@@ -78,7 +78,7 @@
 				</div>
 			</div>
 		</button>
-		<div class="w-full relative mt-1">
+		<div class="w-full relative mt-1.5">
 			{#if isSettingsOpen}
 				<div
 					transition:expandCollapse={{ durationMultiplier: 0.8 }}
@@ -133,7 +133,7 @@
 			class="w-full max-w-xl bg-c-bg-secondary rounded-2xl 
       shadow-xl shadow-c-shadow/25 overflow-hidden z-0 origin-top"
 		>
-			<div class="w-full flex flex-col px-3 py-4 md:p-5 gap-4">
+			<div class="w-full flex flex-col px-3 py-4 md:p-5 gap-5">
 				<p class="font-bold text-xl px-2">{$serverUrl ? 'Switch' : 'Set'} Server</p>
 				<form
 					on:submit|preventDefault={setServerUrl}
@@ -148,7 +148,7 @@
 							type="text"
 							placeholder="Set server URL"
 							class="w-full bg-transparent relative px-6 md:px-8 py-5 rounded-xl transition 
-			        focus:ring-2 focus:ring-c-primary/50 ring-0 ring-c-primary/25 placeholder:text-c-on-bg/40 {!$isTouchscreen
+			        focus:ring-2 focus:ring-c-primary/50 ring-0 ring-c-primary/25 placeholder:text-c-on-bg/30 {!$isTouchscreen
 								? 'enabled:hover:ring-2'
 								: ''}"
 						/>

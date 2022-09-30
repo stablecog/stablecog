@@ -11,9 +11,8 @@
 	export let since: number | undefined;
 	export let duration: number;
 
-	let input: HTMLInputElement;
 	let submitting = false;
-	const placeholder = 'Monkeys having fun on a tree';
+	const placeholder = 'Portrait of a monkey, Unreal Engine, Octane Render, 8k';
 
 	async function onSubmit() {
 		submitting = true;
@@ -46,14 +45,12 @@
 			/>
 		</div>
 		<input
-			bind:this={input}
 			bind:value={inputValue}
 			disabled={loadingOrSubmitting}
-			on:focus={() => input.select()}
 			{placeholder}
 			type="text"
 			class="w-full bg-transparent relative px-6 md:px-8 py-5 rounded-xl transition 
-			focus:ring-2 focus:ring-c-primary/50 ring-0 ring-c-primary/25 placeholder:text-c-on-bg/40 {!$isTouchscreen
+			focus:ring-2 focus:ring-c-primary/50 ring-0 ring-c-primary/25 placeholder:text-c-on-bg/30 {!$isTouchscreen
 				? 'enabled:hover:ring-2'
 				: ''} {classes} {loadingOrSubmitting ? 'text-c-secondary/75' : 'text-c-on-bg'}"
 		/>

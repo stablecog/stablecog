@@ -3,7 +3,7 @@ export async function generateImage(
 	prompt: string,
 	width = 512,
 	height = 768,
-	num_inference_steps = 100,
+	num_inference_steps = 50,
 	guidance_scale = 7,
 	seed = Math.floor(Math.random() * 1000000000)
 ) {
