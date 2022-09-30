@@ -7,6 +7,7 @@
 	export let onCreate: () => Promise<void>;
 	export let status: TStatus;
 	export let inputValue: string | undefined;
+	export let since: number | undefined;
 
 	let classes = '';
 </script>
@@ -27,22 +28,20 @@
 	/>
 	<button
 		disabled={status === 'loading'}
-		class="w-40 px-8 relative flex justify-center text-center py-5 bg-c-primary shadow-lg shadow-c-shadow/25 text-c-on-primary rounded-xl font-bold"
+		class="w-40 px-8 relative flex items-center justify-center text-center py-5 bg-c-primary shadow-lg shadow-c-shadow/25 text-c-on-primary rounded-xl font-bold gap-2"
 	>
-		<div
-			class="w-6 h-6 absolute left-1/2 top-1/2 transform transition -translate-x-1/2 -translate-y-1/2 {status ===
-			'loading'
-				? 'scale-100 opacity-100'
-				: 'scale-0 opacity-0'}"
-		>
-			<IconLoading class="w-full h-full animate-spin" />
-		</div>
-		<p
-			class="transition transform {status === 'loading'
-				? 'opacity-0 scale-0'
-				: 'opacity-100 scale-100'}"
-		>
-			Create
-		</p>
+		{#if status === 'loading'}
+			<IconLoading class="w-5 h-5 animate-spin" />
+			<p class="transition transform font-mono">
+				{since !== undefined
+					? Math.max(since / 1000, 0).toLocaleString('en-US', {
+							minimumFractionDigits: 1,
+							maximumFractionDigits: 1
+					  })
+					: '0.0'}
+			</p>
+		{:else}
+			<p class="transition transform">Create</p>
+		{/if}
 	</button>
 </form>
