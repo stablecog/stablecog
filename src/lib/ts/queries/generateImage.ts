@@ -7,7 +7,6 @@ export async function generateImage(
 	guidance_scale = 7,
 	seed = Math.floor(Math.random() * 1000000000)
 ) {
-	console.log(seed);
 	const response = await fetch(`/api/generate-image`, {
 		method: 'POST',
 		headers: {

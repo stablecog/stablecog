@@ -1,6 +1,7 @@
 <script lang="ts">
 	import CreateBar from '$components/CreateBar.svelte';
 	import { expandCollapse } from '$ts/animation/transitions';
+	import { base64toBlob } from '$ts/helpers/base64toBlob';
 	import { generateImage } from '$ts/queries/generateImage';
 	import { serverUrl } from '$ts/stores/serverUrl';
 	import type { TStatus } from '$ts/types/main';
@@ -30,10 +31,12 @@
 			let res = await generateImage($serverUrl, inputValue);
 			let { data, error } = res;
 			if (data && !error) {
+				const blob = base64toBlob(data);
+				const blobUrl = URL.createObjectURL(blob);
 				const img = new Image();
-				img.src = data;
+				img.src = blobUrl;
 				img.onload = () => {
-					generatedImageSrc = data;
+					generatedImageSrc = blobUrl;
 					status = 'success';
 					console.log('loaded');
 				};
@@ -62,14 +65,14 @@
 <div class="w-full flex flex-col flex-1 justify-center items-center px-5 pt-12 pb-32">
 	<CreateBar bind:inputValue {status} {onCreate} {since} duration={30} />
 	{#if status === 'error'}
-		<p transition:expandCollapse={{}} class="text-c-on-bg/40 text-center">
-			Something went wrong...
-		</p>
+		<div transition:expandCollapse={{}} class="flex flex-col origin-top">
+			<p class="text-c-on-bg/40 text-center mt-6">Something went wrong...</p>
+		</div>
 	{:else if status === 'success' && generatedImageSrc !== undefined && duration !== undefined}
-		<div transition:expandCollapse={{}} class="overflow-hidden rounded-xl relative z-0">
+		<div transition:expandCollapse={{}} class="overflow-hidden rounded-xl origin-top relative z-0">
 			<div class="flex flex-col items-center pt-6 gap-4">
 				<img
-					class="w-full max-w-lg h-auto origin-top rounded-xl shadow-xl shadow-c-shadow/20"
+					class="w-full max-w-lg h-auto rounded-xl shadow-xl shadow-c-shadow/20"
 					src={generatedImageSrc}
 					height="756"
 					width="512"
