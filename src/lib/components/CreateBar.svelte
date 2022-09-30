@@ -1,7 +1,6 @@
 <script lang="ts">
 	import { isTouchscreen } from '$ts/stores/isTouchscreen';
 	import type { TStatus } from '$ts/types/main';
-	import IconLoading from '$components/icons/IconLoading.svelte';
 	import { tick } from 'svelte';
 
 	export { classes as class };
@@ -33,11 +32,12 @@
 <form
 	disabled={loadingOrSubmitting}
 	on:submit|preventDefault={onSubmit}
-	class="w-full max-w-4xl flex flex-row items-center gap-4"
+	class="w-full max-w-xl md:max-w-4xl md:px-8 flex flex-col md:flex-row items-center gap-4"
 >
 	<div class="w-full relative">
 		<div
-			class="w-full h-full rounded-xl bg-c-bg-secondary shadow-lg shadow-c-shadow/20 overflow-hidden absolute left-0 top-0"
+			class="w-full h-full rounded-xl bg-c-bg-secondary shadow-lg shadow-c-shadow/20 
+			overflow-hidden z-0 absolute left-0 top-0"
 		>
 			<div
 				style="transition-duration: {loadingOrSubmitting ? duration : 0.2}s"
@@ -52,7 +52,7 @@
 			on:focus={() => input.select()}
 			{placeholder}
 			type="text"
-			class="w-full bg-transparent relative px-8 py-5 rounded-xl transition 
+			class="w-full bg-transparent relative px-6 md:px-8 py-5 rounded-xl transition 
 			focus:ring-2 focus:ring-c-primary/50 ring-0 ring-c-primary/25 placeholder:text-c-on-bg/40 {!$isTouchscreen
 				? 'enabled:hover:ring-2'
 				: ''} {classes} {loadingOrSubmitting ? 'text-c-secondary/75' : 'text-c-on-bg'}"
@@ -60,13 +60,15 @@
 	</div>
 	<button
 		disabled={loadingOrSubmitting}
-		class="w-40 px-8 relative flex items-center justify-center text-center py-5 
+		class="w-full md:w-40 px-8 relative flex items-center justify-center text-center py-5 
 		shadow-lg shadow-c-shadow/20 text-c-on-primary rounded-xl font-bold gap-2 
-		overflow-hidden group {loadingOrSubmitting ? 'bg-c-secondary' : 'bg-c-primary'}"
+		overflow-hidden z-0 group {loadingOrSubmitting ? 'bg-c-secondary' : 'bg-c-primary'}"
 	>
 		<div
 			class="w-full h-full origin-left rounded-xl transition transform -translate-x-full 
-			group-enabled:group-hover:translate-x-0 bg-c-secondary absolute left-0 top-0"
+			bg-c-secondary absolute left-0 top-0 {!$isTouchscreen
+				? 'group-enabled:group-hover:translate-x-0'
+				: ''}"
 		/>
 		{#if status === 'loading'}
 			<!-- <IconLoading class="w-5 h-5 animate-spin relative" /> -->

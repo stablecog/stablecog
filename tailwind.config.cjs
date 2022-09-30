@@ -15,6 +15,7 @@ module.exports = {
 			colors: {
 				'c-bg': withOpacityValue('--c-bg'),
 				'c-bg-secondary': withOpacityValue('--c-bg-secondary'),
+				'c-bg-tertiary': withOpacityValue('--c-bg-tertiary'),
 				'c-on-bg': withOpacityValue('--c-on-bg'),
 				'c-primary': withOpacityValue('--c-primary'),
 				'c-on-primary': withOpacityValue('--c-on-primary'),
@@ -33,6 +34,10 @@ module.exports = {
 			opacity: {
 				8: '0.08',
 				15: '0.15'
+			},
+			rotate: {
+				360: '360deg',
+				270: '270deg'
 			}
 		}
 	},

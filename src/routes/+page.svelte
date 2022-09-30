@@ -62,7 +62,7 @@
 	});
 </script>
 
-<div class="w-full flex flex-col flex-1 justify-center items-center px-5 pt-12 pb-32">
+<div class="w-full flex flex-col flex-1 justify-center items-center px-5 pt-8 pb-32">
 	<CreateBar bind:inputValue {status} {onCreate} {since} duration={30} />
 	{#if status === 'error'}
 		<div transition:expandCollapse={{}} class="flex flex-col origin-top">
