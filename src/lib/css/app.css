@@ -7,7 +7,7 @@
 	--c-on-bg: 219 213 231;
 	--c-primary: 174 133 255;
 	--c-on-primary: 32 31 34;
-	--c-secondary: 80 200 100;
+	--c-secondary: 255 174 116;
 	--c-danger: 150 50 50;
 	--c-success: 50 200 50;
 	--c-shadow: 0 0 0;
@@ -17,6 +17,9 @@
 body {
 	color: rgb(var(--c-on-bg));
 	background: rgb(var(--c-bg));
+	font-family: ui-monospace, Menlo, Monaco, 'Cascadia Mono', 'Segoe UI Mono', 'Roboto Mono',
+		'Oxygen Mono', 'Ubuntu Monospace', 'Source Code Pro', 'Fira Mono', 'Droid Sans Mono',
+		'Courier New', monospace;
 }
 
 input,
@@ -45,6 +48,11 @@ button:focus-visible {
 	outline: none;
 	box-shadow: 0 0 0 4px rgb(var(--c-bg)), 0 0 0 6px rgb(var(--c-primary));
 	z-index: 10;
+}
+
+/* text select color */
+::selection {
+	background: rgb(var(--c-primary) / 0.5);
 }
 
 @tailwind utilities;

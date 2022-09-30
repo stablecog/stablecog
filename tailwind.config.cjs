@@ -31,6 +31,7 @@ module.exports = {
 				128: '32rem'
 			},
 			opacity: {
+				8: '0.08',
 				15: '0.15'
 			}
 		}

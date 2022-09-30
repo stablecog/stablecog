@@ -5,9 +5,9 @@ export async function generateImage(
 	height = 768,
 	num_inference_steps = 100,
 	guidance_scale = 7,
-	seed?: number
+	seed = Math.floor(Math.random() * 1000000000)
 ) {
-	const _seed = seed || Math.floor(Math.random() * 1000000);
+	console.log(seed);
 	const response = await fetch(`/api/generate-image`, {
 		method: 'POST',
 		headers: {
@@ -20,10 +20,9 @@ export async function generateImage(
 			height,
 			num_inference_steps,
 			guidance_scale,
-			seed: _seed
+			seed
 		})
 	});
-	const resJSON: { data: string } = await response.json();
-	const output = resJSON.data;
-	return output;
+	const resJSON: { data: string | undefined; error: string | undefined } = await response.json();
+	return resJSON;
 }
