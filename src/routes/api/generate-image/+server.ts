@@ -6,13 +6,13 @@ export const POST: RequestHandler = async ({ request }) => {
 	console.log(
 		'-----',
 		new Date(Date.now()),
-		url,
-		prompt,
+		`"${prompt}"`,
 		seed,
 		width,
 		height,
 		num_inference_steps,
 		guidance_scale,
+		url,
 		'-----'
 	);
 	const _seed = seed || Math.floor(Math.random() * 1000000);
