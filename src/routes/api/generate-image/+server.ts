@@ -5,7 +5,7 @@ export const POST: RequestHandler = async ({ request }) => {
 		await request.json();
 	console.log(
 		'-----',
-		new Date(Date.now()),
+		new Date(Date.now()).toUTCString(),
 		`"${prompt}"`,
 		seed,
 		width,
