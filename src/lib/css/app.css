@@ -1,0 +1,50 @@
+@tailwind base;
+@tailwind components;
+
+:root {
+	--c-bg: 32 31 34;
+	--c-bg-secondary: 41 40 43;
+	--c-on-bg: 219 213 231;
+	--c-primary: 174 133 255;
+	--c-on-primary: 32 31 34;
+	--c-secondary: 80 200 100;
+	--c-danger: 150 50 50;
+	--c-success: 50 200 50;
+	--c-shadow: 0 0 0;
+	--c-barrier: 0 0 0;
+}
+
+body {
+	color: rgb(var(--c-on-bg));
+	background: rgb(var(--c-bg));
+}
+
+input,
+textarea {
+	-webkit-appearance: none;
+}
+
+input:focus,
+textarea:focus {
+	outline: none;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+	-webkit-appearance: none;
+	margin: 0;
+}
+
+/* Firefox */
+input[type='number'] {
+	-moz-appearance: textfield;
+}
+
+a:focus-visible,
+button:focus-visible {
+	outline: none;
+	box-shadow: 0 0 0 4px rgb(var(--c-bg)), 0 0 0 6px rgb(var(--c-primary));
+	z-index: 10;
+}
+
+@tailwind utilities;
