@@ -3,6 +3,18 @@ import type { RequestHandler } from '@sveltejs/kit';
 export const POST: RequestHandler = async ({ request }) => {
 	const { url, prompt, seed, width, height, num_inference_steps, guidance_scale } =
 		await request.json();
+	console.log(
+		'-----',
+		new Date(Date.now()),
+		url,
+		prompt,
+		seed,
+		width,
+		height,
+		num_inference_steps,
+		guidance_scale,
+		'-----'
+	);
 	const _seed = seed || Math.floor(Math.random() * 1000000);
 	const response = await fetch(`${url}/predictions`, {
 		method: 'POST',

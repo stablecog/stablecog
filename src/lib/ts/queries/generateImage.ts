@@ -23,7 +23,6 @@ export async function generateImage(
 			seed: _seed
 		})
 	});
-	console.log(response);
 	const resJSON: { data: string } = await response.json();
 	const output = resJSON.data;
 	return output;
