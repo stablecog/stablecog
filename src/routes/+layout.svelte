@@ -2,8 +2,17 @@
 	import '$css/app.css';
 	import Navbar from '$components/Navbar.svelte';
 	import { theme } from '$ts/stores/theme';
+	import { onMount } from 'svelte';
+	import { serverUrl } from '$ts/stores/serverUrl';
+	import { defaultServerUrl } from '$ts/constants/main';
 
 	let innerHeight: number | undefined;
+
+	onMount(() => {
+		if ($serverUrl === undefined || $serverUrl === null || $serverUrl === '') {
+			serverUrl.set(defaultServerUrl);
+		}
+	});
 </script>
 
 <svelte:window bind:innerHeight />
