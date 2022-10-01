@@ -22,8 +22,8 @@
 		? 'theme-light'
 		: 'theme-dark'}"
 	style="background-image: url({$theme === 'light'
-		? '/grid-on-light.svg'
-		: '/grid-on-dark.svg'}); background-size: 24px;{innerHeight !== undefined
+		? '/illustrations/grid-on-light.svg'
+		: '/illustrations/grid-on-dark.svg'}); background-size: 24px;{innerHeight !== undefined
 		? `min-height: ${innerHeight}px`
 		: ''}"
 >
