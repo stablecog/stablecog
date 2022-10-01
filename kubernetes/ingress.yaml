@@ -10,7 +10,7 @@ spec:
   tls:
     - hosts:
         - stablecog.appditto.com
-      secretName: utils-banano-cc-server-secret
+      secretName: stablecog-server-secret
   rules:
     - host: stablecog.appditto.com
       http:
