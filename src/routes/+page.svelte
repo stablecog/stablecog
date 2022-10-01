@@ -46,7 +46,11 @@
 	}
 
 	async function onCreate() {
-		if (!$serverUrl || !inputValue) return;
+		if (!$serverUrl || !inputValue) {
+			!inputValue && console.log('no input');
+			!$serverUrl && console.log('no server url');
+			return;
+		}
 		generationError = undefined;
 		lastGeneration = {
 			url: $serverUrl,
