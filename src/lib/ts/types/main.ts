@@ -10,3 +10,8 @@ export interface TGeneration {
 	guidance_scale: number;
 	imageUrl?: string;
 }
+
+export interface TTab {
+	label: string;
+	value: string;
+}

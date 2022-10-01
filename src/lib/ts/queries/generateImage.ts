@@ -1,12 +1,20 @@
-export async function generateImage(
-	url: string,
-	prompt: string,
+export async function generateImage({
+	url,
+	prompt,
 	width = 512,
-	height = 768,
-	num_inference_steps = 50,
-	guidance_scale = 7,
-	seed = Math.floor(Math.random() * 1000000000)
-) {
+	height = 512,
+	seed = Math.floor(Math.random() * 1000000000),
+	num_inference_steps = 100,
+	guidance_scale = 7
+}: {
+	url: string;
+	prompt: string;
+	width: number;
+	height: number;
+	num_inference_steps: number;
+	guidance_scale: number;
+	seed: number;
+}) {
 	const response = await fetch(`/api/generate-image`, {
 		method: 'POST',
 		headers: {

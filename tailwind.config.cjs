@@ -29,9 +29,12 @@ module.exports = {
 				DEFAULT: '200ms'
 			},
 			spacing: {
+				88: '22rem',
 				128: '32rem'
 			},
 			opacity: {
+				3: '0.03',
+				4: '0.04',
 				8: '0.08',
 				15: '0.15'
 			},

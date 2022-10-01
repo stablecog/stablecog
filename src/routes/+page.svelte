@@ -16,6 +16,8 @@
 	let startTimestamp: number | undefined;
 	let endTimestamp: number | undefined;
 	let lastGeneration: TGeneration | undefined;
+	let generationWidth: string;
+	let generationHeight: string;
 
 	$: since = now !== undefined && startTimestamp !== undefined ? now - startTimestamp : undefined;
 	$: duration =
@@ -29,16 +31,25 @@
 		endTimestamp = undefined;
 		startTimestamp = Date.now();
 		try {
+			console.log(generationWidth, generationHeight);
 			lastGeneration = {
 				url: $serverUrl,
 				prompt: inputValue,
-				width: 512,
-				height: 768,
+				width: Number(generationWidth),
+				height: Number(generationHeight),
 				seed: Math.floor(Math.random() * 1000000000),
 				guidance_scale: 7,
 				num_inference_steps: 100
 			};
-			let res = await generateImage(lastGeneration.url, lastGeneration.prompt);
+			let res = await generateImage({
+				url: lastGeneration.url,
+				prompt: lastGeneration.prompt,
+				width: lastGeneration.width,
+				height: lastGeneration.height,
+				seed: lastGeneration.seed,
+				guidance_scale: lastGeneration.guidance_scale,
+				num_inference_steps: lastGeneration.num_inference_steps
+			});
 			let { data, error } = res;
 			if (data && !error) {
 				const blob = base64toBlob(data);
@@ -75,14 +86,22 @@
 </script>
 
 <div class="w-full flex flex-col flex-1 justify-center items-center px-5 pb-8">
-	<CreateBar bind:inputValue {status} {onCreate} {since} duration={30} />
+	<CreateBar
+		bind:inputValue
+		bind:generationWidth
+		bind:generationHeight
+		{status}
+		{onCreate}
+		{since}
+		duration={30}
+	/>
 	{#if status === 'error'}
 		<div transition:expandCollapse={{}} class="flex flex-col origin-top">
-			<p class="text-c-on-bg/40 text-center mt-6">Something went wrong...</p>
+			<p class="text-c-on-bg/40 text-center mt-4">Something went wrong...</p>
 		</div>
 	{:else if status === 'success' && duration !== undefined && lastGeneration && lastGeneration.imageUrl}
 		<div transition:expandCollapse={{}} class="overflow-hidden rounded-xl origin-top relative z-0">
-			<div class="flex flex-col items-center py-6 md:px-5 gap-4">
+			<div class="flex flex-col items-center pb-6 md:px-5 gap-4">
 				<div class="relative">
 					<img
 						class="w-full max-w-md h-auto rounded-2xl shadow-xl shadow-c-shadow/20 border-4 border-c-bg"
@@ -119,6 +138,6 @@
 			</div>
 		</div>
 	{:else}
-		<div transition:expandCollapse={{}} class="h-[12vh]" />
+		<div transition:expandCollapse={{}} class="h-[10vh]" />
 	{/if}
 </div>
