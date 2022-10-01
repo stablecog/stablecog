@@ -1,0 +1,24 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: stablecog-ingress
+  namespace: stablecog
+  annotations:
+    kubernetes.io/ingress.class: 'nginx'
+    cert-manager.io/cluster-issuer: 'letsencrypt-prod'
+spec:
+  tls:
+    - hosts:
+        - stablecog.appditto.com
+      secretName: utils-banano-cc-server-secret
+  rules:
+    - host: stablecog.appditto.com
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: stablecog-service
+                port:
+                  number: 3000

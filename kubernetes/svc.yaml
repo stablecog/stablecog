@@ -1,0 +1,12 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: stablecog-service
+  namespace: stablecog
+spec:
+  selector:
+    app: stablecog
+  type: ClusterIP
+  ports:
+    - port: 3000
+      targetPort: 3000
