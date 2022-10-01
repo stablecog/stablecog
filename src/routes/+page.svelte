@@ -52,7 +52,7 @@
 		}
 		generationError = undefined;
 		lastGeneration = {
-			url: $serverUrl,
+			server_url: $serverUrl,
 			prompt: inputValue,
 			width: Number(generationWidth),
 			height: Number(generationHeight),
@@ -67,7 +67,7 @@
 		startTimestamp = Date.now();
 		try {
 			let res = await generateImage({
-				url: lastGeneration.url,
+				server_url: lastGeneration.server_url,
 				prompt: lastGeneration.prompt,
 				width: lastGeneration.width,
 				height: lastGeneration.height,

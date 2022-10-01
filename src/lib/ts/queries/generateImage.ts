@@ -1,5 +1,5 @@
 export async function generateImage({
-	url,
+	server_url,
 	prompt,
 	width = 512,
 	height = 512,
@@ -7,7 +7,7 @@ export async function generateImage({
 	num_inference_steps = 100,
 	guidance_scale = 7
 }: {
-	url: string;
+	server_url: string;
 	prompt: string;
 	width: number;
 	height: number;
@@ -21,7 +21,7 @@ export async function generateImage({
 			'Content-Type': 'application/json'
 		},
 		body: JSON.stringify({
-			url,
+			server_url,
 			prompt,
 			width,
 			height,

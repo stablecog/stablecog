@@ -1,7 +1,7 @@
 export type TStatus = 'idle' | 'loading' | 'success' | 'error';
 
 export interface TGeneration {
-	url: string;
+	server_url: string;
 	prompt: string;
 	width: number;
 	height: number;
