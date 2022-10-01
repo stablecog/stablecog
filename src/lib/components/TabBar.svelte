@@ -12,10 +12,10 @@
 </script>
 
 <div
-	class="w-full text-sm flex items-stretch bg-c-bg shadow-lg shadow-c-shadow/20 rounded-xl overflow-hidden z-0 transition relative {classes}"
+	class="w-full text-sm flex items-stretch bg-c-bg shadow-lg ring-2 ring-c-on-bg/5 shadow-c-shadow/20 rounded-xl overflow-hidden z-0 transition relative {classes}"
 >
 	<p class="pl-5 pr-4 py-2 text-base flex items-center text-c-on-bg/30">{title}</p>
-	<div class="w-[2px] mx-1 self-stretch">
+	<div class="w-2px mx-1 self-stretch">
 		<div class="w-full h-full bg-c-on-bg/3" />
 	</div>
 	<div class="flex-1 min-w-0 flex relative z-0 overflow-hidden rounded-lg">

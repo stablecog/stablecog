@@ -29,6 +29,7 @@ module.exports = {
 				DEFAULT: '200ms'
 			},
 			spacing: {
+				'2px': '2px',
 				88: '22rem',
 				128: '32rem'
 			},

@@ -1,5 +1,5 @@
 <script lang="ts">
-	import CreateBar from '$components/CreateBar.svelte';
+	import GenerateBar from '$components/GenerateBar.svelte';
 	import IconDownload from '$components/icons/IconDownload.svelte';
 	import { expandCollapse } from '$ts/animation/transitions';
 	import { estimatedDurationBufferSec, estimatedDurationDefault } from '$ts/constants/main';
@@ -129,7 +129,7 @@
 </script>
 
 <div class="w-full flex flex-col flex-1 justify-center items-center px-4 pb-8">
-	<CreateBar
+	<GenerateBar
 		bind:inputValue
 		bind:generationWidth
 		bind:generationHeight
