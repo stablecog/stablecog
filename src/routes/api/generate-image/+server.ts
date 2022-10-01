@@ -4,6 +4,8 @@ import type { RequestHandler } from '@sveltejs/kit';
 export const POST: RequestHandler = async ({ request }) => {
 	const startTimestamp = Date.now();
 	const startDate = new Date(startTimestamp).toUTCString();
+	const { headers } = request;
+	console.log('Country is:', headers.get('CF-IPCountry'));
 	try {
 		const { server_url, prompt, seed, width, height, num_inference_steps, guidance_scale } =
 			await request.json();
