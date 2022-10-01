@@ -18,6 +18,7 @@
 	let lastGeneration: TGeneration | undefined;
 	let generationWidth: string;
 	let generationHeight: string;
+	let generationError: string | undefined;
 
 	$: since = now !== undefined && startTimestamp !== undefined ? now - startTimestamp : undefined;
 	$: duration =
@@ -27,6 +28,7 @@
 
 	async function onCreate() {
 		if (!$serverUrl || !inputValue) return;
+		generationError = undefined;
 		status = 'loading';
 		endTimestamp = undefined;
 		startTimestamp = Date.now();
@@ -64,6 +66,7 @@
 					console.log('loaded');
 				};
 			} else {
+				generationError = error;
 				throw new Error(error);
 			}
 		} catch (error) {
@@ -97,7 +100,9 @@
 	/>
 	{#if status === 'error'}
 		<div transition:expandCollapse={{}} class="flex flex-col origin-top">
-			<p class="text-c-on-bg/40 text-center mt-4">Something went wrong...</p>
+			<p class="w-full max-w-lg text-c-on-bg/40 text-center mt-4">
+				{generationError ?? 'Something went wrong...'}
+			</p>
 		</div>
 	{:else if status === 'success' && duration !== undefined && lastGeneration && lastGeneration.imageUrl}
 		<div transition:expandCollapse={{}} class="overflow-hidden rounded-xl origin-top relative z-0">

@@ -35,7 +35,10 @@ export const POST: RequestHandler = async ({ request }) => {
 		});
 		const data: TGenerateImageData = await response.json();
 		const output = data.output[0];
-		return new Response(JSON.stringify({ data: output }));
+		if (data.error) {
+			console.log('-----', new Date(Date.now()).toUTCString(), data.error, '-----');
+		}
+		return new Response(JSON.stringify({ data: output, error: data.error }));
 	} catch (error) {
 		return new Response(JSON.stringify({ error: 'Something went wrong' }));
 	}
@@ -43,4 +46,8 @@ export const POST: RequestHandler = async ({ request }) => {
 
 interface TGenerateImageData {
 	output: string[];
+	status: TStatus;
+	error?: string;
 }
+
+type TStatus = 'succeeded' | 'failed';
