@@ -132,7 +132,7 @@
 	</div>
 	{#if status !== 'loading'}
 		<div class="w-full overflow-hidden" transition:expandCollapse={{}}>
-			<div class="w-full flex flex-wrap items-center justify-center gap-3 px-3 py-8">
+			<div class="w-full flex flex-wrap items-center justify-center gap-3 py-8">
 				<TabBar
 					title="W"
 					class="w-88 max-w-full"

@@ -85,7 +85,7 @@
 	});
 </script>
 
-<div class="w-full flex flex-col flex-1 justify-center items-center px-5 pb-8">
+<div class="w-full flex flex-col flex-1 justify-center items-center px-4 pb-8">
 	<CreateBar
 		bind:inputValue
 		bind:generationWidth
