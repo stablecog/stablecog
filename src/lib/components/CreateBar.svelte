@@ -26,7 +26,7 @@
 	export let status: TStatus;
 	export let inputValue: string | undefined;
 	export let since: number | undefined;
-	export let duration: number;
+	export let estimatedDuration: number;
 	export { classes as class };
 	let classes = '';
 
@@ -56,7 +56,6 @@
 		const heightIndex = heights
 			.map((h) => h.value)
 			.findIndex((i) => i === $imageSize?.height?.toString());
-		console.log(widthIndex, heightIndex);
 		if (widthIndex >= 0) generationWidth = widths[widthIndex].value;
 		if (heightIndex >= 0) generationHeight = heights[heightIndex].value;
 		isCheckComplete = true;
@@ -87,8 +86,8 @@
 				overflow-hidden z-0 absolute left-0 top-0"
 			>
 				<div
-					style="transition-duration: {loadingOrSubmitting ? duration : 0.2}s"
-					class="w-full h-full ease-out transition bg-c-secondary/8 
+					style="transition-duration: {loadingOrSubmitting ? estimatedDuration : 0.2}s"
+					class="w-full h-full ease-linear transition bg-c-secondary/8 
 					absolute left-0 top-0 rounded-xl {loadingOrSubmitting ? 'translate-x-0' : '-translate-x-full'}"
 				/>
 			</div>

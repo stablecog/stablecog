@@ -2,9 +2,11 @@
 	import CreateBar from '$components/CreateBar.svelte';
 	import IconDownload from '$components/icons/IconDownload.svelte';
 	import { expandCollapse } from '$ts/animation/transitions';
+	import { estimatedDurationBufferSec, estimatedDurationDefault } from '$ts/constants/main';
 	import { base64toBlob } from '$ts/helpers/base64toBlob';
 	import { generateImage } from '$ts/queries/generateImage';
 	import { isTouchscreen } from '$ts/stores/isTouchscreen';
+	import { iterationMpPerSecond } from '$ts/stores/iterationMpPerSecond';
 	import { serverUrl } from '$ts/stores/serverUrl';
 	import type { TGeneration, TStatus } from '$ts/types/main';
 	import { onDestroy, onMount } from 'svelte';
@@ -19,6 +21,9 @@
 	let generationWidth: string;
 	let generationHeight: string;
 	let generationError: string | undefined;
+	let estimatedDuration = estimatedDurationDefault;
+
+	const num_inference_steps = 100;
 
 	$: since = now !== undefined && startTimestamp !== undefined ? now - startTimestamp : undefined;
 	$: duration =
@@ -26,23 +31,38 @@
 			? endTimestamp - startTimestamp
 			: undefined;
 
+	$: [generationWidth, generationHeight], setEstimatedDuration();
+
+	async function setEstimatedDuration() {
+		if (isCheckComplete) {
+			estimatedDuration =
+				$iterationMpPerSecond && generationWidth && generationHeight
+					? Math.ceil(
+							(Number(generationWidth) * Number(generationHeight) * num_inference_steps) /
+								$iterationMpPerSecond
+					  ) + estimatedDurationBufferSec
+					: estimatedDurationDefault;
+		}
+	}
+
 	async function onCreate() {
 		if (!$serverUrl || !inputValue) return;
 		generationError = undefined;
+		lastGeneration = {
+			url: $serverUrl,
+			prompt: inputValue,
+			width: Number(generationWidth),
+			height: Number(generationHeight),
+			seed: Math.floor(Math.random() * 1000000000),
+			guidance_scale: 7,
+			num_inference_steps: 100
+		};
+		console.log('generation', lastGeneration);
+		console.log('estimatedDuration', estimatedDuration);
 		status = 'loading';
 		endTimestamp = undefined;
 		startTimestamp = Date.now();
 		try {
-			console.log(generationWidth, generationHeight);
-			lastGeneration = {
-				url: $serverUrl,
-				prompt: inputValue,
-				width: Number(generationWidth),
-				height: Number(generationHeight),
-				seed: Math.floor(Math.random() * 1000000000),
-				guidance_scale: 7,
-				num_inference_steps: 100
-			};
 			let res = await generateImage({
 				url: lastGeneration.url,
 				prompt: lastGeneration.prompt,
@@ -62,8 +82,16 @@
 					if (lastGeneration) {
 						lastGeneration.imageUrl = blobUrl;
 					}
+					if (lastGeneration && startTimestamp !== undefined) {
+						lastGeneration.iterationMpPerSecond = Math.ceil(
+							(lastGeneration.width * lastGeneration.height * lastGeneration.num_inference_steps) /
+								((Date.now() - startTimestamp) / 1000)
+						);
+						iterationMpPerSecond.set(lastGeneration.iterationMpPerSecond);
+						setEstimatedDuration();
+					}
 					status = 'success';
-					console.log('loaded');
+					console.log('image loaded');
 				};
 			} else {
 				generationError = error;
@@ -77,10 +105,18 @@
 		}
 	}
 
+	let isCheckComplete = false;
+
 	onMount(() => {
+		if ($iterationMpPerSecond === undefined) {
+			iterationMpPerSecond.set(1500000);
+		}
 		nowInterval = setInterval(() => {
 			now = Date.now();
 		}, 100);
+
+		setEstimatedDuration();
+		isCheckComplete = true;
 	});
 
 	onDestroy(() => {
@@ -96,7 +132,7 @@
 		{status}
 		{onCreate}
 		{since}
-		duration={30}
+		{estimatedDuration}
 	/>
 	{#if status === 'error'}
 		<div transition:expandCollapse={{}} class="flex flex-col origin-top">
@@ -121,7 +157,7 @@
 						download="{lastGeneration.prompt}-[seed_{lastGeneration.seed}].png"
 						aria-label="Download Image"
 					>
-						<div class="p-3 rounded-full bg-c-bg/50 relative overflow-hidden z-0">
+						<div class="p-3 rounded-full bg-c-bg relative overflow-hidden z-0">
 							<div
 								class="w-full h-full rounded-full transition transform -translate-x-full 
 			        		bg-c-primary absolute left-0 top-0 {!$isTouchscreen ? 'group-hover:translate-x-0' : ''}"
