@@ -54,7 +54,7 @@
 	});
 </script>
 
-<div class="w-full flex flex-row items-center justify-between px-4 py-4">
+<div class="w-full flex flex-row items-center justify-between px-4 py-4 relative">
 	<div class="w-5 h-5" />
 	<div use:clickoutside={{ callback: closeSettings }} class="flex-1 flex flex-col items-end">
 		<button on:click={toggleSettings} class="group">

@@ -29,7 +29,7 @@
 		</div>
 		{#each tabs as tab}
 			<label
-				class="flex-1 min-w-0 px-4 py-4 relative text-center group overflow-hidden {!$isTouchscreen
+				class="flex-1 min-w-0 px-2 py-4 relative text-center group overflow-hidden {!$isTouchscreen
 					? 'hover:cursor-pointer'
 					: ''}"
 			>
