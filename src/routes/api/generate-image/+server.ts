@@ -1,12 +1,14 @@
 import type { RequestHandler } from '@sveltejs/kit';
 
 export const POST: RequestHandler = async ({ request }) => {
+	let startTimestamp = Date.now();
 	try {
 		const { url, prompt, seed, width, height, num_inference_steps, guidance_scale } =
 			await request.json();
 		console.log(
 			'-----',
-			new Date(Date.now()).toUTCString(),
+			'Started:',
+			new Date(startTimestamp).toUTCString(),
 			`"${prompt}"`,
 			seed,
 			width,
@@ -38,8 +40,22 @@ export const POST: RequestHandler = async ({ request }) => {
 		if (data.error) {
 			console.log('-----', new Date(Date.now()).toUTCString(), data.error, '-----');
 		}
+		console.log(
+			'-----',
+			`Ended in ${(Date.now() - startTimestamp) / 1000}s:`,
+			new Date(startTimestamp).toUTCString(),
+			`"${prompt}"`,
+			seed,
+			width,
+			height,
+			num_inference_steps,
+			guidance_scale,
+			url,
+			'-----'
+		);
 		return new Response(JSON.stringify({ data: output, error: data.error }));
 	} catch (error) {
+		console.log('-----', `Failed in ${(Date.now() - startTimestamp) / 1000}s`, '-----');
 		return new Response(JSON.stringify({ error: 'Something went wrong' }));
 	}
 };
