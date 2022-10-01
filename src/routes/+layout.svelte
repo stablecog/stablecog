@@ -5,12 +5,16 @@
 	import { onMount } from 'svelte';
 	import { serverUrl } from '$ts/stores/serverUrl';
 	import { defaultServerUrl } from '$ts/constants/main';
+	import { iterationMpPerSec } from '$ts/stores/iterationMpPerSec';
 
 	let innerHeight: number | undefined;
 
 	onMount(() => {
 		if ($serverUrl === undefined || $serverUrl === null || $serverUrl === '') {
 			serverUrl.set(defaultServerUrl);
+		}
+		if ($iterationMpPerSec === undefined) {
+			iterationMpPerSec.set(1000000);
 		}
 	});
 </script>

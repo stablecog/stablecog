@@ -9,7 +9,7 @@ export interface TGeneration {
 	num_inference_steps: number;
 	guidance_scale: number;
 	imageUrl?: string;
-	iterationMpPerSecond?: number;
+	iterationMpPerSec?: number;
 }
 
 export interface TTab {

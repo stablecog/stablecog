@@ -89,7 +89,7 @@
 <form
 	disabled={loadingOrSubmitting}
 	on:submit|preventDefault={onSubmit}
-	class="w-full max-w-xl md:max-w-4xl md:px-8 flex flex-col items-center"
+	class="w-full max-w-xl md:max-w-5xl md:px-8 flex flex-col items-center"
 >
 	<!-- Prompt bar -->
 	<div class="w-full flex flex-col md:flex-row gap-4 items-center py-4">

@@ -30,6 +30,7 @@
 	},
 	"type": "module",
 	"dependencies": {
-		"@supabase/supabase-js": "^1.35.7"
+		"@supabase/supabase-js": "^1.35.7",
+		"dexie": "^3.2.2"
 	}
 }

@@ -4,9 +4,10 @@
 	import { expandCollapse } from '$ts/animation/transitions';
 	import { estimatedDurationBufferRatio, estimatedDurationDefault } from '$ts/constants/main';
 	import { base64toBlob } from '$ts/helpers/base64toBlob';
+	import { addGenerationToDb } from '$ts/queries/addGenerationToDb';
 	import { generateImage } from '$ts/queries/generateImage';
 	import { isTouchscreen } from '$ts/stores/isTouchscreen';
-	import { iterationMpPerSecond } from '$ts/stores/iterationMpPerSecond';
+	import { iterationMpPerSec } from '$ts/stores/iterationMpPerSec';
 	import { serverUrl } from '$ts/stores/serverUrl';
 	import type { TGeneration, TStatus } from '$ts/types/main';
 	import { onDestroy, onMount } from 'svelte';
@@ -22,7 +23,7 @@
 	let generationError: string | undefined;
 	let estimatedDuration = estimatedDurationDefault;
 
-	const num_inference_steps = 100;
+	const num_inference_steps = 50;
 
 	$: duration =
 		endTimestamp !== undefined && startTimestamp !== undefined
@@ -34,10 +35,10 @@
 	async function setEstimatedDuration() {
 		if (isCheckComplete) {
 			estimatedDuration =
-				$iterationMpPerSecond && generationWidth && generationHeight
+				$iterationMpPerSec && generationWidth && generationHeight
 					? Math.ceil(
 							((Number(generationWidth) * Number(generationHeight) * num_inference_steps) /
-								$iterationMpPerSecond) *
+								$iterationMpPerSec) *
 								(1 + estimatedDurationBufferRatio)
 					  )
 					: estimatedDurationDefault;
@@ -58,7 +59,7 @@
 			height: Number(generationHeight),
 			seed: Math.floor(Math.random() * 1000000000),
 			guidance_scale: 7,
-			num_inference_steps: 100
+			num_inference_steps: num_inference_steps
 		};
 		console.log('generation', lastGeneration);
 		console.log('estimatedDuration', estimatedDuration);
@@ -77,6 +78,14 @@
 			});
 			let { data, error } = res;
 			if (data && !error) {
+				try {
+					await addGenerationToDb({
+						...lastGeneration,
+						imageDataB64: data
+					});
+				} catch (error) {
+					console.log('indexedDB error', error);
+				}
 				const blob = base64toBlob(data);
 				const blobUrl = URL.createObjectURL(blob);
 				const img = new Image();
@@ -86,11 +95,11 @@
 						lastGeneration.imageUrl = blobUrl;
 					}
 					if (lastGeneration && startTimestamp !== undefined) {
-						lastGeneration.iterationMpPerSecond = Math.ceil(
+						lastGeneration.iterationMpPerSec = Math.ceil(
 							(lastGeneration.width * lastGeneration.height * lastGeneration.num_inference_steps) /
 								((Date.now() - startTimestamp) / 1000)
 						);
-						iterationMpPerSecond.set(lastGeneration.iterationMpPerSecond);
+						iterationMpPerSec.set(lastGeneration.iterationMpPerSec);
 						setEstimatedDuration();
 					}
 					status = 'success';
@@ -111,10 +120,6 @@
 	let isCheckComplete = false;
 
 	onMount(() => {
-		if ($iterationMpPerSecond === undefined) {
-			iterationMpPerSecond.set(1500000);
-		}
-
 		setEstimatedDuration();
 		isCheckComplete = true;
 	});
