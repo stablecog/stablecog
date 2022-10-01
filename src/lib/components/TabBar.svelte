@@ -31,9 +31,7 @@
 		</div>
 		{#each tabs as tab}
 			<label
-				class="flex-1 min-w-0 px-2 py-4 relative text-center group overflow-hidden {!$isTouchscreen
-					? 'hover:cursor-pointer'
-					: ''}"
+				class="flex-1 min-w-0 px-2 py-4 relative text-center group overflow-hidden cursor-pointer"
 			>
 				<div class="w-full h-full absolute left-0 top-0 rounded-lg p-1">
 					<div class="w-full h-full overflow-hidden rounded-lg">

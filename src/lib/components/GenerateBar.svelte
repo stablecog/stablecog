@@ -1,5 +1,4 @@
 <script lang="ts">
-	import { browser } from '$app/environment';
 	import TabBar from '$components/TabBar.svelte';
 	import { expandCollapse } from '$ts/animation/transitions';
 	import { imageSize } from '$ts/stores/imageSize';
@@ -25,15 +24,29 @@
 	export let onCreate: () => Promise<void>;
 	export let status: TStatus;
 	export let inputValue: string | undefined;
-	export let since: number | undefined;
+	export let startTimestamp: number | undefined;
 	export let estimatedDuration: number;
 	export { classes as class };
 	let classes = '';
 
 	let submitting = false;
 	const placeholder = 'Portrait of a monkey, Unreal Engine, Octane Render, 8k';
+	let now: number | undefined;
+	let nowInterval: NodeJS.Timeout | undefined;
 
 	$: loadingOrSubmitting = status === 'loading' || submitting;
+	$: sinceSec =
+		now !== undefined && startTimestamp !== undefined ? (now - startTimestamp) / 1000 : 0;
+	$: [status], createOrDestroyInterval();
+
+	async function createOrDestroyInterval() {
+		if (nowInterval) clearInterval(nowInterval);
+		if (status === 'loading') {
+			nowInterval = setInterval(() => {
+				now = Date.now();
+			}, 100);
+		}
+	}
 
 	async function onSubmit() {
 		submitting = true;
@@ -87,7 +100,7 @@
 			>
 				<div
 					style="transition-duration: {loadingOrSubmitting ? estimatedDuration : 0.2}s"
-					class="w-full h-full ease-linear transition bg-c-secondary/8 
+					class="w-full h-full ease-linear transition bg-c-secondary/10 
 					absolute left-0 top-0 rounded-xl {loadingOrSubmitting ? 'translate-x-0' : '-translate-x-full'}"
 				/>
 			</div>
@@ -97,7 +110,7 @@
 				{placeholder}
 				type="text"
 				class="w-full bg-transparent relative px-6 md:px-8 py-5 rounded-xl transition 
-				focus:ring-2 focus:ring-c-primary/50 ring-0 ring-c-primary/25 placeholder:text-c-on-bg/30 {!$isTouchscreen
+				focus:ring-2 focus:ring-c-primary/40 ring-0 ring-c-primary/20 placeholder:text-c-on-bg/30 {!$isTouchscreen
 					? 'enabled:hover:ring-2'
 					: ''} {classes} {loadingOrSubmitting ? 'text-c-secondary/75' : 'text-c-on-bg'}"
 			/>
@@ -117,12 +130,10 @@
 			{#if status === 'loading'}
 				<!-- <IconLoading class="w-5 h-5 animate-spin relative" /> -->
 				<p class="relative">
-					{since !== undefined
-						? Math.max(since / 1000, 0).toLocaleString('en-US', {
-								minimumFractionDigits: 1,
-								maximumFractionDigits: 1
-						  })
-						: '0.0'}
+					{Math.max(sinceSec, 0).toLocaleString('en-US', {
+						minimumFractionDigits: 1,
+						maximumFractionDigits: 1
+					})}
 				</p>
 			{:else}
 				<p class="relative">Generate</p>

@@ -1,2 +1,2 @@
-export const estimatedDurationBufferSec = 2;
+export const estimatedDurationBufferRatio = 0.1;
 export const estimatedDurationDefault = 30;

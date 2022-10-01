@@ -2,7 +2,7 @@
 	import GenerateBar from '$components/GenerateBar.svelte';
 	import IconDownload from '$components/icons/IconDownload.svelte';
 	import { expandCollapse } from '$ts/animation/transitions';
-	import { estimatedDurationBufferSec, estimatedDurationDefault } from '$ts/constants/main';
+	import { estimatedDurationBufferRatio, estimatedDurationDefault } from '$ts/constants/main';
 	import { base64toBlob } from '$ts/helpers/base64toBlob';
 	import { generateImage } from '$ts/queries/generateImage';
 	import { isTouchscreen } from '$ts/stores/isTouchscreen';
@@ -13,7 +13,6 @@
 
 	let status: TStatus = 'idle';
 	let inputValue: string | undefined;
-	let now: number | undefined;
 	let nowInterval: NodeJS.Timeout | undefined;
 	let startTimestamp: number | undefined;
 	let endTimestamp: number | undefined;
@@ -25,7 +24,6 @@
 
 	const num_inference_steps = 100;
 
-	$: since = now !== undefined && startTimestamp !== undefined ? now - startTimestamp : undefined;
 	$: duration =
 		endTimestamp !== undefined && startTimestamp !== undefined
 			? endTimestamp - startTimestamp
@@ -38,9 +36,10 @@
 			estimatedDuration =
 				$iterationMpPerSecond && generationWidth && generationHeight
 					? Math.ceil(
-							(Number(generationWidth) * Number(generationHeight) * num_inference_steps) /
-								$iterationMpPerSecond
-					  ) + estimatedDurationBufferSec
+							((Number(generationWidth) * Number(generationHeight) * num_inference_steps) /
+								$iterationMpPerSecond) *
+								(1 + estimatedDurationBufferRatio)
+					  )
 					: estimatedDurationDefault;
 		}
 	}
@@ -115,9 +114,6 @@
 		if ($iterationMpPerSecond === undefined) {
 			iterationMpPerSecond.set(1500000);
 		}
-		nowInterval = setInterval(() => {
-			now = Date.now();
-		}, 100);
 
 		setEstimatedDuration();
 		isCheckComplete = true;
@@ -135,7 +131,7 @@
 		bind:generationHeight
 		{status}
 		{onCreate}
-		{since}
+		{startTimestamp}
 		{estimatedDuration}
 	/>
 	{#if status === 'error'}
