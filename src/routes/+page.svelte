@@ -3,14 +3,18 @@
 	import IconDownload from '$components/icons/IconDownload.svelte';
 	import MetaTag from '$components/MetaTag.svelte';
 	import { expandCollapse } from '$ts/animation/transitions';
-	import { estimatedDurationBufferRatio, estimatedDurationDefault } from '$ts/constants/main';
+	import {
+		canonicalUrl,
+		estimatedDurationBufferRatio,
+		estimatedDurationDefault
+	} from '$ts/constants/main';
 	import { base64toBlob } from '$ts/helpers/base64toBlob';
 	import { addGenerationToDb } from '$ts/queries/addGenerationToDb';
 	import { generateImage } from '$ts/queries/generateImage';
 	import { isTouchscreen } from '$ts/stores/isTouchscreen';
 	import { iterationMpPerSec } from '$ts/stores/iterationMpPerSec';
 	import { serverUrl } from '$ts/stores/serverUrl';
-	import { canonicalUrl, type TGeneration, type TStatus } from '$ts/types/main';
+	import type { TGeneration, TStatus } from '$ts/types/main';
 	import { onDestroy, onMount } from 'svelte';
 
 	let status: TStatus = 'idle';

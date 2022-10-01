@@ -9,10 +9,10 @@ metadata:
 spec:
   tls:
     - hosts:
-        - stablecog.appditto.com
+        - stablecog.com
       secretName: stablecog-server-secret
   rules:
-    - host: stablecog.appditto.com
+    - host: stablecog.com
       http:
         paths:
           - path: /
