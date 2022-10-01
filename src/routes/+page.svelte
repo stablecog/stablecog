@@ -20,10 +20,9 @@
 	let lastGeneration: TGeneration | undefined;
 	let generationWidth: string;
 	let generationHeight: string;
+	let numInferenceSteps = 50;
 	let generationError: string | undefined;
 	let estimatedDuration = estimatedDurationDefault;
-
-	const num_inference_steps = 50;
 
 	$: duration =
 		endTimestamp !== undefined && startTimestamp !== undefined
@@ -37,7 +36,7 @@
 			estimatedDuration =
 				$iterationMpPerSec && generationWidth && generationHeight
 					? Math.ceil(
-							((Number(generationWidth) * Number(generationHeight) * num_inference_steps) /
+							((Number(generationWidth) * Number(generationHeight) * numInferenceSteps) /
 								$iterationMpPerSec) *
 								(1 + estimatedDurationBufferRatio)
 					  )
@@ -59,7 +58,7 @@
 			height: Number(generationHeight),
 			seed: Math.floor(Math.random() * 1000000000),
 			guidance_scale: 7,
-			num_inference_steps: num_inference_steps
+			num_inference_steps: numInferenceSteps
 		};
 		console.log('generation', lastGeneration);
 		console.log('estimatedDuration', estimatedDuration);
