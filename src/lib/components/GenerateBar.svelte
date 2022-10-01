@@ -30,7 +30,7 @@
 	let classes = '';
 
 	let submitting = false;
-	const placeholder = 'Portrait of a monkey, Unreal Engine, Octane Render, 8k';
+	const placeholder = 'Portrait of a monkey by Van Gogh';
 	let now: number | undefined;
 	let nowInterval: NodeJS.Timeout | undefined;
 
