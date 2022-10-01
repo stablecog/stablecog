@@ -7,6 +7,7 @@ interface IExpandCollapseOptions {
 	y?: number;
 	durationMultiplier?: number;
 	horizontal?: boolean;
+	opacity?: number;
 }
 
 export const expandCollapse = (node: Node, options: IExpandCollapseOptions) => {
@@ -16,7 +17,8 @@ export const expandCollapse = (node: Node, options: IExpandCollapseOptions) => {
 		easing = quadOut,
 		y,
 		durationMultiplier = 1,
-		horizontal = false
+		horizontal = false,
+		opacity = 0
 	} = options;
 	let height = Number(getComputedStyle(node as HTMLElement).height.split('px')[0]);
 	let width = Number(getComputedStyle(node as HTMLElement).width.split('px')[0]);
@@ -26,8 +28,8 @@ export const expandCollapse = (node: Node, options: IExpandCollapseOptions) => {
 		duration: duration ?? durationCalculated * durationMultiplier,
 		easing,
 		css: (t: number) => {
-			return `${
-				horizontal ? `width: ${t * width}px` : `height: ${t * height}px`
+			return `${horizontal ? `width: ${t * width}px` : `height: ${t * height}px`}; opacity: ${
+				opacity + (1 - opacity) * t
 			}; transform: translateY(${(y !== undefined ? y : 0) * (1 - t)}rem); transform-origin: top;`;
 		}
 	};

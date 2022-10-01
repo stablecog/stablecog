@@ -135,14 +135,17 @@
 		{estimatedDuration}
 	/>
 	{#if status === 'error'}
-		<div transition:expandCollapse={{}} class="flex flex-col origin-top">
-			<p class="w-full max-w-lg text-c-on-bg/40 text-center mt-4">
+		<div transition:expandCollapse={{}} class="flex flex-col justify-start origin-top">
+			<p class="w-full max-w-lg text-c-on-bg/40 text-center py-4">
 				{generationError ?? 'Something went wrong...'}
 			</p>
 		</div>
 	{:else if status === 'success' && duration !== undefined && lastGeneration && lastGeneration.imageUrl}
-		<div transition:expandCollapse={{}} class="overflow-hidden rounded-xl origin-top relative z-0">
-			<div class="flex flex-col items-center pb-6 md:px-5 gap-4">
+		<div
+			transition:expandCollapse={{}}
+			class="overflow-hidden flex flex-col justify-start rounded-xl origin-top relative z-0"
+		>
+			<div class="flex flex-col items-center md:px-5 gap-4 py-4">
 				<div class="relative">
 					<img
 						class="w-full max-w-md h-auto rounded-2xl shadow-xl shadow-c-shadow/[var(--o-shadow-normal)]  border-4 border-c-bg"

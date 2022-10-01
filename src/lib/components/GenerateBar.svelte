@@ -92,7 +92,7 @@
 	class="w-full max-w-xl md:max-w-4xl md:px-8 flex flex-col items-center"
 >
 	<!-- Prompt bar -->
-	<div class="w-full flex flex-col md:flex-row gap-4 items-center">
+	<div class="w-full flex flex-col md:flex-row gap-4 items-center py-4">
 		<div class="w-full relative">
 			<div
 				class="w-full h-full rounded-xl bg-c-bg-secondary shadow-lg shadow-c-shadow/[var(--o-shadow-normal)] 
@@ -140,9 +140,10 @@
 			{/if}
 		</button>
 	</div>
+	<!-- Tab bars -->
 	{#if status !== 'loading'}
-		<div class="w-full overflow-hidden" transition:expandCollapse={{}}>
-			<div class="w-full flex flex-wrap items-center justify-center gap-4 py-8">
+		<div class="w-full flex flex-col justify-start overflow-hidden" transition:expandCollapse={{}}>
+			<div class="w-full flex flex-wrap items-center justify-center gap-4 py-4">
 				<TabBar
 					title="W"
 					class="w-88 max-w-full"
