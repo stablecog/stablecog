@@ -50,7 +50,7 @@
 
 <div class="w-full flex flex-row items-center justify-between px-4 py-4 relative">
 	<div class="w-5 h-5" />
-	<div use:clickoutside={{ callback: closeSettings }} class="flex-1 flex flex-col items-end">
+	<div use:clickoutside={{ callback: closeSettings }} class="flex flex-col items-end">
 		<button on:click={toggleSettings} class="group">
 			<div class="rounded-full relative">
 				<div class="w-full h-full rounded-full overflow-hidden z-0 absolute left-0 top-0">
@@ -72,7 +72,7 @@
 				</div>
 			</div>
 		</button>
-		<div class="w-full relative mt-1.5">
+		<div class="relative mt-1.5">
 			{#if isSettingsOpen}
 				<SettingsMenu {onSwitchServer} {closeSettings} />
 			{/if}

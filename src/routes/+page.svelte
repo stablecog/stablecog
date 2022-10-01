@@ -94,7 +94,7 @@
 						setEstimatedDuration();
 					}
 					status = 'success';
-					console.log('image loaded');
+					console.log('image loaded for:', `"${lastGeneration?.prompt}"`);
 				};
 			} else {
 				generationError = error;
