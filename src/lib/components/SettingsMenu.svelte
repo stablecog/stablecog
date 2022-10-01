@@ -63,7 +63,7 @@
 						Dark Mode
 					</p>
 				</div>
-				<ToggleIndicator isToggled={$theme === 'dark'} />
+				<ToggleIndicator isToggled={$theme !== 'light'} />
 			</div>
 		</DropdownItem>
 	</div>
