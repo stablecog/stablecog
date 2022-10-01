@@ -15,6 +15,7 @@
 		"@sveltejs/adapter-auto": "next",
 		"@sveltejs/adapter-node": "^1.0.0-next.96",
 		"@sveltejs/kit": "next",
+		"@types/ua-parser-js": "^0.7.36",
 		"autoprefixer": "^10.4.10",
 		"postcss": "^8.4.16",
 		"prettier": "^2.6.2",
@@ -32,6 +33,7 @@
 	"dependencies": {
 		"@supabase/supabase-js": "^1.35.7",
 		"dexie": "^3.2.2",
-		"svelte-meta-tags": "^2.6.3"
+		"svelte-meta-tags": "^2.6.3",
+		"ua-parser-js": "^1.0.2"
 	}
 }

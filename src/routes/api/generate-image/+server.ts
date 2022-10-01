@@ -1,11 +1,14 @@
 import { supabaseAdmin } from '$ts/constants/supabaseAdmin';
+import { getDeviceInfo } from '$ts/helpers/getDeviceInfo';
 import type { RequestHandler } from '@sveltejs/kit';
 
 export const POST: RequestHandler = async ({ request }) => {
 	const startTimestamp = Date.now();
 	const startDate = new Date(startTimestamp).toUTCString();
 	const { headers } = request;
-	console.log('Country is:', headers.get('CF-IPCountry'));
+	const countryCode = headers.get('cf-ipcountry');
+	const userAgent = headers.get('user-agent');
+	const deviceInfo = getDeviceInfo(userAgent);
 	try {
 		const { server_url, prompt, seed, width, height, num_inference_steps, guidance_scale } =
 			await request.json();
@@ -66,7 +69,12 @@ export const POST: RequestHandler = async ({ request }) => {
 						height,
 						num_inference_steps,
 						guidance_scale,
-						server_url
+						server_url,
+						country_code: countryCode,
+						device_type: deviceInfo.type,
+						device_browser: deviceInfo.browser,
+						device_os: deviceInfo.os,
+						user_agent: userAgent
 					}
 				]);
 				if (error) {
