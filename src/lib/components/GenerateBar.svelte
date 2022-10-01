@@ -89,7 +89,7 @@
 <form
 	disabled={loadingOrSubmitting}
 	on:submit|preventDefault={onSubmit}
-	class="w-full max-w-xl md:max-w-5xl md:px-8 flex flex-col items-center"
+	class="w-full max-w-xl md:max-w-6xl md:px-8 flex flex-col items-center"
 >
 	<!-- Prompt bar -->
 	<div class="w-full flex flex-col md:flex-row gap-4 items-center py-4">
@@ -110,7 +110,7 @@
 				{placeholder}
 				type="text"
 				class="w-full bg-transparent relative px-6 md:px-8 py-5 rounded-xl transition 
-				focus:ring-2 focus:ring-c-primary/40 ring-0 ring-c-primary/20 placeholder:text-c-on-bg/30 {!$isTouchscreen
+				focus:ring-2 focus:ring-c-primary/20 ring-0 ring-c-primary/20 placeholder:text-c-on-bg/30 {!$isTouchscreen
 					? 'enabled:hover:ring-2'
 					: ''} {classes} {loadingOrSubmitting ? 'text-c-secondary/75' : 'text-c-on-bg'}"
 			/>

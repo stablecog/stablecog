@@ -1,6 +1,7 @@
 <script lang="ts">
 	import GenerateBar from '$components/GenerateBar.svelte';
 	import IconDownload from '$components/icons/IconDownload.svelte';
+	import MetaTag from '$components/MetaTag.svelte';
 	import { expandCollapse } from '$ts/animation/transitions';
 	import { estimatedDurationBufferRatio, estimatedDurationDefault } from '$ts/constants/main';
 	import { base64toBlob } from '$ts/helpers/base64toBlob';
@@ -9,7 +10,7 @@
 	import { isTouchscreen } from '$ts/stores/isTouchscreen';
 	import { iterationMpPerSec } from '$ts/stores/iterationMpPerSec';
 	import { serverUrl } from '$ts/stores/serverUrl';
-	import type { TGeneration, TStatus } from '$ts/types/main';
+	import { canonicalUrl, type TGeneration, type TStatus } from '$ts/types/main';
 	import { onDestroy, onMount } from 'svelte';
 
 	let status: TStatus = 'idle';
@@ -127,6 +128,12 @@
 		clearInterval(nowInterval);
 	});
 </script>
+
+<MetaTag
+	title="Stablecog"
+	description="Create AI generated images using Stable Diffusion cogs. Connect your own instance or use one of the default servers."
+	canonical={canonicalUrl}
+/>
 
 <div class="w-full flex flex-col flex-1 justify-center items-center px-4 pb-8">
 	<GenerateBar

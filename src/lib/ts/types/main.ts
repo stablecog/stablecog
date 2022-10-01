@@ -16,3 +16,5 @@ export interface TTab {
 	label: string;
 	value: string;
 }
+
+export const canonicalUrl = 'https://stablecog.appditto.com';
