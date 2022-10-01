@@ -9,14 +9,14 @@
 	const widths: TTab[] = [
 		{ label: '256', value: '256' },
 		{ label: '512', value: '512' },
-		{ label: '768', value: '768' },
-		{ label: '1024', value: '1024' }
+		{ label: '768', value: '768' }
+		/* { label: '1024', value: '1024' } */
 	];
 	const heights: TTab[] = [
 		{ label: '256', value: '256' },
 		{ label: '512', value: '512' },
-		{ label: '768', value: '768' },
-		{ label: '1024', value: '1024' }
+		{ label: '768', value: '768' }
+		/* { label: '1024', value: '1024' } */
 	];
 
 	export let generationWidth = widths[1].value;
@@ -146,7 +146,7 @@
 			<div class="w-full flex flex-wrap items-center justify-center gap-4 py-4">
 				<TabBar
 					title="W"
-					class="w-88 max-w-full"
+					class="w-72 max-w-full"
 					tabs={widths}
 					bind:value={generationWidth}
 					name="width"
@@ -154,7 +154,7 @@
 				/>
 				<TabBar
 					title="H"
-					class="w-88 max-w-full"
+					class="w-72 max-w-full"
 					tabs={heights}
 					bind:value={generationHeight}
 					name="height"
