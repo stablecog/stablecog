@@ -12,7 +12,7 @@
 </script>
 
 <div
-	class="w-full text-sm flex items-stretch bg-c-bg shadow-lg ring-2 ring-c-on-bg/5 shadow-c-shadow/20 rounded-xl overflow-hidden z-0 transition relative {classes}"
+	class="w-full text-sm flex items-stretch bg-c-bg shadow-lg ring-2 ring-c-on-bg/5 shadow-c-shadow/[var(--o-shadow-normal)]  rounded-xl overflow-hidden z-0 transition relative {classes}"
 >
 	<p class="pl-5 pr-4 py-2 text-base flex items-center text-c-on-bg/30">{title}</p>
 	<div class="w-2px mx-1 self-stretch">
@@ -25,7 +25,9 @@
 				: tabs.map((t) => t.value).indexOf(value) * 100}%)"
 			class="h-full absolute left-0 top-0 p-1 transition"
 		>
-			<div class="w-full h-full bg-c-bg-secondary rounded-lg shadow-md shadow-c-shadow/20" />
+			<div
+				class="w-full h-full bg-c-bg-secondary rounded-lg shadow-md shadow-c-shadow/[var(--o-shadow-normal)] "
+			/>
 		</div>
 		{#each tabs as tab}
 			<label
@@ -37,7 +39,7 @@
 					<div class="w-full h-full overflow-hidden rounded-lg">
 						<div
 							class="w-full h-full origin-left rounded-lg transition transform translate-y-full 
-              bg-c-on-bg/5 {!$isTouchscreen ? 'group-hover:translate-y-0' : ''}"
+              bg-c-bg-secondary {!$isTouchscreen ? 'group-hover:translate-y-0' : ''}"
 						/>
 					</div>
 				</div>
@@ -50,7 +52,7 @@
 					value={tab.value}
 				/>
 				<p
-					class="flex-1 font-medium transition overflow-hidden overflow-ellipsis max-w-full z-0 {value ===
+					class="flex-1 font-medium relative transition overflow-hidden overflow-ellipsis max-w-full z-0 {value ===
 						tab.value && !hideSelected
 						? 'text-c-on-bg/75'
 						: 'text-c-on-bg/30'}"

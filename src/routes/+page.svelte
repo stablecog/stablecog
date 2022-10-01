@@ -149,7 +149,7 @@
 			<div class="flex flex-col items-center pb-6 md:px-5 gap-4">
 				<div class="relative">
 					<img
-						class="w-full max-w-md h-auto rounded-2xl shadow-xl shadow-c-shadow/20 border-4 border-c-bg"
+						class="w-full max-w-md h-auto rounded-2xl shadow-xl shadow-c-shadow/[var(--o-shadow-normal)]  border-4 border-c-bg"
 						src={lastGeneration.imageUrl}
 						height={lastGeneration.width}
 						width={lastGeneration.height}

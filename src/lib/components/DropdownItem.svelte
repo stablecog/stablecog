@@ -1,0 +1,18 @@
+<script lang="ts">
+	import { isTouchscreen } from '$ts/stores/isTouchscreen';
+
+	export let onClick: () => void;
+</script>
+
+<button
+	on:click={onClick}
+	class="w-full px-5 py-4 items-center font-bold relative rounded-xl overflow-hidden group"
+>
+	<div
+		class="w-full h-full origin-left rounded-xl transition transform -translate-x-full 
+			  bg-c-primary/10 absolute left-0 top-0 {!$isTouchscreen
+			? 'group-enabled:group-hover:translate-x-0'
+			: ''}"
+	/>
+	<slot />
+</button>

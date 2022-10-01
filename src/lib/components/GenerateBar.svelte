@@ -82,7 +82,7 @@
 	<div class="w-full flex flex-col md:flex-row gap-4 items-center">
 		<div class="w-full relative">
 			<div
-				class="w-full h-full rounded-xl bg-c-bg-secondary shadow-lg shadow-c-shadow/20 
+				class="w-full h-full rounded-xl bg-c-bg-secondary shadow-lg shadow-c-shadow/[var(--o-shadow-normal)] 
 				overflow-hidden z-0 absolute left-0 top-0"
 			>
 				<div
@@ -105,7 +105,7 @@
 		<button
 			disabled={loadingOrSubmitting}
 			class="w-full md:w-40 px-8 relative flex items-center justify-center text-center py-5 
-			shadow-lg shadow-c-shadow/20 text-c-on-primary rounded-xl font-bold gap-2 
+			shadow-lg shadow-c-shadow/[var(--o-shadow-normal)]  text-c-on-primary rounded-xl font-bold gap-2 
 			overflow-hidden z-0 group {loadingOrSubmitting ? 'bg-c-secondary' : 'bg-c-primary'}"
 		>
 			<div
