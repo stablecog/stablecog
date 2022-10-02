@@ -9,12 +9,9 @@
 	import { clickoutside } from '$ts/actions/clickoutside';
 	import { isTouchscreen } from '$ts/stores/isTouchscreen';
 	import { serverHealth } from '$ts/stores/serverHealth';
-	import { serverUrl } from '$ts/stores/serverUrl';
-	import { onMount } from 'svelte';
 
 	let isSettingsOpen = false;
 	let isSwitchServerOpen = false;
-	let serverUrlInputValue: string | undefined;
 	const toggleSettings = () => (isSettingsOpen = !isSettingsOpen);
 	const closeSettings = () => (isSettingsOpen = false);
 
@@ -22,12 +19,6 @@
 		closeSettings();
 		isSwitchServerOpen = true;
 	};
-
-	onMount(() => {
-		if ($serverUrl) {
-			serverUrlInputValue = $serverUrl;
-		}
-	});
 </script>
 
 <div class="w-full flex flex-row items-center justify-between px-4 py-4 relative">
@@ -82,5 +73,5 @@
 </div>
 
 {#if isSwitchServerOpen}
-	<SetServerModal bind:serverUrlInputValue close={() => (isSwitchServerOpen = false)} />
+	<SetServerModal close={() => (isSwitchServerOpen = false)} />
 {/if}

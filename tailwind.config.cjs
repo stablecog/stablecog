@@ -59,7 +59,8 @@ module.exports = {
 			},
 			animation: {
 				'pulse-custom': 'pulse-custom 1s cubic-bezier(0.5, 0, 0.5, 1) infinite',
-				'pulse-scale': 'pulse-scale 0.8s cubic-bezier(0.5, 0, 0.5, 1) infinite'
+				'pulse-scale': 'pulse-scale 0.75s cubic-bezier(0.5, 0, 0.5, 1) infinite',
+				'spin-faster': 'spin-faster 0.75s linear infinite'
 			},
 			keyframes: {
 				'pulse-custom': {
@@ -78,6 +79,14 @@ module.exports = {
 					'50%': {
 						opacity: '0.25',
 						transform: 'scale(1.75)'
+					}
+				},
+				'spin-faster': {
+					'0%': {
+						transform: 'rotate(0deg)'
+					},
+					'100%': {
+						transform: 'rotate(360deg)'
 					}
 				}
 			}

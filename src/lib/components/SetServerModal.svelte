@@ -1,16 +1,22 @@
 <script lang="ts">
 	import Button from '$components/buttons/Button.svelte';
+	import IconLoading from '$components/icons/IconLoading.svelte';
 	import { clickoutside } from '$ts/actions/clickoutside';
 	import { expandCollapse } from '$ts/animation/transitions';
+	import { checkServerHealth } from '$ts/queries/checkServerHealth';
 	import { isTouchscreen } from '$ts/stores/isTouchscreen';
+	import { serverHealth } from '$ts/stores/serverHealth';
 	import { serverUrl } from '$ts/stores/serverUrl';
 	import { quadOut } from 'svelte/easing';
 	import { fade } from 'svelte/transition';
+	import { onMount } from 'svelte';
 
 	export let close: () => void;
-	export let serverUrlInputValue: string | undefined;
 
-	const setServerUrl = () => {
+	let serverUrlInputValue: string | undefined;
+	let setServerProcessStatus: 'idle' | 'loading' | 'success' | 'error' = 'idle';
+
+	const setServerUrl = async () => {
 		if (serverUrlInputValue) {
 			try {
 				let urlString = serverUrlInputValue;
@@ -24,14 +30,29 @@
 				if (!url) {
 					throw new Error('Invalid URL');
 				}
-				serverUrl.set(url.toString());
-				serverUrlInputValue = $serverUrl;
-				close();
+				setServerProcessStatus = 'loading';
+				const status = await checkServerHealth(url);
+				if (status === 'healthy') {
+					setServerProcessStatus = 'success';
+					serverHealth.set('healthy');
+					serverUrl.set(url.toString());
+					serverUrlInputValue = $serverUrl;
+					close();
+				} else {
+					setServerProcessStatus = 'error';
+				}
 			} catch (error) {
 				console.log(error);
+				setServerProcessStatus = 'error';
 			}
 		}
 	};
+
+	onMount(() => {
+		if ($serverUrl !== undefined) {
+			serverUrlInputValue = $serverUrl;
+		}
+	});
 </script>
 
 <div
@@ -41,15 +62,16 @@
 >
 	<div
 		transition:expandCollapse={{ duration: 200, easing: quadOut }}
-		use:clickoutside={{ callback: close }}
+		use:clickoutside={{ callback: () => (setServerProcessStatus === 'loading' ? null : close()) }}
 		class="w-full max-w-xl bg-c-bg-secondary rounded-2xl 
       shadow-xl shadow-c-shadow/[var(--o-shadow-normal)] overflow-hidden z-0 origin-top"
 	>
-		<div class="w-full flex flex-col px-3 py-4 md:p-5 gap-5">
+		<div class="w-full flex flex-col px-3 py-4 md:p-5">
 			<p class="font-bold text-xl px-2">{$serverUrl ? 'Switch' : 'Set'} Server</p>
 			<form
 				on:submit|preventDefault={setServerUrl}
-				class="w-full relative flex flex-col md:flex-row items-center justify-center gap-3"
+				disabled={setServerProcessStatus === 'loading'}
+				class="w-full relative flex flex-col md:flex-row items-center justify-center gap-3 mt-5"
 			>
 				<div class="w-full md:w-auto flex-1 min-w-0 relative">
 					<div
@@ -57,16 +79,36 @@
 					/>
 					<input
 						bind:value={serverUrlInputValue}
+						disabled={setServerProcessStatus === 'loading'}
 						type="text"
 						placeholder="Set server URL"
-						class="w-full overflow-hidden overflow-ellipsis bg-transparent relative px-6 md:px-8 py-5 rounded-xl transition 
+						class="w-full overflow-hidden overflow-ellipsis bg-transparent relative px-6 py-5 rounded-xl transition 
 			        focus:ring-2 focus:ring-c-primary/20 ring-0 ring-c-primary/20 placeholder:text-c-on-bg/30 {!$isTouchscreen
 							? 'enabled:hover:ring-2'
 							: ''}"
 					/>
 				</div>
-				<Button class="w-full md:w-auto">Set</Button>
+				<Button
+					disabled={setServerProcessStatus === 'loading'}
+					loading={setServerProcessStatus === 'loading'}
+					class="w-full md:w-40"
+				>
+					{#if setServerProcessStatus === 'loading'}
+						<IconLoading class="w-6 h-6 animate-spin-faster" />
+					{:else}
+						Set
+					{/if}
+				</Button>
 			</form>
+			{#if setServerProcessStatus === 'error'}
+				<div transition:expandCollapse|local={{}}>
+					<div class="pt-4">
+						<p class="py-3 px-4 bg-c-danger/10 rounded-lg text-c-danger text-sm">
+							This server isn't compatible or not responding...
+						</p>
+					</div>
+				</div>
+			{/if}
 		</div>
 	</div>
 </div>
