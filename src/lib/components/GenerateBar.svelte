@@ -1,4 +1,5 @@
 <script lang="ts">
+	import Button from '$components/buttons/Button.svelte';
 	import TabBar from '$components/TabBar.svelte';
 	import { expandCollapse } from '$ts/animation/transitions';
 	import { heightTabs, widthTabs } from '$ts/constants/main';
@@ -103,30 +104,16 @@
 					: ''} {classes} {loadingOrSubmitting ? 'text-c-secondary/75' : 'text-c-on-bg'}"
 			/>
 		</div>
-		<button
-			disabled={loadingOrSubmitting}
-			class="w-full md:w-40 px-8 relative flex items-center justify-center text-center py-5 
-			shadow-lg shadow-c-shadow/[var(--o-shadow-normal)]  text-c-on-primary rounded-xl font-bold gap-2 
-			overflow-hidden z-0 group {loadingOrSubmitting ? 'bg-c-secondary' : 'bg-c-primary'}"
-		>
-			<div
-				class="w-full h-full origin-left rounded-xl transition transform -translate-x-full 
-				bg-c-secondary absolute left-0 top-0 {!$isTouchscreen
-					? 'group-enabled:group-hover:translate-x-0'
-					: ''}"
-			/>
+		<Button disabled={loadingOrSubmitting} loading={loadingOrSubmitting} class="w-full md:w-40">
 			{#if status === 'loading'}
-				<!-- <IconLoading class="w-5 h-5 animate-spin relative" /> -->
-				<p class="relative">
-					{Math.max(sinceSec, 0).toLocaleString('en-US', {
-						minimumFractionDigits: 1,
-						maximumFractionDigits: 1
-					})}
-				</p>
+				{Math.max(sinceSec, 0).toLocaleString('en-US', {
+					minimumFractionDigits: 1,
+					maximumFractionDigits: 1
+				})}
 			{:else}
-				<p class="relative">Generate</p>
+				Generate
 			{/if}
-		</button>
+		</Button>
 	</div>
 	<!-- Tab bars -->
 	{#if status !== 'loading'}
