@@ -29,7 +29,7 @@
 				if (url.endsWith('/')) {
 					url = url.slice(0, -1);
 				}
-				if (!url.startsWith('http://')) {
+				if (!url.startsWith('http')) {
 					url = 'http://' + url;
 				}
 				if (!url) {
