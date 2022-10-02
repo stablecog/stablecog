@@ -16,7 +16,7 @@
 	});
 </script>
 
-<div class="w-full flex flex-col items-center px-4 pb-16">
+<div class="w-full flex flex-col items-center px-2 pt-2 md:px-8 md:pt-4 pb-16">
 	<div class="w-full max-w-7xl flex flex-col">
 		<GenerationGrid {generations} />
 	</div>
