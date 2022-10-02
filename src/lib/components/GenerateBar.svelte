@@ -121,7 +121,7 @@
 			class="w-full flex flex-col justify-start overflow-hidden"
 			transition:expandCollapse|local={{}}
 		>
-			<div class="w-full flex flex-wrap items-center justify-center gap-4 py-4">
+			<div class="w-full flex flex-wrap items-center justify-center gap-4 px-2px py-4">
 				<TabBar
 					title="W"
 					class="w-72 max-w-full"
