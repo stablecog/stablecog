@@ -8,6 +8,6 @@ export async function addGenerationToDb(generation: TDBGeneration) {
 }
 
 export async function getGenerationsFromDb() {
-	const generations = await indexedDb.generations.toArray();
+	const generations = await indexedDb.generations.orderBy('id').reverse().toArray();
 	return generations;
 }

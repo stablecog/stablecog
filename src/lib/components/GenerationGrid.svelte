@@ -20,7 +20,7 @@
 				width={generation.width}
 				height={generation.height}
 			/>
-			<div class="w-full h-full absolute left-0 top-0 overflow-hidden">
+			<div class="w-full h-full absolute left-0 top-0 overflow-hidden z-0">
 				<div
 					class="absolute flex items-end justify-end right-0 top-0 transition transform translate-x-16 group-hover:translate-x-0"
 				>
