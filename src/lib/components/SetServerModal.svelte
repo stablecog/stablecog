@@ -93,11 +93,18 @@
 					loading={setServerProcessStatus === 'loading'}
 					class="w-full md:w-40"
 				>
-					{#if setServerProcessStatus === 'loading'}
-						<IconLoading class="w-6 h-6 animate-spin-faster" />
-					{:else}
+					<p
+						class="transition transform relative
+						{setServerProcessStatus === 'loading' ? 'opacity-0 scale-0' : 'opacity-100 scale-100'}"
+					>
 						Set
-					{/if}
+					</p>
+					<div
+						class="w-6 h-6 absolute transition transform left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none
+						{setServerProcessStatus === 'loading' ? 'opacity-100 scale-100' : 'opacity-0 scale-0'}"
+					>
+						<IconLoading class="w-full h-full animate-spin-faster" />
+					</div>
 				</Button>
 			</form>
 			{#if setServerProcessStatus === 'error'}
