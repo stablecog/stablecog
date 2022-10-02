@@ -163,7 +163,9 @@
 			<div class="flex flex-col items-center md:px-5 gap-4 py-4">
 				<div class="relative">
 					<img
-						class="w-full max-w-xl h-auto rounded-2xl shadow-xl shadow-c-shadow/[var(--o-shadow-strong)]  border-4 border-c-bg"
+						class="{lastGeneration.height / lastGeneration.width >= 3 / 2
+							? 'max-w-sm'
+							: 'max-w-xl'} w-full h-auto rounded-2xl shadow-xl shadow-c-shadow/[var(--o-shadow-strong)] border-4 border-c-bg"
 						src={lastGeneration.imageUrl}
 						height={lastGeneration.width}
 						width={lastGeneration.height}
