@@ -9,6 +9,8 @@
 	import { clickoutside } from '$ts/actions/clickoutside';
 	import { isTouchscreen } from '$ts/stores/isTouchscreen';
 	import { serverHealth } from '$ts/stores/serverHealth';
+	import { quadOut } from 'svelte/easing';
+	import { scale } from 'svelte/transition';
 
 	let isSettingsOpen = false;
 	let isSwitchServerOpen = false;
@@ -39,19 +41,31 @@
 			href={$page.url.pathname === '/history' ? '/' : '/history'}
 			name={$page.url.pathname === '/history' ? 'Home' : 'History'}
 		>
-			{#if $page.url.pathname === '/history'}
-				<IconHome
-					class="w-8 h-8 relative transition transform {!$isTouchscreen
-						? 'group-hover:text-c-primary'
-						: 'text-c-on-bg'}"
-				/>
-			{:else}
-				<IconHistory
-					class="w-8 h-8 relative transition transform {!$isTouchscreen
-						? 'group-hover:text-c-primary'
-						: 'text-c-on-bg'}"
-				/>
-			{/if}
+			<div class="w-8 h-8 relative">
+				{#if $page.url.pathname === '/history'}
+					<div
+						transition:scale={{ duration: 200, easing: quadOut, opacity: 0 }}
+						class="w-full h-full absolute left-0 top-0"
+					>
+						<IconHome
+							class="w-full h-full relative transition transform {!$isTouchscreen
+								? 'group-hover:text-c-primary'
+								: 'text-c-on-bg'}"
+						/>
+					</div>
+				{:else}
+					<div
+						transition:scale={{ duration: 200, easing: quadOut, opacity: 0 }}
+						class="w-full h-full absolute left-0 top-0"
+					>
+						<IconHistory
+							class="w-full h-full relative transition transform {!$isTouchscreen
+								? 'group-hover:text-c-primary'
+								: 'text-c-on-bg'}"
+						/>
+					</div>
+				{/if}
+			</div>
 		</IconButton>
 		<div use:clickoutside={{ callback: closeSettings }} class="flex flex-col items-end">
 			<IconButton onClick={toggleSettings} name="Settings">
