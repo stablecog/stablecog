@@ -63,7 +63,7 @@ module.exports = {
 			keyframes: {
 				'pulse-custom': {
 					'0%, 100%': {
-						opacity: '0.35'
+						opacity: '0.3'
 					},
 					'50%': {
 						opacity: '0.2'

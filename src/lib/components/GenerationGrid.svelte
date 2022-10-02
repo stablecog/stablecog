@@ -12,6 +12,13 @@
 
 	const randomWidth = () => widths[Math.floor(Math.random() * widths.length)];
 	const randomHeight = () => heights[Math.floor(Math.random() * heights.length)];
+
+	const placeholderArray = Array.from({ length: 15 }, (_, i) => {
+		return {
+			width: randomWidth(),
+			height: randomHeight()
+		};
+	});
 </script>
 
 <Masonry items={generations}>
@@ -55,7 +62,7 @@
 			</div>
 		{/each}
 	{:else}
-		{#each Array.from({ length: 15 }) as i}
+		{#each placeholderArray as p}
 			<div
 				class="bg-c-bg rounded-xl relative border-4 shadow-lg 
 				shadow-c-[var(--o-shadow-strong)] border-c-bg-secondary overflow-hidden"
@@ -63,12 +70,13 @@
 				<div
 					class="absolute left-0 top-0 w-full h-full bg-c-on-bg transition animate-pulse-custom"
 				/>
-				<img
-					class="w-full h-auto opacity-0"
-					src={''}
-					alt={''}
-					width={randomWidth()}
-					height={randomHeight()}
+				<svg
+					class="w-full h-auto"
+					width={p.width}
+					height={p.height}
+					viewBox="0 0 {p.width} {p.height}"
+					fill="none"
+					xmlns="http://www.w3.org/2000/svg"
 				/>
 			</div>
 		{/each}
