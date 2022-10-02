@@ -8,6 +8,6 @@ export async function checkServerHealth(server_url: string) {
 			server_url
 		})
 	});
-	const data: { status: 'ok' | 'error' } = await response.json();
+	const data: { status: 'healthy' | 'not-healthy' } = await response.json();
 	return data.status;
 }

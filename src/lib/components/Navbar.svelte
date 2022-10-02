@@ -8,6 +8,7 @@
 	import SettingsMenu from '$components/SettingsMenu.svelte';
 	import { clickoutside } from '$ts/actions/clickoutside';
 	import { isTouchscreen } from '$ts/stores/isTouchscreen';
+	import { serverHealth } from '$ts/stores/serverHealth';
 	import { serverUrl } from '$ts/stores/serverUrl';
 	import { onMount } from 'svelte';
 
@@ -31,7 +32,18 @@
 
 <div class="w-full flex flex-row items-center justify-between px-4 py-4 relative">
 	<div class="w-5 h-5" />
-	<div class="flex justify-end">
+	<div class="flex items-center justify-end">
+		<div class="p-3">
+			<div
+				class="w-2.5 h-2.5 rounded-full {$serverHealth === 'loading'
+					? 'bg-c-primary animate-pulse-scale'
+					: $serverHealth === 'healthy'
+					? 'bg-c-success'
+					: $serverHealth === 'unhealthy'
+					? 'bg-c-danger'
+					: 'bg-c-on-bg/50'}"
+			/>
+		</div>
 		<IconButton
 			href={$page.url.pathname === '/history' ? '/' : '/history'}
 			name={$page.url.pathname === '/history' ? 'Home' : 'History'}

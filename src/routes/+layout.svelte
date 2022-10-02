@@ -8,6 +8,7 @@
 	import { iterationMpPerSec } from '$ts/stores/iterationMpPerSec';
 	import { browser } from '$app/environment';
 	import { checkServerHealth } from '$ts/queries/checkServerHealth';
+	import { serverHealth } from '$ts/stores/serverHealth';
 
 	let innerHeight: number | undefined;
 
@@ -17,23 +18,32 @@
 		if ($iterationMpPerSec === undefined) {
 			iterationMpPerSec.set(1000000);
 		}
+		if ($serverHealth === undefined) {
+			serverHealth.set('loading');
+		}
 		setBodyClasses();
 
 		const now = Date.now();
 		try {
+			serverHealth.set('loading');
 			console.log('Checking server health...');
 			if ($serverUrl === undefined || $serverUrl === null || $serverUrl === '') {
 				serverUrl.set(defaultServerUrl);
 			}
 			const status = await checkServerHealth($serverUrl!!);
-			if (status === 'ok') {
+			if (status === 'healthy') {
+				serverHealth.set('healthy');
 				console.log('Server is healthy ✅:', $serverUrl);
 			} else {
-				console.log('Server is not healthy ❌:', $serverUrl);
+				serverHealth.set('unhealthy');
+				console.log('Server is unhealthy ❌:', $serverUrl);
 			}
 		} catch (error) {
 			console.log('Server health check failed:', $serverUrl, 'Error:', error);
 		} finally {
+			if ($serverHealth !== 'healthy' && $serverHealth !== 'unhealthy') {
+				serverHealth.set('unknown');
+			}
 			console.log('Server health check took:', Date.now() - now, 'ms');
 		}
 	});

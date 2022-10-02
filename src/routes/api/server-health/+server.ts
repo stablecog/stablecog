@@ -21,10 +21,10 @@ export const POST: RequestHandler = async ({ request }) => {
 			properties.height !== undefined
 		) {
 			endLog(startTimestamp, endTimestamp, endDate, server_url);
-			return new Response(JSON.stringify({ status: 'ok' }));
+			return new Response(JSON.stringify({ status: 'healthy' }));
 		} else {
 			endLog(startTimestamp, endTimestamp, endDate, server_url);
-			return new Response(JSON.stringify({ status: 'error' }));
+			return new Response(JSON.stringify({ status: 'unhealthy' }));
 		}
 	} catch (error) {
 		const endTimestamp = Date.now();
@@ -35,7 +35,7 @@ export const POST: RequestHandler = async ({ request }) => {
 			endDate,
 			'----'
 		);
-		return new Response(JSON.stringify({ status: 'error' }));
+		return new Response(JSON.stringify({ status: 'unhealthy' }));
 	}
 };
 
