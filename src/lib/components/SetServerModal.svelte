@@ -7,9 +7,31 @@
 	import { quadOut } from 'svelte/easing';
 	import { fade } from 'svelte/transition';
 
-	export let onClickoutside: () => void;
+	export let close: () => void;
 	export let serverUrlInputValue: string | undefined;
-	export let setServerUrl: () => void;
+
+	const setServerUrl = () => {
+		if (serverUrlInputValue) {
+			try {
+				let urlString = serverUrlInputValue;
+				if (!urlString.startsWith('http')) {
+					urlString = 'http://' + urlString;
+				}
+				let url = new URL(urlString).toString();
+				if (url.endsWith('/')) {
+					url = url.slice(0, -1);
+				}
+				if (!url) {
+					throw new Error('Invalid URL');
+				}
+				serverUrl.set(url.toString());
+				serverUrlInputValue = $serverUrl;
+				close();
+			} catch (error) {
+				console.log(error);
+			}
+		}
+	};
 </script>
 
 <div
@@ -19,7 +41,7 @@
 >
 	<div
 		transition:expandCollapse={{ duration: 200, easing: quadOut }}
-		use:clickoutside={{ callback: onClickoutside }}
+		use:clickoutside={{ callback: close }}
 		class="w-full max-w-xl bg-c-bg-secondary rounded-2xl 
       shadow-xl shadow-c-shadow/[var(--o-shadow-normal)] overflow-hidden z-0 origin-top"
 	>

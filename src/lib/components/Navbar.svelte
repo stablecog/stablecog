@@ -22,29 +22,6 @@
 		isSwitchServerOpen = true;
 	};
 
-	const setServerUrl = () => {
-		if (serverUrlInputValue) {
-			try {
-				let urlString = serverUrlInputValue;
-				if (!urlString.startsWith('http')) {
-					urlString = 'http://' + urlString;
-				}
-				let url = new URL(urlString).toString();
-				if (url.endsWith('/')) {
-					url = url.slice(0, -1);
-				}
-				if (!url) {
-					throw new Error('Invalid URL');
-				}
-				serverUrl.set(url.toString());
-				serverUrlInputValue = $serverUrl;
-				isSwitchServerOpen = false;
-			} catch (error) {
-				console.log(error);
-			}
-		}
-	};
-
 	onMount(() => {
 		if ($serverUrl) {
 			serverUrlInputValue = $serverUrl;
@@ -93,9 +70,5 @@
 </div>
 
 {#if isSwitchServerOpen}
-	<SetServerModal
-		{setServerUrl}
-		bind:serverUrlInputValue
-		onClickoutside={() => (isSwitchServerOpen = false)}
-	/>
+	<SetServerModal bind:serverUrlInputValue close={() => (isSwitchServerOpen = false)} />
 {/if}
