@@ -3,10 +3,11 @@
 
 	export let onClick: (() => void) | undefined = undefined;
 	export let href: string | undefined = undefined;
+	export let name: string;
 </script>
 
 {#if href}
-	<a data-sveltekit-prefetch {href} class="group">
+	<a data-sveltekit-prefetch {href} class="group" aria-label={name}>
 		<div class="rounded-full relative">
 			<div class="w-full h-full rounded-full overflow-hidden z-0 absolute left-0 top-0">
 				<div
@@ -22,7 +23,7 @@
 		</div>
 	</a>
 {:else}
-	<button on:click={onClick} class="group">
+	<button on:click={onClick} class="group" aria-label={name}>
 		<div class="rounded-full relative">
 			<div class="w-full h-full rounded-full overflow-hidden z-0 absolute left-0 top-0">
 				<div

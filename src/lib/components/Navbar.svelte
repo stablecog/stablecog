@@ -54,7 +54,10 @@
 <div class="w-full flex flex-row items-center justify-between px-4 py-4 relative">
 	<div class="w-5 h-5" />
 	<div class="flex justify-end">
-		<IconButton href={$page.url.pathname === '/history' ? '/' : '/history'}>
+		<IconButton
+			href={$page.url.pathname === '/history' ? '/' : '/history'}
+			name={$page.url.pathname === '/history' ? 'Home' : 'History'}
+		>
 			{#if $page.url.pathname === '/history'}
 				<IconHome
 					class="w-8 h-8 relative transition transform {!$isTouchscreen
@@ -70,7 +73,7 @@
 			{/if}
 		</IconButton>
 		<div use:clickoutside={{ callback: closeSettings }} class="flex flex-col items-end">
-			<IconButton onClick={toggleSettings}>
+			<IconButton onClick={toggleSettings} name="Settings">
 				<IconSettings
 					class="w-8 h-8 relative transition transform {isSettingsOpen
 						? 'text-c-primary rotate-360'
