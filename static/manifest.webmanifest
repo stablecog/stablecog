@@ -1,9 +1,13 @@
 {
 	"name": "Stablecog",
 	"short_name": "Stablecog",
-	"start_url": "/",
+	"start_url": "./",
 	"display": "standalone",
+	"background_color": "#1F1F22",
+	"theme_color": "#AE85FF",
 	"icons": [
+		{ "src": "/icon-192.png", "type": "image/png", "sizes": "192x192", "purpose": "maskable" },
+		{ "src": "/icon-512.png", "type": "image/png", "sizes": "512x512", "purpose": "maskable" },
 		{ "src": "/icon-192.png", "type": "image/png", "sizes": "192x192" },
 		{ "src": "/icon-512.png", "type": "image/png", "sizes": "512x512" }
 	]
