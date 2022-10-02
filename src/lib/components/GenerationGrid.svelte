@@ -38,7 +38,7 @@
 					/>
 				</div>
 				<div
-					class="w-full h-full absolute left-0 top-0 flex flex-col justify-between items-end rounded-xl overflow-hidden z-0"
+					class="w-full h-full absolute left-0 top-0 flex flex-col justify-between items-end rounded-xl overflow-hidden z-0 gap-5"
 				>
 					<div
 						class="flex items-end justify-end right-0 top-0 transition transform translate-x-16 group-hover:translate-x-0"
@@ -50,10 +50,10 @@
 							seed={generation.seed}
 						/>
 					</div>
-					<div class="w-full text-xs relative overflow-hidden">
+					<div class="w-full text-xs relative overflow-auto">
 						<p
 							class="w-full font-medium transition bg-c-bg/90 text-c-on-bg px-5 py-4 transform 
-						translate-y-full leading-relaxed group-hover:translate-y-0"
+								translate-y-full leading-relaxed group-hover:translate-y-0 overflow-auto"
 						>
 							{generation.prompt}
 						</p>
