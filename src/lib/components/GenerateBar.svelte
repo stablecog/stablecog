@@ -97,7 +97,7 @@
 				disabled={loadingOrSubmitting}
 				{placeholder}
 				type="text"
-				class="w-full bg-transparent relative px-6 md:px-8 py-5 rounded-xl transition 
+				class="w-full overflow-hidden overflow-ellipsis bg-transparent relative px-6 md:px-8 py-5 rounded-xl transition 
 				focus:ring-2 focus:ring-c-primary/20 ring-0 ring-c-primary/20 placeholder:text-c-on-bg/30 {!$isTouchscreen
 					? 'enabled:hover:ring-2'
 					: ''} {classes} {loadingOrSubmitting ? 'text-c-secondary/75' : 'text-c-on-bg'}"
