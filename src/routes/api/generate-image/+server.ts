@@ -46,10 +46,12 @@ export const POST: RequestHandler = async ({ request }) => {
 		if (data.error) {
 			console.log('----', new Date(Date.now()).toUTCString(), data.error, '----');
 		}
+		const endTimestamp = Date.now();
+		const endDate = new Date(endTimestamp).toUTCString();
 		console.log(
 			'----',
-			`Ended in ${(Date.now() - startTimestamp) / 1000}s:`,
-			startDate,
+			`Ended in ${(endTimestamp - startTimestamp) / 1000}s:`,
+			endDate,
 			`"${prompt}"`,
 			seed,
 			width,
@@ -100,7 +102,9 @@ export const POST: RequestHandler = async ({ request }) => {
 		}
 		return new Response(JSON.stringify({ data: output, error: data.error }));
 	} catch (error) {
-		console.log('----', `Failed in ${(Date.now() - startTimestamp) / 1000}s`, '----');
+		const endTimestamp = Date.now();
+		const endDate = new Date(endTimestamp).toUTCString();
+		console.log('----', `Failed in ${(endTimestamp - startTimestamp) / 1000}s:`, endDate, '----');
 		return new Response(JSON.stringify({ error: 'Something went wrong :(' }));
 	}
 };

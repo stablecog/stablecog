@@ -25,12 +25,13 @@
 	const setServerUrl = () => {
 		if (serverUrlInputValue) {
 			try {
-				let url = new URL(serverUrlInputValue).toString();
+				let urlString = serverUrlInputValue;
+				if (!urlString.startsWith('http')) {
+					urlString = 'http://' + urlString;
+				}
+				let url = new URL(urlString).toString();
 				if (url.endsWith('/')) {
 					url = url.slice(0, -1);
-				}
-				if (!url.startsWith('http')) {
-					url = 'http://' + url;
 				}
 				if (!url) {
 					throw new Error('Invalid URL');

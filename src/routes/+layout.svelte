@@ -7,19 +7,35 @@
 	import { defaultServerUrl } from '$ts/constants/main';
 	import { iterationMpPerSec } from '$ts/stores/iterationMpPerSec';
 	import { browser } from '$app/environment';
+	import { checkServerHealth } from '$ts/queries/checkServerHealth';
 
 	let innerHeight: number | undefined;
 
 	$: [$theme], setBodyClasses();
 
-	onMount(() => {
-		if ($serverUrl === undefined || $serverUrl === null || $serverUrl === '') {
-			serverUrl.set(defaultServerUrl);
-		}
+	onMount(async () => {
 		if ($iterationMpPerSec === undefined) {
 			iterationMpPerSec.set(1000000);
 		}
 		setBodyClasses();
+
+		const now = Date.now();
+		try {
+			console.log('Checking server health...');
+			if ($serverUrl === undefined || $serverUrl === null || $serverUrl === '') {
+				serverUrl.set(defaultServerUrl);
+			}
+			const status = await checkServerHealth($serverUrl!!);
+			if (status === 'ok') {
+				console.log('Server is healthy ✅:', $serverUrl);
+			} else {
+				console.log('Server is not healthy ❌:', $serverUrl);
+			}
+		} catch (error) {
+			console.log('Server health check failed:', $serverUrl, 'Error:', error);
+		} finally {
+			console.log('Server health check took:', Date.now() - now, 'ms');
+		}
 	});
 
 	function setBodyClasses() {
