@@ -16,7 +16,7 @@
 <div
 	transition:expandCollapse={{ durationMultiplier: 0.8 }}
 	class="w-60 max-w-[80vw] bg-c-bg-secondary rounded-xl flex flex-col justify-start shadow-lg 
-  shadow-c-shadow/[var(--o-shadow-strong)] absolute right-0 top-0 overflow-hidden z-50"
+  shadow-c-shadow/[var(--o-shadow-strong)] absolute right-0 top-0 overflow-hidden z-50 mt-2"
 >
 	<div class="w-full flex flex-col">
 		<DropdownItem onClick={onSwitchServer}>

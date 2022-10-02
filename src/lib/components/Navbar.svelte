@@ -72,7 +72,7 @@
 						: 'text-c-on-bg'}"
 				/>
 			</IconButton>
-			<div class="relative mt-1.5">
+			<div class="relative">
 				{#if isSettingsOpen}
 					<SettingsMenu {onSwitchServer} {closeSettings} />
 				{/if}
