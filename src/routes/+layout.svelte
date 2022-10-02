@@ -6,8 +6,11 @@
 	import { serverUrl } from '$ts/stores/serverUrl';
 	import { defaultServerUrl } from '$ts/constants/main';
 	import { iterationMpPerSec } from '$ts/stores/iterationMpPerSec';
+	import { browser } from '$app/environment';
 
 	let innerHeight: number | undefined;
+
+	$: [$theme], setBodyClasses();
 
 	onMount(() => {
 		if ($serverUrl === undefined || $serverUrl === null || $serverUrl === '') {
@@ -16,7 +19,20 @@
 		if ($iterationMpPerSec === undefined) {
 			iterationMpPerSec.set(1000000);
 		}
+		setBodyClasses();
 	});
+
+	function setBodyClasses() {
+		if (browser) {
+			if ($theme === 'light') {
+				document.body.classList.add('theme-light');
+				document.body.classList.remove('theme-dark');
+			} else {
+				document.body.classList.add('theme-dark');
+				document.body.classList.remove('theme-light');
+			}
+		}
+	}
 </script>
 
 <svelte:window bind:innerHeight />

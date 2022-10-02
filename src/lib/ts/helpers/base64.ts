@@ -19,3 +19,9 @@ export const base64toBlob = (b64Data: string, sliceSize = 512) => {
 	const blob = new Blob(byteArrays, { type: contentType });
 	return blob;
 };
+
+export const urlFromBase64 = (b64Data: string) => {
+	const blob = base64toBlob(b64Data);
+	const url = URL.createObjectURL(blob);
+	return url;
+};

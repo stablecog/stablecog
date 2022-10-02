@@ -101,7 +101,7 @@ export const POST: RequestHandler = async ({ request }) => {
 		return new Response(JSON.stringify({ data: output, error: data.error }));
 	} catch (error) {
 		console.log('----', `Failed in ${(Date.now() - startTimestamp) / 1000}s`, '----');
-		return new Response(JSON.stringify({ error: 'Something went wrong...' }));
+		return new Response(JSON.stringify({ error: 'Something went wrong :(' }));
 	}
 };
 

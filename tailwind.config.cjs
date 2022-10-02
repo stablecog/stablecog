@@ -42,10 +42,11 @@ module.exports = {
 				15: '0.15'
 			},
 			rotate: {
+				15: '15deg',
 				360: '360deg',
 				270: '270deg'
 			}
 		}
 	},
-	plugins: []
+	plugins: [require('tailwindcss-labeled-groups')(['1', '2', '3'])]
 };

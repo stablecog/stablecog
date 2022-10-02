@@ -8,14 +8,14 @@
 		estimatedDurationBufferRatio,
 		estimatedDurationDefault
 	} from '$ts/constants/main';
-	import { base64toBlob } from '$ts/helpers/base64toBlob';
-	import { addGenerationToDb } from '$ts/queries/addGenerationToDb';
+	import { urlFromBase64 } from '$ts/helpers/base64';
+	import { addGenerationToDb } from '$ts/queries/indexedDb';
 	import { generateImage } from '$ts/queries/generateImage';
-	import { isTouchscreen } from '$ts/stores/isTouchscreen';
 	import { iterationMpPerSec } from '$ts/stores/iterationMpPerSec';
 	import { serverUrl } from '$ts/stores/serverUrl';
 	import type { TGeneration, TStatus } from '$ts/types/main';
 	import { onDestroy, onMount } from 'svelte';
+	import DownloadGenerationButton from '$components/buttons/DownloadGenerationButton.svelte';
 
 	let status: TStatus = 'idle';
 	let inputValue: string | undefined;
@@ -90,13 +90,13 @@
 				} catch (error) {
 					console.log('indexedDB error', error);
 				}
-				const blob = base64toBlob(data);
-				const blobUrl = URL.createObjectURL(blob);
+				const imageUrl = urlFromBase64(data);
 				const img = new Image();
-				img.src = blobUrl;
+				img.src = imageUrl;
 				img.onload = () => {
 					if (lastGeneration) {
-						lastGeneration.imageUrl = blobUrl;
+						lastGeneration.imageUrl = imageUrl;
+						lastGeneration = lastGeneration;
 					}
 					if (lastGeneration && startTimestamp !== undefined) {
 						lastGeneration.iterationMpPerSec = Math.ceil(
@@ -123,7 +123,7 @@
 
 	let isCheckComplete = false;
 
-	onMount(() => {
+	onMount(async () => {
 		setEstimatedDuration();
 		isCheckComplete = true;
 	});
@@ -139,7 +139,7 @@
 	canonical={canonicalUrl}
 />
 
-<div class="w-full flex flex-col flex-1 justify-center items-center px-4 pb-8">
+<div class="w-full flex flex-col items-center flex-1 justify-center px-4 pb-8">
 	<GenerateBar
 		bind:inputValue
 		bind:generationWidth
@@ -150,14 +150,14 @@
 		{estimatedDuration}
 	/>
 	{#if status === 'error'}
-		<div transition:expandCollapse={{}} class="flex flex-col justify-start origin-top">
+		<div transition:expandCollapse|local={{}} class="flex flex-col justify-start origin-top">
 			<p class="w-full max-w-lg text-c-on-bg/40 text-center py-4">
-				{generationError ?? 'Something went wrong...'}
+				{generationError ?? 'Something went wrong :('}
 			</p>
 		</div>
 	{:else if status === 'success' && duration !== undefined && lastGeneration && lastGeneration.imageUrl}
 		<div
-			transition:expandCollapse={{}}
+			transition:expandCollapse|local={{}}
 			class="overflow-hidden flex flex-col justify-start rounded-xl origin-top relative z-0"
 		>
 			<div class="flex flex-col items-center md:px-5 gap-4 py-4">
@@ -169,25 +169,12 @@
 						width={lastGeneration.height}
 						alt={lastGeneration.prompt}
 					/>
-					<a
-						class="absolute right-3 top-3 transition group"
-						href={lastGeneration.imageUrl}
-						download="{lastGeneration.prompt}-[seed_{lastGeneration.seed}].png"
-						aria-label="Download Image"
-					>
-						<div class="p-3 rounded-full bg-c-bg relative overflow-hidden z-0">
-							<div
-								class="w-full h-full rounded-full transition transform -translate-x-full 
-			        		bg-c-primary absolute left-0 top-0 {!$isTouchscreen ? 'group-hover:translate-x-0' : ''}"
-							/>
-							<IconDownload
-								class="w-6 h-6 transition text-c-on-bg relative {!$isTouchscreen
-									? 'group-hover:text-c-on-primary'
-									: ''}"
-							/>
-							<p class="hidden">Download Image</p>
-						</div>
-					</a>
+					<DownloadGenerationButton
+						class="absolute top-0 right-0 pr-3 pt-3"
+						prompt={lastGeneration.prompt}
+						url={lastGeneration.imageUrl}
+						seed={lastGeneration.seed}
+					/>
 				</div>
 				<p class="text-c-on-bg/40 text-center">
 					{(duration / 1000).toLocaleString('en-US', {
@@ -197,6 +184,6 @@
 			</div>
 		</div>
 	{:else}
-		<div transition:expandCollapse={{}} class="h-[10vh]" />
+		<div transition:expandCollapse|local={{}} class="h-[10vh]" />
 	{/if}
 </div>

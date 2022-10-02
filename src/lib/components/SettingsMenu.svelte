@@ -3,7 +3,7 @@
 	import IconDarkMode from '$components/icons/IconDarkMode.svelte';
 	import ToggleIndicator from '$components/ToggleIndicator.svelte';
 	import { expandCollapse } from '$ts/animation/transitions';
-	import { parsedUrl } from '$ts/helpers/parsedUrl';
+	import { parseUrlStr } from '$ts/helpers/parseUrlStr';
 	import { isTouchscreen } from '$ts/stores/isTouchscreen';
 	import { serverUrl } from '$ts/stores/serverUrl';
 	import { theme } from '$ts/stores/theme';
@@ -36,7 +36,7 @@
 					</p>
 				</div>
 				<p class="w-full text-xs text-left break-all font-normal text-c-on-bg/60">
-					{$serverUrl ? parsedUrl($serverUrl) : 'Not connected'}
+					{$serverUrl ? parseUrlStr($serverUrl) : 'Not connected'}
 				</p>
 			</div>
 		</DropdownItem>

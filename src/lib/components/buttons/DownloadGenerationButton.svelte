@@ -1,0 +1,30 @@
+<script lang="ts">
+	import IconDownload from '$components/icons/IconDownload.svelte';
+	import { isTouchscreen } from '$ts/stores/isTouchscreen';
+
+	export let url: string;
+	export let prompt: string;
+	export let seed: number;
+	export { classes as class };
+	let classes = '';
+</script>
+
+<a
+	class="transition group-1 {classes}"
+	href={url}
+	download="{prompt}-[seed_{seed}].png"
+	aria-label="Download Image"
+>
+	<div class="p-3 rounded-full bg-c-bg relative overflow-hidden z-0">
+		<div
+			class="w-full h-full rounded-full transition transform -translate-x-full 
+			bg-c-primary absolute left-0 top-0 {!$isTouchscreen ? 'group-1-hover:translate-x-0' : ''}"
+		/>
+		<IconDownload
+			class="w-6 h-6 transition text-c-on-bg relative {!$isTouchscreen
+				? 'group-1-hover:text-c-on-primary'
+				: ''}"
+		/>
+		<p class="hidden">Download Image</p>
+	</div>
+</a>
