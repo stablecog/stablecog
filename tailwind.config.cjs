@@ -58,8 +58,8 @@ module.exports = {
 				103: '1.03'
 			},
 			animation: {
-				'pulse-custom': 'pulse-custom 1s cubic-bezier(0.4, 0, 0.6, 1) infinite',
-				'pulse-scale': 'pulse-scale 0.8s cubic-bezier(0.4, 0, 0.6, 1) infinite'
+				'pulse-custom': 'pulse-custom 1s cubic-bezier(0.5, 0, 0.5, 1) infinite',
+				'pulse-scale': 'pulse-scale 0.8s cubic-bezier(0.5, 0, 0.5, 1) infinite'
 			},
 			keyframes: {
 				'pulse-custom': {
@@ -72,12 +72,12 @@ module.exports = {
 				},
 				'pulse-scale': {
 					'0%, 100%': {
-						opacity: '0.5',
-						transform: 'scale(0.9)'
+						opacity: '0.75',
+						transform: 'scale(1)'
 					},
 					'50%': {
 						opacity: '0.25',
-						transform: 'scale(1.2)'
+						transform: 'scale(1.75)'
 					}
 				}
 			}
