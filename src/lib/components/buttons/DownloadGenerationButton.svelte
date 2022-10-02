@@ -15,13 +15,13 @@
 	download="{prompt}-[seed_{seed}].png"
 	aria-label="Download Image"
 >
-	<div class="p-3 rounded-full bg-c-bg relative overflow-hidden z-0">
+	<div class="p-2.5 rounded-full bg-c-bg relative overflow-hidden z-0">
 		<div
 			class="w-full h-full rounded-full transition transform -translate-x-full 
 			bg-c-primary absolute left-0 top-0 {!$isTouchscreen ? 'group-1-hover:translate-x-0' : ''}"
 		/>
 		<IconDownload
-			class="w-6 h-6 transition text-c-on-bg relative {!$isTouchscreen
+			class="w-7 h-7 transition text-c-on-bg relative {!$isTouchscreen
 				? 'group-1-hover:text-c-on-primary'
 				: ''}"
 		/>

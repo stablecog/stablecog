@@ -16,7 +16,7 @@
 						: ''}"
 				/>
 			</div>
-			<div class="p-1.5">
+			<div class="p-2">
 				<slot />
 			</div>
 		</div>
@@ -32,7 +32,7 @@
 						: ''}"
 				/>
 			</div>
-			<div class="p-1.5">
+			<div class="p-2">
 				<slot />
 			</div>
 		</div>
