@@ -161,7 +161,7 @@
 			class="overflow-hidden flex flex-col items-center justify-start rounded-xl origin-top relative z-0"
 		>
 			<div class="flex flex-col items-center md:px-5 gap-4 py-4">
-				<div class="relative">
+				<div class="relative group">
 					<img
 						class="{lastGeneration.height / lastGeneration.width >= 3 / 2
 							? 'max-w-sm'
@@ -171,12 +171,18 @@
 						width={lastGeneration.height}
 						alt={lastGeneration.prompt}
 					/>
-					<DownloadGenerationButton
-						class="absolute top-0 right-0 pr-3 pt-3"
-						prompt={lastGeneration.prompt}
-						url={lastGeneration.imageUrl}
-						seed={lastGeneration.seed}
-					/>
+					<div class="w-full h-full absolute left-0 top-0 overflow-hidden">
+						<div
+							class="absolute flex items-end justify-end right-0 top-0 transition transform translate-x-16 group-hover:translate-x-0"
+						>
+							<DownloadGenerationButton
+								class="pr-3 pt-3"
+								url={lastGeneration.imageUrl}
+								prompt={lastGeneration.prompt}
+								seed={lastGeneration.seed}
+							/>
+						</div>
+					</div>
 				</div>
 				<p class="text-c-on-bg/40 text-center">
 					{(duration / 1000).toLocaleString('en-US', {
