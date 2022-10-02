@@ -15,7 +15,7 @@
 			try {
 				let urlString = serverUrlInputValue;
 				if (!urlString.startsWith('http')) {
-					urlString = 'http://' + urlString;
+					urlString = 'https://' + urlString;
 				}
 				let url = new URL(urlString).toString();
 				if (url.endsWith('/')) {

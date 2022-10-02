@@ -118,6 +118,7 @@
 			console.log(error);
 		} finally {
 			endTimestamp = Date.now();
+			console.log('generation duration:', (endTimestamp - startTimestamp) / 1000, 's');
 		}
 	}
 
