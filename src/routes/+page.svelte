@@ -184,6 +184,6 @@
 			</div>
 		</div>
 	{:else}
-		<div transition:expandCollapse|local={{}} class="h-[10vh]" />
+		<div transition:expandCollapse|local={{}} class="h-[5vh]" />
 	{/if}
 </div>
