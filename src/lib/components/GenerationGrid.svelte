@@ -50,13 +50,17 @@
 							seed={generation.seed}
 						/>
 					</div>
-					<div class="w-full text-xs relative overflow-auto">
-						<p
-							class="w-full font-medium transition bg-c-bg/90 text-c-on-bg px-5 py-4 transform 
-								translate-y-full leading-relaxed group-hover:translate-y-0 overflow-auto"
-						>
-							{generation.prompt}
-						</p>
+					<div
+						class="w-full max-h-[35%] transition bg-c-bg/90 text-xs relative overflow-hidden
+						translate-y-full group-hover:translate-y-0"
+					>
+						<div class="w-full max-h-full overflow-auto list-fade">
+							<p
+								class="w-full font-medium transition text-c-on-bg px-5 py-4 transform leading-relaxed"
+							>
+								{generation.prompt}
+							</p>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -82,3 +86,9 @@
 		{/each}
 	{/if}
 </Masonry>
+
+<style>
+	.list-fade {
+		mask-image: linear-gradient(to top, transparent, transparent 0.35rem, black 1.25rem);
+	}
+</style>
