@@ -1,4 +1,5 @@
 <script lang="ts">
+	import Button from '$components/buttons/Button.svelte';
 	import { clickoutside } from '$ts/actions/clickoutside';
 	import { expandCollapse } from '$ts/animation/transitions';
 	import { isTouchscreen } from '$ts/stores/isTouchscreen';
@@ -42,19 +43,7 @@
 							: ''}"
 					/>
 				</div>
-				<button
-					class="w-full md:w-auto px-8 relative flex items-center justify-center text-center py-5 
-            shadow-lg shadow-c-shadow/[var(--o-shadow-normal)]  text-c-on-primary rounded-xl font-bold gap-2 
-            overflow-hidden z-0 group bg-c-primary"
-				>
-					<div
-						class="w-full h-full origin-left rounded-xl transition transform -translate-x-full 
-              bg-c-secondary absolute left-0 top-0 {!$isTouchscreen
-							? 'group-enabled:group-hover:translate-x-0'
-							: ''}"
-					/>
-					<p class="relative">Set</p>
-				</button>
+				<Button class="w-full md:w-auto">Set</Button>
 			</form>
 		</div>
 	</div>

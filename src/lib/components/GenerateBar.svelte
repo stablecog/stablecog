@@ -104,7 +104,7 @@
 					: ''} {classes} {loadingOrSubmitting ? 'text-c-secondary/75' : 'text-c-on-bg'}"
 			/>
 		</div>
-		<Button disabled={loadingOrSubmitting} loading={loadingOrSubmitting} class="w-full md:w-40">
+		<Button disabled={loadingOrSubmitting} loading={loadingOrSubmitting} class="w-full md:w-auto">
 			{#if status === 'loading'}
 				{Math.max(sinceSec, 0).toLocaleString('en-US', {
 					minimumFractionDigits: 1,
