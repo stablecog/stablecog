@@ -2,36 +2,75 @@
 	import DownloadGenerationButton from '$components/buttons/DownloadGenerationButton.svelte';
 	import Masonry from '$components/Masonry.svelte';
 	import type { TDBGeneration } from '$ts/constants/indexedDb';
+	import { heightTabs, widthTabs } from '$ts/constants/main';
 	import { urlFromBase64 } from '$ts/helpers/base64';
 
-	export let generations: TDBGeneration[] = [];
+	export let generations: TDBGeneration[] | undefined = undefined;
 
-	let updateGrid: () => void;
+	const widths = widthTabs.map((w) => Number(w.value)).filter((i) => i !== 256);
+	const heights = heightTabs.map((h) => Number(h.value)).filter((i) => i !== 256);
+
+	const randomWidth = () => widths[Math.floor(Math.random() * widths.length)];
+	const randomHeight = () => heights[Math.floor(Math.random() * heights.length)];
 </script>
 
-<svelte:window on:resize={updateGrid} />
 <Masonry items={generations}>
-	{#each generations as generation}
-		<div class="relative group">
-			<img
-				class="w-full relative h-auto block rounded-xl border-2 shadow-lg shadow-c-[var(--o-shadow-strong)] border-c-bg-secondary"
-				src={generation.imageDataB64}
-				alt={generation.prompt}
-				width={generation.width}
-				height={generation.height}
-			/>
-			<div class="w-full h-full absolute left-0 top-0 overflow-hidden z-0">
+	{#if generations}
+		{#each generations as generation}
+			<div class="relative group">
 				<div
-					class="absolute flex items-end justify-end right-0 top-0 transition transform translate-x-16 group-hover:translate-x-0"
+					class="rounded-xl relative border-4 shadow-lg 
+					shadow-c-[var(--o-shadow-strong)] border-c-bg-secondary overflow-hidden"
 				>
-					<DownloadGenerationButton
-						class="pr-3 pt-3"
-						url={urlFromBase64(generation.imageDataB64)}
-						prompt={generation.prompt}
-						seed={generation.seed}
+					<img
+						class="w-full h-auto"
+						src={generation.imageDataB64}
+						alt={generation.prompt}
+						width={generation.width}
+						height={generation.height}
 					/>
 				</div>
+				<div
+					class="w-full h-full absolute left-0 top-0 flex flex-col justify-between items-end rounded-xl overflow-hidden z-0"
+				>
+					<div
+						class="flex items-end justify-end right-0 top-0 transition transform translate-x-16 group-hover:translate-x-0"
+					>
+						<DownloadGenerationButton
+							class="pr-3 pt-3"
+							url={urlFromBase64(generation.imageDataB64)}
+							prompt={generation.prompt}
+							seed={generation.seed}
+						/>
+					</div>
+					<div class="w-full text-xs relative overflow-hidden">
+						<p
+							class="w-full font-medium transition bg-c-bg/90 text-c-on-bg px-5 py-4 transform 
+						translate-y-full leading-relaxed group-hover:translate-y-0"
+						>
+							{generation.prompt}
+						</p>
+					</div>
+				</div>
 			</div>
-		</div>
-	{/each}
+		{/each}
+	{:else}
+		{#each Array.from({ length: 15 }) as i}
+			<div
+				class="bg-c-bg rounded-xl relative border-4 shadow-lg 
+				shadow-c-[var(--o-shadow-strong)] border-c-bg-secondary overflow-hidden"
+			>
+				<div
+					class="absolute left-0 top-0 w-full h-full bg-c-on-bg transition animate-pulse-custom"
+				/>
+				<img
+					class="w-full h-auto opacity-0"
+					src={''}
+					alt={''}
+					width={randomWidth()}
+					height={randomHeight()}
+				/>
+			</div>
+		{/each}
+	{/if}
 </Masonry>

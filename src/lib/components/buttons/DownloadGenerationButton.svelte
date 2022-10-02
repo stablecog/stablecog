@@ -6,10 +6,12 @@
 	export let prompt: string;
 	export let seed: number;
 	export { classes as class };
+	export let disabled = false;
 	let classes = '';
 </script>
 
 <a
+	{disabled}
 	class="transition group-1 {classes}"
 	href={url}
 	download="{prompt}-[seed_{seed}].png"

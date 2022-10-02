@@ -1,26 +1,14 @@
 <script lang="ts">
 	import TabBar from '$components/TabBar.svelte';
 	import { expandCollapse } from '$ts/animation/transitions';
+	import { heightTabs, widthTabs } from '$ts/constants/main';
 	import { imageSize } from '$ts/stores/imageSize';
 	import { isTouchscreen } from '$ts/stores/isTouchscreen';
-	import type { TStatus, TTab } from '$ts/types/main';
+	import type { TStatus } from '$ts/types/main';
 	import { onMount, tick } from 'svelte';
 
-	const widths: TTab[] = [
-		{ label: '256', value: '256' },
-		{ label: '512', value: '512' },
-		{ label: '768', value: '768' }
-		/* { label: '1024', value: '1024' } */
-	];
-	const heights: TTab[] = [
-		{ label: '256', value: '256' },
-		{ label: '512', value: '512' },
-		{ label: '768', value: '768' }
-		/* { label: '1024', value: '1024' } */
-	];
-
-	export let generationWidth = widths[1].value;
-	export let generationHeight = heights[1].value;
+	export let generationWidth = widthTabs[1].value;
+	export let generationHeight = heightTabs[1].value;
 	export let onCreate: () => Promise<void>;
 	export let status: TStatus;
 	export let inputValue: string | undefined;
@@ -63,14 +51,14 @@
 
 	onMount(() => {
 		isCheckComplete = false;
-		const widthIndex = widths
+		const widthIndex = widthTabs
 			.map((w) => w.value)
 			.findIndex((i) => i === $imageSize?.width?.toString());
-		const heightIndex = heights
+		const heightIndex = heightTabs
 			.map((h) => h.value)
 			.findIndex((i) => i === $imageSize?.height?.toString());
-		if (widthIndex >= 0) generationWidth = widths[widthIndex].value;
-		if (heightIndex >= 0) generationHeight = heights[heightIndex].value;
+		if (widthIndex >= 0) generationWidth = widthTabs[widthIndex].value;
+		if (heightIndex >= 0) generationHeight = heightTabs[heightIndex].value;
 		isCheckComplete = true;
 	});
 
@@ -150,7 +138,7 @@
 				<TabBar
 					title="W"
 					class="w-72 max-w-full"
-					tabs={widths}
+					tabs={widthTabs}
 					bind:value={generationWidth}
 					name="width"
 					hideSelected={!isCheckComplete}
@@ -158,7 +146,7 @@
 				<TabBar
 					title="H"
 					class="w-72 max-w-full"
-					tabs={heights}
+					tabs={heightTabs}
 					bind:value={generationHeight}
 					name="height"
 					hideSelected={!isCheckComplete}

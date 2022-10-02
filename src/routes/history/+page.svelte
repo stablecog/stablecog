@@ -4,7 +4,7 @@
 	import { getGenerationsFromDb } from '$ts/queries/indexedDb';
 	import { onMount } from 'svelte';
 
-	let generations: TDBGeneration[] = [];
+	let generations: TDBGeneration[] | undefined = undefined;
 
 	onMount(async () => {
 		try {
