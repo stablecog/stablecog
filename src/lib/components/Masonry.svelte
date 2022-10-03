@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { onMount, onDestroy, tick } from 'svelte';
 	export let stretchFirst = false;
-	export let gridGap = '0.5em';
+	export let gridGap = '0.375rem';
 	export let colWidth = 'minmax(Min(17em, 100%), 1fr)';
 	export let items: any[] = [];
 	let grids: any[] = [];
