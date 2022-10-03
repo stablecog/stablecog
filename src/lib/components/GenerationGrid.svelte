@@ -29,7 +29,7 @@
 	{#if generations.length > 0}
 		<Masonry items={generations}>
 			{#each [...generations, ...generations, ...generations] as generation, i}
-				<IntersectionObserver rootMargin="200%" element={nodes[i]} let:intersecting once>
+				<IntersectionObserver rootMargin="100%" element={nodes[i]} let:intersecting once>
 					<div bind:this={nodes[i]} class="relative group">
 						<div
 							class="rounded-xl bg-c-bg-secondary relative border-4 shadow-lg 
