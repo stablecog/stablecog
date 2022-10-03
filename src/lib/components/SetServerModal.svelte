@@ -58,13 +58,13 @@
 <div
 	transition:fade={{ duration: 300, easing: quadOut }}
 	class="w-screen h-screen flex items-center justify-center fixed left-0 
-    top-0 bg-c-barrier/50 z-[100] p-4"
+    top-0 bg-c-barrier/80 z-[100] p-4"
 >
 	<div
 		transition:expandCollapse={{ duration: 200, easing: quadOut }}
 		use:clickoutside={{ callback: () => (setServerProcessStatus === 'loading' ? null : close()) }}
 		class="w-full max-w-xl bg-c-bg-secondary rounded-2xl 
-      shadow-xl shadow-c-shadow/[var(--o-shadow-normal)] overflow-hidden z-0 origin-top"
+      shadow-2xl shadow-c-shadow/[var(--o-shadow-strong)] overflow-hidden z-0 origin-top"
 	>
 		<div class="w-full flex flex-col px-3 py-4 md:p-5">
 			<p class="font-bold text-xl px-2">{$serverUrl ? 'Switch' : 'Set'} Server</p>
