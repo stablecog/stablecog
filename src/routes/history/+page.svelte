@@ -25,8 +25,8 @@
 	canonical="{canonicalUrl}{$page.url.pathname}"
 />
 
-<div class="w-full flex flex-col items-center px-2 pt-2 md:px-8 md:pt-4 pb-16">
-	<div class="w-full max-w-7xl flex flex-col">
+<div class="w-full flex-1 flex flex-col items-center px-2 pt-2 md:px-8 md:pt-4 pb-16">
+	<div class="w-full flex-1 max-w-7xl flex flex-col">
 		<GenerationGrid {generations} />
 	</div>
 </div>
