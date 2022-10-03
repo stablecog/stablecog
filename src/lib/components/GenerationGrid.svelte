@@ -63,7 +63,7 @@
 									>
 										<div class="w-full max-h-full overflow-auto list-fade">
 											<p
-												class="w-full font-medium transition text-c-on-bg px-5 py-4 transform leading-relaxed"
+												class="w-full font-medium leading-normal transition text-c-on-bg px-5 py-4 transform"
 											>
 												{generation.prompt}
 											</p>
