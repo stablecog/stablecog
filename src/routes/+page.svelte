@@ -1,6 +1,5 @@
 <script lang="ts">
 	import GenerateBar from '$components/GenerateBar.svelte';
-	import IconDownload from '$components/icons/IconDownload.svelte';
 	import MetaTag from '$components/MetaTag.svelte';
 	import { expandCollapse } from '$ts/animation/transitions';
 	import {
