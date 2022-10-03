@@ -15,7 +15,7 @@
 	const randomWidth = () => widths[Math.floor(Math.random() * widths.length)];
 	const randomHeight = () => heights[Math.floor(Math.random() * heights.length)];
 
-	const placeholderArray = Array.from({ length: 15 }, (_, i) => {
+	const placeholderArray = Array.from({ length: 20 }, (_, i) => {
 		return {
 			width: randomWidth(),
 			height: randomHeight()
@@ -28,15 +28,15 @@
 {#if generations}
 	{#if generations.length > 0}
 		<Masonry items={generations}>
-			{#each [...generations, ...generations, ...generations] as generation, i}
+			{#each generations as generation, i}
 				<IntersectionObserver rootMargin="100%" element={nodes[i]} let:intersecting once>
 					<div bind:this={nodes[i]} class="relative group">
-						{#if intersecting}
-							{@const url = urlFromBase64(generation.imageDataB64)}
-							<div
-								class="rounded-xl bg-c-bg-secondary relative border-4 shadow-lg 
-								shadow-c-[var(--o-shadow-strong)] border-c-bg-secondary overflow-hidden"
-							>
+						<div
+							class="rounded-xl bg-c-bg-secondary relative z-0 border-4 shadow-lg 
+							shadow-c-[var(--o-shadow-strong)] border-c-bg-secondary overflow-hidden"
+						>
+							{#if intersecting}
+								{@const url = urlFromBase64(generation.imageDataB64)}
 								<img
 									class="w-full h-auto"
 									src={url}
@@ -44,38 +44,33 @@
 									width={generation.width}
 									height={generation.height}
 								/>
-							</div>
-							<div
-								class="w-full h-full absolute left-0 top-0 flex flex-col justify-between items-end rounded-xl overflow-hidden z-0 gap-5"
-							>
 								<div
-									class="flex items-end justify-end right-0 top-0 transition transform translate-x-16 group-hover:translate-x-0"
+									class="w-full h-full absolute left-0 top-0 flex flex-col justify-between items-end gap-5"
 								>
-									<DownloadGenerationButton
-										class="pr-3 pt-3"
-										{url}
-										prompt={generation.prompt}
-										seed={generation.seed}
-									/>
-								</div>
-								<div
-									class="w-full max-h-[35%] transition bg-c-bg/90 text-xs relative overflow-hidden
-									translate-y-full group-hover:translate-y-0"
-								>
-									<div class="w-full max-h-full overflow-auto list-fade">
-										<p
-											class="w-full font-medium transition text-c-on-bg px-5 py-4 transform leading-relaxed"
-										>
-											{generation.prompt}
-										</p>
+									<div
+										class="flex items-end justify-end right-0 top-0 transition transform translate-x-16 group-hover:translate-x-0"
+									>
+										<DownloadGenerationButton
+											class="pr-3 pt-3"
+											{url}
+											prompt={generation.prompt}
+											seed={generation.seed}
+										/>
+									</div>
+									<div
+										class="w-full max-h-[35%] transition bg-c-bg/90 text-xs relative overflow-hidden
+										translate-y-full group-hover:translate-y-0"
+									>
+										<div class="w-full max-h-full overflow-auto list-fade">
+											<p
+												class="w-full font-medium transition text-c-on-bg px-5 py-4 transform leading-relaxed"
+											>
+												{generation.prompt}
+											</p>
+										</div>
 									</div>
 								</div>
-							</div>
-						{:else}
-							<div
-								class="rounded-xl bg-c-bg-secondary relative border-4 shadow-lg 
-								shadow-c-[var(--o-shadow-strong)] border-c-bg-secondary overflow-hidden"
-							>
+							{:else}
 								<svg
 									class="w-full h-auto"
 									width={generation.width}
@@ -84,8 +79,8 @@
 									fill="none"
 									xmlns="http://www.w3.org/2000/svg"
 								/>
-							</div>
-						{/if}
+							{/if}
+						</div>
 					</div>
 				</IntersectionObserver>
 			{/each}

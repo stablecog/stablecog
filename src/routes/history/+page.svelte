@@ -25,7 +25,7 @@
 	canonical="{canonicalUrl}{$page.url.pathname}"
 />
 
-<div class="w-full flex-1 flex flex-col items-center px-2 gap-2 pt-2 md:px-8 md:pt-4 pb-16">
+<div class="w-full flex-1 flex flex-col items-center px-2 gap-2 pt-2 md:px-8 md:pt-4 pb-24">
 	{#if generations === undefined || generations.length !== 0}
 		<div class="w-full max-w-7xl flex justify-center px-1.5">
 			<div
