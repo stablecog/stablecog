@@ -81,16 +81,16 @@
 				num_inference_steps: lastGeneration.num_inference_steps
 			});
 			let { data, error } = res;
-			if (data && !error) {
+			if (data && data.imageDataB64 && !error) {
 				try {
 					await addGenerationToDb({
 						...lastGeneration,
-						imageDataB64: data
+						imageDataB64: data.imageDataB64
 					});
 				} catch (error) {
 					console.log('indexedDB error', error);
 				}
-				const imageUrl = urlFromBase64(data);
+				const imageUrl = urlFromBase64(data.imageDataB64);
 				const img = new Image();
 				img.src = imageUrl;
 				img.onload = () => {

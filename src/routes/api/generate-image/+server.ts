@@ -1,17 +1,21 @@
 import { supabaseAdmin } from '$ts/constants/supabaseAdmin';
 import { getDeviceInfo } from '$ts/helpers/getDeviceInfo';
+import type { TGenerationRequest, TGenerationResponse } from '$ts/types/main';
 import type { RequestHandler } from '@sveltejs/kit';
 
 export const POST: RequestHandler = async ({ request }) => {
 	const startTimestamp = Date.now();
 	const startDate = new Date(startTimestamp).toUTCString();
-	const { headers } = request;
-	const countryCode = headers.get('cf-ipcountry');
-	const userAgent = headers.get('user-agent');
-	const deviceInfo = getDeviceInfo(userAgent);
 	try {
-		const { server_url, prompt, seed, width, height, num_inference_steps, guidance_scale } =
-			await request.json();
+		const {
+			server_url,
+			prompt,
+			seed,
+			width,
+			height,
+			num_inference_steps,
+			guidance_scale
+		}: TGenerationRequest = await request.json();
 		generationLog({
 			text: 'Started generation:',
 			dateString: startDate,
@@ -57,9 +61,13 @@ export const POST: RequestHandler = async ({ request }) => {
 			seed,
 			server_url
 		});
-		// Write the result to Supabase if it exists
+		// If Supabase is setup, write to
 		if (output && !data.error && supabaseAdmin !== undefined) {
 			try {
+				const { headers } = request;
+				const countryCode = headers.get('cf-ipcountry');
+				const userAgent = headers.get('user-agent');
+				const deviceInfo = getDeviceInfo(userAgent);
 				const dbEntryStartTimestamp = Date.now();
 				let { data, error } = await supabaseAdmin.from('generation').insert([
 					{
@@ -98,7 +106,11 @@ export const POST: RequestHandler = async ({ request }) => {
 				console.log(error);
 			}
 		}
-		return new Response(JSON.stringify({ data: output, error: data.error }));
+		const generationResponse: TGenerationResponse = {
+			data: output ? { imageDataB64: output } : undefined,
+			error: data.error
+		};
+		return new Response(JSON.stringify(generationResponse));
 	} catch (error) {
 		const endTimestamp = Date.now();
 		const endDate = new Date(endTimestamp).toUTCString();
@@ -141,7 +153,7 @@ const generationLog = ({
 	num_inference_steps: number;
 	guidance_scale: number;
 	seed: number;
-	server_url: number;
+	server_url: string;
 }) => {
 	console.log(
 		'----',
