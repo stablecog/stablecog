@@ -31,30 +31,20 @@
 			{#each [...generations, ...generations, ...generations] as generation, i}
 				<IntersectionObserver rootMargin="100%" element={nodes[i]} let:intersecting once>
 					<div bind:this={nodes[i]} class="relative group">
-						<div
-							class="rounded-xl bg-c-bg-secondary relative border-4 shadow-lg 
-							shadow-c-[var(--o-shadow-strong)] border-c-bg-secondary overflow-hidden"
-						>
-							{#if intersecting}
+						{#if intersecting}
+							{@const url = urlFromBase64(generation.imageDataB64)}
+							<div
+								class="rounded-xl bg-c-bg-secondary relative border-4 shadow-lg 
+								shadow-c-[var(--o-shadow-strong)] border-c-bg-secondary overflow-hidden"
+							>
 								<img
 									class="w-full h-auto"
-									src={generation.imageDataB64}
+									src={url}
 									alt={generation.prompt}
 									width={generation.width}
 									height={generation.height}
 								/>
-							{:else}
-								<svg
-									class="w-full h-auto"
-									width={generation.width}
-									height={generation.height}
-									viewBox="0 0 {generation.width} {generation.height}"
-									fill="none"
-									xmlns="http://www.w3.org/2000/svg"
-								/>
-							{/if}
-						</div>
-						{#if intersecting}
+							</div>
 							<div
 								class="w-full h-full absolute left-0 top-0 flex flex-col justify-between items-end rounded-xl overflow-hidden z-0 gap-5"
 							>
@@ -63,7 +53,7 @@
 								>
 									<DownloadGenerationButton
 										class="pr-3 pt-3"
-										url={urlFromBase64(generation.imageDataB64)}
+										{url}
 										prompt={generation.prompt}
 										seed={generation.seed}
 									/>
@@ -80,6 +70,20 @@
 										</p>
 									</div>
 								</div>
+							</div>
+						{:else}
+							<div
+								class="rounded-xl bg-c-bg-secondary relative border-4 shadow-lg 
+								shadow-c-[var(--o-shadow-strong)] border-c-bg-secondary overflow-hidden"
+							>
+								<svg
+									class="w-full h-auto"
+									width={generation.width}
+									height={generation.height}
+									viewBox="0 0 {generation.width} {generation.height}"
+									fill="none"
+									xmlns="http://www.w3.org/2000/svg"
+								/>
 							</div>
 						{/if}
 					</div>
