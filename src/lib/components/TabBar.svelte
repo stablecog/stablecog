@@ -31,10 +31,10 @@
 		</div>
 		{#each tabs as tab}
 			<label
-				class="flex-1 min-w-0 px-2 py-4 relative text-center group overflow-hidden cursor-pointer"
+				class="flex-1 min-w-0 px-2 py-4 relative text-center group overflow-hidden z-0 cursor-pointer"
 			>
 				<div class="w-full h-full absolute left-0 top-0 rounded-lg p-1">
-					<div class="w-full h-full overflow-hidden rounded-lg">
+					<div class="w-full h-full overflow-hidden relative z-0 rounded-lg">
 						<div
 							class="w-full h-full origin-left rounded-lg transition transform translate-y-full 
               bg-c-bg-secondary {!$isTouchscreen ? 'group-hover:translate-y-0' : ''}"
