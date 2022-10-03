@@ -1,3 +1,4 @@
+import type { TServerHealth } from '$ts/types/main';
 import type { RequestHandler } from '@sveltejs/kit';
 
 export const POST: RequestHandler = async ({ request }) => {
@@ -5,12 +6,13 @@ export const POST: RequestHandler = async ({ request }) => {
 	const startDate = new Date(startTimestamp).toUTCString();
 	try {
 		const { server_url }: { server_url: string | undefined } = await request.json();
-		console.log('----', 'Started server health check:', startDate, server_url, '----');
+		console.log('----', 'Started server health check:', startDate, '--', server_url, '----');
 		const res = await fetch(`${server_url}/openapi.json`);
 		const data: TServerHealthData = await res.json();
 		const properties = data.components?.schemas?.Input?.properties;
 		const endTimestamp = Date.now();
 		const endDate = new Date(endTimestamp).toUTCString();
+		let status: TServerHealth;
 		if (
 			properties !== undefined &&
 			properties.guidance_scale !== undefined &&
@@ -20,18 +22,25 @@ export const POST: RequestHandler = async ({ request }) => {
 			properties.width !== undefined &&
 			properties.height !== undefined
 		) {
-			endLog(startTimestamp, endTimestamp, endDate, server_url);
-			return new Response(JSON.stringify({ status: 'healthy' }));
+			status = 'healthy';
 		} else {
-			endLog(startTimestamp, endTimestamp, endDate, server_url);
-			return new Response(JSON.stringify({ status: 'unhealthy' }));
+			status = 'unhealthy';
 		}
+		endLog({
+			startTimestamp,
+			endTimestamp,
+			endDate,
+			status,
+			serverUrl: server_url
+		});
+		return new Response(JSON.stringify({ status }));
 	} catch (error) {
 		const endTimestamp = Date.now();
 		const endDate = new Date(endTimestamp).toUTCString();
 		console.log(
 			'----',
 			`Failed server health check in ${(endTimestamp - startTimestamp) / 1000}s:`,
+			'--',
 			endDate,
 			'----'
 		);
@@ -39,16 +48,26 @@ export const POST: RequestHandler = async ({ request }) => {
 	}
 };
 
-function endLog(
-	startTimestamp: number,
-	endTimestamp: number,
-	endDate: string,
-	serverUrl: string | undefined
-) {
+function endLog({
+	startTimestamp,
+	endTimestamp,
+	endDate,
+	status,
+	serverUrl
+}: {
+	startTimestamp: number;
+	endTimestamp: number;
+	endDate: string;
+	status: string;
+	serverUrl: string | undefined;
+}) {
 	console.log(
 		'----',
 		`Ended server health check in ${(endTimestamp - startTimestamp) / 1000}s:`,
 		endDate,
+		'--',
+		status,
+		'--',
 		serverUrl,
 		'----'
 	);

@@ -1,5 +1,4 @@
-import type { TServerHealth } from '$ts/stores/serverHealth';
-import type { TTab } from '$ts/types/main';
+import type { TServerHealth, TTab } from '$ts/types/main';
 
 export const estimatedDurationBufferRatio = 0.1;
 export const estimatedDurationDefault = 30;

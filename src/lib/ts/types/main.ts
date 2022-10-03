@@ -16,3 +16,5 @@ export interface TTab {
 	label: string;
 	value: string;
 }
+
+export type TServerHealth = 'healthy' | 'unhealthy' | 'unknown' | 'loading';

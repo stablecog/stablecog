@@ -12,19 +12,17 @@ export const POST: RequestHandler = async ({ request }) => {
 	try {
 		const { server_url, prompt, seed, width, height, num_inference_steps, guidance_scale } =
 			await request.json();
-		console.log(
-			'----',
-			'Started:',
-			startDate,
-			`"${prompt}"`,
-			seed,
+		generationLog({
+			text: 'Started generation:',
+			dateString: startDate,
+			prompt,
 			width,
 			height,
 			num_inference_steps,
 			guidance_scale,
-			server_url,
-			'----'
-		);
+			seed,
+			server_url
+		});
 		const response = await fetch(`${server_url}/predictions`, {
 			method: 'POST',
 			headers: {
@@ -43,26 +41,26 @@ export const POST: RequestHandler = async ({ request }) => {
 		});
 		const data: TGenerateImageData = await response.json();
 		const output = data.output[0];
-		if (data.error) {
-			console.log('----', new Date(Date.now()).toUTCString(), data.error, '----');
-		}
 		const endTimestamp = Date.now();
 		const endDate = new Date(endTimestamp).toUTCString();
-		console.log(
-			'----',
-			`Ended in ${(endTimestamp - startTimestamp) / 1000}s:`,
-			endDate,
-			`"${prompt}"`,
-			seed,
+		if (data.error) {
+			console.log('----', endDate, '--', data.error, '----');
+		}
+		generationLog({
+			text: `Ended generation in ${(endTimestamp - startTimestamp) / 1000}s:`,
+			dateString: endDate,
+			prompt,
 			width,
 			height,
 			num_inference_steps,
 			guidance_scale,
-			server_url,
-			'----'
-		);
-		if (output && !data.error) {
+			seed,
+			server_url
+		});
+		// Write the result to Supabase if it exists
+		if (output && !data.error && supabaseAdmin !== undefined) {
 			try {
+				const dbEntryStartTimestamp = Date.now();
 				let { data, error } = await supabaseAdmin.from('generation').insert([
 					{
 						prompt,
@@ -82,19 +80,19 @@ export const POST: RequestHandler = async ({ request }) => {
 				if (error) {
 					console.log('error', error.message);
 				} else {
-					console.log(
-						'----',
-						'Inserted into the database:',
-						startDate,
-						`"${prompt}"`,
+					const dbEntryEndTimestamp = Date.now();
+					const dbEntryEndDate = new Date(dbEntryEndTimestamp).toUTCString();
+					generationLog({
+						text: `Inserted into the DB in ${dbEntryEndTimestamp - dbEntryStartTimestamp}ms:`,
+						dateString: dbEntryEndDate,
+						prompt,
 						seed,
 						width,
 						height,
 						num_inference_steps,
 						guidance_scale,
-						server_url,
-						'----'
-					);
+						server_url
+					});
 				}
 			} catch (error) {
 				console.log(error);
@@ -104,7 +102,14 @@ export const POST: RequestHandler = async ({ request }) => {
 	} catch (error) {
 		const endTimestamp = Date.now();
 		const endDate = new Date(endTimestamp).toUTCString();
-		console.log('----', `Failed in ${(endTimestamp - startTimestamp) / 1000}s:`, endDate, '----');
+		console.log(
+			'----',
+			`Failed generation in ${(endTimestamp - startTimestamp) / 1000}s:`,
+			endDate,
+			'--',
+			error,
+			'----'
+		);
 		return new Response(JSON.stringify({ error: 'Something went wrong :(' }));
 	}
 };
@@ -116,3 +121,46 @@ interface TGenerateImageData {
 }
 
 type TStatus = 'succeeded' | 'failed';
+
+const generationLog = ({
+	text,
+	dateString,
+	prompt,
+	width,
+	height,
+	num_inference_steps,
+	guidance_scale,
+	seed,
+	server_url
+}: {
+	text: string;
+	dateString: string;
+	prompt: string;
+	width: number;
+	height: number;
+	num_inference_steps: number;
+	guidance_scale: number;
+	seed: number;
+	server_url: number;
+}) => {
+	console.log(
+		'----',
+		text,
+		dateString,
+		'--',
+		`"${prompt}"`,
+		'--',
+		width,
+		'--',
+		height,
+		'--',
+		num_inference_steps,
+		'--',
+		guidance_scale,
+		'--',
+		seed,
+		'--',
+		server_url,
+		'----'
+	);
+};
