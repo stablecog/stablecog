@@ -4,8 +4,6 @@
 	import { theme } from '$ts/stores/theme';
 	import { onMount } from 'svelte';
 	import { serverUrl } from '$ts/stores/serverUrl';
-	import { defaultServerUrl } from '$ts/constants/main';
-	import { iterationMpPerSec } from '$ts/stores/iterationMpPerSec';
 	import { browser } from '$app/environment';
 	import { checkServerHealth } from '$ts/queries/checkServerHealth';
 	import { serverHealth } from '$ts/stores/serverHealth';
@@ -15,21 +13,11 @@
 	$: [$theme], setBodyClasses();
 
 	onMount(async () => {
-		if ($iterationMpPerSec === undefined) {
-			iterationMpPerSec.set(1000000);
-		}
-		if ($serverHealth === undefined) {
-			serverHealth.set('loading');
-		}
 		setBodyClasses();
-
 		const now = Date.now();
 		try {
 			serverHealth.set('loading');
 			console.log('Checking server health...');
-			if ($serverUrl === undefined || $serverUrl === null || $serverUrl === '') {
-				serverUrl.set(defaultServerUrl);
-			}
 			const status = await checkServerHealth($serverUrl!!);
 			if (status === 'healthy') {
 				serverHealth.set('healthy');
