@@ -58,7 +58,7 @@
 										/>
 									</div>
 									<div
-										class="w-full max-h-[35%] transition bg-c-bg/90 text-xs relative overflow-hidden
+										class="w-full max-h-[35%] transition bg-c-bg/90 text-xs relative z-0 overflow-hidden
 										translate-y-full group-hover:translate-y-0"
 									>
 										<div class="w-full max-h-full overflow-auto list-fade">
