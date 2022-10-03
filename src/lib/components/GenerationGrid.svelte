@@ -32,8 +32,8 @@
 				<IntersectionObserver rootMargin="100%" element={nodes[i]} let:intersecting once>
 					<div bind:this={nodes[i]} class="relative group">
 						<div
-							class="rounded-xl bg-c-bg-secondary relative z-0 border-4 shadow-lg 
-							shadow-c-[var(--o-shadow-strong)] border-c-bg-secondary overflow-hidden"
+							class="rounded-xl bg-c-bg-secondary relative z-0 overflow-hidden border-4 shadow-lg 
+							shadow-c-[var(--o-shadow-strong)] border-c-bg-secondary"
 						>
 							{#if intersecting}
 								{@const url = urlFromBase64(generation.imageDataB64)}
