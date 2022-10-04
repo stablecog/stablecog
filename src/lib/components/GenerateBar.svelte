@@ -131,7 +131,9 @@
 					name="width"
 					hideSelected={!isCheckComplete}
 				>
-					<IconWidth class="w-6 h-6 text-c-on-bg/25" slot="title" />
+					<div slot="title" class="py-2 px-4 flex items-center justify-center">
+						<IconWidth class="w-6 h-6 text-c-on-bg/25" />
+					</div>
 				</TabBar>
 				<TabBar
 					class="w-72 max-w-full"
@@ -140,7 +142,9 @@
 					name="height"
 					hideSelected={!isCheckComplete}
 				>
-					<IconHeight class="w-6 h-6 text-c-on-bg/25" slot="title" />
+					<di slot="title" class="py-2 px-4 flex items-center justify-center">
+						<IconHeight class="w-6 h-6 text-c-on-bg/25" />
+					</di>
 				</TabBar>
 			</div>
 		</div>
