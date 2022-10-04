@@ -50,7 +50,7 @@
 				<IconTick
 					class="{!copied
 						? 'scale-0 opacity-0'
-						: 'scale-160 opacity-100'} w-full h-full absolute left-0 top-0 transition text-c-primary"
+						: 'scale-175 opacity-100'} w-full h-full absolute left-0 top-0 transition text-c-primary"
 				/>
 			</div>
 		</div>
