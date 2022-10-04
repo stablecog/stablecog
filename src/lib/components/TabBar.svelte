@@ -11,8 +11,8 @@
 </script>
 
 <div
-	class="w-full text-sm flex items-stretch bg-c-bg shadow-lg ring-2 ring-c-bg-secondary 
-	shadow-c-shadow/[var(--o-shadow-normal)] rounded-xl transition relative {classes}"
+	class="w-full text-sm flex items-stretch bg-c-bg shadow-lg shadow-c-shadow/[var(--o-shadow-normal)] 
+	ring-2 ring-c-bg-secondary rounded-xl transition relative {classes}"
 >
 	<div class="self-stretch flex text-c-on-bg/30">
 		<slot name="title" />
