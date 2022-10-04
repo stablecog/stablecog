@@ -19,7 +19,7 @@
 	{#if $generations === undefined || $generations.length !== 0}
 		<div class="w-full max-w-7xl flex justify-center px-1.5">
 			<div
-				class="w-full flex bg-c-bg-secondary shadow-lg shadow-c-[var(--o-shadow-normal)] justify-start px-6 py-4 md:px-8 md:py-4.5 rounded-xl"
+				class="w-full flex bg-c-bg-secondary shadow-lg shadow-c-[var(--o-shadow-normal)] justify-start px-5 py-3.5 md:px-6 md:py-4.5 rounded-xl"
 			>
 				<p class="font-bold text-xl">
 					Generations{#if $generations?.length}

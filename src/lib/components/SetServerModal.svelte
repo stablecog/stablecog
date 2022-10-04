@@ -78,10 +78,13 @@
 				/>
 				<input
 					bind:value={serverUrlInputValue}
+					on:input={() => {
+						if (setServerProcessStatus === 'error') setServerProcessStatus = 'idle';
+					}}
 					disabled={setServerProcessStatus === 'loading'}
 					type="text"
 					placeholder="Server URL"
-					class="w-full overflow-hidden overflow-ellipsis bg-transparent relative px-6 py-5 rounded-xl transition 
+					class="w-full overflow-hidden overflow-ellipsis bg-transparent relative px-5 md:px-6 py-5 rounded-xl transition 
 			        focus:ring-2 focus:ring-c-primary/20 ring-0 ring-c-primary/20 placeholder:text-c-on-bg/30 {!$isTouchscreen
 						? 'enabled:hover:ring-2'
 						: ''}"
@@ -108,9 +111,9 @@
 		</form>
 		{#if setServerProcessStatus === 'error'}
 			<div transition:expandCollapse|local={{}}>
-				<div class="pt-4">
+				<div class="pt-3.5">
 					<p class="py-3 px-4 bg-c-danger/10 rounded-lg text-c-danger text-sm">
-						This server isn't compatible or not responding...
+						This server isn't compatible or not responding.
 					</p>
 				</div>
 			</div>
