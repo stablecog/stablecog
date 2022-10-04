@@ -15,6 +15,7 @@
 
 	let serverUrlInputValue: string | undefined;
 	let setServerProcessStatus: 'idle' | 'loading' | 'success' | 'error' = 'idle';
+	let inputElement: HTMLInputElement;
 
 	const setServerUrl = async () => {
 		if (!serverUrlInputValue && env.PUBLIC_DEFAULT_SERVER_URL) {
@@ -77,9 +78,13 @@
 					class="w-full h-full rounded-xl bg-c-bg-tertiary shadow-lg shadow-c-shadow/[var(--o-shadow-normal)]  overflow-hidden absolute left-0 top-0"
 				/>
 				<input
+					bind:this={inputElement}
 					bind:value={serverUrlInputValue}
 					on:input={() => {
 						if (setServerProcessStatus === 'error') setServerProcessStatus = 'idle';
+					}}
+					on:focus={() => {
+						inputElement.select();
 					}}
 					disabled={setServerProcessStatus === 'loading'}
 					type="text"
