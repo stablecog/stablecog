@@ -8,9 +8,7 @@
 	import { serverHealth } from '$ts/stores/serverHealth';
 	import { serverUrl } from '$ts/stores/serverUrl';
 	import { quadOut } from 'svelte/easing';
-	import { fade } from 'svelte/transition';
 	import { onMount } from 'svelte';
-	import ModalWrapper from '$components/ModalWrapper.svelte';
 
 	export let close: () => void;
 
