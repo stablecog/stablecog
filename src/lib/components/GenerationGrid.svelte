@@ -35,10 +35,18 @@
 							class="rounded-xl bg-c-bg-secondary relative z-0 overflow-hidden border-4 shadow-lg 
 							shadow-c-[var(--o-shadow-strong)] border-c-bg-secondary"
 						>
+							<svg
+								class="w-full h-auto"
+								width={generation.width}
+								height={generation.height}
+								viewBox="0 0 {generation.width} {generation.height}"
+								fill="none"
+								xmlns="http://www.w3.org/2000/svg"
+							/>
 							{#if intersecting}
 								{@const url = urlFromBase64(generation.imageDataB64)}
 								<img
-									class="w-full h-auto"
+									class="w-full h-full absolute left-0 top-0"
 									src={url}
 									alt={generation.prompt}
 									width={generation.width}
@@ -48,10 +56,11 @@
 									class="w-full h-full absolute left-0 top-0 flex flex-col justify-between items-end gap-5"
 								>
 									<div
-										class="flex items-end justify-end right-0 top-0 transition transform translate-x-16 group-hover:translate-x-0"
+										class="flex items-end justify-end right-0 top-0 transition transform 
+										translate-x-16 group-focus-within:translate-x-0 group-hover:translate-x-0"
 									>
 										<DownloadGenerationButton
-											class="pr-3 pt-3"
+											class="p-2"
 											{url}
 											prompt={generation.prompt}
 											seed={generation.seed}
@@ -59,7 +68,7 @@
 									</div>
 									<div
 										class="w-full max-h-[35%] transition bg-c-bg/90 text-xs relative z-0 overflow-hidden
-										translate-y-full group-hover:translate-y-0"
+										translate-y-full group-focus-within:translate-y-0 group-hover:translate-y-0"
 									>
 										<div class="w-full max-h-full overflow-auto list-fade">
 											<p
@@ -70,15 +79,6 @@
 										</div>
 									</div>
 								</div>
-							{:else}
-								<svg
-									class="w-full h-auto"
-									width={generation.width}
-									height={generation.height}
-									viewBox="0 0 {generation.width} {generation.height}"
-									fill="none"
-									xmlns="http://www.w3.org/2000/svg"
-								/>
 							{/if}
 						</div>
 					</div>

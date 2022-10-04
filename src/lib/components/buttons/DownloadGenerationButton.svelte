@@ -12,7 +12,7 @@
 
 <a
 	{disabled}
-	class="transition group-1 {classes}"
+	class="transition rounded-lg group-1 {classes}"
 	href={url}
 	download="{prompt}-[seed_{seed}].png"
 	aria-label="Download Image"
@@ -20,10 +20,12 @@
 	<div class="p-2.5 rounded-full bg-c-bg relative overflow-hidden z-0">
 		<div
 			class="w-full h-full rounded-full transition transform -translate-x-full 
-			bg-c-primary absolute left-0 top-0 {!$isTouchscreen ? 'group-1-hover:translate-x-0' : ''}"
+			bg-c-primary absolute left-0 top-0 group-1-focus:translate-x-0 {!$isTouchscreen
+				? 'group-1-hover:translate-x-0'
+				: ''}"
 		/>
 		<IconDownload
-			class="w-7 h-7 transition text-c-on-bg relative {!$isTouchscreen
+			class="w-7 h-7 transition text-c-on-bg relative group-1-focus:text-c-on-primary {!$isTouchscreen
 				? 'group-1-hover:text-c-on-primary'
 				: ''}"
 		/>

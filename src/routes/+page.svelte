@@ -173,10 +173,11 @@
 					/>
 					<div class="w-full h-full absolute left-0 top-0 overflow-hidden z-0">
 						<div
-							class="absolute flex items-end justify-end right-0 top-0 transition transform translate-x-16 group-hover:translate-x-0"
+							class="absolute flex items-end justify-end right-0 top-0 transition transform 
+							translate-x-16 group-focus-within:translate-x-0 group-hover:translate-x-0"
 						>
 							<DownloadGenerationButton
-								class="pr-3 pt-3"
+								class="p-2"
 								url={lastGeneration.imageUrl}
 								prompt={lastGeneration.prompt}
 								seed={lastGeneration.seed}
