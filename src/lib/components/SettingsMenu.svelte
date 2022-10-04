@@ -9,7 +9,7 @@
 	import { theme } from '$ts/stores/theme';
 	import IconServer from './icons/IconServer.svelte';
 
-	export let onSwitchServer: () => void;
+	export let onSwitchServerClick: () => void;
 	export let closeSettings: () => void;
 </script>
 
@@ -19,7 +19,7 @@
   shadow-c-shadow/[var(--o-shadow-strong)] absolute right-0 top-0 overflow-hidden z-50 mt-2"
 >
 	<div class="w-full flex flex-col">
-		<DropdownItem onClick={onSwitchServer}>
+		<DropdownItem onClick={onSwitchServerClick}>
 			<div class="flex-1 min-w-0 flex flex-col items-start gap-1">
 				<div class="w-full flex items-center justify-start gap-2.5">
 					<IconServer

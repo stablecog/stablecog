@@ -14,13 +14,13 @@
 	import { scale } from 'svelte/transition';
 
 	let isSettingsOpen = false;
-	let isSwitchServerOpen = false;
+	let isSwitchServerModalOpen = false;
 	const toggleSettings = () => (isSettingsOpen = !isSettingsOpen);
 	const closeSettings = () => (isSettingsOpen = false);
 
-	const onSwitchServer = () => {
+	const onSwitchServerClick = () => {
 		closeSettings();
-		isSwitchServerOpen = true;
+		isSwitchServerModalOpen = true;
 	};
 </script>
 
@@ -80,15 +80,15 @@
 			</IconButton>
 			<div class="relative">
 				{#if isSettingsOpen}
-					<SettingsMenu {onSwitchServer} {closeSettings} />
+					<SettingsMenu {onSwitchServerClick} {closeSettings} />
 				{/if}
 			</div>
 		</div>
 	</div>
 </div>
 
-{#if isSwitchServerOpen}
+{#if isSwitchServerModalOpen}
 	<ModalWrapper>
-		<SetServerModal close={() => (isSwitchServerOpen = false)} />
+		<SetServerModal close={() => (isSwitchServerModalOpen = false)} />
 	</ModalWrapper>
 {/if}
