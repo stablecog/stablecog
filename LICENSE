@@ -1,0 +1,39 @@
+The Stablecog logo, and some of the assets in the "src/static" folders are copyrighted by Appditto LLC and used by permission for this project only.
+
+Use of these assets without express written consent from Appditto LLC for any reason is strictly forbidden
+Copyrighted assets include, but are not limited to:
+
+- static/favicon.ico
+- static/icon.svg
+- static/icon-16.png
+- static/icon-32.png
+- static/icon-96.png
+- static/icon-192.png
+- static/icon-512.png
+- static/apple-touch-icon.png
+- static/icon-any-192.png
+- static/icon-any-512.png
+- static/icon-maskable-192.png
+- static/icon-maskable-512.png
+
+All code is copyrighted by Appditto LLC under the MIT license.
+
+Copyright (c) 2022 Appditto LLC
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
