@@ -18,6 +18,9 @@
 	let setServerProcessStatus: 'idle' | 'loading' | 'success' | 'error' = 'idle';
 
 	const setServerUrl = async () => {
+		if (!serverUrlInputValue && $serverUrl) {
+			serverUrlInputValue = $serverUrl;
+		}
 		if (serverUrlInputValue) {
 			try {
 				let urlString = serverUrlInputValue;
