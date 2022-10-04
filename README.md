@@ -1,35 +1,47 @@
-# create-svelte
+# Stablecog - [stablecog.com](https://stablecog.com)
 
-Everything you need to build a SvelteKit project, powered by [`create-kit-app`](https://github.com/yekta/create-kit-app).
+This is an app made with [SvelteKit](https://kit.svelte.dev) for connecting to [Stable Diffusion](https://github.com/CompVis/stable-diffusion) cogs and creating AI generated images. For more info on cogs, you can check out: [Replicate](https://replicate.com). The app knows how to communicate with the this cog to generate images: [Stable Diffusion Cog](https://replicate.com/stability-ai/stable-diffusion). However, as long as your cog has the endpoints and the parameters the app uses, it'll work.
 
-## Creating a project
+---
 
-If you're seeing this, you've probably already done this step. Congrats!
+## Running the app in development mode
+
+First, install the dependencies with:
 
 ```bash
-# create a new project in my-app
-npx create-kit-app my-app
+npm install
 ```
 
-## Developing
-
-Once you've created a project and installed dependencies with `npm install`, start a development server:
+Then, you can run the app in development mode with:
 
 ```bash
 npm run dev
-
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
 ```
 
-## Building
+---
 
-To create a production version of your app:
+## Running the app in production mode
+
+First, create a production version of the app:
 
 ```bash
 npm run build
 ```
 
-You can preview the production build with `npm run preview`.
+Then, you can start the app with:
 
-> To deploy your app, you may need to install an [adapter](https://kit.svelte.dev/docs/adapters) for your target environment.
+```bash
+node ./build
+```
+
+If you want to deploy the app, you should edit or remove the `ci.yml` file in `.github/workflows` to suit your setup. There is also a `kubernetes` folder with the config files to deploy on Kubernetes but those are again specific to my setup, so you can edit, remove or ignore those.
+
+---
+
+## Optionals
+
+There is an `.env.example` file in the root directory. You can copy this file and rename it to `.env`. This will allow you to set the following optional environment variables:
+
+- `PUBLIC_DEFAULT_SERVER_URL`: This is the default server url (your cog's url) that the app uses to generate images if provided. You can still change to another server in the app by clicking the settings icon in the top right corner of the home page.
+- `PUBLIC_SUPABASE_URL`
+- `PUBLIC_SUPABASE_ADMIN_KEY`
