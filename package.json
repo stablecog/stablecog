@@ -23,6 +23,7 @@
 		"prettier-plugin-svelte": "^2.7.0",
 		"svelte": "^3.44.0",
 		"svelte-check": "^2.7.1",
+		"svelte-copy": "^1.2.4",
 		"svelte-intersection-observer": "^0.10.0",
 		"svelte-local-storage-store": "^0.3.1",
 		"svelte-preprocess": "^4.10.6",

@@ -56,7 +56,9 @@ module.exports = {
 			scale: {
 				101: '1.01',
 				102: '1.02',
-				103: '1.03'
+				103: '1.03',
+				160: '1.6',
+				175: '1.75'
 			},
 			animation: {
 				'pulse-custom': 'pulse-custom 1s cubic-bezier(0.5, 0, 0.5, 1) infinite',

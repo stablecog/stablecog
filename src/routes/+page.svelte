@@ -15,6 +15,8 @@
 	import type { TGeneration, TStatus } from '$ts/types/main';
 	import { onDestroy, onMount } from 'svelte';
 	import DownloadGenerationButton from '$components/buttons/DownloadGenerationButton.svelte';
+	import ImagePlaceholder from '$components/ImagePlaceholder.svelte';
+	import GenerationImage from '$components/GenerationImage.svelte';
 
 	let status: TStatus = 'idle';
 	let inputValue: string | undefined;
@@ -161,31 +163,24 @@
 			class="overflow-hidden flex flex-col items-center justify-start rounded-xl origin-top relative z-0"
 		>
 			<div class="flex flex-col items-center md:px-5 gap-4 py-4">
-				<div class="relative group">
-					<img
-						class="{lastGeneration.height / lastGeneration.width >= 3 / 2
-							? 'max-w-sm'
-							: 'max-w-xl'} w-full h-auto rounded-2xl shadow-xl shadow-c-shadow/[var(--o-shadow-strong)] border-4 border-c-bg"
-						src={lastGeneration.imageUrl}
-						height={lastGeneration.width}
-						width={lastGeneration.height}
-						alt={lastGeneration.prompt}
+				<div
+					class="rounded-2xl bg-c-bg-secondary relative z-0 overflow-hidden border-4 shadow-xl 
+					shadow-c-shadow/[var(--o-shadow-strong)] border-c-bg-secondary group"
+				>
+					<ImagePlaceholder
+						class={lastGeneration.height / lastGeneration.width >= 3 / 2 ? 'max-w-sm' : 'max-w-xl'}
+						width={lastGeneration.width}
+						height={lastGeneration.height}
 					/>
-					<div class="w-full h-full absolute left-0 top-0 overflow-hidden z-0">
-						<div
-							class="absolute flex items-end justify-end right-0 top-0 transition transform 
-							translate-x-16 group-focus-within:translate-x-0 group-hover:translate-x-0"
-						>
-							<DownloadGenerationButton
-								class="p-2"
-								url={lastGeneration.imageUrl}
-								prompt={lastGeneration.prompt}
-								seed={lastGeneration.seed}
-							/>
-						</div>
-					</div>
+					<GenerationImage
+						src={lastGeneration.imageUrl}
+						prompt={lastGeneration.prompt}
+						width={lastGeneration.width}
+						height={lastGeneration.height}
+						seed={lastGeneration.seed}
+					/>
 				</div>
-				<p class="text-c-on-bg/40 text-center">
+				<p class="text-c-on-bg/40 text-sm text-center">
 					{(duration / 1000).toLocaleString('en-US', {
 						maximumFractionDigits: 1
 					})} seconds

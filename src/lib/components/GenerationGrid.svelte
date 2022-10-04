@@ -1,6 +1,7 @@
 <script lang="ts">
 	import Button from '$components/buttons/Button.svelte';
-	import DownloadGenerationButton from '$components/buttons/DownloadGenerationButton.svelte';
+	import GenerationImage from '$components/GenerationImage.svelte';
+	import ImagePlaceholder from '$components/ImagePlaceholder.svelte';
 	import Masonry from '$components/Masonry.svelte';
 	import type { TDBGeneration } from '$ts/constants/indexedDb';
 	import { heightTabs, widthTabs } from '$ts/constants/main';
@@ -33,52 +34,18 @@
 					<div bind:this={nodes[i]} class="relative group">
 						<div
 							class="rounded-xl bg-c-bg-secondary relative z-0 overflow-hidden border-4 shadow-lg 
-							shadow-c-[var(--o-shadow-strong)] border-c-bg-secondary"
+							shadow-c-shadow/[var(--o-shadow-strong)] border-c-bg-secondary"
 						>
-							<svg
-								class="w-full h-auto"
-								width={generation.width}
-								height={generation.height}
-								viewBox="0 0 {generation.width} {generation.height}"
-								fill="none"
-								xmlns="http://www.w3.org/2000/svg"
-							/>
+							<ImagePlaceholder width={generation.width} height={generation.height} />
 							{#if intersecting}
 								{@const url = urlFromBase64(generation.imageDataB64)}
-								<img
-									class="w-full h-full absolute left-0 top-0"
-									src={url}
-									alt={generation.prompt}
+								<GenerationImage
+									prompt={generation.prompt}
 									width={generation.width}
 									height={generation.height}
+									seed={generation.seed}
+									src={url}
 								/>
-								<div
-									class="w-full h-full absolute left-0 top-0 flex flex-col justify-between items-end gap-5"
-								>
-									<div
-										class="flex items-end justify-end right-0 top-0 transition transform 
-										translate-x-16 group-focus-within:translate-x-0 group-hover:translate-x-0"
-									>
-										<DownloadGenerationButton
-											class="p-2"
-											{url}
-											prompt={generation.prompt}
-											seed={generation.seed}
-										/>
-									</div>
-									<div
-										class="w-full max-h-[35%] transition bg-c-bg/90 text-xs relative z-0 overflow-hidden
-										translate-y-full group-focus-within:translate-y-0 group-hover:translate-y-0"
-									>
-										<div class="w-full max-h-full overflow-auto list-fade">
-											<p
-												class="w-full font-medium leading-normal transition text-c-on-bg px-5 py-4 transform"
-											>
-												{generation.prompt}
-											</p>
-										</div>
-									</div>
-								</div>
 							{/if}
 						</div>
 					</div>
@@ -111,9 +78,3 @@
 		{/each}
 	</Masonry>
 {/if}
-
-<style>
-	.list-fade {
-		mask-image: linear-gradient(to top, transparent, transparent 0.35rem, black 1.25rem);
-	}
-</style>
