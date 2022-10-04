@@ -7,8 +7,8 @@
 </script>
 
 {#if href}
-	<a data-sveltekit-prefetch {href} class="group" aria-label={name}>
-		<div class="rounded-full relative">
+	<a data-sveltekit-prefetch {href} class="group rounded-xl" aria-label={name}>
+		<div class="rounded-lg relative">
 			<div class="w-full h-full rounded-full overflow-hidden z-0 absolute left-0 top-0">
 				<div
 					class="w-full h-full ease-out transition transform bg-c-primary/25 
@@ -23,8 +23,8 @@
 		</div>
 	</a>
 {:else}
-	<button on:click={onClick} class="group" aria-label={name}>
-		<div class="rounded-full relative">
+	<button on:click={onClick} class="group rounded-xl" aria-label={name}>
+		<div class="rounded-lg relative">
 			<div class="w-full h-full rounded-full overflow-hidden z-0 absolute left-0 top-0">
 				<div
 					class="w-full h-full ease-out transition transform bg-c-primary/25 
