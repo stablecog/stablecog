@@ -61,7 +61,7 @@
 <div
 	transition:expandCollapse={{ duration: 200, easing: quadOut }}
 	use:clickoutside={{ callback: () => (setServerProcessStatus === 'loading' ? null : close()) }}
-	class="w-full max-w-xl my-auto bg-c-bg-secondary rounded-2xl shadow-2xl 
+	class="w-full max-w-xl my-auto bg-c-bg-secondary rounded-2xl shadow-xl 
 		shadow-c-shadow/[var(--o-shadow-strong)] relative overflow-hidden z-0 origin-top"
 >
 	<div class="w-full flex flex-col px-3 py-4 md:p-5">
