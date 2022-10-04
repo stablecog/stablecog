@@ -1,4 +1,7 @@
+import { env } from '$env/dynamic/public';
 import { writable as writableLocal } from 'svelte-local-storage-store';
 
-const defaultServerUrl = 'http://peepeepoopoohootdetector3000.com:5000';
-export let serverUrl = writableLocal<string>('serverUrl', defaultServerUrl);
+export let serverUrl = writableLocal<string | undefined>(
+	'serverUrl',
+	env.PUBLIC_DEFAULT_SERVER_URL ?? undefined
+);

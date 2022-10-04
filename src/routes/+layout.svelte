@@ -18,13 +18,17 @@
 		try {
 			serverHealth.set('loading');
 			console.log('Checking server health...');
-			const status = await checkServerHealth($serverUrl!!);
-			if (status === 'healthy') {
-				serverHealth.set('healthy');
-				console.log('Server is healthy ✅:', $serverUrl);
-			} else {
+			if ($serverUrl === undefined) {
 				serverHealth.set('unhealthy');
-				console.log('Server is unhealthy ❌:', $serverUrl);
+			} else {
+				const status = await checkServerHealth($serverUrl);
+				if (status === 'healthy') {
+					serverHealth.set('healthy');
+					console.log('Server is healthy ✅:', $serverUrl);
+				} else {
+					serverHealth.set('unhealthy');
+					console.log('Server is unhealthy ❌:', $serverUrl);
+				}
 			}
 		} catch (error) {
 			console.log('Server health check failed:', $serverUrl, 'Error:', error);
