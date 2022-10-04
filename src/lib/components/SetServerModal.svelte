@@ -9,6 +9,7 @@
 	import { serverUrl } from '$ts/stores/serverUrl';
 	import { quadOut } from 'svelte/easing';
 	import { onMount } from 'svelte';
+	import { env } from '$env/dynamic/public';
 
 	export let close: () => void;
 
@@ -16,8 +17,8 @@
 	let setServerProcessStatus: 'idle' | 'loading' | 'success' | 'error' = 'idle';
 
 	const setServerUrl = async () => {
-		if (!serverUrlInputValue && $serverUrl) {
-			serverUrlInputValue = $serverUrl;
+		if (!serverUrlInputValue && env.PUBLIC_DEFAULT_SERVER_URL) {
+			serverUrlInputValue = env.PUBLIC_DEFAULT_SERVER_URL;
 			return;
 		}
 		if (serverUrlInputValue) {
@@ -95,7 +96,7 @@
 					class="transition transform relative
 						{setServerProcessStatus === 'loading' ? 'opacity-0 scale-0' : 'opacity-100 scale-100'}"
 				>
-					{serverUrlInputValue ? 'Set' : 'Default'}
+					{!serverUrlInputValue && env.PUBLIC_DEFAULT_SERVER_URL ? 'Default' : 'Set'}
 				</p>
 				<div
 					class="w-6 h-6 absolute transition transform left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none
