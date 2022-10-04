@@ -18,6 +18,7 @@
 	const setServerUrl = async () => {
 		if (!serverUrlInputValue && $serverUrl) {
 			serverUrlInputValue = $serverUrl;
+			return;
 		}
 		if (serverUrlInputValue) {
 			try {
@@ -94,7 +95,7 @@
 					class="transition transform relative
 						{setServerProcessStatus === 'loading' ? 'opacity-0 scale-0' : 'opacity-100 scale-100'}"
 				>
-					Set
+					{serverUrlInputValue ? 'Set' : 'Default'}
 				</p>
 				<div
 					class="w-6 h-6 absolute transition transform left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none
