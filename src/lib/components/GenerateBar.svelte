@@ -1,5 +1,7 @@
 <script lang="ts">
 	import Button from '$components/buttons/Button.svelte';
+	import IconHeight from '$components/icons/IconHeight.svelte';
+	import IconWidth from '$components/icons/IconWidth.svelte';
 	import TabBar from '$components/TabBar.svelte';
 	import { expandCollapse } from '$ts/animation/transitions';
 	import { heightTabs, widthTabs } from '$ts/constants/main';
@@ -123,21 +125,23 @@
 		>
 			<div class="w-full flex flex-wrap items-center justify-center gap-4 px-2px py-4">
 				<TabBar
-					title="W"
 					class="w-72 max-w-full"
 					tabs={widthTabs}
 					bind:value={generationWidth}
 					name="width"
 					hideSelected={!isCheckComplete}
-				/>
+				>
+					<IconWidth class="w-6 h-6 text-c-on-bg/25" slot="title" />
+				</TabBar>
 				<TabBar
-					title="H"
 					class="w-72 max-w-full"
 					tabs={heightTabs}
 					bind:value={generationHeight}
 					name="height"
 					hideSelected={!isCheckComplete}
-				/>
+				>
+					<IconHeight class="w-6 h-6 text-c-on-bg/25" slot="title" />
+				</TabBar>
 			</div>
 		</div>
 	{/if}
