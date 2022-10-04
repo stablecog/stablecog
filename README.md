@@ -1,6 +1,6 @@
 # Stablecog - [stablecog.com](https://stablecog.com)
 
-This is an app made with [SvelteKit](https://kit.svelte.dev) for connecting to [Stable Diffusion](https://github.com/CompVis/stable-diffusion) cogs and creating AI generated images. For more info on cogs, you can check out: [Replicate](https://replicate.com). The app knows how to communicate with the this cog to generate images: [Stable Diffusion Cog](https://replicate.com/stability-ai/stable-diffusion). However, as long as your cog has the endpoints and the parameters the app uses, it'll work.
+This is an app made with [SvelteKit](https://kit.svelte.dev) for connecting to [Stable Diffusion](https://github.com/CompVis/stable-diffusion) cogs and creating AI generated images. For more info on cogs, you can check out: [Replicate](https://replicate.com). The app knows how to communicate with this specific cog to generate images: [Stable Diffusion Cog](https://replicate.com/stability-ai/stable-diffusion). However, as long as your cog has the endpoints and the parameters the app uses, it'll work.
 
 ---
 
