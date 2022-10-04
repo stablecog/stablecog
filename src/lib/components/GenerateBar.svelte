@@ -24,6 +24,7 @@
 	const placeholder = 'Portrait of a monkey by Van Gogh';
 	let now: number | undefined;
 	let nowInterval: NodeJS.Timeout | undefined;
+	let inputElement: HTMLInputElement;
 
 	$: loadingOrSubmitting = status === 'loading' || submitting;
 	$: sinceSec =
@@ -96,7 +97,11 @@
 				/>
 			</div>
 			<input
+				bind:this={inputElement}
 				bind:value={inputValue}
+				on:focus={() => {
+					inputElement.select();
+				}}
 				disabled={loadingOrSubmitting}
 				{placeholder}
 				type="text"
