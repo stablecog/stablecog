@@ -48,7 +48,7 @@ export const POST: RequestHandler = async ({ request }) => {
 		const endTimestamp = Date.now();
 		const endDate = new Date(endTimestamp).toUTCString();
 		if (data.error) {
-			console.log('----', endDate, '--', data.error, '----');
+			console.log('----', endDate, '--', 'Generation error', '--', data.error, '----');
 		}
 		generationLog({
 			text: `Ended generation in ${(endTimestamp - startTimestamp) / 1000}s:`,
@@ -61,7 +61,7 @@ export const POST: RequestHandler = async ({ request }) => {
 			seed,
 			server_url
 		});
-		// If Supabase is setup, write to
+		// If Supabase is setup, write to it
 		if (output && !data.error && supabaseAdmin !== undefined) {
 			try {
 				const { headers } = request;
