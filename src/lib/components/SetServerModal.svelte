@@ -56,63 +56,61 @@
 	});
 </script>
 
-<ModalWrapper>
-	<div
-		transition:expandCollapse={{ duration: 200, easing: quadOut }}
-		use:clickoutside={{ callback: () => (setServerProcessStatus === 'loading' ? null : close()) }}
-		class="w-full max-w-xl my-auto bg-c-bg-secondary rounded-2xl shadow-2xl 
+<div
+	transition:expandCollapse={{ duration: 200, easing: quadOut }}
+	use:clickoutside={{ callback: () => (setServerProcessStatus === 'loading' ? null : close()) }}
+	class="w-full max-w-xl my-auto bg-c-bg-secondary rounded-2xl shadow-2xl 
 		shadow-c-shadow/[var(--o-shadow-strong)] relative overflow-hidden z-0 origin-top"
-	>
-		<div class="w-full flex flex-col px-3 py-4 md:p-5">
-			<p class="font-bold text-xl px-2">{$serverUrl ? 'Switch' : 'Set'} Server</p>
-			<form
-				on:submit|preventDefault={setServerUrl}
-				disabled={setServerProcessStatus === 'loading'}
-				class="w-full relative flex flex-col md:flex-row items-center justify-center gap-3 mt-5"
-			>
-				<div class="w-full md:w-auto flex-1 min-w-0 relative">
-					<div
-						class="w-full h-full rounded-xl bg-c-bg-tertiary shadow-lg shadow-c-shadow/[var(--o-shadow-normal)]  overflow-hidden absolute left-0 top-0"
-					/>
-					<input
-						bind:value={serverUrlInputValue}
-						disabled={setServerProcessStatus === 'loading'}
-						type="text"
-						placeholder="Set server URL"
-						class="w-full overflow-hidden overflow-ellipsis bg-transparent relative px-6 py-5 rounded-xl transition 
-			        focus:ring-2 focus:ring-c-primary/20 ring-0 ring-c-primary/20 placeholder:text-c-on-bg/30 {!$isTouchscreen
-							? 'enabled:hover:ring-2'
-							: ''}"
-					/>
-				</div>
-				<Button
+>
+	<div class="w-full flex flex-col px-3 py-4 md:p-5">
+		<p class="font-bold text-xl px-2">{$serverUrl ? 'Switch' : 'Set'} Server</p>
+		<form
+			on:submit|preventDefault={setServerUrl}
+			disabled={setServerProcessStatus === 'loading'}
+			class="w-full relative flex flex-col md:flex-row items-center justify-center gap-3 mt-5"
+		>
+			<div class="w-full md:w-auto flex-1 min-w-0 relative">
+				<div
+					class="w-full h-full rounded-xl bg-c-bg-tertiary shadow-lg shadow-c-shadow/[var(--o-shadow-normal)]  overflow-hidden absolute left-0 top-0"
+				/>
+				<input
+					bind:value={serverUrlInputValue}
 					disabled={setServerProcessStatus === 'loading'}
-					loading={setServerProcessStatus === 'loading'}
-					class="w-full md:w-40"
-				>
-					<p
-						class="transition transform relative
+					type="text"
+					placeholder="Server URL"
+					class="w-full overflow-hidden overflow-ellipsis bg-transparent relative px-6 py-5 rounded-xl transition 
+			        focus:ring-2 focus:ring-c-primary/20 ring-0 ring-c-primary/20 placeholder:text-c-on-bg/30 {!$isTouchscreen
+						? 'enabled:hover:ring-2'
+						: ''}"
+				/>
+			</div>
+			<Button
+				disabled={setServerProcessStatus === 'loading'}
+				loading={setServerProcessStatus === 'loading'}
+				class="w-full md:w-40"
+			>
+				<p
+					class="transition transform relative
 						{setServerProcessStatus === 'loading' ? 'opacity-0 scale-0' : 'opacity-100 scale-100'}"
-					>
-						Set
-					</p>
-					<div
-						class="w-6 h-6 absolute transition transform left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none
+				>
+					Set
+				</p>
+				<div
+					class="w-6 h-6 absolute transition transform left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none
 						{setServerProcessStatus === 'loading' ? 'opacity-100 scale-100' : 'opacity-0 scale-0'}"
-					>
-						<IconLoading class="w-full h-full animate-spin-faster" />
-					</div>
-				</Button>
-			</form>
-			{#if setServerProcessStatus === 'error'}
-				<div transition:expandCollapse|local={{}}>
-					<div class="pt-4">
-						<p class="py-3 px-4 bg-c-danger/10 rounded-lg text-c-danger text-sm">
-							This server isn't compatible or not responding...
-						</p>
-					</div>
+				>
+					<IconLoading class="w-full h-full animate-spin-faster" />
 				</div>
-			{/if}
-		</div>
+			</Button>
+		</form>
+		{#if setServerProcessStatus === 'error'}
+			<div transition:expandCollapse|local={{}}>
+				<div class="pt-4">
+					<p class="py-3 px-4 bg-c-danger/10 rounded-lg text-c-danger text-sm">
+						This server isn't compatible or not responding...
+					</p>
+				</div>
+			</div>
+		{/if}
 	</div>
-</ModalWrapper>
+</div>

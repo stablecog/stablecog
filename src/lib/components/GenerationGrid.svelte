@@ -86,10 +86,10 @@
 			{/each}
 		</Masonry>
 	{:else}
-		<div class="w-full flex-1 flex flex-col justify-center items-center py-8 px-5 gap-6">
+		<div class="w-full flex-1 flex flex-col justify-center items-center pt-8 pb-12 px-5 gap-6">
 			<p class="text-c-on-bg/50">You didn't generate any images yet.</p>
 			<Button href="/">Start Generating</Button>
-			<div class="h-[8vh]" />
+			<div class="h-[2vh]" />
 		</div>
 	{/if}
 {:else}

@@ -4,6 +4,7 @@
 	import IconHistory from '$components/icons/IconHistory.svelte';
 	import IconHome from '$components/icons/IconHome.svelte';
 	import IconSettings from '$components/icons/IconSettings.svelte';
+	import ModalWrapper from '$components/ModalWrapper.svelte';
 	import SetServerModal from '$components/SetServerModal.svelte';
 	import SettingsMenu from '$components/SettingsMenu.svelte';
 	import { clickoutside } from '$ts/actions/clickoutside';
@@ -87,5 +88,7 @@
 </div>
 
 {#if isSwitchServerOpen}
-	<SetServerModal close={() => (isSwitchServerOpen = false)} />
+	<ModalWrapper>
+		<SetServerModal close={() => (isSwitchServerOpen = false)} />
+	</ModalWrapper>
 {/if}
