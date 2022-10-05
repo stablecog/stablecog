@@ -7,6 +7,7 @@
 	import { browser } from '$app/environment';
 	import { checkServerHealth } from '$ts/queries/checkServerHealth';
 	import { serverHealth } from '$ts/stores/serverHealth';
+	import Footer from '$components/Footer.svelte';
 
 	let innerHeight: number | undefined;
 
@@ -65,9 +66,9 @@
 		? `min-height: ${innerHeight}px`
 		: ''}"
 >
-	<!-- <div class="w-full h-full absolute left-0 bottom-0 bg-gradient-to-t from-c-bg to-c-bg/0" /> -->
 	<Navbar />
 	<main class="w-full flex-1 flex flex-col overflow-x-hidden relative">
 		<slot />
 	</main>
+	<Footer />
 </div>
