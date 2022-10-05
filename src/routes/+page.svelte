@@ -69,7 +69,7 @@
 			prompt: inputValue,
 			width: Number(generationWidth),
 			height: Number(generationHeight),
-			seed: Math.floor(Math.random() * 10000000000000),
+			seed: Math.floor(Math.random() * Math.pow(10, 15)),
 			guidance_scale: Number(generationGuidanceScale),
 			num_inference_steps: Number(generationInferenceSteps)
 		};

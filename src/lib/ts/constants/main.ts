@@ -5,6 +5,8 @@ export const estimatedDurationDefault = 30;
 export const canonicalUrl = 'https://stablecog.com';
 export const defaultServerHealth: TServerHealth = 'loading';
 
+export const iterationMpPerSecDefault = 1000000;
+
 export type TAvailableWidths = '256' | '512' | '768';
 export const widthTabs: TWidthTab[] = [
 	{ label: '256', value: '256' },
