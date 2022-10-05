@@ -164,14 +164,12 @@
 		>
 			<div class="flex flex-col items-center md:px-5 gap-4 py-4">
 				<div
-					class="rounded-2xl bg-c-bg-secondary relative z-0 overflow-hidden border-4 
+					class="{lastGeneration.height / lastGeneration.width >= 3 / 2
+						? 'w-88'
+						: 'w-128'} max-w-full rounded-2xl bg-c-bg-secondary relative z-0 overflow-hidden border-4 
 					shadow-xl shadow-c-shadow/[var(--o-shadow-normal)] border-c-bg-secondary group"
 				>
-					<ImagePlaceholder
-						class={lastGeneration.height / lastGeneration.width >= 3 / 2 ? 'max-w-sm' : 'max-w-xl'}
-						width={lastGeneration.width}
-						height={lastGeneration.height}
-					/>
+					<ImagePlaceholder width={lastGeneration.width} height={lastGeneration.height} />
 					<GenerationImage
 						src={lastGeneration.imageUrl}
 						prompt={lastGeneration.prompt}
