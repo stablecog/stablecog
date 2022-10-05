@@ -117,7 +117,7 @@
 		{#if setServerProcessStatus === 'error'}
 			<div transition:expandCollapse|local={{}}>
 				<div class="pt-3.5">
-					<p class="py-3 px-4 bg-c-danger/10 rounded-lg text-c-danger text-sm">
+					<p class="py-3 px-4 bg-c-danger/8 rounded-lg text-c-danger text-sm">
 						This server isn't compatible or not responding.
 					</p>
 				</div>
