@@ -8,9 +8,15 @@
 	export { classes as class };
 	export let disabled = false;
 	let classes = '';
+
+	let element: HTMLAnchorElement;
 </script>
 
 <a
+	bind:this={element}
+	on:click={() => {
+		element.blur();
+	}}
 	{disabled}
 	class="transition rounded-lg group-1 {classes}"
 	href={url}
