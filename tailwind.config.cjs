@@ -27,6 +27,7 @@ module.exports = {
 			},
 			transitionDuration: {
 				DEFAULT: '200ms',
+				250: '250ms',
 				400: '400ms'
 			},
 			spacing: {
