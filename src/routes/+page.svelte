@@ -194,7 +194,5 @@
 				</p>
 			</div>
 		</div>
-	{:else if !$advancedMode}
-		<div transition:expandCollapse|local={{}} class="md:h-[5vh]" />
 	{/if}
 </div>

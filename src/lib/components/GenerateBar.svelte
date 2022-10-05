@@ -170,53 +170,57 @@
 			class="w-full flex flex-col justify-start overflow-hidden"
 			transition:expandCollapse|local={{}}
 		>
-			<div class="w-full flex flex-wrap items-center justify-center gap-4 px-4px py-4">
-				<TabBar
-					class="{$advancedMode ? 'w-72 md:w-76' : 'w-64 md:w-68'} max-w-full"
-					tabs={widthTabs}
-					bind:value={generationWidth}
-					name="width"
-					hideSelected={!isCheckComplete}
-				>
-					<div slot="title" class="py-2 px-4 flex items-center justify-center">
-						<IconWidth class="w-6 h-6 text-c-on-bg/25" />
-					</div>
-				</TabBar>
-				<TabBar
-					class="{$advancedMode ? 'w-72 md:w-76' : 'w-64 md:w-68'} max-w-full"
-					tabs={heightTabs}
-					bind:value={generationHeight}
-					name="height"
-					hideSelected={!isCheckComplete}
-				>
-					<di slot="title" class="py-2 px-4 flex items-center justify-center">
-						<IconHeight class="w-6 h-6 text-c-on-bg/25" />
-					</di>
-				</TabBar>
+			<div class="w-full flex flex-wrap items-center justify-center px-4px py-4">
+				<div class="w-full flex flex-wrap items-center justify-center gap-4">
+					<TabBar
+						class="{$advancedMode ? 'w-72 md:w-76' : 'w-64 md:w-68'} transition-all max-w-full"
+						tabs={widthTabs}
+						bind:value={generationWidth}
+						name="width"
+						hideSelected={!isCheckComplete}
+					>
+						<div slot="title" class="py-2 px-4 flex items-center justify-center">
+							<IconWidth class="w-6 h-6 text-c-on-bg/25" />
+						</div>
+					</TabBar>
+					<TabBar
+						class="{$advancedMode ? 'w-72 md:w-76' : 'w-64 md:w-68'} transition-all max-w-full"
+						tabs={heightTabs}
+						bind:value={generationHeight}
+						name="height"
+						hideSelected={!isCheckComplete}
+					>
+						<di slot="title" class="py-2 px-4 flex items-center justify-center">
+							<IconHeight class="w-6 h-6 text-c-on-bg/25" />
+						</di>
+					</TabBar>
+				</div>
 				{#if $advancedMode}
-					<div class="w-full flex flex-wrap items-center justify-center gap-4">
-						<TabBar
-							class="w-72 md:w-76 max-w-full"
-							tabs={guidanceScaleTabs}
-							bind:value={generationGuidanceScale}
-							name="scale"
-							hideSelected={!isCheckComplete}
-						>
-							<div slot="title" class="py-2 px-4 flex items-center justify-center">
-								<IconScale class="w-6 h-6 text-c-on-bg/25" />
-							</div>
-						</TabBar>
-						<TabBar
-							class="w-72 md:w-76 max-w-full"
-							tabs={inferenceStepsTabs}
-							bind:value={generationInferenceSteps}
-							name="steps"
-							hideSelected={!isCheckComplete}
-						>
-							<div slot="title" class="py-2 px-4 flex items-center justify-center">
-								<IconSteps class="w-6 h-6 text-c-on-bg/25" />
-							</div>
-						</TabBar>
+					<div transition:expandCollapse|local={{}} class="w-full overflow-hidden -mb-4">
+						<div class="w-full flex flex-wrap items-center justify-center gap-4 py-4">
+							<TabBar
+								class="w-72 md:w-76 max-w-full"
+								tabs={guidanceScaleTabs}
+								bind:value={generationGuidanceScale}
+								name="scale"
+								hideSelected={!isCheckComplete}
+							>
+								<div slot="title" class="py-2 px-4 flex items-center justify-center">
+									<IconScale class="w-6 h-6 text-c-on-bg/25" />
+								</div>
+							</TabBar>
+							<TabBar
+								class="w-72 md:w-76 max-w-full"
+								tabs={inferenceStepsTabs}
+								bind:value={generationInferenceSteps}
+								name="steps"
+								hideSelected={!isCheckComplete}
+							>
+								<div slot="title" class="py-2 px-4 flex items-center justify-center">
+									<IconSteps class="w-6 h-6 text-c-on-bg/25" />
+								</div>
+							</TabBar>
+						</div>
 					</div>
 				{/if}
 			</div>
