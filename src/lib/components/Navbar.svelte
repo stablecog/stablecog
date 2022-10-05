@@ -10,6 +10,8 @@
 	import { clickoutside } from '$ts/actions/clickoutside';
 	import { isTouchscreen } from '$ts/stores/isTouchscreen';
 	import { serverHealth } from '$ts/stores/serverHealth';
+	import { theme } from '$ts/stores/theme';
+	import { onMount } from 'svelte';
 	import { quadOut } from 'svelte/easing';
 	import { scale } from 'svelte/transition';
 
@@ -17,17 +19,43 @@
 	let isSwitchServerModalOpen = false;
 	const toggleSettings = () => (isSettingsOpen = !isSettingsOpen);
 	const closeSettings = () => (isSettingsOpen = false);
+	let notAtTheTop = false;
+	const notAtTheTopThreshold = 10;
 
 	const onSwitchServerClick = () => {
 		closeSettings();
 		isSwitchServerModalOpen = true;
 	};
+
+	const setNotAtTheTop = () => {
+		const t = window.scrollY > notAtTheTopThreshold;
+		if (t !== notAtTheTop) {
+			notAtTheTop = t;
+		}
+	};
+
+	onMount(() => {
+		setNotAtTheTop();
+	});
 </script>
 
-<div class="w-full flex flex-row items-center justify-between px-4 py-4 relative">
-	<div class="w-5 h-5" />
-	<div class="flex items-center justify-end">
-		<div class="p-3">
+<svelte:window on:scroll={setNotAtTheTop} />
+
+<div class="w-full flex flex-row items-center justify-between sticky z-50 top-0 transition">
+	<div class="px-4 py-3 pointer-events-none">
+		<div class="w-5 h-5 relative" />
+	</div>
+	<div class="flex items-center justify-end relative px-4 py-3">
+		<div
+			style="background-image: url({$theme === 'light'
+				? '/illustrations/grid-on-light.svg'
+				: '/illustrations/grid-on-dark.svg'});"
+			class="w-full h-full rounded-bl-xl absolute left-0 top-0 transform transition duration-300 bg-c-bg 
+			shadow-lg shadow-c-shadow/[var(--o-shadow-strong)] {notAtTheTop
+				? 'translate-y-0 opacity-100'
+				: '-translate-y-24 opacity-0'}"
+		/>
+		<div class="p-3 relative">
 			<div
 				class="w-2.5 h-2.5 rounded-full {$serverHealth === 'loading'
 					? 'bg-c-primary animate-pulse-scale'
