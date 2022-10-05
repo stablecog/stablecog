@@ -10,8 +10,8 @@
 				: ''}"
 			target="blank"
 			href="https://twitter.com/ngyekta">@ngyekta</a
-		>
-		<span class="hidden md:inline-block mx-1ch">|</span>
+		>.
+		<!-- <span class="hidden md:inline-block mx-1ch">|</span>
 		<br class="block md:hidden" />
 		GitHub:
 		<a
@@ -22,6 +22,6 @@
 			href="https://github.com/yekta/stablecog"
 		>
 			Stablecog
-		</a>
+		</a> -->
 	</p>
 </div>
