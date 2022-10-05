@@ -24,6 +24,7 @@
 	const placeholder = 'Portrait of a monkey by Van Gogh';
 	let now: number | undefined;
 	let nowInterval: NodeJS.Timeout | undefined;
+	let inputElement: HTMLInputElement;
 
 	$: loadingOrSubmitting = status === 'loading' || submitting;
 	$: sinceSec =
@@ -96,11 +97,15 @@
 				/>
 			</div>
 			<input
+				bind:this={inputElement}
 				bind:value={inputValue}
+				on:focus={() => {
+					inputElement.select();
+				}}
 				disabled={loadingOrSubmitting}
 				{placeholder}
 				type="text"
-				class="w-full overflow-hidden overflow-ellipsis bg-transparent relative px-6 md:px-8 py-5 rounded-xl transition 
+				class="w-full overflow-hidden overflow-ellipsis bg-transparent relative px-5 md:px-6 py-5 rounded-xl transition 
 				focus:ring-2 focus:ring-c-primary/20 ring-0 ring-c-primary/20 placeholder:text-c-on-bg/30 {!$isTouchscreen
 					? 'enabled:hover:ring-2'
 					: ''} {classes} {loadingOrSubmitting ? 'text-c-secondary/75' : 'text-c-on-bg'}"
@@ -131,7 +136,9 @@
 					name="width"
 					hideSelected={!isCheckComplete}
 				>
-					<IconWidth class="w-6 h-6 text-c-on-bg/25" slot="title" />
+					<div slot="title" class="py-2 px-4 flex items-center justify-center">
+						<IconWidth class="w-6 h-6 text-c-on-bg/25" />
+					</div>
 				</TabBar>
 				<TabBar
 					class="w-72 max-w-full"
@@ -140,7 +147,9 @@
 					name="height"
 					hideSelected={!isCheckComplete}
 				>
-					<IconHeight class="w-6 h-6 text-c-on-bg/25" slot="title" />
+					<di slot="title" class="py-2 px-4 flex items-center justify-center">
+						<IconHeight class="w-6 h-6 text-c-on-bg/25" />
+					</di>
 				</TabBar>
 			</div>
 		</div>

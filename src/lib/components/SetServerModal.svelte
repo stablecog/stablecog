@@ -8,16 +8,20 @@
 	import { serverHealth } from '$ts/stores/serverHealth';
 	import { serverUrl } from '$ts/stores/serverUrl';
 	import { quadOut } from 'svelte/easing';
-	import { fade } from 'svelte/transition';
 	import { onMount } from 'svelte';
-	import ModalWrapper from '$components/ModalWrapper.svelte';
+	import { env } from '$env/dynamic/public';
 
 	export let close: () => void;
 
 	let serverUrlInputValue: string | undefined;
 	let setServerProcessStatus: 'idle' | 'loading' | 'success' | 'error' = 'idle';
+	let inputElement: HTMLInputElement;
 
 	const setServerUrl = async () => {
+		if (!serverUrlInputValue && env.PUBLIC_DEFAULT_SERVER_URL) {
+			serverUrlInputValue = env.PUBLIC_DEFAULT_SERVER_URL;
+			return;
+		}
 		if (serverUrlInputValue) {
 			try {
 				let urlString = serverUrlInputValue;
@@ -59,7 +63,7 @@
 <div
 	transition:expandCollapse={{ duration: 200, easing: quadOut }}
 	use:clickoutside={{ callback: () => (setServerProcessStatus === 'loading' ? null : close()) }}
-	class="w-full max-w-xl my-auto bg-c-bg-secondary rounded-2xl shadow-2xl 
+	class="w-full max-w-xl my-auto bg-c-bg-secondary rounded-2xl shadow-xl 
 		shadow-c-shadow/[var(--o-shadow-strong)] relative overflow-hidden z-0 origin-top"
 >
 	<div class="w-full flex flex-col px-3 py-4 md:p-5">
@@ -74,11 +78,18 @@
 					class="w-full h-full rounded-xl bg-c-bg-tertiary shadow-lg shadow-c-shadow/[var(--o-shadow-normal)]  overflow-hidden absolute left-0 top-0"
 				/>
 				<input
+					bind:this={inputElement}
 					bind:value={serverUrlInputValue}
+					on:input={() => {
+						if (setServerProcessStatus === 'error') setServerProcessStatus = 'idle';
+					}}
+					on:focus={() => {
+						inputElement.select();
+					}}
 					disabled={setServerProcessStatus === 'loading'}
 					type="text"
 					placeholder="Server URL"
-					class="w-full overflow-hidden overflow-ellipsis bg-transparent relative px-6 py-5 rounded-xl transition 
+					class="w-full overflow-hidden overflow-ellipsis bg-transparent relative px-5 md:px-6 py-5 rounded-xl transition 
 			        focus:ring-2 focus:ring-c-primary/20 ring-0 ring-c-primary/20 placeholder:text-c-on-bg/30 {!$isTouchscreen
 						? 'enabled:hover:ring-2'
 						: ''}"
@@ -93,7 +104,7 @@
 					class="transition transform relative
 						{setServerProcessStatus === 'loading' ? 'opacity-0 scale-0' : 'opacity-100 scale-100'}"
 				>
-					Set
+					{!serverUrlInputValue && env.PUBLIC_DEFAULT_SERVER_URL ? 'Default' : 'Set'}
 				</p>
 				<div
 					class="w-6 h-6 absolute transition transform left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none
@@ -105,9 +116,9 @@
 		</form>
 		{#if setServerProcessStatus === 'error'}
 			<div transition:expandCollapse|local={{}}>
-				<div class="pt-4">
+				<div class="pt-3.5">
 					<p class="py-3 px-4 bg-c-danger/10 rounded-lg text-c-danger text-sm">
-						This server isn't compatible or not responding...
+						This server isn't compatible or not responding.
 					</p>
 				</div>
 			</div>

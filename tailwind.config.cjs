@@ -30,8 +30,10 @@ module.exports = {
 				400: '400ms'
 			},
 			spacing: {
+				'1ch': '1ch',
 				'2px': '2px',
 				'3px': '3px',
+				0.25: '0.0625rem',
 				4.5: '1.125rem',
 				60: '15rem',
 				68: '17rem',
