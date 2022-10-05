@@ -2,9 +2,11 @@
 	import Button from '$components/buttons/Button.svelte';
 	import IconHeight from '$components/icons/IconHeight.svelte';
 	import IconScale from '$components/icons/IconScale.svelte';
+	import IconSeed from '$components/icons/IconSeed.svelte';
 	import IconSteps from '$components/icons/IconSteps.svelte';
 	import IconWidth from '$components/icons/IconWidth.svelte';
 	import TabBar from '$components/TabBar.svelte';
+	import TabLikeInput from '$components/TabLikeInput.svelte';
 	import { tooltip } from '$ts/actions/tooltip';
 	import { expandCollapse } from '$ts/animation/transitions';
 	import {
@@ -22,6 +24,7 @@
 	import { imageSize } from '$ts/stores/imageSize';
 	import { inferenceSteps } from '$ts/stores/inferenceSteps';
 	import { isTouchscreen } from '$ts/stores/isTouchscreen';
+	import { seed } from '$ts/stores/seed';
 	import type { TStatus } from '$ts/types/main';
 	import { onMount, tick } from 'svelte';
 
@@ -29,6 +32,7 @@
 	export let generationHeight = heightDefault;
 	export let generationInferenceSteps = inferenceStepsDefault;
 	export let generationGuidanceScale = guidanceScaleDefault;
+	export let generationSeed: number;
 	export let onCreate: () => Promise<void>;
 	export let status: TStatus;
 	export let inputValue: string | undefined;
@@ -70,34 +74,10 @@
 
 	let isCheckComplete = false;
 
-	onMount(() => {
-		isCheckComplete = false;
-		const widthIndex = widthTabs
-			.map((w) => w.value)
-			.findIndex((i) => i === $imageSize?.width?.toString());
-		const heightIndex = heightTabs
-			.map((h) => h.value)
-			.findIndex((i) => i === $imageSize?.height?.toString());
-		const inferenceStepsIndex = inferenceStepsTabs
-			.map((i) => i.value)
-			.findIndex((i) => i === $inferenceSteps?.toString());
-		const guidanceScaleIndex = guidanceScaleTabs
-			.map((i) => i.value)
-			.findIndex((i) => i === $guidanceScale?.toString());
-
-		if (widthIndex >= 0) generationWidth = widthTabs[widthIndex].value;
-		if (heightIndex >= 0) generationHeight = heightTabs[heightIndex].value;
-		if (inferenceStepsIndex >= 0)
-			generationInferenceSteps = inferenceStepsTabs[inferenceStepsIndex].value;
-		if (guidanceScaleIndex >= 0)
-			generationGuidanceScale = guidanceScaleTabs[guidanceScaleIndex].value;
-
-		isCheckComplete = true;
-	});
-
 	$: [generationWidth, generationHeight], setLocalImageSize();
 	$: [generationInferenceSteps], setLocalInferenceSteps();
 	$: [generationGuidanceScale], setLocalGuidanceScale();
+	$: [generationSeed], setLocalSeed();
 
 	const setLocalImageSize = () => {
 		if (isCheckComplete) {
@@ -119,6 +99,42 @@
 			guidanceScale.set(generationGuidanceScale);
 		}
 	};
+
+	const setLocalSeed = () => {
+		if (isCheckComplete) {
+			if (generationSeed !== undefined && generationSeed !== null) {
+				seed.set(parseInt(generationSeed.toString()));
+			} else {
+				localStorage.removeItem('seed');
+			}
+		}
+	};
+
+	onMount(() => {
+		isCheckComplete = false;
+		const widthIndex = widthTabs
+			.map((w) => w.value)
+			.findIndex((i) => i === $imageSize?.width?.toString());
+		const heightIndex = heightTabs
+			.map((h) => h.value)
+			.findIndex((i) => i === $imageSize?.height?.toString());
+		const inferenceStepsIndex = inferenceStepsTabs
+			.map((i) => i.value)
+			.findIndex((i) => i === $inferenceSteps?.toString());
+		const guidanceScaleIndex = guidanceScaleTabs
+			.map((i) => i.value)
+			.findIndex((i) => i === $guidanceScale?.toString());
+
+		if (widthIndex >= 0) generationWidth = widthTabs[widthIndex].value;
+		if (heightIndex >= 0) generationHeight = heightTabs[heightIndex].value;
+		if (inferenceStepsIndex >= 0)
+			generationInferenceSteps = inferenceStepsTabs[inferenceStepsIndex].value;
+		if (guidanceScaleIndex >= 0)
+			generationGuidanceScale = guidanceScaleTabs[guidanceScaleIndex].value;
+		if ($seed !== undefined && $seed !== null) generationSeed = $seed;
+
+		isCheckComplete = true;
+	});
 
 	const tooltipStyleProps = {
 		titleClass: 'font-bold text-sm leading-relaxed',
@@ -267,6 +283,24 @@
 									<IconSteps class="w-6 h-6 text-c-on-bg/25" />
 								</div>
 							</TabBar>
+							<TabLikeInput
+								class="w-72 md:w-76 max-w-full"
+								placeholder="Seed, enter a number"
+								bind:value={generationSeed}
+							>
+								<div
+									use:tooltip={{
+										title: 'Seed',
+										description:
+											'Get repeatable results. The same seed combined with the same prompt and the options will generate the same image.',
+										...tooltipStyleProps
+									}}
+									slot="title"
+									class="py-2 px-4 flex items-center justify-center"
+								>
+									<IconSeed class="w-6 h-6 text-c-on-bg/25" />
+								</div>
+							</TabLikeInput>
 						</div>
 					</div>
 				{/if}

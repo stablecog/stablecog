@@ -6,6 +6,8 @@
 		canonicalUrl,
 		estimatedDurationBufferRatio,
 		estimatedDurationDefault,
+		guidanceScaleDefault,
+		inferenceStepsDefault,
 		type TAvailableGuidanceScales,
 		type TAvailableHeights,
 		type TAvailableInferenceSteps,
@@ -32,6 +34,7 @@
 	let generationHeight: TAvailableHeights;
 	let generationInferenceSteps: TAvailableInferenceSteps;
 	let generationGuidanceScale: TAvailableGuidanceScales;
+	let generationSeed: number;
 	let generationError: string | undefined;
 	let estimatedDuration = estimatedDurationDefault;
 
@@ -69,9 +72,12 @@
 			prompt: inputValue,
 			width: Number(generationWidth),
 			height: Number(generationHeight),
-			seed: Math.floor(Math.random() * Math.pow(10, 15)),
-			guidance_scale: Number(generationGuidanceScale),
-			num_inference_steps: Number(generationInferenceSteps)
+			guidance_scale: Number($advancedMode ? generationGuidanceScale : guidanceScaleDefault),
+			num_inference_steps: Number($advancedMode ? generationInferenceSteps : inferenceStepsDefault),
+			seed:
+				generationSeed !== undefined && generationSeed !== null && $advancedMode
+					? generationSeed
+					: Math.floor(Math.random() * Math.pow(10, 15))
 		};
 		console.log('generation', lastGeneration);
 		console.log('estimatedDuration', estimatedDuration);
@@ -155,6 +161,7 @@
 		bind:generationHeight
 		bind:generationInferenceSteps
 		bind:generationGuidanceScale
+		bind:generationSeed
 		{status}
 		{onCreate}
 		{startTimestamp}
