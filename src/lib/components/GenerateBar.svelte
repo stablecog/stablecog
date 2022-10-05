@@ -5,6 +5,7 @@
 	import IconSteps from '$components/icons/IconSteps.svelte';
 	import IconWidth from '$components/icons/IconWidth.svelte';
 	import TabBar from '$components/TabBar.svelte';
+	import { tooltip } from '$ts/actions/tooltip';
 	import { expandCollapse } from '$ts/animation/transitions';
 	import {
 		guidanceScaleDefault,
@@ -118,6 +119,15 @@
 			guidanceScale.set(generationGuidanceScale);
 		}
 	};
+
+	const tooltipStyleProps = {
+		titleClass: 'font-bold text-sm leading-relaxed',
+		descriptionClass: 'text-c-on-bg/50 text-xs leading-relaxed',
+		containerClass:
+			'px-5 py-3 text-c-on-bg/75 flex flex-col gap-1 rounded-xl bg-c-bg-secondary max-w-[17rem] shadow-lg shadow-c-shadow/[var(--o-shadow-strong)',
+		indicatorClass:
+			'-mt-1 ml-3.5 w-0 h-0 border-b-[0.75rem] border-b-c-bg-secondary border-l-[0.75rem] border-l-transparent border-r-[0.75rem] border-r-transparent'
+	};
 </script>
 
 <form
@@ -170,8 +180,8 @@
 			class="w-full flex flex-col justify-start overflow-hidden"
 			transition:expandCollapse|local={{}}
 		>
-			<div class="w-full flex flex-wrap items-center justify-center px-4px py-4">
-				<div class="w-full flex flex-wrap items-center justify-center gap-4">
+			<div class="w-full flex flex-wrap items-center justify-center py-4">
+				<div class="w-full flex flex-wrap items-center justify-center px-4px gap-4">
 					<TabBar
 						class="{$advancedMode ? 'w-72 md:w-76' : 'w-64 md:w-68'} transition-all max-w-full"
 						tabs={widthTabs}
@@ -179,7 +189,15 @@
 						name="width"
 						hideSelected={!isCheckComplete}
 					>
-						<div slot="title" class="py-2 px-4 flex items-center justify-center">
+						<div
+							use:tooltip={{
+								title: 'Width',
+								description: 'The width of the image.',
+								...tooltipStyleProps
+							}}
+							slot="title"
+							class="py-2 px-4 flex items-center justify-center"
+						>
 							<IconWidth class="w-6 h-6 text-c-on-bg/25" />
 						</div>
 					</TabBar>
@@ -190,14 +208,22 @@
 						name="height"
 						hideSelected={!isCheckComplete}
 					>
-						<di slot="title" class="py-2 px-4 flex items-center justify-center">
+						<div
+							use:tooltip={{
+								title: 'Height',
+								description: 'The height of the image.',
+								...tooltipStyleProps
+							}}
+							slot="title"
+							class="py-2 px-4 flex items-center justify-center"
+						>
 							<IconHeight class="w-6 h-6 text-c-on-bg/25" />
-						</di>
+						</div>
 					</TabBar>
 				</div>
 				{#if $advancedMode}
 					<div transition:expandCollapse|local={{}} class="w-full overflow-hidden -mb-4">
-						<div class="w-full flex flex-wrap items-center justify-center gap-4 py-4">
+						<div class="w-full flex flex-wrap items-center justify-center px-4px gap-4 py-4">
 							<TabBar
 								class="w-72 md:w-76 max-w-full"
 								tabs={guidanceScaleTabs}
@@ -205,7 +231,16 @@
 								name="scale"
 								hideSelected={!isCheckComplete}
 							>
-								<div slot="title" class="py-2 px-4 flex items-center justify-center">
+								<div
+									use:tooltip={{
+										title: 'Guidance Scale',
+										description:
+											'How similar the image will be to your prompt. Higher values make the image closer to your prompt.',
+										...tooltipStyleProps
+									}}
+									slot="title"
+									class="py-2 px-4 flex items-center justify-center"
+								>
 									<IconScale class="w-6 h-6 text-c-on-bg/25" />
 								</div>
 							</TabBar>
@@ -216,7 +251,15 @@
 								name="steps"
 								hideSelected={!isCheckComplete}
 							>
-								<div slot="title" class="py-2 px-4 flex items-center justify-center">
+								<div
+									use:tooltip={{
+										title: 'Steps',
+										description: 'How many steps will be taken to generate (diffuse) the image.',
+										...tooltipStyleProps
+									}}
+									slot="title"
+									class="py-2 px-4 flex items-center justify-center"
+								>
 									<IconSteps class="w-6 h-6 text-c-on-bg/25" />
 								</div>
 							</TabBar>
