@@ -32,6 +32,10 @@ jobs:
       - name: Build and tag
         if: success()
         run: docker build -t appditto/stablecog:${{ env.BRANCH_NAME }}-${{ env.GITHUB_RUN_ID }} .
+        env:
+          PUBLIC_DEFAULT_SERVER_URL: ${{ secrets.PUBLIC_DEFAULT_SERVER_URL }}
+          PUBLIC_SUPABASE_URL: ${{ secrets.PUBLIC_SUPABASE_URL }}
+          SUPABASE_ADMIN_KEY: ${{ secrets.SUPABASE_ADMIN_KEY }}
 
       - name: Push image
         if: success()
