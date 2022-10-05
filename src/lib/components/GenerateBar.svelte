@@ -285,7 +285,7 @@
 							</TabBar>
 							<TabLikeInput
 								class="w-72 md:w-76 max-w-full"
-								placeholder="Seed, enter a number"
+								placeholder="Enter a number"
 								bind:value={generationSeed}
 							>
 								<div

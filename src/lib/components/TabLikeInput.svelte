@@ -34,7 +34,7 @@
 			}}
 			{placeholder}
 			type="number"
-			class="w-full text-c-on-bg/75 self-stretch ring-0 transition ring-c-primary/20 focus:ring-2 px-5 py-3.5 rounded-r-xl 
+			class="w-full text-c-on-bg/75 self-stretch overflow-ellipsis ring-0 transition ring-c-primary/20 focus:ring-2 px-5 py-3.5 rounded-r-xl 
 			bg-transparent placeholder:text-c-on-bg/30 {!$isTouchscreen ? 'hover:ring-2' : ''}"
 		/>
 	</div>
