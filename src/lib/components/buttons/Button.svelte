@@ -14,7 +14,7 @@
 		data-sveltekit-prefetch
 		{disabled}
 		class="px-8 md:px-10 relative flex items-center justify-center text-center py-5 
-			shadow-lg shadow-c-shadow/[var(--o-shadow-strong)]  text-c-on-primary rounded-xl font-bold gap-2 
+			shadow-lg shadow-c-shadow/[var(--o-shadow-normal)]  text-c-on-primary rounded-xl font-bold gap-2 
 			overflow-hidden z-0 group {loading ? 'bg-c-secondary' : 'bg-c-primary'} {classes}"
 	>
 		<div class="w-[200%] h-full absolute left-0 top-0 flex items-center justify-center">
@@ -32,7 +32,7 @@
 		on:click={onClick}
 		disabled={disabled || loading}
 		class="px-8 md:px-10 relative flex items-center justify-center text-center py-5 
-			shadow-lg shadow-c-shadow/[var(--o-shadow-strong)]  text-c-on-primary rounded-xl font-bold gap-2 
+			shadow-lg shadow-c-shadow/[var(--o-shadow-normal)]  text-c-on-primary rounded-xl font-bold gap-2 
 			overflow-hidden z-0 group {loading ? 'bg-c-secondary' : 'bg-c-primary'} {classes}"
 	>
 		<div class="w-[200%] h-full absolute left-0 top-0 flex items-center justify-center">

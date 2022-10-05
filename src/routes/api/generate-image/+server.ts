@@ -38,8 +38,8 @@ export const POST: RequestHandler = async ({ request }) => {
 					width: width.toString(),
 					height: height.toString(),
 					seed: seed.toString(),
-					num_inference_steps: num_inference_steps.toString(),
-					guidance_scale: guidance_scale.toString()
+					num_inference_steps: Math.round(num_inference_steps).toString(),
+					guidance_scale: Math.round(guidance_scale).toString()
 				}
 			})
 		});

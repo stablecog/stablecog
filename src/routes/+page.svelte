@@ -5,7 +5,11 @@
 	import {
 		canonicalUrl,
 		estimatedDurationBufferRatio,
-		estimatedDurationDefault
+		estimatedDurationDefault,
+		type TAvailableGuidanceScales,
+		type TAvailableHeights,
+		type TAvailableInferenceSteps,
+		type TAvailableWidths
 	} from '$ts/constants/main';
 	import { urlFromBase64 } from '$ts/helpers/base64';
 	import { addGenerationToDb } from '$ts/queries/indexedDb';
@@ -14,9 +18,9 @@
 	import { serverUrl } from '$ts/stores/serverUrl';
 	import type { TGeneration, TStatus } from '$ts/types/main';
 	import { onDestroy, onMount } from 'svelte';
-	import DownloadGenerationButton from '$components/buttons/DownloadGenerationButton.svelte';
 	import ImagePlaceholder from '$components/ImagePlaceholder.svelte';
 	import GenerationImage from '$components/GenerationImage.svelte';
+	import { advancedMode } from '$ts/stores/advancedMode';
 
 	let status: TStatus = 'idle';
 	let inputValue: string | undefined;
@@ -24,9 +28,10 @@
 	let startTimestamp: number | undefined;
 	let endTimestamp: number | undefined;
 	let lastGeneration: TGeneration | undefined;
-	let generationWidth: string;
-	let generationHeight: string;
-	let numInferenceSteps = 50;
+	let generationWidth: TAvailableWidths;
+	let generationHeight: TAvailableHeights;
+	let generationInferenceSteps: TAvailableInferenceSteps;
+	let generationGuidanceScale: TAvailableGuidanceScales;
 	let generationError: string | undefined;
 	let estimatedDuration = estimatedDurationDefault;
 
@@ -35,14 +40,16 @@
 			? endTimestamp - startTimestamp
 			: undefined;
 
-	$: [generationWidth, generationHeight], setEstimatedDuration();
+	$: [generationWidth, generationHeight, generationInferenceSteps], setEstimatedDuration();
 
 	async function setEstimatedDuration() {
 		if (isCheckComplete) {
 			estimatedDuration =
 				$iterationMpPerSec && generationWidth && generationHeight
 					? Math.ceil(
-							((Number(generationWidth) * Number(generationHeight) * numInferenceSteps) /
+							((Number(generationWidth) *
+								Number(generationHeight) *
+								Number(generationInferenceSteps)) /
 								$iterationMpPerSec) *
 								(1 + estimatedDurationBufferRatio)
 					  )
@@ -62,9 +69,9 @@
 			prompt: inputValue,
 			width: Number(generationWidth),
 			height: Number(generationHeight),
-			seed: Math.floor(Math.random() * 1000000000),
-			guidance_scale: 7,
-			num_inference_steps: numInferenceSteps
+			seed: Math.floor(Math.random() * 10000000000000),
+			guidance_scale: Number(generationGuidanceScale),
+			num_inference_steps: Number(generationInferenceSteps)
 		};
 		console.log('generation', lastGeneration);
 		console.log('estimatedDuration', estimatedDuration);
@@ -146,6 +153,8 @@
 		bind:inputValue
 		bind:generationWidth
 		bind:generationHeight
+		bind:generationInferenceSteps
+		bind:generationGuidanceScale
 		{status}
 		{onCreate}
 		{startTimestamp}
@@ -185,7 +194,7 @@
 				</p>
 			</div>
 		</div>
-	{:else}
+	{:else if !$advancedMode}
 		<div transition:expandCollapse|local={{}} class="md:h-[5vh]" />
 	{/if}
 </div>

@@ -3,11 +3,11 @@ import type { TGenerationRequest, TGenerationResponse } from '$ts/types/main';
 export async function generateImage({
 	server_url,
 	prompt,
-	width = 512,
-	height = 512,
-	seed = Math.floor(Math.random() * 1000000000),
-	num_inference_steps = 100,
-	guidance_scale = 7
+	width,
+	height,
+	seed,
+	num_inference_steps,
+	guidance_scale
 }: TGenerationRequest) {
 	const response = await fetch(`/api/generate-image`, {
 		method: 'POST',

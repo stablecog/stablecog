@@ -11,7 +11,7 @@
 </script>
 
 <div
-	class="w-full text-sm flex items-stretch bg-c-bg shadow-lg shadow-c-shadow/[var(--o-shadow-normal)] 
+	class="w-full text-xs md:text-sm flex items-stretch bg-c-bg shadow-lg shadow-c-shadow/[var(--o-shadow-normal)] 
 	ring-2 ring-c-bg-secondary rounded-xl transition relative {classes}"
 >
 	<div class="self-stretch flex text-c-on-bg/30">
@@ -43,9 +43,9 @@
 					<div class="w-full h-full overflow-hidden relative z-0 rounded-lg">
 						<div
 							class="w-full h-full origin-left rounded-lg transition transform translate-y-full 
-              bg-c-bg-secondary group-focus-within:translate-y-0 {!$isTouchscreen
-								? 'group-hover:translate-y-0'
-								: ''}"
+              bg-c-bg-secondary {value !== tab.value
+								? 'group-focus-within:translate-y-0'
+								: ''} {!$isTouchscreen ? 'group-hover:translate-y-0' : ''}"
 						/>
 					</div>
 				</div>

@@ -1,9 +1,11 @@
 <script lang="ts">
 	import DropdownItem from '$components/DropdownItem.svelte';
+	import IconAdvanced from '$components/icons/IconAdvanced.svelte';
 	import IconDarkMode from '$components/icons/IconDarkMode.svelte';
 	import ToggleIndicator from '$components/ToggleIndicator.svelte';
 	import { expandCollapse } from '$ts/animation/transitions';
 	import { parseUrlStr } from '$ts/helpers/parseUrlStr';
+	import { advancedMode } from '$ts/stores/advancedMode';
 	import { isTouchscreen } from '$ts/stores/isTouchscreen';
 	import { serverUrl } from '$ts/stores/serverUrl';
 	import { theme } from '$ts/stores/theme';
@@ -15,7 +17,7 @@
 
 <div
 	transition:expandCollapse={{ durationMultiplier: 0.8 }}
-	class="w-60 max-w-[80vw] bg-c-bg-secondary rounded-xl flex flex-col justify-start shadow-lg 
+	class="w-68 max-w-[80vw] bg-c-bg-secondary rounded-xl flex flex-col justify-start shadow-lg 
   shadow-c-shadow/[var(--o-shadow-strong)] absolute right-0 top-0 overflow-hidden z-50 mt-2"
 >
 	<div class="w-full flex flex-col">
@@ -38,6 +40,32 @@
 				<p class="w-full text-xs text-left break-all font-normal text-c-on-bg/60">
 					{$serverUrl ? parseUrlStr($serverUrl) : 'Not connected'}
 				</p>
+			</div>
+		</DropdownItem>
+		<DropdownItem
+			onClick={() => {
+				advancedMode.set($advancedMode === false ? true : false);
+				setTimeout(() => {
+					closeSettings();
+				}, 100);
+			}}
+		>
+			<div class="flex-1 flex min-w-0 items-center justify-between gap-2">
+				<div class="flex-1 min-w-0 flex items-center justify-start gap-2.5">
+					<IconAdvanced
+						class="transition w-6 h-6 text-c-text {!$isTouchscreen
+							? 'group-hover:text-c-primary'
+							: ''}"
+					/>
+					<p
+						class="flex-1 min-w-0 overflow-hidden overflow-ellipsis whitespace-nowrap text-left transition text-c-on-bg {!$isTouchscreen
+							? 'group-hover:text-c-primary'
+							: ''}"
+					>
+						Advanced Mode
+					</p>
+				</div>
+				<ToggleIndicator isToggled={$advancedMode !== false} />
 			</div>
 		</DropdownItem>
 		<DropdownItem
