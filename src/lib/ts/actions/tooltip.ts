@@ -1,72 +1,81 @@
 export function tooltip(
 	node: HTMLElement,
 	{
+		wrapperClass,
 		containerClass,
 		indicatorClass,
 		title,
 		titleClass,
 		description,
-		descriptionClass
+		descriptionClass,
+		animationTime = 200,
+		animateFrom,
+		animateTo
 	}: TTooltipProps
 ) {
 	const tooltipWrapper = document.createElement('div');
 	tooltipWrapper.style.zIndex = '50';
 	tooltipWrapper.style.position = 'absolute';
 	tooltipWrapper.style.paddingRight = '1rem';
+	tooltipWrapper.style.pointerEvents = 'none';
+
+	addClasses(tooltipWrapper, animateFrom);
+	addClasses(tooltipWrapper, wrapperClass);
 
 	if (indicatorClass) {
 		const indicator = document.createElement('div');
-		const indicatorClasses = indicatorClass.split(' ');
-		if (indicatorClasses.length > 0) {
-			indicator.classList.add(...indicatorClasses);
-		}
+		addClasses(indicator, indicatorClass);
 		tooltipWrapper.appendChild(indicator);
 	}
 
 	const tooltipContainer = document.createElement('div');
-	if (containerClass) {
-		const containerClasses = containerClass.split(' ');
-		if (containerClasses.length > 0) {
-			tooltipContainer.classList.add(...containerClasses);
-		}
-	}
+	addClasses(tooltipContainer, containerClass);
 	tooltipWrapper.appendChild(tooltipContainer);
 
 	const titleElement = document.createElement('h3');
 	titleElement.textContent = title;
 	tooltipContainer.appendChild(titleElement);
-	if (titleClass) {
-		const titleClasses = titleClass.split(' ');
-		if (titleClasses.length > 0) {
-			titleElement.classList.add(...titleClasses);
-		}
-	}
+	addClasses(titleElement, titleClass);
 
 	if (description) {
 		const descriptionElement = document.createElement('p');
 		descriptionElement.textContent = description;
+		addClasses(descriptionElement, descriptionClass);
 		tooltipContainer.appendChild(descriptionElement);
-		if (descriptionClass) {
-			const descriptionClasses = descriptionClass.split(' ');
-			if (descriptionClasses.length > 0) {
-				descriptionElement.classList.add(...descriptionClasses);
-			}
-		}
 	}
 
-	const onMouseEnter = () => {
-		const { left, top, width, height } = node.getBoundingClientRect();
-		tooltipWrapper.style.left = `${left}px`;
-		tooltipWrapper.style.top = `${top + height}px`;
+	let mouseLeaveTimeout: NodeJS.Timeout;
 
-		document.body.appendChild(tooltipWrapper);
+	const onMouseEnter = () => {
+		clearTimeout(mouseLeaveTimeout);
+		if (!document.body.contains(tooltipWrapper)) {
+			const { left, top, width, height } = node.getBoundingClientRect();
+			const scrollY = window.scrollY;
+			tooltipWrapper.style.left = `${left}px`;
+			tooltipWrapper.style.top = `${top + height + scrollY}px`;
+
+			document.body.appendChild(tooltipWrapper);
+			setTimeout(() => {
+				addClasses(tooltipWrapper, animateTo);
+				removeClasses(tooltipWrapper, animateFrom);
+			});
+		} else {
+			addClasses(tooltipWrapper, animateTo);
+			removeClasses(tooltipWrapper, animateFrom);
+		}
 	};
 
 	const onMouseLeave = () => {
-		// if body has the child
-		if (document.body.contains(tooltipWrapper)) {
-			document.body.removeChild(tooltipWrapper);
+		if (tooltipWrapper) {
+			addClasses(tooltipWrapper, animateFrom);
+			removeClasses(tooltipWrapper, animateTo);
 		}
+		clearTimeout(mouseLeaveTimeout);
+		mouseLeaveTimeout = setTimeout(() => {
+			if (document.body.contains(tooltipWrapper)) {
+				document.body.removeChild(tooltipWrapper);
+			}
+		}, animationTime);
 	};
 
 	node.addEventListener('mouseenter', onMouseEnter, false);
@@ -83,11 +92,33 @@ export function tooltip(
 	};
 }
 
+function addClasses(element: HTMLElement, classes?: string) {
+	if (classes) {
+		const classesArray = classes.split(' ');
+		if (classes.length > 0) {
+			element.classList.add(...classesArray);
+		}
+	}
+}
+
+function removeClasses(element: HTMLElement, classes?: string) {
+	if (classes) {
+		const classesArray = classes.split(' ');
+		if (classes.length > 0) {
+			element.classList.remove(...classesArray);
+		}
+	}
+}
+
 interface TTooltipProps {
+	wrapperClass?: string;
 	containerClass?: string;
 	indicatorClass?: string;
 	title: string;
 	titleClass: string;
 	description?: string;
 	descriptionClass: string;
+	animationTime?: number;
+	animateFrom?: string;
+	animateTo?: string;
 }
