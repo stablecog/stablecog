@@ -130,7 +130,7 @@
 		>
 			<div class="w-full flex flex-wrap items-center justify-center gap-4 px-2px py-4">
 				<TabBar
-					class="w-72 max-w-full"
+					class="w-68 max-w-full"
 					tabs={widthTabs}
 					bind:value={generationWidth}
 					name="width"
@@ -141,7 +141,7 @@
 					</div>
 				</TabBar>
 				<TabBar
-					class="w-72 max-w-full"
+					class="w-68 max-w-full"
 					tabs={heightTabs}
 					bind:value={generationHeight}
 					name="height"
