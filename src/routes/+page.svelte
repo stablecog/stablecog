@@ -141,7 +141,7 @@
 	canonical={canonicalUrl}
 />
 
-<div class="w-full flex flex-col items-center flex-1 justify-center px-4 pb-14">
+<div class="w-full flex flex-col items-center flex-1 justify-center px-4 pb-8">
 	<GenerateBar
 		bind:inputValue
 		bind:generationWidth
