@@ -292,7 +292,7 @@
 									use:tooltip={{
 										title: 'Seed',
 										description:
-											'Get repeatable results. The same seed combined with the same prompt and the options will generate the same image.',
+											'Get repeatable results. The same seed combined with the same prompt and options will generate the same image.',
 										...tooltipStyleProps
 									}}
 									slot="title"
