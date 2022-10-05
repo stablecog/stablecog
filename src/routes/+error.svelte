@@ -4,7 +4,7 @@
 	import Button from '$components/buttons/Button.svelte';
 </script>
 
-<div class="w-full flex-1 flex flex-col items-center justify-center px-5 pt-8 pb-[calc(15vh+4rem)]">
+<div class="w-full flex-1 flex flex-col items-center justify-center px-5 pt-8 pb-[calc(8vh+2rem)]">
 	<div class="w-full flex flex-col items-center justify-center max-w-lg gap-8">
 		<div class="w-full max-w-xl flex flex-col items-center gap-3">
 			<h1 class="text-6xl font-bold">{$page.status}</h1>

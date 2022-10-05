@@ -20,7 +20,7 @@
 		<div class="w-[200%] h-full absolute left-0 top-0 flex items-center justify-center">
 			<div
 				class="w-full aspect-square origin-left rounded-full transition transform -translate-x-full 
-					bg-c-secondary {!$isTouchscreen ? 'group-enabled:group-hover:translate-x-[-45%]' : ''}"
+				bg-c-secondary {!$isTouchscreen ? 'group-hover:translate-x-[-45%]' : ''}"
 			/>
 		</div>
 		<div class="relative">
