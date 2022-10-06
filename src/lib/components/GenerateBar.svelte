@@ -146,7 +146,7 @@
 		containerClass:
 			'px-5 py-3 text-c-on-bg/75 flex flex-col gap-1 rounded-xl bg-c-bg-secondary max-w-[17rem] shadow-lg shadow-c-shadow/[var(--o-shadow-strong)',
 		indicatorClass:
-			'ml-4 -mt-2 w-0 h-0 border-b-[1rem] border-b-c-bg-secondary border-l-[0.75rem] border-l-transparent border-r-[0.75rem] border-r-transparent'
+			'ml-4.5 w-5 h-5 transform -mt-0.5 -mb-2.5 rotate-135 bg-c-bg-secondary rounded-bl'
 	};
 </script>
 
