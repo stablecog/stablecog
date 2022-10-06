@@ -44,6 +44,8 @@
 									width={generation.width}
 									height={generation.height}
 									seed={generation.seed}
+									guidanceScale={generation.guidance_scale}
+									inferenceSteps={generation.num_inference_steps}
 									src={url}
 								/>
 							{/if}

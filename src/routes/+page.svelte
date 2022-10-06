@@ -192,6 +192,8 @@
 						width={lastGeneration.width}
 						height={lastGeneration.height}
 						seed={lastGeneration.seed}
+						guidanceScale={lastGeneration.guidance_scale}
+						inferenceSteps={lastGeneration.num_inference_steps}
 					/>
 				</div>
 				<p class="text-c-on-bg/40 text-sm text-center">
