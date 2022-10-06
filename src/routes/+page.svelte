@@ -176,9 +176,9 @@
 	{:else if status === 'success' && duration !== undefined && lastGeneration && lastGeneration.imageUrl}
 		<div
 			transition:expandCollapse|local={{}}
-			class="overflow-hidden flex flex-col items-center justify-start rounded-xl origin-top relative z-0"
+			class="max-w-full overflow-hidden flex flex-col items-center justify-start rounded-xl origin-top relative z-0"
 		>
-			<div class="flex flex-col items-center md:px-5 gap-4 py-4">
+			<div class="max-w-full flex flex-col items-center md:px-5 gap-4 py-4">
 				<div
 					class="{lastGeneration.height / lastGeneration.width >= 3 / 2
 						? 'w-88'
