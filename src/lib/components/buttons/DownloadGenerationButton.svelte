@@ -22,7 +22,7 @@
 	{disabled}
 	class="transition rounded-lg group-1 {classes}"
 	href={url}
-	download="{prompt}_[seed_{seed}]_[scale_{guidanceScale}]_[steps_{inferenceSteps}].png"
+	download="{prompt}-[seed_{seed}]-[scale_{guidanceScale}]-[steps_{inferenceSteps}].png"
 	aria-label="Download Image"
 >
 	<div class="p-2.5 rounded-full bg-c-bg relative overflow-hidden z-0">
