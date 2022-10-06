@@ -34,14 +34,9 @@ export const inferenceStepsTabs: TInferenceStepsTab[] = [
 ];
 export const inferenceStepsDefault = inferenceStepsTabs[1].value;
 
-export type TAvailableGuidanceScales = '1' | '7' | '15' | '20';
-export const guidanceScaleTabs: TGuidanceScaleTab[] = [
-	{ label: '1', value: '1' },
-	{ label: '7', value: '7' },
-	{ label: '15', value: '15' },
-	{ label: '20', value: '20' }
-];
-export const guidanceScaleDefault = guidanceScaleTabs[1].value;
+export const guidanceScaleMax = 20;
+export const guidanceScaleMin = 1;
+export const guidanceScaleDefault = 7;
 
 export interface TWidthTab extends TTab {
 	value: TAvailableWidths;
@@ -53,5 +48,5 @@ export interface TInferenceStepsTab extends TTab {
 	value: TAvailableInferenceSteps;
 }
 export interface TGuidanceScaleTab extends TTab {
-	value: TAvailableGuidanceScales;
+	value: number;
 }

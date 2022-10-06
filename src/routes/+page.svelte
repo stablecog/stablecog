@@ -8,7 +8,6 @@
 		estimatedDurationDefault,
 		guidanceScaleDefault,
 		inferenceStepsDefault,
-		type TAvailableGuidanceScales,
 		type TAvailableHeights,
 		type TAvailableInferenceSteps,
 		type TAvailableWidths
@@ -33,7 +32,7 @@
 	let generationWidth: TAvailableWidths;
 	let generationHeight: TAvailableHeights;
 	let generationInferenceSteps: TAvailableInferenceSteps;
-	let generationGuidanceScale: TAvailableGuidanceScales;
+	let generationGuidanceScale: number;
 	let generationSeed: number;
 	let generationError: string | undefined;
 	let estimatedDuration = estimatedDurationDefault;

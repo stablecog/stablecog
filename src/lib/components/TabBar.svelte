@@ -4,7 +4,7 @@
 
 	export let tabs: TTab[];
 	export let name: string;
-	export let value: string;
+	export let value: string | number;
 	export let hideSelected = false;
 	export { classes as class };
 	let classes = '';

@@ -78,7 +78,8 @@ input[type='number'] {
 
 a:focus-visible,
 button:focus-visible,
-label:focus-visible {
+label:focus-visible,
+input[type='range']:focus-visible {
 	outline: none;
 	box-shadow: 0 0 0 4px rgb(var(--c-bg)), 0 0 0 6px rgb(var(--c-primary));
 	z-index: 10;

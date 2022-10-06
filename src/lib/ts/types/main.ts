@@ -31,7 +31,7 @@ export interface TGenerationResponse {
 
 export interface TTab {
 	label: string;
-	value: string;
+	value: string | number;
 }
 
 export type TServerHealth = 'healthy' | 'unhealthy' | 'unknown' | 'loading';

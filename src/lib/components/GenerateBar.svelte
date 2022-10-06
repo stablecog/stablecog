@@ -7,11 +7,13 @@
 	import IconWidth from '$components/icons/IconWidth.svelte';
 	import TabBar from '$components/TabBar.svelte';
 	import TabLikeInput from '$components/TabLikeInput.svelte';
+	import TabLikeRangeInput from '$components/TabLikeRangeInput.svelte';
 	import { tooltip } from '$ts/actions/tooltip';
 	import { expandCollapse } from '$ts/animation/transitions';
 	import {
 		guidanceScaleDefault,
-		guidanceScaleTabs,
+		guidanceScaleMax,
+		guidanceScaleMin,
 		heightDefault,
 		heightTabs,
 		inferenceStepsDefault,
@@ -96,7 +98,7 @@
 
 	const setLocalGuidanceScale = () => {
 		if (isCheckComplete) {
-			guidanceScale.set(generationGuidanceScale);
+			guidanceScale.set(Math.round(generationGuidanceScale));
 		}
 	};
 
@@ -121,16 +123,15 @@
 		const inferenceStepsIndex = inferenceStepsTabs
 			.map((i) => i.value)
 			.findIndex((i) => i === $inferenceSteps?.toString());
-		const guidanceScaleIndex = guidanceScaleTabs
-			.map((i) => i.value)
-			.findIndex((i) => i === $guidanceScale?.toString());
 
 		if (widthIndex >= 0) generationWidth = widthTabs[widthIndex].value;
 		if (heightIndex >= 0) generationHeight = heightTabs[heightIndex].value;
-		if (inferenceStepsIndex >= 0)
+		if (inferenceStepsIndex >= 0) {
 			generationInferenceSteps = inferenceStepsTabs[inferenceStepsIndex].value;
-		if (guidanceScaleIndex >= 0)
-			generationGuidanceScale = guidanceScaleTabs[guidanceScaleIndex].value;
+		}
+		if ($guidanceScale >= guidanceScaleMin && $guidanceScale <= guidanceScaleMax) {
+			generationGuidanceScale = $guidanceScale;
+		}
 		if ($seed !== undefined && $seed !== null) generationSeed = $seed;
 
 		isCheckComplete = true;
@@ -246,26 +247,6 @@
 						<div class="w-full flex flex-wrap items-center justify-center px-4px gap-4 py-4">
 							<TabBar
 								class="w-72 md:w-76 max-w-full"
-								tabs={guidanceScaleTabs}
-								bind:value={generationGuidanceScale}
-								name="scale"
-								hideSelected={!isCheckComplete}
-							>
-								<div
-									use:tooltip={{
-										title: 'Guidance Scale',
-										description:
-											'How similar the image will be to your prompt. Higher values make the image closer to your prompt.',
-										...tooltipStyleProps
-									}}
-									slot="title"
-									class="py-2 px-4 flex items-center justify-center"
-								>
-									<IconScale class="w-6 h-6 text-c-on-bg/25" />
-								</div>
-							</TabBar>
-							<TabBar
-								class="w-72 md:w-76 max-w-full"
 								tabs={inferenceStepsTabs}
 								bind:value={generationInferenceSteps}
 								name="steps"
@@ -283,6 +264,25 @@
 									<IconSteps class="w-6 h-6 text-c-on-bg/25" />
 								</div>
 							</TabBar>
+							<TabLikeRangeInput
+								class="w-72 md:w-76 max-w-full"
+								bind:value={generationGuidanceScale}
+								min={guidanceScaleMin}
+								max={guidanceScaleMax}
+							>
+								<div
+									use:tooltip={{
+										title: 'Guidance Scale',
+										description:
+											'How similar the image will be to your prompt. Higher values make the image closer to your prompt.',
+										...tooltipStyleProps
+									}}
+									slot="title"
+									class="py-2 px-4 flex items-center justify-center"
+								>
+									<IconScale class="w-6 h-6 text-c-on-bg/25" />
+								</div>
+							</TabLikeRangeInput>
 							<TabLikeInput
 								class="w-72 md:w-76 max-w-full"
 								placeholder="Enter a number"
