@@ -41,7 +41,7 @@
 		{#if $advancedMode}
 			<div
 				class="flex-1 min-w-0 overflow-hidden flex flex-col items-start justify-start gap-1 transition transform 
-				-translate-x-full group-focus-within:translate-x-0 group-hover:translate-x-0 p-2"
+				-translate-x-full group-focus-within:translate-x-0 group-hover:translate-x-0 p-1.5"
 			>
 				<button
 					bind:this={seedButton}
@@ -104,23 +104,23 @@
 			translate-x-full group-focus-within:translate-x-0 group-hover:translate-x-0"
 		>
 			<DownloadGenerationButton
-				class="p-2"
+				class="p-1.5"
 				url={src}
 				{prompt}
 				{seed}
 				{guidanceScale}
 				{inferenceSteps}
 			/>
-			<CopyButton class="p-2 -mt-2" stringToCopy={prompt} />
+			<CopyButton class="p-1.5 -mt-1.5" stringToCopy={prompt} />
 		</div>
 	</div>
 	<div
-		class="w-full max-h-[35%] min-h-[3.2rem] transition bg-c-bg/90 text-xs relative z-0 overflow-hidden
+		class="w-full max-h-[35%] transition bg-c-bg/90 text-xs relative z-0 overflow-hidden
 		translate-y-full group-focus-within:translate-y-0 group-hover:translate-y-0"
 	>
 		<div class="w-full max-h-full overflow-auto list-fade">
 			<p
-				class="w-full font-medium leading-normal transition text-c-on-bg px-5 py-4 transform break-all"
+				class="w-full font-medium leading-normal transition text-c-on-bg px-4 py-3 transform break-all"
 			>
 				{prompt}
 			</p>
