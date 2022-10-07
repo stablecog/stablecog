@@ -11,6 +11,7 @@
 	import { onMount } from 'svelte';
 
 	export let setServerProcessStatus: TSetServerProcessStatus = 'idle';
+	export let close: (() => void) | undefined = undefined;
 	let serverUrlInputValue: string | undefined;
 
 	const setServerUrl = async () => {
@@ -38,7 +39,9 @@
 					serverHealth.set('healthy');
 					serverUrl.set(url.toString());
 					serverUrlInputValue = $serverUrl;
-					close();
+					if (close) {
+						close();
+					}
 				} else {
 					setServerProcessStatus = 'error';
 				}

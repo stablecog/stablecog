@@ -27,6 +27,6 @@
 				The server will be used to generate images.
 			</p>
 		</div>
-		<SetServerForm bind:setServerProcessStatus />
+		<SetServerForm bind:setServerProcessStatus {close} />
 	</div>
 </div>
