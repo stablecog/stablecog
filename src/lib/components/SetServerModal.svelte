@@ -75,7 +75,7 @@
 		<div class="flex flex-col px-2 gap-1">
 			<h1 class="font-bold text-xl">{$serverUrl ? 'Switch' : 'Set'} Server</h1>
 			<p class="text-sm text-c-on-bg/50 leading-relaxed">
-				The server will be used to generate images.
+				The server will be used for generating images.
 			</p>
 		</div>
 		<form
