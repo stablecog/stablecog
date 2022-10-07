@@ -63,7 +63,7 @@
 							class="w-full h-full absolute left-0 top-0 rounded-md flex items-center transition justify-center
 							{seedCopied ? 'scale-50 opacity-0' : 'scale-100 opacity-100'} bg-c-primary transform"
 						>
-							<div class="w-5 h-5 relative">
+							<div class="w-5.5 h-5.5 relative">
 								<IconCopy
 									class="w-full h-full absolute left-0 top-0 transition text-c-on-primary"
 								/>
