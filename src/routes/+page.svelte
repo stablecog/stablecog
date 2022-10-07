@@ -15,7 +15,7 @@
 	import { urlFromBase64 } from '$ts/helpers/base64';
 	import { addGenerationToDb } from '$ts/queries/indexedDb';
 	import { generateImage } from '$ts/queries/generateImage';
-	import { iterationMpPerSec } from '$ts/stores/iterationMpPerSec';
+	import { computeRatePerSec } from '$ts/stores/computeRatePerSec';
 	import { serverUrl } from '$ts/stores/serverUrl';
 	import type { TGeneration, TStatus } from '$ts/types/main';
 	import { onDestroy, onMount } from 'svelte';
@@ -48,14 +48,14 @@
 
 	async function setEstimatedDuration() {
 		if (isCheckComplete) {
-			if ($iterationMpPerSec && generationWidth && generationHeight) {
+			if ($computeRatePerSec && generationWidth && generationHeight) {
 				const rate = getComputeRate(
 					Number(generationWidth),
 					Number(generationHeight),
 					Number(generationInferenceSteps)
 				);
 				estimatedDuration = Math.ceil(
-					(rate / $iterationMpPerSec) * (1 + estimatedDurationBufferRatio)
+					(rate / $computeRatePerSec) * (1 + estimatedDurationBufferRatio)
 				);
 			} else {
 				estimatedDuration = estimatedDurationDefault;
@@ -124,10 +124,10 @@
 							Number(generationHeight),
 							Number(generationInferenceSteps)
 						);
-						lastGeneration.iterationMpPerSec = Math.ceil(
+						lastGeneration.computeRatePerSec = Math.ceil(
 							rate / ((Date.now() - startTimestamp) / 1000)
 						);
-						iterationMpPerSec.set(lastGeneration.iterationMpPerSec);
+						computeRatePerSec.set(lastGeneration.computeRatePerSec);
 						setEstimatedDuration();
 					}
 					status = 'success';
