@@ -11,7 +11,7 @@
 </script>
 
 <div class="relative">
-	<div class="overflow-hidden relative py-2.5 {classes}">
+	<div class="overflow-hidden relative py-3.5 {classes}">
 		<div class="relative z-0 text-center">
 			<p bind:clientHeight={itemHeight} class="opacity-0">{max}</p>
 			<div
@@ -30,8 +30,8 @@
 			</div>
 		</div>
 	</div>
-	<div class="absolute left-0 -top-0.5 bg-gradient-to-b from-c-bg via-c-bg to-c-bg/0 w-full h-4" />
+	<div class="absolute left-0 -top-0.25 bg-gradient-to-b from-c-bg via-c-bg to-c-bg/0 w-full h-5" />
 	<div
-		class="absolute left-0 -bottom-0.5 bg-gradient-to-t from-c-bg via-c-bg to-c-bg/0 w-full h-4"
+		class="absolute left-0 -bottom-0.25 bg-gradient-to-t from-c-bg via-c-bg to-c-bg/0 w-full h-5"
 	/>
 </div>

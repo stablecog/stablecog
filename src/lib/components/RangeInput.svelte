@@ -1,4 +1,6 @@
 <script lang="ts">
+	import { isTouchscreen } from '$ts/stores/isTouchscreen';
+
 	export let value: number;
 	export let min: number;
 	export let max: number;
@@ -10,45 +12,60 @@
 </script>
 
 <div class="relative {classes}">
-	<div
-		style="width: 100%; height: var(--track-height); background: var(--track-bg); 
-		position: absolute; top: 50%; transform: translateY(-50%); border-radius: var(--track-radius); z-index: 0; overflow: hidden;"
-	>
-		<div
-			style="width: calc({progress * 100}%); height: 100%; background: var(--track-bg-progressed);"
-		/>
-	</div>
 	<input
-		class={classInput}
-		style="width: 100%; background: transparent; position: relative"
+		class="transition range-input {!$isTouchscreen ? 'range-input-not-touch' : ''} {classInput}"
+		style="width: 100%; background: transparent; position: relative; z-index: 1"
 		bind:value
 		type="range"
 		{min}
 		{max}
 	/>
+	<div class="track">
+		<div class="track-progressed" style="width: calc({progress * 100}%);" />
+	</div>
 </div>
 
 <style>
-	input[type='range'] {
+	.track {
+		pointer-events: none;
+		width: 100%;
+		height: var(--track-height);
+		background: var(--track-bg);
+		position: absolute;
+		top: 50%;
+		transform: translateY(-50%);
+		border-radius: var(--track-radius);
+		z-index: 0;
+		overflow: hidden;
+	}
+	.track-progressed {
+		height: 100%;
+		background: var(--track-bg-progressed);
+		transition: var(--transition);
+	}
+	.range-input:active + div > div {
+		background: var(--track-bg-progressed-active);
+	}
+	.range-input {
 		width: 100%;
 		height: 100%;
 		-webkit-appearance: none;
 		cursor: pointer;
 	}
-	input[type='range']:focus {
+	.range-input:focus {
 		outline: none;
 	}
-	input[type='range']:active {
+	.range-input:active {
 		cursor: grabbing;
 	}
-	input[type='range']::-webkit-slider-runnable-track {
+	.range-input::-webkit-slider-runnable-track {
 		width: 100%;
 		height: var(--thumb-size);
 		background: transparent;
 		box-shadow: none;
 		border-style: none;
 	}
-	input[type='range']::-webkit-slider-thumb {
+	.range-input::-webkit-slider-thumb {
 		width: var(--thumb-size);
 		height: var(--thumb-size);
 		border-radius: var(--thumb-radius);
@@ -58,14 +75,14 @@
 		transition: var(--transition);
 		border-style: none;
 	}
-	input[type='range']::-moz-range-track {
+	.range-input::-moz-range-track {
 		width: 100%;
 		height: var(--thumb-size);
 		background: transparent;
 		box-shadow: none;
 		border-style: none;
 	}
-	input[type='range']::-moz-range-thumb {
+	.range-input::-moz-range-thumb {
 		width: var(--thumb-size);
 		height: var(--thumb-size);
 		border-radius: var(--thumb-radius);
@@ -74,24 +91,24 @@
 		transition: var(--transition);
 		border-style: none;
 	}
-	input[type='range']::-ms-track {
+	.range-input::-ms-track {
 		width: 100%;
 		height: var(--thumb-size);
 		background: transparent;
 		border-color: transparent;
 		color: transparent;
 	}
-	input[type='range']::-ms-fill-lower {
+	.range-input::-ms-fill-lower {
 		background: transparent;
 		box-shadow: none;
 		border-style: none;
 	}
-	input[type='range']::-ms-fill-upper {
+	.range-input::-ms-fill-upper {
 		background: transparent;
 		box-shadow: none;
 		border-style: none;
 	}
-	input[type='range']::-ms-thumb {
+	.range-input::-ms-thumb {
 		width: var(--thumb-size);
 		height: var(--thumb-size);
 		border-radius: var(--thumb-radius);
@@ -100,18 +117,27 @@
 		transition: var(--transition);
 		border-style: none;
 	}
-	input[type='range']:active::-webkit-slider-thumb {
+	.range-input:active::-webkit-slider-thumb {
 		background: var(--thumb-bg-active);
 	}
-	input[type='range']:active::-moz-range-thumb {
+	.range-input:active::-moz-range-thumb {
 		background: var(--thumb-bg-active);
 	}
-	input[type='range']:active::-ms-thumb {
+	.range-input:active::-ms-thumb {
 		background: var(--thumb-bg-active);
 	}
-	input[type='range']:focus::-webkit-slider-runnable-track,
-	input[type='range']:focus::-ms-fill-lower,
-	input[type='range']:focus::-ms-fill-upper {
+	.range-input-not-touch:not(:active):hover::-webkit-slider-thumb {
+		box-shadow: var(--thumb-shadow-hovered);
+	}
+	.range-input-not-touch:not(:active):hover::-moz-range-thumb {
+		box-shadow: var(--thumb-shadow-hovered);
+	}
+	.range-input-not-touch:not(:active):hover:-ms-thumb {
+		box-shadow: var(--thumb-shadow-hovered);
+	}
+	.range-input:focus::-webkit-slider-runnable-track,
+	.range-input:focus::-ms-fill-lower,
+	.range-input:focus::-ms-fill-upper {
 		background: transparent;
 	}
 </style>
