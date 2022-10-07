@@ -44,7 +44,9 @@
 		--thumb-radius: 9999px;
 		--thumb-shadow: 0 0 0 0rem rgba(var(--c-on-bg-secondary) / 0.35),
 			0 0.15rem 0.45rem 0 rgba(var(--c-shadow) / var(--o-shadow-stronger));
-		--thumb-shadow-hovered: 0 0 0 0.4rem rgba(var(--c-on-bg-secondary) / 0.35),
+		--thumb-shadow-hovered: 0 0 0 0.5rem rgba(var(--c-on-bg-secondary) / 0.35),
+			0 0.15rem 0.45rem 0 rgba(var(--c-shadow) / var(--o-shadow-stronger));
+		--thumb-shadow-active: 0 0 0 0.3rem rgba(var(--c-primary) / 0.35),
 			0 0.15rem 0.45rem 0 rgba(var(--c-shadow) / var(--o-shadow-stronger));
 		--transition: box-shadow 0.2s cubic-bezier(0.4, 0, 0.2, 1),
 			background 0.3s cubic-bezier(0.4, 0, 0.2, 1);

@@ -126,14 +126,23 @@
 	.range-input:active::-ms-thumb {
 		background: var(--thumb-bg-active);
 	}
-	.range-input-not-touch:not(:active):hover::-webkit-slider-thumb {
+	.range-input-not-touch:hover::-webkit-slider-thumb {
 		box-shadow: var(--thumb-shadow-hovered);
 	}
-	.range-input-not-touch:not(:active):hover::-moz-range-thumb {
+	.range-input-not-touch:hover::-moz-range-thumb {
 		box-shadow: var(--thumb-shadow-hovered);
 	}
-	.range-input-not-touch:not(:active):hover:-ms-thumb {
+	.range-input-not-touch:hover:-ms-thumb {
 		box-shadow: var(--thumb-shadow-hovered);
+	}
+	.range-input-not-touch:active::-webkit-slider-thumb {
+		box-shadow: var(--thumb-shadow-active);
+	}
+	.range-input-not-touch:active::-moz-range-thumb {
+		box-shadow: var(--thumb-shadow-active);
+	}
+	.range-input-not-touch:active:-ms-thumb {
+		box-shadow: var(--thumb-shadow-active);
 	}
 	.range-input:focus::-webkit-slider-runnable-track,
 	.range-input:focus::-ms-fill-lower,
