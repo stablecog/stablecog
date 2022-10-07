@@ -48,7 +48,7 @@
 					use:copy={seed.toString()}
 					on:svelte-copy={onSeedCopy}
 					class="max-w-full flex items-center text-c-on-bg text-xs gap-1.5 rounded-lg bg-c-bg 
-					px-3 py-2 overflow-hidden relative group-2"
+					px-3 py-2 overflow-hidden relative z-0 group-2"
 				>
 					<IconSeed class="w-3.5 h-3.5 relative" />
 					<p class="flex-1 flex-shrink min-w-0 overflow-hidden overflow-ellipsis relative">
@@ -56,22 +56,29 @@
 					</p>
 					<div
 						class="w-full h-full absolute left-0 top-0 pointer-events-none 
-						transition rounded-lg opacity-0 -translate-x-[20%] 
-						group-2-hover:translate-x-0 group-2-hover:opacity-100 bg-c-bg"
+						transition rounded-lg {seedCopied
+							? 'opacity-100 -translate-x-0'
+							: !$isTouchscreen
+							? 'opacity-0 -translate-x-[20%]'
+							: ''} {!$isTouchscreen
+							? 'group-2-hover:translate-x-0 group-2-hover:opacity-100 bg-c-bg'
+							: ''}"
 					>
-						<div
-							class="w-full h-full absolute left-0 top-0 rounded-md flex items-center transition justify-center
-							{seedCopied ? 'scale-50 opacity-0' : 'scale-100 opacity-100'} bg-c-primary transform"
-						>
-							<div class="w-5.5 h-5.5 relative">
-								<IconCopy
-									class="w-full h-full absolute left-0 top-0 transition text-c-on-primary"
-								/>
+						{#if !$isTouchscreen}
+							<div
+								class="w-full h-full absolute left-0 top-0 rounded-md flex items-center transition justify-center
+								{seedCopied ? 'scale-x-75 scale-y-25 opacity-0' : 'scale-100 opacity-100'} bg-c-primary transform"
+							>
+								<div class="w-5.5 h-5.5 relative">
+									<IconCopy
+										class="w-full h-full absolute left-0 top-0 transition text-c-on-primary"
+									/>
+								</div>
 							</div>
-						</div>
+						{/if}
 						<div
 							class="w-full h-full absolute left-0 top-0 rounded-md transition
-							{!seedCopied ? 'scale-50 opacity-0' : 'scale-100 opacity-100'} p-0.75 transform"
+							{!seedCopied ? 'scale-x-75 scale-y-25 opacity-0' : 'scale-100 opacity-100'} p-0.75 transform"
 						>
 							<div class="w-full h-full bg-c-success rounded-md flex items-center justify-center">
 								<div class="w-5.5 h-5.5 relative">
