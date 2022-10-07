@@ -34,4 +34,6 @@ export interface TTab {
 	value: string | number;
 }
 
-export type TServerHealth = 'healthy' | 'unhealthy' | 'unknown' | 'loading';
+export type TServerHealth = 'healthy' | 'unhealthy' | 'not-set' | 'unknown' | 'loading';
+
+export type TSetServerProcessStatus = 'idle' | 'loading' | 'success' | 'error';

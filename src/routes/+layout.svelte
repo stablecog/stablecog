@@ -16,6 +16,10 @@
 	onMount(async () => {
 		setBodyClasses();
 		const now = Date.now();
+		if (!$serverUrl) {
+			serverHealth.set('not-set');
+			return;
+		}
 		try {
 			serverHealth.set('loading');
 			console.log('Checking server health...');

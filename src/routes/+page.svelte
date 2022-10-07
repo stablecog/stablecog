@@ -22,6 +22,9 @@
 	import ImagePlaceholder from '$components/ImagePlaceholder.svelte';
 	import GenerationImage from '$components/GenerationImage.svelte';
 	import { advancedMode } from '$ts/stores/advancedMode';
+	import { serverHealth } from '$ts/stores/serverHealth';
+	import SetServerForm from '$components/SetServerForm.svelte';
+	import SetServerModal from '$components/SetServerModal.svelte';
 
 	let status: TStatus = 'idle';
 	let inputValue: string | undefined;
@@ -95,6 +98,9 @@
 			});
 			let { data, error } = res;
 			if (data && data.imageDataB64 && !error) {
+				if ($serverHealth !== 'healthy') {
+					serverHealth.set('healthy');
+				}
 				try {
 					await addGenerationToDb({
 						...lastGeneration,
@@ -154,53 +160,64 @@
 />
 
 <div class="w-full flex flex-col items-center flex-1 justify-center px-4">
-	<GenerateBar
-		bind:inputValue
-		bind:generationWidth
-		bind:generationHeight
-		bind:generationInferenceSteps
-		bind:generationGuidanceScale
-		bind:generationSeed
-		{status}
-		{onCreate}
-		{startTimestamp}
-		{estimatedDuration}
-	/>
-	{#if status === 'error'}
-		<div transition:expandCollapse|local={{}} class="flex flex-col justify-start origin-top">
-			<p class="w-full max-w-lg text-c-on-bg/40 text-center py-4">
-				{generationError ?? 'Something went wrong :('}
-			</p>
-		</div>
-	{:else if status === 'success' && duration !== undefined && lastGeneration && lastGeneration.imageUrl}
-		<div
-			transition:expandCollapse|local={{}}
-			class="max-w-full overflow-hidden flex flex-col items-center justify-start rounded-xl origin-top relative z-0"
-		>
-			<div class="max-w-full flex flex-col items-center md:px-5 gap-4 py-4">
-				<div
-					class="{lastGeneration.height / lastGeneration.width >= 3 / 2
-						? 'w-88'
-						: 'w-128'} max-w-full rounded-2xl bg-c-bg-secondary relative z-0 overflow-hidden border-4 
-					shadow-xl shadow-c-shadow/[var(--o-shadow-normal)] border-c-bg-secondary group"
-				>
-					<ImagePlaceholder width={lastGeneration.width} height={lastGeneration.height} />
-					<GenerationImage
-						src={lastGeneration.imageUrl}
-						prompt={lastGeneration.prompt}
-						width={lastGeneration.width}
-						height={lastGeneration.height}
-						seed={lastGeneration.seed}
-						guidanceScale={lastGeneration.guidance_scale}
-						inferenceSteps={lastGeneration.num_inference_steps}
-					/>
-				</div>
-				<p class="text-c-on-bg/40 text-sm text-center">
-					{(duration / 1000).toLocaleString('en-US', {
-						maximumFractionDigits: 1
-					})} seconds
-				</p>
+	<div class="w-full flex flex-col items-center justify-center">
+		{#if isCheckComplete && !$serverUrl}
+			<SetServerModal isOnBarrier={false} />
+		{:else}
+			<div
+				transition:expandCollapse|local={{ duration: 300 }}
+				class="w-full flex flex-col justify-start items-center overflow-hidden z-0"
+			>
+				<GenerateBar
+					bind:inputValue
+					bind:generationWidth
+					bind:generationHeight
+					bind:generationInferenceSteps
+					bind:generationGuidanceScale
+					bind:generationSeed
+					{status}
+					{onCreate}
+					{startTimestamp}
+					{estimatedDuration}
+				/>
+				{#if status === 'error'}
+					<div transition:expandCollapse|local={{}} class="flex flex-col justify-start origin-top">
+						<p class="w-full max-w-lg text-c-on-bg/40 text-center py-4">
+							{generationError ?? 'Something went wrong :('}
+						</p>
+					</div>
+				{:else if status === 'success' && duration !== undefined && lastGeneration && lastGeneration.imageUrl}
+					<div
+						transition:expandCollapse|local={{}}
+						class="max-w-full overflow-hidden flex flex-col items-center justify-start rounded-xl origin-top relative z-0"
+					>
+						<div class="max-w-full flex flex-col items-center md:px-5 gap-4 py-4">
+							<div
+								class="{lastGeneration.height / lastGeneration.width >= 3 / 2
+									? 'w-88'
+									: 'w-128'} max-w-full rounded-2xl bg-c-bg-secondary relative z-0 overflow-hidden border-4 
+								shadow-xl shadow-c-shadow/[var(--o-shadow-normal)] border-c-bg-secondary group"
+							>
+								<ImagePlaceholder width={lastGeneration.width} height={lastGeneration.height} />
+								<GenerationImage
+									src={lastGeneration.imageUrl}
+									prompt={lastGeneration.prompt}
+									width={lastGeneration.width}
+									height={lastGeneration.height}
+									seed={lastGeneration.seed}
+									guidanceScale={lastGeneration.guidance_scale}
+									inferenceSteps={lastGeneration.num_inference_steps}
+								/>
+							</div>
+							<p class="text-c-on-bg/40 text-sm text-center">
+								{(duration / 1000).toLocaleString('en-US', {
+									maximumFractionDigits: 1
+								})} seconds
+							</p>
+						</div>
+					</div>
+				{/if}
 			</div>
-		</div>
-	{/if}
+		{/if}
+	</div>
 </div>

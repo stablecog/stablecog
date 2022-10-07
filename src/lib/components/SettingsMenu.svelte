@@ -1,5 +1,6 @@
 <script lang="ts">
 	import DropdownItem from '$components/DropdownItem.svelte';
+	import HealthIndicator from '$components/HealthIndicator.svelte';
 	import IconAdvanced from '$components/icons/IconAdvanced.svelte';
 	import IconDarkMode from '$components/icons/IconDarkMode.svelte';
 	import ToggleIndicator from '$components/ToggleIndicator.svelte';
@@ -21,27 +22,34 @@
   shadow-c-shadow/[var(--o-shadow-strong)] absolute right-0 top-0 overflow-hidden z-50 mt-2"
 >
 	<div class="w-full flex flex-col">
-		<DropdownItem onClick={onSwitchServerClick}>
-			<div class="flex-1 min-w-0 flex flex-col items-start gap-1">
-				<div class="w-full flex items-center justify-start gap-2.5">
-					<IconServer
-						class="transition w-6 h-6 text-c-text {!$isTouchscreen
-							? 'group-hover:text-c-primary'
-							: ''}"
-					/>
-					<p
-						class="w-full text-left transition text-c-on-bg {!$isTouchscreen
-							? 'group-hover:text-c-primary'
-							: ''}"
-					>
-						{$serverUrl ? 'Switch' : 'Set'} Server
-					</p>
+		{#if $serverUrl}
+			<DropdownItem onClick={onSwitchServerClick}>
+				<div class="flex-1 min-w-0 flex flex-col items-start gap-1.5 relative">
+					<div class="w-full flex items-center justify-start gap-2.5">
+						<IconServer
+							class="transition w-6 h-6 text-c-text {!$isTouchscreen
+								? 'group-hover:text-c-primary'
+								: ''}"
+						/>
+						<p
+							class="w-full text-left transition text-c-on-bg {!$isTouchscreen
+								? 'group-hover:text-c-primary'
+								: ''}"
+						>
+							Switch Server
+						</p>
+					</div>
+					<div class="w-full flex items-center gap-2.5">
+						<p class="flex-shrink min-w-0 text-xs text-left break-all font-normal text-c-on-bg/60">
+							{$serverUrl ? parseUrlStr($serverUrl) : 'Not connected'}
+						</p>
+						<div>
+							<HealthIndicator size="sm" />
+						</div>
+					</div>
 				</div>
-				<p class="w-full text-xs text-left break-all font-normal text-c-on-bg/60">
-					{$serverUrl ? parseUrlStr($serverUrl) : 'Not connected'}
-				</p>
-			</div>
-		</DropdownItem>
+			</DropdownItem>
+		{/if}
 		<DropdownItem
 			onClick={() => {
 				advancedMode.set($advancedMode === false ? true : false);

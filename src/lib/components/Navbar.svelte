@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { page } from '$app/stores';
 	import IconButton from '$components/buttons/IconButton.svelte';
+	import HealthIndicator from '$components/HealthIndicator.svelte';
 	import IconHistory from '$components/icons/IconHistory.svelte';
 	import IconHome from '$components/icons/IconHome.svelte';
 	import IconSettings from '$components/icons/IconSettings.svelte';
@@ -56,15 +57,7 @@
 				: '-translate-y-24 opacity-0'}"
 		/>
 		<div class="p-3 relative">
-			<div
-				class="w-2.5 h-2.5 rounded-full {$serverHealth === 'loading'
-					? 'bg-c-primary animate-pulse-scale'
-					: $serverHealth === 'healthy'
-					? 'bg-c-success'
-					: $serverHealth === 'unhealthy'
-					? 'bg-c-danger'
-					: 'bg-c-on-bg/50'}"
-			/>
+			<HealthIndicator />
 		</div>
 		<IconButton
 			href={$page.url.pathname === '/history' ? '/' : '/history'}
