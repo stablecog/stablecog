@@ -35,7 +35,7 @@
 
 <img class="w-full h-full absolute left-0 top-0" {src} alt={prompt} {width} {height} />
 <div
-	class="w-full h-full absolute left-0 top-0 flex flex-col justify-between items-end gap-5 overflow-auto"
+	class="w-full h-full absolute left-0 top-0 flex flex-col justify-between items-end gap-5 overflow-hidden"
 >
 	<div class="w-full flex justify-between">
 		{#if $advancedMode}
@@ -119,7 +119,9 @@
 		translate-y-full group-focus-within:translate-y-0 group-hover:translate-y-0"
 	>
 		<div class="w-full max-h-full overflow-auto list-fade">
-			<p class="w-full font-medium leading-normal transition text-c-on-bg px-5 py-4 transform">
+			<p
+				class="w-full font-medium leading-normal transition text-c-on-bg px-5 py-4 transform break-all"
+			>
 				{prompt}
 			</p>
 		</div>
