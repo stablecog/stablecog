@@ -39,7 +39,7 @@
 							Switch Server
 						</p>
 					</div>
-					<div class="w-full flex items-center gap-2 px-0.5">
+					<div class="w-full flex items-center gap-2.5 px-0.5">
 						<div>
 							<HealthIndicator size="sm" />
 						</div>

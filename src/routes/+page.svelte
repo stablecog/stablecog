@@ -48,16 +48,18 @@
 
 	async function setEstimatedDuration() {
 		if (isCheckComplete) {
-			estimatedDuration =
-				$iterationMpPerSec && generationWidth && generationHeight
-					? Math.ceil(
-							((Number(generationWidth) *
-								Number(generationHeight) *
-								Number(generationInferenceSteps)) /
-								$iterationMpPerSec) *
-								(1 + estimatedDurationBufferRatio)
-					  )
-					: estimatedDurationDefault;
+			if ($iterationMpPerSec && generationWidth && generationHeight) {
+				const rate = getComputeRate(
+					Number(generationWidth),
+					Number(generationHeight),
+					Number(generationInferenceSteps)
+				);
+				estimatedDuration = Math.ceil(
+					(rate / $iterationMpPerSec) * (1 + estimatedDurationBufferRatio)
+				);
+			} else {
+				estimatedDuration = estimatedDurationDefault;
+			}
 		}
 	}
 
@@ -117,9 +119,13 @@
 						lastGeneration = lastGeneration;
 					}
 					if (lastGeneration && startTimestamp !== undefined) {
+						const rate = getComputeRate(
+							Number(generationWidth),
+							Number(generationHeight),
+							Number(generationInferenceSteps)
+						);
 						lastGeneration.iterationMpPerSec = Math.ceil(
-							(lastGeneration.width * lastGeneration.height * lastGeneration.num_inference_steps) /
-								((Date.now() - startTimestamp) / 1000)
+							rate / ((Date.now() - startTimestamp) / 1000)
 						);
 						iterationMpPerSec.set(lastGeneration.iterationMpPerSec);
 						setEstimatedDuration();
@@ -139,6 +145,13 @@
 			console.log('generation duration:', (endTimestamp - startTimestamp) / 1000, 's');
 		}
 	}
+
+	const getComputeRate = (w: number, h: number, s: number) => {
+		const area = Number(generationWidth) * Number(generationHeight);
+		const steps = Number(generationInferenceSteps);
+		const rate = area * Math.pow(steps, 1 / 2);
+		return rate;
+	};
 
 	let isCheckComplete = false;
 	onMount(async () => {
