@@ -21,15 +21,17 @@
 
 	let seedCopied = false;
 	let seedCopiedTimeout: NodeJS.Timeout;
-	let seedButton: HTMLButtonElement;
+	let promptCopied = false;
+	let promptCopiedTimeout: NodeJS.Timeout;
 
 	const onSeedCopy = () => {
 		seedCopied = true;
-		seedButton.blur();
 		clearTimeout(seedCopiedTimeout);
 		seedCopiedTimeout = setTimeout(() => {
 			seedCopied = false;
 		}, 2000);
+		clearTimeout(promptCopiedTimeout);
+		promptCopied = false;
 	};
 </script>
 
@@ -44,7 +46,6 @@
 				-translate-x-full group-focus-within:translate-x-0 group-hover:translate-x-0 p-1.5"
 			>
 				<button
-					bind:this={seedButton}
 					use:copy={seed.toString()}
 					on:svelte-copy={onSeedCopy}
 					class="max-w-full flex items-center text-c-on-bg text-xs gap-1.5 rounded-lg bg-c-bg 
@@ -56,12 +57,10 @@
 					</p>
 					<div
 						class="w-full h-full absolute left-0 top-0 pointer-events-none 
-						transition rounded-lg {seedCopied
-							? 'opacity-100 -translate-x-0'
+						transition rounded-lg {!$isTouchscreen ? 'bg-c-bg' : ''} {seedCopied
+							? 'opacity-100 translate-x-0'
 							: !$isTouchscreen
-							? 'opacity-0 -translate-x-[20%]'
-							: ''} {!$isTouchscreen
-							? 'group-2-hover:translate-x-0 group-2-hover:opacity-100 bg-c-bg'
+							? 'opacity-0 -translate-x-[20%] group-2-hover:translate-x-0 group-2-hover:opacity-100'
 							: ''}"
 					>
 						{#if !$isTouchscreen}
@@ -118,7 +117,16 @@
 				{guidanceScale}
 				{inferenceSteps}
 			/>
-			<CopyButton class="p-1.5 -mt-1.5" stringToCopy={prompt} />
+			<CopyButton
+				class="p-1.5 -mt-1.5"
+				stringToCopy={prompt}
+				bind:copied={promptCopied}
+				bind:copiedTimeout={promptCopiedTimeout}
+				onCopied={() => {
+					clearTimeout(seedCopiedTimeout);
+					seedCopied = false;
+				}}
+			/>
 		</div>
 	</div>
 	<div
