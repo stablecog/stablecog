@@ -1,5 +1,7 @@
 <script lang="ts">
+	import Numerator from '$components/Numerator.svelte';
 	import RangeInput from '$components/RangeInput.svelte';
+	import { guidanceScaleMax, guidanceScaleMin } from '$ts/constants/main';
 
 	export let value: number;
 	export let min: number;
@@ -16,17 +18,10 @@
 		<slot name="title" />
 	</div>
 	<div class="w-2px mr-px -ml-px self-stretch">
-		<div class="w-full h-full bg-c-bg-secondary" />
+		<div class="w-full h-full bg-c-bg-secondary transition" />
 	</div>
-	<div class="range-input flex-1 min-w-0 flex relative rounded-r-xl pl-3 pr-4 gap-3">
-		<div class="w-5 flex items-center">
-			<p
-				class="w-full text-right overflow-hidden overflow-ellipsis text-xs md:text-sm 
-				text-c-on-bg/75 font-medium"
-			>
-				{value}
-			</p>
-		</div>
+	<div class="range-input flex-1 min-w-0 flex items-center relative rounded-r-xl pl-4 pr-4 gap-3.5">
+		<Numerator min={guidanceScaleMin} max={guidanceScaleMax} {value} class="text-c-on-bg/75" />
 		<RangeInput class="flex-1 h-12 md:h-13" classInput="rounded-lg" bind:value {min} {max} />
 	</div>
 </div>
@@ -34,12 +29,15 @@
 <style>
 	.range-input {
 		--track-bg: rgba(var(--c-bg-tertiary));
-		--track-bg-progressed: rgba(var(--c-on-bg) / 0.25);
+		--track-bg-progressed: rgba(var(--c-on-bg-secondary));
+		--track-bg-progressed-active: rgba(var(--c-primary));
 		--track-height: 0.5rem;
 		--track-radius: 9999px;
 		--thumb-size: 1.5rem;
-		--thumb-bg: rgba(var(--c-bg-tertiary));
+		--thumb-bg: rgba(var(--c-on-bg-secondary));
+		--thumb-bg-active: rgba(var(--c-primary));
 		--thumb-radius: 9999px;
-		--thumb-shadow: 0 0.25rem 0.5rem 0 rgba(var(--c-shadow) / var(--o-shadow-strong));
+		--thumb-shadow: 0 0.15rem 0.45rem 0 rgba(var(--c-shadow) / var(--o-shadow-stronger));
+		--transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 	}
 </style>

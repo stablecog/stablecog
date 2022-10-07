@@ -83,9 +83,6 @@
 					on:input={() => {
 						if (setServerProcessStatus === 'error') setServerProcessStatus = 'idle';
 					}}
-					on:focus={() => {
-						inputElement.select();
-					}}
 					disabled={setServerProcessStatus === 'loading'}
 					type="text"
 					placeholder="Server URL"

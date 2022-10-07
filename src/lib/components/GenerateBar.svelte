@@ -172,9 +172,6 @@
 			<input
 				bind:this={inputElement}
 				bind:value={inputValue}
-				on:focus={() => {
-					inputElement.select();
-				}}
 				disabled={loadingOrSubmitting}
 				{placeholder}
 				type="text"
@@ -204,7 +201,7 @@
 			<div class="w-full flex flex-wrap items-center justify-center py-4">
 				<div class="w-full flex flex-wrap items-center justify-center px-4px gap-4">
 					<TabBar
-						class="{$advancedMode ? 'w-72 md:w-76' : 'w-64 md:w-68'} transition-all max-w-full"
+						class="{$advancedMode ? 'w-76' : 'w-64 md:w-68'} transition-all max-w-full"
 						tabs={widthTabs}
 						bind:value={generationWidth}
 						name="width"
@@ -223,7 +220,7 @@
 						</div>
 					</TabBar>
 					<TabBar
-						class="{$advancedMode ? 'w-72 md:w-76' : 'w-64 md:w-68'} transition-all max-w-full"
+						class="{$advancedMode ? 'w-76' : 'w-64 md:w-68'} transition-all max-w-full"
 						tabs={heightTabs}
 						bind:value={generationHeight}
 						name="height"
@@ -246,7 +243,7 @@
 					<div transition:expandCollapse|local={{}} class="w-full overflow-hidden -mb-4">
 						<div class="w-full flex flex-wrap items-center justify-center px-4px gap-4 py-4">
 							<TabBar
-								class="w-72 md:w-76 max-w-full"
+								class="w-76 max-w-full"
 								tabs={inferenceStepsTabs}
 								bind:value={generationInferenceSteps}
 								name="steps"
@@ -265,7 +262,7 @@
 								</div>
 							</TabBar>
 							<TabLikeRangeInput
-								class="w-72 md:w-76 max-w-full"
+								class="w-76 max-w-full"
 								bind:value={generationGuidanceScale}
 								min={guidanceScaleMin}
 								max={guidanceScaleMax}
@@ -284,7 +281,7 @@
 								</div>
 							</TabLikeRangeInput>
 							<TabLikeInput
-								class="w-72 md:w-76 max-w-full"
+								class="w-76 max-w-full"
 								placeholder="Enter a number"
 								bind:value={generationSeed}
 							>

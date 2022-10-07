@@ -24,9 +24,6 @@
 			on:submit|preventDefault
 			bind:this={inputElement}
 			bind:value
-			on:focus={() => {
-				inputElement.select();
-			}}
 			on:input={() => {
 				if (value !== null && value !== undefined && value.toString().length > 15) {
 					value = parseInt(value.toString().slice(0, 15));

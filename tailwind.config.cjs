@@ -17,6 +17,7 @@ module.exports = {
 				'c-bg-secondary': withOpacityValue('--c-bg-secondary'),
 				'c-bg-tertiary': withOpacityValue('--c-bg-tertiary'),
 				'c-on-bg': withOpacityValue('--c-on-bg'),
+				'c-on-bg-secondary': withOpacityValue('--c-on-bg-secondary'),
 				'c-primary': withOpacityValue('--c-primary'),
 				'c-on-primary': withOpacityValue('--c-on-primary'),
 				'c-secondary': withOpacityValue('--c-secondary'),
@@ -28,6 +29,7 @@ module.exports = {
 			transitionDuration: {
 				DEFAULT: '200ms',
 				250: '250ms',
+				350: '350ms',
 				400: '400ms'
 			},
 			spacing: {
