@@ -142,7 +142,6 @@
 	}
 
 	let isCheckComplete = false;
-
 	onMount(async () => {
 		setEstimatedDuration();
 		isCheckComplete = true;
@@ -187,15 +186,24 @@
 						</p>
 					</div>
 				{:else if status === 'success' && duration !== undefined && lastGeneration && lastGeneration.imageUrl}
+					{@const aspectRatio = lastGeneration.width / lastGeneration.height}
 					<div
 						transition:expandCollapse|local={{}}
 						class="max-w-full overflow-hidden flex flex-col items-center justify-start rounded-xl origin-top relative z-0"
 					>
 						<div class="max-w-full flex flex-col items-center md:px-5 gap-4 py-4">
 							<div
-								class="{lastGeneration.height / lastGeneration.width >= 3 / 2
+								class="{aspectRatio >= 3 / 2
+									? 'w-140'
+									: aspectRatio >= 4 / 3
+									? 'w-128'
+									: aspectRatio >= 1 / 1
+									? 'w-112'
+									: aspectRatio >= 3 / 4
 									? 'w-88'
-									: 'w-128'} max-w-full rounded-2xl bg-c-bg-secondary relative z-0 overflow-hidden border-4 
+									: aspectRatio >= 2 / 3
+									? 'w-80'
+									: 'w-72'} max-w-full h-auto rounded-2xl bg-c-bg-secondary relative z-0 overflow-hidden border-4 
 								shadow-xl shadow-c-shadow/[var(--o-shadow-normal)] border-c-bg-secondary group"
 							>
 								<ImagePlaceholder width={lastGeneration.width} height={lastGeneration.height} />

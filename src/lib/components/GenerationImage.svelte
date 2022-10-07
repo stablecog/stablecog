@@ -12,7 +12,9 @@
 </script>
 
 <img class="w-full h-full absolute left-0 top-0" {src} alt={prompt} {width} {height} />
-<div class="w-full h-full absolute left-0 top-0 flex flex-col justify-between items-end gap-5">
+<div
+	class="w-full h-full absolute left-0 top-0 flex flex-col justify-between items-end gap-5 overflow-auto"
+>
 	<div
 		class="flex flex-col items-end justify-end right-0 top-0 transition transform 
 		translate-x-16 group-focus-within:translate-x-0 group-hover:translate-x-0"
@@ -28,7 +30,7 @@
 		<CopyButton class="p-2 -mt-2" stringToCopy={prompt} />
 	</div>
 	<div
-		class="w-full max-h-[35%] transition bg-c-bg/90 text-xs relative z-0 overflow-hidden
+		class="w-full max-h-[35%] min-h-[3.2rem] transition bg-c-bg/90 text-xs relative z-0 overflow-hidden
 		translate-y-full group-focus-within:translate-y-0 group-hover:translate-y-0"
 	>
 		<div class="w-full max-h-full overflow-auto list-fade">
