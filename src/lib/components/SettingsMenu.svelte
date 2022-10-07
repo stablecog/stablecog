@@ -39,13 +39,13 @@
 							Switch Server
 						</p>
 					</div>
-					<div class="w-full flex items-center gap-2.5">
-						<p class="flex-shrink min-w-0 text-xs text-left break-all font-normal text-c-on-bg/60">
-							{$serverUrl ? parseUrlStr($serverUrl) : 'Not connected'}
-						</p>
+					<div class="w-full flex items-center gap-2 px-0.5">
 						<div>
 							<HealthIndicator size="sm" />
 						</div>
+						<p class="flex-shrink min-w-0 text-xs text-left break-all font-normal text-c-on-bg/60">
+							{$serverUrl ? parseUrlStr($serverUrl) : 'Not connected'}
+						</p>
 					</div>
 				</div>
 			</DropdownItem>
