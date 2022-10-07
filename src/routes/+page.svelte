@@ -23,7 +23,6 @@
 	import GenerationImage from '$components/GenerationImage.svelte';
 	import { advancedMode } from '$ts/stores/advancedMode';
 	import { serverHealth } from '$ts/stores/serverHealth';
-	import SetServerForm from '$components/SetServerForm.svelte';
 	import SetServerModal from '$components/SetServerModal.svelte';
 
 	let status: TStatus = 'idle';
