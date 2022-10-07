@@ -6,6 +6,7 @@
 	import IconSeed from '$components/icons/IconSeed.svelte';
 	import IconSteps from '$components/icons/IconSteps.svelte';
 	import IconTick from '$components/icons/IconTick.svelte';
+	import IconTickOnly from '$components/icons/IconTickOnly.svelte';
 	import { advancedMode } from '$ts/stores/advancedMode';
 	import { isTouchscreen } from '$ts/stores/isTouchscreen';
 	import { copy } from 'svelte-copy';
@@ -47,39 +48,48 @@
 					use:copy={seed.toString()}
 					on:svelte-copy={onSeedCopy}
 					class="max-w-full flex items-center text-c-on-bg text-xs gap-1.5 rounded-lg bg-c-bg 
-					px-2 py-2 overflow-hidden relative group-2"
+					px-3 py-2 overflow-hidden relative group-2"
 				>
 					<IconSeed class="w-3.5 h-3.5 relative" />
 					<p class="flex-1 flex-shrink min-w-0 overflow-hidden overflow-ellipsis relative">
 						{seed}
 					</p>
 					<div
-						class="w-full h-full absolute left-0 top-0 pointer-events-none flex items-center 
-						justify-center transition rounded-lg {seedCopied
-							? 'bg-c-success'
-							: 'bg-c-bg'} opacity-0 -translate-x-[20%] group-2-hover:translate-x-0 group-2-hover:opacity-100"
+						class="w-full h-full absolute left-0 top-0 pointer-events-none 
+						transition rounded-lg opacity-0 -translate-x-[20%] 
+						group-2-hover:translate-x-0 group-2-hover:opacity-100 bg-c-bg"
 					>
-						<div class="w-5 h-5 relative">
-							<IconCopy
-								class="{seedCopied
-									? 'scale-0 opacity-0'
-									: 'scale-100 opacity-100'} transform w-full h-full absolute left-0 top-0 transition text-c-on-bg"
-							/>
-							<IconTick
-								class="{!seedCopied
-									? 'scale-0 opacity-0'
-									: 'scale-125 opacity-100'} transform w-full h-full absolute left-0 top-0 transition text-c-on-primary"
-							/>
+						<div
+							class="w-full h-full absolute left-0 top-0 rounded-md flex items-center transition justify-center
+							{seedCopied ? 'scale-50 opacity-0' : 'scale-100 opacity-100'} bg-c-primary transform"
+						>
+							<div class="w-5 h-5 relative">
+								<IconCopy
+									class="w-full h-full absolute left-0 top-0 transition text-c-on-primary"
+								/>
+							</div>
+						</div>
+						<div
+							class="w-full h-full absolute left-0 top-0 rounded-md transition
+							{!seedCopied ? 'scale-50 opacity-0' : 'scale-100 opacity-100'} p-0.75 transform"
+						>
+							<div class="w-full h-full bg-c-success rounded-md flex items-center justify-center">
+								<div class="w-5.5 h-5.5 relative">
+									<IconTickOnly
+										class="w-full h-full absolute left-0 top-0 transition text-c-on-primary"
+									/>
+								</div>
+							</div>
 						</div>
 					</div>
 				</button>
-				<div class="max-w-full flex items-center text-xs gap-1.5 rounded-lg bg-c-bg px-2 py-2">
+				<div class="max-w-full flex items-center text-xs gap-1.5 rounded-lg bg-c-bg px-3 py-2">
 					<IconScale class="w-3.5 h-3.5" />
 					<p class="flex-1 flex-shrink min-w-0 overflow-hidden overflow-ellipsis">
 						{guidanceScale}
 					</p>
 				</div>
-				<div class="max-w-full flex items-center text-xs gap-1.5 rounded-lg bg-c-bg px-2 py-2">
+				<div class="max-w-full flex items-center text-xs gap-1.5 rounded-lg bg-c-bg px-3 py-2">
 					<IconSteps class="w-3.5 h-3.5" />
 					<p class="flex-1 flex-shrink min-w-0 overflow-hidden overflow-ellipsis">
 						{inferenceSteps}
