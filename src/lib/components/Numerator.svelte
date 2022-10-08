@@ -20,7 +20,11 @@
 				class="flex flex-col transition absolute left-0 top-0"
 			>
 				{#each array as n}
-					<p class="transform transition font-medium {n === value ? 'scale-100' : 'scale-75'}">
+					<p
+						class="transform transition font-medium {n === value
+							? 'scale-100'
+							: 'scale-75 opacity-75'}"
+					>
 						{n}
 					</p>
 				{/each}
@@ -29,18 +33,18 @@
 	</div>
 	<div
 		class="absolute left-0 -top-0.25 bg-gradient-to-b transition
-		from-c-bg via-c-bg/50 to-c-bg/0 w-full h-5"
+		from-c-bg via-c-bg/50 to-c-bg/0 w-full h-4.5"
 	/>
 	<div
 		class="absolute left-0 -bottom-0.25 bg-gradient-to-t transition
-		from-c-bg via-c-bg/50 to-c-bg/0 w-full h-5"
+		from-c-bg via-c-bg/50 to-c-bg/0 w-full h-4.5"
 	/>
 	<div
 		class="absolute left-0 -top-0.25 bg-gradient-to-b transition
-		from-c-bg via-c-bg to-c-bg/0 w-full h-5 {!focused ? 'opacity-100' : 'opacity-0'}"
+		from-c-bg via-c-bg to-c-bg/0 w-full h-4.5 {!focused ? 'opacity-100' : 'opacity-0'}"
 	/>
 	<div
 		class="absolute left-0 -bottom-0.25 bg-gradient-to-t transition
-		from-c-bg via-c-bg to-c-bg/0 w-full h-5 {!focused ? 'opacity-100' : 'opacity-0'}"
+		from-c-bg via-c-bg to-c-bg/0 w-full h-4.5 {!focused ? 'opacity-100' : 'opacity-0'}"
 	/>
 </div>
