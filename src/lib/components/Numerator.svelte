@@ -2,7 +2,7 @@
 	export let max: number;
 	export let min: number;
 	export let value: number;
-	export let focused = false;
+	export let showWheel = false;
 	export { classes as class };
 	let classes = '';
 
@@ -41,10 +41,10 @@
 	/>
 	<div
 		class="absolute left-0 -top-0.25 bg-gradient-to-b transition
-		from-c-bg via-c-bg to-c-bg/0 w-full h-4.5 {!focused ? 'opacity-100' : 'opacity-0'}"
+		from-c-bg via-c-bg to-c-bg/0 w-full h-4.5 {!showWheel ? 'opacity-100' : 'opacity-0'}"
 	/>
 	<div
 		class="absolute left-0 -bottom-0.25 bg-gradient-to-t transition
-		from-c-bg via-c-bg to-c-bg/0 w-full h-4.5 {!focused ? 'opacity-100' : 'opacity-0'}"
+		from-c-bg via-c-bg to-c-bg/0 w-full h-4.5 {!showWheel ? 'opacity-100' : 'opacity-0'}"
 	/>
 </div>

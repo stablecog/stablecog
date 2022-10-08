@@ -28,7 +28,7 @@
 			max={guidanceScaleMax}
 			{value}
 			class="text-xs md:text-sm text-c-on-bg/75"
-			{focused}
+			showWheel={focused}
 		/>
 		<RangeInput
 			class="flex-1 h-12 md:h-13"
