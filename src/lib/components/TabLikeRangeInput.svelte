@@ -8,6 +8,8 @@
 	export let max: number;
 	export { classes as class };
 	let classes = '';
+
+	let focused = false;
 </script>
 
 <div
@@ -26,8 +28,16 @@
 			max={guidanceScaleMax}
 			{value}
 			class="text-xs md:text-sm text-c-on-bg/75"
+			{focused}
 		/>
-		<RangeInput class="flex-1 h-12 md:h-13" classInput="rounded-lg" bind:value {min} {max} />
+		<RangeInput
+			class="flex-1 h-12 md:h-13"
+			classInput="rounded-lg"
+			bind:value
+			bind:focused
+			{min}
+			{max}
+		/>
 	</div>
 </div>
 

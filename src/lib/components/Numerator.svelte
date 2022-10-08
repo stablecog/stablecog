@@ -2,6 +2,7 @@
 	export let max: number;
 	export let min: number;
 	export let value: number;
+	export let focused = false;
 	export { classes as class };
 	let classes = '';
 
@@ -16,22 +17,30 @@
 			<p bind:clientHeight={itemHeight} class="opacity-0">{max}</p>
 			<div
 				style="transform: translateY(-{array.findIndex((i) => i === value) * itemHeight}px)"
-				class="flex flex-col transition duration-200 absolute left-0 top-0"
+				class="flex flex-col transition absolute left-0 top-0"
 			>
 				{#each array as n}
-					<p
-						class="transform transition duration-300 {n === value
-							? 'scale-100 opacity-100'
-							: 'scale-75'}"
-					>
+					<p class="transform transition font-medium {n === value ? 'scale-100' : 'scale-75'}">
 						{n}
 					</p>
 				{/each}
 			</div>
 		</div>
 	</div>
-	<div class="absolute left-0 -top-0.25 bg-gradient-to-b from-c-bg via-c-bg to-c-bg/0 w-full h-5" />
 	<div
-		class="absolute left-0 -bottom-0.25 bg-gradient-to-t from-c-bg via-c-bg to-c-bg/0 w-full h-5"
+		class="absolute left-0 -top-0.25 bg-gradient-to-b transition
+		from-c-bg via-c-bg/50 to-c-bg/0 w-full h-5 {focused ? 'opacity-100' : 'opacity-0'}"
+	/>
+	<div
+		class="absolute left-0 -bottom-0.25 bg-gradient-to-t transition
+		from-c-bg via-c-bg/50 to-c-bg/0 w-full h-5 {focused ? 'opacity-100' : 'opacity-0'}"
+	/>
+	<div
+		class="absolute left-0 -top-0.25 bg-gradient-to-b transition
+		from-c-bg via-c-bg to-c-bg/0 w-full h-5 {!focused ? 'opacity-100' : 'opacity-0'}"
+	/>
+	<div
+		class="absolute left-0 -bottom-0.25 bg-gradient-to-t transition
+		from-c-bg via-c-bg to-c-bg/0 w-full h-5 {!focused ? 'opacity-100' : 'opacity-0'}"
 	/>
 </div>

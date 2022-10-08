@@ -7,12 +7,28 @@
 	export { classes as class };
 	let classes = '';
 	export let classInput = '';
+	export let focused = false;
 
 	$: progress = (value - min) / (max - min);
 </script>
 
 <div class="relative {classes}">
 	<input
+		on:mousedown={() => {
+			focused = true;
+		}}
+		on:mouseup={() => {
+			focused = false;
+		}}
+		on:touchstart={() => {
+			focused = true;
+		}}
+		on:touchend={() => {
+			focused = false;
+		}}
+		on:touchcancel={() => {
+			focused = false;
+		}}
 		class="transition range-input {!$isTouchscreen ? 'range-input-not-touch' : ''} {classInput}"
 		style="width: 100%; background: transparent; position: relative; z-index: 1"
 		bind:value
