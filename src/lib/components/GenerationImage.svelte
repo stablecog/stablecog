@@ -23,9 +23,11 @@
 	let seedCopiedTimeout: NodeJS.Timeout;
 	let promptCopied = false;
 	let promptCopiedTimeout: NodeJS.Timeout;
+	let seedButtonElement: HTMLButtonElement;
 
 	const onSeedCopy = () => {
 		seedCopied = true;
+		seedButtonElement.blur();
 		clearTimeout(seedCopiedTimeout);
 		seedCopiedTimeout = setTimeout(() => {
 			seedCopied = false;
@@ -46,6 +48,7 @@
 				-translate-x-full group-focus-within:translate-x-0 group-hover:translate-x-0 p-1.5"
 			>
 				<button
+					bind:this={seedButtonElement}
 					use:copy={seed.toString()}
 					on:svelte-copy={onSeedCopy}
 					class="max-w-full flex items-center text-c-on-bg text-xs gap-1.5 rounded-lg bg-c-bg 
@@ -145,6 +148,6 @@
 
 <style>
 	.list-fade {
-		mask-image: linear-gradient(to top, transparent, transparent 0.35rem, black 1.25rem);
+		mask-image: linear-gradient(to top, transparent, transparent 0.35rem, black 1.1rem);
 	}
 </style>

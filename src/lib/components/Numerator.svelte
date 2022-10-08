@@ -29,11 +29,11 @@
 	</div>
 	<div
 		class="absolute left-0 -top-0.25 bg-gradient-to-b transition
-		from-c-bg via-c-bg/50 to-c-bg/0 w-full h-5 {focused ? 'opacity-100' : 'opacity-0'}"
+		from-c-bg via-c-bg/50 to-c-bg/0 w-full h-5"
 	/>
 	<div
 		class="absolute left-0 -bottom-0.25 bg-gradient-to-t transition
-		from-c-bg via-c-bg/50 to-c-bg/0 w-full h-5 {focused ? 'opacity-100' : 'opacity-0'}"
+		from-c-bg via-c-bg/50 to-c-bg/0 w-full h-5"
 	/>
 	<div
 		class="absolute left-0 -top-0.25 bg-gradient-to-b transition
