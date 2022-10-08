@@ -6,7 +6,7 @@
 	export { classes as class };
 	let classes = '';
 
-	let itemHeight;
+	let itemHeight: number;
 
 	$: array = Array.from({ length: max - min + 1 }, (_, i) => i + min);
 </script>
