@@ -264,27 +264,6 @@
 					</div>
 				</TabBar>
 				{#if $advancedMode}
-					{#if $serverHealth.features?.includes('negative_prompt')}
-						<TabLikeInput
-							class="w-76 max-w-full"
-							placeholder="Negative prompt"
-							type="text"
-							bind:value={negativePromptInputValue}
-						>
-							<div
-								use:tooltip={{
-									title: 'Negative Prompt',
-									description:
-										'Remove things from the image, as opposed to adding things to it. The opposite of the prompt.',
-									...tooltipStyleProps
-								}}
-								slot="title"
-								class="py-2 px-4 flex items-center justify-center"
-							>
-								<IconChatBubbleCancel class="w-6 h-6 text-c-on-bg/25" />
-							</div>
-						</TabLikeInput>
-					{/if}
 					<TabBar
 						class="w-76 max-w-full"
 						tabs={inferenceStepsTabs}
@@ -323,6 +302,27 @@
 							<IconScale class="w-6 h-6 text-c-on-bg/25" />
 						</div>
 					</TabLikeRangeInput>
+					{#if $serverHealth.features?.includes('negative_prompt')}
+						<TabLikeInput
+							class="w-76 max-w-full"
+							placeholder="Negative prompt"
+							type="text"
+							bind:value={negativePromptInputValue}
+						>
+							<div
+								use:tooltip={{
+									title: 'Negative Prompt',
+									description:
+										'Remove things from the image, as opposed to adding things to it. The opposite of the prompt.',
+									...tooltipStyleProps
+								}}
+								slot="title"
+								class="py-2 px-4 flex items-center justify-center"
+							>
+								<IconChatBubbleCancel class="w-6 h-6 text-c-on-bg/25" />
+							</div>
+						</TabLikeInput>
+					{/if}
 					<TabLikeInput
 						class="w-76 max-w-full"
 						placeholder="Enter a number"
