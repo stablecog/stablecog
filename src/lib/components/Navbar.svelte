@@ -5,6 +5,7 @@
 	import IconHistory from '$components/icons/IconHistory.svelte';
 	import IconHome from '$components/icons/IconHome.svelte';
 	import IconSettings from '$components/icons/IconSettings.svelte';
+	import Logo from '$components/Logo.svelte';
 	import ModalWrapper from '$components/ModalWrapper.svelte';
 	import SetServerModal from '$components/SetServerModal.svelte';
 	import SettingsMenu from '$components/SettingsMenu.svelte';
@@ -43,19 +44,30 @@
 <svelte:window on:scroll={setNotAtTheTop} />
 
 <div class="w-full flex flex-row items-center justify-between sticky z-50 top-0 transition">
-	<div class="px-4 py-3 pointer-events-none">
-		<div class="w-5 h-5 relative" />
-	</div>
+	<div
+		style="background-image: url({$theme === 'light'
+			? '/illustrations/grid-on-light.svg'
+			: '/illustrations/grid-on-dark.svg'});"
+		class="w-full h-full rounded-bl-xl absolute left-0 top-0 transform transition duration-300 bg-c-bg 
+		shadow-lg shadow-c-shadow/[var(--o-shadow-strong)] {notAtTheTop
+			? 'translate-y-0 opacity-100'
+			: '-translate-y-24 opacity-0'}"
+	/>
+	<a
+		href="/"
+		class="px-4 py-3 self-stretch flex items-center justify-center relative rounded-lg z-0 group"
+	>
+		<div class="w-full h-full absolute left-0 top-0 pointer-events-none p-2">
+			<div
+				class="w-full h-full origin-left rounded-xl transition transform -translate-x-1/2
+			  bg-c-primary/25 opacity-0 {!$isTouchscreen
+					? 'group-hover:translate-x-0 group-hover:opacity-100'
+					: ''}"
+			/>
+		</div>
+		<Logo class="w-9 h-9" />
+	</a>
 	<div class="flex items-center justify-end relative px-4 py-3">
-		<div
-			style="background-image: url({$theme === 'light'
-				? '/illustrations/grid-on-light.svg'
-				: '/illustrations/grid-on-dark.svg'});"
-			class="w-full h-full rounded-bl-xl absolute left-0 top-0 transform transition duration-300 bg-c-bg 
-			shadow-lg shadow-c-shadow/[var(--o-shadow-strong)] {notAtTheTop
-				? 'translate-y-0 opacity-100'
-				: '-translate-y-24 opacity-0'}"
-		/>
 		<div class="p-3 relative">
 			<HealthIndicator />
 		</div>
