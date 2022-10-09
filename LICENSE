@@ -15,6 +15,7 @@ Copyrighted assets include, but are not limited to:
 - static/icon-any-512.png
 - static/icon-maskable-192.png
 - static/icon-maskable-512.png
+- src/lib/components/Logo.svelte
 
 All code is copyrighted by Appditto LLC under the MIT license.
 
