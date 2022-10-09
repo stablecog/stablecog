@@ -209,9 +209,9 @@
 					{@const aspectRatio = lastGeneration.width / lastGeneration.height}
 					<div
 						transition:expandCollapse|local={{}}
-						class="max-w-full overflow-hidden flex flex-col items-center justify-start rounded-xl origin-top relative z-0 pb-4 px-4"
+						class="max-w-full overflow-hidden flex flex-col items-center justify-start rounded-xl origin-top relative z-0 pt-4 pb-6 px-4"
 					>
-						<div class="max-w-full flex flex-col items-center md:px-5 gap-4 py-4">
+						<div class="max-w-full flex flex-col items-center md:px-5 gap-4">
 							<div
 								class="{aspectRatio >= 3 / 2
 									? 'w-140'
@@ -224,7 +224,7 @@
 									: aspectRatio >= 2 / 3
 									? 'w-80'
 									: 'w-72'} max-w-full h-auto rounded-2xl bg-c-bg-secondary relative z-0 overflow-hidden border-4 
-								shadow-xl shadow-c-shadow/[var(--o-shadow-normal)] border-c-bg-secondary group"
+								shadow-lg shadow-c-shadow/[var(--o-shadow-normal)] border-c-bg-secondary group"
 							>
 								<ImagePlaceholder width={lastGeneration.width} height={lastGeneration.height} />
 								<GenerationImage generation={lastGeneration} src={lastGeneration.imageUrl} />

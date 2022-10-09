@@ -55,3 +55,15 @@ export type TServerHealth = {
 };
 
 export type TSetServerProcessStatus = 'idle' | 'loading' | 'success' | 'error';
+
+export type TIconSocial =
+	| 'discord'
+	| 'reddit'
+	| 'twitter'
+	| 'instagram'
+	| 'telegram'
+	| 'facebook'
+	| 'github'
+	| 'medium'
+	| 'youtube'
+	| 'email';

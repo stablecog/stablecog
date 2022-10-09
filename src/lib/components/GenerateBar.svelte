@@ -226,7 +226,7 @@
 		>
 			<div class="w-full flex flex-wrap items-start justify-center px-2px py-4 gap-4">
 				<TabBar
-					class="w-76 transition-all max-w-full"
+					class="w-80 max-w-full"
 					tabs={widthTabs}
 					bind:value={generationWidth}
 					name="width"
@@ -245,7 +245,7 @@
 					</div>
 				</TabBar>
 				<TabBar
-					class="w-76 transition-all max-w-full"
+					class="w-80 max-w-full"
 					tabs={heightTabs}
 					bind:value={generationHeight}
 					name="height"
@@ -265,7 +265,7 @@
 				</TabBar>
 				{#if $advancedMode}
 					<TabBar
-						class="w-76 max-w-full"
+						class="w-80 max-w-full"
 						tabs={inferenceStepsTabs}
 						bind:value={generationInferenceSteps}
 						name="steps"
@@ -284,7 +284,7 @@
 						</div>
 					</TabBar>
 					<TabLikeRangeInput
-						class="w-76 max-w-full"
+						class="w-80 max-w-full"
 						bind:value={generationGuidanceScale}
 						min={guidanceScaleMin}
 						max={guidanceScaleMax}
@@ -304,7 +304,7 @@
 					</TabLikeRangeInput>
 					{#if $serverHealth.features?.includes('negative_prompt')}
 						<TabLikeInput
-							class="w-76 max-w-full"
+							class="w-80 max-w-full"
 							placeholder="Negative prompt"
 							type="text"
 							bind:value={negativePromptInputValue}
@@ -324,7 +324,7 @@
 						</TabLikeInput>
 					{/if}
 					<TabLikeInput
-						class="w-76 max-w-full"
+						class="w-80 max-w-full"
 						placeholder="Enter a number"
 						bind:value={generationSeed}
 						type="number"

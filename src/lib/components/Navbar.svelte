@@ -22,7 +22,7 @@
 	const toggleSettings = () => (isSettingsOpen = !isSettingsOpen);
 	const closeSettings = () => (isSettingsOpen = false);
 	let notAtTheTop = false;
-	const notAtTheTopThreshold = 10;
+	const notAtTheTopThreshold = 1;
 
 	const onSwitchServerClick = () => {
 		closeSettings();
