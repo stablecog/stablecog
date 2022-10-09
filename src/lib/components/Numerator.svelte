@@ -23,7 +23,7 @@
 					<p
 						class="transform transition font-medium {n === value
 							? 'scale-100'
-							: 'scale-75 opacity-75'} leading-4 md:leading-5"
+							: 'scale-75 opacity-50'} leading-4 md:leading-5"
 					>
 						{n}
 					</p>

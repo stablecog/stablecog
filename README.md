@@ -1,6 +1,21 @@
 # Stablecog - [stablecog.com](https://stablecog.com)
 
-This is an app made with [SvelteKit](https://kit.svelte.dev) for connecting to [Stable Diffusion](https://github.com/CompVis/stable-diffusion) cogs and creating AI generated images. For more info on cogs, you can check out: [Replicate](https://replicate.com). The app knows how to communicate with this specific cog to generate images: [Stable Diffusion Cog](https://replicate.com/stability-ai/stable-diffusion). However, as long as your cog has the endpoints and the parameters the app uses, it'll work.
+This is an app made with [SvelteKit](https://kit.svelte.dev) for connecting to [Stable Diffusion](https://github.com/CompVis/stable-diffusion) cogs and creating AI generated images. For more info on cogs, you can check out: [Replicate](https://replicate.com).
+
+The app knows how to communicate with this cog to generate images: [Stable Diffusion Cog](https://github.com/yekta/stable-diffusion-cog). However, as long as your server has the endpoints and the parameters the app uses, it'll work.
+
+For example, the following cogs would also work with the app:
+
+- [stability.ai: Stable Diffusion Cog](https://replicate.com/stability-ai/stable-diffusion)
+- [cjwbw: Waifu Diffusion Cog](https://replicate.com/cjwbw/waifu-diffusion)
+
+For the app to work, the cog needs to have the following input properties on the `/predictions` endpoint:
+
+- `prompt`, `width`, `height`, `guidance_scale`, `num_inference_steps`, `seed`.
+
+Optionals:
+
+- `negative_prompt`
 
 ---
 
@@ -45,3 +60,5 @@ There is an `.env.example` file in the root directory. You can copy this file an
 - `PUBLIC_DEFAULT_SERVER_URL`: This is the default server url (your cog's url) that the app uses to generate images if provided. You can still change to another server in the app by clicking the settings icon in the top right corner of the home page.
 - `PUBLIC_SUPABASE_URL`
 - `PUBLIC_SUPABASE_ADMIN_KEY`
+
+There is a Plausible Analytics script on `src/app.html`. You can remove it or you can change the `data-domain` and `src` attributes to point to your domain and your Plausible instance.
