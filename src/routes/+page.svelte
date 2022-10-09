@@ -197,7 +197,7 @@
 					{@const aspectRatio = lastGeneration.width / lastGeneration.height}
 					<div
 						transition:expandCollapse|local={{}}
-						class="max-w-full overflow-hidden flex flex-col items-center justify-start rounded-xl origin-top relative z-0"
+						class="max-w-full overflow-hidden flex flex-col items-center justify-start rounded-xl origin-top relative z-0 pb-4"
 					>
 						<div class="max-w-full flex flex-col items-center md:px-5 gap-4 py-4">
 							<div
