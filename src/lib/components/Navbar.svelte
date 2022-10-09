@@ -55,15 +55,17 @@
 	/>
 	<a
 		href="/"
-		class="px-4 py-3 self-stretch flex items-center justify-center relative rounded-lg z-0 group"
+		class="px-4 py-3 self-stretch flex items-center justify-center relative rounded-xl z-0 group"
 	>
 		<div class="w-full h-full absolute left-0 top-0 pointer-events-none p-2">
-			<div
-				class="w-full h-full origin-left rounded-xl transition transform -translate-x-1/2
-			  bg-c-primary/25 opacity-0 {!$isTouchscreen
-					? 'group-hover:translate-x-0 group-hover:opacity-100'
-					: ''}"
-			/>
+			<div class="w-full h-full rounded-xl z-0 overflow-hidden">
+				<div
+					class="w-full h-full origin-left rounded-xl transition transform -translate-x-full
+			  	bg-c-primary/25 opacity-0 {!$isTouchscreen
+						? 'group-hover:translate-x-0 group-hover:opacity-100'
+						: ''}"
+				/>
+			</div>
 		</div>
 		<Logo class="w-9 h-9" />
 	</a>
