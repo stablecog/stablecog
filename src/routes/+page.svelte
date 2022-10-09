@@ -39,11 +39,6 @@
 	let generationError: string | undefined;
 	let estimatedDuration = estimatedDurationDefault;
 
-	$: duration =
-		endTimestamp !== undefined && startTimestamp !== undefined
-			? endTimestamp - startTimestamp
-			: undefined;
-
 	$: [generationWidth, generationHeight, generationInferenceSteps], setEstimatedDuration();
 
 	async function setEstimatedDuration() {
@@ -102,6 +97,7 @@
 				if ($serverHealth !== 'healthy') {
 					serverHealth.set('healthy');
 				}
+				lastGeneration.duration_ms = data.duration_ms;
 				try {
 					await addGenerationToDb({
 						...lastGeneration,
@@ -197,7 +193,7 @@
 							{generationError ?? 'Something went wrong :('}
 						</p>
 					</div>
-				{:else if status === 'success' && duration !== undefined && lastGeneration && lastGeneration.imageUrl}
+				{:else if status === 'success' && lastGeneration && lastGeneration.imageUrl}
 					{@const aspectRatio = lastGeneration.width / lastGeneration.height}
 					<div
 						transition:expandCollapse|local={{}}
@@ -227,13 +223,9 @@
 									seed={lastGeneration.seed}
 									guidanceScale={lastGeneration.guidance_scale}
 									inferenceSteps={lastGeneration.num_inference_steps}
+									durationMs={lastGeneration.duration_ms}
 								/>
 							</div>
-							<p class="text-c-on-bg/40 text-sm text-center">
-								{(duration / 1000).toLocaleString('en-US', {
-									maximumFractionDigits: 1
-								})} seconds
-							</p>
 						</div>
 					</div>
 				{/if}

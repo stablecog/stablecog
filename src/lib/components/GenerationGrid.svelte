@@ -46,6 +46,7 @@
 									seed={generation.seed}
 									guidanceScale={generation.guidance_scale}
 									inferenceSteps={generation.num_inference_steps}
+									durationMs={generation.duration_ms}
 									src={url}
 								/>
 							{/if}

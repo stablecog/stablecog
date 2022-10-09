@@ -1,6 +1,7 @@
 <script lang="ts">
 	import CopyButton from '$components/buttons/CopyButton.svelte';
 	import DownloadGenerationButton from '$components/buttons/DownloadGenerationButton.svelte';
+	import IconClock from '$components/icons/IconClock.svelte';
 	import IconCopy from '$components/icons/IconCopy.svelte';
 	import IconScale from '$components/icons/IconScale.svelte';
 	import IconSeed from '$components/icons/IconSeed.svelte';
@@ -18,6 +19,7 @@
 	export let src: string;
 	export let guidanceScale: number;
 	export let inferenceSteps: number;
+	export let durationMs: number | undefined;
 
 	let seedCopied = false;
 	let seedCopiedTimeout: NodeJS.Timeout;
@@ -42,11 +44,11 @@
 	class="w-full h-full absolute left-0 top-0 flex flex-col justify-between items-end gap-5 overflow-hidden"
 >
 	<div class="w-full flex justify-between">
-		{#if $advancedMode}
-			<div
-				class="flex-1 min-w-0 overflow-hidden flex flex-col items-start justify-start gap-1 transition transform 
+		<div
+			class="flex-1 min-w-0 overflow-hidden flex flex-col items-start justify-start gap-1 transition transform 
 				-translate-x-full group-focus-within:translate-x-0 group-hover:translate-x-0 p-1.5"
-			>
+		>
+			{#if $advancedMode}
 				<button
 					bind:this={seedButtonElement}
 					use:copy={seed.toString()}
@@ -104,10 +106,19 @@
 						{inferenceSteps}
 					</p>
 				</div>
-			</div>
-		{:else}
-			<div class="flex-1" />
-		{/if}
+			{/if}
+			{#if durationMs !== undefined}
+				<div class="max-w-full flex items-center text-xs gap-1.5 rounded-lg bg-c-bg px-3 py-2">
+					<IconClock class="w-3.5 h-3.5" />
+					<p class="flex-1 flex-shrink min-w-0 overflow-hidden overflow-ellipsis">
+						{(durationMs / 1000).toLocaleString('en-US', {
+							minimumFractionDigits: 0,
+							maximumFractionDigits: 1
+						})}s
+					</p>
+				</div>
+			{/if}
+		</div>
 		<div
 			class="flex flex-col items-end justify-start transition transform 
 			translate-x-full group-focus-within:translate-x-0 group-hover:translate-x-0"

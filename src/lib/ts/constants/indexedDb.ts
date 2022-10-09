@@ -10,6 +10,7 @@ export interface TDBGeneration {
 	guidance_scale: number;
 	seed: number;
 	server_url: string;
+	duration_ms?: number;
 }
 
 export class MySubClassedDexie extends Dexie {
@@ -19,7 +20,7 @@ export class MySubClassedDexie extends Dexie {
 		super('stablecogDb');
 		this.version(1).stores({
 			generations:
-				'++id, prompt, imageDataB64, width, height, num_inference_steps, guidance_scale, seed, server_url' // Primary key and indexed props
+				'++id, prompt, imageDataB64, width, height, num_inference_steps, guidance_scale, seed, server_url, duration_ms' // Primary key and indexed props
 		});
 	}
 }

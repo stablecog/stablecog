@@ -8,6 +8,7 @@ export interface TGeneration {
 	seed: number;
 	num_inference_steps: number;
 	guidance_scale: number;
+	duration_ms?: number;
 	imageUrl?: string;
 	computeRatePerSec?: number;
 }
@@ -25,6 +26,7 @@ export interface TGenerationRequest {
 export interface TGenerationResponse {
 	data?: {
 		imageDataB64: string;
+		duration_ms: number;
 	};
 	error?: string;
 }

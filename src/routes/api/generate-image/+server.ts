@@ -27,6 +27,7 @@ export const POST: RequestHandler = async ({ request }) => {
 			seed,
 			server_url
 		});
+		const startTimestamp = Date.now();
 		const response = await fetch(`${server_url}/predictions`, {
 			method: 'POST',
 			headers: {
@@ -43,9 +44,10 @@ export const POST: RequestHandler = async ({ request }) => {
 				}
 			})
 		});
+		const endTimestamp = Date.now();
+		const generationDurationMs = endTimestamp - startTimestamp;
 		const data: TGenerateImageData = await response.json();
 		const output = data.output[0];
-		const endTimestamp = Date.now();
 		const endDate = new Date(endTimestamp).toUTCString();
 		if (data.error) {
 			console.log('----', endDate, '--', 'Generation error', '--', data.error, '----');
@@ -78,6 +80,7 @@ export const POST: RequestHandler = async ({ request }) => {
 						num_inference_steps,
 						guidance_scale,
 						server_url,
+						duration_ms: generationDurationMs,
 						country_code: countryCode,
 						device_type: deviceInfo.type,
 						device_browser: deviceInfo.browser,
@@ -107,7 +110,7 @@ export const POST: RequestHandler = async ({ request }) => {
 			}
 		}
 		const generationResponse: TGenerationResponse = {
-			data: output ? { imageDataB64: output } : undefined,
+			data: output ? { imageDataB64: output, duration_ms: generationDurationMs } : undefined,
 			error: data.error
 		};
 		return new Response(JSON.stringify(generationResponse));
