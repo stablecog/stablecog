@@ -48,7 +48,7 @@
 		style="background-image: url({$theme === 'light'
 			? '/illustrations/grid-on-light.svg'
 			: '/illustrations/grid-on-dark.svg'});"
-		class="w-full h-full rounded-bl-xl absolute left-0 top-0 transform transition duration-300 bg-c-bg 
+		class="w-full h-full rounded-b-xl absolute left-0 top-0 transform transition duration-300 bg-c-bg 
 		shadow-lg shadow-c-shadow/[var(--o-shadow-strong)] {notAtTheTop
 			? 'translate-y-0 opacity-100'
 			: '-translate-y-24 opacity-0'}"
