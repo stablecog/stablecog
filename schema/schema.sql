@@ -2,6 +2,7 @@ CREATE extension IF NOT EXISTS moddatetime schema extensions;
 
 CREATE TABLE "generation" (
     "prompt" TEXT NOT NULL,
+    "negative_prompt" TEXT,
     "width" INTEGER NOT NULL,
     "height" INTEGER NOT NULL,
     "seed" BIGINT NOT NULL,

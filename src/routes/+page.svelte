@@ -26,7 +26,8 @@
 	import SetServerModal from '$components/SetServerModal.svelte';
 
 	let status: TStatus = 'idle';
-	let inputValue: string | undefined;
+	let promptInputValue: string | undefined;
+	let negativePromptInputValue: string | undefined;
 	let nowInterval: NodeJS.Timeout | undefined;
 	let startTimestamp: number | undefined;
 	let endTimestamp: number | undefined;
@@ -64,15 +65,15 @@
 	}
 
 	async function onCreate() {
-		if (!$serverUrl || !inputValue) {
-			!inputValue && console.log('no input');
+		if (!$serverUrl || !promptInputValue) {
+			!promptInputValue && console.log('no input');
 			!$serverUrl && console.log('no server url');
 			return;
 		}
 		generationError = undefined;
 		lastGeneration = {
 			server_url: $serverUrl,
-			prompt: inputValue,
+			prompt: promptInputValue,
 			width: Number(generationWidth),
 			height: Number(generationHeight),
 			guidance_scale: Number($advancedMode ? generationGuidanceScale : guidanceScaleDefault),
@@ -99,8 +100,8 @@
 			});
 			let { data, error } = res;
 			if (data && data.imageDataB64 && !error) {
-				if ($serverHealth !== 'healthy') {
-					serverHealth.set('healthy');
+				if ($serverHealth.status !== 'healthy') {
+					serverHealth.set({ status: 'healthy', features: $serverHealth.features });
 				}
 				try {
 					await addGenerationToDb({
@@ -180,7 +181,8 @@
 				class="w-full flex flex-col justify-start items-center overflow-hidden z-0"
 			>
 				<GenerateBar
-					bind:inputValue
+					bind:promptInputValue
+					bind:negativePromptInputValue
 					bind:generationWidth
 					bind:generationHeight
 					bind:generationInferenceSteps

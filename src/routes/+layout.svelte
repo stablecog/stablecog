@@ -17,29 +17,29 @@
 		setBodyClasses();
 		const now = Date.now();
 		if (!$serverUrl) {
-			serverHealth.set('not-set');
+			serverHealth.set({ status: 'not-set' });
 			return;
 		}
 		try {
-			serverHealth.set('loading');
+			serverHealth.set({ status: 'loading' });
 			console.log('Checking server health...');
 			if ($serverUrl === undefined) {
-				serverHealth.set('unhealthy');
+				serverHealth.set({ status: 'unhealthy' });
 			} else {
-				const status = await checkServerHealth($serverUrl);
-				if (status === 'healthy') {
-					serverHealth.set('healthy');
+				const healthRes = await checkServerHealth($serverUrl);
+				if (healthRes.status === 'healthy') {
+					serverHealth.set({ status: 'healthy', features: healthRes.features ?? undefined });
 					console.log('Server is healthy ✅:', $serverUrl);
 				} else {
-					serverHealth.set('unhealthy');
+					serverHealth.set({ status: 'unhealthy' });
 					console.log('Server is unhealthy ❌:', $serverUrl);
 				}
 			}
 		} catch (error) {
 			console.log('Server health check failed:', $serverUrl, 'Error:', error);
 		} finally {
-			if ($serverHealth !== 'healthy' && $serverHealth !== 'unhealthy') {
-				serverHealth.set('unknown');
+			if ($serverHealth.status !== 'healthy' && $serverHealth.status !== 'unhealthy') {
+				serverHealth.set({ status: 'unknown' });
 			}
 			console.log('Server health check took:', Date.now() - now, 'ms');
 		}

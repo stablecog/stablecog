@@ -26,7 +26,9 @@
 	import { imageSize } from '$ts/stores/imageSize';
 	import { inferenceSteps } from '$ts/stores/inferenceSteps';
 	import { isTouchscreen } from '$ts/stores/isTouchscreen';
+	import { negativePrompt, prompt } from '$ts/stores/prompt';
 	import { seed } from '$ts/stores/seed';
+	import { serverHealth } from '$ts/stores/serverHealth';
 	import type { TStatus } from '$ts/types/main';
 	import { onMount, tick } from 'svelte';
 
@@ -37,7 +39,8 @@
 	export let generationSeed: number;
 	export let onCreate: () => Promise<void>;
 	export let status: TStatus;
-	export let inputValue: string | undefined;
+	export let promptInputValue: string | undefined;
+	export let negativePromptInputValue: string | undefined;
 	export let startTimestamp: number | undefined;
 	export let estimatedDuration: number;
 	export { classes as class };
@@ -47,7 +50,6 @@
 	const placeholder = 'Portrait of a monkey by Van Gogh';
 	let now: number | undefined;
 	let nowInterval: NodeJS.Timeout | undefined;
-	let inputElement: HTMLInputElement;
 
 	$: loadingOrSubmitting = status === 'loading' || submitting;
 	$: sinceSec =
@@ -65,10 +67,10 @@
 
 	async function onSubmit() {
 		submitting = true;
-		if (!inputValue) {
+		if (!promptInputValue) {
 			await new Promise((resolve) => setTimeout(resolve, 75));
 			await tick();
-			inputValue = placeholder;
+			promptInputValue = placeholder;
 		}
 		await onCreate();
 		submitting = false;
@@ -80,6 +82,8 @@
 	$: [generationInferenceSteps], setLocalInferenceSteps();
 	$: [generationGuidanceScale], setLocalGuidanceScale();
 	$: [generationSeed], setLocalSeed();
+	$: [promptInputValue], setLocalPrompt();
+	$: [negativePromptInputValue], setLocalNegativePrompt();
 
 	const setLocalImageSize = () => {
 		if (isCheckComplete) {
@@ -112,6 +116,18 @@
 		}
 	};
 
+	const setLocalPrompt = () => {
+		if (isCheckComplete) {
+			prompt.set(promptInputValue);
+		}
+	};
+
+	const setLocalNegativePrompt = () => {
+		if (isCheckComplete) {
+			negativePrompt.set(negativePromptInputValue);
+		}
+	};
+
 	onMount(() => {
 		isCheckComplete = false;
 		const widthIndex = widthTabs
@@ -133,6 +149,9 @@
 			generationGuidanceScale = $guidanceScale;
 		}
 		if ($seed !== undefined && $seed !== null) generationSeed = $seed;
+		if ($prompt) {
+			promptInputValue = $prompt;
+		}
 
 		isCheckComplete = true;
 	});
@@ -170,8 +189,7 @@
 				/>
 			</div>
 			<input
-				bind:this={inputElement}
-				bind:value={inputValue}
+				bind:value={promptInputValue}
 				disabled={loadingOrSubmitting}
 				{placeholder}
 				type="text"
@@ -238,6 +256,26 @@
 							<IconHeight class="w-6 h-6 text-c-on-bg/25" />
 						</div>
 					</TabBar>
+					{#if $serverHealth.features?.includes('negative_prompt')}
+						<TabLikeInput
+							class="w-76 max-w-full"
+							placeholder="Negative Prompt"
+							bind:value={negativePromptInputValue}
+						>
+							<div
+								use:tooltip={{
+									title: 'Negative Prompt',
+									description:
+										'It is to not include things that you are wishing to not see in the generated image.',
+									...tooltipStyleProps
+								}}
+								slot="title"
+								class="py-2 px-4 flex items-center justify-center"
+							>
+								<IconSeed class="w-6 h-6 text-c-on-bg/25" />
+							</div>
+						</TabLikeInput>
+					{/if}
 				</div>
 				{#if $advancedMode}
 					<div transition:expandCollapse|local={{}} class="w-full overflow-hidden -mb-4">

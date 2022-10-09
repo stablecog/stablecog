@@ -10,6 +10,7 @@ export const POST: RequestHandler = async ({ request }) => {
 		const {
 			server_url,
 			prompt,
+			negativePrompt,
 			seed,
 			width,
 			height,
@@ -35,6 +36,7 @@ export const POST: RequestHandler = async ({ request }) => {
 			body: JSON.stringify({
 				input: {
 					prompt: prompt,
+					negativePrompt,
 					width: width.toString(),
 					height: height.toString(),
 					seed: seed.toString(),

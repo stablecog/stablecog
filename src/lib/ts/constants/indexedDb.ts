@@ -3,6 +3,7 @@ import Dexie, { type Table } from 'dexie';
 export interface TDBGeneration {
 	id?: number;
 	prompt: string;
+	negative_prompt?: string;
 	imageDataB64: string;
 	width: number;
 	height: number;
@@ -19,7 +20,7 @@ export class MySubClassedDexie extends Dexie {
 		super('stablecogDb');
 		this.version(1).stores({
 			generations:
-				'++id, prompt, imageDataB64, width, height, num_inference_steps, guidance_scale, seed, server_url' // Primary key and indexed props
+				'++id, prompt, imageDataB64, width, height, num_inference_steps, guidance_scale, seed, server_url, negative_prompt' // Primary key and indexed props
 		});
 	}
 }

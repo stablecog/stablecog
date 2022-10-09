@@ -8,11 +8,12 @@
 </script>
 
 <div
-	class="{size === 'sm' ? 'w-2 h-2' : 'w-2.5 h-2.5'} rounded-full {$serverHealth === 'loading'
+	class="{size === 'sm' ? 'w-2 h-2' : 'w-2.5 h-2.5'} rounded-full {$serverHealth.status ===
+	'loading'
 		? 'bg-c-primary animate-pulse-scale'
-		: $serverHealth === 'healthy'
+		: $serverHealth.status === 'healthy'
 		? 'bg-c-success'
-		: $serverHealth === 'unhealthy'
+		: $serverHealth.status === 'unhealthy'
 		? 'bg-c-danger'
 		: 'bg-c-on-bg/50'} {classes}"
 />

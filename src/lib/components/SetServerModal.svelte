@@ -36,10 +36,10 @@
 					throw new Error('Invalid URL');
 				}
 				setServerProcessStatus = 'loading';
-				const status = await checkServerHealth(url);
-				if (status === 'healthy') {
+				const healthRes = await checkServerHealth(url);
+				if (healthRes.status === 'healthy') {
 					setServerProcessStatus = 'success';
-					serverHealth.set('healthy');
+					serverHealth.set({ ...healthRes });
 					serverUrl.set(url.toString());
 					serverUrlInputValue = $serverUrl;
 					if (close) {

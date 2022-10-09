@@ -1,4 +1,4 @@
-import type { TServerHealth } from '$ts/types/main';
+import type { TServerHealth, TServerHealthStatus } from '$ts/types/main';
 import type { RequestHandler } from '@sveltejs/kit';
 
 export const POST: RequestHandler = async ({ request }) => {
@@ -12,7 +12,7 @@ export const POST: RequestHandler = async ({ request }) => {
 		const properties = data.components?.schemas?.Input?.properties;
 		const endTimestamp = Date.now();
 		const endDate = new Date(endTimestamp).toUTCString();
-		let status: TServerHealth;
+		let serverHealth: TServerHealth;
 		if (
 			properties !== undefined &&
 			properties.guidance_scale !== undefined &&
@@ -22,18 +22,21 @@ export const POST: RequestHandler = async ({ request }) => {
 			properties.width !== undefined &&
 			properties.height !== undefined
 		) {
-			status = 'healthy';
+			serverHealth = { status: 'healthy' };
+			if (properties.negative_prompt !== undefined) {
+				serverHealth.features = ['negative_prompt'];
+			}
 		} else {
-			status = 'unhealthy';
+			serverHealth = { status: 'unhealthy' };
 		}
 		endLog({
 			startTimestamp,
 			endTimestamp,
 			endDate,
-			status,
+			status: serverHealth.status,
 			serverUrl: server_url
 		});
-		return new Response(JSON.stringify({ status }));
+		return new Response(JSON.stringify({ ...serverHealth }));
 	} catch (error) {
 		const endTimestamp = Date.now();
 		const endDate = new Date(endTimestamp).toUTCString();
@@ -58,7 +61,7 @@ function endLog({
 	startTimestamp: number;
 	endTimestamp: number;
 	endDate: string;
-	status: string;
+	status: string | TServerHealthStatus;
 	serverUrl: string | undefined;
 }) {
 	console.log(
@@ -86,6 +89,9 @@ interface TServerHealthData {
 			Input?: {
 				properties?: {
 					prompt?: {
+						title?: string;
+					};
+					negative_prompt?: {
 						title?: string;
 					};
 					width?: {

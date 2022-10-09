@@ -3,6 +3,7 @@ export type TStatus = 'idle' | 'loading' | 'success' | 'error';
 export interface TGeneration {
 	server_url: string;
 	prompt: string;
+	negative_prompt?: string;
 	width: number;
 	height: number;
 	seed: number;
@@ -15,6 +16,7 @@ export interface TGeneration {
 export interface TGenerationRequest {
 	server_url: string;
 	prompt: string;
+	negativePrompt?: string;
 	width: number;
 	height: number;
 	seed: number;
@@ -34,6 +36,12 @@ export interface TTab {
 	value: string | number;
 }
 
-export type TServerHealth = 'healthy' | 'unhealthy' | 'not-set' | 'unknown' | 'loading';
+export type TServerFeatures = 'negative_prompt';
+export type TServerHealthStatus = 'healthy' | 'unhealthy' | 'not-set' | 'unknown' | 'loading';
+
+export type TServerHealth = {
+	status: TServerHealthStatus;
+	features?: TServerFeatures[] | undefined;
+};
 
 export type TSetServerProcessStatus = 'idle' | 'loading' | 'success' | 'error';
