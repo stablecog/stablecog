@@ -1,6 +1,8 @@
 <script lang="ts">
 	import Numerator from '$components/Numerator.svelte';
 	import RangeInput from '$components/RangeInput.svelte';
+	import TabBarWrapper from '$components/TabBarWrapper.svelte';
+	import { expandCollapse } from '$ts/animation/transitions';
 	import { guidanceScaleMax, guidanceScaleMin } from '$ts/constants/main';
 
 	export let value: number;
@@ -8,28 +10,42 @@
 	export let max: number;
 	export { classes as class };
 	let classes = '';
+
+	let focused = false;
 </script>
 
-<div
-	class="w-full flex items-stretch bg-c-bg shadow-lg shadow-c-shadow/[var(--o-shadow-normal)] 
-	ring-2 ring-c-bg-secondary rounded-xl transition relative {classes}"
->
-	<div class="self-stretch flex text-c-on-bg/30">
-		<slot name="title" />
+<TabBarWrapper class={classes}>
+	<div
+		class="w-full flex items-stretch bg-c-bg shadow-lg shadow-c-shadow/[var(--o-shadow-normal)] 
+		ring-2 ring-c-bg-secondary rounded-xl transition relative {classes}"
+	>
+		<div class="self-stretch flex text-c-on-bg/30">
+			<slot name="title" />
+		</div>
+		<div class="w-2px mr-px -ml-px self-stretch">
+			<div class="w-full h-full bg-c-bg-secondary transition" />
+		</div>
+		<div
+			class="range-input flex-1 min-w-0 flex items-center relative rounded-r-xl pl-4 pr-4 gap-3.5"
+		>
+			<Numerator
+				min={guidanceScaleMin}
+				max={guidanceScaleMax}
+				{value}
+				class="text-xs md:text-sm text-c-on-bg/75"
+				showWheel={focused}
+			/>
+			<RangeInput
+				class="flex-1 h-12 md:h-13"
+				classInput="rounded-lg"
+				bind:value
+				bind:focused
+				{min}
+				{max}
+			/>
+		</div>
 	</div>
-	<div class="w-2px mr-px -ml-px self-stretch">
-		<div class="w-full h-full bg-c-bg-secondary transition" />
-	</div>
-	<div class="range-input flex-1 min-w-0 flex items-center relative rounded-r-xl pl-4 pr-4 gap-3.5">
-		<Numerator
-			min={guidanceScaleMin}
-			max={guidanceScaleMax}
-			{value}
-			class="text-xs md:text-sm text-c-on-bg/75"
-		/>
-		<RangeInput class="flex-1 h-12 md:h-13" classInput="rounded-lg" bind:value {min} {max} />
-	</div>
-</div>
+</TabBarWrapper>
 
 <style>
 	.range-input {

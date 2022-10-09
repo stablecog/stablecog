@@ -17,7 +17,7 @@
 	import { generateImage } from '$ts/queries/generateImage';
 	import { computeRatePerSec } from '$ts/stores/computeRatePerSec';
 	import { serverUrl } from '$ts/stores/serverUrl';
-	import type { TGeneration, TStatus } from '$ts/types/main';
+	import type { TGenerationUI, TStatus } from '$ts/types/main';
 	import { onDestroy, onMount } from 'svelte';
 	import ImagePlaceholder from '$components/ImagePlaceholder.svelte';
 	import GenerationImage from '$components/GenerationImage.svelte';
@@ -31,7 +31,7 @@
 	let nowInterval: NodeJS.Timeout | undefined;
 	let startTimestamp: number | undefined;
 	let endTimestamp: number | undefined;
-	let lastGeneration: TGeneration | undefined;
+	let lastGeneration: TGenerationUI | undefined;
 	let generationWidth: TAvailableWidths;
 	let generationHeight: TAvailableHeights;
 	let generationInferenceSteps: TAvailableInferenceSteps;
@@ -39,11 +39,6 @@
 	let generationSeed: number;
 	let generationError: string | undefined;
 	let estimatedDuration = estimatedDurationDefault;
-
-	$: duration =
-		endTimestamp !== undefined && startTimestamp !== undefined
-			? endTimestamp - startTimestamp
-			: undefined;
 
 	$: [generationWidth, generationHeight, generationInferenceSteps], setEstimatedDuration();
 
@@ -74,6 +69,12 @@
 		lastGeneration = {
 			server_url: $serverUrl,
 			prompt: promptInputValue,
+			negative_prompt:
+				$serverHealth.features?.includes('negative_prompt') &&
+				negativePromptInputValue !== '' &&
+				negativePromptInputValue !== undefined
+					? negativePromptInputValue
+					: undefined,
 			width: Number(generationWidth),
 			height: Number(generationHeight),
 			guidance_scale: Number($advancedMode ? generationGuidanceScale : guidanceScaleDefault),
@@ -92,6 +93,7 @@
 			let res = await generateImage({
 				server_url: lastGeneration.server_url,
 				prompt: lastGeneration.prompt,
+				negative_prompt: lastGeneration.negative_prompt,
 				width: lastGeneration.width,
 				height: lastGeneration.height,
 				seed: lastGeneration.seed,
@@ -103,6 +105,7 @@
 				if ($serverHealth.status !== 'healthy') {
 					serverHealth.set({ status: 'healthy', features: $serverHealth.features });
 				}
+				lastGeneration.duration_ms = data.duration_ms;
 				try {
 					await addGenerationToDb({
 						...lastGeneration,
@@ -178,7 +181,7 @@
 		{:else}
 			<div
 				transition:expandCollapse|local={{ duration: 300 }}
-				class="w-full flex flex-col justify-start items-center overflow-hidden z-0"
+				class="w-[calc(100%+2rem)] flex flex-col justify-start items-center overflow-hidden z-0 -mx-4"
 			>
 				<GenerateBar
 					bind:promptInputValue
@@ -194,16 +197,19 @@
 					{estimatedDuration}
 				/>
 				{#if status === 'error'}
-					<div transition:expandCollapse|local={{}} class="flex flex-col justify-start origin-top">
+					<div
+						transition:expandCollapse|local={{}}
+						class="flex flex-col justify-start origin-top px-4"
+					>
 						<p class="w-full max-w-lg text-c-on-bg/40 text-center py-4">
 							{generationError ?? 'Something went wrong :('}
 						</p>
 					</div>
-				{:else if status === 'success' && duration !== undefined && lastGeneration && lastGeneration.imageUrl}
+				{:else if status === 'success' && lastGeneration && lastGeneration.imageUrl}
 					{@const aspectRatio = lastGeneration.width / lastGeneration.height}
 					<div
 						transition:expandCollapse|local={{}}
-						class="max-w-full overflow-hidden flex flex-col items-center justify-start rounded-xl origin-top relative z-0"
+						class="max-w-full overflow-hidden flex flex-col items-center justify-start rounded-xl origin-top relative z-0 pb-4 px-4"
 					>
 						<div class="max-w-full flex flex-col items-center md:px-5 gap-4 py-4">
 							<div
@@ -221,21 +227,8 @@
 								shadow-xl shadow-c-shadow/[var(--o-shadow-normal)] border-c-bg-secondary group"
 							>
 								<ImagePlaceholder width={lastGeneration.width} height={lastGeneration.height} />
-								<GenerationImage
-									src={lastGeneration.imageUrl}
-									prompt={lastGeneration.prompt}
-									width={lastGeneration.width}
-									height={lastGeneration.height}
-									seed={lastGeneration.seed}
-									guidanceScale={lastGeneration.guidance_scale}
-									inferenceSteps={lastGeneration.num_inference_steps}
-								/>
+								<GenerationImage generation={lastGeneration} src={lastGeneration.imageUrl} />
 							</div>
-							<p class="text-c-on-bg/40 text-sm text-center">
-								{(duration / 1000).toLocaleString('en-US', {
-									maximumFractionDigits: 1
-								})} seconds
-							</p>
 						</div>
 					</div>
 				{/if}

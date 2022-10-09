@@ -1,7 +1,6 @@
 export type TStatus = 'idle' | 'loading' | 'success' | 'error';
 
-export interface TGeneration {
-	server_url: string;
+export interface TGenerationBase {
 	prompt: string;
 	negative_prompt?: string;
 	width: number;
@@ -9,14 +8,24 @@ export interface TGeneration {
 	seed: number;
 	num_inference_steps: number;
 	guidance_scale: number;
+	duration_ms?: number;
+	server_url: string;
+}
+
+export interface TGenerationUI extends TGenerationBase {
 	imageUrl?: string;
 	computeRatePerSec?: number;
+}
+
+export interface TDBGeneration extends TGenerationBase {
+	id?: number;
+	imageDataB64: string;
 }
 
 export interface TGenerationRequest {
 	server_url: string;
 	prompt: string;
-	negativePrompt?: string;
+	negative_prompt?: string;
 	width: number;
 	height: number;
 	seed: number;
@@ -27,6 +36,7 @@ export interface TGenerationRequest {
 export interface TGenerationResponse {
 	data?: {
 		imageDataB64: string;
+		duration_ms: number;
 	};
 	error?: string;
 }

@@ -7,11 +7,12 @@
 
 	export let stringToCopy: string;
 	export let disabled = false;
+	export let onCopied: (() => void) | undefined = undefined;
+	export let copied = false;
+	export let copiedTimeout: NodeJS.Timeout | undefined = undefined;
 	export { classes as class };
 	let classes = '';
 
-	let copied = false;
-	let copiedTimeout: NodeJS.Timeout;
 	let element: HTMLButtonElement;
 
 	const onCopy = () => {
@@ -21,6 +22,9 @@
 		copiedTimeout = setTimeout(() => {
 			copied = false;
 		}, 2000);
+		if (onCopied) {
+			onCopied();
+		}
 	};
 </script>
 

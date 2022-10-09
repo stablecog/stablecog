@@ -1,5 +1,6 @@
 <script lang="ts">
 	import Button from '$components/buttons/Button.svelte';
+	import IconChatBubbleCancel from '$components/icons/IconChatBubbleCancel.svelte';
 	import IconHeight from '$components/icons/IconHeight.svelte';
 	import IconScale from '$components/icons/IconScale.svelte';
 	import IconSeed from '$components/icons/IconSeed.svelte';
@@ -118,13 +119,17 @@
 
 	const setLocalPrompt = () => {
 		if (isCheckComplete) {
-			prompt.set(promptInputValue);
+			prompt.set(promptInputValue !== '' && promptInputValue !== undefined ? promptInputValue : '');
 		}
 	};
 
 	const setLocalNegativePrompt = () => {
 		if (isCheckComplete) {
-			negativePrompt.set(negativePromptInputValue);
+			negativePrompt.set(
+				negativePromptInputValue !== '' && negativePromptInputValue !== undefined
+					? negativePromptInputValue
+					: ''
+			);
 		}
 	};
 
@@ -152,6 +157,9 @@
 		if ($prompt) {
 			promptInputValue = $prompt;
 		}
+		if ($negativePrompt) {
+			negativePromptInputValue = $negativePrompt;
+		}
 
 		isCheckComplete = true;
 	});
@@ -173,10 +181,10 @@
 <form
 	disabled={loadingOrSubmitting}
 	on:submit|preventDefault={onSubmit}
-	class="w-full max-w-xl md:max-w-5xl md:px-8 flex flex-col items-center"
+	class="w-full max-w-xl md:max-w-6xl md:px-8 flex flex-col items-center"
 >
 	<!-- Prompt bar -->
-	<div class="w-full flex flex-col md:flex-row gap-4 items-center py-4">
+	<div class="w-full flex flex-col md:flex-row gap-4 items-center py-4 px-4">
 		<div class="w-full relative">
 			<div
 				class="w-full h-full rounded-xl bg-c-bg-secondary shadow-lg shadow-c-shadow/[var(--o-shadow-normal)] 
@@ -213,131 +221,127 @@
 	<!-- Tab bars -->
 	{#if status !== 'loading'}
 		<div
-			class="w-full flex flex-col justify-start overflow-hidden"
+			class="w-full flex flex-col justify-start items-center overflow-hidden px-4"
 			transition:expandCollapse|local={{}}
 		>
-			<div class="w-full flex flex-wrap items-center justify-center py-4">
-				<div class="w-full flex flex-wrap items-center justify-center px-4px gap-4">
-					<TabBar
-						class="{$advancedMode ? 'w-76' : 'w-64 md:w-68'} transition-all max-w-full"
-						tabs={widthTabs}
-						bind:value={generationWidth}
-						name="width"
-						hideSelected={!isCheckComplete}
+			<div class="w-full flex flex-wrap items-start justify-center px-2px py-4 gap-4">
+				<TabBar
+					class="w-76 transition-all max-w-full"
+					tabs={widthTabs}
+					bind:value={generationWidth}
+					name="width"
+					hideSelected={!isCheckComplete}
+				>
+					<div
+						use:tooltip={{
+							title: 'Width',
+							description: 'The width of the image.',
+							...tooltipStyleProps
+						}}
+						slot="title"
+						class="py-2 px-4 flex items-center justify-center"
 					>
-						<div
-							use:tooltip={{
-								title: 'Width',
-								description: 'The width of the image.',
-								...tooltipStyleProps
-							}}
-							slot="title"
-							class="py-2 px-4 flex items-center justify-center"
-						>
-							<IconWidth class="w-6 h-6 text-c-on-bg/25" />
-						</div>
-					</TabBar>
-					<TabBar
-						class="{$advancedMode ? 'w-76' : 'w-64 md:w-68'} transition-all max-w-full"
-						tabs={heightTabs}
-						bind:value={generationHeight}
-						name="height"
-						hideSelected={!isCheckComplete}
+						<IconWidth class="w-6 h-6 text-c-on-bg/25" />
+					</div>
+				</TabBar>
+				<TabBar
+					class="w-76 transition-all max-w-full"
+					tabs={heightTabs}
+					bind:value={generationHeight}
+					name="height"
+					hideSelected={!isCheckComplete}
+				>
+					<div
+						use:tooltip={{
+							title: 'Height',
+							description: 'The height of the image.',
+							...tooltipStyleProps
+						}}
+						slot="title"
+						class="py-2 px-4 flex items-center justify-center"
 					>
-						<div
-							use:tooltip={{
-								title: 'Height',
-								description: 'The height of the image.',
-								...tooltipStyleProps
-							}}
-							slot="title"
-							class="py-2 px-4 flex items-center justify-center"
-						>
-							<IconHeight class="w-6 h-6 text-c-on-bg/25" />
-						</div>
-					</TabBar>
+						<IconHeight class="w-6 h-6 text-c-on-bg/25" />
+					</div>
+				</TabBar>
+				{#if $advancedMode}
 					{#if $serverHealth.features?.includes('negative_prompt')}
 						<TabLikeInput
 							class="w-76 max-w-full"
-							placeholder="Negative Prompt"
+							placeholder="Negative prompt"
+							type="text"
 							bind:value={negativePromptInputValue}
 						>
 							<div
 								use:tooltip={{
 									title: 'Negative Prompt',
 									description:
-										'It is to not include things that you are wishing to not see in the generated image.',
+										'Remove things from the image, as opposed to adding things to it. The opposite of the prompt.',
 									...tooltipStyleProps
 								}}
 								slot="title"
 								class="py-2 px-4 flex items-center justify-center"
 							>
-								<IconSeed class="w-6 h-6 text-c-on-bg/25" />
+								<IconChatBubbleCancel class="w-6 h-6 text-c-on-bg/25" />
 							</div>
 						</TabLikeInput>
 					{/if}
-				</div>
-				{#if $advancedMode}
-					<div transition:expandCollapse|local={{}} class="w-full overflow-hidden -mb-4">
-						<div class="w-full flex flex-wrap items-center justify-center px-4px gap-4 py-4">
-							<TabBar
-								class="w-76 max-w-full"
-								tabs={inferenceStepsTabs}
-								bind:value={generationInferenceSteps}
-								name="steps"
-								hideSelected={!isCheckComplete}
-							>
-								<div
-									use:tooltip={{
-										title: 'Steps',
-										description: 'How many steps will be taken to generate (diffuse) the image.',
-										...tooltipStyleProps
-									}}
-									slot="title"
-									class="py-2 px-4 flex items-center justify-center"
-								>
-									<IconSteps class="w-6 h-6 text-c-on-bg/25" />
-								</div>
-							</TabBar>
-							<TabLikeRangeInput
-								class="w-76 max-w-full"
-								bind:value={generationGuidanceScale}
-								min={guidanceScaleMin}
-								max={guidanceScaleMax}
-							>
-								<div
-									use:tooltip={{
-										title: 'Guidance Scale',
-										description:
-											'How similar the image will be to your prompt. Higher values make the image closer to your prompt.',
-										...tooltipStyleProps
-									}}
-									slot="title"
-									class="py-2 px-4 flex items-center justify-center"
-								>
-									<IconScale class="w-6 h-6 text-c-on-bg/25" />
-								</div>
-							</TabLikeRangeInput>
-							<TabLikeInput
-								class="w-76 max-w-full"
-								placeholder="Enter a number"
-								bind:value={generationSeed}
-							>
-								<div
-									use:tooltip={{
-										title: 'Seed',
-										description:
-											'Get repeatable results. The same seed combined with the same prompt and options will generate the same image.',
-										...tooltipStyleProps
-									}}
-									slot="title"
-									class="py-2 px-4 flex items-center justify-center"
-								>
-									<IconSeed class="w-6 h-6 text-c-on-bg/25" />
-								</div>
-							</TabLikeInput>
+					<TabBar
+						class="w-76 max-w-full"
+						tabs={inferenceStepsTabs}
+						bind:value={generationInferenceSteps}
+						name="steps"
+						hideSelected={!isCheckComplete}
+					>
+						<div
+							use:tooltip={{
+								title: 'Steps',
+								description: 'How many steps will be taken to generate (diffuse) the image.',
+								...tooltipStyleProps
+							}}
+							slot="title"
+							class="py-2 px-4 flex items-center justify-center"
+						>
+							<IconSteps class="w-6 h-6 text-c-on-bg/25" />
 						</div>
-					</div>
+					</TabBar>
+					<TabLikeRangeInput
+						class="w-76 max-w-full"
+						bind:value={generationGuidanceScale}
+						min={guidanceScaleMin}
+						max={guidanceScaleMax}
+					>
+						<div
+							use:tooltip={{
+								title: 'Guidance Scale',
+								description:
+									'How similar the image will be to your prompt. Higher values make the image closer to your prompt.',
+								...tooltipStyleProps
+							}}
+							slot="title"
+							class="py-2 px-4 flex items-center justify-center"
+						>
+							<IconScale class="w-6 h-6 text-c-on-bg/25" />
+						</div>
+					</TabLikeRangeInput>
+					<TabLikeInput
+						class="w-76 max-w-full"
+						placeholder="Enter a number"
+						bind:value={generationSeed}
+						type="number"
+					>
+						<div
+							use:tooltip={{
+								title: 'Seed',
+								description:
+									'Get repeatable results. The same seed combined with the same prompt and options will generate the same image.',
+								...tooltipStyleProps
+							}}
+							slot="title"
+							class="py-2 px-4 flex items-center justify-center"
+						>
+							<IconSeed class="w-6 h-6 text-c-on-bg/25" />
+						</div>
+					</TabLikeInput>
 				{/if}
 			</div>
 		</div>

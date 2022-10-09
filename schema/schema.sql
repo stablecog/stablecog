@@ -9,6 +9,7 @@ CREATE TABLE "generation" (
     "num_inference_steps" INTEGER NOT NULL,
     "guidance_scale" DOUBLE PRECISION NOT NULL,
     "server_url" TEXT NOT NULL,
+    "duration_ms": INTEGER,
     "country_code" TEXT,
     "device_type" TEXT,
     "device_os" TEXT,

@@ -3,6 +3,7 @@ import type { TGenerationRequest, TGenerationResponse } from '$ts/types/main';
 export async function generateImage({
 	server_url,
 	prompt,
+	negative_prompt,
 	width,
 	height,
 	seed,
@@ -17,6 +18,7 @@ export async function generateImage({
 		body: JSON.stringify({
 			server_url,
 			prompt,
+			negative_prompt,
 			width,
 			height,
 			num_inference_steps,

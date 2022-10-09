@@ -10,17 +10,20 @@ export const POST: RequestHandler = async ({ request }) => {
 		const {
 			server_url,
 			prompt,
-			negativePrompt,
+			negative_prompt,
 			seed,
 			width,
 			height,
 			num_inference_steps,
 			guidance_scale
 		}: TGenerationRequest = await request.json();
+		const _negative_prompt =
+			negative_prompt !== '' && negative_prompt !== undefined ? negative_prompt : undefined;
 		generationLog({
 			text: 'Started generation:',
 			dateString: startDate,
 			prompt,
+			negative_prompt: _negative_prompt,
 			width,
 			height,
 			num_inference_steps,
@@ -28,6 +31,7 @@ export const POST: RequestHandler = async ({ request }) => {
 			seed,
 			server_url
 		});
+		const startTimestamp = Date.now();
 		const response = await fetch(`${server_url}/predictions`, {
 			method: 'POST',
 			headers: {
@@ -36,7 +40,7 @@ export const POST: RequestHandler = async ({ request }) => {
 			body: JSON.stringify({
 				input: {
 					prompt: prompt,
-					negativePrompt,
+					negative_prompt: _negative_prompt,
 					width: width.toString(),
 					height: height.toString(),
 					seed: seed.toString(),
@@ -45,9 +49,10 @@ export const POST: RequestHandler = async ({ request }) => {
 				}
 			})
 		});
+		const endTimestamp = Date.now();
+		const generationDurationMs = endTimestamp - startTimestamp;
 		const data: TGenerateImageData = await response.json();
 		const output = data.output[0];
-		const endTimestamp = Date.now();
 		const endDate = new Date(endTimestamp).toUTCString();
 		if (data.error) {
 			console.log('----', endDate, '--', 'Generation error', '--', data.error, '----');
@@ -56,6 +61,7 @@ export const POST: RequestHandler = async ({ request }) => {
 			text: `Ended generation in ${(endTimestamp - startTimestamp) / 1000}s:`,
 			dateString: endDate,
 			prompt,
+			negative_prompt: _negative_prompt,
 			width,
 			height,
 			num_inference_steps,
@@ -74,12 +80,14 @@ export const POST: RequestHandler = async ({ request }) => {
 				let { data, error } = await supabaseAdmin.from('generation').insert([
 					{
 						prompt,
+						negative_prompt: _negative_prompt,
 						seed,
 						width,
 						height,
 						num_inference_steps,
 						guidance_scale,
 						server_url,
+						duration_ms: generationDurationMs,
 						country_code: countryCode,
 						device_type: deviceInfo.type,
 						device_browser: deviceInfo.browser,
@@ -96,6 +104,7 @@ export const POST: RequestHandler = async ({ request }) => {
 						text: `Inserted into the DB in ${dbEntryEndTimestamp - dbEntryStartTimestamp}ms:`,
 						dateString: dbEntryEndDate,
 						prompt,
+						negative_prompt: _negative_prompt,
 						seed,
 						width,
 						height,
@@ -109,7 +118,7 @@ export const POST: RequestHandler = async ({ request }) => {
 			}
 		}
 		const generationResponse: TGenerationResponse = {
-			data: output ? { imageDataB64: output } : undefined,
+			data: output ? { imageDataB64: output, duration_ms: generationDurationMs } : undefined,
 			error: data.error
 		};
 		return new Response(JSON.stringify(generationResponse));
@@ -140,6 +149,7 @@ const generationLog = ({
 	text,
 	dateString,
 	prompt,
+	negative_prompt,
 	width,
 	height,
 	num_inference_steps,
@@ -150,6 +160,7 @@ const generationLog = ({
 	text: string;
 	dateString: string;
 	prompt: string;
+	negative_prompt: string | undefined;
 	width: number;
 	height: number;
 	num_inference_steps: number;
@@ -163,7 +174,7 @@ const generationLog = ({
 		dateString,
 		'--',
 		`"${prompt}"`,
-		'--',
+		`--${negative_prompt ? ` "${negative_prompt}" --` : ''}`,
 		width,
 		'--',
 		height,

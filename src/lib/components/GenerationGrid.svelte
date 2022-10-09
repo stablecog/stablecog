@@ -3,9 +3,9 @@
 	import GenerationImage from '$components/GenerationImage.svelte';
 	import ImagePlaceholder from '$components/ImagePlaceholder.svelte';
 	import Masonry from '$components/Masonry.svelte';
-	import type { TDBGeneration } from '$ts/constants/indexedDb';
 	import { heightTabs, widthTabs } from '$ts/constants/main';
 	import { urlFromBase64 } from '$ts/helpers/base64';
+	import type { TDBGeneration } from '$ts/types/main';
 	import IntersectionObserver from 'svelte-intersection-observer';
 
 	export let generations: TDBGeneration[] | undefined = undefined;
@@ -39,15 +39,7 @@
 							<ImagePlaceholder width={generation.width} height={generation.height} />
 							{#if intersecting}
 								{@const url = urlFromBase64(generation.imageDataB64)}
-								<GenerationImage
-									prompt={generation.prompt}
-									width={generation.width}
-									height={generation.height}
-									seed={generation.seed}
-									guidanceScale={generation.guidance_scale}
-									inferenceSteps={generation.num_inference_steps}
-									src={url}
-								/>
+								<GenerationImage {generation} src={url} />
 							{/if}
 						</div>
 					</div>

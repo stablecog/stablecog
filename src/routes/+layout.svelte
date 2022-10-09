@@ -21,7 +21,7 @@
 			return;
 		}
 		try {
-			serverHealth.set({ status: 'loading' });
+			serverHealth.set({ status: 'loading', features: $serverHealth.features });
 			console.log('Checking server health...');
 			if ($serverUrl === undefined) {
 				serverHealth.set({ status: 'unhealthy' });
