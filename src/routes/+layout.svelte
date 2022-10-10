@@ -30,6 +30,7 @@
 				if (healthRes.status === 'healthy') {
 					serverHealth.set({ status: 'healthy', features: healthRes.features ?? undefined });
 					console.log('Server is healthy ✅:', $serverUrl);
+					console.log('Server features:', healthRes.features);
 				} else {
 					serverHealth.set({ status: 'unhealthy' });
 					console.log('Server is unhealthy ❌:', $serverUrl);
