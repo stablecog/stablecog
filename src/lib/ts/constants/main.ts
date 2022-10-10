@@ -3,7 +3,6 @@ import type { TServerHealth, TTab } from '$ts/types/main';
 export const estimatedDurationBufferRatio = 0.1;
 export const estimatedDurationDefault = 30;
 export const canonicalUrl = 'https://stablecog.com';
-export const defaultServerHealth: TServerHealth = 'loading';
 
 export const computeRatePerSecDefault = 150000;
 
