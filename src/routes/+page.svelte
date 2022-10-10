@@ -170,7 +170,7 @@
 
 <MetaTag
 	title="Stablecog"
-	description="Free & easy to use AI image generator using Stable Diffusion cogs. Connect your own instance or use one of the default servers."
+	description="Free & easy to use AI image generator using Stable Diffusion cogs. Use one of the default servers or connect your own."
 	imageUrl="{canonicalUrl}/previews/home.png"
 	canonical={canonicalUrl}
 />

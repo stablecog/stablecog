@@ -1,6 +1,6 @@
 # Stablecog - [stablecog.com](https://stablecog.com)
 
-This is an app made with [SvelteKit](https://kit.svelte.dev) for connecting to [Stable Diffusion](https://github.com/CompVis/stable-diffusion) cogs and creating AI generated images. For more info on cogs, you can check out: [Replicate](https://replicate.com).
+This is a free and easy to use app for creating AI generated images using [Stable Diffusion](https://github.com/CompVis/stable-diffusion) cogs. It's made with [SvelteKit](https://kit.svelte.dev). For more info on cogs, you can check out: [Replicate](https://replicate.com).
 
 The app knows how to communicate with this cog to generate images: [Stable Diffusion Cog](https://github.com/yekta/stable-diffusion-cog). However, as long as your server has the endpoints and the parameters the app uses, it'll work.
 
@@ -55,7 +55,7 @@ If you want to deploy the app, you should edit or remove the `ci.yml` file in `.
 
 ## Optionals
 
-There is an `.env.example` file in the root directory. You can copy this file and rename it to `.env`. This will allow you to set the following optional environment variables:
+There is a `.env.example` file in the root directory. You can copy this file and rename it to `.env`. This will allow you to set the following optional environment variables:
 
 - `PUBLIC_DEFAULT_SERVER_URL`: This is the default server url (your cog's url) that the app uses to generate images if provided. You can still change to another server in the app by clicking the settings icon in the top right corner of the home page.
 - `PUBLIC_SUPABASE_URL`
