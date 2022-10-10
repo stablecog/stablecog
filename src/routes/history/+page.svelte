@@ -11,7 +11,7 @@
 
 <MetaTag
 	title="History | Stablecog"
-	description="Free & easy to use AI image generator using Stable Diffusion cogs. Use one of the default servers or connect your own."
+	description="Free & easy to use AI image generator using Stable Diffusion cogs. Use one of the default servers or connect to your own."
 	imageUrl="{canonicalUrl}/previews{$page.url.pathname}.png"
 	canonical="{canonicalUrl}{$page.url.pathname}"
 />
