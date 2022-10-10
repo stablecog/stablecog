@@ -60,10 +60,8 @@
 		<div class="w-full h-full absolute left-0 top-0 pointer-events-none p-2">
 			<div class="w-full h-full rounded-xl z-0 overflow-hidden">
 				<div
-					class="w-full h-full origin-left rounded-xl transition transform -translate-x-full
-			  	bg-c-primary/25 opacity-0 {!$isTouchscreen
-						? 'group-hover:translate-x-0 group-hover:opacity-100'
-						: ''}"
+					class="w-full h-full origin-left rounded-xl transition transform translate-y-full
+			  	bg-c-primary/25 {!$isTouchscreen ? 'group-hover:translate-y-0' : ''}"
 				/>
 			</div>
 		</div>
