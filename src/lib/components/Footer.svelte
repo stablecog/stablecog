@@ -27,7 +27,7 @@
 			? 'hover:text-c-primary'
 			: ''}"
 		target="blank"
-		href="https://github.com/yekta/stablecog"
+		href="https://twitter.com/ngyekta"
 	>
 		<div class="w-full h-full absolute left-0 top-0 pointer-events-none p-1.5">
 			<div class="w-full h-full rounded-xl z-0 overflow-hidden">
