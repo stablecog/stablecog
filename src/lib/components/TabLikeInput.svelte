@@ -1,6 +1,5 @@
 <script lang="ts">
 	import TabBarWrapper from '$components/TabBarWrapper.svelte';
-	import { expandCollapse } from '$ts/animation/transitions';
 	import { isTouchscreen } from '$ts/stores/isTouchscreen';
 
 	export let value: number | string | undefined;

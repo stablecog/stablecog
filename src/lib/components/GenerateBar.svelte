@@ -328,6 +328,7 @@
 						placeholder="Enter a number"
 						bind:value={generationSeed}
 						type="number"
+						max={15}
 					>
 						<div
 							use:tooltip={{
