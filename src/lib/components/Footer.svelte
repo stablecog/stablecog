@@ -3,28 +3,41 @@
 	import { isTouchscreen } from '$ts/stores/isTouchscreen';
 </script>
 
-<div class="w-full flex justify-center items-center px-8 py-6">
-	<p class="text-c-on-bg/25 target leading-[1.75] pointer-events-none text-right">
-		Made by <a
-			class="text-c-on-bg/40 px-5 py-3 -mx-5 rounded-lg font-semibold transition pointer-events-auto {!$isTouchscreen
-				? 'hover:text-c-primary hover:underline'
-				: ''}"
-			target="blank"
-			href="https://twitter.com/ngyekta">@ngyekta</a
-		>
-	</p>
-	<div class="self-stretch py-3 pointer-events-none">
-		<div class="mx-5 w-2px rounded-full bg-c-on-bg/15 h-full" />
-	</div>
-
+<div class="w-full flex flex-wrap justify-center items-center px-6 pt-7 pb-4">
 	<a
-		class="text-c-on-bg/40 px-5 py-3 leading-[1.75] -mx-5 rounded-lg font-semibold transition pointer-events-auto flex items-center gap-2 {!$isTouchscreen
-			? 'hover:text-c-primary hover:underline'
+		class="text-c-on-bg/40 px-5 py-4.5 -mt-3 leading-[1.75] rounded-xl font-semibold transition pointer-events-auto flex items-center gap-2 group relative {!$isTouchscreen
+			? 'hover:text-c-primary'
 			: ''}"
 		target="blank"
 		href="https://github.com/yekta/stablecog"
 	>
+		<div class="w-full h-full absolute left-0 top-0 pointer-events-none p-1.5">
+			<div class="w-full h-full rounded-xl z-0 overflow-hidden">
+				<div
+					class="w-full h-full origin-left rounded-xl transition transform translate-y-full
+				bg-c-primary/25 {!$isTouchscreen ? 'group-hover:translate-y-0' : ''}"
+				/>
+			</div>
+		</div>
 		<IconSocial type="github" class="w-6 h-6" />
-		GitHub
+		yekta
+	</a>
+	<a
+		class="text-c-on-bg/40 px-5 py-4.5 -mt-3 leading-[1.75] rounded-xl font-semibold transition pointer-events-auto flex items-center gap-2 group relative {!$isTouchscreen
+			? 'hover:text-c-primary'
+			: ''}"
+		target="blank"
+		href="https://github.com/yekta/stablecog"
+	>
+		<div class="w-full h-full absolute left-0 top-0 pointer-events-none p-1.5">
+			<div class="w-full h-full rounded-xl z-0 overflow-hidden">
+				<div
+					class="w-full h-full origin-left rounded-xl transition transform translate-y-full
+					bg-c-primary/25 {!$isTouchscreen ? 'group-hover:translate-y-0' : ''}"
+				/>
+			</div>
+		</div>
+		<IconSocial type="twitter" class="w-6 h-6" />
+		ngyekta
 	</a>
 </div>
