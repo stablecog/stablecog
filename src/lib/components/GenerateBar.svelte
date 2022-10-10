@@ -1,5 +1,7 @@
 <script lang="ts">
 	import Button from '$components/buttons/Button.svelte';
+	import ClearButton from '$components/buttons/ClearButton.svelte';
+	import IconCancel from '$components/icons/IconCancel.svelte';
 	import IconChatBubbleCancel from '$components/icons/IconChatBubbleCancel.svelte';
 	import IconHeight from '$components/icons/IconHeight.svelte';
 	import IconScale from '$components/icons/IconScale.svelte';
@@ -51,6 +53,7 @@
 	const placeholder = 'Portrait of a monkey by Van Gogh';
 	let now: number | undefined;
 	let nowInterval: NodeJS.Timeout | undefined;
+	let promptInputElement: HTMLInputElement;
 
 	$: loadingOrSubmitting = status === 'loading' || submitting;
 	$: sinceSec =
@@ -85,6 +88,8 @@
 	$: [generationSeed], setLocalSeed();
 	$: [promptInputValue], setLocalPrompt();
 	$: [negativePromptInputValue], setLocalNegativePrompt();
+	$: showClearPromptInputButton =
+		promptInputValue !== undefined && promptInputValue !== '' && !loadingOrSubmitting;
 
 	const setLocalImageSize = () => {
 		if (isCheckComplete) {
@@ -131,6 +136,11 @@
 					: ''
 			);
 		}
+	};
+
+	const clearPrompt = () => {
+		promptInputValue = '';
+		promptInputElement.focus();
 	};
 
 	onMount(() => {
@@ -185,7 +195,7 @@
 >
 	<!-- Prompt bar -->
 	<div class="w-full flex flex-col md:flex-row gap-4 items-center py-4 px-4">
-		<div class="w-full relative">
+		<div class="w-full relative group">
 			<div
 				class="w-full h-full rounded-xl bg-c-bg-secondary shadow-lg shadow-c-shadow/[var(--o-shadow-normal)] 
 				overflow-hidden z-0 absolute left-0 top-0"
@@ -197,15 +207,21 @@
 				/>
 			</div>
 			<input
+				bind:this={promptInputElement}
 				bind:value={promptInputValue}
 				disabled={loadingOrSubmitting}
 				{placeholder}
 				type="text"
-				class="w-full overflow-hidden overflow-ellipsis bg-transparent relative px-5 md:px-6 py-5 rounded-xl transition 
+				class="w-full overflow-hidden overflow-ellipsis bg-transparent relative pl-5 md:pl-6 py-5 rounded-xl transition-all 
 				focus:ring-2 focus:ring-c-primary/20 ring-0 ring-c-primary/20 placeholder:text-c-on-bg/30 {!$isTouchscreen
 					? 'enabled:hover:ring-2'
-					: ''} {classes} {loadingOrSubmitting ? 'text-c-secondary/75' : 'text-c-on-bg'}"
+					: ''} {classes} {loadingOrSubmitting
+					? 'text-c-secondary/75'
+					: 'text-c-on-bg'} {!$isTouchscreen && !loadingOrSubmitting
+					? 'group-hover:ring-2'
+					: ''} {showClearPromptInputButton ? 'pr-12 md:pr-17' : 'pr-5 md:pr-6'}"
 			/>
+			<ClearButton show={showClearPromptInputButton} onClick={clearPrompt} />
 		</div>
 		<Button disabled={loadingOrSubmitting} loading={loadingOrSubmitting} class="w-full md:w-40">
 			{#if status === 'loading'}

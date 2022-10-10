@@ -1,4 +1,5 @@
 <script lang="ts">
+	import ClearButton from '$components/buttons/ClearButton.svelte';
 	import TabBarWrapper from '$components/TabBarWrapper.svelte';
 	import { isTouchscreen } from '$ts/stores/isTouchscreen';
 
@@ -8,6 +9,15 @@
 	export let type: 'text' | 'number' = 'number';
 	export let max: undefined | number = undefined;
 	let classes = '';
+
+	let inputElement: HTMLInputElement;
+
+	let clearInput = () => {
+		value = '';
+		inputElement.focus();
+	};
+
+	$: showClearInputButton = value !== undefined && value !== '';
 </script>
 
 <TabBarWrapper class={classes}>
@@ -18,15 +28,16 @@
 		<div class="w-2px mr-px -ml-px self-stretch">
 			<div class="w-full h-full bg-c-bg-secondary" />
 		</div>
-		<div class="flex-1 min-w-0 flex relative rounded-r-xl">
+		<div class="flex-1 min-w-0 flex relative rounded-r-xl group">
 			<input
+				bind:this={inputElement}
+				bind:value
 				on:keypress={(e) => {
 					if (e.key === 'Enter') {
 						e.preventDefault();
 						e.stopPropagation();
 					}
 				}}
-				bind:value
 				on:input={() => {
 					if (
 						max !== undefined &&
@@ -40,10 +51,11 @@
 				{placeholder}
 				type="text"
 				class="text-base w-full text-c-on-bg/75 self-stretch overflow-ellipsis ring-0 transition ring-c-primary/20 focus:ring-2 
-						px-4 py-3 md:py-3.5 rounded-r-xl bg-transparent placeholder:text-c-on-bg/30 {!$isTouchscreen
-					? 'hover:ring-2'
-					: ''}"
+						pl-4 py-3 md:py-3.5 rounded-r-xl bg-transparent placeholder:text-c-on-bg/30 {!$isTouchscreen
+					? 'hover:ring-2 group-hover:ring-2'
+					: ''} {showClearInputButton ? 'pr-10 md:pr-12' : 'pr-4'}"
 			/>
+			<ClearButton show={showClearInputButton} onClick={clearInput} type="sm" />
 		</div>
 	{:else}
 		<div class="self-stretch flex text-c-on-bg/30">
@@ -52,15 +64,16 @@
 		<div class="w-2px mr-px -ml-px self-stretch">
 			<div class="w-full h-full bg-c-bg-secondary" />
 		</div>
-		<div class="flex-1 min-w-0 flex relative rounded-r-xl">
+		<div class="flex-1 min-w-0 flex relative rounded-r-xl group">
 			<input
+				bind:this={inputElement}
+				bind:value
 				on:keypress={(e) => {
 					if (e.key === 'Enter') {
 						e.preventDefault();
 						e.stopPropagation();
 					}
 				}}
-				bind:value
 				on:input={() => {
 					if (
 						max !== undefined &&
@@ -74,10 +87,11 @@
 				{placeholder}
 				type="number"
 				class="text-base w-full text-c-on-bg/75 self-stretch overflow-ellipsis ring-0 transition ring-c-primary/20 focus:ring-2 
-					px-4 py-3 md:py-3.5 rounded-r-xl bg-transparent placeholder:text-c-on-bg/30 {!$isTouchscreen
-					? 'hover:ring-2'
-					: ''}"
+					pl-4 py-3 md:py-3.5 rounded-r-xl bg-transparent placeholder:text-c-on-bg/30 {!$isTouchscreen
+					? 'hover:ring-2 group-hover:ring-2'
+					: ''} {showClearInputButton ? 'pr-10 md:pr-12' : 'pr-4'}"
 			/>
+			<ClearButton show={showClearInputButton} onClick={clearInput} type="sm" />
 		</div>
 	{/if}
 </TabBarWrapper>

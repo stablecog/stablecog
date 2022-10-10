@@ -72,7 +72,7 @@
 		: ''}"
 >
 	<Navbar />
-	<main class="w-full flex-1 flex flex-col overflow-x-hidden relative">
+	<main class="w-full flex-1 flex flex-col overflow-x-hidden relative break-words">
 		<slot />
 	</main>
 	<Footer />
