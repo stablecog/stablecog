@@ -169,7 +169,7 @@
 		descriptionClass: 'text-c-on-bg/50 text-xs leading-relaxed',
 		wrapperClass: 'transition duration-250 transform',
 		animationTime: 250,
-		animateFrom: 'opacity-0 translate-y-2',
+		animateFrom: 'opacity-0 translate-y-3',
 		animateTo: 'opacity-100 translate-y-0',
 		containerClass:
 			'px-5 py-3 text-c-on-bg/75 flex flex-col gap-1 rounded-xl bg-c-bg-secondary max-w-[17rem] shadow-lg shadow-c-shadow/[var(--o-shadow-strong)',
@@ -325,7 +325,7 @@
 					{/if}
 					<TabLikeInput
 						class="w-80 max-w-full"
-						placeholder="Enter a number"
+						placeholder="Seed number"
 						bind:value={generationSeed}
 						type="number"
 						max={15}

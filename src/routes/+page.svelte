@@ -220,9 +220,9 @@
 									: aspectRatio >= 1 / 1
 									? 'w-112'
 									: aspectRatio >= 3 / 4
-									? 'w-88'
+									? 'w-92'
 									: aspectRatio >= 2 / 3
-									? 'w-80'
+									? 'w-84'
 									: 'w-72'} max-w-full h-auto rounded-2xl bg-c-bg-secondary relative z-0 overflow-hidden border-4 
 								shadow-lg shadow-c-shadow/[var(--o-shadow-normal)] border-c-bg-secondary group"
 							>
