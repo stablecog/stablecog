@@ -4,7 +4,7 @@ This is a free and easy to use app for creating AI generated images using [Stabl
 
 | ![Stablecog Homepage (Advanced mode)](https://stablecog.com/images/homepage.png) |
 | :------------------------------------------------------------------------------: |
-|              <b>Image Credits - Fig.2 - 4K Mountains Wallpaper</b>               |
+|                    <b>Stablecog Homepage (Advanced Mode)</b>                     |
 
 The app knows how to communicate with this cog to generate images: [Stable Diffusion Cog](https://github.com/yekta/stable-diffusion-cog). However, as long as your server has the endpoints and the parameters the app uses, it'll work.
 
