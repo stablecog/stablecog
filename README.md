@@ -2,6 +2,10 @@
 
 This is a free and easy to use app for creating AI generated images using [Stable Diffusion](https://github.com/CompVis/stable-diffusion) cogs. It's made with [SvelteKit](https://kit.svelte.dev). For more info on cogs, you can check out: [Replicate](https://replicate.com).
 
+| ![Stablecog Homepage (Advanced mode)](https://stablecog.com/images/homepage.png) |
+| :------------------------------------------------------------------------------: |
+|              <b>Image Credits - Fig.2 - 4K Mountains Wallpaper</b>               |
+
 The app knows how to communicate with this cog to generate images: [Stable Diffusion Cog](https://github.com/yekta/stable-diffusion-cog). However, as long as your server has the endpoints and the parameters the app uses, it'll work.
 
 For example, the following cogs would also work with the app:
