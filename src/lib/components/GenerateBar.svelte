@@ -329,7 +329,7 @@
 								use:tooltip={{
 									title: 'Negative Prompt',
 									description:
-										'To remove things from the image. It does the opposite of what the prompt does.',
+										'To remove unwanted things from the image. It does the opposite of what the prompt does.',
 									...tooltipStyleProps
 								}}
 								slot="title"
