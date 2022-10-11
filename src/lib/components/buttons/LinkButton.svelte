@@ -5,7 +5,7 @@
 </script>
 
 <a
-	class="text-c-on-bg/40 px-4 py-3.5 -mt-1 leading-[1.75] rounded-xl font-semibold transition pointer-events-auto flex items-center gap-2 group relative {!$isTouchscreen
+	class="text-c-on-bg/40 px-4 py-3.5 -mt-1 leading-[1.75] rounded-xl font-semibold transition pointer-events-auto flex items-center gap-1.5 group relative {!$isTouchscreen
 		? 'hover:text-c-primary'
 		: ''}"
 	{target}
