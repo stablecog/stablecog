@@ -182,7 +182,7 @@
 		animateFrom: 'opacity-0 translate-y-3',
 		animateTo: 'opacity-100 translate-y-0',
 		containerClass:
-			'px-5 py-3 text-c-on-bg/75 flex flex-col gap-1 rounded-xl bg-c-bg-secondary max-w-[17rem] shadow-lg shadow-c-shadow/[var(--o-shadow-strong)',
+			'px-5 py-3 text-c-on-bg/75 flex flex-col gap-1 rounded-xl bg-c-bg-secondary max-w-[18rem] shadow-lg shadow-c-shadow/[var(--o-shadow-strong)',
 		indicatorClass:
 			'ml-4.5 w-5 h-5 transform -mt-0.5 -mb-2.5 rotate-135 bg-c-bg-secondary rounded-bl'
 	};
@@ -329,7 +329,7 @@
 								use:tooltip={{
 									title: 'Negative Prompt',
 									description:
-										'Remove things from the image, as opposed to adding things to it. The opposite of the prompt.',
+										'To remove unwanted things from the image. It does the opposite of what the prompt does.',
 									...tooltipStyleProps
 								}}
 								slot="title"
@@ -350,7 +350,7 @@
 							use:tooltip={{
 								title: 'Seed',
 								description:
-									'Get repeatable results. The same seed combined with the same prompt and options will generate the same image.',
+									'Get repeatable results. A seed combined with the same prompt and options generates the same image.',
 								...tooltipStyleProps
 							}}
 							slot="title"

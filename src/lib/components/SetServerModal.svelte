@@ -10,12 +10,14 @@
 	import Button from '$components/buttons/Button.svelte';
 	import IconLoading from '$components/icons/IconLoading.svelte';
 	import { isTouchscreen } from '$ts/stores/isTouchscreen';
+	import ClearButton from '$components/buttons/ClearButton.svelte';
 
 	export let close: (() => void) | undefined = undefined;
 	export let isOnBarrier = true;
 
 	let setServerProcessStatus: TSetServerProcessStatus;
 	let serverUrlInputValue: string | undefined;
+	let inputElement: HTMLInputElement;
 
 	const setServerUrl = async () => {
 		if (!serverUrlInputValue && env.PUBLIC_DEFAULT_SERVER_URL) {
@@ -55,6 +57,16 @@
 		}
 	};
 
+	$: showClearServerUrlInputButton =
+		serverUrlInputValue !== undefined &&
+		serverUrlInputValue !== '' &&
+		setServerProcessStatus !== 'loading';
+
+	const clearServerUrlInput = () => {
+		serverUrlInputValue = '';
+		inputElement.focus();
+	};
+
 	onMount(() => {
 		if ($serverUrl !== undefined) {
 			serverUrlInputValue = $serverUrl;
@@ -83,11 +95,12 @@
 			disabled={setServerProcessStatus === 'loading'}
 			class="w-full relative flex flex-col md:flex-row items-center justify-center gap-3 mt-5"
 		>
-			<div class="w-full md:w-auto flex-1 min-w-0 relative">
+			<div class="w-full md:w-auto flex-1 min-w-0 relative group">
 				<div
 					class="w-full h-full rounded-xl bg-c-bg-tertiary shadow-lg shadow-c-shadow/[var(--o-shadow-normal)]  overflow-hidden absolute left-0 top-0"
 				/>
 				<input
+					bind:this={inputElement}
 					bind:value={serverUrlInputValue}
 					on:input={() => {
 						if (setServerProcessStatus === 'error') setServerProcessStatus = 'idle';
@@ -95,11 +108,14 @@
 					disabled={setServerProcessStatus === 'loading'}
 					type="text"
 					placeholder="Server URL"
-					class="w-full overflow-hidden overflow-ellipsis bg-transparent relative px-5 md:px-6 py-5 rounded-xl transition 
+					class="w-full overflow-hidden overflow-ellipsis bg-transparent relative pl-5 md:pl-6 py-5 rounded-xl transition 
 			        focus:ring-2 focus:ring-c-primary/20 ring-0 ring-c-primary/20 placeholder:text-c-on-bg/30 {!$isTouchscreen
 						? 'enabled:hover:ring-2'
-						: ''}"
+						: ''} {!$isTouchscreen
+						? 'enabled:group-hover:ring-2'
+						: ''} {showClearServerUrlInputButton ? 'pr-12 md:pr-17' : 'pr-5 md:pr-6'}"
 				/>
+				<ClearButton show={showClearServerUrlInputButton} onClick={clearServerUrlInput} />
 			</div>
 			<Button
 				disabled={setServerProcessStatus === 'loading'}
