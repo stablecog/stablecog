@@ -74,7 +74,7 @@
 								class="w-full h-full absolute left-0 top-0 rounded-md flex items-center transition justify-center
 								{seedCopied ? 'scale-x-75 scale-y-25 opacity-0' : 'scale-100 opacity-100'} bg-c-primary transform"
 							>
-								<div class="w-5.5 h-5.5 relative">
+								<div class="w-5 h-5 relative">
 									<IconCopy
 										class="w-full h-full absolute left-0 top-0 transition text-c-on-primary"
 									/>
@@ -86,7 +86,7 @@
 							{!seedCopied ? 'scale-x-75 scale-y-25 opacity-0' : 'scale-100 opacity-100'} p-0.75 transform"
 						>
 							<div class="w-full h-full bg-c-success rounded-md flex items-center justify-center">
-								<div class="w-5.5 h-5.5 relative">
+								<div class="w-5 h-5 relative">
 									<IconTickOnly
 										class="w-full h-full absolute left-0 top-0 transition text-c-on-primary"
 									/>
