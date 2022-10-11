@@ -154,7 +154,7 @@
 		class="w-full max-h-[35%] transition bg-c-bg/90 text-xs relative z-0 overflow-hidden
 		translate-y-full group-focus-within:translate-y-0 group-hover:translate-y-0"
 	>
-		<div class="w-full max-h-full overflow-auto list-fade px-4 py-3 flex flex-col gap-1.5">
+		<div class="w-full max-h-full overflow-auto list-fade px-4 py-3 flex flex-col gap-2">
 			<p class="w-full font-medium leading-normal transition text-c-on-bg transform">
 				{generation.prompt}
 			</p>
