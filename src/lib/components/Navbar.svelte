@@ -60,18 +60,19 @@
 		<div class="w-full h-full absolute left-0 top-0 pointer-events-none p-2">
 			<div class="w-full h-full rounded-xl z-0 overflow-hidden">
 				<div
-					class="w-full h-full origin-left rounded-xl transition transform translate-y-full
-			  	bg-c-primary/25 {!$isTouchscreen ? 'group-hover:translate-y-0' : ''}"
+					class="w-full h-full origin-left rounded-xl transition transform -translate-x-full
+			  	bg-c-primary/25 {!$isTouchscreen ? 'group-hover:translate-x-0' : ''}"
 				/>
 			</div>
 		</div>
 		<Logo class="w-9 h-9" />
 	</a>
-	<div class="flex items-center justify-end relative px-4 py-3">
+	<div class="flex items-center justify-end relative">
 		<div class="p-3 relative">
 			<HealthIndicator />
 		</div>
 		<IconButton
+			class="p-3 -ml-3"
 			href={$page.url.pathname === '/history' ? '/' : '/history'}
 			name={$page.url.pathname === '/history' ? 'Home' : 'History'}
 		>
@@ -101,8 +102,8 @@
 				{/if}
 			</div>
 		</IconButton>
-		<div use:clickoutside={{ callback: closeSettings }} class="flex flex-col items-end">
-			<IconButton onClick={toggleSettings} name="Settings">
+		<div use:clickoutside={{ callback: closeSettings }} class="flex flex-col items-end -ml-6">
+			<IconButton class="p-3" onClick={toggleSettings} name="Settings">
 				<IconSettings
 					class="w-8 h-8 relative transition transform {isSettingsOpen
 						? 'text-c-primary rotate-360'
@@ -111,10 +112,12 @@
 						: 'text-c-on-bg'}"
 				/>
 			</IconButton>
-			<div class="relative">
-				{#if isSettingsOpen}
-					<SettingsMenu {onSwitchServerClick} {closeSettings} />
-				{/if}
+			<div class="pr-3">
+				<div class="relative -mt-1">
+					{#if isSettingsOpen}
+						<SettingsMenu {onSwitchServerClick} {closeSettings} />
+					{/if}
+				</div>
 			</div>
 		</div>
 	</div>
