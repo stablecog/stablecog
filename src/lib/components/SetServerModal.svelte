@@ -64,6 +64,7 @@
 
 	const clearServerUrlInput = () => {
 		serverUrlInputValue = '';
+		inputElement.focus();
 	};
 
 	onMount(() => {
