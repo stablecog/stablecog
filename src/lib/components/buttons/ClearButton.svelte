@@ -14,7 +14,8 @@
 >
 	<button
 		disabled={!show}
-		on:click|preventDefault|stopPropagation={onClick}
+		type="button"
+		on:click|preventDefault={onClick}
 		class="w-full h-full relative rounded-r-xl flex items-center justify-center group-1
 		  transition {show
 			? 'focus:translate-x-0 translate-x-0 opacity-100'
