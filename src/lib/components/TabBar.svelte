@@ -33,10 +33,10 @@
 		</div>
 		{#each tabs as tab}
 			<button
-				aria-label={name}
-				type="button"
 				on:click|preventDefault={() => (value = tab.value)}
 				class="flex-1 min-w-0 px-2 py-4 relative text-center rounded-lg group"
+				type="button"
+				aria-label={name}
 			>
 				<div class="w-full h-full absolute left-0 top-0 rounded-lg p-1">
 					<div class="w-full h-full overflow-hidden relative z-0 rounded-lg">
