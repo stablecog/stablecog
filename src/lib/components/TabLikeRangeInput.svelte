@@ -2,7 +2,6 @@
 	import Numerator from '$components/Numerator.svelte';
 	import RangeInput from '$components/RangeInput.svelte';
 	import TabBarWrapper from '$components/TabBarWrapper.svelte';
-	import { expandCollapse } from '$ts/animation/transitions';
 	import { guidanceScaleMax, guidanceScaleMin } from '$ts/constants/main';
 
 	export let value: number;

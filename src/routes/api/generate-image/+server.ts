@@ -77,7 +77,7 @@ export const POST: RequestHandler = async ({ request }) => {
 				const userAgent = headers.get('user-agent');
 				const deviceInfo = getDeviceInfo(userAgent);
 				const dbEntryStartTimestamp = Date.now();
-				let { data, error } = await supabaseAdmin.from('generation').insert([
+				let { error } = await supabaseAdmin.from('generation').insert([
 					{
 						prompt,
 						negative_prompt: _negative_prompt,

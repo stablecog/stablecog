@@ -1,4 +1,5 @@
-import { indexedDb, type TDBGeneration } from '$ts/constants/indexedDb';
+import { indexedDb } from '$ts/constants/indexedDb';
+import type { TDBGeneration } from '$ts/types/main';
 
 export async function addGenerationToDb(generation: TDBGeneration) {
 	console.log('adding generation to db:', `"${generation.prompt}"`);

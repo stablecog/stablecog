@@ -1,6 +1,5 @@
 <script lang="ts">
 	import IconCopy from '$components/icons/IconCopy.svelte';
-	import IconDownload from '$components/icons/IconDownload.svelte';
 	import IconTick from '$components/icons/IconTick.svelte';
 	import { isTouchscreen } from '$ts/stores/isTouchscreen';
 	import { copy } from 'svelte-copy';

@@ -24,6 +24,7 @@
 	import { advancedMode } from '$ts/stores/advancedMode';
 	import { serverHealth } from '$ts/stores/serverHealth';
 	import SetServerModal from '$components/SetServerModal.svelte';
+	import { pLogGeneration } from '$ts/helpers/loggers';
 
 	let status: TStatus = 'idle';
 	let promptInputValue: string | undefined;
@@ -60,6 +61,7 @@
 	}
 
 	async function onCreate() {
+		pLogGeneration('Started');
 		if (!$serverUrl || !promptInputValue) {
 			!promptInputValue && console.log('no input');
 			!$serverUrl && console.log('no server url');
@@ -102,6 +104,7 @@
 			});
 			let { data, error } = res;
 			if (data && data.imageDataB64 && !error) {
+				pLogGeneration('Succeeded');
 				if ($serverHealth.status !== 'healthy') {
 					serverHealth.set({ status: 'healthy', features: $serverHealth.features });
 				}
@@ -142,6 +145,7 @@
 				throw new Error(error);
 			}
 		} catch (error) {
+			pLogGeneration('Failed');
 			status = 'error';
 			console.log(error);
 		} finally {
@@ -151,8 +155,8 @@
 	}
 
 	const getComputeRate = (w: number, h: number, s: number) => {
-		const area = Number(generationWidth) * Number(generationHeight);
-		const steps = Number(generationInferenceSteps);
+		const area = Number(w) * Number(h);
+		const steps = Number(s);
 		const rate = area * Math.pow(steps, 1 / 2);
 		return rate;
 	};

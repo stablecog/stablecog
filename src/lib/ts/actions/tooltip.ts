@@ -49,7 +49,7 @@ export function tooltip(
 	const onMouseEnter = () => {
 		clearTimeout(mouseLeaveTimeout);
 		if (!document.body.contains(tooltipWrapper)) {
-			const { left, top, width, height } = node.getBoundingClientRect();
+			const { left, top, height } = node.getBoundingClientRect();
 			const scrollY = window.scrollY;
 			tooltipWrapper.style.left = `${left}px`;
 			tooltipWrapper.style.top = `${top + height + scrollY}px`;

@@ -1,5 +1,4 @@
 import { canonicalUrl } from '$ts/constants/main';
-import type { PostgrestError } from '@supabase/supabase-js';
 import type { RequestHandler } from '@sveltejs/kit';
 
 const today = new Date();
@@ -48,9 +47,4 @@ interface IRoute {
 	loc: string;
 	lastmod: string;
 	changefreq: string;
-}
-
-interface TCollectionResponse {
-	data: { slug: string }[] | null;
-	error: PostgrestError | null;
 }

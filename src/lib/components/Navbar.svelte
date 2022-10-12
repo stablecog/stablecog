@@ -11,7 +11,6 @@
 	import SettingsMenu from '$components/SettingsMenu.svelte';
 	import { clickoutside } from '$ts/actions/clickoutside';
 	import { isTouchscreen } from '$ts/stores/isTouchscreen';
-	import { serverHealth } from '$ts/stores/serverHealth';
 	import { theme } from '$ts/stores/theme';
 	import { onMount } from 'svelte';
 	import { quadOut } from 'svelte/easing';
