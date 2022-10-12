@@ -13,12 +13,11 @@
 		: ''} {type === 'sm' ? 'w-10 md:w-12' : 'w-12 md:w-16'}"
 >
 	<button
-		disabled={!show}
-		on:click|preventDefault|stopPropagation={onClick}
+		on:click|preventDefault={onClick}
 		class="w-full h-full relative rounded-r-xl flex items-center justify-center group-1
-		  transition {show
-			? 'focus:translate-x-0 translate-x-0 opacity-100'
-			: 'translate-x-full opacity-0'}"
+			transition {show ? 'focus:translate-x-0 translate-x-0 opacity-100' : 'translate-x-full opacity-0'}"
+		disabled={!show}
+		type="button"
 	>
 		<div
 			class="w-full h-full absolute left-0 top-0 pointer-events-none {type === 'sm'

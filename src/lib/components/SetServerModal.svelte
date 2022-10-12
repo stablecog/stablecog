@@ -64,6 +64,7 @@
 
 	const clearServerUrlInput = () => {
 		serverUrlInputValue = '';
+		if (setServerProcessStatus === 'error') setServerProcessStatus = 'idle';
 		inputElement.focus();
 	};
 
