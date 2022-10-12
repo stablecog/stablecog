@@ -199,7 +199,7 @@
 				/>
 				{#if status === 'error'}
 					<div
-						transition:expandCollapse|local={{}}
+						transition:expandCollapse|local={{ duration: 300 }}
 						class="flex flex-col justify-start origin-top px-4"
 					>
 						<p class="w-full max-w-lg text-c-on-bg/40 text-center py-4">
@@ -209,7 +209,7 @@
 				{:else if status === 'success' && lastGeneration && lastGeneration.imageUrl}
 					{@const aspectRatio = lastGeneration.width / lastGeneration.height}
 					<div
-						transition:expandCollapse|local={{}}
+						transition:expandCollapse|local={{ duration: 300 }}
 						class="max-w-full overflow-hidden flex flex-col items-center justify-start rounded-xl origin-top relative z-0 px-4"
 					>
 						<div class="max-w-full flex flex-col items-center md:px-5 gap-4 pt-4 pb-6">

@@ -238,7 +238,7 @@
 	{#if status !== 'loading'}
 		<div
 			class="w-full flex flex-col justify-start items-center overflow-hidden px-4"
-			transition:expandCollapse|local={{}}
+			transition:expandCollapse|local={{ duration: 300 }}
 		>
 			<div class="w-full flex flex-wrap items-start justify-center px-2px py-4 gap-4">
 				<TabBar
@@ -362,5 +362,8 @@
 				{/if}
 			</div>
 		</div>
+	{/if}
+	{#if loadingOrSubmitting}
+		<div transition:expandCollapse={{ duration: 300 }} class="w-full h-[4vh]" />
 	{/if}
 </form>
