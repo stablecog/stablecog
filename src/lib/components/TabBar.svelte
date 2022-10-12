@@ -34,6 +34,7 @@
 		{#each tabs as tab}
 			<button
 				aria-label={name}
+				type="button"
 				on:click|preventDefault={() => (value = tab.value)}
 				class="flex-1 min-w-0 px-2 py-4 relative text-center rounded-lg group"
 			>
