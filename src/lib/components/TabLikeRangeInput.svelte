@@ -11,6 +11,12 @@
 	let classes = '';
 
 	let focused = false;
+	let focusedTimeout: NodeJS.Timeout;
+	const focusedTimeoutDuration = 400;
+
+	let canRegisterWheel = true;
+	let canRegisterWheelTimeout: NodeJS.Timeout;
+	const wheelMsThreshold = 100;
 </script>
 
 <TabBarWrapper class={classes}>
@@ -20,11 +26,37 @@
 	<div class="w-2px mr-px -ml-px self-stretch">
 		<div class="w-full h-full bg-c-bg-secondary transition" />
 	</div>
-	<div class="range-input flex-1 min-w-0 flex items-center relative rounded-r-xl pl-4 pr-4 gap-3.5">
+	<div
+		on:wheel={async (e) => {
+			focused = true;
+			clearTimeout(focusedTimeout);
+			focusedTimeout = setTimeout(() => {
+				focused = false;
+			}, focusedTimeoutDuration);
+			if (!canRegisterWheel) return;
+			if (e.deltaY > 25 && value < max) {
+				canRegisterWheel = false;
+				clearTimeout(canRegisterWheelTimeout);
+				canRegisterWheelTimeout = setTimeout(() => {
+					canRegisterWheel = true;
+				}, wheelMsThreshold);
+				value++;
+			} else if (e.deltaY < -25 && value > min) {
+				canRegisterWheel = false;
+				clearTimeout(canRegisterWheelTimeout);
+				canRegisterWheelTimeout = setTimeout(() => {
+					canRegisterWheel = true;
+					focused = false;
+				}, wheelMsThreshold);
+				value--;
+			}
+		}}
+		class="range-input flex-1 min-w-0 flex items-center relative rounded-r-xl pl-4 pr-4 gap-3.5"
+	>
 		<Numerator
 			min={guidanceScaleMin}
 			max={guidanceScaleMax}
-			{value}
+			bind:value
 			class="text-xs md:text-sm text-c-on-bg/75"
 			showWheel={focused}
 		/>

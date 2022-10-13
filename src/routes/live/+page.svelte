@@ -14,7 +14,7 @@
 	let generations: TPayload[] = [];
 	let clearMessageInterval: NodeJS.Timeout;
 	const clearMessageIntervalDuration = 1000 * 10;
-	const maxDurationSec = 60 * 10;
+	const maxDurationSec = 60 * 15;
 	const timestampDescSort = (a: TPayload, b: TPayload) => {
 		return new Date(b.created_at).getTime() - new Date(a.created_at).getTime();
 	};
@@ -104,9 +104,9 @@
 								both: true,
 								transformOrigin: 'center'
 							}}
-							class="flex items-center justify-center relative overflow-hidden z-0 rounded-full -m-1"
+							class="flex items-center justify-center relative overflow-hidden z-0 rounded-full"
 						>
-							<div class="p-5 relative overflow-hidden z-0 rounded-full">
+							<div class="p-6 relative overflow-hidden z-0 rounded-full">
 								{#if generation.status === 'started'}
 									<div
 										transition:scale|local={{ duration: 300, easing: quadOut }}
@@ -120,7 +120,7 @@
 									</div>
 								{/if}
 								<div
-									class="w-8 h-8 rounded-full transition-all duration-300 flex items-center justify-center relative overflow-hidden z-0 {generation.status ===
+									class="w-10 h-10 rounded-full transition-all duration-300 flex items-center justify-center relative overflow-hidden z-0 {generation.status ===
 									'succeeded'
 										? 'bg-c-success'
 										: generation.status === 'failed'
@@ -145,7 +145,7 @@
 			>
 				<div class="w-full flex flex-col items-center justify-start py-4">
 					<div class="flex items-center justify-center relative overflow-hidden z-0 rounded-full">
-						<div class="p-5 relative overflow-hidden z-0 rounded-full">
+						<div class="p-6 relative overflow-hidden z-0 rounded-full">
 							<div class="absolute w-full h-full left-0 top-0 origin-center">
 								<div class="w-full h-full">
 									<div
@@ -154,7 +154,7 @@
 								</div>
 							</div>
 							<div
-								class="w-8 h-8 rounded-full transition-all duration-300 flex items-center justify-center relative overflow-hidden z-0 bg-c-primary"
+								class="w-10 h-10 rounded-full transition-all duration-300 flex items-center justify-center relative overflow-hidden z-0 bg-c-primary"
 							/>
 						</div>
 					</div>

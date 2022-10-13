@@ -14,14 +14,16 @@
 <div class="relative py-0.5">
 	<div class="overflow-hidden relative py-3.5 {classes}">
 		<div class="relative z-0 text-center">
-			<p bind:clientHeight={itemHeight} class="opacity-0 leading-4 md:leading-5">{max}</p>
+			<p bind:clientHeight={itemHeight} class="opacity-0 leading-4 md:leading-5 select-none">
+				{max}
+			</p>
 			<div
 				style="transform: translateY(-{array.findIndex((i) => i === value) * itemHeight}px)"
 				class="flex flex-col transition absolute left-0 top-0"
 			>
 				{#each array as n}
 					<p
-						class="transform transition font-medium {n === value
+						class="transform transition font-medium select-none cursor-default {n === value
 							? 'scale-100'
 							: 'scale-75 opacity-50'} leading-4 md:leading-5"
 					>
