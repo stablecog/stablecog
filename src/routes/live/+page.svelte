@@ -108,7 +108,7 @@
 							<div class="p-5 relative overflow-hidden z-0 rounded-full">
 								{#if generation.ended === false}
 									<div
-										transition:scale={{ duration: 300, easing: quadOut }}
+										transition:scale|local={{ duration: 300, easing: quadOut }}
 										class="absolute w-full h-full left-0 top-0 origin-center"
 									>
 										<div class="w-full h-full">
@@ -119,7 +119,7 @@
 									</div>
 								{/if}
 								<div
-									class="w-8 h-8 rounded-full transition-all flex items-center justify-center relative overflow-hidden z-0 {generation.ended ===
+									class="w-8 h-8 rounded-full transition-all duration-300 flex items-center justify-center relative overflow-hidden z-0 {generation.ended ===
 										true && generation.succeeded === true
 										? 'bg-c-success'
 										: generation.ended === true && generation.succeeded === false
@@ -153,7 +153,7 @@
 								</div>
 							</div>
 							<div
-								class="w-8 h-8 rounded-full transition-all flex items-center justify-center relative overflow-hidden z-0 bg-c-primary"
+								class="w-8 h-8 rounded-full transition-all duration-300 flex items-center justify-center relative overflow-hidden z-0 bg-c-primary"
 							/>
 						</div>
 					</div>
