@@ -12,6 +12,7 @@
 		id: string;
 		ended: boolean;
 		succeeded: boolean;
+		country_code: string | null;
 		created_at: string;
 		updated_at: string;
 	}
