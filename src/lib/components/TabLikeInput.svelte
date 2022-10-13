@@ -17,7 +17,7 @@
 		inputElement.focus();
 	};
 
-	$: showClearInputButton = value !== undefined && value !== '';
+	$: showClearInputButton = value !== undefined && value !== '' && value !== null;
 </script>
 
 <TabBarWrapper class={classes}>
