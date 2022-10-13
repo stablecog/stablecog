@@ -49,7 +49,7 @@
 	let classes = '';
 
 	let submitting = false;
-	const placeholder = 'Portrait of a monkey by Van Gogh';
+	const placeholder = 'Portrait of a cat by Van Gogh';
 	let now: number | undefined;
 	let nowInterval: NodeJS.Timeout | undefined;
 	let promptInputElement: HTMLInputElement;
