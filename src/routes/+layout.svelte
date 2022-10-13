@@ -18,37 +18,8 @@
 
 	onMount(async () => {
 		setBodyClasses();
-		serverHealthCheckInterval = setInterval(async () => {
-			const now = Date.now();
-			if (!$serverUrl) {
-				serverHealth.set({ status: 'not-set' });
-				return;
-			}
-			try {
-				serverHealth.set({ status: 'loading', features: $serverHealth.features });
-				console.log('Checking server health...');
-				if ($serverUrl === undefined) {
-					serverHealth.set({ status: 'unhealthy' });
-				} else {
-					const healthRes = await checkServerHealth($serverUrl);
-					if (healthRes.status === 'healthy') {
-						serverHealth.set({ status: 'healthy', features: healthRes.features ?? undefined });
-						console.log('Server is healthy ✅:', $serverUrl);
-						console.log('Server features:', healthRes.features);
-					} else {
-						serverHealth.set({ status: 'unhealthy' });
-						console.log('Server is unhealthy ❌:', $serverUrl);
-					}
-				}
-			} catch (error) {
-				console.log('Server health check failed:', $serverUrl, 'Error:', error);
-			} finally {
-				if ($serverHealth.status !== 'healthy' && $serverHealth.status !== 'unhealthy') {
-					serverHealth.set({ status: 'unknown' });
-				}
-				console.log('Server health check took:', Date.now() - now, 'ms');
-			}
-		}, serverHealthCheckIntervalDuration);
+		await _checkServerHealth();
+		serverHealthCheckInterval = setInterval(_checkServerHealth, serverHealthCheckIntervalDuration);
 	});
 
 	onDestroy(() => {
@@ -64,6 +35,38 @@
 				document.body.classList.add('theme-dark');
 				document.body.classList.remove('theme-light');
 			}
+		}
+	}
+
+	async function _checkServerHealth() {
+		const now = Date.now();
+		if (!$serverUrl) {
+			serverHealth.set({ status: 'not-set' });
+			return;
+		}
+		try {
+			serverHealth.set({ status: 'loading', features: $serverHealth.features });
+			console.log('Checking server health...');
+			if ($serverUrl === undefined) {
+				serverHealth.set({ status: 'unhealthy' });
+			} else {
+				const healthRes = await checkServerHealth($serverUrl);
+				if (healthRes.status === 'healthy') {
+					serverHealth.set({ status: 'healthy', features: healthRes.features ?? undefined });
+					console.log('Server is healthy ✅:', $serverUrl);
+					console.log('Server features:', healthRes.features);
+				} else {
+					serverHealth.set({ status: 'unhealthy' });
+					console.log('Server is unhealthy ❌:', $serverUrl);
+				}
+			}
+		} catch (error) {
+			console.log('Server health check failed:', $serverUrl, 'Error:', error);
+		} finally {
+			if ($serverHealth.status !== 'healthy' && $serverHealth.status !== 'unhealthy') {
+				serverHealth.set({ status: 'unknown' });
+			}
+			console.log('Server health check took:', Date.now() - now, 'ms');
 		}
 	}
 </script>
