@@ -18,8 +18,11 @@
 
 	onMount(async () => {
 		setBodyClasses();
-		await _checkServerHealth();
-		serverHealthCheckInterval = setInterval(_checkServerHealth, serverHealthCheckIntervalDuration);
+		await checkAndSetServerHealth();
+		serverHealthCheckInterval = setInterval(
+			checkAndSetServerHealth,
+			serverHealthCheckIntervalDuration
+		);
 	});
 
 	onDestroy(() => {
@@ -38,7 +41,7 @@
 		}
 	}
 
-	async function _checkServerHealth() {
+	async function checkAndSetServerHealth() {
 		const now = Date.now();
 		if (!$serverUrl) {
 			serverHealth.set({ status: 'not-set' });
