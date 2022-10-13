@@ -55,6 +55,7 @@
 	let now: number | undefined;
 	let nowInterval: NodeJS.Timeout | undefined;
 	let promptInputElement: HTMLTextAreaElement;
+	let formElement: HTMLFormElement;
 
 	$: loadingOrSubmitting = status === 'loading' || submitting;
 	$: sinceSec =
@@ -202,6 +203,7 @@
 </script>
 
 <form
+	bind:this={formElement}
 	disabled={loadingOrSubmitting}
 	on:submit|preventDefault={onSubmit}
 	class="w-full max-w-xl md:max-w-6xl md:px-10 flex flex-col items-center"
@@ -356,6 +358,7 @@
 							placeholder="Negative prompt"
 							type="text"
 							bind:value={negativePromptInputValue}
+							{formElement}
 						>
 							<div
 								use:tooltip={{
@@ -377,6 +380,7 @@
 						bind:value={generationSeed}
 						type="number"
 						max={15}
+						{formElement}
 					>
 						<div
 							use:tooltip={{
