@@ -4,6 +4,7 @@
 	import MetaTag from '$components/MetaTag.svelte';
 	import { canonicalUrl } from '$ts/constants/main';
 	import { getGenerationsFromDb } from '$ts/queries/indexedDb';
+	// @ts-ignore
 	import { liveQuery } from 'dexie';
 
 	let generations = liveQuery(getGenerationsFromDb);

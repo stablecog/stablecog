@@ -1,11 +1,27 @@
 import { supabaseAdmin } from '$ts/constants/supabaseAdmin';
 import { getDeviceInfo } from '$ts/helpers/getDeviceInfo';
 import type { TGenerationRequest, TGenerationResponse } from '$ts/types/main';
+import type { PostgrestError } from '@supabase/supabase-js';
 import type { RequestHandler } from '@sveltejs/kit';
 
 export const POST: RequestHandler = async ({ request }) => {
 	const startTimestamp = Date.now();
 	const startDate = new Date(startTimestamp).toUTCString();
+	let generationProcessId: string | undefined;
+	if (supabaseAdmin !== undefined) {
+		try {
+			let { data, error }: TDBGenerationRes = await supabaseAdmin
+				.from('generation_process')
+				.insert({
+					ended: false,
+					succeeded: false
+				})
+				.select('id');
+			generationProcessId = data?.[0].id;
+		} catch (error) {
+			console.log(error);
+		}
+	}
 	try {
 		const {
 			server_url,
@@ -77,27 +93,38 @@ export const POST: RequestHandler = async ({ request }) => {
 				const userAgent = headers.get('user-agent');
 				const deviceInfo = getDeviceInfo(userAgent);
 				const dbEntryStartTimestamp = Date.now();
-				let { error } = await supabaseAdmin.from('generation').insert([
-					{
-						prompt,
-						negative_prompt: _negative_prompt,
-						seed,
-						width,
-						height,
-						num_inference_steps,
-						guidance_scale,
-						server_url,
-						duration_ms: generationDurationMs,
-						country_code: countryCode,
-						device_type: deviceInfo.type,
-						device_browser: deviceInfo.browser,
-						device_os: deviceInfo.os,
-						user_agent: userAgent
-					}
-				]);
-				if (error) {
-					console.log('error', error.message);
+				let { data: generationData, error: generationError } = await supabaseAdmin
+					.from('generation')
+					.insert([
+						{
+							prompt,
+							negative_prompt: _negative_prompt,
+							seed,
+							width,
+							height,
+							num_inference_steps,
+							guidance_scale,
+							server_url,
+							duration_ms: generationDurationMs,
+							country_code: countryCode,
+							device_type: deviceInfo.type,
+							device_browser: deviceInfo.browser,
+							device_os: deviceInfo.os,
+							user_agent: userAgent
+						}
+					])
+					.select('id');
+				if (generationError) {
+					console.log('error', generationError.message);
 				} else {
+					const { data: generationProcessData, error: generationProcessError } = await supabaseAdmin
+						.from('generation_process')
+						.update({
+							generation_id: generationData?.[0]?.id,
+							ended: true,
+							succeeded: true
+						})
+						.eq('id', generationProcessId);
 					const dbEntryEndTimestamp = Date.now();
 					const dbEntryEndDate = new Date(dbEntryEndTimestamp).toUTCString();
 					generationLog({
@@ -133,6 +160,23 @@ export const POST: RequestHandler = async ({ request }) => {
 			error,
 			'----'
 		);
+		if (supabaseAdmin) {
+			try {
+				const { data, error } = await supabaseAdmin
+					.from('generation_process')
+					.update({
+						ended: true,
+						succeeded: false
+					})
+					.eq('id', generationProcessId)
+					.select('id');
+				if (error) {
+					console.log('error', error.message);
+				}
+			} catch (error) {
+				console.log(error);
+			}
+		}
 		return new Response(JSON.stringify({ error: 'Something went wrong :(' }));
 	}
 };
@@ -144,6 +188,18 @@ interface TGenerateImageData {
 }
 
 type TStatus = 'succeeded' | 'failed';
+
+interface TDBGenerationRes {
+	data:
+		| {
+				id: string;
+				ended: boolean;
+				succeeded: boolean;
+				generation_id: string | null;
+		  }[]
+		| null;
+	error: PostgrestError | null;
+}
 
 const generationLog = ({
 	text,

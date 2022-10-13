@@ -27,3 +27,20 @@ UPDATE
 
 ALTER TABLE
     generation ENABLE ROW LEVEL SECURITY;
+
+CREATE TABLE "generation_process" (
+    "ended" BOOLEAN NOT NULL,
+    "succeeded" BOOLEAN NOT NULL,
+    "generation_id" UUID REFERENCES generation(id),
+    "id" UUID NOT NULL DEFAULT uuid_generate_v4(),
+    "created_at" TIMESTAMPTZ DEFAULT TIMEZONE('utc' :: TEXT, NOW()) NOT NULL,
+    "updated_at" TIMESTAMPTZ DEFAULT TIMEZONE('utc' :: TEXT, NOW()) NOT NULL,
+    PRIMARY KEY(id)
+);
+
+CREATE trigger handle_updated_at before
+UPDATE
+    ON generation_process FOR each ROW EXECUTE PROCEDURE moddatetime (updated_at);
+
+ALTER TABLE
+    generation_process ENABLE ROW LEVEL SECURITY;

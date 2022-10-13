@@ -36,7 +36,7 @@
 	},
 	"type": "module",
 	"dependencies": {
-		"@supabase/supabase-js": "^1.35.7",
+		"@supabase/supabase-js": "^2.0.0",
 		"dexie": "^3.2.2",
 		"svelte-meta-tags": "^2.6.3",
 		"ua-parser-js": "^1.0.2"
