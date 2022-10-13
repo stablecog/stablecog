@@ -1,5 +1,8 @@
 <script lang="ts">
+	import { page } from '$app/stores';
+	import MetaTag from '$components/MetaTag.svelte';
 	import { expandCollapse } from '$ts/animation/transitions';
+	import { canonicalUrl } from '$ts/constants/main';
 	import { supabase } from '$ts/constants/supabase';
 	import { onDestroy, onMount } from 'svelte';
 
@@ -70,6 +73,13 @@
 		clearInterval(clearMessageInterval);
 	});
 </script>
+
+<MetaTag
+	title="Live | Stablecog"
+	description="Free & easy to use AI image generator using Stable Diffusion cogs. Use one of the default servers or connect to your own."
+	imageUrl="{canonicalUrl}/previews{$page.url.pathname}.png"
+	canonical="{canonicalUrl}{$page.url.pathname}"
+/>
 
 <div class="w-full flex-1 flex justify-center px-8 md:px-24 pt-8 pb-[calc(6vh+2rem)]">
 	<div class="w-full flex flex-col items-center justify-center max-w-5xl">
