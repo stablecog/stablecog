@@ -100,8 +100,8 @@
 				<div class="w-full flex flex-wrap items-center justify-center py-4">
 					{#each generations as generation (generation.id)}
 						<div
-							in:elementreceive={{ key: generation.id }}
-							out:elementsend={{ key: generation.id }}
+							in:elementreceive|local={{ key: generation.id }}
+							out:elementsend|local={{ key: generation.id }}
 							animate:flip={{ duration: 300, easing: quadOut }}
 							class="flex items-center justify-center relative overflow-hidden z-0 rounded-full -m-1"
 						>
