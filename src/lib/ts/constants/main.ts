@@ -49,3 +49,5 @@ export interface TInferenceStepsTab extends TTab {
 export interface TGuidanceScaleTab extends TTab {
 	value: number;
 }
+
+export const maxPromptLength = 600;

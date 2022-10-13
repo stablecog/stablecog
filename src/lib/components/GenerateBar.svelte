@@ -10,6 +10,7 @@
 	import TabBar from '$components/TabBar.svelte';
 	import TabLikeInput from '$components/TabLikeInput.svelte';
 	import TabLikeRangeInput from '$components/TabLikeRangeInput.svelte';
+	import { autoresize } from '$components/textarea/autoresize';
 	import { tooltip } from '$ts/actions/tooltip';
 	import { expandCollapse } from '$ts/animation/transitions';
 	import {
@@ -52,7 +53,7 @@
 	const placeholder = 'Portrait of a cat by Van Gogh';
 	let now: number | undefined;
 	let nowInterval: NodeJS.Timeout | undefined;
-	let promptInputElement: HTMLInputElement;
+	let promptInputElement: HTMLTextAreaElement;
 
 	$: loadingOrSubmitting = status === 'loading' || submitting;
 	$: sinceSec =
@@ -69,6 +70,7 @@
 	}
 
 	async function onSubmit() {
+		promptInputElement.scrollTo(0, 0);
 		submitting = true;
 		if (!promptInputValue) {
 			await new Promise((resolve) => setTimeout(resolve, 75));
@@ -139,6 +141,8 @@
 
 	const clearPrompt = () => {
 		promptInputValue = '';
+		promptInputElement.value = '';
+		promptInputElement.blur();
 		promptInputElement.focus();
 	};
 
@@ -169,7 +173,6 @@
 		if ($negativePrompt) {
 			negativePromptInputValue = $negativePrompt;
 		}
-
 		isCheckComplete = true;
 	});
 
@@ -194,10 +197,40 @@
 >
 	<!-- Prompt bar -->
 	<div class="w-full flex flex-col md:flex-row gap-4 items-center py-4 px-4">
-		<div class="w-full relative group">
+		<div class="w-full flex relative group">
+			<textarea
+				use:autoresize={{ maxRows: 3 }}
+				bind:this={promptInputElement}
+				bind:value={promptInputValue}
+				disabled={loadingOrSubmitting}
+				{placeholder}
+				rows="1"
+				type="text"
+				style="transition: height 0.1s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.2s cubic-bezier(0.4, 0, 0.2, 1), padding 0.2s cubic-bezier(0.4, 0, 0.2, 1)"
+				class="w-full bg-c-bg-secondary shadow-lg hide-scrollbar shadow-c-shadow/[var(--o-shadow-normal)] 
+					scroll-smooth resize-none transition relative pl-5 md:pl-6 py-5 rounded-xl 
+				focus:ring-2 focus:ring-c-primary/20 ring-0 ring-c-primary/20 placeholder:text-c-on-bg/30 {!$isTouchscreen
+					? 'enabled:hover:ring-2'
+					: ''} {classes} {loadingOrSubmitting
+					? 'text-c-secondary/75'
+					: 'text-c-on-bg'} {!$isTouchscreen && !loadingOrSubmitting
+					? 'group-hover:ring-2'
+					: ''} {showClearPromptInputButton
+					? 'pr-12 md:pr-17'
+					: 'pr-5 md:pr-6'} {loadingOrSubmitting ? 'overflow-hidden' : ''}"
+			/>
+			{#if loadingOrSubmitting}
+				<div
+					class="w-full h-full flex items-end absolute left-0 top-0 overflow-hidden z-0 rounded-xl pointer-events-none"
+				>
+					<div
+						transition:expandCollapse={{ transformOrigin: 'bottom' }}
+						class="w-full h-6 absolute left-0 bottom-0 bg-gradient-to-t from-c-bg-secondary to-c-bg-secondary/0"
+					/>
+				</div>
+			{/if}
 			<div
-				class="w-full h-full rounded-xl bg-c-bg-secondary shadow-lg shadow-c-shadow/[var(--o-shadow-normal)] 
-				overflow-hidden z-0 absolute left-0 top-0"
+				class="w-full h-full rounded-xl overflow-hidden z-0 absolute left-0 top-0 pointer-events-none"
 			>
 				<div
 					style="transition-duration: {loadingOrSubmitting ? estimatedDuration : 0.2}s"
@@ -205,21 +238,6 @@
 					absolute left-0 top-0 rounded-xl {loadingOrSubmitting ? 'translate-x-0' : '-translate-x-full'}"
 				/>
 			</div>
-			<input
-				bind:this={promptInputElement}
-				bind:value={promptInputValue}
-				disabled={loadingOrSubmitting}
-				{placeholder}
-				type="text"
-				class="w-full overflow-hidden overflow-ellipsis bg-transparent relative pl-5 md:pl-6 py-5 rounded-xl transition-all 
-				focus:ring-2 focus:ring-c-primary/20 ring-0 ring-c-primary/20 placeholder:text-c-on-bg/30 {!$isTouchscreen
-					? 'enabled:hover:ring-2'
-					: ''} {classes} {loadingOrSubmitting
-					? 'text-c-secondary/75'
-					: 'text-c-on-bg'} {!$isTouchscreen && !loadingOrSubmitting
-					? 'group-hover:ring-2'
-					: ''} {showClearPromptInputButton ? 'pr-12 md:pr-17' : 'pr-5 md:pr-6'}"
-			/>
 			<ClearButton show={showClearPromptInputButton} onClick={clearPrompt} />
 		</div>
 		<Button disabled={loadingOrSubmitting} loading={loadingOrSubmitting} class="w-full md:w-40">

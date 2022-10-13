@@ -95,6 +95,7 @@ module.exports = {
 				'pulse-custom': 'pulse-custom 1s cubic-bezier(0.5, 0, 0.5, 1) infinite',
 				'pulse-scale': 'pulse-scale 0.75s cubic-bezier(0.5, 0, 0.5, 1) infinite',
 				'ping-custom': 'ping-custom 1.25s ease-out infinite',
+				'ping-custom-bg': 'ping-custom-bg 1.25s ease infinite',
 				'spin-faster': 'spin-faster 0.75s linear infinite'
 			},
 			keyframes: {
@@ -126,6 +127,17 @@ module.exports = {
 					},
 					'100%': {
 						opacity: '0',
+						transform: 'scale(1)'
+					}
+				},
+				'ping-custom-bg': {
+					'0%': {
+						transform: 'scale(1)'
+					},
+					'50%': {
+						transform: 'scale(1.2)'
+					},
+					'100%': {
 						transform: 'scale(1)'
 					}
 				},

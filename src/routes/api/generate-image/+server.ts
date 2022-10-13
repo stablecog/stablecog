@@ -1,4 +1,6 @@
+import { maxPromptLength } from '$ts/constants/main';
 import { supabaseAdmin } from '$ts/constants/supabaseAdmin';
+import { formatPrompt } from '$ts/helpers/formatPrompt';
 import { getDeviceInfo } from '$ts/helpers/getDeviceInfo';
 import type { TGenerationRequest, TGenerationResponse } from '$ts/types/main';
 import type { PostgrestError } from '@supabase/supabase-js';
@@ -36,11 +38,14 @@ export const POST: RequestHandler = async ({ request }) => {
 			guidance_scale
 		}: TGenerationRequest = await request.json();
 		const _negative_prompt =
-			negative_prompt !== '' && negative_prompt !== undefined ? negative_prompt : undefined;
+			negative_prompt !== '' && negative_prompt !== undefined
+				? formatPrompt(negative_prompt)
+				: undefined;
+		const _prompt = formatPrompt(prompt);
 		generationLog({
 			text: 'Started generation:',
 			dateString: startDate,
-			prompt,
+			prompt: _prompt,
 			negative_prompt: _negative_prompt,
 			width,
 			height,
@@ -57,7 +62,7 @@ export const POST: RequestHandler = async ({ request }) => {
 			},
 			body: JSON.stringify({
 				input: {
-					prompt: prompt,
+					prompt: _prompt,
 					negative_prompt: _negative_prompt,
 					width: width.toString(),
 					height: height.toString(),
@@ -78,7 +83,7 @@ export const POST: RequestHandler = async ({ request }) => {
 		generationLog({
 			text: `Ended generation in ${(endTimestamp - startTimestamp) / 1000}s:`,
 			dateString: endDate,
-			prompt,
+			prompt: _prompt,
 			negative_prompt: _negative_prompt,
 			width,
 			height,
@@ -97,7 +102,7 @@ export const POST: RequestHandler = async ({ request }) => {
 					.from('generation')
 					.insert([
 						{
-							prompt,
+							prompt: _prompt,
 							negative_prompt: _negative_prompt,
 							seed,
 							width,
@@ -129,7 +134,7 @@ export const POST: RequestHandler = async ({ request }) => {
 					generationLog({
 						text: `Inserted into the DB in ${dbEntryEndTimestamp - dbEntryStartTimestamp}ms:`,
 						dateString: dbEntryEndDate,
-						prompt,
+						prompt: _prompt,
 						negative_prompt: _negative_prompt,
 						seed,
 						width,

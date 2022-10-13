@@ -28,6 +28,7 @@
 		"svelte-intersection-observer": "^0.10.0",
 		"svelte-local-storage-store": "^0.3.1",
 		"svelte-preprocess": "^4.10.6",
+		"svelte-textarea-autoresize": "^1.0.0",
 		"tailwindcss": "^3.1.8",
 		"tailwindcss-labeled-groups": "^0.0.2",
 		"tslib": "^2.3.1",
