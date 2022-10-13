@@ -185,7 +185,7 @@
 		{#if isCheckComplete && !$serverUrl}
 			<SetServerModal isOnBarrier={false} />
 		{:else}
-			{#if isCheckComplete && $serverHealth.status === 'unhealthy'}
+			{#if isCheckComplete && ($serverHealth.status === 'unhealthy' || $serverHealth.status === 'unknown')}
 				<div transition:expandCollapse|local={{ duration: 300 }}>
 					<div class="py-3.5">
 						<div

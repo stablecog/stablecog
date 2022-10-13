@@ -2,7 +2,7 @@
 	import '$css/app.css';
 	import Navbar from '$components/Navbar.svelte';
 	import { theme } from '$ts/stores/theme';
-	import { onMount } from 'svelte';
+	import { onDestroy, onMount } from 'svelte';
 	import { serverUrl } from '$ts/stores/serverUrl';
 	import { browser } from '$app/environment';
 	import { checkServerHealth } from '$ts/queries/checkServerHealth';
@@ -11,39 +11,48 @@
 
 	let innerHeight: number | undefined;
 
+	let serverHealthCheckInterval: NodeJS.Timeout;
+	const serverHealthCheckIntervalDuration = 1000 * 10;
+
 	$: [$theme], setBodyClasses();
 
 	onMount(async () => {
 		setBodyClasses();
-		const now = Date.now();
-		if (!$serverUrl) {
-			serverHealth.set({ status: 'not-set' });
-			return;
-		}
-		try {
-			serverHealth.set({ status: 'loading', features: $serverHealth.features });
-			console.log('Checking server health...');
-			if ($serverUrl === undefined) {
-				serverHealth.set({ status: 'unhealthy' });
-			} else {
-				const healthRes = await checkServerHealth($serverUrl);
-				if (healthRes.status === 'healthy') {
-					serverHealth.set({ status: 'healthy', features: healthRes.features ?? undefined });
-					console.log('Server is healthy ✅:', $serverUrl);
-					console.log('Server features:', healthRes.features);
-				} else {
+		serverHealthCheckInterval = setInterval(async () => {
+			const now = Date.now();
+			if (!$serverUrl) {
+				serverHealth.set({ status: 'not-set' });
+				return;
+			}
+			try {
+				serverHealth.set({ status: 'loading', features: $serverHealth.features });
+				console.log('Checking server health...');
+				if ($serverUrl === undefined) {
 					serverHealth.set({ status: 'unhealthy' });
-					console.log('Server is unhealthy ❌:', $serverUrl);
+				} else {
+					const healthRes = await checkServerHealth($serverUrl);
+					if (healthRes.status === 'healthy') {
+						serverHealth.set({ status: 'healthy', features: healthRes.features ?? undefined });
+						console.log('Server is healthy ✅:', $serverUrl);
+						console.log('Server features:', healthRes.features);
+					} else {
+						serverHealth.set({ status: 'unhealthy' });
+						console.log('Server is unhealthy ❌:', $serverUrl);
+					}
 				}
+			} catch (error) {
+				console.log('Server health check failed:', $serverUrl, 'Error:', error);
+			} finally {
+				if ($serverHealth.status !== 'healthy' && $serverHealth.status !== 'unhealthy') {
+					serverHealth.set({ status: 'unknown' });
+				}
+				console.log('Server health check took:', Date.now() - now, 'ms');
 			}
-		} catch (error) {
-			console.log('Server health check failed:', $serverUrl, 'Error:', error);
-		} finally {
-			if ($serverHealth.status !== 'healthy' && $serverHealth.status !== 'unhealthy') {
-				serverHealth.set({ status: 'unknown' });
-			}
-			console.log('Server health check took:', Date.now() - now, 'ms');
-		}
+		}, serverHealthCheckIntervalDuration);
+	});
+
+	onDestroy(() => {
+		clearInterval(serverHealthCheckInterval);
 	});
 
 	function setBodyClasses() {
