@@ -6,6 +6,8 @@
 	import { supabase } from '$ts/constants/supabase';
 	import type { RealtimeChannel } from '@supabase/supabase-js';
 	import { onDestroy, onMount } from 'svelte';
+	import { quadOut } from 'svelte/easing';
+	import { scale } from 'svelte/transition';
 
 	let channel: RealtimeChannel;
 	let generations: TPayload[] = [];
@@ -89,7 +91,7 @@
 	canonical="{canonicalUrl}{$page.url.pathname}"
 />
 
-<div class="w-full flex-1 flex justify-center px-8 md:px-24 pt-8 pb-[calc(6vh+2rem)]">
+<div class="w-full flex-1 flex justify-center px-8 md:px-24 pt-8 pb-[calc(7vh+2rem)]">
 	<div class="w-full flex flex-col items-center justify-center max-w-5xl">
 		{#if generations && generations.length > 0}
 			<div transition:expandCollapse|local={{ duration: 300 }} class="w-full">
@@ -101,16 +103,28 @@
 								both: true,
 								transformOrigin: 'center'
 							}}
-							class="overflow-hidden relative rounded-full z-0"
+							class="flex items-center justify-center relative overflow-hidden z-0 rounded-full -m-1"
 						>
-							<div class="p-3">
+							<div class="p-5 relative overflow-hidden z-0 rounded-full">
+								{#if generation.ended === false}
+									<div
+										transition:scale={{ duration: 300, easing: quadOut }}
+										class="absolute w-full h-full left-0 top-0 origin-center"
+									>
+										<div class="w-full h-full">
+											<div
+												class="w-full h-full absolute left-0 top-0 rounded-full bg-c-primary/50 animate-ping-custom"
+											/>
+										</div>
+									</div>
+								{/if}
 								<div
-									class="w-8 h-8 rounded-full transition-all flex items-center justify-center overflow-hidden z-0 {generation.ended ===
+									class="w-8 h-8 rounded-full transition-all flex items-center justify-center relative overflow-hidden z-0 {generation.ended ===
 										true && generation.succeeded === true
 										? 'bg-c-success'
 										: generation.ended === true && generation.succeeded === false
 										? 'bg-c-danger'
-										: 'bg-c-primary animate-pulse-scale-small'}"
+										: 'bg-c-primary'}"
 								>
 									{#if generation.country_code}
 										<p class="text-center text-xs font-bold text-c-on-primary/50">
@@ -124,14 +138,33 @@
 				</div>
 			</div>
 		{:else if supabase}
-			<div transition:expandCollapse|local={{ duration: 300 }} class="w-full max-w-lg">
-				<div class="w-full flex flex-col items-center justify-start gap-5 py-4">
-					<div class="h-8 w-8 rounded-full transition-all bg-c-primary animate-pulse-scale-small" />
+			<div
+				transition:expandCollapse|local={{ duration: 300 }}
+				class="w-full overflow-hidden z-0 relative max-w-lg"
+			>
+				<div class="w-full flex flex-col items-center justify-start py-4">
+					<div class="flex items-center justify-center relative overflow-hidden z-0 rounded-full">
+						<div class="p-5 relative overflow-hidden z-0 rounded-full">
+							<div class="absolute w-full h-full left-0 top-0 origin-center">
+								<div class="w-full h-full">
+									<div
+										class="w-full h-full absolute left-0 top-0 rounded-full bg-c-primary/50 animate-ping-custom"
+									/>
+								</div>
+							</div>
+							<div
+								class="w-8 h-8 rounded-full transition-all flex items-center justify-center relative overflow-hidden z-0 bg-c-primary"
+							/>
+						</div>
+					</div>
 					<p class="w-full text-c-on-bg/40 text-center">Waiting for generations</p>
 				</div>
 			</div>
 		{:else}
-			<div transition:expandCollapse|local={{ duration: 300 }} class="w-full max-w-xl">
+			<div
+				transition:expandCollapse|local={{ duration: 300 }}
+				class="w-full overflow-hidden z-0 relative max-w-lg"
+			>
 				<div class="w-full flex flex-col items-center justify-start gap-5 py-4">
 					<p class="w-full leading-relaxed text-c-on-bg/40 text-center">
 						Supabase instance not found. Can't listen for generations.

@@ -94,7 +94,7 @@ module.exports = {
 			animation: {
 				'pulse-custom': 'pulse-custom 1s cubic-bezier(0.5, 0, 0.5, 1) infinite',
 				'pulse-scale': 'pulse-scale 0.75s cubic-bezier(0.5, 0, 0.5, 1) infinite',
-				'pulse-scale-small': 'pulse-scale-small 1s cubic-bezier(0.5, 0, 0.5, 1) infinite',
+				'ping-custom': 'ping-custom 1.25s ease-out infinite',
 				'spin-faster': 'spin-faster 0.75s linear infinite'
 			},
 			keyframes: {
@@ -116,14 +116,17 @@ module.exports = {
 						transform: 'scale(1.75)'
 					}
 				},
-				'pulse-scale-small': {
-					'0%, 100%': {
-						opacity: '0.75',
-						transform: 'scale(1)'
+				'ping-custom': {
+					'0%': {
+						opacity: '1',
+						transform: 'scale(0)'
 					},
-					'50%': {
-						opacity: '0.25',
-						transform: 'scale(1.25)'
+					'60%': {
+						opacity: '1'
+					},
+					'100%': {
+						opacity: '0',
+						transform: 'scale(1)'
 					}
 				},
 				'spin-faster': {
