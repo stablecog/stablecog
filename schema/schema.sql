@@ -31,6 +31,7 @@ ALTER TABLE
 CREATE TABLE "generation_process" (
     "ended" BOOLEAN NOT NULL,
     "succeeded" BOOLEAN NOT NULL,
+    "country_code" TEXT,
     "generation_id" UUID REFERENCES generation(id),
     "id" UUID NOT NULL DEFAULT uuid_generate_v4(),
     "created_at" TIMESTAMPTZ DEFAULT TIMEZONE('utc' :: TEXT, NOW()) NOT NULL,

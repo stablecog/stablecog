@@ -7,6 +7,8 @@ import type { RequestHandler } from '@sveltejs/kit';
 export const POST: RequestHandler = async ({ request }) => {
 	const startTimestamp = Date.now();
 	const startDate = new Date(startTimestamp).toUTCString();
+	const { headers } = request;
+	const countryCode = headers.get('cf-ipcountry');
 	let generationProcessId: string | undefined;
 	if (supabaseAdmin !== undefined) {
 		try {
@@ -14,7 +16,8 @@ export const POST: RequestHandler = async ({ request }) => {
 				.from('generation_process')
 				.insert({
 					ended: false,
-					succeeded: false
+					succeeded: false,
+					countryCode
 				})
 				.select('id');
 			generationProcessId = data?.[0].id;
@@ -88,8 +91,6 @@ export const POST: RequestHandler = async ({ request }) => {
 		// If Supabase is setup, write to it
 		if (output && !data.error && supabaseAdmin !== undefined) {
 			try {
-				const { headers } = request;
-				const countryCode = headers.get('cf-ipcountry');
 				const userAgent = headers.get('user-agent');
 				const deviceInfo = getDeviceInfo(userAgent);
 				const dbEntryStartTimestamp = Date.now();

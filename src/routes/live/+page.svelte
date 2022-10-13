@@ -1,10 +1,12 @@
 <script lang="ts">
 	import { expandCollapse } from '$ts/animation/transitions';
 	import { supabase } from '$ts/constants/supabase';
-	import { onMount } from 'svelte';
+	import { onDestroy, onMount } from 'svelte';
 
 	let generations: TPayload[] = [];
-	const maxDurationSec = 60;
+	let clearMessageInterval: NodeJS.Timeout;
+	const clearMessageIntervalDuration = 1000 * 10;
+	const maxDurationSec = 60 * 5;
 
 	interface TPayload {
 		id: string;
@@ -41,10 +43,10 @@
 			);
 			channel.subscribe(async (status) => {
 				if (status === 'SUBSCRIBED') {
-					console.log('subscribed to channel');
+					console.log('subscribed to db-generation-process');
 				}
 			});
-			const interval = setInterval(() => {
+			clearMessageInterval = setInterval(() => {
 				if (generations && generations.length > 0) {
 					generations = generations.filter((i) => {
 						const createdAt = new Date(i.created_at);
@@ -54,14 +56,21 @@
 						return diffInSec <= maxDurationSec;
 					});
 				}
-			}, 1000);
+			}, clearMessageIntervalDuration);
 		} else {
 			console.log('Supabase is not detected.');
 		}
 	});
+
+	onDestroy(() => {
+		if (supabase) {
+			supabase.removeAllChannels();
+		}
+		clearInterval(clearMessageInterval);
+	});
 </script>
 
-<div class="w-full flex-1 flex justify-center px-4 md:px-24 pt-8 pb-[calc(6vh+2rem)]">
+<div class="w-full flex-1 flex justify-center px-8 md:px-24 pt-8 pb-[calc(6vh+2rem)]">
 	<div class="w-full flex flex-col items-center justify-center max-w-5xl">
 		{#if generations && generations.length > 0}
 			<div
@@ -96,7 +105,7 @@
 				class="w-full flex flex-col items-center justify-start origin-top gap-5"
 			>
 				<div class="h-5 w-5 rounded-full bg-c-primary animate-pulse-scale" />
-				<p class="w-full max-w-lg text-c-on-bg/40 text-center">Waiting for generations...</p>
+				<p class="w-full max-w-lg text-c-on-bg/40 text-center">Waiting for generations</p>
 			</div>
 		{:else}
 			<div
