@@ -17,7 +17,7 @@ export const POST: RequestHandler = async ({ request }) => {
 				.insert({
 					ended: false,
 					succeeded: false,
-					countryCode
+					country_code: countryCode || null
 				})
 				.select('id');
 			generationProcessId = data?.[0].id;
