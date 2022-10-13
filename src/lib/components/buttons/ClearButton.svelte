@@ -24,7 +24,7 @@
 				? 'p-1'
 				: 'p-1.5'}"
 		>
-			<div class="w-full h-full rounded-lg z-0 overflow-hidden">
+			<div class="w-full h-full rounded-lg relative z-0 overflow-hidden">
 				<div
 					class="w-full h-full origin-left rounded-lg transition transform -translate-x-full
 						bg-c-primary/25 group-1-focus:translate-x-0 {!$isTouchscreen

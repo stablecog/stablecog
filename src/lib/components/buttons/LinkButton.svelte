@@ -14,7 +14,7 @@
 	{href}
 >
 	<div class="w-full h-full absolute left-0 top-0 p-0.5">
-		<div class="w-full h-full z-0 overflow-hidden rounded-xl">
+		<div class="w-full h-full relative z-0 overflow-hidden rounded-xl">
 			<div
 				class="w-full h-full origin-left transition transform translate-y-full
 					bg-c-primary/25 rounded-xl {!$isTouchscreen ? 'group-hover:translate-y-0' : ''}"

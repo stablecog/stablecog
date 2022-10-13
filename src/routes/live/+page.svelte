@@ -9,7 +9,7 @@
 	let generations: TPayload[] = [];
 	let clearMessageInterval: NodeJS.Timeout;
 	const clearMessageIntervalDuration = 1000 * 10;
-	const maxDurationSec = 60 * 5;
+	const maxDurationSec = 60 * 10;
 	const timestampDescSort = (a: TPayload, b: TPayload) => {
 		return new Date(b.created_at).getTime() - new Date(a.created_at).getTime();
 	};
@@ -119,16 +119,16 @@
 				</div>
 			</div>
 		{:else if supabase}
-			<div transition:expandCollapse|local={{ duration: 300 }} class="w-full">
+			<div transition:expandCollapse|local={{ duration: 300 }} class="w-full max-w-lg">
 				<div class="w-full flex flex-col items-center justify-start gap-5 py-4">
 					<div class="h-8 w-8 rounded-full bg-c-primary animate-pulse-scale-small" />
-					<p class="w-full max-w-lg text-c-on-bg/40 text-center">Waiting for generations</p>
+					<p class="w-full text-c-on-bg/40 text-center">Waiting for generations</p>
 				</div>
 			</div>
 		{:else}
-			<div transition:expandCollapse|local={{ duration: 300 }} class="w-full">
+			<div transition:expandCollapse|local={{ duration: 300 }} class="w-full max-w-xl">
 				<div class="w-full flex flex-col items-center justify-start gap-5 py-4">
-					<p class="w-full max-w-xl leading-relaxed text-c-on-bg/40 text-center">
+					<p class="w-full leading-relaxed text-c-on-bg/40 text-center">
 						Supabase instance not found. Can't listen for generations.
 					</p>
 				</div>
