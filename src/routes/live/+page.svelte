@@ -4,8 +4,10 @@
 	import { expandCollapse } from '$ts/animation/transitions';
 	import { canonicalUrl } from '$ts/constants/main';
 	import { supabase } from '$ts/constants/supabase';
+	import type { RealtimeChannel } from '@supabase/supabase-js';
 	import { onDestroy, onMount } from 'svelte';
 
+	let channel: RealtimeChannel;
 	let generations: TPayload[] = [];
 	let clearMessageInterval: NodeJS.Timeout;
 	const clearMessageIntervalDuration = 1000 * 10;
@@ -25,7 +27,7 @@
 
 	onMount(() => {
 		if (supabase) {
-			const channel = supabase.channel('db-generation-process');
+			channel = supabase.channel('db-generation-process');
 			channel.on(
 				'postgres_changes',
 				{
@@ -72,6 +74,9 @@
 	onDestroy(() => {
 		if (supabase) {
 			supabase.removeAllChannels();
+			if (channel) {
+				channel.unsubscribe();
+			}
 		}
 		clearInterval(clearMessageInterval);
 	});
@@ -100,7 +105,7 @@
 						>
 							<div class="p-3">
 								<div
-									class="w-8 h-8 rounded-full transition flex items-center justify-center overflow-hidden z-0 {generation.ended ===
+									class="w-8 h-8 rounded-full transition-all flex items-center justify-center overflow-hidden z-0 {generation.ended ===
 										true && generation.succeeded === true
 										? 'bg-c-success'
 										: generation.ended === true && generation.succeeded === false
@@ -121,7 +126,7 @@
 		{:else if supabase}
 			<div transition:expandCollapse|local={{ duration: 300 }} class="w-full max-w-lg">
 				<div class="w-full flex flex-col items-center justify-start gap-5 py-4">
-					<div class="h-8 w-8 rounded-full bg-c-primary animate-pulse-scale-small" />
+					<div class="h-8 w-8 rounded-full transition-all bg-c-primary animate-pulse-scale-small" />
 					<p class="w-full text-c-on-bg/40 text-center">Waiting for generations</p>
 				</div>
 			</div>

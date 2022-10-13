@@ -123,7 +123,7 @@ module.exports = {
 					},
 					'50%': {
 						opacity: '0.25',
-						transform: 'scale(1.4)'
+						transform: 'scale(1.25)'
 					}
 				},
 				'spin-faster': {
