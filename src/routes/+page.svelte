@@ -25,7 +25,6 @@
 	import { serverHealth } from '$ts/stores/serverHealth';
 	import SetServerModal from '$components/SetServerModal.svelte';
 	import { pLogGeneration } from '$ts/helpers/loggers';
-	import { formatPrompt } from '$ts/helpers/formatPrompt';
 
 	let status: TStatus = 'idle';
 	let promptInputValue: string | undefined;
@@ -67,10 +66,6 @@
 			!promptInputValue && console.log('no input');
 			!$serverUrl && console.log('no server url');
 			return;
-		}
-		promptInputValue = formatPrompt(promptInputValue);
-		if (negativePromptInputValue) {
-			negativePromptInputValue = formatPrompt(negativePromptInputValue);
 		}
 		generationError = undefined;
 		lastGeneration = {

@@ -24,6 +24,7 @@
 		widthDefault,
 		widthTabs
 	} from '$ts/constants/main';
+	import { formatPrompt } from '$ts/helpers/formatPrompt';
 	import { advancedMode } from '$ts/stores/advancedMode';
 	import { guidanceScale } from '$ts/stores/guidanceScale';
 	import { imageSize } from '$ts/stores/imageSize';
@@ -70,15 +71,25 @@
 	}
 
 	async function onSubmit() {
-		promptInputElement.scrollTo(0, 0);
-		submitting = true;
-		if (!promptInputValue) {
-			await new Promise((resolve) => setTimeout(resolve, 75));
-			await tick();
-			promptInputValue = placeholder;
+		if (promptInputValue) {
+			promptInputValue = formatPrompt(promptInputValue);
 		}
-		await onCreate();
-		submitting = false;
+		if (negativePromptInputValue) {
+			negativePromptInputValue = formatPrompt(negativePromptInputValue);
+		}
+		promptInputElement.scrollTo(0, 0);
+		promptInputElement.blur();
+		promptInputElement.focus();
+		setTimeout(async () => {
+			submitting = true;
+			if (!promptInputValue) {
+				await new Promise((resolve) => setTimeout(resolve, 75));
+				await tick();
+				promptInputValue = placeholder;
+			}
+			await onCreate();
+			submitting = false;
+		});
 	}
 
 	let isCheckComplete = false;
@@ -202,12 +213,18 @@
 				use:autoresize={{ maxRows: 3 }}
 				bind:this={promptInputElement}
 				bind:value={promptInputValue}
+				on:keypress={(e) => {
+					if (e.key === 'Enter' && !e.shiftKey) {
+						e.preventDefault();
+						onSubmit();
+					}
+				}}
 				disabled={loadingOrSubmitting}
 				{placeholder}
 				rows="1"
 				type="text"
 				style="transition: height 0.1s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.2s cubic-bezier(0.4, 0, 0.2, 1), padding 0.2s cubic-bezier(0.4, 0, 0.2, 1)"
-				class="w-full bg-c-bg-secondary shadow-lg hide-scrollbar shadow-c-shadow/[var(--o-shadow-normal)] 
+				class="w-full bg-c-bg-secondary shadow-lg pr-12 md:pr-17 hide-scrollbar shadow-c-shadow/[var(--o-shadow-normal)] 
 					scroll-smooth resize-none transition relative pl-5 md:pl-6 py-5 rounded-xl 
 				focus:ring-2 focus:ring-c-primary/20 ring-0 ring-c-primary/20 placeholder:text-c-on-bg/30 {!$isTouchscreen
 					? 'enabled:hover:ring-2'
@@ -215,9 +232,7 @@
 					? 'text-c-secondary/75'
 					: 'text-c-on-bg'} {!$isTouchscreen && !loadingOrSubmitting
 					? 'group-hover:ring-2'
-					: ''} {showClearPromptInputButton
-					? 'pr-12 md:pr-17'
-					: 'pr-5 md:pr-6'} {loadingOrSubmitting ? 'overflow-hidden' : ''}"
+					: ''} {loadingOrSubmitting ? 'overflow-hidden' : ''}"
 			/>
 			{#if loadingOrSubmitting}
 				<div

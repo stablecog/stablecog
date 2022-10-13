@@ -19,7 +19,6 @@ export function autoresize(node: HTMLTextAreaElement, props?: TAutoResizeProps) 
 			minRows,
 			maxRows
 		);
-		console.log('called', height);
 		node.style.setProperty('height', `${height[0]}px`, 'important');
 	};
 	node.addEventListener('input', resize);
