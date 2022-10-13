@@ -16,7 +16,7 @@
 
 	let canRegisterWheel = true;
 	let canRegisterWheelTimeout: NodeJS.Timeout;
-	const wheelMsThreshold = 200;
+	const wheelMsThreshold = 100;
 </script>
 
 <TabBarWrapper class={classes}>
@@ -28,25 +28,20 @@
 	</div>
 	<div
 		on:wheel={async (e) => {
+			focused = true;
+			clearTimeout(focusedTimeout);
+			focusedTimeout = setTimeout(() => {
+				focused = false;
+			}, focusedTimeoutDuration);
 			if (!canRegisterWheel) return;
-			if (e.deltaY > 20 && value < max) {
-				focused = true;
-				clearTimeout(focusedTimeout);
-				focusedTimeout = setTimeout(() => {
-					focused = false;
-				}, focusedTimeoutDuration);
+			if (e.deltaY > 25 && value < max) {
 				canRegisterWheel = false;
 				clearTimeout(canRegisterWheelTimeout);
 				canRegisterWheelTimeout = setTimeout(() => {
 					canRegisterWheel = true;
 				}, wheelMsThreshold);
 				value++;
-			} else if (e.deltaY < -20 && value > min) {
-				focused = true;
-				clearTimeout(focusedTimeout);
-				focusedTimeout = setTimeout(() => {
-					focused = false;
-				}, focusedTimeoutDuration);
+			} else if (e.deltaY < -25 && value > min) {
 				canRegisterWheel = false;
 				clearTimeout(canRegisterWheelTimeout);
 				canRegisterWheelTimeout = setTimeout(() => {
