@@ -5,6 +5,7 @@
 	import { canonicalUrl } from '$ts/constants/main';
 	import { supabase } from '$ts/constants/supabase';
 	import type { RealtimeChannel } from '@supabase/supabase-js';
+	import type { TDBGenerationProcessStatus } from 'src/routes/api/generate-image/+server';
 	import { onDestroy, onMount } from 'svelte';
 	import { quadOut } from 'svelte/easing';
 	import { scale } from 'svelte/transition';
@@ -20,8 +21,8 @@
 
 	interface TPayload {
 		id: string;
-		ended: boolean;
-		succeeded: boolean;
+		status: TDBGenerationProcessStatus;
+		generation_id: string | null;
 		country_code: string | null;
 		created_at: string;
 		updated_at: string;
@@ -106,7 +107,7 @@
 							class="flex items-center justify-center relative overflow-hidden z-0 rounded-full -m-1"
 						>
 							<div class="p-5 relative overflow-hidden z-0 rounded-full">
-								{#if generation.ended === false}
+								{#if generation.status === 'started'}
 									<div
 										transition:scale|local={{ duration: 300, easing: quadOut }}
 										class="absolute w-full h-full left-0 top-0 origin-center"
@@ -119,10 +120,10 @@
 									</div>
 								{/if}
 								<div
-									class="w-8 h-8 rounded-full transition-all duration-300 flex items-center justify-center relative overflow-hidden z-0 {generation.ended ===
-										true && generation.succeeded === true
+									class="w-8 h-8 rounded-full transition-all duration-300 flex items-center justify-center relative overflow-hidden z-0 {generation.status ===
+									'succeeded'
 										? 'bg-c-success'
-										: generation.ended === true && generation.succeeded === false
+										: generation.status === 'failed'
 										? 'bg-c-danger'
 										: 'bg-c-primary'}"
 								>

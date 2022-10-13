@@ -12,11 +12,10 @@ export const POST: RequestHandler = async ({ request }) => {
 	let generationProcessId: string | undefined;
 	if (supabaseAdmin !== undefined) {
 		try {
-			let { data, error }: TDBGenerationRes = await supabaseAdmin
+			let { data, error }: TDBGenerationProcessRes = await supabaseAdmin
 				.from('generation_process')
 				.insert({
-					ended: false,
-					succeeded: false,
+					status: 'started',
 					country_code: countryCode || null
 				})
 				.select('id');
@@ -122,8 +121,7 @@ export const POST: RequestHandler = async ({ request }) => {
 						.from('generation_process')
 						.update({
 							generation_id: generationData?.[0]?.id,
-							ended: true,
-							succeeded: true
+							status: 'succeeded'
 						})
 						.eq('id', generationProcessId);
 					const dbEntryEndTimestamp = Date.now();
@@ -166,8 +164,7 @@ export const POST: RequestHandler = async ({ request }) => {
 				const { data, error } = await supabaseAdmin
 					.from('generation_process')
 					.update({
-						ended: true,
-						succeeded: false
+						status: 'failed'
 					})
 					.eq('id', generationProcessId)
 					.select('id');
@@ -190,13 +187,17 @@ interface TGenerateImageData {
 
 type TStatus = 'succeeded' | 'failed';
 
-interface TDBGenerationRes {
+export type TDBGenerationProcessStatus = 'started' | 'succeeded' | 'failed' | 'rejected';
+
+export interface TDBGenerationProcessRes {
 	data:
 		| {
 				id: string;
-				ended: boolean;
-				succeeded: boolean;
+				status: TDBGenerationProcessStatus;
 				generation_id: string | null;
+				country_code: string | null;
+				created_at: string;
+				updated_at: string;
 		  }[]
 		| null;
 	error: PostgrestError | null;
