@@ -42,7 +42,11 @@
 				if (healthRes.status === 'healthy') {
 					setServerProcessStatus = 'success';
 					serverHealth.set({ ...healthRes });
-					serverUrl.set(url.toString());
+					if (url === env.PUBLIC_DEFAULT_SERVER_URL) {
+						localStorage.removeItem('serverUrl');
+					} else {
+						localStorage.setItem('serverUrl', url);
+					}
 					serverUrlInputValue = $serverUrl;
 					if (close) {
 						close();

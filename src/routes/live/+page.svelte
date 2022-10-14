@@ -99,13 +99,15 @@
 	async function getAndSetTotals() {
 		if (supabase) {
 			try {
-				const [duration, count] = await Promise.all([
+				const [duration, count, d] = await Promise.all([
 					supabase.rpc('generation_duration_ms_total_estimate'),
-					supabase.rpc('generation_count')
+					supabase.rpc('generation_count'),
+					supabase.rpc('non_null_generation_duration_ms_total')
 				]);
+				console.log(Math.round(Number(d.data) / 1000), Math.round(Number(duration.data) / 1000));
 				if (duration.data && count.data) {
 					const _count = Number(count.data);
-					const _duration = Number(duration.data);
+					const _duration = Number(d.data);
 					if (_count > $generationTotalCount) {
 						generationTotalCount.set(_count);
 						console.log('generationTotalCount:', $generationTotalCount);
