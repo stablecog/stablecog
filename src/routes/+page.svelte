@@ -25,6 +25,7 @@
 	import { serverHealth } from '$ts/stores/serverHealth';
 	import SetServerModal from '$components/SetServerModal.svelte';
 	import { pLogGeneration } from '$ts/helpers/loggers';
+	import IconWarning from '$components/icons/IconWarning.svelte';
 
 	let status: TStatus = 'idle';
 	let promptInputValue: string | undefined;
@@ -184,6 +185,21 @@
 		{#if isCheckComplete && !$serverUrl}
 			<SetServerModal isOnBarrier={false} />
 		{:else}
+			{#if isCheckComplete && ($serverHealth.status === 'unhealthy' || $serverHealth.status === 'unknown')}
+				<div transition:expandCollapse|local={{ duration: 300 }}>
+					<div class="py-3.5">
+						<div
+							class="py-4 px-4 text-xs md:text-sm gap-3 flex items-center justify-start max-w-[34rem] rounded-xl bg-c-danger/8 text-c-danger"
+						>
+							<IconWarning class="w-6 h-6" />
+							<p class="flex-1">
+								The server seems to be offline. You might want to refresh the page or set another
+								server in the settings.
+							</p>
+						</div>
+					</div>
+				</div>
+			{/if}
 			<div
 				transition:expandCollapse|local={{ duration: 300 }}
 				class="w-[calc(100%+2rem)] flex flex-col justify-start items-center overflow-hidden z-0 -mx-4"

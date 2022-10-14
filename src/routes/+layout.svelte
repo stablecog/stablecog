@@ -2,7 +2,7 @@
 	import '$css/app.css';
 	import Navbar from '$components/Navbar.svelte';
 	import { theme } from '$ts/stores/theme';
-	import { onMount } from 'svelte';
+	import { onDestroy, onMount } from 'svelte';
 	import { serverUrl } from '$ts/stores/serverUrl';
 	import { browser } from '$app/environment';
 	import { checkServerHealth } from '$ts/queries/checkServerHealth';
@@ -11,10 +11,37 @@
 
 	let innerHeight: number | undefined;
 
+	let serverHealthCheckInterval: NodeJS.Timeout;
+	const serverHealthCheckIntervalDuration = 1000 * 10;
+
 	$: [$theme], setBodyClasses();
 
 	onMount(async () => {
 		setBodyClasses();
+		await checkAndSetServerHealth();
+		serverHealthCheckInterval = setInterval(
+			checkAndSetServerHealth,
+			serverHealthCheckIntervalDuration
+		);
+	});
+
+	onDestroy(() => {
+		clearInterval(serverHealthCheckInterval);
+	});
+
+	function setBodyClasses() {
+		if (browser) {
+			if ($theme === 'light') {
+				document.body.classList.add('theme-light');
+				document.body.classList.remove('theme-dark');
+			} else {
+				document.body.classList.add('theme-dark');
+				document.body.classList.remove('theme-light');
+			}
+		}
+	}
+
+	async function checkAndSetServerHealth() {
 		const now = Date.now();
 		if (!$serverUrl) {
 			serverHealth.set({ status: 'not-set' });
@@ -43,18 +70,6 @@
 				serverHealth.set({ status: 'unknown' });
 			}
 			console.log('Server health check took:', Date.now() - now, 'ms');
-		}
-	});
-
-	function setBodyClasses() {
-		if (browser) {
-			if ($theme === 'light') {
-				document.body.classList.add('theme-light');
-				document.body.classList.remove('theme-dark');
-			} else {
-				document.body.classList.add('theme-dark');
-				document.body.classList.remove('theme-light');
-			}
 		}
 	}
 </script>

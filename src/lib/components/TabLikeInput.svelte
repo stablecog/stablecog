@@ -8,6 +8,7 @@
 	export { classes as class };
 	export let type: 'text' | 'number' = 'number';
 	export let max: undefined | number = undefined;
+	export let formElement: HTMLFormElement | undefined = undefined;
 	let classes = '';
 
 	let inputElement: HTMLInputElement;
@@ -17,7 +18,27 @@
 		inputElement.focus();
 	};
 
-	$: showClearInputButton = value !== undefined && value !== '';
+	$: showClearInputButton = value !== undefined && value !== '' && value !== null;
+
+	const onEnter = (e: KeyboardEvent) => {
+		e.preventDefault();
+		e.stopPropagation();
+		const inputsOrTextareas = formElement?.querySelectorAll(
+			'input[type=text], input[type=number], textarea'
+		);
+		if (inputsOrTextareas) {
+			for (let i = 0; i < inputsOrTextareas.length; i++) {
+				if (inputsOrTextareas[i] === e.target) {
+					if (i < inputsOrTextareas.length - 1) {
+						(inputsOrTextareas[i + 1] as HTMLInputElement | HTMLTextAreaElement).focus();
+					} else {
+						(inputsOrTextareas[0] as HTMLInputElement | HTMLTextAreaElement).focus();
+					}
+					break;
+				}
+			}
+		}
+	};
 </script>
 
 <TabBarWrapper class={classes}>
@@ -34,8 +55,7 @@
 				bind:value
 				on:keypress={(e) => {
 					if (e.key === 'Enter') {
-						e.preventDefault();
-						e.stopPropagation();
+						onEnter(e);
 					}
 				}}
 				on:input={() => {
@@ -70,8 +90,7 @@
 				bind:value
 				on:keypress={(e) => {
 					if (e.key === 'Enter') {
-						e.preventDefault();
-						e.stopPropagation();
+						onEnter(e);
 					}
 				}}
 				on:input={() => {

@@ -1,4 +1,5 @@
 import { quadOut } from 'svelte/easing';
+import { crossfade } from 'svelte/transition';
 
 interface IExpandCollapseOptions {
 	delay?: number;
@@ -44,3 +45,21 @@ export const expandCollapse = (node: Node, options: IExpandCollapseOptions) => {
 		}
 	};
 };
+
+export const [elementsend, elementreceive] = crossfade({
+	duration: (d) => Math.sqrt(d * 200),
+
+	fallback(node, params) {
+		const style = getComputedStyle(node);
+		const transform = style.transform === 'none' ? '' : style.transform;
+
+		return {
+			duration: 600,
+			easing: quadOut,
+			css: (t) => `
+					transform: ${transform} scale(${t});
+					opacity: ${t}
+				`
+		};
+	}
+});

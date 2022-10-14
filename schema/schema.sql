@@ -28,9 +28,10 @@ UPDATE
 ALTER TABLE
     generation ENABLE ROW LEVEL SECURITY;
 
+CREATE TYPE generation_process_status_enum AS ENUM ('started', 'succeeded', 'failed', 'rejected');
+
 CREATE TABLE "generation_process" (
-    "ended" BOOLEAN NOT NULL,
-    "succeeded" BOOLEAN NOT NULL,
+    "status" generation_process_status_enum NOT NULL,
     "country_code" TEXT,
     "generation_id" UUID REFERENCES generation(id),
     "id" UUID NOT NULL DEFAULT uuid_generate_v4(),
@@ -45,3 +46,7 @@ UPDATE
 
 ALTER TABLE
     generation_process ENABLE ROW LEVEL SECURITY;
+
+CREATE POLICY "Everyone can read generation processes" ON public.generation_process FOR
+SELECT
+    USING (TRUE);

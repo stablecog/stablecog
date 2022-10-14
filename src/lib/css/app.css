@@ -47,7 +47,7 @@
 	--c-on-primary: 255 255 255;
 	--c-secondary: 210 108 34;
 	--c-danger: 178 35 35;
-	--c-success: 12 160 0;
+	--c-success: 12 150 0;
 	--c-shadow: 0 0 0;
 	--c-barrier: 227 221 235;
 	--o-shadow-normal: 0.05;
@@ -94,6 +94,16 @@ input[type='range']:focus-visible {
 /* text select color */
 ::selection {
 	background: rgb(var(--c-primary) / 0.5);
+}
+
+.hide-scrollbar {
+	-ms-overflow-style: none; /* for Internet Explorer, Edge */
+	scrollbar-width: none; /* for Firefox */
+	overflow-y: scroll;
+}
+
+.hide-scrollbar::-webkit-scrollbar {
+	display: none; /* for Chrome, Safari, and Opera */
 }
 
 @tailwind utilities;

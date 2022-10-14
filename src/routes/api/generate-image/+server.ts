@@ -1,4 +1,6 @@
+import { maxPromptLength } from '$ts/constants/main';
 import { supabaseAdmin } from '$ts/constants/supabaseAdmin';
+import { formatPrompt } from '$ts/helpers/formatPrompt';
 import { getDeviceInfo } from '$ts/helpers/getDeviceInfo';
 import type { TGenerationRequest, TGenerationResponse } from '$ts/types/main';
 import type { PostgrestError } from '@supabase/supabase-js';
@@ -12,11 +14,10 @@ export const POST: RequestHandler = async ({ request }) => {
 	let generationProcessId: string | undefined;
 	if (supabaseAdmin !== undefined) {
 		try {
-			let { data, error }: TDBGenerationRes = await supabaseAdmin
+			let { data, error }: TDBGenerationProcessRes = await supabaseAdmin
 				.from('generation_process')
 				.insert({
-					ended: false,
-					succeeded: false,
+					status: 'started',
 					country_code: countryCode || null
 				})
 				.select('id');
@@ -37,11 +38,14 @@ export const POST: RequestHandler = async ({ request }) => {
 			guidance_scale
 		}: TGenerationRequest = await request.json();
 		const _negative_prompt =
-			negative_prompt !== '' && negative_prompt !== undefined ? negative_prompt : undefined;
+			negative_prompt !== '' && negative_prompt !== undefined
+				? formatPrompt(negative_prompt)
+				: undefined;
+		const _prompt = formatPrompt(prompt);
 		generationLog({
 			text: 'Started generation:',
 			dateString: startDate,
-			prompt,
+			prompt: _prompt,
 			negative_prompt: _negative_prompt,
 			width,
 			height,
@@ -58,7 +62,7 @@ export const POST: RequestHandler = async ({ request }) => {
 			},
 			body: JSON.stringify({
 				input: {
-					prompt: prompt,
+					prompt: _prompt,
 					negative_prompt: _negative_prompt,
 					width: width.toString(),
 					height: height.toString(),
@@ -79,7 +83,7 @@ export const POST: RequestHandler = async ({ request }) => {
 		generationLog({
 			text: `Ended generation in ${(endTimestamp - startTimestamp) / 1000}s:`,
 			dateString: endDate,
-			prompt,
+			prompt: _prompt,
 			negative_prompt: _negative_prompt,
 			width,
 			height,
@@ -98,7 +102,7 @@ export const POST: RequestHandler = async ({ request }) => {
 					.from('generation')
 					.insert([
 						{
-							prompt,
+							prompt: _prompt,
 							negative_prompt: _negative_prompt,
 							seed,
 							width,
@@ -122,8 +126,7 @@ export const POST: RequestHandler = async ({ request }) => {
 						.from('generation_process')
 						.update({
 							generation_id: generationData?.[0]?.id,
-							ended: true,
-							succeeded: true
+							status: 'succeeded'
 						})
 						.eq('id', generationProcessId);
 					const dbEntryEndTimestamp = Date.now();
@@ -131,7 +134,7 @@ export const POST: RequestHandler = async ({ request }) => {
 					generationLog({
 						text: `Inserted into the DB in ${dbEntryEndTimestamp - dbEntryStartTimestamp}ms:`,
 						dateString: dbEntryEndDate,
-						prompt,
+						prompt: _prompt,
 						negative_prompt: _negative_prompt,
 						seed,
 						width,
@@ -166,8 +169,7 @@ export const POST: RequestHandler = async ({ request }) => {
 				const { data, error } = await supabaseAdmin
 					.from('generation_process')
 					.update({
-						ended: true,
-						succeeded: false
+						status: 'failed'
 					})
 					.eq('id', generationProcessId)
 					.select('id');
@@ -190,13 +192,17 @@ interface TGenerateImageData {
 
 type TStatus = 'succeeded' | 'failed';
 
-interface TDBGenerationRes {
+export type TDBGenerationProcessStatus = 'started' | 'succeeded' | 'failed' | 'rejected';
+
+export interface TDBGenerationProcessRes {
 	data:
 		| {
 				id: string;
-				ended: boolean;
-				succeeded: boolean;
+				status: TDBGenerationProcessStatus;
 				generation_id: string | null;
+				country_code: string | null;
+				created_at: string;
+				updated_at: string;
 		  }[]
 		| null;
 	error: PostgrestError | null;

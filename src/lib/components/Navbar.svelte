@@ -7,6 +7,7 @@
 	import IconSettings from '$components/icons/IconSettings.svelte';
 	import Logo from '$components/Logo.svelte';
 	import ModalWrapper from '$components/ModalWrapper.svelte';
+	import ProductHuntBadge from '$components/ProductHuntBadge.svelte';
 	import SetServerModal from '$components/SetServerModal.svelte';
 	import SettingsMenu from '$components/SettingsMenu.svelte';
 	import { clickoutside } from '$ts/actions/clickoutside';
@@ -68,6 +69,7 @@
 		<Logo class="w-9 h-9" />
 	</a>
 	<div class="flex items-center justify-end relative">
+		<ProductHuntBadge />
 		<div class="p-3 relative">
 			<HealthIndicator />
 		</div>

@@ -1,11 +1,13 @@
 <script lang="ts">
 	import { page } from '$app/stores';
 	import MetaTag from '$components/MetaTag.svelte';
-	import { expandCollapse } from '$ts/animation/transitions';
+	import { elementreceive, elementsend, expandCollapse } from '$ts/animation/transitions';
 	import { canonicalUrl } from '$ts/constants/main';
 	import { supabase } from '$ts/constants/supabase';
 	import type { RealtimeChannel } from '@supabase/supabase-js';
+	import type { TDBGenerationProcessStatus } from 'src/routes/api/generate-image/+server';
 	import { onDestroy, onMount } from 'svelte';
+	import { flip } from 'svelte/animate';
 	import { quadOut } from 'svelte/easing';
 	import { scale } from 'svelte/transition';
 
@@ -20,8 +22,8 @@
 
 	interface TPayload {
 		id: string;
-		ended: boolean;
-		succeeded: boolean;
+		status: TDBGenerationProcessStatus;
+		generation_id: string | null;
 		country_code: string | null;
 		created_at: string;
 		updated_at: string;
@@ -98,15 +100,13 @@
 				<div class="w-full flex flex-wrap items-center justify-center py-4">
 					{#each generations as generation (generation.id)}
 						<div
-							transition:expandCollapse|local={{
-								duration: 300,
-								both: true,
-								transformOrigin: 'center'
-							}}
-							class="flex items-center justify-center relative overflow-hidden z-0 rounded-full"
+							in:elementreceive|local={{ key: generation.id }}
+							out:elementsend|local={{ key: generation.id }}
+							animate:flip={{ duration: 300, easing: quadOut }}
+							class="flex items-center justify-center relative overflow-hidden z-0 rounded-full -m-1"
 						>
 							<div class="p-6 relative overflow-hidden z-0 rounded-full">
-								{#if generation.ended === false}
+								{#if generation.status === 'started'}
 									<div
 										transition:scale|local={{ duration: 300, easing: quadOut }}
 										class="absolute w-full h-full left-0 top-0 origin-center"
@@ -118,19 +118,27 @@
 										</div>
 									</div>
 								{/if}
-								<div
-									class="w-10 h-10 rounded-full transition-all duration-300 flex items-center justify-center relative overflow-hidden z-0 {generation.ended ===
-										true && generation.succeeded === true
-										? 'bg-c-success'
-										: generation.ended === true && generation.succeeded === false
-										? 'bg-c-danger'
-										: 'bg-c-primary'}"
-								>
-									{#if generation.country_code}
-										<p class="text-center text-xs font-bold text-c-on-primary/50">
-											{generation.country_code}
-										</p>
+								<div class="w-10 h-10 relative">
+									{#if generation.status === 'started'}
+										<div
+											transition:scale|local={{ duration: 300, easing: quadOut }}
+											class="w-full h-full absolute left-0 top-0 rounded-full bg-c-primary animate-ping-custom-bg"
+										/>
 									{/if}
+									<div
+										class="w-full h-full rounded-full transition-all duration-300 flex items-center justify-center relative overflow-hidden z-0 {generation.status ===
+										'succeeded'
+											? 'bg-c-success'
+											: generation.status === 'failed'
+											? 'bg-c-danger'
+											: 'bg-c-primary'}"
+									>
+										{#if generation.country_code}
+											<p class="text-center text-xs font-bold text-c-on-primary/50">
+												{generation.country_code}
+											</p>
+										{/if}
+									</div>
 								</div>
 							</div>
 						</div>
@@ -152,9 +160,14 @@
 									/>
 								</div>
 							</div>
-							<div
-								class="w-10 h-10 rounded-full transition-all duration-300 flex items-center justify-center relative overflow-hidden z-0 bg-c-primary"
-							/>
+							<div class="w-10 h-10 relative">
+								<div
+									class="w-full h-full absolute left-0 top-0 rounded-full bg-c-primary animate-ping-custom-bg"
+								/>
+								<div
+									class="w-full h-full rounded-full transition-all duration-300 flex items-center justify-center relative overflow-hidden z-0 bg-c-primary"
+								/>
+							</div>
 						</div>
 					</div>
 					<p class="w-full text-c-on-bg/40 text-center">Waiting for generations</p>
