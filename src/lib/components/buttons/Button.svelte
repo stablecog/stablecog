@@ -4,6 +4,7 @@
 	export let loading = false;
 	export let href: string | undefined = undefined;
 	export let onClick: (() => void) | undefined = undefined;
+	export let size: 'md' | 'sm' = 'md';
 	export { classes as class };
 	let classes = '';
 </script>
@@ -13,8 +14,10 @@
 		{href}
 		data-sveltekit-prefetch
 		{disabled}
-		class="px-8 md:px-10 relative flex items-center justify-center text-center py-5 
-			shadow-lg shadow-c-shadow/[var(--o-shadow-normal)]  text-c-on-primary rounded-xl font-bold gap-2 
+		class="{size === 'sm'
+			? 'text-sm px-6 md:px-8 py-4 rounded-lg2'
+			: 'text-base px-8 md:px-10 py-5 rounded-xl'} relative flex items-center justify-center text-center
+			shadow-lg shadow-c-shadow/[var(--o-shadow-normal)]  text-c-on-primary font-bold gap-2 
 			overflow-hidden z-0 group {loading ? 'bg-c-secondary' : 'bg-c-primary'} {classes}"
 	>
 		<div class="w-[200%] h-full absolute left-0 top-0 flex items-center justify-center">
@@ -31,8 +34,10 @@
 	<button
 		on:click={onClick}
 		disabled={disabled || loading}
-		class="px-8 md:px-10 relative flex items-center justify-center text-center py-5 
-			shadow-lg shadow-c-shadow/[var(--o-shadow-normal)]  text-c-on-primary rounded-xl font-bold gap-2 
+		class="{size === 'sm'
+			? 'text-sm px-6 md:px-8 py-4 rounded-lg2'
+			: 'text-base px-8 md:px-10 py-5 rounded-xl'} relative flex items-center justify-center text-center
+			shadow-lg shadow-c-shadow/[var(--o-shadow-normal)]  text-c-on-primary font-bold gap-2 
 			overflow-hidden z-0 group {loading ? 'bg-c-secondary' : 'bg-c-primary'} {classes}"
 	>
 		<div class="w-[200%] h-full absolute left-0 top-0 flex items-center justify-center">

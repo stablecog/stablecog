@@ -22,10 +22,12 @@
 	import ImagePlaceholder from '$components/ImagePlaceholder.svelte';
 	import GenerationImage from '$components/GenerationImage.svelte';
 	import { advancedMode } from '$ts/stores/advancedMode';
-	import { serverHealth } from '$ts/stores/serverHealth';
+	import { defaultServerHealth, lastServerHealth, serverHealth } from '$ts/stores/serverHealth';
 	import SetServerModal from '$components/SetServerModal.svelte';
 	import { pLogGeneration } from '$ts/helpers/loggers';
 	import IconWarning from '$components/icons/IconWarning.svelte';
+	import { env as envPublic } from '$env/dynamic/public';
+	import Button from '$components/buttons/Button.svelte';
 
 	let status: TStatus = 'idle';
 	let promptInputValue: string | undefined;
@@ -162,6 +164,16 @@
 		return rate;
 	};
 
+	const switchToDefaultServer = () => {
+		serverUrl.set(envPublic.PUBLIC_DEFAULT_SERVER_URL);
+		localStorage.removeItem('serverUrl');
+		serverHealth.set($defaultServerHealth);
+		lastServerHealth.set({
+			status: 'healthy',
+			features: $defaultServerHealth.features
+		});
+	};
+
 	let isCheckComplete = false;
 	onMount(async () => {
 		setEstimatedDuration();
@@ -185,9 +197,12 @@
 		{#if isCheckComplete && !$serverUrl}
 			<SetServerModal isOnBarrier={false} />
 		{:else}
-			{#if isCheckComplete && ($serverHealth.status === 'unhealthy' || $serverHealth.status === 'unknown')}
-				<div transition:expandCollapse|local={{ duration: 300 }}>
-					<div class="py-3.5">
+			{#if isCheckComplete && ($serverHealth.status === 'unhealthy' || $serverHealth.status === 'unknown' || $lastServerHealth.status === 'unhealthy' || $lastServerHealth.status === 'unknown')}
+				<div
+					transition:expandCollapse|local={{ duration: 300 }}
+					class="overflow-hidden relative z-0"
+				>
+					<div class="py-3.5 flex flex-col items-center">
 						<div
 							class="py-4 px-4 text-xs md:text-sm gap-3 flex items-center justify-start max-w-[34rem] rounded-xl bg-c-danger/8 text-c-danger"
 						>
@@ -197,6 +212,18 @@
 								server in the settings.
 							</p>
 						</div>
+						{#if envPublic.PUBLIC_DEFAULT_SERVER_URL && $serverUrl !== envPublic.PUBLIC_DEFAULT_SERVER_URL && ($defaultServerHealth.status === 'healthy' || $defaultServerHealth.status === 'loading')}
+							<div
+								transition:expandCollapse|local={{ duration: 300 }}
+								class="overflow-hidden relative z-0"
+							>
+								<div class="pt-3.5">
+									<Button size="sm" onClick={switchToDefaultServer}>
+										Switch to Default Server
+									</Button>
+								</div>
+							</div>
+						{/if}
 					</div>
 				</div>
 			{/if}

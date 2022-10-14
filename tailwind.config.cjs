@@ -98,6 +98,9 @@ module.exports = {
 				'ping-custom-bg': 'ping-custom-bg 1.25s cubic-bezier(0,.5,.5,1) infinite',
 				'spin-faster': 'spin-faster 0.75s linear infinite'
 			},
+			borderRadius: {
+				lg2: '0.625rem'
+			},
 			keyframes: {
 				'pulse-custom': {
 					'0%, 100%': {
