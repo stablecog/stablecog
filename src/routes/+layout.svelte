@@ -8,6 +8,7 @@
 	import { checkServerHealth } from '$ts/queries/checkServerHealth';
 	import { serverHealth } from '$ts/stores/serverHealth';
 	import Footer from '$components/Footer.svelte';
+	import { env as envPublic } from '$env/dynamic/public';
 
 	let innerHeight: number | undefined;
 
@@ -46,6 +47,9 @@
 		if (!$serverUrl) {
 			serverHealth.set({ status: 'not-set' });
 			return;
+		}
+		if (envPublic.PUBLIC_DEFAULT_SERVER_URL && $serverUrl === envPublic.PUBLIC_DEFAULT_SERVER_URL) {
+			localStorage.removeItem('serverUrl');
 		}
 		try {
 			serverHealth.set({ status: 'loading', features: $serverHealth.features });
