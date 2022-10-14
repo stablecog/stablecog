@@ -137,14 +137,14 @@
 
 <div class="w-full flex-1 flex justify-center px-8 md:px-24 pt-8 pb-[calc(7vh+2rem)]">
 	<div class="w-full flex flex-col items-center justify-center max-w-5xl">
-		<div class="w-full flex flex-wrap items-center justify-center py-6 text-center gap-8">
-			<div class="w-full md:w-52 max-w-full flex flex-col gap-1.5">
+		<div class="w-full flex flex-wrap items-center justify-center py-6 gap-10 md:gap-14">
+			<div class="w-full md:w-64 max-w-full flex flex-col gap-1.5 text-center md:text-right">
 				<h1 class="text-c-on-bg/50 text-sm">Generations</h1>
 				<p class="font-bold text-4xl">
 					{Math.floor($generationTotalCount).toLocaleString('en-US')}
 				</p>
 			</div>
-			<div class="w-full md:w-52 max-w-full flex flex-col gap-1.5">
+			<div class="w-full md:w-64 max-w-full flex flex-col gap-1.5 text-center md:text-left">
 				<h1 class="text-c-on-bg/50 text-sm">Total GPU Time</h1>
 				<p class="font-bold text-4xl">
 					{Math.round($generationTotalDurationMs / 1000).toLocaleString('en-US')}s
