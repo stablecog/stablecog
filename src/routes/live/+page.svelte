@@ -99,17 +99,15 @@
 	async function getAndSetTotals() {
 		if (supabase) {
 			try {
-				const [duration, count, d] = await Promise.all([
-					supabase.rpc('generation_duration_ms_total_estimate'),
-					supabase.rpc('generation_count'),
-					supabase.rpc('non_null_generation_duration_ms_total')
+				const [durationRes, countRes] = await Promise.all([
+					supabase.rpc('generation_duration_ms_total_estimate_with_constant'),
+					supabase.rpc('generation_count')
 				]);
-				console.log(Math.round(Number(d.data) / 1000), Math.round(Number(duration.data) / 1000));
-				if (duration.data && count.data) {
-					const _count = Number(count.data);
-					const _duration = Number(d.data);
-					if (_count > $generationTotalCount) {
-						generationTotalCount.set(_count);
+				if (durationRes.data && countRes.data) {
+					const duration = Number(countRes.data);
+					const _duration = Number(durationRes.data);
+					if (duration > $generationTotalCount) {
+						generationTotalCount.set(duration);
 						console.log('generationTotalCount:', $generationTotalCount);
 					} else {
 						console.log('no change in generationTotalCount, new result is equal or smaller');
@@ -121,7 +119,7 @@
 						console.log('no change in generationTotalDurationMs, new result is equal or smaller');
 					}
 				} else {
-					console.log(duration.error, count.error);
+					console.log(durationRes.error, countRes.error);
 				}
 			} catch (error) {
 				console.log(error);
@@ -140,13 +138,13 @@
 <div class="w-full flex-1 flex justify-center px-8 md:px-24 pt-8 pb-[calc(7vh+2rem)]">
 	<div class="w-full flex flex-col items-center justify-center max-w-5xl">
 		<div class="w-full flex flex-wrap items-center justify-center py-6 text-center gap-8">
-			<div class="w-full md:w-52 max-w-full flex flex-col gap-2">
+			<div class="w-full md:w-52 max-w-full flex flex-col gap-1.5">
 				<h1 class="text-c-on-bg/50 text-sm">Generations</h1>
 				<p class="font-bold text-4xl">
 					{Math.floor($generationTotalCount).toLocaleString('en-US')}
 				</p>
 			</div>
-			<div class="w-full md:w-52 max-w-full flex flex-col gap-2">
+			<div class="w-full md:w-52 max-w-full flex flex-col gap-1.5">
 				<h1 class="text-c-on-bg/50 text-sm">Total GPU Time</h1>
 				<p class="font-bold text-4xl">
 					{Math.round($generationTotalDurationMs / 1000).toLocaleString('en-US')}s

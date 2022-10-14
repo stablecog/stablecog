@@ -59,14 +59,14 @@ FROM
     generation;
 
 CREATE
-OR REPLACE FUNCTION generation_count() RETURNS integer AS $ $
+OR REPLACE FUNCTION generation_count() RETURNS BIGINT AS $ $
 SELECT
     COUNT(*)
 FROM
     generation_public $ $ language SQL;
 
 CREATE
-OR REPLACE FUNCTION non_null_generation_duration_ms_average() RETURNS integer AS $ $
+OR REPLACE FUNCTION non_null_generation_duration_ms_average() RETURNS BIGINT AS $ $
 SELECT
     SUM (duration_ms) / COUNT('*') AS non_null_generation_duration_ms_average
 FROM
@@ -75,7 +75,7 @@ WHERE
     duration_ms IS NOT NULL $ $ language SQL;
 
 CREATE
-OR REPLACE FUNCTION non_null_generation_duration_ms_total() RETURNS integer AS $ $
+OR REPLACE FUNCTION non_null_generation_duration_ms_total() RETURNS BIGINT AS $ $
 SELECT
     SUM (duration_ms) non_null_generation_duration_ms_total
 FROM
@@ -84,7 +84,7 @@ WHERE
     duration_ms IS NOT NULL $ $ language SQL;
 
 CREATE
-OR REPLACE FUNCTION generation_count_with_null_duration_ms() RETURNS integer AS $ $
+OR REPLACE FUNCTION generation_count_with_null_duration_ms() RETURNS BIGINT AS $ $
 SELECT
     COUNT(*)
 FROM
@@ -93,6 +93,11 @@ WHERE
     duration_ms IS NULL $ $ language SQL;
 
 CREATE
-OR REPLACE FUNCTION generation_duration_ms_total_estimate() RETURNS integer AS $ $
+OR REPLACE FUNCTION generation_duration_ms_total_estimate() RETURNS BIGINT AS $ $
 SELECT
     non_null_generation_duration_ms_total() + generation_count_with_null_duration_ms() * non_null_generation_duration_ms_average() $ $ language SQL;
+
+CREATE
+OR REPLACE FUNCTION generation_duration_ms_total_estimate_with_constant() RETURNS BIGINT AS $ $
+SELECT
+    non_null_generation_duration_ms_total() + generation_count_with_null_duration_ms() * 10000 $ $ language SQL;
