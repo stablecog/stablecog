@@ -10,6 +10,7 @@
 	import { flip } from 'svelte/animate';
 	import { quadOut } from 'svelte/easing';
 	import { scale } from 'svelte/transition';
+	import { tweened } from 'svelte/motion';
 
 	let channel: RealtimeChannel;
 	let generations: TPayload[] = [];
@@ -19,6 +20,14 @@
 	const timestampDescSort = (a: TPayload, b: TPayload) => {
 		return new Date(b.created_at).getTime() - new Date(a.created_at).getTime();
 	};
+	let generationTotalCount = tweened(0, {
+		duration: 500,
+		easing: quadOut
+	});
+	let generationTotalDurationMs = tweened(0, {
+		duration: 500,
+		easing: quadOut
+	});
 
 	interface TPayload {
 		id: string;
@@ -29,8 +38,9 @@
 		updated_at: string;
 	}
 
-	onMount(() => {
+	onMount(async () => {
 		if (supabase) {
+			await getAndSetTotals();
 			channel = supabase.channel('db-generation-process');
 			channel.on(
 				'postgres_changes',
@@ -40,7 +50,8 @@
 					table: 'generation_process'
 				},
 				(payload) => {
-					console.log(payload);
+					console.log('payload', payload);
+					getAndSetTotals();
 					const entry = payload.new as TPayload;
 					if (!generations.map((i) => i.id).includes(entry.id)) {
 						generations = [entry, ...generations].sort(timestampDescSort);
@@ -84,6 +95,37 @@
 		}
 		clearInterval(clearMessageInterval);
 	});
+
+	async function getAndSetTotals() {
+		if (supabase) {
+			try {
+				const [duration, count] = await Promise.all([
+					supabase.rpc('generation_duration_ms_total_estimate'),
+					supabase.rpc('generation_count')
+				]);
+				if (duration.data && count.data) {
+					const _count = Number(count.data);
+					const _duration = Number(duration.data);
+					if (_count > $generationTotalCount) {
+						generationTotalCount.set(_count);
+						console.log('generationTotalCount:', $generationTotalCount);
+					} else {
+						console.log('no change in generationTotalCount, new result is equal or smaller');
+					}
+					if (_duration > $generationTotalDurationMs) {
+						generationTotalDurationMs.set(_duration);
+						console.log('generationTotalDurationMs:', $generationTotalDurationMs);
+					} else {
+						console.log('no change in generationTotalDurationMs, new result is equal or smaller');
+					}
+				} else {
+					console.log(duration.error, count.error);
+				}
+			} catch (error) {
+				console.log(error);
+			}
+		}
+	}
 </script>
 
 <MetaTag
@@ -95,9 +137,23 @@
 
 <div class="w-full flex-1 flex justify-center px-8 md:px-24 pt-8 pb-[calc(7vh+2rem)]">
 	<div class="w-full flex flex-col items-center justify-center max-w-5xl">
+		<div class="w-full flex flex-wrap items-center justify-center py-6 text-center gap-8">
+			<div class="w-full md:w-52 max-w-full flex flex-col gap-2">
+				<h1 class="text-c-on-bg/50 text-sm">Generations</h1>
+				<p class="font-bold text-4xl">
+					{Math.floor($generationTotalCount).toLocaleString('en-US')}
+				</p>
+			</div>
+			<div class="w-full md:w-52 max-w-full flex flex-col gap-2">
+				<h1 class="text-c-on-bg/50 text-sm">Total GPU Time</h1>
+				<p class="font-bold text-4xl">
+					{Math.round($generationTotalDurationMs / 1000).toLocaleString('en-US')}s
+				</p>
+			</div>
+		</div>
 		{#if generations && generations.length > 0}
 			<div transition:expandCollapse|local={{ duration: 300 }} class="w-full">
-				<div class="w-full flex flex-wrap items-center justify-center py-4">
+				<div class="w-full flex flex-wrap items-center justify-center py-6">
 					{#each generations as generation (generation.id)}
 						<div
 							in:elementreceive|local={{ key: generation.id }}
@@ -170,7 +226,7 @@
 							</div>
 						</div>
 					</div>
-					<p class="w-full text-c-on-bg/40 text-center">Waiting for generations</p>
+					<p class="w-full text-c-on-bg/40 text-center py-1">Waiting for generations</p>
 				</div>
 			</div>
 		{:else}

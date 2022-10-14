@@ -50,3 +50,49 @@ ALTER TABLE
 CREATE POLICY "Everyone can read generation processes" ON public.generation_process FOR
 SELECT
     USING (TRUE);
+
+CREATE VIEW generation_public AS
+SELECT
+    id,
+    duration_ms
+FROM
+    generation;
+
+CREATE
+OR REPLACE FUNCTION generation_count() RETURNS integer AS $ $
+SELECT
+    COUNT(*)
+FROM
+    generation_public $ $ language SQL;
+
+CREATE
+OR REPLACE FUNCTION non_null_generation_duration_ms_average() RETURNS integer AS $ $
+SELECT
+    SUM (duration_ms) / COUNT('*') AS non_null_generation_duration_ms_average
+FROM
+    generation_public
+WHERE
+    duration_ms IS NOT NULL $ $ language SQL;
+
+CREATE
+OR REPLACE FUNCTION non_null_generation_duration_ms_total() RETURNS integer AS $ $
+SELECT
+    SUM (duration_ms) non_null_generation_duration_ms_total
+FROM
+    generation_public
+WHERE
+    duration_ms IS NOT NULL $ $ language SQL;
+
+CREATE
+OR REPLACE FUNCTION generation_count_with_null_duration_ms() RETURNS integer AS $ $
+SELECT
+    COUNT(*)
+FROM
+    generation_public
+WHERE
+    duration_ms IS NULL $ $ language SQL;
+
+CREATE
+OR REPLACE FUNCTION generation_duration_ms_total_estimate() RETURNS integer AS $ $
+SELECT
+    non_null_generation_duration_ms_total() + generation_count_with_null_duration_ms() * non_null_generation_duration_ms_average() $ $ language SQL;

@@ -14,13 +14,16 @@
 	let focusedTimeout: NodeJS.Timeout;
 	const focusedTimeoutDuration = 400;
 
-	const averageDuration = 50;
-	let lastAverageTimestamp = Date.now();
-	let wheelY = 0;
-	let resetWheelYTimeout: NodeJS.Timeout;
-	const resetWheelYTimeoutDuration = 25;
 	let lastValueSetTimestamp = Date.now();
-	let valueSetMinDiffMs = 100;
+	let valueSetMinDiffMs = 500;
+
+	const createFocusTimeout = () => {
+		focused = true;
+		clearTimeout(focusedTimeout);
+		focusedTimeout = setTimeout(() => {
+			focused = false;
+		}, focusedTimeoutDuration);
+	};
 </script>
 
 <TabBarWrapper class={classes}>
@@ -32,27 +35,15 @@
 	</div>
 	<div
 		on:wheel={async (e) => {
-			focused = true;
-			clearTimeout(focusedTimeout);
-			focusedTimeout = setTimeout(() => {
-				focused = false;
-			}, focusedTimeoutDuration);
+			createFocusTimeout();
 			const now = Date.now();
-			if (now - lastAverageTimestamp > averageDuration) {
-				lastAverageTimestamp = now;
-				clearTimeout(resetWheelYTimeout);
-				resetWheelYTimeout = setTimeout(() => {
-					wheelY = 0;
-				}, resetWheelYTimeoutDuration);
-			}
-			wheelY = wheelY + e.deltaY;
 			if (now - lastValueSetTimestamp < valueSetMinDiffMs) return;
-			if (wheelY > 100 && value < max) {
-				value = value + 1;
-				lastValueSetTimestamp = now;
-			} else if (wheelY < -100 && value > min) {
-				value = value - 1;
-				lastValueSetTimestamp = now;
+			if (e.deltaY > 0 && value > min) {
+				value--;
+				lastValueSetTimestamp = Date.now();
+			} else if (e.deltaY < 0 && value < max) {
+				value++;
+				lastValueSetTimestamp = Date.now();
 			}
 		}}
 		class="range-input flex-1 min-w-0 flex items-center relative rounded-r-xl pl-4 pr-4 gap-3.5"
