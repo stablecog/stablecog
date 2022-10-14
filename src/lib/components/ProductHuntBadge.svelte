@@ -7,7 +7,7 @@
 	<div class="flex relative overflow-hidden z-0 rounded-lg p-px group">
 		{#if $theme === 'light'}
 			<a
-				class="ring-1 transition ring-c-secondary rounded-lg relative z-0 overflow-hidden"
+				class="transition ring-c-secondary rounded-lg relative z-0 overflow-hidden"
 				href="https://www.producthunt.com/posts/stablecog?utm_source=badge-featured&utm_medium=badge&utm_souce=badge-stablecog"
 				target="_blank"
 				><img
@@ -38,7 +38,7 @@
 					class="w-full h-full origin-left transition transform translate-y-full
             {$theme === 'light'
 						? 'bg-c-secondary/25'
-						: 'bg-c-primary/25'} rounded-md {!$isTouchscreen ? 'group-hover:translate-y-0' : ''}"
+						: 'bg-c-primary/30'} rounded-md {!$isTouchscreen ? 'group-hover:translate-y-0' : ''}"
 				/>
 			</div>
 		</div>
