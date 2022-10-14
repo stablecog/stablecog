@@ -14,13 +14,10 @@
 	let focusedTimeout: NodeJS.Timeout;
 	const focusedTimeoutDuration = 400;
 
-	let lastValueSetTimestamp = Date.now();
-	let valueSetMinDiffMs = 400;
-
 	let mouseDeltaY = 0;
-	let mouseDeltaYLast = 0;
 	let mouseDeltaYResetTimeout: NodeJS.Timeout;
 	const mouseDeltaYResetTimeoutDuration = 50;
+	const deltaYCutoff = 500;
 
 	const createFocusTimeout = () => {
 		focused = true;
@@ -34,13 +31,10 @@
 		clearTimeout(mouseDeltaYResetTimeout);
 		mouseDeltaYResetTimeout = setTimeout(() => {
 			mouseDeltaY = 0;
-			mouseDeltaYLast = 0;
 		}, mouseDeltaYResetTimeoutDuration);
 	};
 </script>
 
-<div class="w-16 text-right">{mouseDeltaY}</div>
-<div class="w-16 text-right">{mouseDeltaYLast}</div>
 <TabBarWrapper class={classes}>
 	<div class="self-stretch flex text-c-on-bg/30">
 		<slot name="title" />
@@ -52,15 +46,22 @@
 		on:wheel={async (e) => {
 			createFocusTimeout();
 			createMouseDeltaYResetTimeout();
-			const now = Date.now();
-			mouseDeltaY = e.deltaY;
-			if (now - lastValueSetTimestamp < valueSetMinDiffMs) return;
-			if (e.deltaY > 0 && value < max) {
-				value++;
-				lastValueSetTimestamp = Date.now();
-			} else if (e.deltaY < 0 && value > min) {
-				value--;
-				lastValueSetTimestamp = Date.now();
+			if (mouseDeltaY === 0) {
+				mouseDeltaY = mouseDeltaY + e.deltaY;
+				if (e.deltaY > 0 && value < max) {
+					value++;
+				} else if (e.deltaY < 0 && value > min) {
+					value--;
+				}
+			} else {
+				mouseDeltaY = mouseDeltaY + e.deltaY;
+				if (mouseDeltaY > deltaYCutoff && value < max) {
+					value++;
+					mouseDeltaY = 0;
+				} else if (mouseDeltaY < -deltaYCutoff && value > min) {
+					value--;
+					mouseDeltaY = 0;
+				}
 			}
 		}}
 		class="range-input flex-1 min-w-0 flex items-center relative rounded-r-xl pl-4 pr-4 gap-3.5"
