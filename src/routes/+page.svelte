@@ -178,6 +178,7 @@
 	onMount(async () => {
 		setEstimatedDuration();
 		isCheckComplete = true;
+		console.log($serverHealth, $lastServerHealth);
 	});
 
 	onDestroy(() => {
@@ -197,7 +198,7 @@
 		{#if isCheckComplete && !$serverUrl}
 			<SetServerModal isOnBarrier={false} />
 		{:else}
-			{#if isCheckComplete && ($serverHealth.status === 'unhealthy' || $serverHealth.status === 'unknown' || $lastServerHealth.status === 'unhealthy' || $lastServerHealth.status === 'unknown')}
+			{#if isCheckComplete && ($serverHealth.status === 'unhealthy' || $serverHealth.status === 'unknown' || $lastServerHealth.status === 'unhealthy')}
 				<div
 					transition:expandCollapse|local={{ duration: 300 }}
 					class="overflow-hidden relative z-0"
