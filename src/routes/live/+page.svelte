@@ -104,17 +104,17 @@
 					supabase.rpc('generation_count')
 				]);
 				if (durationRes.data && countRes.data) {
-					const duration = Number(countRes.data);
-					const _duration = Number(durationRes.data);
-					if (duration > $generationTotalCount) {
-						generationTotalCount.set(duration);
-						console.log('generationTotalCount:', $generationTotalCount);
+					const count = Number(countRes.data);
+					const duration = Number(durationRes.data);
+					if (count > $generationTotalCount) {
+						generationTotalCount.set(count);
+						console.log('generationTotalCount:', count);
 					} else {
 						console.log('no change in generationTotalCount, new result is equal or smaller');
 					}
-					if (_duration > $generationTotalDurationMs) {
-						generationTotalDurationMs.set(_duration);
-						console.log('generationTotalDurationMs:', $generationTotalDurationMs);
+					if (duration > $generationTotalDurationMs) {
+						generationTotalDurationMs.set(duration);
+						console.log('generationTotalDurationMs:', duration);
 					} else {
 						console.log('no change in generationTotalDurationMs, new result is equal or smaller');
 					}
