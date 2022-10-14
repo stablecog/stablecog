@@ -14,9 +14,13 @@
 	let focusedTimeout: NodeJS.Timeout;
 	const focusedTimeoutDuration = 400;
 
-	let canRegisterWheel = true;
-	let canRegisterWheelTimeout: NodeJS.Timeout;
-	const wheelMsThreshold = 100;
+	const averageDuration = 50;
+	let lastAverageTimestamp = Date.now();
+	let wheelY = 0;
+	let resetWheelYTimeout: NodeJS.Timeout;
+	const resetWheelYTimeoutDuration = 25;
+	let lastValueSetTimestamp = Date.now();
+	let valueSetMinDiffMs = 100;
 </script>
 
 <TabBarWrapper class={classes}>
@@ -33,22 +37,22 @@
 			focusedTimeout = setTimeout(() => {
 				focused = false;
 			}, focusedTimeoutDuration);
-			if (!canRegisterWheel) return;
-			if (e.deltaY > 25 && value < max) {
-				canRegisterWheel = false;
-				clearTimeout(canRegisterWheelTimeout);
-				canRegisterWheelTimeout = setTimeout(() => {
-					canRegisterWheel = true;
-				}, wheelMsThreshold);
-				value++;
-			} else if (e.deltaY < -25 && value > min) {
-				canRegisterWheel = false;
-				clearTimeout(canRegisterWheelTimeout);
-				canRegisterWheelTimeout = setTimeout(() => {
-					canRegisterWheel = true;
-					focused = false;
-				}, wheelMsThreshold);
-				value--;
+			const now = Date.now();
+			if (now - lastAverageTimestamp > averageDuration) {
+				lastAverageTimestamp = now;
+				clearTimeout(resetWheelYTimeout);
+				resetWheelYTimeout = setTimeout(() => {
+					wheelY = 0;
+				}, resetWheelYTimeoutDuration);
+			}
+			wheelY = wheelY + e.deltaY;
+			if (now - lastValueSetTimestamp < valueSetMinDiffMs) return;
+			if (wheelY > 100 && value < max) {
+				value = value + 1;
+				lastValueSetTimestamp = now;
+			} else if (wheelY < -100 && value > min) {
+				value = value - 1;
+				lastValueSetTimestamp = now;
 			}
 		}}
 		class="range-input flex-1 min-w-0 flex items-center relative rounded-r-xl pl-4 pr-4 gap-3.5"
