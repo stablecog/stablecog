@@ -24,7 +24,7 @@
 	import { advancedMode } from '$ts/stores/advancedMode';
 	import { defaultServerHealth, lastServerHealth, serverHealth } from '$ts/stores/serverHealth';
 	import SetServerModal from '$components/SetServerModal.svelte';
-	import { pLogGeneration } from '$ts/helpers/loggers';
+	import { pLogGeneration, uLogGeneration } from '$ts/helpers/loggers';
 	import IconWarning from '$components/icons/IconWarning.svelte';
 	import { env as envPublic } from '$env/dynamic/public';
 	import Button from '$components/buttons/Button.svelte';
@@ -65,6 +65,7 @@
 
 	async function onCreate() {
 		pLogGeneration('Started');
+		uLogGeneration('Started');
 		if (!$serverUrl || !promptInputValue) {
 			!promptInputValue && console.log('no input');
 			!$serverUrl && console.log('no server url');
@@ -108,6 +109,7 @@
 			let { data, error } = res;
 			if (data && data.imageDataB64 && !error) {
 				pLogGeneration('Succeeded');
+				uLogGeneration('Succeeded');
 				if ($serverHealth.status !== 'healthy') {
 					serverHealth.set({ status: 'healthy', features: $serverHealth.features });
 				}
@@ -149,6 +151,7 @@
 			}
 		} catch (error) {
 			pLogGeneration('Failed');
+			uLogGeneration('Failed');
 			status = 'error';
 			console.log(error);
 		} finally {
