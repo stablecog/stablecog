@@ -45,7 +45,7 @@
 					if (url === env.PUBLIC_DEFAULT_SERVER_URL) {
 						localStorage.removeItem('serverUrl');
 					} else {
-						localStorage.setItem('serverUrl', url);
+						serverUrl.set(url);
 					}
 					serverUrlInputValue = $serverUrl;
 					if (close) {
