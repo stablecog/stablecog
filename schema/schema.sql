@@ -100,4 +100,4 @@ SELECT
 CREATE
 OR REPLACE FUNCTION generation_duration_ms_total_estimate_with_constant() RETURNS BIGINT AS $ $
 SELECT
-    non_null_generation_duration_ms_total() + generation_count_with_null_duration_ms() * 10000 $ $ language SQL;
+    non_null_generation_duration_ms_total() + generation_count_with_null_duration_ms() * 12000 $ $ language SQL;
