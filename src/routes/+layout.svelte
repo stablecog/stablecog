@@ -65,6 +65,10 @@
 			console.log('Checking server health...');
 			if ($serverUrl === undefined) {
 				serverHealth.set({ status: 'unhealthy', features: $serverHealth.features ?? undefined });
+				lastServerHealth.set({
+					status: 'unhealthy',
+					features: $serverHealth.features ?? undefined
+				});
 			} else {
 				const healthRes = await checkServerHealth($serverUrl);
 				if (healthRes.status === 'healthy') {
