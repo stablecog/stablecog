@@ -1,7 +1,9 @@
 CREATE extension IF NOT EXISTS moddatetime schema extensions;
 
+CREATE TYPE generation_status_enum AS ENUM ('started', 'succeeded', 'failed', 'rejected');
+
 CREATE TABLE "generation" (
-    "prompt" TEXT NOT NULL,
+    "prompt" TEXT,
     "negative_prompt" TEXT,
     "width" INTEGER NOT NULL,
     "height" INTEGER NOT NULL,
@@ -10,6 +12,7 @@ CREATE TABLE "generation" (
     "guidance_scale" DOUBLE PRECISION NOT NULL,
     "server_url" TEXT NOT NULL,
     "duration_ms": INTEGER,
+    "status" generation_status_enum NOT NULL,
     "country_code" TEXT,
     "device_type" TEXT,
     "device_os" TEXT,
@@ -28,33 +31,11 @@ UPDATE
 ALTER TABLE
     generation ENABLE ROW LEVEL SECURITY;
 
-CREATE TYPE generation_process_status_enum AS ENUM ('started', 'succeeded', 'failed', 'rejected');
-
-CREATE TABLE "generation_process" (
-    "status" generation_process_status_enum NOT NULL,
-    "country_code" TEXT,
-    "generation_id" UUID REFERENCES generation(id),
-    "id" UUID NOT NULL DEFAULT uuid_generate_v4(),
-    "created_at" TIMESTAMPTZ DEFAULT TIMEZONE('utc' :: TEXT, NOW()) NOT NULL,
-    "updated_at" TIMESTAMPTZ DEFAULT TIMEZONE('utc' :: TEXT, NOW()) NOT NULL,
-    PRIMARY KEY(id)
-);
-
-CREATE trigger handle_updated_at before
-UPDATE
-    ON generation_process FOR each ROW EXECUTE PROCEDURE moddatetime (updated_at);
-
-ALTER TABLE
-    generation_process ENABLE ROW LEVEL SECURITY;
-
-CREATE POLICY "Everyone can read generation processes" ON public.generation_process FOR
-SELECT
-    USING (TRUE);
-
 CREATE VIEW generation_public AS
 SELECT
     id,
-    duration_ms
+    duration_ms,
+    status
 FROM
     generation;
 

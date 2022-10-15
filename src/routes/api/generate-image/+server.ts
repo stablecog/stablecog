@@ -1,4 +1,3 @@
-import { maxPromptLength } from '$ts/constants/main';
 import { supabaseAdmin } from '$ts/constants/supabaseAdmin';
 import { formatPrompt } from '$ts/helpers/formatPrompt';
 import { getDeviceInfo } from '$ts/helpers/getDeviceInfo';
@@ -11,21 +10,10 @@ export const POST: RequestHandler = async ({ request }) => {
 	const startDate = new Date(startTimestamp).toUTCString();
 	const { headers } = request;
 	const countryCode = headers.get('cf-ipcountry');
-	let generationProcessId: string | undefined;
-	if (supabaseAdmin !== undefined) {
-		try {
-			let { data, error }: TDBGenerationProcessRes = await supabaseAdmin
-				.from('generation_process')
-				.insert({
-					status: 'started',
-					country_code: countryCode || null
-				})
-				.select('id');
-			generationProcessId = data?.[0].id;
-		} catch (error) {
-			console.log(error);
-		}
-	}
+	let generationId: string | undefined;
+	const userAgent = headers.get('user-agent');
+	const deviceInfo = getDeviceInfo(userAgent);
+	let generationDurationMs: number | undefined;
 	try {
 		const {
 			server_url,
@@ -54,6 +42,31 @@ export const POST: RequestHandler = async ({ request }) => {
 			seed,
 			server_url
 		});
+		// Is Supabase is enabled, record the generation
+		if (supabaseAdmin !== undefined) {
+			try {
+				let { data, error }: TDBGenerationProcessRes = await supabaseAdmin
+					.from('generation')
+					.insert({
+						status: 'started',
+						country_code: countryCode || null,
+						seed,
+						width,
+						height,
+						num_inference_steps,
+						guidance_scale,
+						server_url,
+						device_type: deviceInfo.type,
+						device_browser: deviceInfo.browser,
+						device_os: deviceInfo.os,
+						user_agent: userAgent
+					})
+					.select('id');
+				generationId = data?.[0].id;
+			} catch (error) {
+				console.log(error);
+			}
+		}
 		const startTimestamp = Date.now();
 		const response = await fetch(`${server_url}/predictions`, {
 			method: 'POST',
@@ -73,7 +86,7 @@ export const POST: RequestHandler = async ({ request }) => {
 			})
 		});
 		const endTimestamp = Date.now();
-		const generationDurationMs = endTimestamp - startTimestamp;
+		generationDurationMs = endTimestamp - startTimestamp;
 		const data: TGenerateImageData = await response.json();
 		const output = data.output[0];
 		const endDate = new Date(endTimestamp).toUTCString();
@@ -92,58 +105,39 @@ export const POST: RequestHandler = async ({ request }) => {
 			seed,
 			server_url
 		});
-		// If Supabase is setup, write to it
+		// If Supabase is enabled, update the generation with prompt, negative prompt, duration and status
 		if (output && !data.error && supabaseAdmin !== undefined) {
 			try {
-				const userAgent = headers.get('user-agent');
-				const deviceInfo = getDeviceInfo(userAgent);
-				const dbEntryStartTimestamp = Date.now();
 				let { data: generationData, error: generationError } = await supabaseAdmin
 					.from('generation')
-					.insert([
+					.update([
 						{
 							prompt: _prompt,
 							negative_prompt: _negative_prompt,
-							seed,
-							width,
-							height,
-							num_inference_steps,
-							guidance_scale,
-							server_url,
 							duration_ms: generationDurationMs,
-							status: 'succeeded',
-							country_code: countryCode,
-							device_type: deviceInfo.type,
-							device_browser: deviceInfo.browser,
-							device_os: deviceInfo.os,
-							user_agent: userAgent
+							status: 'succeeded'
 						}
 					])
-					.select('id');
+					.eq('id', generationId);
 				if (generationError) {
 					console.log('error', generationError.message);
-				} else {
-					const { data: generationProcessData, error: generationProcessError } = await supabaseAdmin
-						.from('generation_process')
-						.update({
-							generation_id: generationData?.[0]?.id,
-							status: 'succeeded'
-						})
-						.eq('id', generationProcessId);
-					const dbEntryEndTimestamp = Date.now();
-					const dbEntryEndDate = new Date(dbEntryEndTimestamp).toUTCString();
-					generationLog({
-						text: `Inserted into the DB in ${dbEntryEndTimestamp - dbEntryStartTimestamp}ms:`,
-						dateString: dbEntryEndDate,
-						prompt: _prompt,
-						negative_prompt: _negative_prompt,
-						seed,
-						width,
-						height,
-						num_inference_steps,
-						guidance_scale,
-						server_url
-					});
+				}
+			} catch (error) {
+				console.log(error);
+			}
+		} else if (supabaseAdmin !== undefined) {
+			try {
+				let { data: generationData, error: generationError } = await supabaseAdmin
+					.from('generation')
+					.update([
+						{
+							duration_ms: generationDurationMs,
+							status: 'failed'
+						}
+					])
+					.eq('id', generationId);
+				if (generationError) {
+					console.log(generationError);
 				}
 			} catch (error) {
 				console.log(error);
@@ -157,6 +151,7 @@ export const POST: RequestHandler = async ({ request }) => {
 	} catch (error) {
 		const endTimestamp = Date.now();
 		const endDate = new Date(endTimestamp).toUTCString();
+		generationDurationMs = endTimestamp - startTimestamp;
 		console.log(
 			'----',
 			`Failed generation in ${(endTimestamp - startTimestamp) / 1000}s:`,
@@ -165,17 +160,19 @@ export const POST: RequestHandler = async ({ request }) => {
 			error,
 			'----'
 		);
-		if (supabaseAdmin) {
+		if (supabaseAdmin !== undefined) {
 			try {
-				const { data, error } = await supabaseAdmin
-					.from('generation_process')
-					.update({
-						status: 'failed'
-					})
-					.eq('id', generationProcessId)
-					.select('id');
-				if (error) {
-					console.log('error', error.message);
+				let { data: generationData, error: generationError } = await supabaseAdmin
+					.from('generation')
+					.update([
+						{
+							duration_ms: generationDurationMs,
+							status: 'failed'
+						}
+					])
+					.eq('id', generationId);
+				if (generationError) {
+					console.log(generationError);
 				}
 			} catch (error) {
 				console.log(error);

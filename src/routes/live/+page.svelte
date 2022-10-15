@@ -47,7 +47,7 @@
 				{
 					event: '*',
 					schema: 'public',
-					table: 'generation_process'
+					table: 'generation'
 				},
 				(payload) => {
 					console.log('payload', payload);
