@@ -14,22 +14,22 @@ export const POST: RequestHandler = async ({ request }) => {
 	const userAgent = headers.get('user-agent');
 	const deviceInfo = getDeviceInfo(userAgent);
 	let generationDurationMs: number | undefined;
+	const {
+		server_url,
+		prompt,
+		negative_prompt,
+		seed,
+		width,
+		height,
+		num_inference_steps,
+		guidance_scale
+	}: TGenerationRequest = await request.json();
+	const _negative_prompt =
+		negative_prompt !== '' && negative_prompt !== undefined
+			? formatPrompt(negative_prompt)
+			: undefined;
+	const _prompt = formatPrompt(prompt);
 	try {
-		const {
-			server_url,
-			prompt,
-			negative_prompt,
-			seed,
-			width,
-			height,
-			num_inference_steps,
-			guidance_scale
-		}: TGenerationRequest = await request.json();
-		const _negative_prompt =
-			negative_prompt !== '' && negative_prompt !== undefined
-				? formatPrompt(negative_prompt)
-				: undefined;
-		const _prompt = formatPrompt(prompt);
 		generationLog({
 			text: 'Started generation:',
 			dateString: startDate,
@@ -45,6 +45,7 @@ export const POST: RequestHandler = async ({ request }) => {
 		// Is Supabase is enabled, record the generation
 		if (supabaseAdmin !== undefined) {
 			try {
+				const startTimestamp = Date.now();
 				let { data, error }: TDBGenerationProcessRes = await supabaseAdmin
 					.from('generation')
 					.insert({
@@ -62,7 +63,25 @@ export const POST: RequestHandler = async ({ request }) => {
 						user_agent: userAgent
 					})
 					.select('id');
-				generationId = data?.[0].id;
+				if (error) {
+					console.log(error);
+				}
+				if (data) {
+					generationId = data?.[0].id;
+					const endTimestamp = Date.now();
+					generationLog({
+						text: `Inserted into the DB in ${(endTimestamp - startTimestamp) / 1000}s:`,
+						dateString: startDate,
+						prompt: _prompt,
+						negative_prompt: _negative_prompt,
+						width,
+						height,
+						num_inference_steps,
+						guidance_scale,
+						seed,
+						server_url
+					});
+				}
 			} catch (error) {
 				console.log(error);
 			}
@@ -108,7 +127,8 @@ export const POST: RequestHandler = async ({ request }) => {
 		// If Supabase is enabled, update the generation with prompt, negative prompt, duration and status
 		if (output && !data.error && supabaseAdmin !== undefined) {
 			try {
-				let { data: generationData, error: generationError } = await supabaseAdmin
+				const startTimestamp = Date.now();
+				let { data, error } = await supabaseAdmin
 					.from('generation')
 					.update([
 						{
@@ -118,16 +138,35 @@ export const POST: RequestHandler = async ({ request }) => {
 							status: 'succeeded'
 						}
 					])
-					.eq('id', generationId);
-				if (generationError) {
-					console.log('error', generationError.message);
+					.eq('id', generationId)
+					.select('id');
+				if (error) {
+					console.log('error', error.message);
+				}
+				if (data) {
+					const endTimestamp = Date.now();
+					generationLog({
+						text: `Updated the DB record with "succeeded" in ${
+							(endTimestamp - startTimestamp) / 1000
+						}s:`,
+						dateString: startDate,
+						prompt: _prompt,
+						negative_prompt: _negative_prompt,
+						width,
+						height,
+						num_inference_steps,
+						guidance_scale,
+						seed,
+						server_url
+					});
 				}
 			} catch (error) {
 				console.log(error);
 			}
 		} else if (supabaseAdmin !== undefined) {
 			try {
-				let { data: generationData, error: generationError } = await supabaseAdmin
+				const startTimestamp = Date.now();
+				let { data, error } = await supabaseAdmin
 					.from('generation')
 					.update([
 						{
@@ -136,8 +175,25 @@ export const POST: RequestHandler = async ({ request }) => {
 						}
 					])
 					.eq('id', generationId);
-				if (generationError) {
-					console.log(generationError);
+				if (error) {
+					console.log(error);
+				}
+				if (data) {
+					const endTimestamp = Date.now();
+					generationLog({
+						text: `Updated the DB record with "failed" in ${
+							(endTimestamp - startTimestamp) / 1000
+						}s:`,
+						dateString: startDate,
+						prompt: _prompt,
+						negative_prompt: _negative_prompt,
+						width,
+						height,
+						num_inference_steps,
+						guidance_scale,
+						seed,
+						server_url
+					});
 				}
 			} catch (error) {
 				console.log(error);
@@ -162,7 +218,8 @@ export const POST: RequestHandler = async ({ request }) => {
 		);
 		if (supabaseAdmin !== undefined) {
 			try {
-				let { data: generationData, error: generationError } = await supabaseAdmin
+				const startTimestamp = Date.now();
+				let { data, error } = await supabaseAdmin
 					.from('generation')
 					.update([
 						{
@@ -170,9 +227,27 @@ export const POST: RequestHandler = async ({ request }) => {
 							status: 'failed'
 						}
 					])
-					.eq('id', generationId);
-				if (generationError) {
-					console.log(generationError);
+					.eq('id', generationId)
+					.select('id');
+				if (error) {
+					console.log(error);
+				}
+				if (data) {
+					const endTimestamp = Date.now();
+					generationLog({
+						text: `Updated the DB record with "failed" in ${
+							(endTimestamp - startTimestamp) / 1000
+						}s:`,
+						dateString: startDate,
+						prompt: _prompt,
+						negative_prompt: _negative_prompt,
+						width,
+						height,
+						num_inference_steps,
+						guidance_scale,
+						seed,
+						server_url
+					});
 				}
 			} catch (error) {
 				console.log(error);
@@ -206,7 +281,7 @@ export interface TDBGenerationProcessRes {
 	error: PostgrestError | null;
 }
 
-const generationLog = ({
+function generationLog({
 	text,
 	dateString,
 	prompt,
@@ -228,7 +303,7 @@ const generationLog = ({
 	guidance_scale: number;
 	seed: number;
 	server_url: string;
-}) => {
+}) {
 	console.log(
 		'----',
 		text,
@@ -249,4 +324,4 @@ const generationLog = ({
 		server_url,
 		'----'
 	);
-};
+}
