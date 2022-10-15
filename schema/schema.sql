@@ -50,28 +50,25 @@ FROM
     generation_public
 WHERE
     status = 'succeeded'
-OR
-    status IS NULL
-$ $ language SQL;
+    OR status IS NULL $ $ language SQL;
 
 CREATE
-OR REPLACE FUNCTION non_null_generation_duration_ms_average() RETURNS BIGINT AS $ $
+OR REPLACE FUNCTION generation_with_non_null_duration_ms_average() RETURNS BIGINT AS $ $
 SELECT
-    SUM (duration_ms) / COUNT('*') AS non_null_generation_duration_ms_average
+    SUM (duration_ms) / COUNT('*') AS generation_with_non_null_duration_ms_average
 FROM
     generation_public
 WHERE
     duration_ms IS NOT NULL $ $ language SQL;
 
 CREATE
-OR REPLACE FUNCTION non_null_generation_duration_ms_total() RETURNS BIGINT AS $ $
+OR REPLACE FUNCTION generation_with_non_null_duration_ms_total() RETURNS BIGINT AS $ $
 SELECT
-    SUM (duration_ms) non_null_generation_duration_ms_total
+    SUM (duration_ms) generation_with_non_null_duration_ms_total
 FROM
     generation_public
 WHERE
-    duration_ms IS NOT NULL
-AND status != 'started' $ $ language SQL;
+    duration_ms IS NOT NULL $ $ language SQL;
 
 CREATE
 OR REPLACE FUNCTION generation_count_with_null_duration_ms() RETURNS BIGINT AS $ $
@@ -80,14 +77,15 @@ SELECT
 FROM
     generation_public
 WHERE
-    duration_ms IS NULL $ $ language SQL;
+    duration_ms IS NULL
+    AND status != 'started' $ $ language SQL;
 
 CREATE
 OR REPLACE FUNCTION generation_duration_ms_total_estimate() RETURNS BIGINT AS $ $
 SELECT
-    non_null_generation_duration_ms_total() + generation_count_with_null_duration_ms() * non_null_generation_duration_ms_average() $ $ language SQL;
+    generation_with_non_null_duration_ms_total() + generation_count_with_null_duration_ms() * generation_with_non_null_duration_ms_average() $ $ language SQL;
 
 CREATE
 OR REPLACE FUNCTION generation_duration_ms_total_estimate_with_constant() RETURNS BIGINT AS $ $
 SELECT
-    non_null_generation_duration_ms_total() + generation_count_with_null_duration_ms() * 12000 $ $ language SQL;
+    generation_with_non_null_duration_ms_total() + generation_count_with_null_duration_ms() * 12000 $ $ language SQL;
