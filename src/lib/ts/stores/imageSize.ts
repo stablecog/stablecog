@@ -6,7 +6,7 @@ import {
 } from '$ts/constants/main';
 import { writable as writableLocal } from 'svelte-local-storage-store';
 
-export let imageSize = writableLocal<TImageSize>('imageSize', {
+export const imageSize = writableLocal<TImageSize>('imageSize', {
 	width: widthDefault,
 	height: heightDefault
 });

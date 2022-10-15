@@ -22,7 +22,12 @@
 	import ImagePlaceholder from '$components/ImagePlaceholder.svelte';
 	import GenerationImage from '$components/GenerationImage.svelte';
 	import { advancedMode } from '$ts/stores/advancedMode';
-	import { lastServerHealth, serverHealth } from '$ts/stores/serverHealth';
+	import {
+		lastServerHealth,
+		lastServerHealthStatus,
+		serverHealth,
+		serverHealthStatus
+	} from '$ts/stores/serverHealth';
 	import SetServerModal from '$components/SetServerModal.svelte';
 	import { pLogGeneration, uLogGeneration } from '$ts/helpers/loggers';
 	import ServerOfflineBanner from '$components/ServerOfflineBanner.svelte';
@@ -194,7 +199,7 @@
 		{#if isCheckComplete && !$serverUrl}
 			<SetServerModal isOnBarrier={false} />
 		{:else}
-			{#if isCheckComplete && $serverHealth && $lastServerHealth && ($serverHealth.status === 'unhealthy' || $serverHealth.status === 'unknown' || $lastServerHealth.status === 'unhealthy')}
+			{#if isCheckComplete && ($serverHealthStatus === 'unhealthy' || $serverHealthStatus === 'unknown' || $lastServerHealthStatus === 'unhealthy')}
 				<ServerOfflineBanner />
 			{/if}
 			<div

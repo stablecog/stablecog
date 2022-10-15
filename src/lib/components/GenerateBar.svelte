@@ -80,7 +80,6 @@
 		}
 		promptInputElement.scrollTo(0, 0);
 		promptInputElement.blur();
-		promptInputElement.focus();
 		setTimeout(async () => {
 			submitting = true;
 			if (!promptInputValue) {

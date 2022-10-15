@@ -31,11 +31,16 @@
 	async function clearAndSetHealthCheckInterval() {
 		if (mounted) {
 			clearInterval(serverHealthCheckInterval);
-			serverHealthCheckInterval = setInterval(
-				checkAndSetServerHealth,
-				serverHealthCheckIntervalDuration
-			);
-			await Promise.all([checkAndSetDefaultServerHealth(), checkAndSetServerHealth()]);
+			try {
+				await Promise.all([getAndSetServerHealth(), getAndSetDefaultServerHealth()]);
+			} catch (error) {
+				console.log('clearAndSetHealthCheckInterval Error', error);
+			} finally {
+				serverHealthCheckInterval = setInterval(
+					getAndSetServerHealth,
+					serverHealthCheckIntervalDuration
+				);
+			}
 		}
 	}
 
@@ -51,7 +56,7 @@
 		}
 	}
 
-	async function checkAndSetServerHealth() {
+	async function getAndSetServerHealth() {
 		const now = Date.now();
 		if (envPublic.PUBLIC_DEFAULT_SERVER_URL && $serverUrl === envPublic.PUBLIC_DEFAULT_SERVER_URL) {
 			localStorage.removeItem('serverUrl');
@@ -98,7 +103,7 @@
 		}
 	}
 
-	async function checkAndSetDefaultServerHealth() {
+	async function getAndSetDefaultServerHealth() {
 		const now = Date.now();
 		try {
 			defaultServerHealth.set({
