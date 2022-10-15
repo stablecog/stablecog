@@ -57,9 +57,9 @@
 	<a
 		href="/"
 		data-sveltekit-prefetch
-		class="px-4 py-3 self-stretch flex items-center justify-center relative rounded-xl z-0 group"
+		class="px-3 py-3 self-stretch flex items-center justify-center relative rounded-xl z-0 group"
 	>
-		<div class="w-full h-full absolute left-0 top-0 pointer-events-none p-2">
+		<div class="w-full h-full absolute left-0 top-0 pointer-events-none p-1.5">
 			<div class="w-full h-full rounded-xl relative z-0 overflow-hidden">
 				<div
 					class="w-full h-full origin-left rounded-xl transition transform -translate-x-full
