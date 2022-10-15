@@ -12,12 +12,12 @@
 
 	let innerHeight: number | undefined;
 
-	let serverHealthCheckInterval: NodeJS.Timeout;
-	const serverHealthCheckIntervalDuration = 1000 * 10;
+	let bothHealthCheckTimeout: NodeJS.Timeout;
+	const bothHealthCheckTimeoutDuration = 1000 * 10;
 	let mounted = false;
 
 	$: [$theme], setBodyClasses();
-	$: [$serverUrl, mounted], clearAndSetHealthCheckInterval();
+	$: [$serverUrl, mounted], clearAndSetHealthCheckTimeout();
 
 	onMount(async () => {
 		mounted = true;
@@ -25,20 +25,20 @@
 	});
 
 	onDestroy(() => {
-		clearInterval(serverHealthCheckInterval);
+		clearTimeout(bothHealthCheckTimeout);
 	});
 
-	async function clearAndSetHealthCheckInterval() {
+	async function clearAndSetHealthCheckTimeout() {
 		if (mounted) {
-			clearInterval(serverHealthCheckInterval);
+			clearTimeout(bothHealthCheckTimeout);
 			try {
 				await Promise.all([getAndSetServerHealth(), getAndSetDefaultServerHealth()]);
 			} catch (error) {
-				console.log('clearAndSetHealthCheckInterval Error', error);
+				console.log(error);
 			} finally {
-				serverHealthCheckInterval = setInterval(
-					getAndSetServerHealth,
-					serverHealthCheckIntervalDuration
+				bothHealthCheckTimeout = setTimeout(
+					clearAndSetHealthCheckTimeout,
+					bothHealthCheckTimeoutDuration
 				);
 			}
 		}
