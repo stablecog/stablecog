@@ -30,7 +30,6 @@
 
 	async function clearAndSetHealthCheckInterval() {
 		if (mounted) {
-			console.log('interval cleared');
 			clearInterval(serverHealthCheckInterval);
 			serverHealthCheckInterval = setInterval(
 				checkAndSetServerHealth,

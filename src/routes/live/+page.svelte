@@ -12,14 +12,10 @@
 	import { scale } from 'svelte/transition';
 	import { tweened } from 'svelte/motion';
 
-	let channel: RealtimeChannel;
-	let generations: TPayload[] = [];
-	let clearMessageInterval: NodeJS.Timeout;
-	const clearMessageIntervalDuration = 1000 * 10;
-	const maxDurationSec = 60 * 15;
-	const timestampDescSort = (a: TPayload, b: TPayload) => {
-		return new Date(b.created_at).getTime() - new Date(a.created_at).getTime();
-	};
+	let generations: TGeneration[] = [];
+	let getAndSetDataInterval: NodeJS.Timeout;
+	let startTimestamp: number;
+	const getAndSetDataIntervalDuration = 2000;
 	let generationTotalCount = tweened(0, {
 		duration: 500,
 		easing: quadOut
@@ -29,58 +25,19 @@
 		easing: quadOut
 	});
 
-	interface TPayload {
+	interface TGeneration {
 		id: string;
 		status: TDBGenerationProcessStatus;
-		generation_id: string | null;
 		country_code: string | null;
+		duration_ms: number | null;
 		created_at: string;
-		updated_at: string;
 	}
 
 	onMount(async () => {
+		startTimestamp = Date.now();
 		if (supabase) {
-			await getAndSetTotals();
-			channel = supabase.channel('db-generation-process');
-			channel.on(
-				'postgres_changes',
-				{
-					event: '*',
-					schema: 'public',
-					table: 'generation'
-				},
-				(payload) => {
-					console.log('payload', payload);
-					getAndSetTotals();
-					const entry = payload.new as TPayload;
-					if (!generations.map((i) => i.id).includes(entry.id)) {
-						generations = [entry, ...generations].sort(timestampDescSort);
-					} else {
-						const index = generations.findIndex((i) => i.id === entry.id);
-						if (index !== -1) {
-							generations[index] = entry;
-							generations = [...generations].sort(timestampDescSort);
-						}
-					}
-					console.log('generations', generations);
-				}
-			);
-			channel.subscribe(async (status) => {
-				if (status === 'SUBSCRIBED') {
-					console.log('subscribed to db-generation-process');
-				}
-			});
-			clearMessageInterval = setInterval(() => {
-				if (generations && generations.length > 0) {
-					generations = generations.filter((i) => {
-						const createdAt = new Date(i.created_at);
-						const now = new Date();
-						const diff = now.getTime() - createdAt.getTime();
-						const diffInSec = diff / 1000;
-						return diffInSec <= maxDurationSec;
-					});
-				}
-			}, clearMessageIntervalDuration);
+			await getAndSetData();
+			getAndSetDataInterval = setInterval(getAndSetData, getAndSetDataIntervalDuration);
 		} else {
 			console.log('Supabase is not detected.');
 		}
@@ -88,35 +45,36 @@
 
 	onDestroy(() => {
 		if (supabase) {
-			supabase.removeAllChannels();
-			if (channel) {
-				channel.unsubscribe();
-			}
+			clearInterval(getAndSetDataInterval);
 		}
-		clearInterval(clearMessageInterval);
 	});
 
-	async function getAndSetTotals() {
+	async function getAndSetData() {
 		if (supabase) {
 			try {
-				const [durationRes, countRes] = await Promise.all([
+				const [durationRes, countRes, generationsRes] = await Promise.all([
 					supabase.rpc('generation_duration_ms_total_estimate_with_constant'),
-					supabase.rpc('generation_count')
+					supabase.rpc('generation_count'),
+					supabase
+						.from('generation_public')
+						.select('*')
+						.order('created_at', { ascending: false })
+						.filter('created_at', 'gte', new Date(startTimestamp).toISOString())
+						.limit(100)
 				]);
+				if (generationsRes.data) {
+					generations = [...generationsRes.data];
+				}
 				if (durationRes.data && countRes.data) {
 					const count = Number(countRes.data);
 					const duration = Number(durationRes.data);
 					if (count > $generationTotalCount) {
 						generationTotalCount.set(count);
 						console.log('generationTotalCount:', count);
-					} else {
-						console.log('no change in generationTotalCount, new result is equal or smaller');
 					}
 					if (duration > $generationTotalDurationMs) {
 						generationTotalDurationMs.set(duration);
 						console.log('generationTotalDurationMs:', duration);
-					} else {
-						console.log('no change in generationTotalDurationMs, new result is equal or smaller');
 					}
 				} else {
 					console.log(durationRes.error, countRes.error);
