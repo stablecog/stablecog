@@ -169,9 +169,14 @@
 				class="w-full overflow-hidden z-0 relative max-w-lg"
 			>
 				<div class="w-full flex flex-col items-center justify-start py-4">
-					<div class="flex items-center justify-center relative overflow-hidden z-0 rounded-full">
+					<div
+						class="flex items-center justify-center relative overflow-hidden z-0 rounded-full -m-1.5"
+					>
 						<div class="p-7 relative overflow-hidden z-0 rounded-full">
-							<div class="absolute w-full h-full left-0 top-0 origin-center">
+							<div
+								transition:scale|local={{ duration: 300, easing: quadOut }}
+								class="absolute w-full h-full left-0 top-0 origin-center"
+							>
 								<div class="w-full h-full">
 									<div
 										class="w-full h-full absolute left-0 top-0 rounded-full bg-c-primary/50 animate-ping-custom"
@@ -180,15 +185,17 @@
 							</div>
 							<div class="w-10 h-10 relative">
 								<div
+									transition:scale|local={{ duration: 300, easing: quadOut }}
 									class="w-full h-full absolute left-0 top-0 rounded-full bg-c-primary animate-ping-custom-bg"
 								/>
 								<div
-									class="w-full h-full rounded-full transition-all duration-300 flex items-center justify-center relative overflow-hidden z-0 bg-c-primary"
+									class="w-full h-full rounded-full transition-all duration-300 flex 
+									items-center justify-center relative overflow-hidden z-0 bg-c-primary"
 								/>
 							</div>
 						</div>
 					</div>
-					<p class="w-full text-c-on-bg/40 text-center">Waiting for generations</p>
+					<p class="w-full text-c-on-bg/40 text-center mt-1.5">Waiting for generations</p>
 				</div>
 			</div>
 		{:else}
