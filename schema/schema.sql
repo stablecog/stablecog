@@ -43,14 +43,17 @@ FROM
     generation;
 
 CREATE
-OR REPLACE FUNCTION generation_count() RETURNS BIGINT AS $ $
+OR REPLACE FUNCTION generation_count_with_null_duration_ms() RETURNS BIGINT AS $ $
 SELECT
     COUNT(*)
 FROM
     generation_public
 WHERE
-    status = 'succeeded'
-    OR status IS NULL $ $ language SQL;
+    duration_ms IS NULL
+    AND (
+        status IS NULL
+        OR status = 'succeeded'
+    ) $ $ language SQL;
 
 CREATE
 OR REPLACE FUNCTION generation_with_non_null_duration_ms_average() RETURNS BIGINT AS $ $
