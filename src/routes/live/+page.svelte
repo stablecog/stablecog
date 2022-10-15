@@ -4,17 +4,16 @@
 	import { elementreceive, elementsend, expandCollapse } from '$ts/animation/transitions';
 	import { canonicalUrl } from '$ts/constants/main';
 	import { supabase } from '$ts/constants/supabase';
-	import type { TDBGenerationProcessStatus } from 'src/routes/api/generate-image/+server';
 	import { onDestroy, onMount } from 'svelte';
 	import { flip } from 'svelte/animate';
 	import { quadOut } from 'svelte/easing';
 	import { scale } from 'svelte/transition';
 	import { tweened } from 'svelte/motion';
+	import type { TDBGenerationRealtimePayload } from '$ts/types/main';
 
-	let generations: TGeneration[] = [];
-	let getAndSetDataInterval: NodeJS.Timeout;
-	let startTimestamp: number;
-	const getAndSetDataIntervalDuration = 2000;
+	let generations: TDBGenerationRealtimePayload[] = [];
+	const generationsMaxLength = 100;
+	let eventSource: EventSource | undefined;
 	let generationTotalCount = tweened(0, {
 		duration: 500,
 		easing: quadOut
@@ -24,44 +23,42 @@
 		easing: quadOut
 	});
 
-	interface TGeneration {
-		id: string;
-		status: TDBGenerationProcessStatus;
-		country_code: string | null;
-		duration_ms: number | null;
-		created_at: string;
-	}
-
 	onMount(async () => {
-		startTimestamp = Date.now();
 		if (supabase) {
-			getAndSetData();
+			getAndSetTotals();
+			eventSource = new EventSource('/api/live-generations');
+			eventSource.onmessage = (event) => {
+				const dataJson: TDBGenerationRealtimePayload = JSON.parse(event.data);
+				if (generations.map((i) => i.id).includes(dataJson.id)) {
+					const index = generations.findIndex((i) => i.id === dataJson.id);
+					generations[index] = dataJson;
+					generations = [...generations];
+				} else {
+					generations = [dataJson, ...generations];
+				}
+				generations = generations
+					.sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime())
+					.slice(0, generationsMaxLength);
+				getAndSetTotals();
+			};
+			eventSource.onopen = (event) => {
+				console.log('Event source opened');
+			};
+			eventSource.onerror = (e) => {
+				console.log('Event source error:', e);
+			};
 		} else {
 			console.log('Supabase is not detected.');
 		}
 	});
 
 	onDestroy(() => {
-		if (supabase) {
-			clearInterval(getAndSetDataInterval);
-		}
+		eventSource?.close();
 	});
 
-	async function getAndSetData() {
-		if (supabase) {
-			clearInterval(getAndSetDataInterval);
-			try {
-				const [generationsRes] = await Promise.all([
-					supabase
-						.from('generation_public')
-						.select('*')
-						.order('created_at', { ascending: false })
-						.filter('updated_at', 'gte', new Date(startTimestamp).toISOString())
-						.limit(100)
-				]);
-				if (generationsRes.data) {
-					generations = [...generationsRes.data];
-				}
+	async function getAndSetTotals() {
+		try {
+			if (supabase) {
 				const [durationRes, countRes] = await Promise.all([
 					supabase.rpc('generation_duration_ms_total_estimate_with_constant'),
 					supabase.rpc('generation_count')
@@ -80,11 +77,9 @@
 				} else {
 					console.log(durationRes.error, countRes.error);
 				}
-			} catch (error) {
-				console.log(error);
-			} finally {
-				getAndSetDataInterval = setInterval(getAndSetData, getAndSetDataIntervalDuration);
 			}
+		} catch (error) {
+			console.log('Error getting totals:', error);
 		}
 	}
 </script>

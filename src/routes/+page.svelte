@@ -22,13 +22,9 @@
 	import ImagePlaceholder from '$components/ImagePlaceholder.svelte';
 	import GenerationImage from '$components/GenerationImage.svelte';
 	import { advancedMode } from '$ts/stores/advancedMode';
-	import { defaultServerHealth, lastServerHealth, serverHealth } from '$ts/stores/serverHealth';
+	import { lastServerHealth, serverHealth } from '$ts/stores/serverHealth';
 	import SetServerModal from '$components/SetServerModal.svelte';
 	import { pLogGeneration, uLogGeneration } from '$ts/helpers/loggers';
-	import IconWarning from '$components/icons/IconWarning.svelte';
-	import { env as envPublic } from '$env/dynamic/public';
-	import Button from '$components/buttons/Button.svelte';
-	import { Server } from '@sveltejs/kit';
 	import ServerOfflineBanner from '$components/ServerOfflineBanner.svelte';
 
 	let status: TStatus = 'idle';
@@ -178,7 +174,7 @@
 	onMount(() => {
 		setEstimatedDuration();
 		isCheckComplete = true;
-		console.log($serverHealth, $lastServerHealth);
+		console.log('serverHealth:', $serverHealth, 'lastServerHealth:', $lastServerHealth);
 	});
 
 	onDestroy(() => {

@@ -73,3 +73,12 @@ export type TIconSocial =
 	| 'medium'
 	| 'youtube'
 	| 'email';
+
+export interface TDBGenerationRealtimePayload {
+	id: string;
+	country_code: string | null;
+	duration_ms: number | null;
+	status: 'started' | 'succeeded' | 'failed' | 'rejected';
+	created_at: string;
+	updated_at: string;
+}
