@@ -4,6 +4,7 @@
 	import HealthIndicator from '$components/HealthIndicator.svelte';
 	import IconHistory from '$components/icons/IconHistory.svelte';
 	import IconHome from '$components/icons/IconHome.svelte';
+	import IconLive from '$components/icons/IconLive.svelte';
 	import IconSettings from '$components/icons/IconSettings.svelte';
 	import Logo from '$components/Logo.svelte';
 	import ModalWrapper from '$components/ModalWrapper.svelte';
@@ -68,13 +69,44 @@
 		</div>
 		<Logo class="w-9 h-9" />
 	</a>
-	<div class="flex items-center justify-end relative">
+	<div class="flex flex-wrap items-center justify-end relative">
 		<ProductHuntBadge />
 		<div class="p-3 relative">
 			<HealthIndicator />
 		</div>
 		<IconButton
 			class="p-3 -ml-3"
+			href={$page.url.pathname === '/live' ? '/' : '/live'}
+			name={$page.url.pathname === '/live' ? 'Home' : 'Live'}
+		>
+			<div class="w-8 h-8 relative">
+				{#if $page.url.pathname === '/live'}
+					<div
+						transition:scale={{ duration: 200, easing: quadOut, opacity: 0 }}
+						class="w-full h-full absolute left-0 top-0"
+					>
+						<IconHome
+							class="w-full h-full relative transition transform {!$isTouchscreen
+								? 'group-hover:text-c-primary'
+								: 'text-c-on-bg'}"
+						/>
+					</div>
+				{:else}
+					<div
+						transition:scale={{ duration: 200, easing: quadOut, opacity: 0 }}
+						class="w-full h-full absolute left-0 top-0"
+					>
+						<IconLive
+							class="w-full h-full relative transition transform {!$isTouchscreen
+								? 'group-hover:text-c-primary'
+								: 'text-c-on-bg'}"
+						/>
+					</div>
+				{/if}
+			</div>
+		</IconButton>
+		<IconButton
+			class="p-3 -ml-6"
 			href={$page.url.pathname === '/history' ? '/' : '/history'}
 			name={$page.url.pathname === '/history' ? 'Home' : 'History'}
 		>

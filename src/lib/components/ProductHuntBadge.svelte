@@ -3,7 +3,7 @@
 	import { theme } from '$ts/stores/theme';
 </script>
 
-<div class="w-full justify-center py-2 mr-3 hidden md:flex">
+<div class="justify-center py-2 mr-3 hidden md:flex">
 	<div class="flex relative overflow-hidden z-0 rounded-lg p-px group">
 		{#if $theme === 'light'}
 			<a
