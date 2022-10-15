@@ -36,8 +36,7 @@
 	onMount(async () => {
 		startTimestamp = Date.now();
 		if (supabase) {
-			await getAndSetData();
-			getAndSetDataInterval = setInterval(getAndSetData, getAndSetDataIntervalDuration);
+			getAndSetData();
 		} else {
 			console.log('Supabase is not detected.');
 		}
@@ -51,20 +50,23 @@
 
 	async function getAndSetData() {
 		if (supabase) {
+			clearInterval(getAndSetDataInterval);
 			try {
-				const [durationRes, countRes, generationsRes] = await Promise.all([
-					supabase.rpc('generation_duration_ms_total_estimate_with_constant'),
-					supabase.rpc('generation_count'),
+				const [generationsRes] = await Promise.all([
 					supabase
 						.from('generation_public')
 						.select('*')
 						.order('created_at', { ascending: false })
-						.filter('created_at', 'gte', new Date(startTimestamp).toISOString())
+						.filter('updated_at', 'gte', new Date(startTimestamp).toISOString())
 						.limit(100)
 				]);
 				if (generationsRes.data) {
 					generations = [...generationsRes.data];
 				}
+				const [durationRes, countRes] = await Promise.all([
+					supabase.rpc('generation_duration_ms_total_estimate_with_constant'),
+					supabase.rpc('generation_count')
+				]);
 				if (durationRes.data && countRes.data) {
 					const count = Number(countRes.data);
 					const duration = Number(durationRes.data);
@@ -81,6 +83,8 @@
 				}
 			} catch (error) {
 				console.log(error);
+			} finally {
+				getAndSetDataInterval = setInterval(getAndSetData, getAndSetDataIntervalDuration);
 			}
 		}
 	}

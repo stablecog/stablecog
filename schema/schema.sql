@@ -35,7 +35,10 @@ CREATE VIEW generation_public AS
 SELECT
     id,
     duration_ms,
-    status
+    status,
+    country_code,
+    created_at,
+    updated_at
 FROM
     generation;
 
@@ -44,7 +47,12 @@ OR REPLACE FUNCTION generation_count() RETURNS BIGINT AS $ $
 SELECT
     COUNT(*)
 FROM
-    generation_public $ $ language SQL;
+    generation_public
+WHERE
+    status = 'succeeded'
+OR
+    status IS NULL
+$ $ language SQL;
 
 CREATE
 OR REPLACE FUNCTION non_null_generation_duration_ms_average() RETURNS BIGINT AS $ $
@@ -62,7 +70,8 @@ SELECT
 FROM
     generation_public
 WHERE
-    duration_ms IS NOT NULL $ $ language SQL;
+    duration_ms IS NOT NULL
+AND status != 'started' $ $ language SQL;
 
 CREATE
 OR REPLACE FUNCTION generation_count_with_null_duration_ms() RETURNS BIGINT AS $ $
