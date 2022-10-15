@@ -111,6 +111,7 @@ export const POST: RequestHandler = async ({ request }) => {
 							guidance_scale,
 							server_url,
 							duration_ms: generationDurationMs,
+							status: 'succeeded',
 							country_code: countryCode,
 							device_type: deviceInfo.type,
 							device_browser: deviceInfo.browser,
