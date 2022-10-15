@@ -4,7 +4,6 @@
 	import { elementreceive, elementsend, expandCollapse } from '$ts/animation/transitions';
 	import { canonicalUrl } from '$ts/constants/main';
 	import { supabase } from '$ts/constants/supabase';
-	import type { RealtimeChannel } from '@supabase/supabase-js';
 	import type { TDBGenerationProcessStatus } from 'src/routes/api/generate-image/+server';
 	import { onDestroy, onMount } from 'svelte';
 	import { flip } from 'svelte/animate';

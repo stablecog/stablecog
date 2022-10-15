@@ -6,7 +6,7 @@
 	import { onMount } from 'svelte';
 	import { env } from '$env/dynamic/public';
 	import { checkServerHealth } from '$ts/queries/checkServerHealth';
-	import { serverHealth } from '$ts/stores/serverHealth';
+	import { lastServerHealth, serverHealth } from '$ts/stores/serverHealth';
 	import Button from '$components/buttons/Button.svelte';
 	import IconLoading from '$components/icons/IconLoading.svelte';
 	import { isTouchscreen } from '$ts/stores/isTouchscreen';
@@ -42,6 +42,7 @@
 				if (healthRes.status === 'healthy') {
 					setServerProcessStatus = 'success';
 					serverHealth.set({ ...healthRes });
+					lastServerHealth.set({ status: 'healthy', features: healthRes.features ?? undefined });
 					if (url === env.PUBLIC_DEFAULT_SERVER_URL) {
 						localStorage.removeItem('serverUrl');
 					} else {

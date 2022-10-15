@@ -53,40 +53,36 @@
 
 	async function checkAndSetServerHealth() {
 		const now = Date.now();
-		if (!$serverUrl) {
-			serverHealth.set({ status: 'not-set' });
-			return;
-		}
 		if (envPublic.PUBLIC_DEFAULT_SERVER_URL && $serverUrl === envPublic.PUBLIC_DEFAULT_SERVER_URL) {
 			localStorage.removeItem('serverUrl');
 		}
+		if (!$serverUrl) {
+			serverHealth.set({ status: 'not-set' });
+			lastServerHealth.set({
+				status: 'not-set'
+			});
+			console.log('Server URL not set');
+			return;
+		}
 		try {
-			serverHealth.set({ status: 'loading', features: $serverHealth.features ?? undefined });
 			console.log('Checking server health...');
-			if ($serverUrl === undefined) {
+			serverHealth.set({ status: 'loading', features: $serverHealth.features ?? undefined });
+			const healthRes = await checkServerHealth($serverUrl);
+			if (healthRes.status === 'healthy') {
+				serverHealth.set({ status: 'healthy', features: healthRes.features ?? undefined });
+				lastServerHealth.set({
+					status: 'healthy',
+					features: healthRes.features ?? undefined
+				});
+				console.log('Server is healthy ✅:', $serverUrl);
+				console.log('Server features:', healthRes.features);
+			} else {
 				serverHealth.set({ status: 'unhealthy', features: $serverHealth.features ?? undefined });
 				lastServerHealth.set({
 					status: 'unhealthy',
-					features: $serverHealth.features ?? undefined
+					features: $lastServerHealth.features ?? undefined
 				});
-			} else {
-				const healthRes = await checkServerHealth($serverUrl);
-				if (healthRes.status === 'healthy') {
-					serverHealth.set({ status: 'healthy', features: healthRes.features ?? undefined });
-					lastServerHealth.set({
-						status: 'healthy',
-						features: healthRes.features ?? undefined
-					});
-					console.log('Server is healthy ✅:', $serverUrl);
-					console.log('Server features:', healthRes.features);
-				} else {
-					serverHealth.set({ status: 'unhealthy', features: $serverHealth.features ?? undefined });
-					lastServerHealth.set({
-						status: 'unhealthy',
-						features: $lastServerHealth.features ?? undefined
-					});
-					console.log('Server is unhealthy ❌:', $serverUrl);
-				}
+				console.log('Server is unhealthy ❌:', $serverUrl);
 			}
 		} catch (error) {
 			console.log('Server health check failed:', $serverUrl, 'Error:', error);

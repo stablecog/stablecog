@@ -28,6 +28,8 @@
 	import IconWarning from '$components/icons/IconWarning.svelte';
 	import { env as envPublic } from '$env/dynamic/public';
 	import Button from '$components/buttons/Button.svelte';
+	import { Server } from '@sveltejs/kit';
+	import ServerOfflineBanner from '$components/ServerOfflineBanner.svelte';
 
 	let status: TStatus = 'idle';
 	let promptInputValue: string | undefined;
@@ -111,7 +113,11 @@
 				pLogGeneration('Succeeded');
 				uLogGeneration('Succeeded');
 				if ($serverHealth.status !== 'healthy') {
-					serverHealth.set({ status: 'healthy', features: $serverHealth.features });
+					serverHealth.set({ status: 'healthy', features: $serverHealth.features ?? undefined });
+					lastServerHealth.set({
+						status: 'healthy',
+						features: $serverHealth.features ?? undefined
+					});
 				}
 				lastGeneration.duration_ms = data.duration_ms;
 				try {
@@ -167,18 +173,9 @@
 		return rate;
 	};
 
-	const switchToDefaultServer = () => {
-		serverUrl.set(envPublic.PUBLIC_DEFAULT_SERVER_URL);
-		localStorage.removeItem('serverUrl');
-		serverHealth.set($defaultServerHealth);
-		lastServerHealth.set({
-			status: 'healthy',
-			features: $defaultServerHealth.features
-		});
-	};
-
 	let isCheckComplete = false;
-	onMount(async () => {
+
+	onMount(() => {
 		setEstimatedDuration();
 		isCheckComplete = true;
 		console.log($serverHealth, $lastServerHealth);
@@ -201,35 +198,8 @@
 		{#if isCheckComplete && !$serverUrl}
 			<SetServerModal isOnBarrier={false} />
 		{:else}
-			{#if isCheckComplete && ($serverHealth.status === 'unhealthy' || $serverHealth.status === 'unknown' || $lastServerHealth.status === 'unhealthy')}
-				<div
-					transition:expandCollapse|local={{ duration: 300 }}
-					class="overflow-hidden relative z-0"
-				>
-					<div class="py-3.5 flex flex-col items-center">
-						<div
-							class="py-4 px-4 text-xs md:text-sm gap-3 flex items-center justify-start max-w-[34rem] rounded-xl bg-c-danger/8 text-c-danger"
-						>
-							<IconWarning class="w-6 h-6" />
-							<p class="flex-1">
-								The server seems to be offline. You might want to refresh the page or set another
-								server in the settings.
-							</p>
-						</div>
-						{#if envPublic.PUBLIC_DEFAULT_SERVER_URL && $serverUrl !== envPublic.PUBLIC_DEFAULT_SERVER_URL && ($defaultServerHealth.status === 'healthy' || $defaultServerHealth.status === 'loading')}
-							<div
-								transition:expandCollapse|local={{ duration: 300 }}
-								class="overflow-hidden relative z-0"
-							>
-								<div class="pt-3.5">
-									<Button size="sm" onClick={switchToDefaultServer}>
-										Switch to Default Server
-									</Button>
-								</div>
-							</div>
-						{/if}
-					</div>
-				</div>
+			{#if isCheckComplete && $serverHealth && $lastServerHealth && ($serverHealth.status === 'unhealthy' || $serverHealth.status === 'unknown' || $lastServerHealth.status === 'unhealthy')}
+				<ServerOfflineBanner />
 			{/if}
 			<div
 				transition:expandCollapse|local={{ duration: 300 }}
