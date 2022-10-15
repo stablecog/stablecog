@@ -1,5 +1,9 @@
+import { env as envPublic } from '$env/dynamic/public';
 import { supabaseAdmin } from '$ts/constants/supabaseAdmin';
-import type { TDBGenerationRealtimePayload } from '$ts/types/main';
+import type {
+	TDBGenerationRealtimePayloadIncoming,
+	TDBGenerationRealtimePayloadOutgoing
+} from '$ts/types/main';
 import type { RealtimeChannel } from '@supabase/supabase-js';
 
 export async function GET() {
@@ -16,14 +20,15 @@ export async function GET() {
 							{ event: '*', schema: 'public', table: 'generation' },
 							(payload) => {
 								const eventType = payload.eventType;
-								const newObj = payload.new as TDBGenerationRealtimePayload;
-								const newData: TDBGenerationRealtimePayload = {
+								const newObj = payload.new as TDBGenerationRealtimePayloadIncoming;
+								const newData: TDBGenerationRealtimePayloadOutgoing = {
 									id: newObj.id,
 									status: newObj.status,
 									country_code: newObj.country_code,
 									duration_ms: newObj.duration_ms,
 									created_at: newObj.created_at,
-									updated_at: newObj.updated_at
+									updated_at: newObj.updated_at,
+									uses_default_server: newObj.server_url === envPublic.PUBLIC_DEFAULT_SERVER_URL
 								};
 								if (eventType === 'INSERT' || eventType === 'UPDATE') {
 									ctr.enqueue(`data: ${JSON.stringify(newData)}\n\n`);

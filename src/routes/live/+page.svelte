@@ -9,9 +9,10 @@
 	import { quadOut } from 'svelte/easing';
 	import { scale } from 'svelte/transition';
 	import { tweened } from 'svelte/motion';
-	import type { TDBGenerationRealtimePayload } from '$ts/types/main';
+	import { tooltip } from '$ts/actions/tooltip';
+	import type { TDBGenerationRealtimePayloadOutgoing } from '$ts/types/main';
 
-	let generations: TDBGenerationRealtimePayload[] = [];
+	let generations: TDBGenerationRealtimePayloadOutgoing[] = [];
 	const generationsMaxLength = 100;
 	let eventSource: EventSource | undefined;
 	let generationTotalCount = tweened(0, {
@@ -28,7 +29,7 @@
 			getAndSetTotals();
 			eventSource = new EventSource('/api/live-generations');
 			eventSource.onmessage = (event) => {
-				const dataJson: TDBGenerationRealtimePayload = JSON.parse(event.data);
+				const dataJson: TDBGenerationRealtimePayloadOutgoing = JSON.parse(event.data);
 				if (generations.map((i) => i.id).includes(dataJson.id)) {
 					const index = generations.findIndex((i) => i.id === dataJson.id);
 					generations[index] = dataJson;
@@ -82,6 +83,20 @@
 			console.log('Error getting totals:', error);
 		}
 	}
+
+	const tooltipStyleProps = {
+		titleClass: 'font-medium text-c-on-bg/50 text-sm leading-relaxed text-left',
+		descriptionClass: 'font-bold text-sm leading-relaxed text-right',
+		rowClass: 'w-full flex gap-4 justify-between',
+		wrapperClass: 'transition duration-250 transform -ml-2',
+		animationTime: 250,
+		animateFrom: 'opacity-0 translate-y-3',
+		animateTo: 'opacity-100 translate-y-0',
+		containerClass:
+			'px-5 py-3 text-c-on-bg/75 flex flex-col gap-1 rounded-xl bg-c-bg-secondary max-w-[18rem] shadow-lg shadow-c-shadow/[var(--o-shadow-strong)',
+		indicatorClass:
+			'ml-4.5 w-5 h-5 transform -mt-0.5 -mb-2.5 rotate-135 bg-c-bg-secondary rounded-bl'
+	};
 </script>
 
 <MetaTag
@@ -137,20 +152,51 @@
 											class="w-full h-full absolute left-0 top-0 rounded-full bg-c-primary animate-ping-custom-bg"
 										/>
 									{/if}
-									<div
-										class="w-full h-full rounded-full transition-all duration-300 flex items-center justify-center relative overflow-hidden z-0 {generation.status ===
-										'succeeded'
-											? 'bg-c-success'
-											: generation.status === 'failed'
-											? 'bg-c-danger'
-											: 'bg-c-primary'}"
-									>
-										{#if generation.country_code}
-											<p class="text-center text-xs font-bold text-c-on-primary/50">
-												{generation.country_code}
-											</p>
-										{/if}
-									</div>
+									{#key generation.status}
+										<div
+											use:tooltip={{
+												rows: [
+													{
+														key: 'Server:',
+														value: generation.uses_default_server ? 'Default' : 'Custom'
+													},
+													{
+														key: 'Status:',
+														value:
+															generation.status.slice(0, 1).toUpperCase() +
+															generation.status.slice(1)
+													},
+													...(generation.duration_ms
+														? [
+																{
+																	key: 'Duration:',
+																	value: generation.duration_ms
+																		? `${(generation.duration_ms / 1000).toLocaleString('en-US', {
+																				maximumFractionDigits: 1
+																		  })}s`
+																		: 'Unfinished'
+																}
+														  ]
+														: [])
+												],
+												...tooltipStyleProps
+											}}
+											class="w-full h-full rounded-full transition-all duration-300 flex items-center justify-center relative overflow-hidden z-0 {generation.status ===
+											'succeeded'
+												? 'bg-c-success'
+												: generation.status === 'failed'
+												? 'bg-c-danger'
+												: 'bg-c-primary'}"
+										>
+											{#if generation.country_code}
+												<p
+													class="text-center text-xs font-bold text-c-on-primary/50 cursor-default"
+												>
+													{generation.country_code}
+												</p>
+											{/if}
+										</div>
+									{/key}
 								</div>
 							</div>
 						</div>

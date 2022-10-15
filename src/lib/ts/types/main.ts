@@ -74,11 +74,22 @@ export type TIconSocial =
 	| 'youtube'
 	| 'email';
 
-export interface TDBGenerationRealtimePayload {
+export interface TDBGenerationRealtimePayloadIncoming {
 	id: string;
 	country_code: string | null;
 	duration_ms: number | null;
 	status: 'started' | 'succeeded' | 'failed' | 'rejected';
 	created_at: string;
 	updated_at: string;
+	server_url: string;
+}
+
+export interface TDBGenerationRealtimePayloadOutgoing {
+	id: string;
+	country_code: string | null;
+	duration_ms: number | null;
+	status: 'started' | 'succeeded' | 'failed' | 'rejected';
+	created_at: string;
+	updated_at: string;
+	uses_default_server: boolean;
 }
