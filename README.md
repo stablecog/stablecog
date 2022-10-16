@@ -66,7 +66,11 @@ If you want to deploy the app, you should edit or remove the `ci.yml` file in `.
 There is a `.env.example` file in the root directory. You can copy this file and rename it to `.env`. This will allow you to set the following optional environment variables:
 
 - `PUBLIC_DEFAULT_SERVER_URL`: This is the default server url (your cog's url) that the app uses to generate images if provided. You can still change to another server in the app by clicking the settings icon in the top right corner of the home page.
-- `PUBLIC_SUPABASE_URL`: In case you want to record generation metadata, you can use a [Supabase](https://supabase.com) instance. This environment variable is for the url of your Supabase instance.
-- `PUBLIC_SUPABASE_ADMIN_KEY`. In case you want to record generation metadata, you can use a [Supabase](https://supabase.com) instance. This environment variable is for the admin key of your Supabase instance.
+
+In case you want to record generation metadata, you can use a [Supabase](https://supabase.com) instance. You can set the following environment variables to enable it:
+
+- `PUBLIC_SUPABASE_URL`: The url of your Supabase instance.
+- `PUBLIC_SUPABASE_ANON_KEY`: The anon key of your Supabase instance.
+- `PUBLIC_SUPABASE_ADMIN_KEY`. The admin key of your Supabase instance.
 
 There is a Plausible Analytics script on `src/app.html`. You can remove it or you can change the `data-domain` and `src` attributes to point to your domain and your Plausible instance.
