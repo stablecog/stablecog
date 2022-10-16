@@ -10,11 +10,11 @@
 	import { scale } from 'svelte/transition';
 	import { tweened } from 'svelte/motion';
 	import { tooltip } from '$ts/actions/tooltip';
-	import type { TDBGenerationRealtimePayloadOutgoing } from '$ts/types/main';
+	import type { TDBGenerationRealtimePayload } from '$ts/types/main';
+	import type { RealtimeChannel } from '@supabase/supabase-js';
 
-	let generations: TDBGenerationRealtimePayloadOutgoing[] = [];
+	let generations: TDBGenerationRealtimePayload[] = [];
 	const generationsMaxLength = 100;
-	let eventSource: EventSource | undefined;
 	let generationTotalCount = tweened(0, {
 		duration: 500,
 		easing: quadOut
@@ -23,38 +23,40 @@
 		duration: 500,
 		easing: quadOut
 	});
+	let channel: RealtimeChannel | undefined;
 
 	onMount(async () => {
 		if (supabase) {
 			getAndSetTotals();
-			eventSource = new EventSource('/api/live-generations');
-			eventSource.onmessage = (event) => {
-				const dataJson: TDBGenerationRealtimePayloadOutgoing = JSON.parse(event.data);
-				if (generations.map((i) => i.id).includes(dataJson.id)) {
-					const index = generations.findIndex((i) => i.id === dataJson.id);
-					generations[index] = dataJson;
-					generations = [...generations];
-				} else {
-					generations = [dataJson, ...generations];
-				}
-				generations = generations
-					.sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime())
-					.slice(0, generationsMaxLength);
-				getAndSetTotals();
-			};
-			eventSource.onopen = (event) => {
-				console.log('Event source opened');
-			};
-			eventSource.onerror = (e) => {
-				console.log('Event source error:', e);
-			};
+			channel = supabase
+				.channel('generation-realtime-changes')
+				.on(
+					'postgres_changes',
+					{ event: '*', schema: 'public', table: 'generation_realtime' },
+					(payload) => {
+						const newData = payload.new as TDBGenerationRealtimePayload;
+						if (generations.map((i) => i.id).includes(newData.id)) {
+							const index = generations.findIndex((i) => i.id === newData.id);
+							generations[index] = newData;
+							generations = [...generations];
+						} else {
+							generations = [newData, ...generations];
+						}
+						generations = generations
+							.sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime())
+							.slice(0, generationsMaxLength);
+						getAndSetTotals();
+					}
+				)
+				.subscribe();
 		} else {
 			console.log('Supabase is not detected.');
 		}
 	});
 
 	onDestroy(() => {
-		eventSource?.close();
+		channel?.unsubscribe();
+		supabase?.removeAllChannels();
 	});
 
 	async function getAndSetTotals() {

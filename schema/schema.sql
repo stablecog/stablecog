@@ -11,7 +11,7 @@ CREATE TABLE "generation" (
     "num_inference_steps" INTEGER NOT NULL,
     "guidance_scale" DOUBLE PRECISION NOT NULL,
     "server_url" TEXT NOT NULL,
-    "duration_ms": INTEGER,
+    "duration_ms" INTEGER,
     "status" generation_status_enum NOT NULL,
     "country_code" TEXT,
     "device_type" TEXT,
@@ -35,7 +35,7 @@ CREATE VIEW generation_public AS
 SELECT
     id,
     duration_ms,
-    status,
+    STATUS,
     country_code,
     created_at,
     updated_at
@@ -51,8 +51,8 @@ FROM
 WHERE
     duration_ms IS NULL
     AND (
-        status IS NULL
-        OR status = 'succeeded'
+        STATUS IS NULL
+        OR STATUS = 'succeeded'
     ) $ $ language SQL;
 
 CREATE
@@ -81,7 +81,7 @@ FROM
     generation_public
 WHERE
     duration_ms IS NULL
-    AND status != 'started' $ $ language SQL;
+    AND STATUS != 'started' $ $ language SQL;
 
 CREATE
 OR REPLACE FUNCTION generation_duration_ms_total_estimate() RETURNS BIGINT AS $ $
@@ -92,3 +92,76 @@ CREATE
 OR REPLACE FUNCTION generation_duration_ms_total_estimate_with_constant() RETURNS BIGINT AS $ $
 SELECT
     generation_with_non_null_duration_ms_total() + generation_count_with_null_duration_ms() * 12000 $ $ language SQL;
+
+CREATE TABLE "generation_realtime" (
+    "status" generation_status_enum NOT NULL,
+    "duration_ms" INTEGER,
+    "country_code" TEXT,
+    "uses_default_server" BOOLEAN NOT NULL,
+    "id" UUID NOT NULL DEFAULT uuid_generate_v4(),
+    "created_at" TIMESTAMPTZ DEFAULT TIMEZONE('utc' :: TEXT, NOW()) NOT NULL,
+    "updated_at" TIMESTAMPTZ DEFAULT TIMEZONE('utc' :: TEXT, NOW()) NOT NULL,
+    PRIMARY KEY(id)
+);
+
+ALTER TABLE
+    generation_realtime ENABLE ROW LEVEL SECURITY;
+
+CREATE POLICY "Everyone can read generation_realtime" ON public.generation_realtime FOR
+SELECT
+    USING (true);
+
+CREATE
+OR REPLACE FUNCTION duplicate_to_generation_realtime() RETURNS trigger AS $ $ BEGIN IF EXISTS(
+    SELECT
+        id
+    FROM
+        generation_realtime
+    WHERE
+        id = new.id
+) THEN
+UPDATE
+    generation_realtime
+SET
+    status = new.status,
+    updated_at = new.updated_at,
+    duration_ms = new.duration_ms
+WHERE
+    id = new.id;
+
+ELSE
+INSERT INTO
+    generation_realtime (
+        id,
+        STATUS,
+        created_at,
+        updated_at,
+        country_code,
+        duration_ms,
+        uses_default_server
+    )
+VALUES
+    (
+        new.id,
+        new.status,
+        new.created_at,
+        new.updated_at,
+        new.country_code,
+        new.duration_ms,
+        new.server_url = 'http://c1.stablecog.com:5000'
+    );
+
+END IF;
+
+RETURN new;
+
+END;
+
+$ $ language plpgsql SECURITY DEFINER;
+
+CREATE trigger generation_created_or_updated
+AFTER
+INSERT
+    OR
+UPDATE
+    ON generation FOR each ROW EXECUTE PROCEDURE duplicate_to_generation_realtime();
