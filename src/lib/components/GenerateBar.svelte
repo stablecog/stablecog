@@ -250,7 +250,7 @@
 			>
 				<div
 					style="transition-duration: {loadingOrSubmitting ? estimatedDuration : 0.2}s"
-					class="w-full h-full ease-in-out transition bg-c-secondary/10 
+					class="w-full h-full ease-image-generation transition bg-c-secondary/10 
 					absolute left-0 top-0 rounded-xl {loadingOrSubmitting ? 'translate-x-0' : '-translate-x-full'}"
 				/>
 			</div>

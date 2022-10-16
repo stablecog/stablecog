@@ -89,7 +89,7 @@
 			guidance_scale: Number($advancedMode ? generationGuidanceScale : guidanceScaleDefault),
 			num_inference_steps: Number($advancedMode ? generationInferenceSteps : inferenceStepsDefault),
 			seed:
-				generationSeed !== undefined && generationSeed !== null && $advancedMode
+				(generationSeed || generationSeed === 0) && $advancedMode
 					? generationSeed
 					: Math.floor(Math.random() * Math.pow(10, 15))
 		};
