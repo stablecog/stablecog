@@ -13,5 +13,7 @@
 		? 'loading'
 		: $serverHealth.status === 'healthy'
 		? 'success'
-		: 'error'}
+		: $serverHealth.status === 'unhealthy'
+		? 'error'
+		: 'unknown'}
 />

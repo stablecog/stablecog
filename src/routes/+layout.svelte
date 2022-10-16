@@ -9,6 +9,7 @@
 	import { defaultServerHealth, lastServerHealth, serverHealth } from '$ts/stores/serverHealth';
 	import Footer from '$components/Footer.svelte';
 	import { env as envPublic } from '$env/dynamic/public';
+	import type { TServerHealth } from '$ts/types/main';
 
 	let innerHeight: number | undefined;
 
@@ -58,6 +59,7 @@
 
 	async function getAndSetServerHealth() {
 		const now = Date.now();
+		let newHealthStatus: TServerHealth['status'] = 'unknown';
 		if (envPublic.PUBLIC_DEFAULT_SERVER_URL && $serverUrl === envPublic.PUBLIC_DEFAULT_SERVER_URL) {
 			localStorage.removeItem('serverUrl');
 		}
@@ -73,6 +75,7 @@
 			console.log('Checking server health...');
 			serverHealth.set({ status: 'loading', features: $serverHealth.features ?? undefined });
 			const healthRes = await checkServerHealth($serverUrl);
+			newHealthStatus = healthRes.status;
 			if (healthRes.status === 'healthy') {
 				serverHealth.set({ status: 'healthy', features: healthRes.features ?? undefined });
 				lastServerHealth.set({
@@ -92,7 +95,7 @@
 		} catch (error) {
 			console.log('Server health check failed:', $serverUrl, 'Error:', error);
 		} finally {
-			if ($serverHealth.status !== 'healthy' && $serverHealth.status !== 'unhealthy') {
+			if (newHealthStatus !== 'healthy' && newHealthStatus !== 'unhealthy') {
 				serverHealth.set({ status: 'unknown', features: $serverHealth.features ?? undefined });
 				lastServerHealth.set({
 					status: 'unknown',
@@ -105,6 +108,7 @@
 
 	async function getAndSetDefaultServerHealth() {
 		const now = Date.now();
+		let newHealthStatus: TServerHealth['status'] = 'unknown';
 		try {
 			defaultServerHealth.set({
 				status: 'loading',
@@ -118,6 +122,7 @@
 				});
 			} else {
 				const healthRes = await checkServerHealth(envPublic.PUBLIC_DEFAULT_SERVER_URL);
+				newHealthStatus = healthRes.status;
 				if (healthRes.status === 'healthy') {
 					defaultServerHealth.set({ status: 'healthy', features: healthRes.features ?? undefined });
 					console.log('Default server is healthy ✅:', envPublic.PUBLIC_DEFAULT_SERVER_URL);
@@ -133,10 +138,7 @@
 		} catch (error) {
 			console.log('Default server health check failed:', $serverUrl, 'Error:', error);
 		} finally {
-			if (
-				$defaultServerHealth.status !== 'healthy' &&
-				$defaultServerHealth.status !== 'unhealthy'
-			) {
+			if (newHealthStatus !== 'healthy' && newHealthStatus !== 'unhealthy') {
 				defaultServerHealth.set({
 					status: 'unknown',
 					features: $defaultServerHealth.features ?? undefined
