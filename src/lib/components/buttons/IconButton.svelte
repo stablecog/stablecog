@@ -5,11 +5,12 @@
 	export let href: string | undefined = undefined;
 	export let name: string;
 	export { classes as class };
+	export const prefetch: boolean = true;
 	let classes = '';
 </script>
 
 {#if href}
-	<a data-sveltekit-prefetch {href} class="group rounded-xl {classes}" aria-label={name}>
+	<a data-sveltekit-prefetch={prefetch} {href} class="group rounded-xl {classes}" aria-label={name}>
 		<div class="rounded-lg relative">
 			<div class="w-full h-full rounded-full overflow-hidden z-0 absolute left-0 top-0">
 				<div
