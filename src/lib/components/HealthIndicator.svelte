@@ -1,19 +1,19 @@
 <script lang="ts">
+	import IconPulsing from '$components/icons/IconPulsing.svelte';
 	import { serverHealth } from '$ts/stores/serverHealth';
-	export let size: TSize = 'md';
+
 	export { classes as class };
 	let classes = '';
-
-	type TSize = 'sm' | 'md';
 </script>
 
-<div
-	class="{size === 'sm' ? 'w-2 h-2' : 'w-2.5 h-2.5'} rounded-full {$serverHealth.status ===
-	'loading'
-		? 'bg-c-primary animate-pulse-scale'
+<IconPulsing
+	class={classes}
+	size="xs"
+	status={$serverHealth.status === 'loading'
+		? 'loading'
 		: $serverHealth.status === 'healthy'
-		? 'bg-c-success'
+		? 'success'
 		: $serverHealth.status === 'unhealthy'
-		? 'bg-c-danger'
-		: 'bg-c-on-bg/50'} {classes}"
+		? 'error'
+		: 'unknown'}
 />

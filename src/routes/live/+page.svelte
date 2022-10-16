@@ -10,11 +10,12 @@
 	import { scale } from 'svelte/transition';
 	import { tweened } from 'svelte/motion';
 	import { tooltip } from '$ts/actions/tooltip';
-	import type { TDBGenerationRealtimePayloadOutgoing } from '$ts/types/main';
+	import type { TDBGenerationRealtimePayload } from '$ts/types/main';
+	import type { RealtimeChannel } from '@supabase/supabase-js';
+	import IconPulsing from '$components/icons/IconPulsing.svelte';
 
-	let generations: TDBGenerationRealtimePayloadOutgoing[] = [];
+	let generations: TDBGenerationRealtimePayload[] = [];
 	const generationsMaxLength = 100;
-	let eventSource: EventSource | undefined;
 	let generationTotalCount = tweened(0, {
 		duration: 500,
 		easing: quadOut
@@ -23,38 +24,40 @@
 		duration: 500,
 		easing: quadOut
 	});
+	let channel: RealtimeChannel | undefined;
 
 	onMount(async () => {
 		if (supabase) {
 			getAndSetTotals();
-			eventSource = new EventSource('/api/live-generations');
-			eventSource.onmessage = (event) => {
-				const dataJson: TDBGenerationRealtimePayloadOutgoing = JSON.parse(event.data);
-				if (generations.map((i) => i.id).includes(dataJson.id)) {
-					const index = generations.findIndex((i) => i.id === dataJson.id);
-					generations[index] = dataJson;
-					generations = [...generations];
-				} else {
-					generations = [dataJson, ...generations];
-				}
-				generations = generations
-					.sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime())
-					.slice(0, generationsMaxLength);
-				getAndSetTotals();
-			};
-			eventSource.onopen = (event) => {
-				console.log('Event source opened');
-			};
-			eventSource.onerror = (e) => {
-				console.log('Event source error:', e);
-			};
+			channel = supabase
+				.channel('generation-realtime-changes')
+				.on(
+					'postgres_changes',
+					{ event: '*', schema: 'public', table: 'generation_realtime' },
+					(payload) => {
+						const newData = payload.new as TDBGenerationRealtimePayload;
+						if (generations.map((i) => i.id).includes(newData.id)) {
+							const index = generations.findIndex((i) => i.id === newData.id);
+							generations[index] = newData;
+							generations = [...generations];
+						} else {
+							generations = [newData, ...generations];
+						}
+						generations = generations
+							.sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime())
+							.slice(0, generationsMaxLength);
+						getAndSetTotals();
+					}
+				)
+				.subscribe();
 		} else {
 			console.log('Supabase is not detected.');
 		}
 	});
 
 	onDestroy(() => {
-		eventSource?.close();
+		channel?.unsubscribe();
+		supabase?.removeAllChannels();
 	});
 
 	async function getAndSetTotals() {
@@ -209,32 +212,7 @@
 				class="w-full overflow-hidden z-0 relative max-w-lg"
 			>
 				<div class="w-full flex flex-col items-center justify-start py-4">
-					<div
-						class="flex items-center justify-center relative overflow-hidden z-0 rounded-full -m-1.5"
-					>
-						<div class="p-7 relative overflow-hidden z-0 rounded-full">
-							<div
-								transition:scale|local={{ duration: 300, easing: quadOut }}
-								class="absolute w-full h-full left-0 top-0 origin-center"
-							>
-								<div class="w-full h-full">
-									<div
-										class="w-full h-full absolute left-0 top-0 rounded-full bg-c-primary/50 animate-ping-custom"
-									/>
-								</div>
-							</div>
-							<div class="w-10 h-10 relative">
-								<div
-									transition:scale|local={{ duration: 300, easing: quadOut }}
-									class="w-full h-full absolute left-0 top-0 rounded-full bg-c-primary animate-ping-custom-bg"
-								/>
-								<div
-									class="w-full h-full rounded-full transition-all duration-300 flex 
-									items-center justify-center relative overflow-hidden z-0 bg-c-primary"
-								/>
-							</div>
-						</div>
-					</div>
+					<IconPulsing />
 					<p class="w-full text-c-on-bg/40 text-center mt-1.5">Waiting for generations</p>
 				</div>
 			</div>

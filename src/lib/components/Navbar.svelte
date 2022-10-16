@@ -6,6 +6,7 @@
 	import IconHome from '$components/icons/IconHome.svelte';
 	import IconLive from '$components/icons/IconLive.svelte';
 	import IconSettings from '$components/icons/IconSettings.svelte';
+	import IconSocial from '$components/icons/IconSocial.svelte';
 	import Logo from '$components/Logo.svelte';
 	import ModalWrapper from '$components/ModalWrapper.svelte';
 	import ProductHuntBadge from '$components/ProductHuntBadge.svelte';
@@ -71,9 +72,22 @@
 	</a>
 	<div class="flex flex-wrap items-center justify-end relative">
 		<ProductHuntBadge />
-		<div class="p-3 relative">
-			<HealthIndicator />
-		</div>
+		<IconButton class="p-3 -ml-3 -mr-3.5" href="/discord" name="Discord">
+			<div class="w-9 h-9 relative">
+				<div
+					transition:scale={{ duration: 200, easing: quadOut, opacity: 0 }}
+					class="w-full h-full absolute left-0 top-0"
+				>
+					<IconSocial
+						type="discord"
+						class="w-full h-full relative transition transform {!$isTouchscreen
+							? 'group-hover:text-c-primary'
+							: 'text-c-on-bg'}"
+					/>
+				</div>
+			</div>
+		</IconButton>
+		<HealthIndicator />
 		<IconButton
 			class="p-3 -ml-3"
 			href={$page.url.pathname === '/live' ? '/' : '/live'}
