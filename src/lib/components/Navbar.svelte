@@ -87,9 +87,7 @@
 				</div>
 			</div>
 		</IconButton>
-		<div class="p-3 relative">
-			<HealthIndicator />
-		</div>
+		<HealthIndicator />
 		<IconButton
 			class="p-3 -ml-3"
 			href={$page.url.pathname === '/live' ? '/' : '/live'}

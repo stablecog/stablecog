@@ -10,7 +10,12 @@
 </script>
 
 {#if href}
-	<a data-sveltekit-prefetch={prefetch} {href} class="group rounded-xl {classes}" aria-label={name}>
+	<a
+		data-sveltekit-prefetch={prefetch ? '' : 'off'}
+		{href}
+		class="group rounded-xl {classes}"
+		aria-label={name}
+	>
 		<div class="rounded-lg relative">
 			<div class="w-full h-full rounded-full overflow-hidden z-0 absolute left-0 top-0">
 				<div
