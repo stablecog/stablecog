@@ -96,10 +96,10 @@ module.exports = {
 				175: '1.75'
 			},
 			animation: {
+				'ping-custom': 'ping-custom 1s ease-out infinite -0.9s',
+				'ping-custom-bg': 'ping-custom-bg 1s ease infinite',
 				'pulse-custom': 'pulse-custom 1s cubic-bezier(0.5, 0, 0.5, 1) infinite',
 				'pulse-scale': 'pulse-scale 0.75s cubic-bezier(0.5, 0, 0.5, 1) infinite',
-				'ping-custom': 'ping-custom 1s ease-out infinite',
-				'ping-custom-bg': 'ping-custom-bg 1s ease infinite',
 				'spin-faster': 'spin-faster 0.75s linear infinite'
 			},
 			borderRadius: {
