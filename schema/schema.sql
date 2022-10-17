@@ -69,8 +69,21 @@ FROM
 WHERE
     duration_ms IS NULL
     AND (
-        STATUS IS NULL
-        OR STATUS = 'succeeded'
+        status IS NULL
+        OR status = 'succeeded'
+    ) $ $ language SQL;
+
+CREATE
+OR REPLACE FUNCTION generation_with_non_null_duration_ms_total() RETURNS BIGINT AS $ $
+SELECT
+    SUM (duration_ms) generation_with_non_null_duration_ms_total
+FROM
+    generation_public
+WHERE
+    duration_ms IS NOT NULL
+    AND (
+        status IS NULL
+        or status = 'succeeded'
     ) $ $ language SQL;
 
 CREATE
@@ -80,26 +93,11 @@ SELECT
 FROM
     generation_public
 WHERE
-    duration_ms IS NOT NULL $ $ language SQL;
-
-CREATE
-OR REPLACE FUNCTION generation_with_non_null_duration_ms_total() RETURNS BIGINT AS $ $
-SELECT
-    SUM (duration_ms) generation_with_non_null_duration_ms_total
-FROM
-    generation_public
-WHERE
-    duration_ms IS NOT NULL $ $ language SQL;
-
-CREATE
-OR REPLACE FUNCTION generation_count_with_null_duration_ms() RETURNS BIGINT AS $ $
-SELECT
-    COUNT(*)
-FROM
-    generation_public
-WHERE
-    duration_ms IS NULL
-    AND STATUS != 'started' $ $ language SQL;
+    duration_ms IS NOT NULL
+    AND (
+        status IS NULL
+        or status = 'succeeded'
+    ) $ $ language SQL;
 
 CREATE
 OR REPLACE FUNCTION generation_duration_ms_total_estimate() RETURNS BIGINT AS $ $
