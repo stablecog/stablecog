@@ -1,6 +1,7 @@
 import { supabaseAdmin } from '$ts/constants/supabaseAdmin';
 import { formatPrompt } from '$ts/helpers/formatPrompt';
 import { getDeviceInfo } from '$ts/helpers/getDeviceInfo';
+import { pickServerUrl } from '$ts/helpers/db/pickServerUrl';
 import type { TGenerationRequest, TGenerationResponse } from '$ts/types/main';
 import type { PostgrestError } from '@supabase/supabase-js';
 import type { RequestHandler } from '@sveltejs/kit';
@@ -29,6 +30,13 @@ export const POST: RequestHandler = async ({ request }) => {
 			? formatPrompt(negative_prompt)
 			: undefined;
 	const _prompt = formatPrompt(prompt);
+	let picked_server_url: string;
+	try {
+		const res = await pickServerUrl(server_url);
+		picked_server_url = res.serverUrl;
+	} catch (error) {
+		picked_server_url = server_url;
+	}
 	try {
 		generationLog({
 			text: 'Started generation:',
@@ -40,7 +48,7 @@ export const POST: RequestHandler = async ({ request }) => {
 			num_inference_steps,
 			guidance_scale,
 			seed,
-			server_url
+			server_url: picked_server_url
 		});
 		// Is Supabase is enabled, record the generation
 		if (supabaseAdmin !== undefined) {
@@ -56,7 +64,7 @@ export const POST: RequestHandler = async ({ request }) => {
 						height,
 						num_inference_steps,
 						guidance_scale,
-						server_url,
+						server_url: picked_server_url,
 						device_type: deviceInfo.type,
 						device_browser: deviceInfo.browser,
 						device_os: deviceInfo.os,
@@ -79,7 +87,7 @@ export const POST: RequestHandler = async ({ request }) => {
 						num_inference_steps,
 						guidance_scale,
 						seed,
-						server_url
+						server_url: picked_server_url
 					});
 				}
 			} catch (error) {
@@ -87,7 +95,7 @@ export const POST: RequestHandler = async ({ request }) => {
 			}
 		}
 		const startTimestamp = Date.now();
-		const response = await fetch(`${server_url}/predictions`, {
+		const response = await fetch(`${picked_server_url}/predictions`, {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json'
@@ -122,7 +130,7 @@ export const POST: RequestHandler = async ({ request }) => {
 			num_inference_steps,
 			guidance_scale,
 			seed,
-			server_url
+			server_url: picked_server_url
 		});
 		// If Supabase is enabled, update the generation with prompt, negative prompt, duration and status
 		if (output && !data.error && supabaseAdmin !== undefined) {
@@ -157,7 +165,7 @@ export const POST: RequestHandler = async ({ request }) => {
 						num_inference_steps,
 						guidance_scale,
 						seed,
-						server_url
+						server_url: picked_server_url
 					});
 				}
 			} catch (error) {
@@ -192,7 +200,7 @@ export const POST: RequestHandler = async ({ request }) => {
 						num_inference_steps,
 						guidance_scale,
 						seed,
-						server_url
+						server_url: picked_server_url
 					});
 				}
 			} catch (error) {
@@ -246,7 +254,7 @@ export const POST: RequestHandler = async ({ request }) => {
 						num_inference_steps,
 						guidance_scale,
 						seed,
-						server_url
+						server_url: picked_server_url
 					});
 				}
 			} catch (error) {

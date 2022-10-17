@@ -17,11 +17,6 @@ export interface TGenerationUI extends TGenerationBase {
 	computeRatePerSec?: number;
 }
 
-export interface TDBGeneration extends TGenerationBase {
-	id?: number;
-	imageDataB64: string;
-}
-
 export interface TGenerationRequest {
 	server_url: string;
 	prompt: string;
@@ -73,13 +68,3 @@ export type TIconSocial =
 	| 'medium'
 	| 'youtube'
 	| 'email';
-
-export interface TDBGenerationRealtimePayload {
-	id: string;
-	country_code: string | null;
-	duration_ms: number | null;
-	status: 'started' | 'succeeded' | 'failed' | 'rejected';
-	uses_default_server: boolean;
-	created_at: string;
-	updated_at: string;
-}

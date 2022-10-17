@@ -10,9 +10,9 @@
 	import { scale } from 'svelte/transition';
 	import { tweened } from 'svelte/motion';
 	import { tooltip } from '$ts/actions/tooltip';
-	import type { TDBGenerationRealtimePayload } from '$ts/types/main';
 	import type { RealtimeChannel } from '@supabase/supabase-js';
 	import IconPulsing from '$components/icons/IconPulsing.svelte';
+	import type { TDBGenerationRealtimePayload } from '$ts/types/db';
 
 	let generations: TDBGenerationRealtimePayload[] = [];
 	const generationsMaxLength = 100;

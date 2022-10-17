@@ -31,6 +31,23 @@ UPDATE
 ALTER TABLE
     generation ENABLE ROW LEVEL SECURITY;
 
+CREATE TABLE "server" (
+    "url" TEXT NOT NULL,
+    "healthy" BOOLEAN NOT NULL DEFAULT FALSE,
+    "last_health_check_at" TIMESTAMPTZ DEFAULT TIMEZONE('utc' :: TEXT, NOW()) NOT NULL,
+    "id" UUID NOT NULL DEFAULT uuid_generate_v4(),
+    "created_at" TIMESTAMPTZ DEFAULT TIMEZONE('utc' :: TEXT, NOW()) NOT NULL,
+    "updated_at" TIMESTAMPTZ DEFAULT TIMEZONE('utc' :: TEXT, NOW()) NOT NULL,
+    PRIMARY KEY(id)
+);
+
+CREATE trigger handle_updated_at before
+UPDATE
+    ON server FOR each ROW EXECUTE PROCEDURE moddatetime (updated_at);
+
+ALTER TABLE
+    server ENABLE ROW LEVEL SECURITY;
+
 CREATE VIEW generation_public AS
 SELECT
     id,
@@ -148,7 +165,12 @@ VALUES
         new.updated_at,
         new.country_code,
         new.duration_ms,
-        new.server_url = 'http://c1.stablecog.com:5000'
+        new.server_url IN (
+            SELECT
+                url
+            FROM
+                server
+        )
     );
 
 END IF;
