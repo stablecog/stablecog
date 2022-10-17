@@ -16,6 +16,8 @@
 
 	let generations: TDBGenerationRealtimePayload[] = [];
 	const generationsMaxLength = 100;
+	const msForEachDifference = 50;
+	const maxDuration = 500;
 	let generationTotalCount = tweened(0, {
 		duration: 500,
 		easing: quadOut
@@ -24,6 +26,9 @@
 		duration: 500,
 		easing: quadOut
 	});
+	const calculateAnimationDuration = (curr: number, next: number) => {
+		return Math.min((next - curr) * msForEachDifference, maxDuration);
+	};
 	let channel: RealtimeChannel | undefined;
 
 	let getRegionName = new Intl.DisplayNames(['en'], { type: 'region' });
@@ -38,7 +43,7 @@
 					{ event: '*', schema: 'public', table: 'generation_realtime' },
 					(payload) => {
 						const newData = payload.new as TDBGenerationRealtimePayload;
-						if (generations.map((i) => i.id).includes(newData.id)) {
+						if (newData.created_at && generations.map((i) => i.id).includes(newData.id)) {
 							const index = generations.findIndex((i) => i.id === newData.id);
 							generations[index] = newData;
 							generations = [...generations];
@@ -52,6 +57,7 @@
 					}
 				)
 				.subscribe();
+			console.log(channel);
 		} else {
 			console.log('Supabase is not detected.');
 		}
@@ -73,10 +79,18 @@
 					const count = Number(countRes.data);
 					const duration = Number(durationRes.data);
 					if (count > $generationTotalCount) {
+						generationTotalCount = tweened($generationTotalCount, {
+							duration: calculateAnimationDuration($generationTotalCount, count),
+							easing: quadOut
+						});
 						generationTotalCount.set(count);
 						console.log('generationTotalCount:', count);
 					}
 					if (duration > $generationTotalDurationMs) {
+						generationTotalDurationMs = tweened($generationTotalDurationMs, {
+							duration: calculateAnimationDuration($generationTotalDurationMs, duration),
+							easing: quadOut
+						});
 						generationTotalDurationMs.set(duration);
 						console.log('generationTotalDurationMs:', duration);
 					}
@@ -128,16 +142,19 @@
 			</div>
 		</div>
 		{#if generations && generations.length > 0}
-			<div transition:expandCollapse|local={{ duration: 300 }} class="w-full">
-				<div class="w-full flex flex-wrap items-center justify-center py-6">
+			<div
+				transition:expandCollapse|local={{ duration: 300 }}
+				class="w-[calc(100%+4rem)] md:w-[calc(100%+12rem)] px-4 md:px-24 overflow-hidden z-0 relative -mx-8"
+			>
+				<div class="w-full flex flex-wrap items-center justify-center py-4">
 					{#each generations as generation (generation.id)}
 						<div
 							in:elementreceive|local={{ key: generation.id }}
 							out:elementsend|local={{ key: generation.id }}
 							animate:flip={{ duration: 300, easing: quadOut }}
-							class="flex items-center justify-center relative overflow-hidden z-0 rounded-full -m-1.5"
+							class="flex items-center justify-center relative overflow-hidden z-0 rounded-full -m-3"
 						>
-							<div class="p-7 relative overflow-hidden z-0 rounded-full">
+							<div class="p-8 relative overflow-hidden z-0 rounded-full">
 								{#if generation.status === 'started'}
 									<div
 										transition:scale|local={{ duration: 300, easing: quadOut }}
@@ -219,7 +236,7 @@
 				transition:expandCollapse|local={{ duration: 300 }}
 				class="w-full overflow-hidden z-0 relative max-w-lg"
 			>
-				<div class="w-full flex flex-col items-center justify-start py-4">
+				<div class="w-full flex flex-col items-center justify-center py-4">
 					<IconPulsing />
 					<p class="w-full text-c-on-bg/40 text-center mt-1.5">Waiting for generations</p>
 				</div>
@@ -229,7 +246,7 @@
 				transition:expandCollapse|local={{ duration: 300 }}
 				class="w-full overflow-hidden z-0 relative max-w-lg"
 			>
-				<div class="w-full flex flex-col items-center justify-start gap-5 py-4">
+				<div class="w-full flex flex-col items-center justify-center gap-5 py-4">
 					<p class="w-full leading-relaxed text-c-on-bg/40 text-center">
 						Supabase instance not found. Can't listen for generations.
 					</p>
