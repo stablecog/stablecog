@@ -71,14 +71,14 @@ export const POST: RequestHandler = async ({ request }) => {
 async function checkHealth(serverUrl: string) {
 	const startTimestamp = Date.now();
 	const startDate = new Date(startTimestamp).toUTCString();
+	console.log('----', 'Started server health check:', startDate, '--', serverUrl, '----');
+	let serverHealth: TServerHealthRes = { status: 'unhealthy' };
 	try {
-		console.log('----', 'Started server health check:', startDate, '--', serverUrl, '----');
 		const res = await fetch(`${serverUrl}/openapi.json`);
 		const data: TServerHealthData = await res.json();
 		const properties = data.components?.schemas?.Input?.properties;
 		const endTimestamp = Date.now();
 		const endDate = new Date(endTimestamp).toUTCString();
-		let serverHealth: TServerHealthRes;
 		if (
 			properties !== undefined &&
 			properties.guidance_scale !== undefined &&
@@ -113,7 +113,7 @@ async function checkHealth(serverUrl: string) {
 			endDate,
 			'----'
 		);
-		return { status: 'unhealthy' } as TServerHealthRes;
+		return serverHealth;
 	}
 }
 
