@@ -17,6 +17,11 @@ const definedRoutes: IRoute[] = [
 		loc: '/history',
 		lastmod: todayString,
 		changefreq: 'daily'
+	},
+	{
+		loc: '/live',
+		lastmod: todayString,
+		changefreq: 'daily'
 	}
 ];
 
