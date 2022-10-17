@@ -9,6 +9,10 @@ export async function addGenerationToDb(generation: TDBGeneration) {
 }
 
 export async function getGenerationsFromDb() {
-	const generations = await indexedDb.generations.orderBy('id').reverse().toArray();
+	const generations: TDBGeneration[] = await indexedDb.generations
+		.orderBy('id')
+		.limit(200)
+		.reverse()
+		.toArray();
 	return generations;
 }

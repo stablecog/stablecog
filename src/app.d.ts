@@ -8,12 +8,6 @@ declare namespace App {
 	// interface Platform {}
 }
 
-declare module 'dexie' {
-	interface Observable<T> {
-		subscribe(run: Subscriber<T>): Unsubscriber | Subscription;
-	}
-}
-
 interface PlausibleObj {
 	callback?: function;
 	props?: { [key: string]: string };
