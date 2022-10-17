@@ -113,6 +113,7 @@ async function checkHealth(serverUrl: string) {
 			endDate,
 			'----'
 		);
+	} finally {
 		return serverHealth;
 	}
 }
