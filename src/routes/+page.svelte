@@ -22,15 +22,10 @@
 	import ImagePlaceholder from '$components/ImagePlaceholder.svelte';
 	import GenerationImage from '$components/GenerationImage.svelte';
 	import { advancedMode } from '$ts/stores/advancedMode';
-	import {
-		lastServerHealth,
-		lastServerHealthStatus,
-		serverHealth,
-		serverHealthStatus
-	} from '$ts/stores/serverHealth';
 	import SetServerModal from '$components/SetServerModal.svelte';
 	import { pLogGeneration, uLogGeneration } from '$ts/helpers/loggers';
 	import ServerOfflineBanner from '$components/ServerOfflineBanner.svelte';
+	import { currentServer, currentServerHealthStatus } from '$ts/stores/serverHealth';
 
 	let status: TStatus = 'idle';
 	let promptInputValue: string | undefined;
@@ -79,7 +74,7 @@
 			server_url: $serverUrl,
 			prompt: promptInputValue,
 			negative_prompt:
-				$serverHealth.features?.includes('negative_prompt') &&
+				$currentServer.features?.includes('negative_prompt') &&
 				negativePromptInputValue !== '' &&
 				negativePromptInputValue !== undefined
 					? negativePromptInputValue
@@ -113,12 +108,15 @@
 			if (data && data.imageDataB64 && !error) {
 				pLogGeneration('Succeeded');
 				uLogGeneration('Succeeded');
-				if ($serverHealth.status !== 'healthy') {
-					serverHealth.set({ status: 'healthy', features: $serverHealth.features ?? undefined });
-					lastServerHealth.set({
-						status: 'healthy',
-						features: $serverHealth.features ?? undefined
+				if (
+					$currentServer.lastHealthStatus !== 'healthy' ||
+					$currentServerHealthStatus !== 'healthy'
+				) {
+					currentServer.set({
+						lastHealthStatus: 'healthy',
+						features: $currentServer.features ?? undefined
 					});
+					currentServerHealthStatus.set('healthy');
 				}
 				lastGeneration.duration_ms = data.duration_ms;
 				try {
@@ -179,7 +177,13 @@
 	onMount(() => {
 		setEstimatedDuration();
 		isCheckComplete = true;
-		console.log('serverHealth:', $serverHealth, 'lastServerHealth:', $lastServerHealth);
+		console.log(
+			'currentServer:',
+			$currentServer,
+			'lastServerHealth:',
+			'currentServerHealthStatus',
+			$currentServerHealthStatus
+		);
 	});
 
 	onDestroy(() => {
@@ -199,7 +203,7 @@
 		{#if isCheckComplete && !$serverUrl}
 			<SetServerModal isOnBarrier={false} />
 		{:else}
-			{#if isCheckComplete && ($serverHealthStatus === 'unhealthy' || $serverHealthStatus === 'unknown' || $lastServerHealthStatus === 'unhealthy')}
+			{#if isCheckComplete && ($currentServerHealthStatus === 'unhealthy' || $currentServerHealthStatus === 'unknown' || $currentServer.lastHealthStatus === 'unhealthy')}
 				<ServerOfflineBanner />
 			{/if}
 			<div

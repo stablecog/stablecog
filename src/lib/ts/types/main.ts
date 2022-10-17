@@ -45,13 +45,8 @@ export type TServerFeatures = 'negative_prompt';
 export type TServerHealthStatus = 'healthy' | 'unhealthy' | 'not-set' | 'unknown' | 'loading';
 export type TLastServerHealthStatus = 'healthy' | 'unhealthy' | 'not-set' | 'unknown';
 
-export type TServerHealth = {
-	status: TServerHealthStatus;
-	features?: TServerFeatures[] | undefined;
-};
-
-export type TLastServerHealth = {
-	status: TLastServerHealthStatus;
+export type TServerLocalStorage = {
+	lastHealthStatus: TLastServerHealthStatus;
 	features?: TServerFeatures[] | undefined;
 };
 

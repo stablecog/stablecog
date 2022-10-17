@@ -32,7 +32,7 @@
 	import { isTouchscreen } from '$ts/stores/isTouchscreen';
 	import { negativePrompt, prompt } from '$ts/stores/prompt';
 	import { seed } from '$ts/stores/seed';
-	import { serverHealth } from '$ts/stores/serverHealth';
+	import { currentServer } from '$ts/stores/serverHealth';
 	import type { TStatus } from '$ts/types/main';
 	import { onMount, tick } from 'svelte';
 
@@ -351,7 +351,7 @@
 							<IconScale class="w-6 h-6 text-c-on-bg/25" />
 						</div>
 					</TabLikeRangeInput>
-					{#if $serverHealth.features?.includes('negative_prompt')}
+					{#if $currentServer.features?.includes('negative_prompt')}
 						<TabLikeInput
 							class="w-80 max-w-full"
 							placeholder="Negative prompt"

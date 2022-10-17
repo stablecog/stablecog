@@ -5,7 +5,7 @@
 	import Masonry from '$components/Masonry.svelte';
 	import { heightTabs, widthTabs } from '$ts/constants/main';
 	import { urlFromBase64 } from '$ts/helpers/base64';
-	import type { TDBGeneration } from '$ts/types/main';
+	import type { TDBGeneration } from '$ts/types/db';
 	import IntersectionObserver from 'svelte-intersection-observer';
 
 	export let generations: TDBGeneration[] | undefined = undefined;

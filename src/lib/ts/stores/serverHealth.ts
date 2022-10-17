@@ -1,23 +1,16 @@
-import type { TLastServerHealth, TServerHealth } from '$ts/types/main';
+import { writable } from 'svelte/store';
 import { writable as writableLocal } from 'svelte-local-storage-store';
-import { derived } from 'svelte/store';
+import type { TServerHealthStatus, TServerLocalStorage } from '$ts/types/main';
 
-export const serverHealth = writableLocal<TServerHealth>('serverHealth', {
-	status: 'loading',
+export const currentServer = writableLocal<TServerLocalStorage>('currentServer', {
+	lastHealthStatus: 'unknown',
 	features: undefined
 });
-export const serverHealthStatus = derived(serverHealth, ($serverHealth) => $serverHealth.status);
+export const currentServerHealthStatus = writable<TServerHealthStatus>('loading');
 
-export const lastServerHealth = writableLocal<TLastServerHealth>('lastServerHealth', {
-	status: 'unknown',
+export const defaultServer = writable<TServerLocalStorage>({
+	lastHealthStatus: 'unknown',
 	features: undefined
 });
-export const lastServerHealthStatus = derived(
-	lastServerHealth,
-	($lastServerHealth) => $lastServerHealth.status
-);
 
-export const defaultServerHealth = writableLocal<TServerHealth>('defaultServerHealth', {
-	status: 'loading',
-	features: undefined
-});
+export const defaultServerHealthStatus = writable<TServerHealthStatus>('loading');

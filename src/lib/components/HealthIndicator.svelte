@@ -1,6 +1,6 @@
 <script lang="ts">
 	import IconPulsing from '$components/icons/IconPulsing.svelte';
-	import { serverHealth } from '$ts/stores/serverHealth';
+	import { currentServerHealthStatus } from '$ts/stores/serverHealth';
 
 	export { classes as class };
 	let classes = '';
@@ -9,11 +9,11 @@
 <IconPulsing
 	class={classes}
 	size="xs"
-	status={$serverHealth.status === 'loading'
+	status={$currentServerHealthStatus === 'loading'
 		? 'loading'
-		: $serverHealth.status === 'healthy'
+		: $currentServerHealthStatus === 'healthy'
 		? 'success'
-		: $serverHealth.status === 'unhealthy'
+		: $currentServerHealthStatus === 'unhealthy'
 		? 'error'
 		: 'unknown'}
 />
