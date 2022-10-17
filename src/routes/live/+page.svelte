@@ -26,6 +26,8 @@
 	});
 	let channel: RealtimeChannel | undefined;
 
+	let getRegionName = new Intl.DisplayNames(['en'], { type: 'region' });
+
 	onMount(async () => {
 		if (supabase) {
 			getAndSetTotals();
@@ -160,8 +162,10 @@
 											use:tooltip={{
 												rows: [
 													{
-														key: 'Server:',
-														value: generation.uses_default_server ? 'Default' : 'Custom'
+														key: 'Country:',
+														value: generation.country_code
+															? getRegionName.of(generation.country_code) ?? 'Unknown'
+															: 'Unknown'
 													},
 													{
 														key: 'Status:',
@@ -180,7 +184,11 @@
 																		: 'Unfinished'
 																}
 														  ]
-														: [])
+														: []),
+													{
+														key: 'Server:',
+														value: generation.uses_default_server ? 'Default' : 'Custom'
+													}
 												],
 												...tooltipStyleProps
 											}}
