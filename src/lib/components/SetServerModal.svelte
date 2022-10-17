@@ -22,7 +22,6 @@
 	const setServerUrl = async () => {
 		if (!serverUrlInputValue && env.PUBLIC_DEFAULT_SERVER_URL) {
 			serverUrlInputValue = env.PUBLIC_DEFAULT_SERVER_URL;
-			return;
 		}
 		if (serverUrlInputValue) {
 			try {

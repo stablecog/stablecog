@@ -1,4 +1,4 @@
-import type { TDBGeneration } from '$ts/types/main';
+import type { TDBGeneration } from '$ts/types/db';
 import Dexie, { type Table } from 'dexie';
 
 export class MySubClassedDexie extends Dexie {
