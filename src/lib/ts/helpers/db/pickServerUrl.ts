@@ -14,7 +14,11 @@ export async function pickServerUrl(serverUrl: string): Promise<TPickServerUrlRe
 		return { serverUrl: serverUrl, isDefault: false };
 	}
 	const { data, error }: { data: TDBServer[] | null; error: PostgrestError | null } =
-		await supabaseAdmin.from('server').select('*').filter('healthy', 'eq', true);
+		await supabaseAdmin
+			.from('server')
+			.select('*')
+			.filter('healthy', 'eq', true)
+			.filter('enabled', 'eq', true);
 	if (!data || data.length < 1 || error) {
 		if (error) console.log(error);
 		return { serverUrl: serverUrl, isDefault: false };

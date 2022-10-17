@@ -34,6 +34,7 @@ ALTER TABLE
 CREATE TABLE "server" (
     "url" TEXT NOT NULL,
     "healthy" BOOLEAN NOT NULL DEFAULT TRUE,
+    "enabled" BOOLEAN NOT NULL DEFAULT TRUE,
     "last_health_check_at" TIMESTAMPTZ DEFAULT TIMEZONE('utc' :: TEXT, NOW()) NOT NULL,
     "id" UUID NOT NULL DEFAULT uuid_generate_v4(),
     "created_at" TIMESTAMPTZ DEFAULT TIMEZONE('utc' :: TEXT, NOW()) NOT NULL,

@@ -4,7 +4,10 @@ import type { PostgrestError } from '@supabase/supabase-js';
 
 export async function getDefaultServers() {
 	if (supabaseAdmin) {
-		const { data, error }: TRes = await supabaseAdmin.from('server').select('*');
+		const { data, error }: TRes = await supabaseAdmin
+			.from('server')
+			.select('*')
+			.filter('enabled', 'eq', true);
 		if (error) {
 			console.log(error);
 		}

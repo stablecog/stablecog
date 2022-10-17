@@ -27,8 +27,8 @@ export const POST: RequestHandler = async ({ request }) => {
 			const lastHealthCheckTimestamp = new Date(currentServer.last_health_check_at).getTime();
 			const now = Date.now();
 			const actualHealthCheckDiff = now - lastHealthCheckTimestamp;
-			const minHealthCheckDiff = 1000 * 60 * 1;
-			const minHealthCheckDiffUnhealthy = 1000 * 60 * 5;
+			const minHealthWriteDiff = 1000 * 15;
+			const minHealthCheckDiffUnhealthy = 1000 * 15;
 			if (!currentServer.healthy && actualHealthCheckDiff < minHealthCheckDiffUnhealthy) {
 				continue;
 			}
@@ -38,7 +38,7 @@ export const POST: RequestHandler = async ({ request }) => {
 				console.log(error);
 			} finally {
 				if (serverHealth.status === 'healthy') {
-					if (actualHealthCheckDiff > minHealthCheckDiff) {
+					if (actualHealthCheckDiff > minHealthWriteDiff) {
 						try {
 							await updateServerHealthInDb(currentServer.url, true);
 						} catch (error) {
