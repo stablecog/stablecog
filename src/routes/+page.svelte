@@ -13,7 +13,7 @@
 		type TAvailableWidths
 	} from '$ts/constants/main';
 	import { urlFromBase64 } from '$ts/helpers/base64';
-	import { addGenerationToDb, pruneGenerationsFromDb } from '$ts/queries/indexedDb';
+	import { addGenerationToDb } from '$ts/queries/indexedDb';
 	import { generateImage } from '$ts/queries/generateImage';
 	import { computeRatePerSec } from '$ts/stores/computeRatePerSec';
 	import { serverUrl } from '$ts/stores/serverUrl';
@@ -175,7 +175,6 @@
 	let isCheckComplete = false;
 
 	onMount(() => {
-		pruneGenerationsFromDb();
 		setEstimatedDuration();
 		isCheckComplete = true;
 		console.log(

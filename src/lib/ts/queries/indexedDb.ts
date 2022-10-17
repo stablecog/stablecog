@@ -12,8 +12,3 @@ export async function getGenerationsFromDb() {
 	const generations = await indexedDb.generations.orderBy('id').reverse().toArray();
 	return generations;
 }
-
-export async function pruneGenerationsFromDb() {
-	const generations = await indexedDb.generations.count();
-	console.log('count', generations);
-}
