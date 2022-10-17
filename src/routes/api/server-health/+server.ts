@@ -4,7 +4,7 @@ import { getDefaultServers } from '$ts/helpers/db/getDefaultServers';
 import { updateServerHealthInDb } from '$ts/helpers/db/updateServerHealthInDb';
 import { shuffleArray } from '$ts/helpers/shuffleArray';
 import type { TDBServer } from '$ts/types/db';
-import type { TServerHealth, TServerHealthStatus } from '$ts/types/main';
+import type { TServerHealthRes, TServerHealthStatus } from '$ts/types/main';
 import type { RequestHandler } from '@sveltejs/kit';
 
 export const POST: RequestHandler = async ({ request }) => {
@@ -21,7 +21,7 @@ export const POST: RequestHandler = async ({ request }) => {
 		}
 	}
 	if (supabaseAdmin && isDefaultServer && defaultServers.length > 0) {
-		let serverHealth: TServerHealth = { status: 'unhealthy' };
+		let serverHealth: TServerHealthRes = { status: 'unhealthy' };
 		for (let i = 0; i < defaultServers.length; i++) {
 			const currentServer = defaultServers[i];
 			const lastHealthCheckTimestamp = new Date(currentServer.last_health_check_at).getTime();
@@ -47,19 +47,17 @@ export const POST: RequestHandler = async ({ request }) => {
 					}
 					return new Response(JSON.stringify(serverHealth));
 				} else {
-					if (actualHealthCheckDiff > minHealthCheckDiffUnhealthy) {
-						try {
-							await updateServerHealthInDb(currentServer.url, false);
-						} catch (error) {
-							console.log(error);
-						}
+					try {
+						await updateServerHealthInDb(currentServer.url, false);
+					} catch (error) {
+						console.log(error);
 					}
 				}
 			}
 		}
 		return new Response(JSON.stringify(serverHealth));
 	} else {
-		let serverHealth: TServerHealth = { status: 'unhealthy' };
+		let serverHealth: TServerHealthRes = { status: 'unhealthy' };
 		try {
 			serverHealth = await checkHealth(server_url);
 		} catch (error) {
@@ -80,7 +78,7 @@ async function checkHealth(serverUrl: string) {
 		const properties = data.components?.schemas?.Input?.properties;
 		const endTimestamp = Date.now();
 		const endDate = new Date(endTimestamp).toUTCString();
-		let serverHealth: TServerHealth;
+		let serverHealth: TServerHealthRes;
 		if (
 			properties !== undefined &&
 			properties.guidance_scale !== undefined &&
@@ -115,7 +113,7 @@ async function checkHealth(serverUrl: string) {
 			endDate,
 			'----'
 		);
-		return { status: 'unhealthy' } as TServerHealth;
+		return { status: 'unhealthy' } as TServerHealthRes;
 	}
 }
 

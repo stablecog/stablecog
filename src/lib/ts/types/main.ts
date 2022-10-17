@@ -50,6 +50,11 @@ export type TServerLocalStorage = {
 	features?: TServerFeatures[] | undefined;
 };
 
+export interface TServerHealthRes {
+	status: TServerHealthStatus;
+	features?: TServerFeatures[] | undefined;
+}
+
 export type TSetServerProcessStatus = 'idle' | 'loading' | 'success' | 'error';
 
 export type TIconSocial =
