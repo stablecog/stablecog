@@ -63,7 +63,7 @@
 						value !== undefined &&
 						value.toString().length > max
 					) {
-						value = parseInt(value.toString().slice(0, max));
+						value = value.toString().slice(0, max);
 					}
 				}}
 				{placeholder}
@@ -92,9 +92,12 @@
 						max !== undefined &&
 						value !== null &&
 						value !== undefined &&
-						value.toString().length > max
+						value.toString().length > max.toString().length
 					) {
-						value = parseInt(value.toString().slice(0, max));
+						value = parseInt(value.toString().slice(0, max.toString().length));
+						if (value > max) {
+							value = max;
+						}
 					}
 				}}
 				{placeholder}

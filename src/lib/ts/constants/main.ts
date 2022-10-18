@@ -5,6 +5,7 @@ export const estimatedDurationDefault = 30;
 export const canonicalUrl = 'https://stablecog.com';
 
 export const maxSeed = 2147483647;
+export const maxPromptLength = 500;
 
 export const computeRatePerSecDefault = 150000;
 
@@ -51,5 +52,3 @@ export interface TInferenceStepsTab extends TTab {
 export interface TGuidanceScaleTab extends TTab {
 	value: number;
 }
-
-export const maxPromptLength = 600;

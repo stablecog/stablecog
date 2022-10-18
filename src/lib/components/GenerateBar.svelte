@@ -21,6 +21,8 @@
 		heightTabs,
 		inferenceStepsDefault,
 		inferenceStepsTabs,
+		maxPromptLength,
+		maxSeed,
 		widthDefault,
 		widthTabs
 	} from '$ts/constants/main';
@@ -220,6 +222,15 @@
 						onSubmit();
 					}
 				}}
+				on:input={(e) => {
+					if (
+						promptInputValue !== undefined &&
+						promptInputValue !== null &&
+						promptInputValue.length > maxPromptLength
+					) {
+						promptInputValue = promptInputValue.slice(0, maxPromptLength);
+					}
+				}}
 				disabled={loadingOrSubmitting}
 				{placeholder}
 				rows="1"
@@ -357,6 +368,7 @@
 							placeholder="Negative prompt"
 							type="text"
 							bind:value={negativePromptInputValue}
+							max={maxPromptLength}
 							{formElement}
 						>
 							<div
@@ -378,7 +390,7 @@
 						placeholder="Seed number"
 						bind:value={generationSeed}
 						type="number"
-						max={9}
+						max={maxSeed}
 						{formElement}
 					>
 						<div
