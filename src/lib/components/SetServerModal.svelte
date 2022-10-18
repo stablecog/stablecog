@@ -22,6 +22,7 @@
 	const setServerUrl = async () => {
 		if (!serverUrlInputValue && env.PUBLIC_DEFAULT_SERVER_URL) {
 			serverUrlInputValue = env.PUBLIC_DEFAULT_SERVER_URL;
+			return;
 		}
 		if (serverUrlInputValue) {
 			try {
@@ -46,6 +47,7 @@
 					});
 					currentServerHealthStatus.set('healthy');
 					if (url === env.PUBLIC_DEFAULT_SERVER_URL) {
+						serverUrl.set(env.PUBLIC_DEFAULT_SERVER_URL);
 						localStorage.removeItem('serverUrl');
 					} else {
 						serverUrl.set(url);
