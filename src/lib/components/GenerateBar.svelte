@@ -378,7 +378,7 @@
 						placeholder="Seed number"
 						bind:value={generationSeed}
 						type="number"
-						max={15}
+						max={9}
 						{formElement}
 					>
 						<div

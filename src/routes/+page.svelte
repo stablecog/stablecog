@@ -8,6 +8,7 @@
 		estimatedDurationDefault,
 		guidanceScaleDefault,
 		inferenceStepsDefault,
+		maxSeed,
 		type TAvailableHeights,
 		type TAvailableInferenceSteps,
 		type TAvailableWidths
@@ -86,7 +87,7 @@
 			seed:
 				(generationSeed || generationSeed === 0) && $advancedMode
 					? generationSeed
-					: Math.floor(Math.random() * 2147483647)
+					: Math.round(Math.random() * maxSeed)
 		};
 		console.log('generation', lastGeneration);
 		console.log('estimatedDuration', estimatedDuration);
