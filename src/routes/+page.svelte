@@ -13,7 +13,7 @@
 		type TAvailableWidths
 	} from '$ts/constants/main';
 	import { urlFromBase64 } from '$ts/helpers/base64';
-	import { addGenerationToDb } from '$ts/queries/indexedDb';
+	import { addGenerationToDb, isStorageAvailableIfNotPrune } from '$ts/queries/indexedDb';
 	import { generateImage } from '$ts/queries/generateImage';
 	import { computeRatePerSec } from '$ts/stores/computeRatePerSec';
 	import { serverUrl } from '$ts/stores/serverUrl';
@@ -120,10 +120,13 @@
 				}
 				lastGeneration.duration_ms = data.duration_ms;
 				try {
-					await addGenerationToDb({
-						...lastGeneration,
-						imageDataB64: data.imageDataB64
-					});
+					const canWrite = await isStorageAvailableIfNotPrune(data.imageDataB64);
+					if (canWrite) {
+						await addGenerationToDb({
+							...lastGeneration,
+							imageDataB64: data.imageDataB64
+						});
+					}
 				} catch (error) {
 					console.log('indexedDB error', error);
 				}
