@@ -88,15 +88,12 @@
 				bind:value
 				on:keypress={(e) => handleKeypress(e)}
 				on:input={() => {
-					if (
-						max !== undefined &&
-						value !== null &&
-						value !== undefined &&
-						value.toString().length > max.toString().length
-					) {
-						value = parseInt(value.toString().slice(0, max.toString().length));
+					if (max !== undefined && value !== null && value !== undefined) {
+						if (value.toString().length > max.toString().length) {
+							value = parseInt(value.toString().slice(0, max.toString().length));
+						}
 						if (value > max) {
-							value = max;
+							value = parseInt(value.toString().slice(0, -1));
 						}
 					}
 				}}
