@@ -86,7 +86,7 @@
 			seed:
 				(generationSeed || generationSeed === 0) && $advancedMode
 					? generationSeed
-					: Math.floor(Math.random() * Math.pow(10, 15))
+					: Math.floor(Math.random() * 2147483647)
 		};
 		console.log('generation', lastGeneration);
 		console.log('estimatedDuration', estimatedDuration);

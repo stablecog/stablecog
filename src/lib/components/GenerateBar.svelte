@@ -215,7 +215,7 @@
 				bind:this={promptInputElement}
 				bind:value={promptInputValue}
 				on:keypress={(e) => {
-					if (e.key === 'Enter' && !e.shiftKey) {
+					if (e.key === 'Enter') {
 						e.preventDefault();
 						onSubmit();
 					}

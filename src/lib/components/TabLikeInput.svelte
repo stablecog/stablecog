@@ -20,21 +20,23 @@
 
 	$: showClearInputButton = value !== undefined && value !== '' && value !== null;
 
-	const onEnter = (e: KeyboardEvent) => {
-		e.preventDefault();
-		e.stopPropagation();
-		const inputsOrTextareas = formElement?.querySelectorAll(
-			'input[type=text], input[type=number], textarea'
-		);
-		if (inputsOrTextareas) {
-			for (let i = 0; i < inputsOrTextareas.length; i++) {
-				if (inputsOrTextareas[i] === e.target) {
-					if (i < inputsOrTextareas.length - 1) {
-						(inputsOrTextareas[i + 1] as HTMLInputElement | HTMLTextAreaElement).focus();
-					} else {
-						(inputsOrTextareas[0] as HTMLInputElement | HTMLTextAreaElement).focus();
+	const handleKeypress = (e: KeyboardEvent) => {
+		if (e.key === 'Enter' && e.shiftKey === false) {
+			e.preventDefault();
+			e.stopPropagation();
+			const inputsOrTextareas = formElement?.querySelectorAll(
+				'input[type=text], input[type=number], textarea'
+			);
+			if (inputsOrTextareas) {
+				for (let i = 0; i < inputsOrTextareas.length; i++) {
+					if (inputsOrTextareas[i] === e.target) {
+						if (i < inputsOrTextareas.length - 1) {
+							(inputsOrTextareas[i + 1] as HTMLInputElement | HTMLTextAreaElement).focus();
+						} else {
+							(inputsOrTextareas[0] as HTMLInputElement | HTMLTextAreaElement).focus();
+						}
+						break;
 					}
-					break;
 				}
 			}
 		}
@@ -53,11 +55,7 @@
 			<input
 				bind:this={inputElement}
 				bind:value
-				on:keypress={(e) => {
-					if (e.key === 'Enter') {
-						onEnter(e);
-					}
-				}}
+				on:keypress={(e) => handleKeypress(e)}
 				on:input={() => {
 					if (
 						max !== undefined &&
@@ -88,11 +86,7 @@
 			<input
 				bind:this={inputElement}
 				bind:value
-				on:keypress={(e) => {
-					if (e.key === 'Enter') {
-						onEnter(e);
-					}
-				}}
+				on:keypress={(e) => handleKeypress(e)}
 				on:input={() => {
 					if (
 						max !== undefined &&
