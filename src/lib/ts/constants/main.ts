@@ -4,6 +4,8 @@ export const estimatedDurationBufferRatio = 0.1;
 export const estimatedDurationDefault = 30;
 export const canonicalUrl = 'https://stablecog.com';
 
+export const maxSeed = 2147483647;
+
 export const computeRatePerSecDefault = 150000;
 
 export type TAvailableWidths = '256' | '512' | '768';
