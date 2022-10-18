@@ -57,7 +57,6 @@
 					}
 				)
 				.subscribe();
-			console.log(channel);
 		} else {
 			console.log('Supabase is not detected.');
 		}
