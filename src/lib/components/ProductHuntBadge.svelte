@@ -1,26 +1,26 @@
 <script lang="ts">
 	import { isTouchscreen } from '$ts/stores/isTouchscreen';
+	import { theme } from '$ts/stores/theme';
 </script>
 
 <div class="justify-center py-2 mr-3 hidden md:flex">
 	<div
-		class="flex transition relative overflow-hidden z-0 rounded-lg p-px group ring-2 ring-c-on-bg {!$isTouchscreen
-			? 'hover:ring-c-secondary'
-			: ''}"
+		class="flex transition relative overflow-hidden z-0 rounded-lg p-px group ring-c-on-bg {$theme ===
+		'light'
+			? 'ring-2'
+			: 'ring-1.5'} {!$isTouchscreen ? 'hover:ring-c-primary' : ''}"
 	>
 		<div class="w-full h-full absolute left-0 top-0 pointer-events-none">
 			<div class="w-full h-full relative z-0 overflow-hidden rounded-lg">
 				<div
-					class="w-full h-full origin-left transition transform translate-y-full bg-c-secondary/20 rounded-md {!$isTouchscreen
+					class="w-full h-full origin-left transition transform translate-y-full bg-c-primary/25 rounded-md {!$isTouchscreen
 						? 'group-hover:translate-y-0'
 						: ''}"
 				/>
 			</div>
 		</div>
 		<a
-			class="text-c-on-bg transition relative {!$isTouchscreen
-				? 'group-hover:text-c-secondary'
-				: ''}"
+			class="text-c-on-bg transition relative {!$isTouchscreen ? 'group-hover:text-c-primary' : ''}"
 			href="https://www.producthunt.com/posts/stablecog?utm_source=badge-featured&utm_medium=badge&utm_souce=badge-stablecog"
 			target="_blank"
 			><svg

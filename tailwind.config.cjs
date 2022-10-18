@@ -102,6 +102,9 @@ module.exports = {
 				'pulse-scale': 'pulse-scale 0.75s cubic-bezier(0.5, 0, 0.5, 1) infinite',
 				'spin-faster': 'spin-faster 0.75s linear infinite'
 			},
+			ringWidth: {
+				1.5: '1.5px'
+			},
 			borderRadius: {
 				lg2: '0.625rem'
 			},
