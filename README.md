@@ -1,6 +1,6 @@
 # [Stablecog](https://stablecog.com) - Simple, free & open source AI image generator
 
-It's an app for creating AI generated images using [Stable Diffusion](https://github.com/CompVis/stable-diffusion) cogs. It's made with [SvelteKit](https://kit.svelte.dev), uses [Supabase](https://supabase.com) for recording of metadata and for managing the default cog cluster. For more info on "cogs", you can check out: [Replicate](https://replicate.com). The app hosted at [stablecog.com](https://stablecog.com).
+This is an app for creating AI generated images using [Stable Diffusion](https://github.com/CompVis/stable-diffusion) cogs. It's made with [SvelteKit](https://kit.svelte.dev), uses [Supabase](https://supabase.com) for recording of metadata and for managing the default cog cluster. For more info on "cogs", you can check out: [Replicate](https://replicate.com). The app is hosted at [stablecog.com](https://stablecog.com).
 
 | ![Stablecog (Advanced mode)](https://stablecog.com/images/homepage-mockup-default-dark.png) |
 | :-----------------------------------------------------------------------------------------: |
