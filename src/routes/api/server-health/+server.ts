@@ -1,7 +1,7 @@
 import { env as envPublic } from '$env/dynamic/public';
 import { supabaseAdmin } from '$ts/constants/supabaseAdmin';
-import { getDefaultServers } from '$ts/helpers/db/getDefaultServers';
-import { updateServerHealthInDb } from '$ts/helpers/db/updateServerHealthInDb';
+import { getDefaultServers } from '$ts/queries/db/getDefaultServers';
+import { updateServerHealthInDb } from '$ts/queries/db/updateServerHealthInDb';
 import { shuffleArray } from '$ts/helpers/shuffleArray';
 import type { TDBServer } from '$ts/types/db';
 import type { TServerHealthRes, TServerHealthStatus } from '$ts/types/main';

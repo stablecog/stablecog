@@ -244,7 +244,11 @@
 					>
 						<div class="max-w-full flex flex-col items-center md:px-5 gap-4 pt-4 pb-6">
 							<div
-								class="{aspectRatio >= 3 / 2
+								class="{aspectRatio >= 6 / 2
+									? 'w-180'
+									: aspectRatio >= 4 / 2
+									? 'w-160'
+									: aspectRatio >= 3 / 2
 									? 'w-140'
 									: aspectRatio >= 4 / 3
 									? 'w-128'

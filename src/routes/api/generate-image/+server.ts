@@ -1,7 +1,7 @@
 import { supabaseAdmin } from '$ts/constants/supabaseAdmin';
 import { formatPrompt } from '$ts/helpers/formatPrompt';
 import { getDeviceInfo } from '$ts/helpers/getDeviceInfo';
-import { pickServerUrl } from '$ts/helpers/db/pickServerUrl';
+import { pickServerUrl } from '$ts/queries/db/pickServerUrl';
 import type { TGenerationRequest, TGenerationResponse } from '$ts/types/main';
 import type { PostgrestError } from '@supabase/supabase-js';
 import type { RequestHandler } from '@sveltejs/kit';
