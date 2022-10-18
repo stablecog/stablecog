@@ -116,6 +116,7 @@ export const POST: RequestHandler = async ({ request }) => {
 		generationDurationMs = endTimestamp - startTimestamp;
 		const data: TGenerateImageData = await response.json();
 		const output = data.output[0];
+		const isNSFW = getIsNSFW(output);
 		const endDate = new Date(endTimestamp).toUTCString();
 		if (data.error) {
 			console.log('----', endDate, '--', 'Generation error', '--', data.error, '----');
@@ -133,7 +134,7 @@ export const POST: RequestHandler = async ({ request }) => {
 			server_url: picked_server_url
 		});
 		// If Supabase is enabled, update the generation with prompt, negative prompt, duration and status
-		if (output && !data.error && supabaseAdmin !== undefined) {
+		if (output && !isNSFW && !data.error && supabaseAdmin !== undefined) {
 			try {
 				const startTimestamp = Date.now();
 				let { data, error } = await supabaseAdmin
@@ -208,8 +209,9 @@ export const POST: RequestHandler = async ({ request }) => {
 			}
 		}
 		const generationResponse: TGenerationResponse = {
-			data: output ? { imageDataB64: output, duration_ms: generationDurationMs } : undefined,
-			error: data.error
+			data:
+				output && !isNSFW ? { imageDataB64: output, duration_ms: generationDurationMs } : undefined,
+			error: output && isNSFW ? 'NSFW content detected, try another prompt :(' : data.error
 		};
 		return new Response(JSON.stringify(generationResponse));
 	} catch (error) {
@@ -264,6 +266,15 @@ export const POST: RequestHandler = async ({ request }) => {
 		return new Response(JSON.stringify({ error: 'Something went wrong :(' }));
 	}
 };
+
+function getIsNSFW(imageDataB64: string) {
+	const blackStartString = 'data:image/png;base64,iVBORw0KGg';
+	const blackString = Array.from({ length: 200 }, () => 'A').join('');
+	if (!imageDataB64) {
+		return false;
+	}
+	return imageDataB64.startsWith(blackStartString) && imageDataB64.includes(blackString);
+}
 
 interface TGenerateImageData {
 	output: string[];
