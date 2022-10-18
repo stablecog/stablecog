@@ -31,7 +31,7 @@
 	};
 	let channel: RealtimeChannel | undefined;
 
-	const getRegionName = (countryCode: string) => {
+	const getCountryName = (countryCode: string) => {
 		try {
 			const displayName = new Intl.DisplayNames(['en'], { type: 'region' });
 			const countryName = displayName.of(countryCode);
@@ -188,7 +188,7 @@
 													{
 														key: 'Country:',
 														value: generation.country_code
-															? getRegionName(generation.country_code) ?? 'Unknown'
+															? getCountryName(generation.country_code) ?? 'Unknown'
 															: 'Unknown'
 													},
 													{
