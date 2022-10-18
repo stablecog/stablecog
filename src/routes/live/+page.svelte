@@ -31,7 +31,15 @@
 	};
 	let channel: RealtimeChannel | undefined;
 
-	let getRegionName = new Intl.DisplayNames(['en'], { type: 'region' });
+	const getRegionName = (countryCode: string) => {
+		try {
+			const displayName = new Intl.DisplayNames(['en'], { type: 'region' });
+			const countryName = displayName.of(countryCode);
+			return countryName ?? 'Unknown';
+		} catch (error) {
+			return 'Unknown';
+		}
+	};
 
 	onMount(async () => {
 		if (supabase) {
@@ -180,7 +188,7 @@
 													{
 														key: 'Country:',
 														value: generation.country_code
-															? getRegionName.of(generation.country_code) ?? 'Unknown'
+															? getRegionName(generation.country_code) ?? 'Unknown'
 															: 'Unknown'
 													},
 													{
