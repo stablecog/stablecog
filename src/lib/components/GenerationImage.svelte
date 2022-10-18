@@ -42,11 +42,11 @@
 	height={generation.height}
 />
 <div
-	class="w-full h-full absolute left-0 top-0 flex flex-col justify-between items-end gap-5 overflow-hidden"
+	class="w-full h-full absolute left-0 top-0 flex flex-col justify-between items-end overflow-hidden"
 >
-	<div class="w-full flex justify-between">
+	<div class="w-full flex justify-between items-start gap-4">
 		<div
-			class="flex-1 min-w-0 overflow-hidden flex flex-col items-start justify-start gap-1 transition transform 
+			class="flex-1 max-w-[13rem] min-w-0 overflow-hidden flex flex-row flex-wrap items-start justify-start gap-1 transition transform 
 				-translate-x-full group-focus-within:translate-x-0 group-hover:translate-x-0 p-1.5"
 		>
 			{#if $advancedMode}
@@ -58,7 +58,9 @@
 					pl-2 pr-2.5 py-1.5 overflow-hidden relative z-0 group-2"
 				>
 					<IconSeed class="w-4 h-4 relative" />
-					<p class="flex-1 flex-shrink min-w-0 overflow-hidden overflow-ellipsis relative">
+					<p
+						class="flex-1 whitespace-nowrap flex-shrink min-w-0 overflow-hidden overflow-ellipsis relative text-left"
+					>
 						{generation.seed}
 					</p>
 					<div
@@ -99,7 +101,9 @@
 					class="max-w-full flex items-center text-xs gap-1.5 rounded-lg bg-c-bg pl-2 pr-2.5 py-1.5"
 				>
 					<IconScale class="w-4 h-4" />
-					<p class="flex-1 flex-shrink min-w-0 overflow-hidden overflow-ellipsis">
+					<p
+						class="flex-1 whitespace-nowrap flex-shrink min-w-0 overflow-hidden overflow-ellipsis text-left"
+					>
 						{generation.guidance_scale}
 					</p>
 				</div>
@@ -107,7 +111,9 @@
 					class="max-w-full flex items-center text-xs gap-1.5 rounded-lg bg-c-bg pl-2 pr-2.5 py-1.5"
 				>
 					<IconSteps class="w-4 h-4" />
-					<p class="flex-1 flex-shrink min-w-0 overflow-hidden overflow-ellipsis">
+					<p
+						class="flex-1 whitespace-nowrap flex-shrink min-w-0 overflow-hidden overflow-ellipsis text-left"
+					>
 						{generation.num_inference_steps}
 					</p>
 				</div>
@@ -117,7 +123,9 @@
 					class="max-w-full flex items-center text-xs gap-1.5 rounded-lg bg-c-bg pl-2 pr-2.5 py-1.5"
 				>
 					<IconClock class="w-4 h-4" />
-					<p class="flex-1 flex-shrink min-w-0 overflow-hidden overflow-ellipsis">
+					<p
+						class="flex-1 whitespace-nowrap flex-shrink min-w-0 overflow-hidden overflow-ellipsis text-left"
+					>
 						{(generation.duration_ms / 1000).toLocaleString('en-US', {
 							minimumFractionDigits: 0,
 							maximumFractionDigits: 1
@@ -127,19 +135,11 @@
 			{/if}
 		</div>
 		<div
-			class="flex flex-col items-end justify-start transition transform 
+			class="flex flex-row items-end justify-start transition transform 
 			translate-x-full group-focus-within:translate-x-0 group-hover:translate-x-0"
 		>
-			<DownloadGenerationButton
-				class="p-1.5"
-				url={src}
-				prompt={generation.prompt}
-				seed={generation.seed}
-				guidanceScale={generation.guidance_scale}
-				inferenceSteps={generation.num_inference_steps}
-			/>
 			<CopyButton
-				class="p-1.5 -mt-1.5"
+				class="p-1.5"
 				stringToCopy={generation.prompt}
 				bind:copied={promptCopied}
 				bind:copiedTimeout={promptCopiedTimeout}
@@ -148,10 +148,18 @@
 					seedCopied = false;
 				}}
 			/>
+			<DownloadGenerationButton
+				class="p-1.5 -ml-1.5"
+				url={src}
+				prompt={generation.prompt}
+				seed={generation.seed}
+				guidanceScale={generation.guidance_scale}
+				inferenceSteps={generation.num_inference_steps}
+			/>
 		</div>
 	</div>
 	<div
-		class="w-full max-h-[35%] transition bg-c-bg/90 text-xs relative z-0 overflow-hidden
+		class="w-full max-h-[max(4rem,min(35%,7.5rem))] transition bg-c-bg/90 text-xs relative z-0 overflow-hidden
 		translate-y-full group-focus-within:translate-y-0 group-hover:translate-y-0"
 	>
 		<div class="w-full max-h-full overflow-auto list-fade px-4 py-3 flex flex-col gap-2">
