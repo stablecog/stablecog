@@ -66,5 +66,5 @@ export const tooltipStyleProps: TTooltipProps = {
 		'max-w-[min(100vw-32px,18rem)] px-5 py-3 transform -translate-y-3 text-c-on-bg/75 flex flex-col gap-1 rounded-xl bg-c-bg-secondary overflow-hidden shadow-lg shadow-c-shadow/[var(--o-shadow-strong)',
 	containerAlign: 'left',
 	indicatorClass: 'w-5 h-5',
-	indicatorInnerClass: `w-5 h-5 transform rotate-135 scale-105 bg-c-bg-secondary rounded`
+	indicatorInnerClass: `w-5 h-5 transform rotate-135 bg-c-bg-secondary rounded`
 };
