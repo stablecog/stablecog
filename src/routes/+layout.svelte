@@ -19,7 +19,7 @@
 	let innerHeight: number | undefined;
 
 	let bothHealthCheckTimeout: NodeJS.Timeout;
-	const bothHealthCheckTimeoutDuration = 1000 * 10;
+	const bothHealthCheckTimeoutDuration = 1000 * 15;
 	let mounted = false;
 
 	$: [$theme], setBodyClasses();
@@ -38,7 +38,14 @@
 		if (mounted) {
 			clearTimeout(bothHealthCheckTimeout);
 			try {
-				await Promise.all([getAndSetServerHealth(), getAndSetDefaultServerHealth()]);
+				const isDefaultServer = $serverUrl === envPublic.PUBLIC_DEFAULT_SERVER_URL;
+				if (isDefaultServer) {
+					console.log('Server is the default server, skipping health check for default');
+				}
+				await Promise.all([
+					getAndSetServerHealth(isDefaultServer),
+					...(!isDefaultServer ? [getAndSetDefaultServerHealth()] : [])
+				]);
 			} catch (error) {
 				console.log(error);
 			} finally {
@@ -62,7 +69,7 @@
 		}
 	}
 
-	async function getAndSetServerHealth() {
+	async function getAndSetServerHealth(isDefaultServer: boolean) {
 		const now = Date.now();
 		let newHealthStatus: TServerHealthStatus = 'unknown';
 		if (envPublic.PUBLIC_DEFAULT_SERVER_URL && $serverUrl === envPublic.PUBLIC_DEFAULT_SERVER_URL) {
@@ -71,12 +78,22 @@
 		if (!$serverUrl) {
 			currentServer.set({ lastHealthStatus: 'not-set', features: undefined });
 			currentServerHealthStatus.set('not-set');
+			if (isDefaultServer) {
+				defaultServer.set({
+					lastHealthStatus: 'not-set',
+					features: undefined
+				});
+				defaultServerHealthStatus.set('not-set');
+			}
 			console.log('Server URL not set');
 			return;
 		}
 		try {
 			console.log('Checking server health...');
 			currentServerHealthStatus.set('loading');
+			if (isDefaultServer) {
+				defaultServerHealthStatus.set('loading');
+			}
 			const healthRes = await checkServerHealth($serverUrl);
 			newHealthStatus = healthRes.status;
 			if (healthRes.status === 'healthy') {
@@ -85,6 +102,13 @@
 					features: healthRes.features ?? undefined
 				});
 				currentServerHealthStatus.set('healthy');
+				if (isDefaultServer) {
+					defaultServer.set({
+						lastHealthStatus: 'healthy',
+						features: healthRes.features ?? undefined
+					});
+					defaultServerHealthStatus.set('healthy');
+				}
 				console.log('Server is healthy ✅:', $serverUrl);
 				console.log('Server features:', healthRes.features);
 			} else {
@@ -93,6 +117,13 @@
 					features: healthRes.features ?? undefined
 				});
 				currentServerHealthStatus.set('unhealthy');
+				if (isDefaultServer) {
+					defaultServer.set({
+						lastHealthStatus: 'unhealthy',
+						features: healthRes.features ?? undefined
+					});
+					defaultServerHealthStatus.set('unhealthy');
+				}
 				console.log('Server is unhealthy ❌:', $serverUrl);
 			}
 		} catch (error) {
@@ -104,6 +135,13 @@
 					features: $currentServer.features ?? undefined
 				});
 				currentServerHealthStatus.set('unknown');
+				if (isDefaultServer) {
+					defaultServer.set({
+						lastHealthStatus: 'unknown',
+						features: $defaultServer.features ?? undefined
+					});
+					defaultServerHealthStatus.set('unknown');
+				}
 			}
 			console.log('Server health check took:', Date.now() - now, 'ms');
 		}

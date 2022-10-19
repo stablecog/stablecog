@@ -33,7 +33,7 @@ module.exports = {
 				400: '400ms'
 			},
 			transitionTimingFunction: {
-				'image-generation': 'cubic-bezier(.35,.1,.35,1)'
+				'image-generation': 'cubic-bezier(.4,0,.3,1)'
 			},
 			spacing: {
 				'1ch': '1ch',
