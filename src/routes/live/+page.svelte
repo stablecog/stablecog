@@ -14,53 +14,7 @@
 	import IconPulsing from '$components/icons/IconPulsing.svelte';
 	import type { TDBGenerationRealtimePayload } from '$ts/types/db';
 
-	let generations: TDBGenerationRealtimePayload[] = [
-		{
-			id: 'asdfasdfsadf',
-			country_code: 'AE',
-			duration_ms: 10000,
-			status: 'succeeded',
-			uses_default_server: true,
-			created_at: new Date().toISOString(),
-			updated_at: new Date().toISOString()
-		},
-		{
-			id: 'asdfasdasdffsadf',
-			country_code: 'AE',
-			duration_ms: 10000,
-			status: 'succeeded',
-			uses_default_server: true,
-			created_at: new Date().toISOString(),
-			updated_at: new Date().toISOString()
-		},
-		{
-			id: 'asdfaqwerdfsdfsadf',
-			country_code: 'AE',
-			duration_ms: 10000,
-			status: 'succeeded',
-			uses_default_server: true,
-			created_at: new Date().toISOString(),
-			updated_at: new Date().toISOString()
-		},
-		{
-			id: 'asdfadfgsdfsadf',
-			country_code: 'AE',
-			duration_ms: 10000,
-			status: 'succeeded',
-			uses_default_server: true,
-			created_at: new Date().toISOString(),
-			updated_at: new Date().toISOString()
-		},
-		{
-			id: 'asdfazxcvsdfsadf',
-			country_code: 'AE',
-			duration_ms: 10000,
-			status: 'succeeded',
-			uses_default_server: true,
-			created_at: new Date().toISOString(),
-			updated_at: new Date().toISOString()
-		}
-	];
+	let generations: TDBGenerationRealtimePayload[] = [];
 	const generationsMaxLength = 100;
 	const msForEachDifference = 50;
 	const maxDuration = 500;
