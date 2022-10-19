@@ -1,7 +1,5 @@
-import { indexedDb } from '$ts/constants/indexedDb';
+import { indexedDb, maxImages } from '$ts/constants/indexedDb';
 import type { TDBGeneration } from '$ts/types/db';
-
-const maxImages = 250;
 
 export async function addGenerationToDb(generation: TDBGeneration) {
 	console.log('Adding generation to db:', `"${generation.prompt}"`);

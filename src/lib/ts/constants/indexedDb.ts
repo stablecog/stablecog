@@ -1,6 +1,8 @@
 import type { TDBGeneration } from '$ts/types/db';
 import Dexie, { type Table } from 'dexie';
 
+export const maxImages = 500;
+
 export class MySubClassedDexie extends Dexie {
 	generations!: Table<TDBGeneration>;
 
