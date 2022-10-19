@@ -1,3 +1,4 @@
+import type { TTooltipProps } from '$ts/actions/tooltip';
 import type { TTab } from '$ts/types/main';
 
 export const estimatedDurationBufferRatio = 0.1;
@@ -52,3 +53,17 @@ export interface TInferenceStepsTab extends TTab {
 export interface TGuidanceScaleTab extends TTab {
 	value: number;
 }
+
+export const tooltipStyleProps: TTooltipProps = {
+	titleClass: 'font-bold text-sm leading-relaxed',
+	descriptionClass: 'text-c-on-bg/50 text-xs leading-relaxed',
+	wrapperClass: 'transition duration-250 transform -mt-0.25 w-full',
+	animationTime: 250,
+	animateFrom: 'opacity-0 translate-y-3',
+	animateTo: 'opacity-100 translate-y-0',
+	containerClass:
+		'px-5 py-3 transform -translate-y-3 text-c-on-bg/75 flex flex-col gap-1 rounded-xl bg-c-bg-secondary w-auto max-w-[17rem] shadow-lg shadow-c-shadow/[var(--o-shadow-strong)',
+	containerAlign: 'left',
+	indicatorClass: 'w-5 h-5',
+	indicatorInnerClass: `w-5 h-5 transform rotate-135 scale-105 bg-c-bg-secondary rounded`
+};

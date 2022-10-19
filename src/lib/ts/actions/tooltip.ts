@@ -3,7 +3,9 @@ export function tooltip(
 	{
 		wrapperClass,
 		containerClass,
+		containerAlign,
 		indicatorClass,
+		indicatorInnerClass,
 		rowClass,
 		title,
 		titleClass,
@@ -16,21 +18,28 @@ export function tooltip(
 	}: TTooltipProps
 ) {
 	const tooltipWrapper = document.createElement('div');
-	tooltipWrapper.style.zIndex = '50';
+	const indicator = document.createElement('div');
+	const tooltipContainer = document.createElement('div');
+	tooltipWrapper.style.zIndex = '9999';
 	tooltipWrapper.style.position = 'absolute';
-	tooltipWrapper.style.paddingRight = '1rem';
 	tooltipWrapper.style.pointerEvents = 'none';
+	tooltipWrapper.style.backgroundColor = 'blue';
 
 	addClasses(tooltipWrapper, animateFrom);
 	addClasses(tooltipWrapper, wrapperClass);
 
 	if (indicatorClass) {
-		const indicator = document.createElement('div');
+		indicator.style.position = 'absolute';
 		addClasses(indicator, indicatorClass);
+		if (indicatorInnerClass) {
+			const indicatorInner = document.createElement('div');
+			addClasses(indicatorInner, indicatorInnerClass);
+			indicator.appendChild(indicatorInner);
+		}
 		tooltipWrapper.appendChild(indicator);
 	}
 
-	const tooltipContainer = document.createElement('div');
+	tooltipContainer.style.position = 'absolute';
 	addClasses(tooltipContainer, containerClass);
 	tooltipWrapper.appendChild(tooltipContainer);
 
@@ -72,12 +81,17 @@ export function tooltip(
 	const onMouseEnter = () => {
 		clearTimeout(mouseLeaveTimeout);
 		if (!document.body.contains(tooltipWrapper)) {
-			const { left, top, height } = node.getBoundingClientRect();
-			const scrollY = window.scrollY;
-			tooltipWrapper.style.left = `${left}px`;
-			tooltipWrapper.style.top = `${top + height + scrollY}px`;
-
 			document.body.appendChild(tooltipWrapper);
+			const { left: nodeL, top: nodeT, height: nodeH, width: nodeW } = node.getBoundingClientRect();
+			const { height: indicatorH, width: indicatorW } = indicator.getBoundingClientRect();
+			const { width: containerW } = tooltipContainer.getBoundingClientRect();
+			const scrollY = window.scrollY;
+			tooltipWrapper.style.left = `${nodeL + nodeW / 2 - indicatorW / 2}px`;
+			tooltipWrapper.style.top = `${nodeT + nodeH + scrollY}px`;
+			tooltipContainer.style.marginTop = `${indicatorH}px`;
+			tooltipContainer.style.marginLeft = `${
+				containerAlign === 'left' ? -indicatorW : -containerW / 2 + indicatorW / 2
+			}px`;
 			setTimeout(() => {
 				addClasses(tooltipWrapper, animateTo);
 				removeClasses(tooltipWrapper, animateFrom);
@@ -135,10 +149,12 @@ function removeClasses(element: HTMLElement, classes?: string) {
 	}
 }
 
-interface TTooltipProps {
+export interface TTooltipProps {
 	wrapperClass?: string;
 	containerClass?: string;
+	containerAlign?: 'left' | 'center';
 	indicatorClass?: string;
+	indicatorInnerClass?: string;
 	title?: string;
 	titleClass: string;
 	rowClass?: string;
