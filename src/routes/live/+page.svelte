@@ -142,7 +142,7 @@
 				</p>
 			</div>
 			<div class="w-full md:w-64 max-w-full flex flex-col gap-1.5 text-center md:text-left">
-				<h1 class="text-c-on-bg/50 text-sm">Total GPU Time</h1>
+				<h1 class="text-c-on-bg/50 text-sm">Total Duration</h1>
 				<p class="font-bold text-4xl">
 					{Math.round($generationTotalDurationMs / 1000).toLocaleString('en-US')}s
 				</p>
