@@ -1,3 +1,5 @@
+import { tick } from 'svelte';
+
 export function tooltip(
 	node: HTMLElement,
 	{
@@ -20,6 +22,7 @@ export function tooltip(
 	const tooltipWrapper = document.createElement('div');
 	const indicator = document.createElement('div');
 	const tooltipContainer = document.createElement('div');
+	const padding = 16;
 	tooltipWrapper.style.zIndex = '9999';
 	tooltipWrapper.style.position = 'absolute';
 	tooltipWrapper.style.pointerEvents = 'none';
@@ -78,20 +81,37 @@ export function tooltip(
 
 	let mouseLeaveTimeout: NodeJS.Timeout;
 
-	const onMouseEnter = () => {
+	const addStyles = async () => {
+		const { left: nodeL, top: nodeT, height: nodeH, width: nodeW } = node.getBoundingClientRect();
+		const { height: indicatorH, width: indicatorW } = indicator.getBoundingClientRect();
+		const { width: containerW } = tooltipContainer.getBoundingClientRect();
+		const scrollY = window.scrollY;
+		tooltipWrapper.style.left = `${nodeL + nodeW / 2 - indicatorW / 2}px`;
+		tooltipWrapper.style.top = `${nodeT + nodeH + scrollY}px`;
+		tooltipContainer.style.marginTop = `${indicatorH}px`;
+		const leftDistance = nodeL + nodeW / 2 - containerW / 2;
+		const rightDistance = -(nodeL + nodeW / 2 + containerW / 2 - window.innerWidth);
+		let newMarginLeft = containerAlign === 'left' ? -indicatorW : -containerW / 2 + indicatorW / 2;
+		if (leftDistance < padding && containerAlign !== 'left') {
+			newMarginLeft = newMarginLeft - (leftDistance - padding);
+		} else if (rightDistance < padding && containerAlign !== 'right') {
+			newMarginLeft = newMarginLeft + (rightDistance - padding);
+		}
+		tooltipContainer.style.marginLeft = `${newMarginLeft}px`;
+	};
+
+	const removeStyles = async () => {
+		tooltipWrapper.style.left = '';
+		tooltipWrapper.style.top = '';
+		tooltipContainer.style.marginTop = '';
+		tooltipContainer.style.marginLeft = '';
+	};
+
+	const onMouseEnter = async () => {
 		clearTimeout(mouseLeaveTimeout);
 		if (!document.body.contains(tooltipWrapper)) {
 			document.body.appendChild(tooltipWrapper);
-			const { left: nodeL, top: nodeT, height: nodeH, width: nodeW } = node.getBoundingClientRect();
-			const { height: indicatorH, width: indicatorW } = indicator.getBoundingClientRect();
-			const { width: containerW } = tooltipContainer.getBoundingClientRect();
-			const scrollY = window.scrollY;
-			tooltipWrapper.style.left = `${nodeL + nodeW / 2 - indicatorW / 2}px`;
-			tooltipWrapper.style.top = `${nodeT + nodeH + scrollY}px`;
-			tooltipContainer.style.marginTop = `${indicatorH}px`;
-			tooltipContainer.style.marginLeft = `${
-				containerAlign === 'left' ? -indicatorW : -containerW / 2 + indicatorW / 2
-			}px`;
+			addStyles();
 			setTimeout(() => {
 				addClasses(tooltipWrapper, animateTo);
 				removeClasses(tooltipWrapper, animateFrom);
@@ -102,15 +122,16 @@ export function tooltip(
 		}
 	};
 
-	const onMouseLeave = () => {
+	const onMouseLeave = async () => {
 		if (tooltipWrapper) {
 			addClasses(tooltipWrapper, animateFrom);
 			removeClasses(tooltipWrapper, animateTo);
 		}
 		clearTimeout(mouseLeaveTimeout);
-		mouseLeaveTimeout = setTimeout(() => {
+		mouseLeaveTimeout = setTimeout(async () => {
 			if (document.body.contains(tooltipWrapper)) {
 				document.body.removeChild(tooltipWrapper);
+				removeStyles();
 			}
 		}, animationTime);
 	};
@@ -152,7 +173,7 @@ function removeClasses(element: HTMLElement, classes?: string) {
 export interface TTooltipProps {
 	wrapperClass?: string;
 	containerClass?: string;
-	containerAlign?: 'left' | 'center';
+	containerAlign?: 'left' | 'center' | 'right';
 	indicatorClass?: string;
 	indicatorInnerClass?: string;
 	title?: string;

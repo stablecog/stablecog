@@ -14,7 +14,53 @@
 	import IconPulsing from '$components/icons/IconPulsing.svelte';
 	import type { TDBGenerationRealtimePayload } from '$ts/types/db';
 
-	let generations: TDBGenerationRealtimePayload[] = [];
+	let generations: TDBGenerationRealtimePayload[] = [
+		{
+			id: 'asdfasdfsadf',
+			country_code: 'AE',
+			duration_ms: 10000,
+			status: 'succeeded',
+			uses_default_server: true,
+			created_at: new Date().toISOString(),
+			updated_at: new Date().toISOString()
+		},
+		{
+			id: 'asdfasdasdffsadf',
+			country_code: 'AE',
+			duration_ms: 10000,
+			status: 'succeeded',
+			uses_default_server: true,
+			created_at: new Date().toISOString(),
+			updated_at: new Date().toISOString()
+		},
+		{
+			id: 'asdfaqwerdfsdfsadf',
+			country_code: 'AE',
+			duration_ms: 10000,
+			status: 'succeeded',
+			uses_default_server: true,
+			created_at: new Date().toISOString(),
+			updated_at: new Date().toISOString()
+		},
+		{
+			id: 'asdfadfgsdfsadf',
+			country_code: 'AE',
+			duration_ms: 10000,
+			status: 'succeeded',
+			uses_default_server: true,
+			created_at: new Date().toISOString(),
+			updated_at: new Date().toISOString()
+		},
+		{
+			id: 'asdfazxcvsdfsadf',
+			country_code: 'AE',
+			duration_ms: 10000,
+			status: 'succeeded',
+			uses_default_server: true,
+			created_at: new Date().toISOString(),
+			updated_at: new Date().toISOString()
+		}
+	];
 	const generationsMaxLength = 100;
 	const msForEachDifference = 50;
 	const maxDuration = 500;
@@ -114,12 +160,12 @@
 		titleClass: 'font-medium text-c-on-bg/50 text-sm leading-relaxed text-left',
 		descriptionClass: 'font-bold text-sm leading-relaxed text-right',
 		rowClass: 'w-full flex gap-4 justify-between',
-		wrapperClass: 'w-full transition duration-250 -mt-0.25 w-full',
+		wrapperClass: 'w-full transition duration-250 -mt-0.25',
 		animationTime: 250,
 		animateFrom: 'opacity-0 translate-y-3',
 		animateTo: 'opacity-100 translate-y-0',
 		containerClass:
-			'px-5 py-3 transform -translate-y-3 text-c-on-bg/75 flex flex-col gap-1 rounded-xl bg-c-bg-secondary max-w-[18rem] shadow-lg shadow-c-shadow/[var(--o-shadow-strong)',
+			'px-5 py-3 transform -translate-y-3 max-w-[min(100vw-32px,14rem)] overflow-hidden text-c-on-bg/75 flex flex-col gap-1 rounded-xl bg-c-bg-secondary shadow-lg shadow-c-shadow/[var(--o-shadow-strong)',
 		indicatorClass: 'w-5 h-5',
 		indicatorInnerClass: `w-5 h-5 transform rotate-135 scale-105 bg-c-bg-secondary rounded`
 	};
