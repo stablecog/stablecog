@@ -196,7 +196,9 @@
 <svelte:window bind:innerHeight />
 
 <div
-	class="w-full bg-c-bg text-c-on-bg min-h-screen flex flex-col {$theme === 'light'
+	id="main-container"
+	class="w-full relative overflow-x-hidden bg-c-bg text-c-on-bg min-h-screen flex flex-col {$theme ===
+	'light'
 		? 'theme-light'
 		: 'theme-dark'}"
 	style="background-image: url({$theme === 'light'
@@ -206,7 +208,7 @@
 		: ''}"
 >
 	<Navbar />
-	<main class="w-full flex-1 flex flex-col overflow-x-hidden relative break-words">
+	<main class="w-full flex-1 flex flex-col relative break-words">
 		<slot />
 	</main>
 	<Footer />

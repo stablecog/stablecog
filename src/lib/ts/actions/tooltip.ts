@@ -3,6 +3,7 @@ import { tick } from 'svelte';
 export function tooltip(
 	node: HTMLElement,
 	{
+		parentContainerId,
 		wrapperClass,
 		containerClass,
 		containerAlign,
@@ -108,9 +109,10 @@ export function tooltip(
 	};
 
 	const onMouseEnter = async () => {
+		console.log(document.getElementById(`${parentContainerId}`));
 		clearTimeout(mouseLeaveTimeout);
-		if (!document.body.contains(tooltipWrapper)) {
-			document.body.appendChild(tooltipWrapper);
+		if (!document.getElementById(`${parentContainerId}`)?.contains(tooltipWrapper)) {
+			document.getElementById(`${parentContainerId}`)?.appendChild(tooltipWrapper);
 			addStyles();
 			setTimeout(() => {
 				addClasses(tooltipWrapper, animateTo);
@@ -129,8 +131,8 @@ export function tooltip(
 		}
 		clearTimeout(mouseLeaveTimeout);
 		mouseLeaveTimeout = setTimeout(async () => {
-			if (document.body.contains(tooltipWrapper)) {
-				document.body.removeChild(tooltipWrapper);
+			if (document.getElementById(`${parentContainerId}`)?.contains(tooltipWrapper)) {
+				document.getElementById(`${parentContainerId}`)?.removeChild(tooltipWrapper);
 				removeStyles();
 			}
 		}, animationTime);
@@ -171,6 +173,7 @@ function removeClasses(element: HTMLElement, classes?: string) {
 }
 
 export interface TTooltipProps {
+	parentContainerId: string;
 	wrapperClass?: string;
 	containerClass?: string;
 	containerAlign?: 'left' | 'center' | 'right';
