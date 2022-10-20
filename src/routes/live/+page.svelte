@@ -192,12 +192,27 @@
 															? getCountryName(generation.country_code) ?? 'Unknown'
 															: 'Unknown'
 													},
-													{
-														key: 'Status:',
-														value:
-															generation.status.slice(0, 1).toUpperCase() +
-															generation.status.slice(1)
-													},
+													...(generation.width && generation.height
+														? [
+																{
+																	key: 'Dimensions:',
+																	value:
+																		generation.width && generation.height
+																			? `${generation.width}x${generation.height}`
+																			: 'Unknown'
+																}
+														  ]
+														: []),
+													...(generation.num_inference_steps
+														? [
+																{
+																	key: 'Steps:',
+																	value: generation.num_inference_steps
+																		? generation.num_inference_steps.toString()
+																		: 'Unknown'
+																}
+														  ]
+														: []),
 													...(generation.duration_ms
 														? [
 																{
@@ -210,6 +225,12 @@
 																}
 														  ]
 														: []),
+													{
+														key: 'Status:',
+														value:
+															generation.status.slice(0, 1).toUpperCase() +
+															generation.status.slice(1)
+													},
 													{
 														key: 'Server:',
 														value: generation.uses_default_server ? 'Default' : 'Custom'

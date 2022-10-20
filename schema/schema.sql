@@ -114,6 +114,9 @@ CREATE TABLE "generation_realtime" (
     "duration_ms" INTEGER,
     "country_code" TEXT,
     "uses_default_server" BOOLEAN NOT NULL,
+    "width" INTEGER,
+    "height" INTEGER,
+    "num_inference_steps" INTEGER,
     "id" UUID NOT NULL DEFAULT uuid_generate_v4(),
     "created_at" TIMESTAMPTZ DEFAULT TIMEZONE('utc' :: TEXT, NOW()) NOT NULL,
     "updated_at" TIMESTAMPTZ DEFAULT TIMEZONE('utc' :: TEXT, NOW()) NOT NULL,
@@ -154,7 +157,10 @@ INSERT INTO
         updated_at,
         country_code,
         duration_ms,
-        uses_default_server
+        uses_default_server,
+        width,
+        height,
+        num_inference_steps
     )
 VALUES
     (
@@ -169,7 +175,10 @@ VALUES
                 url
             FROM
                 server
-        )
+        ),
+        new.width,
+        new.height,
+        new.num_inference_steps
     );
 
 END IF;
@@ -185,4 +194,24 @@ AFTER
 INSERT
     OR
 UPDATE
-    ON generation FOR each ROW EXECUTE PROCEDURE duplicate_to_generation_realtime();
+    ON generation FOR EACH ROW EXECUTE PROCEDURE duplicate_to_generation_realtime();
+
+CREATE
+OR REPLACE FUNCTION prune_generation_realtime() RETURNS trigger AS $ $ BEGIN
+DELETE FROM
+    generation_realtime
+WHERE
+    created_at < TIMEZONE('utc' :: TEXT, NOW()) - INTERVAL '2 hours';
+
+RETURN NULL;
+
+END;
+
+$ $ language plpgsql SECURITY DEFINER;
+
+CREATE trigger generation_created_or_updated_prune
+AFTER
+INSERT
+    OR
+UPDATE
+    ON generation FOR EACH ROW EXECUTE PROCEDURE prune_generation_realtime();

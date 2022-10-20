@@ -22,4 +22,7 @@ export interface TDBGenerationRealtimePayload {
 	uses_default_server: boolean;
 	created_at: string;
 	updated_at: string;
+	width: number | null;
+	height: number | null;
+	num_inference_steps: number | null;
 }
