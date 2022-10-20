@@ -51,17 +51,19 @@
 					{ event: '*', schema: 'public', table: 'generation_realtime' },
 					(payload) => {
 						const newData = payload.new as TDBGenerationRealtimePayload;
-						if (newData.created_at && generations.map((i) => i.id).includes(newData.id)) {
-							const index = generations.findIndex((i) => i.id === newData.id);
-							generations[index] = newData;
-							generations = [...generations];
-						} else {
-							generations = [newData, ...generations];
+						if (newData.id && newData.status && newData.created_at) {
+							if (generations.map((i) => i.id).includes(newData.id)) {
+								const index = generations.findIndex((i) => i.id === newData.id);
+								generations[index] = newData;
+								generations = [...generations];
+							} else {
+								generations = [newData, ...generations];
+							}
+							generations = generations
+								.sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime())
+								.slice(0, generationsMaxLength);
+							getAndSetTotals();
 						}
-						generations = generations
-							.sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime())
-							.slice(0, generationsMaxLength);
-						getAndSetTotals();
 					}
 				)
 				.subscribe();
