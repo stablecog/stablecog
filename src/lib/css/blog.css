@@ -100,18 +100,18 @@
 }
 
 .toc-item-h2 {
-	font-size: 0.875rem;
-	line-height: 1.85;
+	font-size: 1rem;
+	line-height: 1.9;
 	color: rgba(var(--c-on-bg) / 0.75);
 	font-weight: 600;
-	margin-top: 0.75rem;
+	margin-top: 1rem;
 }
 .toc-item-h2:first-child {
 	margin-top: 0rem;
 }
 .toc-item-h3 {
-	font-size: 0.75rem;
-	line-height: 1.85;
+	font-size: 0.875rem;
+	line-height: 1.9;
 	color: rgba(var(--c-on-bg) / 0.5);
 	font-weight: 400;
 }

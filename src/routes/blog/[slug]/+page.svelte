@@ -42,11 +42,11 @@
 
 <div
 	class="w-full flex-1 flex flex-col transition relative items-center 
-	px-5 md:px-12 lg:pl-6 lg:pr-14 xl:px-6 pt-4 md:pt-12 pb-16"
+	px-5 md:px-12 lg:px-0 pt-5 md:pt-12 pb-16"
 >
-	<div class="flex flex-row justify-center items-start">
+	<div class="w-full flex flex-row justify-between items-start">
 		<ToC {toc} />
-		<div class="flex flex-col justify-start items-center pt-3">
+		<div class="flex-1 flex flex-col justify-start items-center lg:px-16">
 			<div class="max-w-2xl flex flex-col items-center">
 				<h1 class="font-bold text-center text-3.5xl leading-snug px-3">{title}</h1>
 				<p class="mt-3 mb-8 text-c-on-bg/40 font-medium text-center leading-relaxed">
@@ -63,7 +63,7 @@
 				{@html content}
 			</div>
 		</div>
-		<ToC {toc} class="hidden xl:flex opacity-0 pointer-events-none" />
+		<ToC {toc} class="hidden 2xl:flex opacity-0 pointer-events-none" />
 	</div>
 	<LinkButton href="/blog" class="mt-5" target={null} prefetch={true}>
 		<div class="flex items-center justify-center gap-2.5 px-2 py-1">
@@ -74,7 +74,7 @@
 			<p class="font-bold">Back to Blog</p>
 		</div>
 	</LinkButton>
-	<div class="w-full flex justify-center pt-6 pb-10">
+	<div class="w-full flex justify-center pt-6 pb-10 md:px-8 lg:px-12">
 		<div class="w-full max-w-7xl bg-c-on-bg/5 rounded-full h-2px" />
 	</div>
 	<div class="w-full max-w-7xl flex flex-col items-center gap-12">
