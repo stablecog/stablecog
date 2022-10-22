@@ -110,10 +110,7 @@
 	margin-top: 2rem;
 }
 .toc-item-h2:first-child {
-	margin-top: 0rem;
-}
-.toc-item-h3:first-child {
-	margin-top: 0.4rem;
+	margin-top: 0.5rem;
 }
 .toc-item-h3 {
 	font-size: 0.875rem;

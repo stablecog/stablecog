@@ -29,7 +29,7 @@
 				href="/blog/{post.slug}"
 				data-sveltekit-prefetch
 				class="w-full max-w-md md:max-w-sm bg-c-bg-secondary ring-2 ring-c-bg-tertiary relative z-0 overflow-hidden
-				rounded-lg flex flex-col shadow-lg shadow-c-shadow/[var(--o-shadow-strong)] transition group
+				rounded-lg flex flex-col shadow-lg shadow-c-shadow/[var(--o-shadow-normal)] transition group
 				{!$isTouchscreen ? 'hover:ring-4 hover:shadow-2xl hover:-translate-y-1' : ''}"
 			>
 				<div class="w-full h-auto relative z-0 overflow-hidden">

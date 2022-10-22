@@ -14,7 +14,7 @@
 		class="h-full items-start justify-start flex flex-col 
 		self-stretch"
 	>
-		<div class="pb-4">
+		<div class="pb-2">
 			<SocialBar />
 		</div>
 		<nav class="toc max-h-full overflow-y-auto max-w-[15rem] pb-16 px-2 rounded-2xl">

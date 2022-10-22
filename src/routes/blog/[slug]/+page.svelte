@@ -80,7 +80,7 @@
 	<div class="w-full max-w-7xl flex flex-col items-center gap-12">
 		<div
 			class="max-w-full flex flex-col items-center bg-c-bg relative z-0 overflow-hidden
-			ring-2 ring-c-bg-secondary rounded-xl shadow-xl shadow-c-shadow/[var(--o-shadow-strong)]"
+			ring-2 ring-c-bg-secondary rounded-xl shadow-lg shadow-c-shadow/[var(--o-shadow-normal)]"
 		>
 			<p class="font-bold text-center text-base bg-c-bg-secondary w-full px-5 py-2.5">Join Us</p>
 			<div class="flex flex-wrap justify-center items-center p-2">
