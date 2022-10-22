@@ -34,7 +34,7 @@
 </script>
 
 <MetaTag
-	title="{title} | Stablecog Blog"
+	title="{title} | Blog"
 	{description}
 	imageUrl="{canonicalUrl}/previews{$page.url.pathname}.png"
 	canonical="{canonicalUrl}{$page.url.pathname}"
