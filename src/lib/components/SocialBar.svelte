@@ -13,7 +13,7 @@
 		<IconSocial
 			type="discord"
 			class="{size === 'sm' ? 'w-8 h-8' : 'w-10 h-10'} transition {color === 'normal'
-				? 'text-c-on-bg/75'
+				? 'text-c-on-bg'
 				: 'text-c-on-bg/50'} {!$isTouchscreen ? 'group-hover:text-c-primary' : ''}"
 		/>
 	</IconButton>
@@ -21,7 +21,7 @@
 		<IconSocial
 			type="twitter"
 			class="{size === 'sm' ? 'w-8 h-8' : 'w-10 h-10'} transition {color === 'normal'
-				? 'text-c-on-bg/75'
+				? 'text-c-on-bg'
 				: 'text-c-on-bg/50'} {!$isTouchscreen ? 'group-hover:text-c-primary' : ''}"
 		/>
 	</IconButton>
@@ -29,7 +29,7 @@
 		<IconSocial
 			type="instagram"
 			class="{size === 'sm' ? 'w-8 h-8' : 'w-10 h-10'} transition {color === 'normal'
-				? 'text-c-on-bg/75'
+				? 'text-c-on-bg'
 				: 'text-c-on-bg/50'} {!$isTouchscreen ? 'group-hover:text-c-primary' : ''}"
 		/>
 	</IconButton>
@@ -37,7 +37,7 @@
 		<IconSocial
 			type="producthunt"
 			class="{size === 'sm' ? 'w-8 h-8' : 'w-10 h-10'} transition {color === 'normal'
-				? 'text-c-on-bg/75'
+				? 'text-c-on-bg'
 				: 'text-c-on-bg/50'} {!$isTouchscreen ? 'group-hover:text-c-primary' : ''}"
 		/>
 	</IconButton>
@@ -45,7 +45,7 @@
 		<IconSocial
 			type="github"
 			class="{size === 'sm' ? 'w-8 h-8' : 'w-10 h-10'} transition {color === 'normal'
-				? 'text-c-on-bg/75'
+				? 'text-c-on-bg'
 				: 'text-c-on-bg/50'} {!$isTouchscreen ? 'group-hover:text-c-primary' : ''}"
 		/>
 	</IconButton>

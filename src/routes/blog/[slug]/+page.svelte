@@ -82,16 +82,12 @@
 			class="max-w-full flex flex-col items-center bg-c-bg relative z-0 overflow-hidden
 			ring-2 ring-c-bg-secondary rounded-xl shadow-xl shadow-c-shadow/[var(--o-shadow-strong)]"
 		>
-			<p
-				class="font-bold text-c-on-bg/75 text-center text-base bg-c-bg-secondary w-full px-5 py-2.5"
-			>
-				Join Us
-			</p>
+			<p class="font-bold text-center text-base bg-c-bg-secondary w-full px-5 py-2.5">Join Us</p>
 			<div class="flex flex-wrap justify-center items-center p-2">
 				<SocialBar size="md" color="normal" />
 			</div>
 		</div>
-		<div class="w-full flex flex-col items-center gap-5">
+		<div class="w-full flex flex-col items-center gap-6">
 			<p class="font-bold text-xl text-center max-w-md px-5 leading-normal">
 				Start generating beautiful images!
 			</p>
