@@ -42,11 +42,11 @@
 
 <div
 	class="w-full flex-1 flex flex-col transition relative items-center 
-	px-5 md:px-12 lg:pl-6 lg:pr-14 xl:px-6 pt-6 md:pt-12 pb-16"
+	px-5 md:px-12 lg:pl-6 lg:pr-14 xl:px-6 pt-4 md:pt-12 pb-16"
 >
 	<div class="flex flex-row justify-center items-start">
 		<ToC {toc} />
-		<div class="flex flex-col justify-start items-center pt-4">
+		<div class="flex flex-col justify-start items-center pt-3">
 			<div class="max-w-2xl flex flex-col items-center">
 				<h1 class="font-bold text-center text-3.5xl leading-snug px-3">{title}</h1>
 				<p class="mt-3 mb-8 text-c-on-bg/40 font-medium text-center leading-relaxed">
