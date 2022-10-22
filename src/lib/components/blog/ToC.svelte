@@ -17,7 +17,7 @@
 		<div class="pb-3">
 			<SocialBar />
 		</div>
-		<nav class="toc max-h-full overflow-y-auto max-w-[15rem] py-3 px-2 -mt-3 rounded-2xl">
+		<nav class="toc max-h-full overflow-y-auto max-w-[15rem] pb-16 px-2 rounded-2xl">
 			{@html toc}
 		</nav>
 	</div>
