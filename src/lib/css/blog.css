@@ -101,17 +101,21 @@
 
 .toc-item-h2 {
 	font-size: 1rem;
-	line-height: 2;
+	line-height: 1.5;
 	color: rgba(var(--c-on-bg) / 0.75);
 	font-weight: 600;
-	margin-top: 1rem;
+	margin-top: 2rem;
 }
 .toc-item-h2:first-child {
 	margin-top: 0rem;
 }
+.toc-item-h3:first-child {
+	margin-top: 0.4rem;
+}
 .toc-item-h3 {
 	font-size: 0.875rem;
-	line-height: 2;
+	line-height: 1.5;
+	margin-top: 0.6rem;
 	margin-left: 0.5rem;
 	color: rgba(var(--c-on-bg) / 0.5);
 	font-weight: 400;
