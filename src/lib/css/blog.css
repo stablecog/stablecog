@@ -13,14 +13,14 @@
 }
 .blog h2 {
 	font-weight: 700;
-	font-size: 1.6rem;
-	margin-top: 3rem;
+	font-size: 1.75rem;
+	margin-top: 3.5rem;
 	line-height: 1.25;
 }
 .blog h3 {
 	font-weight: 700;
 	font-size: 1.25rem;
-	margin-top: 2rem;
+	margin-top: 2.5rem;
 	line-height: 1.25;
 }
 .blog h1 + p,
@@ -46,7 +46,7 @@
 	padding: 2px 4px;
 	margin: -2px -4px;
 	border-radius: 0px;
-	box-shadow: 0 -2px 0 0 rgba(var(--c-primary)) inset;
+	box-shadow: 0 -2px 0 0 rgba(var(--c-primary) / 0.5) inset;
 	z-index: 0;
 }
 .blog a:hover {
@@ -88,7 +88,7 @@
 	padding: 2px 4px;
 	margin: -2px -4px;
 	border-radius: 0px;
-	box-shadow: 0 0px 0 0 rgba(var(--c-primary)) inset;
+	box-shadow: 0 0px 0 0 rgba(var(--c-primary) / 0.5) inset;
 	z-index: 0;
 }
 .toc a:hover,
@@ -101,7 +101,7 @@
 
 .toc-item-h2 {
 	font-size: 1rem;
-	line-height: 1.9;
+	line-height: 2;
 	color: rgba(var(--c-on-bg) / 0.75);
 	font-weight: 600;
 	margin-top: 1rem;
@@ -111,7 +111,8 @@
 }
 .toc-item-h3 {
 	font-size: 0.875rem;
-	line-height: 1.9;
+	line-height: 2;
+	margin-left: 0.5rem;
 	color: rgba(var(--c-on-bg) / 0.5);
 	font-weight: 400;
 }
