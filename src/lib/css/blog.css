@@ -30,6 +30,9 @@
 .blog h3 + p {
 	margin-top: 0.75rem;
 }
+.blog h2 + h3 {
+	margin-top: 1.5rem;
+}
 .blog p {
 	font-size: 1rem;
 	line-height: 1.75;
