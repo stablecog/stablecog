@@ -90,7 +90,7 @@ Aitrepreneur is a relatively small YouTube channel with great content on Stable 
 
 ### 2. [r/StableDiffusion](https://www.reddit.com/r/StableDiffusion)
 
-The community run subreddit for Stable Diffusion. It's a great place to see what others are doing with Stable Diffusion, share your own experiments and learn more about Stable Diffusion. It has 70K+ members at the time of writing with usually 1K+ online.
+The community run subreddit for Stable Diffusion. It's a great place to see what others are doing with Stable Diffusion, share your own experiments and learn more about Stable Diffusion. [Stable Diffusion Reddit](https://www.reddit.com/r/StableDiffusion) has 70K+ members at the time of writing with usually 1K+ online.
 
 ![r/StableDiffusion](https://azwnrqkywgmlooolxxgm.supabase.co/storage/v1/object/public/blog-public/r-stablediffusion.jpg)<!--rehype:width=2436  &height=1690-->
 
