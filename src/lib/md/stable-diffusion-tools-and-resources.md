@@ -86,7 +86,7 @@ Here are some resources that you might want to check out if you want to go deepe
 
 Aitrepreneur is a relatively small YouTube channel with great content on Stable Diffusion and other AI models. I followed his tutorial when using DreamBooth to train Stable Diffusion with my own photos.
 
-![promptoMANIA](https://azwnrqkywgmlooolxxgm.supabase.co/storage/v1/object/public/blog-public/aitrepreneur.jpg)<!--rehype:width=2646  &height=1724-->
+![Aitrepreneur](https://azwnrqkywgmlooolxxgm.supabase.co/storage/v1/object/public/blog-public/aitrepreneur.jpg)<!--rehype:width=2646  &height=1724-->
 
 ### 2. [r/StableDiffusion](https://www.reddit.com/r/StableDiffusion)
 
