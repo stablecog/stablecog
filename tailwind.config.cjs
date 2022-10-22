@@ -101,6 +101,9 @@ module.exports = {
 			boxShadow: {
 				navbar: '0 0 1.5rem 0'
 			},
+			screens: {
+				'1.5xl': '1408px'
+			},
 			animation: {
 				'ping-custom': 'ping-custom 1s ease-out infinite -0.9s',
 				'ping-custom-bg': 'ping-custom-bg 1s ease infinite',

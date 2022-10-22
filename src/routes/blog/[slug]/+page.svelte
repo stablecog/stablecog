@@ -63,7 +63,7 @@
 				{@html content}
 			</div>
 		</div>
-		<ToC {toc} class="hidden 2xl:flex opacity-0 pointer-events-none" />
+		<ToC {toc} class="hidden 1.5xl:flex opacity-0 pointer-events-none" />
 	</div>
 	<LinkButton href="/blog" class="mt-5" target={null} prefetch={true}>
 		<div class="flex items-center justify-center gap-2.5 px-2 py-1">
