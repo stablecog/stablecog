@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://boohuman.com/sitemap.xml
+Sitemap: https://stablecog.com/sitemap.xml
