@@ -55,7 +55,7 @@ export interface TGuidanceScaleTab extends TTab {
 }
 
 export const tooltipStyleProps: TTooltipProps = {
-	parentContainerId: 'main-container',
+	parentContainerId: 'tooltip-container',
 	titleClass: 'font-bold text-sm leading-relaxed',
 	descriptionClass: 'text-c-on-bg/50 text-xs leading-relaxed',
 	wrapperClass: 'w-full transition duration-250 transform -mt-0.25',

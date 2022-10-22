@@ -1,5 +1,3 @@
-import { tick } from 'svelte';
-
 export function tooltip(
 	node: HTMLElement,
 	{

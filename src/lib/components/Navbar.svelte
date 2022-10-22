@@ -2,22 +2,15 @@
 	import { page } from '$app/stores';
 	import IconButton from '$components/buttons/IconButton.svelte';
 	import HealthIndicator from '$components/HealthIndicator.svelte';
-	import IconHistory from '$components/icons/IconHistory.svelte';
-	import IconHome from '$components/icons/IconHome.svelte';
-	import IconLive from '$components/icons/IconLive.svelte';
 	import IconSettings from '$components/icons/IconSettings.svelte';
-	import IconSocial from '$components/icons/IconSocial.svelte';
 	import Logo from '$components/Logo.svelte';
 	import ModalWrapper from '$components/ModalWrapper.svelte';
-	import ProductHuntBadge from '$components/ProductHuntBadge.svelte';
+	import NavigationTabBar from '$components/NavigationTabBar.svelte';
 	import SetServerModal from '$components/SetServerModal.svelte';
 	import SettingsMenu from '$components/SettingsMenu.svelte';
 	import { clickoutside } from '$ts/actions/clickoutside';
 	import { isTouchscreen } from '$ts/stores/isTouchscreen';
-	import { theme } from '$ts/stores/theme';
 	import { onMount } from 'svelte';
-	import { quadOut } from 'svelte/easing';
-	import { scale } from 'svelte/transition';
 
 	let isSettingsOpen = false;
 	let isSwitchServerModalOpen = false;
@@ -45,112 +38,38 @@
 
 <svelte:window on:scroll={setNotAtTheTop} />
 
-<div class="w-full flex flex-row items-center justify-between sticky z-50 top-0 transition">
+<nav class="w-full flex flex-row items-center justify-between fixed -top-px z-50 transition">
 	<div
-		style="background-image: url({$theme === 'light'
-			? '/illustrations/grid-on-light.svg'
-			: '/illustrations/grid-on-dark.svg'});"
 		class="w-full h-full rounded-b-xl absolute left-0 top-0 transform transition duration-300 bg-c-bg 
-		shadow-lg shadow-c-shadow/[var(--o-shadow-strong)] {notAtTheTop
+		shadow-navbar shadow-c-shadow/[var(--o-shadow-strong)] {notAtTheTop
 			? 'translate-y-0 opacity-100'
 			: '-translate-y-24 opacity-0'}"
 	/>
-	<a
-		href="/"
-		data-sveltekit-prefetch
-		class="px-3.5 py-3 self-stretch flex items-center justify-center relative rounded-xl z-0 group"
-	>
-		<div class="w-full h-full absolute left-0 top-0 pointer-events-none p-1.5">
-			<div class="w-full h-full rounded-xl relative z-0 overflow-hidden">
-				<div
-					class="w-full h-full origin-left rounded-xl transition transform -translate-x-full
-			  	bg-c-primary/25 {!$isTouchscreen ? 'group-hover:translate-x-0' : ''}"
-				/>
-			</div>
-		</div>
-		<Logo class="w-9 h-9" />
-	</a>
-	<div class="flex flex-wrap items-center justify-end relative">
-		<ProductHuntBadge />
-		<IconButton class="p-3 -ml-3 -mr-3.5" href="/discord" name="Discord">
-			<div class="w-9 h-9 relative">
-				<div
-					transition:scale={{ duration: 200, easing: quadOut, opacity: 0 }}
-					class="w-full h-full absolute left-0 top-0"
-				>
-					<IconSocial
-						type="discord"
-						class="w-full h-full relative transition transform {!$isTouchscreen
-							? 'group-hover:text-c-primary'
-							: 'text-c-on-bg'}"
+	<div class="flex self-stretch w-48">
+		<a
+			href="/"
+			data-sveltekit-prefetch
+			class="px-3.5 py-5.5 self-stretch flex items-center justify-center relative rounded-xl z-0 group"
+		>
+			<div class="w-full h-full absolute left-0 top-0 pointer-events-none p-1.5">
+				<div class="w-full h-full rounded-xl relative z-0 overflow-hidden">
+					<div
+						class="w-full h-full origin-left rounded-xl transition transform -translate-x-full
+						bg-c-primary/25 {!$isTouchscreen ? 'group-hover:translate-x-0' : ''}"
 					/>
 				</div>
 			</div>
-		</IconButton>
-		<HealthIndicator />
-		<IconButton
-			class="p-3 -ml-3"
-			href={$page.url.pathname === '/live' ? '/' : '/live'}
-			name={$page.url.pathname === '/live' ? 'Home' : 'Live'}
-		>
-			<div class="w-8 h-8 relative">
-				{#if $page.url.pathname === '/live'}
-					<div
-						transition:scale={{ duration: 200, easing: quadOut, opacity: 0 }}
-						class="w-full h-full absolute left-0 top-0"
-					>
-						<IconHome
-							class="w-full h-full relative transition transform {!$isTouchscreen
-								? 'group-hover:text-c-primary'
-								: 'text-c-on-bg'}"
-						/>
-					</div>
-				{:else}
-					<div
-						transition:scale={{ duration: 200, easing: quadOut, opacity: 0 }}
-						class="w-full h-full absolute left-0 top-0"
-					>
-						<IconLive
-							class="w-full h-full relative transition transform {!$isTouchscreen
-								? 'group-hover:text-c-primary'
-								: 'text-c-on-bg'}"
-						/>
-					</div>
-				{/if}
-			</div>
-		</IconButton>
-		<IconButton
-			class="p-3 -ml-6"
-			href={$page.url.pathname === '/history' ? '/' : '/history'}
-			name={$page.url.pathname === '/history' ? 'Home' : 'History'}
-		>
-			<div class="w-8 h-8 relative">
-				{#if $page.url.pathname === '/history'}
-					<div
-						transition:scale={{ duration: 200, easing: quadOut, opacity: 0 }}
-						class="w-full h-full absolute left-0 top-0"
-					>
-						<IconHome
-							class="w-full h-full relative transition transform {!$isTouchscreen
-								? 'group-hover:text-c-primary'
-								: 'text-c-on-bg'}"
-						/>
-					</div>
-				{:else}
-					<div
-						transition:scale={{ duration: 200, easing: quadOut, opacity: 0 }}
-						class="w-full h-full absolute left-0 top-0"
-					>
-						<IconHistory
-							class="w-full h-full relative transition transform {!$isTouchscreen
-								? 'group-hover:text-c-primary'
-								: 'text-c-on-bg'}"
-						/>
-					</div>
-				{/if}
-			</div>
-		</IconButton>
-		<div use:clickoutside={{ callback: closeSettings }} class="flex flex-col items-end -ml-6">
+			<Logo class="w-9 h-9" />
+		</a>
+	</div>
+	<div class="w-auto md:w-full max-w-[33rem] hidden md:flex">
+		<NavigationTabBar />
+	</div>
+	<div class="flex flex-wrap items-center justify-end relative w-48">
+		{#if $page.url.pathname === '/'}
+			<HealthIndicator />
+		{/if}
+		<div use:clickoutside={{ callback: closeSettings }} class="flex flex-col items-end -ml-3.5">
 			<IconButton class="p-3" onClick={toggleSettings} name="Settings">
 				<IconSettings
 					class="w-8 h-8 relative transition transform {isSettingsOpen
@@ -169,7 +88,7 @@
 			</div>
 		</div>
 	</div>
-</div>
+</nav>
 
 {#if isSwitchServerModalOpen}
 	<ModalWrapper>

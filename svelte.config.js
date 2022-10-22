@@ -9,7 +9,8 @@ const config = {
 		alias: {
 			'$components/*': './src/lib/components',
 			'$ts/*': './src/lib/ts',
-			'$css/*': './src/lib/css'
+			'$css/*': './src/lib/css',
+			'$md/*': './src/lib/md'
 		},
 		inlineStyleThreshold: 60 * 1024
 	}

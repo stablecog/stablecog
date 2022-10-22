@@ -15,6 +15,8 @@
 		defaultServerHealthStatus
 	} from '$ts/stores/serverHealth';
 	import type { TServerHealthStatus } from '$ts/types/main';
+	import NavbarBottom from '$components/NavbarBottom.svelte';
+	import { page } from '$app/stores';
 
 	let innerHeight: number | undefined;
 
@@ -23,7 +25,7 @@
 	let mounted = false;
 
 	$: [$theme], setBodyClasses();
-	$: [$serverUrl, mounted], clearAndSetHealthCheckTimeout();
+	$: [$serverUrl, mounted, $page], clearAndSetHealthCheckTimeout();
 
 	onMount(async () => {
 		mounted = true;
@@ -36,6 +38,10 @@
 
 	async function clearAndSetHealthCheckTimeout() {
 		if (mounted) {
+			if ($page.url.pathname !== '/') {
+				clearTimeout(bothHealthCheckTimeout);
+				return;
+			}
 			clearTimeout(bothHealthCheckTimeout);
 			try {
 				const isDefaultServer = $serverUrl === envPublic.PUBLIC_DEFAULT_SERVER_URL;
@@ -196,11 +202,8 @@
 <svelte:window bind:innerHeight />
 
 <div
-	id="main-container"
-	class="w-full relative overflow-x-hidden bg-c-bg text-c-on-bg min-h-screen flex flex-col {$theme ===
-	'light'
-		? 'theme-light'
-		: 'theme-dark'}"
+	class="w-full relative bg-c-bg text-c-on-bg 
+	min-h-screen flex flex-col {$theme === 'light' ? 'theme-light' : 'theme-dark'}"
 	style="background-image: url({$theme === 'light'
 		? '/illustrations/grid-on-light.svg'
 		: '/illustrations/grid-on-dark.svg'}); background-size: 24px;{innerHeight !== undefined
@@ -208,8 +211,15 @@
 		: ''}"
 >
 	<Navbar />
+	<div class="h-20" />
 	<main class="w-full flex-1 flex flex-col relative break-words">
 		<slot />
 	</main>
 	<Footer />
+	<NavbarBottom class="md:hidden" />
+	<div class="h-18 md:hidden" />
+	<div
+		id="tooltip-container"
+		class="absolute overflow-x-hidden left-0 top-0 w-full h-full pointer-events-none"
+	/>
 </div>

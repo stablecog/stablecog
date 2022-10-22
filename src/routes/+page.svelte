@@ -121,7 +121,7 @@
 				}
 				lastGeneration.duration_ms = data.duration_ms;
 				try {
-					const canWrite = await isStorageAvailableIfNotPrune(data.imageDataB64);
+					const canWrite = await isStorageAvailableIfNotPrune();
 					if (canWrite) {
 						await addGenerationToDb({
 							...lastGeneration,
@@ -202,7 +202,7 @@
 	canonical={canonicalUrl}
 />
 
-<div class="w-full flex flex-col items-center flex-1 justify-center px-4">
+<div class="w-full flex flex-col items-center flex-1 justify-center px-4 pt-4">
 	<div class="w-full flex flex-col items-center justify-center">
 		{#if isCheckComplete && !$serverUrl}
 			<SetServerModal isOnBarrier={false} />

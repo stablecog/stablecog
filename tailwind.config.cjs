@@ -47,6 +47,7 @@ module.exports = {
 				13: '3.25rem',
 				17: '4.25rem',
 				18: '4.5rem',
+				30: '7.5rem',
 				58: '14.5rem',
 				60: '15rem',
 				62: '15.5rem',
@@ -97,6 +98,9 @@ module.exports = {
 				160: '1.6',
 				175: '1.75'
 			},
+			boxShadow: {
+				navbar: '0 0 1.5rem 0'
+			},
 			animation: {
 				'ping-custom': 'ping-custom 1s ease-out infinite -0.9s',
 				'ping-custom-bg': 'ping-custom-bg 1s ease infinite',
@@ -109,6 +113,9 @@ module.exports = {
 			},
 			borderRadius: {
 				lg2: '0.625rem'
+			},
+			fontSize: {
+				'3.5xl': '2rem'
 			},
 			keyframes: {
 				'pulse-custom': {

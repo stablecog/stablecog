@@ -16,7 +16,7 @@
 	const randomWidth = () => widths[Math.floor(Math.random() * widths.length)];
 	const randomHeight = () => heights[Math.floor(Math.random() * heights.length)];
 
-	const placeholderArray = Array.from({ length: 20 }, (_, i) => {
+	const placeholderArray = Array.from({ length: 20 }, (_) => {
 		return {
 			width: randomWidth(),
 			height: randomHeight()

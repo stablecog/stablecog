@@ -1,11 +1,14 @@
 <script lang="ts">
+	export let type: 'bottom' | 'normal' = 'normal';
 	export { classes as class };
 	let classes = '';
 </script>
 
 <div
-	class="w-full text-xs md:text-sm flex items-stretch bg-c-bg shadow-lg shadow-c-shadow/[var(--o-shadow-normal)] 
-	ring-2 ring-c-bg-secondary rounded-xl transition relative {classes}"
+	class="{type === 'bottom'
+		? 'rounded-t-xl self-stretch shadow-navbar shadow-c-shadow/[var(--o-shadow-stronger)]'
+		: 'rounded-xl shadow-lg shadow-c-shadow/[var(--o-shadow-normal)] '} w-full flex items-stretch text-xs md:text-sm bg-c-bg
+		ring-2 ring-c-bg-secondary transition relative {classes}"
 >
 	<slot />
 </div>

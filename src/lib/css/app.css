@@ -16,7 +16,7 @@
 	--c-barrier: 32 31 34;
 	--o-shadow-normal: 0.15;
 	--o-shadow-strong: 0.25;
-	--o-shadow-stronger: 0.35;
+	--o-shadow-stronger: 0.4;
 }
 
 .theme-dark {
@@ -53,6 +53,12 @@
 	--o-shadow-normal: 0.05;
 	--o-shadow-strong: 0.1;
 	--o-shadow-stronger: 0.15;
+}
+
+html,
+body {
+	scroll-behavior: smooth;
+	scroll-padding-top: 7rem;
 }
 
 body {

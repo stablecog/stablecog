@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { page } from '$app/stores';
 	import DropdownItem from '$components/DropdownItem.svelte';
 	import HealthIndicator from '$components/HealthIndicator.svelte';
 	import IconAdvanced from '$components/icons/IconAdvanced.svelte';
@@ -40,7 +41,10 @@
 						</p>
 					</div>
 					<div class="w-full flex items-center gap-3 px-0.5">
-						<HealthIndicator class="-mx-3 -my-2.5" />
+						{#if $page.url.pathname === '/'}
+							<HealthIndicator class="-mx-3 -my-2.5" />
+						{/if}
+
 						<p class="flex-shrink min-w-0 text-xs text-left break-all font-normal text-c-on-bg/60">
 							{$serverUrl ? parseUrlStr($serverUrl) : 'Not connected'}
 						</p>

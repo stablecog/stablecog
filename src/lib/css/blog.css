@@ -1,0 +1,117 @@
+.blog,
+.toc,
+.blog-link {
+	--e-default: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.blog h1 {
+	font-weight: 700;
+	font-size: 2rem;
+	text-align: center;
+	margin-bottom: 1.5rem;
+	line-height: 1.25;
+}
+.blog h2 {
+	font-weight: 700;
+	font-size: 1.6rem;
+	margin-top: 3rem;
+	line-height: 1.25;
+}
+.blog h3 {
+	font-weight: 700;
+	font-size: 1.25rem;
+	margin-top: 2rem;
+	line-height: 1.25;
+}
+.blog h1 + p,
+.blog h2 + p {
+	margin-top: 0.5rem;
+}
+.blog h3 + p {
+	margin-top: 0.75rem;
+}
+.blog p {
+	font-size: 1rem;
+	line-height: 1.75;
+	margin-top: 1rem;
+	color: rgba(var(--c-on-bg) / 0.75);
+	font-weight: 200;
+}
+.blog p:first-child {
+	margin-top: 0rem;
+}
+.blog a {
+	transition: all 0.2s var(--e-default);
+	position: relative;
+	padding: 2px 4px;
+	margin: -2px -4px;
+	border-radius: 0px;
+	box-shadow: 0 -2px 0 0 rgba(var(--c-primary)) inset;
+	z-index: 0;
+}
+.blog a:hover {
+	color: rgba(var(--c-on-primary));
+	border-radius: 4px;
+	box-shadow: 0 -1.75rem 0 0 rgba(var(--c-primary)) inset;
+	font-weight: 700;
+}
+.blog h3 a:hover {
+	color: rgba(var(--c-on-primary));
+	border-radius: 5px;
+	box-shadow: 0 -2.1rem 0 0 rgba(var(--c-primary)) inset;
+	font-weight: 700;
+}
+
+.blog img {
+	background: rgba(var(--c-bg-tertiary));
+	border-radius: 0.5rem;
+	margin: 0.5rem 0rem;
+	box-shadow: 0 0.5rem 1rem rgba(var(--c-shadow) / var(--o-shadow-strong));
+	border: 2px solid rgba(var(--c-bg-tertiary));
+}
+
+.toc nav {
+	margin-left: -0.75rem;
+}
+
+.toc nav ol {
+	margin-left: 0.75rem;
+}
+.toc nav li {
+	line-height: 2;
+}
+
+.toc a,
+.blog-link {
+	transition: all 0.2s var(--e-default);
+	position: relative;
+	padding: 2px 4px;
+	margin: -2px -4px;
+	border-radius: 0px;
+	box-shadow: 0 0px 0 0 rgba(var(--c-primary)) inset;
+	z-index: 0;
+}
+.toc a:hover,
+.blog-link:hover {
+	color: rgba(var(--c-on-primary));
+	border-radius: 4px;
+	box-shadow: 0 -1.75rem 0 0 rgba(var(--c-primary)) inset;
+	font-weight: 700;
+}
+
+.toc-item-h2 {
+	font-size: 0.875rem;
+	line-height: 1.85;
+	color: rgba(var(--c-on-bg) / 0.75);
+	font-weight: 600;
+	margin-top: 0.75rem;
+}
+.toc-item-h2:first-child {
+	margin-top: 0rem;
+}
+.toc-item-h3 {
+	font-size: 0.75rem;
+	line-height: 1.85;
+	color: rgba(var(--c-on-bg) / 0.5);
+	font-weight: 400;
+}

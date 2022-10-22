@@ -11,7 +11,7 @@
 	import TabLikeInput from '$components/TabLikeInput.svelte';
 	import TabLikeRangeInput from '$components/TabLikeRangeInput.svelte';
 	import { autoresize } from '$components/textarea/autoresize';
-	import { tooltip, type TTooltipProps } from '$ts/actions/tooltip';
+	import { tooltip } from '$ts/actions/tooltip';
 	import { expandCollapse } from '$ts/animation/transitions';
 	import {
 		guidanceScaleDefault,
@@ -210,7 +210,7 @@
 						onSubmit();
 					}
 				}}
-				on:input={(e) => {
+				on:input={() => {
 					if (
 						promptInputValue !== undefined &&
 						promptInputValue !== null &&
@@ -239,7 +239,7 @@
 					class="w-full h-full flex items-end absolute left-0 top-0 overflow-hidden z-0 rounded-xl pointer-events-none"
 				>
 					<div
-						transition:expandCollapse={{ transformOrigin: 'bottom' }}
+						transition:expandCollapse|local={{ transformOrigin: 'bottom' }}
 						class="w-full h-6 absolute left-0 bottom-0 bg-gradient-to-t from-c-bg-secondary to-c-bg-secondary/0"
 					/>
 				</div>
@@ -321,7 +321,7 @@
 					>
 						<div
 							use:tooltip={{
-								title: 'Steps',
+								title: 'Sampling Steps',
 								description: 'How many steps will be taken to generate (diffuse) the image.',
 								...tooltipStyleProps
 							}}
@@ -399,6 +399,6 @@
 		</div>
 	{/if}
 	{#if loadingOrSubmitting}
-		<div transition:expandCollapse={{ duration: 300 }} class="w-full h-[4vh]" />
+		<div transition:expandCollapse|local={{ duration: 300 }} class="w-full h-[4vh]" />
 	{/if}
 </form>

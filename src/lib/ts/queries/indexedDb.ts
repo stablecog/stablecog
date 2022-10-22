@@ -16,7 +16,7 @@ export async function getGenerationsFromDb() {
 	return generations;
 }
 
-export async function isStorageAvailableIfNotPrune(data: string) {
+export async function isStorageAvailableIfNotPrune() {
 	let shouldContinuePruning = true;
 	let canWrite = false;
 	try {

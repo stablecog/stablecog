@@ -4,6 +4,7 @@
 	export let loading = false;
 	export let href: string | undefined = undefined;
 	export let onClick: (() => void) | undefined = undefined;
+	export let prefetch: boolean = true;
 	export let size: 'md' | 'sm' = 'md';
 	export { classes as class };
 	let classes = '';
@@ -12,7 +13,7 @@
 {#if href}
 	<a
 		{href}
-		data-sveltekit-prefetch
+		data-sveltekit-prefetch={prefetch ? '' : 'off'}
 		{disabled}
 		class="{size === 'sm'
 			? 'text-sm px-6 md:px-8 py-4 rounded-lg2'

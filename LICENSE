@@ -1,8 +1,9 @@
-The Stablecog logo, and some of the assets in the "src/static" folder are copyrighted by Appditto LLC and used by permission for this project only.
+The Stablecog logo, and some of the assets/articles in the "src/static" folder are copyrighted by Appditto LLC and used by permission for this project only.
 
 Use of these assets without express written consent from Appditto LLC for any reason is strictly forbidden.
 Copyrighted assets include, but are not limited to:
 
+- src/lib/md folder's entire content
 - static/favicon.ico
 - static/icon.svg
 - static/icon-16.png

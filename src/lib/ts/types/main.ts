@@ -67,4 +67,30 @@ export type TIconSocial =
 	| 'github'
 	| 'medium'
 	| 'youtube'
-	| 'email';
+	| 'email'
+	| 'producthunt';
+
+export type TNavbarRouteOption = 'home' | 'live' | 'blog' | 'history';
+export interface TNavbarRoute {
+	name: string;
+	href: string;
+	icon: TNavbarRouteOption;
+}
+
+export interface TBlogPost {
+	slug: string;
+	title: string;
+	description: string;
+	author: string;
+	author_url?: string;
+	date: string;
+}
+
+export interface TToC {
+	title: string;
+	description: string;
+	author: string;
+	date: string;
+}
+
+export type TTabBarPlacement = 'bottom' | 'normal';
