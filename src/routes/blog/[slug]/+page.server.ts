@@ -51,12 +51,10 @@ const r = unified()
 const getPath = (slug: string | undefined) => `/src/lib/md/${slug}.md`;
 
 export const load: ServerLoad = async ({ params }) => {
-	console.time('load');
 	const { slug } = params;
 	const blogPostsImport = import.meta.glob('$md/*.md');
 	if (!blogPostsImport[getPath(slug)]) {
-		console.log('not found');
-		throw error(404, 'Blog posts not found');
+		throw error(404, 'Blog post not found');
 	}
 	const post: any = await blogPostsImport[getPath(slug)]();
 	const unprocessedHTML: string = post.html;
@@ -69,7 +67,6 @@ export const load: ServerLoad = async ({ params }) => {
 	const htmlString = file.toString();
 	const toc = htmlString.split('</nav>')[0].split('<nav class="toc">')[1];
 	const content = htmlString.split('</nav>')[1];
-	console.timeEnd('load');
 	return {
 		content,
 		toc,
