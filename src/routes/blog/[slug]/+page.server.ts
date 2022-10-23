@@ -8,7 +8,9 @@ import rehypeStringify from 'rehype-stringify';
 import rehypeToC from '@jsdevtools/rehype-toc';
 import rehypeSlug from 'rehype-slug';
 import rehypeAttrs from 'rehype-attr';
+import remarkImages from 'remark-images';
 import rehypeRaw from 'rehype-raw';
+import rehypeAttributes from 'rehype-attributes';
 import yaml from 'yaml';
 import { canonicalUrl } from '$ts/constants/main';
 import { error, type ServerLoad } from '@sveltejs/kit';
@@ -20,11 +22,22 @@ const averageWordLength = 5;
 
 const r = unified()
 	.use(remarkParse)
+	.use(remarkImages)
 	.use(remarkFrontmatter)
 	.use(extractFrontmatter, { yaml: yaml.parse })
 	.use(remarkToRehype, { allowDangerousHtml: true })
 	.use(rehypeRaw)
 	.use(rehypeAttrs, { properties: 'attr' })
+	.use(rehypeAttributes, {
+		img: function (node) {
+			// @ts-ignore
+			node.properties.loading = 'lazy';
+		},
+		a: function (node) {
+			// @ts-ignore
+			if (node.children.map((n) => n.tagName).includes('img')) node.properties.hasimage = true;
+		}
+	})
 	.use(rehypeExternalLinks, {
 		rel: ['nofollow'],
 		target(element) {
@@ -38,6 +51,7 @@ const r = unified()
 const getPath = (slug: string | undefined) => `/src/lib/md/${slug}.md`;
 
 export const load: ServerLoad = async ({ params }) => {
+	console.time('load');
 	const { slug } = params;
 	const blogPostsImport = import.meta.glob('$md/*.md');
 	if (!blogPostsImport[getPath(slug)]) {
@@ -52,9 +66,10 @@ export const load: ServerLoad = async ({ params }) => {
 	const reading_time = Math.round(wordsAveraged / averageWordsPerMinute);
 	const attributes: TToC = post.attributes;
 	const file = await r.process(unprocessedHTML);
-	const html = String(file).replaceAll('<img src=', '<img loading="lazy" src=');
-	const toc = html.split('</nav>')[0].split('<nav class="toc">')[1];
-	const content = html.split('</nav>')[1];
+	const htmlString = file.toString();
+	const toc = htmlString.split('</nav>')[0].split('<nav class="toc">')[1];
+	const content = htmlString.split('</nav>')[1];
+	console.timeEnd('load');
 	return {
 		content,
 		toc,

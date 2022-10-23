@@ -5,7 +5,7 @@
 }
 
 .blog h1 {
-	font-weight: 700;
+	font-weight: 800;
 	font-size: 2rem;
 	text-align: center;
 	margin-bottom: 1.5rem;
@@ -14,11 +14,11 @@
 .blog h2 {
 	font-weight: 700;
 	font-size: 1.75rem;
-	margin-top: 3.5rem;
+	margin-top: 4rem;
 	line-height: 1.35;
 }
 .blog h3 {
-	font-weight: 700;
+	font-weight: 600;
 	font-size: 1.25rem;
 	margin-top: 2.5rem;
 	line-height: 1.5;
@@ -28,7 +28,7 @@
 	margin-top: 0.5rem;
 }
 .blog h3 + p {
-	margin-top: 0.75rem;
+	margin-top: 0.5rem;
 }
 .blog h2 + h3 {
 	margin-top: 1.5rem;
@@ -52,13 +52,15 @@
 	box-shadow: 0 -2px 0 0 rgba(var(--c-primary) / 0.5) inset;
 	z-index: 0;
 }
-.blog a:hover {
+.blog a:hover,
+.blog a:focus-visible {
 	color: rgba(var(--c-on-primary));
 	border-radius: 4px;
 	box-shadow: 0 -1.75rem 0 0 rgba(var(--c-primary)) inset;
 	font-weight: 700;
 }
-.blog h3 a:hover {
+.blog h3 a:hover,
+.blog h3 a:focus-visible {
 	color: rgba(var(--c-on-primary));
 	border-radius: 5px;
 	box-shadow: 0 -2.1rem 0 0 rgba(var(--c-primary)) inset;
@@ -66,11 +68,36 @@
 }
 
 .blog img {
+	transition: box-shadow 0.2s var(--e-default);
 	background: rgba(var(--c-bg-tertiary));
 	border-radius: 0.5rem;
-	margin: 0.5rem 0rem;
-	box-shadow: 0 0.5rem 1rem rgba(var(--c-shadow) / var(--o-shadow-strong));
-	border: 2px solid rgba(var(--c-bg-tertiary));
+	margin-top: 0.75rem;
+	margin-bottom: 1rem;
+	box-shadow: 0 0 0 2px rgba(var(--c-bg-tertiary)),
+		0 0.5rem 1rem rgba(var(--c-shadow) / var(--o-shadow-strong));
+}
+
+.blog a:hover > img,
+.blog a:focus-visible > img {
+	box-shadow: 0 0 0 3px rgba(var(--c-primary) / 0.5),
+		0 0.5rem 1rem rgba(var(--c-shadow) / var(--o-shadow-strong));
+}
+
+.blog a[hasimage] {
+	transition: all 0.2s var(--e-default);
+	padding: 0;
+	margin: 0 0;
+	border-radius: 0;
+	box-shadow: none;
+	z-index: 0;
+}
+
+.blog a[hasimage]:hover,
+.blog a[hasimage]:focus-visible {
+	padding: 0;
+	margin: 0;
+	border-radius: 0;
+	box-shadow: none;
 }
 
 .toc nav {
@@ -95,7 +122,9 @@
 	z-index: 0;
 }
 .toc a:hover,
-.blog-link:hover {
+.blog-link:hover,
+.toc a:focus-visible,
+.blog-link:focus-visible {
 	color: rgba(var(--c-on-primary));
 	border-radius: 4px;
 	box-shadow: 0 -1.75rem 0 0 rgba(var(--c-primary)) inset;

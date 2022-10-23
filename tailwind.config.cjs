@@ -104,6 +104,9 @@ module.exports = {
 			screens: {
 				'1.5xl': '1408px'
 			},
+			maxWidth: {
+				'2.5xl': '45rem'
+			},
 			animation: {
 				'ping-custom': 'ping-custom 1s ease-out infinite -0.9s',
 				'ping-custom-bg': 'ping-custom-bg 1s ease infinite',
