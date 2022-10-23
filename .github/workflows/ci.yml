@@ -31,7 +31,7 @@ jobs:
 
       - name: Build and tag
         if: success()
-        uses: docker/build-push-action@
+        uses: docker/build-push-action@v3
         with:
           context: .
           tags: appditto/stablecog:${{ env.BRANCH_NAME }}-${{ env.GITHUB_RUN_ID }}
