@@ -48,7 +48,7 @@
 				$page.url.pathname
 			) * 100}%)"
 			class="h-full absolute left-0 top-0 transition {type === 'bottom'
-				? 'px-2 pt-2 pb-2.5'
+				? 'px-1.5 pt-1.5 pb-2'
 				: 'p-1'}"
 		>
 			<div
@@ -72,7 +72,7 @@
 		>
 			<div
 				class="w-full h-full absolute left-0 top-0 rounded-lg {type === 'bottom'
-					? 'px-2 pt-2 pb-2.5'
+					? 'px-1.5 pt-1.5 pb-2'
 					: 'p-1'}"
 			>
 				<div class="w-full h-full overflow-hidden relative z-0 rounded-lg">

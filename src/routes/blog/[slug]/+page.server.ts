@@ -1,4 +1,4 @@
-import { remark } from 'remark';
+import { unified } from 'unified';
 import rehypeExternalLinks from 'rehype-external-links';
 import remarkParse from 'remark-parse';
 import remarkFrontmatter from 'remark-frontmatter';
@@ -12,12 +12,13 @@ import rehypeRaw from 'rehype-raw';
 import yaml from 'yaml';
 import { canonicalUrl } from '$ts/constants/main';
 import { error, type ServerLoad } from '@sveltejs/kit';
+import { convert as convertHtmlToText } from 'html-to-text';
 import type { TToC } from '$ts/types/main';
 
-const averageWordsPerMinute = 200;
+const averageWordsPerMinute = 265;
 const averageWordLength = 5;
 
-const r = remark()
+const r = unified()
 	.use(remarkParse)
 	.use(remarkFrontmatter)
 	.use(extractFrontmatter, { yaml: yaml.parse })
@@ -45,10 +46,11 @@ export const load: ServerLoad = async ({ params }) => {
 	}
 	const post: any = await blogPostsImport[getPath(slug)]();
 	const unprocessedHTML: string = post.html;
-	const attributes: TToC = post.attributes;
-	const characters = unprocessedHTML.length;
+	const plainText = convertHtmlToText(unprocessedHTML);
+	const characters = plainText.length;
 	const wordsAveraged = characters / averageWordLength;
 	const reading_time = Math.round(wordsAveraged / averageWordsPerMinute);
+	const attributes: TToC = post.attributes;
 	const file = await r.process(unprocessedHTML);
 	const html = String(file).replaceAll('<img src=', '<img loading="lazy" src=');
 	const toc = html.split('</nav>')[0].split('<nav class="toc">')[1];

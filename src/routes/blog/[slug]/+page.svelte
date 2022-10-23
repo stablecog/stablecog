@@ -53,7 +53,7 @@
 					{formattedDate} • {reading_time} min read
 				</p>
 				{#if author}
-					<p class="mt-0.5 text-c-on-bg/40 font-medium text-center leading-relaxed">
+					<p class="mt-0.75 text-c-on-bg/40 font-medium text-center leading-relaxed">
 						{#if author_url}
 							<a class="blog-link" href={author_url} target="_blank">{author}</a>
 						{:else}
