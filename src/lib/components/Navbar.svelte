@@ -3,6 +3,7 @@
 	import IconButton from '$components/buttons/IconButton.svelte';
 	import HealthIndicator from '$components/HealthIndicator.svelte';
 	import IconSettings from '$components/icons/IconSettings.svelte';
+	import PageLoadProgressBar from '$components/PageLoadProgressBar.svelte';
 	import Logo from '$components/Logo.svelte';
 	import ModalWrapper from '$components/ModalWrapper.svelte';
 	import NavigationTabBar from '$components/NavigationTabBar.svelte';
@@ -39,6 +40,7 @@
 <svelte:window on:scroll={setNotAtTheTop} />
 
 <nav class="w-full flex flex-row items-center justify-between fixed -top-px z-50 transition">
+	<PageLoadProgressBar />
 	<div
 		class="w-full h-full rounded-b-xl absolute left-0 top-0 transform transition duration-300 bg-c-bg 
 		shadow-navbar shadow-c-shadow/[var(--o-shadow-stronger)] ring-2 ring-c-bg-secondary {notAtTheTop
