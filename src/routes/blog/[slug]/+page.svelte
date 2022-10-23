@@ -47,17 +47,20 @@
 	<div class="w-full flex flex-row justify-between items-start">
 		<ToC {toc} />
 		<div class="flex-1 flex flex-col justify-start items-center lg:px-16">
-			<div class="max-w-2xl flex flex-col items-center">
+			<div class="max-w-2xl flex flex-col items-center mb-8">
 				<h1 class="font-bold text-center text-3.5xl leading-snug px-3">{title}</h1>
-				<p class="mt-3 mb-8 text-c-on-bg/40 font-medium text-center leading-relaxed">
-					{formattedDate} • {reading_time} min read {#if author}
-						• {#if author_url}
+				<p class="mt-3 text-c-on-bg/40 font-medium text-center leading-relaxed">
+					{formattedDate} • {reading_time} min read
+				</p>
+				{#if author}
+					<p class="mt-0.5 text-c-on-bg/40 font-medium text-center leading-relaxed">
+						{#if author_url}
 							<a class="blog-link" href={author_url} target="_blank">{author}</a>
 						{:else}
 							<span>{author}</span>
 						{/if}
-					{/if}
-				</p>
+					</p>
+				{/if}
 			</div>
 			<div class="blog max-w-2xl w-full flex flex-col justify-start items-start relative">
 				{@html content}

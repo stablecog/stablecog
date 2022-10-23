@@ -47,7 +47,9 @@
 			style="width: {(1 / routes.length) * 100}%; transform: translateX({routeIndexOf(
 				$page.url.pathname
 			) * 100}%)"
-			class="h-full absolute left-0 top-0 transition {type === 'bottom' ? 'p-2' : 'p-1'}"
+			class="h-full absolute left-0 top-0 transition {type === 'bottom'
+				? 'px-2 pt-2 pb-2.5'
+				: 'p-1'}"
 		>
 			<div
 				class="w-full h-full bg-c-bg-secondary rounded-lg shadow-md shadow-c-shadow/[var(--o-shadow-strong)] "
@@ -58,10 +60,9 @@
 		<a
 			data-sveltekit-prefetch
 			class="flex-1 rounded-lg overflow-hidden group self-stretch flex 
-      items-center justify-center px-5 py-4 transition-all relative {isSelected(
-				route.href,
-				$page.url.pathname
-			)
+      items-center justify-center px-5 transition-all relative {type === 'bottom'
+				? 'pt-4 pb-4.5'
+				: 'py-4'} {isSelected(route.href, $page.url.pathname)
 				? 'text-c-on-bg font-bold'
 				: 'text-c-on-bg/50 font-semibold'} {isSelected(route.href, $page.url.pathname) &&
 			!$isTouchscreen
@@ -70,7 +71,9 @@
 			href={route.href}
 		>
 			<div
-				class="w-full h-full absolute left-0 top-0 rounded-lg {type === 'bottom' ? 'p-2' : 'p-1'}"
+				class="w-full h-full absolute left-0 top-0 rounded-lg {type === 'bottom'
+					? 'px-2 pt-2 pb-2.5'
+					: 'p-1'}"
 			>
 				<div class="w-full h-full overflow-hidden relative z-0 rounded-lg">
 					<div
