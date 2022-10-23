@@ -39,7 +39,7 @@ jobs:
         with:
           args: push appditto/stablecog:${{ env.BRANCH_NAME }}-${{ env.GITHUB_RUN_ID }}
 
-  deploy_go:
+  deploy_sveltekit:
     name: Deploy SvelteKit app
     needs: build_and_publish_sveltekit
     runs-on: ubuntu-latest
@@ -72,3 +72,16 @@ jobs:
           KUBE_CONFIG_DATA: ${{ secrets.KUBE_CONFIG_DATA }}
         with:
           args: apply -f ./kubernetes/stablecog-k.yaml
+  clear_cloudflare_cache:
+    name: Clear Cloudflare Cache
+    needs: deploy_sveltekit
+    runs-on: ubuntu-latest
+    env:
+      CLOUDFLARE_EMAIL: ${{ secrets.CLOUDFLARE_EMAIL }}
+      CLOUDFLARE_ZONE_ID: ${{ secrets.CLOUDFLARE_ZONE_ID }}
+      CLOUDFLARE_TOKEN: ${{ secrets.CLOUDFLARE_TOKEN }}
+    steps:
+      - name: Clear Cloudflare Cache
+        uses: wei/curl@master
+        with:
+          args: -X POST "https://api.cloudflare.com/client/v4/zones/${{ secrets.CLOUDFLARE_ZONE_ID }}/purge_cache"  -H "Authorization:Bearer ${{ secrets.CLOUDFLARE_TOKEN }}" -H "Content-Type:application/json" --data "{"purge_everything":true}"
