@@ -137,141 +137,143 @@
 
 <div class="w-full flex-1 flex justify-center px-8 md:px-24 pt-4 pb-[calc(4vh+0.5rem)]">
 	<div class="w-full flex flex-col items-center justify-center max-w-5xl">
-		<div class="w-full flex flex-wrap items-center justify-center py-6 gap-10 md:gap-14">
-			<div class="w-full md:w-64 max-w-full flex flex-col gap-1.5 text-center md:text-right">
-				<h1 class="text-c-on-bg/50 text-sm">Generations</h1>
-				<p class="font-bold text-4xl">
-					{Math.floor($generationTotalCount).toLocaleString('en-US')}
-				</p>
+		{#if supabase}
+			<div class="w-full flex flex-wrap items-center justify-center py-6 gap-10 md:gap-14">
+				<div class="w-full md:w-64 max-w-full flex flex-col gap-1.5 text-center md:text-right">
+					<h1 class="text-c-on-bg/50 text-sm">Generations</h1>
+					<p class="font-bold text-4xl">
+						{Math.floor($generationTotalCount).toLocaleString('en-US')}
+					</p>
+				</div>
+				<div class="w-full md:w-64 max-w-full flex flex-col gap-1.5 text-center md:text-left">
+					<h1 class="text-c-on-bg/50 text-sm">Total Duration</h1>
+					<p class="font-bold text-4xl">
+						{Math.round($generationTotalDurationMs / 1000).toLocaleString('en-US')}s
+					</p>
+				</div>
 			</div>
-			<div class="w-full md:w-64 max-w-full flex flex-col gap-1.5 text-center md:text-left">
-				<h1 class="text-c-on-bg/50 text-sm">Total Duration</h1>
-				<p class="font-bold text-4xl">
-					{Math.round($generationTotalDurationMs / 1000).toLocaleString('en-US')}s
-				</p>
-			</div>
-		</div>
-		{#if generations && generations.length > 0}
-			<div
-				transition:expandCollapse|local={{ duration: 300 }}
-				class="w-[calc(100%+4rem)] md:w-[calc(100%+12rem)] px-4 md:px-24 overflow-hidden z-0 relative -mx-8"
-			>
-				<div class="w-full flex flex-wrap items-center justify-center py-4">
-					{#each generations as generation (generation.id)}
-						<div
-							in:elementreceive|local={{ key: generation.id }}
-							out:elementsend|local={{ key: generation.id }}
-							animate:flip={{ duration: 300, easing: quadOut }}
-							class="flex items-center justify-center relative overflow-hidden z-0 rounded-full -m-3"
-						>
-							<div class="p-8 relative overflow-hidden z-0 rounded-full">
-								{#if generation.status === 'started'}
-									<div
-										transition:scale|local={{ duration: 300, easing: quadOut }}
-										class="absolute w-full h-full left-0 top-0 origin-center"
-									>
-										<div class="w-full h-full">
-											<div
-												class="w-full h-full absolute left-0 top-0 rounded-full bg-c-primary/50 animate-ping-custom"
-											/>
-										</div>
-									</div>
-								{/if}
-								<div class="w-10 h-10 relative">
+			{#if generations && generations.length > 0}
+				<div
+					transition:expandCollapse|local={{ duration: 300 }}
+					class="w-[calc(100%+4rem)] md:w-[calc(100%+12rem)] px-4 md:px-24 overflow-hidden z-0 relative -mx-8"
+				>
+					<div class="w-full flex flex-wrap items-center justify-center py-4">
+						{#each generations as generation (generation.id)}
+							<div
+								in:elementreceive|local={{ key: generation.id }}
+								out:elementsend|local={{ key: generation.id }}
+								animate:flip={{ duration: 300, easing: quadOut }}
+								class="flex items-center justify-center relative overflow-hidden z-0 rounded-full -m-3"
+							>
+								<div class="p-8 relative overflow-hidden z-0 rounded-full">
 									{#if generation.status === 'started'}
 										<div
 											transition:scale|local={{ duration: 300, easing: quadOut }}
-											class="w-full h-full absolute left-0 top-0 rounded-full bg-c-primary animate-ping-custom-bg"
-										/>
-									{/if}
-									{#key generation.status}
-										<div
-											use:tooltip={{
-												rows: [
-													{
-														key: 'Country:',
-														value: generation.country_code
-															? getCountryName(generation.country_code) ?? 'Unknown'
-															: 'Unknown'
-													},
-													...(generation.width && generation.height
-														? [
-																{
-																	key: 'Dimensions:',
-																	value:
-																		generation.width && generation.height
-																			? `${generation.width}×${generation.height}`
-																			: 'Unknown'
-																}
-														  ]
-														: []),
-													...(generation.num_inference_steps
-														? [
-																{
-																	key: 'Steps:',
-																	value: generation.num_inference_steps
-																		? generation.num_inference_steps.toString()
-																		: 'Unknown'
-																}
-														  ]
-														: []),
-													...(generation.duration_ms
-														? [
-																{
-																	key: 'Duration:',
-																	value: generation.duration_ms
-																		? `${(generation.duration_ms / 1000).toLocaleString('en-US', {
-																				maximumFractionDigits: 1
-																		  })}s`
-																		: 'Unfinished'
-																}
-														  ]
-														: []),
-													{
-														key: 'Status:',
-														value:
-															generation.status.slice(0, 1).toUpperCase() +
-															generation.status.slice(1)
-													},
-													{
-														key: 'Server:',
-														value: generation.uses_default_server ? 'Default' : 'Custom'
-													}
-												],
-												...tooltipStyleProps
-											}}
-											class="w-full h-full rounded-full transition-all duration-300 flex items-center justify-center relative overflow-hidden z-0 {generation.status ===
-											'succeeded'
-												? 'bg-c-success'
-												: generation.status === 'failed'
-												? 'bg-c-danger'
-												: 'bg-c-primary'}"
+											class="absolute w-full h-full left-0 top-0 origin-center"
 										>
-											{#if generation.country_code}
-												<p
-													class="text-center text-xs font-bold text-c-on-primary/50 cursor-default"
-												>
-													{generation.country_code}
-												</p>
-											{/if}
+											<div class="w-full h-full">
+												<div
+													class="w-full h-full absolute left-0 top-0 rounded-full bg-c-primary/50 animate-ping-custom"
+												/>
+											</div>
 										</div>
-									{/key}
+									{/if}
+									<div class="w-10 h-10 relative">
+										{#if generation.status === 'started'}
+											<div
+												transition:scale|local={{ duration: 300, easing: quadOut }}
+												class="w-full h-full absolute left-0 top-0 rounded-full bg-c-primary animate-ping-custom-bg"
+											/>
+										{/if}
+										{#key generation.status}
+											<div
+												use:tooltip={{
+													rows: [
+														{
+															key: 'Country:',
+															value: generation.country_code
+																? getCountryName(generation.country_code) ?? 'Unknown'
+																: 'Unknown'
+														},
+														...(generation.width && generation.height
+															? [
+																	{
+																		key: 'Dimensions:',
+																		value:
+																			generation.width && generation.height
+																				? `${generation.width}×${generation.height}`
+																				: 'Unknown'
+																	}
+															  ]
+															: []),
+														...(generation.num_inference_steps
+															? [
+																	{
+																		key: 'Steps:',
+																		value: generation.num_inference_steps
+																			? generation.num_inference_steps.toString()
+																			: 'Unknown'
+																	}
+															  ]
+															: []),
+														...(generation.duration_ms
+															? [
+																	{
+																		key: 'Duration:',
+																		value: generation.duration_ms
+																			? `${(generation.duration_ms / 1000).toLocaleString('en-US', {
+																					maximumFractionDigits: 1
+																			  })}s`
+																			: 'Unfinished'
+																	}
+															  ]
+															: []),
+														{
+															key: 'Status:',
+															value:
+																generation.status.slice(0, 1).toUpperCase() +
+																generation.status.slice(1)
+														},
+														{
+															key: 'Server:',
+															value: generation.uses_default_server ? 'Default' : 'Custom'
+														}
+													],
+													...tooltipStyleProps
+												}}
+												class="w-full h-full rounded-full transition-all duration-300 flex items-center justify-center relative overflow-hidden z-0 {generation.status ===
+												'succeeded'
+													? 'bg-c-success'
+													: generation.status === 'failed'
+													? 'bg-c-danger'
+													: 'bg-c-primary'}"
+											>
+												{#if generation.country_code}
+													<p
+														class="text-center text-xs font-bold text-c-on-primary/50 cursor-default"
+													>
+														{generation.country_code}
+													</p>
+												{/if}
+											</div>
+										{/key}
+									</div>
 								</div>
 							</div>
-						</div>
-					{/each}
+						{/each}
+					</div>
 				</div>
-			</div>
-		{:else if supabase}
-			<div
-				transition:expandCollapse|local={{ duration: 300 }}
-				class="w-full overflow-hidden z-0 relative max-w-lg"
-			>
-				<div class="w-full flex flex-col items-center justify-center py-4">
-					<IconPulsing />
-					<p class="w-full text-c-on-bg/40 text-center mt-1.5">Waiting for generations</p>
+			{:else}
+				<div
+					transition:expandCollapse|local={{ duration: 300 }}
+					class="w-full overflow-hidden z-0 relative max-w-lg"
+				>
+					<div class="w-full flex flex-col items-center justify-center py-4">
+						<IconPulsing />
+						<p class="w-full text-c-on-bg/40 text-center mt-1.5">Waiting for generations</p>
+					</div>
 				</div>
-			</div>
+			{/if}
 		{:else}
 			<div
 				transition:expandCollapse|local={{ duration: 300 }}
