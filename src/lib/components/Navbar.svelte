@@ -41,7 +41,7 @@
 <nav class="w-full flex flex-row items-center justify-between fixed -top-px z-50 transition">
 	<div
 		class="w-full h-full rounded-b-xl absolute left-0 top-0 transform transition duration-300 bg-c-bg 
-		shadow-navbar shadow-c-shadow/[var(--o-shadow-strongest)] ring-2 ring-c-bg-secondary {notAtTheTop
+		shadow-navbar shadow-c-shadow/[var(--o-shadow-stronger)] ring-2 ring-c-bg-secondary {notAtTheTop
 			? 'translate-y-0 opacity-100'
 			: '-translate-y-24 opacity-0'}"
 	/>

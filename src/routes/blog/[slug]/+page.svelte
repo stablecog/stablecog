@@ -77,7 +77,7 @@
 	<div class="w-full flex justify-center pt-6 pb-10 md:px-8 lg:px-12">
 		<div class="w-full max-w-7xl bg-c-on-bg/5 rounded-full h-2px" />
 	</div>
-	<div class="w-full max-w-7xl flex flex-col items-center gap-12">
+	<div class="w-full max-w-7xl flex flex-col items-center gap-10">
 		<div
 			class="max-w-full flex flex-col items-center bg-c-bg relative z-0 overflow-hidden
 			ring-2 ring-c-bg-secondary rounded-xl shadow-lg shadow-c-shadow/[var(--o-shadow-normal)]"
@@ -87,7 +87,7 @@
 				<SocialBar size="md" color="normal" />
 			</div>
 		</div>
-		<div class="w-full flex flex-col items-center gap-6">
+		<div class="w-full flex flex-col items-center gap-5">
 			<p class="font-bold text-xl text-center max-w-md px-5 leading-normal">
 				Start generating beautiful images!
 			</p>
