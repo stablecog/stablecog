@@ -58,6 +58,7 @@
 	</div>
 	{#each routes as route}
 		<a
+			aria-label="Go to {route.name}"
 			data-sveltekit-prefetch
 			class="flex-1 rounded-lg overflow-hidden group self-stretch flex 
       items-center justify-center px-5 transition-all relative {type === 'bottom'

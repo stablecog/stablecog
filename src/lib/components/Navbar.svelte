@@ -47,6 +47,7 @@
 	/>
 	<div class="flex self-stretch w-48">
 		<a
+			aria-label="Go to Home"
 			href="/"
 			data-sveltekit-prefetch
 			class="px-3.5 py-4.5 md:py-5.5 self-stretch flex items-center justify-center relative rounded-xl z-0 group"
