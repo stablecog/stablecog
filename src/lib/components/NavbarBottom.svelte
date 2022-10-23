@@ -4,6 +4,6 @@
 	let classes = '';
 </script>
 
-<nav class="w-full fixed -bottom-px left-0 z-50 h-18 flex {classes}">
+<nav class="w-full fixed -bottom-px left-0 z-50 flex {classes}">
 	<NavigationTabBar type="bottom" />
 </nav>

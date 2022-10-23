@@ -216,8 +216,8 @@
 		<slot />
 	</main>
 	<Footer />
-	<NavbarBottom class="md:hidden" />
-	<div class="h-18 md:hidden" />
+	<NavbarBottom class="md:hidden h-16" />
+	<div class="h-16 md:hidden" />
 	<div
 		id="tooltip-container"
 		class="absolute overflow-x-hidden left-0 top-0 w-full h-full pointer-events-none"

@@ -17,6 +17,7 @@
 	--o-shadow-normal: 0.15;
 	--o-shadow-strong: 0.25;
 	--o-shadow-stronger: 0.4;
+	--o-shadow-strongest: 0.6;
 }
 
 .theme-dark {
@@ -35,6 +36,7 @@
 	--o-shadow-normal: 0.15;
 	--o-shadow-strong: 0.25;
 	--o-shadow-stronger: 0.4;
+	--o-shadow-strongest: 0.6;
 }
 
 .theme-light {
@@ -53,6 +55,7 @@
 	--o-shadow-normal: 0.05;
 	--o-shadow-strong: 0.1;
 	--o-shadow-stronger: 0.15;
+	--o-shadow-strongest: 0.25;
 }
 
 html,

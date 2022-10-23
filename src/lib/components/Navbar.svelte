@@ -41,7 +41,7 @@
 <nav class="w-full flex flex-row items-center justify-between fixed -top-px z-50 transition">
 	<div
 		class="w-full h-full rounded-b-xl absolute left-0 top-0 transform transition duration-300 bg-c-bg 
-		shadow-navbar shadow-c-shadow/[var(--o-shadow-strong)] {notAtTheTop
+		shadow-navbar shadow-c-shadow/[var(--o-shadow-strongest)] ring-2 ring-c-bg-secondary {notAtTheTop
 			? 'translate-y-0 opacity-100'
 			: '-translate-y-24 opacity-0'}"
 	/>
@@ -49,7 +49,7 @@
 		<a
 			href="/"
 			data-sveltekit-prefetch
-			class="px-3.5 py-5.5 self-stretch flex items-center justify-center relative rounded-xl z-0 group"
+			class="px-3.5 py-4.5 md:py-5.5 self-stretch flex items-center justify-center relative rounded-xl z-0 group"
 		>
 			<div class="w-full h-full absolute left-0 top-0 pointer-events-none p-1.5">
 				<div class="w-full h-full rounded-xl relative z-0 overflow-hidden">
