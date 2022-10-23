@@ -72,19 +72,17 @@ jobs:
           KUBE_CONFIG_DATA: ${{ secrets.KUBE_CONFIG_DATA }}
         with:
           args: apply -f ./kubernetes/stablecog-k.yaml
-  clear_cloudflare_cache:
-    name: Clear Cloudflare Cache
-    needs: deploy_sveltekit
-    runs-on: ubuntu-latest
-    env:
-      CLOUDFLARE_EMAIL: ${{ secrets.CLOUDFLARE_EMAIL }}
-      CLOUDFLARE_ZONE_ID: ${{ secrets.CLOUDFLARE_ZONE_ID }}
-      CLOUDFLARE_TOKEN: ${{ secrets.CLOUDFLARE_TOKEN }}
-    steps:
       - name: Sleep for 60 seconds
         run: sleep 60s
         shell: bash
       - name: Clear Cloudflare Cache
-        uses: wei/curl@master
-        with:
-          args: -X POST "https://api.cloudflare.com/client/v4/zones/${{ env.CLOUDFLARE_ZONE_ID }}/purge_cache"  -H "Authorization:Bearer ${{ env.CLOUDFLARE_TOKEN }}" -H "Content-Type:application/json" --data "{"purge_everything":true}"
+        env:
+          CLOUDFLARE_ZONE_ID: ${{ secrets.CLOUDFLARE_ZONE_ID }}
+          CLOUDFLARE_TOKEN: ${{ secrets.CLOUDFLARE_TOKEN }}
+        run: |
+          curl --request POST \
+          --url https://api.cloudflare.com/client/v4/zones/${{ env.CLOUDFLARE_ZONE_ID }}/purge_cache \
+          --header 'authorization: Bearer ${{ env.CLOUDFLARE_TOKEN }}' \
+          --header 'content-type: application/json' \
+          --data '{"purge_everything":true}' \
+          --fail
