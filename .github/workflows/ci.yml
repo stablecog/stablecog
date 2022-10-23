@@ -72,8 +72,8 @@ jobs:
           KUBE_CONFIG_DATA: ${{ secrets.KUBE_CONFIG_DATA }}
         with:
           args: apply -f ./kubernetes/stablecog-k.yaml
-      - name: Sleep for 60 seconds
-        run: sleep 60s
+      - name: Sleep for 90 seconds
+        run: sleep 90s
         shell: bash
       - name: Clear Cloudflare Cache
         env:
