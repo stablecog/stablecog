@@ -47,8 +47,8 @@
 	<div class="w-full flex flex-row justify-between items-start">
 		<ToC {toc} />
 		<div class="flex-1 flex flex-col justify-start items-center lg:px-16">
-			<div class="max-w-2xl flex flex-col items-center mb-8">
-				<h1 class="font-bold text-center text-3.5xl leading-snug px-3">{title}</h1>
+			<div class="max-w-2.5xl flex flex-col items-center mb-8 md:px-5">
+				<h1 class="font-extrabold text-center text-3.5xl leading-snug px-3">{title}</h1>
 				<p class="mt-3 text-c-on-bg/40 font-medium text-center leading-relaxed">
 					{formattedDate} • {reading_time} min read
 				</p>
@@ -62,7 +62,7 @@
 					</p>
 				{/if}
 			</div>
-			<div class="blog max-w-2xl w-full flex flex-col justify-start items-start relative">
+			<div class="blog max-w-2.5xl w-full flex flex-col justify-start items-start relative">
 				{@html content}
 			</div>
 		</div>
