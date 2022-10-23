@@ -1,4 +1,4 @@
-import { env as envPublic } from '$env/dynamic/public';
+import { PUBLIC_DEFAULT_SERVER_URL } from '$env/static/public';
 import { supabaseAdmin } from '$ts/constants/supabaseAdmin';
 import { getDefaultServers } from '$ts/queries/db/getDefaultServers';
 import { updateServerHealthInDb } from '$ts/queries/db/updateServerHealthInDb';
@@ -9,7 +9,7 @@ import type { RequestHandler } from '@sveltejs/kit';
 
 export const POST: RequestHandler = async ({ request }) => {
 	const { server_url }: { server_url: string } = await request.json();
-	let isDefaultServer = envPublic.PUBLIC_DEFAULT_SERVER_URL === server_url;
+	let isDefaultServer = PUBLIC_DEFAULT_SERVER_URL === server_url;
 	let defaultServers: TDBServer[] = [];
 	if (supabaseAdmin && isDefaultServer) {
 		try {

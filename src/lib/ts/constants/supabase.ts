@@ -1,7 +1,7 @@
 import { createClient } from '@supabase/supabase-js';
-import { env as envPublic } from '$env/dynamic/public';
+import { PUBLIC_SUPABASE_URL, PUBLIC_SUPABASE_ANON_KEY } from '$env/static/public';
 
 export const supabase =
-	envPublic.PUBLIC_SUPABASE_URL && envPublic.PUBLIC_SUPABASE_ANON_KEY
-		? createClient(envPublic.PUBLIC_SUPABASE_URL, envPublic.PUBLIC_SUPABASE_ANON_KEY)
+	PUBLIC_SUPABASE_URL && PUBLIC_SUPABASE_ANON_KEY
+		? createClient(PUBLIC_SUPABASE_URL, PUBLIC_SUPABASE_ANON_KEY)
 		: undefined;

@@ -1,13 +1,10 @@
-import { env as envPublic } from '$env/dynamic/public';
+import { PUBLIC_DEFAULT_SERVER_URL } from '$env/static/public';
 import { supabaseAdmin } from '$ts/constants/supabaseAdmin';
 import type { TDBServer } from '$ts/types/db';
 import type { PostgrestError } from '@supabase/supabase-js';
 
 export async function pickServerUrl(serverUrl: string): Promise<TPickServerUrlRes> {
-	if (
-		envPublic.PUBLIC_DEFAULT_SERVER_URL === undefined ||
-		serverUrl !== envPublic.PUBLIC_DEFAULT_SERVER_URL
-	) {
+	if (PUBLIC_DEFAULT_SERVER_URL === undefined || serverUrl !== PUBLIC_DEFAULT_SERVER_URL) {
 		return { serverUrl: serverUrl, isDefault: false };
 	}
 	if (!supabaseAdmin) {

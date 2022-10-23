@@ -1,7 +1,7 @@
-import { env } from '$env/dynamic/public';
+import { PUBLIC_DEFAULT_SERVER_URL } from '$env/static/public';
 import { writable as writableLocal } from 'svelte-local-storage-store';
 
 export const serverUrl = writableLocal<string | undefined>(
 	'serverUrl',
-	env.PUBLIC_DEFAULT_SERVER_URL ?? undefined
+	PUBLIC_DEFAULT_SERVER_URL ?? undefined
 );
