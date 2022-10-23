@@ -81,7 +81,10 @@ jobs:
       CLOUDFLARE_ZONE_ID: ${{ secrets.CLOUDFLARE_ZONE_ID }}
       CLOUDFLARE_TOKEN: ${{ secrets.CLOUDFLARE_TOKEN }}
     steps:
+      - name: Sleep for 60 seconds
+        run: sleep 60s
+        shell: bash
       - name: Clear Cloudflare Cache
         uses: wei/curl@master
         with:
-          args: -X POST "https://api.cloudflare.com/client/v4/zones/${{ secrets.CLOUDFLARE_ZONE_ID }}/purge_cache"  -H "Authorization:Bearer ${{ secrets.CLOUDFLARE_TOKEN }}" -H "Content-Type:application/json" --data "{"purge_everything":true}"
+          args: -X POST "https://api.cloudflare.com/client/v4/zones/${{ env.CLOUDFLARE_ZONE_ID }}/purge_cache"  -H "Authorization:Bearer ${{ env.CLOUDFLARE_TOKEN }}" -H "Content-Type:application/json" --data "{"purge_everything":true}"
