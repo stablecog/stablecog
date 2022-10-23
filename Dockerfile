@@ -9,18 +9,14 @@ RUN npm ci
 COPY . .
 
 RUN --mount=type=secret,id=PUBLIC_SUPABASE_URL \
-  cat /run/secrets/PUBLIC_SUPABASE_URL
-
-RUN --mount=type=secret,id=PUBLIC_SUPABASE_ANON_KEY \
-  cat /run/secrets/PUBLIC_SUPABASE_ANON_KEY
-
-RUN --mount=type=secret,id=SUPABASE_ADMIN_KEY \
-  cat /run/secrets/SUPABASE_ADMIN_KEY
-
-RUN --mount=type=secret,id=PUBLIC_DEFAULT_SERVER_URL \
-  cat /run/secrets/PUBLIC_DEFAULT_SERVER_URL
-
-RUN npm run build
+  --mount=type=secret,id=PUBLIC_SUPABASE_ANON_KEY \
+  --mount=type=secret,id=SUPABASE_ADMIN_KEY \
+  --mount=type=secret,id=PUBLIC_DEFAULT_SERVER_URL \
+  export PUBLIC_SUPABASE_URL=$(cat /run/secrets/PUBLIC_SUPABASE_URL) && \
+  export PUBLIC_SUPABASE_ANON_KEY=$(cat /run/secrets/PUBLIC_SUPABASE_ANON_KEY) && \
+  export SUPABASE_ADMIN_KEY=$(cat /run/secrets/SUPABASE_ADMIN_KEY) && \
+  export PUBLIC_DEFAULT_SERVER_URL=$(cat /run/secrets/PUBLIC_DEFAULT_SERVER_URL) && \
+  npm run build
 
 ###
 # Only copy over the Node pieces we need
