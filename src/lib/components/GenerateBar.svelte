@@ -10,7 +10,7 @@
 	import TabBar from '$components/TabBar.svelte';
 	import TabLikeInput from '$components/TabLikeInput.svelte';
 	import TabLikeRangeInput from '$components/TabLikeRangeInput.svelte';
-	import { autoresize } from '$components/textarea/autoresize';
+	import { autoresize } from '$ts/actions/textarea/autoresize';
 	import { tooltip } from '$ts/actions/tooltip';
 	import { expandCollapse } from '$ts/animation/transitions';
 	import {
