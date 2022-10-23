@@ -10,11 +10,11 @@ COPY . .
 
 RUN --mount=type=secret,id=PUBLIC_SUPABASE_URL \
   cat /run/secrets/PUBLIC_SUPABASE_URL \
-  --mount=type=secret,id=PUBLIC_SUPABASE_ANON_KEY \
+  && --mount=type=secret,id=PUBLIC_SUPABASE_ANON_KEY \
   cat /run/secrets/PUBLIC_SUPABASE_ANON_KEY \
-  --mount=type=secret,id=SUPABASE_ADMIN_KEY \
+  && --mount=type=secret,id=SUPABASE_ADMIN_KEY \
   cat /run/secrets/SUPABASE_ADMIN_KEY \
-  --mount=type=secret,id=PUBLIC_DEFAULT_SERVER_URL \
+  && --mount=type=secret,id=PUBLIC_DEFAULT_SERVER_URL \
   cat /run/secrets/PUBLIC_DEFAULT_SERVER_URL \
   && npm run build
 
