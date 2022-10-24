@@ -86,7 +86,7 @@
 				</div>
 			</div>
 			<div class="w-full flex justify-center items-center gap-2 relative md:-ml-1">
-				<IconNavbarRoute class="w-5 h-5" type={route.icon} />
+				<IconNavbarRoute class="w-6 h-6 md:w-5 md:h-5" type={route.icon} />
 				<p
 					class="hidden md:block flex-shrink min-w-0 text-center overflow-hidden overflow-ellipsis"
 				>
