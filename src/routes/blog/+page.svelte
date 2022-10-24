@@ -29,8 +29,10 @@
 				href="/blog/{post.slug}"
 				data-sveltekit-prefetch
 				class="w-full max-w-md md:max-w-sm bg-c-bg-secondary ring-2 ring-c-bg-tertiary relative z-0 overflow-hidden
-				rounded-lg flex flex-col shadow-lg shadow-c-shadow/[var(--o-shadow-normal)] transition group
-				{!$isTouchscreen ? 'hover:ring-4 hover:shadow-2xl hover:-translate-y-1' : ''}"
+				rounded-xl flex flex-col shadow-lg shadow-c-shadow/[var(--o-shadow-normal)] transition group
+				{!$isTouchscreen
+					? 'hover:ring-4 hover:shadow-xl hover:shadow-c-shadow/[var(--o-shadow-strong)] hover:-translate-y-1.5'
+					: ''}"
 			>
 				<div class="w-full h-auto relative z-0 overflow-hidden">
 					<svg class="w-full h-auto relative" viewBox="0 0 1200 630" />
