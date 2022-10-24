@@ -65,7 +65,7 @@
 			<Logo class="w-9 h-9" />
 		</a>
 	</div>
-	<div class="w-auto md:w-full max-w-[34rem] hidden md:flex">
+	<div class="w-auto md:w-full max-w-[33rem] hidden md:flex">
 		<NavigationTabBar />
 	</div>
 	<div class="flex flex-1 flex-wrap items-center justify-end relative">
