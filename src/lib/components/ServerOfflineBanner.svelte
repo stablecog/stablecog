@@ -20,7 +20,7 @@
 </script>
 
 <div transition:expandCollapse|local={{ duration: 300 }} class="overflow-hidden relative z-0">
-	<div class="py-3.5 flex flex-col items-center">
+	<div class="pb-7 flex flex-col items-center">
 		<div
 			class="py-4 px-4 text-xs md:text-sm gap-3 flex items-center justify-start max-w-[34rem] rounded-xl bg-c-danger/8 text-c-danger"
 		>
