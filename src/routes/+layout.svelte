@@ -17,8 +17,10 @@
 	import type { TServerHealthStatus } from '$ts/types/main';
 	import NavbarBottom from '$components/NavbarBottom.svelte';
 	import { page } from '$app/stores';
+	import { windowHeight, windowWidth } from '$ts/stores/window';
 
 	let innerHeight: number | undefined;
+	let innerWidth: number | undefined;
 
 	let bothHealthCheckTimeout: NodeJS.Timeout;
 	const bothHealthCheckTimeoutDuration = 1000 * 15;
@@ -26,6 +28,7 @@
 
 	$: [$theme], setBodyClasses();
 	$: [$serverUrl, mounted, $page], clearAndSetHealthCheckTimeout();
+	$: [innerWidth, innerHeight], setWindowStores();
 
 	onMount(async () => {
 		mounted = true;
@@ -35,6 +38,11 @@
 	onDestroy(() => {
 		clearTimeout(bothHealthCheckTimeout);
 	});
+
+	function setWindowStores() {
+		windowWidth.set(innerWidth);
+		windowHeight.set(innerHeight);
+	}
 
 	async function clearAndSetHealthCheckTimeout() {
 		if (mounted) {
@@ -199,7 +207,7 @@
 	}
 </script>
 
-<svelte:window bind:innerHeight />
+<svelte:window bind:innerHeight bind:innerWidth />
 
 <div
 	class="w-full relative bg-c-bg text-c-on-bg 

@@ -321,7 +321,7 @@
 					>
 						<div
 							use:tooltip={{
-								title: 'Sampling Steps',
+								title: 'Inference Steps',
 								description: 'How many steps will be taken to generate (diffuse) the image.',
 								...tooltipStyleProps
 							}}

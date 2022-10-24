@@ -1,12 +1,16 @@
 <script lang="ts">
+	import { windowHeight, windowWidth } from '$ts/stores/window';
 	import { quadOut } from 'svelte/easing';
 	import { fade } from 'svelte/transition';
+
+	export let hasPadding = true;
 </script>
 
 <div
 	transition:fade={{ duration: 300, easing: quadOut }}
-	class="w-screen h-screen flex justify-center py-16 fixed left-0 
-    top-0 bg-c-barrier/80 z-[100] p-4 overflow-auto"
+	style="width: {$windowWidth}px; height: {$windowHeight}px;"
+	class="flex justify-center fixed left-0 
+    top-0 bg-c-barrier/80 z-[100] overflow-auto {hasPadding ? 'px-4 py-16' : ''}"
 >
 	<slot />
 </div>
