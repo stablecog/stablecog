@@ -131,7 +131,7 @@
 		style={$windowWidth >= lgBreakpoint
 			? `max-width: ${mainContainerWidth}px; max-height: ${mainContainerHeight}px`
 			: ''}
-		class="relative w-full h-full px-5 py-24 md:px-12 lg:p-0 flex lg:items-center justify-center z-10 overflow-auto lg:my-auto lg:overflow-hidden"
+		class="relative w-full h-full px-5 py-20 md:px-12 lg:p-0 flex lg:items-center justify-center z-10 overflow-auto lg:my-auto lg:overflow-hidden"
 	>
 		<div
 			in:elementreceive|local={{ key: generationId(generation) }}
