@@ -25,7 +25,7 @@
 	import { isTouchscreen } from '$ts/stores/isTouchscreen';
 	import { onMount } from 'svelte';
 	import { quadOut } from 'svelte/easing';
-	import { scale } from 'svelte/transition';
+	import { fly } from 'svelte/transition';
 
 	export let generation: TGenerationUI;
 
@@ -199,7 +199,7 @@
 			>
 				{#if showSidebarChevron && sidebarWrapperScrollTop + 12 < sidebarWrapperScrollHeight - sidebarWrapperHeight}
 					<div
-						transition:scale|local={{ duration: 200, easing: quadOut }}
+						transition:fly|local={{ duration: 200, easing: quadOut, y: 50, opacity: 0 }}
 						class="absolute left-1/2 transform -translate-x-1/2 bottom-0 flex justify-center items-end p-1 z-50"
 					>
 						<IconButton
