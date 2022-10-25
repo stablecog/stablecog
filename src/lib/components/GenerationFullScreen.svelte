@@ -25,7 +25,7 @@
 
 	const padding = 48;
 
-	const maxWidth = 1440;
+	const maxWidth = 1280;
 	const maxHeight = 1024;
 	const sidebarWidth = 400;
 
@@ -40,7 +40,7 @@
 	$: modalMaxWidth = mainContainerWidth - 2 * padding;
 	$: modalMaxHeight = mainContainerHeight - 2 * padding;
 
-	$: modalMinHeight = Math.min(modalMaxHeight, 500);
+	$: modalMinHeight = Math.min(modalMaxHeight, 400);
 
 	$: [modalMaxWidth, modalMaxHeight], setImageContainerSize();
 
@@ -163,7 +163,7 @@
 				style={$windowWidth >= lgBreakpoint
 					? `width: ${sidebarWidth}px; height: ${imageContainerHeight}px; min-height: ${modalMinHeight}px;`
 					: ``}
-				class="w-full shadow-generation-sidebar shadow-c-shadow/[var(--o-shadow-stronger)] flex 
+				class="w-full list-fade shadow-generation-sidebar shadow-c-shadow/[var(--o-shadow-stronger)] flex 
 				flex-col items-start justify-start overflow-auto bg-c-bg-secondary lg:border-l-2 border-c-bg-tertiary relative"
 			>
 				<div class="flex flex-col gap-4 md:gap-5 px-5 py-4 md:px-7 md:py-5">
@@ -297,3 +297,9 @@
 		</div>
 	</div>
 </ModalWrapper>
+
+<style>
+	.list-fade {
+		mask-image: linear-gradient(to top, transparent, transparent 0rem, black 1.5rem);
+	}
+</style>
