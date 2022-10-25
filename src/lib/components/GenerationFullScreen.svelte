@@ -57,7 +57,7 @@
 	$: modalMaxWidth = mainContainerWidth - 2 * padding;
 	$: modalMaxHeight = mainContainerHeight - 2 * padding;
 
-	$: modalMinHeight = Math.min(modalMaxHeight, 400);
+	$: modalMinHeight = Math.min(modalMaxHeight, 500);
 
 	$: [modalMaxWidth, modalMaxHeight], setImageContainerSize();
 
