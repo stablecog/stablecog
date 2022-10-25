@@ -20,12 +20,18 @@
 	import { windowHeight, windowWidth } from '$ts/stores/window';
 	import type { TGenerationUI } from '$ts/types/main';
 	import { copy } from 'svelte-copy';
+	import IconChevronDown from '$components/icons/IconChevronDown.svelte';
+	import IconButton from '$components/buttons/IconButton.svelte';
+	import { isTouchscreen } from '$ts/stores/isTouchscreen';
+	import { onMount } from 'svelte';
+	import { quadOut } from 'svelte/easing';
+	import { scale } from 'svelte/transition';
 
 	export let generation: TGenerationUI;
 
 	const padding = 48;
 
-	const maxWidth = 1280;
+	$: maxWidthConstant = generation.width / generation.height >= 3 / 2 ? 1440 : 1280;
 	const maxHeight = 1024;
 	const sidebarWidth = 400;
 
@@ -34,7 +40,18 @@
 	let imageContainerWidth = 0;
 	let imageContainerHeight = 0;
 
-	$: mainContainerWidth = Math.min($windowWidth || 0, maxWidth);
+	let sidebarWrapperHeight: number;
+	let sidebarWrapper: HTMLDivElement;
+	let sidebarWrapperScrollHeight: number;
+	let sidebarWrapperScrollTop: number;
+	let sidebarInnerContainerHeight: number;
+
+	$: showSidebarChevron =
+		sidebarWrapperHeight &&
+		sidebarInnerContainerHeight &&
+		sidebarInnerContainerHeight > sidebarWrapperHeight;
+
+	$: mainContainerWidth = Math.min($windowWidth || 0, maxWidthConstant);
 	$: mainContainerHeight = Math.min($windowHeight || 0, maxHeight);
 
 	$: modalMaxWidth = mainContainerWidth - 2 * padding;
@@ -124,6 +141,20 @@
 			imageDownloading = false;
 		}, 2000);
 	};
+
+	const sidebarWrapperOnScroll = () => {
+		sidebarWrapperScrollTop = sidebarWrapper.scrollTop;
+		sidebarWrapperScrollHeight = sidebarWrapper.scrollHeight;
+	};
+
+	const setSidebarWrapperVars = () => {
+		sidebarWrapperScrollTop = sidebarWrapper.scrollTop;
+		sidebarWrapperScrollHeight = sidebarWrapper.scrollHeight;
+	};
+
+	onMount(() => {
+		setSidebarWrapperVars();
+	});
 </script>
 
 <ModalWrapper hasPadding={false}>
@@ -163,143 +194,178 @@
 				style={$windowWidth >= lgBreakpoint
 					? `width: ${sidebarWidth}px; height: ${imageContainerHeight}px; min-height: ${modalMinHeight}px;`
 					: ``}
-				class="w-full list-fade shadow-generation-sidebar shadow-c-shadow/[var(--o-shadow-stronger)] flex 
-				flex-col items-start justify-start overflow-auto bg-c-bg-secondary lg:border-l-2 border-c-bg-tertiary relative"
+				class="w-full shadow-generation-sidebar shadow-c-shadow/[var(--o-shadow-stronger)] flex 
+				flex-col items-start justify-start bg-c-bg-secondary lg:border-l-2 border-c-bg-tertiary relative"
 			>
-				<div class="flex flex-col gap-4 md:gap-5 px-5 py-4 md:px-7 md:py-5">
-					<div class="flex flex-col gap-3">
-						<p class="text-sm leading-normal">{generation.prompt}</p>
-						{#if generation.negative_prompt}
-							<div class="flex items-start text-c-danger gap-2">
-								<IconChatBubbleCancel class="w-4 h-4" />
-								<p class="text-sm leading-normal flex-1 -mt-1">{generation.negative_prompt}</p>
+				{#if showSidebarChevron && sidebarWrapperScrollTop + 12 < sidebarWrapperScrollHeight - sidebarWrapperHeight}
+					<div
+						transition:scale|local={{ duration: 200, easing: quadOut }}
+						class="absolute left-1/2 transform -translate-x-1/2 bottom-0 flex justify-center items-end p-1 z-50"
+					>
+						<IconButton
+							name="Scroll to Sidebar Bottom"
+							onClick={() => {
+								if (sidebarWrapper) {
+									sidebarWrapper.scrollTo({
+										top: sidebarWrapperScrollHeight - sidebarWrapperHeight,
+										behavior: 'smooth'
+									});
+								}
+							}}
+						>
+							<div class="p-0.5">
+								<IconChevronDown
+									class="w-7 h-7 text-c-on-bg/25 transition {!$isTouchscreen
+										? 'group-hover:text-c-primary'
+										: ''}"
+								/>
 							</div>
-						{/if}
+						</IconButton>
 					</div>
-					<div class="w-full flex flex-wrap gap-3">
-						<div use:copy={generation.prompt} on:svelte-copy={onPromptCopied}>
-							<SubtleButton state={promptCopied ? 'success' : 'default'}>
-								<Morpher morph={promptCopied}>
-									<div slot="item-0" class="flex items-center justify-center gap-1.5">
-										<IconCopy class="w-5 h-5 -ml-0.25" />
-										<p>Copy Prompt</p>
+				{/if}
+				<div
+					on:scroll={sidebarWrapperOnScroll}
+					bind:this={sidebarWrapper}
+					bind:clientHeight={sidebarWrapperHeight}
+					class="w-full overflow-auto lg-list-fade relative"
+				>
+					<div
+						bind:clientHeight={sidebarInnerContainerHeight}
+						class="w-full flex flex-col items-start justify-start"
+					>
+						<div class="flex flex-col gap-4 md:gap-5 px-5 py-4 md:px-7 md:py-5">
+							<div class="flex flex-col gap-3">
+								<p class="text-sm leading-normal">{generation.prompt}</p>
+								{#if generation.negative_prompt}
+									<div class="flex items-start text-c-danger gap-2">
+										<IconChatBubbleCancel class="w-4 h-4" />
+										<p class="text-sm leading-normal flex-1 -mt-1">{generation.negative_prompt}</p>
 									</div>
-									<div slot="item-1" class="flex items-center justify-center gap-1.5">
-										<IconTick class="w-5 h-5 -ml-0.25 scale-110" />
-										<p>Copied!</p>
+								{/if}
+							</div>
+							<div class="w-full flex flex-wrap gap-3">
+								<div use:copy={generation.prompt} on:svelte-copy={onPromptCopied}>
+									<SubtleButton state={promptCopied ? 'success' : 'default'}>
+										<Morpher morph={promptCopied}>
+											<div slot="item-0" class="flex items-center justify-center gap-1.5">
+												<IconCopy class="w-5 h-5 -ml-0.25" />
+												<p>Copy Prompt</p>
+											</div>
+											<div slot="item-1" class="flex items-center justify-center gap-1.5">
+												<IconTick class="w-5 h-5 -ml-0.25 scale-110" />
+												<p>Copied!</p>
+											</div>
+										</Morpher>
+									</SubtleButton>
+								</div>
+								{#if generation.negative_prompt}
+									<div
+										use:copy={generation.negative_prompt}
+										on:svelte-copy={onNegativePromptCopied}
+									>
+										<SubtleButton state={negativePromptCopied ? 'success' : 'default'}>
+											<Morpher morph={negativePromptCopied}>
+												<div slot="item-0" class="flex items-center justify-center gap-1.5">
+													<IconCopy class="w-5 h-5 -ml-0.25" />
+													<p>Negative Copy Prompt</p>
+												</div>
+												<div slot="item-1" class="flex items-center justify-center gap-1.5">
+													<IconTick class="w-5 h-5 -ml-0.25 scale-110" />
+													<p>Copied!</p>
+												</div>
+											</Morpher>
+										</SubtleButton>
 									</div>
-								</Morpher>
-							</SubtleButton>
-						</div>
-						{#if generation.negative_prompt}
-							<div use:copy={generation.negative_prompt} on:svelte-copy={onNegativePromptCopied}>
-								<SubtleButton state={negativePromptCopied ? 'success' : 'default'}>
-									<Morpher morph={negativePromptCopied}>
+								{/if}
+								<SubtleButton
+									onClick={onDownloadImageClicked}
+									href={generation.imageUrl?.startsWith('data:image/')
+										? urlFromBase64(generation.imageUrl)
+										: generation.imageUrl}
+									download={getImageNameFromGeneration(
+										generation.prompt,
+										generation.seed,
+										generation.guidance_scale,
+										generation.num_inference_steps
+									)}
+									state={imageDownloading ? 'success' : 'default'}
+								>
+									<Morpher morph={imageDownloading}>
 										<div slot="item-0" class="flex items-center justify-center gap-1.5">
-											<IconCopy class="w-5 h-5 -ml-0.25" />
-											<p>Negative Copy Prompt</p>
+											<IconDownload class="w-5 h-5 -ml-0.25" />
+											<p>Download Image</p>
 										</div>
 										<div slot="item-1" class="flex items-center justify-center gap-1.5">
 											<IconTick class="w-5 h-5 -ml-0.25 scale-110" />
-											<p>Copied!</p>
+											<p>Downloaded!</p>
 										</div>
 									</Morpher>
 								</SubtleButton>
 							</div>
-						{/if}
-						<SubtleButton
-							onClick={onDownloadImageClicked}
-							href={generation.imageUrl?.startsWith('data:image/')
-								? urlFromBase64(generation.imageUrl)
-								: generation.imageUrl}
-							download={getImageNameFromGeneration(
-								generation.prompt,
-								generation.seed,
-								generation.guidance_scale,
-								generation.num_inference_steps
-							)}
-							state={imageDownloading ? 'success' : 'default'}
-						>
-							<Morpher morph={imageDownloading}>
-								<div slot="item-0" class="flex items-center justify-center gap-1.5">
-									<IconDownload class="w-5 h-5 -ml-0.25" />
-									<p>Download Image</p>
-								</div>
-								<div slot="item-1" class="flex items-center justify-center gap-1.5">
-									<IconTick class="w-5 h-5 -ml-0.25 scale-110" />
-									<p>Downloaded!</p>
-								</div>
-							</Morpher>
-						</SubtleButton>
-					</div>
-				</div>
-				<!-- Divider -->
-				<div class="w-full pt-1.5 pb-0.5">
-					<div class="w-full h-2px bg-c-bg-tertiary rounded-full" />
-				</div>
-				<!-- Divider -->
-				<div class="flex flex-col px-5 py-4 md:px-7 md:py-5 lg:pb-12 gap-5">
-					<div class="flex flex-wrap items-center gap-4">
-						<div class="flex flex-col gap-0.5">
-							<div class="flex items-center gap-1.5 text-c-on-bg/75 text-sm">
-								<IconSeed class="w-4 h-4" />
-								<p>Seed</p>
-							</div>
-							<p class="font-bold">{generation.seed}</p>
 						</div>
-						<div use:copy={String(generation.seed)} on:svelte-copy={onSeedCopied}>
-							<SubtleButton noPadding class="p-2.5" state={seedCopied ? 'success' : 'default'}>
-								<Morpher morph={seedCopied}>
-									<div slot="item-0" class="flex items-center justify-center gap-1.5">
-										<IconCopy class="w-5 h-5" />
+						<!-- Divider -->
+						<div class="w-full pt-1.5 pb-0.5">
+							<div class="w-full h-2px bg-c-bg-tertiary rounded-full" />
+						</div>
+						<!-- Divider -->
+						<div class="flex flex-col px-5 py-4 md:px-7 md:py-5 lg:pb-8 gap-6">
+							<div class="flex flex-wrap items-center gap-4">
+								<div class="flex flex-col gap-1">
+									<div class="flex items-center gap-1.5 text-c-on-bg/75 text-sm">
+										<IconSeed class="w-4 h-4" />
+										<p>Seed</p>
 									</div>
-									<div slot="item-1" class="flex items-center justify-center gap-1.5">
-										<IconTick class="w-5 h-5 scale-150" />
-									</div>
-								</Morpher>
-							</SubtleButton>
-						</div>
-					</div>
-					<div class="flex flex-col gap-0.5">
-						<div class="flex items-center gap-1.5 text-c-on-bg/75 text-sm">
-							<IconScale class="w-4 h-4" />
-							<p>Guidance Scale</p>
-						</div>
-						<p class="font-bold">{generation.guidance_scale}</p>
-					</div>
-					<div class="flex flex-col gap-0.5">
-						<div class="flex items-center gap-1.5 text-c-on-bg/75 text-sm">
-							<IconSteps class="w-4 h-4" />
-							<p>Inference Steps</p>
-						</div>
-						<p class="font-bold">{generation.num_inference_steps}</p>
-					</div>
-					<div class="flex flex-col gap-0.5">
-						<div class="flex items-center gap-1.5 text-c-on-bg/75 text-sm">
-							<IconDimensions class="w-4 h-4" />
-							<p>Dimensions</p>
-						</div>
-						<p class="font-bold">{generation.width} × {generation.height}</p>
-					</div>
-					{#if generation.duration_ms}
-						<div class="flex flex-col gap-0.5">
-							<div class="flex items-center gap-1.5 text-c-on-bg/75 text-sm">
-								<IconClock class="w-4 h-4" />
-								<p>Duration</p>
+									<p class="font-bold">{generation.seed}</p>
+								</div>
+								<div use:copy={String(generation.seed)} on:svelte-copy={onSeedCopied}>
+									<SubtleButton noPadding class="p-2.5" state={seedCopied ? 'success' : 'default'}>
+										<Morpher morph={seedCopied}>
+											<div slot="item-0" class="flex items-center justify-center gap-1.5">
+												<IconCopy class="w-5 h-5" />
+											</div>
+											<div slot="item-1" class="flex items-center justify-center gap-1.5">
+												<IconTick class="w-5 h-5 scale-150" />
+											</div>
+										</Morpher>
+									</SubtleButton>
+								</div>
 							</div>
-							<p class="font-bold">
-								{Math.round((generation.duration_ms / 1000) * 10) / 10}s
-							</p>
+							<div class="flex flex-col gap-1">
+								<div class="flex items-center gap-1.5 text-c-on-bg/75 text-sm">
+									<IconScale class="w-4 h-4" />
+									<p>Guidance Scale</p>
+								</div>
+								<p class="font-bold">{generation.guidance_scale}</p>
+							</div>
+							<div class="flex flex-col gap-1">
+								<div class="flex items-center gap-1.5 text-c-on-bg/75 text-sm">
+									<IconSteps class="w-4 h-4" />
+									<p>Inference Steps</p>
+								</div>
+								<p class="font-bold">{generation.num_inference_steps}</p>
+							</div>
+							<div class="flex flex-col gap-1">
+								<div class="flex items-center gap-1.5 text-c-on-bg/75 text-sm">
+									<IconDimensions class="w-4 h-4" />
+									<p>Dimensions</p>
+								</div>
+								<p class="font-bold">{generation.width} × {generation.height}</p>
+							</div>
+							{#if generation.duration_ms}
+								<div class="flex flex-col gap-1">
+									<div class="flex items-center gap-1.5 text-c-on-bg/75 text-sm">
+										<IconClock class="w-4 h-4" />
+										<p>Duration</p>
+									</div>
+									<p class="font-bold">
+										{Math.round((generation.duration_ms / 1000) * 10) / 10}s
+									</p>
+								</div>
+							{/if}
 						</div>
-					{/if}
+					</div>
 				</div>
 			</div>
 		</div>
 	</div>
 </ModalWrapper>
-
-<style>
-	.list-fade {
-		mask-image: linear-gradient(to top, transparent, transparent 0rem, black 1.5rem);
-	}
-</style>

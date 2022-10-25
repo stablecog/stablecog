@@ -115,4 +115,10 @@ input[type='range']:focus-visible {
 	display: none; /* for Chrome, Safari, and Opera */
 }
 
+@media (min-width: 1024px) {
+	.lg-list-fade {
+		mask-image: linear-gradient(to top, transparent, transparent 0rem, black 2rem);
+	}
+}
+
 @tailwind utilities;
