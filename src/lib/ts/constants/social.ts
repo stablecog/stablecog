@@ -7,7 +7,7 @@ export const socialAppUrls = {
 };
 
 export const socialUrls = {
-	discord: 'https://discord.gg/74p8E6rv',
+	discord: 'https://discord.gg/3rHj4Whesm',
 	twitter: 'https://twitter.com/stablecogcom',
 	instagram: 'https://instagram.com/stablecog',
 	github: 'https://github.com/yekta/stablecog',
