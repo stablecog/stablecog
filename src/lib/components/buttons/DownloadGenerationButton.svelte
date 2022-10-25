@@ -1,5 +1,6 @@
 <script lang="ts">
 	import IconDownload from '$components/icons/IconDownload.svelte';
+	import { getImageNameFromGeneration } from '$ts/helpers/getImageNameFromGeneration';
 	import { isTouchscreen } from '$ts/stores/isTouchscreen';
 
 	export let url: string;
@@ -22,7 +23,7 @@
 	{disabled}
 	class="transition rounded-lg group-1 {classes}"
 	href={url}
-	download="[sd_{seed}]-[scl_{guidanceScale}]-[stp_{inferenceSteps}]-{prompt}.png"
+	download={getImageNameFromGeneration(prompt, seed, inferenceSteps, guidanceScale)}
 	aria-label="Download Image"
 >
 	<div class="p-2.5 rounded-full bg-c-bg relative overflow-hidden z-0">

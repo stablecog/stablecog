@@ -8,6 +8,10 @@
 	import IconSeed from '$components/icons/IconSeed.svelte';
 	import IconSteps from '$components/icons/IconSteps.svelte';
 	import IconTickOnly from '$components/icons/IconTickOnly.svelte';
+	import { elementreceive, elementsend } from '$ts/animation/transitions';
+	import { doesContainTarget } from '$ts/helpers/doesContainTarget';
+	import { generationId } from '$ts/helpers/generationId';
+	import { activeGeneration } from '$ts/stores/activeGeneration';
 	import { advancedMode } from '$ts/stores/advancedMode';
 	import { isTouchscreen } from '$ts/stores/isTouchscreen';
 	import type { TGenerationBase } from '$ts/types/main';
@@ -21,6 +25,8 @@
 	let promptCopied = false;
 	let promptCopiedTimeout: NodeJS.Timeout;
 	let seedButtonElement: HTMLButtonElement;
+	let rightButtonContainer: HTMLDivElement;
+	let promptContainer: HTMLDivElement;
 
 	const onSeedCopy = () => {
 		seedCopied = true;
@@ -42,6 +48,18 @@
 	height={generation.height}
 />
 <div
+	on:click={(e) => {
+		if (
+			doesContainTarget(e.target, [
+				rightButtonContainer,
+				promptContainer,
+				...($advancedMode ? [seedButtonElement] : [])
+			])
+		) {
+			return;
+		}
+		activeGeneration.set({ ...generation, imageUrl: src });
+	}}
 	class="w-full h-full absolute left-0 top-0 flex flex-col justify-between items-end overflow-hidden"
 >
 	<div class="w-full flex justify-between items-start gap-4">
@@ -102,7 +120,7 @@
 				>
 					<IconScale class="w-4 h-4" />
 					<p
-						class="flex-1 whitespace-nowrap flex-shrink min-w-0 overflow-hidden overflow-ellipsis text-left"
+						class="flex-1 cursor-default whitespace-nowrap flex-shrink min-w-0 overflow-hidden overflow-ellipsis text-left"
 					>
 						{generation.guidance_scale}
 					</p>
@@ -112,7 +130,7 @@
 				>
 					<IconSteps class="w-4 h-4" />
 					<p
-						class="flex-1 whitespace-nowrap flex-shrink min-w-0 overflow-hidden overflow-ellipsis text-left"
+						class="flex-1 cursor-default whitespace-nowrap flex-shrink min-w-0 overflow-hidden overflow-ellipsis text-left"
 					>
 						{generation.num_inference_steps}
 					</p>
@@ -124,7 +142,7 @@
 				>
 					<IconClock class="w-4 h-4" />
 					<p
-						class="flex-1 whitespace-nowrap flex-shrink min-w-0 overflow-hidden overflow-ellipsis text-left"
+						class="flex-1 cursor-default whitespace-nowrap flex-shrink min-w-0 overflow-hidden overflow-ellipsis text-left"
 					>
 						{(generation.duration_ms / 1000).toLocaleString('en-US', {
 							minimumFractionDigits: 0,
@@ -135,6 +153,7 @@
 			{/if}
 		</div>
 		<div
+			bind:this={rightButtonContainer}
 			class="flex flex-row items-end justify-start transition transform 
 			translate-x-full group-focus-within:translate-x-0 group-hover:translate-x-0"
 		>
@@ -162,7 +181,10 @@
 		class="w-full max-h-[max(4rem,min(35%,7.5rem))] transition bg-c-bg/90 text-xs relative z-0 overflow-hidden
 		translate-y-full group-focus-within:translate-y-0 group-hover:translate-y-0"
 	>
-		<div class="w-full max-h-full overflow-auto list-fade px-4 py-3 flex flex-col gap-2">
+		<div
+			bind:this={promptContainer}
+			class="w-full max-h-full overflow-auto list-fade px-4 py-3 flex flex-col gap-2"
+		>
 			<p class="w-full font-medium leading-normal transition text-c-on-bg transform">
 				{generation.prompt}
 			</p>

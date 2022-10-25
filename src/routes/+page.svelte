@@ -1,7 +1,7 @@
 <script lang="ts">
 	import GenerateBar from '$components/GenerateBar.svelte';
 	import MetaTag from '$components/MetaTag.svelte';
-	import { expandCollapse } from '$ts/animation/transitions';
+	import { elementreceive, elementsend, expandCollapse } from '$ts/animation/transitions';
 	import {
 		canonicalUrl,
 		estimatedDurationBufferRatio,
@@ -27,6 +27,9 @@
 	import { pLogGeneration, uLogGeneration } from '$ts/helpers/loggers';
 	import ServerOfflineBanner from '$components/ServerOfflineBanner.svelte';
 	import { currentServer, currentServerHealthStatus } from '$ts/stores/serverHealth';
+	import GenerationFullScreen from '$components/GenerationFullScreen.svelte';
+	import { activeGeneration } from '$ts/stores/activeGeneration';
+	import { generationId } from '$ts/helpers/generationId';
 
 	let status: TStatus = 'idle';
 	let promptInputValue: string | undefined;
@@ -258,11 +261,19 @@
 									? 'w-92'
 									: aspectRatio >= 2 / 3
 									? 'w-84'
-									: 'w-72'} max-w-full h-auto rounded-2xl bg-c-bg-secondary relative z-0 overflow-hidden border-4 
-								shadow-lg shadow-c-shadow/[var(--o-shadow-normal)] border-c-bg-secondary group"
+									: 'w-72'} max-w-full h-auto relative"
 							>
 								<ImagePlaceholder width={lastGeneration.width} height={lastGeneration.height} />
-								<GenerationImage generation={lastGeneration} src={lastGeneration.imageUrl} />
+								{#if !($activeGeneration && generationId($activeGeneration) === generationId(lastGeneration))}
+									<div
+										class="absolute w-full h-full left-0 top-0 rounded-2xl bg-c-bg-secondary z-0 overflow-hidden border-4 
+											shadow-lg shadow-c-shadow/[var(--o-shadow-normal)] border-c-bg-secondary group"
+										in:elementreceive|local={{ key: generationId(lastGeneration) }}
+										out:elementsend|local={{ key: generationId(lastGeneration) }}
+									>
+										<GenerationImage generation={lastGeneration} src={lastGeneration.imageUrl} />
+									</div>
+								{/if}
 							</div>
 						</div>
 					</div>
@@ -271,3 +282,7 @@
 		{/if}
 	</div>
 </div>
+
+{#if $activeGeneration}
+	<GenerationFullScreen generation={$activeGeneration} />
+{/if}

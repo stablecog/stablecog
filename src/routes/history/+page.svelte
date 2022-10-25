@@ -1,9 +1,11 @@
 <script lang="ts">
 	import { page } from '$app/stores';
+	import GenerationFullScreen from '$components/GenerationFullScreen.svelte';
 	import GenerationGrid from '$components/GenerationGrid.svelte';
 	import MetaTag from '$components/MetaTag.svelte';
 	import { canonicalUrl } from '$ts/constants/main';
 	import { getGenerationsFromDb } from '$ts/queries/indexedDb';
+	import { activeGeneration } from '$ts/stores/activeGeneration';
 	import type { TDBGeneration } from '$ts/types/db';
 	import { onMount } from 'svelte';
 
@@ -39,3 +41,7 @@
 		<GenerationGrid {generations} />
 	</div>
 </div>
+
+{#if $activeGeneration}
+	<GenerationFullScreen generation={$activeGeneration} />
+{/if}

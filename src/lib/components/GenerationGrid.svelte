@@ -3,8 +3,11 @@
 	import GenerationImage from '$components/GenerationImage.svelte';
 	import ImagePlaceholder from '$components/ImagePlaceholder.svelte';
 	import Masonry from '$components/Masonry.svelte';
+	import { elementreceive, elementsend } from '$ts/animation/transitions';
 	import { heightTabs, widthTabs } from '$ts/constants/main';
 	import { urlFromBase64 } from '$ts/helpers/base64';
+	import { generationId } from '$ts/helpers/generationId';
+	import { activeGeneration } from '$ts/stores/activeGeneration';
 	import type { TDBGeneration } from '$ts/types/db';
 	import IntersectionObserver from 'svelte-intersection-observer';
 
@@ -32,16 +35,19 @@
 			{#each generations as generation, i}
 				<IntersectionObserver rootMargin="100%" element={nodes[i]} let:intersecting once>
 					<div bind:this={nodes[i]} class="relative group">
-						<div
-							class="rounded-xl bg-c-bg-secondary relative z-0 overflow-hidden border-4 
-							shadow-lg shadow-c-shadow/[var(--o-shadow-normal)] border-c-bg-secondary"
-						>
-							<ImagePlaceholder width={generation.width} height={generation.height} />
-							{#if intersecting}
-								{@const url = urlFromBase64(generation.imageDataB64)}
-								<GenerationImage {generation} src={url} />
-							{/if}
-						</div>
+						<ImagePlaceholder width={generation.width} height={generation.height} />
+						{#if !($activeGeneration && generationId($activeGeneration) === generationId(generation))}
+							<div
+								in:elementreceive|local={{ key: generationId(generation) }}
+								out:elementsend|local={{ key: generationId(generation) }}
+								class="absolute left-0 top-0 w-full h-full rounded-xl bg-c-bg-secondary z-0 overflow-hidden border-4 
+									shadow-lg shadow-c-shadow/[var(--o-shadow-normal)] border-c-bg-secondary"
+							>
+								{#if intersecting}
+									<GenerationImage {generation} src={generation.imageDataB64} />
+								{/if}
+							</div>
+						{/if}
 					</div>
 				</IntersectionObserver>
 			{/each}

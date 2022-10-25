@@ -96,14 +96,20 @@ module.exports = {
 				101: '1.01',
 				102: '1.02',
 				103: '1.03',
+				135: '1.35',
 				160: '1.6',
 				175: '1.75'
 			},
 			boxShadow: {
-				navbar: '0 0 1.5rem 0'
+				navbar: '0 0 1.5rem 0',
+				'generation-sidebar': '0 0 1rem 0',
+				'generation-modal': '0 1rem 2rem 0'
 			},
 			screens: {
 				'1.5xl': '1408px'
+			},
+			ringWidth: {
+				3: '3px'
 			},
 			maxWidth: {
 				'2.5xl': '45rem'
