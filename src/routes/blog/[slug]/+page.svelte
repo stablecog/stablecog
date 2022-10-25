@@ -8,6 +8,7 @@
 	import SocialBar from '$components/SocialBar.svelte';
 	import '$css/blog.css';
 	import { canonicalUrl } from '$ts/constants/main';
+	import { isTouchscreen } from '$ts/stores/isTouchscreen';
 	export let data: {
 		content: string;
 		toc: string;
@@ -72,7 +73,7 @@
 		<div class="flex items-center justify-center gap-2.5 px-2 py-1">
 			<IconBack
 				class="w-6 h-6 transform transition text-c-on-bg/50 group-hover:-translate-x-1
-				group-hover:text-c-primary"
+				{!$isTouchscreen ? 'group-hover:text-c-primary' : ''}"
 			/>
 			<p class="font-bold">Back to Blog</p>
 		</div>
