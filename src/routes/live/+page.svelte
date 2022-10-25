@@ -201,7 +201,7 @@
 																		key: 'Dimensions:',
 																		value:
 																			generation.width && generation.height
-																				? `${generation.width}×${generation.height}`
+																				? `${generation.width} × ${generation.height}`
 																				: 'Unknown'
 																	}
 															  ]

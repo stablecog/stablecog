@@ -1,10 +1,10 @@
 <script lang="ts">
-	import CopyButton from '$components/buttons/CopyButton.svelte';
 	import SubtleButton from '$components/buttons/SubtleButton.svelte';
 	import IconChatBubbleCancel from '$components/icons/IconChatBubbleCancel.svelte';
 	import IconClock from '$components/icons/IconClock.svelte';
 	import IconCopy from '$components/icons/IconCopy.svelte';
 	import IconDownload from '$components/icons/IconDownload.svelte';
+	import IconDimensions from '$components/icons/IconDimensions.svelte';
 	import IconScale from '$components/icons/IconScale.svelte';
 	import IconSeed from '$components/icons/IconSeed.svelte';
 	import IconSteps from '$components/icons/IconSteps.svelte';
@@ -273,6 +273,13 @@
 							<p>Inference Steps</p>
 						</div>
 						<p class="font-bold">{generation.num_inference_steps}</p>
+					</div>
+					<div class="flex flex-col gap-0.5">
+						<div class="flex items-center gap-1.5 text-c-on-bg/75 text-sm">
+							<IconDimensions class="w-4 h-4" />
+							<p>Dimensions</p>
+						</div>
+						<p class="font-bold">{generation.width} × {generation.height}</p>
 					</div>
 					{#if generation.duration_ms}
 						<div class="flex flex-col gap-0.5">
