@@ -13,14 +13,14 @@
 	</div>
 	{#if morph}
 		<div
-			transition:scale={{ duration: 200, easing: quadOut, opacity: 0, start: 0.5 }}
+			transition:scale|local={{ duration: 200, easing: quadOut, opacity: 0, start: 0.5 }}
 			class="w-full h-full absolute left-0 top-0"
 		>
 			<slot name="item-1" />
 		</div>
 	{:else}
 		<div
-			transition:scale={{ duration: 200, easing: quadOut, opacity: 0, start: 0.5 }}
+			transition:scale|local={{ duration: 200, easing: quadOut, opacity: 0, start: 0.5 }}
 			class="w-full h-full absolute left-0 top-0"
 		>
 			<slot name="item-0" />

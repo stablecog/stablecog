@@ -18,7 +18,7 @@
 </script>
 
 <div
-	transition:expandCollapse={{ duration: 200 }}
+	transition:expandCollapse|local={{ duration: 200 }}
 	class="w-68 max-w-[80vw] bg-c-bg-secondary rounded-xl flex flex-col justify-start shadow-lg 
   shadow-c-shadow/[var(--o-shadow-strong)] absolute right-0 top-0 overflow-hidden z-50"
 >
