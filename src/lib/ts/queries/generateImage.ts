@@ -10,7 +10,7 @@ export async function generateImage({
 	num_inference_steps,
 	guidance_scale
 }: TGenerationRequest) {
-	const response = await fetch(`/api/generate-image`, {
+	const response = await fetch(`/api/generate`, {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json'

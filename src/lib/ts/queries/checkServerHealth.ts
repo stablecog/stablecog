@@ -1,7 +1,7 @@
 import type { TServerHealthRes } from '$ts/types/main';
 
 export async function checkServerHealth(server_url: string) {
-	const response = await fetch(`/api/server-health`, {
+	const response = await fetch(`/api/cog-health`, {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json'

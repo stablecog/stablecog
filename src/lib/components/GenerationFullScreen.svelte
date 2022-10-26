@@ -29,7 +29,7 @@
 
 	export let generation: TGenerationUI;
 
-	const padding = 48;
+	const padding = 64;
 
 	$: maxWidthConstant = generation.width / generation.height >= 3 / 2 ? 1440 : 1280;
 	const maxHeight = 1024;
