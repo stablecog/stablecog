@@ -57,7 +57,7 @@
 	$: modalMaxWidth = mainContainerWidth - 2 * padding;
 	$: modalMaxHeight = mainContainerHeight - 2 * padding;
 
-	$: modalMinHeight = Math.min(modalMaxHeight, 500);
+	$: modalMinHeight = Math.min(modalMaxHeight, 600);
 
 	$: [modalMaxWidth, modalMaxHeight], setImageContainerSize();
 
@@ -171,16 +171,23 @@
 			style={$windowWidth >= lgBreakpoint
 				? `max-width: ${modalMaxWidth}px; max-height: ${modalMaxHeight}px`
 				: ''}
-			class="max-w-lg flex flex-col my-auto lg:flex-row bg-c-bg-secondary items-center shadow-generation-modal shadow-c-shadow/[var(--o-shadow-strongest)] 
+			class="max-w-lg w-full lg:w-auto flex flex-col my-auto lg:flex-row bg-c-bg-secondary items-center shadow-generation-modal shadow-c-shadow/[var(--o-shadow-strongest)] 
 			rounded-xl ring-4 ring-c-bg-tertiary overflow-hidden z-0 relative"
 		>
-			<div
-				style={$windowWidth >= lgBreakpoint
-					? `width: ${imageContainerWidth}px; height: ${imageContainerHeight}px;`
-					: ''}
-				class="w-full relative"
-			>
-				<div class="w-full lg:h-full">
+			<div class="relative self-stretch flex items-center">
+				<img
+					class="w-full h-full absolute left-0 top-0 transform scale-125 blur-xl filter brightness-90"
+					src={generation.imageUrl}
+					alt={generation.prompt}
+					width={generation.width}
+					height={generation.height}
+				/>
+				<div
+					style={$windowWidth >= lgBreakpoint
+						? `width: ${imageContainerWidth}px; height: ${imageContainerHeight}px;`
+						: ''}
+					class="w-full lg:h-full relative"
+				>
 					<img
 						class="w-full h-auto lg:h-full lg:object-contain lg:absolute lg:left-0 lg:top-0"
 						src={generation.imageUrl}
