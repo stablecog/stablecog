@@ -10,6 +10,7 @@ export interface TGenerationBase {
 	guidance_scale: number;
 	duration_ms?: number;
 	server_url: string;
+	imageDataB64: string;
 }
 
 export interface TGenerationUI extends TGenerationBase {

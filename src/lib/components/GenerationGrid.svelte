@@ -5,7 +5,6 @@
 	import Masonry from '$components/Masonry.svelte';
 	import { elementreceive, elementsend } from '$ts/animation/transitions';
 	import { heightTabs, widthTabs } from '$ts/constants/main';
-	import { urlFromBase64 } from '$ts/helpers/base64';
 	import { generationId } from '$ts/helpers/generationId';
 	import { activeGeneration } from '$ts/stores/activeGeneration';
 	import type { TDBGeneration } from '$ts/types/db';
@@ -44,7 +43,7 @@
 									shadow-lg shadow-c-shadow/[var(--o-shadow-normal)] border-c-bg-secondary"
 							>
 								{#if intersecting}
-									<GenerationImage {generation} src={generation.imageDataB64} />
+									<GenerationImage {generation} />
 								{/if}
 							</div>
 						{/if}

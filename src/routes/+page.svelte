@@ -90,7 +90,8 @@
 			seed:
 				(generationSeed || generationSeed === 0) && $advancedMode
 					? generationSeed
-					: Math.round(Math.random() * maxSeed)
+					: Math.round(Math.random() * maxSeed),
+			imageDataB64: ''
 		};
 		console.log('generation', lastGeneration);
 		console.log('estimatedDuration', estimatedDuration);
@@ -112,6 +113,7 @@
 			if (data && data.imageDataB64 && !error) {
 				pLogGeneration('Succeeded');
 				uLogGeneration('Succeeded');
+				lastGeneration.imageDataB64 = data.imageDataB64;
 				if (
 					$currentServer.lastHealthStatus !== 'healthy' ||
 					$currentServerHealthStatus !== 'healthy'
@@ -271,7 +273,7 @@
 										in:elementreceive|local={{ key: generationId(lastGeneration) }}
 										out:elementsend|local={{ key: generationId(lastGeneration) }}
 									>
-										<GenerationImage generation={lastGeneration} src={lastGeneration.imageUrl} />
+										<GenerationImage generation={lastGeneration} />
 									</div>
 								{/if}
 							</div>

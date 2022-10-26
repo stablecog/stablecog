@@ -13,14 +13,13 @@
 	import { activeGeneration } from '$ts/stores/activeGeneration';
 	import { advancedMode } from '$ts/stores/advancedMode';
 	import { isTouchscreen } from '$ts/stores/isTouchscreen';
-	import type { TGenerationBase } from '$ts/types/main';
+	import type { TGenerationUI } from '$ts/types/main';
 	import { copy } from 'svelte-copy';
 
-	export let generation: TGenerationBase;
-	export let src: string;
+	export let generation: TGenerationUI;
 
-	if (src.startsWith('data:image/')) {
-		src = urlFromBase64(src);
+	if (generation.imageUrl === undefined) {
+		generation.imageUrl = urlFromBase64(generation.imageDataB64);
 	}
 
 	let seedCopied = false;
@@ -45,7 +44,7 @@
 
 <img
 	class="w-full h-full absolute left-0 top-0"
-	{src}
+	src={generation.imageUrl}
 	alt={generation.prompt}
 	width={generation.width}
 	height={generation.height}
@@ -61,7 +60,7 @@
 		) {
 			return;
 		}
-		activeGeneration.set({ ...generation, imageUrl: src });
+		activeGeneration.set(generation);
 	}}
 	class="w-full h-full absolute left-0 top-0 flex flex-col justify-between items-end overflow-hidden"
 >
@@ -172,7 +171,7 @@
 			/>
 			<DownloadGenerationButton
 				class="p-1.5 -ml-1.5"
-				url={src}
+				url={String(generation.imageUrl)}
 				prompt={generation.prompt}
 				seed={generation.seed}
 				guidanceScale={generation.guidance_scale}
