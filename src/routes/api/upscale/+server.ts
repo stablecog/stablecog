@@ -18,7 +18,8 @@ export const POST: RequestHandler = async ({ request }) => {
 	}
 	try {
 		const startTimestamp = Date.now();
-		console.time('Request');
+		const startDate = new Date(startTimestamp).toUTCString();
+		upscaleLog({ text: 'Started upscale:', dateString: startDate, scale, server_url, version });
 		const res = await fetch(`${picked_server_url}/predictions`, {
 			method: 'POST',
 			headers: {
@@ -33,20 +34,45 @@ export const POST: RequestHandler = async ({ request }) => {
 				}
 			})
 		});
-		console.timeEnd('Request');
 		const endTimestamp = Date.now();
+		const endDate = new Date(endTimestamp).toUTCString();
 		const upscaleDurationMs = endTimestamp - startTimestamp;
-		console.time('res.json() took:');
+		upscaleLog({
+			text: `Finished upscale in ${(endTimestamp - startTimestamp) / 1000}s:`,
+			dateString: endDate,
+			scale,
+			server_url,
+			version
+		});
+		const startTimestampJson = Date.now();
 		const data: TUpscaleData = await res.json();
-		console.timeEnd('res.json() took:');
+		const endTimestampJson = Date.now();
+		console.log(
+			`---- Upscale body to JSON in: ${(endTimestampJson - startTimestampJson) / 1000}s ----`
+		);
 		const output = data.output[0];
-		const jsonStr = JSON.stringify({ img: output, duration_ms: upscaleDurationMs });
-		return new Response(jsonStr);
+		return new Response(JSON.stringify({ img: output, duration_ms: upscaleDurationMs }));
 	} catch (error) {
 		console.log(error);
 	}
 	return new Response(JSON.stringify({ error: 'Something went wrong :(' }));
 };
+
+function upscaleLog({
+	text,
+	dateString,
+	scale,
+	version,
+	server_url
+}: {
+	text: string;
+	dateString: string;
+	scale: number;
+	version: string;
+	server_url: string;
+}) {
+	console.log('----', text, dateString, '--', version, '--', scale, '--', server_url, '----');
+}
 
 interface TUpscaleRequest {
 	server_url: string;

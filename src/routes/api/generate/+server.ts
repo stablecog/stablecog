@@ -117,7 +117,9 @@ export const POST: RequestHandler = async ({ request }) => {
 		const jsonStartTimestamp = Date.now();
 		const data: TGenerateImageData = await res.json();
 		const jsonEndTimestamp = Date.now();
-		console.log(`---- Body to JSON in: ${(jsonEndTimestamp - jsonStartTimestamp) / 1000}s ----`);
+		console.log(
+			`---- Generation body to JSON in: ${(jsonEndTimestamp - jsonStartTimestamp) / 1000}s ----`
+		);
 		const output = data.output[0];
 		const isNSFW = getIsNSFW(output);
 		const endDate = new Date(endTimestamp).toUTCString();
