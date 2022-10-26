@@ -135,7 +135,7 @@
 	canonical="{canonicalUrl}{$page.url.pathname}"
 />
 
-<div class="w-full flex-1 flex justify-center px-8 md:px-24 pt-4 pb-[calc(4vh+0.5rem)]">
+<div class="w-full flex-1 flex justify-center px-8 md:px-24 pt-4 pb-[calc(3vh)]">
 	<div class="w-full flex flex-col items-center justify-center max-w-5xl">
 		{#if supabase}
 			<div class="w-full flex flex-wrap items-center justify-center py-6 gap-10 md:gap-14">
