@@ -8,10 +8,10 @@ metadata:
     cert-manager.io/cluster-issuer: 'letsencrypt-prod'
     nginx.ingress.kubernetes.io/proxy-send-timeout: '180'
     nginx.ingress.kubernetes.io/proxy-read-timeout: '180'
-    nginx.ingress.kubernetes.io/proxy-body-size: '0'
+    nginx.ingress.kubernetes.io/proxy-body-size: 25m
     nginx.org/proxy-connect-timeout: 180s
     nginx.org/proxy-read-timeout: 180s
-    nginx.org/client-max-body-size: '0'
+    nginx.org/client-max-body-size: 25m
 spec:
   tls:
     - hosts:

@@ -76,7 +76,6 @@ async function checkHealth(serverUrl: string) {
 		const data: TServerHealthData = await res.json();
 		const properties = data.components?.schemas?.Input?.properties;
 		const endTimestamp = Date.now();
-		const endDate = new Date(endTimestamp).toUTCString();
 		if (
 			properties !== undefined &&
 			properties.guidance_scale !== undefined &&
@@ -93,13 +92,15 @@ async function checkHealth(serverUrl: string) {
 		} else {
 			serverHealth = { status: 'unhealthy' };
 		}
-		endLog({
-			startTimestamp,
-			endTimestamp,
-			endDate,
-			status: serverHealth.status,
-			serverUrl
-		});
+		console.log(
+			'----',
+			`Ended server health check in ${(endTimestamp - startTimestamp) / 1000}s`,
+			'--',
+			serverHealth.status,
+			'--',
+			serverUrl,
+			'----'
+		);
 		return serverHealth;
 	} catch (error) {
 		const endTimestamp = Date.now();
@@ -114,31 +115,6 @@ async function checkHealth(serverUrl: string) {
 	} finally {
 		return serverHealth;
 	}
-}
-
-function endLog({
-	startTimestamp,
-	endTimestamp,
-	endDate,
-	status,
-	serverUrl
-}: {
-	startTimestamp: number;
-	endTimestamp: number;
-	endDate: string;
-	status: string | TServerHealthStatus;
-	serverUrl: string | undefined;
-}) {
-	console.log(
-		'----',
-		`Ended server health check in ${(endTimestamp - startTimestamp) / 1000}s:`,
-		endDate,
-		'--',
-		status,
-		'--',
-		serverUrl,
-		'----'
-	);
 }
 
 interface TServerHealthData {

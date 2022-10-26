@@ -21,7 +21,7 @@ export async function pickServerUrl(serverUrl: string): Promise<TPickServerUrlRe
 		return { serverUrl: serverUrl, isDefault: false };
 	}
 	const pickedServer = data[Math.floor(Math.random() * data.length)];
-	console.log('---- Picked server url is:', pickedServer.url);
+	console.log(`---- Picked server url is: ${pickedServer.url} ---`);
 	return { serverUrl: pickedServer.url, isDefault: true };
 }
 

@@ -8,7 +8,6 @@ import type { RequestHandler } from '@sveltejs/kit';
 
 export const POST: RequestHandler = async ({ request }) => {
 	const startTimestamp = Date.now();
-	const startDate = new Date(startTimestamp).toUTCString();
 	const { headers } = request;
 	const countryCode = headers.get('cf-ipcountry');
 	let generationId: string | undefined;
@@ -39,8 +38,7 @@ export const POST: RequestHandler = async ({ request }) => {
 	}
 	try {
 		generationLog({
-			text: 'Started generation:',
-			dateString: startDate,
+			text: 'Started generation',
 			prompt: _prompt,
 			negative_prompt: _negative_prompt,
 			width,
@@ -78,8 +76,7 @@ export const POST: RequestHandler = async ({ request }) => {
 					generationId = data?.[0].id;
 					const endTimestamp = Date.now();
 					generationLog({
-						text: `Inserted into the DB in ${(endTimestamp - startTimestamp) / 1000}s:`,
-						dateString: startDate,
+						text: `Inserted into the DB in ${(endTimestamp - startTimestamp) / 1000}s`,
 						prompt: _prompt,
 						negative_prompt: _negative_prompt,
 						width,
@@ -122,13 +119,11 @@ export const POST: RequestHandler = async ({ request }) => {
 		);
 		const output = data.output[0];
 		const isNSFW = getIsNSFW(output);
-		const endDate = new Date(endTimestamp).toUTCString();
 		if (data.error) {
-			console.log('----', endDate, '--', 'Generation error', '--', data.error, '----');
+			console.log('----', 'Generation error', '--', data.error, '----');
 		}
 		generationLog({
-			text: `Ended generation in ${(endTimestamp - startTimestamp) / 1000}s:`,
-			dateString: endDate,
+			text: `Ended generation in ${(endTimestamp - startTimestamp) / 1000}s`,
 			prompt: _prompt,
 			negative_prompt: _negative_prompt,
 			width,
@@ -162,8 +157,7 @@ export const POST: RequestHandler = async ({ request }) => {
 					generationLog({
 						text: `Updated the DB record with "succeeded" in ${
 							(endTimestamp - startTimestamp) / 1000
-						}s:`,
-						dateString: startDate,
+						}s`,
 						prompt: _prompt,
 						negative_prompt: _negative_prompt,
 						width,
@@ -197,8 +191,7 @@ export const POST: RequestHandler = async ({ request }) => {
 					generationLog({
 						text: `Updated the DB record with "failed" in ${
 							(endTimestamp - startTimestamp) / 1000
-						}s:`,
-						dateString: startDate,
+						}s`,
 						prompt: _prompt,
 						negative_prompt: _negative_prompt,
 						width,
@@ -221,12 +214,10 @@ export const POST: RequestHandler = async ({ request }) => {
 		return new Response(JSON.stringify(generationResponse));
 	} catch (error) {
 		const endTimestamp = Date.now();
-		const endDate = new Date(endTimestamp).toUTCString();
 		generationDurationMs = endTimestamp - startTimestamp;
 		console.log(
 			'----',
-			`Failed generation in ${(endTimestamp - startTimestamp) / 1000}s:`,
-			endDate,
+			`Failed generation in ${(endTimestamp - startTimestamp) / 1000}s`,
 			'--',
 			error,
 			'----'
@@ -252,8 +243,7 @@ export const POST: RequestHandler = async ({ request }) => {
 					generationLog({
 						text: `Updated the DB record with "failed" in ${
 							(endTimestamp - startTimestamp) / 1000
-						}s:`,
-						dateString: startDate,
+						}s`,
 						prompt: _prompt,
 						negative_prompt: _negative_prompt,
 						width,
@@ -307,7 +297,6 @@ export interface TDBGenerationProcessRes {
 
 function generationLog({
 	text,
-	dateString,
 	prompt,
 	negative_prompt,
 	width,
@@ -318,7 +307,6 @@ function generationLog({
 	server_url
 }: {
 	text: string;
-	dateString: string;
 	prompt: string;
 	negative_prompt: string | undefined;
 	width: number;
@@ -331,7 +319,6 @@ function generationLog({
 	console.log(
 		'----',
 		text,
-		dateString,
 		'--',
 		`"${prompt}"`,
 		`--${negative_prompt ? ` "${negative_prompt}" --` : ''}`,

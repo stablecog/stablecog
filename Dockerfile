@@ -8,6 +8,7 @@ RUN npm ci
 # Copy all local files into the image.
 COPY . .
 
+ENV BODY_SIZE_LIMIT=26214400
 RUN --mount=type=secret,id=PUBLIC_SUPABASE_URL \
   --mount=type=secret,id=PUBLIC_SUPABASE_ANON_KEY \
   --mount=type=secret,id=SUPABASE_ADMIN_KEY \
