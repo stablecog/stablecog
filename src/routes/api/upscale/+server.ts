@@ -17,7 +17,6 @@ export const POST: RequestHandler = async ({ request }) => {
 		picked_server_url = server_url;
 	}
 	try {
-		/*
 		const startTimestamp = Date.now();
 		upscaleLog({ text: 'Started upscale', scale, server_url, version });
 		const res = await fetch(`${picked_server_url}/predictions`, {
@@ -48,8 +47,8 @@ export const POST: RequestHandler = async ({ request }) => {
 		console.log(
 			`---- Upscale body to JSON in: ${(endTimestampJson - startTimestampJson) / 1000}s ----`
 		);
-		const output = data.output[0]; */
-		return new Response(JSON.stringify({ img: '', duration_ms: 1234 }));
+		const output = data.output[0];
+		return new Response(JSON.stringify({ img: output, duration_ms: upscaleDurationMs }));
 	} catch (error) {
 		console.log(error);
 	}
