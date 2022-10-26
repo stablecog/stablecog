@@ -337,38 +337,40 @@
 									</SubtleButton>
 								</div>
 							</div>
-							<div class="flex flex-col gap-1">
-								<div class="flex items-center gap-1.5 text-c-on-bg/75 text-sm">
-									<IconScale class="w-4 h-4" />
-									<p>Guidance Scale</p>
-								</div>
-								<p class="font-bold">{generation.guidance_scale}</p>
-							</div>
-							<div class="flex flex-col gap-1">
-								<div class="flex items-center gap-1.5 text-c-on-bg/75 text-sm">
-									<IconSteps class="w-4 h-4" />
-									<p>Inference Steps</p>
-								</div>
-								<p class="font-bold">{generation.num_inference_steps}</p>
-							</div>
-							<div class="flex flex-col gap-1">
-								<div class="flex items-center gap-1.5 text-c-on-bg/75 text-sm">
-									<IconDimensions class="w-4 h-4" />
-									<p>Dimensions</p>
-								</div>
-								<p class="font-bold">{generation.width} × {generation.height}</p>
-							</div>
-							{#if generation.duration_ms}
-								<div class="flex flex-col gap-1">
+							<div class="flex flex-wrap gap-6">
+								<div class="min-w-[calc(50%-0.75rem)] flex flex-col gap-1">
 									<div class="flex items-center gap-1.5 text-c-on-bg/75 text-sm">
-										<IconClock class="w-4 h-4" />
-										<p>Duration</p>
+										<IconScale class="w-4 h-4" />
+										<p>Guidance Scale</p>
 									</div>
-									<p class="font-bold">
-										{Math.round((generation.duration_ms / 1000) * 10) / 10}s
-									</p>
+									<p class="font-bold">{generation.guidance_scale}</p>
 								</div>
-							{/if}
+								<div class="min-w-[calc(50%-0.75rem)] flex flex-col gap-1">
+									<div class="flex items-center gap-1.5 text-c-on-bg/75 text-sm">
+										<IconSteps class="w-4 h-4" />
+										<p>Inference Steps</p>
+									</div>
+									<p class="font-bold">{generation.num_inference_steps}</p>
+								</div>
+								<div class="min-w-[calc(50%-0.75rem)] flex flex-col gap-1">
+									<div class="flex items-center gap-1.5 text-c-on-bg/75 text-sm">
+										<IconDimensions class="w-4 h-4" />
+										<p>Dimensions</p>
+									</div>
+									<p class="font-bold">{generation.width} × {generation.height}</p>
+								</div>
+								{#if generation.duration_ms}
+									<div class="min-w-[calc(50%-0.75rem)] flex flex-col gap-1">
+										<div class="flex items-center gap-1.5 text-c-on-bg/75 text-sm">
+											<IconClock class="w-4 h-4" />
+											<p>Duration</p>
+										</div>
+										<p class="font-bold">
+											{Math.round((generation.duration_ms / 1000) * 10) / 10}s
+										</p>
+									</div>
+								{/if}
+							</div>
 						</div>
 					</div>
 				</div>
