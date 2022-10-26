@@ -204,7 +204,7 @@
 				class="w-full shadow-generation-sidebar shadow-c-shadow/[var(--o-shadow-stronger)] flex 
 				flex-col items-start justify-start bg-c-bg-secondary lg:border-l-2 border-c-bg-tertiary relative"
 			>
-				{#if showSidebarChevron && sidebarWrapperScrollTop + 12 < sidebarWrapperScrollHeight - sidebarWrapperHeight}
+				{#if showSidebarChevron && sidebarWrapperScrollTop + 24 < sidebarWrapperScrollHeight - sidebarWrapperHeight}
 					<div
 						transition:fly|local={{ duration: 200, easing: quadOut, y: 50, opacity: 0 }}
 						class="absolute left-1/2 transform -translate-x-1/2 bottom-0 flex justify-center items-end p-1 z-50"

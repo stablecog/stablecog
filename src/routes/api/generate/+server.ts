@@ -95,7 +95,7 @@ export const POST: RequestHandler = async ({ request }) => {
 			}
 		}
 		const startTimestamp = Date.now();
-		const response = await fetch(`${picked_server_url}/predictions`, {
+		const res = await fetch(`${picked_server_url}/predictions`, {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json'
@@ -114,7 +114,10 @@ export const POST: RequestHandler = async ({ request }) => {
 		});
 		const endTimestamp = Date.now();
 		generationDurationMs = endTimestamp - startTimestamp;
-		const data: TGenerateImageData = await response.json();
+		const jsonStartTimestamp = Date.now();
+		const data: TGenerateImageData = await res.json();
+		const jsonEndTimestamp = Date.now();
+		console.log(`---- Body to JSON in: ${(jsonEndTimestamp - jsonStartTimestamp) / 1000}s ----`);
 		const output = data.output[0];
 		const isNSFW = getIsNSFW(output);
 		const endDate = new Date(endTimestamp).toUTCString();

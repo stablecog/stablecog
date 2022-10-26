@@ -70,8 +70,6 @@ export const POST: RequestHandler = async ({ request }) => {
 
 async function checkHealth(serverUrl: string) {
 	const startTimestamp = Date.now();
-	const startDate = new Date(startTimestamp).toUTCString();
-	console.log('----', 'Started server health check:', startDate, '--', serverUrl, '----');
 	let serverHealth: TServerHealthRes = { status: 'unhealthy' };
 	try {
 		const res = await fetch(`${serverUrl}/openapi.json`);
