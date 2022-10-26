@@ -89,7 +89,7 @@
 	use:clickoutside={{
 		callback: () => (setServerProcessStatus === 'loading' || !close ? null : close())
 	}}
-	class="w-full flex flex-col justify-start max-w-xl my-auto bg-c-bg-secondary rounded-2xl shadow-xl relative overflow-hidden z-0 origin-top {isOnBarrier
+	class="w-full ring-2 ring-c-bg-tertiary bg-c-bg-secondary flex flex-col justify-start max-w-xl my-auto rounded-2xl shadow-xl relative overflow-hidden z-0 origin-top {isOnBarrier
 		? 'shadow-c-shadow/[var(--o-shadow-strong)]'
 		: 'shadow-c-shadow/[var(--o-shadow-normal)]'}"
 >
