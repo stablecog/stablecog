@@ -47,14 +47,14 @@ export const expandCollapse = (node: Node, options: IExpandCollapseOptions) => {
 };
 
 export const [elementsend, elementreceive] = crossfade({
-	duration: (d) => Math.sqrt(d * 200),
+	duration: (d) => Math.min(Math.max(Math.sqrt(d * 200), 250), 350),
 
 	fallback(node) {
 		const style = getComputedStyle(node);
 		const transform = style.transform === 'none' ? '' : style.transform;
 
 		return {
-			duration: 600,
+			duration: 350,
 			easing: quadOut,
 			css: (t) => `
 					transform: ${transform} scale(${t});

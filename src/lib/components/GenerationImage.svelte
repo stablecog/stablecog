@@ -8,9 +8,8 @@
 	import IconSeed from '$components/icons/IconSeed.svelte';
 	import IconSteps from '$components/icons/IconSteps.svelte';
 	import IconTickOnly from '$components/icons/IconTickOnly.svelte';
-	import { elementreceive, elementsend } from '$ts/animation/transitions';
+	import { urlFromBase64 } from '$ts/helpers/base64';
 	import { doesContainTarget } from '$ts/helpers/doesContainTarget';
-	import { generationId } from '$ts/helpers/generationId';
 	import { activeGeneration } from '$ts/stores/activeGeneration';
 	import { advancedMode } from '$ts/stores/advancedMode';
 	import { isTouchscreen } from '$ts/stores/isTouchscreen';
@@ -19,6 +18,10 @@
 
 	export let generation: TGenerationBase;
 	export let src: string;
+
+	if (src.startsWith('data:image/')) {
+		src = urlFromBase64(src);
+	}
 
 	let seedCopied = false;
 	let seedCopiedTimeout: NodeJS.Timeout;
