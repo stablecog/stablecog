@@ -1,5 +1,6 @@
 CREATE extension IF NOT EXISTS moddatetime schema extensions;
 
+-- Generation Table
 CREATE TYPE generation_status_enum AS ENUM ('started', 'succeeded', 'failed', 'rejected');
 
 CREATE TABLE "generation" (
@@ -31,6 +32,41 @@ UPDATE
 ALTER TABLE
     generation ENABLE ROW LEVEL SECURITY;
 
+-- Upscale Table
+CREATE TYPE upscale_status_enum AS ENUM ('started', 'succeeded', 'failed');
+
+CREATE TABLE "upscale" (
+    "width" INTEGER NOT NULL,
+    "height" INTEGER NOT NULL,
+    "scale" INTEGER NOT NULL,
+    "status" upscale_status_enum NOT NULL,
+    "server_url" TEXT NOT NULL,
+    "duration_ms" INTEGER,
+    "version" TEXT,
+    "prompt" TEXT,
+    "negative_prompt" TEXT,
+    "seed" BIGINT,
+    "num_inference_steps" INTEGER,
+    "guidance_scale" DOUBLE PRECISION,
+    "country_code" TEXT,
+    "device_type" TEXT,
+    "device_os" TEXT,
+    "device_browser" TEXT,
+    "user_agent" TEXT,
+    "id" UUID NOT NULL DEFAULT uuid_generate_v4(),
+    "created_at" TIMESTAMPTZ DEFAULT TIMEZONE('utc' :: TEXT, NOW()) NOT NULL,
+    "updated_at" TIMESTAMPTZ DEFAULT TIMEZONE('utc' :: TEXT, NOW()) NOT NULL,
+    PRIMARY KEY(id)
+);
+
+CREATE trigger handle_updated_at before
+UPDATE
+    ON upscale FOR each ROW EXECUTE PROCEDURE moddatetime (updated_at);
+
+ALTER TABLE
+    upscale ENABLE ROW LEVEL SECURITY;
+
+-- Server Table
 CREATE TABLE "server" (
     "url" TEXT NOT NULL,
     "healthy" BOOLEAN NOT NULL DEFAULT TRUE,
@@ -49,16 +85,27 @@ UPDATE
 ALTER TABLE
     server ENABLE ROW LEVEL SECURITY;
 
+-- Generation peripheral stuff
 CREATE VIEW generation_public AS
 SELECT
     id,
     duration_ms,
-    STATUS,
+    status,
     country_code,
     created_at,
     updated_at
 FROM
     generation;
+
+CREATE
+OR REPLACE FUNCTION generation_count() RETURNS BIGINT AS $ $
+SELECT
+    COUNT(*)
+FROM
+    generation_public
+WHERE
+    status = 'succeeded'
+    OR status IS NULL $ $ language SQL;
 
 CREATE
 OR REPLACE FUNCTION generation_count_with_null_duration_ms() RETURNS BIGINT AS $ $
@@ -152,7 +199,7 @@ ELSE
 INSERT INTO
     generation_realtime (
         id,
-        STATUS,
+        status,
         created_at,
         updated_at,
         country_code,
@@ -215,3 +262,181 @@ INSERT
     OR
 UPDATE
     ON generation FOR EACH ROW EXECUTE PROCEDURE prune_generation_realtime();
+
+-- Upscale peripheral stuff
+CREATE VIEW upscale_public AS
+SELECT
+    id,
+    duration_ms,
+    status,
+    country_code,
+    created_at,
+    updated_at
+FROM
+    upscale;
+
+CREATE
+OR REPLACE FUNCTION upscale_count() RETURNS BIGINT AS $ $
+SELECT
+    COUNT(*)
+FROM
+    upscale_public
+WHERE
+    status = 'succeeded'
+    OR status IS NULL $ $ language SQL;
+
+CREATE
+OR REPLACE FUNCTION upscale_count_with_null_duration_ms() RETURNS BIGINT AS $ $
+SELECT
+    COUNT(*)
+FROM
+    upscale_public
+WHERE
+    duration_ms IS NULL
+    AND (
+        status IS NULL
+        OR status = 'succeeded'
+    ) $ $ language SQL;
+
+CREATE
+OR REPLACE FUNCTION upscale_with_non_null_duration_ms_total() RETURNS BIGINT AS $ $
+SELECT
+    SUM (duration_ms) upscale_with_non_null_duration_ms_total
+FROM
+    upscale_public
+WHERE
+    duration_ms IS NOT NULL
+    AND (
+        status IS NULL
+        or status = 'succeeded'
+    ) $ $ language SQL;
+
+CREATE
+OR REPLACE FUNCTION upscale_with_non_null_duration_ms_average() RETURNS BIGINT AS $ $
+SELECT
+    SUM (duration_ms) / COUNT('*') AS upscale_with_non_null_duration_ms_average
+FROM
+    upscale_public
+WHERE
+    duration_ms IS NOT NULL
+    AND (
+        status IS NULL
+        or status = 'succeeded'
+    ) $ $ language SQL;
+
+CREATE
+OR REPLACE FUNCTION upscale_duration_ms_total_estimate() RETURNS BIGINT AS $ $
+SELECT
+    upscale_with_non_null_duration_ms_total() + upscale_count_with_null_duration_ms() * upscale_with_non_null_duration_ms_average() $ $ language SQL;
+
+CREATE
+OR REPLACE FUNCTION upscale_duration_ms_total_estimate_with_constant() RETURNS BIGINT AS $ $
+SELECT
+    upscale_with_non_null_duration_ms_total() + upscale_count_with_null_duration_ms() * 12000 $ $ language SQL;
+
+CREATE TABLE "upscale_realtime" (
+    "status" upscale_status_enum NOT NULL,
+    "duration_ms" INTEGER,
+    "country_code" TEXT,
+    "uses_default_server" BOOLEAN NOT NULL,
+    "width" INTEGER,
+    "height" INTEGER,
+    "scale" INTEGER,
+    "id" UUID NOT NULL DEFAULT uuid_generate_v4(),
+    "created_at" TIMESTAMPTZ DEFAULT TIMEZONE('utc' :: TEXT, NOW()) NOT NULL,
+    "updated_at" TIMESTAMPTZ DEFAULT TIMEZONE('utc' :: TEXT, NOW()) NOT NULL,
+    PRIMARY KEY(id)
+);
+
+ALTER TABLE
+    upscale_realtime ENABLE ROW LEVEL SECURITY;
+
+CREATE POLICY "Everyone can read upscale_realtime" ON public.upscale_realtime FOR
+SELECT
+    USING (true);
+
+CREATE
+OR REPLACE FUNCTION duplicate_to_upscale_realtime() RETURNS trigger AS $ $ BEGIN IF EXISTS(
+    SELECT
+        id
+    FROM
+        upscale_realtime
+    WHERE
+        id = new.id
+) THEN
+UPDATE
+    upscale_realtime
+SET
+    status = new.status,
+    updated_at = new.updated_at,
+    duration_ms = new.duration_ms
+WHERE
+    id = new.id;
+
+ELSE
+INSERT INTO
+    upscale_realtime (
+        id,
+        status,
+        created_at,
+        updated_at,
+        country_code,
+        duration_ms,
+        uses_default_server,
+        width,
+        height,
+        scale
+    )
+VALUES
+    (
+        new.id,
+        new.status,
+        new.created_at,
+        new.updated_at,
+        new.country_code,
+        new.duration_ms,
+        new.server_url IN (
+            SELECT
+                url
+            FROM
+                server
+        ),
+        new.width,
+        new.height,
+        new.scale
+    );
+
+END IF;
+
+RETURN new;
+
+END;
+
+$ $ language plpgsql SECURITY DEFINER;
+
+CREATE trigger upscale_created_or_updated
+AFTER
+INSERT
+    OR
+UPDATE
+    ON upscale FOR EACH ROW EXECUTE PROCEDURE duplicate_to_upscale_realtime();
+
+CREATE
+OR REPLACE FUNCTION prune_upscale_realtime() RETURNS trigger AS $ $ BEGIN
+DELETE FROM
+    upscale_realtime
+WHERE
+    created_at < TIMEZONE('utc' :: TEXT, NOW()) - INTERVAL '2 hours';
+
+RETURN NULL;
+
+END;
+
+$ $ language plpgsql SECURITY DEFINER;
+
+CREATE trigger upscale_created_or_updated_prune
+AFTER
+INSERT
+    OR
+UPDATE
+    ON upscale FOR EACH ROW EXECUTE PROCEDURE prune_upscale_realtime();

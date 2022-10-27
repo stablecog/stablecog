@@ -28,12 +28,12 @@ export const heightTabs: THeightTab[] = [
 ];
 export const heightDefault = heightTabs[1].value;
 
-export type TAvailableInferenceSteps = '25' | '50' | '75' | '100';
+export type TAvailableInferenceSteps = '25' | '50' | '75' /* | '100' */;
 export const inferenceStepsTabs: TInferenceStepsTab[] = [
 	{ label: '25', value: '25' },
 	{ label: '50', value: '50' },
-	{ label: '75', value: '75' },
-	{ label: '100', value: '100' }
+	{ label: '75', value: '75' }
+	/* 	{ label: '100', value: '100' } */
 ];
 export const inferenceStepsDefault = inferenceStepsTabs[1].value;
 
