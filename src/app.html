@@ -41,6 +41,23 @@
 			data-domains="stablecog.com"
 			src="https://umami.stablecog.com/umami.js"
 		></script>
+		<script>
+			window.onload = () => {
+				try {
+					const version = document.body.getAttribute('version');
+					const appVersion = window.localStorage.getItem('appVersion');
+					if (version && appVersion === 'not-set') {
+						window.localStorage.setItem('appVersion', version);
+					}
+					if (version && version !== appVersion) {
+						window.localStorage.setItem('appVersion', version);
+						document.location.reload();
+					}
+				} catch (error) {
+					console.log(error);
+				}
+			};
+		</script>
 		%sveltekit.head%
 	</head>
 	<body version="1.2">

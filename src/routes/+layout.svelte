@@ -18,7 +18,6 @@
 	import NavbarBottom from '$components/NavbarBottom.svelte';
 	import { page } from '$app/stores';
 	import { windowHeight, windowWidth } from '$ts/stores/window';
-	import { appVersion } from '$ts/stores/appVersion';
 
 	let innerHeight: number;
 	let innerWidth: number;
@@ -32,14 +31,6 @@
 	$: [innerWidth, innerHeight], setWindowStores();
 
 	onMount(async () => {
-		const version = document.body.getAttribute('version');
-		if (version && $appVersion === 'not-set') {
-			appVersion.set(version);
-		}
-		if (version && version !== $appVersion) {
-			appVersion.set(version);
-			document.location.reload();
-		}
 		mounted = true;
 		setBodyClasses();
 	});
