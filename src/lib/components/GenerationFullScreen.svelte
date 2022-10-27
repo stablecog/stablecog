@@ -57,7 +57,7 @@
 	$: modalMaxWidth = mainContainerWidth - 2 * padding;
 	$: modalMaxHeight = mainContainerHeight - 2 * padding;
 
-	$: modalMinHeight = Math.min(modalMaxHeight, 600);
+	$: modalMinHeight = Math.min(modalMaxHeight, 575);
 
 	$: [modalMaxWidth, modalMaxHeight], setImageContainerSize();
 
@@ -176,12 +176,13 @@
 		>
 			<div class="relative self-stretch flex items-center">
 				<img
-					class="w-full h-full absolute left-0 top-0 transform scale-125 blur-xl filter brightness-90"
+					class="w-full h-full absolute left-0 top-0 transform scale-125 blur-xl"
 					src={generation.imageUrl}
 					alt={generation.prompt}
 					width={generation.width}
 					height={generation.height}
 				/>
+				<div class="w-full h-full absolute left-0 top-0 bg-c-bg/50" />
 				<div
 					style={$windowWidth >= lgBreakpoint
 						? `width: ${imageContainerWidth}px; height: ${imageContainerHeight}px;`
