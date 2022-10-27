@@ -32,6 +32,14 @@
 	$: [innerWidth, innerHeight], setWindowStores();
 
 	onMount(async () => {
+		const version = document.body.getAttribute('version');
+		if (version && $appVersion === '') {
+			appVersion.set(version);
+		}
+		if (version && version !== $appVersion) {
+			appVersion.set(version);
+			document.location.reload();
+		}
 		mounted = true;
 		setBodyClasses();
 	});
