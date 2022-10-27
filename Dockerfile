@@ -29,4 +29,4 @@ COPY --from=0 /app .
 COPY . .
 
 EXPOSE 3000
-CMD ["BODY_SIZE_LIMIT=26214400", "node", "./build"]
+CMD ["node", "./build", "BODY_SIZE_LIMIT=26214400" ]

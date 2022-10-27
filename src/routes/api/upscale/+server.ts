@@ -8,7 +8,6 @@ export const POST: RequestHandler = async ({ request }) => {
 		scale = 4,
 		version = 'General - RealESRGANplus'
 	}: TUpscaleRequest = await request.json();
-	console.log(server_url, scale, version);
 	let picked_server_url: string;
 	try {
 		const res = await pickServerUrl(server_url);
@@ -66,7 +65,7 @@ function upscaleLog({
 	version: string;
 	server_url: string;
 }) {
-	console.log('----', text, '--', version, '--', scale, '--', server_url, '----');
+	console.log('----', text, '--', `"${version}"`, '--', scale, '--', server_url, '----');
 }
 
 interface TUpscaleRequest {
