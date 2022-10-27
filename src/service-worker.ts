@@ -24,11 +24,13 @@ worker.addEventListener('install', (event) => {
 worker.addEventListener('activate', (event) => {
 	event.waitUntil(
 		caches.keys().then(async (keys) => {
-			// delete old caches
+			// delete old cache
 			for (const key of keys) {
-				if (key !== FILES) await caches.delete(key);
+				if (key !== FILES) {
+					console.log('Deleting service worker cache with key:', key);
+					await caches.delete(key);
+				}
 			}
-
 			worker.clients.claim();
 		})
 	);
