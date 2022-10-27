@@ -24,11 +24,11 @@ export interface TGenerationRequest {
 	server_url: string;
 	prompt: string;
 	negative_prompt?: string;
-	width: number;
-	height: number;
-	seed: number;
-	num_inference_steps: number;
-	guidance_scale: number;
+	width?: number;
+	height?: number;
+	seed?: number;
+	num_inference_steps?: number;
+	guidance_scale?: number;
 }
 
 export interface TGenerationResponse {

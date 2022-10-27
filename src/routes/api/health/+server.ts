@@ -87,7 +87,10 @@ async function checkHealth(serverUrl: string) {
 		) {
 			serverHealth = { status: 'healthy' };
 			if (properties.negative_prompt !== undefined) {
-				serverHealth.features = ['negative_prompt'];
+				serverHealth.features = [...(serverHealth.features ?? []), 'negative_prompt'];
+			}
+			if (properties.img !== undefined && properties.scale !== undefined) {
+				serverHealth.features = [...(serverHealth.features ?? []), 'upscale'];
 			}
 		} else {
 			serverHealth = { status: 'unhealthy' };
@@ -148,6 +151,12 @@ interface TServerHealthData {
 						title: string;
 					};
 					seed?: {
+						title: string;
+					};
+					img?: {
+						title: string;
+					};
+					scale?: {
 						title: string;
 					};
 				};
