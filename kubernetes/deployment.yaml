@@ -20,10 +20,10 @@ spec:
           image: replaceme
           resources:
             requests:
-              cpu: 750m
+              cpu: 500m
               memory: 1000Mi
             limits:
-              cpu: 1250m
+              cpu: 1000m
               memory: 2000Mi
           ports:
             - containerPort: 3000
