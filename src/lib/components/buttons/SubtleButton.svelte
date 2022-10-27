@@ -2,7 +2,7 @@
 	import { isTouchscreen } from '$ts/stores/isTouchscreen';
 
 	export let onClick: (() => void) | undefined = undefined;
-	export let state: 'default' | 'success' = 'default';
+	export let state: 'idle' | 'success' = 'idle';
 	export let href: string | undefined = undefined;
 	export let download: string | undefined = undefined;
 	export let noPadding = false;

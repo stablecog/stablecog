@@ -52,7 +52,9 @@
 					class="flex-1 font-medium relative transition overflow-hidden overflow-ellipsis max-w-full z-0 {value ===
 						tab.value && !hideSelected
 						? 'text-c-on-bg/75'
-						: 'text-c-on-bg/30'}"
+						: 'text-c-on-bg/30'} {value === tab.value && !hideSelected && !$isTouchscreen
+						? 'group-hover:text-c-primary'
+						: ''}"
 				>
 					{tab.label}
 				</p>

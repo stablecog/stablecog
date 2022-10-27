@@ -11,10 +11,12 @@ export interface TGenerationBase {
 	duration_ms?: number;
 	server_url: string;
 	imageDataB64: string;
+	upscaledImageDataB64?: string;
 }
 
 export interface TGenerationUI extends TGenerationBase {
 	imageUrl?: string;
+	upscaledImageUrl?: string;
 	computeRatePerSec?: number;
 }
 
@@ -63,7 +65,7 @@ export interface TTab {
 	value: string | number;
 }
 
-export type TServerFeatures = 'negative_prompt';
+export type TServerFeatures = 'negative_prompt' | 'upscale';
 export type TServerHealthStatus = 'healthy' | 'unhealthy' | 'not-set' | 'unknown' | 'loading';
 export type TLastServerHealthStatus = 'healthy' | 'unhealthy' | 'not-set' | 'unknown';
 

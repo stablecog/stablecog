@@ -261,7 +261,7 @@
 							</div>
 							<div class="w-full flex flex-wrap gap-3">
 								<div use:copy={generation.prompt} on:svelte-copy={onPromptCopied}>
-									<SubtleButton state={promptCopied ? 'success' : 'default'}>
+									<SubtleButton state={promptCopied ? 'success' : 'idle'}>
 										<Morpher morph={promptCopied}>
 											<div slot="item-0" class="flex items-center justify-center gap-1.5">
 												<IconCopy class="w-5 h-5 -ml-0.25" />
@@ -279,7 +279,7 @@
 										use:copy={generation.negative_prompt}
 										on:svelte-copy={onNegativePromptCopied}
 									>
-										<SubtleButton state={negativePromptCopied ? 'success' : 'default'}>
+										<SubtleButton state={negativePromptCopied ? 'success' : 'idle'}>
 											<Morpher morph={negativePromptCopied}>
 												<div slot="item-0" class="flex items-center justify-center gap-1.5">
 													<IconCopy class="w-5 h-5 -ml-0.25" />
@@ -304,7 +304,7 @@
 										generation.guidance_scale,
 										generation.num_inference_steps
 									)}
-									state={imageDownloading ? 'success' : 'default'}
+									state={imageDownloading ? 'success' : 'idle'}
 								>
 									<Morpher morph={imageDownloading}>
 										<div slot="item-0" class="flex items-center justify-center gap-1.5">
@@ -334,7 +334,7 @@
 									<p class="font-bold">{generation.seed}</p>
 								</div>
 								<div use:copy={String(generation.seed)} on:svelte-copy={onSeedCopied}>
-									<SubtleButton noPadding class="p-2.5" state={seedCopied ? 'success' : 'default'}>
+									<SubtleButton noPadding class="p-2.5" state={seedCopied ? 'success' : 'idle'}>
 										<Morpher morph={seedCopied}>
 											<div slot="item-0" class="flex items-center justify-center gap-1.5">
 												<IconCopy class="w-5 h-5" />

@@ -1,8 +1,7 @@
 import type { TGenerationBase } from '$ts/types/main';
 
-export interface TDBGeneration extends TGenerationBase {
+export interface TIndexedDBGeneration extends TGenerationBase {
 	id?: number;
-	imageDataB64: string;
 }
 
 export interface TDBServer {
