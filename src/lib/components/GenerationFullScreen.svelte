@@ -28,10 +28,11 @@
 	import { fly } from 'svelte/transition';
 
 	export let generation: TGenerationUI;
+	$: generationAspectRatio = generation.width / generation.height;
 
 	const padding = 64;
 
-	$: maxWidthConstant = generation.width / generation.height >= 3 / 2 ? 1440 : 1280;
+	$: maxWidthConstant = generationAspectRatio >= 3 / 2 ? 1440 : 1280;
 	const maxHeight = 1024;
 	const sidebarWidth = 400;
 
@@ -162,7 +163,8 @@
 		style={$windowWidth >= lgBreakpoint
 			? `max-width: ${mainContainerWidth}px; max-height: ${mainContainerHeight}px`
 			: ''}
-		class="relative w-full h-full px-5 py-20 md:px-12 lg:p-0 flex lg:items-center justify-center z-10 overflow-auto lg:my-auto lg:overflow-hidden"
+		class="relative w-full h-full px-5 py-20 md:px-12 lg:p-0 flex lg:items-center justify-center z-10 
+		overflow-auto lg:my-auto lg:overflow-hidden"
 	>
 		<div
 			in:elementreceive|local={{ key: generationId(generation) }}
@@ -171,8 +173,14 @@
 			style={$windowWidth >= lgBreakpoint
 				? `max-width: ${modalMaxWidth}px; max-height: ${modalMaxHeight}px`
 				: ''}
-			class="max-w-lg w-full lg:w-auto flex flex-col my-auto lg:flex-row bg-c-bg-secondary items-center shadow-generation-modal shadow-c-shadow/[var(--o-shadow-strongest)] 
-			rounded-xl ring-4 ring-c-bg-tertiary overflow-hidden z-0 relative"
+			class="{generationAspectRatio >= 1.5
+				? 'max-w-2xl'
+				: generationAspectRatio >= 1
+				? 'max-w-xl'
+				: generationAspectRatio >= 2 / 3
+				? 'max-w-md'
+				: 'max-w-sm'} w-full lg:w-auto flex flex-col my-auto lg:flex-row bg-c-bg-secondary items-center shadow-generation-modal 
+			shadow-c-shadow/[var(--o-shadow-stronger)] rounded-xl ring-4 ring-c-bg-tertiary overflow-hidden z-0 relative"
 		>
 			<div class="relative self-stretch flex items-center">
 				<img

@@ -26,6 +26,9 @@ export async function generateImage({
 			seed
 		})
 	});
+	const start = Date.now();
 	const resJSON: TGenerationResponse = await response.json();
+	const end = Date.now();
+	console.log(`JSON deserialization in: ${(end - start) / 1000}s`);
 	return resJSON;
 }
