@@ -6,7 +6,7 @@ metadata:
   labels:
     app: stablecog
 spec:
-  replicas: 1
+  replicas: 2
   selector:
     matchLabels:
       app: stablecog
@@ -20,10 +20,10 @@ spec:
           image: replaceme
           resources:
             requests:
-              cpu: 1000m
+              cpu: 500m
               memory: 1000Mi
             limits:
-              cpu: 2000m
+              cpu: 1000m
               memory: 2000Mi
           ports:
             - containerPort: 3000
