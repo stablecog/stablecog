@@ -18,9 +18,10 @@
 	import NavbarBottom from '$components/NavbarBottom.svelte';
 	import { page } from '$app/stores';
 	import { windowHeight, windowWidth } from '$ts/stores/window';
+	import { appVersion } from '$ts/stores/appVersion';
 
-	let innerHeight: number | undefined;
-	let innerWidth: number | undefined;
+	let innerHeight: number;
+	let innerWidth: number;
 
 	let bothHealthCheckTimeout: NodeJS.Timeout;
 	const bothHealthCheckTimeoutDuration = 1000 * 15;
@@ -31,6 +32,11 @@
 	$: [innerWidth, innerHeight], setWindowStores();
 
 	onMount(async () => {
+		const version = document.body.getAttribute('version');
+		if (version && version !== $appVersion) {
+			appVersion.set(version);
+			document.location.reload();
+		}
 		mounted = true;
 		setBodyClasses();
 	});
