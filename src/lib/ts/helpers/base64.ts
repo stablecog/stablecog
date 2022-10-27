@@ -1,6 +1,6 @@
 export const base64toBlob = (b64Data: string, sliceSize = 512) => {
 	const contentType = b64Data.match(/data:([^;]+)/)?.[1] || '';
-	const b64Formatted = b64Data.replace(/^data:image\/(png|jpg);base64,/, '');
+	const b64Formatted = b64Data.replace(/^data:image\/(png|jpg|jpeg);base64,/, '');
 	const byteCharacters = window.atob(b64Formatted);
 	const byteArrays = [];
 
