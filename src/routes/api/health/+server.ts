@@ -4,7 +4,7 @@ import { getDefaultServers } from '$ts/queries/db/getDefaultServers';
 import { updateServerHealthInDb } from '$ts/queries/db/updateServerHealthInDb';
 import { shuffleArray } from '$ts/helpers/shuffleArray';
 import type { TDBServer } from '$ts/types/db';
-import type { TServerHealthRes, TServerHealthStatus } from '$ts/types/main';
+import type { TServerHealthRes } from '$ts/types/main';
 import type { RequestHandler } from '@sveltejs/kit';
 
 export const POST: RequestHandler = async ({ request }) => {
@@ -94,7 +94,7 @@ async function checkHealth(serverUrl: string) {
 		}
 		console.log(
 			'----',
-			`Ended server health check in ${(endTimestamp - startTimestamp) / 1000}s`,
+			`Ended server health check in: ${(endTimestamp - startTimestamp) / 1000}s`,
 			'--',
 			serverHealth.status,
 			'--',
@@ -107,7 +107,7 @@ async function checkHealth(serverUrl: string) {
 		const endDate = new Date(endTimestamp).toUTCString();
 		console.log(
 			'----',
-			`Failed server health check in ${(endTimestamp - startTimestamp) / 1000}s:`,
+			`Failed server health check in: ${(endTimestamp - startTimestamp) / 1000}s:`,
 			'--',
 			endDate,
 			'----'

@@ -35,7 +35,7 @@ export const POST: RequestHandler = async ({ request }) => {
 		const endTimestamp = Date.now();
 		const upscaleDurationMs = endTimestamp - startTimestamp;
 		upscaleLog({
-			text: `Finished upscale in ${(endTimestamp - startTimestamp) / 1000}s`,
+			text: `Finished upscale in: ${(endTimestamp - startTimestamp) / 1000}s`,
 			scale,
 			server_url,
 			version

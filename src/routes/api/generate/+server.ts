@@ -76,7 +76,7 @@ export const POST: RequestHandler = async ({ request }) => {
 					generationId = data?.[0].id;
 					const endTimestamp = Date.now();
 					generationLog({
-						text: `Inserted into the DB in ${(endTimestamp - startTimestamp) / 1000}s`,
+						text: `Inserted into the DB in: ${(endTimestamp - startTimestamp) / 1000}s`,
 						prompt: _prompt,
 						negative_prompt: _negative_prompt,
 						width,
@@ -155,7 +155,7 @@ export const POST: RequestHandler = async ({ request }) => {
 				if (data) {
 					const endTimestamp = Date.now();
 					generationLog({
-						text: `Updated the DB record with "succeeded" in ${
+						text: `Updated the DB record with "succeeded" in: ${
 							(endTimestamp - startTimestamp) / 1000
 						}s`,
 						prompt: _prompt,
@@ -189,7 +189,7 @@ export const POST: RequestHandler = async ({ request }) => {
 				if (data) {
 					const endTimestamp = Date.now();
 					generationLog({
-						text: `Updated the DB record with "failed" in ${
+						text: `Updated the DB record with "failed" in: ${
 							(endTimestamp - startTimestamp) / 1000
 						}s`,
 						prompt: _prompt,
@@ -217,7 +217,7 @@ export const POST: RequestHandler = async ({ request }) => {
 		generationDurationMs = endTimestamp - startTimestamp;
 		console.log(
 			'----',
-			`Failed generation in ${(endTimestamp - startTimestamp) / 1000}s`,
+			`Failed generation in: ${(endTimestamp - startTimestamp) / 1000}s`,
 			'--',
 			error,
 			'----'
@@ -241,7 +241,7 @@ export const POST: RequestHandler = async ({ request }) => {
 				if (data) {
 					const endTimestamp = Date.now();
 					generationLog({
-						text: `Updated the DB record with "failed" in ${
+						text: `Updated the DB record with "failed" in: ${
 							(endTimestamp - startTimestamp) / 1000
 						}s`,
 						prompt: _prompt,
