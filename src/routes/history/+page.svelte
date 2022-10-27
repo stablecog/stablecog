@@ -6,10 +6,10 @@
 	import { canonicalUrl } from '$ts/constants/main';
 	import { getGenerationsFromDb } from '$ts/queries/indexedDb';
 	import { activeGeneration } from '$ts/stores/activeGeneration';
-	import type { TDBGeneration } from '$ts/types/db';
+	import type { TIndexedDBGeneration } from '$ts/types/db';
 	import { onMount } from 'svelte';
 
-	let generations: TDBGeneration[];
+	let generations: TIndexedDBGeneration[];
 
 	onMount(async () => {
 		generations = await getGenerationsFromDb();

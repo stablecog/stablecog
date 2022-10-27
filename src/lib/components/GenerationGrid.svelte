@@ -7,10 +7,10 @@
 	import { heightTabs, widthTabs } from '$ts/constants/main';
 	import { generationId } from '$ts/helpers/generationId';
 	import { activeGeneration } from '$ts/stores/activeGeneration';
-	import type { TDBGeneration } from '$ts/types/db';
+	import type { TIndexedDBGeneration } from '$ts/types/db';
 	import IntersectionObserver from 'svelte-intersection-observer';
 
-	export let generations: TDBGeneration[] | undefined = undefined;
+	export let generations: TIndexedDBGeneration[] | undefined = undefined;
 
 	const widths = widthTabs.map((w) => Number(w.value)).filter((i) => i !== 256);
 	const heights = heightTabs.map((h) => Number(h.value)).filter((i) => i !== 256);

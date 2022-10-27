@@ -1,7 +1,7 @@
 import { indexedDb, maxImages } from '$ts/constants/indexedDb';
-import type { TDBGeneration } from '$ts/types/db';
+import type { TIndexedDBGeneration } from '$ts/types/db';
 
-export async function addGenerationToDb(generation: TDBGeneration) {
+export async function addGenerationToDb(generation: TIndexedDBGeneration) {
 	console.log('Adding generation to db:', `"${generation.prompt}"`);
 	const id = await indexedDb.generations.add(generation);
 	console.log('Added generation to db:', id, `"${generation.prompt}"`);
@@ -9,7 +9,7 @@ export async function addGenerationToDb(generation: TDBGeneration) {
 }
 
 export async function getGenerationsFromDb() {
-	const generations: TDBGeneration[] = await indexedDb.generations
+	const generations: TIndexedDBGeneration[] = await indexedDb.generations
 		.orderBy('id')
 		.reverse()
 		.toArray();

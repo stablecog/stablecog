@@ -9,20 +9,9 @@
 	import '$css/blog.css';
 	import { canonicalUrl } from '$ts/constants/main';
 	import { isTouchscreen } from '$ts/stores/isTouchscreen';
-	export let data: {
-		content: string;
-		toc: string;
-		title: string;
-		frontmatter: {
-			title: string;
-			slug: string;
-			author: string;
-			author_url?: string;
-			date: string;
-			reading_time: number;
-			description: string;
-		};
-	};
+
+	export let data: import('./$types').PageServerData;
+
 	const content = data.content;
 	const toc = data.toc;
 	const frontmatter = data.frontmatter;

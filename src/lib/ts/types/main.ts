@@ -114,6 +114,7 @@ export interface TToC {
 	title: string;
 	description: string;
 	author: string;
+	author_url?: string;
 	date: string;
 }
 

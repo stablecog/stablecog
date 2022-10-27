@@ -3,9 +3,9 @@
 	import MetaTag from '$components/MetaTag.svelte';
 	import { canonicalUrl } from '$ts/constants/main';
 	import { isTouchscreen } from '$ts/stores/isTouchscreen';
-	import type { TBlogPost } from '$ts/types/main';
 
-	export let data: { posts: TBlogPost[] };
+	export let data: import('./$types').PageServerData;
+
 	const posts = data.posts;
 </script>
 

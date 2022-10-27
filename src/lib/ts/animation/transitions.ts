@@ -47,7 +47,7 @@ export const expandCollapse = (node: Node, options: IExpandCollapseOptions) => {
 };
 
 export const [elementsend, elementreceive] = crossfade({
-	duration: (d) => 350,
+	duration: () => 350,
 	easing: quartOut,
 	fallback(node) {
 		const style = getComputedStyle(node);
