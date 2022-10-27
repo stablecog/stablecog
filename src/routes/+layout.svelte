@@ -33,7 +33,7 @@
 
 	onMount(async () => {
 		const version = document.body.getAttribute('version');
-		if (version && $appVersion === '') {
+		if (version && $appVersion === 'not-set') {
 			appVersion.set(version);
 		}
 		if (version && version !== $appVersion) {
