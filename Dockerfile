@@ -19,7 +19,7 @@ RUN --mount=type=secret,id=PUBLIC_SUPABASE_URL \
   npm run build
 
 ###
-# Only copy over the Node pieces we need
+# Only copy over the Node pieces needed
 # ~> Saves 35MB
 ###
 FROM node:16-alpine
@@ -29,4 +29,4 @@ COPY --from=0 /app .
 COPY . .
 
 EXPOSE 3000
-CMD node ./build BODY_SIZE_LIMIT=10485760
+CMD ["node","./build"]
