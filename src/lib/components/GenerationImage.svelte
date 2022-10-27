@@ -28,7 +28,6 @@
 	let promptCopiedTimeout: NodeJS.Timeout;
 	let seedButtonElement: HTMLButtonElement;
 	let rightButtonContainer: HTMLDivElement;
-	let promptContainer: HTMLDivElement;
 
 	const onSeedCopy = () => {
 		seedCopied = true;
@@ -54,7 +53,6 @@
 		if (
 			doesContainTarget(e.target, [
 				rightButtonContainer,
-				promptContainer,
 				...($advancedMode ? [seedButtonElement] : [])
 			])
 		) {
@@ -62,7 +60,7 @@
 		}
 		activeGeneration.set(generation);
 	}}
-	class="w-full h-full absolute left-0 top-0 flex flex-col justify-between items-end overflow-hidden"
+	class="w-full h-full absolute left-0 top-0 flex flex-col justify-between items-end overflow-hidden gap-4"
 >
 	<div class="w-full flex justify-between items-start gap-4">
 		<div
@@ -180,12 +178,11 @@
 		</div>
 	</div>
 	<div
-		class="w-full max-h-[max(4rem,min(35%,7.5rem))] transition bg-c-bg/90 text-xs relative z-0 overflow-hidden
+		class="w-full max-h-[max(4rem,min(35%,5.3rem))] transition bg-c-bg/90 text-xs relative z-0 overflow-hidden
 		translate-y-full group-focus-within:translate-y-0 group-hover:translate-y-0"
 	>
 		<div
-			bind:this={promptContainer}
-			class="w-full max-h-full overflow-auto list-fade px-4 py-3 flex flex-col gap-2"
+			class="w-full max-h-full overflow-auto list-fade px-4 py-3 flex flex-col gap-2 cursor-default"
 		>
 			<p class="w-full font-medium leading-normal transition text-c-on-bg transform">
 				{generation.prompt}

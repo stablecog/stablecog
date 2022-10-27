@@ -37,6 +37,27 @@ export interface TGenerationResponse {
 	error?: string;
 }
 
+export interface TUpscaleRequest {
+	imageDataB64: string;
+	version: TUpscaleVersion;
+	scale: number;
+	server_url: string;
+}
+
+export interface TUpscaleResponse {
+	data?: {
+		imageDataB64: string;
+		duration_ms: number;
+	};
+	error?: string;
+}
+
+export type TUpscaleVersion =
+	| 'General - RealESRGANplus'
+	| 'General - v3'
+	| 'Anime - anime6B'
+	| 'AnimeVideo - v3';
+
 export interface TTab {
 	label: string;
 	value: string | number;

@@ -1,10 +1,11 @@
 import { pickServerUrl } from '$ts/queries/db/pickServerUrl';
+import type { TUpscaleRequest, TUpscaleResponse } from '$ts/types/main';
 import type { RequestHandler } from '@sveltejs/kit';
 
 export const POST: RequestHandler = async ({ request }) => {
 	const {
 		server_url,
-		img,
+		imageDataB64,
 		scale = 4,
 		version = 'General - RealESRGANplus'
 	}: TUpscaleRequest = await request.json();
@@ -25,7 +26,7 @@ export const POST: RequestHandler = async ({ request }) => {
 			},
 			body: JSON.stringify({
 				input: {
-					img,
+					img: imageDataB64,
 					scale: scale.toString(),
 					version,
 					process_type: 'upscale'
@@ -47,7 +48,10 @@ export const POST: RequestHandler = async ({ request }) => {
 			`---- Upscale body to JSON in: ${(endTimestampJson - startTimestampJson) / 1000}s ----`
 		);
 		const output = data.output[0];
-		return new Response(JSON.stringify({ img: output, duration_ms: upscaleDurationMs }));
+		const upscaleResponse: TUpscaleResponse = {
+			data: { imageDataB64: output, duration_ms: upscaleDurationMs }
+		};
+		return new Response(JSON.stringify(upscaleResponse));
 	} catch (error) {
 		console.log(error);
 	}
@@ -68,13 +72,6 @@ function upscaleLog({
 	console.log('----', text, '--', `"${version}"`, '--', scale, '--', server_url, '----');
 }
 
-interface TUpscaleRequest {
-	server_url: string;
-	img: string;
-	scale?: number;
-	version: TUpscaleVersion;
-}
-
 interface TUpscaleData {
 	output: string[];
 	status: TStatus;
@@ -82,9 +79,3 @@ interface TUpscaleData {
 }
 
 type TStatus = 'succeeded' | 'failed';
-
-export type TUpscaleVersion =
-	| 'General - RealESRGANplus'
-	| 'General - v3'
-	| 'Anime - anime6B'
-	| 'AnimeVideo - v3';
