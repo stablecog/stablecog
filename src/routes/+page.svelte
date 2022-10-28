@@ -29,7 +29,6 @@
 	import { currentServer, currentServerHealthStatus } from '$ts/stores/serverHealth';
 	import GenerationFullScreen from '$components/GenerationFullScreen.svelte';
 	import { activeGeneration } from '$ts/stores/activeGeneration';
-	import { generationId } from '$ts/helpers/generationId';
 	import type { THomePageData } from '$routes/+page.server';
 
 	export let data: THomePageData;
@@ -40,7 +39,7 @@
 	let nowInterval: NodeJS.Timeout | undefined;
 	let startTimestamp: number | undefined;
 	let endTimestamp: number | undefined;
-	let lastGeneration: TGenerationUI | undefined;
+	let lastGeneration: TGenerationUI;
 	let generationWidth: TAvailableWidths;
 	let generationHeight: TAvailableHeights;
 	let generationInferenceSteps: TAvailableInferenceSteps;
@@ -78,6 +77,7 @@
 		}
 		generationError = undefined;
 		lastGeneration = {
+			id: Math.round(Math.random() * Math.pow(10, 15)),
 			server_url: $serverUrl,
 			prompt: promptInputValue,
 			negative_prompt:
@@ -189,6 +189,14 @@
 		return rate;
 	};
 
+	function onKeyDown({ key }: KeyboardEvent) {
+		if ($activeGeneration !== undefined) {
+			if (key === 'Escape') {
+				activeGeneration.set(undefined);
+			}
+		}
+	}
+
 	let isCheckComplete = false;
 
 	onMount(() => {
@@ -214,6 +222,8 @@
 	imageUrl="{canonicalUrl}/previews/home.png"
 	canonical={canonicalUrl}
 />
+
+<svelte:window on:keydown={onKeyDown} />
 
 <div class="w-full flex flex-col items-center flex-1 justify-center px-4 pt-4">
 	<div class="w-full flex flex-col items-center justify-center">
@@ -275,12 +285,12 @@
 									: 'w-72'} max-w-full h-auto relative"
 							>
 								<ImagePlaceholder width={lastGeneration.width} height={lastGeneration.height} />
-								{#if !($activeGeneration && generationId($activeGeneration) === generationId(lastGeneration))}
+								{#if !($activeGeneration && $activeGeneration.id === lastGeneration.id)}
 									<div
 										class="absolute w-full h-full left-0 top-0 rounded-2xl bg-c-bg-secondary z-0 overflow-hidden border-4 
 											shadow-lg shadow-c-shadow/[var(--o-shadow-normal)] border-c-bg-secondary group"
-										in:elementreceive|local={{ key: generationId(lastGeneration) }}
-										out:elementsend|local={{ key: generationId(lastGeneration) }}
+										in:elementreceive|local={{ key: lastGeneration.id }}
+										out:elementsend|local={{ key: lastGeneration.id }}
 									>
 										<GenerationImage generation={lastGeneration} />
 									</div>

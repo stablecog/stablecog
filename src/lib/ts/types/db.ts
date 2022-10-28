@@ -1,11 +1,11 @@
 import type { TGenerationBase } from '$ts/types/main';
 
 export interface TIndexedDBGeneration extends TGenerationBase {
-	id?: number;
+	id: number;
 }
 
 export interface TDBServer {
-	id: string;
+	id: number;
 	url: string;
 	healthy: boolean;
 	last_health_check_at: string;

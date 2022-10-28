@@ -14,7 +14,6 @@
 	import { clickoutside } from '$ts/actions/clickoutside';
 	import { elementreceive, elementsend } from '$ts/animation/transitions';
 	import { urlFromBase64 } from '$ts/helpers/base64';
-	import { generationId } from '$ts/helpers/generationId';
 	import { getImageNameFromGeneration } from '$ts/helpers/getImageNameFromGeneration';
 	import { activeGeneration } from '$ts/stores/activeGeneration';
 	import { windowHeight, windowWidth } from '$ts/stores/window';
@@ -27,11 +26,17 @@
 	import { quadOut } from 'svelte/easing';
 	import { fly } from 'svelte/transition';
 	import { tooltip, type TTooltipProps } from '$ts/actions/tooltip';
+	import { getGenerationUrlFromParams } from '$ts/helpers/getGenerationUrlFromParams';
+	import { goto } from '$app/navigation';
+	import IconDice from '$components/icons/IconDice.svelte';
+	import IconRefresh from '$components/icons/IconRefresh.svelte';
+	import { page } from '$app/stores';
 
 	export let generation: TGenerationUI;
-	$: generationAspectRatio = generation.width / generation.height;
+	let currentSrc = generation.imageUrl ?? urlFromBase64(generation.imageDataB64);
 
-	const padding = 64;
+	$: generation, setCurrentSrc();
+	$: generationAspectRatio = generation.width / generation.height;
 
 	$: maxWidthConstant = generationAspectRatio >= 3 / 2 ? 1440 : 1280;
 	const maxHeight = 1024;
@@ -56,12 +61,17 @@
 	$: mainContainerWidth = Math.min($windowWidth || 0, maxWidthConstant);
 	$: mainContainerHeight = Math.min($windowHeight || 0, maxHeight);
 
+	const padding = 64;
 	$: modalMaxWidth = mainContainerWidth - 2 * padding;
 	$: modalMaxHeight = mainContainerHeight - 2 * padding;
 
 	$: modalMinHeight = Math.min(modalMaxHeight, 575);
 
-	$: [modalMaxWidth, modalMaxHeight], setImageContainerSize();
+	$: [modalMaxWidth, modalMaxHeight, generation], setImageContainerSize();
+
+	const setCurrentSrc = () => {
+		currentSrc = generation.imageUrl ?? urlFromBase64(generation.imageDataB64);
+	};
 
 	function setImageContainerSize() {
 		if ($windowWidth && $windowWidth < lgBreakpoint) {
@@ -154,6 +164,17 @@
 		sidebarWrapperScrollHeight = sidebarWrapper.scrollHeight;
 	};
 
+	const onRerollClicked = async () => {
+		const { seed, ...rest } = generation;
+		const url = getGenerationUrlFromParams(rest);
+		await goto(url);
+	};
+
+	const onRegenerateClicked = async () => {
+		const url = getGenerationUrlFromParams(generation);
+		await goto(url);
+	};
+
 	const tooltipStyleProps: TTooltipProps = {
 		parentContainerId: 'tooltip-container',
 		titleClass: 'font-bold text-sm leading-relaxed',
@@ -183,8 +204,8 @@
 		overflow-auto lg:my-auto lg:overflow-hidden"
 	>
 		<div
-			in:elementreceive|local={{ key: generationId(generation) }}
-			out:elementsend|local={{ key: generationId(generation) }}
+			in:elementreceive|local={{ key: generation.id }}
+			out:elementsend|local={{ key: generation.id }}
 			use:clickoutside={{ callback: () => activeGeneration.set(undefined) }}
 			style={$windowWidth >= lgBreakpoint
 				? `max-width: ${modalMaxWidth}px; max-height: ${modalMaxHeight}px`
@@ -201,7 +222,7 @@
 			<div class="relative self-stretch flex items-center">
 				<img
 					class="w-full h-full absolute left-0 top-0 transform scale-125 blur-xl"
-					src={generation.imageUrl}
+					src={currentSrc}
 					alt={generation.prompt}
 					width={generation.width}
 					height={generation.height}
@@ -215,7 +236,7 @@
 				>
 					<img
 						class="w-full h-auto lg:h-full lg:object-contain lg:absolute lg:left-0 lg:top-0"
-						src={generation.imageUrl}
+						src={currentSrc}
 						alt={generation.prompt}
 						width={generation.width}
 						height={generation.height}
@@ -291,11 +312,11 @@
 									<SubtleButton state={promptCopied ? 'success' : 'idle'}>
 										<Morpher morph={promptCopied}>
 											<div slot="item-0" class="flex items-center justify-center gap-1.5">
-												<IconCopy class="w-5 h-5 -ml-0.25" />
+												<IconCopy class="w-5 h-5 -ml-0.5" />
 												<p>Copy Prompt</p>
 											</div>
 											<div slot="item-1" class="flex items-center justify-center gap-1.5">
-												<IconTick class="w-5 h-5 -ml-0.25 scale-110" />
+												<IconTick class="w-5 h-5 -ml-0.5 scale-110" />
 												<p>Copied!</p>
 											</div>
 										</Morpher>
@@ -309,11 +330,11 @@
 										<SubtleButton state={negativePromptCopied ? 'success' : 'idle'}>
 											<Morpher morph={negativePromptCopied}>
 												<div slot="item-0" class="flex items-center justify-center gap-1.5">
-													<IconCopy class="w-5 h-5 -ml-0.25" />
-													<p>Negative Copy Prompt</p>
+													<IconCopy class="w-5 h-5 -ml-0.5" />
+													<p>Copy Negative Prompt</p>
 												</div>
 												<div slot="item-1" class="flex items-center justify-center gap-1.5">
-													<IconTick class="w-5 h-5 -ml-0.25 scale-110" />
+													<IconTick class="w-5 h-5 -ml-0.5 scale-110" />
 													<p>Copied!</p>
 												</div>
 											</Morpher>
@@ -335,15 +356,29 @@
 								>
 									<Morpher morph={imageDownloading}>
 										<div slot="item-0" class="flex items-center justify-center gap-1.5">
-											<IconDownload class="w-5 h-5 -ml-0.25" />
-											<p>Download Image</p>
+											<IconDownload class="w-5 h-5 -ml-0.5" />
+											<p>Download</p>
 										</div>
 										<div slot="item-1" class="flex items-center justify-center gap-1.5">
-											<IconTick class="w-5 h-5 -ml-0.25 scale-110" />
+											<IconTick class="w-5 h-5 -ml-0.5 scale-110" />
 											<p>Downloaded!</p>
 										</div>
 									</Morpher>
 								</SubtleButton>
+								{#if $page.url.pathname !== '/'}
+									<SubtleButton onClick={onRerollClicked}>
+										<div class="flex items-center justify-center gap-1.5">
+											<IconDice class="w-5 h-5 -ml-0.5 scale-110" />
+											<p>Reroll</p>
+										</div>
+									</SubtleButton>
+									<SubtleButton onClick={onRegenerateClicked}>
+										<div class="flex items-center justify-center gap-1.5">
+											<IconRefresh class="w-5 h-5 -ml-0.5 scale-110" />
+											<p>Regenerate</p>
+										</div>
+									</SubtleButton>
+								{/if}
 							</div>
 						</div>
 						<!-- Divider -->

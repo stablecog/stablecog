@@ -11,6 +11,24 @@
 
 	let generations: TIndexedDBGeneration[];
 
+	function onKeyDown({ key }: KeyboardEvent) {
+		if ($activeGeneration !== undefined) {
+			if (key === 'Escape') {
+				activeGeneration.set(undefined);
+			} else if (key === 'ArrowLeft') {
+				const index = generations.findIndex(({ id }) => id === $activeGeneration?.id);
+				if (index > 0) {
+					activeGeneration.set(generations[index - 1]);
+				}
+			} else if (key === 'ArrowRight') {
+				const index = generations.findIndex(({ id }) => id === $activeGeneration?.id);
+				if (index < generations.length - 1) {
+					activeGeneration.set(generations[index + 1]);
+				}
+			}
+		}
+	}
+
 	onMount(async () => {
 		generations = await getGenerationsFromDb();
 	});
@@ -22,6 +40,8 @@
 	imageUrl="{canonicalUrl}/previews{$page.url.pathname}.png"
 	canonical="{canonicalUrl}{$page.url.pathname}"
 />
+
+<svelte:window on:keydown={onKeyDown} />
 
 <div class="w-full flex-1 flex flex-col items-center px-2 gap-2 pt-4 md:pt-8 pb-8 md:px-8">
 	{#if generations === undefined || generations.length !== 0}

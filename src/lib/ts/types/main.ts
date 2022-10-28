@@ -15,6 +15,7 @@ export interface TGenerationBase {
 }
 
 export interface TGenerationUI extends TGenerationBase {
+	id: number;
 	imageUrl?: string;
 	upscaledImageUrl?: string;
 	computeRatePerSec?: number;

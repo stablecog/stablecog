@@ -5,7 +5,6 @@
 	import Masonry from '$components/Masonry.svelte';
 	import { elementreceive, elementsend } from '$ts/animation/transitions';
 	import { heightTabs, widthTabs } from '$ts/constants/main';
-	import { generationId } from '$ts/helpers/generationId';
 	import { activeGeneration } from '$ts/stores/activeGeneration';
 	import type { TIndexedDBGeneration } from '$ts/types/db';
 	import IntersectionObserver from 'svelte-intersection-observer';
@@ -35,10 +34,10 @@
 				<IntersectionObserver rootMargin="100%" element={nodes[i]} let:intersecting once>
 					<div bind:this={nodes[i]} class="relative group">
 						<ImagePlaceholder width={generation.width} height={generation.height} />
-						{#if !($activeGeneration && generationId($activeGeneration) === generationId(generation))}
+						{#if !($activeGeneration && $activeGeneration.id === generation.id)}
 							<div
-								in:elementreceive|local={{ key: generationId(generation) }}
-								out:elementsend|local={{ key: generationId(generation) }}
+								in:elementreceive|local={{ key: generation.id }}
+								out:elementsend|local={{ key: generation.id }}
 								class="absolute left-0 top-0 w-full h-full rounded-xl bg-c-bg-secondary z-0 overflow-hidden border-4 
 									shadow-lg shadow-c-shadow/[var(--o-shadow-normal)] border-c-bg-secondary"
 							>

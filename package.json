@@ -59,7 +59,6 @@
 	"dependencies": {
 		"@supabase/supabase-js": "^2.0.0",
 		"dexie": "^3.2.2",
-		"fast-json-body": "^1.1.0",
 		"svelte-meta-tags": "^2.6.3",
 		"ua-parser-js": "^1.0.2"
 	}
