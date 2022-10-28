@@ -26,6 +26,7 @@
 	import { onMount } from 'svelte';
 	import { quadOut } from 'svelte/easing';
 	import { fly } from 'svelte/transition';
+	import { tooltip, type TTooltipProps } from '$ts/actions/tooltip';
 
 	export let generation: TGenerationUI;
 	$: generationAspectRatio = generation.width / generation.height;
@@ -153,6 +154,21 @@
 		sidebarWrapperScrollHeight = sidebarWrapper.scrollHeight;
 	};
 
+	const tooltipStyleProps: TTooltipProps = {
+		parentContainerId: 'tooltip-container',
+		titleClass: 'font-bold text-sm leading-relaxed',
+		descriptionClass: 'text-c-on-bg/50 text-xs leading-relaxed',
+		wrapperClass: 'w-full transition duration-250 transform mt-1.5',
+		animationTime: 250,
+		animateFrom: 'opacity-0 translate-y-3',
+		animateTo: 'opacity-100 translate-y-0',
+		containerClass:
+			'max-w-[min(100vw-32px,18rem)] px-5 py-3 transform -translate-y-3 text-c-on-bg/75 flex flex-col gap-1 rounded-xl bg-c-bg-tertiary overflow-hidden shadow-lg shadow-c-shadow/[var(--o-shadow-strongest)',
+		containerAlign: 'center',
+		indicatorClass: 'w-5 h-5',
+		indicatorInnerClass: `w-5 h-5 transform rotate-135 bg-c-bg-tertiary rounded`
+	};
+
 	onMount(() => {
 		setSidebarWrapperVars();
 	});
@@ -250,12 +266,23 @@
 						class="w-full flex flex-col items-start justify-start"
 					>
 						<div class="flex flex-col gap-4 md:gap-5 px-5 py-4 md:px-7 md:py-5">
-							<div class="flex flex-col gap-3">
+							<div class="flex flex-col items-start gap-3">
 								<p class="text-sm leading-normal">{generation.prompt}</p>
 								{#if generation.negative_prompt}
 									<div class="flex items-start text-c-danger gap-2">
-										<IconChatBubbleCancel class="w-4 h-4" />
-										<p class="text-sm leading-normal flex-1 -mt-1">{generation.negative_prompt}</p>
+										<div
+											use:tooltip={{
+												title: 'Negative Prompt',
+												description:
+													'To remove unwanted things from the image. It does the opposite of what the prompt does.',
+												...tooltipStyleProps
+											}}
+										>
+											<IconChatBubbleCancel class="w-5 h-5" />
+										</div>
+										<p class="text-sm leading-normal flex-shrink -mt-0.75">
+											{generation.negative_prompt}
+										</p>
 									</div>
 								{/if}
 							</div>
@@ -326,8 +353,16 @@
 						<!-- Divider -->
 						<div class="flex flex-col px-5 py-4 md:px-7 md:py-5 lg:pb-8 gap-6">
 							<div class="flex flex-wrap items-center gap-4">
-								<div class="flex flex-col gap-1">
-									<div class="flex items-center gap-1.5 text-c-on-bg/75 text-sm">
+								<div class="flex flex-col items-start gap-1">
+									<div
+										use:tooltip={{
+											title: 'Seed',
+											description:
+												'Get repeatable results. A seed combined with the same prompt and options generates the same image.',
+											...tooltipStyleProps
+										}}
+										class="flex items-center gap-1.5 text-c-on-bg/75 text-sm cursor-default"
+									>
 										<IconSeed class="w-4 h-4" />
 										<p>Seed</p>
 									</div>
@@ -347,30 +382,45 @@
 								</div>
 							</div>
 							<div class="flex flex-wrap gap-6">
-								<div class="min-w-[calc(50%-0.75rem)] flex flex-col gap-1">
-									<div class="flex items-center gap-1.5 text-c-on-bg/75 text-sm">
+								<div class="min-w-[calc(50%-0.75rem)] flex flex-col items-start gap-1">
+									<div
+										use:tooltip={{
+											title: 'Guidance Scale',
+											description:
+												'How similar the image will be to your prompt. Higher values make the image closer to your prompt.',
+											...tooltipStyleProps
+										}}
+										class="flex items-center gap-1.5 text-c-on-bg/75 text-sm cursor-default"
+									>
 										<IconScale class="w-4 h-4" />
 										<p>Guidance Scale</p>
 									</div>
 									<p class="font-bold">{generation.guidance_scale}</p>
 								</div>
-								<div class="min-w-[calc(50%-0.75rem)] flex flex-col gap-1">
-									<div class="flex items-center gap-1.5 text-c-on-bg/75 text-sm">
+								<div class="min-w-[calc(50%-0.75rem)] flex flex-col items-start gap-1">
+									<div
+										use:tooltip={{
+											title: 'Inference Steps',
+											description: 'How many steps will be taken to generate (diffuse) the image.',
+											...tooltipStyleProps
+										}}
+										class="flex items-center gap-1.5 text-c-on-bg/75 text-sm cursor-default"
+									>
 										<IconSteps class="w-4 h-4" />
 										<p>Inference Steps</p>
 									</div>
 									<p class="font-bold">{generation.num_inference_steps}</p>
 								</div>
-								<div class="min-w-[calc(50%-0.75rem)] flex flex-col gap-1">
-									<div class="flex items-center gap-1.5 text-c-on-bg/75 text-sm">
+								<div class="min-w-[calc(50%-0.75rem)] flex flex-col items-start gap-1">
+									<div class="flex items-center gap-1.5 text-c-on-bg/75 text-sm cursor-default">
 										<IconDimensions class="w-4 h-4" />
 										<p>Dimensions</p>
 									</div>
 									<p class="font-bold">{generation.width} × {generation.height}</p>
 								</div>
 								{#if generation.duration_ms}
-									<div class="min-w-[calc(50%-0.75rem)] flex flex-col gap-1">
-										<div class="flex items-center gap-1.5 text-c-on-bg/75 text-sm">
+									<div class="min-w-[calc(50%-0.75rem)] flex flex-col items-start gap-1">
+										<div class="flex items-center gap-1.5 text-c-on-bg/75 text-sm cursor-default">
 											<IconClock class="w-4 h-4" />
 											<p>Duration</p>
 										</div>
