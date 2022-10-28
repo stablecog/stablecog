@@ -135,19 +135,19 @@ export function tooltip(
 		}, animationTime);
 	};
 
-	node.addEventListener('mouseenter', onMouseEnter, true);
-	node.addEventListener('mouseleave', onMouseLeave, true);
-	node.addEventListener('click', onMouseEnter, true);
-	window.addEventListener('resize', onMouseLeave, true);
+	node.addEventListener('mouseenter', onMouseEnter, false);
+	node.addEventListener('mouseleave', onMouseLeave, false);
+	node.addEventListener('click', onMouseEnter, false);
+	window.addEventListener('resize', onMouseLeave, false);
 	window.addEventListener('scroll', onMouseLeave, true);
 
 	return {
 		destroy() {
 			onMouseLeave();
-			node.removeEventListener('mouseenter', onMouseEnter, true);
-			node.removeEventListener('mouseleave', onMouseLeave, true);
-			node.removeEventListener('click', onMouseEnter, true);
-			window.removeEventListener('resize', onMouseLeave, true);
+			node.removeEventListener('mouseenter', onMouseEnter, false);
+			node.removeEventListener('mouseleave', onMouseLeave, false);
+			node.removeEventListener('click', onMouseEnter, false);
+			window.removeEventListener('resize', onMouseLeave, false);
 			window.removeEventListener('scroll', onMouseLeave, true);
 		}
 	};

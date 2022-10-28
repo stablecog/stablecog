@@ -27,12 +27,15 @@
 	{#if generations === undefined || generations.length !== 0}
 		<div class="w-full max-w-7xl flex justify-center px-1.5">
 			<div
-				class="w-full flex bg-c-bg-secondary shadow-lg shadow-c-[var(--o-shadow-normal)] justify-start px-5 py-3.5 md:px-6 md:py-4.5 rounded-xl"
+				class="w-full flex flex-wrap gap-3 items-end bg-c-bg-secondary shadow-lg shadow-c-[var(--o-shadow-normal)] px-5 py-3.5 md:px-6 md:py-4.5 rounded-xl"
 			>
 				<p class="font-bold text-xl">
 					Generations{#if generations?.length}
-						<span class="text-sm text-c-on-bg/50 font-medium">&nbsp;({generations?.length})</span>
+						<span class="text-sm text-c-on-bg/50 font-semibold">&nbsp;({generations?.length})</span>
 					{/if}
+				</p>
+				<p class="text-xs text-c-primary/75 font-semibold bg-c-primary/15 px-2 py-1 rounded-md">
+					Last 250 only
 				</p>
 			</div>
 		</div>
