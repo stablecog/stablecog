@@ -10,7 +10,8 @@ const config = {
 			'$components/*': './src/lib/components',
 			'$ts/*': './src/lib/ts',
 			'$css/*': './src/lib/css',
-			'$md/*': './src/lib/md'
+			'$md/*': './src/lib/md',
+			'$routes/*': './src/routes'
 		},
 		inlineStyleThreshold: 60 * 1024
 	}

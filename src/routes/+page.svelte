@@ -30,6 +30,9 @@
 	import GenerationFullScreen from '$components/GenerationFullScreen.svelte';
 	import { activeGeneration } from '$ts/stores/activeGeneration';
 	import { generationId } from '$ts/helpers/generationId';
+	import type { THomePageData } from '$routes/+page.server';
+
+	export let data: THomePageData;
 
 	let status: TStatus = 'idle';
 	let promptInputValue: string | undefined;
@@ -80,15 +83,20 @@
 			negative_prompt:
 				$currentServer.features?.includes('negative_prompt') &&
 				negativePromptInputValue !== '' &&
-				negativePromptInputValue !== undefined
+				negativePromptInputValue !== undefined &&
+				($advancedMode || data.negative_prompt)
 					? negativePromptInputValue
 					: undefined,
 			width: Number(generationWidth),
 			height: Number(generationHeight),
-			guidance_scale: Number($advancedMode ? generationGuidanceScale : guidanceScaleDefault),
-			num_inference_steps: Number($advancedMode ? generationInferenceSteps : inferenceStepsDefault),
+			guidance_scale: Number(
+				$advancedMode || data.guidance_scale ? generationGuidanceScale : guidanceScaleDefault
+			),
+			num_inference_steps: Number(
+				$advancedMode || data.num_inference_steps ? generationInferenceSteps : inferenceStepsDefault
+			),
 			seed:
-				(generationSeed || generationSeed === 0) && $advancedMode
+				((generationSeed || generationSeed === 0) && $advancedMode) || data.seed
 					? generationSeed
 					: Math.round(Math.random() * maxSeed),
 			imageDataB64: ''
@@ -227,6 +235,7 @@
 					bind:generationInferenceSteps
 					bind:generationGuidanceScale
 					bind:generationSeed
+					serverData={data}
 					{status}
 					{onCreate}
 					{startTimestamp}

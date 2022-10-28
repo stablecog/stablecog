@@ -10,6 +10,7 @@
 	import TabBar from '$components/TabBar.svelte';
 	import TabLikeInput from '$components/TabLikeInput.svelte';
 	import TabLikeRangeInput from '$components/TabLikeRangeInput.svelte';
+	import type { THomePageData } from '$routes/+page.server';
 	import { autoresize } from '$ts/actions/textarea/autoresize';
 	import { tooltip } from '$ts/actions/tooltip';
 	import { expandCollapse } from '$ts/animation/transitions';
@@ -39,19 +40,28 @@
 	import type { TStatus } from '$ts/types/main';
 	import { onMount, tick } from 'svelte';
 
-	export let generationWidth = widthDefault;
-	export let generationHeight = heightDefault;
-	export let generationInferenceSteps = inferenceStepsDefault;
-	export let generationGuidanceScale = guidanceScaleDefault;
+	export let serverData: THomePageData;
+	export let generationWidth = serverData.width !== null ? serverData.width : widthDefault;
+	export let generationHeight = serverData.height !== null ? serverData.height : heightDefault;
+	export let generationInferenceSteps =
+		serverData.num_inference_steps !== null
+			? serverData.num_inference_steps
+			: inferenceStepsDefault;
+	export let generationGuidanceScale =
+		serverData.guidance_scale !== null ? serverData.guidance_scale : guidanceScaleDefault;
 	export let generationSeed: number;
-	export let onCreate: () => Promise<void>;
-	export let status: TStatus;
 	export let promptInputValue: string | undefined;
 	export let negativePromptInputValue: string | undefined;
+	export let onCreate: () => Promise<void>;
+	export let status: TStatus;
 	export let startTimestamp: number | undefined;
 	export let estimatedDuration: number;
 	export { classes as class };
 	let classes = '';
+
+	if (serverData.seed !== null) generationSeed = serverData.seed;
+	if (serverData.prompt !== null) promptInputValue = serverData.prompt;
+	if (serverData.negative_prompt !== null) negativePromptInputValue = serverData.negative_prompt;
 
 	let submitting = false;
 	const placeholder = 'Portrait of a cat by Van Gogh';
@@ -162,29 +172,38 @@
 
 	onMount(() => {
 		isCheckComplete = false;
-		const widthIndex = widthTabs
-			.map((w) => w.value)
-			.findIndex((i) => i === $imageSize?.width?.toString());
-		const heightIndex = heightTabs
-			.map((h) => h.value)
-			.findIndex((i) => i === $imageSize?.height?.toString());
-		const inferenceStepsIndex = inferenceStepsTabs
-			.map((i) => i.value)
-			.findIndex((i) => i === $inferenceSteps?.toString());
-
-		if (widthIndex >= 0) generationWidth = widthTabs[widthIndex].value;
-		if (heightIndex >= 0) generationHeight = heightTabs[heightIndex].value;
-		if (inferenceStepsIndex >= 0) {
-			generationInferenceSteps = inferenceStepsTabs[inferenceStepsIndex].value;
+		if (serverData.width === null) {
+			const widthIndex = widthTabs
+				.map((w) => w.value)
+				.findIndex((i) => i === $imageSize?.width?.toString());
+			if (widthIndex >= 0) generationWidth = widthTabs[widthIndex].value;
 		}
-		if ($guidanceScale >= guidanceScaleMin && $guidanceScale <= guidanceScaleMax) {
+		if (serverData.height === null) {
+			const heightIndex = heightTabs
+				.map((h) => h.value)
+				.findIndex((i) => i === $imageSize?.height?.toString());
+			if (heightIndex >= 0) generationHeight = heightTabs[heightIndex].value;
+		}
+		if (serverData.num_inference_steps === null) {
+			const inferenceStepsIndex = inferenceStepsTabs
+				.map((i) => i.value)
+				.findIndex((i) => i === $inferenceSteps?.toString());
+			if (inferenceStepsIndex >= 0) {
+				generationInferenceSteps = inferenceStepsTabs[inferenceStepsIndex].value;
+			}
+		}
+		if (
+			serverData.guidance_scale === null &&
+			$guidanceScale >= guidanceScaleMin &&
+			$guidanceScale <= guidanceScaleMax
+		) {
 			generationGuidanceScale = $guidanceScale;
 		}
-		if ($seed !== undefined && $seed !== null) generationSeed = $seed;
-		if ($prompt) {
+		if (serverData.seed === null && $seed !== undefined && $seed !== null) generationSeed = $seed;
+		if (serverData.prompt === null && $prompt) {
 			promptInputValue = $prompt;
 		}
-		if ($negativePrompt) {
+		if (serverData.negative_prompt === null && $negativePrompt) {
 			negativePromptInputValue = $negativePrompt;
 		}
 		isCheckComplete = true;

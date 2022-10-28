@@ -9,8 +9,9 @@
 	import '$css/blog.css';
 	import { canonicalUrl } from '$ts/constants/main';
 	import { isTouchscreen } from '$ts/stores/isTouchscreen';
+	import type { PageServerData } from './$types';
 
-	export let data: import('./$types').PageServerData;
+	export let data: PageServerData;
 
 	const content = data.content;
 	const toc = data.toc;
