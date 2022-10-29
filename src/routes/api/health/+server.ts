@@ -6,9 +6,15 @@ import { shuffleArray } from '$ts/helpers/shuffleArray';
 import type { TDBServer } from '$ts/types/db';
 import type { TServerHealthRes } from '$ts/types/main';
 import type { RequestHandler } from '@sveltejs/kit';
+import { getDeviceInfo } from '$ts/helpers/getDeviceInfo';
 
 export const POST: RequestHandler = async ({ request }) => {
 	const { server_url }: { server_url: string } = await request.json();
+	const { headers } = request;
+	const userAgent = headers.get('user-agent');
+	const deviceInfo = getDeviceInfo(userAgent);
+	const countryCode = headers.get('cf-ipcountry');
+	console.log('Health request made to the new endpoint "/health":', countryCode, deviceInfo);
 	let isDefaultServer = PUBLIC_DEFAULT_SERVER_URL === server_url;
 	let defaultServers: TDBServer[] = [];
 	if (supabaseAdmin && isDefaultServer) {

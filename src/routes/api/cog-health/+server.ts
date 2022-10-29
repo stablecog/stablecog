@@ -7,7 +7,7 @@ export const POST: RequestHandler = async ({ request }) => {
 	const userAgent = headers.get('user-agent');
 	const deviceInfo = getDeviceInfo(userAgent);
 	const countryCode = headers.get('cf-ipcountry');
-	console.log('Request made to old endpoint (/cog-health):', deviceInfo, countryCode);
+	console.log('Health request made to the old endpoint "/cog-health":', countryCode, deviceInfo);
 	const res = await fetch('https://stablecog.com/api/health', {
 		method: 'POST',
 		body: JSON.stringify({ server_url }),
