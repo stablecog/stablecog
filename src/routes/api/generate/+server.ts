@@ -2,6 +2,7 @@ import { maxSeed } from '$ts/constants/main';
 import { supabaseAdmin } from '$ts/constants/supabaseAdmin';
 import { formatPrompt } from '$ts/helpers/formatPrompt';
 import { getDeviceInfo } from '$ts/helpers/getDeviceInfo';
+import { isValue } from '$ts/helpers/isValue';
 import { pickServerUrl } from '$ts/queries/db/pickServerUrl';
 import type { TGenerationRequest, TGenerationResponse } from '$ts/types/main';
 import type { PostgrestError } from '@supabase/supabase-js';
@@ -15,7 +16,7 @@ export const POST: RequestHandler = async ({ request }) => {
 	const userAgent = headers.get('user-agent');
 	const deviceInfo = getDeviceInfo(userAgent);
 	let generationDurationMs: number | undefined;
-	const {
+	let {
 		server_url,
 		prompt,
 		negative_prompt,
@@ -25,11 +26,12 @@ export const POST: RequestHandler = async ({ request }) => {
 		num_inference_steps = 50,
 		guidance_scale = 7
 	}: TGenerationRequest = await request.json();
-	const _negative_prompt =
-		negative_prompt !== '' && negative_prompt !== undefined
+	seed = isValue(seed) ? seed : Math.round(Math.random() * maxSeed);
+	negative_prompt =
+		negative_prompt !== '' && negative_prompt !== undefined && negative_prompt !== null
 			? formatPrompt(negative_prompt)
 			: undefined;
-	const _prompt = formatPrompt(prompt);
+	prompt = formatPrompt(prompt);
 	let picked_server_url: string;
 	try {
 		const res = await pickServerUrl(server_url);
@@ -40,8 +42,8 @@ export const POST: RequestHandler = async ({ request }) => {
 	try {
 		generationLog({
 			text: 'Started generation',
-			prompt: _prompt,
-			negative_prompt: _negative_prompt,
+			prompt,
+			negative_prompt,
 			width,
 			height,
 			num_inference_steps,
@@ -78,8 +80,8 @@ export const POST: RequestHandler = async ({ request }) => {
 					const endTimestamp = Date.now();
 					generationLog({
 						text: `Inserted into the DB in: ${(endTimestamp - startTimestamp) / 1000}s`,
-						prompt: _prompt,
-						negative_prompt: _negative_prompt,
+						prompt,
+						negative_prompt,
 						width,
 						height,
 						num_inference_steps,
@@ -100,8 +102,8 @@ export const POST: RequestHandler = async ({ request }) => {
 			},
 			body: JSON.stringify({
 				input: {
-					prompt: _prompt,
-					negative_prompt: _negative_prompt,
+					prompt,
+					negative_prompt,
 					width: width.toString(),
 					height: height.toString(),
 					seed: seed.toString(),
@@ -125,8 +127,8 @@ export const POST: RequestHandler = async ({ request }) => {
 		}
 		generationLog({
 			text: `Ended generation in ${(endTimestamp - startTimestamp) / 1000}s`,
-			prompt: _prompt,
-			negative_prompt: _negative_prompt,
+			prompt,
+			negative_prompt,
 			width,
 			height,
 			num_inference_steps,
@@ -142,8 +144,8 @@ export const POST: RequestHandler = async ({ request }) => {
 					.from('generation')
 					.update([
 						{
-							prompt: _prompt,
-							negative_prompt: _negative_prompt,
+							prompt,
+							negative_prompt,
 							duration_ms: generationDurationMs,
 							status: 'succeeded'
 						}
@@ -159,8 +161,8 @@ export const POST: RequestHandler = async ({ request }) => {
 						text: `Updated the DB record with "succeeded" in: ${
 							(endTimestamp - startTimestamp) / 1000
 						}s`,
-						prompt: _prompt,
-						negative_prompt: _negative_prompt,
+						prompt,
+						negative_prompt,
 						width,
 						height,
 						num_inference_steps,
@@ -193,8 +195,8 @@ export const POST: RequestHandler = async ({ request }) => {
 						text: `Updated the DB record with "failed" in: ${
 							(endTimestamp - startTimestamp) / 1000
 						}s`,
-						prompt: _prompt,
-						negative_prompt: _negative_prompt,
+						prompt,
+						negative_prompt,
 						width,
 						height,
 						num_inference_steps,
@@ -245,8 +247,8 @@ export const POST: RequestHandler = async ({ request }) => {
 						text: `Updated the DB record with "failed" in: ${
 							(endTimestamp - startTimestamp) / 1000
 						}s`,
-						prompt: _prompt,
-						negative_prompt: _negative_prompt,
+						prompt,
+						negative_prompt,
 						width,
 						height,
 						num_inference_steps,

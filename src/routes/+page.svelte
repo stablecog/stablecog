@@ -34,6 +34,7 @@
 	import GenerationFullScreen from '$components/generationFullScreen/GenerationFullScreen.svelte';
 	import { activeGeneration } from '$ts/stores/activeGeneration';
 	import type { THomePageData } from '$routes/+page.server';
+	import { isValue } from '$ts/helpers/isValue';
 
 	export let data: THomePageData;
 
@@ -100,7 +101,7 @@
 				$advancedMode || data.num_inference_steps ? generationInferenceSteps : inferenceStepsDefault
 			),
 			seed:
-				((generationSeed || generationSeed === 0) && $advancedMode) || data.seed
+				(isValue(generationSeed) && $advancedMode) || data.seed
 					? generationSeed
 					: Math.round(Math.random() * maxSeed),
 			imageDataB64: ''
