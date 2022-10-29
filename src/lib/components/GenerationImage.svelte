@@ -17,9 +17,13 @@
 	import { copy } from 'svelte-copy';
 
 	export let generation: TGenerationUI;
+	export let prioritizeUpscaled = false;
 
 	if (generation.imageUrl === undefined) {
 		generation.imageUrl = urlFromBase64(generation.imageDataB64);
+	}
+	if (generation.upscaledImageUrl === undefined && generation.upscaledImageDataB64 !== undefined) {
+		generation.upscaledImageUrl = urlFromBase64(generation.upscaledImageDataB64);
 	}
 
 	let seedCopied = false;
@@ -43,7 +47,9 @@
 
 <img
 	class="w-full h-full absolute left-0 top-0"
-	src={generation.imageUrl}
+	src={prioritizeUpscaled && generation.upscaledImageUrl
+		? generation.upscaledImageUrl
+		: generation.imageUrl}
 	alt={generation.prompt}
 	width={generation.width}
 	height={generation.height}
@@ -57,6 +63,12 @@
 			])
 		) {
 			return;
+		}
+		if (!generation.imageUrl) {
+			generation.imageUrl = urlFromBase64(generation.imageDataB64);
+		}
+		if (!generation.upscaledImageUrl && generation.upscaledImageDataB64) {
+			generation.upscaledImageUrl = urlFromBase64(generation.upscaledImageDataB64);
 		}
 		activeGeneration.set(generation);
 	}}
@@ -169,7 +181,8 @@
 			/>
 			<DownloadGenerationButton
 				class="p-1.5 -ml-1.5"
-				url={String(generation.imageUrl)}
+				url={generation.upscaledImageUrl ?? String(generation.imageUrl)}
+				b64={generation.upscaledImageDataB64 ?? generation.imageDataB64}
 				prompt={generation.prompt}
 				seed={generation.seed}
 				guidanceScale={generation.guidance_scale}

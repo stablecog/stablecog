@@ -1,14 +1,16 @@
 <script lang="ts">
 	export let type: 'bottom' | 'normal' = 'normal';
 	export { classes as class };
+	export let dontScale = false;
 	let classes = '';
 </script>
 
 <div
 	class="{type === 'bottom'
 		? 'rounded-t-xl self-stretch shadow-navbar shadow-c-shadow/[var(--o-shadow-stronger)]'
-		: 'rounded-xl shadow-lg shadow-c-shadow/[var(--o-shadow-normal)]'} w-full flex items-stretch text-xs md:text-sm bg-c-bg
-		ring-2 ring-c-bg-secondary transition relative {classes}"
+		: 'rounded-xl shadow-lg shadow-c-shadow/[var(--o-shadow-normal)]'} {dontScale
+		? 'text-sm'
+		: 'text-xs md:text-sm'} ring-2 ring-c-bg-secondary w-full flex items-stretch  bg-c-bg transition relative {classes}"
 >
 	<slot />
 </div>

@@ -8,11 +8,20 @@ export async function addGenerationToDb(generation: TIndexedDBGeneration) {
 	return id;
 }
 
+export async function updateGenerationInDb(generation: TIndexedDBGeneration) {
+	if (generation.id) {
+		console.log('Updating generation in db:', `"${generation.prompt}"`);
+		await indexedDb.generations.update(generation.id, generation);
+		console.log('Updated generation in db:', `"${generation.prompt}"`);
+	}
+}
+
 export async function getGenerationsFromDb() {
 	const generations: TIndexedDBGeneration[] = await indexedDb.generations
 		.orderBy('id')
 		.reverse()
 		.toArray();
+
 	return generations;
 }
 

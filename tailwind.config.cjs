@@ -125,7 +125,9 @@ module.exports = {
 				1.5: '1.5px'
 			},
 			borderRadius: {
-				lg2: '0.625rem'
+				lg2: '0.625rem',
+				'4xl': '2rem',
+				'5xl': '2.5rem'
 			},
 			fontSize: {
 				'3.5xl': '2rem'

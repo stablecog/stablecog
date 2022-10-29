@@ -8,13 +8,17 @@
 	export let value: string | number;
 	export let hideSelected = false;
 	export { classes as class };
+	export let hasTitle = true;
+	export let dontScale = false;
 	let classes = '';
 </script>
 
-<TabBarWrapper class={classes}>
-	<div class="self-stretch flex text-c-on-bg/30">
-		<slot name="title" />
-	</div>
+<TabBarWrapper class={classes} {dontScale}>
+	{#if hasTitle}
+		<div class="self-stretch flex text-c-on-bg/30">
+			<slot name="title" />
+		</div>
+	{/if}
 	<div class="w-2px mr-px -ml-px self-stretch">
 		<div class="w-full h-full bg-c-bg-secondary" />
 	</div>

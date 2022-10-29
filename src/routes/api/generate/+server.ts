@@ -57,13 +57,13 @@ export const POST: RequestHandler = async ({ request }) => {
 					.from('generation')
 					.insert({
 						status: 'started',
-						country_code: countryCode || null,
 						seed,
 						width,
 						height,
 						num_inference_steps,
 						guidance_scale,
 						server_url: picked_server_url,
+						country_code: countryCode || null,
 						device_type: deviceInfo.type,
 						device_browser: deviceInfo.browser,
 						device_os: deviceInfo.os,

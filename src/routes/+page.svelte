@@ -14,11 +14,15 @@
 		type TAvailableWidths
 	} from '$ts/constants/main';
 	import { urlFromBase64 } from '$ts/helpers/base64';
-	import { addGenerationToDb, isStorageAvailableIfNotPrune } from '$ts/queries/indexedDb';
+	import {
+		addGenerationToDb,
+		isStorageAvailableIfNotPrune,
+		updateGenerationInDb
+	} from '$ts/queries/indexedDb';
 	import { generateImage } from '$ts/queries/generateImage';
 	import { computeRatePerSec } from '$ts/stores/computeRatePerSec';
 	import { serverUrl } from '$ts/stores/serverUrl';
-	import type { TGenerationUI, TStatus } from '$ts/types/main';
+	import type { TGenerationUI, TStatus, TUpscaleStatus } from '$ts/types/main';
 	import { onDestroy, onMount } from 'svelte';
 	import ImagePlaceholder from '$components/ImagePlaceholder.svelte';
 	import GenerationImage from '$components/GenerationImage.svelte';
@@ -27,7 +31,7 @@
 	import { pLogGeneration, uLogGeneration } from '$ts/helpers/loggers';
 	import ServerOfflineBanner from '$components/ServerOfflineBanner.svelte';
 	import { currentServer, currentServerHealthStatus } from '$ts/stores/serverHealth';
-	import GenerationFullScreen from '$components/GenerationFullScreen.svelte';
+	import GenerationFullScreen from '$components/generationFullScreen/GenerationFullScreen.svelte';
 	import { activeGeneration } from '$ts/stores/activeGeneration';
 	import type { THomePageData } from '$routes/+page.server';
 
@@ -47,6 +51,7 @@
 	let generationSeed: number;
 	let generationError: string | undefined;
 	let estimatedDuration = estimatedDurationDefault;
+	let upscaleStatus: TUpscaleStatus;
 
 	$: [generationWidth, generationHeight, generationInferenceSteps], setEstimatedDuration();
 
@@ -77,7 +82,6 @@
 		}
 		generationError = undefined;
 		lastGeneration = {
-			id: Math.round(Math.random() * Math.pow(10, 15)),
 			server_url: $serverUrl,
 			prompt: promptInputValue,
 			negative_prompt:
@@ -133,16 +137,25 @@
 					currentServerHealthStatus.set('healthy');
 				}
 				lastGeneration.duration_ms = data.duration_ms;
+				let id: number | undefined = undefined;
 				try {
 					const canWrite = await isStorageAvailableIfNotPrune();
 					if (canWrite) {
-						await addGenerationToDb({
+						const resId = await addGenerationToDb({
 							...lastGeneration,
 							imageDataB64: data.imageDataB64
 						});
+						if (resId !== undefined && resId !== null) {
+							id = Number(resId);
+						}
 					}
 				} catch (error) {
 					console.log('indexedDB error', error);
+				}
+				if (id === undefined) {
+					lastGeneration.id = Math.round(Math.random() * Math.pow(10, 15));
+				} else {
+					lastGeneration.id = id;
 				}
 				const imageUrl = urlFromBase64(data.imageDataB64);
 				const img = new Image();
@@ -190,10 +203,27 @@
 	};
 
 	function onKeyDown({ key }: KeyboardEvent) {
-		if ($activeGeneration !== undefined) {
+		if ($activeGeneration !== undefined && upscaleStatus !== 'loading') {
 			if (key === 'Escape') {
 				activeGeneration.set(undefined);
 			}
+		}
+	}
+
+	async function onUpscale(event: CustomEvent<{ generation: TGenerationUI }>) {
+		const { generation } = event.detail;
+		const { imageUrl, upscaledImageUrl, computeRatePerSec, ...rest } = generation;
+		try {
+			await updateGenerationInDb(rest);
+		} catch (error) {
+			console.log('IndexDB error', error);
+		}
+		lastGeneration.upscaledImageDataB64 = rest.upscaledImageDataB64;
+		if (rest.upscaledImageDataB64) {
+			lastGeneration.upscaledImageUrl = urlFromBase64(rest.upscaledImageDataB64);
+		}
+		if ($activeGeneration) {
+			activeGeneration.set(lastGeneration);
 		}
 	}
 
@@ -292,7 +322,7 @@
 										in:elementreceive|local={{ key: lastGeneration.id }}
 										out:elementsend|local={{ key: lastGeneration.id }}
 									>
-										<GenerationImage generation={lastGeneration} />
+										<GenerationImage generation={lastGeneration} prioritizeUpscaled={true} />
 									</div>
 								{/if}
 							</div>
@@ -305,5 +335,5 @@
 </div>
 
 {#if $activeGeneration}
-	<GenerationFullScreen generation={$activeGeneration} />
+	<GenerationFullScreen bind:upscaleStatus on:upscale={onUpscale} generation={$activeGeneration} />
 {/if}

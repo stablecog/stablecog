@@ -1,7 +1,7 @@
 import type { TGenerationBase } from '$ts/types/main';
 
 export interface TIndexedDBGeneration extends TGenerationBase {
-	id: number;
+	id?: number;
 }
 
 export interface TDBServer {
@@ -24,4 +24,17 @@ export interface TDBGenerationRealtimePayload {
 	width: number | null;
 	height: number | null;
 	num_inference_steps: number | null;
+}
+
+export interface TDBUpscaleRealtimePayload {
+	id: string;
+	country_code: string | null;
+	duration_ms: number | null;
+	status: 'started' | 'succeeded' | 'failed' | 'rejected';
+	scale: number;
+	uses_default_server: boolean;
+	created_at: string;
+	updated_at: string;
+	width: number | null;
+	height: number | null;
 }

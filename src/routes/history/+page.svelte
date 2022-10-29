@@ -1,18 +1,20 @@
 <script lang="ts">
 	import { page } from '$app/stores';
-	import GenerationFullScreen from '$components/GenerationFullScreen.svelte';
+	import GenerationFullScreen from '$components/generationFullScreen/GenerationFullScreen.svelte';
 	import GenerationGrid from '$components/GenerationGrid.svelte';
 	import MetaTag from '$components/MetaTag.svelte';
 	import { canonicalUrl } from '$ts/constants/main';
-	import { getGenerationsFromDb } from '$ts/queries/indexedDb';
+	import { getGenerationsFromDb, updateGenerationInDb } from '$ts/queries/indexedDb';
 	import { activeGeneration } from '$ts/stores/activeGeneration';
 	import type { TIndexedDBGeneration } from '$ts/types/db';
+	import type { TGenerationUI, TUpscaleStatus } from '$ts/types/main';
 	import { onMount } from 'svelte';
 
 	let generations: TIndexedDBGeneration[];
+	let upscaleStatus: TUpscaleStatus;
 
 	function onKeyDown({ key }: KeyboardEvent) {
-		if ($activeGeneration !== undefined) {
+		if ($activeGeneration !== undefined && upscaleStatus !== 'loading') {
 			if (key === 'Escape') {
 				activeGeneration.set(undefined);
 			} else if (key === 'ArrowLeft') {
@@ -27,6 +29,19 @@
 				}
 			}
 		}
+	}
+
+	async function onUpscale(event: CustomEvent<{ generation: TGenerationUI }>) {
+		const { generation } = event.detail;
+		const { imageUrl, upscaledImageUrl, computeRatePerSec, ...rest } = generation;
+		try {
+			await updateGenerationInDb(rest);
+		} catch (error) {
+			console.log('IndexDB error', error);
+		}
+		const index = generations.findIndex(({ id }) => id === generation.id);
+		generations[index].upscaledImageDataB64 = rest.upscaledImageDataB64;
+		activeGeneration.set(generation);
 	}
 
 	onMount(async () => {
@@ -66,5 +81,5 @@
 </div>
 
 {#if $activeGeneration}
-	<GenerationFullScreen generation={$activeGeneration} />
+	<GenerationFullScreen bind:upscaleStatus on:upscale={onUpscale} generation={$activeGeneration} />
 {/if}

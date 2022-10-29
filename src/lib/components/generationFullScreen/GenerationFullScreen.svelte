@@ -1,13 +1,8 @@
 <script lang="ts">
 	import SubtleButton from '$components/buttons/SubtleButton.svelte';
 	import IconChatBubbleCancel from '$components/icons/IconChatBubbleCancel.svelte';
-	import IconClock from '$components/icons/IconClock.svelte';
 	import IconCopy from '$components/icons/IconCopy.svelte';
 	import IconDownload from '$components/icons/IconDownload.svelte';
-	import IconDimensions from '$components/icons/IconDimensions.svelte';
-	import IconScale from '$components/icons/IconScale.svelte';
-	import IconSeed from '$components/icons/IconSeed.svelte';
-	import IconSteps from '$components/icons/IconSteps.svelte';
 	import IconTick from '$components/icons/IconTick.svelte';
 	import ModalWrapper from '$components/ModalWrapper.svelte';
 	import Morpher from '$components/Morpher.svelte';
@@ -17,25 +12,42 @@
 	import { getImageNameFromGeneration } from '$ts/helpers/getImageNameFromGeneration';
 	import { activeGeneration } from '$ts/stores/activeGeneration';
 	import { windowHeight, windowWidth } from '$ts/stores/window';
-	import type { TGenerationUI } from '$ts/types/main';
+	import type { TGenerationUI, TTab, TUpscaleStatus } from '$ts/types/main';
 	import { copy } from 'svelte-copy';
 	import IconChevronDown from '$components/icons/IconChevronDown.svelte';
 	import IconButton from '$components/buttons/IconButton.svelte';
 	import { isTouchscreen } from '$ts/stores/isTouchscreen';
 	import { onMount } from 'svelte';
 	import { quadOut } from 'svelte/easing';
-	import { fly } from 'svelte/transition';
-	import { tooltip, type TTooltipProps } from '$ts/actions/tooltip';
+	import { fade, fly } from 'svelte/transition';
+	import { tooltip } from '$ts/actions/tooltip';
 	import { getGenerationUrlFromParams } from '$ts/helpers/getGenerationUrlFromParams';
-	import { goto } from '$app/navigation';
 	import IconDice from '$components/icons/IconDice.svelte';
 	import IconRefresh from '$components/icons/IconRefresh.svelte';
 	import { page } from '$app/stores';
+	import { tooltipStyleProps } from '$components/generationFullScreen/Shared';
+	import ParamsSection from '$components/generationFullScreen/ParamsSection.svelte';
+	import Button from '$components/buttons/Button.svelte';
+	import IconUpscale from '$components/icons/IconUpscale.svelte';
+	import { currentServer } from '$ts/stores/serverHealth';
+	import { upscaleImage } from '$ts/queries/upscaleImage';
+	import { serverUrl } from '$ts/stores/serverUrl';
+	import { createEventDispatcher } from 'svelte';
+	import TabBar from '$components/TabBar.svelte';
+	import { lastUpscaleDurationSec } from '$ts/stores/lastUpscaleDurationSec';
+	import { estimatedDurationBufferRatio } from '$ts/constants/main';
 
 	export let generation: TGenerationUI;
-	let currentSrc = generation.imageUrl ?? urlFromBase64(generation.imageDataB64);
+	export let upscaleStatus: TUpscaleStatus = 'idle';
 
-	$: generation, setCurrentSrc();
+	let currentSrc: string;
+	let currentImageDataBase64: string;
+	$: generation, onGenerationChanged();
+
+	const dispatch = createEventDispatcher<{ upscale: { generation: TGenerationUI } }>();
+
+	$: canClose = upscaleStatus !== 'loading';
+
 	$: generationAspectRatio = generation.width / generation.height;
 
 	$: maxWidthConstant = generationAspectRatio >= 3 / 2 ? 1440 : 1280;
@@ -69,8 +81,11 @@
 
 	$: [modalMaxWidth, modalMaxHeight, generation], setImageContainerSize();
 
-	const setCurrentSrc = () => {
-		currentSrc = generation.imageUrl ?? urlFromBase64(generation.imageDataB64);
+	const onGenerationChanged = () => {
+		currentImageDataBase64 = generation.upscaledImageDataB64 ?? generation.imageDataB64;
+		currentSrc =
+			generation.upscaledImageUrl ?? generation.imageUrl ?? urlFromBase64(currentImageDataBase64);
+		if (upscaleStatus === 'error') upscaleStatus = 'idle';
 	};
 
 	function setImageContainerSize() {
@@ -130,18 +145,13 @@
 		}, 2000);
 	};
 
-	let seedCopiedTimeout: NodeJS.Timeout;
 	let seedCopied = false;
-	const onSeedCopied = () => {
-		seedCopied = true;
+	let seedCopiedTimeout: NodeJS.Timeout;
+	const onSeedCopyClicked = () => {
 		promptCopied = false;
 		negativePromptCopied = false;
-		clearTimeout(seedCopiedTimeout);
 		clearTimeout(negativePromptCopiedTimeout);
 		clearTimeout(promptCopiedTimeout);
-		seedCopiedTimeout = setTimeout(() => {
-			seedCopied = false;
-		}, 2000);
 	};
 
 	let imageDownloadingTimeout: NodeJS.Timeout;
@@ -164,31 +174,94 @@
 		sidebarWrapperScrollHeight = sidebarWrapper.scrollHeight;
 	};
 
-	const onRerollClicked = async () => {
-		const { seed, ...rest } = generation;
-		const url = getGenerationUrlFromParams(rest);
-		await goto(url);
-	};
+	const { seed, ...rest } = generation;
+	const rerollUrl = getGenerationUrlFromParams(rest);
+	const regenerateUrl = getGenerationUrlFromParams(generation);
 
-	const onRegenerateClicked = async () => {
-		const url = getGenerationUrlFromParams(generation);
-		await goto(url);
-	};
+	let upscaleDurationSec = 0;
+	let upscaleDurationSecCalcInterval: NodeJS.Timeout;
 
-	const tooltipStyleProps: TTooltipProps = {
-		parentContainerId: 'tooltip-container',
-		titleClass: 'font-bold text-sm leading-relaxed',
-		descriptionClass: 'text-c-on-bg/50 text-xs leading-relaxed',
-		wrapperClass: 'w-full transition duration-250 transform mt-1.5',
-		animationTime: 250,
-		animateFrom: 'opacity-0 translate-y-3',
-		animateTo: 'opacity-100 translate-y-0',
-		containerClass:
-			'max-w-[min(100vw-32px,18rem)] px-5 py-3 transform -translate-y-3 text-c-on-bg/75 flex flex-col gap-0.5 rounded-xl bg-c-bg-tertiary overflow-hidden shadow-lg shadow-c-shadow/[var(--o-shadow-strongest)',
-		containerAlign: 'center',
-		indicatorClass: 'w-5 h-5',
-		indicatorInnerClass: `w-5 h-5 transform rotate-135 bg-c-bg-tertiary rounded`
-	};
+	$: estimatedUpscaleDurationSec = $lastUpscaleDurationSec * (1 + estimatedDurationBufferRatio);
+
+	async function onUpscaleClicked() {
+		if (!$serverUrl) {
+			console.log("No server url, can't upscale");
+			return;
+		}
+		const start = Date.now();
+		clearTimeout(upscaleDurationSecCalcInterval);
+		upscaleDurationSecCalcInterval = setInterval(() => {
+			upscaleDurationSec = (Date.now() - start) / 1000;
+		}, 100);
+		upscaleStatus = 'loading';
+		try {
+			const res = await upscaleImage({
+				imageDataB64: generation.imageDataB64,
+				scale: 4,
+				version: 'General - RealESRGANplus',
+				server_url: $serverUrl,
+				prompt: generation.prompt,
+				negative_prompt: generation.negative_prompt,
+				seed: generation.seed,
+				num_inference_steps: generation.num_inference_steps,
+				guidance_scale: generation.guidance_scale,
+				height: generation.height,
+				width: generation.width
+			});
+			if (res.data?.imageDataB64) {
+				const base64 = res.data.imageDataB64;
+				const url = urlFromBase64(base64);
+				const { upscaledImageDataB64, upscaledImageUrl, ...rest } = generation;
+				dispatch('upscale', {
+					generation: {
+						...rest,
+						upscaledImageDataB64: base64,
+						upscaledImageUrl: url
+					}
+				});
+			} else {
+				throw new Error('No image data in response');
+			}
+		} catch (error) {
+			console.log(error);
+			upscaleStatus = 'error';
+		}
+		if (upscaleStatus !== 'error') {
+			upscaledTabValue = 'upscaled';
+			lastUpscaleDurationSec.set(upscaleDurationSec);
+		}
+		setTimeout(() => {
+			if (upscaleStatus !== 'error') {
+				upscaleStatus = 'idle';
+			}
+			clearTimeout(upscaleDurationSecCalcInterval);
+		}, 250);
+	}
+
+	$: upscaledTabValue, setCurrentSrc();
+
+	function setCurrentSrc() {
+		if (upscaledTabValue === 'upscaled' && generation.upscaledImageDataB64) {
+			currentImageDataBase64 = generation.upscaledImageDataB64;
+			currentSrc = generation.upscaledImageUrl ?? urlFromBase64(currentImageDataBase64);
+		} else {
+			currentImageDataBase64 = generation.imageDataB64;
+			currentSrc = generation.imageUrl ?? urlFromBase64(currentImageDataBase64);
+		}
+	}
+
+	let upscaledTabValue: TUpscaleTabValue = 'upscaled';
+	type TUpscaleTabValue = 'normal' | 'upscaled';
+	const upscaledOrDefaultTabs: { label: string; value: TUpscaleTabValue }[] = [
+		{
+			label: 'Upscaled',
+			value: 'upscaled'
+		},
+		{
+			label: 'Normal',
+			value: 'normal'
+		}
+	];
 
 	onMount(() => {
 		setSidebarWrapperVars();
@@ -197,6 +270,9 @@
 
 <ModalWrapper hasPadding={false}>
 	<div
+		on:click|capture={() => {
+			if (upscaleStatus === 'error') upscaleStatus = 'idle';
+		}}
 		style={$windowWidth >= lgBreakpoint
 			? `max-width: ${mainContainerWidth}px; max-height: ${mainContainerHeight}px`
 			: ''}
@@ -206,7 +282,13 @@
 		<div
 			in:elementreceive|local={{ key: generation.id }}
 			out:elementsend|local={{ key: generation.id }}
-			use:clickoutside={{ callback: () => activeGeneration.set(undefined) }}
+			use:clickoutside={{
+				callback: () => {
+					if (canClose) {
+						activeGeneration.set(undefined);
+					}
+				}
+			}}
 			style={$windowWidth >= lgBreakpoint
 				? `max-width: ${modalMaxWidth}px; max-height: ${modalMaxHeight}px`
 				: ''}
@@ -222,7 +304,7 @@
 			<div class="relative self-stretch flex items-center">
 				<img
 					class="w-full h-full absolute left-0 top-0 transform scale-125 blur-xl"
-					src={currentSrc}
+					src={generation.imageUrl}
 					alt={generation.prompt}
 					width={generation.width}
 					height={generation.height}
@@ -235,12 +317,48 @@
 					class="w-full lg:h-full relative"
 				>
 					<img
-						class="w-full h-auto lg:h-full lg:object-contain lg:absolute lg:left-0 lg:top-0"
+						style="transition: filter 0.5s cubic-bezier(0.4, 0, 0.2, 1);"
+						class="{upscaleStatus === 'loading'
+							? 'blur-2xl'
+							: ''} w-full transition h-auto lg:h-full lg:object-contain absolute lg:left-0 lg:top-0"
+						src={generation.imageUrl}
+						alt={generation.prompt}
+						width={generation.width}
+						height={generation.height}
+					/>
+					<img
+						style="transition: filter 0.5s cubic-bezier(0.4, 0, 0.2, 1);"
+						class="{upscaleStatus === 'loading'
+							? 'blur-2xl'
+							: ''} filter w-full relative transition h-auto lg:h-full lg:object-contain lg:absolute lg:left-0 lg:top-0"
 						src={currentSrc}
 						alt={generation.prompt}
 						width={generation.width}
 						height={generation.height}
 					/>
+					<div class="w-full h-full overflow-hidden z-0 absolute left-0 top-0 pointer-events-none">
+						<div
+							style="transition-duration: {upscaleStatus === 'loading'
+								? estimatedUpscaleDurationSec
+								: 0.2}s"
+							class="w-[110%] h-full ease-image-generation transition bg-c-secondary/35 
+							absolute left-0 top-0 rounded-xl {upscaleStatus === 'loading'
+								? 'translate-x-0'
+								: '-translate-x-full'}"
+						/>
+					</div>
+					{#if upscaleStatus === 'error'}
+						<div
+							transition:fly={{ duration: 200, easing: quadOut, y: -50 }}
+							class="w-full absolute left-0 top-0 flex items-center justify-center p-3"
+						>
+							<p
+								class="text-center font-medium text-xs md:text-sm shadow-lg shadow-c-shadow/[var(--o-shadow-stronger)] bg-c-bg-secondary px-4 py-3 rounded-xl"
+							>
+								Something went wrong :(
+							</p>
+						</div>
+					{/if}
 				</div>
 			</div>
 			<div
@@ -286,7 +404,39 @@
 						bind:clientHeight={sidebarInnerContainerHeight}
 						class="w-full flex flex-col items-start justify-start"
 					>
-						<div class="flex flex-col gap-4 md:gap-5 px-5 py-4 md:px-7 md:py-5">
+						<div class="w-full flex flex-col gap-4 md:gap-5 px-5 py-4 md:px-7 md:py-5">
+							{#if !generation.upscaledImageDataB64 && $currentServer.features?.includes('upscale')}
+								<div class="w-full flex flex-col gap-3">
+									<Button
+										onClick={onUpscaleClicked}
+										loading={upscaleStatus === 'loading'}
+										class="w-full"
+										size="sm"
+									>
+										<div class="flex items-center gap-2">
+											{#if upscaleStatus === 'loading'}
+												<p>
+													{upscaleDurationSec.toLocaleString('en-US', {
+														minimumFractionDigits: 1,
+														maximumFractionDigits: 1
+													})}
+												</p>
+											{:else}
+												<IconUpscale class="w-5 h-5" />
+												<p>Upscale</p>
+											{/if}
+										</div>
+									</Button>
+								</div>
+							{:else if generation.upscaledImageDataB64}
+								<TabBar
+									bind:value={upscaledTabValue}
+									tabs={upscaledOrDefaultTabs}
+									hasTitle={false}
+									dontScale={true}
+									name="Upscaled or Default Image"
+								/>
+							{/if}
 							<div class="flex flex-col items-start gap-3">
 								<p class="text-sm leading-normal">{generation.prompt}</p>
 								{#if generation.negative_prompt}
@@ -308,6 +458,43 @@
 								{/if}
 							</div>
 							<div class="w-full flex flex-wrap gap-3">
+								<SubtleButton
+									onClick={onDownloadImageClicked}
+									href={currentSrc}
+									download={getImageNameFromGeneration(
+										generation.prompt,
+										generation.seed,
+										generation.guidance_scale,
+										generation.num_inference_steps,
+										currentImageDataBase64
+									)}
+									state={imageDownloading ? 'success' : 'idle'}
+								>
+									<Morpher morph={imageDownloading}>
+										<div slot="item-0" class="flex items-center justify-center gap-1.5">
+											<IconDownload class="w-5 h-5 -ml-0.5" />
+											<p>Download</p>
+										</div>
+										<div slot="item-1" class="flex items-center justify-center gap-1.5">
+											<IconTick class="w-5 h-5 -ml-0.5 scale-110" />
+											<p>Done!</p>
+										</div>
+									</Morpher>
+								</SubtleButton>
+								{#if $page.url.pathname !== '/'}
+									<SubtleButton prefetch={true} href={rerollUrl}>
+										<div class="flex items-center justify-center gap-1.5">
+											<IconDice class="w-5 h-5 -ml-0.5 scale-110" />
+											<p>Reroll</p>
+										</div>
+									</SubtleButton>
+									<SubtleButton prefetch={true} href={regenerateUrl}>
+										<div class="flex items-center justify-center gap-1.5">
+											<IconRefresh class="w-5 h-5 -ml-0.5 scale-110" />
+											<p>Regenerate</p>
+										</div>
+									</SubtleButton>
+								{/if}
 								<div use:copy={generation.prompt} on:svelte-copy={onPromptCopied}>
 									<SubtleButton state={promptCopied ? 'success' : 'idle'}>
 										<Morpher morph={promptCopied}>
@@ -341,44 +528,6 @@
 										</SubtleButton>
 									</div>
 								{/if}
-								<SubtleButton
-									onClick={onDownloadImageClicked}
-									href={generation.imageUrl?.startsWith('data:image/')
-										? urlFromBase64(generation.imageUrl)
-										: generation.imageUrl}
-									download={getImageNameFromGeneration(
-										generation.prompt,
-										generation.seed,
-										generation.guidance_scale,
-										generation.num_inference_steps
-									)}
-									state={imageDownloading ? 'success' : 'idle'}
-								>
-									<Morpher morph={imageDownloading}>
-										<div slot="item-0" class="flex items-center justify-center gap-1.5">
-											<IconDownload class="w-5 h-5 -ml-0.5" />
-											<p>Download</p>
-										</div>
-										<div slot="item-1" class="flex items-center justify-center gap-1.5">
-											<IconTick class="w-5 h-5 -ml-0.5 scale-110" />
-											<p>Downloaded!</p>
-										</div>
-									</Morpher>
-								</SubtleButton>
-								{#if $page.url.pathname !== '/'}
-									<SubtleButton onClick={onRerollClicked}>
-										<div class="flex items-center justify-center gap-1.5">
-											<IconDice class="w-5 h-5 -ml-0.5 scale-110" />
-											<p>Reroll</p>
-										</div>
-									</SubtleButton>
-									<SubtleButton onClick={onRegenerateClicked}>
-										<div class="flex items-center justify-center gap-1.5">
-											<IconRefresh class="w-5 h-5 -ml-0.5 scale-110" />
-											<p>Regenerate</p>
-										</div>
-									</SubtleButton>
-								{/if}
 							</div>
 						</div>
 						<!-- Divider -->
@@ -386,86 +535,13 @@
 							<div class="w-full h-2px bg-c-bg-tertiary rounded-full" />
 						</div>
 						<!-- Divider -->
-						<div class="flex flex-col px-5 py-4 md:px-7 md:py-5 lg:pb-8 gap-6">
-							<div class="flex flex-wrap items-center gap-4">
-								<div class="flex flex-col items-start gap-1">
-									<div
-										use:tooltip={{
-											title: 'Seed',
-											description:
-												'Get repeatable results. A seed combined with the same prompt and options generates the same image.',
-											...tooltipStyleProps
-										}}
-										class="flex items-center gap-1.5 text-c-on-bg/75 text-sm cursor-default"
-									>
-										<IconSeed class="w-4 h-4" />
-										<p>Seed</p>
-									</div>
-									<p class="font-bold">{generation.seed}</p>
-								</div>
-								<div use:copy={String(generation.seed)} on:svelte-copy={onSeedCopied}>
-									<SubtleButton noPadding class="p-2.5" state={seedCopied ? 'success' : 'idle'}>
-										<Morpher morph={seedCopied}>
-											<div slot="item-0" class="flex items-center justify-center gap-1.5">
-												<IconCopy class="w-5 h-5" />
-											</div>
-											<div slot="item-1" class="flex items-center justify-center gap-1.5">
-												<IconTick class="w-5 h-5 scale-150" />
-											</div>
-										</Morpher>
-									</SubtleButton>
-								</div>
-							</div>
-							<div class="flex flex-wrap gap-6">
-								<div class="min-w-[calc(50%-0.75rem)] flex flex-col items-start gap-1">
-									<div
-										use:tooltip={{
-											title: 'Guidance Scale',
-											description:
-												'How similar the image will be to your prompt. Higher values make the image closer to your prompt.',
-											...tooltipStyleProps
-										}}
-										class="flex items-center gap-1.5 text-c-on-bg/75 text-sm cursor-default"
-									>
-										<IconScale class="w-4 h-4" />
-										<p>Guidance Scale</p>
-									</div>
-									<p class="font-bold">{generation.guidance_scale}</p>
-								</div>
-								<div class="min-w-[calc(50%-0.75rem)] flex flex-col items-start gap-1">
-									<div
-										use:tooltip={{
-											title: 'Inference Steps',
-											description: 'How many steps will be taken to generate (diffuse) the image.',
-											...tooltipStyleProps
-										}}
-										class="flex items-center gap-1.5 text-c-on-bg/75 text-sm cursor-default"
-									>
-										<IconSteps class="w-4 h-4" />
-										<p>Inference Steps</p>
-									</div>
-									<p class="font-bold">{generation.num_inference_steps}</p>
-								</div>
-								<div class="min-w-[calc(50%-0.75rem)] flex flex-col items-start gap-1">
-									<div class="flex items-center gap-1.5 text-c-on-bg/75 text-sm cursor-default">
-										<IconDimensions class="w-4 h-4" />
-										<p>Dimensions</p>
-									</div>
-									<p class="font-bold">{generation.width} × {generation.height}</p>
-								</div>
-								{#if generation.duration_ms}
-									<div class="min-w-[calc(50%-0.75rem)] flex flex-col items-start gap-1">
-										<div class="flex items-center gap-1.5 text-c-on-bg/75 text-sm cursor-default">
-											<IconClock class="w-4 h-4" />
-											<p>Duration</p>
-										</div>
-										<p class="font-bold">
-											{Math.round((generation.duration_ms / 1000) * 10) / 10}s
-										</p>
-									</div>
-								{/if}
-							</div>
-						</div>
+						<ParamsSection
+							class="flex flex-col px-5 py-4 md:px-7 md:py-5 lg:pb-8 gap-6"
+							{generation}
+							bind:seedCopied
+							bind:seedCopiedTimeout
+							{onSeedCopyClicked}
+						/>
 					</div>
 				</div>
 			</div>

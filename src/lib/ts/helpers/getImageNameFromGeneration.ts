@@ -3,7 +3,9 @@ export function getImageNameFromGeneration(
 	seed: number,
 	inferenceSteps: number,
 	guidanceScale: number,
-	ext?: string
+	b64: string
 ) {
-	return `[sd_${seed}]-[scl_${guidanceScale}]-[stp_${inferenceSteps}]-${prompt}.${ext ?? 'png'}`;
+	return `[sd_${seed}]-[scl_${guidanceScale}]-[stp_${inferenceSteps}]-${prompt}.${
+		b64.startsWith('data:image/jpeg') ? 'jpeg' : b64.startsWith('data:image/jpg') ? 'jpg' : 'png'
+	}`;
 }

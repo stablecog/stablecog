@@ -4,6 +4,7 @@
 	import { isTouchscreen } from '$ts/stores/isTouchscreen';
 
 	export let url: string;
+	export let b64: string;
 	export let prompt: string;
 	export let seed: number;
 	export let inferenceSteps: number;
@@ -23,7 +24,7 @@
 	{disabled}
 	class="transition rounded-lg group-1 {classes}"
 	href={url}
-	download={getImageNameFromGeneration(prompt, seed, inferenceSteps, guidanceScale)}
+	download={getImageNameFromGeneration(prompt, seed, inferenceSteps, guidanceScale, b64)}
 	aria-label="Download Image"
 >
 	<div class="p-2.5 rounded-full bg-c-bg relative overflow-hidden z-0">

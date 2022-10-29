@@ -6,6 +6,7 @@
 	export let href: string | undefined = undefined;
 	export let download: string | undefined = undefined;
 	export let noPadding = false;
+	export let prefetch = false;
 	export { classes as class };
 	let classes = '';
 </script>
@@ -15,6 +16,7 @@
 		on:click={onClick}
 		{href}
 		{download}
+		data-sveltekit-prefetch={prefetch ? '' : 'off'}
 		class="{state === 'success'
 			? 'bg-c-success ring-c-success text-c-on-primary'
 			: 'bg-c-bg-secondary ring-c-bg-tertiary text-c-on-bg'} {noPadding

@@ -15,7 +15,7 @@ export interface TGenerationBase {
 }
 
 export interface TGenerationUI extends TGenerationBase {
-	id: number;
+	id?: number;
 	imageUrl?: string;
 	upscaledImageUrl?: string;
 	computeRatePerSec?: number;
@@ -42,9 +42,16 @@ export interface TGenerationResponse {
 
 export interface TUpscaleRequest {
 	imageDataB64: string;
+	width?: number;
+	height?: number;
 	version: TUpscaleVersion;
 	scale: number;
 	server_url: string;
+	seed?: number;
+	num_inference_steps?: number;
+	guidance_scale?: number;
+	prompt?: string;
+	negative_prompt?: string;
 }
 
 export interface TUpscaleResponse {
@@ -120,3 +127,5 @@ export interface TToC {
 }
 
 export type TTabBarPlacement = 'bottom' | 'normal';
+
+export type TUpscaleStatus = 'idle' | 'loading' | 'error';
