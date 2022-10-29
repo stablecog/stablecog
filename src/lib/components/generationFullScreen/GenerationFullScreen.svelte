@@ -276,7 +276,7 @@
 		style={$windowWidth >= lgBreakpoint
 			? `max-width: ${mainContainerWidth}px; max-height: ${mainContainerHeight}px`
 			: ''}
-		class="relative w-full h-full px-5 py-20 md:px-12 lg:p-0 flex lg:items-center justify-center z-10 
+		class="relative w-full h-full px-3 pt-16 pb-32 md:p-20 lg:p-0 flex lg:items-center justify-center z-10 
 		overflow-auto lg:my-auto lg:overflow-hidden"
 	>
 		<div
@@ -336,17 +336,6 @@
 						width={generation.width}
 						height={generation.height}
 					/>
-					<div class="w-full h-full overflow-hidden z-0 absolute left-0 top-0 pointer-events-none">
-						<div
-							style="transition-duration: {upscaleStatus === 'loading'
-								? estimatedUpscaleDurationSec
-								: 0.2}s"
-							class="w-[110%] h-full ease-image-generation transition bg-c-secondary/25 
-							absolute left-0 top-0 rounded-xl {upscaleStatus === 'loading'
-								? 'translate-x-0'
-								: '-translate-x-full'}"
-						/>
-					</div>
 					{#if upscaleStatus === 'error'}
 						<div
 							transition:fly={{ duration: 200, easing: quadOut, y: -50 }}
@@ -359,6 +348,17 @@
 							</p>
 						</div>
 					{/if}
+				</div>
+				<div class="w-full h-full overflow-hidden z-0 absolute left-0 top-0 pointer-events-none">
+					<div
+						style="transition-duration: {upscaleStatus === 'loading'
+							? estimatedUpscaleDurationSec
+							: 0.2}s"
+						class="w-[110%] h-full ease-image-generation transition bg-c-secondary/25 
+						absolute left-0 top-0 rounded-xl {upscaleStatus === 'loading'
+							? '-translate-x-[5%]'
+							: '-translate-x-full'}"
+					/>
 				</div>
 			</div>
 			<div
