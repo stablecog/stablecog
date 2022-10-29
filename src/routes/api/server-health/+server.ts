@@ -8,12 +8,13 @@ export const POST: RequestHandler = async ({ request }) => {
 	const deviceInfo = getDeviceInfo(userAgent);
 	const countryCode = headers.get('cf-ipcountry');
 	console.log('Request made to old endpoint (/server-health):', deviceInfo, countryCode);
-	const res = await fetch('/api/health', {
+	const res = await fetch('https://stablecog.com/api/health', {
 		method: 'POST',
 		body: JSON.stringify({ server_url }),
 		headers: {
 			'Content-Type': 'application/json'
 		}
 	});
-	return res;
+	const resJson = await res.json();
+	return new Response(JSON.stringify(resJson));
 };
