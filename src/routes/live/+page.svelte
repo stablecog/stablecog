@@ -226,10 +226,12 @@
 	canonical="{canonicalUrl}{$page.url.pathname}"
 />
 
-<div class="w-full flex-1 flex justify-center px-8 lg:px-16 pb-[calc(3vh)]">
+<div class="w-full flex-1 flex justify-center pb-[calc(3vh)]">
 	<div class="w-full flex flex-col items-center justify-center max-w-5xl">
 		{#if supabase}
-			<div class="w-full flex flex-wrap items-center justify-center pb-6 md:pt-10 gap-10 lg:gap-14">
+			<div
+				class="w-full px-8 lg:px-16 flex flex-wrap items-center justify-center pb-6 md:pt-10 gap-10 lg:gap-14"
+			>
 				<div class="w-full lg:w-64 max-w-full flex flex-col gap-1.5 text-center lg:text-right">
 					<h1 class="text-c-on-bg/50 text-sm">Generations</h1>
 					<p class="font-bold text-4xl">
@@ -254,7 +256,7 @@
 			{#if generationsAndUpscales.length > 0}
 				<div
 					transition:expandCollapse|local={{ duration: 300 }}
-					class="w-[calc(100%+4rem)] md:w-[calc(100%+8rem)] px-4 md:px-32 overflow-hidden z-0 relative -mx-8 md:-mx-16"
+					class="w-full px-8 lg:px-32 overflow-hidden z-0 relative"
 				>
 					<div class="w-full flex flex-wrap items-center justify-center py-4">
 						{#each generationsAndUpscales as generationOrUpscale (generationOrUpscale.id)}
@@ -379,7 +381,7 @@
 			{:else}
 				<div
 					transition:expandCollapse|local={{ duration: 300 }}
-					class="w-full overflow-hidden z-0 relative max-w-lg"
+					class="w-full px-8 lg:px-16 overflow-hidden z-0 relative max-w-lg"
 				>
 					<div class="w-full flex flex-col items-center justify-center py-4">
 						<IconPulsing />
@@ -390,7 +392,7 @@
 		{:else}
 			<div
 				transition:expandCollapse|local={{ duration: 300 }}
-				class="w-full overflow-hidden z-0 relative max-w-lg"
+				class="w-full px-8 lg:px-16 overflow-hidden z-0 relative max-w-lg"
 			>
 				<div class="w-full flex flex-col items-center justify-center gap-5 py-4">
 					<p class="w-full leading-relaxed text-c-on-bg/40 text-center">
