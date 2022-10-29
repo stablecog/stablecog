@@ -254,7 +254,7 @@
 			{#if generationsAndUpscales.length > 0}
 				<div
 					transition:expandCollapse|local={{ duration: 300 }}
-					class="w-[calc(100%+4rem)] md:w-[calc(100%+12rem)] px-4 md:px-24 overflow-hidden z-0 relative -mx-8"
+					class="w-[calc(100%+4rem)] md:w-[calc(100%+8rem)] px-4 md:px-32 overflow-hidden z-0 relative -mx-8 md:-mx-16"
 				>
 					<div class="w-full flex flex-wrap items-center justify-center py-4">
 						{#each generationsAndUpscales as generationOrUpscale (generationOrUpscale.id)}

@@ -341,7 +341,7 @@
 							style="transition-duration: {upscaleStatus === 'loading'
 								? estimatedUpscaleDurationSec
 								: 0.2}s"
-							class="w-[110%] h-full ease-image-generation transition bg-c-secondary/35 
+							class="w-[110%] h-full ease-image-generation transition bg-c-secondary/25 
 							absolute left-0 top-0 rounded-xl {upscaleStatus === 'loading'
 								? 'translate-x-0'
 								: '-translate-x-full'}"
