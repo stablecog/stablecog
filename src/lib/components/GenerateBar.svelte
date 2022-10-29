@@ -267,9 +267,17 @@
 				class="w-full h-full rounded-xl overflow-hidden z-0 absolute left-0 top-0 pointer-events-none"
 			>
 				<div
-					style="transition-duration: {loadingOrSubmitting ? estimatedDuration : 0.2}s"
+					style="transition-duration: {status === 'loading'
+						? estimatedDuration
+						: status === 'success'
+						? 0.5
+						: 0}s"
 					class="w-full h-full ease-image-generation transition bg-c-secondary/10 
-					absolute left-0 top-0 rounded-xl {loadingOrSubmitting ? 'translate-x-0' : '-translate-x-full'}"
+					absolute left-0 top-0 rounded-xl {status === 'loading'
+						? 'translate-x-0'
+						: status === 'success'
+						? 'translate-x-full'
+						: '-translate-x-full'}"
 				/>
 			</div>
 			<ClearButton show={showClearPromptInputButton} onClick={clearPrompt} />

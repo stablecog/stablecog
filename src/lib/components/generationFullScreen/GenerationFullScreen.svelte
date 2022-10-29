@@ -85,7 +85,7 @@
 		currentImageDataBase64 = generation.upscaledImageDataB64 ?? generation.imageDataB64;
 		currentSrc =
 			generation.upscaledImageUrl ?? generation.imageUrl ?? urlFromBase64(currentImageDataBase64);
-		if (upscaleStatus === 'error') upscaleStatus = 'idle';
+		if (upscaleStatus === 'error' || upscaleStatus === 'success') upscaleStatus = 'idle';
 	};
 
 	function setImageContainerSize() {
@@ -232,7 +232,7 @@
 		}
 		setTimeout(() => {
 			if (upscaleStatus !== 'error') {
-				upscaleStatus = 'idle';
+				upscaleStatus = 'success';
 			}
 			clearTimeout(upscaleDurationSecCalcInterval);
 		}, 250);
@@ -353,10 +353,14 @@
 					<div
 						style="transition-duration: {upscaleStatus === 'loading'
 							? estimatedUpscaleDurationSec
-							: 0.2}s"
+							: upscaleStatus === 'success'
+							? 0.5
+							: 0}s"
 						class="w-[110%] h-full ease-image-generation transition bg-c-secondary/25 
 						absolute left-0 top-0 rounded-xl {upscaleStatus === 'loading'
 							? '-translate-x-[5%]'
+							: upscaleStatus === 'success'
+							? 'translate-x-full'
 							: '-translate-x-full'}"
 					/>
 				</div>

@@ -23,7 +23,7 @@
 	import { computeRatePerSec } from '$ts/stores/computeRatePerSec';
 	import { serverUrl } from '$ts/stores/serverUrl';
 	import type { TGenerationUI, TStatus, TUpscaleStatus } from '$ts/types/main';
-	import { onDestroy, onMount } from 'svelte';
+	import { onDestroy, onMount, tick } from 'svelte';
 	import ImagePlaceholder from '$components/ImagePlaceholder.svelte';
 	import GenerationImage from '$components/GenerationImage.svelte';
 	import { advancedMode } from '$ts/stores/advancedMode';
@@ -107,6 +107,8 @@
 		};
 		console.log('generation', lastGeneration);
 		console.log('estimatedDuration', estimatedDuration);
+		status = 'idle';
+		await tick();
 		status = 'loading';
 		endTimestamp = undefined;
 		startTimestamp = Date.now();

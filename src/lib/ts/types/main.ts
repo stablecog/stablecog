@@ -128,4 +128,4 @@ export interface TToC {
 
 export type TTabBarPlacement = 'bottom' | 'normal';
 
-export type TUpscaleStatus = 'idle' | 'loading' | 'error';
+export type TUpscaleStatus = 'idle' | 'success' | 'loading' | 'error';
