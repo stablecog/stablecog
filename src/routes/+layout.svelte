@@ -224,8 +224,8 @@
 		<slot />
 	</main>
 	<Footer />
-	<NavbarBottom class="md:hidden h-15 md:h-[calc(3.75rem+env(safe-area-inset-bottom))]" />
-	<div class="h-15 md:h-[calc(3.75rem+env(safe-area-inset-bottom))] md:hidden" />
+	<NavbarBottom class="md:hidden h-[calc(3.75rem+env(safe-area-inset-bottom))]" />
+	<div class="md:hidden h-[calc(3.75rem+env(safe-area-inset-bottom))]" />
 	<div
 		id="tooltip-container"
 		class="absolute overflow-x-hidden left-0 top-0 w-full h-full pointer-events-none"
