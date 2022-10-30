@@ -36,6 +36,7 @@
 	import TabBar from '$components/TabBar.svelte';
 	import { lastUpscaleDurationSec } from '$ts/stores/lastUpscaleDurationSec';
 	import { estimatedDurationBufferRatio } from '$ts/constants/main';
+	import { pLogUpscale, uLogUpscale } from '$ts/helpers/loggers';
 
 	export let generation: TGenerationUI;
 	export let upscaleStatus: TUpscaleStatus = 'idle';
@@ -195,6 +196,8 @@
 			console.log("No server url, can't upscale");
 			return;
 		}
+		pLogUpscale('Started');
+		uLogUpscale('Started');
 		const start = Date.now();
 		clearTimeout(upscaleDurationSecCalcInterval);
 		upscaleDurationSecCalcInterval = setInterval(() => {
@@ -216,6 +219,8 @@
 				width: generation.width
 			});
 			if (res.data?.imageDataB64) {
+				pLogUpscale('Succeeded');
+				uLogUpscale('Succeeded');
 				const base64 = res.data.imageDataB64;
 				const url = urlFromBase64(base64);
 				const { upscaledImageDataB64, upscaledImageUrl, ...rest } = generation;
@@ -230,6 +235,8 @@
 				throw new Error('No image data in response');
 			}
 		} catch (error) {
+			pLogUpscale('Failed');
+			uLogUpscale('Failed');
 			console.log(error);
 			upscaleStatus = 'error';
 		}
