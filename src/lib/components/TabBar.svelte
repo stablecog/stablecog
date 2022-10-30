@@ -37,7 +37,10 @@
 		</div>
 		{#each tabs as tab}
 			<button
-				on:click|preventDefault={() => (value = tab.value)}
+				on:click|preventDefault={(e) => {
+					value = tab.value;
+					e.currentTarget.blur();
+				}}
 				class="flex-1 min-w-0 px-2 py-4 relative text-center rounded-lg group"
 				type="button"
 				aria-label={name}

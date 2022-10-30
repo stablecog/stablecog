@@ -217,7 +217,7 @@
 	class="w-full max-w-xl md:max-w-6xl md:px-10 flex flex-col items-center pt-2px"
 >
 	<!-- Prompt bar -->
-	<div class="w-full flex flex-col md:flex-row gap-4 items-center pb-4 px-4">
+	<div class="w-full flex flex-col md:flex-row gap-3 items-center pb-2 px-4">
 		<div class="w-full flex relative group">
 			<textarea
 				use:autoresize={{ maxRows: 3 }}

@@ -14,6 +14,8 @@
 	import { copy } from 'svelte-copy';
 
 	export let generation: TGenerationUI;
+	export let currentImageWidth: number;
+	export let currentImageHeight: number;
 	export let onSeedCopyClicked: () => void;
 	export let seedCopiedTimeout: NodeJS.Timeout;
 	export let seedCopied = false;
@@ -95,7 +97,7 @@
 				<IconDimensions class="w-4 h-4" />
 				<p>Dimensions</p>
 			</div>
-			<p class="font-bold">{generation.width} × {generation.height}</p>
+			<p class="font-bold">{currentImageWidth} × {currentImageHeight}</p>
 		</div>
 		{#if generation.duration_ms}
 			<div class="min-w-[calc(50%-0.75rem)] flex flex-col items-start gap-1">

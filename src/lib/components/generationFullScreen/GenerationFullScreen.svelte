@@ -12,14 +12,14 @@
 	import { getImageNameFromGeneration } from '$ts/helpers/getImageNameFromGeneration';
 	import { activeGeneration } from '$ts/stores/activeGeneration';
 	import { windowHeight, windowWidth } from '$ts/stores/window';
-	import type { TGenerationUI, TTab, TUpscaleStatus } from '$ts/types/main';
+	import type { TGenerationUI, TUpscaleStatus } from '$ts/types/main';
 	import { copy } from 'svelte-copy';
 	import IconChevronDown from '$components/icons/IconChevronDown.svelte';
 	import IconButton from '$components/buttons/IconButton.svelte';
 	import { isTouchscreen } from '$ts/stores/isTouchscreen';
 	import { onMount } from 'svelte';
 	import { quadOut } from 'svelte/easing';
-	import { fade, fly } from 'svelte/transition';
+	import { fly } from 'svelte/transition';
 	import { tooltip } from '$ts/actions/tooltip';
 	import { getGenerationUrlFromParams } from '$ts/helpers/getGenerationUrlFromParams';
 	import IconDice from '$components/icons/IconDice.svelte';
@@ -40,8 +40,10 @@
 	export let generation: TGenerationUI;
 	export let upscaleStatus: TUpscaleStatus = 'idle';
 
-	let currentSrc: string;
-	let currentImageDataBase64: string;
+	let currentImageUrl: string;
+	let currentImageDataB64: string;
+	let upscaledImageWidth: number | undefined;
+	let upscaledImageHeight: number | undefined;
 	$: generation, onGenerationChanged();
 
 	const dispatch = createEventDispatcher<{ upscale: { generation: TGenerationUI } }>();
@@ -82,10 +84,13 @@
 	$: [modalMaxWidth, modalMaxHeight, generation], setImageContainerSize();
 
 	const onGenerationChanged = () => {
-		currentImageDataBase64 = generation.upscaledImageDataB64 ?? generation.imageDataB64;
-		currentSrc =
-			generation.upscaledImageUrl ?? generation.imageUrl ?? urlFromBase64(currentImageDataBase64);
+		currentImageDataB64 = generation.upscaledImageDataB64 ?? generation.imageDataB64;
+		currentImageUrl =
+			generation.upscaledImageUrl ?? generation.imageUrl ?? urlFromBase64(currentImageDataB64);
 		if (upscaleStatus === 'error' || upscaleStatus === 'success') upscaleStatus = 'idle';
+		if (generation.upscaledImageUrl) upscaledTabValue = 'upscaled';
+		upscaledImageWidth = undefined;
+		upscaledImageHeight = undefined;
 	};
 
 	function setImageContainerSize() {
@@ -238,15 +243,15 @@
 		}, 250);
 	}
 
-	$: upscaledTabValue, setCurrentSrc();
+	$: upscaledTabValue, setCurrentImageUrl();
 
-	function setCurrentSrc() {
+	function setCurrentImageUrl() {
 		if (upscaledTabValue === 'upscaled' && generation.upscaledImageDataB64) {
-			currentImageDataBase64 = generation.upscaledImageDataB64;
-			currentSrc = generation.upscaledImageUrl ?? urlFromBase64(currentImageDataBase64);
+			currentImageDataB64 = generation.upscaledImageDataB64;
+			currentImageUrl = generation.upscaledImageUrl ?? urlFromBase64(currentImageDataB64);
 		} else {
-			currentImageDataBase64 = generation.imageDataB64;
-			currentSrc = generation.imageUrl ?? urlFromBase64(currentImageDataBase64);
+			currentImageDataB64 = generation.imageDataB64;
+			currentImageUrl = generation.imageUrl ?? urlFromBase64(currentImageDataB64);
 		}
 	}
 
@@ -262,6 +267,16 @@
 			value: 'normal'
 		}
 	];
+
+	const onImageLoad = (e: Event) => {
+		const target = e.target as HTMLImageElement;
+		if (generation.width !== target.naturalWidth) {
+			upscaledImageWidth = target.naturalWidth;
+		}
+		if (generation.height !== target.naturalHeight) {
+			upscaledImageHeight = target.naturalHeight;
+		}
+	};
 
 	onMount(() => {
 		setSidebarWrapperVars();
@@ -327,14 +342,19 @@
 						height={generation.height}
 					/>
 					<img
+						on:load={onImageLoad}
 						style="transition: filter 0.5s cubic-bezier(0.4, 0, 0.2, 1);"
 						class="{upscaleStatus === 'loading'
 							? 'blur-2xl'
 							: ''} filter w-full relative transition h-auto lg:h-full lg:object-contain lg:absolute lg:left-0 lg:top-0"
-						src={currentSrc}
+						src={currentImageUrl}
 						alt={generation.prompt}
-						width={generation.width}
-						height={generation.height}
+						width={upscaledTabValue === 'upscaled' && upscaledImageWidth
+							? upscaledImageWidth
+							: generation.width}
+						height={upscaledTabValue === 'upscaled' && upscaledImageHeight
+							? upscaledImageHeight
+							: generation.height}
 					/>
 					{#if upscaleStatus === 'error'}
 						<div
@@ -464,13 +484,13 @@
 							<div class="w-full flex flex-wrap gap-3">
 								<SubtleButton
 									onClick={onDownloadImageClicked}
-									href={currentSrc}
+									href={currentImageUrl}
 									download={getImageNameFromGeneration(
 										generation.prompt,
 										generation.seed,
 										generation.guidance_scale,
 										generation.num_inference_steps,
-										currentImageDataBase64
+										currentImageDataB64
 									)}
 									state={imageDownloading ? 'success' : 'idle'}
 								>
@@ -541,6 +561,12 @@
 						<!-- Divider -->
 						<ParamsSection
 							class="flex flex-col px-5 py-4 md:px-7 md:py-5 lg:pb-8 gap-6"
+							currentImageWidth={upscaledTabValue === 'upscaled' && upscaledImageWidth
+								? upscaledImageWidth
+								: generation.width}
+							currentImageHeight={upscaledTabValue === 'upscaled' && upscaledImageHeight
+								? upscaledImageHeight
+								: generation.height}
 							{generation}
 							bind:seedCopied
 							bind:seedCopiedTimeout

@@ -258,7 +258,7 @@
 
 <svelte:window on:keydown={onKeyDown} />
 
-<div class="w-full flex flex-col items-center flex-1 justify-center px-4 pt-4">
+<div class="w-full flex flex-col items-center flex-1 justify-center px-4 md:pt-4">
 	<div class="w-full flex flex-col items-center justify-center">
 		{#if isCheckComplete && !$serverUrl}
 			<SetServerModal isOnBarrier={false} />
@@ -299,7 +299,7 @@
 						transition:expandCollapse|local={{ duration: 300 }}
 						class="max-w-full flex flex-col items-center justify-start rounded-xl origin-top relative z-0 px-4"
 					>
-						<div class="max-w-full flex flex-col items-center md:px-5 gap-4 py-4">
+						<div class="max-w-full flex flex-col items-center md:px-5 gap-4 pt-6 pb-4">
 							<div
 								class="{aspectRatio >= 6 / 2
 									? 'w-180'
