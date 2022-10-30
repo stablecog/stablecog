@@ -122,6 +122,8 @@
 		}
 	}
 
+	const copyTimeoutDuration = 1500;
+
 	let promptCopiedTimeout: NodeJS.Timeout;
 	let promptCopied = false;
 	const onPromptCopied = () => {
@@ -133,7 +135,7 @@
 		clearTimeout(seedCopiedTimeout);
 		promptCopiedTimeout = setTimeout(() => {
 			promptCopied = false;
-		}, 2000);
+		}, copyTimeoutDuration);
 	};
 
 	let negativePromptCopiedTimeout: NodeJS.Timeout;
@@ -147,7 +149,7 @@
 		clearTimeout(seedCopiedTimeout);
 		promptCopiedTimeout = setTimeout(() => {
 			negativePromptCopied = false;
-		}, 2000);
+		}, copyTimeoutDuration);
 	};
 
 	let seedCopied = false;
@@ -166,7 +168,7 @@
 		clearTimeout(imageDownloadingTimeout);
 		imageDownloadingTimeout = setTimeout(() => {
 			imageDownloading = false;
-		}, 2000);
+		}, copyTimeoutDuration);
 	};
 
 	const sidebarWrapperOnScroll = () => {
@@ -376,7 +378,7 @@
 							: upscaleStatus === 'success'
 							? 0.5
 							: 0}s"
-						class="w-[110%] h-full ease-image-generation transition bg-c-secondary/25 
+						class="w-[110%] h-full ease-image-generation transition bg-c-secondary/50 
 						absolute left-0 top-0 rounded-xl {upscaleStatus === 'loading'
 							? '-translate-x-[5%]'
 							: upscaleStatus === 'success'
@@ -570,6 +572,7 @@
 							{generation}
 							bind:seedCopied
 							bind:seedCopiedTimeout
+							{copyTimeoutDuration}
 							{onSeedCopyClicked}
 						/>
 					</div>

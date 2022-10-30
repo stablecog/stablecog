@@ -19,6 +19,7 @@
 	export let onSeedCopyClicked: () => void;
 	export let seedCopiedTimeout: NodeJS.Timeout;
 	export let seedCopied = false;
+	export let copyTimeoutDuration: number;
 	export { classes as class };
 	let classes = '';
 
@@ -28,7 +29,7 @@
 		onSeedCopyClicked();
 		seedCopiedTimeout = setTimeout(() => {
 			seedCopied = false;
-		}, 2000);
+		}, copyTimeoutDuration);
 	};
 </script>
 
