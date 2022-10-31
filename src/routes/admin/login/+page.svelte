@@ -3,7 +3,7 @@
 	import { page } from '$app/stores';
 	import Button from '$components/buttons/Button.svelte';
 	import Input from '$components/Input.svelte';
-	import { supabase } from '$ts/constants/supabase';
+	import { supabaseClient } from '$ts/constants/supabaseClient';
 
 	let email: string;
 	let password: string;
@@ -14,7 +14,7 @@
 	async function login() {
 		loginStatus = 'loading';
 		try {
-			const res = await supabase?.auth.signInWithPassword({ email, password });
+			const res = await supabaseClient?.auth.signInWithPassword({ email, password });
 			console.log(res);
 			await goto('/admin');
 		} catch (error) {
@@ -26,7 +26,7 @@
 	async function logout() {
 		logoutStatus = 'loading';
 		try {
-			const res = await supabase?.auth.signOut();
+			const res = await supabaseClient?.auth.signOut();
 			console.log(res);
 		} catch (error) {
 			console.log(error);
@@ -43,7 +43,7 @@
 		{#if $page.data.session?.user}
 			<div class="w-full flex flex-col gap-6 text-center">
 				<p class="font-bold text-lg">{$page.data.session.user.email}</p>
-				<Button onClick={logout} loading={logoutStatus === 'loading'}>
+				<Button withSpinner={true} onClick={logout} loading={logoutStatus === 'loading'}>
 					{#if logoutStatus === 'loading'}
 						Logging out...
 					{:else}
@@ -71,7 +71,7 @@
 						bind:value={password}
 					/>
 				</div>
-				<Button loading={loginStatus === 'loading'}>
+				<Button withSpinner={true} loading={loginStatus === 'loading'}>
 					{#if loginStatus === 'loading'}
 						Logging in...
 					{:else}

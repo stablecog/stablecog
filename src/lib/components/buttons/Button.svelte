@@ -1,4 +1,5 @@
 <script lang="ts">
+	import IconLoading from '$components/icons/IconLoading.svelte';
 	import { isTouchscreen } from '$ts/stores/isTouchscreen';
 	export let disabled = false;
 	export let loading = false;
@@ -6,6 +7,7 @@
 	export let onClick: (() => void) | undefined = undefined;
 	export let prefetch: boolean = true;
 	export let size: 'md' | 'sm' = 'md';
+	export let withSpinner = false;
 	export { classes as class };
 	let classes = '';
 </script>
@@ -28,7 +30,20 @@
 			/>
 		</div>
 		<div class="relative">
-			<slot />
+			{#if withSpinner}
+				<div class="transform transition relative {loading ? 'opacity-0' : 'opacity-100'}">
+					<slot />
+				</div>
+				<div
+					class="w-full h-full absolute left-0 top-0 pointer-events-none flex justify-center items-center"
+				>
+					<div class="w-6 h-6 transition transform {loading ? 'scale-100' : 'scale-0'}">
+						<IconLoading class="w-full h-full {loading ? 'animate-spin-faster' : ''}" />
+					</div>
+				</div>
+			{:else}
+				<slot />
+			{/if}
 		</div>
 	</a>
 {:else}
@@ -48,7 +63,20 @@
 			/>
 		</div>
 		<div class="relative">
-			<slot />
+			{#if withSpinner}
+				<div class="transform transition relative {loading ? 'opacity-0' : 'opacity-100'}">
+					<slot />
+				</div>
+				<div
+					class="w-full h-full absolute left-0 top-0 pointer-events-none flex justify-center items-center"
+				>
+					<div class="w-6 h-6 transition transform {loading ? 'scale-100' : 'scale-0'}">
+						<IconLoading class="w-full h-full {loading ? 'animate-spin-faster' : ''}" />
+					</div>
+				</div>
+			{:else}
+				<slot />
+			{/if}
 		</div>
 	</button>
 {/if}

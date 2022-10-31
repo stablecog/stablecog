@@ -13,7 +13,7 @@
 		{disabled}
 		type="email"
 		{placeholder}
-		class="w-full overflow-hidden overflow-ellipsis bg-c-bg-tertiary relative px-5 md:px-6 py-5 rounded-xl transition 
+		class="flex-1 overflow-hidden overflow-ellipsis bg-c-bg-tertiary relative px-5 md:px-6 py-5 rounded-xl transition 
       shadow-lg shadow-c-shadow/[var(--o-shadow-normal)] focus:ring-2 focus:ring-c-primary/30 ring-0 ring-c-primary/30 
       placeholder:text-c-on-bg/30 {!$isTouchscreen ? 'enabled:hover:ring-2' : ''} {!$isTouchscreen
 			? 'enabled:group-hover:ring-2'
@@ -25,7 +25,7 @@
 		{disabled}
 		type="password"
 		{placeholder}
-		class="w-full overflow-hidden overflow-ellipsis bg-c-bg-tertiary relative px-5 md:px-6 py-5 rounded-xl transition 
+		class="flex-1 overflow-hidden overflow-ellipsis bg-c-bg-tertiary relative px-5 md:px-6 py-5 rounded-xl transition 
       shadow-lg shadow-c-shadow/[var(--o-shadow-normal)] focus:ring-2 focus:ring-c-primary/30 ring-0 ring-c-primary/30 
       placeholder:text-c-on-bg/30 {!$isTouchscreen ? 'enabled:hover:ring-2' : ''} {!$isTouchscreen
 			? 'enabled:group-hover:ring-2'
@@ -37,7 +37,7 @@
 		{disabled}
 		type="text"
 		{placeholder}
-		class="w-full overflow-hidden overflow-ellipsis bg-c-bg-tertiary relative px-5 md:px-6 py-5 rounded-xl transition 
+		class="flex-1 overflow-hidden overflow-ellipsis bg-c-bg-tertiary relative px-5 md:px-6 py-5 rounded-xl transition 
       shadow-lg shadow-c-shadow/[var(--o-shadow-normal)] focus:ring-2 focus:ring-c-primary/30 ring-0 ring-c-primary/30 
       placeholder:text-c-on-bg/30 {!$isTouchscreen ? 'enabled:hover:ring-2' : ''} {!$isTouchscreen
 			? 'enabled:group-hover:ring-2'
