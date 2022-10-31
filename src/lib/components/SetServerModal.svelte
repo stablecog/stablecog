@@ -107,7 +107,7 @@
 		>
 			<div class="w-full md:w-auto flex-1 min-w-0 relative group">
 				<div
-					class="w-full h-full rounded-xl bg-c-bg-tertiary shadow-lg shadow-c-shadow/[var(--o-shadow-normal)]  overflow-hidden absolute left-0 top-0"
+					class="w-full h-full rounded-xl bg-c-bg-tertiary shadow-lg shadow-c-shadow/[var(--o-shadow-normal)] overflow-hidden absolute left-0 top-0"
 				/>
 				<input
 					bind:this={inputElement}

@@ -440,3 +440,18 @@ INSERT
     OR
 UPDATE
     ON upscale FOR EACH ROW EXECUTE PROCEDURE prune_upscale_realtime();
+
+-- Admin Table
+CREATE TABLE "admin" (
+    "id" UUID REFERENCES auth.users(id) NOT NULL,
+    "created_at" TIMESTAMPTZ DEFAULT TIMEZONE('utc' :: TEXT, NOW()) NOT NULL,
+    "updated_at" TIMESTAMPTZ DEFAULT TIMEZONE('utc' :: TEXT, NOW()) NOT NULL,
+    PRIMARY KEY(id)
+);
+
+CREATE trigger handle_updated_at before
+UPDATE
+    ON admin FOR each ROW EXECUTE PROCEDURE moddatetime (updated_at);
+
+ALTER TABLE
+    admin ENABLE ROW LEVEL SECURITY;

@@ -57,6 +57,7 @@
 	},
 	"type": "module",
 	"dependencies": {
+		"@supabase/auth-helpers-sveltekit": "^0.8.3",
 		"@supabase/supabase-js": "^2.0.0",
 		"dexie": "^3.2.2",
 		"svelte-meta-tags": "^2.6.3",
