@@ -1,9 +1,12 @@
 <script lang="ts">
+	import { page } from '$app/stores';
 	import Button from '$components/buttons/Button.svelte';
 	import SubtleButton from '$components/buttons/SubtleButton.svelte';
 	import IconLoading from '$components/icons/IconLoading.svelte';
 	import IconTrashcan from '$components/icons/IconTrashcan.svelte';
 	import Input from '$components/Input.svelte';
+	import MetaTag from '$components/MetaTag.svelte';
+	import { canonicalUrl } from '$ts/constants/main';
 	import { supabaseClient } from '$ts/constants/supabaseClient';
 	import { getRelativeDate } from '$ts/helpers/getRelativeDate';
 	import type { PostgrestError, RealtimeChannel } from '@supabase/supabase-js';
@@ -150,6 +153,13 @@
 		if (index >= 0) servers[index].enableDisableLoading = false;
 	}
 </script>
+
+<MetaTag
+	title="Servers | Admin"
+	description="Free & easy to use AI image generator using Stable Diffusion cogs. Use one of the default servers or connect to your own."
+	imageUrl="{canonicalUrl}/previews/home.png"
+	canonical="{canonicalUrl}{$page.url.pathname}"
+/>
 
 <div class="w-full flex-1 flex flex-col items-center-center px-5 md:px-16 pt-8 pb-[calc(3vh+1rem)]">
 	<div class="flex flex-col items-center my-auto gap-8">

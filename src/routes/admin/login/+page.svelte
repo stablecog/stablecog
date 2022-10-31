@@ -3,6 +3,8 @@
 	import { page } from '$app/stores';
 	import Button from '$components/buttons/Button.svelte';
 	import Input from '$components/Input.svelte';
+	import MetaTag from '$components/MetaTag.svelte';
+	import { canonicalUrl } from '$ts/constants/main';
 	import { supabaseClient } from '$ts/constants/supabaseClient';
 
 	let email: string;
@@ -35,10 +37,17 @@
 	}
 </script>
 
+<MetaTag
+	title="Login | Admin"
+	description="Free & easy to use AI image generator using Stable Diffusion cogs. Use one of the default servers or connect to your own."
+	imageUrl="{canonicalUrl}/previews/home.png"
+	canonical="{canonicalUrl}{$page.url.pathname}"
+/>
+
 <div class="w-full flex-1 flex justify-center px-5 pt-8 pb-[calc(3vh+1rem)]">
 	<div
-		class="w-full ring-2 ring-c-bg-tertiary bg-c-bg-secondary flex flex-col justify-start px-4 py-5 max-w-xs 
-  my-auto rounded-2xl shadow-xl relative overflow-hidden z-0 origin-top shadow-c-shadow/[var(--o-shadow-normal)]"
+		class="w-full ring-2 ring-c-bg-tertiary bg-c-bg-secondary flex flex-col justify-start px-4 py-5 max-w-sm 
+    my-auto rounded-2xl shadow-xl relative overflow-hidden z-0 origin-top shadow-c-shadow/[var(--o-shadow-normal)]"
 	>
 		{#if $page.data.session?.user}
 			<div class="w-full flex flex-col gap-6 text-center">
