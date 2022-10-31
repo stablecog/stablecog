@@ -7,7 +7,7 @@
 	import { browser } from '$app/environment';
 	import { checkServerHealth } from '$ts/queries/checkServerHealth';
 	import Footer from '$components/Footer.svelte';
-	import { PUBLIC_DEFAULT_SERVER_URL } from '$env/static/public';
+	import { env } from '$env/dynamic/public';
 	import {
 		currentServer,
 		currentServerHealthStatus,
@@ -52,7 +52,7 @@
 			}
 			clearTimeout(bothHealthCheckTimeout);
 			try {
-				const isDefaultServer = $serverUrl === PUBLIC_DEFAULT_SERVER_URL;
+				const isDefaultServer = $serverUrl === env.PUBLIC_DEFAULT_SERVER_URL;
 				if (isDefaultServer) {
 					console.log('Server is the default server, skipping health check for default');
 				}
@@ -86,7 +86,7 @@
 	async function getAndSetServerHealth(isDefaultServer: boolean) {
 		const now = Date.now();
 		let newHealthStatus: TServerHealthStatus = 'unknown';
-		if (PUBLIC_DEFAULT_SERVER_URL && $serverUrl === PUBLIC_DEFAULT_SERVER_URL) {
+		if (env.PUBLIC_DEFAULT_SERVER_URL && $serverUrl === env.PUBLIC_DEFAULT_SERVER_URL) {
 			localStorage.removeItem('serverUrl');
 		}
 		if (!$serverUrl) {
@@ -174,7 +174,7 @@
 				});
 				defaultServerHealthStatus.set('unhealthy');
 			} else {
-				const healthRes = await checkServerHealth(PUBLIC_DEFAULT_SERVER_URL);
+				const healthRes = await checkServerHealth(env.PUBLIC_DEFAULT_SERVER_URL);
 				newHealthStatus = healthRes.status;
 				if (healthRes.status === 'healthy') {
 					defaultServer.set({
@@ -182,7 +182,7 @@
 						features: healthRes.features ?? undefined
 					});
 					defaultServerHealthStatus.set('healthy');
-					console.log('Default server is healthy ✅:', PUBLIC_DEFAULT_SERVER_URL);
+					console.log('Default server is healthy ✅:', env.PUBLIC_DEFAULT_SERVER_URL);
 					console.log('Default server features:', healthRes.features);
 				} else {
 					defaultServer.set({

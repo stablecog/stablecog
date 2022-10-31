@@ -1,7 +1,7 @@
 <script lang="ts">
 	import Button from '$components/buttons/Button.svelte';
 	import IconWarning from '$components/icons/IconWarning.svelte';
-	import { PUBLIC_DEFAULT_SERVER_URL } from '$env/static/public';
+	import { env } from '$env/dynamic/public';
 	import { expandCollapse } from '$ts/animation/transitions';
 	import {
 		currentServer,
@@ -12,7 +12,7 @@
 	import { serverUrl } from '$ts/stores/serverUrl';
 
 	const switchToDefaultServer = () => {
-		serverUrl.set(PUBLIC_DEFAULT_SERVER_URL);
+		serverUrl.set(env.PUBLIC_DEFAULT_SERVER_URL);
 		localStorage.removeItem('serverUrl');
 		currentServer.set($defaultServer);
 		currentServerHealthStatus.set($defaultServerHealthStatus);
@@ -30,7 +30,7 @@
 				the settings.
 			</p>
 		</div>
-		{#if PUBLIC_DEFAULT_SERVER_URL && $serverUrl !== PUBLIC_DEFAULT_SERVER_URL && ($defaultServerHealthStatus === 'healthy' || $defaultServerHealthStatus === 'loading')}
+		{#if env.PUBLIC_DEFAULT_SERVER_URL && $serverUrl !== env.PUBLIC_DEFAULT_SERVER_URL && ($defaultServerHealthStatus === 'healthy' || $defaultServerHealthStatus === 'loading')}
 			<div transition:expandCollapse|local={{ duration: 300 }} class="overflow-hidden relative z-0">
 				<div class="pt-3.5">
 					<Button size="sm" onClick={switchToDefaultServer}>Switch to Default Server</Button>

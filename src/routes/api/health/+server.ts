@@ -1,4 +1,4 @@
-import { PUBLIC_DEFAULT_SERVER_URL } from '$env/static/public';
+import { env } from '$env/dynamic/public';
 import { supabaseAdmin } from '$ts/constants/supabaseAdmin';
 import { getDefaultServers } from '$ts/queries/db/getDefaultServers';
 import { updateServerHealthInDb } from '$ts/queries/db/updateServerHealthInDb';
@@ -15,7 +15,7 @@ export const POST: RequestHandler = async ({ request }) => {
 	const deviceInfo = getDeviceInfo(userAgent);
 	const countryCode = headers.get('cf-ipcountry');
 	console.log('Health request made to the new endpoint "/health":', countryCode, deviceInfo);
-	let isDefaultServer = PUBLIC_DEFAULT_SERVER_URL === server_url;
+	let isDefaultServer = env.PUBLIC_DEFAULT_SERVER_URL === server_url;
 	let defaultServers: TDBServer[] = [];
 	if (supabaseAdmin && isDefaultServer) {
 		try {

@@ -4,7 +4,7 @@
 	import { serverUrl } from '$ts/stores/serverUrl';
 	import type { TSetServerProcessStatus } from '$ts/types/main';
 	import { onMount } from 'svelte';
-	import { PUBLIC_DEFAULT_SERVER_URL } from '$env/static/public';
+	import { env } from '$env/dynamic/public';
 	import { checkServerHealth } from '$ts/queries/checkServerHealth';
 	import Button from '$components/buttons/Button.svelte';
 	import IconLoading from '$components/icons/IconLoading.svelte';
@@ -20,8 +20,8 @@
 	let inputElement: HTMLInputElement;
 
 	const setServerUrl = async () => {
-		if (!serverUrlInputValue && PUBLIC_DEFAULT_SERVER_URL) {
-			serverUrlInputValue = PUBLIC_DEFAULT_SERVER_URL;
+		if (!serverUrlInputValue && env.PUBLIC_DEFAULT_SERVER_URL) {
+			serverUrlInputValue = env.PUBLIC_DEFAULT_SERVER_URL;
 			return;
 		}
 		if (serverUrlInputValue) {
@@ -46,8 +46,8 @@
 						features: healthRes.features ?? undefined
 					});
 					currentServerHealthStatus.set('healthy');
-					if (url === PUBLIC_DEFAULT_SERVER_URL) {
-						serverUrl.set(PUBLIC_DEFAULT_SERVER_URL);
+					if (url === env.PUBLIC_DEFAULT_SERVER_URL) {
+						serverUrl.set(env.PUBLIC_DEFAULT_SERVER_URL);
 						localStorage.removeItem('serverUrl');
 					} else {
 						serverUrl.set(url);
@@ -136,7 +136,7 @@
 					class="transition transform relative
 						{setServerProcessStatus === 'loading' ? 'opacity-0 scale-0' : 'opacity-100 scale-100'}"
 				>
-					{!serverUrlInputValue && PUBLIC_DEFAULT_SERVER_URL ? 'Default' : 'Set'}
+					{!serverUrlInputValue && env.PUBLIC_DEFAULT_SERVER_URL ? 'Default' : 'Set'}
 				</p>
 				<div
 					class="w-6 h-6 absolute transition transform left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none

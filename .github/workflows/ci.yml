@@ -35,11 +35,6 @@ jobs:
         with:
           context: .
           tags: appditto/stablecog:${{ env.BRANCH_NAME }}-${{ env.GITHUB_RUN_ID }}
-          secrets: |
-            "PUBLIC_SUPABASE_URL=${{ secrets.PUBLIC_SUPABASE_URL }}"
-            "PUBLIC_SUPABASE_ANON_KEY=${{ secrets.PUBLIC_SUPABASE_ANON_KEY }}"
-            "SUPABASE_ADMIN_KEY=${{ secrets.SUPABASE_ADMIN_KEY }}"
-            "PUBLIC_DEFAULT_SERVER_URL=${{ secrets.PUBLIC_DEFAULT_SERVER_URL }}"
 
       - name: Push image
         if: success()
