@@ -1,4 +1,5 @@
 import { supabaseAdmin } from '$ts/constants/supabaseAdmin';
+import { supabaseClient } from '$ts/constants/supabaseClient';
 import { getSupabase } from '@supabase/auth-helpers-sveltekit';
 import type { Handle } from '@sveltejs/kit';
 
