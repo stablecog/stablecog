@@ -395,8 +395,8 @@
 				class="w-full px-8 lg:px-16 overflow-hidden z-0 relative max-w-lg"
 			>
 				<div class="w-full flex flex-col items-center justify-center gap-5 py-4">
-					<p class="w-full leading-relaxed text-c-on-bg/40 text-center">
-						Supabase instance not found. Can't listen for generations.
+					<p class="w-full leading-loose text-c-on-bg/40 text-center">
+						Supabase instance not found.<br />Can't listen for generations.
 					</p>
 				</div>
 			</div>
