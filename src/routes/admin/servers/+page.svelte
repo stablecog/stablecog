@@ -2,7 +2,11 @@
 	import { page } from '$app/stores';
 	import Button from '$components/buttons/Button.svelte';
 	import SubtleButton from '$components/buttons/SubtleButton.svelte';
+	import IconHeartBroken from '$components/icons/IconHeartBroken.svelte';
+	import IconHearth from '$components/icons/IconHearth.svelte';
 	import IconLoading from '$components/icons/IconLoading.svelte';
+	import IconServer from '$components/icons/IconServer.svelte';
+	import IconServerDisabled from '$components/icons/IconServerDisabled.svelte';
 	import IconTrashcan from '$components/icons/IconTrashcan.svelte';
 	import Input from '$components/Input.svelte';
 	import MetaTag from '$components/MetaTag.svelte';
@@ -75,8 +79,8 @@
 					const serverOld = serversOld.find((s) => s.id === server.id);
 					return {
 						...server,
-						enableDisableLoading: serverOld?.enableDisableLoading || false,
-						removeLoading: serverOld?.removeLoading || false
+						enableDisableLoading: false,
+						removeLoading: false
 					};
 				});
 				now = Date.now();
@@ -132,8 +136,8 @@
 			console.log(data, error);
 		} catch (error) {
 			console.log(error);
+			if (index >= 0) servers[index].enableDisableLoading = false;
 		}
-		if (index >= 0) servers[index].enableDisableLoading = false;
 	}
 
 	async function enableServer(id: string) {
@@ -149,8 +153,8 @@
 			console.log(data, error);
 		} catch (error) {
 			console.log(error);
+			if (index >= 0) servers[index].enableDisableLoading = false;
 		}
-		if (index >= 0) servers[index].enableDisableLoading = false;
 	}
 </script>
 
@@ -181,16 +185,31 @@
 						class="w-full shadow-lg shadow-c-shadow/[var(--o-shadow-normal)] bg-c-bg-secondary px-5 py-4 rounded-xl 
 						flex flex-wrap justify-between items-center text-sm gap-8"
 					>
-						<p class="w-full md:w-auto text-c-on-bg/75 text-xs break-all">
-							{server.url}
-						</p>
-						<div class="flex flex-wrap justify-end items-center gap-6 text-right">
-							<p class="font-bold {server.healthy ? 'text-c-success' : 'text-c-danger'}">
-								{server.healthy ? 'Healthy' : 'Not Healthy'}
+						<div class="w-full md:w-auto flex flex-col gap-2 text-xs">
+							<p class="w-full break-all text-c-on-bg/75">
+								{server.url}
 							</p>
-							<div class="flex justify-center min-w-[7rem] max-w-full">
+							<p class="w-full text-c-on-bg/50 min-w-[6rem] max-w-full">
+								{getRelativeDate(new Date(server.last_health_check_at).getTime(), now)}
+							</p>
+						</div>
+						<div class="flex flex-wrap justify-end items-center gap-8 text-left">
+							<div class="flex items-center gap-3">
+								{#if server.healthy}
+									<IconHearth class="w-8 h-8 text-c-success" />
+								{:else}
+									<IconHeartBroken class="w-8 h-8 text-c-danger" />
+								{/if}
+								{#if server.enabled}
+									<IconServer class="w-8 h-8 text-c-success" />
+								{:else}
+									<IconServerDisabled class="w-8 h-8 text-c-danger" />
+								{/if}
+							</div>
+							<div class="flex items-center gap-3">
 								<SubtleButton
-									disabled={server.enableDisableLoading}
+									class=" min-w-[6.5rem]"
+									loading={server.enableDisableLoading}
 									onClick={() => {
 										server.enabled ? disableServer(server.id) : enableServer(server.id);
 									}}
@@ -199,7 +218,7 @@
 										<div
 											class="px-3 py-1 transition {server.enabled
 												? 'text-c-danger'
-												: ''} {server.enableDisableLoading
+												: 'text-c-success'} {server.enableDisableLoading
 												? 'scale-0 opacity-0'
 												: 'scale-100 opacity-100'}"
 										>
@@ -209,7 +228,7 @@
 											class="w-full h-full absolute left-0 top-0 flex items-center justify-center 
 											pointer-events-none transform transition {server.enableDisableLoading
 												? 'scale-100 opacity-100'
-												: 'scale-0 opacity-100'}"
+												: 'scale-0 opacity-0'}"
 										>
 											<IconLoading
 												class="w-5 h-5 {server.enableDisableLoading ? 'animate-spin-faster' : ''}"
@@ -217,34 +236,31 @@
 										</div>
 									</div>
 								</SubtleButton>
-							</div>
-							<p class="text-c-on-bg/50 min-w-[6rem] max-w-full">
-								{getRelativeDate(new Date(server.last_health_check_at).getTime(), now)}
-							</p>
-							<SubtleButton
-								disabled={server.removeLoading}
-								class="-mr-1"
-								noPadding
-								onClick={() => removeServer(server.id)}
-							>
-								<div class="p-2.5 relative">
-									<IconTrashcan
-										class="w-6 h-6 text-c-danger transition {server.removeLoading
-											? 'scale-0 opacity-0'
-											: 'scale-100 opacity-100'}"
-									/>
-									<div
-										class="w-full h-full absolute left-0 top-0 flex items-center justify-center 
-										pointer-events-none transform transition {server.removeLoading
-											? 'scale-100 opacity-100'
-											: 'scale-0 opacity-100'}"
-									>
-										<IconLoading
-											class="w-5 h-5 {server.removeLoading ? 'animate-spin-faster' : ''}"
+								<SubtleButton
+									loading={server.removeLoading}
+									class="-mr-1"
+									noPadding
+									onClick={() => removeServer(server.id)}
+								>
+									<div class="p-2.5 relative">
+										<IconTrashcan
+											class="w-6 h-6 text-c-danger transition {server.removeLoading
+												? 'scale-0 opacity-0'
+												: 'scale-100 opacity-100'}"
 										/>
+										<div
+											class="w-full h-full absolute left-0 top-0 flex items-center justify-center 
+										pointer-events-none transform transition {server.removeLoading
+												? 'scale-100 opacity-100'
+												: 'scale-0 opacity-0'}"
+										>
+											<IconLoading
+												class="w-5 h-5 {server.removeLoading ? 'animate-spin-faster' : ''}"
+											/>
+										</div>
 									</div>
-								</div>
-							</SubtleButton>
+								</SubtleButton>
+							</div>
 						</div>
 					</div>
 				{/each}

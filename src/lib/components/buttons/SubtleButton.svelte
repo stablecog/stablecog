@@ -9,6 +9,7 @@
 	export let prefetch = false;
 	export { classes as class };
 	export let disabled = false;
+	export let loading = false;
 	let classes = '';
 </script>
 
@@ -17,7 +18,7 @@
 		on:click={onClick}
 		{href}
 		{download}
-		{disabled}
+		disabled={disabled || loading}
 		data-sveltekit-prefetch={prefetch ? '' : 'off'}
 		class="{state === 'success'
 			? 'bg-c-success ring-c-success text-c-on-primary'
@@ -32,7 +33,7 @@
 					? 'bg-c-success translate-x-[-45%]'
 					: 'bg-c-bg-tertiary'} w-full aspect-square origin-left rounded-full transition transform -translate-x-full {!$isTouchscreen
 					? 'group-hover:translate-x-[-45%]'
-					: ''}"
+					: ''} {loading ? 'translate-x-[-45%]' : ''}"
 			/>
 		</div>
 		<div class="relative flex items-center justify-center text-center">
@@ -42,7 +43,7 @@
 {:else}
 	<button
 		on:click={onClick}
-		{disabled}
+		disabled={disabled || loading}
 		class="{state === 'success'
 			? 'bg-c-success ring-c-success text-c-on-primary'
 			: 'bg-c-bg-secondary ring-c-bg-tertiary text-c-on-bg'} {noPadding
@@ -56,7 +57,7 @@
 					? 'bg-c-success translate-x-[-45%]'
 					: 'bg-c-bg-tertiary'} w-full aspect-square origin-left rounded-full transition transform -translate-x-full {!$isTouchscreen
 					? 'group-enabled:group-hover:translate-x-[-45%]'
-					: ''}"
+					: ''} {loading ? 'translate-x-[-45%]' : ''}"
 			/>
 		</div>
 		<div class="relative flex items-center justify-center text-center">
