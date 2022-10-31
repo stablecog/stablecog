@@ -31,7 +31,7 @@
 		</div>
 		<div class="relative">
 			{#if withSpinner}
-				<div class="transform transition relative {loading ? 'opacity-0' : 'opacity-100'}">
+				<div class="transform relative {loading ? 'opacity-0' : 'opacity-100'}">
 					<slot />
 				</div>
 				<div
@@ -64,7 +64,7 @@
 		</div>
 		<div class="relative">
 			{#if withSpinner}
-				<div class="transform transition relative {loading ? 'opacity-0' : 'opacity-100'}">
+				<div class="transform relative {loading ? 'opacity-0' : 'opacity-100'}">
 					<slot />
 				</div>
 				<div

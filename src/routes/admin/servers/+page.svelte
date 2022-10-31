@@ -1,9 +1,12 @@
 <script lang="ts">
 	import Button from '$components/buttons/Button.svelte';
 	import SubtleButton from '$components/buttons/SubtleButton.svelte';
+	import IconLoading from '$components/icons/IconLoading.svelte';
+	import IconTrashcan from '$components/icons/IconTrashcan.svelte';
 	import Input from '$components/Input.svelte';
 	import { supabaseClient } from '$ts/constants/supabaseClient';
-	import type { PostgrestError } from '@supabase/supabase-js';
+	import { getRelativeDate } from '$ts/helpers/getRelativeDate';
+	import type { PostgrestError, RealtimeChannel } from '@supabase/supabase-js';
 	import { onMount } from 'svelte';
 
 	interface TServer {
@@ -16,6 +19,11 @@
 		url: string;
 	}
 
+	interface TServerUI extends TServer {
+		enableDisableLoading: boolean;
+		removeLoading: boolean;
+	}
+
 	interface TServerRes {
 		data: TServer[] | null;
 		error: PostgrestError | null;
@@ -23,28 +31,30 @@
 
 	let serverUrl: string;
 	let serverAddStatus: 'idle' | 'loading' = 'idle';
-	let servers: TServer[];
-	let getAndSetServersInterval: NodeJS.Timeout;
+	let servers: TServerUI[];
 	let nowInterval: NodeJS.Timeout;
 	let now = Date.now();
-
-	const formatDate = new Intl.RelativeTimeFormat('en', { style: 'short' });
-	const getRelativeDate = (now: number, timestamp: number) => {
-		const diff = timestamp - now;
-		const diffInSeconds = Math.round(diff / 1000);
-		return formatDate.format(Math.round(diffInSeconds), 'second');
-	};
+	let channelServers: RealtimeChannel | undefined;
 
 	onMount(async () => {
 		getAndSetServers();
-		getAndSetServersInterval = setInterval(getAndSetServers, 5000);
 		now = Date.now();
 		nowInterval = setInterval(() => {
 			now = Date.now();
 		}, 1000);
+		if (supabaseClient) {
+			channelServers = supabaseClient
+				.channel('server-realtime-changes')
+				.on('postgres_changes', { event: '*', schema: 'public', table: 'server' }, (payload) => {
+					console.log('Payload', payload);
+					getAndSetServers();
+				})
+				.subscribe();
+		}
 		return () => {
 			clearInterval(nowInterval);
-			clearInterval(getAndSetServersInterval);
+			channelServers?.unsubscribe();
+			supabaseClient?.removeAllChannels();
 		};
 	});
 
@@ -55,8 +65,19 @@
 				?.from('server')
 				.select('*')
 				.order('url');
-			console.log(data, error);
-			if (data) servers = data;
+			console.log('Server data:', data, error);
+			if (data) {
+				const serversOld = servers ? [...servers] : [];
+				servers = data.map((server) => {
+					const serverOld = serversOld.find((s) => s.id === server.id);
+					return {
+						...server,
+						enableDisableLoading: serverOld?.enableDisableLoading || false,
+						removeLoading: serverOld?.removeLoading || false
+					};
+				});
+				now = Date.now();
+			}
 		} catch (error) {
 			console.log(error);
 		}
@@ -75,7 +96,6 @@
 			console.log(data, error);
 			if (data && !error) {
 				serverUrl = '';
-				await getAndSetServers();
 			}
 		} catch (error) {
 			console.log(error);
@@ -83,8 +103,23 @@
 		serverAddStatus = 'idle';
 	}
 
+	async function removeServer(id: string) {
+		if (!supabaseClient) return;
+		const index = servers.findIndex((s) => s.id === id);
+		if (index >= 0) servers[index].removeLoading = true;
+		try {
+			const { data, error } = await supabaseClient?.from('server').delete().eq('id', id);
+			console.log(data, error);
+		} catch (error) {
+			console.log(error);
+			servers[index].removeLoading = false;
+		}
+	}
+
 	async function disableServer(id: string) {
 		if (!supabaseClient) return;
+		const index = servers.findIndex((s) => s.id === id);
+		if (index >= 0) servers[index].enableDisableLoading = true;
 		try {
 			const { data, error } = await supabaseClient
 				?.from('server')
@@ -92,16 +127,16 @@
 				.eq('id', id)
 				.select();
 			console.log(data, error);
-			if (data && !error) {
-				await getAndSetServers();
-			}
 		} catch (error) {
 			console.log(error);
 		}
+		if (index >= 0) servers[index].enableDisableLoading = false;
 	}
 
 	async function enableServer(id: string) {
 		if (!supabaseClient) return;
+		const index = servers.findIndex((s) => s.id === id);
+		if (index >= 0) servers[index].enableDisableLoading = true;
 		try {
 			const { data, error } = await supabaseClient
 				?.from('server')
@@ -109,12 +144,10 @@
 				.eq('id', id)
 				.select();
 			console.log(data, error);
-			if (data && !error) {
-				await getAndSetServers();
-			}
 		} catch (error) {
 			console.log(error);
 		}
+		if (index >= 0) servers[index].enableDisableLoading = false;
 	}
 </script>
 
@@ -129,13 +162,7 @@
 				placeholder="Server url"
 				bind:value={serverUrl}
 			/>
-			<Button
-				withSpinner={true}
-				class="w-full md:w-auto min-w-[10rem]"
-				loading={serverAddStatus === 'loading'}
-			>
-				Add
-			</Button>
+			<Button withSpinner={true} loading={serverAddStatus === 'loading'}>Add</Button>
 		</form>
 		<div class="w-full max-w-md md:max-w-4xl flex flex-col items-center justify-center gap-2">
 			{#if servers}
@@ -151,25 +178,68 @@
 							<p class="font-bold {server.healthy ? 'text-c-success' : 'text-c-danger'}">
 								{server.healthy ? 'Healthy' : 'Not Healthy'}
 							</p>
-							<div class="flex justify-center max-w-full min-w-[9rem]">
+							<div class="flex justify-center min-w-[7rem] max-w-full">
 								<SubtleButton
+									disabled={server.enableDisableLoading}
 									onClick={() => {
 										server.enabled ? disableServer(server.id) : enableServer(server.id);
 									}}
 								>
-									<div class="px-3 py-1 {server.enabled ? 'text-c-danger' : ''}">
-										{server.enabled ? 'Disable' : 'Enable'}
+									<div class="relative">
+										<div
+											class="px-3 py-1 transition {server.enabled
+												? 'text-c-danger'
+												: ''} {server.enableDisableLoading
+												? 'scale-0 opacity-0'
+												: 'scale-100 opacity-100'}"
+										>
+											{server.enabled ? 'Disable' : 'Enable'}
+										</div>
+										<div
+											class="w-full h-full absolute left-0 top-0 flex items-center justify-center 
+											pointer-events-none transform transition {server.enableDisableLoading
+												? 'scale-100 opacity-100'
+												: 'scale-0 opacity-100'}"
+										>
+											<IconLoading
+												class="w-5 h-5 {server.enableDisableLoading ? 'animate-spin-faster' : ''}"
+											/>
+										</div>
 									</div>
 								</SubtleButton>
 							</div>
-							<p class="text-c-on-bg/50 min-w-[7rem] max-w-full">
-								{getRelativeDate(now, new Date(server.last_health_check_at).getTime())}
+							<p class="text-c-on-bg/50 min-w-[6rem] max-w-full">
+								{getRelativeDate(new Date(server.last_health_check_at).getTime(), now)}
 							</p>
+							<SubtleButton
+								disabled={server.removeLoading}
+								class="-mr-1"
+								noPadding
+								onClick={() => removeServer(server.id)}
+							>
+								<div class="p-2.5 relative">
+									<IconTrashcan
+										class="w-6 h-6 text-c-danger transition {server.removeLoading
+											? 'scale-0 opacity-0'
+											: 'scale-100 opacity-100'}"
+									/>
+									<div
+										class="w-full h-full absolute left-0 top-0 flex items-center justify-center 
+										pointer-events-none transform transition {server.removeLoading
+											? 'scale-100 opacity-100'
+											: 'scale-0 opacity-100'}"
+									>
+										<IconLoading
+											class="w-5 h-5 {server.removeLoading ? 'animate-spin-faster' : ''}"
+										/>
+									</div>
+								</div>
+							</SubtleButton>
 						</div>
 					</div>
 				{/each}
 			{:else}
-				<p class="text-c-on-bg/50">Loading...</p>
+				<p class="text-c-on-bg/50 py-6.5">Loading...</p>
 			{/if}
 		</div>
 	</div>

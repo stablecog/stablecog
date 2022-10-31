@@ -8,6 +8,7 @@
 	export let noPadding = false;
 	export let prefetch = false;
 	export { classes as class };
+	export let disabled = false;
 	let classes = '';
 </script>
 
@@ -16,6 +17,7 @@
 		on:click={onClick}
 		{href}
 		{download}
+		{disabled}
 		data-sveltekit-prefetch={prefetch ? '' : 'off'}
 		class="{state === 'success'
 			? 'bg-c-success ring-c-success text-c-on-primary'
@@ -40,6 +42,7 @@
 {:else}
 	<button
 		on:click={onClick}
+		{disabled}
 		class="{state === 'success'
 			? 'bg-c-success ring-c-success text-c-on-primary'
 			: 'bg-c-bg-secondary ring-c-bg-tertiary text-c-on-bg'} {noPadding
@@ -52,7 +55,7 @@
 				class="{state === 'success'
 					? 'bg-c-success translate-x-[-45%]'
 					: 'bg-c-bg-tertiary'} w-full aspect-square origin-left rounded-full transition transform -translate-x-full {!$isTouchscreen
-					? 'group-hover:translate-x-[-45%]'
+					? 'group-enabled:group-hover:translate-x-[-45%]'
 					: ''}"
 			/>
 		</div>

@@ -13,8 +13,8 @@
 		{disabled}
 		type="email"
 		{placeholder}
-		class="flex-1 overflow-hidden overflow-ellipsis bg-c-bg-tertiary relative px-5 md:px-6 py-5 rounded-xl transition 
-      shadow-lg shadow-c-shadow/[var(--o-shadow-normal)] focus:ring-2 focus:ring-c-primary/30 ring-0 ring-c-primary/30 
+		class="flex-1 overflow-hidden overflow-ellipsis bg-c-bg-secondary relative px-5 md:px-6 py-5 rounded-xl transition 
+      shadow-lg shadow-c-shadow/[var(--o-shadow-normal)] focus:ring-2 focus:ring-c-primary/20 ring-0 ring-c-primary/20 
       placeholder:text-c-on-bg/30 {!$isTouchscreen ? 'enabled:hover:ring-2' : ''} {!$isTouchscreen
 			? 'enabled:group-hover:ring-2'
 			: ''}"
@@ -25,8 +25,8 @@
 		{disabled}
 		type="password"
 		{placeholder}
-		class="flex-1 overflow-hidden overflow-ellipsis bg-c-bg-tertiary relative px-5 md:px-6 py-5 rounded-xl transition 
-      shadow-lg shadow-c-shadow/[var(--o-shadow-normal)] focus:ring-2 focus:ring-c-primary/30 ring-0 ring-c-primary/30 
+		class="flex-1 overflow-hidden overflow-ellipsis bg-c-bg-secondary relative px-5 md:px-6 py-5 rounded-xl transition 
+      shadow-lg shadow-c-shadow/[var(--o-shadow-normal)] focus:ring-2 focus:ring-c-primary/20 ring-0 ring-c-primary/20 
       placeholder:text-c-on-bg/30 {!$isTouchscreen ? 'enabled:hover:ring-2' : ''} {!$isTouchscreen
 			? 'enabled:group-hover:ring-2'
 			: ''}"
@@ -37,8 +37,8 @@
 		{disabled}
 		type="text"
 		{placeholder}
-		class="flex-1 overflow-hidden overflow-ellipsis bg-c-bg-tertiary relative px-5 md:px-6 py-5 rounded-xl transition 
-      shadow-lg shadow-c-shadow/[var(--o-shadow-normal)] focus:ring-2 focus:ring-c-primary/30 ring-0 ring-c-primary/30 
+		class="flex-1 overflow-hidden overflow-ellipsis bg-c-bg-secondary relative px-5 md:px-6 py-5 rounded-xl transition 
+      shadow-lg shadow-c-shadow/[var(--o-shadow-normal)] focus:ring-2 focus:ring-c-primary/20 ring-0 ring-c-primary/20 
       placeholder:text-c-on-bg/30 {!$isTouchscreen ? 'enabled:hover:ring-2' : ''} {!$isTouchscreen
 			? 'enabled:group-hover:ring-2'
 			: ''}"
