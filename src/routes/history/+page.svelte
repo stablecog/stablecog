@@ -45,7 +45,12 @@
 		activeGeneration.set(generation);
 	}
 
+	let startAnimation = false;
+
 	onMount(async () => {
+		setTimeout(() => {
+			startAnimation = true;
+		}, 500);
 		generations = await getGenerationsFromDb();
 	});
 </script>
@@ -76,7 +81,7 @@
 		</div>
 	{/if}
 	<div class="w-full flex-1 max-w-7xl flex flex-col">
-		<GenerationGrid {generations} />
+		<GenerationGrid {generations} {startAnimation} />
 	</div>
 </div>
 

@@ -11,6 +11,7 @@
 	import IntersectionObserver from 'svelte-intersection-observer';
 
 	export let generations: TIndexedDBGeneration[] | undefined = undefined;
+	export let startAnimation = false;
 
 	const widths = widthTabs.map((w) => Number(w.value)).filter((i) => i !== 256);
 	const heights = heightTabs.map((h) => Number(h.value)).filter((i) => i !== 256);
@@ -65,7 +66,11 @@
 				class="bg-c-bg-secondary  rounded-xl relative border-4 shadow-lg 
 				shadow-c-[var(--o-shadow-strong)] border-c-bg-secondary overflow-hidden"
 			>
-				<div class="w-full animate-pulse-faster bg-c-on-bg/5">
+				<div
+					class="w-full transition {startAnimation
+						? 'animate-pulse-faster bg-c-on-bg/5'
+						: 'bg-c-bg/0'}"
+				>
 					<svg
 						class="w-full h-auto"
 						width={p.width}
