@@ -9,6 +9,7 @@
 		"start": "node ./build BODY_SIZE_LIMIT=10485760",
 		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
 		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
+		"update-types": "export $(xargs <.env) && npx supabase gen types typescript --project-id $SUPABASE_PROJECT_ID > src/lib/ts/types/supabase.ts",
 		"lint": "prettier --check .",
 		"format": "prettier --write ."
 	},
@@ -20,8 +21,10 @@
 		"@sveltejs/adapter-static": "^1.0.0-next.46",
 		"@sveltejs/kit": "next",
 		"@types/html-to-text": "^8.1.1",
+		"@types/sharp": "^0.31.0",
 		"@types/showdown": "^2.0.0",
 		"@types/ua-parser-js": "^0.7.36",
+		"@types/uuid": "^8.3.4",
 		"autoprefixer": "^10.4.10",
 		"bezier-easing": "^2.1.0",
 		"html-to-text": "^8.2.1",
@@ -59,8 +62,11 @@
 	"dependencies": {
 		"@supabase/auth-helpers-sveltekit": "^0.8.3",
 		"@supabase/supabase-js": "^2.0.0",
+		"aws-sdk": "^2.1243.0",
 		"dexie": "^3.2.2",
+		"sharp": "^0.31.1",
 		"svelte-meta-tags": "^2.6.3",
-		"ua-parser-js": "^1.0.2"
+		"ua-parser-js": "^1.0.2",
+		"uuid": "^9.0.0"
 	}
 }

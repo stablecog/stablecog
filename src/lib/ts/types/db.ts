@@ -5,7 +5,7 @@ export interface TIndexedDBGeneration extends TGenerationBase {
 }
 
 export interface TDBServer {
-	id: number;
+	id: string;
 	url: string;
 	healthy: boolean;
 	last_health_check_at: string;

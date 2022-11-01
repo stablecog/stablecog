@@ -3,6 +3,7 @@
 	import GenerationFullScreen from '$components/generationFullScreen/GenerationFullScreen.svelte';
 	import GenerationGrid from '$components/GenerationGrid.svelte';
 	import MetaTag from '$components/MetaTag.svelte';
+	import { maxImages } from '$ts/constants/indexedDb';
 	import { canonicalUrl } from '$ts/constants/main';
 	import { getGenerationsFromDb, updateGenerationInDb } from '$ts/queries/indexedDb';
 	import { activeGeneration } from '$ts/stores/activeGeneration';
@@ -70,7 +71,7 @@
 					{/if}
 				</p>
 				<p class="text-xs text-c-primary/75 font-semibold bg-c-primary/15 px-2 py-1 rounded-md">
-					Last 250 only
+					Last {maxImages} only
 				</p>
 			</div>
 		</div>

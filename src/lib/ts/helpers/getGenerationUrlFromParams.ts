@@ -1,6 +1,3 @@
-import type { THomePageData } from '$routes/+page.server';
-import type { TGenerationUI } from '$ts/types/main';
-
 export function getGenerationUrlFromParams({
 	prompt,
 	negative_prompt,

@@ -226,11 +226,11 @@
 	canonical="{canonicalUrl}{$page.url.pathname}"
 />
 
-<div class="w-full flex-1 flex justify-center pb-[calc(3vh)]">
+<div class="w-full flex-1 flex justify-center pb-[calc(2vh)]">
 	<div class="w-full flex flex-col items-center justify-center max-w-5xl">
 		{#if supabase}
 			<div
-				class="w-full px-8 lg:px-16 flex flex-wrap items-center justify-center pt-2 pb-6 md:pt-10 gap-10 lg:gap-14"
+				class="w-full px-8 lg:px-16 flex flex-wrap items-center justify-center py-2 md:pt-10 gap-10 lg:gap-14"
 			>
 				<div class="w-full lg:w-64 max-w-full flex flex-col gap-1.5 text-center lg:text-right">
 					<h1 class="text-c-on-bg/50 text-sm">Generations</h1>

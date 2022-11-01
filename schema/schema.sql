@@ -468,3 +468,108 @@ CREATE POLICY "Admins can edit servers" ON public.server FOR ALL USING (
             admin
     )
 );
+
+CREATE TABLE "prompt" (
+    "text" TEXT NOT NULL UNIQUE,
+    "id" UUID NOT NULL DEFAULT uuid_generate_v4(),
+    "created_at" TIMESTAMPTZ DEFAULT TIMEZONE('utc' :: TEXT, NOW()) NOT NULL,
+    "updated_at" TIMESTAMPTZ DEFAULT TIMEZONE('utc' :: TEXT, NOW()) NOT NULL,
+    PRIMARY KEY(id)
+);
+
+CREATE TABLE "negative_prompt" (
+    "text" TEXT NOT NULL UNIQUE,
+    "id" UUID NOT NULL DEFAULT uuid_generate_v4(),
+    "created_at" TIMESTAMPTZ DEFAULT TIMEZONE('utc' :: TEXT, NOW()) NOT NULL,
+    "updated_at" TIMESTAMPTZ DEFAULT TIMEZONE('utc' :: TEXT, NOW()) NOT NULL,
+    PRIMARY KEY(id)
+);
+
+CREATE TABLE "model" (
+    "name" TEXT NOT NULL UNIQUE,
+    "id" UUID NOT NULL DEFAULT uuid_generate_v4(),
+    "created_at" TIMESTAMPTZ DEFAULT TIMEZONE('utc' :: TEXT, NOW()) NOT NULL,
+    "updated_at" TIMESTAMPTZ DEFAULT TIMEZONE('utc' :: TEXT, NOW()) NOT NULL,
+    PRIMARY KEY(id)
+);
+
+CREATE TABLE "generation_p" (
+    "prompt_id" UUID REFERENCES prompt(id) NOT NULL,
+    "negative_prompt_id" UUID REFERENCES negative_prompt(id),
+    "model_id" UUID REFERENCES model(id) NOT NULL,
+    "image_id" TEXT NOT NULL,
+    "width" INTEGER NOT NULL,
+    "height" INTEGER NOT NULL,
+    "seed" TEXT NOT NULL,
+    "inference_steps" INTEGER,
+    "guidance_scale" DOUBLE PRECISION NOT NULL,
+    "hidden" BOOLEAN NOT NULL DEFAULT FALSE,
+    "id" UUID NOT NULL DEFAULT uuid_generate_v4(),
+    "created_at" TIMESTAMPTZ DEFAULT TIMEZONE('utc' :: TEXT, NOW()) NOT NULL,
+    "updated_at" TIMESTAMPTZ DEFAULT TIMEZONE('utc' :: TEXT, NOW()) NOT NULL,
+    PRIMARY KEY(id)
+);
+
+CREATE trigger handle_updated_at before
+UPDATE
+    ON generation_p FOR each ROW EXECUTE PROCEDURE moddatetime (updated_at);
+
+CREATE trigger handle_updated_at before
+UPDATE
+    ON prompt FOR each ROW EXECUTE PROCEDURE moddatetime (updated_at);
+
+CREATE trigger handle_updated_at before
+UPDATE
+    ON negative_prompt FOR each ROW EXECUTE PROCEDURE moddatetime (updated_at);
+
+CREATE trigger handle_updated_at before
+UPDATE
+    ON model FOR each ROW EXECUTE PROCEDURE moddatetime (updated_at);
+
+ALTER TABLE
+    generation_p ENABLE ROW LEVEL SECURITY;
+
+ALTER TABLE
+    prompt ENABLE ROW LEVEL SECURITY;
+
+ALTER TABLE
+    negative_prompt ENABLE ROW LEVEL SECURITY;
+
+ALTER TABLE
+    model ENABLE ROW LEVEL SECURITY;
+
+CREATE POLICY "Admins can edit generation_p" ON public.generation_p FOR ALL USING (
+    auth.uid() IN (
+        SELECT
+            id
+        FROM
+            admin
+    )
+);
+
+CREATE POLICY "Admins can edit prompts" ON public.prompt FOR ALL USING (
+    auth.uid() IN (
+        SELECT
+            id
+        FROM
+            admin
+    )
+);
+
+CREATE POLICY "Admins can edit negative prompts" ON public.negative_prompt FOR ALL USING (
+    auth.uid() IN (
+        SELECT
+            id
+        FROM
+            admin
+    )
+);
+
+CREATE POLICY "Admins can edit models" ON public.model FOR ALL USING (
+    auth.uid() IN (
+        SELECT
+            id
+        FROM
+            admin
+    )
+);
