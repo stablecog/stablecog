@@ -6,7 +6,7 @@
 		"dev": "vite dev",
 		"build": "vite build",
 		"preview": "vite preview",
-		"start": "node ./build BODY_SIZE_LIMIT=10485760",
+		"start": "export $(xargs <.env) && node ./build",
 		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
 		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
 		"update-types": "export $(xargs <.env) && npx supabase gen types typescript --project-id $SUPABASE_PROJECT_ID > src/lib/ts/types/supabase.ts",
