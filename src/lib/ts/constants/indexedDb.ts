@@ -8,9 +8,9 @@ export class MySubClassedDexie extends Dexie {
 
 	constructor() {
 		super('stablecogDb');
-		this.version(1.1).stores({
+		this.version(1.2).stores({
 			generations:
-				'++id, prompt, negative_prompt, imageDataB64, upscaledImageDataB64, width, height, num_inference_steps, guidance_scale, seed, server_url, duration_ms'
+				'++id, prompt, negative_prompt, width, height, num_inference_steps, guidance_scale, seed, server_url, duration_ms'
 		});
 	}
 }
