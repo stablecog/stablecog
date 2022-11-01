@@ -37,10 +37,10 @@ jobs:
           tags: appditto/stablecog:${{ env.BRANCH_NAME }}-${{ env.GITHUB_RUN_ID }}
           secrets: |
             "PUBLIC_DEFAULT_SERVER_URL=${{ secrets.PUBLIC_DEFAULT_SERVER_URL }}"
-            "PUBLIC_SUPABASE_PROJECT_ID=${{ secrets.PUBLIC_SUPABASE_PROJECT_ID }}"
             "PUBLIC_SUPABASE_URL=${{ secrets.PUBLIC_SUPABASE_URL }}"
             "PUBLIC_SUPABASE_ANON_KEY=${{ secrets.PUBLIC_SUPABASE_ANON_KEY }}"
             "SUPABASE_ADMIN_KEY=${{ secrets.SUPABASE_ADMIN_KEY }}"
+            "SUPABASE_PROJECT_ID=${{ secrets.SUPABASE_PROJECT_ID }}"
             "R2_ACCESS_KEY_ID=${{ secrets.R2_ACCESS_KEY_ID }}"
             "R2_SECRET_ACCESS_KEY=${{ secrets.R2_SECRET_ACCESS_KEY }}"
             "CLOUDFLARE_ACCOUNT_ID=${{ secrets.CLOUDFLARE_ACCOUNT_ID }}"
