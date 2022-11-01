@@ -1,6 +1,7 @@
 <script lang="ts">
 	import Button from '$components/buttons/Button.svelte';
 	import GenerationImage from '$components/GenerationImage.svelte';
+	import IconLoading from '$components/icons/IconLoading.svelte';
 	import ImagePlaceholder from '$components/ImagePlaceholder.svelte';
 	import Masonry from '$components/Masonry.svelte';
 	import { elementreceive, elementsend } from '$ts/animation/transitions';
@@ -64,14 +65,16 @@
 				class="bg-c-bg-secondary  rounded-xl relative border-4 shadow-lg 
 				shadow-c-[var(--o-shadow-strong)] border-c-bg-secondary overflow-hidden"
 			>
-				<svg
-					class="w-full h-auto"
-					width={p.width}
-					height={p.height}
-					viewBox="0 0 {p.width} {p.height}"
-					fill="none"
-					xmlns="http://www.w3.org/2000/svg"
-				/>
+				<div class="w-full animate-pulse-faster bg-c-on-bg/5">
+					<svg
+						class="w-full h-auto"
+						width={p.width}
+						height={p.height}
+						viewBox="0 0 {p.width} {p.height}"
+						fill="none"
+						xmlns="http://www.w3.org/2000/svg"
+					/>
+				</div>
 			</div>
 		{/each}
 	</Masonry>

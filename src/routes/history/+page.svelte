@@ -66,9 +66,8 @@
 				class="w-full flex flex-wrap gap-3 items-end bg-c-bg-secondary shadow-lg shadow-c-[var(--o-shadow-normal)] px-5 py-3.5 md:px-6 md:py-4.5 rounded-xl"
 			>
 				<p class="font-bold text-xl">
-					Generations{#if generations?.length}
-						<span class="text-sm text-c-on-bg/50 font-semibold">&nbsp;({generations?.length})</span>
-					{/if}
+					Generations
+					<span class="text-sm text-c-on-bg/50 font-semibold">({generations?.length ?? '..'})</span>
 				</p>
 				<p class="text-xs text-c-primary/75 font-semibold bg-c-primary/15 px-2 py-1 rounded-md">
 					Last {maxImages} only

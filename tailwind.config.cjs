@@ -120,7 +120,8 @@ module.exports = {
 				'ping-custom-bg': 'ping-custom-bg 1s ease infinite',
 				'pulse-custom': 'pulse-custom 1s cubic-bezier(0.5, 0, 0.5, 1) infinite',
 				'pulse-scale': 'pulse-scale 0.75s cubic-bezier(0.5, 0, 0.5, 1) infinite',
-				'spin-faster': 'spin-faster 0.75s linear infinite'
+				'spin-faster': 'spin-faster 0.75s linear infinite',
+				'pulse-faster': 'pulse 1s cubic-bezier(0.4, 0, 0.6, 1) infinite;'
 			},
 			ringWidth: {
 				1.5: '1.5px'
