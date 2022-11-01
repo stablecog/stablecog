@@ -18,6 +18,7 @@
 
 	export let generation: TGenerationUI;
 	export let prioritizeUpscaled = false;
+	export let scrollPrompt = true;
 
 	if (generation.imageUrl === undefined) {
 		generation.imageUrl = urlFromBase64(generation.imageDataB64);
@@ -195,7 +196,9 @@
 		translate-y-full group-focus-within:translate-y-0 group-hover:translate-y-0"
 	>
 		<div
-			class="w-full max-h-full overflow-auto list-fade px-4 py-3 flex flex-col gap-2 cursor-default"
+			class="{scrollPrompt
+				? 'overflow-auto'
+				: 'overflow-hidden'} w-full max-h-full list-fade px-4 py-3 flex flex-col gap-2 cursor-default"
 		>
 			<p class="w-full font-medium leading-normal transition text-c-on-bg transform">
 				{generation.prompt}

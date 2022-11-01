@@ -44,7 +44,7 @@
 									shadow-lg shadow-c-shadow/[var(--o-shadow-normal)] border-c-bg-secondary"
 							>
 								{#if intersecting}
-									<GenerationImage {generation} />
+									<GenerationImage scrollPrompt={false} {generation} />
 								{/if}
 							</div>
 						{/if}
