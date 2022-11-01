@@ -25,6 +25,7 @@
 	let bothHealthCheckTimeout: NodeJS.Timeout;
 	const bothHealthCheckTimeoutDuration = 1000 * 15;
 	let mounted = false;
+	let checking = false;
 
 	$: [$theme], setBodyClasses();
 	$: [$serverUrl, mounted, $page], clearAndSetHealthCheckTimeout();
@@ -32,10 +33,13 @@
 
 	onMount(async () => {
 		mounted = true;
+		checking = false;
+		clearAndSetHealthCheckTimeout();
 		setBodyClasses();
 	});
 
 	onDestroy(() => {
+		checking = false;
 		clearTimeout(bothHealthCheckTimeout);
 	});
 
@@ -45,7 +49,8 @@
 	}
 
 	async function clearAndSetHealthCheckTimeout() {
-		if (mounted) {
+		if (mounted && !checking) {
+			checking = true;
 			if ($page.url.pathname !== '/') {
 				clearTimeout(bothHealthCheckTimeout);
 				return;
@@ -67,6 +72,7 @@
 					clearAndSetHealthCheckTimeout,
 					bothHealthCheckTimeoutDuration
 				);
+				checking = false;
 			}
 		}
 	}
