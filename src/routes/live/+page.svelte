@@ -230,7 +230,7 @@
 	<div class="w-full flex flex-col items-center justify-center max-w-5xl">
 		{#if supabase}
 			<div
-				class="w-full px-8 lg:px-16 flex flex-wrap items-center justify-center py-2 md:pt-10 gap-10 lg:gap-14"
+				class="w-full px-8 md:px-16 flex flex-wrap items-center justify-center py-2 md:pt-10 gap-10 lg:gap-14"
 			>
 				<div class="w-full lg:w-64 max-w-full flex flex-col gap-1.5 text-center lg:text-right">
 					<h1 class="text-c-on-bg/50 text-sm">Generations</h1>
@@ -256,7 +256,7 @@
 			{#if generationsAndUpscales.length > 0}
 				<div
 					transition:expandCollapse|local={{ duration: 300 }}
-					class="w-full px-8 lg:px-28 overflow-hidden z-0 relative"
+					class="w-full px-8 md:px-24 overflow-hidden z-0 relative"
 				>
 					<div class="w-full flex flex-wrap items-center justify-center py-4">
 						{#each generationsAndUpscales as generationOrUpscale (generationOrUpscale.id)}
