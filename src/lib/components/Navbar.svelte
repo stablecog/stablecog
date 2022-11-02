@@ -69,7 +69,7 @@
 		<NavigationTabBar />
 	</div>
 	<div class="flex flex-1 flex-wrap items-center justify-end relative">
-		{#if $page.url.pathname === '/'}
+		{#if $page.url.pathname === '/' || $page.url.pathname === '/history'}
 			<HealthIndicator />
 		{/if}
 		<div use:clickoutside={{ callback: closeSettings }} class="flex flex-col items-end -ml-3.5">

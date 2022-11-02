@@ -1,3 +1,5 @@
+import type { TDBGenerationG } from '$ts/types/db';
+
 export type TStatus = 'idle' | 'loading' | 'success' | 'error';
 
 export interface TGenerationBase {
@@ -129,3 +131,9 @@ export interface TToC {
 export type TTabBarPlacement = 'bottom' | 'normal';
 
 export type TUpscaleStatus = 'idle' | 'success' | 'loading' | 'error';
+
+export interface TGalleryResponse {
+	generations: TDBGenerationG[];
+	page: number;
+	next: number | null | undefined;
+}

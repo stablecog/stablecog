@@ -38,3 +38,18 @@ export interface TDBUpscaleRealtimePayload {
 	width: number | null;
 	height: number | null;
 }
+
+export interface TDBGenerationG {
+	id: string;
+	width: number;
+	height: number;
+	seed: string;
+	inference_steps: number | null;
+	guidance_scale: number;
+	image_id: string;
+	created_at: string;
+	updated_at: string;
+	prompt: string;
+	negative_prompt: string | null;
+	model: string;
+}

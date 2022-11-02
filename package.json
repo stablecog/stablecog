@@ -14,7 +14,6 @@
 		"format": "prettier --write ."
 	},
 	"devDependencies": {
-		"@egjs/svelte-grid": "^1.11.1",
 		"@jsdevtools/rehype-toc": "^3.0.2",
 		"@sveltejs/adapter-auto": "next",
 		"@sveltejs/adapter-node": "^1.0.0-next.96",

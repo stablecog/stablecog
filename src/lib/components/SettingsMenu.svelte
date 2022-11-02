@@ -42,7 +42,7 @@
 							</p>
 						</div>
 						<div class="w-full flex items-center gap-3 px-0.5">
-							{#if $page.url.pathname === '/'}
+							{#if $page.url.pathname === '/' || $page.url.pathname === '/history'}
 								<HealthIndicator class="-mx-3 -my-2.5" />
 							{/if}
 

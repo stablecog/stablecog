@@ -46,7 +46,7 @@
 
 	async function clearAndSetHealthCheckTimeout() {
 		if (mounted) {
-			if ($page.url.pathname !== '/') {
+			if ($page.url.pathname !== '/' && $page.url.pathname !== '/history') {
 				clearTimeout(bothHealthCheckTimeout);
 				return;
 			}
