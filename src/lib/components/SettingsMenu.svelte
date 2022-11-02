@@ -44,7 +44,6 @@
 						{#if $page.url.pathname === '/'}
 							<HealthIndicator class="-mx-3 -my-2.5" />
 						{/if}
-
 						<p class="flex-shrink min-w-0 text-xs text-left break-all font-normal text-c-on-bg/60">
 							{$serverUrl ? parseUrlStr($serverUrl) : 'Not connected'}
 						</p>
