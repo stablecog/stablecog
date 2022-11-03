@@ -60,7 +60,7 @@
 			{/if}
 			<DropdownItem
 				onClick={() => {
-					const val = $shouldSubmitToGallery === undefined ? false : !$shouldSubmitToGallery;
+					const val = $shouldSubmitToGallery === undefined ? true : !$shouldSubmitToGallery;
 					shouldSubmitToGallery.set(val);
 					if (val) {
 						pLogSubmitToGallery('On');
@@ -90,7 +90,7 @@
 						</p>
 					</div>
 					<ToggleIndicator
-						isToggled={$shouldSubmitToGallery === undefined ? true : $shouldSubmitToGallery}
+						isToggled={$shouldSubmitToGallery === undefined ? false : $shouldSubmitToGallery}
 					/>
 				</div>
 			</DropdownItem>
