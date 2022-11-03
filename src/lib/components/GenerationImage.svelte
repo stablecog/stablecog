@@ -18,7 +18,7 @@
 
 	export let generation: TGenerationUI;
 	export let prioritizeUpscaled = false;
-	export let scrollPrompt = true;
+	export let scrollPrompt = false;
 
 	if (generation.imageUrl === undefined) {
 		generation.imageUrl = urlFromBase64(generation.imageDataB64);

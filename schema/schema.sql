@@ -500,7 +500,7 @@ CREATE TABLE "generation_g" (
     "image_id" TEXT NOT NULL,
     "width" INTEGER NOT NULL,
     "height" INTEGER NOT NULL,
-    "seed" TEXT NOT NULL,
+    "seed" BIGINT NOT NULL,
     "inference_steps" INTEGER,
     "guidance_scale" DOUBLE PRECISION NOT NULL,
     "hidden" BOOLEAN NOT NULL DEFAULT FALSE,

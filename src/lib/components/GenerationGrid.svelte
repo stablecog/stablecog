@@ -71,7 +71,7 @@
 								/>
 							{/if}
 							{#if generations}
-								<GenerationImage scrollPrompt={false} generation={generations[item.key]} />
+								<GenerationImage generation={generations[item.key]} />
 							{/if}
 						</div>
 					{/if}
