@@ -1,5 +1,6 @@
 <script>
 	import { expandCollapse } from '$ts/animation/transitions';
+	import { pLogSubmitToGallery, uLogSubmitToGallery } from '$ts/helpers/loggers';
 	import { shouldSubmitToGallery } from '$ts/stores/shouldSubmitToGallery';
 	import SubtleButton from './buttons/SubtleButton.svelte';
 </script>
@@ -20,10 +21,24 @@
 				</p>
 			</div>
 			<div class="w-full flex gap-4">
-				<SubtleButton onClick={() => shouldSubmitToGallery.set(true)} class="flex-1 text-c-success">
+				<SubtleButton
+					onClick={() => {
+						shouldSubmitToGallery.set(true);
+						pLogSubmitToGallery('On');
+						uLogSubmitToGallery('On');
+					}}
+					class="flex-1 text-c-success"
+				>
 					<p class="py-1">Yes</p>
 				</SubtleButton>
-				<SubtleButton onClick={() => shouldSubmitToGallery.set(false)} class="flex-1 text-c-danger">
+				<SubtleButton
+					onClick={() => {
+						shouldSubmitToGallery.set(false);
+						pLogSubmitToGallery('Off');
+						uLogSubmitToGallery('Off');
+					}}
+					class="flex-1 text-c-danger"
+				>
 					<p class="py-1">No</p>
 				</SubtleButton>
 			</div>

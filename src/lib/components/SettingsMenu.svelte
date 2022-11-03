@@ -7,6 +7,7 @@
 	import IconGalleryFilled from '$components/icons/IconGalleryFilled.svelte';
 	import ToggleIndicator from '$components/ToggleIndicator.svelte';
 	import { expandCollapse } from '$ts/animation/transitions';
+	import { pLogSubmitToGallery, uLogSubmitToGallery } from '$ts/helpers/loggers';
 	import { parseUrlStr } from '$ts/helpers/parseUrlStr';
 	import { advancedMode } from '$ts/stores/advancedMode';
 	import { isTouchscreen } from '$ts/stores/isTouchscreen';
@@ -59,9 +60,15 @@
 			{/if}
 			<DropdownItem
 				onClick={() => {
-					shouldSubmitToGallery.set(
-						$shouldSubmitToGallery === undefined ? false : !$shouldSubmitToGallery
-					);
+					const val = $shouldSubmitToGallery === undefined ? false : !$shouldSubmitToGallery;
+					shouldSubmitToGallery.set(val);
+					if (val) {
+						pLogSubmitToGallery('On');
+						uLogSubmitToGallery('On');
+					} else {
+						pLogSubmitToGallery('Off');
+						uLogSubmitToGallery('Off');
+					}
 					setTimeout(() => {
 						closeSettings();
 					}, 100);
