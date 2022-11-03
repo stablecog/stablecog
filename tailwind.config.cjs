@@ -22,7 +22,9 @@ module.exports = {
 				'c-on-primary': withOpacityValue('--c-on-primary'),
 				'c-secondary': withOpacityValue('--c-secondary'),
 				'c-danger': withOpacityValue('--c-danger'),
+				'c-danger-secondary': withOpacityValue('--c-danger-secondary'),
 				'c-success': withOpacityValue('--c-success'),
+				'c-success-secondary': withOpacityValue('--c-success-secondary'),
 				'c-shadow': withOpacityValue('--c-shadow'),
 				'c-barrier': withOpacityValue('--c-barrier')
 			},

@@ -12,7 +12,7 @@
 	import { activeGenerationG } from '$ts/stores/activeGenerationG';
 	import type { TDBGenerationG } from '$ts/types/db';
 	import { quadOut } from 'svelte/easing';
-	import { scale } from 'svelte/transition';
+	import { fly, scale } from 'svelte/transition';
 
 	export let generation: TDBGenerationG;
 
@@ -95,34 +95,39 @@
 	class="w-full h-full absolute left-0 top-0 flex flex-col justify-between items-end overflow-hidden gap-4"
 >
 	<div class="w-full flex justify-between items-start gap-4">
-		<div />
 		{#if deleteStatus !== 'success' && approveStatus !== 'success'}
 			<div
-				transition:scale|local={{ duration: 200, easing: quadOut, opacity: 0 }}
+				transition:fly|local={{ duration: 200, easing: quadOut, opacity: 0, y: -60 }}
 				bind:this={rightButtonContainer}
-				class="flex flex-row items-end justify-start transition transform p-1.5 gap-1.5
-				translate-x-full group-focus-within:translate-x-0 group-hover:translate-x-0"
+				class="flex-1 flex flex-row items-end justify-start transition transform p-1.5 gap-1.5
+				-translate-y-full group-focus-within:translate-y-0 group-hover:translate-y-0"
 			>
 				<Button
-					padding={false}
+					class="flex-1"
 					withSpinner={true}
 					size="sm"
+					type="success"
+					padding={false}
 					loading={approveStatus === 'loading'}
 					onClick={approveGeneration}
 				>
-					<div class="p-2">
-						<IconTickOnly />
+					<div class="flex-1 py-3 flex justify-center items-center gap-1.5">
+						<IconTickOnly class="w-5 h-5" />
+						<p>Approve</p>
 					</div>
 				</Button>
 				<Button
-					padding={false}
+					class="flex-1"
 					withSpinner={true}
 					size="sm"
+					type="danger"
+					padding={false}
 					loading={deleteStatus === 'loading'}
 					onClick={deleteGeneration}
 				>
-					<div class="p-2">
-						<IconTrashcan />
+					<div class="flex-1 py-3 flex justify-center items-center gap-1.5">
+						<IconTrashcan class="w-5 h-5" />
+						<p>Delete</p>
 					</div>
 				</Button>
 			</div>

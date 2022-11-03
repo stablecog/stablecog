@@ -11,7 +11,9 @@
 	--c-on-primary: 32 31 34;
 	--c-secondary: 255 174 116;
 	--c-danger: 229 108 108;
+	--c-danger-secondary: 254 133 133;
 	--c-success: 129 209 116;
+	--c-success-secondary: 154 224 131;
 	--c-shadow: 0 0 0;
 	--c-barrier: 32 31 34;
 	--o-shadow-normal: 0.15;
@@ -30,7 +32,9 @@
 	--c-on-primary: 32 31 34;
 	--c-secondary: 255 174 116;
 	--c-danger: 229 108 108;
+	--c-danger-secondary: 254 133 133;
 	--c-success: 129 209 116;
+	--c-success-secondary: 154 224 131;
 	--c-shadow: 0 0 0;
 	--c-barrier: 32 31 34;
 	--o-shadow-normal: 0.15;
@@ -49,7 +53,9 @@
 	--c-on-primary: 255 255 255;
 	--c-secondary: 210 108 34;
 	--c-danger: 178 35 35;
+	--c-danger-secondary: 153 10 10;
 	--c-success: 12 150 0;
+	--c-success-secondary: 0 125 0;
 	--c-shadow: 0 0 0;
 	--c-barrier: 227 221 235;
 	--o-shadow-normal: 0.05;

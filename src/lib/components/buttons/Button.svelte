@@ -10,6 +10,7 @@
 	export let withSpinner = false;
 	export let padding = true;
 	export { classes as class };
+	export let type: 'primary' | 'success' | 'danger' = 'primary';
 	let classes = '';
 </script>
 
@@ -22,13 +23,27 @@
 		'sm'
 			? 'text-sm rounded-lg2'
 			: 'text-base rounded-xl'} relative flex items-center justify-center text-center
-			shadow-lg shadow-c-shadow/[var(--o-shadow-normal)]  text-c-on-primary font-bold gap-2 
-			overflow-hidden z-0 group {loading ? 'bg-c-secondary' : 'bg-c-primary'} {classes}"
+			shadow-lg shadow-c-shadow/[var(--o-shadow-normal)] text-c-on-primary font-bold gap-2 
+			overflow-hidden z-0 group {loading
+			? type === 'success'
+				? 'bg-c-secondary'
+				: type === 'danger'
+				? 'bg-c-danger-secondary'
+				: 'bg-c-secondary'
+			: type === 'success'
+			? 'bg-c-success'
+			: type === 'danger'
+			? 'bg-c-danger'
+			: 'bg-c-primary'} {classes}"
 	>
 		<div class="w-[200%] h-full absolute left-0 top-0 flex items-center justify-center">
 			<div
 				class="w-full aspect-square origin-left rounded-full transition transform -translate-x-full 
-				bg-c-secondary {!$isTouchscreen ? 'group-hover:translate-x-[-45%]' : ''}"
+				{type === 'success'
+					? 'bg-c-success-secondary'
+					: type === 'danger'
+					? 'bg-c-danger-secondary'
+					: 'bg-c-secondary'} {!$isTouchscreen ? 'group-hover:translate-x-[-45%]' : ''}"
 			/>
 		</div>
 		<div class="relative">
@@ -43,7 +58,11 @@
 				<div
 					class="w-full h-full absolute left-0 top-0 pointer-events-none flex justify-center items-center"
 				>
-					<div class="w-6 h-6 transition transform {loading ? 'scale-100' : 'scale-0'}">
+					<div
+						class="{size === 'sm' ? 'w-5 h-5' : 'w-6 h-6'} transition transform {loading
+							? 'scale-100'
+							: 'scale-0'}"
+					>
 						<IconLoading class="w-full h-full {loading ? 'animate-spin-faster' : ''}" />
 					</div>
 				</div>
@@ -61,12 +80,28 @@
 			? 'text-sm rounded-lg2'
 			: 'text-base rounded-xl'} relative flex items-center justify-center text-center
 			shadow-lg shadow-c-shadow/[var(--o-shadow-normal)]  text-c-on-primary font-bold gap-2 
-			overflow-hidden z-0 group {loading ? 'bg-c-secondary' : 'bg-c-primary'} {classes}"
+			overflow-hidden z-0 group {loading
+			? type === 'success'
+				? 'bg-c-secondary'
+				: type === 'danger'
+				? 'bg-c-danger-secondary'
+				: 'bg-c-secondary'
+			: type === 'success'
+			? 'bg-c-success'
+			: type === 'danger'
+			? 'bg-c-danger'
+			: 'bg-c-primary'} {classes}"
 	>
 		<div class="w-[200%] h-full absolute left-0 top-0 flex items-center justify-center">
 			<div
 				class="w-full aspect-square origin-left rounded-full transition transform -translate-x-full 
-					bg-c-secondary {!$isTouchscreen ? 'group-enabled:group-hover:translate-x-[-45%]' : ''}"
+					{type === 'success'
+					? 'bg-c-success-secondary'
+					: type === 'danger'
+					? 'bg-c-danger-secondary'
+					: 'bg-c-secondary'} {!$isTouchscreen
+					? 'group-enabled:group-hover:translate-x-[-45%]'
+					: ''}"
 			/>
 		</div>
 		<div class="relative">
@@ -81,7 +116,11 @@
 				<div
 					class="w-full h-full absolute left-0 top-0 pointer-events-none flex justify-center items-center"
 				>
-					<div class="w-6 h-6 transition transform {loading ? 'scale-100' : 'scale-0'}">
+					<div
+						class="{size === 'sm' ? 'w-5 h-5' : 'w-6 h-6'} transition transform {loading
+							? 'scale-100'
+							: 'scale-0'}"
+					>
 						<IconLoading class="w-full h-full {loading ? 'animate-spin-faster' : ''}" />
 					</div>
 				</div>
