@@ -43,6 +43,7 @@ jobs:
             "SUPABASE_PROJECT_ID=${{ secrets.SUPABASE_PROJECT_ID }}"
             "R2_ACCESS_KEY_ID=${{ secrets.R2_ACCESS_KEY_ID }}"
             "R2_SECRET_ACCESS_KEY=${{ secrets.R2_SECRET_ACCESS_KEY }}"
+            "PUBLIC_R2_URL=${{ secrets.PUBLIC_R2_URL }}"
             "CLOUDFLARE_ACCOUNT_ID=${{ secrets.CLOUDFLARE_ACCOUNT_ID }}"
       - name: Push image
         if: success()

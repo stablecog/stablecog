@@ -15,6 +15,7 @@ RUN --mount=type=secret,id=PUBLIC_DEFAULT_SERVER_URL \
   --mount=type=secret,id=SUPABASE_ADMIN_KEY \
   --mount=type=secret,id=R2_ACCESS_KEY_ID \
   --mount=type=secret,id=R2_SECRET_ACCESS_KEY \
+  --mount=type=secret,id=PUBLIC_R2_URL \
   --mount=type=secret,id=CLOUDFLARE_ACCOUNT_ID \
   export PUBLIC_DEFAULT_SERVER_URL=$(cat /run/secrets/PUBLIC_DEFAULT_SERVER_URL) && \
   export PUBLIC_SUPABASE_URL=$(cat /run/secrets/PUBLIC_SUPABASE_URL) && \
@@ -23,6 +24,7 @@ RUN --mount=type=secret,id=PUBLIC_DEFAULT_SERVER_URL \
   export SUPABASE_PROJECT_ID=$(cat /run/secrets/SUPABASE_PROJECT_ID) && \
   export R2_ACCESS_KEY_ID=$(cat /run/secrets/R2_ACCESS_KEY_ID) && \
   export R2_SECRET_ACCESS_KEY=$(cat /run/secrets/R2_SECRET_ACCESS_KEY) && \
+  export PUBLIC_R2_URL=$(cat /run/secrets/PUBLIC_R2_URL) && \
   export CLOUDFLARE_ACCOUNT_ID=$(cat /run/secrets/CLOUDFLARE_ACCOUNT_ID) && \
   npm run build
 
