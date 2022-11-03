@@ -26,7 +26,7 @@
 			shadow-lg shadow-c-shadow/[var(--o-shadow-normal)] text-c-on-primary font-bold gap-2 
 			overflow-hidden z-0 group {loading
 			? type === 'success'
-				? 'bg-c-secondary'
+				? 'bg-c-success-secondary'
 				: type === 'danger'
 				? 'bg-c-danger-secondary'
 				: 'bg-c-secondary'
@@ -82,7 +82,7 @@
 			shadow-lg shadow-c-shadow/[var(--o-shadow-normal)]  text-c-on-primary font-bold gap-2 
 			overflow-hidden z-0 group {loading
 			? type === 'success'
-				? 'bg-c-secondary'
+				? 'bg-c-success-secondary'
 				: type === 'danger'
 				? 'bg-c-danger-secondary'
 				: 'bg-c-secondary'
