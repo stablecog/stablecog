@@ -26,7 +26,7 @@ export const POST: RequestHandler = async ({ request }) => {
 		height = 512,
 		num_inference_steps = 50,
 		guidance_scale = 7,
-		shouldSubmitToGallery = false
+		shouldSubmitToGallery = true
 	}: TGenerationRequest = await request.json();
 	seed = isValue(seed) ? seed : Math.round(Math.random() * maxSeed);
 	negative_prompt =
