@@ -6,9 +6,11 @@
 	import IconSeed from '$components/icons/IconSeed.svelte';
 	import IconSteps from '$components/icons/IconSteps.svelte';
 	import IconTickOnly from '$components/icons/IconTickOnly.svelte';
-	import { env as envPublic } from '$env/dynamic/public';
+
 	import { doesContainTarget } from '$ts/helpers/doesContainTarget';
 	import { isValue } from '$ts/helpers/isValue';
+	import { urlFromImageId } from '$ts/helpers/urlFromImageId';
+	import { activeGenerationG } from '$ts/stores/activeGenerationG';
 	import { advancedMode } from '$ts/stores/advancedMode';
 	import { isTouchscreen } from '$ts/stores/isTouchscreen';
 	import type { TDBGenerationG } from '$ts/types/db';
@@ -45,14 +47,14 @@
 </script>
 
 <img
-	bind:this={imgElement}
 	loading="lazy"
+	bind:this={imgElement}
 	on:load={onLoad}
 	class="w-full h-full absolute left-0 top-0 transition duration-500 {loaded
 		? 'opacity-100'
 		: 'opacity-0'}"
-	src="{envPublic.PUBLIC_R2_URL}/{generation.image_id}.webp"
-	alt={generation.prompt}
+	src={urlFromImageId(generation.image_id)}
+	alt={generation.prompt.id}
 	width={generation.width}
 	height={generation.height}
 />
@@ -66,6 +68,7 @@
 		) {
 			return;
 		}
+		activeGenerationG.set(generation);
 	}}
 	class="w-full h-full absolute left-0 top-0 flex flex-col justify-between items-end overflow-hidden gap-4"
 >
@@ -149,7 +152,7 @@
 		>
 			<CopyButton
 				class="p-1.5"
-				stringToCopy={generation.prompt}
+				stringToCopy={generation.prompt.text}
 				bind:copied={promptCopied}
 				bind:copiedTimeout={promptCopiedTimeout}
 				onCopied={() => {
@@ -167,14 +170,14 @@
 			class="w-full max-h-full overflow-hidden list-fade px-4 py-3 flex flex-col gap-2 cursor-default"
 		>
 			<p class="w-full font-medium leading-normal transition text-c-on-bg transform">
-				{generation.prompt}
+				{generation.prompt.text}
 			</p>
 			{#if isValue(generation.negative_prompt)}
 				<div class="w-full flex items-start justify-start gap-1.5">
 					<IconChatBubbleCancel class="text-c-danger h-4 w-4 mt-0.25" />
 					<div class="flex-1 min-w-0">
 						<p class="w-full text-c-danger">
-							{generation.negative_prompt}
+							{generation.negative_prompt?.text}
 						</p>
 					</div>
 				</div>

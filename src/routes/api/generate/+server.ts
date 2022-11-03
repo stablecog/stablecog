@@ -4,6 +4,7 @@ import { formatPrompt } from '$ts/helpers/formatPrompt';
 import { getDeviceInfo } from '$ts/helpers/getDeviceInfo';
 import { isValue } from '$ts/helpers/isValue';
 import { pickServerUrl } from '$ts/queries/db/pickServerUrl';
+import { uploadToGallery } from '$ts/queries/db/uploadToGallery';
 import type { TGenerationRequest, TGenerationResponse } from '$ts/types/main';
 import type { PostgrestError } from '@supabase/supabase-js';
 import type { RequestHandler } from '@sveltejs/kit';
@@ -24,7 +25,8 @@ export const POST: RequestHandler = async ({ request }) => {
 		width = 512,
 		height = 512,
 		num_inference_steps = 50,
-		guidance_scale = 7
+		guidance_scale = 7,
+		shouldSubmitToGallery = false
 	}: TGenerationRequest = await request.json();
 	seed = isValue(seed) ? seed : Math.round(Math.random() * maxSeed);
 	negative_prompt =
@@ -173,6 +175,21 @@ export const POST: RequestHandler = async ({ request }) => {
 				}
 			} catch (error) {
 				console.log(error);
+			}
+			if (shouldSubmitToGallery) {
+				try {
+					await uploadToGallery({
+						imageDataB64: output,
+						prompt,
+						negative_prompt,
+						inference_steps: num_inference_steps,
+						guidance_scale,
+						seed,
+						hidden: true
+					});
+				} catch (error) {
+					console.log(error);
+				}
 			}
 		} else if (supabaseAdmin !== undefined) {
 			try {

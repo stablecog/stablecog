@@ -4,12 +4,14 @@
 	import HealthIndicator from '$components/HealthIndicator.svelte';
 	import IconAdvanced from '$components/icons/IconAdvanced.svelte';
 	import IconDarkMode from '$components/icons/IconDarkMode.svelte';
+	import IconGalleryFilled from '$components/icons/IconGalleryFilled.svelte';
 	import ToggleIndicator from '$components/ToggleIndicator.svelte';
 	import { expandCollapse } from '$ts/animation/transitions';
 	import { parseUrlStr } from '$ts/helpers/parseUrlStr';
 	import { advancedMode } from '$ts/stores/advancedMode';
 	import { isTouchscreen } from '$ts/stores/isTouchscreen';
 	import { serverUrl } from '$ts/stores/serverUrl';
+	import { shouldSubmitToGallery } from '$ts/stores/shouldSubmitToGallery';
 	import { theme } from '$ts/stores/theme';
 	import IconServer from './icons/IconServer.svelte';
 
@@ -19,7 +21,7 @@
 
 <div
 	transition:expandCollapse|local={{ duration: 200 }}
-	class="w-68 max-w-[80vw] ring-2 ring-c-bg-tertiary bg-c-bg-secondary rounded-xl flex flex-col justify-start shadow-lg 
+	class="w-80 max-w-[80vw] ring-2 ring-c-bg-tertiary bg-c-bg-secondary rounded-xl flex flex-col justify-start shadow-lg 
   	shadow-c-shadow/[var(--o-shadow-strong)] absolute right-0 top-0 z-50 overflow-hidden"
 >
 	<div class="w-full flex flex-col justify-start overflow-hidden z-0 relative">
@@ -55,6 +57,32 @@
 					</div>
 				</DropdownItem>
 			{/if}
+			<DropdownItem
+				onClick={() => {
+					shouldSubmitToGallery.set($shouldSubmitToGallery ? false : true);
+					setTimeout(() => {
+						closeSettings();
+					}, 100);
+				}}
+			>
+				<div class="flex-1 flex min-w-0 items-center justify-between gap-2">
+					<div class="flex-1 min-w-0 flex items-center justify-start gap-2.5">
+						<IconGalleryFilled
+							class="transition w-6 h-6 text-c-text {!$isTouchscreen
+								? 'group-hover:text-c-primary'
+								: ''}"
+						/>
+						<p
+							class="flex-1 min-w-0 overflow-hidden overflow-ellipsis whitespace-nowrap text-left transition text-c-on-bg {!$isTouchscreen
+								? 'group-hover:text-c-primary'
+								: ''}"
+						>
+							Submit to Gallery
+						</p>
+					</div>
+					<ToggleIndicator isToggled={$shouldSubmitToGallery} />
+				</div>
+			</DropdownItem>
 			<DropdownItem
 				onClick={() => {
 					advancedMode.set($advancedMode === false ? true : false);

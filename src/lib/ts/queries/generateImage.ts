@@ -8,7 +8,8 @@ export async function generateImage({
 	height,
 	seed,
 	num_inference_steps,
-	guidance_scale
+	guidance_scale,
+	shouldSubmitToGallery = false
 }: TGenerationRequest) {
 	const response = await fetch(`/api/generate`, {
 		method: 'POST',
@@ -23,7 +24,8 @@ export async function generateImage({
 			height,
 			num_inference_steps,
 			guidance_scale,
-			seed
+			seed,
+			shouldSubmitToGallery
 		})
 	});
 	const start = Date.now();

@@ -14,6 +14,7 @@
 		"format": "prettier --write ."
 	},
 	"devDependencies": {
+		"@egjs/svelte-infinitegrid": "^4.7.1",
 		"@jsdevtools/rehype-toc": "^3.0.2",
 		"@sveltejs/adapter-auto": "next",
 		"@sveltejs/adapter-node": "^1.0.0-next.96",

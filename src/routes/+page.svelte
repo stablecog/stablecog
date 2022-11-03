@@ -35,6 +35,8 @@
 	import { activeGeneration } from '$ts/stores/activeGeneration';
 	import type { THomePageData } from '$routes/+page.server';
 	import { isValue } from '$ts/helpers/isValue';
+	import { shouldSubmitToGallery } from '$ts/stores/shouldSubmitToGallery';
+	import SubmitToGallery from '$components/SubmitToGallery.svelte';
 
 	export let data: THomePageData;
 
@@ -122,7 +124,8 @@
 				height: lastGeneration.height,
 				seed: lastGeneration.seed,
 				guidance_scale: lastGeneration.guidance_scale,
-				num_inference_steps: lastGeneration.num_inference_steps
+				num_inference_steps: lastGeneration.num_inference_steps,
+				shouldSubmitToGallery: $shouldSubmitToGallery !== undefined ? $shouldSubmitToGallery : false
 			});
 			let { data, error } = res;
 			if (data && data.imageDataB64 && !error) {
@@ -331,6 +334,9 @@
 							</div>
 						</div>
 					</div>
+					{#if $shouldSubmitToGallery === undefined}
+						<SubmitToGallery />
+					{/if}
 				{/if}
 			</div>
 		{/if}

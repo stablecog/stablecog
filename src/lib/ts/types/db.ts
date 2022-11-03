@@ -49,7 +49,13 @@ export interface TDBGenerationG {
 	image_id: string;
 	created_at: string;
 	updated_at: string;
-	prompt: string;
-	negative_prompt: string | null;
-	model: string;
+	prompt: {
+		id: string;
+		text: string;
+	};
+	negative_prompt: { id: string; text: string } | null;
+	model: {
+		id: string;
+		name: string;
+	};
 }

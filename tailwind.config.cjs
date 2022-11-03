@@ -89,6 +89,10 @@ module.exports = {
 			lineHeight: {
 				4.5: '1.125rem'
 			},
+			width: {
+				'1/7': '14.2857143%',
+				'1/8': '12.5%'
+			},
 			scale: {
 				25: '0.25',
 				60: '0.6',
@@ -107,7 +111,10 @@ module.exports = {
 				'generation-modal': '0 1rem 2rem 0'
 			},
 			screens: {
-				'1.5xl': '1408px'
+				'1.5xl': '1408px',
+				'2.5xl': '1728px',
+				'3xl': '1920px',
+				'4xl': '2560px'
 			},
 			ringWidth: {
 				3: '3px'

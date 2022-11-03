@@ -1,16 +1,16 @@
 import { supabaseAdmin } from '$ts/constants/supabaseAdmin';
 import type { TDBGenerationG } from '$ts/types/db';
 import type { TGalleryResponse } from '$ts/types/main';
-import type { RequestHandler } from '@sveltejs/kit';
 
 const batch = 50;
-const headers = {
-	'Content-Type': 'application/json'
-};
 
-export const GET: RequestHandler = async ({ url }) => {
-	if (!supabaseAdmin) return new Response('No Supabase instance', { status: 500 });
-	const page = Number(url.searchParams.get('page')) || 1;
+type TGetType = 'visible-only' | 'hidden-only' | 'all';
+
+export async function getGalleryPage(page: number, getType: TGetType = 'visible-only') {
+	if (!supabaseAdmin) {
+		console.log('No Supabase instance found');
+		return { status: 500, error: 'No Supabase instance found' };
+	}
 	console.log(`---- Request for gallery page: ${page} ----`);
 	const [pageRes, nextRes] = await Promise.all([
 		supabaseAdmin
@@ -18,9 +18,9 @@ export const GET: RequestHandler = async ({ url }) => {
 			.select(
 				`width,
       height,
-      prompt_id(text),
-      negative_prompt_id(text),
-      model_id(name),
+      prompt:prompt_id(id,text),
+      negative_prompt:negative_prompt_id(id,text),
+      model:model_id(id,name),
       seed,
       inference_steps,
       guidance_scale,
@@ -29,7 +29,11 @@ export const GET: RequestHandler = async ({ url }) => {
       updated_at,
       id`
 			)
-			.filter('hidden', 'eq', false)
+			.filter(
+				'hidden',
+				'in',
+				getType === 'all' ? '(true,false)' : getType === 'hidden-only' ? '(true)' : '(false)'
+			)
 			.order('created_at', { ascending: false })
 			.range((page - 1) * batch, page * batch - 1),
 		supabaseAdmin
@@ -37,9 +41,9 @@ export const GET: RequestHandler = async ({ url }) => {
 			.select(
 				`width,
       height,
-      prompt_id(text),
-      negative_prompt_id(text),
-      model_id(name),
+      prompt:prompt_id(id,text),
+      negative_prompt:negative_prompt_id(id,text),
+     	model:model_id(id,name),
       seed,
       inference_steps,
       guidance_scale,
@@ -48,7 +52,11 @@ export const GET: RequestHandler = async ({ url }) => {
       updated_at,
       id`
 			)
-			.filter('hidden', 'eq', false)
+			.filter(
+				'hidden',
+				'in',
+				getType === 'all' ? '(true,false)' : getType === 'hidden-only' ? '(true)' : '(false)'
+			)
 			.order('created_at', { ascending: false })
 			.range(page * batch, page * batch)
 	]);
@@ -56,7 +64,7 @@ export const GET: RequestHandler = async ({ url }) => {
 	const { data: nextData, error: nextError } = nextRes;
 	if (pageError || nextError) {
 		console.log('Error getting generations:', pageError || nextError);
-		return new Response('Error getting generations', { status: 500 });
+		return { status: 500, error: 'Error getting generations' };
 	}
 	let next: number | null = null;
 	if (nextData?.length > 0) next = page + 1;
@@ -72,11 +80,11 @@ export const GET: RequestHandler = async ({ url }) => {
 			image_id: d.image_id,
 			created_at: d.created_at,
 			updated_at: d.updated_at,
-			prompt: (d.prompt_id as { text: string }).text,
-			negative_prompt: (d.negative_prompt_id as { text: string } | null)
-				? (d.negative_prompt_id as { text: string }).text
+			prompt: d.prompt as { id: string; text: string },
+			negative_prompt: (d.negative_prompt as { id: string; text: string } | null)
+				? (d.negative_prompt as { id: string; text: string })
 				: null,
-			model: (d.model_id as { name: string }).name
+			model: d.model as { id: string; name: string }
 		};
 	});
 	const response: TGalleryResponse = {
@@ -84,5 +92,5 @@ export const GET: RequestHandler = async ({ url }) => {
 		page,
 		next
 	};
-	return new Response(JSON.stringify(response), { headers });
-};
+	return response;
+}

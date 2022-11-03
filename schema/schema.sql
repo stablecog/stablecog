@@ -493,7 +493,7 @@ CREATE TABLE "model" (
     PRIMARY KEY(id)
 );
 
-CREATE TABLE "generation_p" (
+CREATE TABLE "generation_g" (
     "prompt_id" UUID REFERENCES prompt(id) NOT NULL,
     "negative_prompt_id" UUID REFERENCES negative_prompt(id),
     "model_id" UUID REFERENCES model(id) NOT NULL,
@@ -512,7 +512,7 @@ CREATE TABLE "generation_p" (
 
 CREATE trigger handle_updated_at before
 UPDATE
-    ON generation_p FOR each ROW EXECUTE PROCEDURE moddatetime (updated_at);
+    ON generation_g FOR each ROW EXECUTE PROCEDURE moddatetime (updated_at);
 
 CREATE trigger handle_updated_at before
 UPDATE
@@ -527,7 +527,7 @@ UPDATE
     ON model FOR each ROW EXECUTE PROCEDURE moddatetime (updated_at);
 
 ALTER TABLE
-    generation_p ENABLE ROW LEVEL SECURITY;
+    generation_g ENABLE ROW LEVEL SECURITY;
 
 ALTER TABLE
     prompt ENABLE ROW LEVEL SECURITY;
@@ -538,7 +538,7 @@ ALTER TABLE
 ALTER TABLE
     model ENABLE ROW LEVEL SECURITY;
 
-CREATE POLICY "Admins can edit generation_p" ON public.generation_p FOR ALL USING (
+CREATE POLICY "Admins can edit generation_g" ON public.generation_g FOR ALL USING (
     auth.uid() IN (
         SELECT
             id

@@ -47,6 +47,7 @@
 </script>
 
 <img
+	loading="lazy"
 	class="w-full h-full absolute left-0 top-0"
 	src={prioritizeUpscaled && generation.upscaledImageUrl
 		? generation.upscaledImageUrl

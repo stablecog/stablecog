@@ -14,8 +14,9 @@
 <div class="w-full flex-1 flex justify-center px-5 pb-[calc(3vh)]">
 	<div class="my-auto w-full flex flex-col items-center max-w-xl gap-6">
 		<h1 class="font-bold text-2xl">Admin</h1>
-		<div class="w-full flex flex-row items-center justify-center gap-4">
+		<div class="w-full flex flex-row flex-wrap items-center justify-center gap-4">
 			<Button href="admin/servers">Servers</Button>
+			<Button href="admin/gallery">Gallery</Button>
 		</div>
 	</div>
 </div>

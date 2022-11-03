@@ -1,4 +1,5 @@
 <script lang="ts">
+	import IconBlog from '$components/icons/IconBlog.svelte';
 	import { socialAppUrls } from '$ts/constants/social';
 	import { isTouchscreen } from '$ts/stores/isTouchscreen';
 	import IconButton from './buttons/IconButton.svelte';
@@ -6,9 +7,19 @@
 
 	export let size: 'sm' | 'md' = 'sm';
 	export let color: 'faded' | 'normal' = 'faded';
+	export let withBlog = false;
 </script>
 
 <div class="w-full flex flex-wrap justify-center">
+	{#if withBlog}
+		<IconButton name="Blog" href={'/blog'}>
+			<IconBlog
+				class="{size === 'sm' ? 'w-8 h-8' : 'w-10 h-10'} transition {color === 'normal'
+					? 'text-c-on-bg'
+					: 'text-c-on-bg/50'} {!$isTouchscreen ? 'group-hover:text-c-primary' : ''}"
+			/>
+		</IconButton>
+	{/if}
 	<IconButton name="Discord" href={socialAppUrls.discord} target="_blank">
 		<IconSocial
 			type="discord"

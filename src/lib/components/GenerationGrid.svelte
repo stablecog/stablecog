@@ -1,86 +1,88 @@
 <script lang="ts">
 	import Button from '$components/buttons/Button.svelte';
 	import GenerationImage from '$components/GenerationImage.svelte';
-	import IconLoading from '$components/icons/IconLoading.svelte';
 	import ImagePlaceholder from '$components/ImagePlaceholder.svelte';
-	import Masonry from '$components/Masonry.svelte';
 	import { elementreceive, elementsend } from '$ts/animation/transitions';
-	import { heightTabs, widthTabs } from '$ts/constants/main';
 	import { activeGeneration } from '$ts/stores/activeGeneration';
 	import type { TIndexedDBGeneration } from '$ts/types/db';
-	import IntersectionObserver from 'svelte-intersection-observer';
+	import { MasonryInfiniteGrid } from '@egjs/svelte-infinitegrid';
+	import { quadOut } from 'svelte/easing';
+	import { fade } from 'svelte/transition';
 
 	export let generations: TIndexedDBGeneration[] | undefined = undefined;
+	export let loading = true;
 	export let startAnimation = false;
 
-	const widths = widthTabs.map((w) => Number(w.value)).filter((i) => i !== 256);
-	const heights = heightTabs.map((h) => Number(h.value)).filter((i) => i !== 256);
+	const batchSize = 20;
+	$: items =
+		generations?.slice(0, batchSize).map((_, i) => ({
+			groupKey: 0,
+			key: i
+		})) || Array.from({ length: batchSize }, (_, i) => ({ groupKey: 0, key: i }));
 
-	const randomWidth = () => widths[Math.floor(Math.random() * widths.length)];
-	const randomHeight = () => heights[Math.floor(Math.random() * heights.length)];
-
-	const placeholderArray = Array.from({ length: 20 }, (_) => {
-		return {
-			width: randomWidth(),
-			height: randomHeight()
-		};
-	});
-
-	let nodes: (HTMLElement | undefined)[] = [];
+	function getItems(nextGroupKey: number) {
+		const nextItems = [];
+		for (let i = 0; i < batchSize; ++i) {
+			const nextKey = nextGroupKey * batchSize + i;
+			nextItems.push({ groupKey: nextGroupKey, key: nextKey });
+		}
+		return nextItems;
+	}
 </script>
 
-{#if generations}
-	{#if generations.length > 0}
-		<Masonry items={generations}>
-			{#each generations as generation, i}
-				<IntersectionObserver rootMargin="100%" element={nodes[i]} let:intersecting once>
-					<div bind:this={nodes[i]} class="relative group">
-						<ImagePlaceholder width={generation.width} height={generation.height} />
-						{#if !($activeGeneration && $activeGeneration.id === generation.id)}
-							<div
-								in:elementreceive|local={{ key: generation.id }}
-								out:elementsend|local={{ key: generation.id }}
-								class="absolute left-0 top-0 w-full h-full rounded-xl bg-c-bg-secondary z-0 overflow-hidden border-4 
-									shadow-lg shadow-c-shadow/[var(--o-shadow-normal)] border-c-bg-secondary"
-							>
-								{#if intersecting}
-									<GenerationImage scrollPrompt={false} {generation} />
-								{/if}
-							</div>
-						{/if}
-					</div>
-				</IntersectionObserver>
-			{/each}
-		</Masonry>
-	{:else}
-		<div class="w-full flex-1 flex flex-col justify-center items-center py-8 px-5 gap-8">
-			<p class="text-c-on-bg/50">You didn't generate any images yet.</p>
-			<Button href="/">Start Generating</Button>
-			<div class="h-[2vh]" />
-		</div>
-	{/if}
-{:else}
-	<Masonry items={generations}>
-		{#each placeholderArray as p}
-			<div
-				class="bg-c-bg-secondary  rounded-xl relative border-4 shadow-lg 
-				shadow-c-[var(--o-shadow-strong)] border-c-bg-secondary overflow-hidden"
-			>
-				<div
-					class="w-full transition {startAnimation
-						? 'animate-pulse-faster bg-c-on-bg/5'
-						: 'bg-c-bg/0'}"
-				>
-					<svg
-						class="w-full h-auto"
-						width={p.width}
-						height={p.height}
-						viewBox="0 0 {p.width} {p.height}"
-						fill="none"
-						xmlns="http://www.w3.org/2000/svg"
+{#if loading || (generations && generations.length > 0)}
+	<MasonryInfiniteGrid
+		on:requestAppend={({ detail: e }) => {
+			if (!generations) return;
+			const nextGroupKey = (+e.groupKey || 0) + 1;
+			if (items.length === generations.length) {
+				return;
+			}
+			items = [...items, ...getItems(nextGroupKey)].slice(0, generations.length);
+		}}
+		resizeDebounce={1}
+		gap={0}
+		column={0}
+		threshold={1000}
+		useResizeObserver={true}
+		renderOnPropertyChange={true}
+		observeChildren={true}
+		{items}
+		let:visibleItems
+	>
+		{#each visibleItems as item (item.key)}
+			<div class="w-full sm:w-1/2 md:w-1/3 lg:w-1/4 p-0.5">
+				<div class="w-full relative group">
+					<ImagePlaceholder
+						width={generations ? generations[item.key].width : 512}
+						height={generations ? generations[item.key].height : 512}
 					/>
+					{#if !($activeGeneration && $activeGeneration.id === generations?.[item.key].id)}
+						<div
+							in:elementreceive|local={{ key: generations ? generations[item.key].id : '1' }}
+							out:elementsend|local={{ key: generations ? generations[item.key].id : '1' }}
+							class="absolute left-0 top-0 w-full h-full rounded-xl bg-c-bg-secondary z-0 overflow-hidden border-4 
+							shadow-lg shadow-c-shadow/[var(--o-shadow-normal)] border-c-bg-secondary"
+						>
+							{#if loading && startAnimation}
+								<div
+									transition:fade|local={{ delay: 200, easing: quadOut }}
+									class="absolute w-full h-full left-0 top-0 bg-c-on-bg/5 animate-pulse-faster"
+								/>
+							{/if}
+							{#if generations}
+								<GenerationImage scrollPrompt={false} generation={generations[item.key]} />
+							{/if}
+						</div>
+					{/if}
 				</div>
 			</div>
 		{/each}
-	</Masonry>
+	</MasonryInfiniteGrid>
+{:else}
+	<div class="w-full flex-1 flex flex-col justify-center items-center py-8 px-5 gap-8">
+		<p class="text-c-on-bg/50">You didn't generate any images yet.</p>
+		<Button href="/">Start Generating</Button>
+		<div class="h-[2vh]" />
+	</div>
 {/if}

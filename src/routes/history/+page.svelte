@@ -45,13 +45,19 @@
 		activeGeneration.set(generation);
 	}
 
+	let loading = true;
 	let startAnimation = false;
-
 	onMount(async () => {
+		loading = true;
 		setTimeout(() => {
 			startAnimation = true;
 		}, 500);
-		generations = await getGenerationsFromDb();
+		try {
+			generations = await getGenerationsFromDb();
+		} catch (error) {
+			console.log('IndexDB error', error);
+		}
+		loading = false;
 	});
 </script>
 
@@ -80,8 +86,8 @@
 			</div>
 		</div>
 	{/if}
-	<div class="w-full flex-1 max-w-7xl flex flex-col">
-		<GenerationGrid {generations} {startAnimation} />
+	<div class="w-full flex-1 max-w-7xl flex flex-col px-1">
+		<GenerationGrid {generations} {loading} {startAnimation} />
 	</div>
 </div>
 

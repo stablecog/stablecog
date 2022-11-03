@@ -32,6 +32,7 @@ export interface TGenerationRequest {
 	seed?: number;
 	num_inference_steps?: number;
 	guidance_scale?: number;
+	shouldSubmitToGallery?: boolean;
 }
 
 export interface TGenerationResponse {
@@ -104,7 +105,7 @@ export type TIconSocial =
 	| 'email'
 	| 'producthunt';
 
-export type TNavbarRouteOption = 'home' | 'live' | 'blog' | 'history';
+export type TNavbarRouteOption = 'home' | 'live' | 'blog' | 'history' | 'gallery';
 export interface TNavbarRoute {
 	name: string;
 	href: string;

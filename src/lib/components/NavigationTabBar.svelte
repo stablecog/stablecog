@@ -27,14 +27,14 @@
 			icon: 'history'
 		},
 		{
+			name: 'Gallery',
+			href: '/gallery',
+			icon: 'gallery'
+		},
+		{
 			name: 'Live',
 			href: '/live',
 			icon: 'live'
-		},
-		{
-			name: 'Blog',
-			href: '/blog',
-			icon: 'blog'
 		}
 	];
 </script>

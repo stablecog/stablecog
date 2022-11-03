@@ -13,6 +13,7 @@ export const handle: Handle = async ({ event, resolve }) => {
 		if (data && !error && admins && admins.includes(userId)) {
 			console.log('Admin user access:', userId);
 		} else {
+			console.log('Non-admin user access:', userId);
 			return Response.redirect(`${event.url.origin}/admin/login`, 303);
 		}
 	}

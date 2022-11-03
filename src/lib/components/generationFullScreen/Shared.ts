@@ -14,3 +14,9 @@ export const tooltipStyleProps: TTooltipProps = {
 	indicatorClass: 'w-5 h-5',
 	indicatorInnerClass: `w-5 h-5 transform rotate-135 bg-c-bg-tertiary rounded`
 };
+
+export const maxHeight = 1024;
+export const sidebarWidth = 400;
+export const lgBreakpoint = 1024;
+export const padding = 64;
+export const copyTimeoutDuration = 1500;

@@ -25,7 +25,14 @@
 	import IconDice from '$components/icons/IconDice.svelte';
 	import IconRefresh from '$components/icons/IconRefresh.svelte';
 	import { page } from '$app/stores';
-	import { tooltipStyleProps } from '$components/generationFullScreen/Shared';
+	import {
+		copyTimeoutDuration,
+		lgBreakpoint,
+		maxHeight,
+		padding,
+		sidebarWidth,
+		tooltipStyleProps
+	} from '$components/generationFullScreen/Shared';
 	import ParamsSection from '$components/generationFullScreen/ParamsSection.svelte';
 	import Button from '$components/buttons/Button.svelte';
 	import IconUpscale from '$components/icons/IconUpscale.svelte';
@@ -54,10 +61,6 @@
 	$: generationAspectRatio = generation.width / generation.height;
 
 	$: maxWidthConstant = generationAspectRatio >= 3 / 2 ? 1440 : 1280;
-	const maxHeight = 1024;
-	const sidebarWidth = 400;
-
-	const lgBreakpoint = 1024;
 
 	let imageContainerWidth = 0;
 	let imageContainerHeight = 0;
@@ -76,13 +79,15 @@
 	$: mainContainerWidth = Math.min($windowWidth || 0, maxWidthConstant);
 	$: mainContainerHeight = Math.min($windowHeight || 0, maxHeight);
 
-	const padding = 64;
 	$: modalMaxWidth = mainContainerWidth - 2 * padding;
 	$: modalMaxHeight = mainContainerHeight - 2 * padding;
 
 	$: modalMinHeight = Math.min(modalMaxHeight, 575);
 
 	$: [modalMaxWidth, modalMaxHeight, generation], setImageContainerSize();
+
+	let rerollUrl: string;
+	let regenerateUrl: string;
 
 	const onGenerationChanged = () => {
 		currentImageDataB64 = generation.upscaledImageDataB64 ?? generation.imageDataB64;
@@ -92,6 +97,10 @@
 		if (generation.upscaledImageUrl) upscaledTabValue = 'upscaled';
 		upscaledImageWidth = undefined;
 		upscaledImageHeight = undefined;
+
+		const { seed, ...rest } = generation;
+		rerollUrl = getGenerationUrlFromParams(rest);
+		regenerateUrl = getGenerationUrlFromParams(generation);
 	};
 
 	function setImageContainerSize() {
@@ -122,8 +131,6 @@
 			}
 		}
 	}
-
-	const copyTimeoutDuration = 1500;
 
 	let promptCopiedTimeout: NodeJS.Timeout;
 	let promptCopied = false;
@@ -181,10 +188,6 @@
 		sidebarWrapperScrollTop = sidebarWrapper.scrollTop;
 		sidebarWrapperScrollHeight = sidebarWrapper.scrollHeight;
 	};
-
-	const { seed, ...rest } = generation;
-	const rerollUrl = getGenerationUrlFromParams(rest);
-	const regenerateUrl = getGenerationUrlFromParams(generation);
 
 	let upscaleDurationSec = 0;
 	let upscaleDurationSecCalcInterval: NodeJS.Timeout;
@@ -517,7 +520,7 @@
 								{#if $page.url.pathname !== '/'}
 									<SubtleButton prefetch={true} href={rerollUrl}>
 										<div class="flex items-center justify-center gap-1.5">
-											<IconDice class="w-5 h-5 -ml-0.5 scale-110" />
+											<IconDice class="w-5 h-5 -ml-0.5" />
 											<p>Reroll</p>
 										</div>
 									</SubtleButton>
