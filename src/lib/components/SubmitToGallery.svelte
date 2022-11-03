@@ -14,7 +14,7 @@
 			class="bg-c-bg-secondary shadow-lg shadow-c-shadow/[var(--o-shadow-normal)] px-5 pb-5 pt-4 rounded-2xl 
       flex flex-col items-start justify-start gap-4 w-full max-w-[21rem]"
 		>
-			<div class="flex flex-col items-start justify-start gap-2">
+			<div class="flex flex-col items-start justify-start gap-1.5">
 				<p class="text-sm font-bold text-c-on-bg/75">Submit generations to the gallery?</p>
 				<p class="text-xs text-c-on-bg/50 leading-relaxed">
 					You can change your preference from the settings later.
