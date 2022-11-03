@@ -90,6 +90,10 @@
 			localStorage.removeItem('serverUrl');
 		}
 		if (!$serverUrl) {
+			console.log('No server url');
+			return;
+		}
+		/* if (!$serverUrl) {
 			currentServer.set({ lastHealthStatus: 'not-set', features: undefined });
 			currentServerHealthStatus.set('not-set');
 			if (isDefaultServer) {
@@ -101,7 +105,7 @@
 			}
 			console.log('Server URL not set');
 			return;
-		}
+		} */
 		try {
 			console.log('Checking server health...');
 			currentServerHealthStatus.set('loading');
