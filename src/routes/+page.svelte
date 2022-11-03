@@ -125,7 +125,7 @@
 				seed: lastGeneration.seed,
 				guidance_scale: lastGeneration.guidance_scale,
 				num_inference_steps: lastGeneration.num_inference_steps,
-				shouldSubmitToGallery: $shouldSubmitToGallery !== undefined ? $shouldSubmitToGallery : false
+				shouldSubmitToGallery: $shouldSubmitToGallery === undefined ? true : $shouldSubmitToGallery
 			});
 			let { data, error } = res;
 			if (data && data.imageDataB64 && !error) {

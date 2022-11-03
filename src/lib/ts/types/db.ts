@@ -43,7 +43,7 @@ export interface TDBGenerationG {
 	id: string;
 	width: number;
 	height: number;
-	seed: string;
+	seed: number;
 	inference_steps: number | null;
 	guidance_scale: number;
 	image_id: string;

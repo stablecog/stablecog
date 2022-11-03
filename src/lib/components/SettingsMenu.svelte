@@ -59,7 +59,9 @@
 			{/if}
 			<DropdownItem
 				onClick={() => {
-					shouldSubmitToGallery.set($shouldSubmitToGallery ? false : true);
+					shouldSubmitToGallery.set(
+						$shouldSubmitToGallery === undefined ? false : !$shouldSubmitToGallery
+					);
 					setTimeout(() => {
 						closeSettings();
 					}, 100);
@@ -80,7 +82,9 @@
 							Submit to Gallery
 						</p>
 					</div>
-					<ToggleIndicator isToggled={$shouldSubmitToGallery} />
+					<ToggleIndicator
+						isToggled={$shouldSubmitToGallery === undefined ? true : $shouldSubmitToGallery}
+					/>
 				</div>
 			</DropdownItem>
 			<DropdownItem
