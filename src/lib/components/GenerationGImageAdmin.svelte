@@ -3,6 +3,7 @@
 	import IconCancelCircle from '$components/icons/IconCancelCircle.svelte';
 	import IconChatBubbleCancel from '$components/icons/IconChatBubbleCancel.svelte';
 	import IconTick from '$components/icons/IconTick.svelte';
+	import IconTickOnly from '$components/icons/IconTickOnly.svelte';
 	import IconTrashcan from '$components/icons/IconTrashcan.svelte';
 
 	import { doesContainTarget } from '$ts/helpers/doesContainTarget';
@@ -110,7 +111,7 @@
 					onClick={approveGeneration}
 				>
 					<div class="p-2">
-						<IconTick />
+						<IconTickOnly />
 					</div>
 				</Button>
 				<Button
