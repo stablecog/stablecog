@@ -273,7 +273,7 @@
 								{/if}
 							</div>
 							<div class="w-full flex flex-wrap gap-3">
-								<SubtleButton prefetch={true} href={generateUrl}>
+								<SubtleButton prefetch={true} href={generateUrl} target="_blank">
 									<div class="flex items-center justify-center gap-1.5">
 										<IconPaintBrush class="w-5 h-5 -ml-0.5" />
 										<p>Generate</p>

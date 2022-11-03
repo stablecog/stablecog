@@ -10,6 +10,7 @@
 	export { classes as class };
 	export let disabled = false;
 	export let loading = false;
+	export let target = '_self';
 	let classes = '';
 </script>
 
@@ -18,6 +19,7 @@
 		on:click={onClick}
 		{href}
 		{download}
+		{target}
 		disabled={disabled || loading}
 		data-sveltekit-prefetch={prefetch ? '' : 'off'}
 		class="{state === 'success'
