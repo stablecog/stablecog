@@ -188,7 +188,7 @@
 				<img
 					class="w-full h-full absolute left-0 top-0 transform scale-125 blur-xl"
 					src={urlFromImageId(generation.image_id)}
-					alt={generation.prompt.id}
+					alt="Blurred background for: {generation.prompt.text}"
 					width={generation.width}
 					height={generation.height}
 				/>
@@ -202,7 +202,7 @@
 					<img
 						class="w-full relative transition h-auto lg:h-full lg:object-contain lg:absolute lg:left-0 lg:top-0"
 						src={urlFromImageId(generation.image_id)}
-						alt={generation.prompt.id}
+						alt={generation.prompt.text}
 						width={generation.width}
 						height={generation.height}
 					/>

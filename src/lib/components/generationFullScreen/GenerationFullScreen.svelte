@@ -332,7 +332,7 @@
 				<img
 					class="w-full h-full absolute left-0 top-0 transform scale-125 blur-xl"
 					src={generation.imageUrl}
-					alt={generation.prompt}
+					alt="Blurred background for: {generation.prompt}"
 					width={generation.width}
 					height={generation.height}
 				/>
@@ -349,7 +349,7 @@
 							? 'blur-2xl'
 							: ''} w-full transition h-auto lg:h-full lg:object-contain absolute lg:left-0 lg:top-0"
 						src={generation.imageUrl}
-						alt={generation.prompt}
+						alt="Blurred background 2 for: {generation.prompt}"
 						width={generation.width}
 						height={generation.height}
 					/>

@@ -39,7 +39,7 @@
 		? 'opacity-100'
 		: 'opacity-0'}"
 	src={urlFromImageId(generation.image_id)}
-	alt={generation.prompt.id}
+	alt={generation.prompt.text}
 	width={generation.width}
 	height={generation.height}
 />
