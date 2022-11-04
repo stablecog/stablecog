@@ -13,7 +13,7 @@
 
 	export let data: PageServerData;
 
-	let generations = data.generations || [];
+	let generations = (data.generations || []).map((g) => ({ ...g, isLoadedBefore: false }));
 	let currPage = data.page;
 	let nextPage = data.next;
 	let items = generations.map((_, i) => ({
@@ -45,7 +45,10 @@
 					key: generations.length + i
 				}))
 			];
-			generations = [...generations, ...resJson.generations];
+			generations = [
+				...generations,
+				...resJson.generations.map((g) => ({ ...g, isLoadedBefore: false }))
+			];
 			console.log('Got the page:', currPage);
 		} catch (error) {
 			console.log(error);
@@ -114,7 +117,7 @@
 									class="absolute left-0 top-0 w-full h-full group rounded-xl bg-c-bg-secondary z-0 overflow-hidden border-4 
 									shadow-lg shadow-c-shadow/[var(--o-shadow-normal)] border-c-bg-secondary"
 								>
-									<GenerationGImage generation={generations[item.key]} />
+									<GenerationGImage bind:generation={generations[item.key]} />
 								</div>
 							{/if}
 						</div>

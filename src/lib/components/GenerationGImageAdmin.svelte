@@ -10,11 +10,11 @@
 	import { isValue } from '$ts/helpers/isValue';
 	import { urlFromImageId } from '$ts/helpers/urlFromImageId';
 	import { activeGenerationG } from '$ts/stores/activeGenerationG';
-	import type { TDBGenerationG } from '$ts/types/db';
+	import type { TGenerationGWithLoaded } from '$ts/types/main';
 	import { quadOut } from 'svelte/easing';
 	import { fly, scale } from 'svelte/transition';
 
-	export let generation: TDBGenerationG;
+	export let generation: TGenerationGWithLoaded;
 
 	let rightButtonContainer: HTMLDivElement;
 	let loaded = false;
@@ -24,6 +24,9 @@
 	const onLoad = () => {
 		if (imgElement && imgElement?.naturalWidth > 0) {
 			loaded = true;
+			setTimeout(() => {
+				generation.isLoadedBefore = true;
+			}, 500);
 		}
 	};
 
@@ -77,7 +80,7 @@
 	class="w-full h-full absolute left-0 top-0 transition duration-500 {deleteStatus === 'success' ||
 	approveStatus === 'success'
 		? 'opacity-25'
-		: loaded
+		: loaded || generation.isLoadedBefore
 		? 'opacity-100'
 		: 'opacity-0'}"
 	src={urlFromImageId(generation.image_id)}

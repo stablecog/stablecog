@@ -9,14 +9,12 @@
 	import { isValue } from '$ts/helpers/isValue';
 	import { urlFromImageId } from '$ts/helpers/urlFromImageId';
 	import { activeGenerationG } from '$ts/stores/activeGenerationG';
-	import { advancedMode } from '$ts/stores/advancedMode';
-	import type { TDBGenerationG } from '$ts/types/db';
+	import type { TGenerationGWithLoaded } from '$ts/types/main';
 
-	export let generation: TDBGenerationG;
+	export let generation: TGenerationGWithLoaded;
 
 	let promptCopied = false;
 	let promptCopiedTimeout: NodeJS.Timeout;
-	let seedButtonElement: HTMLButtonElement;
 	let rightButtonContainer: HTMLDivElement;
 	let loaded = false;
 
@@ -25,6 +23,9 @@
 	const onLoad = () => {
 		if (imgElement && imgElement?.naturalWidth > 0) {
 			loaded = true;
+			setTimeout(() => {
+				generation.isLoadedBefore = true;
+			}, 500);
 		}
 	};
 </script>
@@ -33,7 +34,8 @@
 	loading="lazy"
 	bind:this={imgElement}
 	on:load={onLoad}
-	class="w-full h-full absolute left-0 top-0 transition duration-500 {loaded
+	class="w-full h-full absolute left-0 top-0 transition duration-500 {loaded ||
+	generation.isLoadedBefore
 		? 'opacity-100'
 		: 'opacity-0'}"
 	src={urlFromImageId(generation.image_id)}

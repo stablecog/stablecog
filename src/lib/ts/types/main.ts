@@ -138,3 +138,7 @@ export interface TGalleryResponse {
 	page: number;
 	next: number | null | undefined;
 }
+
+export interface TGenerationGWithLoaded extends TDBGenerationG {
+	isLoadedBefore: boolean;
+}
