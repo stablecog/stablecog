@@ -1,5 +1,5 @@
 <script lang="ts">
-	import IconPaintBrush from '$components/icons/IconPaintBrush.svelte';
+	import IconWand from '$components/icons/IconWand.svelte';
 	import { getGenerationUrlFromParams } from '$ts/helpers/getGenerationUrlFromParams';
 	import { isTouchscreen } from '$ts/stores/isTouchscreen';
 	import type { TDBGenerationG } from '$ts/types/db';
@@ -35,7 +35,7 @@
 				? 'group-1-hover:translate-x-0'
 				: ''}"
 		/>
-		<IconPaintBrush
+		<IconWand
 			class="w-7 h-7 transition text-c-on-bg relative group-1-focus:text-c-on-primary {!$isTouchscreen
 				? 'group-1-hover:text-c-on-primary'
 				: ''}"
