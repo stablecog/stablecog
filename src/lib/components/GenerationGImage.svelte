@@ -52,9 +52,9 @@
 	}}
 	class="w-full h-full absolute left-0 top-0 flex flex-col justify-between items-end overflow-hidden gap-4"
 >
-	<div class="w-full flex justify-between items-start gap-4">
+	<div class="w-full flex justify-between items-start gap-8">
 		<div
-			class="flex-1 max-w-[18rem] min-w-0 overflow-hidden flex flex-row flex-wrap items-start justify-start gap-1 transition transform 
+			class="flex-1 min-w-0 overflow-hidden flex flex-row flex-wrap items-start justify-start gap-1 transition transform 
 				-translate-x-full group-focus-within:translate-x-0 group-hover:translate-x-0 p-1.5"
 		>
 			<div
