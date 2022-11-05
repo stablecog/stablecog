@@ -89,8 +89,7 @@
 			prompt: promptInputValue,
 			negative_prompt:
 				$currentServer.features?.includes('negative_prompt') &&
-				negativePromptInputValue !== '' &&
-				negativePromptInputValue !== undefined &&
+				isValue(data.negative_prompt) &&
 				($advancedMode || data.negative_prompt)
 					? negativePromptInputValue
 					: undefined,

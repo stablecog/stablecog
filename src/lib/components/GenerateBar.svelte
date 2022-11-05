@@ -49,7 +49,7 @@
 			: inferenceStepsDefault;
 	export let generationGuidanceScale =
 		serverData.guidance_scale !== null ? serverData.guidance_scale : guidanceScaleDefault;
-	export let generationSeed: number;
+	export let generationSeed: number | undefined;
 	export let promptInputValue: string | undefined;
 	export let negativePromptInputValue: string | undefined;
 	export let onCreate: () => Promise<void>;
@@ -59,7 +59,11 @@
 	export { classes as class };
 	let classes = '';
 
-	if (serverData.seed !== null) generationSeed = serverData.seed;
+	if (serverData.seed !== null) {
+		generationSeed = serverData.seed;
+	} else if (serverData.prompt) {
+		generationSeed = undefined;
+	}
 	if (serverData.prompt !== null) promptInputValue = serverData.prompt;
 	if (serverData.negative_prompt !== null) negativePromptInputValue = serverData.negative_prompt;
 
@@ -199,11 +203,17 @@
 		) {
 			generationGuidanceScale = $guidanceScale;
 		}
-		if (serverData.seed === null && $seed !== undefined && $seed !== null) generationSeed = $seed;
+		if (
+			serverData.seed === null &&
+			serverData.prompt === null &&
+			$seed !== undefined &&
+			$seed !== null
+		)
+			generationSeed = $seed;
 		if (serverData.prompt === null && $prompt) {
 			promptInputValue = $prompt;
 		}
-		if (serverData.negative_prompt === null && $negativePrompt) {
+		if (serverData.negative_prompt === null && serverData.prompt === null && $negativePrompt) {
 			negativePromptInputValue = $negativePrompt;
 		}
 		isCheckComplete = true;
