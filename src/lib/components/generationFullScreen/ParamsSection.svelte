@@ -34,7 +34,7 @@
 </script>
 
 <div class={classes}>
-	<div class="flex flex-wrap items-center gap-4">
+	<div class="flex flex-wrap items-center gap-3">
 		<div class="flex flex-col items-start gap-1">
 			<div
 				use:tooltip={{
