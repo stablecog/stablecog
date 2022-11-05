@@ -27,6 +27,11 @@ const definedRoutes: IRoute[] = [
 		lastmod: todayString,
 		changefreq: 'daily'
 	},
+	{
+		loc: '/gallery',
+		lastmod: todayString,
+		changefreq: 'daily'
+	},
 	{ loc: '/blog', lastmod: todayString, changefreq: 'daily' }
 ];
 

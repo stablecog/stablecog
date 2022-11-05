@@ -79,7 +79,7 @@
 
 <MetaTag
 	title="Gallery | Stablecog"
-	description="A gallery full of images created with Stable Diffusion. Check out the images and their metadata which includes their prompt, negative prompt, inference steps, guidance scale and seed. You can generate similar images directly from the gallery or submit your own creations to it."
+	description="Free & easy to use AI image generator using Stable Diffusion cogs. Use one of the default servers or connect to your own."
 	imageUrl="{canonicalUrl}/previews{$page.url.pathname}.png"
 	canonical="{canonicalUrl}{$page.url.pathname}"
 />
