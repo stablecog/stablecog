@@ -32,7 +32,7 @@
 	}
 </script>
 
-{#if loading || (generations && generations.length > 0)}
+{#if generations && generations.length > 0}
 	<MasonryInfiniteGrid
 		on:requestAppend={({ detail: e }) => {
 			if (!generations) return;
@@ -79,11 +79,10 @@
 			</div>
 		{/each}
 	</MasonryInfiniteGrid>
-	{#if !generations || items.length !== generations.length}
-		<div class="w-full flex flex-1 flex-col items-center justify-center py-12">
-			<IconLoading class="animate-spin-faster w-8 h-8 text-c-on-bg/50" />
-		</div>
-	{/if}
+{:else if loading || !generations || items.length !== generations.length}
+	<div class="w-full flex flex-1 flex-col items-center justify-center py-12">
+		<IconLoading class="animate-spin-faster w-8 h-8 text-c-on-bg/50" />
+	</div>
 {:else}
 	<div class="w-full flex-1 flex flex-col justify-center items-center py-8 px-5 gap-8">
 		<p class="text-c-on-bg/50">You didn't generate any images yet.</p>
