@@ -1,8 +1,10 @@
 <script lang="ts">
 	import Button from '$components/buttons/Button.svelte';
 	import GenerationImage from '$components/GenerationImage.svelte';
+	import IconLoading from '$components/icons/IconLoading.svelte';
 	import ImagePlaceholder from '$components/ImagePlaceholder.svelte';
 	import { elementreceive, elementsend } from '$ts/animation/transitions';
+	import { isValue } from '$ts/helpers/isValue';
 	import { activeGeneration } from '$ts/stores/activeGeneration';
 	import type { TIndexedDBGeneration } from '$ts/types/db';
 	import { MasonryInfiniteGrid } from '@egjs/svelte-infinitegrid';
@@ -40,13 +42,11 @@
 			}
 			items = [...items, ...getItems(nextGroupKey)].slice(0, generations.length);
 		}}
+		align="center"
 		resizeDebounce={1}
 		gap={0}
 		column={0}
 		threshold={1000}
-		useResizeObserver={true}
-		renderOnPropertyChange={true}
-		observeChildren={true}
 		{items}
 		let:visibleItems
 	>
@@ -79,6 +79,11 @@
 			</div>
 		{/each}
 	</MasonryInfiniteGrid>
+	{#if !generations || items.length !== generations.length}
+		<div class="w-full flex flex-1 flex-col items-center justify-center py-12">
+			<IconLoading class="animate-spin-faster w-8 h-8 text-c-on-bg/50" />
+		</div>
+	{/if}
 {:else}
 	<div class="w-full flex-1 flex flex-col justify-center items-center py-8 px-5 gap-8">
 		<p class="text-c-on-bg/50">You didn't generate any images yet.</p>

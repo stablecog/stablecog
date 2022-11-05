@@ -2,10 +2,12 @@
 	import { page } from '$app/stores';
 	import GenerationGFullScreen from '$components/generationFullScreen/GenerationGFullScreen.svelte';
 	import GenerationGImageAdmin from '$components/GenerationGImageAdmin.svelte';
+	import IconLoading from '$components/icons/IconLoading.svelte';
 	import ImagePlaceholder from '$components/ImagePlaceholder.svelte';
 	import MetaTag from '$components/MetaTag.svelte';
 	import { elementreceive, elementsend } from '$ts/animation/transitions';
 	import { canonicalUrl } from '$ts/constants/main';
+	import { isValue } from '$ts/helpers/isValue';
 	import { activeGenerationG } from '$ts/stores/activeGenerationG';
 	import type { TGalleryResponse } from '$ts/types/main';
 	import { MasonryInfiniteGrid } from '@egjs/svelte-infinitegrid';
@@ -95,7 +97,6 @@
 					getNext(e);
 				}}
 				align="center"
-				usePlaceholder={true}
 				resizeDebounce={1}
 				gap={0}
 				column={0}
@@ -127,6 +128,11 @@
 				{/each}
 			</MasonryInfiniteGrid>
 		</div>
+		{#if isValue(nextPage)}
+			<div class="w-full flex flex-1 flex-col items-center justify-center py-12">
+				<IconLoading class="animate-spin-faster w-8 h-8 text-c-on-bg/50" />
+			</div>
+		{/if}
 	</div>
 {:else}
 	<div class="w-full flex flex-1 px-5 justify-center py-8">
