@@ -1,5 +1,5 @@
 import { supabaseAdmin } from '$ts/constants/supabaseAdmin';
-import { getGalleryPage } from '$ts/queries/gallery';
+import { getGalleryPage } from '$ts/queries/db/gallery';
 import type { TGalleryResponse } from '$ts/types/main';
 import { error, type ServerLoad } from '@sveltejs/kit';
 

@@ -16,18 +16,20 @@ export async function getGalleryPage(page: number, getType: TGetType = 'visible-
 		supabaseAdmin
 			.from('generation_g')
 			.select(
-				`width,
-      height,
-      prompt:prompt_id(id,text),
-      negative_prompt:negative_prompt_id(id,text),
-      model:model_id(id,name),
-      seed,
-      inference_steps,
-      guidance_scale,
-      image_id,
-      created_at,
-      updated_at,
-      id`
+				`
+					width,
+					height,
+					prompt:prompt_id(id,text),
+					negative_prompt:negative_prompt_id(id,text),
+					model:model_id(id,name),
+					seed,
+					inference_steps,
+					guidance_scale,
+					image_id,
+					created_at,
+					updated_at,
+					id
+				`
 			)
 			.filter(
 				'hidden',
@@ -39,18 +41,20 @@ export async function getGalleryPage(page: number, getType: TGetType = 'visible-
 		supabaseAdmin
 			.from('generation_g')
 			.select(
-				`width,
-      height,
-      prompt:prompt_id(id,text),
-      negative_prompt:negative_prompt_id(id,text),
-     	model:model_id(id,name),
-      seed,
-      inference_steps,
-      guidance_scale,
-      image_id,
-      created_at,
-      updated_at,
-      id`
+				`
+					width,
+					height,
+					prompt:prompt_id(id,text),
+					negative_prompt:negative_prompt_id(id,text),
+					model:model_id(id,name),
+					seed,
+					inference_steps,
+					guidance_scale,
+					image_id,
+					created_at,
+					updated_at,
+					id
+				`
 			)
 			.filter(
 				'hidden',

@@ -1,4 +1,4 @@
-import { getGalleryPage } from '$ts/queries/gallery';
+import { getGalleryPage } from '$ts/queries/db/gallery';
 import type { TGalleryResponse } from '$ts/types/main';
 import type { RequestHandler } from '@sveltejs/kit';
 

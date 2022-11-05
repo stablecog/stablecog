@@ -469,7 +469,7 @@ CREATE POLICY "Admins can edit servers" ON public.server FOR ALL USING (
     )
 );
 
-CREATE TABLE "prompt" (
+CREATE TABLE "prompt_g" (
     "text" TEXT NOT NULL UNIQUE,
     "id" UUID NOT NULL DEFAULT uuid_generate_v4(),
     "created_at" TIMESTAMPTZ DEFAULT TIMEZONE('utc' :: TEXT, NOW()) NOT NULL,
@@ -477,7 +477,7 @@ CREATE TABLE "prompt" (
     PRIMARY KEY(id)
 );
 
-CREATE TABLE "negative_prompt" (
+CREATE TABLE "negative_prompt_g" (
     "text" TEXT NOT NULL UNIQUE,
     "id" UUID NOT NULL DEFAULT uuid_generate_v4(),
     "created_at" TIMESTAMPTZ DEFAULT TIMEZONE('utc' :: TEXT, NOW()) NOT NULL,
@@ -485,7 +485,7 @@ CREATE TABLE "negative_prompt" (
     PRIMARY KEY(id)
 );
 
-CREATE TABLE "model" (
+CREATE TABLE "model_g" (
     "name" TEXT NOT NULL UNIQUE,
     "id" UUID NOT NULL DEFAULT uuid_generate_v4(),
     "created_at" TIMESTAMPTZ DEFAULT TIMEZONE('utc' :: TEXT, NOW()) NOT NULL,
@@ -494,9 +494,9 @@ CREATE TABLE "model" (
 );
 
 CREATE TABLE "generation_g" (
-    "prompt_id" UUID REFERENCES prompt(id) NOT NULL,
-    "negative_prompt_id" UUID REFERENCES negative_prompt(id),
-    "model_id" UUID REFERENCES model(id) NOT NULL,
+    "prompt_id" UUID REFERENCES prompt_g(id) NOT NULL,
+    "negative_prompt_id" UUID REFERENCES negative_prompt_g(id),
+    "model_id" UUID REFERENCES model_g(id) NOT NULL,
     "image_id" TEXT NOT NULL,
     "width" INTEGER NOT NULL,
     "height" INTEGER NOT NULL,
@@ -516,27 +516,27 @@ UPDATE
 
 CREATE trigger handle_updated_at before
 UPDATE
-    ON prompt FOR each ROW EXECUTE PROCEDURE moddatetime (updated_at);
+    ON prompt_g FOR each ROW EXECUTE PROCEDURE moddatetime (updated_at);
 
 CREATE trigger handle_updated_at before
 UPDATE
-    ON negative_prompt FOR each ROW EXECUTE PROCEDURE moddatetime (updated_at);
+    ON negative_prompt_g FOR each ROW EXECUTE PROCEDURE moddatetime (updated_at);
 
 CREATE trigger handle_updated_at before
 UPDATE
-    ON model FOR each ROW EXECUTE PROCEDURE moddatetime (updated_at);
+    ON model_g FOR each ROW EXECUTE PROCEDURE moddatetime (updated_at);
 
 ALTER TABLE
     generation_g ENABLE ROW LEVEL SECURITY;
 
 ALTER TABLE
-    prompt ENABLE ROW LEVEL SECURITY;
+    prompt_g ENABLE ROW LEVEL SECURITY;
 
 ALTER TABLE
-    negative_prompt ENABLE ROW LEVEL SECURITY;
+    negative_prompt_g ENABLE ROW LEVEL SECURITY;
 
 ALTER TABLE
-    model ENABLE ROW LEVEL SECURITY;
+    model_g ENABLE ROW LEVEL SECURITY;
 
 CREATE POLICY "Admins can edit generation_g" ON public.generation_g FOR ALL USING (
     auth.uid() IN (
@@ -547,7 +547,7 @@ CREATE POLICY "Admins can edit generation_g" ON public.generation_g FOR ALL USIN
     )
 );
 
-CREATE POLICY "Admins can edit prompts" ON public.prompt FOR ALL USING (
+CREATE POLICY "Admins can edit prompts" ON public.prompt_g FOR ALL USING (
     auth.uid() IN (
         SELECT
             id
@@ -556,7 +556,7 @@ CREATE POLICY "Admins can edit prompts" ON public.prompt FOR ALL USING (
     )
 );
 
-CREATE POLICY "Admins can edit negative prompts" ON public.negative_prompt FOR ALL USING (
+CREATE POLICY "Admins can edit negative prompts" ON public.negative_prompt_g FOR ALL USING (
     auth.uid() IN (
         SELECT
             id
@@ -565,7 +565,7 @@ CREATE POLICY "Admins can edit negative prompts" ON public.negative_prompt FOR A
     )
 );
 
-CREATE POLICY "Admins can edit models" ON public.model FOR ALL USING (
+CREATE POLICY "Admins can edit models" ON public.model_g FOR ALL USING (
     auth.uid() IN (
         SELECT
             id

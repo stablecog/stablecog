@@ -34,7 +34,7 @@ export async function uploadToGallery({
 	let prompt_id: string;
 	const startTimestampPromptChecks = Date.now();
 	const { data: prompt_get_data, error: prompt_get_error } = await supabaseAdmin
-		.from('prompt')
+		.from('prompt_g')
 		.select('id')
 		.eq('text', prompt);
 	if (prompt_get_error) {
@@ -44,7 +44,7 @@ export async function uploadToGallery({
 		prompt_id = prompt_get_data[0].id;
 	} else {
 		const { data: prompt_insert_data, error: prompt_insert_error } = await supabaseAdmin
-			.from('prompt')
+			.from('prompt_g')
 			.insert([{ text: prompt }])
 			.select('id')
 			.single();
@@ -59,7 +59,7 @@ export async function uploadToGallery({
 		negative_prompt_id = null;
 	} else {
 		const { data: negative_prompt_get_data, error: negative_prompt_get_error } = await supabaseAdmin
-			.from('negative_prompt')
+			.from('negative_prompt_g')
 			.select('id')
 			.eq('text', negative_prompt);
 		if (negative_prompt_get_error) {
@@ -70,7 +70,7 @@ export async function uploadToGallery({
 		} else {
 			const { data: negative_prompt_insert_data, error: negative_prompt_insert_error } =
 				await supabaseAdmin
-					.from('negative_prompt')
+					.from('negative_prompt_g')
 					.insert([{ text: negative_prompt }])
 					.select('id')
 					.single();
