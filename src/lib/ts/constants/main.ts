@@ -2,14 +2,14 @@ import type { TTooltipProps } from '$ts/actions/tooltip';
 import type { TTab } from '$ts/types/main';
 
 export const estimatedDurationBufferRatio = 0.1;
-export const estimatedDurationDefault = 30;
+export const estimatedDurationDefault = 10;
 export const estimatedDurationUpscaleDefault = 15;
 export const canonicalUrl = 'https://stablecog.com';
 
 export const maxSeed = 2147483647;
 export const maxPromptLength = 500;
 
-export const computeRatePerSecDefault = 150000;
+export const computeRatePerSecDefault = 250000;
 
 export type TAvailableWidths = '256' | '512' | '768';
 export const widthTabs: TWidthTab[] = [
