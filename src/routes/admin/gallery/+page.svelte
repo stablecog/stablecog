@@ -9,13 +9,18 @@
 	import { canonicalUrl } from '$ts/constants/main';
 	import { isValue } from '$ts/helpers/isValue';
 	import { activeGenerationG } from '$ts/stores/activeGenerationG';
-	import type { TGalleryResponse } from '$ts/types/main';
+	import type { TGalleryResponse, TGenerationGAdmin } from '$ts/types/main';
 	import { MasonryInfiniteGrid } from '@egjs/svelte-infinitegrid';
 	import type { PageServerData } from './$types';
 
 	export let data: PageServerData;
 
-	let generations = (data.generations || []).map((g) => ({ ...g, isLoadedBefore: false }));
+	let generations: TGenerationGAdmin[] = (data.generations || []).map((g) => ({
+		...g,
+		isLoadedBefore: false,
+		status: 'idle'
+	}));
+
 	let currPage = data.page;
 	let nextPage = data.next;
 	let items = generations.map((_, i) => ({
@@ -48,10 +53,16 @@
 					key: generations.length + i
 				}))
 			];
-			console.log(items);
 			generations = [
 				...generations,
-				...resJson.generations.map((g) => ({ ...g, isLoadedBefore: false }))
+				...resJson.generations.map((g) => {
+					const gen: TGenerationGAdmin = {
+						...g,
+						isLoadedBefore: false,
+						status: 'idle'
+					};
+					return gen;
+				})
 			];
 			console.log('Got the page:', currPage);
 		} catch (error) {
