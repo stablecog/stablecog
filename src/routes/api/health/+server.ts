@@ -14,7 +14,9 @@ export const POST: RequestHandler = async ({ request }) => {
 	const userAgent = headers.get('user-agent');
 	const deviceInfo = getDeviceInfo(userAgent);
 	const countryCode = headers.get('cf-ipcountry');
-	console.log(`---- Health request made to "/health" -- ${countryCode} -- ${deviceInfo} ----`);
+	console.log(
+		`---- Health request made to "/health" -- ${countryCode} -- ${deviceInfo.os} -- ${deviceInfo.browser} -- ${deviceInfo.type} ----`
+	);
 	let isDefaultServer = env.PUBLIC_DEFAULT_SERVER_URL === server_url;
 	let defaultServers: TDBServer[] = [];
 	if (supabaseAdmin && isDefaultServer) {
