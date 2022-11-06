@@ -279,13 +279,13 @@
 				<div
 					style="transition-duration: {status === 'loading'
 						? estimatedDuration
-						: status === 'success'
+						: status === 'success' || status === 'error'
 						? 0.5
 						: 0}s"
 					class="w-full h-full ease-image-generation transition bg-c-secondary/10 
 					absolute left-0 top-0 rounded-xl {status === 'loading'
 						? 'translate-x-0'
-						: status === 'success'
+						: status === 'success' || status === 'error'
 						? 'translate-x-full'
 						: '-translate-x-full'}"
 				/>

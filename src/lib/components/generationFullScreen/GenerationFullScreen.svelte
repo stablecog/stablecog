@@ -17,7 +17,7 @@
 	import IconChevronDown from '$components/icons/IconChevronDown.svelte';
 	import IconButton from '$components/buttons/IconButton.svelte';
 	import { isTouchscreen } from '$ts/stores/isTouchscreen';
-	import { onMount } from 'svelte';
+	import { onMount, onDestroy, tick } from 'svelte';
 	import { quadOut } from 'svelte/easing';
 	import { fly } from 'svelte/transition';
 	import { tooltip } from '$ts/actions/tooltip';
@@ -95,7 +95,6 @@
 		currentImageDataB64 = generation.upscaledImageDataB64 ?? generation.imageDataB64;
 		currentImageUrl =
 			generation.upscaledImageUrl ?? generation.imageUrl ?? urlFromBase64(currentImageDataB64);
-		if (upscaleStatus === 'error' || upscaleStatus === 'success') upscaleStatus = 'idle';
 		if (generation.upscaledImageUrl) upscaledTabValue = 'upscaled';
 		upscaledImageWidth = undefined;
 		upscaledImageHeight = undefined;
@@ -208,7 +207,9 @@
 		upscaleDurationSecCalcInterval = setInterval(() => {
 			upscaleDurationSec = (Date.now() - start) / 1000;
 		}, 100);
-		upscaleStatus = 'loading';
+		upscaleStatus = 'idle';
+		await tick();
+		setTimeout(() => (upscaleStatus = 'loading'));
 		try {
 			const res = await upscaleImage({
 				imageDataB64: generation.imageDataB64,
@@ -248,13 +249,9 @@
 		if (upscaleStatus !== 'error') {
 			upscaledTabValue = 'upscaled';
 			lastUpscaleDurationSec.set(upscaleDurationSec);
+			upscaleStatus = 'success';
 		}
-		setTimeout(() => {
-			if (upscaleStatus !== 'error') {
-				upscaleStatus = 'success';
-			}
-			clearTimeout(upscaleDurationSecCalcInterval);
-		}, 250);
+		clearTimeout(upscaleDurationSecCalcInterval);
 	}
 
 	$: upscaledTabValue, setCurrentImageUrl();
@@ -294,6 +291,10 @@
 
 	onMount(() => {
 		setSidebarWrapperVars();
+	});
+
+	onDestroy(() => {
+		upscaleStatus = 'idle';
 	});
 </script>
 
@@ -387,13 +388,13 @@
 					<div
 						style="transition-duration: {upscaleStatus === 'loading'
 							? estimatedUpscaleDurationSec
-							: upscaleStatus === 'success'
+							: upscaleStatus === 'success' || upscaleStatus === 'error'
 							? 0.5
 							: 0}s"
 						class="w-[110%] h-full ease-image-generation transition bg-c-secondary/50 
 						absolute left-0 top-0 rounded-xl {upscaleStatus === 'loading'
 							? '-translate-x-[5%]'
-							: upscaleStatus === 'success'
+							: upscaleStatus === 'success' || upscaleStatus === 'error'
 							? 'translate-x-full'
 							: '-translate-x-full'}"
 					/>

@@ -110,7 +110,7 @@
 		console.log('estimatedDuration', estimatedDuration);
 		status = 'idle';
 		await tick();
-		status = 'loading';
+		setTimeout(() => (status = 'loading'));
 		endTimestamp = undefined;
 		startTimestamp = Date.now();
 		try {
