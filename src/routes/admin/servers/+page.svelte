@@ -95,6 +95,7 @@
 		if (!serverUrl) return;
 		serverAddStatus = 'loading';
 		if (serverUrl.endsWith('/')) serverUrl = serverUrl.slice(0, -1);
+		if (!serverUrl.startsWith('http')) serverUrl = `http://${serverUrl}`;
 		try {
 			const { data, error } = await supabaseClient
 				?.from('server')
