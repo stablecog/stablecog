@@ -32,7 +32,7 @@
 
 <div class={classes}>
 	<div class="flex flex-wrap gap-6">
-		<div class="min-w-[calc(50%-0.75rem)] flex flex-wrap items-center gap-3">
+		<div class="min-w-[calc(50%-0.75rem)] flex flex-wrap items-center gap-3.5">
 			<div class="flex flex-col items-start gap-1">
 				<div
 					use:tooltip={{
