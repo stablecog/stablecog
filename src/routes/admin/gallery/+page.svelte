@@ -31,7 +31,6 @@
 	async function getNext(e: any) {
 		if (!nextPage) {
 			console.log('No more pages');
-			e.ready();
 			return;
 		}
 		console.log('Getting the page:', nextPage);
