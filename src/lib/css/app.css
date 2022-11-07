@@ -74,7 +74,7 @@ body {
 	color: rgb(var(--c-on-bg));
 	background: rgb(var(--c-bg));
 	font-family: jetbrains-mono, monospace;
-	overflow: scroll;
+	overflow-y: scroll;
 }
 
 input,
