@@ -94,8 +94,16 @@
 		if (!supabaseClient) return;
 		if (!serverUrl) return;
 		serverAddStatus = 'loading';
-		if (serverUrl.endsWith('/')) serverUrl = serverUrl.slice(0, -1);
-		if (!serverUrl.startsWith('http')) serverUrl = `http://${serverUrl}`;
+		if (!serverUrl.startsWith('http')) {
+			serverUrl = 'http://' + serverUrl;
+		}
+		let url = new URL(serverUrl).toString();
+		if (!url) {
+			throw new Error('Invalid URL');
+		}
+		if (url.endsWith('/')) {
+			serverUrl = url.slice(0, -1);
+		}
 		try {
 			const { data, error } = await supabaseClient
 				?.from('server')
