@@ -7,6 +7,8 @@
 	import { canonicalUrl } from '$ts/constants/main';
 	import { supabaseClient } from '$ts/constants/supabaseClient';
 
+	export let data: { admins: string[] };
+
 	let email: string;
 	let password: string;
 
@@ -14,11 +16,19 @@
 	let logoutStatus: 'loading' | 'idle' = 'idle';
 
 	async function login() {
+		if (!supabaseClient) {
+			console.log('supabaseClient not initialized');
+			return;
+		}
 		loginStatus = 'loading';
 		try {
-			const res = await supabaseClient?.auth.signInWithPassword({ email, password });
-			console.log(res);
-			await goto('/admin');
+			const { data: d, error: e } = await supabaseClient.auth.signInWithPassword({
+				email,
+				password
+			});
+			if (d.user?.id && data.admins.includes(d.user?.id)) {
+				await goto('/admin');
+			}
 		} catch (error) {
 			console.log(error);
 		}

@@ -26,12 +26,12 @@
 		sidebarWidth,
 		tooltipStyleProps
 	} from '$components/generationFullScreen/Shared';
-	import type { TDBGenerationG } from '$ts/types/db';
 	import ParamsSectionG from '$components/generationFullScreen/ParamsSectionG.svelte';
 	import { urlFromImageId } from '$ts/helpers/urlFromImageId';
 	import IconWand from '$components/icons/IconWand.svelte';
+	import type { TGenerationGAdmin, TGenerationGWithLoaded } from '$ts/types/main';
 
-	export let generation: TDBGenerationG;
+	export let generation: TGenerationGWithLoaded | TGenerationGAdmin;
 
 	$: generationAspectRatio = generation.width / generation.height;
 

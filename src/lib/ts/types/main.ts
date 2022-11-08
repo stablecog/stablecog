@@ -142,3 +142,8 @@ export interface TGalleryResponse {
 export interface TGenerationGWithLoaded extends TDBGenerationG {
 	isLoadedBefore: boolean;
 }
+
+export interface TGenerationGAdmin extends TDBGenerationG {
+	isLoadedBefore: boolean;
+	status: 'deleted' | 'approved' | 'idle';
+}

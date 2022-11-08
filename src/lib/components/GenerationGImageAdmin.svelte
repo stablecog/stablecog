@@ -10,11 +10,11 @@
 	import { isValue } from '$ts/helpers/isValue';
 	import { urlFromImageId } from '$ts/helpers/urlFromImageId';
 	import { activeGenerationG } from '$ts/stores/activeGenerationG';
-	import type { TGenerationGWithLoaded } from '$ts/types/main';
+	import type { TGenerationGAdmin } from '$ts/types/main';
 	import { quadOut } from 'svelte/easing';
 	import { fly, scale } from 'svelte/transition';
 
-	export let generation: TGenerationGWithLoaded;
+	export let generation: TGenerationGAdmin;
 
 	let rightButtonContainer: HTMLDivElement;
 	let loaded = false;
@@ -46,6 +46,7 @@
 			);
 			if (response.ok) {
 				deleteStatus = 'success';
+				generation.status = 'deleted';
 			} else {
 				throw new Error('Failed to delete generation');
 			}
@@ -63,6 +64,7 @@
 			});
 			if (response.ok) {
 				approveStatus = 'success';
+				generation.status = 'approved';
 			} else {
 				throw new Error('Failed to approve generation');
 			}
@@ -78,7 +80,9 @@
 	bind:this={imgElement}
 	on:load={onLoad}
 	class="w-full h-full absolute left-0 top-0 transition duration-500 {deleteStatus === 'success' ||
-	approveStatus === 'success'
+	approveStatus === 'success' ||
+	generation.status === 'deleted' ||
+	generation.status === 'approved'
 		? 'opacity-25'
 		: loaded || generation.isLoadedBefore
 		? 'opacity-100'
@@ -90,15 +94,17 @@
 />
 <div
 	on:click={(e) => {
-		if (doesContainTarget(e.target, [rightButtonContainer])) {
-			return;
+		if (deleteStatus !== 'success' && approveStatus !== 'success' && generation.status === 'idle') {
+			if (doesContainTarget(e.target, [rightButtonContainer])) {
+				return;
+			}
+			activeGenerationG.set(generation);
 		}
-		activeGenerationG.set(generation);
 	}}
 	class="w-full h-full absolute left-0 top-0 flex flex-col justify-between items-end overflow-hidden gap-4"
 >
 	<div class="w-full flex justify-between items-start gap-4">
-		{#if deleteStatus !== 'success' && approveStatus !== 'success'}
+		{#if deleteStatus !== 'success' && approveStatus !== 'success' && generation.status === 'idle'}
 			<div
 				transition:fly|local={{ duration: 200, easing: quadOut, opacity: 0, y: -60 }}
 				bind:this={rightButtonContainer}
@@ -161,11 +167,11 @@
 	<div
 		class="w-full h-full absolute left-0 top-0 flex items-center justify-center pointer-events-none"
 	>
-		{#if deleteStatus === 'success'}
+		{#if deleteStatus === 'success' || generation.status === 'deleted'}
 			<div transition:scale|local={{ duration: 200, easing: quadOut, opacity: 0 }}>
 				<IconCancelCircle class="w-16 h-16 text-c-danger" />
 			</div>
-		{:else if approveStatus === 'success'}
+		{:else if approveStatus === 'success' || generation.status === 'approved'}
 			<div transition:scale|local={{ duration: 200, easing: quadOut, opacity: 0 }}>
 				<IconTick class="w-16 h-16 text-c-success" />
 			</div>
