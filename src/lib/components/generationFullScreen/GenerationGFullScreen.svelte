@@ -29,9 +29,9 @@
 	import ParamsSectionG from '$components/generationFullScreen/ParamsSectionG.svelte';
 	import { urlFromImageId } from '$ts/helpers/urlFromImageId';
 	import IconWand from '$components/icons/IconWand.svelte';
-	import type { TGenerationGAdmin } from '$ts/types/main';
+	import type { TGenerationGAdmin, TGenerationGWithLoaded } from '$ts/types/main';
 
-	export let generation: TGenerationGAdmin;
+	export let generation: TGenerationGWithLoaded | TGenerationGAdmin;
 
 	$: generationAspectRatio = generation.width / generation.height;
 
