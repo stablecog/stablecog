@@ -88,7 +88,7 @@
 
 {#if generations}
 	<div class="w-full flex-1 flex flex-col items-center relative">
-		<div class="w-full px-2 py-4 relative">
+		<div class="w-full px-2 md:pt-4 pb-4 relative">
 			<MasonryInfiniteGrid
 				on:requestAppend={({ detail: e }) => {
 					e.wait();
