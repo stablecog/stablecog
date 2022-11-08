@@ -267,15 +267,15 @@
 	}
 
 	let upscaledTabValue: TUpscaleTabValue = 'upscaled';
-	type TUpscaleTabValue = 'normal' | 'upscaled';
+	type TUpscaleTabValue = 'original' | 'upscaled';
 	const upscaledOrDefaultTabs: { label: string; value: TUpscaleTabValue }[] = [
 		{
 			label: 'Upscaled',
 			value: 'upscaled'
 		},
 		{
-			label: 'Normal',
-			value: 'normal'
+			label: 'Original',
+			value: 'original'
 		}
 	];
 

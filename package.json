@@ -11,7 +11,8 @@
 		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
 		"update-types": "export $(xargs <.env) && npx supabase gen types typescript --project-id $SUPABASE_PROJECT_ID > src/lib/ts/types/supabase.ts",
 		"lint": "prettier --check .",
-		"format": "prettier --write ."
+		"format": "prettier --write .",
+		"typesafe-i18n": "typesafe-i18n"
 	},
 	"devDependencies": {
 		"@egjs/svelte-infinitegrid": "^4.7.1",
@@ -66,6 +67,7 @@
 		"dexie": "^3.2.2",
 		"sharp": "^0.31.1",
 		"svelte-meta-tags": "^2.6.3",
+		"typesafe-i18n": "^5.16.3",
 		"ua-parser-js": "^1.0.2",
 		"uuid": "^9.0.0"
 	}
