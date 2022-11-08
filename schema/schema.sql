@@ -4,8 +4,8 @@ CREATE extension IF NOT EXISTS moddatetime schema extensions;
 CREATE TYPE generation_status_enum AS ENUM ('started', 'succeeded', 'failed', 'rejected');
 
 CREATE TABLE "generation" (
-    "prompt" TEXT,
-    "negative_prompt" TEXT,
+    "prompt_id" UUID REFERENCES prompt(id),
+    "negative_prompt_id" UUID REFERENCES negative_prompt(id),
     "width" INTEGER NOT NULL,
     "height" INTEGER NOT NULL,
     "seed" BIGINT NOT NULL,
@@ -31,6 +31,36 @@ UPDATE
 
 ALTER TABLE
     generation ENABLE ROW LEVEL SECURITY;
+
+CREATE TABLE "prompt" (
+    "text" TEXT NOT NULL UNIQUE,
+    "id" UUID NOT NULL DEFAULT uuid_generate_v4(),
+    "created_at" TIMESTAMPTZ DEFAULT TIMEZONE('utc' :: TEXT, NOW()) NOT NULL,
+    "updated_at" TIMESTAMPTZ DEFAULT TIMEZONE('utc' :: TEXT, NOW()) NOT NULL,
+    PRIMARY KEY(id)
+);
+
+CREATE trigger handle_updated_at before
+UPDATE
+    ON prompt FOR each ROW EXECUTE PROCEDURE moddatetime (updated_at);
+
+ALTER TABLE
+    prompt ENABLE ROW LEVEL SECURITY;
+
+CREATE TABLE "negative_prompt" (
+    "text" TEXT NOT NULL UNIQUE,
+    "id" UUID NOT NULL DEFAULT uuid_generate_v4(),
+    "created_at" TIMESTAMPTZ DEFAULT TIMEZONE('utc' :: TEXT, NOW()) NOT NULL,
+    "updated_at" TIMESTAMPTZ DEFAULT TIMEZONE('utc' :: TEXT, NOW()) NOT NULL,
+    PRIMARY KEY(id)
+);
+
+CREATE trigger handle_updated_at before
+UPDATE
+    ON negative_prompt FOR each ROW EXECUTE PROCEDURE moddatetime (updated_at);
+
+ALTER TABLE
+    negative_prompt ENABLE ROW LEVEL SECURITY;
 
 -- Upscale Table
 CREATE TYPE upscale_status_enum AS ENUM ('started', 'succeeded', 'failed');

@@ -142,12 +142,67 @@ export const POST: RequestHandler = async ({ request }) => {
 		if (output && !isNSFW && !data.error && supabaseAdmin !== undefined) {
 			try {
 				const startTimestamp = Date.now();
+				// Check if the prompt exists in the DB already
+				let prompt_id: string | undefined;
+				let { data: promptData, error: promptErr } = await supabaseAdmin
+					.from('prompt')
+					.select('id')
+					.eq('text', prompt)
+					.maybeSingle();
+				if (promptErr) {
+					console.log(promptErr);
+				} else if (promptData?.id) {
+					prompt_id = promptData.id;
+				} else {
+					// If not, insert it
+					let { data: newPromptData, error: newPromptErr } = await supabaseAdmin
+						.from('prompt')
+						.insert({
+							text: prompt
+						})
+						.select('id')
+						.single();
+					if (newPromptErr) {
+						console.log(newPromptErr);
+					} else {
+						prompt_id = newPromptData?.id;
+					}
+				}
+				// Check if the negative prompt exists in the DB already
+				let negative_prompt_id: string | undefined;
+				if (isValue(negative_prompt)) {
+					let { data: negativePromptData, error: negativePromptErr } = await supabaseAdmin
+						.from('negative_prompt')
+						.select('id')
+						.eq('text', negative_prompt)
+						.maybeSingle();
+					if (negativePromptErr) {
+						console.log(negativePromptErr);
+					} else if (negativePromptData?.id) {
+						negative_prompt_id = negativePromptData.id;
+					} else {
+						// If not, insert it
+						let { data: newNegativePromptData, error: newNegativePromptErr } = await supabaseAdmin
+							.from('negative_prompt')
+							.insert({
+								text: negative_prompt
+							})
+							.select('id')
+							.single();
+						if (newNegativePromptErr) {
+							console.log(newNegativePromptErr);
+						} else {
+							negative_prompt_id = newNegativePromptData?.id;
+						}
+					}
+				}
+				// Update the generation with the prompt, negative prompt, duration and status
 				let { data, error } = await supabaseAdmin
 					.from('generation')
 					.update([
 						{
-							prompt,
-							negative_prompt,
+							prompt_id,
+							negative_prompt_id,
 							duration_ms: generationDurationMs,
 							status: 'succeeded'
 						}
