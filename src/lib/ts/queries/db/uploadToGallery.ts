@@ -36,12 +36,13 @@ export async function uploadToGallery({
 	const { data: prompt_get_data, error: prompt_get_error } = await supabaseAdmin
 		.from('prompt_g')
 		.select('id')
-		.eq('text', prompt);
+		.eq('text', prompt)
+		.maybeSingle();
 	if (prompt_get_error) {
 		console.log('Prompt get error:', prompt_get_error);
 		return;
-	} else if (prompt_get_data?.[0]?.id) {
-		prompt_id = prompt_get_data[0].id;
+	} else if (prompt_get_data?.id) {
+		prompt_id = prompt_get_data?.id;
 	} else {
 		const { data: prompt_insert_data, error: prompt_insert_error } = await supabaseAdmin
 			.from('prompt_g')
@@ -61,12 +62,13 @@ export async function uploadToGallery({
 		const { data: negative_prompt_get_data, error: negative_prompt_get_error } = await supabaseAdmin
 			.from('negative_prompt_g')
 			.select('id')
-			.eq('text', negative_prompt);
+			.eq('text', negative_prompt)
+			.maybeSingle();
 		if (negative_prompt_get_error) {
 			console.log('Negative prompt get error:', negative_prompt_get_error);
 			return;
-		} else if (negative_prompt_get_data?.[0]?.id) {
-			negative_prompt_id = negative_prompt_get_data[0].id;
+		} else if (negative_prompt_get_data?.id) {
+			negative_prompt_id = negative_prompt_get_data.id;
 		} else {
 			const { data: negative_prompt_insert_data, error: negative_prompt_insert_error } =
 				await supabaseAdmin
@@ -76,7 +78,7 @@ export async function uploadToGallery({
 					.single();
 			if (negative_prompt_insert_error) {
 				console.log('Negative prompt insert error:', negative_prompt_insert_error);
-				return new Response(negative_prompt_insert_error.message, { status: 500 });
+				return;
 			}
 			negative_prompt_id = negative_prompt_insert_data.id;
 		}
