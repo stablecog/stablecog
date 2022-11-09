@@ -13,6 +13,7 @@
 	import type { RealtimeChannel } from '@supabase/supabase-js';
 	import IconPulsing from '$components/icons/IconPulsing.svelte';
 	import type { TDBGenerationRealtimePayload, TDBUpscaleRealtimePayload } from '$ts/types/db';
+	import LL, { locale } from '$i18n/i18n-svelte';
 
 	type TProcessType = 'upscale' | 'generation';
 	interface TDBGenerationRealtimePayloadExt extends TDBGenerationRealtimePayload {
@@ -51,9 +52,9 @@
 
 	let channelGeneration: RealtimeChannel | undefined;
 	let channelUpscale: RealtimeChannel | undefined;
-	const getCountryName = (countryCode: string) => {
+	const getCountryName = (locale: Locales, countryCode: string) => {
 		try {
-			const displayName = new Intl.DisplayNames(['en'], { type: 'region' });
+			const displayName = new Intl.DisplayNames([locale], { type: 'region' });
 			const countryName = displayName.of(countryCode);
 			return countryName ?? 'Unknown';
 		} catch (error) {
@@ -70,6 +71,7 @@
 	}
 
 	function getOptionalInfo(
+		$LL: TranslationFunctions,
 		generationOrUpscale: TDBGenerationRealtimePayloadExt | TDBUpscaleRealtimePayloadExt
 	) {
 		const asGeneration = generationOrUpscale as TDBGenerationRealtimePayloadExt;
@@ -78,7 +80,7 @@
 			return asUpscale.scale
 				? [
 						{
-							key: 'Scale:',
+							key: $LL.Live.GenerationTooltip.ScaleTitle() + ':',
 							value: asUpscale.scale.toString()
 						}
 				  ]
@@ -87,7 +89,7 @@
 			return asGeneration.num_inference_steps
 				? [
 						{
-							key: 'Steps',
+							key: $LL.Live.GenerationTooltip.StepsTitle() + ':',
 							value: asGeneration.num_inference_steps.toString()
 						}
 				  ]
@@ -233,7 +235,7 @@
 				class="w-full px-8 md:px-16 flex flex-wrap items-center justify-center py-2 md:pt-10 gap-10 lg:gap-14"
 			>
 				<div class="w-full lg:w-64 max-w-full flex flex-col gap-1.5 text-center lg:text-right">
-					<h1 class="text-c-on-bg/50 text-sm">Generations</h1>
+					<h1 class="text-c-on-bg/50 text-sm">{$LL.Live.GenerationsTitle()}</h1>
 					<p class="font-bold text-4xl">
 						{Math.floor($generationTotalCount).toLocaleString('en-US')}
 					</p>
@@ -241,13 +243,13 @@
 				<div
 					class="w-full order-last lg:order-none lg:w-64 max-w-full flex flex-col gap-1.5 text-center"
 				>
-					<h1 class="text-c-on-bg/50 text-sm">Total Duration</h1>
+					<h1 class="text-c-on-bg/50 text-sm">{$LL.Live.TotalDurationTitle()}</h1>
 					<p class="font-bold text-4xl">
 						{Math.round($generationAndUpscaleTotalDurationMs / 1000).toLocaleString('en-US')}s
 					</p>
 				</div>
 				<div class="w-full lg:w-64 max-w-full flex flex-col gap-1.5 text-center lg:text-left">
-					<h1 class="text-c-on-bg/50 text-sm">Upscales</h1>
+					<h1 class="text-c-on-bg/50 text-sm">{$LL.Live.UpscalesTitle()}</h1>
 					<p class="font-bold text-4xl">
 						{Math.floor($upscaleTotalCount).toLocaleString('en-US')}
 					</p>
@@ -299,79 +301,85 @@
 													: 'rounded-xl'} bg-c-primary animate-ping-custom-bg"
 											/>
 										{/if}
-										{#key generationOrUpscale.status}
-											<div
-												use:tooltip={{
-													rows: [
-														{
-															key: 'Country:',
-															value: generationOrUpscale.country_code
-																? getCountryName(generationOrUpscale.country_code) ?? 'Unknown'
-																: 'Unknown'
-														},
-														{
-															key: 'Type:',
-															value:
-																generationOrUpscale.type === 'upscale' ? 'Upscale' : 'Generation'
-														},
-														...(generationOrUpscale.width && generationOrUpscale.height
-															? [
-																	{
-																		key: 'Dimensions:',
-																		value:
-																			generationOrUpscale.width && generationOrUpscale.height
-																				? `${generationOrUpscale.width} × ${generationOrUpscale.height}`
-																				: 'Unknown'
-																	}
-															  ]
-															: []),
-														...getOptionalInfo(generationOrUpscale),
-														...(generationOrUpscale.duration_ms
-															? [
-																	{
-																		key: 'Duration:',
-																		value: generationOrUpscale.duration_ms
-																			? `${(generationOrUpscale.duration_ms / 1000).toLocaleString(
-																					'en-US',
-																					{
-																						maximumFractionDigits: 1
-																					}
-																			  )}s`
-																			: 'Unfinished'
-																	}
-															  ]
-															: []),
-														{
-															key: 'Status:',
-															value:
-																generationOrUpscale.status.slice(0, 1).toUpperCase() +
-																generationOrUpscale.status.slice(1)
-														},
-														{
-															key: 'Server:',
-															value: generationOrUpscale.uses_default_server ? 'Default' : 'Custom'
-														}
-													],
-													...tooltipStyleProps
-												}}
-												class="w-full h-full {generationOrUpscale.type === 'generation'
-													? 'rounded-full'
-													: 'rounded-xl'} transition-all duration-300 flex items-center justify-center relative overflow-hidden z-0 {generationOrUpscale.status ===
-												'succeeded'
-													? 'bg-c-success'
-													: generationOrUpscale.status === 'failed'
-													? 'bg-c-danger'
-													: 'bg-c-primary'}"
-											>
-												{#if generationOrUpscale.country_code}
-													<p
-														class="text-center text-xs font-bold text-c-on-primary/50 cursor-default"
-													>
-														{generationOrUpscale.country_code}
-													</p>
-												{/if}
-											</div>
-										{/key}
+										<div
+											use:tooltip={{
+												rows: [
+													{
+														key: $LL.Live.GenerationTooltip.CountryTitle() + ':',
+														value: generationOrUpscale.country_code
+															? getCountryName($locale, generationOrUpscale.country_code) ??
+															  $LL.Live.GenerationTooltip.UnknownTitle()
+															: $LL.Live.GenerationTooltip.UnknownTitle()
+													},
+													{
+														key: $LL.Live.GenerationTooltip.Type.Title() + ':',
+														value:
+															generationOrUpscale.type === 'upscale'
+																? $LL.Live.GenerationTooltip.Type.Upscale()
+																: $LL.Live.GenerationTooltip.Type.Generation()
+													},
+													...(generationOrUpscale.width && generationOrUpscale.height
+														? [
+																{
+																	key: $LL.Live.GenerationTooltip.DimensionsTitle() + ':',
+																	value:
+																		generationOrUpscale.width && generationOrUpscale.height
+																			? `${generationOrUpscale.width} × ${generationOrUpscale.height}`
+																			: $LL.Live.GenerationTooltip.UnknownTitle()
+																}
+														  ]
+														: []),
+													...getOptionalInfo($LL, generationOrUpscale),
+													...(generationOrUpscale.duration_ms
+														? [
+																{
+																	key: $LL.Live.GenerationTooltip.DurationTitle() + ':',
+																	value: generationOrUpscale.duration_ms
+																		? `${(generationOrUpscale.duration_ms / 1000).toLocaleString(
+																				'en-US',
+																				{
+																					maximumFractionDigits: 1
+																				}
+																		  )}s`
+																		: 'Unfinished'
+																}
+														  ]
+														: []),
+													{
+														key: $LL.Live.GenerationTooltip.Status.Title() + ':',
+														value:
+															generationOrUpscale.status === 'started'
+																? $LL.Live.GenerationTooltip.Status.Started()
+																: generationOrUpscale.status === 'succeeded'
+																? $LL.Live.GenerationTooltip.Status.Succeeded()
+																: $LL.Live.GenerationTooltip.Status.Failed()
+													},
+													{
+														key: $LL.Live.GenerationTooltip.Server.Title() + ':',
+														value: generationOrUpscale.uses_default_server
+															? $LL.Live.GenerationTooltip.Server.Default()
+															: $LL.Live.GenerationTooltip.Server.Custom()
+													}
+												],
+												...tooltipStyleProps
+											}}
+											class="w-full h-full {generationOrUpscale.type === 'generation'
+												? 'rounded-full'
+												: 'rounded-xl'} transition-all duration-300 flex items-center justify-center relative overflow-hidden z-0 {generationOrUpscale.status ===
+											'succeeded'
+												? 'bg-c-success'
+												: generationOrUpscale.status === 'failed'
+												? 'bg-c-danger'
+												: 'bg-c-primary'}"
+										>
+											{#if generationOrUpscale.country_code}
+												<p
+													class="text-center text-xs font-bold text-c-on-primary/50 cursor-default"
+												>
+													{generationOrUpscale.country_code}
+												</p>
+											{/if}
+										</div>
 									</div>
 								</div>
 							</div>
@@ -385,7 +393,7 @@
 				>
 					<div class="w-full flex flex-col items-center justify-center py-4">
 						<IconPulsing />
-						<p class="w-full text-c-on-bg/40 text-center mt-1.5">Waiting for generations</p>
+						<p class="w-full text-c-on-bg/40 text-center mt-1.5">{$LL.Live.WaitingTitle()}</p>
 					</div>
 				</div>
 			{/if}

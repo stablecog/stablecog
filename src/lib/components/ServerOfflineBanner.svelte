@@ -2,6 +2,7 @@
 	import Button from '$components/buttons/Button.svelte';
 	import IconWarning from '$components/icons/IconWarning.svelte';
 	import { env } from '$env/dynamic/public';
+	import LL from '$i18n/i18n-svelte';
 	import { expandCollapse } from '$ts/animation/transitions';
 	import {
 		currentServer,
@@ -26,14 +27,15 @@
 		>
 			<IconWarning class="w-6 h-6" />
 			<p class="flex-1">
-				The server seems to be offline. You might want to refresh the page or set another server in
-				the settings.
+				{$LL.Error.ServerSeemsOffline()}
 			</p>
 		</div>
 		{#if env.PUBLIC_DEFAULT_SERVER_URL && $serverUrl !== env.PUBLIC_DEFAULT_SERVER_URL && ($defaultServerHealthStatus === 'healthy' || $defaultServerHealthStatus === 'loading')}
 			<div transition:expandCollapse|local={{ duration: 300 }} class="overflow-hidden relative z-0">
 				<div class="pt-3.5">
-					<Button size="sm" onClick={switchToDefaultServer}>Switch to Default Server</Button>
+					<Button size="sm" onClick={switchToDefaultServer}>
+						{$LL.SetServerModal.SwitchToDefaultServerButton()}
+					</Button>
 				</div>
 			</div>
 		{/if}

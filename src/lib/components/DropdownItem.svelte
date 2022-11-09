@@ -2,11 +2,14 @@
 	import { isTouchscreen } from '$ts/stores/isTouchscreen';
 
 	export let onClick: () => void;
+	export let twoLine = false;
 </script>
 
 <button
 	on:click={onClick}
-	class="w-full font-bold px-5 py-5 relative z-0 overflow-hidden rounded-xl group"
+	class="w-full font-bold px-5 {twoLine
+		? 'py-4'
+		: 'py-5'} relative z-0 overflow-hidden rounded-xl group"
 >
 	<div
 		class="w-full h-full origin-left rounded-xl transition transform -translate-x-full 

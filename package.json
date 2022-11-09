@@ -12,7 +12,7 @@
 		"update-types": "export $(xargs <.env) && npx supabase gen types typescript --project-id $SUPABASE_PROJECT_ID > src/lib/ts/types/supabase.ts",
 		"lint": "prettier --check .",
 		"format": "prettier --write .",
-		"typesafe-i18n": "typesafe-i18n"
+		"i18n": "typesafe-i18n"
 	},
 	"devDependencies": {
 		"@egjs/svelte-infinitegrid": "^4.7.1",

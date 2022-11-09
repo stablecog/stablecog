@@ -284,12 +284,13 @@ export const POST: RequestHandler = async ({ request }) => {
 		const generationResponse: TGenerationResponse = {
 			data:
 				output && !isNSFW ? { imageDataB64: output, duration_ms: generationDurationMs } : undefined,
-			error: output && isNSFW ? 'NSFW content detected, try another prompt :(' : data.error
+			error: output && isNSFW ? 'NSFW' : data.error
 		};
 		return new Response(JSON.stringify(generationResponse));
 	} catch (error) {
 		const endTimestamp = Date.now();
 		generationDurationMs = endTimestamp - startTimestamp;
+		console.log(error);
 		console.log(
 			'----',
 			`Failed generation in: ${(endTimestamp - startTimestamp) / 1000}s`,

@@ -30,8 +30,7 @@
 		lgBreakpoint,
 		maxHeight,
 		padding,
-		sidebarWidth,
-		tooltipStyleProps
+		sidebarWidth
 	} from '$components/generationFullScreen/Shared';
 	import ParamsSection from '$components/generationFullScreen/ParamsSection.svelte';
 	import Button from '$components/buttons/Button.svelte';
@@ -44,6 +43,8 @@
 	import { lastUpscaleDurationSec } from '$ts/stores/lastUpscaleDurationSec';
 	import { estimatedDurationBufferRatio } from '$ts/constants/main';
 	import { pLogUpscale, uLogUpscale } from '$ts/helpers/loggers';
+	import LL, { locale } from '$i18n/i18n-svelte';
+	import { negativePromptTooltipAlt } from '$ts/constants/tooltip';
 
 	export let generation: TGenerationUI;
 	export let upscaleStatus: TUpscaleStatus = 'idle';
@@ -76,7 +77,8 @@
 		sidebarWrapperScrollTop !== undefined &&
 		sidebarWrapperScrollHeight !== undefined &&
 		sidebarWrapperHeight !== undefined &&
-		sidebarWrapperScrollTop + 16 < sidebarWrapperScrollHeight - sidebarWrapperHeight;
+		sidebarWrapperScrollTop + 16 < sidebarWrapperScrollHeight - sidebarWrapperHeight &&
+		$windowWidth >= lgBreakpoint;
 
 	$: mainContainerWidth = Math.min($windowWidth || 0, maxWidthConstant);
 	$: mainContainerHeight = Math.min($windowHeight || 0, maxHeight);
@@ -379,7 +381,7 @@
 							<p
 								class="text-center font-medium text-xs md:text-sm shadow-lg shadow-c-shadow/[var(--o-shadow-stronger)] bg-c-bg-secondary px-4 py-3 rounded-xl"
 							>
-								Something went wrong :(
+								{$LL.Error.SomethingWentWrong()}
 							</p>
 						</div>
 					{/if}
@@ -407,32 +409,6 @@
 				class="w-full shadow-generation-sidebar shadow-c-shadow/[var(--o-shadow-stronger)] flex 
 				flex-col items-start justify-start bg-c-bg-secondary lg:border-l-2 border-c-bg-tertiary relative"
 			>
-				{#if showSidebarChevron}
-					<div
-						transition:fly|local={{ duration: 200, easing: quadOut, y: 50, opacity: 0 }}
-						class="absolute left-1/2 transform -translate-x-1/2 bottom-0 flex justify-center items-end p-1 z-50"
-					>
-						<IconButton
-							name="Scroll to Sidebar Bottom"
-							onClick={() => {
-								if (sidebarWrapper) {
-									sidebarWrapper.scrollTo({
-										top: sidebarWrapperScrollHeight - sidebarWrapperHeight,
-										behavior: 'smooth'
-									});
-								}
-							}}
-						>
-							<div class="p-0.5">
-								<IconChevronDown
-									class="w-7 h-7 text-c-on-bg/25 transition {!$isTouchscreen
-										? 'group-hover:text-c-primary'
-										: ''}"
-								/>
-							</div>
-						</IconButton>
-					</div>
-				{/if}
 				<div
 					on:scroll={sidebarWrapperOnScroll}
 					bind:this={sidebarWrapper}
@@ -462,7 +438,7 @@
 												</p>
 											{:else}
 												<IconUpscale class="w-5 h-5" />
-												<p>Upscale</p>
+												<p>{$LL.GenerationFullscreen.UpscaleButton()}</p>
 											{/if}
 										</div>
 									</Button>
@@ -477,20 +453,13 @@
 								/>
 							{/if}
 							<div class="flex flex-col items-start gap-3">
-								<p class="text-sm leading-normal">{generation.prompt}</p>
+								<p class="max-w-full text-sm leading-normal">{generation.prompt}</p>
 								{#if generation.negative_prompt}
-									<div class="flex items-start text-c-danger gap-2">
-										<div
-											use:tooltip={{
-												title: 'Negative Prompt',
-												description:
-													'To remove unwanted things from the image. It does the opposite of what the prompt does.',
-												...tooltipStyleProps
-											}}
-										>
+									<div class="max-w-full flex items-start text-c-danger gap-2">
+										<div use:tooltip={$negativePromptTooltipAlt}>
 											<IconChatBubbleCancel class="w-5 h-5" />
 										</div>
-										<p class="text-sm leading-normal flex-shrink -mt-0.75">
+										<p class="flex-shrink min-w-0 text-sm leading-normal -mt-0.75">
 											{generation.negative_prompt}
 										</p>
 									</div>
@@ -512,11 +481,11 @@
 									<Morpher morph={imageDownloading}>
 										<div slot="item-0" class="flex items-center justify-center gap-1.5">
 											<IconDownload class="w-5 h-5 -ml-0.5" />
-											<p>Download</p>
+											<p>{$LL.GenerationFullscreen.DownloadButton()}</p>
 										</div>
 										<div slot="item-1" class="flex items-center justify-center gap-1.5">
 											<IconTick class="w-5 h-5 -ml-0.5 scale-110" />
-											<p>Done!</p>
+											<p>{$LL.GenerationFullscreen.DoneButtonState()}</p>
 										</div>
 									</Morpher>
 								</SubtleButton>
@@ -524,13 +493,13 @@
 									<SubtleButton prefetch={true} href={rerollUrl}>
 										<div class="flex items-center justify-center gap-1.5">
 											<IconDice class="w-5 h-5 -ml-0.5" />
-											<p>Reroll</p>
+											<p>{$LL.GenerationFullscreen.RerollButton()}</p>
 										</div>
 									</SubtleButton>
 									<SubtleButton prefetch={true} href={regenerateUrl}>
 										<div class="flex items-center justify-center gap-1.5">
 											<IconRefresh class="w-5 h-5 -ml-0.5 scale-110" />
-											<p>Regenerate</p>
+											<p>{$LL.GenerationFullscreen.RegenerateButton()}</p>
 										</div>
 									</SubtleButton>
 								{/if}
@@ -539,11 +508,11 @@
 										<Morpher morph={promptCopied}>
 											<div slot="item-0" class="flex items-center justify-center gap-1.5">
 												<IconCopy class="w-5 h-5 -ml-0.5" />
-												<p>Copy Prompt</p>
+												<p>{$LL.GenerationFullscreen.CopyPromptButton()}</p>
 											</div>
 											<div slot="item-1" class="flex items-center justify-center gap-1.5">
 												<IconTick class="w-5 h-5 -ml-0.5 scale-110" />
-												<p>Copied!</p>
+												<p>{$LL.GenerationFullscreen.CopiedButtonState()}</p>
 											</div>
 										</Morpher>
 									</SubtleButton>
@@ -557,11 +526,11 @@
 											<Morpher morph={negativePromptCopied}>
 												<div slot="item-0" class="flex items-center justify-center gap-1.5">
 													<IconCopy class="w-5 h-5 -ml-0.5" />
-													<p>Copy Negative Prompt</p>
+													<p>{$LL.GenerationFullscreen.CopyNegativePromptButton()}</p>
 												</div>
 												<div slot="item-1" class="flex items-center justify-center gap-1.5">
 													<IconTick class="w-5 h-5 -ml-0.5 scale-110" />
-													<p>Copied!</p>
+													<p>{$LL.GenerationFullscreen.CopiedButtonState()}</p>
 												</div>
 											</Morpher>
 										</SubtleButton>
@@ -590,6 +559,32 @@
 						/>
 					</div>
 				</div>
+				{#if showSidebarChevron}
+					<div
+						transition:fly|local={{ duration: 200, easing: quadOut, y: 50, opacity: 0 }}
+						class="absolute left-1/2 transform -translate-x-1/2 bottom-0 flex justify-center items-end p-1 z-50"
+					>
+						<IconButton
+							name="Scroll to Sidebar Bottom"
+							onClick={() => {
+								if (sidebarWrapper) {
+									sidebarWrapper.scrollTo({
+										top: sidebarWrapperScrollHeight - sidebarWrapperHeight,
+										behavior: 'smooth'
+									});
+								}
+							}}
+						>
+							<div class="p-0.5">
+								<IconChevronDown
+									class="w-7 h-7 text-c-on-bg/25 transition {!$isTouchscreen
+										? 'group-hover:text-c-primary'
+										: ''}"
+								/>
+							</div>
+						</IconButton>
+					</div>
+				{/if}
 			</div>
 		</div>
 	</div>

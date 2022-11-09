@@ -3,6 +3,7 @@
 	import GenerationImage from '$components/GenerationImage.svelte';
 	import IconLoading from '$components/icons/IconLoading.svelte';
 	import ImagePlaceholder from '$components/ImagePlaceholder.svelte';
+	import LL from '$i18n/i18n-svelte';
 	import { elementreceive, elementsend } from '$ts/animation/transitions';
 	import { isValue } from '$ts/helpers/isValue';
 	import { activeGeneration } from '$ts/stores/activeGeneration';
@@ -85,8 +86,8 @@
 	</div>
 {:else}
 	<div class="w-full flex-1 flex flex-col justify-center items-center py-8 px-5 gap-8">
-		<p class="text-c-on-bg/50">You didn't generate any images yet.</p>
-		<Button href="/">Start Generating</Button>
+		<p class="text-c-on-bg/50">{$LL.History.NoGenerationsYet()}</p>
+		<Button href="/">{$LL.Shared.StartGeneratingButton()}</Button>
 		<div class="h-[2vh]" />
 	</div>
 {/if}

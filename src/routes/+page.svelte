@@ -37,6 +37,7 @@
 	import { isValue } from '$ts/helpers/isValue';
 	import { shouldSubmitToGallery } from '$ts/stores/shouldSubmitToGallery';
 	import SubmitToGallery from '$components/SubmitToGallery.svelte';
+	import LL from '$i18n/i18n-svelte';
 
 	export let data: THomePageData;
 
@@ -291,7 +292,11 @@
 						class="flex flex-col justify-start origin-top px-8"
 					>
 						<p class="w-full max-w-lg leading-relaxed text-c-on-bg/40 text-center py-4">
-							{generationError ?? 'Something went wrong :('}
+							{generationError
+								? generationError === 'NSFW'
+									? $LL.Error.NSFW()
+									: generationError
+								: $LL.Error.SomethingWentWrong()}
 						</p>
 					</div>
 				{:else if status === 'success' && lastGeneration && lastGeneration.imageUrl}

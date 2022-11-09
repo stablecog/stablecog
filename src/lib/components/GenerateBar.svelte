@@ -24,7 +24,6 @@
 		inferenceStepsTabs,
 		maxPromptLength,
 		maxSeed,
-		tooltipStyleProps,
 		widthDefault,
 		widthTabs
 	} from '$ts/constants/main';
@@ -39,6 +38,15 @@
 	import { currentServer } from '$ts/stores/serverHealth';
 	import type { TStatus } from '$ts/types/main';
 	import { onMount, tick } from 'svelte';
+	import LL, { locale } from '$i18n/i18n-svelte';
+	import {
+		guidanceScaleTooltip,
+		heightTooltip,
+		inferenceStepsTooltip,
+		negativePromptTooltip,
+		seedTooltip,
+		widthTooltip
+	} from '$ts/constants/tooltip';
 
 	export let serverData: THomePageData;
 	export let generationWidth = serverData.width !== null ? serverData.width : widthDefault;
@@ -68,7 +76,7 @@
 	if (serverData.negative_prompt !== null) negativePromptInputValue = serverData.negative_prompt;
 
 	let submitting = false;
-	const placeholder = 'Portrait of a cat by Van Gogh';
+	$: placeholder = $LL.Home.PromptInput.Placeholder();
 	let now: number | undefined;
 	let nowInterval: NodeJS.Timeout | undefined;
 	let promptInputElement: HTMLTextAreaElement;
@@ -299,7 +307,7 @@
 					maximumFractionDigits: 1
 				})}
 			{:else}
-				Generate
+				{$LL.Home.GenerateButton()}
 			{/if}
 		</Button>
 	</div>
@@ -318,12 +326,8 @@
 					hideSelected={!isCheckComplete}
 				>
 					<div
-						use:tooltip={{
-							title: 'Width',
-							description: 'The width of the image.',
-							...tooltipStyleProps
-						}}
 						slot="title"
+						use:tooltip={$widthTooltip}
 						class="py-2 px-4 flex items-center justify-center"
 					>
 						<IconWidth class="w-6 h-6 text-c-on-bg/25" />
@@ -337,12 +341,8 @@
 					hideSelected={!isCheckComplete}
 				>
 					<div
-						use:tooltip={{
-							title: 'Height',
-							description: 'The height of the image.',
-							...tooltipStyleProps
-						}}
 						slot="title"
+						use:tooltip={$heightTooltip}
 						class="py-2 px-4 flex items-center justify-center"
 					>
 						<IconHeight class="w-6 h-6 text-c-on-bg/25" />
@@ -357,12 +357,8 @@
 						hideSelected={!isCheckComplete}
 					>
 						<div
-							use:tooltip={{
-								title: 'Inference Steps',
-								description: 'How many steps will be taken to generate (diffuse) the image.',
-								...tooltipStyleProps
-							}}
 							slot="title"
+							use:tooltip={$inferenceStepsTooltip}
 							class="py-2 px-4 flex items-center justify-center"
 						>
 							<IconSteps class="w-6 h-6 text-c-on-bg/25" />
@@ -375,13 +371,8 @@
 						max={guidanceScaleMax}
 					>
 						<div
-							use:tooltip={{
-								title: 'Guidance Scale',
-								description:
-									'How similar the image will be to your prompt. Higher values make the image closer to your prompt.',
-								...tooltipStyleProps
-							}}
 							slot="title"
+							use:tooltip={$guidanceScaleTooltip}
 							class="py-2 px-4 flex items-center justify-center"
 						>
 							<IconScale class="w-6 h-6 text-c-on-bg/25" />
@@ -390,20 +381,15 @@
 					{#if $currentServer.features?.includes('negative_prompt')}
 						<TabLikeInput
 							class="w-80 max-w-full"
-							placeholder="Negative prompt"
+							placeholder={$LL.Home.NegativePromptInput.Placeholder()}
 							type="text"
 							bind:value={negativePromptInputValue}
 							max={maxPromptLength}
 							{formElement}
 						>
 							<div
-								use:tooltip={{
-									title: 'Negative Prompt',
-									description:
-										'To remove unwanted things from the image. It does the opposite of what the prompt does.',
-									...tooltipStyleProps
-								}}
 								slot="title"
+								use:tooltip={$negativePromptTooltip}
 								class="py-2 px-4 flex items-center justify-center"
 							>
 								<IconChatBubbleCancel class="w-6 h-6 text-c-on-bg/25" />
@@ -412,20 +398,15 @@
 					{/if}
 					<TabLikeInput
 						class="w-80 max-w-full"
-						placeholder="Seed number"
+						placeholder={$LL.Home.SeedInput.Placeholder()}
 						bind:value={generationSeed}
 						type="number"
 						max={maxSeed}
 						{formElement}
 					>
 						<div
-							use:tooltip={{
-								title: 'Seed',
-								description:
-									'Get repeatable results. A seed combined with the same prompt and options generates the same image.',
-								...tooltipStyleProps
-							}}
 							slot="title"
+							use:tooltip={$seedTooltip}
 							class="py-2 px-4 flex items-center justify-center"
 						>
 							<IconSeed class="w-6 h-6 text-c-on-bg/25" />

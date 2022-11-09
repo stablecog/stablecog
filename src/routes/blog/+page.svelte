@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { page } from '$app/stores';
 	import MetaTag from '$components/MetaTag.svelte';
+	import LL from '$i18n/i18n-svelte';
 	import { canonicalUrl } from '$ts/constants/main';
 	import { isTouchscreen } from '$ts/stores/isTouchscreen';
 	import type { PageServerData } from './$types';
@@ -22,7 +23,7 @@
 		md:pt-8 pb-[calc(3vh+0.5rem)]"
 >
 	<div class="w-full max-w-7xl flex justify-center text-center">
-		<h1 class="font-bold text-4xl">Blog Posts</h1>
+		<h1 class="font-bold text-4xl">{$LL.Blog.Title()}</h1>
 	</div>
 	<div class="w-full max-w-7xl md:px-8 flex flex-wrap gap-5 items-center justify-center mt-8">
 		{#each posts as post}

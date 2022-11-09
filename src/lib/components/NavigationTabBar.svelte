@@ -4,6 +4,7 @@
 	import { isTouchscreen } from '$ts/stores/isTouchscreen';
 	import type { TNavbarRoute, TTabBarPlacement } from '$ts/types/main';
 	import TabBarWrapper from './TabBarWrapper.svelte';
+	import LL from '$i18n/i18n-svelte';
 
 	export let type: TTabBarPlacement = 'normal';
 
@@ -15,24 +16,25 @@
 		return routes.findIndex((route) => isSelected(route.href, currentPath));
 	};
 
-	const routes: TNavbarRoute[] = [
+	let routes: TNavbarRoute[];
+	$: routes = [
 		{
-			name: 'Home',
+			name: $LL.Navbar.HomeTab(),
 			href: '/',
 			icon: 'home'
 		},
 		{
-			name: 'History',
+			name: $LL.Navbar.HistoryTab(),
 			href: '/history',
 			icon: 'history'
 		},
 		{
-			name: 'Gallery',
+			name: $LL.Navbar.GalleryTab(),
 			href: '/gallery',
 			icon: 'gallery'
 		},
 		{
-			name: 'Live',
+			name: $LL.Navbar.LiveTab(),
 			href: '/live',
 			icon: 'live'
 		}

@@ -7,6 +7,7 @@
 	import MetaTag from '$components/MetaTag.svelte';
 	import SocialBar from '$components/SocialBar.svelte';
 	import '$css/blog.css';
+	import LL from '$i18n/i18n-svelte';
 	import { canonicalUrl } from '$ts/constants/main';
 	import { isTouchscreen } from '$ts/stores/isTouchscreen';
 	import type { PageServerData } from './$types';
@@ -65,7 +66,7 @@
 				class="w-6 h-6 transform transition text-c-on-bg/50 group-hover:-translate-x-1
 				{!$isTouchscreen ? 'group-hover:text-c-primary' : ''}"
 			/>
-			<p class="font-bold">Back to Blog</p>
+			<p class="font-bold">{$LL.Blog.BackToBlogButton()}</p>
 		</div>
 	</LinkButton>
 	<div class="w-full flex justify-center pt-6 pb-10 md:px-8 lg:px-12">
@@ -76,16 +77,18 @@
 			class="max-w-full flex flex-col items-center bg-c-bg relative z-0 overflow-hidden
 			ring-2 ring-c-bg-secondary rounded-xl shadow-lg shadow-c-shadow/[var(--o-shadow-normal)]"
 		>
-			<p class="font-bold text-center text-base bg-c-bg-secondary w-full px-5 py-2.5">Join Us</p>
+			<p class="font-bold text-center text-base bg-c-bg-secondary w-full px-5 py-2.5">
+				{$LL.Shared.JoinUsTitle()}
+			</p>
 			<div class="flex flex-wrap justify-center items-center p-2">
 				<SocialBar size="md" color="normal" />
 			</div>
 		</div>
 		<div class="w-full flex flex-col items-center gap-5">
-			<p class="font-bold text-xl text-center max-w-md px-5 leading-normal">
-				Start generating beautiful images!
+			<p class="font-bold text-xl text-center max-w-lg px-5 leading-normal">
+				{$LL.Shared.StartGeneratingTitle()}
 			</p>
-			<Button href="/">Start Generating</Button>
+			<Button href="/">{$LL.Shared.StartGeneratingButton()}</Button>
 		</div>
 	</div>
 </div>

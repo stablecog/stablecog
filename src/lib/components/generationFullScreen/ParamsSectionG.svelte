@@ -1,6 +1,5 @@
 <script lang="ts">
 	import SubtleButton from '$components/buttons/SubtleButton.svelte';
-	import { tooltipStyleProps } from '$components/generationFullScreen/Shared';
 	import IconCopy from '$components/icons/IconCopy.svelte';
 	import IconDimensions from '$components/icons/IconDimensions.svelte';
 	import IconScale from '$components/icons/IconScale.svelte';
@@ -8,7 +7,13 @@
 	import IconSteps from '$components/icons/IconSteps.svelte';
 	import IconTick from '$components/icons/IconTick.svelte';
 	import Morpher from '$components/Morpher.svelte';
+	import LL, { locale } from '$i18n/i18n-svelte';
 	import { tooltip } from '$ts/actions/tooltip';
+	import {
+		guidanceScaleTooltipAlt,
+		inferenceStepsTooltipAlt,
+		seedTooltipAlt
+	} from '$ts/constants/tooltip';
 	import type { TDBGenerationG } from '$ts/types/db';
 	import { copy } from 'svelte-copy';
 
@@ -35,16 +40,11 @@
 		<div class="min-w-[calc(50%-0.75rem)] flex flex-wrap items-center gap-3.5">
 			<div class="flex flex-col items-start gap-1">
 				<div
-					use:tooltip={{
-						title: 'Seed',
-						description:
-							'Get repeatable results. A seed combined with the same prompt and options generates the same image.',
-						...tooltipStyleProps
-					}}
+					use:tooltip={$seedTooltipAlt}
 					class="flex items-center gap-1.5 text-c-on-bg/75 text-sm cursor-default"
 				>
 					<IconSeed class="w-4 h-4" />
-					<p>Seed</p>
+					<p>{$LL.Home.SeedInput.Title()}</p>
 				</div>
 				<p class="font-bold">{generation.seed}</p>
 			</div>
@@ -63,37 +63,28 @@
 		</div>
 		<div class="min-w-[calc(50%-0.75rem)] flex flex-col items-start gap-1">
 			<div
-				use:tooltip={{
-					title: 'Guidance Scale',
-					description:
-						'How similar the image will be to your prompt. Higher values make the image closer to your prompt.',
-					...tooltipStyleProps
-				}}
+				use:tooltip={$guidanceScaleTooltipAlt}
 				class="flex items-center gap-1.5 text-c-on-bg/75 text-sm cursor-default"
 			>
 				<IconScale class="w-4 h-4" />
-				<p>Guidance Scale</p>
+				<p>{$LL.Home.GuidanceScaleSlider.Title()}</p>
 			</div>
 			<p class="font-bold">{generation.guidance_scale}</p>
 		</div>
 		<div class="min-w-[calc(50%-0.75rem)] flex flex-col items-start gap-1">
 			<div
-				use:tooltip={{
-					title: 'Inference Steps',
-					description: 'How many steps will be taken to generate (diffuse) the image.',
-					...tooltipStyleProps
-				}}
+				use:tooltip={$inferenceStepsTooltipAlt}
 				class="flex items-center gap-1.5 text-c-on-bg/75 text-sm cursor-default"
 			>
 				<IconSteps class="w-4 h-4" />
-				<p>Inference Steps</p>
+				<p>{$LL.Home.InferenceStepsTabBar.Title()}</p>
 			</div>
 			<p class="font-bold">{generation.inference_steps}</p>
 		</div>
 		<div class="min-w-[calc(50%-0.75rem)] flex flex-col items-start gap-1">
 			<div class="flex items-center gap-1.5 text-c-on-bg/75 text-sm cursor-default">
 				<IconDimensions class="w-4 h-4" />
-				<p>Dimensions</p>
+				<p>{$LL.GenerationFullscreen.Dimensions.Title()}</p>
 			</div>
 			<p class="font-bold">{generation.width} × {generation.height}</p>
 		</div>

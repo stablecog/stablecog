@@ -1,6 +1,7 @@
 import type { BaseTranslation } from '../i18n-types';
 
 const en: BaseTranslation = {
+	Language: 'Language',
 	Home: {
 		GenerateButton: 'Generate',
 		PromptInput: {
@@ -38,21 +39,23 @@ const en: BaseTranslation = {
 	},
 	History: {
 		GenerationsTitle: 'Generations',
-		GenerationsWarning: 'Last {count:number} only.',
-		NoGenerations: "You didn't generate any images yet."
+		GenerationsMaxSavedCountWarning: 'Last {count:number} only',
+		NoGenerationsYet: "You didn't generate any images yet."
 	},
 	Live: {
 		GenerationsTitle: 'Generations',
 		TotalDurationTitle: 'Total Duration',
 		UpscalesTitle: 'Upscales',
-		Tooltip: {
-			Country: {
-				Title: 'Country',
-				Unknown: 'Unknown'
+		GenerationTooltip: {
+			CountryTitle: 'Country',
+			Type: {
+				Title: 'Type',
+				Generation: 'Generation',
+				Upscale: 'Upscale'
 			},
-			TypeTitle: 'Type',
 			DimensionsTitle: 'Dimensions',
 			StepsTitle: 'Steps',
+			ScaleTitle: 'Scale',
 			DurationTitle: 'Duration',
 			Status: {
 				Title: 'Status',
@@ -61,8 +64,11 @@ const en: BaseTranslation = {
 				Failed: 'Failed'
 			},
 			Server: {
-				Title: 'Server'
-			}
+				Title: 'Server',
+				Default: 'Default',
+				Custom: 'Custom'
+			},
+			UnknownTitle: 'Unknown'
 		},
 		WaitingTitle: 'Waiting for generations'
 	},
@@ -81,15 +87,17 @@ const en: BaseTranslation = {
 	},
 	GenerationFullscreen: {
 		DownloadButton: 'Download',
+		DoneButtonState: 'Done!',
 		CopyPromptButton: 'Copy Prompt',
 		CopyNegativePromptButton: 'Copy Negative Prompt',
+		CopiedButtonState: 'Copied!',
 		RerollButton: 'Reroll',
 		RegenerateButton: 'Regenerate',
 		GenerateButton: 'Generate',
 		UpscaleButton: 'Upscale',
 		UpscaleTabBar: {
 			UpscaledTitle: 'Upscaled',
-			OriginalTitle: 'Normal'
+			OriginalTitle: 'Original'
 		},
 		Dimensions: {
 			Title: 'Dimensions'
@@ -98,17 +106,35 @@ const en: BaseTranslation = {
 			Title: 'Duration'
 		}
 	},
+	SetServerModal: {
+		SetServerTitle: 'Set Server',
+		SwitchServerTitle: 'Switch Server',
+		Paragraph: 'The server will be used for generating images.',
+		SetButton: 'Set',
+		DefaultButton: 'Default',
+		ServerUrlInput: {
+			Placeholder: 'Server URL'
+		},
+		SwitchToDefaultServerButton: 'Switch to Default Server'
+	},
 	Blog: {
 		Title: 'Blog Posts',
-		BackToBlogButton: 'Back to Blog',
-		JoinUsTitle: 'Join Us'
+		BackToBlogButton: 'Back to Blog'
 	},
 	Redirect: {
 		RedirectingToTitle: 'Redirecting to {name:string}'
 	},
 	Shared: {
 		StartGeneratingTitle: 'Start generating beautiful images!',
-		StartGeneratingButton: 'Start Generating'
+		StartGeneratingButton: 'Start Generating',
+		JoinUsTitle: 'Join Us'
+	},
+	Error: {
+		SomethingWentWrong: 'Something went wrong :(',
+		NSFW: 'NSFW content detected, try another prompt :(',
+		ServerSeemsOffline:
+			'The server seems to be offline. You might want to refresh the page or set another server from the settings.',
+		ServerSetNotWorking: "This server isn't compatible or not responding."
 	}
 };
 

@@ -1,9 +1,17 @@
 import { supabaseClient } from '$ts/constants/supabaseClient';
 import { supabaseAdmin } from '$ts/constants/supabaseAdmin';
 import { getSupabase } from '@supabase/auth-helpers-sveltekit';
-import type { Handle } from '@sveltejs/kit';
+import type { Handle, RequestEvent } from '@sveltejs/kit';
+import { initAcceptLanguageHeaderDetector } from 'typesafe-i18n/detectors';
+import { detectLocale, isLocale, i18n } from '$i18n/i18n-util';
+import { loadAllLocales } from '$i18n/i18n-util.sync';
+
+loadAllLocales();
 
 export const handle: Handle = async ({ event, resolve }) => {
+	let preferredLocale = getPreferredLocale(event);
+	const locale = isLocale(preferredLocale) ? preferredLocale : 'en';
+	event.locals.locale = locale;
 	// protect requests to all routes that start with /admin (except login)
 	if (event.url.pathname.startsWith('/admin') && event.url.pathname !== '/admin/login') {
 		if (!supabaseClient || !supabaseAdmin) return Response.redirect(`${event.url.origin}/`, 303);
@@ -19,4 +27,9 @@ export const handle: Handle = async ({ event, resolve }) => {
 		}
 	}
 	return resolve(event);
+};
+
+const getPreferredLocale = ({ request }: RequestEvent) => {
+	const acceptLanguageDetector = initAcceptLanguageHeaderDetector(request);
+	return detectLocale(acceptLanguageDetector);
 };

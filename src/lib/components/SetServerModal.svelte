@@ -11,6 +11,7 @@
 	import { isTouchscreen } from '$ts/stores/isTouchscreen';
 	import ClearButton from '$components/buttons/ClearButton.svelte';
 	import { currentServer, currentServerHealthStatus } from '$ts/stores/serverHealth';
+	import LL from '$i18n/i18n-svelte';
 
 	export let close: (() => void) | undefined = undefined;
 	export let isOnBarrier = true;
@@ -95,9 +96,11 @@
 >
 	<div class="w-full flex flex-col px-3 py-4 md:p-5">
 		<div class="flex flex-col px-2 gap-1">
-			<h1 class="font-bold text-xl">{$serverUrl ? 'Switch' : 'Set'} Server</h1>
+			<h1 class="font-bold text-xl">
+				{$serverUrl ? $LL.SetServerModal.SwitchServerTitle() : $LL.SetServerModal.SetServerTitle()}
+			</h1>
 			<p class="text-sm text-c-on-bg/50 leading-relaxed">
-				The server will be used for generating images.
+				{$LL.SetServerModal.Paragraph()}
 			</p>
 		</div>
 		<form
@@ -117,7 +120,7 @@
 					}}
 					disabled={setServerProcessStatus === 'loading'}
 					type="text"
-					placeholder="Server URL"
+					placeholder={$LL.SetServerModal.ServerUrlInput.Placeholder()}
 					class="w-full overflow-hidden overflow-ellipsis bg-transparent relative pl-5 md:pl-6 py-5 rounded-xl transition 
 			        focus:ring-2 focus:ring-c-primary/20 ring-0 ring-c-primary/20 placeholder:text-c-on-bg/30 {!$isTouchscreen
 						? 'enabled:hover:ring-2'
@@ -136,7 +139,9 @@
 					class="transition transform relative
 						{setServerProcessStatus === 'loading' ? 'opacity-0 scale-0' : 'opacity-100 scale-100'}"
 				>
-					{!serverUrlInputValue && env.PUBLIC_DEFAULT_SERVER_URL ? 'Default' : 'Set'}
+					{!serverUrlInputValue && env.PUBLIC_DEFAULT_SERVER_URL
+						? $LL.SetServerModal.DefaultButton()
+						: $LL.SetServerModal.SetButton()}
 				</p>
 				<div
 					class="w-6 h-6 absolute transition transform left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none
@@ -150,7 +155,7 @@
 			<div transition:expandCollapse|local={{}}>
 				<div class="pt-3.5">
 					<p class="py-3 px-4 bg-c-danger/8 rounded-lg text-c-danger text-sm">
-						This server isn't compatible or not responding.
+						{$LL.Error.ServerSetNotWorking()}
 					</p>
 				</div>
 			</div>

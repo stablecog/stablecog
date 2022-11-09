@@ -23,13 +23,14 @@
 		lgBreakpoint,
 		maxHeight,
 		padding,
-		sidebarWidth,
-		tooltipStyleProps
+		sidebarWidth
 	} from '$components/generationFullScreen/Shared';
 	import ParamsSectionG from '$components/generationFullScreen/ParamsSectionG.svelte';
 	import { urlFromImageId } from '$ts/helpers/urlFromImageId';
 	import IconWand from '$components/icons/IconWand.svelte';
 	import type { TGenerationGAdmin, TGenerationGWithLoaded } from '$ts/types/main';
+	import LL, { locale } from '$i18n/i18n-svelte';
+	import { negativePromptTooltipAlt } from '$ts/constants/tooltip';
 
 	export let generation: TGenerationGWithLoaded | TGenerationGAdmin;
 
@@ -51,7 +52,8 @@
 		sidebarWrapperScrollTop !== undefined &&
 		sidebarWrapperScrollHeight !== undefined &&
 		sidebarWrapperHeight !== undefined &&
-		sidebarWrapperScrollTop + 16 < sidebarWrapperScrollHeight - sidebarWrapperHeight;
+		sidebarWrapperScrollTop + 16 < sidebarWrapperScrollHeight - sidebarWrapperHeight &&
+		$windowWidth >= lgBreakpoint;
 
 	$: mainContainerWidth = Math.min($windowWidth || 0, maxWidthConstant);
 	$: mainContainerHeight = Math.min($windowHeight || 0, maxHeight);
@@ -217,6 +219,89 @@
 				class="w-full shadow-generation-sidebar shadow-c-shadow/[var(--o-shadow-stronger)] flex 
 				flex-col items-start justify-start bg-c-bg-secondary lg:border-l-2 border-c-bg-tertiary relative"
 			>
+				<div
+					on:scroll={sidebarWrapperOnScroll}
+					bind:this={sidebarWrapper}
+					bind:clientHeight={sidebarWrapperHeight}
+					class="w-full overflow-auto lg-list-fade relative"
+				>
+					<div
+						bind:clientHeight={sidebarInnerContainerHeight}
+						class="w-full flex flex-col items-start justify-start"
+					>
+						<div class="w-full flex flex-col gap-4 md:gap-5 px-5 py-4 md:px-7 md:py-5">
+							<div class="flex flex-col items-start gap-3">
+								<p class="max-w-full text-sm leading-normal">
+									{generation.prompt.text}
+								</p>
+								{#if generation.negative_prompt}
+									<div class="max-w-full flex items-start text-c-danger gap-2">
+										<div use:tooltip={$negativePromptTooltipAlt}>
+											<IconChatBubbleCancel class="w-5 h-5" />
+										</div>
+										<p class="flex-shrink min-w-0 text-sm leading-normal -mt-0.75">
+											{generation.negative_prompt.text}
+										</p>
+									</div>
+								{/if}
+							</div>
+							<div class="w-full flex flex-wrap gap-3">
+								<SubtleButton prefetch={true} href={generateUrl} target="_blank">
+									<div class="flex items-center justify-center gap-1.5">
+										<IconWand class="w-5 h-5 -ml-0.5" />
+										<p>{$LL.GenerationFullscreen.GenerateButton()}</p>
+									</div>
+								</SubtleButton>
+								<div use:copy={generation.prompt.text} on:svelte-copy={onPromptCopied}>
+									<SubtleButton state={promptCopied ? 'success' : 'idle'}>
+										<Morpher morph={promptCopied}>
+											<div slot="item-0" class="flex items-center justify-center gap-1.5">
+												<IconCopy class="w-5 h-5 -ml-0.5" />
+												<p>{$LL.GenerationFullscreen.CopyPromptButton()}</p>
+											</div>
+											<div slot="item-1" class="flex items-center justify-center gap-1.5">
+												<IconTick class="w-5 h-5 -ml-0.5 scale-110" />
+												<p>{$LL.GenerationFullscreen.CopiedButtonState()}</p>
+											</div>
+										</Morpher>
+									</SubtleButton>
+								</div>
+								{#if generation.negative_prompt}
+									<div
+										use:copy={generation.negative_prompt.text}
+										on:svelte-copy={onNegativePromptCopied}
+									>
+										<SubtleButton state={negativePromptCopied ? 'success' : 'idle'}>
+											<Morpher morph={negativePromptCopied}>
+												<div slot="item-0" class="flex items-center justify-center gap-1.5">
+													<IconCopy class="w-5 h-5 -ml-0.5" />
+													<p>{$LL.GenerationFullscreen.CopyNegativePromptButton()}</p>
+												</div>
+												<div slot="item-1" class="flex items-center justify-center gap-1.5">
+													<IconTick class="w-5 h-5 -ml-0.5 scale-110" />
+													<p>{$LL.GenerationFullscreen.CopiedButtonState()}</p>
+												</div>
+											</Morpher>
+										</SubtleButton>
+									</div>
+								{/if}
+							</div>
+						</div>
+						<!-- Divider -->
+						<div class="w-full pt-1.5 pb-0.5">
+							<div class="w-full h-2px bg-c-bg-tertiary rounded-full" />
+						</div>
+						<!-- Divider -->
+						<ParamsSectionG
+							class="flex flex-col px-5 py-4 md:px-7 md:py-5 lg:pb-8 gap-6"
+							{generation}
+							bind:seedCopied
+							bind:seedCopiedTimeout
+							{copyTimeoutDuration}
+							{onSeedCopyClicked}
+						/>
+					</div>
+				</div>
 				{#if showSidebarChevron}
 					<div
 						transition:fly|local={{ duration: 200, easing: quadOut, y: 50, opacity: 0 }}
@@ -243,94 +328,6 @@
 						</IconButton>
 					</div>
 				{/if}
-				<div
-					on:scroll={sidebarWrapperOnScroll}
-					bind:this={sidebarWrapper}
-					bind:clientHeight={sidebarWrapperHeight}
-					class="w-full overflow-auto lg-list-fade relative"
-				>
-					<div
-						bind:clientHeight={sidebarInnerContainerHeight}
-						class="w-full flex flex-col items-start justify-start"
-					>
-						<div class="w-full flex flex-col gap-4 md:gap-5 px-5 py-4 md:px-7 md:py-5">
-							<div class="flex flex-col items-start gap-3">
-								<p class="text-sm leading-normal">{generation.prompt.text}</p>
-								{#if generation.negative_prompt}
-									<div class="flex items-start text-c-danger gap-2">
-										<div
-											use:tooltip={{
-												title: 'Negative Prompt',
-												description:
-													'To remove unwanted things from the image. It does the opposite of what the prompt does.',
-												...tooltipStyleProps
-											}}
-										>
-											<IconChatBubbleCancel class="w-5 h-5" />
-										</div>
-										<p class="text-sm leading-normal flex-shrink -mt-0.75">
-											{generation.negative_prompt.text}
-										</p>
-									</div>
-								{/if}
-							</div>
-							<div class="w-full flex flex-wrap gap-3">
-								<SubtleButton prefetch={true} href={generateUrl} target="_blank">
-									<div class="flex items-center justify-center gap-1.5">
-										<IconWand class="w-5 h-5 -ml-0.5" />
-										<p>Generate</p>
-									</div>
-								</SubtleButton>
-								<div use:copy={generation.prompt.text} on:svelte-copy={onPromptCopied}>
-									<SubtleButton state={promptCopied ? 'success' : 'idle'}>
-										<Morpher morph={promptCopied}>
-											<div slot="item-0" class="flex items-center justify-center gap-1.5">
-												<IconCopy class="w-5 h-5 -ml-0.5" />
-												<p>Copy Prompt</p>
-											</div>
-											<div slot="item-1" class="flex items-center justify-center gap-1.5">
-												<IconTick class="w-5 h-5 -ml-0.5 scale-110" />
-												<p>Copied!</p>
-											</div>
-										</Morpher>
-									</SubtleButton>
-								</div>
-								{#if generation.negative_prompt}
-									<div
-										use:copy={generation.negative_prompt.text}
-										on:svelte-copy={onNegativePromptCopied}
-									>
-										<SubtleButton state={negativePromptCopied ? 'success' : 'idle'}>
-											<Morpher morph={negativePromptCopied}>
-												<div slot="item-0" class="flex items-center justify-center gap-1.5">
-													<IconCopy class="w-5 h-5 -ml-0.5" />
-													<p>Copy Negative Prompt</p>
-												</div>
-												<div slot="item-1" class="flex items-center justify-center gap-1.5">
-													<IconTick class="w-5 h-5 -ml-0.5 scale-110" />
-													<p>Copied!</p>
-												</div>
-											</Morpher>
-										</SubtleButton>
-									</div>
-								{/if}
-							</div>
-						</div>
-						<!-- Divider -->
-						<div class="w-full pt-1.5 pb-0.5">
-							<div class="w-full h-2px bg-c-bg-tertiary rounded-full" />
-						</div>
-						<!-- Divider -->
-						<ParamsSectionG
-							class="flex flex-col px-5 py-4 md:px-7 md:py-5 lg:pb-8 gap-6"
-							{generation}
-							bind:seedCopied
-							bind:seedCopiedTimeout
-							{copyTimeoutDuration}
-							{onSeedCopyClicked}
-						/>
-					</div>
-				</div>
 			</div>
 		</div>
 	</div>

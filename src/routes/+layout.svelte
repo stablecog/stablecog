@@ -18,6 +18,11 @@
 	import NavbarBottom from '$components/NavbarBottom.svelte';
 	import { page } from '$app/stores';
 	import { windowHeight, windowWidth } from '$ts/stores/window';
+	import type { LayoutData } from './$types';
+	import { setLocale } from '$i18n/i18n-svelte';
+
+	export let data: LayoutData;
+	setLocale(data.locale);
 
 	let innerHeight: number;
 	let innerWidth: number;
@@ -33,6 +38,10 @@
 	onMount(async () => {
 		mounted = true;
 		setBodyClasses();
+		/* if ($language && $language !== $locale) {
+			await loadLocaleAsync($language);
+			setLocale($language);
+		} */
 	});
 
 	onDestroy(() => {
@@ -210,7 +219,7 @@
 <svelte:window bind:innerHeight bind:innerWidth />
 
 <div
-	class="w-full relative bg-c-bg text-c-on-bg 
+	class="w-full relative bg-c-bg text-c-on-bg
 	min-h-screen flex flex-col {$theme === 'light' ? 'theme-light' : 'theme-dark'}"
 	style="background-image: url({$theme === 'light'
 		? '/illustrations/grid-on-light.svg'

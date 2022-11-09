@@ -149,6 +149,44 @@ export function tooltip(
 			node.removeEventListener('click', onMouseEnter, false);
 			window.removeEventListener('resize', onMouseLeave, false);
 			window.removeEventListener('scroll', onMouseLeave, true);
+		},
+		update(newProps: TTooltipProps) {
+			tooltipContainer.innerHTML = '';
+			const rows = newProps.rows;
+			const title = newProps.title;
+			const description = newProps.description;
+			if (rows) {
+				rows.forEach((row) => {
+					const rowWrapper = document.createElement('div');
+
+					const titleElement = document.createElement('p');
+					titleElement.textContent = row.key;
+					addClasses(titleElement, titleClass);
+					rowWrapper.appendChild(titleElement);
+
+					const descriptionElement = document.createElement('p');
+					descriptionElement.textContent = row.value;
+					addClasses(descriptionElement, descriptionClass);
+					rowWrapper.appendChild(descriptionElement);
+
+					addClasses(rowWrapper, rowClass);
+					tooltipContainer.appendChild(rowWrapper);
+				});
+			} else {
+				if (title) {
+					const titleElement = document.createElement('h3');
+					titleElement.textContent = title;
+					addClasses(titleElement, titleClass);
+					tooltipContainer.appendChild(titleElement);
+				}
+
+				if (description) {
+					const descriptionElement = document.createElement('p');
+					descriptionElement.textContent = description;
+					addClasses(descriptionElement, descriptionClass);
+					tooltipContainer.appendChild(descriptionElement);
+				}
+			}
 		}
 	};
 }
