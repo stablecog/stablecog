@@ -375,7 +375,7 @@ type RootTranslation = {
 		 */
 		NSFW: string
 		/**
-		 * T​h​e​ ​s​e​r​v​e​r​ ​s​e​e​m​s​ ​t​o​ ​b​e​ ​o​f​f​l​i​n​e​.​ ​Y​o​u​ ​m​i​g​h​t​ ​w​a​n​t​ ​t​o​ ​r​e​f​r​e​s​h​ ​t​h​e​ ​p​a​g​e​ ​o​r​ ​s​e​t​ ​a​n​o​t​h​e​r​ ​s​e​r​v​e​r​ ​f​r​o​m​ ​t​h​e​ ​s​e​t​t​i​n​g​s​.
+		 * T​h​e​ ​s​e​r​v​e​r​ ​s​e​e​m​s​ ​o​f​f​l​i​n​e​.​ ​Y​o​u​ ​m​i​g​h​t​ ​w​a​n​t​ ​t​o​ ​r​e​f​r​e​s​h​ ​t​h​e​ ​p​a​g​e​ ​o​r​ ​s​e​t​ ​a​n​o​t​h​e​r​ ​s​e​r​v​e​r​ ​f​r​o​m​ ​t​h​e​ ​s​e​t​t​i​n​g​s​.
 		 */
 		ServerSeemsOffline: string
 		/**
@@ -746,7 +746,7 @@ export type TranslationFunctions = {
 		 */
 		NSFW: () => LocalizedString
 		/**
-		 * The server seems to be offline. You might want to refresh the page or set another server from the settings.
+		 * The server seems offline. You might want to refresh the page or set another server from the settings.
 		 */
 		ServerSeemsOffline: () => LocalizedString
 		/**

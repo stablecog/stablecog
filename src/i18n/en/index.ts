@@ -133,7 +133,7 @@ const en: BaseTranslation = {
 		SomethingWentWrong: 'Something went wrong :(',
 		NSFW: 'NSFW content detected, try another prompt :(',
 		ServerSeemsOffline:
-			'The server seems to be offline. You might want to refresh the page or set another server from the settings.',
+			'The server seems offline. You might want to refresh the page or set another server from the settings.',
 		ServerSetNotWorking: "This server isn't compatible or not responding."
 	}
 };
