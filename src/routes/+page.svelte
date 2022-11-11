@@ -102,7 +102,7 @@
 				$advancedMode || data.num_inference_steps ? generationInferenceSteps : inferenceStepsDefault
 			),
 			seed:
-				(isValue(generationSeed) && $advancedMode) || data.seed
+				(isValue(generationSeed) && $advancedMode) || isValue(data.seed)
 					? generationSeed
 					: Math.round(Math.random() * maxSeed),
 			imageDataB64: ''

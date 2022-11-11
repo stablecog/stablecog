@@ -47,16 +47,23 @@
 		seedTooltip,
 		widthTooltip
 	} from '$ts/constants/tooltip';
+	import { isValue } from '$ts/helpers/isValue';
 
 	export let serverData: THomePageData;
-	export let generationWidth = serverData.width !== null ? serverData.width : widthDefault;
-	export let generationHeight = serverData.height !== null ? serverData.height : heightDefault;
+	export let generationWidth =
+		isValue(serverData.width) && serverData.width !== null ? serverData.width : widthDefault;
+	export let generationHeight =
+		isValue(serverData.height) && serverData.height !== null && serverData
+			? serverData.height
+			: heightDefault;
 	export let generationInferenceSteps =
-		serverData.num_inference_steps !== null
+		isValue(serverData.num_inference_steps) && serverData.num_inference_steps !== null
 			? serverData.num_inference_steps
 			: inferenceStepsDefault;
 	export let generationGuidanceScale =
-		serverData.guidance_scale !== null ? serverData.guidance_scale : guidanceScaleDefault;
+		isValue(serverData.guidance_scale) && serverData.guidance_scale !== null
+			? serverData.guidance_scale
+			: guidanceScaleDefault;
 	export let generationSeed: number | undefined;
 	export let promptInputValue: string | undefined;
 	export let negativePromptInputValue: string | undefined;
@@ -67,9 +74,9 @@
 	export { classes as class };
 	let classes = '';
 
-	if (serverData.seed !== null) {
+	if (isValue(serverData.seed) && serverData.seed !== null) {
 		generationSeed = serverData.seed;
-	} else if (serverData.prompt) {
+	} else if (isValue(serverData.prompt)) {
 		generationSeed = undefined;
 	}
 	if (serverData.prompt !== null) promptInputValue = serverData.prompt;
@@ -184,19 +191,19 @@
 
 	onMount(() => {
 		isCheckComplete = false;
-		if (serverData.width === null) {
+		if (!isValue(serverData.width)) {
 			const widthIndex = widthTabs
 				.map((w) => w.value)
 				.findIndex((i) => i === $imageSize?.width?.toString());
 			if (widthIndex >= 0) generationWidth = widthTabs[widthIndex].value;
 		}
-		if (serverData.height === null) {
+		if (!isValue(serverData.height)) {
 			const heightIndex = heightTabs
 				.map((h) => h.value)
 				.findIndex((i) => i === $imageSize?.height?.toString());
 			if (heightIndex >= 0) generationHeight = heightTabs[heightIndex].value;
 		}
-		if (serverData.num_inference_steps === null) {
+		if (!isValue(serverData.num_inference_steps)) {
 			const inferenceStepsIndex = inferenceStepsTabs
 				.map((i) => i.value)
 				.findIndex((i) => i === $inferenceSteps?.toString());
@@ -205,23 +212,24 @@
 			}
 		}
 		if (
-			serverData.guidance_scale === null &&
+			!isValue(serverData.guidance_scale) &&
 			$guidanceScale >= guidanceScaleMin &&
 			$guidanceScale <= guidanceScaleMax
 		) {
 			generationGuidanceScale = $guidanceScale;
 		}
 		if (
-			serverData.seed === null &&
-			serverData.prompt === null &&
+			!isValue(serverData.seed) &&
+			!isValue(serverData.prompt) &&
 			$seed !== undefined &&
 			$seed !== null
-		)
+		) {
 			generationSeed = $seed;
-		if (serverData.prompt === null && $prompt) {
+		}
+		if (!isValue(serverData.prompt) && $prompt) {
 			promptInputValue = $prompt;
 		}
-		if (serverData.negative_prompt === null && serverData.prompt === null && $negativePrompt) {
+		if (!isValue(serverData.negative_prompt) && !isValue(serverData.prompt) && $negativePrompt) {
 			negativePromptInputValue = $negativePrompt;
 		}
 		isCheckComplete = true;
