@@ -364,6 +364,10 @@ type RootTranslation = {
 		 * J​o​i​n​ ​U​s
 		 */
 		JoinUsTitle: string
+		/**
+		 * G​o​ ​H​o​m​e
+		 */
+		GoHomeButton: string
 	}
 	Error: {
 		/**
@@ -382,6 +386,10 @@ type RootTranslation = {
 		 * T​h​i​s​ ​s​e​r​v​e​r​ ​i​s​n​'​t​ ​c​o​m​p​a​t​i​b​l​e​ ​o​r​ ​n​o​t​ ​r​e​s​p​o​n​d​i​n​g​.
 		 */
 		ServerSetNotWorking: string
+		/**
+		 * N​o​t​ ​F​o​u​n​d
+		 */
+		NotFound: string
 	}
 }
 
@@ -735,6 +743,10 @@ export type TranslationFunctions = {
 		 * Join Us
 		 */
 		JoinUsTitle: () => LocalizedString
+		/**
+		 * Go Home
+		 */
+		GoHomeButton: () => LocalizedString
 	}
 	Error: {
 		/**
@@ -753,6 +765,10 @@ export type TranslationFunctions = {
 		 * This server isn't compatible or not responding.
 		 */
 		ServerSetNotWorking: () => LocalizedString
+		/**
+		 * Not Found
+		 */
+		NotFound: () => LocalizedString
 	}
 }
 

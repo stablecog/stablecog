@@ -127,14 +127,16 @@ const en: BaseTranslation = {
 	Shared: {
 		StartGeneratingTitle: 'Start generating beautiful images!',
 		StartGeneratingButton: 'Start Generating',
-		JoinUsTitle: 'Join Us'
+		JoinUsTitle: 'Join Us',
+		GoHomeButton: 'Go Home'
 	},
 	Error: {
 		SomethingWentWrong: 'Something went wrong :(',
 		NSFW: 'NSFW content detected, try another prompt :(',
 		ServerSeemsOffline:
 			'The server seems offline. You might want to refresh the page or set another server from the settings.',
-		ServerSetNotWorking: "This server isn't compatible or not responding."
+		ServerSetNotWorking: "This server isn't compatible or not responding.",
+		NotFound: 'Not Found'
 	}
 };
 
