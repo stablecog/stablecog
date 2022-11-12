@@ -114,6 +114,9 @@ export const POST: RequestHandler = async ({ request }) => {
 				}
 			})
 		});
+		if (!res.ok) {
+			throw new Error(`Something went wrong during generation: ${res.status}`);
+		}
 		const endTimestamp = Date.now();
 		generationDurationMs = endTimestamp - startTimestamp;
 		const jsonStartTimestamp = Date.now();
