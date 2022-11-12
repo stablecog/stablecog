@@ -34,7 +34,7 @@
 			<div transition:expandCollapse|local={{ duration: 300 }} class="overflow-hidden relative z-0">
 				<div class="pt-3.5">
 					<Button size="sm" onClick={switchToDefaultServer}>
-						{$LL.SetServerModal.SwitchToDefaultServerButton()}
+						{$LL.Shared.SwitchToDefaultServerButton()}
 					</Button>
 				</div>
 			</div>
