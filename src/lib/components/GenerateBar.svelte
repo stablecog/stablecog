@@ -38,7 +38,7 @@
 	import { currentServer } from '$ts/stores/serverHealth';
 	import type { TStatus } from '$ts/types/main';
 	import { onMount, tick } from 'svelte';
-	import LL, { locale } from '$i18n/i18n-svelte';
+	import LL from '$i18n/i18n-svelte';
 	import {
 		guidanceScaleTooltip,
 		heightTooltip,
@@ -58,7 +58,11 @@
 			: heightDefault;
 	export let generationInferenceSteps =
 		isValue(serverData.num_inference_steps) && serverData.num_inference_steps !== null
-			? serverData.num_inference_steps
+			? inferenceStepsTabs
+					.map((i) => i.value)
+					.findIndex((i) => i === serverData.num_inference_steps) >= 0
+				? serverData.num_inference_steps
+				: inferenceStepsTabs[inferenceStepsTabs.length - 1].value
 			: inferenceStepsDefault;
 	export let generationGuidanceScale =
 		isValue(serverData.guidance_scale) && serverData.guidance_scale !== null

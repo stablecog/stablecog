@@ -2,6 +2,7 @@ import {
 	guidanceScaleMax,
 	guidanceScaleMin,
 	heightTabs,
+	inferenceStepsDefault,
 	inferenceStepsTabs,
 	maxPromptLength,
 	maxSeed,
@@ -38,11 +39,15 @@ export const load: ServerLoad = ({ url }) => {
 			? _guidance_scale_number
 			: null;
 	const num_inference_steps =
-		_num_inference_steps !== null &&
-		inferenceStepsTabs
-			.map((i) => i.value)
-			.includes(_num_inference_steps as TAvailableInferenceSteps)
-			? (_num_inference_steps as TAvailableInferenceSteps)
+		_num_inference_steps !== null
+			? inferenceStepsTabs
+					.map((i) => i.value)
+					.includes(_num_inference_steps as TAvailableInferenceSteps)
+				? (_num_inference_steps as TAvailableInferenceSteps)
+				: _num_inference_steps >
+				  inferenceStepsTabs.map((i) => i.value)[inferenceStepsTabs.length - 1]
+				? inferenceStepsTabs.map((i) => i.value)[inferenceStepsTabs.length - 1]
+				: inferenceStepsDefault
 			: null;
 	const width =
 		_width !== null && widthTabs.map((i) => i.value).includes(_width as TAvailableWidths)
