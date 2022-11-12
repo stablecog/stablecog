@@ -120,7 +120,7 @@
 					}}
 					disabled={setServerProcessStatus === 'loading'}
 					type="text"
-					placeholder={$LL.SetServerModal.ServerUrlInput.Placeholder()}
+					placeholder={$LL.Shared.ServerUrlInput.Placeholder()}
 					class="w-full overflow-hidden overflow-ellipsis bg-transparent relative pl-5 md:pl-6 py-5 rounded-xl transition 
 			        focus:ring-2 focus:ring-c-primary/20 ring-0 ring-c-primary/20 placeholder:text-c-on-bg/30 {!$isTouchscreen
 						? 'enabled:hover:ring-2'

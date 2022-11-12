@@ -337,12 +337,6 @@ type RootTranslation = {
 		 * D​e​f​a​u​l​t
 		 */
 		DefaultButton: string
-		ServerUrlInput: {
-			/**
-			 * S​e​r​v​e​r​ ​U​R​L
-			 */
-			Placeholder: string
-		}
 	}
 	Blog: {
 		/**
@@ -399,6 +393,36 @@ type RootTranslation = {
 		 * N​o
 		 */
 		NoButton: string
+		/**
+		 * E​n​a​b​l​e
+		 */
+		EnableButton: string
+		/**
+		 * D​i​s​a​b​l​e
+		 */
+		DisableButton: string
+		/**
+		 * A​d​d
+		 */
+		AddButton: string
+		/**
+		 * D​e​l​e​t​e
+		 */
+		DeleteButton: string
+		ServerUrlInput: {
+			/**
+			 * S​e​r​v​e​r​ ​U​R​L
+			 */
+			Placeholder: string
+		}
+		/**
+		 * L​o​a​d​i​n​g
+		 */
+		LoadingTitle: string
+		/**
+		 * L​o​a​d​i​n​g​.​.​.
+		 */
+		LoadingParagraph: string
 	}
 	Error: {
 		/**
@@ -430,7 +454,7 @@ type RootTranslation = {
 		/**
 		 * A​d​m​i​n
 		 */
-		AdminTitle: string
+		AdminPanelTitle: string
 		/**
 		 * D​e​l​e​t​e
 		 */
@@ -439,6 +463,18 @@ type RootTranslation = {
 		 * A​p​p​r​o​v​e
 		 */
 		ApproveButton: string
+		/**
+		 * N​o​ ​g​e​n​e​r​a​t​i​o​n​s​ ​t​o​ ​r​e​v​i​e​w​.
+		 */
+		NoGenerationsToReview: string
+		/**
+		 * S​e​r​v​e​r​s
+		 */
+		ServersButton: string
+		/**
+		 * G​a​l​l​e​r​y
+		 */
+		GalleryButton: string
 	}
 }
 
@@ -766,12 +802,6 @@ export type TranslationFunctions = {
 		 * Default
 		 */
 		DefaultButton: () => LocalizedString
-		ServerUrlInput: {
-			/**
-			 * Server URL
-			 */
-			Placeholder: () => LocalizedString
-		}
 	}
 	Blog: {
 		/**
@@ -826,6 +856,36 @@ export type TranslationFunctions = {
 		 * No
 		 */
 		NoButton: () => LocalizedString
+		/**
+		 * Enable
+		 */
+		EnableButton: () => LocalizedString
+		/**
+		 * Disable
+		 */
+		DisableButton: () => LocalizedString
+		/**
+		 * Add
+		 */
+		AddButton: () => LocalizedString
+		/**
+		 * Delete
+		 */
+		DeleteButton: () => LocalizedString
+		ServerUrlInput: {
+			/**
+			 * Server URL
+			 */
+			Placeholder: () => LocalizedString
+		}
+		/**
+		 * Loading
+		 */
+		LoadingTitle: () => LocalizedString
+		/**
+		 * Loading...
+		 */
+		LoadingParagraph: () => LocalizedString
 	}
 	Error: {
 		/**
@@ -857,7 +917,7 @@ export type TranslationFunctions = {
 		/**
 		 * Admin
 		 */
-		AdminTitle: () => LocalizedString
+		AdminPanelTitle: () => LocalizedString
 		/**
 		 * Delete
 		 */
@@ -866,6 +926,18 @@ export type TranslationFunctions = {
 		 * Approve
 		 */
 		ApproveButton: () => LocalizedString
+		/**
+		 * No generations to review.
+		 */
+		NoGenerationsToReview: () => LocalizedString
+		/**
+		 * Servers
+		 */
+		ServersButton: () => LocalizedString
+		/**
+		 * Gallery
+		 */
+		GalleryButton: () => LocalizedString
 	}
 }
 

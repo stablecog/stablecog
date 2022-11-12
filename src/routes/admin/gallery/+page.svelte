@@ -5,6 +5,7 @@
 	import IconLoading from '$components/icons/IconLoading.svelte';
 	import ImagePlaceholder from '$components/ImagePlaceholder.svelte';
 	import MetaTag from '$components/MetaTag.svelte';
+	import LL from '$i18n/i18n-svelte';
 	import { elementreceive, elementsend } from '$ts/animation/transitions';
 	import { canonicalUrl } from '$ts/constants/main';
 	import { isValue } from '$ts/helpers/isValue';
@@ -147,7 +148,7 @@
 {:else}
 	<div class="w-full flex flex-1 px-5 justify-center py-8">
 		<div class="w-full flex justify-center items-center max-w-sm my-auto">
-			<p class="text-c-on-bg/50">No generations to review</p>
+			<p class="text-c-on-bg/50">{$LL.Admin.NoGenerationsToReview()}</p>
 		</div>
 	</div>
 {/if}

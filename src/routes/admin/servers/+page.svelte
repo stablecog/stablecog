@@ -10,6 +10,7 @@
 	import IconTrashcan from '$components/icons/IconTrashcan.svelte';
 	import Input from '$components/Input.svelte';
 	import MetaTag from '$components/MetaTag.svelte';
+	import LL from '$i18n/i18n-svelte';
 	import { canonicalUrl } from '$ts/constants/main';
 	import { supabaseClient } from '$ts/constants/supabaseClient';
 	import { getRelativeDate } from '$ts/helpers/getRelativeDate';
@@ -182,10 +183,12 @@
 		>
 			<Input
 				disabled={serverAddStatus === 'loading'}
-				placeholder="Server url"
+				placeholder={$LL.Shared.ServerUrlInput.Placeholder()}
 				bind:value={serverUrl}
 			/>
-			<Button withSpinner={true} loading={serverAddStatus === 'loading'}>Add</Button>
+			<Button withSpinner={true} loading={serverAddStatus === 'loading'}>
+				{$LL.Shared.AddButton()}
+			</Button>
 		</form>
 		<div class="w-full max-w-md md:max-w-4xl flex flex-col items-center justify-center gap-2">
 			{#if servers}
@@ -274,7 +277,7 @@
 					</div>
 				{/each}
 			{:else}
-				<p class="text-c-on-bg/50 py-6.5">Loading...</p>
+				<p class="text-c-on-bg/50 py-6.5">{$LL.Shared.LoadingParagraph()}</p>
 			{/if}
 		</div>
 	</div>

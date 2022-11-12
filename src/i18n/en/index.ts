@@ -116,10 +116,7 @@ const en: BaseTranslation = {
 		SwitchServerTitle: 'Switch Server',
 		Paragraph: 'The server will be used for generating images.',
 		SetButton: 'Set',
-		DefaultButton: 'Default',
-		ServerUrlInput: {
-			Placeholder: 'Server URL'
-		}
+		DefaultButton: 'Default'
 	},
 	Blog: {
 		Title: 'Blog Posts',
@@ -137,7 +134,16 @@ const en: BaseTranslation = {
 		ShareButton: 'Share',
 		ShareOnButton: 'Share on {name:string}',
 		YesButton: 'Yes',
-		NoButton: 'No'
+		NoButton: 'No',
+		EnableButton: 'Enable',
+		DisableButton: 'Disable',
+		AddButton: 'Add',
+		DeleteButton: 'Delete',
+		ServerUrlInput: {
+			Placeholder: 'Server URL'
+		},
+		LoadingTitle: 'Loading',
+		LoadingParagraph: 'Loading...'
 	},
 	Error: {
 		SomethingWentWrong: 'Something went wrong :(',
@@ -149,9 +155,12 @@ const en: BaseTranslation = {
 		SupabaseNotFoundCantListen: "Supabase instance not found. Can't listen for generations."
 	},
 	Admin: {
-		AdminTitle: 'Admin',
+		AdminPanelTitle: 'Admin',
 		DeleteButton: 'Delete',
-		ApproveButton: 'Approve'
+		ApproveButton: 'Approve',
+		NoGenerationsToReview: 'No generations to review.',
+		ServersButton: 'Servers',
+		GalleryButton: 'Gallery'
 	}
 };
 

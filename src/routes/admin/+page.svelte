@@ -2,6 +2,7 @@
 	import { page } from '$app/stores';
 	import Button from '$components/buttons/Button.svelte';
 	import MetaTag from '$components/MetaTag.svelte';
+	import LL from '$i18n/i18n-svelte';
 	import { canonicalUrl } from '$ts/constants/main';
 </script>
 
@@ -13,10 +14,10 @@
 />
 <div class="w-full flex-1 flex justify-center px-5 pb-[calc(3vh)]">
 	<div class="my-auto w-full flex flex-col items-center max-w-xl gap-6">
-		<h1 class="font-bold text-2xl">Admin</h1>
+		<h1 class="font-bold text-2xl">{$LL.Admin.AdminPanelTitle()}</h1>
 		<div class="w-full flex flex-row flex-wrap items-center justify-center gap-4">
-			<Button href="admin/servers">Servers</Button>
-			<Button href="admin/gallery">Gallery</Button>
+			<Button href="admin/servers">{$LL.Admin.ServersButton()}</Button>
+			<Button href="admin/gallery">{$LL.Admin.GalleryButton()}</Button>
 		</div>
 	</div>
 </div>
