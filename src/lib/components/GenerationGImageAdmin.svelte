@@ -81,7 +81,12 @@
 
 <svelte:window
 	on:keypress={(e) => {
-		if (insideId !== undefined && insideId === generation.id) {
+		if (
+			deleteStatus === 'idle' &&
+			approveStatus === 'idle' &&
+			insideId !== undefined &&
+			insideId === generation.id
+		) {
 			if (e.key === 'd') {
 				deleteGeneration();
 			} else if (e.key === 'a') {
