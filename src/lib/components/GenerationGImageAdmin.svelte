@@ -109,7 +109,7 @@
 				transition:fly|local={{ duration: 200, easing: quadOut, opacity: 0, y: -60 }}
 				bind:this={rightButtonContainer}
 				class="flex-1 flex flex-row items-end justify-start transition transform p-1.5 gap-1.5
-				-translate-y-full group-focus-within:translate-y-0 group-hover:translate-y-0"
+				-translate-y-[calc(100%+1rem)] group-focus-within:translate-y-0 group-hover:translate-y-0"
 			>
 				<Button
 					class="flex-1"

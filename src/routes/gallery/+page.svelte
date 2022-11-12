@@ -8,6 +8,7 @@
 	import { elementreceive, elementsend } from '$ts/animation/transitions';
 	import { canonicalUrl } from '$ts/constants/main';
 	import { isValue } from '$ts/helpers/isValue';
+	import { randomSort } from '$ts/helpers/randomSort';
 	import { activeGenerationG } from '$ts/stores/activeGenerationG';
 	import type { TGalleryResponse } from '$ts/types/main';
 	import { MasonryInfiniteGrid } from '@egjs/svelte-infinitegrid';
@@ -15,7 +16,9 @@
 
 	export let data: PageServerData;
 
-	let generations = (data.generations || []).map((g) => ({ ...g, isLoadedBefore: false }));
+	let generations = (data.generations || [])
+		.sort(randomSort)
+		.map((g) => ({ ...g, isLoadedBefore: false }));
 	let currPage = data.page;
 	let nextPage = data.next;
 	let items = generations.map((_, i) => ({
@@ -49,7 +52,7 @@
 			];
 			generations = [
 				...generations,
-				...resJson.generations.map((g) => ({ ...g, isLoadedBefore: false }))
+				...resJson.generations.sort(randomSort).map((g) => ({ ...g, isLoadedBefore: false }))
 			];
 			console.log('Got the page:', currPage);
 		} catch (error) {

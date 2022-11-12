@@ -12,11 +12,5 @@ export const load: ServerLoad = async () => {
 	if (resAsError.error) {
 		throw error(resAsError.status, resAsError.error);
 	}
-	const randomSortedGenerations = resAsGalleryResponse.generations.sort(() => Math.random() - 0.5);
-	const response: TGalleryResponse = {
-		generations: randomSortedGenerations,
-		page: resAsGalleryResponse.page,
-		next: resAsGalleryResponse.next
-	};
-	return response;
+	return resAsGalleryResponse;
 };
