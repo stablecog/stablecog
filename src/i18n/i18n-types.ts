@@ -96,6 +96,16 @@ type RootTranslation = {
 			 */
 			Paragraph: string
 		}
+		SubmitToGalleryQuestion: {
+			/**
+			 * S​u​b​m​i​t​ ​g​e​n​e​r​a​t​i​o​n​s​ ​t​o​ ​t​h​e​ ​g​a​l​l​e​r​y​?
+			 */
+			Title: string
+			/**
+			 * Y​o​u​ ​c​a​n​ ​c​h​a​n​g​e​ ​y​o​u​r​ ​p​r​e​f​e​r​e​n​c​e​ ​f​r​o​m​ ​t​h​e​ ​s​e​t​t​i​n​g​s​ ​l​a​t​e​r​.
+			 */
+			Paragraph: string
+		}
 	}
 	History: {
 		/**
@@ -201,6 +211,10 @@ type RootTranslation = {
 		 * W​a​i​t​i​n​g​ ​f​o​r​ ​g​e​n​e​r​a​t​i​o​n​s
 		 */
 		WaitingTitle: string
+		/**
+		 * U​n​k​n​o​w​n
+		 */
+		DurationStatusUnknown: string
 	}
 	Navbar: {
 		/**
@@ -368,6 +382,23 @@ type RootTranslation = {
 		 * S​w​i​t​c​h​ ​t​o​ ​D​e​f​a​u​l​t​ ​S​e​r​v​e​r
 		 */
 		SwitchToDefaultServerButton: string
+		/**
+		 * S​h​a​r​e
+		 */
+		ShareButton: string
+		/**
+		 * S​h​a​r​e​ ​o​n​ ​{​n​a​m​e​}
+		 * @param {string} name
+		 */
+		ShareOnButton: RequiredParams<'name'>
+		/**
+		 * Y​e​s
+		 */
+		YesButton: string
+		/**
+		 * N​o
+		 */
+		NoButton: string
 	}
 	Error: {
 		/**
@@ -390,6 +421,24 @@ type RootTranslation = {
 		 * N​o​t​ ​F​o​u​n​d
 		 */
 		NotFound: string
+		/**
+		 * S​u​p​a​b​a​s​e​ ​i​n​s​t​a​n​c​e​ ​n​o​t​ ​f​o​u​n​d​.​ ​C​a​n​'​t​ ​l​i​s​t​e​n​ ​f​o​r​ ​g​e​n​e​r​a​t​i​o​n​s​.
+		 */
+		SupabaseNotFoundCantListen: string
+	}
+	Admin: {
+		/**
+		 * A​d​m​i​n
+		 */
+		AdminTitle: string
+		/**
+		 * D​e​l​e​t​e
+		 */
+		DeleteButton: string
+		/**
+		 * A​p​p​r​o​v​e
+		 */
+		ApproveButton: string
 	}
 }
 
@@ -474,6 +523,16 @@ export type TranslationFunctions = {
 			Placeholder: () => LocalizedString
 			/**
 			 * Get repeatable results. A seed combined with the same prompt and options generates the same image.
+			 */
+			Paragraph: () => LocalizedString
+		}
+		SubmitToGalleryQuestion: {
+			/**
+			 * Submit generations to the gallery?
+			 */
+			Title: () => LocalizedString
+			/**
+			 * You can change your preference from the settings later.
 			 */
 			Paragraph: () => LocalizedString
 		}
@@ -581,6 +640,10 @@ export type TranslationFunctions = {
 		 * Waiting for generations
 		 */
 		WaitingTitle: () => LocalizedString
+		/**
+		 * Unknown
+		 */
+		DurationStatusUnknown: () => LocalizedString
 	}
 	Navbar: {
 		/**
@@ -747,6 +810,22 @@ export type TranslationFunctions = {
 		 * Switch to Default Server
 		 */
 		SwitchToDefaultServerButton: () => LocalizedString
+		/**
+		 * Share
+		 */
+		ShareButton: () => LocalizedString
+		/**
+		 * Share on {name}
+		 */
+		ShareOnButton: (arg: { name: string }) => LocalizedString
+		/**
+		 * Yes
+		 */
+		YesButton: () => LocalizedString
+		/**
+		 * No
+		 */
+		NoButton: () => LocalizedString
 	}
 	Error: {
 		/**
@@ -769,6 +848,24 @@ export type TranslationFunctions = {
 		 * Not Found
 		 */
 		NotFound: () => LocalizedString
+		/**
+		 * Supabase instance not found. Can't listen for generations.
+		 */
+		SupabaseNotFoundCantListen: () => LocalizedString
+	}
+	Admin: {
+		/**
+		 * Admin
+		 */
+		AdminTitle: () => LocalizedString
+		/**
+		 * Delete
+		 */
+		DeleteButton: () => LocalizedString
+		/**
+		 * Approve
+		 */
+		ApproveButton: () => LocalizedString
 	}
 }
 

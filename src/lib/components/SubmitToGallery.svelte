@@ -1,4 +1,5 @@
 <script>
+	import LL from '$i18n/i18n-svelte';
 	import { expandCollapse } from '$ts/animation/transitions';
 	import { pLogSubmitToGallery, uLogSubmitToGallery } from '$ts/helpers/loggers';
 	import { shouldSubmitToGallery } from '$ts/stores/shouldSubmitToGallery';
@@ -15,9 +16,11 @@
       flex flex-col items-start justify-start gap-4 w-full max-w-[21rem]"
 		>
 			<div class="flex flex-col items-start justify-start gap-1.5">
-				<p class="text-sm font-bold text-c-on-bg/75">Submit generations to the gallery?</p>
+				<p class="text-sm font-bold text-c-on-bg/75">
+					{$LL.Home.SubmitToGalleryQuestion.Title()}
+				</p>
 				<p class="text-xs text-c-on-bg/50 leading-relaxed">
-					You can change your preference from the settings later.
+					{$LL.Home.SubmitToGalleryQuestion.Paragraph()}
 				</p>
 			</div>
 			<div class="w-full flex gap-4">
@@ -29,7 +32,7 @@
 					}}
 					class="flex-1 text-c-success"
 				>
-					<p class="py-1">Yes</p>
+					<p class="py-1">{$LL.Shared.YesButton()}</p>
 				</SubtleButton>
 				<SubtleButton
 					onClick={() => {
@@ -39,7 +42,7 @@
 					}}
 					class="flex-1 text-c-danger"
 				>
-					<p class="py-1">No</p>
+					<p class="py-1">{$LL.Shared.NoButton()}</p>
 				</SubtleButton>
 			</div>
 		</div>

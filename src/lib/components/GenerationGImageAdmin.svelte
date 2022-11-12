@@ -5,6 +5,7 @@
 	import IconTick from '$components/icons/IconTick.svelte';
 	import IconTickOnly from '$components/icons/IconTickOnly.svelte';
 	import IconTrashcan from '$components/icons/IconTrashcan.svelte';
+	import LL from '$i18n/i18n-svelte';
 
 	import { doesContainTarget } from '$ts/helpers/doesContainTarget';
 	import { isValue } from '$ts/helpers/isValue';
@@ -144,7 +145,7 @@
 				>
 					<div class="flex-1 py-3 flex justify-center items-center gap-1.5">
 						<IconTickOnly class="w-5 h-5" />
-						<p>Approve</p>
+						<p>{$LL.Admin.ApproveButton()}</p>
 					</div>
 				</Button>
 				<Button
@@ -158,7 +159,7 @@
 				>
 					<div class="flex-1 py-3 flex justify-center items-center gap-1.5">
 						<IconTrashcan class="w-5 h-5" />
-						<p>Delete</p>
+						<p>{$LL.Admin.DeleteButton()}</p>
 					</div>
 				</Button>
 			</div>

@@ -341,7 +341,7 @@
 																					maximumFractionDigits: 1
 																				}
 																		  )}s`
-																		: 'Unfinished'
+																		: $LL.Live.DurationStatusUnknown()
 																}
 														  ]
 														: []),
@@ -404,7 +404,7 @@
 			>
 				<div class="w-full flex flex-col items-center justify-center gap-5 py-4">
 					<p class="w-full leading-loose text-c-on-bg/40 text-center">
-						Supabase instance not found.<br />Can't listen for generations.
+						{$LL.Error.SupabaseNotFoundCantListen()}
 					</p>
 				</div>
 			</div>

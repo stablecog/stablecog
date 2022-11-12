@@ -35,6 +35,10 @@ const en: BaseTranslation = {
 			Placeholder: 'Seed number',
 			Paragraph:
 				'Get repeatable results. A seed combined with the same prompt and options generates the same image.'
+		},
+		SubmitToGalleryQuestion: {
+			Title: 'Submit generations to the gallery?',
+			Paragraph: 'You can change your preference from the settings later.'
 		}
 	},
 	History: {
@@ -70,7 +74,8 @@ const en: BaseTranslation = {
 			},
 			UnknownTitle: 'Unknown'
 		},
-		WaitingTitle: 'Waiting for generations'
+		WaitingTitle: 'Waiting for generations',
+		DurationStatusUnknown: 'Unknown'
 	},
 	Navbar: {
 		HomeTab: 'Home',
@@ -128,7 +133,11 @@ const en: BaseTranslation = {
 		StartGeneratingButton: 'Start Generating',
 		JoinUsTitle: 'Join Us',
 		GoHomeButton: 'Go Home',
-		SwitchToDefaultServerButton: 'Switch to Default Server'
+		SwitchToDefaultServerButton: 'Switch to Default Server',
+		ShareButton: 'Share',
+		ShareOnButton: 'Share on {name:string}',
+		YesButton: 'Yes',
+		NoButton: 'No'
 	},
 	Error: {
 		SomethingWentWrong: 'Something went wrong :(',
@@ -136,7 +145,13 @@ const en: BaseTranslation = {
 		ServerSeemsOffline:
 			'The server seems offline. You might want to refresh the page or set another server from the settings.',
 		ServerSetNotWorking: "This server isn't compatible or not responding.",
-		NotFound: 'Not Found'
+		NotFound: 'Not Found',
+		SupabaseNotFoundCantListen: "Supabase instance not found. Can't listen for generations."
+	},
+	Admin: {
+		AdminTitle: 'Admin',
+		DeleteButton: 'Delete',
+		ApproveButton: 'Approve'
 	}
 };
 
