@@ -329,10 +329,6 @@ type RootTranslation = {
 			 */
 			Placeholder: string
 		}
-		/**
-		 * S​w​i​t​c​h​ ​t​o​ ​D​e​f​a​u​l​t​ ​S​e​r​v​e​r
-		 */
-		SwitchToDefaultServerButton: string
 	}
 	Blog: {
 		/**
@@ -368,6 +364,10 @@ type RootTranslation = {
 		 * G​o​ ​H​o​m​e
 		 */
 		GoHomeButton: string
+		/**
+		 * S​w​i​t​c​h​ ​t​o​ ​D​e​f​a​u​l​t​ ​S​e​r​v​e​r
+		 */
+		SwitchToDefaultServerButton: string
 	}
 	Error: {
 		/**
@@ -709,10 +709,6 @@ export type TranslationFunctions = {
 			 */
 			Placeholder: () => LocalizedString
 		}
-		/**
-		 * Switch to Default Server
-		 */
-		SwitchToDefaultServerButton: () => LocalizedString
 	}
 	Blog: {
 		/**
@@ -747,6 +743,10 @@ export type TranslationFunctions = {
 		 * Go Home
 		 */
 		GoHomeButton: () => LocalizedString
+		/**
+		 * Switch to Default Server
+		 */
+		SwitchToDefaultServerButton: () => LocalizedString
 	}
 	Error: {
 		/**

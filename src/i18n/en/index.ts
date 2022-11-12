@@ -114,8 +114,7 @@ const en: BaseTranslation = {
 		DefaultButton: 'Default',
 		ServerUrlInput: {
 			Placeholder: 'Server URL'
-		},
-		SwitchToDefaultServerButton: 'Switch to Default Server'
+		}
 	},
 	Blog: {
 		Title: 'Blog Posts',
@@ -128,7 +127,8 @@ const en: BaseTranslation = {
 		StartGeneratingTitle: 'Start generating beautiful images!',
 		StartGeneratingButton: 'Start Generating',
 		JoinUsTitle: 'Join Us',
-		GoHomeButton: 'Go Home'
+		GoHomeButton: 'Go Home',
+		SwitchToDefaultServerButton: 'Switch to Default Server'
 	},
 	Error: {
 		SomethingWentWrong: 'Something went wrong :(',
