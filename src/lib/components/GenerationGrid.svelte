@@ -5,7 +5,6 @@
 	import ImagePlaceholder from '$components/ImagePlaceholder.svelte';
 	import LL from '$i18n/i18n-svelte';
 	import { elementreceive, elementsend } from '$ts/animation/transitions';
-	import { isValue } from '$ts/helpers/isValue';
 	import { activeGeneration } from '$ts/stores/activeGeneration';
 	import type { TIndexedDBGeneration } from '$ts/types/db';
 	import { MasonryInfiniteGrid } from '@egjs/svelte-infinitegrid';
@@ -85,9 +84,9 @@
 		<IconLoading class="animate-spin-faster w-8 h-8 text-c-on-bg/50" />
 	</div>
 {:else}
-	<div class="w-full flex-1 flex flex-col justify-center items-center py-8 px-5 gap-8">
+	<div class="w-full flex-1 flex flex-col justify-center items-center pt-8 px-5 gap-8">
 		<p class="text-c-on-bg/50">{$LL.History.NoGenerationsYet()}</p>
 		<Button href="/">{$LL.Shared.StartGeneratingButton()}</Button>
-		<div class="h-[2vh]" />
+		<div class="h-[1vh]" />
 	</div>
 {/if}
