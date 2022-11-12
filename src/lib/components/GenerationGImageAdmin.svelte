@@ -36,6 +36,7 @@
 	let approveStatus: TStatus = 'idle';
 
 	async function deleteGeneration() {
+		if (deleteStatus === 'loading') return;
 		deleteStatus = 'loading';
 		try {
 			const response = await fetch(
@@ -57,6 +58,7 @@
 	}
 
 	async function approveGeneration() {
+		if (approveStatus === 'loading') return;
 		approveStatus = 'loading';
 		try {
 			const response = await fetch(`/admin/api/gallery?id=${generation.id}&hidden=false`, {
@@ -73,8 +75,21 @@
 			approveStatus = 'idle';
 		}
 	}
+
+	let insideId: string | undefined;
 </script>
 
+<svelte:window
+	on:keypress={(e) => {
+		if (insideId !== undefined && insideId === generation.id) {
+			if (e.key === 'd') {
+				deleteGeneration();
+			} else if (e.key === 'a') {
+				approveGeneration();
+			}
+		}
+	}}
+/>
 <img
 	loading="lazy"
 	bind:this={imgElement}
@@ -101,6 +116,8 @@
 			activeGenerationG.set(generation);
 		}
 	}}
+	on:mouseleave={() => (insideId = undefined)}
+	on:mouseenter={() => (insideId = generation.id)}
 	class="w-full h-full absolute left-0 top-0 flex flex-col justify-between items-end overflow-hidden gap-4"
 >
 	<div class="w-full flex justify-between items-start gap-4">
