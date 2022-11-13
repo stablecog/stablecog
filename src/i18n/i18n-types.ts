@@ -344,6 +344,10 @@ type RootTranslation = {
 		 */
 		Title: string
 		/**
+		 * B​l​o​g
+		 */
+		TitleAlt: string
+		/**
 		 * B​a​c​k​ ​t​o​ ​B​l​o​g
 		 */
 		BackToBlogButton: string
@@ -808,6 +812,10 @@ export type TranslationFunctions = {
 		 * Blog Posts
 		 */
 		Title: () => LocalizedString
+		/**
+		 * Blog
+		 */
+		TitleAlt: () => LocalizedString
 		/**
 		 * Back to Blog
 		 */
