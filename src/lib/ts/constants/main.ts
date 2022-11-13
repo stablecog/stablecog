@@ -11,19 +11,21 @@ export const maxPromptLength = 500;
 
 export const computeRatePerSecDefault = 250000;
 
-export type TAvailableWidths = '256' | '512' | '768';
+export type TAvailableWidths = '384' | '512' | '640' | '768';
 export const widthTabs: TWidthTab[] = [
-	{ label: '256', value: '256' },
+	{ label: '384', value: '384' },
 	{ label: '512', value: '512' },
+	{ label: '640', value: '640' },
 	{ label: '768', value: '768' } /* ,
 	{ label: '1024', value: '1024' } */
 ];
 export const widthDefault = widthTabs[1].value;
 
-export type TAvailableHeights = '256' | '512' | '768';
+export type TAvailableHeights = '384' | '512' | '640' | '768';
 export const heightTabs: THeightTab[] = [
-	{ label: '256', value: '256' },
+	{ label: '384', value: '384' },
 	{ label: '512', value: '512' },
+	{ label: '640', value: '640' },
 	{ label: '768', value: '768' } /* ,
 	{ label: '1024', value: '1024' } */
 ];

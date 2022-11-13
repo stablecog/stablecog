@@ -244,7 +244,7 @@
 	bind:this={formElement}
 	disabled={loadingOrSubmitting}
 	on:submit|preventDefault={onSubmit}
-	class="w-full max-w-xl md:max-w-6xl md:px-10 flex flex-col items-center pt-2px"
+	class="w-full max-w-xl md:max-w-6.5xl md:px-4 lg:px-12 flex flex-col items-center pt-2px"
 >
 	<!-- Prompt bar -->
 	<div class="w-full flex flex-col md:flex-row gap-3 items-center pb-2 px-4">
@@ -331,7 +331,7 @@
 		>
 			<div class="w-full flex flex-wrap items-start justify-center px-2px py-4 gap-4">
 				<TabBar
-					class="w-80 max-w-full"
+					class="w-84 max-w-full"
 					tabs={widthTabs}
 					bind:value={generationWidth}
 					name="width"
@@ -346,7 +346,7 @@
 					</div>
 				</TabBar>
 				<TabBar
-					class="w-80 max-w-full"
+					class="w-84 max-w-full"
 					tabs={heightTabs}
 					bind:value={generationHeight}
 					name="height"
@@ -362,7 +362,7 @@
 				</TabBar>
 				{#if $advancedMode}
 					<TabBar
-						class="w-80 max-w-full"
+						class="w-84 max-w-full"
 						tabs={inferenceStepsTabs}
 						bind:value={generationInferenceSteps}
 						name="steps"
@@ -377,7 +377,7 @@
 						</div>
 					</TabBar>
 					<TabLikeRangeInput
-						class="w-80 max-w-full"
+						class="w-84 max-w-full"
 						bind:value={generationGuidanceScale}
 						min={guidanceScaleMin}
 						max={guidanceScaleMax}
@@ -392,7 +392,7 @@
 					</TabLikeRangeInput>
 					{#if $currentServer.features?.includes('negative_prompt')}
 						<TabLikeInput
-							class="w-80 max-w-full"
+							class="w-84 max-w-full"
 							placeholder={$LL.Home.NegativePromptInput.Placeholder()}
 							type="text"
 							bind:value={negativePromptInputValue}
@@ -409,7 +409,7 @@
 						</TabLikeInput>
 					{/if}
 					<TabLikeInput
-						class="w-80 max-w-full"
+						class="w-84 max-w-full"
 						placeholder={$LL.Home.SeedInput.Placeholder()}
 						bind:value={generationSeed}
 						type="number"

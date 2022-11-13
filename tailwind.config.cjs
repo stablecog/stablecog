@@ -122,7 +122,8 @@ module.exports = {
 				3: '3px'
 			},
 			maxWidth: {
-				'2.5xl': '45rem'
+				'2.5xl': '45rem',
+				'6.5xl': '76rem'
 			},
 			animation: {
 				'ping-custom': 'ping-custom 1s ease-out infinite -0.9s',
