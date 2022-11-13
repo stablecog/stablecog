@@ -18,7 +18,7 @@
 
 	let generations = (data.generations || [])
 		.sort(randomSort)
-		.map((g) => ({ ...g, isLoadedBefore: false }));
+		.map((g) => ({ ...g, didLoadBefore: false }));
 	let currPage = data.page;
 	let nextPage = data.next;
 	let items = generations.map((_, i) => ({
@@ -52,7 +52,7 @@
 			];
 			generations = [
 				...generations,
-				...resJson.generations.sort(randomSort).map((g) => ({ ...g, isLoadedBefore: false }))
+				...resJson.generations.sort(randomSort).map((g) => ({ ...g, didLoadBefore: false }))
 			];
 			console.log('Got the page:', currPage);
 		} catch (error) {

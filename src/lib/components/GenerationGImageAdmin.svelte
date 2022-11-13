@@ -27,7 +27,7 @@
 		if (imgElement && imgElement?.naturalWidth > 0) {
 			loaded = true;
 			setTimeout(() => {
-				generation.isLoadedBefore = true;
+				generation.didLoadBefore = true;
 			}, 500);
 		}
 	};
@@ -112,7 +112,7 @@
 	generation.status === 'deleted' ||
 	generation.status === 'approved'
 		? 'opacity-25'
-		: loaded || generation.isLoadedBefore
+		: loaded || generation.didLoadBefore
 		? 'opacity-100'
 		: 'opacity-0'}"
 	src={urlFromImageId(generation.image_id)}

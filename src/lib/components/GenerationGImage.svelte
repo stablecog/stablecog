@@ -24,7 +24,7 @@
 		if (imgElement && imgElement?.naturalWidth > 0) {
 			loaded = true;
 			setTimeout(() => {
-				generation.isLoadedBefore = true;
+				generation.didLoadBefore = true;
 			}, 500);
 		}
 	};
@@ -35,7 +35,7 @@
 	bind:this={imgElement}
 	on:load={onLoad}
 	class="w-full h-full absolute left-0 top-0 transition duration-500 {loaded ||
-	generation.isLoadedBefore
+	generation.didLoadBefore
 		? 'opacity-100'
 		: 'opacity-0'}"
 	src={urlFromImageId(generation.image_id)}

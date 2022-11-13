@@ -18,7 +18,7 @@
 
 	let generations: TGenerationGAdmin[] = (data.generations || []).map((g) => ({
 		...g,
-		isLoadedBefore: false,
+		didLoadBefore: false,
 		status: 'idle'
 	}));
 
@@ -58,7 +58,7 @@
 				...resJson.generations.map((g) => {
 					const gen: TGenerationGAdmin = {
 						...g,
-						isLoadedBefore: false,
+						didLoadBefore: false,
 						status: 'idle'
 					};
 					return gen;
