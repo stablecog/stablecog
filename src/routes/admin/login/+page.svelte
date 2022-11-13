@@ -4,6 +4,7 @@
 	import Button from '$components/buttons/Button.svelte';
 	import Input from '$components/Input.svelte';
 	import MetaTag from '$components/MetaTag.svelte';
+	import LL from '$i18n/i18n-svelte';
 	import { canonicalUrl } from '$ts/constants/main';
 	import { supabaseClient } from '$ts/constants/supabaseClient';
 
@@ -63,11 +64,7 @@
 			<div class="w-full flex flex-col gap-6 text-center">
 				<p class="font-bold text-lg">{$page.data.session.user.email}</p>
 				<Button withSpinner={true} onClick={logout} loading={logoutStatus === 'loading'}>
-					{#if logoutStatus === 'loading'}
-						Logging out...
-					{:else}
-						Logout
-					{/if}
+					{$LL.Shared.LogoutButton()}
 				</Button>
 			</div>
 		{:else}
@@ -80,22 +77,18 @@
 					<Input
 						disabled={loginStatus === 'loading'}
 						type="email"
-						placeholder="Email"
+						placeholder={$LL.Shared.EmailInput.Placeholder()}
 						bind:value={email}
 					/>
 					<Input
 						disabled={loginStatus === 'loading'}
 						type="password"
-						placeholder="Password"
+						placeholder={$LL.Shared.PasswordInput.Placeholder()}
 						bind:value={password}
 					/>
 				</div>
 				<Button withSpinner={true} loading={loginStatus === 'loading'}>
-					{#if loginStatus === 'loading'}
-						Logging in...
-					{:else}
-						Login
-					{/if}
+					{$LL.Shared.LoginButton()}
 				</Button>
 			</form>
 		{/if}

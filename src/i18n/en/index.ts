@@ -144,7 +144,15 @@ const en: BaseTranslation = {
 			Placeholder: 'Server URL'
 		},
 		LoadingTitle: 'Loading',
-		LoadingParagraph: 'Loading...'
+		LoadingParagraph: 'Loading...',
+		LoginButton: 'Login',
+		LogoutButton: 'Logout',
+		EmailInput: {
+			Placeholder: 'Email'
+		},
+		PasswordInput: {
+			Placeholder: 'Password'
+		}
 	},
 	Error: {
 		SomethingWentWrong: 'Something went wrong :(',

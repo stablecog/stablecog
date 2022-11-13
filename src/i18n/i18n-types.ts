@@ -427,6 +427,26 @@ type RootTranslation = {
 		 * L​o​a​d​i​n​g​.​.​.
 		 */
 		LoadingParagraph: string
+		/**
+		 * L​o​g​i​n
+		 */
+		LoginButton: string
+		/**
+		 * L​o​g​o​u​t
+		 */
+		LogoutButton: string
+		EmailInput: {
+			/**
+			 * E​m​a​i​l
+			 */
+			Placeholder: string
+		}
+		PasswordInput: {
+			/**
+			 * P​a​s​s​w​o​r​d
+			 */
+			Placeholder: string
+		}
 	}
 	Error: {
 		/**
@@ -894,6 +914,26 @@ export type TranslationFunctions = {
 		 * Loading...
 		 */
 		LoadingParagraph: () => LocalizedString
+		/**
+		 * Login
+		 */
+		LoginButton: () => LocalizedString
+		/**
+		 * Logout
+		 */
+		LogoutButton: () => LocalizedString
+		EmailInput: {
+			/**
+			 * Email
+			 */
+			Placeholder: () => LocalizedString
+		}
+		PasswordInput: {
+			/**
+			 * Password
+			 */
+			Placeholder: () => LocalizedString
+		}
 	}
 	Error: {
 		/**
