@@ -26,12 +26,9 @@ export const DELETE: RequestHandler = async ({ url }) => {
 	if (!id || !image_id)
 		return new Response(JSON.stringify({ error: 'No id or image_id provided' }), { status: 400 });
 	const { data, error, status } = await deleteFromGallery(id, image_id);
-	if (error) {
-		return new Response(JSON.stringify({ error: error }), { status: status });
-	} else {
-		console.log(`---- Gallery delete request succeeded -- ${id} ----`);
-		return new Response(JSON.stringify({ data: data }));
-	}
+	if (error) return new Response(JSON.stringify({ error: error }), { status: status });
+	console.log(`---- Gallery delete request succeeded -- ${id} ----`);
+	return new Response(JSON.stringify({ data: data }));
 };
 
 export const PATCH: RequestHandler = async ({ url }) => {
