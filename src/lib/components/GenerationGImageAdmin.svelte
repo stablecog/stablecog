@@ -12,6 +12,7 @@
 	import { urlFromImageId } from '$ts/helpers/urlFromImageId';
 	import { activeGenerationG } from '$ts/stores/activeGenerationG';
 	import type { TGenerationGAdmin } from '$ts/types/main';
+	import type { PostgrestError } from '@supabase/supabase-js';
 	import { quadOut } from 'svelte/easing';
 	import { fly, scale } from 'svelte/transition';
 
@@ -47,6 +48,9 @@
 				}
 			);
 			if (response.ok) {
+				const { data, error }: { data: any | null; error: PostgrestError | null } =
+					await response.json();
+				if (error) throw new Error(error.message);
 				deleteStatus = 'success';
 				generation.status = 'deleted';
 			} else {
@@ -66,6 +70,9 @@
 				method: 'PATCH'
 			});
 			if (response.ok) {
+				const { data, error }: { data: any | null; error: PostgrestError | null } =
+					await response.json();
+				if (error) throw new Error(error.message);
 				approveStatus = 'success';
 				generation.status = 'approved';
 			} else {

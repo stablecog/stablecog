@@ -18,33 +18,35 @@ export const GET: RequestHandler = async ({ url }) => {
 };
 
 export const DELETE: RequestHandler = async ({ url }) => {
-	if (!supabaseAdmin) return new Response('No Supabase instance found', { status: 500 });
+	if (!supabaseAdmin)
+		return new Response(JSON.stringify({ error: 'No Supabase instance found' }), { status: 500 });
 	const id = url.searchParams.get('id');
 	const image_id = url.searchParams.get('image_id');
 	console.log(`---- Gallery delete request -- ${id} ----`);
-	if (id && image_id) {
-		const res = await deleteFromGallery(id, image_id);
-		if (res.error) {
-			return new Response(res.error, { status: res.status });
-		} else {
-			console.log(`---- Gallery delete request succeeded -- ${id} ----`);
-			return new Response(JSON.stringify(res.data));
-		}
+	if (!id || !image_id)
+		return new Response(JSON.stringify({ error: 'No id or image_id provided' }), { status: 400 });
+	const { data, error, status } = await deleteFromGallery(id, image_id);
+	if (error) {
+		return new Response(JSON.stringify({ error: error }), { status: status });
+	} else {
+		console.log(`---- Gallery delete request succeeded -- ${id} ----`);
+		return new Response(JSON.stringify({ data: data }));
 	}
-	return new Response('No id or image_id provided', { status: 400 });
 };
 
 export const PATCH: RequestHandler = async ({ url }) => {
-	if (!supabaseAdmin) return new Response('No Supabase instance found', { status: 500 });
+	if (!supabaseAdmin)
+		return new Response(JSON.stringify({ error: 'No Supabase instance found' }), { status: 500 });
 	const id = url.searchParams.get('id');
 	const hidden = url.searchParams.get('hidden');
 	console.log(`---- Gallery update request -- ${id} -- ${hidden} ----`);
-	if (!id || !hidden) return new Response('No id or hidden provided', { status: 400 });
+	if (!id || !hidden)
+		return new Response(JSON.stringify({ error: 'No id or hidden provided' }), { status: 400 });
 	const { error } = await supabaseAdmin
 		.from('generation_g')
 		.update({ hidden: hidden })
 		.eq('id', id);
-	if (error) return new Response(error.message, { status: 500 });
+	if (error) return new Response(JSON.stringify({ error: error.message }), { status: 500 });
 	console.log(`---- Gallery update request successful -- ${id} -- ${hidden} ----`);
-	return new Response(JSON.stringify({ id: id, hidden: hidden }), { status: 200 });
+	return new Response(JSON.stringify({ data: { id: id, hidden: hidden } }), { status: 200 });
 };
