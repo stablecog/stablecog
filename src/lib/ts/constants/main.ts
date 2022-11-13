@@ -31,14 +31,15 @@ export const heightTabs: THeightTab[] = [
 ];
 export const heightDefault = heightTabs[1].value;
 
-export type TAvailableInferenceSteps = '40' | '50' | '60' /* | '100' */;
+export type TAvailableInferenceSteps = '30' | '40' | '50' | '60' /* | '100' */;
 export const inferenceStepsTabs: TInferenceStepsTab[] = [
+	{ label: '30', value: '30' },
 	{ label: '40', value: '40' },
 	{ label: '50', value: '50' },
 	{ label: '60', value: '60' }
 	/* 	{ label: '100', value: '100' } */
 ];
-export const inferenceStepsDefault = inferenceStepsTabs[1].value;
+export const inferenceStepsDefault = inferenceStepsTabs[2].value;
 
 export const guidanceScaleMax = 20;
 export const guidanceScaleMin = 1;
