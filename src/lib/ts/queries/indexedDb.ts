@@ -8,6 +8,13 @@ export async function addGenerationToDb(generation: TIndexedDBGeneration) {
 	return id;
 }
 
+export async function deleteGenerationFromDb(id: number) {
+	console.log('Deleting generation from db:', id);
+	await indexedDb.generations.delete(id);
+	console.log('Deleted generation from db:', id);
+	return id;
+}
+
 export async function updateGenerationInDb(generation: TIndexedDBGeneration) {
 	if (generation.id) {
 		console.log('Updating generation in db:', `"${generation.prompt}"`);

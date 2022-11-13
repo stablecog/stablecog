@@ -45,6 +45,9 @@
 	import { pLogUpscale, uLogUpscale } from '$ts/helpers/loggers';
 	import LL, { locale } from '$i18n/i18n-svelte';
 	import { negativePromptTooltipAlt } from '$ts/constants/tooltip';
+	import IconTrashcan from '$components/icons/IconTrashcan.svelte';
+	import { deleteGenerationFromDb } from '$ts/queries/indexedDb';
+	import IconTrashcanFilledOpen from '$components/icons/IconTrashcanFilledOpen.svelte';
 
 	export let generation: TGenerationUI;
 	export let upscaleStatus: TUpscaleStatus = 'idle';
@@ -55,7 +58,8 @@
 	let upscaledImageHeight: number | undefined;
 	$: generation, onGenerationChanged();
 
-	const dispatch = createEventDispatcher<{ upscale: { generation: TGenerationUI } }>();
+	const dispatchUpscale = createEventDispatcher<{ upscale: { generation: TGenerationUI } }>();
+	const dispatchDelete = createEventDispatcher<{ delete: { generation: TGenerationUI } }>();
 
 	$: canClose = upscaleStatus !== 'loading';
 
@@ -232,7 +236,7 @@
 				const base64 = res.data.imageDataB64;
 				const url = urlFromBase64(base64);
 				const { upscaledImageDataB64, upscaledImageUrl, ...rest } = generation;
-				dispatch('upscale', {
+				dispatchUpscale('upscale', {
 					generation: {
 						...rest,
 						upscaledImageDataB64: base64,
@@ -290,6 +294,30 @@
 			upscaledImageHeight = target.naturalHeight;
 		}
 	};
+
+	let deleteStatus: 'idle' | 'loading' | 'success' | 'should-confirm' = 'idle';
+
+	async function deleteGeneration(id: number | undefined) {
+		if (id === undefined) {
+			console.log("Can't delete generation, id is undefined");
+			return;
+		}
+		if (deleteStatus === 'idle') {
+			deleteStatus = 'should-confirm';
+			return;
+		}
+		try {
+			deleteStatus = 'should-confirm';
+			await tick();
+			setTimeout(() => (deleteStatus = 'loading'));
+			await deleteGenerationFromDb(id);
+			dispatchDelete('delete', { generation });
+			deleteStatus = 'success';
+		} catch (error) {
+			console.log(error);
+			deleteStatus = 'idle';
+		}
+	}
 
 	onMount(() => {
 		setSidebarWrapperVars();
@@ -531,6 +559,35 @@
 												<div slot="item-1" class="flex items-center justify-center gap-1.5">
 													<IconTick class="w-5 h-5 -ml-0.5 scale-110" />
 													<p>{$LL.GenerationFullscreen.CopiedButtonState()}</p>
+												</div>
+											</Morpher>
+										</SubtleButton>
+									</div>
+								{/if}
+								{#if $page.url.pathname === '/history'}
+									<div
+										use:clickoutside={{
+											callback: () =>
+												deleteStatus === 'should-confirm' ? (deleteStatus = 'idle') : null
+										}}
+									>
+										<SubtleButton
+											disabled={deleteStatus === 'loading'}
+											onClick={() => deleteGeneration(generation.id)}
+										>
+											<Morpher morph={deleteStatus === 'should-confirm'}>
+												<div
+													slot="item-0"
+													class="flex items-center justify-center gap-1.5 text-c-danger"
+												>
+													<IconTrashcan class="w-5 h-5 -ml-0.5" />
+													<p>{$LL.Shared.DeleteButton()}</p>
+												</div>
+												<div
+													slot="item-1"
+													class="flex items-center justify-center gap-1.5 text-c-danger"
+												>
+													<IconTrashcanFilledOpen class="w-5 h-5 -ml-0.5 scale-110" />
 												</div>
 											</Morpher>
 										</SubtleButton>

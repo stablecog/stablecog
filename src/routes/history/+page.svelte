@@ -46,6 +46,14 @@
 		activeGeneration.set(generation);
 	}
 
+	async function onDelete(event: CustomEvent<{ generation: TGenerationUI }>) {
+		const { generation } = event.detail;
+		const index = generations.findIndex(({ id }) => id === generation.id);
+		generations.splice(index, 1);
+		generations = [...generations];
+		activeGeneration.set(undefined);
+	}
+
 	let loading = true;
 	let startAnimation = false;
 	onMount(async () => {
@@ -93,5 +101,10 @@
 </div>
 
 {#if $activeGeneration}
-	<GenerationFullScreen bind:upscaleStatus on:upscale={onUpscale} generation={$activeGeneration} />
+	<GenerationFullScreen
+		bind:upscaleStatus
+		on:delete={onDelete}
+		on:upscale={onUpscale}
+		generation={$activeGeneration}
+	/>
 {/if}
