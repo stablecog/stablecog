@@ -3,7 +3,7 @@
 	import Button from '$components/buttons/Button.svelte';
 	import SubtleButton from '$components/buttons/SubtleButton.svelte';
 	import IconHeartBroken from '$components/icons/IconHeartBroken.svelte';
-	import IconHearth from '$components/icons/IconHearth.svelte';
+	import IconHeart from '$components/icons/IconHeart.svelte';
 	import IconLoading from '$components/icons/IconLoading.svelte';
 	import IconServer from '$components/icons/IconServer.svelte';
 	import IconServerDisabled from '$components/icons/IconServerDisabled.svelte';
@@ -16,6 +16,8 @@
 	import { getRelativeDate } from '$ts/helpers/getRelativeDate';
 	import type { PostgrestError, RealtimeChannel } from '@supabase/supabase-js';
 	import { onMount } from 'svelte';
+	import { flip } from 'svelte/animate';
+	import { elementreceive, elementsend } from '$ts/animation/transitions';
 
 	interface TServer {
 		id: string;
@@ -192,30 +194,45 @@
 		</form>
 		<div class="w-full max-w-md md:max-w-4xl flex flex-col items-center justify-center gap-2">
 			{#if servers}
-				{#each servers as server}
+				{#each [...servers
+						.filter((s) => s.enabled)
+						.sort((a, b) => a.url.localeCompare(b.url)), ...servers
+						.filter((s) => !s.enabled)
+						.sort((a, b) => a.url.localeCompare(b.url))] as server (server.id)}
 					<div
+						animate:flip={{ duration: 300 }}
+						in:elementsend|local={{ key: server.id }}
+						out:elementreceive|local={{ key: server.id }}
 						class="w-full shadow-lg shadow-c-shadow/[var(--o-shadow-normal)] bg-c-bg-secondary px-5 py-4 rounded-xl 
 						flex flex-wrap justify-between items-center text-sm gap-8"
 					>
 						<div class="w-full md:w-auto flex flex-col gap-2 text-xs">
-							<p class="w-full break-all text-c-on-bg/75">
+							<p
+								class="w-full break-all {server.enabled
+									? server.healthy
+										? 'text-c-on-bg/75'
+										: 'text-c-danger'
+									: 'text-c-on-bg/40'}"
+							>
 								{server.url}
 							</p>
-							<p class="w-full text-c-on-bg/50 min-w-[6rem] max-w-full">
+							<p class="w-full text-c-on-bg/40 min-w-[6rem] max-w-full">
 								{getRelativeDate(new Date(server.last_health_check_at).getTime(), now)}
 							</p>
 						</div>
 						<div class="flex flex-wrap justify-end items-center gap-8 text-left">
 							<div class="flex items-center gap-3">
-								{#if server.healthy}
-									<IconHearth class="w-8 h-8 text-c-success" />
+								{#if !server.enabled}
+									<IconHeart class="w-8 h-8 text-c-on-bg/40" />
+								{:else if server.healthy}
+									<IconHeart class="w-8 h-8 text-c-success" />
 								{:else}
 									<IconHeartBroken class="w-8 h-8 text-c-danger" />
 								{/if}
 								{#if server.enabled}
 									<IconServer class="w-8 h-8 text-c-success" />
 								{:else}
-									<IconServerDisabled class="w-8 h-8 text-c-danger" />
+									<IconServerDisabled class="w-8 h-8 text-c-on-bg/40" />
 								{/if}
 							</div>
 							<div class="flex items-center gap-3">
