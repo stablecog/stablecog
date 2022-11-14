@@ -2,20 +2,20 @@ import { componentToImageResponse } from '@ethercorps/sveltekit-og';
 import OGGallery from '$components/og/OGGallery.svelte';
 import type { RequestHandler } from '@sveltejs/kit';
 import { getGenerationG } from '$ts/queries/db/gallery';
+import { canonicalUrl } from '$ts/constants/main';
+
+const [fontRegularRes, fontBoldRes, fontExtraboldRes] = await Promise.all([
+	fetch(`${canonicalUrl}/fonts/jetbrains-mono/jetbrains-mono-400.ttf`),
+	fetch(`${canonicalUrl}/fonts/jetbrains-mono/jetbrains-mono-700.ttf`),
+	fetch(`${canonicalUrl}/fonts/jetbrains-mono/jetbrains-mono-800.ttf`)
+]);
+const [fontRegular, fontBold, fontExtrabold] = await Promise.all([
+	fontRegularRes.arrayBuffer(),
+	fontBoldRes.arrayBuffer(),
+	fontExtraboldRes.arrayBuffer()
+]);
 
 export const GET: RequestHandler = async ({ url }) => {
-	const originUrl = url.origin;
-	const [fontRegularRes, fontBoldRes, fontExtraboldRes] = await Promise.all([
-		fetch(`${originUrl}/fonts/jetbrains-mono/jetbrains-mono-400.ttf`),
-		fetch(`${originUrl}/fonts/jetbrains-mono/jetbrains-mono-700.ttf`),
-		fetch(`${originUrl}/fonts/jetbrains-mono/jetbrains-mono-800.ttf`)
-	]);
-	const [fontRegular, fontBold, fontExtrabold] = await Promise.all([
-		fontRegularRes.arrayBuffer(),
-		fontBoldRes.arrayBuffer(),
-		fontExtraboldRes.arrayBuffer()
-	]);
-
 	const generationIdWithExt = url.searchParams.get('generation');
 	if (!generationIdWithExt) return new Response('No generation id provided', { status: 400 });
 	const generationId = generationIdWithExt.split('.')[0];
@@ -27,7 +27,7 @@ export const GET: RequestHandler = async ({ url }) => {
 	const height = 630;
 	const og = new componentToImageResponse(
 		OGGallery,
-		{ generation, width, height, originUrl },
+		{ generation, width, height },
 		{
 			width: width,
 			height: height,

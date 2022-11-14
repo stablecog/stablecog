@@ -1,11 +1,11 @@
 <script lang="ts">
 	import Logo from '$components/Logo.svelte';
+	import { canonicalUrl } from '$ts/constants/main';
 	import type { TDBGenerationG } from '$ts/types/db';
 
 	export let generation: TDBGenerationG;
 	export let width: number;
 	export let height: number;
-	export let originUrl: string;
 
 	const imgUrl = `https://ik.imagekit.io/stablecog/tr:f-jpg/${generation.image_id}.webp`;
 	const maxPromptLength = 150;
@@ -29,7 +29,7 @@
 >
 	<img
 		tw="absolute left-0 top-0"
-		src="{originUrl}/images/patterns/grid-pattern.png"
+		src="{canonicalUrl}/images/patterns/grid-pattern.png"
 		alt="Pattern"
 		{width}
 		height={width}
