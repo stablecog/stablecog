@@ -46,7 +46,9 @@ export const POST: RequestHandler = async ({ request }) => {
 		prompt.length > maxLogLength ? '...' : ''
 	}`;
 	const sliced_negative_prompt = negative_prompt
-		? `${negative_prompt.slice(0, maxLogLength)}${prompt.length > maxLogLength ? '...' : ''}`
+		? `${negative_prompt.slice(0, maxLogLength)}${
+				negative_prompt.length > maxLogLength ? '...' : ''
+		  }`
 		: undefined;
 	try {
 		generationLog({
