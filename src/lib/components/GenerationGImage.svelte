@@ -52,8 +52,32 @@
 		activeGenerationG.set(generation);
 		window.history.replaceState({}, '', `/gallery?generation=${generation.id}`);
 	}}
-	class="w-full h-full absolute left-0 top-0 flex flex-col justify-between items-end overflow-hidden gap-4"
+	class="w-full h-full absolute left-0 top-0 flex flex-col justify-end items-end overflow-hidden gap-4"
 >
+	<div
+		class="w-full max-h-[max(4rem,min(35%,5.3rem))] transition bg-c-bg/90 text-xs relative z-0 overflow-hidden
+		translate-y-full group-focus-within:translate-y-0 group-hover:translate-y-0 pointer-events-none"
+	>
+		<div
+			class="w-full max-h-full overflow-hidden list-fade px-4 py-3 flex flex-col gap-2 cursor-default"
+		>
+			<p class="w-full font-medium leading-normal transition text-c-on-bg transform">
+				{generation.prompt.text}
+			</p>
+			{#if isValue(generation.negative_prompt)}
+				<div class="w-full flex items-start justify-start gap-1.5">
+					<IconChatBubbleCancel class="text-c-danger h-4 w-4 mt-0.25" />
+					<div class="flex-1 min-w-0">
+						<p class="w-full text-c-danger">
+							{generation.negative_prompt?.text}
+						</p>
+					</div>
+				</div>
+			{/if}
+		</div>
+	</div>
+</a>
+<div class="w-full absolute left-0 top-0 flex flex-col justify-start pointer-events-none">
 	<div class="w-full flex justify-between items-start gap-8">
 		<div
 			class="flex-1 min-w-0 overflow-hidden flex flex-row flex-wrap items-start justify-start gap-1 transition transform 
@@ -83,7 +107,7 @@
 		<div
 			bind:this={rightButtonContainer}
 			class="flex flex-row items-end justify-start transition transform 
-			translate-x-full group-focus-within:translate-x-0 group-hover:translate-x-0"
+			translate-x-full group-focus-within:translate-x-0 group-hover:translate-x-0 pointer-events-auto"
 		>
 			<CopyButton
 				class="p-1.5 -mr-1.5"
@@ -94,29 +118,7 @@
 			<GenerateButton class="p-1.5" {generation} />
 		</div>
 	</div>
-	<div
-		class="w-full max-h-[max(4rem,min(35%,5.3rem))] transition bg-c-bg/90 text-xs relative z-0 overflow-hidden
-		translate-y-full group-focus-within:translate-y-0 group-hover:translate-y-0 pointer-events-none"
-	>
-		<div
-			class="w-full max-h-full overflow-hidden list-fade px-4 py-3 flex flex-col gap-2 cursor-default"
-		>
-			<p class="w-full font-medium leading-normal transition text-c-on-bg transform">
-				{generation.prompt.text}
-			</p>
-			{#if isValue(generation.negative_prompt)}
-				<div class="w-full flex items-start justify-start gap-1.5">
-					<IconChatBubbleCancel class="text-c-danger h-4 w-4 mt-0.25" />
-					<div class="flex-1 min-w-0">
-						<p class="w-full text-c-danger">
-							{generation.negative_prompt?.text}
-						</p>
-					</div>
-				</div>
-			{/if}
-		</div>
-	</div>
-</a>
+</div>
 
 <style>
 	.list-fade {

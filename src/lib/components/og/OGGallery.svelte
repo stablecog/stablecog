@@ -1,5 +1,4 @@
 <script lang="ts">
-	import { page } from '$app/stores';
 	import Logo from '$components/Logo.svelte';
 	import type { TDBGenerationG } from '$ts/types/db';
 
