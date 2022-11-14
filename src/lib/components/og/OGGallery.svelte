@@ -8,7 +8,7 @@
 	export let originUrl: string;
 
 	const imgUrl = `https://ik.imagekit.io/stablecog/tr:f-jpg/${generation.image_id}.webp`;
-	const maxPromptLength = 130;
+	const maxPromptLength = 150;
 	const padding = 24;
 	let imageWidth: number;
 	let imageHeight: number;
