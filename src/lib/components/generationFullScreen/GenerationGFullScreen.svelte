@@ -32,6 +32,7 @@
 	import LL, { locale } from '$i18n/i18n-svelte';
 	import { negativePromptTooltipAlt } from '$ts/constants/tooltip';
 	import { page } from '$app/stores';
+	import IconLink from '$components/icons/IconLink.svelte';
 
 	export let generation: TGenerationGWithLoaded | TGenerationGAdmin;
 
@@ -115,9 +116,13 @@
 		promptCopied = true;
 		negativePromptCopied = false;
 		seedCopied = false;
-		clearTimeout(promptCopiedTimeout);
+		linkCopied = false;
+
 		clearTimeout(negativePromptCopiedTimeout);
 		clearTimeout(seedCopiedTimeout);
+		clearTimeout(linkCopiedTimeout);
+
+		clearTimeout(promptCopiedTimeout);
 		promptCopiedTimeout = setTimeout(() => {
 			promptCopied = false;
 		}, copyTimeoutDuration);
@@ -129,9 +134,13 @@
 		negativePromptCopied = true;
 		promptCopied = false;
 		seedCopied = false;
-		clearTimeout(negativePromptCopiedTimeout);
+		linkCopied = false;
+
 		clearTimeout(promptCopiedTimeout);
 		clearTimeout(seedCopiedTimeout);
+		clearTimeout(linkCopiedTimeout);
+
+		clearTimeout(negativePromptCopiedTimeout);
 		promptCopiedTimeout = setTimeout(() => {
 			negativePromptCopied = false;
 		}, copyTimeoutDuration);
@@ -142,8 +151,29 @@
 	const onSeedCopyClicked = () => {
 		promptCopied = false;
 		negativePromptCopied = false;
+		linkCopied = false;
+
 		clearTimeout(negativePromptCopiedTimeout);
 		clearTimeout(promptCopiedTimeout);
+		clearTimeout(linkCopiedTimeout);
+	};
+
+	let linkCopied = false;
+	let linkCopiedTimeout: NodeJS.Timeout;
+	const onLinkCopied = () => {
+		promptCopied = false;
+		seedCopied = false;
+		negativePromptCopied = false;
+		linkCopied = true;
+
+		clearTimeout(negativePromptCopiedTimeout);
+		clearTimeout(promptCopiedTimeout);
+		clearTimeout(seedCopiedTimeout);
+
+		clearTimeout(linkCopiedTimeout);
+		linkCopiedTimeout = setTimeout(() => {
+			linkCopied = false;
+		}, copyTimeoutDuration);
 	};
 
 	const sidebarWrapperOnScroll = () => {
@@ -289,6 +319,23 @@
 										</SubtleButton>
 									</div>
 								{/if}
+								<div
+									use:copy={`${$page.url.origin}/gallery?generation=${generation.id}`}
+									on:svelte-copy={onLinkCopied}
+								>
+									<SubtleButton state={linkCopied ? 'success' : 'idle'}>
+										<Morpher morph={linkCopied}>
+											<div slot="item-0" class="flex items-center justify-center gap-1.5">
+												<IconLink class="w-5 h-5 -ml-0.5" />
+												<p>{$LL.Shared.CopyLinkButton()}</p>
+											</div>
+											<div slot="item-1" class="flex items-center justify-center gap-1.5">
+												<IconTick class="w-5 h-5 -ml-0.5 scale-110" />
+												<p>{$LL.GenerationFullscreen.CopiedButtonState()}</p>
+											</div>
+										</Morpher>
+									</SubtleButton>
+								</div>
 							</div>
 						</div>
 						<!-- Divider -->

@@ -410,6 +410,14 @@ type RootTranslation = {
 		 */
 		AddButton: string
 		/**
+		 * C​o​p​y​ ​L​i​n​k
+		 */
+		CopyLinkButton: string
+		/**
+		 * C​o​p​y
+		 */
+		CopyButton: string
+		/**
 		 * D​e​l​e​t​e
 		 */
 		DeleteButton: string
@@ -896,6 +904,14 @@ export type TranslationFunctions = {
 		 * Add
 		 */
 		AddButton: () => LocalizedString
+		/**
+		 * Copy Link
+		 */
+		CopyLinkButton: () => LocalizedString
+		/**
+		 * Copy
+		 */
+		CopyButton: () => LocalizedString
 		/**
 		 * Delete
 		 */

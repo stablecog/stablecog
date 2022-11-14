@@ -56,7 +56,7 @@
 		<div tw="w-full flex flex-col">
 			<div tw="w-full flex items-center">
 				<Logo class="w-20 h-20 -ml-2" />
-				<h1 tw="font-extrabold text-7xl ml-3">Gallery</h1>
+				<h1 tw="font-extrabold text-7xl ml-4">Gallery</h1>
 			</div>
 			<p style="line-height: 2.5rem;" tw="w-full text-3xl opacity-75 mt-6">
 				{generation.prompt.text.slice(0, maxPromptLength)}{generation.prompt.text.length >

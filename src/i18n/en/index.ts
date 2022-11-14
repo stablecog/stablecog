@@ -139,6 +139,8 @@ const en: BaseTranslation = {
 		EnableButton: 'Enable',
 		DisableButton: 'Disable',
 		AddButton: 'Add',
+		CopyLinkButton: 'Copy Link',
+		CopyButton: 'Copy',
 		DeleteButton: 'Delete',
 		ServerUrlInput: {
 			Placeholder: 'Server URL'
