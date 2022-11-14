@@ -83,6 +83,10 @@
 		}
 	}
 
+	function capitalize(string: string) {
+		return string.charAt(0).toUpperCase() + string.slice(1);
+	}
+
 	onMount(() => {
 		if (generationData) {
 			activeGenerationG.set({ ...generationData, didLoadBefore: false });
@@ -92,9 +96,17 @@
 
 <MetaTag
 	title="Gallery | Stablecog"
-	description="A gallery full of images created with Stable Diffusion. Check out the images and their metadata which includes their prompt, negative prompt, inference steps, guidance scale and seed. You can generate similar images directly from the gallery or submit your own creations to it."
-	imageUrl="{canonicalUrl}/previews{$page.url.pathname}.png"
-	canonical="{canonicalUrl}{$page.url.pathname}"
+	description={generationData
+		? 'Check out this generation on the gallery: ' +
+		  capitalize(generationData.prompt.text.slice(0, 140)) +
+		  (generationData.prompt.text.length > 0 ? '...' : '')
+		: 'A gallery full of images created with Stable Diffusion. Check out the images and their metadata which includes their prompt, negative prompt, inference steps, guidance scale and seed. You can generate similar images directly from the gallery or submit your own creations to it.'}
+	imageUrl={generationData
+		? `${$page.url.origin}/api/og/gallery?generation=${generationData.id}.jpg`
+		: `${canonicalUrl}/previews${$page.url.pathname}.png`}
+	canonical={generationData
+		? `${canonicalUrl}${$page.url.pathname}?generation=${generationData.id}`
+		: `${canonicalUrl}${$page.url.pathname}`}
 />
 
 <svelte:window on:keydown={onKeyDown} />

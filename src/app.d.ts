@@ -27,6 +27,12 @@ interface Window {
 	umami: (goalName: string) => void;
 }
 
+declare namespace svelte.JSX {
+	interface HTMLAttributes<T> {
+		tw: string;
+	}
+}
+
 declare module '*.md' {
 	// "unknown" would be more detailed depends on how you structure frontmatter
 	const attributes: Record<string, unknown>;

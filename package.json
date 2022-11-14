@@ -61,6 +61,7 @@
 	},
 	"type": "module",
 	"dependencies": {
+		"@ethercorps/sveltekit-og": "^0.1.8",
 		"@supabase/auth-helpers-sveltekit": "^0.8.3",
 		"@supabase/supabase-js": "^2.0.0",
 		"aws-sdk": "^2.1243.0",
