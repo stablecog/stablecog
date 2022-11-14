@@ -12,15 +12,18 @@
 	import { activeGenerationG } from '$ts/stores/activeGenerationG';
 	import type { TGalleryResponse } from '$ts/types/main';
 	import { MasonryInfiniteGrid } from '@egjs/svelte-infinitegrid';
+	import { onMount } from 'svelte';
 	import type { PageServerData } from './$types';
 
 	export let data: PageServerData;
+	const { galleryData, generationData } = data;
+	activeGenerationG.set(undefined);
 
-	let generations = (data.generations || [])
+	let generations = (galleryData.generations || [])
 		.sort(randomSort)
 		.map((g) => ({ ...g, didLoadBefore: false }));
-	let currPage = data.page;
-	let nextPage = data.next;
+	let currPage = galleryData.page;
+	let nextPage = galleryData.next;
 	let items = generations.map((_, i) => ({
 		groupKey: currPage,
 		key: i
@@ -65,6 +68,7 @@
 		if ($activeGenerationG !== undefined) {
 			if (key === 'Escape') {
 				activeGenerationG.set(undefined);
+				window.history.replaceState({}, '', `/gallery`);
 			} else if (key === 'ArrowLeft') {
 				const index = generations.findIndex(({ id }) => id === $activeGenerationG?.id);
 				if (index > 0) {
@@ -78,6 +82,12 @@
 			}
 		}
 	}
+
+	onMount(() => {
+		if (generationData) {
+			activeGenerationG.set({ ...generationData, didLoadBefore: false });
+		}
+	});
 </script>
 
 <MetaTag

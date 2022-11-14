@@ -43,12 +43,14 @@
 	width={generation.width}
 	height={generation.height}
 />
-<div
-	on:click={(e) => {
+<a
+	href="/gallery?generation={generation.id}"
+	on:click|preventDefault={(e) => {
 		if (doesContainTarget(e.target, [rightButtonContainer])) {
 			return;
 		}
 		activeGenerationG.set(generation);
+		window.history.replaceState({}, '', `/gallery?generation=${generation.id}`);
 	}}
 	class="w-full h-full absolute left-0 top-0 flex flex-col justify-between items-end overflow-hidden gap-4"
 >
@@ -94,7 +96,7 @@
 	</div>
 	<div
 		class="w-full max-h-[max(4rem,min(35%,5.3rem))] transition bg-c-bg/90 text-xs relative z-0 overflow-hidden
-		translate-y-full group-focus-within:translate-y-0 group-hover:translate-y-0"
+		translate-y-full group-focus-within:translate-y-0 group-hover:translate-y-0 pointer-events-none"
 	>
 		<div
 			class="w-full max-h-full overflow-hidden list-fade px-4 py-3 flex flex-col gap-2 cursor-default"
@@ -114,7 +116,7 @@
 			{/if}
 		</div>
 	</div>
-</div>
+</a>
 
 <style>
 	.list-fade {

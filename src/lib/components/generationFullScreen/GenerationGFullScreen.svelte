@@ -31,6 +31,7 @@
 	import type { TGenerationGAdmin, TGenerationGWithLoaded } from '$ts/types/main';
 	import LL, { locale } from '$i18n/i18n-svelte';
 	import { negativePromptTooltipAlt } from '$ts/constants/tooltip';
+	import { page } from '$app/stores';
 
 	export let generation: TGenerationGWithLoaded | TGenerationGAdmin;
 
@@ -174,6 +175,9 @@
 			use:clickoutside={{
 				callback: () => {
 					activeGenerationG.set(undefined);
+					if ($page.url.pathname === '/gallery') {
+						window.history.replaceState({}, '', `/gallery`);
+					}
 				}
 			}}
 			style={$windowWidth >= lgBreakpoint

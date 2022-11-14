@@ -50,7 +50,7 @@
 		}
 		activeGeneration.set(generation);
 	}}
-	class="w-full h-full absolute left-0 top-0 flex flex-col justify-between items-end overflow-hidden gap-4"
+	class="w-full h-full absolute left-0 top-0 flex flex-col justify-between items-end overflow-hidden gap-4 cursor-pointer"
 >
 	<div class="w-full flex justify-between items-start gap-8">
 		<div
@@ -119,7 +119,7 @@
 	</div>
 	<div
 		class="w-full max-h-[max(4rem,min(35%,5.3rem))] transition bg-c-bg/90 text-xs relative z-0 overflow-hidden
-		translate-y-full group-focus-within:translate-y-0 group-hover:translate-y-0"
+		translate-y-full group-focus-within:translate-y-0 group-hover:translate-y-0 pointer-events-none"
 	>
 		<div
 			class="{scrollPrompt
