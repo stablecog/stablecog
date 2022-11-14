@@ -41,11 +41,18 @@ export const POST: RequestHandler = async ({ request }) => {
 	} catch (error) {
 		picked_server_url = server_url;
 	}
+	const maxLogLength = 100;
+	const sliced_prompt = `${prompt.slice(0, maxLogLength)}${
+		prompt.length > maxLogLength ? '...' : ''
+	}`;
+	const sliced_negative_prompt = negative_prompt
+		? `${negative_prompt.slice(0, maxLogLength)}${prompt.length > maxLogLength ? '...' : ''}`
+		: undefined;
 	try {
 		generationLog({
 			text: 'Started generation',
-			prompt,
-			negative_prompt,
+			prompt: sliced_prompt,
+			negative_prompt: sliced_negative_prompt,
 			width,
 			height,
 			num_inference_steps,
@@ -82,8 +89,8 @@ export const POST: RequestHandler = async ({ request }) => {
 					const endTimestamp = Date.now();
 					generationLog({
 						text: `Inserted into the DB in: ${(endTimestamp - startTimestamp) / 1000}s`,
-						prompt,
-						negative_prompt,
+						prompt: sliced_prompt,
+						negative_prompt: sliced_negative_prompt,
 						width,
 						height,
 						num_inference_steps,
@@ -132,8 +139,8 @@ export const POST: RequestHandler = async ({ request }) => {
 		}
 		generationLog({
 			text: `Ended generation in ${(endTimestamp - startTimestamp) / 1000}s`,
-			prompt,
-			negative_prompt,
+			prompt: sliced_prompt,
+			negative_prompt: sliced_negative_prompt,
 			width,
 			height,
 			num_inference_steps,
@@ -221,8 +228,8 @@ export const POST: RequestHandler = async ({ request }) => {
 						text: `Updated the DB record with "succeeded" in: ${
 							(endTimestamp - startTimestamp) / 1000
 						}s`,
-						prompt,
-						negative_prompt,
+						prompt: sliced_prompt,
+						negative_prompt: sliced_negative_prompt,
 						width,
 						height,
 						num_inference_steps,
@@ -270,8 +277,8 @@ export const POST: RequestHandler = async ({ request }) => {
 						text: `Updated the DB record with "failed" in: ${
 							(endTimestamp - startTimestamp) / 1000
 						}s`,
-						prompt,
-						negative_prompt,
+						prompt: sliced_prompt,
+						negative_prompt: sliced_negative_prompt,
 						width,
 						height,
 						num_inference_steps,
@@ -323,8 +330,8 @@ export const POST: RequestHandler = async ({ request }) => {
 						text: `Updated the DB record with "failed" in: ${
 							(endTimestamp - startTimestamp) / 1000
 						}s`,
-						prompt,
-						negative_prompt,
+						prompt: sliced_prompt,
+						negative_prompt: sliced_negative_prompt,
 						width,
 						height,
 						num_inference_steps,
