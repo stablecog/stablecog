@@ -98,8 +98,8 @@
 	title="Gallery | Stablecog"
 	description={generationData
 		? `Check out this generation on the gallery: "${capitalize(
-				generationData.prompt.text.slice(0, 140)
-		  )}${generationData.prompt.text.length > 0 ? '...' : ''}"`
+				generationData.prompt.text.slice(0, 200)
+		  )}${generationData.prompt.text.length > 200 ? '...' : ''}"`
 		: 'A gallery full of images created with Stable Diffusion. Check out the images and their metadata including their prompt, negative prompt, inference steps, guidance scale and seed. Generate similar images directly from the gallery or submit your own.'}
 	imageUrl={generationData
 		? `${$page.url.origin}/api/og/gallery?generation=${generationData.id}.jpg`

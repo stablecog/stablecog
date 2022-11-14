@@ -5,8 +5,8 @@
 	export let description: string;
 	export let canonical: string;
 	export let imageUrl: string | undefined = undefined;
-	export let imageWidth = 1920;
-	export let imageHeight = 1080;
+	export let imageWidth = 1200;
+	export let imageHeight = 630;
 </script>
 
 <MetaTags
