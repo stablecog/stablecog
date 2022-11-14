@@ -43,7 +43,7 @@
 	import { lastUpscaleDurationSec } from '$ts/stores/lastUpscaleDurationSec';
 	import { estimatedDurationBufferRatio } from '$ts/constants/main';
 	import { pLogUpscale, uLogUpscale } from '$ts/helpers/loggers';
-	import LL, { locale } from '$i18n/i18n-svelte';
+	import LL from '$i18n/i18n-svelte';
 	import { negativePromptTooltipAlt } from '$ts/constants/tooltip';
 	import IconTrashcan from '$components/icons/IconTrashcan.svelte';
 	import { deleteGenerationFromDb } from '$ts/queries/indexedDb';
@@ -311,8 +311,11 @@
 			await tick();
 			setTimeout(() => (deleteStatus = 'loading'));
 			await deleteGenerationFromDb(id);
-			dispatchDelete('delete', { generation });
+			activeGeneration.set(undefined);
 			deleteStatus = 'success';
+			setTimeout(() => {
+				dispatchDelete('delete', { generation });
+			}, 300);
 		} catch (error) {
 			console.log(error);
 			deleteStatus = 'idle';
