@@ -84,8 +84,8 @@ jobs:
           KUBE_CONFIG_DATA: ${{ secrets.KUBE_CONFIG_DATA }}
         with:
           args: apply -f ./kubernetes/stablecog-k.yaml
-      - name: Sleep for 30 seconds
-        run: sleep 30s
+      - name: Sleep for 40 seconds
+        run: sleep 40s
         shell: bash
       - name: Clear Cloudflare Cache 1
         env:
@@ -98,8 +98,8 @@ jobs:
           --header 'content-type: application/json' \
           --data '{"purge_everything":true}' \
           --fail
-      - name: Sleep for 45 seconds
-        run: sleep 45s
+      - name: Sleep for 30 seconds
+        run: sleep 30s
         shell: bash
       - name: Clear Cloudflare Cache 2
         env:
