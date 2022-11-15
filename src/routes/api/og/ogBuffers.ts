@@ -3,12 +3,11 @@ import satori from 'satori';
 import { initWasm, Resvg } from '@resvg/resvg-wasm';
 import type { SatoriOptions } from 'satori';
 import type { SvelteComponent } from 'svelte';
-import sharp from 'sharp';
 import { canonicalUrl } from '$ts/constants/main';
 
 await initWasm(fetch(`${canonicalUrl}/wasm/resvg.wasm`));
 
-export async function getJpegBuffer(htmlTemplate: string, optionsByUser: ImageResponseOptions) {
+export async function getPngBuffer(htmlTemplate: string, optionsByUser: ImageResponseOptions) {
 	const options = Object.assign({ width: 1200, height: 630, debug: !1 }, optionsByUser);
 	const svg = await satori(toReactNode(htmlTemplate), {
 		width: options.width,
@@ -17,18 +16,18 @@ export async function getJpegBuffer(htmlTemplate: string, optionsByUser: ImageRe
 		fonts: options.fonts
 	});
 	const pngData = new Resvg(svg, { fitTo: { mode: 'width', value: options.width } });
-	const jpegBuffer = await sharp(pngData.render().asPng()).jpeg().toBuffer();
-	return jpegBuffer;
+	const pngBuffer = pngData.render().asPng();
+	return pngBuffer;
 }
 
-export async function getJpegBufferFromComponent(
+export async function getPngBufferFromComponent(
 	component: typeof SvelteComponent,
 	props = {},
 	optionsByUser: ImageResponseOptions
 ) {
 	const htmlTemplate = componentToMarkup(component, props);
-	const jpegBuffer = await getJpegBuffer(htmlTemplate, optionsByUser);
-	return jpegBuffer;
+	const pngBuffer = await getPngBuffer(htmlTemplate, optionsByUser);
+	return pngBuffer;
 }
 
 const componentToMarkup = (component: typeof SvelteComponent, props = {}) => {

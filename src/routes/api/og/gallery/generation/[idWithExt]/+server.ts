@@ -1,4 +1,4 @@
-import { getJpegBufferFromComponent } from '$routes/api/og/ogBuffers';
+import { getPngBufferFromComponent } from '$routes/api/og/ogBuffers';
 import OGGallery from '$components/og/OGGallery.svelte';
 import type { RequestHandler } from '@sveltejs/kit';
 import { getGenerationG } from '$ts/queries/db/gallery';
@@ -32,12 +32,12 @@ export const GET: RequestHandler = async ({ params, url }) => {
 	const webpArrayBuffer = await webpRes.arrayBuffer();
 	const webpBuffer = Buffer.from(webpArrayBuffer);
 	const jpgBuffer = await sharp(webpBuffer).jpeg().toBuffer();
-	const imgBase64 = jpgBuffer.toString('base64');
-	const imgUrl = `data:image/jpeg;base64,${imgBase64}`;
-	const startOgJpegBuffer = Date.now();
-	const ogJpegBuffer = await getJpegBufferFromComponent(
+	const imgB64String = jpgBuffer.toString('base64');
+	const imgB64 = `data:image/jpeg;base64,${imgB64String}`;
+	const startOgPngBuffer = Date.now();
+	const ogPngBuffer = await getPngBufferFromComponent(
 		OGGallery,
-		{ generation, width, height, imgUrl },
+		{ generation, width, height, imgB64 },
 		{
 			width: width,
 			height: height,
@@ -60,13 +60,15 @@ export const GET: RequestHandler = async ({ params, url }) => {
 			]
 		}
 	);
-	const endOgJpegBuffer = Date.now();
-	console.log(`---- ogJpegBuffer in: ${endOgJpegBuffer - startOgJpegBuffer}ms`);
+	const endOgPngBuffer = Date.now();
+	console.log(
+		`---- Converted OG component to PNG buffer in: ${endOgPngBuffer - startOgPngBuffer}ms`
+	);
 	const end = Date.now();
 	console.log(`---- Generated OG image for generation "${generationId}" in: ${end - start}ms ----`);
-	return new Response(ogJpegBuffer, {
+	return new Response(ogPngBuffer, {
 		headers: {
-			'Content-Type': 'image/jpeg',
+			'Content-Type': 'image/png',
 			'Cache-Control': 'public, max-age=31536000'
 		}
 	});

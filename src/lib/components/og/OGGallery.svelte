@@ -8,7 +8,7 @@
 	export let generation: TDBGenerationG;
 	export let width: number;
 	export let height: number;
-	export let imgUrl: string;
+	export let imgB64: string;
 
 	const maxPromptLength = 140;
 	const padding = 24;
@@ -45,7 +45,7 @@
 		border-width: 4px; border-style: solid"
 	>
 		<img
-			src={imgUrl}
+			src={imgB64}
 			width={imageWidth}
 			height={imageHeight}
 			alt={generation.prompt.text.slice(0, 50)}
