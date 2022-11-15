@@ -29,17 +29,10 @@ export const GET: RequestHandler = async ({ params, url }) => {
 	const generation = data;
 	const width = 1200;
 	const height = 630;
-	const webpUrl = urlFromImageId(generation.image_id);
-	const webpRes = await fetch(webpUrl);
-	const webpArrayBuffer = await webpRes.arrayBuffer();
-	const webpBuffer = Buffer.from(webpArrayBuffer);
-	const jpgBuffer = await sharp(webpBuffer).jpeg().toBuffer();
-	const imgB64String = jpgBuffer.toString('base64');
-	const imgB64 = `data:image/jpeg;base64,${imgB64String}`;
 	const startOgJpegBuffer = Date.now();
 	const ogJpegBuffer = await getJpegBufferFromComponent(
 		OGGallery,
-		{ generation, width, height, imgB64 },
+		{ generation, width, height },
 		{
 			width: width,
 			height: height,
