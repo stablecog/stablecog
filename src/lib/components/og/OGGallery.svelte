@@ -10,7 +10,7 @@
 	export let height: number;
 	export let imgUrl: string;
 
-	const maxPromptLength = 158;
+	const maxPromptLength = 140;
 	const padding = 24;
 	let imageWidth: number;
 	let imageHeight: number;
