@@ -36,7 +36,7 @@ export const GET: RequestHandler = async ({ params, url }) => {
 	const jpgBuffer = await sharp(webpBuffer).jpeg().toBuffer();
 	const imgB64String = jpgBuffer.toString('base64');
 	const imgB64 = `data:image/jpeg;base64,${imgB64String}`;
-	const startOgPngBuffer = Date.now();
+	const startOgJpegBuffer = Date.now();
 	const ogJpegBuffer = await getJpegBufferFromComponent(
 		OGGallery,
 		{ generation, width, height, imgB64 },
@@ -62,9 +62,9 @@ export const GET: RequestHandler = async ({ params, url }) => {
 			]
 		}
 	);
-	const endOgPngBuffer = Date.now();
+	const endOgJpegBuffer = Date.now();
 	console.log(
-		`---- Converted OG component to JPEG buffer in: ${endOgPngBuffer - startOgPngBuffer}ms`
+		`---- Converted OG component to JPEG buffer in: ${endOgJpegBuffer - startOgJpegBuffer}ms`
 	);
 	const end = Date.now();
 	console.log(`---- Generated OG image for generation "${generationId}" in: ${end - start}ms ----`);
