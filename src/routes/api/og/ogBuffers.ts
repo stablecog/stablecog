@@ -4,6 +4,7 @@ import { initWasm, Resvg } from '@resvg/resvg-wasm';
 import type { SatoriOptions } from 'satori';
 import type { SvelteComponent } from 'svelte';
 import { canonicalUrl } from '$ts/constants/main';
+import sharp from 'sharp';
 
 await initWasm(fetch(`${canonicalUrl}/wasm/resvg.wasm`));
 
@@ -28,6 +29,22 @@ export async function getPngBufferFromComponent(
 	const htmlTemplate = componentToMarkup(component, props);
 	const pngBuffer = await getPngBuffer(htmlTemplate, optionsByUser);
 	return pngBuffer;
+}
+
+export async function getJpegBuffer(htmlTemplate: string, optionsByUser: ImageResponseOptions) {
+	const pngBuffer = await getPngBuffer(htmlTemplate, optionsByUser);
+	const jpegBuffer = await sharp(pngBuffer).jpeg().toBuffer();
+	return jpegBuffer;
+}
+
+export async function getJpegBufferFromComponent(
+	component: typeof SvelteComponent,
+	props = {},
+	optionsByUser: ImageResponseOptions
+) {
+	const htmlTemplate = componentToMarkup(component, props);
+	const jpegBuffer = await getJpegBuffer(htmlTemplate, optionsByUser);
+	return jpegBuffer;
 }
 
 const componentToMarkup = (component: typeof SvelteComponent, props = {}) => {
