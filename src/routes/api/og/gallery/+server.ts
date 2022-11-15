@@ -62,6 +62,6 @@ export const GET: RequestHandler = async ({ url }) => {
 	);
 	const res = og as Response;
 	const end = Date.now();
-	console.log(`Generated OG image for generation "${generationId}" in: ${end - start}ms`);
+	console.log(`---- Generated OG image for generation "${generationId}" in: ${end - start}ms ----`);
 	return res;
 };
