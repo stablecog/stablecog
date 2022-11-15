@@ -3,7 +3,6 @@
 	import IconScale from '$components/icons/IconScale.svelte';
 	import IconSteps from '$components/icons/IconSteps.svelte';
 	import Logo from '$components/Logo.svelte';
-	import { canonicalUrl } from '$ts/constants/main';
 	import type { TDBGenerationG } from '$ts/types/db';
 
 	export let generation: TDBGenerationG;
@@ -33,24 +32,17 @@
 
 	const bgColor = 'rgb(32, 31, 34)';
 	const onBgColor = 'rgb(219, 213, 231)';
-	const shadowColor = 'rgba(0, 0, 0, 0.3)';
+	const bgSecondaryColor = 'rgb(41, 40, 43)';
 </script>
 
 <div
 	style="background: {bgColor}; color: {onBgColor}; padding: {padding}px;"
 	tw="flex w-full h-full items-center justify-center"
 >
-	<img
-		tw="absolute left-0 top-0"
-		src="{canonicalUrl}/images/patterns/grid-pattern.png"
-		alt="Pattern"
-		{width}
-		height={width}
-	/>
 	<div
 		tw="h-full flex items-center justify-center rounded-2xl relative"
-		style="overflow:hidden; width:{imageContainerWidth}px; height:{imageContainerHeight}px; border-color: {bgColor};
-		border-width: 4px; border-style: solid; box-shadow: 0 12px 24px 0 {shadowColor};"
+		style="overflow:hidden; width:{imageContainerWidth}px; height:{imageContainerHeight}px; border-color: {bgSecondaryColor};
+		border-width: 4px; border-style: solid"
 	>
 		<img
 			src={imgUrl}
