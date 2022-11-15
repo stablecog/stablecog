@@ -13,7 +13,7 @@ const config = {
 			'$css/*': './src/lib/css',
 			'$md/*': './src/lib/md',
 			'$routes/*': './src/routes',
-			'$i18n/*': './src/i18n'
+			'$i18n/*': './src/i18n',
 		},
 		inlineStyleThreshold: 60 * 1024
 	}
