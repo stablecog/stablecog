@@ -84,10 +84,24 @@ jobs:
           KUBE_CONFIG_DATA: ${{ secrets.KUBE_CONFIG_DATA }}
         with:
           args: apply -f ./kubernetes/stablecog-k.yaml
-      - name: Sleep for 75 seconds
-        run: sleep 75s
+      - name: Sleep for 30 seconds
+        run: sleep 30s
         shell: bash
-      - name: Clear Cloudflare Cache
+      - name: Clear Cloudflare Cache 1
+        env:
+          CLOUDFLARE_ZONE_ID: ${{ secrets.CLOUDFLARE_ZONE_ID }}
+          CLOUDFLARE_TOKEN: ${{ secrets.CLOUDFLARE_TOKEN }}
+        run: |
+          curl --request POST \
+          --url https://api.cloudflare.com/client/v4/zones/${{ env.CLOUDFLARE_ZONE_ID }}/purge_cache \
+          --header 'authorization: Bearer ${{ env.CLOUDFLARE_TOKEN }}' \
+          --header 'content-type: application/json' \
+          --data '{"purge_everything":true}' \
+          --fail
+      - name: Sleep for 45 seconds
+        run: sleep 45s
+        shell: bash
+      - name: Clear Cloudflare Cache 2
         env:
           CLOUDFLARE_ZONE_ID: ${{ secrets.CLOUDFLARE_ZONE_ID }}
           CLOUDFLARE_TOKEN: ${{ secrets.CLOUDFLARE_TOKEN }}
