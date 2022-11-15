@@ -6,7 +6,7 @@ import type { SvelteComponent } from 'svelte';
 import sharp from 'sharp';
 import { canonicalUrl } from '$ts/constants/main';
 
-await initWasm(`${canonicalUrl}/wasm/resvg.wasm`);
+await initWasm(fetch(`${canonicalUrl}/wasm/resvg.wasm`));
 
 export async function getJpegBuffer(htmlTemplate: string, optionsByUser: ImageResponseOptions) {
 	const options = Object.assign({ width: 1200, height: 630, debug: !1 }, optionsByUser);
