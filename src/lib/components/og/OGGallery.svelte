@@ -7,7 +7,7 @@
 
 	const imageUrl = `https://ik.imagekit.io/stablecog/tr:f-jpg/${generation.image_id}.webp`;
 
-	const maxPromptLength = 140;
+	const maxPromptLength = 130;
 	const padding = 24;
 	let imageWidth: number;
 	let imageHeight: number;
