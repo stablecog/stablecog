@@ -79,7 +79,7 @@
 				<div class="flex items-center">
 					<IconDimensions class="w-8 h-8" color={onBgColor} />
 					<p class="ml-3 font-bold text-3xl">
-						{generation.width}<span class="mx-2">×</span>{generation.height}
+						{generation.width}<span class="mx-1.5">×</span>{generation.height}
 					</p>
 				</div>
 			</div>
