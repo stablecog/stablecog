@@ -17,9 +17,9 @@ const [fontRegular, fontBold, fontExtrabold] = await Promise.all([
 	fontExtraboldRes.arrayBuffer()
 ]);
 
-export const GET: RequestHandler = async ({ url }) => {
+export const GET: RequestHandler = async ({ url, params }) => {
 	const start = Date.now();
-	const generationIdWithExt = url.searchParams.get('generation');
+	const generationIdWithExt = params.idWithExt;
 	if (!generationIdWithExt) return new Response('No generation id provided', { status: 400 });
 	const generationId = generationIdWithExt.split('.')[0];
 	const { data, error } = await getGenerationG(generationId);
