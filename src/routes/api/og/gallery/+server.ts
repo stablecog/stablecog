@@ -18,6 +18,7 @@ const [fontRegular, fontBold, fontExtrabold] = await Promise.all([
 ]);
 
 export const GET: RequestHandler = async ({ url }) => {
+	const start = Date.now();
 	const generationIdWithExt = url.searchParams.get('generation');
 	if (!generationIdWithExt) return new Response('No generation id provided', { status: 400 });
 	const generationId = generationIdWithExt.split('.')[0];
@@ -60,5 +61,7 @@ export const GET: RequestHandler = async ({ url }) => {
 		}
 	);
 	const res = og as Response;
+	const end = Date.now();
+	console.log(`Generated OG image for generation "${generationId}" in: ${end - start}ms`);
 	return res;
 };
