@@ -2,8 +2,6 @@ import { getJpegBufferFromComponent } from '$routes/api/og/ogBuffers';
 import OGGallery from '$components/og/OGGallery.svelte';
 import type { RequestHandler } from '@sveltejs/kit';
 import { getGenerationG } from '$ts/queries/db/gallery';
-import { urlFromImageId } from '$ts/helpers/urlFromImageId';
-import sharp from 'sharp';
 import { canonicalUrl } from '$ts/constants/main';
 
 const [fontRegularRes, fontBoldRes, fontExtraboldRes] = await Promise.all([
@@ -17,7 +15,7 @@ const [fontRegular, fontBold, fontExtrabold] = await Promise.all([
 	fontExtraboldRes.arrayBuffer()
 ]);
 
-export const GET: RequestHandler = async ({ params, url }) => {
+export const GET: RequestHandler = async ({ params }) => {
 	const start = Date.now();
 	const generationIdWithExt = params.idWithExt;
 	if (!generationIdWithExt) return new Response('No generation id provided', { status: 400 });
