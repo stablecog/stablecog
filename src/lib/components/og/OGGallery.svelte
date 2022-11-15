@@ -1,4 +1,7 @@
 <script lang="ts">
+	import IconDimensions from '$components/icons/IconDimensions.svelte';
+	import IconScale from '$components/icons/IconScale.svelte';
+	import IconSteps from '$components/icons/IconSteps.svelte';
 	import Logo from '$components/Logo.svelte';
 	import { canonicalUrl } from '$ts/constants/main';
 	import type { TDBGenerationG } from '$ts/types/db';
@@ -6,8 +9,8 @@
 	export let generation: TDBGenerationG;
 	export let width: number;
 	export let height: number;
+	export let imgUrl: string;
 
-	const imgUrl = `https://ik.imagekit.io/stablecog/tr:f-jpg/${generation.image_id}.webp`;
 	const maxPromptLength = 158;
 	const padding = 24;
 	let imageWidth: number;
@@ -27,10 +30,14 @@
 		imageContainerHeight = imageHeight;
 	}
 	const containerWidth = width - 2 * padding - imageContainerWidth;
+
+	const bgColor = 'rgb(32, 31, 34)';
+	const onBgColor = 'rgb(219, 213, 231)';
+	const shadowColor = 'rgba(0, 0, 0, 0.3)';
 </script>
 
 <div
-	style="background: rgb(32, 31, 34); color: rgb(219, 213, 231); padding: {padding}px;"
+	style="background: {bgColor}; color: {onBgColor}; padding: {padding}px;"
 	tw="flex w-full h-full items-center justify-center"
 >
 	<img
@@ -42,8 +49,8 @@
 	/>
 	<div
 		tw="h-full flex items-center justify-center rounded-2xl relative"
-		style="overflow:hidden; width:{imageContainerWidth}px; height:{imageContainerHeight}px; border-color: rgb(32, 31, 34);
-		border-width: 4px; border-style: solid; box-shadow: 0 12px 24px 0 rgba(0, 0, 0, 0.3);"
+		style="overflow:hidden; width:{imageContainerWidth}px; height:{imageContainerHeight}px; border-color: {bgColor};
+		border-width: 4px; border-style: solid; box-shadow: 0 12px 24px 0 {shadowColor};"
 	>
 		<img
 			src={imgUrl}
@@ -68,6 +75,22 @@
 					? '...'
 					: ''}
 			</p>
+			<div class="w-full flex mt-2">
+				<div class="flex items-center mr-10">
+					<IconScale class="w-8 h-8" color={onBgColor} />
+					<p class="ml-3 font-bold text-3xl">{Math.round(generation.guidance_scale)}</p>
+				</div>
+				<div class="flex items-center mr-10">
+					<IconSteps class="w-8 h-8" color={onBgColor} />
+					<p class="ml-3 font-bold text-3xl">{generation.inference_steps}</p>
+				</div>
+				<div class="flex items-center">
+					<IconDimensions class="w-8 h-8" color={onBgColor} />
+					<p class="ml-3 font-bold text-3xl">
+						{generation.width}<span class="mx-2">×</span>{generation.height}
+					</p>
+				</div>
+			</div>
 		</div>
 	</div>
 </div>

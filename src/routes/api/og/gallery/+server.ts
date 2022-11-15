@@ -3,6 +3,8 @@ import OGGallery from '$components/og/OGGallery.svelte';
 import type { RequestHandler } from '@sveltejs/kit';
 import { getGenerationG } from '$ts/queries/db/gallery';
 import { canonicalUrl } from '$ts/constants/main';
+import { urlFromImageId } from '$ts/helpers/urlFromImageId';
+import sharp from 'sharp';
 
 const [fontRegularRes, fontBoldRes, fontExtraboldRes] = await Promise.all([
 	fetch(`${canonicalUrl}/fonts/jetbrains-mono/jetbrains-mono-400.ttf`),
@@ -25,9 +27,16 @@ export const GET: RequestHandler = async ({ url }) => {
 	const generation = data;
 	const width = 1200;
 	const height = 630;
+	const webpUrl = urlFromImageId(generation.image_id);
+	const webpRes = await fetch(webpUrl);
+	const webpArrayBuffer = await webpRes.arrayBuffer();
+	const webpBuffer = Buffer.from(webpArrayBuffer);
+	const jpgBuffer = await sharp(webpBuffer).jpeg().toBuffer();
+	const imgBase64 = jpgBuffer.toString('base64');
+	const imgUrl = `data:image/jpeg;base64,${imgBase64}`;
 	const og = new componentToImageResponse(
 		OGGallery,
-		{ generation, width, height },
+		{ generation, width, height, imgUrl },
 		{
 			width: width,
 			height: height,
