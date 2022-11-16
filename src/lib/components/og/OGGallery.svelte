@@ -131,7 +131,7 @@
 				>
 				<h1 tw="font-extrabold text-7xl ml-4">Gallery</h1>
 			</div>
-			<p style="line-height: 2.5rem" tw="w-full text-3xl opacity-75 mt-6 overflow-hidden">
+			<p style="line-height: 2.5rem" tw="w-full text-3xl opacity-75 mt-4 overflow-hidden">
 				{generation.prompt.text.slice(0, maxPromptLength)}{generation.prompt.text.length >
 				maxPromptLength
 					? '...'
