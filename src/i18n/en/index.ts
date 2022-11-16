@@ -44,7 +44,7 @@ const en: BaseTranslation = {
 	History: {
 		GenerationsTitle: 'Generations',
 		GenerationsMaxSavedCountWarning: 'Last {count:number} only',
-		NoGenerationsYet: "You didn't generate any images yet."
+		NoGenerationsYet: "You haven't generated any images yet."
 	},
 	Live: {
 		GenerationsTitle: 'Generations',

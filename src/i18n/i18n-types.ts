@@ -118,7 +118,7 @@ type RootTranslation = {
 		 */
 		GenerationsMaxSavedCountWarning: RequiredParams<'count'>
 		/**
-		 * Y​o​u​ ​d​i​d​n​'​t​ ​g​e​n​e​r​a​t​e​ ​a​n​y​ ​i​m​a​g​e​s​ ​y​e​t​.
+		 * Y​o​u​ ​h​a​v​e​n​'​t​ ​g​e​n​e​r​a​t​e​d​ ​a​n​y​ ​i​m​a​g​e​s​ ​y​e​t​.
 		 */
 		NoGenerationsYet: string
 	}
@@ -615,7 +615,7 @@ export type TranslationFunctions = {
 		 */
 		GenerationsMaxSavedCountWarning: (arg: { count: number }) => LocalizedString
 		/**
-		 * You didn't generate any images yet.
+		 * You haven't generated any images yet.
 		 */
 		NoGenerationsYet: () => LocalizedString
 	}
