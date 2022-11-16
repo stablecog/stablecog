@@ -51,7 +51,6 @@
 		if (doesContainTarget(e.target, [rightButtonContainer])) {
 			return;
 		}
-		fetch(galleryPreviewUrlFromGenerationId(generation.id));
 		activeGenerationG.set(generation);
 		window.history.replaceState({}, '', `/gallery?generation=${generation.id}`);
 	}}
