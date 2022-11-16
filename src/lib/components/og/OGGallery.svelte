@@ -4,8 +4,7 @@
 	export let generation: TDBGenerationG;
 	export let width: number;
 	export let height: number;
-
-	const imageUrl = `https://ik.imagekit.io/stablecog/tr:f-jpg/${generation.image_id}.webp`;
+	export let imageUri: string;
 
 	const maxPromptLength = 130;
 	const padding = 24;
@@ -42,7 +41,7 @@
 		border-width: 4px; border-style: solid"
 	>
 		<img
-			src={imageUrl}
+			src={imageUri}
 			width={imageWidth}
 			height={imageHeight}
 			alt={generation.prompt.text.slice(0, 50)}
