@@ -1,3 +1,3 @@
-export function galleryPreviewUrlFromGenerationId(baseUrl: string, generationId: string) {
-	return `${baseUrl}/api/og/gallery/generation/${generationId}.jpeg`;
+export function galleryPreviewUrlFromGenerationId(generationId: string) {
+	return `https://og.stablecog.com/api/gallery/generation/${generationId}.png`;
 }

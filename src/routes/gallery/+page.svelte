@@ -103,7 +103,7 @@
 		  )}${generationData.prompt.text.length > 200 ? '...' : ''}".`
 		: 'A gallery full of images created with Stable Diffusion. Check out the images and their metadata including their prompt, negative prompt, inference steps, guidance scale and seed. Generate similar images directly from the gallery or submit your own.'}
 	imageUrl={generationData
-		? galleryPreviewUrlFromGenerationId($page.url.origin, generationData.id)
+		? galleryPreviewUrlFromGenerationId(generationData.id)
 		: `${canonicalUrl}/previews${$page.url.pathname}.png`}
 	canonical={generationData
 		? `${canonicalUrl}${$page.url.pathname}?generation=${generationData.id}`
