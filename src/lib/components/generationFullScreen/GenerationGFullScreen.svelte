@@ -33,6 +33,7 @@
 	import { negativePromptTooltipAlt } from '$ts/constants/tooltip';
 	import { page } from '$app/stores';
 	import IconLink from '$components/icons/IconLink.svelte';
+	import { generationGPreviewUrlFromId } from '$ts/helpers/generationGPreviewUrlFromId';
 
 	export let generation: TGenerationGWithLoaded | TGenerationGAdmin;
 
@@ -161,6 +162,8 @@
 	let linkCopied = false;
 	let linkCopiedTimeout: NodeJS.Timeout;
 	const onLinkCopied = () => {
+		fetch(generationGPreviewUrlFromId(generation.id));
+
 		promptCopied = false;
 		seedCopied = false;
 		negativePromptCopied = false;
