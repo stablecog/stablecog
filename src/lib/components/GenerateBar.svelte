@@ -38,7 +38,7 @@
 	import { currentServer } from '$ts/stores/serverHealth';
 	import type { TStatus } from '$ts/types/main';
 	import { onMount, tick } from 'svelte';
-	import LL from '$i18n/i18n-svelte';
+	import LL, { locale } from '$i18n/i18n-svelte';
 	import {
 		guidanceScaleTooltip,
 		heightTooltip,
@@ -312,15 +312,19 @@
 			</div>
 			<ClearButton show={showClearPromptInputButton} onClick={clearPrompt} />
 		</div>
-		<Button disabled={loadingOrSubmitting} loading={loadingOrSubmitting} class="w-full md:w-40">
-			{#if status === 'loading'}
-				{Math.max(sinceSec, 0).toLocaleString('en-US', {
-					minimumFractionDigits: 1,
-					maximumFractionDigits: 1
-				})}
-			{:else}
-				{$LL.Home.GenerateButton()}
-			{/if}
+		<Button
+			disabled={loadingOrSubmitting}
+			loading={loadingOrSubmitting}
+			class="w-full md:w-auto md:min-w-[9.5rem]"
+		>
+			<p class={loadingOrSubmitting ? 'opacity-0' : 'opacity-100'}>{$LL.Home.GenerateButton()}</p>
+			<p
+				class="{loadingOrSubmitting
+					? 'opacity-100'
+					: 'opacity-0'} absolute left-0 top-0 w-full h-full flex items-center justify-center"
+			>
+				{sinceSec.toLocaleString($locale, { minimumFractionDigits: 1, maximumFractionDigits: 1 })}
+			</p>
 		</Button>
 	</div>
 	<!-- Tab bars -->

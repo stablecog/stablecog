@@ -7,6 +7,8 @@
 	export { classes as class };
 	export let prefetch: boolean = true;
 	export let target: string | null = null;
+	export let noPadding = false;
+	export let disabled = false;
 	let classes = '';
 </script>
 
@@ -27,13 +29,13 @@
 						: ''}"
 				/>
 			</div>
-			<div class="p-2">
+			<div class={noPadding ? '' : 'p-2'}>
 				<slot />
 			</div>
 		</div>
 	</a>
 {:else}
-	<button on:click={onClick} class="group rounded-xl {classes}" aria-label={name}>
+	<button {disabled} on:click={onClick} class="group rounded-xl {classes}" aria-label={name}>
 		<div class="rounded-lg relative">
 			<div class="w-full h-full rounded-full overflow-hidden z-0 absolute left-0 top-0">
 				<div
@@ -43,7 +45,7 @@
 						: ''}"
 				/>
 			</div>
-			<div class="p-2">
+			<div class={noPadding ? '' : 'p-2'}>
 				<slot />
 			</div>
 		</div>

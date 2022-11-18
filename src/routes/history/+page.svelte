@@ -3,7 +3,7 @@
 	import GenerationFullScreen from '$components/generationFullScreen/GenerationFullScreen.svelte';
 	import GenerationGrid from '$components/GenerationGrid.svelte';
 	import MetaTag from '$components/MetaTag.svelte';
-	import LL from '$i18n/i18n-svelte';
+	import LL, { locale } from '$i18n/i18n-svelte';
 	import { maxImages } from '$ts/constants/indexedDb';
 	import { canonicalUrl } from '$ts/constants/main';
 	import { getGenerationsFromDb, updateGenerationInDb } from '$ts/queries/indexedDb';
@@ -87,7 +87,9 @@
 			>
 				<p class="font-bold text-xl">
 					{$LL.History.GenerationsTitle()}
-					<span class="text-sm text-c-on-bg/50 font-semibold">({generations?.length ?? '..'})</span>
+					<span class="text-sm text-c-on-bg/50 font-semibold">
+						({generations?.length.toLocaleString($locale) ?? '..'})
+					</span>
 				</p>
 				<p class="text-xs text-c-primary/75 font-semibold bg-c-primary/15 px-2 py-1 rounded-md">
 					{$LL.History.GenerationsMaxSavedCountWarning({ count: maxImages })}

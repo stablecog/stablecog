@@ -147,3 +147,5 @@ export interface TGenerationGAdmin extends TDBGenerationG {
 	didLoadBefore: boolean;
 	status: 'deleted' | 'approved' | 'idle';
 }
+
+export type TCurrentSettingsPage = 'settings' | 'language';

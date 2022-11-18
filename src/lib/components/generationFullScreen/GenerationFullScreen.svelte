@@ -274,13 +274,15 @@
 
 	let upscaledTabValue: TUpscaleTabValue = 'upscaled';
 	type TUpscaleTabValue = 'original' | 'upscaled';
-	const upscaledOrDefaultTabs: { label: string; value: TUpscaleTabValue }[] = [
+	let upscaledOrDefaultTabs: { label: string; value: TUpscaleTabValue }[];
+
+	$: upscaledOrDefaultTabs = [
 		{
-			label: 'Upscaled',
+			label: $LL.GenerationFullscreen.UpscaleTabBar.UpscaledTitle(),
 			value: 'upscaled'
 		},
 		{
-			label: 'Original',
+			label: $LL.GenerationFullscreen.UpscaleTabBar.OriginalTitle(),
 			value: 'original'
 		}
 	];

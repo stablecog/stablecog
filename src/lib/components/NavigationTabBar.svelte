@@ -64,8 +64,8 @@
 				<a
 					aria-label="Go to {route.name}"
 					data-sveltekit-prefetch
-					class="flex-1 rounded-lg overflow-hidden group self-stretch flex 
-				items-center justify-center px-5 transition-all relative {type === 'bottom'
+					class="flex-1 rounded-lg whitespace-nowrap overflow-hidden group self-stretch flex 
+					items-center justify-center px-5 transition-all relative {type === 'bottom'
 						? 'pt-4 pb-4.5'
 						: 'py-4'} {isSelected(route.href, $page.url.pathname)
 						? 'text-c-on-bg font-bold'
@@ -83,7 +83,7 @@
 						<div class="w-full h-full overflow-hidden relative z-0 rounded-lg">
 							<div
 								class="w-full h-full origin-left rounded-lg transition transform translate-y-full 
-							bg-c-bg-secondary {isSelected(route.href, $page.url.pathname)
+									bg-c-bg-secondary {isSelected(route.href, $page.url.pathname)
 									? 'group-focus-within:translate-y-0'
 									: ''} {!$isTouchscreen ? 'group-hover:translate-y-0' : ''}"
 							/>

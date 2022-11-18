@@ -146,7 +146,7 @@
 					withSpinner={true}
 					size="sm"
 					type="success"
-					padding={false}
+					noPadding
 					loading={approveStatus === 'loading'}
 					onClick={approveGeneration}
 				>
@@ -160,7 +160,7 @@
 					withSpinner={true}
 					size="sm"
 					type="danger"
-					padding={false}
+					noPadding
 					loading={deleteStatus === 'loading'}
 					onClick={deleteGeneration}
 				>

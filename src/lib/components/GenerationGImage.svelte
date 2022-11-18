@@ -1,5 +1,4 @@
 <script lang="ts">
-	import { page } from '$app/stores';
 	import CopyButton from '$components/buttons/CopyButton.svelte';
 	import GenerateButton from '$components/buttons/GenerateButton.svelte';
 	import IconChatBubbleCancel from '$components/icons/IconChatBubbleCancel.svelte';
@@ -7,7 +6,6 @@
 	import IconSteps from '$components/icons/IconSteps.svelte';
 
 	import { doesContainTarget } from '$ts/helpers/doesContainTarget';
-	import { galleryPreviewUrlFromGenerationId } from '$ts/helpers/galleryPreviewUrlFromGenerationId';
 	import { isValue } from '$ts/helpers/isValue';
 	import { urlFromImageId } from '$ts/helpers/urlFromImageId';
 	import { activeGenerationG } from '$ts/stores/activeGenerationG';

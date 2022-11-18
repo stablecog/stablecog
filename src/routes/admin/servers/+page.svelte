@@ -251,7 +251,7 @@
 												? 'scale-0 opacity-0'
 												: 'scale-100 opacity-100'}"
 										>
-											{server.enabled ? 'Disable' : 'Enable'}
+											{server.enabled ? $LL.Shared.DisableButton() : $LL.Shared.EnableButton()}
 										</div>
 										<div
 											class="w-full h-full absolute left-0 top-0 flex items-center justify-center 

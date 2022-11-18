@@ -19,7 +19,10 @@
 	import { page } from '$app/stores';
 	import { windowHeight, windowWidth } from '$ts/stores/window';
 	import type { LayoutData } from './$types';
-	import { setLocale } from '$i18n/i18n-svelte';
+	import { locale, setLocale } from '$i18n/i18n-svelte';
+	import { localeLS } from '$ts/stores/localeLS';
+	import { loadLocaleAsync } from '$i18n/i18n-util.async';
+	import { isLocale } from '$i18n/i18n-util';
 
 	export let data: LayoutData;
 	setLocale(data.locale);
@@ -38,10 +41,10 @@
 	onMount(async () => {
 		mounted = true;
 		setBodyClasses();
-		/* if ($language && $language !== $locale) {
-			await loadLocaleAsync($language);
-			setLocale($language);
-		} */
+		if ($localeLS && isLocale($localeLS) && $localeLS !== $locale) {
+			await loadLocaleAsync($localeLS);
+			setLocale($localeLS);
+		}
 	});
 
 	onDestroy(() => {

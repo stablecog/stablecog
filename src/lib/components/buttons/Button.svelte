@@ -8,7 +8,7 @@
 	export let prefetch: boolean = true;
 	export let size: 'md' | 'sm' = 'md';
 	export let withSpinner = false;
-	export let padding = true;
+	export let noPadding = false;
 	export { classes as class };
 	export let type: 'primary' | 'success' | 'danger' = 'primary';
 	let classes = '';
@@ -19,7 +19,7 @@
 		{href}
 		data-sveltekit-prefetch={prefetch ? '' : 'off'}
 		{disabled}
-		class="{!padding ? 'p-0' : size === 'sm' ? 'px-6 md:px-8 py-4' : 'px-8 md:px-10 py-5'} {size ===
+		class="{noPadding ? 'p-0' : size === 'sm' ? 'px-6 md:px-8 py-4' : 'px-6 md:px-8 py-5'} {size ===
 		'sm'
 			? 'text-sm rounded-lg2'
 			: 'text-base rounded-xl'} relative flex items-center justify-center text-center
@@ -75,7 +75,7 @@
 	<button
 		on:click={onClick}
 		disabled={disabled || loading}
-		class="{!padding ? 'p-0' : size === 'sm' ? 'px-6 md:px-8 py-4' : 'px-8 md:px-10 py-5'} {size ===
+		class="{noPadding ? 'p-0' : size === 'sm' ? 'px-6 md:px-8 py-4' : 'px-6 md:px-8 py-5'} {size ===
 		'sm'
 			? 'text-sm rounded-lg2'
 			: 'text-base rounded-xl'} relative flex items-center justify-center text-center

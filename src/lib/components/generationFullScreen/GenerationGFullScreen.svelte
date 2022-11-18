@@ -29,10 +29,11 @@
 	import { urlFromImageId } from '$ts/helpers/urlFromImageId';
 	import IconWand from '$components/icons/IconWand.svelte';
 	import type { TGenerationGAdmin, TGenerationGWithLoaded } from '$ts/types/main';
-	import LL, { locale } from '$i18n/i18n-svelte';
+	import LL from '$i18n/i18n-svelte';
 	import { negativePromptTooltipAlt } from '$ts/constants/tooltip';
 	import { page } from '$app/stores';
 	import IconLink from '$components/icons/IconLink.svelte';
+	import { generationGPreviewUrlFromId } from '$ts/helpers/generationGPreviewUrlFromId';
 
 	export let generation: TGenerationGWithLoaded | TGenerationGAdmin;
 
@@ -161,6 +162,8 @@
 	let linkCopied = false;
 	let linkCopiedTimeout: NodeJS.Timeout;
 	const onLinkCopied = () => {
+		fetch(generationGPreviewUrlFromId(generation.id));
+
 		promptCopied = false;
 		seedCopied = false;
 		negativePromptCopied = false;

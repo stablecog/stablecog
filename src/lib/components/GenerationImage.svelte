@@ -5,6 +5,7 @@
 	import IconClock from '$components/icons/IconClock.svelte';
 	import IconScale from '$components/icons/IconScale.svelte';
 	import IconSteps from '$components/icons/IconSteps.svelte';
+	import { locale } from '$i18n/i18n-svelte';
 	import { urlFromBase64 } from '$ts/helpers/base64';
 	import { doesContainTarget } from '$ts/helpers/doesContainTarget';
 	import { activeGeneration } from '$ts/stores/activeGeneration';
@@ -87,10 +88,10 @@
 					<p
 						class="flex-1 cursor-default whitespace-nowrap flex-shrink min-w-0 overflow-hidden overflow-ellipsis text-left"
 					>
-						{(generation.duration_ms / 1000).toLocaleString('en-US', {
+						{(generation.duration_ms / 1000).toLocaleString($locale, {
 							minimumFractionDigits: 0,
 							maximumFractionDigits: 1
-						})}s
+						})}
 					</p>
 				</div>
 			{/if}

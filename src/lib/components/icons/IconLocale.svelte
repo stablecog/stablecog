@@ -36,4 +36,30 @@
 			/>
 		</g>
 	</svg>
+{:else if locale === 'de'}
+	<svg class={classes} xmlns="http://www.w3.org/2000/svg" id="flag-icons-de" viewBox="0 0 512 512">
+		<path fill="#ffce00" d="M0 341.3h512V512H0z" />
+		<path d="M0 0h512v170.7H0z" />
+		<path fill="#d00" d="M0 170.7h512v170.6H0z" />
+	</svg>
+{:else if locale === 'ru'}
+	<svg class={classes} xmlns="http://www.w3.org/2000/svg" id="flag-icons-ru" viewBox="0 0 512 512">
+		<g fill-rule="evenodd" stroke-width="1pt">
+			<path fill="#fff" d="M0 0h512v512H0z" />
+			<path fill="#0039a6" d="M0 170.7h512V512H0z" />
+			<path fill="#d52b1e" d="M0 341.3h512V512H0z" />
+		</g>
+	</svg>
+{:else if locale === 'es'}
+	<svg
+		class={classes}
+		width="512"
+		height="512"
+		viewBox="0 0 512 512"
+		fill="none"
+		xmlns="http://www.w3.org/2000/svg"
+	>
+		<path d="M0 0H512V512H0V0Z" fill="#AA151B" />
+		<path d="M0 128H512V384H0V128Z" fill="#F1BF00" />
+	</svg>
 {/if}

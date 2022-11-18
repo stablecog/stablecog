@@ -52,6 +52,7 @@ module.exports = {
 				17: '4.25rem',
 				18: '4.5rem',
 				30: '7.5rem',
+				46: '11.5rem',
 				58: '14.5rem',
 				60: '15rem',
 				62: '15.5rem',
@@ -109,6 +110,7 @@ module.exports = {
 			},
 			boxShadow: {
 				navbar: '0 0 1.5rem 0',
+				'settings-page': '0 0 1rem 0',
 				'generation-sidebar': '0 0 1rem 0',
 				'generation-modal': '0 1rem 2rem 0'
 			},
