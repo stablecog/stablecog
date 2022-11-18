@@ -7,7 +7,6 @@
 	import IconSteps from '$components/icons/IconSteps.svelte';
 
 	import { doesContainTarget } from '$ts/helpers/doesContainTarget';
-	import { generationGPreviewUrlFromId } from '$ts/helpers/generationGPreviewUrlFromId';
 	import { isValue } from '$ts/helpers/isValue';
 	import { urlFromImageId } from '$ts/helpers/urlFromImageId';
 	import { activeGenerationG } from '$ts/stores/activeGenerationG';
