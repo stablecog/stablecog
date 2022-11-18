@@ -1,5 +1,4 @@
 <script lang="ts">
-	import IconButton from '$components/buttons/IconButton.svelte';
 	import IconBack from '$components/icons/IconBack.svelte';
 	import LanguagePage from '$components/settings/pages/LanguagePage.svelte';
 	import SettingsPage from '$components/settings/pages/SettingsPage.svelte';
