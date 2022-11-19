@@ -72,7 +72,7 @@ CREATE TABLE "upscale" (
     "status" upscale_status_enum NOT NULL,
     "server_url" TEXT NOT NULL,
     "duration_ms" INTEGER,
-    "version" TEXT,
+    "type" TEXT,
     "prompt" TEXT,
     "negative_prompt" TEXT,
     "seed" BIGINT,

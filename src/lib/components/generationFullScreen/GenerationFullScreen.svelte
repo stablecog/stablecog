@@ -219,8 +219,6 @@
 		try {
 			const res = await upscaleImage({
 				imageDataB64: generation.imageDataB64,
-				scale: 4,
-				version: 'General - RealESRGANplus',
 				server_url: $serverUrl,
 				prompt: generation.prompt,
 				negative_prompt: generation.negative_prompt,

@@ -97,7 +97,7 @@ async function checkHealth(serverUrl: string) {
 			if (properties.negative_prompt !== undefined) {
 				serverHealth.features = [...(serverHealth.features ?? []), 'negative_prompt'];
 			}
-			if (properties.img !== undefined && properties.scale !== undefined) {
+			if (properties.image_u !== undefined) {
 				serverHealth.features = [...(serverHealth.features ?? []), 'upscale'];
 			}
 		} else {
@@ -161,10 +161,7 @@ interface TServerHealthData {
 					seed?: {
 						title: string;
 					};
-					img?: {
-						title: string;
-					};
-					scale?: {
+					image_u?: {
 						title: string;
 					};
 				};

@@ -2,9 +2,7 @@ import type { TUpscaleRequest, TUpscaleResponse } from '$ts/types/main';
 
 export async function upscaleImage({
 	imageDataB64,
-	scale,
 	server_url,
-	version,
 	width,
 	height,
 	num_inference_steps,
@@ -20,8 +18,6 @@ export async function upscaleImage({
 		},
 		body: JSON.stringify({
 			imageDataB64,
-			scale,
-			version,
 			server_url,
 			width,
 			height,

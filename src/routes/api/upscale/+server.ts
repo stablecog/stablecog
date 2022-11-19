@@ -1,7 +1,7 @@
 import { supabaseAdmin } from '$ts/constants/supabaseAdmin';
 import { getDeviceInfo } from '$ts/helpers/getDeviceInfo';
 import { pickServerUrl } from '$ts/queries/db/pickServerUrl';
-import type { TUpscaleRequest, TUpscaleResponse } from '$ts/types/main';
+import type { TUpscaleRequest, TUpscaleResponse, TUpscaleType } from '$ts/types/main';
 import type { PostgrestError } from '@supabase/supabase-js';
 import type { RequestHandler } from '@sveltejs/kit';
 
@@ -15,8 +15,6 @@ export const POST: RequestHandler = async ({ request }) => {
 	const {
 		server_url,
 		imageDataB64,
-		scale = 4,
-		version = 'General - RealESRGANplus',
 		width,
 		height,
 		seed,
@@ -26,6 +24,9 @@ export const POST: RequestHandler = async ({ request }) => {
 		prompt
 	}: TUpscaleRequest = await request.json();
 
+	const scale = 4;
+	const type: TUpscaleType = 'Real-World Image Super-Resolution-Large';
+
 	let picked_server_url: string;
 	try {
 		const res = await pickServerUrl(server_url);
@@ -34,7 +35,7 @@ export const POST: RequestHandler = async ({ request }) => {
 		picked_server_url = server_url;
 	}
 
-	upscaleLog({ text: 'Started upscale', scale, server_url, version });
+	upscaleLog({ text: 'Started upscale', scale, server_url, type });
 
 	if (supabaseAdmin !== undefined) {
 		try {
@@ -43,7 +44,7 @@ export const POST: RequestHandler = async ({ request }) => {
 				.from('upscale')
 				.insert({
 					status: 'started',
-					version,
+					type,
 					scale,
 					prompt,
 					negative_prompt,
@@ -68,7 +69,7 @@ export const POST: RequestHandler = async ({ request }) => {
 				const endTimestamp = Date.now();
 				upscaleLog({
 					text: `Inserted into the DB in: ${(endTimestamp - startTimestamp) / 1000}s`,
-					version,
+					type,
 					scale,
 					server_url: picked_server_url
 				});
@@ -86,9 +87,8 @@ export const POST: RequestHandler = async ({ request }) => {
 			},
 			body: JSON.stringify({
 				input: {
-					img: imageDataB64,
-					scale: scale.toString(),
-					version,
+					image_u: imageDataB64,
+					task_u: 'Real-World Image Super-Resolution-Large',
 					process_type: 'upscale'
 				}
 			})
@@ -99,7 +99,7 @@ export const POST: RequestHandler = async ({ request }) => {
 			text: `Finished upscale in: ${(endTimestamp - startTimestamp) / 1000}s`,
 			scale,
 			server_url,
-			version
+			type
 		});
 		if (supabaseAdmin !== undefined) {
 			try {
@@ -123,7 +123,7 @@ export const POST: RequestHandler = async ({ request }) => {
 						text: `Updated the DB record with "succeeded" in: ${
 							(endTimestamp - startTimestamp) / 1000
 						}s`,
-						version,
+						type,
 						scale,
 						server_url
 					});
@@ -149,7 +149,7 @@ export const POST: RequestHandler = async ({ request }) => {
 			text: `Upscale error in: ${(endTimestamp - startTimestamp) / 1000}s`,
 			scale,
 			server_url,
-			version
+			type
 		});
 		console.log(error);
 		if (supabaseAdmin !== undefined && upscaleId !== undefined) {
@@ -173,7 +173,7 @@ export const POST: RequestHandler = async ({ request }) => {
 						text: `Updated the DB record with "failed" in: ${
 							(endTimestamp - startTimestamp) / 1000
 						}s`,
-						version,
+						type,
 						scale,
 						server_url
 					});
@@ -189,15 +189,15 @@ export const POST: RequestHandler = async ({ request }) => {
 function upscaleLog({
 	text,
 	scale,
-	version,
+	type,
 	server_url
 }: {
 	text: string;
 	scale: number;
-	version: string;
+	type: string;
 	server_url: string;
 }) {
-	console.log('----', text, '--', `"${version}"`, '--', scale, '--', server_url, '----');
+	console.log('----', text, '--', `"${type}"`, '--', scale, '--', server_url, '----');
 }
 
 interface TUpscaleData {

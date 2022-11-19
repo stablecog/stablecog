@@ -47,8 +47,6 @@ export interface TUpscaleRequest {
 	imageDataB64: string;
 	width?: number;
 	height?: number;
-	version: TUpscaleVersion;
-	scale: number;
 	server_url: string;
 	seed?: number;
 	num_inference_steps?: number;
@@ -65,11 +63,12 @@ export interface TUpscaleResponse {
 	error?: string;
 }
 
-export type TUpscaleVersion =
-	| 'General - RealESRGANplus'
-	| 'General - v3'
-	| 'Anime - anime6B'
-	| 'AnimeVideo - v3';
+export type TUpscaleType =
+	| 'Real-World Image Super-Resolution-Large'
+	| 'Real-World Image Super-Resolution-Medium'
+	| 'Grayscale Image Denoising'
+	| 'Color Image Denoising'
+	| 'JPEG Compression Artifact Reduction';
 
 export interface TTab {
 	label: string;
