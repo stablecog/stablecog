@@ -5,7 +5,13 @@
 </script>
 
 {#if locale === 'en'}
-	<svg class={classes} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+	<svg
+		class={classes}
+		width="512"
+		height="512"
+		xmlns="http://www.w3.org/2000/svg"
+		viewBox="0 0 512 512"
+	>
 		<path fill="#012169" d="M0 0h512v512H0z" />
 		<path
 			fill="#FFF"
@@ -19,7 +25,13 @@
 		<path fill="#C8102E" d="M0 208v96h512v-96H0zM208 0v512h96V0h-96z" />
 	</svg>
 {:else if locale === 'tr'}
-	<svg class={classes} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+	<svg
+		class={classes}
+		width="512"
+		height="512"
+		xmlns="http://www.w3.org/2000/svg"
+		viewBox="0 0 512 512"
+	>
 		<g fill-rule="evenodd">
 			<path fill="#e30a17" d="M0 0h512v512H0z" />
 			<path
@@ -37,13 +49,27 @@
 		</g>
 	</svg>
 {:else if locale === 'de'}
-	<svg class={classes} xmlns="http://www.w3.org/2000/svg" id="flag-icons-de" viewBox="0 0 512 512">
+	<svg
+		class={classes}
+		width="512"
+		height="512"
+		xmlns="http://www.w3.org/2000/svg"
+		id="flag-icons-de"
+		viewBox="0 0 512 512"
+	>
 		<path fill="#ffce00" d="M0 341.3h512V512H0z" />
 		<path d="M0 0h512v170.7H0z" />
 		<path fill="#d00" d="M0 170.7h512v170.6H0z" />
 	</svg>
 {:else if locale === 'ru'}
-	<svg class={classes} xmlns="http://www.w3.org/2000/svg" id="flag-icons-ru" viewBox="0 0 512 512">
+	<svg
+		class={classes}
+		width="512"
+		height="512"
+		xmlns="http://www.w3.org/2000/svg"
+		id="flag-icons-ru"
+		viewBox="0 0 512 512"
+	>
 		<g fill-rule="evenodd" stroke-width="1pt">
 			<path fill="#fff" d="M0 0h512v512H0z" />
 			<path fill="#0039a6" d="M0 170.7h512V512H0z" />
@@ -64,6 +90,9 @@
 	</svg>
 {:else if locale === 'hi'}
 	<svg
+		class={classes}
+		width="512"
+		height="512"
 		xmlns="http://www.w3.org/2000/svg"
 		xmlns:xlink="http://www.w3.org/1999/xlink"
 		id="flag-icons-in"
@@ -94,31 +123,33 @@
 		</g>
 	</svg>
 {:else if locale === 'fr'}
-	<svg xmlns="http://www.w3.org/2000/svg" id="flag-icons-fr" viewBox="0 0 512 512">
+	<svg
+		class={classes}
+		width="512"
+		height="512"
+		viewBox="0 0 512 512"
+		xmlns="http://www.w3.org/2000/svg"
+		id="flag-icons-fr"
+	>
 		<path fill="#fff" d="M0 0h512v512H0z" />
 		<path fill="#002654" d="M0 0h170.7v512H0z" />
 		<path fill="#ce1126" d="M341.3 0H512v512H341.3z" />
 	</svg>
 {:else if locale === 'zh-HanS'}
 	<svg
-		xmlns="http://www.w3.org/2000/svg"
-		xmlns:xlink="http://www.w3.org/1999/xlink"
-		id="flag-icons-cn"
+		class={classes}
+		width="512"
+		height="512"
 		viewBox="0 0 512 512"
+		fill="none"
+		xmlns="http://www.w3.org/2000/svg"
 	>
-		<defs>
-			<path id="a" fill="#ff0" d="M1-.3-.7.8 0-1 .6.8-1-.3z" />
-		</defs>
-		<path fill="#ee1c25" d="M0 0h512v512H0z" />
-		<use xlink:href="#a" width="30" height="20" transform="matrix(76.8 0 0 76.8 128 128)" />
-		<use xlink:href="#a" width="30" height="20" transform="rotate(-121 142.6 -47) scale(25.5827)" />
-		<use xlink:href="#a" width="30" height="20" transform="rotate(-98.1 198 -82) scale(25.6)" />
-		<use xlink:href="#a" width="30" height="20" transform="rotate(-74 272.4 -114) scale(25.6137)" />
-		<use
-			xlink:href="#a"
-			width="30"
-			height="20"
-			transform="matrix(16 -19.968 19.968 16 256 230.4)"
+		<path d="M0 0h512v512H0V0Z" fill="#EE1C25" />
+		<path
+			fill-rule="evenodd"
+			clip-rule="evenodd"
+			d="m236.58 33.05 17.25 8.45 12.14-14.17-1.2 19.53 18.33 8.97-19.08 3.28-1.1 17.8-9.58-15.96-18.94 3.25 12.28-14.34-10.1-16.81Zm-31.78 71.91-48.43 31.34 17.71 53.14-48.4-33.28-51.44 33.28 21.06-54.16-44.1-30.32h55.9L128 51.2l17.92 53.76h58.88Zm103.69-12.24-12.62-14.51 2.76 19.43-16.9 8.44 18.73 4.37 2.62 18.45 7.94-15.98 18.86 4.4-13.4-15.4 8.71-17.54-16.7 8.34Zm-1.92 59.81 5.6 18.4 18.66-.78-15.12 12.45 5.94 19.55-15.42-11.73-13.78 11.35 5.14-17.92-15.31-11.64 18.88-.8 5.41-18.88Zm-42.5 72.22 1.94-19.12-12.27 15.31-17.7-6.54 9.61 16.64-11.64 14.53 17.07-5.15 9.7 16.76 2.06-20.3 18.74-5.66-17.51-6.47Z"
+			fill="#FF0"
 		/>
 	</svg>
 {/if}
