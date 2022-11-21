@@ -9,6 +9,7 @@ export type Locales =
 	| 'de'
 	| 'en'
 	| 'es'
+	| 'fr'
 	| 'hi'
 	| 'ru'
 	| 'tr'

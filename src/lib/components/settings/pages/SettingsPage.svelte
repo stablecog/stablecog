@@ -81,7 +81,7 @@
 							: ''}"
 					/>
 					<p
-						class="flex-1 min-w-0 overflow-hidden overflow-ellipsis whitespace-nowrap text-left transition text-c-on-bg {!$isTouchscreen
+						class="flex-1 min-w-0 overflow-hidden overflow-ellipsis text-left transition text-c-on-bg {!$isTouchscreen
 							? 'group-hover:text-c-primary'
 							: ''}"
 					>
