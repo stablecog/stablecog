@@ -12,7 +12,7 @@ import (
 )
 
 func main() {
-	serverPort := flag.Int("port", 3000, "Port to listen on")
+	serverPort := flag.Int("port", 3001, "Port to listen on")
 
 	app := fiber.New()
 	cors := cors.New()

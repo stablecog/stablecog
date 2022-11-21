@@ -22,6 +22,8 @@ var lastCheckTime time.Time
 var lastGenerationTime time.Time
 var lastStatus string
 var lastNotificationTime time.Time
+var lastHealthyNotificationTime time.Time
+var lastUnhealthyNotificationTime time.Time
 var maxUnhealthyNotificationInterval = 5 * time.Minute
 var maxGenerationDuration = 2 * time.Minute
 var maxHealthyNotificationInterval = 1 * time.Hour
@@ -82,9 +84,10 @@ func CheckAndNotify() {
 		lastStatus = "healthy"
 	}
 	lastCheckTime = time.Now()
-	sinceNotification := time.Since(lastNotificationTime)
-	if (lastStatus == "unhealthy" && sinceNotification > maxUnhealthyNotificationInterval) ||
-		(lastStatus == "healthy" && sinceNotification > maxHealthyNotificationInterval) {
+	sinceHealthyNotification := time.Since(lastHealthyNotificationTime)
+	sinceUnhealthyNotification := time.Since(lastUnhealthyNotificationTime)
+	if (lastStatus == "unhealthy" && sinceUnhealthyNotification > maxUnhealthyNotificationInterval) ||
+		(lastStatus == "healthy" && sinceHealthyNotification > maxHealthyNotificationInterval) {
 		sendDiscordNotification(lastStatus, healthyServers, enabledServers, len(servers), generationsFailed, len(generations))
 	}
 	log.Printf("Healthy servers (enabled): %d/%d", healthyServers, enabledServers)
@@ -111,6 +114,11 @@ func sendDiscordNotification(
 		log.Fatalln(postErr)
 	}
 	lastNotificationTime = time.Now()
+	if status == "healthy" {
+		lastHealthyNotificationTime = lastNotificationTime
+	} else {
+		lastUnhealthyNotificationTime = lastNotificationTime
+	}
 	defer res.Body.Close()
 
 }
