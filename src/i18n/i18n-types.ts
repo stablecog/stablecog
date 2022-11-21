@@ -13,6 +13,7 @@ export type Locales =
 	| 'hi'
 	| 'ru'
 	| 'tr'
+	| 'zh-HanS'
 
 export type Translation = RootTranslation
 

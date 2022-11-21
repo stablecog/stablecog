@@ -13,6 +13,7 @@ const localeTranslationLoaders = {
 	hi: () => import('./hi'),
 	ru: () => import('./ru'),
 	tr: () => import('./tr'),
+	'zh-HanS': () => import('./zh-HanS'),
 }
 
 const updateDictionary = (locale: Locales, dictionary: Partial<Translations>): Translations =>
