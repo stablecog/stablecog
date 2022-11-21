@@ -77,13 +77,13 @@ jobs:
         working-directory: ./kubernetes/sveltekit
         run: |
           kustomize edit set image replaceme=appditto/stablecog:${{ env.BRANCH_NAME }}-${{ env.GITHUB_RUN_ID }}
-          kustomize build . > stablecog-sveltekit.yaml
+          kustomize build . > stablecog-sveltekit-k.yaml
       - name: Deploy image to k8s cluster
         uses: bbedward/kubectl@master
         env:
           KUBE_CONFIG_DATA: ${{ secrets.KUBE_CONFIG_DATA }}
         with:
-          args: apply -f ./kubernetes/sveltekit/stablecog-sveltekit.yaml
+          args: apply -f ./kubernetes/sveltekit/stablecog-sveltekit-k.yaml
       - name: Sleep for 40 seconds
         run: sleep 40s
         shell: bash
