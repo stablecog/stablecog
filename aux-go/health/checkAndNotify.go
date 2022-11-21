@@ -134,7 +134,7 @@ func getDiscordWebhookBody(
 ) structs.SDiscordWebhookBody {
 	var s string
 	if status == "unhealthy" {
-		s = "💀"
+		s = "❌💀❌"
 	} else {
 		s = "✅"
 	}
