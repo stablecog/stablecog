@@ -78,6 +78,7 @@ func CheckAndNotify() {
 			enabledServers++
 		}
 	}
+	lastStatusPrev := lastStatus
 	if healthyServers == 0 || generationFailRate > maxGenerationFailRate {
 		lastStatus = "unhealthy"
 	} else {
@@ -86,7 +87,7 @@ func CheckAndNotify() {
 	lastCheckTime = time.Now()
 	sinceHealthyNotification := time.Since(lastHealthyNotificationTime)
 	sinceUnhealthyNotification := time.Since(lastUnhealthyNotificationTime)
-	if (lastStatus == "unhealthy" && sinceUnhealthyNotification > maxUnhealthyNotificationInterval) ||
+	if lastStatus != lastStatusPrev || (lastStatus == "unhealthy" && sinceUnhealthyNotification > maxUnhealthyNotificationInterval) ||
 		(lastStatus == "healthy" && sinceHealthyNotification > maxHealthyNotificationInterval) {
 		sendDiscordNotification(lastStatus, healthyServers, enabledServers, len(servers), generationsFailed, len(generations))
 	}
