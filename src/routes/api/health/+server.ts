@@ -4,7 +4,7 @@ import { getDefaultServers } from '$ts/queries/db/getDefaultServers';
 import { updateServerHealthInDb } from '$ts/queries/db/updateServerHealthInDb';
 import { shuffleArray } from '$ts/helpers/shuffleArray';
 import type { TDBServer } from '$ts/types/db';
-import type { TServerHealthRes } from '$ts/types/main';
+import type { TServerHealthData, TServerHealthRes } from '$ts/types/main';
 import type { RequestHandler } from '@sveltejs/kit';
 import { getDeviceInfo } from '$ts/helpers/getDeviceInfo';
 
@@ -126,46 +126,4 @@ async function checkHealth(serverUrl: string) {
 	} finally {
 		return serverHealth;
 	}
-}
-
-interface TServerHealthData {
-	paths?: {
-		predictions?: {
-			post?: {
-				summary?: string;
-			};
-		};
-	};
-	components?: {
-		schemas?: {
-			Input?: {
-				properties?: {
-					prompt?: {
-						title?: string;
-					};
-					negative_prompt?: {
-						title?: string;
-					};
-					width?: {
-						[key: string]: string;
-					};
-					height?: {
-						[key: string]: string;
-					};
-					num_inference_steps?: {
-						title: string;
-					};
-					guidance_scale?: {
-						title: string;
-					};
-					seed?: {
-						title: string;
-					};
-					image_u?: {
-						title: string;
-					};
-				};
-			};
-		};
-	};
 }
