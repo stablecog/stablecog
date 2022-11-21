@@ -31,13 +31,13 @@
 	import { pLogGeneration, uLogGeneration } from '$ts/helpers/loggers';
 	import ServerOfflineBanner from '$components/ServerOfflineBanner.svelte';
 	import { currentServer, currentServerHealthStatus } from '$ts/stores/serverHealth';
-	import GenerationFullScreen from '$components/generationFullScreen/GenerationFullScreen.svelte';
 	import { activeGeneration } from '$ts/stores/activeGeneration';
 	import type { THomePageData } from '$routes/+page.server';
 	import { isValue } from '$ts/helpers/isValue';
 	import { shouldSubmitToGallery } from '$ts/stores/shouldSubmitToGallery';
 	import SubmitToGallery from '$components/SubmitToGallery.svelte';
 	import LL from '$i18n/i18n-svelte';
+	import type GenerationFullScreen from '$components/generationFullScreen/GenerationFullScreen.svelte';
 
 	export let data: THomePageData;
 
@@ -56,6 +56,7 @@
 	let generationError: string | undefined;
 	let estimatedDuration = estimatedDurationDefault;
 	let upscaleStatus: TUpscaleStatus;
+	let GenerationFullScreenLazy: typeof GenerationFullScreen;
 
 	$: [generationWidth, generationHeight, generationInferenceSteps], setEstimatedDuration();
 
@@ -83,6 +84,11 @@
 			!promptInputValue && console.log('no input');
 			!$serverUrl && console.log('no server url');
 			return;
+		}
+		if (!GenerationFullScreenLazy) {
+			GenerationFullScreenLazy = (
+				await import('../lib/components/generationFullScreen/GenerationFullScreen.svelte')
+			).default;
 		}
 		generationError = undefined;
 		lastGeneration = {
@@ -347,5 +353,9 @@
 </div>
 
 {#if $activeGeneration}
-	<GenerationFullScreen bind:upscaleStatus on:upscale={onUpscale} generation={$activeGeneration} />
+	<GenerationFullScreenLazy
+		bind:upscaleStatus
+		on:upscale={onUpscale}
+		generation={$activeGeneration}
+	/>
 {/if}
