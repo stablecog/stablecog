@@ -337,9 +337,9 @@
 							</div>
 						</div>
 					</div>
-					{#if $shouldSubmitToGallery === undefined}
-						<SubmitToGallery />
-					{/if}
+				{/if}
+				{#if status === 'success' && $shouldSubmitToGallery === undefined}
+					<SubmitToGallery />
 				{/if}
 			</div>
 		{/if}
