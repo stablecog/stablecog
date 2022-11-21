@@ -9,6 +9,7 @@
 	export let type: 'text' | 'number' = 'number';
 	export let max: undefined | number = undefined;
 	export let formElement: HTMLFormElement | undefined = undefined;
+	export let disabled = false;
 	let classes = '';
 
 	let inputElement: HTMLInputElement;
@@ -53,6 +54,7 @@
 		</div>
 		<div class="flex-1 min-w-0 flex relative rounded-r-xl group">
 			<input
+				{disabled}
 				bind:this={inputElement}
 				bind:value
 				on:keypress={(e) => handleKeypress(e)}
