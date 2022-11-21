@@ -74,16 +74,16 @@ jobs:
         run: echo "BRANCH_NAME=$(echo ${GITHUB_HEAD_REF} | tr / -)" >> $GITHUB_ENV
 
       - name: Set image
-        working-directory: ./kubernetes
+        working-directory: ./kubernetes/sveltekit
         run: |
           kustomize edit set image replaceme=appditto/stablecog:${{ env.BRANCH_NAME }}-${{ env.GITHUB_RUN_ID }}
-          kustomize build . > stablecog-k.yaml
+          kustomize build . > stablecog-sveltekit.yaml
       - name: Deploy image to k8s cluster
         uses: bbedward/kubectl@master
         env:
           KUBE_CONFIG_DATA: ${{ secrets.KUBE_CONFIG_DATA }}
         with:
-          args: apply -f ./kubernetes/stablecog-k.yaml
+          args: apply -f ./kubernetes/sveltekit/stablecog-sveltekit.yaml
       - name: Sleep for 40 seconds
         run: sleep 40s
         shell: bash
@@ -112,3 +112,63 @@ jobs:
           --header 'content-type: application/json' \
           --data '{"purge_everything":true}' \
           --fail
+  build_and_publish_go:
+    name: Build and Publish GO Image
+    runs-on: ubuntu-latest
+    env:
+      GITHUB_RUN_ID: ${{ github.run_id }}
+    steps:
+      - uses: actions/checkout@master
+      - name: Get branch name (merge)
+        if: github.event_name != 'pull_request'
+        shell: bash
+        run: echo "BRANCH_NAME=$(echo ${GITHUB_REF#refs/heads/} | tr / -)" >> $GITHUB_ENV
+      - name: Get branch name (pull request)
+        if: github.event_name == 'pull_request'
+        shell: bash
+        run: echo "BRANCH_NAME=$(echo ${GITHUB_HEAD_REF} | tr / -)" >> $GITHUB_ENV
+      - name: Login to registry
+        uses: actions-hub/docker/login@master
+        env:
+          DOCKER_USERNAME: ${{ secrets.DOCKER_USER }}
+          DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+      - name: Build and tag
+        if: success()
+        run: docker build -t appditto/stablecog-go:${{ env.BRANCH_NAME }}-${{ env.GITHUB_RUN_ID }} aux-go
+      - name: Push image
+        if: success()
+        uses: actions-hub/docker@master
+        with:
+          args: push appditto/stablecog-go:${{ env.BRANCH_NAME }}-${{ env.GITHUB_RUN_ID }}
+  deploy_go:
+    name: Deploy GO app
+    needs: build_and_publish_go
+    runs-on: ubuntu-latest
+    env:
+      GITHUB_RUN_ID: ${{ github.run_id }}
+    steps:
+      - uses: actions/checkout@master
+      - uses: imranismail/setup-kustomize@v1
+        with:
+          kustomize-version: '3.5.4'
+      - name: Get branch name (merge)
+        if: github.event_name != 'pull_request'
+        shell: bash
+        run: echo "BRANCH_NAME=$(echo ${GITHUB_REF#refs/heads/} | tr / -)" >> $GITHUB_ENV
+
+      - name: Get branch name (pull request)
+        if: github.event_name == 'pull_request'
+        shell: bash
+        run: echo "BRANCH_NAME=$(echo ${GITHUB_HEAD_REF} | tr / -)" >> $GITHUB_ENV
+
+      - name: Set image
+        working-directory: ./kubernetes/go
+        run: |
+          kustomize edit set image replaceme=appditto/go-banano-utils:${{ env.BRANCH_NAME }}-${{ env.GITHUB_RUN_ID }}
+          kustomize build . > stabecog-go-k.yaml
+      - name: Deploy image to k8s cluster
+        uses: bbedward/kubectl@master
+        env:
+          KUBE_CONFIG_DATA: ${{ secrets.KUBE_CONFIG_DATA }}
+        with:
+          args: apply -f ./kubernetes/go/stabecog-go-k.yaml
