@@ -32,8 +32,9 @@ type SDiscordWebhookEmbedFooter struct {
 }
 
 type SDiscordWebhookField struct {
-	Name  string `json:"name"`
-	Value string `json:"value"`
+	Name   string `json:"name"`
+	Value  string `json:"value"`
+	Inline bool   `json:"inline"`
 }
 
 type SDiscordWebhookAttachment struct {

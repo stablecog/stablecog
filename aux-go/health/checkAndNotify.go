@@ -3,9 +3,10 @@ package health
 import (
 	"bytes"
 	"encoding/json"
+	"fmt"
 	"log"
 	"net/http"
-	"strconv"
+	"strings"
 	"sync"
 	"time"
 
@@ -14,7 +15,7 @@ import (
 	structs "github.com/yekta/stablecog/aux-go/structs"
 )
 
-const maxGenerationFailRate = 0.4
+const maxGenerationFailRate = 0.5
 const generationCountToCheck = 10
 const timeLayout = "2006-01-02T15:04:05.999999-07:00"
 
@@ -68,18 +69,18 @@ func CheckAndNotify() {
 	generationFailRate := float64(generationsFailed) / float64(len(generations))
 	log.Printf("Generation fail rate: %d/%d", generationsFailed, len(generations))
 
-	var healthyServers int
-	var enabledServers int
+	var healthyServerCount int
+	var enabledServerCount int
 	for _, server := range servers {
 		if server.Healthy && server.Enabled {
-			healthyServers++
+			healthyServerCount++
 		}
 		if server.Enabled {
-			enabledServers++
+			enabledServerCount++
 		}
 	}
 	lastStatusPrev := lastStatus
-	if healthyServers == 0 || generationFailRate > maxGenerationFailRate {
+	if healthyServerCount == 0 || generationFailRate > maxGenerationFailRate {
 		lastStatus = "unhealthy"
 	} else {
 		lastStatus = "healthy"
@@ -89,22 +90,21 @@ func CheckAndNotify() {
 	sinceUnhealthyNotification := time.Since(lastUnhealthyNotificationTime)
 	if lastStatus != lastStatusPrev || (lastStatus == "unhealthy" && sinceUnhealthyNotification > maxUnhealthyNotificationInterval) ||
 		(lastStatus == "healthy" && sinceHealthyNotification > maxHealthyNotificationInterval) {
-		sendDiscordNotification(lastStatus, healthyServers, enabledServers, len(servers), generationsFailed, len(generations))
+		sendDiscordNotification(lastStatus, servers, generations, lastGenerationTime, lastCheckTime)
 	}
-	log.Printf("Healthy servers (enabled): %d/%d", healthyServers, enabledServers)
-	log.Printf("Healthy servers (all): %d/%d", healthyServers, len(servers))
+	log.Printf("Healthy servers (enabled): %d/%d", healthyServerCount, enabledServerCount)
+	log.Printf("Healthy servers (all): %d/%d", healthyServerCount, len(servers))
 	log.Printf("Done checking health in: %s\n\n", lastCheckTime.Sub(start))
 }
 
 func sendDiscordNotification(
 	status string,
-	healthyServers int,
-	enabledServers int,
-	totalServers int,
-	generationsFailed int,
-	generationsTotal int,
+	servers []structs.SDBServer,
+	generations []structs.SDBGeneration,
+	lastGenerationTime time.Time,
+	lastCheckTime time.Time,
 ) {
-	webhookBody := getDiscordWebhookBody(status, healthyServers, enabledServers, totalServers, generationsFailed, generationsTotal)
+	webhookBody := getDiscordWebhookBody(status, servers, generations, lastGenerationTime, lastCheckTime)
 	reqBody, err := json.Marshal(webhookBody)
 	if err != nil {
 		log.Fatalln(err)
@@ -126,35 +126,58 @@ func sendDiscordNotification(
 
 func getDiscordWebhookBody(
 	status string,
-	healthyServers int,
-	enabledServers int,
-	totalServers int,
-	generationsFailed int,
-	generationTotal int,
+	servers []structs.SDBServer,
+	generations []structs.SDBGeneration,
+	lastGenerationTime time.Time,
+	lastCheckTime time.Time,
 ) structs.SDiscordWebhookBody {
 	var s string
 	if status == "unhealthy" {
 		s = "❌💀❌"
 	} else {
-		s = "✅"
+		s = "🟢"
 	}
+	serversStr := ""
+	serversStrArr := []string{}
+	generationsStr := ""
+	generationsStrArr := []string{}
+	for _, server := range servers {
+		if !server.Enabled {
+			serversStrArr = append(serversStrArr, "🖥️ ⚪️")
+		} else if server.Healthy {
+			serversStrArr = append(serversStrArr, "🖥️ 🟢")
+		} else {
+			serversStrArr = append(serversStrArr, "🖥️ 🔴")
+		}
+	}
+	for _, generation := range generations {
+		if generation.Status == "failed" {
+			generationsStrArr = append(generationsStrArr, "🔴")
+		} else if generation.Status == "started" {
+			generationsStrArr = append(generationsStrArr, "🕑")
+		} else {
+			generationsStrArr = append(generationsStrArr, "🟢")
+		}
+	}
+	serversStr = strings.Join(serversStrArr, " --- ")
+	generationsStr = strings.Join(generationsStrArr, " ")
 	body := structs.SDiscordWebhookBody{
 		Embeds: []structs.SDiscordWebhookEmbed{
 			{
-				Title: "Health Status: " + s,
+				Title: fmt.Sprintf("Health Status %s", s),
 				Color: 11437547,
 				Fields: []structs.SDiscordWebhookField{
 					{
-						Name:  "Healthy Servers (Enabled)",
-						Value: strconv.Itoa(healthyServers) + "/" + strconv.Itoa(enabledServers),
+						Name:  "Servers",
+						Value: serversStr,
 					},
 					{
-						Name:  "Healthy Servers (All)",
-						Value: strconv.Itoa(healthyServers) + "/" + strconv.Itoa(totalServers),
+						Name:  "Generations",
+						Value: generationsStr,
 					},
 					{
-						Name:  "Generation Fail Rate",
-						Value: strconv.Itoa(generationsFailed) + "/" + strconv.Itoa(generationTotal),
+						Name:  "Last Generation",
+						Value: shared.RelativeTimeStr(lastGenerationTime),
 					},
 				},
 				Footer: structs.SDiscordWebhookEmbedFooter{
