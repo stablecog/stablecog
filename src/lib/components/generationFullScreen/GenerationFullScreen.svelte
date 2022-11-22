@@ -451,37 +451,41 @@
 						class="w-full flex flex-col items-start justify-start"
 					>
 						<div class="w-full flex flex-col gap-4 md:gap-5 px-5 py-4 md:px-7 md:py-5">
-							{#if !generation.upscaledImageDataB64 && $currentServer.features?.includes('upscale')}
-								<div class="w-full flex flex-col gap-3">
-									<Button
-										onClick={onUpscaleClicked}
-										loading={upscaleStatus === 'loading'}
-										class="w-full"
-										size="sm"
-									>
-										<div class="flex items-center gap-2">
-											{#if upscaleStatus === 'loading'}
-												<p>
-													{upscaleDurationSec.toLocaleString('en-US', {
-														minimumFractionDigits: 1,
-														maximumFractionDigits: 1
-													})}
-												</p>
-											{:else}
-												<IconUpscale class="w-5 h-5" />
-												<p>{$LL.GenerationFullscreen.UpscaleButton()}</p>
-											{/if}
+							{#if $currentServer.features?.includes('upscale') || generation.upscaledImageDataB64}
+								<div class="w-full pt-1.5">
+									{#if !generation.upscaledImageDataB64}
+										<div class="w-full flex flex-col gap-3">
+											<Button
+												onClick={onUpscaleClicked}
+												loading={upscaleStatus === 'loading'}
+												class="w-full"
+												size="sm"
+											>
+												<div class="flex items-center gap-2">
+													{#if upscaleStatus === 'loading'}
+														<p>
+															{upscaleDurationSec.toLocaleString('en-US', {
+																minimumFractionDigits: 1,
+																maximumFractionDigits: 1
+															})}
+														</p>
+													{:else}
+														<IconUpscale class="w-5 h-5" />
+														<p>{$LL.GenerationFullscreen.UpscaleButton()}</p>
+													{/if}
+												</div>
+											</Button>
 										</div>
-									</Button>
+									{:else if generation.upscaledImageDataB64}
+										<TabBar
+											bind:value={upscaledTabValue}
+											tabs={upscaledOrDefaultTabs}
+											hasTitle={false}
+											dontScale={true}
+											name="Upscaled or Default Image"
+										/>
+									{/if}
 								</div>
-							{:else if generation.upscaledImageDataB64}
-								<TabBar
-									bind:value={upscaledTabValue}
-									tabs={upscaledOrDefaultTabs}
-									hasTitle={false}
-									dontScale={true}
-									name="Upscaled or Default Image"
-								/>
 							{/if}
 							<div class="flex flex-col items-start gap-3">
 								<p class="max-w-full text-sm leading-normal">{generation.prompt}</p>
