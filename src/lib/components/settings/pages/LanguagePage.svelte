@@ -1,6 +1,7 @@
 <script lang="ts">
 	import DropdownItem from '$components/DropdownItem.svelte';
 	import IconLocale from '$components/icons/IconLocale.svelte';
+	import ScrollAreaWithChevron from '$components/ScrollAreaWithChevron.svelte';
 	import { locale, setLocale } from '$i18n/i18n-svelte';
 	import { isLocale, locales } from '$i18n/i18n-util';
 	import { loadLocaleAsync } from '$i18n/i18n-util.async';
@@ -23,9 +24,9 @@
 	};
 </script>
 
-<div
+<ScrollAreaWithChevron
 	bind:clientHeight={height}
-	class="w-full flex flex-col justify-start max-h-[60vh] overflow-auto 
+	class="w-full flex flex-col justify-start max-h-[50vh] overflow-auto 
 	shadow-settings-page shadow-c-shadow/[var(--o-shadow-stronger)] rounded-b-xl"
 >
 	<div class="w-full bg-c-bg-secondary flex flex-col justify-start">
@@ -53,4 +54,4 @@
 			</DropdownItem>
 		{/each}
 	</div>
-</div>
+</ScrollAreaWithChevron>

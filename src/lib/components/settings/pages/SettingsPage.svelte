@@ -8,6 +8,7 @@
 	import IconLanguage from '$components/icons/IconLanguage.svelte';
 	import IconLocale from '$components/icons/IconLocale.svelte';
 	import IconServer from '$components/icons/IconServer.svelte';
+	import ScrollAreaWithChevron from '$components/ScrollAreaWithChevron.svelte';
 	import ToggleIndicator from '$components/ToggleIndicator.svelte';
 	import LL, { locale } from '$i18n/i18n-svelte';
 	import { languageName } from '$ts/helpers/languageName';
@@ -26,9 +27,9 @@
 	export let currentPage: TCurrentSettingsPage;
 </script>
 
-<div
+<ScrollAreaWithChevron
 	bind:clientHeight={height}
-	class="w-full flex flex-col justify-start max-h-[60vh] overflow-auto"
+	class="w-full flex flex-col justify-start max-h-[50vh] overflow-auto relative"
 >
 	<div class="w-full bg-c-bg-secondary flex flex-col justify-start">
 		{#if $serverUrl}
@@ -167,4 +168,4 @@
 			</DropdownItem>
 		</div>
 	</div>
-</div>
+</ScrollAreaWithChevron>
