@@ -82,3 +82,18 @@ In case you want to record generation metadata, you can use a [Supabase](https:/
 - `PUBLIC_SUPABASE_ADMIN_KEY`. The admin key of your Supabase instance.
 
 There is a Plausible Analytics script on `src/app.html`. You can remove it or you can change the `data-domain` and `src` attributes to point to your domain and your Plausible instance.
+
+---
+
+## Special Thanks
+
+**Astromahdi** have been contributing by providing two NVIDIA A40s which are being used for the default cog cluster. Thanks to his contributions, thousands of people generated 140K+ images (so far) for free, without seeing any ads or dealing with sign ups.
+
+Following people have contributed by translating it to their language. Thanks to their contributions, billions of people can use the app in their native language:
+
+- [**Arkhath**](https://twitter.com/Arkhath): French
+- [**Chibi**](https://twitter.com/CryptoChibs): Spanish
+- **Mongoose**: Chinese Traditional
+- **Sebrock**: German
+- [**Jatt**](https://twitter.com/BananoJatt): Hindu
+- [**Just_Dmitry**](https://github.com/justdmitry): Russian
