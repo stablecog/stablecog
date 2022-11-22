@@ -230,10 +230,14 @@
 		) {
 			generationSeed = $seed;
 		}
-		if (!isValue(serverData.prompt) && $prompt) {
+		if (!isValue(serverData.prompt) && isValue($prompt)) {
 			promptInputValue = $prompt;
 		}
-		if (!isValue(serverData.negative_prompt) && !isValue(serverData.prompt) && $negativePrompt) {
+		if (
+			!isValue(serverData.negative_prompt) &&
+			!isValue(serverData.prompt) &&
+			isValue($negativePrompt)
+		) {
 			negativePromptInputValue = $negativePrompt;
 		}
 		isCheckComplete = true;
@@ -268,7 +272,7 @@
 						promptInputValue = promptInputValue.slice(0, maxPromptLength);
 					}
 				}}
-				disabled={loadingOrSubmitting}
+				disabled={loadingOrSubmitting || !isCheckComplete}
 				{placeholder}
 				rows="1"
 				type="text"
@@ -313,7 +317,7 @@
 			<ClearButton show={showClearPromptInputButton} onClick={clearPrompt} />
 		</div>
 		<Button
-			disabled={loadingOrSubmitting}
+			disabled={loadingOrSubmitting || !isCheckComplete}
 			loading={loadingOrSubmitting}
 			class="w-full md:w-auto md:min-w-[9.5rem]"
 		>
@@ -396,6 +400,7 @@
 					</TabLikeRangeInput>
 					{#if $currentServer.features?.includes('negative_prompt')}
 						<TabLikeInput
+							disabled={!isCheckComplete}
 							class="w-84 max-w-full"
 							placeholder={$LL.Home.NegativePromptInput.Placeholder()}
 							type="text"
@@ -413,6 +418,7 @@
 						</TabLikeInput>
 					{/if}
 					<TabLikeInput
+						disabled={!isCheckComplete}
 						class="w-84 max-w-full"
 						placeholder={$LL.Home.SeedInput.Placeholder()}
 						bind:value={generationSeed}

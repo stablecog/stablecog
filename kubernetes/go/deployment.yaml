@@ -1,0 +1,35 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: stablecog-go-deployment
+  namespace: stablecog
+  labels:
+    app: stablecog-go
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: stablecog-go
+  template:
+    metadata:
+      labels:
+        app: stablecog-go
+    spec:
+      containers:
+        - name: stablecog-go
+          image: replaceme
+          resources:
+            requests:
+              cpu: 50m
+              memory: 50Mi
+            limits:
+              cpu: 250m
+              memory: 250Mi
+          ports:
+            - containerPort: 3000
+          imagePullPolicy: 'Always'
+          envFrom:
+            - secretRef:
+                name: stablecog-secrets
+      imagePullSecrets:
+        - name: regcred

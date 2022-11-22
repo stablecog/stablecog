@@ -31,13 +31,13 @@
 	import { pLogGeneration, uLogGeneration } from '$ts/helpers/loggers';
 	import ServerOfflineBanner from '$components/ServerOfflineBanner.svelte';
 	import { currentServer, currentServerHealthStatus } from '$ts/stores/serverHealth';
-	import GenerationFullScreen from '$components/generationFullScreen/GenerationFullScreen.svelte';
 	import { activeGeneration } from '$ts/stores/activeGeneration';
 	import type { THomePageData } from '$routes/+page.server';
 	import { isValue } from '$ts/helpers/isValue';
 	import { shouldSubmitToGallery } from '$ts/stores/shouldSubmitToGallery';
 	import SubmitToGallery from '$components/SubmitToGallery.svelte';
 	import LL from '$i18n/i18n-svelte';
+	import GenerationFullScreen from '$components/generationFullScreen/GenerationFullScreen.svelte';
 
 	export let data: THomePageData;
 
@@ -337,9 +337,9 @@
 							</div>
 						</div>
 					</div>
-					{#if $shouldSubmitToGallery === undefined}
-						<SubmitToGallery />
-					{/if}
+				{/if}
+				{#if status === 'success' && $shouldSubmitToGallery === undefined}
+					<SubmitToGallery />
 				{/if}
 			</div>
 		{/if}
