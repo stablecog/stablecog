@@ -21,7 +21,7 @@ type SDiscordWebhookBody struct {
 }
 
 type SDiscordWebhookEmbed struct {
-	Title  string                     `json:"title"`
+	Title  string                     `json:"title,omitempty"`
 	Fields []SDiscordWebhookField     `json:"fields"`
 	Color  int                        `json:"color"`
 	Footer SDiscordWebhookEmbedFooter `json:"footer"`

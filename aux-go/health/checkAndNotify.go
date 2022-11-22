@@ -131,11 +131,11 @@ func getDiscordWebhookBody(
 	lastGenerationTime time.Time,
 	lastCheckTime time.Time,
 ) structs.SDiscordWebhookBody {
-	var s string
+	var statusStr string
 	if status == "unhealthy" {
-		s = "❌💀❌"
+		statusStr = "🔴💀🔴"
 	} else {
-		s = "🟢"
+		statusStr = "🟢👌🟢"
 	}
 	serversStr := ""
 	serversStrArr := []string{}
@@ -143,41 +143,44 @@ func getDiscordWebhookBody(
 	generationsStrArr := []string{}
 	for _, server := range servers {
 		if !server.Enabled {
-			serversStrArr = append(serversStrArr, "🖥️ ⚪️")
+			serversStrArr = append(serversStrArr, "🖥️⚪️")
 		} else if server.Healthy {
-			serversStrArr = append(serversStrArr, "🖥️ 🟢")
+			serversStrArr = append(serversStrArr, "🖥️🟢")
 		} else {
-			serversStrArr = append(serversStrArr, "🖥️ 🔴")
+			serversStrArr = append(serversStrArr, "🖥️🔴")
 		}
 	}
 	for _, generation := range generations {
 		if generation.Status == "failed" {
 			generationsStrArr = append(generationsStrArr, "🔴")
 		} else if generation.Status == "started" {
-			generationsStrArr = append(generationsStrArr, "🕑")
+			generationsStrArr = append(generationsStrArr, "🟡")
 		} else {
 			generationsStrArr = append(generationsStrArr, "🟢")
 		}
 	}
-	serversStr = strings.Join(serversStrArr, " --- ")
-	generationsStr = strings.Join(generationsStrArr, " ")
+	serversStr = strings.Join(serversStrArr, "  ")
+	generationsStr = strings.Join(generationsStrArr, "")
 	body := structs.SDiscordWebhookBody{
 		Embeds: []structs.SDiscordWebhookEmbed{
 			{
-				Title: fmt.Sprintf("Health Status %s", s),
 				Color: 11437547,
 				Fields: []structs.SDiscordWebhookField{
 					{
+						Name:  "Status",
+						Value: fmt.Sprintf("```%s```", statusStr),
+					},
+					{
 						Name:  "Servers",
-						Value: serversStr,
+						Value: fmt.Sprintf("```%s```", serversStr),
 					},
 					{
 						Name:  "Generations",
-						Value: generationsStr,
+						Value: fmt.Sprintf("```%s```", generationsStr),
 					},
 					{
 						Name:  "Last Generation",
-						Value: shared.RelativeTimeStr(lastGenerationTime),
+						Value: fmt.Sprintf("```%s```", shared.RelativeTimeStr(lastGenerationTime)),
 					},
 				},
 				Footer: structs.SDiscordWebhookEmbedFooter{

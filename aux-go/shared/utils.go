@@ -25,10 +25,10 @@ func RelativeTimeStr(t time.Time) string {
 		return "Just now"
 	}
 	if diffInSeconds < 60 {
-		return fmt.Sprint(diffInSeconds, " seconds ago")
+		return fmt.Sprint(diffInSeconds, "s ago")
 	}
 	if diffInSeconds < 60*60 {
-		return fmt.Sprint(diffInSeconds/60, " minute(s) ago")
+		return fmt.Sprint(diffInSeconds/60, "m ago")
 	}
-	return fmt.Sprint(diffInSeconds/60/60, " hour(s) ago")
+	return fmt.Sprint(diffInSeconds/60/60, "h ago")
 }
