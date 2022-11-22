@@ -135,7 +135,7 @@
 		<path fill="#002654" d="M0 0h170.7v512H0z" />
 		<path fill="#ce1126" d="M341.3 0H512v512H341.3z" />
 	</svg>
-{:else if locale === 'zh-HanS'}
+{:else if locale === 'zh-Hans'}
 	<svg
 		class={classes}
 		width="512"

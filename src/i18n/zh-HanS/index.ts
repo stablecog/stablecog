@@ -5,7 +5,7 @@ const zhHans: BaseTranslation = {
 	Home: {
 		GenerateButton: '生成',
 		PromptInput: {
-			Placeholder: '以梵高的画风来画一幅猫的肖像'
+			Placeholder: '猫的肖像，梵高的风格'
 		},
 		WidthTabBar: {
 			Title: '宽度',

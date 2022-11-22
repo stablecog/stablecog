@@ -29,7 +29,7 @@ interface Window {
 
 declare namespace svelte.JSX {
 	interface HTMLAttributes<T> {
-		tw: string;
+		tw?: string;
 	}
 }
 

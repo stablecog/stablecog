@@ -1,6 +1,6 @@
 import LL from '$i18n/i18n-svelte';
 import type { TTooltipProps } from '$ts/actions/tooltip';
-import { derived, type Readable, type Writable } from 'svelte/store';
+import { derived, type Readable } from 'svelte/store';
 
 export let widthTooltip: Readable<TTooltipProps> = derived(LL, ($LL) => ({
 	title: $LL.Home.WidthTabBar.Title(),

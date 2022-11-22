@@ -77,9 +77,7 @@
 				.order('url');
 			console.log('Server data:', data, error);
 			if (data) {
-				const serversOld = servers ? [...servers] : [];
 				servers = data.map((server) => {
-					const serverOld = serversOld.find((s) => s.id === server.id);
 					return {
 						...server,
 						enableDisableLoading: false,
