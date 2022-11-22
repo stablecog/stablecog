@@ -27,4 +27,4 @@ spec:
               service:
                 name: stablecog-go-service
                 port:
-                  number: 3000
+                  number: 3001
