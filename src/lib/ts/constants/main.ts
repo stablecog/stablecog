@@ -1,10 +1,12 @@
-import type { TTooltipProps } from '$ts/actions/tooltip';
 import type { TTab } from '$ts/types/main';
 
 export const estimatedDurationBufferRatio = 0.1;
 export const estimatedDurationDefault = 10;
 export const estimatedDurationUpscaleDefault = 15;
 export const canonicalUrl = 'https://stablecog.com';
+export const defaultLocale: Locales = 'en';
+
+export const modalCloseDelay = 120;
 
 export const maxSeed = 2147483647;
 export const maxPromptLength = 500;

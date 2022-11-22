@@ -146,3 +146,47 @@ export interface TGenerationGAdmin extends TDBGenerationG {
 	didLoadBefore: boolean;
 	status: 'deleted' | 'approved' | 'idle';
 }
+
+export type TCurrentSettingsPage = 'settings' | 'language';
+
+export interface TServerHealthData {
+	paths?: {
+		predictions?: {
+			post?: {
+				summary?: string;
+			};
+		};
+	};
+	components?: {
+		schemas?: {
+			Input?: {
+				properties?: {
+					prompt?: {
+						title?: string;
+					};
+					negative_prompt?: {
+						title?: string;
+					};
+					width?: {
+						[key: string]: string;
+					};
+					height?: {
+						[key: string]: string;
+					};
+					num_inference_steps?: {
+						title: string;
+					};
+					guidance_scale?: {
+						title: string;
+					};
+					seed?: {
+						title: string;
+					};
+					image_u?: {
+						title: string;
+					};
+				};
+			};
+		};
+	};
+}

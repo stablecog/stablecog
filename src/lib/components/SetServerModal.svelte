@@ -90,7 +90,7 @@
 	use:clickoutside={{
 		callback: () => (setServerProcessStatus === 'loading' || !close ? null : close())
 	}}
-	class="w-full ring-2 ring-c-bg-tertiary bg-c-bg-secondary flex flex-col justify-start max-w-xl my-auto rounded-2xl shadow-xl relative overflow-hidden z-0 origin-top {isOnBarrier
+	class="w-full ring-2 ring-c-bg-tertiary bg-c-bg-secondary flex flex-col justify-start max-w-2xl my-auto rounded-2xl shadow-xl relative overflow-hidden z-0 origin-top {isOnBarrier
 		? 'shadow-c-shadow/[var(--o-shadow-strong)]'
 		: 'shadow-c-shadow/[var(--o-shadow-normal)]'}"
 >
@@ -133,21 +133,24 @@
 			<Button
 				disabled={setServerProcessStatus === 'loading'}
 				loading={setServerProcessStatus === 'loading'}
-				class="w-full md:w-40"
+				noPadding
+				class="w-full md:w-44"
 			>
-				<p
-					class="transition transform relative
+				<div class="flex items-center py-5 px-6">
+					<p
+						class="transition transform relative
 						{setServerProcessStatus === 'loading' ? 'opacity-0 scale-0' : 'opacity-100 scale-100'}"
-				>
-					{!serverUrlInputValue && env.PUBLIC_DEFAULT_SERVER_URL
-						? $LL.SetServerModal.DefaultButton()
-						: $LL.SetServerModal.SetButton()}
-				</p>
-				<div
-					class="w-6 h-6 absolute transition transform left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none
+					>
+						{!serverUrlInputValue && env.PUBLIC_DEFAULT_SERVER_URL
+							? $LL.SetServerModal.DefaultButton()
+							: $LL.SetServerModal.SetButton()}
+					</p>
+					<div
+						class="w-6 h-6 absolute transition transform left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none
 						{setServerProcessStatus === 'loading' ? 'opacity-100 scale-100' : 'opacity-0 scale-0'}"
-				>
-					<IconLoading class="w-full h-full animate-spin-faster" />
+					>
+						<IconLoading class="w-full h-full animate-spin-faster" />
+					</div>
 				</div>
 			</Button>
 		</form>

@@ -8,7 +8,7 @@
 	import IconSteps from '$components/icons/IconSteps.svelte';
 	import IconTick from '$components/icons/IconTick.svelte';
 	import Morpher from '$components/Morpher.svelte';
-	import LL from '$i18n/i18n-svelte';
+	import LL, { locale } from '$i18n/i18n-svelte';
 	import { tooltip } from '$ts/actions/tooltip';
 	import {
 		guidanceScaleTooltipAlt,
@@ -98,7 +98,10 @@
 					<p>{$LL.GenerationFullscreen.Duration.Title()}</p>
 				</div>
 				<p class="font-bold">
-					{Math.round((generation.duration_ms / 1000) * 10) / 10}s
+					{(generation.duration_ms / 1000).toLocaleString($locale, {
+						minimumFractionDigits: 0,
+						maximumFractionDigits: 1
+					})}
 				</p>
 			</div>
 		{/if}

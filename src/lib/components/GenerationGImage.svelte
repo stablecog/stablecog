@@ -1,5 +1,4 @@
 <script lang="ts">
-	import { page } from '$app/stores';
 	import CopyButton from '$components/buttons/CopyButton.svelte';
 	import GenerateButton from '$components/buttons/GenerateButton.svelte';
 	import IconChatBubbleCancel from '$components/icons/IconChatBubbleCancel.svelte';

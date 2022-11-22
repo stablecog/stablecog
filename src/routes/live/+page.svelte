@@ -122,7 +122,9 @@
 						}
 					}
 				)
-				.subscribe();
+				.subscribe((status) => {
+					console.log('generation realtime status:', status);
+				});
 			channelUpscale = supabase
 				.channel('upscale-realtime-changes')
 				.on(
@@ -142,7 +144,9 @@
 						}
 					}
 				)
-				.subscribe();
+				.subscribe((status) => {
+					console.log('upscale realtime status:', status);
+				});
 		} else {
 			console.log('Supabase is not detected.');
 		}
@@ -237,7 +241,7 @@
 				<div class="w-full lg:w-64 max-w-full flex flex-col gap-1.5 text-center lg:text-right">
 					<h1 class="text-c-on-bg/50 text-sm">{$LL.Live.GenerationsTitle()}</h1>
 					<p class="font-bold text-4xl">
-						{Math.floor($generationTotalCount).toLocaleString('en-US')}
+						{Math.floor($generationTotalCount).toLocaleString($locale)}
 					</p>
 				</div>
 				<div
@@ -245,13 +249,13 @@
 				>
 					<h1 class="text-c-on-bg/50 text-sm">{$LL.Live.TotalDurationTitle()}</h1>
 					<p class="font-bold text-4xl">
-						{Math.round($generationAndUpscaleTotalDurationMs / 1000).toLocaleString('en-US')}s
+						{Math.round($generationAndUpscaleTotalDurationMs / 1000).toLocaleString($locale)}
 					</p>
 				</div>
 				<div class="w-full lg:w-64 max-w-full flex flex-col gap-1.5 text-center lg:text-left">
 					<h1 class="text-c-on-bg/50 text-sm">{$LL.Live.UpscalesTitle()}</h1>
 					<p class="font-bold text-4xl">
-						{Math.floor($upscaleTotalCount).toLocaleString('en-US')}
+						{Math.floor($upscaleTotalCount).toLocaleString($locale)}
 					</p>
 				</div>
 			</div>
@@ -336,11 +340,11 @@
 																	key: $LL.Live.GenerationTooltip.DurationTitle() + ':',
 																	value: generationOrUpscale.duration_ms
 																		? `${(generationOrUpscale.duration_ms / 1000).toLocaleString(
-																				'en-US',
+																				$locale,
 																				{
 																					maximumFractionDigits: 1
 																				}
-																		  )}s`
+																		  )}`
 																		: $LL.Live.DurationStatusUnknown()
 																}
 														  ]

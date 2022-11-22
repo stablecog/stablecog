@@ -8,7 +8,7 @@
 	import ModalWrapper from '$components/ModalWrapper.svelte';
 	import NavigationTabBar from '$components/NavigationTabBar.svelte';
 	import SetServerModal from '$components/SetServerModal.svelte';
-	import SettingsMenu from '$components/SettingsMenu.svelte';
+	import SettingsMenu from '$components/settings/SettingsMenu.svelte';
 	import { clickoutside } from '$ts/actions/clickoutside';
 	import { isTouchscreen } from '$ts/stores/isTouchscreen';
 	import { onMount } from 'svelte';
@@ -65,7 +65,7 @@
 			<Logo class="w-9 h-9" />
 		</a>
 	</div>
-	<div class="w-auto md:w-full max-w-[33rem] hidden md:flex">
+	<div class="w-auto md:w-full max-w-[36rem] hidden md:flex">
 		<NavigationTabBar />
 	</div>
 	<div class="flex flex-1 flex-wrap items-center justify-end relative">
