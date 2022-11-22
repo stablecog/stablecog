@@ -94,6 +94,6 @@ Following people have contributed by translating it to their language. Thanks to
 - [**Arkhath**](https://twitter.com/Arkhath): French
 - [**Chibi**](https://twitter.com/CryptoChibs): Spanish
 - **Mongoose**: Chinese Traditional
-- **Sebrock**: German
+- [**Sebrock**](https://twitter.com/sebrock): German
 - [**Jatt**](https://twitter.com/BananoJatt): Hindu
 - [**Just_Dmitry**](https://github.com/justdmitry): Russian
