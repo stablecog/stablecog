@@ -119,7 +119,8 @@ export const POST: RequestHandler = async ({ request }) => {
 					height: height.toString(),
 					seed: seed.toString(),
 					num_inference_steps: Math.round(num_inference_steps).toString(),
-					guidance_scale: Math.round(guidance_scale).toString()
+					guidance_scale: Math.round(guidance_scale).toString(),
+					output_image_ext: 'jpg'
 				}
 			})
 		});
