@@ -93,7 +93,7 @@ Following people have contributed by translating the app to their language. Than
 
 - [**Arkhath**](https://twitter.com/Arkhath): French
 - [**Chibi**](https://twitter.com/CryptoChibs): Spanish
-- **Mongoose**: Chinese Traditional
+- **Mongoose#3074**: Chinese Traditional
 - [**Sebrock**](https://twitter.com/sebrock): German
 - [**Jatt**](https://twitter.com/BananoJatt): Hindu
 - [**Just_Dmitry**](https://github.com/justdmitry): Russian
