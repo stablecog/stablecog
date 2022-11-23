@@ -32,6 +32,7 @@
 	<div class="w-full bg-c-bg-secondary flex flex-col justify-start">
 		{#each locales as locale}
 			<DropdownItem
+				padding="lg"
 				disabled={currentPage === 'settings'}
 				onClick={async () => {
 					await switchToLocale(locale);

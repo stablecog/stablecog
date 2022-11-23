@@ -33,7 +33,11 @@
 >
 	<div class="w-full bg-c-bg-secondary flex flex-col justify-start">
 		{#if $serverUrl}
-			<DropdownItem disabled={currentPage !== 'settings'} twoLine onClick={onSwitchServerClick}>
+			<DropdownItem
+				disabled={currentPage !== 'settings'}
+				padding="md"
+				onClick={onSwitchServerClick}
+			>
 				<div class="flex-1 min-w-0 flex flex-col items-start gap-1.5 relative">
 					<div class="w-full flex items-center justify-start gap-2.5">
 						<IconServer

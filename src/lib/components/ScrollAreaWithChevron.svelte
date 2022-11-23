@@ -7,7 +7,7 @@
 	export let clientHeight: number | undefined;
 	let classes = 'w-full relative';
 	let container: HTMLDivElement;
-	const showChevronPadding = 20;
+	const showChevronPadding = 12;
 
 	$: containerScrollTop = container?.scrollTop;
 	$: containerScrollHeight = container?.scrollHeight;
