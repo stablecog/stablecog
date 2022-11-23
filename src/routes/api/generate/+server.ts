@@ -355,12 +355,12 @@ function getIsNSFW(imageDataB64: string) {
 	const pngStart = 'data:image/png;base64,';
 	const blackStringPng = Array.from({ length: 200 }, () => 'A').join('');
 	const jpegStart = 'data:image/jpeg;base64,';
-	const blackStringJpg = Array.from({ length: 30 }, () => 'iiigAooooAKKKKAC').join('');
+	const blackStringJpeg = Array.from({ length: 30 }, () => 'iiigAooooAKKKKAC').join('');
 	if (!imageDataB64) {
 		return false;
 	}
 	return (
-		(imageDataB64.startsWith(jpegStart) && imageDataB64.includes(blackStringJpg)) ||
+		(imageDataB64.startsWith(jpegStart) && imageDataB64.includes(blackStringJpeg)) ||
 		(imageDataB64.startsWith(pngStart) && imageDataB64.includes(blackStringPng))
 	);
 }
