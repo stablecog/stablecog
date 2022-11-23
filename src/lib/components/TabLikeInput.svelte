@@ -71,11 +71,11 @@
 				{placeholder}
 				type="text"
 				class="text-base w-full text-c-on-bg/75 self-stretch overflow-ellipsis ring-0 transition ring-c-primary/20 focus:ring-2 
-						pl-4 py-3 md:py-3.5 rounded-r-xl bg-transparent placeholder:text-c-on-bg/30 {!$isTouchscreen
+						pl-4 py-3.25 md:py-3.5 rounded-r-xl bg-transparent placeholder:text-c-on-bg/30 {!$isTouchscreen
 					? 'hover:ring-2 group-hover:ring-2'
 					: ''} {showClearInputButton ? 'pr-10 md:pr-12' : 'pr-4'}"
 			/>
-			<ClearButton show={showClearInputButton} onClick={clearInput} type="sm" />
+			<ClearButton {disabled} show={showClearInputButton} onClick={clearInput} type="sm" />
 		</div>
 	{:else}
 		<div class="self-stretch flex text-c-on-bg/30">
@@ -86,6 +86,7 @@
 		</div>
 		<div class="flex-1 min-w-0 flex relative rounded-r-xl group">
 			<input
+				{disabled}
 				bind:this={inputElement}
 				bind:value
 				on:keypress={(e) => handleKeypress(e)}
@@ -104,11 +105,11 @@
 				inputmode="numeric"
 				pattern="[0-9]*"
 				class="text-base w-full text-c-on-bg/75 self-stretch overflow-ellipsis ring-0 transition ring-c-primary/20 focus:ring-2 
-					pl-4 py-3 md:py-3.5 rounded-r-xl bg-transparent placeholder:text-c-on-bg/30 {!$isTouchscreen
+					pl-4 py-3.25 md:py-3.5 rounded-r-xl bg-transparent placeholder:text-c-on-bg/30 {!$isTouchscreen
 					? 'hover:ring-2 group-hover:ring-2'
 					: ''} {showClearInputButton ? 'pr-10 md:pr-12' : 'pr-4'}"
 			/>
-			<ClearButton show={showClearInputButton} onClick={clearInput} type="sm" />
+			<ClearButton {disabled} show={showClearInputButton} onClick={clearInput} type="sm" />
 		</div>
 	{/if}
 </TabBarWrapper>

@@ -1,18 +1,8 @@
 <script lang="ts">
 	import Button from '$components/buttons/Button.svelte';
 	import ClearButton from '$components/buttons/ClearButton.svelte';
-	import IconChatBubbleCancel from '$components/icons/IconChatBubbleCancel.svelte';
-	import IconHeight from '$components/icons/IconHeight.svelte';
-	import IconScale from '$components/icons/IconScale.svelte';
-	import IconSeed from '$components/icons/IconSeed.svelte';
-	import IconSteps from '$components/icons/IconSteps.svelte';
-	import IconWidth from '$components/icons/IconWidth.svelte';
-	import TabBar from '$components/TabBar.svelte';
-	import TabLikeInput from '$components/TabLikeInput.svelte';
-	import TabLikeRangeInput from '$components/TabLikeRangeInput.svelte';
 	import type { THomePageData } from '$routes/+page.server';
 	import { autoresize } from '$ts/actions/textarea/autoresize';
-	import { tooltip } from '$ts/actions/tooltip';
 	import { expandCollapse } from '$ts/animation/transitions';
 	import {
 		guidanceScaleDefault,
@@ -23,31 +13,28 @@
 		inferenceStepsDefault,
 		inferenceStepsTabs,
 		maxPromptLength,
-		maxSeed,
 		widthDefault,
 		widthTabs
 	} from '$ts/constants/main';
 	import { formatPrompt } from '$ts/helpers/formatPrompt';
-	import { advancedMode } from '$ts/stores/advancedMode';
 	import { guidanceScale } from '$ts/stores/guidanceScale';
 	import { imageSize } from '$ts/stores/imageSize';
 	import { inferenceSteps } from '$ts/stores/inferenceSteps';
 	import { isTouchscreen } from '$ts/stores/isTouchscreen';
 	import { negativePrompt, prompt } from '$ts/stores/prompt';
 	import { seed } from '$ts/stores/seed';
-	import { currentServer } from '$ts/stores/serverHealth';
 	import type { TStatus } from '$ts/types/main';
 	import { onMount, tick } from 'svelte';
 	import LL, { locale } from '$i18n/i18n-svelte';
-	import {
-		guidanceScaleTooltip,
-		heightTooltip,
-		inferenceStepsTooltip,
-		negativePromptTooltip,
-		seedTooltip,
-		widthTooltip
-	} from '$ts/constants/tooltip';
 	import { isValue } from '$ts/helpers/isValue';
+	import GenerationSettingsSheet from '$components/generateBar/GenerationSettings.svelte';
+	import { clickoutside } from '$ts/actions/clickoutside';
+	import { portal } from 'svelte-portal';
+	import { windowHeight, windowWidth } from '$ts/stores/window';
+	import NoBgButton from '$components/buttons/NoBgButton.svelte';
+	import IconGenerationSettings from '$components/icons/IconGenerationSettings.svelte';
+	import { advancedMode } from '$ts/stores/advancedMode';
+	import ScrollAreaWithChevron from '$components/ScrollAreaWithChevron.svelte';
 
 	export let serverData: THomePageData;
 	export let generationWidth =
@@ -92,6 +79,7 @@
 	let nowInterval: NodeJS.Timeout | undefined;
 	let promptInputElement: HTMLTextAreaElement;
 	let formElement: HTMLFormElement;
+	let generationSettingsSheet = false;
 
 	$: loadingOrSubmitting = status === 'loading' || submitting;
 	$: sinceSec =
@@ -140,6 +128,7 @@
 	$: [negativePromptInputValue], setLocalNegativePrompt();
 	$: showClearPromptInputButton =
 		promptInputValue !== undefined && promptInputValue !== '' && !loadingOrSubmitting;
+	$: [$windowWidth, $windowHeight], closeMobileSettingsSheet();
 
 	const setLocalImageSize = () => {
 		if (isCheckComplete) {
@@ -193,6 +182,10 @@
 		promptInputElement.value = '';
 		promptInputElement.blur();
 		promptInputElement.focus();
+	};
+
+	const closeMobileSettingsSheet = () => {
+		if (generationSettingsSheet) generationSettingsSheet = false;
 	};
 
 	onMount(() => {
@@ -250,7 +243,7 @@
 	bind:this={formElement}
 	disabled={loadingOrSubmitting}
 	on:submit|preventDefault={onSubmit}
-	class="w-full max-w-xl md:max-w-6.5xl md:px-4 lg:px-12 flex flex-col items-center pt-2px"
+	class="w-full max-w-2xl md:max-w-6.5xl md:px-4 lg:px-12 flex flex-col items-center pt-2"
 >
 	<!-- Prompt bar -->
 	<div class="w-full flex flex-col md:flex-row gap-3 items-center pb-2 px-4">
@@ -281,7 +274,7 @@
 				style="transition: height 0.1s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.2s cubic-bezier(0.4, 0, 0.2, 1), padding 0.2s cubic-bezier(0.4, 0, 0.2, 1)"
 				class="w-full bg-c-bg-secondary shadow-lg pr-12 md:pr-17 hide-scrollbar shadow-c-shadow/[var(--o-shadow-normal)] 
 					scroll-smooth resize-none transition relative pl-5 md:pl-6 py-5 rounded-xl 
-				focus:ring-2 focus:ring-c-primary/20 ring-0 ring-c-primary/20 placeholder:text-c-on-bg/30 {!$isTouchscreen
+					focus:ring-2 focus:ring-c-primary/20 ring-0 ring-c-primary/20 placeholder:text-c-on-bg/30 {!$isTouchscreen
 					? 'enabled:hover:ring-2'
 					: ''} {classes} {loadingOrSubmitting
 					? 'text-c-secondary/75'
@@ -339,108 +332,71 @@
 			class="w-full flex flex-col justify-start items-center overflow-hidden px-4"
 			transition:expandCollapse|local={{ duration: 300 }}
 		>
-			<div class="w-full flex flex-wrap items-start justify-center px-2px py-4 gap-4">
-				<TabBar
-					class="w-84 max-w-full"
-					tabs={widthTabs}
-					bind:value={generationWidth}
-					name="width"
-					hideSelected={!isCheckComplete}
-				>
+			<div class="w-full hidden md:flex flex-col justify-start">
+				<GenerationSettingsSheet
+					disabled={loadingOrSubmitting}
+					bind:generationWidth
+					bind:generationHeight
+					bind:generationGuidanceScale
+					bind:generationInferenceSteps
+					bind:generationSeed
+					bind:negativePromptInputValue
+					{formElement}
+					{isCheckComplete}
+				/>
+			</div>
+			<div class="w-full flex flex-col md:hidden justify-start pt-2 items-center relative">
+				<NoBgButton onClick={() => (generationSettingsSheet = !generationSettingsSheet)}>
 					<div
-						slot="title"
-						use:tooltip={$widthTooltip}
-						class="py-2 px-4 flex items-center justify-center"
+						class="flex justify-center items-center gap-2 px-4 py-0.5 flex-1 font-semibold overflow-hidden"
 					>
-						<IconWidth class="w-6 h-6 text-c-on-bg/25" />
+						<IconGenerationSettings class="-ml-0.5" />
+						<p class="flex-1 flex-shrink whitespace-nowrap overflow-hidden overflow-ellipsis">
+							{$LL.Settings.Title()}
+						</p>
 					</div>
-				</TabBar>
-				<TabBar
-					class="w-84 max-w-full"
-					tabs={heightTabs}
-					bind:value={generationHeight}
-					name="height"
-					hideSelected={!isCheckComplete}
-				>
-					<div
-						slot="title"
-						use:tooltip={$heightTooltip}
-						class="py-2 px-4 flex items-center justify-center"
-					>
-						<IconHeight class="w-6 h-6 text-c-on-bg/25" />
-					</div>
-				</TabBar>
-				{#if $advancedMode}
-					<TabBar
-						class="w-84 max-w-full"
-						tabs={inferenceStepsTabs}
-						bind:value={generationInferenceSteps}
-						name="steps"
-						hideSelected={!isCheckComplete}
-					>
-						<div
-							slot="title"
-							use:tooltip={$inferenceStepsTooltip}
-							class="py-2 px-4 flex items-center justify-center"
-						>
-							<IconSteps class="w-6 h-6 text-c-on-bg/25" />
-						</div>
-					</TabBar>
-					<TabLikeRangeInput
-						class="w-84 max-w-full"
-						bind:value={generationGuidanceScale}
-						min={guidanceScaleMin}
-						max={guidanceScaleMax}
-					>
-						<div
-							slot="title"
-							use:tooltip={$guidanceScaleTooltip}
-							class="py-2 px-4 flex items-center justify-center"
-						>
-							<IconScale class="w-6 h-6 text-c-on-bg/25" />
-						</div>
-					</TabLikeRangeInput>
-					{#if $currentServer.features?.includes('negative_prompt')}
-						<TabLikeInput
-							disabled={!isCheckComplete}
-							class="w-84 max-w-full"
-							placeholder={$LL.Home.NegativePromptInput.Placeholder()}
-							type="text"
-							bind:value={negativePromptInputValue}
-							max={maxPromptLength}
-							{formElement}
-						>
-							<div
-								slot="title"
-								use:tooltip={$negativePromptTooltip}
-								class="py-2 px-4 flex items-center justify-center"
-							>
-								<IconChatBubbleCancel class="w-6 h-6 text-c-on-bg/25" />
-							</div>
-						</TabLikeInput>
-					{/if}
-					<TabLikeInput
-						disabled={!isCheckComplete}
-						class="w-84 max-w-full"
-						placeholder={$LL.Home.SeedInput.Placeholder()}
-						bind:value={generationSeed}
-						type="number"
-						max={maxSeed}
-						{formElement}
-					>
-						<div
-							slot="title"
-							use:tooltip={$seedTooltip}
-							class="py-2 px-4 flex items-center justify-center"
-						>
-							<IconSeed class="w-6 h-6 text-c-on-bg/25" />
-						</div>
-					</TabLikeInput>
-				{/if}
+				</NoBgButton>
 			</div>
 		</div>
 	{/if}
 	{#if loadingOrSubmitting}
-		<div transition:expandCollapse|local={{ duration: 300 }} class="w-full h-[4vh]" />
+		<div transition:expandCollapse|local={{ duration: 300 }} class="w-full h-[2vh] md:h-[4vh]" />
 	{/if}
 </form>
+<div
+	use:portal={'body'}
+	style="height: {$windowHeight}px; width: {$windowWidth}px"
+	class="md:hidden fixed bottom-0 flex flex-col justify-end z-100 overflow-hidden transition {generationSettingsSheet
+		? 'bg-c-barrier/85'
+		: 'pointer-events-none bg-c-barrier/0'}"
+>
+	<div
+		use:clickoutside={{
+			callback: () => (generationSettingsSheet = false)
+		}}
+		class="{generationSettingsSheet
+			? 'translate-y-0'
+			: 'translate-y-[calc(100%+2rem)]'} transition {$advancedMode
+			? 'duration-300'
+			: ''} border-2 border-c-bg-secondary bg-c-bg w-full flex flex-col relative
+			rounded-t-2xl justify-end overflow-hidden shadow-sheet shadow-c-shadow/[var(--o-shadow-strong)]"
+	>
+		<ScrollAreaWithChevron
+			class="overflow-auto max-h-[70vh] flex flex-col justify-start px-4 pb-[calc(env(safe-area-inset-bottom)+0.5rem)] pt-1"
+		>
+			<div class="w-full flex flex-col">
+				<GenerationSettingsSheet
+					disabled={!generationSettingsSheet || loadingOrSubmitting}
+					bind:generationWidth
+					bind:generationHeight
+					bind:generationGuidanceScale
+					bind:generationInferenceSteps
+					bind:generationSeed
+					bind:negativePromptInputValue
+					{formElement}
+					{isCheckComplete}
+				/>
+			</div>
+		</ScrollAreaWithChevron>
+	</div>
+</div>

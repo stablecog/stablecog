@@ -10,6 +10,8 @@
 	export { classes as class };
 	export let hasTitle = true;
 	export let dontScale = false;
+	export let disabled = false;
+
 	let classes = '';
 </script>
 
@@ -31,12 +33,13 @@
 				class="h-full absolute left-0 top-0 p-1 transition"
 			>
 				<div
-					class="w-full h-full bg-c-bg-secondary rounded-lg shadow-md shadow-c-shadow/[var(--o-shadow-strong)] "
+					class="w-full h-full bg-c-bg-secondary rounded-lg shadow-md shadow-c-shadow/[var(--o-shadow-strong)]"
 				/>
 			</div>
 		</div>
 		{#each tabs as tab}
 			<button
+				{disabled}
 				on:click|preventDefault={(e) => {
 					value = tab.value;
 					e.currentTarget.blur();

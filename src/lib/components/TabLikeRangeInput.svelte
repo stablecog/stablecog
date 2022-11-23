@@ -7,6 +7,7 @@
 	export let value: number;
 	export let min: number;
 	export let max: number;
+	export let disabled: boolean;
 	export { classes as class };
 	let classes = '';
 
@@ -74,6 +75,7 @@
 			showWheel={focused}
 		/>
 		<RangeInput
+			{disabled}
 			class="flex-1 h-12 md:h-13"
 			classInput="rounded-lg"
 			bind:value

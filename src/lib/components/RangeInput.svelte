@@ -8,12 +8,14 @@
 	let classes = '';
 	export let classInput = '';
 	export let focused = false;
+	export let disabled = false;
 
 	$: progress = (value - min) / (max - min);
 </script>
 
 <div class="relative {classes}">
 	<input
+		{disabled}
 		on:mousedown={() => {
 			focused = true;
 		}}

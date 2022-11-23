@@ -44,6 +44,7 @@ module.exports = {
 				'4px': '4px',
 				0.25: '0.0625rem',
 				0.75: '0.1875rem',
+				3.25: '0.8125rem',
 				4.5: '1.125rem',
 				5.5: '1.375rem',
 				6.5: '1.625rem',
@@ -77,7 +78,8 @@ module.exports = {
 				4: '0.04',
 				8: '0.08',
 				15: '0.15',
-				35: '0.35'
+				35: '0.35',
+				85: '0.85'
 			},
 			borderWidth: {
 				'3px': '3px',
@@ -112,7 +114,8 @@ module.exports = {
 				navbar: '0 0 1.5rem 0',
 				'settings-page': '0 0 1rem 0',
 				'generation-sidebar': '0 0 1rem 0',
-				'generation-modal': '0 1rem 2rem 0'
+				'generation-modal': '0 1rem 2rem 0',
+				sheet: '0 0 2rem 0'
 			},
 			screens: {
 				'1.5xl': '1408px',
@@ -137,6 +140,9 @@ module.exports = {
 			},
 			ringWidth: {
 				1.5: '1.5px'
+			},
+			zIndex: {
+				100: '100'
 			},
 			borderRadius: {
 				lg2: '0.625rem',

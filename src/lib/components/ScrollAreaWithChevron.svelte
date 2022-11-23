@@ -4,7 +4,7 @@
 	import { fly } from 'svelte/transition';
 
 	export { classes as class };
-	export let clientHeight: number | undefined;
+	export let clientHeight: number | undefined = undefined;
 	let classes = 'w-full relative';
 	let container: HTMLDivElement;
 	const showChevronPadding = 12;

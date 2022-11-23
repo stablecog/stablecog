@@ -2,7 +2,7 @@
 	import { page } from '$app/stores';
 	import ToC from '$components/blog/ToC.svelte';
 	import Button from '$components/buttons/Button.svelte';
-	import LinkButton from '$components/buttons/LinkButton.svelte';
+	import LinkButton from '$components/buttons/NoBgButton.svelte';
 	import IconBack from '$components/icons/IconBack.svelte';
 	import MetaTag from '$components/MetaTag.svelte';
 	import SocialBar from '$components/SocialBar.svelte';

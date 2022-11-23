@@ -1,5 +1,5 @@
 <script lang="ts">
-	import GenerateBar from '$components/GenerateBar.svelte';
+	import GenerateBar from '$components/generateBar/GenerateBar.svelte';
 	import MetaTag from '$components/MetaTag.svelte';
 	import { elementreceive, elementsend, expandCollapse } from '$ts/animation/transitions';
 	import {
@@ -305,7 +305,7 @@
 						transition:expandCollapse|local={{ duration: 300 }}
 						class="max-w-full flex flex-col items-center justify-start rounded-xl origin-top relative z-0 px-4"
 					>
-						<div class="max-w-full flex flex-col items-center md:px-5 gap-4 pt-6 pb-4">
+						<div class="max-w-full flex flex-col items-center md:px-5 gap-4 pt-4 md:pt-6 pb-4">
 							<div
 								class="{aspectRatio >= 6 / 2
 									? 'w-180'

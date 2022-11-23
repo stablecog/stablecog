@@ -5,6 +5,7 @@
 	export let show = false;
 	export let onClick: () => void;
 	export let type: 'sm' | 'md' = 'md';
+	export let disabled = false;
 </script>
 
 <div
@@ -16,7 +17,7 @@
 		on:click|preventDefault={onClick}
 		class="w-full h-full relative rounded-r-xl flex items-center justify-center group-1
 			transition {show ? 'focus:translate-x-0 translate-x-0 opacity-100' : 'translate-x-full opacity-0'}"
-		disabled={!show}
+		disabled={!show || disabled}
 		type="button"
 	>
 		<div

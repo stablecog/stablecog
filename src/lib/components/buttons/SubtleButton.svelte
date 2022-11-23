@@ -44,6 +44,7 @@
 	</a>
 {:else}
 	<button
+		type="button"
 		on:click={onClick}
 		disabled={disabled || loading}
 		class="{state === 'success'
