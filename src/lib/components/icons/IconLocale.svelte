@@ -128,12 +128,12 @@
 		width="512"
 		height="512"
 		viewBox="0 0 512 512"
+		fill="none"
 		xmlns="http://www.w3.org/2000/svg"
-		id="flag-icons-fr"
 	>
-		<path fill="#fff" d="M0 0h512v512H0z" />
-		<path fill="#002654" d="M0 0h170.7v512H0z" />
-		<path fill="#ce1126" d="M341.3 0H512v512H341.3z" />
+		<rect width="170" height="512" fill="#002654" />
+		<rect x="342" width="170" height="512" fill="#CE1126" />
+		<rect x="170" width="172" height="512" fill="white" />
 	</svg>
 {:else if locale === 'zh-Hans'}
 	<svg
