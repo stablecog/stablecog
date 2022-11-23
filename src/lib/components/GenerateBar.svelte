@@ -95,7 +95,9 @@
 
 	$: loadingOrSubmitting = status === 'loading' || submitting;
 	$: sinceSec =
-		now !== undefined && startTimestamp !== undefined ? (now - startTimestamp) / 1000 : 0;
+		now !== undefined && startTimestamp !== undefined
+			? Math.max(now - startTimestamp, 0) / 1000
+			: 0;
 	$: [status], createOrDestroyInterval();
 
 	async function createOrDestroyInterval() {
