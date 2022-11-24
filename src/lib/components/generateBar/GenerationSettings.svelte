@@ -10,7 +10,6 @@
 	import TabBar from '$components/TabBar.svelte';
 	import TabLikeInput from '$components/TabLikeInput.svelte';
 	import TabLikeRangeInput from '$components/TabLikeRangeInput.svelte';
-	import TabLikeToggle from '$components/TabLikeToggle.svelte';
 	import LL from '$i18n/i18n-svelte';
 	import { tooltip } from '$ts/actions/tooltip';
 	import {
@@ -23,7 +22,6 @@
 		widthTabs
 	} from '$ts/constants/main';
 	import {
-		advancedModeTooltip,
 		guidanceScaleTooltip,
 		heightTooltip,
 		inferenceStepsTooltip,
@@ -48,7 +46,7 @@
 <div class="w-full flex flex-wrap items-start justify-center px-2px py-4 gap-4">
 	<TabBar
 		{disabled}
-		class="w-full md:w-84 xl:w-88 max-w-full"
+		class="w-full md:w-84 max-w-full"
 		tabs={widthTabs}
 		bind:value={generationWidth}
 		name="width"
@@ -64,7 +62,7 @@
 	</TabBar>
 	<TabBar
 		{disabled}
-		class="w-full md:w-84 xl:w-88 max-w-full"
+		class="w-full md:w-84 max-w-full"
 		tabs={heightTabs}
 		bind:value={generationHeight}
 		name="height"
@@ -81,7 +79,7 @@
 	{#if $advancedMode}
 		<TabBar
 			{disabled}
-			class="w-full md:w-84 xl:w-88 max-w-full"
+			class="w-full md:w-84 max-w-full"
 			tabs={inferenceStepsTabs}
 			bind:value={generationInferenceSteps}
 			name="steps"
@@ -97,7 +95,7 @@
 		</TabBar>
 		<TabLikeRangeInput
 			{disabled}
-			class="w-full md:w-84 xl:w-88 max-w-full"
+			class="w-full md:w-84 max-w-full"
 			bind:value={generationGuidanceScale}
 			min={guidanceScaleMin}
 			max={guidanceScaleMax}
@@ -113,7 +111,7 @@
 		{#if $currentServer.features?.includes('negative_prompt')}
 			<TabLikeInput
 				disabled={!isCheckComplete || disabled}
-				class="w-full md:w-84 xl:w-88 max-w-full"
+				class="w-full md:w-84 max-w-full"
 				placeholder={$LL.Home.NegativePromptInput.Placeholder()}
 				type="text"
 				bind:value={negativePromptInputValue}
@@ -131,7 +129,7 @@
 		{/if}
 		<TabLikeInput
 			disabled={!isCheckComplete || disabled}
-			class="w-full md:w-84 xl:w-88 max-w-full"
+			class="w-full md:w-84 max-w-full"
 			placeholder={$LL.Home.SeedInput.Placeholder()}
 			bind:value={generationSeed}
 			type="number"
