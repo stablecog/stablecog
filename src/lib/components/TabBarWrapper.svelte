@@ -10,7 +10,7 @@
 		? 'rounded-t-xl self-stretch shadow-navbar shadow-c-shadow/[var(--o-shadow-stronger)]'
 		: 'rounded-xl shadow-lg shadow-c-shadow/[var(--o-shadow-normal)]'} {dontScale
 		? 'text-sm'
-		: 'text-xs md:text-sm'} ring-2 ring-c-bg-secondary w-full flex items-stretch  bg-c-bg transition relative {classes}"
+		: 'text-xs md:text-sm'} ring-2 ring-c-bg-secondary flex items-stretch  bg-c-bg transition relative {classes}"
 >
 	<slot />
 </div>

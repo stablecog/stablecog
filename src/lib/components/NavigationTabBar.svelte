@@ -41,7 +41,7 @@
 	];
 </script>
 
-<TabBarWrapper {type}>
+<TabBarWrapper class="w-full" {type}>
 	<div class="w-full flex pb-[env(safe-area-inset-bottom)] md:pb-0">
 		<div class="w-full flex relative">
 			<div

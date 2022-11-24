@@ -1,9 +1,14 @@
 <script lang="ts">
 	export let isToggled: boolean = false;
+	export let color: 'primary' | 'on-bg' = 'primary';
 </script>
 
 <div
-	class="w-12 h-6 flex items-center rounded-full transition {isToggled
+	class="w-12 h-6 flex items-center rounded-full transition {color == 'on-bg'
+		? isToggled
+			? 'bg-c-on-bg/50'
+			: 'bg-c-on-bg/25'
+		: isToggled
 		? 'bg-c-primary'
 		: 'bg-c-on-bg/25'} relative z-0 overflow-hidden"
 >

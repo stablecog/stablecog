@@ -38,6 +38,11 @@ export let seedTooltip: Readable<TTooltipProps> = derived(LL, ($LL) => ({
 	...tooltipStyleProps
 }));
 
+export let advancedModeTooltip: Readable<TTooltipProps> = derived(LL, ($LL) => ({
+	title: $LL.Settings.AdvancedModeToggle(),
+	...tooltipStyleProps
+}));
+
 export let widthTooltipAlt: Readable<TTooltipProps> = derived(LL, ($LL) => ({
 	title: $LL.Home.WidthTabBar.Title(),
 	description: $LL.Home.WidthTabBar.Paragraph(),

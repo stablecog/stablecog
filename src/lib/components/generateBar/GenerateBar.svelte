@@ -234,7 +234,7 @@
 	bind:this={formElement}
 	disabled={loadingOrSubmitting}
 	on:submit|preventDefault={onSubmit}
-	class="w-full max-w-2xl md:max-w-6.5xl md:px-4 lg:px-12 flex flex-col items-center pt-2"
+	class="w-full max-w-2xl md:max-w-7xl md:px-4 lg:px-12 flex flex-col items-center pt-2"
 >
 	<!-- Prompt bar -->
 	<div class="w-full flex flex-col md:flex-row gap-3 items-center pb-2 px-4">
