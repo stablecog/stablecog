@@ -27,14 +27,10 @@
 	import { onMount, tick } from 'svelte';
 	import LL, { locale } from '$i18n/i18n-svelte';
 	import { isValue } from '$ts/helpers/isValue';
-	import GenerationSettingsSheet from '$components/generateBar/GenerationSettings.svelte';
-	import { clickoutside } from '$ts/actions/clickoutside';
-	import { portal } from 'svelte-portal';
-	import { windowHeight, windowWidth } from '$ts/stores/window';
+	import GenerationSettingsSheet from '$components/generateBar/GenerationSettingsSheet.svelte';
+	import GenerationSettings from '$components/generateBar/GenerationSettings.svelte';
 	import NoBgButton from '$components/buttons/NoBgButton.svelte';
 	import IconGenerationSettings from '$components/icons/IconGenerationSettings.svelte';
-	import { advancedMode } from '$ts/stores/advancedMode';
-	import ScrollAreaWithChevron from '$components/ScrollAreaWithChevron.svelte';
 
 	export let serverData: THomePageData;
 	export let generationWidth =
@@ -79,7 +75,7 @@
 	let nowInterval: NodeJS.Timeout | undefined;
 	let promptInputElement: HTMLTextAreaElement;
 	let formElement: HTMLFormElement;
-	let generationSettingsSheet = false;
+	let isGenerationSettingsSheetOpen = false;
 
 	$: loadingOrSubmitting = status === 'loading' || submitting;
 	$: sinceSec =
@@ -128,7 +124,6 @@
 	$: [negativePromptInputValue], setLocalNegativePrompt();
 	$: showClearPromptInputButton =
 		promptInputValue !== undefined && promptInputValue !== '' && !loadingOrSubmitting;
-	$: [$windowWidth, $windowHeight], closeMobileSettingsSheet();
 
 	const setLocalImageSize = () => {
 		if (isCheckComplete) {
@@ -182,10 +177,6 @@
 		promptInputElement.value = '';
 		promptInputElement.blur();
 		promptInputElement.focus();
-	};
-
-	const closeMobileSettingsSheet = () => {
-		if (generationSettingsSheet) generationSettingsSheet = false;
 	};
 
 	onMount(() => {
@@ -333,7 +324,7 @@
 			transition:expandCollapse|local={{ duration: 300 }}
 		>
 			<div class="w-full hidden md:flex flex-col justify-start">
-				<GenerationSettingsSheet
+				<GenerationSettings
 					disabled={loadingOrSubmitting}
 					bind:generationWidth
 					bind:generationHeight
@@ -346,12 +337,15 @@
 				/>
 			</div>
 			<div class="w-full flex flex-col md:hidden justify-start pt-2 items-center relative">
-				<NoBgButton onClick={() => (generationSettingsSheet = !generationSettingsSheet)}>
+				<NoBgButton
+					disabled={loadingOrSubmitting || isGenerationSettingsSheetOpen}
+					onClick={() => (isGenerationSettingsSheetOpen = !isGenerationSettingsSheetOpen)}
+				>
 					<div
 						class="flex justify-center items-center gap-2 px-4 py-0.5 flex-1 font-semibold overflow-hidden"
 					>
-						<IconGenerationSettings class="-ml-0.5" />
-						<p class="flex-1 flex-shrink whitespace-nowrap overflow-hidden overflow-ellipsis">
+						<IconGenerationSettings class="flex-shrink-0 -ml-0.5" />
+						<p class="flex-shrink whitespace-nowrap overflow-hidden overflow-ellipsis">
 							{$LL.Settings.Title()}
 						</p>
 					</div>
@@ -363,40 +357,16 @@
 		<div transition:expandCollapse|local={{ duration: 300 }} class="w-full h-[2vh] md:h-[4vh]" />
 	{/if}
 </form>
-<div
-	use:portal={'body'}
-	style="height: {$windowHeight}px; width: {$windowWidth}px"
-	class="md:hidden fixed bottom-0 flex flex-col justify-end z-100 overflow-hidden transition {generationSettingsSheet
-		? 'bg-c-barrier/85'
-		: 'pointer-events-none bg-c-barrier/0'}"
->
-	<div
-		use:clickoutside={{
-			callback: () => (generationSettingsSheet = false)
-		}}
-		class="{generationSettingsSheet
-			? 'translate-y-0'
-			: 'translate-y-[calc(100%+2rem)]'} transition {$advancedMode
-			? 'duration-300'
-			: ''} ring-2 ring-c-bg-secondary bg-c-bg w-full flex flex-col relative
-			rounded-t-3xl justify-end overflow-hidden shadow-sheet shadow-c-shadow/[var(--o-shadow-strong)]"
-	>
-		<ScrollAreaWithChevron
-			class="overflow-auto max-h-[70vh] flex flex-col justify-start px-4 pb-[calc(env(safe-area-inset-bottom)+0.5rem)] pt-1"
-		>
-			<div class="w-full flex flex-col">
-				<GenerationSettingsSheet
-					disabled={!generationSettingsSheet || loadingOrSubmitting}
-					bind:generationWidth
-					bind:generationHeight
-					bind:generationGuidanceScale
-					bind:generationInferenceSteps
-					bind:generationSeed
-					bind:negativePromptInputValue
-					{formElement}
-					{isCheckComplete}
-				/>
-			</div>
-		</ScrollAreaWithChevron>
-	</div>
-</div>
+
+<GenerationSettingsSheet
+	disabled={!isGenerationSettingsSheetOpen || loadingOrSubmitting}
+	bind:generationWidth
+	bind:generationHeight
+	bind:generationGuidanceScale
+	bind:generationInferenceSteps
+	bind:generationSeed
+	bind:negativePromptInputValue
+	bind:isGenerationSettingsSheetOpen
+	{formElement}
+	{isCheckComplete}
+/>

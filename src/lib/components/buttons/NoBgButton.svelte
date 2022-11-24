@@ -6,6 +6,7 @@
 	export let prefetch: boolean = false;
 	export let onClick: (() => void) | undefined = undefined;
 	export { classes as class };
+	export let disabled = false;
 	let classes = '';
 </script>
 
@@ -34,6 +35,7 @@
 	<button
 		type="button"
 		on:click={onClick}
+		{disabled}
 		class="max-w-full relative overflow-hidden z-0 text-c-on-bg/50 px-4 py-3.5 -mt-1 font-semibold transition pointer-events-auto 
 		flex items-center gap-1.5 group rounded-xl {!$isTouchscreen ? 'hover:text-c-primary' : ''} {type ===
 		'sm'

@@ -32,7 +32,7 @@
 	};
 </script>
 
-<div class="w-full relative">
+<div class="w-full relative overflow-hidden">
 	<div
 		bind:clientHeight
 		on:scroll={() => {
