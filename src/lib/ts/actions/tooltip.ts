@@ -81,9 +81,15 @@ export function tooltip(
 	let mouseLeaveTimeout: NodeJS.Timeout;
 
 	const addStyles = async () => {
-		const { left: nodeL, top: nodeT, height: nodeH, width: nodeW } = node.getBoundingClientRect();
+		const {
+			left: nodeL,
+			top: nodeT,
+			height: nodeH,
+			width: nodeW,
+			bottom: nodeB
+		} = node.getBoundingClientRect();
 		const { height: indicatorH, width: indicatorW } = indicator.getBoundingClientRect();
-		const { width: containerW } = tooltipContainer.getBoundingClientRect();
+		const { width: containerW, height: containerH } = tooltipContainer.getBoundingClientRect();
 		const scrollY = window.scrollY;
 		tooltipWrapper.style.left = `${nodeL + nodeW / 2 - indicatorW / 2}px`;
 		tooltipWrapper.style.top = `${nodeT + nodeH + scrollY}px`;
@@ -97,6 +103,15 @@ export function tooltip(
 			newMarginLeft = newMarginLeft + (rightDistance - padding);
 		}
 		tooltipContainer.style.marginLeft = `${newMarginLeft}px`;
+		const bottomDistance = window.innerHeight - (nodeB + indicatorH + containerH);
+		if (bottomDistance < padding) {
+			const translateFix = 4;
+			const wrapperNegativeMt = 1;
+			let newMarginTop = -(indicatorH + containerH + nodeH - translateFix) + wrapperNegativeMt;
+			tooltipWrapper.style.marginTop = `${newMarginTop}px`;
+			indicator.style.marginTop = `${containerH - translateFix}px`;
+			indicator.style.zIndex = '1';
+		}
 	};
 
 	const removeStyles = async () => {
@@ -104,6 +119,9 @@ export function tooltip(
 		tooltipWrapper.style.top = '';
 		tooltipContainer.style.marginTop = '';
 		tooltipContainer.style.marginLeft = '';
+		tooltipWrapper.style.marginTop = '';
+		indicator.style.marginTop = '';
+		indicator.style.zIndex = '';
 	};
 
 	const onMouseEnter = async () => {
@@ -207,6 +225,15 @@ function removeClasses(element: HTMLElement, classes?: string) {
 			element.classList.remove(...classesArray);
 		}
 	}
+}
+
+function getTranslateXY(element: HTMLElement) {
+	const style = window.getComputedStyle(element);
+	const matrix = new DOMMatrixReadOnly(style.transform);
+	return {
+		translateX: matrix.m41,
+		translateY: matrix.m42
+	};
 }
 
 export interface TTooltipProps {
