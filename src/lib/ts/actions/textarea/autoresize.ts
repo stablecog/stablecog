@@ -4,6 +4,7 @@ import calculateNodeHeight from './calculateNodeHeight';
 interface TAutoResizeProps {
 	minRows?: number;
 	maxRows?: number;
+	placeholder?: string;
 }
 
 export function autoresize(node: HTMLTextAreaElement, props?: TAutoResizeProps) {
@@ -35,6 +36,9 @@ export function autoresize(node: HTMLTextAreaElement, props?: TAutoResizeProps) 
 			node.removeEventListener('focus', resize);
 			node.removeEventListener('blur', resize);
 			window.removeEventListener('resize', resize);
+		},
+		update(newProps: TAutoResizeProps) {
+			resize();
 		}
 	};
 }

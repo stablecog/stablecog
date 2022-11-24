@@ -249,7 +249,7 @@
 	<div class="w-full flex flex-col md:flex-row gap-3 items-center pb-2 px-4">
 		<div class="w-full flex relative group">
 			<textarea
-				use:autoresize={{ maxRows: 3 }}
+				use:autoresize={{ maxRows: 3, placeholder }}
 				bind:this={promptInputElement}
 				bind:value={promptInputValue}
 				on:keypress={(e) => {

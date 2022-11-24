@@ -8,14 +8,28 @@
 	let classes = 'w-full relative';
 	let container: HTMLDivElement;
 	const showChevronPadding = 12;
+	let showChevron = false;
 
 	$: containerScrollTop = container?.scrollTop;
 	$: containerScrollHeight = container?.scrollHeight;
-	$: showChevron =
-		containerScrollTop !== undefined &&
-		containerScrollHeight !== undefined &&
-		clientHeight !== undefined &&
-		containerScrollHeight - containerScrollTop > clientHeight + showChevronPadding;
+	$: [clientHeight], setContainerValues();
+	$: [containerScrollTop, containerScrollHeight, clientHeight], setShowChevron();
+
+	const setContainerValues = () => {
+		if (container) {
+			containerScrollTop = container.scrollTop;
+			containerScrollHeight = container.scrollHeight;
+		}
+	};
+	const setShowChevron = () => {
+		if (
+			containerScrollHeight !== undefined &&
+			containerScrollTop !== undefined &&
+			clientHeight !== undefined
+		) {
+			showChevron = containerScrollHeight - containerScrollTop - clientHeight > showChevronPadding;
+		}
+	};
 </script>
 
 <div class="w-full relative">
