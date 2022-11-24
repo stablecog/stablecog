@@ -87,11 +87,12 @@ There is a Plausible Analytics script on `src/app.html`. You can remove it or yo
 
 ## Special Thanks
 
-[**Mahdi**](https://twitter.com/MahdiMC) have been contributing by providing two NVIDIA A40s which are being used for the default cog cluster. Thanks to his contributions, thousands of people generated 140K+ images (so far) for free, without seeing any ads or dealing with sign ups.
+[**Mahdi**](https://twitter.com/MahdiMC) has been contributing by providing two NVIDIA A40s which are being used for the default cog cluster. Thanks to his contribution, thousands of people generated 150K+ images (so far) for free, without seeing any ads or dealing with sign ups.
 
 Following people have contributed by translating the app to their language. Thanks to their contributions, billions of people can use the app in their native language:
 
 - [**Arkhath**](https://twitter.com/Arkhath): French
+- [**Behoney**](https://github.com/behoney): Korean
 - [**Chibi**](https://twitter.com/CryptoChibs): Spanish
 - **Mongoose#3074**: Chinese Traditional
 - [**Sebrock**](https://twitter.com/sebrock): German

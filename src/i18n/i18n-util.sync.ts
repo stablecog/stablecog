@@ -10,6 +10,7 @@ import en from './en'
 import es from './es'
 import fr from './fr'
 import hi from './hi'
+import ko from './ko'
 import ru from './ru'
 import tr from './tr'
 import zh_Hans from './zh-Hans'
@@ -20,6 +21,7 @@ const localeTranslations = {
 	es,
 	fr,
 	hi,
+	ko,
 	ru,
 	tr,
 	'zh-Hans': zh_Hans,
