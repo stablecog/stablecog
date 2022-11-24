@@ -42,8 +42,8 @@ const ko: BaseTranslation = {
 		}
 	},
 	History: {
-		GenerationsTitle: '생성한 이미지들',
-		GenerationsMaxSavedCountWarning: '최대 {count:number}개 까지',
+		GenerationsTitle: '생성한 이미지',
+		GenerationsMaxSavedCountWarning: '최대 {count:number}개',
 		NoGenerationsYet: '아직 생성한 이미지가 없어요.'
 	},
 	Live: {
@@ -97,9 +97,9 @@ const ko: BaseTranslation = {
 		CopyNegativePromptButton: '미포함 문구 복사하기',
 		CopiedButtonState: '복사 완료!',
 		RerollButton: '다시하기',
-		RegenerateButton: '재생성하기',
-		GenerateButton: '생성하기',
-		UpscaleButton: '화질 개선하기',
+		RegenerateButton: '다시 생성하기',
+		GenerateButton: '나도 생성해보기',
+		UpscaleButton: '고화질 이미지로 만들기',
 		UpscaleTabBar: {
 			UpscaledTitle: '고화질',
 			OriginalTitle: '원본'
