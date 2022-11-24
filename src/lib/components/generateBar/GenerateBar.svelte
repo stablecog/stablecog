@@ -378,8 +378,8 @@
 			? 'translate-y-0'
 			: 'translate-y-[calc(100%+2rem)]'} transition {$advancedMode
 			? 'duration-300'
-			: ''} border-2 border-c-bg-secondary bg-c-bg w-full flex flex-col relative
-			rounded-t-2xl justify-end overflow-hidden shadow-sheet shadow-c-shadow/[var(--o-shadow-strong)]"
+			: ''} ring-2 ring-c-bg-secondary bg-c-bg w-full flex flex-col relative
+			rounded-t-3xl justify-end overflow-hidden shadow-sheet shadow-c-shadow/[var(--o-shadow-strong)]"
 	>
 		<ScrollAreaWithChevron
 			class="overflow-auto max-h-[70vh] flex flex-col justify-start px-4 pb-[calc(env(safe-area-inset-bottom)+0.5rem)] pt-1"
