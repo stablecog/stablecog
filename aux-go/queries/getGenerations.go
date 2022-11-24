@@ -5,11 +5,10 @@ import (
 
 	"github.com/supabase/postgrest-go"
 	shared "github.com/yekta/stablecog/aux-go/shared"
-	structs "github.com/yekta/stablecog/aux-go/structs"
 )
 
-func GetGenerations(limit int) []structs.SDBGeneration {
-	var generations []structs.SDBGeneration
+func GetGenerations(limit int) []shared.SDBGeneration {
+	var generations []shared.SDBGeneration
 	_, err := shared.Supabase.From("generation").
 		Select("status,created_at", "", false).Limit(limit, "").
 		Order("created_at", &postgrest.OrderOpts{Ascending: false}).

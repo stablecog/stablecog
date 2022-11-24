@@ -8,7 +8,8 @@ import (
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/cors"
 	"github.com/robfig/cron/v3"
-	"github.com/yekta/stablecog/aux-go/health"
+	scCron "github.com/yekta/stablecog/aux-go/cron"
+	"github.com/yekta/stablecog/aux-go/handlers"
 )
 
 func main() {
@@ -19,10 +20,12 @@ func main() {
 	app.Use(cors)
 
 	cron := cron.New()
-	cron.AddFunc("@every 15s", health.CheckAndNotify)
+	cron.AddFunc("@every 15s", scCron.CheckHealthAndNotify)
 	cron.Start()
 
-	go health.CheckAndNotify()
+	go scCron.CheckHealthAndNotify()
+
+	app.Get("/generate", handlers.Generate)
 
 	log.Fatal(app.Listen(fmt.Sprintf(":%d", *serverPort)))
 }
