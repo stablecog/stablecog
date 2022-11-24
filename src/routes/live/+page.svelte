@@ -30,7 +30,7 @@
 
 	$: [generations, upscales], setGenerationsAndUpscales();
 
-	const maxLengthGenerationAndUpscales = 100;
+	const maxLengthGenerationsAndUpscales = 50;
 	const msForEachDifference = 50;
 	const maxDuration = 500;
 	let generationTotalCount = tweened(0, {
@@ -66,7 +66,7 @@
 		const all = [...generations, ...upscales];
 		const allSorted = all
 			.sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime())
-			.slice(0, maxLengthGenerationAndUpscales);
+			.slice(0, maxLengthGenerationsAndUpscales);
 		generationsAndUpscales = [...allSorted];
 	}
 
