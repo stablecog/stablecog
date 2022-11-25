@@ -513,13 +513,13 @@
 									)}
 									state={imageDownloading ? 'success' : 'idle'}
 								>
-									<Morpher morph={imageDownloading}>
+									<Morpher morphed={imageDownloading}>
 										<div slot="item-0" class="flex items-center justify-center gap-1.5">
 											<IconDownload class="w-5 h-5 -ml-0.5" />
 											<p>{$LL.GenerationFullscreen.DownloadButton()}</p>
 										</div>
 										<div slot="item-1" class="flex items-center justify-center gap-1.5">
-											<IconTick class="w-5 h-5 -ml-0.5 scale-110" />
+											<IconTick class="w-5 h-5 -ml-0.5 transform scale-110" />
 											<p>{$LL.GenerationFullscreen.DoneButtonState()}</p>
 										</div>
 									</Morpher>
@@ -533,14 +533,14 @@
 									</SubtleButton>
 									<SubtleButton prefetch={true} href={regenerateUrl}>
 										<div class="flex items-center justify-center gap-1.5">
-											<IconRefresh class="w-5 h-5 -ml-0.5 scale-110" />
+											<IconRefresh class="w-5 h-5 -ml-0.5" />
 											<p>{$LL.GenerationFullscreen.RegenerateButton()}</p>
 										</div>
 									</SubtleButton>
 								{/if}
 								<div use:copy={generation.prompt} on:svelte-copy={onPromptCopied}>
 									<SubtleButton state={promptCopied ? 'success' : 'idle'}>
-										<Morpher morph={promptCopied}>
+										<Morpher morphed={promptCopied}>
 											<div slot="item-0" class="flex items-center justify-center gap-1.5">
 												<IconCopy class="w-5 h-5 -ml-0.5" />
 												<p>{$LL.GenerationFullscreen.CopyPromptButton()}</p>
@@ -558,7 +558,7 @@
 										on:svelte-copy={onNegativePromptCopied}
 									>
 										<SubtleButton state={negativePromptCopied ? 'success' : 'idle'}>
-											<Morpher morph={negativePromptCopied}>
+											<Morpher morphed={negativePromptCopied}>
 												<div slot="item-0" class="flex items-center justify-center gap-1.5">
 													<IconCopy class="w-5 h-5 -ml-0.5" />
 													<p>{$LL.GenerationFullscreen.CopyNegativePromptButton()}</p>
@@ -582,7 +582,7 @@
 											disabled={deleteStatus === 'loading'}
 											onClick={() => deleteGeneration(generation.id)}
 										>
-											<Morpher morph={deleteStatus === 'should-confirm'}>
+											<Morpher morphed={deleteStatus === 'should-confirm'}>
 												<div
 													slot="item-0"
 													class="flex items-center justify-center gap-1.5 text-c-danger"

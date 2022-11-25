@@ -50,12 +50,12 @@
 			</div>
 			<div use:copy={String(generation.seed)} on:svelte-copy={onSeedCopied}>
 				<SubtleButton noPadding class="p-2.5" state={seedCopied ? 'success' : 'idle'}>
-					<Morpher morph={seedCopied}>
+					<Morpher morphed={seedCopied}>
 						<div slot="item-0" class="flex items-center justify-center gap-1.5">
 							<IconCopy class="w-5 h-5" />
 						</div>
 						<div slot="item-1" class="flex items-center justify-center gap-1.5">
-							<IconTick class="w-5 h-5 scale-150" />
+							<IconTick class="w-8 h-8" />
 						</div>
 					</Morpher>
 				</SubtleButton>

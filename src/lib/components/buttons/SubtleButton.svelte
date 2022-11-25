@@ -38,7 +38,12 @@
 					: ''} {loading ? 'translate-x-[-45%]' : ''}"
 			/>
 		</div>
-		<div class="relative flex items-center justify-center text-center">
+		<div
+			class="relative flex items-center justify-center text-center transition-none {state ===
+			'success'
+				? 'text-c-on-primary'
+				: 'text-c-on-bg'}"
+		>
 			<slot />
 		</div>
 	</a>
@@ -48,8 +53,8 @@
 		on:click={onClick}
 		disabled={disabled || loading}
 		class="{state === 'success'
-			? 'bg-c-success ring-c-success text-c-on-primary'
-			: 'bg-c-bg-secondary ring-c-bg-tertiary text-c-on-bg'} {noPadding
+			? 'bg-c-success ring-c-success'
+			: 'bg-c-bg-secondary ring-c-bg-tertiary'} {noPadding
 			? ''
 			: 'px-3 py-2.5'} shadow-lg shadow-c-shadow/[var(--o-shadow-strong)]
     	rounded-lg font-bold transition text-xs ring-2 relative overflow-hidden z-0 group {classes}"
@@ -63,7 +68,12 @@
 					: ''} {loading ? 'translate-x-[-45%]' : ''}"
 			/>
 		</div>
-		<div class="relative flex items-center justify-center text-center">
+		<div
+			class="relative flex items-center justify-center text-center transition-none {state ===
+			'success'
+				? 'text-c-on-primary'
+				: 'text-c-on-bg'}"
+		>
 			<slot />
 		</div>
 	</button>

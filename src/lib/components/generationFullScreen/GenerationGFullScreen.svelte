@@ -291,7 +291,7 @@
 								</SubtleButton>
 								<div use:copy={generation.prompt.text} on:svelte-copy={onPromptCopied}>
 									<SubtleButton state={promptCopied ? 'success' : 'idle'}>
-										<Morpher morph={promptCopied}>
+										<Morpher morphed={promptCopied}>
 											<div slot="item-0" class="flex items-center justify-center gap-1.5">
 												<IconCopy class="w-5 h-5 -ml-0.5" />
 												<p>{$LL.GenerationFullscreen.CopyPromptButton()}</p>
@@ -309,7 +309,7 @@
 										on:svelte-copy={onNegativePromptCopied}
 									>
 										<SubtleButton state={negativePromptCopied ? 'success' : 'idle'}>
-											<Morpher morph={negativePromptCopied}>
+											<Morpher morphed={negativePromptCopied}>
 												<div slot="item-0" class="flex items-center justify-center gap-1.5">
 													<IconCopy class="w-5 h-5 -ml-0.5" />
 													<p>{$LL.GenerationFullscreen.CopyNegativePromptButton()}</p>
@@ -327,7 +327,7 @@
 									on:svelte-copy={onLinkCopied}
 								>
 									<SubtleButton state={linkCopied ? 'success' : 'idle'}>
-										<Morpher morph={linkCopied}>
+										<Morpher morphed={linkCopied}>
 											<div slot="item-0" class="flex items-center justify-center gap-1.5">
 												<IconLink class="w-5 h-5 -ml-0.5" />
 												<p>{$LL.Shared.CopyLinkButton()}</p>
