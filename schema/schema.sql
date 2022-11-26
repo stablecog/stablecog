@@ -531,18 +531,10 @@ CREATE TABLE "negative_prompt_g" (
     PRIMARY KEY(id)
 );
 
-CREATE TABLE "model_g" (
-    "name" TEXT NOT NULL UNIQUE,
-    "id" UUID NOT NULL DEFAULT uuid_generate_v4(),
-    "created_at" TIMESTAMPTZ DEFAULT TIMEZONE('utc' :: TEXT, NOW()) NOT NULL,
-    "updated_at" TIMESTAMPTZ DEFAULT TIMEZONE('utc' :: TEXT, NOW()) NOT NULL,
-    PRIMARY KEY(id)
-);
-
 CREATE TABLE "generation_g" (
     "prompt_id" UUID REFERENCES prompt_g(id) NOT NULL,
     "negative_prompt_id" UUID REFERENCES negative_prompt_g(id),
-    "model_id" UUID REFERENCES model_g(id) NOT NULL,
+    "model_id" UUID REFERENCES model(id) NOT NULL,
     "image_id" TEXT NOT NULL,
     "width" INTEGER NOT NULL,
     "height" INTEGER NOT NULL,
@@ -567,10 +559,6 @@ UPDATE
 CREATE trigger handle_updated_at before
 UPDATE
     ON negative_prompt_g FOR each ROW EXECUTE PROCEDURE moddatetime (updated_at);
-
-CREATE trigger handle_updated_at before
-UPDATE
-    ON model_g FOR each ROW EXECUTE PROCEDURE moddatetime (updated_at);
 
 CREATE
 OR REPLACE FUNCTION prune_prompt_g_and_negative_prompt_g() RETURNS trigger AS $ $ BEGIN
@@ -613,9 +601,6 @@ ALTER TABLE
 ALTER TABLE
     negative_prompt_g ENABLE ROW LEVEL SECURITY;
 
-ALTER TABLE
-    model_g ENABLE ROW LEVEL SECURITY;
-
 CREATE POLICY "Admins can edit generation_g" ON public.generation_g FOR ALL USING (
     auth.uid() IN (
         SELECT
@@ -643,7 +628,7 @@ CREATE POLICY "Admins can edit negative prompts" ON public.negative_prompt_g FOR
     )
 );
 
-CREATE POLICY "Admins can edit models" ON public.model_g FOR ALL USING (
+CREATE POLICY "Admins can edit models" ON public.model FOR ALL USING (
     auth.uid() IN (
         SELECT
             id

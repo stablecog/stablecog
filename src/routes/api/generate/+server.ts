@@ -156,10 +156,11 @@ export const POST: RequestHandler = async ({ request }) => {
 		});
 		// If Supabase is enabled, update the generation with prompt, negative prompt, duration and status
 		if (output && !isNSFW && !data.error && supabaseAdmin !== undefined) {
+			let negative_prompt_id: string | undefined;
+			let prompt_id: string | undefined;
 			try {
 				const startTimestamp = Date.now();
 				// Check if the prompt exists in the DB already
-				let prompt_id: string | undefined;
 				let { data: promptData, error: promptErr } = await supabaseAdmin
 					.from('prompt')
 					.select('id')
@@ -184,8 +185,6 @@ export const POST: RequestHandler = async ({ request }) => {
 						prompt_id = newPromptData?.id;
 					}
 				}
-				// Check if the negative prompt exists in the DB already
-				let negative_prompt_id: string | undefined;
 				if (isValue(negative_prompt)) {
 					let { data: negativePromptData, error: negativePromptErr } = await supabaseAdmin
 						.from('negative_prompt')
@@ -247,13 +246,13 @@ export const POST: RequestHandler = async ({ request }) => {
 			} catch (error) {
 				console.log(error);
 			}
-			if (shouldSubmitToGallery) {
+			if (shouldSubmitToGallery && prompt_id) {
 				try {
 					await uploadToGallery({
 						imageDataB64: output,
-						prompt,
+						prompt_id,
+						negative_prompt_id,
 						model_id,
-						negative_prompt,
 						inference_steps: num_inference_steps,
 						guidance_scale,
 						seed,
