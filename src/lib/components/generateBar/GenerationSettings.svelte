@@ -1,6 +1,7 @@
 <script lang="ts">
 	import IconAdvanced from '$components/icons/IconAdvanced.svelte';
 	import IconAdvancedOutline from '$components/icons/IconAdvancedOutline.svelte';
+	import IconBrain from '$components/icons/IconBrain.svelte';
 	import IconChatBubbleCancel from '$components/icons/IconChatBubbleCancel.svelte';
 	import IconHeight from '$components/icons/IconHeight.svelte';
 	import IconScale from '$components/icons/IconScale.svelte';
@@ -8,18 +9,21 @@
 	import IconSteps from '$components/icons/IconSteps.svelte';
 	import IconWidth from '$components/icons/IconWidth.svelte';
 	import TabBar from '$components/TabBar.svelte';
+	import TabLikeDropdown from '$components/TabLikeDropdown.svelte';
 	import TabLikeInput from '$components/TabLikeInput.svelte';
 	import TabLikeRangeInput from '$components/TabLikeRangeInput.svelte';
 	import LL from '$i18n/i18n-svelte';
 	import { tooltip } from '$ts/actions/tooltip';
 	import {
+		availableModelIdDropdownItems,
 		guidanceScaleMax,
 		guidanceScaleMin,
 		heightTabs,
 		inferenceStepsTabs,
 		maxPromptLength,
 		maxSeed,
-		widthTabs
+		widthTabs,
+		type TAvailableModelIds
 	} from '$ts/constants/main';
 	import {
 		guidanceScaleTooltip,
@@ -37,10 +41,13 @@
 	export let generationInferenceSteps: string;
 	export let generationGuidanceScale: number;
 	export let generationSeed: number | undefined;
+	export let generationModelId: TAvailableModelIds;
 	export let negativePromptInputValue: string | undefined;
 	export let isCheckComplete: boolean;
 	export let formElement: HTMLFormElement;
 	export let disabled = false;
+
+	$: console.log(generationModelId);
 </script>
 
 <div class="w-full flex flex-wrap items-start justify-center px-2px py-4 gap-4">
@@ -49,7 +56,7 @@
 		class="w-full md:w-84 max-w-full"
 		tabs={widthTabs}
 		bind:value={generationWidth}
-		name="width"
+		name="Width"
 		hideSelected={!isCheckComplete}
 	>
 		<div
@@ -65,7 +72,7 @@
 		class="w-full md:w-84 max-w-full"
 		tabs={heightTabs}
 		bind:value={generationHeight}
-		name="height"
+		name="Height"
 		hideSelected={!isCheckComplete}
 	>
 		<div
@@ -76,13 +83,28 @@
 			<IconHeight class="w-6 h-6 text-c-on-bg/25" />
 		</div>
 	</TabBar>
+	<TabLikeDropdown
+		{disabled}
+		class="w-full md:w-84 max-w-full"
+		bind:value={generationModelId}
+		items={availableModelIdDropdownItems}
+		name="Model"
+	>
+		<div
+			slot="title"
+			use:tooltip={$heightTooltip}
+			class="py-2 px-4 flex items-center justify-center"
+		>
+			<IconBrain class="w-6 h-6 text-c-on-bg/25" />
+		</div>
+	</TabLikeDropdown>
 	{#if $advancedMode}
 		<TabBar
 			{disabled}
 			class="w-full md:w-84 max-w-full"
 			tabs={inferenceStepsTabs}
 			bind:value={generationInferenceSteps}
-			name="steps"
+			name="Steps"
 			hideSelected={!isCheckComplete}
 		>
 			<div

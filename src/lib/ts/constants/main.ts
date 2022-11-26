@@ -60,6 +60,10 @@ export interface TGuidanceScaleTab extends TTab {
 	value: number;
 }
 
+export interface TModelIdDropdownItem extends TTab {
+	value: TAvailableModelIds;
+}
+
 export type TAvailableModelIds =
 	| '048b4aa3-5586-47ed-900f-f4341c96bdb2'
 	| '8acfe4c8-751d-4aa6-8c3c-844e3ef478e0';
@@ -67,6 +71,11 @@ export type TAvailableModelIds =
 export const availableModelIds: TAvailableModelIds[] = [
 	'048b4aa3-5586-47ed-900f-f4341c96bdb2',
 	'8acfe4c8-751d-4aa6-8c3c-844e3ef478e0'
+];
+
+export const availableModelIdDropdownItems: TModelIdDropdownItem[] = [
+	{ label: 'General', value: '048b4aa3-5586-47ed-900f-f4341c96bdb2' },
+	{ label: 'Artistic 3D', value: '8acfe4c8-751d-4aa6-8c3c-844e3ef478e0' }
 ];
 
 export const modelIdToCogModelName: Record<TAvailableModelIds, string> = {
