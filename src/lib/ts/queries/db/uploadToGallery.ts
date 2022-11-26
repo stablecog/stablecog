@@ -4,13 +4,13 @@ import { v4 as uuid } from 'uuid';
 import { formatPrompt } from '$ts/helpers/formatPrompt';
 import { supabaseAdmin } from '$ts/constants/supabaseAdmin';
 import { s3 } from '$ts/constants/s3';
-
-const model_id = '048b4aa3-5586-47ed-900f-f4341c96bdb2';
+import type { TAvailableModelIds } from '$ts/constants/main';
 
 export async function uploadToGallery({
 	imageDataB64,
 	prompt,
 	negative_prompt,
+	model_id,
 	seed,
 	inference_steps,
 	guidance_scale,
@@ -117,13 +117,13 @@ export async function uploadToGallery({
 			{
 				image_id,
 				width: metadata.width,
-				height: metadata.height,
-				prompt_id,
 				negative_prompt_id,
+				prompt_id,
+				model_id,
+				height: metadata.height,
 				seed,
 				inference_steps,
 				guidance_scale,
-				model_id,
 				hidden
 			}
 		])
@@ -147,6 +147,7 @@ interface TUploadToGalleryRequest {
 	imageDataB64: string;
 	prompt: string;
 	negative_prompt?: string;
+	model_id: TAvailableModelIds;
 	seed: number;
 	inference_steps: number;
 	guidance_scale: number;

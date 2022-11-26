@@ -1,4 +1,4 @@
-import { maxSeed, modelIdDefault } from '$ts/constants/main';
+import { maxSeed, modelIdDefault, modelIdToCogModelName } from '$ts/constants/main';
 import { supabaseAdmin } from '$ts/constants/supabaseAdmin';
 import { formatPrompt } from '$ts/helpers/formatPrompt';
 import { getDeviceInfo } from '$ts/helpers/getDeviceInfo';
@@ -117,6 +117,7 @@ export const POST: RequestHandler = async ({ request }) => {
 				input: {
 					prompt,
 					negative_prompt,
+					model: modelIdToCogModelName[model_id],
 					width: width.toString(),
 					height: height.toString(),
 					seed: seed.toString(),
@@ -251,6 +252,7 @@ export const POST: RequestHandler = async ({ request }) => {
 					await uploadToGallery({
 						imageDataB64: output,
 						prompt,
+						model_id,
 						negative_prompt,
 						inference_steps: num_inference_steps,
 						guidance_scale,

@@ -69,4 +69,9 @@ export const availableModelIds: TAvailableModelIds[] = [
 	'8acfe4c8-751d-4aa6-8c3c-844e3ef478e0'
 ];
 
+export const modelIdToCogModelName: Record<TAvailableModelIds, string> = {
+	'048b4aa3-5586-47ed-900f-f4341c96bdb2': 'Stable Diffusion v1.5',
+	'8acfe4c8-751d-4aa6-8c3c-844e3ef478e0': 'Openjourney'
+};
+
 export const modelIdDefault = '048b4aa3-5586-47ed-900f-f4341c96bdb2';
