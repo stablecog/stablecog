@@ -1,4 +1,12 @@
-import { maxSeed, modelIdDefault, modelIdToCogModelName } from '$ts/constants/main';
+import {
+	maxSeed,
+	modelIdDefault,
+	modelIdToCogModelName,
+	schedulerIdDefault,
+	schedulerIdToCogSchedulerName,
+	type TAvailableModelId,
+	type TAvailableSchedulerId
+} from '$ts/constants/main';
 import { supabaseAdmin } from '$ts/constants/supabaseAdmin';
 import { formatPrompt } from '$ts/helpers/formatPrompt';
 import { getDeviceInfo } from '$ts/helpers/getDeviceInfo';
@@ -22,6 +30,7 @@ export const POST: RequestHandler = async ({ request }) => {
 		prompt,
 		negative_prompt,
 		model_id = modelIdDefault,
+		scheduler_id = schedulerIdDefault,
 		seed = Math.round(Math.random() * maxSeed),
 		width = 512,
 		height = 512,
@@ -56,6 +65,8 @@ export const POST: RequestHandler = async ({ request }) => {
 			text: 'Started generation',
 			prompt: sliced_prompt,
 			negative_prompt: sliced_negative_prompt,
+			model_id,
+			scheduler_id,
 			width,
 			height,
 			num_inference_steps,
@@ -72,6 +83,7 @@ export const POST: RequestHandler = async ({ request }) => {
 					.insert({
 						status: 'started',
 						model_id,
+						scheduler_id,
 						seed,
 						width,
 						height,
@@ -95,6 +107,8 @@ export const POST: RequestHandler = async ({ request }) => {
 						text: `Inserted into the DB in: ${(endTimestamp - startTimestamp) / 1000}s`,
 						prompt: sliced_prompt,
 						negative_prompt: sliced_negative_prompt,
+						model_id,
+						scheduler_id,
 						width,
 						height,
 						num_inference_steps,
@@ -118,6 +132,7 @@ export const POST: RequestHandler = async ({ request }) => {
 					prompt,
 					negative_prompt,
 					model: modelIdToCogModelName[model_id],
+					scheduler_id: schedulerIdToCogSchedulerName[scheduler_id],
 					width: width.toString(),
 					height: height.toString(),
 					seed: seed.toString(),
@@ -147,6 +162,8 @@ export const POST: RequestHandler = async ({ request }) => {
 			text: `Ended generation in ${(endTimestamp - startTimestamp) / 1000}s`,
 			prompt: sliced_prompt,
 			negative_prompt: sliced_negative_prompt,
+			model_id,
+			scheduler_id,
 			width,
 			height,
 			num_inference_steps,
@@ -235,6 +252,8 @@ export const POST: RequestHandler = async ({ request }) => {
 						}s`,
 						prompt: sliced_prompt,
 						negative_prompt: sliced_negative_prompt,
+						model_id,
+						scheduler_id,
 						width,
 						height,
 						num_inference_steps,
@@ -285,6 +304,8 @@ export const POST: RequestHandler = async ({ request }) => {
 						}s`,
 						prompt: sliced_prompt,
 						negative_prompt: sliced_negative_prompt,
+						model_id,
+						scheduler_id,
 						width,
 						height,
 						num_inference_steps,
@@ -338,6 +359,8 @@ export const POST: RequestHandler = async ({ request }) => {
 						}s`,
 						prompt: sliced_prompt,
 						negative_prompt: sliced_negative_prompt,
+						model_id,
+						scheduler_id,
 						width,
 						height,
 						num_inference_steps,
@@ -396,6 +419,8 @@ function generationLog({
 	text,
 	prompt,
 	negative_prompt,
+	model_id,
+	scheduler_id,
 	width,
 	height,
 	num_inference_steps,
@@ -406,6 +431,8 @@ function generationLog({
 	text: string;
 	prompt: string;
 	negative_prompt: string | undefined;
+	model_id: TAvailableModelId;
+	scheduler_id: TAvailableSchedulerId;
 	width: number;
 	height: number;
 	num_inference_steps: number;
@@ -419,6 +446,10 @@ function generationLog({
 		'--',
 		`"${prompt}"`,
 		`--${negative_prompt ? ` "${negative_prompt}" --` : ''}`,
+		`${modelIdToCogModelName[model_id]}`,
+		'--',
+		`${schedulerIdToCogSchedulerName[scheduler_id]}`,
+		'--',
 		width,
 		'--',
 		height,

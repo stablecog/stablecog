@@ -60,18 +60,28 @@ export interface TGuidanceScaleTab extends TTab {
 	value: number;
 }
 
-export type TAvailableModelIds =
-	| '048b4aa3-5586-47ed-900f-f4341c96bdb2'
-	| '8acfe4c8-751d-4aa6-8c3c-844e3ef478e0';
-
-export const availableModelIds: TAvailableModelIds[] = [
+export const availableModelIds = [
 	'048b4aa3-5586-47ed-900f-f4341c96bdb2',
 	'8acfe4c8-751d-4aa6-8c3c-844e3ef478e0'
-];
-
-export const modelIdToCogModelName: Record<TAvailableModelIds, string> = {
+] as const;
+export type TAvailableModelId = typeof availableModelIds[number];
+export const modelIdToCogModelName: Record<TAvailableModelId, string> = {
 	'048b4aa3-5586-47ed-900f-f4341c96bdb2': 'Stable Diffusion v1.5',
 	'8acfe4c8-751d-4aa6-8c3c-844e3ef478e0': 'Openjourney'
 };
+export const modelIdDefault: TAvailableModelId = '048b4aa3-5586-47ed-900f-f4341c96bdb2';
 
-export const modelIdDefault = '048b4aa3-5586-47ed-900f-f4341c96bdb2';
+export const availableSchedulerIds = [
+	'55027f8b-f046-4e71-bc51-53d5448661e0',
+	'82cf78dd-6afb-48cc-aca6-14224cca6950',
+	'6fb13b76-9900-4fa4-abf8-8f843e034a7f',
+	'af2679a4-dbbb-4950-8c06-c3bb15416ef6'
+] as const;
+export type TAvailableSchedulerId = typeof availableSchedulerIds[number];
+export const schedulerIdToCogSchedulerName: Record<TAvailableSchedulerId, string> = {
+	'55027f8b-f046-4e71-bc51-53d5448661e0': 'K_LMS',
+	'82cf78dd-6afb-48cc-aca6-14224cca6950': 'DDIM',
+	'6fb13b76-9900-4fa4-abf8-8f843e034a7f': 'K_EULER',
+	'af2679a4-dbbb-4950-8c06-c3bb15416ef6': 'K_EULER_ANCESTRAL'
+};
+export const schedulerIdDefault: TAvailableSchedulerId = '55027f8b-f046-4e71-bc51-53d5448661e0';

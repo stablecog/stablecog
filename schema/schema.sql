@@ -6,7 +6,8 @@ CREATE TYPE generation_status_enum AS ENUM ('started', 'succeeded', 'failed', 'r
 CREATE TABLE "generation" (
     "prompt_id" UUID REFERENCES prompt(id),
     "negative_prompt_id" UUID REFERENCES negative_prompt(id),
-    "model_id" UUID REFERENCES model(id),
+    "model_id" UUID REFERENCES model(id) NOT NULL,
+    "scheduler_id" UUID REFERENCES scheduler(id) NOT NULL,
     "width" INTEGER NOT NULL,
     "height" INTEGER NOT NULL,
     "seed" BIGINT NOT NULL,
@@ -77,6 +78,21 @@ UPDATE
 
 ALTER TABLE
     model ENABLE ROW LEVEL SECURITY;
+
+CREATE TABLE "scheduler" (
+    "name" TEXT NOT NULL UNIQUE,
+    "id" UUID NOT NULL DEFAULT uuid_generate_v4(),
+    "created_at" TIMESTAMPTZ DEFAULT TIMEZONE('utc' :: TEXT, NOW()) NOT NULL,
+    "updated_at" TIMESTAMPTZ DEFAULT TIMEZONE('utc' :: TEXT, NOW()) NOT NULL,
+    PRIMARY KEY(id)
+);
+
+CREATE trigger handle_updated_at before
+UPDATE
+    ON scheduler FOR each ROW EXECUTE PROCEDURE moddatetime (updated_at);
+
+ALTER TABLE
+    scheduler ENABLE ROW LEVEL SECURITY;
 
 -- Upscale Table
 CREATE TYPE upscale_status_enum AS ENUM ('started', 'succeeded', 'failed');
@@ -519,6 +535,7 @@ CREATE TABLE "generation_g" (
     "prompt_id" UUID REFERENCES prompt(id) NOT NULL,
     "negative_prompt_id" UUID REFERENCES negative_prompt(id),
     "model_id" UUID REFERENCES model(id) NOT NULL,
+    "scheduler_id" UUID REFERENCES scheduler(id) NOT NULL,
     "image_id" TEXT NOT NULL,
     "width" INTEGER NOT NULL,
     "height" INTEGER NOT NULL,
