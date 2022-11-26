@@ -59,3 +59,14 @@ export interface TInferenceStepsTab extends TTab {
 export interface TGuidanceScaleTab extends TTab {
 	value: number;
 }
+
+export type TAvailableModelIds =
+	| '048b4aa3-5586-47ed-900f-f4341c96bdb2'
+	| '8acfe4c8-751d-4aa6-8c3c-844e3ef478e0';
+
+export const availableModelIds: TAvailableModelIds[] = [
+	'048b4aa3-5586-47ed-900f-f4341c96bdb2',
+	'8acfe4c8-751d-4aa6-8c3c-844e3ef478e0'
+];
+
+export const modelIdDefault = '048b4aa3-5586-47ed-900f-f4341c96bdb2';

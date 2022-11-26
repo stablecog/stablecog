@@ -6,6 +6,7 @@ CREATE TYPE generation_status_enum AS ENUM ('started', 'succeeded', 'failed', 'r
 CREATE TABLE "generation" (
     "prompt_id" UUID REFERENCES prompt(id),
     "negative_prompt_id" UUID REFERENCES negative_prompt(id),
+    "model_id" UUID REFERENCES model(id),
     "width" INTEGER NOT NULL,
     "height" INTEGER NOT NULL,
     "seed" BIGINT NOT NULL,
@@ -61,6 +62,21 @@ UPDATE
 
 ALTER TABLE
     negative_prompt ENABLE ROW LEVEL SECURITY;
+
+CREATE TABLE "model" (
+    "name" TEXT NOT NULL UNIQUE,
+    "id" UUID NOT NULL DEFAULT uuid_generate_v4(),
+    "created_at" TIMESTAMPTZ DEFAULT TIMEZONE('utc' :: TEXT, NOW()) NOT NULL,
+    "updated_at" TIMESTAMPTZ DEFAULT TIMEZONE('utc' :: TEXT, NOW()) NOT NULL,
+    PRIMARY KEY(id)
+);
+
+CREATE trigger handle_updated_at before
+UPDATE
+    ON model FOR each ROW EXECUTE PROCEDURE moddatetime (updated_at);
+
+ALTER TABLE
+    model ENABLE ROW LEVEL SECURITY;
 
 -- Upscale Table
 CREATE TYPE upscale_status_enum AS ENUM ('started', 'succeeded', 'failed');
@@ -555,6 +571,38 @@ UPDATE
 CREATE trigger handle_updated_at before
 UPDATE
     ON model_g FOR each ROW EXECUTE PROCEDURE moddatetime (updated_at);
+
+CREATE
+OR REPLACE FUNCTION prune_prompt_g_and_negative_prompt_g() RETURNS trigger AS $ $ BEGIN
+DELETE FROM
+    prompt_g
+WHERE
+    id NOT IN (
+        SELECT
+            prompt_id
+        FROM
+            generation_g
+    );
+
+DELETE FROM
+    negative_prompt_g
+WHERE
+    id NOT IN (
+        SELECT
+            negative_prompt_id
+        FROM
+            generation_g
+    );
+
+RETURN NULL;
+
+END;
+
+$ $ language plpgsql SECURITY DEFINER;
+
+CREATE trigger generation_g_deleted_prune
+AFTER
+    DELETE ON generation_g FOR EACH STATEMENT EXECUTE PROCEDURE prune_prompt_g_and_negative_prompt_g();
 
 ALTER TABLE
     generation_g ENABLE ROW LEVEL SECURITY;

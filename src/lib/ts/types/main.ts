@@ -1,3 +1,4 @@
+import type { TAvailableModelIds } from '$ts/constants/main';
 import type { TDBGenerationG } from '$ts/types/db';
 
 export type TStatus = 'idle' | 'loading' | 'success' | 'error';
@@ -27,6 +28,7 @@ export interface TGenerationRequest {
 	server_url: string;
 	prompt: string;
 	negative_prompt?: string;
+	model_id?: TAvailableModelIds;
 	width?: number;
 	height?: number;
 	seed?: number;

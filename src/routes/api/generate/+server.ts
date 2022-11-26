@@ -1,4 +1,4 @@
-import { maxSeed } from '$ts/constants/main';
+import { maxSeed, modelIdDefault } from '$ts/constants/main';
 import { supabaseAdmin } from '$ts/constants/supabaseAdmin';
 import { formatPrompt } from '$ts/helpers/formatPrompt';
 import { getDeviceInfo } from '$ts/helpers/getDeviceInfo';
@@ -21,6 +21,7 @@ export const POST: RequestHandler = async ({ request }) => {
 		server_url,
 		prompt,
 		negative_prompt,
+		model_id = modelIdDefault,
 		seed = Math.round(Math.random() * maxSeed),
 		width = 512,
 		height = 512,
@@ -70,6 +71,7 @@ export const POST: RequestHandler = async ({ request }) => {
 					.from('generation')
 					.insert({
 						status: 'started',
+						model_id,
 						seed,
 						width,
 						height,
