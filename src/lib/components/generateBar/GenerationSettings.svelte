@@ -195,10 +195,10 @@
 	<div class="w-full flex items-center justify-center order-last">
 		<NoBgButton onClick={() => advancedMode.set(!$advancedMode)}>
 			<div
-				class="max-w-full min-w-0 overflow-hidden flex items-center gap-2 text-sm transition-none"
+				class="max-w-full min-w-0 overflow-hidden flex items-center gap-2 text-sm transition-none px-1"
 			>
 				<div
-					class="w-5 h-5 flex-shrink-0 transform transition {$advancedMode
+					class="-ml-1 w-5 h-5 flex-shrink-0 transform transition {$advancedMode
 						? 'rotate-180'
 						: 'rotate-0'}"
 				>
