@@ -13,16 +13,31 @@
 		inferenceStepsDefault,
 		inferenceStepsTabs,
 		maxPromptLength,
+		modelIdDefault,
+		schedulerIdDefault,
 		widthDefault,
 		widthTabs
 	} from '$ts/constants/main';
 	import { formatPrompt } from '$ts/helpers/formatPrompt';
-	import { guidanceScale } from '$ts/stores/guidanceScale';
-	import { imageSize } from '$ts/stores/imageSize';
-	import { inferenceSteps } from '$ts/stores/inferenceSteps';
-	import { isTouchscreen } from '$ts/stores/isTouchscreen';
-	import { negativePrompt, prompt } from '$ts/stores/prompt';
-	import { seed } from '$ts/stores/seed';
+	import {
+		guidanceScale,
+		imageSize,
+		inferenceSteps,
+		negativePrompt,
+		prompt,
+		seed,
+		modelId,
+		schedulerId,
+		generationWidth,
+		generationHeight,
+		generationInferenceSteps,
+		generationGuidanceScale,
+		generationModelId,
+		generationSchedulerId,
+		generationSeed,
+		promptInputValue,
+		negativePromptInputValue
+	} from '$ts/stores/generationSettings';
 	import type { TStatus } from '$ts/types/main';
 	import { onMount, tick } from 'svelte';
 	import LL, { locale } from '$i18n/i18n-svelte';
@@ -31,29 +46,9 @@
 	import GenerationSettings from '$components/generateBar/GenerationSettings.svelte';
 	import NoBgButton from '$components/buttons/NoBgButton.svelte';
 	import IconGenerationSettings from '$components/icons/IconGenerationSettings.svelte';
+	import { isTouchscreen } from '$ts/stores/isTouchscreen';
 
 	export let serverData: THomePageData;
-	export let generationWidth =
-		isValue(serverData.width) && serverData.width !== null ? serverData.width : widthDefault;
-	export let generationHeight =
-		isValue(serverData.height) && serverData.height !== null && serverData
-			? serverData.height
-			: heightDefault;
-	export let generationInferenceSteps =
-		isValue(serverData.num_inference_steps) && serverData.num_inference_steps !== null
-			? inferenceStepsTabs
-					.map((i) => i.value)
-					.findIndex((i) => i === serverData.num_inference_steps) >= 0
-				? serverData.num_inference_steps
-				: inferenceStepsTabs[inferenceStepsTabs.length - 1].value
-			: inferenceStepsDefault;
-	export let generationGuidanceScale =
-		isValue(serverData.guidance_scale) && serverData.guidance_scale !== null
-			? serverData.guidance_scale
-			: guidanceScaleDefault;
-	export let generationSeed: number | undefined;
-	export let promptInputValue: string | undefined;
-	export let negativePromptInputValue: string | undefined;
 	export let onCreate: () => Promise<void>;
 	export let status: TStatus;
 	export let startTimestamp: number | undefined;
@@ -61,13 +56,46 @@
 	export { classes as class };
 	let classes = '';
 
-	if (isValue(serverData.seed) && serverData.seed !== null) {
-		generationSeed = serverData.seed;
-	} else if (isValue(serverData.prompt)) {
-		generationSeed = undefined;
-	}
-	if (serverData.prompt !== null) promptInputValue = serverData.prompt;
-	if (serverData.negative_prompt !== null) negativePromptInputValue = serverData.negative_prompt;
+	promptInputValue.set(serverData.prompt !== null ? serverData.prompt : undefined);
+	negativePromptInputValue.set(
+		serverData.negative_prompt !== null ? serverData.negative_prompt : undefined
+	);
+	generationWidth.set(
+		isValue(serverData.width) && serverData.width !== null ? serverData.width : widthDefault
+	);
+	generationHeight.set(
+		isValue(serverData.height) && serverData.height !== null && serverData
+			? serverData.height
+			: heightDefault
+	);
+	generationInferenceSteps.set(
+		isValue(serverData.num_inference_steps) && serverData.num_inference_steps !== null
+			? inferenceStepsTabs
+					.map((i) => i.value)
+					.findIndex((i) => i === serverData.num_inference_steps) >= 0
+				? serverData.num_inference_steps
+				: inferenceStepsTabs[inferenceStepsTabs.length - 1].value
+			: inferenceStepsDefault
+	);
+	generationGuidanceScale.set(
+		isValue(serverData.guidance_scale) && serverData.guidance_scale !== null
+			? serverData.guidance_scale
+			: guidanceScaleDefault
+	);
+	generationModelId.set(
+		isValue(serverData.model_id) && serverData.model_id !== null
+			? serverData.model_id
+			: modelIdDefault
+	);
+	generationSchedulerId.set(
+		isValue(serverData.scheduler_id) && serverData.scheduler_id !== null
+			? serverData.scheduler_id
+			: schedulerIdDefault
+	);
+
+	generationSeed.set(
+		isValue(serverData.seed) && serverData.seed !== null ? serverData.seed : undefined
+	);
 
 	let submitting = false;
 	$: placeholder = $LL.Home.PromptInput.Placeholder();
@@ -94,20 +122,20 @@
 	}
 
 	async function onSubmit() {
-		if (promptInputValue) {
-			promptInputValue = formatPrompt(promptInputValue);
+		if ($promptInputValue) {
+			promptInputValue.set(formatPrompt($promptInputValue));
 		}
-		if (negativePromptInputValue) {
-			negativePromptInputValue = formatPrompt(negativePromptInputValue);
+		if ($negativePromptInputValue) {
+			negativePromptInputValue.set(formatPrompt($negativePromptInputValue));
 		}
 		promptInputElement.scrollTo(0, 0);
 		promptInputElement.blur();
 		setTimeout(async () => {
 			submitting = true;
-			if (!promptInputValue) {
+			if (!$promptInputValue) {
 				await new Promise((resolve) => setTimeout(resolve, 75));
 				await tick();
-				promptInputValue = placeholder;
+				promptInputValue.set(placeholder);
 			}
 			await onCreate();
 			submitting = false;
@@ -116,40 +144,42 @@
 
 	let isCheckComplete = false;
 
-	$: [generationWidth, generationHeight], setLocalImageSize();
-	$: [generationInferenceSteps], setLocalInferenceSteps();
-	$: [generationGuidanceScale], setLocalGuidanceScale();
-	$: [generationSeed], setLocalSeed();
-	$: [promptInputValue], setLocalPrompt();
-	$: [negativePromptInputValue], setLocalNegativePrompt();
+	$: [$generationWidth, $generationHeight], setLocalImageSize();
+	$: [$generationInferenceSteps], setLocalInferenceSteps();
+	$: [$generationGuidanceScale], setLocalGuidanceScale();
+	$: [$generationSeed], setLocalSeed();
+	$: [$promptInputValue], setLocalPrompt();
+	$: [$negativePromptInputValue], setLocalNegativePrompt();
+	$: [$generationModelId], setLocalModelId();
+	$: [$generationSchedulerId], setLocalSchedulerId();
 	$: showClearPromptInputButton =
-		promptInputValue !== undefined && promptInputValue !== '' && !loadingOrSubmitting;
+		$promptInputValue !== undefined && $promptInputValue !== '' && !loadingOrSubmitting;
 
 	const setLocalImageSize = () => {
 		if (isCheckComplete) {
 			imageSize.set({
-				width: generationWidth,
-				height: generationHeight
+				width: $generationWidth,
+				height: $generationHeight
 			});
 		}
 	};
 
 	const setLocalInferenceSteps = () => {
 		if (isCheckComplete) {
-			inferenceSteps.set(generationInferenceSteps);
+			inferenceSteps.set($generationInferenceSteps);
 		}
 	};
 
 	const setLocalGuidanceScale = () => {
 		if (isCheckComplete) {
-			guidanceScale.set(Math.round(generationGuidanceScale));
+			guidanceScale.set(Math.round($generationGuidanceScale));
 		}
 	};
 
 	const setLocalSeed = () => {
 		if (isCheckComplete) {
-			if (generationSeed !== undefined && generationSeed !== null) {
-				seed.set(parseInt(generationSeed.toString()));
+			if ($generationSeed !== undefined && $generationSeed !== null) {
+				seed.set(parseInt($generationSeed.toString()));
 			} else {
 				localStorage.removeItem('seed');
 			}
@@ -158,22 +188,36 @@
 
 	const setLocalPrompt = () => {
 		if (isCheckComplete) {
-			prompt.set(promptInputValue !== '' && promptInputValue !== undefined ? promptInputValue : '');
+			prompt.set(
+				$promptInputValue !== '' && $promptInputValue !== undefined ? $promptInputValue : ''
+			);
 		}
 	};
 
 	const setLocalNegativePrompt = () => {
 		if (isCheckComplete) {
 			negativePrompt.set(
-				negativePromptInputValue !== '' && negativePromptInputValue !== undefined
-					? negativePromptInputValue
+				$negativePromptInputValue !== '' && $negativePromptInputValue !== undefined
+					? $negativePromptInputValue
 					: ''
 			);
 		}
 	};
 
+	const setLocalModelId = () => {
+		if (isCheckComplete) {
+			modelId.set($generationModelId);
+		}
+	};
+
+	const setLocalSchedulerId = () => {
+		if (isCheckComplete) {
+			schedulerId.set($generationSchedulerId);
+		}
+	};
+
 	const clearPrompt = () => {
-		promptInputValue = '';
+		promptInputValue.set('');
 		promptInputElement.value = '';
 		promptInputElement.blur();
 		promptInputElement.focus();
@@ -185,20 +229,20 @@
 			const widthIndex = widthTabs
 				.map((w) => w.value)
 				.findIndex((i) => i === $imageSize?.width?.toString());
-			if (widthIndex >= 0) generationWidth = widthTabs[widthIndex].value;
+			if (widthIndex >= 0) generationWidth.set(widthTabs[widthIndex].value);
 		}
 		if (!isValue(serverData.height)) {
 			const heightIndex = heightTabs
 				.map((h) => h.value)
 				.findIndex((i) => i === $imageSize?.height?.toString());
-			if (heightIndex >= 0) generationHeight = heightTabs[heightIndex].value;
+			if (heightIndex >= 0) generationHeight.set(heightTabs[heightIndex].value);
 		}
 		if (!isValue(serverData.num_inference_steps)) {
 			const inferenceStepsIndex = inferenceStepsTabs
 				.map((i) => i.value)
 				.findIndex((i) => i === $inferenceSteps?.toString());
 			if (inferenceStepsIndex >= 0) {
-				generationInferenceSteps = inferenceStepsTabs[inferenceStepsIndex].value;
+				generationInferenceSteps.set(inferenceStepsTabs[inferenceStepsIndex].value);
 			}
 		}
 		if (
@@ -206,7 +250,7 @@
 			$guidanceScale >= guidanceScaleMin &&
 			$guidanceScale <= guidanceScaleMax
 		) {
-			generationGuidanceScale = $guidanceScale;
+			generationGuidanceScale.set($guidanceScale);
 		}
 		if (
 			!isValue(serverData.seed) &&
@@ -214,17 +258,24 @@
 			$seed !== undefined &&
 			$seed !== null
 		) {
-			generationSeed = $seed;
+			generationSeed.set($seed);
 		}
-		if (!isValue(serverData.prompt) && isValue($prompt)) {
-			promptInputValue = $prompt;
+		if (!isValue(serverData.prompt) && isValue($prompt) && $prompt !== null) {
+			promptInputValue.set($prompt);
 		}
 		if (
 			!isValue(serverData.negative_prompt) &&
 			!isValue(serverData.prompt) &&
-			isValue($negativePrompt)
+			isValue($negativePrompt) &&
+			$negativePrompt !== null
 		) {
-			negativePromptInputValue = $negativePrompt;
+			negativePromptInputValue.set($negativePrompt);
+		}
+		if (!isValue(serverData.model_id) && isValue($modelId)) {
+			generationModelId.set($modelId);
+		}
+		if (!isValue(serverData.scheduler_id) && isValue($schedulerId)) {
+			generationSchedulerId.set($schedulerId);
 		}
 		isCheckComplete = true;
 	});
@@ -242,7 +293,7 @@
 			<textarea
 				use:autoresize={{ maxRows: 3, placeholder }}
 				bind:this={promptInputElement}
-				bind:value={promptInputValue}
+				bind:value={$promptInputValue}
 				on:keypress={(e) => {
 					if (e.key === 'Enter') {
 						e.preventDefault();
@@ -251,11 +302,11 @@
 				}}
 				on:input={() => {
 					if (
-						promptInputValue !== undefined &&
-						promptInputValue !== null &&
-						promptInputValue.length > maxPromptLength
+						$promptInputValue !== undefined &&
+						$promptInputValue !== null &&
+						$promptInputValue.length > maxPromptLength
 					) {
-						promptInputValue = promptInputValue.slice(0, maxPromptLength);
+						promptInputValue.set($promptInputValue.slice(0, maxPromptLength));
 					}
 				}}
 				disabled={loadingOrSubmitting || !isCheckComplete}
@@ -320,21 +371,11 @@
 	<!-- Tab bars -->
 	{#if status !== 'loading'}
 		<div
-			class="w-full flex flex-col justify-start items-center overflow-hidden px-4"
+			class="w-full flex flex-col justify-start items-center px-4"
 			transition:expandCollapse|local={{ duration: 300 }}
 		>
 			<div class="w-full hidden md:flex flex-col justify-start">
-				<GenerationSettings
-					disabled={loadingOrSubmitting}
-					bind:generationWidth
-					bind:generationHeight
-					bind:generationGuidanceScale
-					bind:generationInferenceSteps
-					bind:generationSeed
-					bind:negativePromptInputValue
-					{formElement}
-					{isCheckComplete}
-				/>
+				<GenerationSettings disabled={loadingOrSubmitting} {formElement} {isCheckComplete} />
 			</div>
 			<div class="w-full flex flex-col md:hidden justify-start pt-2 items-center relative">
 				<NoBgButton
@@ -360,12 +401,6 @@
 
 <GenerationSettingsSheet
 	disabled={!isGenerationSettingsSheetOpen || loadingOrSubmitting}
-	bind:generationWidth
-	bind:generationHeight
-	bind:generationGuidanceScale
-	bind:generationInferenceSteps
-	bind:generationSeed
-	bind:negativePromptInputValue
 	bind:isGenerationSettingsSheetOpen
 	{formElement}
 	{isCheckComplete}

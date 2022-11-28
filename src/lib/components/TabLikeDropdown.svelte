@@ -1,26 +1,45 @@
 <script lang="ts">
+	import IconChevronDown from '$components/icons/IconChevronDown.svelte';
 	import TabBarWrapper from '$components/TabBarWrapper.svelte';
 	import { clickoutside } from '$ts/actions/clickoutside';
+	import { isTouchscreen } from '$ts/stores/isTouchscreen';
+	import { windowHeight, windowWidth } from '$ts/stores/window';
 	import type { TTab } from '$ts/types/main';
 
-	export let items: TTab[];
+	type T = $$Generic;
+	export let value: T;
+	export let items: TTab<T>[];
 	export let name: string;
-	export let selectedItem = items[0];
-	export let value = selectedItem.value;
 	export let hasTitle = true;
 	export let dontScale = false;
 	export let disabled = false;
+	export let bottomMinDistance = 80;
+	export let dropdownClass = '';
 	export { classes as class };
 	let classes = '';
 
 	let isDropdownOpen = false;
-
+	$: selectedItem = items.find((item) => item.value === value);
 	const toggleDropdown = () => (isDropdownOpen = !isDropdownOpen);
 
-	$: value = selectedItem.value;
+	let dropdownWrapper: HTMLDivElement;
+	let dropdownPlacement: 'top' | 'bottom' = 'bottom';
+	let dropdownHeight: number;
+	$: [$windowWidth, $windowHeight], setDropdownWrapperTop();
+
+	function setDropdownWrapperTop() {
+		if (!dropdownWrapper || !$windowHeight || !$windowWidth) return;
+		const { top, width } = dropdownWrapper.getBoundingClientRect();
+		if (width === 0 && top === 0) return;
+		if (top + dropdownHeight + bottomMinDistance > $windowHeight) {
+			dropdownPlacement = 'top';
+		} else {
+			dropdownPlacement = 'bottom';
+		}
+	}
 </script>
 
-<TabBarWrapper class={classes} {dontScale}>
+<TabBarWrapper class="{classes} {isDropdownOpen ? 'z-20' : 'z-10'} relative" {dontScale}>
 	{#if hasTitle}
 		<div class="self-stretch flex text-c-on-bg/30">
 			<slot name="title" />
@@ -32,45 +51,116 @@
 	>
 		<button
 			{disabled}
-			on:click={toggleDropdown}
-			class="flex-1 ring-2 ring-c-bg-secondary text-left flex items-center justify-start min-w-0 px-4 py-4 relative 
-				group bg-c-bg {isDropdownOpen ? 'z-50 rounded-tr-xl' : 'rounded-r-xl'}"
+			on:click={() => {
+				setDropdownWrapperTop();
+				toggleDropdown();
+			}}
+			class="flex-1 ring-2 text-left flex items-center justify-between min-w-0 px-4 py-3.25 md:py-3.5 relative 
+				group transition-all duration-150 z-30 {isDropdownOpen
+				? dropdownPlacement === 'top'
+					? 'rounded-br-xl bg-c-bg-secondary ring-c-bg-tertiary'
+					: 'rounded-tr-xl bg-c-bg-secondary ring-c-bg-tertiary'
+				: 'rounded-r-xl bg-c-bg ring-c-bg-secondary'}"
 			type="button"
 			aria-label={name}
 		>
-			<p
-				class="w-full text-base font-medium relative transition overflow-hidden overflow-ellipsis 
-					max-w-full z-0 text-c-on-bg/75"
+			<div
+				class="w-full h-full absolute left-0 top-0 overflow-hidden z-0 transition-all duration-150 {isDropdownOpen
+					? dropdownPlacement === 'top'
+						? 'rounded-br-xl'
+						: 'rounded-tr-xl'
+					: 'rounded-r-xl'}"
 			>
-				{selectedItem.label}
-			</p>
-		</button>
-		<div class="w-full relative">
-			{#if isDropdownOpen}
-				<div
-					class="w-full flex flex-col absolute top-0 left-0 z-40 bg-c-bg rounded-b-xl shadow-sheet
-						shadow-c-shadow/[var(--o-shadow-strongest)] ring-2 ring-c-bg-secondary"
-				>
-					{#each items.filter((i) => i.value !== value) as item}
-						<button
-							{disabled}
-							on:click={() => {
-								selectedItem = item;
-								isDropdownOpen = false;
-							}}
-							class="w-full text-left flex items-center justify-start min-w-0 px-4 py-4 relative rounded-lg group"
-							type="button"
-							aria-label={item.label}
-						>
-							<p
-								class="w-full text-base font-medium relative transition overflow-hidden overflow-ellipsis max-w-full z-0 text-c-on-bg/75"
-							>
-								{item.label}
-							</p>
-						</button>
-					{/each}
+				<div class="w-[200%] h-full absolute left-0 top-0 flex items-center justify-center">
+					<div
+						class="w-full aspect-square origin-left rounded-full transition transform -translate-x-full opacity-0
+							bg-c-primary/10 {!$isTouchscreen ? 'group-hover:translate-x-[-45%] group-hover:opacity-100' : ''}"
+					/>
 				</div>
-			{/if}
+			</div>
+			<p
+				class="flex-shrink whitespace-nowrap overflow-hidden overflow-ellipsis text-base font-medium relative transition
+					max-w-full z-0 text-c-on-bg/75 {!$isTouchscreen ? 'group-hover:text-c-primary' : ''}"
+			>
+				{selectedItem?.label}
+			</p>
+			<div class="flex-shrink-0 w-5 h-5 transition {isDropdownOpen ? 'rotate-180' : 'rotate-0'}">
+				<IconChevronDown
+					class="relative w-full h-full transition text-c-on-bg/25 {!$isTouchscreen
+						? 'group-hover:text-c-primary'
+						: ''}"
+				/>
+			</div>
+		</button>
+		<div bind:this={dropdownWrapper} class="w-full" />
+		<div
+			class="w-full flex flex-col justify-start relative {dropdownPlacement === 'top'
+				? 'order-first'
+				: ''}"
+		>
+			<div
+				style="transform: translateY(-{dropdownPlacement === 'top'
+					? dropdownHeight
+					: 0}px); height: {dropdownHeight}px;"
+				class="w-full absolute left-0 top-0 flex flex-col {dropdownPlacement === 'top'
+					? 'justify-end'
+					: 'justify-start'} {!isDropdownOpen ? 'pointer-events-none' : ''}"
+			>
+				<div
+					style="height: {isDropdownOpen ? dropdownHeight : '0'}px"
+					class="w-full flex flex-col overflow-hidden bg-c-bg-secondary shadow-sheet transition-all 
+					shadow-c-shadow/[var(--o-shadow-stronger)] ring-2 ring-c-bg-tertiary {dropdownPlacement === 'top'
+						? 'rounded-t-xl origin-bottom justify-end'
+						: 'rounded-b-xl origin-top justify-start'} {isDropdownOpen
+						? 'opacity-100'
+						: 'opacity-0'}"
+				>
+					<div
+						bind:clientHeight={dropdownHeight}
+						class="w-full flex flex-col justify-start relative z-20 {dropdownClass}"
+					>
+						<div class="w-full flex flex-col overflow-auto">
+							{#each items.filter((i) => i.value !== value) as item, index (item.value)}
+								<button
+									disabled={disabled || !isDropdownOpen}
+									on:click={() => {
+										isDropdownOpen = false;
+										setTimeout(() => {
+											value = item.value;
+										}, 100);
+									}}
+									class="w-full text-left flex items-center justify-start min-w-0 px-4 py-3.25 md:py-3.5 relative z-0 group
+									{index === items.filter((i) => i.value !== value).length - 1 ? 'rounded-b-lg' : ''}"
+									type="button"
+									aria-label={item.label}
+								>
+									<div
+										class="w-full h-full absolute left-0 top-0 overflow-hidden z-0 {index ===
+										items.filter((i) => i.value !== value).length - 1
+											? 'rounded-b-lg'
+											: ''}"
+									>
+										<div
+											class="w-[200%] h-full absolute left-0 top-0 flex items-center justify-center"
+										>
+											<div
+												class="w-full aspect-square origin-left rounded-full transition transform -translate-x-full opacity-0
+													bg-c-primary/10 {!$isTouchscreen ? 'group-hover:translate-x-[-45%] group-hover:opacity-100' : ''}"
+											/>
+										</div>
+									</div>
+									<p
+										class="flex-shrink whitespace-nowrap overflow-hidden overflow-ellipsis text-base font-medium relative transition
+										max-w-full z-0 text-c-on-bg/75 {!$isTouchscreen ? 'group-hover:text-c-primary' : ''}"
+									>
+										{item.label}
+									</p>
+								</button>
+							{/each}
+						</div>
+					</div>
+				</div>
+			</div>
 		</div>
 	</div>
 </TabBarWrapper>

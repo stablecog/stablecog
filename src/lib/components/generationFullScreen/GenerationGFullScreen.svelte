@@ -30,7 +30,7 @@
 	import IconWand from '$components/icons/IconWand.svelte';
 	import type { TGenerationGAdmin, TGenerationGWithLoaded } from '$ts/types/main';
 	import LL from '$i18n/i18n-svelte';
-	import { negativePromptTooltipAlt } from '$ts/constants/tooltip';
+	import { negativePromptTooltipAlt } from '$ts/constants/tooltips';
 	import { page } from '$app/stores';
 	import IconLink from '$components/icons/IconLink.svelte';
 	import { generationGPreviewUrlFromId } from '$ts/helpers/generationGPreviewUrlFromId';
@@ -75,6 +75,8 @@
 		generateUrl = getGenerationUrlFromParams({
 			prompt: generation.prompt.text,
 			negative_prompt: generation.negative_prompt?.text ?? undefined,
+			model_id: generation.model?.id ?? undefined,
+			scheduler_id: generation.scheduler?.id ?? undefined,
 			guidance_scale: generation.guidance_scale,
 			num_inference_steps: generation.inference_steps ?? undefined,
 			height: generation.height,

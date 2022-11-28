@@ -33,6 +33,15 @@ const zhHans: BaseTranslation = {
 			Placeholder: '种子编号',
 			Paragraph: '获得可重复的结果。含有结合相同提示和选项的种子会生成相同的图像。'
 		},
+		ModelDropdown: {
+			Title: 'Model',
+			Paragraph: 'The AI Model that will be used to generate the image.'
+		},
+		SchedulerDropdown: {
+			Title: 'Scheduler',
+			Paragraph:
+				'Diffuse the image in a certain way. It can drastically change the generated image. Some require less steps to produce good results.'
+		},
 		SubmitToGalleryQuestion: {
 			Title: '是否要将生成的图像提交到图库？',
 			Paragraph: '您可以稍后从设置中更改您的偏好。'
@@ -85,6 +94,10 @@ const zhHans: BaseTranslation = {
 		SwitchServerButton: '切换服务器',
 		SubmitToGalleryToggle: '提交到图库',
 		AdvancedModeToggle: '进阶模式',
+		AdvancedOptionsDropdown: 'Advanced Options',
+		AdvancedDropdown: 'Advanced',
+		GenerationSettingsButton: 'Generation Settings',
+		GenerationSettingsTitle: 'Generation Settings',
 		DarkModeToggle: '深色模式'
 	},
 	GenerationFullscreen: {
@@ -151,7 +164,27 @@ const zhHans: BaseTranslation = {
 		},
 		PasswordInput: {
 			Placeholder: '密码'
-		}
+		},
+		ModelOptions: {
+			'048b4aa3-5586-47ed-900f-f4341c96bdb2': {
+				realName: 'Stable Diffusion 1.5',
+				simpleName: 'General'
+			},
+			'8acfe4c8-751d-4aa6-8c3c-844e3ef478e0': {
+				realName: 'Openjourney',
+				simpleName: '3D Digital Art'
+			},
+			'36d9d835-646f-4fc7-b9fe-98654464bf8e': {
+				realName: 'Arcane Diffusion',
+				simpleName: '3D Comic'
+			},
+			'48a7031d-43b6-4a23-9f8c-8020eb6862e4': { realName: 'Ghibli Diffusion', simpleName: 'Anime' },
+			'790c80e1-65b1-4556-9332-196344389572': {
+				realName: 'Mo-Di Diffusion',
+				simpleName: 'Animated Movie'
+			}
+		},
+		UnknownTitle: 'Unknown'
 	},
 	Error: {
 		SomethingWentWrong: '出了问题:(',

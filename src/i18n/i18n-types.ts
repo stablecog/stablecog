@@ -104,6 +104,26 @@ type RootTranslation = {
 			 */
 			Paragraph: string
 		}
+		ModelDropdown: {
+			/**
+			 * M​o​d​e​l
+			 */
+			Title: string
+			/**
+			 * T​h​e​ ​A​I​ ​M​o​d​e​l​ ​t​h​a​t​ ​w​i​l​l​ ​b​e​ ​u​s​e​d​ ​t​o​ ​g​e​n​e​r​a​t​e​ ​t​h​e​ ​i​m​a​g​e​.
+			 */
+			Paragraph: string
+		}
+		SchedulerDropdown: {
+			/**
+			 * S​c​h​e​d​u​l​e​r
+			 */
+			Title: string
+			/**
+			 * D​i​f​f​u​s​e​ ​t​h​e​ ​i​m​a​g​e​ ​i​n​ ​a​ ​c​e​r​t​a​i​n​ ​w​a​y​.​ ​I​t​ ​c​a​n​ ​d​r​a​s​t​i​c​a​l​l​y​ ​c​h​a​n​g​e​ ​t​h​e​ ​g​e​n​e​r​a​t​e​d​ ​i​m​a​g​e​.​ ​S​o​m​e​ ​r​e​q​u​i​r​e​ ​l​e​s​s​ ​s​t​e​p​s​ ​t​o​ ​p​r​o​d​u​c​e​ ​g​o​o​d​ ​r​e​s​u​l​t​s​.
+			 */
+			Paragraph: string
+		}
 		SubmitToGalleryQuestion: {
 			/**
 			 * S​u​b​m​i​t​ ​g​e​n​e​r​a​t​i​o​n​s​ ​t​o​ ​t​h​e​ ​g​a​l​l​e​r​y​?
@@ -259,6 +279,22 @@ type RootTranslation = {
 		 * A​d​v​a​n​c​e​d​ ​M​o​d​e
 		 */
 		AdvancedModeToggle: string
+		/**
+		 * A​d​v​a​n​c​e​d​ ​O​p​t​i​o​n​s
+		 */
+		AdvancedOptionsDropdown: string
+		/**
+		 * A​d​v​a​n​c​e​d
+		 */
+		AdvancedDropdown: string
+		/**
+		 * G​e​n​e​r​a​t​i​o​n​ ​S​e​t​t​i​n​g​s
+		 */
+		GenerationSettingsButton: string
+		/**
+		 * G​e​n​e​r​a​t​i​o​n​ ​S​e​t​t​i​n​g​s
+		 */
+		GenerationSettingsTitle: string
 		/**
 		 * D​a​r​k​ ​M​o​d​e
 		 */
@@ -463,6 +499,62 @@ type RootTranslation = {
 			 */
 			Placeholder: string
 		}
+		ModelOptions: {
+			'048b4aa3-5586-47ed-900f-f4341c96bdb2': {
+				/**
+				 * S​t​a​b​l​e​ ​D​i​f​f​u​s​i​o​n​ ​1​.​5
+				 */
+				realName: string
+				/**
+				 * G​e​n​e​r​a​l
+				 */
+				simpleName: string
+			}
+			'8acfe4c8-751d-4aa6-8c3c-844e3ef478e0': {
+				/**
+				 * O​p​e​n​j​o​u​r​n​e​y
+				 */
+				realName: string
+				/**
+				 * 3​D​ ​D​i​g​i​t​a​l​ ​A​r​t
+				 */
+				simpleName: string
+			}
+			'36d9d835-646f-4fc7-b9fe-98654464bf8e': {
+				/**
+				 * A​r​c​a​n​e​ ​D​i​f​f​u​s​i​o​n
+				 */
+				realName: string
+				/**
+				 * 3​D​ ​C​o​m​i​c
+				 */
+				simpleName: string
+			}
+			'48a7031d-43b6-4a23-9f8c-8020eb6862e4': {
+				/**
+				 * G​h​i​b​l​i​ ​D​i​f​f​u​s​i​o​n
+				 */
+				realName: string
+				/**
+				 * A​n​i​m​e
+				 */
+				simpleName: string
+			}
+			'790c80e1-65b1-4556-9332-196344389572': {
+				/**
+				 * M​o​-​D​i​ ​D​i​f​f​u​s​i​o​n
+				 */
+				realName: string
+				/**
+				 * A​n​i​m​a​t​e​d​ ​M​o​v​i​e
+				 */
+				simpleName: string
+			}
+		}
+		/**
+		 * U​n​k​n​o​w​n
+		 */
+		UnknownTitle: string
 	}
 	Error: {
 		/**
@@ -599,6 +691,26 @@ export type TranslationFunctions = {
 			Placeholder: () => LocalizedString
 			/**
 			 * Get repeatable results. A seed combined with the same prompt and options generates the same image.
+			 */
+			Paragraph: () => LocalizedString
+		}
+		ModelDropdown: {
+			/**
+			 * Model
+			 */
+			Title: () => LocalizedString
+			/**
+			 * The AI Model that will be used to generate the image.
+			 */
+			Paragraph: () => LocalizedString
+		}
+		SchedulerDropdown: {
+			/**
+			 * Scheduler
+			 */
+			Title: () => LocalizedString
+			/**
+			 * Diffuse the image in a certain way. It can drastically change the generated image. Some require less steps to produce good results.
 			 */
 			Paragraph: () => LocalizedString
 		}
@@ -756,6 +868,22 @@ export type TranslationFunctions = {
 		 * Advanced Mode
 		 */
 		AdvancedModeToggle: () => LocalizedString
+		/**
+		 * Advanced Options
+		 */
+		AdvancedOptionsDropdown: () => LocalizedString
+		/**
+		 * Advanced
+		 */
+		AdvancedDropdown: () => LocalizedString
+		/**
+		 * Generation Settings
+		 */
+		GenerationSettingsButton: () => LocalizedString
+		/**
+		 * Generation Settings
+		 */
+		GenerationSettingsTitle: () => LocalizedString
 		/**
 		 * Dark Mode
 		 */
@@ -958,6 +1086,62 @@ export type TranslationFunctions = {
 			 */
 			Placeholder: () => LocalizedString
 		}
+		ModelOptions: {
+			'048b4aa3-5586-47ed-900f-f4341c96bdb2': {
+				/**
+				 * Stable Diffusion 1.5
+				 */
+				realName: () => LocalizedString
+				/**
+				 * General
+				 */
+				simpleName: () => LocalizedString
+			}
+			'8acfe4c8-751d-4aa6-8c3c-844e3ef478e0': {
+				/**
+				 * Openjourney
+				 */
+				realName: () => LocalizedString
+				/**
+				 * 3D Digital Art
+				 */
+				simpleName: () => LocalizedString
+			}
+			'36d9d835-646f-4fc7-b9fe-98654464bf8e': {
+				/**
+				 * Arcane Diffusion
+				 */
+				realName: () => LocalizedString
+				/**
+				 * 3D Comic
+				 */
+				simpleName: () => LocalizedString
+			}
+			'48a7031d-43b6-4a23-9f8c-8020eb6862e4': {
+				/**
+				 * Ghibli Diffusion
+				 */
+				realName: () => LocalizedString
+				/**
+				 * Anime
+				 */
+				simpleName: () => LocalizedString
+			}
+			'790c80e1-65b1-4556-9332-196344389572': {
+				/**
+				 * Mo-Di Diffusion
+				 */
+				realName: () => LocalizedString
+				/**
+				 * Animated Movie
+				 */
+				simpleName: () => LocalizedString
+			}
+		}
+		/**
+		 * Unknown
+		 */
+		UnknownTitle: () => LocalizedString
 	}
 	Error: {
 		/**

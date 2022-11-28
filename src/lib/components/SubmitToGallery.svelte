@@ -8,7 +8,7 @@
 
 <div
 	transition:expandCollapse|local={{ duration: 300 }}
-	class="w-full flex flex-col justify-start relative overflow-hidden z-0"
+	class="w-full flex flex-col justify-start relative"
 >
 	<div class="w-full flex items-center justify-center py-4 px-4">
 		<div
@@ -30,9 +30,9 @@
 						pLogSubmitToGallery('On');
 						uLogSubmitToGallery('On');
 					}}
-					class="flex-1 text-c-success"
+					class="flex-1"
 				>
-					<p class="py-1">{$LL.Shared.YesButton()}</p>
+					<p class="py-1 text-c-success">{$LL.Shared.YesButton()}</p>
 				</SubtleButton>
 				<SubtleButton
 					onClick={() => {
@@ -40,9 +40,9 @@
 						pLogSubmitToGallery('Off');
 						uLogSubmitToGallery('Off');
 					}}
-					class="flex-1 text-c-danger"
+					class="flex-1"
 				>
-					<p class="py-1">{$LL.Shared.NoButton()}</p>
+					<p class="py-1 text-c-danger">{$LL.Shared.NoButton()}</p>
 				</SubtleButton>
 			</div>
 		</div>

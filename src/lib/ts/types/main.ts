@@ -1,4 +1,4 @@
-import type { TAvailableModelIds } from '$ts/constants/main';
+import type { TAvailableModelId, TAvailableSchedulerId } from '$ts/constants/main';
 import type { TDBGenerationG } from '$ts/types/db';
 
 export type TStatus = 'idle' | 'loading' | 'success' | 'error';
@@ -6,6 +6,8 @@ export type TStatus = 'idle' | 'loading' | 'success' | 'error';
 export interface TGenerationBase {
 	prompt: string;
 	negative_prompt?: string;
+	model_id?: TAvailableModelId;
+	scheduler_id?: TAvailableSchedulerId;
 	width: number;
 	height: number;
 	seed: number;
@@ -28,7 +30,8 @@ export interface TGenerationRequest {
 	server_url: string;
 	prompt: string;
 	negative_prompt?: string;
-	model_id?: TAvailableModelIds;
+	model_id?: TAvailableModelId;
+	scheduler_id?: TAvailableSchedulerId;
 	width?: number;
 	height?: number;
 	seed?: number;
@@ -72,9 +75,9 @@ export type TUpscaleType =
 	| 'Color Image Denoising'
 	| 'JPEG Compression Artifact Reduction';
 
-export interface TTab {
+export interface TTab<T> {
 	label: string;
-	value: string | number;
+	value: T;
 }
 
 export type TServerFeatures = 'negative_prompt' | 'upscale';

@@ -21,11 +21,13 @@
 	class="transition rounded-lg group-1 {classes}"
 	href={getGenerationUrlFromParams({
 		prompt: generation.prompt.text,
+		negative_prompt: generation.negative_prompt?.text ?? undefined,
+		model_id: generation.model?.id ?? undefined,
+		scheduler_id: generation.scheduler?.id ?? undefined,
 		num_inference_steps: generation.inference_steps ?? undefined,
 		guidance_scale: generation.guidance_scale ?? undefined,
 		width: generation.width,
-		height: generation.height,
-		negative_prompt: generation.negative_prompt?.text ?? undefined
+		height: generation.height
 	})}
 >
 	<div class="p-2.5 rounded-full bg-c-bg relative overflow-hidden z-0">

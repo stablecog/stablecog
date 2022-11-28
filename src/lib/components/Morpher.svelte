@@ -1,7 +1,4 @@
 <script lang="ts">
-	import { quadOut } from 'svelte/easing';
-	import { scale } from 'svelte/transition';
-
 	export let morphed = false;
 	export { classes as class };
 	let classes = '';

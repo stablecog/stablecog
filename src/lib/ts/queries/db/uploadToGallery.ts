@@ -1,16 +1,16 @@
 import sharp from 'sharp';
 
 import { v4 as uuid } from 'uuid';
-import { formatPrompt } from '$ts/helpers/formatPrompt';
 import { supabaseAdmin } from '$ts/constants/supabaseAdmin';
 import { s3 } from '$ts/constants/s3';
-import type { TAvailableModelIds } from '$ts/constants/main';
+import type { TAvailableModelId, TAvailableSchedulerId } from '$ts/constants/main';
 
 export async function uploadToGallery({
 	imageDataB64,
-	prompt,
-	negative_prompt,
+	prompt_id,
+	negative_prompt_id,
 	model_id,
+	scheduler_id,
 	seed,
 	inference_steps,
 	guidance_scale,
@@ -21,74 +21,10 @@ export async function uploadToGallery({
 		console.log('Invalid image');
 		return;
 	}
-	if (!prompt) {
-		console.log('No prompt');
-		return;
-	}
 	if (!supabaseAdmin) {
 		console.log('No Supabase instance found');
 		return;
 	}
-	prompt = formatPrompt(prompt);
-	if (negative_prompt) negative_prompt = formatPrompt(negative_prompt);
-	let prompt_id: string;
-	const startTimestampPromptChecks = Date.now();
-	const { data: prompt_get_data, error: prompt_get_error } = await supabaseAdmin
-		.from('prompt_g')
-		.select('id')
-		.eq('text', prompt)
-		.maybeSingle();
-	if (prompt_get_error) {
-		console.log('Prompt get error:', prompt_get_error);
-		return;
-	} else if (prompt_get_data?.id) {
-		prompt_id = prompt_get_data?.id;
-	} else {
-		const { data: prompt_insert_data, error: prompt_insert_error } = await supabaseAdmin
-			.from('prompt_g')
-			.insert([{ text: prompt }])
-			.select('id')
-			.single();
-		if (prompt_insert_error) {
-			console.log('Prompt insert error:', prompt_insert_error);
-			return;
-		}
-		prompt_id = prompt_insert_data.id;
-	}
-	let negative_prompt_id: string | null;
-	if (!negative_prompt) {
-		negative_prompt_id = null;
-	} else {
-		const { data: negative_prompt_get_data, error: negative_prompt_get_error } = await supabaseAdmin
-			.from('negative_prompt_g')
-			.select('id')
-			.eq('text', negative_prompt)
-			.maybeSingle();
-		if (negative_prompt_get_error) {
-			console.log('Negative prompt get error:', negative_prompt_get_error);
-			return;
-		} else if (negative_prompt_get_data?.id) {
-			negative_prompt_id = negative_prompt_get_data.id;
-		} else {
-			const { data: negative_prompt_insert_data, error: negative_prompt_insert_error } =
-				await supabaseAdmin
-					.from('negative_prompt_g')
-					.insert([{ text: negative_prompt }])
-					.select('id')
-					.single();
-			if (negative_prompt_insert_error) {
-				console.log('Negative prompt insert error:', negative_prompt_insert_error);
-				return;
-			}
-			negative_prompt_id = negative_prompt_insert_data.id;
-		}
-	}
-	const endTimestampPromptChecks = Date.now();
-	console.log(
-		`---- Prompt checks and inserts in: ${
-			(endTimestampPromptChecks - startTimestampPromptChecks) / 1000
-		}s -- ${guidance_scale} -- ${inference_steps} -- ${seed} ----`
-	);
 	const startTimestampSharp = Date.now();
 	const imgBuffer = Buffer.from(uri, 'base64');
 	const webp = await sharp(imgBuffer).webp({ quality: 85, effort: 6 }).toBuffer();
@@ -120,6 +56,7 @@ export async function uploadToGallery({
 				negative_prompt_id,
 				prompt_id,
 				model_id,
+				scheduler_id,
 				height: metadata.height,
 				seed,
 				inference_steps,
@@ -145,9 +82,10 @@ export async function uploadToGallery({
 
 interface TUploadToGalleryRequest {
 	imageDataB64: string;
-	prompt: string;
-	negative_prompt?: string;
-	model_id: TAvailableModelIds;
+	prompt_id: string;
+	negative_prompt_id?: string;
+	model_id: TAvailableModelId;
+	scheduler_id: TAvailableSchedulerId;
 	seed: number;
 	inference_steps: number;
 	guidance_scale: number;

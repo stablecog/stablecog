@@ -36,6 +36,15 @@ const tr: BaseTranslation = {
 			Paragraph:
 				'Tekrarlanabilir sonuçlar almak için. Spesifik bir tohum diğer ayarlar sabitken aynı fotoğrafı üretir.'
 		},
+		ModelDropdown: {
+			Title: 'Model',
+			Paragraph: 'Fotoğrafı üretecek olan yapay zeka modeli.'
+		},
+		SchedulerDropdown: {
+			Title: 'Planlayıcı',
+			Paragraph:
+				'Üretim sürecininin planını değiştirir. Üretilecek fotoğrafı ciddi şekilde farklılaştırabilir. Bazı planlayıcılar düzgün sonuç vermek için daha az tahmin adımına ihtiyaç duyar.'
+		},
 		SubmitToGalleryQuestion: {
 			Title: 'Üretimler galeriye gönderilsin mi?',
 			Paragraph: 'Tercihini daha sonra ayarlardan değiştirebilirsin.'
@@ -88,6 +97,10 @@ const tr: BaseTranslation = {
 		SwitchServerButton: 'Sunucu Değiştir',
 		SubmitToGalleryToggle: 'Galeriye Gönder',
 		AdvancedModeToggle: 'Gelişmiş Mod',
+		AdvancedOptionsDropdown: 'Ekstra Seçenekler',
+		AdvancedDropdown: 'Ekstra',
+		GenerationSettingsButton: 'Üretim Ayarları',
+		GenerationSettingsTitle: 'Üretim Ayarları',
 		DarkModeToggle: 'Karanlık Mod'
 	},
 	GenerationFullscreen: {
@@ -154,7 +167,27 @@ const tr: BaseTranslation = {
 		},
 		PasswordInput: {
 			Placeholder: 'Şifre'
-		}
+		},
+		ModelOptions: {
+			'048b4aa3-5586-47ed-900f-f4341c96bdb2': {
+				realName: 'Stable Diffusion 1.5',
+				simpleName: 'Genel'
+			},
+			'8acfe4c8-751d-4aa6-8c3c-844e3ef478e0': {
+				realName: 'Openjourney',
+				simpleName: '3B Dijital Sanat'
+			},
+			'36d9d835-646f-4fc7-b9fe-98654464bf8e': {
+				realName: 'Arcane Diffusion',
+				simpleName: '3B Çizgi Roman'
+			},
+			'48a7031d-43b6-4a23-9f8c-8020eb6862e4': { realName: 'Ghibli Diffusion', simpleName: 'Anime' },
+			'790c80e1-65b1-4556-9332-196344389572': {
+				realName: 'Mo-Di Diffusion',
+				simpleName: 'Animasyon Filmi'
+			}
+		},
+		UnknownTitle: 'Bilinmeyen'
 	},
 	Error: {
 		SomethingWentWrong: 'Bir şeyler ters gitti :(',

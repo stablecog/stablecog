@@ -3,7 +3,7 @@ import { supabaseAdmin } from '$ts/constants/supabaseAdmin';
 import { getSupabase } from '@supabase/auth-helpers-sveltekit';
 import type { Handle, RequestEvent } from '@sveltejs/kit';
 import { initAcceptLanguageHeaderDetector } from 'typesafe-i18n/detectors';
-import { detectLocale, isLocale, i18n } from '$i18n/i18n-util';
+import { detectLocale, isLocale } from '$i18n/i18n-util';
 import { loadAllLocales } from '$i18n/i18n-util.sync';
 
 loadAllLocales();

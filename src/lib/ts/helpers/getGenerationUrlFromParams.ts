@@ -1,6 +1,8 @@
 export function getGenerationUrlFromParams({
 	prompt,
 	negative_prompt,
+	model_id,
+	scheduler_id,
 	width,
 	height,
 	guidance_scale,
@@ -16,12 +18,16 @@ export function getGenerationUrlFromParams({
 	if (guidance_scale) params.push(`gs=${guidance_scale}`);
 	if (num_inference_steps) params.push(`is=${num_inference_steps}`);
 	if (seed || seed === 0) params.push(`s=${seed}`);
+	if (model_id) params.push(`mi=${model_id}`);
+	if (scheduler_id) params.push(`si=${scheduler_id}`);
 	return baseUrl + params.join('&');
 }
 
 export interface TGenerationUrlFromParamsParams {
 	prompt?: string;
 	negative_prompt?: string;
+	model_id?: string;
+	scheduler_id?: string;
 	width?: number;
 	height?: number;
 	seed?: number;

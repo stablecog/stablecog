@@ -26,7 +26,7 @@
 
 <ScrollAreaWithChevron
 	bind:clientHeight={height}
-	class="w-full flex flex-col justify-start max-h-[50vh] overflow-auto 
+	class="w-full flex flex-col justify-start max-h-[50vh] 
 	shadow-settings-page shadow-c-shadow/[var(--o-shadow-stronger)] rounded-b-xl"
 >
 	<div class="w-full bg-c-bg-secondary flex flex-col justify-start">

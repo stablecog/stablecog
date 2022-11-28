@@ -22,6 +22,7 @@ export async function getGalleryPage(page: number, getType: TGetType = 'visible-
 					prompt:prompt_id(id,text),
 					negative_prompt:negative_prompt_id(id,text),
 					model:model_id(id,name),
+					scheduler:scheduler_id(id,name),
 					seed,
 					inference_steps,
 					guidance_scale,
@@ -47,6 +48,7 @@ export async function getGalleryPage(page: number, getType: TGetType = 'visible-
 					prompt:prompt_id(id,text),
 					negative_prompt:negative_prompt_id(id,text),
 					model:model_id(id,name),
+					scheduler:scheduler_id(id,name),
 					seed,
 					inference_steps,
 					guidance_scale,
@@ -88,7 +90,8 @@ export async function getGalleryPage(page: number, getType: TGetType = 'visible-
 			negative_prompt: (d.negative_prompt as { id: string; text: string } | null)
 				? (d.negative_prompt as { id: string; text: string })
 				: null,
-			model: d.model as { id: string; name: string }
+			model: d.model as { id: string; name: string },
+			scheduler: d.scheduler as { id: string; name: string }
 		};
 	});
 	const response: TGalleryResponse = {
@@ -113,6 +116,7 @@ export async function getGenerationG(id: string) {
 			prompt:prompt_id(id,text),
 			negative_prompt:negative_prompt_id(id,text),
 			model:model_id(id,name),
+			scheduler:scheduler_id(id,name),
 			seed,
 			inference_steps,
 			guidance_scale,
@@ -140,7 +144,8 @@ export async function getGenerationG(id: string) {
 			negative_prompt: (data.negative_prompt as { id: string; text: string } | null)
 				? (data.negative_prompt as { id: string; text: string })
 				: null,
-			model: data.model as { id: string; name: string }
+			model: data.model as { id: string; name: string },
+			scheduler: data.scheduler as { id: string; name: string }
 		};
 		return { data: generation, error: null };
 	}

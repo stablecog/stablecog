@@ -35,6 +35,15 @@ const de: BaseTranslation = {
 			Paragraph:
 				'Wiederholbare Ergebnisse. Ein Seed-Nummer kombiniert mit denselben Eingabewörtern und den gleichen Optionen erzeugt das gleiche Bild.'
 		},
+		ModelDropdown: {
+			Title: 'Model',
+			Paragraph: 'The AI Model that will be used to generate the image.'
+		},
+		SchedulerDropdown: {
+			Title: 'Scheduler',
+			Paragraph:
+				'Diffuse the image in a certain way. It can drastically change the generated image. Some require less steps to produce good results.'
+		},
 		SubmitToGalleryQuestion: {
 			Title: 'Generierte Bilder zur Galerie hinzufügen?',
 			Paragraph: 'Du kannst deine Einstellungen später ändern.'
@@ -87,6 +96,10 @@ const de: BaseTranslation = {
 		SwitchServerButton: 'Server wechseln',
 		SubmitToGalleryToggle: 'Zur Galerie zufügen',
 		AdvancedModeToggle: 'Erweiterter Modus',
+		AdvancedOptionsDropdown: 'Advanced Options',
+		AdvancedDropdown: 'Advanced',
+		GenerationSettingsButton: 'Generation Settings',
+		GenerationSettingsTitle: 'Generation Settings',
 		DarkModeToggle: 'Dunkel-Modus'
 	},
 	GenerationFullscreen: {
@@ -153,7 +166,27 @@ const de: BaseTranslation = {
 		},
 		PasswordInput: {
 			Placeholder: 'Passwort'
-		}
+		},
+		ModelOptions: {
+			'048b4aa3-5586-47ed-900f-f4341c96bdb2': {
+				realName: 'Stable Diffusion 1.5',
+				simpleName: 'General'
+			},
+			'8acfe4c8-751d-4aa6-8c3c-844e3ef478e0': {
+				realName: 'Openjourney',
+				simpleName: '3D Digital Art'
+			},
+			'36d9d835-646f-4fc7-b9fe-98654464bf8e': {
+				realName: 'Arcane Diffusion',
+				simpleName: '3D Comic'
+			},
+			'48a7031d-43b6-4a23-9f8c-8020eb6862e4': { realName: 'Ghibli Diffusion', simpleName: 'Anime' },
+			'790c80e1-65b1-4556-9332-196344389572': {
+				realName: 'Mo-Di Diffusion',
+				simpleName: 'Animated Movie'
+			}
+		},
+		UnknownTitle: 'Unknown'
 	},
 	Error: {
 		SomethingWentWrong: 'Etwas ist schiefgelaufen :(',

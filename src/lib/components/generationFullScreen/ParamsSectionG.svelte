@@ -1,5 +1,7 @@
 <script lang="ts">
 	import SubtleButton from '$components/buttons/SubtleButton.svelte';
+	import IconBrain from '$components/icons/IconBrain.svelte';
+	import IconBubbles from '$components/icons/IconBubbles.svelte';
 	import IconCopy from '$components/icons/IconCopy.svelte';
 	import IconDimensions from '$components/icons/IconDimensions.svelte';
 	import IconScale from '$components/icons/IconScale.svelte';
@@ -10,10 +12,18 @@
 	import LL from '$i18n/i18n-svelte';
 	import { tooltip } from '$ts/actions/tooltip';
 	import {
+		modelIdDefault,
+		modelIdToDisplayName,
+		schedulerIdDefault,
+		schedulerIdToDisplayName
+	} from '$ts/constants/main';
+	import {
 		guidanceScaleTooltipAlt,
 		inferenceStepsTooltipAlt,
+		modelTooltipAlt,
+		schedulerTooltipAlt,
 		seedTooltipAlt
-	} from '$ts/constants/tooltip';
+	} from '$ts/constants/tooltips';
 	import type { TDBGenerationG } from '$ts/types/db';
 	import { copy } from 'svelte-copy';
 
@@ -37,6 +47,51 @@
 
 <div class={classes}>
 	<div class="flex flex-wrap gap-6">
+		<div class="min-w-[calc(50%-0.75rem)] flex flex-col items-start gap-1">
+			<div
+				use:tooltip={$modelTooltipAlt}
+				class="flex items-center gap-1.5 text-c-on-bg/75 text-sm cursor-default"
+			>
+				<IconBrain class="w-4 h-4" />
+				<p>{$LL.Home.ModelDropdown.Title()}</p>
+			</div>
+			<p class="font-bold">
+				{$modelIdToDisplayName[generation.model?.id ?? modelIdDefault] ?? $LL.Shared.UnknownTitle()}
+			</p>
+		</div>
+		<div class="min-w-[calc(50%-0.75rem)] flex flex-col items-start gap-1">
+			<div
+				use:tooltip={$guidanceScaleTooltipAlt}
+				class="flex items-center gap-1.5 text-c-on-bg/75 text-sm cursor-default"
+			>
+				<IconScale class="w-4 h-4" />
+				<p>{$LL.Home.GuidanceScaleSlider.Title()}</p>
+			</div>
+			<p class="font-bold">{generation.guidance_scale}</p>
+		</div>
+		<div class="min-w-[calc(50%-0.75rem)] flex flex-col items-start gap-1">
+			<div
+				use:tooltip={$inferenceStepsTooltipAlt}
+				class="flex items-center gap-1.5 text-c-on-bg/75 text-sm cursor-default"
+			>
+				<IconSteps class="w-4 h-4" />
+				<p>{$LL.Home.InferenceStepsTabBar.Title()}</p>
+			</div>
+			<p class="font-bold">{generation.inference_steps}</p>
+		</div>
+		<div class="min-w-[calc(50%-0.75rem)] flex flex-col items-start gap-1">
+			<div
+				use:tooltip={$schedulerTooltipAlt}
+				class="flex items-center gap-1.5 text-c-on-bg/75 text-sm cursor-default"
+			>
+				<IconBubbles class="w-4 h-4" />
+				<p>{$LL.Home.SchedulerDropdown.Title()}</p>
+			</div>
+			<p class="font-bold">
+				{schedulerIdToDisplayName[generation.scheduler?.id ?? schedulerIdDefault] ??
+					$LL.Shared.UnknownTitle()}
+			</p>
+		</div>
 		<div class="min-w-[calc(50%-0.75rem)] flex flex-wrap items-center gap-3.5">
 			<div class="flex flex-col items-start gap-1">
 				<div
@@ -60,26 +115,6 @@
 					</Morpher>
 				</SubtleButton>
 			</div>
-		</div>
-		<div class="min-w-[calc(50%-0.75rem)] flex flex-col items-start gap-1">
-			<div
-				use:tooltip={$guidanceScaleTooltipAlt}
-				class="flex items-center gap-1.5 text-c-on-bg/75 text-sm cursor-default"
-			>
-				<IconScale class="w-4 h-4" />
-				<p>{$LL.Home.GuidanceScaleSlider.Title()}</p>
-			</div>
-			<p class="font-bold">{generation.guidance_scale}</p>
-		</div>
-		<div class="min-w-[calc(50%-0.75rem)] flex flex-col items-start gap-1">
-			<div
-				use:tooltip={$inferenceStepsTooltipAlt}
-				class="flex items-center gap-1.5 text-c-on-bg/75 text-sm cursor-default"
-			>
-				<IconSteps class="w-4 h-4" />
-				<p>{$LL.Home.InferenceStepsTabBar.Title()}</p>
-			</div>
-			<p class="font-bold">{generation.inference_steps}</p>
 		</div>
 		<div class="min-w-[calc(50%-0.75rem)] flex flex-col items-start gap-1">
 			<div class="flex items-center gap-1.5 text-c-on-bg/75 text-sm cursor-default">

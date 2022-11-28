@@ -20,8 +20,8 @@
 <div
 	transition:expandCollapse|local={{ duration: 200 }}
 	class="w-80 max-w-[calc(100vw-1.5rem)] transition-all ring-2 ring-c-bg-tertiary bg-c-bg-secondary 
-	rounded-xl flex flex-col justify-start shadow-lg shadow-c-shadow/[var(--o-shadow-strong)] absolute 
-	right-0 top-0 overflow-hidden z-50"
+		rounded-xl flex flex-col justify-start shadow-lg shadow-c-shadow/[var(--o-shadow-strong)] absolute 
+		right-0 top-0 overflow-hidden z-50"
 >
 	<div class="w-full flex flex-col justify-start z-0 overflow-hidden relative">
 		<div class="w-full flex">

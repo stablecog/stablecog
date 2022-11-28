@@ -37,7 +37,7 @@ export function autoresize(node: HTMLTextAreaElement, props?: TAutoResizeProps) 
 			node.removeEventListener('blur', resize);
 			window.removeEventListener('resize', resize);
 		},
-		update(newProps: TAutoResizeProps) {
+		update(_: TAutoResizeProps) {
 			resize();
 		}
 	};

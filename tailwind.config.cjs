@@ -74,6 +74,8 @@ module.exports = {
 				132: '33rem',
 				140: '35rem',
 				160: '40rem',
+				168: '42rem',
+				172: '43rem',
 				180: '45rem'
 			},
 			opacity: {

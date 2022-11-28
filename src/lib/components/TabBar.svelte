@@ -3,9 +3,10 @@
 	import { isTouchscreen } from '$ts/stores/isTouchscreen';
 	import type { TTab } from '$ts/types/main';
 
-	export let tabs: TTab[];
+	type T = $$Generic;
+	export let tabs: TTab<T>[];
 	export let name: string;
-	export let value: string | number;
+	export let value: T;
 	export let hideSelected = false;
 	export { classes as class };
 	export let hasTitle = true;

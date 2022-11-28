@@ -32,7 +32,7 @@
 	};
 </script>
 
-<div class="w-full relative overflow-hidden">
+<div class="w-full flex flex-col flex-1 min-h-0 relative">
 	<div
 		bind:clientHeight
 		on:scroll={() => {
@@ -40,7 +40,7 @@
 			containerScrollHeight = container?.scrollHeight;
 		}}
 		bind:this={container}
-		class={classes}
+		class="{classes} overflow-auto flex-1 min-h-0"
 	>
 		<slot />
 	</div>
@@ -48,7 +48,7 @@
 		<div
 			transition:fly|local={{ duration: 200, easing: quadOut, y: 40, opacity: 0 }}
 			class="absolute left-1/2 transform -translate-x-1/2 bottom-0 flex justify-center items-end p-2 z-50
-      pointer-events-none"
+      	pointer-events-none"
 		>
 			<IconChevronDown class="w-6 h-6 text-c-on-bg/25 transition" />
 		</div>

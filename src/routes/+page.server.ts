@@ -1,4 +1,6 @@
 import {
+	availableModelIds,
+	availableSchedulerIds,
 	guidanceScaleMax,
 	guidanceScaleMin,
 	heightTabs,
@@ -7,9 +9,11 @@ import {
 	maxPromptLength,
 	maxSeed,
 	widthTabs,
-	type TAvailableHeights,
+	type TAvailableHeight,
 	type TAvailableInferenceSteps,
-	type TAvailableWidths
+	type TAvailableModelId,
+	type TAvailableSchedulerId,
+	type TAvailableWidth
 } from '$ts/constants/main';
 import type { ServerLoad } from '@sveltejs/kit';
 
@@ -22,6 +26,8 @@ export const load: ServerLoad = ({ url }) => {
 	const _height = url.searchParams.get('h');
 	const _guidance_scale = url.searchParams.get('gs');
 	const _num_inference_steps = url.searchParams.get('is');
+	const _model_id = url.searchParams.get('mi');
+	const _scheduler_id = url.searchParams.get('si');
 
 	const prompt = _prompt !== null ? decodeURIComponent(_prompt.slice(0, maxPromptLength)) : null;
 	const negative_prompt =
@@ -50,16 +56,26 @@ export const load: ServerLoad = ({ url }) => {
 				: inferenceStepsDefault
 			: null;
 	const width =
-		_width !== null && widthTabs.map((i) => i.value).includes(_width as TAvailableWidths)
-			? (_width as TAvailableWidths)
+		_width !== null && widthTabs.map((i) => i.value).includes(_width as TAvailableWidth)
+			? (_width as TAvailableWidth)
 			: null;
 	const height =
-		_height !== null && heightTabs.map((i) => i.value).includes(_height as TAvailableHeights)
-			? (_height as TAvailableHeights)
+		_height !== null && heightTabs.map((i) => i.value).includes(_height as TAvailableHeight)
+			? (_height as TAvailableHeight)
+			: null;
+	const model_id =
+		_model_id !== null && availableModelIds.includes(_model_id as TAvailableModelId)
+			? (_model_id as TAvailableModelId)
+			: null;
+	const scheduler_id =
+		_scheduler_id !== null && availableSchedulerIds.includes(_scheduler_id as TAvailableSchedulerId)
+			? (_scheduler_id as TAvailableSchedulerId)
 			: null;
 	const data: THomePageData = {
 		prompt,
 		negative_prompt,
+		model_id,
+		scheduler_id,
 		seed,
 		guidance_scale,
 		num_inference_steps,
@@ -72,9 +88,11 @@ export const load: ServerLoad = ({ url }) => {
 export interface THomePageData {
 	prompt: string | null;
 	negative_prompt: string | null;
+	model_id: TAvailableModelId | null;
+	scheduler_id: TAvailableSchedulerId | null;
 	seed: number | null;
 	guidance_scale: number | null;
 	num_inference_steps: TAvailableInferenceSteps | null;
-	width: TAvailableWidths | null;
-	height: TAvailableHeights | null;
+	width: TAvailableWidth | null;
+	height: TAvailableHeight | null;
 }

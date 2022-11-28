@@ -17,11 +17,11 @@
 		? 'py-4.5'
 		: 'py-5'} relative z-0 overflow-hidden group"
 >
-	<div
-		class="w-full h-full origin-left transition transform -translate-x-full 
-			  bg-c-primary/10 absolute left-0 top-0 opacity-0 {!$isTouchscreen
-			? 'group-enabled:group-hover:translate-x-0 group-enabled:group-hover:opacity-100'
-			: ''}"
-	/>
+	<div class="w-[200%] h-full absolute left-0 top-0 flex items-center justify-center">
+		<div
+			class="w-full aspect-square origin-left rounded-full transition transform -translate-x-full opacity-0
+				bg-c-primary/10 {!$isTouchscreen ? 'group-hover:translate-x-[-45%] group-hover:opacity-100' : ''}"
+		/>
+	</div>
 	<slot />
 </button>

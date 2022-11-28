@@ -8,10 +8,7 @@
 		estimatedDurationDefault,
 		guidanceScaleDefault,
 		inferenceStepsDefault,
-		maxSeed,
-		type TAvailableHeights,
-		type TAvailableInferenceSteps,
-		type TAvailableWidths
+		maxSeed
 	} from '$ts/constants/main';
 	import { urlFromBase64 } from '$ts/helpers/base64';
 	import {
@@ -38,34 +35,38 @@
 	import SubmitToGallery from '$components/SubmitToGallery.svelte';
 	import LL from '$i18n/i18n-svelte';
 	import GenerationFullScreen from '$components/generationFullScreen/GenerationFullScreen.svelte';
+	import {
+		generationGuidanceScale,
+		generationHeight,
+		generationInferenceSteps,
+		generationModelId,
+		generationSchedulerId,
+		generationSeed,
+		generationWidth,
+		negativePromptInputValue,
+		promptInputValue
+	} from '$ts/stores/generationSettings';
 
 	export let data: THomePageData;
 
 	let status: TStatus = 'idle';
-	let promptInputValue: string | undefined;
-	let negativePromptInputValue: string | undefined;
 	let nowInterval: NodeJS.Timeout | undefined;
 	let startTimestamp: number | undefined;
 	let endTimestamp: number | undefined;
 	let lastGeneration: TGenerationUI;
-	let generationWidth: TAvailableWidths;
-	let generationHeight: TAvailableHeights;
-	let generationInferenceSteps: TAvailableInferenceSteps;
-	let generationGuidanceScale: number;
-	let generationSeed: number;
 	let generationError: string | undefined;
 	let estimatedDuration = estimatedDurationDefault;
 	let upscaleStatus: TUpscaleStatus;
 
-	$: [generationWidth, generationHeight, generationInferenceSteps], setEstimatedDuration();
+	$: [$generationWidth, $generationHeight, $generationInferenceSteps], setEstimatedDuration();
 
 	async function setEstimatedDuration() {
 		if (isCheckComplete) {
-			if ($computeRatePerSec && generationWidth && generationHeight) {
+			if ($computeRatePerSec && $generationWidth && $generationHeight) {
 				const rate = getComputeRate(
-					Number(generationWidth),
-					Number(generationHeight),
-					Number(generationInferenceSteps)
+					Number($generationWidth),
+					Number($generationHeight),
+					Number($generationInferenceSteps)
 				);
 				estimatedDuration = Math.ceil(
 					(rate / $computeRatePerSec) * (1 + estimatedDurationBufferRatio)
@@ -79,31 +80,35 @@
 	async function onCreate() {
 		pLogGeneration('Started');
 		uLogGeneration('Started');
-		if (!$serverUrl || !promptInputValue) {
-			!promptInputValue && console.log('no input');
+		if (!$serverUrl || !$promptInputValue) {
+			!$promptInputValue && console.log('no input');
 			!$serverUrl && console.log('no server url');
 			return;
 		}
 		generationError = undefined;
 		lastGeneration = {
 			server_url: $serverUrl,
-			prompt: promptInputValue,
+			prompt: $promptInputValue,
 			negative_prompt:
 				$currentServer.features?.includes('negative_prompt') &&
 				($advancedMode || isValue(data.negative_prompt))
-					? negativePromptInputValue
+					? $negativePromptInputValue
 					: undefined,
-			width: Number(generationWidth),
-			height: Number(generationHeight),
+			model_id: $generationModelId,
+			scheduler_id: $advancedMode || data.scheduler_id ? $generationSchedulerId : undefined,
+			width: Number($generationWidth),
+			height: Number($generationHeight),
 			guidance_scale: Number(
-				$advancedMode || data.guidance_scale ? generationGuidanceScale : guidanceScaleDefault
+				$advancedMode || data.guidance_scale ? $generationGuidanceScale : guidanceScaleDefault
 			),
 			num_inference_steps: Number(
-				$advancedMode || data.num_inference_steps ? generationInferenceSteps : inferenceStepsDefault
+				$advancedMode || data.num_inference_steps
+					? $generationInferenceSteps
+					: inferenceStepsDefault
 			),
 			seed:
-				(isValue(generationSeed) && $advancedMode) || isValue(data.seed)
-					? generationSeed
+				(isValue($generationSeed) && $advancedMode) || isValue(data.seed)
+					? $generationSeed!!
 					: Math.round(Math.random() * maxSeed),
 			imageDataB64: ''
 		};
@@ -119,6 +124,8 @@
 				server_url: lastGeneration.server_url,
 				prompt: lastGeneration.prompt,
 				negative_prompt: lastGeneration.negative_prompt,
+				model_id: lastGeneration.model_id,
+				scheduler_id: lastGeneration.scheduler_id,
 				width: lastGeneration.width,
 				height: lastGeneration.height,
 				seed: lastGeneration.seed,
@@ -270,22 +277,9 @@
 			{/if}
 			<div
 				transition:expandCollapse|local={{ duration: 300 }}
-				class="w-[calc(100%+2rem)] flex flex-col justify-start items-center overflow-hidden z-0 -mx-4"
+				class="w-[calc(100%+2rem)] flex flex-col justify-start items-center z-0 -mx-4"
 			>
-				<GenerateBar
-					bind:promptInputValue
-					bind:negativePromptInputValue
-					bind:generationWidth
-					bind:generationHeight
-					bind:generationInferenceSteps
-					bind:generationGuidanceScale
-					bind:generationSeed
-					serverData={data}
-					{status}
-					{onCreate}
-					{startTimestamp}
-					{estimatedDuration}
-				/>
+				<GenerateBar serverData={data} {status} {onCreate} {startTimestamp} {estimatedDuration} />
 				{#if status === 'error'}
 					<div
 						transition:expandCollapse|local={{ duration: 300 }}
@@ -305,7 +299,7 @@
 						transition:expandCollapse|local={{ duration: 300 }}
 						class="max-w-full flex flex-col items-center justify-start rounded-xl origin-top relative z-0 px-4"
 					>
-						<div class="max-w-full flex flex-col items-center md:px-5 gap-4 pt-4 md:pt-6 pb-4">
+						<div class="max-w-full flex flex-col items-center md:px-5 gap-4 py-3">
 							<div
 								class="{aspectRatio >= 6 / 2
 									? 'w-180'

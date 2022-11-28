@@ -29,7 +29,7 @@
 
 <ScrollAreaWithChevron
 	bind:clientHeight={height}
-	class="w-full flex flex-col justify-start max-h-[50vh] overflow-auto relative"
+	class="w-full flex flex-col justify-start max-h-[50vh] relative"
 >
 	<div class="w-full bg-c-bg-secondary flex flex-col justify-start">
 		{#if $serverUrl}

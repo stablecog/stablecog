@@ -36,6 +36,15 @@ const ko: BaseTranslation = {
 			Paragraph:
 				'난수 시드 값을 바꾸면, 동일한 문구와 동일한 옵션에서 다른 이미지를 생성할 수 있습니다.'
 		},
+		ModelDropdown: {
+			Title: 'Model',
+			Paragraph: 'The AI Model that will be used to generate the image.'
+		},
+		SchedulerDropdown: {
+			Title: 'Scheduler',
+			Paragraph:
+				'Diffuse the image in a certain way. It can drastically change the generated image. Some require less steps to produce good results.'
+		},
 		SubmitToGalleryQuestion: {
 			Title: '생성한 이미지를 갤러리에 전시할까요?',
 			Paragraph: '갤러리에 전시하는 옵션은 설정을 통해 언제든 키거나 끌 수 있어요.'
@@ -88,6 +97,10 @@ const ko: BaseTranslation = {
 		SwitchServerButton: '서버 변경하기',
 		SubmitToGalleryToggle: '갤러리에 전시하기',
 		AdvancedModeToggle: '고급 옵션 보기',
+		AdvancedOptionsDropdown: 'Advanced Options',
+		AdvancedDropdown: 'Advanced',
+		GenerationSettingsButton: 'Generation Settings',
+		GenerationSettingsTitle: 'Generation Settings',
 		DarkModeToggle: '다크모드'
 	},
 	GenerationFullscreen: {
@@ -154,7 +167,27 @@ const ko: BaseTranslation = {
 		},
 		PasswordInput: {
 			Placeholder: '비밀번호'
-		}
+		},
+		ModelOptions: {
+			'048b4aa3-5586-47ed-900f-f4341c96bdb2': {
+				realName: 'Stable Diffusion 1.5',
+				simpleName: 'General'
+			},
+			'8acfe4c8-751d-4aa6-8c3c-844e3ef478e0': {
+				realName: 'Openjourney',
+				simpleName: '3D Digital Art'
+			},
+			'36d9d835-646f-4fc7-b9fe-98654464bf8e': {
+				realName: 'Arcane Diffusion',
+				simpleName: '3D Comic'
+			},
+			'48a7031d-43b6-4a23-9f8c-8020eb6862e4': { realName: 'Ghibli Diffusion', simpleName: 'Anime' },
+			'790c80e1-65b1-4556-9332-196344389572': {
+				realName: 'Mo-Di Diffusion',
+				simpleName: 'Animated Movie'
+			}
+		},
+		UnknownTitle: 'Unknown'
 	},
 	Error: {
 		SomethingWentWrong: '웁스.. 뭔가 잘못됐어요. :(',

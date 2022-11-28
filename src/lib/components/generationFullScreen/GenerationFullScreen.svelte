@@ -44,7 +44,7 @@
 	import { estimatedDurationBufferRatio } from '$ts/constants/main';
 	import { pLogUpscale, uLogUpscale } from '$ts/helpers/loggers';
 	import LL from '$i18n/i18n-svelte';
-	import { negativePromptTooltipAlt } from '$ts/constants/tooltip';
+	import { negativePromptTooltipAlt } from '$ts/constants/tooltips';
 	import IconTrashcan from '$components/icons/IconTrashcan.svelte';
 	import { deleteGenerationFromDb } from '$ts/queries/indexedDb';
 	import IconTrashcanFilledOpen from '$components/icons/IconTrashcanFilledOpen.svelte';

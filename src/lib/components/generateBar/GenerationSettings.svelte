@@ -1,7 +1,6 @@
 <script lang="ts">
-	import IconAdvanced from '$components/icons/IconAdvanced.svelte';
-	import IconAdvancedOutline from '$components/icons/IconAdvancedOutline.svelte';
 	import IconBrain from '$components/icons/IconBrain.svelte';
+	import IconBubbles from '$components/icons/IconBubbles.svelte';
 	import IconChatBubbleCancel from '$components/icons/IconChatBubbleCancel.svelte';
 	import IconHeight from '$components/icons/IconHeight.svelte';
 	import IconScale from '$components/icons/IconScale.svelte';
@@ -16,46 +15,69 @@
 	import { tooltip } from '$ts/actions/tooltip';
 	import {
 		availableModelIdDropdownItems,
+		availableSchedulerIdDropdownItems,
 		guidanceScaleMax,
 		guidanceScaleMin,
 		heightTabs,
 		inferenceStepsTabs,
 		maxPromptLength,
 		maxSeed,
-		widthTabs,
-		type TAvailableModelIds
+		widthTabs
 	} from '$ts/constants/main';
 	import {
 		guidanceScaleTooltip,
 		heightTooltip,
 		inferenceStepsTooltip,
+		modelTooltip,
 		negativePromptTooltip,
+		schedulerTooltip,
 		seedTooltip,
 		widthTooltip
-	} from '$ts/constants/tooltip';
+	} from '$ts/constants/tooltips';
 	import { advancedMode } from '$ts/stores/advancedMode';
+	import {
+		generationGuidanceScale,
+		generationHeight,
+		generationInferenceSteps,
+		generationModelId,
+		generationSchedulerId,
+		generationSeed,
+		generationWidth,
+		negativePromptInputValue
+	} from '$ts/stores/generationSettings';
 	import { currentServer } from '$ts/stores/serverHealth';
+	import { windowWidth } from '$ts/stores/window';
 
-	export let generationWidth: string;
-	export let generationHeight: string;
-	export let generationInferenceSteps: string;
-	export let generationGuidanceScale: number;
-	export let generationSeed: number | undefined;
-	export let generationModelId: TAvailableModelIds;
-	export let negativePromptInputValue: string | undefined;
 	export let isCheckComplete: boolean;
 	export let formElement: HTMLFormElement;
 	export let disabled = false;
-
-	$: console.log(generationModelId);
 </script>
 
 <div class="w-full flex flex-wrap items-start justify-center px-2px py-4 gap-4">
+	{#if $advancedMode && $currentServer.features?.includes('negative_prompt')}
+		<TabLikeInput
+			disabled={!isCheckComplete || disabled}
+			class="w-full md:w-172 max-w-full order-1"
+			placeholder={$LL.Home.NegativePromptInput.Placeholder()}
+			type="text"
+			bind:value={$negativePromptInputValue}
+			max={maxPromptLength}
+			{formElement}
+		>
+			<div
+				slot="title"
+				use:tooltip={$negativePromptTooltip}
+				class="py-2 px-4 flex items-center justify-center"
+			>
+				<IconChatBubbleCancel class="w-6 h-6 text-c-on-bg/25" />
+			</div>
+		</TabLikeInput>
+	{/if}
 	<TabBar
 		{disabled}
-		class="w-full md:w-84 max-w-full"
+		class="w-full md:w-84 max-w-full order-2"
 		tabs={widthTabs}
-		bind:value={generationWidth}
+		bind:value={$generationWidth}
 		name="Width"
 		hideSelected={!isCheckComplete}
 	>
@@ -69,9 +91,9 @@
 	</TabBar>
 	<TabBar
 		{disabled}
-		class="w-full md:w-84 max-w-full"
+		class="w-full md:w-84 max-w-full order-2"
 		tabs={heightTabs}
-		bind:value={generationHeight}
+		bind:value={$generationHeight}
 		name="Height"
 		hideSelected={!isCheckComplete}
 	>
@@ -85,40 +107,26 @@
 	</TabBar>
 	<TabLikeDropdown
 		{disabled}
-		class="w-full md:w-84 max-w-full"
-		bind:value={generationModelId}
-		items={availableModelIdDropdownItems}
+		class="w-full md:w-84 max-w-full {$advancedMode ? 'order-1' : 'order-2'}"
+		dropdownClass={$advancedMode ? 'max-h-[15rem]' : 'max-h-[8rem] md:max-h-[15rem]'}
+		bind:value={$generationModelId}
+		items={$availableModelIdDropdownItems}
 		name="Model"
+		bottomMinDistance={$windowWidth < 768 ? 0 : 72}
 	>
 		<div
 			slot="title"
-			use:tooltip={$heightTooltip}
+			use:tooltip={$modelTooltip}
 			class="py-2 px-4 flex items-center justify-center"
 		>
 			<IconBrain class="w-6 h-6 text-c-on-bg/25" />
 		</div>
 	</TabLikeDropdown>
 	{#if $advancedMode}
-		<TabBar
-			{disabled}
-			class="w-full md:w-84 max-w-full"
-			tabs={inferenceStepsTabs}
-			bind:value={generationInferenceSteps}
-			name="Steps"
-			hideSelected={!isCheckComplete}
-		>
-			<div
-				slot="title"
-				use:tooltip={$inferenceStepsTooltip}
-				class="py-2 px-4 flex items-center justify-center"
-			>
-				<IconSteps class="w-6 h-6 text-c-on-bg/25" />
-			</div>
-		</TabBar>
 		<TabLikeRangeInput
 			{disabled}
-			class="w-full md:w-84 max-w-full"
-			bind:value={generationGuidanceScale}
+			class="w-full md:w-84 max-w-full order-2"
+			bind:value={$generationGuidanceScale}
 			min={guidanceScaleMin}
 			max={guidanceScaleMax}
 		>
@@ -130,30 +138,44 @@
 				<IconScale class="w-6 h-6 text-c-on-bg/25" />
 			</div>
 		</TabLikeRangeInput>
-		{#if $currentServer.features?.includes('negative_prompt')}
-			<TabLikeInput
-				disabled={!isCheckComplete || disabled}
-				class="w-full md:w-84 max-w-full"
-				placeholder={$LL.Home.NegativePromptInput.Placeholder()}
-				type="text"
-				bind:value={negativePromptInputValue}
-				max={maxPromptLength}
-				{formElement}
+		<TabBar
+			{disabled}
+			class="w-full md:w-84 max-w-full order-2"
+			tabs={inferenceStepsTabs}
+			bind:value={$generationInferenceSteps}
+			name="Steps"
+			hideSelected={!isCheckComplete}
+		>
+			<div
+				slot="title"
+				use:tooltip={$inferenceStepsTooltip}
+				class="py-2 px-4 flex items-center justify-center"
 			>
-				<div
-					slot="title"
-					use:tooltip={$negativePromptTooltip}
-					class="py-2 px-4 flex items-center justify-center"
-				>
-					<IconChatBubbleCancel class="w-6 h-6 text-c-on-bg/25" />
-				</div>
-			</TabLikeInput>
-		{/if}
+				<IconSteps class="w-6 h-6 text-c-on-bg/25" />
+			</div>
+		</TabBar>
+		<TabLikeDropdown
+			{disabled}
+			class="w-full md:w-84 max-w-full order-2"
+			dropdownClass={'max-h-[15rem]'}
+			bind:value={$generationSchedulerId}
+			items={availableSchedulerIdDropdownItems}
+			name="Scheduler"
+			bottomMinDistance={$windowWidth < 768 ? 0 : 72}
+		>
+			<div
+				slot="title"
+				use:tooltip={$schedulerTooltip}
+				class="py-2 px-4 flex items-center justify-center"
+			>
+				<IconBubbles class="w-6 h-6 text-c-on-bg/25" />
+			</div>
+		</TabLikeDropdown>
 		<TabLikeInput
 			disabled={!isCheckComplete || disabled}
-			class="w-full md:w-84 max-w-full"
+			class="w-full md:w-84 max-w-full order-2"
 			placeholder={$LL.Home.SeedInput.Placeholder()}
-			bind:value={generationSeed}
+			bind:value={$generationSeed}
 			type="number"
 			max={maxSeed}
 			{formElement}

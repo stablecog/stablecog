@@ -1,3 +1,4 @@
+import type { TAvailableModelId, TAvailableSchedulerId } from '$ts/constants/main';
 import type { TGenerationBase } from '$ts/types/main';
 
 export interface TIndexedDBGeneration extends TGenerationBase {
@@ -55,7 +56,11 @@ export interface TDBGenerationG {
 	};
 	negative_prompt: { id: string; text: string } | null;
 	model: {
-		id: string;
+		id: TAvailableModelId;
 		name: string;
-	};
+	} | null;
+	scheduler: {
+		id: TAvailableSchedulerId;
+		name: string;
+	} | null;
 }

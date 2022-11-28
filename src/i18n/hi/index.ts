@@ -35,6 +35,15 @@ const hi: BaseTranslation = {
 			Paragraph:
 				'दोहराने योग्य परिणाम प्राप्त करें। एक ही संकेत विकल्पों के साथ संयुक्त एक सीड एक ही छवि उत्पन्न करता है।'
 		},
+		ModelDropdown: {
+			Title: 'Model',
+			Paragraph: 'The AI Model that will be used to generate the image.'
+		},
+		SchedulerDropdown: {
+			Title: 'Scheduler',
+			Paragraph:
+				'Diffuse the image in a certain way. It can drastically change the generated image. Some require less steps to produce good results.'
+		},
 		SubmitToGalleryQuestion: {
 			Title: 'बनावट को गैलरी में दर्ज करे?',
 			Paragraph: 'आप बाद में सेटिंग्स से अपनी प्राथमिकताएं बदल सकते हैं।'
@@ -87,6 +96,10 @@ const hi: BaseTranslation = {
 		SwitchServerButton: 'सर्वर बदले',
 		SubmitToGalleryToggle: 'गैलरी में दर्ज करें',
 		AdvancedModeToggle: 'एडवांस सेटिंग',
+		AdvancedOptionsDropdown: 'Advanced Options',
+		AdvancedDropdown: 'Advanced',
+		GenerationSettingsButton: 'Generation Settings',
+		GenerationSettingsTitle: 'Generation Settings',
 		DarkModeToggle: 'डार्क मोड'
 	},
 	GenerationFullscreen: {
@@ -153,7 +166,27 @@ const hi: BaseTranslation = {
 		},
 		PasswordInput: {
 			Placeholder: 'पासवर्ड'
-		}
+		},
+		ModelOptions: {
+			'048b4aa3-5586-47ed-900f-f4341c96bdb2': {
+				realName: 'Stable Diffusion 1.5',
+				simpleName: 'General'
+			},
+			'8acfe4c8-751d-4aa6-8c3c-844e3ef478e0': {
+				realName: 'Openjourney',
+				simpleName: '3D Digital Art'
+			},
+			'36d9d835-646f-4fc7-b9fe-98654464bf8e': {
+				realName: 'Arcane Diffusion',
+				simpleName: '3D Comic'
+			},
+			'48a7031d-43b6-4a23-9f8c-8020eb6862e4': { realName: 'Ghibli Diffusion', simpleName: 'Anime' },
+			'790c80e1-65b1-4556-9332-196344389572': {
+				realName: 'Mo-Di Diffusion',
+				simpleName: 'Animated Movie'
+			}
+		},
+		UnknownTitle: 'Unknown'
 	},
 	Error: {
 		SomethingWentWrong: 'कुछ गलत हो गया :(',

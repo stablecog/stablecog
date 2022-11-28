@@ -53,7 +53,7 @@
 					} else {
 						serverUrl.set(url);
 					}
-					serverUrlInputValue = $serverUrl;
+					serverUrlInputValue = $serverUrl ?? undefined;
 					if (close) {
 						close();
 					}
@@ -79,7 +79,7 @@
 	};
 
 	onMount(() => {
-		if ($serverUrl !== undefined) {
+		if ($serverUrl !== null) {
 			serverUrlInputValue = $serverUrl;
 		}
 	});

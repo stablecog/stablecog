@@ -1,4 +1,12 @@
-import { maxSeed, modelIdDefault, modelIdToCogModelName } from '$ts/constants/main';
+import {
+	maxSeed,
+	modelIdDefault,
+	modelIdToCogModelName,
+	schedulerIdDefault,
+	schedulerIdToCogSchedulerName,
+	type TAvailableModelId,
+	type TAvailableSchedulerId
+} from '$ts/constants/main';
 import { supabaseAdmin } from '$ts/constants/supabaseAdmin';
 import { formatPrompt } from '$ts/helpers/formatPrompt';
 import { getDeviceInfo } from '$ts/helpers/getDeviceInfo';
@@ -22,6 +30,7 @@ export const POST: RequestHandler = async ({ request }) => {
 		prompt,
 		negative_prompt,
 		model_id = modelIdDefault,
+		scheduler_id = schedulerIdDefault,
 		seed = Math.round(Math.random() * maxSeed),
 		width = 512,
 		height = 512,
@@ -56,6 +65,8 @@ export const POST: RequestHandler = async ({ request }) => {
 			text: 'Started generation',
 			prompt: sliced_prompt,
 			negative_prompt: sliced_negative_prompt,
+			model_id,
+			scheduler_id,
 			width,
 			height,
 			num_inference_steps,
@@ -72,6 +83,7 @@ export const POST: RequestHandler = async ({ request }) => {
 					.insert({
 						status: 'started',
 						model_id,
+						scheduler_id,
 						seed,
 						width,
 						height,
@@ -95,6 +107,8 @@ export const POST: RequestHandler = async ({ request }) => {
 						text: `Inserted into the DB in: ${(endTimestamp - startTimestamp) / 1000}s`,
 						prompt: sliced_prompt,
 						negative_prompt: sliced_negative_prompt,
+						model_id,
+						scheduler_id,
 						width,
 						height,
 						num_inference_steps,
@@ -108,24 +122,26 @@ export const POST: RequestHandler = async ({ request }) => {
 			}
 		}
 		const startTimestamp = Date.now();
+		const predictionsBody: TPredictionsRequest = {
+			input: {
+				prompt,
+				negative_prompt,
+				model: modelIdToCogModelName[model_id],
+				scheduler: schedulerIdToCogSchedulerName[scheduler_id],
+				width: width.toString(),
+				height: height.toString(),
+				seed: seed.toString(),
+				num_inference_steps: Math.round(num_inference_steps).toString(),
+				guidance_scale: Math.round(guidance_scale).toString(),
+				output_image_ext: 'jpg'
+			}
+		};
 		const res = await fetch(`${picked_server_url}/predictions`, {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json'
 			},
-			body: JSON.stringify({
-				input: {
-					prompt,
-					negative_prompt,
-					model: modelIdToCogModelName[model_id],
-					width: width.toString(),
-					height: height.toString(),
-					seed: seed.toString(),
-					num_inference_steps: Math.round(num_inference_steps).toString(),
-					guidance_scale: Math.round(guidance_scale).toString(),
-					output_image_ext: 'jpg'
-				}
-			})
+			body: JSON.stringify(predictionsBody)
 		});
 		if (!res.ok) {
 			throw new Error(`Something went wrong during generation: ${res.status}`);
@@ -147,6 +163,8 @@ export const POST: RequestHandler = async ({ request }) => {
 			text: `Ended generation in ${(endTimestamp - startTimestamp) / 1000}s`,
 			prompt: sliced_prompt,
 			negative_prompt: sliced_negative_prompt,
+			model_id,
+			scheduler_id,
 			width,
 			height,
 			num_inference_steps,
@@ -156,10 +174,11 @@ export const POST: RequestHandler = async ({ request }) => {
 		});
 		// If Supabase is enabled, update the generation with prompt, negative prompt, duration and status
 		if (output && !isNSFW && !data.error && supabaseAdmin !== undefined) {
+			let negative_prompt_id: string | undefined;
+			let prompt_id: string | undefined;
 			try {
 				const startTimestamp = Date.now();
 				// Check if the prompt exists in the DB already
-				let prompt_id: string | undefined;
 				let { data: promptData, error: promptErr } = await supabaseAdmin
 					.from('prompt')
 					.select('id')
@@ -184,8 +203,6 @@ export const POST: RequestHandler = async ({ request }) => {
 						prompt_id = newPromptData?.id;
 					}
 				}
-				// Check if the negative prompt exists in the DB already
-				let negative_prompt_id: string | undefined;
 				if (isValue(negative_prompt)) {
 					let { data: negativePromptData, error: negativePromptErr } = await supabaseAdmin
 						.from('negative_prompt')
@@ -236,6 +253,8 @@ export const POST: RequestHandler = async ({ request }) => {
 						}s`,
 						prompt: sliced_prompt,
 						negative_prompt: sliced_negative_prompt,
+						model_id,
+						scheduler_id,
 						width,
 						height,
 						num_inference_steps,
@@ -247,13 +266,14 @@ export const POST: RequestHandler = async ({ request }) => {
 			} catch (error) {
 				console.log(error);
 			}
-			if (shouldSubmitToGallery) {
+			if (shouldSubmitToGallery && prompt_id) {
 				try {
 					await uploadToGallery({
 						imageDataB64: output,
-						prompt,
+						prompt_id,
+						negative_prompt_id,
 						model_id,
-						negative_prompt,
+						scheduler_id,
 						inference_steps: num_inference_steps,
 						guidance_scale,
 						seed,
@@ -286,6 +306,8 @@ export const POST: RequestHandler = async ({ request }) => {
 						}s`,
 						prompt: sliced_prompt,
 						negative_prompt: sliced_negative_prompt,
+						model_id,
+						scheduler_id,
 						width,
 						height,
 						num_inference_steps,
@@ -339,6 +361,8 @@ export const POST: RequestHandler = async ({ request }) => {
 						}s`,
 						prompt: sliced_prompt,
 						negative_prompt: sliced_negative_prompt,
+						model_id,
+						scheduler_id,
 						width,
 						height,
 						num_inference_steps,
@@ -375,6 +399,29 @@ interface TGenerateImageData {
 	error?: string;
 }
 
+export type TSchedulerNameCog = 'K_LMS' | 'K_EULER' | 'K_EULER_ANCESTRAL';
+export type TModelNameCog =
+	| 'Stable Diffusion v1.5'
+	| 'Openjourney'
+	| 'Arcane Diffusion'
+	| 'Ghibli Diffusion'
+	| 'Mo-Di Diffusion';
+export type TOutputImageExt = 'png' | 'jpg';
+
+export interface TPredictionsRequest {
+	input: {
+		prompt: string;
+		negative_prompt?: string;
+		model: TModelNameCog;
+		scheduler: TSchedulerNameCog;
+		width: string;
+		height: string;
+		seed: string;
+		num_inference_steps: string;
+		guidance_scale: string;
+		output_image_ext: TOutputImageExt;
+	};
+}
 type TStatus = 'succeeded' | 'failed';
 
 export type TDBGenerationProcessStatus = 'started' | 'succeeded' | 'failed' | 'rejected';
@@ -397,6 +444,8 @@ function generationLog({
 	text,
 	prompt,
 	negative_prompt,
+	model_id,
+	scheduler_id,
 	width,
 	height,
 	num_inference_steps,
@@ -407,6 +456,8 @@ function generationLog({
 	text: string;
 	prompt: string;
 	negative_prompt: string | undefined;
+	model_id: TAvailableModelId;
+	scheduler_id: TAvailableSchedulerId;
 	width: number;
 	height: number;
 	num_inference_steps: number;
@@ -420,6 +471,10 @@ function generationLog({
 		'--',
 		`"${prompt}"`,
 		`--${negative_prompt ? ` "${negative_prompt}" --` : ''}`,
+		`${modelIdToCogModelName[model_id]}`,
+		'--',
+		`${schedulerIdToCogSchedulerName[scheduler_id]}`,
+		'--',
 		width,
 		'--',
 		height,
