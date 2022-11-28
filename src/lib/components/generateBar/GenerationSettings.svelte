@@ -1,7 +1,9 @@
 <script lang="ts">
+	import NoBgButton from '$components/buttons/NoBgButton.svelte';
 	import IconBrain from '$components/icons/IconBrain.svelte';
 	import IconBubbles from '$components/icons/IconBubbles.svelte';
 	import IconChatBubbleCancel from '$components/icons/IconChatBubbleCancel.svelte';
+	import IconChevronDown from '$components/icons/IconChevronDown.svelte';
 	import IconHeight from '$components/icons/IconHeight.svelte';
 	import IconScale from '$components/icons/IconScale.svelte';
 	import IconSeed from '$components/icons/IconSeed.svelte';
@@ -45,6 +47,7 @@
 		generationWidth,
 		negativePromptInputValue
 	} from '$ts/stores/generationSettings';
+	import { isTouchscreen } from '$ts/stores/isTouchscreen';
 	import { currentServer } from '$ts/stores/serverHealth';
 	import { windowWidth } from '$ts/stores/window';
 
@@ -189,4 +192,30 @@
 			</div>
 		</TabLikeInput>
 	{/if}
+	<div class="w-full flex items-center justify-center order-last">
+		<NoBgButton onClick={() => advancedMode.set(!$advancedMode)}>
+			<div
+				class="max-w-full min-w-0 overflow-hidden flex items-center gap-2 text-sm transition-none"
+			>
+				<div
+					class="w-5 h-5 flex-shrink-0 transform transition {$advancedMode
+						? 'rotate-180'
+						: 'rotate-0'}"
+				>
+					<IconChevronDown
+						class="w-full h-full transition text-c-on-bg/25 {!$isTouchscreen
+							? 'group-hover:text-c-primary'
+							: ''}"
+					/>
+				</div>
+				<p
+					class="flex-shrink whitespace-nowrap overflow-hidden overflow-ellipsis text-c-on-bg/25 transition {!$isTouchscreen
+						? 'group-hover:text-c-primary'
+						: ''}"
+				>
+					{$advancedMode ? $LL.Shared.LessOptionsTitle() : $LL.Shared.MoreOptionsTitle()}
+				</p>
+			</div>
+		</NoBgButton>
+	</div>
 </div>
