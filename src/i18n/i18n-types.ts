@@ -575,6 +575,14 @@ type RootTranslation = {
 		 * U​n​k​n​o​w​n
 		 */
 		UnknownTitle: string
+		/**
+		 * M​o​r​e​ ​O​p​t​i​o​n​s
+		 */
+		MoreOptionsTitle: string
+		/**
+		 * L​e​s​s​ ​O​p​t​i​o​n​s
+		 */
+		LessOptionsTitle: string
 	}
 	Error: {
 		/**
@@ -1182,6 +1190,14 @@ export type TranslationFunctions = {
 		 * Unknown
 		 */
 		UnknownTitle: () => LocalizedString
+		/**
+		 * More Options
+		 */
+		MoreOptionsTitle: () => LocalizedString
+		/**
+		 * Less Options
+		 */
+		LessOptionsTitle: () => LocalizedString
 	}
 	Error: {
 		/**
