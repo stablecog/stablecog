@@ -186,6 +186,17 @@ const hi: BaseTranslation = {
 				simpleName: 'Animated Movie'
 			}
 		},
+		SchedulerOptions: {
+			'55027f8b-f046-4e71-bc51-53d5448661e0': {
+				realName: 'LMS'
+			},
+			'6fb13b76-9900-4fa4-abf8-8f843e034a7f': {
+				realName: 'Euler'
+			},
+			'af2679a4-dbbb-4950-8c06-c3bb15416ef6': {
+				realName: 'Euler A.'
+			}
+		},
 		UnknownTitle: 'Unknown'
 	},
 	Error: {

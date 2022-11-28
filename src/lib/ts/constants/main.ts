@@ -2,7 +2,7 @@ import LL from '$i18n/i18n-svelte';
 import type { TModelNameCog, TSchedulerNameCog } from '$routes/api/generate/+server';
 import { advancedMode } from '$ts/stores/advancedMode';
 import type { TTab } from '$ts/types/main';
-import { derived, type Readable, type Writable } from 'svelte/store';
+import { derived, readable, type Readable, type Writable } from 'svelte/store';
 
 export const estimatedDurationBufferRatio = 0.1;
 export const estimatedDurationDefault = 10;
@@ -141,23 +141,37 @@ export const schedulerIdToCogSchedulerName: Record<TAvailableSchedulerId, TSched
 	'af2679a4-dbbb-4950-8c06-c3bb15416ef6': 'K_EULER_ANCESTRAL'
 };
 
-export const schedulerIdToDisplayName = {
-	'55027f8b-f046-4e71-bc51-53d5448661e0': 'LMS',
-	'6fb13b76-9900-4fa4-abf8-8f843e034a7f': 'Euler',
-	'af2679a4-dbbb-4950-8c06-c3bb15416ef6': 'Euler A.'
-};
+export const schedulerIdToDisplayName = derived<
+	[Readable<TranslationFunctions>],
+	Record<TAvailableSchedulerId, string>
+>([LL], ([$LL]) => {
+	return {
+		'55027f8b-f046-4e71-bc51-53d5448661e0':
+			$LL.Shared.SchedulerOptions['55027f8b-f046-4e71-bc51-53d5448661e0'].realName(),
+		'6fb13b76-9900-4fa4-abf8-8f843e034a7f':
+			$LL.Shared.SchedulerOptions['6fb13b76-9900-4fa4-abf8-8f843e034a7f'].realName(),
+		'af2679a4-dbbb-4950-8c06-c3bb15416ef6':
+			$LL.Shared.SchedulerOptions['af2679a4-dbbb-4950-8c06-c3bb15416ef6'].realName()
+	};
+});
 
-export const availableSchedulerIdDropdownItems: TTab<TAvailableSchedulerId>[] = [
-	{
-		label: schedulerIdToDisplayName['55027f8b-f046-4e71-bc51-53d5448661e0'],
-		value: '55027f8b-f046-4e71-bc51-53d5448661e0'
-	},
-	{
-		label: schedulerIdToDisplayName['6fb13b76-9900-4fa4-abf8-8f843e034a7f'],
-		value: '6fb13b76-9900-4fa4-abf8-8f843e034a7f'
-	},
-	{
-		label: schedulerIdToDisplayName['af2679a4-dbbb-4950-8c06-c3bb15416ef6'],
-		value: 'af2679a4-dbbb-4950-8c06-c3bb15416ef6'
+export const availableSchedulerIdDropdownItems = derived(
+	[schedulerIdToDisplayName],
+	([$schedulerIdToDisplayName]) => {
+		const items: TTab<TAvailableSchedulerId>[] = [
+			{
+				label: $schedulerIdToDisplayName['55027f8b-f046-4e71-bc51-53d5448661e0'],
+				value: '55027f8b-f046-4e71-bc51-53d5448661e0'
+			},
+			{
+				label: $schedulerIdToDisplayName['6fb13b76-9900-4fa4-abf8-8f843e034a7f'],
+				value: '6fb13b76-9900-4fa4-abf8-8f843e034a7f'
+			},
+			{
+				label: $schedulerIdToDisplayName['af2679a4-dbbb-4950-8c06-c3bb15416ef6'],
+				value: 'af2679a4-dbbb-4950-8c06-c3bb15416ef6'
+			}
+		];
+		return items;
 	}
-];
+);

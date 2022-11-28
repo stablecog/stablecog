@@ -159,7 +159,7 @@
 			class="w-full md:w-84 max-w-full order-2"
 			dropdownClass={'max-h-[15rem]'}
 			bind:value={$generationSchedulerId}
-			items={availableSchedulerIdDropdownItems}
+			items={$availableSchedulerIdDropdownItems}
 			name="Scheduler"
 			bottomMinDistance={$windowWidth < 768 ? 0 : 72}
 		>

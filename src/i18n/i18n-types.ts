@@ -551,6 +551,26 @@ type RootTranslation = {
 				simpleName: string
 			}
 		}
+		SchedulerOptions: {
+			'55027f8b-f046-4e71-bc51-53d5448661e0': {
+				/**
+				 * L​M​S
+				 */
+				realName: string
+			}
+			'6fb13b76-9900-4fa4-abf8-8f843e034a7f': {
+				/**
+				 * E​u​l​e​r
+				 */
+				realName: string
+			}
+			'af2679a4-dbbb-4950-8c06-c3bb15416ef6': {
+				/**
+				 * E​u​l​e​r​ ​A​.
+				 */
+				realName: string
+			}
+		}
 		/**
 		 * U​n​k​n​o​w​n
 		 */
@@ -1136,6 +1156,26 @@ export type TranslationFunctions = {
 				 * Animated Movie
 				 */
 				simpleName: () => LocalizedString
+			}
+		}
+		SchedulerOptions: {
+			'55027f8b-f046-4e71-bc51-53d5448661e0': {
+				/**
+				 * LMS
+				 */
+				realName: () => LocalizedString
+			}
+			'6fb13b76-9900-4fa4-abf8-8f843e034a7f': {
+				/**
+				 * Euler
+				 */
+				realName: () => LocalizedString
+			}
+			'af2679a4-dbbb-4950-8c06-c3bb15416ef6': {
+				/**
+				 * Euler A.
+				 */
+				realName: () => LocalizedString
 			}
 		}
 		/**
