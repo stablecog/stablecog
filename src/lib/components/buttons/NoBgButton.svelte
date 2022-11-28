@@ -6,8 +6,9 @@
 	export let prefetch: boolean = false;
 	export let onClick: (() => void) | undefined = undefined;
 	export { classes as class };
-	export let disabled = false;
 	let classes = '';
+	export let disabled = false;
+	export let hoverFrom: 'bottom' | 'top' = 'bottom';
 </script>
 
 {#if href}
@@ -24,8 +25,10 @@
 		<div class="w-full h-full absolute left-0 top-0 p-0.5">
 			<div class="w-full h-full relative z-0 overflow-hidden rounded-xl">
 				<div
-					class="w-full h-full origin-left transition transform translate-y-full
-					bg-c-primary/25 rounded-xl {!$isTouchscreen ? 'group-hover:translate-y-0' : ''}"
+					class="w-full h-full origin-left transition transform {hoverFrom === 'top'
+						? '-translate-y-full'
+						: 'translate-y-full'}
+					bg-c-primary/15 rounded-xl {!$isTouchscreen ? 'group-hover:translate-y-0' : ''}"
 				/>
 			</div>
 		</div>
@@ -45,8 +48,10 @@
 		<div class="w-full h-full absolute left-0 top-0 p-0.5">
 			<div class="w-full h-full relative z-0 overflow-hidden rounded-xl">
 				<div
-					class="w-full h-full origin-left transition transform translate-y-full
-					bg-c-primary/25 rounded-xl {!$isTouchscreen ? 'group-hover:translate-y-0' : ''}"
+					class="w-full h-full origin-left transition transform {hoverFrom === 'top'
+						? '-translate-y-full'
+						: 'translate-y-full'}
+					bg-c-primary/15 rounded-xl {!$isTouchscreen ? 'group-hover:translate-y-0' : ''}"
 				/>
 			</div>
 		</div>
