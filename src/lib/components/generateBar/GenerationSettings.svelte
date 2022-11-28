@@ -192,7 +192,7 @@
 			</div>
 		</TabLikeInput>
 	{/if}
-	<div class="w-full flex items-center justify-center order-last">
+	<div class="w-full flex items-center justify-center order-last -mb-2 md:mb-0">
 		<NoBgButton onClick={() => advancedMode.set(!$advancedMode)}>
 			<div
 				class="max-w-full min-w-0 overflow-hidden flex items-center gap-2 text-sm transition-none px-1"
