@@ -88,7 +88,7 @@
 				<p>{$LL.Home.SchedulerDropdown.Title()}</p>
 			</div>
 			<p class="font-bold">
-				{schedulerIdToDisplayName[generation.scheduler?.id ?? schedulerIdDefault] ??
+				{$schedulerIdToDisplayName[generation.scheduler?.id ?? schedulerIdDefault] ??
 					$LL.Shared.UnknownTitle()}
 			</p>
 		</div>
