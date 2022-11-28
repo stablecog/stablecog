@@ -198,7 +198,9 @@ const tr: BaseTranslation = {
 				realName: 'Euler A.'
 			}
 		},
-		UnknownTitle: 'Bilinmeyen'
+		UnknownTitle: 'Bilinmeyen',
+		MoreOptionsTitle: 'Daha Fazla Seçenek',
+		LessOptionsTitle: 'Daha Az Seçenek'
 	},
 	Error: {
 		SomethingWentWrong: 'Bir şeyler ters gitti :(',

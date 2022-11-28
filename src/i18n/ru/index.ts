@@ -198,7 +198,9 @@ const ru: BaseTranslation = {
 				realName: 'Euler A.'
 			}
 		},
-		UnknownTitle: 'Unknown'
+		UnknownTitle: 'Unknown',
+		MoreOptionsTitle: 'More Options',
+		LessOptionsTitle: 'Less Options'
 	},
 	Error: {
 		SomethingWentWrong: 'Что-то пошло не так :(',

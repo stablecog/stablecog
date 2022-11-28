@@ -198,7 +198,9 @@ const ko: BaseTranslation = {
 				realName: 'Euler A.'
 			}
 		},
-		UnknownTitle: 'Unknown'
+		UnknownTitle: 'Unknown',
+		MoreOptionsTitle: 'More Options',
+		LessOptionsTitle: 'Less Options'
 	},
 	Error: {
 		SomethingWentWrong: '웁스.. 뭔가 잘못됐어요. :(',

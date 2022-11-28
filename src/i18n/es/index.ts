@@ -198,7 +198,9 @@ const es: BaseTranslation = {
 				realName: 'Euler A.'
 			}
 		},
-		UnknownTitle: 'Unknown'
+		UnknownTitle: 'Unknown',
+		MoreOptionsTitle: 'More Options',
+		LessOptionsTitle: 'Less Options'
 	},
 	Error: {
 		SomethingWentWrong: 'Algo salió mal :(',
