@@ -1,11 +1,20 @@
+import { generationLog, getIsNSFW } from '$routes/api/generate/helpers';
+import {
+	insertGenerationSupabase,
+	updateGenerationAsFailedSupabase,
+	updateGenerationAsSucceededSupabase
+} from '$routes/api/generate/supabase';
+import type {
+	TGenerateImageData,
+	TGenerationLogObject,
+	TPredictionsRequest
+} from '$routes/api/generate/types';
 import {
 	maxSeed,
 	modelIdDefault,
 	modelIdToCogModelName,
 	schedulerIdDefault,
-	schedulerIdToCogSchedulerName,
-	type TAvailableModelId,
-	type TAvailableSchedulerId
+	schedulerIdToCogSchedulerName
 } from '$ts/constants/main';
 import { supabaseAdmin } from '$ts/constants/supabaseAdmin';
 import { formatPrompt } from '$ts/helpers/formatPrompt';
@@ -14,14 +23,12 @@ import { isValue } from '$ts/helpers/isValue';
 import { pickServerUrl } from '$ts/queries/db/pickServerUrl';
 import { uploadToGallery } from '$ts/queries/db/uploadToGallery';
 import type { TGenerationRequest, TGenerationResponse } from '$ts/types/main';
-import type { PostgrestError } from '@supabase/supabase-js';
 import type { RequestHandler } from '@sveltejs/kit';
 
 export const POST: RequestHandler = async ({ request }) => {
 	const startTimestamp = Date.now();
 	const { headers } = request;
 	const countryCode = headers.get('cf-ipcountry');
-	let generationId: string | undefined;
 	const userAgent = headers.get('user-agent');
 	const deviceInfo = getDeviceInfo(userAgent);
 	let generationDurationMs: number | undefined;
@@ -60,67 +67,46 @@ export const POST: RequestHandler = async ({ request }) => {
 				negative_prompt.length > maxLogLength ? '...' : ''
 		  }`
 		: undefined;
-	try {
-		generationLog({
-			text: 'Started generation',
-			prompt: sliced_prompt,
-			negative_prompt: sliced_negative_prompt,
-			model_id,
-			scheduler_id,
-			width,
-			height,
-			num_inference_steps,
-			guidance_scale,
-			seed,
-			server_url: picked_server_url
-		});
-		// Is Supabase is enabled, record the generation
-		if (supabaseAdmin !== undefined) {
-			try {
-				const startTimestamp = Date.now();
-				let { data, error }: TDBGenerationProcessRes = await supabaseAdmin
-					.from('generation')
-					.insert({
-						status: 'started',
-						model_id,
-						scheduler_id,
-						seed,
-						width,
-						height,
-						num_inference_steps,
-						guidance_scale,
-						server_url: picked_server_url,
-						country_code: countryCode || null,
-						device_type: deviceInfo.type,
-						device_browser: deviceInfo.browser,
-						device_os: deviceInfo.os,
-						user_agent: userAgent
-					})
-					.select('id');
-				if (error) {
-					console.log(error);
-				}
-				if (data) {
-					generationId = data?.[0].id;
-					const endTimestamp = Date.now();
-					generationLog({
-						text: `Inserted into the DB in: ${(endTimestamp - startTimestamp) / 1000}s`,
-						prompt: sliced_prompt,
-						negative_prompt: sliced_negative_prompt,
-						model_id,
-						scheduler_id,
-						width,
-						height,
-						num_inference_steps,
-						guidance_scale,
-						seed,
-						server_url: picked_server_url
-					});
-				}
-			} catch (error) {
-				console.log(error);
-			}
+	const logObject: TGenerationLogObject = {
+		prompt: sliced_prompt,
+		negative_prompt: sliced_negative_prompt,
+		model_id,
+		scheduler_id,
+		width,
+		height,
+		num_inference_steps,
+		guidance_scale,
+		seed,
+		server_url: picked_server_url
+	};
+	generationLog({
+		text: 'Started generation',
+		logObject
+	});
+	// Is Supabase is enabled, record the generation
+	let generationId: string | undefined;
+	if (supabaseAdmin !== undefined) {
+		try {
+			const iRes = await insertGenerationSupabase({
+				width,
+				height,
+				seed,
+				countryCode,
+				deviceInfo,
+				logObject,
+				guidance_scale,
+				model_id,
+				num_inference_steps,
+				picked_server_url,
+				scheduler_id,
+				userAgent
+			});
+			if (iRes.generationId !== undefined) generationId = iRes.generationId;
+		} catch (error) {
+			console.log(error);
 		}
+	}
+	try {
 		const startTimestamp = Date.now();
 		const predictionsBody: TPredictionsRequest = {
 			input: {
@@ -161,108 +147,22 @@ export const POST: RequestHandler = async ({ request }) => {
 		}
 		generationLog({
 			text: `Ended generation in ${(endTimestamp - startTimestamp) / 1000}s`,
-			prompt: sliced_prompt,
-			negative_prompt: sliced_negative_prompt,
-			model_id,
-			scheduler_id,
-			width,
-			height,
-			num_inference_steps,
-			guidance_scale,
-			seed,
-			server_url: picked_server_url
+			logObject
 		});
 		// If Supabase is enabled, update the generation with prompt, negative prompt, duration and status
 		if (output && !isNSFW && !data.error && supabaseAdmin !== undefined) {
-			let negative_prompt_id: string | undefined;
 			let prompt_id: string | undefined;
+			let negative_prompt_id: string | undefined;
 			try {
-				const startTimestamp = Date.now();
-				// Check if the prompt exists in the DB already
-				let { data: promptData, error: promptErr } = await supabaseAdmin
-					.from('prompt')
-					.select('id')
-					.eq('text', prompt)
-					.maybeSingle();
-				if (promptErr) {
-					console.log(promptErr);
-				} else if (promptData?.id) {
-					prompt_id = promptData.id;
-				} else {
-					// If not, insert it
-					let { data: newPromptData, error: newPromptErr } = await supabaseAdmin
-						.from('prompt')
-						.insert({
-							text: prompt
-						})
-						.select('id')
-						.single();
-					if (newPromptErr) {
-						console.log(newPromptErr);
-					} else {
-						prompt_id = newPromptData?.id;
-					}
-				}
-				if (isValue(negative_prompt)) {
-					let { data: negativePromptData, error: negativePromptErr } = await supabaseAdmin
-						.from('negative_prompt')
-						.select('id')
-						.eq('text', negative_prompt)
-						.maybeSingle();
-					if (negativePromptErr) {
-						console.log(negativePromptErr);
-					} else if (negativePromptData?.id) {
-						negative_prompt_id = negativePromptData.id;
-					} else {
-						// If not, insert it
-						let { data: newNegativePromptData, error: newNegativePromptErr } = await supabaseAdmin
-							.from('negative_prompt')
-							.insert({
-								text: negative_prompt
-							})
-							.select('id')
-							.single();
-						if (newNegativePromptErr) {
-							console.log(newNegativePromptErr);
-						} else {
-							negative_prompt_id = newNegativePromptData?.id;
-						}
-					}
-				}
-				// Update the generation with the prompt, negative prompt, duration and status
-				let { data, error } = await supabaseAdmin
-					.from('generation')
-					.update([
-						{
-							prompt_id,
-							negative_prompt_id,
-							duration_ms: generationDurationMs,
-							status: 'succeeded'
-						}
-					])
-					.eq('id', generationId)
-					.select('id');
-				if (error) {
-					console.log('error', error.message);
-				}
-				if (data) {
-					const endTimestamp = Date.now();
-					generationLog({
-						text: `Updated the DB record with "succeeded" in: ${
-							(endTimestamp - startTimestamp) / 1000
-						}s`,
-						prompt: sliced_prompt,
-						negative_prompt: sliced_negative_prompt,
-						model_id,
-						scheduler_id,
-						width,
-						height,
-						num_inference_steps,
-						guidance_scale,
-						seed,
-						server_url: picked_server_url
-					});
-				}
+				const uRes = await updateGenerationAsSucceededSupabase({
+					prompt,
+					negative_prompt,
+					generationId,
+					generationDurationMs,
+					logObject
+				});
+				if (uRes.prompt_id !== undefined) prompt_id = uRes.prompt_id;
+				if (uRes.negative_prompt_id !== undefined) negative_prompt_id = uRes.negative_prompt_id;
 			} catch (error) {
 				console.log(error);
 			}
@@ -285,37 +185,7 @@ export const POST: RequestHandler = async ({ request }) => {
 			}
 		} else if (supabaseAdmin !== undefined) {
 			try {
-				const startTimestamp = Date.now();
-				let { data, error } = await supabaseAdmin
-					.from('generation')
-					.update([
-						{
-							duration_ms: generationDurationMs,
-							status: 'failed'
-						}
-					])
-					.eq('id', generationId);
-				if (error) {
-					console.log(error);
-				}
-				if (data) {
-					const endTimestamp = Date.now();
-					generationLog({
-						text: `Updated the DB record with "failed" in: ${
-							(endTimestamp - startTimestamp) / 1000
-						}s`,
-						prompt: sliced_prompt,
-						negative_prompt: sliced_negative_prompt,
-						model_id,
-						scheduler_id,
-						width,
-						height,
-						num_inference_steps,
-						guidance_scale,
-						seed,
-						server_url: picked_server_url
-					});
-				}
+				await updateGenerationAsFailedSupabase({ generationId, generationDurationMs, logObject });
 			} catch (error) {
 				console.log(error);
 			}
@@ -339,38 +209,7 @@ export const POST: RequestHandler = async ({ request }) => {
 		);
 		if (supabaseAdmin !== undefined) {
 			try {
-				const startTimestamp = Date.now();
-				let { data, error } = await supabaseAdmin
-					.from('generation')
-					.update([
-						{
-							duration_ms: generationDurationMs,
-							status: 'failed'
-						}
-					])
-					.eq('id', generationId)
-					.select('id');
-				if (error) {
-					console.log(error);
-				}
-				if (data) {
-					const endTimestamp = Date.now();
-					generationLog({
-						text: `Updated the DB record with "failed" in: ${
-							(endTimestamp - startTimestamp) / 1000
-						}s`,
-						prompt: sliced_prompt,
-						negative_prompt: sliced_negative_prompt,
-						model_id,
-						scheduler_id,
-						width,
-						height,
-						num_inference_steps,
-						guidance_scale,
-						seed,
-						server_url: picked_server_url
-					});
-				}
+				await updateGenerationAsFailedSupabase({ generationId, generationDurationMs, logObject });
 			} catch (error) {
 				console.log(error);
 			}
@@ -378,114 +217,3 @@ export const POST: RequestHandler = async ({ request }) => {
 		return new Response(JSON.stringify({ error: 'Something went wrong :(' }));
 	}
 };
-
-function getIsNSFW(imageDataB64: string) {
-	const pngStart = 'data:image/png;base64,';
-	const blackStringPng = Array.from({ length: 200 }, () => 'A').join('');
-	const jpegStart = 'data:image/jpeg;base64,';
-	const blackStringJpeg = Array.from({ length: 30 }, () => 'iiigAooooAKKKKAC').join('');
-	if (!imageDataB64) {
-		return false;
-	}
-	return (
-		(imageDataB64.startsWith(jpegStart) && imageDataB64.includes(blackStringJpeg)) ||
-		(imageDataB64.startsWith(pngStart) && imageDataB64.includes(blackStringPng))
-	);
-}
-
-interface TGenerateImageData {
-	output: string[];
-	status: TStatus;
-	error?: string;
-}
-
-export type TSchedulerNameCog = 'K_LMS' | 'K_EULER' | 'K_EULER_ANCESTRAL';
-export type TModelNameCog =
-	| 'Stable Diffusion v1.5'
-	| 'Openjourney'
-	| 'Arcane Diffusion'
-	| 'Ghibli Diffusion'
-	| 'Mo-Di Diffusion';
-export type TOutputImageExt = 'png' | 'jpg';
-
-export interface TPredictionsRequest {
-	input: {
-		prompt: string;
-		negative_prompt?: string;
-		model: TModelNameCog;
-		scheduler: TSchedulerNameCog;
-		width: string;
-		height: string;
-		seed: string;
-		num_inference_steps: string;
-		guidance_scale: string;
-		output_image_ext: TOutputImageExt;
-	};
-}
-type TStatus = 'succeeded' | 'failed';
-
-export type TDBGenerationProcessStatus = 'started' | 'succeeded' | 'failed' | 'rejected';
-
-export interface TDBGenerationProcessRes {
-	data:
-		| {
-				id: string;
-				status: TDBGenerationProcessStatus;
-				generation_id: string | null;
-				country_code: string | null;
-				created_at: string;
-				updated_at: string;
-		  }[]
-		| null;
-	error: PostgrestError | null;
-}
-
-function generationLog({
-	text,
-	prompt,
-	negative_prompt,
-	model_id,
-	scheduler_id,
-	width,
-	height,
-	num_inference_steps,
-	guidance_scale,
-	seed,
-	server_url
-}: {
-	text: string;
-	prompt: string;
-	negative_prompt: string | undefined;
-	model_id: TAvailableModelId;
-	scheduler_id: TAvailableSchedulerId;
-	width: number;
-	height: number;
-	num_inference_steps: number;
-	guidance_scale: number;
-	seed: number;
-	server_url: string;
-}) {
-	console.log(
-		'----',
-		text,
-		'--',
-		`"${prompt}"`,
-		`--${negative_prompt ? ` "${negative_prompt}" --` : ''}`,
-		`${modelIdToCogModelName[model_id]}`,
-		'--',
-		`${schedulerIdToCogSchedulerName[scheduler_id]}`,
-		'--',
-		width,
-		'--',
-		height,
-		'--',
-		guidance_scale,
-		'--',
-		num_inference_steps,
-		'--',
-		seed,
-		'--',
-		server_url,
-		'----'
-	);
-}
