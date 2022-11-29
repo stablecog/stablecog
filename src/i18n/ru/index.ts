@@ -37,13 +37,13 @@ const ru: BaseTranslation = {
 				'Для воспроизведения результата. Сид в сочетании с тем же текстом запроса и опциями генерирует одно и то же изображение.'
 		},
 		ModelDropdown: {
-			Title: 'Model',
-			Paragraph: 'The AI Model that will be used to generate the image.'
+			Title: 'Модель',
+			Paragraph: 'Модель ИИ, которая будет использоваться для создания изображения.'
 		},
 		SchedulerDropdown: {
-			Title: 'Scheduler',
+			Title: 'Планировщик',
 			Paragraph:
-				'Diffuse the image in a certain way. It can drastically change the generated image. Some require less steps to produce good results.'
+				'Рассеивает изображение определенным образом. Может кардинально изменить созданное изображение. Некоторые планировщики требуют меньше шагов для получения хороших результатов.'
 		},
 		SubmitToGalleryQuestion: {
 			Title: 'Отправить сгенерированные изображения в галерею?',
@@ -97,10 +97,10 @@ const ru: BaseTranslation = {
 		SwitchServerButton: 'Сменить сервер',
 		SubmitToGalleryToggle: 'Отправить в галерею',
 		AdvancedModeToggle: 'Расширенный режим',
-		AdvancedOptionsDropdown: 'Advanced Options',
-		AdvancedDropdown: 'Advanced',
-		GenerationSettingsButton: 'Generation Settings',
-		GenerationSettingsTitle: 'Generation Settings',
+		AdvancedOptionsDropdown: 'Дополнительные настройки',
+		AdvancedDropdown: 'Дополнительно',
+		GenerationSettingsButton: 'Настройки генерации',
+		GenerationSettingsTitle: 'Настройки генерации',
 		DarkModeToggle: 'Тёмный режим'
 	},
 	GenerationFullscreen: {
@@ -171,20 +171,23 @@ const ru: BaseTranslation = {
 		ModelOptions: {
 			'048b4aa3-5586-47ed-900f-f4341c96bdb2': {
 				realName: 'Stable Diffusion 1.5',
-				simpleName: 'General'
+				simpleName: 'Обычный'
 			},
 			'8acfe4c8-751d-4aa6-8c3c-844e3ef478e0': {
 				realName: 'Openjourney',
-				simpleName: '3D Digital Art'
+				simpleName: '3D изображение'
 			},
 			'36d9d835-646f-4fc7-b9fe-98654464bf8e': {
 				realName: 'Arcane Diffusion',
-				simpleName: '3D Comic'
+				simpleName: '3D комикс'
 			},
-			'48a7031d-43b6-4a23-9f8c-8020eb6862e4': { realName: 'Ghibli Diffusion', simpleName: 'Anime' },
+			'48a7031d-43b6-4a23-9f8c-8020eb6862e4': {
+				realName: 'Ghibli Diffusion',
+				simpleName: 'Аниме'
+			},
 			'790c80e1-65b1-4556-9332-196344389572': {
 				realName: 'Mo-Di Diffusion',
-				simpleName: 'Animated Movie'
+				simpleName: 'Анимированный фильм'
 			}
 		},
 		SchedulerOptions: {
@@ -198,9 +201,9 @@ const ru: BaseTranslation = {
 				realName: 'Euler A.'
 			}
 		},
-		UnknownTitle: 'Unknown',
-		MoreOptionsTitle: 'More Options',
-		LessOptionsTitle: 'Less Options'
+		UnknownTitle: 'Неизвестно',
+		MoreOptionsTitle: 'Больше опций',
+		LessOptionsTitle: 'Меньше опций'
 	},
 	Error: {
 		SomethingWentWrong: 'Что-то пошло не так :(',

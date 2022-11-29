@@ -37,13 +37,13 @@ const fr: BaseTranslation = {
 				"Permet d'obtenir des résultats reproductibles. Une même graine avec la même description textuelle et les mêmes options génèrent la même image."
 		},
 		ModelDropdown: {
-			Title: 'Model',
-			Paragraph: 'The AI Model that will be used to generate the image.'
+			Title: 'Modèle',
+			Paragraph: "Le modèle IA qui sera utilisé pour générer l'image."
 		},
 		SchedulerDropdown: {
-			Title: 'Scheduler',
+			Title: 'Programmateur',
 			Paragraph:
-				'Diffuse the image in a certain way. It can drastically change the generated image. Some require less steps to produce good results.'
+				"Choisit une manière particulière de générer (diffuser) l'image. Cela peut changer radicalement l'image générée. Certaines nécessitent moins d'étapes pour produire de bons résultats."
 		},
 		SubmitToGalleryQuestion: {
 			Title: 'Soumettre les images générées à la galerie ?',
@@ -97,10 +97,10 @@ const fr: BaseTranslation = {
 		SwitchServerButton: 'Changer de serveur',
 		SubmitToGalleryToggle: 'Soumettre à la galerie',
 		AdvancedModeToggle: 'Mode avancé',
-		AdvancedOptionsDropdown: 'Advanced Options',
-		AdvancedDropdown: 'Advanced',
-		GenerationSettingsButton: 'Generation Settings',
-		GenerationSettingsTitle: 'Generation Settings',
+		AdvancedOptionsDropdown: 'Options avancées',
+		AdvancedDropdown: 'Avancé',
+		GenerationSettingsButton: 'Paramètres de génération',
+		GenerationSettingsTitle: 'Paramètres de génération',
 		DarkModeToggle: 'Mode sombre'
 	},
 	GenerationFullscreen: {
@@ -171,20 +171,23 @@ const fr: BaseTranslation = {
 		ModelOptions: {
 			'048b4aa3-5586-47ed-900f-f4341c96bdb2': {
 				realName: 'Stable Diffusion 1.5',
-				simpleName: 'General'
+				simpleName: 'Général'
 			},
 			'8acfe4c8-751d-4aa6-8c3c-844e3ef478e0': {
 				realName: 'Openjourney',
-				simpleName: '3D Digital Art'
+				simpleName: 'Art numérique 3D'
 			},
 			'36d9d835-646f-4fc7-b9fe-98654464bf8e': {
 				realName: 'Arcane Diffusion',
-				simpleName: '3D Comic'
+				simpleName: 'Bande dessinée 3D'
 			},
-			'48a7031d-43b6-4a23-9f8c-8020eb6862e4': { realName: 'Ghibli Diffusion', simpleName: 'Anime' },
+			'48a7031d-43b6-4a23-9f8c-8020eb6862e4': {
+				realName: 'Ghibli Diffusion',
+				simpleName: 'Anime'
+			},
 			'790c80e1-65b1-4556-9332-196344389572': {
 				realName: 'Mo-Di Diffusion',
-				simpleName: 'Animated Movie'
+				simpleName: 'Film animé'
 			}
 		},
 		SchedulerOptions: {
@@ -198,9 +201,9 @@ const fr: BaseTranslation = {
 				realName: 'Euler A.'
 			}
 		},
-		UnknownTitle: 'Unknown',
-		MoreOptionsTitle: 'More Options',
-		LessOptionsTitle: 'Less Options'
+		UnknownTitle: 'Inconnu',
+		MoreOptionsTitle: "Plus D'Options",
+		LessOptionsTitle: "Moins D'Options"
 	},
 	Error: {
 		SomethingWentWrong: "Une erreur s'est produite :(",
