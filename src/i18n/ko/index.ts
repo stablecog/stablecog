@@ -37,13 +37,13 @@ const ko: BaseTranslation = {
 				'난수 시드 값을 바꾸면, 동일한 문구와 동일한 옵션에서 다른 이미지를 생성할 수 있습니다.'
 		},
 		ModelDropdown: {
-			Title: 'Model',
-			Paragraph: 'The AI Model that will be used to generate the image.'
+			Title: 'AI 모델',
+			Paragraph: '이미지를 생성하기 위한 AI 모델을 의미합니다.'
 		},
 		SchedulerDropdown: {
-			Title: 'Scheduler',
+			Title: '스케쥴러',
 			Paragraph:
-				'Diffuse the image in a certain way. It can drastically change the generated image. Some require less steps to produce good results.'
+				'이미지에 노이즈를 넣거나 샘플을 업데이트 하는 방법을 의미합니다. 스케쥴러의 변화는 생성된 이미지의 큰 변화로 이어집니다. 스케쥴러에 따라 더 적은 생성 스텝을 써야 좋은 이미지를 생성할 수 있습니다.'
 		},
 		SubmitToGalleryQuestion: {
 			Title: '생성한 이미지를 갤러리에 전시할까요?',
@@ -97,10 +97,10 @@ const ko: BaseTranslation = {
 		SwitchServerButton: '서버 변경하기',
 		SubmitToGalleryToggle: '갤러리에 전시하기',
 		AdvancedModeToggle: '고급 옵션 보기',
-		AdvancedOptionsDropdown: 'Advanced Options',
-		AdvancedDropdown: 'Advanced',
-		GenerationSettingsButton: 'Generation Settings',
-		GenerationSettingsTitle: 'Generation Settings',
+		AdvancedOptionsDropdown: '고급 옵션',
+		AdvancedDropdown: '고급 옵션',
+		GenerationSettingsButton: '생성 이미지 설정',
+		GenerationSettingsTitle: '생성 이미지 설정',
 		DarkModeToggle: '다크모드'
 	},
 	GenerationFullscreen: {
@@ -171,7 +171,7 @@ const ko: BaseTranslation = {
 		ModelOptions: {
 			'048b4aa3-5586-47ed-900f-f4341c96bdb2': {
 				realName: 'Stable Diffusion 1.5',
-				simpleName: 'General'
+				simpleName: '기본 모델'
 			},
 			'8acfe4c8-751d-4aa6-8c3c-844e3ef478e0': {
 				realName: 'Openjourney',
@@ -181,7 +181,10 @@ const ko: BaseTranslation = {
 				realName: 'Arcane Diffusion',
 				simpleName: '3D Comic'
 			},
-			'48a7031d-43b6-4a23-9f8c-8020eb6862e4': { realName: 'Ghibli Diffusion', simpleName: 'Anime' },
+			'48a7031d-43b6-4a23-9f8c-8020eb6862e4': {
+				realName: 'Ghibli Diffusion',
+				simpleName: 'Anime'
+			},
 			'790c80e1-65b1-4556-9332-196344389572': {
 				realName: 'Mo-Di Diffusion',
 				simpleName: 'Animated Movie'
@@ -198,9 +201,9 @@ const ko: BaseTranslation = {
 				realName: 'Euler A.'
 			}
 		},
-		UnknownTitle: 'Unknown',
-		MoreOptionsTitle: 'More Options',
-		LessOptionsTitle: 'Less Options'
+		UnknownTitle: '알 수 없음',
+		MoreOptionsTitle: '더 많은 옵션 보기',
+		LessOptionsTitle: '옵션 숨기기'
 	},
 	Error: {
 		SomethingWentWrong: '웁스.. 뭔가 잘못됐어요. :(',
@@ -220,4 +223,5 @@ const ko: BaseTranslation = {
 		GalleryButton: '갤러리 관리'
 	}
 };
+
 export default ko;
