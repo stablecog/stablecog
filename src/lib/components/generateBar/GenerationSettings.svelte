@@ -70,7 +70,7 @@
 			<div
 				slot="title"
 				use:tooltip={$negativePromptTooltip}
-				class="py-2 px-4 flex items-center justify-center"
+				class="p-3.5 flex items-center justify-center"
 			>
 				<IconChatBubbleCancel class="w-6 h-6 text-c-on-bg/25" />
 			</div>
@@ -84,11 +84,7 @@
 		name="Width"
 		hideSelected={!isCheckComplete}
 	>
-		<div
-			slot="title"
-			use:tooltip={$widthTooltip}
-			class="py-2 px-4 flex items-center justify-center"
-		>
+		<div slot="title" use:tooltip={$widthTooltip} class="p-3.5 flex items-center justify-center">
 			<IconWidth class="w-6 h-6 text-c-on-bg/25" />
 		</div>
 	</TabBar>
@@ -100,11 +96,7 @@
 		name="Height"
 		hideSelected={!isCheckComplete}
 	>
-		<div
-			slot="title"
-			use:tooltip={$heightTooltip}
-			class="py-2 px-4 flex items-center justify-center"
-		>
+		<div slot="title" use:tooltip={$heightTooltip} class="p-3.5 flex items-center justify-center">
 			<IconHeight class="w-6 h-6 text-c-on-bg/25" />
 		</div>
 	</TabBar>
@@ -117,11 +109,7 @@
 		name="Model"
 		bottomMinDistance={$windowWidth < 768 ? 0 : 72}
 	>
-		<div
-			slot="title"
-			use:tooltip={$modelTooltip}
-			class="py-2 px-4 flex items-center justify-center"
-		>
+		<div slot="title" use:tooltip={$modelTooltip} class="p-3.5 flex items-center justify-center">
 			<IconBrain class="w-6 h-6 text-c-on-bg/25" />
 		</div>
 	</TabLikeDropdown>
@@ -136,7 +124,7 @@
 			<div
 				slot="title"
 				use:tooltip={$guidanceScaleTooltip}
-				class="py-2 px-4 flex items-center justify-center"
+				class="p-3.5 flex items-center justify-center"
 			>
 				<IconScale class="w-6 h-6 text-c-on-bg/25" />
 			</div>
@@ -152,7 +140,7 @@
 			<div
 				slot="title"
 				use:tooltip={$inferenceStepsTooltip}
-				class="py-2 px-4 flex items-center justify-center"
+				class="p-3.5 flex items-center justify-center"
 			>
 				<IconSteps class="w-6 h-6 text-c-on-bg/25" />
 			</div>
@@ -169,7 +157,7 @@
 			<div
 				slot="title"
 				use:tooltip={$schedulerTooltip}
-				class="py-2 px-4 flex items-center justify-center"
+				class="p-3.5 flex items-center justify-center"
 			>
 				<IconBubbles class="w-6 h-6 text-c-on-bg/25" />
 			</div>
@@ -183,11 +171,7 @@
 			max={maxSeed}
 			{formElement}
 		>
-			<div
-				slot="title"
-				use:tooltip={$seedTooltip}
-				class="py-3.5 px-4 flex items-center justify-center"
-			>
+			<div slot="title" use:tooltip={$seedTooltip} class="p-3.5 flex items-center justify-center">
 				<IconSeed class="w-6 h-6 text-c-on-bg/25" />
 			</div>
 		</TabLikeInput>
