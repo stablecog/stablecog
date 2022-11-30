@@ -1,4 +1,5 @@
 import type { TAvailableModelId, TAvailableSchedulerId } from '$ts/constants/main';
+import type { TModelNameCog, TOutputImageExtCog, TSchedulerNameCog } from '$ts/types/cog';
 import type { PostgrestError } from '@supabase/supabase-js';
 
 export interface TGenerateImageData {
@@ -7,17 +8,7 @@ export interface TGenerateImageData {
 	error?: string;
 }
 
-export type TSchedulerNameCog = 'K_LMS' | 'K_EULER' | 'K_EULER_ANCESTRAL';
-
-export type TModelNameCog =
-	| 'Stable Diffusion v1.5'
-	| 'Openjourney'
-	| 'Arcane Diffusion'
-	| 'Ghibli Diffusion'
-	| 'Mo-Di Diffusion';
-export type TOutputImageExt = 'png' | 'jpg';
-
-export interface TPredictionsRequest {
+export interface TPredictionsRequestGeneration {
 	input: {
 		prompt: string;
 		negative_prompt?: string;
@@ -28,7 +19,7 @@ export interface TPredictionsRequest {
 		seed: string;
 		num_inference_steps: string;
 		guidance_scale: string;
-		output_image_ext: TOutputImageExt;
+		output_image_ext: TOutputImageExtCog;
 	};
 }
 type TStatus = 'succeeded' | 'failed';
@@ -66,4 +57,19 @@ export interface TDeviceInfo {
 	type: string | null;
 	browser: string | null | undefined;
 	os: string | null | undefined;
+}
+
+export interface TInsertGenerationRequestSupabase {
+	width: number;
+	height: number;
+	seed: number;
+	num_inference_steps: number;
+	guidance_scale: number;
+	picked_server_url: string;
+	countryCode: string | null;
+	model_id: string;
+	scheduler_id: string;
+	userAgent: string | null;
+	logObject: TGenerationLogObject;
+	deviceInfo: TDeviceInfo;
 }

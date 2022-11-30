@@ -1,8 +1,19 @@
+import { upscaleLog } from '$routes/api/upscale/helpers';
+import {
+	insertUpscaleSupabase,
+	updateUpscaleAsFailedSupabase,
+	updateUpscaleAsSucceededSupabase
+} from '$routes/api/upscale/supabase';
+import type {
+	TPredictionsRequestUpscale,
+	TUpscaleData,
+	TUpscaleLogObject
+} from '$routes/api/upscale/types';
 import { supabaseAdmin } from '$ts/constants/supabaseAdmin';
 import { getDeviceInfo } from '$ts/helpers/getDeviceInfo';
 import { pickServerUrl } from '$ts/queries/db/pickServerUrl';
-import type { TUpscaleRequest, TUpscaleResponse, TUpscaleType } from '$ts/types/main';
-import type { PostgrestError } from '@supabase/supabase-js';
+import type { TTaskUCog } from '$ts/types/cog';
+import type { TUpscaleRequest, TUpscaleResponse } from '$ts/types/main';
 import type { RequestHandler } from '@sveltejs/kit';
 
 export const POST: RequestHandler = async ({ request }) => {
@@ -25,7 +36,7 @@ export const POST: RequestHandler = async ({ request }) => {
 	}: TUpscaleRequest = await request.json();
 
 	const scale = 4;
-	const type: TUpscaleType = 'Real-World Image Super-Resolution-Large';
+	const type: TTaskUCog = 'Real-World Image Super-Resolution-Large';
 
 	let picked_server_url: string;
 	try {
@@ -35,99 +46,62 @@ export const POST: RequestHandler = async ({ request }) => {
 		picked_server_url = server_url;
 	}
 
-	upscaleLog({ text: 'Started upscale', scale, server_url, type });
+	const logObject: TUpscaleLogObject = {
+		scale,
+		server_url,
+		type
+	};
+
+	upscaleLog({ text: 'Started upscale', logObject });
 
 	if (supabaseAdmin !== undefined) {
 		try {
-			const startTimestamp = Date.now();
-			let { data, error }: TDBUpscaleProcessRes = await supabaseAdmin
-				.from('upscale')
-				.insert({
-					status: 'started',
-					type,
-					scale,
-					prompt,
-					negative_prompt,
-					seed,
-					width,
-					height,
-					num_inference_steps,
-					guidance_scale,
-					server_url: picked_server_url,
-					country_code: countryCode || null,
-					device_type: deviceInfo.type,
-					device_browser: deviceInfo.browser,
-					device_os: deviceInfo.os,
-					user_agent: userAgent
-				})
-				.select('id');
-			if (error) {
-				console.log(error);
-			}
-			if (data) {
-				upscaleId = data?.[0].id;
-				const endTimestamp = Date.now();
-				upscaleLog({
-					text: `Inserted into the DB in: ${(endTimestamp - startTimestamp) / 1000}s`,
-					type,
-					scale,
-					server_url: picked_server_url
-				});
-			}
+			const res = await insertUpscaleSupabase({
+				type,
+				scale,
+				width,
+				height,
+				prompt,
+				negative_prompt,
+				picked_server_url,
+				logObject,
+				userAgent,
+				countryCode,
+				deviceInfo,
+				guidance_scale,
+				num_inference_steps,
+				seed
+			});
+			if (res?.upscaleId) upscaleId = res.upscaleId;
 		} catch (error) {
 			console.log(error);
 		}
 	}
 	try {
 		const startTimestamp = Date.now();
+		const predictionsBody: TPredictionsRequestUpscale = {
+			input: {
+				image_u: imageDataB64,
+				task_u: 'Real-World Image Super-Resolution-Large',
+				process_type: 'upscale'
+			}
+		};
 		const res = await fetch(`${picked_server_url}/predictions`, {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json'
 			},
-			body: JSON.stringify({
-				input: {
-					image_u: imageDataB64,
-					task_u: 'Real-World Image Super-Resolution-Large',
-					process_type: 'upscale'
-				}
-			})
+			body: JSON.stringify(predictionsBody)
 		});
 		const endTimestamp = Date.now();
 		const upscaleDurationMs = endTimestamp - startTimestamp;
 		upscaleLog({
 			text: `Finished upscale in: ${(endTimestamp - startTimestamp) / 1000}s`,
-			scale,
-			server_url,
-			type
+			logObject
 		});
-		if (supabaseAdmin !== undefined) {
+		if (supabaseAdmin !== undefined && upscaleId !== undefined) {
 			try {
-				const startTimestamp = Date.now();
-				let { data, error } = await supabaseAdmin
-					.from('upscale')
-					.update([
-						{
-							duration_ms: upscaleDurationMs,
-							status: 'succeeded'
-						}
-					])
-					.eq('id', upscaleId)
-					.select('id');
-				if (error) {
-					console.log('error', error.message);
-				}
-				if (data) {
-					const endTimestamp = Date.now();
-					upscaleLog({
-						text: `Updated the DB record with "succeeded" in: ${
-							(endTimestamp - startTimestamp) / 1000
-						}s`,
-						type,
-						scale,
-						server_url
-					});
-				}
+				await updateUpscaleAsSucceededSupabase({ upscaleId, upscaleDurationMs, logObject });
 			} catch (error) {
 				console.log(error);
 			}
@@ -147,37 +121,12 @@ export const POST: RequestHandler = async ({ request }) => {
 		const endTimestamp = Date.now();
 		upscaleLog({
 			text: `Upscale error in: ${(endTimestamp - startTimestamp) / 1000}s`,
-			scale,
-			server_url,
-			type
+			logObject
 		});
 		console.log(error);
 		if (supabaseAdmin !== undefined && upscaleId !== undefined) {
 			try {
-				const startTimestamp = Date.now();
-				let { data, error } = await supabaseAdmin
-					.from('upscale')
-					.update([
-						{
-							status: 'failed'
-						}
-					])
-					.eq('id', upscaleId)
-					.select('id');
-				if (error) {
-					console.log('error', error.message);
-				}
-				if (data) {
-					const endTimestamp = Date.now();
-					upscaleLog({
-						text: `Updated the DB record with "failed" in: ${
-							(endTimestamp - startTimestamp) / 1000
-						}s`,
-						type,
-						scale,
-						server_url
-					});
-				}
+				await updateUpscaleAsFailedSupabase({ upscaleId, logObject });
 			} catch (error) {
 				console.log(error);
 			}
@@ -185,34 +134,3 @@ export const POST: RequestHandler = async ({ request }) => {
 	}
 	return new Response(JSON.stringify({ error: 'Something went wrong :(' }));
 };
-
-function upscaleLog({
-	text,
-	scale,
-	type,
-	server_url
-}: {
-	text: string;
-	scale: number;
-	type: string;
-	server_url: string;
-}) {
-	console.log('----', text, '--', `"${type}"`, '--', scale, '--', server_url, '----');
-}
-
-interface TUpscaleData {
-	output: string[];
-	status: TStatus;
-	error?: string;
-}
-
-type TStatus = 'succeeded' | 'failed';
-
-export interface TDBUpscaleProcessRes {
-	data:
-		| {
-				id: string;
-		  }[]
-		| null;
-	error: PostgrestError | null;
-}

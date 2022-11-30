@@ -68,13 +68,6 @@ export interface TUpscaleResponse {
 	error?: string;
 }
 
-export type TUpscaleType =
-	| 'Real-World Image Super-Resolution-Large'
-	| 'Real-World Image Super-Resolution-Medium'
-	| 'Grayscale Image Denoising'
-	| 'Color Image Denoising'
-	| 'JPEG Compression Artifact Reduction';
-
 export interface TTab<T> {
 	label: string;
 	value: T;

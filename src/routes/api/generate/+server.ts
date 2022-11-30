@@ -7,7 +7,7 @@ import {
 import type {
 	TGenerateImageData,
 	TGenerationLogObject,
-	TPredictionsRequest
+	TPredictionsRequestGeneration
 } from '$routes/api/generate/types';
 import {
 	maxSeed,
@@ -108,7 +108,7 @@ export const POST: RequestHandler = async ({ request }) => {
 	}
 	try {
 		const startTimestamp = Date.now();
-		const predictionsBody: TPredictionsRequest = {
+		const predictionsBody: TPredictionsRequestGeneration = {
 			input: {
 				prompt,
 				negative_prompt,

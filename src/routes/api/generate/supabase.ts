@@ -2,7 +2,8 @@ import { generationLog } from '$routes/api/generate/helpers';
 import type {
 	TDBGenerationProcessRes,
 	TDeviceInfo,
-	TGenerationLogObject
+	TGenerationLogObject,
+	TInsertGenerationRequestSupabase
 } from '$routes/api/generate/types';
 import { supabaseAdmin } from '$ts/constants/supabaseAdmin';
 import { isValue } from '$ts/helpers/isValue';
@@ -117,20 +118,7 @@ export async function insertGenerationSupabase({
 	scheduler_id,
 	userAgent,
 	logObject
-}: {
-	width: number;
-	height: number;
-	seed: number;
-	num_inference_steps: number;
-	guidance_scale: number;
-	picked_server_url: string;
-	countryCode: string | null;
-	model_id: string;
-	scheduler_id: string;
-	userAgent: string | null;
-	logObject: TGenerationLogObject;
-	deviceInfo: TDeviceInfo;
-}) {
+}: TInsertGenerationRequestSupabase) {
 	let generationId: string | undefined;
 	if (!supabaseAdmin) {
 		console.log('No supabaseAdmin');
