@@ -36,13 +36,13 @@ const de: BaseTranslation = {
 				'Wiederholbare Ergebnisse. Ein Seed-Nummer kombiniert mit denselben Eingabewörtern und den gleichen Optionen erzeugt das gleiche Bild.'
 		},
 		ModelDropdown: {
-			Title: 'Model',
-			Paragraph: 'The AI Model that will be used to generate the image.'
+			Title: 'Modell',
+			Paragraph: 'Das KI-Modell, das verwendet wird, um das Bild zu generieren.'
 		},
 		SchedulerDropdown: {
-			Title: 'Scheduler',
+			Title: 'Zeitplaner',
 			Paragraph:
-				'Diffuse the image in a certain way. It can drastically change the generated image. Some require less steps to produce good results.'
+				'Diffundiere das Bild auf eine bestimmte Art und Weise. Es kann das generierte Bild drastisch verändern. Einige benötigen weniger Schritte, um gute Ergebnisse zu erzielen.'
 		},
 		SubmitToGalleryQuestion: {
 			Title: 'Generierte Bilder zur Galerie hinzufügen?',
@@ -96,10 +96,10 @@ const de: BaseTranslation = {
 		SwitchServerButton: 'Server wechseln',
 		SubmitToGalleryToggle: 'Zur Galerie zufügen',
 		AdvancedModeToggle: 'Erweiterter Modus',
-		AdvancedOptionsDropdown: 'Advanced Options',
-		AdvancedDropdown: 'Advanced',
-		GenerationSettingsButton: 'Generation Settings',
-		GenerationSettingsTitle: 'Generation Settings',
+		AdvancedOptionsDropdown: 'Erweiterte Einstellungen',
+		AdvancedDropdown: 'Erweitert',
+		GenerationSettingsButton: 'Generierungseinstellungen',
+		GenerationSettingsTitle: 'Generierungseinstellungen',
 		DarkModeToggle: 'Dunkel-Modus'
 	},
 	GenerationFullscreen: {
@@ -169,8 +169,8 @@ const de: BaseTranslation = {
 		},
 		ModelOptions: {
 			'048b4aa3-5586-47ed-900f-f4341c96bdb2': {
-				realName: 'Stable Diffusion 1.5',
-				simpleName: 'General'
+				realName: 'Stabile Diffusion 1,5',
+				simpleName: 'Allgemein'
 			},
 			'8acfe4c8-751d-4aa6-8c3c-844e3ef478e0': {
 				realName: 'Openjourney',
@@ -178,12 +178,15 @@ const de: BaseTranslation = {
 			},
 			'36d9d835-646f-4fc7-b9fe-98654464bf8e': {
 				realName: 'Arcane Diffusion',
-				simpleName: '3D Comic'
+				simpleName: '3D-Comic'
 			},
-			'48a7031d-43b6-4a23-9f8c-8020eb6862e4': { realName: 'Ghibli Diffusion', simpleName: 'Anime' },
+			'48a7031d-43b6-4a23-9f8c-8020eb6862e4': {
+				realName: 'Ghibli Diffusion',
+				simpleName: 'Anime'
+			},
 			'790c80e1-65b1-4556-9332-196344389572': {
 				realName: 'Mo-Di Diffusion',
-				simpleName: 'Animated Movie'
+				simpleName: 'Animierter Film'
 			}
 		},
 		SchedulerOptions: {
@@ -197,9 +200,9 @@ const de: BaseTranslation = {
 				realName: 'Euler A.'
 			}
 		},
-		UnknownTitle: 'Unknown',
-		MoreOptionsTitle: 'More Options',
-		LessOptionsTitle: 'Less Options'
+		UnknownTitle: 'Unbekannt',
+		MoreOptionsTitle: 'Weitere Optionen',
+		LessOptionsTitle: 'Weniger Optionen'
 	},
 	Error: {
 		SomethingWentWrong: 'Etwas ist schiefgelaufen :(',
