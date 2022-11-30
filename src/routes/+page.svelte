@@ -179,9 +179,9 @@
 					}
 					if (lastGeneration && startTimestamp !== undefined) {
 						const rate = getComputeRate(
-							Number(generationWidth),
-							Number(generationHeight),
-							Number(generationInferenceSteps)
+							Number($generationWidth),
+							Number($generationHeight),
+							Number($generationInferenceSteps)
 						);
 						lastGeneration.computeRatePerSec = Math.ceil(
 							rate / ((Date.now() - startTimestamp) / 1000)
