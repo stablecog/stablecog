@@ -50,7 +50,7 @@
 
 <MetaTag
 	title="Login | Admin"
-	description="Free & easy to use AI image generator using Stable Diffusion cogs. Use one of the default servers or connect to your own."
+	description="Free, easy to use, multilingual and open-source AI image generator using Stable Diffusion."
 	imageUrl="{canonicalUrl}/previews/home.png"
 	canonical="{canonicalUrl}{$page.url.pathname}"
 />
