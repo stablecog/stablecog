@@ -197,10 +197,11 @@
 				throw new Error(error);
 			}
 		} catch (error) {
-			pLogGeneration(error === 'NSFW' ? 'Failed-NSFW' : 'Failed');
-			uLogGeneration(error === 'NSFW' ? 'Failed-NSFW' : 'Failed');
+			const _error = error as Error;
+			pLogGeneration(_error.message === 'NSFW' ? 'Failed-NSFW' : 'Failed');
+			uLogGeneration(_error.message === 'NSFW' ? 'Failed-NSFW' : 'Failed');
 			status = 'error';
-			console.log(error);
+			console.log('Generation error', error);
 		} finally {
 			endTimestamp = Date.now();
 			console.log('generation duration:', (endTimestamp - startTimestamp) / 1000, 's');

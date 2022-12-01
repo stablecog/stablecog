@@ -14,7 +14,7 @@ import (
 	"github.com/yekta/stablecog/aux-go/shared"
 )
 
-const maxGenerationFailRate = 0.5
+const maxGenerationFailWithoutNSFWRate = 0.5
 const generationCountToCheck = 10
 const timeLayout = "2006-01-02T15:04:05.999999-07:00"
 
@@ -50,6 +50,7 @@ func CheckHealthAndNotify() {
 	wg.Wait()
 
 	var generationsFailed int
+	var generationsFailedWithoutNSFW int
 	for i, generation := range generations {
 		createdAt, err := time.Parse(timeLayout, generation.CreatedAt)
 		if i == 0 {
@@ -59,14 +60,20 @@ func CheckHealthAndNotify() {
 			}
 			lastGenerationTime = createdAt
 		}
-		if generation.Status == "failed" && generation.FailureReason != "NSFW" {
+		if generation.Status == "failed" {
 			generationsFailed++
+			if generation.FailureReason != "NSFW" {
+				generationsFailedWithoutNSFW++
+			}
 		} else if generation.Status == "started" && time.Now().Sub(createdAt) > maxGenerationDuration {
 			generationsFailed++
+			generationsFailedWithoutNSFW++
 		}
 	}
-	generationFailRate := float64(generationsFailed) / float64(len(generations))
+	/* generationFailRate := float64(generationsFailed) / float64(len(generations)) */
+	generationFailWithoutNSFWRate := float64(generationsFailedWithoutNSFW) / float64(len(generations))
 	log.Printf("Generation fail rate: %d/%d", generationsFailed, len(generations))
+	log.Printf("Generation fail rate without NSFW: %d/%d", generationsFailedWithoutNSFW, len(generations))
 
 	var healthyServerCount int
 	var enabledServerCount int
@@ -79,7 +86,7 @@ func CheckHealthAndNotify() {
 		}
 	}
 	lastStatusPrev := lastStatus
-	if healthyServerCount == 0 || generationFailRate > maxGenerationFailRate {
+	if healthyServerCount == 0 || generationFailWithoutNSFWRate > maxGenerationFailWithoutNSFWRate {
 		lastStatus = "unhealthy"
 	} else {
 		lastStatus = "healthy"
