@@ -10,7 +10,7 @@ Stable Diffusion is an open source AI model to generate images. It is like DALL-
 
 ## [Openjourney](https://huggingface.co/prompthero/openjourney)
 
-Openjourney is a fine-tuned Stable Diffusion model that tries to mimic the style of [Midjourney](https://midjourney.com). It is created by [Prompthero](https://twitter.com/prompthero) and available on [Hugging Face](https://huggingface.co/prompthero/openjourney) for everyone to download and use for free. Openjourney is one of the most popular fine-tuned Stable Diffusion models on Hugging Face with 56K+ downloads last month at the time of writing.
+Openjourney is a fine-tuned Stable Diffusion model that tries to mimic the style of [Midjourney](https://midjourney.com). It is created by [Prompthero](https://twitter.com/prompthero) and [available on Hugging Face](https://huggingface.co/prompthero/openjourney) for everyone to download and use for free. Openjourney is one of the most popular fine-tuned Stable Diffusion models on Hugging Face with 56K+ downloads last month at the time of writing.
 
 [![Openjourney](https://pub-6a0b59853e4a4dcfa459b203f5724709.r2.dev/blog/openjourney.jpg)<!--rehype:width=2560&height=3840-->](https://huggingface.co/prompthero/openjourney)
 
@@ -24,7 +24,7 @@ Openjourney will be pre-selected for you in the UI, you can enter a prompt and j
 
 ## [Arcane Diffusion](https://huggingface.co/nitrosocke/Arcane-Diffusion)
 
-Arcane Diffusion tries to mimic the style of the popular TV series [Arcane](https://www.imdb.com/title/tt11126994/). It is created by [@nitrosocke](https://twitter.com/nitrosocke) and available on [Hugging Face](https://huggingface.co/nitrosocke/Arcane-Diffusion) for everyone to download and use for free. Arcane Diffusion is one of the most popular fine-tuned Stable Diffusion models on Hugging Face with 30K+ downloads last month at the time of writing.
+Arcane Diffusion tries to mimic the style of the popular TV series [Arcane](https://www.imdb.com/title/tt11126994/). It is created by [@nitrosocke](https://twitter.com/nitrosocke) and [available on Hugging Face](https://huggingface.co/nitrosocke/Arcane-Diffusion) for everyone to download and use for free. Arcane Diffusion is one of the most popular fine-tuned Stable Diffusion models on Hugging Face with 30K+ downloads last month at the time of writing.
 
 [![Arcane Diffusion](https://pub-6a0b59853e4a4dcfa459b203f5724709.r2.dev/blog/arcane-diffusion.jpg)<!--rehype:width=2560&height=4480-->](https://huggingface.co/nitrosocke/Arcane-Diffusion)
 
@@ -38,7 +38,7 @@ Arcane Diffusion will be pre-selected for you in the UI, you can enter a prompt 
 
 ## [Mo-Di Diffusion](https://huggingface.co/nitrosocke/mo-di-diffusion)
 
-Mo-Di Diffusion tries to mimic the style of Disney's modern animated films. It is created by [@nitrosocke](https://twitter.com/nitrosocke) and available on [Hugging Face](https://huggingface.co/nitrosocke/mo-di-diffusion) for everyone to download and use for free. Mo-Di Diffusion is another very popular fine-tuned Stable Diffusion model with 26K+ downloads last month on Hugging Face at the time of writing.
+Mo-Di Diffusion tries to mimic the style of Disney's modern animated films. It is created by [@nitrosocke](https://twitter.com/nitrosocke) and [available on Hugging Face](https://huggingface.co/nitrosocke/mo-di-diffusion) for everyone to download and use for free. Mo-Di Diffusion is another very popular fine-tuned Stable Diffusion model with 26K+ downloads last month on Hugging Face at the time of writing.
 
 [![Mo-Di Diffusion](https://pub-6a0b59853e4a4dcfa459b203f5724709.r2.dev/blog/mo-di-diffusion.jpg)<!--rehype:width=2560&height=3840-->](https://huggingface.co/nitrosocke/mo-di-diffusion)
 
@@ -52,7 +52,7 @@ Mo-Di Diffusion will be pre-selected for you in the UI, you can enter a prompt a
 
 ## [Waifu Diffusion](https://huggingface.co/hakurei/waifu-diffusion)
 
-Waifu Diffusion is an anime style model. It is created by [harubaru](https://github.com/harubaru) and available on [Hugging Face](https://huggingface.co/hakurei/waifu-diffusion) for everyone to download and use for free. Waifu Diffusion is by far the most popular model in this list with 176K+ downloads last month on Hugging Face at the time of writing.
+Waifu Diffusion is an anime style model. It is created by [harubaru](https://github.com/harubaru) and [available on Hugging Face](https://huggingface.co/hakurei/waifu-diffusion) for everyone to download and use for free. Waifu Diffusion is by far the most popular model in this list with 176K+ downloads last month on Hugging Face at the time of writing.
 
 [![Waifu Diffusion](https://pub-6a0b59853e4a4dcfa459b203f5724709.r2.dev/blog/waifu-diffusion.jpg)<!--rehype:width=2560&height=4480-->](https://huggingface.co/hakurei/waifu-diffusion)
 
@@ -62,7 +62,7 @@ Waifu Diffusion isn't availabe on Stablecog since Stablecog is a SFW tool and ge
 
 ## [Ghibli Diffusion](https://huggingface.co/nitrosocke/Ghibli-Diffusion)
 
-Ghibli Diffusion tries to mimic the style of [Studio Ghibli](https://www.studioghibli.com.au). It is created by [@nitrosocke](https://twitter.com/nitrosocke) and available on [Hugging Face](https://huggingface.co/nitrosocke/Ghibli-Diffusion) for everyone to download and use for free. Ghibli Diffusion is less popular compared to others in this list with 2.8K+ downloads last month on Hugging Face at the time of writing.
+Ghibli Diffusion tries to mimic the style of [Studio Ghibli](https://www.studioghibli.com.au). It is created by [@nitrosocke](https://twitter.com/nitrosocke) and [available on Hugging Face](https://huggingface.co/nitrosocke/Ghibli-Diffusion) for everyone to download and use for free. Ghibli Diffusion is less popular compared to others in this list with 2.8K+ downloads last month on Hugging Face at the time of writing.
 
 [![Ghibli Diffusion](https://pub-6a0b59853e4a4dcfa459b203f5724709.r2.dev/blog/ghibli-diffusion.jpg)<!--rehype:width=2560&height=4480-->](https://huggingface.co/nitrosocke/Ghibli-Diffusion)
 
