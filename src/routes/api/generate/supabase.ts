@@ -161,10 +161,12 @@ export async function insertGenerationSupabase({
 export async function updateGenerationAsFailedSupabase({
 	generationDurationMs,
 	generationId,
+	isNSFW,
 	logObject
 }: {
 	generationDurationMs: number;
 	generationId: string | undefined;
+	isNSFW: boolean;
 	logObject: TGenerationLogObject;
 }) {
 	if (!supabaseAdmin) {
@@ -177,7 +179,8 @@ export async function updateGenerationAsFailedSupabase({
 		.update([
 			{
 				duration_ms: generationDurationMs,
-				status: 'failed'
+				status: 'failed',
+				failure_reason: isNSFW ? 'NSFW' : null
 			}
 		])
 		.eq('id', generationId)
@@ -188,7 +191,9 @@ export async function updateGenerationAsFailedSupabase({
 	if (data) {
 		const endTimestamp = Date.now();
 		generationLog({
-			text: `Updated the DB record with "failed" in: ${(endTimestamp - startTimestamp) / 1000}s`,
+			text: `Updated the DB record with "failed"${isNSFW ? ' (NSFW) ' : ' '}in: ${
+				(endTimestamp - startTimestamp) / 1000
+			}s`,
 			logObject
 		});
 	}

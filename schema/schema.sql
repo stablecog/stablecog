@@ -16,6 +16,7 @@ CREATE TABLE "generation" (
     "server_url" TEXT NOT NULL,
     "duration_ms" INTEGER,
     "status" generation_status_enum NOT NULL,
+    "failure_reason" TEXT,
     "country_code" TEXT,
     "device_type" TEXT,
     "device_os" TEXT,

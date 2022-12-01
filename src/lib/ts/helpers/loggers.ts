@@ -1,10 +1,10 @@
-export function pLogGeneration(status: 'Started' | 'Succeeded' | 'Failed') {
+export function pLogGeneration(status: 'Started' | 'Succeeded' | 'Failed' | 'Failed-NSFW') {
 	if (window.plausible) {
 		window.plausible(`Generation | ${status}`);
 	}
 }
 
-export function uLogGeneration(status: 'Started' | 'Succeeded' | 'Failed') {
+export function uLogGeneration(status: 'Started' | 'Succeeded' | 'Failed' | 'Failed-NSFW') {
 	if (window.umami) {
 		window.umami(`Generation | ${status}`);
 	}

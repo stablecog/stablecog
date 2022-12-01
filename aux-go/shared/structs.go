@@ -1,9 +1,10 @@
 package shared
 
 type SDBGeneration struct {
-	Id        string `json:"id"`
-	Status    string `json:"status"`
-	CreatedAt string `json:"created_at"`
+	Id            string `json:"id"`
+	Status        string `json:"status"`
+	FailureReason string `json:"failure_reason"`
+	CreatedAt     string `json:"created_at"`
 }
 
 type SDBServer struct {

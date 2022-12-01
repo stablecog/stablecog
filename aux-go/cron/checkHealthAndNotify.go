@@ -59,7 +59,7 @@ func CheckHealthAndNotify() {
 			}
 			lastGenerationTime = createdAt
 		}
-		if generation.Status == "failed" {
+		if generation.Status == "failed" && generation.FailureReason != "NSFW" {
 			generationsFailed++
 		} else if generation.Status == "started" && time.Now().Sub(createdAt) > maxGenerationDuration {
 			generationsFailed++
@@ -151,7 +151,11 @@ func getDiscordWebhookBody(
 	}
 	for _, generation := range generations {
 		if generation.Status == "failed" {
-			generationsStrArr = append(generationsStrArr, "🔴")
+			if generation.FailureReason == "NSFW" {
+				generationsStrArr = append(generationsStrArr, "🌶️")
+			} else {
+				generationsStrArr = append(generationsStrArr, "🔴")
+			}
 		} else if generation.Status == "started" {
 			generationsStrArr = append(generationsStrArr, "🟡")
 		} else {

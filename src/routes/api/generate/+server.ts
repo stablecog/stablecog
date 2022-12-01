@@ -185,7 +185,12 @@ export const POST: RequestHandler = async ({ request }) => {
 			}
 		} else if (supabaseAdmin !== undefined) {
 			try {
-				await updateGenerationAsFailedSupabase({ generationId, generationDurationMs, logObject });
+				await updateGenerationAsFailedSupabase({
+					generationId,
+					generationDurationMs,
+					isNSFW,
+					logObject
+				});
 			} catch (error) {
 				console.log(error);
 			}
@@ -209,7 +214,12 @@ export const POST: RequestHandler = async ({ request }) => {
 		);
 		if (supabaseAdmin !== undefined) {
 			try {
-				await updateGenerationAsFailedSupabase({ generationId, generationDurationMs, logObject });
+				await updateGenerationAsFailedSupabase({
+					generationId,
+					generationDurationMs,
+					isNSFW: false,
+					logObject
+				});
 			} catch (error) {
 				console.log(error);
 			}

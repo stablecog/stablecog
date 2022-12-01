@@ -197,8 +197,8 @@
 				throw new Error(error);
 			}
 		} catch (error) {
-			pLogGeneration('Failed');
-			uLogGeneration('Failed');
+			pLogGeneration(error === 'NSFW' ? 'Failed-NSFW' : 'Failed');
+			uLogGeneration(error === 'NSFW' ? 'Failed-NSFW' : 'Failed');
 			status = 'error';
 			console.log(error);
 		} finally {
