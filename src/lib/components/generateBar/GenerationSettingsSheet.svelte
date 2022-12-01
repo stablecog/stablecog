@@ -6,7 +6,7 @@
 	import ScrollAreaWithChevron from '$components/ScrollAreaWithChevron.svelte';
 	import LL from '$i18n/i18n-svelte';
 	import { clickoutside } from '$ts/actions/clickoutside';
-	import { advancedMode } from '$ts/stores/advancedMode';
+	import { advancedModeApp } from '$ts/stores/advancedMode';
 	import { isTouchscreen } from '$ts/stores/isTouchscreen';
 	import { windowHeight, windowWidth } from '$ts/stores/window';
 	import { portal } from 'svelte-portal';
@@ -30,7 +30,7 @@
 		}}
 		class="{isGenerationSettingsSheetOpen
 			? 'translate-y-0'
-			: 'translate-y-[calc(100%+2rem)]'} transition {$advancedMode
+			: 'translate-y-[calc(100%+2rem)]'} transition {$advancedModeApp
 			? 'duration-300'
 			: ''} ring-2 ring-c-bg-secondary bg-c-bg w-full flex flex-col relative
 			rounded-t-3xl justify-end overflow-hidden shadow-sheet shadow-c-shadow/[var(--o-shadow-stronger)]"

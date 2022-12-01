@@ -14,7 +14,7 @@
 	import { languageName } from '$ts/helpers/languageName';
 	import { pLogSubmitToGallery, uLogSubmitToGallery } from '$ts/helpers/loggers';
 	import { parseUrlStr } from '$ts/helpers/parseUrlStr';
-	import { advancedMode } from '$ts/stores/advancedMode';
+	import { advancedMode, advancedModeApp } from '$ts/stores/advancedMode';
 	import { isTouchscreen } from '$ts/stores/isTouchscreen';
 	import { serverUrl } from '$ts/stores/serverUrl';
 	import { shouldSubmitToGallery } from '$ts/stores/shouldSubmitToGallery';
@@ -101,7 +101,9 @@
 		<DropdownItem
 			disabled={currentPage !== 'settings'}
 			onClick={() => {
-				advancedMode.set($advancedMode === false ? true : false);
+				const val = $advancedModeApp === false ? true : false;
+				advancedModeApp.set(val);
+				advancedMode.set(val);
 			}}
 		>
 			<div class="flex-1 flex min-w-0 items-center justify-between gap-2">

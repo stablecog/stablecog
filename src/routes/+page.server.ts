@@ -28,6 +28,7 @@ export const load: ServerLoad = ({ url }) => {
 	const _num_inference_steps = url.searchParams.get('is');
 	const _model_id = url.searchParams.get('mi');
 	const _scheduler_id = url.searchParams.get('si');
+	const _advanced_mode = url.searchParams.get('adv');
 
 	const prompt = _prompt !== null ? decodeURIComponent(_prompt.slice(0, maxPromptLength)) : null;
 	const negative_prompt =
@@ -71,6 +72,14 @@ export const load: ServerLoad = ({ url }) => {
 		_scheduler_id !== null && availableSchedulerIds.includes(_scheduler_id as TAvailableSchedulerId)
 			? (_scheduler_id as TAvailableSchedulerId)
 			: null;
+	const advanced_mode =
+		_advanced_mode !== null
+			? _advanced_mode === 'true'
+				? true
+				: _advanced_mode === 'false'
+				? false
+				: null
+			: null;
 	const data: THomePageData = {
 		prompt,
 		negative_prompt,
@@ -80,7 +89,8 @@ export const load: ServerLoad = ({ url }) => {
 		guidance_scale,
 		num_inference_steps,
 		width,
-		height
+		height,
+		advanced_mode
 	};
 	return data;
 };
@@ -95,4 +105,5 @@ export interface THomePageData {
 	num_inference_steps: TAvailableInferenceSteps | null;
 	width: TAvailableWidth | null;
 	height: TAvailableHeight | null;
+	advanced_mode: boolean | null;
 }

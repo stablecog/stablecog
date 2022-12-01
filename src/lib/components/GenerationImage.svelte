@@ -9,7 +9,7 @@
 	import { urlFromBase64 } from '$ts/helpers/base64';
 	import { doesContainTarget } from '$ts/helpers/doesContainTarget';
 	import { activeGeneration } from '$ts/stores/activeGeneration';
-	import { advancedMode } from '$ts/stores/advancedMode';
+	import { advancedModeApp } from '$ts/stores/advancedMode';
 	import type { TGenerationUI } from '$ts/types/main';
 
 	export let generation: TGenerationUI;
@@ -58,7 +58,7 @@
 			class="flex-1 min-w-0 overflow-hidden flex flex-row flex-wrap items-start justify-start gap-1 transition transform 
 				-translate-x-full group-focus-within:translate-x-0 group-hover:translate-x-0 p-1.5"
 		>
-			{#if $advancedMode}
+			{#if $advancedModeApp}
 				<div
 					class="max-w-full flex items-center text-xs gap-1.5 rounded-lg bg-c-bg pl-2 pr-2.5 py-1.5"
 				>

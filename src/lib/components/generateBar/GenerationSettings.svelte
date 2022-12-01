@@ -36,7 +36,7 @@
 		seedTooltip,
 		widthTooltip
 	} from '$ts/constants/tooltips';
-	import { advancedMode } from '$ts/stores/advancedMode';
+	import { advancedMode, advancedModeApp } from '$ts/stores/advancedMode';
 	import {
 		generationGuidanceScale,
 		generationHeight,
@@ -57,7 +57,7 @@
 </script>
 
 <div class="w-full flex flex-wrap items-start justify-center px-2px py-4 gap-4">
-	{#if $advancedMode && $currentServer.features?.includes('negative_prompt')}
+	{#if $advancedModeApp && $currentServer.features?.includes('negative_prompt')}
 		<TabLikeInput
 			disabled={!isCheckComplete || disabled}
 			class="w-full md:w-172 max-w-full order-1"
@@ -102,8 +102,8 @@
 	</TabBar>
 	<TabLikeDropdown
 		{disabled}
-		class="w-full md:w-84 max-w-full {$advancedMode ? 'order-1' : 'order-2'}"
-		dropdownClass={$advancedMode ? 'max-h-[15rem]' : 'max-h-[8rem] md:max-h-[15rem]'}
+		class="w-full md:w-84 max-w-full {$advancedModeApp ? 'order-1' : 'order-2'}"
+		dropdownClass={$advancedModeApp ? 'max-h-[15rem]' : 'max-h-[8rem] md:max-h-[15rem]'}
 		bind:value={$generationModelId}
 		items={$availableModelIdDropdownItems}
 		name="Model"
@@ -113,7 +113,7 @@
 			<IconBrain class="w-6 h-6 text-c-on-bg/25" />
 		</div>
 	</TabLikeDropdown>
-	{#if $advancedMode}
+	{#if $advancedModeApp}
 		<TabLikeRangeInput
 			{disabled}
 			class="w-full md:w-84 max-w-full order-2"
@@ -178,14 +178,18 @@
 	{/if}
 	<div class="w-full flex items-center justify-center order-last -mb-2 md:mb-0">
 		<NoBgButton
-			hoverFrom={$advancedMode ? 'bottom' : 'top'}
-			onClick={() => advancedMode.set(!$advancedMode)}
+			hoverFrom={$advancedModeApp ? 'bottom' : 'top'}
+			onClick={() => {
+				const val = !$advancedModeApp;
+				advancedModeApp.set(val);
+				advancedMode.set(val);
+			}}
 		>
 			<div
 				class="max-w-full min-w-0 overflow-hidden flex items-center gap-2 text-sm transition-none px-1"
 			>
 				<div
-					class="-ml-1 w-5 h-5 flex-shrink-0 transform transition {$advancedMode
+					class="-ml-1 w-5 h-5 flex-shrink-0 transform transition {$advancedModeApp
 						? 'rotate-180'
 						: 'rotate-0'}"
 				>
@@ -200,7 +204,7 @@
 						? 'group-hover:text-c-primary'
 						: ''}"
 				>
-					{$advancedMode ? $LL.Shared.LessOptionsTitle() : $LL.Shared.MoreOptionsTitle()}
+					{$advancedModeApp ? $LL.Shared.LessOptionsTitle() : $LL.Shared.MoreOptionsTitle()}
 				</p>
 			</div>
 		</NoBgButton>

@@ -79,7 +79,7 @@
 		'sm'
 			? 'text-sm rounded-lg2'
 			: 'text-base rounded-xl'} relative flex items-center justify-center text-center
-			shadow-lg shadow-c-shadow/[var(--o-shadow-strong)]  text-c-on-primary font-bold gap-2 
+			shadow-lg shadow-c-shadow/[var(--o-shadow-strong)] text-c-on-primary font-bold gap-2 
 			overflow-hidden z-0 group {loading
 			? type === 'success'
 				? 'bg-c-success-secondary'

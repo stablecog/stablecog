@@ -47,6 +47,7 @@
 	import NoBgButton from '$components/buttons/NoBgButton.svelte';
 	import IconGenerationSettings from '$components/icons/IconGenerationSettings.svelte';
 	import { isTouchscreen } from '$ts/stores/isTouchscreen';
+	import { advancedMode, advancedModeApp } from '$ts/stores/advancedMode';
 
 	export let serverData: THomePageData;
 	export let onCreate: () => Promise<void>;
@@ -276,6 +277,18 @@
 		}
 		if (!isValue(serverData.scheduler_id) && isValue($schedulerId)) {
 			generationSchedulerId.set($schedulerId);
+		}
+		if (serverData.advanced_mode === true) {
+			console.log('advanced mode server data true');
+			advancedModeApp.set(true);
+		} else if (serverData.advanced_mode === false) {
+			console.log('advanced mode server data false');
+			advancedModeApp.set(false);
+		} else if (
+			($advancedMode === true || $advancedMode === false) &&
+			$advancedMode !== $advancedModeApp
+		) {
+			advancedModeApp.set($advancedMode);
 		}
 		isCheckComplete = true;
 	});

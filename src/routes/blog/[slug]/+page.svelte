@@ -7,6 +7,7 @@
 	import MetaTag from '$components/MetaTag.svelte';
 	import SocialBar from '$components/SocialBar.svelte';
 	import '$css/blog.css';
+	import { PUBLIC_R2_URL } from '$env/static/public';
 	import LL from '$i18n/i18n-svelte';
 	import { canonicalUrl } from '$ts/constants/main';
 	import { isTouchscreen } from '$ts/stores/isTouchscreen';
@@ -28,13 +29,13 @@
 <MetaTag
 	title="{title} | Blog"
 	{description}
-	imageUrl="{canonicalUrl}/previews{$page.url.pathname}.png"
+	imageUrl="{PUBLIC_R2_URL}/blog/previews/{frontmatter.slug}.jpg"
 	canonical="{canonicalUrl}{$page.url.pathname}"
 />
 
 <div
 	class="w-full flex-1 flex flex-col transition relative items-center 
-	px-5 md:px-12 lg:px-0 pt-5 md:pt-12 pb-16"
+	px-5 pt-5 md:px-12 lg:px-0 md:pt-12 pb-8"
 >
 	<div class="w-full flex flex-row justify-between items-start">
 		<ToC {toc} />
@@ -60,17 +61,22 @@
 		</div>
 		<ToC {toc} class="hidden 1.5xl:flex opacity-0 pointer-events-none" />
 	</div>
-	<LinkButton href="/blog" class="mt-5" target={null} prefetch={true}>
-		<div class="flex items-center justify-center gap-2.5 px-2 py-1">
-			<IconBack
-				class="w-6 h-6 transform transition text-c-on-bg/50 group-hover:-translate-x-1
-				{!$isTouchscreen ? 'group-hover:text-c-primary' : ''}"
-			/>
-			<p class="font-bold">{$LL.Blog.BackToBlogButton()}</p>
+	<div class="w-full flex flex-col items-center mt-16 gap-5">
+		<div class="max-w-full flex items-center justify-center">
+			<p class="font-bold text-3xl">Thanks for reading!</p>
 		</div>
-	</LinkButton>
-	<div class="w-full flex justify-center pt-6 pb-10 md:px-8 lg:px-12">
-		<div class="w-full max-w-7xl bg-c-on-bg/5 rounded-full h-2px" />
+		<LinkButton href="/blog" target={null} prefetch={true}>
+			<div class="flex items-center justify-center gap-2.5 px-2 py-1">
+				<IconBack
+					class="w-6 h-6 transform transition text-c-on-bg/50 group-hover:-translate-x-1
+					{!$isTouchscreen ? 'group-hover:text-c-primary' : ''}"
+				/>
+				<p class="font-bold">{$LL.Blog.BackToBlogButton()}</p>
+			</div>
+		</LinkButton>
+	</div>
+	<div class="w-full flex justify-center pt-6 pb-10 lg:px-5">
+		<div class="w-full bg-c-on-bg/5 rounded-full h-2px" />
 	</div>
 	<div class="w-full max-w-7xl flex flex-col items-center gap-10">
 		<div
@@ -85,9 +91,6 @@
 			</div>
 		</div>
 		<div class="w-full flex flex-col items-center gap-5">
-			<p class="font-bold text-xl text-center max-w-lg px-5 leading-normal">
-				{$LL.Shared.StartGeneratingTitle()}
-			</p>
 			<Button href="/">{$LL.Shared.StartGeneratingButton()}</Button>
 		</div>
 	</div>

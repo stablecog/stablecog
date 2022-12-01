@@ -12,7 +12,6 @@ import remarkImages from 'remark-images';
 import rehypeRaw from 'rehype-raw';
 import rehypeAttributes from 'rehype-attributes';
 import yaml from 'yaml';
-import { canonicalUrl } from '$ts/constants/main';
 import { error, type ServerLoad } from '@sveltejs/kit';
 import { convert as convertHtmlToText } from 'html-to-text';
 import type { TToC } from '$ts/types/main';
@@ -41,7 +40,7 @@ const r = unified()
 	.use(rehypeExternalLinks, {
 		rel: ['nofollow'],
 		target(element) {
-			return String(element.properties?.href).startsWith(canonicalUrl) ? undefined : '_blank';
+			return /* String(element.properties?.href).startsWith(canonicalUrl) ? undefined : */ '_blank';
 		}
 	})
 	.use(rehypeSlug)
@@ -50,6 +49,7 @@ const r = unified()
 
 const getPath = (slug: string | undefined) => `/src/lib/md/${slug}.md`;
 
+export const prerender = true;
 export const load: ServerLoad = async ({ params }) => {
 	const { slug } = params;
 	const blogPostsImport = import.meta.glob('$md/*.md');

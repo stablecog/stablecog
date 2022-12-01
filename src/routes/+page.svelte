@@ -23,7 +23,7 @@
 	import { onDestroy, onMount, tick } from 'svelte';
 	import ImagePlaceholder from '$components/ImagePlaceholder.svelte';
 	import GenerationImage from '$components/GenerationImage.svelte';
-	import { advancedMode } from '$ts/stores/advancedMode';
+	import { advancedModeApp } from '$ts/stores/advancedMode';
 	import SetServerModal from '$components/SetServerModal.svelte';
 	import { pLogGeneration, uLogGeneration } from '$ts/helpers/loggers';
 	import ServerOfflineBanner from '$components/ServerOfflineBanner.svelte';
@@ -91,23 +91,23 @@
 			prompt: $promptInputValue,
 			negative_prompt:
 				$currentServer.features?.includes('negative_prompt') &&
-				($advancedMode || isValue(data.negative_prompt))
+				($advancedModeApp || isValue(data.negative_prompt))
 					? $negativePromptInputValue
 					: undefined,
 			model_id: $generationModelId,
-			scheduler_id: $advancedMode || data.scheduler_id ? $generationSchedulerId : undefined,
+			scheduler_id: $advancedModeApp || data.scheduler_id ? $generationSchedulerId : undefined,
 			width: Number($generationWidth),
 			height: Number($generationHeight),
 			guidance_scale: Number(
-				$advancedMode || data.guidance_scale ? $generationGuidanceScale : guidanceScaleDefault
+				$advancedModeApp || data.guidance_scale ? $generationGuidanceScale : guidanceScaleDefault
 			),
 			num_inference_steps: Number(
-				$advancedMode || data.num_inference_steps
+				$advancedModeApp || data.num_inference_steps
 					? $generationInferenceSteps
 					: inferenceStepsDefault
 			),
 			seed:
-				(isValue($generationSeed) && $advancedMode) || isValue(data.seed)
+				(isValue($generationSeed) && $advancedModeApp) || isValue(data.seed)
 					? $generationSeed!!
 					: Math.round(Math.random() * maxSeed),
 			imageDataB64: ''
