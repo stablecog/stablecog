@@ -1,6 +1,6 @@
 ---
 title: Stable Diffusion Tools & Resources
-description: Stable Diffusion is an open source AI model to generate images. It is like DALL-E and Midjourney but open source and free for everyone to use. In this article, I've curated some tools to help you get started with Stable Diffusion.
+description: Stable Diffusion is an AI model to generate images, bit like DALL-E and Midjourney but it's open source and free. Here are tools to help you get started.
 author: M. Yekta Güngör
 author_url: https://twitter.com/ngyekta
 date: 2022-10-21T16:00:00.000Z

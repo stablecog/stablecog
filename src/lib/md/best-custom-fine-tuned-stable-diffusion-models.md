@@ -1,6 +1,6 @@
 ---
 title: Best Custom (Fine-Tuned) Stable Diffusion Models
-description: Fine-tuned Stable Diffusion models let you achieve certain styles of art easier, using shorter prompts. If they are fine-tuned nicely, they tend to reproduce those styles in higher quality compared to the base Stable Diffusion model.
+description: Fine-tuned Stable Diffusion models let you achieve certain styles of art easier. When they are fine-tuned nicely, they reproduce styles in higher quality.
 author: M. Yekta Güngör
 author_url: https://twitter.com/ngyekta
 date: 2022-12-01T13:00:00.000Z
@@ -16,7 +16,7 @@ Openjourney is a fine-tuned Stable Diffusion model that tries to mimic the style
 
 In my experience, it does a relatively good job of mimicking the style of Midjourney with certain kinds of prompts. However, it tends to give results that are sometimes too similar to each other, a narrowed down "Midjourney style" if you will. In exchange, you can get pretty good results with relatively short prompts.
 
-Openjourney model is availabe on [Stablecog](https://stablecog.com/?mi=8acfe4c8-751d-4aa6-8c3c-844e3ef478e0&adv=true) and you can use it for free by clicking the link below:
+Openjourney model is available on [Stablecog](https://stablecog.com/?mi=8acfe4c8-751d-4aa6-8c3c-844e3ef478e0&adv=true) and you can use it for free by clicking the link below:
 
 [Try Openjourney](https://stablecog.com/?mi=8acfe4c8-751d-4aa6-8c3c-844e3ef478e0&adv=true)<!--rehype:button=true-->
 
@@ -30,7 +30,7 @@ Arcane Diffusion tries to mimic the style of the popular TV series [Arcane](http
 
 In my experience, it does a very good job of mimicking the style of the TV series Arcane. However, since that series has such a unique and well-defined world, using Arcane Diffusion for certain kinds of prompts might not produce good results.
 
-Arcane Diffusion model is availabe on [Stablecog](https://stablecog.com/?mi=36d9d835-646f-4fc7-b9fe-98654464bf8e&adv=true) and you can use it for free by clicking the link below:
+Arcane Diffusion model is available on [Stablecog](https://stablecog.com/?mi=36d9d835-646f-4fc7-b9fe-98654464bf8e&adv=true) and you can use it for free by clicking the link below:
 
 [Try Arcane Diffusion](https://stablecog.com/?mi=36d9d835-646f-4fc7-b9fe-98654464bf8e&adv=true)<!--rehype:button=true-->
 
@@ -44,7 +44,7 @@ Mo-Di Diffusion tries to mimic the style of Disney's modern animated films. It i
 
 In my experience, it does a good job of mimicking the style of the Disney's modern animated films. It seems like the dataset used to fine-tune the model includes a relatively good variety of subjects and it is able to generate a variety of subjects in the style of Disney's modern animated films.
 
-Mo-Di Diffusion model is availabe on [Stablecog](https://stablecog.com/?mi=790c80e1-65b1-4556-9332-196344389572&adv=true) and you can use it for free by clicking the link below:
+Mo-Di Diffusion model is available on [Stablecog](https://stablecog.com/?mi=790c80e1-65b1-4556-9332-196344389572&adv=true) and you can use it for free by clicking the link below:
 
 [Try Mo-Di Diffusion](https://stablecog.com/?mi=790c80e1-65b1-4556-9332-196344389572&adv=true)<!--rehype:button=true-->
 
@@ -58,7 +58,7 @@ Waifu Diffusion is an anime style model. It is created by [harubaru](https://git
 
 In my experience, it does a good job within the anime style. However, if you want a SFW results, this model might not be for you. In my trials it was generating too many NSFW images for prompts that are completely family friendly.
 
-Waifu Diffusion isn't availabe on Stablecog since Stablecog is a SFW tool and getting too many NSFW errors makes for a not so great experience. However, [harubaru](https://huggingface.co/hakurei/waifu-diffusion) announced that there will be a new release on December 26th. I'll be trying that model out to see if NSFW content is little more manageable.
+Waifu Diffusion isn't available on Stablecog since Stablecog is a SFW tool and getting too many NSFW errors makes for a not so great experience. However, [harubaru](https://huggingface.co/hakurei/waifu-diffusion) announced that there will be a new release on December 26th. I'll be trying that model out to see if NSFW content is little more manageable.
 
 ## [Ghibli Diffusion](https://huggingface.co/nitrosocke/Ghibli-Diffusion)
 
@@ -68,7 +68,7 @@ Ghibli Diffusion tries to mimic the style of [Studio Ghibli](https://www.studiog
 
 In my experience, it does a good job of mimicking the style of some of the Studio Ghibli's work. However, it produces artifacts with some prompts and the dataset used to fine tune Stable Diffusion doesn't seem particularly large judging by the results.
 
-Ghibli Diffusion model is availabe on [Stablecog](https://stablecog.com/?mi=48a7031d-43b6-4a23-9f8c-8020eb6862e4&adv=true) and you can use it for free by clicking the link below:
+Ghibli Diffusion model is available on [Stablecog](https://stablecog.com/?mi=48a7031d-43b6-4a23-9f8c-8020eb6862e4&adv=true) and you can use it for free by clicking the link below:
 
 [Try Ghibli Diffusion](https://stablecog.com/?mi=48a7031d-43b6-4a23-9f8c-8020eb6862e4&adv=true)<!--rehype:button=true-->
 
