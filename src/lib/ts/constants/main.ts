@@ -61,7 +61,7 @@ export type TAvailableModelId = typeof availableModelIds[number];
 
 export const modelIdDefault: TAvailableModelId = '048b4aa3-5586-47ed-900f-f4341c96bdb2';
 
-export const modelIdToCogModelName: Record<TAvailableModelId, TModelNameCog> = {
+export const modelIdToModelNameCog: Record<TAvailableModelId, TModelNameCog> = {
 	'048b4aa3-5586-47ed-900f-f4341c96bdb2': 'Stable Diffusion v1.5',
 	'8acfe4c8-751d-4aa6-8c3c-844e3ef478e0': 'Openjourney',
 	'36d9d835-646f-4fc7-b9fe-98654464bf8e': 'Arcane Diffusion',
@@ -132,7 +132,7 @@ export type TAvailableSchedulerId = typeof availableSchedulerIds[number];
 
 export const schedulerIdDefault: TAvailableSchedulerId = '6fb13b76-9900-4fa4-abf8-8f843e034a7f';
 
-export const schedulerIdToCogSchedulerName: Record<TAvailableSchedulerId, TSchedulerNameCog> = {
+export const schedulerIdToSchedulerNameCog: Record<TAvailableSchedulerId, TSchedulerNameCog> = {
 	'55027f8b-f046-4e71-bc51-53d5448661e0': 'K_LMS',
 	'6fb13b76-9900-4fa4-abf8-8f843e034a7f': 'K_EULER',
 	'af2679a4-dbbb-4950-8c06-c3bb15416ef6': 'K_EULER_ANCESTRAL'

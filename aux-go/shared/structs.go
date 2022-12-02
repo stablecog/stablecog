@@ -57,7 +57,7 @@ type SCogGenerateResponseBody struct {
 
 type SGenerateRequestBody struct {
 	Prompt                string `json:"prompt"`
-	NegativePrompt        string `json:"negative_prompt"`
+	NegativePrompt        string `json:"negative_prompt,omitempty"`
 	Width                 int    `json:"width"`
 	Height                int    `json:"height"`
 	NumInferenceSteps     int    `json:"num_inference_steps"`
@@ -70,15 +70,14 @@ type SGenerateRequestBody struct {
 }
 
 type SCogGenerateRequestInput struct {
-	Prompt         string `json:"prompt"`
-	NegativePrompt string `json:"negative_prompt"`
-	Width          string `json:"width"`
-	Height         string `json:"height"`
-	OutputImageExt string `json:"output_image_ext"`
-	/* NumInferenceSteps string `json:"num_inference_steps"`
+	Prompt            string `json:"prompt"`
+	NegativePrompt    string `json:"negative_prompt,omitempty"`
+	Width             string `json:"width"`
+	Height            string `json:"height"`
+	OutputImageExt    string `json:"output_image_ext"`
+	NumInferenceSteps string `json:"num_inference_steps"`
 	GuidanceScale     string `json:"guidance_scale"`
-	ServerUrl         string `json:"server_url"`
-	ModelId           string `json:"model_id"`
-	SchedulerId       string `json:"scheduler_id"`
-	Seed              string `json:"seed"` */
+	Model             string `json:"model"`
+	Scheduler         string `json:"scheduler"`
+	Seed              string `json:"seed"`
 }

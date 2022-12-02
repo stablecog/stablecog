@@ -5,10 +5,12 @@ import (
 	"math/rand"
 	"time"
 
+	"github.com/fatih/color"
 	shared "github.com/yekta/stablecog/aux-go/shared"
 )
 
 func PickServerUrl(serverUrl string) SServerUrlResult {
+	yellow := color.New(color.FgYellow).SprintFunc()
 	if serverUrl != shared.DEFAULT_SERVER_URL {
 		return SServerUrlResult{
 			ServerUrl: serverUrl,
@@ -33,7 +35,7 @@ func PickServerUrl(serverUrl string) SServerUrlResult {
 	rand.Seed(time.Now().Unix())
 	i := rand.Intn(len(servers))
 	pickedServer := servers[i]
-	log.Printf("Picked server URL: %v", pickedServer.Url)
+	log.Printf("-- Picked server URL: %v --", yellow(pickedServer.Url))
 	return SServerUrlResult{
 		ServerUrl: pickedServer.Url,
 		IsDefault: true,

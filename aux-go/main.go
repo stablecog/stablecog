@@ -20,9 +20,13 @@ func main() {
 
 	cron := cron.New()
 
-	cron.AddFunc("@every 15s", scCron.CheckHealthAndNotify)
-	cron.Start()
-	go scCron.CheckHealthAndNotify()
+	cronEnabled := true
+
+	if cronEnabled {
+		cron.AddFunc("@every 15s", scCron.CheckHealthAndNotify)
+		cron.Start()
+		go scCron.CheckHealthAndNotify()
+	}
 
 	/* app.Post("/generate", handlers.Generate) */
 

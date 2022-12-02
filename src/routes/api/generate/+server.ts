@@ -12,9 +12,9 @@ import type {
 import {
 	maxSeed,
 	modelIdDefault,
-	modelIdToCogModelName,
+	modelIdToModelNameCog,
 	schedulerIdDefault,
-	schedulerIdToCogSchedulerName
+	schedulerIdToSchedulerNameCog
 } from '$ts/constants/main';
 import { supabaseAdmin } from '$ts/constants/supabaseAdmin';
 import { formatPrompt } from '$ts/helpers/formatPrompt';
@@ -112,8 +112,8 @@ export const POST: RequestHandler = async ({ request }) => {
 			input: {
 				prompt,
 				negative_prompt,
-				model: modelIdToCogModelName[model_id],
-				scheduler: schedulerIdToCogSchedulerName[scheduler_id],
+				model: modelIdToModelNameCog[model_id],
+				scheduler: schedulerIdToSchedulerNameCog[scheduler_id],
 				width: width.toString(),
 				height: height.toString(),
 				seed: seed.toString(),

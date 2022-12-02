@@ -1,5 +1,5 @@
 import type { TGenerationLogObject } from '$routes/api/generate/types';
-import { modelIdToCogModelName, schedulerIdToCogSchedulerName } from '$ts/constants/main';
+import { modelIdToModelNameCog, schedulerIdToSchedulerNameCog } from '$ts/constants/main';
 
 export function getIsNSFW(imageDataB64: string) {
 	if (!imageDataB64) {
@@ -28,9 +28,9 @@ export function generationLog({
 		'--',
 		`"${logObject.prompt}"`,
 		`--${logObject.negative_prompt ? ` "${logObject.negative_prompt}" --` : ''}`,
-		`${modelIdToCogModelName[logObject.model_id]}`,
+		`${modelIdToModelNameCog[logObject.model_id]}`,
 		'--',
-		`${schedulerIdToCogSchedulerName[logObject.scheduler_id]}`,
+		`${schedulerIdToSchedulerNameCog[logObject.scheduler_id]}`,
 		'--',
 		logObject.width,
 		'--',
