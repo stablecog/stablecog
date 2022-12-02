@@ -46,3 +46,39 @@ type SDiscordWebhookAttachment struct {
 type SInternalServerErrorResponse struct {
 	Error string `json:"error"`
 }
+
+type SCogGenerateRequestBody struct {
+	Input SCogGenerateRequestInput `json:"input"`
+}
+
+type SCogGenerateResponseBody struct {
+	Output []string `json:"output"`
+}
+
+type SGenerateRequestBody struct {
+	Prompt                string `json:"prompt"`
+	NegativePrompt        string `json:"negative_prompt"`
+	Width                 int    `json:"width"`
+	Height                int    `json:"height"`
+	NumInferenceSteps     int    `json:"num_inference_steps"`
+	GuidanceScale         int    `json:"guidance_scale"`
+	ServerUrl             string `json:"server_url"`
+	ModelId               string `json:"model_id"`
+	SchedulerId           string `json:"scheduler_id"`
+	Seed                  int    `json:"seed"`
+	ShouldSubmitToGallery bool   `json:"should_submit_to_gallery"`
+}
+
+type SCogGenerateRequestInput struct {
+	Prompt         string `json:"prompt"`
+	NegativePrompt string `json:"negative_prompt"`
+	Width          string `json:"width"`
+	Height         string `json:"height"`
+	OutputImageExt string `json:"output_image_ext"`
+	/* NumInferenceSteps string `json:"num_inference_steps"`
+	GuidanceScale     string `json:"guidance_scale"`
+	ServerUrl         string `json:"server_url"`
+	ModelId           string `json:"model_id"`
+	SchedulerId       string `json:"scheduler_id"`
+	Seed              string `json:"seed"` */
+}
