@@ -14,6 +14,7 @@ var Supabase = postgrest.NewClient(PUBLIC_SUPABASE_POSTGREST_URL, "", map[string
 })
 
 var MaxSeed = 2147483647
+var MaxPromptLen = 500
 
 var ModelIdToModelNameCog = map[string]string{
 	"048b4aa3-5586-47ed-900f-f4341c96bdb2": "Stable Diffusion v1.5",

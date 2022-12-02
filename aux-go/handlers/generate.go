@@ -31,13 +31,17 @@ func Generate(c *fiber.Ctx) error {
 		req.Seed = rand.Intn(shared.MaxSeed)
 	}
 
+	cleanedPrompt := shared.FormatPrompt(req.Prompt)
+	cleanedNegativePrompt := shared.FormatPrompt(req.NegativePrompt)
+
 	pickServerRes := queries.PickServerUrl(req.ServerUrl)
 	if pickServerRes.Error {
 		return c.Status(http.StatusInternalServerError).JSON("Could not pick a server URL")
 	}
+
 	var logObj = loggers.SGenerationLogObject{
-		Prompt:            req.Prompt,
-		NegativePrompt:    req.NegativePrompt,
+		Prompt:            cleanedPrompt,
+		NegativePrompt:    cleanedNegativePrompt,
 		ModelId:           req.ModelId,
 		SchedulerId:       req.SchedulerId,
 		Width:             req.Width,
@@ -50,8 +54,8 @@ func Generate(c *fiber.Ctx) error {
 	loggers.LogGeneration("Generation started", logObj)
 	cogReq := shared.SCogGenerateRequestBody{
 		Input: shared.SCogGenerateRequestInput{
-			Prompt:            req.Prompt,
-			NegativePrompt:    req.NegativePrompt,
+			Prompt:            cleanedPrompt,
+			NegativePrompt:    cleanedNegativePrompt,
 			Width:             fmt.Sprint(req.Width),
 			Height:            fmt.Sprint(req.Height),
 			NumInferenceSteps: fmt.Sprint(req.NumInferenceSteps),

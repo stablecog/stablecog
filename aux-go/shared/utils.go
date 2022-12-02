@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"log"
 	"os"
+	"regexp"
 	"time"
 
 	"github.com/joho/godotenv"
@@ -31,4 +32,33 @@ func RelativeTimeStr(t time.Time) string {
 		return fmt.Sprint(diffInSeconds/60, "m ago")
 	}
 	return fmt.Sprint(diffInSeconds/60/60, "h ago")
+}
+
+func FormatPrompt(s string) string {
+	cleanStr := RemoveSuffixSpaces(RemoveRedundantSpaces(RemoveLineBreaks(s)))
+	if len(cleanStr) > MaxPromptLen {
+		cleanStr = cleanStr[:MaxPromptLen]
+	}
+	return cleanStr
+}
+
+func RemoveLineBreaks(s string) string {
+	var result string
+	r := regexp.MustCompile(`\n`)
+	result = r.ReplaceAllString(s, " ")
+	return result
+}
+
+func RemoveRedundantSpaces(s string) string {
+	var result string
+	r := regexp.MustCompile(`\s+`)
+	result = r.ReplaceAllString(s, " ")
+	return result
+}
+
+func RemoveSuffixSpaces(s string) string {
+	var result string
+	r := regexp.MustCompile(`\s+$`)
+	result = r.ReplaceAllString(s, "")
+	return result
 }

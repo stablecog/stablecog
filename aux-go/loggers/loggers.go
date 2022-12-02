@@ -7,10 +7,17 @@ import (
 )
 
 func LogGeneration(text string, obj SGenerationLogObject) {
+	maxLen := 75
+	var sPrompt string
+	if len(obj.Prompt) > maxLen {
+		sPrompt = obj.Prompt[:maxLen] + "..."
+	} else {
+		sPrompt = obj.Prompt
+	}
 	log.Printf(
 		`-- %s - "%s" - "%s" - "%s" - %d - %d - %d - %d - %d - "%s"`,
 		text,
-		obj.Prompt,
+		sPrompt,
 		shared.ModelIdToModelNameCog[obj.ModelId],
 		shared.SchedulerIdToSchedulerNameCog[obj.SchedulerId],
 		obj.Width,
