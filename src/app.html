@@ -49,7 +49,10 @@
 		></script>
 		<script>
 			window.addEventListener('unhandledrejection', function (e) {
-				alert('Error occurred: ' + e.reason.message);
+				alert(
+					'Something completely unexpect happened. Please reach us out on Twitter (@stablecog) or via email (hello@stablecog.com) to report the error: ' +
+						e.reason.message
+				);
 			});
 			window.onload = () => {
 				try {
