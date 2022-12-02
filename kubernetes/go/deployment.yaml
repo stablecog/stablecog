@@ -20,11 +20,11 @@ spec:
           image: replaceme
           resources:
             requests:
-              cpu: 50m
-              memory: 50Mi
-            limits:
-              cpu: 250m
+              cpu: 500m
               memory: 250Mi
+            limits:
+              cpu: 1000m
+              memory: 500Mi
           ports:
             - containerPort: 3001
           imagePullPolicy: 'Always'
