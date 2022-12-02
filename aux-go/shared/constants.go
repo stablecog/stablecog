@@ -6,6 +6,7 @@ import (
 
 var SUPABASE_ADMIN_KEY = GetEnv("SUPABASE_ADMIN_KEY")
 var PUBLIC_SUPABASE_POSTGREST_URL = GetEnv("PUBLIC_SUPABASE_POSTGREST_URL")
+var DEFAULT_SERVER_URL = GetEnv("PUBLIC_DEFAULT_SERVER_URL")
 
 var Supabase = postgrest.NewClient(PUBLIC_SUPABASE_POSTGREST_URL, "", map[string]string{
 	"Authorization": "Bearer " + SUPABASE_ADMIN_KEY,

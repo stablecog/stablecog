@@ -9,8 +9,7 @@ import (
 )
 
 func PickServerUrl(serverUrl string) SServerUrlResult {
-	defaultServerUrl := shared.GetEnv("PUBLIC_DEFAULT_SERVER_URL")
-	if serverUrl != defaultServerUrl {
+	if serverUrl != shared.DEFAULT_SERVER_URL {
 		return SServerUrlResult{
 			ServerUrl: serverUrl,
 			IsDefault: false,
