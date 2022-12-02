@@ -48,6 +48,9 @@
 			src="https://umami.stablecog.com/umami.js"
 		></script>
 		<script>
+			window.addEventListener('unhandledrejection', function (e) {
+				alert('Error occurred: ' + e.reason.message);
+			});
 			window.onload = () => {
 				try {
 					const version = document.body.getAttribute('version');
