@@ -37,13 +37,13 @@ const es: BaseTranslation = {
 				'Obtener resultados repetibles. Una semilla combinada con la misma indicación y opciones genera la misma imagen.'
 		},
 		ModelDropdown: {
-			Title: 'Model',
-			Paragraph: 'The AI Model that will be used to generate the image.'
+			Title: 'Modelo',
+			Paragraph: 'El modelo de IA que se utilizará para generar la imagen.'
 		},
 		SchedulerDropdown: {
-			Title: 'Scheduler',
+			Title: 'Planificador',
 			Paragraph:
-				'Diffuse the image in a certain way. It can drastically change the generated image. Some require less steps to produce good results.'
+				'Difunda la imagen de una cierta manera. Puede cambiar drásticamente la imagen generada. Algunos requieren menos pasos para producir buenos resultados.'
 		},
 		SubmitToGalleryQuestion: {
 			Title: '¿Enviar generaciones a la galería?',
@@ -97,10 +97,10 @@ const es: BaseTranslation = {
 		SwitchServerButton: 'Cambiar de Servidor',
 		SubmitToGalleryToggle: 'Enviar a la Galería',
 		AdvancedModeToggle: 'Modo Avanzado',
-		AdvancedOptionsDropdown: 'Advanced Options',
-		AdvancedDropdown: 'Advanced',
-		GenerationSettingsButton: 'Generation Settings',
-		GenerationSettingsTitle: 'Generation Settings',
+		AdvancedOptionsDropdown: 'Opciones Avanzadas',
+		AdvancedDropdown: 'Avanzado',
+		GenerationSettingsButton: 'Configuración de Generación',
+		GenerationSettingsTitle: 'Configuración de Generación',
 		DarkModeToggle: 'Modo Oscuro'
 	},
 	GenerationFullscreen: {
@@ -175,16 +175,19 @@ const es: BaseTranslation = {
 			},
 			'8acfe4c8-751d-4aa6-8c3c-844e3ef478e0': {
 				realName: 'Openjourney',
-				simpleName: '3D Digital Art'
+				simpleName: 'Arte Digital 3D'
 			},
 			'36d9d835-646f-4fc7-b9fe-98654464bf8e': {
 				realName: 'Arcane Diffusion',
-				simpleName: '3D Comic'
+				simpleName: 'Cómic 3D'
 			},
-			'48a7031d-43b6-4a23-9f8c-8020eb6862e4': { realName: 'Ghibli Diffusion', simpleName: 'Anime' },
+			'48a7031d-43b6-4a23-9f8c-8020eb6862e4': {
+				realName: 'Ghibli Diffusion',
+				simpleName: 'Anime'
+			},
 			'790c80e1-65b1-4556-9332-196344389572': {
 				realName: 'Mo-Di Diffusion',
-				simpleName: 'Animated Movie'
+				simpleName: 'Película Animada'
 			}
 		},
 		SchedulerOptions: {
@@ -198,9 +201,9 @@ const es: BaseTranslation = {
 				realName: 'Euler A.'
 			}
 		},
-		UnknownTitle: 'Unknown',
-		MoreOptionsTitle: 'More Options',
-		LessOptionsTitle: 'Less Options'
+		UnknownTitle: 'Desconocido',
+		MoreOptionsTitle: 'Más Opciones',
+		LessOptionsTitle: 'Menos Opciones'
 	},
 	Error: {
 		SomethingWentWrong: 'Algo salió mal :(',
