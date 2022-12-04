@@ -28,6 +28,7 @@ var maxUnhealthyNotificationInterval = 5 * time.Minute
 var maxGenerationDuration = 2 * time.Minute
 var maxHealthyNotificationInterval = 1 * time.Hour
 var discordWebhookUrl = shared.GetEnv("DISCORD_WEBHOOK_URL")
+var serversLast []shared.SDBServer = make([]shared.SDBServer, 0)
 
 func CheckHealthAndNotify() {
 	start := time.Now()
@@ -35,6 +36,7 @@ func CheckHealthAndNotify() {
 
 	var generations []shared.SDBGeneration
 	var servers []shared.SDBServer
+	serversStateChanged := false
 
 	var wg sync.WaitGroup
 	wg.Add(1)
@@ -84,6 +86,27 @@ func CheckHealthAndNotify() {
 		if server.Enabled {
 			enabledServerCount++
 		}
+		isNew := true
+		for _, serverOld := range serversLast {
+			if serverOld.Url == server.Url {
+				isNew = false
+				if serverOld.Enabled != server.Enabled || serverOld.Healthy != server.Healthy {
+					serversStateChanged = true
+					break
+				}
+			}
+		}
+		if !serversStateChanged && isNew {
+			serversStateChanged = true
+		}
+	}
+	if len(serversLast) != len(servers) {
+		serversStateChanged = true
+		serversLast = make([]shared.SDBServer, len(servers))
+	}
+	copy(serversLast, servers)
+	if serversStateChanged {
+		log.Printf("Servers state changed")
 	}
 	lastStatusPrev := lastStatus
 	if healthyServerCount == 0 || generationFailWithoutNSFWRate > maxGenerationFailWithoutNSFWRate {
@@ -95,12 +118,12 @@ func CheckHealthAndNotify() {
 	sinceHealthyNotification := time.Since(lastHealthyNotificationTime)
 	sinceUnhealthyNotification := time.Since(lastUnhealthyNotificationTime)
 	if lastStatus != lastStatusPrev || (lastStatus == "unhealthy" && sinceUnhealthyNotification > maxUnhealthyNotificationInterval) ||
-		(lastStatus == "healthy" && sinceHealthyNotification > maxHealthyNotificationInterval) {
+		(lastStatus == "healthy" && sinceHealthyNotification > maxHealthyNotificationInterval) || serversStateChanged {
 		sendDiscordNotification(lastStatus, servers, generations, lastGenerationTime, lastCheckTime)
 	}
 	log.Printf("Healthy servers (enabled): %d/%d", healthyServerCount, enabledServerCount)
 	log.Printf("Healthy servers (all): %d/%d", healthyServerCount, len(servers))
-	log.Printf("Done checking health in: %s\n\n", lastCheckTime.Sub(start))
+	log.Printf("Done checking health in: %d ms\n\n", lastCheckTime.Sub(start).Milliseconds())
 }
 
 func sendDiscordNotification(
