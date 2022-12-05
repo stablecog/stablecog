@@ -1,5 +1,7 @@
 FROM golang:1.18.2-bullseye AS build
 
+RUN apk add musl-dev vips-dev gcc
+
 WORKDIR /go/src/stablecog-go
 
 # Copy all the Code and stuff to compile everything
@@ -13,9 +15,9 @@ RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -a -installsuffix cgo -o app 
 
 # Moving the binary to the 'final Image' to make it smaller
 FROM golang:1.18.2-alpine
-
 WORKDIR /app
 
+RUN apk add vips-dev
 COPY --from=build /go/src/stablecog-go/app .
 
 CMD ["./app"]
