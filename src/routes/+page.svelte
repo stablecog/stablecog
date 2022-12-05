@@ -8,7 +8,8 @@
 		estimatedDurationDefault,
 		guidanceScaleDefault,
 		inferenceStepsDefault,
-		maxSeed
+		maxSeed,
+		schedulerIdDefault
 	} from '$ts/constants/main';
 	import { urlFromBase64 } from '$ts/helpers/base64';
 	import {
@@ -95,7 +96,8 @@
 					? $negativePromptInputValue
 					: undefined,
 			model_id: $generationModelId,
-			scheduler_id: $advancedModeApp || data.scheduler_id ? $generationSchedulerId : undefined,
+			scheduler_id:
+				$advancedModeApp || data.scheduler_id ? $generationSchedulerId : schedulerIdDefault,
 			width: Number($generationWidth),
 			height: Number($generationHeight),
 			guidance_scale: Number(
