@@ -1,6 +1,6 @@
-FROM golang:1.18.2-bullseye AS build
+FROM golang:1.18.2-alpine AS build
 
-RUN apt-get install -y musl-dev vips-dev gcc
+RUN apk add musl-dev vips-dev gcc
 
 WORKDIR /go/src/stablecog-go
 
@@ -17,7 +17,7 @@ RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -a -installsuffix cgo -o app 
 FROM golang:1.18.2-alpine
 WORKDIR /app
 
-RUN apt-get install -y vips-dev
+RUN apk add vips-dev
 COPY --from=build /go/src/stablecog-go/app .
 
 CMD ["./app"]
