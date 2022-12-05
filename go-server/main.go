@@ -41,5 +41,5 @@ func main() {
 		return c.SendString("API is up and running")
 	})
 
-	log.Fatal(app.Listen(fmt.Sprintf("127.0.0.1:%d", *serverPort)))
+	log.Fatal(app.Listen(fmt.Sprintf(":%d", *serverPort)))
 }
