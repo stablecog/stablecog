@@ -4,14 +4,11 @@ WORKDIR /root
 
 # add source code
 ADD . .
-# add assets
-ADD assets assets
 # Build
 RUN go build -o /root/app
 
 FROM ubuntu:22.04
 
-ADD assets assets
 COPY --from=builder /root/app /usr/local/bin/app
 
 ENV MALLOC_ARENA_MAX=2
