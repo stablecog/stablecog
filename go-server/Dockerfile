@@ -1,8 +1,7 @@
-FROM golang:1.18.2-alpine AS build
-
-RUN apk add musl-dev vips-dev gcc
+FROM golang:1.18.2-bullseye AS build
 
 WORKDIR /go/src/stablecog-go
+RUN apt-get install -y musl-dev vips-dev gcc
 
 # Copy all the Code and stuff to compile everything
 COPY . .
