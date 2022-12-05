@@ -1,4 +1,4 @@
-package queries
+package generate
 
 import (
 	"log"
@@ -6,11 +6,13 @@ import (
 	"time"
 
 	"github.com/fatih/color"
-	shared "github.com/yekta/stablecog/aux-go/shared"
+	shared "github.com/yekta/stablecog/go-server/shared"
 )
 
+var yellow = color.New(color.FgYellow).SprintFunc()
+
 func PickServerUrl(serverUrl string) SServerUrlResult {
-	yellow := color.New(color.FgYellow).SprintFunc()
+	start := time.Now().UTC().UnixMilli()
 	if serverUrl != shared.DEFAULT_SERVER_URL {
 		return SServerUrlResult{
 			ServerUrl: serverUrl,
@@ -35,7 +37,8 @@ func PickServerUrl(serverUrl string) SServerUrlResult {
 	rand.Seed(time.Now().Unix())
 	i := rand.Intn(len(servers))
 	pickedServer := servers[i]
-	log.Printf("-- Picked server URL: %v --", yellow(pickedServer.Url))
+	end := time.Now().UTC().UnixMilli()
+	log.Printf("-- Picked server URL in: %s%s - %v --", green(end-start), green("ms"), yellow(pickedServer.Url))
 	return SServerUrlResult{
 		ServerUrl: pickedServer.Url,
 		IsDefault: true,

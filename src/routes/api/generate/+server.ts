@@ -90,16 +90,16 @@ export const POST: RequestHandler = async ({ request }) => {
 			const iRes = await insertGenerationSupabase({
 				width,
 				height,
+				guidance_scale,
+				num_inference_steps,
 				seed,
+				model_id,
+				scheduler_id,
+				picked_server_url,
+				userAgent,
 				countryCode,
 				deviceInfo,
-				logObject,
-				guidance_scale,
-				model_id,
-				num_inference_steps,
-				picked_server_url,
-				scheduler_id,
-				userAgent
+				logObject
 			});
 			if (iRes.generationId !== undefined) generationId = iRes.generationId;
 		} catch (error) {

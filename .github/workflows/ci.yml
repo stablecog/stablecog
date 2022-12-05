@@ -134,7 +134,7 @@ jobs:
           DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
       - name: Build and tag
         if: success()
-        run: docker build -t appditto/stablecog-go:${{ env.BRANCH_NAME }}-${{ env.GITHUB_RUN_ID }} aux-go
+        run: docker build -t appditto/stablecog-go:${{ env.BRANCH_NAME }}-${{ env.GITHUB_RUN_ID }} go-server
       - name: Push image
         if: success()
         uses: actions-hub/docker@master

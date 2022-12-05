@@ -1,4 +1,4 @@
-package cron
+package health
 
 import (
 	"bytes"
@@ -10,8 +10,7 @@ import (
 	"sync"
 	"time"
 
-	queries "github.com/yekta/stablecog/aux-go/queries"
-	"github.com/yekta/stablecog/aux-go/shared"
+	"github.com/yekta/stablecog/go-server/shared"
 )
 
 const maxGenerationFailWithoutNSFWRate = 0.5
@@ -39,12 +38,12 @@ func CheckHealthAndNotify() {
 	var wg sync.WaitGroup
 	wg.Add(1)
 	go func() {
-		generations = queries.GetGenerations(generationCountToCheck)
+		generations = GetGenerations(generationCountToCheck)
 		defer wg.Done()
 	}()
 	wg.Add(1)
 	go func() {
-		servers = queries.GetServers()
+		servers = GetServers()
 		defer wg.Done()
 	}()
 	wg.Wait()
@@ -94,13 +93,13 @@ func CheckHealthAndNotify() {
 	lastCheckTime = time.Now()
 	sinceHealthyNotification := time.Since(lastHealthyNotificationTime)
 	sinceUnhealthyNotification := time.Since(lastUnhealthyNotificationTime)
+	log.Printf("Healthy servers (enabled): %d/%d", healthyServerCount, enabledServerCount)
+	log.Printf("Healthy servers (all): %d/%d", healthyServerCount, len(servers))
+	log.Printf("Done checking health in: %dms", lastCheckTime.Sub(start).Milliseconds())
 	if lastStatus != lastStatusPrev || (lastStatus == "unhealthy" && sinceUnhealthyNotification > maxUnhealthyNotificationInterval) ||
 		(lastStatus == "healthy" && sinceHealthyNotification > maxHealthyNotificationInterval) {
 		sendDiscordNotification(lastStatus, servers, generations, lastGenerationTime, lastCheckTime)
 	}
-	log.Printf("Healthy servers (enabled): %d/%d", healthyServerCount, enabledServerCount)
-	log.Printf("Healthy servers (all): %d/%d", healthyServerCount, len(servers))
-	log.Printf("Done checking health in: %s\n\n", lastCheckTime.Sub(start))
 }
 
 func sendDiscordNotification(
@@ -110,15 +109,17 @@ func sendDiscordNotification(
 	lastGenerationTime time.Time,
 	lastCheckTime time.Time,
 ) {
+	start := time.Now().UnixMilli()
+	log.Printf("Sending Discord notification...")
 	webhookBody := getDiscordWebhookBody(status, servers, generations, lastGenerationTime, lastCheckTime)
 	reqBody, err := json.Marshal(webhookBody)
 	if err != nil {
-		log.Fatalln(err)
+		log.Printf("Error marshalling webhook body: %s", err)
 		return
 	}
 	res, postErr := http.Post(discordWebhookUrl, "application/json", bytes.NewBuffer(reqBody))
 	if postErr != nil {
-		log.Fatalln(postErr)
+		log.Printf("Error sending webhook: %s", postErr)
 	}
 	lastNotificationTime = time.Now()
 	if status == "healthy" {
@@ -126,8 +127,9 @@ func sendDiscordNotification(
 	} else {
 		lastUnhealthyNotificationTime = lastNotificationTime
 	}
+	end := time.Now().UnixMilli()
+	log.Printf("Sent Discord notification in: %dms", end-start)
 	defer res.Body.Close()
-
 }
 
 func getDiscordWebhookBody(

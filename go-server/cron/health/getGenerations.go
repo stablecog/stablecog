@@ -1,10 +1,10 @@
-package queries
+package health
 
 import (
 	"log"
 
 	"github.com/supabase/postgrest-go"
-	shared "github.com/yekta/stablecog/aux-go/shared"
+	shared "github.com/yekta/stablecog/go-server/shared"
 )
 
 func GetGenerations(limit int) []shared.SDBGeneration {

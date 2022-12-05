@@ -3,8 +3,12 @@ package loggers
 import (
 	"log"
 
-	"github.com/yekta/stablecog/aux-go/shared"
+	"github.com/fatih/color"
+	"github.com/yekta/stablecog/go-server/shared"
 )
+
+var yellow = color.New(color.FgHiYellow).SprintFunc()
+var green = color.New(color.FgHiGreen).SprintFunc()
 
 func LogGeneration(text string, obj SGenerationLogObject) {
 	maxLen := 75
@@ -15,17 +19,17 @@ func LogGeneration(text string, obj SGenerationLogObject) {
 		sPrompt = obj.Prompt
 	}
 	log.Printf(
-		`-- %s - "%s" - "%s" - "%s" - %d - %d - %d - %d - %d - "%s"`,
+		`-- %s - "%s" - "%s" - "%s" - %s - %s - %s - %s - %d - %s`,
 		text,
 		sPrompt,
 		shared.ModelIdToModelNameCog[obj.ModelId],
 		shared.SchedulerIdToSchedulerNameCog[obj.SchedulerId],
-		obj.Width,
-		obj.Height,
-		obj.GuidanceScale,
-		obj.NumInferenceSteps,
+		green(obj.Width),
+		green(obj.Height),
+		green(obj.GuidanceScale),
+		green(obj.NumInferenceSteps),
 		obj.Seed,
-		obj.ServerUrl,
+		yellow(obj.ServerUrl),
 	)
 }
 
