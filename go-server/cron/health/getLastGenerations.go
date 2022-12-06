@@ -1,4 +1,4 @@
-package health
+package cronHealth
 
 import (
 	"log"
@@ -7,7 +7,7 @@ import (
 	shared "github.com/yekta/stablecog/go-server/shared"
 )
 
-func GetGenerations(limit int) []shared.SDBGeneration {
+func GetLastGenerations(limit int) []shared.SDBGeneration {
 	var generations []shared.SDBGeneration
 	_, err := shared.Supabase.From("generation").
 		Select("status,created_at,failure_reason", "", false).Limit(limit, "").
