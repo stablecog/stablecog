@@ -122,8 +122,9 @@
 						}
 					}
 				)
-				.subscribe((status) => {
+				.subscribe((status, err) => {
 					console.log('generation realtime status:', status);
+					if (err) console.log('generation realtime error:', err);
 				});
 			channelUpscale = supabase
 				.channel('upscale-realtime-changes')
@@ -144,8 +145,9 @@
 						}
 					}
 				)
-				.subscribe((status) => {
+				.subscribe((status, err) => {
 					console.log('upscale realtime status:', status);
+					if (err) console.log('upscale realtime error:', err);
 				});
 		} else {
 			console.log('Supabase is not detected.');
