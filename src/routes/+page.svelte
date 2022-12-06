@@ -112,7 +112,7 @@
 				$generationSeed !== undefined &&
 				$generationSeed !== null &&
 				$generationSeed !== '' &&
-				($advancedModeApp || data.seed)
+				($advancedModeApp || isValue(data.seed))
 					? Number($generationSeed)
 					: Math.round(Math.random() * maxSeed),
 			imageDataB64: ''
