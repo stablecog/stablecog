@@ -36,13 +36,13 @@ const hi: BaseTranslation = {
 				'दोहराने योग्य परिणाम प्राप्त करें। एक ही संकेत विकल्पों के साथ संयुक्त एक सीड एक ही छवि उत्पन्न करता है।'
 		},
 		ModelDropdown: {
-			Title: 'Model',
-			Paragraph: 'The AI Model that will be used to generate the image.'
+			Title: 'मॉडल',
+			Paragraph: 'चित्र उत्पन्न करने के लिए उपयोग किया जाने वाला AI मॉडल।'
 		},
 		SchedulerDropdown: {
-			Title: 'Scheduler',
+			Title: 'अनुसूचक',
 			Paragraph:
-				'Diffuse the image in a certain way. It can drastically change the generated image. Some require less steps to produce good results.'
+				'चित्र को एक निश्चित तरीके से डिफ्यूज करें। यह उत्पन्न चित्र को काफी हद तक बदल सकता है। कुछ को अच्छे परिणाम देने के लिए कम चरणों की आवश्यकता होती है।'
 		},
 		SubmitToGalleryQuestion: {
 			Title: 'बनावट को गैलरी में दर्ज करे?',
@@ -96,10 +96,10 @@ const hi: BaseTranslation = {
 		SwitchServerButton: 'सर्वर बदले',
 		SubmitToGalleryToggle: 'गैलरी में दर्ज करें',
 		AdvancedModeToggle: 'एडवांस सेटिंग',
-		AdvancedOptionsDropdown: 'Advanced Options',
-		AdvancedDropdown: 'Advanced',
-		GenerationSettingsButton: 'Generation Settings',
-		GenerationSettingsTitle: 'Generation Settings',
+		AdvancedOptionsDropdown: 'उन्नत विकल्प',
+		AdvancedDropdown: 'उन्नत',
+		GenerationSettingsButton: 'बनावट सेटिंग्स',
+		GenerationSettingsTitle: 'बनावट सेटिंग्स',
 		DarkModeToggle: 'डार्क मोड'
 	},
 	GenerationFullscreen: {
@@ -169,37 +169,40 @@ const hi: BaseTranslation = {
 		},
 		ModelOptions: {
 			'048b4aa3-5586-47ed-900f-f4341c96bdb2': {
-				realName: 'Stable Diffusion 1.5',
-				simpleName: 'General'
+				realName: 'स्टेबल डिफ्यूजन 1.5',
+				simpleName: 'सामान्य'
 			},
 			'8acfe4c8-751d-4aa6-8c3c-844e3ef478e0': {
-				realName: 'Openjourney',
-				simpleName: '3D Digital Art'
+				realName: 'ओपनजर्नी',
+				simpleName: '3D डिजिटल कला'
 			},
 			'36d9d835-646f-4fc7-b9fe-98654464bf8e': {
-				realName: 'Arcane Diffusion',
-				simpleName: '3D Comic'
+				realName: 'अरकेन डिफ्यूशन',
+				simpleName: '3D हास्य'
 			},
-			'48a7031d-43b6-4a23-9f8c-8020eb6862e4': { realName: 'Ghibli Diffusion', simpleName: 'Anime' },
+			'48a7031d-43b6-4a23-9f8c-8020eb6862e4': {
+				realName: 'घिबली डिफ्यूजन',
+				simpleName: 'एनिमे'
+			},
 			'790c80e1-65b1-4556-9332-196344389572': {
-				realName: 'Mo-Di Diffusion',
-				simpleName: 'Animated Movie'
+				realName: 'मो-दी डिफ्यूजन',
+				simpleName: 'कार्टून फ़िल्म'
 			}
 		},
 		SchedulerOptions: {
 			'55027f8b-f046-4e71-bc51-53d5448661e0': {
-				realName: 'LMS'
+				realName: 'LMS '
 			},
 			'6fb13b76-9900-4fa4-abf8-8f843e034a7f': {
-				realName: 'Euler'
+				realName: 'यूलर'
 			},
 			'af2679a4-dbbb-4950-8c06-c3bb15416ef6': {
-				realName: 'Euler A.'
+				realName: 'युलर ए.'
 			}
 		},
-		UnknownTitle: 'Unknown',
-		MoreOptionsTitle: 'More Options',
-		LessOptionsTitle: 'Less Options'
+		UnknownTitle: 'अनजान',
+		MoreOptionsTitle: 'अधिक विकल्प',
+		LessOptionsTitle: 'कम विकल्प'
 	},
 	Error: {
 		SomethingWentWrong: 'कुछ गलत हो गया :(',
