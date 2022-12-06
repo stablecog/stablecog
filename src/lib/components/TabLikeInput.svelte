@@ -3,7 +3,7 @@
 	import TabBarWrapper from '$components/TabBarWrapper.svelte';
 	import { isTouchscreen } from '$ts/stores/isTouchscreen';
 
-	export let value: number | string | undefined;
+	export let value: number | string | undefined | null;
 	export let placeholder: string | undefined = undefined;
 	export { classes as class };
 	export let type: 'text' | 'number' = 'number';
@@ -15,7 +15,7 @@
 	let inputElement: HTMLInputElement;
 
 	let clearInput = () => {
-		value = '';
+		value = null;
 		inputElement.focus();
 	};
 

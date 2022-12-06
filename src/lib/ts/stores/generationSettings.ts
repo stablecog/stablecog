@@ -43,6 +43,6 @@ export const generationWidth = writable<TAvailableWidth>(widthDefault);
 export const generationHeight = writable<TAvailableHeight>(heightDefault);
 export const generationInferenceSteps = writable<TAvailableInferenceSteps>(inferenceStepsDefault);
 export const generationGuidanceScale = writable<number>(guidanceScaleDefault);
-export const generationSeed = writable<number | undefined>(undefined);
+export const generationSeed = writable<string | number | undefined | null>(undefined);
 export const generationModelId = writable<TAvailableModelId>(modelIdDefault);
 export const generationSchedulerId = writable<TAvailableSchedulerId>(schedulerIdDefault);

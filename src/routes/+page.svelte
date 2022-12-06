@@ -109,8 +109,11 @@
 					: inferenceStepsDefault
 			),
 			seed:
-				(isValue($generationSeed) && $advancedModeApp) || isValue(data.seed)
-					? $generationSeed!!
+				$generationSeed !== undefined &&
+				$generationSeed !== null &&
+				$generationSeed !== '' &&
+				($advancedModeApp || data.seed)
+					? Number($generationSeed)
 					: Math.round(Math.random() * maxSeed),
 			imageDataB64: ''
 		};
