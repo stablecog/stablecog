@@ -1,6 +1,7 @@
 package shared
 
 import (
+	"github.com/fatih/color"
 	"github.com/supabase/postgrest-go"
 )
 
@@ -31,3 +32,8 @@ var SchedulerIdToSchedulerNameCog = map[string]string{
 	"6fb13b76-9900-4fa4-abf8-8f843e034a7f": "K_EULER",
 	"af2679a4-dbbb-4950-8c06-c3bb15416ef6": "K_EULER_ANCESTRAL",
 }
+
+var green = color.New(color.FgHiGreen).SprintFunc()
+var yellow = color.New(color.FgYellow).SprintFunc()
+
+var IsDev = GetEnv("APP_MODE") == "development"

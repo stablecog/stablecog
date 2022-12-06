@@ -25,7 +25,7 @@ export const POST: RequestHandler = async ({ request }) => {
 	const deviceInfo = getDeviceInfo(userAgent);
 	const {
 		server_url,
-		imageDataB64,
+		image_b64,
 		width,
 		height,
 		seed,
@@ -81,7 +81,7 @@ export const POST: RequestHandler = async ({ request }) => {
 		const startTimestamp = Date.now();
 		const predictionsBody: TPredictionsRequestUpscale = {
 			input: {
-				image_u: imageDataB64,
+				image_u: image_b64,
 				task_u: 'Real-World Image Super-Resolution-Large',
 				process_type: 'upscale'
 			}
@@ -114,7 +114,7 @@ export const POST: RequestHandler = async ({ request }) => {
 		);
 		const output = data.output[0];
 		const upscaleResponse: TUpscaleResponse = {
-			data: { imageDataB64: output, duration_ms: upscaleDurationMs }
+			data: { image_b64: output, duration_ms: upscaleDurationMs }
 		};
 		return new Response(JSON.stringify(upscaleResponse));
 	} catch (error) {

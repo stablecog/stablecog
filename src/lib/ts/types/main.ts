@@ -42,14 +42,14 @@ export interface TGenerationRequest {
 
 export interface TGenerationResponse {
 	data?: {
-		imageDataB64: string;
+		image_b64: string;
 		duration_ms: number;
 	};
 	error?: string;
 }
 
 export interface TUpscaleRequest {
-	imageDataB64: string;
+	image_b64: string;
 	width?: number;
 	height?: number;
 	server_url: string;
@@ -62,7 +62,7 @@ export interface TUpscaleRequest {
 
 export interface TUpscaleResponse {
 	data?: {
-		imageDataB64: string;
+		image_b64: string;
 		duration_ms: number;
 	};
 	error?: string;

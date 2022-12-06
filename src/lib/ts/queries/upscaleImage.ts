@@ -1,7 +1,8 @@
+import { apiBase } from '$ts/constants/main';
 import type { TUpscaleRequest, TUpscaleResponse } from '$ts/types/main';
 
 export async function upscaleImage({
-	imageDataB64,
+	image_b64,
 	server_url,
 	width,
 	height,
@@ -11,13 +12,13 @@ export async function upscaleImage({
 	prompt,
 	seed
 }: TUpscaleRequest) {
-	const response = await fetch(`/api/upscale`, {
+	const response = await fetch(`${apiBase}/upscale`, {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json'
 		},
 		body: JSON.stringify({
-			imageDataB64,
+			image_b64,
 			server_url,
 			width,
 			height,

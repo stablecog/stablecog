@@ -197,7 +197,7 @@ export const POST: RequestHandler = async ({ request }) => {
 		}
 		const generationResponse: TGenerationResponse = {
 			data:
-				output && !isNSFW ? { imageDataB64: output, duration_ms: generationDurationMs } : undefined,
+				output && !isNSFW ? { image_b64: output, duration_ms: generationDurationMs } : undefined,
 			error: output && isNSFW ? 'NSFW' : data.error
 		};
 		return new Response(JSON.stringify(generationResponse));

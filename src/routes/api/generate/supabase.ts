@@ -1,7 +1,6 @@
 import { generationLog } from '$routes/api/generate/helpers';
 import type {
 	TDBGenerationProcessRes,
-	TDeviceInfo,
 	TGenerationLogObject,
 	TInsertGenerationRequestSupabase
 } from '$routes/api/generate/types';

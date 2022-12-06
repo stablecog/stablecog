@@ -6,7 +6,7 @@
 	import ImagePlaceholder from '$components/ImagePlaceholder.svelte';
 	import MetaTag from '$components/MetaTag.svelte';
 	import { elementreceive, elementsend } from '$ts/animation/transitions';
-	import { canonicalUrl } from '$ts/constants/main';
+	import { apiBase, canonicalUrl } from '$ts/constants/main';
 	import { generationGPreviewUrlFromId } from '$ts/helpers/generationGPreviewUrlFromId';
 	import { isValue } from '$ts/helpers/isValue';
 	import { randomSort } from '$ts/helpers/randomSort';
@@ -37,7 +37,7 @@
 		}
 		console.log('Getting the page:', nextPage);
 		try {
-			const res = await fetch(`/api/gallery?page=${nextPage}`);
+			const res = await fetch(`${apiBase}/gallery?page=${nextPage}`);
 			if (res.status !== 200) {
 				throw new Error('Error getting the page');
 			}

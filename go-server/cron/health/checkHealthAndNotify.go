@@ -132,6 +132,10 @@ func sendDiscordNotification(
 	lastGenerationTime time.Time,
 	lastCheckTime time.Time,
 ) {
+	if shared.IsDev {
+		log.Printf("Not sending Discord notification in dev mode")
+		return
+	}
 	start := time.Now().UnixMilli()
 	log.Printf("Sending Discord notification...")
 	webhookBody := getDiscordWebhookBody(status, servers, generations, lastGenerationTime, lastCheckTime)

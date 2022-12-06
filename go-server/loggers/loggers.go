@@ -9,6 +9,7 @@ import (
 
 var yellow = color.New(color.FgHiYellow).SprintFunc()
 var green = color.New(color.FgHiGreen).SprintFunc()
+var magenta = color.New(color.FgHiMagenta).SprintFunc()
 
 func LogGeneration(text string, obj SGenerationLogObject) {
 	maxLen := 75
@@ -19,16 +20,16 @@ func LogGeneration(text string, obj SGenerationLogObject) {
 		sPrompt = obj.Prompt
 	}
 	log.Printf(
-		`-- %s - "%s" - "%s" - "%s" - %s - %s - %s - %s - %d - %s`,
+		`-- %s - "%s" - "%s" - "%s" - %s - %s - %s - %s - %s - %s`,
 		text,
-		sPrompt,
-		shared.ModelIdToModelNameCog[obj.ModelId],
-		shared.SchedulerIdToSchedulerNameCog[obj.SchedulerId],
-		green(obj.Width),
-		green(obj.Height),
-		green(obj.GuidanceScale),
-		green(obj.NumInferenceSteps),
-		obj.Seed,
+		magenta(sPrompt),
+		magenta(shared.ModelIdToModelNameCog[obj.ModelId]),
+		magenta(shared.SchedulerIdToSchedulerNameCog[obj.SchedulerId]),
+		magenta(obj.Width),
+		magenta(obj.Height),
+		magenta(obj.GuidanceScale),
+		magenta(obj.NumInferenceSteps),
+		magenta(obj.Seed),
 		yellow(obj.ServerUrl),
 	)
 }
@@ -38,6 +39,43 @@ type SGenerationLogObject struct {
 	NegativePrompt    string
 	ModelId           string
 	SchedulerId       string
+	Width             int
+	Height            int
+	NumInferenceSteps int
+	GuidanceScale     int
+	Seed              int
+	ServerUrl         string
+}
+
+func LogUpscale(text string, obj SUpscaleLogObject) {
+	maxLen := 75
+	var sPrompt string
+	if len(obj.Prompt) > maxLen {
+		sPrompt = obj.Prompt[:maxLen] + "..."
+	} else {
+		sPrompt = obj.Prompt
+	}
+	log.Printf(
+		`-- %s - %s%s - "%s" - "%s" - %s - %s - %s - %s - %s - %s`,
+		text,
+		magenta(obj.Scale),
+		magenta("x"),
+		magenta(obj.Type),
+		magenta(sPrompt),
+		magenta(obj.Width),
+		magenta(obj.Height),
+		magenta(obj.GuidanceScale),
+		magenta(obj.NumInferenceSteps),
+		magenta(obj.Seed),
+		yellow(obj.ServerUrl),
+	)
+}
+
+type SUpscaleLogObject struct {
+	Type              string
+	Scale             int
+	Prompt            string
+	NegativePrompt    string
 	Width             int
 	Height            int
 	NumInferenceSteps int

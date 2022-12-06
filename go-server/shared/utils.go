@@ -8,6 +8,7 @@ import (
 	"time"
 
 	"github.com/joho/godotenv"
+	"github.com/mileusna/useragent"
 )
 
 func GetEnv(key string) string {
@@ -61,4 +62,18 @@ func RemoveSuffixSpaces(s string) string {
 	r := regexp.MustCompile(`\s+$`)
 	result = r.ReplaceAllString(s, "")
 	return result
+}
+
+func GetDeviceType(client useragent.UserAgent) string {
+	if client.Mobile {
+		return "mobile"
+	} else if client.Tablet {
+		return "tablet"
+	} else if client.Desktop {
+		return "desktop"
+	} else if client.Bot {
+		return "bot"
+	} else {
+		return "unknown"
+	}
 }

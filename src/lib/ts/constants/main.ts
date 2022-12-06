@@ -9,6 +9,7 @@ export const estimatedDurationDefault = 10;
 export const estimatedDurationUpscaleDefault = 15;
 export const canonicalUrl = 'https://stablecog.com';
 export const defaultLocale: Locales = 'en';
+export const apiBase = '/api';
 
 export const modalCloseDelay = 120;
 

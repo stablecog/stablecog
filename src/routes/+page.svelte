@@ -139,10 +139,10 @@
 				shouldSubmitToGallery: $shouldSubmitToGallery === undefined ? false : $shouldSubmitToGallery
 			});
 			let { data, error } = res;
-			if (data && data.imageDataB64 && !error) {
+			if (data && data.image_b64 && !error) {
 				pLogGeneration('Succeeded');
 				uLogGeneration('Succeeded');
-				lastGeneration.imageDataB64 = data.imageDataB64;
+				lastGeneration.imageDataB64 = data.image_b64;
 				if (
 					$currentServer.lastHealthStatus !== 'healthy' ||
 					$currentServerHealthStatus !== 'healthy'
@@ -160,7 +160,7 @@
 					if (canWrite) {
 						const resId = await addGenerationToDb({
 							...lastGeneration,
-							imageDataB64: data.imageDataB64
+							imageDataB64: data.image_b64
 						});
 						if (resId !== undefined && resId !== null) {
 							id = Number(resId);
@@ -174,7 +174,7 @@
 				} else {
 					lastGeneration.id = id;
 				}
-				const imageUrl = urlFromBase64(data.imageDataB64);
+				const imageUrl = urlFromBase64(data.image_b64);
 				const img = new Image();
 				img.src = imageUrl;
 				img.onload = () => {

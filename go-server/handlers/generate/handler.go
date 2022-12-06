@@ -18,6 +18,7 @@ import (
 )
 
 var green = color.New(color.FgHiGreen).SprintFunc()
+var yellow = color.New(color.FgHiYellow).SprintFunc()
 
 func Handler(c *fiber.Ctx) error {
 	start := time.Now().UTC().UnixMilli()
@@ -56,7 +57,7 @@ func Handler(c *fiber.Ctx) error {
 	cleanedPrompt := shared.FormatPrompt(req.Prompt)
 	cleanedNegativePrompt := shared.FormatPrompt(req.NegativePrompt)
 
-	pickServerRes := PickServerUrl(req.ServerUrl)
+	pickServerRes := shared.PickServerUrl(req.ServerUrl)
 	if pickServerRes.Error {
 		return c.Status(http.StatusInternalServerError).JSON(
 			SGenerateResponse{Error: "Failed to pick a server"},
@@ -79,6 +80,7 @@ func Handler(c *fiber.Ctx) error {
 	userAgent := c.Get("User-Agent")
 	client := useragent.Parse(userAgent)
 	generationIdChan := make(chan string)
+	countryCode := c.Get("CF-IPCountry")
 	go InsertGenerationInitial(SInsertGenerationProps{
 		Status:            "started",
 		Width:             req.Width,
@@ -89,8 +91,9 @@ func Handler(c *fiber.Ctx) error {
 		ModelId:           req.ModelId,
 		SchedulerId:       req.SchedulerId,
 		ServerUrl:         pickServerRes.ServerUrl,
+		CountryCode:       countryCode,
 		UserAgent:         userAgent,
-		DeviceType:        getDeviceType(client),
+		DeviceType:        shared.GetDeviceType(client),
 		DeviceOS:          client.OS,
 		DeviceBrowser:     client.Name,
 		LogObject:         logObj,
@@ -203,26 +206,12 @@ func Handler(c *fiber.Ctx) error {
 	})
 }
 
-func getDeviceType(client useragent.UserAgent) string {
-	if client.Mobile {
-		return "mobile"
-	} else if client.Tablet {
-		return "tablet"
-	} else if client.Desktop {
-		return "desktop"
-	} else if client.Bot {
-		return "bot"
-	} else {
-		return "unknown"
-	}
-}
-
 type SGenerateResponse struct {
 	Data  SGenerateResponseData `json:"data,omitempty"`
 	Error string                `json:"error,omitempty"`
 }
 
 type SGenerateResponseData struct {
-	ImageB64   string `json:"imageDataB64"`
+	ImageB64   string `json:"image_b64"`
 	DurationMs int64  `json:"duration_ms"`
 }

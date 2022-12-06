@@ -1,3 +1,4 @@
+import { apiBase } from '$ts/constants/main';
 import type { TGenerationRequest, TGenerationResponse } from '$ts/types/main';
 
 export async function generateImage({
@@ -13,7 +14,7 @@ export async function generateImage({
 	guidance_scale,
 	shouldSubmitToGallery = false
 }: TGenerationRequest) {
-	const response = await fetch(`/api/generate`, {
+	const response = await fetch(`${apiBase}/generate`, {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json'

@@ -218,7 +218,7 @@
 		setTimeout(() => (upscaleStatus = 'loading'));
 		try {
 			const res = await upscaleImage({
-				imageDataB64: generation.imageDataB64,
+				image_b64: generation.imageDataB64,
 				server_url: $serverUrl,
 				prompt: generation.prompt,
 				negative_prompt: generation.negative_prompt,
@@ -228,10 +228,10 @@
 				height: generation.height,
 				width: generation.width
 			});
-			if (res.data?.imageDataB64) {
+			if (res.data?.image_b64) {
 				pLogUpscale('Succeeded');
 				uLogUpscale('Succeeded');
-				const base64 = res.data.imageDataB64;
+				const base64 = res.data.image_b64;
 				const url = urlFromBase64(base64);
 				const { upscaledImageDataB64, upscaledImageUrl, ...rest } = generation;
 				dispatchUpscale('upscale', {
