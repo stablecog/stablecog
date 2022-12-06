@@ -23,6 +23,7 @@
 	import { localeLS } from '$ts/stores/localeLS';
 	import { loadLocaleAsync } from '$i18n/i18n-util.async';
 	import { isLocale } from '$i18n/i18n-util';
+	import { advancedMode, advancedModeApp } from '$ts/stores/advancedMode';
 
 	export let data: LayoutData;
 	setLocale(data.locale);
@@ -44,6 +45,9 @@
 		if ($localeLS && isLocale($localeLS) && $localeLS !== $locale) {
 			await loadLocaleAsync($localeLS);
 			setLocale($localeLS);
+		}
+		if (($advancedMode === true || $advancedMode === false) && $advancedMode !== $advancedModeApp) {
+			advancedModeApp.set($advancedMode);
 		}
 	});
 
