@@ -12,6 +12,7 @@ import (
 	"github.com/yekta/stablecog/go-server/cron/health"
 	"github.com/yekta/stablecog/go-server/handlers/gallery"
 	"github.com/yekta/stablecog/go-server/handlers/generate"
+	generationGImage "github.com/yekta/stablecog/go-server/handlers/generation-g-image"
 	"github.com/yekta/stablecog/go-server/handlers/health"
 	"github.com/yekta/stablecog/go-server/handlers/upscale"
 	"github.com/yekta/stablecog/go-server/shared"
@@ -39,6 +40,7 @@ func main() {
 	app.Post("/upscale", upscale.Handler)
 	app.Get("/gallery", gallery.Handler)
 	app.Post("/health", health.Handler)
+	app.Get("/generation-g-image/:imageIdWithExt", generationGImage.Handler)
 
 	app.Get("/", func(c *fiber.Ctx) error {
 		return c.SendString("API is up and running")
