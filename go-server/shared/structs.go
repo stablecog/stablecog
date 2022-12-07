@@ -10,11 +10,11 @@ type SDBGeneration struct {
 type SDBServer struct {
 	Id                string `json:"id"`
 	Healthy           bool   `json:"healthy"`
-	Url               string `json:"url,omitempty"`
-	Enabled           bool   `json:"enabled,omitempty"`
-	CreatedAt         string `json:"created_at,omitempty"`
-	UpdatedAt         string `json:"updated_at,omitempty"`
-	LastHealthCheckAt string `json:"last_health_check_at,omitempty"`
+	Url               string `json:"url"`
+	Enabled           bool   `json:"enabled"`
+	CreatedAt         string `json:"created_at"`
+	UpdatedAt         string `json:"updated_at"`
+	LastHealthCheckAt string `json:"last_health_check_at"`
 }
 
 type SDBServerUpdate struct {

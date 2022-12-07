@@ -17,7 +17,7 @@ func SetDefaultServerHealths() {
 	servers := shared.GetServers()
 	for _, s := range servers {
 		if s.Enabled {
-			serversToCheck = append(servers, s)
+			serversToCheck = append(serversToCheck, s)
 		}
 	}
 	var results []shared.SDBServer
