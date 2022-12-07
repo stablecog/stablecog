@@ -72,7 +72,8 @@
 		</script>
 		%sveltekit.head%
 	</head>
-	<body version="2.35">
+	<body version="2.5">
 		<div>%sveltekit.body%</div>
 	</body>
 </html>
+env.PUBLIC_APP_MODE === 'development' ? env.PUBLIC_GO_SERVER_URL_DEV : env.PUBLIC_GO_SERVER_URL_PROD
