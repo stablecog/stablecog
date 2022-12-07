@@ -12,7 +12,7 @@
 	import MetaTag from '$components/MetaTag.svelte';
 	import LL from '$i18n/i18n-svelte';
 	import { canonicalUrl } from '$ts/constants/main';
-	import { supabaseClient } from '$ts/constants/supabaseClient';
+	import { supabase } from '$ts/constants/supabase';
 	import { getRelativeDate } from '$ts/helpers/getRelativeDate';
 	import type { PostgrestError, RealtimeChannel } from '@supabase/supabase-js';
 	import { onMount } from 'svelte';
@@ -52,8 +52,8 @@
 		nowInterval = setInterval(() => {
 			now = Date.now();
 		}, 1000);
-		if (supabaseClient) {
-			channelServers = supabaseClient
+		if (supabase) {
+			channelServers = supabase
 				.channel('server-realtime-changes')
 				.on('postgres_changes', { event: '*', schema: 'public', table: 'server' }, (payload) => {
 					console.log('Payload', payload);
@@ -64,17 +64,14 @@
 		return () => {
 			clearInterval(nowInterval);
 			channelServers?.unsubscribe();
-			supabaseClient?.removeAllChannels();
+			supabase?.removeAllChannels();
 		};
 	});
 
 	async function getAndSetServers() {
-		if (!supabaseClient) return;
+		if (!supabase) return;
 		try {
-			const { data, error }: TServerRes = await supabaseClient
-				?.from('server')
-				.select('*')
-				.order('url');
+			const { data, error }: TServerRes = await supabase?.from('server').select('*').order('url');
 			console.log('Server data:', data, error);
 			if (data) {
 				servers = data.map((server) => {
@@ -92,7 +89,7 @@
 	}
 
 	async function addServer() {
-		if (!supabaseClient) return;
+		if (!supabase) return;
 		if (!serverUrl) return;
 		serverAddStatus = 'loading';
 		if (!serverUrl.startsWith('http')) {
@@ -106,10 +103,7 @@
 			serverUrl = url.slice(0, -1);
 		}
 		try {
-			const { data, error } = await supabaseClient
-				?.from('server')
-				.insert({ url: serverUrl })
-				.select();
+			const { data, error } = await supabase?.from('server').insert({ url: serverUrl }).select();
 			console.log(data, error);
 			if (data && !error) {
 				serverUrl = '';
@@ -121,11 +115,11 @@
 	}
 
 	async function removeServer(id: string) {
-		if (!supabaseClient) return;
+		if (!supabase) return;
 		const index = servers.findIndex((s) => s.id === id);
 		if (index >= 0) servers[index].removeLoading = true;
 		try {
-			const { data, error } = await supabaseClient?.from('server').delete().eq('id', id);
+			const { data, error } = await supabase?.from('server').delete().eq('id', id);
 			console.log(data, error);
 		} catch (error) {
 			console.log(error);
@@ -134,11 +128,11 @@
 	}
 
 	async function disableServer(id: string) {
-		if (!supabaseClient) return;
+		if (!supabase) return;
 		const index = servers.findIndex((s) => s.id === id);
 		if (index >= 0) servers[index].enableDisableLoading = true;
 		try {
-			const { data, error } = await supabaseClient
+			const { data, error } = await supabase
 				?.from('server')
 				.update({ enabled: false })
 				.eq('id', id)
@@ -151,11 +145,11 @@
 	}
 
 	async function enableServer(id: string) {
-		if (!supabaseClient) return;
+		if (!supabase) return;
 		const index = servers.findIndex((s) => s.id === id);
 		if (index >= 0) servers[index].enableDisableLoading = true;
 		try {
-			const { data, error } = await supabaseClient
+			const { data, error } = await supabase
 				?.from('server')
 				.update({ enabled: true })
 				.eq('id', id)

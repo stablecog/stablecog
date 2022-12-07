@@ -6,9 +6,7 @@
 	import MetaTag from '$components/MetaTag.svelte';
 	import LL from '$i18n/i18n-svelte';
 	import { canonicalUrl } from '$ts/constants/main';
-	import { supabaseClient } from '$ts/constants/supabaseClient';
-
-	export let data: { admins: string[] };
+	import { supabase } from '$ts/constants/supabase';
 
 	let email: string;
 	let password: string;
@@ -17,17 +15,17 @@
 	let logoutStatus: 'loading' | 'idle' = 'idle';
 
 	async function login() {
-		if (!supabaseClient) {
-			console.log('supabaseClient not initialized');
+		if (!supabase) {
+			console.log('Supabase not initialized');
 			return;
 		}
 		loginStatus = 'loading';
 		try {
-			const { data: d, error: e } = await supabaseClient.auth.signInWithPassword({
+			const { data: d, error: e } = await supabase.auth.signInWithPassword({
 				email,
 				password
 			});
-			if (d.user?.id && data.admins.includes(d.user?.id)) {
+			if (d.user?.id) {
 				await goto('/admin');
 			}
 		} catch (error) {
@@ -39,7 +37,7 @@
 	async function logout() {
 		logoutStatus = 'loading';
 		try {
-			const res = await supabaseClient?.auth.signOut();
+			const res = await supabase?.auth.signOut();
 			console.log(res);
 		} catch (error) {
 			console.log(error);
