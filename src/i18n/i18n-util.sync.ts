@@ -11,6 +11,7 @@ import es from './es'
 import fr from './fr'
 import hi from './hi'
 import ko from './ko'
+import pt_br from './pt-br'
 import ru from './ru'
 import tr from './tr'
 import zh_Hans from './zh-Hans'
@@ -22,6 +23,7 @@ const localeTranslations = {
 	fr,
 	hi,
 	ko,
+	'pt-br': pt_br,
 	ru,
 	tr,
 	'zh-Hans': zh_Hans,
