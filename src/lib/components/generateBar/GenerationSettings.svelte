@@ -100,19 +100,23 @@
 			<IconHeight class="w-6 h-6 text-c-on-bg/25" />
 		</div>
 	</TabBar>
-	<TabLikeDropdown
-		{disabled}
-		class="w-full md:w-84 max-w-full {$advancedModeApp ? 'order-1' : 'order-2'}"
-		dropdownClass={$advancedModeApp ? 'max-h-[18rem]' : 'max-h-[8rem] md:max-h-[18rem]'}
-		bind:value={$generationModelId}
-		items={$availableModelIdDropdownItems}
-		name="Model"
-		bottomMinDistance={$windowWidth < 768 ? 0 : 72}
-	>
-		<div slot="title" use:tooltip={$modelTooltip} class="p-3.5 flex items-center justify-center">
-			<IconBrain class="w-6 h-6 text-c-on-bg/25" />
-		</div>
-	</TabLikeDropdown>
+	{#if $currentServer.lastHealthStatus === 'unknown' || $currentServer.features
+			?.map((f) => f.name)
+			.includes('model')}
+		<TabLikeDropdown
+			{disabled}
+			class="w-full md:w-84 max-w-full {$advancedModeApp ? 'order-1' : 'order-2'}"
+			dropdownClass={$advancedModeApp ? 'max-h-[18rem]' : 'max-h-[8rem] md:max-h-[18rem]'}
+			bind:value={$generationModelId}
+			items={$availableModelIdDropdownItems}
+			name="Model"
+			bottomMinDistance={$windowWidth < 768 ? 0 : 72}
+		>
+			<div slot="title" use:tooltip={$modelTooltip} class="p-3.5 flex items-center justify-center">
+				<IconBrain class="w-6 h-6 text-c-on-bg/25" />
+			</div>
+		</TabLikeDropdown>
+	{/if}
 	{#if $advancedModeApp}
 		<TabLikeRangeInput
 			{disabled}
@@ -145,23 +149,27 @@
 				<IconSteps class="w-6 h-6 text-c-on-bg/25" />
 			</div>
 		</TabBar>
-		<TabLikeDropdown
-			{disabled}
-			class="w-full md:w-84 max-w-full order-2"
-			dropdownClass={'max-h-[15rem]'}
-			bind:value={$generationSchedulerId}
-			items={$availableSchedulerIdDropdownItems}
-			name="Scheduler"
-			bottomMinDistance={$windowWidth < 768 ? 0 : 72}
-		>
-			<div
-				slot="title"
-				use:tooltip={$schedulerTooltip}
-				class="p-3.5 flex items-center justify-center"
+		{#if $currentServer.lastHealthStatus === 'unknown' || $currentServer.features
+				?.map((f) => f.name)
+				.includes('model')}
+			<TabLikeDropdown
+				{disabled}
+				class="w-full md:w-84 max-w-full order-2"
+				dropdownClass={'max-h-[15rem]'}
+				bind:value={$generationSchedulerId}
+				items={$availableSchedulerIdDropdownItems}
+				name="Scheduler"
+				bottomMinDistance={$windowWidth < 768 ? 0 : 72}
 			>
-				<IconBubbles class="w-6 h-6 text-c-on-bg/25" />
-			</div>
-		</TabLikeDropdown>
+				<div
+					slot="title"
+					use:tooltip={$schedulerTooltip}
+					class="p-3.5 flex items-center justify-center"
+				>
+					<IconBubbles class="w-6 h-6 text-c-on-bg/25" />
+				</div>
+			</TabLikeDropdown>
+		{/if}
 		<TabLikeInput
 			disabled={!isCheckComplete || disabled}
 			class="w-full md:w-84 max-w-full order-2"

@@ -95,9 +95,14 @@
 				($advancedModeApp || isValue(data.negative_prompt))
 					? $negativePromptInputValue
 					: undefined,
-			model_id: $generationModelId,
-			scheduler_id:
-				$advancedModeApp || data.scheduler_id ? $generationSchedulerId : schedulerIdDefault,
+			model_id: $currentServer.features?.map((f) => f.name).includes('model')
+				? $generationModelId
+				: undefined,
+			scheduler_id: $currentServer.features?.map((f) => f.name).includes('scheduler')
+				? $advancedModeApp || data.scheduler_id
+					? $generationSchedulerId
+					: schedulerIdDefault
+				: undefined,
 			width: Number($generationWidth),
 			height: Number($generationHeight),
 			guidance_scale: Number(

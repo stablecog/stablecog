@@ -78,7 +78,7 @@ export type TLastServerHealthStatus = 'healthy' | 'unhealthy' | 'not-set' | 'unk
 
 export interface TServerFeature {
 	name: string;
-	values: string[];
+	values?: string[];
 }
 export type TServerLocalStorage = {
 	lastHealthStatus: TLastServerHealthStatus;
