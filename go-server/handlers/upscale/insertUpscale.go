@@ -38,7 +38,7 @@ func InsertUpscaleInitial(g SInsertUpscaleProps) string {
 		return ""
 	}
 	end := time.Now().UTC().UnixMilli()
-	log.Printf("-- DB - Upscale initial insert in: %s%s --", green(end-start), green("ms"))
+	log.Printf("-- DB - Upscale initial insert in: %s --", green(end-start, "ms"))
 	g.UpscaleIdChan <- res.Id
 	return res.Id
 }

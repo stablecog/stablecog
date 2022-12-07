@@ -33,7 +33,7 @@ func PickServerUrl(serverUrl string) SServerUrlResult {
 	i := rand.Intn(len(servers))
 	pickedServer := servers[i]
 	end := time.Now().UTC().UnixMilli()
-	log.Printf("-- Picked server URL in: %s%s - %v --", green(end-start), green("ms"), yellow(pickedServer.Url))
+	log.Printf("-- Picked server URL in: %s - %v --", green(end-start, "ms"), yellow(pickedServer.Url))
 	return SServerUrlResult{
 		ServerUrl: pickedServer.Url,
 		IsDefault: true,

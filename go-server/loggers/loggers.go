@@ -56,10 +56,9 @@ func LogUpscale(text string, obj SUpscaleLogObject) {
 		sPrompt = obj.Prompt
 	}
 	log.Printf(
-		`-- %s - %s%s - "%s" - "%s" - %s - %s - %s - %s - %s - %s`,
+		`-- %s - %s - %s - "%s" - %s - %s - %s - %s - %s - %s`,
 		text,
-		magenta(obj.Scale),
-		magenta("x"),
+		magenta(obj.Scale, "x"),
 		magenta(obj.Type),
 		magenta(sPrompt),
 		magenta(obj.Width),

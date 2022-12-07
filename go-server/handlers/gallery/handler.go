@@ -1,7 +1,6 @@
 package gallery
 
 import (
-	"fmt"
 	"log"
 	"math/rand"
 	"strconv"
@@ -26,7 +25,7 @@ func Handler(c *fiber.Ctx) error {
 	log.Printf("-- Request for gallery page - %s --", magenta(p))
 	generationGs := GetGenerationGs(p, batchSize+1, "")
 	if generationGs == nil {
-		log.Printf(red(fmt.Sprintf("-- Failed to get generations for gallery page - %d --", p)))
+		log.Printf(red("-- Failed to get generations for gallery page - %d --", p))
 		return c.Status(fiber.StatusInternalServerError).JSON("Failed to get generations")
 	}
 	next := 0
@@ -45,7 +44,7 @@ func Handler(c *fiber.Ctx) error {
 		Next:        next,
 	}
 	end := time.Now().UTC().UnixMilli()
-	log.Printf("-- Responded to gallery page request: %s - %s%s --", magenta(p), green(end-start), green("ms"))
+	log.Printf("-- Responded to gallery page request: %s - %s --", magenta(p), green(end-start, "ms"))
 	return c.JSON(res)
 }
 

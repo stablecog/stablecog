@@ -1,11 +1,13 @@
 package health
 
 import (
+	"log"
 	"net/http"
+	"time"
 
 	"github.com/fatih/color"
 	"github.com/gofiber/fiber/v2"
-	"github.com/yekta/stablecog/go-server/cron/health"
+	cronHealth "github.com/yekta/stablecog/go-server/cron/health"
 	"github.com/yekta/stablecog/go-server/shared"
 )
 
@@ -14,9 +16,10 @@ var magenta = color.New(color.FgHiMagenta).SprintFunc()
 var red = color.New(color.FgHiRed).SprintFunc()
 var defaultServerUrl = shared.GetEnv("PUBLIC_DEFAULT_SERVER_URL")
 
-var serverFeatures = []string{"upscale", "generate"}
+var defaultServerFeatures = []string{"upscale", "generate"}
 
 func Handler(c *fiber.Ctx) error {
+	start := time.Now().UTC().UnixMilli()
 	var req SHealthRequestBody
 	if err := c.BodyParser(&req); err != nil {
 		return c.Status(http.StatusInternalServerError).JSON("Invalid request body")
@@ -32,25 +35,26 @@ func Handler(c *fiber.Ctx) error {
 				break
 			}
 		}
-		res := SHealthResponse{
+		res := shared.SHealthResponse{
 			Status:   "unhealthy",
-			Features: serverFeatures,
+			Features: defaultServerFeatures,
 		}
 		if hasHealthyAndEnabled {
 			res.Status = "healthy"
 		}
+		logEnd(start)
 		return c.JSON(res)
 	}
-	return c.JSON(SHealthResponse{
-		Status: "unhealthy",
-	})
+	healthRes := shared.CheckServer(req.ServerUrl)
+	logEnd(start)
+	return c.JSON(healthRes)
+}
+
+func logEnd(start int64) {
+	end := time.Now().UTC().UnixMilli()
+	log.Printf("-- Health - Returned server health response in: %s --", green(end-start, "ms"))
 }
 
 type SHealthRequestBody struct {
 	ServerUrl string `json:"server_url"`
-}
-
-type SHealthResponse struct {
-	Status   string   `json:"status"`
-	Features []string `json:"features,omitempty"`
 }

@@ -1,3 +1,4 @@
+import { env } from '$env/dynamic/public';
 import LL from '$i18n/i18n-svelte';
 import { advancedModeApp } from '$ts/stores/advancedMode';
 import type { TModelNameCog, TSchedulerNameCog } from '$ts/types/cog';

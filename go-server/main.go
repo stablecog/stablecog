@@ -26,15 +26,17 @@ func main() {
 
 	app := fiber.New()
 	cors := cors.New(cors.Config{
-		AllowOrigins: fmt.Sprintf("%s, %s, %s", shared.GetEnv("PUBLIC_CANONICAL_URL"), "http://localhost:5173", "http://localhost:3000"),
+		AllowOrigins: fmt.Sprintf("%s, %s, %s, %s", shared.GetEnv("PUBLIC_CANONICAL_URL"), "https://stablecog.vercel.app", "http://localhost:5173", "http://localhost:3000"),
 	})
 	app.Use(cors)
 
 	cron := cron.New()
 
 	cron.AddFunc("@every 10s", cronHealth.CheckHealth)
+	cron.AddFunc("@every 10s", cronHealth.SetDefaultServerHealths)
 	cron.Start()
 	go cronHealth.CheckHealth()
+	go cronHealth.SetDefaultServerHealths()
 
 	app.Post("/generate", generate.Handler)
 	app.Post("/upscale", upscale.Handler)

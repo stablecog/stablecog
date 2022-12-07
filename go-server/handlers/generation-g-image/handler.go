@@ -67,9 +67,8 @@ func Handler(c *fiber.Ctx) error {
 	}
 	endC := time.Now().UnixMilli()
 	log.Printf(
-		`-- GenerationG image converted in: %s%s - "%s" - "%s" --`,
-		green(endC-startC),
-		green("ms"),
+		`-- GenerationG image converted in: %s - "%s" - "%s" --`,
+		green(endC-startC, "ms"),
 		yellow(imageId),
 		yellow(ext),
 	)
@@ -81,9 +80,8 @@ func Handler(c *fiber.Ctx) error {
 	c.Set("Cache-Control", "public, immutable, no-transform, max-age=31536000")
 	end := time.Now().UnixMilli()
 	log.Printf(
-		`-- GenerationG image response in: %s%s - "%s" - "%s" --`,
-		green(end-start),
-		green("ms"),
+		`-- GenerationG image response in: %s - "%s" - "%s" --`,
+		green(end-start, "ms"),
 		yellow(imageId),
 		yellow(ext),
 	)

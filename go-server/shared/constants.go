@@ -34,6 +34,9 @@ var SchedulerIdToSchedulerNameCog = map[string]string{
 }
 
 var green = color.New(color.FgHiGreen).SprintFunc()
-var yellow = color.New(color.FgYellow).SprintFunc()
+var yellow = color.New(color.FgHiYellow).SprintFunc()
+var red = color.New(color.FgHiRed).SprintFunc()
 
-var IsDev = GetEnv("APP_MODE") == "development"
+var IsDev = GetEnv("PUBLIC_APP_MODE") == "development"
+
+const DBTimeLayout = "2006-01-02T15:04:05.999999-07:00"

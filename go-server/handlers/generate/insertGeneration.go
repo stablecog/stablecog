@@ -36,7 +36,7 @@ func InsertGenerationInitial(g SInsertGenerationProps) string {
 		return ""
 	}
 	end := time.Now().UTC().UnixMilli()
-	log.Printf("-- DB - Generation initial insert in: %s%s --", green(end-start), green("ms"))
+	log.Printf("-- DB - Generation initial insert in: %s --", green(end-start, "ms"))
 	g.GenerationIdChan <- res.Id
 	return res.Id
 }

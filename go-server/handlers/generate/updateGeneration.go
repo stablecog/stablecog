@@ -110,7 +110,7 @@ func UpdateGenerationAsSucceeded(
 	promptIdChan <- promptId
 	negativePromptIdChan <- negativePromptId
 	end := time.Now().UTC().UnixMilli()
-	log.Printf("-- DB - Updated generation as succeeded in: %s%s --", green(end-start), green("ms"))
+	log.Printf("-- DB - Updated generation as succeeded in: %s --", green(end-start, "ms"))
 }
 
 func UpdateGenerationAsFailed(generationIdChan chan string, durationMs int64, isNSFW bool) {
@@ -132,7 +132,7 @@ func UpdateGenerationAsFailed(generationIdChan chan string, durationMs int64, is
 		return
 	}
 	end := time.Now().UTC().UnixMilli()
-	log.Printf("-- DB - Updated generation as failed in: %s%s --", green(end-start), green("ms"))
+	log.Printf("-- DB - Updated generation as failed in: %s --", green(end-start, "ms"))
 }
 
 type SDBPromptSelectRes struct {

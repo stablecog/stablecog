@@ -11,7 +11,6 @@ import (
 
 const maxGenerationFailWithoutNSFWRate = 0.5
 const generationCountToCheck = 10
-const timeLayout = "2006-01-02T15:04:05.999999-07:00"
 
 var lastCheckTime time.Time
 var lastGenerationTime time.Time
@@ -31,12 +30,12 @@ func CheckHealth() {
 	var wg sync.WaitGroup
 	wg.Add(1)
 	go func() {
-		generations = GetLastGenerations(generationCountToCheck)
+		generations = shared.GetLastGenerations(generationCountToCheck)
 		defer wg.Done()
 	}()
 	wg.Add(1)
 	go func() {
-		servers = GetServers()
+		servers = shared.GetServers()
 		defer wg.Done()
 	}()
 	wg.Wait()
@@ -53,7 +52,7 @@ func CheckHealth() {
 	var generationsFailed int
 	var generationsFailedWithoutNSFW int
 	for i, generation := range generations {
-		createdAt, err := time.Parse(timeLayout, generation.CreatedAt)
+		createdAt, err := time.Parse(shared.DBTimeLayout, generation.CreatedAt)
 		if i == 0 {
 			if err != nil {
 				log.Printf("Couldn't parse createdAt: %s", red(err))

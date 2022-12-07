@@ -9,12 +9,18 @@ type SDBGeneration struct {
 
 type SDBServer struct {
 	Id                string `json:"id"`
-	Url               string `json:"url"`
 	Healthy           bool   `json:"healthy"`
-	Enabled           bool   `json:"enabled"`
-	CreatedAt         string `json:"created_at"`
-	UpdatedAt         string `json:"updated_at"`
-	LastHealthCheckAt string `json:"last_health_check_at"`
+	Url               string `json:"url,omitempty"`
+	Enabled           bool   `json:"enabled,omitempty"`
+	CreatedAt         string `json:"created_at,omitempty"`
+	UpdatedAt         string `json:"updated_at,omitempty"`
+	LastHealthCheckAt string `json:"last_health_check_at,omitempty"`
+}
+
+type SDBServerUpdate struct {
+	Id                string `json:"id"`
+	Healthy           bool   `json:"healthy"`
+	LastHealthCheckAt string `json:"last_health_check_at,omitempty"`
 }
 
 type SDiscordWebhookBody struct {
@@ -106,4 +112,9 @@ type SCogUpscaleRequestInput struct {
 	Image       string `json:"image_u"`
 	Task        string `json:"task_u,omitempty"`
 	ProcessType string `json:"process_type"`
+}
+
+type SHealthResponse struct {
+	Status   string   `json:"status"`
+	Features []string `json:"features,omitempty"`
 }

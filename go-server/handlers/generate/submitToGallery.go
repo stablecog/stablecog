@@ -61,15 +61,12 @@ func SubmitToGallery(p SSubmitToGalleryProps) {
 		return
 	}
 	eVips := time.Now().UTC().UnixMilli()
-	log.Printf("-- Gallery - Converted to WebP in: %s%s--", green(eVips-sVips), green("ms"))
+	log.Printf("-- Gallery - Converted to WebP in: %s--", green(eVips-sVips, "ms"))
 	// Vips process for converting to WebP - END
 
-	log.Printf("-- Gallery - Image metadata - %s %s %s - %s%s --",
-		green(webpMeta.Width),
-		green("×"),
-		green(webpMeta.Height),
-		green(len(webpBuff)/1000),
-		green("KB"),
+	log.Printf("-- Gallery - Image metadata - %s - %s --",
+		green(webpMeta.Width, " × ", webpMeta.Height),
+		green(len(webpBuff)/1000, "KB"),
 	)
 	id := uuid.New()
 	imgId := id.String()
@@ -112,7 +109,7 @@ func SubmitToGallery(p SSubmitToGalleryProps) {
 	// Insert to DB - END
 
 	e := time.Now().UTC().UnixMilli()
-	log.Printf("-- DB - Submitted to gallery in: %s%s --", green(e-s), green("ms"))
+	log.Printf("-- DB - Submitted to gallery in: %s --", green(e-s, "ms"))
 }
 
 type SSubmitToGalleryProps struct {

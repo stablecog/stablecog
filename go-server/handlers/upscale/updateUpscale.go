@@ -25,7 +25,7 @@ func UpdateUpscaleAsSucceeded(
 		return
 	}
 	end := time.Now().UTC().UnixMilli()
-	log.Printf("-- DB - Updated upscale as succeeded in: %s%s --", green(end-start), green("ms"))
+	log.Printf("-- DB - Updated upscale as succeeded in: %s --", green(end-start, "ms"))
 }
 
 func UpdateUpscaleAsFailed(upscaleIdChan chan string, durationMs int64) {
@@ -42,7 +42,7 @@ func UpdateUpscaleAsFailed(upscaleIdChan chan string, durationMs int64) {
 		return
 	}
 	end := time.Now().UTC().UnixMilli()
-	log.Printf("-- DB - Updated upscale as failed in: %s%s --", green(end-start), green("ms"))
+	log.Printf("-- DB - Updated upscale as failed in: %s --", green(end-start, "ms"))
 }
 
 type SDBGenerationSucceededUpdate struct {
