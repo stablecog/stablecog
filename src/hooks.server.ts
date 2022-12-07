@@ -20,6 +20,7 @@ export const handle: Handle = async ({ event, resolve }) => {
 			const { data, error } = await _supabaseClient.from('admin').select('id');
 			const admins = data?.map((a) => a.id);
 			if (!data || error || !admins || !admins.includes(userId)) {
+				console.log('Admin access error:', error, admins, userId);
 				return new Response(null, { status: 303, headers: { location: '/admin/login' } });
 			}
 			console.log('Admin user access:', userId);
