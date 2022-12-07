@@ -16,7 +16,7 @@ var magenta = color.New(color.FgHiMagenta).SprintFunc()
 var red = color.New(color.FgHiRed).SprintFunc()
 var defaultServerUrl = shared.GetEnv("PUBLIC_DEFAULT_SERVER_URL")
 
-var defaultServerFeatures = []string{"upscale", "generate"}
+var defaultServerFeatures = []string{"upscale", "negative_prompt"}
 
 func Handler(c *fiber.Ctx) error {
 	start := time.Now().UTC().UnixMilli()
