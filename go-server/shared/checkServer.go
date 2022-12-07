@@ -10,6 +10,12 @@ import (
 func CheckServer(serverUrl string) SHealthResponse {
 	endpoint := fmt.Sprintf("%s/openapi.json", serverUrl)
 	res, err := http.Get(endpoint)
+	if err != nil {
+		log.Printf(red("Checking server HTTP error: %s"), err.Error())
+		return SHealthResponse{
+			Status: "unhealthy",
+		}
+	}
 	if res.StatusCode != http.StatusOK {
 		log.Printf(red("Checking server HTTP status code: %d"), res.StatusCode)
 		return SHealthResponse{
@@ -30,7 +36,7 @@ func CheckServer(serverUrl string) SHealthResponse {
 			Status: "unhealthy",
 		}
 	}
-	if data.Components.Schemas.Input.Properties.Prompt == nil ||
+	if data.Components != nil && data.Components.Schemas != nil && data.Components.Schemas.Input.Properties.Prompt == nil ||
 		data.Components.Schemas.Input.Properties.GuidanceScale == nil ||
 		data.Components.Schemas.Input.Properties.NumInferenceSteps == nil ||
 		data.Components.Schemas.Input.Properties.Seed == nil {
