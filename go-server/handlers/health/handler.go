@@ -16,7 +16,25 @@ var magenta = color.New(color.FgHiMagenta).SprintFunc()
 var red = color.New(color.FgHiRed).SprintFunc()
 var defaultServerUrl = shared.GetEnv("PUBLIC_DEFAULT_SERVER_URL")
 
-var defaultServerFeatures = []string{"upscale", "negative_prompt"}
+var defaultServerModels = []string{
+	"Stable Diffusion v1.5",
+	"Openjourney",
+	"Redshift Diffusion",
+	"Arcane Diffusion",
+	"Mo-Di Diffusion",
+	"Ghibli Diffusion",
+}
+var defaultServerSchedulers = []string{
+	"K_LMS",
+	"K_EULER",
+	"K_EULER_ANCESTRAL",
+}
+var defaultServerFeatures = []shared.SFeature{
+	{Name: "upscale"},
+	{Name: "negative_prompt"},
+	{Name: "model", Values: defaultServerModels},
+	{Name: "scheduler", Values: defaultServerSchedulers},
+}
 
 func Handler(c *fiber.Ctx) error {
 	start := time.Now().UTC().UnixMilli()

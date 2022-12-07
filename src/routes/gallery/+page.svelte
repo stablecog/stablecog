@@ -58,7 +58,7 @@
 				...generations,
 				...resJson.generations.sort(randomSort).map((g) => ({ ...g, didLoadBefore: false }))
 			];
-			console.log(generations);
+			console.log('Generations length:', generations.length);
 			console.log('Got the page:', currPage);
 		} catch (error) {
 			console.log(error);

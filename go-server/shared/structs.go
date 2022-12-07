@@ -115,6 +115,11 @@ type SCogUpscaleRequestInput struct {
 }
 
 type SHealthResponse struct {
-	Status   string   `json:"status"`
-	Features []string `json:"features,omitempty"`
+	Status   string     `json:"status"`
+	Features []SFeature `json:"features,omitempty"`
+}
+
+type SFeature struct {
+	Name   string   `json:"name"`
+	Values []string `json:"values,omitempty"`
 }

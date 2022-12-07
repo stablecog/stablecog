@@ -11,7 +11,7 @@ export const estimatedDurationUpscaleDefault = 15;
 export const canonicalUrl = 'https://stablecog.com';
 export const defaultLocale: Locales = 'en';
 export const apiBase =
-	env.PUBLIC_APP_MODE === 'production'
+	env.PUBLIC_APP_MODE === 'development'
 		? env.PUBLIC_GO_SERVER_URL_DEV
 		: env.PUBLIC_GO_SERVER_URL_PROD;
 

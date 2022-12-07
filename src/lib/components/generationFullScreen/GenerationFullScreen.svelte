@@ -451,7 +451,9 @@
 						class="w-full flex flex-col items-start justify-start"
 					>
 						<div class="w-full flex flex-col gap-4 md:gap-5 px-5 py-4 md:px-7 md:py-5">
-							{#if $currentServer.features?.includes('upscale') || generation.upscaledImageDataB64}
+							{#if $currentServer.features
+								?.map((f) => f.name)
+								.includes('upscale') || generation.upscaledImageDataB64}
 								<div class="w-full pt-1.5">
 									{#if !generation.upscaledImageDataB64}
 										<div class="w-full flex flex-col gap-3">

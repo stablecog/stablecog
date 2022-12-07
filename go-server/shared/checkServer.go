@@ -39,12 +39,30 @@ func CheckServer(serverUrl string) SHealthResponse {
 			Status: "unhealthy",
 		}
 	}
-	var features []string
+	var features []SFeature
 	if data.Components.Schemas.Input.Properties.NegativePrompt != nil {
-		features = append(features, "negative_prompt")
+		features = append(features, SFeature{
+			Name: "negative_prompt",
+		})
 	}
 	if data.Components.Schemas.Input.Properties.ImageU != nil {
-		features = append(features, "upscale")
+		features = append(features, SFeature{
+			Name: "upscale",
+		})
+	}
+	if data.Components.Schemas.Model != nil {
+		models := data.Components.Schemas.Model.Enum
+		features = append(features, SFeature{
+			Name:   "model",
+			Values: models,
+		})
+	}
+	if data.Components.Schemas.Scheduler != nil {
+		schedulers := data.Components.Schemas.Scheduler.Enum
+		features = append(features, SFeature{
+			Name:   "scheduler",
+			Values: schedulers,
+		})
 	}
 	return SHealthResponse{
 		Status:   "healthy",
@@ -75,8 +93,20 @@ type SServerResult struct {
 					ImageU *struct {
 						Title string `json:"title,omitempty"`
 					} `json:"image_u,omitempty"`
+					Model *struct {
+						Default string `json:"default,omitempty"`
+					} `json:"model,omitempty"`
+					Scheduler *struct {
+						Default string `json:"default,omitempty"`
+					}
 				} `json:"properties,omitempty"`
 			} `json:"Input,omitempty"`
+			Model *struct {
+				Enum []string `json:"enum,omitempty"`
+			} `json:"model,omitempty"`
+			Scheduler *struct {
+				Enum []string `json:"enum,omitempty"`
+			} `json:"scheduler,omitempty"`
 		} `json:"schemas,omitempty"`
 	} `json:"components,omitempty"`
 }

@@ -73,18 +73,21 @@ export interface TTab<T> {
 	value: T;
 }
 
-export type TServerFeatures = 'negative_prompt' | 'upscale';
 export type TServerHealthStatus = 'healthy' | 'unhealthy' | 'not-set' | 'unknown' | 'loading';
 export type TLastServerHealthStatus = 'healthy' | 'unhealthy' | 'not-set' | 'unknown';
 
+export interface TServerFeature {
+	name: string;
+	values: string[];
+}
 export type TServerLocalStorage = {
 	lastHealthStatus: TLastServerHealthStatus;
-	features?: TServerFeatures[] | undefined;
+	features?: TServerFeature[] | undefined;
 };
 
 export interface TServerHealthRes {
 	status: TServerHealthStatus;
-	features?: TServerFeatures[] | undefined;
+	features?: TServerFeature[] | undefined;
 }
 
 export type TSetServerProcessStatus = 'idle' | 'loading' | 'success' | 'error';
