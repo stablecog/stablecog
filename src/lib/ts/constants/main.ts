@@ -59,7 +59,8 @@ export const availableModelIds = [
 	'8acfe4c8-751d-4aa6-8c3c-844e3ef478e0',
 	'36d9d835-646f-4fc7-b9fe-98654464bf8e',
 	'48a7031d-43b6-4a23-9f8c-8020eb6862e4',
-	'790c80e1-65b1-4556-9332-196344389572'
+	'790c80e1-65b1-4556-9332-196344389572',
+	'eaa438e1-dbf9-48fd-be71-206f0f257617'
 ] as const;
 
 export type TAvailableModelId = typeof availableModelIds[number];
@@ -69,6 +70,7 @@ export const modelIdDefault: TAvailableModelId = '048b4aa3-5586-47ed-900f-f4341c
 export const modelIdToModelNameCog: Record<TAvailableModelId, TModelNameCog> = {
 	'048b4aa3-5586-47ed-900f-f4341c96bdb2': 'Stable Diffusion v1.5',
 	'8acfe4c8-751d-4aa6-8c3c-844e3ef478e0': 'Openjourney',
+	'eaa438e1-dbf9-48fd-be71-206f0f257617': 'Redshift Diffusion',
 	'36d9d835-646f-4fc7-b9fe-98654464bf8e': 'Arcane Diffusion',
 	'790c80e1-65b1-4556-9332-196344389572': 'Mo-Di Diffusion',
 	'48a7031d-43b6-4a23-9f8c-8020eb6862e4': 'Ghibli Diffusion'
@@ -93,7 +95,10 @@ export const modelIdToDisplayName = derived<
 			: $LL.Shared.ModelOptions['48a7031d-43b6-4a23-9f8c-8020eb6862e4'].simpleName(),
 		'790c80e1-65b1-4556-9332-196344389572': $advancedModeApp
 			? $LL.Shared.ModelOptions['790c80e1-65b1-4556-9332-196344389572'].realName()
-			: $LL.Shared.ModelOptions['790c80e1-65b1-4556-9332-196344389572'].simpleName()
+			: $LL.Shared.ModelOptions['790c80e1-65b1-4556-9332-196344389572'].simpleName(),
+		'eaa438e1-dbf9-48fd-be71-206f0f257617': $advancedModeApp
+			? $LL.Shared.ModelOptions['eaa438e1-dbf9-48fd-be71-206f0f257617'].realName()
+			: $LL.Shared.ModelOptions['eaa438e1-dbf9-48fd-be71-206f0f257617'].simpleName()
 	};
 });
 
@@ -116,6 +121,10 @@ export const availableModelIdDropdownItems = derived(
 			{
 				label: $modelIdToDisplayName['790c80e1-65b1-4556-9332-196344389572'],
 				value: '790c80e1-65b1-4556-9332-196344389572'
+			},
+			{
+				label: $modelIdToDisplayName['eaa438e1-dbf9-48fd-be71-206f0f257617'],
+				value: 'eaa438e1-dbf9-48fd-be71-206f0f257617'
 			},
 			{
 				label: $modelIdToDisplayName['48a7031d-43b6-4a23-9f8c-8020eb6862e4'],

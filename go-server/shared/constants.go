@@ -25,6 +25,7 @@ var ModelIdToModelNameCog = map[string]string{
 	"36d9d835-646f-4fc7-b9fe-98654464bf8e": "Arcane Diffusion",
 	"790c80e1-65b1-4556-9332-196344389572": "Mo-Di Diffusion",
 	"48a7031d-43b6-4a23-9f8c-8020eb6862e4": "Ghibli Diffusion",
+	"eaa438e1-dbf9-48fd-be71-206f0f257617": "Redshift Diffusion",
 }
 
 var SchedulerIdToSchedulerNameCog = map[string]string{

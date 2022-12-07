@@ -182,6 +182,10 @@ const zhHans: BaseTranslation = {
 			'790c80e1-65b1-4556-9332-196344389572': {
 				realName: 'Mo-Di Diffusion',
 				simpleName: 'Animated Movie'
+			},
+			'eaa438e1-dbf9-48fd-be71-206f0f257617': {
+				realName: 'Redshift Diffusion',
+				simpleName: '3D Render'
 			}
 		},
 		SchedulerOptions: {

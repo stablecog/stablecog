@@ -103,7 +103,7 @@
 	<TabLikeDropdown
 		{disabled}
 		class="w-full md:w-84 max-w-full {$advancedModeApp ? 'order-1' : 'order-2'}"
-		dropdownClass={$advancedModeApp ? 'max-h-[15rem]' : 'max-h-[8rem] md:max-h-[15rem]'}
+		dropdownClass={$advancedModeApp ? 'max-h-[18rem]' : 'max-h-[8rem] md:max-h-[18rem]'}
 		bind:value={$generationModelId}
 		items={$availableModelIdDropdownItems}
 		name="Model"

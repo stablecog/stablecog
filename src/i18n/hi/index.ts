@@ -187,6 +187,10 @@ const hi: BaseTranslation = {
 			'790c80e1-65b1-4556-9332-196344389572': {
 				realName: 'मो-दी डिफ्यूजन',
 				simpleName: 'कार्टून फ़िल्म'
+			},
+			'eaa438e1-dbf9-48fd-be71-206f0f257617': {
+				realName: 'Redshift Diffusion',
+				simpleName: '3D Render'
 			}
 		},
 		SchedulerOptions: {

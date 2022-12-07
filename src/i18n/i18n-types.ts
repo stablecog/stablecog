@@ -551,6 +551,16 @@ type RootTranslation = {
 				 */
 				simpleName: string
 			}
+			'eaa438e1-dbf9-48fd-be71-206f0f257617': {
+				/**
+				 * R​e​d​s​h​i​f​t​ ​D​i​f​f​u​s​i​o​n
+				 */
+				realName: string
+				/**
+				 * 3​D​ ​R​e​n​d​e​r
+				 */
+				simpleName: string
+			}
 		}
 		SchedulerOptions: {
 			'55027f8b-f046-4e71-bc51-53d5448661e0': {
@@ -1163,6 +1173,16 @@ export type TranslationFunctions = {
 				realName: () => LocalizedString
 				/**
 				 * Animated Movie
+				 */
+				simpleName: () => LocalizedString
+			}
+			'eaa438e1-dbf9-48fd-be71-206f0f257617': {
+				/**
+				 * Redshift Diffusion
+				 */
+				realName: () => LocalizedString
+				/**
+				 * 3D Render
 				 */
 				simpleName: () => LocalizedString
 			}

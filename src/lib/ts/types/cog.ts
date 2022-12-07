@@ -14,6 +14,7 @@ export type TModelNameCog =
 	| 'Openjourney'
 	| 'Arcane Diffusion'
 	| 'Ghibli Diffusion'
-	| 'Mo-Di Diffusion';
+	| 'Mo-Di Diffusion'
+	| 'Redshift Diffusion';
 
 export type TOutputImageExtCog = 'png' | 'jpg';
