@@ -175,19 +175,19 @@ const ko: BaseTranslation = {
 			},
 			'8acfe4c8-751d-4aa6-8c3c-844e3ef478e0': {
 				realName: 'Openjourney',
-				simpleName: '3D Digital Art'
+				simpleName: '3D 디지털 아트'
 			},
 			'36d9d835-646f-4fc7-b9fe-98654464bf8e': {
 				realName: 'Arcane Diffusion',
-				simpleName: '3D Comic'
+				simpleName: '3D 만화'
 			},
 			'48a7031d-43b6-4a23-9f8c-8020eb6862e4': {
 				realName: 'Ghibli Diffusion',
-				simpleName: 'Anime'
+				simpleName: '애니메이션'
 			},
 			'790c80e1-65b1-4556-9332-196344389572': {
 				realName: 'Mo-Di Diffusion',
-				simpleName: 'Animated Movie'
+				simpleName: '애니메이션 영화'
 			}
 		},
 		SchedulerOptions: {
@@ -223,5 +223,4 @@ const ko: BaseTranslation = {
 		GalleryButton: '갤러리 관리'
 	}
 };
-
 export default ko;
