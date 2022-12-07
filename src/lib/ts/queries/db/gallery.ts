@@ -8,7 +8,15 @@ const batch = 50;
 
 type TGetType = 'visible-only' | 'hidden-only' | 'all';
 
-export async function getGalleryPage(page: number, getType: TGetType = 'visible-only') {
+export async function getGalleryPage({
+	page = 1,
+	getType = 'visible-only',
+	getCount = false
+}: {
+	page: number;
+	getType?: TGetType;
+	getCount?: boolean;
+}) {
 	if (!supabaseAdmin) {
 		console.log('No Supabase instance found');
 		return { status: 500, error: 'No Supabase instance found' };
@@ -31,7 +39,8 @@ export async function getGalleryPage(page: number, getType: TGetType = 'visible-
 			created_at,
 			updated_at,
 			id
-		`
+		`,
+			{ count: getCount ? 'exact' : undefined }
 		)
 		.filter(
 			'hidden',
@@ -39,46 +48,16 @@ export async function getGalleryPage(page: number, getType: TGetType = 'visible-
 			getType === 'all' ? '(true,false)' : getType === 'hidden-only' ? '(true)' : '(false)'
 		)
 		.order('created_at', { ascending: false })
-		.range((page - 1) * batch, page * batch - 1);
-	const nextPromise = supabaseAdmin
-		.from('generation_g')
-		.select(
-			`
-			width,
-			height,
-			prompt:prompt_id(id,text),
-			negative_prompt:negative_prompt_id(id,text),
-			model:model_id(id,name),
-			scheduler:scheduler_id(id,name),
-			seed,
-			inference_steps,
-			guidance_scale,
-			image_id,
-			created_at,
-			updated_at,
-			id
-		`
-		)
-		.filter(
-			'hidden',
-			'in',
-			getType === 'all' ? '(true,false)' : getType === 'hidden-only' ? '(true)' : '(false)'
-		)
-		.order('created_at', { ascending: false })
-		.range(page * batch, page * batch);
+		.range((page - 1) * batch, page * batch - 1 + 1);
 	// @ts-ignore
-	const [pageRes, nextRes]: [TGenerationGPage, TGenerationGPage] = await Promise.all([
-		pagePromise,
-		nextPromise
-	]);
-	const { data: pageData, error: pageError }: TGenerationGPage = pageRes;
-	const { data: nextData, error: nextError }: TGenerationGPage = nextRes;
-	if (pageError || nextError || !pageData || !nextData) {
-		console.log('Error getting generations:', pageError || nextError);
+	const [pageRes]: [TGenerationGPage] = await Promise.all([pagePromise]);
+	const { data: pageData, error: pageError, count }: TGenerationGPage = pageRes;
+	if (pageError || !pageData) {
+		console.log('Error getting generations:', pageError);
 		return { status: 500, error: 'Error getting generations' };
 	}
 	let next: number | null = null;
-	if (nextData?.length > 0) next = page + 1;
+	if (pageData?.length > batch) next = page + 1;
 	console.log(`---- Responding to gallery page request -- Page: ${page} -- Next: ${next} ----`);
 	const data: TDBGenerationG[] = pageData.map((d) => {
 		const { prompt, negative_prompt, model, scheduler, ...rest } = d;
@@ -95,7 +74,8 @@ export async function getGalleryPage(page: number, getType: TGetType = 'visible-
 	const response: TGalleryResponse = {
 		generations: data,
 		page,
-		next
+		next,
+		totalCount: count !== null && count !== undefined ? count : undefined
 	};
 	return response;
 }
@@ -153,4 +133,5 @@ export async function getGenerationG(id: string) {
 interface TGenerationGPage {
 	data: TDBGenerationG[] | null;
 	error: PostgrestError | null;
+	count?: number | null;
 }

@@ -6,7 +6,7 @@ import type { RequestHandler } from '@sveltejs/kit';
 
 export const GET: RequestHandler = async ({ url }) => {
 	const page = parseInt(url.searchParams.get('page') ?? '1');
-	const res = await getGalleryPage(page, 'hidden-only');
+	const res = await getGalleryPage({ page, getType: 'hidden-only' });
 	const resAsGalleryResponse = res as TGalleryResponse;
 	const resAsError = res as { status: number; error: string };
 	if (resAsError.error) {

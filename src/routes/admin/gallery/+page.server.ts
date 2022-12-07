@@ -4,7 +4,7 @@ import { error, type ServerLoad } from '@sveltejs/kit';
 
 export const prerender = false;
 export const load: ServerLoad = async () => {
-	const res = await getGalleryPage(1, 'hidden-only');
+	const res = await getGalleryPage({ page: 1, getType: 'hidden-only', getCount: true });
 	const resAsGalleryResponse = res as TGalleryResponse;
 	const resAsError = res as { status: number; error: string };
 	if (resAsError.error) {

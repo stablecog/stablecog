@@ -29,6 +29,8 @@
 		key: i
 	}));
 
+	let totalCount = data.totalCount;
+
 	async function getNext(e: any) {
 		if (!nextPage) {
 			console.log('No more pages');
@@ -99,6 +101,11 @@
 
 <svelte:window on:keydown={onKeyDown} />
 
+<div class="w-full px-6 pt-6 pb-4 flex items-center justify-center">
+	{#if totalCount !== undefined && totalCount !== null}
+		<p class="font-bold"><span class="text-c-on-bg/60 font-medium">Total:</span> {totalCount}</p>
+	{/if}
+</div>
 {#if generations && generations.length > 0}
 	<div class="w-full flex-1 flex flex-col items-center relative">
 		<div class="w-full px-2 md:pt-4 pb-4 relative">

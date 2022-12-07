@@ -37,7 +37,7 @@ export interface TGenerationRequest {
 	seed?: number;
 	num_inference_steps?: number;
 	guidance_scale?: number;
-	shouldSubmitToGallery?: boolean;
+	should_submit_to_gallery?: boolean;
 }
 
 export interface TGenerationResponse {
@@ -132,6 +132,13 @@ export interface TToC {
 export type TTabBarPlacement = 'bottom' | 'normal';
 
 export type TUpscaleStatus = 'idle' | 'success' | 'loading' | 'error';
+
+export interface TGalleryResponse {
+	generations: TDBGenerationG[];
+	page: number;
+	next: number | null | undefined;
+	totalCount?: number;
+}
 
 export interface TGalleryResponse {
 	generations: TDBGenerationG[];
