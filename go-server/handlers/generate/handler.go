@@ -81,6 +81,9 @@ func Handler(c *fiber.Ctx) error {
 	client := useragent.Parse(userAgent)
 	generationIdChan := make(chan string)
 	countryCode := c.Get("CF-IPCountry")
+	if countryCode == "" {
+		countryCode = c.Get("X-Vercel-IP-Country")
+	}
 	go InsertGenerationInitial(SInsertGenerationProps{
 		Status:            "started",
 		Width:             req.Width,

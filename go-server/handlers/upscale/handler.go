@@ -57,6 +57,10 @@ func Handler(c *fiber.Ctx) error {
 	userAgent := c.Get("User-Agent")
 	client := useragent.Parse(userAgent)
 	upscaleIdChan := make(chan string)
+	countryCode := c.Get("CF-IPCountry")
+	if countryCode == "" {
+		countryCode = c.Get("X-Vercel-IP-Country")
+	}
 	go InsertUpscaleInitial(SInsertUpscaleProps{
 		Status:            "started",
 		Scale:             scale,
@@ -71,6 +75,7 @@ func Handler(c *fiber.Ctx) error {
 		ServerUrl:         pickServerRes.ServerUrl,
 		UserAgent:         userAgent,
 		DeviceType:        shared.GetDeviceType(client),
+		CountryCode:       countryCode,
 		DeviceOS:          client.OS,
 		DeviceBrowser:     client.Name,
 		LogObject:         logObj,
