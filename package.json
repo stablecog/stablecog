@@ -69,6 +69,7 @@
 		"@supabase/supabase-js": "^2.0.0",
 		"aws-sdk": "^2.1243.0",
 		"dexie": "^3.2.2",
+		"konva": "^8.3.14",
 		"satori": "^0.0.44",
 		"satori-html": "^0.3.0",
 		"sharp": "^0.31.1",
