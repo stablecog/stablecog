@@ -54,17 +54,14 @@
 		stage.add(imageLayer);
 		selectionRect = new konva.Rect(selectionRectStartConfig(stage));
 		makeDraggableWithSnap(selectionRect, stage);
-		addSelectionRectDragStyles(selectionRect);
+		addSelectionRectDragStyles(selectionRect, konva);
 		mainLayer.add(selectionRect);
 		stage.add(mainLayer);
 		stage.batchDraw();
-		makeStageInteractive(stage);
+		makeStageInteractive(stage, selectionRect);
 	});
 </script>
 
-<div
-	bind:clientWidth
-	bind:clientHeight
-	id="canvas-container"
-	class="w-full flex-1 bg-c-bg ring-2 ring-c-bg-secondary"
-/>
+<div bind:clientWidth bind:clientHeight class="w-full flex flex-1 relative">
+	<div id="canvas-container" class="w-full flex-1 bg-c-bg ring-2 ring-c-bg-secondary z-10" />
+</div>

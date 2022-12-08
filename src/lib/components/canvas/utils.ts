@@ -1,4 +1,5 @@
-import { gridSize, stageScaleMax, stageScaleMin } from '$components/canvas/constants';
+import { gridSize } from '$components/canvas/bgGrid';
+import { stageScaleMax, stageScaleMin } from '$components/canvas/constants';
 import type Konva from 'konva/lib/Stage';
 
 export const limitedScale = (scale: number) => {
