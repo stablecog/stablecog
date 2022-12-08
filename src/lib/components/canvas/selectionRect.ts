@@ -3,7 +3,7 @@ import { stageCenteredPos } from '$components/canvas/utils';
 import type Konva from 'konva';
 
 export const selectionRectStrokeWidth = 3;
-export const selectionRectColor = 'rgba(174, 133, 235, 0.5)';
+export const selectionRectColor = 'rgba(174, 133, 235, 0.75)';
 export const selectionRectHoverColor = 'rgba(174, 133, 235, 1)';
 export const selectionRectGrabbedColor = 'rgba(255, 174, 116, 1)';
 export const selectionRectStartWidth = 512;
