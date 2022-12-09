@@ -64,6 +64,14 @@ func Handler(c *fiber.Ctx) error {
 		)
 	}
 
+	userAgent := c.Get("User-Agent")
+	client := useragent.Parse(userAgent)
+	generationIdChan := make(chan string)
+	countryCode := c.Get("CF-IPCountry")
+	if countryCode == "" {
+		countryCode = c.Get("X-Vercel-IP-Country")
+	}
+
 	var logObj = loggers.SGenerationLogObject{
 		Prompt:            cleanedPrompt,
 		NegativePrompt:    cleanedNegativePrompt,
@@ -74,16 +82,11 @@ func Handler(c *fiber.Ctx) error {
 		NumInferenceSteps: req.NumInferenceSteps,
 		GuidanceScale:     req.GuidanceScale,
 		Seed:              req.Seed,
+		CountryCode:       countryCode,
 		ServerUrl:         pickServerRes.ServerUrl,
 	}
 	loggers.LogGeneration("Generation started", logObj)
-	userAgent := c.Get("User-Agent")
-	client := useragent.Parse(userAgent)
-	generationIdChan := make(chan string)
-	countryCode := c.Get("CF-IPCountry")
-	if countryCode == "" {
-		countryCode = c.Get("X-Vercel-IP-Country")
-	}
+
 	go InsertGenerationInitial(SInsertGenerationProps{
 		Status:            "started",
 		Width:             req.Width,

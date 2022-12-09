@@ -1,13 +1,12 @@
 package gallery
 
 import (
+	"github.com/fatih/color"
+	"github.com/gofiber/fiber/v2"
 	"log"
 	"math/rand"
 	"strconv"
 	"time"
-
-	"github.com/fatih/color"
-	"github.com/gofiber/fiber/v2"
 )
 
 const batchSize = 50
@@ -22,7 +21,11 @@ func Handler(c *fiber.Ctx) error {
 	if e != nil || p < 1 {
 		p = 1
 	}
-	log.Printf("-- Request for gallery page - %s --", magenta(p))
+	countryCode := c.Get("CF-IPCountry")
+	if countryCode == "" {
+		countryCode = c.Get("X-Vercel-IP-Country")
+	}
+	log.Printf("-- Request for gallery page - %s - %s --", magenta(p), magenta(countryCode))
 	generationGs := GetGenerationGs(p, batchSize+1, "")
 	if generationGs == nil {
 		log.Printf(red("-- Failed to get generations for gallery page - %d --", p))
@@ -44,7 +47,12 @@ func Handler(c *fiber.Ctx) error {
 		Next:        next,
 	}
 	end := time.Now().UTC().UnixMilli()
-	log.Printf("-- Responded to gallery page request: %s - %s --", magenta(p), green(end-start, "ms"))
+	log.Printf(
+		"-- Responded to gallery page request: %s - %s - %s --",
+		magenta(p),
+		green(end-start, "ms"),
+		magenta(countryCode),
+	)
 	return c.JSON(res)
 }
 
