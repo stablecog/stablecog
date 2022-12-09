@@ -32,18 +32,18 @@
 			height: clientHeight
 		});
 
-		bgGridGroup = makeBgGridGroup(stage, konva);
 		bgLayer = new konva.Layer({});
+		bgGridGroup = makeBgGridGroup(stage, konva);
 		bgLayer.add(bgGridGroup);
 		stage.add(bgLayer);
 
 		imageLayer = new konva.Layer({});
 		stage.add(imageLayer);
 
+		mainLayer = new konva.Layer({});
 		selectionRect = new konva.Rect(selectionRectStartConfig(stage));
 		makeDraggableWithSnap(selectionRect, stage);
 		addSelectionRectDragStyles(selectionRect, konva);
-		mainLayer = new konva.Layer({});
 		mainLayer.add(selectionRect);
 		stage.add(mainLayer);
 
