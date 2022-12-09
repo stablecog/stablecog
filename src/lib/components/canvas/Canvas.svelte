@@ -26,25 +26,29 @@
 
 	onMount(async () => {
 		konva = (await import('konva')).default;
-		bgLayer = new konva.Layer({});
-		imageLayer = new konva.Layer({});
-		mainLayer = new konva.Layer({});
 		stage = new konva.Stage({
 			container: 'canvas-container',
 			width: clientWidth,
 			height: clientHeight
 		});
+
 		bgGridGroup = makeBgGridGroup(stage, konva);
+		bgLayer = new konva.Layer({});
 		bgLayer.add(bgGridGroup);
 		stage.add(bgLayer);
+
+		imageLayer = new konva.Layer({});
 		stage.add(imageLayer);
+
 		selectionRect = new konva.Rect(selectionRectStartConfig(stage));
 		makeDraggableWithSnap(selectionRect, stage);
 		addSelectionRectDragStyles(selectionRect, konva);
+		mainLayer = new konva.Layer({});
 		mainLayer.add(selectionRect);
 		stage.add(mainLayer);
-		stage.batchDraw();
+
 		makeStageInteractive(stage, selectionRect, bgGridGroup);
+		stage.batchDraw();
 	});
 </script>
 
