@@ -54,6 +54,10 @@ func Handler(c *fiber.Ctx) error {
 		)
 	}
 
+	if req.OutputImageExt == "" {
+		req.OutputImageExt = "jpg"
+	}
+
 	cleanedPrompt := shared.FormatPrompt(req.Prompt)
 	cleanedNegativePrompt := shared.FormatPrompt(req.NegativePrompt)
 
@@ -116,7 +120,10 @@ func Handler(c *fiber.Ctx) error {
 			Model:             shared.ModelIdToModelNameCog[req.ModelId],
 			Scheduler:         shared.SchedulerIdToSchedulerNameCog[req.SchedulerId],
 			Seed:              fmt.Sprint(req.Seed),
-			OutputImageExt:    "jpg",
+			InitImage:         req.InitImage,
+			Mask:              req.Mask,
+			PromptStrength:    req.PromptStrength,
+			OutputImageExt:    req.OutputImageExt,
 		},
 	}
 	cogReqBody, cogReqBodyErr := json.Marshal(cogReq)
