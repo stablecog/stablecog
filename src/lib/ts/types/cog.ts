@@ -7,7 +7,7 @@ export type TTaskUCog =
 
 export type TProcessTypeCog = 'generate' | 'upscale' | 'generate-and-upscale';
 
-export type TSchedulerNameCog = 'K_LMS' | 'K_EULER' | 'K_EULER_ANCESTRAL';
+export type TSchedulerNameCog = 'K_LMS' | 'K_EULER' | 'K_EULER_ANCESTRAL' | 'PNDM';
 
 export type TModelNameCog =
 	| 'Stable Diffusion v1.5'

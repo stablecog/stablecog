@@ -139,7 +139,8 @@ export const availableModelIdDropdownItems = derived(
 export const availableSchedulerIds = [
 	'55027f8b-f046-4e71-bc51-53d5448661e0',
 	'6fb13b76-9900-4fa4-abf8-8f843e034a7f',
-	'af2679a4-dbbb-4950-8c06-c3bb15416ef6'
+	'af2679a4-dbbb-4950-8c06-c3bb15416ef6',
+	'162b6989-f635-4bfe-a2f5-24d4246df318'
 ] as const;
 
 export type TAvailableSchedulerId = typeof availableSchedulerIds[number];
@@ -149,7 +150,8 @@ export const schedulerIdDefault: TAvailableSchedulerId = '6fb13b76-9900-4fa4-abf
 export const schedulerIdToSchedulerNameCog: Record<TAvailableSchedulerId, TSchedulerNameCog> = {
 	'55027f8b-f046-4e71-bc51-53d5448661e0': 'K_LMS',
 	'6fb13b76-9900-4fa4-abf8-8f843e034a7f': 'K_EULER',
-	'af2679a4-dbbb-4950-8c06-c3bb15416ef6': 'K_EULER_ANCESTRAL'
+	'af2679a4-dbbb-4950-8c06-c3bb15416ef6': 'K_EULER_ANCESTRAL',
+	'162b6989-f635-4bfe-a2f5-24d4246df318': 'PNDM'
 };
 
 export const schedulerIdToDisplayName = derived<
@@ -162,7 +164,8 @@ export const schedulerIdToDisplayName = derived<
 		'6fb13b76-9900-4fa4-abf8-8f843e034a7f':
 			$LL.Shared.SchedulerOptions['6fb13b76-9900-4fa4-abf8-8f843e034a7f'].realName(),
 		'af2679a4-dbbb-4950-8c06-c3bb15416ef6':
-			$LL.Shared.SchedulerOptions['af2679a4-dbbb-4950-8c06-c3bb15416ef6'].realName()
+			$LL.Shared.SchedulerOptions['af2679a4-dbbb-4950-8c06-c3bb15416ef6'].realName(),
+		'162b6989-f635-4bfe-a2f5-24d4246df318': 'PNDM'
 	};
 });
 

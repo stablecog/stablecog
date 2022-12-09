@@ -1,7 +1,8 @@
-import { bgGridStrokeWidth } from '$components/canvas/bgGrid';
+import { limitedBgGridStrokeWidth } from '$components/canvas/bgGrid';
 import { disableSelectionRect, enableSelectionRect } from '$components/canvas/selectionRect';
-import { limitedScale, type IXY } from '$components/canvas/utils';
+import { limitedScale } from '$components/canvas/utils';
 import type Konva from 'konva';
+import type { Vector2d } from 'konva/lib/types';
 
 const zoomSpeed = 0.6;
 const zoomSpeedMultiplier = 0.01;
@@ -52,12 +53,7 @@ export const makeStageInteractive = (
 			stage.scale(scale);
 			bgGridGroup.children?.forEach((child) => {
 				const l = child as Konva.Line;
-				l.strokeWidth(
-					Math.min(
-						Math.max(bgGridStrokeWidth / scale.x, bgGridStrokeWidth / 1.5),
-						bgGridStrokeWidth * 2
-					)
-				);
+				l.strokeWidth(limitedBgGridStrokeWidth(stage.scaleX()));
 			});
 			stage.batchDraw();
 		} else {
@@ -72,7 +68,7 @@ export const makeStageInteractive = (
 export const getWheelPinchResult = (
 	e: WheelEvent,
 	stage: Konva.Stage
-): { position: IXY; scale: IXY } => {
+): { position: Vector2d; scale: Vector2d } => {
 	const pointerPosition = stage.getPointerPosition();
 	if (!pointerPosition)
 		return {
@@ -94,7 +90,7 @@ export const getWheelPinchResult = (
 	return { position: { x: newX, y: newY }, scale: { x: newScale, y: newScale } };
 };
 
-export const getWheelPanResult = (e: WheelEvent, stage: Konva.Stage): IXY => {
+export const getWheelPanResult = (e: WheelEvent, stage: Konva.Stage): Vector2d => {
 	const deltaY = e.deltaY;
 	const deltaX = e.deltaX;
 	const oldX = stage.x();

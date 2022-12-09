@@ -22,7 +22,7 @@ export const makeBgGridGroup = (stage: Konva.Stage, konva: typeof Konva) => {
 			const line = new konva.Line({
 				points: [0, i, w, i],
 				stroke: gridColor,
-				strokeWidth: bgGridStrokeWidth,
+				strokeWidth: limitedBgGridStrokeWidth(stage.scaleX()),
 				dash: [0, gridSize],
 				lineJoin: 'round',
 				lineCap: 'round'
@@ -34,7 +34,7 @@ export const makeBgGridGroup = (stage: Konva.Stage, konva: typeof Konva) => {
 			const line = new konva.Line({
 				points: [i, 0, i, h],
 				stroke: gridColor,
-				strokeWidth: bgGridStrokeWidth,
+				strokeWidth: limitedBgGridStrokeWidth(stage.scaleX()),
 				dash: [0, gridSize],
 				lineJoin: 'round',
 				lineCap: 'round'
@@ -43,4 +43,11 @@ export const makeBgGridGroup = (stage: Konva.Stage, konva: typeof Konva) => {
 		}
 	}
 	return bgGridGroup;
+};
+
+export const limitedBgGridStrokeWidth = (scale: number) => {
+	return Math.min(
+		Math.max(bgGridStrokeWidth / scale, bgGridStrokeWidth / 1.25),
+		bgGridStrokeWidth * 2
+	);
 };

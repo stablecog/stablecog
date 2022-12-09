@@ -37,6 +37,10 @@ export interface TGenerationRequest {
 	seed?: number;
 	num_inference_steps?: number;
 	guidance_scale?: number;
+	output_image_ext?: 'jpg' | 'png';
+	init_image?: string;
+	mask?: string;
+	prompt_strength?: number;
 	should_submit_to_gallery?: boolean;
 }
 

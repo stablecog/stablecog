@@ -12,7 +12,11 @@ export async function generateImage({
 	seed,
 	num_inference_steps,
 	guidance_scale,
-	should_submit_to_gallery = false
+	should_submit_to_gallery = false,
+	init_image,
+	prompt_strength,
+	mask,
+	output_image_ext = 'jpg'
 }: TGenerationRequest) {
 	const response = await fetch(`${apiBase}/generate`, {
 		method: 'POST',
@@ -30,6 +34,10 @@ export async function generateImage({
 			num_inference_steps,
 			guidance_scale,
 			seed,
+			output_image_ext,
+			init_image,
+			mask,
+			prompt_strength,
 			should_submit_to_gallery
 		})
 	});
