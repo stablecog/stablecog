@@ -1,3 +1,4 @@
+import { bgGridStrokeWidth } from '$components/canvas/bgGrid';
 import { disableSelectionRect, enableSelectionRect } from '$components/canvas/selectionRect';
 import { limitedScale, type IXY } from '$components/canvas/utils';
 import type Konva from 'konva';
@@ -5,7 +6,11 @@ import type Konva from 'konva';
 const zoomSpeed = 0.6;
 const zoomSpeedMultiplier = 0.01;
 
-export const makeStageInteractive = (stage: Konva.Stage, selectionRect: Konva.Rect) => {
+export const makeStageInteractive = (
+	stage: Konva.Stage,
+	selectionRect: Konva.Rect,
+	bgGridGroup: Konva.Group
+) => {
 	// Spacebar pan
 	window.addEventListener('keydown', (e) => {
 		if (e.key === ' ' && !stage.draggable()) {
@@ -45,6 +50,15 @@ export const makeStageInteractive = (stage: Konva.Stage, selectionRect: Konva.Re
 			const { position, scale } = getWheelPinchResult(e.evt, stage);
 			stage.position(position);
 			stage.scale(scale);
+			bgGridGroup.children?.forEach((child) => {
+				const l = child as Konva.Line;
+				l.strokeWidth(
+					Math.min(
+						Math.max(bgGridStrokeWidth / scale.x, bgGridStrokeWidth / 1.5),
+						bgGridStrokeWidth * 2
+					)
+				);
+			});
 			stage.batchDraw();
 		} else {
 			// Pan

@@ -58,7 +58,7 @@
 		mainLayer.add(selectionRect);
 		stage.add(mainLayer);
 		stage.batchDraw();
-		makeStageInteractive(stage, selectionRect);
+		makeStageInteractive(stage, selectionRect, bgGridGroup);
 	});
 </script>
 

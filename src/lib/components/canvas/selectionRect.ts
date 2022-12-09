@@ -26,6 +26,7 @@ export const selectionRectStartConfig = (stage: Konva.Stage) => {
 		height: selectionRectStartHeight,
 		stroke: selectionRectColor,
 		strokeWidth: selectionRectStrokeWidth,
+		strokeScaleEnabled: false,
 		draggable: true
 	};
 	return config;
