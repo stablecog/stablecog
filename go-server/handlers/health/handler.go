@@ -38,6 +38,10 @@ var defaultServerFeatures = []shared.SFeature{
 
 func Handler(c *fiber.Ctx) error {
 	start := time.Now().UTC().UnixMilli()
+	countryCode := c.Get("CF-IPCountry")
+	if countryCode == "" {
+		countryCode = c.Get("X-Vercel-IP-Country")
+	}
 	var req SHealthRequestBody
 	if err := c.BodyParser(&req); err != nil {
 		return c.Status(http.StatusInternalServerError).JSON("Invalid request body")
@@ -60,17 +64,17 @@ func Handler(c *fiber.Ctx) error {
 		if hasHealthyAndEnabled {
 			res.Status = "healthy"
 		}
-		logEnd(start)
+		logEnd(start, countryCode)
 		return c.JSON(res)
 	}
 	healthRes := shared.CheckServer(req.ServerUrl)
-	logEnd(start)
+	logEnd(start, countryCode)
 	return c.JSON(healthRes)
 }
 
-func logEnd(start int64) {
+func logEnd(start int64, countryCode string) {
 	end := time.Now().UTC().UnixMilli()
-	log.Printf("-- Health - Returned server health response in: %s --", green(end-start, "ms"))
+	log.Printf("-- Health - Returned server health response in: %s - %s --", green(end-start, "ms"), magenta(countryCode))
 }
 
 type SHealthRequestBody struct {

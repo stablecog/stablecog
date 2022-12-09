@@ -20,7 +20,7 @@ func LogGeneration(text string, obj SGenerationLogObject) {
 		sPrompt = obj.Prompt
 	}
 	log.Printf(
-		`-- %s - "%s" - "%s" - "%s" - %s - %s - %s - %s - %s - %s`,
+		`-- %s - "%s" - "%s" - "%s" - %s - %s - %s - %s - %s - %s - %s --`,
 		text,
 		magenta(sPrompt),
 		magenta(shared.ModelIdToModelNameCog[obj.ModelId]),
@@ -30,6 +30,7 @@ func LogGeneration(text string, obj SGenerationLogObject) {
 		magenta(obj.GuidanceScale),
 		magenta(obj.NumInferenceSteps),
 		magenta(obj.Seed),
+		magenta(obj.CountryCode),
 		yellow(obj.ServerUrl),
 	)
 }
@@ -44,6 +45,7 @@ type SGenerationLogObject struct {
 	NumInferenceSteps int
 	GuidanceScale     int
 	Seed              int
+	CountryCode       string
 	ServerUrl         string
 }
 
@@ -56,7 +58,7 @@ func LogUpscale(text string, obj SUpscaleLogObject) {
 		sPrompt = obj.Prompt
 	}
 	log.Printf(
-		`-- %s - %s - %s - "%s" - %s - %s - %s - %s - %s - %s`,
+		`-- %s - %s - %s - "%s" - %s - %s - %s - %s - %s - %s - %s --`,
 		text,
 		magenta(obj.Scale, "x"),
 		magenta(obj.Type),
@@ -66,6 +68,7 @@ func LogUpscale(text string, obj SUpscaleLogObject) {
 		magenta(obj.GuidanceScale),
 		magenta(obj.NumInferenceSteps),
 		magenta(obj.Seed),
+		magenta(obj.CountryCode),
 		yellow(obj.ServerUrl),
 	)
 }
@@ -80,5 +83,6 @@ type SUpscaleLogObject struct {
 	NumInferenceSteps int
 	GuidanceScale     int
 	Seed              int
+	CountryCode       string
 	ServerUrl         string
 }
