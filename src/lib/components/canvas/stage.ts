@@ -89,11 +89,3 @@ export const getWheelPanResult = (e: WheelEvent, stage: Konva.Stage): IXY => {
 	const newY = oldY - deltaY;
 	return { x: newX, y: newY };
 };
-
-export const getMiddleClickResult = (e: MouseEvent, stage: Konva.Stage): IXY => {
-	const oldX = stage.x();
-	const oldY = stage.y();
-	const newX = oldX - e.movementX;
-	const newY = oldY - e.movementY;
-	return { x: newX, y: newY };
-};
