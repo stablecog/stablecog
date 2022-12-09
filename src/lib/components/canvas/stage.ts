@@ -6,6 +6,8 @@ import type { Vector2d } from 'konva/lib/types';
 
 const zoomSpeed = 0.6;
 const zoomSpeedMultiplier = 0.01;
+export const stageScaleMin = 0.3;
+export const stageScaleMax = 2;
 
 export const makeStageInteractive = (
 	stage: Konva.Stage,
@@ -14,32 +16,28 @@ export const makeStageInteractive = (
 ) => {
 	// Spacebar pan
 	window.addEventListener('keydown', (e) => {
-		if (e.key === ' ' && !stage.draggable()) {
+		if (e.key === ' ') {
 			disableSelectionRect(selectionRect);
-			stage.draggable(true);
 			document.body.style.cursor = 'grabbing';
 		}
 	});
 	window.addEventListener('keyup', (e) => {
-		if (e.key === ' ' && stage.draggable()) {
+		if (e.key === ' ') {
 			enableSelectionRect(selectionRect);
-			stage.draggable(false);
 			document.body.style.cursor = 'default';
 		}
 	});
 	// Middle click pan
 	stage.on('mousedown', (e) => {
-		if (e.evt.button === 1 && !stage.draggable()) {
+		document.body.style.cursor = 'grabbing';
+		if (e.evt.button === 1) {
 			disableSelectionRect(selectionRect);
-			stage.draggable(true);
-			document.body.style.cursor = 'grabbing';
 		}
 	});
 	stage.on('mouseup', (e) => {
-		if (e.evt.button === 1 && stage.draggable()) {
+		document.body.style.cursor = 'default';
+		if (e.evt.button === 1) {
 			enableSelectionRect(selectionRect);
-			stage.draggable(false);
-			document.body.style.cursor = 'default';
 		}
 	});
 	// Wheel pan and pitch (also for touchpads)

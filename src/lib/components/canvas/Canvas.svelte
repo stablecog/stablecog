@@ -1,5 +1,4 @@
 <script lang="ts">
-	import SubtleButton from '$components/buttons/SubtleButton.svelte';
 	import { makeBgGridGroup } from '$components/canvas/bgGrid';
 	import { makeDraggableWithSnap } from '$components/canvas/drag';
 	import {
@@ -29,7 +28,8 @@
 		stage = new konva.Stage({
 			container: 'canvas-container',
 			width: clientWidth,
-			height: clientHeight
+			height: clientHeight,
+			draggable: true
 		});
 
 		bgLayer = new konva.Layer({});

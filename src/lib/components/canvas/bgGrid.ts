@@ -1,4 +1,4 @@
-import { stageScaleMax } from '$components/canvas/constants';
+import { stageScaleMax, stageScaleMin } from '$components/canvas/stage';
 import { makeMultipleOfGrid, stageCenteredPos } from '$components/canvas/utils';
 import type Konva from 'konva';
 
@@ -46,8 +46,8 @@ export const makeBgGridGroup = (stage: Konva.Stage, konva: typeof Konva) => {
 };
 
 export const limitedBgGridStrokeWidth = (scale: number) => {
-	return Math.min(
-		Math.max(bgGridStrokeWidth / scale, bgGridStrokeWidth / 1.25),
-		bgGridStrokeWidth * 2
-	);
+	const minWidth = bgGridStrokeWidth / 1.25;
+	const maxWidth = bgGridStrokeWidth * 2;
+	const progress = 1 - (scale - stageScaleMin) / (stageScaleMax - stageScaleMin);
+	return minWidth + (maxWidth - minWidth) * progress;
 };

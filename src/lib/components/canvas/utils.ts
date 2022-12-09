@@ -1,5 +1,5 @@
 import { gridSize } from '$components/canvas/bgGrid';
-import { stageScaleMax, stageScaleMin } from '$components/canvas/constants';
+import { stageScaleMax, stageScaleMin } from '$components/canvas/stage';
 import type Konva from 'konva/lib/Stage';
 import type { Vector2d } from 'konva/lib/types';
 
