@@ -1,48 +1,39 @@
 import { stageScaleMax, stageScaleMin } from '$components/canvas/stage';
-import { makeMultipleOfGrid, stageCenteredPos } from '$components/canvas/utils';
+import { makeMultipleOfGrid, stageCenteredPosition } from '$components/canvas/utils';
 import type Konva from 'konva';
 
 const gridColor = 'rgba(219, 213, 231, 0.05)';
 export const gridSize = 64;
 export const bgGridStrokeWidth = 4;
 
-export const makeBgGridGroup = (stage: Konva.Stage, konva: typeof Konva) => {
+export const setUpBgGridGroup = (
+	bgGridGroup: Konva.Group,
+	stage: Konva.Stage,
+	konva: typeof Konva
+) => {
+	const biggerDimension = stage.width() > stage.height() ? stage.width() : stage.height();
+	const dimensionScaled = makeMultipleOfGrid(biggerDimension * stageScaleMax * 3, true);
+
 	const bgGridGroupDimensions = {
-		w: makeMultipleOfGrid(stage.width() * stageScaleMax * 3, true),
-		h: makeMultipleOfGrid(stage.height() * stageScaleMax * 3, true)
+		x: dimensionScaled,
+		y: dimensionScaled
 	};
-	const bgGridGroupPos = stageCenteredPos(bgGridGroupDimensions, stage);
-	const bgGridGroup = new konva.Group({
-		x: bgGridGroupPos.x,
-		y: bgGridGroupPos.y
-	});
-	let [w, h] = [bgGridGroupDimensions.w, bgGridGroupDimensions.h];
-	if (w > h) {
-		for (let i = 0; i < h; i += gridSize) {
-			const line = new konva.Line({
-				points: [0, i, w, i],
-				stroke: gridColor,
-				strokeWidth: limitedBgGridStrokeWidth(stage.scaleX()),
-				dash: [0, gridSize],
-				lineJoin: 'round',
-				lineCap: 'round'
-			});
-			bgGridGroup.add(line);
-		}
-	} else {
-		for (let i = 0; i < w; i += gridSize) {
-			const line = new konva.Line({
-				points: [i, 0, i, h],
-				stroke: gridColor,
-				strokeWidth: limitedBgGridStrokeWidth(stage.scaleX()),
-				dash: [0, gridSize],
-				lineJoin: 'round',
-				lineCap: 'round'
-			});
-			bgGridGroup.add(line);
-		}
+
+	bgGridGroup.position(stageCenteredPosition(bgGridGroupDimensions, stage));
+
+	let w = bgGridGroupDimensions.x;
+
+	for (let i = 0; i < w; i += gridSize) {
+		const line = new konva.Line({
+			points: [0, i, w, i],
+			stroke: gridColor,
+			strokeWidth: limitedBgGridStrokeWidth(stage.scaleX()),
+			dash: [0, gridSize],
+			lineJoin: 'round',
+			lineCap: 'round'
+		});
+		bgGridGroup.add(line);
 	}
-	return bgGridGroup;
 };
 
 export const limitedBgGridStrokeWidth = (scale: number) => {

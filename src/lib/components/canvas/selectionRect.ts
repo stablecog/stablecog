@@ -1,5 +1,5 @@
 import { transitionDuration } from '$components/canvas/constants';
-import { stageCenteredPos } from '$components/canvas/utils';
+import { stageCenteredPosition } from '$components/canvas/utils';
 import type Konva from 'konva';
 
 export const selectionRectStrokeWidth = 3;
@@ -15,8 +15,8 @@ export const selectionRectDashSize = 8;
 export const selectionRectDashAnimVelocity = 50;
 
 export const selectionRectStartConfig = (stage: Konva.Stage) => {
-	const rectPos = stageCenteredPos(
-		{ w: selectionRectStartWidth, h: selectionRectStartHeight },
+	const rectPos = stageCenteredPosition(
+		{ x: selectionRectStartWidth, y: selectionRectStartHeight },
 		stage
 	);
 	const config: Konva.RectConfig | undefined = {
@@ -32,7 +32,7 @@ export const selectionRectStartConfig = (stage: Konva.Stage) => {
 	return config;
 };
 
-export function addSelectionRectDragStyles(shape: Konva.Shape, konva: typeof Konva) {
+export function addSelectionRectDragStyles(shape: Konva.Shape) {
 	shape.on('mouseover', () => {
 		document.body.style.cursor = 'grab';
 		shape.to({

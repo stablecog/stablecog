@@ -1,6 +1,6 @@
 import { gridSize } from '$components/canvas/bgGrid';
 import { stageScaleMax, stageScaleMin } from '$components/canvas/stage';
-import type Konva from 'konva/lib/Stage';
+import type Konva from 'konva';
 import type { Vector2d } from 'konva/lib/types';
 
 export const limitedScale = (scale: number) => {
@@ -28,17 +28,12 @@ export const snapToGrid = (coordinate: Vector2d, stage: Konva.Stage) => {
 	};
 };
 
-export const stageCenteredPos = (size: ISize, stage: Konva.Stage) => {
+export const stageCenteredPosition = (size: Vector2d, stage: Konva.Stage) => {
 	return {
-		x: stage.width() / 2 - size.w / 2,
-		y: stage.height() / 2 - size.h / 2
+		x: stage.width() / 2 - size.x / 2,
+		y: stage.height() / 2 - size.y / 2
 	};
 };
-
-export interface ISize {
-	w: number;
-	h: number;
-}
 
 export const makeMultipleOfGrid = (n: number, even = false) => {
 	const r = Math.ceil(n / gridSize);

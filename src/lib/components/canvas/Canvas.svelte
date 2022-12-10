@@ -1,6 +1,6 @@
 <script lang="ts">
-	import { makeBgGridGroup } from '$components/canvas/bgGrid';
-	import { makeDraggableWithSnap } from '$components/canvas/drag';
+	import { setUpBgGridGroup } from '$components/canvas/bgGrid';
+	import { makeShapeSnapOnDrag } from '$components/canvas/drag';
 	import {
 		addSelectionRectDragStyles,
 		selectionRectStartConfig,
@@ -33,7 +33,8 @@
 		});
 
 		bgLayer = new konva.Layer({});
-		bgGridGroup = makeBgGridGroup(stage, konva);
+		bgGridGroup = new konva.Group();
+		setUpBgGridGroup(bgGridGroup, stage, konva);
 		bgLayer.add(bgGridGroup);
 		stage.add(bgLayer);
 
@@ -42,8 +43,8 @@
 
 		mainLayer = new konva.Layer({});
 		selectionRect = new konva.Rect(selectionRectStartConfig(stage));
-		makeDraggableWithSnap(selectionRect, stage);
-		addSelectionRectDragStyles(selectionRect, konva);
+		makeShapeSnapOnDrag(selectionRect, stage);
+		addSelectionRectDragStyles(selectionRect);
 		mainLayer.add(selectionRect);
 		stage.add(mainLayer);
 
