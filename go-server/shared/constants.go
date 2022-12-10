@@ -21,6 +21,7 @@ const MaxHeight = 768
 
 var ModelIdToModelNameCog = map[string]string{
 	"048b4aa3-5586-47ed-900f-f4341c96bdb2": "Stable Diffusion v1.5",
+	"897461c5-d8e8-49f6-95a2-1c7d697b8644": "Stable Diffusion v1.5 Inpaint",
 	"8acfe4c8-751d-4aa6-8c3c-844e3ef478e0": "Openjourney",
 	"36d9d835-646f-4fc7-b9fe-98654464bf8e": "Arcane Diffusion",
 	"790c80e1-65b1-4556-9332-196344389572": "Mo-Di Diffusion",

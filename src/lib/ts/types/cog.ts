@@ -11,6 +11,7 @@ export type TSchedulerNameCog = 'K_LMS' | 'K_EULER' | 'K_EULER_ANCESTRAL' | 'PND
 
 export type TModelNameCog =
 	| 'Stable Diffusion v1.5'
+	| 'Stable Diffusion v1.5 Inpaint'
 	| 'Openjourney'
 	| 'Arcane Diffusion'
 	| 'Ghibli Diffusion'

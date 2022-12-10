@@ -56,6 +56,7 @@ export const guidanceScaleDefault = 7;
 // Model IDs
 export const availableModelIds = [
 	'048b4aa3-5586-47ed-900f-f4341c96bdb2',
+	'897461c5-d8e8-49f6-95a2-1c7d697b8644',
 	'8acfe4c8-751d-4aa6-8c3c-844e3ef478e0',
 	'36d9d835-646f-4fc7-b9fe-98654464bf8e',
 	'48a7031d-43b6-4a23-9f8c-8020eb6862e4',
@@ -69,6 +70,7 @@ export const modelIdDefault: TAvailableModelId = '048b4aa3-5586-47ed-900f-f4341c
 
 export const modelIdToModelNameCog: Record<TAvailableModelId, TModelNameCog> = {
 	'048b4aa3-5586-47ed-900f-f4341c96bdb2': 'Stable Diffusion v1.5',
+	'897461c5-d8e8-49f6-95a2-1c7d697b8644': 'Stable Diffusion v1.5 Inpaint',
 	'8acfe4c8-751d-4aa6-8c3c-844e3ef478e0': 'Openjourney',
 	'eaa438e1-dbf9-48fd-be71-206f0f257617': 'Redshift Diffusion',
 	'36d9d835-646f-4fc7-b9fe-98654464bf8e': 'Arcane Diffusion',
@@ -84,6 +86,7 @@ export const modelIdToDisplayName = derived<
 		'048b4aa3-5586-47ed-900f-f4341c96bdb2': $advancedModeApp
 			? $LL.Shared.ModelOptions['048b4aa3-5586-47ed-900f-f4341c96bdb2'].realName()
 			: $LL.Shared.ModelOptions['048b4aa3-5586-47ed-900f-f4341c96bdb2'].simpleName(),
+		'897461c5-d8e8-49f6-95a2-1c7d697b8644': $advancedModeApp ? 'SD v1.5 Inpaint' : 'Inpaint',
 		'8acfe4c8-751d-4aa6-8c3c-844e3ef478e0': $advancedModeApp
 			? $LL.Shared.ModelOptions['8acfe4c8-751d-4aa6-8c3c-844e3ef478e0'].realName()
 			: $LL.Shared.ModelOptions['8acfe4c8-751d-4aa6-8c3c-844e3ef478e0'].simpleName(),
