@@ -8,11 +8,13 @@
 		selectionRectStartWidth
 	} from '$components/canvas/selectionRect';
 	import { makeStageInteractive } from '$components/canvas/stage';
+	import { redrawEverything } from '$components/canvas/utils';
 	import type Konva from 'konva';
 	import { onMount } from 'svelte';
 
-	let clientWidth: number;
-	let clientHeight: number;
+	export let clientWidth: number;
+	export let clientHeight: number;
+
 	let konva: typeof Konva;
 	let stage: Konva.Stage;
 	let selectionRect: Konva.Rect;
@@ -22,6 +24,8 @@
 	let bgGridGroup: Konva.Group;
 	let imageLayer: Konva.Layer;
 	let mainLayer: Konva.Layer;
+
+	$: redrawEverything(konva, stage, selectionRect, bgGridGroup, clientWidth, clientHeight);
 
 	onMount(async () => {
 		konva = (await import('konva')).default;
@@ -53,6 +57,6 @@
 	});
 </script>
 
-<div bind:clientWidth bind:clientHeight class="w-full flex flex-1 relative">
-	<div id="canvas-container" class="w-full flex-1 bg-c-bg ring-2 ring-c-bg-secondary z-10" />
+<div class="w-full h-full relative">
+	<div id="canvas-container" class="w-full h-full bg-c-bg ring-2 ring-c-bg-secondary z-10" />
 </div>

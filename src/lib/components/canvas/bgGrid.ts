@@ -11,6 +11,8 @@ export const setUpBgGridGroup = (
 	stage: Konva.Stage,
 	konva: typeof Konva
 ) => {
+	if (bgGridGroup.children && bgGridGroup.children.length > 0) bgGridGroup.destroyChildren();
+
 	const biggerDimension = stage.width() > stage.height() ? stage.width() : stage.height();
 	const dimensionScaled = makeMultipleOfGrid(biggerDimension * stageScaleMax * 3, true);
 

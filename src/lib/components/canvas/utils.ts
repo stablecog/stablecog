@@ -1,4 +1,4 @@
-import { gridSize } from '$components/canvas/bgGrid';
+import { gridSize, setUpBgGridGroup } from '$components/canvas/bgGrid';
 import { stageScaleMax, stageScaleMin } from '$components/canvas/stage';
 import type Konva from 'konva';
 import type { Vector2d } from 'konva/lib/types';
@@ -38,4 +38,29 @@ export const stageCenteredPosition = (size: Vector2d, stage: Konva.Stage) => {
 export const makeMultipleOfGrid = (n: number, even = false) => {
 	const r = Math.ceil(n / gridSize);
 	return (r + (even && r % 2 !== 0 ? 1 : 0)) * gridSize;
+};
+
+export const redrawEverything = (
+	konva: typeof Konva,
+	stage: Konva.Stage,
+	selectionRect: Konva.Rect,
+	bgGridGroup: Konva.Group,
+	clientWidth: number,
+	clientHeight: number
+) => {
+	if (!stage) return;
+	if (stage.width() === clientWidth && stage.height() === clientHeight) return;
+
+	stage.width(clientWidth);
+	stage.height(clientHeight);
+	stage.position({
+		x: clientWidth / 2 - (clientWidth / 2) * stage.scaleX(),
+		y: clientHeight / 2 - (clientHeight / 2) * stage.scaleY()
+	});
+
+	setUpBgGridGroup(bgGridGroup, stage, konva);
+
+	selectionRect.position(
+		stageCenteredPosition({ x: selectionRect.width(), y: selectionRect.height() }, stage)
+	);
 };
