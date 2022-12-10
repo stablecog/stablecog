@@ -76,14 +76,8 @@ export const getWheelPinchResult = (
 	const oldScale = stage.scaleX();
 	const deltaY = e.deltaY;
 	const newScale = limitedScale(oldScale - deltaY / (1 / (zoomSpeed * zoomSpeedMultiplier)));
-	const newX =
-		pointerPosition.x -
-		((pointerPosition.x - stage.x()) / oldScale) *
-			limitedScale(oldScale - deltaY / (1 / (zoomSpeed * zoomSpeedMultiplier)));
-	const newY =
-		pointerPosition.y -
-		((pointerPosition.y - stage.y()) / oldScale) *
-			limitedScale(oldScale - deltaY / (1 / (zoomSpeed * zoomSpeedMultiplier)));
+	const newX = pointerPosition.x - ((pointerPosition.x - stage.x()) / oldScale) * newScale;
+	const newY = pointerPosition.y - ((pointerPosition.y - stage.y()) / oldScale) * newScale;
 
 	return { position: { x: newX, y: newY }, scale: { x: newScale, y: newScale } };
 };
