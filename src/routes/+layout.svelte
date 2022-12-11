@@ -24,6 +24,7 @@
 	import { loadLocaleAsync } from '$i18n/i18n-util.async';
 	import { isLocale } from '$i18n/i18n-util';
 	import { advancedMode, advancedModeApp } from '$ts/stores/advancedMode';
+	import { healthCheckRoutes } from '$ts/constants/main';
 
 	export let data: LayoutData;
 	setLocale(data.locale);
@@ -62,7 +63,7 @@
 
 	async function clearAndSetHealthCheckTimeout() {
 		if (mounted) {
-			if ($page.url.pathname !== '/' && $page.url.pathname !== '/history') {
+			if (!healthCheckRoutes.includes($page.url.pathname)) {
 				clearTimeout(bothHealthCheckTimeout);
 				return;
 			}
@@ -239,7 +240,9 @@
 	<main class="w-full flex-1 flex flex-col relative break-words">
 		<slot />
 	</main>
-	<Footer />
+	{#if $page.url.pathname !== '/canvas'}
+		<Footer />
+	{/if}
 	<NavbarBottom class="md:hidden h-[calc(3.75rem+env(safe-area-inset-bottom))]" />
 	<div class="md:hidden h-[calc(3.75rem+env(safe-area-inset-bottom))]" />
 	<div
