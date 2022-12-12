@@ -163,9 +163,7 @@
 
 	let linkCopied = false;
 	let linkCopiedTimeout: NodeJS.Timeout;
-	const onLinkCopied = () => {
-		fetch(generationGPreviewUrlFromId(generation.id));
-
+	const onLinkCopied = async () => {
 		promptCopied = false;
 		seedCopied = false;
 		negativePromptCopied = false;
@@ -179,6 +177,12 @@
 		linkCopiedTimeout = setTimeout(() => {
 			linkCopied = false;
 		}, copyTimeoutDuration);
+
+		try {
+			await fetch(generationGPreviewUrlFromId(generation.id));
+		} catch (error) {
+			console.log(error);
+		}
 	};
 
 	const sidebarWrapperOnScroll = () => {
