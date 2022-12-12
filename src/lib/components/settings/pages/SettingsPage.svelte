@@ -11,6 +11,7 @@
 	import ScrollAreaWithChevron from '$components/ScrollAreaWithChevron.svelte';
 	import ToggleIndicator from '$components/ToggleIndicator.svelte';
 	import LL, { locale } from '$i18n/i18n-svelte';
+	import { routesWithHealthCheck } from '$ts/constants/main';
 	import { languageName } from '$ts/helpers/languageName';
 	import { pLogSubmitToGallery, uLogSubmitToGallery } from '$ts/helpers/loggers';
 	import { parseUrlStr } from '$ts/helpers/parseUrlStr';
@@ -54,7 +55,7 @@
 						</p>
 					</div>
 					<div class="w-full flex items-center gap-3 px-0.5">
-						{#if $page.url.pathname === '/' || $page.url.pathname === '/history'}
+						{#if routesWithHealthCheck.includes($page.url.pathname)}
 							<HealthIndicator class="-mx-3 -my-2.5" />
 						{/if}
 						<p class="flex-shrink min-w-0 text-xs text-left break-all font-normal text-c-on-bg/60">

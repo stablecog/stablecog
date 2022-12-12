@@ -12,6 +12,7 @@
 	import { clickoutside } from '$ts/actions/clickoutside';
 	import { isTouchscreen } from '$ts/stores/isTouchscreen';
 	import { onMount } from 'svelte';
+	import { routesWithHealthCheck } from '$ts/constants/main';
 
 	let isSettingsOpen = false;
 	let isSwitchServerModalOpen = false;
@@ -69,7 +70,7 @@
 		<NavigationTabBar />
 	</div>
 	<div class="flex flex-1 flex-wrap items-center justify-end relative">
-		{#if $page.url.pathname === '/' || $page.url.pathname === '/history'}
+		{#if routesWithHealthCheck.includes($page.url.pathname)}
 			<HealthIndicator />
 		{/if}
 		<div use:clickoutside={{ callback: closeSettings }} class="flex flex-col items-end -ml-3.5">

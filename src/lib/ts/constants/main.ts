@@ -15,6 +15,9 @@ export const apiBase =
 		? env.PUBLIC_GO_SERVER_URL_DEV
 		: env.PUBLIC_GO_SERVER_URL_PROD;
 
+export const routesWithHealthCheck = ['/', '/history', '/canvas'];
+export const routesWithHiddenFooter = ['/canvas'];
+
 export const modalCloseDelay = 120;
 
 export const maxSeed = 2147483647;
