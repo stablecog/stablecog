@@ -9,7 +9,7 @@ export const load: ServerLoad = async ({ url }) => {
 	const generationId = url.searchParams.get('generation');
 	const [generationRes, galleryRes] = await Promise.all([
 		generationId ? getGenerationG(generationId) : null,
-		getGalleryPage(1)
+		getGalleryPage({ page: 1 })
 	]);
 	const resAsGalleryResponse = galleryRes as TGalleryResponse;
 	const resAsError = galleryRes as { status: number; error: string };

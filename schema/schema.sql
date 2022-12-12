@@ -541,7 +541,7 @@ CREATE TABLE "generation_g" (
     "width" INTEGER NOT NULL,
     "height" INTEGER NOT NULL,
     "seed" BIGINT NOT NULL,
-    "inference_steps" INTEGER,
+    "num_inference_steps" INTEGER,
     "guidance_scale" DOUBLE PRECISION NOT NULL,
     "hidden" BOOLEAN NOT NULL DEFAULT FALSE,
     "id" UUID NOT NULL DEFAULT uuid_generate_v4(),

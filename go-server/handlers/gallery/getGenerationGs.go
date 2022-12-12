@@ -16,7 +16,7 @@ func GetGenerationGs(page int, batchSize int, filter string) []SDBGenerationG {
 		filterValue = "(true,false)"
 	}
 	_, err := shared.Supabase.From("generation_g").
-		Select(`prompt:prompt_id(id,text),negative_prompt:negative_prompt_id(id,text),model:model_id(id,name),scheduler:scheduler_id(id,name),width,height,seed,inference_steps,guidance_scale,image_id,created_at,updated_at,id`, "", false).
+		Select(`prompt:prompt_id(id,text),negative_prompt:negative_prompt_id(id,text),model:model_id(id,name),scheduler:scheduler_id(id,name),width,height,seed,num_inference_steps,guidance_scale,image_id,created_at,updated_at,id`, "", false).
 		Filter("hidden", "in", filterValue).
 		Order("created_at", &postgrest.OrderOpts{Ascending: false}).
 		Range((page-1)*batchSize, page*batchSize-1, "").
@@ -29,19 +29,19 @@ func GetGenerationGs(page int, batchSize int, filter string) []SDBGenerationG {
 }
 
 type SDBGenerationG struct {
-	Width          int                        `json:"width"`
-	Height         int                        `json:"height"`
-	Prompt         SDBGalleryGPrompt          `json:"prompt"`
-	NegativePrompt *SDBGalleryGNegativePrompt `json:"negative_prompt,omitempty"`
-	Model          SDBGalleryGModel           `json:"model"`
-	Scheduler      SDBGalleryGScheduler       `json:"scheduler"`
-	Seed           int                        `json:"seed"`
-	InferenceSteps int                        `json:"inference_steps"`
-	GuidanceScale  int                        `json:"guidance_scale"`
-	ImageId        string                     `json:"image_id"`
-	CreatedAt      string                     `json:"created_at"`
-	UpdatedAt      string                     `json:"updated_at"`
-	Id             string                     `json:"id"`
+	Width             int                        `json:"width"`
+	Height            int                        `json:"height"`
+	Prompt            SDBGalleryGPrompt          `json:"prompt"`
+	NegativePrompt    *SDBGalleryGNegativePrompt `json:"negative_prompt,omitempty"`
+	Model             SDBGalleryGModel           `json:"model"`
+	Scheduler         SDBGalleryGScheduler       `json:"scheduler"`
+	Seed              int                        `json:"seed"`
+	NumInferenceSteps int                        `json:"num_inference_steps"`
+	GuidanceScale     int                        `json:"guidance_scale"`
+	ImageId           string                     `json:"image_id"`
+	CreatedAt         string                     `json:"created_at"`
+	UpdatedAt         string                     `json:"updated_at"`
+	Id                string                     `json:"id"`
 }
 
 type SDBGalleryGPrompt struct {

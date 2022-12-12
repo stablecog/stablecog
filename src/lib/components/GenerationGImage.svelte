@@ -100,7 +100,7 @@
 				<p
 					class="flex-1 cursor-default whitespace-nowrap flex-shrink min-w-0 overflow-hidden overflow-ellipsis text-left"
 				>
-					{generation.inference_steps}
+					{generation.num_inference_steps}
 				</p>
 			</div>
 		</div>

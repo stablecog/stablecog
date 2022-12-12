@@ -78,7 +78,7 @@
 			model_id: generation.model?.id ?? undefined,
 			scheduler_id: generation.scheduler?.id ?? undefined,
 			guidance_scale: generation.guidance_scale,
-			num_inference_steps: generation.inference_steps ?? undefined,
+			num_inference_steps: generation.num_inference_steps ?? undefined,
 			height: generation.height,
 			width: generation.width
 		});

@@ -77,7 +77,7 @@
 				<IconSteps class="w-4 h-4" />
 				<p>{$LL.Home.InferenceStepsTabBar.Title()}</p>
 			</div>
-			<p class="font-bold">{generation.inference_steps}</p>
+			<p class="font-bold">{generation.num_inference_steps}</p>
 		</div>
 		<div class="min-w-[calc(50%-0.75rem)] flex flex-col items-start gap-1">
 			<div
