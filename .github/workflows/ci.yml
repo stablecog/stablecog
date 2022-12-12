@@ -32,7 +32,6 @@ jobs:
           context: go-server
           platforms: linux/amd64
           push: true
-          file: ./Dockerfile
           tags: appditto/stablecog-go:${{ env.BRANCH_NAME }}-${{ env.GITHUB_RUN_ID }}
   deploy_go:
     name: Deploy GO app
