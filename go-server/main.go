@@ -38,6 +38,8 @@ func main() {
 	go cronHealth.CheckHealth()
 	go cronHealth.SetDefaultServerHealths()
 
+	//
+
 	app.Post("/generate", generate.Handler)
 	app.Post("/upscale", upscale.Handler)
 	app.Get("/gallery", gallery.Handler)
