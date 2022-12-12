@@ -79,19 +79,22 @@
 
 <svelte:window on:keydown={onKeyDown} />
 
-<div class="w-full flex-1 flex flex-col items-center px-2 gap-2 pt-4 md:pt-8 pb-8 md:px-8">
+<div class="w-full flex-1 flex flex-col items-center px-2 gap-2 md:pt-6 pb-8 md:px-8">
 	{#if generations === undefined || generations.length !== 0}
 		<div class="w-full max-w-7xl flex justify-center px-1.5">
-			<div
-				class="w-full flex flex-wrap gap-3 items-end bg-c-bg-secondary shadow-lg shadow-c-[var(--o-shadow-normal)] px-5 py-3.5 md:px-6 md:py-4.5 rounded-xl"
-			>
-				<p class="font-bold text-xl">
-					{$LL.History.GenerationsTitle()}
-					<span class="text-sm text-c-on-bg/50 font-semibold">
-						({generations?.length.toLocaleString($locale) ?? '..'})
-					</span>
-				</p>
-				<p class="text-xs text-c-primary/75 font-semibold bg-c-primary/15 px-2 py-1 rounded-md">
+			<div class="w-full flex flex-wrap gap-3 items-center px-2 py-2 md:px-4 md:py-3 rounded-xl">
+				<div class="flex gap-2 items-center">
+					<p class="font-bold text-xl md:text-2xl">
+						{$LL.History.GenerationsTitle()}
+					</p>
+					<p class="text-sm md:text-base text-c-on-bg/50 font-semibold mt-0.5 md:mt-1">
+						({generations?.length.toLocaleString($locale) ?? '...'})
+					</p>
+				</div>
+				<p
+					class="text-xs md:text-sm text-c-primary/75 font-semibold bg-c-primary/15 px-2 py-1 md:px-3 md:py-1.5
+						rounded-md md:rounded-lg"
+				>
 					{$LL.History.GenerationsMaxSavedCountWarning({ count: maxImages })}
 				</p>
 			</div>
