@@ -7,16 +7,11 @@ ADD . .
 # Build
 RUN go build -o /root/app
 
-FROM ubuntu:22.04
+FROM appditto/libvips:latest
 
 COPY --from=builder /root/app /usr/local/bin/app
 
 ENV MALLOC_ARENA_MAX=2
-
-# Install libvips
-RUN apt-get update && apt-get install -y \
-  libvips-dev \
-  && rm -rf /var/lib/apt/lists/*
 
 # run main.go
 CMD ["app"]
