@@ -25,14 +25,15 @@ jobs:
         env:
           DOCKER_USERNAME: ${{ secrets.DOCKER_USER }}
           DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
-      - name: Build and tag
+      - name: Build and push
         if: success()
-        run: docker build -t appditto/stablecog-go:${{ env.BRANCH_NAME }}-${{ env.GITHUB_RUN_ID }} go-server
-      - name: Push image
-        if: success()
-        uses: actions-hub/docker@master
+        uses: docker/build-push-action@v3
         with:
-          args: push appditto/stablecog-go:${{ env.BRANCH_NAME }}-${{ env.GITHUB_RUN_ID }}
+          context: .
+          platforms: linux/amd64
+          push: true
+          file: ./Dockerfile
+          tags: appditto/stablecog-go:${{ env.BRANCH_NAME }}-${{ env.GITHUB_RUN_ID }}
   deploy_go:
     name: Deploy GO app
     needs: build_and_publish_go
