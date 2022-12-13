@@ -90,7 +90,7 @@
 					</p>
 					<p
 						slot="item-1"
-						class="text-xl flex-1 font-medium relative transition overflow-hidden overflow-ellipsis max-w-full z-0 {value ===
+						class="flex-1 font-medium relative transition overflow-hidden overflow-ellipsis max-w-full z-0 {value ===
 							tab.value && !hideSelected
 							? 'text-c-on-bg/75'
 							: 'text-c-on-bg/30'} {value === tab.value && !hideSelected && !$isTouchscreen
