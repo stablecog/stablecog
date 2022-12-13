@@ -238,7 +238,7 @@ ALTER TABLE
 
 CREATE POLICY "Everyone can read generation_realtime" ON public.generation_realtime FOR
 SELECT
-    USING (true);
+    USING (TRUE);
 
 CREATE
 OR REPLACE FUNCTION duplicate_to_generation_realtime() RETURNS trigger AS $ $ BEGIN IF EXISTS(
@@ -416,7 +416,7 @@ ALTER TABLE
 
 CREATE POLICY "Everyone can read upscale_realtime" ON public.upscale_realtime FOR
 SELECT
-    USING (true);
+    USING (TRUE);
 
 CREATE
 OR REPLACE FUNCTION duplicate_to_upscale_realtime() RETURNS trigger AS $ $ BEGIN IF EXISTS(
@@ -511,6 +511,10 @@ CREATE TABLE "admin" (
     "updated_at" TIMESTAMPTZ DEFAULT TIMEZONE('utc' :: TEXT, NOW()) NOT NULL,
     PRIMARY KEY(id)
 );
+
+CREATE POLICY "Everyone can see admins" ON public.admin FOR
+SELECT
+    USING (TRUE);
 
 CREATE trigger handle_updated_at before
 UPDATE
