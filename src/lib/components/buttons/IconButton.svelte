@@ -9,6 +9,7 @@
 	export let target: string | null = null;
 	export let noPadding = false;
 	export let disabled = false;
+	export let type: 'on-primary' | 'primary' = 'primary';
 	let classes = '';
 </script>
 
@@ -23,7 +24,9 @@
 		<div class="rounded-lg relative">
 			<div class="w-full h-full rounded-full overflow-hidden z-0 absolute left-0 top-0">
 				<div
-					class="w-full h-full ease-out transition transform bg-c-primary/25 
+					class="w-full h-full ease-out transition transform {type === 'on-primary'
+						? 'bg-c-on-primary/15'
+						: 'bg-c-primary/25'} 
         	absolute left-0 top-0 rounded-xl -translate-x-full {!$isTouchscreen
 						? 'group-hover:translate-x-0'
 						: ''}"
@@ -35,12 +38,20 @@
 		</div>
 	</a>
 {:else}
-	<button {disabled} on:click={onClick} class="group rounded-xl {classes}" aria-label={name}>
+	<button
+		type="button"
+		{disabled}
+		on:click={onClick}
+		class="group rounded-xl {classes}"
+		aria-label={name}
+	>
 		<div class="rounded-lg relative">
 			<div class="w-full h-full rounded-full overflow-hidden z-0 absolute left-0 top-0">
 				<div
-					class="w-full h-full ease-out transition transform bg-c-primary/25 
-          absolute left-0 top-0 rounded-xl -translate-x-full {!$isTouchscreen
+					class="w-full h-full ease-out transition transform {type === 'on-primary'
+						? 'bg-c-on-primary/25'
+						: 'bg-c-primary/25'} 
+          	absolute left-0 top-0 rounded-xl -translate-x-full {!$isTouchscreen
 						? 'group-hover:translate-x-0'
 						: ''}"
 				/>

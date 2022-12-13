@@ -236,7 +236,6 @@
 		: ''}"
 >
 	<Navbar />
-	<div class="h-20" />
 	<main class="w-full flex-1 flex flex-col relative break-words">
 		<slot />
 	</main>
