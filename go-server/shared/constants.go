@@ -14,7 +14,7 @@ var Supabase = postgrest.NewClient(PUBLIC_SUPABASE_POSTGREST_URL, "", map[string
 	"apikey":        SUPABASE_ADMIN_KEY,
 })
 
-const MaxSeed = 2147483647
+const MaxSeed = 640 * 640 * 50
 const MaxPromptLen = 500
 const MaxWidth = 768
 const MaxHeight = 768

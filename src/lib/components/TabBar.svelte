@@ -18,9 +18,9 @@
 
 	let classes = '';
 
-	$: [value, validityDependsOn], affirmValidity();
+	$: [value, validityDependsOn], enforceValidity();
 
-	function affirmValidity() {
+	function enforceValidity() {
 		if (!isValid(value)) {
 			const index = tabs.map((t) => t.value).indexOf(value);
 			for (let i = index - 1; i >= 0; i--) {
@@ -90,7 +90,7 @@
 					</p>
 					<p
 						slot="item-1"
-						class="flex-1 font-medium relative transition overflow-hidden overflow-ellipsis max-w-full z-0 {value ===
+						class="text-xl flex-1 font-medium relative transition overflow-hidden overflow-ellipsis max-w-full z-0 {value ===
 							tab.value && !hideSelected
 							? 'text-c-on-bg/75'
 							: 'text-c-on-bg/30'} {value === tab.value && !hideSelected && !$isTouchscreen
