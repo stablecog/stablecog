@@ -24,6 +24,7 @@ func Handler(c *fiber.Ctx) error {
 	start := time.Now().UTC().UnixMilli()
 	var req shared.SGenerateRequestBody
 	if err := c.BodyParser(&req); err != nil {
+		log.Printf("-- Invalid request body: %v --", err)
 		return c.Status(http.StatusBadRequest).JSON(
 			SGenerateResponse{Error: "Invalid request body"},
 		)
@@ -34,28 +35,38 @@ func Handler(c *fiber.Ctx) error {
 		req.Seed = rand.Intn(shared.MaxSeed)
 	}
 	if req.Width > shared.MaxWidth {
+		log.Printf("Width is too large: %d", req.Width)
 		return c.Status(http.StatusBadRequest).JSON(
 			SGenerateResponse{Error: "Width is too large"},
 		)
 	}
 	if req.Height > shared.MaxHeight {
+		log.Printf("Height is too large: %d", req.Height)
 		return c.Status(http.StatusBadRequest).JSON(
 			SGenerateResponse{Error: "Height is too large"},
 		)
 	}
 
 	if req.Width*req.Height*req.NumInferenceSteps >= shared.MaxFreePixelSteps {
+		log.Printf(
+			"Pick fewer inference steps or smaller dimensions: %d - %d - %d",
+			req.Width,
+			req.Height,
+			req.NumInferenceSteps,
+		)
 		return c.Status(http.StatusBadRequest).JSON(
 			SGenerateResponse{Error: "Pick fewer inference steps or smaller dimensions"},
 		)
 	}
 
 	if shared.ModelIdToModelNameCog[req.ModelId] == "" {
+		log.Printf("Invalid model ID: %s", req.ModelId)
 		return c.Status(http.StatusBadRequest).JSON(
 			SGenerateResponse{Error: "Invalid model ID"},
 		)
 	}
 	if shared.SchedulerIdToSchedulerNameCog[req.SchedulerId] == "" {
+		log.Printf("Invalid scheduler ID: %s", req.SchedulerId)
 		return c.Status(http.StatusBadRequest).JSON(
 			SGenerateResponse{Error: "Invalid scheduler ID"},
 		)
@@ -70,6 +81,7 @@ func Handler(c *fiber.Ctx) error {
 
 	pickServerRes := shared.PickServerUrl(req.ServerUrl)
 	if pickServerRes.Error {
+		log.Printf("Failed to pick a server")
 		return c.Status(http.StatusInternalServerError).JSON(
 			SGenerateResponse{Error: "Failed to pick a server"},
 		)
@@ -174,6 +186,7 @@ func Handler(c *fiber.Ctx) error {
 	generationCogDurationMs := generationCogEnd - generationCogStart
 	if output == "" {
 		go UpdateGenerationAsFailed(generationIdChan, generationCogDurationMs, false)
+		log.Printf("Cog server returned empty output")
 		return c.Status(http.StatusInternalServerError).JSON(
 			SGenerateResponse{Error: "Cog server returned empty output"},
 		)
@@ -189,6 +202,7 @@ func Handler(c *fiber.Ctx) error {
 	isNSFW := IsNSFW(output)
 	if isNSFW {
 		go UpdateGenerationAsFailed(generationIdChan, generationCogDurationMs, true)
+		log.Printf("NSFW error")
 		return c.Status(http.StatusBadRequest).JSON(
 			SGenerateResponse{Error: "NSFW"},
 		)
