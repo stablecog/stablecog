@@ -519,10 +519,6 @@ UPDATE
 ALTER TABLE
     admin ENABLE ROW LEVEL SECURITY;
 
-CREATE POLICY "Everyone can see admins" ON public.admin FOR
-SELECT
-    USING (TRUE);
-
 CREATE POLICY "Admins can edit servers" ON public.server FOR ALL USING (
     auth.uid() IN (
         SELECT
