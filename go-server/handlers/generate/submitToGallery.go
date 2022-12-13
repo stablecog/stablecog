@@ -90,17 +90,17 @@ func SubmitToGallery(p SSubmitToGalleryProps) {
 	// Insert to DB
 	var insertRes SDBGalleryInsertRes
 	_, insertErr := shared.Supabase.From("generation_g").Insert(SDBGenerationGInsertBody{
-		ImageId:          imgId,
-		Width:            webpMeta.Width,
-		Height:           webpMeta.Height,
-		Hidden:           p.Hidden,
-		PromptId:         promptId,
-		NegativePromptId: negativePromptId,
-		ModelId:          p.ModelId,
-		SchedulerId:      p.SchedulerId,
-		InferenceSteps:   p.InferenceSteps,
-		GuidanceScale:    p.GuidanceScale,
-		Seed:             p.Seed,
+		ImageId:           imgId,
+		Width:             webpMeta.Width,
+		Height:            webpMeta.Height,
+		Hidden:            p.Hidden,
+		PromptId:          promptId,
+		NegativePromptId:  negativePromptId,
+		ModelId:           p.ModelId,
+		SchedulerId:       p.SchedulerId,
+		NumInferenceSteps: p.NumInferenceSteps,
+		GuidanceScale:     p.GuidanceScale,
+		Seed:              p.Seed,
 	}, false, "", "", "").Single().ExecuteTo(&insertRes)
 	if insertErr != nil {
 		log.Printf("-- Gallery - Error inserting to DB: %v --", insertErr)
@@ -118,39 +118,39 @@ type SSubmitToGalleryProps struct {
 	NegativePromptIdChan chan string
 	ModelId              string
 	SchedulerId          string
-	InferenceSteps       int
+	NumInferenceSteps    int
 	GuidanceScale        int
 	Seed                 int
 	Hidden               bool
 }
 
 type SDBGenerationGInsertBody struct {
-	ImageId          string `json:"image_id"`
-	Width            int    `json:"width"`
-	Height           int    `json:"height"`
-	Hidden           bool   `json:"hidden"`
-	PromptId         string `json:"prompt_id"`
-	NegativePromptId string `json:"negative_prompt_id,omitempty"`
-	ModelId          string `json:"model_id"`
-	SchedulerId      string `json:"scheduler_id"`
-	InferenceSteps   int    `json:"inference_steps"`
-	GuidanceScale    int    `json:"guidance_scale"`
-	Seed             int    `json:"seed"`
+	ImageId           string `json:"image_id"`
+	Width             int    `json:"width"`
+	Height            int    `json:"height"`
+	Hidden            bool   `json:"hidden"`
+	PromptId          string `json:"prompt_id"`
+	NegativePromptId  string `json:"negative_prompt_id,omitempty"`
+	ModelId           string `json:"model_id"`
+	SchedulerId       string `json:"scheduler_id"`
+	NumInferenceSteps int    `json:"num_inference_steps"`
+	GuidanceScale     int    `json:"guidance_scale"`
+	Seed              int    `json:"seed"`
 }
 
 type SDBGalleryInsertRes struct {
-	Id               string `json:"id"`
-	PromptId         string `json:"prompt_id"`
-	NegativePromptId string `json:"negative_prompt_id,omitempty"`
-	Hidden           bool   `json:"hidden"`
-	ImageId          string `json:"image_id"`
-	Width            int    `json:"width"`
-	Height           int    `json:"height"`
-	ModelId          string `json:"model_id"`
-	SchedulerId      string `json:"scheduler_id"`
-	InferenceSteps   int    `json:"inference_steps"`
-	GuidanceScale    int    `json:"guidance_scale"`
-	Seed             int    `json:"seed"`
-	CreatedAt        string `json:"created_at"`
-	UpdatedAt        string `json:"updated_at"`
+	Id                string `json:"id"`
+	PromptId          string `json:"prompt_id"`
+	NegativePromptId  string `json:"negative_prompt_id,omitempty"`
+	Hidden            bool   `json:"hidden"`
+	ImageId           string `json:"image_id"`
+	Width             int    `json:"width"`
+	Height            int    `json:"height"`
+	ModelId           string `json:"model_id"`
+	SchedulerId       string `json:"scheduler_id"`
+	NumInferenceSteps int    `json:"num_inference_steps"`
+	GuidanceScale     int    `json:"guidance_scale"`
+	Seed              int    `json:"seed"`
+	CreatedAt         string `json:"created_at"`
+	UpdatedAt         string `json:"updated_at"`
 }

@@ -225,7 +225,7 @@ func Handler(c *fiber.Ctx) error {
 			ModelId:              req.ModelId,
 			SchedulerId:          req.SchedulerId,
 			GuidanceScale:        req.GuidanceScale,
-			InferenceSteps:       req.NumInferenceSteps,
+			NumInferenceSteps:    req.NumInferenceSteps,
 			Seed:                 req.Seed,
 			Hidden:               true,
 		})
