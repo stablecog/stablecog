@@ -55,7 +55,7 @@
 	let startTimestamp: number | undefined;
 	let endTimestamp: number | undefined;
 	let lastGeneration: TGenerationUI;
-	let generationError: string | undefined;
+	let generationError: Error | undefined;
 	let estimatedDuration = estimatedDurationDefault;
 	let upscaleStatus: TUpscaleStatus;
 
@@ -208,7 +208,6 @@
 					console.log('image loaded for:', `"${lastGeneration?.prompt}"`);
 				};
 			} else {
-				generationError = error;
 				throw new Error(error);
 			}
 		} catch (error) {
@@ -216,7 +215,8 @@
 			pLogGeneration(_error.message === 'NSFW' ? 'Failed-NSFW' : 'Failed');
 			uLogGeneration(_error.message === 'NSFW' ? 'Failed-NSFW' : 'Failed');
 			status = 'error';
-			console.log('Generation error', error);
+			generationError = _error;
+			console.log('Generation error', _error);
 		} finally {
 			endTimestamp = Date.now();
 			console.log('generation duration:', (endTimestamp - startTimestamp) / 1000, 's');
@@ -303,9 +303,9 @@
 					>
 						<p class="w-full max-w-lg leading-relaxed text-c-on-bg/40 text-center py-4">
 							{generationError
-								? generationError === 'NSFW'
+								? generationError.message === 'NSFW'
 									? $LL.Error.NSFW()
-									: generationError
+									: generationError.message
 								: $LL.Error.SomethingWentWrong()}
 						</p>
 					</div>

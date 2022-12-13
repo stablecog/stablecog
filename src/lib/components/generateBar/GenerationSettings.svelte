@@ -22,6 +22,7 @@
 		guidanceScaleMin,
 		heightTabs,
 		inferenceStepsTabs,
+		maxFreePixelSteps,
 		maxPromptLength,
 		maxSeed,
 		widthTabs
@@ -54,6 +55,10 @@
 	export let isCheckComplete: boolean;
 	export let formElement: HTMLFormElement;
 	export let disabled = false;
+
+	$: isInferenceStepsValid = (s: string) => {
+		return Number(s) * Number($generationHeight) * Number($generationWidth) < maxFreePixelSteps;
+	};
 </script>
 
 <div class="w-full flex flex-wrap items-start justify-center px-2px py-4 gap-4">
@@ -137,6 +142,8 @@
 			{disabled}
 			class="w-full md:w-84 max-w-full order-2"
 			tabs={inferenceStepsTabs}
+			isValid={isInferenceStepsValid}
+			validityDependsOn={[$generationHeight, $generationWidth]}
 			bind:value={$generationInferenceSteps}
 			name="Steps"
 			hideSelected={!isCheckComplete}

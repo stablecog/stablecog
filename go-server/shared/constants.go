@@ -19,6 +19,8 @@ const MaxPromptLen = 500
 const MaxWidth = 768
 const MaxHeight = 768
 
+const MaxFreePixelSteps = 768 * 768 * 40
+
 var ModelIdToModelNameCog = map[string]string{
 	"048b4aa3-5586-47ed-900f-f4341c96bdb2": "Stable Diffusion v1.5",
 	"897461c5-d8e8-49f6-95a2-1c7d697b8644": "Stable Diffusion v1.5 Inpaint",

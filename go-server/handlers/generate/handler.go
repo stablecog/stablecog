@@ -43,6 +43,13 @@ func Handler(c *fiber.Ctx) error {
 			SGenerateResponse{Error: "Height is too large"},
 		)
 	}
+
+	if req.Width*req.Height*req.NumInferenceSteps > shared.MaxFreePixelSteps {
+		return c.Status(http.StatusBadRequest).JSON(
+			SGenerateResponse{Error: "Pick fewer inference steps or smaller dimensions"},
+		)
+	}
+
 	if shared.ModelIdToModelNameCog[req.ModelId] == "" {
 		return c.Status(http.StatusBadRequest).JSON(
 			SGenerateResponse{Error: "Invalid model ID"},
@@ -182,7 +189,7 @@ func Handler(c *fiber.Ctx) error {
 	isNSFW := IsNSFW(output)
 	if isNSFW {
 		go UpdateGenerationAsFailed(generationIdChan, generationCogDurationMs, true)
-		return c.Status(http.StatusOK).JSON(
+		return c.Status(http.StatusBadRequest).JSON(
 			SGenerateResponse{Error: "NSFW"},
 		)
 	}

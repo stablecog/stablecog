@@ -41,12 +41,6 @@ export async function generateImage({
 			should_submit_to_gallery
 		})
 	});
-	const start = Date.now();
-	if (!response.ok) {
-		throw new Error('Failed to generate image');
-	}
 	const resJSON: TGenerationResponse = await response.json();
-	const end = Date.now();
-	console.log(`JSON deserialization in: ${(end - start) / 1000}s`);
 	return resJSON;
 }

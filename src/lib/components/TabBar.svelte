@@ -1,4 +1,5 @@
 <script lang="ts">
+	import Morpher from '$components/Morpher.svelte';
 	import TabBarWrapper from '$components/TabBarWrapper.svelte';
 	import { isTouchscreen } from '$ts/stores/isTouchscreen';
 	import type { TTab } from '$ts/types/main';
@@ -12,8 +13,24 @@
 	export let hasTitle = true;
 	export let dontScale = false;
 	export let disabled = false;
+	export let isValid: (v: T) => boolean = () => true;
+	export let validityDependsOn: T[] = [];
 
 	let classes = '';
+
+	$: [value, validityDependsOn], affirmValidity();
+
+	function affirmValidity() {
+		if (!isValid(value)) {
+			const index = tabs.map((t) => t.value).indexOf(value);
+			for (let i = index - 1; i >= 0; i--) {
+				if (isValid(tabs[i].value)) {
+					value = tabs[i].value;
+					return;
+				}
+			}
+		}
+	}
 </script>
 
 <TabBarWrapper class={classes} {dontScale}>
@@ -40,12 +57,12 @@
 		</div>
 		{#each tabs as tab}
 			<button
-				{disabled}
+				disabled={disabled || !isValid(tab.value)}
 				on:click|preventDefault={(e) => {
 					value = tab.value;
 					e.currentTarget.blur();
 				}}
-				class="flex-1 min-w-0 px-2 py-4 relative text-center rounded-lg group"
+				class="flex-1 min-w-0 px-2 py-4 relative text-center rounded-lg group transition"
 				type="button"
 				aria-label={name}
 			>
@@ -54,21 +71,35 @@
 						<div
 							class="w-full h-full origin-left rounded-lg transition transform translate-y-full 
               bg-c-bg-secondary {value !== tab.value
-								? 'group-focus-within:translate-y-0'
-								: ''} {!$isTouchscreen ? 'group-hover:translate-y-0' : ''}"
+								? 'group-enabled:group-focus-within:translate-y-0'
+								: ''} {!$isTouchscreen ? 'group-enabled:group-hover:translate-y-0' : ''}"
 						/>
 					</div>
 				</div>
-				<p
-					class="flex-1 font-medium relative transition overflow-hidden overflow-ellipsis max-w-full z-0 {value ===
-						tab.value && !hideSelected
-						? 'text-c-on-bg/75'
-						: 'text-c-on-bg/30'} {value === tab.value && !hideSelected && !$isTouchscreen
-						? 'group-hover:text-c-primary'
-						: ''}"
-				>
-					{tab.label}
-				</p>
+				<Morpher morphed={!isValid(tab.value)}>
+					<p
+						slot="item-0"
+						class="flex-1 font-medium relative transition overflow-hidden overflow-ellipsis max-w-full z-0 {value ===
+							tab.value && !hideSelected
+							? 'text-c-on-bg/75'
+							: 'text-c-on-bg/30'} {value === tab.value && !hideSelected && !$isTouchscreen
+							? 'group-hover:text-c-primary'
+							: ''}"
+					>
+						{tab.label}
+					</p>
+					<p
+						slot="item-1"
+						class="flex-1 font-medium relative transition overflow-hidden overflow-ellipsis max-w-full z-0 {value ===
+							tab.value && !hideSelected
+							? 'text-c-on-bg/75'
+							: 'text-c-on-bg/30'} {value === tab.value && !hideSelected && !$isTouchscreen
+							? 'group-hover:text-c-primary'
+							: ''}"
+					>
+						•
+					</p>
+				</Morpher>
 			</button>
 		{/each}
 	</div>

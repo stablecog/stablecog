@@ -18,6 +18,8 @@ export const apiBase =
 export const routesWithHealthCheck = ['/', '/history', '/canvas'];
 export const routesWithHiddenFooter = ['/canvas'];
 
+export const maxFreePixelSteps = 768 * 768 * 40;
+
 export const modalCloseDelay = 120;
 
 export const maxSeed = 2147483647;
