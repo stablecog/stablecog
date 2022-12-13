@@ -44,7 +44,7 @@ func Handler(c *fiber.Ctx) error {
 		)
 	}
 
-	if req.Width*req.Height*req.NumInferenceSteps > shared.MaxFreePixelSteps {
+	if req.Width*req.Height*req.NumInferenceSteps >= shared.MaxFreePixelSteps {
 		return c.Status(http.StatusBadRequest).JSON(
 			SGenerateResponse{Error: "Pick fewer inference steps or smaller dimensions"},
 		)
