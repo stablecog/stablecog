@@ -37,13 +37,13 @@ func Handler(c *fiber.Ctx) error {
 	if req.Width > shared.MaxWidth {
 		log.Printf("Width is too large: %d", req.Width)
 		return c.Status(http.StatusBadRequest).JSON(
-			SGenerateResponse{Error: "Width is too large"},
+			SGenerateResponse{Error: fmt.Sprintf("Width is too large, max is: %d", shared.MaxWidth)},
 		)
 	}
 	if req.Height > shared.MaxHeight {
 		log.Printf("Height is too large: %d", req.Height)
 		return c.Status(http.StatusBadRequest).JSON(
-			SGenerateResponse{Error: "Height is too large"},
+			SGenerateResponse{Error: fmt.Sprintf("Height is too large, max is: %d", shared.MaxHeight)},
 		)
 	}
 
