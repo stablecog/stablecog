@@ -12,6 +12,7 @@ func UpdateUpscaleAsSucceeded(
 	durationMs int64,
 ) {
 	upscaleId := <-upscaleIdChan
+	close(upscaleIdChan)
 	start := time.Now().UTC().UnixMilli()
 
 	var res SDBGenerationUpdateAsSucceededRes
@@ -30,6 +31,7 @@ func UpdateUpscaleAsSucceeded(
 
 func UpdateUpscaleAsFailed(upscaleIdChan chan string, durationMs int64) {
 	upscaleId := <-upscaleIdChan
+	close(upscaleIdChan)
 	start := time.Now().UTC().UnixMilli()
 	var res SDBGenerationUpdateAsFailedRes
 	value := SDBGenerationFailedUpdate{
