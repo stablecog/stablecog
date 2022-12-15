@@ -17,6 +17,7 @@ func UpdateGenerationAsSucceeded(
 	negativePromptIdChan chan string,
 ) {
 	generationId := <-generationIdChan
+	close(generationIdChan)
 	start := time.Now().UTC().UnixMilli()
 	promptId := ""
 	negativePromptId := ""
@@ -115,6 +116,7 @@ func UpdateGenerationAsSucceeded(
 
 func UpdateGenerationAsFailed(generationIdChan chan string, durationMs int64, isNSFW bool) {
 	generationId := <-generationIdChan
+	close(generationIdChan)
 	start := time.Now().UTC().UnixMilli()
 	var res SDBGenerationUpdateAsFailedRes
 	failureReason := ""

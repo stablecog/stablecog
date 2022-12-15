@@ -35,6 +35,8 @@ var bucket = "stablecog"
 func SubmitToGallery(p SSubmitToGalleryProps) {
 	promptId := <-p.PromptIdChan
 	negativePromptId := <-p.NegativePromptIdChan
+	close(p.PromptIdChan)
+	close(p.NegativePromptIdChan)
 	s := time.Now().UTC().UnixMilli()
 
 	arr := strings.Split(p.ImageB64, ";base64,")
