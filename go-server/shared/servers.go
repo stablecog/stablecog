@@ -29,6 +29,5 @@ func UpdateServerHealths(servers []SDBServerUpdate) []SDBServer {
 		}
 		res = append(res, r)
 	}
-	log.Printf("results: %v", res)
 	return res
 }
