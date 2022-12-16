@@ -1,15 +1,26 @@
 package shared
 
 import (
+	"context"
 	"encoding/json"
 	"fmt"
 	"log"
 	"net/http"
+	"time"
 )
 
 func CheckServer(serverUrl string) SHealthResponse {
 	endpoint := fmt.Sprintf("%s/openapi.json", serverUrl)
-	res, err := http.Get(endpoint)
+	ctx, cncl := context.WithTimeout(context.Background(), time.Second*10)
+	defer cncl()
+	req, reqErr := http.NewRequestWithContext(ctx, http.MethodGet, endpoint, nil)
+	if reqErr != nil {
+		log.Printf(red("Checking server HTTP error: %s"), reqErr.Error())
+		return SHealthResponse{
+			Status: "unhealthy",
+		}
+	}
+	res, err := http.DefaultClient.Do(req)
 	if err != nil {
 		log.Printf(red("Checking server HTTP error: %s"), err.Error())
 		return SHealthResponse{
