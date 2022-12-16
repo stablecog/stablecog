@@ -26,7 +26,7 @@
 	import GenerationImage from '$components/GenerationImage.svelte';
 	import { advancedModeApp } from '$ts/stores/advancedMode';
 	import SetServerModal from '$components/SetServerModal.svelte';
-	import { pLogGeneration, uLogGeneration } from '$ts/helpers/loggers';
+	import { mLogGeneration, pLogGeneration, uLogGeneration } from '$ts/helpers/loggers';
 	import ServerOfflineBanner from '$components/ServerOfflineBanner.svelte';
 	import { currentServer, currentServerHealthStatus } from '$ts/stores/serverHealth';
 	import { activeGeneration } from '$ts/stores/activeGeneration';
@@ -81,6 +81,7 @@
 	async function onCreate() {
 		pLogGeneration('Started');
 		uLogGeneration('Started');
+		mLogGeneration('Started');
 		if (!$serverUrl || !$promptInputValue) {
 			!$promptInputValue && console.log('no input');
 			!$serverUrl && console.log('no server url');
@@ -152,6 +153,7 @@
 			if (data && data.image_b64 && !error) {
 				pLogGeneration('Succeeded');
 				uLogGeneration('Succeeded');
+				mLogGeneration('Succeeded');
 				lastGeneration.imageDataB64 = data.image_b64;
 				if (
 					$currentServer.lastHealthStatus !== 'healthy' ||
@@ -214,6 +216,7 @@
 			const _error = error as Error;
 			pLogGeneration(_error.message === 'NSFW' ? 'Failed-NSFW' : 'Failed');
 			uLogGeneration(_error.message === 'NSFW' ? 'Failed-NSFW' : 'Failed');
+			mLogGeneration(_error.message === 'NSFW' ? 'Failed-NSFW' : 'Failed');
 			status = 'error';
 			generationError = _error;
 			console.log('Generation error', _error);

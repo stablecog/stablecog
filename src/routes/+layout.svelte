@@ -25,6 +25,7 @@
 	import { isLocale } from '$i18n/i18n-util';
 	import { advancedMode, advancedModeApp } from '$ts/stores/advancedMode';
 	import { routesWithHealthCheck, routesWithHiddenFooter } from '$ts/constants/main';
+	import mixpanel from 'mixpanel-browser';
 
 	export let data: LayoutData;
 	setLocale(data.locale);
@@ -42,6 +43,7 @@
 
 	onMount(async () => {
 		mounted = true;
+		mixpanel.init(env.PUBLIC_MIXPANEL_ID);
 		setBodyClasses();
 		if ($localeLS && isLocale($localeLS) && $localeLS !== $locale) {
 			await loadLocaleAsync($localeLS);

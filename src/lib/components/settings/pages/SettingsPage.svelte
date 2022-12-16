@@ -13,7 +13,11 @@
 	import LL, { locale } from '$i18n/i18n-svelte';
 	import { routesWithHealthCheck } from '$ts/constants/main';
 	import { languageName } from '$ts/helpers/languageName';
-	import { pLogSubmitToGallery, uLogSubmitToGallery } from '$ts/helpers/loggers';
+	import {
+		mLogSubmitToGallery,
+		pLogSubmitToGallery,
+		uLogSubmitToGallery
+	} from '$ts/helpers/loggers';
 	import { parseUrlStr } from '$ts/helpers/parseUrlStr';
 	import { advancedMode, advancedModeApp } from '$ts/stores/advancedMode';
 	import { isTouchscreen } from '$ts/stores/isTouchscreen';
@@ -73,9 +77,11 @@
 				if (val) {
 					pLogSubmitToGallery('On');
 					uLogSubmitToGallery('On');
+					mLogSubmitToGallery('On');
 				} else {
 					pLogSubmitToGallery('Off');
 					uLogSubmitToGallery('Off');
+					mLogSubmitToGallery('Off');
 				}
 			}}
 		>

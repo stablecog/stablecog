@@ -1,7 +1,11 @@
 <script>
 	import LL from '$i18n/i18n-svelte';
 	import { expandCollapse } from '$ts/animation/transitions';
-	import { pLogSubmitToGallery, uLogSubmitToGallery } from '$ts/helpers/loggers';
+	import {
+		mLogSubmitToGallery,
+		pLogSubmitToGallery,
+		uLogSubmitToGallery
+	} from '$ts/helpers/loggers';
 	import { shouldSubmitToGallery } from '$ts/stores/shouldSubmitToGallery';
 	import SubtleButton from './buttons/SubtleButton.svelte';
 </script>
@@ -29,6 +33,7 @@
 						shouldSubmitToGallery.set(true);
 						pLogSubmitToGallery('On');
 						uLogSubmitToGallery('On');
+						mLogSubmitToGallery('On');
 					}}
 					class="flex-1"
 				>
@@ -39,6 +44,7 @@
 						shouldSubmitToGallery.set(false);
 						pLogSubmitToGallery('Off');
 						uLogSubmitToGallery('Off');
+						mLogSubmitToGallery('Off');
 					}}
 					class="flex-1"
 				>

@@ -42,7 +42,7 @@
 	import TabBar from '$components/TabBar.svelte';
 	import { lastUpscaleDurationSec } from '$ts/stores/lastUpscaleDurationSec';
 	import { estimatedDurationBufferRatio } from '$ts/constants/main';
-	import { pLogUpscale, uLogUpscale } from '$ts/helpers/loggers';
+	import { mLogUpscale, pLogUpscale, uLogUpscale } from '$ts/helpers/loggers';
 	import LL from '$i18n/i18n-svelte';
 	import { negativePromptTooltipAlt } from '$ts/constants/tooltips';
 	import IconTrashcan from '$components/icons/IconTrashcan.svelte';
@@ -208,6 +208,7 @@
 		}
 		pLogUpscale('Started');
 		uLogUpscale('Started');
+		mLogUpscale('Started');
 		const start = Date.now();
 		clearTimeout(upscaleDurationSecCalcInterval);
 		upscaleDurationSecCalcInterval = setInterval(() => {
@@ -231,6 +232,7 @@
 			if (res.data?.image_b64) {
 				pLogUpscale('Succeeded');
 				uLogUpscale('Succeeded');
+				mLogUpscale('Succeeded');
 				const base64 = res.data.image_b64;
 				const url = urlFromBase64(base64);
 				const { upscaledImageDataB64, upscaledImageUrl, ...rest } = generation;
@@ -247,6 +249,7 @@
 		} catch (error) {
 			pLogUpscale('Failed');
 			uLogUpscale('Failed');
+			mLogUpscale('Failed');
 			console.log(error);
 			upscaleStatus = 'error';
 		}
