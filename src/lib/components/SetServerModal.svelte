@@ -12,6 +12,7 @@
 	import ClearButton from '$components/buttons/ClearButton.svelte';
 	import { currentServer, currentServerHealthStatus } from '$ts/stores/serverHealth';
 	import LL from '$i18n/i18n-svelte';
+	import ErrorLine from '$components/ErrorLine.svelte';
 
 	export let close: (() => void) | undefined = undefined;
 	export let isOnBarrier = true;
@@ -155,13 +156,7 @@
 			</Button>
 		</form>
 		{#if setServerProcessStatus === 'error'}
-			<div transition:expandCollapse|local={{}}>
-				<div class="pt-3.5">
-					<p class="py-3 px-4 bg-c-danger/8 rounded-lg text-c-danger text-sm">
-						{$LL.Error.ServerSetNotWorking()}
-					</p>
-				</div>
-			</div>
+			<ErrorLine text={$LL.Error.ServerSetNotWorking()} />
 		{/if}
 	</div>
 </div>

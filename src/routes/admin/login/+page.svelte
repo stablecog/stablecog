@@ -55,8 +55,8 @@
 
 <div class="w-full flex-1 flex justify-center px-5 pt-8 pb-[calc(3vh+1rem)]">
 	<div
-		class="w-full ring-2 ring-c-bg-tertiary bg-c-bg-secondary flex flex-col justify-start px-4 py-5 max-w-sm 
-    my-auto rounded-2xl shadow-xl relative overflow-hidden z-0 origin-top shadow-c-shadow/[var(--o-shadow-normal)]"
+		class="w-full ring-2 ring-c-bg-tertiary shadow-xl shadow-c-shadow/[var(--o-shadow-normal)] bg-c-bg-secondary flex flex-col justify-start px-4 py-5 max-w-sm 
+    my-auto rounded-2xl relative overflow-hidden z-0 origin-top"
 	>
 		{#if $page.data.session?.user}
 			<div class="w-full flex flex-col gap-6 text-center">

@@ -21,9 +21,14 @@ func GetServers() []SDBServer {
 
 func UpdateServerHealths(servers []SDBServerUpdate) []SDBServer {
 	var res []SDBServer
-	_, err := Supabase.From("server").Update(servers, "", "").ExecuteTo(&res)
-	if err != nil {
-		log.Printf(red("Error updating server healths: %s"), err)
+	for _, s := range servers {
+		var r SDBServer
+		_, err := Supabase.From("server").Update(s, "", "").Eq("id", s.Id).Single().ExecuteTo(&r)
+		if err != nil {
+			log.Printf(red("Error updating server healths: %s"), err)
+		}
+		res = append(res, r)
 	}
+	log.Printf("results: %v", res)
 	return res
 }

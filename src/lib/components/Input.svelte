@@ -5,6 +5,8 @@
 	export let value: string;
 	export let placeholder: string;
 	export let disabled = false;
+	export { classes as class };
+	let classes = '';
 </script>
 
 {#if type === 'email'}
@@ -17,7 +19,7 @@
       shadow-lg shadow-c-shadow/[var(--o-shadow-normal)] focus:ring-2 focus:ring-c-primary/20 ring-0 ring-c-primary/20 
       placeholder:text-c-on-bg/30 {!$isTouchscreen ? 'enabled:hover:ring-2' : ''} {!$isTouchscreen
 			? 'enabled:group-hover:ring-2'
-			: ''}"
+			: ''} {classes}"
 	/>
 {:else if type === 'password'}
 	<input
@@ -29,7 +31,7 @@
       shadow-lg shadow-c-shadow/[var(--o-shadow-normal)] focus:ring-2 focus:ring-c-primary/20 ring-0 ring-c-primary/20 
       placeholder:text-c-on-bg/30 {!$isTouchscreen ? 'enabled:hover:ring-2' : ''} {!$isTouchscreen
 			? 'enabled:group-hover:ring-2'
-			: ''}"
+			: ''} {classes}"
 	/>
 {:else}
 	<input
@@ -41,6 +43,6 @@
       shadow-lg shadow-c-shadow/[var(--o-shadow-normal)] focus:ring-2 focus:ring-c-primary/20 ring-0 ring-c-primary/20 
       placeholder:text-c-on-bg/30 {!$isTouchscreen ? 'enabled:hover:ring-2' : ''} {!$isTouchscreen
 			? 'enabled:group-hover:ring-2'
-			: ''}"
+			: ''} {classes}"
 	/>
 {/if}
