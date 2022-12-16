@@ -13,7 +13,7 @@ export function uLogGeneration(status: 'Started' | 'Succeeded' | 'Failed' | 'Fai
 }
 
 export function mLogGeneration(status: 'Started' | 'Succeeded' | 'Failed' | 'Failed-NSFW') {
-	mixpanel.track(`Generation`, { status });
+	mixpanel.track(`Generation | ${status}`);
 }
 
 export function pLogUpscale(status: 'Started' | 'Succeeded' | 'Failed') {
@@ -29,7 +29,7 @@ export function uLogUpscale(status: 'Started' | 'Succeeded' | 'Failed') {
 }
 
 export function mLogUpscale(status: 'Started' | 'Succeeded' | 'Failed') {
-	mixpanel.track(`Upscale`, { status });
+	mixpanel.track(`Upscale | ${status}`);
 }
 
 export function pLogSubmitToGallery(status: 'On' | 'Off') {
@@ -45,5 +45,5 @@ export function uLogSubmitToGallery(status: 'On' | 'Off') {
 }
 
 export function mLogSubmitToGallery(status: 'On' | 'Off') {
-	mixpanel.track(`Submit to Gallery`, { status });
+	mixpanel.track(`Submit to Gallery | ${status}`);
 }
