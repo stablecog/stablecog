@@ -24,6 +24,8 @@ func main() {
 	vips.Startup(nil)
 	defer vips.Shutdown()
 
+	shared.SetSeed()
+
 	app := fiber.New()
 	cors := cors.New(cors.Config{
 		AllowOrigins: fmt.Sprintf("%s, %s, %s, %s", shared.GetEnv("PUBLIC_CANONICAL_URL"), "https://stablecog.vercel.app", "http://localhost:5173", "http://localhost:3000"),
