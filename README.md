@@ -81,8 +81,6 @@ In case you want to record generation metadata, you can use a [Supabase](https:/
 - `PUBLIC_SUPABASE_ANON_KEY`: The anon key of your Supabase instance.
 - `PUBLIC_SUPABASE_ADMIN_KEY`. The admin key of your Supabase instance.
 
-There is a Plausible Analytics script on `src/app.html`. You can remove it or you can change the `data-domain` and `src` attributes to point to your domain and your Plausible instance.
-
 ---
 
 ## Special Thanks

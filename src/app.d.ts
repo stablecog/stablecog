@@ -17,13 +17,7 @@ declare namespace App {
 	}
 }
 
-interface PlausibleObj {
-	callback?: function;
-	props?: { [key: string]: string };
-}
-
 interface Window {
-	plausible: (goalName: string, obj?: PlausibleObj) => void;
 	umami: (goalName: string) => void;
 }
 
