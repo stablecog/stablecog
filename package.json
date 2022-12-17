@@ -47,6 +47,7 @@
 		"remark-images": "^3.1.0",
 		"remark-parse": "^10.0.1",
 		"remark-rehype": "^10.1.0",
+		"stripe": "^11.4.0",
 		"svelte": "^3.44.0",
 		"svelte-check": "^2.7.1",
 		"svelte-copy": "^1.2.4",

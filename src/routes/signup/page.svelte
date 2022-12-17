@@ -100,7 +100,7 @@
 							<Input
 								disabled={signupStatus === 'otp-loading'}
 								type="text"
-								placeholder="6-digit code"
+								title="6-Digit Code"
 								bind:value={otp}
 							/>
 						</div>
@@ -112,13 +112,13 @@
 							<Input
 								disabled={signupStatus === 'signup-loading'}
 								type="email"
-								placeholder="Email"
+								title="Email"
 								bind:value={email}
 							/>
 							<Input
 								disabled={signupStatus === 'signup-loading'}
 								type="password"
-								placeholder="Password"
+								title="Password"
 								bind:value={password}
 								class="mt-2"
 							/>

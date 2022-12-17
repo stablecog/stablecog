@@ -574,3 +574,37 @@ CREATE POLICY "Admins can edit models" ON public.model FOR ALL USING (
             admin
     )
 );
+
+CREATE TABLE public."user" (
+    "id" UUID REFERENCES auth.users(id) NOT NULL,
+    "email" TEXT NOT NULL,
+    "created_at" TIMESTAMPTZ DEFAULT TIMEZONE('utc' :: TEXT, NOW()) NOT NULL,
+    "updated_at" TIMESTAMPTZ DEFAULT TIMEZONE('utc' :: TEXT, NOW()) NOT NULL,
+    "stripe_customer_id" TEXT,
+    PRIMARY KEY(id)
+);
+
+CREATE trigger handle_updated_at before
+UPDATE
+    ON public.user FOR each ROW EXECUTE PROCEDURE moddatetime (updated_at);
+
+ALTER TABLE
+    public.user ENABLE ROW LEVEL SECURITY;
+
+create function handle_new_user() returns trigger as $ $ begin
+insert into
+    public.user (id, email)
+values
+    (new.id, new.email);
+
+return new;
+
+end;
+
+$ $ language plpgsql security definer;
+
+-- Trigger the function every time a user is created
+create trigger on_auth_user_created
+after
+insert
+    on auth.users for each row execute procedure handle_new_user();
