@@ -11,9 +11,15 @@ export const POST: RequestHandler = async ({ url, request }) => {
 	if (!supabaseAdmin) return new Response(JSON.stringify({ error: 'No Supabase Admin' }));
 	const body: IBody = await request.json();
 	const record = body.record;
+	if (!record.email) {
+		return new Response(JSON.stringify({ error: 'No email provided' }));
+	}
+	if (!record.id) {
+		return new Response(JSON.stringify({ error: 'No ID provided' }));
+	}
 	const { data, error } = await supabaseAdmin
 		.from('user')
-		.select('id,stripe_customer_id')
+		.select('id,stripe_customer_id,email')
 		.eq('id', record.id)
 		.maybeSingle();
 	if (error) {
@@ -24,6 +30,12 @@ export const POST: RequestHandler = async ({ url, request }) => {
 	}
 	if (data.stripe_customer_id) {
 		return new Response(JSON.stringify({ error: 'User already has a Stripe customer id' }));
+	}
+	if (!data.email || data.email !== record.email) {
+		return new Response(JSON.stringify({ error: 'Emails do not match' }));
+	}
+	if (!data.id || data.id !== record.id) {
+		return new Response(JSON.stringify({ error: 'IDs do not match' }));
 	}
 	const customer = await stripe.customers.create({
 		email: record.email,
@@ -43,7 +55,5 @@ interface IBody {
 	record: {
 		id: string;
 		email: string;
-		created_at: string;
-		updated_at: string;
 	};
 }
