@@ -42,8 +42,8 @@
 	import TabBar from '$components/TabBar.svelte';
 	import { lastUpscaleDurationSec } from '$ts/stores/lastUpscaleDurationSec';
 	import { estimatedDurationBufferRatio } from '$ts/constants/main';
-	import { mLogUpscale, pLogUpscale, uLogUpscale } from '$ts/helpers/loggers';
-	import LL from '$i18n/i18n-svelte';
+	import { mLogUpscale, uLogUpscale } from '$ts/helpers/loggers';
+	import LL, { locale } from '$i18n/i18n-svelte';
 	import { negativePromptTooltipAlt } from '$ts/constants/tooltips';
 	import IconTrashcan from '$components/icons/IconTrashcan.svelte';
 	import { deleteGenerationFromDb } from '$ts/queries/indexedDb';
@@ -206,9 +206,13 @@
 			console.log("No server url, can't upscale");
 			return;
 		}
-		pLogUpscale('Started');
+		const upscaleMinimal = {
+			'SC - Width': generation.width,
+			'SC - Height': generation.height,
+			'SC - Locale': $locale
+		};
 		uLogUpscale('Started');
-		mLogUpscale('Started');
+		mLogUpscale('Started', upscaleMinimal);
 		const start = Date.now();
 		clearTimeout(upscaleDurationSecCalcInterval);
 		upscaleDurationSecCalcInterval = setInterval(() => {
@@ -230,9 +234,8 @@
 				width: generation.width
 			});
 			if (res.data?.image_b64) {
-				pLogUpscale('Succeeded');
 				uLogUpscale('Succeeded');
-				mLogUpscale('Succeeded');
+				mLogUpscale('Succeeded', { ...upscaleMinimal, 'SC - Duration': res.data.duration_ms });
 				const base64 = res.data.image_b64;
 				const url = urlFromBase64(base64);
 				const { upscaledImageDataB64, upscaledImageUrl, ...rest } = generation;
@@ -247,9 +250,8 @@
 				throw new Error('No image data in response');
 			}
 		} catch (error) {
-			pLogUpscale('Failed');
 			uLogUpscale('Failed');
-			mLogUpscale('Failed');
+			mLogUpscale('Failed', upscaleMinimal);
 			console.log(error);
 			upscaleStatus = 'error';
 		}

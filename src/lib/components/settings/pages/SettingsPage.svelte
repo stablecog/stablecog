@@ -13,11 +13,7 @@
 	import LL, { locale } from '$i18n/i18n-svelte';
 	import { routesWithHealthCheck } from '$ts/constants/main';
 	import { languageName } from '$ts/helpers/languageName';
-	import {
-		mLogSubmitToGallery,
-		pLogSubmitToGallery,
-		uLogSubmitToGallery
-	} from '$ts/helpers/loggers';
+	import { mLogAdvancedMode, mLogSubmitToGallery, uLogSubmitToGallery } from '$ts/helpers/loggers';
 	import { parseUrlStr } from '$ts/helpers/parseUrlStr';
 	import { advancedMode, advancedModeApp } from '$ts/stores/advancedMode';
 	import { isTouchscreen } from '$ts/stores/isTouchscreen';
@@ -75,11 +71,9 @@
 				const val = $shouldSubmitToGallery === undefined ? true : !$shouldSubmitToGallery;
 				shouldSubmitToGallery.set(val);
 				if (val) {
-					pLogSubmitToGallery('On');
 					uLogSubmitToGallery('On');
 					mLogSubmitToGallery('On');
 				} else {
-					pLogSubmitToGallery('Off');
 					uLogSubmitToGallery('Off');
 					mLogSubmitToGallery('Off');
 				}
@@ -109,6 +103,7 @@
 			disabled={currentPage !== 'settings'}
 			onClick={() => {
 				const val = $advancedModeApp === false ? true : false;
+				mLogAdvancedMode(val === true ? 'On' : 'Off');
 				advancedModeApp.set(val);
 				advancedMode.set(val);
 			}}

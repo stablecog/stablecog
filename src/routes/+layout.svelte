@@ -42,8 +42,8 @@
 	$: [innerWidth, innerHeight], setWindowStores();
 
 	onMount(async () => {
-		mounted = true;
 		mixpanel.init(env.PUBLIC_MIXPANEL_ID, { api_host: env.PUBLIC_MIXPANEL_URL });
+		mounted = true;
 		setBodyClasses();
 		if ($localeLS && isLocale($localeLS) && $localeLS !== $locale) {
 			await loadLocaleAsync($localeLS);

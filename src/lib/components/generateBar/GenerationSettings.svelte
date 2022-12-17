@@ -37,6 +37,7 @@
 		seedTooltip,
 		widthTooltip
 	} from '$ts/constants/tooltips';
+	import { mLogAdvancedMode } from '$ts/helpers/loggers';
 	import { advancedMode, advancedModeApp } from '$ts/stores/advancedMode';
 	import {
 		generationGuidanceScale,
@@ -196,6 +197,7 @@
 			hoverFrom={$advancedModeApp ? 'bottom' : 'top'}
 			onClick={() => {
 				const val = !$advancedModeApp;
+				mLogAdvancedMode(val === true ? 'On' : 'Off');
 				advancedModeApp.set(val);
 				advancedMode.set(val);
 			}}

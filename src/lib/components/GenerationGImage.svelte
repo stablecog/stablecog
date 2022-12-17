@@ -7,9 +7,11 @@
 
 	import { doesContainTarget } from '$ts/helpers/doesContainTarget';
 	import { isValue } from '$ts/helpers/isValue';
+	import { mLogGalleryGenerationOpened } from '$ts/helpers/loggers';
 	import { urlFromImageId } from '$ts/helpers/urlFromImageId';
 	import { activeGenerationG } from '$ts/stores/activeGenerationG';
 	import type { TGenerationGWithLoaded } from '$ts/types/main';
+	import mixpanel from 'mixpanel-browser';
 
 	export let generation: TGenerationGWithLoaded;
 
@@ -49,6 +51,7 @@
 		if (doesContainTarget(e.target, [rightButtonContainer])) {
 			return;
 		}
+		mLogGalleryGenerationOpened(generation.id);
 		activeGenerationG.set(generation);
 		window.history.replaceState({}, '', `/gallery?generation=${generation.id}`);
 	}}

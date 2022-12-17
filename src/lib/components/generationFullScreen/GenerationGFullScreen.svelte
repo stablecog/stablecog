@@ -34,6 +34,7 @@
 	import { page } from '$app/stores';
 	import IconLink from '$components/icons/IconLink.svelte';
 	import { generationGPreviewUrlFromId } from '$ts/helpers/generationGPreviewUrlFromId';
+	import { mLogGalleryGenerateClicked } from '$ts/helpers/loggers';
 
 	export let generation: TGenerationGWithLoaded | TGenerationGAdmin;
 
@@ -289,7 +290,12 @@
 								{/if}
 							</div>
 							<div class="w-full flex flex-wrap gap-3">
-								<SubtleButton prefetch={true} href={generateUrl} target="_blank">
+								<SubtleButton
+									onClick={() => mLogGalleryGenerateClicked(generation.id)}
+									prefetch={true}
+									href={generateUrl}
+									target="_blank"
+								>
 									<div class="flex items-center justify-center gap-1.5">
 										<IconWand class="w-5 h-5 -ml-0.5" />
 										<p>{$LL.GenerationFullscreen.GenerateButton()}</p>

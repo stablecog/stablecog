@@ -26,7 +26,7 @@
 	import GenerationImage from '$components/GenerationImage.svelte';
 	import { advancedModeApp } from '$ts/stores/advancedMode';
 	import SetServerModal from '$components/SetServerModal.svelte';
-	import { mLogGeneration, pLogGeneration, uLogGeneration } from '$ts/helpers/loggers';
+	import { mLogGeneration, uLogGeneration } from '$ts/helpers/loggers';
 	import ServerOfflineBanner from '$components/ServerOfflineBanner.svelte';
 	import { currentServer, currentServerHealthStatus } from '$ts/stores/serverHealth';
 	import { activeGeneration } from '$ts/stores/activeGeneration';
@@ -34,7 +34,7 @@
 	import { isValue } from '$ts/helpers/isValue';
 	import { shouldSubmitToGallery } from '$ts/stores/shouldSubmitToGallery';
 	import SubmitToGallery from '$components/SubmitToGallery.svelte';
-	import LL from '$i18n/i18n-svelte';
+	import LL, { locale } from '$i18n/i18n-svelte';
 	import GenerationFullScreen from '$components/generationFullScreen/GenerationFullScreen.svelte';
 	import {
 		generationGuidanceScale,
@@ -79,9 +79,6 @@
 	}
 
 	async function onCreate() {
-		pLogGeneration('Started');
-		uLogGeneration('Started');
-		mLogGeneration('Started');
 		if (!$serverUrl || !$promptInputValue) {
 			!$promptInputValue && console.log('no input');
 			!$serverUrl && console.log('no server url');
@@ -123,6 +120,17 @@
 					: Math.round(Math.random() * maxSeed),
 			imageDataB64: ''
 		};
+		const generationMinimal = {
+			'SC - Width': lastGeneration.width,
+			'SC - Height': lastGeneration.height,
+			'SC - Inference Steps': lastGeneration.num_inference_steps,
+			'SC - Guidance Scale': lastGeneration.guidance_scale,
+			'SC - Model Id': lastGeneration.model_id,
+			'SC - Scheduler Id': lastGeneration.scheduler_id,
+			'SC - Locale': $locale
+		};
+		uLogGeneration('Started');
+		mLogGeneration('Started', generationMinimal);
 		console.log('generation', lastGeneration);
 		console.log('estimatedDuration', estimatedDuration);
 		status = 'idle';
@@ -151,9 +159,8 @@
 			});
 			let { data, error } = res;
 			if (data && data.image_b64 && !error) {
-				pLogGeneration('Succeeded');
 				uLogGeneration('Succeeded');
-				mLogGeneration('Succeeded');
+				mLogGeneration('Succeeded', { ...generationMinimal, 'SC - Duration': data.duration_ms });
 				lastGeneration.imageDataB64 = data.image_b64;
 				if (
 					$currentServer.lastHealthStatus !== 'healthy' ||
@@ -214,9 +221,8 @@
 			}
 		} catch (error) {
 			const _error = error as Error;
-			pLogGeneration(_error.message === 'NSFW' ? 'Failed-NSFW' : 'Failed');
 			uLogGeneration(_error.message === 'NSFW' ? 'Failed-NSFW' : 'Failed');
-			mLogGeneration(_error.message === 'NSFW' ? 'Failed-NSFW' : 'Failed');
+			mLogGeneration(_error.message === 'NSFW' ? 'Failed-NSFW' : 'Failed', generationMinimal);
 			status = 'error';
 			generationError = _error;
 			console.log('Generation error', _error);
