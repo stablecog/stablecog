@@ -19,7 +19,7 @@ export const POST: RequestHandler = async ({ url, request }) => {
 	if (error) {
 		return new Response(JSON.stringify({ error }));
 	}
-	if (!data) {
+	if (!data || !data.id) {
 		return new Response(JSON.stringify({ error: 'No user found' }));
 	}
 	if (data.stripe_customer_id) {
