@@ -46,6 +46,9 @@
 		easing: quadOut
 	});
 
+	let lastPulled = 0;
+	let maxPullInterval = 1000 * 5;
+
 	const calculateAnimationDuration = (curr: number, next: number) => {
 		return Math.min((next - curr) * msForEachDifference, maxDuration);
 	};
@@ -118,7 +121,10 @@
 							} else {
 								generations = [{ ...newData, type: 'generation' }, ...generations];
 							}
-							getAndSetTotals();
+							if (Date.now() - lastPulled > maxPullInterval) {
+								lastPulled = Date.now();
+								getAndSetTotals();
+							}
 						}
 					}
 				)
@@ -141,7 +147,10 @@
 							} else {
 								upscales = [{ ...newData, type: 'upscale' }, ...upscales];
 							}
-							getAndSetTotals();
+							if (Date.now() - lastPulled > maxPullInterval) {
+								lastPulled = Date.now();
+								getAndSetTotals();
+							}
 						}
 					}
 				)
