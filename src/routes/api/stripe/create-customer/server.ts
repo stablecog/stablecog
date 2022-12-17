@@ -8,7 +8,6 @@ const stripe = new Stripe(env.STRIPE_SECRET_KEY_TEST, {
 });
 
 export const POST: RequestHandler = async ({ url, request }) => {
-	if (!supabaseAdmin) return new Response(JSON.stringify({ error: 'No Supabase Admin' }));
 	const body: IBody = await request.json();
 	const record = body.record;
 	if (!record.email) {

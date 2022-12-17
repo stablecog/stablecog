@@ -1,9 +1,13 @@
 <script lang="ts">
+	import { goto } from '$app/navigation';
 	import Button from '$components/buttons/Button.svelte';
 	import ErrorLine from '$components/ErrorLine.svelte';
 	import Input from '$components/Input.svelte';
 	import { expandCollapse } from '$ts/animation/transitions';
 	import { supabase } from '$ts/constants/supabase';
+	import type { PageServerData } from './$types';
+
+	export let data: PageServerData;
 
 	let email: string;
 	let password: string;
@@ -17,6 +21,7 @@
 		| 'otp-error'
 		| 'success' = 'idle';
 	let errorText: string | null = null;
+	const defaultRedirectRoute = '/pro';
 
 	async function signup() {
 		if (!supabase) return;
@@ -43,19 +48,20 @@
 	async function confirm() {
 		if (!supabase) return;
 		signupStatus = 'otp-loading';
-		const { data, error } = await supabase.auth.verifyOtp({
+		const { data: verifyData, error: verifyError } = await supabase.auth.verifyOtp({
 			email: email,
 			token: otp,
 			type: 'signup'
 		});
-		if (error) {
-			console.log(error);
+		if (verifyError) {
+			console.log(verifyError);
 			signupStatus = 'otp-error';
 			errorText = 'Wrong code, try again.';
 			return;
 		}
-		console.log(data);
+		console.log(verifyData);
 		signupStatus = 'success';
+		await goto(data.redirect_to || defaultRedirectRoute);
 	}
 </script>
 
@@ -63,7 +69,7 @@
 	<div class="w-full flex flex-col items-center justify-center my-auto">
 		<h1 class="text-center font-bold text-4xl">
 			{#if signupStatus === 'success'}
-				Thanks for signing up!
+				Redirecting...
 			{:else if signupStatus === 'otp' || signupStatus === 'otp-loading' || signupStatus === 'otp-error'}
 				Confirm
 			{:else}

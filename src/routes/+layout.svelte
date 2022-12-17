@@ -26,6 +26,8 @@
 	import { advancedMode, advancedModeApp } from '$ts/stores/advancedMode';
 	import { routesWithHealthCheck, routesWithHiddenFooter } from '$ts/constants/main';
 	import mixpanel from 'mixpanel-browser';
+	import { supabase } from '$ts/constants/supabase';
+	import { invalidate } from '$app/navigation';
 
 	export let data: LayoutData;
 	setLocale(data.locale);
@@ -43,6 +45,11 @@
 
 	onMount(async () => {
 		mixpanel.init(env.PUBLIC_MIXPANEL_ID, { api_host: env.PUBLIC_MIXPANEL_URL });
+		const {
+			data: { subscription }
+		} = supabase.auth.onAuthStateChange(() => {
+			invalidate('supabase:auth');
+		});
 		mounted = true;
 		setBodyClasses();
 		if ($localeLS && isLocale($localeLS) && $localeLS !== $locale) {
@@ -52,6 +59,9 @@
 		if (($advancedMode === true || $advancedMode === false) && $advancedMode !== $advancedModeApp) {
 			advancedModeApp.set($advancedMode);
 		}
+		return () => {
+			subscription.unsubscribe();
+		};
 	});
 
 	onDestroy(() => {
