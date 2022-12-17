@@ -1,24 +1,17 @@
-import { env } from '$env/dynamic/private';
 import { supabaseAdmin } from '$ts/constants/supabaseAdmin';
 import { getSupabase } from '@supabase/auth-helpers-sveltekit';
 import type { RequestHandler } from '@sveltejs/kit';
 import Stripe from 'stripe';
+import { STRIPE_PRO_PRICE_ID_TEST, STRIPE_SECRET_KEY_TEST } from '$env/static/private';
 
-const stripe = new Stripe(env.STRIPE_SECRET_KEY_TEST, {
+const stripe = new Stripe(STRIPE_SECRET_KEY_TEST, {
 	apiVersion: '2022-11-15'
 });
-
-/* const tiers = [
-	{
-		name: 'pro',
-		priceId: 'price_1MFLkCBZEfCmgpOWyidn3xgR'
-	}
-] as const; */
 
 const tiers = [
 	{
 		name: 'pro',
-		priceId: 'price_1MG8RWBZEfCmgpOWQNLLeTwK'
+		priceId: STRIPE_PRO_PRICE_ID_TEST
 	}
 ] as const;
 
