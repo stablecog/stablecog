@@ -43,7 +43,7 @@
 
 	onMount(async () => {
 		mounted = true;
-		mixpanel.init(env.PUBLIC_MIXPANEL_ID, { api_host: env.PUBLIC_MIXPANEL_URL });
+		mixpanel.init(env.PUBLIC_MIXPANEL_ID);
 		setBodyClasses();
 		if ($localeLS && isLocale($localeLS) && $localeLS !== $locale) {
 			await loadLocaleAsync($localeLS);
