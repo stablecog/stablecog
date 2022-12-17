@@ -177,7 +177,7 @@
 		>
 			<Input
 				disabled={serverAddStatus === 'loading'}
-				placeholder={$LL.Shared.ServerUrlInput.Placeholder()}
+				title={$LL.Shared.ServerUrlInput.Placeholder()}
 				bind:value={serverUrl}
 			/>
 			<Button withSpinner={true} loading={serverAddStatus === 'loading'}>

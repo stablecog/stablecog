@@ -75,13 +75,13 @@
 					<Input
 						disabled={loginStatus === 'loading'}
 						type="email"
-						placeholder={$LL.Shared.EmailInput.Placeholder()}
+						title={$LL.Shared.EmailInput.Placeholder()}
 						bind:value={email}
 					/>
 					<Input
 						disabled={loginStatus === 'loading'}
 						type="password"
-						placeholder={$LL.Shared.PasswordInput.Placeholder()}
+						title={$LL.Shared.PasswordInput.Placeholder()}
 						bind:value={password}
 					/>
 				</div>
