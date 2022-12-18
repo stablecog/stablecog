@@ -49,15 +49,15 @@
 			p-4 md:p-6 rounded-2xl md:rounded-3xl ring-2 ring-c-primary"
 		>
 			<h2
-				class="font-bold text-3xl text-c-primary md:-mt-1.5 flex justify-center items-center gap-2 text-center"
+				class="font-bold text-3xl text-c-primary md:-mt-2 flex justify-center items-center gap-2 text-center"
 			>
 				<IconStar class="w-8 h-8" /> Pro
 			</h2>
 			<h3
 				class="w-[calc(100%+2rem)] md:w-[calc(100%+3rem)] text-center bg-c-primary text-c-on-primary
-				-mx-4 md:-mx-6 mt-5 px-6 py-3 font-bold flex justify-center items-start"
+				-mx-4 md:-mx-6 mt-4 px-5 py-3 font-bold flex justify-center items-start"
 			>
-				<span class="text-xl">$</span><span class="text-5xl font-extrabold">8</span>
+				<span class="text-xl">$</span><span class="text-4xl font-extrabold">8</span>
 				<span class="self-end mb-1">/month</span>
 			</h3>
 			<ul class="mt-6 flex flex-col gap-3 px-2 md:px-4">

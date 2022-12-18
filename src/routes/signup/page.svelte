@@ -2,6 +2,7 @@
 	import { goto } from '$app/navigation';
 	import Button from '$components/buttons/Button.svelte';
 	import ErrorLine from '$components/ErrorLine.svelte';
+	import IconLoading from '$components/icons/IconLoading.svelte';
 	import Input from '$components/Input.svelte';
 	import { expandCollapse } from '$ts/animation/transitions';
 	import { supabase } from '$ts/constants/supabase';
@@ -24,7 +25,6 @@
 	const defaultRedirectRoute = '/pro';
 
 	async function signup() {
-		if (!supabase) return;
 		if (password.length < 8) {
 			errorText = 'Password must be at least 8 characters long';
 			return;
@@ -67,16 +67,16 @@
 
 <div class="w-full flex-1 flex flex-col py-8 px-5">
 	<div class="w-full flex flex-col items-center justify-center my-auto">
-		<h1 class="text-center font-bold text-4xl">
-			{#if signupStatus === 'success'}
-				Redirecting...
-			{:else if signupStatus === 'otp' || signupStatus === 'otp-loading' || signupStatus === 'otp-error'}
-				Confirm
-			{:else}
-				Sign Up
-			{/if}
-		</h1>
-		{#if signupStatus !== 'success'}
+		{#if signupStatus === 'success'}
+			<IconLoading class="w-10 h-10 text-c-on-bg/50 animate-spin-faster" />
+		{:else}
+			<h1 class="text-center font-bold text-4xl">
+				{#if signupStatus === 'otp' || signupStatus === 'otp-loading' || signupStatus === 'otp-error'}
+					Confirm
+				{:else}
+					Sign Up
+				{/if}
+			</h1>
 			<div
 				transition:expandCollapse|local={{ duration: 200 }}
 				class="w-full flex flex-col items-center justify-start"
