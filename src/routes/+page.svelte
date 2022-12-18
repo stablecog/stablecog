@@ -127,7 +127,8 @@
 			'SC - Guidance Scale': lastGeneration.guidance_scale,
 			'SC - Model Id': lastGeneration.model_id,
 			'SC - Scheduler Id': lastGeneration.scheduler_id,
-			'SC - Locale': $locale
+			'SC - Locale': $locale,
+			'SC - Submit to Gallery': $shouldSubmitToGallery ?? false
 		};
 		uLogGeneration('Started');
 		mLogGeneration('Started', generationMinimal);

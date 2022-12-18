@@ -65,5 +65,6 @@ interface IGenerationMinimal {
 	'SC - Model Id'?: string | undefined;
 	'SC - Scheduler Id'?: string | undefined;
 	'SC - Locale': string;
+	'SC - Submit to Gallery': boolean;
 	'SC - Duration'?: number;
 }
