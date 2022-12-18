@@ -1,13 +1,14 @@
 <script>
 	import Button from '$components/buttons/Button.svelte';
+	import IconSadFace from '$components/icons/IconSadFace.svelte';
 </script>
 
 <div class="w-full flex-1 flex flex-col py-8 px-5">
 	<div class="w-full flex flex-col items-center justify-start my-auto">
-		<p class="text-5xl font-bold text-c-primary">:(</p>
-		<h1 class="text-center font-bold text-4xl mt-8">Something went wrong</h1>
-		<p class="max-w-2xl mt-4 text-left leading-relaxed text-c-on-bg/75">
-			Don't worry, you can always try again.
+		<IconSadFace class="w-32 h-32 text-c-primary" />
+		<h1 class="text-center font-bold text-4xl mt-8">You've cancelled</h1>
+		<p class="max-w-xl mt-4 text-left leading-relaxed text-c-on-bg/75">
+			You've cancelled the subscription process. If it was a mistake, you can try again.
 		</p>
 		<Button href="/pro" withSpinner class=" mt-8">Try Again</Button>
 	</div>
