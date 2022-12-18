@@ -40,18 +40,27 @@
 	<div class="w-full flex flex-col items-center justify-start my-auto">
 		<h1 class="text-center font-bold text-4xl">Become a Pro</h1>
 		<p class="max-w-2xl mt-4 text-left leading-relaxed text-c-on-bg/75">
-			Unlock all the features of Stablecog and support the project. Without the pro members,
-			Stablecog wouldn't be able to stay completely open source and offer free generations to
-			everyone without a sign up.
+			Unlock all features of Stablecog and support the project. Without the pro members, Stablecog
+			wouldn't be able to stay completely open-source and offer free generations to everyone without
+			a sign up.
 		</p>
 		<div
 			class="mt-8 max-w-[34rem] bg-c-bg shadow-xl shadow-c-shadow/[var(--o-shadow-strong)] 
-			p-6 md:p-8 rounded-2xl md:rounded-3xl ring-2 ring-c-primary"
+			p-4 md:p-6 rounded-2xl md:rounded-3xl ring-2 ring-c-primary"
 		>
-			<h2 class="font-bold text-3xl text-c-primary -mt-2 flex items-center gap-2">
+			<h2
+				class="font-bold text-3xl text-c-primary md:-mt-1.5 flex justify-center items-center gap-2 text-center"
+			>
 				<IconStar class="w-8 h-8" /> Pro
 			</h2>
-			<ul class="mt-4 flex flex-col gap-3">
+			<h3
+				class="w-[calc(100%+2rem)] md:w-[calc(100%+3rem)] text-center bg-c-primary text-c-on-primary
+				-mx-4 md:-mx-6 mt-5 px-6 py-3 font-bold flex justify-center items-start"
+			>
+				<span class="text-xl">$</span><span class="text-5xl font-extrabold">8</span>
+				<span class="self-end mb-1">/month</span>
+			</h3>
+			<ul class="mt-6 flex flex-col gap-3 px-2 md:px-4">
 				<li class="flex items-center gap-3">
 					<IconTickOnly class="text-c-primary w-5 h-5 shrink-0" /> Full speed without set limits
 				</li>
@@ -65,11 +74,7 @@
 					<IconTickOnly class="text-c-primary w-5 h-5 shrink-0" /> Different inference steps
 				</li>
 				<li class="flex items-center gap-3">
-					<IconTickOnly class="text-c-primary w-5 h-5 shrink-0" /> More models
-					<span class="text-c-on-bg/50">(soon)</span>
-				</li>
-				<li class="flex items-center gap-3">
-					<IconTickOnly class="text-c-primary w-5 h-5 shrink-0" /> More schedulers
+					<IconTickOnly class="text-c-primary w-5 h-5 shrink-0" /> More models, mode schedulers
 					<span class="text-c-on-bg/50">(soon)</span>
 				</li>
 				<li class="flex items-center gap-3">
