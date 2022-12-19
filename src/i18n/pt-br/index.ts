@@ -17,7 +17,7 @@ const ptBr: BaseTranslation = {
 		},
 		InferenceStepsTabBar: {
 			Title: 'Etapas de Inferência',
-			Paragraph: 'Quantas etapas serão tomadas para gerar (difusão) a imagem.'
+			Paragraph: 'Quantas etapas serão tomadas para gerar (difundir) a imagem.'
 		},
 		GuidanceScaleSlider: {
 			Title: 'Escala de Orientação',
@@ -42,7 +42,7 @@ const ptBr: BaseTranslation = {
 		SchedulerDropdown: {
 			Title: 'Agendador',
 			Paragraph:
-				'Difunda a imagem de uma certa maneira. Pode alterar drasticamente a imagem gerada. Alguns requerem menos etapas para produzir bons resultados.'
+				'Difunde a imagem de uma certa maneira. Pode alterar drasticamente a imagem gerada. Alguns requerem menos etapas para produzir bons resultados.'
 		},
 		SubmitToGalleryQuestion: {
 			Title: 'Submeter as gerações para a galeria?',
@@ -187,10 +187,6 @@ const ptBr: BaseTranslation = {
 			'790c80e1-65b1-4556-9332-196344389572': {
 				realName: 'Mo-Di Diffusion',
 				simpleName: 'Filme Animado'
-			},
-			'eaa438e1-dbf9-48fd-be71-206f0f257617': {
-				realName: 'Redshift Diffusion',
-				simpleName: '3D Render'
 			}
 		},
 		SchedulerOptions: {
