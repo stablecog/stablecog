@@ -2,6 +2,7 @@ package generate
 
 import (
 	"bytes"
+	"context"
 	"fmt"
 	"log"
 	"math/rand"
@@ -13,12 +14,36 @@ import (
 	"github.com/fatih/color"
 	"github.com/gofiber/fiber/v2"
 	"github.com/mileusna/useragent"
+
+	"github.com/bsm/redislock"
+	"github.com/go-redis/redis/v9"
 	"github.com/yekta/stablecog/go-server/loggers"
 	"github.com/yekta/stablecog/go-server/shared"
 )
 
 var green = color.New(color.FgHiGreen).SprintFunc()
 var yellow = color.New(color.FgHiYellow).SprintFunc()
+var client *redis.Client
+var locker *redislock.Client
+var redisHost = shared.GetEnv("REDIS_HOST")
+var redisPort = shared.GetEnv("REDIS_PORT")
+var redisUsername = shared.GetEnv("REDIS_USERNAME")
+var redisPassword = shared.GetEnv("REDIS_PASSWORD")
+var ctx = context.Background()
+var lockRetryStrategy = redislock.Options{
+	RetryStrategy: redislock.LinearBackoff(1000 * time.Millisecond),
+}
+
+func SetRedis() {
+	addr := fmt.Sprintf("%s:%s", redisHost, redisPort)
+	client = redis.NewClient(&redis.Options{
+		Addr:     addr,
+		Username: redisUsername,
+		Password: redisPassword,
+		DB:       0,
+	})
+	locker = redislock.New(client)
+}
 
 func Handler(c *fiber.Ctx) error {
 	start := time.Now().UTC().UnixMilli()
@@ -155,6 +180,21 @@ func Handler(c *fiber.Ctx) error {
 	}
 	cogEndpoint := fmt.Sprintf("%s/predictions", pickServerRes.ServerUrl)
 	generationCogStart := time.Now().UTC().UnixMilli()
+
+	// REDIS STUFF
+	// Try to obtain lock.
+	lockKey := pickServerRes.ServerUrl
+	lock, err := locker.Obtain(ctx, lockKey, 60*time.Second, &lockRetryStrategy)
+	if err == redislock.ErrNotObtained {
+		log.Printf("-- Could not obtain the lock for: %s --", lockKey)
+	} else if err != nil {
+		log.Fatalln(err)
+	}
+	// Don't forget to defer Release.
+	defer lock.Release(ctx)
+	log.Printf("-- I have a lock for: %s --", lockKey)
+	// REDIS STUFF END
+
 	cogRes, cogResErr := http.Post(cogEndpoint, "application/json", bytes.NewBuffer(cogReqBody))
 	if cogResErr != nil {
 		generationCogEnd := time.Now().UTC().UnixMilli()
@@ -174,6 +214,7 @@ func Handler(c *fiber.Ctx) error {
 	}
 	var cogResBody shared.SCogGenerateResponseBody
 	cogResBodyErr := json.NewDecoder(cogRes.Body).Decode(&cogResBody)
+	lock.Release(ctx)
 	if cogResBodyErr != nil {
 		generationCogEnd := time.Now().UTC().UnixMilli()
 		go UpdateGenerationAsFailed(generationIdChan, generationCogEnd-generationCogStart, false)

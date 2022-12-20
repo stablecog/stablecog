@@ -25,6 +25,7 @@ func main() {
 	defer vips.Shutdown()
 
 	shared.SetSeed()
+	generate.SetRedis()
 
 	app := fiber.New()
 	cors := cors.New(cors.Config{
@@ -45,19 +46,6 @@ func main() {
 	app.Get("/gallery", gallery.Handler)
 	app.Post("/health", health.Handler)
 	app.Get("/generation-g-image/:imageIdWithExt", generationGImage.Handler)
-
-	app.Put("/test", func(c *fiber.Ctx) error {
-		log.Printf("PUT /test")
-		return c.SendString("OK")
-	})
-	app.Get("/test", func(c *fiber.Ctx) error {
-		log.Printf("GET /test")
-		return c.SendString("OK")
-	})
-	app.Post("/test", func(c *fiber.Ctx) error {
-		log.Printf("POST /test")
-		return c.SendString("OK")
-	})
 
 	app.Get("/", func(c *fiber.Ctx) error {
 		return c.SendString("API is up and running")
