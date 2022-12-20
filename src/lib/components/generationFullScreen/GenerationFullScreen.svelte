@@ -39,7 +39,7 @@
 	import { upscaleImage } from '$ts/queries/upscaleImage';
 	import { serverUrl } from '$ts/stores/serverUrl';
 	import { createEventDispatcher } from 'svelte';
-	import TabBar from '$components/TabBar.svelte';
+	import TabBar from '$components/tabBars/TabBar.svelte';
 	import { lastUpscaleDurationSec } from '$ts/stores/lastUpscaleDurationSec';
 	import { estimatedDurationBufferRatio } from '$ts/constants/main';
 	import { mLogUpscale, uLogUpscale } from '$ts/helpers/loggers';

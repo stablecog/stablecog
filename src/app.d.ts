@@ -17,6 +17,8 @@ declare namespace App {
 	}
 }
 
+declare module 'svelte-confetti';
+
 interface Window {
 	umami: (goalName: string) => void;
 }

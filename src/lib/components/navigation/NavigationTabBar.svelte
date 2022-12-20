@@ -3,7 +3,7 @@
 	import IconNavbarRoute from '$components/icons/IconNavbarRoute.svelte';
 	import { isTouchscreen } from '$ts/stores/isTouchscreen';
 	import type { TNavbarRoute, TTabBarPlacement } from '$ts/types/main';
-	import TabBarWrapper from './TabBarWrapper.svelte';
+	import TabBarWrapper from '$components/tabBars/TabBarWrapper.svelte';
 	import LL from '$i18n/i18n-svelte';
 
 	export let type: TTabBarPlacement = 'normal';
@@ -89,10 +89,10 @@
 							/>
 						</div>
 					</div>
-					<div class="w-full flex justify-center items-center gap-1.5 relative md:-ml-1">
+					<div class="w-full flex justify-center items-center gap-1.5 relative lg:-ml-1">
 						<IconNavbarRoute class="w-6 h-6 md:w-5 md:h-5" type={route.icon} />
 						<p
-							class="hidden md:block flex-shrink min-w-0 text-center overflow-hidden overflow-ellipsis"
+							class="hidden lg:block flex-shrink min-w-0 text-center overflow-hidden overflow-ellipsis"
 						>
 							{route.name}
 						</p>

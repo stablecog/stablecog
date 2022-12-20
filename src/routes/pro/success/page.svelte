@@ -5,7 +5,6 @@
 	import { theme } from '$ts/stores/theme';
 	import { onMount } from 'svelte';
 	import { portal } from 'svelte-portal';
-	// @ts-ignore
 	import { Confetti } from 'svelte-confetti';
 
 	$: confettiColorArray =

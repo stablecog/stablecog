@@ -11,7 +11,6 @@
 	import { urlFromImageId } from '$ts/helpers/urlFromImageId';
 	import { activeGenerationG } from '$ts/stores/activeGenerationG';
 	import type { TGenerationGWithLoaded } from '$ts/types/main';
-	import mixpanel from 'mixpanel-browser';
 
 	export let generation: TGenerationGWithLoaded;
 

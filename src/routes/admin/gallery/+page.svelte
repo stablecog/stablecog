@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { page } from '$app/stores';
 	import GenerationGFullScreen from '$components/generationFullScreen/GenerationGFullScreen.svelte';
-	import GenerationGImageAdmin from '$components/GenerationGImageAdmin.svelte';
+	import GenerationGImageAdmin from '$components/generationImage/GenerationGImageAdmin.svelte';
 	import IconLoading from '$components/icons/IconLoading.svelte';
 	import ImagePlaceholder from '$components/ImagePlaceholder.svelte';
 	import MetaTag from '$components/MetaTag.svelte';

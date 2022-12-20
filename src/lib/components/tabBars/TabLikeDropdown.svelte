@@ -1,6 +1,6 @@
 <script lang="ts">
 	import IconChevronDown from '$components/icons/IconChevronDown.svelte';
-	import TabBarWrapper from '$components/TabBarWrapper.svelte';
+	import TabBarWrapper from '$components/tabBars/TabBarWrapper.svelte';
 	import { clickoutside } from '$ts/actions/clickoutside';
 	import { isTouchscreen } from '$ts/stores/isTouchscreen';
 	import { windowHeight, windowWidth } from '$ts/stores/window';

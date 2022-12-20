@@ -1,6 +1,6 @@
 <script lang="ts">
 	import Button from '$components/buttons/Button.svelte';
-	import GenerationImage from '$components/GenerationImage.svelte';
+	import GenerationImage from '$components/generationImage/GenerationImage.svelte';
 	import IconLoading from '$components/icons/IconLoading.svelte';
 	import ImagePlaceholder from '$components/ImagePlaceholder.svelte';
 	import LL from '$i18n/i18n-svelte';

@@ -1,12 +1,12 @@
 <script lang="ts">
 	import '$css/app.css';
-	import Navbar from '$components/Navbar.svelte';
+	import Navbar from '$components/navigation/Navbar.svelte';
 	import { theme } from '$ts/stores/theme';
 	import { onDestroy, onMount } from 'svelte';
 	import { serverUrl } from '$ts/stores/serverUrl';
 	import { browser } from '$app/environment';
 	import { checkServerHealth } from '$ts/queries/checkServerHealth';
-	import Footer from '$components/Footer.svelte';
+	import Footer from '$components/navigation/Footer.svelte';
 	import { env } from '$env/dynamic/public';
 	import {
 		currentServer,
@@ -15,7 +15,7 @@
 		defaultServerHealthStatus
 	} from '$ts/stores/serverHealth';
 	import type { TServerHealthStatus } from '$ts/types/main';
-	import NavbarBottom from '$components/NavbarBottom.svelte';
+	import NavbarBottom from '$components/navigation/NavbarBottom.svelte';
 	import { page } from '$app/stores';
 	import { windowHeight, windowWidth } from '$ts/stores/window';
 	import type { LayoutData } from './$types';

@@ -6,7 +6,7 @@
 	import PageLoadProgressBar from '$components/PageLoadProgressBar.svelte';
 	import Logo from '$components/Logo.svelte';
 	import ModalWrapper from '$components/ModalWrapper.svelte';
-	import NavigationTabBar from '$components/NavigationTabBar.svelte';
+	import NavigationTabBar from '$components/navigation/NavigationTabBar.svelte';
 	import SetServerModal from '$components/SetServerModal.svelte';
 	import SettingsMenu from '$components/settings/SettingsMenu.svelte';
 	import { clickoutside } from '$ts/actions/clickoutside';
@@ -16,11 +16,15 @@
 	import Banner from '$components/Banner.svelte';
 	import IconSocial from '$components/icons/IconSocial.svelte';
 	import { lastClosedNotification } from '$ts/stores/lastClosedNotification';
+	/* import LL from '$i18n/i18n-svelte';
+	import Button from '$components/buttons/Button.svelte'; */
 
-	let isSettingsOpen = false;
 	let isSwitchServerModalOpen = false;
+	let isSettingsOpen = false;
+
 	const toggleSettings = () => (isSettingsOpen = !isSettingsOpen);
 	const closeSettings = () => (isSettingsOpen = false);
+
 	let notAtTheTop = false;
 	const notAtTheTopThreshold = 1;
 
@@ -87,10 +91,30 @@
 				<Logo class="w-9 h-9" />
 			</a>
 		</div>
-		<div class="w-auto md:w-full max-w-[36rem] hidden md:flex">
+		<div class="hidden md:flex md:w-full md:max-w-[20rem] lg:max-w-[36rem]">
 			<NavigationTabBar />
 		</div>
 		<div class="flex flex-1 flex-wrap items-center justify-end relative">
+			<!-- User -->
+			<!-- <div class="flex items-center justify-end px-2">
+				{#if $page.data.session?.user.email}
+					<IconButton
+						class="shadow-lg rounded-full shadow-c-shadow/[var(--o-shadow-strong)]"
+						noPadding
+						name="Account"
+						onClick={() => null}
+					>
+						<p
+							class="w-10 h-10 flex items-center justify-center bg-c-bg ring-2 ring-c-bg-secondary rounded-full
+							text-c-on-bg font-semibold transition {!$isTouchscreen ? 'group-hover:text-c-primary' : ''}"
+						>
+							{$page.data.session?.user.email.slice(0, 2).toUpperCase()}
+						</p>
+					</IconButton>
+				{:else if $page.url.pathname !== '/login'}
+					<Button size="xs" href="/login">{$LL.Shared.LoginButton()}</Button>
+				{/if}
+			</div> -->
 			{#if routesWithHealthCheck.includes($page.url.pathname)}
 				<HealthIndicator />
 			{/if}

@@ -9,10 +9,10 @@
 	import IconSeed from '$components/icons/IconSeed.svelte';
 	import IconSteps from '$components/icons/IconSteps.svelte';
 	import IconWidth from '$components/icons/IconWidth.svelte';
-	import TabBar from '$components/TabBar.svelte';
-	import TabLikeDropdown from '$components/TabLikeDropdown.svelte';
-	import TabLikeInput from '$components/TabLikeInput.svelte';
-	import TabLikeRangeInput from '$components/TabLikeRangeInput.svelte';
+	import TabBar from '$components/tabBars/TabBar.svelte';
+	import TabLikeDropdown from '$components/tabBars/TabLikeDropdown.svelte';
+	import TabLikeInput from '$components/tabBars/TabLikeInput.svelte';
+	import TabLikeRangeInput from '$components/tabBars/TabLikeRangeInput.svelte';
 	import LL from '$i18n/i18n-svelte';
 	import { tooltip } from '$ts/actions/tooltip';
 	import {

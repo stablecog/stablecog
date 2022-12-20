@@ -1,5 +1,5 @@
 <script lang="ts">
-	import TabBarWrapper from '$components/TabBarWrapper.svelte';
+	import TabBarWrapper from '$components/tabBars/TabBarWrapper.svelte';
 	import ToggleIndicator from '$components/ToggleIndicator.svelte';
 	import { isTouchscreen } from '$ts/stores/isTouchscreen';
 

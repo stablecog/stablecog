@@ -1,6 +1,6 @@
 <script lang="ts">
 	import ClearButton from '$components/buttons/ClearButton.svelte';
-	import TabBarWrapper from '$components/TabBarWrapper.svelte';
+	import TabBarWrapper from '$components/tabBars/TabBarWrapper.svelte';
 	import { isTouchscreen } from '$ts/stores/isTouchscreen';
 
 	export let value: number | string | undefined | null;

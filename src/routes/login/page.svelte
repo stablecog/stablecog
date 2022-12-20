@@ -4,7 +4,6 @@
 	import ErrorLine from '$components/ErrorLine.svelte';
 	import IconLoading from '$components/icons/IconLoading.svelte';
 	import Input from '$components/Input.svelte';
-	import { expandCollapse } from '$ts/animation/transitions';
 	import { supabase } from '$ts/constants/supabase';
 	import type { PageServerData } from './$types';
 

@@ -1,6 +1,5 @@
 import { env } from '$env/dynamic/public';
 import { writable as writableLocal } from 'svelte-local-storage-store';
-import { writable } from 'svelte/store';
 
 export const serverUrl = writableLocal<string | null>(
 	'serverUrl',

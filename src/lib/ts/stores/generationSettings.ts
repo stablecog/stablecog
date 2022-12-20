@@ -1,5 +1,5 @@
 import { writable as writableLocal } from 'svelte-local-storage-store';
-import { guidanceScaleDefault, maxSeed } from '$ts/constants/main';
+import { guidanceScaleDefault } from '$ts/constants/main';
 import { inferenceStepsDefault, type TAvailableInferenceSteps } from '$ts/constants/main';
 import { modelIdDefault, type TAvailableModelId } from '$ts/constants/main';
 import { schedulerIdDefault, type TAvailableSchedulerId } from '$ts/constants/main';

@@ -1,6 +1,6 @@
 <script lang="ts">
 	import Morpher from '$components/Morpher.svelte';
-	import TabBarWrapper from '$components/TabBarWrapper.svelte';
+	import TabBarWrapper from '$components/tabBars/TabBarWrapper.svelte';
 	import { isTouchscreen } from '$ts/stores/isTouchscreen';
 	import type { TTab } from '$ts/types/main';
 

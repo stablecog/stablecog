@@ -23,7 +23,7 @@
 	import type { TGenerationUI, TStatus, TUpscaleStatus } from '$ts/types/main';
 	import { onDestroy, onMount, tick } from 'svelte';
 	import ImagePlaceholder from '$components/ImagePlaceholder.svelte';
-	import GenerationImage from '$components/GenerationImage.svelte';
+	import GenerationImage from '$components/generationImage/GenerationImage.svelte';
 	import { advancedModeApp } from '$ts/stores/advancedMode';
 	import SetServerModal from '$components/SetServerModal.svelte';
 	import { mLogGeneration, uLogGeneration } from '$ts/helpers/loggers';

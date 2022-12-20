@@ -1,5 +1,5 @@
 <script lang="ts">
-	import NavigationTabBar from '$components/NavigationTabBar.svelte';
+	import NavigationTabBar from '$components/navigation/NavigationTabBar.svelte';
 	export { classes as class };
 	let classes = '';
 </script>

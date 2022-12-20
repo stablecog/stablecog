@@ -6,7 +6,7 @@
 	export let href: string | undefined = undefined;
 	export let onClick: (() => void) | undefined = undefined;
 	export let prefetch: boolean = true;
-	export let size: 'md' | 'sm' = 'md';
+	export let size: 'md' | 'sm' | 'xs' = 'md';
 	export let withSpinner = false;
 	export let noPadding = false;
 	export { classes as class };
@@ -19,8 +19,15 @@
 		{href}
 		data-sveltekit-prefetch={prefetch ? '' : 'off'}
 		{disabled}
-		class="{noPadding ? 'p-0' : size === 'sm' ? 'px-6 md:px-8 py-4' : 'px-6 md:px-8 py-5'} {size ===
-		'sm'
+		class="{noPadding
+			? 'p-0'
+			: size === 'xs'
+			? 'px-5 py-3'
+			: size === 'sm'
+			? 'px-6 md:px-8 py-4'
+			: 'px-6 md:px-8 py-5'} {size === 'xs'
+			? 'text-sm rounded-lg2'
+			: size === 'sm'
 			? 'text-sm rounded-lg2'
 			: 'text-base rounded-xl'} relative flex items-center justify-center text-center
 			shadow-lg shadow-c-shadow/[var(--o-shadow-strong)] text-c-on-primary font-bold gap-2 
@@ -75,8 +82,15 @@
 	<button
 		on:click={onClick}
 		disabled={disabled || loading}
-		class="{noPadding ? 'p-0' : size === 'sm' ? 'px-6 md:px-8 py-4' : 'px-6 md:px-8 py-5'} {size ===
-		'sm'
+		class="{noPadding
+			? 'p-0'
+			: size === 'xs'
+			? 'px-5 py-3'
+			: size === 'sm'
+			? 'px-6 md:px-8 py-4'
+			: 'px-6 md:px-8 py-5'} {size === 'xs'
+			? 'text-sm rounded-lg2'
+			: size === 'sm'
 			? 'text-sm rounded-lg2'
 			: 'text-base rounded-xl'} relative flex items-center justify-center text-center
 			shadow-lg shadow-c-shadow/[var(--o-shadow-strong)] text-c-on-primary font-bold gap-2 

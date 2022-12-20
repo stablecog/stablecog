@@ -1,7 +1,7 @@
 <script lang="ts">
 	import Numerator from '$components/Numerator.svelte';
 	import RangeInput from '$components/RangeInput.svelte';
-	import TabBarWrapper from '$components/TabBarWrapper.svelte';
+	import TabBarWrapper from '$components/tabBars/TabBarWrapper.svelte';
 	import { guidanceScaleMax, guidanceScaleMin } from '$ts/constants/main';
 
 	export let value: number;
