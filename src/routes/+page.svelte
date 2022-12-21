@@ -24,7 +24,7 @@
 	import { onDestroy, onMount, tick } from 'svelte';
 	import ImagePlaceholder from '$components/ImagePlaceholder.svelte';
 	import GenerationImage from '$components/generationImage/GenerationImage.svelte';
-	import { advancedModeApp } from '$ts/stores/advancedMode';
+	import { advancedMode, advancedModeApp } from '$ts/stores/advancedMode';
 	import SetServerModal from '$components/SetServerModal.svelte';
 	import { mLogGeneration, uLogGeneration } from '$ts/helpers/loggers';
 	import ServerOfflineBanner from '$components/ServerOfflineBanner.svelte';
@@ -127,7 +127,7 @@
 			'SC - Guidance Scale': lastGeneration.guidance_scale,
 			'SC - Model Id': lastGeneration.model_id,
 			'SC - Scheduler Id': lastGeneration.scheduler_id,
-			'SC - Advanced Mode': $advancedModeApp,
+			'SC - Advanced Mode': $advancedMode,
 			'SC - Locale': $locale,
 			'SC - Submit to Gallery': $shouldSubmitToGallery ?? false
 		};

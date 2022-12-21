@@ -48,7 +48,7 @@
 	import IconTrashcan from '$components/icons/IconTrashcan.svelte';
 	import { deleteGenerationFromDb } from '$ts/queries/indexedDb';
 	import IconTrashcanFilledOpen from '$components/icons/IconTrashcanFilledOpen.svelte';
-	import { advancedModeApp } from '$ts/stores/advancedMode';
+	import { advancedMode } from '$ts/stores/advancedMode';
 
 	export let generation: TGenerationUI;
 	export let upscaleStatus: TUpscaleStatus = 'idle';
@@ -210,7 +210,7 @@
 		const upscaleMinimal = {
 			'SC - Width': generation.width,
 			'SC - Height': generation.height,
-			'SC - Advanced Mode': $advancedModeApp,
+			'SC - Advanced Mode': $advancedMode,
 			'SC - Locale': $locale
 		};
 		uLogUpscale('Started');
