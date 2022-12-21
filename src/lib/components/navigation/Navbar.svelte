@@ -16,14 +16,18 @@
 	import Banner from '$components/Banner.svelte';
 	import IconSocial from '$components/icons/IconSocial.svelte';
 	import { lastClosedNotification } from '$ts/stores/lastClosedNotification';
-	/* import LL from '$i18n/i18n-svelte';
-	import Button from '$components/buttons/Button.svelte'; */
-
+	import LL from '$i18n/i18n-svelte';
+	import Button from '$components/buttons/Button.svelte';
+	import AccountMenu from '$components/AccountMenu.svelte';
 	let isSwitchServerModalOpen = false;
 	let isSettingsOpen = false;
+	let isAccountMenuOpen = false;
 
 	const toggleSettings = () => (isSettingsOpen = !isSettingsOpen);
 	const closeSettings = () => (isSettingsOpen = false);
+
+	const toggleAccountMenu = () => (isAccountMenuOpen = !isAccountMenuOpen);
+	const closeAccountMenu = () => (isAccountMenuOpen = false);
 
 	let notAtTheTop = false;
 	const notAtTheTopThreshold = 1;
@@ -73,7 +77,7 @@
 				? 'translate-y-0 opacity-100'
 				: '-translate-y-24 opacity-0'}"
 		/>
-		<div class="flex flex-1 self-stretch">
+		<div class="flex md:flex-1 self-stretch">
 			<a
 				aria-label="Go to Home"
 				href="/"
@@ -95,24 +99,40 @@
 			<NavigationTabBar />
 		</div>
 		<div class="flex flex-1 flex-wrap items-center justify-end relative">
-			<!-- User -->
+			<!-- Account -->
 			<!-- <div class="flex items-center justify-end px-2">
 				{#if $page.data.session?.user.email}
-					<IconButton
-						class="shadow-lg rounded-full shadow-c-shadow/[var(--o-shadow-strong)]"
-						noPadding
-						name="Account"
-						onClick={() => null}
+					<div
+						use:clickoutside={{ callback: closeAccountMenu }}
+						class="flex flex-col items-end relative"
 					>
-						<p
-							class="w-10 h-10 flex items-center justify-center bg-c-bg ring-2 ring-c-bg-secondary rounded-full
-							text-c-on-bg font-semibold transition {!$isTouchscreen ? 'group-hover:text-c-primary' : ''}"
-						>
-							{$page.data.session?.user.email.slice(0, 2).toUpperCase()}
-						</p>
-					</IconButton>
+						<div class="p-2">
+							<IconButton
+								class="shadow-lg rounded-full shadow-c-shadow/[var(--o-shadow-strong)]"
+								noPadding
+								name="Account"
+								onClick={toggleAccountMenu}
+							>
+								<p
+									class="w-10 h-10 flex items-center justify-center bg-c-bg ring-2 ring-c-primary/50 rounded-full
+									text-c-on-bg font-semibold transition {!$isTouchscreen
+										? 'group-hover:text-c-primary group-hover:ring-c-primary'
+										: ''}"
+								>
+									{$page.data.session?.user.email.slice(0, 2).toUpperCase()}
+								</p>
+							</IconButton>
+						</div>
+						<div class="relative -mr-12 md:mr-0">
+							{#if isAccountMenuOpen}
+								<AccountMenu {closeAccountMenu} />
+							{/if}
+						</div>
+					</div>
 				{:else if $page.url.pathname !== '/login'}
-					<Button size="xs" href="/login">{$LL.Shared.LoginButton()}</Button>
+					<Button size="xs" href={`/login?redirect_to=${encodeURIComponent($page.url.pathname)}`}>
+						{$LL.Shared.LoginButton()}
+					</Button>
 				{/if}
 			</div> -->
 			{#if routesWithHealthCheck.includes($page.url.pathname)}

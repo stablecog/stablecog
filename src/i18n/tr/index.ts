@@ -204,7 +204,8 @@ const tr: BaseTranslation = {
 		},
 		UnknownTitle: 'Bilinmeyen',
 		MoreOptionsTitle: 'Daha Fazla Seçenek',
-		LessOptionsTitle: 'Daha Az Seçenek'
+		LessOptionsTitle: 'Daha Az Seçenek',
+		TryAgainButton: 'Try Again'
 	},
 	Error: {
 		SomethingWentWrong: 'Bir şeyler ters gitti :(',
@@ -213,7 +214,10 @@ const tr: BaseTranslation = {
 			'Sunucudan cevap alamadık. Sayfayı yenilemeyi veya ayarlardan başka bir sunucuya geçmeyi deneyebilirsin.',
 		ServerSetNotWorking: 'Sunucu uyumlu değil ya da cevap vermiyor.',
 		NotFound: 'Bulunamadı',
-		SupabaseNotFoundCantListen: 'Supabase bulunamadı. Üretimler izlenemeyecek.'
+		SupabaseNotFoundCantListen: 'Supabase bulunamadı. Üretimler izlenemeyecek.',
+		InvalidEmail: 'Enter a valid email.',
+		PasswordTooShort: 'Password must be at least 8 characters.',
+		SomethingWentWrongTryAgain: 'Something went wrong, try again.'
 	},
 	Admin: {
 		AdminPanelTitle: 'Yönetici',
@@ -222,6 +226,55 @@ const tr: BaseTranslation = {
 		NoGenerationsToReview: 'İncelecek üretim yok.',
 		ServersButton: 'Sunucular',
 		GalleryButton: 'Galeri'
+	},
+	SignUp: {
+		PageTitle: 'Sign Up',
+		PageParagraph: 'Sign up to become a pro member. Unlock the full potential of Stablecog.',
+		PageTitleConfirm: 'Confirm',
+		PageParagraphConfirm:
+			"We've emailed you a 6-digit code. Enter it below to confirm your account.",
+		SignUpButton: 'Sign Up',
+		ConfirmButton: 'Confirm',
+		AlreadyHaveAnAccountTitle: 'Already have an account?',
+		LoginInsteadButton: 'Login instead',
+		SixDigitCodeInput: {
+			Placeholder: '6-Digit Code'
+		}
+	},
+	Login: {
+		PageTitle: 'Login',
+		PageParagraph: 'Start using Stablecog with all features that are available to your account.',
+		DontHaveAnAccountTitle: "Don't have an account?",
+		SignUpInsteadButton: 'Sign up instead'
+	},
+	Pro: {
+		PageTitle: 'Become a Pro',
+		PageParagraph:
+			"Unlock all features of Stablecog and support the project. Without the pro members, Stablecog wouldn't be able to stay completely open-source and offer free generations to everyone.",
+		ProPlanTitle: 'Pro',
+		Features: {
+			FullSpeed: 'Full speed without set limits',
+			ImageDimensions: 'Different image dimensions',
+			Upscale: 'Upscale images',
+			Steps: 'Different inference steps',
+			MoreModels: 'More models',
+			MoreSchedulers: 'More schedulers',
+			SavedToCloud: 'Generations saved to the cloud',
+			Upcoming: 'Upcoming features'
+		},
+		Soon: '(soon)',
+		Month: '/month',
+		BecomeProButton: 'Become a Pro',
+		Success: {
+			PageTitle: 'Thanks for becoming a pro!',
+			PageParagraph:
+				'You now have access to everything Stablecog has to offer. If you have any questions, reach out to us on {platform:string}.'
+		},
+		Cancel: {
+			PageTitle: "You've cancelled",
+			PageParagraph:
+				"You've cancelled the subscription process. If it was a mistake, you can try again."
+		}
 	}
 };
 export default tr;

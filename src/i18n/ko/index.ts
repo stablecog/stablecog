@@ -207,7 +207,8 @@ const ko: BaseTranslation = {
 		},
 		UnknownTitle: '알 수 없음',
 		MoreOptionsTitle: '더 많은 옵션 보기',
-		LessOptionsTitle: '옵션 숨기기'
+		LessOptionsTitle: '옵션 숨기기',
+		TryAgainButton: 'Try Again'
 	},
 	Error: {
 		SomethingWentWrong: '웁스.. 뭔가 잘못됐어요. :(',
@@ -216,7 +217,10 @@ const ko: BaseTranslation = {
 			'서버와 연결이 끊긴 것 같아요. 웹사이트를 새로고침하거나 설정 화면을 통해 다른 서버를 지정해주세요.',
 		ServerSetNotWorking: '입력한 서버와 호환되지 않거나 요청에 대한 응답을 받지 못하고 있어요.',
 		NotFound: '요청한 페이지를 찾지 못했어요.',
-		SupabaseNotFoundCantListen: '데이터베이스를 찾을 수 없어요.'
+		SupabaseNotFoundCantListen: '데이터베이스를 찾을 수 없어요.',
+		InvalidEmail: 'Enter a valid email.',
+		PasswordTooShort: 'Password must be at least 8 characters.',
+		SomethingWentWrongTryAgain: 'Something went wrong, try again.'
 	},
 	Admin: {
 		AdminPanelTitle: '관리자',
@@ -225,6 +229,55 @@ const ko: BaseTranslation = {
 		NoGenerationsToReview: '확인할 이미지 없음',
 		ServersButton: '서버 관리',
 		GalleryButton: '갤러리 관리'
+	},
+	SignUp: {
+		PageTitle: 'Sign Up',
+		PageParagraph: 'Sign up to become a pro member. Unlock the full potential of Stablecog.',
+		PageTitleConfirm: 'Confirm',
+		PageParagraphConfirm:
+			"We've emailed you a 6-digit code. Enter it below to confirm your account.",
+		SignUpButton: 'Sign Up',
+		ConfirmButton: 'Confirm',
+		AlreadyHaveAnAccountTitle: 'Already have an account?',
+		LoginInsteadButton: 'Login instead',
+		SixDigitCodeInput: {
+			Placeholder: '6-Digit Code'
+		}
+	},
+	Login: {
+		PageTitle: 'Login',
+		PageParagraph: 'Start using Stablecog with all features that are available to your account.',
+		DontHaveAnAccountTitle: "Don't have an account?",
+		SignUpInsteadButton: 'Sign up instead'
+	},
+	Pro: {
+		PageTitle: 'Become a Pro',
+		PageParagraph:
+			"Unlock all features of Stablecog and support the project. Without the pro members, Stablecog wouldn't be able to stay completely open-source and offer free generations to everyone.",
+		ProPlanTitle: 'Pro',
+		Features: {
+			FullSpeed: 'Full speed without set limits',
+			ImageDimensions: 'Different image dimensions',
+			Upscale: 'Upscale images',
+			Steps: 'Different inference steps',
+			MoreModels: 'More models',
+			MoreSchedulers: 'More schedulers',
+			SavedToCloud: 'Generations saved to the cloud',
+			Upcoming: 'Upcoming features'
+		},
+		Soon: '(soon)',
+		Month: '/month',
+		BecomeProButton: 'Become a Pro',
+		Success: {
+			PageTitle: 'Thanks for becoming a pro!',
+			PageParagraph:
+				'You now have access to everything Stablecog has to offer. If you have any questions, reach out to us on {platform:string}.'
+		},
+		Cancel: {
+			PageTitle: "You've cancelled",
+			PageParagraph:
+				"You've cancelled the subscription process. If it was a mistake, you can try again."
+		}
 	}
 };
 export default ko;

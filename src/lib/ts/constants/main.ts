@@ -20,6 +20,19 @@ export const routesWithHiddenFooter = ['/canvas'];
 
 export const maxFreePixelSteps = 640 * 640 * 50;
 
+export const allowedRedirectRoutes = ['/', '/pro', '/history', '/gallery', '/live', '/blog'];
+
+export const isAllowedRedirectRoute = (route: string) => {
+	let allowed = false;
+	for (const r of allowedRedirectRoutes) {
+		if (route === r || (r !== '/' && route.startsWith(`${r}/`))) {
+			allowed = true;
+			break;
+		}
+	}
+	return allowed;
+};
+
 export const modalCloseDelay = 120;
 
 export const maxSeed = 2147483647;

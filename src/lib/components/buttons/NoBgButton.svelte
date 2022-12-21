@@ -6,7 +6,7 @@
 	export let prefetch: boolean = false;
 	export let onClick: (() => void) | undefined = undefined;
 	export { classes as class };
-	let classes = '';
+	let classes = 'text-c-on-bg/50 -mt-1';
 	export let disabled = false;
 	export let hoverFrom: 'bottom' | 'top' = 'bottom';
 </script>
@@ -14,7 +14,7 @@
 {#if href}
 	<a
 		data-sveltekit-prefetch={prefetch ? '' : 'off'}
-		class="max-w-full relative overflow-hidden z-0 text-c-on-bg/50 px-4 py-3.5 -mt-1 font-semibold transition pointer-events-auto 
+		class="max-w-full relative overflow-hidden z-0 px-4 py-3.5 font-semibold transition pointer-events-auto 
 		flex items-center gap-1.5 group rounded-xl {!$isTouchscreen ? 'hover:text-c-primary' : ''} {type ===
 		'sm'
 			? 'text-sm '
@@ -39,7 +39,7 @@
 		type="button"
 		on:click={onClick}
 		{disabled}
-		class="max-w-full relative overflow-hidden z-0 text-c-on-bg/50 px-4 py-3.5 -mt-1 font-semibold transition pointer-events-auto 
+		class="max-w-full relative overflow-hidden z-0 px-4 py-3.5 font-semibold transition pointer-events-auto 
 		flex items-center gap-1.5 group rounded-xl {!$isTouchscreen ? 'hover:text-c-primary' : ''} {type ===
 		'sm'
 			? 'text-sm '
