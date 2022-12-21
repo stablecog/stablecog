@@ -127,6 +127,7 @@
 			'SC - Guidance Scale': lastGeneration.guidance_scale,
 			'SC - Model Id': lastGeneration.model_id,
 			'SC - Scheduler Id': lastGeneration.scheduler_id,
+			'SC - Advanced Mode': $advancedModeApp,
 			'SC - Locale': $locale,
 			'SC - Submit to Gallery': $shouldSubmitToGallery ?? false
 		};

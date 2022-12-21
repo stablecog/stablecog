@@ -33,15 +33,23 @@ export function mLogSubmitToGallery(status: IOnOff) {
 }
 
 export function mLogGalleryGenerationOpened(id: string) {
-	mixpanel.track('Gallery | Generation Opened', { 'Generation Id': id });
+	mixpanel.track('Gallery | Generation Opened', { 'SC - Generation Id': id });
 }
 
 export function mLogGalleryGenerateClicked(id: string) {
-	mixpanel.track('Gallery | Generate Clicked', { 'Generation Id': id });
+	mixpanel.track('Gallery | Generate Clicked', { 'SC - Generation Id': id });
 }
 
 export function mLogAdvancedMode(status: IOnOff) {
 	mixpanel.track(`Advanced Mode | ${status}`);
+}
+
+export function mLogPageview(path: string, locale: string, advanced: boolean) {
+	mixpanel.track('Pageview', {
+		'SC - Page': path,
+		'SC - Locale': locale,
+		'SC - Advanced Mode': advanced
+	});
 }
 
 type IGenerationStatus = 'Started' | 'Succeeded' | 'Failed' | 'Failed-NSFW';
@@ -53,6 +61,7 @@ type IOnOff = 'On' | 'Off';
 interface IUpscaleMinimal {
 	'SC - Width': number;
 	'SC - Height': number;
+	'SC - Advanced Mode': boolean;
 	'SC - Locale': string;
 	'SC - Duration'?: number;
 }
@@ -64,6 +73,7 @@ interface IGenerationMinimal {
 	'SC - Guidance Scale': number;
 	'SC - Model Id'?: string | undefined;
 	'SC - Scheduler Id'?: string | undefined;
+	'SC - Advanced Mode': boolean;
 	'SC - Locale': string;
 	'SC - Submit to Gallery': boolean;
 	'SC - Duration'?: number;

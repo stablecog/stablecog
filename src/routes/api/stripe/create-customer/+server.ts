@@ -7,7 +7,7 @@ const stripe = new Stripe(env.STRIPE_SECRET_KEY_TEST, {
 	apiVersion: '2022-11-15'
 });
 
-export const POST: RequestHandler = async ({ url, request }) => {
+export const POST: RequestHandler = async ({ request }) => {
 	const body: IBody = await request.json();
 	const record = body.record;
 	if (!record.email) {

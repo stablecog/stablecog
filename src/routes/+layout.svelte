@@ -27,7 +27,8 @@
 	import { routesWithHealthCheck, routesWithHiddenFooter } from '$ts/constants/main';
 	import mixpanel from 'mixpanel-browser';
 	import { supabase } from '$ts/constants/supabase';
-	import { invalidate } from '$app/navigation';
+	import { afterNavigate, invalidate } from '$app/navigation';
+	import { mLogPageview } from '$ts/helpers/loggers';
 
 	export let data: LayoutData;
 	setLocale(data.locale);
@@ -62,6 +63,10 @@
 		return () => {
 			subscription.unsubscribe();
 		};
+	});
+
+	afterNavigate(() => {
+		mLogPageview($page.url.pathname, $locale, $advancedMode);
 	});
 
 	onDestroy(() => {
