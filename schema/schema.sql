@@ -506,7 +506,7 @@ UPDATE
 
 -- Admin Table
 CREATE TABLE "admin" (
-    "id" UUID REFERENCES auth.users(id) NOT NULL,
+    "id" UUID REFERENCES auth.users(id) NOT NULL ON DELETE CASCADE,
     "created_at" TIMESTAMPTZ DEFAULT TIMEZONE('utc' :: TEXT, NOW()) NOT NULL,
     "updated_at" TIMESTAMPTZ DEFAULT TIMEZONE('utc' :: TEXT, NOW()) NOT NULL,
     PRIMARY KEY(id)
@@ -576,7 +576,7 @@ CREATE POLICY "Admins can edit models" ON public.model FOR ALL USING (
 );
 
 CREATE TABLE public."user" (
-    "id" UUID REFERENCES auth.users(id) NOT NULL,
+    "id" UUID REFERENCES auth.users(id) NOT NULL ON DELETE CASCADE,
     "email" TEXT NOT NULL,
     "created_at" TIMESTAMPTZ DEFAULT TIMEZONE('utc' :: TEXT, NOW()) NOT NULL,
     "updated_at" TIMESTAMPTZ DEFAULT TIMEZONE('utc' :: TEXT, NOW()) NOT NULL,
