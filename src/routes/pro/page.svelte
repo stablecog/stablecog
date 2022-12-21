@@ -6,6 +6,9 @@
 	import IconTickOnly from '$components/icons/IconTickOnly.svelte';
 	import LL from '$i18n/i18n-svelte';
 	import type Stripe from 'stripe';
+	import type { PageServerData } from './$types';
+
+	export let data: PageServerData;
 
 	let checkoutCreationStatus: 'idle' | 'loading' | 'success' | 'error' = 'idle';
 
@@ -35,8 +38,6 @@
 		};
 		error: string;
 	}
-
-	const proPrice = 8;
 </script>
 
 <div class="w-full flex-1 flex flex-col py-8 px-5">
@@ -59,7 +60,9 @@
 				class="w-[calc(100%+2rem)] md:w-[calc(100%+3rem)] text-center bg-c-primary text-c-on-primary
 				-mx-4 md:-mx-6 mt-4 px-5 py-3 font-bold flex justify-center items-start"
 			>
-				<span class="text-xl">$</span><span class="text-4xl font-extrabold">{proPrice}</span>
+				<span class="text-xl">$</span><span class="text-4xl font-extrabold">
+					{data.prices.pro / 100}
+				</span>
 				<span class="self-end mb-1">{$LL.Pro.Month()}</span>
 			</h3>
 			<ul class="mt-6 flex flex-col gap-3 px-2 md:px-4">
