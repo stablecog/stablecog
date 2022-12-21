@@ -66,7 +66,7 @@
 	});
 
 	afterNavigate(() => {
-		mLogPageview($page.url.pathname, $locale, $advancedMode);
+		mLogPageview({ path: $page.url.pathname, locale: $locale, advanced: $advancedMode });
 	});
 
 	onDestroy(() => {

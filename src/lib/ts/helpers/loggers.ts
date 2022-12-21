@@ -44,7 +44,7 @@ export function mLogAdvancedMode(status: IOnOff) {
 	mixpanel.track(`Advanced Mode | ${status}`);
 }
 
-export function mLogPageview(path: string, locale: string, advanced: boolean) {
+export function mLogPageview({ path, locale, advanced }: IPageviewProps) {
 	mixpanel.track('Pageview', {
 		'SC - Page': path,
 		'SC - Locale': locale,
@@ -77,4 +77,10 @@ interface IGenerationMinimal {
 	'SC - Locale': string;
 	'SC - Submit to Gallery': boolean;
 	'SC - Duration'?: number;
+}
+
+interface IPageviewProps {
+	path: string;
+	locale: string;
+	advanced: boolean;
 }
