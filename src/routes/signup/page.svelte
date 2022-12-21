@@ -1,9 +1,11 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
 	import Button from '$components/buttons/Button.svelte';
+	import NoBgButton from '$components/buttons/NoBgButton.svelte';
 	import ErrorLine from '$components/ErrorLine.svelte';
 	import IconLoading from '$components/icons/IconLoading.svelte';
 	import Input from '$components/Input.svelte';
+	import LL from '$i18n/i18n-svelte';
 	import { expandCollapse } from '$ts/animation/transitions';
 	import { supabase } from '$ts/constants/supabase';
 	import type { PageServerData } from './$types';
@@ -26,11 +28,11 @@
 
 	async function signup() {
 		if (password.length < 8) {
-			errorText = 'Password must be at least 8 characters long';
+			errorText = $LL.Error.PasswordTooShort();
 			return;
 		}
 		if (!email.includes('@')) {
-			errorText = 'Please enter a valid email address';
+			errorText = $LL.Error.InvalidEmail();
 			return;
 		}
 		signupStatus = 'signup-loading';
@@ -38,7 +40,7 @@
 		if (error) {
 			console.log(error);
 			signupStatus = 'signup-error';
-			errorText = 'Something went wrong. Try again.';
+			errorText = $LL.Error.SomethingWentWrong();
 			return;
 		}
 		console.log(data);
@@ -72,9 +74,9 @@
 		{:else}
 			<h1 class="text-center font-bold text-4xl">
 				{#if signupStatus === 'otp' || signupStatus === 'otp-loading' || signupStatus === 'otp-error'}
-					Confirm
+					{$LL.SignUp.PageTitleConfirm()}
 				{:else}
-					Sign Up
+					{$LL.SignUp.PageTitle()}
 				{/if}
 			</h1>
 			<div
@@ -83,10 +85,9 @@
 			>
 				<p class="max-w-sm mt-4 text-c-on-bg/60 text-left leading-relaxed">
 					{#if signupStatus === 'otp' || signupStatus === 'otp-loading' || signupStatus === 'otp-error'}
-						We've emailed you a 6-digit code. Enter it below to confirm your account.
+						{$LL.SignUp.PageParagraphConfirm()}
 					{:else}
-						Sign up to <span class="text-c-primary font-semibold">become a pro member</span>. Get
-						access to different image dimensions, full speed generations, steps and more.
+						{$LL.SignUp.PageParagraph()}
 					{/if}
 				</p>
 				<form
@@ -95,7 +96,7 @@
 					on:submit|preventDefault={signupStatus === 'otp' || signupStatus === 'otp-error'
 						? confirm
 						: signup}
-					class="w-full bg-c-bg-secondary max-w-sm flex flex-col p-4 md:p-5 rounded-3xl mt-8
+					class="w-full bg-c-bg-secondary max-w-sm flex flex-col p-4 md:p-5 rounded-3xl mt-6
           ring-2 ring-c-bg-tertiary shadow-xl shadow-c-shadow/[var(--o-shadow-normal)]"
 				>
 					{#if signupStatus === 'otp' || signupStatus === 'otp-loading' || signupStatus === 'otp-error'}
@@ -118,13 +119,13 @@
 							<Input
 								disabled={signupStatus === 'signup-loading'}
 								type="email"
-								title="Email"
+								title={$LL.Shared.EmailInput.Placeholder()}
 								bind:value={email}
 							/>
 							<Input
 								disabled={signupStatus === 'signup-loading'}
 								type="password"
-								title="Password"
+								title={$LL.Shared.PasswordInput.Placeholder()}
 								bind:value={password}
 								class="mt-2"
 							/>
@@ -139,12 +140,18 @@
 						withSpinner
 					>
 						{#if signupStatus === 'otp' || signupStatus === 'otp-loading' || signupStatus === 'otp-error'}
-							Confirm
+							{$LL.SignUp.ConfirmButton()}
 						{:else}
-							Sign Up
+							{$LL.SignUp.SignUpButton()}
 						{/if}
 					</Button>
 				</form>
+				<div class="w-full flex flex-col items-center justify-center mt-6">
+					<p class="text-sm text-c-on-bg/50">{$LL.SignUp.AlreadyHaveAnAccountTitle()}</p>
+					<NoBgButton prefetch target="_self" href="/login" class="-mt-2 text-c-primary">
+						{$LL.SignUp.LoginInsteadButton()}
+					</NoBgButton>
+				</div>
 			</div>
 		{/if}
 	</div>

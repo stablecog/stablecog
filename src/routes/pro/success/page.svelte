@@ -21,14 +21,12 @@
 <div class="w-full flex-1 flex flex-col py-8 px-5">
 	<div class="w-full flex flex-col items-center justify-start my-auto">
 		<IconConfetti class="w-32 h-32 text-c-primary" />
-		<h1 class="text-center font-bold text-4xl mt-8">Thanks for becoming a pro!</h1>
-		<p class="max-w-2xl mt-4 text-left leading-relaxed text-c-on-bg/75">
-			You now have access to everything Stablecog has to offer. If you have any questions, feel free
-			to reach out to us on <a
-				class="text-c-primary font-bold hover:underline"
-				href="/discord"
-				target="_blank">Discord</a
-			>.
+		<h1 class="text-center font-bold text-4xl mt-8">{$LL.Pro.Success.PageTitle()}</h1>
+		<p class="max-w-2xl mt-4 text-center leading-relaxed text-c-on-bg/75">
+			{@html $LL.Pro.Success.PageParagraph({ platform: '__discord__' }).replace(
+				'__discord__',
+				`<a class="text-c-primary font-bold hover:underline" href="/discord" target="_blank">Discord</a>`
+			)}
 		</p>
 		<Button href="/" withSpinner class=" mt-8">{$LL.Shared.StartGeneratingButton()}</Button>
 	</div>
@@ -45,7 +43,7 @@
 			colorArray={confettiColorArray}
 			duration={6000}
 			delay={[0, 1000]}
-			amount="300"
+			amount="400"
 			fallDistance="100vh"
 		/>
 	</div>

@@ -595,6 +595,10 @@ type RootTranslation = {
 		 * L​e​s​s​ ​O​p​t​i​o​n​s
 		 */
 		LessOptionsTitle: string
+		/**
+		 * T​r​y​ ​A​g​a​i​n
+		 */
+		TryAgainButton: string
 	}
 	Error: {
 		/**
@@ -621,6 +625,18 @@ type RootTranslation = {
 		 * S​u​p​a​b​a​s​e​ ​i​n​s​t​a​n​c​e​ ​n​o​t​ ​f​o​u​n​d​.​ ​C​a​n​'​t​ ​l​i​s​t​e​n​ ​f​o​r​ ​g​e​n​e​r​a​t​i​o​n​s​.
 		 */
 		SupabaseNotFoundCantListen: string
+		/**
+		 * E​n​t​e​r​ ​a​ ​v​a​l​i​d​ ​e​m​a​i​l​.
+		 */
+		InvalidEmail: string
+		/**
+		 * P​a​s​s​w​o​r​d​ ​m​u​s​t​ ​b​e​ ​a​t​ ​l​e​a​s​t​ ​8​ ​c​h​a​r​a​c​t​e​r​s​.
+		 */
+		PasswordTooShort: string
+		/**
+		 * S​o​m​e​t​h​i​n​g​ ​w​e​n​t​ ​w​r​o​n​g​,​ ​t​r​y​ ​a​g​a​i​n​.
+		 */
+		SomethingWentWrongTryAgain: string
 	}
 	Admin: {
 		/**
@@ -647,6 +663,145 @@ type RootTranslation = {
 		 * G​a​l​l​e​r​y
 		 */
 		GalleryButton: string
+	}
+	SignUp: {
+		/**
+		 * S​i​g​n​ ​U​p
+		 */
+		PageTitle: string
+		/**
+		 * S​i​g​n​ ​u​p​ ​t​o​ ​b​e​c​o​m​e​ ​a​ ​p​r​o​ ​m​e​m​b​e​r​.​ ​U​n​l​o​c​k​ ​t​h​e​ ​f​u​l​l​ ​p​o​t​e​n​t​i​a​l​ ​o​f​ ​S​t​a​b​l​e​c​o​g​.
+		 */
+		PageParagraph: string
+		/**
+		 * C​o​n​f​i​r​m
+		 */
+		PageTitleConfirm: string
+		/**
+		 * W​e​'​v​e​ ​e​m​a​i​l​e​d​ ​y​o​u​ ​a​ ​6​-​d​i​g​i​t​ ​c​o​d​e​.​ ​E​n​t​e​r​ ​i​t​ ​b​e​l​o​w​ ​t​o​ ​c​o​n​f​i​r​m​ ​y​o​u​r​ ​a​c​c​o​u​n​t​.
+		 */
+		PageParagraphConfirm: string
+		/**
+		 * S​i​g​n​ ​U​p
+		 */
+		SignUpButton: string
+		/**
+		 * C​o​n​f​i​r​m
+		 */
+		ConfirmButton: string
+		/**
+		 * A​l​r​e​a​d​y​ ​h​a​v​e​ ​a​n​ ​a​c​c​o​u​n​t​?
+		 */
+		AlreadyHaveAnAccountTitle: string
+		/**
+		 * L​o​g​i​n​ ​i​n​s​t​e​a​d
+		 */
+		LoginInsteadButton: string
+		SixDigitCodeInput: {
+			/**
+			 * 6​-​D​i​g​i​t​ ​C​o​d​e
+			 */
+			Placeholder: string
+		}
+	}
+	Login: {
+		/**
+		 * L​o​g​i​n
+		 */
+		PageTitle: string
+		/**
+		 * S​t​a​r​t​ ​u​s​i​n​g​ ​S​t​a​b​l​e​c​o​g​ ​w​i​t​h​ ​a​l​l​ ​f​e​a​t​u​r​e​s​ ​t​h​a​t​ ​a​r​e​ ​a​v​a​i​l​a​b​l​e​ ​t​o​ ​y​o​u​r​ ​a​c​c​o​u​n​t​.
+		 */
+		PageParagraph: string
+		/**
+		 * D​o​n​'​t​ ​h​a​v​e​ ​a​n​ ​a​c​c​o​u​n​t​?
+		 */
+		DontHaveAnAccountTitle: string
+		/**
+		 * S​i​g​n​ ​u​p​ ​i​n​s​t​e​a​d
+		 */
+		SignUpInsteadButton: string
+	}
+	Pro: {
+		/**
+		 * B​e​c​o​m​e​ ​a​ ​P​r​o
+		 */
+		PageTitle: string
+		/**
+		 * U​n​l​o​c​k​ ​a​l​l​ ​f​e​a​t​u​r​e​s​ ​o​f​ ​S​t​a​b​l​e​c​o​g​ ​a​n​d​ ​s​u​p​p​o​r​t​ ​t​h​e​ ​p​r​o​j​e​c​t​.​ ​W​i​t​h​o​u​t​ ​t​h​e​ ​p​r​o​ ​m​e​m​b​e​r​s​,​ ​S​t​a​b​l​e​c​o​g​ ​w​o​u​l​d​n​'​t​ ​b​e​ ​a​b​l​e​ ​t​o​ ​s​t​a​y​ ​c​o​m​p​l​e​t​e​l​y​ ​o​p​e​n​-​s​o​u​r​c​e​ ​a​n​d​ ​o​f​f​e​r​ ​f​r​e​e​ ​g​e​n​e​r​a​t​i​o​n​s​ ​t​o​ ​e​v​e​r​y​o​n​e​.
+		 */
+		PageParagraph: string
+		/**
+		 * P​r​o
+		 */
+		ProPlanTitle: string
+		Features: {
+			/**
+			 * F​u​l​l​ ​s​p​e​e​d​ ​w​i​t​h​o​u​t​ ​s​e​t​ ​l​i​m​i​t​s
+			 */
+			FullSpeed: string
+			/**
+			 * D​i​f​f​e​r​e​n​t​ ​i​m​a​g​e​ ​d​i​m​e​n​s​i​o​n​s
+			 */
+			ImageDimensions: string
+			/**
+			 * U​p​s​c​a​l​e​ ​i​m​a​g​e​s
+			 */
+			Upscale: string
+			/**
+			 * D​i​f​f​e​r​e​n​t​ ​i​n​f​e​r​e​n​c​e​ ​s​t​e​p​s
+			 */
+			Steps: string
+			/**
+			 * M​o​r​e​ ​m​o​d​e​l​s
+			 */
+			MoreModels: string
+			/**
+			 * M​o​r​e​ ​s​c​h​e​d​u​l​e​r​s
+			 */
+			MoreSchedulers: string
+			/**
+			 * G​e​n​e​r​a​t​i​o​n​s​ ​s​a​v​e​d​ ​t​o​ ​t​h​e​ ​c​l​o​u​d
+			 */
+			SavedToCloud: string
+			/**
+			 * U​p​c​o​m​i​n​g​ ​f​e​a​t​u​r​e​s
+			 */
+			Upcoming: string
+		}
+		/**
+		 * (​s​o​o​n​)
+		 */
+		Soon: string
+		/**
+		 * /​m​o​n​t​h
+		 */
+		Month: string
+		/**
+		 * B​e​c​o​m​e​ ​a​ ​P​r​o
+		 */
+		BecomeProButton: string
+		Success: {
+			/**
+			 * T​h​a​n​k​s​ ​f​o​r​ ​b​e​c​o​m​i​n​g​ ​a​ ​p​r​o​!
+			 */
+			PageTitle: string
+			/**
+			 * Y​o​u​ ​n​o​w​ ​h​a​v​e​ ​a​c​c​e​s​s​ ​t​o​ ​e​v​e​r​y​t​h​i​n​g​ ​S​t​a​b​l​e​c​o​g​ ​h​a​s​ ​t​o​ ​o​f​f​e​r​.​ ​I​f​ ​y​o​u​ ​h​a​v​e​ ​a​n​y​ ​q​u​e​s​t​i​o​n​s​,​ ​r​e​a​c​h​ ​o​u​t​ ​t​o​ ​u​s​ ​o​n​ ​{​p​l​a​t​f​o​r​m​}​.
+			 * @param {string} platform
+			 */
+			PageParagraph: RequiredParams<'platform'>
+		}
+		Cancel: {
+			/**
+			 * Y​o​u​'​v​e​ ​c​a​n​c​e​l​l​e​d
+			 */
+			PageTitle: string
+			/**
+			 * Y​o​u​'​v​e​ ​c​a​n​c​e​l​l​e​d​ ​t​h​e​ ​s​u​b​s​c​r​i​p​t​i​o​n​ ​p​r​o​c​e​s​s​.​ ​I​f​ ​i​t​ ​w​a​s​ ​a​ ​m​i​s​t​a​k​e​,​ ​y​o​u​ ​c​a​n​ ​t​r​y​ ​a​g​a​i​n​.
+			 */
+			PageParagraph: string
+		}
 	}
 }
 
@@ -1220,6 +1375,10 @@ export type TranslationFunctions = {
 		 * Less Options
 		 */
 		LessOptionsTitle: () => LocalizedString
+		/**
+		 * Try Again
+		 */
+		TryAgainButton: () => LocalizedString
 	}
 	Error: {
 		/**
@@ -1246,6 +1405,18 @@ export type TranslationFunctions = {
 		 * Supabase instance not found. Can't listen for generations.
 		 */
 		SupabaseNotFoundCantListen: () => LocalizedString
+		/**
+		 * Enter a valid email.
+		 */
+		InvalidEmail: () => LocalizedString
+		/**
+		 * Password must be at least 8 characters.
+		 */
+		PasswordTooShort: () => LocalizedString
+		/**
+		 * Something went wrong, try again.
+		 */
+		SomethingWentWrongTryAgain: () => LocalizedString
 	}
 	Admin: {
 		/**
@@ -1272,6 +1443,144 @@ export type TranslationFunctions = {
 		 * Gallery
 		 */
 		GalleryButton: () => LocalizedString
+	}
+	SignUp: {
+		/**
+		 * Sign Up
+		 */
+		PageTitle: () => LocalizedString
+		/**
+		 * Sign up to become a pro member. Unlock the full potential of Stablecog.
+		 */
+		PageParagraph: () => LocalizedString
+		/**
+		 * Confirm
+		 */
+		PageTitleConfirm: () => LocalizedString
+		/**
+		 * We've emailed you a 6-digit code. Enter it below to confirm your account.
+		 */
+		PageParagraphConfirm: () => LocalizedString
+		/**
+		 * Sign Up
+		 */
+		SignUpButton: () => LocalizedString
+		/**
+		 * Confirm
+		 */
+		ConfirmButton: () => LocalizedString
+		/**
+		 * Already have an account?
+		 */
+		AlreadyHaveAnAccountTitle: () => LocalizedString
+		/**
+		 * Login instead
+		 */
+		LoginInsteadButton: () => LocalizedString
+		SixDigitCodeInput: {
+			/**
+			 * 6-Digit Code
+			 */
+			Placeholder: () => LocalizedString
+		}
+	}
+	Login: {
+		/**
+		 * Login
+		 */
+		PageTitle: () => LocalizedString
+		/**
+		 * Start using Stablecog with all features that are available to your account.
+		 */
+		PageParagraph: () => LocalizedString
+		/**
+		 * Don't have an account?
+		 */
+		DontHaveAnAccountTitle: () => LocalizedString
+		/**
+		 * Sign up instead
+		 */
+		SignUpInsteadButton: () => LocalizedString
+	}
+	Pro: {
+		/**
+		 * Become a Pro
+		 */
+		PageTitle: () => LocalizedString
+		/**
+		 * Unlock all features of Stablecog and support the project. Without the pro members, Stablecog wouldn't be able to stay completely open-source and offer free generations to everyone.
+		 */
+		PageParagraph: () => LocalizedString
+		/**
+		 * Pro
+		 */
+		ProPlanTitle: () => LocalizedString
+		Features: {
+			/**
+			 * Full speed without set limits
+			 */
+			FullSpeed: () => LocalizedString
+			/**
+			 * Different image dimensions
+			 */
+			ImageDimensions: () => LocalizedString
+			/**
+			 * Upscale images
+			 */
+			Upscale: () => LocalizedString
+			/**
+			 * Different inference steps
+			 */
+			Steps: () => LocalizedString
+			/**
+			 * More models
+			 */
+			MoreModels: () => LocalizedString
+			/**
+			 * More schedulers
+			 */
+			MoreSchedulers: () => LocalizedString
+			/**
+			 * Generations saved to the cloud
+			 */
+			SavedToCloud: () => LocalizedString
+			/**
+			 * Upcoming features
+			 */
+			Upcoming: () => LocalizedString
+		}
+		/**
+		 * (soon)
+		 */
+		Soon: () => LocalizedString
+		/**
+		 * /month
+		 */
+		Month: () => LocalizedString
+		/**
+		 * Become a Pro
+		 */
+		BecomeProButton: () => LocalizedString
+		Success: {
+			/**
+			 * Thanks for becoming a pro!
+			 */
+			PageTitle: () => LocalizedString
+			/**
+			 * You now have access to everything Stablecog has to offer. If you have any questions, reach out to us on {platform}.
+			 */
+			PageParagraph: (arg: { platform: string }) => LocalizedString
+		}
+		Cancel: {
+			/**
+			 * You've cancelled
+			 */
+			PageTitle: () => LocalizedString
+			/**
+			 * You've cancelled the subscription process. If it was a mistake, you can try again.
+			 */
+			PageParagraph: () => LocalizedString
+		}
 	}
 }
 

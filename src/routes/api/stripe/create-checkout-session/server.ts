@@ -1,28 +1,14 @@
+import { defaultStripeTier, stripe, stripeTiers } from '$ts/constants/stripe';
 import { supabaseAdmin } from '$ts/constants/supabaseAdmin';
 import { getSupabase } from '@supabase/auth-helpers-sveltekit';
 import type { RequestHandler } from '@sveltejs/kit';
-import Stripe from 'stripe';
-import { STRIPE_PRO_PRICE_ID_TEST, STRIPE_SECRET_KEY_TEST } from '$env/static/private';
-
-const stripe = new Stripe(STRIPE_SECRET_KEY_TEST, {
-	apiVersion: '2022-11-15'
-});
-
-const tiers = [
-	{
-		name: 'pro',
-		priceId: STRIPE_PRO_PRICE_ID_TEST
-	}
-] as const;
-
-const defaultTier = tiers[0];
 
 export const GET: RequestHandler = async (event) => {
 	const { session } = await getSupabase(event);
 	const url = event.url;
 	const baseUrl = `${url.protocol}//${url.host}`;
 	const tierParam = event.url.searchParams.get('tier');
-	const tier = tiers.find((t) => t.name === tierParam) || defaultTier;
+	const tier = stripeTiers.find((t) => t.name === tierParam) || defaultStripeTier;
 	const email = session?.user.email;
 	if (!email) {
 		return new Response(JSON.stringify({ error: 'No email provided' }));
