@@ -6,11 +6,11 @@ import Stripe from 'stripe';
 
 const cryptoProvider = Stripe.createSubtleCryptoProvider();
 
-export const GET: RequestHandler = async (event) => {
-	const signature = event.request.headers.get('stripe-signature');
-	if (!signature) {
-		return new Response('No signature', { status: 400 });
-	}
+export const POST: RequestHandler = async (event) => {
+	console.log('Stripe webhook - Request received - /api/stripe/webhooks');
+	const signature = event.request.headers.get('Stripe-Signature');
+	if (!signature) return new Response('No signature', { status: 400 });
+
 	const body = await event.request.text();
 
 	let receivedEvent;
@@ -23,10 +23,11 @@ export const GET: RequestHandler = async (event) => {
 			cryptoProvider
 		);
 	} catch (err) {
+		console.log('Stripe webhook - Error constructing event: ', (err as Error).message);
 		return new Response((err as Error).message, { status: 400 });
 	}
 
-	console.log(`Stripe webhook event received: ${receivedEvent.id}`);
+	console.log(`Stripe webhook - Event received: ${receivedEvent.id}`);
 
 	const requestOptions =
 		receivedEvent.request && receivedEvent.request.idempotency_key
@@ -43,6 +44,12 @@ export const GET: RequestHandler = async (event) => {
 	}
 
 	const subscription = retrievedEvent.data.object;
+	// @ts-ignore
+	const customerId = subscription.customer;
+	// @ts-ignore
+	const productId = subscription.plan?.product;
+	if (customerId && productId)
+		console.log(`Stripe webhook - Customer ID: ${customerId} - Product: ${productId}`);
 
 	switch (retrievedEvent.type) {
 		case 'customer.subscription.deleted':
@@ -51,22 +58,19 @@ export const GET: RequestHandler = async (event) => {
 				.update({
 					subscription_tier: 'FREE'
 				})
-				// @ts-ignore
-				.match({ stripe_customer_id: subscription.customer });
+				.match({ stripe_customer_id: customerId });
 			break;
 		case 'customer.subscription.updated':
-			// @ts-ignore
-			const product = await stripe.products.retrieve(subscription.plan.product);
+			const prod = await stripe.products.retrieve(productId);
 			await supabaseAdmin
 				.from('user')
 				.update({
-					subscription_tier: product.name.toUpperCase()
+					subscription_tier: prod.name.toUpperCase()
 				})
-				// @ts-ignore
-				.match({ stripe_customer_id: subscription.customer });
+				.match({ stripe_customer_id: customerId });
 			break;
 		default:
-			console.log(`Unhandled retrievedEvent type ${retrievedEvent.type}`);
+			console.log(`Stripe webhook - Unhandled retrievedEvent type ${retrievedEvent.type}`);
 	}
 
 	return new Response(JSON.stringify({ id: retrievedEvent.id, status: 'ok' }), { status: 200 });

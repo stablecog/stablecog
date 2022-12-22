@@ -9,7 +9,7 @@
 	import { clickoutside } from '$ts/actions/clickoutside';
 	import { elementreceive, elementsend } from '$ts/animation/transitions';
 	import { urlFromBase64 } from '$ts/helpers/base64';
-	import { getImageNameFromGeneration } from '$ts/helpers/getImageNameFromGeneration';
+	import { getImageFileNameFromGeneration } from '$ts/helpers/getImageFileNameFromGeneration';
 	import { activeGeneration } from '$ts/stores/activeGeneration';
 	import { windowHeight, windowWidth } from '$ts/stores/window';
 	import type { TGenerationUI, TUpscaleStatus } from '$ts/types/main';
@@ -513,13 +513,13 @@
 								<SubtleButton
 									onClick={onDownloadImageClicked}
 									href={currentImageUrl}
-									download={getImageNameFromGeneration(
-										generation.prompt,
-										generation.seed,
-										generation.guidance_scale,
-										generation.num_inference_steps,
-										currentImageDataB64
-									)}
+									download={getImageFileNameFromGeneration({
+										prompt: generation.prompt,
+										seed: generation.seed,
+										guidanceScale: generation.guidance_scale,
+										inferenceSteps: generation.num_inference_steps,
+										b64: currentImageDataB64
+									})}
 									state={imageDownloading ? 'success' : 'idle'}
 								>
 									<Morpher morphed={imageDownloading}>
