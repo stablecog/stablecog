@@ -12,6 +12,7 @@
 	imageUrl="{canonicalUrl}/previews/home.png"
 	canonical="{canonicalUrl}{$page.url.pathname}"
 />
+
 <div class="w-full flex-1 flex justify-center px-5 pb-[calc(3vh)]">
 	<div class="my-auto w-full flex flex-col items-center max-w-xl gap-6">
 		<h1 class="font-bold text-2xl">{$LL.Admin.AdminPanelTitle()}</h1>
