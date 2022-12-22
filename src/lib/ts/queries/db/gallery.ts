@@ -72,7 +72,7 @@ export async function getGalleryPage({
 		};
 	});
 	const response: TGalleryResponse = {
-		generations: data,
+		generations: data.slice(0, batch),
 		page,
 		next,
 		totalCount: count !== null && count !== undefined ? count : undefined
