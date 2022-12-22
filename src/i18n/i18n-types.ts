@@ -803,6 +803,24 @@ type RootTranslation = {
 			PageParagraph: string
 		}
 	}
+	Account: {
+		/**
+		 * A​c​c​o​u​n​t
+		 */
+		PageTitle: string
+		/**
+		 * M​a​n​a​g​e​ ​S​u​b​s​c​r​i​p​t​i​o​n
+		 */
+		ManageSubscriptionButton: string
+		/**
+		 * M​a​n​a​g​e​ ​A​c​c​o​u​n​t
+		 */
+		ManageAccountButton: string
+		/**
+		 * M​y​ ​A​c​c​o​u​n​t
+		 */
+		MyAccountButton: string
+	}
 }
 
 export type TranslationFunctions = {
@@ -1581,6 +1599,24 @@ export type TranslationFunctions = {
 			 */
 			PageParagraph: () => LocalizedString
 		}
+	}
+	Account: {
+		/**
+		 * Account
+		 */
+		PageTitle: () => LocalizedString
+		/**
+		 * Manage Subscription
+		 */
+		ManageSubscriptionButton: () => LocalizedString
+		/**
+		 * Manage Account
+		 */
+		ManageAccountButton: () => LocalizedString
+		/**
+		 * My Account
+		 */
+		MyAccountButton: () => LocalizedString
 	}
 }
 

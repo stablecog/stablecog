@@ -279,6 +279,12 @@ const ru: BaseTranslation = {
 			PageParagraph:
 				"You've cancelled the subscription process. If it was a mistake, you can try again."
 		}
+	},
+	Account: {
+		PageTitle: 'Account',
+		ManageSubscriptionButton: 'Manage Subscription',
+		ManageAccountButton: 'Manage Account',
+		MyAccountButton: 'My Account'
 	}
 };
 export default ru;

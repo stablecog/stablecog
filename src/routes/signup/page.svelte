@@ -1,12 +1,15 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
+	import { page } from '$app/stores';
 	import Button from '$components/buttons/Button.svelte';
 	import NoBgButton from '$components/buttons/NoBgButton.svelte';
 	import ErrorLine from '$components/ErrorLine.svelte';
 	import IconLoading from '$components/icons/IconLoading.svelte';
 	import Input from '$components/Input.svelte';
+	import MetaTag from '$components/MetaTag.svelte';
 	import LL from '$i18n/i18n-svelte';
 	import { expandCollapse } from '$ts/animation/transitions';
+	import { canonicalUrl } from '$ts/constants/main';
 	import { supabase } from '$ts/constants/supabase';
 	import type { PageServerData } from './$types';
 
@@ -66,6 +69,13 @@
 		await goto(data.redirect_to || defaultRedirectRoute);
 	}
 </script>
+
+<MetaTag
+	title="Sign Up | Stablecog"
+	description="Sign up to Stablecog and start generating beautiful images with Stable Diffusion."
+	imageUrl="{canonicalUrl}/previews{$page.url.pathname}.png"
+	canonical="{canonicalUrl}{$page.url.pathname}"
+/>
 
 <div class="w-full flex-1 flex flex-col py-8 px-5">
 	<div class="w-full flex flex-col items-center justify-center my-auto">
