@@ -2,6 +2,7 @@
 	import { page } from '$app/stores';
 	import MetaTag from '$components/MetaTag.svelte';
 	import { canonicalUrl } from '$ts/constants/main';
+	import { socialUrls } from '$ts/constants/social';
 </script>
 
 <MetaTag
@@ -29,8 +30,13 @@
 		</p>
 		<h1 class="text-3xl font-bold mt-10">When was it released?</h1>
 		<p class="text-c-on-bg/60 mt-2.5 leading-relaxed">
-			Although some beta testing was done beforehand and everything has been open-source since the
-			start, it was <a
+			Although some beta testing was done beforehand and everything has been <a
+				target="_blank"
+				href={socialUrls.github}
+				class="hover:underline text-c-primary font-semibold">open-source</a
+			>
+			since the start, it was
+			<a
 				target="_blank"
 				href="https://twitter.com/ngyekta/status/1580297548816056320?s=20&t=_ECO2mQZuwfzl8oG4tcizg"
 				class="hover:underline text-c-primary font-semibold">officially announced</a
