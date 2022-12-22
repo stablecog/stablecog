@@ -6,6 +6,9 @@
 	import { onMount } from 'svelte';
 	import { portal } from 'svelte-portal';
 	import { Confetti } from 'svelte-confetti';
+	import MetaTag from '$components/MetaTag.svelte';
+	import { canonicalUrl } from '$ts/constants/main';
+	import { page } from '$app/stores';
 
 	$: confettiColorArray =
 		$theme === 'light'
@@ -17,6 +20,13 @@
 		mounted = true;
 	});
 </script>
+
+<MetaTag
+	title="Succeeded | Stablecog"
+	description="Become a pro member on Stablecog to unlock all of its features."
+	imageUrl="{canonicalUrl}/previews{$page.url.pathname}.png"
+	canonical="{canonicalUrl}{$page.url.pathname}"
+/>
 
 <div class="w-full flex-1 flex flex-col py-8 px-5">
 	<div class="w-full flex flex-col items-center justify-start my-auto">

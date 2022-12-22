@@ -50,16 +50,18 @@
 			if (!currPage || !generations) {
 				throw new Error('Page or generations is null');
 			}
+			const generationIds = generations.map((g) => g.id);
+			const filteredGenerations = resJson.generations.filter((g) => !generationIds.includes(g.id));
 			items = [
 				...items,
-				...resJson.generations.map((_, i) => ({
+				...filteredGenerations.map((_, i) => ({
 					groupKey: currPage,
 					key: generations.length + i
 				}))
 			];
 			generations = [
 				...generations,
-				...resJson.generations.map((g) => {
+				...filteredGenerations.map((g) => {
 					const gen: TGenerationGAdmin = {
 						...g,
 						didLoadBefore: false,

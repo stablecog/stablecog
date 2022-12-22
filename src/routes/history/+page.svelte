@@ -72,7 +72,7 @@
 
 <MetaTag
 	title="History | Stablecog"
-	description="Free, easy to use, multilingual and open-source AI image generator using Stable Diffusion."
+	description="See your generation history on Stablecog (free and multi-lingual AI image generator)."
 	imageUrl="{canonicalUrl}/previews{$page.url.pathname}.png"
 	canonical="{canonicalUrl}{$page.url.pathname}"
 />

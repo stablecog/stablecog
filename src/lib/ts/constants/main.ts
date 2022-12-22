@@ -20,7 +20,15 @@ export const routesWithHiddenFooter = ['/canvas'];
 
 export const maxFreePixelSteps = 640 * 640 * 50;
 
-export const allowedRedirectRoutes = ['/', '/pro', '/history', '/gallery', '/live', '/blog'];
+export const allowedRedirectRoutes = [
+	'/',
+	'/pro',
+	'/history',
+	'/gallery',
+	'/live',
+	'/blog',
+	'/account'
+];
 
 export const isAllowedRedirectRoute = (route: string) => {
 	let allowed = false;
