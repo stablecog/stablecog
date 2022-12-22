@@ -7,7 +7,7 @@
 <MetaTag
 	title="About | Stablecog"
 	description="What is Stablecog? Who created it? How can you contact us?"
-	imageUrl="{canonicalUrl}/previews/home.png"
+	imageUrl="{canonicalUrl}/previews{$page.url.pathname}.png"
 	canonical="{canonicalUrl}{$page.url.pathname}"
 />
 
