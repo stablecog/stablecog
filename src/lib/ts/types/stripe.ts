@@ -1,1 +1,1 @@
-export type IStripeCustomerTier = 'free' | 'pro';
+export type IStripeSubscriptionTier = 'FREE' | 'PRO';

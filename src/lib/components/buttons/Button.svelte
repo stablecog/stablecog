@@ -9,6 +9,7 @@
 	export let size: 'md' | 'sm' | 'xs' = 'md';
 	export let withSpinner = false;
 	export let noPadding = false;
+	export let target: '_blank' | '_self' = '_self';
 	export { classes as class };
 	export let type: 'primary' | 'success' | 'danger' = 'primary';
 	let classes = '';
@@ -17,7 +18,8 @@
 {#if href}
 	<a
 		{href}
-		data-sveltekit-prefetch={prefetch ? '' : 'off'}
+		{target}
+		data-sveltekit-prefetch={prefetch && target !== '_blank' ? '' : 'off'}
 		{disabled}
 		class="{noPadding
 			? 'p-0'

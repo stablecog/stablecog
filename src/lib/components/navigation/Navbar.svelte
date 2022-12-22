@@ -16,9 +16,9 @@
 	import Banner from '$components/Banner.svelte';
 	import IconSocial from '$components/icons/IconSocial.svelte';
 	import { lastClosedNotification } from '$ts/stores/lastClosedNotification';
-	/* import LL from '$i18n/i18n-svelte';
+	import LL from '$i18n/i18n-svelte';
 	import Button from '$components/buttons/Button.svelte';
-	import AccountMenu from '$components/AccountMenu.svelte'; */
+	import AccountMenu from '$components/AccountMenu.svelte';
 	let isSwitchServerModalOpen = false;
 	let isSettingsOpen = false;
 	let isAccountMenuOpen = false;

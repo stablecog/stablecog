@@ -10,15 +10,17 @@ const stripe = new Stripe(env.STRIPE_SECRET_KEY_TEST, {
 export const POST: RequestHandler = async ({ request }) => {
 	const body: IBody = await request.json();
 	const record = body.record;
+
 	if (!record.email) {
 		return new Response(JSON.stringify({ error: 'No email provided' }));
 	}
 	if (!record.id) {
 		return new Response(JSON.stringify({ error: 'No ID provided' }));
 	}
+
 	const { data, error } = await supabaseAdmin
 		.from('user')
-		.select('id,stripe_customer_id,email')
+		.select('id,email,stripe_customer_id')
 		.eq('id', record.id)
 		.maybeSingle();
 	if (error) {
@@ -33,20 +35,20 @@ export const POST: RequestHandler = async ({ request }) => {
 	if (!data.email || data.email !== record.email) {
 		return new Response(JSON.stringify({ error: 'Emails do not match' }));
 	}
-	if (!data.id || data.id !== record.id) {
-		return new Response(JSON.stringify({ error: 'IDs do not match' }));
-	}
+
 	const customer = await stripe.customers.create({
 		email: record.email,
 		metadata: {
 			supabase_id: record.id
 		}
 	});
+
 	const { data: dataUpdate, error: errorUpdate } = await supabaseAdmin
 		.from('user')
 		.update({ stripe_customer_id: customer.id })
-		.eq('id', record.id)
+		.match({ id: record.id })
 		.select('stripe_customer_id');
+
 	return new Response(JSON.stringify({ data: dataUpdate, error: errorUpdate }));
 };
 

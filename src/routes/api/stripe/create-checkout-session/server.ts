@@ -5,18 +5,17 @@ import type { RequestHandler } from '@sveltejs/kit';
 
 export const GET: RequestHandler = async (event) => {
 	const { session } = await getSupabase(event);
+	if (!session?.user.id) {
+		return new Response(JSON.stringify({ error: 'No user ID' }));
+	}
 	const url = event.url;
 	const baseUrl = `${url.protocol}//${url.host}`;
 	const tierParam = event.url.searchParams.get('tier');
 	const tier = stripeTiers.find((t) => t.name === tierParam) || defaultStripeTier;
-	const email = session?.user.email;
-	if (!email) {
-		return new Response(JSON.stringify({ error: 'No email provided' }));
-	}
 	const { data: userData, error: userError } = await supabaseAdmin
 		.from('user')
-		.select('id,stripe_customer_id')
-		.eq('email', email)
+		.select('stripe_customer_id')
+		.eq('id', session.user.id)
 		.maybeSingle();
 	if (userError || !userData) {
 		return new Response(JSON.stringify({ error: userError || 'No user found' }));
@@ -42,7 +41,3 @@ export const GET: RequestHandler = async (event) => {
 		})
 	);
 };
-
-interface IBody {
-	access_token: string;
-}

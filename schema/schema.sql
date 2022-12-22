@@ -575,9 +575,12 @@ CREATE POLICY "Admins can edit models" ON public.model FOR ALL USING (
     )
 );
 
+CREATE TYPE user_subscription_tier_enum AS ENUM ('FREE', 'PRO');
+
 CREATE TABLE public."user" (
-    "id" UUID REFERENCES auth.users(id) NOT NULL ON DELETE CASCADE,
+    "id" UUID REFERENCES auth.users(id) ON DELETE CASCADE NOT NULL,
     "email" TEXT NOT NULL,
+    "subscription_tier" user_subscription_tier_enum DEFAULT 'FREE' NOT NULL,
     "created_at" TIMESTAMPTZ DEFAULT TIMEZONE('utc' :: TEXT, NOW()) NOT NULL,
     "updated_at" TIMESTAMPTZ DEFAULT TIMEZONE('utc' :: TEXT, NOW()) NOT NULL,
     "stripe_customer_id" TEXT,
@@ -590,6 +593,10 @@ UPDATE
 
 ALTER TABLE
     public.user ENABLE ROW LEVEL SECURITY;
+
+CREATE POLICY "Users can select their on entry" ON public.user FOR
+SELECT
+    USING (auth.uid() = id);
 
 create function handle_new_user() returns trigger as $ $ begin
 insert into
