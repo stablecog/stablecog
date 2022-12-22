@@ -1,3 +1,16 @@
+<script lang="ts">
+	import { page } from '$app/stores';
+	import MetaTag from '$components/MetaTag.svelte';
+	import { canonicalUrl } from '$ts/constants/main';
+</script>
+
+<MetaTag
+	title="About | Stablecog"
+	description="What is Stablecog? Who created it? How can you contact us?"
+	imageUrl="{canonicalUrl}/previews/home.png"
+	canonical="{canonicalUrl}{$page.url.pathname}"
+/>
+
 <div class="w-full flex-1 flex flex-col justify-center items-center py-8 px-5">
 	<div class="w-full flex flex-col items-start justify-center my-auto max-w-3xl">
 		<h1 class="text-3xl font-bold">What is Stablecog?</h1>
