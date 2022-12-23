@@ -8,7 +8,10 @@ import (
 )
 
 func IsRateLimited(c *fiber.Ctx, minDuration time.Duration) bool {
-	ip := c.Get("X-Forwarded-For")
+	ip := c.Get("CF-Connecting-IP")
+	if ip == "" {
+		ip = c.Get("X-Forwarded-For")
+	}
 	if ip == "" {
 		ip = c.IP()
 	}
