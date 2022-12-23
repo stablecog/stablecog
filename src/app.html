@@ -36,12 +36,12 @@
 			src="https://umami.stablecog.com/umami.js"
 		></script>
 		<script>
-			window.addEventListener('unhandledrejection', function (e) {
+			/* window.addEventListener('unhandledrejection', function (e) {
 				alert(
 					'Something completely unexpected happened. Please reach us out on Twitter (@stablecog) or via email (hello@stablecog.com) to report the error: ' +
 						e.reason.message
 				);
-			});
+			}); */
 			window.onload = () => {
 				try {
 					const version = document.body.getAttribute('version');
