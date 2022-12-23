@@ -11,7 +11,7 @@ import (
 var seed int
 var counter int
 
-func SetSeed() {
+func SetupSeed() {
 	rand.Seed(time.Now().Unix())
 	seed = rand.Intn(1000)
 	counter = seed
