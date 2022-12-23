@@ -312,7 +312,7 @@
 						transition:expandCollapse|local={{ duration: 300 }}
 						class="flex flex-col justify-start origin-top px-8"
 					>
-						<p class="w-full max-w-lg leading-relaxed text-c-on-bg/40 text-center py-4">
+						<p class="w-full max-w-lg leading-relaxed text-c-on-bg/40 text-center py-4 md:py-2">
 							{generationError
 								? generationError.message === 'NSFW'
 									? $LL.Error.NSFW()
