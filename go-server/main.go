@@ -25,6 +25,7 @@ func main() {
 	defer vips.Shutdown()
 
 	shared.SetSeed()
+	generate.SetRedis()
 
 	app := fiber.New()
 	cors := cors.New(cors.Config{
