@@ -53,6 +53,7 @@
 	export let generation: TGenerationUI;
 	export let upscaleStatus: TUpscaleStatus = 'idle';
 
+	let upscaleErrorText: string | undefined;
 	let currentImageUrl: string;
 	let currentImageDataB64: string;
 	let upscaledImageWidth: number | undefined;
@@ -221,6 +222,7 @@
 			upscaleDurationSec = (Date.now() - start) / 1000;
 		}, 100);
 		upscaleStatus = 'idle';
+		upscaleErrorText = undefined;
 		await tick();
 		setTimeout(() => (upscaleStatus = 'loading'));
 		try {
@@ -235,6 +237,9 @@
 				height: generation.height,
 				width: generation.width
 			});
+			if (res.error) {
+				throw new Error(res.error);
+			}
 			if (res.data?.image_b64) {
 				uLogUpscale('Succeeded');
 				mLogUpscale('Succeeded', { ...upscaleMinimal, 'SC - Duration': res.data.duration_ms });
@@ -254,13 +259,17 @@
 		} catch (error) {
 			uLogUpscale('Failed');
 			mLogUpscale('Failed', upscaleMinimal);
-			console.log(error);
+			console.log('Upscale image error:', error);
 			upscaleStatus = 'error';
+			if ((error as Error).message) {
+				upscaleErrorText = (error as Error).message;
+			}
 		}
 		if (upscaleStatus !== 'error') {
 			upscaledTabValue = 'upscaled';
 			lastUpscaleDurationSec.set(upscaleDurationSec);
 			upscaleStatus = 'success';
+			upscaleErrorText = undefined;
 		}
 		clearTimeout(upscaleDurationSecCalcInterval);
 	}
@@ -419,7 +428,7 @@
 							<p
 								class="text-center font-medium text-xs md:text-sm shadow-lg shadow-c-shadow/[var(--o-shadow-stronger)] bg-c-bg-secondary px-4 py-3 rounded-xl"
 							>
-								{$LL.Error.SomethingWentWrong()}
+								{upscaleErrorText ?? $LL.Error.SomethingWentWrong()}
 							</p>
 						</div>
 					{/if}

@@ -2,14 +2,12 @@ package generate
 
 import (
 	"bytes"
-	"context"
 	"fmt"
 	"log"
 	"math/rand"
 	"net/http"
 	"time"
 
-	"github.com/go-redis/redis/v9"
 	"github.com/goccy/go-json"
 
 	"github.com/fatih/color"
@@ -21,47 +19,25 @@ import (
 
 var green = color.New(color.FgHiGreen).SprintFunc()
 var yellow = color.New(color.FgHiYellow).SprintFunc()
-var rdb *redis.Client
-var ctx = context.Background()
 
-func SetRedis() {
-	url := fmt.Sprintf(
-		"redis://%s:%s@%s:%s",
-		shared.GetEnv("REDIS_USERNAME"),
-		shared.GetEnv("REDIS_PASSWORD"),
-		shared.GetEnv("REDIS_HOST"),
-		shared.GetEnv("REDIS_PORT"),
-	)
-	opts, optsErr := redis.ParseURL(url)
-	if optsErr != nil {
-		log.Printf("-- Redis - Error parsing url: %v --", optsErr)
-	}
-	rdb = redis.NewClient(opts)
-	res := rdb.Ping(ctx)
-	log.Printf("-- Redis - Status - %v --", res)
-}
+var minDuration = time.Second * 4
 
 func Handler(c *fiber.Ctx) error {
 	start := time.Now().UTC().UnixMilli()
-	ip := c.Get("X-Forwarded-For")
-	if ip == "" {
-		ip = c.IP()
-	}
-	ipKey := fmt.Sprintf("ip:%s", ip)
-	minDuration := time.Second * 5
+
 	countryCode := c.Get("CF-IPCountry")
 	if countryCode == "" {
 		countryCode = c.Get("X-Vercel-IP-Country")
 	}
-	res := rdb.Get(ctx, ipKey)
-	if res.Val() == "" {
-		rdb.Set(ctx, ipKey, 1, minDuration)
-	} else if res.Val() == "1" {
-		log.Printf("-- Redis - Rate limiting - %s --", countryCode)
+
+	isRateLimited := shared.IsRateLimited(c, minDuration)
+	if isRateLimited {
+		log.Printf("-- Generation - Rate limited!: %s --", countryCode)
 		return c.Status(http.StatusTooManyRequests).JSON(
-			SGenerateResponse{Error: fmt.Sprintf("You can only make a generation every %d seconds", minDuration/time.Second)},
+			SGenerateResponse{Error: fmt.Sprintf("You can only start a generation every %d seconds :(", minDuration/time.Second)},
 		)
 	}
+
 	var req shared.SGenerateRequestBody
 	if err := c.BodyParser(&req); err != nil {
 		log.Printf("-- Invalid request body: %v --", err)

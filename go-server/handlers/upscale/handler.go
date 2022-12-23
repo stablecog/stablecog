@@ -22,8 +22,24 @@ const upscaleType = "Real-World Image Super-Resolution-Large"
 const processType = "upscale"
 const scale = 4
 
+var minDuration = time.Second * 4
+
 func Handler(c *fiber.Ctx) error {
 	start := time.Now().UTC().UnixMilli()
+
+	countryCode := c.Get("CF-IPCountry")
+	if countryCode == "" {
+		countryCode = c.Get("X-Vercel-IP-Country")
+	}
+
+	isRateLimited := shared.IsRateLimited(c, minDuration)
+	if isRateLimited {
+		log.Printf("-- Upscale - Rate limited!: %s --", countryCode)
+		return c.Status(http.StatusTooManyRequests).JSON(
+			SUpscaleResponse{Error: fmt.Sprintf("You can only start an upscale every %d seconds :(", minDuration/time.Second)},
+		)
+	}
+
 	var req shared.SUpscaleRequestBody
 	if err := c.BodyParser(&req); err != nil {
 		return c.Status(http.StatusBadRequest).JSON(
@@ -44,10 +60,6 @@ func Handler(c *fiber.Ctx) error {
 	userAgent := c.Get("User-Agent")
 	client := useragent.Parse(userAgent)
 	upscaleIdChan := make(chan string)
-	countryCode := c.Get("CF-IPCountry")
-	if countryCode == "" {
-		countryCode = c.Get("X-Vercel-IP-Country")
-	}
 
 	var logObj = loggers.SUpscaleLogObject{
 		Prompt:            cleanedPrompt,
