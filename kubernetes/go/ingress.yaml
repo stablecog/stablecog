@@ -12,6 +12,7 @@ metadata:
     nginx.org/proxy-connect-timeout: 180s
     nginx.org/proxy-read-timeout: 180s
     nginx.org/client-max-body-size: 10m
+    nginx.ingress.kubernetes.io/upstream-hash-by: $http_cf_connecting_ip
     nginx.ingress.kubernetes.io/affinity: 'cookie'
     nginx.ingress.kubernetes.io/session-cookie-name: 'stablecog_session'
     nginx.ingress.kubernetes.io/session-cookie-expires: '600'
