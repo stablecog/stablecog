@@ -1,23 +1,12 @@
 package generate
 
 import (
-	"bytes"
-	"encoding/base64"
-	"fmt"
 	"log"
-	"strings"
 	"sync"
 	"time"
 
-	"github.com/google/uuid"
-	"github.com/h2non/bimg"
 	"github.com/yekta/stablecog/go-server/shared"
 )
-
-var webpToUploadOptions = bimg.Options{
-	Quality: 85,
-	Type:    bimg.WEBP,
-}
 
 func UpdateGenerationAsSucceeded(
 	generationIdChan chan string,
@@ -26,15 +15,12 @@ func UpdateGenerationAsSucceeded(
 	durationMs int64,
 	promptIdChan chan string,
 	negativePromptIdChan chan string,
-	b64 string,
-	supabaseUserId string,
 ) {
 	generationId := <-generationIdChan
 	close(generationIdChan)
 	start := time.Now().UTC().UnixMilli()
 	promptId := ""
 	negativePromptId := ""
-	imageId := ""
 
 	var wg sync.WaitGroup
 	wg.Add(2)
@@ -108,33 +94,6 @@ func UpdateGenerationAsSucceeded(
 		}
 		defer wg.Done()
 	}()
-	log.Printf("Uploading image to Supabase: %s", supabaseUserId)
-	if supabaseUserId != "" {
-		wg.Add(1)
-		go func() {
-			imgId := uuid.New()
-			path := fmt.Sprintf("%s/%s.webp", supabaseUserId, imgId.String())
-			arr := strings.Split(b64, ";base64,")
-			b64str := arr[len(arr)-1]
-			buff, bErr := base64.StdEncoding.DecodeString(b64str)
-			webp, err := bimg.NewImage(buff).Process(webpToUploadOptions)
-			if err != nil {
-				log.Printf("-- Generate - Error converting to webp for uploading to Supabase: %v --", err)
-				return
-			}
-			data := bytes.NewReader(webp)
-			if bErr != nil {
-				log.Printf("-- Gallery - Error decoding base64 image: %v --", bErr)
-				return
-			}
-			res := shared.Supabase.Storage.From("generation").Upload(path, data)
-			if res.Key != "" {
-				imageId = res.Key
-			}
-			log.Printf("Image id: %s", imageId)
-			defer wg.Done()
-		}()
-	}
 	wg.Wait()
 
 	var res SDBGenerationUpdateAsSucceededRes

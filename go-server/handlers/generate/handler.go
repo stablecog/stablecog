@@ -227,8 +227,6 @@ func Handler(c *fiber.Ctx) error {
 		generationCogDurationMs,
 		promptIdChan,
 		negativePromptIdChan,
-		output,
-		supabaseUserId,
 	)
 	if req.ShouldSubmitToGallery {
 		go SubmitToGallery(SSubmitToGalleryProps{
