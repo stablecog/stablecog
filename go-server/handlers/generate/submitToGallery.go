@@ -3,11 +3,9 @@ package generate
 import (
 	"bytes"
 	"context"
-	"encoding/base64"
 	"fmt"
 	"log"
 	"os"
-	"strings"
 	"time"
 
 	"github.com/aws/aws-sdk-go/aws"
@@ -32,7 +30,7 @@ var s3sess = session.New(s3Conf)
 var uploader = s3manager.NewUploader(s3sess)
 var bucket = "stablecog"
 
-var webpOptions = bimg.Options{
+var webpOptionsGallery = bimg.Options{
 	Quality: 85,
 	Type:    bimg.WEBP,
 }
@@ -44,17 +42,14 @@ func SubmitToGallery(p SSubmitToGalleryProps) {
 	close(p.NegativePromptIdChan)
 	s := time.Now().UTC().UnixMilli()
 
-	arr := strings.Split(p.ImageB64, ";base64,")
-	b64str := arr[len(arr)-1]
-	buff, bErr := base64.StdEncoding.DecodeString(b64str)
+	buff, bErr := shared.BufferFromB64(p.ImageB64)
 	if bErr != nil {
 		log.Printf("-- Gallery - Error decoding base64 image: %v --", bErr)
-		return
 	}
 
 	// Vips process for converting to WebP
 	sVips := time.Now().UTC().UnixMilli()
-	webpBuff, errBuff := bimg.NewImage(buff).Process(webpOptions)
+	webpBuff, errBuff := bimg.NewImage(buff).Process(webpOptionsGallery)
 	webpMeta, errMeta := bimg.Metadata(webpBuff)
 	if errBuff != nil {
 		log.Printf("-- Gallery - Error converting to WebP: %v --", errBuff)
@@ -93,7 +88,7 @@ func SubmitToGallery(p SSubmitToGalleryProps) {
 
 	// Insert to DB
 	var insertRes SDBGalleryInsertRes
-	_, insertErr := shared.SupabasePostgrest.From("generation_g").Insert(SDBGenerationGInsertBody{
+	_, insertErr := shared.SupabaseDb.From("generation_g").Insert(SDBGenerationGInsertBody{
 		ImageId:           imgId,
 		Width:             webpMeta.Size.Width,
 		Height:            webpMeta.Size.Height,

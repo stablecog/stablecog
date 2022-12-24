@@ -33,7 +33,7 @@ func InsertUpscaleInitial(g SInsertUpscaleProps) string {
 		CountryCode:       g.CountryCode,
 	}
 	var res SDBUpscaleInsertInitialRes
-	_, err := shared.SupabasePostgrest.From("upscale").Insert(insertBody, false, "", "", "").Single().ExecuteTo(&res)
+	_, err := shared.SupabaseDb.From("upscale").Insert(insertBody, false, "", "", "").Single().ExecuteTo(&res)
 	if err != nil {
 		log.Printf(red("-- DB - Error inserting upscale: %v --"), err)
 		return ""

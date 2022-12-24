@@ -15,7 +15,7 @@ func GetGenerationGs(page int, batchSize int, filter string) []SDBGenerationG {
 	} else if filter == "all" {
 		filterValue = "(true,false)"
 	}
-	_, err := shared.SupabasePostgrest.From("generation_g").
+	_, err := shared.SupabaseDb.From("generation_g").
 		Select(`prompt:prompt_id(id,text),negative_prompt:negative_prompt_id(id,text),model:model_id(id,name),scheduler:scheduler_id(id,name),width,height,seed,num_inference_steps,guidance_scale,image_id,created_at,updated_at,id`, "", false).
 		Filter("hidden", "in", filterValue).
 		Order("created_at", &postgrest.OrderOpts{Ascending: false}).

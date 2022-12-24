@@ -31,7 +31,7 @@ func InsertGenerationInitial(g SInsertGenerationProps) string {
 		CountryCode:       g.CountryCode,
 	}
 	var res SDBGenerationInsertInitialRes
-	_, err := shared.SupabasePostgrest.From("generation").Insert(insertBody, false, "", "", "").Single().ExecuteTo(&res)
+	_, err := shared.SupabaseDb.From("generation").Insert(insertBody, false, "", "", "").Single().ExecuteTo(&res)
 	if err != nil {
 		log.Printf(red("-- DB - Error inserting generation: %v --"), err)
 		return ""

@@ -20,7 +20,7 @@ func UpdateUpscaleAsSucceeded(
 		Status:     "succeeded",
 		DurationMs: durationMs,
 	}
-	_, err := shared.SupabasePostgrest.From("upscale").Update(value, "", "").Eq("id", upscaleId).ExecuteTo(res)
+	_, err := shared.SupabaseDb.From("upscale").Update(value, "", "").Eq("id", upscaleId).ExecuteTo(res)
 	if err != nil {
 		log.Printf("-- DB - Error updating upscale as succeeded: %v --", err)
 		return
@@ -38,7 +38,7 @@ func UpdateUpscaleAsFailed(upscaleIdChan chan string, durationMs int64) {
 		Status:     "failed",
 		DurationMs: durationMs,
 	}
-	_, err := shared.SupabasePostgrest.From("upscale").Update(value, "", "").Eq("id", upscaleId).ExecuteTo(res)
+	_, err := shared.SupabaseDb.From("upscale").Update(value, "", "").Eq("id", upscaleId).ExecuteTo(res)
 	if err != nil {
 		log.Printf("-- DB - Error updating upscale as failed: %v --", err)
 		return

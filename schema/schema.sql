@@ -24,6 +24,7 @@ CREATE TABLE "generation" (
     "user_agent" TEXT,
     "id" UUID NOT NULL DEFAULT uuid_generate_v4(),
     "user_id" UUID REFERENCES auth.users(id),
+    "image_object_name" TEXT,
     "created_at" TIMESTAMPTZ DEFAULT TIMEZONE('utc' :: TEXT, NOW()) NOT NULL,
     "updated_at" TIMESTAMPTZ DEFAULT TIMEZONE('utc' :: TEXT, NOW()) NOT NULL,
     PRIMARY KEY(id)
@@ -35,6 +36,10 @@ UPDATE
 
 ALTER TABLE
     generation ENABLE ROW LEVEL SECURITY;
+
+CREATE POLICY "Users can select their own generation" ON public.generation FOR
+SELECT
+    USING (auth.uid() = user_id);
 
 CREATE TABLE "prompt" (
     "text" TEXT NOT NULL UNIQUE,
@@ -618,3 +623,8 @@ create trigger on_auth_user_created
 after
 insert
     on auth.users for each row execute procedure handle_new_user();
+
+CREATE POLICY "Give users access to their own folder in generation bucket" ON storage.objects FOR ALL TO public USING (
+    bucket_id = 'generation'
+    AND auth.uid() :: text = (storage.foldername(name)) [1]
+);

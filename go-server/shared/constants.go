@@ -1,22 +1,26 @@
 package shared
 
 import (
+	"fmt"
+
 	"github.com/fatih/color"
-	supa "github.com/nedpals/supabase-go"
+	"github.com/supabase-community/gotrue-go"
+	"github.com/supabase-community/storage-go"
 	"github.com/supabase/postgrest-go"
 )
 
 var SUPABASE_ADMIN_KEY = GetEnv("SUPABASE_ADMIN_KEY")
 var SUPABASE_URL = GetEnv("PUBLIC_SUPABASE_URL")
+var SUPABASE_REFERENCE_ID = GetEnv("PUBLIC_SUPABASE_REFERENCE_ID")
 var PUBLIC_SUPABASE_POSTGREST_URL = GetEnv("PUBLIC_SUPABASE_POSTGREST_URL")
 var DEFAULT_SERVER_URL = GetEnv("PUBLIC_DEFAULT_SERVER_URL")
 
-var SupabasePostgrest = postgrest.NewClient(PUBLIC_SUPABASE_POSTGREST_URL, "", map[string]string{
+var SupabaseDb = postgrest.NewClient(PUBLIC_SUPABASE_POSTGREST_URL, "", map[string]string{
 	"Authorization": "Bearer " + SUPABASE_ADMIN_KEY,
 	"apikey":        SUPABASE_ADMIN_KEY,
 })
-
-var Supabase = supa.CreateClient(SUPABASE_URL, SUPABASE_ADMIN_KEY)
+var SupabaseAuth = gotrue.New(SUPABASE_REFERENCE_ID, SUPABASE_ADMIN_KEY)
+var SupabaseStorage = storage_go.NewClient(fmt.Sprintf("%s/storage/v1", SUPABASE_URL), SUPABASE_ADMIN_KEY, nil)
 
 const MaxSeed = 640 * 640 * 50
 const MaxPromptLen = 500

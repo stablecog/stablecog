@@ -10,9 +10,9 @@ func GetSupabaseUserIdFromAccessToken(accessToken string) string {
 	if accessToken == "" {
 		return ""
 	}
-	user, err := Supabase.Auth.User(ctx, accessToken)
+	user, err := SupabaseAuth.WithToken(accessToken).GetUser()
 	if err != nil || user == nil {
 		return ""
 	}
-	return user.ID
+	return user.ID.String()
 }

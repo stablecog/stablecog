@@ -12,22 +12,21 @@ require (
 	github.com/jellydator/ttlcache/v3 v3.0.0
 	github.com/joho/godotenv v1.4.0
 	github.com/mileusna/useragent v1.2.1
-	github.com/nedpals/supabase-go v0.2.0
 	github.com/robfig/cron/v3 v3.0.1
+	github.com/supabase-community/gotrue-go v1.0.1
+	github.com/supabase-community/storage-go v0.5.7
 	github.com/supabase/postgrest-go v0.0.7
 )
 
 require (
 	github.com/andybalholm/brotli v1.0.4 // indirect
-	github.com/google/go-querystring v1.1.0 // indirect
 	github.com/jmespath/go-jmespath v0.4.0 // indirect
 	github.com/klauspost/compress v1.15.9 // indirect
 	github.com/mattn/go-colorable v0.1.13 // indirect
 	github.com/mattn/go-isatty v0.0.16 // indirect
 	github.com/mattn/go-runewidth v0.0.14 // indirect
-	github.com/nedpals/postgrest-go v0.1.2 // indirect
 	github.com/rivo/uniseg v0.2.0 // indirect
-	github.com/stretchr/testify v1.8.1 // indirect
+	github.com/tomnomnom/linkheader v0.0.0-20180905144013-02ca5825eb80 // indirect
 	github.com/valyala/bytebufferpool v1.0.0 // indirect
 	github.com/valyala/fasthttp v1.41.0 // indirect
 	github.com/valyala/tcplisten v1.0.0 // indirect

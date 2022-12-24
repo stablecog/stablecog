@@ -28,7 +28,7 @@ func PickServerUrl(serverUrl string) SServerUrlResult {
 	}
 	order := postgrest.OrderOpts{Ascending: false}
 	var servers []SDBServer
-	_, err := SupabasePostgrest.From("server").
+	_, err := SupabaseDb.From("server").
 		Select("id,url,healthy,enabled,created_at,updated_at,last_health_check_at", "", false).
 		Filter("enabled", "eq", "true").
 		Filter("healthy", "eq", "true").

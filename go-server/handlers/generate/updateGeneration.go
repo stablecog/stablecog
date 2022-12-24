@@ -1,12 +1,24 @@
 package generate
 
 import (
+	"bytes"
+	"fmt"
 	"log"
 	"sync"
 	"time"
 
+	"github.com/google/uuid"
+	"github.com/h2non/bimg"
 	"github.com/yekta/stablecog/go-server/shared"
 )
+
+var bucketId = "generation"
+var imageExt = "webp"
+
+var webpOptionsStorage = bimg.Options{
+	Quality: 90,
+	Type:    bimg.WEBP,
+}
 
 func UpdateGenerationAsSucceeded(
 	generationIdChan chan string,
@@ -15,6 +27,9 @@ func UpdateGenerationAsSucceeded(
 	durationMs int64,
 	promptIdChan chan string,
 	negativePromptIdChan chan string,
+	supabaseUserId string,
+	subscriptionTier string,
+	b64 string,
 ) {
 	generationId := <-generationIdChan
 	close(generationIdChan)
@@ -22,12 +37,14 @@ func UpdateGenerationAsSucceeded(
 	promptId := ""
 	negativePromptId := ""
 
+	imageObjectName := ""
+
 	var wg sync.WaitGroup
 	wg.Add(2)
 	go func() {
 		if prompt != "" {
 			var promptRes []SDBPromptSelectRes
-			_, err := shared.SupabasePostgrest.From("prompt").
+			_, err := shared.SupabaseDb.From("prompt").
 				Select("id", "", false).
 				Eq("text", prompt).
 				ExecuteTo(&promptRes)
@@ -39,7 +56,7 @@ func UpdateGenerationAsSucceeded(
 				promptId = promptRes[0].Id
 			} else {
 				var promptInsertRes SDBPromptInsertRes
-				_, err := shared.SupabasePostgrest.
+				_, err := shared.SupabaseDb.
 					From("prompt").
 					Insert(
 						SDBPromptInsertBody{
@@ -62,7 +79,7 @@ func UpdateGenerationAsSucceeded(
 	go func() {
 		if negativePrompt != "" {
 			var negativePromptRes []SDBNegativePromptSelectRes
-			_, err := shared.SupabasePostgrest.From("negative_prompt").
+			_, err := shared.SupabaseDb.From("negative_prompt").
 				Select("id", "", false).
 				Eq("text", negativePrompt).
 				ExecuteTo(&negativePromptRes)
@@ -74,7 +91,7 @@ func UpdateGenerationAsSucceeded(
 				negativePromptId = negativePromptRes[0].Id
 			} else {
 				var negativePromptInsertRes SDBNegativePromptInsertRes
-				_, err := shared.SupabasePostgrest.
+				_, err := shared.SupabaseDb.
 					From("negative_prompt").
 					Insert(
 						SDBNegativePromptInsertBody{
@@ -94,6 +111,31 @@ func UpdateGenerationAsSucceeded(
 		}
 		defer wg.Done()
 	}()
+	if supabaseUserId != "" && subscriptionTier == "PRO" {
+		wg.Add(1)
+		go func() {
+			imageId := uuid.New().String()
+			path := fmt.Sprintf("%s/%s.%s", supabaseUserId, imageId, imageExt)
+			name := fmt.Sprintf("%s.%s", imageId, imageExt)
+			buff, bErr := shared.BufferFromB64(b64)
+			if bErr != nil {
+				log.Printf("-- Supabase Storage Upload - Error converting b64 to buffer: %v --", bErr)
+				return
+			}
+			buffWebp, wErr := bimg.NewImage(buff).Process(webpOptionsStorage)
+			if wErr != nil {
+				log.Printf("-- Supabase Storage Upload - Error converting to webp: %v --", wErr)
+				return
+			}
+			data := bytes.NewReader(buffWebp)
+			res := shared.SupabaseStorage.UploadFile(bucketId, path, data)
+			if res.Key != "" {
+				imageObjectName = name
+			}
+			log.Printf("-- Supabase Storage Upload - Image Object Name: %s --", imageObjectName)
+			defer wg.Done()
+		}()
+	}
 	wg.Wait()
 
 	var res SDBGenerationUpdateAsSucceededRes
@@ -102,8 +144,9 @@ func UpdateGenerationAsSucceeded(
 		NegativePromptId: negativePromptId,
 		Status:           "succeeded",
 		DurationMs:       durationMs,
+		ImageObjectName:  imageObjectName,
 	}
-	_, err := shared.SupabasePostgrest.From("generation").Update(value, "", "").Eq("id", generationId).ExecuteTo(res)
+	_, err := shared.SupabaseDb.From("generation").Update(value, "", "").Eq("id", generationId).ExecuteTo(res)
 	if err != nil {
 		log.Printf("-- DB - Error updating generation as succeeded: %v --", err)
 		return
@@ -128,7 +171,7 @@ func UpdateGenerationAsFailed(generationIdChan chan string, durationMs int64, is
 		DurationMs:    durationMs,
 		FailureReason: failureReason,
 	}
-	_, err := shared.SupabasePostgrest.From("generation").Update(value, "", "").Eq("id", generationId).ExecuteTo(res)
+	_, err := shared.SupabaseDb.From("generation").Update(value, "", "").Eq("id", generationId).ExecuteTo(res)
 	if err != nil {
 		log.Printf("-- DB - Error updating generation as failed: %v --", err)
 		return
@@ -172,6 +215,7 @@ type SDBGenerationSucceededUpdate struct {
 	NegativePromptId string `json:"negative_prompt_id,omitempty"`
 	Status           string `json:"status"`
 	DurationMs       int64  `json:"duration_ms"`
+	ImageObjectName  string `json:"image_object_name,omitempty"`
 }
 
 type SDBGenerationFailedUpdate struct {

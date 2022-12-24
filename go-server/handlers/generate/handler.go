@@ -119,6 +119,17 @@ func Handler(c *fiber.Ctx) error {
 	loggers.LogGeneration("Generation started", logObj)
 
 	supabaseUserId := shared.GetSupabaseUserIdFromAccessToken(req.AccessToken)
+	subscriptionTier := "FREE"
+	if supabaseUserId != "" {
+		var res SUserResponse
+		_, err := shared.SupabaseDb.From("user").Select("subscription_tier", "", false).Eq("id", supabaseUserId).Single().ExecuteTo(&res)
+		if err != nil {
+			log.Printf("Failed to get user tier: %v", err)
+		} else {
+			log.Printf("User tier: %s", res.SubsciptionTier)
+			subscriptionTier = res.SubsciptionTier
+		}
+	}
 
 	go InsertGenerationInitial(SInsertGenerationProps{
 		Status:            "started",
@@ -227,6 +238,9 @@ func Handler(c *fiber.Ctx) error {
 		generationCogDurationMs,
 		promptIdChan,
 		negativePromptIdChan,
+		supabaseUserId,
+		subscriptionTier,
+		output,
 	)
 	if req.ShouldSubmitToGallery {
 		go SubmitToGallery(SSubmitToGalleryProps{
@@ -260,4 +274,8 @@ type SGenerateResponse struct {
 type SGenerateResponseData struct {
 	ImageB64   string `json:"image_b64"`
 	DurationMs int64  `json:"duration_ms"`
+}
+
+type SUserResponse struct {
+	SubsciptionTier string `json:"subscription_tier"`
 }
