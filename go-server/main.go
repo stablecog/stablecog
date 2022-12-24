@@ -5,9 +5,9 @@ import (
 	"fmt"
 	"log"
 
-	"github.com/davidbyttow/govips/v2/vips"
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/cors"
+	"github.com/h2non/bimg"
 	"github.com/robfig/cron/v3"
 	"github.com/yekta/stablecog/go-server/cron/health"
 	"github.com/yekta/stablecog/go-server/handlers/gallery"
@@ -21,8 +21,10 @@ import (
 func main() {
 	serverPort := flag.Int("port", 3001, "Port to listen on")
 
-	vips.Startup(nil)
-	defer vips.Shutdown()
+	bimg.Initialize()
+	bimg.VipsCacheSetMaxMem(0)
+	bimg.VipsCacheSetMax(0)
+	defer bimg.Shutdown()
 
 	shared.SetupSeed()
 	shared.SetupCache()

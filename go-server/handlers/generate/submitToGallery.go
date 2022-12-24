@@ -14,8 +14,8 @@ import (
 	"github.com/aws/aws-sdk-go/aws/credentials"
 	"github.com/aws/aws-sdk-go/aws/session"
 	"github.com/aws/aws-sdk-go/service/s3/s3manager"
-	"github.com/davidbyttow/govips/v2/vips"
 	"github.com/google/uuid"
+	"github.com/h2non/bimg"
 
 	"github.com/yekta/stablecog/go-server/shared"
 )
@@ -32,6 +32,11 @@ var s3sess = session.New(s3Conf)
 var uploader = s3manager.NewUploader(s3sess)
 var bucket = "stablecog"
 
+var webpOptions = bimg.Options{
+	Quality: 85,
+	Type:    bimg.WEBP,
+}
+
 func SubmitToGallery(p SSubmitToGalleryProps) {
 	promptId := <-p.PromptIdChan
 	negativePromptId := <-p.NegativePromptIdChan
@@ -41,7 +46,7 @@ func SubmitToGallery(p SSubmitToGalleryProps) {
 
 	arr := strings.Split(p.ImageB64, ";base64,")
 	b64str := arr[len(arr)-1]
-	buf, bErr := base64.StdEncoding.DecodeString(b64str)
+	buff, bErr := base64.StdEncoding.DecodeString(b64str)
 	if bErr != nil {
 		log.Printf("-- Gallery - Error decoding base64 image: %v --", bErr)
 		return
@@ -49,17 +54,14 @@ func SubmitToGallery(p SSubmitToGalleryProps) {
 
 	// Vips process for converting to WebP
 	sVips := time.Now().UTC().UnixMilli()
-	img, iErr := vips.NewImageFromBuffer(buf)
-	if iErr != nil {
-		log.Printf("-- Gallery - Error creating vips image: %v --", iErr)
+	webpBuff, errBuff := bimg.NewImage(buff).Process(webpOptions)
+	webpMeta, errMeta := bimg.Metadata(webpBuff)
+	if errBuff != nil {
+		log.Printf("-- Gallery - Error converting to WebP: %v --", errBuff)
 		return
 	}
-	exportParam := vips.NewWebpExportParams()
-	exportParam.ReductionEffort = 6
-	exportParam.Quality = 85
-	webpBuff, webpMeta, wErr := img.ExportWebp(exportParam)
-	if wErr != nil {
-		log.Printf("-- Gallery - Error exporting to WebP: %v --", wErr)
+	if errMeta != nil {
+		log.Printf("-- Gallery - Error getting WebP metadata: %v --", errMeta)
 		return
 	}
 	eVips := time.Now().UTC().UnixMilli()
@@ -67,7 +69,7 @@ func SubmitToGallery(p SSubmitToGalleryProps) {
 	// Vips process for converting to WebP - END
 
 	log.Printf("-- Gallery - Image metadata - %s - %s --",
-		green(webpMeta.Width, " × ", webpMeta.Height),
+		green(webpMeta.Size.Width, " × ", webpMeta.Size.Height),
 		green(len(webpBuff)/1000, "KB"),
 	)
 	id := uuid.New()
@@ -93,8 +95,8 @@ func SubmitToGallery(p SSubmitToGalleryProps) {
 	var insertRes SDBGalleryInsertRes
 	_, insertErr := shared.SupabasePostgrest.From("generation_g").Insert(SDBGenerationGInsertBody{
 		ImageId:           imgId,
-		Width:             webpMeta.Width,
-		Height:            webpMeta.Height,
+		Width:             webpMeta.Size.Width,
+		Height:            webpMeta.Size.Height,
 		Hidden:            p.Hidden,
 		PromptId:          promptId,
 		NegativePromptId:  negativePromptId,
