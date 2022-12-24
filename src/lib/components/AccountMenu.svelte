@@ -3,7 +3,6 @@
 	import DropdownItem from '$components/DropdownItem.svelte';
 	import IconLogout from '$components/icons/IconLogout.svelte';
 	import IconUser from '$components/icons/IconUser.svelte';
-	import { PUBLIC_STRIPE_CUSTOMER_PORTAL_URL_TEST } from '$env/static/public';
 	import LL from '$i18n/i18n-svelte';
 	import { supabase } from '$ts/constants/supabase';
 	import { isTouchscreen } from '$ts/stores/isTouchscreen';

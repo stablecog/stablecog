@@ -765,9 +765,13 @@ type RootTranslation = {
 			 */
 			SavedToCloud: string
 			/**
-			 * U​p​c​o​m​i​n​g​ ​f​e​a​t​u​r​e​s
+			 * A​l​l​ ​u​p​c​o​m​i​n​g​ ​f​e​a​t​u​r​e​s
 			 */
 			Upcoming: string
+			/**
+			 * C​o​m​m​e​r​c​i​a​l​ ​U​s​e
+			 */
+			CommercialUse: string
 		}
 		/**
 		 * (​s​o​o​n​)
@@ -1567,9 +1571,13 @@ export type TranslationFunctions = {
 			 */
 			SavedToCloud: () => LocalizedString
 			/**
-			 * Upcoming features
+			 * All upcoming features
 			 */
 			Upcoming: () => LocalizedString
+			/**
+			 * Commercial Use
+			 */
+			CommercialUse: () => LocalizedString
 		}
 		/**
 		 * (soon)

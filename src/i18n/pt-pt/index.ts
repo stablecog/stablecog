@@ -259,7 +259,8 @@ const ptPt: BaseTranslation = {
 			MoreModels: 'More models',
 			MoreSchedulers: 'More schedulers',
 			SavedToCloud: 'Generations saved to the cloud',
-			Upcoming: 'Upcoming features'
+			Upcoming: 'All upcoming features',
+			CommercialUse: 'Commercial Use'
 		},
 		Soon: '(soon)',
 		Month: '/month',

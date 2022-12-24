@@ -74,39 +74,42 @@
 				</span>
 				<span class="self-end mb-1">{$LL.Pro.Month()}</span>
 			</h3>
-			<ul class="mt-6 flex flex-col gap-3 px-2 md:px-4">
+			<ul class="mt-6 flex flex-col gap-3 px-4 md:px-6">
 				<li class="flex items-center gap-3">
-					<IconTickOnly class="text-c-primary w-5 h-5 shrink-0" />
+					<IconTickOnly class="text-c-primary w-5 h-5 shrink-0 -ml-2" />
 					{$LL.Pro.Features.FullSpeed()}
 				</li>
 				<li class="flex items-center gap-3">
-					<IconTickOnly class="text-c-primary w-5 h-5 shrink-0" />
+					<IconTickOnly class="text-c-primary w-5 h-5 shrink-0 -ml-2" />
 					{$LL.Pro.Features.ImageDimensions()}
 				</li>
 				<li class="flex items-center gap-3">
-					<IconTickOnly class="text-c-primary w-5 h-5 shrink-0" />
+					<IconTickOnly class="text-c-primary w-5 h-5 shrink-0 -ml-2" />
 					{$LL.Pro.Features.Upscale()}
 				</li>
 				<li class="flex items-center gap-3">
-					<IconTickOnly class="text-c-primary w-5 h-5 shrink-0" />
+					<IconTickOnly class="text-c-primary w-5 h-5 shrink-0 -ml-2" />
 					{$LL.Pro.Features.Steps()}
 				</li>
 				<li class="flex items-center gap-3">
-					<IconTickOnly class="text-c-primary w-5 h-5 shrink-0" />
+					<IconTickOnly class="text-c-primary w-5 h-5 shrink-0 -ml-2" />
 					{$LL.Pro.Features.MoreModels()}
 				</li>
 				<li class="flex items-center gap-3">
-					<IconTickOnly class="text-c-primary w-5 h-5 shrink-0" />
+					<IconTickOnly class="text-c-primary w-5 h-5 shrink-0 -ml-2" />
+					{$LL.Pro.Features.SavedToCloud()}
+				</li>
+				<li class="flex items-center gap-3">
+					<IconTickOnly class="text-c-primary w-5 h-5 shrink-0 -ml-2" />
+					{$LL.Pro.Features.CommercialUse()}
+				</li>
+				<li class="flex items-center gap-3">
+					<IconTickOnly class="text-c-primary w-5 h-5 shrink-0 -ml-2" />
 					{$LL.Pro.Features.MoreSchedulers()}
 					<span class="text-c-on-bg/50">{$LL.Pro.Soon()}</span>
 				</li>
 				<li class="flex items-center gap-3">
-					<IconTickOnly class="text-c-primary w-5 h-5 shrink-0" />
-					{$LL.Pro.Features.SavedToCloud()}
-					<span class="text-c-on-bg/50">{$LL.Pro.Soon()}</span>
-				</li>
-				<li class="flex items-center gap-3">
-					<IconTickOnly class="text-c-primary w-5 h-5 shrink-0" />
+					<IconTickOnly class="text-c-primary w-5 h-5 shrink-0 -ml-2" />
 					{$LL.Pro.Features.Upcoming()}
 				</li>
 			</ul>
