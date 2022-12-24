@@ -65,7 +65,7 @@
 		<div class="max-w-full flex items-center justify-center">
 			<p class="font-bold text-3xl">Thanks for reading!</p>
 		</div>
-		<LinkButton href="/blog" target={null} prefetch={true}>
+		<LinkButton href="/blog" target="_self" prefetch={true}>
 			<div class="flex items-center justify-center gap-2.5 px-2 py-1">
 				<IconBack
 					class="w-6 h-6 transform transition text-c-on-bg/50 group-hover:-translate-x-1

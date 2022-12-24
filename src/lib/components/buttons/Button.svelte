@@ -1,6 +1,7 @@
 <script lang="ts">
 	import IconLoading from '$components/icons/IconLoading.svelte';
 	import { isTouchscreen } from '$ts/stores/isTouchscreen';
+	import type { THrefTarget } from '$ts/types/main';
 	export let disabled = false;
 	export let loading = false;
 	export let href: string | undefined = undefined;
@@ -9,7 +10,7 @@
 	export let size: 'md' | 'sm' | 'xs' = 'md';
 	export let withSpinner = false;
 	export let noPadding = false;
-	export let target: '_blank' | '_self' = '_self';
+	export let target: THrefTarget = '_self';
 	export { classes as class };
 	export let type: 'primary' | 'success' | 'danger' = 'primary';
 	let classes = '';
@@ -19,8 +20,7 @@
 	<a
 		{href}
 		{target}
-		data-sveltekit-prefetch={prefetch && target !== '_blank' ? '' : 'off'}
-		{disabled}
+		data-sveltekit-prefetch={prefetch && target === '_self' ? '' : 'off'}
 		class="{noPadding
 			? 'p-0'
 			: size === 'xs'

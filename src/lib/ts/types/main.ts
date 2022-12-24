@@ -3,6 +3,8 @@ import type { TDBGenerationG } from '$ts/types/db';
 
 export type TStatus = 'idle' | 'loading' | 'success' | 'error';
 
+export type THrefTarget = '_blank' | '_self';
+
 export interface TGenerationBase {
 	prompt: string;
 	negative_prompt?: string;

@@ -1,12 +1,13 @@
 <script lang="ts">
 	import { isTouchscreen } from '$ts/stores/isTouchscreen';
+	import type { THrefTarget } from '$ts/types/main';
 
 	export let onClick: (() => void) | undefined = undefined;
 	export let href: string | undefined = undefined;
 	export let name: string;
 	export { classes as class };
 	export let prefetch: boolean = true;
-	export let target: string | null = null;
+	export let target: THrefTarget = '_self';
 	export let noPadding = false;
 	export let disabled = false;
 	export let type: 'on-primary' | 'primary' = 'primary';
@@ -15,7 +16,7 @@
 
 {#if href}
 	<a
-		data-sveltekit-prefetch={prefetch ? '' : 'off'}
+		data-sveltekit-prefetch={prefetch && target === '_self' ? '' : 'off'}
 		{href}
 		{target}
 		class="group rounded-xl {classes}"

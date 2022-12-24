@@ -1,11 +1,12 @@
 <script lang="ts">
 	import { isTouchscreen } from '$ts/stores/isTouchscreen';
+	import type { THrefTarget } from '$ts/types/main';
 
 	export let onClick: () => void = () => null;
 	export let padding: 'xl' | 'lg' | 'md' | 'sm' = 'xl';
 	export let disabled = false;
 	export let href: string | undefined = undefined;
-	export let target: '_blank' | '_self' = '_self';
+	export let target: THrefTarget = '_self';
 	export let prefetch = true;
 	export { classes as class };
 	let classes = 'w-full';
@@ -15,7 +16,7 @@
 	<a
 		{href}
 		{target}
-		data-sveltekit-prefetch={prefetch ? '' : 'off'}
+		data-sveltekit-prefetch={prefetch && target === '_self' ? '' : 'off'}
 		on:click={onClick}
 		class="flex items-center justify-center font-bold px-5 {padding === 'sm'
 			? 'py-3'

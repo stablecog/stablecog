@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { isTouchscreen } from '$ts/stores/isTouchscreen';
+	import type { THrefTarget } from '$ts/types/main';
 
 	export let onClick: (() => void) | undefined = undefined;
 	export let state: 'idle' | 'success' = 'idle';
@@ -10,7 +11,7 @@
 	export { classes as class };
 	export let disabled = false;
 	export let loading = false;
-	export let target = '_self';
+	export let target: THrefTarget = '_self';
 	let classes = '';
 </script>
 
@@ -20,8 +21,7 @@
 		{href}
 		{download}
 		{target}
-		disabled={disabled || loading}
-		data-sveltekit-prefetch={prefetch ? '' : 'off'}
+		data-sveltekit-prefetch={prefetch && target === '_self' ? '' : 'off'}
 		class="{state === 'success'
 			? 'bg-c-success ring-c-success text-c-on-primary'
 			: 'bg-c-bg-secondary ring-c-bg-tertiary text-c-on-bg'} {noPadding
