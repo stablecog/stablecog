@@ -42,6 +42,7 @@ export interface TGenerationRequest {
 	mask?: string;
 	prompt_strength?: number;
 	should_submit_to_gallery?: boolean;
+	access_token?: string;
 }
 
 export interface TGenerationResponse {
@@ -62,6 +63,7 @@ export interface TUpscaleRequest {
 	guidance_scale?: number;
 	prompt?: string;
 	negative_prompt?: string;
+	access_token?: string;
 }
 
 export interface TUpscaleResponse {

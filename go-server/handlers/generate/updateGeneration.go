@@ -27,7 +27,7 @@ func UpdateGenerationAsSucceeded(
 	go func() {
 		if prompt != "" {
 			var promptRes []SDBPromptSelectRes
-			_, err := shared.Supabase.From("prompt").
+			_, err := shared.SupabasePostgrest.From("prompt").
 				Select("id", "", false).
 				Eq("text", prompt).
 				ExecuteTo(&promptRes)
@@ -39,7 +39,7 @@ func UpdateGenerationAsSucceeded(
 				promptId = promptRes[0].Id
 			} else {
 				var promptInsertRes SDBPromptInsertRes
-				_, err := shared.Supabase.
+				_, err := shared.SupabasePostgrest.
 					From("prompt").
 					Insert(
 						SDBPromptInsertBody{
@@ -62,7 +62,7 @@ func UpdateGenerationAsSucceeded(
 	go func() {
 		if negativePrompt != "" {
 			var negativePromptRes []SDBNegativePromptSelectRes
-			_, err := shared.Supabase.From("negative_prompt").
+			_, err := shared.SupabasePostgrest.From("negative_prompt").
 				Select("id", "", false).
 				Eq("text", negativePrompt).
 				ExecuteTo(&negativePromptRes)
@@ -74,7 +74,7 @@ func UpdateGenerationAsSucceeded(
 				negativePromptId = negativePromptRes[0].Id
 			} else {
 				var negativePromptInsertRes SDBNegativePromptInsertRes
-				_, err := shared.Supabase.
+				_, err := shared.SupabasePostgrest.
 					From("negative_prompt").
 					Insert(
 						SDBNegativePromptInsertBody{
@@ -103,7 +103,7 @@ func UpdateGenerationAsSucceeded(
 		Status:           "succeeded",
 		DurationMs:       durationMs,
 	}
-	_, err := shared.Supabase.From("generation").Update(value, "", "").Eq("id", generationId).ExecuteTo(res)
+	_, err := shared.SupabasePostgrest.From("generation").Update(value, "", "").Eq("id", generationId).ExecuteTo(res)
 	if err != nil {
 		log.Printf("-- DB - Error updating generation as succeeded: %v --", err)
 		return
@@ -128,7 +128,7 @@ func UpdateGenerationAsFailed(generationIdChan chan string, durationMs int64, is
 		DurationMs:    durationMs,
 		FailureReason: failureReason,
 	}
-	_, err := shared.Supabase.From("generation").Update(value, "", "").Eq("id", generationId).ExecuteTo(res)
+	_, err := shared.SupabasePostgrest.From("generation").Update(value, "", "").Eq("id", generationId).ExecuteTo(res)
 	if err != nil {
 		log.Printf("-- DB - Error updating generation as failed: %v --", err)
 		return

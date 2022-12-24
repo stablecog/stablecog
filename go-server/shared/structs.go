@@ -79,6 +79,7 @@ type SGenerateRequestBody struct {
 	Mask                  string  `json:"mask,omitempty"`
 	PromptStrength        float32 `json:"prompt_strength,omitempty"`
 	ShouldSubmitToGallery bool    `json:"should_submit_to_gallery"`
+	AccessToken           string  `json:"access_token,omitempty"`
 }
 
 type SCogGenerateRequestBody struct {
@@ -110,6 +111,7 @@ type SUpscaleRequestBody struct {
 	ServerUrl         string `json:"server_url"`
 	Seed              int    `json:"seed"`
 	ImageB64          string `json:"image_b64"`
+	AccessToken       string `json:"access_token,omitempty"`
 }
 
 type SCogUpscaleRequestBody struct {

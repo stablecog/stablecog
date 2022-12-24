@@ -47,6 +47,7 @@
 		negativePromptInputValue,
 		promptInputValue
 	} from '$ts/stores/generationSettings';
+	import { page } from '$app/stores';
 
 	export let data: THomePageData;
 
@@ -129,7 +130,8 @@
 			'SC - Scheduler Id': lastGeneration.scheduler_id,
 			'SC - Advanced Mode': $advancedMode,
 			'SC - Locale': $locale,
-			'SC - Submit to Gallery': $shouldSubmitToGallery ?? false
+			'SC - Submit to Gallery': $shouldSubmitToGallery ?? false,
+			'SC - Plan': $page.data.tier
 		};
 		uLogGeneration('Started');
 		mLogGeneration('Started', generationMinimal);
@@ -157,7 +159,8 @@
 				guidance_scale: lastGeneration.guidance_scale,
 				num_inference_steps: lastGeneration.num_inference_steps,
 				should_submit_to_gallery:
-					$shouldSubmitToGallery === undefined ? false : $shouldSubmitToGallery
+					$shouldSubmitToGallery === undefined ? false : $shouldSubmitToGallery,
+				access_token: $page.data.session?.access_token
 			});
 			let { data, error } = res;
 			if (data && data.image_b64 && !error) {

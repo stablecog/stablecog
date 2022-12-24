@@ -21,6 +21,7 @@ func InsertGenerationInitial(g SInsertGenerationProps) string {
 		Seed:              g.Seed,
 		ModelId:           g.ModelId,
 		SchedulerId:       g.SchedulerId,
+		UserId:            g.UserId,
 		ServerUrl:         g.ServerUrl,
 		Status:            "started",
 		DeviceType:        g.DeviceType,
@@ -30,7 +31,7 @@ func InsertGenerationInitial(g SInsertGenerationProps) string {
 		CountryCode:       g.CountryCode,
 	}
 	var res SDBGenerationInsertInitialRes
-	_, err := shared.Supabase.From("generation").Insert(insertBody, false, "", "", "").Single().ExecuteTo(&res)
+	_, err := shared.SupabasePostgrest.From("generation").Insert(insertBody, false, "", "", "").Single().ExecuteTo(&res)
 	if err != nil {
 		log.Printf(red("-- DB - Error inserting generation: %v --"), err)
 		return ""
@@ -50,6 +51,7 @@ type SInsertGenerationProps struct {
 	ModelId           string
 	SchedulerId       string
 	Status            string
+	UserId            string
 	ServerUrl         string
 	UserAgent         string
 	DeviceType        string
@@ -68,6 +70,7 @@ type SDBGenerationInsertInitial struct {
 	Seed              int    `json:"seed"`
 	ModelId           string `json:"model_id"`
 	SchedulerId       string `json:"scheduler_id"`
+	UserId            string `json:"user_id,omitempty"`
 	Status            string `json:"status"`
 	ServerUrl         string `json:"server_url"`
 	UserAgent         string `json:"user_agent,omitempty"`
@@ -86,6 +89,7 @@ type SDBGenerationInsertInitialRes struct {
 	Seed              int    `json:"seed"`
 	ModelId           string `json:"model_id"`
 	SchedulerId       string `json:"scheduler_id"`
+	UserId            string `json:"user_id,omitempty"`
 	Status            string `json:"status"`
 	ServerUrl         string `json:"server_url"`
 	UserAgent         string `json:"user_agent,omitempty"`

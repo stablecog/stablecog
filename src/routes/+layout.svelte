@@ -44,6 +44,12 @@
 	$: [$serverUrl, mounted, $page], clearAndSetHealthCheckTimeout();
 	$: [innerWidth, innerHeight], setWindowStores();
 
+	$: if (mounted && $page.data.session?.user.id && $page.data.session.user.email) {
+		mixpanel.identify($page.data.session?.user.id);
+		mixpanel.people.set({ $email: $page.data.session?.user.email });
+		mixpanel.people.set({ 'SC - Plan': $page.data.tier });
+	}
+
 	onMount(async () => {
 		mixpanel.init(env.PUBLIC_MIXPANEL_ID, { api_host: env.PUBLIC_MIXPANEL_URL });
 		const {
@@ -66,7 +72,13 @@
 	});
 
 	afterNavigate(() => {
-		mLogPageview({ path: $page.url.pathname, locale: $locale, advanced: $advancedMode });
+		const props = {
+			'SC - Path': $page.url.pathname,
+			'SC - Locale': $locale,
+			'SC - Advanced Mode': $advancedMode,
+			'SC - Plan': $page.data.tier
+		};
+		mLogPageview(props);
 	});
 
 	onDestroy(() => {

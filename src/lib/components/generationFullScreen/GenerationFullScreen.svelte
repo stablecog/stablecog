@@ -212,7 +212,8 @@
 			'SC - Width': generation.width,
 			'SC - Height': generation.height,
 			'SC - Advanced Mode': $advancedMode,
-			'SC - Locale': $locale
+			'SC - Locale': $locale,
+			'SC - Plan': $page.data.tier
 		};
 		uLogUpscale('Started');
 		mLogUpscale('Started', upscaleMinimal);
@@ -235,7 +236,8 @@
 				num_inference_steps: generation.num_inference_steps,
 				guidance_scale: generation.guidance_scale,
 				height: generation.height,
-				width: generation.width
+				width: generation.width,
+				access_token: $page.data.session?.access_token
 			});
 			if (res.error) {
 				throw new Error(res.error);

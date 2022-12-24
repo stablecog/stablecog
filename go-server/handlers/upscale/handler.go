@@ -76,6 +76,10 @@ func Handler(c *fiber.Ctx) error {
 	}
 	loggers.LogUpscale("Upscale started", logObj)
 
+	supabaseUserId := shared.GetSupabaseUserIdFromAccessToken(req.AccessToken)
+
+	log.Printf("User id is: %s", supabaseUserId)
+
 	go InsertUpscaleInitial(SInsertUpscaleProps{
 		Status:            "started",
 		Scale:             scale,
@@ -87,6 +91,7 @@ func Handler(c *fiber.Ctx) error {
 		GuidanceScale:     req.GuidanceScale,
 		NumInferenceSteps: req.NumInferenceSteps,
 		Seed:              req.Seed,
+		UserId:            supabaseUserId,
 		ServerUrl:         pickServerRes.ServerUrl,
 		UserAgent:         userAgent,
 		DeviceType:        shared.GetDeviceType(client),

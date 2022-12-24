@@ -10,7 +10,8 @@ export async function upscaleImage({
 	guidance_scale,
 	negative_prompt,
 	prompt,
-	seed
+	seed,
+	access_token
 }: TUpscaleRequest) {
 	const response = await fetch(`${apiBase}/upscale`, {
 		method: 'POST',
@@ -26,7 +27,8 @@ export async function upscaleImage({
 			guidance_scale,
 			negative_prompt,
 			prompt,
-			seed
+			seed,
+			access_token
 		})
 	});
 	const resJSON: TUpscaleResponse = await response.json();

@@ -91,7 +91,7 @@ func SubmitToGallery(p SSubmitToGalleryProps) {
 
 	// Insert to DB
 	var insertRes SDBGalleryInsertRes
-	_, insertErr := shared.Supabase.From("generation_g").Insert(SDBGenerationGInsertBody{
+	_, insertErr := shared.SupabasePostgrest.From("generation_g").Insert(SDBGenerationGInsertBody{
 		ImageId:           imgId,
 		Width:             webpMeta.Width,
 		Height:            webpMeta.Height,
@@ -103,6 +103,7 @@ func SubmitToGallery(p SSubmitToGalleryProps) {
 		NumInferenceSteps: p.NumInferenceSteps,
 		GuidanceScale:     p.GuidanceScale,
 		Seed:              p.Seed,
+		UserId:            p.UserId,
 	}, false, "", "", "").Single().ExecuteTo(&insertRes)
 	if insertErr != nil {
 		log.Printf("-- Gallery - Error inserting to DB: %v --", insertErr)
@@ -123,6 +124,7 @@ type SSubmitToGalleryProps struct {
 	NumInferenceSteps    int
 	GuidanceScale        int
 	Seed                 int
+	UserId               string
 	Hidden               bool
 }
 
@@ -138,6 +140,7 @@ type SDBGenerationGInsertBody struct {
 	NumInferenceSteps int    `json:"num_inference_steps"`
 	GuidanceScale     int    `json:"guidance_scale"`
 	Seed              int    `json:"seed"`
+	UserId            string `json:"user_id,omitempty"`
 }
 
 type SDBGalleryInsertRes struct {
@@ -153,6 +156,7 @@ type SDBGalleryInsertRes struct {
 	NumInferenceSteps int    `json:"num_inference_steps"`
 	GuidanceScale     int    `json:"guidance_scale"`
 	Seed              int    `json:"seed"`
+	UserId            string `json:"user_id,omitempty"`
 	CreatedAt         string `json:"created_at"`
 	UpdatedAt         string `json:"updated_at"`
 }

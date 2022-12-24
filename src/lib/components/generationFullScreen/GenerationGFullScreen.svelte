@@ -35,6 +35,7 @@
 	import IconLink from '$components/icons/IconLink.svelte';
 	import { generationGPreviewUrlFromId } from '$ts/helpers/generationGPreviewUrlFromId';
 	import { mLogGalleryGenerateClicked } from '$ts/helpers/loggers';
+	import { advancedMode } from '$ts/stores/advancedMode';
 
 	export let generation: TGenerationGWithLoaded | TGenerationGAdmin;
 
@@ -199,6 +200,12 @@
 	onMount(() => {
 		setSidebarWrapperVars();
 	});
+
+	$: logProps = {
+		'SC - Generation Id': generation.id,
+		'SC - Plan': $page.data.tier,
+		'SC - Advanced Mode': $advancedMode
+	};
 </script>
 
 <ModalWrapper hasPadding={false}>
@@ -291,7 +298,7 @@
 							</div>
 							<div class="w-full flex flex-wrap gap-3">
 								<SubtleButton
-									onClick={() => mLogGalleryGenerateClicked(generation.id)}
+									onClick={() => mLogGalleryGenerateClicked(logProps)}
 									prefetch={true}
 									href={generateUrl}
 									target="_blank"

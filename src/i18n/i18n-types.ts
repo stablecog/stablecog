@@ -820,6 +820,10 @@ type RootTranslation = {
 		 * M​y​ ​A​c​c​o​u​n​t
 		 */
 		MyAccountButton: string
+		/**
+		 * P​l​a​n
+		 */
+		SubscriptionPlanTitle: string
 	}
 }
 
@@ -1617,6 +1621,10 @@ export type TranslationFunctions = {
 		 * My Account
 		 */
 		MyAccountButton: () => LocalizedString
+		/**
+		 * Plan
+		 */
+		SubscriptionPlanTitle: () => LocalizedString
 	}
 }
 

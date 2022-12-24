@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { page } from '$app/stores';
 	import CopyButton from '$components/buttons/CopyButton.svelte';
 	import GenerateButton from '$components/buttons/GenerateButton.svelte';
 	import IconChatBubbleCancel from '$components/icons/IconChatBubbleCancel.svelte';
@@ -10,6 +11,7 @@
 	import { mLogGalleryGenerationOpened } from '$ts/helpers/loggers';
 	import { urlFromImageId } from '$ts/helpers/urlFromImageId';
 	import { activeGenerationG } from '$ts/stores/activeGenerationG';
+	import { advancedMode } from '$ts/stores/advancedMode';
 	import type { TGenerationGWithLoaded } from '$ts/types/main';
 
 	export let generation: TGenerationGWithLoaded;
@@ -28,6 +30,12 @@
 				generation.didLoadBefore = true;
 			}, 500);
 		}
+	};
+
+	$: logProps = {
+		'SC - Generation Id': generation.id,
+		'SC - Plan': $page.data.tier,
+		'SC - Advanced Mode': $advancedMode
 	};
 </script>
 
@@ -50,7 +58,7 @@
 		if (doesContainTarget(e.target, [rightButtonContainer])) {
 			return;
 		}
-		mLogGalleryGenerationOpened(generation.id);
+		mLogGalleryGenerationOpened(logProps);
 		activeGenerationG.set(generation);
 		window.history.replaceState({}, '', `/gallery?generation=${generation.id}`);
 	}}

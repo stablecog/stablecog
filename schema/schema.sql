@@ -23,6 +23,7 @@ CREATE TABLE "generation" (
     "device_browser" TEXT,
     "user_agent" TEXT,
     "id" UUID NOT NULL DEFAULT uuid_generate_v4(),
+    "user_id" UUID REFERENCES auth.users(id),
     "created_at" TIMESTAMPTZ DEFAULT TIMEZONE('utc' :: TEXT, NOW()) NOT NULL,
     "updated_at" TIMESTAMPTZ DEFAULT TIMEZONE('utc' :: TEXT, NOW()) NOT NULL,
     PRIMARY KEY(id)
@@ -117,6 +118,7 @@ CREATE TABLE "upscale" (
     "device_browser" TEXT,
     "user_agent" TEXT,
     "id" UUID NOT NULL DEFAULT uuid_generate_v4(),
+    "user_id" UUID REFERENCES auth.users(id),
     "created_at" TIMESTAMPTZ DEFAULT TIMEZONE('utc' :: TEXT, NOW()) NOT NULL,
     "updated_at" TIMESTAMPTZ DEFAULT TIMEZONE('utc' :: TEXT, NOW()) NOT NULL,
     PRIMARY KEY(id)
@@ -545,6 +547,7 @@ CREATE TABLE "generation_g" (
     "guidance_scale" DOUBLE PRECISION NOT NULL,
     "hidden" BOOLEAN NOT NULL DEFAULT FALSE,
     "id" UUID NOT NULL DEFAULT uuid_generate_v4(),
+    "user_id" UUID REFERENCES auth.users(id),
     "created_at" TIMESTAMPTZ DEFAULT TIMEZONE('utc' :: TEXT, NOW()) NOT NULL,
     "updated_at" TIMESTAMPTZ DEFAULT TIMEZONE('utc' :: TEXT, NOW()) NOT NULL,
     PRIMARY KEY(id)

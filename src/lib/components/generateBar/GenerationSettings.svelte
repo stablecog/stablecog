@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { page } from '$app/stores';
 	import NoBgButton from '$components/buttons/NoBgButton.svelte';
 	import IconBrain from '$components/icons/IconBrain.svelte';
 	import IconBubbles from '$components/icons/IconBubbles.svelte';
@@ -59,6 +60,10 @@
 
 	$: isInferenceStepsValid = (s: string) => {
 		return Number(s) * Number($generationHeight) * Number($generationWidth) < maxFreePixelSteps;
+	};
+
+	$: logProps = {
+		'SC - Plan': $page.data.tier
 	};
 </script>
 
@@ -197,7 +202,7 @@
 			hoverFrom={$advancedModeApp ? 'bottom' : 'top'}
 			onClick={() => {
 				const val = !$advancedModeApp;
-				mLogAdvancedMode(val === true ? 'On' : 'Off');
+				mLogAdvancedMode(val === true ? 'On' : 'Off', logProps);
 				advancedModeApp.set(val);
 				advancedMode.set(val);
 			}}

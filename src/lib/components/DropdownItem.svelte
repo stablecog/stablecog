@@ -1,27 +1,29 @@
 <script lang="ts">
 	import { isTouchscreen } from '$ts/stores/isTouchscreen';
 
-	export let onClick: () => void;
+	export let onClick: () => void = () => null;
 	export let padding: 'xl' | 'lg' | 'md' | 'sm' = 'xl';
 	export let disabled = false;
 	export let href: string | undefined = undefined;
 	export let target: '_blank' | '_self' = '_self';
 	export let prefetch = true;
+	export { classes as class };
+	let classes = 'w-full';
 </script>
 
 {#if href}
 	<a
 		{href}
 		{target}
-		data-sveltekit-prefetch={prefetch && target !== '_blank' ? '' : 'off'}
+		data-sveltekit-prefetch={prefetch ? '' : 'off'}
 		on:click={onClick}
-		class="w-full font-bold px-5 {padding === 'sm'
+		class="flex items-center justify-center font-bold px-5 {padding === 'sm'
 			? 'py-3'
 			: padding === 'md'
 			? 'py-4'
 			: padding === 'lg'
 			? 'py-4.5'
-			: 'py-5'} relative z-0 overflow-hidden group"
+			: 'py-5'} relative z-0 overflow-hidden group {classes}"
 	>
 		<div class="w-[200%] h-full absolute left-0 top-0 flex items-center justify-center">
 			<div
@@ -35,13 +37,13 @@
 	<button
 		{disabled}
 		on:click={onClick}
-		class="w-full font-bold px-5 {padding === 'sm'
+		class="font-bold px-5 {padding === 'sm'
 			? 'py-3'
 			: padding === 'md'
 			? 'py-4'
 			: padding === 'lg'
 			? 'py-4.5'
-			: 'py-5'} relative z-0 overflow-hidden group"
+			: 'py-5'} relative z-0 overflow-hidden group {classes}"
 	>
 		<div class="w-[200%] h-full absolute left-0 top-0 flex items-center justify-center">
 			<div

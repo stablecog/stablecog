@@ -280,7 +280,8 @@ const en: BaseTranslation = {
 		PageTitle: 'Account',
 		ManageSubscriptionButton: 'Manage Subscription',
 		ManageAccountButton: 'Manage Account',
-		MyAccountButton: 'My Account'
+		MyAccountButton: 'My Account',
+		SubscriptionPlanTitle: 'Plan'
 	}
 };
 

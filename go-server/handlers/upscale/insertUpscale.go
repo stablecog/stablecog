@@ -23,6 +23,7 @@ func InsertUpscaleInitial(g SInsertUpscaleProps) string {
 		GuidanceScale:     g.GuidanceScale,
 		NumInferenceSteps: g.NumInferenceSteps,
 		Seed:              g.Seed,
+		UserId:            g.UserId,
 		ServerUrl:         g.ServerUrl,
 		Status:            "started",
 		DeviceType:        g.DeviceType,
@@ -32,7 +33,7 @@ func InsertUpscaleInitial(g SInsertUpscaleProps) string {
 		CountryCode:       g.CountryCode,
 	}
 	var res SDBUpscaleInsertInitialRes
-	_, err := shared.Supabase.From("upscale").Insert(insertBody, false, "", "", "").Single().ExecuteTo(&res)
+	_, err := shared.SupabasePostgrest.From("upscale").Insert(insertBody, false, "", "", "").Single().ExecuteTo(&res)
 	if err != nil {
 		log.Printf(red("-- DB - Error inserting upscale: %v --"), err)
 		return ""
@@ -52,6 +53,7 @@ type SInsertUpscaleProps struct {
 	Height            int
 	GuidanceScale     int
 	NumInferenceSteps int
+	UserId            string
 	Seed              int
 	Status            string
 	ServerUrl         string
@@ -74,6 +76,7 @@ type SDBUpscaleInsertInitial struct {
 	GuidanceScale     int    `json:"guidance_scale"`
 	NumInferenceSteps int    `json:"num_inference_steps"`
 	Seed              int    `json:"seed"`
+	UserId            string `json:"user_id,omitempty"`
 	Status            string `json:"status"`
 	ServerUrl         string `json:"server_url"`
 	UserAgent         string `json:"user_agent,omitempty"`
@@ -94,6 +97,7 @@ type SDBUpscaleInsertInitialRes struct {
 	GuidanceScale     int    `json:"guidance_scale"`
 	NumInferenceSteps int    `json:"num_inference_steps"`
 	Seed              int    `json:"seed"`
+	UserId            string `json:"user_id,omitempty"`
 	Status            string `json:"status"`
 	ServerUrl         string `json:"server_url"`
 	UserAgent         string `json:"user_agent,omitempty"`

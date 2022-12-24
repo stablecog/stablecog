@@ -16,7 +16,8 @@ export async function generateImage({
 	init_image,
 	prompt_strength,
 	mask,
-	output_image_ext = 'jpg'
+	output_image_ext = 'jpg',
+	access_token
 }: TGenerationRequest) {
 	const response = await fetch(`${apiBase}/generate`, {
 		method: 'POST',
@@ -38,7 +39,8 @@ export async function generateImage({
 			init_image,
 			mask,
 			prompt_strength,
-			should_submit_to_gallery
+			should_submit_to_gallery,
+			access_token
 		})
 	});
 	const resJSON: TGenerationResponse = await response.json();

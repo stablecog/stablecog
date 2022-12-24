@@ -8,7 +8,7 @@ import (
 
 func GetLastGenerations(limit int) []SDBGeneration {
 	var generations []SDBGeneration
-	_, err := Supabase.From("generation").
+	_, err := SupabasePostgrest.From("generation").
 		Select("status,created_at,failure_reason", "", false).Limit(limit, "").
 		Order("created_at", &postgrest.OrderOpts{Ascending: false}).
 		ExecuteTo(&generations)

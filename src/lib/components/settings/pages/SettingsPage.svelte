@@ -26,6 +26,14 @@
 	export let navigateToLanguagePage: () => void;
 	export let height: number | undefined;
 	export let currentPage: TCurrentSettingsPage;
+
+	$: submitToGalleryLogProps = {
+		'SC - Plan': $page.data.tier,
+		'SC - Advanced Mode': $advancedMode
+	};
+	$: advancedModeLogProps = {
+		'SC - Plan': $page.data.tier
+	};
 </script>
 
 <ScrollAreaWithChevron
@@ -72,10 +80,10 @@
 				shouldSubmitToGallery.set(val);
 				if (val) {
 					uLogSubmitToGallery('On');
-					mLogSubmitToGallery('On');
+					mLogSubmitToGallery('On', submitToGalleryLogProps);
 				} else {
 					uLogSubmitToGallery('Off');
-					mLogSubmitToGallery('Off');
+					mLogSubmitToGallery('Off', submitToGalleryLogProps);
 				}
 			}}
 		>
@@ -103,7 +111,7 @@
 			disabled={currentPage !== 'settings'}
 			onClick={() => {
 				const val = $advancedModeApp === false ? true : false;
-				mLogAdvancedMode(val === true ? 'On' : 'Off');
+				mLogAdvancedMode(val === true ? 'On' : 'Off', advancedModeLogProps);
 				advancedModeApp.set(val);
 				advancedMode.set(val);
 			}}

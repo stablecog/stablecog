@@ -61,7 +61,6 @@ func Handler(c *fiber.Ctx) error {
 			SGenerateResponse{Error: fmt.Sprintf("Height is too large, max is: %d", shared.MaxHeight)},
 		)
 	}
-
 	if req.Width*req.Height*req.NumInferenceSteps >= shared.MaxFreePixelSteps {
 		log.Printf(
 			"Pick fewer inference steps or smaller dimensions: %d - %d - %d",
@@ -73,7 +72,6 @@ func Handler(c *fiber.Ctx) error {
 			SGenerateResponse{Error: "Pick fewer inference steps or smaller dimensions"},
 		)
 	}
-
 	if shared.ModelIdToModelNameCog[req.ModelId] == "" {
 		log.Printf("Invalid model ID: %s", req.ModelId)
 		return c.Status(http.StatusBadRequest).JSON(
@@ -86,7 +84,6 @@ func Handler(c *fiber.Ctx) error {
 			SGenerateResponse{Error: "Invalid scheduler ID"},
 		)
 	}
-
 	if req.OutputImageExt == "" {
 		req.OutputImageExt = "jpg"
 	}
@@ -121,6 +118,8 @@ func Handler(c *fiber.Ctx) error {
 	}
 	loggers.LogGeneration("Generation started", logObj)
 
+	supabaseUserId := shared.GetSupabaseUserIdFromAccessToken(req.AccessToken)
+
 	go InsertGenerationInitial(SInsertGenerationProps{
 		Status:            "started",
 		Width:             req.Width,
@@ -130,6 +129,7 @@ func Handler(c *fiber.Ctx) error {
 		Seed:              req.Seed,
 		ModelId:           req.ModelId,
 		SchedulerId:       req.SchedulerId,
+		UserId:            supabaseUserId,
 		ServerUrl:         pickServerRes.ServerUrl,
 		CountryCode:       countryCode,
 		UserAgent:         userAgent,
@@ -238,6 +238,7 @@ func Handler(c *fiber.Ctx) error {
 			GuidanceScale:        req.GuidanceScale,
 			NumInferenceSteps:    req.NumInferenceSteps,
 			Seed:                 req.Seed,
+			UserId:               supabaseUserId,
 			Hidden:               true,
 		})
 	}
