@@ -101,7 +101,7 @@ interface IGenerationMinimal {
 }
 
 interface IPageviewProps {
-	'SC - Path': string;
+	'SC - Page': string;
 	'SC - Locale': string;
 	'SC - Advanced Mode': boolean;
 	'SC - Plan': IStripeSubscriptionTier;
