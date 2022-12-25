@@ -31,7 +31,7 @@ var uploader = s3manager.NewUploader(s3sess)
 var bucket = "stablecog"
 
 var webpOptionsGallery = bimg.Options{
-	Quality: 85,
+	Quality: 90,
 	Type:    bimg.WEBP,
 }
 
