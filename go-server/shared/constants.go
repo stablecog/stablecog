@@ -22,12 +22,12 @@ var SupabaseDb = postgrest.NewClient(PUBLIC_SUPABASE_POSTGREST_URL, "", map[stri
 var SupabaseAuth = gotrue.New(SUPABASE_REFERENCE_ID, SUPABASE_ADMIN_KEY)
 var SupabaseStorage = storage_go.NewClient(fmt.Sprintf("%s/storage/v1", SUPABASE_URL), SUPABASE_ADMIN_KEY, nil)
 
-const MaxSeed = 640 * 640 * 50
+const MaxSeed = 2147483647
 const MaxPromptLen = 500
 const MaxWidth = 768
 const MaxHeight = 768
 
-const MaxFreePixelSteps = 768 * 768 * 40
+const MaxFreePixelSteps = 640 * 640 * 50
 
 var ModelIdToModelNameCog = map[string]string{
 	"048b4aa3-5586-47ed-900f-f4341c96bdb2": "Stable Diffusion v1.5",
