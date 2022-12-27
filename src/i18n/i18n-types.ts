@@ -955,6 +955,12 @@ type RootTranslation = {
 		 */
 		ForgotPasswordButton: string
 	}
+	FeaturedOn: {
+		/**
+		 * W​e​ ​A​r​e​ ​F​e​a​t​u​r​e​d​ ​O​n
+		 */
+		PageTitle: string
+	}
 }
 
 export type TranslationFunctions = {
@@ -1885,6 +1891,12 @@ export type TranslationFunctions = {
 		 * Forgot Password?
 		 */
 		ForgotPasswordButton: () => LocalizedString
+	}
+	FeaturedOn: {
+		/**
+		 * We Are Featured On
+		 */
+		PageTitle: () => LocalizedString
 	}
 }
 

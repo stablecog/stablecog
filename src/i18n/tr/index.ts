@@ -326,6 +326,9 @@ const tr: Translation = {
 		PageTitleSuccess: 'Done!',
 		PageParagraphSuccess: 'Your password has been successfully reset.',
 		ForgotPasswordButton: 'Forgot Password?'
+	},
+	FeaturedOn: {
+		PageTitle: 'We Are Featured On'
 	}
 };
 export default tr;
