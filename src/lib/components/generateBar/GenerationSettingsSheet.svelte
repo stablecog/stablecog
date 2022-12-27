@@ -15,6 +15,7 @@
 	export let formElement: HTMLFormElement;
 	export let disabled = false;
 	export let isGenerationSettingsSheetOpen = false;
+	let innerContainer: HTMLDivElement;
 </script>
 
 <div
@@ -61,11 +62,19 @@
 					</div>
 				</IconButton>
 			</div>
-			<div class="w-full flex flex-col justify-start flex-1 min-h-0">
+			<div bind:this={innerContainer} class="w-full flex flex-col justify-start flex-1 min-h-0">
 				<ScrollAreaWithChevron class="relative pb-[calc(env(safe-area-inset-bottom)+0.5rem)] pt-1">
 					<div class="w-full overflow-hidden relative z-10">
 						<div class="w-full flex flex-col items-start px-4">
-							<GenerationSettings {disabled} {formElement} {isCheckComplete} />
+							<GenerationSettings
+								calculateDistance={isGenerationSettingsSheetOpen}
+								container={innerContainer}
+								containerTopMinDistance={12}
+								containerBottomMinDistance={12}
+								{disabled}
+								{formElement}
+								{isCheckComplete}
+							/>
 						</div>
 					</div>
 				</ScrollAreaWithChevron>

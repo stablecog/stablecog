@@ -48,6 +48,7 @@
 	import IconGenerationSettings from '$components/icons/IconGenerationSettings.svelte';
 	import { isTouchscreen } from '$ts/stores/isTouchscreen';
 	import { advancedMode, advancedModeApp } from '$ts/stores/advancedMode';
+	import { homePageContainer } from '$ts/stores/homePageContainer';
 
 	export let serverData: THomePageData;
 	export let onCreate: () => Promise<void>;
@@ -296,7 +297,6 @@
 
 <form
 	bind:this={formElement}
-	disabled={loadingOrSubmitting}
 	on:submit|preventDefault={onSubmit}
 	class="w-full max-w-2xl md:max-w-6.5xl md:px-4 lg:px-12 flex flex-col items-center pt-2"
 >
@@ -325,7 +325,6 @@
 				disabled={loadingOrSubmitting || !isCheckComplete}
 				{placeholder}
 				rows="1"
-				type="text"
 				style="transition: height 0.1s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.2s cubic-bezier(0.4, 0, 0.2, 1), padding 0.2s cubic-bezier(0.4, 0, 0.2, 1)"
 				class="w-full bg-c-bg-secondary shadow-lg pr-12 md:pr-17 hide-scrollbar shadow-c-shadow/[var(--o-shadow-normal)] 
 					scroll-smooth resize-none transition relative pl-5 md:pl-6 py-5 rounded-xl 
@@ -388,7 +387,15 @@
 			transition:expandCollapse|local={{ duration: 300 }}
 		>
 			<div class="w-full hidden md:flex flex-col justify-start">
-				<GenerationSettings disabled={loadingOrSubmitting} {formElement} {isCheckComplete} />
+				<GenerationSettings
+					calculateDistance={!isGenerationSettingsSheetOpen}
+					container={$homePageContainer}
+					containerTopMinDistance={12}
+					containerBottomMinDistance={12}
+					disabled={loadingOrSubmitting}
+					{formElement}
+					{isCheckComplete}
+				/>
 			</div>
 			<div class="w-full flex flex-col md:hidden justify-start pt-2 items-center relative">
 				<NoBgButton

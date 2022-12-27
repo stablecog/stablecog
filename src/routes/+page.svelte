@@ -48,6 +48,7 @@
 		promptInputValue
 	} from '$ts/stores/generationSettings';
 	import { page } from '$app/stores';
+	import { homePageContainer } from '$ts/stores/homePageContainer';
 
 	export let data: THomePageData;
 
@@ -297,7 +298,10 @@
 
 <svelte:window on:keydown={onKeyDown} />
 
-<div class="w-full flex flex-col items-center flex-1 justify-center px-4 md:pt-4">
+<div
+	bind:this={$homePageContainer}
+	class="w-full flex flex-col items-center flex-1 justify-center px-4 md:pt-4"
+>
 	<div class="w-full flex flex-col items-center justify-center">
 		{#if isCheckComplete && !$serverUrl}
 			<SetServerModal isOnBarrier={false} />
