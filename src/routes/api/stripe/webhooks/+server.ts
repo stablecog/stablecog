@@ -68,11 +68,14 @@ export const POST: RequestHandler = async (event) => {
 				stripe.products.retrieve(productId),
 				supabaseAdmin
 					.from('user')
-					.select('id')
+					.select('id,email')
 					.match({ stripe_customer_id: customerId })
 					.maybeSingle()
 			]);
 			if (userRes.data?.id) {
+				mixpanel.people.set(userRes.data.id, {
+					$email: userRes.data.email
+				});
 				mixpanel.track('Subscription', {
 					distinct_id: userRes.data.id,
 					'SC - Plan': prodRes.name.toUpperCase()
