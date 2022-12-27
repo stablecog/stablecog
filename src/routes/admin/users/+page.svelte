@@ -26,7 +26,7 @@
 
 	let users: TUser[];
 
-	const giftedPro = 5;
+	const giftedPro = 6;
 
 	onMount(async () => {
 		getUsers();
