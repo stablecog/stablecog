@@ -49,7 +49,6 @@ const r = unified()
 
 const getPath = (slug: string | undefined) => `/src/lib/md/${slug}.md`;
 
-export const prerender = true;
 export const load: ServerLoad = async ({ params }) => {
 	const { slug } = params;
 	const blogPostsImport = import.meta.glob('$md/*.md');

@@ -17,7 +17,6 @@ import {
 } from '$ts/constants/main';
 import type { ServerLoad } from '@sveltejs/kit';
 
-export const prerender = false;
 export const load: ServerLoad = ({ url }) => {
 	const _prompt = url.searchParams.get('p');
 	const _negative_prompt = url.searchParams.get('np');
