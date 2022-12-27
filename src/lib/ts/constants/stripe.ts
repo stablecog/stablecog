@@ -1,4 +1,8 @@
-import { STRIPE_PRO_PRICE_ID, STRIPE_SECRET_KEY } from '$env/static/private';
+import {
+	STRIPE_PRO_PRICE_ID,
+	STRIPE_PRO_PRICE_ID_EUR,
+	STRIPE_SECRET_KEY
+} from '$env/static/private';
 import Stripe from 'stripe';
 
 export const stripe = new Stripe(STRIPE_SECRET_KEY, {
@@ -8,7 +12,10 @@ export const stripe = new Stripe(STRIPE_SECRET_KEY, {
 export const stripeTiers = [
 	{
 		name: 'Pro',
-		priceId: STRIPE_PRO_PRICE_ID
+		priceId: {
+			USD: STRIPE_PRO_PRICE_ID,
+			EUR: STRIPE_PRO_PRICE_ID_EUR
+		}
 	}
 ] as const;
 

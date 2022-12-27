@@ -1,3 +1,4 @@
+import { eurCountryCodes } from '$ts/constants/main';
 import { defaultStripeTier, stripe, stripeTiers } from '$ts/constants/stripe';
 import { supabaseAdmin } from '$ts/constants/supabaseAdmin';
 import { getSupabase } from '@supabase/auth-helpers-sveltekit';
@@ -21,15 +22,17 @@ export const GET: RequestHandler = async (event) => {
 		return new Response(JSON.stringify({ error: userError || 'No user found' }));
 	}
 	const customer = await stripe.customers.retrieve(userData.stripe_customer_id);
+	const countryCode = event.request.headers.get('x-vercel-ip-country');
+	const priceId =
+		countryCode && eurCountryCodes.includes(countryCode) ? tier.priceId.EUR : tier.priceId.USD;
 	const checkoutSession = await stripe.checkout.sessions.create({
 		customer: customer.id,
 		line_items: [
 			{
-				price: tier.priceId,
+				price: priceId,
 				quantity: 1
 			}
 		],
-		allow_promotion_codes: true,
 		mode: 'subscription',
 		success_url: `${baseUrl}/pro/success`,
 		cancel_url: `${baseUrl}/pro/cancel`

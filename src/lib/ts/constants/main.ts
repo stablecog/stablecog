@@ -230,3 +230,30 @@ export const availableSchedulerIdDropdownItems = derived(
 		return items;
 	}
 );
+
+export const eurCountryCodes = [
+	'BE',
+	'BG',
+	'CY',
+	'CZ',
+	'DE',
+	'DK',
+	'EE',
+	'ES',
+	'FI',
+	'FR',
+	'HR',
+	'HU',
+	'IT',
+	'LT',
+	'LU',
+	'LV',
+	'MT',
+	'NL',
+	'PL',
+	'PT',
+	'RO',
+	'SE',
+	'SI',
+	'SK'
+];

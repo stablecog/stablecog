@@ -1,7 +1,8 @@
-import { STRIPE_PRO_PRICE_ID } from '$env/static/private';
+import { STRIPE_PRO_PRICE_ID, STRIPE_PRO_PRICE_ID_EUR } from '$env/static/private';
 import { stripe } from '$ts/constants/stripe';
 import type { PageServerLoad } from './$types';
 import { error } from '@sveltejs/kit';
+import { eurCountryCodes } from '$ts/constants/main';
 
 const availableProReasons = [
 	'width',
@@ -21,9 +22,12 @@ const availableProReasons = [
 export type TAvailableProReason = typeof availableProReasons[number];
 
 export const load: PageServerLoad = async ({ url, locals }) => {
-	console.log('Country code is:', locals.countryCode);
 	try {
-		const res = await stripe.prices.retrieve(STRIPE_PRO_PRICE_ID);
+		let priceId = STRIPE_PRO_PRICE_ID;
+		if (locals.countryCode && eurCountryCodes.includes(locals.countryCode)) {
+			priceId = STRIPE_PRO_PRICE_ID_EUR;
+		}
+		const res = await stripe.prices.retrieve(priceId);
 		if (res.unit_amount === null || res.unit_amount === undefined) {
 			throw error(500, 'Error loading prices');
 		}
@@ -37,6 +41,7 @@ export const load: PageServerLoad = async ({ url, locals }) => {
 			prices: {
 				pro: {
 					amount: res.unit_amount,
+					amountDivider: 100,
 					currency: res.currency
 				}
 			}

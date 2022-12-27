@@ -40,10 +40,10 @@
 		<div class="self-stretch flex text-c-on-bg/30">
 			<slot name="title" />
 		</div>
+		<div class="w-2px mr-px -ml-px self-stretch">
+			<div class="w-full h-full bg-c-bg-secondary" />
+		</div>
 	{/if}
-	<div class="w-2px mr-px -ml-px self-stretch">
-		<div class="w-full h-full bg-c-bg-secondary" />
-	</div>
 	<div class="flex-1 min-w-0 flex relative rounded-r-xl">
 		<div class="w-full h-full absolute left-0 top-0 overflow-hidden rounded-r-xl z-0">
 			<div

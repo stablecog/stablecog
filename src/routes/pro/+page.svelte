@@ -14,10 +14,24 @@
 	import ConfettiFullScreen from '$components/ConfettiFullScreen.svelte';
 	import PageWrapper from '$components/PageWrapper.svelte';
 	import IconInfo from '$components/icons/IconInfo.svelte';
+	import type { TTab } from '$ts/types/main';
 
 	export let data: PageServerData;
 
 	let checkoutCreationStatus: 'idle' | 'loading' | 'success' | 'error' = 'idle';
+
+	type TPaymentInterval = 'monthly' | 'quarterly';
+	let paymentIntervalTabs: TTab<TPaymentInterval>[] = [
+		{
+			label: 'Monthly',
+			value: 'monthly'
+		},
+		{
+			label: 'Quarterly',
+			value: 'quarterly'
+		}
+	];
+	let paymentInterval: TPaymentInterval = 'monthly';
 
 	async function createCheckoutSessionAndRedirect() {
 		try {
@@ -115,7 +129,7 @@
 					<span class="text-xl">{data.prices.pro.currency === 'eur' ? '€' : '$'}</span><span
 						class="text-4xl font-extrabold"
 					>
-						{data.prices.pro.amount / 100}
+						{data.prices.pro.amount / data.prices.pro.amountDivider}
 					</span>
 					<span class="self-end mb-1">{$LL.Pro.Month()}</span>
 				</h3>
