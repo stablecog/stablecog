@@ -41,7 +41,12 @@
 	import { createEventDispatcher } from 'svelte';
 	import TabBar from '$components/tabBars/TabBar.svelte';
 	import { lastUpscaleDurationSec } from '$ts/stores/lastUpscaleDurationSec';
-	import { estimatedDurationBufferRatio } from '$ts/constants/main';
+	import {
+		availableHeightsFree,
+		availableModelIdsFree,
+		availableWidthsFree,
+		estimatedDurationBufferRatio
+	} from '$ts/constants/main';
 	import { mLogUpscale, uLogUpscale } from '$ts/helpers/loggers';
 	import LL, { locale } from '$i18n/i18n-svelte';
 	import { negativePromptTooltipAlt } from '$ts/constants/tooltips';
@@ -49,6 +54,8 @@
 	import { deleteGenerationFromDb } from '$ts/queries/indexedDb';
 	import IconTrashcanFilledOpen from '$components/icons/IconTrashcanFilledOpen.svelte';
 	import { advancedMode } from '$ts/stores/advancedMode';
+	import TierBadge from '$components/TierBadge.svelte';
+	import type { TAvailableProReason } from '.svelte-kit/types/src/routes/pro/proxy+page.server';
 
 	export let generation: TGenerationUI;
 	export let upscaleStatus: TUpscaleStatus = 'idle';
@@ -340,6 +347,18 @@
 		}
 	}
 
+	$: showTierBadge =
+		$page.data.tier === 'FREE' &&
+		(!availableWidthsFree.map((i) => Number(i)).includes(generation.width) ||
+			!availableHeightsFree.map((i) => Number(i)).includes(generation.height) ||
+			(generation.model_id && !availableModelIdsFree.includes(generation.model_id)));
+
+	let showTierBadgeReason: TAvailableProReason;
+	$: showTierBadgeReason =
+		generation.model_id && !availableModelIdsFree.includes(generation.model_id)
+			? 'model_generation'
+			: 'dimensions_generation';
+
 	onMount(() => {
 		setSidebarWrapperVars();
 	});
@@ -474,27 +493,43 @@
 								.includes('upscale') || generation.upscaledImageDataB64}
 								<div class="w-full pt-1.5">
 									{#if !generation.upscaledImageDataB64}
-										<div class="w-full flex flex-col gap-3">
-											<Button
-												onClick={onUpscaleClicked}
-												loading={upscaleStatus === 'loading'}
-												class="w-full"
-												size="sm"
-											>
-												<div class="flex items-center gap-2">
-													{#if upscaleStatus === 'loading'}
-														<p>
-															{upscaleDurationSec.toLocaleString('en-US', {
-																minimumFractionDigits: 1,
-																maximumFractionDigits: 1
-															})}
-														</p>
-													{:else}
+										<div class="w-fulll relative">
+											{#if $page.data.tier === 'FREE'}
+												<Button href="/pro?reason=upscale" target="_blank" class="w-full" size="sm">
+													<div class="flex items-center gap-2">
 														<IconUpscale class="w-5 h-5" />
 														<p>{$LL.GenerationFullscreen.UpscaleButton()}</p>
-													{/if}
-												</div>
-											</Button>
+													</div>
+												</Button>
+											{:else}
+												<Button
+													onClick={onUpscaleClicked}
+													loading={upscaleStatus === 'loading'}
+													class="w-full"
+													size="sm"
+												>
+													<div class="flex items-center gap-2">
+														{#if upscaleStatus === 'loading'}
+															<p>
+																{upscaleDurationSec.toLocaleString('en-US', {
+																	minimumFractionDigits: 1,
+																	maximumFractionDigits: 1
+																})}
+															</p>
+														{:else}
+															<IconUpscale class="w-5 h-5" />
+															<p>{$LL.GenerationFullscreen.UpscaleButton()}</p>
+														{/if}
+													</div>
+												</Button>
+											{/if}
+											{#if $page.data.tier === 'FREE'}
+												<TierBadge
+													size="md"
+													tier="PRO"
+													class="absolute transform -top-2.5 -right-2.5 pointer-events-none"
+												/>
+											{/if}
 										</div>
 									{:else if generation.upscaledImageDataB64}
 										<TabBar
@@ -545,18 +580,44 @@
 									</Morpher>
 								</SubtleButton>
 								{#if $page.url.pathname !== '/'}
-									<SubtleButton prefetch={true} href={rerollUrl}>
-										<div class="flex items-center justify-center gap-1.5">
-											<IconDice class="w-5 h-5 -ml-0.5" />
-											<p>{$LL.GenerationFullscreen.RerollButton()}</p>
-										</div>
-									</SubtleButton>
-									<SubtleButton prefetch={true} href={regenerateUrl}>
-										<div class="flex items-center justify-center gap-1.5">
-											<IconRefresh class="w-5 h-5 -ml-0.5" />
-											<p>{$LL.GenerationFullscreen.RegenerateButton()}</p>
-										</div>
-									</SubtleButton>
+									<div class="flex relative">
+										<SubtleButton
+											target="_self"
+											prefetch={true}
+											href={showTierBadge ? `/pro?reason=${showTierBadgeReason}` : rerollUrl}
+										>
+											<div class="flex items-center justify-center gap-1.5">
+												<IconDice class="w-5 h-5 -ml-0.5" />
+												<p>{$LL.GenerationFullscreen.RerollButton()}</p>
+											</div>
+										</SubtleButton>
+										{#if showTierBadge}
+											<TierBadge
+												size="xs"
+												tier="PRO"
+												class="absolute -right-2 -top-2 pointer-events-none"
+											/>
+										{/if}
+									</div>
+									<div class="flex relative">
+										<SubtleButton
+											target="_self"
+											prefetch={true}
+											href={showTierBadge ? `/pro?reason=${showTierBadgeReason}` : regenerateUrl}
+										>
+											<div class="flex items-center justify-center gap-1.5">
+												<IconRefresh class="w-5 h-5 -ml-0.5" />
+												<p>{$LL.GenerationFullscreen.RegenerateButton()}</p>
+											</div>
+										</SubtleButton>
+										{#if showTierBadge}
+											<TierBadge
+												size="xs"
+												tier="PRO"
+												class="absolute -right-2 -top-2 pointer-events-none"
+											/>
+										{/if}
+									</div>
 								{/if}
 								<div use:copy={generation.prompt} on:svelte-copy={onPromptCopied}>
 									<SubtleButton state={promptCopied ? 'success' : 'idle'}>

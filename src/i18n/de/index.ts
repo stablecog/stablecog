@@ -1,6 +1,6 @@
-import type { BaseTranslation } from '../i18n-types';
+import type { Translation } from '../i18n-types';
 
-const de: BaseTranslation = {
+const de: Translation = {
 	Language: 'Sprache',
 	Home: {
 		GenerateButton: 'Generieren',
@@ -51,7 +51,7 @@ const de: BaseTranslation = {
 	},
 	History: {
 		GenerationsTitle: 'Generierte Bilder',
-		GenerationsMaxSavedCountWarning: 'Nur die letzten {count:number}',
+		GenerationsMaxSavedCountWarning: 'Nur die letzten {count}',
 		NoGenerationsYet: 'Du hast noch keine Bilder generiert.'
 	},
 	Live: {
@@ -136,7 +136,7 @@ const de: BaseTranslation = {
 		BackToBlogButton: 'Zurück zum Blog'
 	},
 	Redirect: {
-		RedirectingToTitle: 'Weiterleitung zu {name:string}'
+		RedirectingToTitle: 'Weiterleitung zu {name}'
 	},
 	Shared: {
 		StartGeneratingTitle: 'Beginne wunderschöne Bilder zu generieren!',
@@ -145,7 +145,7 @@ const de: BaseTranslation = {
 		GoHomeButton: 'Zurück zur Startseite',
 		SwitchToDefaultServerButton: 'Zum Standard-Server wechseln',
 		ShareButton: 'Teilen',
-		ShareOnButton: 'Auf {name:string} teilen',
+		ShareOnButton: 'Auf {name} teilen',
 		YesButton: 'Ja',
 		NoButton: 'Nein',
 		EnableButton: 'Aktivieren',
@@ -154,13 +154,11 @@ const de: BaseTranslation = {
 		CopyLinkButton: 'Link kopieren',
 		CopyButton: 'Kopieren',
 		DeleteButton: 'Löschen',
+		LoadingTitle: 'Wird geladen',
+		LoadingParagraph: 'Wird geladen...',
 		ServerUrlInput: {
 			Placeholder: 'Server-URL'
 		},
-		LoadingTitle: 'Wird geladen',
-		LoadingParagraph: 'Wird geladen...',
-		LoginButton: 'Einloggen',
-		LogoutButton: 'Logout',
 		EmailInput: {
 			Placeholder: 'E-Mail'
 		},
@@ -231,7 +229,7 @@ const de: BaseTranslation = {
 	},
 	SignUp: {
 		PageTitle: 'Sign Up',
-		PageParagraph: 'Sign up to become a pro member. Unlock the full potential of Stablecog.',
+		PageParagraph: 'Join Stablecog to become a pro member and unlock its full potential.',
 		PageTitleConfirm: 'Confirm',
 		PageParagraphConfirm:
 			"We've emailed you a 6-digit code. Enter it below to confirm your account.",
@@ -243,17 +241,22 @@ const de: BaseTranslation = {
 			Placeholder: '6-Digit Code'
 		}
 	},
-	Login: {
-		PageTitle: 'Login',
+	SignIn: {
+		PageTitle: 'Sign In',
 		PageParagraph: 'Start using Stablecog with all features that are available to your account.',
 		DontHaveAnAccountTitle: "Don't have an account?",
-		SignUpInsteadButton: 'Sign up instead'
+		SignUpInsteadButton: 'Sign up instead',
+		SignInButton: 'Sign In',
+		SignOutButton: 'Sign Out'
 	},
 	Pro: {
 		PageTitle: 'Become a Pro',
 		PageParagraph:
 			"Unlock all features of Stablecog and support the project. Without the pro members, Stablecog wouldn't be able to stay completely open-source and offer free generations to everyone.",
 		ProPlanTitle: 'Pro',
+		PageTitleAlreadyPro: 'Already a Pro!',
+		PageParagraphAlreadyPro:
+			'You are already a pro member. Thank you for supporting the project! Go ahead and enjoy Stablecog, and consider sharing it with your friends.',
 		Features: {
 			FullSpeed: 'Full speed without set limits',
 			ImageDimensions: 'Different image dimensions',
@@ -262,21 +265,42 @@ const de: BaseTranslation = {
 			MoreModels: 'More models',
 			MoreSchedulers: 'More schedulers',
 			SavedToCloud: 'Generations saved to the cloud',
-			Upcoming: 'All upcoming features',
+			Upcoming: 'Upcoming features',
 			CommercialUse: 'Commercial Use'
 		},
 		Soon: '(soon)',
 		Month: '/month',
 		BecomeProButton: 'Become a Pro',
 		Success: {
-			PageTitle: 'Thanks for becoming a pro!',
+			PageTitle: "You're a Pro!",
 			PageParagraph:
-				'You now have access to everything Stablecog has to offer. If you have any questions, reach out to us on {platform:string}.'
+				'You now have access to everything Stablecog has to offer. If you have any questions, reach out to us on {platform}.'
 		},
 		Cancel: {
 			PageTitle: "You've cancelled",
 			PageParagraph:
 				"You've cancelled the subscription process. If it was a mistake, you can try again."
+		},
+		Reason: {
+			ParagraphWidth: "That image width isn't available on the free plan.",
+			ParagraphHeight: "That image height isn't available on the free plan.",
+			ParagraphDimensions: "Those image dimensions aren't available on the free plan.",
+			ParagraphUpscale: "Upscale feature isn't available on the free plan.",
+			ParagraphInferenceSteps: "That inference steps setting isn't available on the free plan.",
+			ParagraphModel: "That AI model isn't available on the free plan.",
+			ParagraphScheduler: "That scheduler isn't available on the free plan.",
+			ParagraphWidthGeneration:
+				"That generation was created using an image width that isn't available on the free plan.",
+			ParagraphHeightGeneration:
+				"That generation was created using an image height that isn't available on the free plan.",
+			ParagraphDimensionsGeneration:
+				"That generation was created using image dimensions that aren't available on the free plan.",
+			ParagraphInferenceStepsGeneration:
+				"That generation was created using an inference steps setting that isn't available on the free plan.",
+			ParagraphModelGeneration:
+				"That generation was created using a model that isn't available on the free plan.",
+			ParagraphSchedulerGeneration:
+				"That generation was created using a scheduler that isn't available on the free plan."
 		}
 	},
 	Account: {
@@ -285,6 +309,23 @@ const de: BaseTranslation = {
 		ManageAccountButton: 'Manage Account',
 		MyAccountButton: 'My Account',
 		SubscriptionPlanTitle: 'Plan'
+	},
+	ForgotPassword: {
+		PageTitle: 'Reset Password',
+		PageParagraph: 'We will send a 6-digit code to your email for resetting your password.',
+		SendResetCodeButton: 'Send Code',
+		PageTitleConfirmCode: 'Confirm',
+		PageParagraphConfirmCode: "We've emailed you a 6-digit code. Enter it below to continue.",
+		ConfirmCodeButton: 'Confirm',
+		PageTitleNewPassword: 'New Password',
+		PageParagraphNewPassword: 'Enter a new password for your account.',
+		NewPasswordInput: {
+			Placeholder: 'New Password'
+		},
+		SetNewPasswordButton: 'Set New Password',
+		PageTitleSuccess: 'Done!',
+		PageParagraphSuccess: 'Your password has been successfully reset.',
+		ForgotPasswordButton: 'Forgot Password?'
 	}
 };
 export default de;

@@ -19,6 +19,9 @@
 	import LL from '$i18n/i18n-svelte';
 	import Button from '$components/buttons/Button.svelte';
 	import AccountMenu from '$components/AccountMenu.svelte';
+	import { scale } from 'svelte/transition';
+	import { quadOut } from 'svelte/easing';
+	import IconStar from '$components/icons/IconStar.svelte';
 	let isSwitchServerModalOpen = false;
 	let isSettingsOpen = false;
 	let isAccountMenuOpen = false;
@@ -50,7 +53,7 @@
 		mounted = true;
 	});
 
-	const lastNotification = 'join-discord-1';
+	const lastNotification = 'go-pro-1';
 </script>
 
 <svelte:window on:scroll={setNotAtTheTop} />
@@ -58,14 +61,16 @@
 <nav class="w-full flex flex-col sticky -top-px z-50 transition">
 	{#if mounted && ($lastClosedNotification === null || $lastClosedNotification !== lastNotification)}
 		<Banner
-			href="/discord"
+			href="/pro"
 			onClose={() => {
 				lastClosedNotification.set(lastNotification);
 			}}
 		>
 			<div class="flex items-center justify-center gap-2">
-				<IconSocial class="w-7 h-7 flex-shrink-0" type="discord" />
-				<p class="flex-shrink min-w-0 overflow-hidden overflow-ellipsis">Join our Discord!</p>
+				<IconStar class="w-7 h-7 flex-shrink-0" />
+				<p class="flex-shrink min-w-0 overflow-hidden overflow-ellipsis">
+					Become a pro and unlock all features of Stablecog!
+				</p>
 			</div>
 		</Banner>
 	{/if}
@@ -77,7 +82,7 @@
 				? 'translate-y-0 opacity-100'
 				: '-translate-y-24 opacity-0'}"
 		/>
-		<div class="flex md:flex-1 self-stretch">
+		<div class="flex xl:flex-1 self-stretch">
 			<a
 				aria-label="Go to Home"
 				href="/"
@@ -95,12 +100,12 @@
 				<Logo class="w-9 h-9" />
 			</a>
 		</div>
-		<div class="hidden md:flex md:w-full md:max-w-[20rem] lg:max-w-[36rem]">
+		<div class="hidden md:flex md:w-full md:max-w-[19rem] lg:max-w-[36rem] md:ml-2 xl:ml-0">
 			<NavigationTabBar />
 		</div>
 		<div class="flex flex-1 flex-wrap items-center justify-end relative">
 			<!-- Account -->
-			<!-- <div class="flex items-center justify-end px-2">
+			<div class="flex items-center justify-end px-2">
 				{#if $page.data.session?.user.email}
 					<div
 						use:clickoutside={{ callback: closeAccountMenu }}
@@ -123,18 +128,22 @@
 								</p>
 							</IconButton>
 						</div>
-						<div class="relative -mr-12 md:mr-0">
+						<div
+							class="relative {routesWithHealthCheck.includes($page.url.pathname)
+								? '-mr-22'
+								: '-mr-13'} md:mr-0"
+						>
 							{#if isAccountMenuOpen}
 								<AccountMenu {closeAccountMenu} />
 							{/if}
 						</div>
 					</div>
-				{:else if $page.url.pathname !== '/login'}
-					<Button size="xs" href={`/login?redirect_to=${encodeURIComponent($page.url.pathname)}`}>
-						{$LL.Shared.LoginButton()}
+				{:else if $page.url.pathname !== '/sign-in'}
+					<Button size="xs" href={`/sign-in?redirect_to=${encodeURIComponent($page.url.pathname)}`}>
+						{$LL.SignIn.SignInButton()}
 					</Button>
 				{/if}
-			</div> -->
+			</div>
 			{#if routesWithHealthCheck.includes($page.url.pathname)}
 				<HealthIndicator />
 			{/if}

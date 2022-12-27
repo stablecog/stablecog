@@ -14,6 +14,7 @@
 	import IconPulsing from '$components/icons/IconPulsing.svelte';
 	import type { TDBGenerationRealtimePayload, TDBUpscaleRealtimePayload } from '$ts/types/db';
 	import LL, { locale } from '$i18n/i18n-svelte';
+	import IconSubscriptionTier from '$components/icons/IconSubscriptionTier.svelte';
 
 	type TProcessType = 'upscale' | 'generation';
 	interface TDBGenerationRealtimePayloadExt extends TDBGenerationRealtimePayload {
@@ -387,13 +388,38 @@
 												? 'bg-c-danger'
 												: 'bg-c-primary'}"
 										>
-											{#if generationOrUpscale.country_code}
-												<p
-													class="text-center text-xs font-bold text-c-on-primary/50 cursor-default"
-												>
-													{generationOrUpscale.country_code}
-												</p>
-											{/if}
+											<div
+												class="w-full h-full flex items-center justify-center"
+												style="
+													background-color: transparent;
+													opacity: 0.8;
+													background-image: 
+														linear-gradient(
+															135deg, {generationOrUpscale.user_tier !== 'FREE'
+													? 'rgb(var(--c-on-primary)/0.1)'
+													: 'transparent'} 25%, transparent 25%),
+														linear-gradient(225deg, {generationOrUpscale.user_tier !== 'FREE'
+													? 'rgb(var(--c-on-primary)/0.1)'
+													: 'transparent'} 25%, transparent 25%),
+														linear-gradient(45deg, {generationOrUpscale.user_tier !== 'FREE'
+													? 'rgb(var(--c-on-primary)/0.1)'
+													: 'transparent'} 25%, transparent 25%),
+														linear-gradient(315deg, {generationOrUpscale.user_tier !== 'FREE'
+													? 'rgb(var(--c-on-primary)/0.1)'
+													: 'transparent'} 25%, transparent 25%);
+													background-position:  10px 0, 10px 0, 0 0, 0 0;
+													background-size: 20px 20px;
+													background-repeat: repeat;
+												"
+											>
+												{#if generationOrUpscale.country_code}
+													<p
+														class="text-center text-xs font-bold text-c-on-primary/75 cursor-default relative"
+													>
+														{generationOrUpscale.country_code}
+													</p>
+												{/if}
+											</div>
 										</div>
 									</div>
 								</div>

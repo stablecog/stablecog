@@ -1,4 +1,4 @@
-import { STRIPE_SIGNING_SECRET_TEST } from '$env/static/private';
+import { STRIPE_SIGNING_SECRET } from '$env/static/private';
 import { stripe } from '$ts/constants/stripe';
 import { supabaseAdmin } from '$ts/constants/supabaseAdmin';
 import type { RequestHandler } from '@sveltejs/kit';
@@ -18,7 +18,7 @@ export const POST: RequestHandler = async (event) => {
 		receivedEvent = await stripe.webhooks.constructEventAsync(
 			body,
 			signature,
-			STRIPE_SIGNING_SECRET_TEST,
+			STRIPE_SIGNING_SECRET,
 			undefined,
 			cryptoProvider
 		);

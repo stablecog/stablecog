@@ -14,16 +14,25 @@
 	import TabLikeDropdown from '$components/tabBars/TabLikeDropdown.svelte';
 	import TabLikeInput from '$components/tabBars/TabLikeInput.svelte';
 	import TabLikeRangeInput from '$components/tabBars/TabLikeRangeInput.svelte';
+	import TierBadge from '$components/TierBadge.svelte';
 	import LL from '$i18n/i18n-svelte';
 	import { tooltip } from '$ts/actions/tooltip';
 	import {
+		availableHeights,
+		availableHeightsFree,
+		availableInferenceSteps,
+		availableInferenceStepsFree,
 		availableModelIdDropdownItems,
+		availableModelIds,
+		availableModelIdsFree,
 		availableSchedulerIdDropdownItems,
+		availableWidths,
+		availableWidthsFree,
 		guidanceScaleMax,
 		guidanceScaleMin,
 		heightTabs,
 		inferenceStepsTabs,
-		maxFreePixelSteps,
+		maxProPixelSteps,
 		maxPromptLength,
 		maxSeed,
 		widthTabs
@@ -59,7 +68,7 @@
 	export let disabled = false;
 
 	$: isInferenceStepsValid = (s: string) => {
-		return Number(s) * Number($generationHeight) * Number($generationWidth) < maxFreePixelSteps;
+		return Number(s) * Number($generationHeight) * Number($generationWidth) < maxProPixelSteps;
 	};
 
 	$: logProps = {
@@ -87,30 +96,49 @@
 			</div>
 		</TabLikeInput>
 	{/if}
-	<TabBar
-		{disabled}
-		class="w-full md:w-84 max-w-full order-2"
-		tabs={widthTabs}
-		bind:value={$generationWidth}
-		name="Width"
-		hideSelected={!isCheckComplete}
-	>
-		<div slot="title" use:tooltip={$widthTooltip} class="p-3.5 flex items-center justify-center">
-			<IconWidth class="w-6 h-6 text-c-on-bg/25" />
-		</div>
-	</TabBar>
-	<TabBar
-		{disabled}
-		class="w-full md:w-84 max-w-full order-2"
-		tabs={heightTabs}
-		bind:value={$generationHeight}
-		name="Height"
-		hideSelected={!isCheckComplete}
-	>
-		<div slot="title" use:tooltip={$heightTooltip} class="p-3.5 flex items-center justify-center">
-			<IconHeight class="w-6 h-6 text-c-on-bg/25" />
-		</div>
-	</TabBar>
+	<div class="w-full md:w-84 max-w-full order-2 relative">
+		<TabBar
+			{disabled}
+			class="w-full"
+			tabs={widthTabs}
+			badgeHref="/pro?reason=width"
+			badgeAppliedTo={$page.data.tier === 'FREE'
+				? availableWidths.filter((i) => !availableWidthsFree.includes(i))
+				: undefined}
+			bind:value={$generationWidth}
+			name="Width"
+			hideSelected={!isCheckComplete}
+		>
+			<div slot="title" use:tooltip={$widthTooltip} class="p-3.5 flex items-center justify-center">
+				<IconWidth class="w-6 h-6 text-c-on-bg/25" />
+			</div>
+		</TabBar>
+		{#if $page.data.tier === 'FREE'}
+			<TierBadge tier="PRO" class="absolute -right-1.5 -top-1.5 pointer-events-none" />
+		{/if}
+	</div>
+	<div class="w-full md:w-84 max-w-full order-2 relative">
+		<TabBar
+			{disabled}
+			class="w-full"
+			tabs={heightTabs}
+			badgeHref="/pro?reason=height"
+			badgeAppliedTo={$page.data.tier === 'FREE'
+				? availableHeights.filter((i) => !availableHeightsFree.includes(i))
+				: undefined}
+			bind:value={$generationHeight}
+			name="Height"
+			hideSelected={!isCheckComplete}
+		>
+			<div slot="title" use:tooltip={$heightTooltip} class="p-3.5 flex items-center justify-center">
+				<IconHeight class="w-6 h-6 text-c-on-bg/25" />
+			</div>
+		</TabBar>
+		{#if $page.data.tier === 'FREE'}
+			<TierBadge tier="PRO" class="absolute -right-1.5 -top-1.5 pointer-events-none" />
+		{/if}
+	</div>
+
 	{#if $currentServer.lastHealthStatus === 'unknown' || $currentServer.features
 			?.map((f) => f.name)
 			.includes('model')}
@@ -120,12 +148,21 @@
 			dropdownClass={$advancedModeApp ? 'max-h-[18rem]' : 'max-h-[8rem] md:max-h-[18rem]'}
 			bind:value={$generationModelId}
 			items={$availableModelIdDropdownItems}
+			badgeHref="/pro?reason=model"
+			badgeAppliedTo={$page.data.tier === 'FREE'
+				? availableModelIds.filter((i) => !availableModelIdsFree.includes(i))
+				: undefined}
 			name="Model"
 			bottomMinDistance={$windowWidth < 768 ? 0 : 72}
 		>
 			<div slot="title" use:tooltip={$modelTooltip} class="p-3.5 flex items-center justify-center">
 				<IconBrain class="w-6 h-6 text-c-on-bg/25" />
 			</div>
+			<TierBadge
+				slot="badge"
+				tier="PRO"
+				class="absolute transform top-1/2 -translate-y-1/2 right-3 pointer-events-none"
+			/>
 		</TabLikeDropdown>
 	{/if}
 	{#if $advancedModeApp}
@@ -144,24 +181,33 @@
 				<IconScale class="w-6 h-6 text-c-on-bg/25" />
 			</div>
 		</TabLikeRangeInput>
-		<TabBar
-			{disabled}
-			class="w-full md:w-84 max-w-full order-2"
-			tabs={inferenceStepsTabs}
-			isValid={isInferenceStepsValid}
-			validityDependsOn={[$generationHeight, $generationWidth]}
-			bind:value={$generationInferenceSteps}
-			name="Steps"
-			hideSelected={!isCheckComplete}
-		>
-			<div
-				slot="title"
-				use:tooltip={$inferenceStepsTooltip}
-				class="p-3.5 flex items-center justify-center"
+		<div class="w-full md:w-84 max-w-full order-2 relative">
+			<TabBar
+				{disabled}
+				class="w-full"
+				tabs={inferenceStepsTabs}
+				badgeHref="/pro?reason=steps"
+				badgeAppliedTo={$page.data.tier === 'FREE'
+					? availableInferenceSteps.filter((i) => !availableInferenceStepsFree.includes(i))
+					: undefined}
+				isValid={isInferenceStepsValid}
+				validityDependsOn={[$generationHeight, $generationWidth]}
+				bind:value={$generationInferenceSteps}
+				name="Steps"
+				hideSelected={!isCheckComplete}
 			>
-				<IconSteps class="w-6 h-6 text-c-on-bg/25" />
-			</div>
-		</TabBar>
+				<div
+					slot="title"
+					use:tooltip={$inferenceStepsTooltip}
+					class="p-3.5 flex items-center justify-center"
+				>
+					<IconSteps class="w-6 h-6 text-c-on-bg/25" />
+				</div>
+			</TabBar>
+			{#if $page.data.tier === 'FREE'}
+				<TierBadge tier="PRO" class="absolute -right-1.5 -top-1.5 pointer-events-none" />
+			{/if}
+		</div>
 		{#if $currentServer.lastHealthStatus === 'unknown' || $currentServer.features
 				?.map((f) => f.name)
 				.includes('model')}

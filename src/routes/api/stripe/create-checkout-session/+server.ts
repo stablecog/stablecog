@@ -29,6 +29,7 @@ export const GET: RequestHandler = async (event) => {
 				quantity: 1
 			}
 		],
+		allow_promotion_codes: true,
 		mode: 'subscription',
 		success_url: `${baseUrl}/pro/success`,
 		cancel_url: `${baseUrl}/pro/cancel`

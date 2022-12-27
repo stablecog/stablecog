@@ -13,7 +13,7 @@ export const handle: Handle = async ({ event, resolve }) => {
 	const locale = isLocale(preferredLocale) ? preferredLocale : 'en';
 	event.locals.locale = locale;
 	// protect requests to all routes that start with /admin
-	if (event.url.pathname.startsWith('/admin') && event.url.pathname !== '/admin/login') {
+	if (event.url.pathname.startsWith('/admin') && event.url.pathname !== '/admin/sign-in') {
 		try {
 			const { session, supabaseClient } = await getSupabase(event);
 			const userId = session?.user?.id;
@@ -21,12 +21,12 @@ export const handle: Handle = async ({ event, resolve }) => {
 			const admins = data?.map((a) => a.id);
 			if (!data || error || !admins || !admins.includes(userId)) {
 				console.log('Admin access error:', error, admins, userId);
-				return new Response(null, { status: 303, headers: { location: '/admin/login' } });
+				return new Response(null, { status: 303, headers: { location: '/admin/sign-in' } });
 			}
 			console.log('Admin user access:', userId);
 		} catch (error) {
 			console.log('Admin access error:', error);
-			return new Response(null, { status: 303, headers: { location: '/admin/login' } });
+			return new Response(null, { status: 303, headers: { location: '/admin/sign-in' } });
 		}
 	}
 	return resolve(event);

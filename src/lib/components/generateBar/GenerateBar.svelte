@@ -5,6 +5,12 @@
 	import { autoresize } from '$ts/actions/textarea/autoresize';
 	import { expandCollapse } from '$ts/animation/transitions';
 	import {
+		availableHeightsFree,
+		availableInferenceStepsFree,
+		availableModelIds,
+		availableModelIdsFree,
+		availableSchedulerIds,
+		availableWidthsFree,
 		guidanceScaleDefault,
 		guidanceScaleMax,
 		guidanceScaleMin,
@@ -48,6 +54,7 @@
 	import IconGenerationSettings from '$components/icons/IconGenerationSettings.svelte';
 	import { isTouchscreen } from '$ts/stores/isTouchscreen';
 	import { advancedMode, advancedModeApp } from '$ts/stores/advancedMode';
+	import { page } from '$app/stores';
 
 	export let serverData: THomePageData;
 	export let onCreate: () => Promise<void>;
@@ -62,20 +69,29 @@
 		serverData.negative_prompt !== null ? serverData.negative_prompt : undefined
 	);
 	generationWidth.set(
-		isValue(serverData.width) && serverData.width !== null ? serverData.width : widthDefault
+		isValue(serverData.width) &&
+			serverData.width !== null &&
+			(availableWidthsFree.includes(serverData.width) || $page.data.tier !== 'FREE')
+			? serverData.width
+			: widthDefault
 	);
 	generationHeight.set(
-		isValue(serverData.height) && serverData.height !== null && serverData
+		isValue(serverData.height) &&
+			serverData.height !== null &&
+			serverData &&
+			(availableHeightsFree.includes(serverData.height) || $page.data.tier !== 'FREE')
 			? serverData.height
 			: heightDefault
 	);
 	generationInferenceSteps.set(
-		isValue(serverData.num_inference_steps) && serverData.num_inference_steps !== null
-			? inferenceStepsTabs
-					.map((i) => i.value)
-					.findIndex((i) => i === serverData.num_inference_steps) >= 0
-				? serverData.num_inference_steps
-				: inferenceStepsTabs[inferenceStepsTabs.length - 1].value
+		isValue(serverData.num_inference_steps) &&
+			serverData.num_inference_steps !== null &&
+			inferenceStepsTabs
+				.map((i) => i.value)
+				.findIndex((i) => i === serverData.num_inference_steps) >= 0 &&
+			(availableInferenceStepsFree.includes(serverData.num_inference_steps) ||
+				$page.data.tier !== 'FREE')
+			? serverData.num_inference_steps
 			: inferenceStepsDefault
 	);
 	generationGuidanceScale.set(
@@ -84,7 +100,9 @@
 			: guidanceScaleDefault
 	);
 	generationModelId.set(
-		isValue(serverData.model_id) && serverData.model_id !== null
+		isValue(serverData.model_id) &&
+			serverData.model_id !== null &&
+			(availableModelIdsFree.includes(serverData.model_id) || $page.data.tier !== 'FREE')
 			? serverData.model_id
 			: modelIdDefault
 	);
@@ -145,6 +163,7 @@
 
 	let isCheckComplete = false;
 
+	$: $page.data.tier, onTierStateChanged();
 	$: [$generationWidth, $generationHeight], setLocalImageSize();
 	$: [$generationInferenceSteps], setLocalInferenceSteps();
 	$: [$generationGuidanceScale], setLocalGuidanceScale();
@@ -155,6 +174,23 @@
 	$: [$generationSchedulerId], setLocalSchedulerId();
 	$: showClearPromptInputButton =
 		$promptInputValue !== undefined && $promptInputValue !== '' && !loadingOrSubmitting;
+
+	const onTierStateChanged = () => {
+		if (isCheckComplete && $page.data.tier === 'FREE') {
+			if (!availableWidthsFree.includes($generationWidth)) {
+				generationWidth.set(widthDefault);
+			}
+			if (!availableHeightsFree.includes($generationHeight)) {
+				generationHeight.set(heightDefault);
+			}
+			if (!availableInferenceStepsFree.includes($generationInferenceSteps)) {
+				generationInferenceSteps.set(inferenceStepsDefault);
+			}
+			if (!availableModelIdsFree.includes($generationModelId)) {
+				generationModelId.set(modelIdDefault);
+			}
+		}
+	};
 
 	const setLocalImageSize = () => {
 		if (isCheckComplete) {
@@ -230,19 +266,33 @@
 			const widthIndex = widthTabs
 				.map((w) => w.value)
 				.findIndex((i) => i === $imageSize?.width?.toString());
-			if (widthIndex >= 0) generationWidth.set(widthTabs[widthIndex].value);
+			if (
+				widthIndex >= 0 &&
+				(availableWidthsFree.includes(widthTabs[widthIndex].value) || $page.data.tier !== 'FREE')
+			) {
+				generationWidth.set(widthTabs[widthIndex].value);
+			}
 		}
 		if (!isValue(serverData.height)) {
 			const heightIndex = heightTabs
 				.map((h) => h.value)
 				.findIndex((i) => i === $imageSize?.height?.toString());
-			if (heightIndex >= 0) generationHeight.set(heightTabs[heightIndex].value);
+			if (
+				heightIndex >= 0 &&
+				(availableHeightsFree.includes(heightTabs[heightIndex].value) || $page.data.tier !== 'FREE')
+			) {
+				generationHeight.set(heightTabs[heightIndex].value);
+			}
 		}
 		if (!isValue(serverData.num_inference_steps)) {
 			const inferenceStepsIndex = inferenceStepsTabs
 				.map((i) => i.value)
 				.findIndex((i) => i === $inferenceSteps?.toString());
-			if (inferenceStepsIndex >= 0) {
+			if (
+				inferenceStepsIndex >= 0 &&
+				(availableInferenceStepsFree.includes(inferenceStepsTabs[inferenceStepsIndex].value) ||
+					$page.data.tier !== 'FREE')
+			) {
 				generationInferenceSteps.set(inferenceStepsTabs[inferenceStepsIndex].value);
 			}
 		}
@@ -272,10 +322,20 @@
 		) {
 			negativePromptInputValue.set($negativePrompt);
 		}
-		if (!isValue(serverData.model_id) && isValue($modelId)) {
-			generationModelId.set($modelId);
+		if (
+			!isValue(serverData.model_id) &&
+			isValue($modelId) &&
+			availableModelIds.includes($modelId)
+		) {
+			if (availableModelIdsFree.includes($modelId) || $page.data.tier !== 'FREE') {
+				generationModelId.set($modelId);
+			}
 		}
-		if (!isValue(serverData.scheduler_id) && isValue($schedulerId)) {
+		if (
+			!isValue(serverData.scheduler_id) &&
+			isValue($schedulerId) &&
+			availableSchedulerIds.includes($schedulerId)
+		) {
 			generationSchedulerId.set($schedulerId);
 		}
 		if (serverData.advanced_mode === true) {
@@ -296,7 +356,6 @@
 
 <form
 	bind:this={formElement}
-	disabled={loadingOrSubmitting}
 	on:submit|preventDefault={onSubmit}
 	class="w-full max-w-2xl md:max-w-6.5xl md:px-4 lg:px-12 flex flex-col items-center pt-2"
 >
@@ -325,7 +384,6 @@
 				disabled={loadingOrSubmitting || !isCheckComplete}
 				{placeholder}
 				rows="1"
-				type="text"
 				style="transition: height 0.1s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.2s cubic-bezier(0.4, 0, 0.2, 1), padding 0.2s cubic-bezier(0.4, 0, 0.2, 1)"
 				class="w-full bg-c-bg-secondary shadow-lg pr-12 md:pr-17 hide-scrollbar shadow-c-shadow/[var(--o-shadow-normal)] 
 					scroll-smooth resize-none transition relative pl-5 md:pl-6 py-5 rounded-xl 

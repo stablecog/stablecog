@@ -22,7 +22,8 @@ const upscaleType = "Real-World Image Super-Resolution-Large"
 const processType = "upscale"
 const scale = 4
 
-var minDuration = time.Second * 4
+var minDuration = time.Second * 2
+var minDurationFree = time.Second * 8
 
 func Handler(c *fiber.Ctx) error {
 	start := time.Now().UTC().UnixMilli()
@@ -32,18 +33,37 @@ func Handler(c *fiber.Ctx) error {
 		countryCode = c.Get("X-Vercel-IP-Country")
 	}
 
+	var req shared.SUpscaleRequestBody
+	if err := c.BodyParser(&req); err != nil {
+		return c.Status(http.StatusBadRequest).JSON(
+			SUpscaleResponse{Error: "Invalid request body"},
+		)
+	}
+
+	supabaseUserId := shared.GetSupabaseUserIdFromAccessToken(req.AccessToken)
+	subscriptionTier := "FREE"
+	if supabaseUserId != "" {
+		var res shared.SUserResponse
+		_, err := shared.SupabaseDb.From("user").Select("subscription_tier", "", false).Eq("id", supabaseUserId).Single().ExecuteTo(&res)
+		if err != nil {
+			log.Printf("-- Failed to get user tier: %v --", err)
+		} else {
+			log.Printf("-- User tier: %s --", res.SubsciptionTier)
+			subscriptionTier = res.SubsciptionTier
+		}
+	}
+
+	if subscriptionTier == "FREE" {
+		return c.Status(http.StatusBadRequest).JSON(
+			SUpscaleResponse{Error: "Upscale feature isn't available on the free tier :("},
+		)
+	}
+
 	isRateLimited := shared.IsRateLimited(c, minDuration)
 	if isRateLimited {
 		log.Printf("-- Upscale - Rate limited!: %s --", countryCode)
 		return c.Status(http.StatusTooManyRequests).JSON(
 			SUpscaleResponse{Error: fmt.Sprintf("You can only start an upscale every %d seconds :(", minDuration/time.Second)},
-		)
-	}
-
-	var req shared.SUpscaleRequestBody
-	if err := c.BodyParser(&req); err != nil {
-		return c.Status(http.StatusBadRequest).JSON(
-			SUpscaleResponse{Error: "Invalid request body"},
 		)
 	}
 
@@ -76,10 +96,6 @@ func Handler(c *fiber.Ctx) error {
 	}
 	loggers.LogUpscale("Upscale started", logObj)
 
-	supabaseUserId := shared.GetSupabaseUserIdFromAccessToken(req.AccessToken)
-
-	log.Printf("User id is: %s", supabaseUserId)
-
 	go InsertUpscaleInitial(SInsertUpscaleProps{
 		Status:            "started",
 		Scale:             scale,
@@ -92,6 +108,7 @@ func Handler(c *fiber.Ctx) error {
 		NumInferenceSteps: req.NumInferenceSteps,
 		Seed:              req.Seed,
 		UserId:            supabaseUserId,
+		UserTier:          subscriptionTier,
 		ServerUrl:         pickServerRes.ServerUrl,
 		UserAgent:         userAgent,
 		DeviceType:        shared.GetDeviceType(client),

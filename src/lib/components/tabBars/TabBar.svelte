@@ -8,6 +8,8 @@
 	export let tabs: TTab<T>[];
 	export let name: string;
 	export let value: T;
+	export let badgeAppliedTo: T[] | undefined = undefined;
+	export let badgeHref: string | undefined = undefined;
 	export let hideSelected = false;
 	export { classes as class };
 	export let hasTitle = true;
@@ -56,51 +58,96 @@
 			</div>
 		</div>
 		{#each tabs as tab}
-			<button
-				disabled={disabled || !isValid(tab.value)}
-				on:click|preventDefault={(e) => {
-					value = tab.value;
-					e.currentTarget.blur();
-				}}
-				class="flex-1 min-w-0 px-2 py-4 relative text-center rounded-lg group transition"
-				type="button"
-				aria-label={name}
-			>
-				<div class="w-full h-full absolute left-0 top-0 rounded-lg p-1">
-					<div class="w-full h-full overflow-hidden relative z-0 rounded-lg">
-						<div
-							class="w-full h-full origin-left rounded-lg transition transform translate-y-full 
-              bg-c-bg-secondary {value !== tab.value
-								? 'group-enabled:group-focus-within:translate-y-0'
-								: ''} {!$isTouchscreen ? 'group-enabled:group-hover:translate-y-0' : ''}"
-						/>
+			{#if badgeAppliedTo?.includes(tab.value)}
+				<a
+					href={badgeHref}
+					target="_blank"
+					class="flex-1 min-w-0 px-2 py-4 relative text-center rounded-lg group transition"
+					type="button"
+					aria-label={name}
+				>
+					<div class="w-full h-full absolute left-0 top-0 rounded-lg p-1">
+						<div class="w-full h-full overflow-hidden relative z-0 rounded-lg">
+							<div
+								class="w-full h-full origin-left rounded-lg transition transform translate-y-full 
+              		bg-c-bg-secondary {value !== tab.value
+									? 'group-focus-visible:translate-y-0'
+									: ''} {!$isTouchscreen ? 'group-hover:translate-y-0' : ''}"
+							/>
+						</div>
 					</div>
-				</div>
-				<Morpher morphed={!isValid(tab.value)}>
-					<p
-						slot="item-0"
-						class="flex-1 font-medium relative transition overflow-hidden overflow-ellipsis max-w-full z-0 {value ===
-							tab.value && !hideSelected
-							? 'text-c-on-bg/75'
-							: 'text-c-on-bg/30'} {value === tab.value && !hideSelected && !$isTouchscreen
-							? 'group-hover:text-c-primary'
-							: ''}"
-					>
-						{tab.label}
-					</p>
-					<p
-						slot="item-1"
-						class="flex-1 font-medium relative transition overflow-hidden overflow-ellipsis max-w-full z-0 {value ===
-							tab.value && !hideSelected
-							? 'text-c-on-bg/75'
-							: 'text-c-on-bg/30'} {value === tab.value && !hideSelected && !$isTouchscreen
-							? 'group-hover:text-c-primary'
-							: ''}"
-					>
-						•
-					</p>
-				</Morpher>
-			</button>
+					<Morpher morphed={!isValid(tab.value)}>
+						<p
+							slot="item-0"
+							class="flex-1 font-medium relative transition overflow-hidden overflow-ellipsis max-w-full z-0 {value ===
+								tab.value && !hideSelected
+								? 'text-c-on-bg/75'
+								: 'text-c-on-bg/30'} {value === tab.value && !hideSelected && !$isTouchscreen
+								? 'group-hover:text-c-primary'
+								: ''}"
+						>
+							{tab.label}
+						</p>
+						<p
+							slot="item-1"
+							class="flex-1 font-medium relative transition overflow-hidden overflow-ellipsis max-w-full z-0 {value ===
+								tab.value && !hideSelected
+								? 'text-c-on-bg/75'
+								: 'text-c-on-bg/30'} {value === tab.value && !hideSelected && !$isTouchscreen
+								? 'group-hover:text-c-primary'
+								: ''}"
+						>
+							•
+						</p>
+					</Morpher>
+				</a>
+			{:else}
+				<button
+					disabled={disabled || !isValid(tab.value)}
+					on:click|preventDefault={(e) => {
+						value = tab.value;
+						e.currentTarget.blur();
+					}}
+					class="flex-1 min-w-0 px-2 py-4 relative text-center rounded-lg group transition"
+					type="button"
+					aria-label={name}
+				>
+					<div class="w-full h-full absolute left-0 top-0 rounded-lg p-1">
+						<div class="w-full h-full overflow-hidden relative z-0 rounded-lg">
+							<div
+								class="w-full h-full origin-left rounded-lg transition transform translate-y-full 
+									bg-c-bg-secondary {value !== tab.value
+									? 'group-enabled:group-focus-visible:translate-y-0'
+									: ''} {!$isTouchscreen ? 'group-enabled:group-hover:translate-y-0' : ''}"
+							/>
+						</div>
+					</div>
+					<Morpher morphed={!isValid(tab.value)}>
+						<p
+							slot="item-0"
+							class="flex-1 font-medium relative transition overflow-hidden overflow-ellipsis max-w-full z-0 {value ===
+								tab.value && !hideSelected
+								? 'text-c-on-bg/75'
+								: 'text-c-on-bg/30'} {value === tab.value && !hideSelected && !$isTouchscreen
+								? 'group-hover:text-c-primary'
+								: ''}"
+						>
+							{tab.label}
+						</p>
+						<p
+							slot="item-1"
+							class="flex-1 font-medium relative transition overflow-hidden overflow-ellipsis max-w-full z-0 {value ===
+								tab.value && !hideSelected
+								? 'text-c-on-bg/75'
+								: 'text-c-on-bg/30'} {value === tab.value && !hideSelected && !$isTouchscreen
+								? 'group-hover:text-c-primary'
+								: ''}"
+						>
+							•
+						</p>
+					</Morpher>
+				</button>
+			{/if}
 		{/each}
 	</div>
 </TabBarWrapper>

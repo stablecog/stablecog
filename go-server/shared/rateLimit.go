@@ -7,7 +7,7 @@ import (
 	"github.com/gofiber/fiber/v2"
 )
 
-func IsRateLimited(c *fiber.Ctx, minDuration time.Duration) bool {
+func IsRateLimited(c *fiber.Ctx, duration time.Duration) bool {
 	ip := c.Get("CF-Connecting-IP")
 	if ip == "" {
 		ip = c.Get("X-Forwarded-For")
@@ -19,7 +19,7 @@ func IsRateLimited(c *fiber.Ctx, minDuration time.Duration) bool {
 	Cache.DeleteExpired()
 	res := Cache.Get(ipKey)
 	if res == nil {
-		Cache.Set(ipKey, "1", minDuration)
+		Cache.Set(ipKey, "1", duration)
 		return false
 	}
 	return true

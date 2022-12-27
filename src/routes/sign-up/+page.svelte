@@ -4,13 +4,18 @@
 	import Button from '$components/buttons/Button.svelte';
 	import NoBgButton from '$components/buttons/NoBgButton.svelte';
 	import ErrorLine from '$components/ErrorLine.svelte';
+	import IconEmail from '$components/icons/IconEmail.svelte';
 	import IconLoading from '$components/icons/IconLoading.svelte';
+	import IconPassword from '$components/icons/IconPassword.svelte';
 	import Input from '$components/Input.svelte';
 	import MetaTag from '$components/MetaTag.svelte';
-	import LL from '$i18n/i18n-svelte';
+	import PageWrapper from '$components/PageWrapper.svelte';
+	import LL, { locale } from '$i18n/i18n-svelte';
 	import { expandCollapse } from '$ts/animation/transitions';
 	import { canonicalUrl } from '$ts/constants/main';
 	import { supabase } from '$ts/constants/supabase';
+	import { mLogSignUp } from '$ts/helpers/loggers';
+	import { advancedMode } from '$ts/stores/advancedMode';
 	import type { PageServerData } from './$types';
 
 	export let data: PageServerData;
@@ -55,7 +60,7 @@
 		signupStatus = 'otp-loading';
 		const { data: verifyData, error: verifyError } = await supabase.auth.verifyOtp({
 			email: email,
-			token: otp,
+			token: String(otp),
 			type: 'signup'
 		});
 		if (verifyError) {
@@ -64,8 +69,16 @@
 			errorText = 'Wrong code, try again.';
 			return;
 		}
+		mLogSignUp({
+			'SC - Plan': $page.data.tier,
+			'SC - Locale': $locale,
+			'SC - Advanced Mode': $advancedMode,
+			'SC - Page': $page.url.pathname
+		});
 		console.log(verifyData);
-		signupStatus = 'success';
+		setTimeout(() => {
+			signupStatus = 'success';
+		}, 200);
 		await goto(data.redirect_to || defaultRedirectRoute);
 	}
 </script>
@@ -77,7 +90,7 @@
 	canonical="{canonicalUrl}{$page.url.pathname}"
 />
 
-<div class="w-full flex-1 flex flex-col py-8 px-5">
+<PageWrapper>
 	<div class="w-full flex flex-col items-center justify-center my-auto">
 		{#if signupStatus === 'success'}
 			<IconLoading class="w-10 h-10 text-c-on-bg/50 animate-spin-faster" />
@@ -93,7 +106,7 @@
 				transition:expandCollapse|local={{ duration: 200 }}
 				class="w-full flex flex-col items-center justify-start"
 			>
-				<p class="max-w-sm mt-4 text-c-on-bg/60 text-left leading-relaxed">
+				<p class="max-w-sm mt-4 text-c-on-bg/60 text-center leading-relaxed">
 					{#if signupStatus === 'otp' || signupStatus === 'otp-loading' || signupStatus === 'otp-error'}
 						{$LL.SignUp.PageParagraphConfirm()}
 					{:else}
@@ -101,8 +114,7 @@
 					{/if}
 				</p>
 				<form
-					on:input={(errorText = null)}
-					disabled={signupStatus === 'signup-loading' || signupStatus === 'otp-loading'}
+					on:input={() => (errorText = null)}
 					on:submit|preventDefault={signupStatus === 'otp' || signupStatus === 'otp-error'
 						? confirm
 						: signup}
@@ -116,10 +128,13 @@
 						>
 							<Input
 								disabled={signupStatus === 'otp-loading'}
-								type="text"
+								type="number"
 								title="6-Digit Code"
 								bind:value={otp}
-							/>
+								hasIcon
+							>
+								<IconPassword slot="icon" class="w-full h-full" />
+							</Input>
 						</div>
 					{:else}
 						<div
@@ -131,14 +146,20 @@
 								type="email"
 								title={$LL.Shared.EmailInput.Placeholder()}
 								bind:value={email}
-							/>
+								hasIcon
+							>
+								<IconEmail slot="icon" class="w-full h-full" />
+							</Input>
 							<Input
 								disabled={signupStatus === 'signup-loading'}
 								type="password"
 								title={$LL.Shared.PasswordInput.Placeholder()}
 								bind:value={password}
 								class="mt-2"
-							/>
+								hasIcon
+							>
+								<IconPassword slot="icon" class="w-full h-full" />
+							</Input>
 						</div>
 					{/if}
 					{#if errorText}
@@ -158,11 +179,11 @@
 				</form>
 				<div class="w-full flex flex-col items-center justify-center mt-6">
 					<p class="text-sm text-c-on-bg/50">{$LL.SignUp.AlreadyHaveAnAccountTitle()}</p>
-					<NoBgButton prefetch target="_self" href="/login" class="-mt-2 text-c-primary">
-						{$LL.SignUp.LoginInsteadButton()}
+					<NoBgButton prefetch target="_self" href="/sign-in" class="-mt-2 text-c-primary">
+						{$LL.SignIn.SignInButton()}
 					</NoBgButton>
 				</div>
 			</div>
 		{/if}
 	</div>
-</div>
+</PageWrapper>

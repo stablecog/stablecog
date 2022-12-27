@@ -36,6 +36,15 @@
 	import { generationGPreviewUrlFromId } from '$ts/helpers/generationGPreviewUrlFromId';
 	import { mLogGalleryGenerateClicked } from '$ts/helpers/loggers';
 	import { advancedMode } from '$ts/stores/advancedMode';
+	import {
+		availableHeightsFree,
+		availableInferenceSteps,
+		availableModelIdsFree,
+		availableWidths,
+		availableWidthsFree
+	} from '$ts/constants/main';
+	import TierBadge from '$components/TierBadge.svelte';
+	import type { TAvailableProReason } from '.svelte-kit/types/src/routes/pro/proxy+page.server';
 
 	export let generation: TGenerationGWithLoaded | TGenerationGAdmin;
 
@@ -197,6 +206,18 @@
 		sidebarWrapperScrollHeight = sidebarWrapper.scrollHeight;
 	};
 
+	$: showTierBadge =
+		$page.data.tier === 'FREE' &&
+		(!availableWidthsFree.map((i) => Number(i)).includes(generation.width) ||
+			!availableHeightsFree.map((i) => Number(i)).includes(generation.height) ||
+			(generation.model?.id && !availableModelIdsFree.includes(generation.model.id)));
+
+	let showTierBadgeReason: TAvailableProReason;
+	$: showTierBadgeReason =
+		generation.model?.id && !availableModelIdsFree.includes(generation.model.id)
+			? 'model_generation'
+			: 'dimensions_generation';
+
 	onMount(() => {
 		setSidebarWrapperVars();
 	});
@@ -297,17 +318,25 @@
 								{/if}
 							</div>
 							<div class="w-full flex flex-wrap gap-3">
-								<SubtleButton
-									onClick={() => mLogGalleryGenerateClicked(logProps)}
-									prefetch={true}
-									href={generateUrl}
-									target="_blank"
-								>
-									<div class="flex items-center justify-center gap-1.5">
-										<IconWand class="w-5 h-5 -ml-0.5" />
-										<p>{$LL.GenerationFullscreen.GenerateButton()}</p>
-									</div>
-								</SubtleButton>
+								<div class="flex relative">
+									<SubtleButton
+										onClick={() => mLogGalleryGenerateClicked(logProps)}
+										href={showTierBadge ? `/pro?reason=${showTierBadgeReason}` : generateUrl}
+										target="_blank"
+									>
+										<div class="flex items-center justify-center gap-1.5">
+											<IconWand class="w-5 h-5 -ml-0.5" />
+											<p>{$LL.GenerationFullscreen.GenerateButton()}</p>
+										</div>
+									</SubtleButton>
+									{#if showTierBadge}
+										<TierBadge
+											size="xs"
+											tier="PRO"
+											class="absolute -right-2 -top-2 pointer-events-none"
+										/>
+									{/if}
+								</div>
 								<div use:copy={generation.prompt.text} on:svelte-copy={onPromptCopied}>
 									<SubtleButton state={promptCopied ? 'success' : 'idle'}>
 										<Morpher morphed={promptCopied}>

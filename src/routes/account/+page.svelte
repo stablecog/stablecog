@@ -5,24 +5,33 @@
 	import DropdownItem from '$components/DropdownItem.svelte';
 	import IconHome from '$components/icons/IconHome.svelte';
 	import IconLoading from '$components/icons/IconLoading.svelte';
-	import IconLogout from '$components/icons/IconLogout.svelte';
+	import IconSignOut from '$components/icons/IconSignOut.svelte';
 	import IconSubscriptionTier from '$components/icons/IconSubscriptionTier.svelte';
 	import MetaTag from '$components/MetaTag.svelte';
-	import LL from '$i18n/i18n-svelte';
+	import PageWrapper from '$components/PageWrapper.svelte';
+	import LL, { locale } from '$i18n/i18n-svelte';
 	import { canonicalUrl } from '$ts/constants/main';
 	import { supabase } from '$ts/constants/supabase';
+	import { mLogSignOut } from '$ts/helpers/loggers';
+	import { advancedMode } from '$ts/stores/advancedMode';
 	import { isTouchscreen } from '$ts/stores/isTouchscreen';
 	import type { PageServerData } from './$types';
 
 	export let data: PageServerData;
 
 	$: if (!$page.data.session?.user.id) {
-		goto(`/login?redirect_to=${encodeURIComponent($page.url.pathname)}`);
+		goto(`/sign-in?redirect_to=${encodeURIComponent($page.url.pathname)}`);
 	}
 
-	async function logout() {
+	async function signOut() {
 		try {
 			await supabase.auth.signOut();
+			mLogSignOut({
+				'SC - Plan': $page.data.tier,
+				'SC - Locale': $locale,
+				'SC - Advanced Mode': $advancedMode,
+				'SC - Page': $page.url.pathname
+			});
 		} catch (error) {
 			console.log(error);
 		}
@@ -36,12 +45,12 @@
 	canonical="{canonicalUrl}{$page.url.pathname}"
 />
 
-{#if !$page.data.session?.user.email}
-	<div class="w-full flex-1 flex flex-col py-8 px-5 justify-center items-center">
-		<IconLoading class="w-10 h-10 text-c-on-bg/50 animate-spin-faster" />
-	</div>
-{:else}
-	<div class="w-full flex-1 flex flex-col py-6 px-5">
+<PageWrapper>
+	{#if !$page.data.session?.user.email}
+		<div class="w-full flex justify-center items-center my-auto">
+			<IconLoading class="w-10 h-10 text-c-on-bg/50 animate-spin-faster" />
+		</div>
+	{:else}
 		<div class="w-full flex flex-col items-center justify-center my-auto">
 			<h1 class="text-4xl font-bold">{$LL.Account.PageTitle()}</h1>
 			<div
@@ -80,9 +89,13 @@
 					<Button
 						class="w-full md:w-auto"
 						size="sm"
-						href={data.customerPortalSession ? data.customerPortalSession.url : '/pro'}
+						href={data.customerPortalSession && $page.data.tier !== 'FREE'
+							? data.customerPortalSession.url
+							: '/pro'}
 					>
-						{data.customerPortalSession ? 'Manage Subscription' : $LL.Pro.BecomeProButton()}
+						{data.customerPortalSession && $page.data.tier !== 'FREE'
+							? 'Manage Subscription'
+							: $LL.Pro.BecomeProButton()}
 					</Button>
 				</div>
 				<div class="w-full h-2px bg-c-bg-secondary" />
@@ -98,18 +111,18 @@
 						</div>
 					</DropdownItem>
 					<div class="w-full h-2px md:h-auto md:w-2px bg-c-bg-secondary" />
-					<DropdownItem onClick={logout} class="w-full md:w-auto md:flex-1">
+					<DropdownItem onClick={signOut} class="w-full md:w-auto md:flex-1">
 						<div
 							class="flex transition justify-center items-center gap-2 text-c-on-bg {!$isTouchscreen
 								? 'group-hover:text-c-primary'
 								: ''}"
 						>
-							<IconLogout class="w-6 h-6" />
-							<p>{$LL.Shared.LogoutButton()}</p>
+							<IconSignOut class="w-6 h-6" />
+							<p>{$LL.SignIn.SignOutButton()}</p>
 						</div>
 					</DropdownItem>
 				</div>
 			</div>
 		</div>
-	</div>
-{/if}
+	{/if}
+</PageWrapper>

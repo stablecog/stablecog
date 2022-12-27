@@ -6,7 +6,8 @@ import type { TTab } from '$ts/types/main';
 import { derived, type Readable, type Writable } from 'svelte/store';
 
 export const estimatedDurationBufferRatio = 0.1;
-export const estimatedDurationDefault = 10;
+export const estimatedDurationDefault = 15;
+export const durationAdditionFree = 8;
 export const estimatedDurationUpscaleDefault = 15;
 export const canonicalUrl = 'https://stablecog.com';
 export const defaultLocale: Locales = 'en';
@@ -18,7 +19,7 @@ export const apiBase =
 export const routesWithHealthCheck = ['/', '/history', '/canvas'];
 export const routesWithHiddenFooter = ['/canvas'];
 
-export const maxFreePixelSteps = 640 * 640 * 50;
+export const maxProPixelSteps = 640 * 640 * 50;
 
 export const allowedRedirectRoutes = [
 	'/',
@@ -48,32 +49,37 @@ export const maxPromptLength = 500;
 
 export const computeRatePerSecDefault = 250000;
 
-export type TAvailableWidth = '384' | '512' | '640' | '768';
+export const availableWidths = ['384', '512', '640', '768'] as const;
+export type TAvailableWidth = typeof availableWidths[number];
+export const availableWidthsFree: TAvailableWidth[] = ['512'];
 export const widthTabs: TTab<TAvailableWidth>[] = [
 	{ label: '384', value: '384' },
 	{ label: '512', value: '512' },
 	{ label: '640', value: '640' },
-	{ label: '768', value: '768' } /* ,
-	{ label: '1024', value: '1024' } */
+	{ label: '768', value: '768' }
 ];
-export const widthDefault = widthTabs[1].value;
+export const widthDefault: TAvailableWidth = '512';
 
-export type TAvailableHeight = '384' | '512' | '640' | '768';
+export const availableHeights = ['384', '512', '640', '768'] as const;
+export type TAvailableHeight = typeof availableWidths[number];
+export const availableHeightsFree: TAvailableHeight[] = ['512'];
 export const heightTabs: TTab<TAvailableHeight>[] = [
 	{ label: '384', value: '384' },
 	{ label: '512', value: '512' },
 	{ label: '640', value: '640' },
 	{ label: '768', value: '768' }
 ];
-export const heightDefault = heightTabs[1].value;
+export const heightDefault: TAvailableHeight = '512';
 
-export type TAvailableInferenceSteps = '30' | '40' | '50';
+export const availableInferenceSteps = ['30', '40', '50'] as const;
+export type TAvailableInferenceSteps = typeof availableInferenceSteps[number];
+export const availableInferenceStepsFree: TAvailableInferenceSteps[] = ['30'];
 export const inferenceStepsTabs: TTab<TAvailableInferenceSteps>[] = [
 	{ label: '30', value: '30' },
 	{ label: '40', value: '40' },
 	{ label: '50', value: '50' }
 ];
-export const inferenceStepsDefault = inferenceStepsTabs[0].value;
+export const inferenceStepsDefault: TAvailableInferenceSteps = '30';
 
 export const guidanceScaleMax = 20;
 export const guidanceScaleMin = 1;
@@ -91,6 +97,12 @@ export const availableModelIds = [
 ] as const;
 
 export type TAvailableModelId = typeof availableModelIds[number];
+
+export const availableModelIdsFree: TAvailableModelId[] = [
+	'048b4aa3-5586-47ed-900f-f4341c96bdb2',
+	'8acfe4c8-751d-4aa6-8c3c-844e3ef478e0',
+	'48a7031d-43b6-4a23-9f8c-8020eb6862e4'
+];
 
 export const modelIdDefault: TAvailableModelId = '048b4aa3-5586-47ed-900f-f4341c96bdb2';
 

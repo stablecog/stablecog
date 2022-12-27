@@ -44,12 +44,14 @@ module.exports = {
 				'4px': '4px',
 				0.25: '0.0625rem',
 				0.75: '0.1875rem',
+				1.25: '0.3125rem',
 				3.25: '0.8125rem',
 				4.5: '1.125rem',
 				5.5: '1.375rem',
 				6.5: '1.625rem',
 				13: '3.25rem',
 				15: '3.75rem',
+				22: '5.5rem',
 				17: '4.25rem',
 				18: '4.5rem',
 				30: '7.5rem',
@@ -76,7 +78,9 @@ module.exports = {
 				160: '40rem',
 				168: '42rem',
 				172: '43rem',
-				180: '45rem'
+				180: '45rem',
+				'4vh': '4vh',
+				'5vh': '5vh'
 			},
 			opacity: {
 				3: '0.03',
@@ -87,6 +91,7 @@ module.exports = {
 				85: '0.85'
 			},
 			borderWidth: {
+				1.5: '1.5px',
 				'3px': '3px',
 				'4px': '4px'
 			},
@@ -156,7 +161,8 @@ module.exports = {
 				'5xl': '2.5rem'
 			},
 			fontSize: {
-				'3.5xl': '2rem'
+				'3.5xl': '2rem',
+				xxs: '0.6rem'
 			},
 			keyframes: {
 				'pulse-custom': {

@@ -132,3 +132,7 @@ type SFeature struct {
 	Name   string   `json:"name"`
 	Values []string `json:"values,omitempty"`
 }
+
+type SUserResponse struct {
+	SubsciptionTier string `json:"subscription_tier"`
+}

@@ -24,6 +24,7 @@ func InsertUpscaleInitial(g SInsertUpscaleProps) string {
 		NumInferenceSteps: g.NumInferenceSteps,
 		Seed:              g.Seed,
 		UserId:            g.UserId,
+		UserTier:          g.UserTier,
 		ServerUrl:         g.ServerUrl,
 		Status:            "started",
 		DeviceType:        g.DeviceType,
@@ -54,6 +55,7 @@ type SInsertUpscaleProps struct {
 	GuidanceScale     int
 	NumInferenceSteps int
 	UserId            string
+	UserTier          string
 	Seed              int
 	Status            string
 	ServerUrl         string
@@ -77,6 +79,7 @@ type SDBUpscaleInsertInitial struct {
 	NumInferenceSteps int    `json:"num_inference_steps"`
 	Seed              int    `json:"seed"`
 	UserId            string `json:"user_id,omitempty"`
+	UserTier          string `json:"user_tier"`
 	Status            string `json:"status"`
 	ServerUrl         string `json:"server_url"`
 	UserAgent         string `json:"user_agent,omitempty"`
@@ -98,6 +101,7 @@ type SDBUpscaleInsertInitialRes struct {
 	NumInferenceSteps int    `json:"num_inference_steps"`
 	Seed              int    `json:"seed"`
 	UserId            string `json:"user_id,omitempty"`
+	UserTier          string `json:"user_tier"`
 	Status            string `json:"status"`
 	ServerUrl         string `json:"server_url"`
 	UserAgent         string `json:"user_agent,omitempty"`

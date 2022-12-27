@@ -144,7 +144,7 @@ type RootTranslation = {
 		GenerationsTitle: string
 		/**
 		 * L​a​s​t​ ​{​c​o​u​n​t​}​ ​o​n​l​y
-		 * @param {number} count
+		 * @param {unknown} count
 		 */
 		GenerationsMaxSavedCountWarning: RequiredParams<'count'>
 		/**
@@ -401,7 +401,7 @@ type RootTranslation = {
 	Redirect: {
 		/**
 		 * R​e​d​i​r​e​c​t​i​n​g​ ​t​o​ ​{​n​a​m​e​}
-		 * @param {string} name
+		 * @param {unknown} name
 		 */
 		RedirectingToTitle: RequiredParams<'name'>
 	}
@@ -432,7 +432,7 @@ type RootTranslation = {
 		ShareButton: string
 		/**
 		 * S​h​a​r​e​ ​o​n​ ​{​n​a​m​e​}
-		 * @param {string} name
+		 * @param {unknown} name
 		 */
 		ShareOnButton: RequiredParams<'name'>
 		/**
@@ -467,12 +467,6 @@ type RootTranslation = {
 		 * D​e​l​e​t​e
 		 */
 		DeleteButton: string
-		ServerUrlInput: {
-			/**
-			 * S​e​r​v​e​r​ ​U​R​L
-			 */
-			Placeholder: string
-		}
 		/**
 		 * L​o​a​d​i​n​g
 		 */
@@ -481,14 +475,12 @@ type RootTranslation = {
 		 * L​o​a​d​i​n​g​.​.​.
 		 */
 		LoadingParagraph: string
-		/**
-		 * L​o​g​i​n
-		 */
-		LoginButton: string
-		/**
-		 * L​o​g​o​u​t
-		 */
-		LogoutButton: string
+		ServerUrlInput: {
+			/**
+			 * S​e​r​v​e​r​ ​U​R​L
+			 */
+			Placeholder: string
+		}
 		EmailInput: {
 			/**
 			 * E​m​a​i​l
@@ -670,7 +662,7 @@ type RootTranslation = {
 		 */
 		PageTitle: string
 		/**
-		 * S​i​g​n​ ​u​p​ ​t​o​ ​b​e​c​o​m​e​ ​a​ ​p​r​o​ ​m​e​m​b​e​r​.​ ​U​n​l​o​c​k​ ​t​h​e​ ​f​u​l​l​ ​p​o​t​e​n​t​i​a​l​ ​o​f​ ​S​t​a​b​l​e​c​o​g​.
+		 * J​o​i​n​ ​S​t​a​b​l​e​c​o​g​ ​t​o​ ​b​e​c​o​m​e​ ​a​ ​p​r​o​ ​m​e​m​b​e​r​ ​a​n​d​ ​u​n​l​o​c​k​ ​i​t​s​ ​f​u​l​l​ ​p​o​t​e​n​t​i​a​l​.
 		 */
 		PageParagraph: string
 		/**
@@ -704,9 +696,9 @@ type RootTranslation = {
 			Placeholder: string
 		}
 	}
-	Login: {
+	SignIn: {
 		/**
-		 * L​o​g​i​n
+		 * S​i​g​n​ ​I​n
 		 */
 		PageTitle: string
 		/**
@@ -721,6 +713,14 @@ type RootTranslation = {
 		 * S​i​g​n​ ​u​p​ ​i​n​s​t​e​a​d
 		 */
 		SignUpInsteadButton: string
+		/**
+		 * S​i​g​n​ ​I​n
+		 */
+		SignInButton: string
+		/**
+		 * S​i​g​n​ ​O​u​t
+		 */
+		SignOutButton: string
 	}
 	Pro: {
 		/**
@@ -731,6 +731,14 @@ type RootTranslation = {
 		 * U​n​l​o​c​k​ ​a​l​l​ ​f​e​a​t​u​r​e​s​ ​o​f​ ​S​t​a​b​l​e​c​o​g​ ​a​n​d​ ​s​u​p​p​o​r​t​ ​t​h​e​ ​p​r​o​j​e​c​t​.​ ​W​i​t​h​o​u​t​ ​t​h​e​ ​p​r​o​ ​m​e​m​b​e​r​s​,​ ​S​t​a​b​l​e​c​o​g​ ​w​o​u​l​d​n​'​t​ ​b​e​ ​a​b​l​e​ ​t​o​ ​s​t​a​y​ ​c​o​m​p​l​e​t​e​l​y​ ​o​p​e​n​-​s​o​u​r​c​e​ ​a​n​d​ ​o​f​f​e​r​ ​f​r​e​e​ ​g​e​n​e​r​a​t​i​o​n​s​ ​t​o​ ​e​v​e​r​y​o​n​e​.
 		 */
 		PageParagraph: string
+		/**
+		 * A​l​r​e​a​d​y​ ​a​ ​P​r​o​!
+		 */
+		PageTitleAlreadyPro: string
+		/**
+		 * Y​o​u​ ​a​r​e​ ​a​l​r​e​a​d​y​ ​a​ ​p​r​o​ ​m​e​m​b​e​r​.​ ​T​h​a​n​k​ ​y​o​u​ ​f​o​r​ ​s​u​p​p​o​r​t​i​n​g​ ​t​h​e​ ​p​r​o​j​e​c​t​!​ ​G​o​ ​a​h​e​a​d​ ​a​n​d​ ​e​n​j​o​y​ ​S​t​a​b​l​e​c​o​g​,​ ​a​n​d​ ​c​o​n​s​i​d​e​r​ ​s​h​a​r​i​n​g​ ​i​t​ ​w​i​t​h​ ​y​o​u​r​ ​f​r​i​e​n​d​s​.
+		 */
+		PageParagraphAlreadyPro: string
 		/**
 		 * P​r​o
 		 */
@@ -765,7 +773,7 @@ type RootTranslation = {
 			 */
 			SavedToCloud: string
 			/**
-			 * A​l​l​ ​u​p​c​o​m​i​n​g​ ​f​e​a​t​u​r​e​s
+			 * U​p​c​o​m​i​n​g​ ​f​e​a​t​u​r​e​s
 			 */
 			Upcoming: string
 			/**
@@ -787,12 +795,12 @@ type RootTranslation = {
 		BecomeProButton: string
 		Success: {
 			/**
-			 * T​h​a​n​k​s​ ​f​o​r​ ​b​e​c​o​m​i​n​g​ ​a​ ​p​r​o​!
+			 * Y​o​u​'​r​e​ ​a​ ​P​r​o​!
 			 */
 			PageTitle: string
 			/**
 			 * Y​o​u​ ​n​o​w​ ​h​a​v​e​ ​a​c​c​e​s​s​ ​t​o​ ​e​v​e​r​y​t​h​i​n​g​ ​S​t​a​b​l​e​c​o​g​ ​h​a​s​ ​t​o​ ​o​f​f​e​r​.​ ​I​f​ ​y​o​u​ ​h​a​v​e​ ​a​n​y​ ​q​u​e​s​t​i​o​n​s​,​ ​r​e​a​c​h​ ​o​u​t​ ​t​o​ ​u​s​ ​o​n​ ​{​p​l​a​t​f​o​r​m​}​.
-			 * @param {string} platform
+			 * @param {unknown} platform
 			 */
 			PageParagraph: RequiredParams<'platform'>
 		}
@@ -805,6 +813,60 @@ type RootTranslation = {
 			 * Y​o​u​'​v​e​ ​c​a​n​c​e​l​l​e​d​ ​t​h​e​ ​s​u​b​s​c​r​i​p​t​i​o​n​ ​p​r​o​c​e​s​s​.​ ​I​f​ ​i​t​ ​w​a​s​ ​a​ ​m​i​s​t​a​k​e​,​ ​y​o​u​ ​c​a​n​ ​t​r​y​ ​a​g​a​i​n​.
 			 */
 			PageParagraph: string
+		}
+		Reason: {
+			/**
+			 * T​h​a​t​ ​i​m​a​g​e​ ​w​i​d​t​h​ ​i​s​n​'​t​ ​a​v​a​i​l​a​b​l​e​ ​o​n​ ​t​h​e​ ​f​r​e​e​ ​p​l​a​n​.
+			 */
+			ParagraphWidth: string
+			/**
+			 * T​h​a​t​ ​i​m​a​g​e​ ​h​e​i​g​h​t​ ​i​s​n​'​t​ ​a​v​a​i​l​a​b​l​e​ ​o​n​ ​t​h​e​ ​f​r​e​e​ ​p​l​a​n​.
+			 */
+			ParagraphHeight: string
+			/**
+			 * T​h​o​s​e​ ​i​m​a​g​e​ ​d​i​m​e​n​s​i​o​n​s​ ​a​r​e​n​'​t​ ​a​v​a​i​l​a​b​l​e​ ​o​n​ ​t​h​e​ ​f​r​e​e​ ​p​l​a​n​.
+			 */
+			ParagraphDimensions: string
+			/**
+			 * U​p​s​c​a​l​e​ ​f​e​a​t​u​r​e​ ​i​s​n​'​t​ ​a​v​a​i​l​a​b​l​e​ ​o​n​ ​t​h​e​ ​f​r​e​e​ ​p​l​a​n​.
+			 */
+			ParagraphUpscale: string
+			/**
+			 * T​h​a​t​ ​i​n​f​e​r​e​n​c​e​ ​s​t​e​p​s​ ​s​e​t​t​i​n​g​ ​i​s​n​'​t​ ​a​v​a​i​l​a​b​l​e​ ​o​n​ ​t​h​e​ ​f​r​e​e​ ​p​l​a​n​.
+			 */
+			ParagraphInferenceSteps: string
+			/**
+			 * T​h​a​t​ ​A​I​ ​m​o​d​e​l​ ​i​s​n​'​t​ ​a​v​a​i​l​a​b​l​e​ ​o​n​ ​t​h​e​ ​f​r​e​e​ ​p​l​a​n​.
+			 */
+			ParagraphModel: string
+			/**
+			 * T​h​a​t​ ​s​c​h​e​d​u​l​e​r​ ​i​s​n​'​t​ ​a​v​a​i​l​a​b​l​e​ ​o​n​ ​t​h​e​ ​f​r​e​e​ ​p​l​a​n​.
+			 */
+			ParagraphScheduler: string
+			/**
+			 * T​h​a​t​ ​g​e​n​e​r​a​t​i​o​n​ ​w​a​s​ ​c​r​e​a​t​e​d​ ​u​s​i​n​g​ ​a​n​ ​i​m​a​g​e​ ​w​i​d​t​h​ ​t​h​a​t​ ​i​s​n​'​t​ ​a​v​a​i​l​a​b​l​e​ ​o​n​ ​t​h​e​ ​f​r​e​e​ ​p​l​a​n​.
+			 */
+			ParagraphWidthGeneration: string
+			/**
+			 * T​h​a​t​ ​g​e​n​e​r​a​t​i​o​n​ ​w​a​s​ ​c​r​e​a​t​e​d​ ​u​s​i​n​g​ ​a​n​ ​i​m​a​g​e​ ​h​e​i​g​h​t​ ​t​h​a​t​ ​i​s​n​'​t​ ​a​v​a​i​l​a​b​l​e​ ​o​n​ ​t​h​e​ ​f​r​e​e​ ​p​l​a​n​.
+			 */
+			ParagraphHeightGeneration: string
+			/**
+			 * T​h​a​t​ ​g​e​n​e​r​a​t​i​o​n​ ​w​a​s​ ​c​r​e​a​t​e​d​ ​u​s​i​n​g​ ​i​m​a​g​e​ ​d​i​m​e​n​s​i​o​n​s​ ​t​h​a​t​ ​a​r​e​n​'​t​ ​a​v​a​i​l​a​b​l​e​ ​o​n​ ​t​h​e​ ​f​r​e​e​ ​p​l​a​n​.
+			 */
+			ParagraphDimensionsGeneration: string
+			/**
+			 * T​h​a​t​ ​g​e​n​e​r​a​t​i​o​n​ ​w​a​s​ ​c​r​e​a​t​e​d​ ​u​s​i​n​g​ ​a​n​ ​i​n​f​e​r​e​n​c​e​ ​s​t​e​p​s​ ​s​e​t​t​i​n​g​ ​t​h​a​t​ ​i​s​n​'​t​ ​a​v​a​i​l​a​b​l​e​ ​o​n​ ​t​h​e​ ​f​r​e​e​ ​p​l​a​n​.
+			 */
+			ParagraphInferenceStepsGeneration: string
+			/**
+			 * T​h​a​t​ ​g​e​n​e​r​a​t​i​o​n​ ​w​a​s​ ​c​r​e​a​t​e​d​ ​u​s​i​n​g​ ​a​ ​m​o​d​e​l​ ​t​h​a​t​ ​i​s​n​'​t​ ​a​v​a​i​l​a​b​l​e​ ​o​n​ ​t​h​e​ ​f​r​e​e​ ​p​l​a​n​.
+			 */
+			ParagraphModelGeneration: string
+			/**
+			 * T​h​a​t​ ​g​e​n​e​r​a​t​i​o​n​ ​w​a​s​ ​c​r​e​a​t​e​d​ ​u​s​i​n​g​ ​a​ ​s​c​h​e​d​u​l​e​r​ ​t​h​a​t​ ​i​s​n​'​t​ ​a​v​a​i​l​a​b​l​e​ ​o​n​ ​t​h​e​ ​f​r​e​e​ ​p​l​a​n​.
+			 */
+			ParagraphSchedulerGeneration: string
 		}
 	}
 	Account: {
@@ -828,6 +890,62 @@ type RootTranslation = {
 		 * P​l​a​n
 		 */
 		SubscriptionPlanTitle: string
+	}
+	ForgotPassword: {
+		/**
+		 * R​e​s​e​t​ ​P​a​s​s​w​o​r​d
+		 */
+		PageTitle: string
+		/**
+		 * W​e​ ​w​i​l​l​ ​s​e​n​d​ ​a​ ​6​-​d​i​g​i​t​ ​c​o​d​e​ ​t​o​ ​y​o​u​r​ ​e​m​a​i​l​ ​f​o​r​ ​r​e​s​e​t​t​i​n​g​ ​y​o​u​r​ ​p​a​s​s​w​o​r​d​.
+		 */
+		PageParagraph: string
+		/**
+		 * S​e​n​d​ ​C​o​d​e
+		 */
+		SendResetCodeButton: string
+		/**
+		 * C​o​n​f​i​r​m
+		 */
+		PageTitleConfirmCode: string
+		/**
+		 * W​e​'​v​e​ ​e​m​a​i​l​e​d​ ​y​o​u​ ​a​ ​6​-​d​i​g​i​t​ ​c​o​d​e​.​ ​E​n​t​e​r​ ​i​t​ ​b​e​l​o​w​ ​t​o​ ​c​o​n​t​i​n​u​e​.
+		 */
+		PageParagraphConfirmCode: string
+		/**
+		 * C​o​n​f​i​r​m
+		 */
+		ConfirmCodeButton: string
+		/**
+		 * N​e​w​ ​P​a​s​s​w​o​r​d
+		 */
+		PageTitleNewPassword: string
+		/**
+		 * E​n​t​e​r​ ​a​ ​n​e​w​ ​p​a​s​s​w​o​r​d​ ​f​o​r​ ​y​o​u​r​ ​a​c​c​o​u​n​t​.
+		 */
+		PageParagraphNewPassword: string
+		NewPasswordInput: {
+			/**
+			 * N​e​w​ ​P​a​s​s​w​o​r​d
+			 */
+			Placeholder: string
+		}
+		/**
+		 * S​e​t​ ​N​e​w​ ​P​a​s​s​w​o​r​d
+		 */
+		SetNewPasswordButton: string
+		/**
+		 * D​o​n​e​!
+		 */
+		PageTitleSuccess: string
+		/**
+		 * Y​o​u​r​ ​p​a​s​s​w​o​r​d​ ​h​a​s​ ​b​e​e​n​ ​s​u​c​c​e​s​s​f​u​l​l​y​ ​r​e​s​e​t​.
+		 */
+		PageParagraphSuccess: string
+		/**
+		 * F​o​r​g​o​t​ ​P​a​s​s​w​o​r​d​?
+		 */
+		ForgotPasswordButton: string
 	}
 }
 
@@ -954,7 +1072,7 @@ export type TranslationFunctions = {
 		/**
 		 * Last {count} only
 		 */
-		GenerationsMaxSavedCountWarning: (arg: { count: number }) => LocalizedString
+		GenerationsMaxSavedCountWarning: (arg: { count: unknown }) => LocalizedString
 		/**
 		 * You haven't generated any images yet.
 		 */
@@ -1210,7 +1328,7 @@ export type TranslationFunctions = {
 		/**
 		 * Redirecting to {name}
 		 */
-		RedirectingToTitle: (arg: { name: string }) => LocalizedString
+		RedirectingToTitle: (arg: { name: unknown }) => LocalizedString
 	}
 	Shared: {
 		/**
@@ -1240,7 +1358,7 @@ export type TranslationFunctions = {
 		/**
 		 * Share on {name}
 		 */
-		ShareOnButton: (arg: { name: string }) => LocalizedString
+		ShareOnButton: (arg: { name: unknown }) => LocalizedString
 		/**
 		 * Yes
 		 */
@@ -1273,12 +1391,6 @@ export type TranslationFunctions = {
 		 * Delete
 		 */
 		DeleteButton: () => LocalizedString
-		ServerUrlInput: {
-			/**
-			 * Server URL
-			 */
-			Placeholder: () => LocalizedString
-		}
 		/**
 		 * Loading
 		 */
@@ -1287,14 +1399,12 @@ export type TranslationFunctions = {
 		 * Loading...
 		 */
 		LoadingParagraph: () => LocalizedString
-		/**
-		 * Login
-		 */
-		LoginButton: () => LocalizedString
-		/**
-		 * Logout
-		 */
-		LogoutButton: () => LocalizedString
+		ServerUrlInput: {
+			/**
+			 * Server URL
+			 */
+			Placeholder: () => LocalizedString
+		}
 		EmailInput: {
 			/**
 			 * Email
@@ -1476,7 +1586,7 @@ export type TranslationFunctions = {
 		 */
 		PageTitle: () => LocalizedString
 		/**
-		 * Sign up to become a pro member. Unlock the full potential of Stablecog.
+		 * Join Stablecog to become a pro member and unlock its full potential.
 		 */
 		PageParagraph: () => LocalizedString
 		/**
@@ -1510,9 +1620,9 @@ export type TranslationFunctions = {
 			Placeholder: () => LocalizedString
 		}
 	}
-	Login: {
+	SignIn: {
 		/**
-		 * Login
+		 * Sign In
 		 */
 		PageTitle: () => LocalizedString
 		/**
@@ -1527,6 +1637,14 @@ export type TranslationFunctions = {
 		 * Sign up instead
 		 */
 		SignUpInsteadButton: () => LocalizedString
+		/**
+		 * Sign In
+		 */
+		SignInButton: () => LocalizedString
+		/**
+		 * Sign Out
+		 */
+		SignOutButton: () => LocalizedString
 	}
 	Pro: {
 		/**
@@ -1537,6 +1655,14 @@ export type TranslationFunctions = {
 		 * Unlock all features of Stablecog and support the project. Without the pro members, Stablecog wouldn't be able to stay completely open-source and offer free generations to everyone.
 		 */
 		PageParagraph: () => LocalizedString
+		/**
+		 * Already a Pro!
+		 */
+		PageTitleAlreadyPro: () => LocalizedString
+		/**
+		 * You are already a pro member. Thank you for supporting the project! Go ahead and enjoy Stablecog, and consider sharing it with your friends.
+		 */
+		PageParagraphAlreadyPro: () => LocalizedString
 		/**
 		 * Pro
 		 */
@@ -1571,7 +1697,7 @@ export type TranslationFunctions = {
 			 */
 			SavedToCloud: () => LocalizedString
 			/**
-			 * All upcoming features
+			 * Upcoming features
 			 */
 			Upcoming: () => LocalizedString
 			/**
@@ -1593,13 +1719,13 @@ export type TranslationFunctions = {
 		BecomeProButton: () => LocalizedString
 		Success: {
 			/**
-			 * Thanks for becoming a pro!
+			 * You're a Pro!
 			 */
 			PageTitle: () => LocalizedString
 			/**
 			 * You now have access to everything Stablecog has to offer. If you have any questions, reach out to us on {platform}.
 			 */
-			PageParagraph: (arg: { platform: string }) => LocalizedString
+			PageParagraph: (arg: { platform: unknown }) => LocalizedString
 		}
 		Cancel: {
 			/**
@@ -1610,6 +1736,60 @@ export type TranslationFunctions = {
 			 * You've cancelled the subscription process. If it was a mistake, you can try again.
 			 */
 			PageParagraph: () => LocalizedString
+		}
+		Reason: {
+			/**
+			 * That image width isn't available on the free plan.
+			 */
+			ParagraphWidth: () => LocalizedString
+			/**
+			 * That image height isn't available on the free plan.
+			 */
+			ParagraphHeight: () => LocalizedString
+			/**
+			 * Those image dimensions aren't available on the free plan.
+			 */
+			ParagraphDimensions: () => LocalizedString
+			/**
+			 * Upscale feature isn't available on the free plan.
+			 */
+			ParagraphUpscale: () => LocalizedString
+			/**
+			 * That inference steps setting isn't available on the free plan.
+			 */
+			ParagraphInferenceSteps: () => LocalizedString
+			/**
+			 * That AI model isn't available on the free plan.
+			 */
+			ParagraphModel: () => LocalizedString
+			/**
+			 * That scheduler isn't available on the free plan.
+			 */
+			ParagraphScheduler: () => LocalizedString
+			/**
+			 * That generation was created using an image width that isn't available on the free plan.
+			 */
+			ParagraphWidthGeneration: () => LocalizedString
+			/**
+			 * That generation was created using an image height that isn't available on the free plan.
+			 */
+			ParagraphHeightGeneration: () => LocalizedString
+			/**
+			 * That generation was created using image dimensions that aren't available on the free plan.
+			 */
+			ParagraphDimensionsGeneration: () => LocalizedString
+			/**
+			 * That generation was created using an inference steps setting that isn't available on the free plan.
+			 */
+			ParagraphInferenceStepsGeneration: () => LocalizedString
+			/**
+			 * That generation was created using a model that isn't available on the free plan.
+			 */
+			ParagraphModelGeneration: () => LocalizedString
+			/**
+			 * That generation was created using a scheduler that isn't available on the free plan.
+			 */
+			ParagraphSchedulerGeneration: () => LocalizedString
 		}
 	}
 	Account: {
@@ -1633,6 +1813,62 @@ export type TranslationFunctions = {
 		 * Plan
 		 */
 		SubscriptionPlanTitle: () => LocalizedString
+	}
+	ForgotPassword: {
+		/**
+		 * Reset Password
+		 */
+		PageTitle: () => LocalizedString
+		/**
+		 * We will send a 6-digit code to your email for resetting your password.
+		 */
+		PageParagraph: () => LocalizedString
+		/**
+		 * Send Code
+		 */
+		SendResetCodeButton: () => LocalizedString
+		/**
+		 * Confirm
+		 */
+		PageTitleConfirmCode: () => LocalizedString
+		/**
+		 * We've emailed you a 6-digit code. Enter it below to continue.
+		 */
+		PageParagraphConfirmCode: () => LocalizedString
+		/**
+		 * Confirm
+		 */
+		ConfirmCodeButton: () => LocalizedString
+		/**
+		 * New Password
+		 */
+		PageTitleNewPassword: () => LocalizedString
+		/**
+		 * Enter a new password for your account.
+		 */
+		PageParagraphNewPassword: () => LocalizedString
+		NewPasswordInput: {
+			/**
+			 * New Password
+			 */
+			Placeholder: () => LocalizedString
+		}
+		/**
+		 * Set New Password
+		 */
+		SetNewPasswordButton: () => LocalizedString
+		/**
+		 * Done!
+		 */
+		PageTitleSuccess: () => LocalizedString
+		/**
+		 * Your password has been successfully reset.
+		 */
+		PageParagraphSuccess: () => LocalizedString
+		/**
+		 * Forgot Password?
+		 */
+		ForgotPasswordButton: () => LocalizedString
 	}
 }
 

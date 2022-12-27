@@ -9,6 +9,8 @@
 	type T = $$Generic;
 	export let value: T;
 	export let items: TTab<T>[];
+	export let badgeAppliedTo: T[] | undefined = undefined;
+	export let badgeHref: string | undefined = undefined;
 	export let name: string;
 	export let hasTitle = true;
 	export let dontScale = false;
@@ -121,41 +123,78 @@
 					>
 						<div class="w-full flex flex-col overflow-auto">
 							{#each items.filter((i) => i.value !== value) as item, index (item.value)}
-								<button
-									disabled={disabled || !isDropdownOpen}
-									on:click={() => {
-										isDropdownOpen = false;
-										setTimeout(() => {
-											value = item.value;
-										}, 100);
-									}}
-									class="w-full text-left flex items-center justify-start min-w-0 px-4 py-3.25 md:py-3.5 relative z-0 group
-									{index === items.filter((i) => i.value !== value).length - 1 ? 'rounded-b-lg' : ''}"
-									type="button"
-									aria-label={item.label}
-								>
-									<div
-										class="w-full h-full absolute left-0 top-0 overflow-hidden z-0 {index ===
-										items.filter((i) => i.value !== value).length - 1
-											? 'rounded-b-lg'
-											: ''}"
+								{#if badgeAppliedTo?.includes(item.value)}
+									<a
+										href={badgeHref}
+										target="_blank"
+										on:click={() => (isDropdownOpen = false)}
+										class="w-full text-left flex items-center justify-start min-w-0 px-4 py-3.25 md:py-3.5 relative z-0 group
+											{index === items.filter((i) => i.value !== value).length - 1 ? 'rounded-b-lg' : ''}"
+										type="button"
+										aria-label={item.label}
 									>
 										<div
-											class="w-[200%] h-full absolute left-0 top-0 flex items-center justify-center"
+											class="w-full h-full absolute left-0 top-0 overflow-hidden z-0 {index ===
+											items.filter((i) => i.value !== value).length - 1
+												? 'rounded-b-lg'
+												: ''}"
 										>
 											<div
-												class="w-full aspect-square origin-left rounded-full transition transform -translate-x-full opacity-0
-													bg-c-primary/10 {!$isTouchscreen ? 'group-hover:translate-x-[-45%] group-hover:opacity-100' : ''}"
-											/>
+												class="w-[200%] h-full absolute left-0 top-0 flex items-center justify-center"
+											>
+												<div
+													class="w-full aspect-square origin-left rounded-full transition transform -translate-x-full opacity-0
+														bg-c-primary/10 {!$isTouchscreen ? 'group-hover:translate-x-[-45%] group-hover:opacity-100' : ''}"
+												/>
+											</div>
 										</div>
-									</div>
-									<p
-										class="flex-shrink whitespace-nowrap overflow-hidden overflow-ellipsis text-base font-medium relative transition
-										max-w-full z-0 text-c-on-bg/75 {!$isTouchscreen ? 'group-hover:text-c-primary' : ''}"
+										<p
+											class="flex-shrink whitespace-nowrap overflow-hidden overflow-ellipsis text-base font-medium relative transition
+											max-w-full z-0 text-c-on-bg/75 {!$isTouchscreen ? 'group-hover:text-c-primary' : ''}"
+										>
+											{item.label}
+										</p>
+										{#if badgeAppliedTo?.includes(item.value)}
+											<slot name="badge" />
+										{/if}
+									</a>
+								{:else}
+									<button
+										disabled={disabled || !isDropdownOpen}
+										on:click={() => {
+											isDropdownOpen = false;
+											setTimeout(() => {
+												value = item.value;
+											}, 100);
+										}}
+										class="w-full text-left flex items-center justify-start min-w-0 px-4 py-3.25 md:py-3.5 relative z-0 group
+											{index === items.filter((i) => i.value !== value).length - 1 ? 'rounded-b-lg' : ''}"
+										type="button"
+										aria-label={item.label}
 									>
-										{item.label}
-									</p>
-								</button>
+										<div
+											class="w-full h-full absolute left-0 top-0 overflow-hidden z-0 {index ===
+											items.filter((i) => i.value !== value).length - 1
+												? 'rounded-b-lg'
+												: ''}"
+										>
+											<div
+												class="w-[200%] h-full absolute left-0 top-0 flex items-center justify-center"
+											>
+												<div
+													class="w-full aspect-square origin-left rounded-full transition transform -translate-x-full opacity-0
+													bg-c-primary/10 {!$isTouchscreen ? 'group-hover:translate-x-[-45%] group-hover:opacity-100' : ''}"
+												/>
+											</div>
+										</div>
+										<p
+											class="flex-shrink whitespace-nowrap overflow-hidden overflow-ellipsis text-base font-medium relative transition
+												max-w-full z-0 text-c-on-bg/75 {!$isTouchscreen ? 'group-hover:text-c-primary' : ''}"
+										>
+											{item.label}
+										</p>
+									</button>
+								{/if}
 							{/each}
 						</div>
 					</div>

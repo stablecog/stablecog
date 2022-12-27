@@ -101,6 +101,7 @@ func SubmitToGallery(p SSubmitToGalleryProps) {
 		GuidanceScale:     p.GuidanceScale,
 		Seed:              p.Seed,
 		UserId:            p.UserId,
+		UserTier:          p.UserTier,
 	}, false, "", "", "").Single().ExecuteTo(&insertRes)
 	if insertErr != nil {
 		log.Printf("-- Gallery - Error inserting to DB: %v --", insertErr)
@@ -122,6 +123,7 @@ type SSubmitToGalleryProps struct {
 	GuidanceScale        int
 	Seed                 int
 	UserId               string
+	UserTier             string
 	Hidden               bool
 }
 
@@ -138,6 +140,7 @@ type SDBGenerationGInsertBody struct {
 	GuidanceScale     int    `json:"guidance_scale"`
 	Seed              int    `json:"seed"`
 	UserId            string `json:"user_id,omitempty"`
+	UserTier          string `json:"user_tier"`
 }
 
 type SDBGalleryInsertRes struct {
@@ -154,6 +157,7 @@ type SDBGalleryInsertRes struct {
 	GuidanceScale     int    `json:"guidance_scale"`
 	Seed              int    `json:"seed"`
 	UserId            string `json:"user_id,omitempty"`
+	UserTier          string `json:"user_tier"`
 	CreatedAt         string `json:"created_at"`
 	UpdatedAt         string `json:"updated_at"`
 }

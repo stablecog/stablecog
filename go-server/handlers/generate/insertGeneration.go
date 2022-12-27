@@ -22,6 +22,7 @@ func InsertGenerationInitial(g SInsertGenerationProps) string {
 		ModelId:           g.ModelId,
 		SchedulerId:       g.SchedulerId,
 		UserId:            g.UserId,
+		UserTier:          g.UserTier,
 		ServerUrl:         g.ServerUrl,
 		Status:            "started",
 		DeviceType:        g.DeviceType,
@@ -52,6 +53,7 @@ type SInsertGenerationProps struct {
 	SchedulerId       string
 	Status            string
 	UserId            string
+	UserTier          string
 	ServerUrl         string
 	UserAgent         string
 	DeviceType        string
@@ -71,6 +73,7 @@ type SDBGenerationInsertInitial struct {
 	ModelId           string `json:"model_id"`
 	SchedulerId       string `json:"scheduler_id"`
 	UserId            string `json:"user_id,omitempty"`
+	UserTier          string `json:"user_tier"`
 	Status            string `json:"status"`
 	ServerUrl         string `json:"server_url"`
 	UserAgent         string `json:"user_agent,omitempty"`
@@ -90,6 +93,7 @@ type SDBGenerationInsertInitialRes struct {
 	ModelId           string `json:"model_id"`
 	SchedulerId       string `json:"scheduler_id"`
 	UserId            string `json:"user_id,omitempty"`
+	UserTier          string `json:"user_tier"`
 	Status            string `json:"status"`
 	ServerUrl         string `json:"server_url"`
 	UserAgent         string `json:"user_agent,omitempty"`

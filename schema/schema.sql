@@ -1,5 +1,7 @@
 CREATE extension IF NOT EXISTS moddatetime schema extensions;
 
+CREATE TYPE user_subscription_tier_enum AS ENUM ('FREE', 'PRO');
+
 -- Generation Table
 CREATE TYPE generation_status_enum AS ENUM ('started', 'succeeded', 'failed', 'rejected');
 
@@ -24,9 +26,10 @@ CREATE TABLE "generation" (
     "user_agent" TEXT,
     "id" UUID NOT NULL DEFAULT uuid_generate_v4(),
     "user_id" UUID REFERENCES auth.users(id),
+    "user_tier" user_tier_enum NOT NULL DEFAULT 'FREE',
     "image_object_name" TEXT,
-    "created_at" TIMESTAMPTZ DEFAULT TIMEZONE('utc' :: TEXT, NOW()) NOT NULL,
-    "updated_at" TIMESTAMPTZ DEFAULT TIMEZONE('utc' :: TEXT, NOW()) NOT NULL,
+    "created_at" TIMESTAMPTZ DEFAULT TIMEZONE(' utc ' :: TEXT, NOW()) NOT NULL,
+    "updated_at" TIMESTAMPTZ DEFAULT TIMEZONE(' utc ' :: TEXT, NOW()) NOT NULL,
     PRIMARY KEY(id)
 );
 
@@ -44,8 +47,8 @@ SELECT
 CREATE TABLE "prompt" (
     "text" TEXT NOT NULL UNIQUE,
     "id" UUID NOT NULL DEFAULT uuid_generate_v4(),
-    "created_at" TIMESTAMPTZ DEFAULT TIMEZONE('utc' :: TEXT, NOW()) NOT NULL,
-    "updated_at" TIMESTAMPTZ DEFAULT TIMEZONE('utc' :: TEXT, NOW()) NOT NULL,
+    "created_at" TIMESTAMPTZ DEFAULT TIMEZONE(' utc ' :: TEXT, NOW()) NOT NULL,
+    "updated_at" TIMESTAMPTZ DEFAULT TIMEZONE(' utc ' :: TEXT, NOW()) NOT NULL,
     PRIMARY KEY(id)
 );
 
@@ -59,8 +62,8 @@ ALTER TABLE
 CREATE TABLE "negative_prompt" (
     "text" TEXT NOT NULL UNIQUE,
     "id" UUID NOT NULL DEFAULT uuid_generate_v4(),
-    "created_at" TIMESTAMPTZ DEFAULT TIMEZONE('utc' :: TEXT, NOW()) NOT NULL,
-    "updated_at" TIMESTAMPTZ DEFAULT TIMEZONE('utc' :: TEXT, NOW()) NOT NULL,
+    "created_at" TIMESTAMPTZ DEFAULT TIMEZONE(' utc ' :: TEXT, NOW()) NOT NULL,
+    "updated_at" TIMESTAMPTZ DEFAULT TIMEZONE(' utc ' :: TEXT, NOW()) NOT NULL,
     PRIMARY KEY(id)
 );
 
@@ -74,8 +77,8 @@ ALTER TABLE
 CREATE TABLE "model" (
     "name" TEXT NOT NULL UNIQUE,
     "id" UUID NOT NULL DEFAULT uuid_generate_v4(),
-    "created_at" TIMESTAMPTZ DEFAULT TIMEZONE('utc' :: TEXT, NOW()) NOT NULL,
-    "updated_at" TIMESTAMPTZ DEFAULT TIMEZONE('utc' :: TEXT, NOW()) NOT NULL,
+    "created_at" TIMESTAMPTZ DEFAULT TIMEZONE(' utc ' :: TEXT, NOW()) NOT NULL,
+    "updated_at" TIMESTAMPTZ DEFAULT TIMEZONE(' utc ' :: TEXT, NOW()) NOT NULL,
     PRIMARY KEY(id)
 );
 
@@ -89,8 +92,8 @@ ALTER TABLE
 CREATE TABLE "scheduler" (
     "name" TEXT NOT NULL UNIQUE,
     "id" UUID NOT NULL DEFAULT uuid_generate_v4(),
-    "created_at" TIMESTAMPTZ DEFAULT TIMEZONE('utc' :: TEXT, NOW()) NOT NULL,
-    "updated_at" TIMESTAMPTZ DEFAULT TIMEZONE('utc' :: TEXT, NOW()) NOT NULL,
+    "created_at" TIMESTAMPTZ DEFAULT TIMEZONE(' utc ' :: TEXT, NOW()) NOT NULL,
+    "updated_at" TIMESTAMPTZ DEFAULT TIMEZONE(' utc ' :: TEXT, NOW()) NOT NULL,
     PRIMARY KEY(id)
 );
 
@@ -102,7 +105,7 @@ ALTER TABLE
     scheduler ENABLE ROW LEVEL SECURITY;
 
 -- Upscale Table
-CREATE TYPE upscale_status_enum AS ENUM ('started', 'succeeded', 'failed');
+CREATE TYPE upscale_status_enum AS ENUM (' started ', ' succeeded ', ' failed ');
 
 CREATE TABLE "upscale" (
     "width" INTEGER NOT NULL,
@@ -124,8 +127,9 @@ CREATE TABLE "upscale" (
     "user_agent" TEXT,
     "id" UUID NOT NULL DEFAULT uuid_generate_v4(),
     "user_id" UUID REFERENCES auth.users(id),
-    "created_at" TIMESTAMPTZ DEFAULT TIMEZONE('utc' :: TEXT, NOW()) NOT NULL,
-    "updated_at" TIMESTAMPTZ DEFAULT TIMEZONE('utc' :: TEXT, NOW()) NOT NULL,
+    "user_tier" user_tier_enum NOT NULL DEFAULT 'FREE',
+    "created_at" TIMESTAMPTZ DEFAULT TIMEZONE(' utc ' :: TEXT, NOW()) NOT NULL,
+    "updated_at" TIMESTAMPTZ DEFAULT TIMEZONE(' utc ' :: TEXT, NOW()) NOT NULL,
     PRIMARY KEY(id)
 );
 
@@ -141,10 +145,10 @@ CREATE TABLE "server" (
     "url" TEXT NOT NULL,
     "healthy" BOOLEAN NOT NULL DEFAULT TRUE,
     "enabled" BOOLEAN NOT NULL DEFAULT TRUE,
-    "last_health_check_at" TIMESTAMPTZ DEFAULT TIMEZONE('utc' :: TEXT, NOW()) NOT NULL,
+    "last_health_check_at" TIMESTAMPTZ DEFAULT TIMEZONE(' utc ' :: TEXT, NOW()) NOT NULL,
     "id" UUID NOT NULL DEFAULT uuid_generate_v4(),
-    "created_at" TIMESTAMPTZ DEFAULT TIMEZONE('utc' :: TEXT, NOW()) NOT NULL,
-    "updated_at" TIMESTAMPTZ DEFAULT TIMEZONE('utc' :: TEXT, NOW()) NOT NULL,
+    "created_at" TIMESTAMPTZ DEFAULT TIMEZONE(' utc ' :: TEXT, NOW()) NOT NULL,
+    "updated_at" TIMESTAMPTZ DEFAULT TIMEZONE(' utc ' :: TEXT, NOW()) NOT NULL,
     PRIMARY KEY(id)
 );
 
@@ -163,7 +167,8 @@ SELECT
     status,
     country_code,
     created_at,
-    updated_at
+    updated_at,
+    user_tier
 FROM
     generation;
 
@@ -174,7 +179,7 @@ SELECT
 FROM
     generation_public
 WHERE
-    status = 'succeeded'
+    status = ' succeeded '
     OR status IS NULL $ $ language SQL;
 
 CREATE
@@ -206,7 +211,7 @@ WHERE
 CREATE
 OR REPLACE FUNCTION generation_with_non_null_duration_ms_average() RETURNS BIGINT AS $ $
 SELECT
-    SUM (duration_ms) / COUNT('*') AS generation_with_non_null_duration_ms_average
+    SUM (duration_ms) / COUNT(' * ') AS generation_with_non_null_duration_ms_average
 FROM
     generation_public
 WHERE
@@ -235,8 +240,9 @@ CREATE TABLE "generation_realtime" (
     "height" INTEGER,
     "num_inference_steps" INTEGER,
     "id" UUID NOT NULL DEFAULT uuid_generate_v4(),
-    "created_at" TIMESTAMPTZ DEFAULT TIMEZONE('utc' :: TEXT, NOW()) NOT NULL,
-    "updated_at" TIMESTAMPTZ DEFAULT TIMEZONE('utc' :: TEXT, NOW()) NOT NULL,
+    "user_tier" user_tier_enum NOT NULL DEFAULT 'FREE',
+    "created_at" TIMESTAMPTZ DEFAULT TIMEZONE(' utc ' :: TEXT, NOW()) NOT NULL,
+    "updated_at" TIMESTAMPTZ DEFAULT TIMEZONE(' utc ' :: TEXT, NOW()) NOT NULL,
     PRIMARY KEY(id)
 );
 
@@ -277,7 +283,8 @@ INSERT INTO
         uses_default_server,
         width,
         height,
-        num_inference_steps
+        num_inference_steps,
+        user_tier
     )
 VALUES
     (
@@ -295,7 +302,8 @@ VALUES
         ),
         new.width,
         new.height,
-        new.num_inference_steps
+        new.num_inference_steps,
+        new.user_tier
     );
 
 END IF;
@@ -341,7 +349,8 @@ SELECT
     status,
     country_code,
     created_at,
-    updated_at
+    updated_at,
+    user_tier
 FROM
     upscale;
 
@@ -352,7 +361,7 @@ SELECT
 FROM
     upscale_public
 WHERE
-    status = 'succeeded'
+    status = ' succeeded '
     OR status IS NULL $ $ language SQL;
 
 CREATE
@@ -365,7 +374,7 @@ WHERE
     duration_ms IS NULL
     AND (
         status IS NULL
-        OR status = 'succeeded'
+        OR status = ' succeeded '
     ) $ $ language SQL;
 
 CREATE
@@ -378,20 +387,20 @@ WHERE
     duration_ms IS NOT NULL
     AND (
         status IS NULL
-        or status = 'succeeded'
+        or status = ' succeeded '
     ) $ $ language SQL;
 
 CREATE
 OR REPLACE FUNCTION upscale_with_non_null_duration_ms_average() RETURNS BIGINT AS $ $
 SELECT
-    SUM (duration_ms) / COUNT('*') AS upscale_with_non_null_duration_ms_average
+    SUM (duration_ms) / COUNT(' * ') AS upscale_with_non_null_duration_ms_average
 FROM
     upscale_public
 WHERE
     duration_ms IS NOT NULL
     AND (
         status IS NULL
-        or status = 'succeeded'
+        or status = ' succeeded '
     ) $ $ language SQL;
 
 CREATE
@@ -413,6 +422,7 @@ CREATE TABLE "upscale_realtime" (
     "height" INTEGER,
     "scale" INTEGER,
     "id" UUID NOT NULL DEFAULT uuid_generate_v4(),
+    "user_tier" user_tier_enum NOT NULL DEFAULT 'FREE',
     "created_at" TIMESTAMPTZ DEFAULT TIMEZONE('utc' :: TEXT, NOW()) NOT NULL,
     "updated_at" TIMESTAMPTZ DEFAULT TIMEZONE('utc' :: TEXT, NOW()) NOT NULL,
     PRIMARY KEY(id)
@@ -455,7 +465,8 @@ INSERT INTO
         uses_default_server,
         width,
         height,
-        scale
+        scale,
+        user_tier
     )
 VALUES
     (
@@ -473,7 +484,8 @@ VALUES
         ),
         new.width,
         new.height,
-        new.scale
+        new.scale,
+        new.user_tier
     );
 
 END IF;
@@ -496,7 +508,7 @@ OR REPLACE FUNCTION prune_upscale_realtime() RETURNS trigger AS $ $ BEGIN
 DELETE FROM
     upscale_realtime
 WHERE
-    created_at < TIMEZONE('utc' :: TEXT, NOW()) - INTERVAL '2 hours';
+    created_at < TIMEZONE(' utc ' :: TEXT, NOW()) - INTERVAL ' 2 hours ';
 
 RETURN NULL;
 
@@ -514,8 +526,8 @@ UPDATE
 -- Admin Table
 CREATE TABLE "admin" (
     "id" UUID REFERENCES auth.users(id) NOT NULL ON DELETE CASCADE,
-    "created_at" TIMESTAMPTZ DEFAULT TIMEZONE('utc' :: TEXT, NOW()) NOT NULL,
-    "updated_at" TIMESTAMPTZ DEFAULT TIMEZONE('utc' :: TEXT, NOW()) NOT NULL,
+    "created_at" TIMESTAMPTZ DEFAULT TIMEZONE(' utc ' :: TEXT, NOW()) NOT NULL,
+    "updated_at" TIMESTAMPTZ DEFAULT TIMEZONE(' utc ' :: TEXT, NOW()) NOT NULL,
     PRIMARY KEY(id)
 );
 
@@ -553,8 +565,9 @@ CREATE TABLE "generation_g" (
     "hidden" BOOLEAN NOT NULL DEFAULT FALSE,
     "id" UUID NOT NULL DEFAULT uuid_generate_v4(),
     "user_id" UUID REFERENCES auth.users(id),
-    "created_at" TIMESTAMPTZ DEFAULT TIMEZONE('utc' :: TEXT, NOW()) NOT NULL,
-    "updated_at" TIMESTAMPTZ DEFAULT TIMEZONE('utc' :: TEXT, NOW()) NOT NULL,
+    "user_tier" user_tier_enum NOT NULL DEFAULT ' FREE ',
+    "created_at" TIMESTAMPTZ DEFAULT TIMEZONE(' utc ' :: TEXT, NOW()) NOT NULL,
+    "updated_at" TIMESTAMPTZ DEFAULT TIMEZONE(' utc ' :: TEXT, NOW()) NOT NULL,
     PRIMARY KEY(id)
 );
 
@@ -583,14 +596,12 @@ CREATE POLICY "Admins can edit models" ON public.model FOR ALL USING (
     )
 );
 
-CREATE TYPE user_subscription_tier_enum AS ENUM ('FREE', 'PRO');
-
 CREATE TABLE public."user" (
     "id" UUID REFERENCES auth.users(id) ON DELETE CASCADE NOT NULL,
     "email" TEXT NOT NULL,
-    "subscription_tier" user_subscription_tier_enum DEFAULT 'FREE' NOT NULL,
-    "created_at" TIMESTAMPTZ DEFAULT TIMEZONE('utc' :: TEXT, NOW()) NOT NULL,
-    "updated_at" TIMESTAMPTZ DEFAULT TIMEZONE('utc' :: TEXT, NOW()) NOT NULL,
+    "subscription_tier" user_subscription_tier_enum DEFAULT ' FREE ' NOT NULL,
+    "created_at" TIMESTAMPTZ DEFAULT TIMEZONE(' utc ' :: TEXT, NOW()) NOT NULL,
+    "updated_at" TIMESTAMPTZ DEFAULT TIMEZONE(' utc ' :: TEXT, NOW()) NOT NULL,
     "stripe_customer_id" TEXT,
     PRIMARY KEY(id)
 );
@@ -602,7 +613,7 @@ UPDATE
 ALTER TABLE
     public.user ENABLE ROW LEVEL SECURITY;
 
-CREATE POLICY "Users can select their on entry" ON public.user FOR
+CREATE POLICY "Users can select their own entry" ON public.user FOR
 SELECT
     USING (auth.uid() = id);
 
@@ -625,6 +636,6 @@ insert
     on auth.users for each row execute procedure handle_new_user();
 
 CREATE POLICY "Give users access to their own folder in generation bucket" ON storage.objects FOR ALL TO public USING (
-    bucket_id = 'generation'
+    bucket_id = ' generation '
     AND auth.uid() :: text = (storage.foldername(name)) [1]
 );

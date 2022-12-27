@@ -20,7 +20,8 @@ import (
 var green = color.New(color.FgHiGreen).SprintFunc()
 var yellow = color.New(color.FgHiYellow).SprintFunc()
 
-var minDuration = time.Second * 4
+var minDuration = time.Second * 2
+var minDurationFree = time.Second * 8
 
 func Handler(c *fiber.Ctx) error {
 	start := time.Now().UTC().UnixMilli()
@@ -30,14 +31,6 @@ func Handler(c *fiber.Ctx) error {
 		countryCode = c.Get("X-Vercel-IP-Country")
 	}
 
-	isRateLimited := shared.IsRateLimited(c, minDuration)
-	if isRateLimited {
-		log.Printf("-- Generation - Rate limited!: %s --", countryCode)
-		return c.Status(http.StatusTooManyRequests).JSON(
-			SGenerateResponse{Error: fmt.Sprintf("You can only start a generation every %d seconds :(", minDuration/time.Second)},
-		)
-	}
-
 	var req shared.SGenerateRequestBody
 	if err := c.BodyParser(&req); err != nil {
 		log.Printf("-- Invalid request body: %v --", err)
@@ -45,8 +38,8 @@ func Handler(c *fiber.Ctx) error {
 			SGenerateResponse{Error: "Invalid request body"},
 		)
 	}
-	rand.Seed(time.Now().Unix())
 	if req.Seed == -1 {
+		rand.Seed(time.Now().Unix())
 		req.Seed = rand.Intn(shared.MaxSeed)
 	}
 	if req.Width > shared.MaxWidth {
@@ -61,7 +54,7 @@ func Handler(c *fiber.Ctx) error {
 			SGenerateResponse{Error: fmt.Sprintf("Height is too large, max is: %d", shared.MaxHeight)},
 		)
 	}
-	if req.Width*req.Height*req.NumInferenceSteps >= shared.MaxFreePixelSteps {
+	if req.Width*req.Height*req.NumInferenceSteps >= shared.MaxProPixelSteps {
 		log.Printf(
 			"Pick fewer inference steps or smaller dimensions: %d - %d - %d",
 			req.Width,
@@ -84,6 +77,65 @@ func Handler(c *fiber.Ctx) error {
 			SGenerateResponse{Error: "Invalid scheduler ID"},
 		)
 	}
+
+	supabaseUserId := shared.GetSupabaseUserIdFromAccessToken(req.AccessToken)
+	subscriptionTier := "FREE"
+	if supabaseUserId != "" {
+		var res shared.SUserResponse
+		_, err := shared.SupabaseDb.From("user").Select("subscription_tier", "", false).Eq("id", supabaseUserId).Single().ExecuteTo(&res)
+		if err != nil {
+			log.Printf("Failed to get user tier: %v", err)
+		} else {
+			log.Printf("User tier: %s", res.SubsciptionTier)
+			subscriptionTier = res.SubsciptionTier
+		}
+	}
+
+	var duration time.Duration
+	var rateLimitedResponse SGenerateResponse
+	if subscriptionTier == "FREE" {
+		duration = minDurationFree
+		rateLimitedResponse = SGenerateResponse{Error: fmt.Sprintf("You can only start a generation every %d seconds on the free plan :(", duration/time.Second)}
+	} else {
+		duration = minDuration
+		rateLimitedResponse = SGenerateResponse{Error: fmt.Sprintf("You can only start a generation every %d seconds :(", duration/time.Second)}
+	}
+
+	// Generation setting checks for the free tier
+	if subscriptionTier == "FREE" {
+		if shared.Contains(shared.AvailableModelIdsFree, req.ModelId) == false {
+			return c.Status(http.StatusBadRequest).JSON(
+				SGenerateResponse{Error: "That model is not available on the free plan :("},
+			)
+		}
+		if shared.Contains(shared.AvailableWidthsFree, req.Width) == false {
+			return c.Status(http.StatusBadRequest).JSON(
+				SGenerateResponse{Error: "That generation width is not available on the free plan :("},
+			)
+		}
+		if shared.Contains(shared.AvailableHeightsFree, req.Height) == false {
+			return c.Status(http.StatusBadRequest).JSON(
+				SGenerateResponse{Error: "That generation height is not available on the free plan :("},
+			)
+		}
+		if shared.Contains(shared.AvailableInferenceStepsFree, req.NumInferenceSteps) == false {
+			return c.Status(http.StatusBadRequest).JSON(
+				SGenerateResponse{Error: "That inference steps setting is not available on the free plan :("},
+			)
+		}
+	}
+
+	isRateLimited := shared.IsRateLimited(c, duration)
+	if isRateLimited {
+		log.Printf("-- Generation - Rate limited!: %s --", countryCode)
+		return c.Status(http.StatusTooManyRequests).JSON(rateLimitedResponse)
+	}
+
+	// Wait if free tier
+	if subscriptionTier == "FREE" {
+		time.Sleep(minDurationFree)
+	}
+
 	if req.OutputImageExt == "" {
 		req.OutputImageExt = "jpg"
 	}
@@ -118,19 +170,6 @@ func Handler(c *fiber.Ctx) error {
 	}
 	loggers.LogGeneration("Generation started", logObj)
 
-	supabaseUserId := shared.GetSupabaseUserIdFromAccessToken(req.AccessToken)
-	subscriptionTier := "FREE"
-	if supabaseUserId != "" {
-		var res SUserResponse
-		_, err := shared.SupabaseDb.From("user").Select("subscription_tier", "", false).Eq("id", supabaseUserId).Single().ExecuteTo(&res)
-		if err != nil {
-			log.Printf("Failed to get user tier: %v", err)
-		} else {
-			log.Printf("User tier: %s", res.SubsciptionTier)
-			subscriptionTier = res.SubsciptionTier
-		}
-	}
-
 	go InsertGenerationInitial(SInsertGenerationProps{
 		Status:            "started",
 		Width:             req.Width,
@@ -149,6 +188,7 @@ func Handler(c *fiber.Ctx) error {
 		DeviceBrowser:     client.Name,
 		LogObject:         logObj,
 		GenerationIdChan:  generationIdChan,
+		UserTier:          subscriptionTier,
 	})
 	cogReq := shared.SCogGenerateRequestBody{
 		Input: shared.SCogGenerateRequestInput{
@@ -253,6 +293,7 @@ func Handler(c *fiber.Ctx) error {
 			NumInferenceSteps:    req.NumInferenceSteps,
 			Seed:                 req.Seed,
 			UserId:               supabaseUserId,
+			UserTier:             subscriptionTier,
 			Hidden:               true,
 		})
 	}
@@ -274,8 +315,4 @@ type SGenerateResponse struct {
 type SGenerateResponseData struct {
 	ImageB64   string `json:"image_b64"`
 	DurationMs int64  `json:"duration_ms"`
-}
-
-type SUserResponse struct {
-	SubsciptionTier string `json:"subscription_tier"`
 }

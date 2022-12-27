@@ -1,5 +1,6 @@
 import type { TAvailableModelId, TAvailableSchedulerId } from '$ts/constants/main';
 import type { TGenerationBase } from '$ts/types/main';
+import type { IStripeSubscriptionTier } from '$ts/types/stripe';
 
 export interface TIndexedDBGeneration extends TGenerationBase {
 	id?: number;
@@ -25,6 +26,7 @@ export interface TDBGenerationRealtimePayload {
 	width: number | null;
 	height: number | null;
 	num_inference_steps: number | null;
+	user_tier: IStripeSubscriptionTier;
 }
 
 export interface TDBUpscaleRealtimePayload {
@@ -38,6 +40,7 @@ export interface TDBUpscaleRealtimePayload {
 	updated_at: string;
 	width: number | null;
 	height: number | null;
+	user_tier: IStripeSubscriptionTier;
 }
 
 export interface TDBGenerationG {

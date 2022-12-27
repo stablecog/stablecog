@@ -51,6 +51,24 @@ export function mLogPageview(props: IPageviewProps) {
 	});
 }
 
+export function mLogSignIn(props: ISignInProps) {
+	mixpanel.track('Sign In', {
+		...props
+	});
+}
+
+export function mLogSignOut(props: ISignOutProps) {
+	mixpanel.track('Sign Out', {
+		...props
+	});
+}
+
+export function mLogSignUp(props: ISignUpProps) {
+	mixpanel.track('Sign Up', {
+		...props
+	});
+}
+
 interface ISubmitToGalleryToggledMinimal {
 	'SC - Advanced Mode': boolean;
 	'SC - Plan': IStripeSubscriptionTier;
@@ -105,4 +123,25 @@ interface IPageviewProps {
 	'SC - Locale': string;
 	'SC - Advanced Mode': boolean;
 	'SC - Plan': IStripeSubscriptionTier;
+}
+
+interface ISignInProps {
+	'SC - Locale': string;
+	'SC - Advanced Mode': boolean;
+	'SC - Plan': IStripeSubscriptionTier;
+	'SC - Page': string;
+}
+
+interface ISignOutProps {
+	'SC - Locale': string;
+	'SC - Advanced Mode': boolean;
+	'SC - Plan': IStripeSubscriptionTier;
+	'SC - Page': string;
+}
+
+interface ISignUpProps {
+	'SC - Locale': string;
+	'SC - Advanced Mode': boolean;
+	'SC - Plan': IStripeSubscriptionTier;
+	'SC - Page': string;
 }
