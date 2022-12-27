@@ -59,7 +59,7 @@
 <svelte:window on:scroll={setNotAtTheTop} />
 
 <nav class="w-full flex flex-col sticky -top-px z-50 transition">
-	{#if mounted && ($lastClosedNotification === null || $lastClosedNotification !== lastNotification)}
+	{#if mounted && ($lastClosedNotification === null || $lastClosedNotification !== lastNotification) && $page.data.tier !== 'PRO'}
 		<Banner
 			href="/pro"
 			onClose={() => {
