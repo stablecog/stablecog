@@ -10,6 +10,7 @@ import (
 	"github.com/h2non/bimg"
 	"github.com/robfig/cron/v3"
 	"github.com/yekta/stablecog/go-server/cron/health"
+	"github.com/yekta/stablecog/go-server/cron/stats"
 	"github.com/yekta/stablecog/go-server/handlers/gallery"
 	"github.com/yekta/stablecog/go-server/handlers/generate"
 	generationGImage "github.com/yekta/stablecog/go-server/handlers/generation-g-image"
@@ -40,27 +41,20 @@ func main() {
 
 	cron.AddFunc("@every 10s", cronHealth.CheckHealth)
 	cron.AddFunc("@every 10s", cronHealth.SetDefaultServerHealths)
+	cron.AddFunc("@every 15s", cronStats.GetAndSetStats)
 	cron.Start()
+
 	go cronHealth.CheckHealth()
 	go cronHealth.SetDefaultServerHealths()
+	go cronStats.GetAndSetStats()
 
 	app.Post("/generate", generate.Handler)
 	app.Post("/upscale", upscale.Handler)
 	app.Get("/gallery", gallery.Handler)
 	app.Post("/health", health.Handler)
 	app.Get("/generation-g-image/:imageIdWithExt", generationGImage.Handler)
-
-	app.Put("/test", func(c *fiber.Ctx) error {
-		log.Printf("PUT /test")
-		return c.SendString("OK")
-	})
-	app.Get("/test", func(c *fiber.Ctx) error {
-		log.Printf("GET /test")
-		return c.SendString("OK")
-	})
-	app.Post("/test", func(c *fiber.Ctx) error {
-		log.Printf("POST /test")
-		return c.SendString("OK")
+	app.Get("/stats", func(c *fiber.Ctx) error {
+		return c.JSON(cronStats.Stats)
 	})
 
 	app.Get("/", func(c *fiber.Ctx) error {

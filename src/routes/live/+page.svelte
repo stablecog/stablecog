@@ -2,7 +2,7 @@
 	import { page } from '$app/stores';
 	import MetaTag from '$components/MetaTag.svelte';
 	import { elementreceive, elementsend, expandCollapse } from '$ts/animation/transitions';
-	import { canonicalUrl } from '$ts/constants/main';
+	import { apiBase, canonicalUrl } from '$ts/constants/main';
 	import { supabase } from '$ts/constants/supabase';
 	import { onDestroy, onMount } from 'svelte';
 	import { flip } from 'svelte/animate';
@@ -172,49 +172,38 @@
 
 	async function getAndSetTotals() {
 		try {
-			if (supabase) {
-				const [gDurationRes, gCountRes, uDurationRes, uCountRes] = await Promise.all([
-					supabase.rpc('generation_duration_ms_total_estimate_with_constant'),
-					supabase.rpc('generation_count'),
-					supabase.rpc('upscale_duration_ms_total_estimate_with_constant'),
-					supabase.rpc('upscale_count')
-				]);
-				if ((gDurationRes.data && gCountRes.data, uDurationRes.data && uCountRes.data)) {
-					const gCount = Number(gCountRes.data);
-					const gDuration = Number(gDurationRes.data);
-					const uCount = Number(uCountRes.data);
-					const uDuration = Number(uDurationRes.data);
-					if (gCount > $generationTotalCount) {
-						generationTotalCount = tweened($generationTotalCount, {
-							duration: calculateAnimationDuration($generationTotalCount, gCount),
-							easing: quadOut
-						});
-						generationTotalCount.set(gCount);
-						console.log('generationTotalCount:', gCount);
-					}
-					if (uCount > $upscaleTotalCount) {
-						upscaleTotalCount = tweened($upscaleTotalCount, {
-							duration: calculateAnimationDuration($upscaleTotalCount, uCount),
-							easing: quadOut
-						});
-						upscaleTotalCount.set(uCount);
-						console.log('upscaleTotalCount:', uCount);
-					}
-					const durationTotal = gDuration + uDuration;
-					if (durationTotal > $generationAndUpscaleTotalDurationMs) {
-						generationAndUpscaleTotalDurationMs = tweened($generationAndUpscaleTotalDurationMs, {
-							duration: calculateAnimationDuration(
-								$generationAndUpscaleTotalDurationMs,
-								durationTotal
-							),
-							easing: quadOut
-						});
-						generationAndUpscaleTotalDurationMs.set(durationTotal);
-						console.log('totalDurationMs:', durationTotal);
-					}
-				} else {
-					console.log(gDurationRes.error, gCountRes.error, uDurationRes.error, uCountRes.error);
-				}
+			const res = await fetch(`${apiBase}/stats`);
+			const resJson: IStatsRes = await res.json();
+			const {
+				generation_duration_ms_total_estimate_with_constant: gDuration,
+				generation_count: gCount,
+				upscale_duration_ms_total_estimate_with_constant: uDuration,
+				upscale_count: uCount
+			} = resJson;
+			if (gCount > $generationTotalCount) {
+				generationTotalCount = tweened($generationTotalCount, {
+					duration: calculateAnimationDuration($generationTotalCount, gCount),
+					easing: quadOut
+				});
+				generationTotalCount.set(gCount);
+				console.log('generationTotalCount:', gCount);
+			}
+			if (uCount > $upscaleTotalCount) {
+				upscaleTotalCount = tweened($upscaleTotalCount, {
+					duration: calculateAnimationDuration($upscaleTotalCount, uCount),
+					easing: quadOut
+				});
+				upscaleTotalCount.set(uCount);
+				console.log('upscaleTotalCount:', uCount);
+			}
+			const durationTotal = gDuration + uDuration;
+			if (durationTotal > $generationAndUpscaleTotalDurationMs) {
+				generationAndUpscaleTotalDurationMs = tweened($generationAndUpscaleTotalDurationMs, {
+					duration: calculateAnimationDuration($generationAndUpscaleTotalDurationMs, durationTotal),
+					easing: quadOut
+				});
+				generationAndUpscaleTotalDurationMs.set(durationTotal);
+				console.log('totalDurationMs:', durationTotal);
 			}
 		} catch (error) {
 			console.log('Error getting totals:', error);
@@ -235,6 +224,13 @@
 		indicatorClass: 'w-5 h-5',
 		indicatorInnerClass: `w-5 h-5 transform rotate-135 bg-c-bg-secondary rounded`
 	};
+
+	interface IStatsRes {
+		generation_duration_ms_total_estimate_with_constant: number;
+		upscale_duration_ms_total_estimate_with_constant: number;
+		generation_count: number;
+		upscale_count: number;
+	}
 </script>
 
 <MetaTag
