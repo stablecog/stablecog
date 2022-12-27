@@ -551,6 +551,17 @@ CREATE POLICY "Admins can edit servers" ON public.server FOR ALL USING (
     )
 );
 
+CREATE POLICY "Admins can select users" ON public.user FOR
+SELECT
+    USING (
+        auth.uid() IN (
+            SELECT
+                id
+            FROM
+                admin
+        )
+    );
+
 CREATE TABLE "generation_g" (
     "prompt_id" UUID REFERENCES prompt(id) NOT NULL,
     "negative_prompt_id" UUID REFERENCES negative_prompt(id),

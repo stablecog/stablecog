@@ -228,7 +228,8 @@ const ru: Translation = {
 		ApproveButton: 'Одобрить',
 		NoGenerationsToReview: 'Нет генераций для проверки.',
 		ServersButton: 'Серверы',
-		GalleryButton: 'Галерея'
+		GalleryButton: 'Галерея',
+		UsersButton: 'Users'
 	},
 	SignUp: {
 		PageTitle: 'Sign Up',

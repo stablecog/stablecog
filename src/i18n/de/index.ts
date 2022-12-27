@@ -226,7 +226,8 @@ const de: Translation = {
 		ApproveButton: 'Freigeben',
 		NoGenerationsToReview: 'Keine Generierung zu prüfen.',
 		ServersButton: 'Server',
-		GalleryButton: 'Galerie'
+		GalleryButton: 'Galerie',
+		UsersButton: 'Users'
 	},
 	SignUp: {
 		PageTitle: 'Sign Up',

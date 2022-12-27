@@ -228,7 +228,8 @@ const fr: Translation = {
 		ApproveButton: 'Approuver',
 		NoGenerationsToReview: 'Aucune image à approuver.',
 		ServersButton: 'Serveurs',
-		GalleryButton: 'Galerie'
+		GalleryButton: 'Galerie',
+		UsersButton: 'Users'
 	},
 	SignUp: {
 		PageTitle: 'Sign Up',

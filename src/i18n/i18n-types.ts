@@ -659,6 +659,10 @@ type RootTranslation = {
 		 * G​a​l​l​e​r​y
 		 */
 		GalleryButton: string
+		/**
+		 * U​s​e​r​s
+		 */
+		UsersButton: string
 	}
 	SignUp: {
 		/**
@@ -1587,6 +1591,10 @@ export type TranslationFunctions = {
 		 * Gallery
 		 */
 		GalleryButton: () => LocalizedString
+		/**
+		 * Users
+		 */
+		UsersButton: () => LocalizedString
 	}
 	SignUp: {
 		/**

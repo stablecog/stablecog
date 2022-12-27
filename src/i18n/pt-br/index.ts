@@ -227,7 +227,8 @@ const ptBr: Translation = {
 		ApproveButton: 'Aprovar',
 		NoGenerationsToReview: 'Sem gerações para revisar.',
 		ServersButton: 'Servidores',
-		GalleryButton: 'Galeria'
+		GalleryButton: 'Galeria',
+		UsersButton: 'Users'
 	},
 	SignUp: {
 		PageTitle: 'Sign Up',

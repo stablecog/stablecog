@@ -224,7 +224,8 @@ const tr: Translation = {
 		ApproveButton: 'Onayla',
 		NoGenerationsToReview: 'İncelecek üretim yok.',
 		ServersButton: 'Sunucular',
-		GalleryButton: 'Galeri'
+		GalleryButton: 'Galeri',
+		UsersButton: 'Users'
 	},
 	SignUp: {
 		PageTitle: 'Sign Up',

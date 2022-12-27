@@ -226,7 +226,8 @@ const hi: Translation = {
 		ApproveButton: 'मंजूर करे',
 		NoGenerationsToReview: 'समीक्षा के लिए कोई बानावट नही है।',
 		ServersButton: 'सर्वर्स',
-		GalleryButton: 'गैलरी'
+		GalleryButton: 'गैलरी',
+		UsersButton: 'Users'
 	},
 	SignUp: {
 		PageTitle: 'Sign Up',

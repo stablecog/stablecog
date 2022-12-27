@@ -227,7 +227,8 @@ const ko: Translation = {
 		ApproveButton: '확인됨',
 		NoGenerationsToReview: '확인할 이미지 없음',
 		ServersButton: '서버 관리',
-		GalleryButton: '갤러리 관리'
+		GalleryButton: '갤러리 관리',
+		UsersButton: 'Users'
 	},
 	SignUp: {
 		PageTitle: 'Sign Up',

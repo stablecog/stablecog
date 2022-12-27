@@ -57,43 +57,44 @@
 />
 
 <PageWrapper>
-	<div
-		class="w-full ring-2 ring-c-bg-tertiary shadow-xl shadow-c-shadow/[var(--o-shadow-normal)] bg-c-bg-secondary flex flex-col justify-start px-4 py-5 max-w-sm 
-    my-auto rounded-2xl relative overflow-hidden z-0 origin-top"
-	>
-		{#if $page.data.session?.user}
-			<div class="w-full flex flex-col gap-6 text-center">
-				<p class="font-bold text-lg">{$page.data.session.user.email}</p>
-				<Button withSpinner={true} onClick={signOut} loading={signOutStatus === 'loading'}>
-					{$LL.SignIn.SignOutButton()}
-				</Button>
-			</div>
-		{:else}
-			<form class="w-full flex flex-col gap-4" on:submit|preventDefault={signIn}>
-				<div class="w-full flex flex-col gap-2">
-					<Input
-						disabled={signInStatus === 'loading'}
-						type="email"
-						title={$LL.Shared.EmailInput.Placeholder()}
-						bind:value={email}
-						hasIcon
-					>
-						<IconEmail slot="icon" class="w-full h-full" />
-					</Input>
-					<Input
-						disabled={signInStatus === 'loading'}
-						type="password"
-						title={$LL.Shared.PasswordInput.Placeholder()}
-						bind:value={password}
-						hasIcon
-					>
-						<IconPassword slot="icon" class="w-full h-full" />
-					</Input>
+	<div class="w-full my-auto flex justify-center">
+		<div
+			class="w-full max-w-sm ring-2 ring-c-bg-tertiary shadow-xl shadow-c-shadow/[var(--o-shadow-normal)] bg-c-bg-secondary flex flex-col justify-start px-4 py-5 rounded-2xl relative overflow-hidden z-0 origin-top"
+		>
+			{#if $page.data.session?.user}
+				<div class="w-full flex flex-col gap-6 text-center">
+					<p class="font-bold text-lg">{$page.data.session.user.email}</p>
+					<Button withSpinner={true} onClick={signOut} loading={signOutStatus === 'loading'}>
+						{$LL.SignIn.SignOutButton()}
+					</Button>
 				</div>
-				<Button withSpinner={true} loading={signInStatus === 'loading'}>
-					{$LL.SignIn.SignInButton()}
-				</Button>
-			</form>
-		{/if}
+			{:else}
+				<form class="w-full flex flex-col gap-4" on:submit|preventDefault={signIn}>
+					<div class="w-full flex flex-col gap-2">
+						<Input
+							disabled={signInStatus === 'loading'}
+							type="email"
+							title={$LL.Shared.EmailInput.Placeholder()}
+							bind:value={email}
+							hasIcon
+						>
+							<IconEmail slot="icon" class="w-full h-full" />
+						</Input>
+						<Input
+							disabled={signInStatus === 'loading'}
+							type="password"
+							title={$LL.Shared.PasswordInput.Placeholder()}
+							bind:value={password}
+							hasIcon
+						>
+							<IconPassword slot="icon" class="w-full h-full" />
+						</Input>
+					</div>
+					<Button withSpinner={true} loading={signInStatus === 'loading'}>
+						{$LL.SignIn.SignInButton()}
+					</Button>
+				</form>
+			{/if}
+		</div>
 	</div>
 </PageWrapper>

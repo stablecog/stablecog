@@ -15,10 +15,11 @@
 
 <div class="w-full flex-1 flex justify-center px-5 pb-[calc(3vh)]">
 	<div class="my-auto w-full flex flex-col items-center max-w-xl gap-6">
-		<h1 class="font-bold text-2xl">{$LL.Admin.AdminPanelTitle()}</h1>
+		<h1 class="font-bold text-4xl">{$LL.Admin.AdminPanelTitle()}</h1>
 		<div class="w-full flex flex-row flex-wrap items-center justify-center gap-4">
 			<Button href="admin/servers">{$LL.Admin.ServersButton()}</Button>
 			<Button href="admin/gallery">{$LL.Admin.GalleryButton()}</Button>
+			<Button href="admin/users">{$LL.Admin.UsersButton()}</Button>
 		</div>
 	</div>
 </div>

@@ -18,6 +18,7 @@
 	import { onMount } from 'svelte';
 	import { flip } from 'svelte/animate';
 	import { elementreceive, elementsend } from '$ts/animation/transitions';
+	import PageWrapper from '$components/PageWrapper.svelte';
 
 	interface TServer {
 		id: string;
@@ -169,7 +170,7 @@
 	canonical="{canonicalUrl}{$page.url.pathname}"
 />
 
-<div class="w-full flex-1 flex flex-col items-center-center px-5 md:px-16 pt-8 pb-[calc(3vh+1rem)]">
+<PageWrapper>
 	<div class="flex flex-col items-center my-auto gap-8">
 		<form
 			on:submit|preventDefault={addServer}
@@ -290,4 +291,4 @@
 			{/if}
 		</div>
 	</div>
-</div>
+</PageWrapper>

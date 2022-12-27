@@ -138,9 +138,9 @@
 							{/if}
 						</div>
 					</div>
-				{:else if $page.url.pathname !== '/sign-in'}
-					<Button size="xs" href={`/sign-in?redirect_to=${encodeURIComponent($page.url.pathname)}`}>
-						{$LL.SignIn.SignInButton()}
+				{:else if $page.url.pathname !== '/sign-up'}
+					<Button size="xs" href={`/sign-up`}>
+						{$LL.SignUp.SignUpButton()}
 					</Button>
 				{/if}
 			</div>
