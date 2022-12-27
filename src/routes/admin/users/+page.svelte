@@ -1,23 +1,11 @@
 <script lang="ts">
 	import { page } from '$app/stores';
-	import Button from '$components/buttons/Button.svelte';
-	import SubtleButton from '$components/buttons/SubtleButton.svelte';
-	import IconHeartBroken from '$components/icons/IconHeartBroken.svelte';
-	import IconHeart from '$components/icons/IconHeart.svelte';
-	import IconLoading from '$components/icons/IconLoading.svelte';
-	import IconServer from '$components/icons/IconServer.svelte';
-	import IconServerDisabled from '$components/icons/IconServerDisabled.svelte';
-	import IconTrashcan from '$components/icons/IconTrashcan.svelte';
-	import Input from '$components/Input.svelte';
 	import MetaTag from '$components/MetaTag.svelte';
 	import LL from '$i18n/i18n-svelte';
 	import { canonicalUrl } from '$ts/constants/main';
 	import { supabase } from '$ts/constants/supabase';
-	import { getRelativeDate } from '$ts/helpers/getRelativeDate';
-	import type { PostgrestError, RealtimeChannel } from '@supabase/supabase-js';
+	import type { PostgrestError } from '@supabase/supabase-js';
 	import { onMount } from 'svelte';
-	import { flip } from 'svelte/animate';
-	import { elementreceive, elementsend } from '$ts/animation/transitions';
 	import PageWrapper from '$components/PageWrapper.svelte';
 	import type { IStripeSubscriptionTier } from '$ts/types/stripe';
 	import TierBadge from '$components/TierBadge.svelte';
@@ -37,6 +25,8 @@
 	}
 
 	let users: TUser[];
+
+	const giftedPro = 5;
 
 	onMount(async () => {
 		getUsers();
@@ -75,7 +65,7 @@
 			<div class="flex gap-3 items-center">
 				<TierBadge tier={'PRO'} size="md" />
 				<p class="font-bold text-xl text-c-primary pr-4">
-					{users ? users.filter((u) => u.subscription_tier === 'PRO').length : '--'}
+					{users ? users.filter((u) => u.subscription_tier === 'PRO').length - giftedPro : '--'}
 				</p>
 			</div>
 			<div class="flex gap-3 items-center">
@@ -97,7 +87,7 @@
 						<div class="flex flex-col items-start flex-shrink overflow-hidden p-1">
 							<p class="text-sm font-semibold text-c-on-bg/75">{user.email}</p>
 							<p
-								class="text-xs text-c-on-bg/40 bg-c-on-bg/5 rounded-md px-2 py-1 mt-1.5 mb-0.5 -ml-0.5"
+								class="text-xs text-c-on-bg/40 bg-c-on-bg/5 rounded-md px-2 py-1 mt-2 mb-0.5 -ml-0.5"
 							>
 								{user.stripe_customer_id}
 							</p>

@@ -3,6 +3,8 @@
 	import TabBarWrapper from '$components/tabBars/TabBarWrapper.svelte';
 	import { isTouchscreen } from '$ts/stores/isTouchscreen';
 	import type { TTab } from '$ts/types/main';
+	import { quadOut } from 'svelte/easing';
+	import { fade } from 'svelte/transition';
 
 	type T = $$Generic;
 	export let tabs: TTab<T>[];
@@ -18,6 +20,7 @@
 	export let isValid: (v: T) => boolean = () => true;
 	export let validityDependsOn: T[] = [];
 	export let outline: 'primary' | 'bg-secondary' = 'bg-secondary';
+	export let hasBackgroundPattern = false;
 
 	let classes = '';
 
@@ -37,11 +40,24 @@
 </script>
 
 <TabBarWrapper {outline} class={classes} {dontScale}>
+	{#if hasBackgroundPattern}
+		<div class="w-full h-full absolute left-0 top-0 rounded-xl overflow-hidden z-0">
+			<div
+				transition:fade|local={{ duration: 200, easing: quadOut }}
+				style="
+				background-color: transparent;
+				opacity: 0.8;
+				background: repeating-linear-gradient(-45deg, rgb(var(--c-primary)/0.08), rgb(var(--c-primary)/0.08) 2px, transparent 2px, transparent 8px);
+			"
+				class="w-full h-full"
+			/>
+		</div>
+	{/if}
 	{#if hasTitle}
-		<div class="self-stretch flex text-c-on-bg/25">
+		<div class="self-stretch flex text-c-on-bg/25 relative">
 			<slot name="title" />
 		</div>
-		<div class="w-2px mr-px -ml-px self-stretch">
+		<div class="w-2px mr-px -ml-px self-stretch relative">
 			<div
 				class="w-full h-full {outline === 'primary' ? 'bg-c-primary/15' : 'bg-c-bg-secondary'}"
 			/>

@@ -19,6 +19,7 @@ module.exports = {
 				'c-on-bg': withOpacityValue('--c-on-bg'),
 				'c-on-bg-secondary': withOpacityValue('--c-on-bg-secondary'),
 				'c-primary': withOpacityValue('--c-primary'),
+				'c-primary-secondary': withOpacityValue('--c-primary-secondary'),
 				'c-on-primary': withOpacityValue('--c-on-primary'),
 				'c-secondary': withOpacityValue('--c-secondary'),
 				'c-danger': withOpacityValue('--c-danger'),

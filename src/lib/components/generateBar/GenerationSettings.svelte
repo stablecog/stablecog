@@ -110,6 +110,7 @@
 				? availableWidths.filter((i) => !availableWidthsFree.includes(i))
 				: undefined}
 			outline={$page.data.tier === 'FREE' ? 'primary' : 'bg-secondary'}
+			hasBackgroundPattern={$page.data.tier === 'FREE'}
 			bind:value={$generationWidth}
 			name="Width"
 			hideSelected={!isCheckComplete}
@@ -138,6 +139,7 @@
 				? availableHeights.filter((i) => !availableHeightsFree.includes(i))
 				: undefined}
 			outline={$page.data.tier === 'FREE' ? 'primary' : 'bg-secondary'}
+			hasBackgroundPattern={$page.data.tier === 'FREE'}
 			bind:value={$generationHeight}
 			name="Height"
 			hideSelected={!isCheckComplete}
@@ -211,6 +213,7 @@
 					? availableInferenceSteps.filter((i) => !availableInferenceStepsFree.includes(i))
 					: undefined}
 				outline={$page.data.tier === 'FREE' ? 'primary' : 'bg-secondary'}
+				hasBackgroundPattern={$page.data.tier === 'FREE'}
 				isValid={isInferenceStepsValid}
 				validityDependsOn={[$generationHeight, $generationWidth]}
 				bind:value={$generationInferenceSteps}

@@ -396,16 +396,32 @@
 													background-image: 
 														linear-gradient(
 															135deg, {generationOrUpscale.user_tier !== 'FREE'
-													? 'rgb(var(--c-on-primary)/0.1)'
+													? generationOrUpscale.status === 'succeeded'
+														? 'rgb(var(--c-success-secondary))'
+														: generationOrUpscale.status === 'failed'
+														? 'rgb(var(--c-danger-secondary))'
+														: 'rgb(var(--c-primary-secondary))'
 													: 'transparent'} 25%, transparent 25%),
 														linear-gradient(225deg, {generationOrUpscale.user_tier !== 'FREE'
-													? 'rgb(var(--c-on-primary)/0.1)'
+													? generationOrUpscale.status === 'succeeded'
+														? 'rgb(var(--c-success-secondary))'
+														: generationOrUpscale.status === 'failed'
+														? 'rgb(var(--c-danger-secondary))'
+														: 'rgb(var(--c-primary-secondary))'
 													: 'transparent'} 25%, transparent 25%),
 														linear-gradient(45deg, {generationOrUpscale.user_tier !== 'FREE'
-													? 'rgb(var(--c-on-primary)/0.1)'
+													? generationOrUpscale.status === 'succeeded'
+														? 'rgb(var(--c-success-secondary))'
+														: generationOrUpscale.status === 'failed'
+														? 'rgb(var(--c-danger-secondary))'
+														: 'rgb(var(--c-primary-secondary))'
 													: 'transparent'} 25%, transparent 25%),
 														linear-gradient(315deg, {generationOrUpscale.user_tier !== 'FREE'
-													? 'rgb(var(--c-on-primary)/0.1)'
+													? generationOrUpscale.status === 'succeeded'
+														? 'rgb(var(--c-success-secondary))'
+														: generationOrUpscale.status === 'failed'
+														? 'rgb(var(--c-danger-secondary))'
+														: 'rgb(var(--c-primary-secondary))'
 													: 'transparent'} 25%, transparent 25%);
 													background-position:  10px 0, 10px 0, 0 0, 0 0;
 													background-size: 20px 20px;
@@ -414,7 +430,7 @@
 											>
 												{#if generationOrUpscale.country_code}
 													<p
-														class="text-center text-xs font-bold text-c-on-primary/75 cursor-default relative"
+														class="text-center text-xs font-bold text-c-on-primary cursor-default relative"
 													>
 														{generationOrUpscale.country_code}
 													</p>

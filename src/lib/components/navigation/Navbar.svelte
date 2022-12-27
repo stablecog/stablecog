@@ -19,8 +19,6 @@
 	import LL from '$i18n/i18n-svelte';
 	import Button from '$components/buttons/Button.svelte';
 	import AccountMenu from '$components/AccountMenu.svelte';
-	import { scale } from 'svelte/transition';
-	import { quadOut } from 'svelte/easing';
 	import IconStar from '$components/icons/IconStar.svelte';
 	let isSwitchServerModalOpen = false;
 	let isSettingsOpen = false;
@@ -147,6 +145,19 @@
 			{#if routesWithHealthCheck.includes($page.url.pathname)}
 				<HealthIndicator />
 			{/if}
+			<IconButton
+				class="p-3 -ml-3.5 -mr-3 hidden md:block"
+				href="/discord"
+				target="_blank"
+				name="Discord"
+			>
+				<IconSocial
+					type="discord"
+					class="w-8 h-8 relative transition transform {!$isTouchscreen
+						? 'group-hover:text-c-primary'
+						: 'text-c-on-bg'}"
+				/>
+			</IconButton>
 			<div use:clickoutside={{ callback: closeSettings }} class="flex flex-col items-end -ml-3.5">
 				<IconButton class="p-3" onClick={toggleSettings} name="Settings">
 					<IconSettings
