@@ -14,7 +14,7 @@
 	import { expandCollapse } from '$ts/animation/transitions';
 	import { canonicalUrl } from '$ts/constants/main';
 	import { supabase } from '$ts/constants/supabase';
-	import { mLogSignUp } from '$ts/helpers/loggers';
+	import { mLogSignIn, mLogSignUp } from '$ts/helpers/loggers';
 	import { advancedMode } from '$ts/stores/advancedMode';
 	import { unconfirmedEmail } from '$ts/stores/unconfirmedEmail';
 	import { onMount } from 'svelte';
@@ -46,6 +46,20 @@
 			return;
 		}
 		signupStatus = 'signup-loading';
+		try {
+			const { data, error } = await supabase.auth.signInWithPassword({ email, password });
+			if (error) throw new Error(error.message);
+			if (data && data.user && data.user?.confirmed_at) {
+				mLogSignIn({
+					'SC - Advanced Mode': $advancedMode,
+					'SC - Page': $page.url.pathname,
+					'SC - Locale': $locale,
+					'SC - Plan': $page.data.tier
+				});
+				await goto('/');
+				return;
+			}
+		} catch (err) {}
 		const { data, error } = await supabase.auth.signUp({ email, password });
 		if (error) {
 			console.log(error);

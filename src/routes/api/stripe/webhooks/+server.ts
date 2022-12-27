@@ -3,8 +3,11 @@ import { stripe } from '$ts/constants/stripe';
 import { supabaseAdmin } from '$ts/constants/supabaseAdmin';
 import type { RequestHandler } from '@sveltejs/kit';
 import Stripe from 'stripe';
+import Mixpanel from 'mixpanel';
+import { PUBLIC_MIXPANEL_ID } from '$env/static/public';
 
 const cryptoProvider = Stripe.createSubtleCryptoProvider();
+const mixpanel = Mixpanel.init(PUBLIC_MIXPANEL_ID);
 
 export const POST: RequestHandler = async (event) => {
 	console.log('Stripe webhook - Request received - /api/stripe/webhooks');
@@ -60,6 +63,21 @@ export const POST: RequestHandler = async (event) => {
 				})
 				.match({ stripe_customer_id: customerId });
 			break;
+		case 'customer.subscription.created':
+			const [prodRes, userRes] = await Promise.all([
+				stripe.products.retrieve(productId),
+				supabaseAdmin
+					.from('user')
+					.select('id')
+					.match({ stripe_customer_id: customerId })
+					.maybeSingle()
+			]);
+			if (userRes.data?.id) {
+				mixpanel.track('Subscription', {
+					distinct_id: userRes.data.id,
+					'SC - Plan': prodRes.name.toUpperCase()
+				});
+			}
 		case 'customer.subscription.updated':
 			const prod = await stripe.products.retrieve(productId);
 			await supabaseAdmin
