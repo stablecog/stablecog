@@ -112,8 +112,10 @@
 					class="w-[calc(100%+2rem)] md:w-[calc(100%+3rem)] text-center bg-c-primary text-c-on-primary
 					-mx-4 md:-mx-6 mt-4 px-5 py-3 font-bold flex justify-center items-start"
 				>
-					<span class="text-xl">$</span><span class="text-4xl font-extrabold">
-						{data.prices.pro / 100}
+					<span class="text-xl">{data.prices.pro.currency === 'eur' ? '€' : '$'}</span><span
+						class="text-4xl font-extrabold"
+					>
+						{data.prices.pro.amount / 100}
 					</span>
 					<span class="self-end mb-1">{$LL.Pro.Month()}</span>
 				</h3>

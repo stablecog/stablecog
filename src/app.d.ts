@@ -8,6 +8,8 @@ declare namespace App {
 	interface Locals {
 		locale: Locales;
 		LL: TranslationFunctions;
+		IP: string | null;
+		countryCode: string | null;
 	}
 
 	// interface Error {}

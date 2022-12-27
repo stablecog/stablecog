@@ -12,6 +12,12 @@ export const handle: Handle = async ({ event, resolve }) => {
 	let preferredLocale = getPreferredLocale(event);
 	const locale = isLocale(preferredLocale) ? preferredLocale : 'en';
 	event.locals.locale = locale;
+	let IP = event.request.headers.get('X-Forwarded-For');
+	if (!IP) IP = event.request.headers.get('CF-Connecting-IP');
+	if (!IP) IP = event.getClientAddress();
+	event.locals.IP = IP;
+	let countryCode = event.request.headers.get('x-vercel-ip-country');
+	event.locals.countryCode = countryCode;
 	// protect requests to all routes that start with /admin
 	if (event.url.pathname.startsWith('/admin') && event.url.pathname !== '/admin/sign-in') {
 		try {

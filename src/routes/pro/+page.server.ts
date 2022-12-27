@@ -20,7 +20,8 @@ const availableProReasons = [
 ] as const;
 export type TAvailableProReason = typeof availableProReasons[number];
 
-export const load: PageServerLoad = async ({ url }) => {
+export const load: PageServerLoad = async ({ url, locals }) => {
+	console.log('Country code is:', locals.countryCode);
 	try {
 		const res = await stripe.prices.retrieve(STRIPE_PRO_PRICE_ID);
 		if (res.unit_amount === null || res.unit_amount === undefined) {
@@ -34,7 +35,10 @@ export const load: PageServerLoad = async ({ url }) => {
 		return {
 			reason,
 			prices: {
-				pro: res.unit_amount
+				pro: {
+					amount: res.unit_amount,
+					currency: res.currency
+				}
 			}
 		};
 	} catch (err) {
