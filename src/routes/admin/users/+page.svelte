@@ -58,9 +58,9 @@
 
 <PageWrapper>
 	<div class="-mt-6" />
-	<div class="w-full flex justify-center sticky top-16 py-6 z-10">
+	<div class="flex justify-center sticky top-16 py-6 z-10 -mx-2">
 		<div
-			class="p-3 gap-8 flex bg-c-bg ring-2 ring-c-bg-secondary rounded-2xl shadow-lg shadow-c-shadow/[var(--o-shadow-normal)]"
+			class="p-3 gap-3 md:gap-8 flex flex-wrap bg-c-bg ring-2 ring-c-bg-secondary rounded-2xl shadow-lg shadow-c-shadow/[var(--o-shadow-normal)]"
 		>
 			<div class="flex gap-3 items-center">
 				<TierBadge tier={'PRO'} size="md" />
@@ -76,8 +76,8 @@
 			</div>
 		</div>
 	</div>
-	<div class="flex flex-col items-center my-auto gap-8 z-0">
-		<div class="w-full max-w-md md:max-w-4xl flex flex-col items-center justify-center gap-2">
+	<div class="flex flex-col items-center my-auto gap-8 z-0 -mx-2">
+		<div class="w-full md:max-w-4xl flex flex-col items-center justify-center gap-2">
 			{#if users}
 				{#each users as user}
 					<div
