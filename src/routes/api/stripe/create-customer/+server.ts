@@ -3,7 +3,7 @@ import { supabaseAdmin } from '$ts/constants/supabaseAdmin';
 import type { RequestHandler } from '@sveltejs/kit';
 import Stripe from 'stripe';
 
-const stripe = new Stripe(env.STRIPE_SECRET_KEY_TEST, {
+const stripe = new Stripe(env.STRIPE_SECRET_KEY, {
 	apiVersion: '2022-11-15'
 });
 
