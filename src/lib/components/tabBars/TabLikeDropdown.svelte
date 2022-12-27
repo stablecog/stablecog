@@ -5,6 +5,7 @@
 	import { isTouchscreen } from '$ts/stores/isTouchscreen';
 	import { windowHeight, windowWidth } from '$ts/stores/window';
 	import type { TTab } from '$ts/types/main';
+	import { onMount } from 'svelte';
 
 	type T = $$Generic;
 	export let value: T;
@@ -15,30 +16,69 @@
 	export let hasTitle = true;
 	export let dontScale = false;
 	export let disabled = false;
-	export let bottomMinDistance = 80;
+	export let calculateDistance = true;
 	export let dropdownClass = '';
+	export let container: HTMLDivElement | undefined = undefined;
+	export let containerTopMinDistance = 0;
+	export let containerBottomMinDistance = 0;
 	export { classes as class };
 	let classes = '';
+
+	let minDropdownHeight = 200;
 
 	let isDropdownOpen = false;
 	$: selectedItem = items.find((item) => item.value === value);
 	const toggleDropdown = () => (isDropdownOpen = !isDropdownOpen);
 
-	let dropdownWrapper: HTMLDivElement;
+	let buttonElement: HTMLButtonElement;
+	let buttonHeight: number;
 	let dropdownPlacement: 'top' | 'bottom' = 'bottom';
 	let dropdownHeight: number;
-	$: [$windowWidth, $windowHeight], setDropdownWrapperTop();
+	let dropdownMaxHeight: number;
+	$: [$windowWidth, $windowHeight, calculateDistance], setDropdownWrapperPosition();
 
-	function setDropdownWrapperTop() {
-		if (!dropdownWrapper || !$windowHeight || !$windowWidth) return;
-		const { top, width } = dropdownWrapper.getBoundingClientRect();
-		if (width === 0 && top === 0) return;
-		if (top + dropdownHeight + bottomMinDistance > $windowHeight) {
-			dropdownPlacement = 'top';
+	function setDropdownWrapperPosition() {
+		if (!calculateDistance) return;
+		if (!buttonElement || !$windowHeight || !$windowWidth) return;
+		if (container) {
+			const containerHeight = container.clientHeight;
+			const buttonDistanceToTop =
+				buttonElement.getBoundingClientRect().top -
+				container.getBoundingClientRect().top -
+				containerTopMinDistance;
+			const buttonDistanceToBottom =
+				containerHeight - buttonDistanceToTop - buttonHeight - containerBottomMinDistance;
+			if (buttonDistanceToBottom >= dropdownHeight || buttonDistanceToBottom >= minDropdownHeight) {
+				dropdownPlacement = 'bottom';
+				dropdownMaxHeight = buttonDistanceToBottom;
+			} else if (buttonDistanceToTop > buttonDistanceToBottom) {
+				dropdownPlacement = 'top';
+				dropdownMaxHeight = buttonDistanceToTop;
+			} else {
+				dropdownPlacement = 'bottom';
+				dropdownMaxHeight = buttonDistanceToBottom;
+			}
 		} else {
-			dropdownPlacement = 'bottom';
+			const { top, height: buttonHeight } = buttonElement.getBoundingClientRect();
+			const buttonDistanceToTopEdge = top - containerTopMinDistance;
+			const buttonDistanceToBottomEdge =
+				$windowHeight - buttonDistanceToTopEdge - buttonHeight - containerBottomMinDistance;
+			if (buttonDistanceToBottomEdge >= minDropdownHeight) {
+				dropdownPlacement = 'bottom';
+				dropdownMaxHeight = buttonDistanceToBottomEdge;
+			} else if (buttonDistanceToTopEdge > buttonDistanceToBottomEdge) {
+				dropdownPlacement = 'top';
+				dropdownMaxHeight = buttonDistanceToTopEdge;
+			} else {
+				dropdownPlacement = 'bottom';
+				dropdownMaxHeight = buttonDistanceToBottomEdge;
+			}
 		}
 	}
+
+	onMount(() => {
+		setDropdownWrapperPosition();
+	});
 </script>
 
 <TabBarWrapper class="{classes} {isDropdownOpen ? 'z-20' : 'z-10'} relative" {dontScale}>
@@ -53,8 +93,10 @@
 	>
 		<button
 			{disabled}
+			bind:this={buttonElement}
+			bind:clientHeight={buttonHeight}
 			on:click={() => {
-				setDropdownWrapperTop();
+				setDropdownWrapperPosition();
 				toggleDropdown();
 			}}
 			class="flex-1 ring-2 text-left flex items-center justify-between min-w-0 px-4 py-3.25 md:py-3.5 relative 
@@ -94,28 +136,28 @@
 				/>
 			</div>
 		</button>
-		<div bind:this={dropdownWrapper} class="w-full" />
 		<div
-			class="w-full flex flex-col justify-start relative {dropdownPlacement === 'top'
-				? 'order-first'
-				: ''}"
+			style="transform: translateY({dropdownPlacement === 'top'
+				? `${-dropdownHeight}px`
+				: `${buttonHeight}px`}); height: {dropdownHeight}px;"
+			class="absolute left-0 top-0 w-full pointer-events-none flex flex-col {dropdownPlacement ===
+			'top'
+				? 'justify-end'
+				: 'justify-start'}"
 		>
 			<div
-				style="transform: translateY(-{dropdownPlacement === 'top'
-					? dropdownHeight
-					: 0}px); height: {dropdownHeight}px;"
-				class="w-full absolute left-0 top-0 flex flex-col {dropdownPlacement === 'top'
-					? 'justify-end'
-					: 'justify-start'} {!isDropdownOpen ? 'pointer-events-none' : ''}"
+				style="height: {isDropdownOpen ? dropdownHeight : '0'}px"
+				class="w-full flex flex-col overflow-hidden bg-c-bg-secondary shadow-sheet transition-all 
+					shadow-c-shadow/[var(--o-shadow-stronger)] ring-2 ring-c-bg-tertiary {dropdownPlacement === 'top'
+					? 'rounded-t-xl origin-bottom justify-end'
+					: 'rounded-b-xl origin-top justify-start'} {isDropdownOpen
+					? 'opacity-100 pointer-events-auto'
+					: 'opacity-0 pointer-events-none'}"
 			>
 				<div
-					style="height: {isDropdownOpen ? dropdownHeight : '0'}px"
-					class="w-full flex flex-col overflow-hidden bg-c-bg-secondary shadow-sheet transition-all 
-					shadow-c-shadow/[var(--o-shadow-stronger)] ring-2 ring-c-bg-tertiary {dropdownPlacement === 'top'
-						? 'rounded-t-xl origin-bottom justify-end'
-						: 'rounded-b-xl origin-top justify-start'} {isDropdownOpen
-						? 'opacity-100'
-						: 'opacity-0'}"
+					style="max-height: {dropdownMaxHeight}px;"
+					bind:clientHeight={dropdownHeight}
+					class="w-full flex flex-col justify-start relative z-20 {dropdownClass}"
 				>
 					<div
 						bind:clientHeight={dropdownHeight}

@@ -55,6 +55,7 @@
 	import { isTouchscreen } from '$ts/stores/isTouchscreen';
 	import { advancedMode, advancedModeApp } from '$ts/stores/advancedMode';
 	import { page } from '$app/stores';
+	import { homePageContainer } from '$ts/stores/homePageContainer';
 
 	export let serverData: THomePageData;
 	export let onCreate: () => Promise<void>;
@@ -446,7 +447,15 @@
 			transition:expandCollapse|local={{ duration: 300 }}
 		>
 			<div class="w-full hidden md:flex flex-col justify-start">
-				<GenerationSettings disabled={loadingOrSubmitting} {formElement} {isCheckComplete} />
+				<GenerationSettings
+					calculateDistance={!isGenerationSettingsSheetOpen}
+					container={$homePageContainer}
+					containerTopMinDistance={12}
+					containerBottomMinDistance={12}
+					disabled={loadingOrSubmitting}
+					{formElement}
+					{isCheckComplete}
+				/>
 			</div>
 			<div class="w-full flex flex-col md:hidden justify-start pt-2 items-center relative">
 				<NoBgButton

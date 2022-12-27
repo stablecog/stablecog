@@ -66,6 +66,10 @@
 	export let isCheckComplete: boolean;
 	export let formElement: HTMLFormElement;
 	export let disabled = false;
+	export let calculateDistance = true;
+	export let container: HTMLDivElement | undefined = undefined;
+	export let containerTopMinDistance = 0;
+	export let containerBottomMinDistance = 0;
 
 	$: isInferenceStepsValid = (s: string) => {
 		return Number(s) * Number($generationHeight) * Number($generationWidth) < maxProPixelSteps;
@@ -143,17 +147,19 @@
 			?.map((f) => f.name)
 			.includes('model')}
 		<TabLikeDropdown
-			{disabled}
 			class="w-full md:w-84 max-w-full {$advancedModeApp ? 'order-1' : 'order-2'}"
-			dropdownClass={$advancedModeApp ? 'max-h-[18rem]' : 'max-h-[8rem] md:max-h-[18rem]'}
+			{calculateDistance}
+			{container}
+			{containerTopMinDistance}
+			{containerBottomMinDistance}
 			bind:value={$generationModelId}
+			{disabled}
 			items={$availableModelIdDropdownItems}
 			badgeHref="/pro?reason=model"
 			badgeAppliedTo={$page.data.tier === 'FREE'
 				? availableModelIds.filter((i) => !availableModelIdsFree.includes(i))
 				: undefined}
 			name="Model"
-			bottomMinDistance={$windowWidth < 768 ? 0 : 72}
 		>
 			<div slot="title" use:tooltip={$modelTooltip} class="p-3.5 flex items-center justify-center">
 				<IconBrain class="w-6 h-6 text-c-on-bg/25" />
@@ -210,15 +216,17 @@
 		</div>
 		{#if $currentServer.lastHealthStatus === 'unknown' || $currentServer.features
 				?.map((f) => f.name)
-				.includes('model')}
+				.includes('scheduler')}
 			<TabLikeDropdown
-				{disabled}
 				class="w-full md:w-84 max-w-full order-2"
-				dropdownClass={'max-h-[15rem]'}
+				{calculateDistance}
+				{container}
+				{containerTopMinDistance}
+				{containerBottomMinDistance}
+				{disabled}
 				bind:value={$generationSchedulerId}
 				items={$availableSchedulerIdDropdownItems}
 				name="Scheduler"
-				bottomMinDistance={$windowWidth < 768 ? 0 : 72}
 			>
 				<div
 					slot="title"
