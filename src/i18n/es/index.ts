@@ -219,7 +219,8 @@ const es: Translation = {
 			'Instancia de Supabase no encontrada. Las generaciones no serán rastreadas.',
 		InvalidEmail: 'Enter a valid email.',
 		PasswordTooShort: 'Password must be at least 8 characters.',
-		SomethingWentWrongTryAgain: 'Something went wrong, try again.'
+		SomethingWentWrongTryAgain: 'Something went wrong, try again.',
+		InvalidCredentials: 'Invalid credentials.'
 	},
 	Admin: {
 		AdminPanelTitle: 'Administrador',

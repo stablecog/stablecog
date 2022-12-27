@@ -629,6 +629,10 @@ type RootTranslation = {
 		 * S​o​m​e​t​h​i​n​g​ ​w​e​n​t​ ​w​r​o​n​g​,​ ​t​r​y​ ​a​g​a​i​n​.
 		 */
 		SomethingWentWrongTryAgain: string
+		/**
+		 * I​n​v​a​l​i​d​ ​c​r​e​d​e​n​t​i​a​l​s​.
+		 */
+		InvalidCredentials: string
 	}
 	Admin: {
 		/**
@@ -1553,6 +1557,10 @@ export type TranslationFunctions = {
 		 * Something went wrong, try again.
 		 */
 		SomethingWentWrongTryAgain: () => LocalizedString
+		/**
+		 * Invalid credentials.
+		 */
+		InvalidCredentials: () => LocalizedString
 	}
 	Admin: {
 		/**

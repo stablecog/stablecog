@@ -218,7 +218,8 @@ const ko: Translation = {
 		SupabaseNotFoundCantListen: '데이터베이스를 찾을 수 없어요.',
 		InvalidEmail: 'Enter a valid email.',
 		PasswordTooShort: 'Password must be at least 8 characters.',
-		SomethingWentWrongTryAgain: 'Something went wrong, try again.'
+		SomethingWentWrongTryAgain: 'Something went wrong, try again.',
+		InvalidCredentials: 'Invalid credentials.'
 	},
 	Admin: {
 		AdminPanelTitle: '관리자',

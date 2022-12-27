@@ -15,6 +15,7 @@
 	import { supabase } from '$ts/constants/supabase';
 	import { mLogSignIn } from '$ts/helpers/loggers';
 	import { advancedMode } from '$ts/stores/advancedMode';
+	import { unconfirmedEmail } from '$ts/stores/unconfirmedEmail';
 	import type { PageServerData } from './$types';
 
 	export let data: PageServerData;
@@ -35,17 +36,24 @@
 			return;
 		}
 		signInStatus = 'loading';
-		const { data: lData, error: lError } = await supabase.auth.signInWithPassword({
+		const { data: sData, error: sError } = await supabase.auth.signInWithPassword({
 			email,
 			password
 		});
-		if (lError) {
-			console.log(lError);
+		if (sError) {
+			console.log(sError);
 			signInStatus = 'error';
-			errorText = $LL.Error.SomethingWentWrong();
+			if (sError.message === 'Invalid login credentials') {
+				errorText = $LL.Error.InvalidCredentials();
+			} else if (sError.message === 'Email not confirmed') {
+				unconfirmedEmail.set(email);
+				await goto('/sign-up', { state: { email } });
+			} else {
+				errorText = $LL.Error.SomethingWentWrong();
+			}
 			return;
 		}
-		console.log(lData);
+		console.log(sData);
 		mLogSignIn({
 			'SC - Plan': $page.data.tier,
 			'SC - Locale': $locale,

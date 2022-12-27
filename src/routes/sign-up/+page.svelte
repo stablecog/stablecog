@@ -16,6 +16,8 @@
 	import { supabase } from '$ts/constants/supabase';
 	import { mLogSignUp } from '$ts/helpers/loggers';
 	import { advancedMode } from '$ts/stores/advancedMode';
+	import { unconfirmedEmail } from '$ts/stores/unconfirmedEmail';
+	import { onMount } from 'svelte';
 	import type { PageServerData } from './$types';
 
 	export let data: PageServerData;
@@ -50,9 +52,10 @@
 			signupStatus = 'signup-error';
 			errorText = $LL.Error.SomethingWentWrong();
 			return;
+		} else {
+			console.log(data);
+			signupStatus = 'otp';
 		}
-		console.log(data);
-		signupStatus = 'otp';
 	}
 
 	async function confirm() {
@@ -81,6 +84,13 @@
 		}, 200);
 		await goto(data.redirect_to || defaultRedirectRoute);
 	}
+
+	onMount(() => {
+		if ($unconfirmedEmail) {
+			email = $unconfirmedEmail;
+			signupStatus = 'otp';
+		}
+	});
 </script>
 
 <MetaTag

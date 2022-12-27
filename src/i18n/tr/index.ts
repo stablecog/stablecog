@@ -215,7 +215,8 @@ const tr: Translation = {
 		SupabaseNotFoundCantListen: 'Supabase bulunamadı. Üretimler izlenemeyecek.',
 		InvalidEmail: 'Enter a valid email.',
 		PasswordTooShort: 'Password must be at least 8 characters.',
-		SomethingWentWrongTryAgain: 'Something went wrong, try again.'
+		SomethingWentWrongTryAgain: 'Something went wrong, try again.',
+		InvalidCredentials: 'Invalid credentials.'
 	},
 	Admin: {
 		AdminPanelTitle: 'Yönetici',

@@ -218,7 +218,8 @@ const ptBr: Translation = {
 			'Instância de Supabase não encontrado. Não posso escutar para gerações.',
 		InvalidEmail: 'Enter a valid email.',
 		PasswordTooShort: 'Password must be at least 8 characters.',
-		SomethingWentWrongTryAgain: 'Something went wrong, try again.'
+		SomethingWentWrongTryAgain: 'Something went wrong, try again.',
+		InvalidCredentials: 'Invalid credentials.'
 	},
 	Admin: {
 		AdminPanelTitle: 'Administrador',

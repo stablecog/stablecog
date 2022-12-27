@@ -217,7 +217,8 @@ const hi: Translation = {
 		SupabaseNotFoundCantListen: 'सुपरबेस उदाहरण नहीं मिला। बनावट नहीं हो सकती।',
 		InvalidEmail: 'Enter a valid email.',
 		PasswordTooShort: 'Password must be at least 8 characters.',
-		SomethingWentWrongTryAgain: 'Something went wrong, try again.'
+		SomethingWentWrongTryAgain: 'Something went wrong, try again.',
+		InvalidCredentials: 'Invalid credentials.'
 	},
 	Admin: {
 		AdminPanelTitle: 'एडमिन',
