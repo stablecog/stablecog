@@ -17,6 +17,7 @@
 	export let disabled = false;
 	export let isValid: (v: T) => boolean = () => true;
 	export let validityDependsOn: T[] = [];
+	export let outline: 'primary' | 'bg-secondary' = 'bg-secondary';
 
 	let classes = '';
 
@@ -35,13 +36,15 @@
 	}
 </script>
 
-<TabBarWrapper class={classes} {dontScale}>
+<TabBarWrapper {outline} class={classes} {dontScale}>
 	{#if hasTitle}
-		<div class="self-stretch flex text-c-on-bg/30">
+		<div class="self-stretch flex text-c-on-bg/25">
 			<slot name="title" />
 		</div>
 		<div class="w-2px mr-px -ml-px self-stretch">
-			<div class="w-full h-full bg-c-bg-secondary" />
+			<div
+				class="w-full h-full {outline === 'primary' ? 'bg-c-primary/15' : 'bg-c-bg-secondary'}"
+			/>
 		</div>
 	{/if}
 	<div class="flex-1 min-w-0 flex relative rounded-r-xl">
@@ -81,8 +84,8 @@
 							slot="item-0"
 							class="flex-1 font-medium relative transition overflow-hidden overflow-ellipsis max-w-full z-0 {value ===
 								tab.value && !hideSelected
-								? 'text-c-on-bg/75'
-								: 'text-c-on-bg/30'} {value === tab.value && !hideSelected && !$isTouchscreen
+								? 'text-c-primary'
+								: 'text-c-primary/50'} {value === tab.value && !hideSelected && !$isTouchscreen
 								? 'group-hover:text-c-primary'
 								: ''}"
 						>

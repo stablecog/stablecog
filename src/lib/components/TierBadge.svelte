@@ -5,15 +5,18 @@
 	import { scale } from 'svelte/transition';
 
 	export let tier: IStripeSubscriptionTier;
-	export { classes as class };
 	export let size: 'xs' | 'sm' | 'md' = 'sm';
+	export let outline: 'primary' | 'bg-secondary' = 'primary';
+	export { classes as class };
 	let classes = '';
 </script>
 
 <div
 	transition:scale|local={{ duration: 150, easing: quadOut, start: 0, opacity: 0 }}
-	class="bg-c-bg border-2 border-c-bg-secondary overflow-hidden z-10 shadow-lg 
-  shadow-c-shadow/[var(--o-shadow-normal)] {size === 'xs'
+	class="bg-c-bg border-2 overflow-hidden z-10 shadow-lg 
+  shadow-c-shadow/[var(--o-shadow-normal)] {outline === 'primary'
+		? 'border-c-primary/30'
+		: 'border-c-bg-secondary'} {size === 'xs'
 		? 'rounded-md'
 		: size === 'md'
 		? 'rounded-lg2'

@@ -333,7 +333,7 @@
 										<TierBadge
 											size="xs"
 											tier="PRO"
-											class="absolute -right-2 -top-2 pointer-events-none"
+											class="absolute -right-1.5 -top-1.5 pointer-events-none"
 										/>
 									{/if}
 								</div>

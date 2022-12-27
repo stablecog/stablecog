@@ -109,16 +109,23 @@
 			badgeAppliedTo={$page.data.tier === 'FREE'
 				? availableWidths.filter((i) => !availableWidthsFree.includes(i))
 				: undefined}
+			outline={$page.data.tier === 'FREE' ? 'primary' : 'bg-secondary'}
 			bind:value={$generationWidth}
 			name="Width"
 			hideSelected={!isCheckComplete}
 		>
 			<div slot="title" use:tooltip={$widthTooltip} class="p-3.5 flex items-center justify-center">
-				<IconWidth class="w-6 h-6 text-c-on-bg/25" />
+				<IconWidth
+					class="w-6 h-6 {$page.data.tier === 'FREE' ? 'text-c-primary/40' : 'text-c-on-bg/25'}"
+				/>
 			</div>
 		</TabBar>
 		{#if $page.data.tier === 'FREE'}
-			<TierBadge tier="PRO" class="absolute -right-1.5 -top-1.5 pointer-events-none" />
+			<TierBadge
+				tier="PRO"
+				outline="primary"
+				class="absolute -right-1.5 -top-1.5 pointer-events-none"
+			/>
 		{/if}
 	</div>
 	<div class="w-full md:w-84 max-w-full order-2 relative">
@@ -130,16 +137,23 @@
 			badgeAppliedTo={$page.data.tier === 'FREE'
 				? availableHeights.filter((i) => !availableHeightsFree.includes(i))
 				: undefined}
+			outline={$page.data.tier === 'FREE' ? 'primary' : 'bg-secondary'}
 			bind:value={$generationHeight}
 			name="Height"
 			hideSelected={!isCheckComplete}
 		>
 			<div slot="title" use:tooltip={$heightTooltip} class="p-3.5 flex items-center justify-center">
-				<IconHeight class="w-6 h-6 text-c-on-bg/25" />
+				<IconHeight
+					class="w-6 h-6 {$page.data.tier === 'FREE' ? 'text-c-primary/40' : 'text-c-on-bg/25'}"
+				/>
 			</div>
 		</TabBar>
 		{#if $page.data.tier === 'FREE'}
-			<TierBadge tier="PRO" class="absolute -right-1.5 -top-1.5 pointer-events-none" />
+			<TierBadge
+				tier="PRO"
+				outline="primary"
+				class="absolute -right-1.5 -top-1.5 pointer-events-none"
+			/>
 		{/if}
 	</div>
 
@@ -196,6 +210,7 @@
 				badgeAppliedTo={$page.data.tier === 'FREE'
 					? availableInferenceSteps.filter((i) => !availableInferenceStepsFree.includes(i))
 					: undefined}
+				outline={$page.data.tier === 'FREE' ? 'primary' : 'bg-secondary'}
 				isValid={isInferenceStepsValid}
 				validityDependsOn={[$generationHeight, $generationWidth]}
 				bind:value={$generationInferenceSteps}
@@ -207,11 +222,17 @@
 					use:tooltip={$inferenceStepsTooltip}
 					class="p-3.5 flex items-center justify-center"
 				>
-					<IconSteps class="w-6 h-6 text-c-on-bg/25" />
+					<IconSteps
+						class="w-6 h-6 {$page.data.tier === 'FREE' ? 'text-c-primary/40' : 'text-c-on-bg/25'}"
+					/>
 				</div>
 			</TabBar>
 			{#if $page.data.tier === 'FREE'}
-				<TierBadge tier="PRO" class="absolute -right-1.5 -top-1.5 pointer-events-none" />
+				<TierBadge
+					tier="PRO"
+					outline="primary"
+					class="absolute -right-1.5 -top-1.5 pointer-events-none"
+				/>
 			{/if}
 		</div>
 		{#if $currentServer.lastHealthStatus === 'unknown' || $currentServer.features
