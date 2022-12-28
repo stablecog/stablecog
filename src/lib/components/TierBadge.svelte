@@ -6,7 +6,7 @@
 	import { scale } from 'svelte/transition';
 
 	export let tier: IStripeSubscriptionTier;
-	export let size: 'xs' | 'sm' | 'md' = 'sm';
+	export let size: 'xs' | 'sm' | 'md' | 'lg' = 'sm';
 	export let outline: 'primary' | 'on-bg' | undefined = undefined;
 	export { classes as class };
 	let classes = '';
@@ -25,6 +25,8 @@
 		? 'rounded-md'
 		: size === 'md'
 		? 'rounded-lg2'
+		: size === 'lg'
+		? 'rounded-lg2'
 		: 'rounded-lg'} {classes}"
 >
 	<div
@@ -35,6 +37,8 @@
 			? 'gap-1 px-1 py-0.5'
 			: size === 'md'
 			? 'gap-1.5 px-3 py-1.25'
+			: size === 'lg'
+			? 'gap-1.5 px-3 py-1.25'
 			: 'gap-1.5 px-2 py-1'}"
 	>
 		<IconSubscriptionTier
@@ -43,9 +47,19 @@
 				? 'w-3.5 h-3.5 -ml-0.25'
 				: size === 'md'
 				? 'w-5 h-5 -ml-0.75'
+				: size === 'lg'
+				? 'w-5 h-5 -ml-0.5'
 				: 'w-4 h-4 -ml-0.5'}
 		/>
-		<p class="font-semibold {size === 'xs' ? 'text-xxs' : size === 'md' ? 'text-sm' : 'text-xs'}">
+		<p
+			class={size === 'xs'
+				? 'text-xxs font-semibold'
+				: size === 'md'
+				? 'text-sm font-bold'
+				: size === 'lg'
+				? 'text-base font-bold'
+				: 'text-xs font-semibold'}
+		>
 			{tierText}
 		</p>
 	</div>

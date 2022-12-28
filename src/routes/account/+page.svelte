@@ -77,7 +77,7 @@
 						<p class="text-c-on-bg/60 text-sm px-0.5 -mt-1">
 							{$LL.Account.SubscriptionPlanTitle()}
 						</p>
-						<TierBadge class="mt-1.5" size="md" tier={$page.data.tier} />
+						<TierBadge class="mt-1.5" size="lg" tier={$page.data.tier} />
 					</div>
 					<Button
 						class="w-full md:w-auto"
