@@ -9,6 +9,7 @@ import (
 )
 
 func IsRateLimited(prefix string, duration time.Duration, c *fiber.Ctx) bool {
+	rctx := Redis.Context()
 	ip := c.Get("CF-Connecting-IP")
 	if ip == "" {
 		ip = c.Get("X-Forwarded-For")
@@ -17,11 +18,11 @@ func IsRateLimited(prefix string, duration time.Duration, c *fiber.Ctx) bool {
 		ip = c.IP()
 	}
 	ipKey := fmt.Sprintf("rl:%s:ip:%s", prefix, ip)
-	val, _ := Redis.Get(ctx, ipKey).Result()
+	val, _ := Redis.Get(rctx, ipKey).Result()
 	if val == "1" {
 		return true
 	}
-	err := Redis.Set(ctx, ipKey, "1", duration).Err()
+	err := Redis.Set(rctx, ipKey, "1", duration).Err()
 	if err != nil {
 		log.Printf("Redis - Error setting IP key: %v", err)
 	}
