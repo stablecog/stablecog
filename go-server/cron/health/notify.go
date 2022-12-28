@@ -18,9 +18,8 @@ var lastUnhealthyNotificationTime time.Time
 var discordWebhookUrl = shared.GetEnv("DISCORD_WEBHOOK_URL", "")
 
 const unhealthyNotificationInterval = 5 * time.Minute
-const maxGenerationDuration = 2 * time.Minute
 const healthyNotificationInterval = 1 * time.Hour
-const rTTL = time.Hour * 2
+const rTTL = 2 * time.Hour
 
 var groupKey = "discord_notification"
 
@@ -33,10 +32,6 @@ func SendDiscordNotificationIfNeeded(
 	lastGenerationTime time.Time,
 	lastCheckTime time.Time,
 ) {
-	if shared.IsDev {
-		log.Printf("Not sending Discord notification in dev mode")
-		return
-	}
 	var rctx = shared.Redis.Context()
 	lastHealthyKey := fmt.Sprintf("%s:last_healthy", groupKey)
 	lastUnhealthyKey := fmt.Sprintf("%s:last_unhealthy", groupKey)
@@ -47,13 +42,15 @@ func SendDiscordNotificationIfNeeded(
 
 	sinceHealthyNotification := time.Since(lastHealthyNotificationTime)
 	sinceUnhealthyNotification := time.Since(lastUnhealthyNotificationTime)
-	if status == statusPrev &&
+
+	if statusPrev == "unknown" || (status == statusPrev &&
 		!serversStateChanged &&
 		((status == "unhealthy" && sinceUnhealthyNotification < unhealthyNotificationInterval) ||
-			(status == "healthy" && sinceHealthyNotification < healthyNotificationInterval)) {
+			(status == "healthy" && sinceHealthyNotification < healthyNotificationInterval))) {
 		log.Printf("Skipping Discord notification, not needed")
 		return
 	}
+
 	start := time.Now().UnixMilli()
 	log.Printf("Sending Discord notification...")
 	webhookBody := getDiscordWebhookBody(status, servers, generations, lastGenerationTime, lastCheckTime)
@@ -77,7 +74,6 @@ func SendDiscordNotificationIfNeeded(
 		if err != nil {
 			log.Printf("Redis - Error setting last unhealthy key: %v", err)
 		}
-		lastUnhealthyNotificationTime = lastNotificationTime
 	}
 	end := time.Now().UnixMilli()
 	log.Printf("Sent Discord notification in: %dms", end-start)

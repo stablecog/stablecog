@@ -14,10 +14,14 @@ const generationCountToCheck = 10
 
 var lastCheckTime time.Time
 var lastGenerationTime time.Time
-var lastStatus string
+var lastStatus = "unknown"
 var ServersLast []shared.SDBServer = make([]shared.SDBServer, 0)
 
+const maxGenerationDuration = 2 * time.Minute
+
 var red = color.New(color.FgHiRed).SprintFunc()
+
+var firstTime = true
 
 func CheckHealth() {
 	start := time.Now()
@@ -88,24 +92,24 @@ func CheckHealth() {
 		for _, serverOld := range ServersLast {
 			if serverOld.Url == server.Url {
 				isNew = false
-				if serverOld.Enabled != server.Enabled || serverOld.Healthy != server.Healthy {
+				if (serverOld.Enabled != server.Enabled || serverOld.Healthy != server.Healthy) && !firstTime {
 					serversStateChanged = true
 					break
 				}
 			}
 		}
-		if !serversStateChanged && isNew {
+		if !serversStateChanged && isNew && !firstTime {
 			serversStateChanged = true
 		}
 	}
 	if len(ServersLast) != len(servers) {
-		serversStateChanged = true
+		if !firstTime {
+			serversStateChanged = true
+		}
 		ServersLast = make([]shared.SDBServer, len(servers))
 	}
 	copy(ServersLast, servers)
-	if serversStateChanged {
-		log.Printf("Servers state changed")
-	}
+	firstTime = false
 	lastStatusPrev := lastStatus
 	if healthyServerCount == 0 || generationFailWithoutNSFWRate > maxGenerationFailWithoutNSFWRate {
 		lastStatus = "unhealthy"

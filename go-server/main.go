@@ -39,6 +39,9 @@ func main() {
 
 	cron := cron.New()
 
+	if !shared.IsDev {
+		shared.RandomWaitMs(5000)
+	}
 	cron.AddFunc("@every 15s", cronHealth.CheckHealth)
 	cron.AddFunc("@every 15s", cronHealth.SetDefaultServerHealths)
 	cron.AddFunc("@every 15s", cronStats.GetAndSetStats)
