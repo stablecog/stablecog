@@ -397,7 +397,6 @@
 												class="w-full h-full flex items-center justify-center"
 												style="
 													background-color: transparent;
-													opacity: 0.8;
 													background-image:  linear-gradient(135deg, {tierBasedColor(
 													generationOrUpscale
 												)} 25%, transparent 25%), linear-gradient(225deg, {tierBasedColor(
@@ -414,7 +413,7 @@
 											>
 												{#if generationOrUpscale.country_code}
 													<p
-														class="text-center text-xs font-bold text-c-on-primary cursor-default relative"
+														class="text-center text-xs font-bold text-c-on-primary/75 cursor-default relative"
 													>
 														{generationOrUpscale.country_code}
 													</p>
