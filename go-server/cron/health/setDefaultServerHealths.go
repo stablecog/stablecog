@@ -32,17 +32,21 @@ func SetDefaultServerHealths() {
 				Id:                server.Id,
 				Healthy:           res.Status == "healthy",
 				LastHealthCheckAt: lastCheck,
+				Url:               server.Url,
+				Enabled:           server.Enabled,
 			})
 			defer wg.Done()
 		}(server)
 	}
 	wg.Wait()
-	updateResults := make([]shared.SDBServerUpdate, len(results))
+	updateResults := make([]shared.SDBServer, len(results))
 	for i, r := range results {
-		updateResults[i] = shared.SDBServerUpdate{
+		updateResults[i] = shared.SDBServer{
 			Id:                r.Id,
 			Healthy:           r.Healthy,
 			LastHealthCheckAt: r.LastHealthCheckAt,
+			Url:               r.Url,
+			Enabled:           r.Enabled,
 		}
 	}
 	shared.UpdateServerHealths(updateResults)

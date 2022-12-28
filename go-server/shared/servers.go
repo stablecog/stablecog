@@ -19,15 +19,11 @@ func GetServers() []SDBServer {
 	return servers
 }
 
-func UpdateServerHealths(servers []SDBServerUpdate) []SDBServer {
+func UpdateServerHealths(servers []SDBServer) []SDBServer {
 	var res []SDBServer
-	for _, s := range servers {
-		var r SDBServer
-		_, err := SupabaseDb.From("server").Update(s, "", "").Eq("id", s.Id).Single().ExecuteTo(&r)
-		if err != nil {
-			log.Printf(red("Error updating server healths: %s"), err)
-		}
-		res = append(res, r)
+	_, err := SupabaseDb.From("server").Upsert(servers, "", "", "").ExecuteTo(&res)
+	if err != nil {
+		log.Printf(red("Error updating server healths: %s"), err)
 	}
 	return res
 }

@@ -39,8 +39,8 @@ func main() {
 
 	cron := cron.New()
 
-	cron.AddFunc("@every 10s", cronHealth.CheckHealth)
-	cron.AddFunc("@every 10s", cronHealth.SetDefaultServerHealths)
+	cron.AddFunc("@every 15s", cronHealth.CheckHealth)
+	cron.AddFunc("@every 15s", cronHealth.SetDefaultServerHealths)
 	cron.AddFunc("@every 15s", cronStats.GetAndSetStats)
 	cron.Start()
 
