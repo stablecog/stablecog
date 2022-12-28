@@ -222,13 +222,17 @@ const ptBr: Translation = {
 		InvalidCredentials: 'Invalid credentials.'
 	},
 	Admin: {
-		AdminPanelTitle: 'Administrador',
-		DeleteButton: 'Deletar',
-		ApproveButton: 'Aprovar',
-		NoGenerationsToReview: 'Sem gerações para revisar.',
-		ServersButton: 'Servidores',
-		GalleryButton: 'Galeria',
-		UsersButton: 'Users'
+		AdminPanelTitle: 'Admin',
+		DeleteButton: 'Delete',
+		ApproveButton: 'Approve',
+		NoGenerationsToReview: 'No generations to review.',
+		ServersButton: 'Servers',
+		AdminGalleryButton: 'Gallery',
+		UsersButton: 'Users',
+		AdminTab: 'Admin',
+		ServersTab: 'Servers',
+		AdminGalleryTab: 'Gallery',
+		UsersTab: 'Users'
 	},
 	SignUp: {
 		PageTitle: 'Sign Up',

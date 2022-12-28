@@ -113,7 +113,15 @@ export type TIconSocial =
 	| 'email'
 	| 'producthunt';
 
-export type TNavbarRouteOption = 'home' | 'live' | 'blog' | 'history' | 'gallery';
+export type TNavbarRouteOption =
+	| 'home'
+	| 'live'
+	| 'blog'
+	| 'history'
+	| 'gallery'
+	| 'servers'
+	| 'users';
+
 export interface TNavbarRoute {
 	name: string;
 	href: string;

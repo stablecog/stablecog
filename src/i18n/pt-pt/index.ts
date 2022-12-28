@@ -223,12 +223,16 @@ const ptPt: Translation = {
 	},
 	Admin: {
 		AdminPanelTitle: 'Admin',
-		DeleteButton: 'Eliminar',
-		ApproveButton: 'Aprovar',
-		NoGenerationsToReview: 'Sem gerações para rever.',
-		ServersButton: 'Servidores',
-		GalleryButton: 'Galeria',
-		UsersButton: 'Users'
+		DeleteButton: 'Delete',
+		ApproveButton: 'Approve',
+		NoGenerationsToReview: 'No generations to review.',
+		ServersButton: 'Servers',
+		AdminGalleryButton: 'Gallery',
+		UsersButton: 'Users',
+		AdminTab: 'Admin',
+		ServersTab: 'Servers',
+		AdminGalleryTab: 'Gallery',
+		UsersTab: 'Users'
 	},
 	SignUp: {
 		PageTitle: 'Sign Up',

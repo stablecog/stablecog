@@ -71,7 +71,7 @@
 			<div class="flex gap-3 items-center">
 				<TierBadge tier={'FREE'} size="md" />
 				<p class="font-bold text-xl text-c-on-bg pr-4">
-					{users ? users.filter((u) => u.subscription_tier === 'FREE').length : '--'}
+					{users ? users.filter((u) => u.subscription_tier === 'FREE').length : '---'}
 				</p>
 			</div>
 		</div>

@@ -223,13 +223,17 @@ const fr: Translation = {
 		InvalidCredentials: 'Invalid credentials.'
 	},
 	Admin: {
-		AdminPanelTitle: 'Administration',
-		DeleteButton: 'Supprimer',
-		ApproveButton: 'Approuver',
-		NoGenerationsToReview: 'Aucune image à approuver.',
-		ServersButton: 'Serveurs',
-		GalleryButton: 'Galerie',
-		UsersButton: 'Users'
+		AdminPanelTitle: 'Admin',
+		DeleteButton: 'Delete',
+		ApproveButton: 'Approve',
+		NoGenerationsToReview: 'No generations to review.',
+		ServersButton: 'Servers',
+		AdminGalleryButton: 'Gallery',
+		UsersButton: 'Users',
+		AdminTab: 'Admin',
+		ServersTab: 'Servers',
+		AdminGalleryTab: 'Gallery',
+		UsersTab: 'Users'
 	},
 	SignUp: {
 		PageTitle: 'Sign Up',

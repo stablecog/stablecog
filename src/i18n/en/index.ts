@@ -227,8 +227,12 @@ const en: BaseTranslation = {
 		ApproveButton: 'Approve',
 		NoGenerationsToReview: 'No generations to review.',
 		ServersButton: 'Servers',
-		GalleryButton: 'Gallery',
-		UsersButton: 'Users'
+		AdminGalleryButton: 'Gallery',
+		UsersButton: 'Users',
+		AdminTab: 'Admin',
+		ServersTab: 'Servers',
+		AdminGalleryTab: 'Gallery',
+		UsersTab: 'Users'
 	},
 	SignUp: {
 		PageTitle: 'Sign Up',

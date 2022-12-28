@@ -215,13 +215,17 @@ const zhHans: Translation = {
 		InvalidCredentials: 'Invalid credentials.'
 	},
 	Admin: {
-		AdminPanelTitle: '管理员',
-		DeleteButton: '删除',
-		ApproveButton: '批准',
-		NoGenerationsToReview: '并没有需要审核的生成的图像。',
-		ServersButton: '服务器',
-		GalleryButton: '图库',
-		UsersButton: 'Users'
+		AdminPanelTitle: 'Admin',
+		DeleteButton: 'Delete',
+		ApproveButton: 'Approve',
+		NoGenerationsToReview: 'No generations to review.',
+		ServersButton: 'Servers',
+		AdminGalleryButton: 'Gallery',
+		UsersButton: 'Users',
+		AdminTab: 'Admin',
+		ServersTab: 'Servers',
+		AdminGalleryTab: 'Gallery',
+		UsersTab: 'Users'
 	},
 	SignUp: {
 		PageTitle: 'Sign Up',

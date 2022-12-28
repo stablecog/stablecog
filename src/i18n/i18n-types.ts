@@ -658,11 +658,27 @@ type RootTranslation = {
 		/**
 		 * G​a​l​l​e​r​y
 		 */
-		GalleryButton: string
+		AdminGalleryButton: string
 		/**
 		 * U​s​e​r​s
 		 */
 		UsersButton: string
+		/**
+		 * A​d​m​i​n
+		 */
+		AdminTab: string
+		/**
+		 * S​e​r​v​e​r​s
+		 */
+		ServersTab: string
+		/**
+		 * G​a​l​l​e​r​y
+		 */
+		AdminGalleryTab: string
+		/**
+		 * U​s​e​r​s
+		 */
+		UsersTab: string
 	}
 	SignUp: {
 		/**
@@ -1596,11 +1612,27 @@ export type TranslationFunctions = {
 		/**
 		 * Gallery
 		 */
-		GalleryButton: () => LocalizedString
+		AdminGalleryButton: () => LocalizedString
 		/**
 		 * Users
 		 */
 		UsersButton: () => LocalizedString
+		/**
+		 * Admin
+		 */
+		AdminTab: () => LocalizedString
+		/**
+		 * Servers
+		 */
+		ServersTab: () => LocalizedString
+		/**
+		 * Gallery
+		 */
+		AdminGalleryTab: () => LocalizedString
+		/**
+		 * Users
+		 */
+		UsersTab: () => LocalizedString
 	}
 	SignUp: {
 		/**

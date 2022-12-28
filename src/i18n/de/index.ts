@@ -222,12 +222,16 @@ const de: Translation = {
 	},
 	Admin: {
 		AdminPanelTitle: 'Admin',
-		DeleteButton: 'Löschen',
-		ApproveButton: 'Freigeben',
-		NoGenerationsToReview: 'Keine Generierung zu prüfen.',
-		ServersButton: 'Server',
-		GalleryButton: 'Galerie',
-		UsersButton: 'Users'
+		DeleteButton: 'Delete',
+		ApproveButton: 'Approve',
+		NoGenerationsToReview: 'No generations to review.',
+		ServersButton: 'Servers',
+		AdminGalleryButton: 'Gallery',
+		UsersButton: 'Users',
+		AdminTab: 'Admin',
+		ServersTab: 'Servers',
+		AdminGalleryTab: 'Gallery',
+		UsersTab: 'Users'
 	},
 	SignUp: {
 		PageTitle: 'Sign Up',

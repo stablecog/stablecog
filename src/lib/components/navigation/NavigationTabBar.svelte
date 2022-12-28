@@ -9,6 +9,9 @@
 	export let type: TTabBarPlacement = 'normal';
 
 	const isSelected = (href: string, currentPath: string) => {
+		if (href.startsWith('/admin')) {
+			return $page.url.pathname === href;
+		}
 		return $page.url.pathname === href || currentPath.startsWith(href + '/');
 	};
 
@@ -16,8 +19,10 @@
 		return routes.findIndex((route) => isSelected(route.href, currentPath));
 	};
 
-	let routes: TNavbarRoute[];
-	$: routes = [
+	$: routes = $page.url.pathname.startsWith('/admin') ? adminRoutes : regularRoutes;
+
+	let regularRoutes: TNavbarRoute[];
+	$: regularRoutes = [
 		{
 			name: $LL.Navbar.HomeTab(),
 			href: '/',
@@ -37,6 +42,29 @@
 			name: $LL.Navbar.LiveTab(),
 			href: '/live',
 			icon: 'live'
+		}
+	];
+	let adminRoutes: TNavbarRoute[];
+	$: adminRoutes = [
+		{
+			name: $LL.Admin.AdminTab(),
+			href: '/admin',
+			icon: 'home'
+		},
+		{
+			name: $LL.Admin.ServersTab(),
+			href: '/admin/servers',
+			icon: 'servers'
+		},
+		{
+			name: $LL.Navbar.GalleryTab(),
+			href: '/admin/gallery',
+			icon: 'gallery'
+		},
+		{
+			name: $LL.Admin.UsersTab(),
+			href: '/admin/users',
+			icon: 'users'
 		}
 	];
 </script>

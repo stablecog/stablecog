@@ -221,13 +221,17 @@ const hi: Translation = {
 		InvalidCredentials: 'Invalid credentials.'
 	},
 	Admin: {
-		AdminPanelTitle: 'एडमिन',
-		DeleteButton: 'हटाए',
-		ApproveButton: 'मंजूर करे',
-		NoGenerationsToReview: 'समीक्षा के लिए कोई बानावट नही है।',
-		ServersButton: 'सर्वर्स',
-		GalleryButton: 'गैलरी',
-		UsersButton: 'Users'
+		AdminPanelTitle: 'Admin',
+		DeleteButton: 'Delete',
+		ApproveButton: 'Approve',
+		NoGenerationsToReview: 'No generations to review.',
+		ServersButton: 'Servers',
+		AdminGalleryButton: 'Gallery',
+		UsersButton: 'Users',
+		AdminTab: 'Admin',
+		ServersTab: 'Servers',
+		AdminGalleryTab: 'Gallery',
+		UsersTab: 'Users'
 	},
 	SignUp: {
 		PageTitle: 'Sign Up',

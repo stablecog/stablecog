@@ -222,13 +222,17 @@ const ko: Translation = {
 		InvalidCredentials: 'Invalid credentials.'
 	},
 	Admin: {
-		AdminPanelTitle: '관리자',
-		DeleteButton: '삭제하기',
-		ApproveButton: '확인됨',
-		NoGenerationsToReview: '확인할 이미지 없음',
-		ServersButton: '서버 관리',
-		GalleryButton: '갤러리 관리',
-		UsersButton: 'Users'
+		AdminPanelTitle: 'Admin',
+		DeleteButton: 'Delete',
+		ApproveButton: 'Approve',
+		NoGenerationsToReview: 'No generations to review.',
+		ServersButton: 'Servers',
+		AdminGalleryButton: 'Gallery',
+		UsersButton: 'Users',
+		AdminTab: 'Admin',
+		ServersTab: 'Servers',
+		AdminGalleryTab: 'Gallery',
+		UsersTab: 'Users'
 	},
 	SignUp: {
 		PageTitle: 'Sign Up',
