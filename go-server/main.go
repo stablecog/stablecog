@@ -28,7 +28,7 @@ func main() {
 	defer bimg.Shutdown()
 
 	shared.SetupSeed()
-	shared.SetupCache()
+	shared.SetupRedis()
 
 	app := fiber.New()
 	cors := cors.New(cors.Config{

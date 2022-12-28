@@ -14,7 +14,6 @@
 	import IconPulsing from '$components/icons/IconPulsing.svelte';
 	import type { TDBGenerationRealtimePayload, TDBUpscaleRealtimePayload } from '$ts/types/db';
 	import LL, { locale } from '$i18n/i18n-svelte';
-	import IconSubscriptionTier from '$components/icons/IconSubscriptionTier.svelte';
 
 	type TProcessType = 'upscale' | 'generation';
 	interface TDBGenerationRealtimePayloadExt extends TDBGenerationRealtimePayload {
@@ -231,6 +230,16 @@
 		generation_count: number;
 		upscale_count: number;
 	}
+
+	function tierBasedColor(entry: TDBGenerationRealtimePayloadExt | TDBUpscaleRealtimePayloadExt) {
+		return entry.user_tier !== 'FREE'
+			? entry.status === 'succeeded'
+				? 'rgb(var(--c-success-secondary))'
+				: entry.status === 'failed'
+				? 'rgb(var(--c-danger-secondary))'
+				: 'rgb(var(--c-primary-secondary))'
+			: 'transparent';
+	}
 </script>
 
 <MetaTag
@@ -389,38 +398,17 @@
 												style="
 													background-color: transparent;
 													opacity: 0.8;
-													background-image: 
-														linear-gradient(
-															135deg, {generationOrUpscale.user_tier !== 'FREE'
-													? generationOrUpscale.status === 'succeeded'
-														? 'rgb(var(--c-success-secondary))'
-														: generationOrUpscale.status === 'failed'
-														? 'rgb(var(--c-danger-secondary))'
-														: 'rgb(var(--c-primary-secondary))'
-													: 'transparent'} 25%, transparent 25%),
-														linear-gradient(225deg, {generationOrUpscale.user_tier !== 'FREE'
-													? generationOrUpscale.status === 'succeeded'
-														? 'rgb(var(--c-success-secondary))'
-														: generationOrUpscale.status === 'failed'
-														? 'rgb(var(--c-danger-secondary))'
-														: 'rgb(var(--c-primary-secondary))'
-													: 'transparent'} 25%, transparent 25%),
-														linear-gradient(45deg, {generationOrUpscale.user_tier !== 'FREE'
-													? generationOrUpscale.status === 'succeeded'
-														? 'rgb(var(--c-success-secondary))'
-														: generationOrUpscale.status === 'failed'
-														? 'rgb(var(--c-danger-secondary))'
-														: 'rgb(var(--c-primary-secondary))'
-													: 'transparent'} 25%, transparent 25%),
-														linear-gradient(315deg, {generationOrUpscale.user_tier !== 'FREE'
-													? generationOrUpscale.status === 'succeeded'
-														? 'rgb(var(--c-success-secondary))'
-														: generationOrUpscale.status === 'failed'
-														? 'rgb(var(--c-danger-secondary))'
-														: 'rgb(var(--c-primary-secondary))'
-													: 'transparent'} 25%, transparent 25%);
-													background-position:  10px 0, 10px 0, 0 0, 0 0;
-													background-size: 20px 20px;
+													background-image:  linear-gradient(135deg, {tierBasedColor(
+													generationOrUpscale
+												)} 25%, transparent 25%), linear-gradient(225deg, {tierBasedColor(
+													generationOrUpscale
+												)} 25%, transparent 25%), linear-gradient(45deg, {tierBasedColor(
+													generationOrUpscale
+												)} 25%, transparent 25%), linear-gradient(315deg, {tierBasedColor(
+													generationOrUpscale
+												)} 25%, transparent 25%);
+													background-position:  8px 0, 8px 0, 0 0, 0 0;
+													background-size: 8px 8px;
 													background-repeat: repeat;
 												"
 											>
