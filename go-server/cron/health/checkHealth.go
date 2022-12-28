@@ -116,7 +116,7 @@ func CheckHealth() {
 	log.Printf("Healthy servers (enabled): %d/%d", healthyServerCount, enabledServerCount)
 	log.Printf("Healthy servers (all): %d/%d", healthyServerCount, len(servers))
 	log.Printf("Done checking health in: %dms", lastCheckTime.Sub(start).Milliseconds())
-	//
+
 	go SendDiscordNotificationIfNeeded(
 		lastStatus,
 		lastStatusPrev,
