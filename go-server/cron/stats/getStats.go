@@ -63,7 +63,7 @@ func GetAndSetStat(
 	rctx context.Context,
 ) {
 	rKey := fmt.Sprintf("%s:%s", groupKey, rpcName)
-	val, _ := redis.Get(redis.Context(), rKey).Result()
+	val := redis.Get(redis.Context(), rKey).Val()
 	if val != "" {
 		num, err := strconv.ParseInt(val, 10, 64)
 		if err == nil {

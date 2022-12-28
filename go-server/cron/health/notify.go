@@ -21,6 +21,8 @@ const unhealthyNotificationInterval = 5 * time.Minute
 const maxGenerationDuration = 2 * time.Minute
 const healthyNotificationInterval = 1 * time.Hour
 
+var groupKey = "discord_notification"
+
 func SendDiscordNotificationIfNeeded(
 	status string,
 	statusPrev string,
@@ -34,6 +36,14 @@ func SendDiscordNotificationIfNeeded(
 		log.Printf("Not sending Discord notification in dev mode")
 		return
 	}
+	var rctx = shared.Redis.Context()
+	lastHealthyKey := fmt.Sprintf("%s:last_healthy", groupKey)
+	lastUnhealthyKey := fmt.Sprintf("%s:last_unhealthy", groupKey)
+	lastHealthyStr := shared.Redis.Get(rctx, lastHealthyKey).Val()
+	lastUnhealthyStr := shared.Redis.Get(rctx, lastUnhealthyKey).Val()
+	lastHealthyNotificationTime, _ = time.Parse(time.RFC3339, lastHealthyStr)
+	lastUnhealthyNotificationTime, _ = time.Parse(time.RFC3339, lastUnhealthyStr)
+
 	sinceHealthyNotification := time.Since(lastHealthyNotificationTime)
 	sinceUnhealthyNotification := time.Since(lastUnhealthyNotificationTime)
 	if status == statusPrev &&
@@ -56,9 +66,17 @@ func SendDiscordNotificationIfNeeded(
 		log.Printf("Error sending webhook: %s", postErr)
 	}
 	lastNotificationTime = time.Now()
+	tll := time.Second * 120
 	if status == "healthy" {
-		lastHealthyNotificationTime = lastNotificationTime
+		err := shared.Redis.Set(rctx, lastHealthyKey, lastNotificationTime.Format(time.RFC3339), tll).Err()
+		if err != nil {
+			log.Printf("Redis - Error setting last healthy key: %v", err)
+		}
 	} else {
+		err := shared.Redis.Set(rctx, lastUnhealthyKey, lastNotificationTime.Format(time.RFC3339), tll).Err()
+		if err != nil {
+			log.Printf("Redis - Error setting last unhealthy key: %v", err)
+		}
 		lastUnhealthyNotificationTime = lastNotificationTime
 	}
 	end := time.Now().UnixMilli()
