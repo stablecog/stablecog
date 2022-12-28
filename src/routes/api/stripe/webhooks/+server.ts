@@ -50,6 +50,8 @@ export const POST: RequestHandler = async (event) => {
 	const subscription = retrievedEvent.data.object as Stripe.Subscription;
 	const customerId = subscription.customer;
 	// @ts-ignore
+	const prevStatus: string | undefined = retrievedEvent.data.previous_attributes?.status;
+	// @ts-ignore
 	const productId = subscription.plan?.product;
 	if (customerId && productId)
 		console.log(`Stripe webhook - Customer ID: ${customerId} - Product: ${productId}`);
@@ -83,32 +85,35 @@ export const POST: RequestHandler = async (event) => {
 					.maybeSingle();
 				const user = userRes.data;
 				if (!user) return new Response('User not found', { status: 400 });
-				mixpanel.people.set(user.id, {
-					$email: user.email,
-					'SC - Stripe ID': customerId
-				});
-				mixpanel.track('Subscription', {
-					distinct_id: user.id,
-					'SC - Email': user.email,
-					'SC - Plan': prod.name.toUpperCase(),
-					'SC - Supabase ID': user.id,
-					'SC - Stripe ID': customerId
-				});
-				try {
-					await fetch(DISCORD_WEBHOOK_SUBSCRIBER_URL, {
-						method: 'POST',
-						headers: { 'Content-Type': 'application/json' },
-						body: JSON.stringify(
-							getDiscordWebhookBodyNewSubscriber({
-								email: user.email,
-								plan: prod.name.toUpperCase(),
-								stripeId: customerId.toString(),
-								supabaseId: user.id
-							})
-						)
+				// If new subscription
+				if (prevStatus && prevStatus === 'incomplete') {
+					mixpanel.people.set(user.id, {
+						$email: user.email,
+						'SC - Stripe ID': customerId
 					});
-				} catch (e) {
-					console.log(e);
+					mixpanel.track('Subscription', {
+						distinct_id: user.id,
+						'SC - Email': user.email,
+						'SC - Plan': prod.name.toUpperCase(),
+						'SC - Supabase ID': user.id,
+						'SC - Stripe ID': customerId
+					});
+					try {
+						await fetch(DISCORD_WEBHOOK_SUBSCRIBER_URL, {
+							method: 'POST',
+							headers: { 'Content-Type': 'application/json' },
+							body: JSON.stringify(
+								getDiscordWebhookBodyNewSubscriber({
+									email: user.email,
+									plan: prod.name.toUpperCase(),
+									stripeId: customerId.toString(),
+									supabaseId: user.id
+								})
+							)
+						});
+					} catch (e) {
+						console.log(e);
+					}
 				}
 			}
 			break;
