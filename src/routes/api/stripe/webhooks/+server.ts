@@ -1,10 +1,11 @@
-import { STRIPE_SIGNING_SECRET } from '$env/static/private';
+import { DISCORD_WEBHOOK_SUBSCRIBER_URL, STRIPE_SIGNING_SECRET } from '$env/static/private';
 import { stripe } from '$ts/constants/stripe';
 import { supabaseAdmin } from '$ts/constants/supabaseAdmin';
 import type { RequestHandler } from '@sveltejs/kit';
 import Stripe from 'stripe';
 import Mixpanel from 'mixpanel';
 import { PUBLIC_MIXPANEL_ID } from '$env/static/public';
+import { getDiscordWebhookBodyNewSubscriber } from '$ts/helpers/discord';
 
 const cryptoProvider = Stripe.createSubtleCryptoProvider();
 const mixpanel = Mixpanel.init(PUBLIC_MIXPANEL_ID);
@@ -80,6 +81,22 @@ export const POST: RequestHandler = async (event) => {
 					distinct_id: userRes.data.id,
 					'SC - Plan': prodRes.name.toUpperCase()
 				});
+				try {
+					await fetch(DISCORD_WEBHOOK_SUBSCRIBER_URL, {
+						method: 'POST',
+						headers: { 'Content-Type': 'application/json' },
+						body: JSON.stringify(
+							getDiscordWebhookBodyNewSubscriber({
+								email: userRes.data.email,
+								plan: prodRes.name.toUpperCase(),
+								stripeId: customerId,
+								supabaseId: userRes.data.id
+							})
+						)
+					});
+				} catch (e) {
+					console.log(e);
+				}
 			}
 		case 'customer.subscription.updated':
 			const prod = await stripe.products.retrieve(productId);
