@@ -11,12 +11,16 @@ import (
 	"github.com/mileusna/useragent"
 )
 
-func GetEnv(key string) string {
+func GetEnv(key string, fallback string) string {
 	err := godotenv.Load(".env")
 	if err != nil {
 		log.Println("\nNo .env file, will try to use env variables...")
 	}
-	return os.Getenv(key)
+	k := os.Getenv(key)
+	if k == "" {
+		return fallback
+	}
+	return k
 }
 
 func RelativeTimeStr(t time.Time) string {

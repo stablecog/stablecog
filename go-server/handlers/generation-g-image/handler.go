@@ -14,7 +14,7 @@ import (
 	"github.com/yekta/stablecog/go-server/shared"
 )
 
-var r2Url = shared.GetEnv("PUBLIC_R2_URL")
+var r2Url = shared.GetEnv("PUBLIC_R2_URL", "")
 var red = color.New(color.FgHiRed).SprintFunc()
 var green = color.New(color.FgHiGreen).SprintFunc()
 var yellow = color.New(color.FgHiYellow).SprintFunc()

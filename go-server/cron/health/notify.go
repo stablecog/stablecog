@@ -15,7 +15,7 @@ import (
 var lastNotificationTime time.Time
 var lastHealthyNotificationTime time.Time
 var lastUnhealthyNotificationTime time.Time
-var discordWebhookUrl = shared.GetEnv("DISCORD_WEBHOOK_URL")
+var discordWebhookUrl = shared.GetEnv("DISCORD_WEBHOOK_URL", "")
 
 const unhealthyNotificationInterval = 5 * time.Minute
 const maxGenerationDuration = 2 * time.Minute

@@ -9,11 +9,11 @@ import (
 	"github.com/supabase/postgrest-go"
 )
 
-var SUPABASE_ADMIN_KEY = GetEnv("SUPABASE_ADMIN_KEY")
-var SUPABASE_URL = GetEnv("PUBLIC_SUPABASE_URL")
-var SUPABASE_REFERENCE_ID = GetEnv("PUBLIC_SUPABASE_REFERENCE_ID")
-var PUBLIC_SUPABASE_POSTGREST_URL = GetEnv("PUBLIC_SUPABASE_POSTGREST_URL")
-var DEFAULT_SERVER_URL = GetEnv("PUBLIC_DEFAULT_SERVER_URL")
+var SUPABASE_ADMIN_KEY = GetEnv("SUPABASE_ADMIN_KEY", "")
+var SUPABASE_URL = GetEnv("PUBLIC_SUPABASE_URL", "")
+var SUPABASE_REFERENCE_ID = GetEnv("PUBLIC_SUPABASE_REFERENCE_ID", "")
+var PUBLIC_SUPABASE_POSTGREST_URL = GetEnv("PUBLIC_SUPABASE_POSTGREST_URL", "")
+var DEFAULT_SERVER_URL = GetEnv("PUBLIC_DEFAULT_SERVER_URL", "")
 
 var SupabaseDb = postgrest.NewClient(PUBLIC_SUPABASE_POSTGREST_URL, "", map[string]string{
 	"Authorization": "Bearer " + SUPABASE_ADMIN_KEY,
@@ -50,7 +50,7 @@ var green = color.New(color.FgHiGreen).SprintFunc()
 var yellow = color.New(color.FgHiYellow).SprintFunc()
 var red = color.New(color.FgHiRed).SprintFunc()
 
-var IsDev = GetEnv("PUBLIC_APP_MODE") == "development"
+var IsDev = GetEnv("PUBLIC_APP_MODE", "") == "development"
 
 const DBTimeLayout = "2006-01-02T15:04:05.999999-07:00"
 

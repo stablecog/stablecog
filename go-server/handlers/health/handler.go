@@ -14,7 +14,7 @@ import (
 var green = color.New(color.FgHiGreen).SprintFunc()
 var magenta = color.New(color.FgHiMagenta).SprintFunc()
 var red = color.New(color.FgHiRed).SprintFunc()
-var defaultServerUrl = shared.GetEnv("PUBLIC_DEFAULT_SERVER_URL")
+var defaultServerUrl = shared.GetEnv("PUBLIC_DEFAULT_SERVER_URL", "")
 
 var defaultServerModels = []string{
 	"Stable Diffusion v1.5",

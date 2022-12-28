@@ -9,7 +9,13 @@ import (
 var Redis *redis.Client
 
 func SetupRedis() {
-	opts, err := redis.ParseURL(GetEnv("REDIS_CONNECTION_STRING"))
+	var url string
+	if GetEnv("RENDER", "") != "" {
+		url = GetEnv("REDIS_CONNECTION_STRING_RENDER", "")
+	} else {
+		url = GetEnv("REDIS_CONNECTION_STRING", "")
+	}
+	opts, err := redis.ParseURL(url)
 	if err != nil {
 		log.Printf("Error parsing REDIS_CONNECTION_STRING: %v", err)
 	}
