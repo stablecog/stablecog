@@ -112,21 +112,30 @@
 
 <div class="w-full px-5 pt-3 pb-1.5 sticky z-50 top-20 flex items-center justify-center">
 	<div
-		class="px-6 py-3 rounded-xl shadow-navbar transition ring-2 {scrollTop > 0
+		class="px-6 py-3 rounded-xl shadow-navbar transition ring-2 flex items-center justify-center flex-wrap {scrollTop >
+		0
 			? 'bg-c-bg shadow-c-shadow/[var(--o-shadow-strongest)] ring-c-bg-secondary'
-			: 'bg-c-bg/0 shadow-c-shadow/0 ring-transparent'}"
+			: 'bg-c-bg/0 shadow-c-shadow/0 ring-transparent'} gap-4 md:gap-8"
 	>
 		{#if totalCount !== undefined && totalCount !== null}
 			<p class="font-bold">
 				<span class="text-c-on-bg/60 font-normal">Total:</span>
 				{totalCount - (approved + deleted)}
 			</p>
+			<p class="font-bold">
+				<span class="text-c-on-bg/60 font-normal">Approved:</span>
+				<span class="text-c-success">{approved}</span>
+			</p>
+			<p class="font-bold">
+				<span class="text-c-on-bg/60 font-normal">Deleted:</span>
+				<span class="text-c-danger">{deleted}</span>
+			</p>
 		{/if}
 	</div>
 </div>
 {#if generations && generations.length > 0}
 	<div class="w-full flex-1 flex flex-col items-center relative">
-		<div class="w-full px-2 md:pt-4 pb-4 relative">
+		<div class="w-full px-2 pt-4 pb-4 relative">
 			<MasonryInfiniteGrid
 				on:requestAppend={({ detail: e }) => {
 					e.wait();
