@@ -26,26 +26,25 @@ func GetAndSetStats() {
 
 	rctx := shared.Redis.Context()
 	var wg sync.WaitGroup
-	var rpcNames = []string{
-		"generation_duration_ms_total_estimate_with_constant",
-		"generation_count",
-		"upscale_duration_ms_total_estimate_with_constant",
-		"upscale_count",
-	}
-	wg.Add(len(rpcNames))
-	for _, rpcName := range rpcNames {
-		go func(rpcName string) {
+	rpcMap := make(map[string]*int64)
+	rpcMap["generation_duration_ms_total_estimate_with_constant"] = &Stats.GenerationDurationMsTotalEstimate
+	rpcMap["upscale_duration_ms_total_estimate_with_constant"] = &Stats.UpscaleDurationMsTotalEstimate
+	rpcMap["generation_count"] = &Stats.GenerationCount
+	rpcMap["upscale_count"] = &Stats.UpscaleCount
+	wg.Add(len(rpcMap))
+	for rpcName, rpcValue := range rpcMap {
+		go func(rpcName string, rpcValue *int64) {
 			GetAndSetStat(
 				rpcName,
+				rpcValue,
 				groupKey,
-				&Stats.GenerationDurationMsTotalEstimate,
 				statsTTL,
 				&wg,
 				shared.Redis,
 				rctx,
 			)
 			defer wg.Done()
-		}(rpcName)
+		}(rpcName, rpcValue)
 	}
 	wg.Wait()
 
@@ -55,8 +54,8 @@ func GetAndSetStats() {
 
 func GetAndSetStat(
 	rpcName string,
-	groupKey string,
 	statsValue *int64,
+	groupKey string,
 	statsTTL time.Duration,
 	wg *sync.WaitGroup,
 	redis *redis.Client,
