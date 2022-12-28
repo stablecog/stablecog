@@ -64,22 +64,37 @@ export const POST: RequestHandler = async (event) => {
 				})
 				.match({ stripe_customer_id: customerId });
 			break;
-		case 'customer.subscription.created':
-			const [prodRes, userRes] = await Promise.all([
-				stripe.products.retrieve(productId),
-				supabaseAdmin
+		case 'customer.subscription.updated':
+			const prod = await stripe.products.retrieve(productId);
+			// @ts-ignore
+			if (subscription.status === 'incomplete_expired') {
+				await supabaseAdmin
 					.from('user')
-					.select('id,email')
+					.update({
+						subscription_tier: 'FREE'
+					})
+					.match({ stripe_customer_id: customerId });
+			} else {
+				const userRes = await supabaseAdmin
+					.from('user')
+					.update({
+						subscription_tier: prod.name.toUpperCase()
+					})
 					.match({ stripe_customer_id: customerId })
-					.maybeSingle()
-			]);
-			if (userRes.data?.id) {
-				mixpanel.people.set(userRes.data.id, {
-					$email: userRes.data.email
+					.select('id,email')
+					.maybeSingle();
+				const user = userRes.data;
+				if (!user) return new Response('User not found', { status: 400 });
+				mixpanel.people.set(user.id, {
+					$email: user.email,
+					'SC - Stripe ID': customerId
 				});
 				mixpanel.track('Subscription', {
-					distinct_id: userRes.data.id,
-					'SC - Plan': prodRes.name.toUpperCase()
+					distinct_id: user.id,
+					'SC - Email': user.email,
+					'SC - Plan': prod.name.toUpperCase(),
+					'SC - Supabase ID': user.id,
+					'SC - Stripe ID': customerId
 				});
 				try {
 					await fetch(DISCORD_WEBHOOK_SUBSCRIBER_URL, {
@@ -87,10 +102,10 @@ export const POST: RequestHandler = async (event) => {
 						headers: { 'Content-Type': 'application/json' },
 						body: JSON.stringify(
 							getDiscordWebhookBodyNewSubscriber({
-								email: userRes.data.email,
-								plan: prodRes.name.toUpperCase(),
+								email: user.email,
+								plan: prod.name.toUpperCase(),
 								stripeId: customerId,
-								supabaseId: userRes.data.id
+								supabaseId: user.id
 							})
 						)
 					});
@@ -98,14 +113,6 @@ export const POST: RequestHandler = async (event) => {
 					console.log(e);
 				}
 			}
-		case 'customer.subscription.updated':
-			const prod = await stripe.products.retrieve(productId);
-			await supabaseAdmin
-				.from('user')
-				.update({
-					subscription_tier: prod.name.toUpperCase()
-				})
-				.match({ stripe_customer_id: customerId });
 			break;
 		default:
 			console.log(`Stripe webhook - Unhandled retrievedEvent type ${retrievedEvent.type}`);
