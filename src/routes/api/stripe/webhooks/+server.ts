@@ -40,15 +40,14 @@ export const POST: RequestHandler = async (event) => {
 			  }
 			: {};
 
-	let retrievedEvent;
+	let retrievedEvent: Stripe.Response<Stripe.Event>;
 	try {
 		retrievedEvent = await stripe.events.retrieve(receivedEvent.id, requestOptions);
 	} catch (err) {
 		return new Response((err as Error).message, { status: 400 });
 	}
 
-	const subscription = retrievedEvent.data.object;
-	// @ts-ignore
+	const subscription = retrievedEvent.data.object as Stripe.Response<Stripe.Subscription>;
 	const customerId = subscription.customer;
 	// @ts-ignore
 	const productId = subscription.plan?.product;
@@ -104,7 +103,7 @@ export const POST: RequestHandler = async (event) => {
 							getDiscordWebhookBodyNewSubscriber({
 								email: user.email,
 								plan: prod.name.toUpperCase(),
-								stripeId: customerId,
+								stripeId: customerId.toString(),
 								supabaseId: user.id
 							})
 						)
