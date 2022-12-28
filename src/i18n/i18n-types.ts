@@ -427,6 +427,11 @@ type RootTranslation = {
 		 */
 		SwitchToDefaultServerButton: string
 		/**
+		 * J​o​i​n​ ​u​s​ ​o​n​ ​{​n​a​m​e​}
+		 * @param {unknown} name
+		 */
+		JoinUsOnTitle: RequiredParams<'name'>
+		/**
 		 * S​h​a​r​e
 		 */
 		ShareButton: string
@@ -891,6 +896,26 @@ type RootTranslation = {
 			 * T​h​a​t​ ​g​e​n​e​r​a​t​i​o​n​ ​w​a​s​ ​c​r​e​a​t​e​d​ ​u​s​i​n​g​ ​a​ ​s​c​h​e​d​u​l​e​r​ ​t​h​a​t​ ​i​s​n​'​t​ ​a​v​a​i​l​a​b​l​e​ ​o​n​ ​t​h​e​ ​f​r​e​e​ ​p​l​a​n​.
 			 */
 			ParagraphSchedulerGeneration: string
+		}
+		Tier: {
+			/**
+			 * F​r​e​e
+			 */
+			FreeTitle: string
+			/**
+			 * P​r​o
+			 */
+			ProTitle: string
+			Badge: {
+				/**
+				 * F​R​E​E
+				 */
+				Free: string
+				/**
+				 * P​R​O
+				 */
+				Pro: string
+			}
 		}
 	}
 	Account: {
@@ -1382,6 +1407,10 @@ export type TranslationFunctions = {
 		 */
 		SwitchToDefaultServerButton: () => LocalizedString
 		/**
+		 * Join us on {name}
+		 */
+		JoinUsOnTitle: (arg: { name: unknown }) => LocalizedString
+		/**
 		 * Share
 		 */
 		ShareButton: () => LocalizedString
@@ -1844,6 +1873,26 @@ export type TranslationFunctions = {
 			 * That generation was created using a scheduler that isn't available on the free plan.
 			 */
 			ParagraphSchedulerGeneration: () => LocalizedString
+		}
+		Tier: {
+			/**
+			 * Free
+			 */
+			FreeTitle: () => LocalizedString
+			/**
+			 * Pro
+			 */
+			ProTitle: () => LocalizedString
+			Badge: {
+				/**
+				 * FREE
+				 */
+				Free: () => LocalizedString
+				/**
+				 * PRO
+				 */
+				Pro: () => LocalizedString
+			}
 		}
 	}
 	Account: {

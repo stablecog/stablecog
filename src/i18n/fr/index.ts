@@ -145,6 +145,7 @@ const fr: Translation = {
 		JoinUsTitle: 'Rejoignez-nous',
 		GoHomeButton: "Retour à l'accueil",
 		SwitchToDefaultServerButton: 'Basculer vers le serveur par défaut',
+		JoinUsOnTitle: 'Join us on {name}',
 		ShareButton: 'Partager',
 		ShareOnButton: 'Partager sur {name}',
 		YesButton: 'Oui',
@@ -309,6 +310,14 @@ const fr: Translation = {
 				"That generation was created using a model that isn't available on the free plan.",
 			ParagraphSchedulerGeneration:
 				"That generation was created using a scheduler that isn't available on the free plan."
+		},
+		Tier: {
+			FreeTitle: 'Free',
+			ProTitle: 'Pro',
+			Badge: {
+				Free: 'FREE',
+				Pro: 'PRO'
+			}
 		}
 	},
 	Account: {

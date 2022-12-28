@@ -1,5 +1,6 @@
 <script lang="ts">
 	import IconSubscriptionTier from '$components/icons/IconSubscriptionTier.svelte';
+	import LL from '$i18n/i18n-svelte';
 	import type { IStripeSubscriptionTier } from '$ts/types/stripe';
 	import { quadOut } from 'svelte/easing';
 	import { scale } from 'svelte/transition';
@@ -9,6 +10,8 @@
 	export let outline: 'primary' | 'on-bg' | undefined = undefined;
 	export { classes as class };
 	let classes = '';
+
+	$: tierText = tier === 'PRO' ? $LL.Pro.Tier.Badge.Pro() : $LL.Pro.Tier.Badge.Free();
 </script>
 
 <div
@@ -43,7 +46,7 @@
 				: 'w-4 h-4 -ml-0.5'}
 		/>
 		<p class="font-semibold {size === 'xs' ? 'text-xxs' : size === 'md' ? 'text-sm' : 'text-xs'}">
-			{tier.toUpperCase()}
+			{tierText}
 		</p>
 	</div>
 </div>

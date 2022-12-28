@@ -9,6 +9,7 @@
 	import IconSubscriptionTier from '$components/icons/IconSubscriptionTier.svelte';
 	import MetaTag from '$components/MetaTag.svelte';
 	import PageWrapper from '$components/PageWrapper.svelte';
+	import TierBadge from '$components/TierBadge.svelte';
 	import LL, { locale } from '$i18n/i18n-svelte';
 	import { canonicalUrl } from '$ts/constants/main';
 	import { supabase } from '$ts/constants/supabase';
@@ -76,15 +77,7 @@
 						<p class="text-c-on-bg/60 text-sm px-0.5 -mt-1">
 							{$LL.Account.SubscriptionPlanTitle()}
 						</p>
-						<p
-							class="mt-2 font-bold flex items-center gap-1.5 px-3 py-1 rounded-lg border-2 {$page
-								.data.tier === 'PRO'
-								? 'bg-c-primary/15 border-c-primary/15 text-c-primary'
-								: 'bg-c-on-bg/15 border-c-on-bg/15 text-c-on-bg'}"
-						>
-							<IconSubscriptionTier type={$page.data.tier} class="w-5 h-5 -ml-1" />
-							<span>{$page.data.tier}</span>
-						</p>
+						<TierBadge class="mt-1.5" size="md" tier={$page.data.tier} />
 					</div>
 					<Button
 						class="w-full md:w-auto"

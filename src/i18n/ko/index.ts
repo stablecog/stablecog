@@ -145,6 +145,7 @@ const ko: Translation = {
 		JoinUsTitle: '함께 해요!',
 		GoHomeButton: '홈페이지로 가기',
 		SwitchToDefaultServerButton: '기본 설정된 서버를 사용하기',
+		JoinUsOnTitle: 'Join us on {name}',
 		ShareButton: '공유하기',
 		ShareOnButton: '{name}에 공유하기',
 		YesButton: '좋아요',
@@ -308,6 +309,14 @@ const ko: Translation = {
 				"That generation was created using a model that isn't available on the free plan.",
 			ParagraphSchedulerGeneration:
 				"That generation was created using a scheduler that isn't available on the free plan."
+		},
+		Tier: {
+			FreeTitle: 'Free',
+			ProTitle: 'Pro',
+			Badge: {
+				Free: 'FREE',
+				Pro: 'PRO'
+			}
 		}
 	},
 	Account: {

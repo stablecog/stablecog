@@ -142,6 +142,7 @@ const zhHans: Translation = {
 		JoinUsTitle: '加入我们',
 		GoHomeButton: '返回首页',
 		SwitchToDefaultServerButton: '切换至默认服务器',
+		JoinUsOnTitle: 'Join us on {name}',
 		ShareButton: '分享',
 		ShareOnButton: '在 {name} 上分享',
 		YesButton: '是',
@@ -301,6 +302,14 @@ const zhHans: Translation = {
 				"That generation was created using a model that isn't available on the free plan.",
 			ParagraphSchedulerGeneration:
 				"That generation was created using a scheduler that isn't available on the free plan."
+		},
+		Tier: {
+			FreeTitle: 'Free',
+			ProTitle: 'Pro',
+			Badge: {
+				Free: 'FREE',
+				Pro: 'PRO'
+			}
 		}
 	},
 	Account: {

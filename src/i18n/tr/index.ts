@@ -145,6 +145,7 @@ const tr: Translation = {
 		JoinUsTitle: 'Bize Katıl',
 		GoHomeButton: 'Eve Dön',
 		SwitchToDefaultServerButton: 'Varsayılan Sunucuya Geç',
+		JoinUsOnTitle: 'Join us on {name}',
 		ShareButton: 'Paylaş',
 		ShareOnButton: 'Şurada Paylaş: {name}',
 		YesButton: 'Evet',
@@ -305,6 +306,14 @@ const tr: Translation = {
 				"That generation was created using a model that isn't available on the free plan.",
 			ParagraphSchedulerGeneration:
 				"That generation was created using a scheduler that isn't available on the free plan."
+		},
+		Tier: {
+			FreeTitle: 'Free',
+			ProTitle: 'Pro',
+			Badge: {
+				Free: 'FREE',
+				Pro: 'PRO'
+			}
 		}
 	},
 	Account: {

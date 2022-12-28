@@ -144,6 +144,7 @@ const hi: Translation = {
 		JoinUsTitle: 'हमसे जुड़े',
 		GoHomeButton: 'होम जाए',
 		SwitchToDefaultServerButton: 'डिफॉल्ट सर्वर पर वापसी करे',
+		JoinUsOnTitle: 'Join us on {name}',
 		ShareButton: 'शेयर',
 		ShareOnButton: '{name} पर शेयर करे',
 		YesButton: 'हां',
@@ -307,6 +308,14 @@ const hi: Translation = {
 				"That generation was created using a model that isn't available on the free plan.",
 			ParagraphSchedulerGeneration:
 				"That generation was created using a scheduler that isn't available on the free plan."
+		},
+		Tier: {
+			FreeTitle: 'Free',
+			ProTitle: 'Pro',
+			Badge: {
+				Free: 'FREE',
+				Pro: 'PRO'
+			}
 		}
 	},
 	Account: {

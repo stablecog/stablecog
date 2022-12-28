@@ -145,6 +145,7 @@ const en: BaseTranslation = {
 		JoinUsTitle: 'Join Us',
 		GoHomeButton: 'Go Home',
 		SwitchToDefaultServerButton: 'Switch to Default Server',
+		JoinUsOnTitle: 'Join us on {name}',
 		ShareButton: 'Share',
 		ShareOnButton: 'Share on {name}',
 		YesButton: 'Yes',
@@ -308,6 +309,14 @@ const en: BaseTranslation = {
 				"That generation was created using a model that isn't available on the free plan.",
 			ParagraphSchedulerGeneration:
 				"That generation was created using a scheduler that isn't available on the free plan."
+		},
+		Tier: {
+			FreeTitle: 'Free',
+			ProTitle: 'Pro',
+			Badge: {
+				Free: 'FREE',
+				Pro: 'PRO'
+			}
 		}
 	},
 	Account: {
