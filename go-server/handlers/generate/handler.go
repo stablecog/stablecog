@@ -91,16 +91,6 @@ func Handler(c *fiber.Ctx) error {
 		}
 	}
 
-	var duration time.Duration
-	var rateLimitedResponse SGenerateResponse
-	if subscriptionTier == "FREE" {
-		duration = minDurationFree
-		rateLimitedResponse = SGenerateResponse{Error: fmt.Sprintf("You can only start a generation every %d seconds on the free plan :(", duration/time.Second)}
-	} else {
-		duration = minDuration
-		rateLimitedResponse = SGenerateResponse{Error: fmt.Sprintf("You can only start a generation every %d seconds :(", duration/time.Second)}
-	}
-
 	// Generation setting checks for the free tier
 	if subscriptionTier == "FREE" {
 		if shared.Contains(shared.AvailableModelIdsFree, req.ModelId) == false {
@@ -123,6 +113,16 @@ func Handler(c *fiber.Ctx) error {
 				SGenerateResponse{Error: "That inference steps setting is not available on the free plan :("},
 			)
 		}
+	}
+
+	var duration time.Duration
+	var rateLimitedResponse SGenerateResponse
+	if subscriptionTier == "FREE" {
+		duration = minDurationFree
+		rateLimitedResponse = SGenerateResponse{Error: fmt.Sprintf("You can only start a generation every %d seconds on the free plan :(", duration/time.Second)}
+	} else {
+		duration = minDuration
+		rateLimitedResponse = SGenerateResponse{Error: fmt.Sprintf("You can only start a generation every %d seconds :(", duration/time.Second)}
 	}
 
 	isRateLimited := shared.IsRateLimited(c, duration)
