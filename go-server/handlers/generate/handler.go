@@ -125,7 +125,7 @@ func Handler(c *fiber.Ctx) error {
 		rateLimitedResponse = SGenerateResponse{Error: fmt.Sprintf("You can only start a generation every %d seconds :(", duration/time.Second)}
 	}
 
-	isRateLimited := shared.IsRateLimited(c, duration)
+	isRateLimited := shared.IsRateLimited("goa", duration, c)
 	if isRateLimited {
 		log.Printf("-- Generation - Rate limited!: %s --", countryCode)
 		return c.Status(http.StatusTooManyRequests).JSON(rateLimitedResponse)

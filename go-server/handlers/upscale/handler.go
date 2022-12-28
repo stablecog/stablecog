@@ -59,7 +59,7 @@ func Handler(c *fiber.Ctx) error {
 		)
 	}
 
-	isRateLimited := shared.IsRateLimited(c, minDuration)
+	isRateLimited := shared.IsRateLimited("goa", minDuration, c)
 	if isRateLimited {
 		log.Printf("-- Upscale - Rate limited!: %s --", countryCode)
 		return c.Status(http.StatusTooManyRequests).JSON(

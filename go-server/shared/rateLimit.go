@@ -8,7 +8,7 @@ import (
 	"github.com/gofiber/fiber/v2"
 )
 
-func IsRateLimited(c *fiber.Ctx, duration time.Duration) bool {
+func IsRateLimited(prefix string, duration time.Duration, c *fiber.Ctx) bool {
 	ip := c.Get("CF-Connecting-IP")
 	if ip == "" {
 		ip = c.Get("X-Forwarded-For")
@@ -16,7 +16,7 @@ func IsRateLimited(c *fiber.Ctx, duration time.Duration) bool {
 	if ip == "" {
 		ip = c.IP()
 	}
-	ipKey := fmt.Sprintf("ip:%s", ip)
+	ipKey := fmt.Sprintf("rl:%s:ip:%s", prefix, ip)
 	val, _ := Redis.Get(ctx, ipKey).Result()
 	if val == "1" {
 		return true
