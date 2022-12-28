@@ -19,7 +19,8 @@ export const handle: Handle = async ({ event, resolve }) => {
 	let countryCode = event.request.headers.get('x-vercel-ip-country');
 	event.locals.countryCode = countryCode;
 	// protect requests to all routes that start with /admin
-	if (event.url.pathname.startsWith('/admin') && event.url.pathname !== '/admin/sign-in') {
+	if (event.url.pathname.startsWith('/admin')) {
+		const redirectRoute = `/sign-in?redirect_to=${encodeURIComponent(event.url.pathname)}`;
 		try {
 			const { session, supabaseClient } = await getSupabase(event);
 			const userId = session?.user?.id;
@@ -27,12 +28,15 @@ export const handle: Handle = async ({ event, resolve }) => {
 			const admins = data?.map((a) => a.id);
 			if (!data || error || !admins || !admins.includes(userId)) {
 				console.log('Admin access error:', error, admins, userId);
-				return new Response(null, { status: 303, headers: { location: '/admin/sign-in' } });
+				return new Response(null, {
+					status: 303,
+					headers: { location: redirectRoute }
+				});
 			}
 			console.log('Admin user access:', userId);
 		} catch (error) {
 			console.log('Admin access error:', error);
-			return new Response(null, { status: 303, headers: { location: '/admin/sign-in' } });
+			return new Response(null, { status: 303, headers: { location: redirectRoute } });
 		}
 	}
 	return resolve(event);
