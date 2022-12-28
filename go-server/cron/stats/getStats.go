@@ -31,6 +31,7 @@ func GetAndSetStats() {
 	rpcMap["upscale_duration_ms_total_estimate_with_constant"] = &Stats.UpscaleDurationMsTotalEstimate
 	rpcMap["generation_count"] = &Stats.GenerationCount
 	rpcMap["upscale_count"] = &Stats.UpscaleCount
+
 	wg.Add(len(rpcMap))
 	for rpcName, rpcValue := range rpcMap {
 		go func(rpcName string, rpcValue *int64) {
