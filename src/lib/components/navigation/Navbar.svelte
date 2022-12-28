@@ -67,7 +67,7 @@
 			<div class="flex items-center justify-center gap-2">
 				<IconStar class="w-7 h-7 flex-shrink-0" />
 				<p class="flex-shrink min-w-0 overflow-hidden overflow-ellipsis">
-					Become a pro and unlock all features of Stablecog!
+					Become a pro and unlock all features!
 				</p>
 			</div>
 		</Banner>
