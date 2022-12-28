@@ -20,6 +20,7 @@ var discordWebhookUrl = shared.GetEnv("DISCORD_WEBHOOK_URL", "")
 const unhealthyNotificationInterval = 5 * time.Minute
 const maxGenerationDuration = 2 * time.Minute
 const healthyNotificationInterval = 1 * time.Hour
+const rTTL = time.Hour * 2
 
 var groupKey = "discord_notification"
 
@@ -66,14 +67,13 @@ func SendDiscordNotificationIfNeeded(
 		log.Printf("Error sending webhook: %s", postErr)
 	}
 	lastNotificationTime = time.Now()
-	tll := time.Second * 120
 	if status == "healthy" {
-		err := shared.Redis.Set(rctx, lastHealthyKey, lastNotificationTime.Format(time.RFC3339), tll).Err()
+		err := shared.Redis.Set(rctx, lastHealthyKey, lastNotificationTime.Format(time.RFC3339), rTTL).Err()
 		if err != nil {
 			log.Printf("Redis - Error setting last healthy key: %v", err)
 		}
 	} else {
-		err := shared.Redis.Set(rctx, lastUnhealthyKey, lastNotificationTime.Format(time.RFC3339), tll).Err()
+		err := shared.Redis.Set(rctx, lastUnhealthyKey, lastNotificationTime.Format(time.RFC3339), rTTL).Err()
 		if err != nil {
 			log.Printf("Redis - Error setting last unhealthy key: %v", err)
 		}
