@@ -233,7 +233,12 @@ const en: BaseTranslation = {
 		AdminTab: 'Admin',
 		ServersTab: 'Servers',
 		AdminGalleryTab: 'Gallery',
-		UsersTab: 'Users'
+		UsersTab: 'Users',
+		Gallery: {
+			TotalTitle: 'Total',
+			ApprovedTitle: 'Approved',
+			DeletedTitle: 'Deleted'
+		}
 	},
 	SignUp: {
 		PageTitle: 'Sign Up',

@@ -684,6 +684,20 @@ type RootTranslation = {
 		 * U​s​e​r​s
 		 */
 		UsersTab: string
+		Gallery: {
+			/**
+			 * T​o​t​a​l
+			 */
+			TotalTitle: string
+			/**
+			 * A​p​p​r​o​v​e​d
+			 */
+			ApprovedTitle: string
+			/**
+			 * D​e​l​e​t​e​d
+			 */
+			DeletedTitle: string
+		}
 	}
 	SignUp: {
 		/**
@@ -1662,6 +1676,20 @@ export type TranslationFunctions = {
 		 * Users
 		 */
 		UsersTab: () => LocalizedString
+		Gallery: {
+			/**
+			 * Total
+			 */
+			TotalTitle: () => LocalizedString
+			/**
+			 * Approved
+			 */
+			ApprovedTitle: () => LocalizedString
+			/**
+			 * Deleted
+			 */
+			DeletedTitle: () => LocalizedString
+		}
 	}
 	SignUp: {
 		/**

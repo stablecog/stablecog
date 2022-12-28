@@ -112,24 +112,28 @@
 
 <div class="w-full px-5 pt-3 pb-1.5 sticky z-50 top-20 flex items-center justify-center">
 	<div
-		class="px-6 py-3 rounded-xl shadow-navbar transition ring-2 flex items-center justify-center flex-wrap {scrollTop >
-		0
-			? 'bg-c-bg shadow-c-shadow/[var(--o-shadow-strongest)] ring-c-bg-secondary'
-			: 'bg-c-bg/0 shadow-c-shadow/0 ring-transparent'} gap-4 md:gap-8"
+		class="px-1 py-3 transition flex items-center justify-center flex-wrap 
+		gap-4 md:gap-12 bg-c-bg ring-2 ring-c-bg-secondary rounded-2xl shadow-lg shadow-c-shadow/[var(--o-shadow-normal)]"
 	>
 		{#if totalCount !== undefined && totalCount !== null}
-			<p class="font-bold">
-				<span class="text-c-on-bg/60 font-normal">Total:</span>
-				{totalCount - (approved + deleted)}
-			</p>
-			<p class="font-bold">
-				<span class="text-c-on-bg/60 font-normal">Approved:</span>
-				<span class="text-c-success">{approved}</span>
-			</p>
-			<p class="font-bold">
-				<span class="text-c-on-bg/60 font-normal">Deleted:</span>
-				<span class="text-c-danger">{deleted}</span>
-			</p>
+			<div class="flex flex-col px-4">
+				<p class="text-xs font-medium text-c-on-bg/50">
+					{$LL.Admin.Gallery.TotalTitle()}
+				</p>
+				<p class="font-bold text-xl text-c-on-bg mt-0.5">{totalCount - (approved + deleted)}</p>
+			</div>
+			<div class="flex flex-col px-4">
+				<p class="text-xs font-medium text-c-on-bg/50">
+					{$LL.Admin.Gallery.TotalTitle()}
+				</p>
+				<p class="font-bold text-xl text-c-success mt-0.5">{approved}</p>
+			</div>
+			<div class="flex flex-col px-4">
+				<p class="text-xs font-medium text-c-on-bg/50">
+					{$LL.Admin.Gallery.TotalTitle()}
+				</p>
+				<p class="font-bold text-xl text-c-danger mt-0.5">{deleted}</p>
+			</div>
 		{/if}
 	</div>
 </div>
