@@ -56,6 +56,9 @@ func main() {
 	app.Get("/stats", func(c *fiber.Ctx) error {
 		return c.JSON(cronStats.Stats)
 	})
+	app.Get("/ping", func(c *fiber.Ctx) error {
+		return c.SendString("pong")
+	})
 
 	app.Get("/", func(c *fiber.Ctx) error {
 		return c.SendString("API is up and running")
