@@ -47,7 +47,7 @@ export const POST: RequestHandler = async (event) => {
 		return new Response((err as Error).message, { status: 400 });
 	}
 
-	const subscription = retrievedEvent.data.object as Stripe.Response<Stripe.Subscription>;
+	const subscription = retrievedEvent.data.object as Stripe.Subscription;
 	const customerId = subscription.customer;
 	// @ts-ignore
 	const productId = subscription.plan?.product;
@@ -65,7 +65,6 @@ export const POST: RequestHandler = async (event) => {
 			break;
 		case 'customer.subscription.updated':
 			const prod = await stripe.products.retrieve(productId);
-			// @ts-ignore
 			if (subscription.status === 'incomplete_expired') {
 				await supabaseAdmin
 					.from('user')
