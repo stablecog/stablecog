@@ -102,14 +102,17 @@
 			<NavigationTabBar />
 		</div>
 		<div class="flex flex-1 flex-wrap items-center justify-end relative">
-			<!-- Account -->
-			<div class="flex items-center justify-end px-2">
+			<div class="flex items-center justify-end px-3">
+				{#if routesWithHealthCheck.includes($page.url.pathname)}
+					<HealthIndicator class="mx-2.5" />
+				{/if}
+				<!-- Account -->
 				{#if $page.data.session?.user.email}
 					<div
 						use:clickoutside={{ callback: closeAccountMenu }}
 						class="flex flex-col items-end relative"
 					>
-						<div class="p-3 -mr-3">
+						<div class="p-2.5 -mx-3.5">
 							<IconButton
 								class="shadow-lg rounded-full shadow-c-shadow/[var(--o-shadow-strong)]"
 								noPadding
@@ -126,31 +129,19 @@
 								</p>
 							</IconButton>
 						</div>
-						<div
-							class="relative {routesWithHealthCheck.includes($page.url.pathname)
-								? '-mr-22'
-								: '-mr-13'} md:mr-0"
-						>
+						<div class="relative -mr-14 md:-mr-1.5">
 							{#if isAccountMenuOpen}
 								<AccountMenu {closeAccountMenu} />
 							{/if}
 						</div>
 					</div>
 				{:else if $page.url.pathname !== '/sign-up'}
-					<Button size="xs" href={`/sign-up`}>
+					<Button class="-mx-1" size="xs" href={`/sign-up`}>
 						{$LL.SignUp.SignUpButton()}
 					</Button>
 				{/if}
 			</div>
-			{#if routesWithHealthCheck.includes($page.url.pathname)}
-				<HealthIndicator />
-			{/if}
-			<IconButton
-				class="p-3 -ml-3.5 -mr-3 hidden md:block"
-				href="/discord"
-				target="_blank"
-				name="Discord"
-			>
+			<IconButton class="p-3 -mx-3 hidden md:block" href="/discord" target="_blank" name="Discord">
 				<IconSocial
 					type="discord"
 					class="w-8 h-8 relative transition transform {!$isTouchscreen
@@ -158,7 +149,7 @@
 						: 'text-c-on-bg'}"
 				/>
 			</IconButton>
-			<div use:clickoutside={{ callback: closeSettings }} class="flex flex-col items-end -ml-3.5">
+			<div use:clickoutside={{ callback: closeSettings }} class="flex flex-col items-end -ml-3">
 				<IconButton class="p-3" onClick={toggleSettings} name="Settings">
 					<IconSettings
 						class="w-8 h-8 relative transition transform {isSettingsOpen
