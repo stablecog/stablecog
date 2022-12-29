@@ -19,6 +19,7 @@
 			transition {show ? 'focus:translate-x-0 translate-x-0 opacity-100' : 'translate-x-full opacity-0'}"
 		disabled={!show || disabled}
 		type="button"
+		aria-label="Clear"
 	>
 		<div
 			class="w-full h-full absolute left-0 top-0 pointer-events-none {type === 'sm'
