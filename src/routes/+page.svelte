@@ -270,6 +270,12 @@
 		}
 	}
 
+	function onDelete(event: CustomEvent<{ generation: TGenerationUI }>) {
+		const { generation } = event.detail;
+		console.log('Deleted', generation);
+		status = 'idle';
+	}
+
 	let isCheckComplete = false;
 
 	onMount(() => {
@@ -375,5 +381,10 @@
 </div>
 
 {#if $activeGeneration}
-	<GenerationFullScreen bind:upscaleStatus on:upscale={onUpscale} generation={$activeGeneration} />
+	<GenerationFullScreen
+		bind:upscaleStatus
+		on:delete={onDelete}
+		on:upscale={onUpscale}
+		generation={$activeGeneration}
+	/>
 {/if}

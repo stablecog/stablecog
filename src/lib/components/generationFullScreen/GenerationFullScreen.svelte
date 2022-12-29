@@ -652,35 +652,33 @@
 										</SubtleButton>
 									</div>
 								{/if}
-								{#if $page.url.pathname === '/history'}
-									<div
-										use:clickoutside={{
-											callback: () =>
-												deleteStatus === 'should-confirm' ? (deleteStatus = 'idle') : null
-										}}
+								<div
+									use:clickoutside={{
+										callback: () =>
+											deleteStatus === 'should-confirm' ? (deleteStatus = 'idle') : null
+									}}
+								>
+									<SubtleButton
+										disabled={deleteStatus === 'loading'}
+										onClick={() => deleteGeneration(generation.id)}
 									>
-										<SubtleButton
-											disabled={deleteStatus === 'loading'}
-											onClick={() => deleteGeneration(generation.id)}
-										>
-											<Morpher morphed={deleteStatus === 'should-confirm'}>
-												<div
-													slot="item-0"
-													class="flex items-center justify-center gap-1.5 text-c-danger"
-												>
-													<IconTrashcan class="w-5 h-5 -ml-0.5" />
-													<p>{$LL.Shared.DeleteButton()}</p>
-												</div>
-												<div
-													slot="item-1"
-													class="flex items-center justify-center gap-1.5 text-c-danger"
-												>
-													<IconTrashcanFilledOpen class="w-5 h-5 -ml-0.5 scale-110" />
-												</div>
-											</Morpher>
-										</SubtleButton>
-									</div>
-								{/if}
+										<Morpher morphed={deleteStatus === 'should-confirm'}>
+											<div
+												slot="item-0"
+												class="flex items-center justify-center gap-1.5 text-c-danger"
+											>
+												<IconTrashcan class="w-5 h-5 -ml-0.5" />
+												<p>{$LL.Shared.DeleteButton()}</p>
+											</div>
+											<div
+												slot="item-1"
+												class="flex items-center justify-center gap-1.5 text-c-danger"
+											>
+												<IconTrashcanFilledOpen class="w-5 h-5 -ml-0.5 scale-110" />
+											</div>
+										</Morpher>
+									</SubtleButton>
+								</div>
 							</div>
 						</div>
 						<!-- Divider -->
