@@ -68,12 +68,19 @@ export const POST: RequestHandler = async (event) => {
 		case 'customer.subscription.updated':
 			const prod = await stripe.products.retrieve(productId);
 			if (subscription.status === 'incomplete_expired') {
-				await supabaseAdmin
-					.from('user')
-					.update({
-						subscription_tier: 'FREE'
-					})
-					.match({ stripe_customer_id: customerId });
+				const customer = await stripe.customers.retrieve(customerId as string, {
+					expand: ['subscriptions']
+				});
+				// @ts-ignore
+				const subscription: Stripe.Subscription[] = customer.subscriptions.data;
+				if (!subscription || subscription.length === 0) {
+					await supabaseAdmin
+						.from('user')
+						.update({
+							subscription_tier: 'FREE'
+						})
+						.match({ stripe_customer_id: customerId });
+				}
 			} else {
 				const userRes = await supabaseAdmin
 					.from('user')
