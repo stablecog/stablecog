@@ -41,10 +41,6 @@
 		duration: 500,
 		easing: quadOut
 	});
-	let generationAndUpscaleTotalDurationMs = tweened(0, {
-		duration: 500,
-		easing: quadOut
-	});
 
 	let lastPulled = 0;
 	let maxPullInterval = 1000 * 5;
@@ -118,8 +114,14 @@
 									type: 'generation'
 								};
 								generations = [...generations];
+								if (newData.status === 'succeeded') {
+									generationTotalCount.set($generationTotalCount + 1);
+								}
 							} else {
 								generations = [{ ...newData, type: 'generation' }, ...generations];
+								if (newData.status === 'succeeded') {
+									generationTotalCount.set($generationTotalCount + 1);
+								}
 							}
 							if (Date.now() - lastPulled > maxPullInterval) {
 								lastPulled = Date.now();
@@ -144,8 +146,14 @@
 								const index = upscales.findIndex((i) => i.id === newData.id);
 								upscales[index] = { ...newData, type: 'upscale' };
 								upscales = [...upscales];
+								if (newData.status === 'succeeded') {
+									upscaleTotalCount.set($upscaleTotalCount + 1);
+								}
 							} else {
 								upscales = [{ ...newData, type: 'upscale' }, ...upscales];
+								if (newData.status === 'succeeded') {
+									upscaleTotalCount.set($upscaleTotalCount + 1);
+								}
 							}
 							if (Date.now() - lastPulled > maxPullInterval) {
 								lastPulled = Date.now();
@@ -173,12 +181,7 @@
 		try {
 			const res = await fetch(`${apiBase}/stats`);
 			const resJson: IStatsRes = await res.json();
-			const {
-				generation_duration_ms_total_estimate_with_constant: gDuration,
-				generation_count: gCount,
-				upscale_duration_ms_total_estimate_with_constant: uDuration,
-				upscale_count: uCount
-			} = resJson;
+			const { generation_count: gCount, upscale_count: uCount } = resJson;
 			if (gCount > $generationTotalCount) {
 				generationTotalCount = tweened($generationTotalCount, {
 					duration: calculateAnimationDuration($generationTotalCount, gCount),
@@ -194,15 +197,6 @@
 				});
 				upscaleTotalCount.set(uCount);
 				console.log('upscaleTotalCount:', uCount);
-			}
-			const durationTotal = gDuration + uDuration;
-			if (durationTotal > $generationAndUpscaleTotalDurationMs) {
-				generationAndUpscaleTotalDurationMs = tweened($generationAndUpscaleTotalDurationMs, {
-					duration: calculateAnimationDuration($generationAndUpscaleTotalDurationMs, durationTotal),
-					easing: quadOut
-				});
-				generationAndUpscaleTotalDurationMs.set(durationTotal);
-				console.log('totalDurationMs:', durationTotal);
 			}
 		} catch (error) {
 			console.log('Error getting totals:', error);
@@ -259,14 +253,6 @@
 					<h1 class="text-c-on-bg/50 text-sm">{$LL.Live.GenerationsTitle()}</h1>
 					<p class="font-bold text-4xl">
 						{Math.floor($generationTotalCount).toLocaleString($locale)}
-					</p>
-				</div>
-				<div
-					class="w-full order-last lg:order-none lg:w-64 max-w-full flex flex-col gap-1.5 text-center"
-				>
-					<h1 class="text-c-on-bg/50 text-sm">{$LL.Live.TotalDurationTitle()}</h1>
-					<p class="font-bold text-4xl">
-						{Math.round($generationAndUpscaleTotalDurationMs / 1000).toLocaleString($locale)}
 					</p>
 				</div>
 				<div class="w-full lg:w-64 max-w-full flex flex-col gap-1.5 text-center lg:text-left">
