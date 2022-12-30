@@ -27,7 +27,6 @@ func main() {
 	bimg.VipsCacheSetMax(0)
 	defer bimg.Shutdown()
 
-	shared.SetupSeed()
 	shared.SetupRedis()
 
 	app := fiber.New()
@@ -44,7 +43,7 @@ func main() {
 	}
 	cron.AddFunc("@every 15s", cronHealth.CheckHealth)
 	cron.AddFunc("@every 15s", cronHealth.SetDefaultServerHealths)
-	cron.AddFunc("@every 15s", cronStats.GetAndSetStats)
+	cron.AddFunc("@every 10s", cronStats.GetAndSetStats)
 	cron.Start()
 
 	go cronHealth.CheckHealth()

@@ -12,8 +12,6 @@ const availableProReasons = [
 	'model',
 	'scheduler',
 	'upscale',
-	'width_generation',
-	'height_generation',
 	'dimensions_generation',
 	'steps_generation',
 	'model_generation',

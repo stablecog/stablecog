@@ -16,7 +16,7 @@ import (
 var green = color.New(color.FgHiGreen).SprintFunc()
 var Stats SStats
 
-const statsTTL = 15 * time.Second
+const statsTTL = 10 * time.Second
 
 var groupKey = "stats"
 
@@ -27,8 +27,6 @@ func GetAndSetStats() {
 	rctx := shared.Redis.Context()
 	var wg sync.WaitGroup
 	rpcMap := make(map[string]*int64)
-	rpcMap["generation_duration_ms_total_estimate_with_constant"] = &Stats.GenerationDurationMsTotalEstimate
-	rpcMap["upscale_duration_ms_total_estimate_with_constant"] = &Stats.UpscaleDurationMsTotalEstimate
 	rpcMap["generation_count"] = &Stats.GenerationCount
 	rpcMap["upscale_count"] = &Stats.UpscaleCount
 
@@ -85,8 +83,6 @@ func GetAndSetStat(
 }
 
 type SStats struct {
-	GenerationDurationMsTotalEstimate int64 `json:"generation_duration_ms_total_estimate_with_constant"`
-	UpscaleDurationMsTotalEstimate    int64 `json:"upscale_duration_ms_total_estimate_with_constant"`
-	GenerationCount                   int64 `json:"generation_count"`
-	UpscaleCount                      int64 `json:"upscale_count"`
+	GenerationCount int64 `json:"generation_count"`
+	UpscaleCount    int64 `json:"upscale_count"`
 }

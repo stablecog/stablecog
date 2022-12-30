@@ -638,6 +638,10 @@ type RootTranslation = {
 		 * I​n​v​a​l​i​d​ ​c​r​e​d​e​n​t​i​a​l​s​.
 		 */
 		InvalidCredentials: string
+		/**
+		 * I​n​v​a​l​i​d​ ​c​o​d​e​.
+		 */
+		InvalidCode: string
 	}
 	Admin: {
 		/**
@@ -712,6 +716,10 @@ type RootTranslation = {
 		 * C​o​n​f​i​r​m
 		 */
 		PageTitleConfirm: string
+		/**
+		 * C​h​e​c​k​ ​Y​o​u​r​ ​E​m​a​i​l
+		 */
+		PageTitleConfirmAlt: string
 		/**
 		 * W​e​'​v​e​ ​e​m​a​i​l​e​d​ ​y​o​u​ ​a​ ​6​-​d​i​g​i​t​ ​c​o​d​e​.​ ​E​n​t​e​r​ ​i​t​ ​b​e​l​o​w​ ​t​o​ ​c​o​n​f​i​r​m​ ​y​o​u​r​ ​a​c​c​o​u​n​t​.
 		 */
@@ -903,7 +911,7 @@ type RootTranslation = {
 			 */
 			ParagraphInferenceStepsGeneration: string
 			/**
-			 * T​h​a​t​ ​g​e​n​e​r​a​t​i​o​n​ ​w​a​s​ ​c​r​e​a​t​e​d​ ​u​s​i​n​g​ ​a​ ​m​o​d​e​l​ ​t​h​a​t​ ​i​s​n​'​t​ ​a​v​a​i​l​a​b​l​e​ ​o​n​ ​t​h​e​ ​f​r​e​e​ ​p​l​a​n​.
+			 * T​h​a​t​ ​g​e​n​e​r​a​t​i​o​n​ ​w​a​s​ ​c​r​e​a​t​e​d​ ​u​s​i​n​g​ ​a​n​ ​A​I​ ​m​o​d​e​l​ ​t​h​a​t​ ​i​s​n​'​t​ ​a​v​a​i​l​a​b​l​e​ ​o​n​ ​t​h​e​ ​f​r​e​e​ ​p​l​a​n​.
 			 */
 			ParagraphModelGeneration: string
 			/**
@@ -912,14 +920,16 @@ type RootTranslation = {
 			ParagraphSchedulerGeneration: string
 		}
 		Tier: {
-			/**
-			 * F​r​e​e
-			 */
-			FreeTitle: string
-			/**
-			 * P​r​o
-			 */
-			ProTitle: string
+			Title: {
+				/**
+				 * F​r​e​e
+				 */
+				Free: string
+				/**
+				 * P​r​o
+				 */
+				Pro: string
+			}
 			Badge: {
 				/**
 				 * F​R​E​E
@@ -971,6 +981,10 @@ type RootTranslation = {
 		 * C​o​n​f​i​r​m
 		 */
 		PageTitleConfirmCode: string
+		/**
+		 * C​h​e​c​k​ ​Y​o​u​r​ ​E​m​a​i​l
+		 */
+		PageTitleConfirmCodeAlt: string
 		/**
 		 * W​e​'​v​e​ ​e​m​a​i​l​e​d​ ​y​o​u​ ​a​ ​6​-​d​i​g​i​t​ ​c​o​d​e​.​ ​E​n​t​e​r​ ​i​t​ ​b​e​l​o​w​ ​t​o​ ​c​o​n​t​i​n​u​e​.
 		 */
@@ -1630,6 +1644,10 @@ export type TranslationFunctions = {
 		 * Invalid credentials.
 		 */
 		InvalidCredentials: () => LocalizedString
+		/**
+		 * Invalid code.
+		 */
+		InvalidCode: () => LocalizedString
 	}
 	Admin: {
 		/**
@@ -1704,6 +1722,10 @@ export type TranslationFunctions = {
 		 * Confirm
 		 */
 		PageTitleConfirm: () => LocalizedString
+		/**
+		 * Check Your Email
+		 */
+		PageTitleConfirmAlt: () => LocalizedString
 		/**
 		 * We've emailed you a 6-digit code. Enter it below to confirm your account.
 		 */
@@ -1894,7 +1916,7 @@ export type TranslationFunctions = {
 			 */
 			ParagraphInferenceStepsGeneration: () => LocalizedString
 			/**
-			 * That generation was created using a model that isn't available on the free plan.
+			 * That generation was created using an AI model that isn't available on the free plan.
 			 */
 			ParagraphModelGeneration: () => LocalizedString
 			/**
@@ -1903,14 +1925,16 @@ export type TranslationFunctions = {
 			ParagraphSchedulerGeneration: () => LocalizedString
 		}
 		Tier: {
-			/**
-			 * Free
-			 */
-			FreeTitle: () => LocalizedString
-			/**
-			 * Pro
-			 */
-			ProTitle: () => LocalizedString
+			Title: {
+				/**
+				 * Free
+				 */
+				Free: () => LocalizedString
+				/**
+				 * Pro
+				 */
+				Pro: () => LocalizedString
+			}
 			Badge: {
 				/**
 				 * FREE
@@ -1962,6 +1986,10 @@ export type TranslationFunctions = {
 		 * Confirm
 		 */
 		PageTitleConfirmCode: () => LocalizedString
+		/**
+		 * Check Your Email
+		 */
+		PageTitleConfirmCodeAlt: () => LocalizedString
 		/**
 		 * We've emailed you a 6-digit code. Enter it below to continue.
 		 */

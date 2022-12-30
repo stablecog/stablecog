@@ -73,7 +73,7 @@
 
 	afterNavigate(() => {
 		const props = {
-			'SC - Page': $page.url.pathname,
+			'SC - Page': `${$page.url.pathname}${$page.url.search}`,
 			'SC - Locale': $locale,
 			'SC - Advanced Mode': $advancedMode,
 			'SC - Plan': $page.data.tier

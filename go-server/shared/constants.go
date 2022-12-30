@@ -62,12 +62,3 @@ var AvailableModelIdsFree = []string{
 	"8acfe4c8-751d-4aa6-8c3c-844e3ef478e0",
 	"48a7031d-43b6-4a23-9f8c-8020eb6862e4",
 }
-
-func Contains[T comparable](slice []T, value T) bool {
-	for _, v := range slice {
-		if v == value {
-			return true
-		}
-	}
-	return false
-}

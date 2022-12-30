@@ -220,7 +220,8 @@ const en: BaseTranslation = {
 		InvalidEmail: 'Enter a valid email.',
 		PasswordTooShort: 'Password must be at least 8 characters.',
 		SomethingWentWrongTryAgain: 'Something went wrong, try again.',
-		InvalidCredentials: 'Invalid credentials.'
+		InvalidCredentials: 'Invalid credentials.',
+		InvalidCode: 'Invalid code.'
 	},
 	Admin: {
 		AdminPanelTitle: 'Admin',
@@ -244,6 +245,7 @@ const en: BaseTranslation = {
 		PageTitle: 'Sign Up',
 		PageParagraph: 'Join Stablecog to become a pro member and unlock its full potential.',
 		PageTitleConfirm: 'Confirm',
+		PageTitleConfirmAlt: 'Check Your Email',
 		PageParagraphConfirm:
 			"We've emailed you a 6-digit code. Enter it below to confirm your account.",
 		SignUpButton: 'Sign Up',
@@ -311,13 +313,15 @@ const en: BaseTranslation = {
 			ParagraphInferenceStepsGeneration:
 				"That generation was created using an inference steps setting that isn't available on the free plan.",
 			ParagraphModelGeneration:
-				"That generation was created using a model that isn't available on the free plan.",
+				"That generation was created using an AI model that isn't available on the free plan.",
 			ParagraphSchedulerGeneration:
 				"That generation was created using a scheduler that isn't available on the free plan."
 		},
 		Tier: {
-			FreeTitle: 'Free',
-			ProTitle: 'Pro',
+			Title: {
+				Free: 'Free',
+				Pro: 'Pro'
+			},
 			Badge: {
 				Free: 'FREE',
 				Pro: 'PRO'
@@ -336,6 +340,7 @@ const en: BaseTranslation = {
 		PageParagraph: 'We will send a 6-digit code to your email for resetting your password.',
 		SendResetCodeButton: 'Send Code',
 		PageTitleConfirmCode: 'Confirm',
+		PageTitleConfirmCodeAlt: 'Check Your Email',
 		PageParagraphConfirmCode: "We've emailed you a 6-digit code. Enter it below to continue.",
 		ConfirmCodeButton: 'Confirm',
 		PageTitleNewPassword: 'New Password',
