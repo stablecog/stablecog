@@ -52,7 +52,7 @@
 			if (data && data.user && data.user?.confirmed_at) {
 				mLogSignIn({
 					'SC - Advanced Mode': $advancedMode,
-					'SC - Page': $page.url.pathname,
+					'SC - Page': `${$page.url.pathname}${$page.url.search}`,
 					'SC - Locale': $locale,
 					'SC - Plan': $page.data.tier
 				});
@@ -90,7 +90,7 @@
 			'SC - Plan': $page.data.tier,
 			'SC - Locale': $locale,
 			'SC - Advanced Mode': $advancedMode,
-			'SC - Page': $page.url.pathname
+			'SC - Page': `${$page.url.pathname}${$page.url.search}`
 		});
 		console.log(verifyData);
 		setTimeout(() => {
