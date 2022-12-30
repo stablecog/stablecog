@@ -33,7 +33,6 @@ func SetDefaultServerHealths() {
 				Healthy:           res.Status == "healthy",
 				LastHealthCheckAt: lastCheck,
 				Url:               server.Url,
-				Enabled:           server.Enabled,
 			})
 			defer wg.Done()
 		}(server)
