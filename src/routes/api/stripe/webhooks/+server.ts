@@ -114,8 +114,7 @@ export const POST: RequestHandler = async (event) => {
 									email: user.email,
 									plan: prod.name.toUpperCase(),
 									stripeId: customerId.toString(),
-									supabaseId: user.id,
-									countryCode: event.request.headers.get('x-vercel-ip-country')
+									supabaseId: user.id
 								})
 							)
 						});

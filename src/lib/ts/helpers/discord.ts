@@ -4,14 +4,12 @@ export function getDiscordWebhookBodyNewSubscriber({
 	plan,
 	email,
 	supabaseId,
-	stripeId,
-	countryCode
+	stripeId
 }: {
 	plan: string;
 	email: string;
 	supabaseId: string;
 	stripeId: string;
-	countryCode: string | null;
 }) {
 	return {
 		content: null,
@@ -35,10 +33,6 @@ export function getDiscordWebhookBodyNewSubscriber({
 					{
 						name: 'Stripe ID',
 						value: stripeId
-					},
-					{
-						name: 'Country Code',
-						value: countryCode ?? 'Unknown'
 					}
 				],
 				footer: {
