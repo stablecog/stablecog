@@ -46,7 +46,6 @@ func SetDefaultServerHealths() {
 			Healthy:           r.Healthy,
 			LastHealthCheckAt: r.LastHealthCheckAt,
 			Url:               r.Url,
-			Enabled:           r.Enabled,
 		}
 	}
 	shared.UpdateServerHealths(updateResults)
