@@ -43,7 +43,7 @@
 	});
 
 	let lastPulled = 0;
-	let maxPullInterval = 1000 * 5;
+	let pullInterval = 1000 * 5;
 
 	const calculateAnimationDuration = (curr: number, next: number) => {
 		return Math.min((next - curr) * msForEachDifference, maxDuration);
@@ -120,7 +120,7 @@
 							} else {
 								generations = [{ ...newData, type: 'generation' }, ...generations];
 							}
-							if (Date.now() - lastPulled > maxPullInterval) {
+							if (Date.now() - lastPulled > pullInterval) {
 								lastPulled = Date.now();
 								getAndSetTotals();
 							}
@@ -149,7 +149,7 @@
 							} else {
 								upscales = [{ ...newData, type: 'upscale' }, ...upscales];
 							}
-							if (Date.now() - lastPulled > maxPullInterval) {
+							if (Date.now() - lastPulled > pullInterval) {
 								lastPulled = Date.now();
 								getAndSetTotals();
 							}
