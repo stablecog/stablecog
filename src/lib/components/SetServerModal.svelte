@@ -106,7 +106,6 @@
 		</div>
 		<form
 			on:submit|preventDefault={setServerUrl}
-			disabled={setServerProcessStatus === 'loading'}
 			class="w-full relative flex flex-col md:flex-row items-center justify-center gap-3 mt-5"
 		>
 			<div class="w-full md:w-auto flex-1 min-w-0 relative group">
