@@ -27,7 +27,6 @@ func main() {
 	bimg.VipsCacheSetMax(0)
 	defer bimg.Shutdown()
 
-	shared.SetupSeed()
 	shared.SetupRedis()
 
 	app := fiber.New()
