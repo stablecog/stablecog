@@ -26,7 +26,8 @@ func Handler(c *fiber.Ctx) error {
 		countryCode = c.Get("X-Vercel-IP-Country")
 	}
 	log.Printf("-- Request for gallery page - %s - %s --", magenta(p), magenta(countryCode))
-	generationGs := GetGenerationGs(p, batchSize+1, "")
+	search := c.Query("search")
+	generationGs := GetGenerationGs(p, batchSize+1, search, "")
 	if generationGs == nil {
 		log.Printf(red("-- Failed to get generations for gallery page - %d --", p))
 		return c.Status(fiber.StatusInternalServerError).JSON("Failed to get generations")
