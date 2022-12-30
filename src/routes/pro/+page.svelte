@@ -111,7 +111,7 @@
 					class="font-bold text-3xl text-c-primary md:-mt-2 flex justify-center items-center gap-2 text-center"
 				>
 					<IconStar class="w-8 h-8" />
-					{$LL.Pro.ProPlanTitle()}
+					{$LL.Pro.Tier.Title.Pro()}
 				</h2>
 				<h3
 					class="w-[calc(100%+2rem)] md:w-[calc(100%+3rem)] text-center bg-c-primary text-c-on-primary
