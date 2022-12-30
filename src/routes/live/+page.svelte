@@ -119,9 +119,6 @@
 								}
 							} else {
 								generations = [{ ...newData, type: 'generation' }, ...generations];
-								if (newData.status === 'succeeded') {
-									generationTotalCount.set($generationTotalCount + 1);
-								}
 							}
 							if (Date.now() - lastPulled > maxPullInterval) {
 								lastPulled = Date.now();
@@ -151,9 +148,6 @@
 								}
 							} else {
 								upscales = [{ ...newData, type: 'upscale' }, ...upscales];
-								if (newData.status === 'succeeded') {
-									upscaleTotalCount.set($upscaleTotalCount + 1);
-								}
 							}
 							if (Date.now() - lastPulled > maxPullInterval) {
 								lastPulled = Date.now();
