@@ -310,7 +310,7 @@ const de: Translation = {
 			ParagraphInferenceStepsGeneration:
 				"That generation was created using an inference steps setting that isn't available on the free plan.",
 			ParagraphModelGeneration:
-				"That generation was created using a model that isn't available on the free plan.",
+				"That generation was created using an AI model that isn't available on the free plan.",
 			ParagraphSchedulerGeneration:
 				"That generation was created using a scheduler that isn't available on the free plan."
 		},

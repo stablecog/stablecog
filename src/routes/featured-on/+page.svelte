@@ -49,7 +49,7 @@
 						href={featured.url}
 						target="_blank"
 						rel="noopener noreferrer"
-						class="relative w-full h-full mt-4 p-4 flex transition items-center justify-center rounded-xl 
+						class="relative w-full h-full p-4 flex transition items-center justify-center rounded-xl 
           		ring-2 ring-c-bg-tertiary bg-c-bg-secondary shadow-lg shadow-c-shadow/[var(--o-shadow-normal)] group
 				  		{!$isTouchscreen
 							? 'hover:text-c-primary hover:ring-4 hover:shadow-xl hover:shadow-c-shadow/[var(--o-shadow-strong)] hover:-translate-y-1.5'

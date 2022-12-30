@@ -221,7 +221,8 @@ const ru: Translation = {
 		InvalidEmail: 'Enter a valid email.',
 		PasswordTooShort: 'Password must be at least 8 characters.',
 		SomethingWentWrongTryAgain: 'Something went wrong, try again.',
-		InvalidCredentials: 'Invalid credentials.'
+		InvalidCredentials: 'Invalid credentials.',
+		InvalidCode: 'Invalid code.'
 	},
 	Admin: {
 		AdminPanelTitle: 'Admin',
@@ -312,7 +313,7 @@ const ru: Translation = {
 			ParagraphInferenceStepsGeneration:
 				"That generation was created using an inference steps setting that isn't available on the free plan.",
 			ParagraphModelGeneration:
-				"That generation was created using a model that isn't available on the free plan.",
+				"That generation was created using an AI model that isn't available on the free plan.",
 			ParagraphSchedulerGeneration:
 				"That generation was created using a scheduler that isn't available on the free plan."
 		},

@@ -83,7 +83,7 @@
 		if (verifyError) {
 			console.log(verifyError);
 			signupStatus = 'otp-error';
-			errorText = 'Wrong code, try again.';
+			errorText = $LL.Error.InvalidCode();
 			return;
 		}
 		mLogSignUp({

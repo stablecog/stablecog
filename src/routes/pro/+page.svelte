@@ -20,19 +20,6 @@
 
 	let checkoutCreationStatus: 'idle' | 'loading' | 'success' | 'error' = 'idle';
 
-	type TPaymentInterval = 'monthly' | 'quarterly';
-	let paymentIntervalTabs: TTab<TPaymentInterval>[] = [
-		{
-			label: 'Monthly',
-			value: 'monthly'
-		},
-		{
-			label: 'Quarterly',
-			value: 'quarterly'
-		}
-	];
-	let paymentInterval: TPaymentInterval = 'monthly';
-
 	async function createCheckoutSessionAndRedirect() {
 		try {
 			checkoutCreationStatus = 'loading';
@@ -103,6 +90,10 @@
 								{$LL.Pro.Reason.ParagraphModelGeneration()}
 							{:else if data.reason === 'dimensions_generation'}
 								{$LL.Pro.Reason.ParagraphDimensionsGeneration()}
+							{:else if data.reason === 'steps_generation'}
+								{$LL.Pro.Reason.ParagraphInferenceStepsGeneration()}
+							{:else if data.reason === 'scheduler_generation'}
+								{$LL.Pro.Reason.ParagraphSchedulerGeneration()}
 							{/if}
 						</p>
 					</div>

@@ -638,6 +638,10 @@ type RootTranslation = {
 		 * I​n​v​a​l​i​d​ ​c​r​e​d​e​n​t​i​a​l​s​.
 		 */
 		InvalidCredentials: string
+		/**
+		 * I​n​v​a​l​i​d​ ​c​o​d​e​.
+		 */
+		InvalidCode: string
 	}
 	Admin: {
 		/**
@@ -903,7 +907,7 @@ type RootTranslation = {
 			 */
 			ParagraphInferenceStepsGeneration: string
 			/**
-			 * T​h​a​t​ ​g​e​n​e​r​a​t​i​o​n​ ​w​a​s​ ​c​r​e​a​t​e​d​ ​u​s​i​n​g​ ​a​ ​m​o​d​e​l​ ​t​h​a​t​ ​i​s​n​'​t​ ​a​v​a​i​l​a​b​l​e​ ​o​n​ ​t​h​e​ ​f​r​e​e​ ​p​l​a​n​.
+			 * T​h​a​t​ ​g​e​n​e​r​a​t​i​o​n​ ​w​a​s​ ​c​r​e​a​t​e​d​ ​u​s​i​n​g​ ​a​n​ ​A​I​ ​m​o​d​e​l​ ​t​h​a​t​ ​i​s​n​'​t​ ​a​v​a​i​l​a​b​l​e​ ​o​n​ ​t​h​e​ ​f​r​e​e​ ​p​l​a​n​.
 			 */
 			ParagraphModelGeneration: string
 			/**
@@ -1630,6 +1634,10 @@ export type TranslationFunctions = {
 		 * Invalid credentials.
 		 */
 		InvalidCredentials: () => LocalizedString
+		/**
+		 * Invalid code.
+		 */
+		InvalidCode: () => LocalizedString
 	}
 	Admin: {
 		/**
@@ -1894,7 +1902,7 @@ export type TranslationFunctions = {
 			 */
 			ParagraphInferenceStepsGeneration: () => LocalizedString
 			/**
-			 * That generation was created using a model that isn't available on the free plan.
+			 * That generation was created using an AI model that isn't available on the free plan.
 			 */
 			ParagraphModelGeneration: () => LocalizedString
 			/**
