@@ -1,5 +1,6 @@
 <script lang="ts">
 	import IconChevronDown from '$components/icons/IconChevronDown.svelte';
+	import ScrollAreaWithChevron from '$components/ScrollAreaWithChevron.svelte';
 	import TabBarWrapper from '$components/tabBars/TabBarWrapper.svelte';
 	import { clickoutside } from '$ts/actions/clickoutside';
 	import { isTouchscreen } from '$ts/stores/isTouchscreen';
@@ -161,9 +162,9 @@
 				>
 					<div
 						bind:clientHeight={dropdownHeight}
-						class="w-full flex flex-col justify-start relative z-20 {dropdownClass}"
+						class="w-full flex flex-col justify-start relative z-20 overflow-hidden {dropdownClass}"
 					>
-						<div class="w-full flex flex-col overflow-auto">
+						<ScrollAreaWithChevron class="w-full flex flex-col">
 							{#each items.filter((i) => i.value !== value) as item, index (item.value)}
 								{#if badgeAppliedTo?.includes(item.value)}
 									<a
@@ -238,7 +239,7 @@
 									</button>
 								{/if}
 							{/each}
-						</div>
+						</ScrollAreaWithChevron>
 					</div>
 				</div>
 			</div>
