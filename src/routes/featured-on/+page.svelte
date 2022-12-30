@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { page } from '$app/stores';
+	import NoBgButton from '$components/buttons/NoBgButton.svelte';
 	import MetaTag from '$components/MetaTag.svelte';
 	import PageWrapper from '$components/PageWrapper.svelte';
 	import LL from '$i18n/i18n-svelte';
@@ -43,18 +44,27 @@
 		<h1 class="text-4xl font-bold">{$LL.FeaturedOn.PageTitle()}</h1>
 		<div class="w-full max-w-4xl flex flex-wrap items-stretch justify-center mt-6 gap-6">
 			{#each featuredOn as featured}
-				<a
-					href={featured.url}
-					target="_blank"
-					rel="noopener noreferrer"
-					class="w-full md:w-1/3 max-w-md p-4 flex transition items-center justify-center rounded-xl 
-          ring-2 ring-c-bg-tertiary bg-c-bg-secondary shadow-lg shadow-c-shadow/[var(--o-shadow-normal)] group
-				  {!$isTouchscreen
-						? 'hover:text-c-primary hover:ring-4 hover:shadow-xl hover:shadow-c-shadow/[var(--o-shadow-strong)] hover:-translate-y-1.5'
-						: 'text-c-on-bg'}"
-				>
-					{@html featured.logo}
-				</a>
+				<div class="w-full md:w-1/3 flex flex-col items-center max-w-md relative">
+					<a
+						href={featured.url}
+						target="_blank"
+						rel="noopener noreferrer"
+						class="relative w-full h-full mt-4 p-4 flex transition items-center justify-center rounded-xl 
+          		ring-2 ring-c-bg-tertiary bg-c-bg-secondary shadow-lg shadow-c-shadow/[var(--o-shadow-normal)] group
+				  		{!$isTouchscreen
+							? 'hover:text-c-primary hover:ring-4 hover:shadow-xl hover:shadow-c-shadow/[var(--o-shadow-strong)] hover:-translate-y-1.5'
+							: 'text-c-on-bg'}"
+					>
+						{@html featured.logo}
+					</a>
+					<NoBgButton
+						class="mt-1 font-semibold text-c-on-bg/60"
+						href={featured.url}
+						target="_blank"
+					>
+						{featured.name}
+					</NoBgButton>
+				</div>
 			{/each}
 		</div>
 	</div>
