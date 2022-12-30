@@ -124,13 +124,13 @@
 			</div>
 			<div class="flex flex-col px-4">
 				<p class="text-xs font-medium text-c-on-bg/50">
-					{$LL.Admin.Gallery.TotalTitle()}
+					{$LL.Admin.Gallery.ApprovedTitle()}
 				</p>
 				<p class="font-bold text-xl text-c-success mt-0.5">{approved}</p>
 			</div>
 			<div class="flex flex-col px-4">
 				<p class="text-xs font-medium text-c-on-bg/50">
-					{$LL.Admin.Gallery.TotalTitle()}
+					{$LL.Admin.Gallery.DeletedTitle()}
 				</p>
 				<p class="font-bold text-xl text-c-danger mt-0.5">{deleted}</p>
 			</div>
