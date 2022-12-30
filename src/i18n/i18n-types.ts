@@ -717,6 +717,10 @@ type RootTranslation = {
 		 */
 		PageTitleConfirm: string
 		/**
+		 * C​h​e​c​k​ ​Y​o​u​r​ ​E​m​a​i​l
+		 */
+		PageTitleConfirmAlt: string
+		/**
 		 * W​e​'​v​e​ ​e​m​a​i​l​e​d​ ​y​o​u​ ​a​ ​6​-​d​i​g​i​t​ ​c​o​d​e​.​ ​E​n​t​e​r​ ​i​t​ ​b​e​l​o​w​ ​t​o​ ​c​o​n​f​i​r​m​ ​y​o​u​r​ ​a​c​c​o​u​n​t​.
 		 */
 		PageParagraphConfirm: string
@@ -977,6 +981,10 @@ type RootTranslation = {
 		 * C​o​n​f​i​r​m
 		 */
 		PageTitleConfirmCode: string
+		/**
+		 * C​h​e​c​k​ ​Y​o​u​r​ ​E​m​a​i​l
+		 */
+		PageTitleConfirmCodeAlt: string
 		/**
 		 * W​e​'​v​e​ ​e​m​a​i​l​e​d​ ​y​o​u​ ​a​ ​6​-​d​i​g​i​t​ ​c​o​d​e​.​ ​E​n​t​e​r​ ​i​t​ ​b​e​l​o​w​ ​t​o​ ​c​o​n​t​i​n​u​e​.
 		 */
@@ -1715,6 +1723,10 @@ export type TranslationFunctions = {
 		 */
 		PageTitleConfirm: () => LocalizedString
 		/**
+		 * Check Your Email
+		 */
+		PageTitleConfirmAlt: () => LocalizedString
+		/**
 		 * We've emailed you a 6-digit code. Enter it below to confirm your account.
 		 */
 		PageParagraphConfirm: () => LocalizedString
@@ -1974,6 +1986,10 @@ export type TranslationFunctions = {
 		 * Confirm
 		 */
 		PageTitleConfirmCode: () => LocalizedString
+		/**
+		 * Check Your Email
+		 */
+		PageTitleConfirmCodeAlt: () => LocalizedString
 		/**
 		 * We've emailed you a 6-digit code. Enter it below to continue.
 		 */

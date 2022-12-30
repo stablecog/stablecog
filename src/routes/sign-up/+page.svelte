@@ -18,6 +18,8 @@
 	import { advancedMode } from '$ts/stores/advancedMode';
 	import { unconfirmedEmail } from '$ts/stores/unconfirmedEmail';
 	import { onMount } from 'svelte';
+	import { quadOut } from 'svelte/easing';
+	import { scale } from 'svelte/transition';
 	import type { PageServerData } from './$types';
 
 	export let data: PageServerData;
@@ -119,9 +121,14 @@
 		{#if signupStatus === 'success'}
 			<IconLoading class="w-10 h-10 text-c-on-bg/50 animate-spin-faster" />
 		{:else}
+			{#if signupStatus === 'otp' || signupStatus === 'otp-loading' || signupStatus === 'otp-error'}
+				<div transition:scale|local={{ duration: 200, easing: quadOut, opacity: 0 }} class="mb-2">
+					<IconEmail class="w-20 h-20 text-c-on-bg" />
+				</div>
+			{/if}
 			<h1 class="text-center font-bold text-4xl">
 				{#if signupStatus === 'otp' || signupStatus === 'otp-loading' || signupStatus === 'otp-error'}
-					{$LL.SignUp.PageTitleConfirm()}
+					{$LL.SignUp.PageTitleConfirmAlt()}
 				{:else}
 					{$LL.SignUp.PageTitle()}
 				{/if}

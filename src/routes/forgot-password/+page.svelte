@@ -109,19 +109,19 @@
 				];
 			case 'reset-email-send-success':
 				return [
-					$LL.ForgotPassword.PageTitleConfirmCode(),
+					$LL.ForgotPassword.PageTitleConfirmCodeAlt(),
 					$LL.ForgotPassword.PageParagraphConfirmCode(),
 					$LL.ForgotPassword.ConfirmCodeButton()
 				];
 			case 'confirm-code-loading':
 				return [
-					$LL.ForgotPassword.PageTitleConfirmCode(),
+					$LL.ForgotPassword.PageTitleConfirmCodeAlt(),
 					$LL.ForgotPassword.PageParagraphConfirmCode(),
 					$LL.ForgotPassword.ConfirmCodeButton()
 				];
 			case 'confirm-code-error':
 				return [
-					$LL.ForgotPassword.PageTitleConfirmCode(),
+					$LL.ForgotPassword.PageTitleConfirmCodeAlt(),
 					$LL.ForgotPassword.PageParagraphConfirmCode(),
 					$LL.ForgotPassword.ConfirmCodeButton()
 				];
@@ -174,6 +174,11 @@
 				class="pb-4"
 			>
 				<IconTick class="w-24 h-24 text-c-primary" />
+			</div>
+		{/if}
+		{#if resetProcessStatus === 'reset-email-send-success' || resetProcessStatus === 'confirm-code-loading' || resetProcessStatus === 'confirm-code-error'}
+			<div transition:scale|local={{ duration: 200, easing: quadOut, opacity: 0 }} class="mb-2">
+				<IconEmail class="w-20 h-20 text-c-on-bg" />
 			</div>
 		{/if}
 		<h1

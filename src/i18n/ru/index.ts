@@ -246,6 +246,7 @@ const ru: Translation = {
 		PageTitle: 'Sign Up',
 		PageParagraph: 'Join Stablecog to become a pro member and unlock its full potential.',
 		PageTitleConfirm: 'Confirm',
+		PageTitleConfirmAlt: 'Check Your Email',
 		PageParagraphConfirm:
 			"We've emailed you a 6-digit code. Enter it below to confirm your account.",
 		SignUpButton: 'Sign Up',
@@ -340,6 +341,7 @@ const ru: Translation = {
 		PageParagraph: 'We will send a 6-digit code to your email for resetting your password.',
 		SendResetCodeButton: 'Send Code',
 		PageTitleConfirmCode: 'Confirm',
+		PageTitleConfirmCodeAlt: 'Check Your Email',
 		PageParagraphConfirmCode: "We've emailed you a 6-digit code. Enter it below to continue.",
 		ConfirmCodeButton: 'Confirm',
 		PageTitleNewPassword: 'New Password',
