@@ -916,14 +916,16 @@ type RootTranslation = {
 			ParagraphSchedulerGeneration: string
 		}
 		Tier: {
-			/**
-			 * F​r​e​e
-			 */
-			FreeTitle: string
-			/**
-			 * P​r​o
-			 */
-			ProTitle: string
+			Title: {
+				/**
+				 * F​r​e​e
+				 */
+				Free: string
+				/**
+				 * P​r​o
+				 */
+				Pro: string
+			}
 			Badge: {
 				/**
 				 * F​R​E​E
@@ -1911,14 +1913,16 @@ export type TranslationFunctions = {
 			ParagraphSchedulerGeneration: () => LocalizedString
 		}
 		Tier: {
-			/**
-			 * Free
-			 */
-			FreeTitle: () => LocalizedString
-			/**
-			 * Pro
-			 */
-			ProTitle: () => LocalizedString
+			Title: {
+				/**
+				 * Free
+				 */
+				Free: () => LocalizedString
+				/**
+				 * Pro
+				 */
+				Pro: () => LocalizedString
+			}
 			Badge: {
 				/**
 				 * FREE

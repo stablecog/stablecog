@@ -317,8 +317,10 @@ const ko: Translation = {
 				"That generation was created using a scheduler that isn't available on the free plan."
 		},
 		Tier: {
-			FreeTitle: 'Free',
-			ProTitle: 'Pro',
+			Title: {
+				Free: 'Free',
+				Pro: 'Pro'
+			},
 			Badge: {
 				Free: 'FREE',
 				Pro: 'PRO'

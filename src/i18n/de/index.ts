@@ -219,7 +219,8 @@ const de: Translation = {
 		InvalidEmail: 'Enter a valid email.',
 		PasswordTooShort: 'Password must be at least 8 characters.',
 		SomethingWentWrongTryAgain: 'Something went wrong, try again.',
-		InvalidCredentials: 'Invalid credentials.'
+		InvalidCredentials: 'Invalid credentials.',
+		InvalidCode: 'Invalid code.'
 	},
 	Admin: {
 		AdminPanelTitle: 'Admin',
@@ -315,8 +316,10 @@ const de: Translation = {
 				"That generation was created using a scheduler that isn't available on the free plan."
 		},
 		Tier: {
-			FreeTitle: 'Free',
-			ProTitle: 'Pro',
+			Title: {
+				Free: 'Free',
+				Pro: 'Pro'
+			},
 			Badge: {
 				Free: 'FREE',
 				Pro: 'PRO'
