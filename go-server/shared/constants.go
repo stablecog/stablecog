@@ -4,6 +4,7 @@ import (
 	"fmt"
 
 	"github.com/fatih/color"
+	"github.com/meilisearch/meilisearch-go"
 	"github.com/supabase-community/gotrue-go"
 	"github.com/supabase-community/storage-go"
 	"github.com/supabase/postgrest-go"
@@ -14,6 +15,13 @@ var SUPABASE_URL = GetEnv("PUBLIC_SUPABASE_URL", "")
 var SUPABASE_REFERENCE_ID = GetEnv("PUBLIC_SUPABASE_REFERENCE_ID", "")
 var PUBLIC_SUPABASE_POSTGREST_URL = GetEnv("PUBLIC_SUPABASE_POSTGREST_URL", "")
 var DEFAULT_SERVER_URL = GetEnv("PUBLIC_DEFAULT_SERVER_URL", "")
+var MEILI_URL = func() string {
+	if GetEnv("RENDER", "") != "" {
+		return GetEnv("MEILI_URL_RENDER", "")
+	} else {
+		return GetEnv("MEILI_URL", "")
+	}
+}()
 
 var SupabaseDb = postgrest.NewClient(PUBLIC_SUPABASE_POSTGREST_URL, "", map[string]string{
 	"Authorization": "Bearer " + SUPABASE_ADMIN_KEY,
@@ -21,6 +29,10 @@ var SupabaseDb = postgrest.NewClient(PUBLIC_SUPABASE_POSTGREST_URL, "", map[stri
 })
 var SupabaseAuth = gotrue.New(SUPABASE_REFERENCE_ID, SUPABASE_ADMIN_KEY)
 var SupabaseStorage = storage_go.NewClient(fmt.Sprintf("%s/storage/v1", SUPABASE_URL), SUPABASE_ADMIN_KEY, nil)
+var Meili = meilisearch.NewClient(meilisearch.ClientConfig{
+	Host:   MEILI_URL,
+	APIKey: GetEnv("MEILI_MASTER_KEY", ""),
+})
 
 const MaxSeed = 2147483647
 const MaxPromptLen = 500
