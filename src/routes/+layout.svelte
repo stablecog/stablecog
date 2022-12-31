@@ -265,11 +265,7 @@
 	};
 	$: $locale, runIfMounted(() => setCookie(`sc-locale=${$locale}`));
 	$: $themeApp, runIfMounted(() => setCookie(`sc-theme=${$themeApp}`));
-	$: $advancedModeApp,
-		runIfMounted(() => {
-			console.log('setting cookie');
-			setCookie(`sc-advanced-mode=${$advancedModeApp}`);
-		});
+	$: $advancedModeApp, runIfMounted(() => setCookie(`sc-advanced-mode=${$advancedModeApp}`));
 </script>
 
 <svelte:window bind:innerHeight bind:innerWidth />
