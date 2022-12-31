@@ -16,6 +16,7 @@ export type Locales =
 	| 'pt-pt'
 	| 'ru'
 	| 'tr'
+	| 'vi'
 	| 'zh-Hans'
 
 export type Translation = RootTranslation

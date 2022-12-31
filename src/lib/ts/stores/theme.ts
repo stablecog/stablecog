@@ -1,5 +1,7 @@
 import { writable as writableLocal } from 'svelte-local-storage-store';
+import { writable } from 'svelte/store';
 
-export const theme = writableLocal<TAvailableThemes>('theme', 'dark');
+export const theme = writableLocal<TAvailableThemes | null>('theme', null);
+export const themeApp = writable<TAvailableThemes>('dark');
 
-type TAvailableThemes = 'light' | 'dark';
+export type TAvailableThemes = 'light' | 'dark';

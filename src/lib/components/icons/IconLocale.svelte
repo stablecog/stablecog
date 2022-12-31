@@ -237,4 +237,19 @@
 			stroke-width=".6"
 		/>
 	</svg>
+{:else if locale === 'vi'}
+	<svg
+		class={classes}
+		xmlns="http://www.w3.org/2000/svg"
+		width="512"
+		height="512"
+		viewBox="0 0 512 512"
+		fill="none"
+	>
+		<path fill="#DA251D" d="M0 0h512v512H0V0Z" />
+		<path
+			fill="#FF0"
+			d="m349.566 381.114-89.589-66.903-89.083 67.553 33.163-109.819-89.011-67.769 110.107-.939 34.102-109.458 34.896 109.241 110.108.144-88.505 68.42 33.812 109.53Z"
+		/>
+	</svg>
 {/if}

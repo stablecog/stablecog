@@ -21,10 +21,14 @@ export const load: LayoutServerLoad = async (event) => {
 		}
 	}
 	const locale = event.locals.locale;
+	const theme = event.locals.theme;
+	const advancedMode = event.locals.advancedMode;
 	await loadLocaleAsync(locale);
 	return {
 		locale,
 		session,
-		tier
+		tier,
+		theme,
+		advancedMode
 	};
 };

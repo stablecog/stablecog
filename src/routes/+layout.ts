@@ -22,5 +22,7 @@ export const load: LayoutLoad = async (event) => {
 	}
 	const locale = event.data.locale;
 	await loadLocaleAsync(locale);
-	return { locale, session, tier };
+	const theme = event.data.theme;
+	const advancedMode = event.data.advancedMode;
+	return { locale, session, tier, theme, advancedMode };
 };

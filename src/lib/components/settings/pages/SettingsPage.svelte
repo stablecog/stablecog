@@ -19,7 +19,7 @@
 	import { isTouchscreen } from '$ts/stores/isTouchscreen';
 	import { serverUrl } from '$ts/stores/serverUrl';
 	import { shouldSubmitToGallery } from '$ts/stores/shouldSubmitToGallery';
-	import { theme } from '$ts/stores/theme';
+	import { theme, themeApp } from '$ts/stores/theme';
 	import type { TCurrentSettingsPage } from '$ts/types/main';
 
 	export let onSwitchServerClick: () => void;
@@ -29,7 +29,7 @@
 
 	$: submitToGalleryLogProps = {
 		'SC - Plan': $page.data.tier,
-		'SC - Advanced Mode': $advancedMode
+		'SC - Advanced Mode': $advancedModeApp
 	};
 	$: advancedModeLogProps = {
 		'SC - Plan': $page.data.tier
@@ -131,13 +131,15 @@
 						{$LL.Settings.AdvancedModeToggle()}
 					</p>
 				</div>
-				<ToggleIndicator isToggled={$advancedMode !== false} />
+				<ToggleIndicator isToggled={$advancedModeApp !== false} />
 			</div>
 		</DropdownItem>
 		<DropdownItem
 			disabled={currentPage !== 'settings'}
 			onClick={() => {
-				theme.set($theme === 'dark' ? 'light' : 'dark');
+				const val = $themeApp === 'dark' ? 'light' : 'dark';
+				themeApp.set(val);
+				theme.set(val);
 			}}
 		>
 			<div class="flex-1 flex min-w-0 items-center justify-between gap-2">
@@ -155,7 +157,7 @@
 						{$LL.Settings.DarkModeToggle()}
 					</p>
 				</div>
-				<ToggleIndicator isToggled={$theme !== 'light'} />
+				<ToggleIndicator isToggled={$themeApp !== 'light'} />
 			</div>
 		</DropdownItem>
 		<div class="w-full flex flex-col relative">

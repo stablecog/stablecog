@@ -145,9 +145,9 @@ const tr: Translation = {
 		JoinUsTitle: 'Bize Katıl',
 		GoHomeButton: 'Eve Dön',
 		SwitchToDefaultServerButton: 'Varsayılan Sunucuya Geç',
-		JoinUsOnTitle: 'Join us on {name}',
+		JoinUsOnTitle: 'Bize katıl: {name}',
 		ShareButton: 'Paylaş',
-		ShareOnButton: 'Şurada Paylaş: {name}',
+		ShareOnButton: 'Paylaş: {name}',
 		YesButton: 'Evet',
 		NoButton: 'Hayır',
 		EnableButton: 'Aktifleştir',
@@ -180,7 +180,10 @@ const tr: Translation = {
 				realName: 'Arcane Diffusion',
 				simpleName: '3B Çizgi Roman'
 			},
-			'48a7031d-43b6-4a23-9f8c-8020eb6862e4': { realName: 'Ghibli Diffusion', simpleName: 'Anime' },
+			'48a7031d-43b6-4a23-9f8c-8020eb6862e4': {
+				realName: 'Ghibli Diffusion',
+				simpleName: 'Anime'
+			},
 			'790c80e1-65b1-4556-9332-196344389572': {
 				realName: 'Mo-Di Diffusion',
 				simpleName: 'Animasyon Filmi'
@@ -204,7 +207,7 @@ const tr: Translation = {
 		UnknownTitle: 'Bilinmeyen',
 		MoreOptionsTitle: 'Daha Fazla Seçenek',
 		LessOptionsTitle: 'Daha Az Seçenek',
-		TryAgainButton: 'Try Again'
+		TryAgainButton: 'Yeniden Dene'
 	},
 	Error: {
 		SomethingWentWrong: 'Bir şeyler ters gitti :(',
@@ -214,144 +217,143 @@ const tr: Translation = {
 		ServerSetNotWorking: 'Sunucu uyumlu değil ya da cevap vermiyor.',
 		NotFound: 'Bulunamadı',
 		SupabaseNotFoundCantListen: 'Supabase bulunamadı. Üretimler izlenemeyecek.',
-		InvalidEmail: 'Enter a valid email.',
-		PasswordTooShort: 'Password must be at least 8 characters.',
-		SomethingWentWrongTryAgain: 'Something went wrong, try again.',
-		InvalidCredentials: 'Invalid credentials.',
-		InvalidCode: 'Invalid code.'
+		InvalidEmail: 'Geçerli bir e-posta gir.',
+		PasswordTooShort: 'Şifre en az 8 karakterli olmalı.',
+		SomethingWentWrongTryAgain: 'Bir sıkıntı çıktı, tekrar dene.',
+		InvalidCredentials: 'Geçersiz kimlik.',
+		InvalidCode: 'Geçersiz kod.'
 	},
 	Admin: {
-		AdminPanelTitle: 'Admin',
-		DeleteButton: 'Delete',
-		ApproveButton: 'Approve',
-		NoGenerationsToReview: 'No generations to review.',
-		ServersButton: 'Servers',
-		AdminGalleryButton: 'Gallery',
-		UsersButton: 'Users',
+		AdminPanelTitle: 'Yönetici',
+		DeleteButton: 'Sil',
+		ApproveButton: 'Onayla',
+		NoGenerationsToReview: 'İncelecek üretim yok.',
+		ServersButton: 'Sunucular',
+		AdminGalleryButton: 'Galeri',
+		UsersButton: 'Kullanıcılar',
 		AdminTab: 'Admin',
-		ServersTab: 'Servers',
-		AdminGalleryTab: 'Gallery',
-		UsersTab: 'Users',
+		ServersTab: 'Sunucular',
+		AdminGalleryTab: 'Galeri',
+		UsersTab: 'Kullanıcılar',
 		Gallery: {
-			TotalTitle: 'Total',
-			ApprovedTitle: 'Approved',
-			DeletedTitle: 'Deleted'
+			TotalTitle: 'Toplam',
+			ApprovedTitle: 'Onaylanan',
+			DeletedTitle: 'Silinen'
 		}
 	},
 	SignUp: {
-		PageTitle: 'Sign Up',
-		PageParagraph: 'Join Stablecog to become a pro member and unlock its full potential.',
-		PageTitleConfirm: 'Confirm',
-		PageTitleConfirmAlt: 'Check Your Email',
-		PageParagraphConfirm:
-			"We've emailed you a 6-digit code. Enter it below to confirm your account.",
-		SignUpButton: 'Sign Up',
-		ConfirmButton: 'Confirm',
-		AlreadyHaveAnAccountTitle: 'Already have an account?',
-		LoginInsteadButton: 'Login instead',
+		PageTitle: 'Üye Ol',
+		PageParagraph: "Tüm özelliklere erişmek için Stablecog'a katıl ve pro üye ol.",
+		PageTitleConfirm: 'Onayla',
+		PageTitleConfirmAlt: 'E-posta Yolladık',
+		PageParagraphConfirm: 'Sana 6 haneli bir kod yolladık. Üyeliğini onaylamak için onu aşağı gir.',
+		SignUpButton: 'Üye Ol',
+		ConfirmButton: 'Onayla',
+		AlreadyHaveAnAccountTitle: 'Zaten üye misin?',
+		LoginInsteadButton: 'Giriş yap',
 		SixDigitCodeInput: {
-			Placeholder: '6-Digit Code'
+			Placeholder: '6 Haneli Kod'
 		}
 	},
 	SignIn: {
-		PageTitle: 'Sign In',
-		PageParagraph: 'Start using Stablecog with all features that are available to your account.',
-		DontHaveAnAccountTitle: "Don't have an account?",
-		SignUpInsteadButton: 'Sign up instead',
-		SignInButton: 'Sign In',
-		SignOutButton: 'Sign Out'
+		PageTitle: 'Giriş Yap',
+		PageParagraph: "Stablecog'u üyeliğine sağlanan tüm özelliklerle kullanmaya başla.",
+		DontHaveAnAccountTitle: 'Üyeliğin yok mu?',
+		SignUpInsteadButton: 'Üye ol',
+		SignInButton: 'Giriş Yap',
+		SignOutButton: 'Çıkış Yap'
 	},
 	Pro: {
-		PageTitle: 'Become a Pro',
+		PageTitle: 'Pro Ol',
 		PageParagraph:
-			"Unlock all features of Stablecog and support the project. Without the pro members, Stablecog wouldn't be able to stay completely open-source and offer free generations to everyone.",
-		PageTitleAlreadyPro: 'Already a Pro!',
+			"Stablecog'un bütün özelliklerine eriş ve projeyi destekle. Pro üyeler olmadan Stablecog tamamen açık kaynak kodlu kalamaz, herkese ücretsiz fotoğraf üretimi imkanı sunamazdı.",
+		PageTitleAlreadyPro: 'Zaten Prosun!',
 		PageParagraphAlreadyPro:
-			'You are already a pro member. Thank you for supporting the project! Go ahead and enjoy Stablecog, and consider sharing it with your friends.',
+			"Pro üye olarak projeyi desteklediğin için teşekkürler. Stablecog'un keyfini çıkarmanı ve arkadaşlarınla paylaşmanı tavsiye ederiz.",
 		ProPlanTitle: 'Pro',
 		Features: {
-			FullSpeed: 'Full speed without set limits',
-			ImageDimensions: 'Different image dimensions',
-			Upscale: 'Upscale images',
-			Steps: 'Different inference steps',
-			MoreModels: 'More models',
-			MoreSchedulers: 'More schedulers',
-			SavedToCloud: 'Generations saved to the cloud',
-			Upcoming: 'Upcoming features',
-			CommercialUse: 'Commercial Use'
+			FullSpeed: 'Gecikmesiz tam hız üretim',
+			ImageDimensions: 'Farklı fotoğraf boyutları',
+			Upscale: 'Büyütme/çözünürlük arttırma',
+			Steps: 'Farklı tahmin adımı seçenekleri',
+			MoreModels: 'Daha fazla AI modeli',
+			MoreSchedulers: 'Daha fazla planlayıcı',
+			SavedToCloud: 'Üretimleri buluta kaydetme',
+			Upcoming: 'Gelecek özellikler',
+			CommercialUse: 'Ticari kullanım'
 		},
-		Soon: '(soon)',
-		Month: '/month',
-		BecomeProButton: 'Become a Pro',
+		Soon: '(yakında)',
+		Month: '/ay',
+		BecomeProButton: 'Pro Ol',
 		Success: {
-			PageTitle: "You're a Pro!",
+			PageTitle: 'Pro oldun!',
 			PageParagraph:
-				'You now have access to everything Stablecog has to offer. If you have any questions, reach out to us on {platform}.'
+				"Artık Stablecog'un tüm özelliklerine erişimin var. Soruların varsa bize buradan ulaşabilirsin: {platform}."
 		},
 		Cancel: {
-			PageTitle: "You've cancelled",
-			PageParagraph:
-				"You've cancelled the subscription process. If it was a mistake, you can try again."
+			PageTitle: 'İptal Ettin',
+			PageParagraph: 'Üyelik sürecini iptal ettin. Bir yanlışlık olduysa tekrar deneyebilirsin.'
 		},
 		Reason: {
-			ParagraphWidth: "That image width isn't available on the free plan.",
-			ParagraphHeight: "That image height isn't available on the free plan.",
-			ParagraphDimensions: "Those image dimensions aren't available on the free plan.",
-			ParagraphUpscale: "Upscale feature isn't available on the free plan.",
-			ParagraphInferenceSteps: "That inference steps setting isn't available on the free plan.",
-			ParagraphModel: "That AI model isn't available on the free plan.",
-			ParagraphScheduler: "That scheduler isn't available on the free plan.",
+			ParagraphWidth: 'O fotoğraf genişliği ayarı ücretsiz planda mevcut değil.',
+			ParagraphHeight: 'O fotoğraf yüksekliği ayarı ücretsiz planda mevcut değil.',
+			ParagraphDimensions: 'O fotoğraf boyutu ücretsiz planda mevcut değil.',
+			ParagraphUpscale: 'Büyütme özelliği ücretsiz planda mevcut değil.',
+			ParagraphInferenceSteps: 'O tahmin adımı seçeneği ücretsiz planda mevcut değil.',
+			ParagraphModel: 'O AI modeli ücretsiz planda mevcut değil.',
+			ParagraphScheduler: 'O planlayıcı ücretsiz planda mevcut değil.',
 			ParagraphWidthGeneration:
-				"That generation was created using an image width that isn't available on the free plan.",
+				'O üretim ücretsiz planda mevcut olmayan bir fotoğraf genişliği ayarı ile yapıldı.',
 			ParagraphHeightGeneration:
-				"That generation was created using an image height that isn't available on the free plan.",
+				'O üretim ücretsiz planda mevcut olmayan bir fotoğraf yüksekliği ayarı ile yapıldı.',
 			ParagraphDimensionsGeneration:
-				"That generation was created using image dimensions that aren't available on the free plan.",
+				'O üretim ücretsiz planda mevcut olmayan bir fotoğraf boyutu ayarı ile yapıldı.',
 			ParagraphInferenceStepsGeneration:
-				"That generation was created using an inference steps setting that isn't available on the free plan.",
+				'O üretim ücretsiz planda mevcut olmayan bir tahmin adımı ayarı ile yapıldı.',
 			ParagraphModelGeneration:
-				"That generation was created using an AI model that isn't available on the free plan.",
+				'O üretim ücretsiz planda mevcut olmayan bir AI modeli ile yapıldı.',
 			ParagraphSchedulerGeneration:
-				"That generation was created using a scheduler that isn't available on the free plan."
+				'O üretim ücretsiz planda mevcut olmayan bir planlayıcı seçeneği ile yapıldı.'
 		},
 		Tier: {
 			Title: {
-				Free: 'Free',
+				Free: 'Ücretsiz',
 				Pro: 'Pro'
 			},
 			Badge: {
-				Free: 'FREE',
+				Free: 'ÜCRETSİZ',
 				Pro: 'PRO'
 			}
 		}
 	},
 	Account: {
-		PageTitle: 'Account',
-		ManageSubscriptionButton: 'Manage Subscription',
-		ManageAccountButton: 'Manage Account',
-		MyAccountButton: 'My Account',
-		SubscriptionPlanTitle: 'Plan'
+		PageTitle: 'Üyelik',
+		ManageSubscriptionButton: 'Aboneliği Yönet',
+		ManageAccountButton: 'Üyeliği Yönet',
+		MyAccountButton: 'Üyeliğim',
+		SubscriptionPlanTitle: 'Üyelik Tipi'
 	},
 	ForgotPassword: {
-		PageTitle: 'Reset Password',
-		PageParagraph: 'We will send a 6-digit code to your email for resetting your password.',
-		SendResetCodeButton: 'Send Code',
-		PageTitleConfirmCode: 'Confirm',
-		PageTitleConfirmCodeAlt: 'Check Your Email',
-		PageParagraphConfirmCode: "We've emailed you a 6-digit code. Enter it below to continue.",
-		ConfirmCodeButton: 'Confirm',
-		PageTitleNewPassword: 'New Password',
-		PageParagraphNewPassword: 'Enter a new password for your account.',
+		PageTitle: 'Şifre Yenile',
+		PageParagraph: 'E-posta adresine 6 haneli bir kod yollayacağız.',
+		SendResetCodeButton: 'Kodu Yolla',
+		PageTitleConfirmCode: 'Doğrula',
+		PageTitleConfirmCodeAlt: 'E-posta Yolladık',
+		PageParagraphConfirmCode:
+			'E-posta adresine 6 haneli bir kod yolladık. Devam etmek için onu aşağı gir.',
+		ConfirmCodeButton: 'Onayla',
+		PageTitleNewPassword: 'Yeni Şifre',
+		PageParagraphNewPassword: 'Üyeliğin için yeni bir şifre gir.',
 		NewPasswordInput: {
-			Placeholder: 'New Password'
+			Placeholder: 'Yeni Şifre'
 		},
-		SetNewPasswordButton: 'Set New Password',
-		PageTitleSuccess: 'Done!',
-		PageParagraphSuccess: 'Your password has been successfully reset.',
-		ForgotPasswordButton: 'Forgot Password?'
+		SetNewPasswordButton: 'Şifreyi Güncelle',
+		PageTitleSuccess: 'Tamamdır!',
+		PageParagraphSuccess: 'Şifren başarıyla güncellendi.',
+		ForgotPasswordButton: 'Şifremi Unuttum'
 	},
 	FeaturedOn: {
-		PageTitle: 'We Are Featured On'
+		PageTitle: 'Basında'
 	}
 };
 export default tr;

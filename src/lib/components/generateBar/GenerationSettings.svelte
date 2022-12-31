@@ -81,7 +81,9 @@
 </script>
 
 <div class="w-full flex flex-wrap items-start justify-center px-2px py-4 gap-4">
-	{#if $advancedModeApp && $currentServer.features?.map((f) => f.name).includes('negative_prompt')}
+	{#if $advancedModeApp && ($currentServer.lastHealthStatus === 'unknown' || $currentServer.features
+				?.map((f) => f.name)
+				.includes('negative_prompt'))}
 		<TabLikeInput
 			disabled={!isCheckComplete || disabled}
 			class="w-full md:w-172 max-w-full order-1"

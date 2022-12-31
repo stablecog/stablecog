@@ -1,11 +1,11 @@
 <script lang="ts">
-	import { theme } from '$ts/stores/theme';
+	import { themeApp } from '$ts/stores/theme';
 
 	export { classes as class };
 	let classes = 'w-8 h-8';
 </script>
 
-{#if $theme === 'light'}
+{#if $themeApp === 'light'}
 	<svg class={classes} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 32 32"
 		><g
 			><path

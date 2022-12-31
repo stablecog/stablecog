@@ -1,10 +1,10 @@
 <script lang="ts">
 	import { portal } from 'svelte-portal';
 	import { Confetti } from 'svelte-confetti';
-	import { theme } from '$ts/stores/theme';
+	import { themeApp } from '$ts/stores/theme';
 
 	$: confettiColorArray =
-		$theme === 'light'
+		$themeApp === 'light'
 			? ['rgb(96,42,204)', 'rgb(210,108,34)', 'rgb(12,150,0)']
 			: ['rgb(174,133,235)', 'rgb(255,174,116)', 'rgb(129,209,116)'];
 </script>

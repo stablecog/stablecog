@@ -145,7 +145,7 @@ const fr: Translation = {
 		JoinUsTitle: 'Rejoignez-nous',
 		GoHomeButton: "Retour à l'accueil",
 		SwitchToDefaultServerButton: 'Basculer vers le serveur par défaut',
-		JoinUsOnTitle: 'Join us on {name}',
+		JoinUsOnTitle: 'Rejoignez-nous sur {name}',
 		ShareButton: 'Partager',
 		ShareOnButton: 'Partager sur {name}',
 		YesButton: 'Oui',
@@ -156,8 +156,8 @@ const fr: Translation = {
 		CopyLinkButton: 'Copier le lien',
 		CopyButton: 'Copier',
 		DeleteButton: 'Supprimer',
-		LoadingTitle: 'Loading',
-		LoadingParagraph: 'Loading...',
+		LoadingTitle: 'Chargement en cours',
+		LoadingParagraph: 'Chargement en cours...',
 		ServerUrlInput: {
 			Placeholder: 'URL du serveur'
 		},
@@ -190,7 +190,7 @@ const fr: Translation = {
 			},
 			'eaa438e1-dbf9-48fd-be71-206f0f257617': {
 				realName: 'Redshift Diffusion',
-				simpleName: '3D Render'
+				simpleName: 'Rendu 3D'
 			}
 		},
 		SchedulerOptions: {
@@ -207,7 +207,7 @@ const fr: Translation = {
 		UnknownTitle: 'Inconnu',
 		MoreOptionsTitle: "Plus D'Options",
 		LessOptionsTitle: "Moins D'Options",
-		TryAgainButton: 'Try Again'
+		TryAgainButton: 'Réessayer'
 	},
 	Error: {
 		SomethingWentWrong: "Une erreur s'est produite :(",
@@ -218,144 +218,149 @@ const fr: Translation = {
 		NotFound: 'Introuvable',
 		SupabaseNotFoundCantListen:
 			"Instance Supabase introuvable. Impossible d'écouter le flux d'images générées.",
-		InvalidEmail: 'Enter a valid email.',
-		PasswordTooShort: 'Password must be at least 8 characters.',
-		SomethingWentWrongTryAgain: 'Something went wrong, try again.',
-		InvalidCredentials: 'Invalid credentials.',
-		InvalidCode: 'Invalid code.'
+		InvalidEmail: 'Veuillez saisir un email valide.',
+		PasswordTooShort: 'Le mot de passe doit comporter au moins 8 caractères.',
+		SomethingWentWrongTryAgain: "Une erreur s'est produite, veuillez réessayer.",
+		InvalidCredentials: 'Identifiants incorrects.',
+		InvalidCode: 'Code non valide.'
 	},
 	Admin: {
-		AdminPanelTitle: 'Admin',
-		DeleteButton: 'Delete',
-		ApproveButton: 'Approve',
-		NoGenerationsToReview: 'No generations to review.',
-		ServersButton: 'Servers',
-		AdminGalleryButton: 'Gallery',
-		UsersButton: 'Users',
-		AdminTab: 'Admin',
-		ServersTab: 'Servers',
-		AdminGalleryTab: 'Gallery',
-		UsersTab: 'Users',
+		AdminPanelTitle: 'Administration',
+		DeleteButton: 'Supprimer',
+		ApproveButton: 'Approuver',
+		NoGenerationsToReview: 'Aucune image à approuver.',
+		ServersButton: 'Serveurs',
+		AdminGalleryButton: 'Galerie',
+		UsersButton: 'Utilisateurs',
+		AdminTab: 'Administration',
+		ServersTab: 'Serveurs',
+		AdminGalleryTab: 'Galerie',
+		UsersTab: 'Utilisateurs',
 		Gallery: {
 			TotalTitle: 'Total',
-			ApprovedTitle: 'Approved',
-			DeletedTitle: 'Deleted'
+			ApprovedTitle: 'Approuvé',
+			DeletedTitle: 'Supprimé'
 		}
 	},
 	SignUp: {
-		PageTitle: 'Sign Up',
-		PageParagraph: 'Join Stablecog to become a pro member and unlock its full potential.',
-		PageTitleConfirm: 'Confirm',
-		PageTitleConfirmAlt: 'Check Your Email',
+		PageTitle: 'Créer un compte',
+		PageParagraph:
+			'Inscrivez-vous et devenez membre pro de Stablecog pour libérer son plein potentiel.',
+		PageTitleConfirm: 'Confirmer',
+		PageTitleConfirmAlt: 'Vérifiez vos emails',
 		PageParagraphConfirm:
-			"We've emailed you a 6-digit code. Enter it below to confirm your account.",
-		SignUpButton: 'Sign Up',
-		ConfirmButton: 'Confirm',
-		AlreadyHaveAnAccountTitle: 'Already have an account?',
-		LoginInsteadButton: 'Login instead',
+			'Nous vous avons envoyé un code à 6 chiffres. Saisissez-le ci-dessous pour confirmer votre compte.',
+		SignUpButton: 'Créer un compte',
+		ConfirmButton: 'Confirmer',
+		AlreadyHaveAnAccountTitle: 'Vous avez déjà un compte ?',
+		LoginInsteadButton: 'Se connecter',
 		SixDigitCodeInput: {
-			Placeholder: '6-Digit Code'
+			Placeholder: 'Code à 6 chiffres'
 		}
 	},
 	SignIn: {
-		PageTitle: 'Sign In',
-		PageParagraph: 'Start using Stablecog with all features that are available to your account.',
-		DontHaveAnAccountTitle: "Don't have an account?",
-		SignUpInsteadButton: 'Sign up instead',
-		SignInButton: 'Sign In',
-		SignOutButton: 'Sign Out'
+		PageTitle: 'Se connecter',
+		PageParagraph:
+			'Commencez à utiliser Stablecog avec toutes les fonctionnalités disponibles sur votre compte.',
+		DontHaveAnAccountTitle: "Vous n'avez pas de compte ?",
+		SignUpInsteadButton: 'Créer un compte',
+		SignInButton: 'Se connecter',
+		SignOutButton: 'Se déconnecter'
 	},
 	Pro: {
-		PageTitle: 'Become a Pro',
+		PageTitle: 'Devenez un Pro',
 		PageParagraph:
-			"Unlock all features of Stablecog and support the project. Without the pro members, Stablecog wouldn't be able to stay completely open-source and offer free generations to everyone.",
-		PageTitleAlreadyPro: 'Already a Pro!',
+			'Débloquez toutes les fonctionnalités de Stablecog et soutenez le projet. Grâce aux membres pro, Stablecog peut rester complètement open-source et générer des images gratuitement et pour tous.',
+		PageTitleAlreadyPro: 'Vous êtes déjà Pro !',
 		PageParagraphAlreadyPro:
-			'You are already a pro member. Thank you for supporting the project! Go ahead and enjoy Stablecog, and consider sharing it with your friends.',
+			'Vous êtes déjà un membre pro. Merci de soutenir le projet ! Profitez bien de Stablecog, et parlez-en autour de vous.',
 		ProPlanTitle: 'Pro',
 		Features: {
-			FullSpeed: 'Full speed without set limits',
-			ImageDimensions: 'Different image dimensions',
-			Upscale: 'Upscale images',
-			Steps: 'Different inference steps',
-			MoreModels: 'More models',
-			MoreSchedulers: 'More schedulers',
-			SavedToCloud: 'Generations saved to the cloud',
-			Upcoming: 'Upcoming features',
-			CommercialUse: 'Commercial Use'
+			FullSpeed: 'Pleine vitesse sans limite',
+			ImageDimensions: "Plus de tailles d'image",
+			Upscale: 'Accès à la fonction Upscale',
+			Steps: "Plus d'itérations",
+			MoreModels: 'Plus de modèles',
+			MoreSchedulers: 'Plus de planificateurs',
+			SavedToCloud: 'Enregistrement des images générées sur le cloud',
+			Upcoming: 'Fonctionnalités à venir',
+			CommercialUse: 'Utilisation commerciale'
 		},
-		Soon: '(soon)',
-		Month: '/month',
-		BecomeProButton: 'Become a Pro',
+		Soon: '(bientôt)',
+		Month: '/mois',
+		BecomeProButton: 'Devenez un Pro',
 		Success: {
-			PageTitle: "You're a Pro!",
+			PageTitle: 'Vous êtes un Pro !',
 			PageParagraph:
-				'You now have access to everything Stablecog has to offer. If you have any questions, reach out to us on {platform}.'
+				'Vous avez maintenant accès à tout ce que Stablecog a à offrir. Si vous avez des questions, contactez-nous sur {platform}.'
 		},
 		Cancel: {
-			PageTitle: "You've cancelled",
+			PageTitle: 'Vous avez annulé',
 			PageParagraph:
-				"You've cancelled the subscription process. If it was a mistake, you can try again."
+				"Vous avez annulé le processus d'abonnement. Si c'était une erreur, vous pouvez réessayer."
 		},
 		Reason: {
-			ParagraphWidth: "That image width isn't available on the free plan.",
-			ParagraphHeight: "That image height isn't available on the free plan.",
-			ParagraphDimensions: "Those image dimensions aren't available on the free plan.",
-			ParagraphUpscale: "Upscale feature isn't available on the free plan.",
-			ParagraphInferenceSteps: "That inference steps setting isn't available on the free plan.",
-			ParagraphModel: "That AI model isn't available on the free plan.",
-			ParagraphScheduler: "That scheduler isn't available on the free plan.",
+			ParagraphWidth: "Cette largeur d'image est réservée aux membres pro.",
+			ParagraphHeight: "Cette hauteur d'image est réservée aux membres pro.",
+			ParagraphDimensions:
+				"Cette taille d'image (hauteur et largeur) est réservée aux membres pro.",
+			ParagraphUpscale: 'La fonction Upscale est réservée aux membres pro.',
+			ParagraphInferenceSteps: "Ce réglage du nombre d'itérations est réservé aux membres pro.",
+			ParagraphModel: 'Ce modèle IA est réservé aux membres pro.',
+			ParagraphScheduler: 'Ce planificateur est réservé aux membres pro.',
 			ParagraphWidthGeneration:
-				"That generation was created using an image width that isn't available on the free plan.",
+				'Cette image a été générée avec une taille (largeur) réservée aux membres pro.',
 			ParagraphHeightGeneration:
-				"That generation was created using an image height that isn't available on the free plan.",
+				'Cette image a été générée avec une taille (hauteur) réservée aux membres pro.',
 			ParagraphDimensionsGeneration:
-				"That generation was created using image dimensions that aren't available on the free plan.",
+				'Cette image a été générée avec une taille (hauteur et largeur) réservée aux membres pro.',
 			ParagraphInferenceStepsGeneration:
-				"That generation was created using an inference steps setting that isn't available on the free plan.",
+				"Cette image a été générée avec un paramètre de nombre d'itérations réservé aux membres pro.",
 			ParagraphModelGeneration:
-				"That generation was created using an AI model that isn't available on the free plan.",
+				'Cette image a été générée avec un modèle IA réservé aux membres pro.',
 			ParagraphSchedulerGeneration:
-				"That generation was created using a scheduler that isn't available on the free plan."
+				'Cette image a été générée avec un planificateur réservé aux membres pro.'
 		},
 		Tier: {
 			Title: {
-				Free: 'Free',
+				Free: 'Gratuit',
 				Pro: 'Pro'
 			},
 			Badge: {
-				Free: 'FREE',
+				Free: 'GRATUIT',
 				Pro: 'PRO'
 			}
 		}
 	},
 	Account: {
-		PageTitle: 'Account',
-		ManageSubscriptionButton: 'Manage Subscription',
-		ManageAccountButton: 'Manage Account',
-		MyAccountButton: 'My Account',
-		SubscriptionPlanTitle: 'Plan'
+		PageTitle: 'Compte',
+		ManageSubscriptionButton: 'Gérer votre abonnement',
+		ManageAccountButton: 'Gérer votre compte',
+		MyAccountButton: 'Mon compte',
+		SubscriptionPlanTitle: 'Abonnement'
 	},
 	ForgotPassword: {
-		PageTitle: 'Reset Password',
-		PageParagraph: 'We will send a 6-digit code to your email for resetting your password.',
-		SendResetCodeButton: 'Send Code',
-		PageTitleConfirmCode: 'Confirm',
-		PageTitleConfirmCodeAlt: 'Check Your Email',
-		PageParagraphConfirmCode: "We've emailed you a 6-digit code. Enter it below to continue.",
-		ConfirmCodeButton: 'Confirm',
-		PageTitleNewPassword: 'New Password',
-		PageParagraphNewPassword: 'Enter a new password for your account.',
+		PageTitle: 'Réinitialiser le mot de passe',
+		PageParagraph:
+			'Nous allons vous envoyer un code à 6 chiffres par email pour réinitialiser votre mot de passe.',
+		SendResetCodeButton: 'Envoyer le code',
+		PageTitleConfirmCode: 'Confirmer',
+		PageTitleConfirmCodeAlt: 'Vérifiez vos emails',
+		PageParagraphConfirmCode:
+			'Nous vous avons envoyé un code à 6 chiffres. Saisissez-le ci-dessous pour continuer.',
+		ConfirmCodeButton: 'Confirmer',
+		PageTitleNewPassword: 'Nouveau mot de passe',
+		PageParagraphNewPassword: 'Saisissez un nouveau mot de passe pour votre compte.',
 		NewPasswordInput: {
-			Placeholder: 'New Password'
+			Placeholder: 'Nouveau mot de passe'
 		},
-		SetNewPasswordButton: 'Set New Password',
-		PageTitleSuccess: 'Done!',
-		PageParagraphSuccess: 'Your password has been successfully reset.',
-		ForgotPasswordButton: 'Forgot Password?'
+		SetNewPasswordButton: 'Définir un nouveau mot de passe',
+		PageTitleSuccess: 'Terminé !',
+		PageParagraphSuccess: 'Votre mot de passe a été réinitialisé avec succès.',
+		ForgotPasswordButton: 'Mot de passe oublié ?'
 	},
 	FeaturedOn: {
-		PageTitle: 'We Are Featured On'
+		PageTitle: 'Nous sommes mis en avant sur'
 	}
 };
 export default fr;

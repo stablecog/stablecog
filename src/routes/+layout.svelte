@@ -1,7 +1,7 @@
 <script lang="ts">
 	import '$css/app.css';
 	import Navbar from '$components/navigation/Navbar.svelte';
-	import { theme } from '$ts/stores/theme';
+	import { theme, themeApp } from '$ts/stores/theme';
 	import { onDestroy, onMount } from 'svelte';
 	import { serverUrl } from '$ts/stores/serverUrl';
 	import { browser } from '$app/environment';
@@ -29,9 +29,14 @@
 	import { supabase } from '$ts/constants/supabase';
 	import { afterNavigate, invalidate } from '$app/navigation';
 	import { mLogPageview } from '$ts/helpers/loggers';
+	import { setCookie } from '$ts/helpers/setCookie';
 
 	export let data: LayoutData;
 	setLocale(data.locale);
+	if (data.theme !== null || data.advancedMode !== undefined) themeApp.set(data.theme);
+	if (data.advancedMode !== null && data.advancedMode !== undefined) {
+		advancedModeApp.set(data.advancedMode);
+	}
 
 	let innerHeight: number;
 	let innerWidth: number;
@@ -40,7 +45,7 @@
 	const bothHealthCheckTimeoutDuration = 1000 * 15;
 	let mounted = false;
 
-	$: [$theme], setBodyClasses();
+	$: [$themeApp], setBodyClasses();
 	$: [$serverUrl, mounted, $page], clearAndSetHealthCheckTimeout();
 	$: [innerWidth, innerHeight], setWindowStores();
 
@@ -57,7 +62,6 @@
 		} = supabase.auth.onAuthStateChange(() => {
 			invalidate('supabase:auth');
 		});
-		mounted = true;
 		setBodyClasses();
 		if ($localeLS && isLocale($localeLS) && $localeLS !== $locale) {
 			await loadLocaleAsync($localeLS);
@@ -66,6 +70,10 @@
 		if (($advancedMode === true || $advancedMode === false) && $advancedMode !== $advancedModeApp) {
 			advancedModeApp.set($advancedMode);
 		}
+		if ($theme !== null && $theme !== $themeApp) {
+			themeApp.set($theme);
+		}
+		mounted = true;
 		return () => {
 			subscription.unsubscribe();
 		};
@@ -75,7 +83,7 @@
 		const props = {
 			'SC - Page': `${$page.url.pathname}${$page.url.search}`,
 			'SC - Locale': $locale,
-			'SC - Advanced Mode': $advancedMode,
+			'SC - Advanced Mode': $advancedModeApp,
 			'SC - Plan': $page.data.tier
 		};
 		mLogPageview(props);
@@ -119,7 +127,7 @@
 
 	function setBodyClasses() {
 		if (browser) {
-			if ($theme === 'light') {
+			if ($themeApp === 'light') {
 				document.body.classList.add('theme-light');
 				document.body.classList.remove('theme-dark');
 			} else {
@@ -251,14 +259,25 @@
 			console.log('Default server health check took:', Date.now() - now, 'ms');
 		}
 	}
+
+	const runIfMounted = (fn: () => void) => {
+		if (mounted) fn();
+	};
+	$: $locale, runIfMounted(() => setCookie(`sc-locale=${$locale}`));
+	$: $themeApp, runIfMounted(() => setCookie(`sc-theme=${$themeApp}`));
+	$: $advancedModeApp,
+		runIfMounted(() => {
+			console.log('setting cookie');
+			setCookie(`sc-advanced-mode=${$advancedModeApp}`);
+		});
 </script>
 
 <svelte:window bind:innerHeight bind:innerWidth />
 
 <div
 	class="w-full relative bg-c-bg text-c-on-bg
-	min-h-screen flex flex-col {$theme === 'light' ? 'theme-light' : 'theme-dark'}"
-	style="background-image: url({$theme === 'light'
+	min-h-screen flex flex-col {$themeApp === 'light' ? 'theme-light' : 'theme-dark'}"
+	style="background-image: url({$themeApp === 'light'
 		? '/illustrations/grid-on-light.svg'
 		: '/illustrations/grid-on-dark.svg'}); background-size: 24px;{innerHeight !== undefined
 		? `min-height: ${innerHeight}px`

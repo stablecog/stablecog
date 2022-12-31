@@ -15,6 +15,7 @@ import pt_br from './pt-br'
 import pt_pt from './pt-pt'
 import ru from './ru'
 import tr from './tr'
+import vi from './vi'
 import zh_Hans from './zh-Hans'
 
 const localeTranslations = {
@@ -28,6 +29,7 @@ const localeTranslations = {
 	'pt-pt': pt_pt,
 	ru,
 	tr,
+	vi,
 	'zh-Hans': zh_Hans,
 }
 
