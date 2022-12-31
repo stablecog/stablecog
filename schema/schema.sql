@@ -2,6 +2,8 @@ CREATE extension IF NOT EXISTS moddatetime schema extensions;
 
 CREATE TYPE user_subscription_tier_enum AS ENUM ('FREE', 'PRO');
 
+CREATE TYPE user_subscription_category_enum AS ENUM ('GIFTED', 'FRIEND_BOUGHT');
+
 -- Generation Table
 CREATE TYPE generation_status_enum AS ENUM ('started', 'succeeded', 'failed', 'rejected');
 
@@ -610,7 +612,8 @@ CREATE POLICY "Admins can edit models" ON public.model FOR ALL USING (
 CREATE TABLE public."user" (
     "id" UUID REFERENCES auth.users(id) ON DELETE CASCADE NOT NULL,
     "email" TEXT NOT NULL,
-    "subscription_tier" user_subscription_tier_enum DEFAULT ' FREE ' NOT NULL,
+    "subscription_tier" user_subscription_tier_enum DEFAULT 'FREE' NOT NULL,
+    "subscription_category" user_subscription_cateogry_enum,
     "created_at" TIMESTAMPTZ DEFAULT TIMEZONE(' utc ' :: TEXT, NOW()) NOT NULL,
     "updated_at" TIMESTAMPTZ DEFAULT TIMEZONE(' utc ' :: TEXT, NOW()) NOT NULL,
     "stripe_customer_id" TEXT,

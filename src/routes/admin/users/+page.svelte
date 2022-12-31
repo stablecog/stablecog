@@ -17,6 +17,7 @@
 		email: string;
 		stripe_customer_id: string;
 		subscription_tier: IStripeSubscriptionTier;
+		subscription_category: 'GIFTED' | 'FRIEND_BOUGHT';
 	}
 
 	interface TUserRes {
@@ -25,8 +26,6 @@
 	}
 
 	let users: TUser[];
-
-	const giftedPro = 7;
 
 	onMount(async () => {
 		getUsers();
@@ -65,7 +64,11 @@
 			<div class="flex gap-3 items-center">
 				<TierBadge tier={'PRO'} size="md" />
 				<p class="font-bold text-xl text-c-primary pr-4">
-					{users ? users.filter((u) => u.subscription_tier === 'PRO').length - giftedPro : '--'}
+					{users
+						? users.filter((u) => u.subscription_tier === 'PRO').length -
+						  users.filter((u) => u.subscription_category === 'GIFTED').length -
+						  users.filter((u) => u.subscription_category === 'FRIEND_BOUGHT').length
+						: '--'}
 				</p>
 			</div>
 			<div class="flex gap-3 items-center">
