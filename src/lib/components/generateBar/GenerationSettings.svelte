@@ -124,11 +124,9 @@
 			</div>
 		</TabBar>
 		{#if $page.data.tier === 'FREE'}
-			<TierBadge
-				tier="PRO"
-				outline="primary"
-				class="absolute -right-1.5 -top-1.5 pointer-events-none"
-			/>
+			<div class="absolute -top-2 pointer-events-none -left-1.25">
+				<TierBadge tier="PRO" outline="primary" />
+			</div>
 		{/if}
 	</div>
 	<div class="w-full md:w-84 max-w-full order-2 relative">
@@ -153,11 +151,9 @@
 			</div>
 		</TabBar>
 		{#if $page.data.tier === 'FREE'}
-			<TierBadge
-				tier="PRO"
-				outline="primary"
-				class="absolute -right-1.5 -top-1.5 pointer-events-none"
-			/>
+			<div class="absolute -top-2 pointer-events-none -left-1.25">
+				<TierBadge tier="PRO" outline="primary" />
+			</div>
 		{/if}
 	</div>
 
@@ -233,11 +229,9 @@
 				</div>
 			</TabBar>
 			{#if $page.data.tier === 'FREE'}
-				<TierBadge
-					tier="PRO"
-					outline="primary"
-					class="absolute -right-1.5 -top-1.5 pointer-events-none"
-				/>
+				<div class="absolute -top-2 pointer-events-none -left-1.25">
+					<TierBadge tier="PRO" outline="primary" />
+				</div>
 			{/if}
 		</div>
 		{#if $currentServer.lastHealthStatus === 'unknown' || $currentServer.features

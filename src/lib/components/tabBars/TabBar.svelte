@@ -47,7 +47,7 @@
 				style="
 				background-color: transparent;
 				opacity: 0.8;
-				background: repeating-linear-gradient(-45deg, rgb(var(--c-primary)/0.08), rgb(var(--c-primary)/0.08) 2px, transparent 2px, transparent 8px);
+				background: repeating-linear-gradient(-45deg, rgb(var(--c-primary)/0.15), rgb(var(--c-primary)/0.15) 2px, transparent 2px, transparent 8px);
 			"
 				class="w-full h-full"
 			/>

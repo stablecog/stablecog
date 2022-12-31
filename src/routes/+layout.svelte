@@ -33,7 +33,7 @@
 
 	export let data: LayoutData;
 	setLocale(data.locale);
-	if (data.theme !== null || data.advancedMode !== undefined) themeApp.set(data.theme);
+	if (data.theme !== null) themeApp.set(data.theme);
 	if (data.advancedMode !== null && data.advancedMode !== undefined) {
 		advancedModeApp.set(data.advancedMode);
 	}
@@ -62,10 +62,6 @@
 		} = supabase.auth.onAuthStateChange(() => {
 			invalidate('supabase:auth');
 		});
-		if ($page.data.session?.user.id) {
-			await supabase.auth.signOut();
-			await goto(`/sign-in?redirect_to=${encodeURIComponent('/')}`);
-		}
 		setBodyClasses();
 		if ($localeLS && isLocale($localeLS) && $localeLS !== $locale) {
 			await loadLocaleAsync($localeLS);
