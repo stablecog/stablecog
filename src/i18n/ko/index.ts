@@ -52,7 +52,7 @@ const ko: Translation = {
 	},
 	History: {
 		GenerationsTitle: '생성한 이미지',
-		GenerationsMaxSavedCountWarning: '최대 {count}개',
+		GenerationsMaxSavedCountWarning: '최근 {count}개',
 		NoGenerationsYet: '아직 생성한 이미지가 없어요.'
 	},
 	Live: {
@@ -137,7 +137,7 @@ const ko: Translation = {
 		BackToBlogButton: '되돌아가기'
 	},
 	Redirect: {
-		RedirectingToTitle: '{name}으로 이동합니다.'
+		RedirectingToTitle: '{name}으로 이동 중...'
 	},
 	Shared: {
 		StartGeneratingTitle: '아름다운 이미지를 만들어 보세요!',
@@ -145,7 +145,7 @@ const ko: Translation = {
 		JoinUsTitle: '함께 해요!',
 		GoHomeButton: '홈페이지로 가기',
 		SwitchToDefaultServerButton: '기본 설정된 서버를 사용하기',
-		JoinUsOnTitle: 'Join us on {name}',
+		JoinUsOnTitle: '{name}에서 더보기',
 		ShareButton: '공유하기',
 		ShareOnButton: '{name}에 공유하기',
 		YesButton: '좋아요',
@@ -190,7 +190,7 @@ const ko: Translation = {
 			},
 			'eaa438e1-dbf9-48fd-be71-206f0f257617': {
 				realName: 'Redshift Diffusion',
-				simpleName: '3D Render'
+				simpleName: '3D 렌더링'
 			}
 		},
 		SchedulerOptions: {
@@ -207,7 +207,7 @@ const ko: Translation = {
 		UnknownTitle: '알 수 없음',
 		MoreOptionsTitle: '더 많은 옵션 보기',
 		LessOptionsTitle: '옵션 숨기기',
-		TryAgainButton: 'Try Again'
+		TryAgainButton: '다시 시도하기'
 	},
 	Error: {
 		SomethingWentWrong: '웁스.. 뭔가 잘못됐어요. :(',
@@ -217,144 +217,144 @@ const ko: Translation = {
 		ServerSetNotWorking: '입력한 서버와 호환되지 않거나 요청에 대한 응답을 받지 못하고 있어요.',
 		NotFound: '요청한 페이지를 찾지 못했어요.',
 		SupabaseNotFoundCantListen: '데이터베이스를 찾을 수 없어요.',
-		InvalidEmail: 'Enter a valid email.',
-		PasswordTooShort: 'Password must be at least 8 characters.',
-		SomethingWentWrongTryAgain: 'Something went wrong, try again.',
-		InvalidCredentials: 'Invalid credentials.',
-		InvalidCode: 'Invalid code.'
+		InvalidEmail: '이메일이 올바르지 않습니다.',
+		PasswordTooShort: '비밀번호는 8글자 이상이어야 합니다.',
+		SomethingWentWrongTryAgain: '무언가 잘못되었습니다. 다시 시도해주세요.',
+		InvalidCredentials: '이메일과 비밀번호를 다시 확인해주세요.',
+		InvalidCode: '올바르지 않은 코드입니다. 다시 시도해주세요.'
 	},
 	Admin: {
-		AdminPanelTitle: 'Admin',
-		DeleteButton: 'Delete',
-		ApproveButton: 'Approve',
-		NoGenerationsToReview: 'No generations to review.',
-		ServersButton: 'Servers',
-		AdminGalleryButton: 'Gallery',
-		UsersButton: 'Users',
-		AdminTab: 'Admin',
-		ServersTab: 'Servers',
-		AdminGalleryTab: 'Gallery',
-		UsersTab: 'Users',
+		AdminPanelTitle: '관리자',
+		DeleteButton: '삭제하기',
+		ApproveButton: '확인됨',
+		NoGenerationsToReview: '확인할 이미지 없음',
+		ServersButton: '서버 관리',
+		AdminGalleryButton: '갤러리',
+		UsersButton: '사용자',
+		AdminTab: '관리자',
+		ServersTab: '서버',
+		AdminGalleryTab: '갤러리',
+		UsersTab: '사용자',
 		Gallery: {
-			TotalTitle: 'Total',
-			ApprovedTitle: 'Approved',
-			DeletedTitle: 'Deleted'
+			TotalTitle: '전체',
+			ApprovedTitle: '승인됨',
+			DeletedTitle: '삭제됨'
 		}
 	},
 	SignUp: {
-		PageTitle: 'Sign Up',
-		PageParagraph: 'Join Stablecog to become a pro member and unlock its full potential.',
-		PageTitleConfirm: 'Confirm',
-		PageTitleConfirmAlt: 'Check Your Email',
+		PageTitle: '회원 가입',
+		PageParagraph: 'Stablecog에 가입한 뒤 Pro 멤버가 되면 더 많은 기능을 쓸 수 있어요!',
+		PageTitleConfirm: '이메일 인증',
+		PageTitleConfirmAlt: '이메일 인증',
 		PageParagraphConfirm:
-			"We've emailed you a 6-digit code. Enter it below to confirm your account.",
-		SignUpButton: 'Sign Up',
-		ConfirmButton: 'Confirm',
-		AlreadyHaveAnAccountTitle: 'Already have an account?',
-		LoginInsteadButton: 'Login instead',
+			'가입한 이메일로 6자리 인증코드를 발송했어요. 아래에 인증코드를 입력해주세요.',
+		SignUpButton: '가입하기',
+		ConfirmButton: '이메일 인증하기',
+		AlreadyHaveAnAccountTitle: '이미 계정이 있으신가요?',
+		LoginInsteadButton: '다음으로 로그인하기',
 		SixDigitCodeInput: {
-			Placeholder: '6-Digit Code'
+			Placeholder: '인증번호 6자리'
 		}
 	},
 	SignIn: {
-		PageTitle: 'Sign In',
-		PageParagraph: 'Start using Stablecog with all features that are available to your account.',
-		DontHaveAnAccountTitle: "Don't have an account?",
-		SignUpInsteadButton: 'Sign up instead',
-		SignInButton: 'Sign In',
-		SignOutButton: 'Sign Out'
+		PageTitle: '로그인',
+		PageParagraph: '로그인을 통해 Stablecog의 모든 기능을 사용해보세요!',
+		DontHaveAnAccountTitle: '아직 계정이 없으신가요?',
+		SignUpInsteadButton: '가입하기',
+		SignInButton: '로그인하기',
+		SignOutButton: '로그아웃하기'
 	},
 	Pro: {
-		PageTitle: 'Become a Pro',
+		PageTitle: '더 많은 기능을 사용해보세요!',
 		PageParagraph:
-			"Unlock all features of Stablecog and support the project. Without the pro members, Stablecog wouldn't be able to stay completely open-source and offer free generations to everyone.",
-		PageTitleAlreadyPro: 'Already a Pro!',
+			'프로 멤버에 가입해서 Stablecog의 모든 기능을 사용해보세요. Stablecog가 제공하는 오픈소스와 무료 기능은 프로 멤버들의 지원을 통해 유지될 수 있습니다.',
+		PageTitleAlreadyPro: '이미 프로 멤버에 가입하셨네요!',
 		PageParagraphAlreadyPro:
-			'You are already a pro member. Thank you for supporting the project! Go ahead and enjoy Stablecog, and consider sharing it with your friends.',
+			'이미 프로 멤버에 가입해 주셨네요. Stablecog 프로젝트가 유지될 수 있도록 도와주셔서 고맙습니다. Stablecog가 마음에 드신다면 주변에도 많이 소개해주세요!',
 		ProPlanTitle: 'Pro',
 		Features: {
-			FullSpeed: 'Full speed without set limits',
-			ImageDimensions: 'Different image dimensions',
-			Upscale: 'Upscale images',
-			Steps: 'Different inference steps',
-			MoreModels: 'More models',
-			MoreSchedulers: 'More schedulers',
-			SavedToCloud: 'Generations saved to the cloud',
-			Upcoming: 'Upcoming features',
-			CommercialUse: 'Commercial Use'
+			FullSpeed: '가장 빠른 속도의 이미지 생성',
+			ImageDimensions: '다양한 이미지 생성 옵션',
+			Upscale: '고해상도 이미지 생성 기능',
+			Steps: '다양한 생성 스텝 설정',
+			MoreModels: '더 많은 AI 모델',
+			MoreSchedulers: '다양한 스케쥴러 사용',
+			SavedToCloud: '클라우드에 보관되는 이미지 생성 결과',
+			Upcoming: '향후 출시될 기능 모두!',
+			CommercialUse: '상업적 사용 가능'
 		},
-		Soon: '(soon)',
-		Month: '/month',
-		BecomeProButton: 'Become a Pro',
+		Soon: '(출시 예정)',
+		Month: '월',
+		BecomeProButton: '프로 멤버 가입하기',
 		Success: {
-			PageTitle: "You're a Pro!",
+			PageTitle: '프로 멤버가 되어주셔서 감사합니다!',
 			PageParagraph:
-				'You now have access to everything Stablecog has to offer. If you have any questions, reach out to us on {platform}.'
+				'이제부터 Stablecog에서 제공하는 모든 기능을 사용할 수 있습니다. 궁금한 점이 있을 때면 {platform}을 통해 문의해주세요.'
 		},
 		Cancel: {
-			PageTitle: "You've cancelled",
-			PageParagraph:
-				"You've cancelled the subscription process. If it was a mistake, you can try again."
+			PageTitle: '프로 멤버 가입이 중단됐어요.',
+			PageParagraph: '결제 과정에서 취소된 것 같아요. 실수로 취소했다면 다시 한번 시도해주세요.'
 		},
 		Reason: {
-			ParagraphWidth: "That image width isn't available on the free plan.",
-			ParagraphHeight: "That image height isn't available on the free plan.",
-			ParagraphDimensions: "Those image dimensions aren't available on the free plan.",
-			ParagraphUpscale: "Upscale feature isn't available on the free plan.",
-			ParagraphInferenceSteps: "That inference steps setting isn't available on the free plan.",
-			ParagraphModel: "That AI model isn't available on the free plan.",
-			ParagraphScheduler: "That scheduler isn't available on the free plan.",
+			ParagraphWidth: '선택하신 이미지 너비는 프로 멤버만 사용할 수 있어요.',
+			ParagraphHeight: '선택하신 이미지 높이는 프로 멤버만 사용할 수 있어요.',
+			ParagraphDimensions: '선택하신 이미지 유사 정도는 프로 멤버만 사용할 수 있어요.',
+			ParagraphUpscale: '고해상도 이미지 생성 기능은 프로 멤버만 사용할 수 있어요.',
+			ParagraphInferenceSteps: '선택하신 이미지 생성 스텝은 프로 멤버만 사용할 수 있어요.',
+			ParagraphModel: '선택하신 AI 모델은 프로 멤버만 사용할 수 있어요.',
+			ParagraphScheduler: '선택하신 스케쥴러는 프로 멤버만 사용할 수 있어요.',
 			ParagraphWidthGeneration:
-				"That generation was created using an image width that isn't available on the free plan.",
+				'선택하신 이미지는 프로 멤버만 사용할 수 있는 이미지 너비 값으로 생성됐어요.',
 			ParagraphHeightGeneration:
-				"That generation was created using an image height that isn't available on the free plan.",
+				'선택하신 이미지는 프로 멤버만 사용할 수 있는 이미지 높이 값으로 생성됐어요.',
 			ParagraphDimensionsGeneration:
-				"That generation was created using image dimensions that aren't available on the free plan.",
+				'선택하신 이미지는 프로 멤버만 사용할 수 있는 "유사한 정도" 값으로 생성됐어요.',
 			ParagraphInferenceStepsGeneration:
-				"That generation was created using an inference steps setting that isn't available on the free plan.",
+				'선택하신 이미지는 프로 멤버만 사용할 수 있는 생성 스텝 값으로 생성됐어요.',
 			ParagraphModelGeneration:
-				"That generation was created using an AI model that isn't available on the free plan.",
+				'선택하신 이미지는 프로 멤버만 사용할 수 있는 AI 모델을 통해 생성됐어요.',
 			ParagraphSchedulerGeneration:
-				"That generation was created using a scheduler that isn't available on the free plan."
+				'선택하신 이미지는 프로 멤버만 사용할 수 있는 스케쥴러를 통해 생성됐어요.'
 		},
 		Tier: {
 			Title: {
-				Free: 'Free',
-				Pro: 'Pro'
+				Free: '무료 체험',
+				Pro: '프로'
 			},
 			Badge: {
-				Free: 'FREE',
+				Free: '무료 체험',
 				Pro: 'PRO'
 			}
 		}
 	},
 	Account: {
-		PageTitle: 'Account',
-		ManageSubscriptionButton: 'Manage Subscription',
-		ManageAccountButton: 'Manage Account',
-		MyAccountButton: 'My Account',
-		SubscriptionPlanTitle: 'Plan'
+		PageTitle: '로그인 계정',
+		ManageSubscriptionButton: '구독 설정',
+		ManageAccountButton: '계정 설정',
+		MyAccountButton: '로그인 계정',
+		SubscriptionPlanTitle: '가입 요금제'
 	},
 	ForgotPassword: {
-		PageTitle: 'Reset Password',
-		PageParagraph: 'We will send a 6-digit code to your email for resetting your password.',
-		SendResetCodeButton: 'Send Code',
-		PageTitleConfirmCode: 'Confirm',
-		PageTitleConfirmCodeAlt: 'Check Your Email',
-		PageParagraphConfirmCode: "We've emailed you a 6-digit code. Enter it below to continue.",
-		ConfirmCodeButton: 'Confirm',
-		PageTitleNewPassword: 'New Password',
-		PageParagraphNewPassword: 'Enter a new password for your account.',
+		PageTitle: '비밀번호 재설정',
+		PageParagraph: '비밀번호 재설정을 위해 가입한 이메일로 인증코드를 발송합니다.',
+		SendResetCodeButton: '인증코드 받기',
+		PageTitleConfirmCode: '이메일 인증',
+		PageTitleConfirmCodeAlt: '이메일을 확인해주세요!',
+		PageParagraphConfirmCode:
+			'가입한 이메일로 6자리 인증코드를 발송했어요. 아래에 인증코드를 입력해주세요.',
+		ConfirmCodeButton: '이메일 인증하기',
+		PageTitleNewPassword: '새로운 비밀번호 설정',
+		PageParagraphNewPassword: '새로운 비밀번호를 설정해주세요.',
 		NewPasswordInput: {
-			Placeholder: 'New Password'
+			Placeholder: '새로운 비밀번호'
 		},
-		SetNewPasswordButton: 'Set New Password',
-		PageTitleSuccess: 'Done!',
-		PageParagraphSuccess: 'Your password has been successfully reset.',
-		ForgotPasswordButton: 'Forgot Password?'
+		SetNewPasswordButton: '새로운 비밀번호 설정하기',
+		PageTitleSuccess: '완료!',
+		PageParagraphSuccess: '새로운 비밀번호가 성공적으로 설정됐어요.',
+		ForgotPasswordButton: '비밀번호를 잊으셨나요?'
 	},
 	FeaturedOn: {
-		PageTitle: 'We Are Featured On'
+		PageTitle: 'Stablecog가 알려지고 있어요!'
 	}
 };
 export default ko;

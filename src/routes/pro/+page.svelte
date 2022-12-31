@@ -14,7 +14,6 @@
 	import ConfettiFullScreen from '$components/ConfettiFullScreen.svelte';
 	import PageWrapper from '$components/PageWrapper.svelte';
 	import IconInfo from '$components/icons/IconInfo.svelte';
-	import type { TTab } from '$ts/types/main';
 
 	export let data: PageServerData;
 
@@ -64,10 +63,10 @@
 	<div class="w-full flex flex-col items-center justify-start my-auto">
 		{#if $page.data.tier === 'FREE'}
 			{#if data.reason}
-				<div class="bg-c-bg rounded-xl -mx-2 md:mx-0">
+				<div class="bg-c-bg rounded-xl -mx-2 md:mx-0 -mt-4 md:-mt-2 mb-6 md:mb-8">
 					<div
 						class="flex items-center justify-center max-w-2xl bg-c-primary/10 text-left
-						border-2 border-c-primary/20 text-c-primary px-4 md:px-5 py-2.5 md:py-3 rounded-xl mb-8 gap-2 md:gap-2.5 
+						border-2 border-c-primary/20 text-c-primary px-4 md:px-5 py-2.5 md:py-3 rounded-xl gap-2 md:gap-2.5 
 						shadow-xl shadow-c-shadow/[var(--o-shadow-normal)]"
 					>
 						<IconInfo class="w-6 h-6 md:w-7 md:h-7 flex-shrink-0 -ml-1.5" />
