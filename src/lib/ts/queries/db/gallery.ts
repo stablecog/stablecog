@@ -1,5 +1,6 @@
 import type { TAvailableModelId, TAvailableSchedulerId } from '$ts/constants/main';
 import { supabaseAdmin } from '$ts/constants/supabaseAdmin';
+import { shuffleArray } from '$ts/helpers/shuffleArray';
 import type { TDBGenerationG } from '$ts/types/db';
 import type { TGalleryResponse } from '$ts/types/main';
 import type { PostgrestError } from '@supabase/supabase-js';
@@ -71,8 +72,10 @@ export async function getGalleryPage({
 			scheduler: scheduler as { id: TAvailableSchedulerId; name: string }
 		};
 	});
+	const generations = data.slice(0, batch);
+	const shuffledGenerations = shuffleArray(generations);
 	const response: TGalleryResponse = {
-		generations: data.slice(0, batch),
+		generations: shuffledGenerations,
 		page,
 		next,
 		totalCount: count !== null && count !== undefined ? count : undefined
