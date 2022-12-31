@@ -1,11 +1,12 @@
 import type { LayoutServerLoad } from './$types';
-import { getSupabase } from '@supabase/auth-helpers-sveltekit';
+import { getServerSession, getSupabase } from '@supabase/auth-helpers-sveltekit';
 import { loadLocaleAsync } from '$i18n/i18n-util.async';
 import type { IStripeSubscriptionTier } from '$ts/types/stripe';
 
 export const load: LayoutServerLoad = async (event) => {
 	let tier: IStripeSubscriptionTier = 'FREE';
-	const { supabaseClient, session } = await getSupabase(event);
+	const session = await getServerSession(event);
+	const { supabaseClient } = await getSupabase(event);
 	if (session?.user.id) {
 		try {
 			const { data } = await supabaseClient
