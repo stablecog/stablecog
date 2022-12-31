@@ -27,7 +27,7 @@
 	import { routesWithHealthCheck, routesWithHiddenFooter } from '$ts/constants/main';
 	import mixpanel from 'mixpanel-browser';
 	import { supabase } from '$ts/constants/supabase';
-	import { afterNavigate, invalidate } from '$app/navigation';
+	import { afterNavigate, goto, invalidate } from '$app/navigation';
 	import { mLogPageview } from '$ts/helpers/loggers';
 	import { setCookie } from '$ts/helpers/setCookie';
 
@@ -62,6 +62,10 @@
 		} = supabase.auth.onAuthStateChange(() => {
 			invalidate('supabase:auth');
 		});
+		if ($page.data.session?.user.id) {
+			await supabase.auth.signOut();
+			await goto(`/sign-in?redirect_to=${encodeURIComponent('/')}`);
+		}
 		setBodyClasses();
 		if ($localeLS && isLocale($localeLS) && $localeLS !== $locale) {
 			await loadLocaleAsync($localeLS);
