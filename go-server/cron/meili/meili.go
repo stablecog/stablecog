@@ -40,6 +40,7 @@ func SyncMeili() {
 
 	for _, gen := range generations {
 		newG := SMeiliGenerationG{
+			Id:                gen.Id,
 			ImageId:           gen.ImageId,
 			Width:             gen.Width,
 			Height:            gen.Height,
@@ -56,7 +57,7 @@ func SyncMeili() {
 			UpdatedAt:         gen.UpdatedAt,
 		}
 		if gen.NegativePromptId != "" {
-			newG.NegativePrompt = SNegativePrompt{Id: gen.NegativePromptId, Text: gen.NegativePromptText}
+			newG.NegativePrompt = &SNegativePrompt{Id: gen.NegativePromptId, Text: gen.NegativePromptText}
 		}
 		generationsMeili = append(generationsMeili, newG)
 	}
@@ -74,24 +75,26 @@ func SyncMeili() {
 }
 
 type SMeiliGenerationG struct {
-	ImageId           string          `json:"image_id"`
-	Width             int             `json:"width"`
-	Height            int             `json:"height"`
-	Hidden            bool            `json:"hidden"`
-	Prompt            SPrompt         `json:"prompt"`
-	NegativePrompt    SNegativePrompt `json:"negative_prompt,omitempty"`
-	Model             SModel          `json:"model"`
-	Scheduler         SScheduler      `json:"scheduler"`
-	NumInferenceSteps int             `json:"num_inference_steps"`
-	GuidanceScale     int             `json:"guidance_scale"`
-	Seed              int             `json:"seed"`
-	UserId            string          `json:"user_id,omitempty"`
-	UserTier          string          `json:"user_tier"`
-	CreatedAt         string          `json:"created_at"`
-	UpdatedAt         string          `json:"updated_at"`
+	Id                string           `json:"id"`
+	ImageId           string           `json:"image_id"`
+	Width             int              `json:"width"`
+	Height            int              `json:"height"`
+	Hidden            bool             `json:"hidden"`
+	Prompt            SPrompt          `json:"prompt"`
+	NegativePrompt    *SNegativePrompt `json:"negative_prompt,omitempty"`
+	Model             SModel           `json:"model"`
+	Scheduler         SScheduler       `json:"scheduler"`
+	NumInferenceSteps int              `json:"num_inference_steps"`
+	GuidanceScale     int              `json:"guidance_scale"`
+	Seed              int              `json:"seed"`
+	UserId            string           `json:"user_id,omitempty"`
+	UserTier          string           `json:"user_tier"`
+	CreatedAt         string           `json:"created_at"`
+	UpdatedAt         string           `json:"updated_at"`
 }
 
 type SDBGenerationGFlatRes struct {
+	Id                 string `json:"id"`
 	ImageId            string `json:"image_id"`
 	Width              int    `json:"width"`
 	Height             int    `json:"height"`
