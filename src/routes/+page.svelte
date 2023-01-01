@@ -92,7 +92,8 @@
 			prompt: $promptInputValue,
 			negative_prompt:
 				$currentServer.features?.map((f) => f.name).includes('negative_prompt') &&
-				($advancedModeApp || isValue(data.negative_prompt))
+				($advancedModeApp || isValue(data.negative_prompt)) &&
+				$negativePromptInputValue
 					? $negativePromptInputValue
 					: undefined,
 			model_id: $currentServer.features?.map((f) => f.name).includes('model')

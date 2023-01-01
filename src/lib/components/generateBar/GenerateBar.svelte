@@ -235,7 +235,9 @@
 	const setLocalNegativePrompt = () => {
 		if (isCheckComplete) {
 			negativePrompt.set(
-				$negativePromptInputValue !== '' && $negativePromptInputValue !== undefined
+				$negativePromptInputValue !== '' &&
+					$negativePromptInputValue !== undefined &&
+					$negativePromptInputValue !== null
 					? $negativePromptInputValue
 					: ''
 			);

@@ -1,7 +1,7 @@
 <script lang="ts">
 	import Button from '$components/buttons/Button.svelte';
 	import GenerationImage from '$components/generationImage/GenerationImage.svelte';
-	import IconLoading from '$components/icons/IconLoading.svelte';
+	import IconLoadingSlim from '$components/icons/IconLoadingSlim.svelte';
 	import ImagePlaceholder from '$components/ImagePlaceholder.svelte';
 	import LL from '$i18n/i18n-svelte';
 	import { elementreceive, elementsend } from '$ts/animation/transitions';
@@ -80,8 +80,8 @@
 		{/each}
 	</MasonryInfiniteGrid>
 {:else if loading || !generations || items.length !== generations.length}
-	<div class="w-full flex flex-1 flex-col items-center justify-center py-12">
-		<IconLoading class="animate-spin-faster w-8 h-8 text-c-on-bg/50" />
+	<div class="w-full flex flex-col flex-1 items-center justify-center py-12">
+		<IconLoadingSlim class="animate-spin-faster w-12 h-12 text-c-on-bg/50" />
 	</div>
 {:else}
 	<div class="w-full flex-1 flex flex-col justify-center items-center pt-8 px-5 gap-8">

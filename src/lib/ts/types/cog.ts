@@ -16,6 +16,7 @@ export type TModelNameCog =
 	| 'Arcane Diffusion'
 	| 'Ghibli Diffusion'
 	| 'Mo-Di Diffusion'
-	| 'Redshift Diffusion';
+	| 'Redshift Diffusion'
+	| 'Waifu Diffusion v1.4';
 
 export type TOutputImageExtCog = 'png' | 'jpg';

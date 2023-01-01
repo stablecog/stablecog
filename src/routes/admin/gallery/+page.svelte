@@ -2,7 +2,7 @@
 	import { page } from '$app/stores';
 	import GenerationGFullScreen from '$components/generationFullScreen/GenerationGFullScreen.svelte';
 	import GenerationGImageAdmin from '$components/generationImage/GenerationGImageAdmin.svelte';
-	import IconLoading from '$components/icons/IconLoading.svelte';
+	import IconLoadingSlim from '$components/icons/IconLoadingSlim.svelte';
 	import ImagePlaceholder from '$components/ImagePlaceholder.svelte';
 	import MetaTag from '$components/MetaTag.svelte';
 	import LL from '$i18n/i18n-svelte';
@@ -178,8 +178,8 @@
 			</MasonryInfiniteGrid>
 		</div>
 		{#if isValue(nextPage)}
-			<div class="w-full flex flex-1 flex-col items-center justify-center py-12">
-				<IconLoading class="animate-spin-faster w-8 h-8 text-c-on-bg/50" />
+			<div class="w-full flex flex-col flex-1 items-center justify-center py-12">
+				<IconLoadingSlim class="animate-spin-faster w-12 h-12 text-c-on-bg/50" />
 			</div>
 		{/if}
 	</div>

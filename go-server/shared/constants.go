@@ -50,6 +50,7 @@ var ModelIdToModelNameCog = map[string]string{
 	"790c80e1-65b1-4556-9332-196344389572": "Mo-Di Diffusion",
 	"48a7031d-43b6-4a23-9f8c-8020eb6862e4": "Ghibli Diffusion",
 	"eaa438e1-dbf9-48fd-be71-206f0f257617": "Redshift Diffusion",
+	"f7f3d973-ac6f-4a7a-9db8-e89e4fba03a9": "Waifu Diffusion v1.4",
 }
 
 var SchedulerIdToSchedulerNameCog = map[string]string{
@@ -74,6 +75,7 @@ var AvailableModelIdsFree = []string{
 	"048b4aa3-5586-47ed-900f-f4341c96bdb2",
 	"8acfe4c8-751d-4aa6-8c3c-844e3ef478e0",
 	"48a7031d-43b6-4a23-9f8c-8020eb6862e4",
+	"f7f3d973-ac6f-4a7a-9db8-e89e4fba03a9",
 }
 
 const GenerationOrUpscaleTimeout = time.Second * 30

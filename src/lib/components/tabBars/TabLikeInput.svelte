@@ -70,7 +70,7 @@
 				}}
 				{placeholder}
 				type="text"
-				class="text-base w-full text-c-on-bg/75 self-stretch overflow-ellipsis ring-0 transition ring-c-primary/20 focus:ring-2 
+				class="text-base w-full text-c-on-bg/75 self-stretch overflow-ellipsis ring-0 transition ring-c-primary/15 focus:ring-c-primary/25 focus:ring-2 
 						pl-4 py-3.25 md:py-3.5 rounded-r-xl bg-transparent placeholder:text-c-on-bg/30 {!$isTouchscreen
 					? 'hover:ring-2 group-hover:ring-2'
 					: ''} {showClearInputButton ? 'pr-10 md:pr-12' : 'pr-4'}"
@@ -104,7 +104,7 @@
 				type="number"
 				inputmode="numeric"
 				pattern="[0-9]*"
-				class="text-base w-full text-c-on-bg/75 self-stretch overflow-ellipsis ring-0 transition ring-c-primary/20 focus:ring-2 
+				class="text-base w-full text-c-on-bg/75 self-stretch overflow-ellipsis ring-0 transition ring-c-primary/15 focus:ring-c-primary/25 focus:ring-2 
 					pl-4 py-3.25 md:py-3.5 rounded-r-xl bg-transparent placeholder:text-c-on-bg/30 {!$isTouchscreen
 					? 'hover:ring-2 group-hover:ring-2'
 					: ''} {showClearInputButton ? 'pr-10 md:pr-12' : 'pr-4'}"
