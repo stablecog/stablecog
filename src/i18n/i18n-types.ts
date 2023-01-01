@@ -1031,6 +1031,30 @@ type RootTranslation = {
 		 */
 		PageTitle: string
 	}
+	Gallery: {
+		/**
+		 * G​a​l​l​e​r​y
+		 */
+		PageTitle: string
+		/**
+		 * C​h​e​c​k​ ​o​u​t​ ​w​h​a​t​ ​o​t​h​e​r​s​ ​h​a​v​e​ ​w​i​t​h​ ​S​t​a​b​l​e​c​o​g​.
+		 */
+		PageParagraph: string
+		SearchInput: {
+			/**
+			 * S​e​a​r​c​h
+			 */
+			Title: string
+		}
+		/**
+		 * S​e​a​r​c​h​i​n​g
+		 */
+		SearchingTitle: string
+		/**
+		 * N​o​ ​m​a​t​c​h​i​n​g​ ​g​e​n​e​r​a​t​i​o​n
+		 */
+		NoMatchingGenerationTitle: string
+	}
 }
 
 export type TranslationFunctions = {
@@ -2035,6 +2059,30 @@ export type TranslationFunctions = {
 		 * We Are Featured On
 		 */
 		PageTitle: () => LocalizedString
+	}
+	Gallery: {
+		/**
+		 * Gallery
+		 */
+		PageTitle: () => LocalizedString
+		/**
+		 * Check out what others have with Stablecog.
+		 */
+		PageParagraph: () => LocalizedString
+		SearchInput: {
+			/**
+			 * Search
+			 */
+			Title: () => LocalizedString
+		}
+		/**
+		 * Searching
+		 */
+		SearchingTitle: () => LocalizedString
+		/**
+		 * No matching generation
+		 */
+		NoMatchingGenerationTitle: () => LocalizedString
 	}
 }
 

@@ -359,6 +359,15 @@ const ptBr: Translation = {
 	},
 	FeaturedOn: {
 		PageTitle: 'Estamos em destaque em'
+	},
+	Gallery: {
+		PageTitle: 'Gallery',
+		PageParagraph: 'Check out what others have with Stablecog.',
+		SearchInput: {
+			Title: 'Search'
+		},
+		SearchingTitle: 'Searching',
+		NoMatchingGenerationTitle: 'No matching generation'
 	}
 };
 export default ptBr;

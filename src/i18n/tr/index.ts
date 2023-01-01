@@ -354,6 +354,15 @@ const tr: Translation = {
 	},
 	FeaturedOn: {
 		PageTitle: 'Basında'
+	},
+	Gallery: {
+		PageTitle: 'Gallery',
+		PageParagraph: 'Check out what others have with Stablecog.',
+		SearchInput: {
+			Title: 'Search'
+		},
+		SearchingTitle: 'Searching',
+		NoMatchingGenerationTitle: 'No matching generation'
 	}
 };
 export default tr;

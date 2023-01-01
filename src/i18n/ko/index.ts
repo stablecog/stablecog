@@ -355,6 +355,15 @@ const ko: Translation = {
 	},
 	FeaturedOn: {
 		PageTitle: 'Stablecog가 알려지고 있어요!'
+	},
+	Gallery: {
+		PageTitle: 'Gallery',
+		PageParagraph: 'Check out what others have with Stablecog.',
+		SearchInput: {
+			Title: 'Search'
+		},
+		SearchingTitle: 'Searching',
+		NoMatchingGenerationTitle: 'No matching generation'
 	}
 };
 export default ko;

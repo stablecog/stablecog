@@ -348,6 +348,15 @@ const zhHans: Translation = {
 	},
 	FeaturedOn: {
 		PageTitle: 'We Are Featured On'
+	},
+	Gallery: {
+		PageTitle: 'Gallery',
+		PageParagraph: 'Check out what others have with Stablecog.',
+		SearchInput: {
+			Title: 'Search'
+		},
+		SearchingTitle: 'Searching',
+		NoMatchingGenerationTitle: 'No matching generation'
 	}
 };
 export default zhHans;

@@ -7,7 +7,7 @@
 	import ImagePlaceholder from '$components/ImagePlaceholder.svelte';
 	import Input from '$components/Input.svelte';
 	import MetaTag from '$components/MetaTag.svelte';
-	import { locale } from '$i18n/i18n-svelte';
+	import LL, { locale } from '$i18n/i18n-svelte';
 	import { elementreceive, elementsend } from '$ts/animation/transitions';
 	import { apiBase, canonicalUrl } from '$ts/constants/main';
 	import { generationGPreviewUrlFromId } from '$ts/helpers/generationGPreviewUrlFromId';
@@ -217,9 +217,10 @@
 				disabled={scrollDirection === 'down'}
 				class="max-w-2xl"
 				bind:value={searchString}
-				title="Search"
+				title={$LL.Gallery.SearchInput.Title()}
 				hasIcon
 				hasClearButton
+				bg="bg-secondary"
 				shadow={!atTheTop ? 'strongest' : 'normal'}
 			>
 				<IconSearch slot="icon" class="w-full h-full" />
@@ -241,7 +242,9 @@
 						{/if}
 					</div>
 					<p class="mt-2">
-						{searchStatus === 'searching' ? 'Searching' : 'No matching generations'}
+						{searchStatus === 'searching'
+							? $LL.Gallery.SearchingTitle()
+							: $LL.Gallery.NoMatchingGenerationTitle()}
 					</p>
 				</div>
 			{:else}
@@ -274,7 +277,7 @@
 											in:elementreceive|local={{ key: generations[item.key].id }}
 											out:elementsend|local={{ key: generations[item.key].id }}
 											class="absolute left-0 top-0 w-full h-full group rounded-xl bg-c-bg-secondary z-0 overflow-hidden border-4 
-										shadow-lg shadow-c-shadow/[var(--o-shadow-normal)] border-c-bg-secondary"
+											shadow-lg shadow-c-shadow/[var(--o-shadow-normal)] border-c-bg-secondary"
 										>
 											<GenerationGImage generation={generations[item.key]} />
 										</div>
