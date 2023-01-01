@@ -177,6 +177,7 @@
 			class="w-full flex flex-wrap max-w-xl md:max-w-2xl gap-3"
 		>
 			<Input
+				bg="bg-secondary"
 				disabled={serverAddStatus === 'loading'}
 				title={$LL.Shared.ServerUrlInput.Placeholder()}
 				bind:value={serverUrl}
@@ -210,7 +211,7 @@
 								{server.url}
 							</p>
 							<p class="w-full text-c-on-bg/40 min-w-[6rem] max-w-full">
-								{getRelativeDate(new Date(server.last_health_check_at).getTime(), now)}
+								{getRelativeDate({ date: new Date(server.last_health_check_at).getTime(), now })}
 							</p>
 						</div>
 						<div class="flex flex-wrap justify-end items-center gap-8 text-left">

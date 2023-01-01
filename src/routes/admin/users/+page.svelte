@@ -90,7 +90,9 @@
 			<div class="w-full bg-c-bg-secondary h-2px" />
 			<div class="w-full flex justify-center p-3 text-xs text-c-on-bg/50">
 				{startDate
-					? `${getRelativeDate(startDate.toString())} • ${getDateString(startDate)}`
+					? `${getRelativeDate({ date: startDate.toString(), decimals: 1 })} • ${getDateString(
+							startDate
+					  )}`
 					: '---------- • ----------'}
 			</div>
 		</div>
