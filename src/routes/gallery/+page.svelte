@@ -68,6 +68,12 @@
 			if (searchString) {
 				try {
 					searchStatus = 'searching';
+					mLogGallerySearch({
+						'SC - Search Query': searchString,
+						'SC - Advanced Mode': $advancedModeApp,
+						'SC - Locale': $locale,
+						'SC - Plan': $page.data.tier
+					});
 					const res = await fetch(`${apiBase}/gallery?search=${searchString}`);
 					if (res.status !== 200) {
 						throw new Error('Error getting the page');
@@ -106,12 +112,6 @@
 		}
 		console.log('Getting the page:', nextPage);
 		try {
-			mLogGallerySearch({
-				'SC - Search Query': searchString,
-				'SC - Advanced Mode': $advancedModeApp,
-				'SC - Locale': $locale,
-				'SC - Plan': $page.data.tier
-			});
 			const res = await fetch(
 				`${apiBase}/gallery?page=${nextPage}${searchString ? `&search=${searchString}` : ''}`
 			);
