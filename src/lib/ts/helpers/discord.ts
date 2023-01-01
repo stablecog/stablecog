@@ -4,18 +4,20 @@ export function getDiscordWebhookBodyNewSubscriber({
 	plan,
 	email,
 	supabaseId,
-	stripeId
+	stripeId,
+	count
 }: {
 	plan: string;
 	email: string;
 	supabaseId: string;
 	stripeId: string;
+	count: number | null;
 }) {
 	return {
 		content: null,
 		embeds: [
 			{
-				title: '🎉 New Subscriber!',
+				title: `🎉 New Subscriber${count !== null ? ` #${count}` : ''}`,
 				color: 11437567,
 				fields: [
 					{

@@ -84,13 +84,17 @@ export const POST: RequestHandler = async (event) => {
 			} else {
 				const userRes = await supabaseAdmin
 					.from('user')
-					.update({
-						subscription_tier: prod.name.toUpperCase()
-					})
+					.update(
+						{
+							subscription_tier: prod.name.toUpperCase()
+						},
+						{ count: 'exact' }
+					)
 					.match({ stripe_customer_id: customerId })
 					.select('id,email')
 					.maybeSingle();
 				const user = userRes.data;
+				const count = userRes.count;
 				if (!user) return new Response('User not found', { status: 400 });
 				// If new subscription
 				if (prevStatus && prevStatus === 'incomplete') {
@@ -114,7 +118,8 @@ export const POST: RequestHandler = async (event) => {
 									email: user.email,
 									plan: prod.name.toUpperCase(),
 									stripeId: customerId.toString(),
-									supabaseId: user.id
+									supabaseId: user.id,
+									count
 								})
 							)
 						});
