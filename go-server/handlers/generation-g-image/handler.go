@@ -9,6 +9,7 @@ import (
 	"time"
 
 	"github.com/fatih/color"
+	"github.com/getsentry/sentry-go"
 	"github.com/gofiber/fiber/v2"
 	"github.com/h2non/bimg"
 	"github.com/yekta/stablecog/go-server/shared"
@@ -37,11 +38,13 @@ func Handler(c *fiber.Ctx) error {
 	webpUrl := fmt.Sprintf("%s/%s.webp", r2Url, imageId)
 	res, err := http.Get(webpUrl)
 	if err != nil {
+		sentry.CaptureException(err)
 		log.Printf(red("Error fetching - %s: %s"), webpUrl, err)
 		return c.Status(http.StatusInternalServerError).JSON("Error fetching")
 	}
 	data, err := ioutil.ReadAll(res.Body)
 	if err != nil {
+		sentry.CaptureException(err)
 		log.Printf(red("Error reading response - %s: %s"), webpUrl, err)
 		return c.Status(http.StatusInternalServerError).JSON("Error reading response")
 	}
@@ -62,6 +65,7 @@ func Handler(c *fiber.Ctx) error {
 
 	buff, err := img.Process(params)
 	if err != nil {
+		sentry.CaptureException(err)
 		log.Printf(red("Error converting image - %s: %s"), webpUrl, err)
 		return c.Status(http.StatusInternalServerError).JSON("Error converting image")
 	}

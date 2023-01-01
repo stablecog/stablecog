@@ -4,6 +4,7 @@ import (
 	"log"
 	"time"
 
+	"github.com/getsentry/sentry-go"
 	"github.com/yekta/stablecog/go-server/shared"
 )
 
@@ -22,6 +23,7 @@ func UpdateUpscaleAsSucceeded(
 	}
 	_, err := shared.SupabaseDb.From("upscale").Update(value, "", "").Eq("id", upscaleId).ExecuteTo(res)
 	if err != nil {
+		sentry.CaptureException(err)
 		log.Printf("-- DB - Error updating upscale as succeeded: %v --", err)
 		return
 	}
@@ -40,6 +42,7 @@ func UpdateUpscaleAsFailed(upscaleIdChan chan string, durationMs int64) {
 	}
 	_, err := shared.SupabaseDb.From("upscale").Update(value, "", "").Eq("id", upscaleId).ExecuteTo(res)
 	if err != nil {
+		sentry.CaptureException(err)
 		log.Printf("-- DB - Error updating upscale as failed: %v --", err)
 		return
 	}

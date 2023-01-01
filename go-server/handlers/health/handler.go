@@ -6,6 +6,7 @@ import (
 	"time"
 
 	"github.com/fatih/color"
+	"github.com/getsentry/sentry-go"
 	"github.com/gofiber/fiber/v2"
 	cronHealth "github.com/yekta/stablecog/go-server/cron/health"
 	"github.com/yekta/stablecog/go-server/shared"
@@ -44,6 +45,7 @@ func Handler(c *fiber.Ctx) error {
 	}
 	var req SHealthRequestBody
 	if err := c.BodyParser(&req); err != nil {
+		sentry.CaptureException(err)
 		return c.Status(http.StatusInternalServerError).JSON("Invalid request body")
 	}
 	if req.ServerUrl == "" {

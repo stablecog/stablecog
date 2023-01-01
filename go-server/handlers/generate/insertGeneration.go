@@ -5,6 +5,7 @@ import (
 	"time"
 
 	"github.com/fatih/color"
+	"github.com/getsentry/sentry-go"
 	"github.com/yekta/stablecog/go-server/loggers"
 	"github.com/yekta/stablecog/go-server/shared"
 )
@@ -34,6 +35,7 @@ func InsertGenerationInitial(g SInsertGenerationProps) string {
 	var res SDBGenerationInsertInitialRes
 	_, err := shared.SupabaseDb.From("generation").Insert(insertBody, false, "", "", "").Single().ExecuteTo(&res)
 	if err != nil {
+		sentry.CaptureException(err)
 		log.Printf(red("-- DB - Error inserting generation: %v --"), err)
 		return ""
 	}

@@ -7,6 +7,7 @@ import (
 	"sync"
 	"time"
 
+	"github.com/getsentry/sentry-go"
 	"github.com/google/uuid"
 	"github.com/h2non/bimg"
 	"github.com/yekta/stablecog/go-server/shared"
@@ -49,6 +50,7 @@ func UpdateGenerationAsSucceeded(
 				Eq("text", prompt).
 				ExecuteTo(&promptRes)
 			if err != nil {
+				sentry.CaptureException(err)
 				log.Printf("-- DB - Error getting prompt ID: %v --", err)
 				return
 			}
@@ -68,6 +70,7 @@ func UpdateGenerationAsSucceeded(
 					Single().
 					ExecuteTo(&promptInsertRes)
 				if err != nil {
+					sentry.CaptureException(err)
 					log.Printf("-- DB - Error inserting prompt: %v --", err)
 					return
 				}
@@ -84,6 +87,7 @@ func UpdateGenerationAsSucceeded(
 				Eq("text", negativePrompt).
 				ExecuteTo(&negativePromptRes)
 			if err != nil {
+				sentry.CaptureException(err)
 				log.Printf("-- DB - Error getting negative prompt ID: %v --", err)
 				return
 			}
@@ -103,6 +107,7 @@ func UpdateGenerationAsSucceeded(
 					Single().
 					ExecuteTo(&negativePromptInsertRes)
 				if err != nil {
+					sentry.CaptureException(err)
 					log.Printf("-- DB - Error inserting negative prompt: %v --", err)
 					return
 				}
@@ -119,11 +124,13 @@ func UpdateGenerationAsSucceeded(
 			name := fmt.Sprintf("%s.%s", imageId, imageExt)
 			buff, bErr := shared.BufferFromB64(b64)
 			if bErr != nil {
+				sentry.CaptureException(bErr)
 				log.Printf("-- Supabase Storage Upload - Error converting b64 to buffer: %v --", bErr)
 				return
 			}
 			buffWebp, wErr := bimg.NewImage(buff).Process(webpOptionsStorage)
 			if wErr != nil {
+				sentry.CaptureException(wErr)
 				log.Printf("-- Supabase Storage Upload - Error converting to webp: %v --", wErr)
 				return
 			}
@@ -148,6 +155,7 @@ func UpdateGenerationAsSucceeded(
 	}
 	_, err := shared.SupabaseDb.From("generation").Update(value, "", "").Eq("id", generationId).ExecuteTo(res)
 	if err != nil {
+		sentry.CaptureException(err)
 		log.Printf("-- DB - Error updating generation as succeeded: %v --", err)
 		return
 	}
@@ -173,6 +181,7 @@ func UpdateGenerationAsFailed(generationIdChan chan string, durationMs int64, is
 	}
 	_, err := shared.SupabaseDb.From("generation").Update(value, "", "").Eq("id", generationId).ExecuteTo(res)
 	if err != nil {
+		sentry.CaptureException(err)
 		log.Printf("-- DB - Error updating generation as failed: %v --", err)
 		return
 	}

@@ -9,6 +9,7 @@ import (
 	"net/http"
 	"time"
 
+	"github.com/getsentry/sentry-go"
 	"github.com/goccy/go-json"
 
 	"github.com/fatih/color"
@@ -35,6 +36,7 @@ func Handler(c *fiber.Ctx) error {
 	var req shared.SGenerateRequestBody
 	if err := c.BodyParser(&req); err != nil {
 		log.Printf("-- Invalid request body: %v --", err)
+		sentry.CaptureException(err)
 		return c.Status(http.StatusBadRequest).JSON(
 			SGenerateResponse{Error: "Invalid request body"},
 		)
@@ -85,6 +87,7 @@ func Handler(c *fiber.Ctx) error {
 		var res shared.SUserResponse
 		_, err := shared.SupabaseDb.From("user").Select("subscription_tier", "", false).Eq("id", supabaseUserId).Single().ExecuteTo(&res)
 		if err != nil {
+			sentry.CaptureException(err)
 			log.Printf("Failed to get user tier: %v", err)
 		} else {
 			log.Printf("User tier: %s", res.SubsciptionTier)
@@ -225,6 +228,7 @@ func Handler(c *fiber.Ctx) error {
 	if cogReqErr != nil {
 		generationCogEnd := time.Now().UTC().UnixMilli()
 		go UpdateGenerationAsFailed(generationIdChan, generationCogEnd-generationCogStart, false)
+		sentry.CaptureException(cogReqErr)
 		log.Printf("Error creating cog request: %v", cogReqErr)
 		return c.Status(http.StatusInternalServerError).JSON(
 			SGenerateResponse{Error: "Error creating cog request"},
@@ -234,6 +238,7 @@ func Handler(c *fiber.Ctx) error {
 	if cogResErr != nil {
 		generationCogEnd := time.Now().UTC().UnixMilli()
 		go UpdateGenerationAsFailed(generationIdChan, generationCogEnd-generationCogStart, false)
+		sentry.CaptureException(cogResErr)
 		log.Printf("Cog request returned an error: %v", cogReqErr)
 		return c.Status(http.StatusInternalServerError).JSON(
 			SGenerateResponse{Error: "Cog returned an error"},
@@ -252,6 +257,8 @@ func Handler(c *fiber.Ctx) error {
 	if cogResBodyErr != nil {
 		generationCogEnd := time.Now().UTC().UnixMilli()
 		go UpdateGenerationAsFailed(generationIdChan, generationCogEnd-generationCogStart, false)
+		sentry.CaptureException(cogResBodyErr)
+		log.Printf("Failed to decode cog response body")
 		return c.Status(http.StatusInternalServerError).JSON(
 			SGenerateResponse{Error: "Failed to decode cog response body"},
 		)

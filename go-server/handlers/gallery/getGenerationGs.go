@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"log"
 
+	"github.com/getsentry/sentry-go"
 	"github.com/meilisearch/meilisearch-go"
 	"github.com/yekta/stablecog/go-server/shared"
 )
@@ -20,6 +21,7 @@ func GetGenerationGs(page int, batchSize int, search string, filter string) []SD
 		Sort:        sortBy,
 	})
 	if err != nil {
+		sentry.CaptureException(err)
 		log.Println(err)
 		return nil
 	}
@@ -29,12 +31,14 @@ func GetGenerationGs(page int, batchSize int, search string, filter string) []SD
 	for _, hit := range res.Hits {
 		j, err := json.Marshal(hit)
 		if err != nil {
+			sentry.CaptureException(err)
 			log.Panicf("Error marshalling hit: %v", err)
 			return nil
 		}
 		var gen SDBGenerationG
 		err = json.Unmarshal(j, &gen)
 		if err != nil {
+			sentry.CaptureException(err)
 			log.Panicf("Error unmarshalling hit: %v", err)
 			return nil
 		}

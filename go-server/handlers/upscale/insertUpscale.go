@@ -5,6 +5,7 @@ import (
 	"time"
 
 	"github.com/fatih/color"
+	"github.com/getsentry/sentry-go"
 	"github.com/yekta/stablecog/go-server/loggers"
 	"github.com/yekta/stablecog/go-server/shared"
 )
@@ -36,6 +37,7 @@ func InsertUpscaleInitial(g SInsertUpscaleProps) string {
 	var res SDBUpscaleInsertInitialRes
 	_, err := shared.SupabaseDb.From("upscale").Insert(insertBody, false, "", "", "").Single().ExecuteTo(&res)
 	if err != nil {
+		sentry.CaptureException(err)
 		log.Printf(red("-- DB - Error inserting upscale: %v --"), err)
 		return ""
 	}

@@ -12,6 +12,7 @@ import (
 	"github.com/aws/aws-sdk-go/aws/credentials"
 	"github.com/aws/aws-sdk-go/aws/session"
 	"github.com/aws/aws-sdk-go/service/s3/s3manager"
+	"github.com/getsentry/sentry-go"
 	"github.com/google/uuid"
 	"github.com/h2non/bimg"
 
@@ -44,6 +45,7 @@ func SubmitToGallery(p SSubmitToGalleryProps) {
 
 	buff, bErr := shared.BufferFromB64(p.ImageB64)
 	if bErr != nil {
+		sentry.CaptureException(bErr)
 		log.Printf("-- Gallery - Error decoding base64 image: %v --", bErr)
 	}
 
@@ -52,10 +54,12 @@ func SubmitToGallery(p SSubmitToGalleryProps) {
 	webpBuff, errBuff := bimg.NewImage(buff).Process(webpOptionsGallery)
 	webpMeta, errMeta := bimg.Metadata(webpBuff)
 	if errBuff != nil {
+		sentry.CaptureException(errBuff)
 		log.Printf("-- Gallery - Error converting to WebP: %v --", errBuff)
 		return
 	}
 	if errMeta != nil {
+		sentry.CaptureException(errMeta)
 		log.Printf("-- Gallery - Error getting WebP metadata: %v --", errMeta)
 		return
 	}
@@ -80,6 +84,7 @@ func SubmitToGallery(p SSubmitToGalleryProps) {
 	}
 	_, err := uploader.UploadWithContext(context.Background(), input)
 	if err != nil {
+		sentry.CaptureException(err)
 		log.Printf("-- Gallery - Error uploading to S3: %v --", err)
 		return
 	}
@@ -104,6 +109,7 @@ func SubmitToGallery(p SSubmitToGalleryProps) {
 		UserTier:          p.UserTier,
 	}, false, "", "", "").Single().ExecuteTo(&insertRes)
 	if insertErr != nil {
+		sentry.CaptureException(insertErr)
 		log.Printf("-- Gallery - Error inserting to DB: %v --", insertErr)
 		return
 	}

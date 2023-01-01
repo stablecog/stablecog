@@ -4,7 +4,9 @@ import (
 	"flag"
 	"fmt"
 	"log"
+	"time"
 
+	"github.com/getsentry/sentry-go"
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/cors"
 	"github.com/h2non/bimg"
@@ -21,6 +23,15 @@ import (
 )
 
 func main() {
+	err := sentry.Init(sentry.ClientOptions{
+		Dsn:              shared.SENTRY_DSN_URL,
+		TracesSampleRate: 1.0,
+	})
+	if err != nil {
+		log.Fatalf("sentry.Init: %s", err)
+	}
+	defer sentry.Flush(2 * time.Second)
+
 	serverPort := flag.Int("port", 3001, "Port to listen on")
 
 	bimg.Initialize()

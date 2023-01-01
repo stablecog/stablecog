@@ -23,6 +23,7 @@ var MEILI_URL = func() string {
 		return GetEnv("MEILI_URL", "")
 	}
 }()
+var SENTRY_DSN_URL = GetEnv("SENTRY_DSN_URL", "")
 
 var SupabaseDb = postgrest.NewClient(PUBLIC_SUPABASE_POSTGREST_URL, "", map[string]string{
 	"Authorization": "Bearer " + SUPABASE_ADMIN_KEY,

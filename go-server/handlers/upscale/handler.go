@@ -8,6 +8,7 @@ import (
 	"net/http"
 	"time"
 
+	"github.com/getsentry/sentry-go"
 	"github.com/goccy/go-json"
 
 	"github.com/fatih/color"
@@ -36,6 +37,7 @@ func Handler(c *fiber.Ctx) error {
 
 	var req shared.SUpscaleRequestBody
 	if err := c.BodyParser(&req); err != nil {
+		sentry.CaptureException(err)
 		return c.Status(http.StatusBadRequest).JSON(
 			SUpscaleResponse{Error: "Invalid request body"},
 		)
@@ -47,6 +49,7 @@ func Handler(c *fiber.Ctx) error {
 		var res shared.SUserResponse
 		_, err := shared.SupabaseDb.From("user").Select("subscription_tier", "", false).Eq("id", supabaseUserId).Single().ExecuteTo(&res)
 		if err != nil {
+			sentry.CaptureException(err)
 			log.Printf("-- Failed to get user tier: %v --", err)
 		} else {
 			log.Printf("-- User tier: %s --", res.SubsciptionTier)
@@ -130,6 +133,7 @@ func Handler(c *fiber.Ctx) error {
 	cogReqBodyBuffer, cogReqBodyBufferErr := json.Marshal(cogReqBody)
 	if cogReqBodyBufferErr != nil {
 		go UpdateUpscaleAsFailed(upscaleIdChan, 0)
+		sentry.CaptureException(cogReqBodyBufferErr)
 		log.Printf("Error marshalling cog request body: %v", cogReqBodyBufferErr)
 		return c.Status(http.StatusInternalServerError).JSON(
 			SUpscaleResponse{Error: "Failed to marshal cog request body"},
@@ -145,6 +149,7 @@ func Handler(c *fiber.Ctx) error {
 	if cogReqErr != nil {
 		upscaleCogEnd := time.Now().UTC().UnixMilli()
 		go UpdateUpscaleAsFailed(upscaleIdChan, upscaleCogEnd-upscaleCogStart)
+		sentry.CaptureException(cogReqErr)
 		log.Printf("Error creating cog request: %v", cogReqErr)
 		return c.Status(http.StatusInternalServerError).JSON(
 			SUpscaleResponse{Error: "Error creating cog request"},
@@ -155,6 +160,7 @@ func Handler(c *fiber.Ctx) error {
 	if cogResErr != nil {
 		upscaleCogEnd := time.Now().UTC().UnixMilli()
 		go UpdateUpscaleAsFailed(upscaleIdChan, upscaleCogEnd-upscaleCogStart)
+		sentry.CaptureException(cogResErr)
 		log.Printf("Error sending cog request: %v", cogResErr)
 		return c.Status(http.StatusInternalServerError).JSON(
 			SUpscaleResponse{Error: "Error sending cog request"},
@@ -173,6 +179,7 @@ func Handler(c *fiber.Ctx) error {
 	if cogResBodyErr != nil {
 		upscaleCogEnd := time.Now().UTC().UnixMilli()
 		go UpdateUpscaleAsFailed(upscaleIdChan, upscaleCogEnd-upscaleCogStart)
+		sentry.CaptureException(cogResBodyErr)
 		return c.Status(http.StatusInternalServerError).JSON(
 			SUpscaleResponse{Error: "Failed to decode cog response body"},
 		)
