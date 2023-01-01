@@ -21,7 +21,7 @@ var green = color.New(color.FgHiGreen).SprintFunc()
 var yellow = color.New(color.FgHiYellow).SprintFunc()
 
 var minDuration = time.Second * 2
-var minDurationFree = time.Second * 8
+var minDurationFree = time.Second * 10
 
 func Handler(c *fiber.Ctx) error {
 	start := time.Now().UTC().UnixMilli()
@@ -131,9 +131,10 @@ func Handler(c *fiber.Ctx) error {
 		return c.Status(http.StatusTooManyRequests).JSON(rateLimitedResponse)
 	}
 
-	// Wait if free tier
 	if subscriptionTier == "FREE" {
 		time.Sleep(minDurationFree)
+	} else {
+		time.Sleep(minDuration)
 	}
 
 	if req.OutputImageExt == "" {
