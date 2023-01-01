@@ -1,4 +1,5 @@
 <script lang="ts">
+	import ClearButton from '$components/buttons/ClearButton.svelte';
 	import { isTouchscreen } from '$ts/stores/isTouchscreen';
 
 	export let type: 'text' | 'email' | 'password' | 'number' = 'text';
@@ -8,13 +9,20 @@
 	export { classes as class };
 	export let hasIcon = false;
 	export let bg: 'bg-secondary' | 'bg-tertiary' = 'bg-tertiary';
+	export let hasClearButton = false;
+	export let shadow: 'normal' | 'strong' | 'strongest' = 'normal';
 	let classes = '';
+
+	let inputElement: HTMLInputElement;
+
+	$: showClearButton = value !== undefined && value !== '' && value !== null;
 </script>
 
 <div class="flex-1 flex flex-row relative {classes}">
 	{#if type === 'email'}
 		<input
 			bind:value
+			bind:this={inputElement}
 			{disabled}
 			type="email"
 			name={title}
@@ -22,10 +30,14 @@
 			placeholder=" "
 			class="peer flex-1 overflow-hidden overflow-ellipsis {bg === 'bg-secondary'
 				? 'bg-c-bg-secondary'
-				: 'bg-c-bg-tertiary'} relative {hasIcon
-				? 'pl-12 pr-5'
-				: 'px-5'} pt-7 pb-3 rounded-xl transition 
-      shadow-lg shadow-c-shadow/[var(--o-shadow-normal)] focus:ring-2 focus:ring-c-primary/40 ring-0 ring-c-primary/20 
+				: 'bg-c-bg-tertiary'} relative {hasIcon ? 'pl-12' : 'pl-5'} {hasClearButton
+				? 'pr-10 md:pr-16'
+				: 'pr-5'} pt-7 pb-3 rounded-xl transition 
+      shadow-lg {shadow === 'strongest'
+				? 'shadow-c-shadow/[var(--o-shadow-strongest)]'
+				: shadow === 'strong'
+				? 'shadow-c-shadow/[var(--o-shadow-strong)'
+				: 'shadow-c-shadow/[var(--o-shadow-normal)]'} focus:ring-2 focus:ring-c-primary/40 ring-0 ring-c-primary/20 
       placeholder:text-c-on-bg/30 {!$isTouchscreen ? 'enabled:hover:ring-2' : ''} {!$isTouchscreen
 				? 'enabled:group-hover:ring-2'
 				: ''} "
@@ -33,6 +45,7 @@
 	{:else if type === 'password'}
 		<input
 			bind:value
+			bind:this={inputElement}
 			{disabled}
 			type="password"
 			name={title}
@@ -40,10 +53,14 @@
 			placeholder=" "
 			class="peer flex-1 overflow-hidden overflow-ellipsis {bg === 'bg-secondary'
 				? 'bg-c-bg-secondary'
-				: 'bg-c-bg-tertiary'} relative {hasIcon
-				? 'pl-12 pr-5'
-				: 'px-5'} pt-7 pb-3 rounded-xl transition 
-      shadow-lg shadow-c-shadow/[var(--o-shadow-normal)] focus:ring-2 focus:ring-c-primary/40 ring-0 ring-c-primary/20 
+				: 'bg-c-bg-tertiary'} relative {hasIcon ? 'pl-12' : 'pl-5'} {hasClearButton
+				? 'pr-10 md:pr-16'
+				: 'pr-5'} pt-7 pb-3 rounded-xl transition 
+      shadow-lg {shadow === 'strongest'
+				? 'shadow-c-shadow/[var(--o-shadow-strongest)]'
+				: shadow === 'strong'
+				? 'shadow-c-shadow/[var(--o-shadow-strong)'
+				: 'shadow-c-shadow/[var(--o-shadow-normal)]'} focus:ring-2 focus:ring-c-primary/40 ring-0 ring-c-primary/20 
       placeholder:text-c-on-bg/30 {!$isTouchscreen ? 'enabled:hover:ring-2' : ''} {!$isTouchscreen
 				? 'enabled:group-hover:ring-2'
 				: ''}"
@@ -51,6 +68,7 @@
 	{:else if type === 'number'}
 		<input
 			bind:value
+			bind:this={inputElement}
 			{disabled}
 			type="number"
 			name={title}
@@ -58,10 +76,14 @@
 			placeholder=" "
 			class="peer flex-1 overflow-hidden overflow-ellipsis {bg === 'bg-secondary'
 				? 'bg-c-bg-secondary'
-				: 'bg-c-bg-tertiary'} relative {hasIcon
-				? 'pl-12 pr-5'
-				: 'px-5'} pt-7 pb-3 rounded-xl transition 
-      shadow-lg shadow-c-shadow/[var(--o-shadow-normal)] focus:ring-2 focus:ring-c-primary/40 ring-0 ring-c-primary/20 
+				: 'bg-c-bg-tertiary'} relative {hasIcon ? 'pl-12' : 'pl-5'} {hasClearButton
+				? 'pr-10 md:pr-16'
+				: 'pr-5'} pt-7 pb-3 rounded-xl transition 
+      shadow-lg {shadow === 'strongest'
+				? 'shadow-c-shadow/[var(--o-shadow-strongest)]'
+				: shadow === 'strong'
+				? 'shadow-c-shadow/[var(--o-shadow-strong)'
+				: 'shadow-c-shadow/[var(--o-shadow-normal)]'} focus:ring-2 focus:ring-c-primary/40 ring-0 ring-c-primary/20 
       placeholder:text-c-on-bg/30 {!$isTouchscreen ? 'enabled:hover:ring-2' : ''} {!$isTouchscreen
 				? 'enabled:group-hover:ring-2'
 				: ''}"
@@ -69,6 +91,7 @@
 	{:else}
 		<input
 			bind:value
+			bind:this={inputElement}
 			{disabled}
 			type="text"
 			name={title}
@@ -76,10 +99,14 @@
 			placeholder=" "
 			class="peer flex-1 overflow-hidden overflow-ellipsis {bg === 'bg-secondary'
 				? 'bg-c-bg-secondary'
-				: 'bg-c-bg-tertiary'} relative {hasIcon
-				? 'pl-12 pr-5'
-				: 'px-5'} pt-7 pb-3 rounded-xl transition 
-      shadow-lg shadow-c-shadow/[var(--o-shadow-normal)] focus:ring-2 focus:ring-c-primary/40 ring-0 ring-c-primary/20 
+				: 'bg-c-bg-tertiary'} relative {hasIcon ? 'pl-12' : 'pl-5'} {hasClearButton
+				? 'pr-10 md:pr-16'
+				: 'pr-5'} pt-7 pb-3 rounded-xl transition 
+      shadow-lg {shadow === 'strongest'
+				? 'shadow-c-shadow/[var(--o-shadow-strongest)]'
+				: shadow === 'strong'
+				? 'shadow-c-shadow/[var(--o-shadow-strong)'
+				: 'shadow-c-shadow/[var(--o-shadow-normal)]'} focus:ring-2 focus:ring-c-primary/40 ring-0 ring-c-primary/20 
       placeholder:text-c-on-bg/30 {!$isTouchscreen ? 'enabled:hover:ring-2' : ''} {!$isTouchscreen
 				? 'enabled:group-hover:ring-2'
 				: ''}"
@@ -100,4 +127,15 @@
 	>
 		<slot name="icon" />
 	</div>
+	{#if hasClearButton}
+		<ClearButton
+			{disabled}
+			show={showClearButton}
+			onClick={() => {
+				value = '';
+				inputElement.focus();
+			}}
+			type="md"
+		/>
+	{/if}
 </div>

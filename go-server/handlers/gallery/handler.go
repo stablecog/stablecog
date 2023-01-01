@@ -37,11 +37,13 @@ func Handler(c *fiber.Ctx) error {
 		generationGs = generationGs[:batchSize]
 		next = p + 1
 	}
-	rand.Seed(time.Now().UnixNano())
-	rand.Shuffle(
-		len(generationGs),
-		func(i, j int) { generationGs[i], generationGs[j] = generationGs[j], generationGs[i] },
-	)
+	if search == "" {
+		rand.Seed(time.Now().UnixNano())
+		rand.Shuffle(
+			len(generationGs),
+			func(i, j int) { generationGs[i], generationGs[j] = generationGs[j], generationGs[i] },
+		)
+	}
 	res := SGalleryResponse{
 		Generations: generationGs,
 		Page:        p,

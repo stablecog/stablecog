@@ -10,7 +10,7 @@
 >
 	<div class="w-full flex flex-col items-center justify-center max-w-lg gap-8">
 		<div class="w-full max-w-xl flex flex-col items-center gap-3">
-			<h1 class="text-8xl md:text-9xl font-bold">{$page.status}</h1>
+			<h1 class="text-7xl md:text-8xl font-bold">{$page.status}</h1>
 			<p class="text-lg text-c-on-bg/60">
 				{$page.status === 404
 					? $LL.Error.NotFound()

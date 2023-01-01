@@ -11,7 +11,7 @@
 	import { mLogGalleryGenerationOpened } from '$ts/helpers/loggers';
 	import { urlFromImageId } from '$ts/helpers/urlFromImageId';
 	import { activeGenerationG } from '$ts/stores/activeGenerationG';
-	import { advancedMode, advancedModeApp } from '$ts/stores/advancedMode';
+	import { advancedModeApp } from '$ts/stores/advancedMode';
 	import type { TGenerationGWithLoaded } from '$ts/types/main';
 
 	export let generation: TGenerationGWithLoaded;

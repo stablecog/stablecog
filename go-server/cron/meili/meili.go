@@ -4,11 +4,15 @@ import (
 	"log"
 	"time"
 
+	"github.com/meilisearch/meilisearch-go"
 	"github.com/supabase/postgrest-go"
 	"github.com/yekta/stablecog/go-server/shared"
 )
 
 var lastSyncedGenUpdatedAt time.Time
+var shouldSetSettings = true
+var sortableAttributes = []string{"updated_at", "created_at"}
+var maxTotalHits = 5000
 
 func SyncMeili() {
 	var generations []SDBGenerationGFlatRes
@@ -34,6 +38,24 @@ func SyncMeili() {
 	if errParse != nil {
 		log.Printf("-- MeiliWorker - Time parse error: %v", errParse)
 		return
+	}
+
+	if shouldSetSettings {
+		_, err := shared.Meili.Index("generation_g").UpdateSortableAttributes(&sortableAttributes)
+		if err != nil {
+			log.Printf("-- MeiliWorker - Meili update sortable attributes error: %v", err)
+		} else {
+			log.Printf("-- MeiliWorker - Meili sortable attributes updated")
+		}
+		_, errMax := shared.Meili.Index("generation_g").UpdatePagination(&meilisearch.Pagination{MaxTotalHits: int64(maxTotalHits)})
+		if errMax != nil {
+			log.Printf("-- MeiliWorker - Meili update max total hits error: %v", errMax)
+		} else {
+			log.Printf("-- MeiliWorker - Meili max total hits updated")
+		}
+		if err == nil && errMax == nil {
+			shouldSetSettings = false
+		}
 	}
 
 	var generationsMeili []SMeiliGenerationG
