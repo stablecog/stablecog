@@ -69,6 +69,12 @@ export function mLogSignUp(props: ISignUpProps) {
 	});
 }
 
+export function mLogGallerySearch(props: IGallerySearchProps) {
+	mixpanel.track('Gallery Search', {
+		...props
+	});
+}
+
 interface ISubmitToGalleryToggledMinimal {
 	'SC - Advanced Mode': boolean;
 	'SC - Plan': IStripeSubscriptionTier;
@@ -144,4 +150,11 @@ interface ISignUpProps {
 	'SC - Advanced Mode': boolean;
 	'SC - Plan': IStripeSubscriptionTier;
 	'SC - Page': string;
+}
+
+interface IGallerySearchProps {
+	'SC - Locale': string;
+	'SC - Advanced Mode': boolean;
+	'SC - Plan': IStripeSubscriptionTier;
+	'SC - Search Query': string;
 }

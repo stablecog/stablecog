@@ -14,7 +14,7 @@
 	import { canonicalUrl } from '$ts/constants/main';
 	import { supabase } from '$ts/constants/supabase';
 	import { mLogSignIn } from '$ts/helpers/loggers';
-	import { advancedMode } from '$ts/stores/advancedMode';
+	import { advancedModeApp } from '$ts/stores/advancedMode';
 	import { unconfirmedEmail } from '$ts/stores/unconfirmedEmail';
 	import type { PageServerData } from './$types';
 
@@ -57,7 +57,7 @@
 		mLogSignIn({
 			'SC - Plan': $page.data.tier,
 			'SC - Locale': $locale,
-			'SC - Advanced Mode': $advancedMode,
+			'SC - Advanced Mode': $advancedModeApp,
 			'SC - Page': `${$page.url.pathname}${$page.url.search}`
 		});
 		setTimeout(() => {

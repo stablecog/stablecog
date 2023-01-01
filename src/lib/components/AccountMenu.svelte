@@ -6,7 +6,7 @@
 	import LL, { locale } from '$i18n/i18n-svelte';
 	import { supabase } from '$ts/constants/supabase';
 	import { mLogSignOut } from '$ts/helpers/loggers';
-	import { advancedMode } from '$ts/stores/advancedMode';
+	import { advancedMode, advancedModeApp } from '$ts/stores/advancedMode';
 	import { isTouchscreen } from '$ts/stores/isTouchscreen';
 	import DropdownWrapper from './DropdownWrapper.svelte';
 
@@ -50,7 +50,7 @@
 					mLogSignOut({
 						'SC - Plan': $page.data.tier,
 						'SC - Locale': $locale,
-						'SC - Advanced Mode': $advancedMode,
+						'SC - Advanced Mode': $advancedModeApp,
 						'SC - Page': `${$page.url.pathname}${$page.url.search}`
 					});
 				} catch (error) {

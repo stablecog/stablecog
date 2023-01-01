@@ -53,7 +53,7 @@
 	import IconTrashcan from '$components/icons/IconTrashcan.svelte';
 	import { deleteGenerationFromDb } from '$ts/queries/indexedDb';
 	import IconTrashcanFilledOpen from '$components/icons/IconTrashcanFilledOpen.svelte';
-	import { advancedMode } from '$ts/stores/advancedMode';
+	import { advancedModeApp } from '$ts/stores/advancedMode';
 	import TierBadge from '$components/TierBadge.svelte';
 	import type { TAvailableProReason } from '.svelte-kit/types/src/routes/pro/proxy+page.server';
 
@@ -218,7 +218,7 @@
 		const upscaleMinimal = {
 			'SC - Width': generation.width,
 			'SC - Height': generation.height,
-			'SC - Advanced Mode': $advancedMode,
+			'SC - Advanced Mode': $advancedModeApp,
 			'SC - Locale': $locale,
 			'SC - Plan': $page.data.tier
 		};

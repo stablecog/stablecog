@@ -6,7 +6,6 @@
 	import IconHome from '$components/icons/IconHome.svelte';
 	import IconLoading from '$components/icons/IconLoading.svelte';
 	import IconSignOut from '$components/icons/IconSignOut.svelte';
-	import IconSubscriptionTier from '$components/icons/IconSubscriptionTier.svelte';
 	import MetaTag from '$components/MetaTag.svelte';
 	import PageWrapper from '$components/PageWrapper.svelte';
 	import TierBadge from '$components/TierBadge.svelte';
@@ -14,7 +13,7 @@
 	import { canonicalUrl } from '$ts/constants/main';
 	import { supabase } from '$ts/constants/supabase';
 	import { mLogSignOut } from '$ts/helpers/loggers';
-	import { advancedMode } from '$ts/stores/advancedMode';
+	import { advancedModeApp } from '$ts/stores/advancedMode';
 	import { isTouchscreen } from '$ts/stores/isTouchscreen';
 	import type { PageServerData } from './$types';
 
@@ -30,7 +29,7 @@
 			mLogSignOut({
 				'SC - Plan': $page.data.tier,
 				'SC - Locale': $locale,
-				'SC - Advanced Mode': $advancedMode,
+				'SC - Advanced Mode': $advancedModeApp,
 				'SC - Page': `${$page.url.pathname}${$page.url.search}`
 			});
 		} catch (error) {

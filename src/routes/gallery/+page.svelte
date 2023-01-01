@@ -8,11 +8,14 @@
 	import ImagePlaceholder from '$components/ImagePlaceholder.svelte';
 	import Input from '$components/Input.svelte';
 	import MetaTag from '$components/MetaTag.svelte';
+	import { locale } from '$i18n/i18n-svelte';
 	import { elementreceive, elementsend } from '$ts/animation/transitions';
 	import { apiBase, canonicalUrl } from '$ts/constants/main';
 	import { generationGPreviewUrlFromId } from '$ts/helpers/generationGPreviewUrlFromId';
 	import { isValue } from '$ts/helpers/isValue';
+	import { mLogGallerySearch } from '$ts/helpers/loggers';
 	import { activeGenerationG } from '$ts/stores/activeGenerationG';
+	import { advancedMode, advancedModeApp } from '$ts/stores/advancedMode';
 	import type { TGalleryResponse } from '$ts/types/main';
 	import { MasonryInfiniteGrid } from '@egjs/svelte-infinitegrid';
 	import { onMount, tick } from 'svelte';
@@ -103,6 +106,12 @@
 		}
 		console.log('Getting the page:', nextPage);
 		try {
+			mLogGallerySearch({
+				'SC - Search Query': searchString,
+				'SC - Advanced Mode': $advancedModeApp,
+				'SC - Locale': $locale,
+				'SC - Plan': $page.data.tier
+			});
 			const res = await fetch(
 				`${apiBase}/gallery?page=${nextPage}${searchString ? `&search=${searchString}` : ''}`
 			);

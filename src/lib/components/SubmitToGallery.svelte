@@ -3,13 +3,13 @@
 	import LL from '$i18n/i18n-svelte';
 	import { expandCollapse } from '$ts/animation/transitions';
 	import { mLogSubmitToGallery, uLogSubmitToGallery } from '$ts/helpers/loggers';
-	import { advancedMode } from '$ts/stores/advancedMode';
+	import { advancedModeApp } from '$ts/stores/advancedMode';
 	import { shouldSubmitToGallery } from '$ts/stores/shouldSubmitToGallery';
 	import SubtleButton from './buttons/SubtleButton.svelte';
 
 	$: logProps = {
 		'SC - Plan': $page.data.tier,
-		'SC - Advanced Mode': $advancedMode
+		'SC - Advanced Mode': $advancedModeApp
 	};
 </script>
 

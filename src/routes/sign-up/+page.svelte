@@ -15,7 +15,7 @@
 	import { canonicalUrl } from '$ts/constants/main';
 	import { supabase } from '$ts/constants/supabase';
 	import { mLogSignIn, mLogSignUp } from '$ts/helpers/loggers';
-	import { advancedMode } from '$ts/stores/advancedMode';
+	import { advancedModeApp } from '$ts/stores/advancedMode';
 	import { unconfirmedEmail } from '$ts/stores/unconfirmedEmail';
 	import { onMount } from 'svelte';
 	import { quadOut } from 'svelte/easing';
@@ -53,7 +53,7 @@
 			if (error) throw new Error(error.message);
 			if (data && data.user && data.user?.confirmed_at) {
 				mLogSignIn({
-					'SC - Advanced Mode': $advancedMode,
+					'SC - Advanced Mode': $advancedModeApp,
 					'SC - Page': `${$page.url.pathname}${$page.url.search}`,
 					'SC - Locale': $locale,
 					'SC - Plan': $page.data.tier
@@ -91,7 +91,7 @@
 		mLogSignUp({
 			'SC - Plan': $page.data.tier,
 			'SC - Locale': $locale,
-			'SC - Advanced Mode': $advancedMode,
+			'SC - Advanced Mode': $advancedModeApp,
 			'SC - Page': `${$page.url.pathname}${$page.url.search}`
 		});
 		console.log(verifyData);

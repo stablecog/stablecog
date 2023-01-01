@@ -35,12 +35,10 @@
 	import IconLink from '$components/icons/IconLink.svelte';
 	import { generationGPreviewUrlFromId } from '$ts/helpers/generationGPreviewUrlFromId';
 	import { mLogGalleryGenerateClicked } from '$ts/helpers/loggers';
-	import { advancedMode } from '$ts/stores/advancedMode';
+	import { advancedModeApp } from '$ts/stores/advancedMode';
 	import {
 		availableHeightsFree,
-		availableInferenceSteps,
 		availableModelIdsFree,
-		availableWidths,
 		availableWidthsFree
 	} from '$ts/constants/main';
 	import TierBadge from '$components/TierBadge.svelte';
@@ -225,7 +223,7 @@
 	$: logProps = {
 		'SC - Generation Id': generation.id,
 		'SC - Plan': $page.data.tier,
-		'SC - Advanced Mode': $advancedMode
+		'SC - Advanced Mode': $advancedModeApp
 	};
 </script>
 
