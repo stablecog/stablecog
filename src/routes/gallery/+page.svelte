@@ -2,7 +2,6 @@
 	import { page } from '$app/stores';
 	import GenerationGFullScreen from '$components/generationFullScreen/GenerationGFullScreen.svelte';
 	import GenerationGImage from '$components/generationImage/GenerationGImage.svelte';
-	import IconLoading from '$components/icons/IconLoading.svelte';
 	import IconLoadingSlim from '$components/icons/IconLoadingSlim.svelte';
 	import IconSearch from '$components/icons/IconSearch.svelte';
 	import ImagePlaceholder from '$components/ImagePlaceholder.svelte';
@@ -15,7 +14,7 @@
 	import { isValue } from '$ts/helpers/isValue';
 	import { mLogGallerySearch } from '$ts/helpers/loggers';
 	import { activeGenerationG } from '$ts/stores/activeGenerationG';
-	import { advancedMode, advancedModeApp } from '$ts/stores/advancedMode';
+	import { advancedModeApp } from '$ts/stores/advancedMode';
 	import type { TGalleryResponse } from '$ts/types/main';
 	import { MasonryInfiniteGrid } from '@egjs/svelte-infinitegrid';
 	import { onMount, tick } from 'svelte';
@@ -211,8 +210,8 @@
 		<div
 			class="w-full px-2 py-3 flex justify-center sticky top-18 md:top-20 z-10 transition {scrollDirection ===
 			'up'
-				? 'translate-y-0'
-				: '-translate-y-22 pointer-events-none'}"
+				? 'translate-y-0 opacity-100'
+				: '-translate-y-22 pointer-events-none opacity-0'}"
 		>
 			<Input
 				disabled={scrollDirection === 'down'}
@@ -286,8 +285,8 @@
 					</MasonryInfiniteGrid>
 				{/key}
 				{#if isValue(nextPage)}
-					<div class="w-full flex flex-1 flex-col items-center justify-center py-12">
-						<IconLoading class="animate-spin-faster w-12 h-12 text-c-on-bg/50" />
+					<div class="w-full flex flex-col items-center justify-center py-12">
+						<IconLoadingSlim class="animate-spin-faster w-10 h-10 text-c-on-bg/50" />
 					</div>
 				{/if}
 			{/if}
