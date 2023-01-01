@@ -108,7 +108,9 @@ export const POST: RequestHandler = async (event) => {
 					try {
 						const { count } = await supabaseAdmin
 							.from('user')
-							.select('*', { count: 'exact', head: true });
+							.select('*', { count: 'exact', head: true })
+							.filter('subscription_tier', 'eq', prod.name.toUpperCase())
+							.filter('subscription_category', 'not.in', ['GIFTED', 'FRIEND_BOUGHT']);
 						await fetch(DISCORD_WEBHOOK_SUBSCRIBER_URL, {
 							method: 'POST',
 							headers: { 'Content-Type': 'application/json' },
