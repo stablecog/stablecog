@@ -356,13 +356,13 @@ const tr: Translation = {
 		PageTitle: 'Basında'
 	},
 	Gallery: {
-		PageTitle: 'Gallery',
-		PageParagraph: 'Check out what others have with Stablecog.',
+		PageTitle: 'Galeri',
+		PageParagraph: 'Diğer insanların üretimlerini incele.',
 		SearchInput: {
-			Title: 'Search'
+			Title: 'Ara'
 		},
-		SearchingTitle: 'Searching',
-		NoMatchingGenerationTitle: 'No matching generation'
+		SearchingTitle: 'Arıyor',
+		NoMatchingGenerationTitle: 'Benzer bir üretim bulunamadı'
 	}
 };
 export default tr;

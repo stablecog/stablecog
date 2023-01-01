@@ -364,7 +364,7 @@ const fr: Translation = {
 	},
 	Gallery: {
 		PageTitle: 'Gallery',
-		PageParagraph: 'Check out what others have with Stablecog.',
+		PageParagraph: 'Check out what others have created. with Stablecog..',
 		SearchInput: {
 			Title: 'Search'
 		},
