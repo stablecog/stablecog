@@ -33,7 +33,13 @@
 
 	export let data: LayoutData;
 	setLocale(data.locale);
+
+	const th = data.themeStore;
+	themeApp.set($th);
 	if (data.theme !== null) themeApp.set(data.theme);
+
+	const adv = data.advancedModeStore;
+	advancedModeApp.set($adv);
 	if (data.advancedMode !== null && data.advancedMode !== undefined) {
 		advancedModeApp.set(data.advancedMode);
 	}

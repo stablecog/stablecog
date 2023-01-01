@@ -9,6 +9,8 @@
 	import PageWrapper from '$components/PageWrapper.svelte';
 	import type { IStripeSubscriptionTier } from '$ts/types/stripe';
 	import TierBadge from '$components/TierBadge.svelte';
+	import { getRelativeDate } from '$ts/helpers/getRelativeDate';
+	import { getDateString } from '$ts/helpers/date';
 
 	interface TUser {
 		id: string;
@@ -26,6 +28,7 @@
 	}
 
 	let users: TUser[];
+	let startDate: Date;
 
 	onMount(async () => {
 		getUsers();
@@ -42,6 +45,11 @@
 			if (data) {
 				users = data;
 			}
+			startDate = new Date(
+				users
+					.map((u) => u.created_at)
+					.sort((a, b) => new Date(a).getTime() - new Date(b).getTime())[0]
+			);
 		} catch (error) {
 			console.log(error);
 		}
@@ -59,23 +67,31 @@
 	<div class="-mt-6" />
 	<div class="flex justify-center sticky top-16 py-6 z-10 -mx-2">
 		<div
-			class="p-3 gap-3 md:gap-8 flex flex-wrap bg-c-bg ring-2 ring-c-bg-secondary rounded-2xl shadow-lg shadow-c-shadow/[var(--o-shadow-normal)]"
+			class="flex flex-col bg-c-bg ring-2 ring-c-bg-secondary rounded-2xl shadow-lg shadow-c-shadow/[var(--o-shadow-normal)]"
 		>
-			<div class="flex gap-3 items-center">
-				<TierBadge tier={'PRO'} size="md" />
-				<p class="font-bold text-xl text-c-primary pr-4">
-					{users
-						? users.filter((u) => u.subscription_tier === 'PRO').length -
-						  users.filter((u) => u.subscription_category === 'GIFTED').length -
-						  users.filter((u) => u.subscription_category === 'FRIEND_BOUGHT').length
-						: '--'}
-				</p>
+			<div class="flex flex-wrap gap-3 md:gap-8 p-3">
+				<div class="flex gap-3 items-center">
+					<TierBadge tier={'PRO'} size="md" />
+					<p class="font-bold text-xl text-c-primary pr-4">
+						{users
+							? users.filter((u) => u.subscription_tier === 'PRO').length -
+							  users.filter((u) => u.subscription_category === 'GIFTED').length -
+							  users.filter((u) => u.subscription_category === 'FRIEND_BOUGHT').length
+							: '--'}
+					</p>
+				</div>
+				<div class="flex gap-3 items-center">
+					<TierBadge tier={'FREE'} size="md" />
+					<p class="font-bold text-xl text-c-on-bg pr-4">
+						{users ? users.filter((u) => u.subscription_tier === 'FREE').length : '---'}
+					</p>
+				</div>
 			</div>
-			<div class="flex gap-3 items-center">
-				<TierBadge tier={'FREE'} size="md" />
-				<p class="font-bold text-xl text-c-on-bg pr-4">
-					{users ? users.filter((u) => u.subscription_tier === 'FREE').length : '---'}
-				</p>
+			<div class="w-full bg-c-bg-secondary h-2px" />
+			<div class="w-full flex justify-center p-3 text-xs text-c-on-bg/50">
+				{startDate
+					? `${getRelativeDate(startDate.toString())} • ${getDateString(startDate)}`
+					: '---------- • ----------'}
 			</div>
 		</div>
 	</div>

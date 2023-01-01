@@ -2,6 +2,8 @@ import type { LayoutLoad } from './$types';
 import { loadLocaleAsync } from '$i18n/i18n-util.async';
 import { getSupabase } from '@supabase/auth-helpers-sveltekit';
 import type { IStripeSubscriptionTier } from '$ts/types/stripe';
+import { writable } from 'svelte/store';
+import type { TAvailableThemes } from '$ts/stores/theme';
 
 export const load: LayoutLoad = async (event) => {
 	let tier: IStripeSubscriptionTier = 'FREE';
@@ -24,5 +26,13 @@ export const load: LayoutLoad = async (event) => {
 	await loadLocaleAsync(locale);
 	const theme = event.data.theme;
 	const advancedMode = event.data.advancedMode;
-	return { locale, session, tier, theme, advancedMode };
+	return {
+		locale,
+		session,
+		tier,
+		theme,
+		advancedMode,
+		advancedModeStore: writable(false),
+		themeStore: writable<TAvailableThemes>('dark')
+	};
 };

@@ -11,7 +11,7 @@
 	import { mLogGalleryGenerationOpened } from '$ts/helpers/loggers';
 	import { urlFromImageId } from '$ts/helpers/urlFromImageId';
 	import { activeGenerationG } from '$ts/stores/activeGenerationG';
-	import { advancedMode } from '$ts/stores/advancedMode';
+	import { advancedMode, advancedModeApp } from '$ts/stores/advancedMode';
 	import type { TGenerationGWithLoaded } from '$ts/types/main';
 
 	export let generation: TGenerationGWithLoaded;
@@ -35,7 +35,7 @@
 	$: logProps = {
 		'SC - Generation Id': generation.id,
 		'SC - Plan': $page.data.tier,
-		'SC - Advanced Mode': $advancedMode
+		'SC - Advanced Mode': $advancedModeApp
 	};
 </script>
 

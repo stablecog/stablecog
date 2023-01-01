@@ -7,6 +7,7 @@
 	export let disabled = false;
 	export { classes as class };
 	export let hasIcon = false;
+	export let bg: 'bg-secondary' | 'bg-tertiary' = 'bg-tertiary';
 	let classes = '';
 </script>
 
@@ -19,7 +20,9 @@
 			name={title}
 			id={title}
 			placeholder=" "
-			class="peer flex-1 overflow-hidden overflow-ellipsis bg-c-bg-tertiary relative {hasIcon
+			class="peer flex-1 overflow-hidden overflow-ellipsis {bg === 'bg-secondary'
+				? 'bg-c-bg-secondary'
+				: 'bg-c-bg-tertiary'} relative {hasIcon
 				? 'pl-12 pr-5'
 				: 'px-5'} pt-7 pb-3 rounded-xl transition 
       shadow-lg shadow-c-shadow/[var(--o-shadow-normal)] focus:ring-2 focus:ring-c-primary/40 ring-0 ring-c-primary/20 
@@ -35,7 +38,9 @@
 			name={title}
 			id={title}
 			placeholder=" "
-			class="peer flex-1 overflow-hidden overflow-ellipsis bg-c-bg-tertiary relative {hasIcon
+			class="peer flex-1 overflow-hidden overflow-ellipsis {bg === 'bg-secondary'
+				? 'bg-c-bg-secondary'
+				: 'bg-c-bg-tertiary'} relative {hasIcon
 				? 'pl-12 pr-5'
 				: 'px-5'} pt-7 pb-3 rounded-xl transition 
       shadow-lg shadow-c-shadow/[var(--o-shadow-normal)] focus:ring-2 focus:ring-c-primary/40 ring-0 ring-c-primary/20 
@@ -51,7 +56,9 @@
 			name={title}
 			id={title}
 			placeholder=" "
-			class="peer flex-1 overflow-hidden overflow-ellipsis bg-c-bg-tertiary relative {hasIcon
+			class="peer flex-1 overflow-hidden overflow-ellipsis {bg === 'bg-secondary'
+				? 'bg-c-bg-secondary'
+				: 'bg-c-bg-tertiary'} relative {hasIcon
 				? 'pl-12 pr-5'
 				: 'px-5'} pt-7 pb-3 rounded-xl transition 
       shadow-lg shadow-c-shadow/[var(--o-shadow-normal)] focus:ring-2 focus:ring-c-primary/40 ring-0 ring-c-primary/20 
@@ -67,7 +74,9 @@
 			name={title}
 			id={title}
 			placeholder=" "
-			class="peer flex-1 overflow-hidden overflow-ellipsis bg-c-bg-tertiary relative {hasIcon
+			class="peer flex-1 overflow-hidden overflow-ellipsis {bg === 'bg-secondary'
+				? 'bg-c-bg-secondary'
+				: 'bg-c-bg-tertiary'} relative {hasIcon
 				? 'pl-12 pr-5'
 				: 'px-5'} pt-7 pb-3 rounded-xl transition 
       shadow-lg shadow-c-shadow/[var(--o-shadow-normal)] focus:ring-2 focus:ring-c-primary/40 ring-0 ring-c-primary/20 
