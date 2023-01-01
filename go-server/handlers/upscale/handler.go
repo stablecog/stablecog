@@ -2,6 +2,7 @@ package upscale
 
 import (
 	"bytes"
+	"context"
 	"fmt"
 	"log"
 	"net/http"
@@ -118,30 +119,45 @@ func Handler(c *fiber.Ctx) error {
 		LogObject:         logObj,
 		UpscaleIdChan:     upscaleIdChan,
 	})
-	cogReq := shared.SCogUpscaleRequestBody{
+
+	cogReqBody := shared.SCogUpscaleRequestBody{
 		Input: shared.SCogUpscaleRequestInput{
 			Image:       req.ImageB64,
 			Task:        upscaleType,
 			ProcessType: processType,
 		},
 	}
-	cogReqBody, cogReqBodyErr := json.Marshal(cogReq)
-	if cogReqBodyErr != nil {
+	cogReqBodyBuffer, cogReqBodyBufferErr := json.Marshal(cogReqBody)
+	if cogReqBodyBufferErr != nil {
 		go UpdateUpscaleAsFailed(upscaleIdChan, 0)
-		log.Printf("Error marshalling cog request body: %v", cogReqBodyErr)
+		log.Printf("Error marshalling cog request body: %v", cogReqBodyBufferErr)
 		return c.Status(http.StatusInternalServerError).JSON(
 			SUpscaleResponse{Error: "Failed to marshal cog request body"},
 		)
 	}
-	cogEndpoint := fmt.Sprintf("%s/predictions", pickServerRes.ServerUrl)
+
 	upscaleCogStart := time.Now().UTC().UnixMilli()
-	cogRes, cogResErr := http.Post(cogEndpoint, "application/json", bytes.NewBuffer(cogReqBody))
+	cogEndpoint := fmt.Sprintf("%s/predictions", pickServerRes.ServerUrl)
+	ctx, cncl := context.WithTimeout(context.Background(), shared.GenerationOrUpscaleTimeout)
+	defer cncl()
+
+	cogReq, cogReqErr := http.NewRequestWithContext(ctx, http.MethodPost, cogEndpoint, bytes.NewBuffer(cogReqBodyBuffer))
+	if cogReqErr != nil {
+		upscaleCogEnd := time.Now().UTC().UnixMilli()
+		go UpdateUpscaleAsFailed(upscaleIdChan, upscaleCogEnd-upscaleCogStart)
+		log.Printf("Error creating cog request: %v", cogReqErr)
+		return c.Status(http.StatusInternalServerError).JSON(
+			SUpscaleResponse{Error: "Error creating cog request"},
+		)
+	}
+
+	cogRes, cogResErr := http.DefaultClient.Do(cogReq)
 	if cogResErr != nil {
 		upscaleCogEnd := time.Now().UTC().UnixMilli()
 		go UpdateUpscaleAsFailed(upscaleIdChan, upscaleCogEnd-upscaleCogStart)
-		log.Printf("Error posting to cog server: %v", cogResErr)
+		log.Printf("Error sending cog request: %v", cogResErr)
 		return c.Status(http.StatusInternalServerError).JSON(
-			SUpscaleResponse{Error: "Failed to post to cog server"},
+			SUpscaleResponse{Error: "Error sending cog request"},
 		)
 	}
 	if cogRes.StatusCode != http.StatusOK {

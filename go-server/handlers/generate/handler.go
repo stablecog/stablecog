@@ -2,6 +2,7 @@ package generate
 
 import (
 	"bytes"
+	"context"
 	"fmt"
 	"log"
 	"math/rand"
@@ -191,7 +192,7 @@ func Handler(c *fiber.Ctx) error {
 		GenerationIdChan:  generationIdChan,
 		UserTier:          subscriptionTier,
 	})
-	cogReq := shared.SCogGenerateRequestBody{
+	cogReqBody := shared.SCogGenerateRequestBody{
 		Input: shared.SCogGenerateRequestInput{
 			Prompt:            cleanedPrompt,
 			NegativePrompt:    cleanedNegativePrompt,
@@ -208,23 +209,34 @@ func Handler(c *fiber.Ctx) error {
 			OutputImageExt:    req.OutputImageExt,
 		},
 	}
-	cogReqBody, cogReqBodyErr := json.Marshal(cogReq)
-	if cogReqBodyErr != nil {
-		go UpdateGenerationAsFailed(generationIdChan, 0, false)
-		log.Printf("Error marshalling cog request body: %v", cogReqBodyErr)
+	cogReqBodyBuffer, cogReqBodyBufferErr := json.Marshal(cogReqBody)
+	if cogReqBodyBufferErr != nil {
+		log.Printf("Error marshaling cog request body")
 		return c.Status(http.StatusInternalServerError).JSON(
-			SGenerateResponse{Error: "Failed to marshal cog request body"},
+			SGenerateResponse{Error: "Failed to create cog request body"},
 		)
 	}
-	cogEndpoint := fmt.Sprintf("%s/predictions", pickServerRes.ServerUrl)
+
 	generationCogStart := time.Now().UTC().UnixMilli()
-	cogRes, cogResErr := http.Post(cogEndpoint, "application/json", bytes.NewBuffer(cogReqBody))
+	cogEndpoint := fmt.Sprintf("%s/predictions", pickServerRes.ServerUrl)
+	ctx, cncl := context.WithTimeout(context.Background(), shared.GenerationOrUpscaleTimeout)
+	defer cncl()
+	cogReq, cogReqErr := http.NewRequestWithContext(ctx, http.MethodPost, cogEndpoint, bytes.NewBuffer(cogReqBodyBuffer))
+	if cogReqErr != nil {
+		generationCogEnd := time.Now().UTC().UnixMilli()
+		go UpdateGenerationAsFailed(generationIdChan, generationCogEnd-generationCogStart, false)
+		log.Printf("Error creating cog request: %v", cogReqErr)
+		return c.Status(http.StatusInternalServerError).JSON(
+			SGenerateResponse{Error: "Error creating cog request"},
+		)
+	}
+	cogRes, cogResErr := http.DefaultClient.Do(cogReq)
 	if cogResErr != nil {
 		generationCogEnd := time.Now().UTC().UnixMilli()
 		go UpdateGenerationAsFailed(generationIdChan, generationCogEnd-generationCogStart, false)
-		log.Printf("Error posting to cog server: %v", cogResErr)
+		log.Printf("Cog request returned an error: %v", cogReqErr)
 		return c.Status(http.StatusInternalServerError).JSON(
-			SGenerateResponse{Error: "Failed to post to cog server"},
+			SGenerateResponse{Error: "Cog returned an error"},
 		)
 	}
 	if cogRes.StatusCode != http.StatusOK {

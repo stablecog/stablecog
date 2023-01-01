@@ -43,7 +43,7 @@
 	let items = [...initialItems];
 
 	let searchTimeout: NodeJS.Timeout;
-	let searchDebounceMs = 300;
+	let searchDebounceMs = 400;
 	let searchStatus: 'idle' | 'searching' | 'searched' = 'idle';
 
 	$: searchString, searchWithDebounce(searchString);
@@ -66,14 +66,9 @@
 		searchTimeout = setTimeout(async () => {
 			if (searchString) {
 				try {
+					const searchQuery = searchString;
 					searchStatus = 'searching';
-					mLogGallerySearch({
-						'SC - Search Query': searchString,
-						'SC - Advanced Mode': $advancedModeApp,
-						'SC - Locale': $locale,
-						'SC - Plan': $page.data.tier
-					});
-					const res = await fetch(`${apiBase}/gallery?search=${searchString}`);
+					const res = await fetch(`${apiBase}/gallery?search=${searchQuery}`);
 					if (res.status !== 200) {
 						throw new Error('Error getting the page');
 					}
@@ -95,6 +90,12 @@
 					await tick();
 					console.log('Searched - Generations length:', generations.length);
 					console.log('Searched - Got the page:', currPage);
+					mLogGallerySearch({
+						'SC - Search Query': searchQuery,
+						'SC - Advanced Mode': $advancedModeApp,
+						'SC - Locale': $locale,
+						'SC - Plan': $page.data.tier
+					});
 				} catch (error) {
 					console.log(error);
 				} finally {
