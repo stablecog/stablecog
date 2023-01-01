@@ -84,17 +84,13 @@ export const POST: RequestHandler = async (event) => {
 			} else {
 				const userRes = await supabaseAdmin
 					.from('user')
-					.update(
-						{
-							subscription_tier: prod.name.toUpperCase()
-						},
-						{ count: 'exact' }
-					)
+					.update({
+						subscription_tier: prod.name.toUpperCase()
+					})
 					.match({ stripe_customer_id: customerId })
 					.select('id,email')
 					.maybeSingle();
 				const user = userRes.data;
-				const count = userRes.count;
 				if (!user) return new Response('User not found', { status: 400 });
 				// If new subscription
 				if (prevStatus && prevStatus === 'incomplete') {
@@ -110,6 +106,9 @@ export const POST: RequestHandler = async (event) => {
 						'SC - Stripe ID': customerId
 					});
 					try {
+						const { count } = await supabaseAdmin
+							.from('user')
+							.select('*', { count: 'exact', head: true });
 						await fetch(DISCORD_WEBHOOK_SUBSCRIBER_URL, {
 							method: 'POST',
 							headers: { 'Content-Type': 'application/json' },

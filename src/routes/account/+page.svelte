@@ -86,7 +86,7 @@
 							: '/pro'}
 					>
 						{data.customerPortalSession && $page.data.tier !== 'FREE'
-							? 'Manage Subscription'
+							? $LL.Account.ManageSubscriptionButton()
 							: $LL.Pro.BecomeProButton()}
 					</Button>
 				</div>

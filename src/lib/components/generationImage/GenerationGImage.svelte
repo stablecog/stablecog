@@ -23,6 +23,7 @@
 
 	let imgElement: HTMLImageElement | undefined;
 	$: [imgElement], onLoad();
+	// Check this out and make sure did load before works
 	const onLoad = () => {
 		if (imgElement && imgElement?.naturalWidth > 0) {
 			loaded = true;

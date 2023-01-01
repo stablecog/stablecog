@@ -1,112 +1,89 @@
 <script lang="ts">
-	import { onMount, onDestroy, tick } from 'svelte';
-	export let stretchFirst = false;
-	export let gridGap = '0.375rem';
-	export let colWidth = 'minmax(Min(17em, 100%), 1fr)';
-	export let items: any[] = [];
-	let grids: any[] = [];
-	let masonryElement: HTMLDivElement;
+	import { tick } from 'svelte';
+	import IntersectionObserver from 'svelte-intersection-observer';
 
-	export const refreshLayout = async () => {
-		grids.forEach(async (grid) => {
-			/* get the post relayout number of columns */
-			let ncol = getComputedStyle(grid._el).gridTemplateColumns.split(' ').length;
+	type T = $$Generic;
+	type TItem = T & { id: string };
+	export let items: TItem[];
+	export let cols = 6;
+	export let hasMore = true;
+	export let loadMore: () => Promise<void>;
 
-			grid.items.forEach((c: any) => {
-				let new_h = c.getBoundingClientRect().height;
+	let itemsExtended: IItemsExtended[] = [];
+	let bottomElement: HTMLDivElement;
+	let containerWidth: number;
+	let colHeights = Array.from({ length: cols }, () => 0);
+	let intersecting = false;
 
-				if (new_h !== +c.dataset.h) {
-					c.dataset.h = new_h;
-					grid.mod++;
-				}
-			});
+	$: tallestColumnHeight = Math.max(...colHeights);
 
-			/* if the number of columns has changed */
-			if (grid.ncol !== ncol || grid.mod) {
-				/* update number of columns */
-				grid.ncol = ncol;
-				/* revert to initial positioning, no margin */
-				grid.items.forEach((c: any) => c.style.removeProperty('margin-top'));
-				/* if we have more than one column */
-				if (grid.ncol > 1) {
-					grid.items.slice(ncol).forEach((c: any, i: any) => {
-						let prev_fin =
-								grid.items[i].getBoundingClientRect().bottom /* bottom edge of item above */,
-							curr_ini = c.getBoundingClientRect().top; /* top edge of current item */
-
-						c.style.marginTop = `${prev_fin + grid.gap - curr_ini}px`;
-					});
-				}
-
-				grid.mod = 0;
-			}
-		});
-	};
-
-	const calcGrid = async (_masonryArr: any[]) => {
-		await tick();
-		if (_masonryArr.length && getComputedStyle(_masonryArr[0]).gridTemplateRows !== 'masonry') {
-			grids = _masonryArr.map((grid) => {
-				return {
-					_el: grid,
-					gap: parseFloat(getComputedStyle(grid).gridRowGap),
-					items: [...grid.childNodes].filter(
-						(c) => c.nodeType === 1 && +getComputedStyle(c).gridColumnEnd !== -1
-					),
-					ncol: 0,
-					mod: 0
-				};
-			});
-			refreshLayout(); /* initial load */
-		}
-	};
-
-	let _window: Window;
-	onMount(() => {
-		_window = window;
-		_window.addEventListener('resize', refreshLayout, false); /* on resize */
-	});
-	onDestroy(() => {
-		if (_window) {
-			_window.removeEventListener('resize', refreshLayout, false); /* on resize */
-		}
-	});
-
-	$: if (masonryElement) {
-		calcGrid([masonryElement]);
+	interface IItemsExtended {
+		item: TItem;
+		element: HTMLElement | undefined;
+		width: number;
+		marginTop: number;
+		marginLeft: number;
 	}
 
-	$: if (items) {
-		// update if items are changed
-		masonryElement = masonryElement; // refresh masonryElement
+	let counter = 0;
+
+	$: [containerWidth, items], render();
+	async function render() {
+		if (!containerWidth || !items) return;
+		counter++;
+		console.log(`called render() #${counter}`);
+		const itemWidth = containerWidth / cols;
+		for (let i = 0; i < items.length; i++) {
+			if (itemsExtended[i] && itemsExtended[i].item.id === items[i].id) continue;
+			const item = { ...items[i] };
+			const shortestCol = colHeights.indexOf(Math.min(...colHeights));
+			const colHeight = colHeights[shortestCol];
+			const itemExtended: IItemsExtended = {
+				item,
+				element: undefined,
+				width: itemWidth,
+				marginTop: colHeight,
+				marginLeft: shortestCol * itemWidth
+			};
+			itemsExtended = [...itemsExtended, itemExtended];
+			await tick();
+			while (!itemExtended.element) {
+				await new Promise((resolve) => setTimeout(resolve, 100));
+			}
+			if (!itemExtended.element) return;
+			colHeights[shortestCol] += itemExtended.element.clientHeight;
+			await new Promise((resolve) => setTimeout(resolve, 25));
+		}
+	}
+
+	$: [intersecting], _loadMore();
+
+	let isLoading = false;
+	async function _loadMore() {
+		if (isLoading || !hasMore) return;
+		isLoading = true;
+		try {
+			await loadMore();
+		} catch (error) {
+			console.log(error);
+		} finally {
+			isLoading = false;
+		}
 	}
 </script>
 
-<div
-	bind:this={masonryElement}
-	class={`__grid--masonry ${stretchFirst ? '__stretch-first' : ''}`}
-	style={`--grid-gap: ${gridGap}; --col-width: ${colWidth};`}
->
-	<slot />
+<div class="w-full flex flex-col">
+	<div style="height: {tallestColumnHeight}px" bind:clientWidth={containerWidth} class="w-full">
+		{#each itemsExtended as itemExtended, index}
+			<div
+				bind:this={itemExtended.element}
+				style="width: {itemExtended.width}px; position: absolute; margin-top: {itemExtended.marginTop}px; margin-left: {itemExtended.marginLeft}px;"
+			>
+				<slot item={itemExtended.item} {index} />
+			</div>
+		{/each}
+	</div>
+	<IntersectionObserver bind:intersecting element={bottomElement}>
+		<div bind:this={bottomElement} class="w-full" />
+	</IntersectionObserver>
 </div>
-
-<!-- 
-  $w: var(--col-width); // minmax(Min(20em, 100%), 1fr);
-  $s: var(--grid-gap); // .5em;
- -->
-<style>
-	:global(.__grid--masonry) {
-		display: grid;
-		grid-template-columns: repeat(auto-fit, var(--col-width));
-		grid-template-rows: masonry;
-		justify-content: center;
-		grid-gap: var(--grid-gap);
-		padding: var(--grid-gap);
-	}
-	:global(.__grid--masonry > *) {
-		align-self: start;
-	}
-	:global(.__grid--masonry.__stretch-first > *:first-child) {
-		grid-column: 1/ -1;
-	}
-</style>

@@ -276,7 +276,7 @@
 											class="absolute left-0 top-0 w-full h-full group rounded-xl bg-c-bg-secondary z-0 overflow-hidden border-4 
 										shadow-lg shadow-c-shadow/[var(--o-shadow-normal)] border-c-bg-secondary"
 										>
-											<GenerationGImage bind:generation={generations[item.key]} />
+											<GenerationGImage generation={generations[item.key]} />
 										</div>
 									{/if}
 								</div>
@@ -285,8 +285,8 @@
 					</MasonryInfiniteGrid>
 				{/key}
 				{#if isValue(nextPage)}
-					<div class="w-full flex flex-col items-center justify-center py-12">
-						<IconLoadingSlim class="animate-spin-faster w-10 h-10 text-c-on-bg/50" />
+					<div class="w-full flex flex-col flex-1 items-center justify-center py-12">
+						<IconLoadingSlim class="animate-spin-faster w-12 h-12 text-c-on-bg/50" />
 					</div>
 				{/if}
 			{/if}
