@@ -94,11 +94,6 @@
 			}
 		}
 	}
-
-	let scrollTop = 0;
-	function onScroll() {
-		scrollTop = window.scrollY;
-	}
 </script>
 
 <MetaTag
@@ -108,7 +103,7 @@
 	canonical="{canonicalUrl}{$page.url.pathname}"
 />
 
-<svelte:window on:keydown={onKeyDown} on:scroll={onScroll} />
+<svelte:window on:keydown={onKeyDown} />
 
 <div class="w-full px-5 pt-3 pb-1.5 sticky z-50 top-20 flex items-center justify-center">
 	<div

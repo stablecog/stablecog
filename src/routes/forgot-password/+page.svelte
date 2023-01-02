@@ -1,11 +1,9 @@
 <script lang="ts">
-	import { goto } from '$app/navigation';
 	import { page } from '$app/stores';
 	import Button from '$components/buttons/Button.svelte';
 	import NoBgButton from '$components/buttons/NoBgButton.svelte';
 	import ErrorLine from '$components/ErrorLine.svelte';
 	import IconEmail from '$components/icons/IconEmail.svelte';
-	import IconLoading from '$components/icons/IconLoading.svelte';
 	import IconPassword from '$components/icons/IconPassword.svelte';
 	import IconTick from '$components/icons/IconTick.svelte';
 	import Input from '$components/Input.svelte';

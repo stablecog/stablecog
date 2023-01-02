@@ -1,11 +1,14 @@
 <script lang="ts">
 	import IconSubscriptionTier from '$components/icons/IconSubscriptionTier.svelte';
 	import LL from '$i18n/i18n-svelte';
-	import type { IStripeSubscriptionTier } from '$ts/types/stripe';
+	import type {
+		IStripeSubscriptionTier,
+		IStripeSubscriptionTierOrAnonymous
+	} from '$ts/types/stripe';
 	import { quadOut } from 'svelte/easing';
 	import { scale } from 'svelte/transition';
 
-	export let tier: IStripeSubscriptionTier;
+	export let tier: IStripeSubscriptionTierOrAnonymous;
 	export let size: 'xs' | 'sm' | 'md' | 'lg' = 'sm';
 	export let outline: 'primary' | 'on-bg' | undefined = undefined;
 	export { classes as class };

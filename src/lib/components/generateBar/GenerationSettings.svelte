@@ -61,7 +61,6 @@
 	} from '$ts/stores/generationSettings';
 	import { isTouchscreen } from '$ts/stores/isTouchscreen';
 	import { currentServer } from '$ts/stores/serverHealth';
-	import { windowWidth } from '$ts/stores/window';
 
 	export let isCheckComplete: boolean;
 	export let formElement: HTMLFormElement;

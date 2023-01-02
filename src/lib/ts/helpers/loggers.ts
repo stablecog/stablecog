@@ -1,4 +1,4 @@
-import type { IStripeSubscriptionTier } from '$ts/types/stripe';
+import type { IStripeSubscriptionTierOrAnonymous } from '$ts/types/stripe';
 import mixpanel from 'mixpanel-browser';
 
 export function uLogGeneration(status: IGenerationStatus) {
@@ -77,24 +77,24 @@ export function mLogGallerySearch(props: IGallerySearchProps) {
 
 interface ISubmitToGalleryToggledMinimal {
 	'SC - Advanced Mode': boolean;
-	'SC - Plan': IStripeSubscriptionTier;
+	'SC - Plan': IStripeSubscriptionTierOrAnonymous;
 }
 type IOnOff = 'On' | 'Off';
 
 interface IGalleryGenerationOpenedProps {
 	'SC - Generation Id': string;
-	'SC - Plan': IStripeSubscriptionTier;
+	'SC - Plan': IStripeSubscriptionTierOrAnonymous;
 	'SC - Advanced Mode': boolean;
 }
 
 interface IGalleryGenerateClickedProps {
 	'SC - Generation Id': string;
-	'SC - Plan': IStripeSubscriptionTier;
+	'SC - Plan': IStripeSubscriptionTierOrAnonymous;
 	'SC - Advanced Mode': boolean;
 }
 
 interface IAdvancedModeToggledProps {
-	'SC - Plan': IStripeSubscriptionTier;
+	'SC - Plan': IStripeSubscriptionTierOrAnonymous;
 }
 
 interface IUpscaleMinimal {
@@ -103,7 +103,7 @@ interface IUpscaleMinimal {
 	'SC - Advanced Mode': boolean;
 	'SC - Locale': string;
 	'SC - Duration'?: number;
-	'SC - Plan': IStripeSubscriptionTier;
+	'SC - Plan': IStripeSubscriptionTierOrAnonymous;
 }
 
 type IGenerationStatus = 'Started' | 'Succeeded' | 'Failed' | 'Failed-NSFW';
@@ -121,40 +121,40 @@ interface IGenerationMinimal {
 	'SC - Locale': string;
 	'SC - Submit to Gallery': boolean;
 	'SC - Duration'?: number;
-	'SC - Plan': IStripeSubscriptionTier;
+	'SC - Plan': IStripeSubscriptionTierOrAnonymous;
 }
 
 interface IPageviewProps {
 	'SC - Page': string;
 	'SC - Locale': string;
 	'SC - Advanced Mode': boolean;
-	'SC - Plan': IStripeSubscriptionTier;
+	'SC - Plan': IStripeSubscriptionTierOrAnonymous;
 }
 
 interface ISignInProps {
 	'SC - Locale': string;
 	'SC - Advanced Mode': boolean;
-	'SC - Plan': IStripeSubscriptionTier;
+	'SC - Plan': IStripeSubscriptionTierOrAnonymous;
 	'SC - Page': string;
 }
 
 interface ISignOutProps {
 	'SC - Locale': string;
 	'SC - Advanced Mode': boolean;
-	'SC - Plan': IStripeSubscriptionTier;
+	'SC - Plan': IStripeSubscriptionTierOrAnonymous;
 	'SC - Page': string;
 }
 
 interface ISignUpProps {
 	'SC - Locale': string;
 	'SC - Advanced Mode': boolean;
-	'SC - Plan': IStripeSubscriptionTier;
+	'SC - Plan': IStripeSubscriptionTierOrAnonymous;
 	'SC - Page': string;
 }
 
 interface IGallerySearchProps {
 	'SC - Locale': string;
 	'SC - Advanced Mode': boolean;
-	'SC - Plan': IStripeSubscriptionTier;
+	'SC - Plan': IStripeSubscriptionTierOrAnonymous;
 	'SC - Search Query': string;
 }

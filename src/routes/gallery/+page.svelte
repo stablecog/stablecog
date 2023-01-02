@@ -190,7 +190,7 @@
 
 <svelte:window
 	on:keydown={onKeyDown}
-	on:scroll={(e) => {
+	on:scroll={() => {
 		if (Math.abs(window.scrollY) < 50) {
 			atTheTop = true;
 			return;

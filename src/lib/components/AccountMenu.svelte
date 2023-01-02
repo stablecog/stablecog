@@ -6,7 +6,7 @@
 	import LL, { locale } from '$i18n/i18n-svelte';
 	import { supabase } from '$ts/constants/supabase';
 	import { mLogSignOut } from '$ts/helpers/loggers';
-	import { advancedMode, advancedModeApp } from '$ts/stores/advancedMode';
+	import { advancedModeApp } from '$ts/stores/advancedMode';
 	import { isTouchscreen } from '$ts/stores/isTouchscreen';
 	import DropdownWrapper from './DropdownWrapper.svelte';
 
