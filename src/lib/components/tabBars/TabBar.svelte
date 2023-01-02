@@ -18,25 +18,10 @@
 	export let dontScale = false;
 	export let disabled = false;
 	export let isValid: (v: T) => boolean = () => true;
-	export let validityDependsOn: T[] = [];
 	export let outline: 'primary' | 'bg-secondary' = 'bg-secondary';
 	export let hasBackgroundPattern = false;
 
 	let classes = '';
-
-	$: [value, validityDependsOn], enforceValidity();
-
-	function enforceValidity() {
-		if (!isValid(value)) {
-			const index = tabs.map((t) => t.value).indexOf(value);
-			for (let i = index - 1; i >= 0; i--) {
-				if (isValid(tabs[i].value)) {
-					value = tabs[i].value;
-					return;
-				}
-			}
-		}
-	}
 </script>
 
 <TabBarWrapper {outline} class={classes} {dontScale}>

@@ -61,6 +61,7 @@
 	} from '$ts/stores/generationSettings';
 	import { isTouchscreen } from '$ts/stores/isTouchscreen';
 	import { currentServer } from '$ts/stores/serverHealth';
+	import type { TTab } from '$ts/types/main';
 
 	export let isCheckComplete: boolean;
 	export let formElement: HTMLFormElement;
@@ -70,9 +71,29 @@
 	export let containerTopMinDistance = 0;
 	export let containerBottomMinDistance = 0;
 
-	$: isInferenceStepsValid = (s: string) => {
+	$: isInferenceStepsValid = <T>(s: T) => {
 		return Number(s) * Number($generationHeight) * Number($generationWidth) < maxProPixelSteps;
 	};
+
+	$: [$generationHeight, $generationWidth], adjustInferenceSteps();
+
+	const adjustInferenceSteps = () => {
+		generationInferenceSteps.set(
+			getValidValue($generationInferenceSteps, inferenceStepsTabs, isInferenceStepsValid)
+		);
+	};
+
+	function getValidValue<T>(value: T, tabs: TTab<T>[], isValid: (s: T) => boolean) {
+		if (!isValid(value)) {
+			const index = tabs.map((t) => t.value).indexOf(value);
+			for (let i = index - 1; i >= 0; i--) {
+				if (isValid(tabs[i].value)) {
+					return tabs[i].value;
+				}
+			}
+		}
+		return value;
+	}
 
 	$: logProps = {
 		'SC - Plan': $page.data.plan
@@ -222,7 +243,6 @@
 					: 'bg-secondary'}
 				hasBackgroundPattern={$page.data.plan === 'FREE' || $page.data.plan === 'ANONYMOUS'}
 				isValid={isInferenceStepsValid}
-				validityDependsOn={[$generationHeight, $generationWidth]}
 				bind:value={$generationInferenceSteps}
 				name="Steps"
 				hideSelected={!isCheckComplete}
