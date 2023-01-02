@@ -171,6 +171,9 @@
 			activeGenerationG.set({ ...generationData, didLoadBefore: false });
 		}
 	});
+
+	const atTheTopThreshold = 50;
+	const minScrollThreshold = 40;
 </script>
 
 <MetaTag
@@ -191,13 +194,13 @@
 <svelte:window
 	on:keydown={onKeyDown}
 	on:scroll={() => {
-		if (Math.abs(window.scrollY) < 50) {
+		if (Math.abs(window.scrollY) < atTheTopThreshold) {
 			atTheTop = true;
 			return;
 		} else {
 			atTheTop = false;
 		}
-		if (Math.abs(window.scrollY - oldScrollY) < 50) return;
+		if (Math.abs(window.scrollY - oldScrollY) < minScrollThreshold) return;
 		if (window.scrollY > oldScrollY) {
 			scrollDirection = 'down';
 		} else {
