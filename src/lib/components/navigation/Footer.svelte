@@ -3,5 +3,5 @@
 </script>
 
 <div class="w-full flex flex-wrap justify-center items-center px-6 py-6">
-	<SocialBar withBlog />
+	<SocialBar withBlog withEmail />
 </div>

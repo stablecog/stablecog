@@ -3,7 +3,8 @@ export const socialAppUrls = {
 	twitter: '/twitter',
 	instagram: '/instagram',
 	github: '/github',
-	producthunt: '/producthunt'
+	producthunt: '/producthunt',
+	email: 'mailto:hello@stablecog.com'
 };
 
 export const socialUrls = {
@@ -11,5 +12,6 @@ export const socialUrls = {
 	twitter: 'https://twitter.com/stablecogcom',
 	instagram: 'https://instagram.com/stablecog',
 	github: 'https://github.com/yekta/stablecog',
-	producthunt: 'https://www.producthunt.com/posts/stablecog'
+	producthunt: 'https://www.producthunt.com/posts/stablecog',
+	email: 'hello@stablecog.com'
 };

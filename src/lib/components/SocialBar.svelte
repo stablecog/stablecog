@@ -8,12 +8,23 @@
 	export let size: 'sm' | 'md' = 'sm';
 	export let color: 'faded' | 'normal' = 'faded';
 	export let withBlog = false;
+	export let withEmail = false;
 </script>
 
 <div class="w-full flex flex-wrap justify-center">
 	{#if withBlog}
 		<IconButton name="Blog" href={'/blog'}>
 			<IconBlog
+				class="{size === 'sm' ? 'w-8 h-8' : 'w-10 h-10'} transition {color === 'normal'
+					? 'text-c-on-bg'
+					: 'text-c-on-bg/50'} {!$isTouchscreen ? 'group-hover:text-c-primary' : ''}"
+			/>
+		</IconButton>
+	{/if}
+	{#if withEmail}
+		<IconButton name="Email" href={socialAppUrls.email} target="_blank">
+			<IconSocial
+				type="email"
 				class="{size === 'sm' ? 'w-8 h-8' : 'w-10 h-10'} transition {color === 'normal'
 					? 'text-c-on-bg'
 					: 'text-c-on-bg/50'} {!$isTouchscreen ? 'group-hover:text-c-primary' : ''}"
