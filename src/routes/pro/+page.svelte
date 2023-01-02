@@ -61,7 +61,7 @@
 
 <PageWrapper>
 	<div class="w-full flex flex-col items-center justify-start my-auto">
-		{#if $page.data.tier === 'FREE' || $page.data.tier === 'ANONYMOUS'}
+		{#if $page.data.plan === 'FREE' || $page.data.plan === 'ANONYMOUS'}
 			{#if data.reason}
 				<div class="bg-c-bg rounded-xl -mx-2 md:mx-0 -mt-4 md:-mt-2 mb-6 md:mb-8">
 					<div
@@ -193,6 +193,6 @@
 	</div>
 </PageWrapper>
 
-{#if mounted && $page.data.tier === 'PRO'}
+{#if mounted && $page.data.plan === 'PRO'}
 	<ConfettiFullScreen />
 {/if}

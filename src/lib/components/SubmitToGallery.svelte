@@ -8,7 +8,7 @@
 	import SubtleButton from './buttons/SubtleButton.svelte';
 
 	$: logProps = {
-		'SC - Plan': $page.data.tier,
+		'SC - Plan': $page.data.plan,
 		'SC - Advanced Mode': $advancedModeApp
 	};
 </script>

@@ -75,7 +75,7 @@
 	};
 
 	$: logProps = {
-		'SC - Plan': $page.data.tier
+		'SC - Plan': $page.data.plan
 	};
 </script>
 
@@ -107,26 +107,26 @@
 			class="w-full"
 			tabs={widthTabs}
 			badgeHref="/pro?reason=width"
-			badgeAppliedTo={$page.data.tier === 'FREE' || $page.data.tier === 'ANONYMOUS'
+			badgeAppliedTo={$page.data.plan === 'FREE' || $page.data.plan === 'ANONYMOUS'
 				? availableWidths.filter((i) => !availableWidthsFree.includes(i))
 				: undefined}
-			outline={$page.data.tier === 'FREE' || $page.data.tier === 'ANONYMOUS'
+			outline={$page.data.plan === 'FREE' || $page.data.plan === 'ANONYMOUS'
 				? 'primary'
 				: 'bg-secondary'}
-			hasBackgroundPattern={$page.data.tier === 'FREE' || $page.data.tier === 'ANONYMOUS'}
+			hasBackgroundPattern={$page.data.plan === 'FREE' || $page.data.plan === 'ANONYMOUS'}
 			bind:value={$generationWidth}
 			name="Width"
 			hideSelected={!isCheckComplete}
 		>
 			<div slot="title" use:tooltip={$widthTooltip} class="p-3.5 flex items-center justify-center">
 				<IconWidth
-					class="w-6 h-6 {$page.data.tier === 'FREE' || $page.data.tier === 'ANONYMOUS'
+					class="w-6 h-6 {$page.data.plan === 'FREE' || $page.data.plan === 'ANONYMOUS'
 						? 'text-c-primary/40'
 						: 'text-c-on-bg/25'}"
 				/>
 			</div>
 		</TabBar>
-		{#if $page.data.tier === 'FREE' || $page.data.tier === 'ANONYMOUS'}
+		{#if $page.data.plan === 'FREE' || $page.data.plan === 'ANONYMOUS'}
 			<div class="absolute -top-2 pointer-events-none -left-1.25">
 				<TierBadge tier="PRO" outline="primary" />
 			</div>
@@ -138,26 +138,26 @@
 			class="w-full"
 			tabs={heightTabs}
 			badgeHref="/pro?reason=height"
-			badgeAppliedTo={$page.data.tier === 'FREE' || $page.data.tier === 'ANONYMOUS'
+			badgeAppliedTo={$page.data.plan === 'FREE' || $page.data.plan === 'ANONYMOUS'
 				? availableHeights.filter((i) => !availableHeightsFree.includes(i))
 				: undefined}
-			outline={$page.data.tier === 'FREE' || $page.data.tier === 'ANONYMOUS'
+			outline={$page.data.plan === 'FREE' || $page.data.plan === 'ANONYMOUS'
 				? 'primary'
 				: 'bg-secondary'}
-			hasBackgroundPattern={$page.data.tier === 'FREE' || $page.data.tier === 'ANONYMOUS'}
+			hasBackgroundPattern={$page.data.plan === 'FREE' || $page.data.plan === 'ANONYMOUS'}
 			bind:value={$generationHeight}
 			name="Height"
 			hideSelected={!isCheckComplete}
 		>
 			<div slot="title" use:tooltip={$heightTooltip} class="p-3.5 flex items-center justify-center">
 				<IconHeight
-					class="w-6 h-6 {$page.data.tier === 'FREE' || $page.data.tier === 'ANONYMOUS'
+					class="w-6 h-6 {$page.data.plan === 'FREE' || $page.data.plan === 'ANONYMOUS'
 						? 'text-c-primary/40'
 						: 'text-c-on-bg/25'}"
 				/>
 			</div>
 		</TabBar>
-		{#if $page.data.tier === 'FREE' || $page.data.tier === 'ANONYMOUS'}
+		{#if $page.data.plan === 'FREE' || $page.data.plan === 'ANONYMOUS'}
 			<div class="absolute -top-2 pointer-events-none -left-1.25">
 				<TierBadge tier="PRO" outline="primary" />
 			</div>
@@ -177,7 +177,7 @@
 			{disabled}
 			items={$availableModelIdDropdownItems}
 			badgeHref="/pro?reason=model"
-			badgeAppliedTo={$page.data.tier === 'FREE' || $page.data.tier === 'ANONYMOUS'
+			badgeAppliedTo={$page.data.plan === 'FREE' || $page.data.plan === 'ANONYMOUS'
 				? availableModelIds.filter((i) => !availableModelIdsFree.includes(i))
 				: undefined}
 			name="Model"
@@ -214,13 +214,13 @@
 				class="w-full"
 				tabs={inferenceStepsTabs}
 				badgeHref="/pro?reason=steps"
-				badgeAppliedTo={$page.data.tier === 'FREE' || $page.data.tier === 'ANONYMOUS'
+				badgeAppliedTo={$page.data.plan === 'FREE' || $page.data.plan === 'ANONYMOUS'
 					? availableInferenceSteps.filter((i) => !availableInferenceStepsFree.includes(i))
 					: undefined}
-				outline={$page.data.tier === 'FREE' || $page.data.tier === 'ANONYMOUS'
+				outline={$page.data.plan === 'FREE' || $page.data.plan === 'ANONYMOUS'
 					? 'primary'
 					: 'bg-secondary'}
-				hasBackgroundPattern={$page.data.tier === 'FREE' || $page.data.tier === 'ANONYMOUS'}
+				hasBackgroundPattern={$page.data.plan === 'FREE' || $page.data.plan === 'ANONYMOUS'}
 				isValid={isInferenceStepsValid}
 				validityDependsOn={[$generationHeight, $generationWidth]}
 				bind:value={$generationInferenceSteps}
@@ -233,13 +233,13 @@
 					class="p-3.5 flex items-center justify-center"
 				>
 					<IconSteps
-						class="w-6 h-6 {$page.data.tier === 'FREE' || $page.data.tier === 'ANONYMOUS'
+						class="w-6 h-6 {$page.data.plan === 'FREE' || $page.data.plan === 'ANONYMOUS'
 							? 'text-c-primary/40'
 							: 'text-c-on-bg/25'}"
 					/>
 				</div>
 			</TabBar>
-			{#if $page.data.tier === 'FREE' || $page.data.tier === 'ANONYMOUS'}
+			{#if $page.data.plan === 'FREE' || $page.data.plan === 'ANONYMOUS'}
 				<div class="absolute -top-2 pointer-events-none -left-1.25">
 					<TierBadge tier="PRO" outline="primary" />
 				</div>

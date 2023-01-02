@@ -35,7 +35,7 @@
 
 	$: logProps = {
 		'SC - Generation Id': generation.id,
-		'SC - Plan': $page.data.tier,
+		'SC - Plan': $page.data.plan,
 		'SC - Advanced Mode': $advancedModeApp
 	};
 </script>

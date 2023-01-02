@@ -55,7 +55,7 @@
 		}
 		console.log(sData);
 		mLogSignIn({
-			'SC - Plan': $page.data.tier,
+			'SC - Plan': $page.data.plan,
 			'SC - Locale': $locale,
 			'SC - Advanced Mode': $advancedModeApp,
 			'SC - Page': `${$page.url.pathname}${$page.url.search}`

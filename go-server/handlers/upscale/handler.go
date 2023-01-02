@@ -45,21 +45,25 @@ func Handler(c *fiber.Ctx) error {
 
 	supabaseUserId := shared.GetSupabaseUserIdFromAccessToken(req.AccessToken)
 	subscriptionTier := "FREE"
+	plan := "ANONYMOUS"
+
 	if supabaseUserId != "" {
 		var res shared.SUserResponse
 		_, err := shared.SupabaseDb.From("user").Select("subscription_tier", "", false).Eq("id", supabaseUserId).Single().ExecuteTo(&res)
 		if err != nil {
 			sentry.CaptureException(err)
-			log.Printf("-- Failed to get user tier: %v --", err)
+			log.Printf("-- Upscale - Failed to get user tier: %v --", err)
 		} else {
-			log.Printf("-- User tier: %s --", res.SubsciptionTier)
 			subscriptionTier = res.SubsciptionTier
+			plan = res.SubsciptionTier
 		}
 	}
 
-	if subscriptionTier == "FREE" {
+	log.Printf("-- Generation - User plan: %s --", plan)
+
+	if plan != "PRO" {
 		return c.Status(http.StatusBadRequest).JSON(
-			SUpscaleResponse{Error: "Upscale feature isn't available on the free tier :("},
+			SUpscaleResponse{Error: "Upscale feature isn't available on the free plan :("},
 		)
 	}
 

@@ -1,2 +1,2 @@
 export type IStripeSubscriptionTier = 'FREE' | 'PRO';
-export type IStripeSubscriptionTierOrAnonymous = IStripeSubscriptionTier | 'ANONYMOUS';
+export type IUserPlan = IStripeSubscriptionTier | 'ANONYMOUS';

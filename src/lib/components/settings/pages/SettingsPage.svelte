@@ -28,11 +28,11 @@
 	export let currentPage: TCurrentSettingsPage;
 
 	$: submitToGalleryLogProps = {
-		'SC - Plan': $page.data.tier,
+		'SC - Plan': $page.data.plan,
 		'SC - Advanced Mode': $advancedModeApp
 	};
 	$: advancedModeLogProps = {
-		'SC - Plan': $page.data.tier
+		'SC - Plan': $page.data.plan
 	};
 </script>
 

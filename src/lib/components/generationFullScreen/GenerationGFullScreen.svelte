@@ -205,7 +205,7 @@
 	};
 
 	$: showTierBadge =
-		($page.data.tier === 'FREE' || $page.data.tier === 'ANONYMOUS') &&
+		($page.data.plan === 'FREE' || $page.data.plan === 'ANONYMOUS') &&
 		(!availableWidthsFree.map((i) => Number(i)).includes(generation.width) ||
 			!availableHeightsFree.map((i) => Number(i)).includes(generation.height) ||
 			(generation.model?.id && !availableModelIdsFree.includes(generation.model.id)));
@@ -222,7 +222,7 @@
 
 	$: logProps = {
 		'SC - Generation Id': generation.id,
-		'SC - Plan': $page.data.tier,
+		'SC - Plan': $page.data.plan,
 		'SC - Advanced Mode': $advancedModeApp
 	};
 </script>

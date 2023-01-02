@@ -83,20 +83,23 @@ func Handler(c *fiber.Ctx) error {
 
 	supabaseUserId := shared.GetSupabaseUserIdFromAccessToken(req.AccessToken)
 	subscriptionTier := "FREE"
+	plan := "ANONYMOUS"
 	if supabaseUserId != "" {
 		var res shared.SUserResponse
 		_, err := shared.SupabaseDb.From("user").Select("subscription_tier", "", false).Eq("id", supabaseUserId).Single().ExecuteTo(&res)
 		if err != nil {
 			sentry.CaptureException(err)
-			log.Printf("Failed to get user tier: %v", err)
+			log.Printf("Generation - Failed to get user tier: %v", err)
 		} else {
-			log.Printf("User tier: %s", res.SubsciptionTier)
 			subscriptionTier = res.SubsciptionTier
+			plan = res.SubsciptionTier
 		}
 	}
 
+	log.Printf("-- Generation - User plan: %s --", plan)
+
 	// Generation setting checks for the free tier
-	if subscriptionTier == "FREE" {
+	if plan == "ANONYMOUS" || plan == "FREE" {
 		if shared.Contains(shared.AvailableModelIdsFree, req.ModelId) == false {
 			return c.Status(http.StatusBadRequest).JSON(
 				SGenerateResponse{Error: "That model is not available on the free plan :("},
@@ -121,12 +124,12 @@ func Handler(c *fiber.Ctx) error {
 
 	var duration time.Duration
 	var rateLimitedResponse SGenerateResponse
-	if subscriptionTier == "FREE" {
-		duration = minDurationFree
-		rateLimitedResponse = SGenerateResponse{Error: fmt.Sprintf("You can only start a generation every %d seconds on the free plan :(", duration/time.Second)}
-	} else {
+	if plan == "PRO" {
 		duration = minDuration
 		rateLimitedResponse = SGenerateResponse{Error: fmt.Sprintf("You can only start a generation every %d seconds :(", duration/time.Second)}
+	} else {
+		duration = minDurationFree
+		rateLimitedResponse = SGenerateResponse{Error: fmt.Sprintf("You can only start a generation every %d seconds on the free plan :(", duration/time.Second)}
 	}
 
 	isRateLimited := shared.IsRateLimited("goa", duration, c)
@@ -135,10 +138,10 @@ func Handler(c *fiber.Ctx) error {
 		return c.Status(http.StatusTooManyRequests).JSON(rateLimitedResponse)
 	}
 
-	if subscriptionTier == "FREE" {
-		time.Sleep(minDurationFree)
-	} else {
+	if plan == "PRO" {
 		time.Sleep(minDuration)
+	} else {
+		time.Sleep(minDurationFree)
 	}
 
 	if req.OutputImageExt == "" {

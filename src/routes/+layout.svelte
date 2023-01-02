@@ -58,7 +58,7 @@
 	$: if (mounted && $page.data.session?.user.id) {
 		mixpanel.identify($page.data.session?.user.id);
 		mixpanel.people.set({ $email: $page.data.session?.user.email });
-		mixpanel.people.set({ 'SC - Plan': $page.data.tier });
+		mixpanel.people.set({ 'SC - Plan': $page.data.plan });
 	}
 
 	onMount(async () => {
@@ -90,7 +90,7 @@
 			'SC - Page': `${$page.url.pathname}${$page.url.search}`,
 			'SC - Locale': $locale,
 			'SC - Advanced Mode': $advancedModeApp,
-			'SC - Plan': $page.data.tier
+			'SC - Plan': $page.data.plan
 		};
 		mLogPageview(props);
 	});

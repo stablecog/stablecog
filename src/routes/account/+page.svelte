@@ -27,7 +27,7 @@
 		try {
 			await supabase.auth.signOut();
 			mLogSignOut({
-				'SC - Plan': $page.data.tier,
+				'SC - Plan': $page.data.plan,
 				'SC - Locale': $locale,
 				'SC - Advanced Mode': $advancedModeApp,
 				'SC - Page': `${$page.url.pathname}${$page.url.search}`
@@ -76,20 +76,20 @@
 						<p class="text-c-on-bg/60 text-sm px-0.5 -mt-1">
 							{$LL.Account.SubscriptionPlanTitle()}
 						</p>
-						<TierBadge class="mt-1.5" size="lg" tier={$page.data.tier} />
+						<TierBadge class="mt-1.5" size="lg" tier={$page.data.plan} />
 					</div>
 					<Button
 						class="w-full md:w-auto"
 						size="sm"
 						href={data.customerPortalSession &&
-						$page.data.tier !== 'FREE' &&
-						$page.data.tier !== 'ANONYMOUS'
+						$page.data.plan !== 'FREE' &&
+						$page.data.plan !== 'ANONYMOUS'
 							? data.customerPortalSession.url
 							: '/pro'}
 					>
 						{data.customerPortalSession &&
-						$page.data.tier !== 'FREE' &&
-						$page.data.tier !== 'ANONYMOUS'
+						$page.data.plan !== 'FREE' &&
+						$page.data.plan !== 'ANONYMOUS'
 							? $LL.Account.ManageSubscriptionButton()
 							: $LL.Pro.BecomeProButton()}
 					</Button>

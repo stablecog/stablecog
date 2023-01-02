@@ -73,7 +73,7 @@
 		isValue(serverData.width) &&
 			serverData.width !== null &&
 			(availableWidthsFree.includes(serverData.width) ||
-				($page.data.tier !== 'FREE' && $page.data.tier !== 'ANONYMOUS'))
+				($page.data.plan !== 'FREE' && $page.data.plan !== 'ANONYMOUS'))
 			? serverData.width
 			: widthDefault
 	);
@@ -82,7 +82,7 @@
 			serverData.height !== null &&
 			serverData &&
 			(availableHeightsFree.includes(serverData.height) ||
-				($page.data.tier !== 'FREE' && $page.data.tier !== 'ANONYMOUS'))
+				($page.data.plan !== 'FREE' && $page.data.plan !== 'ANONYMOUS'))
 			? serverData.height
 			: heightDefault
 	);
@@ -93,7 +93,7 @@
 				.map((i) => i.value)
 				.findIndex((i) => i === serverData.num_inference_steps) >= 0 &&
 			(availableInferenceStepsFree.includes(serverData.num_inference_steps) ||
-				($page.data.tier !== 'FREE' && $page.data.tier !== 'ANONYMOUS'))
+				($page.data.plan !== 'FREE' && $page.data.plan !== 'ANONYMOUS'))
 			? serverData.num_inference_steps
 			: inferenceStepsDefault
 	);
@@ -106,7 +106,7 @@
 		isValue(serverData.model_id) &&
 			serverData.model_id !== null &&
 			(availableModelIdsFree.includes(serverData.model_id) ||
-				($page.data.tier !== 'FREE' && $page.data.tier !== 'ANONYMOUS'))
+				($page.data.plan !== 'FREE' && $page.data.plan !== 'ANONYMOUS'))
 			? serverData.model_id
 			: modelIdDefault
 	);
@@ -167,7 +167,7 @@
 
 	let isCheckComplete = false;
 
-	$: $page.data.tier, onTierStateChanged();
+	$: $page.data.plan, onTierStateChanged();
 	$: [$generationWidth, $generationHeight], setLocalImageSize();
 	$: [$generationInferenceSteps], setLocalInferenceSteps();
 	$: [$generationGuidanceScale], setLocalGuidanceScale();
@@ -180,7 +180,7 @@
 		$promptInputValue !== undefined && $promptInputValue !== '' && !loadingOrSubmitting;
 
 	const onTierStateChanged = () => {
-		if (isCheckComplete && ($page.data.tier === 'FREE' || $page.data.tier === 'ANONYMOUS')) {
+		if (isCheckComplete && ($page.data.plan === 'FREE' || $page.data.plan === 'ANONYMOUS')) {
 			if (!availableWidthsFree.includes($generationWidth)) {
 				generationWidth.set(widthDefault);
 			}
@@ -275,7 +275,7 @@
 			if (
 				widthIndex >= 0 &&
 				(availableWidthsFree.includes(widthTabs[widthIndex].value) ||
-					($page.data.tier !== 'FREE' && $page.data.tier !== 'ANONYMOUS'))
+					($page.data.plan !== 'FREE' && $page.data.plan !== 'ANONYMOUS'))
 			) {
 				generationWidth.set(widthTabs[widthIndex].value);
 			}
@@ -287,7 +287,7 @@
 			if (
 				heightIndex >= 0 &&
 				(availableHeightsFree.includes(heightTabs[heightIndex].value) ||
-					($page.data.tier !== 'FREE' && $page.data.tier !== 'ANONYMOUS'))
+					($page.data.plan !== 'FREE' && $page.data.plan !== 'ANONYMOUS'))
 			) {
 				generationHeight.set(heightTabs[heightIndex].value);
 			}
@@ -299,7 +299,7 @@
 			if (
 				inferenceStepsIndex >= 0 &&
 				(availableInferenceStepsFree.includes(inferenceStepsTabs[inferenceStepsIndex].value) ||
-					($page.data.tier !== 'FREE' && $page.data.tier !== 'ANONYMOUS'))
+					($page.data.plan !== 'FREE' && $page.data.plan !== 'ANONYMOUS'))
 			) {
 				generationInferenceSteps.set(inferenceStepsTabs[inferenceStepsIndex].value);
 			}
@@ -337,7 +337,7 @@
 		) {
 			if (
 				availableModelIdsFree.includes($modelId) ||
-				($page.data.tier !== 'FREE' && $page.data.tier !== 'ANONYMOUS')
+				($page.data.plan !== 'FREE' && $page.data.plan !== 'ANONYMOUS')
 			) {
 				generationModelId.set($modelId);
 			}

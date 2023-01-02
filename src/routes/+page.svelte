@@ -133,7 +133,7 @@
 			'SC - Advanced Mode': $advancedModeApp,
 			'SC - Locale': $locale,
 			'SC - Submit to Gallery': $shouldSubmitToGallery ?? false,
-			'SC - Plan': $page.data.tier
+			'SC - Plan': $page.data.plan
 		};
 		uLogGeneration('Started');
 		mLogGeneration('Started', generationMinimal);

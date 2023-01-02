@@ -94,7 +94,7 @@
 						'SC - Search Query': searchQuery,
 						'SC - Advanced Mode': $advancedModeApp,
 						'SC - Locale': $locale,
-						'SC - Plan': $page.data.tier
+						'SC - Plan': $page.data.plan
 					});
 				} catch (error) {
 					console.log(error);

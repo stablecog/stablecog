@@ -20,7 +20,7 @@ declare namespace App {
 	// interface Platform {}
 	interface PageData {
 		session: import('@supabase/supabase-js').Session | null;
-		tier: import('$ts/types/stripe').IStripeSubscriptionTierOrAnonymous;
+		plan: import('$ts/types/stripe').IUserPlan;
 	}
 }
 

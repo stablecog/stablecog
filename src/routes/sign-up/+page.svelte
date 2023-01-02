@@ -56,7 +56,7 @@
 					'SC - Advanced Mode': $advancedModeApp,
 					'SC - Page': `${$page.url.pathname}${$page.url.search}`,
 					'SC - Locale': $locale,
-					'SC - Plan': $page.data.tier
+					'SC - Plan': $page.data.plan
 				});
 				await goto('/');
 				return;
@@ -89,7 +89,7 @@
 			return;
 		}
 		mLogSignUp({
-			'SC - Plan': $page.data.tier,
+			'SC - Plan': $page.data.plan,
 			'SC - Locale': $locale,
 			'SC - Advanced Mode': $advancedModeApp,
 			'SC - Page': `${$page.url.pathname}${$page.url.search}`

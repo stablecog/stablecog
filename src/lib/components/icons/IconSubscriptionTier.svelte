@@ -1,7 +1,7 @@
 <script lang="ts">
-	import type { IStripeSubscriptionTierOrAnonymous } from '$ts/types/stripe';
+	import type { IUserPlan } from '$ts/types/stripe';
 
-	export let type: IStripeSubscriptionTierOrAnonymous;
+	export let type: IUserPlan;
 	export { classes as class };
 	let classes = 'w-6 h-6';
 </script>

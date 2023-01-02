@@ -1,12 +1,12 @@
 import type { LayoutLoad } from './$types';
 import { loadLocaleAsync } from '$i18n/i18n-util.async';
 import { getSupabase } from '@supabase/auth-helpers-sveltekit';
-import type { IStripeSubscriptionTierOrAnonymous } from '$ts/types/stripe';
+import type { IUserPlan } from '$ts/types/stripe';
 import { writable } from 'svelte/store';
 import type { TAvailableThemes } from '$ts/stores/theme';
 
 export const load: LayoutLoad = async (event) => {
-	let tier: IStripeSubscriptionTierOrAnonymous = 'ANONYMOUS';
+	let plan: IUserPlan = 'ANONYMOUS';
 	const { supabaseClient, session } = await getSupabase(event);
 	if (session?.user.id) {
 		try {
@@ -16,7 +16,7 @@ export const load: LayoutLoad = async (event) => {
 				.eq('id', session.user.id)
 				.maybeSingle();
 			if (data && data.subscription_tier) {
-				tier = data.subscription_tier;
+				plan = data.subscription_tier;
 			}
 		} catch (error) {
 			console.log(error);
@@ -29,7 +29,7 @@ export const load: LayoutLoad = async (event) => {
 	return {
 		locale,
 		session,
-		tier,
+		plan,
 		theme,
 		advancedMode,
 		advancedModeStore: writable(false),
