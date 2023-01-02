@@ -5,6 +5,7 @@ import (
 	"log"
 	"os"
 	"regexp"
+	"strconv"
 	"time"
 
 	"github.com/joho/godotenv"
@@ -80,6 +81,15 @@ func GetDeviceType(client useragent.UserAgent) string {
 	} else {
 		return "unknown"
 	}
+}
+
+func GetDurationFromEnv(envVar string, envFallback string) time.Duration {
+	val, err := strconv.ParseInt(GetEnv(envVar, envFallback), 10, 64)
+	if err != nil {
+		panic(err)
+	}
+	dur := time.Duration(val * int64(time.Second))
+	return dur
 }
 
 func Contains[T comparable](slice []T, value T) bool {

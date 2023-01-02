@@ -6,8 +6,7 @@ import type { TTab } from '$ts/types/main';
 import { derived, type Readable, type Writable } from 'svelte/store';
 
 export const estimatedDurationBufferRatio = 0.1;
-export const estimatedDurationDefault = 15;
-export const durationAdditionFree = 8;
+export const estimatedDurationDefault = 20;
 export const estimatedDurationUpscaleDefault = 15;
 export const canonicalUrl = 'https://stablecog.com';
 export const defaultLocale: Locales = 'en';

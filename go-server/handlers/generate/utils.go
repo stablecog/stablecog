@@ -1,6 +1,8 @@
 package generate
 
-import "strings"
+import (
+	"strings"
+)
 
 const pngStart = "data:image/png;base64,"
 const jpgStart = "data:image/jpeg;base64,"

@@ -24,8 +24,8 @@ const upscaleType = "Real-World Image Super-Resolution-Large"
 const processType = "upscale"
 const scale = 4
 
-var minDuration = time.Second * 2
-var minDurationFree = time.Second * 8
+var UPSCALE_MIN_WAIT = shared.GetDurationFromEnv("UPSCALE_MIN_WAIT", "2")
+var UPSCALE_MIN_WAIT_FREE = shared.GetDurationFromEnv("UPSCALE_MIN_WAIT_FREE", "10")
 
 func Handler(c *fiber.Ctx) error {
 	start := time.Now().UTC().UnixMilli()
@@ -59,7 +59,7 @@ func Handler(c *fiber.Ctx) error {
 		}
 	}
 
-	log.Printf("-- Generation - User plan: %s --", plan)
+	log.Printf("-- Upscale - User plan: %s --", plan)
 
 	if plan != "PRO" {
 		return c.Status(http.StatusBadRequest).JSON(
@@ -67,12 +67,18 @@ func Handler(c *fiber.Ctx) error {
 		)
 	}
 
-	isRateLimited := shared.IsRateLimited("goa", minDuration, c)
+	isRateLimited := shared.IsRateLimited("goa", UPSCALE_MIN_WAIT, c)
 	if isRateLimited {
 		log.Printf("-- Upscale - Rate limited!: %s --", countryCode)
 		return c.Status(http.StatusTooManyRequests).JSON(
-			SUpscaleResponse{Error: fmt.Sprintf("You can only start an upscale every %d seconds :(", minDuration/time.Second)},
+			SUpscaleResponse{Error: fmt.Sprintf("You can only start an upscale every %d seconds :(", UPSCALE_MIN_WAIT/time.Second)},
 		)
+	}
+
+	if plan == "PRO" {
+		time.Sleep(UPSCALE_MIN_WAIT)
+	} else {
+		time.Sleep(UPSCALE_MIN_WAIT_FREE)
 	}
 
 	cleanedPrompt := shared.FormatPrompt(req.Prompt)

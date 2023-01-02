@@ -22,8 +22,8 @@ import (
 var green = color.New(color.FgHiGreen).SprintFunc()
 var yellow = color.New(color.FgHiYellow).SprintFunc()
 
-var minDuration = time.Second * 2
-var minDurationFree = time.Second * 15
+var GENERATION_MIN_WAIT = shared.GetDurationFromEnv("GENERATION_MIN_WAIT", "2")
+var GENERATION_MIN_WAIT_FREE = shared.GetDurationFromEnv("GENERATION_MIN_WAIT_FREE", "10")
 
 func Handler(c *fiber.Ctx) error {
 	start := time.Now().UTC().UnixMilli()
@@ -125,10 +125,10 @@ func Handler(c *fiber.Ctx) error {
 	var duration time.Duration
 	var rateLimitedResponse SGenerateResponse
 	if plan == "PRO" {
-		duration = minDuration
+		duration = GENERATION_MIN_WAIT
 		rateLimitedResponse = SGenerateResponse{Error: fmt.Sprintf("You can only start a generation every %d seconds :(", duration/time.Second)}
 	} else {
-		duration = minDurationFree
+		duration = GENERATION_MIN_WAIT_FREE
 		rateLimitedResponse = SGenerateResponse{Error: fmt.Sprintf("You can only start a generation every %d seconds on the free plan :(", duration/time.Second)}
 	}
 
@@ -139,9 +139,9 @@ func Handler(c *fiber.Ctx) error {
 	}
 
 	if plan == "PRO" {
-		time.Sleep(minDuration)
+		time.Sleep(GENERATION_MIN_WAIT)
 	} else {
-		time.Sleep(minDurationFree)
+		time.Sleep(GENERATION_MIN_WAIT_FREE)
 	}
 
 	if req.OutputImageExt == "" {
