@@ -64,10 +64,10 @@
 />
 
 <PageWrapper>
-	<div class="-mt-6" />
-	<div class="flex justify-center sticky top-16 py-6 z-10 -mx-2">
+	<div class="flex justify-center z-10 sticky top-20 md:top-22 -mt-5">
 		<div
-			class="flex flex-col bg-c-bg ring-2 ring-c-bg-secondary rounded-2xl shadow-lg shadow-c-shadow/[var(--o-shadow-normal)]"
+			class="flex flex-col bg-c-bg ring-2 ring-c-bg-secondary rounded-2xl shadow-lg 
+			shadow-c-shadow/[var(--o-shadow-normal)] -mx-3.5"
 		>
 			<div class="flex flex-wrap gap-3 md:gap-8 p-3">
 				<div class="flex gap-3 items-center">
@@ -97,7 +97,7 @@
 			</div>
 		</div>
 	</div>
-	<div class="flex flex-col items-center my-auto gap-8 z-0 -mx-2">
+	<div class="flex flex-col items-center my-auto gap-8 z-0 mt-6 -mx-3.5">
 		<div class="w-full md:max-w-4xl flex flex-col items-center justify-center gap-2">
 			{#if users}
 				{#each users as user}
