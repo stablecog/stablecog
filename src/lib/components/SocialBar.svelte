@@ -21,16 +21,6 @@
 			/>
 		</IconButton>
 	{/if}
-	{#if withEmail}
-		<IconButton name="Email" href={socialAppUrls.email} target="_blank">
-			<IconSocial
-				type="email"
-				class="{size === 'sm' ? 'w-8 h-8' : 'w-10 h-10'} transition {color === 'normal'
-					? 'text-c-on-bg'
-					: 'text-c-on-bg/50'} {!$isTouchscreen ? 'group-hover:text-c-primary' : ''}"
-			/>
-		</IconButton>
-	{/if}
 	<IconButton name="Discord" href={socialAppUrls.discord} target="_blank">
 		<IconSocial
 			type="discord"
@@ -71,4 +61,14 @@
 				: 'text-c-on-bg/50'} {!$isTouchscreen ? 'group-hover:text-c-primary' : ''}"
 		/>
 	</IconButton>
+	{#if withEmail}
+		<IconButton name="Email" href={socialAppUrls.email} target="_blank">
+			<IconSocial
+				type="email"
+				class="{size === 'sm' ? 'w-8 h-8' : 'w-10 h-10'} transition {color === 'normal'
+					? 'text-c-on-bg'
+					: 'text-c-on-bg/50'} {!$isTouchscreen ? 'group-hover:text-c-primary' : ''}"
+			/>
+		</IconButton>
+	{/if}
 </div>
