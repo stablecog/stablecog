@@ -1,10 +1,7 @@
 <script lang="ts">
 	import IconSubscriptionTier from '$components/icons/IconSubscriptionTier.svelte';
 	import LL from '$i18n/i18n-svelte';
-	import type {
-		IStripeSubscriptionTier,
-		IStripeSubscriptionTierOrAnonymous
-	} from '$ts/types/stripe';
+	import type { IStripeSubscriptionTierOrAnonymous } from '$ts/types/stripe';
 	import { quadOut } from 'svelte/easing';
 	import { scale } from 'svelte/transition';
 
