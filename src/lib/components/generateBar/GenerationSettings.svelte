@@ -107,22 +107,26 @@
 			class="w-full"
 			tabs={widthTabs}
 			badgeHref="/pro?reason=width"
-			badgeAppliedTo={$page.data.tier === 'FREE'
+			badgeAppliedTo={$page.data.tier === 'FREE' || $page.data.tier === 'ANONYMOUS'
 				? availableWidths.filter((i) => !availableWidthsFree.includes(i))
 				: undefined}
-			outline={$page.data.tier === 'FREE' ? 'primary' : 'bg-secondary'}
-			hasBackgroundPattern={$page.data.tier === 'FREE'}
+			outline={$page.data.tier === 'FREE' || $page.data.tier === 'ANONYMOUS'
+				? 'primary'
+				: 'bg-secondary'}
+			hasBackgroundPattern={$page.data.tier === 'FREE' || $page.data.tier === 'ANONYMOUS'}
 			bind:value={$generationWidth}
 			name="Width"
 			hideSelected={!isCheckComplete}
 		>
 			<div slot="title" use:tooltip={$widthTooltip} class="p-3.5 flex items-center justify-center">
 				<IconWidth
-					class="w-6 h-6 {$page.data.tier === 'FREE' ? 'text-c-primary/40' : 'text-c-on-bg/25'}"
+					class="w-6 h-6 {$page.data.tier === 'FREE' || $page.data.tier === 'ANONYMOUS'
+						? 'text-c-primary/40'
+						: 'text-c-on-bg/25'}"
 				/>
 			</div>
 		</TabBar>
-		{#if $page.data.tier === 'FREE'}
+		{#if $page.data.tier === 'FREE' || $page.data.tier === 'ANONYMOUS'}
 			<div class="absolute -top-2 pointer-events-none -left-1.25">
 				<TierBadge tier="PRO" outline="primary" />
 			</div>
@@ -134,22 +138,26 @@
 			class="w-full"
 			tabs={heightTabs}
 			badgeHref="/pro?reason=height"
-			badgeAppliedTo={$page.data.tier === 'FREE'
+			badgeAppliedTo={$page.data.tier === 'FREE' || $page.data.tier === 'ANONYMOUS'
 				? availableHeights.filter((i) => !availableHeightsFree.includes(i))
 				: undefined}
-			outline={$page.data.tier === 'FREE' ? 'primary' : 'bg-secondary'}
-			hasBackgroundPattern={$page.data.tier === 'FREE'}
+			outline={$page.data.tier === 'FREE' || $page.data.tier === 'ANONYMOUS'
+				? 'primary'
+				: 'bg-secondary'}
+			hasBackgroundPattern={$page.data.tier === 'FREE' || $page.data.tier === 'ANONYMOUS'}
 			bind:value={$generationHeight}
 			name="Height"
 			hideSelected={!isCheckComplete}
 		>
 			<div slot="title" use:tooltip={$heightTooltip} class="p-3.5 flex items-center justify-center">
 				<IconHeight
-					class="w-6 h-6 {$page.data.tier === 'FREE' ? 'text-c-primary/40' : 'text-c-on-bg/25'}"
+					class="w-6 h-6 {$page.data.tier === 'FREE' || $page.data.tier === 'ANONYMOUS'
+						? 'text-c-primary/40'
+						: 'text-c-on-bg/25'}"
 				/>
 			</div>
 		</TabBar>
-		{#if $page.data.tier === 'FREE'}
+		{#if $page.data.tier === 'FREE' || $page.data.tier === 'ANONYMOUS'}
 			<div class="absolute -top-2 pointer-events-none -left-1.25">
 				<TierBadge tier="PRO" outline="primary" />
 			</div>
@@ -169,7 +177,7 @@
 			{disabled}
 			items={$availableModelIdDropdownItems}
 			badgeHref="/pro?reason=model"
-			badgeAppliedTo={$page.data.tier === 'FREE'
+			badgeAppliedTo={$page.data.tier === 'FREE' || $page.data.tier === 'ANONYMOUS'
 				? availableModelIds.filter((i) => !availableModelIdsFree.includes(i))
 				: undefined}
 			name="Model"
@@ -206,11 +214,13 @@
 				class="w-full"
 				tabs={inferenceStepsTabs}
 				badgeHref="/pro?reason=steps"
-				badgeAppliedTo={$page.data.tier === 'FREE'
+				badgeAppliedTo={$page.data.tier === 'FREE' || $page.data.tier === 'ANONYMOUS'
 					? availableInferenceSteps.filter((i) => !availableInferenceStepsFree.includes(i))
 					: undefined}
-				outline={$page.data.tier === 'FREE' ? 'primary' : 'bg-secondary'}
-				hasBackgroundPattern={$page.data.tier === 'FREE'}
+				outline={$page.data.tier === 'FREE' || $page.data.tier === 'ANONYMOUS'
+					? 'primary'
+					: 'bg-secondary'}
+				hasBackgroundPattern={$page.data.tier === 'FREE' || $page.data.tier === 'ANONYMOUS'}
 				isValid={isInferenceStepsValid}
 				validityDependsOn={[$generationHeight, $generationWidth]}
 				bind:value={$generationInferenceSteps}
@@ -223,11 +233,13 @@
 					class="p-3.5 flex items-center justify-center"
 				>
 					<IconSteps
-						class="w-6 h-6 {$page.data.tier === 'FREE' ? 'text-c-primary/40' : 'text-c-on-bg/25'}"
+						class="w-6 h-6 {$page.data.tier === 'FREE' || $page.data.tier === 'ANONYMOUS'
+							? 'text-c-primary/40'
+							: 'text-c-on-bg/25'}"
 					/>
 				</div>
 			</TabBar>
-			{#if $page.data.tier === 'FREE'}
+			{#if $page.data.tier === 'FREE' || $page.data.tier === 'ANONYMOUS'}
 				<div class="absolute -top-2 pointer-events-none -left-1.25">
 					<TierBadge tier="PRO" outline="primary" />
 				</div>

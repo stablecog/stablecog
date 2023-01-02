@@ -72,7 +72,8 @@
 	generationWidth.set(
 		isValue(serverData.width) &&
 			serverData.width !== null &&
-			(availableWidthsFree.includes(serverData.width) || $page.data.tier !== 'FREE')
+			(availableWidthsFree.includes(serverData.width) ||
+				($page.data.tier !== 'FREE' && $page.data.tier !== 'ANONYMOUS'))
 			? serverData.width
 			: widthDefault
 	);
@@ -80,7 +81,8 @@
 		isValue(serverData.height) &&
 			serverData.height !== null &&
 			serverData &&
-			(availableHeightsFree.includes(serverData.height) || $page.data.tier !== 'FREE')
+			(availableHeightsFree.includes(serverData.height) ||
+				($page.data.tier !== 'FREE' && $page.data.tier !== 'ANONYMOUS'))
 			? serverData.height
 			: heightDefault
 	);
@@ -91,7 +93,7 @@
 				.map((i) => i.value)
 				.findIndex((i) => i === serverData.num_inference_steps) >= 0 &&
 			(availableInferenceStepsFree.includes(serverData.num_inference_steps) ||
-				$page.data.tier !== 'FREE')
+				($page.data.tier !== 'FREE' && $page.data.tier !== 'ANONYMOUS'))
 			? serverData.num_inference_steps
 			: inferenceStepsDefault
 	);
@@ -103,7 +105,8 @@
 	generationModelId.set(
 		isValue(serverData.model_id) &&
 			serverData.model_id !== null &&
-			(availableModelIdsFree.includes(serverData.model_id) || $page.data.tier !== 'FREE')
+			(availableModelIdsFree.includes(serverData.model_id) ||
+				($page.data.tier !== 'FREE' && $page.data.tier !== 'ANONYMOUS'))
 			? serverData.model_id
 			: modelIdDefault
 	);
@@ -177,7 +180,7 @@
 		$promptInputValue !== undefined && $promptInputValue !== '' && !loadingOrSubmitting;
 
 	const onTierStateChanged = () => {
-		if (isCheckComplete && $page.data.tier === 'FREE') {
+		if (isCheckComplete && ($page.data.tier === 'FREE' || $page.data.tier === 'ANONYMOUS')) {
 			if (!availableWidthsFree.includes($generationWidth)) {
 				generationWidth.set(widthDefault);
 			}
@@ -271,7 +274,8 @@
 				.findIndex((i) => i === $imageSize?.width?.toString());
 			if (
 				widthIndex >= 0 &&
-				(availableWidthsFree.includes(widthTabs[widthIndex].value) || $page.data.tier !== 'FREE')
+				(availableWidthsFree.includes(widthTabs[widthIndex].value) ||
+					($page.data.tier !== 'FREE' && $page.data.tier !== 'ANONYMOUS'))
 			) {
 				generationWidth.set(widthTabs[widthIndex].value);
 			}
@@ -282,7 +286,8 @@
 				.findIndex((i) => i === $imageSize?.height?.toString());
 			if (
 				heightIndex >= 0 &&
-				(availableHeightsFree.includes(heightTabs[heightIndex].value) || $page.data.tier !== 'FREE')
+				(availableHeightsFree.includes(heightTabs[heightIndex].value) ||
+					($page.data.tier !== 'FREE' && $page.data.tier !== 'ANONYMOUS'))
 			) {
 				generationHeight.set(heightTabs[heightIndex].value);
 			}
@@ -294,7 +299,7 @@
 			if (
 				inferenceStepsIndex >= 0 &&
 				(availableInferenceStepsFree.includes(inferenceStepsTabs[inferenceStepsIndex].value) ||
-					$page.data.tier !== 'FREE')
+					($page.data.tier !== 'FREE' && $page.data.tier !== 'ANONYMOUS'))
 			) {
 				generationInferenceSteps.set(inferenceStepsTabs[inferenceStepsIndex].value);
 			}
@@ -330,7 +335,10 @@
 			isValue($modelId) &&
 			availableModelIds.includes($modelId)
 		) {
-			if (availableModelIdsFree.includes($modelId) || $page.data.tier !== 'FREE') {
+			if (
+				availableModelIdsFree.includes($modelId) ||
+				($page.data.tier !== 'FREE' && $page.data.tier !== 'ANONYMOUS')
+			) {
 				generationModelId.set($modelId);
 			}
 		}

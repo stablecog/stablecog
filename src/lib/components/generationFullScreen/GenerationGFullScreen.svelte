@@ -205,7 +205,7 @@
 	};
 
 	$: showTierBadge =
-		$page.data.tier === 'FREE' &&
+		($page.data.tier === 'FREE' || $page.data.tier === 'ANONYMOUS') &&
 		(!availableWidthsFree.map((i) => Number(i)).includes(generation.width) ||
 			!availableHeightsFree.map((i) => Number(i)).includes(generation.height) ||
 			(generation.model?.id && !availableModelIdsFree.includes(generation.model.id)));

@@ -81,11 +81,15 @@
 					<Button
 						class="w-full md:w-auto"
 						size="sm"
-						href={data.customerPortalSession && $page.data.tier !== 'FREE'
+						href={data.customerPortalSession &&
+						$page.data.tier !== 'FREE' &&
+						$page.data.tier !== 'ANONYMOUS'
 							? data.customerPortalSession.url
 							: '/pro'}
 					>
-						{data.customerPortalSession && $page.data.tier !== 'FREE'
+						{data.customerPortalSession &&
+						$page.data.tier !== 'FREE' &&
+						$page.data.tier !== 'ANONYMOUS'
 							? $LL.Account.ManageSubscriptionButton()
 							: $LL.Pro.BecomeProButton()}
 					</Button>

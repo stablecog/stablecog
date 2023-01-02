@@ -348,7 +348,7 @@
 	}
 
 	$: showTierBadge =
-		$page.data.tier === 'FREE' &&
+		($page.data.tier === 'FREE' || $page.data.tier === 'ANONYMOUS') &&
 		(!availableWidthsFree.map((i) => Number(i)).includes(generation.width) ||
 			!availableHeightsFree.map((i) => Number(i)).includes(generation.height) ||
 			(generation.model_id && !availableModelIdsFree.includes(generation.model_id)));
@@ -494,7 +494,7 @@
 								<div class="w-full pt-1.5">
 									{#if !generation.upscaledImageDataB64}
 										<div class="w-fulll relative">
-											{#if $page.data.tier === 'FREE'}
+											{#if $page.data.tier === 'FREE' || $page.data.tier === 'ANONYMOUS'}
 												<Button href="/pro?reason=upscale" target="_blank" class="w-full" size="sm">
 													<div class="flex items-center gap-2">
 														<IconUpscale class="w-5 h-5" />
@@ -523,7 +523,7 @@
 													</div>
 												</Button>
 											{/if}
-											{#if $page.data.tier === 'FREE'}
+											{#if $page.data.tier === 'FREE' || $page.data.tier === 'ANONYMOUS'}
 												<TierBadge
 													size="md"
 													tier="PRO"
