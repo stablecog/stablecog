@@ -52,6 +52,7 @@ var ModelIdToModelNameCog = map[string]string{
 	"48a7031d-43b6-4a23-9f8c-8020eb6862e4": "Ghibli Diffusion",
 	"eaa438e1-dbf9-48fd-be71-206f0f257617": "Redshift Diffusion",
 	"f7f3d973-ac6f-4a7a-9db8-e89e4fba03a9": "Waifu Diffusion v1.4",
+	"fc06f6ab-ed14-4186-a7c0-aaec288d4f38": "22h Diffusion v0.1",
 }
 
 var SchedulerIdToSchedulerNameCog = map[string]string{
@@ -59,6 +60,9 @@ var SchedulerIdToSchedulerNameCog = map[string]string{
 	"6fb13b76-9900-4fa4-abf8-8f843e034a7f": "K_EULER",
 	"af2679a4-dbbb-4950-8c06-c3bb15416ef6": "K_EULER_ANCESTRAL",
 	"162b6989-f635-4bfe-a2f5-24d4246df318": "PNDM",
+	"efee957a-dea5-48b2-a66a-1990dc2265c5": "HEUN",
+	"9d175114-9a26-4371-861c-729ba9ecb4da": "DPM",
+	"7e98751f-e135-4206-b855-48b141e7b98f": "DPM_SINGLESTEP",
 }
 
 var green = color.New(color.FgHiGreen).SprintFunc()

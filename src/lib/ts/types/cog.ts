@@ -7,7 +7,14 @@ export type TTaskUCog =
 
 export type TProcessTypeCog = 'generate' | 'upscale' | 'generate-and-upscale';
 
-export type TSchedulerNameCog = 'K_LMS' | 'K_EULER' | 'K_EULER_ANCESTRAL' | 'PNDM';
+export type TSchedulerNameCog =
+	| 'K_LMS'
+	| 'K_EULER'
+	| 'K_EULER_ANCESTRAL'
+	| 'PNDM'
+	| 'HEUN'
+	| 'DPM'
+	| 'DPM_SINGLESTEP';
 
 export type TModelNameCog =
 	| 'Stable Diffusion v1.5'
@@ -17,6 +24,7 @@ export type TModelNameCog =
 	| 'Ghibli Diffusion'
 	| 'Mo-Di Diffusion'
 	| 'Redshift Diffusion'
-	| 'Waifu Diffusion v1.4';
+	| 'Waifu Diffusion v1.4'
+	| '22h Diffusion v0.1';
 
 export type TOutputImageExtCog = 'png' | 'jpg';

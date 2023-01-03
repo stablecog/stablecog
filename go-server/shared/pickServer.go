@@ -17,11 +17,11 @@ var groupKey = "picked_server"
 var ttl = 60 * time.Second
 var counter = 0
 
-func PickServer(serverUrl string) SServerUrlResult {
+func PickServer(props SPickServerProps) SServerUrlResult {
 	start := time.Now().UTC().UnixMilli()
-	if serverUrl != DEFAULT_SERVER_URL {
+	if props.ServerUrl != DEFAULT_SERVER_URL {
 		return SServerUrlResult{
-			ServerUrl: serverUrl,
+			ServerUrl: props.ServerUrl,
 			IsDefault: false,
 			Error:     false,
 		}
@@ -29,7 +29,7 @@ func PickServer(serverUrl string) SServerUrlResult {
 	order := postgrest.OrderOpts{Ascending: false}
 	var servers []SDBServer
 	_, err := SupabaseDb.From("server").
-		Select("id,url,healthy,enabled,created_at,updated_at,last_health_check_at", "", false).
+		Select("id,url,healthy,enabled,created_at,updated_at,last_health_check_at,features", "", false).
 		Filter("enabled", "eq", "true").
 		Filter("healthy", "eq", "true").
 		Order("url", &order).
@@ -37,10 +37,43 @@ func PickServer(serverUrl string) SServerUrlResult {
 	if err != nil || len(servers) == 0 {
 		log.Println(err)
 		return SServerUrlResult{
-			ServerUrl: serverUrl,
+			ServerUrl: props.ServerUrl,
 			IsDefault: true,
 			Error:     true,
 		}
+	}
+	var filteredServers []SDBServer
+
+	if props.Type == "generate" {
+		for _, server := range servers {
+			for _, feature := range server.Features {
+				if feature.Name == "model" {
+					modelCogNames := feature.Values
+					if Contains(modelCogNames, ModelIdToModelNameCog[props.ModelId]) {
+						filteredServers = append(filteredServers, server)
+					}
+					break
+				} else if feature.Name == "scheduler" {
+					schedulerCogNames := feature.Values
+					if Contains(schedulerCogNames, SchedulerIdToSchedulerNameCog[props.SchedulerId]) {
+						filteredServers = append(filteredServers, server)
+					}
+					break
+				}
+			}
+		}
+	} else {
+		filteredServers = servers
+	}
+	if len(filteredServers) == 0 {
+		log.Printf("No servers available to pick for these settings")
+		return SServerUrlResult{
+			ServerUrl: props.ServerUrl,
+			IsDefault: true,
+			Error:     true,
+		}
+	} else {
+		log.Printf("Servers available to process the request: %d", len(filteredServers))
 	}
 	var pickedServerIndex = -1
 	keys := Redis.Keys(Redis.Context(), fmt.Sprintf("%s:*", groupKey)).Val()
@@ -49,7 +82,7 @@ func PickServer(serverUrl string) SServerUrlResult {
 		serversFromKeys = append(serversFromKeys, strings.Split(key, ":")[1])
 	}
 	if len(keys) > 0 {
-		for i, server := range servers {
+		for i, server := range filteredServers {
 			if !Contains(serversFromKeys, server.Id) {
 				pickedServerIndex = i
 				if err != nil {
@@ -105,4 +138,11 @@ type SServerUrlResult struct {
 type SKeyObject struct {
 	timestamp int64
 	serverId  string
+}
+
+type SPickServerProps struct {
+	ServerUrl   string
+	ModelId     string
+	SchedulerId string
+	Type        string
 }

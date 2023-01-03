@@ -75,16 +75,14 @@ func Handler(c *fiber.Ctx) error {
 		)
 	}
 
-	if plan == "PRO" {
-		time.Sleep(UPSCALE_MIN_WAIT)
-	} else {
+	if plan == "FREE" || plan == "ANONYMOUS" {
 		time.Sleep(UPSCALE_MIN_WAIT_FREE)
 	}
 
 	cleanedPrompt := shared.FormatPrompt(req.Prompt)
 	cleanedNegativePrompt := shared.FormatPrompt(req.NegativePrompt)
 
-	pickServerRes := shared.PickServer(req.ServerUrl)
+	pickServerRes := shared.PickServer(shared.SPickServerProps{ServerUrl: req.ServerUrl, Type: "upscale"})
 	if pickServerRes.Error {
 		return c.Status(http.StatusInternalServerError).JSON(
 			SUpscaleResponse{Error: "Failed to pick a server"},

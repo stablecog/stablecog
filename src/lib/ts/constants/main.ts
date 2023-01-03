@@ -96,7 +96,9 @@ export const availableModelIds = [
 	'36d9d835-646f-4fc7-b9fe-98654464bf8e',
 	'48a7031d-43b6-4a23-9f8c-8020eb6862e4',
 	'790c80e1-65b1-4556-9332-196344389572',
-	'eaa438e1-dbf9-48fd-be71-206f0f257617'
+	'eaa438e1-dbf9-48fd-be71-206f0f257617',
+	'f7f3d973-ac6f-4a7a-9db8-e89e4fba03a9',
+	'fc06f6ab-ed14-4186-a7c0-aaec288d4f38'
 ] as const;
 
 export type TAvailableModelId = typeof availableModelIds[number];
@@ -104,7 +106,8 @@ export type TAvailableModelId = typeof availableModelIds[number];
 export const availableModelIdsFree: TAvailableModelId[] = [
 	'048b4aa3-5586-47ed-900f-f4341c96bdb2',
 	'8acfe4c8-751d-4aa6-8c3c-844e3ef478e0',
-	'48a7031d-43b6-4a23-9f8c-8020eb6862e4'
+	'48a7031d-43b6-4a23-9f8c-8020eb6862e4',
+	'f7f3d973-ac6f-4a7a-9db8-e89e4fba03a9'
 ];
 
 export const modelIdDefault: TAvailableModelId = '048b4aa3-5586-47ed-900f-f4341c96bdb2';
@@ -116,7 +119,9 @@ export const modelIdToModelNameCog: Record<TAvailableModelId, TModelNameCog> = {
 	'eaa438e1-dbf9-48fd-be71-206f0f257617': 'Redshift Diffusion',
 	'36d9d835-646f-4fc7-b9fe-98654464bf8e': 'Arcane Diffusion',
 	'790c80e1-65b1-4556-9332-196344389572': 'Mo-Di Diffusion',
-	'48a7031d-43b6-4a23-9f8c-8020eb6862e4': 'Ghibli Diffusion'
+	'48a7031d-43b6-4a23-9f8c-8020eb6862e4': 'Ghibli Diffusion',
+	'f7f3d973-ac6f-4a7a-9db8-e89e4fba03a9': 'Waifu Diffusion v1.4',
+	'fc06f6ab-ed14-4186-a7c0-aaec288d4f38': '22h Diffusion v0.1'
 };
 
 export const modelIdToDisplayName = derived<
@@ -142,7 +147,9 @@ export const modelIdToDisplayName = derived<
 			: $LL.Shared.ModelOptions['790c80e1-65b1-4556-9332-196344389572'].simpleName(),
 		'eaa438e1-dbf9-48fd-be71-206f0f257617': $advancedModeApp
 			? $LL.Shared.ModelOptions['eaa438e1-dbf9-48fd-be71-206f0f257617'].realName()
-			: $LL.Shared.ModelOptions['eaa438e1-dbf9-48fd-be71-206f0f257617'].simpleName()
+			: $LL.Shared.ModelOptions['eaa438e1-dbf9-48fd-be71-206f0f257617'].simpleName(),
+		'f7f3d973-ac6f-4a7a-9db8-e89e4fba03a9': $advancedModeApp ? 'Waifu Diffusion v1.4' : 'Anime New',
+		'fc06f6ab-ed14-4186-a7c0-aaec288d4f38': $advancedModeApp ? '22h Diffusion v0.1' : 'Artistic'
 	};
 });
 
@@ -158,6 +165,14 @@ export const availableModelIdDropdownItems = derived(
 				label: $modelIdToDisplayName['8acfe4c8-751d-4aa6-8c3c-844e3ef478e0'],
 				value: '8acfe4c8-751d-4aa6-8c3c-844e3ef478e0'
 			},
+			/* {
+				label: $modelIdToDisplayName['f7f3d973-ac6f-4a7a-9db8-e89e4fba03a9'],
+				value: 'f7f3d973-ac6f-4a7a-9db8-e89e4fba03a9'
+			},
+			{
+				label: $modelIdToDisplayName['fc06f6ab-ed14-4186-a7c0-aaec288d4f38'],
+				value: 'fc06f6ab-ed14-4186-a7c0-aaec288d4f38'
+			}, */
 			{
 				label: $modelIdToDisplayName['36d9d835-646f-4fc7-b9fe-98654464bf8e'],
 				value: '36d9d835-646f-4fc7-b9fe-98654464bf8e'
@@ -184,7 +199,10 @@ export const availableSchedulerIds = [
 	'55027f8b-f046-4e71-bc51-53d5448661e0',
 	'6fb13b76-9900-4fa4-abf8-8f843e034a7f',
 	'af2679a4-dbbb-4950-8c06-c3bb15416ef6',
-	'162b6989-f635-4bfe-a2f5-24d4246df318'
+	'162b6989-f635-4bfe-a2f5-24d4246df318',
+	'efee957a-dea5-48b2-a66a-1990dc2265c5',
+	'9d175114-9a26-4371-861c-729ba9ecb4da',
+	'7e98751f-e135-4206-b855-48b141e7b98f'
 ] as const;
 
 export type TAvailableSchedulerId = typeof availableSchedulerIds[number];
@@ -195,7 +213,10 @@ export const schedulerIdToSchedulerNameCog: Record<TAvailableSchedulerId, TSched
 	'55027f8b-f046-4e71-bc51-53d5448661e0': 'K_LMS',
 	'6fb13b76-9900-4fa4-abf8-8f843e034a7f': 'K_EULER',
 	'af2679a4-dbbb-4950-8c06-c3bb15416ef6': 'K_EULER_ANCESTRAL',
-	'162b6989-f635-4bfe-a2f5-24d4246df318': 'PNDM'
+	'162b6989-f635-4bfe-a2f5-24d4246df318': 'PNDM',
+	'efee957a-dea5-48b2-a66a-1990dc2265c5': 'HEUN',
+	'9d175114-9a26-4371-861c-729ba9ecb4da': 'DPM',
+	'7e98751f-e135-4206-b855-48b141e7b98f': 'DPM_SINGLESTEP'
 };
 
 export const schedulerIdToDisplayName = derived<
@@ -209,7 +230,10 @@ export const schedulerIdToDisplayName = derived<
 			$LL.Shared.SchedulerOptions['6fb13b76-9900-4fa4-abf8-8f843e034a7f'].realName(),
 		'af2679a4-dbbb-4950-8c06-c3bb15416ef6':
 			$LL.Shared.SchedulerOptions['af2679a4-dbbb-4950-8c06-c3bb15416ef6'].realName(),
-		'162b6989-f635-4bfe-a2f5-24d4246df318': 'PNDM'
+		'162b6989-f635-4bfe-a2f5-24d4246df318': 'PNDM',
+		'efee957a-dea5-48b2-a66a-1990dc2265c5': 'Heun',
+		'9d175114-9a26-4371-861c-729ba9ecb4da': 'DPM',
+		'7e98751f-e135-4206-b855-48b141e7b98f': 'DPM Singlestep'
 	};
 });
 
@@ -229,6 +253,18 @@ export const availableSchedulerIdDropdownItems = derived(
 				label: $schedulerIdToDisplayName['af2679a4-dbbb-4950-8c06-c3bb15416ef6'],
 				value: 'af2679a4-dbbb-4950-8c06-c3bb15416ef6'
 			}
+			/* {
+				label: $schedulerIdToDisplayName['efee957a-dea5-48b2-a66a-1990dc2265c5'],
+				value: 'efee957a-dea5-48b2-a66a-1990dc2265c5'
+			},
+			{
+				label: $schedulerIdToDisplayName['9d175114-9a26-4371-861c-729ba9ecb4da'],
+				value: '9d175114-9a26-4371-861c-729ba9ecb4da'
+			},
+			{
+				label: $schedulerIdToDisplayName['7e98751f-e135-4206-b855-48b141e7b98f'],
+				value: '7e98751f-e135-4206-b855-48b141e7b98f'
+			} */
 		];
 		return items;
 	}

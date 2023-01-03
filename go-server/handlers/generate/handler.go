@@ -151,7 +151,13 @@ func Handler(c *fiber.Ctx) error {
 	cleanedPrompt := shared.FormatPrompt(req.Prompt)
 	cleanedNegativePrompt := shared.FormatPrompt(req.NegativePrompt)
 
-	pickServerRes := shared.PickServer(req.ServerUrl)
+	pickServerRes := shared.PickServer(
+		shared.SPickServerProps{
+			Type:        "generate",
+			ServerUrl:   req.ServerUrl,
+			ModelId:     req.ModelId,
+			SchedulerId: req.SchedulerId,
+		})
 	if pickServerRes.Error {
 		log.Printf("Failed to pick a server")
 		return c.Status(http.StatusInternalServerError).JSON(

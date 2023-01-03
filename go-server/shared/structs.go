@@ -8,13 +8,14 @@ type SDBGeneration struct {
 }
 
 type SDBServer struct {
-	Id                string `json:"id"`
-	Healthy           bool   `json:"healthy"`
-	LastHealthCheckAt string `json:"last_health_check_at"`
-	Url               string `json:"url"`
-	Enabled           bool   `json:"enabled,omitempty"`
-	CreatedAt         string `json:"created_at,omitempty"`
-	UpdatedAt         string `json:"updated_at,omitempty"`
+	Id                string     `json:"id"`
+	Healthy           bool       `json:"healthy"`
+	LastHealthCheckAt string     `json:"last_health_check_at"`
+	Url               string     `json:"url"`
+	Enabled           bool       `json:"enabled,omitempty"`
+	CreatedAt         string     `json:"created_at,omitempty"`
+	UpdatedAt         string     `json:"updated_at,omitempty"`
+	Features          []SFeature `json:"features,omitempty"`
 }
 
 type SDBServerUpdate struct {
@@ -135,4 +136,24 @@ type SFeature struct {
 
 type SUserResponse struct {
 	SubsciptionTier string `json:"subscription_tier"`
+}
+
+type SGenerateOrUpscaleRequestBody struct {
+	Prompt                string  `json:"prompt,omitempty"`
+	NegativePrompt        string  `json:"negative_prompt,omitempty"`
+	Width                 int     `json:"width,omitempty"`
+	Height                int     `json:"height,omitempty"`
+	NumInferenceSteps     int     `json:"num_inference_steps,omitempty"`
+	GuidanceScale         int     `json:"guidance_scale,omitempty"`
+	ServerUrl             string  `json:"server_url,omitempty"`
+	ModelId               string  `json:"model_id,omitempty"`
+	SchedulerId           string  `json:"scheduler_id,omitempty"`
+	Seed                  int     `json:"seed,omitempty"`
+	OutputImageExt        string  `json:"output_image_ext,omitempty"`
+	InitImage             string  `json:"init_image,omitempty"`
+	Mask                  string  `json:"mask,omitempty"`
+	PromptStrength        float32 `json:"prompt_strength,omitempty"`
+	ShouldSubmitToGallery bool    `json:"should_submit_to_gallery,omitempty"`
+	AccessToken           string  `json:"access_token,omitempty"`
+	ImageB64              string  `json:"image_b64,omitempty"`
 }
