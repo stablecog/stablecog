@@ -48,22 +48,25 @@ func PickServer(props SPickServerProps) SServerUrlResult {
 		for _, server := range servers {
 			hasModel := false
 			hasScheduler := false
+			var modelsOnServer []string
+			var schedulersOnServer []string
 			for _, feature := range server.Features {
 				if feature.Name == "model" {
-					modelCogNames := feature.Values
-					if Contains(modelCogNames, ModelIdToModelNameCog[props.ModelId]) {
-						hasModel = true
-					}
-				}
-				if feature.Name == "scheduler" {
-					schedulerCogNames := feature.Values
-					if Contains(schedulerCogNames, SchedulerIdToSchedulerNameCog[props.SchedulerId]) {
-						hasScheduler = true
-					}
-				}
-				if hasModel && hasScheduler {
+					modelsOnServer = feature.Values
 					break
 				}
+			}
+			for _, feature := range server.Features {
+				if feature.Name == "scheduler" {
+					schedulersOnServer = feature.Values
+					break
+				}
+			}
+			if Contains(modelsOnServer, ModelIdToModelNameCog[props.ModelId]) {
+				hasModel = true
+			}
+			if Contains(schedulersOnServer, SchedulerIdToSchedulerNameCog[props.SchedulerId]) {
+				hasScheduler = true
 			}
 			if hasModel && hasScheduler {
 				filteredServers = append(filteredServers, server)
