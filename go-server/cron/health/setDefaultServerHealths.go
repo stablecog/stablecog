@@ -33,6 +33,7 @@ func SetDefaultServerHealths() {
 				Healthy:           res.Status == "healthy",
 				LastHealthCheckAt: lastCheck,
 				Url:               server.Url,
+				Features:          res.Features,
 			})
 			defer wg.Done()
 		}(server)
@@ -45,6 +46,7 @@ func SetDefaultServerHealths() {
 			Healthy:           r.Healthy,
 			LastHealthCheckAt: r.LastHealthCheckAt,
 			Url:               r.Url,
+			Features:          r.Features,
 		}
 	}
 	shared.UpdateServerHealths(updateResults)

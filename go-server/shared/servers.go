@@ -9,7 +9,7 @@ import (
 func GetServers() []SDBServer {
 	var servers []SDBServer
 	_, err := SupabaseDb.From("server").
-		Select("id,url,enabled,healthy,last_health_check_at,created_at,updated_at", "", false).
+		Select("id,url,enabled,healthy,last_health_check_at,created_at,updated_at,features", "", false).
 		Order("created_at", &postgrest.OrderOpts{Ascending: false}).
 		ExecuteTo(&servers)
 	if err != nil {
