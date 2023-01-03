@@ -12,7 +12,7 @@ import (
 	"github.com/h2non/bimg"
 	"github.com/robfig/cron/v3"
 	"github.com/yekta/stablecog/go-server/cron/health"
-	/* "github.com/yekta/stablecog/go-server/cron/meili" */
+	"github.com/yekta/stablecog/go-server/cron/meili"
 	"github.com/yekta/stablecog/go-server/cron/stats"
 	"github.com/yekta/stablecog/go-server/handlers/gallery"
 	"github.com/yekta/stablecog/go-server/handlers/generate"
@@ -56,13 +56,13 @@ func main() {
 	cron.AddFunc("@every 15s", cronHealth.CheckHealth)
 	cron.AddFunc("@every 15s", cronHealth.SetDefaultServerHealths)
 	cron.AddFunc("@every 10s", cronStats.GetAndSetStats)
-	/* cron.AddFunc("@every 30s", cronMeili.SyncMeili) */
+	cron.AddFunc("@every 60s", cronMeili.SyncMeili)
 	cron.Start()
 
 	go cronHealth.CheckHealth()
 	go cronHealth.SetDefaultServerHealths()
 	go cronStats.GetAndSetStats()
-	/* go cronMeili.SyncMeili() */
+	go cronMeili.SyncMeili()
 
 	app.Post("/generate", generate.Handler)
 	app.Post("/upscale", upscale.Handler)
