@@ -43,6 +43,7 @@ func PickServer(props SPickServerProps) SServerUrlResult {
 		}
 	}
 	var filteredServers []SDBServer
+	var filteredServerIds []string
 
 	if props.Type == "generate" {
 		for _, server := range servers {
@@ -74,6 +75,9 @@ func PickServer(props SPickServerProps) SServerUrlResult {
 		}
 	} else {
 		filteredServers = servers
+	}
+	for _, server := range filteredServers {
+		filteredServerIds = append(filteredServerIds, server.Id)
 	}
 	if len(filteredServers) == 0 {
 		log.Printf("No servers available to pick for these settings")
@@ -113,12 +117,20 @@ func PickServer(props SPickServerProps) SServerUrlResult {
 				sortedKeyObjects = append(sortedKeyObjects, SKeyObject{timestamp: timestamp, serverId: serverId})
 			}
 			sort.Slice(sortedKeyObjects, func(i, j int) bool { return sortedKeyObjects[i].timestamp < sortedKeyObjects[j].timestamp })
-			lastBatchKeys := sortedKeyObjects[len(sortedKeyObjects)-len(filteredServers):]
-			pickedServerId := lastBatchKeys[0].serverId
-			for i, server := range filteredServers {
-				if server.Id == pickedServerId {
-					pickedServerIndex = i
-					break
+			lastBatchKeys := sortedKeyObjects[len(sortedKeyObjects)-len(servers):]
+			var lastBatchKeysFiltered []SKeyObject
+			for _, key := range lastBatchKeys {
+				if Contains(filteredServerIds, key.serverId) {
+					lastBatchKeysFiltered = append(lastBatchKeysFiltered, key)
+				}
+			}
+			if len(lastBatchKeysFiltered) > 0 {
+				pickedServerId := lastBatchKeysFiltered[0].serverId
+				for i, server := range filteredServers {
+					if server.Id == pickedServerId {
+						pickedServerIndex = i
+						break
+					}
 				}
 			}
 		}
