@@ -46,20 +46,27 @@ func PickServer(props SPickServerProps) SServerUrlResult {
 
 	if props.Type == "generate" {
 		for _, server := range servers {
+			hasModel := false
+			hasScheduler := false
 			for _, feature := range server.Features {
 				if feature.Name == "model" {
 					modelCogNames := feature.Values
 					if Contains(modelCogNames, ModelIdToModelNameCog[props.ModelId]) {
-						filteredServers = append(filteredServers, server)
+						hasModel = true
 					}
-					break
-				} else if feature.Name == "scheduler" {
+				}
+				if feature.Name == "scheduler" {
 					schedulerCogNames := feature.Values
 					if Contains(schedulerCogNames, SchedulerIdToSchedulerNameCog[props.SchedulerId]) {
-						filteredServers = append(filteredServers, server)
+						hasScheduler = true
 					}
+				}
+				if hasModel && hasScheduler {
 					break
 				}
+			}
+			if hasModel && hasScheduler {
+				filteredServers = append(filteredServers, server)
 			}
 		}
 	} else {
