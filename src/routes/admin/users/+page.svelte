@@ -108,12 +108,19 @@
 						<div class="flex flex-col items-start flex-shrink overflow-hidden p-1">
 							<p class="text-sm font-semibold text-c-on-bg/75">{user.email}</p>
 							<p
-								class="text-xs text-c-on-bg/40 bg-c-on-bg/5 rounded-md px-2 py-1 mt-2 mb-0.5 -ml-0.5"
+								class="text-xxs text-c-on-bg/40 bg-c-on-bg/5 rounded-md px-2 py-1 mt-2 mb-0.5 -ml-0.5"
+							>
+								{user.id}
+							</p>
+						</div>
+						<div class="flex flex-col items-end flex-shrink overflow-hidden p-1">
+							<TierBadge tier={user.subscription_tier} />
+							<p
+								class="text-xxs text-c-on-bg/40 bg-c-on-bg/5 rounded-md px-2 py-1 mt-2 mb-0.5 -ml-0.5"
 							>
 								{user.stripe_customer_id}
 							</p>
 						</div>
-						<TierBadge tier={user.subscription_tier} />
 					</div>
 				{/each}
 			{:else}
