@@ -20,6 +20,7 @@
 	import Button from '$components/buttons/Button.svelte';
 	import AccountMenu from '$components/AccountMenu.svelte';
 	import IconStar from '$components/icons/IconStar.svelte';
+	import Avatar from '$components/Avatar.svelte';
 	let isSwitchServerModalOpen = false;
 	let isSettingsOpen = false;
 	let isAccountMenuOpen = false;
@@ -91,7 +92,7 @@
 					<div class="w-full h-full rounded-xl relative z-0 overflow-hidden">
 						<div
 							class="w-full h-full origin-left rounded-xl transition transform -translate-x-full
-						bg-c-primary/25 {!$isTouchscreen ? 'group-hover:translate-x-0' : ''}"
+							bg-c-primary/25 {!$isTouchscreen ? 'group-hover:translate-x-0' : ''}"
 						/>
 					</div>
 				</div>
@@ -112,21 +113,24 @@
 						use:clickoutside={{ callback: closeAccountMenu }}
 						class="flex flex-col items-end relative"
 					>
-						<div class="p-2.5 -mx-3.5">
+						<div class="p-2.5 -mx-3">
 							<IconButton
-								class="shadow-lg rounded-full shadow-c-shadow/[var(--o-shadow-strong)]"
+								class="shadow-lg rounded-full flex items-center justify-center shadow-c-shadow/[var(--o-shadow-strong)]"
 								noPadding
 								name="Account"
 								onClick={toggleAccountMenu}
 							>
-								<p
-									class="w-10 h-10 flex items-center justify-center bg-c-bg ring-2 ring-c-primary/50 rounded-full
-									text-c-on-bg font-semibold transition {!$isTouchscreen
-										? 'group-hover:text-c-primary group-hover:ring-c-primary'
+								<div
+									class="w-9 h-9 ring-2 ring-c-on-bg/25 overflow-hidden rounded-full transition transform relative {!$isTouchscreen
+										? 'group-hover:ring-c-on-bg'
+										: ''} {!$isTouchscreen && isAccountMenuOpen
+										? 'rotate-360'
+										: !$isTouchscreen && !isAccountMenuOpen
+										? ' group-hover:rotate-90'
 										: ''}"
 								>
-									{$page.data.session?.user.email.slice(0, 2).toUpperCase()}
-								</p>
+									<Avatar str={$page.data.session.user.email} class="w-full h-full relative" />
+								</div>
 							</IconButton>
 						</div>
 						<div class="relative -mr-14 md:-mr-1.5">
