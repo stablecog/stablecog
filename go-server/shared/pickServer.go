@@ -113,9 +113,9 @@ func PickServer(props SPickServerProps) SServerUrlResult {
 				sortedKeyObjects = append(sortedKeyObjects, SKeyObject{timestamp: timestamp, serverId: serverId})
 			}
 			sort.Slice(sortedKeyObjects, func(i, j int) bool { return sortedKeyObjects[i].timestamp < sortedKeyObjects[j].timestamp })
-			lastBatchKeys := sortedKeyObjects[len(sortedKeyObjects)-len(servers):]
+			lastBatchKeys := sortedKeyObjects[len(sortedKeyObjects)-len(filteredServers):]
 			pickedServerId := lastBatchKeys[0].serverId
-			for i, server := range servers {
+			for i, server := range filteredServers {
 				if server.Id == pickedServerId {
 					pickedServerIndex = i
 					break
@@ -124,10 +124,10 @@ func PickServer(props SPickServerProps) SServerUrlResult {
 		}
 	}
 	if pickedServerIndex == -1 {
-		pickedServerIndex = counter % len(servers)
+		pickedServerIndex = counter % len(filteredServers)
 		counter = (counter + 1) % len(servers)
 	}
-	pickedServer := servers[pickedServerIndex]
+	pickedServer := filteredServers[pickedServerIndex]
 	now := time.Now().UTC().UnixMilli()
 	Redis.Set(Redis.Context(), fmt.Sprintf("%s:%s:%d", groupKey, pickedServer.Id, now), "1", ttl)
 	end := time.Now().UTC().UnixMilli()
