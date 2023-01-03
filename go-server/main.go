@@ -56,7 +56,7 @@ func main() {
 	cron.AddFunc("@every 15s", cronHealth.CheckHealth)
 	cron.AddFunc("@every 15s", cronHealth.SetDefaultServerHealths)
 	cron.AddFunc("@every 10s", cronStats.GetAndSetStats)
-	cron.AddFunc("@every 30s", cronMeili.SyncMeili)
+	/* cron.AddFunc("@every 30s", cronMeili.SyncMeili) */
 	cron.Start()
 
 	go cronHealth.CheckHealth()
