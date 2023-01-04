@@ -206,7 +206,7 @@ func Handler(c *fiber.Ctx) error {
 		shared.DeleteOngoingGenerationOrUpscale("goa_active", c)
 		log.Printf("Cog server returned empty output: %v", cogResBodyErr)
 		return c.Status(http.StatusInternalServerError).JSON(
-			SUpscaleResponse{Error: "Failed to decode cog response body"},
+			SUpscaleResponse{Error: "Cog server returned empty output"},
 		)
 	}
 	output := cogResBody.Output[0]
