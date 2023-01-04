@@ -17,6 +17,7 @@ func IsRateLimited(prefix string, duration time.Duration, c *fiber.Ctx) bool {
 	if ip == "" {
 		ip = c.IP()
 	}
+	log.Printf("IP: %s", ip)
 	ipKey := fmt.Sprintf("rl:%s:ip:%s", prefix, ip)
 	val := Redis.Get(rctx, ipKey).Val()
 	if val == "1" {

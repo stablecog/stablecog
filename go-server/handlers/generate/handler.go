@@ -123,7 +123,7 @@ func Handler(c *fiber.Ctx) error {
 
 	if plan == "FREE" || plan == "ANONYMOUS" {
 		duration := GENERATION_MIN_WAIT_FREE
-		rateLimitedResponse := SGenerateResponse{Error: fmt.Sprintf("You can only start a generation once every %d seconds on the free plan.", GENERATION_MIN_WAIT_FREE)}
+		rateLimitedResponse := SGenerateResponse{Error: fmt.Sprintf("You can only start a generation once every %d seconds on the free plan.", int(GENERATION_MIN_WAIT_FREE.Seconds()))}
 		isRateLimited := shared.IsRateLimited("goa", duration, c)
 		if isRateLimited {
 			log.Printf("-- Generation - Rate limited!: %s --", countryCode)
@@ -132,7 +132,7 @@ func Handler(c *fiber.Ctx) error {
 	}
 
 	HasOnGoingGenerationOrUpscale := shared.HasOnGoingGenerationOrUpscale("goa_active", c)
-	onGoingGenerationOrUpscaleResponse := SGenerateResponse{Error: "Please wait for your ongoing generation or upscale to finish before starting a new one."}
+	onGoingGenerationOrUpscaleResponse := SGenerateResponse{Error: "Please wait for your ongoing generation or upscale to finish."}
 	if HasOnGoingGenerationOrUpscale {
 		log.Printf("-- Generation - Has ongoing generation!: %s --", countryCode)
 		return c.Status(http.StatusTooManyRequests).JSON(onGoingGenerationOrUpscaleResponse)

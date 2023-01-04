@@ -67,7 +67,7 @@ func Handler(c *fiber.Ctx) error {
 	}
 
 	hasOnGoingGenerationOrUpscale := shared.HasOnGoingGenerationOrUpscale("goa_active", c)
-	onGoingGenerationOrUpscaleResponse := SUpscaleResponse{Error: "Please wait for your ongoing generation or upscale to finish before starting a new one."}
+	onGoingGenerationOrUpscaleResponse := SUpscaleResponse{Error: "Please wait for your ongoing generation or upscale to finish."}
 	if hasOnGoingGenerationOrUpscale {
 		log.Printf("-- Generation - Has ongoing generation or upscale: %s --", countryCode)
 		return c.Status(http.StatusTooManyRequests).JSON(onGoingGenerationOrUpscaleResponse)
