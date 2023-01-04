@@ -202,9 +202,8 @@ func Handler(c *fiber.Ctx) error {
 	if cogResBody.Output == nil || len(cogResBody.Output) == 0 {
 		upscaleCogEnd := time.Now().UTC().UnixMilli()
 		go UpdateUpscaleAsFailed(upscaleIdChan, upscaleCogEnd-upscaleCogStart)
-		sentry.CaptureException(cogResBodyErr)
-		shared.DeleteOngoingGenerationOrUpscale("goa_active", c)
 		log.Printf("Cog server returned empty output: %v", cogResBodyErr)
+		shared.DeleteOngoingGenerationOrUpscale("goa_active", c)
 		return c.Status(http.StatusInternalServerError).JSON(
 			SUpscaleResponse{Error: "Cog server returned empty output"},
 		)

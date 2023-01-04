@@ -282,7 +282,6 @@ func Handler(c *fiber.Ctx) error {
 	if cogResBody.Output == nil || len(cogResBody.Output) == 0 {
 		generationCogEnd := time.Now().UTC().UnixMilli()
 		go UpdateGenerationAsFailed(generationIdChan, generationCogEnd-generationCogStart, false)
-		sentry.CaptureException(cogResBodyErr)
 		log.Printf("Cog server returned empty output: %v", cogResBody)
 		shared.DeleteOngoingGenerationOrUpscale("goa_active", c)
 		return c.Status(http.StatusInternalServerError).JSON(
