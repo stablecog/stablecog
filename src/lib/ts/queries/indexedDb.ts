@@ -1,4 +1,4 @@
-import { indexedDb, maxImages } from '$ts/constants/indexedDb';
+import { indexedDb, maxLocallyStoredImage } from '$ts/constants/indexedDb';
 import type { TIndexedDBGeneration } from '$ts/types/db';
 
 export async function addGenerationToDb(generation: TIndexedDBGeneration) {
@@ -74,7 +74,7 @@ export async function pruneOneGeneration() {
 export async function canWriteToIndexedDb() {
 	try {
 		const count = await indexedDb.generations.count();
-		const remaining = maxImages - count;
+		const remaining = maxLocallyStoredImage - count;
 		if (remaining > 0) {
 			return true;
 		} else {
