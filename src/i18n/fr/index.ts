@@ -148,6 +148,7 @@ const fr: Translation = {
 		JoinUsOnTitle: 'Rejoignez-nous sur {name}',
 		ShareButton: 'Partager',
 		ShareOnButton: 'Partager sur {name}',
+		GoBackButton: 'Go Back',
 		YesButton: 'Oui',
 		NoButton: 'Non',
 		EnableButton: 'Activer',
@@ -222,7 +223,8 @@ const fr: Translation = {
 		PasswordTooShort: 'Le mot de passe doit comporter au moins 8 caractères.',
 		SomethingWentWrongTryAgain: "Une erreur s'est produite, veuillez réessayer.",
 		InvalidCredentials: 'Identifiants incorrects.',
-		InvalidCode: 'Code non valide.'
+		InvalidCode: 'Code non valide.',
+		OnceEvery60Seconds: 'You can only request a link once every 60 seconds.'
 	},
 	Admin: {
 		AdminPanelTitle: 'Administration',
@@ -262,6 +264,13 @@ const fr: Translation = {
 		PageTitle: 'Se connecter',
 		PageParagraph:
 			'Commencez à utiliser Stablecog avec toutes les fonctionnalités disponibles sur votre compte.',
+		PageTitleCreateAccountOrSignIn: 'Create an account or sign in',
+		PageParagraphCreateAccountOrSignIn:
+			'Start using Stablecog with all features that are available to your account.',
+		PageTitleSentLink: 'Check your email',
+		PageParagraphSentLink:
+			"We've emailed you a sign-in link. If you don't see it, check your spam folder.",
+		ContinueButton: 'Continue',
 		DontHaveAnAccountTitle: "Vous n'avez pas de compte ?",
 		SignUpInsteadButton: 'Créer un compte',
 		SignInButton: 'Se connecter',
@@ -364,7 +373,7 @@ const fr: Translation = {
 	},
 	Gallery: {
 		PageTitle: 'Gallery',
-		PageParagraph: 'Check out what others have created. with Stablecog..',
+		PageParagraph: 'Check out what others have created with Stablecog.',
 		SearchInput: {
 			Title: 'Search'
 		},

@@ -148,6 +148,7 @@ const en: BaseTranslation = {
 		JoinUsOnTitle: 'Join us on {name}',
 		ShareButton: 'Share',
 		ShareOnButton: 'Share on {name}',
+		GoBackButton: 'Go Back',
 		YesButton: 'Yes',
 		NoButton: 'No',
 		EnableButton: 'Enable',
@@ -221,7 +222,8 @@ const en: BaseTranslation = {
 		PasswordTooShort: 'Password must be at least 8 characters.',
 		SomethingWentWrongTryAgain: 'Something went wrong, try again.',
 		InvalidCredentials: 'Invalid credentials.',
-		InvalidCode: 'Invalid code.'
+		InvalidCode: 'Invalid code.',
+		OnceEvery60Seconds: 'You can only request a link once every 60 seconds.'
 	},
 	Admin: {
 		AdminPanelTitle: 'Admin',
@@ -245,7 +247,7 @@ const en: BaseTranslation = {
 		PageTitle: 'Sign Up',
 		PageParagraph: 'Join Stablecog to become a pro member and unlock its full potential.',
 		PageTitleConfirm: 'Confirm',
-		PageTitleConfirmAlt: 'Check Your Email',
+		PageTitleConfirmAlt: 'Check your email',
 		PageParagraphConfirm:
 			"We've emailed you a 6-digit code. Enter it below to confirm your account.",
 		SignUpButton: 'Sign Up',
@@ -259,6 +261,13 @@ const en: BaseTranslation = {
 	SignIn: {
 		PageTitle: 'Sign In',
 		PageParagraph: 'Start using Stablecog with all features that are available to your account.',
+		PageTitleCreateAccountOrSignIn: 'Create an account or sign in',
+		PageParagraphCreateAccountOrSignIn:
+			'Start using Stablecog with all features that are available to your account.',
+		PageTitleSentLink: 'Check your email',
+		PageParagraphSentLink:
+			"We've emailed you a sign-in link. If you don't see it, check your spam folder.",
+		ContinueButton: 'Continue',
 		DontHaveAnAccountTitle: "Don't have an account?",
 		SignUpInsteadButton: 'Sign up instead',
 		SignInButton: 'Sign In',
@@ -358,7 +367,7 @@ const en: BaseTranslation = {
 	},
 	Gallery: {
 		PageTitle: 'Gallery',
-		PageParagraph: 'Check out what others have created. with Stablecog..',
+		PageParagraph: 'Check out what others have created with Stablecog.',
 		SearchInput: {
 			Title: 'Search'
 		},

@@ -148,6 +148,7 @@ const tr: Translation = {
 		JoinUsOnTitle: 'Bize katıl: {name}',
 		ShareButton: 'Paylaş',
 		ShareOnButton: 'Paylaş: {name}',
+		GoBackButton: 'Geri Dön',
 		YesButton: 'Evet',
 		NoButton: 'Hayır',
 		EnableButton: 'Aktifleştir',
@@ -221,7 +222,8 @@ const tr: Translation = {
 		PasswordTooShort: 'Şifre en az 8 karakterli olmalı.',
 		SomethingWentWrongTryAgain: 'Bir sıkıntı çıktı, tekrar dene.',
 		InvalidCredentials: 'Geçersiz kimlik.',
-		InvalidCode: 'Geçersiz kod.'
+		InvalidCode: 'Geçersiz kod.',
+		OnceEvery60Seconds: 'Her 60 saniyede sadece bir link talebinde bulunabilirsin.'
 	},
 	Admin: {
 		AdminPanelTitle: 'Yönetici',
@@ -245,7 +247,7 @@ const tr: Translation = {
 		PageTitle: 'Üye Ol',
 		PageParagraph: "Tüm özelliklere erişmek için Stablecog'a katıl ve pro üye ol.",
 		PageTitleConfirm: 'Onayla',
-		PageTitleConfirmAlt: 'E-posta Yolladık',
+		PageTitleConfirmAlt: 'Posta kutunu kontrol et',
 		PageParagraphConfirm: 'Sana 6 haneli bir kod yolladık. Üyeliğini onaylamak için onu aşağı gir.',
 		SignUpButton: 'Üye Ol',
 		ConfirmButton: 'Onayla',
@@ -258,6 +260,13 @@ const tr: Translation = {
 	SignIn: {
 		PageTitle: 'Giriş Yap',
 		PageParagraph: "Stablecog'u üyeliğine sağlanan tüm özelliklerle kullanmaya başla.",
+		PageTitleCreateAccountOrSignIn: 'Üye ol veya giriş yap',
+		PageParagraphCreateAccountOrSignIn:
+			"Stablecog'u üyeliğine sağlanan tüm özelliklerle kullanmaya başla.",
+		PageTitleSentLink: 'Posta kutunu kontrol et',
+		PageParagraphSentLink:
+			'Giriş yapabilmen için sana bir link yolladık. Bulamadıysan spam klasörüne bak.',
+		ContinueButton: 'Devam Et',
 		DontHaveAnAccountTitle: 'Üyeliğin yok mu?',
 		SignUpInsteadButton: 'Üye ol',
 		SignInButton: 'Giriş Yap',
@@ -357,7 +366,7 @@ const tr: Translation = {
 	},
 	Gallery: {
 		PageTitle: 'Galeri',
-		PageParagraph: 'Diğer insanların üretimlerini incele.',
+		PageParagraph: 'Diğer insanların Stablecog ile ürettiklerini incele.',
 		SearchInput: {
 			Title: 'Ara'
 		},

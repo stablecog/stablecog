@@ -1,69 +1,61 @@
 <script lang="ts">
-	import { goto } from '$app/navigation';
 	import { page } from '$app/stores';
 	import Button from '$components/buttons/Button.svelte';
 	import NoBgButton from '$components/buttons/NoBgButton.svelte';
 	import ErrorLine from '$components/ErrorLine.svelte';
+	import IconBack from '$components/icons/IconBack.svelte';
 	import IconEmail from '$components/icons/IconEmail.svelte';
-	import IconLoading from '$components/icons/IconLoading.svelte';
-	import IconPassword from '$components/icons/IconPassword.svelte';
 	import Input from '$components/Input.svelte';
 	import MetaTag from '$components/MetaTag.svelte';
 	import PageWrapper from '$components/PageWrapper.svelte';
-	import LL, { locale } from '$i18n/i18n-svelte';
+	import LL from '$i18n/i18n-svelte';
+	import { expandCollapse } from '$ts/animation/transitions';
 	import { canonicalUrl } from '$ts/constants/main';
 	import { supabase } from '$ts/constants/supabase';
-	import { mLogSignIn } from '$ts/helpers/loggers';
-	import { advancedModeApp } from '$ts/stores/advancedMode';
-	import { unconfirmedEmail } from '$ts/stores/unconfirmedEmail';
+	import { isTouchscreen } from '$ts/stores/isTouchscreen';
+	import { quadOut } from 'svelte/easing';
 	import type { PageServerData } from './$types';
 
 	export let data: PageServerData;
 
 	let email: string;
-	let password: string;
-	let signInStatus: 'idle' | 'loading' | 'error' | 'success' = 'idle';
+	let signInStatus: 'idle' | 'loading' | 'error' | 'sent-otp' = 'idle';
 	let errorText: string | null = null;
-	const defaultRedirectRoute = '/';
 
 	async function signIn() {
-		if (password.length < 8) {
-			errorText = $LL.Error.PasswordTooShort();
-			return;
-		}
 		if (!email.includes('@')) {
 			errorText = $LL.Error.InvalidEmail();
 			return;
 		}
 		signInStatus = 'loading';
-		const { data: sData, error: sError } = await supabase.auth.signInWithPassword({
+		const { data: sData, error: sError } = await supabase.auth.signInWithOtp({
 			email,
-			password
+			options: {
+				emailRedirectTo: `${$page.url.origin}/api/auth/callback?redirect_to=${
+					data.redirect_to ? encodeURIComponent(data.redirect_to) : ''
+				}`
+			}
 		});
 		if (sError) {
 			console.log(sError);
 			signInStatus = 'error';
-			if (sError.message === 'Invalid login credentials') {
-				errorText = $LL.Error.InvalidCredentials();
-			} else if (sError.message === 'Email not confirmed') {
-				unconfirmedEmail.set(email);
-				await goto('/sign-up', { state: { email } });
+			if (
+				sError.message === 'For security purposes, you can only request this once every 60 seconds'
+			) {
+				errorText = $LL.Error.OnceEvery60Seconds();
 			} else {
 				errorText = $LL.Error.SomethingWentWrong();
 			}
 			return;
 		}
 		console.log(sData);
-		mLogSignIn({
+		/* mLogSignIn({
 			'SC - Plan': $page.data.plan,
 			'SC - Locale': $locale,
 			'SC - Advanced Mode': $advancedModeApp,
 			'SC - Page': `${$page.url.pathname}${$page.url.search}`
-		});
-		setTimeout(() => {
-			signInStatus = 'success';
-		}, 200);
-		await goto(data.redirect_to || defaultRedirectRoute);
+		}); */
+		signInStatus = 'sent-otp';
 	}
 </script>
 
@@ -76,22 +68,49 @@
 
 <PageWrapper>
 	<div class="w-full flex flex-col items-center justify-center my-auto">
-		{#if signInStatus === 'success'}
-			<IconLoading class="w-10 h-10 text-c-on-bg/50 animate-spin-faster" />
-		{:else}
-			<h1 class="text-center font-bold text-4xl">{$LL.SignIn.PageTitle()}</h1>
-			<div class="w-full flex flex-col items-center justify-start mt-4">
-				<p class="max-w-sm text-c-on-bg/60 text-center leading-relaxed">
-					{$LL.SignIn.PageParagraph()}
-				</p>
+		{#if signInStatus === 'sent-otp'}
+			<div class="mb-2">
+				<IconEmail class="w-20 h-20 text-c-on-bg" />
+			</div>
+		{/if}
+		<h1 class="text-center font-bold max-w-sm leading-tight text-4xl">
+			{signInStatus === 'sent-otp'
+				? $LL.SignIn.PageTitleSentLink()
+				: $LL.SignIn.PageTitleCreateAccountOrSignIn()}
+		</h1>
+		<div class="w-full flex flex-col items-center justify-start mt-3">
+			<p class="max-w-sm text-c-on-bg/60 text-center leading-relaxed mb-6">
+				{signInStatus === 'sent-otp'
+					? $LL.SignIn.PageParagraphSentLink()
+					: $LL.SignIn.PageParagraph()}
+			</p>
+			{#if signInStatus === 'sent-otp'}
 				<div
-					class="w-full bg-c-bg-secondary max-w-sm flex flex-col p-4 md:p-5 rounded-3xl mt-6
+					transition:expandCollapse|local={{ duration: 200, easing: quadOut, opacity: 0 }}
+					class="w-full flex flex-col items-center justify-start overflow-hidden relative z-0"
+				>
+					<div class="w-full p-1 flex items-center justify-center">
+						<NoBgButton onClick={() => (signInStatus = 'idle')}>
+							<div class="flex items-center justify-center gap-2.5 px-2 py-1">
+								<IconBack
+									class="w-6 h-6 transform transition text-c-on-bg/50 group-hover:-translate-x-1
+									{!$isTouchscreen ? 'group-hover:text-c-primary' : ''}"
+								/>
+								<p class="font-bold">{$LL.Shared.GoBackButton()}</p>
+							</div>
+						</NoBgButton>
+					</div>
+				</div>
+			{:else}
+				<div
+					transition:expandCollapse|local={{ duration: 200, easing: quadOut, opacity: 0 }}
+					class="w-full bg-c-bg-secondary max-w-sm overflow-hidden relative z-0 flex flex-col justify-start rounded-3xl
 					ring-2 ring-c-bg-tertiary shadow-xl shadow-c-shadow/[var(--o-shadow-normal)]"
 				>
 					<form
 						on:input={() => (errorText = null)}
 						on:submit|preventDefault={signIn}
-						class="w-full flex flex-col"
+						class="w-full flex flex-col p-4 md:p-5"
 					>
 						<div class="w-full flex flex-col justify-start">
 							<Input
@@ -103,39 +122,16 @@
 							>
 								<IconEmail slot="icon" class="w-full h-full" />
 							</Input>
-							<Input
-								disabled={signInStatus === 'loading'}
-								type="password"
-								title={$LL.Shared.PasswordInput.Placeholder()}
-								bind:value={password}
-								class="mt-2"
-								hasIcon
-							>
-								<IconPassword slot="icon" class="w-full h-full" />
-							</Input>
 						</div>
 						{#if errorText}
 							<ErrorLine text={errorText} class="text-xs" />
 						{/if}
 						<Button class="mt-4" loading={signInStatus === 'loading'} withSpinner>
-							{$LL.SignIn.SignInButton()}
+							{$LL.SignIn.ContinueButton()}
 						</Button>
 					</form>
-					{#if errorText !== null}
-						<div class="w-full flex items-center justify-center pt-2 -mb-4">
-							<NoBgButton prefetch target="_self" href="/forgot-password" type="sm">
-								{$LL.ForgotPassword.ForgotPasswordButton()}
-							</NoBgButton>
-						</div>
-					{/if}
 				</div>
-				<div class="w-full flex flex-col items-center justify-center mt-6">
-					<p class="text-sm text-c-on-bg/50">{$LL.SignIn.DontHaveAnAccountTitle()}</p>
-					<NoBgButton prefetch target="_self" href="/sign-up" class="-mt-2 text-c-primary">
-						{$LL.SignUp.SignUpButton()}
-					</NoBgButton>
-				</div>
-			</div>
-		{/if}
+			{/if}
+		</div>
 	</div>
 </PageWrapper>

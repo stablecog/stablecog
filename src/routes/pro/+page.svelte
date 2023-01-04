@@ -171,7 +171,7 @@
 					>
 				{:else}
 					<Button
-						href={`/sign-up?redirect_to=${encodeURIComponent('/pro')}`}
+						href={`/sign-in?redirect_to=${encodeURIComponent('/pro')}`}
 						withSpinner
 						loading={checkoutCreationStatus === 'loading'}
 						class="w-full mt-8">{$LL.SignUp.SignUpButton()}</Button

@@ -148,6 +148,7 @@ const vi: Translation = {
 		JoinUsOnTitle: 'Gia nhập tại {name}',
 		ShareButton: 'Chia sẻ',
 		ShareOnButton: 'Chia sẻ trên {name}',
+		GoBackButton: 'Go Back',
 		YesButton: 'Có',
 		NoButton: 'Không',
 		EnableButton: 'Cho phép',
@@ -222,7 +223,8 @@ const vi: Translation = {
 		PasswordTooShort: 'Mật khẩu phải có ít nhất 8 ký tự.',
 		SomethingWentWrongTryAgain: 'Có sự cố. Xin vui lòng thử lại.',
 		InvalidCredentials: 'Thông tin dùng để xác thực không hợp lệ.',
-		InvalidCode: 'Mã không hợp lệ.'
+		InvalidCode: 'Mã không hợp lệ.',
+		OnceEvery60Seconds: 'You can only request a link once every 60 seconds.'
 	},
 	Admin: {
 		AdminPanelTitle: 'Quản trị',
@@ -262,6 +264,13 @@ const vi: Translation = {
 		PageTitle: 'Đăng nhập',
 		PageParagraph:
 			'Bắt đầu dùng Stablecog với tất cả các tính năng sẵn có trong tài khoản của bạn.',
+		PageTitleCreateAccountOrSignIn: 'Create an account or sign in',
+		PageParagraphCreateAccountOrSignIn:
+			'Start using Stablecog with all features that are available to your account.',
+		PageTitleSentLink: 'Check your email',
+		PageParagraphSentLink:
+			"We've emailed you a sign-in link. If you don't see it, check your spam folder.",
+		ContinueButton: 'Continue',
 		DontHaveAnAccountTitle: 'Bạn không có tài khoản?',
 		SignUpInsteadButton: 'Đăng ký mới',
 		SignInButton: 'Đăng nhập',
@@ -361,7 +370,7 @@ const vi: Translation = {
 	},
 	Gallery: {
 		PageTitle: 'Gallery',
-		PageParagraph: 'Check out what others have created. with Stablecog..',
+		PageParagraph: 'Check out what others have created with Stablecog.',
 		SearchInput: {
 			Title: 'Search'
 		},

@@ -148,6 +148,7 @@ const ko: Translation = {
 		JoinUsOnTitle: '{name}에서 더보기',
 		ShareButton: '공유하기',
 		ShareOnButton: '{name}에 공유하기',
+		GoBackButton: 'Go Back',
 		YesButton: '좋아요',
 		NoButton: '괜찮아요',
 		EnableButton: '활성화',
@@ -221,7 +222,8 @@ const ko: Translation = {
 		PasswordTooShort: '비밀번호는 8글자 이상이어야 합니다.',
 		SomethingWentWrongTryAgain: '무언가 잘못되었습니다. 다시 시도해주세요.',
 		InvalidCredentials: '이메일과 비밀번호를 다시 확인해주세요.',
-		InvalidCode: '올바르지 않은 코드입니다. 다시 시도해주세요.'
+		InvalidCode: '올바르지 않은 코드입니다. 다시 시도해주세요.',
+		OnceEvery60Seconds: 'You can only request a link once every 60 seconds.'
 	},
 	Admin: {
 		AdminPanelTitle: '관리자',
@@ -259,6 +261,13 @@ const ko: Translation = {
 	SignIn: {
 		PageTitle: '로그인',
 		PageParagraph: '로그인을 통해 Stablecog의 모든 기능을 사용해보세요!',
+		PageTitleCreateAccountOrSignIn: 'Create an account or sign in',
+		PageParagraphCreateAccountOrSignIn:
+			'Start using Stablecog with all features that are available to your account.',
+		PageTitleSentLink: 'Check your email',
+		PageParagraphSentLink:
+			"We've emailed you a sign-in link. If you don't see it, check your spam folder.",
+		ContinueButton: 'Continue',
 		DontHaveAnAccountTitle: '아직 계정이 없으신가요?',
 		SignUpInsteadButton: '가입하기',
 		SignInButton: '로그인하기',
@@ -358,7 +367,7 @@ const ko: Translation = {
 	},
 	Gallery: {
 		PageTitle: 'Gallery',
-		PageParagraph: 'Check out what others have created. with Stablecog..',
+		PageParagraph: 'Check out what others have created with Stablecog.',
 		SearchInput: {
 			Title: 'Search'
 		},

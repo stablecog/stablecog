@@ -148,6 +148,7 @@ CREATE TABLE "server" (
     "healthy" BOOLEAN NOT NULL DEFAULT TRUE,
     "enabled" BOOLEAN NOT NULL DEFAULT TRUE,
     "last_health_check_at" TIMESTAMPTZ DEFAULT TIMEZONE(' utc ' :: TEXT, NOW()) NOT NULL,
+    "features" JSONB,
     "id" UUID NOT NULL DEFAULT uuid_generate_v4(),
     "created_at" TIMESTAMPTZ DEFAULT TIMEZONE(' utc ' :: TEXT, NOW()) NOT NULL,
     "updated_at" TIMESTAMPTZ DEFAULT TIMEZONE(' utc ' :: TEXT, NOW()) NOT NULL,

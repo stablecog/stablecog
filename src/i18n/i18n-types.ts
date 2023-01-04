@@ -442,6 +442,10 @@ type RootTranslation = {
 		 */
 		ShareOnButton: RequiredParams<'name'>
 		/**
+		 * G​o​ ​B​a​c​k
+		 */
+		GoBackButton: string
+		/**
 		 * Y​e​s
 		 */
 		YesButton: string
@@ -643,6 +647,10 @@ type RootTranslation = {
 		 * I​n​v​a​l​i​d​ ​c​o​d​e​.
 		 */
 		InvalidCode: string
+		/**
+		 * Y​o​u​ ​c​a​n​ ​o​n​l​y​ ​r​e​q​u​e​s​t​ ​a​ ​l​i​n​k​ ​o​n​c​e​ ​e​v​e​r​y​ ​6​0​ ​s​e​c​o​n​d​s​.
+		 */
+		OnceEvery60Seconds: string
 	}
 	Admin: {
 		/**
@@ -718,7 +726,7 @@ type RootTranslation = {
 		 */
 		PageTitleConfirm: string
 		/**
-		 * C​h​e​c​k​ ​Y​o​u​r​ ​E​m​a​i​l
+		 * C​h​e​c​k​ ​y​o​u​r​ ​e​m​a​i​l
 		 */
 		PageTitleConfirmAlt: string
 		/**
@@ -757,6 +765,26 @@ type RootTranslation = {
 		 * S​t​a​r​t​ ​u​s​i​n​g​ ​S​t​a​b​l​e​c​o​g​ ​w​i​t​h​ ​a​l​l​ ​f​e​a​t​u​r​e​s​ ​t​h​a​t​ ​a​r​e​ ​a​v​a​i​l​a​b​l​e​ ​t​o​ ​y​o​u​r​ ​a​c​c​o​u​n​t​.
 		 */
 		PageParagraph: string
+		/**
+		 * C​r​e​a​t​e​ ​a​n​ ​a​c​c​o​u​n​t​ ​o​r​ ​s​i​g​n​ ​i​n
+		 */
+		PageTitleCreateAccountOrSignIn: string
+		/**
+		 * S​t​a​r​t​ ​u​s​i​n​g​ ​S​t​a​b​l​e​c​o​g​ ​w​i​t​h​ ​a​l​l​ ​f​e​a​t​u​r​e​s​ ​t​h​a​t​ ​a​r​e​ ​a​v​a​i​l​a​b​l​e​ ​t​o​ ​y​o​u​r​ ​a​c​c​o​u​n​t​.
+		 */
+		PageParagraphCreateAccountOrSignIn: string
+		/**
+		 * C​h​e​c​k​ ​y​o​u​r​ ​e​m​a​i​l
+		 */
+		PageTitleSentLink: string
+		/**
+		 * W​e​'​v​e​ ​e​m​a​i​l​e​d​ ​y​o​u​ ​a​ ​s​i​g​n​-​i​n​ ​l​i​n​k​.​ ​I​f​ ​y​o​u​ ​d​o​n​'​t​ ​s​e​e​ ​i​t​,​ ​c​h​e​c​k​ ​y​o​u​r​ ​s​p​a​m​ ​f​o​l​d​e​r​.
+		 */
+		PageParagraphSentLink: string
+		/**
+		 * C​o​n​t​i​n​u​e
+		 */
+		ContinueButton: string
 		/**
 		 * D​o​n​'​t​ ​h​a​v​e​ ​a​n​ ​a​c​c​o​u​n​t​?
 		 */
@@ -1037,7 +1065,7 @@ type RootTranslation = {
 		 */
 		PageTitle: string
 		/**
-		 * C​h​e​c​k​ ​o​u​t​ ​w​h​a​t​ ​o​t​h​e​r​s​ ​h​a​v​e​ ​c​r​e​a​t​e​d​.​ ​w​i​t​h​ ​S​t​a​b​l​e​c​o​g​.​.
+		 * C​h​e​c​k​ ​o​u​t​ ​w​h​a​t​ ​o​t​h​e​r​s​ ​h​a​v​e​ ​c​r​e​a​t​e​d​ ​w​i​t​h​ ​S​t​a​b​l​e​c​o​g​.
 		 */
 		PageParagraph: string
 		SearchInput: {
@@ -1472,6 +1500,10 @@ export type TranslationFunctions = {
 		 */
 		ShareOnButton: (arg: { name: unknown }) => LocalizedString
 		/**
+		 * Go Back
+		 */
+		GoBackButton: () => LocalizedString
+		/**
 		 * Yes
 		 */
 		YesButton: () => LocalizedString
@@ -1673,6 +1705,10 @@ export type TranslationFunctions = {
 		 * Invalid code.
 		 */
 		InvalidCode: () => LocalizedString
+		/**
+		 * You can only request a link once every 60 seconds.
+		 */
+		OnceEvery60Seconds: () => LocalizedString
 	}
 	Admin: {
 		/**
@@ -1748,7 +1784,7 @@ export type TranslationFunctions = {
 		 */
 		PageTitleConfirm: () => LocalizedString
 		/**
-		 * Check Your Email
+		 * Check your email
 		 */
 		PageTitleConfirmAlt: () => LocalizedString
 		/**
@@ -1787,6 +1823,26 @@ export type TranslationFunctions = {
 		 * Start using Stablecog with all features that are available to your account.
 		 */
 		PageParagraph: () => LocalizedString
+		/**
+		 * Create an account or sign in
+		 */
+		PageTitleCreateAccountOrSignIn: () => LocalizedString
+		/**
+		 * Start using Stablecog with all features that are available to your account.
+		 */
+		PageParagraphCreateAccountOrSignIn: () => LocalizedString
+		/**
+		 * Check your email
+		 */
+		PageTitleSentLink: () => LocalizedString
+		/**
+		 * We've emailed you a sign-in link. If you don't see it, check your spam folder.
+		 */
+		PageParagraphSentLink: () => LocalizedString
+		/**
+		 * Continue
+		 */
+		ContinueButton: () => LocalizedString
 		/**
 		 * Don't have an account?
 		 */
@@ -2066,7 +2122,7 @@ export type TranslationFunctions = {
 		 */
 		PageTitle: () => LocalizedString
 		/**
-		 * Check out what others have created. with Stablecog..
+		 * Check out what others have created with Stablecog.
 		 */
 		PageParagraph: () => LocalizedString
 		SearchInput: {

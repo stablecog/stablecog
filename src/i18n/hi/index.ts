@@ -147,6 +147,7 @@ const hi: Translation = {
 		JoinUsOnTitle: 'Join us on {name}',
 		ShareButton: 'शेयर',
 		ShareOnButton: '{name} पर शेयर करे',
+		GoBackButton: 'Go Back',
 		YesButton: 'हां',
 		NoButton: 'नही',
 		EnableButton: 'चालू करे',
@@ -220,7 +221,8 @@ const hi: Translation = {
 		PasswordTooShort: 'Password must be at least 8 characters.',
 		SomethingWentWrongTryAgain: 'Something went wrong, try again.',
 		InvalidCredentials: 'Invalid credentials.',
-		InvalidCode: 'Invalid code.'
+		InvalidCode: 'Invalid code.',
+		OnceEvery60Seconds: 'You can only request a link once every 60 seconds.'
 	},
 	Admin: {
 		AdminPanelTitle: 'Admin',
@@ -258,6 +260,13 @@ const hi: Translation = {
 	SignIn: {
 		PageTitle: 'Sign In',
 		PageParagraph: 'Start using Stablecog with all features that are available to your account.',
+		PageTitleCreateAccountOrSignIn: 'Create an account or sign in',
+		PageParagraphCreateAccountOrSignIn:
+			'Start using Stablecog with all features that are available to your account.',
+		PageTitleSentLink: 'Check your email',
+		PageParagraphSentLink:
+			"We've emailed you a sign-in link. If you don't see it, check your spam folder.",
+		ContinueButton: 'Continue',
 		DontHaveAnAccountTitle: "Don't have an account?",
 		SignUpInsteadButton: 'Sign up instead',
 		SignInButton: 'Sign In',
@@ -357,7 +366,7 @@ const hi: Translation = {
 	},
 	Gallery: {
 		PageTitle: 'Gallery',
-		PageParagraph: 'Check out what others have created. with Stablecog..',
+		PageParagraph: 'Check out what others have created with Stablecog.',
 		SearchInput: {
 			Title: 'Search'
 		},
