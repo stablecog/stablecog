@@ -79,13 +79,13 @@
 				<IconEmail class="w-20 h-20 text-c-on-bg" />
 			</div>
 		{/if}
-		<h1 class="text-center font-bold max-w-sm leading-tight text-4xl">
+		<h1 class="text-center font-bold max-w-lg leading-tight text-3xl">
 			{signInStatus === 'sent-otp'
 				? $LL.SignIn.PageTitleSentLink()
 				: $LL.SignIn.PageTitleCreateAccountOrSignIn()}
 		</h1>
 		<div class="w-full flex flex-col items-center justify-start mt-3">
-			<p class="max-w-sm text-c-on-bg/60 text-center leading-relaxed mb-6">
+			<p class="max-w-lg text-c-on-bg/60 text-center leading-relaxed mb-6">
 				{signInStatus === 'sent-otp'
 					? $LL.SignIn.PageParagraphSentLink()
 					: $LL.SignIn.PageParagraph()}
