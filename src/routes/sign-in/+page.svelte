@@ -31,12 +31,6 @@
 	async function redirect() {
 		if (!browser) return;
 		if (!$page.data.session?.user.id) return;
-		mLogSignIn({
-			'SC - Plan': $page.data.plan,
-			'SC - Locale': $locale,
-			'SC - Advanced Mode': $advancedModeApp,
-			'SC - Page': `${$page.url.pathname}${$page.url.search}`
-		});
 		await goto('/');
 	}
 
