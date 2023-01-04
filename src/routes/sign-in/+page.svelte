@@ -40,11 +40,6 @@
 			return;
 		}
 		signInStatus = 'loading';
-		console.log(
-			`${$page.url.origin}/api/auth/callback?redirect_to=${
-				data.redirect_to ? encodeURIComponent(data.redirect_to) : ''
-			}`
-		);
 		const { data: sData, error: sError } = await supabase.auth.signInWithOtp({
 			email,
 			options: {
