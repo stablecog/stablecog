@@ -11,7 +11,7 @@
 
 	export let data: PageServerData;
 
-	$: $page.data.session, redirect();
+	$: $page.data.session?.user.id, redirect();
 
 	async function redirect() {
 		if (!browser) return;
