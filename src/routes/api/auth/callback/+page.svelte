@@ -7,11 +7,12 @@
 	import { locale } from '$i18n/i18n-svelte';
 	import { mLogSignIn } from '$ts/helpers/loggers';
 	import { advancedModeApp } from '$ts/stores/advancedMode';
+	import { onMount } from 'svelte';
 	import type { PageServerData } from './$types';
 
 	export let data: PageServerData;
 
-	$: $page.data.session?.user.id, redirect();
+	$: if (mounted && $page.data.sesion.user.id) redirect();
 
 	async function redirect() {
 		if (!browser) return;
@@ -34,6 +35,11 @@
 			await goto('/');
 		}, 200);
 	}
+
+	let mounted = false;
+	onMount(() => {
+		mounted = true;
+	});
 </script>
 
 <PageWrapper>
