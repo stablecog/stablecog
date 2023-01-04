@@ -123,7 +123,7 @@ func Handler(c *fiber.Ctx) error {
 
 	if plan == "FREE" || plan == "ANONYMOUS" {
 		duration := GENERATION_MIN_WAIT_FREE
-		rateLimitedResponse := SGenerateResponse{Error: fmt.Sprintf("You can only generate once every %d seconds on the pro plan.", GENERATION_MIN_WAIT_FREE)}
+		rateLimitedResponse := SGenerateResponse{Error: fmt.Sprintf("You can only start a generation once every %d seconds on the free plan.", GENERATION_MIN_WAIT_FREE)}
 		isRateLimited := shared.IsRateLimited("goa", duration, c)
 		if isRateLimited {
 			log.Printf("-- Generation - Rate limited!: %s --", countryCode)
