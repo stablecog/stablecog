@@ -24,7 +24,6 @@ const upscaleType = "Real-World Image Super-Resolution-Large"
 const processType = "upscale"
 const scale = 4
 
-var UPSCALE_MIN_WAIT = shared.GetDurationFromEnv("UPSCALE_MIN_WAIT", "2")
 var UPSCALE_MIN_WAIT_FREE = shared.GetDurationFromEnv("UPSCALE_MIN_WAIT_FREE", "10")
 
 func Handler(c *fiber.Ctx) error {
@@ -65,16 +64,6 @@ func Handler(c *fiber.Ctx) error {
 		return c.Status(http.StatusBadRequest).JSON(
 			SUpscaleResponse{Error: "Upscale feature isn't available on the free plan :("},
 		)
-	}
-
-	if plan == "FREE" || plan == "ANONYMOUS" {
-		isRateLimited := shared.IsRateLimited("goa", UPSCALE_MIN_WAIT, c)
-		if isRateLimited {
-			log.Printf("-- Upscale - Rate limited!: %s --", countryCode)
-			return c.Status(http.StatusTooManyRequests).JSON(
-				SUpscaleResponse{Error: fmt.Sprintf("You can only start an upscale every %d seconds :(", UPSCALE_MIN_WAIT/time.Second)},
-			)
-		}
 	}
 
 	hasOnGoingGenerationOrUpscale := shared.HasOnGoingGenerationOrUpscale("goa_active", c)
