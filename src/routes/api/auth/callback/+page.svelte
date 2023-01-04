@@ -12,7 +12,7 @@
 
 	export let data: PageServerData;
 
-	$: if (mounted && $page.data.sesion.user.id) redirect();
+	$: if (mounted && $page.data.session?.user.id) redirect();
 
 	async function redirect() {
 		if (!browser) return;
