@@ -4,7 +4,7 @@
 	import GenerationGrid from '$components/GenerationGrid.svelte';
 	import MetaTag from '$components/MetaTag.svelte';
 	import LL, { locale } from '$i18n/i18n-svelte';
-	import { maxImages } from '$ts/constants/indexedDb';
+	import { maxLocallyStoredImage } from '$ts/constants/indexedDb';
 	import { canonicalUrl } from '$ts/constants/main';
 	import { getGenerationsFromDb, updateGenerationInDb } from '$ts/queries/indexedDb';
 	import { activeGeneration } from '$ts/stores/activeGeneration';
@@ -95,7 +95,7 @@
 					class="text-xs md:text-sm text-c-primary/75 font-semibold bg-c-primary/15 px-2 py-1 md:px-3 md:py-1.5
 						rounded-md md:rounded-lg"
 				>
-					{$LL.History.GenerationsMaxSavedCountWarning({ count: maxImages })}
+					{$LL.History.GenerationsMaxSavedCountWarning({ count: maxLocallyStoredImage })}
 				</p>
 			</div>
 		</div>
