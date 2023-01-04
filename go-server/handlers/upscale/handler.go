@@ -199,6 +199,16 @@ func Handler(c *fiber.Ctx) error {
 			SUpscaleResponse{Error: "Failed to decode cog response body"},
 		)
 	}
+	if cogResBody.Output == nil || len(cogResBody.Output) == 0 {
+		upscaleCogEnd := time.Now().UTC().UnixMilli()
+		go UpdateUpscaleAsFailed(upscaleIdChan, upscaleCogEnd-upscaleCogStart)
+		sentry.CaptureException(cogResBodyErr)
+		shared.DeleteOngoingGenerationOrUpscale("goa_active", c)
+		log.Printf("Cog server returned empty output: %v", cogResBodyErr)
+		return c.Status(http.StatusInternalServerError).JSON(
+			SUpscaleResponse{Error: "Failed to decode cog response body"},
+		)
+	}
 	output := cogResBody.Output[0]
 	upscaleCogEnd := time.Now().UTC().UnixMilli()
 	upscaleCogDurationMs := upscaleCogEnd - upscaleCogStart

@@ -57,11 +57,11 @@ type SInternalServerErrorResponse struct {
 }
 
 type SCogGenerateResponseBody struct {
-	Output []string `json:"output"`
+	Output []string `json:"output,omitempty"`
 }
 
 type SCogUpscaleResponseBody struct {
-	Output []string `json:"output"`
+	Output []string `json:"output,omitempty"`
 }
 
 type SGenerateRequestBody struct {
