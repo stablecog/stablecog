@@ -1,4 +1,6 @@
 <script lang="ts">
+	import { browser } from '$app/environment';
+	import { goto } from '$app/navigation';
 	import { page } from '$app/stores';
 	import Button from '$components/buttons/Button.svelte';
 	import NoBgButton from '$components/buttons/NoBgButton.svelte';
@@ -8,10 +10,12 @@
 	import Input from '$components/Input.svelte';
 	import MetaTag from '$components/MetaTag.svelte';
 	import PageWrapper from '$components/PageWrapper.svelte';
-	import LL from '$i18n/i18n-svelte';
+	import LL, { locale } from '$i18n/i18n-svelte';
 	import { expandCollapse } from '$ts/animation/transitions';
 	import { canonicalUrl } from '$ts/constants/main';
 	import { supabase } from '$ts/constants/supabase';
+	import { mLogSignIn } from '$ts/helpers/loggers';
+	import { advancedModeApp } from '$ts/stores/advancedMode';
 	import { isTouchscreen } from '$ts/stores/isTouchscreen';
 	import { quadOut } from 'svelte/easing';
 	import type { PageServerData } from './$types';
@@ -22,12 +26,31 @@
 	let signInStatus: 'idle' | 'loading' | 'error' | 'sent-otp' = 'idle';
 	let errorText: string | null = null;
 
+	$: $page.data.session?.user.id, redirect();
+
+	async function redirect() {
+		if (!browser) return;
+		if (!$page.data.session?.user.id) return;
+		mLogSignIn({
+			'SC - Plan': $page.data.plan,
+			'SC - Locale': $locale,
+			'SC - Advanced Mode': $advancedModeApp,
+			'SC - Page': `${$page.url.pathname}${$page.url.search}`
+		});
+		await goto('/');
+	}
+
 	async function signIn() {
 		if (!email.includes('@')) {
 			errorText = $LL.Error.InvalidEmail();
 			return;
 		}
 		signInStatus = 'loading';
+		console.log(
+			`${$page.url.origin}/api/auth/callback?redirect_to=${
+				data.redirect_to ? encodeURIComponent(data.redirect_to) : ''
+			}`
+		);
 		const { data: sData, error: sError } = await supabase.auth.signInWithOtp({
 			email,
 			options: {
@@ -49,12 +72,6 @@
 			return;
 		}
 		console.log(sData);
-		/* mLogSignIn({
-			'SC - Plan': $page.data.plan,
-			'SC - Locale': $locale,
-			'SC - Advanced Mode': $advancedModeApp,
-			'SC - Page': `${$page.url.pathname}${$page.url.search}`
-		}); */
 		signInStatus = 'sent-otp';
 	}
 </script>
