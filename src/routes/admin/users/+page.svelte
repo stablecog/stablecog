@@ -11,6 +11,7 @@
 	import TierBadge from '$components/TierBadge.svelte';
 	import { getRelativeDate } from '$ts/helpers/getRelativeDate';
 	import { getDateString } from '$ts/helpers/date';
+	import { isTouchscreen } from '$ts/stores/isTouchscreen';
 
 	interface TUser {
 		id: string;
@@ -102,24 +103,36 @@
 			{#if users}
 				{#each users as user}
 					<div
-						class="w-full max-w-2xl flex justify-between items-center gap-5 
-						bg-c-bg-secondary rounded-xl shadow-lg shadow-c-shadow/[var(--o-shadow-normal)] px-4 py-2"
+						class="w-full max-w-2xl flex justify-between items-stretch gap-5 
+						bg-c-bg-secondary rounded-xl shadow-lg shadow-c-shadow/[var(--o-shadow-normal)] p-3 md:p-4"
 					>
-						<div class="flex flex-col items-start flex-shrink overflow-hidden p-1">
-							<p class="text-sm font-semibold text-c-on-bg/75">{user.email}</p>
+						<div class="flex flex-col justify-center flex-shrink min-w-0 overflow-hidden">
 							<p
-								class="text-xxs text-c-on-bg/40 bg-c-on-bg/5 rounded-md px-2 py-1 mt-2 mb-0.5 -ml-0.5"
+								class="max-w-full overflow-hidden overflow-ellipsis whitespace-nowrap 
+								text-sm font-semibold text-c-on-bg/75 px-1.5 -mt-0.5"
+							>
+								{user.email}
+							</p>
+							<p
+								class="max-w-full text-xxs text-c-on-bg/40 bg-c-on-bg/5 rounded-md px-2 py-1 mt-2 break-all"
 							>
 								{user.id}
 							</p>
+							<p class="max-w-full text-xxs text-c-on-bg/40 mt-2 break-all px-1.5">
+								{getRelativeDate({ date: user.created_at })}
+							</p>
 						</div>
-						<div class="flex flex-col items-end flex-shrink overflow-hidden p-1">
+						<div class="flex flex-col items-end justify-center">
 							<TierBadge tier={user.subscription_tier} />
-							<p
-								class="text-xxs text-c-on-bg/40 bg-c-on-bg/5 rounded-md px-2 py-1 mt-2 mb-0.5 -ml-0.5"
+							<a
+								href="https://dashboard.stripe.com/customers/{user.stripe_customer_id}"
+								target="_blank"
+								class="text-xs text-c-on-bg/40 bg-c-on-bg/5 rounded-lg px-2.5 py-1.5 mt-2 transition ring-0 ring-c-primary/25 {!$isTouchscreen
+									? 'hover:text-c-primary hover:bg-c-primary/10 hover:ring-2'
+									: ''}"
 							>
 								{user.stripe_customer_id}
-							</p>
+							</a>
 						</div>
 					</div>
 				{/each}
