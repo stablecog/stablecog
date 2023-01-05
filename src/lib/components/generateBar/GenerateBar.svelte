@@ -56,6 +56,11 @@
 	import { advancedMode, advancedModeApp } from '$ts/stores/advancedMode';
 	import { page } from '$app/stores';
 	import { homePageContainer } from '$ts/stores/homePageContainer';
+	import SignInCard from '$components/SignInCard.svelte';
+	import { portal } from 'svelte-portal';
+	import { clickoutside } from '$ts/actions/clickoutside';
+	import { fade, fly } from 'svelte/transition';
+	import { quadOut } from 'svelte/easing';
 
 	export let serverData: THomePageData;
 	export let onCreate: () => Promise<void>;
@@ -127,6 +132,7 @@
 	let promptInputElement: HTMLTextAreaElement;
 	let formElement: HTMLFormElement;
 	let isGenerationSettingsSheetOpen = false;
+	let isSignInModalOpen = false;
 
 	$: loadingOrSubmitting = status === 'loading' || submitting;
 	$: sinceSec =
@@ -145,6 +151,10 @@
 	}
 
 	async function onSubmit() {
+		if (!$page.data.session?.user.id) {
+			isSignInModalOpen = true;
+			return;
+		}
 		if ($promptInputValue) {
 			promptInputValue.set(formatPrompt($promptInputValue));
 		}
@@ -495,3 +505,23 @@
 	{formElement}
 	{isCheckComplete}
 />
+
+{#if isSignInModalOpen && !$page.data.session?.user.id}
+	<div
+		use:portal={'body'}
+		transition:fade|local={{ duration: 300, easing: quadOut }}
+		class="w-full h-full bg-c-bg/80 fixed left-0 top-0 px-3 z-[10000]"
+	/>
+	<div
+		use:portal={'body'}
+		transition:fly|local={{ duration: 200, y: 50, easing: quadOut }}
+		class="w-full h-full flex flex-col items-center fixed left-0 top-0 px-3 py-20 z-[10001] overflow-auto"
+	>
+		<div
+			use:clickoutside={{ callback: () => (isSignInModalOpen = false) }}
+			class="w-full max-w-2xl flex justify-center my-auto"
+		>
+			<SignInCard isModal={true} redirectTo="/" />
+		</div>
+	</div>
+{/if}

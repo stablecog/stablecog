@@ -52,7 +52,7 @@
 
 <div
 	class="max-w-full flex flex-col items-center justify-center {isModal
-		? 'bg-c-bg ring-2 ring-c-bg-secondary p-5 md:px-10 md:py-7 rounded-3xl shadow-lg shadow-c-shadow/[var(--o-shadow-strong)]'
+		? 'bg-c-bg ring-2 ring-c-bg-secondary p-5 md:px-10 md:py-7 rounded-3xl shadow-2xl shadow-c-shadow/[var(--o-shadow-strong)]'
 		: ''}"
 >
 	{#if signInStatus === 'sent-otp'}
@@ -60,7 +60,7 @@
 			<IconEmail class="w-20 h-20 text-c-on-bg" />
 		</div>
 	{/if}
-	<h1 class="text-center font-bold max-w-lg leading-tight text-2xl md:text-3xl">
+	<h1 class="text-center font-bold max-w-lg leading-tight text-2xl md:text-3xl mt-1">
 		{signInStatus === 'sent-otp'
 			? $LL.SignIn.PageTitleSentLink()
 			: $LL.SignIn.PageTitleCreateAccountOrSignIn()}
@@ -74,7 +74,7 @@
 		{#if signInStatus === 'sent-otp'}
 			<div
 				transition:expandCollapse|local={{ duration: 200, easing: quadOut, opacity: 0 }}
-				class="w-full flex flex-col items-center justify-start overflow-hidden relative z-0"
+				class="w-full flex flex-col items-center justify-start relative z-0"
 			>
 				<div class="w-full p-1 flex items-center justify-center">
 					<NoBgButton onClick={() => (signInStatus = 'idle')}>
@@ -91,7 +91,7 @@
 		{:else}
 			<div
 				transition:expandCollapse|local={{ duration: 200, easing: quadOut, opacity: 0 }}
-				class="w-full overflow-hidden relative z-0 flex flex-col justify-start
+				class="w-full relative z-0 flex flex-col justify-start
         {!isModal
 					? 'max-w-sm rounded-3xl bg-c-bg-secondary ring-2 ring-c-bg-tertiary shadow-xl shadow-c-shadow/[var(--o-shadow-normal)]'
 					: 'max-w-xs'}"
