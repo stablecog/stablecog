@@ -127,7 +127,7 @@
 							<a
 								href="https://dashboard.stripe.com/customers/{user.stripe_customer_id}"
 								target="_blank"
-								class="text-xs text-c-on-bg/40 bg-c-on-bg/5 rounded-lg px-2.5 py-1.5 mt-2 transition ring-0 ring-c-primary/25 {!$isTouchscreen
+								class="text-xs text-c-on-bg/40 bg-c-on-bg/5 rounded-lg px-2.5 py-1.5 mt-2.5 transition ring-0 ring-c-primary/25 {!$isTouchscreen
 									? 'hover:text-c-primary hover:bg-c-primary/10 hover:ring-2'
 									: ''}"
 							>
