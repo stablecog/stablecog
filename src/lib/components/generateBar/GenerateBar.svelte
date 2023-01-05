@@ -514,7 +514,7 @@
 	<div
 		use:portal={'body'}
 		transition:fade|local={{ duration: 300, easing: quadOut }}
-		class="w-full h-full bg-c-bg/80 fixed left-0 top-0 px-3 z-[10000]"
+		class="w-full h-full bg-c-barrier/80 fixed left-0 top-0 px-3 z-[10000]"
 	/>
 	<div
 		use:portal={'body'}

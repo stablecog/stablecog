@@ -72,22 +72,23 @@
 </script>
 
 <div
-	class="max-w-full flex flex-col items-center justify-center {isModal
-		? 'bg-c-bg ring-2 ring-c-bg-secondary p-5 md:px-10 md:py-7 rounded-3xl shadow-2xl shadow-c-shadow/[var(--o-shadow-strong)]'
-		: ''}"
+	class="max-w-full flex flex-col items-center justify-center bg-c-bg ring-c-bg-secondary ring-2 p-5 
+	md:px-10 md:py-7 rounded-3xl {isModal
+		? 'shadow-2xl shadow-c-shadow/[var(--o-shadow-strong)]'
+		: 'shadow-xl shadow-c-shadow/[var(--o-shadow-normal)]'}"
 >
 	{#if signInStatus === 'sent-otp'}
 		<div class="mb-2">
 			<IconEmail class="w-20 h-20 text-c-on-bg" />
 		</div>
 	{/if}
-	<h1 class="text-center font-bold max-w-lg leading-tight text-2xl md:text-3xl mt-1">
+	<h1 class="text-center font-bold max-w-lg leading-tight text-xl md:text-2xl mt-1 px-4">
 		{signInStatus === 'sent-otp'
 			? $LL.SignIn.PageTitleSentLink()
 			: $LL.SignIn.PageTitleCreateAccountOrSignIn()}
 	</h1>
-	<div class="w-full flex flex-col items-center justify-start mt-3">
-		<p class="max-w-lg text-c-on-bg/60 text-center leading-relaxed {isModal ? 'mb-4' : 'mb-6'}">
+	<div class="w-full flex flex-col items-center justify-start mt-2">
+		<p class="max-w-sm text-c-on-bg/60 text-center leading-relaxed mb-4">
 			{signInStatus === 'sent-otp'
 				? $LL.SignIn.PageParagraphSentLink()
 				: $LL.SignIn.PageParagraph()}
@@ -97,7 +98,7 @@
 				transition:expandCollapse|local={{ duration: 200, easing: quadOut, opacity: 0 }}
 				class="w-full flex flex-col items-center justify-start relative z-0"
 			>
-				<div class="w-full p-1 flex items-center justify-center">
+				<div class="w-full p-1 flex items-center justify-center -mt-1 -mb-2 md:-mb-4">
 					<NoBgButton onClick={() => (signInStatus = 'idle')}>
 						<div class="flex items-center justify-center gap-2.5 px-2 py-1">
 							<IconBack
@@ -112,16 +113,9 @@
 		{:else}
 			<div
 				transition:expandCollapse|local={{ duration: 200, easing: quadOut, opacity: 0 }}
-				class="w-full relative z-0 flex flex-col justify-start
-        {!isModal
-					? 'max-w-sm rounded-3xl bg-c-bg-secondary ring-2 ring-c-bg-tertiary shadow-xl shadow-c-shadow/[var(--o-shadow-normal)]'
-					: 'max-w-xs'}"
+				class="relative z-0 flex flex-col justify-start items-center w-full"
 			>
-				<div
-					class="w-full flex flex-col items-center justify-start {isModal
-						? 'p-1 md:pb-2'
-						: 'p-4 md:p-5'}"
-				>
+				<div class="w-full flex flex-col items-center justify-start p-1 md:pb-2 max-w-xs">
 					<div class="w-full flex flex-col items-center justify-start">
 						<ButtonOAuth
 							withSpinner
@@ -135,24 +129,18 @@
 					</div>
 				</div>
 				<div
-					class="{isModal
-						? 'w-[calc(100%+2.5rem)] -mx-5'
-						: 'w-full'} flex items-center gap-3 {isModal ? 'mt-5' : 'mt-2'}"
+					class="flex items-center gap-4 mt-4 -mx-5 md:-mx-10 w-[calc(100%+2.5rem)] md:w-[calc(100%+5rem)]"
 				>
-					<div
-						class="flex-1 h-2px rounded-full {isModal ? 'bg-c-bg-secondary' : 'bg-c-bg-tertiary'}"
-					/>
+					<div class="flex-1 h-2px rounded-r-full bg-c-bg-secondary" />
 					<p class="text-sm text-c-on-bg/50 text-center inline-block">
 						{$LL.SignIn.OrContinueWithEmailTitle()}
 					</p>
-					<div
-						class="flex-1 h-2px rounded-full {isModal ? 'bg-c-bg-secondary' : 'bg-c-bg-tertiary'}"
-					/>
+					<div class="flex-1 h-2px rounded-l-full bg-c-bg-secondary" />
 				</div>
 				<form
 					on:input={() => (errorText = null)}
 					on:submit|preventDefault={signIn}
-					class="w-full flex flex-col {!isModal ? 'p-4 md:p-5' : 'p-1 md:pb-2 mt-4'}"
+					class="w-full flex flex-col max-w-xs p-1 md:pb-2 mt-4 md:mt-5"
 				>
 					<div class="w-full flex flex-col justify-start">
 						<Input
