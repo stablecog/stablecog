@@ -30,6 +30,10 @@
 
 	let users: TUser[];
 	let startDate: Date;
+	let proCount: number;
+	let freeCount: number;
+	let giftedCount: number;
+	let friendBoughtCount: number;
 
 	onMount(async () => {
 		getUsers();
@@ -38,19 +42,48 @@
 	async function getUsers() {
 		if (!supabase) return;
 		try {
-			const { data, error }: TUserRes = await supabase
-				.from('user')
-				.select('*')
-				.order('created_at', { ascending: false });
-			console.log('Server data:', data, error);
-			if (data) {
-				users = data;
+			const [
+				userRes,
+				proCountRes,
+				freeCountRes,
+				giftedCountRes,
+				friendBoughtCountRes,
+				startDateRes
+			] = await Promise.all([
+				supabase.from('user').select('*').order('created_at', { ascending: false }).limit(250),
+				supabase
+					.from('user')
+					.select('*', { head: true, count: 'exact' })
+					.match({ subscription_tier: 'PRO' }),
+				supabase
+					.from('user')
+					.select('*', { head: true, count: 'exact' })
+					.match({ subscription_tier: 'FREE' }),
+				supabase
+					.from('user')
+					.select('*', { head: true, count: 'exact' })
+					.match({ subscription_category: 'GIFTED' }),
+				supabase
+					.from('user')
+					.select('*', { head: true, count: 'exact' })
+					.match({ subscription_category: 'FRIEND_BOUGHT' }),
+				supabase.from('user').select('created_at').order('created_at', { ascending: true }).limit(1)
+			]);
+			if (
+				userRes.data &&
+				proCountRes.count &&
+				freeCountRes.count &&
+				giftedCountRes.count &&
+				friendBoughtCountRes.count &&
+				startDateRes.data?.[0].created_at
+			) {
+				users = userRes.data;
+				proCount = proCountRes.count;
+				freeCount = freeCountRes.count;
+				giftedCount = giftedCountRes.count;
+				friendBoughtCount = friendBoughtCountRes.count;
+				startDate = new Date(startDateRes.data?.[0].created_at);
 			}
-			startDate = new Date(
-				users
-					.map((u) => u.created_at)
-					.sort((a, b) => new Date(a).getTime() - new Date(b).getTime())[0]
-			);
 		} catch (error) {
 			console.log(error);
 		}
@@ -74,17 +107,13 @@
 				<div class="flex gap-3 items-center">
 					<TierBadge tier={'PRO'} size="md" />
 					<p class="font-bold text-xl text-c-primary pr-4">
-						{users
-							? users.filter((u) => u.subscription_tier === 'PRO').length -
-							  users.filter((u) => u.subscription_category === 'GIFTED').length -
-							  users.filter((u) => u.subscription_category === 'FRIEND_BOUGHT').length
-							: '--'}
+						{users ? proCount - giftedCount - friendBoughtCount : '---'}
 					</p>
 				</div>
 				<div class="flex gap-3 items-center">
 					<TierBadge tier={'FREE'} size="md" />
 					<p class="font-bold text-xl text-c-on-bg pr-4">
-						{users ? users.filter((u) => u.subscription_tier === 'FREE').length : '---'}
+						{users ? freeCount : '----'}
 					</p>
 				</div>
 			</div>
