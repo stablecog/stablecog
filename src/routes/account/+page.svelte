@@ -58,7 +58,7 @@
 				class="w-full max-w-xl mt-6 flex flex-col rounded-2xl bg-c-bg overflow-hidden relative z-0 
 				shadow-xl shadow-c-shadow/[var(--o-shadow-strong)] ring-2 ring-c-bg-secondary"
 			>
-				<div class="w-full flex items-center gap-4 p-4 md:p-6 overflow-hidden">
+				<div class="w-full flex items-center gap-4 px-5 py-4 md:p-6 overflow-hidden">
 					<div
 						class="w-9 h-9 ring-2 ring-c-on-bg/25 overflow-hidden rounded-full transition transform 
 						relative shadow-lg shadow-c-shadow/[var(--o-shadow-strong)]"
@@ -70,12 +70,14 @@
 					</p>
 				</div>
 				<div class="w-full h-2px bg-c-bg-secondary" />
-				<div class="w-full flex flex-wrap items-center justify-between p-4 md:p-5 gap-5 md:gap-8">
-					<div class="flex flex-col items-start px-1">
-						<p class="text-c-on-bg/60 text-sm px-0.5 -mt-1">
+				<div
+					class="w-full flex flex-wrap items-center justify-between px-4 py-5 md:p-5 gap-5 md:gap-8"
+				>
+					<div class="flex flex-col items-start px-0.5 -mt-2">
+						<p class="text-c-on-bg font-bold px-1">
 							{$LL.Account.SubscriptionPlanTitle()}
 						</p>
-						<TierBadge class="mt-1.5" size="lg" tier={$page.data.plan} />
+						<TierBadge class="mt-2" size="lg" tier={$page.data.plan} />
 					</div>
 					<Button
 						class="w-full md:w-auto"
