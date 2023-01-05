@@ -50,8 +50,6 @@ export const modalCloseDelay = 120;
 export const maxSeed = 2147483647;
 export const maxPromptLength = 500;
 
-export const computeRatePerSecDefault = 250000;
-
 export const availableWidths = ['384', '512', '640', '768'] as const;
 export type TAvailableWidth = typeof availableWidths[number];
 export const availableWidthsFree: TAvailableWidth[] = ['512'];

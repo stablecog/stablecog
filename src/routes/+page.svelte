@@ -64,20 +64,17 @@
 	$: [$generationWidth, $generationHeight, $generationInferenceSteps], setEstimatedDuration();
 
 	async function setEstimatedDuration() {
-		if (isCheckComplete) {
-			if ($computeRatePerSec && $generationWidth && $generationHeight) {
-				const rate = getComputeRate(
-					Number($generationWidth),
-					Number($generationHeight),
-					Number($generationInferenceSteps)
-				);
-				estimatedDuration = Math.ceil(
-					(rate / $computeRatePerSec) * (1 + estimatedDurationBufferRatio)
-				);
-			} else {
-				estimatedDuration = estimatedDurationDefault;
-			}
+		if (!mounted) return;
+		if (!$computeRatePerSec || !$generationWidth || !$generationHeight) {
+			estimatedDuration = estimatedDurationDefault;
+			return;
 		}
+		const rate = getComputeRate(
+			Number($generationWidth),
+			Number($generationHeight),
+			Number($generationInferenceSteps)
+		);
+		estimatedDuration = Math.ceil((rate / $computeRatePerSec) * (1 + estimatedDurationBufferRatio));
 	}
 
 	async function onCreate() {
@@ -277,11 +274,11 @@
 		status = 'idle';
 	}
 
-	let isCheckComplete = false;
+	let mounted = false;
 
 	onMount(() => {
+		mounted = true;
 		setEstimatedDuration();
-		isCheckComplete = true;
 		console.log(
 			'currentServer:',
 			$currentServer,
@@ -310,10 +307,10 @@
 	class="w-full flex flex-col items-center flex-1 justify-center px-4 md:pt-4"
 >
 	<div class="w-full flex flex-col items-center justify-center">
-		{#if isCheckComplete && !$serverUrl}
+		{#if mounted && !$serverUrl}
 			<SetServerModal isOnBarrier={false} />
 		{:else}
-			{#if isCheckComplete && ($currentServerHealthStatus === 'unhealthy' || $currentServerHealthStatus === 'unknown' || $currentServer.lastHealthStatus === 'unhealthy')}
+			{#if mounted && ($currentServerHealthStatus === 'unhealthy' || $currentServerHealthStatus === 'unknown' || $currentServer.lastHealthStatus === 'unhealthy')}
 				<ServerOfflineBanner />
 			{/if}
 			<div
