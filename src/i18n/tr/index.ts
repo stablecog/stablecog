@@ -267,6 +267,9 @@ const tr: Translation = {
 		PageParagraphSentLink:
 			'Giriş yapabilmen için sana bir link yolladık. Bulamadıysan spam klasörüne bak.',
 		ContinueButton: 'Devam Et',
+		ContinueWithProviderButton: '{provider} ile devam et',
+		SignInWithProviderButton: '{provider} ile giriş yap',
+		OrContinueWithEmailTitle: 'Veya e-posta ile devam et',
 		DontHaveAnAccountTitle: 'Üyeliğin yok mu?',
 		SignUpInsteadButton: 'Üye ol',
 		SignInButton: 'Giriş Yap',

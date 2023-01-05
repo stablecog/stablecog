@@ -54,7 +54,12 @@
 	async function signInWithOAuth(provider: Provider) {
 		signInStatus = 'loading';
 		const { data: sData, error: sError } = await supabase.auth.signInWithOAuth({
-			provider
+			provider,
+			options: {
+				redirectTo: `${$page.url.origin}/api/auth/callback?redirect_to=${
+					redirectTo ? encodeURIComponent(redirectTo) : ''
+				}`
+			}
 		});
 		if (sError) {
 			console.log(sError);
