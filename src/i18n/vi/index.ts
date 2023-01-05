@@ -272,6 +272,7 @@ const vi: Translation = {
 			"We've emailed you a sign-in link. If you don't see it, check your spam folder.",
 		ContinueButton: 'Continue',
 		ContinueWithProviderButton: 'Continue with {provider}',
+		SignInWithProviderButton: 'Sign in with {provider}',
 		OrContinueWithEmailTitle: 'Or continue with email',
 		DontHaveAnAccountTitle: 'Bạn không có tài khoản?',
 		SignUpInsteadButton: 'Đăng ký mới',

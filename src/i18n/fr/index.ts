@@ -272,6 +272,7 @@ const fr: Translation = {
 			"We've emailed you a sign-in link. If you don't see it, check your spam folder.",
 		ContinueButton: 'Continue',
 		ContinueWithProviderButton: 'Continue with {provider}',
+		SignInWithProviderButton: 'Sign in with {provider}',
 		OrContinueWithEmailTitle: 'Or continue with email',
 		DontHaveAnAccountTitle: "Vous n'avez pas de compte ?",
 		SignUpInsteadButton: 'Créer un compte',

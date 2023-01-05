@@ -791,6 +791,11 @@ type RootTranslation = {
 		 */
 		ContinueWithProviderButton: RequiredParams<'provider'>
 		/**
+		 * S​i​g​n​ ​i​n​ ​w​i​t​h​ ​{​p​r​o​v​i​d​e​r​}
+		 * @param {unknown} provider
+		 */
+		SignInWithProviderButton: RequiredParams<'provider'>
+		/**
 		 * O​r​ ​c​o​n​t​i​n​u​e​ ​w​i​t​h​ ​e​m​a​i​l
 		 */
 		OrContinueWithEmailTitle: string
@@ -1856,6 +1861,10 @@ export type TranslationFunctions = {
 		 * Continue with {provider}
 		 */
 		ContinueWithProviderButton: (arg: { provider: unknown }) => LocalizedString
+		/**
+		 * Sign in with {provider}
+		 */
+		SignInWithProviderButton: (arg: { provider: unknown }) => LocalizedString
 		/**
 		 * Or continue with email
 		 */
