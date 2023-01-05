@@ -1,4 +1,6 @@
 import { isAllowedRedirectRoute } from '$ts/constants/main';
+import { getServerSession } from '@supabase/auth-helpers-sveltekit';
+import { redirect } from '@sveltejs/kit';
 import type { PageServerLoad } from './$types';
 
 export const load: PageServerLoad = async (event) => {
@@ -8,5 +10,9 @@ export const load: PageServerLoad = async (event) => {
 	const data = {
 		redirect_to: redirect_to && isAllowedRedirectRoute(redirect_to) ? redirect_to : null
 	};
+	const session = await getServerSession(event);
+	if (session?.user.id) {
+		throw redirect(307, redirect_to || '/');
+	}
 	return data;
 };
