@@ -40,11 +40,28 @@ export const handle: Handle = async ({ event, resolve }) => {
 			const userId = session?.user?.id;
 			const { data, error } = await supabaseClient.from('admin').select('id');
 			const admins = data?.map((a) => a.id);
-			if (!data || error || !admins || !admins.includes(userId)) {
-				console.log('Admin access error:', error, admins, userId);
+			if (!data || error || !admins || !userId) {
+				console.log(
+					`Admin access error - Not signed in - Redirecting to: "${redirectRoute}"`,
+					error,
+					admins,
+					userId
+				);
 				return new Response(null, {
 					status: 303,
 					headers: { location: redirectRoute }
+				});
+			}
+			if (!admins.includes(userId)) {
+				console.log(
+					`Admin access error - User isn't admin - Redirecting to: "/"`,
+					error,
+					admins,
+					userId
+				);
+				return new Response(null, {
+					status: 303,
+					headers: { location: '/' }
 				});
 			}
 			console.log('Admin user access:', userId);
