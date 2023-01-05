@@ -16,12 +16,13 @@
 
 	async function redirect() {
 		if (!browser) return;
-		if (!$page.data.session?.user.id) return;
+		if (!$page.data.session?.user.id || !$page.data.session.user.email) return;
 		mLogSignIn({
 			'SC - Page': `${$page.url.pathname}${$page.url.search}`,
 			'SC - Plan': $page.data.plan,
 			'SC - Locale': $locale,
-			'SC - Advanced Mode': $advancedModeApp
+			'SC - Advanced Mode': $advancedModeApp,
+			'SC - Email': $page.data.session?.user.email
 		});
 		setTimeout(async () => {
 			if (data.redirect_to) {

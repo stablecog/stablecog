@@ -136,6 +136,7 @@ interface ISignInProps {
 	'SC - Advanced Mode': boolean;
 	'SC - Plan': IUserPlan;
 	'SC - Page': string;
+	'SC - Email': string;
 }
 
 interface ISignOutProps {
