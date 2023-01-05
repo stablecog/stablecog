@@ -3,8 +3,7 @@ package shared
 import (
 	"fmt"
 	"log"
-	"sort"
-	"strconv"
+	"math/rand"
 	"strings"
 	"time"
 
@@ -14,8 +13,7 @@ import (
 var seed int
 
 var groupKey = "picked_server"
-var ttl = 60 * time.Second
-var counter = 0
+var ttl = 10 * time.Second
 
 func PickServer(props SPickServerProps) SServerUrlResult {
 	start := time.Now().UTC().UnixMilli()
@@ -91,59 +89,27 @@ func PickServer(props SPickServerProps) SServerUrlResult {
 	}
 	var pickedServerIndex = -1
 	keys := Redis.Keys(Redis.Context(), fmt.Sprintf("%s:*", groupKey)).Val()
-	var serversFromKeys []string
+	var serverIdsFromRedis []string
 	for _, key := range keys {
-		serversFromKeys = append(serversFromKeys, strings.Split(key, ":")[1])
+		serverIdsFromRedis = append(serverIdsFromRedis, strings.Split(key, ":")[1])
 	}
-	if len(keys) > 0 {
-		for i, server := range filteredServers {
-			if !Contains(serversFromKeys, server.Id) {
-				pickedServerIndex = i
-				if err != nil {
-					log.Println(err)
-				}
-				break
-			}
-		}
-		if pickedServerIndex == -1 {
-			var sortedKeyObjects []SKeyObject
-			for _, key := range keys {
-				serverId := strings.Split(key, ":")[1]
-				timestamp, err := strconv.ParseInt(strings.Split(key, ":")[2], 10, 64)
-				if err != nil {
-					log.Printf("-- Redis time parse error - %v --", err)
-					continue
-				}
-				sortedKeyObjects = append(sortedKeyObjects, SKeyObject{timestamp: timestamp, serverId: serverId})
-			}
-			sort.Slice(sortedKeyObjects, func(i, j int) bool { return sortedKeyObjects[i].timestamp < sortedKeyObjects[j].timestamp })
-			lowerBound := len(sortedKeyObjects) - len(servers)
-			sortedKeyObjectsLen := len(sortedKeyObjects)
-			if sortedKeyObjectsLen > 0 && lowerBound >= 0 {
-				lastBatchKeys := sortedKeyObjects[lowerBound:]
-				var lastBatchKeysFiltered []SKeyObject
-				for _, key := range lastBatchKeys {
-					if Contains(filteredServerIds, key.serverId) {
-						lastBatchKeysFiltered = append(lastBatchKeysFiltered, key)
-					}
-				}
-				if len(lastBatchKeysFiltered) > 0 {
-					pickedServerId := lastBatchKeysFiltered[0].serverId
-					for i, server := range filteredServers {
-						if server.Id == pickedServerId {
-							pickedServerIndex = i
-							break
-						}
-					}
-				}
-			}
+	var serversNotInRedis []SDBServer
+	for _, server := range filteredServers {
+		if !Contains(serverIdsFromRedis, server.Id) {
+			serversNotInRedis = append(serversNotInRedis, server)
 		}
 	}
-	if pickedServerIndex == -1 {
-		pickedServerIndex = counter % len(filteredServers)
-		counter = (counter + 1) % len(servers)
+
+	rand.Seed(time.Now().UnixNano())
+	var pickedServer SDBServer
+	if len(serversNotInRedis) > 0 {
+		pickedServerIndex = rand.Intn(len(serversNotInRedis))
+		pickedServer = serversNotInRedis[pickedServerIndex]
+	} else {
+		pickedServerIndex = rand.Intn(len(filteredServers))
+		pickedServer = filteredServers[pickedServerIndex]
 	}
-	pickedServer := filteredServers[pickedServerIndex]
+
 	now := time.Now().UTC().UnixMilli()
 	Redis.Set(Redis.Context(), fmt.Sprintf("%s:%s:%d", groupKey, pickedServer.Id, now), "1", ttl)
 	end := time.Now().UTC().UnixMilli()
