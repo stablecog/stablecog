@@ -64,6 +64,7 @@ func main() {
 	go cronStats.GetAndSetStats()
 	go cronMeili.SyncMeili()
 
+	//
 	app.Post("/generate", generate.Handler)
 	app.Post("/upscale", upscale.Handler)
 	app.Get("/gallery", gallery.Handler)

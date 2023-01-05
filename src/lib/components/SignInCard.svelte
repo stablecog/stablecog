@@ -5,11 +5,13 @@
 	import ErrorLine from '$components/ErrorLine.svelte';
 	import IconBack from '$components/icons/IconBack.svelte';
 	import IconEmail from '$components/icons/IconEmail.svelte';
+	import IconGoogle from '$components/icons/IconGoogle.svelte';
 	import Input from '$components/Input.svelte';
 	import LL from '$i18n/i18n-svelte';
 	import { expandCollapse } from '$ts/animation/transitions';
 	import { supabase } from '$ts/constants/supabase';
 	import { isTouchscreen } from '$ts/stores/isTouchscreen';
+	import type { Provider } from '@supabase/supabase-js';
 	import { quadOut } from 'svelte/easing';
 
 	export let redirectTo: string | null = null;
@@ -47,6 +49,20 @@
 		}
 		console.log(sData);
 		signInStatus = 'sent-otp';
+	}
+
+	async function signInWithOAuth(provider: Provider) {
+		signInStatus = 'loading';
+		const { data: sData, error: sError } = await supabase.auth.signInWithOAuth({
+			provider
+		});
+		if (sError) {
+			console.log(sError);
+			signInStatus = 'error';
+			errorText = $LL.Error.SomethingWentWrong();
+			return;
+		}
+		console.log(sData);
 	}
 </script>
 
@@ -119,6 +135,20 @@
 						{$LL.SignIn.ContinueButton()}
 					</Button>
 				</form>
+				<!-- <div
+					class="w-full flex flex-col items-center justify-center {!isModal
+						? 'p-4 md:p-5'
+						: 'p-1 md:pb-2'}"
+				>
+					<p>Or continue with:</p>
+					<button
+						on:click={() => signInWithOAuth('google')}
+						class="w-full px-6 md:px-8 py-5 rounded-xl bg-white text-black/75 flex items-center justify-center font-bold gap-3"
+					>
+						<IconGoogle class="w-6 h-6 flex-shrink-0" />
+						<p>Sign in with Google</p>
+					</button>
+				</div> -->
 			</div>
 		{/if}
 	</div>
