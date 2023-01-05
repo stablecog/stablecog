@@ -27,10 +27,16 @@
 		enabled: boolean;
 		healthy: boolean;
 		last_health_check_at: string;
+		features: IFeature[];
 		url: string;
 	}
 
-	interface TServerUI extends TServer {
+	interface IFeature {
+		name: string;
+		values: string[];
+	}
+
+	interface IServerUI extends TServer {
 		enableDisableLoading: boolean;
 		removeLoading: boolean;
 	}
@@ -42,7 +48,7 @@
 
 	let serverUrl: string;
 	let serverAddStatus: 'idle' | 'loading' = 'idle';
-	let servers: TServerUI[];
+	let servers: IServerUI[];
 	let nowInterval: NodeJS.Timeout;
 	let now = Date.now();
 	let channelServers: RealtimeChannel | undefined;
@@ -213,6 +219,19 @@
 							<p class="w-full text-c-on-bg/40 min-w-[6rem] max-w-full">
 								{getRelativeDate({ date: new Date(server.last_health_check_at).getTime(), now })}
 							</p>
+							{#if server.features}
+								<div class="w-full max-w-md flex flex-row flex-wrap gap-2 mt-2 -ml-1">
+									{#each server.features as feature}
+										{#if feature.name === 'model'}
+											{#each feature.values as value}
+												<p class="text-xs px-2 py-1 rounded-md bg-c-on-bg/8 text-c-on-bg/50">
+													{value}
+												</p>
+											{/each}
+										{/if}
+									{/each}
+								</div>
+							{/if}
 						</div>
 						<div class="flex flex-wrap justify-end items-center gap-8 text-left">
 							<div class="flex items-center gap-3">
