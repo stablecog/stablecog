@@ -21,7 +21,13 @@
 	import AccountMenu from '$components/AccountMenu.svelte';
 	import IconStar from '$components/icons/IconStar.svelte';
 	import Avatar from '$components/Avatar.svelte';
+	import { portal } from 'svelte-portal';
+	import { quadOut } from 'svelte/easing';
+	import { fade, fly } from 'svelte/transition';
+	import SignInCard from '$components/SignInCard.svelte';
+
 	let isSwitchServerModalOpen = false;
+	let isSignInModalOpen = false;
 	let isSettingsOpen = false;
 	let isAccountMenuOpen = false;
 
@@ -140,11 +146,7 @@
 						</div>
 					</div>
 				{:else if $page.url.pathname !== '/sign-in'}
-					<Button
-						class="-mx-1"
-						size="xs"
-						href={`/sign-in?redirect_to=${encodeURIComponent($page.url.pathname)}`}
-					>
+					<Button class="-mx-1" size="xs" onClick={() => (isSignInModalOpen = true)}>
 						{$LL.SignIn.SignInButton()}
 					</Button>
 				{/if}
@@ -183,4 +185,24 @@
 	<ModalWrapper>
 		<SetServerModal close={() => (isSwitchServerModalOpen = false)} />
 	</ModalWrapper>
+{/if}
+
+{#if isSignInModalOpen && !$page.data.session?.user.id}
+	<div
+		use:portal={'body'}
+		transition:fade|local={{ duration: 300, easing: quadOut }}
+		class="w-full h-full bg-c-barrier/80 fixed left-0 top-0 px-3 z-[10000]"
+	/>
+	<div
+		use:portal={'body'}
+		transition:fly|local={{ duration: 200, y: 50, easing: quadOut }}
+		class="w-full h-full flex flex-col items-center fixed left-0 top-0 px-3 py-20 z-[10001] overflow-auto"
+	>
+		<div
+			use:clickoutside={{ callback: () => (isSignInModalOpen = false) }}
+			class="w-full max-w-2xl flex justify-center my-auto"
+		>
+			<SignInCard isModal={true} redirectTo={$page.url.pathname} />
+		</div>
+	</div>
 {/if}
