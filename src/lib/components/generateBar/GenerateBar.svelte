@@ -61,6 +61,7 @@
 	import { clickoutside } from '$ts/actions/clickoutside';
 	import { fade, fly } from 'svelte/transition';
 	import { quadOut } from 'svelte/easing';
+	import { browser } from '$app/environment';
 
 	export let serverData: THomePageData;
 	export let onCreate: () => Promise<void>;
@@ -188,6 +189,9 @@
 	$: [$generationSchedulerId], setLocalSchedulerId();
 	$: showClearPromptInputButton =
 		$promptInputValue !== undefined && $promptInputValue !== '' && !loadingOrSubmitting;
+	$: if (browser && $page.data.session?.user.id) {
+		isSignInModalOpen = false;
+	}
 
 	const onTierStateChanged = () => {
 		if (isCheckComplete && ($page.data.plan === 'FREE' || $page.data.plan === 'ANONYMOUS')) {
