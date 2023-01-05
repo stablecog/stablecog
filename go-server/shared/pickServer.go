@@ -117,19 +117,23 @@ func PickServer(props SPickServerProps) SServerUrlResult {
 				sortedKeyObjects = append(sortedKeyObjects, SKeyObject{timestamp: timestamp, serverId: serverId})
 			}
 			sort.Slice(sortedKeyObjects, func(i, j int) bool { return sortedKeyObjects[i].timestamp < sortedKeyObjects[j].timestamp })
-			lastBatchKeys := sortedKeyObjects[len(sortedKeyObjects)-len(servers):]
-			var lastBatchKeysFiltered []SKeyObject
-			for _, key := range lastBatchKeys {
-				if Contains(filteredServerIds, key.serverId) {
-					lastBatchKeysFiltered = append(lastBatchKeysFiltered, key)
+			lowerBound := len(sortedKeyObjects) - len(servers)
+			sortedKeyObjectsLen := len(sortedKeyObjects)
+			if sortedKeyObjectsLen > 0 && lowerBound >= 0 {
+				lastBatchKeys := sortedKeyObjects[lowerBound:]
+				var lastBatchKeysFiltered []SKeyObject
+				for _, key := range lastBatchKeys {
+					if Contains(filteredServerIds, key.serverId) {
+						lastBatchKeysFiltered = append(lastBatchKeysFiltered, key)
+					}
 				}
-			}
-			if len(lastBatchKeysFiltered) > 0 {
-				pickedServerId := lastBatchKeysFiltered[0].serverId
-				for i, server := range filteredServers {
-					if server.Id == pickedServerId {
-						pickedServerIndex = i
-						break
+				if len(lastBatchKeysFiltered) > 0 {
+					pickedServerId := lastBatchKeysFiltered[0].serverId
+					for i, server := range filteredServers {
+						if server.Id == pickedServerId {
+							pickedServerIndex = i
+							break
+						}
 					}
 				}
 			}
