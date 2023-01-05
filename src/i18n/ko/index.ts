@@ -268,6 +268,8 @@ const ko: Translation = {
 		PageParagraphSentLink:
 			"We've emailed you a sign-in link. If you don't see it, check your spam folder.",
 		ContinueButton: 'Continue',
+		ContinueWithProviderButton: 'Continue with {provider}',
+		OrContinueWithEmailTitle: 'Or continue with email',
 		DontHaveAnAccountTitle: '아직 계정이 없으신가요?',
 		SignUpInsteadButton: '가입하기',
 		SignInButton: '로그인하기',

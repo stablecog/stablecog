@@ -269,6 +269,8 @@ const ptBr: Translation = {
 		PageParagraphSentLink:
 			"We've emailed you a sign-in link. If you don't see it, check your spam folder.",
 		ContinueButton: 'Continue',
+		ContinueWithProviderButton: 'Continue with {provider}',
+		OrContinueWithEmailTitle: 'Or continue with email',
 		DontHaveAnAccountTitle: 'Não possui uma conta?',
 		SignUpInsteadButton: 'Cadastre-se',
 		SignInButton: 'Iniciar sessão',

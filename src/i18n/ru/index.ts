@@ -269,6 +269,8 @@ const ru: Translation = {
 		PageParagraphSentLink:
 			"We've emailed you a sign-in link. If you don't see it, check your spam folder.",
 		ContinueButton: 'Continue',
+		ContinueWithProviderButton: 'Continue with {provider}',
+		OrContinueWithEmailTitle: 'Or continue with email',
 		DontHaveAnAccountTitle: "Don't have an account?",
 		SignUpInsteadButton: 'Sign up instead',
 		SignInButton: 'Sign In',

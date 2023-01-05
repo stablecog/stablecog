@@ -45,14 +45,6 @@
 				: 'text-c-on-bg/50'} {!$isTouchscreen ? 'group-hover:text-c-primary' : ''}"
 		/>
 	</IconButton>
-	<IconButton name="ProductHunt" href={socialAppUrls.producthunt} target="_blank">
-		<IconSocial
-			type="producthunt"
-			class="{size === 'sm' ? 'w-8 h-8' : 'w-10 h-10'} transition {color === 'normal'
-				? 'text-c-on-bg'
-				: 'text-c-on-bg/50'} {!$isTouchscreen ? 'group-hover:text-c-primary' : ''}"
-		/>
-	</IconButton>
 	<IconButton name="GitHub" href={socialAppUrls.github} target="_blank">
 		<IconSocial
 			type="github"

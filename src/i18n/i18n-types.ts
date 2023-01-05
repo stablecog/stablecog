@@ -786,6 +786,15 @@ type RootTranslation = {
 		 */
 		ContinueButton: string
 		/**
+		 * C​o​n​t​i​n​u​e​ ​w​i​t​h​ ​{​p​r​o​v​i​d​e​r​}
+		 * @param {unknown} provider
+		 */
+		ContinueWithProviderButton: RequiredParams<'provider'>
+		/**
+		 * O​r​ ​c​o​n​t​i​n​u​e​ ​w​i​t​h​ ​e​m​a​i​l
+		 */
+		OrContinueWithEmailTitle: string
+		/**
 		 * D​o​n​'​t​ ​h​a​v​e​ ​a​n​ ​a​c​c​o​u​n​t​?
 		 */
 		DontHaveAnAccountTitle: string
@@ -1843,6 +1852,14 @@ export type TranslationFunctions = {
 		 * Continue
 		 */
 		ContinueButton: () => LocalizedString
+		/**
+		 * Continue with {provider}
+		 */
+		ContinueWithProviderButton: (arg: { provider: unknown }) => LocalizedString
+		/**
+		 * Or continue with email
+		 */
+		OrContinueWithEmailTitle: () => LocalizedString
 		/**
 		 * Don't have an account?
 		 */

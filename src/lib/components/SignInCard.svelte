@@ -1,11 +1,11 @@
 <script lang="ts">
 	import { page } from '$app/stores';
 	import Button from '$components/buttons/Button.svelte';
+	import ButtonOAuth from '$components/buttons/ButtonOAuth.svelte';
 	import NoBgButton from '$components/buttons/NoBgButton.svelte';
 	import ErrorLine from '$components/ErrorLine.svelte';
 	import IconBack from '$components/icons/IconBack.svelte';
 	import IconEmail from '$components/icons/IconEmail.svelte';
-	import IconGoogle from '$components/icons/IconGoogle.svelte';
 	import Input from '$components/Input.svelte';
 	import LL from '$i18n/i18n-svelte';
 	import { expandCollapse } from '$ts/animation/transitions';
@@ -82,7 +82,7 @@
 			: $LL.SignIn.PageTitleCreateAccountOrSignIn()}
 	</h1>
 	<div class="w-full flex flex-col items-center justify-start mt-3">
-		<p class="max-w-lg text-c-on-bg/60 text-center leading-relaxed mb-6">
+		<p class="max-w-lg text-c-on-bg/60 text-center leading-relaxed {isModal ? 'mb-4' : 'mb-6'}">
 			{signInStatus === 'sent-otp'
 				? $LL.SignIn.PageParagraphSentLink()
 				: $LL.SignIn.PageParagraph()}
@@ -112,10 +112,42 @@
 					? 'max-w-sm rounded-3xl bg-c-bg-secondary ring-2 ring-c-bg-tertiary shadow-xl shadow-c-shadow/[var(--o-shadow-normal)]'
 					: 'max-w-xs'}"
 			>
+				<div
+					class="w-full flex flex-col items-center justify-start {isModal
+						? 'p-1 md:pb-2'
+						: 'p-4 md:p-5'}"
+				>
+					<div class="w-full flex flex-col items-center justify-start">
+						<ButtonOAuth
+							withSpinner
+							loading={signInStatus === 'loading'}
+							class="w-full"
+							onClick={() => signInWithOAuth('google')}
+							provider={'google'}
+						>
+							{$LL.SignIn.ContinueWithProviderButton({ provider: 'Google' })}
+						</ButtonOAuth>
+					</div>
+				</div>
+				<div
+					class="{isModal
+						? 'w-[calc(100%+2.5rem)] -mx-5'
+						: 'w-full'} flex items-center gap-3 {isModal ? 'mt-5' : 'mt-2'}"
+				>
+					<div
+						class="flex-1 h-2px rounded-full {isModal ? 'bg-c-bg-secondary' : 'bg-c-bg-tertiary'}"
+					/>
+					<p class="text-sm text-c-on-bg/50 text-center inline-block">
+						{$LL.SignIn.OrContinueWithEmailTitle()}
+					</p>
+					<div
+						class="flex-1 h-2px rounded-full {isModal ? 'bg-c-bg-secondary' : 'bg-c-bg-tertiary'}"
+					/>
+				</div>
 				<form
 					on:input={() => (errorText = null)}
 					on:submit|preventDefault={signIn}
-					class="w-full flex flex-col {!isModal ? 'p-4 md:p-5' : 'p-1 md:pb-2'}"
+					class="w-full flex flex-col {!isModal ? 'p-4 md:p-5' : 'p-1 md:pb-2 mt-4'}"
 				>
 					<div class="w-full flex flex-col justify-start">
 						<Input
@@ -135,20 +167,6 @@
 						{$LL.SignIn.ContinueButton()}
 					</Button>
 				</form>
-				<!-- <div
-					class="w-full flex flex-col items-center justify-center {!isModal
-						? 'p-4 md:p-5'
-						: 'p-1 md:pb-2'}"
-				>
-					<p>Or continue with:</p>
-					<button
-						on:click={() => signInWithOAuth('google')}
-						class="w-full px-6 md:px-8 py-5 rounded-xl bg-white text-black/75 flex items-center justify-center font-bold gap-3"
-					>
-						<IconGoogle class="w-6 h-6 flex-shrink-0" />
-						<p>Sign in with Google</p>
-					</button>
-				</div> -->
 			</div>
 		{/if}
 	</div>
