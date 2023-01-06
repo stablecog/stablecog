@@ -72,7 +72,7 @@ func Handler(c *fiber.Ctx) error {
 		)
 	}
 
-	hasOnGoingGenerationOrUpscale := shared.HasOnGoingGenerationOrUpscale("goa_active", c)
+	hasOnGoingGenerationOrUpscale := shared.HasOnGoingGenerationOrUpscale("goa_active", supabaseUserId)
 	onGoingGenerationOrUpscaleResponse := SUpscaleResponse{Error: "Please wait for your ongoing generation or upscale to finish."}
 	if hasOnGoingGenerationOrUpscale {
 		log.Printf("-- Generation - Has ongoing generation or upscale: %s --", countryCode)
@@ -80,7 +80,7 @@ func Handler(c *fiber.Ctx) error {
 	}
 
 	durationOngoing := 15 * time.Second
-	shared.SetOngoingGenerationOrUpscale("goa_active", durationOngoing, c)
+	shared.SetOngoingGenerationOrUpscale("goa_active", durationOngoing, supabaseUserId)
 
 	if plan == "FREE" {
 		time.Sleep(UPSCALE_MIN_WAIT_FREE)
@@ -91,7 +91,7 @@ func Handler(c *fiber.Ctx) error {
 
 	pickServerRes := shared.PickServer(shared.SPickServerProps{ServerUrl: req.ServerUrl, Type: "upscale"})
 	if pickServerRes.Error {
-		shared.DeleteOngoingGenerationOrUpscale("goa_active", c)
+		shared.DeleteOngoingGenerationOrUpscale("goa_active", supabaseUserId)
 		return c.Status(http.StatusInternalServerError).JSON(
 			SUpscaleResponse{Error: "Failed to pick a server"},
 		)
@@ -151,7 +151,7 @@ func Handler(c *fiber.Ctx) error {
 		go UpdateUpscaleAsFailed(upscaleIdChan, 0)
 		sentry.CaptureException(cogReqBodyBufferErr)
 		log.Printf("Error marshalling cog request body: %v", cogReqBodyBufferErr)
-		shared.DeleteOngoingGenerationOrUpscale("goa_active", c)
+		shared.DeleteOngoingGenerationOrUpscale("goa_active", supabaseUserId)
 		return c.Status(http.StatusInternalServerError).JSON(
 			SUpscaleResponse{Error: "Failed to marshal cog request body"},
 		)
@@ -168,7 +168,7 @@ func Handler(c *fiber.Ctx) error {
 		go UpdateUpscaleAsFailed(upscaleIdChan, upscaleCogEnd-upscaleCogStart)
 		sentry.CaptureException(cogReqErr)
 		log.Printf("Error creating cog request: %v", cogReqErr)
-		shared.DeleteOngoingGenerationOrUpscale("goa_active", c)
+		shared.DeleteOngoingGenerationOrUpscale("goa_active", supabaseUserId)
 		return c.Status(http.StatusInternalServerError).JSON(
 			SUpscaleResponse{Error: "Error creating cog request"},
 		)
@@ -180,7 +180,7 @@ func Handler(c *fiber.Ctx) error {
 		go UpdateUpscaleAsFailed(upscaleIdChan, upscaleCogEnd-upscaleCogStart)
 		sentry.CaptureException(cogResErr)
 		log.Printf("Error sending cog request: %v", cogResErr)
-		shared.DeleteOngoingGenerationOrUpscale("goa_active", c)
+		shared.DeleteOngoingGenerationOrUpscale("goa_active", supabaseUserId)
 		return c.Status(http.StatusInternalServerError).JSON(
 			SUpscaleResponse{Error: "Error sending cog request"},
 		)
@@ -189,7 +189,7 @@ func Handler(c *fiber.Ctx) error {
 		upscaleCogEnd := time.Now().UTC().UnixMilli()
 		go UpdateUpscaleAsFailed(upscaleIdChan, upscaleCogEnd-upscaleCogStart)
 		log.Printf("Cog server returned non-200 status code: %v", cogRes.StatusCode)
-		shared.DeleteOngoingGenerationOrUpscale("goa_active", c)
+		shared.DeleteOngoingGenerationOrUpscale("goa_active", supabaseUserId)
 		return c.Status(http.StatusInternalServerError).JSON(
 			SUpscaleResponse{Error: "Cog server returned non-200 status code"},
 		)
@@ -200,7 +200,7 @@ func Handler(c *fiber.Ctx) error {
 		upscaleCogEnd := time.Now().UTC().UnixMilli()
 		go UpdateUpscaleAsFailed(upscaleIdChan, upscaleCogEnd-upscaleCogStart)
 		sentry.CaptureException(cogResBodyErr)
-		shared.DeleteOngoingGenerationOrUpscale("goa_active", c)
+		shared.DeleteOngoingGenerationOrUpscale("goa_active", supabaseUserId)
 		return c.Status(http.StatusInternalServerError).JSON(
 			SUpscaleResponse{Error: "Failed to decode cog response body"},
 		)
@@ -209,7 +209,7 @@ func Handler(c *fiber.Ctx) error {
 		upscaleCogEnd := time.Now().UTC().UnixMilli()
 		go UpdateUpscaleAsFailed(upscaleIdChan, upscaleCogEnd-upscaleCogStart)
 		log.Printf("Cog server returned empty output: %v", cogResBodyErr)
-		shared.DeleteOngoingGenerationOrUpscale("goa_active", c)
+		shared.DeleteOngoingGenerationOrUpscale("goa_active", supabaseUserId)
 		return c.Status(http.StatusInternalServerError).JSON(
 			SUpscaleResponse{Error: "Cog server returned empty output"},
 		)
@@ -219,7 +219,7 @@ func Handler(c *fiber.Ctx) error {
 	upscaleCogDurationMs := upscaleCogEnd - upscaleCogStart
 	if output == "" {
 		go UpdateUpscaleAsFailed(upscaleIdChan, upscaleCogDurationMs)
-		shared.DeleteOngoingGenerationOrUpscale("goa_active", c)
+		shared.DeleteOngoingGenerationOrUpscale("goa_active", supabaseUserId)
 		return c.Status(http.StatusInternalServerError).JSON(
 			SUpscaleResponse{Error: "Cog server returned empty output"},
 		)
@@ -238,7 +238,7 @@ func Handler(c *fiber.Ctx) error {
 	)
 	end := time.Now().UTC().UnixMilli()
 	loggers.LogUpscale(fmt.Sprintf("Upscale successful result returned in: %v%s", green(end-start), green("ms")), logObj)
-	shared.DeleteOngoingGenerationOrUpscale("goa_active", c)
+	shared.DeleteOngoingGenerationOrUpscale("goa_active", supabaseUserId)
 	return c.Status(http.StatusOK).JSON(SUpscaleResponse{
 		Data: SUpscaleResponseData{
 			ImageB64:   output,

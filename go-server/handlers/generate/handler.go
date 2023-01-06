@@ -130,14 +130,14 @@ func Handler(c *fiber.Ctx) error {
 	if plan == "FREE" {
 		duration := GENERATION_MIN_WAIT_FREE
 		rateLimitedResponse := SGenerateResponse{Error: fmt.Sprintf("You can only start a generation once every %d seconds on the free plan.", int(GENERATION_MIN_WAIT_FREE.Seconds()))}
-		isRateLimited := shared.IsRateLimited("goa", duration, c)
+		isRateLimited := shared.IsRateLimited("goa", duration, supabaseUserId)
 		if isRateLimited {
 			log.Printf("-- Generation - Rate limited!: %s --", countryCode)
 			return c.Status(http.StatusTooManyRequests).JSON(rateLimitedResponse)
 		}
 	}
 
-	HasOnGoingGenerationOrUpscale := shared.HasOnGoingGenerationOrUpscale("goa_active", c)
+	HasOnGoingGenerationOrUpscale := shared.HasOnGoingGenerationOrUpscale("goa_active", supabaseUserId)
 	onGoingGenerationOrUpscaleResponse := SGenerateResponse{Error: "Please wait for your ongoing generation or upscale to finish."}
 	if HasOnGoingGenerationOrUpscale {
 		log.Printf("-- Generation - Has ongoing generation!: %s --", countryCode)
@@ -145,7 +145,7 @@ func Handler(c *fiber.Ctx) error {
 	}
 
 	durationOngoing := 15 * time.Second
-	shared.SetOngoingGenerationOrUpscale("goa_active", durationOngoing, c)
+	shared.SetOngoingGenerationOrUpscale("goa_active", durationOngoing, supabaseUserId)
 
 	if plan == "FREE" {
 		time.Sleep(GENERATION_MIN_WAIT_FREE)
@@ -167,7 +167,7 @@ func Handler(c *fiber.Ctx) error {
 		})
 	if pickServerRes.Error {
 		log.Printf("Failed to pick a server")
-		shared.DeleteOngoingGenerationOrUpscale("goa_active", c)
+		shared.DeleteOngoingGenerationOrUpscale("goa_active", supabaseUserId)
 		return c.Status(http.StatusInternalServerError).JSON(
 			SGenerateResponse{Error: "Failed to pick a server"},
 		)
@@ -232,7 +232,7 @@ func Handler(c *fiber.Ctx) error {
 	cogReqBodyBuffer, cogReqBodyBufferErr := json.Marshal(cogReqBody)
 	if cogReqBodyBufferErr != nil {
 		log.Printf("Error marshaling cog request body")
-		shared.DeleteOngoingGenerationOrUpscale("goa_active", c)
+		shared.DeleteOngoingGenerationOrUpscale("goa_active", supabaseUserId)
 		return c.Status(http.StatusInternalServerError).JSON(
 			SGenerateResponse{Error: "Failed to create cog request body"},
 		)
@@ -248,7 +248,7 @@ func Handler(c *fiber.Ctx) error {
 		go UpdateGenerationAsFailed(generationIdChan, generationCogEnd-generationCogStart, false)
 		sentry.CaptureException(cogReqErr)
 		log.Printf("Error creating cog request: %v", cogReqErr)
-		shared.DeleteOngoingGenerationOrUpscale("goa_active", c)
+		shared.DeleteOngoingGenerationOrUpscale("goa_active", supabaseUserId)
 		return c.Status(http.StatusInternalServerError).JSON(
 			SGenerateResponse{Error: "Error creating cog request"},
 		)
@@ -259,7 +259,7 @@ func Handler(c *fiber.Ctx) error {
 		go UpdateGenerationAsFailed(generationIdChan, generationCogEnd-generationCogStart, false)
 		sentry.CaptureException(cogResErr)
 		log.Printf("Cog request returned an error: %v", cogReqErr)
-		shared.DeleteOngoingGenerationOrUpscale("goa_active", c)
+		shared.DeleteOngoingGenerationOrUpscale("goa_active", supabaseUserId)
 		return c.Status(http.StatusInternalServerError).JSON(
 			SGenerateResponse{Error: "Cog returned an error"},
 		)
@@ -268,7 +268,7 @@ func Handler(c *fiber.Ctx) error {
 		generationCogEnd := time.Now().UTC().UnixMilli()
 		go UpdateGenerationAsFailed(generationIdChan, generationCogEnd-generationCogStart, false)
 		log.Printf("Cog server returned non-200 status code: %v", cogRes.StatusCode)
-		shared.DeleteOngoingGenerationOrUpscale("goa_active", c)
+		shared.DeleteOngoingGenerationOrUpscale("goa_active", supabaseUserId)
 		return c.Status(http.StatusInternalServerError).JSON(
 			SGenerateResponse{Error: "Cog server returned non-200 status code"},
 		)
@@ -280,7 +280,7 @@ func Handler(c *fiber.Ctx) error {
 		go UpdateGenerationAsFailed(generationIdChan, generationCogEnd-generationCogStart, false)
 		sentry.CaptureException(cogResBodyErr)
 		log.Printf("Failed to decode cog response body")
-		shared.DeleteOngoingGenerationOrUpscale("goa_active", c)
+		shared.DeleteOngoingGenerationOrUpscale("goa_active", supabaseUserId)
 		return c.Status(http.StatusInternalServerError).JSON(
 			SGenerateResponse{Error: "Failed to decode cog response body"},
 		)
@@ -289,7 +289,7 @@ func Handler(c *fiber.Ctx) error {
 		generationCogEnd := time.Now().UTC().UnixMilli()
 		go UpdateGenerationAsFailed(generationIdChan, generationCogEnd-generationCogStart, false)
 		log.Printf("Cog server returned empty output: %v", cogResBody)
-		shared.DeleteOngoingGenerationOrUpscale("goa_active", c)
+		shared.DeleteOngoingGenerationOrUpscale("goa_active", supabaseUserId)
 		return c.Status(http.StatusInternalServerError).JSON(
 			SGenerateResponse{Error: "Cog server returned empty output"},
 		)
@@ -300,7 +300,7 @@ func Handler(c *fiber.Ctx) error {
 	if output == "" {
 		go UpdateGenerationAsFailed(generationIdChan, generationCogDurationMs, false)
 		log.Printf("Cog server returned empty output")
-		shared.DeleteOngoingGenerationOrUpscale("goa_active", c)
+		shared.DeleteOngoingGenerationOrUpscale("goa_active", supabaseUserId)
 		return c.Status(http.StatusInternalServerError).JSON(
 			SGenerateResponse{Error: "Cog server returned empty output"},
 		)
@@ -317,7 +317,7 @@ func Handler(c *fiber.Ctx) error {
 	if isNSFW {
 		go UpdateGenerationAsFailed(generationIdChan, generationCogDurationMs, true)
 		log.Printf("NSFW error")
-		shared.DeleteOngoingGenerationOrUpscale("goa_active", c)
+		shared.DeleteOngoingGenerationOrUpscale("goa_active", supabaseUserId)
 		return c.Status(http.StatusBadRequest).JSON(
 			SGenerateResponse{Error: "NSFW"},
 		)
@@ -352,7 +352,7 @@ func Handler(c *fiber.Ctx) error {
 	}
 	end := time.Now().UTC().UnixMilli()
 	loggers.LogGeneration(fmt.Sprintf("Generation successful result returned in: %v%s", green(end-start), green("ms")), logObj)
-	shared.DeleteOngoingGenerationOrUpscale("goa_active", c)
+	shared.DeleteOngoingGenerationOrUpscale("goa_active", supabaseUserId)
 	return c.Status(http.StatusOK).JSON(SGenerateResponse{
 		Data: SGenerateResponseData{
 			ImageB64:   output,
