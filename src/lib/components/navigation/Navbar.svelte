@@ -67,6 +67,7 @@
 	{#if mounted && ($lastClosedNotification === null || $lastClosedNotification !== lastNotification) && $page.data.plan !== 'PRO' && $page.url.pathname !== '/pro'}
 		<Banner
 			href="/pro"
+			target="_self"
 			onClose={() => {
 				lastClosedNotification.set(lastNotification);
 			}}

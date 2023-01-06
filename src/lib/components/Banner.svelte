@@ -7,7 +7,8 @@
 	export let onClick: (() => void) | undefined = undefined;
 	export let href: string | undefined = undefined;
 	export let onClose: () => void;
-	export let blank = true;
+	export let target: '_blank' | '_self' = '_blank';
+	export let prefetch = true;
 </script>
 
 <div
@@ -17,9 +18,9 @@
 	{#if href}
 		<a
 			on:click={onClose}
-			target={blank ? '_blank' : ''}
+			{target}
 			{href}
-			data-sveltekit-prefetch
+			data-sveltekit-prefetch={prefetch && target === '_self' ? '' : 'off'}
 			class="w-full flex flex-row justify-center items-center px-10 py-2.5 z-10 relative bg-c-primary transition {!$isTouchscreen
 				? 'hover:bg-c-secondary'
 				: ''}"

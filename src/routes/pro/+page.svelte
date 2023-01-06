@@ -14,10 +14,16 @@
 	import ConfettiFullScreen from '$components/ConfettiFullScreen.svelte';
 	import PageWrapper from '$components/PageWrapper.svelte';
 	import IconInfo from '$components/icons/IconInfo.svelte';
+	import SignInCard from '$components/SignInCard.svelte';
+	import { clickoutside } from '$ts/actions/clickoutside';
+	import { fade, fly } from 'svelte/transition';
+	import { quadOut } from 'svelte/easing';
+	import { portal } from 'svelte-portal';
 
 	export let data: PageServerData;
 
 	let checkoutCreationStatus: 'idle' | 'loading' | 'success' | 'error' = 'idle';
+	let isSignInModalOpen = false;
 
 	async function createCheckoutSessionAndRedirect() {
 		try {
@@ -170,11 +176,8 @@
 						class="w-full mt-8">{$LL.Pro.BecomeProButton()}</Button
 					>
 				{:else}
-					<Button
-						href={`/sign-in?redirect_to=${encodeURIComponent('/pro')}`}
-						withSpinner
-						loading={checkoutCreationStatus === 'loading'}
-						class="w-full mt-8">{$LL.SignUp.SignUpButton()}</Button
+					<Button onClick={() => (isSignInModalOpen = true)} class="w-full mt-8"
+						>{$LL.SignUp.SignUpButton()}</Button
 					>
 				{/if}
 			</div>
@@ -195,4 +198,24 @@
 
 {#if mounted && $page.data.plan === 'PRO'}
 	<ConfettiFullScreen />
+{/if}
+
+{#if isSignInModalOpen && !$page.data.session?.user.id}
+	<div
+		use:portal={'body'}
+		transition:fade|local={{ duration: 300, easing: quadOut }}
+		class="w-full h-full bg-c-barrier/80 fixed left-0 top-0 px-3 z-[10000]"
+	/>
+	<div
+		use:portal={'body'}
+		transition:fly|local={{ duration: 200, y: 50, easing: quadOut }}
+		class="w-full h-full flex flex-col items-center fixed left-0 top-0 px-3 py-20 z-[10001] overflow-auto"
+	>
+		<div
+			use:clickoutside={{ callback: () => (isSignInModalOpen = false) }}
+			class="w-full max-w-2xl flex justify-center my-auto"
+		>
+			<SignInCard isModal={true} redirectTo={$page.url.pathname} />
+		</div>
+	</div>
 {/if}
