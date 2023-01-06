@@ -60,7 +60,7 @@ func Handler(c *fiber.Ctx) error {
 
 	log.Printf("-- Upscale - User plan: %s --", plan)
 
-	if plan == "ANOYMOUS" {
+	if plan == "ANONYMOUS" {
 		return c.Status(http.StatusBadRequest).JSON(
 			SUpscaleResponse{Error: "You need to create an account to upscale images."},
 		)
