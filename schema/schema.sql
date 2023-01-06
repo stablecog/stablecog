@@ -617,6 +617,7 @@ CREATE TABLE public."user" (
     "subscription_category" user_subscription_cateogry_enum,
     "created_at" TIMESTAMPTZ DEFAULT TIMEZONE(' utc ' :: TEXT, NOW()) NOT NULL,
     "updated_at" TIMESTAMPTZ DEFAULT TIMEZONE(' utc ' :: TEXT, NOW()) NOT NULL,
+    "confirmed_at" TIMESTAMPTZ DEFAULT TIMEZONE(' utc ' :: TEXT, NOW()) NOT NULL,
     "stripe_customer_id" TEXT,
     PRIMARY KEY(id)
 );
@@ -649,6 +650,26 @@ create trigger on_auth_user_created
 after
 insert
     on auth.users for each row execute procedure handle_new_user();
+
+create function handle_updated_user() returns trigger as $ $ begin
+update
+    public.user
+set
+    confirmed_at = new.confirmed_at
+where
+    id = new.id
+    and confirmed_at is null;
+
+return new;
+
+end;
+
+$ $ language plpgsql security definer;
+
+create trigger on_auth_user_updated
+after
+update
+    on auth.users for each row execute procedure handle_updated_user();
 
 CREATE POLICY "Give users access to their own folder in generation bucket" ON storage.objects FOR ALL TO public USING (
     bucket_id = ' generation '
