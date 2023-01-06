@@ -60,6 +60,12 @@ func Handler(c *fiber.Ctx) error {
 
 	log.Printf("-- Upscale - User plan: %s --", plan)
 
+	if plan == "ANOYMOUS" {
+		return c.Status(http.StatusBadRequest).JSON(
+			SUpscaleResponse{Error: "You need to create an account to upscale images."},
+		)
+	}
+
 	if plan != "PRO" {
 		return c.Status(http.StatusBadRequest).JSON(
 			SUpscaleResponse{Error: "Upscale feature isn't available on the free plan :("},
@@ -76,7 +82,7 @@ func Handler(c *fiber.Ctx) error {
 	durationOngoing := 15 * time.Second
 	shared.SetOngoingGenerationOrUpscale("goa_active", durationOngoing, c)
 
-	if plan == "FREE" || plan == "ANONYMOUS" {
+	if plan == "FREE" {
 		time.Sleep(UPSCALE_MIN_WAIT_FREE)
 	}
 

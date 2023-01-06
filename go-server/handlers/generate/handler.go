@@ -95,33 +95,39 @@ func Handler(c *fiber.Ctx) error {
 		}
 	}
 
-	log.Printf("-- Generation - User plan: %s --", plan)
+	log.Printf("///// Generation - User plan: %s /////", plan)
+
+	if plan == "ANOYMOUS" {
+		return c.Status(http.StatusBadRequest).JSON(
+			SGenerateResponse{Error: "You need to create an account to generate images."},
+		)
+	}
 
 	// Generation setting checks for the free tier
-	/* 	if plan == "ANONYMOUS" || plan == "FREE" {
-	   		if shared.Contains(shared.AvailableModelIdsFree, req.ModelId) == false {
-	   			return c.Status(http.StatusBadRequest).JSON(
-	   				SGenerateResponse{Error: "That model is not available on the free plan :("},
-	   			)
-	   		}
-	   		if shared.Contains(shared.AvailableWidthsFree, req.Width) == false {
-	   			return c.Status(http.StatusBadRequest).JSON(
-	   				SGenerateResponse{Error: "That generation width is not available on the free plan :("},
-	   			)
-	   		}
-	   		if shared.Contains(shared.AvailableHeightsFree, req.Height) == false {
-	   			return c.Status(http.StatusBadRequest).JSON(
-	   				SGenerateResponse{Error: "That generation height is not available on the free plan :("},
-	   			)
-	   		}
-	   		if shared.Contains(shared.AvailableInferenceStepsFree, req.NumInferenceSteps) == false {
-	   			return c.Status(http.StatusBadRequest).JSON(
-	   				SGenerateResponse{Error: "That inference steps setting is not available on the free plan :("},
-	   			)
-	   		}
-	   	}
-	*/
-	/* 	if plan == "FREE" || plan == "ANONYMOUS" {
+	if plan == "FREE" {
+		if shared.Contains(shared.AvailableModelIdsFree, req.ModelId) == false {
+			return c.Status(http.StatusBadRequest).JSON(
+				SGenerateResponse{Error: "That model is not available on the free plan :("},
+			)
+		}
+		if shared.Contains(shared.AvailableWidthsFree, req.Width) == false {
+			return c.Status(http.StatusBadRequest).JSON(
+				SGenerateResponse{Error: "That generation width is not available on the free plan :("},
+			)
+		}
+		if shared.Contains(shared.AvailableHeightsFree, req.Height) == false {
+			return c.Status(http.StatusBadRequest).JSON(
+				SGenerateResponse{Error: "That generation height is not available on the free plan :("},
+			)
+		}
+		if shared.Contains(shared.AvailableInferenceStepsFree, req.NumInferenceSteps) == false {
+			return c.Status(http.StatusBadRequest).JSON(
+				SGenerateResponse{Error: "That inference steps setting is not available on the free plan :("},
+			)
+		}
+	}
+
+	if plan == "FREE" {
 		duration := GENERATION_MIN_WAIT_FREE
 		rateLimitedResponse := SGenerateResponse{Error: fmt.Sprintf("You can only start a generation once every %d seconds on the free plan.", int(GENERATION_MIN_WAIT_FREE.Seconds()))}
 		isRateLimited := shared.IsRateLimited("goa", duration, c)
@@ -129,7 +135,7 @@ func Handler(c *fiber.Ctx) error {
 			log.Printf("-- Generation - Rate limited!: %s --", countryCode)
 			return c.Status(http.StatusTooManyRequests).JSON(rateLimitedResponse)
 		}
-	} */
+	}
 
 	HasOnGoingGenerationOrUpscale := shared.HasOnGoingGenerationOrUpscale("goa_active", c)
 	onGoingGenerationOrUpscaleResponse := SGenerateResponse{Error: "Please wait for your ongoing generation or upscale to finish."}
@@ -141,7 +147,7 @@ func Handler(c *fiber.Ctx) error {
 	durationOngoing := 15 * time.Second
 	shared.SetOngoingGenerationOrUpscale("goa_active", durationOngoing, c)
 
-	if plan == "FREE" || plan == "ANONYMOUS" {
+	if plan == "FREE" {
 		time.Sleep(GENERATION_MIN_WAIT_FREE)
 	}
 
