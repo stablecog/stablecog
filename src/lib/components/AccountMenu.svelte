@@ -22,7 +22,7 @@
 		>
 			<Avatar str={$page.data.session?.user.email || ''} class="w-full h-full relative" />
 		</div>
-		<div class="min-w-0 flex-1 flex flex-col">
+		<div class="min-w-0 flex-1 flex flex-col -mt-0.5">
 			<p class="flex-1 min-w-0 overflow-hidden overflow-ellipsis font-bold text-xl">Account</p>
 			<p
 				class="flex-1 min-w-0 overflow-hidden overflow-ellipsis font-semibold text-xs text-c-on-bg/50"
