@@ -35,7 +35,9 @@
 		maxProPixelSteps,
 		maxPromptLength,
 		maxSeed,
-		widthTabs
+		widthTabs,
+		availableSchedulerIds,
+		availableSchedulerIdsFree
 	} from '$ts/constants/main';
 	import {
 		guidanceScaleTooltip,
@@ -278,6 +280,10 @@
 				bind:value={$generationSchedulerId}
 				items={$availableSchedulerIdDropdownItems}
 				name="Scheduler"
+				badgeHref="/pro?reason=scheduler"
+				badgeAppliedTo={$page.data.plan === 'FREE' || $page.data.plan === 'ANONYMOUS'
+					? availableSchedulerIds.filter((i) => !availableSchedulerIdsFree.includes(i))
+					: undefined}
 			>
 				<div
 					slot="title"
@@ -286,6 +292,11 @@
 				>
 					<IconBubbles class="w-6 h-6 text-c-on-bg/25" />
 				</div>
+				<TierBadge
+					slot="badge"
+					tier="PRO"
+					class="absolute transform top-1/2 -translate-y-1/2 right-3 pointer-events-none"
+				/>
 			</TabLikeDropdown>
 		{/if}
 		<TabLikeInput

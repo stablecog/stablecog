@@ -540,7 +540,7 @@ type RootTranslation = {
 				 */
 				realName: string
 				/**
-				 * A​n​i​m​e
+				 * A​n​i​m​e​ ​2
 				 */
 				simpleName: string
 			}
@@ -564,6 +564,26 @@ type RootTranslation = {
 				 */
 				simpleName: string
 			}
+			'f7f3d973-ac6f-4a7a-9db8-e89e4fba03a9': {
+				/**
+				 * W​a​i​f​u​ ​D​i​f​f​u​s​i​o​n​ ​v​1​.​4
+				 */
+				realName: string
+				/**
+				 * A​n​i​m​e
+				 */
+				simpleName: string
+			}
+			'fc06f6ab-ed14-4186-a7c0-aaec288d4f38': {
+				/**
+				 * 2​2​h​ ​D​i​f​f​u​s​i​o​n​ ​v​0​.​1
+				 */
+				realName: string
+				/**
+				 * A​r​t​i​s​t​i​c
+				 */
+				simpleName: string
+			}
 		}
 		SchedulerOptions: {
 			'55027f8b-f046-4e71-bc51-53d5448661e0': {
@@ -581,6 +601,24 @@ type RootTranslation = {
 			'af2679a4-dbbb-4950-8c06-c3bb15416ef6': {
 				/**
 				 * E​u​l​e​r​ ​A​.
+				 */
+				realName: string
+			}
+			'efee957a-dea5-48b2-a66a-1990dc2265c5': {
+				/**
+				 * H​e​u​n
+				 */
+				realName: string
+			}
+			'9d175114-9a26-4371-861c-729ba9ecb4da': {
+				/**
+				 * D​P​M
+				 */
+				realName: string
+			}
+			'7e98751f-e135-4206-b855-48b141e7b98f': {
+				/**
+				 * D​P​M​ ​S​i​n​g​l​e​s​t​e​p
 				 */
 				realName: string
 			}
@@ -1612,7 +1650,7 @@ export type TranslationFunctions = {
 				 */
 				realName: () => LocalizedString
 				/**
-				 * Anime
+				 * Anime 2
 				 */
 				simpleName: () => LocalizedString
 			}
@@ -1636,6 +1674,26 @@ export type TranslationFunctions = {
 				 */
 				simpleName: () => LocalizedString
 			}
+			'f7f3d973-ac6f-4a7a-9db8-e89e4fba03a9': {
+				/**
+				 * Waifu Diffusion v1.4
+				 */
+				realName: () => LocalizedString
+				/**
+				 * Anime
+				 */
+				simpleName: () => LocalizedString
+			}
+			'fc06f6ab-ed14-4186-a7c0-aaec288d4f38': {
+				/**
+				 * 22h Diffusion v0.1
+				 */
+				realName: () => LocalizedString
+				/**
+				 * Artistic
+				 */
+				simpleName: () => LocalizedString
+			}
 		}
 		SchedulerOptions: {
 			'55027f8b-f046-4e71-bc51-53d5448661e0': {
@@ -1653,6 +1711,24 @@ export type TranslationFunctions = {
 			'af2679a4-dbbb-4950-8c06-c3bb15416ef6': {
 				/**
 				 * Euler A.
+				 */
+				realName: () => LocalizedString
+			}
+			'efee957a-dea5-48b2-a66a-1990dc2265c5': {
+				/**
+				 * Heun
+				 */
+				realName: () => LocalizedString
+			}
+			'9d175114-9a26-4371-861c-729ba9ecb4da': {
+				/**
+				 * DPM
+				 */
+				realName: () => LocalizedString
+			}
+			'7e98751f-e135-4206-b855-48b141e7b98f': {
+				/**
+				 * DPM Singlestep
 				 */
 				realName: () => LocalizedString
 			}

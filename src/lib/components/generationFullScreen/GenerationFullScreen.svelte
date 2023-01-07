@@ -44,6 +44,7 @@
 	import {
 		availableHeightsFree,
 		availableModelIdsFree,
+		availableSchedulerIdsFree,
 		availableWidthsFree,
 		estimatedDurationBufferRatio
 	} from '$ts/constants/main';
@@ -351,12 +352,15 @@
 		($page.data.plan === 'FREE' || $page.data.plan === 'ANONYMOUS') &&
 		(!availableWidthsFree.map((i) => Number(i)).includes(generation.width) ||
 			!availableHeightsFree.map((i) => Number(i)).includes(generation.height) ||
-			(generation.model_id && !availableModelIdsFree.includes(generation.model_id)));
+			(generation.model_id && !availableModelIdsFree.includes(generation.model_id)) ||
+			(generation.scheduler_id && !availableSchedulerIdsFree.includes(generation.scheduler_id)));
 
 	let showTierBadgeReason: TAvailableProReason;
 	$: showTierBadgeReason =
 		generation.model_id && !availableModelIdsFree.includes(generation.model_id)
 			? 'model_generation'
+			: generation.scheduler_id && !availableSchedulerIdsFree.includes(generation.scheduler_id)
+			? 'scheduler_generation'
 			: 'dimensions_generation';
 
 	onMount(() => {

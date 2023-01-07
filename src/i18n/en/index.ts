@@ -183,7 +183,7 @@ const en: BaseTranslation = {
 			},
 			'48a7031d-43b6-4a23-9f8c-8020eb6862e4': {
 				realName: 'Ghibli Diffusion',
-				simpleName: 'Anime'
+				simpleName: 'Anime 2'
 			},
 			'790c80e1-65b1-4556-9332-196344389572': {
 				realName: 'Mo-Di Diffusion',
@@ -192,6 +192,14 @@ const en: BaseTranslation = {
 			'eaa438e1-dbf9-48fd-be71-206f0f257617': {
 				realName: 'Redshift Diffusion',
 				simpleName: '3D Render'
+			},
+			'f7f3d973-ac6f-4a7a-9db8-e89e4fba03a9': {
+				realName: 'Waifu Diffusion v1.4',
+				simpleName: 'Anime'
+			},
+			'fc06f6ab-ed14-4186-a7c0-aaec288d4f38': {
+				realName: '22h Diffusion v0.1',
+				simpleName: 'Artistic'
 			}
 		},
 		SchedulerOptions: {
@@ -203,6 +211,15 @@ const en: BaseTranslation = {
 			},
 			'af2679a4-dbbb-4950-8c06-c3bb15416ef6': {
 				realName: 'Euler A.'
+			},
+			'efee957a-dea5-48b2-a66a-1990dc2265c5': {
+				realName: 'Heun'
+			},
+			'9d175114-9a26-4371-861c-729ba9ecb4da': {
+				realName: 'DPM'
+			},
+			'7e98751f-e135-4206-b855-48b141e7b98f': {
+				realName: 'DPM Singlestep'
 			}
 		},
 		UnknownTitle: 'Unknown',

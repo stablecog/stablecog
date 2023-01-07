@@ -125,6 +125,11 @@ func Handler(c *fiber.Ctx) error {
 				SGenerateResponse{Error: "That inference steps setting is not available on the free plan :("},
 			)
 		}
+		if shared.Contains(shared.AvailableSchedulerIdsFree, req.SchedulerId) == false {
+			return c.Status(http.StatusBadRequest).JSON(
+				SGenerateResponse{Error: "That scheduler is not available on the free plan :("},
+			)
+		}
 	}
 
 	if plan == "FREE" {

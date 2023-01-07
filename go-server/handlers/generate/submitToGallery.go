@@ -5,12 +5,9 @@ import (
 	"context"
 	"fmt"
 	"log"
-	"os"
 	"time"
 
 	"github.com/aws/aws-sdk-go/aws"
-	"github.com/aws/aws-sdk-go/aws/credentials"
-	"github.com/aws/aws-sdk-go/aws/session"
 	"github.com/aws/aws-sdk-go/service/s3/s3manager"
 	"github.com/getsentry/sentry-go"
 	"github.com/google/uuid"
@@ -18,18 +15,6 @@ import (
 
 	"github.com/yekta/stablecog/go-server/shared"
 )
-
-var accessKeyId = os.Getenv("R2_ACCESS_KEY_ID")
-var secretKey = os.Getenv("R2_SECRET_ACCESS_KEY")
-var endpoint = fmt.Sprintf("https://%s.r2.cloudflarestorage.com", os.Getenv("CLOUDFLARE_ACCOUNT_ID"))
-var s3Conf = &aws.Config{
-	Endpoint:    aws.String(endpoint),
-	Region:      aws.String("auto"),
-	Credentials: credentials.NewStaticCredentials(accessKeyId, secretKey, ""),
-}
-var s3sess = session.New(s3Conf)
-var uploader = s3manager.NewUploader(s3sess)
-var bucket = "stablecog"
 
 var webpOptionsGallery = bimg.Options{
 	Quality: 90,
@@ -77,12 +62,12 @@ func SubmitToGallery(p SSubmitToGalleryProps) {
 
 	// Upload the file to S3
 	input := &s3manager.UploadInput{
-		Bucket:      aws.String(bucket),
+		Bucket:      aws.String(shared.S3BucketPublic),
 		Key:         aws.String(imgKey),
 		Body:        bytes.NewReader(webpBuff),
 		ContentType: aws.String("image/webp"),
 	}
-	_, err := uploader.UploadWithContext(context.Background(), input)
+	_, err := shared.S3Uploader.UploadWithContext(context.Background(), input)
 	if err != nil {
 		sentry.CaptureException(err)
 		log.Printf("-- Gallery - Error uploading to S3: %v --", err)
