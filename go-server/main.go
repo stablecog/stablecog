@@ -18,6 +18,7 @@ import (
 	"github.com/yekta/stablecog/go-server/handlers/generate"
 	generationGImage "github.com/yekta/stablecog/go-server/handlers/generation-g-image"
 	"github.com/yekta/stablecog/go-server/handlers/health"
+	"github.com/yekta/stablecog/go-server/handlers/queue/upload"
 	"github.com/yekta/stablecog/go-server/handlers/upscale"
 	"github.com/yekta/stablecog/go-server/shared"
 )
@@ -64,7 +65,6 @@ func main() {
 	go cronStats.GetAndSetStats()
 	go cronMeili.SyncMeili()
 
-	//
 	app.Post("/generate", generate.Handler)
 	app.Post("/upscale", upscale.Handler)
 	app.Get("/gallery", gallery.Handler)
@@ -76,7 +76,7 @@ func main() {
 	app.Get("/ping", func(c *fiber.Ctx) error {
 		return c.SendString("pong")
 	})
-
+	app.Put(fmt.Sprintf("/queue/upload/%s/*", shared.S3UploadPrivateBucketPath), queueUpload.Handler)
 	app.Get("/", func(c *fiber.Ctx) error {
 		return c.SendString("API is up and running")
 	})

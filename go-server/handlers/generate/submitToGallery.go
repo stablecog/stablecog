@@ -7,12 +7,11 @@ import (
 	"log"
 	"time"
 
-	"github.com/aws/aws-sdk-go/aws"
-	"github.com/aws/aws-sdk-go/service/s3/s3manager"
+	"github.com/aws/aws-sdk-go-v2/aws"
+	"github.com/aws/aws-sdk-go-v2/service/s3"
 	"github.com/getsentry/sentry-go"
 	"github.com/google/uuid"
 	"github.com/h2non/bimg"
-
 	"github.com/yekta/stablecog/go-server/shared"
 )
 
@@ -20,8 +19,6 @@ var webpOptionsGallery = bimg.Options{
 	Quality: 90,
 	Type:    bimg.WEBP,
 }
-
-//
 
 func SubmitToGallery(p SSubmitToGalleryProps) {
 	promptId := <-p.PromptIdChan
@@ -63,13 +60,13 @@ func SubmitToGallery(p SSubmitToGalleryProps) {
 	imgKey := fmt.Sprintf("%s.webp", imgId)
 
 	// Upload the file to S3
-	input := &s3manager.UploadInput{
+	input := &s3.PutObjectInput{
 		Bucket:      aws.String(shared.S3BucketPublic),
 		Key:         aws.String(imgKey),
 		Body:        bytes.NewReader(webpBuff),
 		ContentType: aws.String("image/webp"),
 	}
-	_, err := shared.S3Uploader.UploadWithContext(context.Background(), input)
+	_, err := shared.S3Client.PutObject(context.Background(), input)
 	if err != nil {
 		sentry.CaptureException(err)
 		log.Printf("-- Gallery - Error uploading to S3: %v --", err)
