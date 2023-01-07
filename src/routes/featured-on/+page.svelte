@@ -41,7 +41,7 @@
 
 <PageWrapper>
 	<div class="w-full flex flex-col items-center justify-center my-auto">
-		<h1 class="text-4xl font-bold">{$LL.FeaturedOn.PageTitle()}</h1>
+		<h1 class="text-3xl md:text-4xl font-bold text-center px-6">{$LL.FeaturedOn.PageTitle()}</h1>
 		<div class="w-full max-w-4xl flex flex-wrap items-stretch justify-center mt-6 gap-6">
 			{#each featuredOn as featured}
 				<div class="w-full md:w-1/3 flex flex-col items-center max-w-md relative">
