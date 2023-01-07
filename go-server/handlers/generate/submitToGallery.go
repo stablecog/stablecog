@@ -21,6 +21,8 @@ var webpOptionsGallery = bimg.Options{
 	Type:    bimg.WEBP,
 }
 
+//
+
 func SubmitToGallery(p SSubmitToGalleryProps) {
 	promptId := <-p.PromptIdChan
 	negativePromptId := <-p.NegativePromptIdChan
