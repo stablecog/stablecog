@@ -42,10 +42,6 @@ UPDATE
 ALTER TABLE
     generation ENABLE ROW LEVEL SECURITY;
 
-CREATE POLICY "Users can select their own generation" ON public.generation FOR
-SELECT
-    USING (auth.uid() = user_id);
-
 CREATE TABLE "prompt" (
     "text" TEXT NOT NULL UNIQUE,
     "id" UUID NOT NULL DEFAULT uuid_generate_v4(),
