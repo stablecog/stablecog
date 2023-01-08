@@ -50,7 +50,12 @@
 				friendBoughtCountRes,
 				startDateRes
 			] = await Promise.all([
-				supabase.from('user').select('*').order('created_at', { ascending: false }).limit(250),
+				supabase
+					.from('user')
+					.select('*')
+					.order('created_at', { ascending: false })
+					.not('confirmed_at', 'is', null)
+					.limit(250),
 				supabase
 					.from('user')
 					.select('*', { head: true, count: 'exact' })
@@ -58,7 +63,8 @@
 				supabase
 					.from('user')
 					.select('*', { head: true, count: 'exact' })
-					.match({ subscription_tier: 'FREE' }),
+					.filter('subscription_tier', 'eq', 'FREE')
+					.not('confirmed_at', 'is', null),
 				supabase
 					.from('user')
 					.select('*', { head: true, count: 'exact' })
