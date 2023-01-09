@@ -7,7 +7,13 @@ import type { TAvailableThemes } from '$ts/stores/theme';
 
 export const load: LayoutLoad = async (event) => {
 	let plan: IUserPlan = 'ANONYMOUS';
-	const { supabaseClient, session } = await getSupabase(event);
+	let { supabaseClient, session } = await getSupabase(event);
+	if (session) {
+		let { data, error } = await supabaseClient.auth.refreshSession(session);
+		if (data) {
+			session = data.session;
+		}
+	}
 	if (session?.user.id) {
 		try {
 			const { data } = await supabaseClient
@@ -19,6 +25,7 @@ export const load: LayoutLoad = async (event) => {
 				plan = data.subscription_tier;
 			}
 		} catch (error) {
+			supabaseClient.auth.refreshSession();
 			console.log(error);
 		}
 	}

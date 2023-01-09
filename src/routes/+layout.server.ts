@@ -5,8 +5,14 @@ import type { IUserPlan } from '$ts/types/stripe';
 
 export const load: LayoutServerLoad = async (event) => {
 	let plan: IUserPlan = 'ANONYMOUS';
-	const session = await getServerSession(event);
+	let session = await getServerSession(event);
 	const { supabaseClient } = await getSupabase(event);
+	if (session) {
+		let { data, error } = await supabaseClient.auth.refreshSession(session);
+		if (data) {
+			session = data.session;
+		}
+	}
 	if (session?.user.id) {
 		try {
 			const { data } = await supabaseClient
