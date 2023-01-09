@@ -301,20 +301,27 @@
 		? `min-height: ${innerHeight}px`
 		: ''}"
 >
-	<p class="flex flex-1 items-center justify-center px-6 py-4">
-		We're trying to fix some problems, we'll be back in 1-2 hours.
-	</p>
-	<!-- <Navbar />
-	<main class="w-full flex-1 flex flex-col relative break-words">
-		<slot />
-	</main> -->
+	{#if !$page.url.pathname.startsWith('/admin')}
+		<p class="flex flex-1 items-center justify-center px-6 py-4">
+			We're trying to fix some problems, we'll be back in 1-2 hours.
+		</p>
+	{/if}
+
+	{#if $page.url.pathname.startsWith('/admin')}
+		<Navbar />
+		<main class="w-full flex-1 flex flex-col relative break-words">
+			<slot />
+		</main>
+	{/if}
 	{#if !routesWithHiddenFooter.includes($page.url.pathname)}
 		<Footer />
 	{/if}
-	<!-- <NavbarBottom class="md:hidden h-[calc(3.75rem+env(safe-area-inset-bottom))]" />
-	<div class="md:hidden h-[calc(3.75rem+env(safe-area-inset-bottom))]" />
-	<div
-		id="tooltip-container"
-		class="absolute overflow-x-hidden left-0 top-0 w-full h-full pointer-events-none"
-	/> -->
+	{#if $page.url.pathname.startsWith('/admin')}
+		<NavbarBottom class="md:hidden h-[calc(3.75rem+env(safe-area-inset-bottom))]" />
+		<div class="md:hidden h-[calc(3.75rem+env(safe-area-inset-bottom))]" />
+		<div
+			id="tooltip-container"
+			class="absolute overflow-x-hidden left-0 top-0 w-full h-full pointer-events-none"
+		/>
+	{/if}
 </div>
