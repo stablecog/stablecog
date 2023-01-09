@@ -32,6 +32,13 @@ func Handler(c *fiber.Ctx) error {
 		countryCode = c.Get("X-Vercel-IP-Country")
 	}
 
+	if countryCode == "" {
+		sentry.CaptureMessage("Invalid country code")
+		return c.Status(http.StatusBadRequest).JSON(
+			SGenerateResponse{Error: "Invalid country code"},
+		)
+	}
+
 	var req shared.SGenerateRequestBody
 	if err := c.BodyParser(&req); err != nil {
 		log.Printf("-- Invalid request body: %v --", err)
