@@ -106,6 +106,11 @@
 
 	async function clearAndSetHealthCheckTimeout() {
 		if (mounted) {
+			try {
+				await supabase.auth.signOut();
+			} catch (error) {
+				console.log(error);
+			}
 			if (!routesWithHealthCheck.includes($page.url.pathname)) {
 				clearTimeout(bothHealthCheckTimeout);
 				return;
