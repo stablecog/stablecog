@@ -12,6 +12,7 @@
 	import { getRelativeDate } from '$ts/helpers/getRelativeDate';
 	import { getDateString } from '$ts/helpers/date';
 	import { isTouchscreen } from '$ts/stores/isTouchscreen';
+	import { navbarHeight } from '$ts/stores/navbarHeight';
 
 	interface TUser {
 		id: string;
@@ -103,8 +104,8 @@
 	canonical="{canonicalUrl}{$page.url.pathname}"
 />
 
-<PageWrapper>
-	<div class="flex justify-center z-10 sticky top-20 md:top-22 -mt-5">
+<PageWrapper noPadding>
+	<div style="top: {$navbarHeight}px" class="flex justify-center z-10 sticky py-2.5">
 		<div
 			class="flex flex-col bg-c-bg ring-2 ring-c-bg-secondary rounded-2xl shadow-lg 
 			shadow-c-shadow/[var(--o-shadow-normal)] -mx-3.5"
@@ -133,7 +134,7 @@
 			</div>
 		</div>
 	</div>
-	<div class="flex flex-col items-center my-auto gap-8 z-0 mt-6 -mx-3.5">
+	<div class="flex flex-col items-center my-auto gap-8 z-0 mt-3 -mx-3.5">
 		<div class="w-full md:max-w-4xl flex flex-col items-center justify-center gap-2">
 			{#if users}
 				{#each users as user}
