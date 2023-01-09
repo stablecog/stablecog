@@ -101,7 +101,7 @@ func Handler(c *fiber.Ctx) error {
 
 	log.Printf("///// Generation - User plan: %s /////", plan)
 
-	if plan == "ANONYMOUS" {
+	if plan != "PRO" && plan != "FREE" {
 		return c.Status(http.StatusBadRequest).JSON(
 			SGenerateResponse{Error: "You need to create an account to generate images."},
 		)
