@@ -61,14 +61,6 @@
 		mixpanel.people.set({ 'SC - Plan': $page.data.plan });
 	}
 
-	function removeItem(sKey: string, sPath: string, sDomain: string) {
-		document.cookie =
-			encodeURIComponent(sKey) +
-			'=; expires=Thu, 01 Jan 1970 00:00:00 GMT' +
-			(sDomain ? '; domain=' + sDomain : '') +
-			(sPath ? '; path=' + sPath : '');
-	}
-
 	onMount(async () => {
 		mixpanel.init(env.PUBLIC_MIXPANEL_ID, { api_host: env.PUBLIC_MIXPANEL_URL });
 		const {

@@ -7,7 +7,9 @@ export const load: LayoutServerLoad = async (event) => {
 	let plan: IUserPlan = 'ANONYMOUS';
 	let session = await getServerSession(event);
 	const { supabaseClient } = await getSupabase(event);
-	if (session) {
+	const minExpire = 60 * 60 * 1.1;
+	const now = Math.round(Date.now() / 1000);
+	if (session && session.expires_at && session.expires_at - now > minExpire) {
 		try {
 			let { data, error } = await supabaseClient.auth.refreshSession(session);
 			if (error) {
