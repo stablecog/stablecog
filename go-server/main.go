@@ -20,6 +20,7 @@ import (
 	"github.com/yekta/stablecog/go-server/handlers/health"
 	"github.com/yekta/stablecog/go-server/handlers/queue/upload"
 	"github.com/yekta/stablecog/go-server/handlers/upscale"
+	"github.com/yekta/stablecog/go-server/handlers/user"
 	"github.com/yekta/stablecog/go-server/shared"
 )
 
@@ -77,6 +78,7 @@ func main() {
 		return c.SendString("pong")
 	})
 	app.Put(fmt.Sprintf("/queue/upload/%s/*", shared.S3UploadPrivateBucketPath), queueUpload.Handler)
+	app.Get("/user/generations", user.GenerationsHandler)
 	app.Get("/", func(c *fiber.Ctx) error {
 		return c.SendString("API is up and running")
 	})
