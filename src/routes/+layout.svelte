@@ -30,6 +30,7 @@
 	import { afterNavigate, invalidate, invalidateAll } from '$app/navigation';
 	import { mLogPageview } from '$ts/helpers/loggers';
 	import { setCookie } from '$ts/helpers/setCookie';
+	import { didClearSupabaseTokenBefore } from '$ts/stores/didClearSupabaseTokenBefore';
 
 	export let data: LayoutData;
 	setLocale(data.locale);
@@ -61,6 +62,14 @@
 		mixpanel.people.set({ 'SC - Plan': $page.data.plan });
 	}
 
+	function removeItem(sKey: string, sPath: string, sDomain: string) {
+		document.cookie =
+			encodeURIComponent(sKey) +
+			'=; expires=Thu, 01 Jan 1970 00:00:00 GMT' +
+			(sDomain ? '; domain=' + sDomain : '') +
+			(sPath ? '; path=' + sPath : '');
+	}
+
 	onMount(async () => {
 		mixpanel.init(env.PUBLIC_MIXPANEL_ID, { api_host: env.PUBLIC_MIXPANEL_URL });
 		const {
@@ -68,6 +77,11 @@
 		} = supabase.auth.onAuthStateChange(() => {
 			invalidateAll();
 		});
+		if (!$didClearSupabaseTokenBefore) {
+			removeItem('supabase-auth-token', '/', 'stablecog.com');
+			didClearSupabaseTokenBefore.set(true);
+			document.location.reload();
+		}
 		setBodyClasses();
 		if ($localeLS && isLocale($localeLS) && $localeLS !== $locale) {
 			await loadLocaleAsync($localeLS);
