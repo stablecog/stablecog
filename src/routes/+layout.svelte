@@ -79,6 +79,8 @@
 		});
 		if (!$didClearSupabaseTokenBefore) {
 			removeItem('supabase-auth-token', '/', 'stablecog.com');
+			removeItem('sb-refresh-token', '/', 'azwnrqkywgmlooolxxgm.supabase.co');
+			removeItem('sb-access-token', '/', 'azwnrqkywgmlooolxxgm.supabase.co');
 			didClearSupabaseTokenBefore.set(true);
 			document.location.reload();
 		}
