@@ -301,12 +301,12 @@
 		? `min-height: ${innerHeight}px`
 		: ''}"
 >
-	{#if !$page.url.pathname.startsWith('/admin')}
+	{#if !$page.url.pathname.startsWith('/accounttest')}
 		<p class="flex flex-1 items-center justify-center px-6 py-4">
 			We're trying to fix some problems, we'll be back in 1-2 hours.
 		</p>
 	{/if}
-	{#if $page.url.pathname.startsWith('/admin')}
+	{#if $page.url.pathname.startsWith('/accounttest')}
 		<Navbar />
 		<main class="w-full flex-1 flex flex-col relative break-words">
 			<slot />
@@ -315,7 +315,7 @@
 	{#if !routesWithHiddenFooter.includes($page.url.pathname)}
 		<Footer />
 	{/if}
-	{#if $page.url.pathname.startsWith('/admin')}
+	{#if $page.url.pathname.startsWith('/accounttest')}
 		<NavbarBottom class="md:hidden h-[calc(3.75rem+env(safe-area-inset-bottom))]" />
 		<div class="md:hidden h-[calc(3.75rem+env(safe-area-inset-bottom))]" />
 		<div
