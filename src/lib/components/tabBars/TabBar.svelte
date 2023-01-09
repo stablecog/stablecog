@@ -20,6 +20,7 @@
 	export let isValid: (v: T) => boolean = () => true;
 	export let outline: 'primary' | 'bg-secondary' = 'bg-secondary';
 	export let hasBackgroundPattern = false;
+	export let size: 'sm' | 'md' = 'md';
 
 	let classes = '';
 </script>
@@ -66,7 +67,9 @@
 				<a
 					href={badgeHref}
 					target="_blank"
-					class="flex-1 min-w-0 px-2 py-4 relative text-center rounded-lg group transition"
+					class="flex-1 min-w-0 px-2 {size === 'sm'
+						? 'py-3.5'
+						: 'py-4'} relative text-center rounded-lg group transition"
 					type="button"
 					aria-label={name}
 				>
@@ -112,7 +115,9 @@
 						value = tab.value;
 						e.currentTarget.blur();
 					}}
-					class="flex-1 min-w-0 px-2 py-4 relative text-center rounded-lg group transition"
+					class="flex-1 min-w-0 px-2 {size === 'sm'
+						? 'py-3.5'
+						: 'py-4'} relative text-center rounded-lg group transition"
 					type="button"
 					aria-label={name}
 				>

@@ -29,9 +29,9 @@ func GenerationsHandler(c *fiber.Ctx) error {
 		})
 	}
 	var generations []SGeneration
-	_, errGen := shared.SupabaseDb.
+	total, errGen := shared.SupabaseDb.
 		From("generation").
-		Select("id,width,height,num_inference_steps,guidance_scale,created_at,updated_at,model:model_id(id,name),scheduler:scheduler_id(id,name),prompt:prompt_id(id,text),negative_prompt:negative_prompt_id(id,text),image_object_name,seed,duration_ms", "", false).
+		Select("id,width,height,num_inference_steps,guidance_scale,created_at,updated_at,model:model_id(id,name),scheduler:scheduler_id(id,name),prompt:prompt_id(id,text),negative_prompt:negative_prompt_id(id,text),image_object_name,seed,duration_ms", "estimated", false).
 		Eq("user_id", supabaseUserId).
 		Not("image_object_name", "is", "null").
 		Order("created_at", &postgrest.OrderOpts{Ascending: false}).
@@ -51,6 +51,7 @@ func GenerationsHandler(c *fiber.Ctx) error {
 	data := SGenerationsData{
 		Generations: generationsSliced,
 		Page:        p,
+		Total:       int(total),
 	}
 	if len(generations) > pSize {
 		data.Next = p + 1
@@ -69,6 +70,7 @@ type SGenerationsData struct {
 	Generations []SGeneration `json:"generations"`
 	Page        int           `json:"page"`
 	Next        int           `json:"next,omitempty"`
+	Total       int           `json:"total,omitempty"`
 }
 
 type SGeneration struct {

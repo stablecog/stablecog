@@ -93,6 +93,10 @@ func Handler(c *fiber.Ctx) error {
 			subscriptionTier = res.SubsciptionTier
 			plan = res.SubsciptionTier
 		}
+	} else {
+		return c.Status(http.StatusBadRequest).JSON(
+			SGenerateResponse{Error: "You need to create an account to generate images."},
+		)
 	}
 
 	log.Printf("///// Generation - User plan: %s /////", plan)

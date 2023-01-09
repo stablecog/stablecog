@@ -56,6 +56,10 @@ func Handler(c *fiber.Ctx) error {
 			subscriptionTier = res.SubsciptionTier
 			plan = res.SubsciptionTier
 		}
+	} else {
+		return c.Status(http.StatusBadRequest).JSON(
+			SUpscaleResponse{Error: "You need to create an account to upsale images."},
+		)
 	}
 
 	log.Printf("-- Upscale - User plan: %s --", plan)

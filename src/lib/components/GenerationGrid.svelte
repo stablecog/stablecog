@@ -75,7 +75,7 @@
 		<IconLoadingSlim class="animate-spin-faster w-12 h-12 text-c-on-bg/50" />
 	</div>
 {:else}
-	<div class="w-full flex-1 flex flex-col justify-center items-center pt-8 px-5 gap-8">
+	<div class="w-full flex-1 flex flex-col justify-center items-center pt-8 px-5 gap-6">
 		<p class="text-c-on-bg/50">{$LL.History.NoGenerationsYet()}</p>
 		<Button href="/">{$LL.Shared.StartGeneratingButton()}</Button>
 		<div class="h-[1vh]" />
