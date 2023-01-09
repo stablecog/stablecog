@@ -53,6 +53,7 @@
 		</div>
 	{:else}
 		<div class="w-full flex flex-col items-center justify-center my-auto">
+			<p class="break-all">{JSON.stringify($page.data.session)}</p>
 			<h1 class="text-4xl font-bold">{$LL.Account.PageTitle()}</h1>
 			<div
 				class="w-full max-w-xl mt-6 flex flex-col rounded-2xl bg-c-bg overflow-hidden relative z-0 
