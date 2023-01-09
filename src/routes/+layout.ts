@@ -8,9 +8,9 @@ import type { TAvailableThemes } from '$ts/stores/theme';
 export const load: LayoutLoad = async (event) => {
 	let plan: IUserPlan = 'ANONYMOUS';
 	let { supabaseClient, session } = await getSupabase(event);
-	const maxExpire = 60 * 60 * 1.1;
+	const maxExpireDifference = 60 * 60 * 1.1;
 	const now = Math.round(Date.now() / 1000);
-	if (session && session.expires_at && session.expires_at - now > maxExpire) {
+	if (session && session.expires_at && session.expires_at - now > maxExpireDifference) {
 		try {
 			let { data, error } = await supabaseClient.auth.refreshSession(session);
 			if (error) {
