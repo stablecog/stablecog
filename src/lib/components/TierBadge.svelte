@@ -11,7 +11,7 @@
 	export { classes as class };
 	let classes = '';
 
-	$: tierText = tier === 'PRO' ? $LL.Pro.Tier.Badge.Pro() : $LL.Pro.Tier.Badge.Free();
+	$: tierText = tier;
 </script>
 
 <div
