@@ -8,9 +8,16 @@ export const load: LayoutServerLoad = async (event) => {
 	let session = await getServerSession(event);
 	const { supabaseClient } = await getSupabase(event);
 	if (session) {
-		let { data, error } = await supabaseClient.auth.refreshSession(session);
-		if (data) {
-			session = data.session;
+		try {
+			let { data, error } = await supabaseClient.auth.refreshSession(session);
+			if (error) {
+				throw Error(error.message);
+			}
+			if (data) {
+				session = data.session;
+			}
+		} catch (error) {
+			session = null;
 		}
 	}
 	if (session?.user.id) {

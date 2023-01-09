@@ -27,10 +27,9 @@
 	import { routesWithHealthCheck, routesWithHiddenFooter } from '$ts/constants/main';
 	import mixpanel from 'mixpanel-browser';
 	import { supabase } from '$ts/constants/supabase';
-	import { afterNavigate, invalidate, invalidateAll } from '$app/navigation';
+	import { afterNavigate, invalidateAll } from '$app/navigation';
 	import { mLogPageview } from '$ts/helpers/loggers';
 	import { setCookie } from '$ts/helpers/setCookie';
-	import { didClearSupabaseTokenBefore } from '$ts/stores/didClearSupabaseTokenBefore';
 
 	export let data: LayoutData;
 	setLocale(data.locale);
@@ -77,13 +76,6 @@
 		} = supabase.auth.onAuthStateChange(() => {
 			invalidateAll();
 		});
-		if (!$didClearSupabaseTokenBefore) {
-			removeItem('supabase-auth-token', '/', 'stablecog.com');
-			removeItem('sb-refresh-token', '/', 'azwnrqkywgmlooolxxgm.supabase.co');
-			removeItem('sb-access-token', '/', 'azwnrqkywgmlooolxxgm.supabase.co');
-			didClearSupabaseTokenBefore.set(true);
-			document.location.reload();
-		}
 		setBodyClasses();
 		if ($localeLS && isLocale($localeLS) && $localeLS !== $locale) {
 			await loadLocaleAsync($localeLS);
@@ -301,26 +293,17 @@
 		? `min-height: ${innerHeight}px`
 		: ''}"
 >
-	{#if !$page.url.pathname.startsWith('/accounttest')}
-		<p class="flex flex-1 items-center justify-center px-6 py-4">
-			We're trying to fix some problems, we'll be back in 1-2 hours.
-		</p>
-	{/if}
-	{#if $page.url.pathname.startsWith('/accounttest')}
-		<Navbar />
-		<main class="w-full flex-1 flex flex-col relative break-words">
-			<slot />
-		</main>
-	{/if}
+	<Navbar />
+	<main class="w-full flex-1 flex flex-col relative break-words">
+		<slot />
+	</main>
 	{#if !routesWithHiddenFooter.includes($page.url.pathname)}
 		<Footer />
 	{/if}
-	{#if $page.url.pathname.startsWith('/accounttest')}
-		<NavbarBottom class="md:hidden h-[calc(3.75rem+env(safe-area-inset-bottom))]" />
-		<div class="md:hidden h-[calc(3.75rem+env(safe-area-inset-bottom))]" />
-		<div
-			id="tooltip-container"
-			class="absolute overflow-x-hidden left-0 top-0 w-full h-full pointer-events-none"
-		/>
-	{/if}
+	<NavbarBottom class="md:hidden h-[calc(3.75rem+env(safe-area-inset-bottom))]" />
+	<div class="md:hidden h-[calc(3.75rem+env(safe-area-inset-bottom))]" />
+	<div
+		id="tooltip-container"
+		class="absolute overflow-x-hidden left-0 top-0 w-full h-full pointer-events-none"
+	/>
 </div>
