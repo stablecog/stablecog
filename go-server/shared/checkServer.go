@@ -28,7 +28,7 @@ func CheckServer(serverUrl string) SHealthResponse {
 		}
 	}
 	if res.StatusCode != http.StatusOK {
-		log.Printf(red("Checking server HTTP status code: %d"), res.StatusCode)
+		log.Printf(red("Checking server HTTP status code - %s: %d"), serverUrl, res.StatusCode)
 		return SHealthResponse{
 			Status: "unhealthy",
 		}
