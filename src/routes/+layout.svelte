@@ -306,7 +306,6 @@
 			We're trying to fix some problems, we'll be back in 1-2 hours.
 		</p>
 	{/if}
-
 	{#if $page.url.pathname.startsWith('/admin')}
 		<Navbar />
 		<main class="w-full flex-1 flex flex-col relative break-words">
