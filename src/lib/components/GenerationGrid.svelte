@@ -8,12 +8,9 @@
 	import { activeGeneration } from '$ts/stores/activeGeneration';
 	import type { TIndexedDBGeneration } from '$ts/types/db';
 	import { MasonryInfiniteGrid } from '@egjs/svelte-infinitegrid';
-	import { quadOut } from 'svelte/easing';
-	import { fade } from 'svelte/transition';
 
 	export let generations: TIndexedDBGeneration[] | undefined = undefined;
 	export let loading = true;
-	export let startAnimation = false;
 
 	const batchSize = 20;
 	$: items =
@@ -64,12 +61,6 @@
 							class="absolute left-0 top-0 w-full h-full rounded-xl bg-c-bg-secondary z-0 overflow-hidden border-4 
 							shadow-lg shadow-c-shadow/[var(--o-shadow-normal)] border-c-bg-secondary"
 						>
-							{#if loading && startAnimation}
-								<div
-									transition:fade|local={{ delay: 200, easing: quadOut }}
-									class="absolute w-full h-full left-0 top-0 bg-c-on-bg/5 animate-pulse-faster"
-								/>
-							{/if}
 							{#if generations}
 								<GenerationImage generation={generations[item.key]} />
 							{/if}

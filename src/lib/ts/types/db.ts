@@ -67,3 +67,29 @@ export interface TDBGenerationG {
 		name: string;
 	} | null;
 }
+
+export interface TDBGeneration {
+	id: string;
+	width: number;
+	height: number;
+	seed: number;
+	num_inference_steps: number | null;
+	guidance_scale: number;
+	image_object_name: string;
+	created_at: string;
+	updated_at: string;
+	prompt: {
+		id: string;
+		text: string;
+	};
+	negative_prompt: { id: string; text: string } | null;
+	model: {
+		id: TAvailableModelId;
+		name: string;
+	} | null;
+	scheduler: {
+		id: TAvailableSchedulerId;
+		name: string;
+	} | null;
+	duration_ms: number | null;
+}

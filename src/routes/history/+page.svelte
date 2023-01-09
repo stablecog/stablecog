@@ -5,15 +5,33 @@
 	import MetaTag from '$components/MetaTag.svelte';
 	import LL, { locale } from '$i18n/i18n-svelte';
 	import { maxLocallyStoredImage } from '$ts/constants/indexedDb';
-	import { canonicalUrl } from '$ts/constants/main';
+	import { apiBase, canonicalUrl } from '$ts/constants/main';
 	import { getGenerationsFromDb, updateGenerationInDb } from '$ts/queries/indexedDb';
 	import { activeGeneration } from '$ts/stores/activeGeneration';
-	import type { TIndexedDBGeneration } from '$ts/types/db';
+	import type { TDBGeneration, TIndexedDBGeneration } from '$ts/types/db';
 	import type { TGenerationUI, TUpscaleStatus } from '$ts/types/main';
 	import { onMount } from 'svelte';
 
 	let generations: TIndexedDBGeneration[];
 	let upscaleStatus: TUpscaleStatus;
+	let historyType: 'local' | 'cloud' = 'local';
+	let currentPage = 1;
+	let nextPage: number | null = null;
+
+	interface IGenerationResponse {
+		data: { generations: TDBGeneration[]; page: number; next: number | undefined | null } | null;
+		error: string | null;
+	}
+
+	async function getGenerations() {
+		const res = await fetch(`${apiBase}/user/generations?page=${currentPage}`, {
+			headers: {
+				Authorization: $page.data.session?.access_token || ''
+			}
+		});
+		const resJson: IGenerationResponse = await res.json();
+		console.log(resJson.data, resJson.error);
+	}
 
 	function onKeyDown({ key }: KeyboardEvent) {
 		if ($activeGeneration !== undefined && upscaleStatus !== 'loading') {
@@ -55,12 +73,8 @@
 	}
 
 	let loading = true;
-	let startAnimation = false;
 	onMount(async () => {
 		loading = true;
-		setTimeout(() => {
-			startAnimation = true;
-		}, 500);
 		try {
 			generations = await getGenerationsFromDb();
 		} catch (error) {
@@ -101,7 +115,7 @@
 		</div>
 	{/if}
 	<div class="w-full flex-1 max-w-7xl flex flex-col px-1">
-		<GenerationGrid {generations} {loading} {startAnimation} />
+		<GenerationGrid {generations} {loading} />
 	</div>
 </div>
 
