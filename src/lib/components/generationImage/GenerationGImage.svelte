@@ -27,9 +27,6 @@
 	const onLoad = () => {
 		if (imgElement && imgElement?.naturalWidth > 0) {
 			loaded = true;
-			setTimeout(() => {
-				generation.didLoadBefore = true;
-			}, 500);
 		}
 	};
 
@@ -44,8 +41,7 @@
 	loading="lazy"
 	bind:this={imgElement}
 	on:load={onLoad}
-	class="w-full h-full absolute left-0 top-0 transition duration-500 {loaded ||
-	generation.didLoadBefore
+	class="w-full h-full absolute left-0 top-0 transition duration-500 {loaded
 		? 'opacity-100'
 		: 'opacity-0'}"
 	src={urlFromImageId(generation.image_id)}

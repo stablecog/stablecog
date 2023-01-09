@@ -15,6 +15,7 @@
 	import { mLogGallerySearch } from '$ts/helpers/loggers';
 	import { activeGenerationG } from '$ts/stores/activeGenerationG';
 	import { advancedModeApp } from '$ts/stores/advancedMode';
+	import { navbarHeight } from '$ts/stores/navbarHeight';
 	import type { TGalleryResponse } from '$ts/types/main';
 	import { MasonryInfiniteGrid } from '@egjs/svelte-infinitegrid';
 	import { onMount, tick } from 'svelte';
@@ -212,8 +213,8 @@
 {#if generations}
 	<div class="w-full flex-1 flex flex-col items-center relative">
 		<div
-			class="w-full px-2 py-3 flex justify-center sticky top-18 md:top-20 z-10 transition {scrollDirection ===
-			'up'
+			style="top: {$navbarHeight}px"
+			class="w-full px-2 py-2 flex justify-center sticky z-10 transition {scrollDirection === 'up'
 				? 'translate-y-0 opacity-100'
 				: '-translate-y-22 pointer-events-none opacity-0'}"
 		>

@@ -25,6 +25,7 @@
 	import { quadOut } from 'svelte/easing';
 	import { fade, fly } from 'svelte/transition';
 	import SignInCard from '$components/SignInCard.svelte';
+	import { navbarHeight } from '$ts/stores/navbarHeight';
 
 	let isSwitchServerModalOpen = false;
 	let isSignInModalOpen = false;
@@ -63,7 +64,7 @@
 
 <svelte:window on:scroll={setNotAtTheTop} />
 
-<nav class="w-full flex flex-col sticky -top-px z-50 transition">
+<nav bind:clientHeight={$navbarHeight} class="w-full flex flex-col sticky -top-px z-50 transition">
 	{#if mounted && ($lastClosedNotification === null || $lastClosedNotification !== lastNotification) && $page.data.plan !== 'PRO' && $page.url.pathname !== '/pro'}
 		<Banner
 			href="/pro"

@@ -26,9 +26,6 @@
 	const onLoad = () => {
 		if (imgElement && imgElement?.naturalWidth > 0) {
 			loaded = true;
-			setTimeout(() => {
-				generation.didLoadBefore = true;
-			}, 500);
 		}
 	};
 
@@ -112,7 +109,7 @@
 	generation.status === 'deleted' ||
 	generation.status === 'approved'
 		? 'opacity-25'
-		: loaded || generation.didLoadBefore
+		: loaded
 		? 'opacity-100'
 		: 'opacity-0'}"
 	src={urlFromImageId(generation.image_id)}
