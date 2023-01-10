@@ -1,0 +1,26 @@
+version: '3.9'
+services:
+  app:
+    container_name: stablecog_go_dev
+    image: appditto/go-vscode-dev:latest
+    security_opt:
+      - 'seccomp:unconfined'
+    environment:
+      - GOPRIVATE=github.com/bbedward
+      - PORT=13337
+    ports:
+      - '127.0.0.1:13337:13337'
+    volumes:
+      - $PWD:/home/go/app
+      - $HOME/.gitconfig:/home/go/.gitconfig
+      - $HOME/.ssh:/home/go/.ssh
+    restart: on-failure
+    entrypoint: /bin/zsh
+    stdin_open: true
+    tty: true
+    user: go
+    networks: ['app-network']
+
+networks:
+  app-network:
+    driver: bridge

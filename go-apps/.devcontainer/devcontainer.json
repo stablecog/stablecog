@@ -1,0 +1,37 @@
+// For format details, see https://aka.ms/devcontainer.json. For config options, see the README at:
+// https://github.com/microsoft/vscode-dev-containers/tree/v0.241.1/containers/docker-existing-docker-compose
+// If you want to run as a non-root user in the container, see .devcontainer/docker-compose.yml.
+{
+	"name": "Existing Docker Compose (Extend)",
+	"dockerComposeFile": [
+		"../docker-compose.yaml"
+	],
+	"service": "app",
+	"workspaceFolder": "/home/go/app",
+	"remoteUser": "go",
+	"settings": {
+		"terminal.integrated.inheritEnv": false,
+		"terminal.integrated.defaultProfile.linux": "zsh",
+		"terminal.integrated.defaultProfile.windows": "zsh",
+		"terminal.integrated.defaultProfile.osx": "zsh",
+		"terminal.integrated.profiles.linux": {
+			"zsh": {
+				"path": "/bin/zsh"
+			}
+		}
+	},
+	"customizations": {
+		"vscode": {
+			"settings": {},
+			"extensions": [
+				"GitHub.copilot",
+				"ms-azuretools.vscode-docker",
+				"redhat.vscode-yaml",
+				"streetsidesoftware.code-spell-checker",
+				"Gruntfuggly.todo-tree",
+				"golang.go",
+				"aaron-bond.better-comments"
+			]
+		}
+	}
+}
