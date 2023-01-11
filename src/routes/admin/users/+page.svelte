@@ -4,7 +4,6 @@
 	import LL from '$i18n/i18n-svelte';
 	import { canonicalUrl } from '$ts/constants/main';
 	import { supabase } from '$ts/constants/supabase';
-	import type { PostgrestError } from '@supabase/supabase-js';
 	import { onMount } from 'svelte';
 	import PageWrapper from '$components/PageWrapper.svelte';
 	import type { IStripeSubscriptionTier } from '$ts/types/stripe';
@@ -13,6 +12,8 @@
 	import { getDateString } from '$ts/helpers/date';
 	import { isTouchscreen } from '$ts/stores/isTouchscreen';
 	import { navbarHeight } from '$ts/stores/navbarHeight';
+	import Input from '$components/Input.svelte';
+	import IconSearch from '$components/icons/IconSearch.svelte';
 
 	interface TUser {
 		id: string;
@@ -24,17 +25,15 @@
 		subscription_category: 'GIFTED' | 'FRIEND_BOUGHT';
 	}
 
-	interface TUserRes {
-		data: TUser[] | null;
-		error: PostgrestError | null;
-	}
-
 	let users: TUser[];
+	let initialUsers: TUser[];
 	let startDate: Date;
 	let proCount: number;
 	let freeCount: number;
 	let giftedCount: number;
 	let friendBoughtCount: number;
+	let searchString: string;
+	const maxResCount = 100;
 
 	onMount(async () => {
 		getUsers();
@@ -43,48 +42,48 @@
 	async function getUsers() {
 		if (!supabase) return;
 		try {
-			const [
-				userRes,
-				proCountRes,
-				freeCountRes,
-				giftedCountRes,
-				friendBoughtCountRes,
-				startDateRes
-			] = await Promise.all([
-				supabase
-					.from('user')
-					.select('*')
-					.order('created_at', { ascending: false })
-					.not('confirmed_at', 'is', null)
-					.limit(250),
-				supabase
-					.from('user')
-					.select('*', { head: true, count: 'exact' })
-					.match({ subscription_tier: 'PRO' }),
-				supabase
-					.from('user')
-					.select('*', { head: true, count: 'exact' })
-					.filter('subscription_tier', 'eq', 'FREE')
-					.not('confirmed_at', 'is', null),
-				supabase
-					.from('user')
-					.select('*', { head: true, count: 'exact' })
-					.match({ subscription_category: 'GIFTED' }),
-				supabase
-					.from('user')
-					.select('*', { head: true, count: 'exact' })
-					.match({ subscription_category: 'FRIEND_BOUGHT' }),
-				supabase.from('user').select('created_at').order('created_at', { ascending: true }).limit(1)
-			]);
+			const userRes = await supabase
+				.from('user')
+				.select('*')
+				.order('created_at', { ascending: false })
+				.not('confirmed_at', 'is', null)
+				.limit(maxResCount);
+			if (userRes.data) {
+				users = userRes.data;
+				initialUsers = [...users];
+			}
+			const [proCountRes, freeCountRes, giftedCountRes, friendBoughtCountRes, startDateRes] =
+				await Promise.all([
+					supabase
+						.from('user')
+						.select('*', { head: true, count: 'exact' })
+						.match({ subscription_tier: 'PRO' }),
+					supabase
+						.from('user')
+						.select('*', { head: true, count: 'exact' })
+						.filter('subscription_tier', 'eq', 'FREE')
+						.not('confirmed_at', 'is', null),
+					supabase
+						.from('user')
+						.select('*', { head: true, count: 'exact' })
+						.match({ subscription_category: 'GIFTED' }),
+					supabase
+						.from('user')
+						.select('*', { head: true, count: 'exact' })
+						.match({ subscription_category: 'FRIEND_BOUGHT' }),
+					supabase
+						.from('user')
+						.select('created_at')
+						.order('created_at', { ascending: true })
+						.limit(1)
+				]);
 			if (
-				userRes.data &&
 				proCountRes.count &&
 				freeCountRes.count &&
 				giftedCountRes.count &&
 				friendBoughtCountRes.count &&
 				startDateRes.data?.[0].created_at
 			) {
-				users = userRes.data;
 				proCount = proCountRes.count;
 				freeCount = freeCountRes.count;
 				giftedCount = giftedCountRes.count;
@@ -93,6 +92,52 @@
 			}
 		} catch (error) {
 			console.log(error);
+		}
+	}
+
+	const atTheTopThreshold = 80;
+	const minScrollThreshold = 40;
+	let searchTimeout: NodeJS.Timeout;
+	let searchDebounceMs = 200;
+	let searchStatus: 'idle' | 'searching' | 'searched' = 'idle';
+
+	$: searchString, searchWithDebounce(searchString);
+
+	let scrollDirection: 'up' | 'down' = 'up';
+	let oldScrollY = 0;
+	let atTheTop = true;
+
+	async function searchWithDebounce(s: string) {
+		if (!initialUsers) return;
+		if (searchTimeout) {
+			clearTimeout(searchTimeout);
+			searchStatus = 'idle';
+		}
+		if (!s) {
+			users = [...initialUsers];
+			searchStatus = 'idle';
+			return;
+		}
+		if (searchStatus === 'searching') return;
+		searchTimeout = setTimeout(async () => {
+			search(s);
+		}, searchDebounceMs);
+	}
+
+	async function search(s: string) {
+		searchStatus = 'searching';
+		try {
+			const { data, error } = await supabase
+				.from('user')
+				.select('*')
+				.ilike('email', `%${s}%`)
+				.limit(maxResCount);
+			if (error) console.log(error);
+			if (data) users = [...data];
+		} catch (error) {
+			console.log(error);
+		} finally {
+			searchStatus = 'searched';
 		}
 	}
 </script>
@@ -104,8 +149,26 @@
 	canonical="{canonicalUrl}{$page.url.pathname}"
 />
 
+<svelte:window
+	on:scroll={() => {
+		if (Math.abs(window.scrollY) < atTheTopThreshold) {
+			atTheTop = true;
+			return;
+		} else {
+			atTheTop = false;
+		}
+		if (Math.abs(window.scrollY - oldScrollY) < minScrollThreshold) return;
+		if (window.scrollY > oldScrollY) {
+			scrollDirection = 'down';
+		} else {
+			scrollDirection = 'up';
+		}
+		oldScrollY = window.scrollY;
+	}}
+/>
+
 <PageWrapper noPadding>
-	<div style="top: {$navbarHeight}px" class="flex justify-center z-10 sticky py-2.5">
+	<div class="w-full flex justify-center py-2.5">
 		<div
 			class="flex flex-col bg-c-bg ring-2 ring-c-bg-secondary rounded-2xl shadow-lg 
 			shadow-c-shadow/[var(--o-shadow-normal)] -mx-3.5"
@@ -114,13 +177,13 @@
 				<div class="flex gap-3 items-center">
 					<TierBadge tier={'PRO'} size="md" />
 					<p class="font-bold text-xl text-c-primary pr-4">
-						{users ? proCount - giftedCount - friendBoughtCount : '---'}
+						{proCount !== undefined ? proCount - giftedCount - friendBoughtCount : '---'}
 					</p>
 				</div>
 				<div class="flex gap-3 items-center">
 					<TierBadge tier={'FREE'} size="md" />
 					<p class="font-bold text-xl text-c-on-bg pr-4">
-						{users ? freeCount : '----'}
+						{freeCount !== undefined ? freeCount : '----'}
 					</p>
 				</div>
 			</div>
@@ -134,7 +197,26 @@
 			</div>
 		</div>
 	</div>
-	<div class="flex flex-col items-center my-auto gap-8 z-0 mt-3 -mx-3.5">
+	<div
+		style="top: {$navbarHeight}px"
+		class="w-full py-2 flex justify-center sticky z-10 transition {scrollDirection === 'up'
+			? 'translate-y-0 opacity-100'
+			: '-translate-y-22 pointer-events-none opacity-0'}"
+	>
+		<Input
+			disabled={!initialUsers || scrollDirection === 'down'}
+			class="w-full max-w-2xl -mx-3.5"
+			bind:value={searchString}
+			title={$LL.Gallery.SearchInput.Title()}
+			hasIcon
+			hasClearButton
+			bg="bg-secondary"
+			shadow={!atTheTop ? 'strongest' : 'normal'}
+		>
+			<IconSearch slot="icon" class="w-full h-full" />
+		</Input>
+	</div>
+	<div class="flex flex-col items-center my-auto gap-8 z-0 mt-2 -mx-3.5">
 		<div class="w-full md:max-w-4xl flex flex-col items-center justify-center gap-2">
 			{#if users}
 				{#each users as user}
