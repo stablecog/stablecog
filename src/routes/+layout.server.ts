@@ -7,21 +7,6 @@ export const load: LayoutServerLoad = async (event) => {
 	let plan: IUserPlan = 'ANONYMOUS';
 	let session = await getServerSession(event);
 	const { supabaseClient } = await getSupabase(event);
-	const minExpire = 60 * 60 * 1.1;
-	const now = Math.round(Date.now() / 1000);
-	if (session && session.expires_at && session.expires_at - now > minExpire) {
-		try {
-			let { data, error } = await supabaseClient.auth.refreshSession(session);
-			if (error) {
-				throw Error(error.message);
-			}
-			if (data) {
-				session = data.session;
-			}
-		} catch (error) {
-			session = null;
-		}
-	}
 	if (session?.user.id) {
 		try {
 			const { data } = await supabaseClient
@@ -31,8 +16,14 @@ export const load: LayoutServerLoad = async (event) => {
 				.maybeSingle();
 			if (data && data.subscription_tier) {
 				plan = data.subscription_tier;
+			} else {
+				let { data } = await supabaseClient.auth.refreshSession(session);
+				if (data && data.session) {
+					session = data.session;
+				} else throw Error('No session found');
 			}
 		} catch (error) {
+			session = null;
 			console.error(error);
 		}
 	}
