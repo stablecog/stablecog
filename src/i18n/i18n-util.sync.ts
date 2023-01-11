@@ -10,6 +10,8 @@ import en from './en'
 import es from './es'
 import fr from './fr'
 import hi from './hi'
+import hr from './hr'
+import ja from './ja'
 import ko from './ko'
 import pt_br from './pt-br'
 import pt_pt from './pt-pt'
@@ -24,6 +26,8 @@ const localeTranslations = {
 	es,
 	fr,
 	hi,
+	hr,
+	ja,
 	ko,
 	'pt-br': pt_br,
 	'pt-pt': pt_pt,
