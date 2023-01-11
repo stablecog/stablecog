@@ -21,6 +21,14 @@ export const load: LayoutLoad = async (event) => {
 				let { data } = await supabaseClient.auth.refreshSession(session);
 				if (data && data.session) {
 					session = data.session;
+					const { data: userData } = await supabaseClient
+						.from('user')
+						.select('subscription_tier')
+						.eq('id', session.user.id)
+						.maybeSingle();
+					if (userData && userData.subscription_tier) {
+						plan = userData.subscription_tier;
+					} else throw Error('No user found');
 				} else throw Error('No session found');
 			}
 		} catch (error) {
