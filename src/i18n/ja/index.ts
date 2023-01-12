@@ -41,7 +41,7 @@ const ja: Translation = {
 			Paragraph: '画像生成するために使用されるAIモデル。'
 		},
 		SchedulerDropdown: {
-			Title: 'スケジューラ',
+			Title: 'スケジュラー',
 			Paragraph:
 				'特定の方法で画像を拡散します。生成された画像を大幅に変更することができます。スケジュラーによっては、任意の結果を生み出すために必要なステップ数が少ない場合があります。'
 		},
@@ -308,7 +308,7 @@ const ja: Translation = {
 			Upscale: '画像のアップスケーリング',
 			Steps: '様々な推論ステップ',
 			MoreModels: 'より多くのモデル',
-			MoreSchedulers: 'より多くのスケジューラー',
+			MoreSchedulers: 'より多くのスケジュラー',
 			SavedToCloud: '生成画像をクラウドに保存',
 			Upcoming: '今後追加される機能',
 			CommercialUse: '商用利用'
@@ -333,7 +333,7 @@ const ja: Translation = {
 			ParagraphUpscale: 'アップスケール機能は無料プランでは利用できません。',
 			ParagraphInferenceSteps: 'この推論ステップの設定は無料プランでは利用できません。',
 			ParagraphModel: 'このAIモデルは無料プランでは利用できません。',
-			ParagraphScheduler: 'このスケジューラは無料プランでは利用できません。',
+			ParagraphScheduler: 'このスケジュラーは無料プランでは利用できません。',
 			ParagraphWidthGeneration:
 				'その生成は、無料プランでは利用できない画像幅を使用して作成されました。',
 			ParagraphHeightGeneration:
@@ -345,7 +345,7 @@ const ja: Translation = {
 			ParagraphModelGeneration:
 				'その世代は、無料プランでは利用できないAIモデルを使用して作成されました。',
 			ParagraphSchedulerGeneration:
-				'その生成は、無料プランでは利用できないスケジューラを使用して作成されました。'
+				'その生成は、無料プランでは利用できないスケジュラーを使用して作成されました。'
 		},
 		Tier: {
 			Title: {
