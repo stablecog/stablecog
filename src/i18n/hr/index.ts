@@ -95,7 +95,7 @@ const hr: Translation = {
 		Title: 'Postavke',
 		SwitchServerButton: 'Promijeni server',
 		SubmitToGalleryToggle: 'Slanje u galeriju',
-		AdvancedModeToggle: 'Napredni način rada',
+		AdvancedModeToggle: 'Napredni način',
 		AdvancedOptionsDropdown: 'Napredne mogućnosti',
 		AdvancedDropdown: 'Napredno',
 		GenerationSettingsButton: 'Postavke generiranja',
