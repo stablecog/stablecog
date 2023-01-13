@@ -25,6 +25,7 @@ var MEILI_URL = func() string {
 }()
 var SENTRY_DSN_URL = GetEnv("SENTRY_DSN_URL", "")
 var QUEUE_SECRET = GetEnv("QUEUE_SECRET", "")
+var PUBLIC_API_URL = GetEnv("PUBLIC_API_URL", "https://api.stablecog.com")
 
 var SupabaseDb = postgrest.NewClient(PUBLIC_SUPABASE_POSTGREST_URL, "", map[string]string{
 	"Authorization": "Bearer " + SUPABASE_ADMIN_KEY,

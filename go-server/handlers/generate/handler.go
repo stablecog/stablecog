@@ -584,7 +584,7 @@ func HandlerV2(c *fiber.Ctx) error {
 	requestId := uuid.NewString()
 	cogReqBody := shared.SCogGenerateRequestQueue{
 		WebhookEventFilters: []shared.WebhookEventFilterOption{"start", "completed"},
-		Webhook:             fmt.Sprintf("/queue/webhook/%s", shared.QUEUE_SECRET),
+		Webhook:             fmt.Sprintf("%s/queue/webhook/%s", shared.PUBLIC_API_URL, shared.QUEUE_SECRET),
 		Input: shared.SCogGenerateRequestInput{
 			ID:                requestId,
 			Prompt:            cleanedPrompt,
@@ -687,7 +687,6 @@ func HandlerV2(c *fiber.Ctx) error {
 			SGenerateResponse{Error: "Cog server returned invalid output"},
 		)
 	}
-	defer res.Body.Close()
 	if res.StatusCode != http.StatusOK {
 		go UpdateGenerationAsFailed(generationIdChan, generationCogDurationMs, false)
 		log.Printf("Cog server returned invalid output")
@@ -696,6 +695,7 @@ func HandlerV2(c *fiber.Ctx) error {
 			SGenerateResponse{Error: "Cog server returned invalid output"},
 		)
 	}
+	defer res.Body.Close()
 	// read the body of the response
 	bytes, err := ioutil.ReadAll(res.Body)
 	if err != nil {
@@ -709,6 +709,7 @@ func HandlerV2(c *fiber.Ctx) error {
 
 	// Convert bytes to base64 string
 	output = base64.StdEncoding.EncodeToString(bytes)
+	output = "data:image/jpeg;base64," + output
 
 	isNSFW := IsNSFW(output)
 	if isNSFW {
