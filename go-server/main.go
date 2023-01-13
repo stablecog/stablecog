@@ -71,7 +71,6 @@ func main() {
 	go cronStats.GetAndSetStats()
 	go cronMeili.SyncMeili()
 
-	app.Post("/webhook", queueWebhook.Handler)
 	app.Post("/generate", generate.Handler)
 	app.Post("/v2/generate", generate.HandlerV2)
 	app.Post("/upscale", upscale.Handler)
@@ -81,11 +80,15 @@ func main() {
 	app.Get("/stats", func(c *fiber.Ctx) error {
 		return c.JSON(cronStats.Stats)
 	})
+
+	app.Post(fmt.Sprintf("/queue/webhook/%s", shared.QUEUE_SECRET), queueWebhook.Handler)
+	app.Put(fmt.Sprintf("/queue/upload/%s/*", shared.QUEUE_SECRET), queueUpload.Handler)
+
+	app.Get("/user/generations", user.GenerationsHandler)
+
 	app.Get("/ping", func(c *fiber.Ctx) error {
 		return c.SendString("pong")
 	})
-	app.Put(fmt.Sprintf("/queue/upload/%s/*", shared.S3UploadPrivateBucketPath), queueUpload.Handler)
-	app.Get("/user/generations", user.GenerationsHandler)
 	app.Get("/", func(c *fiber.Ctx) error {
 		return c.SendString("API is up and running")
 	})

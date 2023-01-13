@@ -3,7 +3,9 @@ package generate
 import (
 	"bytes"
 	"context"
+	"encoding/base64"
 	"fmt"
+	"io/ioutil"
 	"log"
 	"math/rand"
 	"net/http"
@@ -580,7 +582,9 @@ func HandlerV2(c *fiber.Ctx) error {
 		UserTier:          subscriptionTier,
 	})
 	requestId := uuid.NewString()
-	cogReqBody := shared.SCogGenerateRequestBody{
+	cogReqBody := shared.SCogGenerateRequestQueue{
+		WebhookEventFilters: []shared.WebhookEventFilterOption{"start", "completed"},
+		Webhook:             fmt.Sprintf("/queue/webhook/%s", shared.QUEUE_SECRET),
 		Input: shared.SCogGenerateRequestInput{
 			ID:                requestId,
 			Prompt:            cleanedPrompt,
@@ -674,6 +678,38 @@ func HandlerV2(c *fiber.Ctx) error {
 		),
 		logObj,
 	)
+	res, err := http.Get(output)
+	if err != nil {
+		go UpdateGenerationAsFailed(generationIdChan, generationCogDurationMs, false)
+		log.Printf("Cog server returned invalid output")
+		shared.DeleteOngoingGenerationOrUpscale("goa_active", supabaseUserId)
+		return c.Status(http.StatusInternalServerError).JSON(
+			SGenerateResponse{Error: "Cog server returned invalid output"},
+		)
+	}
+	defer res.Body.Close()
+	if res.StatusCode != http.StatusOK {
+		go UpdateGenerationAsFailed(generationIdChan, generationCogDurationMs, false)
+		log.Printf("Cog server returned invalid output")
+		shared.DeleteOngoingGenerationOrUpscale("goa_active", supabaseUserId)
+		return c.Status(http.StatusInternalServerError).JSON(
+			SGenerateResponse{Error: "Cog server returned invalid output"},
+		)
+	}
+	// read the body of the response
+	bytes, err := ioutil.ReadAll(res.Body)
+	if err != nil {
+		go UpdateGenerationAsFailed(generationIdChan, generationCogDurationMs, false)
+		log.Printf("Couldn't read cog server response")
+		shared.DeleteOngoingGenerationOrUpscale("goa_active", supabaseUserId)
+		return c.Status(http.StatusInternalServerError).JSON(
+			SGenerateResponse{Error: "Couldn't read cog server response"},
+		)
+	}
+
+	// Convert bytes to base64 string
+	output = base64.StdEncoding.EncodeToString(bytes)
+
 	isNSFW := IsNSFW(output)
 	if isNSFW {
 		go UpdateGenerationAsFailed(generationIdChan, generationCogDurationMs, true)

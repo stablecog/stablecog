@@ -158,3 +158,9 @@ type SGenerateOrUpscaleRequestBody struct {
 	AccessToken           string  `json:"access_token,omitempty"`
 	ImageB64              string  `json:"image_b64,omitempty"`
 }
+
+type SCogGenerateRequestQueue struct {
+	Input               SCogGenerateRequestInput   `json:"input"`
+	WebhookEventFilters []WebhookEventFilterOption `json:"webhook_event_filters"`
+	Webhook             string                     `json:"webhook"`
+}

@@ -14,7 +14,6 @@ import (
 var S3BucketPublic = "stablecog"
 var S3BucketPrivate = "stablecog-private"
 var S3BucketPrivateQueueOutputFolder = "queue/output"
-var S3UploadPrivateBucketPath = os.Getenv("R2_UPLOAD_PRIVATE_BUCKET_PATH")
 var accountId = os.Getenv("CLOUDFLARE_ACCOUNT_ID")
 var accessKeyId = os.Getenv("R2_ACCESS_KEY_ID")
 var secretKey = os.Getenv("R2_SECRET_ACCESS_KEY")

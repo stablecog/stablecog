@@ -8,6 +8,14 @@ const (
 	WebhookProcessing WebhookStatus = "processing"
 )
 
+type WebhookEventFilterOption string
+
+const (
+	WebhookEventStart     WebhookEventFilterOption = "start"
+	WebhookEventOutput    WebhookEventFilterOption = "output"
+	WebhookEventCompleted WebhookEventFilterOption = "completed"
+)
+
 type WebhookRequestInput struct {
 	Id     string `json:"id"`
 	Prompt string `json:"prompt"`
