@@ -8,6 +8,8 @@ import (
 
 var Redis *redis.Client
 
+const WEBHOOK_QUEUE_COMPLETE_CHANNEL = "queue:complete"
+
 func SetupRedis() {
 	var url string
 	if GetEnv("RENDER", "") != "" {

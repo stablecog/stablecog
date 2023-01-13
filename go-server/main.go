@@ -1,6 +1,8 @@
 package main
 
 import (
+	"context"
+	"encoding/json"
 	"flag"
 	"fmt"
 	"log"
@@ -11,14 +13,15 @@ import (
 	"github.com/gofiber/fiber/v2/middleware/cors"
 	"github.com/h2non/bimg"
 	"github.com/robfig/cron/v3"
-	"github.com/yekta/stablecog/go-server/cron/health"
-	"github.com/yekta/stablecog/go-server/cron/meili"
-	"github.com/yekta/stablecog/go-server/cron/stats"
+	cronHealth "github.com/yekta/stablecog/go-server/cron/health"
+	cronMeili "github.com/yekta/stablecog/go-server/cron/meili"
+	cronStats "github.com/yekta/stablecog/go-server/cron/stats"
 	"github.com/yekta/stablecog/go-server/handlers/gallery"
 	"github.com/yekta/stablecog/go-server/handlers/generate"
 	generationGImage "github.com/yekta/stablecog/go-server/handlers/generation-g-image"
 	"github.com/yekta/stablecog/go-server/handlers/health"
-	"github.com/yekta/stablecog/go-server/handlers/queue/upload"
+	queueUpload "github.com/yekta/stablecog/go-server/handlers/queue/upload"
+	queueWebhook "github.com/yekta/stablecog/go-server/handlers/queue/webhook"
 	"github.com/yekta/stablecog/go-server/handlers/upscale"
 	"github.com/yekta/stablecog/go-server/handlers/user"
 	"github.com/yekta/stablecog/go-server/shared"
@@ -41,7 +44,9 @@ func main() {
 	bimg.VipsCacheSetMax(0)
 	defer bimg.Shutdown()
 
+	// ! I don't like either of these
 	shared.SetupRedis()
+	shared.InitSyncArray()
 
 	app := fiber.New()
 	cors := cors.New(cors.Config{
@@ -82,6 +87,24 @@ func main() {
 	app.Get("/", func(c *fiber.Ctx) error {
 		return c.SendString("API is up and running")
 	})
+
+	// Subscribe to webhook channel
+	ctx := context.Background()
+	pubsub := shared.Redis.Subscribe(ctx, shared.WEBHOOK_QUEUE_COMPLETE_CHANNEL)
+	defer pubsub.Close()
+
+	// Listen for messages
+	for msg := range pubsub.Channel() {
+		var WebhookMessage queueWebhook.WebhookRequest
+		err := json.Unmarshal([]byte(msg.Payload), &WebhookMessage)
+		if err != nil {
+			log.Printf("--- Error unmarshalling webhook message: %v", err)
+			sentry.CaptureException(err)
+			continue
+		}
+
+		// ! TODO do something with the message
+	}
 
 	log.Fatal(app.Listen(fmt.Sprintf(":%d", *serverPort)))
 }
