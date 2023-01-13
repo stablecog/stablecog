@@ -620,6 +620,7 @@ func HandlerV2(c *fiber.Ctx) error {
 	// Send request to cog
 	_, err := shared.Redis.XAdd(c.Context(), &redis.XAddArgs{
 		Stream: "input_queue",
+		ID:     "*",
 		Values: cogReqBody,
 	}).Result()
 	if err != nil {
