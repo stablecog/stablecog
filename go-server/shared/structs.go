@@ -87,6 +87,7 @@ type SCogGenerateRequestBody struct {
 	Input SCogGenerateRequestInput `json:"input"`
 }
 type SCogGenerateRequestInput struct {
+	ID                string  `json:"id"`
 	Prompt            string  `json:"prompt"`
 	NegativePrompt    string  `json:"negative_prompt,omitempty"`
 	Width             string  `json:"width"`
