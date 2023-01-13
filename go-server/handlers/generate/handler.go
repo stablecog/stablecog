@@ -625,7 +625,7 @@ func HandlerV2(c *fiber.Ctx) error {
 	if err != nil {
 		generationCogEnd := time.Now().UTC().UnixMilli()
 		go UpdateGenerationAsFailed(generationIdChan, generationCogEnd-generationCogStart, false)
-		log.Printf("Failed to write request to queue: %s", requestId)
+		log.Printf("Failed to write request %s to queue: %v", requestId, err)
 		shared.DeleteOngoingGenerationOrUpscale("goa_active", supabaseUserId)
 		return c.Status(http.StatusInternalServerError).JSON(
 			SGenerateResponse{Error: "Unable to add request to queue"},
