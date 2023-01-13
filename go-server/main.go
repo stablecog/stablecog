@@ -93,6 +93,9 @@ func main() {
 		return c.SendString("API is up and running")
 	})
 
+	log.Printf("Listening on port %d", *serverPort)
+	log.Fatal(app.Listen(fmt.Sprintf(":%d", *serverPort)))
+
 	// Subscribe to webhook channel
 	ctx := context.Background()
 	pubsub := shared.Redis.Subscribe(ctx, shared.WEBHOOK_QUEUE_COMPLETE_CHANNEL)
@@ -114,6 +117,4 @@ func main() {
 			activeChannel.Chan <- WebhookMessage
 		}
 	}
-
-	log.Fatal(app.Listen(fmt.Sprintf(":%d", *serverPort)))
 }

@@ -7,6 +7,9 @@ import (
 )
 
 func IsRateLimited(prefix string, duration time.Duration, supabaseUserId string) bool {
+	if Contains(SUPABASE_ADMINS, supabaseUserId) {
+		return false
+	}
 	rctx := Redis.Context()
 	userKey := fmt.Sprintf("rl:%s:uid:%s", prefix, supabaseUserId)
 	val := Redis.Get(rctx, userKey).Val()
@@ -21,6 +24,9 @@ func IsRateLimited(prefix string, duration time.Duration, supabaseUserId string)
 }
 
 func HasOnGoingGenerationOrUpscale(prefix string, supabaseUserId string) bool {
+	if Contains(SUPABASE_ADMINS, supabaseUserId) {
+		return false
+	}
 	rctx := Redis.Context()
 	userKey := fmt.Sprintf("rl:%s:uid:%s", prefix, supabaseUserId)
 	val := Redis.Get(rctx, userKey).Val()

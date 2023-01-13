@@ -2,6 +2,7 @@ package shared
 
 import (
 	"fmt"
+	"strings"
 	"time"
 
 	"github.com/fatih/color"
@@ -21,6 +22,15 @@ var MEILI_URL = func() string {
 		return GetEnv("MEILI_URL_RENDER", "")
 	} else {
 		return GetEnv("MEILI_URL", "")
+	}
+}()
+var SUPABASE_ADMINS = func() []string {
+	adminsString := GetEnv("SUPABASE_ADMINS", "")
+	if adminsString == "" {
+		return []string{}
+	} else {
+		adminsSlice := strings.Split(adminsString, ",")
+		return adminsSlice
 	}
 }()
 var SENTRY_DSN_URL = GetEnv("SENTRY_DSN_URL", "")
