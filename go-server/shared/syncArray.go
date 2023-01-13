@@ -9,7 +9,7 @@ var GenerateSyncArray *SyncArray
 
 type ActiveChannelObject struct {
 	RequestID string
-	Chan      chan []byte
+	Chan      chan WebhookRequest
 }
 
 // SyncArray builds an thread-safe array with some handy methods

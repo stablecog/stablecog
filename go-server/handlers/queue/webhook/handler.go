@@ -12,14 +12,14 @@ import (
 
 // HTTP Post endpoint from the cog
 func Handler(c *fiber.Ctx) error {
-	var req WebhookRequest
+	var req shared.WebhookRequest
 	if err := c.BodyParser(&req); err != nil {
 		log.Printf("-- Invalid request body: %v --", err)
 		sentry.CaptureException(err)
 		return c.SendStatus(http.StatusBadRequest)
 	}
 
-	if req.Status == Complete {
+	if req.Status == shared.WebhookComplete || req.Status == shared.WebhookFailed {
 		// Publish to redis channel
 		marshalled, err := json.Marshal(req)
 		if err != nil {

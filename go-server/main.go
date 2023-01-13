@@ -71,7 +71,9 @@ func main() {
 	go cronStats.GetAndSetStats()
 	go cronMeili.SyncMeili()
 
+	app.Post("/webhook", queueWebhook.Handler)
 	app.Post("/generate", generate.Handler)
+	app.Post("/v2/generate", generate.HandlerV2)
 	app.Post("/upscale", upscale.Handler)
 	app.Get("/gallery", gallery.Handler)
 	app.Post("/health", health.Handler)
@@ -95,7 +97,7 @@ func main() {
 
 	// Listen for messages
 	for msg := range pubsub.Channel() {
-		var WebhookMessage queueWebhook.WebhookRequest
+		var WebhookMessage shared.WebhookRequest
 		err := json.Unmarshal([]byte(msg.Payload), &WebhookMessage)
 		if err != nil {
 			log.Printf("--- Error unmarshalling webhook message: %v", err)
@@ -103,7 +105,11 @@ func main() {
 			continue
 		}
 
-		// ! TODO do something with the message
+		activeChannel := shared.GenerateSyncArray.Get(WebhookMessage.Input.Id)
+		// Write to channel
+		if activeChannel != nil {
+			activeChannel.Chan <- WebhookMessage
+		}
 	}
 
 	log.Fatal(app.Listen(fmt.Sprintf(":%d", *serverPort)))
