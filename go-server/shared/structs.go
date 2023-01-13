@@ -1,7 +1,5 @@
 package shared
 
-import "encoding/json"
-
 type SDBGeneration struct {
 	Id            string `json:"id"`
 	Status        string `json:"status"`
@@ -165,8 +163,4 @@ type SCogGenerateRequestQueue struct {
 	Input               SCogGenerateRequestInput   `json:"input"`
 	WebhookEventFilters []WebhookEventFilterOption `json:"webhook_event_filters"`
 	Webhook             string                     `json:"webhook"`
-}
-
-func (i SCogGenerateRequestQueue) MarshalBinary() (data []byte, err error) {
-	return json.Marshal(i)
 }

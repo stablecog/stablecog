@@ -629,7 +629,7 @@ func HandlerV2(c *fiber.Ctx) error {
 	// Send request to cog
 	_, err = shared.Redis.XAdd(c.Context(), &redis.XAddArgs{
 		Stream: "input_queue",
-		Values: cogReqBodyBytes,
+		Values: []interface{}{string(cogReqBodyBytes)},
 	}).Result()
 	if err != nil {
 		generationCogEnd := time.Now().UTC().UnixMilli()
