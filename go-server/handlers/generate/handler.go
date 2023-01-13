@@ -618,10 +618,19 @@ func HandlerV2(c *fiber.Ctx) error {
 	defer shared.GenerateSyncArray.Delete(requestId)
 
 	// Send request to cog
-	shared.Redis.XAdd(c.Context(), &redis.XAddArgs{
+	_, err := shared.Redis.XAdd(c.Context(), &redis.XAddArgs{
 		Stream: "input_queue",
 		Values: cogReqBody,
-	})
+	}).Result()
+	if err != nil {
+		generationCogEnd := time.Now().UTC().UnixMilli()
+		go UpdateGenerationAsFailed(generationIdChan, generationCogEnd-generationCogStart, false)
+		log.Printf("Failed to write request to queue: %s", requestId)
+		shared.DeleteOngoingGenerationOrUpscale("goa_active", supabaseUserId)
+		return c.Status(http.StatusInternalServerError).JSON(
+			SGenerateResponse{Error: "Unable to add request to queue"},
+		)
+	}
 
 	// Wait for response on generateChannel with timeout
 	var output string
