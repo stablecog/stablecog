@@ -602,15 +602,6 @@ func HandlerV2(c *fiber.Ctx) error {
 			OutputImageExt:    req.OutputImageExt,
 		},
 	}
-	cogReqBodyBytes, err := json.Marshal(cogReqBody)
-	if err != nil {
-		go UpdateGenerationAsFailed(generationIdChan, 0, false)
-		log.Printf("Failed to marshal cog request %s: %v", requestId, err)
-		shared.DeleteOngoingGenerationOrUpscale("goa_active", supabaseUserId)
-		return c.Status(http.StatusInternalServerError).JSON(
-			SGenerateResponse{Error: "Unable to process cog request"},
-		)
-	}
 	generationCogStart := time.Now().UTC().UnixMilli()
 
 	// ! Start V2 stuff
@@ -627,9 +618,10 @@ func HandlerV2(c *fiber.Ctx) error {
 	defer shared.GenerateSyncArray.Delete(requestId)
 
 	// Send request to cog
-	_, err = shared.Redis.XAdd(c.Context(), &redis.XAddArgs{
+	_, err := shared.Redis.XAdd(c.Context(), &redis.XAddArgs{
 		Stream: "input_queue",
-		Values: []interface{}{string(cogReqBodyBytes)},
+		ID:     "*", // Auto generate ID
+		Values: []interface{}{"value", cogReqBody},
 	}).Result()
 	if err != nil {
 		generationCogEnd := time.Now().UTC().UnixMilli()
