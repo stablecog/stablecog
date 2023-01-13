@@ -168,6 +168,5 @@ type SCogGenerateRequestQueue struct {
 }
 
 func (i SCogGenerateRequestQueue) MarshalBinary() (data []byte, err error) {
-	bytes, err := json.Marshal(i)
-	return bytes, err
+	return json.Marshal(i)
 }
