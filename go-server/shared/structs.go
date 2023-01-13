@@ -1,5 +1,7 @@
 package shared
 
+import "encoding/json"
+
 type SDBGeneration struct {
 	Id            string `json:"id"`
 	Status        string `json:"status"`
@@ -87,20 +89,20 @@ type SCogGenerateRequestBody struct {
 	Input SCogGenerateRequestInput `json:"input"`
 }
 type SCogGenerateRequestInput struct {
-	ID                string  `json:"id" mapstructure:"id"`
-	Prompt            string  `json:"prompt" mapstructure:"prompt"`
-	NegativePrompt    string  `json:"negative_prompt,omitempty" mapstructure:"negative_prompt"`
-	Width             string  `json:"width" mapstructure:"width"`
-	Height            string  `json:"height" mapstructure:"height"`
-	OutputImageExt    string  `json:"output_image_ext" mapstructure:"output_image_ext"`
-	NumInferenceSteps string  `json:"num_inference_steps" mapstructure:"num_inference_steps"`
-	GuidanceScale     string  `json:"guidance_scale" mapstructure:"guidance_scale"`
-	Model             string  `json:"model" mapstructure:"model"`
-	Scheduler         string  `json:"scheduler" mapstructure:"scheduler"`
-	InitImage         string  `json:"init_image,omitempty" mapstructure:"init_image"`
-	PromptStrength    float32 `json:"prompt_strength,omitempty" mapstructure:"prompt_strength"`
-	Mask              string  `json:"mask,omitempty" mapstructure:"mask"`
-	Seed              string  `json:"seed" mapstructure:"seed"`
+	ID                string  `json:"id"`
+	Prompt            string  `json:"prompt"`
+	NegativePrompt    string  `json:"negative_prompt,omitempty"`
+	Width             string  `json:"width"`
+	Height            string  `json:"height"`
+	OutputImageExt    string  `json:"output_image_ext"`
+	NumInferenceSteps string  `json:"num_inference_steps"`
+	GuidanceScale     string  `json:"guidance_scale"`
+	Model             string  `json:"model"`
+	Scheduler         string  `json:"scheduler"`
+	InitImage         string  `json:"init_image,omitempty"`
+	PromptStrength    float32 `json:"prompt_strength,omitempty"`
+	Mask              string  `json:"mask,omitempty"`
+	Seed              string  `json:"seed"`
 }
 
 type SUpscaleRequestBody struct {
@@ -160,7 +162,11 @@ type SGenerateOrUpscaleRequestBody struct {
 }
 
 type SCogGenerateRequestQueue struct {
-	Input               SCogGenerateRequestInput   `json:"input" mapstructure:"input"`
-	WebhookEventFilters []WebhookEventFilterOption `json:"webhook_event_filters" mapstructure:"webhook_event_filters"`
-	Webhook             string                     `json:"webhook" mapstructure:"webhook"`
+	Input               SCogGenerateRequestInput   `json:"input"`
+	WebhookEventFilters []WebhookEventFilterOption `json:"webhook_event_filters"`
+	Webhook             string                     `json:"webhook"`
+}
+
+func (i SCogGenerateRequestQueue) MarshalBinary() (data []byte, err error) {
+	return json.Marshal(i)
 }

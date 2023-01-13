@@ -15,7 +15,6 @@ import (
 	"github.com/go-redis/redis/v8"
 	"github.com/goccy/go-json"
 	"github.com/google/uuid"
-	"github.com/mitchellh/mapstructure"
 
 	"github.com/fatih/color"
 	"github.com/gofiber/fiber/v2"
@@ -603,15 +602,13 @@ func HandlerV2(c *fiber.Ctx) error {
 			OutputImageExt:    req.OutputImageExt,
 		},
 	}
-	// ! Some backwards stuff because go-redis doesn't take a struct for xadd?
-	var cogReqBodyMap map[string]interface{}
-	err := mapstructure.Decode(cogReqBody, &cogReqBodyMap)
+	cogReqBodyBytes, err := json.Marshal(cogReqBody)
 	if err != nil {
 		go UpdateGenerationAsFailed(generationIdChan, 0, false)
-		log.Printf("Failed to encode cog request to map %s: %v", requestId, err)
+		log.Printf("Failed to marshal cog request %s: %v", requestId, err)
 		shared.DeleteOngoingGenerationOrUpscale("goa_active", supabaseUserId)
 		return c.Status(http.StatusInternalServerError).JSON(
-			SGenerateResponse{Error: "Unable to add request to queue"},
+			SGenerateResponse{Error: "Unable to process cog request"},
 		)
 	}
 	generationCogStart := time.Now().UTC().UnixMilli()
@@ -632,7 +629,7 @@ func HandlerV2(c *fiber.Ctx) error {
 	// Send request to cog
 	_, err = shared.Redis.XAdd(c.Context(), &redis.XAddArgs{
 		Stream: "input_queue",
-		Values: cogReqBodyMap,
+		Values: cogReqBodyBytes,
 	}).Result()
 	if err != nil {
 		generationCogEnd := time.Now().UTC().UnixMilli()
