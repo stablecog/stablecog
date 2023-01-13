@@ -116,33 +116,31 @@ func UpdateGenerationAsSucceeded(
 		}
 		defer wg.Done()
 	}()
-	if supabaseUserId != "" && subscriptionTier == "PRO" {
-		wg.Add(1)
-		go func() {
-			imageId := uuid.New().String()
-			path := fmt.Sprintf("%s/%s.%s", supabaseUserId, imageId, imageExt)
-			name := fmt.Sprintf("%s.%s", imageId, imageExt)
-			buff, bErr := shared.BufferFromB64(b64)
-			if bErr != nil {
-				sentry.CaptureException(bErr)
-				log.Printf("-- Supabase Storage Upload - Error converting b64 to buffer: %v --", bErr)
-				return
-			}
-			buffWebp, wErr := bimg.NewImage(buff).Process(webpOptionsStorage)
-			if wErr != nil {
-				sentry.CaptureException(wErr)
-				log.Printf("-- Supabase Storage Upload - Error converting to webp: %v --", wErr)
-				return
-			}
-			data := bytes.NewReader(buffWebp)
-			res := shared.SupabaseStorage.UploadFile(bucketId, path, data)
-			if res.Key != "" {
-				imageObjectName = name
-			}
-			log.Printf("-- Supabase Storage Upload - Image Object Name: %s --", imageObjectName)
-			defer wg.Done()
-		}()
-	}
+	wg.Add(1)
+	go func() {
+		imageId := uuid.New().String()
+		path := fmt.Sprintf("%s/%s.%s", supabaseUserId, imageId, imageExt)
+		name := fmt.Sprintf("%s.%s", imageId, imageExt)
+		buff, bErr := shared.BufferFromB64(b64)
+		if bErr != nil {
+			sentry.CaptureException(bErr)
+			log.Printf("-- Supabase Storage Upload - Error converting b64 to buffer: %v --", bErr)
+			return
+		}
+		buffWebp, wErr := bimg.NewImage(buff).Process(webpOptionsStorage)
+		if wErr != nil {
+			sentry.CaptureException(wErr)
+			log.Printf("-- Supabase Storage Upload - Error converting to webp: %v --", wErr)
+			return
+		}
+		data := bytes.NewReader(buffWebp)
+		res := shared.SupabaseStorage.UploadFile(bucketId, path, data)
+		if res.Key != "" {
+			imageObjectName = name
+		}
+		log.Printf("-- Supabase Storage Upload - Image Object Name: %s --", imageObjectName)
+		defer wg.Done()
+	}()
 	wg.Wait()
 
 	var res SDBGenerationUpdateAsSucceededRes
