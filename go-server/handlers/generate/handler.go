@@ -690,7 +690,7 @@ func HandlerV2(c *fiber.Ctx) error {
 		),
 		logObj,
 	)
-	key := strings.Split("cloudflarestorage.com/", output)[1]
+	key := strings.Split(output, "cloudflarestorage.com/")[1]
 	res, err := shared.S3Client.GetObject(c.Context(), &s3.GetObjectInput{
 		Bucket: &shared.S3BucketPrivate,
 		Key:    &key,
