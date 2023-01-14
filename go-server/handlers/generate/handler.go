@@ -583,7 +583,7 @@ func HandlerV2(c *fiber.Ctx) error {
 	})
 	requestId := uuid.NewString()
 	cogReqBody := shared.SCogGenerateRequestQueue{
-		WebhookEventFilters: []shared.WebhookEventFilterOption{"start", "completed"},
+		WebhookEventsFilter: []shared.WebhookEventFilterOption{"start", "completed"},
 		Webhook:             fmt.Sprintf("%s/queue/webhook/%s", shared.PUBLIC_API_URL, shared.QUEUE_SECRET),
 		Input: shared.SCogGenerateRequestInput{
 			ID:                requestId,
