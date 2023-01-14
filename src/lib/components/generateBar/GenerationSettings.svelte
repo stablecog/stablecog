@@ -62,7 +62,7 @@
 		negativePromptInputValue
 	} from '$ts/stores/generationSettings';
 	import { isTouchscreen } from '$ts/stores/isTouchscreen';
-	import { currentServer } from '$ts/stores/serverHealth';
+
 	import type { TTab } from '$ts/types/main';
 
 	export let isCheckComplete: boolean;
@@ -103,9 +103,7 @@
 </script>
 
 <div class="w-full flex flex-wrap items-start justify-center px-2px py-4 gap-4">
-	{#if $advancedModeApp && ($currentServer.lastHealthStatus === 'unknown' || $currentServer.features
-				?.map((f) => f.name)
-				.includes('negative_prompt'))}
+	{#if $advancedModeApp}
 		<TabLikeInput
 			disabled={!isCheckComplete || disabled}
 			class="w-full md:w-172 max-w-full order-1"
@@ -187,34 +185,30 @@
 		{/if}
 	</div>
 
-	{#if $currentServer.lastHealthStatus === 'unknown' || $currentServer.features
-			?.map((f) => f.name)
-			.includes('model')}
-		<TabLikeDropdown
-			class="w-full md:w-84 max-w-full {$advancedModeApp ? 'order-1' : 'order-2'}"
-			{calculateDistance}
-			{container}
-			{containerTopMinDistance}
-			{containerBottomMinDistance}
-			bind:value={$generationModelId}
-			{disabled}
-			items={$availableModelIdDropdownItems}
-			badgeHref="/pro?reason=model"
-			badgeAppliedTo={$page.data.plan === 'FREE' || $page.data.plan === 'ANONYMOUS'
-				? availableModelIds.filter((i) => !availableModelIdsFree.includes(i))
-				: undefined}
-			name="Model"
-		>
-			<div slot="title" use:tooltip={$modelTooltip} class="p-3.5 flex items-center justify-center">
-				<IconBrain class="w-6 h-6 text-c-on-bg/25" />
-			</div>
-			<TierBadge
-				slot="badge"
-				tier="PRO"
-				class="absolute transform top-1/2 -translate-y-1/2 right-3 pointer-events-none"
-			/>
-		</TabLikeDropdown>
-	{/if}
+	<TabLikeDropdown
+		class="w-full md:w-84 max-w-full {$advancedModeApp ? 'order-1' : 'order-2'}"
+		{calculateDistance}
+		{container}
+		{containerTopMinDistance}
+		{containerBottomMinDistance}
+		bind:value={$generationModelId}
+		{disabled}
+		items={$availableModelIdDropdownItems}
+		badgeHref="/pro?reason=model"
+		badgeAppliedTo={$page.data.plan === 'FREE' || $page.data.plan === 'ANONYMOUS'
+			? availableModelIds.filter((i) => !availableModelIdsFree.includes(i))
+			: undefined}
+		name="Model"
+	>
+		<div slot="title" use:tooltip={$modelTooltip} class="p-3.5 flex items-center justify-center">
+			<IconBrain class="w-6 h-6 text-c-on-bg/25" />
+		</div>
+		<TierBadge
+			slot="badge"
+			tier="PRO"
+			class="absolute transform top-1/2 -translate-y-1/2 right-3 pointer-events-none"
+		/>
+	</TabLikeDropdown>
 	{#if $advancedModeApp}
 		<TabLikeRangeInput
 			{disabled}
@@ -267,38 +261,34 @@
 				</div>
 			{/if}
 		</div>
-		{#if $currentServer.lastHealthStatus === 'unknown' || $currentServer.features
-				?.map((f) => f.name)
-				.includes('scheduler')}
-			<TabLikeDropdown
-				class="w-full md:w-84 max-w-full order-2"
-				{calculateDistance}
-				{container}
-				{containerTopMinDistance}
-				{containerBottomMinDistance}
-				{disabled}
-				bind:value={$generationSchedulerId}
-				items={$availableSchedulerIdDropdownItems}
-				name="Scheduler"
-				badgeHref="/pro?reason=scheduler"
-				badgeAppliedTo={$page.data.plan === 'FREE' || $page.data.plan === 'ANONYMOUS'
-					? availableSchedulerIds.filter((i) => !availableSchedulerIdsFree.includes(i))
-					: undefined}
+		<TabLikeDropdown
+			class="w-full md:w-84 max-w-full order-2"
+			{calculateDistance}
+			{container}
+			{containerTopMinDistance}
+			{containerBottomMinDistance}
+			{disabled}
+			bind:value={$generationSchedulerId}
+			items={$availableSchedulerIdDropdownItems}
+			name="Scheduler"
+			badgeHref="/pro?reason=scheduler"
+			badgeAppliedTo={$page.data.plan === 'FREE' || $page.data.plan === 'ANONYMOUS'
+				? availableSchedulerIds.filter((i) => !availableSchedulerIdsFree.includes(i))
+				: undefined}
+		>
+			<div
+				slot="title"
+				use:tooltip={$schedulerTooltip}
+				class="p-3.5 flex items-center justify-center"
 			>
-				<div
-					slot="title"
-					use:tooltip={$schedulerTooltip}
-					class="p-3.5 flex items-center justify-center"
-				>
-					<IconBubbles class="w-6 h-6 text-c-on-bg/25" />
-				</div>
-				<TierBadge
-					slot="badge"
-					tier="PRO"
-					class="absolute transform top-1/2 -translate-y-1/2 right-3 pointer-events-none"
-				/>
-			</TabLikeDropdown>
-		{/if}
+				<IconBubbles class="w-6 h-6 text-c-on-bg/25" />
+			</div>
+			<TierBadge
+				slot="badge"
+				tier="PRO"
+				class="absolute transform top-1/2 -translate-y-1/2 right-3 pointer-events-none"
+			/>
+		</TabLikeDropdown>
 		<TabLikeInput
 			disabled={!isCheckComplete || disabled}
 			class="w-full md:w-84 max-w-full order-2"

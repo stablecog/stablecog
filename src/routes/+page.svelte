@@ -9,7 +9,8 @@
 		guidanceScaleDefault,
 		inferenceStepsDefault,
 		maxSeed,
-		schedulerIdDefault
+		schedulerIdDefault,
+		serverUrl
 	} from '$ts/constants/main';
 	import { urlFromBase64 } from '$ts/helpers/base64';
 	import {
@@ -19,16 +20,12 @@
 	} from '$ts/queries/indexedDb';
 	import { generateImage } from '$ts/queries/generateImage';
 	import { computeRatePerSec } from '$ts/stores/computeRatePerSec';
-	import { serverUrl } from '$ts/stores/serverUrl';
 	import type { TGenerationUI, TStatus, TUpscaleStatus } from '$ts/types/main';
 	import { onDestroy, onMount, tick } from 'svelte';
 	import ImagePlaceholder from '$components/ImagePlaceholder.svelte';
 	import GenerationImage from '$components/generationImage/GenerationImage.svelte';
 	import { advancedModeApp } from '$ts/stores/advancedMode';
-	import SetServerModal from '$components/SetServerModal.svelte';
 	import { mLogGeneration, uLogGeneration } from '$ts/helpers/loggers';
-	import ServerOfflineBanner from '$components/ServerOfflineBanner.svelte';
-	import { currentServer, currentServerHealthStatus } from '$ts/stores/serverHealth';
 	import { activeGeneration } from '$ts/stores/activeGeneration';
 	import type { THomePageData } from '$routes/+page.server';
 	import { isValue } from '$ts/helpers/isValue';
@@ -78,29 +75,21 @@
 	}
 
 	async function onCreate() {
-		if (!$serverUrl || !$promptInputValue) {
+		if (!$promptInputValue) {
 			!$promptInputValue && console.log('no input');
-			!$serverUrl && console.log('no server url');
 			return;
 		}
 		generationError = undefined;
 		lastGeneration = {
-			server_url: $serverUrl,
+			server_url: serverUrl,
 			prompt: $promptInputValue,
 			negative_prompt:
-				$currentServer.features?.map((f) => f.name).includes('negative_prompt') &&
-				($advancedModeApp || isValue(data.negative_prompt)) &&
-				$negativePromptInputValue
+				($advancedModeApp || isValue(data.negative_prompt)) && $negativePromptInputValue
 					? $negativePromptInputValue
 					: undefined,
-			model_id: $currentServer.features?.map((f) => f.name).includes('model')
-				? $generationModelId
-				: undefined,
-			scheduler_id: $currentServer.features?.map((f) => f.name).includes('scheduler')
-				? $advancedModeApp || data.scheduler_id
-					? $generationSchedulerId
-					: schedulerIdDefault
-				: undefined,
+			model_id: $generationModelId,
+			scheduler_id:
+				$advancedModeApp || data.scheduler_id ? $generationSchedulerId : schedulerIdDefault,
 			width: Number($generationWidth),
 			height: Number($generationHeight),
 			guidance_scale: Number(
@@ -166,16 +155,6 @@
 				uLogGeneration('Succeeded');
 				mLogGeneration('Succeeded', { ...generationMinimal, 'SC - Duration': data.duration_ms });
 				lastGeneration.imageDataB64 = data.image_b64;
-				if (
-					$currentServer.lastHealthStatus !== 'healthy' ||
-					$currentServerHealthStatus !== 'healthy'
-				) {
-					currentServer.set({
-						lastHealthStatus: 'healthy',
-						features: $currentServer.features ?? undefined
-					});
-					currentServerHealthStatus.set('healthy');
-				}
 				lastGeneration.duration_ms = data.duration_ms;
 				let id: number | undefined = undefined;
 				try {
@@ -279,13 +258,6 @@
 	onMount(() => {
 		mounted = true;
 		setEstimatedDuration();
-		console.log(
-			'currentServer:',
-			$currentServer,
-			'lastServerHealth:',
-			'currentServerHealthStatus',
-			$currentServerHealthStatus
-		);
 	});
 
 	onDestroy(() => {
@@ -307,74 +279,64 @@
 	class="w-full flex flex-col items-center flex-1 justify-center px-4 md:pt-4"
 >
 	<div class="w-full flex flex-col items-center justify-center">
-		{#if mounted && !$serverUrl}
-			<SetServerModal isOnBarrier={false} />
-		{:else}
-			{#if mounted && ($currentServerHealthStatus === 'unhealthy' || $currentServerHealthStatus === 'unknown' || $currentServer.lastHealthStatus === 'unhealthy')}
-				<ServerOfflineBanner />
-			{/if}
-			<div
-				transition:expandCollapse|local={{ duration: 300 }}
-				class="w-[calc(100%+2rem)] flex flex-col justify-start items-center z-0 -mx-4"
-			>
-				<GenerateBar serverData={data} {status} {onCreate} {startTimestamp} {estimatedDuration} />
-				{#if status === 'error'}
-					<div
-						transition:expandCollapse|local={{ duration: 300 }}
-						class="flex flex-col justify-start origin-top px-6"
-					>
-						<p class="w-full max-w-2xl leading-relaxed text-c-on-bg/40 text-center py-4 md:py-2">
-							{generationError
-								? generationError.message === 'NSFW'
-									? $LL.Error.NSFW()
-									: generationError.message
-								: $LL.Error.SomethingWentWrong()}
-						</p>
-					</div>
-				{:else if status === 'success' && lastGeneration && lastGeneration.imageUrl}
-					{@const aspectRatio = lastGeneration.width / lastGeneration.height}
-					<div
-						transition:expandCollapse|local={{ duration: 300 }}
-						class="max-w-full flex flex-col items-center justify-start rounded-xl origin-top relative z-0 px-4"
-					>
-						<div class="max-w-full flex flex-col items-center md:px-5 gap-4 py-3 md:pt-0">
-							<div
-								class="{aspectRatio >= 6 / 2
-									? 'w-180'
-									: aspectRatio >= 4 / 2
-									? 'w-160'
-									: aspectRatio >= 3 / 2
-									? 'w-140'
-									: aspectRatio >= 4 / 3
-									? 'w-128'
-									: aspectRatio >= 1 / 1
-									? 'w-112'
-									: aspectRatio >= 3 / 4
-									? 'w-92'
-									: aspectRatio >= 2 / 3
-									? 'w-84'
-									: 'w-72'} max-w-full h-auto relative"
-							>
-								<ImagePlaceholder width={lastGeneration.width} height={lastGeneration.height} />
-								{#if !($activeGeneration && $activeGeneration.id === lastGeneration.id)}
-									<div
-										class="absolute w-full h-full left-0 top-0 rounded-2xl bg-c-bg-secondary z-0 overflow-hidden border-4 
+		<div class="w-[calc(100%+2rem)] flex flex-col justify-start items-center z-0 -mx-4">
+			<GenerateBar serverData={data} {status} {onCreate} {startTimestamp} {estimatedDuration} />
+			{#if status === 'error'}
+				<div
+					transition:expandCollapse|local={{ duration: 300 }}
+					class="flex flex-col justify-start origin-top px-6"
+				>
+					<p class="w-full max-w-2xl leading-relaxed text-c-on-bg/40 text-center py-4 md:py-2">
+						{generationError
+							? generationError.message === 'NSFW'
+								? $LL.Error.NSFW()
+								: generationError.message
+							: $LL.Error.SomethingWentWrong()}
+					</p>
+				</div>
+			{:else if status === 'success' && lastGeneration && lastGeneration.imageUrl}
+				{@const aspectRatio = lastGeneration.width / lastGeneration.height}
+				<div
+					transition:expandCollapse|local={{ duration: 300 }}
+					class="max-w-full flex flex-col items-center justify-start rounded-xl origin-top relative z-0 px-4"
+				>
+					<div class="max-w-full flex flex-col items-center md:px-5 gap-4 py-3 md:pt-0">
+						<div
+							class="{aspectRatio >= 6 / 2
+								? 'w-180'
+								: aspectRatio >= 4 / 2
+								? 'w-160'
+								: aspectRatio >= 3 / 2
+								? 'w-140'
+								: aspectRatio >= 4 / 3
+								? 'w-128'
+								: aspectRatio >= 1 / 1
+								? 'w-112'
+								: aspectRatio >= 3 / 4
+								? 'w-92'
+								: aspectRatio >= 2 / 3
+								? 'w-84'
+								: 'w-72'} max-w-full h-auto relative"
+						>
+							<ImagePlaceholder width={lastGeneration.width} height={lastGeneration.height} />
+							{#if !($activeGeneration && $activeGeneration.id === lastGeneration.id)}
+								<div
+									class="absolute w-full h-full left-0 top-0 rounded-2xl bg-c-bg-secondary z-0 overflow-hidden border-4 
 											shadow-lg shadow-c-shadow/[var(--o-shadow-normal)] border-c-bg-secondary group"
-										in:elementreceive|local={{ key: lastGeneration.id }}
-										out:elementsend|local={{ key: lastGeneration.id }}
-									>
-										<GenerationImage generation={lastGeneration} prioritizeUpscaled={true} />
-									</div>
-								{/if}
-							</div>
+									in:elementreceive|local={{ key: lastGeneration.id }}
+									out:elementsend|local={{ key: lastGeneration.id }}
+								>
+									<GenerationImage generation={lastGeneration} prioritizeUpscaled={true} />
+								</div>
+							{/if}
 						</div>
 					</div>
-				{/if}
-				{#if status === 'success' && $shouldSubmitToGallery === undefined}
-					<SubmitToGallery />
-				{/if}
-			</div>
-		{/if}
+				</div>
+			{/if}
+			{#if status === 'success' && $shouldSubmitToGallery === undefined}
+				<SubmitToGallery />
+			{/if}
+		</div>
 	</div>
 </div>
 

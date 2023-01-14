@@ -35,9 +35,7 @@
 	import ParamsSection from '$components/generationFullScreen/ParamsSection.svelte';
 	import Button from '$components/buttons/Button.svelte';
 	import IconUpscale from '$components/icons/IconUpscale.svelte';
-	import { currentServer } from '$ts/stores/serverHealth';
 	import { upscaleImage } from '$ts/queries/upscaleImage';
-	import { serverUrl } from '$ts/stores/serverUrl';
 	import { createEventDispatcher } from 'svelte';
 	import TabBar from '$components/tabBars/TabBar.svelte';
 	import { lastUpscaleDurationSec } from '$ts/stores/lastUpscaleDurationSec';
@@ -46,7 +44,8 @@
 		availableModelIdsFree,
 		availableSchedulerIdsFree,
 		availableWidthsFree,
-		estimatedDurationBufferRatio
+		estimatedDurationBufferRatio,
+		serverUrl
 	} from '$ts/constants/main';
 	import { mLogUpscale, uLogUpscale } from '$ts/helpers/loggers';
 	import LL, { locale } from '$i18n/i18n-svelte';
@@ -212,10 +211,6 @@
 	$: estimatedUpscaleDurationSec = $lastUpscaleDurationSec * (1 + estimatedDurationBufferRatio);
 
 	async function onUpscaleClicked() {
-		if (!$serverUrl) {
-			console.log("No server url, can't upscale");
-			return;
-		}
 		const upscaleMinimal = {
 			'SC - Width': generation.width,
 			'SC - Height': generation.height,
@@ -237,7 +232,7 @@
 		try {
 			const res = await upscaleImage({
 				image_b64: generation.imageDataB64,
-				server_url: $serverUrl,
+				server_url: serverUrl,
 				prompt: generation.prompt,
 				negative_prompt: generation.negative_prompt,
 				seed: generation.seed,
@@ -492,9 +487,7 @@
 						class="w-full flex flex-col items-start justify-start"
 					>
 						<div class="w-full flex flex-col gap-4 md:gap-5 px-5 py-4 md:px-7 md:py-5">
-							{#if $currentServer.features
-								?.map((f) => f.name)
-								.includes('upscale') || generation.upscaledImageDataB64}
+							{#if generation.upscaledImageDataB64}
 								<div class="w-full pt-1.5">
 									{#if !generation.upscaledImageDataB64}
 										<div class="w-fulll relative">

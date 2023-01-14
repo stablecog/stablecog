@@ -4,9 +4,7 @@
 	import IconSettings from '$components/icons/IconSettings.svelte';
 	import PageLoadProgressBar from '$components/PageLoadProgressBar.svelte';
 	import Logo from '$components/Logo.svelte';
-	import ModalWrapper from '$components/ModalWrapper.svelte';
 	import NavigationTabBar from '$components/navigation/NavigationTabBar.svelte';
-	import SetServerModal from '$components/SetServerModal.svelte';
 	import SettingsMenu from '$components/settings/SettingsMenu.svelte';
 	import { clickoutside } from '$ts/actions/clickoutside';
 	import { isTouchscreen } from '$ts/stores/isTouchscreen';

@@ -5,6 +5,7 @@ import type { TModelNameCog, TSchedulerNameCog } from '$ts/types/cog';
 import type { TTab } from '$ts/types/main';
 import { derived, type Readable, type Writable } from 'svelte/store';
 
+export const serverUrl = env.PUBLIC_DEFAULT_SERVER_URL;
 export const estimatedDurationBufferRatio = 0.1;
 export const estimatedDurationDefault = 20;
 export const estimatedDurationUpscaleDefault = 15;

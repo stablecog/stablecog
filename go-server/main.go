@@ -61,13 +61,11 @@ func main() {
 		shared.RandomWaitMs(5000)
 	}
 	cron.AddFunc("@every 15s", cronHealth.CheckHealth)
-	cron.AddFunc("@every 15s", cronHealth.SetDefaultServerHealths)
 	cron.AddFunc("@every 10s", cronStats.GetAndSetStats)
 	cron.AddFunc("@every 60s", cronMeili.SyncMeili)
 	cron.Start()
 
 	go cronHealth.CheckHealth()
-	go cronHealth.SetDefaultServerHealths()
 	go cronStats.GetAndSetStats()
 	go cronMeili.SyncMeili()
 
