@@ -8,7 +8,6 @@ import (
 	"github.com/fatih/color"
 	"github.com/getsentry/sentry-go"
 	"github.com/gofiber/fiber/v2"
-	cronHealth "github.com/yekta/stablecog/go-server/cron/health"
 	"github.com/yekta/stablecog/go-server/shared"
 )
 
@@ -24,6 +23,8 @@ var defaultServerModels = []string{
 	"Arcane Diffusion",
 	"Mo-Di Diffusion",
 	"Ghibli Diffusion",
+	"Waifu Diffusion v1.4",
+	"22h Diffusion v0.1",
 }
 var defaultServerSchedulers = []string{
 	"K_LMS",
@@ -52,19 +53,9 @@ func Handler(c *fiber.Ctx) error {
 		return c.Status(http.StatusBadRequest).JSON("Bad request, server_url is required")
 	}
 	if req.ServerUrl == defaultServerUrl {
-		hasHealthyAndEnabled := false
-		for _, server := range cronHealth.ServersLast {
-			if server.Healthy && server.Enabled {
-				hasHealthyAndEnabled = true
-				break
-			}
-		}
 		res := shared.SHealthResponse{
-			Status:   "unhealthy",
+			Status:   "healthy",
 			Features: defaultServerFeatures,
-		}
-		if hasHealthyAndEnabled {
-			res.Status = "healthy"
 		}
 		logEnd(start, countryCode)
 		return c.JSON(res)

@@ -11,10 +11,9 @@ export async function upscaleImage({
 	negative_prompt,
 	prompt,
 	seed,
-	access_token,
-	pathname
+	access_token
 }: TUpscaleRequest) {
-	const endpoint = pathname.startsWith('/admin') ? 'v2/upscale' : 'upscale';
+	const endpoint = 'upscale';
 	const response = await fetch(`${apiBase}/${endpoint}`, {
 		method: 'POST',
 		headers: {

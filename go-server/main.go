@@ -72,9 +72,7 @@ func main() {
 	go cronMeili.SyncMeili()
 
 	app.Post("/generate", generate.Handler)
-	app.Post("/v2/generate", generate.HandlerV2)
 	app.Post("/upscale", upscale.Handler)
-	app.Post("/v2/upscale", upscale.HandlerV2)
 	app.Get("/gallery", gallery.Handler)
 	app.Post("/health", health.Handler)
 	app.Get("/generation-g-image/:imageIdWithExt", generationGImage.Handler)

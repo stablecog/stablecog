@@ -1,7 +1,6 @@
 <script lang="ts">
 	import { page } from '$app/stores';
 	import IconButton from '$components/buttons/IconButton.svelte';
-	import HealthIndicator from '$components/HealthIndicator.svelte';
 	import IconSettings from '$components/icons/IconSettings.svelte';
 	import PageLoadProgressBar from '$components/PageLoadProgressBar.svelte';
 	import Logo from '$components/Logo.svelte';
@@ -12,7 +11,6 @@
 	import { clickoutside } from '$ts/actions/clickoutside';
 	import { isTouchscreen } from '$ts/stores/isTouchscreen';
 	import { onMount } from 'svelte';
-	import { routesWithHealthCheck } from '$ts/constants/main';
 	import Banner from '$components/Banner.svelte';
 	import IconSocial from '$components/icons/IconSocial.svelte';
 	import { lastClosedNotification } from '$ts/stores/lastClosedNotification';
@@ -27,7 +25,6 @@
 	import SignInCard from '$components/SignInCard.svelte';
 	import { navbarHeight } from '$ts/stores/navbarHeight';
 
-	let isSwitchServerModalOpen = false;
 	let isSignInModalOpen = false;
 	let isSettingsOpen = false;
 	let isAccountMenuOpen = false;
@@ -40,11 +37,6 @@
 
 	let notAtTheTop = false;
 	const notAtTheTopThreshold = 1;
-
-	const onSwitchServerClick = () => {
-		closeSettings();
-		isSwitchServerModalOpen = true;
-	};
 
 	const setNotAtTheTop = () => {
 		const t = window.scrollY > notAtTheTopThreshold;
@@ -112,9 +104,6 @@
 		</div>
 		<div class="flex flex-1 flex-wrap items-center justify-end relative">
 			<div class="flex items-center justify-end px-3">
-				{#if routesWithHealthCheck.includes($page.url.pathname)}
-					<HealthIndicator class="mx-2.5" />
-				{/if}
 				<!-- Account -->
 				{#if $page.data.session?.user.email}
 					<div
@@ -174,7 +163,7 @@
 				<div class="pr-3">
 					<div class="relative -mt-1">
 						{#if isSettingsOpen}
-							<SettingsMenu {onSwitchServerClick} {closeSettings} />
+							<SettingsMenu {closeSettings} />
 						{/if}
 					</div>
 				</div>
@@ -182,12 +171,6 @@
 		</div>
 	</div>
 </nav>
-
-{#if isSwitchServerModalOpen}
-	<ModalWrapper>
-		<SetServerModal close={() => (isSwitchServerModalOpen = false)} />
-	</ModalWrapper>
-{/if}
 
 {#if isSignInModalOpen && !$page.data.session?.user.id}
 	<div

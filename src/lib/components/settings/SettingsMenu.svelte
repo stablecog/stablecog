@@ -7,7 +7,6 @@
 	import { isTouchscreen } from '$ts/stores/isTouchscreen';
 	import type { TCurrentSettingsPage } from '$ts/types/main';
 
-	export let onSwitchServerClick: () => void;
 	export let closeSettings: () => void;
 
 	let currentPage: TCurrentSettingsPage = 'settings';
@@ -68,12 +67,7 @@
 				? 'opacity-100 translate-x-0'
 				: 'opacity-0 -translate-x-1/3 pointer-events-none'}"
 		>
-			<SettingsPage
-				{onSwitchServerClick}
-				{navigateToLanguagePage}
-				{currentPage}
-				bind:height={settingsPageHeight}
-			/>
+			<SettingsPage {navigateToLanguagePage} {currentPage} bind:height={settingsPageHeight} />
 		</div>
 		<div
 			class="absolute transition duration-300 left-0 top-0 w-full z-10 {currentPage === 'language'
