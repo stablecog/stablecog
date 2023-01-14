@@ -163,7 +163,7 @@ type SGenerateOrUpscaleRequestBody struct {
 
 type SCogGenerateRequestQueue struct {
 	Input               SCogGenerateRequestInput   `json:"input"`
-	WebhookEventFilters []WebhookEventFilterOption `json:"webhook_event_filters"`
+	WebhookEventFilters []WebhookEventFilterOption `json:"webhook_events_filter"`
 	Webhook             string                     `json:"webhook"`
 }
 
