@@ -93,28 +93,30 @@ func main() {
 		return c.SendString("API is up and running")
 	})
 
-	log.Printf("Listening on port %d", *serverPort)
-	log.Fatal(app.Listen(fmt.Sprintf(":%d", *serverPort)))
-
 	// Subscribe to webhook channel
 	ctx := context.Background()
 	pubsub := shared.Redis.Subscribe(ctx, shared.WEBHOOK_QUEUE_COMPLETE_CHANNEL)
 	defer pubsub.Close()
 
 	// Listen for messages
-	for msg := range pubsub.Channel() {
-		var WebhookMessage shared.WebhookRequest
-		err := json.Unmarshal([]byte(msg.Payload), &WebhookMessage)
-		if err != nil {
-			log.Printf("--- Error unmarshalling webhook message: %v", err)
-			sentry.CaptureException(err)
-			continue
-		}
+	go func() {
+		for msg := range pubsub.Channel() {
+			var WebhookMessage shared.WebhookRequest
+			err := json.Unmarshal([]byte(msg.Payload), &WebhookMessage)
+			if err != nil {
+				log.Printf("--- Error unmarshalling webhook message: %v", err)
+				sentry.CaptureException(err)
+				continue
+			}
 
-		activeChannel := shared.GenerateSyncArray.Get(WebhookMessage.Input.Id)
-		// Write to channel
-		if activeChannel != nil {
-			activeChannel.Chan <- WebhookMessage
+			activeChannel := shared.GenerateSyncArray.Get(WebhookMessage.Input.Id)
+			// Write to channel
+			if activeChannel != nil {
+				activeChannel.Chan <- WebhookMessage
+			}
 		}
-	}
+	}()
+
+	log.Printf("Listening on port %d", *serverPort)
+	log.Fatal(app.Listen(fmt.Sprintf(":%d", *serverPort)))
 }
