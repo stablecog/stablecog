@@ -487,58 +487,56 @@
 						class="w-full flex flex-col items-start justify-start"
 					>
 						<div class="w-full flex flex-col gap-4 md:gap-5 px-5 py-4 md:px-7 md:py-5">
-							{#if generation.upscaledImageDataB64}
-								<div class="w-full pt-1.5">
-									{#if !generation.upscaledImageDataB64}
-										<div class="w-fulll relative">
-											{#if $page.data.plan === 'FREE' || $page.data.plan === 'ANONYMOUS'}
-												<Button href="/pro?reason=upscale" target="_blank" class="w-full" size="sm">
-													<div class="flex items-center gap-2">
+							<div class="w-full pt-1.5">
+								{#if !generation.upscaledImageDataB64}
+									<div class="w-fulll relative">
+										{#if $page.data.plan === 'FREE' || $page.data.plan === 'ANONYMOUS'}
+											<Button href="/pro?reason=upscale" target="_blank" class="w-full" size="sm">
+												<div class="flex items-center gap-2">
+													<IconUpscale class="w-5 h-5" />
+													<p>{$LL.GenerationFullscreen.UpscaleButton()}</p>
+												</div>
+											</Button>
+										{:else}
+											<Button
+												onClick={onUpscaleClicked}
+												loading={upscaleStatus === 'loading'}
+												class="w-full"
+												size="sm"
+											>
+												<div class="flex items-center gap-2">
+													{#if upscaleStatus === 'loading'}
+														<p>
+															{upscaleDurationSec.toLocaleString('en-US', {
+																minimumFractionDigits: 1,
+																maximumFractionDigits: 1
+															})}
+														</p>
+													{:else}
 														<IconUpscale class="w-5 h-5" />
 														<p>{$LL.GenerationFullscreen.UpscaleButton()}</p>
-													</div>
-												</Button>
-											{:else}
-												<Button
-													onClick={onUpscaleClicked}
-													loading={upscaleStatus === 'loading'}
-													class="w-full"
-													size="sm"
-												>
-													<div class="flex items-center gap-2">
-														{#if upscaleStatus === 'loading'}
-															<p>
-																{upscaleDurationSec.toLocaleString('en-US', {
-																	minimumFractionDigits: 1,
-																	maximumFractionDigits: 1
-																})}
-															</p>
-														{:else}
-															<IconUpscale class="w-5 h-5" />
-															<p>{$LL.GenerationFullscreen.UpscaleButton()}</p>
-														{/if}
-													</div>
-												</Button>
-											{/if}
-											{#if $page.data.plan === 'FREE' || $page.data.plan === 'ANONYMOUS'}
-												<TierBadge
-													size="md"
-													tier="PRO"
-													class="absolute transform -right-1.5 -top-2 pointer-events-none"
-												/>
-											{/if}
-										</div>
-									{:else if generation.upscaledImageDataB64}
-										<TabBar
-											bind:value={upscaledTabValue}
-											tabs={upscaledOrDefaultTabs}
-											hasTitle={false}
-											dontScale={true}
-											name="Upscaled or Default Image"
-										/>
-									{/if}
-								</div>
-							{/if}
+													{/if}
+												</div>
+											</Button>
+										{/if}
+										{#if $page.data.plan === 'FREE' || $page.data.plan === 'ANONYMOUS'}
+											<TierBadge
+												size="md"
+												tier="PRO"
+												class="absolute transform -right-1.5 -top-2 pointer-events-none"
+											/>
+										{/if}
+									</div>
+								{:else if generation.upscaledImageDataB64}
+									<TabBar
+										bind:value={upscaledTabValue}
+										tabs={upscaledOrDefaultTabs}
+										hasTitle={false}
+										dontScale={true}
+										name="Upscaled or Default Image"
+									/>
+								{/if}
+							</div>
 							<div class="flex flex-col items-start gap-3">
 								<p class="max-w-full text-sm leading-normal">{generation.prompt}</p>
 								{#if generation.negative_prompt}
