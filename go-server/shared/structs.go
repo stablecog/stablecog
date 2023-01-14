@@ -122,6 +122,7 @@ type SCogUpscaleRequestBody struct {
 	Input SCogUpscaleRequestInput `json:"input"`
 }
 type SCogUpscaleRequestInput struct {
+	ID          string `json:"id"`
 	Image       string `json:"image_u"`
 	Task        string `json:"task_u,omitempty"`
 	ProcessType string `json:"process_type"`
@@ -161,6 +162,9 @@ type SGenerateOrUpscaleRequestBody struct {
 	ImageB64              string  `json:"image_b64,omitempty"`
 }
 
+// ! Yes I know all of this can be cleaner and use base structs and interfaces
+// ! It will addressed in the go-new branch
+
 type SCogGenerateRequestQueue struct {
 	Input               SCogGenerateRequestInput   `json:"input"`
 	WebhookEventsFilter []WebhookEventFilterOption `json:"webhook_events_filter"`
@@ -168,5 +172,15 @@ type SCogGenerateRequestQueue struct {
 }
 
 func (i SCogGenerateRequestQueue) MarshalBinary() (data []byte, err error) {
+	return json.Marshal(i)
+}
+
+type SCogUpscaleRequestQueue struct {
+	Input               SCogUpscaleRequestInput    `json:"input"`
+	WebhookEventsFilter []WebhookEventFilterOption `json:"webhook_events_filter"`
+	Webhook             string                     `json:"webhook"`
+}
+
+func (i SCogUpscaleRequestQueue) MarshalBinary() (data []byte, err error) {
 	return json.Marshal(i)
 }
