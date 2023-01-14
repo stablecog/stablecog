@@ -66,6 +66,7 @@ export interface TUpscaleRequest {
 	prompt?: string;
 	negative_prompt?: string;
 	access_token?: string;
+	pathname: string;
 }
 
 export interface TUpscaleResponse {

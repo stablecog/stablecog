@@ -245,7 +245,8 @@
 				guidance_scale: generation.guidance_scale,
 				height: generation.height,
 				width: generation.width,
-				access_token: $page.data.session?.access_token
+				access_token: $page.data.session?.access_token,
+				pathname: $page.url.pathname
 			});
 			if (res.error) {
 				throw new Error(res.error);
