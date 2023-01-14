@@ -9,8 +9,10 @@ import (
 	"log"
 	"math/rand"
 	"net/http"
+	"strings"
 	"time"
 
+	"github.com/aws/aws-sdk-go-v2/service/s3"
 	"github.com/getsentry/sentry-go"
 	"github.com/go-redis/redis/v8"
 	"github.com/goccy/go-json"
@@ -688,35 +690,21 @@ func HandlerV2(c *fiber.Ctx) error {
 		),
 		logObj,
 	)
-	res, err := http.Get(output)
+	key := strings.Split("cloudflarestorage.com/", output)[1]
+	res, err := shared.S3Client.GetObject(c.Context(), &s3.GetObjectInput{
+		Bucket: &shared.S3BucketPrivate,
+		Key:    &key,
+	})
 	if err != nil {
 		go UpdateGenerationAsFailed(generationIdChan, generationCogDurationMs, false)
-		log.Printf("Cog server returned invalid output")
+		log.Printf("Failed to get object from S3: %v", err)
 		shared.DeleteOngoingGenerationOrUpscale("goa_active", supabaseUserId)
 		return c.Status(http.StatusInternalServerError).JSON(
-			SGenerateResponse{Error: "Cog server returned invalid output"},
-		)
-	}
-	if res.StatusCode != http.StatusOK {
-		go UpdateGenerationAsFailed(generationIdChan, generationCogDurationMs, false)
-		log.Printf("Cog server returned invalid output")
-		shared.DeleteOngoingGenerationOrUpscale("goa_active", supabaseUserId)
-		return c.Status(http.StatusInternalServerError).JSON(
-			SGenerateResponse{Error: "Cog server returned invalid output"},
+			SGenerateResponse{Error: "Couldn't get the object from the bucket"},
 		)
 	}
 	defer res.Body.Close()
-	// read the body of the response
 	bytes, err := ioutil.ReadAll(res.Body)
-	if err != nil {
-		go UpdateGenerationAsFailed(generationIdChan, generationCogDurationMs, false)
-		log.Printf("Couldn't read cog server response")
-		shared.DeleteOngoingGenerationOrUpscale("goa_active", supabaseUserId)
-		return c.Status(http.StatusInternalServerError).JSON(
-			SGenerateResponse{Error: "Couldn't read cog server response"},
-		)
-	}
-
 	// Convert bytes to base64 string
 	output = base64.StdEncoding.EncodeToString(bytes)
 	output = "data:image/jpeg;base64," + output
