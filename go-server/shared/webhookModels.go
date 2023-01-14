@@ -3,7 +3,7 @@ package shared
 type WebhookStatus string
 
 const (
-	WebhookComplete   WebhookStatus = "completed"
+	WebhookSucceeded  WebhookStatus = "succeeded"
 	WebhookFailed     WebhookStatus = "failed"
 	WebhookProcessing WebhookStatus = "processing"
 )
