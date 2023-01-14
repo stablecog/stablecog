@@ -170,21 +170,6 @@ func Handler(c *fiber.Ctx) error {
 	cleanedPrompt := shared.FormatPrompt(req.Prompt)
 	cleanedNegativePrompt := shared.FormatPrompt(req.NegativePrompt)
 
-	pickServerRes := shared.PickServer(
-		shared.SPickServerProps{
-			Type:        "generate",
-			ServerUrl:   req.ServerUrl,
-			ModelId:     req.ModelId,
-			SchedulerId: req.SchedulerId,
-		})
-	if pickServerRes.Error {
-		log.Printf("Failed to pick a server")
-		shared.DeleteOngoingGenerationOrUpscale("goa_active", supabaseUserId)
-		return c.Status(http.StatusInternalServerError).JSON(
-			SGenerateResponse{Error: "Failed to pick a server"},
-		)
-	}
-
 	userAgent := c.Get("User-Agent")
 	client := useragent.Parse(userAgent)
 	generationIdChan := make(chan string)
@@ -200,7 +185,7 @@ func Handler(c *fiber.Ctx) error {
 		GuidanceScale:     req.GuidanceScale,
 		Seed:              req.Seed,
 		CountryCode:       countryCode,
-		ServerUrl:         pickServerRes.ServerUrl,
+		ServerUrl:         shared.DEFAULT_SERVER_URL,
 	}
 	loggers.LogGeneration("Generation started", logObj)
 
@@ -214,7 +199,7 @@ func Handler(c *fiber.Ctx) error {
 		ModelId:           req.ModelId,
 		SchedulerId:       req.SchedulerId,
 		UserId:            supabaseUserId,
-		ServerUrl:         pickServerRes.ServerUrl,
+		ServerUrl:         shared.DEFAULT_SERVER_URL,
 		CountryCode:       countryCode,
 		UserAgent:         userAgent,
 		DeviceType:        shared.GetDeviceType(client),

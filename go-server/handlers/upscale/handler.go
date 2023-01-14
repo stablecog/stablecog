@@ -96,14 +96,6 @@ func Handler(c *fiber.Ctx) error {
 	cleanedPrompt := shared.FormatPrompt(req.Prompt)
 	cleanedNegativePrompt := shared.FormatPrompt(req.NegativePrompt)
 
-	pickServerRes := shared.PickServer(shared.SPickServerProps{ServerUrl: req.ServerUrl, Type: "upscale"})
-	if pickServerRes.Error {
-		shared.DeleteOngoingGenerationOrUpscale("goa_active", supabaseUserId)
-		return c.Status(http.StatusInternalServerError).JSON(
-			SUpscaleResponse{Error: "Failed to pick a server"},
-		)
-	}
-
 	userAgent := c.Get("User-Agent")
 	client := useragent.Parse(userAgent)
 	upscaleIdChan := make(chan string)
@@ -119,7 +111,7 @@ func Handler(c *fiber.Ctx) error {
 		GuidanceScale:     req.GuidanceScale,
 		Seed:              req.Seed,
 		CountryCode:       countryCode,
-		ServerUrl:         pickServerRes.ServerUrl,
+		ServerUrl:         shared.DEFAULT_SERVER_URL,
 	}
 	loggers.LogUpscale("Upscale started", logObj)
 
@@ -136,7 +128,7 @@ func Handler(c *fiber.Ctx) error {
 		Seed:              req.Seed,
 		UserId:            supabaseUserId,
 		UserTier:          subscriptionTier,
-		ServerUrl:         pickServerRes.ServerUrl,
+		ServerUrl:         shared.DEFAULT_SERVER_URL,
 		UserAgent:         userAgent,
 		DeviceType:        shared.GetDeviceType(client),
 		CountryCode:       countryCode,
