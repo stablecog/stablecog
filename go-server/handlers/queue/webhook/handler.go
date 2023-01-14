@@ -19,6 +19,7 @@ func Handler(c *fiber.Ctx) error {
 		return c.SendStatus(http.StatusBadRequest)
 	}
 
+	log.Printf("-- Webhook request received: %v --", req)
 	if req.Status == shared.WebhookComplete || req.Status == shared.WebhookFailed {
 		// Publish to redis channel
 		marshalled, err := json.Marshal(req)

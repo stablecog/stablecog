@@ -100,7 +100,9 @@ func main() {
 
 	// Listen for messages
 	go func() {
+		log.Printf("Listening for webhook messages on channel: %s", shared.WEBHOOK_QUEUE_COMPLETE_CHANNEL)
 		for msg := range pubsub.Channel() {
+			log.Printf("Received webhook message: %s", msg.Payload)
 			var WebhookMessage shared.WebhookRequest
 			err := json.Unmarshal([]byte(msg.Payload), &WebhookMessage)
 			if err != nil {
