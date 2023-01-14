@@ -27,7 +27,12 @@ func Handler(c *fiber.Ctx) error {
 			sentry.CaptureException(err)
 			return c.SendStatus(http.StatusInternalServerError)
 		}
-		shared.Redis.Publish(c.Context(), shared.WEBHOOK_QUEUE_COMPLETE_CHANNEL, string(marshalled))
+		err = shared.Redis.Publish(c.Context(), shared.WEBHOOK_QUEUE_COMPLETE_CHANNEL, string(marshalled)).Err()
+		if err != nil {
+			log.Printf("-- Error publishing to redis channel: %v --", err)
+			sentry.CaptureException(err)
+			return c.SendStatus(http.StatusInternalServerError)
+		}
 	}
 
 	return c.SendStatus(200)
