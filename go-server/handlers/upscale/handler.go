@@ -468,7 +468,16 @@ func HandlerV2(c *fiber.Ctx) error {
 	)
 
 	// ! TODO this should all be re-usable, someday
-	key := strings.Split(output, "cloudflarestorage.com/")[1]
+	splitStr := strings.Split(output, "cloudflarestorage.com/")
+	if len(splitStr) < 2 {
+		go UpdateUpscaleAsFailed(upscaleIdChan, upscaleCogDurationMs)
+		log.Printf("Cog server returned invalid output: %s", output)
+		shared.DeleteOngoingGenerationOrUpscale("goa_active", supabaseUserId)
+		return c.Status(http.StatusInternalServerError).JSON(
+			SUpscaleResponse{Error: "Cog server returned invalid output"},
+		)
+	}
+	key := splitStr[1]
 	res, err := shared.S3Client.GetObject(c.Context(), &s3.GetObjectInput{
 		Bucket: &shared.S3BucketPrivate,
 		Key:    &key,
