@@ -46,7 +46,7 @@ func main() {
 
 	// ! I don't like either of these
 	shared.SetupRedis()
-	shared.InitSyncArray()
+	shared.InitSyncMap()
 
 	app := fiber.New()
 	cors := cors.New(cors.Config{
@@ -111,10 +111,10 @@ func main() {
 				continue
 			}
 
-			activeChannel := shared.GenerateSyncArray.Get(WebhookMessage.Input.Id)
+			activeChannel := shared.RequestSyncMap.Get(WebhookMessage.Input.Id)
 			// Write to channel
 			if activeChannel != nil {
-				activeChannel.Chan <- WebhookMessage
+				activeChannel <- WebhookMessage
 			}
 		}
 	}()

@@ -612,12 +612,9 @@ func HandlerV2(c *fiber.Ctx) error {
 	// Cleanup
 	defer close(generateChannel)
 	// Add channel to sync array (basically a thread-safe map)
-	shared.GenerateSyncArray.Put(&shared.ActiveChannelObject{
-		Chan:      generateChannel,
-		RequestID: requestId,
-	})
+	shared.RequestSyncMap.Put(requestId, generateChannel)
 	// Cleanup
-	defer shared.GenerateSyncArray.Delete(requestId)
+	defer shared.RequestSyncMap.Delete(requestId)
 
 	// Send request to cog
 	_, err := shared.Redis.XAdd(c.Context(), &redis.XAddArgs{
