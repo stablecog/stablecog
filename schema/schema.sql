@@ -30,6 +30,7 @@ CREATE TABLE "generation" (
     "user_id" UUID REFERENCES auth.users(id),
     "user_tier" user_tier_enum NOT NULL DEFAULT 'FREE',
     "image_object_name" TEXT,
+    "image_object_name_arr" JSONB,
     "created_at" TIMESTAMPTZ DEFAULT TIMEZONE(' utc ' :: TEXT, NOW()) NOT NULL,
     "updated_at" TIMESTAMPTZ DEFAULT TIMEZONE(' utc ' :: TEXT, NOW()) NOT NULL,
     PRIMARY KEY(id)
