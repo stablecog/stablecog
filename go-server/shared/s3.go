@@ -14,6 +14,8 @@ import (
 var S3BucketPublic = "stablecog"
 var S3BucketPrivate = "stablecog-private"
 var S3BucketPrivateQueueOutputFolder = "queue/output"
+var S3Hostname = fmt.Sprintf("%s.r2.cloudflarestorage.com", os.Getenv("CLOUDFLARE_ACCOUNT_ID"))
+var S3PrivateUrl = os.Getenv("R2_PRIVATE_URL")
 var accountId = os.Getenv("CLOUDFLARE_ACCOUNT_ID")
 var accessKeyId = os.Getenv("R2_ACCESS_KEY_ID")
 var secretKey = os.Getenv("R2_SECRET_ACCESS_KEY")

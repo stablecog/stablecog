@@ -676,6 +676,15 @@ func HandlerV2(c *fiber.Ctx) error {
 		logObj,
 	)
 
+	for index, url := range output {
+		splitStr := strings.Split(url, shared.S3Hostname)
+		if len(splitStr) < 2 {
+			log.Printf("Failed to split url: %s", url)
+			continue
+		}
+		output[index] = fmt.Sprintf("%s%s", shared.S3PrivateUrl, splitStr[1])
+	}
+
 	promptIdChan := make(chan string)
 	negativePromptIdChan := make(chan string)
 	go UpdateGenerationAsSucceededV2(

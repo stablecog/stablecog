@@ -476,6 +476,16 @@ func HandlerV2(c *fiber.Ctx) error {
 		),
 		logObj,
 	)
+
+	for index, url := range output {
+		splitStr := strings.Split(url, shared.S3Hostname)
+		if len(splitStr) < 2 {
+			log.Printf("Failed to split url: %s", url)
+			continue
+		}
+		output[index] = fmt.Sprintf("%s%s", shared.S3PrivateUrl, splitStr[1])
+	}
+
 	// ! TODO this should all be re-usable, someday
 	go UpdateUpscaleAsSucceeded(
 		upscaleIdChan,
