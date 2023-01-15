@@ -184,7 +184,7 @@ func UpdateGenerationAsSucceededV2(
 	promptId := ""
 	negativePromptId := ""
 
-	var imageObjectNameArr []string
+	var imageObjectNames []string
 
 	var wg sync.WaitGroup
 	wg.Add(2)
@@ -299,10 +299,10 @@ func UpdateGenerationAsSucceededV2(
 			name := fmt.Sprintf("%s.%s", imageId, imageExt)
 			resSupa := shared.SupabaseStorage.UploadFile(bucketId, path, data)
 			if resSupa.Key != "" {
-				if imageObjectNameArr == nil {
-					imageObjectNameArr = []string{}
+				if imageObjectNames == nil {
+					imageObjectNames = []string{}
 				}
-				imageObjectNameArr = append(imageObjectNameArr, name)
+				imageObjectNames = append(imageObjectNames, name)
 			}
 			log.Printf("-- Supabase Storage Upload - Image Object Name: %s --", name)
 		}
@@ -312,11 +312,11 @@ func UpdateGenerationAsSucceededV2(
 
 	var res SDBGenerationUpdateAsSucceededRes
 	value := SDBGenerationSucceededUpdate{
-		PromptId:           promptId,
-		NegativePromptId:   negativePromptId,
-		Status:             "succeeded",
-		DurationMs:         durationMs,
-		ImageObjectNameArr: imageObjectNameArr,
+		PromptId:         promptId,
+		NegativePromptId: negativePromptId,
+		Status:           "succeeded",
+		DurationMs:       durationMs,
+		ImageObjectNames: imageObjectNames,
 	}
 	_, err := shared.SupabaseDb.From("generation").Update(value, "", "").Eq("id", generationId).ExecuteTo(res)
 	if err != nil {
@@ -385,12 +385,12 @@ type SDBNegativePromptInsertRes struct {
 }
 
 type SDBGenerationSucceededUpdate struct {
-	PromptId           string   `json:"prompt_id"`
-	NegativePromptId   string   `json:"negative_prompt_id,omitempty"`
-	Status             string   `json:"status"`
-	DurationMs         int64    `json:"duration_ms"`
-	ImageObjectName    string   `json:"image_object_name,omitempty"`
-	ImageObjectNameArr []string `json:"image_object_name_arr,omitempty"`
+	PromptId         string   `json:"prompt_id"`
+	NegativePromptId string   `json:"negative_prompt_id,omitempty"`
+	Status           string   `json:"status"`
+	DurationMs       int64    `json:"duration_ms"`
+	ImageObjectName  string   `json:"image_object_name,omitempty"`
+	ImageObjectNames []string `json:"image_object_names,omitempty"`
 }
 
 type SDBGenerationFailedUpdate struct {
