@@ -265,9 +265,9 @@ func UpdateGenerationAsSucceededV2(
 	wg.Add(1)
 	go func() {
 		for _, imageUrl := range output {
-			splitStr := strings.Split(imageUrl, "cloudflarestorage.com/")
+			splitStr := strings.Split(imageUrl, fmt.Sprintf("%s/", shared.S3PrivateUrl))
 			if len(splitStr) < 2 {
-				log.Printf("Couldn't split the image url string: %s", imageUrl)
+				log.Printf("-- Couldn't split the image url string: %s", imageUrl)
 				continue
 			}
 			key := splitStr[1]

@@ -113,7 +113,7 @@ func SubmitToGalleryV2(p SSubmitToGalleryPropsV2) {
 	s := time.Now().UTC().UnixMilli()
 
 	for _, imageUrl := range p.Output {
-		splitStr := strings.Split(imageUrl, "cloudflarestorage.com/")
+		splitStr := strings.Split(imageUrl, fmt.Sprintf("%s/", shared.S3PrivateUrl))
 		if len(splitStr) < 2 {
 			log.Printf("Couldn't split the image url string: %s", imageUrl)
 			continue
