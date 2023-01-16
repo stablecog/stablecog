@@ -56,6 +56,7 @@
 	import { advancedModeApp } from '$ts/stores/advancedMode';
 	import TierBadge from '$components/TierBadge.svelte';
 	import type { TAvailableProReason } from '.svelte-kit/types/src/routes/pro/proxy+page.server';
+	import IconCancel from '$components/icons/IconCancel.svelte';
 
 	export let generation: TGenerationUI;
 	export let upscaleStatus: TUpscaleStatus = 'idle';
@@ -368,6 +369,22 @@
 </script>
 
 <ModalWrapper hasPadding={false}>
+	<div class="w-full flex items-center justify-start md:hidden pt-2 px-2">
+		<div transition:fly|local={{ duration: 200, easing: quadOut, opacity: 0, x: -50 }}>
+			<IconButton
+				name="Close"
+				onClick={() => {
+					if (canClose) {
+						activeGeneration.set(undefined);
+					}
+				}}
+			>
+				<IconCancel
+					class="w-8 h-8 transition {!$isTouchscreen ? 'group-hover:text-c-primary' : ''}"
+				/>
+			</IconButton>
+		</div>
+	</div>
 	<div
 		on:click|capture={() => {
 			if (upscaleStatus === 'error') upscaleStatus = 'idle';
@@ -375,7 +392,7 @@
 		style={$windowWidth >= lgBreakpoint
 			? `max-width: ${mainContainerWidth}px; max-height: ${mainContainerHeight}px`
 			: ''}
-		class="relative w-full h-full px-3 pt-16 pb-32 md:p-20 lg:p-0 flex lg:items-center justify-center z-10 
+		class="relative w-full h-full px-3 pt-1 pb-20 md:p-20 lg:p-0 flex lg:items-center justify-center z-10 
 		overflow-auto lg:my-auto lg:overflow-hidden"
 	>
 		<div

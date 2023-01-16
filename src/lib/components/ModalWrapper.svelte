@@ -9,8 +9,8 @@
 <div
 	transition:fade|local={{ duration: 300, easing: quadOut }}
 	style="width: {$windowWidth}px; height: {$windowHeight}px;"
-	class="flex justify-center fixed left-0 
-    top-0 bg-c-barrier/80 z-[100] overflow-auto {hasPadding ? 'px-4 py-16' : ''}"
+	class="flex flex-col items-center fixed left-0 
+    top-0 bg-c-barrier/95 z-[100] overflow-auto {hasPadding ? 'px-4 py-16' : ''}"
 >
 	<slot />
 </div>
