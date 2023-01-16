@@ -141,7 +141,7 @@
 			</div>
 		</div>
 	</div>
-	<div class="w-full flex-1 max-w-7xl flex flex-col px-1">
+	<div class="w-full flex-1 max-w-7xl flex flex-col">
 		<GenerationGrid {generations} {loading} />
 	</div>
 </div>

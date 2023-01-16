@@ -380,7 +380,7 @@
 				}}
 			>
 				<IconCancel
-					class="w-8 h-8 transition {!$isTouchscreen ? 'group-hover:text-c-primary' : ''}"
+					class="w-9 h-9 transition {!$isTouchscreen ? 'group-hover:text-c-primary' : ''}"
 				/>
 			</IconButton>
 		</div>
