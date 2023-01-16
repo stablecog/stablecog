@@ -1,3 +1,7 @@
 go 1.19
 
-use ./server
+use (
+	./cron
+	./database
+	./server
+)
