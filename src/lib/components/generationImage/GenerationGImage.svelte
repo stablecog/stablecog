@@ -9,7 +9,7 @@
 	import { doesContainTarget } from '$ts/helpers/doesContainTarget';
 	import { isValue } from '$ts/helpers/isValue';
 	import { mLogGalleryGenerationOpened } from '$ts/helpers/loggers';
-	import { urlFromImageId } from '$ts/helpers/urlFromImageId';
+	import { urlFromImageId } from '$ts/helpers/imageId';
 	import { activeGenerationG } from '$ts/stores/activeGenerationG';
 	import { advancedModeApp } from '$ts/stores/advancedMode';
 	import type { TGenerationGWithLoaded } from '$ts/types/main';

@@ -26,7 +26,7 @@
 		sidebarWidth
 	} from '$components/generationFullScreen/Shared';
 	import ParamsSectionG from '$components/generationFullScreen/ParamsSectionG.svelte';
-	import { urlFromImageId } from '$ts/helpers/urlFromImageId';
+	import { urlFromImageId } from '$ts/helpers/imageId';
 	import IconWand from '$components/icons/IconWand.svelte';
 	import type { TGenerationGAdmin, TGenerationGWithLoaded } from '$ts/types/main';
 	import LL from '$i18n/i18n-svelte';

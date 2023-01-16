@@ -1,5 +1,6 @@
 import { s3 } from '$ts/constants/s3';
 import { supabaseAdmin } from '$ts/constants/supabaseAdmin';
+import { keyFromImageId } from '$ts/helpers/imageId';
 
 export async function deleteFromGallery(id: string, image_id: string) {
 	if (!supabaseAdmin) {
@@ -7,7 +8,7 @@ export async function deleteFromGallery(id: string, image_id: string) {
 		return { status: 500, error: 'No Supabase instance found' };
 	}
 	const deleteRes = await s3
-		.deleteObject({ Bucket: 'stablecog', Key: `${image_id}.webp` })
+		.deleteObject({ Bucket: 'stablecog', Key: keyFromImageId(image_id) })
 		.promise();
 	const { error } = await supabaseAdmin.from('generation_g').delete().eq('id', id);
 	if (error) {

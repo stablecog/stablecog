@@ -9,7 +9,7 @@
 
 	import { doesContainTarget } from '$ts/helpers/doesContainTarget';
 	import { isValue } from '$ts/helpers/isValue';
-	import { urlFromImageId } from '$ts/helpers/urlFromImageId';
+	import { urlFromImageId } from '$ts/helpers/imageId';
 	import { activeGenerationG } from '$ts/stores/activeGenerationG';
 	import type { TGenerationGAdmin } from '$ts/types/main';
 	import type { PostgrestError } from '@supabase/supabase-js';
