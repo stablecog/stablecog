@@ -80,7 +80,7 @@ func main() {
 	app.Get("/stats", func(c *fiber.Ctx) error {
 		return c.JSON(cronStats.Stats)
 	})
-	app.Post("/detect_lang", detect_language.Handler)
+	app.Post("/detect_language", detect_language.Handler)
 
 	app.Post(fmt.Sprintf("/queue/webhook/%s", shared.QUEUE_SECRET), queueWebhook.Handler)
 	app.Put(fmt.Sprintf("/queue/upload/%s/*", shared.QUEUE_SECRET), queueUpload.Handler)
