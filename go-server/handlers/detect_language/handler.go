@@ -5,10 +5,8 @@ import (
 	"net/http"
 
 	"github.com/gofiber/fiber/v2"
-	"github.com/pemistahl/lingua-go"
+	"github.com/yekta/stablecog/go-server/shared"
 )
-
-var detector = lingua.NewLanguageDetectorBuilder().FromAllLanguages().Build()
 
 func Handler(c *fiber.Ctx) error {
 	var req SRequestBody
@@ -16,7 +14,7 @@ func Handler(c *fiber.Ctx) error {
 		log.Printf("-- Invalid request body: %v --", err)
 		return c.Status(http.StatusBadRequest).JSON("Invalid request body")
 	}
-	values := detector.ComputeLanguageConfidenceValues(req.Text)
+	values := shared.LanguageDetector.ComputeLanguageConfidenceValues(req.Text)
 	valueNames := make([]SValue, len(values))
 	for i, value := range values {
 		valueNames[i] = SValue{

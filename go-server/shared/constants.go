@@ -7,6 +7,7 @@ import (
 
 	"github.com/fatih/color"
 	"github.com/meilisearch/meilisearch-go"
+
 	"github.com/supabase-community/gotrue-go"
 	"github.com/supabase-community/storage-go"
 	"github.com/supabase/postgrest-go"
