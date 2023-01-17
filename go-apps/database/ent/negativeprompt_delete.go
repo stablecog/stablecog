@@ -44,7 +44,7 @@ func (npd *NegativePromptDelete) sqlExec(ctx context.Context) (int, error) {
 		Node: &sqlgraph.NodeSpec{
 			Table: negativeprompt.Table,
 			ID: &sqlgraph.FieldSpec{
-				Type:   field.TypeInt,
+				Type:   field.TypeUUID,
 				Column: negativeprompt.FieldID,
 			},
 		},

@@ -10,6 +10,7 @@ import (
 	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"
 	"entgo.io/ent/schema/field"
+	"github.com/google/uuid"
 	"github.com/yekta/stablecog/go-apps/database/ent/predicate"
 	"github.com/yekta/stablecog/go-apps/database/ent/server"
 )
@@ -84,8 +85,8 @@ func (sq *ServerQuery) FirstX(ctx context.Context) *Server {
 
 // FirstID returns the first Server ID from the query.
 // Returns a *NotFoundError when no Server ID was found.
-func (sq *ServerQuery) FirstID(ctx context.Context) (id int, err error) {
-	var ids []int
+func (sq *ServerQuery) FirstID(ctx context.Context) (id uuid.UUID, err error) {
+	var ids []uuid.UUID
 	if ids, err = sq.Limit(1).IDs(newQueryContext(ctx, TypeServer, "FirstID")); err != nil {
 		return
 	}
@@ -97,7 +98,7 @@ func (sq *ServerQuery) FirstID(ctx context.Context) (id int, err error) {
 }
 
 // FirstIDX is like FirstID, but panics if an error occurs.
-func (sq *ServerQuery) FirstIDX(ctx context.Context) int {
+func (sq *ServerQuery) FirstIDX(ctx context.Context) uuid.UUID {
 	id, err := sq.FirstID(ctx)
 	if err != nil && !IsNotFound(err) {
 		panic(err)
@@ -135,8 +136,8 @@ func (sq *ServerQuery) OnlyX(ctx context.Context) *Server {
 // OnlyID is like Only, but returns the only Server ID in the query.
 // Returns a *NotSingularError when more than one Server ID is found.
 // Returns a *NotFoundError when no entities are found.
-func (sq *ServerQuery) OnlyID(ctx context.Context) (id int, err error) {
-	var ids []int
+func (sq *ServerQuery) OnlyID(ctx context.Context) (id uuid.UUID, err error) {
+	var ids []uuid.UUID
 	if ids, err = sq.Limit(2).IDs(newQueryContext(ctx, TypeServer, "OnlyID")); err != nil {
 		return
 	}
@@ -152,7 +153,7 @@ func (sq *ServerQuery) OnlyID(ctx context.Context) (id int, err error) {
 }
 
 // OnlyIDX is like OnlyID, but panics if an error occurs.
-func (sq *ServerQuery) OnlyIDX(ctx context.Context) int {
+func (sq *ServerQuery) OnlyIDX(ctx context.Context) uuid.UUID {
 	id, err := sq.OnlyID(ctx)
 	if err != nil {
 		panic(err)
@@ -180,8 +181,8 @@ func (sq *ServerQuery) AllX(ctx context.Context) []*Server {
 }
 
 // IDs executes the query and returns a list of Server IDs.
-func (sq *ServerQuery) IDs(ctx context.Context) ([]int, error) {
-	var ids []int
+func (sq *ServerQuery) IDs(ctx context.Context) ([]uuid.UUID, error) {
+	var ids []uuid.UUID
 	ctx = newQueryContext(ctx, TypeServer, "IDs")
 	if err := sq.Select(server.FieldID).Scan(ctx, &ids); err != nil {
 		return nil, err
@@ -190,7 +191,7 @@ func (sq *ServerQuery) IDs(ctx context.Context) ([]int, error) {
 }
 
 // IDsX is like IDs, but panics if an error occurs.
-func (sq *ServerQuery) IDsX(ctx context.Context) []int {
+func (sq *ServerQuery) IDsX(ctx context.Context) []uuid.UUID {
 	ids, err := sq.IDs(ctx)
 	if err != nil {
 		panic(err)
@@ -260,6 +261,18 @@ func (sq *ServerQuery) Clone() *ServerQuery {
 
 // GroupBy is used to group vertices by one or more fields/columns.
 // It is often used with aggregate functions, like: count, max, mean, min, sum.
+//
+// Example:
+//
+//	var v []struct {
+//		URL string `json:"url,omitempty"`
+//		Count int `json:"count,omitempty"`
+//	}
+//
+//	client.Server.Query().
+//		GroupBy(server.FieldURL).
+//		Aggregate(ent.Count()).
+//		Scan(ctx, &v)
 func (sq *ServerQuery) GroupBy(field string, fields ...string) *ServerGroupBy {
 	sq.fields = append([]string{field}, fields...)
 	grbuild := &ServerGroupBy{build: sq}
@@ -271,6 +284,16 @@ func (sq *ServerQuery) GroupBy(field string, fields ...string) *ServerGroupBy {
 
 // Select allows the selection one or more fields/columns for the given query,
 // instead of selecting all fields in the entity.
+//
+// Example:
+//
+//	var v []struct {
+//		URL string `json:"url,omitempty"`
+//	}
+//
+//	client.Server.Query().
+//		Select(server.FieldURL).
+//		Scan(ctx, &v)
 func (sq *ServerQuery) Select(fields ...string) *ServerSelect {
 	sq.fields = append(sq.fields, fields...)
 	sbuild := &ServerSelect{ServerQuery: sq}
@@ -350,7 +373,7 @@ func (sq *ServerQuery) querySpec() *sqlgraph.QuerySpec {
 			Table:   server.Table,
 			Columns: server.Columns,
 			ID: &sqlgraph.FieldSpec{
-				Type:   field.TypeInt,
+				Type:   field.TypeUUID,
 				Column: server.FieldID,
 			},
 		},

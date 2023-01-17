@@ -4,12 +4,16 @@ package ent
 
 import (
 	"context"
+	"database/sql/driver"
 	"fmt"
 	"math"
 
 	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"
 	"entgo.io/ent/schema/field"
+	"github.com/google/uuid"
+	"github.com/yekta/stablecog/go-apps/database/ent/generation"
+	"github.com/yekta/stablecog/go-apps/database/ent/generationg"
 	"github.com/yekta/stablecog/go-apps/database/ent/predicate"
 	"github.com/yekta/stablecog/go-apps/database/ent/scheduler"
 )
@@ -17,13 +21,15 @@ import (
 // SchedulerQuery is the builder for querying Scheduler entities.
 type SchedulerQuery struct {
 	config
-	limit      *int
-	offset     *int
-	unique     *bool
-	order      []OrderFunc
-	fields     []string
-	inters     []Interceptor
-	predicates []predicate.Scheduler
+	limit           *int
+	offset          *int
+	unique          *bool
+	order           []OrderFunc
+	fields          []string
+	inters          []Interceptor
+	predicates      []predicate.Scheduler
+	withGeneration  *GenerationQuery
+	withGenerationG *GenerationGQuery
 	// intermediate query (i.e. traversal path).
 	sql  *sql.Selector
 	path func(context.Context) (*sql.Selector, error)
@@ -60,6 +66,50 @@ func (sq *SchedulerQuery) Order(o ...OrderFunc) *SchedulerQuery {
 	return sq
 }
 
+// QueryGeneration chains the current query on the "generation" edge.
+func (sq *SchedulerQuery) QueryGeneration() *GenerationQuery {
+	query := (&GenerationClient{config: sq.config}).Query()
+	query.path = func(ctx context.Context) (fromU *sql.Selector, err error) {
+		if err := sq.prepareQuery(ctx); err != nil {
+			return nil, err
+		}
+		selector := sq.sqlQuery(ctx)
+		if err := selector.Err(); err != nil {
+			return nil, err
+		}
+		step := sqlgraph.NewStep(
+			sqlgraph.From(scheduler.Table, scheduler.FieldID, selector),
+			sqlgraph.To(generation.Table, generation.FieldID),
+			sqlgraph.Edge(sqlgraph.O2M, false, scheduler.GenerationTable, scheduler.GenerationColumn),
+		)
+		fromU = sqlgraph.SetNeighbors(sq.driver.Dialect(), step)
+		return fromU, nil
+	}
+	return query
+}
+
+// QueryGenerationG chains the current query on the "generation_g" edge.
+func (sq *SchedulerQuery) QueryGenerationG() *GenerationGQuery {
+	query := (&GenerationGClient{config: sq.config}).Query()
+	query.path = func(ctx context.Context) (fromU *sql.Selector, err error) {
+		if err := sq.prepareQuery(ctx); err != nil {
+			return nil, err
+		}
+		selector := sq.sqlQuery(ctx)
+		if err := selector.Err(); err != nil {
+			return nil, err
+		}
+		step := sqlgraph.NewStep(
+			sqlgraph.From(scheduler.Table, scheduler.FieldID, selector),
+			sqlgraph.To(generationg.Table, generationg.FieldID),
+			sqlgraph.Edge(sqlgraph.O2M, false, scheduler.GenerationGTable, scheduler.GenerationGColumn),
+		)
+		fromU = sqlgraph.SetNeighbors(sq.driver.Dialect(), step)
+		return fromU, nil
+	}
+	return query
+}
+
 // First returns the first Scheduler entity from the query.
 // Returns a *NotFoundError when no Scheduler was found.
 func (sq *SchedulerQuery) First(ctx context.Context) (*Scheduler, error) {
@@ -84,8 +134,8 @@ func (sq *SchedulerQuery) FirstX(ctx context.Context) *Scheduler {
 
 // FirstID returns the first Scheduler ID from the query.
 // Returns a *NotFoundError when no Scheduler ID was found.
-func (sq *SchedulerQuery) FirstID(ctx context.Context) (id int, err error) {
-	var ids []int
+func (sq *SchedulerQuery) FirstID(ctx context.Context) (id uuid.UUID, err error) {
+	var ids []uuid.UUID
 	if ids, err = sq.Limit(1).IDs(newQueryContext(ctx, TypeScheduler, "FirstID")); err != nil {
 		return
 	}
@@ -97,7 +147,7 @@ func (sq *SchedulerQuery) FirstID(ctx context.Context) (id int, err error) {
 }
 
 // FirstIDX is like FirstID, but panics if an error occurs.
-func (sq *SchedulerQuery) FirstIDX(ctx context.Context) int {
+func (sq *SchedulerQuery) FirstIDX(ctx context.Context) uuid.UUID {
 	id, err := sq.FirstID(ctx)
 	if err != nil && !IsNotFound(err) {
 		panic(err)
@@ -135,8 +185,8 @@ func (sq *SchedulerQuery) OnlyX(ctx context.Context) *Scheduler {
 // OnlyID is like Only, but returns the only Scheduler ID in the query.
 // Returns a *NotSingularError when more than one Scheduler ID is found.
 // Returns a *NotFoundError when no entities are found.
-func (sq *SchedulerQuery) OnlyID(ctx context.Context) (id int, err error) {
-	var ids []int
+func (sq *SchedulerQuery) OnlyID(ctx context.Context) (id uuid.UUID, err error) {
+	var ids []uuid.UUID
 	if ids, err = sq.Limit(2).IDs(newQueryContext(ctx, TypeScheduler, "OnlyID")); err != nil {
 		return
 	}
@@ -152,7 +202,7 @@ func (sq *SchedulerQuery) OnlyID(ctx context.Context) (id int, err error) {
 }
 
 // OnlyIDX is like OnlyID, but panics if an error occurs.
-func (sq *SchedulerQuery) OnlyIDX(ctx context.Context) int {
+func (sq *SchedulerQuery) OnlyIDX(ctx context.Context) uuid.UUID {
 	id, err := sq.OnlyID(ctx)
 	if err != nil {
 		panic(err)
@@ -180,8 +230,8 @@ func (sq *SchedulerQuery) AllX(ctx context.Context) []*Scheduler {
 }
 
 // IDs executes the query and returns a list of Scheduler IDs.
-func (sq *SchedulerQuery) IDs(ctx context.Context) ([]int, error) {
-	var ids []int
+func (sq *SchedulerQuery) IDs(ctx context.Context) ([]uuid.UUID, error) {
+	var ids []uuid.UUID
 	ctx = newQueryContext(ctx, TypeScheduler, "IDs")
 	if err := sq.Select(scheduler.FieldID).Scan(ctx, &ids); err != nil {
 		return nil, err
@@ -190,7 +240,7 @@ func (sq *SchedulerQuery) IDs(ctx context.Context) ([]int, error) {
 }
 
 // IDsX is like IDs, but panics if an error occurs.
-func (sq *SchedulerQuery) IDsX(ctx context.Context) []int {
+func (sq *SchedulerQuery) IDsX(ctx context.Context) []uuid.UUID {
 	ids, err := sq.IDs(ctx)
 	if err != nil {
 		panic(err)
@@ -245,12 +295,14 @@ func (sq *SchedulerQuery) Clone() *SchedulerQuery {
 		return nil
 	}
 	return &SchedulerQuery{
-		config:     sq.config,
-		limit:      sq.limit,
-		offset:     sq.offset,
-		order:      append([]OrderFunc{}, sq.order...),
-		inters:     append([]Interceptor{}, sq.inters...),
-		predicates: append([]predicate.Scheduler{}, sq.predicates...),
+		config:          sq.config,
+		limit:           sq.limit,
+		offset:          sq.offset,
+		order:           append([]OrderFunc{}, sq.order...),
+		inters:          append([]Interceptor{}, sq.inters...),
+		predicates:      append([]predicate.Scheduler{}, sq.predicates...),
+		withGeneration:  sq.withGeneration.Clone(),
+		withGenerationG: sq.withGenerationG.Clone(),
 		// clone intermediate query.
 		sql:    sq.sql.Clone(),
 		path:   sq.path,
@@ -258,8 +310,42 @@ func (sq *SchedulerQuery) Clone() *SchedulerQuery {
 	}
 }
 
+// WithGeneration tells the query-builder to eager-load the nodes that are connected to
+// the "generation" edge. The optional arguments are used to configure the query builder of the edge.
+func (sq *SchedulerQuery) WithGeneration(opts ...func(*GenerationQuery)) *SchedulerQuery {
+	query := (&GenerationClient{config: sq.config}).Query()
+	for _, opt := range opts {
+		opt(query)
+	}
+	sq.withGeneration = query
+	return sq
+}
+
+// WithGenerationG tells the query-builder to eager-load the nodes that are connected to
+// the "generation_g" edge. The optional arguments are used to configure the query builder of the edge.
+func (sq *SchedulerQuery) WithGenerationG(opts ...func(*GenerationGQuery)) *SchedulerQuery {
+	query := (&GenerationGClient{config: sq.config}).Query()
+	for _, opt := range opts {
+		opt(query)
+	}
+	sq.withGenerationG = query
+	return sq
+}
+
 // GroupBy is used to group vertices by one or more fields/columns.
 // It is often used with aggregate functions, like: count, max, mean, min, sum.
+//
+// Example:
+//
+//	var v []struct {
+//		Name string `json:"name,omitempty"`
+//		Count int `json:"count,omitempty"`
+//	}
+//
+//	client.Scheduler.Query().
+//		GroupBy(scheduler.FieldName).
+//		Aggregate(ent.Count()).
+//		Scan(ctx, &v)
 func (sq *SchedulerQuery) GroupBy(field string, fields ...string) *SchedulerGroupBy {
 	sq.fields = append([]string{field}, fields...)
 	grbuild := &SchedulerGroupBy{build: sq}
@@ -271,6 +357,16 @@ func (sq *SchedulerQuery) GroupBy(field string, fields ...string) *SchedulerGrou
 
 // Select allows the selection one or more fields/columns for the given query,
 // instead of selecting all fields in the entity.
+//
+// Example:
+//
+//	var v []struct {
+//		Name string `json:"name,omitempty"`
+//	}
+//
+//	client.Scheduler.Query().
+//		Select(scheduler.FieldName).
+//		Scan(ctx, &v)
 func (sq *SchedulerQuery) Select(fields ...string) *SchedulerSelect {
 	sq.fields = append(sq.fields, fields...)
 	sbuild := &SchedulerSelect{SchedulerQuery: sq}
@@ -312,8 +408,12 @@ func (sq *SchedulerQuery) prepareQuery(ctx context.Context) error {
 
 func (sq *SchedulerQuery) sqlAll(ctx context.Context, hooks ...queryHook) ([]*Scheduler, error) {
 	var (
-		nodes = []*Scheduler{}
-		_spec = sq.querySpec()
+		nodes       = []*Scheduler{}
+		_spec       = sq.querySpec()
+		loadedTypes = [2]bool{
+			sq.withGeneration != nil,
+			sq.withGenerationG != nil,
+		}
 	)
 	_spec.ScanValues = func(columns []string) ([]any, error) {
 		return (*Scheduler).scanValues(nil, columns)
@@ -321,6 +421,7 @@ func (sq *SchedulerQuery) sqlAll(ctx context.Context, hooks ...queryHook) ([]*Sc
 	_spec.Assign = func(columns []string, values []any) error {
 		node := &Scheduler{config: sq.config}
 		nodes = append(nodes, node)
+		node.Edges.loadedTypes = loadedTypes
 		return node.assignValues(columns, values)
 	}
 	for i := range hooks {
@@ -332,7 +433,76 @@ func (sq *SchedulerQuery) sqlAll(ctx context.Context, hooks ...queryHook) ([]*Sc
 	if len(nodes) == 0 {
 		return nodes, nil
 	}
+	if query := sq.withGeneration; query != nil {
+		if err := sq.loadGeneration(ctx, query, nodes,
+			func(n *Scheduler) { n.Edges.Generation = []*Generation{} },
+			func(n *Scheduler, e *Generation) { n.Edges.Generation = append(n.Edges.Generation, e) }); err != nil {
+			return nil, err
+		}
+	}
+	if query := sq.withGenerationG; query != nil {
+		if err := sq.loadGenerationG(ctx, query, nodes,
+			func(n *Scheduler) { n.Edges.GenerationG = []*GenerationG{} },
+			func(n *Scheduler, e *GenerationG) { n.Edges.GenerationG = append(n.Edges.GenerationG, e) }); err != nil {
+			return nil, err
+		}
+	}
 	return nodes, nil
+}
+
+func (sq *SchedulerQuery) loadGeneration(ctx context.Context, query *GenerationQuery, nodes []*Scheduler, init func(*Scheduler), assign func(*Scheduler, *Generation)) error {
+	fks := make([]driver.Value, 0, len(nodes))
+	nodeids := make(map[uuid.UUID]*Scheduler)
+	for i := range nodes {
+		fks = append(fks, nodes[i].ID)
+		nodeids[nodes[i].ID] = nodes[i]
+		if init != nil {
+			init(nodes[i])
+		}
+	}
+	query.Where(predicate.Generation(func(s *sql.Selector) {
+		s.Where(sql.InValues(scheduler.GenerationColumn, fks...))
+	}))
+	neighbors, err := query.All(ctx)
+	if err != nil {
+		return err
+	}
+	for _, n := range neighbors {
+		fk := n.SchedulerID
+		node, ok := nodeids[fk]
+		if !ok {
+			return fmt.Errorf(`unexpected foreign-key "scheduler_id" returned %v for node %v`, fk, n.ID)
+		}
+		assign(node, n)
+	}
+	return nil
+}
+func (sq *SchedulerQuery) loadGenerationG(ctx context.Context, query *GenerationGQuery, nodes []*Scheduler, init func(*Scheduler), assign func(*Scheduler, *GenerationG)) error {
+	fks := make([]driver.Value, 0, len(nodes))
+	nodeids := make(map[uuid.UUID]*Scheduler)
+	for i := range nodes {
+		fks = append(fks, nodes[i].ID)
+		nodeids[nodes[i].ID] = nodes[i]
+		if init != nil {
+			init(nodes[i])
+		}
+	}
+	query.Where(predicate.GenerationG(func(s *sql.Selector) {
+		s.Where(sql.InValues(scheduler.GenerationGColumn, fks...))
+	}))
+	neighbors, err := query.All(ctx)
+	if err != nil {
+		return err
+	}
+	for _, n := range neighbors {
+		fk := n.SchedulerID
+		node, ok := nodeids[fk]
+		if !ok {
+			return fmt.Errorf(`unexpected foreign-key "scheduler_id" returned %v for node %v`, fk, n.ID)
+		}
+		assign(node, n)
+	}
+	return nil
 }
 
 func (sq *SchedulerQuery) sqlCount(ctx context.Context) (int, error) {
@@ -350,7 +520,7 @@ func (sq *SchedulerQuery) querySpec() *sqlgraph.QuerySpec {
 			Table:   scheduler.Table,
 			Columns: scheduler.Columns,
 			ID: &sqlgraph.FieldSpec{
-				Type:   field.TypeInt,
+				Type:   field.TypeUUID,
 				Column: scheduler.FieldID,
 			},
 		},

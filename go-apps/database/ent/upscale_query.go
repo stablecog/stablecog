@@ -10,8 +10,10 @@ import (
 	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"
 	"entgo.io/ent/schema/field"
+	"github.com/google/uuid"
 	"github.com/yekta/stablecog/go-apps/database/ent/predicate"
 	"github.com/yekta/stablecog/go-apps/database/ent/upscale"
+	"github.com/yekta/stablecog/go-apps/database/ent/user"
 )
 
 // UpscaleQuery is the builder for querying Upscale entities.
@@ -24,6 +26,7 @@ type UpscaleQuery struct {
 	fields     []string
 	inters     []Interceptor
 	predicates []predicate.Upscale
+	withUser   *UserQuery
 	// intermediate query (i.e. traversal path).
 	sql  *sql.Selector
 	path func(context.Context) (*sql.Selector, error)
@@ -60,6 +63,28 @@ func (uq *UpscaleQuery) Order(o ...OrderFunc) *UpscaleQuery {
 	return uq
 }
 
+// QueryUser chains the current query on the "user" edge.
+func (uq *UpscaleQuery) QueryUser() *UserQuery {
+	query := (&UserClient{config: uq.config}).Query()
+	query.path = func(ctx context.Context) (fromU *sql.Selector, err error) {
+		if err := uq.prepareQuery(ctx); err != nil {
+			return nil, err
+		}
+		selector := uq.sqlQuery(ctx)
+		if err := selector.Err(); err != nil {
+			return nil, err
+		}
+		step := sqlgraph.NewStep(
+			sqlgraph.From(upscale.Table, upscale.FieldID, selector),
+			sqlgraph.To(user.Table, user.FieldID),
+			sqlgraph.Edge(sqlgraph.M2O, true, upscale.UserTable, upscale.UserColumn),
+		)
+		fromU = sqlgraph.SetNeighbors(uq.driver.Dialect(), step)
+		return fromU, nil
+	}
+	return query
+}
+
 // First returns the first Upscale entity from the query.
 // Returns a *NotFoundError when no Upscale was found.
 func (uq *UpscaleQuery) First(ctx context.Context) (*Upscale, error) {
@@ -84,8 +109,8 @@ func (uq *UpscaleQuery) FirstX(ctx context.Context) *Upscale {
 
 // FirstID returns the first Upscale ID from the query.
 // Returns a *NotFoundError when no Upscale ID was found.
-func (uq *UpscaleQuery) FirstID(ctx context.Context) (id int, err error) {
-	var ids []int
+func (uq *UpscaleQuery) FirstID(ctx context.Context) (id uuid.UUID, err error) {
+	var ids []uuid.UUID
 	if ids, err = uq.Limit(1).IDs(newQueryContext(ctx, TypeUpscale, "FirstID")); err != nil {
 		return
 	}
@@ -97,7 +122,7 @@ func (uq *UpscaleQuery) FirstID(ctx context.Context) (id int, err error) {
 }
 
 // FirstIDX is like FirstID, but panics if an error occurs.
-func (uq *UpscaleQuery) FirstIDX(ctx context.Context) int {
+func (uq *UpscaleQuery) FirstIDX(ctx context.Context) uuid.UUID {
 	id, err := uq.FirstID(ctx)
 	if err != nil && !IsNotFound(err) {
 		panic(err)
@@ -135,8 +160,8 @@ func (uq *UpscaleQuery) OnlyX(ctx context.Context) *Upscale {
 // OnlyID is like Only, but returns the only Upscale ID in the query.
 // Returns a *NotSingularError when more than one Upscale ID is found.
 // Returns a *NotFoundError when no entities are found.
-func (uq *UpscaleQuery) OnlyID(ctx context.Context) (id int, err error) {
-	var ids []int
+func (uq *UpscaleQuery) OnlyID(ctx context.Context) (id uuid.UUID, err error) {
+	var ids []uuid.UUID
 	if ids, err = uq.Limit(2).IDs(newQueryContext(ctx, TypeUpscale, "OnlyID")); err != nil {
 		return
 	}
@@ -152,7 +177,7 @@ func (uq *UpscaleQuery) OnlyID(ctx context.Context) (id int, err error) {
 }
 
 // OnlyIDX is like OnlyID, but panics if an error occurs.
-func (uq *UpscaleQuery) OnlyIDX(ctx context.Context) int {
+func (uq *UpscaleQuery) OnlyIDX(ctx context.Context) uuid.UUID {
 	id, err := uq.OnlyID(ctx)
 	if err != nil {
 		panic(err)
@@ -180,8 +205,8 @@ func (uq *UpscaleQuery) AllX(ctx context.Context) []*Upscale {
 }
 
 // IDs executes the query and returns a list of Upscale IDs.
-func (uq *UpscaleQuery) IDs(ctx context.Context) ([]int, error) {
-	var ids []int
+func (uq *UpscaleQuery) IDs(ctx context.Context) ([]uuid.UUID, error) {
+	var ids []uuid.UUID
 	ctx = newQueryContext(ctx, TypeUpscale, "IDs")
 	if err := uq.Select(upscale.FieldID).Scan(ctx, &ids); err != nil {
 		return nil, err
@@ -190,7 +215,7 @@ func (uq *UpscaleQuery) IDs(ctx context.Context) ([]int, error) {
 }
 
 // IDsX is like IDs, but panics if an error occurs.
-func (uq *UpscaleQuery) IDsX(ctx context.Context) []int {
+func (uq *UpscaleQuery) IDsX(ctx context.Context) []uuid.UUID {
 	ids, err := uq.IDs(ctx)
 	if err != nil {
 		panic(err)
@@ -251,6 +276,7 @@ func (uq *UpscaleQuery) Clone() *UpscaleQuery {
 		order:      append([]OrderFunc{}, uq.order...),
 		inters:     append([]Interceptor{}, uq.inters...),
 		predicates: append([]predicate.Upscale{}, uq.predicates...),
+		withUser:   uq.withUser.Clone(),
 		// clone intermediate query.
 		sql:    uq.sql.Clone(),
 		path:   uq.path,
@@ -258,8 +284,31 @@ func (uq *UpscaleQuery) Clone() *UpscaleQuery {
 	}
 }
 
+// WithUser tells the query-builder to eager-load the nodes that are connected to
+// the "user" edge. The optional arguments are used to configure the query builder of the edge.
+func (uq *UpscaleQuery) WithUser(opts ...func(*UserQuery)) *UpscaleQuery {
+	query := (&UserClient{config: uq.config}).Query()
+	for _, opt := range opts {
+		opt(query)
+	}
+	uq.withUser = query
+	return uq
+}
+
 // GroupBy is used to group vertices by one or more fields/columns.
 // It is often used with aggregate functions, like: count, max, mean, min, sum.
+//
+// Example:
+//
+//	var v []struct {
+//		Width int `json:"width,omitempty"`
+//		Count int `json:"count,omitempty"`
+//	}
+//
+//	client.Upscale.Query().
+//		GroupBy(upscale.FieldWidth).
+//		Aggregate(ent.Count()).
+//		Scan(ctx, &v)
 func (uq *UpscaleQuery) GroupBy(field string, fields ...string) *UpscaleGroupBy {
 	uq.fields = append([]string{field}, fields...)
 	grbuild := &UpscaleGroupBy{build: uq}
@@ -271,6 +320,16 @@ func (uq *UpscaleQuery) GroupBy(field string, fields ...string) *UpscaleGroupBy 
 
 // Select allows the selection one or more fields/columns for the given query,
 // instead of selecting all fields in the entity.
+//
+// Example:
+//
+//	var v []struct {
+//		Width int `json:"width,omitempty"`
+//	}
+//
+//	client.Upscale.Query().
+//		Select(upscale.FieldWidth).
+//		Scan(ctx, &v)
 func (uq *UpscaleQuery) Select(fields ...string) *UpscaleSelect {
 	uq.fields = append(uq.fields, fields...)
 	sbuild := &UpscaleSelect{UpscaleQuery: uq}
@@ -312,8 +371,11 @@ func (uq *UpscaleQuery) prepareQuery(ctx context.Context) error {
 
 func (uq *UpscaleQuery) sqlAll(ctx context.Context, hooks ...queryHook) ([]*Upscale, error) {
 	var (
-		nodes = []*Upscale{}
-		_spec = uq.querySpec()
+		nodes       = []*Upscale{}
+		_spec       = uq.querySpec()
+		loadedTypes = [1]bool{
+			uq.withUser != nil,
+		}
 	)
 	_spec.ScanValues = func(columns []string) ([]any, error) {
 		return (*Upscale).scanValues(nil, columns)
@@ -321,6 +383,7 @@ func (uq *UpscaleQuery) sqlAll(ctx context.Context, hooks ...queryHook) ([]*Upsc
 	_spec.Assign = func(columns []string, values []any) error {
 		node := &Upscale{config: uq.config}
 		nodes = append(nodes, node)
+		node.Edges.loadedTypes = loadedTypes
 		return node.assignValues(columns, values)
 	}
 	for i := range hooks {
@@ -332,7 +395,43 @@ func (uq *UpscaleQuery) sqlAll(ctx context.Context, hooks ...queryHook) ([]*Upsc
 	if len(nodes) == 0 {
 		return nodes, nil
 	}
+	if query := uq.withUser; query != nil {
+		if err := uq.loadUser(ctx, query, nodes, nil,
+			func(n *Upscale, e *User) { n.Edges.User = e }); err != nil {
+			return nil, err
+		}
+	}
 	return nodes, nil
+}
+
+func (uq *UpscaleQuery) loadUser(ctx context.Context, query *UserQuery, nodes []*Upscale, init func(*Upscale), assign func(*Upscale, *User)) error {
+	ids := make([]uuid.UUID, 0, len(nodes))
+	nodeids := make(map[uuid.UUID][]*Upscale)
+	for i := range nodes {
+		if nodes[i].UserID == nil {
+			continue
+		}
+		fk := *nodes[i].UserID
+		if _, ok := nodeids[fk]; !ok {
+			ids = append(ids, fk)
+		}
+		nodeids[fk] = append(nodeids[fk], nodes[i])
+	}
+	query.Where(user.IDIn(ids...))
+	neighbors, err := query.All(ctx)
+	if err != nil {
+		return err
+	}
+	for _, n := range neighbors {
+		nodes, ok := nodeids[n.ID]
+		if !ok {
+			return fmt.Errorf(`unexpected foreign-key "user_id" returned %v`, n.ID)
+		}
+		for i := range nodes {
+			assign(nodes[i], n)
+		}
+	}
+	return nil
 }
 
 func (uq *UpscaleQuery) sqlCount(ctx context.Context) (int, error) {
@@ -350,7 +449,7 @@ func (uq *UpscaleQuery) querySpec() *sqlgraph.QuerySpec {
 			Table:   upscale.Table,
 			Columns: upscale.Columns,
 			ID: &sqlgraph.FieldSpec{
-				Type:   field.TypeInt,
+				Type:   field.TypeUUID,
 				Column: upscale.FieldID,
 			},
 		},

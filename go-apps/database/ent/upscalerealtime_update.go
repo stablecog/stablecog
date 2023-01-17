@@ -6,6 +6,7 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"time"
 
 	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"
@@ -27,6 +28,83 @@ func (uru *UpscaleRealtimeUpdate) Where(ps ...predicate.UpscaleRealtime) *Upscal
 	return uru
 }
 
+// SetStatus sets the "status" field.
+func (uru *UpscaleRealtimeUpdate) SetStatus(u upscalerealtime.Status) *UpscaleRealtimeUpdate {
+	uru.mutation.SetStatus(u)
+	return uru
+}
+
+// SetCountryCode sets the "country_code" field.
+func (uru *UpscaleRealtimeUpdate) SetCountryCode(s string) *UpscaleRealtimeUpdate {
+	uru.mutation.SetCountryCode(s)
+	return uru
+}
+
+// SetUsesDefaultServer sets the "uses_default_server" field.
+func (uru *UpscaleRealtimeUpdate) SetUsesDefaultServer(b bool) *UpscaleRealtimeUpdate {
+	uru.mutation.SetUsesDefaultServer(b)
+	return uru
+}
+
+// SetWidth sets the "width" field.
+func (uru *UpscaleRealtimeUpdate) SetWidth(i int) *UpscaleRealtimeUpdate {
+	uru.mutation.ResetWidth()
+	uru.mutation.SetWidth(i)
+	return uru
+}
+
+// AddWidth adds i to the "width" field.
+func (uru *UpscaleRealtimeUpdate) AddWidth(i int) *UpscaleRealtimeUpdate {
+	uru.mutation.AddWidth(i)
+	return uru
+}
+
+// SetHeight sets the "height" field.
+func (uru *UpscaleRealtimeUpdate) SetHeight(i int) *UpscaleRealtimeUpdate {
+	uru.mutation.ResetHeight()
+	uru.mutation.SetHeight(i)
+	return uru
+}
+
+// AddHeight adds i to the "height" field.
+func (uru *UpscaleRealtimeUpdate) AddHeight(i int) *UpscaleRealtimeUpdate {
+	uru.mutation.AddHeight(i)
+	return uru
+}
+
+// SetScale sets the "scale" field.
+func (uru *UpscaleRealtimeUpdate) SetScale(i int) *UpscaleRealtimeUpdate {
+	uru.mutation.ResetScale()
+	uru.mutation.SetScale(i)
+	return uru
+}
+
+// AddScale adds i to the "scale" field.
+func (uru *UpscaleRealtimeUpdate) AddScale(i int) *UpscaleRealtimeUpdate {
+	uru.mutation.AddScale(i)
+	return uru
+}
+
+// SetUpdatedAt sets the "updated_at" field.
+func (uru *UpscaleRealtimeUpdate) SetUpdatedAt(t time.Time) *UpscaleRealtimeUpdate {
+	uru.mutation.SetUpdatedAt(t)
+	return uru
+}
+
+// SetUserTier sets the "user_tier" field.
+func (uru *UpscaleRealtimeUpdate) SetUserTier(ut upscalerealtime.UserTier) *UpscaleRealtimeUpdate {
+	uru.mutation.SetUserTier(ut)
+	return uru
+}
+
+// SetNillableUserTier sets the "user_tier" field if the given value is not nil.
+func (uru *UpscaleRealtimeUpdate) SetNillableUserTier(ut *upscalerealtime.UserTier) *UpscaleRealtimeUpdate {
+	if ut != nil {
+		uru.SetUserTier(*ut)
+	}
+	return uru
+}
+
 // Mutation returns the UpscaleRealtimeMutation object of the builder.
 func (uru *UpscaleRealtimeUpdate) Mutation() *UpscaleRealtimeMutation {
 	return uru.mutation
@@ -34,6 +112,7 @@ func (uru *UpscaleRealtimeUpdate) Mutation() *UpscaleRealtimeMutation {
 
 // Save executes the query and returns the number of nodes affected by the update operation.
 func (uru *UpscaleRealtimeUpdate) Save(ctx context.Context) (int, error) {
+	uru.defaults()
 	return withHooks[int, UpscaleRealtimeMutation](ctx, uru.sqlSave, uru.mutation, uru.hooks)
 }
 
@@ -59,13 +138,39 @@ func (uru *UpscaleRealtimeUpdate) ExecX(ctx context.Context) {
 	}
 }
 
+// defaults sets the default values of the builder before save.
+func (uru *UpscaleRealtimeUpdate) defaults() {
+	if _, ok := uru.mutation.UpdatedAt(); !ok {
+		v := upscalerealtime.UpdateDefaultUpdatedAt()
+		uru.mutation.SetUpdatedAt(v)
+	}
+}
+
+// check runs all checks and user-defined validators on the builder.
+func (uru *UpscaleRealtimeUpdate) check() error {
+	if v, ok := uru.mutation.Status(); ok {
+		if err := upscalerealtime.StatusValidator(v); err != nil {
+			return &ValidationError{Name: "status", err: fmt.Errorf(`ent: validator failed for field "UpscaleRealtime.status": %w`, err)}
+		}
+	}
+	if v, ok := uru.mutation.UserTier(); ok {
+		if err := upscalerealtime.UserTierValidator(v); err != nil {
+			return &ValidationError{Name: "user_tier", err: fmt.Errorf(`ent: validator failed for field "UpscaleRealtime.user_tier": %w`, err)}
+		}
+	}
+	return nil
+}
+
 func (uru *UpscaleRealtimeUpdate) sqlSave(ctx context.Context) (n int, err error) {
+	if err := uru.check(); err != nil {
+		return n, err
+	}
 	_spec := &sqlgraph.UpdateSpec{
 		Node: &sqlgraph.NodeSpec{
 			Table:   upscalerealtime.Table,
 			Columns: upscalerealtime.Columns,
 			ID: &sqlgraph.FieldSpec{
-				Type:   field.TypeInt,
+				Type:   field.TypeUUID,
 				Column: upscalerealtime.FieldID,
 			},
 		},
@@ -76,6 +181,39 @@ func (uru *UpscaleRealtimeUpdate) sqlSave(ctx context.Context) (n int, err error
 				ps[i](selector)
 			}
 		}
+	}
+	if value, ok := uru.mutation.Status(); ok {
+		_spec.SetField(upscalerealtime.FieldStatus, field.TypeEnum, value)
+	}
+	if value, ok := uru.mutation.CountryCode(); ok {
+		_spec.SetField(upscalerealtime.FieldCountryCode, field.TypeString, value)
+	}
+	if value, ok := uru.mutation.UsesDefaultServer(); ok {
+		_spec.SetField(upscalerealtime.FieldUsesDefaultServer, field.TypeBool, value)
+	}
+	if value, ok := uru.mutation.Width(); ok {
+		_spec.SetField(upscalerealtime.FieldWidth, field.TypeInt, value)
+	}
+	if value, ok := uru.mutation.AddedWidth(); ok {
+		_spec.AddField(upscalerealtime.FieldWidth, field.TypeInt, value)
+	}
+	if value, ok := uru.mutation.Height(); ok {
+		_spec.SetField(upscalerealtime.FieldHeight, field.TypeInt, value)
+	}
+	if value, ok := uru.mutation.AddedHeight(); ok {
+		_spec.AddField(upscalerealtime.FieldHeight, field.TypeInt, value)
+	}
+	if value, ok := uru.mutation.Scale(); ok {
+		_spec.SetField(upscalerealtime.FieldScale, field.TypeInt, value)
+	}
+	if value, ok := uru.mutation.AddedScale(); ok {
+		_spec.AddField(upscalerealtime.FieldScale, field.TypeInt, value)
+	}
+	if value, ok := uru.mutation.UpdatedAt(); ok {
+		_spec.SetField(upscalerealtime.FieldUpdatedAt, field.TypeTime, value)
+	}
+	if value, ok := uru.mutation.UserTier(); ok {
+		_spec.SetField(upscalerealtime.FieldUserTier, field.TypeEnum, value)
 	}
 	if n, err = sqlgraph.UpdateNodes(ctx, uru.driver, _spec); err != nil {
 		if _, ok := err.(*sqlgraph.NotFoundError); ok {
@@ -97,6 +235,83 @@ type UpscaleRealtimeUpdateOne struct {
 	mutation *UpscaleRealtimeMutation
 }
 
+// SetStatus sets the "status" field.
+func (uruo *UpscaleRealtimeUpdateOne) SetStatus(u upscalerealtime.Status) *UpscaleRealtimeUpdateOne {
+	uruo.mutation.SetStatus(u)
+	return uruo
+}
+
+// SetCountryCode sets the "country_code" field.
+func (uruo *UpscaleRealtimeUpdateOne) SetCountryCode(s string) *UpscaleRealtimeUpdateOne {
+	uruo.mutation.SetCountryCode(s)
+	return uruo
+}
+
+// SetUsesDefaultServer sets the "uses_default_server" field.
+func (uruo *UpscaleRealtimeUpdateOne) SetUsesDefaultServer(b bool) *UpscaleRealtimeUpdateOne {
+	uruo.mutation.SetUsesDefaultServer(b)
+	return uruo
+}
+
+// SetWidth sets the "width" field.
+func (uruo *UpscaleRealtimeUpdateOne) SetWidth(i int) *UpscaleRealtimeUpdateOne {
+	uruo.mutation.ResetWidth()
+	uruo.mutation.SetWidth(i)
+	return uruo
+}
+
+// AddWidth adds i to the "width" field.
+func (uruo *UpscaleRealtimeUpdateOne) AddWidth(i int) *UpscaleRealtimeUpdateOne {
+	uruo.mutation.AddWidth(i)
+	return uruo
+}
+
+// SetHeight sets the "height" field.
+func (uruo *UpscaleRealtimeUpdateOne) SetHeight(i int) *UpscaleRealtimeUpdateOne {
+	uruo.mutation.ResetHeight()
+	uruo.mutation.SetHeight(i)
+	return uruo
+}
+
+// AddHeight adds i to the "height" field.
+func (uruo *UpscaleRealtimeUpdateOne) AddHeight(i int) *UpscaleRealtimeUpdateOne {
+	uruo.mutation.AddHeight(i)
+	return uruo
+}
+
+// SetScale sets the "scale" field.
+func (uruo *UpscaleRealtimeUpdateOne) SetScale(i int) *UpscaleRealtimeUpdateOne {
+	uruo.mutation.ResetScale()
+	uruo.mutation.SetScale(i)
+	return uruo
+}
+
+// AddScale adds i to the "scale" field.
+func (uruo *UpscaleRealtimeUpdateOne) AddScale(i int) *UpscaleRealtimeUpdateOne {
+	uruo.mutation.AddScale(i)
+	return uruo
+}
+
+// SetUpdatedAt sets the "updated_at" field.
+func (uruo *UpscaleRealtimeUpdateOne) SetUpdatedAt(t time.Time) *UpscaleRealtimeUpdateOne {
+	uruo.mutation.SetUpdatedAt(t)
+	return uruo
+}
+
+// SetUserTier sets the "user_tier" field.
+func (uruo *UpscaleRealtimeUpdateOne) SetUserTier(ut upscalerealtime.UserTier) *UpscaleRealtimeUpdateOne {
+	uruo.mutation.SetUserTier(ut)
+	return uruo
+}
+
+// SetNillableUserTier sets the "user_tier" field if the given value is not nil.
+func (uruo *UpscaleRealtimeUpdateOne) SetNillableUserTier(ut *upscalerealtime.UserTier) *UpscaleRealtimeUpdateOne {
+	if ut != nil {
+		uruo.SetUserTier(*ut)
+	}
+	return uruo
+}
+
 // Mutation returns the UpscaleRealtimeMutation object of the builder.
 func (uruo *UpscaleRealtimeUpdateOne) Mutation() *UpscaleRealtimeMutation {
 	return uruo.mutation
@@ -111,6 +326,7 @@ func (uruo *UpscaleRealtimeUpdateOne) Select(field string, fields ...string) *Up
 
 // Save executes the query and returns the updated UpscaleRealtime entity.
 func (uruo *UpscaleRealtimeUpdateOne) Save(ctx context.Context) (*UpscaleRealtime, error) {
+	uruo.defaults()
 	return withHooks[*UpscaleRealtime, UpscaleRealtimeMutation](ctx, uruo.sqlSave, uruo.mutation, uruo.hooks)
 }
 
@@ -136,13 +352,39 @@ func (uruo *UpscaleRealtimeUpdateOne) ExecX(ctx context.Context) {
 	}
 }
 
+// defaults sets the default values of the builder before save.
+func (uruo *UpscaleRealtimeUpdateOne) defaults() {
+	if _, ok := uruo.mutation.UpdatedAt(); !ok {
+		v := upscalerealtime.UpdateDefaultUpdatedAt()
+		uruo.mutation.SetUpdatedAt(v)
+	}
+}
+
+// check runs all checks and user-defined validators on the builder.
+func (uruo *UpscaleRealtimeUpdateOne) check() error {
+	if v, ok := uruo.mutation.Status(); ok {
+		if err := upscalerealtime.StatusValidator(v); err != nil {
+			return &ValidationError{Name: "status", err: fmt.Errorf(`ent: validator failed for field "UpscaleRealtime.status": %w`, err)}
+		}
+	}
+	if v, ok := uruo.mutation.UserTier(); ok {
+		if err := upscalerealtime.UserTierValidator(v); err != nil {
+			return &ValidationError{Name: "user_tier", err: fmt.Errorf(`ent: validator failed for field "UpscaleRealtime.user_tier": %w`, err)}
+		}
+	}
+	return nil
+}
+
 func (uruo *UpscaleRealtimeUpdateOne) sqlSave(ctx context.Context) (_node *UpscaleRealtime, err error) {
+	if err := uruo.check(); err != nil {
+		return _node, err
+	}
 	_spec := &sqlgraph.UpdateSpec{
 		Node: &sqlgraph.NodeSpec{
 			Table:   upscalerealtime.Table,
 			Columns: upscalerealtime.Columns,
 			ID: &sqlgraph.FieldSpec{
-				Type:   field.TypeInt,
+				Type:   field.TypeUUID,
 				Column: upscalerealtime.FieldID,
 			},
 		},
@@ -170,6 +412,39 @@ func (uruo *UpscaleRealtimeUpdateOne) sqlSave(ctx context.Context) (_node *Upsca
 				ps[i](selector)
 			}
 		}
+	}
+	if value, ok := uruo.mutation.Status(); ok {
+		_spec.SetField(upscalerealtime.FieldStatus, field.TypeEnum, value)
+	}
+	if value, ok := uruo.mutation.CountryCode(); ok {
+		_spec.SetField(upscalerealtime.FieldCountryCode, field.TypeString, value)
+	}
+	if value, ok := uruo.mutation.UsesDefaultServer(); ok {
+		_spec.SetField(upscalerealtime.FieldUsesDefaultServer, field.TypeBool, value)
+	}
+	if value, ok := uruo.mutation.Width(); ok {
+		_spec.SetField(upscalerealtime.FieldWidth, field.TypeInt, value)
+	}
+	if value, ok := uruo.mutation.AddedWidth(); ok {
+		_spec.AddField(upscalerealtime.FieldWidth, field.TypeInt, value)
+	}
+	if value, ok := uruo.mutation.Height(); ok {
+		_spec.SetField(upscalerealtime.FieldHeight, field.TypeInt, value)
+	}
+	if value, ok := uruo.mutation.AddedHeight(); ok {
+		_spec.AddField(upscalerealtime.FieldHeight, field.TypeInt, value)
+	}
+	if value, ok := uruo.mutation.Scale(); ok {
+		_spec.SetField(upscalerealtime.FieldScale, field.TypeInt, value)
+	}
+	if value, ok := uruo.mutation.AddedScale(); ok {
+		_spec.AddField(upscalerealtime.FieldScale, field.TypeInt, value)
+	}
+	if value, ok := uruo.mutation.UpdatedAt(); ok {
+		_spec.SetField(upscalerealtime.FieldUpdatedAt, field.TypeTime, value)
+	}
+	if value, ok := uruo.mutation.UserTier(); ok {
+		_spec.SetField(upscalerealtime.FieldUserTier, field.TypeEnum, value)
 	}
 	_node = &UpscaleRealtime{config: uruo.config}
 	_spec.Assign = _node.assignValues

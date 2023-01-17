@@ -6,10 +6,14 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"time"
 
 	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"
 	"entgo.io/ent/schema/field"
+	"github.com/google/uuid"
+	"github.com/yekta/stablecog/go-apps/database/ent/generation"
+	"github.com/yekta/stablecog/go-apps/database/ent/generationg"
 	"github.com/yekta/stablecog/go-apps/database/ent/predicate"
 	"github.com/yekta/stablecog/go-apps/database/ent/prompt"
 )
@@ -27,13 +31,98 @@ func (pu *PromptUpdate) Where(ps ...predicate.Prompt) *PromptUpdate {
 	return pu
 }
 
+// SetText sets the "text" field.
+func (pu *PromptUpdate) SetText(s string) *PromptUpdate {
+	pu.mutation.SetText(s)
+	return pu
+}
+
+// SetUpdatedAt sets the "updated_at" field.
+func (pu *PromptUpdate) SetUpdatedAt(t time.Time) *PromptUpdate {
+	pu.mutation.SetUpdatedAt(t)
+	return pu
+}
+
+// AddGenerationIDs adds the "generation" edge to the Generation entity by IDs.
+func (pu *PromptUpdate) AddGenerationIDs(ids ...uuid.UUID) *PromptUpdate {
+	pu.mutation.AddGenerationIDs(ids...)
+	return pu
+}
+
+// AddGeneration adds the "generation" edges to the Generation entity.
+func (pu *PromptUpdate) AddGeneration(g ...*Generation) *PromptUpdate {
+	ids := make([]uuid.UUID, len(g))
+	for i := range g {
+		ids[i] = g[i].ID
+	}
+	return pu.AddGenerationIDs(ids...)
+}
+
+// AddGenerationGIDs adds the "generation_g" edge to the GenerationG entity by IDs.
+func (pu *PromptUpdate) AddGenerationGIDs(ids ...uuid.UUID) *PromptUpdate {
+	pu.mutation.AddGenerationGIDs(ids...)
+	return pu
+}
+
+// AddGenerationG adds the "generation_g" edges to the GenerationG entity.
+func (pu *PromptUpdate) AddGenerationG(g ...*GenerationG) *PromptUpdate {
+	ids := make([]uuid.UUID, len(g))
+	for i := range g {
+		ids[i] = g[i].ID
+	}
+	return pu.AddGenerationGIDs(ids...)
+}
+
 // Mutation returns the PromptMutation object of the builder.
 func (pu *PromptUpdate) Mutation() *PromptMutation {
 	return pu.mutation
 }
 
+// ClearGeneration clears all "generation" edges to the Generation entity.
+func (pu *PromptUpdate) ClearGeneration() *PromptUpdate {
+	pu.mutation.ClearGeneration()
+	return pu
+}
+
+// RemoveGenerationIDs removes the "generation" edge to Generation entities by IDs.
+func (pu *PromptUpdate) RemoveGenerationIDs(ids ...uuid.UUID) *PromptUpdate {
+	pu.mutation.RemoveGenerationIDs(ids...)
+	return pu
+}
+
+// RemoveGeneration removes "generation" edges to Generation entities.
+func (pu *PromptUpdate) RemoveGeneration(g ...*Generation) *PromptUpdate {
+	ids := make([]uuid.UUID, len(g))
+	for i := range g {
+		ids[i] = g[i].ID
+	}
+	return pu.RemoveGenerationIDs(ids...)
+}
+
+// ClearGenerationG clears all "generation_g" edges to the GenerationG entity.
+func (pu *PromptUpdate) ClearGenerationG() *PromptUpdate {
+	pu.mutation.ClearGenerationG()
+	return pu
+}
+
+// RemoveGenerationGIDs removes the "generation_g" edge to GenerationG entities by IDs.
+func (pu *PromptUpdate) RemoveGenerationGIDs(ids ...uuid.UUID) *PromptUpdate {
+	pu.mutation.RemoveGenerationGIDs(ids...)
+	return pu
+}
+
+// RemoveGenerationG removes "generation_g" edges to GenerationG entities.
+func (pu *PromptUpdate) RemoveGenerationG(g ...*GenerationG) *PromptUpdate {
+	ids := make([]uuid.UUID, len(g))
+	for i := range g {
+		ids[i] = g[i].ID
+	}
+	return pu.RemoveGenerationGIDs(ids...)
+}
+
 // Save executes the query and returns the number of nodes affected by the update operation.
 func (pu *PromptUpdate) Save(ctx context.Context) (int, error) {
+	pu.defaults()
 	return withHooks[int, PromptMutation](ctx, pu.sqlSave, pu.mutation, pu.hooks)
 }
 
@@ -59,13 +148,21 @@ func (pu *PromptUpdate) ExecX(ctx context.Context) {
 	}
 }
 
+// defaults sets the default values of the builder before save.
+func (pu *PromptUpdate) defaults() {
+	if _, ok := pu.mutation.UpdatedAt(); !ok {
+		v := prompt.UpdateDefaultUpdatedAt()
+		pu.mutation.SetUpdatedAt(v)
+	}
+}
+
 func (pu *PromptUpdate) sqlSave(ctx context.Context) (n int, err error) {
 	_spec := &sqlgraph.UpdateSpec{
 		Node: &sqlgraph.NodeSpec{
 			Table:   prompt.Table,
 			Columns: prompt.Columns,
 			ID: &sqlgraph.FieldSpec{
-				Type:   field.TypeInt,
+				Type:   field.TypeUUID,
 				Column: prompt.FieldID,
 			},
 		},
@@ -76,6 +173,120 @@ func (pu *PromptUpdate) sqlSave(ctx context.Context) (n int, err error) {
 				ps[i](selector)
 			}
 		}
+	}
+	if value, ok := pu.mutation.Text(); ok {
+		_spec.SetField(prompt.FieldText, field.TypeString, value)
+	}
+	if value, ok := pu.mutation.UpdatedAt(); ok {
+		_spec.SetField(prompt.FieldUpdatedAt, field.TypeTime, value)
+	}
+	if pu.mutation.GenerationCleared() {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.O2M,
+			Inverse: false,
+			Table:   prompt.GenerationTable,
+			Columns: []string{prompt.GenerationColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeUUID,
+					Column: generation.FieldID,
+				},
+			},
+		}
+		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
+	}
+	if nodes := pu.mutation.RemovedGenerationIDs(); len(nodes) > 0 && !pu.mutation.GenerationCleared() {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.O2M,
+			Inverse: false,
+			Table:   prompt.GenerationTable,
+			Columns: []string{prompt.GenerationColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeUUID,
+					Column: generation.FieldID,
+				},
+			},
+		}
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
+	}
+	if nodes := pu.mutation.GenerationIDs(); len(nodes) > 0 {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.O2M,
+			Inverse: false,
+			Table:   prompt.GenerationTable,
+			Columns: []string{prompt.GenerationColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeUUID,
+					Column: generation.FieldID,
+				},
+			},
+		}
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_spec.Edges.Add = append(_spec.Edges.Add, edge)
+	}
+	if pu.mutation.GenerationGCleared() {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.O2M,
+			Inverse: false,
+			Table:   prompt.GenerationGTable,
+			Columns: []string{prompt.GenerationGColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeUUID,
+					Column: generationg.FieldID,
+				},
+			},
+		}
+		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
+	}
+	if nodes := pu.mutation.RemovedGenerationGIDs(); len(nodes) > 0 && !pu.mutation.GenerationGCleared() {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.O2M,
+			Inverse: false,
+			Table:   prompt.GenerationGTable,
+			Columns: []string{prompt.GenerationGColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeUUID,
+					Column: generationg.FieldID,
+				},
+			},
+		}
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
+	}
+	if nodes := pu.mutation.GenerationGIDs(); len(nodes) > 0 {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.O2M,
+			Inverse: false,
+			Table:   prompt.GenerationGTable,
+			Columns: []string{prompt.GenerationGColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeUUID,
+					Column: generationg.FieldID,
+				},
+			},
+		}
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_spec.Edges.Add = append(_spec.Edges.Add, edge)
 	}
 	if n, err = sqlgraph.UpdateNodes(ctx, pu.driver, _spec); err != nil {
 		if _, ok := err.(*sqlgraph.NotFoundError); ok {
@@ -97,9 +308,93 @@ type PromptUpdateOne struct {
 	mutation *PromptMutation
 }
 
+// SetText sets the "text" field.
+func (puo *PromptUpdateOne) SetText(s string) *PromptUpdateOne {
+	puo.mutation.SetText(s)
+	return puo
+}
+
+// SetUpdatedAt sets the "updated_at" field.
+func (puo *PromptUpdateOne) SetUpdatedAt(t time.Time) *PromptUpdateOne {
+	puo.mutation.SetUpdatedAt(t)
+	return puo
+}
+
+// AddGenerationIDs adds the "generation" edge to the Generation entity by IDs.
+func (puo *PromptUpdateOne) AddGenerationIDs(ids ...uuid.UUID) *PromptUpdateOne {
+	puo.mutation.AddGenerationIDs(ids...)
+	return puo
+}
+
+// AddGeneration adds the "generation" edges to the Generation entity.
+func (puo *PromptUpdateOne) AddGeneration(g ...*Generation) *PromptUpdateOne {
+	ids := make([]uuid.UUID, len(g))
+	for i := range g {
+		ids[i] = g[i].ID
+	}
+	return puo.AddGenerationIDs(ids...)
+}
+
+// AddGenerationGIDs adds the "generation_g" edge to the GenerationG entity by IDs.
+func (puo *PromptUpdateOne) AddGenerationGIDs(ids ...uuid.UUID) *PromptUpdateOne {
+	puo.mutation.AddGenerationGIDs(ids...)
+	return puo
+}
+
+// AddGenerationG adds the "generation_g" edges to the GenerationG entity.
+func (puo *PromptUpdateOne) AddGenerationG(g ...*GenerationG) *PromptUpdateOne {
+	ids := make([]uuid.UUID, len(g))
+	for i := range g {
+		ids[i] = g[i].ID
+	}
+	return puo.AddGenerationGIDs(ids...)
+}
+
 // Mutation returns the PromptMutation object of the builder.
 func (puo *PromptUpdateOne) Mutation() *PromptMutation {
 	return puo.mutation
+}
+
+// ClearGeneration clears all "generation" edges to the Generation entity.
+func (puo *PromptUpdateOne) ClearGeneration() *PromptUpdateOne {
+	puo.mutation.ClearGeneration()
+	return puo
+}
+
+// RemoveGenerationIDs removes the "generation" edge to Generation entities by IDs.
+func (puo *PromptUpdateOne) RemoveGenerationIDs(ids ...uuid.UUID) *PromptUpdateOne {
+	puo.mutation.RemoveGenerationIDs(ids...)
+	return puo
+}
+
+// RemoveGeneration removes "generation" edges to Generation entities.
+func (puo *PromptUpdateOne) RemoveGeneration(g ...*Generation) *PromptUpdateOne {
+	ids := make([]uuid.UUID, len(g))
+	for i := range g {
+		ids[i] = g[i].ID
+	}
+	return puo.RemoveGenerationIDs(ids...)
+}
+
+// ClearGenerationG clears all "generation_g" edges to the GenerationG entity.
+func (puo *PromptUpdateOne) ClearGenerationG() *PromptUpdateOne {
+	puo.mutation.ClearGenerationG()
+	return puo
+}
+
+// RemoveGenerationGIDs removes the "generation_g" edge to GenerationG entities by IDs.
+func (puo *PromptUpdateOne) RemoveGenerationGIDs(ids ...uuid.UUID) *PromptUpdateOne {
+	puo.mutation.RemoveGenerationGIDs(ids...)
+	return puo
+}
+
+// RemoveGenerationG removes "generation_g" edges to GenerationG entities.
+func (puo *PromptUpdateOne) RemoveGenerationG(g ...*GenerationG) *PromptUpdateOne {
+	ids := make([]uuid.UUID, len(g))
+	for i := range g {
+		ids[i] = g[i].ID
+	}
+	return puo.RemoveGenerationGIDs(ids...)
 }
 
 // Select allows selecting one or more fields (columns) of the returned entity.
@@ -111,6 +406,7 @@ func (puo *PromptUpdateOne) Select(field string, fields ...string) *PromptUpdate
 
 // Save executes the query and returns the updated Prompt entity.
 func (puo *PromptUpdateOne) Save(ctx context.Context) (*Prompt, error) {
+	puo.defaults()
 	return withHooks[*Prompt, PromptMutation](ctx, puo.sqlSave, puo.mutation, puo.hooks)
 }
 
@@ -136,13 +432,21 @@ func (puo *PromptUpdateOne) ExecX(ctx context.Context) {
 	}
 }
 
+// defaults sets the default values of the builder before save.
+func (puo *PromptUpdateOne) defaults() {
+	if _, ok := puo.mutation.UpdatedAt(); !ok {
+		v := prompt.UpdateDefaultUpdatedAt()
+		puo.mutation.SetUpdatedAt(v)
+	}
+}
+
 func (puo *PromptUpdateOne) sqlSave(ctx context.Context) (_node *Prompt, err error) {
 	_spec := &sqlgraph.UpdateSpec{
 		Node: &sqlgraph.NodeSpec{
 			Table:   prompt.Table,
 			Columns: prompt.Columns,
 			ID: &sqlgraph.FieldSpec{
-				Type:   field.TypeInt,
+				Type:   field.TypeUUID,
 				Column: prompt.FieldID,
 			},
 		},
@@ -170,6 +474,120 @@ func (puo *PromptUpdateOne) sqlSave(ctx context.Context) (_node *Prompt, err err
 				ps[i](selector)
 			}
 		}
+	}
+	if value, ok := puo.mutation.Text(); ok {
+		_spec.SetField(prompt.FieldText, field.TypeString, value)
+	}
+	if value, ok := puo.mutation.UpdatedAt(); ok {
+		_spec.SetField(prompt.FieldUpdatedAt, field.TypeTime, value)
+	}
+	if puo.mutation.GenerationCleared() {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.O2M,
+			Inverse: false,
+			Table:   prompt.GenerationTable,
+			Columns: []string{prompt.GenerationColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeUUID,
+					Column: generation.FieldID,
+				},
+			},
+		}
+		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
+	}
+	if nodes := puo.mutation.RemovedGenerationIDs(); len(nodes) > 0 && !puo.mutation.GenerationCleared() {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.O2M,
+			Inverse: false,
+			Table:   prompt.GenerationTable,
+			Columns: []string{prompt.GenerationColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeUUID,
+					Column: generation.FieldID,
+				},
+			},
+		}
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
+	}
+	if nodes := puo.mutation.GenerationIDs(); len(nodes) > 0 {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.O2M,
+			Inverse: false,
+			Table:   prompt.GenerationTable,
+			Columns: []string{prompt.GenerationColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeUUID,
+					Column: generation.FieldID,
+				},
+			},
+		}
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_spec.Edges.Add = append(_spec.Edges.Add, edge)
+	}
+	if puo.mutation.GenerationGCleared() {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.O2M,
+			Inverse: false,
+			Table:   prompt.GenerationGTable,
+			Columns: []string{prompt.GenerationGColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeUUID,
+					Column: generationg.FieldID,
+				},
+			},
+		}
+		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
+	}
+	if nodes := puo.mutation.RemovedGenerationGIDs(); len(nodes) > 0 && !puo.mutation.GenerationGCleared() {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.O2M,
+			Inverse: false,
+			Table:   prompt.GenerationGTable,
+			Columns: []string{prompt.GenerationGColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeUUID,
+					Column: generationg.FieldID,
+				},
+			},
+		}
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
+	}
+	if nodes := puo.mutation.GenerationGIDs(); len(nodes) > 0 {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.O2M,
+			Inverse: false,
+			Table:   prompt.GenerationGTable,
+			Columns: []string{prompt.GenerationGColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeUUID,
+					Column: generationg.FieldID,
+				},
+			},
+		}
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_spec.Edges.Add = append(_spec.Edges.Add, edge)
 	}
 	_node = &Prompt{config: puo.config}
 	_spec.Assign = _node.assignValues

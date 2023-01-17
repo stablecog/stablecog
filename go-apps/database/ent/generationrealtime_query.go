@@ -10,6 +10,7 @@ import (
 	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"
 	"entgo.io/ent/schema/field"
+	"github.com/google/uuid"
 	"github.com/yekta/stablecog/go-apps/database/ent/generationrealtime"
 	"github.com/yekta/stablecog/go-apps/database/ent/predicate"
 )
@@ -84,8 +85,8 @@ func (grq *GenerationRealtimeQuery) FirstX(ctx context.Context) *GenerationRealt
 
 // FirstID returns the first GenerationRealtime ID from the query.
 // Returns a *NotFoundError when no GenerationRealtime ID was found.
-func (grq *GenerationRealtimeQuery) FirstID(ctx context.Context) (id int, err error) {
-	var ids []int
+func (grq *GenerationRealtimeQuery) FirstID(ctx context.Context) (id uuid.UUID, err error) {
+	var ids []uuid.UUID
 	if ids, err = grq.Limit(1).IDs(newQueryContext(ctx, TypeGenerationRealtime, "FirstID")); err != nil {
 		return
 	}
@@ -97,7 +98,7 @@ func (grq *GenerationRealtimeQuery) FirstID(ctx context.Context) (id int, err er
 }
 
 // FirstIDX is like FirstID, but panics if an error occurs.
-func (grq *GenerationRealtimeQuery) FirstIDX(ctx context.Context) int {
+func (grq *GenerationRealtimeQuery) FirstIDX(ctx context.Context) uuid.UUID {
 	id, err := grq.FirstID(ctx)
 	if err != nil && !IsNotFound(err) {
 		panic(err)
@@ -135,8 +136,8 @@ func (grq *GenerationRealtimeQuery) OnlyX(ctx context.Context) *GenerationRealti
 // OnlyID is like Only, but returns the only GenerationRealtime ID in the query.
 // Returns a *NotSingularError when more than one GenerationRealtime ID is found.
 // Returns a *NotFoundError when no entities are found.
-func (grq *GenerationRealtimeQuery) OnlyID(ctx context.Context) (id int, err error) {
-	var ids []int
+func (grq *GenerationRealtimeQuery) OnlyID(ctx context.Context) (id uuid.UUID, err error) {
+	var ids []uuid.UUID
 	if ids, err = grq.Limit(2).IDs(newQueryContext(ctx, TypeGenerationRealtime, "OnlyID")); err != nil {
 		return
 	}
@@ -152,7 +153,7 @@ func (grq *GenerationRealtimeQuery) OnlyID(ctx context.Context) (id int, err err
 }
 
 // OnlyIDX is like OnlyID, but panics if an error occurs.
-func (grq *GenerationRealtimeQuery) OnlyIDX(ctx context.Context) int {
+func (grq *GenerationRealtimeQuery) OnlyIDX(ctx context.Context) uuid.UUID {
 	id, err := grq.OnlyID(ctx)
 	if err != nil {
 		panic(err)
@@ -180,8 +181,8 @@ func (grq *GenerationRealtimeQuery) AllX(ctx context.Context) []*GenerationRealt
 }
 
 // IDs executes the query and returns a list of GenerationRealtime IDs.
-func (grq *GenerationRealtimeQuery) IDs(ctx context.Context) ([]int, error) {
-	var ids []int
+func (grq *GenerationRealtimeQuery) IDs(ctx context.Context) ([]uuid.UUID, error) {
+	var ids []uuid.UUID
 	ctx = newQueryContext(ctx, TypeGenerationRealtime, "IDs")
 	if err := grq.Select(generationrealtime.FieldID).Scan(ctx, &ids); err != nil {
 		return nil, err
@@ -190,7 +191,7 @@ func (grq *GenerationRealtimeQuery) IDs(ctx context.Context) ([]int, error) {
 }
 
 // IDsX is like IDs, but panics if an error occurs.
-func (grq *GenerationRealtimeQuery) IDsX(ctx context.Context) []int {
+func (grq *GenerationRealtimeQuery) IDsX(ctx context.Context) []uuid.UUID {
 	ids, err := grq.IDs(ctx)
 	if err != nil {
 		panic(err)
@@ -260,6 +261,18 @@ func (grq *GenerationRealtimeQuery) Clone() *GenerationRealtimeQuery {
 
 // GroupBy is used to group vertices by one or more fields/columns.
 // It is often used with aggregate functions, like: count, max, mean, min, sum.
+//
+// Example:
+//
+//	var v []struct {
+//		CountryCode string `json:"country_code,omitempty"`
+//		Count int `json:"count,omitempty"`
+//	}
+//
+//	client.GenerationRealtime.Query().
+//		GroupBy(generationrealtime.FieldCountryCode).
+//		Aggregate(ent.Count()).
+//		Scan(ctx, &v)
 func (grq *GenerationRealtimeQuery) GroupBy(field string, fields ...string) *GenerationRealtimeGroupBy {
 	grq.fields = append([]string{field}, fields...)
 	grbuild := &GenerationRealtimeGroupBy{build: grq}
@@ -271,6 +284,16 @@ func (grq *GenerationRealtimeQuery) GroupBy(field string, fields ...string) *Gen
 
 // Select allows the selection one or more fields/columns for the given query,
 // instead of selecting all fields in the entity.
+//
+// Example:
+//
+//	var v []struct {
+//		CountryCode string `json:"country_code,omitempty"`
+//	}
+//
+//	client.GenerationRealtime.Query().
+//		Select(generationrealtime.FieldCountryCode).
+//		Scan(ctx, &v)
 func (grq *GenerationRealtimeQuery) Select(fields ...string) *GenerationRealtimeSelect {
 	grq.fields = append(grq.fields, fields...)
 	sbuild := &GenerationRealtimeSelect{GenerationRealtimeQuery: grq}
@@ -350,7 +373,7 @@ func (grq *GenerationRealtimeQuery) querySpec() *sqlgraph.QuerySpec {
 			Table:   generationrealtime.Table,
 			Columns: generationrealtime.Columns,
 			ID: &sqlgraph.FieldSpec{
-				Type:   field.TypeInt,
+				Type:   field.TypeUUID,
 				Column: generationrealtime.FieldID,
 			},
 		},

@@ -10,6 +10,7 @@ import (
 	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"
 	"entgo.io/ent/schema/field"
+	"github.com/google/uuid"
 	"github.com/yekta/stablecog/go-apps/database/ent/admin"
 	"github.com/yekta/stablecog/go-apps/database/ent/predicate"
 )
@@ -84,8 +85,8 @@ func (aq *AdminQuery) FirstX(ctx context.Context) *Admin {
 
 // FirstID returns the first Admin ID from the query.
 // Returns a *NotFoundError when no Admin ID was found.
-func (aq *AdminQuery) FirstID(ctx context.Context) (id int, err error) {
-	var ids []int
+func (aq *AdminQuery) FirstID(ctx context.Context) (id uuid.UUID, err error) {
+	var ids []uuid.UUID
 	if ids, err = aq.Limit(1).IDs(newQueryContext(ctx, TypeAdmin, "FirstID")); err != nil {
 		return
 	}
@@ -97,7 +98,7 @@ func (aq *AdminQuery) FirstID(ctx context.Context) (id int, err error) {
 }
 
 // FirstIDX is like FirstID, but panics if an error occurs.
-func (aq *AdminQuery) FirstIDX(ctx context.Context) int {
+func (aq *AdminQuery) FirstIDX(ctx context.Context) uuid.UUID {
 	id, err := aq.FirstID(ctx)
 	if err != nil && !IsNotFound(err) {
 		panic(err)
@@ -135,8 +136,8 @@ func (aq *AdminQuery) OnlyX(ctx context.Context) *Admin {
 // OnlyID is like Only, but returns the only Admin ID in the query.
 // Returns a *NotSingularError when more than one Admin ID is found.
 // Returns a *NotFoundError when no entities are found.
-func (aq *AdminQuery) OnlyID(ctx context.Context) (id int, err error) {
-	var ids []int
+func (aq *AdminQuery) OnlyID(ctx context.Context) (id uuid.UUID, err error) {
+	var ids []uuid.UUID
 	if ids, err = aq.Limit(2).IDs(newQueryContext(ctx, TypeAdmin, "OnlyID")); err != nil {
 		return
 	}
@@ -152,7 +153,7 @@ func (aq *AdminQuery) OnlyID(ctx context.Context) (id int, err error) {
 }
 
 // OnlyIDX is like OnlyID, but panics if an error occurs.
-func (aq *AdminQuery) OnlyIDX(ctx context.Context) int {
+func (aq *AdminQuery) OnlyIDX(ctx context.Context) uuid.UUID {
 	id, err := aq.OnlyID(ctx)
 	if err != nil {
 		panic(err)
@@ -180,8 +181,8 @@ func (aq *AdminQuery) AllX(ctx context.Context) []*Admin {
 }
 
 // IDs executes the query and returns a list of Admin IDs.
-func (aq *AdminQuery) IDs(ctx context.Context) ([]int, error) {
-	var ids []int
+func (aq *AdminQuery) IDs(ctx context.Context) ([]uuid.UUID, error) {
+	var ids []uuid.UUID
 	ctx = newQueryContext(ctx, TypeAdmin, "IDs")
 	if err := aq.Select(admin.FieldID).Scan(ctx, &ids); err != nil {
 		return nil, err
@@ -190,7 +191,7 @@ func (aq *AdminQuery) IDs(ctx context.Context) ([]int, error) {
 }
 
 // IDsX is like IDs, but panics if an error occurs.
-func (aq *AdminQuery) IDsX(ctx context.Context) []int {
+func (aq *AdminQuery) IDsX(ctx context.Context) []uuid.UUID {
 	ids, err := aq.IDs(ctx)
 	if err != nil {
 		panic(err)
@@ -260,6 +261,18 @@ func (aq *AdminQuery) Clone() *AdminQuery {
 
 // GroupBy is used to group vertices by one or more fields/columns.
 // It is often used with aggregate functions, like: count, max, mean, min, sum.
+//
+// Example:
+//
+//	var v []struct {
+//		CreatedAt time.Time `json:"created_at,omitempty"`
+//		Count int `json:"count,omitempty"`
+//	}
+//
+//	client.Admin.Query().
+//		GroupBy(admin.FieldCreatedAt).
+//		Aggregate(ent.Count()).
+//		Scan(ctx, &v)
 func (aq *AdminQuery) GroupBy(field string, fields ...string) *AdminGroupBy {
 	aq.fields = append([]string{field}, fields...)
 	grbuild := &AdminGroupBy{build: aq}
@@ -271,6 +284,16 @@ func (aq *AdminQuery) GroupBy(field string, fields ...string) *AdminGroupBy {
 
 // Select allows the selection one or more fields/columns for the given query,
 // instead of selecting all fields in the entity.
+//
+// Example:
+//
+//	var v []struct {
+//		CreatedAt time.Time `json:"created_at,omitempty"`
+//	}
+//
+//	client.Admin.Query().
+//		Select(admin.FieldCreatedAt).
+//		Scan(ctx, &v)
 func (aq *AdminQuery) Select(fields ...string) *AdminSelect {
 	aq.fields = append(aq.fields, fields...)
 	sbuild := &AdminSelect{AdminQuery: aq}
@@ -350,7 +373,7 @@ func (aq *AdminQuery) querySpec() *sqlgraph.QuerySpec {
 			Table:   admin.Table,
 			Columns: admin.Columns,
 			ID: &sqlgraph.FieldSpec{
-				Type:   field.TypeInt,
+				Type:   field.TypeUUID,
 				Column: admin.FieldID,
 			},
 		},

@@ -4,10 +4,13 @@ package ent
 
 import (
 	"context"
+	"errors"
 	"fmt"
+	"time"
 
 	"entgo.io/ent/dialect/sql/sqlgraph"
 	"entgo.io/ent/schema/field"
+	"github.com/google/uuid"
 	"github.com/yekta/stablecog/go-apps/database/ent/generationrealtime"
 )
 
@@ -18,6 +21,104 @@ type GenerationRealtimeCreate struct {
 	hooks    []Hook
 }
 
+// SetCountryCode sets the "country_code" field.
+func (grc *GenerationRealtimeCreate) SetCountryCode(s string) *GenerationRealtimeCreate {
+	grc.mutation.SetCountryCode(s)
+	return grc
+}
+
+// SetDurationMs sets the "duration_ms" field.
+func (grc *GenerationRealtimeCreate) SetDurationMs(i int) *GenerationRealtimeCreate {
+	grc.mutation.SetDurationMs(i)
+	return grc
+}
+
+// SetStatus sets the "status" field.
+func (grc *GenerationRealtimeCreate) SetStatus(ge generationrealtime.Status) *GenerationRealtimeCreate {
+	grc.mutation.SetStatus(ge)
+	return grc
+}
+
+// SetUsesDefaultServer sets the "uses_default_server" field.
+func (grc *GenerationRealtimeCreate) SetUsesDefaultServer(b bool) *GenerationRealtimeCreate {
+	grc.mutation.SetUsesDefaultServer(b)
+	return grc
+}
+
+// SetWidth sets the "width" field.
+func (grc *GenerationRealtimeCreate) SetWidth(i int) *GenerationRealtimeCreate {
+	grc.mutation.SetWidth(i)
+	return grc
+}
+
+// SetHeight sets the "height" field.
+func (grc *GenerationRealtimeCreate) SetHeight(i int) *GenerationRealtimeCreate {
+	grc.mutation.SetHeight(i)
+	return grc
+}
+
+// SetNumInterferenceSteps sets the "num_interference_steps" field.
+func (grc *GenerationRealtimeCreate) SetNumInterferenceSteps(i int) *GenerationRealtimeCreate {
+	grc.mutation.SetNumInterferenceSteps(i)
+	return grc
+}
+
+// SetCreatedAt sets the "created_at" field.
+func (grc *GenerationRealtimeCreate) SetCreatedAt(t time.Time) *GenerationRealtimeCreate {
+	grc.mutation.SetCreatedAt(t)
+	return grc
+}
+
+// SetNillableCreatedAt sets the "created_at" field if the given value is not nil.
+func (grc *GenerationRealtimeCreate) SetNillableCreatedAt(t *time.Time) *GenerationRealtimeCreate {
+	if t != nil {
+		grc.SetCreatedAt(*t)
+	}
+	return grc
+}
+
+// SetUpdatedAt sets the "updated_at" field.
+func (grc *GenerationRealtimeCreate) SetUpdatedAt(t time.Time) *GenerationRealtimeCreate {
+	grc.mutation.SetUpdatedAt(t)
+	return grc
+}
+
+// SetNillableUpdatedAt sets the "updated_at" field if the given value is not nil.
+func (grc *GenerationRealtimeCreate) SetNillableUpdatedAt(t *time.Time) *GenerationRealtimeCreate {
+	if t != nil {
+		grc.SetUpdatedAt(*t)
+	}
+	return grc
+}
+
+// SetUserTier sets the "user_tier" field.
+func (grc *GenerationRealtimeCreate) SetUserTier(gt generationrealtime.UserTier) *GenerationRealtimeCreate {
+	grc.mutation.SetUserTier(gt)
+	return grc
+}
+
+// SetNillableUserTier sets the "user_tier" field if the given value is not nil.
+func (grc *GenerationRealtimeCreate) SetNillableUserTier(gt *generationrealtime.UserTier) *GenerationRealtimeCreate {
+	if gt != nil {
+		grc.SetUserTier(*gt)
+	}
+	return grc
+}
+
+// SetID sets the "id" field.
+func (grc *GenerationRealtimeCreate) SetID(u uuid.UUID) *GenerationRealtimeCreate {
+	grc.mutation.SetID(u)
+	return grc
+}
+
+// SetNillableID sets the "id" field if the given value is not nil.
+func (grc *GenerationRealtimeCreate) SetNillableID(u *uuid.UUID) *GenerationRealtimeCreate {
+	if u != nil {
+		grc.SetID(*u)
+	}
+	return grc
+}
+
 // Mutation returns the GenerationRealtimeMutation object of the builder.
 func (grc *GenerationRealtimeCreate) Mutation() *GenerationRealtimeMutation {
 	return grc.mutation
@@ -25,6 +126,7 @@ func (grc *GenerationRealtimeCreate) Mutation() *GenerationRealtimeMutation {
 
 // Save creates the GenerationRealtime in the database.
 func (grc *GenerationRealtimeCreate) Save(ctx context.Context) (*GenerationRealtime, error) {
+	grc.defaults()
 	return withHooks[*GenerationRealtime, GenerationRealtimeMutation](ctx, grc.sqlSave, grc.mutation, grc.hooks)
 }
 
@@ -50,8 +152,68 @@ func (grc *GenerationRealtimeCreate) ExecX(ctx context.Context) {
 	}
 }
 
+// defaults sets the default values of the builder before save.
+func (grc *GenerationRealtimeCreate) defaults() {
+	if _, ok := grc.mutation.CreatedAt(); !ok {
+		v := generationrealtime.DefaultCreatedAt()
+		grc.mutation.SetCreatedAt(v)
+	}
+	if _, ok := grc.mutation.UpdatedAt(); !ok {
+		v := generationrealtime.DefaultUpdatedAt()
+		grc.mutation.SetUpdatedAt(v)
+	}
+	if _, ok := grc.mutation.UserTier(); !ok {
+		v := generationrealtime.DefaultUserTier
+		grc.mutation.SetUserTier(v)
+	}
+	if _, ok := grc.mutation.ID(); !ok {
+		v := generationrealtime.DefaultID()
+		grc.mutation.SetID(v)
+	}
+}
+
 // check runs all checks and user-defined validators on the builder.
 func (grc *GenerationRealtimeCreate) check() error {
+	if _, ok := grc.mutation.CountryCode(); !ok {
+		return &ValidationError{Name: "country_code", err: errors.New(`ent: missing required field "GenerationRealtime.country_code"`)}
+	}
+	if _, ok := grc.mutation.DurationMs(); !ok {
+		return &ValidationError{Name: "duration_ms", err: errors.New(`ent: missing required field "GenerationRealtime.duration_ms"`)}
+	}
+	if _, ok := grc.mutation.Status(); !ok {
+		return &ValidationError{Name: "status", err: errors.New(`ent: missing required field "GenerationRealtime.status"`)}
+	}
+	if v, ok := grc.mutation.Status(); ok {
+		if err := generationrealtime.StatusValidator(v); err != nil {
+			return &ValidationError{Name: "status", err: fmt.Errorf(`ent: validator failed for field "GenerationRealtime.status": %w`, err)}
+		}
+	}
+	if _, ok := grc.mutation.UsesDefaultServer(); !ok {
+		return &ValidationError{Name: "uses_default_server", err: errors.New(`ent: missing required field "GenerationRealtime.uses_default_server"`)}
+	}
+	if _, ok := grc.mutation.Width(); !ok {
+		return &ValidationError{Name: "width", err: errors.New(`ent: missing required field "GenerationRealtime.width"`)}
+	}
+	if _, ok := grc.mutation.Height(); !ok {
+		return &ValidationError{Name: "height", err: errors.New(`ent: missing required field "GenerationRealtime.height"`)}
+	}
+	if _, ok := grc.mutation.NumInterferenceSteps(); !ok {
+		return &ValidationError{Name: "num_interference_steps", err: errors.New(`ent: missing required field "GenerationRealtime.num_interference_steps"`)}
+	}
+	if _, ok := grc.mutation.CreatedAt(); !ok {
+		return &ValidationError{Name: "created_at", err: errors.New(`ent: missing required field "GenerationRealtime.created_at"`)}
+	}
+	if _, ok := grc.mutation.UpdatedAt(); !ok {
+		return &ValidationError{Name: "updated_at", err: errors.New(`ent: missing required field "GenerationRealtime.updated_at"`)}
+	}
+	if _, ok := grc.mutation.UserTier(); !ok {
+		return &ValidationError{Name: "user_tier", err: errors.New(`ent: missing required field "GenerationRealtime.user_tier"`)}
+	}
+	if v, ok := grc.mutation.UserTier(); ok {
+		if err := generationrealtime.UserTierValidator(v); err != nil {
+			return &ValidationError{Name: "user_tier", err: fmt.Errorf(`ent: validator failed for field "GenerationRealtime.user_tier": %w`, err)}
+		}
+	}
 	return nil
 }
 
@@ -66,8 +228,13 @@ func (grc *GenerationRealtimeCreate) sqlSave(ctx context.Context) (*GenerationRe
 		}
 		return nil, err
 	}
-	id := _spec.ID.Value.(int64)
-	_node.ID = int(id)
+	if _spec.ID.Value != nil {
+		if id, ok := _spec.ID.Value.(*uuid.UUID); ok {
+			_node.ID = *id
+		} else if err := _node.ID.Scan(_spec.ID.Value); err != nil {
+			return nil, err
+		}
+	}
 	grc.mutation.id = &_node.ID
 	grc.mutation.done = true
 	return _node, nil
@@ -79,11 +246,55 @@ func (grc *GenerationRealtimeCreate) createSpec() (*GenerationRealtime, *sqlgrap
 		_spec = &sqlgraph.CreateSpec{
 			Table: generationrealtime.Table,
 			ID: &sqlgraph.FieldSpec{
-				Type:   field.TypeInt,
+				Type:   field.TypeUUID,
 				Column: generationrealtime.FieldID,
 			},
 		}
 	)
+	if id, ok := grc.mutation.ID(); ok {
+		_node.ID = id
+		_spec.ID.Value = &id
+	}
+	if value, ok := grc.mutation.CountryCode(); ok {
+		_spec.SetField(generationrealtime.FieldCountryCode, field.TypeString, value)
+		_node.CountryCode = &value
+	}
+	if value, ok := grc.mutation.DurationMs(); ok {
+		_spec.SetField(generationrealtime.FieldDurationMs, field.TypeInt, value)
+		_node.DurationMs = &value
+	}
+	if value, ok := grc.mutation.Status(); ok {
+		_spec.SetField(generationrealtime.FieldStatus, field.TypeEnum, value)
+		_node.Status = &value
+	}
+	if value, ok := grc.mutation.UsesDefaultServer(); ok {
+		_spec.SetField(generationrealtime.FieldUsesDefaultServer, field.TypeBool, value)
+		_node.UsesDefaultServer = value
+	}
+	if value, ok := grc.mutation.Width(); ok {
+		_spec.SetField(generationrealtime.FieldWidth, field.TypeInt, value)
+		_node.Width = &value
+	}
+	if value, ok := grc.mutation.Height(); ok {
+		_spec.SetField(generationrealtime.FieldHeight, field.TypeInt, value)
+		_node.Height = &value
+	}
+	if value, ok := grc.mutation.NumInterferenceSteps(); ok {
+		_spec.SetField(generationrealtime.FieldNumInterferenceSteps, field.TypeInt, value)
+		_node.NumInterferenceSteps = &value
+	}
+	if value, ok := grc.mutation.CreatedAt(); ok {
+		_spec.SetField(generationrealtime.FieldCreatedAt, field.TypeTime, value)
+		_node.CreatedAt = value
+	}
+	if value, ok := grc.mutation.UpdatedAt(); ok {
+		_spec.SetField(generationrealtime.FieldUpdatedAt, field.TypeTime, value)
+		_node.UpdatedAt = value
+	}
+	if value, ok := grc.mutation.UserTier(); ok {
+		_spec.SetField(generationrealtime.FieldUserTier, field.TypeEnum, value)
+		_node.UserTier = value
+	}
 	return _node, _spec
 }
 
@@ -101,6 +312,7 @@ func (grcb *GenerationRealtimeCreateBulk) Save(ctx context.Context) ([]*Generati
 	for i := range grcb.builders {
 		func(i int, root context.Context) {
 			builder := grcb.builders[i]
+			builder.defaults()
 			var mut Mutator = MutateFunc(func(ctx context.Context, m Mutation) (Value, error) {
 				mutation, ok := m.(*GenerationRealtimeMutation)
 				if !ok {
@@ -127,10 +339,6 @@ func (grcb *GenerationRealtimeCreateBulk) Save(ctx context.Context) ([]*Generati
 					return nil, err
 				}
 				mutation.id = &nodes[i].ID
-				if specs[i].ID.Value != nil {
-					id := specs[i].ID.Value.(int64)
-					nodes[i].ID = int(id)
-				}
 				mutation.done = true
 				return nodes[i], nil
 			})

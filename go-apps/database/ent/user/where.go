@@ -3,53 +3,453 @@
 package user
 
 import (
+	"time"
+
 	"entgo.io/ent/dialect/sql"
+	"entgo.io/ent/dialect/sql/sqlgraph"
+	"github.com/google/uuid"
 	"github.com/yekta/stablecog/go-apps/database/ent/predicate"
 )
 
 // ID filters vertices based on their ID field.
-func ID(id int) predicate.User {
+func ID(id uuid.UUID) predicate.User {
 	return predicate.User(sql.FieldEQ(FieldID, id))
 }
 
 // IDEQ applies the EQ predicate on the ID field.
-func IDEQ(id int) predicate.User {
+func IDEQ(id uuid.UUID) predicate.User {
 	return predicate.User(sql.FieldEQ(FieldID, id))
 }
 
 // IDNEQ applies the NEQ predicate on the ID field.
-func IDNEQ(id int) predicate.User {
+func IDNEQ(id uuid.UUID) predicate.User {
 	return predicate.User(sql.FieldNEQ(FieldID, id))
 }
 
 // IDIn applies the In predicate on the ID field.
-func IDIn(ids ...int) predicate.User {
+func IDIn(ids ...uuid.UUID) predicate.User {
 	return predicate.User(sql.FieldIn(FieldID, ids...))
 }
 
 // IDNotIn applies the NotIn predicate on the ID field.
-func IDNotIn(ids ...int) predicate.User {
+func IDNotIn(ids ...uuid.UUID) predicate.User {
 	return predicate.User(sql.FieldNotIn(FieldID, ids...))
 }
 
 // IDGT applies the GT predicate on the ID field.
-func IDGT(id int) predicate.User {
+func IDGT(id uuid.UUID) predicate.User {
 	return predicate.User(sql.FieldGT(FieldID, id))
 }
 
 // IDGTE applies the GTE predicate on the ID field.
-func IDGTE(id int) predicate.User {
+func IDGTE(id uuid.UUID) predicate.User {
 	return predicate.User(sql.FieldGTE(FieldID, id))
 }
 
 // IDLT applies the LT predicate on the ID field.
-func IDLT(id int) predicate.User {
+func IDLT(id uuid.UUID) predicate.User {
 	return predicate.User(sql.FieldLT(FieldID, id))
 }
 
 // IDLTE applies the LTE predicate on the ID field.
-func IDLTE(id int) predicate.User {
+func IDLTE(id uuid.UUID) predicate.User {
 	return predicate.User(sql.FieldLTE(FieldID, id))
+}
+
+// Email applies equality check predicate on the "email" field. It's identical to EmailEQ.
+func Email(v string) predicate.User {
+	return predicate.User(sql.FieldEQ(FieldEmail, v))
+}
+
+// StripeCustomerID applies equality check predicate on the "stripe_customer_id" field. It's identical to StripeCustomerIDEQ.
+func StripeCustomerID(v string) predicate.User {
+	return predicate.User(sql.FieldEQ(FieldStripeCustomerID, v))
+}
+
+// CreatedAt applies equality check predicate on the "created_at" field. It's identical to CreatedAtEQ.
+func CreatedAt(v time.Time) predicate.User {
+	return predicate.User(sql.FieldEQ(FieldCreatedAt, v))
+}
+
+// UpdatedAt applies equality check predicate on the "updated_at" field. It's identical to UpdatedAtEQ.
+func UpdatedAt(v time.Time) predicate.User {
+	return predicate.User(sql.FieldEQ(FieldUpdatedAt, v))
+}
+
+// ConfirmedAt applies equality check predicate on the "confirmed_at" field. It's identical to ConfirmedAtEQ.
+func ConfirmedAt(v time.Time) predicate.User {
+	return predicate.User(sql.FieldEQ(FieldConfirmedAt, v))
+}
+
+// EmailEQ applies the EQ predicate on the "email" field.
+func EmailEQ(v string) predicate.User {
+	return predicate.User(sql.FieldEQ(FieldEmail, v))
+}
+
+// EmailNEQ applies the NEQ predicate on the "email" field.
+func EmailNEQ(v string) predicate.User {
+	return predicate.User(sql.FieldNEQ(FieldEmail, v))
+}
+
+// EmailIn applies the In predicate on the "email" field.
+func EmailIn(vs ...string) predicate.User {
+	return predicate.User(sql.FieldIn(FieldEmail, vs...))
+}
+
+// EmailNotIn applies the NotIn predicate on the "email" field.
+func EmailNotIn(vs ...string) predicate.User {
+	return predicate.User(sql.FieldNotIn(FieldEmail, vs...))
+}
+
+// EmailGT applies the GT predicate on the "email" field.
+func EmailGT(v string) predicate.User {
+	return predicate.User(sql.FieldGT(FieldEmail, v))
+}
+
+// EmailGTE applies the GTE predicate on the "email" field.
+func EmailGTE(v string) predicate.User {
+	return predicate.User(sql.FieldGTE(FieldEmail, v))
+}
+
+// EmailLT applies the LT predicate on the "email" field.
+func EmailLT(v string) predicate.User {
+	return predicate.User(sql.FieldLT(FieldEmail, v))
+}
+
+// EmailLTE applies the LTE predicate on the "email" field.
+func EmailLTE(v string) predicate.User {
+	return predicate.User(sql.FieldLTE(FieldEmail, v))
+}
+
+// EmailContains applies the Contains predicate on the "email" field.
+func EmailContains(v string) predicate.User {
+	return predicate.User(sql.FieldContains(FieldEmail, v))
+}
+
+// EmailHasPrefix applies the HasPrefix predicate on the "email" field.
+func EmailHasPrefix(v string) predicate.User {
+	return predicate.User(sql.FieldHasPrefix(FieldEmail, v))
+}
+
+// EmailHasSuffix applies the HasSuffix predicate on the "email" field.
+func EmailHasSuffix(v string) predicate.User {
+	return predicate.User(sql.FieldHasSuffix(FieldEmail, v))
+}
+
+// EmailEqualFold applies the EqualFold predicate on the "email" field.
+func EmailEqualFold(v string) predicate.User {
+	return predicate.User(sql.FieldEqualFold(FieldEmail, v))
+}
+
+// EmailContainsFold applies the ContainsFold predicate on the "email" field.
+func EmailContainsFold(v string) predicate.User {
+	return predicate.User(sql.FieldContainsFold(FieldEmail, v))
+}
+
+// StripeCustomerIDEQ applies the EQ predicate on the "stripe_customer_id" field.
+func StripeCustomerIDEQ(v string) predicate.User {
+	return predicate.User(sql.FieldEQ(FieldStripeCustomerID, v))
+}
+
+// StripeCustomerIDNEQ applies the NEQ predicate on the "stripe_customer_id" field.
+func StripeCustomerIDNEQ(v string) predicate.User {
+	return predicate.User(sql.FieldNEQ(FieldStripeCustomerID, v))
+}
+
+// StripeCustomerIDIn applies the In predicate on the "stripe_customer_id" field.
+func StripeCustomerIDIn(vs ...string) predicate.User {
+	return predicate.User(sql.FieldIn(FieldStripeCustomerID, vs...))
+}
+
+// StripeCustomerIDNotIn applies the NotIn predicate on the "stripe_customer_id" field.
+func StripeCustomerIDNotIn(vs ...string) predicate.User {
+	return predicate.User(sql.FieldNotIn(FieldStripeCustomerID, vs...))
+}
+
+// StripeCustomerIDGT applies the GT predicate on the "stripe_customer_id" field.
+func StripeCustomerIDGT(v string) predicate.User {
+	return predicate.User(sql.FieldGT(FieldStripeCustomerID, v))
+}
+
+// StripeCustomerIDGTE applies the GTE predicate on the "stripe_customer_id" field.
+func StripeCustomerIDGTE(v string) predicate.User {
+	return predicate.User(sql.FieldGTE(FieldStripeCustomerID, v))
+}
+
+// StripeCustomerIDLT applies the LT predicate on the "stripe_customer_id" field.
+func StripeCustomerIDLT(v string) predicate.User {
+	return predicate.User(sql.FieldLT(FieldStripeCustomerID, v))
+}
+
+// StripeCustomerIDLTE applies the LTE predicate on the "stripe_customer_id" field.
+func StripeCustomerIDLTE(v string) predicate.User {
+	return predicate.User(sql.FieldLTE(FieldStripeCustomerID, v))
+}
+
+// StripeCustomerIDContains applies the Contains predicate on the "stripe_customer_id" field.
+func StripeCustomerIDContains(v string) predicate.User {
+	return predicate.User(sql.FieldContains(FieldStripeCustomerID, v))
+}
+
+// StripeCustomerIDHasPrefix applies the HasPrefix predicate on the "stripe_customer_id" field.
+func StripeCustomerIDHasPrefix(v string) predicate.User {
+	return predicate.User(sql.FieldHasPrefix(FieldStripeCustomerID, v))
+}
+
+// StripeCustomerIDHasSuffix applies the HasSuffix predicate on the "stripe_customer_id" field.
+func StripeCustomerIDHasSuffix(v string) predicate.User {
+	return predicate.User(sql.FieldHasSuffix(FieldStripeCustomerID, v))
+}
+
+// StripeCustomerIDEqualFold applies the EqualFold predicate on the "stripe_customer_id" field.
+func StripeCustomerIDEqualFold(v string) predicate.User {
+	return predicate.User(sql.FieldEqualFold(FieldStripeCustomerID, v))
+}
+
+// StripeCustomerIDContainsFold applies the ContainsFold predicate on the "stripe_customer_id" field.
+func StripeCustomerIDContainsFold(v string) predicate.User {
+	return predicate.User(sql.FieldContainsFold(FieldStripeCustomerID, v))
+}
+
+// SubscriptionTierEQ applies the EQ predicate on the "subscription_tier" field.
+func SubscriptionTierEQ(v SubscriptionTier) predicate.User {
+	return predicate.User(sql.FieldEQ(FieldSubscriptionTier, v))
+}
+
+// SubscriptionTierNEQ applies the NEQ predicate on the "subscription_tier" field.
+func SubscriptionTierNEQ(v SubscriptionTier) predicate.User {
+	return predicate.User(sql.FieldNEQ(FieldSubscriptionTier, v))
+}
+
+// SubscriptionTierIn applies the In predicate on the "subscription_tier" field.
+func SubscriptionTierIn(vs ...SubscriptionTier) predicate.User {
+	return predicate.User(sql.FieldIn(FieldSubscriptionTier, vs...))
+}
+
+// SubscriptionTierNotIn applies the NotIn predicate on the "subscription_tier" field.
+func SubscriptionTierNotIn(vs ...SubscriptionTier) predicate.User {
+	return predicate.User(sql.FieldNotIn(FieldSubscriptionTier, vs...))
+}
+
+// SubscriptionCategoryEQ applies the EQ predicate on the "subscription_category" field.
+func SubscriptionCategoryEQ(v SubscriptionCategory) predicate.User {
+	return predicate.User(sql.FieldEQ(FieldSubscriptionCategory, v))
+}
+
+// SubscriptionCategoryNEQ applies the NEQ predicate on the "subscription_category" field.
+func SubscriptionCategoryNEQ(v SubscriptionCategory) predicate.User {
+	return predicate.User(sql.FieldNEQ(FieldSubscriptionCategory, v))
+}
+
+// SubscriptionCategoryIn applies the In predicate on the "subscription_category" field.
+func SubscriptionCategoryIn(vs ...SubscriptionCategory) predicate.User {
+	return predicate.User(sql.FieldIn(FieldSubscriptionCategory, vs...))
+}
+
+// SubscriptionCategoryNotIn applies the NotIn predicate on the "subscription_category" field.
+func SubscriptionCategoryNotIn(vs ...SubscriptionCategory) predicate.User {
+	return predicate.User(sql.FieldNotIn(FieldSubscriptionCategory, vs...))
+}
+
+// CreatedAtEQ applies the EQ predicate on the "created_at" field.
+func CreatedAtEQ(v time.Time) predicate.User {
+	return predicate.User(sql.FieldEQ(FieldCreatedAt, v))
+}
+
+// CreatedAtNEQ applies the NEQ predicate on the "created_at" field.
+func CreatedAtNEQ(v time.Time) predicate.User {
+	return predicate.User(sql.FieldNEQ(FieldCreatedAt, v))
+}
+
+// CreatedAtIn applies the In predicate on the "created_at" field.
+func CreatedAtIn(vs ...time.Time) predicate.User {
+	return predicate.User(sql.FieldIn(FieldCreatedAt, vs...))
+}
+
+// CreatedAtNotIn applies the NotIn predicate on the "created_at" field.
+func CreatedAtNotIn(vs ...time.Time) predicate.User {
+	return predicate.User(sql.FieldNotIn(FieldCreatedAt, vs...))
+}
+
+// CreatedAtGT applies the GT predicate on the "created_at" field.
+func CreatedAtGT(v time.Time) predicate.User {
+	return predicate.User(sql.FieldGT(FieldCreatedAt, v))
+}
+
+// CreatedAtGTE applies the GTE predicate on the "created_at" field.
+func CreatedAtGTE(v time.Time) predicate.User {
+	return predicate.User(sql.FieldGTE(FieldCreatedAt, v))
+}
+
+// CreatedAtLT applies the LT predicate on the "created_at" field.
+func CreatedAtLT(v time.Time) predicate.User {
+	return predicate.User(sql.FieldLT(FieldCreatedAt, v))
+}
+
+// CreatedAtLTE applies the LTE predicate on the "created_at" field.
+func CreatedAtLTE(v time.Time) predicate.User {
+	return predicate.User(sql.FieldLTE(FieldCreatedAt, v))
+}
+
+// UpdatedAtEQ applies the EQ predicate on the "updated_at" field.
+func UpdatedAtEQ(v time.Time) predicate.User {
+	return predicate.User(sql.FieldEQ(FieldUpdatedAt, v))
+}
+
+// UpdatedAtNEQ applies the NEQ predicate on the "updated_at" field.
+func UpdatedAtNEQ(v time.Time) predicate.User {
+	return predicate.User(sql.FieldNEQ(FieldUpdatedAt, v))
+}
+
+// UpdatedAtIn applies the In predicate on the "updated_at" field.
+func UpdatedAtIn(vs ...time.Time) predicate.User {
+	return predicate.User(sql.FieldIn(FieldUpdatedAt, vs...))
+}
+
+// UpdatedAtNotIn applies the NotIn predicate on the "updated_at" field.
+func UpdatedAtNotIn(vs ...time.Time) predicate.User {
+	return predicate.User(sql.FieldNotIn(FieldUpdatedAt, vs...))
+}
+
+// UpdatedAtGT applies the GT predicate on the "updated_at" field.
+func UpdatedAtGT(v time.Time) predicate.User {
+	return predicate.User(sql.FieldGT(FieldUpdatedAt, v))
+}
+
+// UpdatedAtGTE applies the GTE predicate on the "updated_at" field.
+func UpdatedAtGTE(v time.Time) predicate.User {
+	return predicate.User(sql.FieldGTE(FieldUpdatedAt, v))
+}
+
+// UpdatedAtLT applies the LT predicate on the "updated_at" field.
+func UpdatedAtLT(v time.Time) predicate.User {
+	return predicate.User(sql.FieldLT(FieldUpdatedAt, v))
+}
+
+// UpdatedAtLTE applies the LTE predicate on the "updated_at" field.
+func UpdatedAtLTE(v time.Time) predicate.User {
+	return predicate.User(sql.FieldLTE(FieldUpdatedAt, v))
+}
+
+// ConfirmedAtEQ applies the EQ predicate on the "confirmed_at" field.
+func ConfirmedAtEQ(v time.Time) predicate.User {
+	return predicate.User(sql.FieldEQ(FieldConfirmedAt, v))
+}
+
+// ConfirmedAtNEQ applies the NEQ predicate on the "confirmed_at" field.
+func ConfirmedAtNEQ(v time.Time) predicate.User {
+	return predicate.User(sql.FieldNEQ(FieldConfirmedAt, v))
+}
+
+// ConfirmedAtIn applies the In predicate on the "confirmed_at" field.
+func ConfirmedAtIn(vs ...time.Time) predicate.User {
+	return predicate.User(sql.FieldIn(FieldConfirmedAt, vs...))
+}
+
+// ConfirmedAtNotIn applies the NotIn predicate on the "confirmed_at" field.
+func ConfirmedAtNotIn(vs ...time.Time) predicate.User {
+	return predicate.User(sql.FieldNotIn(FieldConfirmedAt, vs...))
+}
+
+// ConfirmedAtGT applies the GT predicate on the "confirmed_at" field.
+func ConfirmedAtGT(v time.Time) predicate.User {
+	return predicate.User(sql.FieldGT(FieldConfirmedAt, v))
+}
+
+// ConfirmedAtGTE applies the GTE predicate on the "confirmed_at" field.
+func ConfirmedAtGTE(v time.Time) predicate.User {
+	return predicate.User(sql.FieldGTE(FieldConfirmedAt, v))
+}
+
+// ConfirmedAtLT applies the LT predicate on the "confirmed_at" field.
+func ConfirmedAtLT(v time.Time) predicate.User {
+	return predicate.User(sql.FieldLT(FieldConfirmedAt, v))
+}
+
+// ConfirmedAtLTE applies the LTE predicate on the "confirmed_at" field.
+func ConfirmedAtLTE(v time.Time) predicate.User {
+	return predicate.User(sql.FieldLTE(FieldConfirmedAt, v))
+}
+
+// HasUpscale applies the HasEdge predicate on the "upscale" edge.
+func HasUpscale() predicate.User {
+	return predicate.User(func(s *sql.Selector) {
+		step := sqlgraph.NewStep(
+			sqlgraph.From(Table, FieldID),
+			sqlgraph.Edge(sqlgraph.O2M, false, UpscaleTable, UpscaleColumn),
+		)
+		sqlgraph.HasNeighbors(s, step)
+	})
+}
+
+// HasUpscaleWith applies the HasEdge predicate on the "upscale" edge with a given conditions (other predicates).
+func HasUpscaleWith(preds ...predicate.Upscale) predicate.User {
+	return predicate.User(func(s *sql.Selector) {
+		step := sqlgraph.NewStep(
+			sqlgraph.From(Table, FieldID),
+			sqlgraph.To(UpscaleInverseTable, FieldID),
+			sqlgraph.Edge(sqlgraph.O2M, false, UpscaleTable, UpscaleColumn),
+		)
+		sqlgraph.HasNeighborsWith(s, step, func(s *sql.Selector) {
+			for _, p := range preds {
+				p(s)
+			}
+		})
+	})
+}
+
+// HasGeneration applies the HasEdge predicate on the "generation" edge.
+func HasGeneration() predicate.User {
+	return predicate.User(func(s *sql.Selector) {
+		step := sqlgraph.NewStep(
+			sqlgraph.From(Table, FieldID),
+			sqlgraph.Edge(sqlgraph.O2M, false, GenerationTable, GenerationColumn),
+		)
+		sqlgraph.HasNeighbors(s, step)
+	})
+}
+
+// HasGenerationWith applies the HasEdge predicate on the "generation" edge with a given conditions (other predicates).
+func HasGenerationWith(preds ...predicate.Generation) predicate.User {
+	return predicate.User(func(s *sql.Selector) {
+		step := sqlgraph.NewStep(
+			sqlgraph.From(Table, FieldID),
+			sqlgraph.To(GenerationInverseTable, FieldID),
+			sqlgraph.Edge(sqlgraph.O2M, false, GenerationTable, GenerationColumn),
+		)
+		sqlgraph.HasNeighborsWith(s, step, func(s *sql.Selector) {
+			for _, p := range preds {
+				p(s)
+			}
+		})
+	})
+}
+
+// HasGenerationG applies the HasEdge predicate on the "generation_g" edge.
+func HasGenerationG() predicate.User {
+	return predicate.User(func(s *sql.Selector) {
+		step := sqlgraph.NewStep(
+			sqlgraph.From(Table, FieldID),
+			sqlgraph.Edge(sqlgraph.O2M, false, GenerationGTable, GenerationGColumn),
+		)
+		sqlgraph.HasNeighbors(s, step)
+	})
+}
+
+// HasGenerationGWith applies the HasEdge predicate on the "generation_g" edge with a given conditions (other predicates).
+func HasGenerationGWith(preds ...predicate.GenerationG) predicate.User {
+	return predicate.User(func(s *sql.Selector) {
+		step := sqlgraph.NewStep(
+			sqlgraph.From(Table, FieldID),
+			sqlgraph.To(GenerationGInverseTable, FieldID),
+			sqlgraph.Edge(sqlgraph.O2M, false, GenerationGTable, GenerationGColumn),
+		)
+		sqlgraph.HasNeighborsWith(s, step, func(s *sql.Selector) {
+			for _, p := range preds {
+				p(s)
+			}
+		})
+	})
 }
 
 // And groups predicates with the AND operator between them.

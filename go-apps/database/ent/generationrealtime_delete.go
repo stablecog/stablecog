@@ -44,7 +44,7 @@ func (grd *GenerationRealtimeDelete) sqlExec(ctx context.Context) (int, error) {
 		Node: &sqlgraph.NodeSpec{
 			Table: generationrealtime.Table,
 			ID: &sqlgraph.FieldSpec{
-				Type:   field.TypeInt,
+				Type:   field.TypeUUID,
 				Column: generationrealtime.FieldID,
 			},
 		},

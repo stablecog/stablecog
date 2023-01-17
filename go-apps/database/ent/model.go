@@ -5,16 +5,56 @@ package ent
 import (
 	"fmt"
 	"strings"
+	"time"
 
 	"entgo.io/ent/dialect/sql"
+	"github.com/google/uuid"
 	"github.com/yekta/stablecog/go-apps/database/ent/model"
 )
 
 // Model is the model entity for the Model schema.
 type Model struct {
-	config
+	config `json:"-"`
 	// ID of the ent.
-	ID int `json:"id,omitempty"`
+	ID uuid.UUID `json:"id,omitempty"`
+	// Name holds the value of the "name" field.
+	Name string `json:"name,omitempty"`
+	// CreatedAt holds the value of the "created_at" field.
+	CreatedAt time.Time `json:"created_at,omitempty"`
+	// UpdatedAt holds the value of the "updated_at" field.
+	UpdatedAt time.Time `json:"updated_at,omitempty"`
+	// Edges holds the relations/edges for other nodes in the graph.
+	// The values are being populated by the ModelQuery when eager-loading is set.
+	Edges ModelEdges `json:"edges"`
+}
+
+// ModelEdges holds the relations/edges for other nodes in the graph.
+type ModelEdges struct {
+	// Generation holds the value of the generation edge.
+	Generation []*Generation `json:"generation,omitempty"`
+	// GenerationG holds the value of the generation_g edge.
+	GenerationG []*GenerationG `json:"generation_g,omitempty"`
+	// loadedTypes holds the information for reporting if a
+	// type was loaded (or requested) in eager-loading or not.
+	loadedTypes [2]bool
+}
+
+// GenerationOrErr returns the Generation value or an error if the edge
+// was not loaded in eager-loading.
+func (e ModelEdges) GenerationOrErr() ([]*Generation, error) {
+	if e.loadedTypes[0] {
+		return e.Generation, nil
+	}
+	return nil, &NotLoadedError{edge: "generation"}
+}
+
+// GenerationGOrErr returns the GenerationG value or an error if the edge
+// was not loaded in eager-loading.
+func (e ModelEdges) GenerationGOrErr() ([]*GenerationG, error) {
+	if e.loadedTypes[1] {
+		return e.GenerationG, nil
+	}
+	return nil, &NotLoadedError{edge: "generation_g"}
 }
 
 // scanValues returns the types for scanning values from sql.Rows.
@@ -22,8 +62,12 @@ func (*Model) scanValues(columns []string) ([]any, error) {
 	values := make([]any, len(columns))
 	for i := range columns {
 		switch columns[i] {
+		case model.FieldName:
+			values[i] = new(sql.NullString)
+		case model.FieldCreatedAt, model.FieldUpdatedAt:
+			values[i] = new(sql.NullTime)
 		case model.FieldID:
-			values[i] = new(sql.NullInt64)
+			values[i] = new(uuid.UUID)
 		default:
 			return nil, fmt.Errorf("unexpected column %q for type Model", columns[i])
 		}
@@ -40,14 +84,42 @@ func (m *Model) assignValues(columns []string, values []any) error {
 	for i := range columns {
 		switch columns[i] {
 		case model.FieldID:
-			value, ok := values[i].(*sql.NullInt64)
-			if !ok {
-				return fmt.Errorf("unexpected type %T for field id", value)
+			if value, ok := values[i].(*uuid.UUID); !ok {
+				return fmt.Errorf("unexpected type %T for field id", values[i])
+			} else if value != nil {
+				m.ID = *value
 			}
-			m.ID = int(value.Int64)
+		case model.FieldName:
+			if value, ok := values[i].(*sql.NullString); !ok {
+				return fmt.Errorf("unexpected type %T for field name", values[i])
+			} else if value.Valid {
+				m.Name = value.String
+			}
+		case model.FieldCreatedAt:
+			if value, ok := values[i].(*sql.NullTime); !ok {
+				return fmt.Errorf("unexpected type %T for field created_at", values[i])
+			} else if value.Valid {
+				m.CreatedAt = value.Time
+			}
+		case model.FieldUpdatedAt:
+			if value, ok := values[i].(*sql.NullTime); !ok {
+				return fmt.Errorf("unexpected type %T for field updated_at", values[i])
+			} else if value.Valid {
+				m.UpdatedAt = value.Time
+			}
 		}
 	}
 	return nil
+}
+
+// QueryGeneration queries the "generation" edge of the Model entity.
+func (m *Model) QueryGeneration() *GenerationQuery {
+	return (&ModelClient{config: m.config}).QueryGeneration(m)
+}
+
+// QueryGenerationG queries the "generation_g" edge of the Model entity.
+func (m *Model) QueryGenerationG() *GenerationGQuery {
+	return (&ModelClient{config: m.config}).QueryGenerationG(m)
 }
 
 // Update returns a builder for updating this Model.
@@ -72,7 +144,15 @@ func (m *Model) Unwrap() *Model {
 func (m *Model) String() string {
 	var builder strings.Builder
 	builder.WriteString("Model(")
-	builder.WriteString(fmt.Sprintf("id=%v", m.ID))
+	builder.WriteString(fmt.Sprintf("id=%v, ", m.ID))
+	builder.WriteString("name=")
+	builder.WriteString(m.Name)
+	builder.WriteString(", ")
+	builder.WriteString("created_at=")
+	builder.WriteString(m.CreatedAt.Format(time.ANSIC))
+	builder.WriteString(", ")
+	builder.WriteString("updated_at=")
+	builder.WriteString(m.UpdatedAt.Format(time.ANSIC))
 	builder.WriteByte(')')
 	return builder.String()
 }

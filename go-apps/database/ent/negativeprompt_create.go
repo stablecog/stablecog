@@ -4,10 +4,15 @@ package ent
 
 import (
 	"context"
+	"errors"
 	"fmt"
+	"time"
 
 	"entgo.io/ent/dialect/sql/sqlgraph"
 	"entgo.io/ent/schema/field"
+	"github.com/google/uuid"
+	"github.com/yekta/stablecog/go-apps/database/ent/generation"
+	"github.com/yekta/stablecog/go-apps/database/ent/generationg"
 	"github.com/yekta/stablecog/go-apps/database/ent/negativeprompt"
 )
 
@@ -18,6 +23,84 @@ type NegativePromptCreate struct {
 	hooks    []Hook
 }
 
+// SetText sets the "text" field.
+func (npc *NegativePromptCreate) SetText(s string) *NegativePromptCreate {
+	npc.mutation.SetText(s)
+	return npc
+}
+
+// SetCreatedAt sets the "created_at" field.
+func (npc *NegativePromptCreate) SetCreatedAt(t time.Time) *NegativePromptCreate {
+	npc.mutation.SetCreatedAt(t)
+	return npc
+}
+
+// SetNillableCreatedAt sets the "created_at" field if the given value is not nil.
+func (npc *NegativePromptCreate) SetNillableCreatedAt(t *time.Time) *NegativePromptCreate {
+	if t != nil {
+		npc.SetCreatedAt(*t)
+	}
+	return npc
+}
+
+// SetUpdatedAt sets the "updated_at" field.
+func (npc *NegativePromptCreate) SetUpdatedAt(t time.Time) *NegativePromptCreate {
+	npc.mutation.SetUpdatedAt(t)
+	return npc
+}
+
+// SetNillableUpdatedAt sets the "updated_at" field if the given value is not nil.
+func (npc *NegativePromptCreate) SetNillableUpdatedAt(t *time.Time) *NegativePromptCreate {
+	if t != nil {
+		npc.SetUpdatedAt(*t)
+	}
+	return npc
+}
+
+// SetID sets the "id" field.
+func (npc *NegativePromptCreate) SetID(u uuid.UUID) *NegativePromptCreate {
+	npc.mutation.SetID(u)
+	return npc
+}
+
+// SetNillableID sets the "id" field if the given value is not nil.
+func (npc *NegativePromptCreate) SetNillableID(u *uuid.UUID) *NegativePromptCreate {
+	if u != nil {
+		npc.SetID(*u)
+	}
+	return npc
+}
+
+// AddGenerationIDs adds the "generation" edge to the Generation entity by IDs.
+func (npc *NegativePromptCreate) AddGenerationIDs(ids ...uuid.UUID) *NegativePromptCreate {
+	npc.mutation.AddGenerationIDs(ids...)
+	return npc
+}
+
+// AddGeneration adds the "generation" edges to the Generation entity.
+func (npc *NegativePromptCreate) AddGeneration(g ...*Generation) *NegativePromptCreate {
+	ids := make([]uuid.UUID, len(g))
+	for i := range g {
+		ids[i] = g[i].ID
+	}
+	return npc.AddGenerationIDs(ids...)
+}
+
+// AddGenerationGIDs adds the "generation_g" edge to the GenerationG entity by IDs.
+func (npc *NegativePromptCreate) AddGenerationGIDs(ids ...uuid.UUID) *NegativePromptCreate {
+	npc.mutation.AddGenerationGIDs(ids...)
+	return npc
+}
+
+// AddGenerationG adds the "generation_g" edges to the GenerationG entity.
+func (npc *NegativePromptCreate) AddGenerationG(g ...*GenerationG) *NegativePromptCreate {
+	ids := make([]uuid.UUID, len(g))
+	for i := range g {
+		ids[i] = g[i].ID
+	}
+	return npc.AddGenerationGIDs(ids...)
+}
+
 // Mutation returns the NegativePromptMutation object of the builder.
 func (npc *NegativePromptCreate) Mutation() *NegativePromptMutation {
 	return npc.mutation
@@ -25,6 +108,7 @@ func (npc *NegativePromptCreate) Mutation() *NegativePromptMutation {
 
 // Save creates the NegativePrompt in the database.
 func (npc *NegativePromptCreate) Save(ctx context.Context) (*NegativePrompt, error) {
+	npc.defaults()
 	return withHooks[*NegativePrompt, NegativePromptMutation](ctx, npc.sqlSave, npc.mutation, npc.hooks)
 }
 
@@ -50,8 +134,33 @@ func (npc *NegativePromptCreate) ExecX(ctx context.Context) {
 	}
 }
 
+// defaults sets the default values of the builder before save.
+func (npc *NegativePromptCreate) defaults() {
+	if _, ok := npc.mutation.CreatedAt(); !ok {
+		v := negativeprompt.DefaultCreatedAt()
+		npc.mutation.SetCreatedAt(v)
+	}
+	if _, ok := npc.mutation.UpdatedAt(); !ok {
+		v := negativeprompt.DefaultUpdatedAt()
+		npc.mutation.SetUpdatedAt(v)
+	}
+	if _, ok := npc.mutation.ID(); !ok {
+		v := negativeprompt.DefaultID()
+		npc.mutation.SetID(v)
+	}
+}
+
 // check runs all checks and user-defined validators on the builder.
 func (npc *NegativePromptCreate) check() error {
+	if _, ok := npc.mutation.Text(); !ok {
+		return &ValidationError{Name: "text", err: errors.New(`ent: missing required field "NegativePrompt.text"`)}
+	}
+	if _, ok := npc.mutation.CreatedAt(); !ok {
+		return &ValidationError{Name: "created_at", err: errors.New(`ent: missing required field "NegativePrompt.created_at"`)}
+	}
+	if _, ok := npc.mutation.UpdatedAt(); !ok {
+		return &ValidationError{Name: "updated_at", err: errors.New(`ent: missing required field "NegativePrompt.updated_at"`)}
+	}
 	return nil
 }
 
@@ -66,8 +175,13 @@ func (npc *NegativePromptCreate) sqlSave(ctx context.Context) (*NegativePrompt, 
 		}
 		return nil, err
 	}
-	id := _spec.ID.Value.(int64)
-	_node.ID = int(id)
+	if _spec.ID.Value != nil {
+		if id, ok := _spec.ID.Value.(*uuid.UUID); ok {
+			_node.ID = *id
+		} else if err := _node.ID.Scan(_spec.ID.Value); err != nil {
+			return nil, err
+		}
+	}
 	npc.mutation.id = &_node.ID
 	npc.mutation.done = true
 	return _node, nil
@@ -79,11 +193,65 @@ func (npc *NegativePromptCreate) createSpec() (*NegativePrompt, *sqlgraph.Create
 		_spec = &sqlgraph.CreateSpec{
 			Table: negativeprompt.Table,
 			ID: &sqlgraph.FieldSpec{
-				Type:   field.TypeInt,
+				Type:   field.TypeUUID,
 				Column: negativeprompt.FieldID,
 			},
 		}
 	)
+	if id, ok := npc.mutation.ID(); ok {
+		_node.ID = id
+		_spec.ID.Value = &id
+	}
+	if value, ok := npc.mutation.Text(); ok {
+		_spec.SetField(negativeprompt.FieldText, field.TypeString, value)
+		_node.Text = value
+	}
+	if value, ok := npc.mutation.CreatedAt(); ok {
+		_spec.SetField(negativeprompt.FieldCreatedAt, field.TypeTime, value)
+		_node.CreatedAt = value
+	}
+	if value, ok := npc.mutation.UpdatedAt(); ok {
+		_spec.SetField(negativeprompt.FieldUpdatedAt, field.TypeTime, value)
+		_node.UpdatedAt = value
+	}
+	if nodes := npc.mutation.GenerationIDs(); len(nodes) > 0 {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.O2M,
+			Inverse: false,
+			Table:   negativeprompt.GenerationTable,
+			Columns: []string{negativeprompt.GenerationColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeUUID,
+					Column: generation.FieldID,
+				},
+			},
+		}
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_spec.Edges = append(_spec.Edges, edge)
+	}
+	if nodes := npc.mutation.GenerationGIDs(); len(nodes) > 0 {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.O2M,
+			Inverse: false,
+			Table:   negativeprompt.GenerationGTable,
+			Columns: []string{negativeprompt.GenerationGColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeUUID,
+					Column: generationg.FieldID,
+				},
+			},
+		}
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_spec.Edges = append(_spec.Edges, edge)
+	}
 	return _node, _spec
 }
 
@@ -101,6 +269,7 @@ func (npcb *NegativePromptCreateBulk) Save(ctx context.Context) ([]*NegativeProm
 	for i := range npcb.builders {
 		func(i int, root context.Context) {
 			builder := npcb.builders[i]
+			builder.defaults()
 			var mut Mutator = MutateFunc(func(ctx context.Context, m Mutation) (Value, error) {
 				mutation, ok := m.(*NegativePromptMutation)
 				if !ok {
@@ -127,10 +296,6 @@ func (npcb *NegativePromptCreateBulk) Save(ctx context.Context) ([]*NegativeProm
 					return nil, err
 				}
 				mutation.id = &nodes[i].ID
-				if specs[i].ID.Value != nil {
-					id := specs[i].ID.Value.(int64)
-					nodes[i].ID = int(id)
-				}
 				mutation.done = true
 				return nodes[i], nil
 			})

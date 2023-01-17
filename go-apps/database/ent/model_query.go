@@ -4,12 +4,16 @@ package ent
 
 import (
 	"context"
+	"database/sql/driver"
 	"fmt"
 	"math"
 
 	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"
 	"entgo.io/ent/schema/field"
+	"github.com/google/uuid"
+	"github.com/yekta/stablecog/go-apps/database/ent/generation"
+	"github.com/yekta/stablecog/go-apps/database/ent/generationg"
 	"github.com/yekta/stablecog/go-apps/database/ent/model"
 	"github.com/yekta/stablecog/go-apps/database/ent/predicate"
 )
@@ -17,13 +21,15 @@ import (
 // ModelQuery is the builder for querying Model entities.
 type ModelQuery struct {
 	config
-	limit      *int
-	offset     *int
-	unique     *bool
-	order      []OrderFunc
-	fields     []string
-	inters     []Interceptor
-	predicates []predicate.Model
+	limit           *int
+	offset          *int
+	unique          *bool
+	order           []OrderFunc
+	fields          []string
+	inters          []Interceptor
+	predicates      []predicate.Model
+	withGeneration  *GenerationQuery
+	withGenerationG *GenerationGQuery
 	// intermediate query (i.e. traversal path).
 	sql  *sql.Selector
 	path func(context.Context) (*sql.Selector, error)
@@ -60,6 +66,50 @@ func (mq *ModelQuery) Order(o ...OrderFunc) *ModelQuery {
 	return mq
 }
 
+// QueryGeneration chains the current query on the "generation" edge.
+func (mq *ModelQuery) QueryGeneration() *GenerationQuery {
+	query := (&GenerationClient{config: mq.config}).Query()
+	query.path = func(ctx context.Context) (fromU *sql.Selector, err error) {
+		if err := mq.prepareQuery(ctx); err != nil {
+			return nil, err
+		}
+		selector := mq.sqlQuery(ctx)
+		if err := selector.Err(); err != nil {
+			return nil, err
+		}
+		step := sqlgraph.NewStep(
+			sqlgraph.From(model.Table, model.FieldID, selector),
+			sqlgraph.To(generation.Table, generation.FieldID),
+			sqlgraph.Edge(sqlgraph.O2M, false, model.GenerationTable, model.GenerationColumn),
+		)
+		fromU = sqlgraph.SetNeighbors(mq.driver.Dialect(), step)
+		return fromU, nil
+	}
+	return query
+}
+
+// QueryGenerationG chains the current query on the "generation_g" edge.
+func (mq *ModelQuery) QueryGenerationG() *GenerationGQuery {
+	query := (&GenerationGClient{config: mq.config}).Query()
+	query.path = func(ctx context.Context) (fromU *sql.Selector, err error) {
+		if err := mq.prepareQuery(ctx); err != nil {
+			return nil, err
+		}
+		selector := mq.sqlQuery(ctx)
+		if err := selector.Err(); err != nil {
+			return nil, err
+		}
+		step := sqlgraph.NewStep(
+			sqlgraph.From(model.Table, model.FieldID, selector),
+			sqlgraph.To(generationg.Table, generationg.FieldID),
+			sqlgraph.Edge(sqlgraph.O2M, false, model.GenerationGTable, model.GenerationGColumn),
+		)
+		fromU = sqlgraph.SetNeighbors(mq.driver.Dialect(), step)
+		return fromU, nil
+	}
+	return query
+}
+
 // First returns the first Model entity from the query.
 // Returns a *NotFoundError when no Model was found.
 func (mq *ModelQuery) First(ctx context.Context) (*Model, error) {
@@ -84,8 +134,8 @@ func (mq *ModelQuery) FirstX(ctx context.Context) *Model {
 
 // FirstID returns the first Model ID from the query.
 // Returns a *NotFoundError when no Model ID was found.
-func (mq *ModelQuery) FirstID(ctx context.Context) (id int, err error) {
-	var ids []int
+func (mq *ModelQuery) FirstID(ctx context.Context) (id uuid.UUID, err error) {
+	var ids []uuid.UUID
 	if ids, err = mq.Limit(1).IDs(newQueryContext(ctx, TypeModel, "FirstID")); err != nil {
 		return
 	}
@@ -97,7 +147,7 @@ func (mq *ModelQuery) FirstID(ctx context.Context) (id int, err error) {
 }
 
 // FirstIDX is like FirstID, but panics if an error occurs.
-func (mq *ModelQuery) FirstIDX(ctx context.Context) int {
+func (mq *ModelQuery) FirstIDX(ctx context.Context) uuid.UUID {
 	id, err := mq.FirstID(ctx)
 	if err != nil && !IsNotFound(err) {
 		panic(err)
@@ -135,8 +185,8 @@ func (mq *ModelQuery) OnlyX(ctx context.Context) *Model {
 // OnlyID is like Only, but returns the only Model ID in the query.
 // Returns a *NotSingularError when more than one Model ID is found.
 // Returns a *NotFoundError when no entities are found.
-func (mq *ModelQuery) OnlyID(ctx context.Context) (id int, err error) {
-	var ids []int
+func (mq *ModelQuery) OnlyID(ctx context.Context) (id uuid.UUID, err error) {
+	var ids []uuid.UUID
 	if ids, err = mq.Limit(2).IDs(newQueryContext(ctx, TypeModel, "OnlyID")); err != nil {
 		return
 	}
@@ -152,7 +202,7 @@ func (mq *ModelQuery) OnlyID(ctx context.Context) (id int, err error) {
 }
 
 // OnlyIDX is like OnlyID, but panics if an error occurs.
-func (mq *ModelQuery) OnlyIDX(ctx context.Context) int {
+func (mq *ModelQuery) OnlyIDX(ctx context.Context) uuid.UUID {
 	id, err := mq.OnlyID(ctx)
 	if err != nil {
 		panic(err)
@@ -180,8 +230,8 @@ func (mq *ModelQuery) AllX(ctx context.Context) []*Model {
 }
 
 // IDs executes the query and returns a list of Model IDs.
-func (mq *ModelQuery) IDs(ctx context.Context) ([]int, error) {
-	var ids []int
+func (mq *ModelQuery) IDs(ctx context.Context) ([]uuid.UUID, error) {
+	var ids []uuid.UUID
 	ctx = newQueryContext(ctx, TypeModel, "IDs")
 	if err := mq.Select(model.FieldID).Scan(ctx, &ids); err != nil {
 		return nil, err
@@ -190,7 +240,7 @@ func (mq *ModelQuery) IDs(ctx context.Context) ([]int, error) {
 }
 
 // IDsX is like IDs, but panics if an error occurs.
-func (mq *ModelQuery) IDsX(ctx context.Context) []int {
+func (mq *ModelQuery) IDsX(ctx context.Context) []uuid.UUID {
 	ids, err := mq.IDs(ctx)
 	if err != nil {
 		panic(err)
@@ -245,12 +295,14 @@ func (mq *ModelQuery) Clone() *ModelQuery {
 		return nil
 	}
 	return &ModelQuery{
-		config:     mq.config,
-		limit:      mq.limit,
-		offset:     mq.offset,
-		order:      append([]OrderFunc{}, mq.order...),
-		inters:     append([]Interceptor{}, mq.inters...),
-		predicates: append([]predicate.Model{}, mq.predicates...),
+		config:          mq.config,
+		limit:           mq.limit,
+		offset:          mq.offset,
+		order:           append([]OrderFunc{}, mq.order...),
+		inters:          append([]Interceptor{}, mq.inters...),
+		predicates:      append([]predicate.Model{}, mq.predicates...),
+		withGeneration:  mq.withGeneration.Clone(),
+		withGenerationG: mq.withGenerationG.Clone(),
 		// clone intermediate query.
 		sql:    mq.sql.Clone(),
 		path:   mq.path,
@@ -258,8 +310,42 @@ func (mq *ModelQuery) Clone() *ModelQuery {
 	}
 }
 
+// WithGeneration tells the query-builder to eager-load the nodes that are connected to
+// the "generation" edge. The optional arguments are used to configure the query builder of the edge.
+func (mq *ModelQuery) WithGeneration(opts ...func(*GenerationQuery)) *ModelQuery {
+	query := (&GenerationClient{config: mq.config}).Query()
+	for _, opt := range opts {
+		opt(query)
+	}
+	mq.withGeneration = query
+	return mq
+}
+
+// WithGenerationG tells the query-builder to eager-load the nodes that are connected to
+// the "generation_g" edge. The optional arguments are used to configure the query builder of the edge.
+func (mq *ModelQuery) WithGenerationG(opts ...func(*GenerationGQuery)) *ModelQuery {
+	query := (&GenerationGClient{config: mq.config}).Query()
+	for _, opt := range opts {
+		opt(query)
+	}
+	mq.withGenerationG = query
+	return mq
+}
+
 // GroupBy is used to group vertices by one or more fields/columns.
 // It is often used with aggregate functions, like: count, max, mean, min, sum.
+//
+// Example:
+//
+//	var v []struct {
+//		Name string `json:"name,omitempty"`
+//		Count int `json:"count,omitempty"`
+//	}
+//
+//	client.Model.Query().
+//		GroupBy(model.FieldName).
+//		Aggregate(ent.Count()).
+//		Scan(ctx, &v)
 func (mq *ModelQuery) GroupBy(field string, fields ...string) *ModelGroupBy {
 	mq.fields = append([]string{field}, fields...)
 	grbuild := &ModelGroupBy{build: mq}
@@ -271,6 +357,16 @@ func (mq *ModelQuery) GroupBy(field string, fields ...string) *ModelGroupBy {
 
 // Select allows the selection one or more fields/columns for the given query,
 // instead of selecting all fields in the entity.
+//
+// Example:
+//
+//	var v []struct {
+//		Name string `json:"name,omitempty"`
+//	}
+//
+//	client.Model.Query().
+//		Select(model.FieldName).
+//		Scan(ctx, &v)
 func (mq *ModelQuery) Select(fields ...string) *ModelSelect {
 	mq.fields = append(mq.fields, fields...)
 	sbuild := &ModelSelect{ModelQuery: mq}
@@ -312,8 +408,12 @@ func (mq *ModelQuery) prepareQuery(ctx context.Context) error {
 
 func (mq *ModelQuery) sqlAll(ctx context.Context, hooks ...queryHook) ([]*Model, error) {
 	var (
-		nodes = []*Model{}
-		_spec = mq.querySpec()
+		nodes       = []*Model{}
+		_spec       = mq.querySpec()
+		loadedTypes = [2]bool{
+			mq.withGeneration != nil,
+			mq.withGenerationG != nil,
+		}
 	)
 	_spec.ScanValues = func(columns []string) ([]any, error) {
 		return (*Model).scanValues(nil, columns)
@@ -321,6 +421,7 @@ func (mq *ModelQuery) sqlAll(ctx context.Context, hooks ...queryHook) ([]*Model,
 	_spec.Assign = func(columns []string, values []any) error {
 		node := &Model{config: mq.config}
 		nodes = append(nodes, node)
+		node.Edges.loadedTypes = loadedTypes
 		return node.assignValues(columns, values)
 	}
 	for i := range hooks {
@@ -332,7 +433,76 @@ func (mq *ModelQuery) sqlAll(ctx context.Context, hooks ...queryHook) ([]*Model,
 	if len(nodes) == 0 {
 		return nodes, nil
 	}
+	if query := mq.withGeneration; query != nil {
+		if err := mq.loadGeneration(ctx, query, nodes,
+			func(n *Model) { n.Edges.Generation = []*Generation{} },
+			func(n *Model, e *Generation) { n.Edges.Generation = append(n.Edges.Generation, e) }); err != nil {
+			return nil, err
+		}
+	}
+	if query := mq.withGenerationG; query != nil {
+		if err := mq.loadGenerationG(ctx, query, nodes,
+			func(n *Model) { n.Edges.GenerationG = []*GenerationG{} },
+			func(n *Model, e *GenerationG) { n.Edges.GenerationG = append(n.Edges.GenerationG, e) }); err != nil {
+			return nil, err
+		}
+	}
 	return nodes, nil
+}
+
+func (mq *ModelQuery) loadGeneration(ctx context.Context, query *GenerationQuery, nodes []*Model, init func(*Model), assign func(*Model, *Generation)) error {
+	fks := make([]driver.Value, 0, len(nodes))
+	nodeids := make(map[uuid.UUID]*Model)
+	for i := range nodes {
+		fks = append(fks, nodes[i].ID)
+		nodeids[nodes[i].ID] = nodes[i]
+		if init != nil {
+			init(nodes[i])
+		}
+	}
+	query.Where(predicate.Generation(func(s *sql.Selector) {
+		s.Where(sql.InValues(model.GenerationColumn, fks...))
+	}))
+	neighbors, err := query.All(ctx)
+	if err != nil {
+		return err
+	}
+	for _, n := range neighbors {
+		fk := n.ModelID
+		node, ok := nodeids[fk]
+		if !ok {
+			return fmt.Errorf(`unexpected foreign-key "model_id" returned %v for node %v`, fk, n.ID)
+		}
+		assign(node, n)
+	}
+	return nil
+}
+func (mq *ModelQuery) loadGenerationG(ctx context.Context, query *GenerationGQuery, nodes []*Model, init func(*Model), assign func(*Model, *GenerationG)) error {
+	fks := make([]driver.Value, 0, len(nodes))
+	nodeids := make(map[uuid.UUID]*Model)
+	for i := range nodes {
+		fks = append(fks, nodes[i].ID)
+		nodeids[nodes[i].ID] = nodes[i]
+		if init != nil {
+			init(nodes[i])
+		}
+	}
+	query.Where(predicate.GenerationG(func(s *sql.Selector) {
+		s.Where(sql.InValues(model.GenerationGColumn, fks...))
+	}))
+	neighbors, err := query.All(ctx)
+	if err != nil {
+		return err
+	}
+	for _, n := range neighbors {
+		fk := n.ModelID
+		node, ok := nodeids[fk]
+		if !ok {
+			return fmt.Errorf(`unexpected foreign-key "model_id" returned %v for node %v`, fk, n.ID)
+		}
+		assign(node, n)
+	}
+	return nil
 }
 
 func (mq *ModelQuery) sqlCount(ctx context.Context) (int, error) {
@@ -350,7 +520,7 @@ func (mq *ModelQuery) querySpec() *sqlgraph.QuerySpec {
 			Table:   model.Table,
 			Columns: model.Columns,
 			ID: &sqlgraph.FieldSpec{
-				Type:   field.TypeInt,
+				Type:   field.TypeUUID,
 				Column: model.FieldID,
 			},
 		},

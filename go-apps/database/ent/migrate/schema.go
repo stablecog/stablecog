@@ -11,7 +11,9 @@ import (
 var (
 	// AdminColumns holds the columns for the "admin" table.
 	AdminColumns = []*schema.Column{
-		{Name: "id", Type: field.TypeInt, Increment: true},
+		{Name: "id", Type: field.TypeUUID},
+		{Name: "created_at", Type: field.TypeTime},
+		{Name: "updated_at", Type: field.TypeTime},
 	}
 	// AdminTable holds the schema information for the "admin" table.
 	AdminTable = &schema.Table{
@@ -21,27 +23,141 @@ var (
 	}
 	// GenerationColumns holds the columns for the "generation" table.
 	GenerationColumns = []*schema.Column{
-		{Name: "id", Type: field.TypeInt, Increment: true},
+		{Name: "id", Type: field.TypeUUID},
+		{Name: "image_id", Type: field.TypeString, Size: 2147483647},
+		{Name: "width", Type: field.TypeInt},
+		{Name: "height", Type: field.TypeInt},
+		{Name: "seed", Type: field.TypeInt, Nullable: true, SchemaType: map[string]string{"postgres": "bigint"}},
+		{Name: "num_inference_steps", Type: field.TypeInt},
+		{Name: "guidance_scale", Type: field.TypeFloat64},
+		{Name: "hidden", Type: field.TypeBool, Default: true},
+		{Name: "user_tier", Type: field.TypeEnum, Enums: []string{"FREE", "PRO"}, Default: "FREE"},
+		{Name: "server_url", Type: field.TypeString, Size: 2147483647},
+		{Name: "country_code", Type: field.TypeString, Size: 2147483647},
+		{Name: "device_type", Type: field.TypeString, Size: 2147483647},
+		{Name: "device_os", Type: field.TypeString, Size: 2147483647},
+		{Name: "device_browser", Type: field.TypeString, Size: 2147483647},
+		{Name: "user_agent", Type: field.TypeString, Size: 2147483647},
+		{Name: "duration_ms", Type: field.TypeInt},
+		{Name: "status", Type: field.TypeEnum, Enums: []string{"started", "succeeded", "failed", "rejected"}},
+		{Name: "failure_reason", Type: field.TypeString, Size: 2147483647},
+		{Name: "image_object_name", Type: field.TypeString, Size: 2147483647},
+		{Name: "created_at", Type: field.TypeTime},
+		{Name: "updated_at", Type: field.TypeTime},
+		{Name: "model_id", Type: field.TypeUUID},
+		{Name: "negative_prompt_id", Type: field.TypeUUID},
+		{Name: "prompt_id", Type: field.TypeUUID},
+		{Name: "scheduler_id", Type: field.TypeUUID},
+		{Name: "user_id", Type: field.TypeUUID},
 	}
 	// GenerationTable holds the schema information for the "generation" table.
 	GenerationTable = &schema.Table{
 		Name:       "generation",
 		Columns:    GenerationColumns,
 		PrimaryKey: []*schema.Column{GenerationColumns[0]},
+		ForeignKeys: []*schema.ForeignKey{
+			{
+				Symbol:     "generation_model_generation",
+				Columns:    []*schema.Column{GenerationColumns[21]},
+				RefColumns: []*schema.Column{ModelColumns[0]},
+				OnDelete:   schema.Cascade,
+			},
+			{
+				Symbol:     "generation_negative_prompt_generation",
+				Columns:    []*schema.Column{GenerationColumns[22]},
+				RefColumns: []*schema.Column{NegativePromptColumns[0]},
+				OnDelete:   schema.Cascade,
+			},
+			{
+				Symbol:     "generation_prompt_generation",
+				Columns:    []*schema.Column{GenerationColumns[23]},
+				RefColumns: []*schema.Column{PromptColumns[0]},
+				OnDelete:   schema.Cascade,
+			},
+			{
+				Symbol:     "generation_scheduler_generation",
+				Columns:    []*schema.Column{GenerationColumns[24]},
+				RefColumns: []*schema.Column{SchedulerColumns[0]},
+				OnDelete:   schema.Cascade,
+			},
+			{
+				Symbol:     "generation_user_generation",
+				Columns:    []*schema.Column{GenerationColumns[25]},
+				RefColumns: []*schema.Column{UserColumns[0]},
+				OnDelete:   schema.Cascade,
+			},
+		},
 	}
 	// GenerationGColumns holds the columns for the "generation_g" table.
 	GenerationGColumns = []*schema.Column{
-		{Name: "id", Type: field.TypeInt, Increment: true},
+		{Name: "id", Type: field.TypeUUID},
+		{Name: "image_id", Type: field.TypeString, Size: 2147483647},
+		{Name: "width", Type: field.TypeInt},
+		{Name: "height", Type: field.TypeInt},
+		{Name: "seed", Type: field.TypeInt, Nullable: true, SchemaType: map[string]string{"postgres": "bigint"}},
+		{Name: "num_inference_steps", Type: field.TypeInt},
+		{Name: "guidance_scale", Type: field.TypeFloat64},
+		{Name: "hidden", Type: field.TypeBool, Default: true},
+		{Name: "user_tier", Type: field.TypeEnum, Enums: []string{"FREE", "PRO"}, Default: "FREE"},
+		{Name: "created_at", Type: field.TypeTime},
+		{Name: "updated_at", Type: field.TypeTime},
+		{Name: "model_id", Type: field.TypeUUID},
+		{Name: "negative_prompt_id", Type: field.TypeUUID},
+		{Name: "prompt_id", Type: field.TypeUUID},
+		{Name: "scheduler_id", Type: field.TypeUUID},
+		{Name: "user_id", Type: field.TypeUUID},
 	}
 	// GenerationGTable holds the schema information for the "generation_g" table.
 	GenerationGTable = &schema.Table{
 		Name:       "generation_g",
 		Columns:    GenerationGColumns,
 		PrimaryKey: []*schema.Column{GenerationGColumns[0]},
+		ForeignKeys: []*schema.ForeignKey{
+			{
+				Symbol:     "generation_g_model_generation_g",
+				Columns:    []*schema.Column{GenerationGColumns[11]},
+				RefColumns: []*schema.Column{ModelColumns[0]},
+				OnDelete:   schema.Cascade,
+			},
+			{
+				Symbol:     "generation_g_negative_prompt_generation_g",
+				Columns:    []*schema.Column{GenerationGColumns[12]},
+				RefColumns: []*schema.Column{NegativePromptColumns[0]},
+				OnDelete:   schema.Cascade,
+			},
+			{
+				Symbol:     "generation_g_prompt_generation_g",
+				Columns:    []*schema.Column{GenerationGColumns[13]},
+				RefColumns: []*schema.Column{PromptColumns[0]},
+				OnDelete:   schema.Cascade,
+			},
+			{
+				Symbol:     "generation_g_scheduler_generation_g",
+				Columns:    []*schema.Column{GenerationGColumns[14]},
+				RefColumns: []*schema.Column{SchedulerColumns[0]},
+				OnDelete:   schema.Cascade,
+			},
+			{
+				Symbol:     "generation_g_user_generation_g",
+				Columns:    []*schema.Column{GenerationGColumns[15]},
+				RefColumns: []*schema.Column{UserColumns[0]},
+				OnDelete:   schema.Cascade,
+			},
+		},
 	}
 	// GenerationRealtimeColumns holds the columns for the "generation_realtime" table.
 	GenerationRealtimeColumns = []*schema.Column{
-		{Name: "id", Type: field.TypeInt, Increment: true},
+		{Name: "id", Type: field.TypeUUID},
+		{Name: "country_code", Type: field.TypeString, Size: 2147483647},
+		{Name: "duration_ms", Type: field.TypeInt},
+		{Name: "status", Type: field.TypeEnum, Enums: []string{"started", "succeeded", "failed", "rejected"}},
+		{Name: "uses_default_server", Type: field.TypeBool},
+		{Name: "width", Type: field.TypeInt},
+		{Name: "height", Type: field.TypeInt},
+		{Name: "num_interference_steps", Type: field.TypeInt},
+		{Name: "created_at", Type: field.TypeTime},
+		{Name: "updated_at", Type: field.TypeTime},
+		{Name: "user_tier", Type: field.TypeEnum, Enums: []string{"FREE", "PRO"}, Default: "FREE"},
 	}
 	// GenerationRealtimeTable holds the schema information for the "generation_realtime" table.
 	GenerationRealtimeTable = &schema.Table{
@@ -51,7 +167,10 @@ var (
 	}
 	// ModelColumns holds the columns for the "model" table.
 	ModelColumns = []*schema.Column{
-		{Name: "id", Type: field.TypeInt, Increment: true},
+		{Name: "id", Type: field.TypeUUID},
+		{Name: "name", Type: field.TypeString, Size: 2147483647},
+		{Name: "created_at", Type: field.TypeTime},
+		{Name: "updated_at", Type: field.TypeTime},
 	}
 	// ModelTable holds the schema information for the "model" table.
 	ModelTable = &schema.Table{
@@ -61,7 +180,10 @@ var (
 	}
 	// NegativePromptColumns holds the columns for the "negative_prompt" table.
 	NegativePromptColumns = []*schema.Column{
-		{Name: "id", Type: field.TypeInt, Increment: true},
+		{Name: "id", Type: field.TypeUUID},
+		{Name: "text", Type: field.TypeString, Size: 2147483647},
+		{Name: "created_at", Type: field.TypeTime},
+		{Name: "updated_at", Type: field.TypeTime},
 	}
 	// NegativePromptTable holds the schema information for the "negative_prompt" table.
 	NegativePromptTable = &schema.Table{
@@ -71,7 +193,10 @@ var (
 	}
 	// PromptColumns holds the columns for the "prompt" table.
 	PromptColumns = []*schema.Column{
-		{Name: "id", Type: field.TypeInt, Increment: true},
+		{Name: "id", Type: field.TypeUUID},
+		{Name: "text", Type: field.TypeString, Size: 2147483647},
+		{Name: "created_at", Type: field.TypeTime},
+		{Name: "updated_at", Type: field.TypeTime},
 	}
 	// PromptTable holds the schema information for the "prompt" table.
 	PromptTable = &schema.Table{
@@ -81,7 +206,10 @@ var (
 	}
 	// SchedulerColumns holds the columns for the "scheduler" table.
 	SchedulerColumns = []*schema.Column{
-		{Name: "id", Type: field.TypeInt, Increment: true},
+		{Name: "id", Type: field.TypeUUID},
+		{Name: "name", Type: field.TypeString, Size: 2147483647},
+		{Name: "created_at", Type: field.TypeTime},
+		{Name: "updated_at", Type: field.TypeTime},
 	}
 	// SchedulerTable holds the schema information for the "scheduler" table.
 	SchedulerTable = &schema.Table{
@@ -91,7 +219,15 @@ var (
 	}
 	// ServerColumns holds the columns for the "server" table.
 	ServerColumns = []*schema.Column{
-		{Name: "id", Type: field.TypeInt, Increment: true},
+		{Name: "id", Type: field.TypeUUID},
+		{Name: "url", Type: field.TypeString, Size: 2147483647},
+		{Name: "healthy", Type: field.TypeBool, Default: true},
+		{Name: "enabled", Type: field.TypeBool, Default: true},
+		{Name: "features", Type: field.TypeJSON},
+		{Name: "last_health_check_at", Type: field.TypeTime},
+		{Name: "created_at", Type: field.TypeTime},
+		{Name: "updated_at", Type: field.TypeTime},
+		{Name: "user_tier", Type: field.TypeEnum, Enums: []string{"FREE", "PRO"}, Default: "FREE"},
 	}
 	// ServerTable holds the schema information for the "server" table.
 	ServerTable = &schema.Table{
@@ -101,17 +237,55 @@ var (
 	}
 	// UpscaleColumns holds the columns for the "upscale" table.
 	UpscaleColumns = []*schema.Column{
-		{Name: "id", Type: field.TypeInt, Increment: true},
+		{Name: "id", Type: field.TypeUUID},
+		{Name: "width", Type: field.TypeInt},
+		{Name: "height", Type: field.TypeInt},
+		{Name: "scale", Type: field.TypeInt},
+		{Name: "status", Type: field.TypeEnum, Enums: []string{"started", "succeeded", "failed"}},
+		{Name: "server_url", Type: field.TypeString, Size: 2147483647},
+		{Name: "duration_msg", Type: field.TypeInt},
+		{Name: "type", Type: field.TypeString, Size: 2147483647},
+		{Name: "prompt", Type: field.TypeString, Size: 2147483647},
+		{Name: "negative_prompt", Type: field.TypeString, Size: 2147483647},
+		{Name: "seed", Type: field.TypeInt, Nullable: true, SchemaType: map[string]string{"postgres": "bigint"}},
+		{Name: "num_inference_steps", Type: field.TypeInt},
+		{Name: "guidance_scale", Type: field.TypeFloat64},
+		{Name: "country_code", Type: field.TypeString, Size: 2147483647},
+		{Name: "device_type", Type: field.TypeString, Size: 2147483647},
+		{Name: "device_os", Type: field.TypeString, Size: 2147483647},
+		{Name: "device_browser", Type: field.TypeString, Size: 2147483647},
+		{Name: "user_agent", Type: field.TypeString, Size: 2147483647},
+		{Name: "created_at", Type: field.TypeTime},
+		{Name: "updated_at", Type: field.TypeTime},
+		{Name: "user_tier", Type: field.TypeEnum, Enums: []string{"FREE", "PRO"}, Default: "FREE"},
+		{Name: "user_id", Type: field.TypeUUID},
 	}
 	// UpscaleTable holds the schema information for the "upscale" table.
 	UpscaleTable = &schema.Table{
 		Name:       "upscale",
 		Columns:    UpscaleColumns,
 		PrimaryKey: []*schema.Column{UpscaleColumns[0]},
+		ForeignKeys: []*schema.ForeignKey{
+			{
+				Symbol:     "upscale_user_upscale",
+				Columns:    []*schema.Column{UpscaleColumns[21]},
+				RefColumns: []*schema.Column{UserColumns[0]},
+				OnDelete:   schema.Cascade,
+			},
+		},
 	}
 	// UpscaleRealtimeColumns holds the columns for the "upscale_realtime" table.
 	UpscaleRealtimeColumns = []*schema.Column{
-		{Name: "id", Type: field.TypeInt, Increment: true},
+		{Name: "id", Type: field.TypeUUID},
+		{Name: "status", Type: field.TypeEnum, Enums: []string{"started", "succeeded", "failed"}},
+		{Name: "country_code", Type: field.TypeString, Size: 2147483647},
+		{Name: "uses_default_server", Type: field.TypeBool},
+		{Name: "width", Type: field.TypeInt},
+		{Name: "height", Type: field.TypeInt},
+		{Name: "scale", Type: field.TypeInt},
+		{Name: "created_at", Type: field.TypeTime},
+		{Name: "updated_at", Type: field.TypeTime},
+		{Name: "user_tier", Type: field.TypeEnum, Enums: []string{"FREE", "PRO"}, Default: "FREE"},
 	}
 	// UpscaleRealtimeTable holds the schema information for the "upscale_realtime" table.
 	UpscaleRealtimeTable = &schema.Table{
@@ -121,7 +295,14 @@ var (
 	}
 	// UserColumns holds the columns for the "user" table.
 	UserColumns = []*schema.Column{
-		{Name: "id", Type: field.TypeInt, Increment: true},
+		{Name: "id", Type: field.TypeUUID},
+		{Name: "email", Type: field.TypeString, Size: 2147483647},
+		{Name: "stripe_customer_id", Type: field.TypeString, Size: 2147483647},
+		{Name: "subscription_tier", Type: field.TypeEnum, Enums: []string{"FREE", "PRO"}, Default: "FREE"},
+		{Name: "subscription_category", Type: field.TypeEnum, Enums: []string{"GIFTED", "FRIEND_BOUGHT"}},
+		{Name: "created_at", Type: field.TypeTime},
+		{Name: "updated_at", Type: field.TypeTime},
+		{Name: "confirmed_at", Type: field.TypeTime},
 	}
 	// UserTable holds the schema information for the "user" table.
 	UserTable = &schema.Table{
@@ -150,9 +331,19 @@ func init() {
 	AdminTable.Annotation = &entsql.Annotation{
 		Table: "admin",
 	}
+	GenerationTable.ForeignKeys[0].RefTable = ModelTable
+	GenerationTable.ForeignKeys[1].RefTable = NegativePromptTable
+	GenerationTable.ForeignKeys[2].RefTable = PromptTable
+	GenerationTable.ForeignKeys[3].RefTable = SchedulerTable
+	GenerationTable.ForeignKeys[4].RefTable = UserTable
 	GenerationTable.Annotation = &entsql.Annotation{
 		Table: "generation",
 	}
+	GenerationGTable.ForeignKeys[0].RefTable = ModelTable
+	GenerationGTable.ForeignKeys[1].RefTable = NegativePromptTable
+	GenerationGTable.ForeignKeys[2].RefTable = PromptTable
+	GenerationGTable.ForeignKeys[3].RefTable = SchedulerTable
+	GenerationGTable.ForeignKeys[4].RefTable = UserTable
 	GenerationGTable.Annotation = &entsql.Annotation{
 		Table: "generation_g",
 	}
@@ -174,6 +365,7 @@ func init() {
 	ServerTable.Annotation = &entsql.Annotation{
 		Table: "server",
 	}
+	UpscaleTable.ForeignKeys[0].RefTable = UserTable
 	UpscaleTable.Annotation = &entsql.Annotation{
 		Table: "upscale",
 	}

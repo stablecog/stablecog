@@ -2,18 +2,97 @@
 
 package upscale
 
+import (
+	"fmt"
+	"time"
+
+	"github.com/google/uuid"
+)
+
 const (
 	// Label holds the string label denoting the upscale type in the database.
 	Label = "upscale"
 	// FieldID holds the string denoting the id field in the database.
 	FieldID = "id"
+	// FieldWidth holds the string denoting the width field in the database.
+	FieldWidth = "width"
+	// FieldHeight holds the string denoting the height field in the database.
+	FieldHeight = "height"
+	// FieldScale holds the string denoting the scale field in the database.
+	FieldScale = "scale"
+	// FieldStatus holds the string denoting the status field in the database.
+	FieldStatus = "status"
+	// FieldServerURL holds the string denoting the server_url field in the database.
+	FieldServerURL = "server_url"
+	// FieldDurationMsg holds the string denoting the duration_msg field in the database.
+	FieldDurationMsg = "duration_msg"
+	// FieldType holds the string denoting the type field in the database.
+	FieldType = "type"
+	// FieldPrompt holds the string denoting the prompt field in the database.
+	FieldPrompt = "prompt"
+	// FieldNegativePrompt holds the string denoting the negative_prompt field in the database.
+	FieldNegativePrompt = "negative_prompt"
+	// FieldSeed holds the string denoting the seed field in the database.
+	FieldSeed = "seed"
+	// FieldNumInferenceSteps holds the string denoting the num_inference_steps field in the database.
+	FieldNumInferenceSteps = "num_inference_steps"
+	// FieldGuidanceScale holds the string denoting the guidance_scale field in the database.
+	FieldGuidanceScale = "guidance_scale"
+	// FieldCountryCode holds the string denoting the country_code field in the database.
+	FieldCountryCode = "country_code"
+	// FieldDeviceType holds the string denoting the device_type field in the database.
+	FieldDeviceType = "device_type"
+	// FieldDeviceOs holds the string denoting the device_os field in the database.
+	FieldDeviceOs = "device_os"
+	// FieldDeviceBrowser holds the string denoting the device_browser field in the database.
+	FieldDeviceBrowser = "device_browser"
+	// FieldUserAgent holds the string denoting the user_agent field in the database.
+	FieldUserAgent = "user_agent"
+	// FieldCreatedAt holds the string denoting the created_at field in the database.
+	FieldCreatedAt = "created_at"
+	// FieldUpdatedAt holds the string denoting the updated_at field in the database.
+	FieldUpdatedAt = "updated_at"
+	// FieldUserID holds the string denoting the user_id field in the database.
+	FieldUserID = "user_id"
+	// FieldUserTier holds the string denoting the user_tier field in the database.
+	FieldUserTier = "user_tier"
+	// EdgeUser holds the string denoting the user edge name in mutations.
+	EdgeUser = "user"
 	// Table holds the table name of the upscale in the database.
 	Table = "upscale"
+	// UserTable is the table that holds the user relation/edge.
+	UserTable = "upscale"
+	// UserInverseTable is the table name for the User entity.
+	// It exists in this package in order to avoid circular dependency with the "user" package.
+	UserInverseTable = "user"
+	// UserColumn is the table column denoting the user relation/edge.
+	UserColumn = "user_id"
 )
 
 // Columns holds all SQL columns for upscale fields.
 var Columns = []string{
 	FieldID,
+	FieldWidth,
+	FieldHeight,
+	FieldScale,
+	FieldStatus,
+	FieldServerURL,
+	FieldDurationMsg,
+	FieldType,
+	FieldPrompt,
+	FieldNegativePrompt,
+	FieldSeed,
+	FieldNumInferenceSteps,
+	FieldGuidanceScale,
+	FieldCountryCode,
+	FieldDeviceType,
+	FieldDeviceOs,
+	FieldDeviceBrowser,
+	FieldUserAgent,
+	FieldCreatedAt,
+	FieldUpdatedAt,
+	FieldUserID,
+	FieldUserTier,
 }
 
 // ValidColumn reports if the column name is valid (part of the table columns).
@@ -24,4 +103,65 @@ func ValidColumn(column string) bool {
 		}
 	}
 	return false
+}
+
+var (
+	// DefaultCreatedAt holds the default value on creation for the "created_at" field.
+	DefaultCreatedAt func() time.Time
+	// DefaultUpdatedAt holds the default value on creation for the "updated_at" field.
+	DefaultUpdatedAt func() time.Time
+	// UpdateDefaultUpdatedAt holds the default value on update for the "updated_at" field.
+	UpdateDefaultUpdatedAt func() time.Time
+	// DefaultID holds the default value on creation for the "id" field.
+	DefaultID func() uuid.UUID
+)
+
+// Status defines the type for the "status" enum field.
+type Status string
+
+// Status values.
+const (
+	StatusStarted   Status = "started"
+	StatusSucceeded Status = "succeeded"
+	StatusFailed    Status = "failed"
+)
+
+func (s Status) String() string {
+	return string(s)
+}
+
+// StatusValidator is a validator for the "status" field enum values. It is called by the builders before save.
+func StatusValidator(s Status) error {
+	switch s {
+	case StatusStarted, StatusSucceeded, StatusFailed:
+		return nil
+	default:
+		return fmt.Errorf("upscale: invalid enum value for status field: %q", s)
+	}
+}
+
+// UserTier defines the type for the "user_tier" enum field.
+type UserTier string
+
+// UserTierFREE is the default value of the UserTier enum.
+const DefaultUserTier = UserTierFREE
+
+// UserTier values.
+const (
+	UserTierFREE UserTier = "FREE"
+	UserTierPRO  UserTier = "PRO"
+)
+
+func (ut UserTier) String() string {
+	return string(ut)
+}
+
+// UserTierValidator is a validator for the "user_tier" field enum values. It is called by the builders before save.
+func UserTierValidator(ut UserTier) error {
+	switch ut {
+	case UserTierFREE, UserTierPRO:
+		return nil
+	default:
+		return fmt.Errorf("upscale: invalid enum value for user_tier field: %q", ut)
+	}
 }

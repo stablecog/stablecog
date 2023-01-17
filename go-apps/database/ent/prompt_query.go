@@ -4,12 +4,16 @@ package ent
 
 import (
 	"context"
+	"database/sql/driver"
 	"fmt"
 	"math"
 
 	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"
 	"entgo.io/ent/schema/field"
+	"github.com/google/uuid"
+	"github.com/yekta/stablecog/go-apps/database/ent/generation"
+	"github.com/yekta/stablecog/go-apps/database/ent/generationg"
 	"github.com/yekta/stablecog/go-apps/database/ent/predicate"
 	"github.com/yekta/stablecog/go-apps/database/ent/prompt"
 )
@@ -17,13 +21,15 @@ import (
 // PromptQuery is the builder for querying Prompt entities.
 type PromptQuery struct {
 	config
-	limit      *int
-	offset     *int
-	unique     *bool
-	order      []OrderFunc
-	fields     []string
-	inters     []Interceptor
-	predicates []predicate.Prompt
+	limit           *int
+	offset          *int
+	unique          *bool
+	order           []OrderFunc
+	fields          []string
+	inters          []Interceptor
+	predicates      []predicate.Prompt
+	withGeneration  *GenerationQuery
+	withGenerationG *GenerationGQuery
 	// intermediate query (i.e. traversal path).
 	sql  *sql.Selector
 	path func(context.Context) (*sql.Selector, error)
@@ -60,6 +66,50 @@ func (pq *PromptQuery) Order(o ...OrderFunc) *PromptQuery {
 	return pq
 }
 
+// QueryGeneration chains the current query on the "generation" edge.
+func (pq *PromptQuery) QueryGeneration() *GenerationQuery {
+	query := (&GenerationClient{config: pq.config}).Query()
+	query.path = func(ctx context.Context) (fromU *sql.Selector, err error) {
+		if err := pq.prepareQuery(ctx); err != nil {
+			return nil, err
+		}
+		selector := pq.sqlQuery(ctx)
+		if err := selector.Err(); err != nil {
+			return nil, err
+		}
+		step := sqlgraph.NewStep(
+			sqlgraph.From(prompt.Table, prompt.FieldID, selector),
+			sqlgraph.To(generation.Table, generation.FieldID),
+			sqlgraph.Edge(sqlgraph.O2M, false, prompt.GenerationTable, prompt.GenerationColumn),
+		)
+		fromU = sqlgraph.SetNeighbors(pq.driver.Dialect(), step)
+		return fromU, nil
+	}
+	return query
+}
+
+// QueryGenerationG chains the current query on the "generation_g" edge.
+func (pq *PromptQuery) QueryGenerationG() *GenerationGQuery {
+	query := (&GenerationGClient{config: pq.config}).Query()
+	query.path = func(ctx context.Context) (fromU *sql.Selector, err error) {
+		if err := pq.prepareQuery(ctx); err != nil {
+			return nil, err
+		}
+		selector := pq.sqlQuery(ctx)
+		if err := selector.Err(); err != nil {
+			return nil, err
+		}
+		step := sqlgraph.NewStep(
+			sqlgraph.From(prompt.Table, prompt.FieldID, selector),
+			sqlgraph.To(generationg.Table, generationg.FieldID),
+			sqlgraph.Edge(sqlgraph.O2M, false, prompt.GenerationGTable, prompt.GenerationGColumn),
+		)
+		fromU = sqlgraph.SetNeighbors(pq.driver.Dialect(), step)
+		return fromU, nil
+	}
+	return query
+}
+
 // First returns the first Prompt entity from the query.
 // Returns a *NotFoundError when no Prompt was found.
 func (pq *PromptQuery) First(ctx context.Context) (*Prompt, error) {
@@ -84,8 +134,8 @@ func (pq *PromptQuery) FirstX(ctx context.Context) *Prompt {
 
 // FirstID returns the first Prompt ID from the query.
 // Returns a *NotFoundError when no Prompt ID was found.
-func (pq *PromptQuery) FirstID(ctx context.Context) (id int, err error) {
-	var ids []int
+func (pq *PromptQuery) FirstID(ctx context.Context) (id uuid.UUID, err error) {
+	var ids []uuid.UUID
 	if ids, err = pq.Limit(1).IDs(newQueryContext(ctx, TypePrompt, "FirstID")); err != nil {
 		return
 	}
@@ -97,7 +147,7 @@ func (pq *PromptQuery) FirstID(ctx context.Context) (id int, err error) {
 }
 
 // FirstIDX is like FirstID, but panics if an error occurs.
-func (pq *PromptQuery) FirstIDX(ctx context.Context) int {
+func (pq *PromptQuery) FirstIDX(ctx context.Context) uuid.UUID {
 	id, err := pq.FirstID(ctx)
 	if err != nil && !IsNotFound(err) {
 		panic(err)
@@ -135,8 +185,8 @@ func (pq *PromptQuery) OnlyX(ctx context.Context) *Prompt {
 // OnlyID is like Only, but returns the only Prompt ID in the query.
 // Returns a *NotSingularError when more than one Prompt ID is found.
 // Returns a *NotFoundError when no entities are found.
-func (pq *PromptQuery) OnlyID(ctx context.Context) (id int, err error) {
-	var ids []int
+func (pq *PromptQuery) OnlyID(ctx context.Context) (id uuid.UUID, err error) {
+	var ids []uuid.UUID
 	if ids, err = pq.Limit(2).IDs(newQueryContext(ctx, TypePrompt, "OnlyID")); err != nil {
 		return
 	}
@@ -152,7 +202,7 @@ func (pq *PromptQuery) OnlyID(ctx context.Context) (id int, err error) {
 }
 
 // OnlyIDX is like OnlyID, but panics if an error occurs.
-func (pq *PromptQuery) OnlyIDX(ctx context.Context) int {
+func (pq *PromptQuery) OnlyIDX(ctx context.Context) uuid.UUID {
 	id, err := pq.OnlyID(ctx)
 	if err != nil {
 		panic(err)
@@ -180,8 +230,8 @@ func (pq *PromptQuery) AllX(ctx context.Context) []*Prompt {
 }
 
 // IDs executes the query and returns a list of Prompt IDs.
-func (pq *PromptQuery) IDs(ctx context.Context) ([]int, error) {
-	var ids []int
+func (pq *PromptQuery) IDs(ctx context.Context) ([]uuid.UUID, error) {
+	var ids []uuid.UUID
 	ctx = newQueryContext(ctx, TypePrompt, "IDs")
 	if err := pq.Select(prompt.FieldID).Scan(ctx, &ids); err != nil {
 		return nil, err
@@ -190,7 +240,7 @@ func (pq *PromptQuery) IDs(ctx context.Context) ([]int, error) {
 }
 
 // IDsX is like IDs, but panics if an error occurs.
-func (pq *PromptQuery) IDsX(ctx context.Context) []int {
+func (pq *PromptQuery) IDsX(ctx context.Context) []uuid.UUID {
 	ids, err := pq.IDs(ctx)
 	if err != nil {
 		panic(err)
@@ -245,12 +295,14 @@ func (pq *PromptQuery) Clone() *PromptQuery {
 		return nil
 	}
 	return &PromptQuery{
-		config:     pq.config,
-		limit:      pq.limit,
-		offset:     pq.offset,
-		order:      append([]OrderFunc{}, pq.order...),
-		inters:     append([]Interceptor{}, pq.inters...),
-		predicates: append([]predicate.Prompt{}, pq.predicates...),
+		config:          pq.config,
+		limit:           pq.limit,
+		offset:          pq.offset,
+		order:           append([]OrderFunc{}, pq.order...),
+		inters:          append([]Interceptor{}, pq.inters...),
+		predicates:      append([]predicate.Prompt{}, pq.predicates...),
+		withGeneration:  pq.withGeneration.Clone(),
+		withGenerationG: pq.withGenerationG.Clone(),
 		// clone intermediate query.
 		sql:    pq.sql.Clone(),
 		path:   pq.path,
@@ -258,8 +310,42 @@ func (pq *PromptQuery) Clone() *PromptQuery {
 	}
 }
 
+// WithGeneration tells the query-builder to eager-load the nodes that are connected to
+// the "generation" edge. The optional arguments are used to configure the query builder of the edge.
+func (pq *PromptQuery) WithGeneration(opts ...func(*GenerationQuery)) *PromptQuery {
+	query := (&GenerationClient{config: pq.config}).Query()
+	for _, opt := range opts {
+		opt(query)
+	}
+	pq.withGeneration = query
+	return pq
+}
+
+// WithGenerationG tells the query-builder to eager-load the nodes that are connected to
+// the "generation_g" edge. The optional arguments are used to configure the query builder of the edge.
+func (pq *PromptQuery) WithGenerationG(opts ...func(*GenerationGQuery)) *PromptQuery {
+	query := (&GenerationGClient{config: pq.config}).Query()
+	for _, opt := range opts {
+		opt(query)
+	}
+	pq.withGenerationG = query
+	return pq
+}
+
 // GroupBy is used to group vertices by one or more fields/columns.
 // It is often used with aggregate functions, like: count, max, mean, min, sum.
+//
+// Example:
+//
+//	var v []struct {
+//		Text string `json:"text,omitempty"`
+//		Count int `json:"count,omitempty"`
+//	}
+//
+//	client.Prompt.Query().
+//		GroupBy(prompt.FieldText).
+//		Aggregate(ent.Count()).
+//		Scan(ctx, &v)
 func (pq *PromptQuery) GroupBy(field string, fields ...string) *PromptGroupBy {
 	pq.fields = append([]string{field}, fields...)
 	grbuild := &PromptGroupBy{build: pq}
@@ -271,6 +357,16 @@ func (pq *PromptQuery) GroupBy(field string, fields ...string) *PromptGroupBy {
 
 // Select allows the selection one or more fields/columns for the given query,
 // instead of selecting all fields in the entity.
+//
+// Example:
+//
+//	var v []struct {
+//		Text string `json:"text,omitempty"`
+//	}
+//
+//	client.Prompt.Query().
+//		Select(prompt.FieldText).
+//		Scan(ctx, &v)
 func (pq *PromptQuery) Select(fields ...string) *PromptSelect {
 	pq.fields = append(pq.fields, fields...)
 	sbuild := &PromptSelect{PromptQuery: pq}
@@ -312,8 +408,12 @@ func (pq *PromptQuery) prepareQuery(ctx context.Context) error {
 
 func (pq *PromptQuery) sqlAll(ctx context.Context, hooks ...queryHook) ([]*Prompt, error) {
 	var (
-		nodes = []*Prompt{}
-		_spec = pq.querySpec()
+		nodes       = []*Prompt{}
+		_spec       = pq.querySpec()
+		loadedTypes = [2]bool{
+			pq.withGeneration != nil,
+			pq.withGenerationG != nil,
+		}
 	)
 	_spec.ScanValues = func(columns []string) ([]any, error) {
 		return (*Prompt).scanValues(nil, columns)
@@ -321,6 +421,7 @@ func (pq *PromptQuery) sqlAll(ctx context.Context, hooks ...queryHook) ([]*Promp
 	_spec.Assign = func(columns []string, values []any) error {
 		node := &Prompt{config: pq.config}
 		nodes = append(nodes, node)
+		node.Edges.loadedTypes = loadedTypes
 		return node.assignValues(columns, values)
 	}
 	for i := range hooks {
@@ -332,7 +433,79 @@ func (pq *PromptQuery) sqlAll(ctx context.Context, hooks ...queryHook) ([]*Promp
 	if len(nodes) == 0 {
 		return nodes, nil
 	}
+	if query := pq.withGeneration; query != nil {
+		if err := pq.loadGeneration(ctx, query, nodes,
+			func(n *Prompt) { n.Edges.Generation = []*Generation{} },
+			func(n *Prompt, e *Generation) { n.Edges.Generation = append(n.Edges.Generation, e) }); err != nil {
+			return nil, err
+		}
+	}
+	if query := pq.withGenerationG; query != nil {
+		if err := pq.loadGenerationG(ctx, query, nodes,
+			func(n *Prompt) { n.Edges.GenerationG = []*GenerationG{} },
+			func(n *Prompt, e *GenerationG) { n.Edges.GenerationG = append(n.Edges.GenerationG, e) }); err != nil {
+			return nil, err
+		}
+	}
 	return nodes, nil
+}
+
+func (pq *PromptQuery) loadGeneration(ctx context.Context, query *GenerationQuery, nodes []*Prompt, init func(*Prompt), assign func(*Prompt, *Generation)) error {
+	fks := make([]driver.Value, 0, len(nodes))
+	nodeids := make(map[uuid.UUID]*Prompt)
+	for i := range nodes {
+		fks = append(fks, nodes[i].ID)
+		nodeids[nodes[i].ID] = nodes[i]
+		if init != nil {
+			init(nodes[i])
+		}
+	}
+	query.Where(predicate.Generation(func(s *sql.Selector) {
+		s.Where(sql.InValues(prompt.GenerationColumn, fks...))
+	}))
+	neighbors, err := query.All(ctx)
+	if err != nil {
+		return err
+	}
+	for _, n := range neighbors {
+		fk := n.PromptID
+		if fk == nil {
+			return fmt.Errorf(`foreign-key "prompt_id" is nil for node %v`, n.ID)
+		}
+		node, ok := nodeids[*fk]
+		if !ok {
+			return fmt.Errorf(`unexpected foreign-key "prompt_id" returned %v for node %v`, *fk, n.ID)
+		}
+		assign(node, n)
+	}
+	return nil
+}
+func (pq *PromptQuery) loadGenerationG(ctx context.Context, query *GenerationGQuery, nodes []*Prompt, init func(*Prompt), assign func(*Prompt, *GenerationG)) error {
+	fks := make([]driver.Value, 0, len(nodes))
+	nodeids := make(map[uuid.UUID]*Prompt)
+	for i := range nodes {
+		fks = append(fks, nodes[i].ID)
+		nodeids[nodes[i].ID] = nodes[i]
+		if init != nil {
+			init(nodes[i])
+		}
+	}
+	query.Where(predicate.GenerationG(func(s *sql.Selector) {
+		s.Where(sql.InValues(prompt.GenerationGColumn, fks...))
+	}))
+	neighbors, err := query.All(ctx)
+	if err != nil {
+		return err
+	}
+	for _, n := range neighbors {
+		fk := n.PromptID
+		node, ok := nodeids[fk]
+		if !ok {
+			return fmt.Errorf(`unexpected foreign-key "prompt_id" returned %v for node %v`, fk, n.ID)
+		}
+		assign(node, n)
+	}
+	return nil
 }
 
 func (pq *PromptQuery) sqlCount(ctx context.Context) (int, error) {
@@ -350,7 +523,7 @@ func (pq *PromptQuery) querySpec() *sqlgraph.QuerySpec {
 			Table:   prompt.Table,
 			Columns: prompt.Columns,
 			ID: &sqlgraph.FieldSpec{
-				Type:   field.TypeInt,
+				Type:   field.TypeUUID,
 				Column: prompt.FieldID,
 			},
 		},

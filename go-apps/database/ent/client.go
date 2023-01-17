@@ -8,6 +8,7 @@ import (
 	"fmt"
 	"log"
 
+	"github.com/google/uuid"
 	"github.com/yekta/stablecog/go-apps/database/ent/migrate"
 
 	"github.com/yekta/stablecog/go-apps/database/ent/admin"
@@ -25,6 +26,7 @@ import (
 
 	"entgo.io/ent/dialect"
 	"entgo.io/ent/dialect/sql"
+	"entgo.io/ent/dialect/sql/sqlgraph"
 )
 
 // Client is the client that holds all ent builders.
@@ -294,7 +296,7 @@ func (c *AdminClient) UpdateOne(a *Admin) *AdminUpdateOne {
 }
 
 // UpdateOneID returns an update builder for the given id.
-func (c *AdminClient) UpdateOneID(id int) *AdminUpdateOne {
+func (c *AdminClient) UpdateOneID(id uuid.UUID) *AdminUpdateOne {
 	mutation := newAdminMutation(c.config, OpUpdateOne, withAdminID(id))
 	return &AdminUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
 }
@@ -311,7 +313,7 @@ func (c *AdminClient) DeleteOne(a *Admin) *AdminDeleteOne {
 }
 
 // DeleteOneID returns a builder for deleting the given entity by its id.
-func (c *AdminClient) DeleteOneID(id int) *AdminDeleteOne {
+func (c *AdminClient) DeleteOneID(id uuid.UUID) *AdminDeleteOne {
 	builder := c.Delete().Where(admin.ID(id))
 	builder.mutation.id = &id
 	builder.mutation.op = OpDeleteOne
@@ -327,12 +329,12 @@ func (c *AdminClient) Query() *AdminQuery {
 }
 
 // Get returns a Admin entity by its id.
-func (c *AdminClient) Get(ctx context.Context, id int) (*Admin, error) {
+func (c *AdminClient) Get(ctx context.Context, id uuid.UUID) (*Admin, error) {
 	return c.Query().Where(admin.ID(id)).Only(ctx)
 }
 
 // GetX is like Get, but panics if an error occurs.
-func (c *AdminClient) GetX(ctx context.Context, id int) *Admin {
+func (c *AdminClient) GetX(ctx context.Context, id uuid.UUID) *Admin {
 	obj, err := c.Get(ctx, id)
 	if err != nil {
 		panic(err)
@@ -411,7 +413,7 @@ func (c *GenerationClient) UpdateOne(ge *Generation) *GenerationUpdateOne {
 }
 
 // UpdateOneID returns an update builder for the given id.
-func (c *GenerationClient) UpdateOneID(id int) *GenerationUpdateOne {
+func (c *GenerationClient) UpdateOneID(id uuid.UUID) *GenerationUpdateOne {
 	mutation := newGenerationMutation(c.config, OpUpdateOne, withGenerationID(id))
 	return &GenerationUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
 }
@@ -428,7 +430,7 @@ func (c *GenerationClient) DeleteOne(ge *Generation) *GenerationDeleteOne {
 }
 
 // DeleteOneID returns a builder for deleting the given entity by its id.
-func (c *GenerationClient) DeleteOneID(id int) *GenerationDeleteOne {
+func (c *GenerationClient) DeleteOneID(id uuid.UUID) *GenerationDeleteOne {
 	builder := c.Delete().Where(generation.ID(id))
 	builder.mutation.id = &id
 	builder.mutation.op = OpDeleteOne
@@ -444,17 +446,97 @@ func (c *GenerationClient) Query() *GenerationQuery {
 }
 
 // Get returns a Generation entity by its id.
-func (c *GenerationClient) Get(ctx context.Context, id int) (*Generation, error) {
+func (c *GenerationClient) Get(ctx context.Context, id uuid.UUID) (*Generation, error) {
 	return c.Query().Where(generation.ID(id)).Only(ctx)
 }
 
 // GetX is like Get, but panics if an error occurs.
-func (c *GenerationClient) GetX(ctx context.Context, id int) *Generation {
+func (c *GenerationClient) GetX(ctx context.Context, id uuid.UUID) *Generation {
 	obj, err := c.Get(ctx, id)
 	if err != nil {
 		panic(err)
 	}
 	return obj
+}
+
+// QueryUser queries the user edge of a Generation.
+func (c *GenerationClient) QueryUser(ge *Generation) *UserQuery {
+	query := (&UserClient{config: c.config}).Query()
+	query.path = func(context.Context) (fromV *sql.Selector, _ error) {
+		id := ge.ID
+		step := sqlgraph.NewStep(
+			sqlgraph.From(generation.Table, generation.FieldID, id),
+			sqlgraph.To(user.Table, user.FieldID),
+			sqlgraph.Edge(sqlgraph.M2O, true, generation.UserTable, generation.UserColumn),
+		)
+		fromV = sqlgraph.Neighbors(ge.driver.Dialect(), step)
+		return fromV, nil
+	}
+	return query
+}
+
+// QueryModel queries the model edge of a Generation.
+func (c *GenerationClient) QueryModel(ge *Generation) *ModelQuery {
+	query := (&ModelClient{config: c.config}).Query()
+	query.path = func(context.Context) (fromV *sql.Selector, _ error) {
+		id := ge.ID
+		step := sqlgraph.NewStep(
+			sqlgraph.From(generation.Table, generation.FieldID, id),
+			sqlgraph.To(model.Table, model.FieldID),
+			sqlgraph.Edge(sqlgraph.M2O, true, generation.ModelTable, generation.ModelColumn),
+		)
+		fromV = sqlgraph.Neighbors(ge.driver.Dialect(), step)
+		return fromV, nil
+	}
+	return query
+}
+
+// QueryPrompt queries the prompt edge of a Generation.
+func (c *GenerationClient) QueryPrompt(ge *Generation) *PromptQuery {
+	query := (&PromptClient{config: c.config}).Query()
+	query.path = func(context.Context) (fromV *sql.Selector, _ error) {
+		id := ge.ID
+		step := sqlgraph.NewStep(
+			sqlgraph.From(generation.Table, generation.FieldID, id),
+			sqlgraph.To(prompt.Table, prompt.FieldID),
+			sqlgraph.Edge(sqlgraph.M2O, true, generation.PromptTable, generation.PromptColumn),
+		)
+		fromV = sqlgraph.Neighbors(ge.driver.Dialect(), step)
+		return fromV, nil
+	}
+	return query
+}
+
+// QueryNegativePrompt queries the negative_prompt edge of a Generation.
+func (c *GenerationClient) QueryNegativePrompt(ge *Generation) *NegativePromptQuery {
+	query := (&NegativePromptClient{config: c.config}).Query()
+	query.path = func(context.Context) (fromV *sql.Selector, _ error) {
+		id := ge.ID
+		step := sqlgraph.NewStep(
+			sqlgraph.From(generation.Table, generation.FieldID, id),
+			sqlgraph.To(negativeprompt.Table, negativeprompt.FieldID),
+			sqlgraph.Edge(sqlgraph.M2O, true, generation.NegativePromptTable, generation.NegativePromptColumn),
+		)
+		fromV = sqlgraph.Neighbors(ge.driver.Dialect(), step)
+		return fromV, nil
+	}
+	return query
+}
+
+// QueryScheduler queries the scheduler edge of a Generation.
+func (c *GenerationClient) QueryScheduler(ge *Generation) *SchedulerQuery {
+	query := (&SchedulerClient{config: c.config}).Query()
+	query.path = func(context.Context) (fromV *sql.Selector, _ error) {
+		id := ge.ID
+		step := sqlgraph.NewStep(
+			sqlgraph.From(generation.Table, generation.FieldID, id),
+			sqlgraph.To(scheduler.Table, scheduler.FieldID),
+			sqlgraph.Edge(sqlgraph.M2O, true, generation.SchedulerTable, generation.SchedulerColumn),
+		)
+		fromV = sqlgraph.Neighbors(ge.driver.Dialect(), step)
+		return fromV, nil
+	}
+	return query
 }
 
 // Hooks returns the client hooks.
@@ -528,7 +610,7 @@ func (c *GenerationGClient) UpdateOne(ge *GenerationG) *GenerationGUpdateOne {
 }
 
 // UpdateOneID returns an update builder for the given id.
-func (c *GenerationGClient) UpdateOneID(id int) *GenerationGUpdateOne {
+func (c *GenerationGClient) UpdateOneID(id uuid.UUID) *GenerationGUpdateOne {
 	mutation := newGenerationGMutation(c.config, OpUpdateOne, withGenerationGID(id))
 	return &GenerationGUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
 }
@@ -545,7 +627,7 @@ func (c *GenerationGClient) DeleteOne(ge *GenerationG) *GenerationGDeleteOne {
 }
 
 // DeleteOneID returns a builder for deleting the given entity by its id.
-func (c *GenerationGClient) DeleteOneID(id int) *GenerationGDeleteOne {
+func (c *GenerationGClient) DeleteOneID(id uuid.UUID) *GenerationGDeleteOne {
 	builder := c.Delete().Where(generationg.ID(id))
 	builder.mutation.id = &id
 	builder.mutation.op = OpDeleteOne
@@ -561,17 +643,97 @@ func (c *GenerationGClient) Query() *GenerationGQuery {
 }
 
 // Get returns a GenerationG entity by its id.
-func (c *GenerationGClient) Get(ctx context.Context, id int) (*GenerationG, error) {
+func (c *GenerationGClient) Get(ctx context.Context, id uuid.UUID) (*GenerationG, error) {
 	return c.Query().Where(generationg.ID(id)).Only(ctx)
 }
 
 // GetX is like Get, but panics if an error occurs.
-func (c *GenerationGClient) GetX(ctx context.Context, id int) *GenerationG {
+func (c *GenerationGClient) GetX(ctx context.Context, id uuid.UUID) *GenerationG {
 	obj, err := c.Get(ctx, id)
 	if err != nil {
 		panic(err)
 	}
 	return obj
+}
+
+// QueryUser queries the user edge of a GenerationG.
+func (c *GenerationGClient) QueryUser(ge *GenerationG) *UserQuery {
+	query := (&UserClient{config: c.config}).Query()
+	query.path = func(context.Context) (fromV *sql.Selector, _ error) {
+		id := ge.ID
+		step := sqlgraph.NewStep(
+			sqlgraph.From(generationg.Table, generationg.FieldID, id),
+			sqlgraph.To(user.Table, user.FieldID),
+			sqlgraph.Edge(sqlgraph.M2O, true, generationg.UserTable, generationg.UserColumn),
+		)
+		fromV = sqlgraph.Neighbors(ge.driver.Dialect(), step)
+		return fromV, nil
+	}
+	return query
+}
+
+// QueryModel queries the model edge of a GenerationG.
+func (c *GenerationGClient) QueryModel(ge *GenerationG) *ModelQuery {
+	query := (&ModelClient{config: c.config}).Query()
+	query.path = func(context.Context) (fromV *sql.Selector, _ error) {
+		id := ge.ID
+		step := sqlgraph.NewStep(
+			sqlgraph.From(generationg.Table, generationg.FieldID, id),
+			sqlgraph.To(model.Table, model.FieldID),
+			sqlgraph.Edge(sqlgraph.M2O, true, generationg.ModelTable, generationg.ModelColumn),
+		)
+		fromV = sqlgraph.Neighbors(ge.driver.Dialect(), step)
+		return fromV, nil
+	}
+	return query
+}
+
+// QueryPrompt queries the prompt edge of a GenerationG.
+func (c *GenerationGClient) QueryPrompt(ge *GenerationG) *PromptQuery {
+	query := (&PromptClient{config: c.config}).Query()
+	query.path = func(context.Context) (fromV *sql.Selector, _ error) {
+		id := ge.ID
+		step := sqlgraph.NewStep(
+			sqlgraph.From(generationg.Table, generationg.FieldID, id),
+			sqlgraph.To(prompt.Table, prompt.FieldID),
+			sqlgraph.Edge(sqlgraph.M2O, true, generationg.PromptTable, generationg.PromptColumn),
+		)
+		fromV = sqlgraph.Neighbors(ge.driver.Dialect(), step)
+		return fromV, nil
+	}
+	return query
+}
+
+// QueryNegativePrompt queries the negative_prompt edge of a GenerationG.
+func (c *GenerationGClient) QueryNegativePrompt(ge *GenerationG) *NegativePromptQuery {
+	query := (&NegativePromptClient{config: c.config}).Query()
+	query.path = func(context.Context) (fromV *sql.Selector, _ error) {
+		id := ge.ID
+		step := sqlgraph.NewStep(
+			sqlgraph.From(generationg.Table, generationg.FieldID, id),
+			sqlgraph.To(negativeprompt.Table, negativeprompt.FieldID),
+			sqlgraph.Edge(sqlgraph.M2O, true, generationg.NegativePromptTable, generationg.NegativePromptColumn),
+		)
+		fromV = sqlgraph.Neighbors(ge.driver.Dialect(), step)
+		return fromV, nil
+	}
+	return query
+}
+
+// QueryScheduler queries the scheduler edge of a GenerationG.
+func (c *GenerationGClient) QueryScheduler(ge *GenerationG) *SchedulerQuery {
+	query := (&SchedulerClient{config: c.config}).Query()
+	query.path = func(context.Context) (fromV *sql.Selector, _ error) {
+		id := ge.ID
+		step := sqlgraph.NewStep(
+			sqlgraph.From(generationg.Table, generationg.FieldID, id),
+			sqlgraph.To(scheduler.Table, scheduler.FieldID),
+			sqlgraph.Edge(sqlgraph.M2O, true, generationg.SchedulerTable, generationg.SchedulerColumn),
+		)
+		fromV = sqlgraph.Neighbors(ge.driver.Dialect(), step)
+		return fromV, nil
+	}
+	return query
 }
 
 // Hooks returns the client hooks.
@@ -645,7 +807,7 @@ func (c *GenerationRealtimeClient) UpdateOne(gr *GenerationRealtime) *Generation
 }
 
 // UpdateOneID returns an update builder for the given id.
-func (c *GenerationRealtimeClient) UpdateOneID(id int) *GenerationRealtimeUpdateOne {
+func (c *GenerationRealtimeClient) UpdateOneID(id uuid.UUID) *GenerationRealtimeUpdateOne {
 	mutation := newGenerationRealtimeMutation(c.config, OpUpdateOne, withGenerationRealtimeID(id))
 	return &GenerationRealtimeUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
 }
@@ -662,7 +824,7 @@ func (c *GenerationRealtimeClient) DeleteOne(gr *GenerationRealtime) *Generation
 }
 
 // DeleteOneID returns a builder for deleting the given entity by its id.
-func (c *GenerationRealtimeClient) DeleteOneID(id int) *GenerationRealtimeDeleteOne {
+func (c *GenerationRealtimeClient) DeleteOneID(id uuid.UUID) *GenerationRealtimeDeleteOne {
 	builder := c.Delete().Where(generationrealtime.ID(id))
 	builder.mutation.id = &id
 	builder.mutation.op = OpDeleteOne
@@ -678,12 +840,12 @@ func (c *GenerationRealtimeClient) Query() *GenerationRealtimeQuery {
 }
 
 // Get returns a GenerationRealtime entity by its id.
-func (c *GenerationRealtimeClient) Get(ctx context.Context, id int) (*GenerationRealtime, error) {
+func (c *GenerationRealtimeClient) Get(ctx context.Context, id uuid.UUID) (*GenerationRealtime, error) {
 	return c.Query().Where(generationrealtime.ID(id)).Only(ctx)
 }
 
 // GetX is like Get, but panics if an error occurs.
-func (c *GenerationRealtimeClient) GetX(ctx context.Context, id int) *GenerationRealtime {
+func (c *GenerationRealtimeClient) GetX(ctx context.Context, id uuid.UUID) *GenerationRealtime {
 	obj, err := c.Get(ctx, id)
 	if err != nil {
 		panic(err)
@@ -762,7 +924,7 @@ func (c *ModelClient) UpdateOne(m *Model) *ModelUpdateOne {
 }
 
 // UpdateOneID returns an update builder for the given id.
-func (c *ModelClient) UpdateOneID(id int) *ModelUpdateOne {
+func (c *ModelClient) UpdateOneID(id uuid.UUID) *ModelUpdateOne {
 	mutation := newModelMutation(c.config, OpUpdateOne, withModelID(id))
 	return &ModelUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
 }
@@ -779,7 +941,7 @@ func (c *ModelClient) DeleteOne(m *Model) *ModelDeleteOne {
 }
 
 // DeleteOneID returns a builder for deleting the given entity by its id.
-func (c *ModelClient) DeleteOneID(id int) *ModelDeleteOne {
+func (c *ModelClient) DeleteOneID(id uuid.UUID) *ModelDeleteOne {
 	builder := c.Delete().Where(model.ID(id))
 	builder.mutation.id = &id
 	builder.mutation.op = OpDeleteOne
@@ -795,17 +957,49 @@ func (c *ModelClient) Query() *ModelQuery {
 }
 
 // Get returns a Model entity by its id.
-func (c *ModelClient) Get(ctx context.Context, id int) (*Model, error) {
+func (c *ModelClient) Get(ctx context.Context, id uuid.UUID) (*Model, error) {
 	return c.Query().Where(model.ID(id)).Only(ctx)
 }
 
 // GetX is like Get, but panics if an error occurs.
-func (c *ModelClient) GetX(ctx context.Context, id int) *Model {
+func (c *ModelClient) GetX(ctx context.Context, id uuid.UUID) *Model {
 	obj, err := c.Get(ctx, id)
 	if err != nil {
 		panic(err)
 	}
 	return obj
+}
+
+// QueryGeneration queries the generation edge of a Model.
+func (c *ModelClient) QueryGeneration(m *Model) *GenerationQuery {
+	query := (&GenerationClient{config: c.config}).Query()
+	query.path = func(context.Context) (fromV *sql.Selector, _ error) {
+		id := m.ID
+		step := sqlgraph.NewStep(
+			sqlgraph.From(model.Table, model.FieldID, id),
+			sqlgraph.To(generation.Table, generation.FieldID),
+			sqlgraph.Edge(sqlgraph.O2M, false, model.GenerationTable, model.GenerationColumn),
+		)
+		fromV = sqlgraph.Neighbors(m.driver.Dialect(), step)
+		return fromV, nil
+	}
+	return query
+}
+
+// QueryGenerationG queries the generation_g edge of a Model.
+func (c *ModelClient) QueryGenerationG(m *Model) *GenerationGQuery {
+	query := (&GenerationGClient{config: c.config}).Query()
+	query.path = func(context.Context) (fromV *sql.Selector, _ error) {
+		id := m.ID
+		step := sqlgraph.NewStep(
+			sqlgraph.From(model.Table, model.FieldID, id),
+			sqlgraph.To(generationg.Table, generationg.FieldID),
+			sqlgraph.Edge(sqlgraph.O2M, false, model.GenerationGTable, model.GenerationGColumn),
+		)
+		fromV = sqlgraph.Neighbors(m.driver.Dialect(), step)
+		return fromV, nil
+	}
+	return query
 }
 
 // Hooks returns the client hooks.
@@ -879,7 +1073,7 @@ func (c *NegativePromptClient) UpdateOne(np *NegativePrompt) *NegativePromptUpda
 }
 
 // UpdateOneID returns an update builder for the given id.
-func (c *NegativePromptClient) UpdateOneID(id int) *NegativePromptUpdateOne {
+func (c *NegativePromptClient) UpdateOneID(id uuid.UUID) *NegativePromptUpdateOne {
 	mutation := newNegativePromptMutation(c.config, OpUpdateOne, withNegativePromptID(id))
 	return &NegativePromptUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
 }
@@ -896,7 +1090,7 @@ func (c *NegativePromptClient) DeleteOne(np *NegativePrompt) *NegativePromptDele
 }
 
 // DeleteOneID returns a builder for deleting the given entity by its id.
-func (c *NegativePromptClient) DeleteOneID(id int) *NegativePromptDeleteOne {
+func (c *NegativePromptClient) DeleteOneID(id uuid.UUID) *NegativePromptDeleteOne {
 	builder := c.Delete().Where(negativeprompt.ID(id))
 	builder.mutation.id = &id
 	builder.mutation.op = OpDeleteOne
@@ -912,17 +1106,49 @@ func (c *NegativePromptClient) Query() *NegativePromptQuery {
 }
 
 // Get returns a NegativePrompt entity by its id.
-func (c *NegativePromptClient) Get(ctx context.Context, id int) (*NegativePrompt, error) {
+func (c *NegativePromptClient) Get(ctx context.Context, id uuid.UUID) (*NegativePrompt, error) {
 	return c.Query().Where(negativeprompt.ID(id)).Only(ctx)
 }
 
 // GetX is like Get, but panics if an error occurs.
-func (c *NegativePromptClient) GetX(ctx context.Context, id int) *NegativePrompt {
+func (c *NegativePromptClient) GetX(ctx context.Context, id uuid.UUID) *NegativePrompt {
 	obj, err := c.Get(ctx, id)
 	if err != nil {
 		panic(err)
 	}
 	return obj
+}
+
+// QueryGeneration queries the generation edge of a NegativePrompt.
+func (c *NegativePromptClient) QueryGeneration(np *NegativePrompt) *GenerationQuery {
+	query := (&GenerationClient{config: c.config}).Query()
+	query.path = func(context.Context) (fromV *sql.Selector, _ error) {
+		id := np.ID
+		step := sqlgraph.NewStep(
+			sqlgraph.From(negativeprompt.Table, negativeprompt.FieldID, id),
+			sqlgraph.To(generation.Table, generation.FieldID),
+			sqlgraph.Edge(sqlgraph.O2M, false, negativeprompt.GenerationTable, negativeprompt.GenerationColumn),
+		)
+		fromV = sqlgraph.Neighbors(np.driver.Dialect(), step)
+		return fromV, nil
+	}
+	return query
+}
+
+// QueryGenerationG queries the generation_g edge of a NegativePrompt.
+func (c *NegativePromptClient) QueryGenerationG(np *NegativePrompt) *GenerationGQuery {
+	query := (&GenerationGClient{config: c.config}).Query()
+	query.path = func(context.Context) (fromV *sql.Selector, _ error) {
+		id := np.ID
+		step := sqlgraph.NewStep(
+			sqlgraph.From(negativeprompt.Table, negativeprompt.FieldID, id),
+			sqlgraph.To(generationg.Table, generationg.FieldID),
+			sqlgraph.Edge(sqlgraph.O2M, false, negativeprompt.GenerationGTable, negativeprompt.GenerationGColumn),
+		)
+		fromV = sqlgraph.Neighbors(np.driver.Dialect(), step)
+		return fromV, nil
+	}
+	return query
 }
 
 // Hooks returns the client hooks.
@@ -996,7 +1222,7 @@ func (c *PromptClient) UpdateOne(pr *Prompt) *PromptUpdateOne {
 }
 
 // UpdateOneID returns an update builder for the given id.
-func (c *PromptClient) UpdateOneID(id int) *PromptUpdateOne {
+func (c *PromptClient) UpdateOneID(id uuid.UUID) *PromptUpdateOne {
 	mutation := newPromptMutation(c.config, OpUpdateOne, withPromptID(id))
 	return &PromptUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
 }
@@ -1013,7 +1239,7 @@ func (c *PromptClient) DeleteOne(pr *Prompt) *PromptDeleteOne {
 }
 
 // DeleteOneID returns a builder for deleting the given entity by its id.
-func (c *PromptClient) DeleteOneID(id int) *PromptDeleteOne {
+func (c *PromptClient) DeleteOneID(id uuid.UUID) *PromptDeleteOne {
 	builder := c.Delete().Where(prompt.ID(id))
 	builder.mutation.id = &id
 	builder.mutation.op = OpDeleteOne
@@ -1029,17 +1255,49 @@ func (c *PromptClient) Query() *PromptQuery {
 }
 
 // Get returns a Prompt entity by its id.
-func (c *PromptClient) Get(ctx context.Context, id int) (*Prompt, error) {
+func (c *PromptClient) Get(ctx context.Context, id uuid.UUID) (*Prompt, error) {
 	return c.Query().Where(prompt.ID(id)).Only(ctx)
 }
 
 // GetX is like Get, but panics if an error occurs.
-func (c *PromptClient) GetX(ctx context.Context, id int) *Prompt {
+func (c *PromptClient) GetX(ctx context.Context, id uuid.UUID) *Prompt {
 	obj, err := c.Get(ctx, id)
 	if err != nil {
 		panic(err)
 	}
 	return obj
+}
+
+// QueryGeneration queries the generation edge of a Prompt.
+func (c *PromptClient) QueryGeneration(pr *Prompt) *GenerationQuery {
+	query := (&GenerationClient{config: c.config}).Query()
+	query.path = func(context.Context) (fromV *sql.Selector, _ error) {
+		id := pr.ID
+		step := sqlgraph.NewStep(
+			sqlgraph.From(prompt.Table, prompt.FieldID, id),
+			sqlgraph.To(generation.Table, generation.FieldID),
+			sqlgraph.Edge(sqlgraph.O2M, false, prompt.GenerationTable, prompt.GenerationColumn),
+		)
+		fromV = sqlgraph.Neighbors(pr.driver.Dialect(), step)
+		return fromV, nil
+	}
+	return query
+}
+
+// QueryGenerationG queries the generation_g edge of a Prompt.
+func (c *PromptClient) QueryGenerationG(pr *Prompt) *GenerationGQuery {
+	query := (&GenerationGClient{config: c.config}).Query()
+	query.path = func(context.Context) (fromV *sql.Selector, _ error) {
+		id := pr.ID
+		step := sqlgraph.NewStep(
+			sqlgraph.From(prompt.Table, prompt.FieldID, id),
+			sqlgraph.To(generationg.Table, generationg.FieldID),
+			sqlgraph.Edge(sqlgraph.O2M, false, prompt.GenerationGTable, prompt.GenerationGColumn),
+		)
+		fromV = sqlgraph.Neighbors(pr.driver.Dialect(), step)
+		return fromV, nil
+	}
+	return query
 }
 
 // Hooks returns the client hooks.
@@ -1113,7 +1371,7 @@ func (c *SchedulerClient) UpdateOne(s *Scheduler) *SchedulerUpdateOne {
 }
 
 // UpdateOneID returns an update builder for the given id.
-func (c *SchedulerClient) UpdateOneID(id int) *SchedulerUpdateOne {
+func (c *SchedulerClient) UpdateOneID(id uuid.UUID) *SchedulerUpdateOne {
 	mutation := newSchedulerMutation(c.config, OpUpdateOne, withSchedulerID(id))
 	return &SchedulerUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
 }
@@ -1130,7 +1388,7 @@ func (c *SchedulerClient) DeleteOne(s *Scheduler) *SchedulerDeleteOne {
 }
 
 // DeleteOneID returns a builder for deleting the given entity by its id.
-func (c *SchedulerClient) DeleteOneID(id int) *SchedulerDeleteOne {
+func (c *SchedulerClient) DeleteOneID(id uuid.UUID) *SchedulerDeleteOne {
 	builder := c.Delete().Where(scheduler.ID(id))
 	builder.mutation.id = &id
 	builder.mutation.op = OpDeleteOne
@@ -1146,17 +1404,49 @@ func (c *SchedulerClient) Query() *SchedulerQuery {
 }
 
 // Get returns a Scheduler entity by its id.
-func (c *SchedulerClient) Get(ctx context.Context, id int) (*Scheduler, error) {
+func (c *SchedulerClient) Get(ctx context.Context, id uuid.UUID) (*Scheduler, error) {
 	return c.Query().Where(scheduler.ID(id)).Only(ctx)
 }
 
 // GetX is like Get, but panics if an error occurs.
-func (c *SchedulerClient) GetX(ctx context.Context, id int) *Scheduler {
+func (c *SchedulerClient) GetX(ctx context.Context, id uuid.UUID) *Scheduler {
 	obj, err := c.Get(ctx, id)
 	if err != nil {
 		panic(err)
 	}
 	return obj
+}
+
+// QueryGeneration queries the generation edge of a Scheduler.
+func (c *SchedulerClient) QueryGeneration(s *Scheduler) *GenerationQuery {
+	query := (&GenerationClient{config: c.config}).Query()
+	query.path = func(context.Context) (fromV *sql.Selector, _ error) {
+		id := s.ID
+		step := sqlgraph.NewStep(
+			sqlgraph.From(scheduler.Table, scheduler.FieldID, id),
+			sqlgraph.To(generation.Table, generation.FieldID),
+			sqlgraph.Edge(sqlgraph.O2M, false, scheduler.GenerationTable, scheduler.GenerationColumn),
+		)
+		fromV = sqlgraph.Neighbors(s.driver.Dialect(), step)
+		return fromV, nil
+	}
+	return query
+}
+
+// QueryGenerationG queries the generation_g edge of a Scheduler.
+func (c *SchedulerClient) QueryGenerationG(s *Scheduler) *GenerationGQuery {
+	query := (&GenerationGClient{config: c.config}).Query()
+	query.path = func(context.Context) (fromV *sql.Selector, _ error) {
+		id := s.ID
+		step := sqlgraph.NewStep(
+			sqlgraph.From(scheduler.Table, scheduler.FieldID, id),
+			sqlgraph.To(generationg.Table, generationg.FieldID),
+			sqlgraph.Edge(sqlgraph.O2M, false, scheduler.GenerationGTable, scheduler.GenerationGColumn),
+		)
+		fromV = sqlgraph.Neighbors(s.driver.Dialect(), step)
+		return fromV, nil
+	}
+	return query
 }
 
 // Hooks returns the client hooks.
@@ -1230,7 +1520,7 @@ func (c *ServerClient) UpdateOne(s *Server) *ServerUpdateOne {
 }
 
 // UpdateOneID returns an update builder for the given id.
-func (c *ServerClient) UpdateOneID(id int) *ServerUpdateOne {
+func (c *ServerClient) UpdateOneID(id uuid.UUID) *ServerUpdateOne {
 	mutation := newServerMutation(c.config, OpUpdateOne, withServerID(id))
 	return &ServerUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
 }
@@ -1247,7 +1537,7 @@ func (c *ServerClient) DeleteOne(s *Server) *ServerDeleteOne {
 }
 
 // DeleteOneID returns a builder for deleting the given entity by its id.
-func (c *ServerClient) DeleteOneID(id int) *ServerDeleteOne {
+func (c *ServerClient) DeleteOneID(id uuid.UUID) *ServerDeleteOne {
 	builder := c.Delete().Where(server.ID(id))
 	builder.mutation.id = &id
 	builder.mutation.op = OpDeleteOne
@@ -1263,12 +1553,12 @@ func (c *ServerClient) Query() *ServerQuery {
 }
 
 // Get returns a Server entity by its id.
-func (c *ServerClient) Get(ctx context.Context, id int) (*Server, error) {
+func (c *ServerClient) Get(ctx context.Context, id uuid.UUID) (*Server, error) {
 	return c.Query().Where(server.ID(id)).Only(ctx)
 }
 
 // GetX is like Get, but panics if an error occurs.
-func (c *ServerClient) GetX(ctx context.Context, id int) *Server {
+func (c *ServerClient) GetX(ctx context.Context, id uuid.UUID) *Server {
 	obj, err := c.Get(ctx, id)
 	if err != nil {
 		panic(err)
@@ -1347,7 +1637,7 @@ func (c *UpscaleClient) UpdateOne(u *Upscale) *UpscaleUpdateOne {
 }
 
 // UpdateOneID returns an update builder for the given id.
-func (c *UpscaleClient) UpdateOneID(id int) *UpscaleUpdateOne {
+func (c *UpscaleClient) UpdateOneID(id uuid.UUID) *UpscaleUpdateOne {
 	mutation := newUpscaleMutation(c.config, OpUpdateOne, withUpscaleID(id))
 	return &UpscaleUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
 }
@@ -1364,7 +1654,7 @@ func (c *UpscaleClient) DeleteOne(u *Upscale) *UpscaleDeleteOne {
 }
 
 // DeleteOneID returns a builder for deleting the given entity by its id.
-func (c *UpscaleClient) DeleteOneID(id int) *UpscaleDeleteOne {
+func (c *UpscaleClient) DeleteOneID(id uuid.UUID) *UpscaleDeleteOne {
 	builder := c.Delete().Where(upscale.ID(id))
 	builder.mutation.id = &id
 	builder.mutation.op = OpDeleteOne
@@ -1380,17 +1670,33 @@ func (c *UpscaleClient) Query() *UpscaleQuery {
 }
 
 // Get returns a Upscale entity by its id.
-func (c *UpscaleClient) Get(ctx context.Context, id int) (*Upscale, error) {
+func (c *UpscaleClient) Get(ctx context.Context, id uuid.UUID) (*Upscale, error) {
 	return c.Query().Where(upscale.ID(id)).Only(ctx)
 }
 
 // GetX is like Get, but panics if an error occurs.
-func (c *UpscaleClient) GetX(ctx context.Context, id int) *Upscale {
+func (c *UpscaleClient) GetX(ctx context.Context, id uuid.UUID) *Upscale {
 	obj, err := c.Get(ctx, id)
 	if err != nil {
 		panic(err)
 	}
 	return obj
+}
+
+// QueryUser queries the user edge of a Upscale.
+func (c *UpscaleClient) QueryUser(u *Upscale) *UserQuery {
+	query := (&UserClient{config: c.config}).Query()
+	query.path = func(context.Context) (fromV *sql.Selector, _ error) {
+		id := u.ID
+		step := sqlgraph.NewStep(
+			sqlgraph.From(upscale.Table, upscale.FieldID, id),
+			sqlgraph.To(user.Table, user.FieldID),
+			sqlgraph.Edge(sqlgraph.M2O, true, upscale.UserTable, upscale.UserColumn),
+		)
+		fromV = sqlgraph.Neighbors(u.driver.Dialect(), step)
+		return fromV, nil
+	}
+	return query
 }
 
 // Hooks returns the client hooks.
@@ -1464,7 +1770,7 @@ func (c *UpscaleRealtimeClient) UpdateOne(ur *UpscaleRealtime) *UpscaleRealtimeU
 }
 
 // UpdateOneID returns an update builder for the given id.
-func (c *UpscaleRealtimeClient) UpdateOneID(id int) *UpscaleRealtimeUpdateOne {
+func (c *UpscaleRealtimeClient) UpdateOneID(id uuid.UUID) *UpscaleRealtimeUpdateOne {
 	mutation := newUpscaleRealtimeMutation(c.config, OpUpdateOne, withUpscaleRealtimeID(id))
 	return &UpscaleRealtimeUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
 }
@@ -1481,7 +1787,7 @@ func (c *UpscaleRealtimeClient) DeleteOne(ur *UpscaleRealtime) *UpscaleRealtimeD
 }
 
 // DeleteOneID returns a builder for deleting the given entity by its id.
-func (c *UpscaleRealtimeClient) DeleteOneID(id int) *UpscaleRealtimeDeleteOne {
+func (c *UpscaleRealtimeClient) DeleteOneID(id uuid.UUID) *UpscaleRealtimeDeleteOne {
 	builder := c.Delete().Where(upscalerealtime.ID(id))
 	builder.mutation.id = &id
 	builder.mutation.op = OpDeleteOne
@@ -1497,12 +1803,12 @@ func (c *UpscaleRealtimeClient) Query() *UpscaleRealtimeQuery {
 }
 
 // Get returns a UpscaleRealtime entity by its id.
-func (c *UpscaleRealtimeClient) Get(ctx context.Context, id int) (*UpscaleRealtime, error) {
+func (c *UpscaleRealtimeClient) Get(ctx context.Context, id uuid.UUID) (*UpscaleRealtime, error) {
 	return c.Query().Where(upscalerealtime.ID(id)).Only(ctx)
 }
 
 // GetX is like Get, but panics if an error occurs.
-func (c *UpscaleRealtimeClient) GetX(ctx context.Context, id int) *UpscaleRealtime {
+func (c *UpscaleRealtimeClient) GetX(ctx context.Context, id uuid.UUID) *UpscaleRealtime {
 	obj, err := c.Get(ctx, id)
 	if err != nil {
 		panic(err)
@@ -1581,7 +1887,7 @@ func (c *UserClient) UpdateOne(u *User) *UserUpdateOne {
 }
 
 // UpdateOneID returns an update builder for the given id.
-func (c *UserClient) UpdateOneID(id int) *UserUpdateOne {
+func (c *UserClient) UpdateOneID(id uuid.UUID) *UserUpdateOne {
 	mutation := newUserMutation(c.config, OpUpdateOne, withUserID(id))
 	return &UserUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
 }
@@ -1598,7 +1904,7 @@ func (c *UserClient) DeleteOne(u *User) *UserDeleteOne {
 }
 
 // DeleteOneID returns a builder for deleting the given entity by its id.
-func (c *UserClient) DeleteOneID(id int) *UserDeleteOne {
+func (c *UserClient) DeleteOneID(id uuid.UUID) *UserDeleteOne {
 	builder := c.Delete().Where(user.ID(id))
 	builder.mutation.id = &id
 	builder.mutation.op = OpDeleteOne
@@ -1614,17 +1920,65 @@ func (c *UserClient) Query() *UserQuery {
 }
 
 // Get returns a User entity by its id.
-func (c *UserClient) Get(ctx context.Context, id int) (*User, error) {
+func (c *UserClient) Get(ctx context.Context, id uuid.UUID) (*User, error) {
 	return c.Query().Where(user.ID(id)).Only(ctx)
 }
 
 // GetX is like Get, but panics if an error occurs.
-func (c *UserClient) GetX(ctx context.Context, id int) *User {
+func (c *UserClient) GetX(ctx context.Context, id uuid.UUID) *User {
 	obj, err := c.Get(ctx, id)
 	if err != nil {
 		panic(err)
 	}
 	return obj
+}
+
+// QueryUpscale queries the upscale edge of a User.
+func (c *UserClient) QueryUpscale(u *User) *UpscaleQuery {
+	query := (&UpscaleClient{config: c.config}).Query()
+	query.path = func(context.Context) (fromV *sql.Selector, _ error) {
+		id := u.ID
+		step := sqlgraph.NewStep(
+			sqlgraph.From(user.Table, user.FieldID, id),
+			sqlgraph.To(upscale.Table, upscale.FieldID),
+			sqlgraph.Edge(sqlgraph.O2M, false, user.UpscaleTable, user.UpscaleColumn),
+		)
+		fromV = sqlgraph.Neighbors(u.driver.Dialect(), step)
+		return fromV, nil
+	}
+	return query
+}
+
+// QueryGeneration queries the generation edge of a User.
+func (c *UserClient) QueryGeneration(u *User) *GenerationQuery {
+	query := (&GenerationClient{config: c.config}).Query()
+	query.path = func(context.Context) (fromV *sql.Selector, _ error) {
+		id := u.ID
+		step := sqlgraph.NewStep(
+			sqlgraph.From(user.Table, user.FieldID, id),
+			sqlgraph.To(generation.Table, generation.FieldID),
+			sqlgraph.Edge(sqlgraph.O2M, false, user.GenerationTable, user.GenerationColumn),
+		)
+		fromV = sqlgraph.Neighbors(u.driver.Dialect(), step)
+		return fromV, nil
+	}
+	return query
+}
+
+// QueryGenerationG queries the generation_g edge of a User.
+func (c *UserClient) QueryGenerationG(u *User) *GenerationGQuery {
+	query := (&GenerationGClient{config: c.config}).Query()
+	query.path = func(context.Context) (fromV *sql.Selector, _ error) {
+		id := u.ID
+		step := sqlgraph.NewStep(
+			sqlgraph.From(user.Table, user.FieldID, id),
+			sqlgraph.To(generationg.Table, generationg.FieldID),
+			sqlgraph.Edge(sqlgraph.O2M, false, user.GenerationGTable, user.GenerationGColumn),
+		)
+		fromV = sqlgraph.Neighbors(u.driver.Dialect(), step)
+		return fromV, nil
+	}
+	return query
 }
 
 // Hooks returns the client hooks.

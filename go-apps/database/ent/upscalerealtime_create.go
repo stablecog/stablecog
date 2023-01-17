@@ -4,10 +4,13 @@ package ent
 
 import (
 	"context"
+	"errors"
 	"fmt"
+	"time"
 
 	"entgo.io/ent/dialect/sql/sqlgraph"
 	"entgo.io/ent/schema/field"
+	"github.com/google/uuid"
 	"github.com/yekta/stablecog/go-apps/database/ent/upscalerealtime"
 )
 
@@ -18,6 +21,98 @@ type UpscaleRealtimeCreate struct {
 	hooks    []Hook
 }
 
+// SetStatus sets the "status" field.
+func (urc *UpscaleRealtimeCreate) SetStatus(u upscalerealtime.Status) *UpscaleRealtimeCreate {
+	urc.mutation.SetStatus(u)
+	return urc
+}
+
+// SetCountryCode sets the "country_code" field.
+func (urc *UpscaleRealtimeCreate) SetCountryCode(s string) *UpscaleRealtimeCreate {
+	urc.mutation.SetCountryCode(s)
+	return urc
+}
+
+// SetUsesDefaultServer sets the "uses_default_server" field.
+func (urc *UpscaleRealtimeCreate) SetUsesDefaultServer(b bool) *UpscaleRealtimeCreate {
+	urc.mutation.SetUsesDefaultServer(b)
+	return urc
+}
+
+// SetWidth sets the "width" field.
+func (urc *UpscaleRealtimeCreate) SetWidth(i int) *UpscaleRealtimeCreate {
+	urc.mutation.SetWidth(i)
+	return urc
+}
+
+// SetHeight sets the "height" field.
+func (urc *UpscaleRealtimeCreate) SetHeight(i int) *UpscaleRealtimeCreate {
+	urc.mutation.SetHeight(i)
+	return urc
+}
+
+// SetScale sets the "scale" field.
+func (urc *UpscaleRealtimeCreate) SetScale(i int) *UpscaleRealtimeCreate {
+	urc.mutation.SetScale(i)
+	return urc
+}
+
+// SetCreatedAt sets the "created_at" field.
+func (urc *UpscaleRealtimeCreate) SetCreatedAt(t time.Time) *UpscaleRealtimeCreate {
+	urc.mutation.SetCreatedAt(t)
+	return urc
+}
+
+// SetNillableCreatedAt sets the "created_at" field if the given value is not nil.
+func (urc *UpscaleRealtimeCreate) SetNillableCreatedAt(t *time.Time) *UpscaleRealtimeCreate {
+	if t != nil {
+		urc.SetCreatedAt(*t)
+	}
+	return urc
+}
+
+// SetUpdatedAt sets the "updated_at" field.
+func (urc *UpscaleRealtimeCreate) SetUpdatedAt(t time.Time) *UpscaleRealtimeCreate {
+	urc.mutation.SetUpdatedAt(t)
+	return urc
+}
+
+// SetNillableUpdatedAt sets the "updated_at" field if the given value is not nil.
+func (urc *UpscaleRealtimeCreate) SetNillableUpdatedAt(t *time.Time) *UpscaleRealtimeCreate {
+	if t != nil {
+		urc.SetUpdatedAt(*t)
+	}
+	return urc
+}
+
+// SetUserTier sets the "user_tier" field.
+func (urc *UpscaleRealtimeCreate) SetUserTier(ut upscalerealtime.UserTier) *UpscaleRealtimeCreate {
+	urc.mutation.SetUserTier(ut)
+	return urc
+}
+
+// SetNillableUserTier sets the "user_tier" field if the given value is not nil.
+func (urc *UpscaleRealtimeCreate) SetNillableUserTier(ut *upscalerealtime.UserTier) *UpscaleRealtimeCreate {
+	if ut != nil {
+		urc.SetUserTier(*ut)
+	}
+	return urc
+}
+
+// SetID sets the "id" field.
+func (urc *UpscaleRealtimeCreate) SetID(u uuid.UUID) *UpscaleRealtimeCreate {
+	urc.mutation.SetID(u)
+	return urc
+}
+
+// SetNillableID sets the "id" field if the given value is not nil.
+func (urc *UpscaleRealtimeCreate) SetNillableID(u *uuid.UUID) *UpscaleRealtimeCreate {
+	if u != nil {
+		urc.SetID(*u)
+	}
+	return urc
+}
+
 // Mutation returns the UpscaleRealtimeMutation object of the builder.
 func (urc *UpscaleRealtimeCreate) Mutation() *UpscaleRealtimeMutation {
 	return urc.mutation
@@ -25,6 +120,7 @@ func (urc *UpscaleRealtimeCreate) Mutation() *UpscaleRealtimeMutation {
 
 // Save creates the UpscaleRealtime in the database.
 func (urc *UpscaleRealtimeCreate) Save(ctx context.Context) (*UpscaleRealtime, error) {
+	urc.defaults()
 	return withHooks[*UpscaleRealtime, UpscaleRealtimeMutation](ctx, urc.sqlSave, urc.mutation, urc.hooks)
 }
 
@@ -50,8 +146,65 @@ func (urc *UpscaleRealtimeCreate) ExecX(ctx context.Context) {
 	}
 }
 
+// defaults sets the default values of the builder before save.
+func (urc *UpscaleRealtimeCreate) defaults() {
+	if _, ok := urc.mutation.CreatedAt(); !ok {
+		v := upscalerealtime.DefaultCreatedAt()
+		urc.mutation.SetCreatedAt(v)
+	}
+	if _, ok := urc.mutation.UpdatedAt(); !ok {
+		v := upscalerealtime.DefaultUpdatedAt()
+		urc.mutation.SetUpdatedAt(v)
+	}
+	if _, ok := urc.mutation.UserTier(); !ok {
+		v := upscalerealtime.DefaultUserTier
+		urc.mutation.SetUserTier(v)
+	}
+	if _, ok := urc.mutation.ID(); !ok {
+		v := upscalerealtime.DefaultID()
+		urc.mutation.SetID(v)
+	}
+}
+
 // check runs all checks and user-defined validators on the builder.
 func (urc *UpscaleRealtimeCreate) check() error {
+	if _, ok := urc.mutation.Status(); !ok {
+		return &ValidationError{Name: "status", err: errors.New(`ent: missing required field "UpscaleRealtime.status"`)}
+	}
+	if v, ok := urc.mutation.Status(); ok {
+		if err := upscalerealtime.StatusValidator(v); err != nil {
+			return &ValidationError{Name: "status", err: fmt.Errorf(`ent: validator failed for field "UpscaleRealtime.status": %w`, err)}
+		}
+	}
+	if _, ok := urc.mutation.CountryCode(); !ok {
+		return &ValidationError{Name: "country_code", err: errors.New(`ent: missing required field "UpscaleRealtime.country_code"`)}
+	}
+	if _, ok := urc.mutation.UsesDefaultServer(); !ok {
+		return &ValidationError{Name: "uses_default_server", err: errors.New(`ent: missing required field "UpscaleRealtime.uses_default_server"`)}
+	}
+	if _, ok := urc.mutation.Width(); !ok {
+		return &ValidationError{Name: "width", err: errors.New(`ent: missing required field "UpscaleRealtime.width"`)}
+	}
+	if _, ok := urc.mutation.Height(); !ok {
+		return &ValidationError{Name: "height", err: errors.New(`ent: missing required field "UpscaleRealtime.height"`)}
+	}
+	if _, ok := urc.mutation.Scale(); !ok {
+		return &ValidationError{Name: "scale", err: errors.New(`ent: missing required field "UpscaleRealtime.scale"`)}
+	}
+	if _, ok := urc.mutation.CreatedAt(); !ok {
+		return &ValidationError{Name: "created_at", err: errors.New(`ent: missing required field "UpscaleRealtime.created_at"`)}
+	}
+	if _, ok := urc.mutation.UpdatedAt(); !ok {
+		return &ValidationError{Name: "updated_at", err: errors.New(`ent: missing required field "UpscaleRealtime.updated_at"`)}
+	}
+	if _, ok := urc.mutation.UserTier(); !ok {
+		return &ValidationError{Name: "user_tier", err: errors.New(`ent: missing required field "UpscaleRealtime.user_tier"`)}
+	}
+	if v, ok := urc.mutation.UserTier(); ok {
+		if err := upscalerealtime.UserTierValidator(v); err != nil {
+			return &ValidationError{Name: "user_tier", err: fmt.Errorf(`ent: validator failed for field "UpscaleRealtime.user_tier": %w`, err)}
+		}
+	}
 	return nil
 }
 
@@ -66,8 +219,13 @@ func (urc *UpscaleRealtimeCreate) sqlSave(ctx context.Context) (*UpscaleRealtime
 		}
 		return nil, err
 	}
-	id := _spec.ID.Value.(int64)
-	_node.ID = int(id)
+	if _spec.ID.Value != nil {
+		if id, ok := _spec.ID.Value.(*uuid.UUID); ok {
+			_node.ID = *id
+		} else if err := _node.ID.Scan(_spec.ID.Value); err != nil {
+			return nil, err
+		}
+	}
 	urc.mutation.id = &_node.ID
 	urc.mutation.done = true
 	return _node, nil
@@ -79,11 +237,51 @@ func (urc *UpscaleRealtimeCreate) createSpec() (*UpscaleRealtime, *sqlgraph.Crea
 		_spec = &sqlgraph.CreateSpec{
 			Table: upscalerealtime.Table,
 			ID: &sqlgraph.FieldSpec{
-				Type:   field.TypeInt,
+				Type:   field.TypeUUID,
 				Column: upscalerealtime.FieldID,
 			},
 		}
 	)
+	if id, ok := urc.mutation.ID(); ok {
+		_node.ID = id
+		_spec.ID.Value = &id
+	}
+	if value, ok := urc.mutation.Status(); ok {
+		_spec.SetField(upscalerealtime.FieldStatus, field.TypeEnum, value)
+		_node.Status = value
+	}
+	if value, ok := urc.mutation.CountryCode(); ok {
+		_spec.SetField(upscalerealtime.FieldCountryCode, field.TypeString, value)
+		_node.CountryCode = &value
+	}
+	if value, ok := urc.mutation.UsesDefaultServer(); ok {
+		_spec.SetField(upscalerealtime.FieldUsesDefaultServer, field.TypeBool, value)
+		_node.UsesDefaultServer = value
+	}
+	if value, ok := urc.mutation.Width(); ok {
+		_spec.SetField(upscalerealtime.FieldWidth, field.TypeInt, value)
+		_node.Width = &value
+	}
+	if value, ok := urc.mutation.Height(); ok {
+		_spec.SetField(upscalerealtime.FieldHeight, field.TypeInt, value)
+		_node.Height = &value
+	}
+	if value, ok := urc.mutation.Scale(); ok {
+		_spec.SetField(upscalerealtime.FieldScale, field.TypeInt, value)
+		_node.Scale = &value
+	}
+	if value, ok := urc.mutation.CreatedAt(); ok {
+		_spec.SetField(upscalerealtime.FieldCreatedAt, field.TypeTime, value)
+		_node.CreatedAt = value
+	}
+	if value, ok := urc.mutation.UpdatedAt(); ok {
+		_spec.SetField(upscalerealtime.FieldUpdatedAt, field.TypeTime, value)
+		_node.UpdatedAt = value
+	}
+	if value, ok := urc.mutation.UserTier(); ok {
+		_spec.SetField(upscalerealtime.FieldUserTier, field.TypeEnum, value)
+		_node.UserTier = value
+	}
 	return _node, _spec
 }
 
@@ -101,6 +299,7 @@ func (urcb *UpscaleRealtimeCreateBulk) Save(ctx context.Context) ([]*UpscaleReal
 	for i := range urcb.builders {
 		func(i int, root context.Context) {
 			builder := urcb.builders[i]
+			builder.defaults()
 			var mut Mutator = MutateFunc(func(ctx context.Context, m Mutation) (Value, error) {
 				mutation, ok := m.(*UpscaleRealtimeMutation)
 				if !ok {
@@ -127,10 +326,6 @@ func (urcb *UpscaleRealtimeCreateBulk) Save(ctx context.Context) ([]*UpscaleReal
 					return nil, err
 				}
 				mutation.id = &nodes[i].ID
-				if specs[i].ID.Value != nil {
-					id := specs[i].ID.Value.(int64)
-					nodes[i].ID = int(id)
-				}
 				mutation.done = true
 				return nodes[i], nil
 			})

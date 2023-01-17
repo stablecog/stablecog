@@ -5,16 +5,159 @@ package ent
 import (
 	"fmt"
 	"strings"
+	"time"
 
 	"entgo.io/ent/dialect/sql"
+	"github.com/google/uuid"
 	"github.com/yekta/stablecog/go-apps/database/ent/generation"
+	"github.com/yekta/stablecog/go-apps/database/ent/model"
+	"github.com/yekta/stablecog/go-apps/database/ent/negativeprompt"
+	"github.com/yekta/stablecog/go-apps/database/ent/prompt"
+	"github.com/yekta/stablecog/go-apps/database/ent/scheduler"
+	"github.com/yekta/stablecog/go-apps/database/ent/user"
+	"github.com/yekta/stablecog/go-apps/database/enttypes"
 )
 
 // Generation is the model entity for the Generation schema.
 type Generation struct {
-	config
+	config `json:"-"`
 	// ID of the ent.
-	ID int `json:"id,omitempty"`
+	ID uuid.UUID `json:"id,omitempty"`
+	// PromptID holds the value of the "prompt_id" field.
+	PromptID *uuid.UUID `json:"prompt_id,omitempty"`
+	// NegativePromptID holds the value of the "negative_prompt_id" field.
+	NegativePromptID *uuid.UUID `json:"negative_prompt_id,omitempty"`
+	// ModelID holds the value of the "model_id" field.
+	ModelID uuid.UUID `json:"model_id,omitempty"`
+	// ImageID holds the value of the "image_id" field.
+	ImageID string `json:"image_id,omitempty"`
+	// Width holds the value of the "width" field.
+	Width int `json:"width,omitempty"`
+	// Height holds the value of the "height" field.
+	Height int `json:"height,omitempty"`
+	// Seed holds the value of the "seed" field.
+	Seed *enttypes.BigInt `json:"seed,omitempty"`
+	// NumInferenceSteps holds the value of the "num_inference_steps" field.
+	NumInferenceSteps *int `json:"num_inference_steps,omitempty"`
+	// GuidanceScale holds the value of the "guidance_scale" field.
+	GuidanceScale float64 `json:"guidance_scale,omitempty"`
+	// Hidden holds the value of the "hidden" field.
+	Hidden bool `json:"hidden,omitempty"`
+	// SchedulerID holds the value of the "scheduler_id" field.
+	SchedulerID uuid.UUID `json:"scheduler_id,omitempty"`
+	// UserID holds the value of the "user_id" field.
+	UserID *uuid.UUID `json:"user_id,omitempty"`
+	// UserTier holds the value of the "user_tier" field.
+	UserTier generation.UserTier `json:"user_tier,omitempty"`
+	// ServerURL holds the value of the "server_url" field.
+	ServerURL string `json:"server_url,omitempty"`
+	// CountryCode holds the value of the "country_code" field.
+	CountryCode *string `json:"country_code,omitempty"`
+	// DeviceType holds the value of the "device_type" field.
+	DeviceType *string `json:"device_type,omitempty"`
+	// DeviceOs holds the value of the "device_os" field.
+	DeviceOs *string `json:"device_os,omitempty"`
+	// DeviceBrowser holds the value of the "device_browser" field.
+	DeviceBrowser *string `json:"device_browser,omitempty"`
+	// UserAgent holds the value of the "user_agent" field.
+	UserAgent *string `json:"user_agent,omitempty"`
+	// DurationMs holds the value of the "duration_ms" field.
+	DurationMs *int `json:"duration_ms,omitempty"`
+	// Status holds the value of the "status" field.
+	Status *generation.Status `json:"status,omitempty"`
+	// FailureReason holds the value of the "failure_reason" field.
+	FailureReason *string `json:"failure_reason,omitempty"`
+	// ImageObjectName holds the value of the "image_object_name" field.
+	ImageObjectName *string `json:"image_object_name,omitempty"`
+	// CreatedAt holds the value of the "created_at" field.
+	CreatedAt time.Time `json:"created_at,omitempty"`
+	// UpdatedAt holds the value of the "updated_at" field.
+	UpdatedAt time.Time `json:"updated_at,omitempty"`
+	// Edges holds the relations/edges for other nodes in the graph.
+	// The values are being populated by the GenerationQuery when eager-loading is set.
+	Edges GenerationEdges `json:"edges"`
+}
+
+// GenerationEdges holds the relations/edges for other nodes in the graph.
+type GenerationEdges struct {
+	// User holds the value of the user edge.
+	User *User `json:"user,omitempty"`
+	// Model holds the value of the model edge.
+	Model *Model `json:"model,omitempty"`
+	// Prompt holds the value of the prompt edge.
+	Prompt *Prompt `json:"prompt,omitempty"`
+	// NegativePrompt holds the value of the negative_prompt edge.
+	NegativePrompt *NegativePrompt `json:"negative_prompt,omitempty"`
+	// Scheduler holds the value of the scheduler edge.
+	Scheduler *Scheduler `json:"scheduler,omitempty"`
+	// loadedTypes holds the information for reporting if a
+	// type was loaded (or requested) in eager-loading or not.
+	loadedTypes [5]bool
+}
+
+// UserOrErr returns the User value or an error if the edge
+// was not loaded in eager-loading, or loaded but was not found.
+func (e GenerationEdges) UserOrErr() (*User, error) {
+	if e.loadedTypes[0] {
+		if e.User == nil {
+			// Edge was loaded but was not found.
+			return nil, &NotFoundError{label: user.Label}
+		}
+		return e.User, nil
+	}
+	return nil, &NotLoadedError{edge: "user"}
+}
+
+// ModelOrErr returns the Model value or an error if the edge
+// was not loaded in eager-loading, or loaded but was not found.
+func (e GenerationEdges) ModelOrErr() (*Model, error) {
+	if e.loadedTypes[1] {
+		if e.Model == nil {
+			// Edge was loaded but was not found.
+			return nil, &NotFoundError{label: model.Label}
+		}
+		return e.Model, nil
+	}
+	return nil, &NotLoadedError{edge: "model"}
+}
+
+// PromptOrErr returns the Prompt value or an error if the edge
+// was not loaded in eager-loading, or loaded but was not found.
+func (e GenerationEdges) PromptOrErr() (*Prompt, error) {
+	if e.loadedTypes[2] {
+		if e.Prompt == nil {
+			// Edge was loaded but was not found.
+			return nil, &NotFoundError{label: prompt.Label}
+		}
+		return e.Prompt, nil
+	}
+	return nil, &NotLoadedError{edge: "prompt"}
+}
+
+// NegativePromptOrErr returns the NegativePrompt value or an error if the edge
+// was not loaded in eager-loading, or loaded but was not found.
+func (e GenerationEdges) NegativePromptOrErr() (*NegativePrompt, error) {
+	if e.loadedTypes[3] {
+		if e.NegativePrompt == nil {
+			// Edge was loaded but was not found.
+			return nil, &NotFoundError{label: negativeprompt.Label}
+		}
+		return e.NegativePrompt, nil
+	}
+	return nil, &NotLoadedError{edge: "negative_prompt"}
+}
+
+// SchedulerOrErr returns the Scheduler value or an error if the edge
+// was not loaded in eager-loading, or loaded but was not found.
+func (e GenerationEdges) SchedulerOrErr() (*Scheduler, error) {
+	if e.loadedTypes[4] {
+		if e.Scheduler == nil {
+			// Edge was loaded but was not found.
+			return nil, &NotFoundError{label: scheduler.Label}
+		}
+		return e.Scheduler, nil
+	}
+	return nil, &NotLoadedError{edge: "scheduler"}
 }
 
 // scanValues returns the types for scanning values from sql.Rows.
@@ -22,8 +165,22 @@ func (*Generation) scanValues(columns []string) ([]any, error) {
 	values := make([]any, len(columns))
 	for i := range columns {
 		switch columns[i] {
-		case generation.FieldID:
+		case generation.FieldSeed:
+			values[i] = &sql.NullScanner{S: new(enttypes.BigInt)}
+		case generation.FieldPromptID, generation.FieldNegativePromptID, generation.FieldUserID:
+			values[i] = &sql.NullScanner{S: new(uuid.UUID)}
+		case generation.FieldHidden:
+			values[i] = new(sql.NullBool)
+		case generation.FieldGuidanceScale:
+			values[i] = new(sql.NullFloat64)
+		case generation.FieldWidth, generation.FieldHeight, generation.FieldNumInferenceSteps, generation.FieldDurationMs:
 			values[i] = new(sql.NullInt64)
+		case generation.FieldImageID, generation.FieldUserTier, generation.FieldServerURL, generation.FieldCountryCode, generation.FieldDeviceType, generation.FieldDeviceOs, generation.FieldDeviceBrowser, generation.FieldUserAgent, generation.FieldStatus, generation.FieldFailureReason, generation.FieldImageObjectName:
+			values[i] = new(sql.NullString)
+		case generation.FieldCreatedAt, generation.FieldUpdatedAt:
+			values[i] = new(sql.NullTime)
+		case generation.FieldID, generation.FieldModelID, generation.FieldSchedulerID:
+			values[i] = new(uuid.UUID)
 		default:
 			return nil, fmt.Errorf("unexpected column %q for type Generation", columns[i])
 		}
@@ -40,14 +197,203 @@ func (ge *Generation) assignValues(columns []string, values []any) error {
 	for i := range columns {
 		switch columns[i] {
 		case generation.FieldID:
-			value, ok := values[i].(*sql.NullInt64)
-			if !ok {
-				return fmt.Errorf("unexpected type %T for field id", value)
+			if value, ok := values[i].(*uuid.UUID); !ok {
+				return fmt.Errorf("unexpected type %T for field id", values[i])
+			} else if value != nil {
+				ge.ID = *value
 			}
-			ge.ID = int(value.Int64)
+		case generation.FieldPromptID:
+			if value, ok := values[i].(*sql.NullScanner); !ok {
+				return fmt.Errorf("unexpected type %T for field prompt_id", values[i])
+			} else if value.Valid {
+				ge.PromptID = new(uuid.UUID)
+				*ge.PromptID = *value.S.(*uuid.UUID)
+			}
+		case generation.FieldNegativePromptID:
+			if value, ok := values[i].(*sql.NullScanner); !ok {
+				return fmt.Errorf("unexpected type %T for field negative_prompt_id", values[i])
+			} else if value.Valid {
+				ge.NegativePromptID = new(uuid.UUID)
+				*ge.NegativePromptID = *value.S.(*uuid.UUID)
+			}
+		case generation.FieldModelID:
+			if value, ok := values[i].(*uuid.UUID); !ok {
+				return fmt.Errorf("unexpected type %T for field model_id", values[i])
+			} else if value != nil {
+				ge.ModelID = *value
+			}
+		case generation.FieldImageID:
+			if value, ok := values[i].(*sql.NullString); !ok {
+				return fmt.Errorf("unexpected type %T for field image_id", values[i])
+			} else if value.Valid {
+				ge.ImageID = value.String
+			}
+		case generation.FieldWidth:
+			if value, ok := values[i].(*sql.NullInt64); !ok {
+				return fmt.Errorf("unexpected type %T for field width", values[i])
+			} else if value.Valid {
+				ge.Width = int(value.Int64)
+			}
+		case generation.FieldHeight:
+			if value, ok := values[i].(*sql.NullInt64); !ok {
+				return fmt.Errorf("unexpected type %T for field height", values[i])
+			} else if value.Valid {
+				ge.Height = int(value.Int64)
+			}
+		case generation.FieldSeed:
+			if value, ok := values[i].(*sql.NullScanner); !ok {
+				return fmt.Errorf("unexpected type %T for field seed", values[i])
+			} else if value.Valid {
+				ge.Seed = new(enttypes.BigInt)
+				*ge.Seed = *value.S.(*enttypes.BigInt)
+			}
+		case generation.FieldNumInferenceSteps:
+			if value, ok := values[i].(*sql.NullInt64); !ok {
+				return fmt.Errorf("unexpected type %T for field num_inference_steps", values[i])
+			} else if value.Valid {
+				ge.NumInferenceSteps = new(int)
+				*ge.NumInferenceSteps = int(value.Int64)
+			}
+		case generation.FieldGuidanceScale:
+			if value, ok := values[i].(*sql.NullFloat64); !ok {
+				return fmt.Errorf("unexpected type %T for field guidance_scale", values[i])
+			} else if value.Valid {
+				ge.GuidanceScale = value.Float64
+			}
+		case generation.FieldHidden:
+			if value, ok := values[i].(*sql.NullBool); !ok {
+				return fmt.Errorf("unexpected type %T for field hidden", values[i])
+			} else if value.Valid {
+				ge.Hidden = value.Bool
+			}
+		case generation.FieldSchedulerID:
+			if value, ok := values[i].(*uuid.UUID); !ok {
+				return fmt.Errorf("unexpected type %T for field scheduler_id", values[i])
+			} else if value != nil {
+				ge.SchedulerID = *value
+			}
+		case generation.FieldUserID:
+			if value, ok := values[i].(*sql.NullScanner); !ok {
+				return fmt.Errorf("unexpected type %T for field user_id", values[i])
+			} else if value.Valid {
+				ge.UserID = new(uuid.UUID)
+				*ge.UserID = *value.S.(*uuid.UUID)
+			}
+		case generation.FieldUserTier:
+			if value, ok := values[i].(*sql.NullString); !ok {
+				return fmt.Errorf("unexpected type %T for field user_tier", values[i])
+			} else if value.Valid {
+				ge.UserTier = generation.UserTier(value.String)
+			}
+		case generation.FieldServerURL:
+			if value, ok := values[i].(*sql.NullString); !ok {
+				return fmt.Errorf("unexpected type %T for field server_url", values[i])
+			} else if value.Valid {
+				ge.ServerURL = value.String
+			}
+		case generation.FieldCountryCode:
+			if value, ok := values[i].(*sql.NullString); !ok {
+				return fmt.Errorf("unexpected type %T for field country_code", values[i])
+			} else if value.Valid {
+				ge.CountryCode = new(string)
+				*ge.CountryCode = value.String
+			}
+		case generation.FieldDeviceType:
+			if value, ok := values[i].(*sql.NullString); !ok {
+				return fmt.Errorf("unexpected type %T for field device_type", values[i])
+			} else if value.Valid {
+				ge.DeviceType = new(string)
+				*ge.DeviceType = value.String
+			}
+		case generation.FieldDeviceOs:
+			if value, ok := values[i].(*sql.NullString); !ok {
+				return fmt.Errorf("unexpected type %T for field device_os", values[i])
+			} else if value.Valid {
+				ge.DeviceOs = new(string)
+				*ge.DeviceOs = value.String
+			}
+		case generation.FieldDeviceBrowser:
+			if value, ok := values[i].(*sql.NullString); !ok {
+				return fmt.Errorf("unexpected type %T for field device_browser", values[i])
+			} else if value.Valid {
+				ge.DeviceBrowser = new(string)
+				*ge.DeviceBrowser = value.String
+			}
+		case generation.FieldUserAgent:
+			if value, ok := values[i].(*sql.NullString); !ok {
+				return fmt.Errorf("unexpected type %T for field user_agent", values[i])
+			} else if value.Valid {
+				ge.UserAgent = new(string)
+				*ge.UserAgent = value.String
+			}
+		case generation.FieldDurationMs:
+			if value, ok := values[i].(*sql.NullInt64); !ok {
+				return fmt.Errorf("unexpected type %T for field duration_ms", values[i])
+			} else if value.Valid {
+				ge.DurationMs = new(int)
+				*ge.DurationMs = int(value.Int64)
+			}
+		case generation.FieldStatus:
+			if value, ok := values[i].(*sql.NullString); !ok {
+				return fmt.Errorf("unexpected type %T for field status", values[i])
+			} else if value.Valid {
+				ge.Status = new(generation.Status)
+				*ge.Status = generation.Status(value.String)
+			}
+		case generation.FieldFailureReason:
+			if value, ok := values[i].(*sql.NullString); !ok {
+				return fmt.Errorf("unexpected type %T for field failure_reason", values[i])
+			} else if value.Valid {
+				ge.FailureReason = new(string)
+				*ge.FailureReason = value.String
+			}
+		case generation.FieldImageObjectName:
+			if value, ok := values[i].(*sql.NullString); !ok {
+				return fmt.Errorf("unexpected type %T for field image_object_name", values[i])
+			} else if value.Valid {
+				ge.ImageObjectName = new(string)
+				*ge.ImageObjectName = value.String
+			}
+		case generation.FieldCreatedAt:
+			if value, ok := values[i].(*sql.NullTime); !ok {
+				return fmt.Errorf("unexpected type %T for field created_at", values[i])
+			} else if value.Valid {
+				ge.CreatedAt = value.Time
+			}
+		case generation.FieldUpdatedAt:
+			if value, ok := values[i].(*sql.NullTime); !ok {
+				return fmt.Errorf("unexpected type %T for field updated_at", values[i])
+			} else if value.Valid {
+				ge.UpdatedAt = value.Time
+			}
 		}
 	}
 	return nil
+}
+
+// QueryUser queries the "user" edge of the Generation entity.
+func (ge *Generation) QueryUser() *UserQuery {
+	return (&GenerationClient{config: ge.config}).QueryUser(ge)
+}
+
+// QueryModel queries the "model" edge of the Generation entity.
+func (ge *Generation) QueryModel() *ModelQuery {
+	return (&GenerationClient{config: ge.config}).QueryModel(ge)
+}
+
+// QueryPrompt queries the "prompt" edge of the Generation entity.
+func (ge *Generation) QueryPrompt() *PromptQuery {
+	return (&GenerationClient{config: ge.config}).QueryPrompt(ge)
+}
+
+// QueryNegativePrompt queries the "negative_prompt" edge of the Generation entity.
+func (ge *Generation) QueryNegativePrompt() *NegativePromptQuery {
+	return (&GenerationClient{config: ge.config}).QueryNegativePrompt(ge)
+}
+
+// QueryScheduler queries the "scheduler" edge of the Generation entity.
+func (ge *Generation) QueryScheduler() *SchedulerQuery {
+	return (&GenerationClient{config: ge.config}).QueryScheduler(ge)
 }
 
 // Update returns a builder for updating this Generation.
@@ -72,7 +418,109 @@ func (ge *Generation) Unwrap() *Generation {
 func (ge *Generation) String() string {
 	var builder strings.Builder
 	builder.WriteString("Generation(")
-	builder.WriteString(fmt.Sprintf("id=%v", ge.ID))
+	builder.WriteString(fmt.Sprintf("id=%v, ", ge.ID))
+	if v := ge.PromptID; v != nil {
+		builder.WriteString("prompt_id=")
+		builder.WriteString(fmt.Sprintf("%v", *v))
+	}
+	builder.WriteString(", ")
+	if v := ge.NegativePromptID; v != nil {
+		builder.WriteString("negative_prompt_id=")
+		builder.WriteString(fmt.Sprintf("%v", *v))
+	}
+	builder.WriteString(", ")
+	builder.WriteString("model_id=")
+	builder.WriteString(fmt.Sprintf("%v", ge.ModelID))
+	builder.WriteString(", ")
+	builder.WriteString("image_id=")
+	builder.WriteString(ge.ImageID)
+	builder.WriteString(", ")
+	builder.WriteString("width=")
+	builder.WriteString(fmt.Sprintf("%v", ge.Width))
+	builder.WriteString(", ")
+	builder.WriteString("height=")
+	builder.WriteString(fmt.Sprintf("%v", ge.Height))
+	builder.WriteString(", ")
+	if v := ge.Seed; v != nil {
+		builder.WriteString("seed=")
+		builder.WriteString(fmt.Sprintf("%v", *v))
+	}
+	builder.WriteString(", ")
+	if v := ge.NumInferenceSteps; v != nil {
+		builder.WriteString("num_inference_steps=")
+		builder.WriteString(fmt.Sprintf("%v", *v))
+	}
+	builder.WriteString(", ")
+	builder.WriteString("guidance_scale=")
+	builder.WriteString(fmt.Sprintf("%v", ge.GuidanceScale))
+	builder.WriteString(", ")
+	builder.WriteString("hidden=")
+	builder.WriteString(fmt.Sprintf("%v", ge.Hidden))
+	builder.WriteString(", ")
+	builder.WriteString("scheduler_id=")
+	builder.WriteString(fmt.Sprintf("%v", ge.SchedulerID))
+	builder.WriteString(", ")
+	if v := ge.UserID; v != nil {
+		builder.WriteString("user_id=")
+		builder.WriteString(fmt.Sprintf("%v", *v))
+	}
+	builder.WriteString(", ")
+	builder.WriteString("user_tier=")
+	builder.WriteString(fmt.Sprintf("%v", ge.UserTier))
+	builder.WriteString(", ")
+	builder.WriteString("server_url=")
+	builder.WriteString(ge.ServerURL)
+	builder.WriteString(", ")
+	if v := ge.CountryCode; v != nil {
+		builder.WriteString("country_code=")
+		builder.WriteString(*v)
+	}
+	builder.WriteString(", ")
+	if v := ge.DeviceType; v != nil {
+		builder.WriteString("device_type=")
+		builder.WriteString(*v)
+	}
+	builder.WriteString(", ")
+	if v := ge.DeviceOs; v != nil {
+		builder.WriteString("device_os=")
+		builder.WriteString(*v)
+	}
+	builder.WriteString(", ")
+	if v := ge.DeviceBrowser; v != nil {
+		builder.WriteString("device_browser=")
+		builder.WriteString(*v)
+	}
+	builder.WriteString(", ")
+	if v := ge.UserAgent; v != nil {
+		builder.WriteString("user_agent=")
+		builder.WriteString(*v)
+	}
+	builder.WriteString(", ")
+	if v := ge.DurationMs; v != nil {
+		builder.WriteString("duration_ms=")
+		builder.WriteString(fmt.Sprintf("%v", *v))
+	}
+	builder.WriteString(", ")
+	if v := ge.Status; v != nil {
+		builder.WriteString("status=")
+		builder.WriteString(fmt.Sprintf("%v", *v))
+	}
+	builder.WriteString(", ")
+	if v := ge.FailureReason; v != nil {
+		builder.WriteString("failure_reason=")
+		builder.WriteString(*v)
+	}
+	builder.WriteString(", ")
+	if v := ge.ImageObjectName; v != nil {
+		builder.WriteString("image_object_name=")
+		builder.WriteString(*v)
+	}
+	builder.WriteString(", ")
+	builder.WriteString("created_at=")
+	builder.WriteString(ge.CreatedAt.Format(time.ANSIC))
+	builder.WriteString(", ")
+	builder.WriteString("updated_at=")
+	builder.WriteString(ge.UpdatedAt.Format(time.ANSIC))
 	builder.WriteByte(')')
 	return builder.String()
 }

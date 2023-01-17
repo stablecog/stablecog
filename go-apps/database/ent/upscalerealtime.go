@@ -5,16 +5,36 @@ package ent
 import (
 	"fmt"
 	"strings"
+	"time"
 
 	"entgo.io/ent/dialect/sql"
+	"github.com/google/uuid"
 	"github.com/yekta/stablecog/go-apps/database/ent/upscalerealtime"
 )
 
 // UpscaleRealtime is the model entity for the UpscaleRealtime schema.
 type UpscaleRealtime struct {
-	config
+	config `json:"-"`
 	// ID of the ent.
-	ID int `json:"id,omitempty"`
+	ID uuid.UUID `json:"id,omitempty"`
+	// Status holds the value of the "status" field.
+	Status upscalerealtime.Status `json:"status,omitempty"`
+	// CountryCode holds the value of the "country_code" field.
+	CountryCode *string `json:"country_code,omitempty"`
+	// UsesDefaultServer holds the value of the "uses_default_server" field.
+	UsesDefaultServer bool `json:"uses_default_server,omitempty"`
+	// Width holds the value of the "width" field.
+	Width *int `json:"width,omitempty"`
+	// Height holds the value of the "height" field.
+	Height *int `json:"height,omitempty"`
+	// Scale holds the value of the "scale" field.
+	Scale *int `json:"scale,omitempty"`
+	// CreatedAt holds the value of the "created_at" field.
+	CreatedAt time.Time `json:"created_at,omitempty"`
+	// UpdatedAt holds the value of the "updated_at" field.
+	UpdatedAt time.Time `json:"updated_at,omitempty"`
+	// UserTier holds the value of the "user_tier" field.
+	UserTier upscalerealtime.UserTier `json:"user_tier,omitempty"`
 }
 
 // scanValues returns the types for scanning values from sql.Rows.
@@ -22,8 +42,16 @@ func (*UpscaleRealtime) scanValues(columns []string) ([]any, error) {
 	values := make([]any, len(columns))
 	for i := range columns {
 		switch columns[i] {
-		case upscalerealtime.FieldID:
+		case upscalerealtime.FieldUsesDefaultServer:
+			values[i] = new(sql.NullBool)
+		case upscalerealtime.FieldWidth, upscalerealtime.FieldHeight, upscalerealtime.FieldScale:
 			values[i] = new(sql.NullInt64)
+		case upscalerealtime.FieldStatus, upscalerealtime.FieldCountryCode, upscalerealtime.FieldUserTier:
+			values[i] = new(sql.NullString)
+		case upscalerealtime.FieldCreatedAt, upscalerealtime.FieldUpdatedAt:
+			values[i] = new(sql.NullTime)
+		case upscalerealtime.FieldID:
+			values[i] = new(uuid.UUID)
 		default:
 			return nil, fmt.Errorf("unexpected column %q for type UpscaleRealtime", columns[i])
 		}
@@ -40,11 +68,69 @@ func (ur *UpscaleRealtime) assignValues(columns []string, values []any) error {
 	for i := range columns {
 		switch columns[i] {
 		case upscalerealtime.FieldID:
-			value, ok := values[i].(*sql.NullInt64)
-			if !ok {
-				return fmt.Errorf("unexpected type %T for field id", value)
+			if value, ok := values[i].(*uuid.UUID); !ok {
+				return fmt.Errorf("unexpected type %T for field id", values[i])
+			} else if value != nil {
+				ur.ID = *value
 			}
-			ur.ID = int(value.Int64)
+		case upscalerealtime.FieldStatus:
+			if value, ok := values[i].(*sql.NullString); !ok {
+				return fmt.Errorf("unexpected type %T for field status", values[i])
+			} else if value.Valid {
+				ur.Status = upscalerealtime.Status(value.String)
+			}
+		case upscalerealtime.FieldCountryCode:
+			if value, ok := values[i].(*sql.NullString); !ok {
+				return fmt.Errorf("unexpected type %T for field country_code", values[i])
+			} else if value.Valid {
+				ur.CountryCode = new(string)
+				*ur.CountryCode = value.String
+			}
+		case upscalerealtime.FieldUsesDefaultServer:
+			if value, ok := values[i].(*sql.NullBool); !ok {
+				return fmt.Errorf("unexpected type %T for field uses_default_server", values[i])
+			} else if value.Valid {
+				ur.UsesDefaultServer = value.Bool
+			}
+		case upscalerealtime.FieldWidth:
+			if value, ok := values[i].(*sql.NullInt64); !ok {
+				return fmt.Errorf("unexpected type %T for field width", values[i])
+			} else if value.Valid {
+				ur.Width = new(int)
+				*ur.Width = int(value.Int64)
+			}
+		case upscalerealtime.FieldHeight:
+			if value, ok := values[i].(*sql.NullInt64); !ok {
+				return fmt.Errorf("unexpected type %T for field height", values[i])
+			} else if value.Valid {
+				ur.Height = new(int)
+				*ur.Height = int(value.Int64)
+			}
+		case upscalerealtime.FieldScale:
+			if value, ok := values[i].(*sql.NullInt64); !ok {
+				return fmt.Errorf("unexpected type %T for field scale", values[i])
+			} else if value.Valid {
+				ur.Scale = new(int)
+				*ur.Scale = int(value.Int64)
+			}
+		case upscalerealtime.FieldCreatedAt:
+			if value, ok := values[i].(*sql.NullTime); !ok {
+				return fmt.Errorf("unexpected type %T for field created_at", values[i])
+			} else if value.Valid {
+				ur.CreatedAt = value.Time
+			}
+		case upscalerealtime.FieldUpdatedAt:
+			if value, ok := values[i].(*sql.NullTime); !ok {
+				return fmt.Errorf("unexpected type %T for field updated_at", values[i])
+			} else if value.Valid {
+				ur.UpdatedAt = value.Time
+			}
+		case upscalerealtime.FieldUserTier:
+			if value, ok := values[i].(*sql.NullString); !ok {
+				return fmt.Errorf("unexpected type %T for field user_tier", values[i])
+			} else if value.Valid {
+				ur.UserTier = upscalerealtime.UserTier(value.String)
+			}
 		}
 	}
 	return nil
@@ -72,7 +158,41 @@ func (ur *UpscaleRealtime) Unwrap() *UpscaleRealtime {
 func (ur *UpscaleRealtime) String() string {
 	var builder strings.Builder
 	builder.WriteString("UpscaleRealtime(")
-	builder.WriteString(fmt.Sprintf("id=%v", ur.ID))
+	builder.WriteString(fmt.Sprintf("id=%v, ", ur.ID))
+	builder.WriteString("status=")
+	builder.WriteString(fmt.Sprintf("%v", ur.Status))
+	builder.WriteString(", ")
+	if v := ur.CountryCode; v != nil {
+		builder.WriteString("country_code=")
+		builder.WriteString(*v)
+	}
+	builder.WriteString(", ")
+	builder.WriteString("uses_default_server=")
+	builder.WriteString(fmt.Sprintf("%v", ur.UsesDefaultServer))
+	builder.WriteString(", ")
+	if v := ur.Width; v != nil {
+		builder.WriteString("width=")
+		builder.WriteString(fmt.Sprintf("%v", *v))
+	}
+	builder.WriteString(", ")
+	if v := ur.Height; v != nil {
+		builder.WriteString("height=")
+		builder.WriteString(fmt.Sprintf("%v", *v))
+	}
+	builder.WriteString(", ")
+	if v := ur.Scale; v != nil {
+		builder.WriteString("scale=")
+		builder.WriteString(fmt.Sprintf("%v", *v))
+	}
+	builder.WriteString(", ")
+	builder.WriteString("created_at=")
+	builder.WriteString(ur.CreatedAt.Format(time.ANSIC))
+	builder.WriteString(", ")
+	builder.WriteString("updated_at=")
+	builder.WriteString(ur.UpdatedAt.Format(time.ANSIC))
+	builder.WriteString(", ")
+	builder.WriteString("user_tier=")
+	builder.WriteString(fmt.Sprintf("%v", ur.UserTier))
 	builder.WriteByte(')')
 	return builder.String()
 }

@@ -3,53 +3,1195 @@
 package upscale
 
 import (
+	"time"
+
 	"entgo.io/ent/dialect/sql"
+	"entgo.io/ent/dialect/sql/sqlgraph"
+	"github.com/google/uuid"
 	"github.com/yekta/stablecog/go-apps/database/ent/predicate"
+	"github.com/yekta/stablecog/go-apps/database/enttypes"
 )
 
 // ID filters vertices based on their ID field.
-func ID(id int) predicate.Upscale {
+func ID(id uuid.UUID) predicate.Upscale {
 	return predicate.Upscale(sql.FieldEQ(FieldID, id))
 }
 
 // IDEQ applies the EQ predicate on the ID field.
-func IDEQ(id int) predicate.Upscale {
+func IDEQ(id uuid.UUID) predicate.Upscale {
 	return predicate.Upscale(sql.FieldEQ(FieldID, id))
 }
 
 // IDNEQ applies the NEQ predicate on the ID field.
-func IDNEQ(id int) predicate.Upscale {
+func IDNEQ(id uuid.UUID) predicate.Upscale {
 	return predicate.Upscale(sql.FieldNEQ(FieldID, id))
 }
 
 // IDIn applies the In predicate on the ID field.
-func IDIn(ids ...int) predicate.Upscale {
+func IDIn(ids ...uuid.UUID) predicate.Upscale {
 	return predicate.Upscale(sql.FieldIn(FieldID, ids...))
 }
 
 // IDNotIn applies the NotIn predicate on the ID field.
-func IDNotIn(ids ...int) predicate.Upscale {
+func IDNotIn(ids ...uuid.UUID) predicate.Upscale {
 	return predicate.Upscale(sql.FieldNotIn(FieldID, ids...))
 }
 
 // IDGT applies the GT predicate on the ID field.
-func IDGT(id int) predicate.Upscale {
+func IDGT(id uuid.UUID) predicate.Upscale {
 	return predicate.Upscale(sql.FieldGT(FieldID, id))
 }
 
 // IDGTE applies the GTE predicate on the ID field.
-func IDGTE(id int) predicate.Upscale {
+func IDGTE(id uuid.UUID) predicate.Upscale {
 	return predicate.Upscale(sql.FieldGTE(FieldID, id))
 }
 
 // IDLT applies the LT predicate on the ID field.
-func IDLT(id int) predicate.Upscale {
+func IDLT(id uuid.UUID) predicate.Upscale {
 	return predicate.Upscale(sql.FieldLT(FieldID, id))
 }
 
 // IDLTE applies the LTE predicate on the ID field.
-func IDLTE(id int) predicate.Upscale {
+func IDLTE(id uuid.UUID) predicate.Upscale {
 	return predicate.Upscale(sql.FieldLTE(FieldID, id))
+}
+
+// Width applies equality check predicate on the "width" field. It's identical to WidthEQ.
+func Width(v int) predicate.Upscale {
+	return predicate.Upscale(sql.FieldEQ(FieldWidth, v))
+}
+
+// Height applies equality check predicate on the "height" field. It's identical to HeightEQ.
+func Height(v int) predicate.Upscale {
+	return predicate.Upscale(sql.FieldEQ(FieldHeight, v))
+}
+
+// Scale applies equality check predicate on the "scale" field. It's identical to ScaleEQ.
+func Scale(v int) predicate.Upscale {
+	return predicate.Upscale(sql.FieldEQ(FieldScale, v))
+}
+
+// ServerURL applies equality check predicate on the "server_url" field. It's identical to ServerURLEQ.
+func ServerURL(v string) predicate.Upscale {
+	return predicate.Upscale(sql.FieldEQ(FieldServerURL, v))
+}
+
+// DurationMsg applies equality check predicate on the "duration_msg" field. It's identical to DurationMsgEQ.
+func DurationMsg(v int) predicate.Upscale {
+	return predicate.Upscale(sql.FieldEQ(FieldDurationMsg, v))
+}
+
+// Type applies equality check predicate on the "type" field. It's identical to TypeEQ.
+func Type(v string) predicate.Upscale {
+	return predicate.Upscale(sql.FieldEQ(FieldType, v))
+}
+
+// Prompt applies equality check predicate on the "prompt" field. It's identical to PromptEQ.
+func Prompt(v string) predicate.Upscale {
+	return predicate.Upscale(sql.FieldEQ(FieldPrompt, v))
+}
+
+// NegativePrompt applies equality check predicate on the "negative_prompt" field. It's identical to NegativePromptEQ.
+func NegativePrompt(v string) predicate.Upscale {
+	return predicate.Upscale(sql.FieldEQ(FieldNegativePrompt, v))
+}
+
+// Seed applies equality check predicate on the "seed" field. It's identical to SeedEQ.
+func Seed(v enttypes.BigInt) predicate.Upscale {
+	return predicate.Upscale(sql.FieldEQ(FieldSeed, v))
+}
+
+// NumInferenceSteps applies equality check predicate on the "num_inference_steps" field. It's identical to NumInferenceStepsEQ.
+func NumInferenceSteps(v int) predicate.Upscale {
+	return predicate.Upscale(sql.FieldEQ(FieldNumInferenceSteps, v))
+}
+
+// GuidanceScale applies equality check predicate on the "guidance_scale" field. It's identical to GuidanceScaleEQ.
+func GuidanceScale(v float64) predicate.Upscale {
+	return predicate.Upscale(sql.FieldEQ(FieldGuidanceScale, v))
+}
+
+// CountryCode applies equality check predicate on the "country_code" field. It's identical to CountryCodeEQ.
+func CountryCode(v string) predicate.Upscale {
+	return predicate.Upscale(sql.FieldEQ(FieldCountryCode, v))
+}
+
+// DeviceType applies equality check predicate on the "device_type" field. It's identical to DeviceTypeEQ.
+func DeviceType(v string) predicate.Upscale {
+	return predicate.Upscale(sql.FieldEQ(FieldDeviceType, v))
+}
+
+// DeviceOs applies equality check predicate on the "device_os" field. It's identical to DeviceOsEQ.
+func DeviceOs(v string) predicate.Upscale {
+	return predicate.Upscale(sql.FieldEQ(FieldDeviceOs, v))
+}
+
+// DeviceBrowser applies equality check predicate on the "device_browser" field. It's identical to DeviceBrowserEQ.
+func DeviceBrowser(v string) predicate.Upscale {
+	return predicate.Upscale(sql.FieldEQ(FieldDeviceBrowser, v))
+}
+
+// UserAgent applies equality check predicate on the "user_agent" field. It's identical to UserAgentEQ.
+func UserAgent(v string) predicate.Upscale {
+	return predicate.Upscale(sql.FieldEQ(FieldUserAgent, v))
+}
+
+// CreatedAt applies equality check predicate on the "created_at" field. It's identical to CreatedAtEQ.
+func CreatedAt(v time.Time) predicate.Upscale {
+	return predicate.Upscale(sql.FieldEQ(FieldCreatedAt, v))
+}
+
+// UpdatedAt applies equality check predicate on the "updated_at" field. It's identical to UpdatedAtEQ.
+func UpdatedAt(v time.Time) predicate.Upscale {
+	return predicate.Upscale(sql.FieldEQ(FieldUpdatedAt, v))
+}
+
+// UserID applies equality check predicate on the "user_id" field. It's identical to UserIDEQ.
+func UserID(v uuid.UUID) predicate.Upscale {
+	return predicate.Upscale(sql.FieldEQ(FieldUserID, v))
+}
+
+// WidthEQ applies the EQ predicate on the "width" field.
+func WidthEQ(v int) predicate.Upscale {
+	return predicate.Upscale(sql.FieldEQ(FieldWidth, v))
+}
+
+// WidthNEQ applies the NEQ predicate on the "width" field.
+func WidthNEQ(v int) predicate.Upscale {
+	return predicate.Upscale(sql.FieldNEQ(FieldWidth, v))
+}
+
+// WidthIn applies the In predicate on the "width" field.
+func WidthIn(vs ...int) predicate.Upscale {
+	return predicate.Upscale(sql.FieldIn(FieldWidth, vs...))
+}
+
+// WidthNotIn applies the NotIn predicate on the "width" field.
+func WidthNotIn(vs ...int) predicate.Upscale {
+	return predicate.Upscale(sql.FieldNotIn(FieldWidth, vs...))
+}
+
+// WidthGT applies the GT predicate on the "width" field.
+func WidthGT(v int) predicate.Upscale {
+	return predicate.Upscale(sql.FieldGT(FieldWidth, v))
+}
+
+// WidthGTE applies the GTE predicate on the "width" field.
+func WidthGTE(v int) predicate.Upscale {
+	return predicate.Upscale(sql.FieldGTE(FieldWidth, v))
+}
+
+// WidthLT applies the LT predicate on the "width" field.
+func WidthLT(v int) predicate.Upscale {
+	return predicate.Upscale(sql.FieldLT(FieldWidth, v))
+}
+
+// WidthLTE applies the LTE predicate on the "width" field.
+func WidthLTE(v int) predicate.Upscale {
+	return predicate.Upscale(sql.FieldLTE(FieldWidth, v))
+}
+
+// HeightEQ applies the EQ predicate on the "height" field.
+func HeightEQ(v int) predicate.Upscale {
+	return predicate.Upscale(sql.FieldEQ(FieldHeight, v))
+}
+
+// HeightNEQ applies the NEQ predicate on the "height" field.
+func HeightNEQ(v int) predicate.Upscale {
+	return predicate.Upscale(sql.FieldNEQ(FieldHeight, v))
+}
+
+// HeightIn applies the In predicate on the "height" field.
+func HeightIn(vs ...int) predicate.Upscale {
+	return predicate.Upscale(sql.FieldIn(FieldHeight, vs...))
+}
+
+// HeightNotIn applies the NotIn predicate on the "height" field.
+func HeightNotIn(vs ...int) predicate.Upscale {
+	return predicate.Upscale(sql.FieldNotIn(FieldHeight, vs...))
+}
+
+// HeightGT applies the GT predicate on the "height" field.
+func HeightGT(v int) predicate.Upscale {
+	return predicate.Upscale(sql.FieldGT(FieldHeight, v))
+}
+
+// HeightGTE applies the GTE predicate on the "height" field.
+func HeightGTE(v int) predicate.Upscale {
+	return predicate.Upscale(sql.FieldGTE(FieldHeight, v))
+}
+
+// HeightLT applies the LT predicate on the "height" field.
+func HeightLT(v int) predicate.Upscale {
+	return predicate.Upscale(sql.FieldLT(FieldHeight, v))
+}
+
+// HeightLTE applies the LTE predicate on the "height" field.
+func HeightLTE(v int) predicate.Upscale {
+	return predicate.Upscale(sql.FieldLTE(FieldHeight, v))
+}
+
+// ScaleEQ applies the EQ predicate on the "scale" field.
+func ScaleEQ(v int) predicate.Upscale {
+	return predicate.Upscale(sql.FieldEQ(FieldScale, v))
+}
+
+// ScaleNEQ applies the NEQ predicate on the "scale" field.
+func ScaleNEQ(v int) predicate.Upscale {
+	return predicate.Upscale(sql.FieldNEQ(FieldScale, v))
+}
+
+// ScaleIn applies the In predicate on the "scale" field.
+func ScaleIn(vs ...int) predicate.Upscale {
+	return predicate.Upscale(sql.FieldIn(FieldScale, vs...))
+}
+
+// ScaleNotIn applies the NotIn predicate on the "scale" field.
+func ScaleNotIn(vs ...int) predicate.Upscale {
+	return predicate.Upscale(sql.FieldNotIn(FieldScale, vs...))
+}
+
+// ScaleGT applies the GT predicate on the "scale" field.
+func ScaleGT(v int) predicate.Upscale {
+	return predicate.Upscale(sql.FieldGT(FieldScale, v))
+}
+
+// ScaleGTE applies the GTE predicate on the "scale" field.
+func ScaleGTE(v int) predicate.Upscale {
+	return predicate.Upscale(sql.FieldGTE(FieldScale, v))
+}
+
+// ScaleLT applies the LT predicate on the "scale" field.
+func ScaleLT(v int) predicate.Upscale {
+	return predicate.Upscale(sql.FieldLT(FieldScale, v))
+}
+
+// ScaleLTE applies the LTE predicate on the "scale" field.
+func ScaleLTE(v int) predicate.Upscale {
+	return predicate.Upscale(sql.FieldLTE(FieldScale, v))
+}
+
+// StatusEQ applies the EQ predicate on the "status" field.
+func StatusEQ(v Status) predicate.Upscale {
+	return predicate.Upscale(sql.FieldEQ(FieldStatus, v))
+}
+
+// StatusNEQ applies the NEQ predicate on the "status" field.
+func StatusNEQ(v Status) predicate.Upscale {
+	return predicate.Upscale(sql.FieldNEQ(FieldStatus, v))
+}
+
+// StatusIn applies the In predicate on the "status" field.
+func StatusIn(vs ...Status) predicate.Upscale {
+	return predicate.Upscale(sql.FieldIn(FieldStatus, vs...))
+}
+
+// StatusNotIn applies the NotIn predicate on the "status" field.
+func StatusNotIn(vs ...Status) predicate.Upscale {
+	return predicate.Upscale(sql.FieldNotIn(FieldStatus, vs...))
+}
+
+// ServerURLEQ applies the EQ predicate on the "server_url" field.
+func ServerURLEQ(v string) predicate.Upscale {
+	return predicate.Upscale(sql.FieldEQ(FieldServerURL, v))
+}
+
+// ServerURLNEQ applies the NEQ predicate on the "server_url" field.
+func ServerURLNEQ(v string) predicate.Upscale {
+	return predicate.Upscale(sql.FieldNEQ(FieldServerURL, v))
+}
+
+// ServerURLIn applies the In predicate on the "server_url" field.
+func ServerURLIn(vs ...string) predicate.Upscale {
+	return predicate.Upscale(sql.FieldIn(FieldServerURL, vs...))
+}
+
+// ServerURLNotIn applies the NotIn predicate on the "server_url" field.
+func ServerURLNotIn(vs ...string) predicate.Upscale {
+	return predicate.Upscale(sql.FieldNotIn(FieldServerURL, vs...))
+}
+
+// ServerURLGT applies the GT predicate on the "server_url" field.
+func ServerURLGT(v string) predicate.Upscale {
+	return predicate.Upscale(sql.FieldGT(FieldServerURL, v))
+}
+
+// ServerURLGTE applies the GTE predicate on the "server_url" field.
+func ServerURLGTE(v string) predicate.Upscale {
+	return predicate.Upscale(sql.FieldGTE(FieldServerURL, v))
+}
+
+// ServerURLLT applies the LT predicate on the "server_url" field.
+func ServerURLLT(v string) predicate.Upscale {
+	return predicate.Upscale(sql.FieldLT(FieldServerURL, v))
+}
+
+// ServerURLLTE applies the LTE predicate on the "server_url" field.
+func ServerURLLTE(v string) predicate.Upscale {
+	return predicate.Upscale(sql.FieldLTE(FieldServerURL, v))
+}
+
+// ServerURLContains applies the Contains predicate on the "server_url" field.
+func ServerURLContains(v string) predicate.Upscale {
+	return predicate.Upscale(sql.FieldContains(FieldServerURL, v))
+}
+
+// ServerURLHasPrefix applies the HasPrefix predicate on the "server_url" field.
+func ServerURLHasPrefix(v string) predicate.Upscale {
+	return predicate.Upscale(sql.FieldHasPrefix(FieldServerURL, v))
+}
+
+// ServerURLHasSuffix applies the HasSuffix predicate on the "server_url" field.
+func ServerURLHasSuffix(v string) predicate.Upscale {
+	return predicate.Upscale(sql.FieldHasSuffix(FieldServerURL, v))
+}
+
+// ServerURLEqualFold applies the EqualFold predicate on the "server_url" field.
+func ServerURLEqualFold(v string) predicate.Upscale {
+	return predicate.Upscale(sql.FieldEqualFold(FieldServerURL, v))
+}
+
+// ServerURLContainsFold applies the ContainsFold predicate on the "server_url" field.
+func ServerURLContainsFold(v string) predicate.Upscale {
+	return predicate.Upscale(sql.FieldContainsFold(FieldServerURL, v))
+}
+
+// DurationMsgEQ applies the EQ predicate on the "duration_msg" field.
+func DurationMsgEQ(v int) predicate.Upscale {
+	return predicate.Upscale(sql.FieldEQ(FieldDurationMsg, v))
+}
+
+// DurationMsgNEQ applies the NEQ predicate on the "duration_msg" field.
+func DurationMsgNEQ(v int) predicate.Upscale {
+	return predicate.Upscale(sql.FieldNEQ(FieldDurationMsg, v))
+}
+
+// DurationMsgIn applies the In predicate on the "duration_msg" field.
+func DurationMsgIn(vs ...int) predicate.Upscale {
+	return predicate.Upscale(sql.FieldIn(FieldDurationMsg, vs...))
+}
+
+// DurationMsgNotIn applies the NotIn predicate on the "duration_msg" field.
+func DurationMsgNotIn(vs ...int) predicate.Upscale {
+	return predicate.Upscale(sql.FieldNotIn(FieldDurationMsg, vs...))
+}
+
+// DurationMsgGT applies the GT predicate on the "duration_msg" field.
+func DurationMsgGT(v int) predicate.Upscale {
+	return predicate.Upscale(sql.FieldGT(FieldDurationMsg, v))
+}
+
+// DurationMsgGTE applies the GTE predicate on the "duration_msg" field.
+func DurationMsgGTE(v int) predicate.Upscale {
+	return predicate.Upscale(sql.FieldGTE(FieldDurationMsg, v))
+}
+
+// DurationMsgLT applies the LT predicate on the "duration_msg" field.
+func DurationMsgLT(v int) predicate.Upscale {
+	return predicate.Upscale(sql.FieldLT(FieldDurationMsg, v))
+}
+
+// DurationMsgLTE applies the LTE predicate on the "duration_msg" field.
+func DurationMsgLTE(v int) predicate.Upscale {
+	return predicate.Upscale(sql.FieldLTE(FieldDurationMsg, v))
+}
+
+// TypeEQ applies the EQ predicate on the "type" field.
+func TypeEQ(v string) predicate.Upscale {
+	return predicate.Upscale(sql.FieldEQ(FieldType, v))
+}
+
+// TypeNEQ applies the NEQ predicate on the "type" field.
+func TypeNEQ(v string) predicate.Upscale {
+	return predicate.Upscale(sql.FieldNEQ(FieldType, v))
+}
+
+// TypeIn applies the In predicate on the "type" field.
+func TypeIn(vs ...string) predicate.Upscale {
+	return predicate.Upscale(sql.FieldIn(FieldType, vs...))
+}
+
+// TypeNotIn applies the NotIn predicate on the "type" field.
+func TypeNotIn(vs ...string) predicate.Upscale {
+	return predicate.Upscale(sql.FieldNotIn(FieldType, vs...))
+}
+
+// TypeGT applies the GT predicate on the "type" field.
+func TypeGT(v string) predicate.Upscale {
+	return predicate.Upscale(sql.FieldGT(FieldType, v))
+}
+
+// TypeGTE applies the GTE predicate on the "type" field.
+func TypeGTE(v string) predicate.Upscale {
+	return predicate.Upscale(sql.FieldGTE(FieldType, v))
+}
+
+// TypeLT applies the LT predicate on the "type" field.
+func TypeLT(v string) predicate.Upscale {
+	return predicate.Upscale(sql.FieldLT(FieldType, v))
+}
+
+// TypeLTE applies the LTE predicate on the "type" field.
+func TypeLTE(v string) predicate.Upscale {
+	return predicate.Upscale(sql.FieldLTE(FieldType, v))
+}
+
+// TypeContains applies the Contains predicate on the "type" field.
+func TypeContains(v string) predicate.Upscale {
+	return predicate.Upscale(sql.FieldContains(FieldType, v))
+}
+
+// TypeHasPrefix applies the HasPrefix predicate on the "type" field.
+func TypeHasPrefix(v string) predicate.Upscale {
+	return predicate.Upscale(sql.FieldHasPrefix(FieldType, v))
+}
+
+// TypeHasSuffix applies the HasSuffix predicate on the "type" field.
+func TypeHasSuffix(v string) predicate.Upscale {
+	return predicate.Upscale(sql.FieldHasSuffix(FieldType, v))
+}
+
+// TypeEqualFold applies the EqualFold predicate on the "type" field.
+func TypeEqualFold(v string) predicate.Upscale {
+	return predicate.Upscale(sql.FieldEqualFold(FieldType, v))
+}
+
+// TypeContainsFold applies the ContainsFold predicate on the "type" field.
+func TypeContainsFold(v string) predicate.Upscale {
+	return predicate.Upscale(sql.FieldContainsFold(FieldType, v))
+}
+
+// PromptEQ applies the EQ predicate on the "prompt" field.
+func PromptEQ(v string) predicate.Upscale {
+	return predicate.Upscale(sql.FieldEQ(FieldPrompt, v))
+}
+
+// PromptNEQ applies the NEQ predicate on the "prompt" field.
+func PromptNEQ(v string) predicate.Upscale {
+	return predicate.Upscale(sql.FieldNEQ(FieldPrompt, v))
+}
+
+// PromptIn applies the In predicate on the "prompt" field.
+func PromptIn(vs ...string) predicate.Upscale {
+	return predicate.Upscale(sql.FieldIn(FieldPrompt, vs...))
+}
+
+// PromptNotIn applies the NotIn predicate on the "prompt" field.
+func PromptNotIn(vs ...string) predicate.Upscale {
+	return predicate.Upscale(sql.FieldNotIn(FieldPrompt, vs...))
+}
+
+// PromptGT applies the GT predicate on the "prompt" field.
+func PromptGT(v string) predicate.Upscale {
+	return predicate.Upscale(sql.FieldGT(FieldPrompt, v))
+}
+
+// PromptGTE applies the GTE predicate on the "prompt" field.
+func PromptGTE(v string) predicate.Upscale {
+	return predicate.Upscale(sql.FieldGTE(FieldPrompt, v))
+}
+
+// PromptLT applies the LT predicate on the "prompt" field.
+func PromptLT(v string) predicate.Upscale {
+	return predicate.Upscale(sql.FieldLT(FieldPrompt, v))
+}
+
+// PromptLTE applies the LTE predicate on the "prompt" field.
+func PromptLTE(v string) predicate.Upscale {
+	return predicate.Upscale(sql.FieldLTE(FieldPrompt, v))
+}
+
+// PromptContains applies the Contains predicate on the "prompt" field.
+func PromptContains(v string) predicate.Upscale {
+	return predicate.Upscale(sql.FieldContains(FieldPrompt, v))
+}
+
+// PromptHasPrefix applies the HasPrefix predicate on the "prompt" field.
+func PromptHasPrefix(v string) predicate.Upscale {
+	return predicate.Upscale(sql.FieldHasPrefix(FieldPrompt, v))
+}
+
+// PromptHasSuffix applies the HasSuffix predicate on the "prompt" field.
+func PromptHasSuffix(v string) predicate.Upscale {
+	return predicate.Upscale(sql.FieldHasSuffix(FieldPrompt, v))
+}
+
+// PromptEqualFold applies the EqualFold predicate on the "prompt" field.
+func PromptEqualFold(v string) predicate.Upscale {
+	return predicate.Upscale(sql.FieldEqualFold(FieldPrompt, v))
+}
+
+// PromptContainsFold applies the ContainsFold predicate on the "prompt" field.
+func PromptContainsFold(v string) predicate.Upscale {
+	return predicate.Upscale(sql.FieldContainsFold(FieldPrompt, v))
+}
+
+// NegativePromptEQ applies the EQ predicate on the "negative_prompt" field.
+func NegativePromptEQ(v string) predicate.Upscale {
+	return predicate.Upscale(sql.FieldEQ(FieldNegativePrompt, v))
+}
+
+// NegativePromptNEQ applies the NEQ predicate on the "negative_prompt" field.
+func NegativePromptNEQ(v string) predicate.Upscale {
+	return predicate.Upscale(sql.FieldNEQ(FieldNegativePrompt, v))
+}
+
+// NegativePromptIn applies the In predicate on the "negative_prompt" field.
+func NegativePromptIn(vs ...string) predicate.Upscale {
+	return predicate.Upscale(sql.FieldIn(FieldNegativePrompt, vs...))
+}
+
+// NegativePromptNotIn applies the NotIn predicate on the "negative_prompt" field.
+func NegativePromptNotIn(vs ...string) predicate.Upscale {
+	return predicate.Upscale(sql.FieldNotIn(FieldNegativePrompt, vs...))
+}
+
+// NegativePromptGT applies the GT predicate on the "negative_prompt" field.
+func NegativePromptGT(v string) predicate.Upscale {
+	return predicate.Upscale(sql.FieldGT(FieldNegativePrompt, v))
+}
+
+// NegativePromptGTE applies the GTE predicate on the "negative_prompt" field.
+func NegativePromptGTE(v string) predicate.Upscale {
+	return predicate.Upscale(sql.FieldGTE(FieldNegativePrompt, v))
+}
+
+// NegativePromptLT applies the LT predicate on the "negative_prompt" field.
+func NegativePromptLT(v string) predicate.Upscale {
+	return predicate.Upscale(sql.FieldLT(FieldNegativePrompt, v))
+}
+
+// NegativePromptLTE applies the LTE predicate on the "negative_prompt" field.
+func NegativePromptLTE(v string) predicate.Upscale {
+	return predicate.Upscale(sql.FieldLTE(FieldNegativePrompt, v))
+}
+
+// NegativePromptContains applies the Contains predicate on the "negative_prompt" field.
+func NegativePromptContains(v string) predicate.Upscale {
+	return predicate.Upscale(sql.FieldContains(FieldNegativePrompt, v))
+}
+
+// NegativePromptHasPrefix applies the HasPrefix predicate on the "negative_prompt" field.
+func NegativePromptHasPrefix(v string) predicate.Upscale {
+	return predicate.Upscale(sql.FieldHasPrefix(FieldNegativePrompt, v))
+}
+
+// NegativePromptHasSuffix applies the HasSuffix predicate on the "negative_prompt" field.
+func NegativePromptHasSuffix(v string) predicate.Upscale {
+	return predicate.Upscale(sql.FieldHasSuffix(FieldNegativePrompt, v))
+}
+
+// NegativePromptEqualFold applies the EqualFold predicate on the "negative_prompt" field.
+func NegativePromptEqualFold(v string) predicate.Upscale {
+	return predicate.Upscale(sql.FieldEqualFold(FieldNegativePrompt, v))
+}
+
+// NegativePromptContainsFold applies the ContainsFold predicate on the "negative_prompt" field.
+func NegativePromptContainsFold(v string) predicate.Upscale {
+	return predicate.Upscale(sql.FieldContainsFold(FieldNegativePrompt, v))
+}
+
+// SeedEQ applies the EQ predicate on the "seed" field.
+func SeedEQ(v enttypes.BigInt) predicate.Upscale {
+	return predicate.Upscale(sql.FieldEQ(FieldSeed, v))
+}
+
+// SeedNEQ applies the NEQ predicate on the "seed" field.
+func SeedNEQ(v enttypes.BigInt) predicate.Upscale {
+	return predicate.Upscale(sql.FieldNEQ(FieldSeed, v))
+}
+
+// SeedIn applies the In predicate on the "seed" field.
+func SeedIn(vs ...enttypes.BigInt) predicate.Upscale {
+	return predicate.Upscale(sql.FieldIn(FieldSeed, vs...))
+}
+
+// SeedNotIn applies the NotIn predicate on the "seed" field.
+func SeedNotIn(vs ...enttypes.BigInt) predicate.Upscale {
+	return predicate.Upscale(sql.FieldNotIn(FieldSeed, vs...))
+}
+
+// SeedGT applies the GT predicate on the "seed" field.
+func SeedGT(v enttypes.BigInt) predicate.Upscale {
+	return predicate.Upscale(sql.FieldGT(FieldSeed, v))
+}
+
+// SeedGTE applies the GTE predicate on the "seed" field.
+func SeedGTE(v enttypes.BigInt) predicate.Upscale {
+	return predicate.Upscale(sql.FieldGTE(FieldSeed, v))
+}
+
+// SeedLT applies the LT predicate on the "seed" field.
+func SeedLT(v enttypes.BigInt) predicate.Upscale {
+	return predicate.Upscale(sql.FieldLT(FieldSeed, v))
+}
+
+// SeedLTE applies the LTE predicate on the "seed" field.
+func SeedLTE(v enttypes.BigInt) predicate.Upscale {
+	return predicate.Upscale(sql.FieldLTE(FieldSeed, v))
+}
+
+// SeedIsNil applies the IsNil predicate on the "seed" field.
+func SeedIsNil() predicate.Upscale {
+	return predicate.Upscale(sql.FieldIsNull(FieldSeed))
+}
+
+// SeedNotNil applies the NotNil predicate on the "seed" field.
+func SeedNotNil() predicate.Upscale {
+	return predicate.Upscale(sql.FieldNotNull(FieldSeed))
+}
+
+// NumInferenceStepsEQ applies the EQ predicate on the "num_inference_steps" field.
+func NumInferenceStepsEQ(v int) predicate.Upscale {
+	return predicate.Upscale(sql.FieldEQ(FieldNumInferenceSteps, v))
+}
+
+// NumInferenceStepsNEQ applies the NEQ predicate on the "num_inference_steps" field.
+func NumInferenceStepsNEQ(v int) predicate.Upscale {
+	return predicate.Upscale(sql.FieldNEQ(FieldNumInferenceSteps, v))
+}
+
+// NumInferenceStepsIn applies the In predicate on the "num_inference_steps" field.
+func NumInferenceStepsIn(vs ...int) predicate.Upscale {
+	return predicate.Upscale(sql.FieldIn(FieldNumInferenceSteps, vs...))
+}
+
+// NumInferenceStepsNotIn applies the NotIn predicate on the "num_inference_steps" field.
+func NumInferenceStepsNotIn(vs ...int) predicate.Upscale {
+	return predicate.Upscale(sql.FieldNotIn(FieldNumInferenceSteps, vs...))
+}
+
+// NumInferenceStepsGT applies the GT predicate on the "num_inference_steps" field.
+func NumInferenceStepsGT(v int) predicate.Upscale {
+	return predicate.Upscale(sql.FieldGT(FieldNumInferenceSteps, v))
+}
+
+// NumInferenceStepsGTE applies the GTE predicate on the "num_inference_steps" field.
+func NumInferenceStepsGTE(v int) predicate.Upscale {
+	return predicate.Upscale(sql.FieldGTE(FieldNumInferenceSteps, v))
+}
+
+// NumInferenceStepsLT applies the LT predicate on the "num_inference_steps" field.
+func NumInferenceStepsLT(v int) predicate.Upscale {
+	return predicate.Upscale(sql.FieldLT(FieldNumInferenceSteps, v))
+}
+
+// NumInferenceStepsLTE applies the LTE predicate on the "num_inference_steps" field.
+func NumInferenceStepsLTE(v int) predicate.Upscale {
+	return predicate.Upscale(sql.FieldLTE(FieldNumInferenceSteps, v))
+}
+
+// GuidanceScaleEQ applies the EQ predicate on the "guidance_scale" field.
+func GuidanceScaleEQ(v float64) predicate.Upscale {
+	return predicate.Upscale(sql.FieldEQ(FieldGuidanceScale, v))
+}
+
+// GuidanceScaleNEQ applies the NEQ predicate on the "guidance_scale" field.
+func GuidanceScaleNEQ(v float64) predicate.Upscale {
+	return predicate.Upscale(sql.FieldNEQ(FieldGuidanceScale, v))
+}
+
+// GuidanceScaleIn applies the In predicate on the "guidance_scale" field.
+func GuidanceScaleIn(vs ...float64) predicate.Upscale {
+	return predicate.Upscale(sql.FieldIn(FieldGuidanceScale, vs...))
+}
+
+// GuidanceScaleNotIn applies the NotIn predicate on the "guidance_scale" field.
+func GuidanceScaleNotIn(vs ...float64) predicate.Upscale {
+	return predicate.Upscale(sql.FieldNotIn(FieldGuidanceScale, vs...))
+}
+
+// GuidanceScaleGT applies the GT predicate on the "guidance_scale" field.
+func GuidanceScaleGT(v float64) predicate.Upscale {
+	return predicate.Upscale(sql.FieldGT(FieldGuidanceScale, v))
+}
+
+// GuidanceScaleGTE applies the GTE predicate on the "guidance_scale" field.
+func GuidanceScaleGTE(v float64) predicate.Upscale {
+	return predicate.Upscale(sql.FieldGTE(FieldGuidanceScale, v))
+}
+
+// GuidanceScaleLT applies the LT predicate on the "guidance_scale" field.
+func GuidanceScaleLT(v float64) predicate.Upscale {
+	return predicate.Upscale(sql.FieldLT(FieldGuidanceScale, v))
+}
+
+// GuidanceScaleLTE applies the LTE predicate on the "guidance_scale" field.
+func GuidanceScaleLTE(v float64) predicate.Upscale {
+	return predicate.Upscale(sql.FieldLTE(FieldGuidanceScale, v))
+}
+
+// CountryCodeEQ applies the EQ predicate on the "country_code" field.
+func CountryCodeEQ(v string) predicate.Upscale {
+	return predicate.Upscale(sql.FieldEQ(FieldCountryCode, v))
+}
+
+// CountryCodeNEQ applies the NEQ predicate on the "country_code" field.
+func CountryCodeNEQ(v string) predicate.Upscale {
+	return predicate.Upscale(sql.FieldNEQ(FieldCountryCode, v))
+}
+
+// CountryCodeIn applies the In predicate on the "country_code" field.
+func CountryCodeIn(vs ...string) predicate.Upscale {
+	return predicate.Upscale(sql.FieldIn(FieldCountryCode, vs...))
+}
+
+// CountryCodeNotIn applies the NotIn predicate on the "country_code" field.
+func CountryCodeNotIn(vs ...string) predicate.Upscale {
+	return predicate.Upscale(sql.FieldNotIn(FieldCountryCode, vs...))
+}
+
+// CountryCodeGT applies the GT predicate on the "country_code" field.
+func CountryCodeGT(v string) predicate.Upscale {
+	return predicate.Upscale(sql.FieldGT(FieldCountryCode, v))
+}
+
+// CountryCodeGTE applies the GTE predicate on the "country_code" field.
+func CountryCodeGTE(v string) predicate.Upscale {
+	return predicate.Upscale(sql.FieldGTE(FieldCountryCode, v))
+}
+
+// CountryCodeLT applies the LT predicate on the "country_code" field.
+func CountryCodeLT(v string) predicate.Upscale {
+	return predicate.Upscale(sql.FieldLT(FieldCountryCode, v))
+}
+
+// CountryCodeLTE applies the LTE predicate on the "country_code" field.
+func CountryCodeLTE(v string) predicate.Upscale {
+	return predicate.Upscale(sql.FieldLTE(FieldCountryCode, v))
+}
+
+// CountryCodeContains applies the Contains predicate on the "country_code" field.
+func CountryCodeContains(v string) predicate.Upscale {
+	return predicate.Upscale(sql.FieldContains(FieldCountryCode, v))
+}
+
+// CountryCodeHasPrefix applies the HasPrefix predicate on the "country_code" field.
+func CountryCodeHasPrefix(v string) predicate.Upscale {
+	return predicate.Upscale(sql.FieldHasPrefix(FieldCountryCode, v))
+}
+
+// CountryCodeHasSuffix applies the HasSuffix predicate on the "country_code" field.
+func CountryCodeHasSuffix(v string) predicate.Upscale {
+	return predicate.Upscale(sql.FieldHasSuffix(FieldCountryCode, v))
+}
+
+// CountryCodeEqualFold applies the EqualFold predicate on the "country_code" field.
+func CountryCodeEqualFold(v string) predicate.Upscale {
+	return predicate.Upscale(sql.FieldEqualFold(FieldCountryCode, v))
+}
+
+// CountryCodeContainsFold applies the ContainsFold predicate on the "country_code" field.
+func CountryCodeContainsFold(v string) predicate.Upscale {
+	return predicate.Upscale(sql.FieldContainsFold(FieldCountryCode, v))
+}
+
+// DeviceTypeEQ applies the EQ predicate on the "device_type" field.
+func DeviceTypeEQ(v string) predicate.Upscale {
+	return predicate.Upscale(sql.FieldEQ(FieldDeviceType, v))
+}
+
+// DeviceTypeNEQ applies the NEQ predicate on the "device_type" field.
+func DeviceTypeNEQ(v string) predicate.Upscale {
+	return predicate.Upscale(sql.FieldNEQ(FieldDeviceType, v))
+}
+
+// DeviceTypeIn applies the In predicate on the "device_type" field.
+func DeviceTypeIn(vs ...string) predicate.Upscale {
+	return predicate.Upscale(sql.FieldIn(FieldDeviceType, vs...))
+}
+
+// DeviceTypeNotIn applies the NotIn predicate on the "device_type" field.
+func DeviceTypeNotIn(vs ...string) predicate.Upscale {
+	return predicate.Upscale(sql.FieldNotIn(FieldDeviceType, vs...))
+}
+
+// DeviceTypeGT applies the GT predicate on the "device_type" field.
+func DeviceTypeGT(v string) predicate.Upscale {
+	return predicate.Upscale(sql.FieldGT(FieldDeviceType, v))
+}
+
+// DeviceTypeGTE applies the GTE predicate on the "device_type" field.
+func DeviceTypeGTE(v string) predicate.Upscale {
+	return predicate.Upscale(sql.FieldGTE(FieldDeviceType, v))
+}
+
+// DeviceTypeLT applies the LT predicate on the "device_type" field.
+func DeviceTypeLT(v string) predicate.Upscale {
+	return predicate.Upscale(sql.FieldLT(FieldDeviceType, v))
+}
+
+// DeviceTypeLTE applies the LTE predicate on the "device_type" field.
+func DeviceTypeLTE(v string) predicate.Upscale {
+	return predicate.Upscale(sql.FieldLTE(FieldDeviceType, v))
+}
+
+// DeviceTypeContains applies the Contains predicate on the "device_type" field.
+func DeviceTypeContains(v string) predicate.Upscale {
+	return predicate.Upscale(sql.FieldContains(FieldDeviceType, v))
+}
+
+// DeviceTypeHasPrefix applies the HasPrefix predicate on the "device_type" field.
+func DeviceTypeHasPrefix(v string) predicate.Upscale {
+	return predicate.Upscale(sql.FieldHasPrefix(FieldDeviceType, v))
+}
+
+// DeviceTypeHasSuffix applies the HasSuffix predicate on the "device_type" field.
+func DeviceTypeHasSuffix(v string) predicate.Upscale {
+	return predicate.Upscale(sql.FieldHasSuffix(FieldDeviceType, v))
+}
+
+// DeviceTypeEqualFold applies the EqualFold predicate on the "device_type" field.
+func DeviceTypeEqualFold(v string) predicate.Upscale {
+	return predicate.Upscale(sql.FieldEqualFold(FieldDeviceType, v))
+}
+
+// DeviceTypeContainsFold applies the ContainsFold predicate on the "device_type" field.
+func DeviceTypeContainsFold(v string) predicate.Upscale {
+	return predicate.Upscale(sql.FieldContainsFold(FieldDeviceType, v))
+}
+
+// DeviceOsEQ applies the EQ predicate on the "device_os" field.
+func DeviceOsEQ(v string) predicate.Upscale {
+	return predicate.Upscale(sql.FieldEQ(FieldDeviceOs, v))
+}
+
+// DeviceOsNEQ applies the NEQ predicate on the "device_os" field.
+func DeviceOsNEQ(v string) predicate.Upscale {
+	return predicate.Upscale(sql.FieldNEQ(FieldDeviceOs, v))
+}
+
+// DeviceOsIn applies the In predicate on the "device_os" field.
+func DeviceOsIn(vs ...string) predicate.Upscale {
+	return predicate.Upscale(sql.FieldIn(FieldDeviceOs, vs...))
+}
+
+// DeviceOsNotIn applies the NotIn predicate on the "device_os" field.
+func DeviceOsNotIn(vs ...string) predicate.Upscale {
+	return predicate.Upscale(sql.FieldNotIn(FieldDeviceOs, vs...))
+}
+
+// DeviceOsGT applies the GT predicate on the "device_os" field.
+func DeviceOsGT(v string) predicate.Upscale {
+	return predicate.Upscale(sql.FieldGT(FieldDeviceOs, v))
+}
+
+// DeviceOsGTE applies the GTE predicate on the "device_os" field.
+func DeviceOsGTE(v string) predicate.Upscale {
+	return predicate.Upscale(sql.FieldGTE(FieldDeviceOs, v))
+}
+
+// DeviceOsLT applies the LT predicate on the "device_os" field.
+func DeviceOsLT(v string) predicate.Upscale {
+	return predicate.Upscale(sql.FieldLT(FieldDeviceOs, v))
+}
+
+// DeviceOsLTE applies the LTE predicate on the "device_os" field.
+func DeviceOsLTE(v string) predicate.Upscale {
+	return predicate.Upscale(sql.FieldLTE(FieldDeviceOs, v))
+}
+
+// DeviceOsContains applies the Contains predicate on the "device_os" field.
+func DeviceOsContains(v string) predicate.Upscale {
+	return predicate.Upscale(sql.FieldContains(FieldDeviceOs, v))
+}
+
+// DeviceOsHasPrefix applies the HasPrefix predicate on the "device_os" field.
+func DeviceOsHasPrefix(v string) predicate.Upscale {
+	return predicate.Upscale(sql.FieldHasPrefix(FieldDeviceOs, v))
+}
+
+// DeviceOsHasSuffix applies the HasSuffix predicate on the "device_os" field.
+func DeviceOsHasSuffix(v string) predicate.Upscale {
+	return predicate.Upscale(sql.FieldHasSuffix(FieldDeviceOs, v))
+}
+
+// DeviceOsEqualFold applies the EqualFold predicate on the "device_os" field.
+func DeviceOsEqualFold(v string) predicate.Upscale {
+	return predicate.Upscale(sql.FieldEqualFold(FieldDeviceOs, v))
+}
+
+// DeviceOsContainsFold applies the ContainsFold predicate on the "device_os" field.
+func DeviceOsContainsFold(v string) predicate.Upscale {
+	return predicate.Upscale(sql.FieldContainsFold(FieldDeviceOs, v))
+}
+
+// DeviceBrowserEQ applies the EQ predicate on the "device_browser" field.
+func DeviceBrowserEQ(v string) predicate.Upscale {
+	return predicate.Upscale(sql.FieldEQ(FieldDeviceBrowser, v))
+}
+
+// DeviceBrowserNEQ applies the NEQ predicate on the "device_browser" field.
+func DeviceBrowserNEQ(v string) predicate.Upscale {
+	return predicate.Upscale(sql.FieldNEQ(FieldDeviceBrowser, v))
+}
+
+// DeviceBrowserIn applies the In predicate on the "device_browser" field.
+func DeviceBrowserIn(vs ...string) predicate.Upscale {
+	return predicate.Upscale(sql.FieldIn(FieldDeviceBrowser, vs...))
+}
+
+// DeviceBrowserNotIn applies the NotIn predicate on the "device_browser" field.
+func DeviceBrowserNotIn(vs ...string) predicate.Upscale {
+	return predicate.Upscale(sql.FieldNotIn(FieldDeviceBrowser, vs...))
+}
+
+// DeviceBrowserGT applies the GT predicate on the "device_browser" field.
+func DeviceBrowserGT(v string) predicate.Upscale {
+	return predicate.Upscale(sql.FieldGT(FieldDeviceBrowser, v))
+}
+
+// DeviceBrowserGTE applies the GTE predicate on the "device_browser" field.
+func DeviceBrowserGTE(v string) predicate.Upscale {
+	return predicate.Upscale(sql.FieldGTE(FieldDeviceBrowser, v))
+}
+
+// DeviceBrowserLT applies the LT predicate on the "device_browser" field.
+func DeviceBrowserLT(v string) predicate.Upscale {
+	return predicate.Upscale(sql.FieldLT(FieldDeviceBrowser, v))
+}
+
+// DeviceBrowserLTE applies the LTE predicate on the "device_browser" field.
+func DeviceBrowserLTE(v string) predicate.Upscale {
+	return predicate.Upscale(sql.FieldLTE(FieldDeviceBrowser, v))
+}
+
+// DeviceBrowserContains applies the Contains predicate on the "device_browser" field.
+func DeviceBrowserContains(v string) predicate.Upscale {
+	return predicate.Upscale(sql.FieldContains(FieldDeviceBrowser, v))
+}
+
+// DeviceBrowserHasPrefix applies the HasPrefix predicate on the "device_browser" field.
+func DeviceBrowserHasPrefix(v string) predicate.Upscale {
+	return predicate.Upscale(sql.FieldHasPrefix(FieldDeviceBrowser, v))
+}
+
+// DeviceBrowserHasSuffix applies the HasSuffix predicate on the "device_browser" field.
+func DeviceBrowserHasSuffix(v string) predicate.Upscale {
+	return predicate.Upscale(sql.FieldHasSuffix(FieldDeviceBrowser, v))
+}
+
+// DeviceBrowserEqualFold applies the EqualFold predicate on the "device_browser" field.
+func DeviceBrowserEqualFold(v string) predicate.Upscale {
+	return predicate.Upscale(sql.FieldEqualFold(FieldDeviceBrowser, v))
+}
+
+// DeviceBrowserContainsFold applies the ContainsFold predicate on the "device_browser" field.
+func DeviceBrowserContainsFold(v string) predicate.Upscale {
+	return predicate.Upscale(sql.FieldContainsFold(FieldDeviceBrowser, v))
+}
+
+// UserAgentEQ applies the EQ predicate on the "user_agent" field.
+func UserAgentEQ(v string) predicate.Upscale {
+	return predicate.Upscale(sql.FieldEQ(FieldUserAgent, v))
+}
+
+// UserAgentNEQ applies the NEQ predicate on the "user_agent" field.
+func UserAgentNEQ(v string) predicate.Upscale {
+	return predicate.Upscale(sql.FieldNEQ(FieldUserAgent, v))
+}
+
+// UserAgentIn applies the In predicate on the "user_agent" field.
+func UserAgentIn(vs ...string) predicate.Upscale {
+	return predicate.Upscale(sql.FieldIn(FieldUserAgent, vs...))
+}
+
+// UserAgentNotIn applies the NotIn predicate on the "user_agent" field.
+func UserAgentNotIn(vs ...string) predicate.Upscale {
+	return predicate.Upscale(sql.FieldNotIn(FieldUserAgent, vs...))
+}
+
+// UserAgentGT applies the GT predicate on the "user_agent" field.
+func UserAgentGT(v string) predicate.Upscale {
+	return predicate.Upscale(sql.FieldGT(FieldUserAgent, v))
+}
+
+// UserAgentGTE applies the GTE predicate on the "user_agent" field.
+func UserAgentGTE(v string) predicate.Upscale {
+	return predicate.Upscale(sql.FieldGTE(FieldUserAgent, v))
+}
+
+// UserAgentLT applies the LT predicate on the "user_agent" field.
+func UserAgentLT(v string) predicate.Upscale {
+	return predicate.Upscale(sql.FieldLT(FieldUserAgent, v))
+}
+
+// UserAgentLTE applies the LTE predicate on the "user_agent" field.
+func UserAgentLTE(v string) predicate.Upscale {
+	return predicate.Upscale(sql.FieldLTE(FieldUserAgent, v))
+}
+
+// UserAgentContains applies the Contains predicate on the "user_agent" field.
+func UserAgentContains(v string) predicate.Upscale {
+	return predicate.Upscale(sql.FieldContains(FieldUserAgent, v))
+}
+
+// UserAgentHasPrefix applies the HasPrefix predicate on the "user_agent" field.
+func UserAgentHasPrefix(v string) predicate.Upscale {
+	return predicate.Upscale(sql.FieldHasPrefix(FieldUserAgent, v))
+}
+
+// UserAgentHasSuffix applies the HasSuffix predicate on the "user_agent" field.
+func UserAgentHasSuffix(v string) predicate.Upscale {
+	return predicate.Upscale(sql.FieldHasSuffix(FieldUserAgent, v))
+}
+
+// UserAgentEqualFold applies the EqualFold predicate on the "user_agent" field.
+func UserAgentEqualFold(v string) predicate.Upscale {
+	return predicate.Upscale(sql.FieldEqualFold(FieldUserAgent, v))
+}
+
+// UserAgentContainsFold applies the ContainsFold predicate on the "user_agent" field.
+func UserAgentContainsFold(v string) predicate.Upscale {
+	return predicate.Upscale(sql.FieldContainsFold(FieldUserAgent, v))
+}
+
+// CreatedAtEQ applies the EQ predicate on the "created_at" field.
+func CreatedAtEQ(v time.Time) predicate.Upscale {
+	return predicate.Upscale(sql.FieldEQ(FieldCreatedAt, v))
+}
+
+// CreatedAtNEQ applies the NEQ predicate on the "created_at" field.
+func CreatedAtNEQ(v time.Time) predicate.Upscale {
+	return predicate.Upscale(sql.FieldNEQ(FieldCreatedAt, v))
+}
+
+// CreatedAtIn applies the In predicate on the "created_at" field.
+func CreatedAtIn(vs ...time.Time) predicate.Upscale {
+	return predicate.Upscale(sql.FieldIn(FieldCreatedAt, vs...))
+}
+
+// CreatedAtNotIn applies the NotIn predicate on the "created_at" field.
+func CreatedAtNotIn(vs ...time.Time) predicate.Upscale {
+	return predicate.Upscale(sql.FieldNotIn(FieldCreatedAt, vs...))
+}
+
+// CreatedAtGT applies the GT predicate on the "created_at" field.
+func CreatedAtGT(v time.Time) predicate.Upscale {
+	return predicate.Upscale(sql.FieldGT(FieldCreatedAt, v))
+}
+
+// CreatedAtGTE applies the GTE predicate on the "created_at" field.
+func CreatedAtGTE(v time.Time) predicate.Upscale {
+	return predicate.Upscale(sql.FieldGTE(FieldCreatedAt, v))
+}
+
+// CreatedAtLT applies the LT predicate on the "created_at" field.
+func CreatedAtLT(v time.Time) predicate.Upscale {
+	return predicate.Upscale(sql.FieldLT(FieldCreatedAt, v))
+}
+
+// CreatedAtLTE applies the LTE predicate on the "created_at" field.
+func CreatedAtLTE(v time.Time) predicate.Upscale {
+	return predicate.Upscale(sql.FieldLTE(FieldCreatedAt, v))
+}
+
+// UpdatedAtEQ applies the EQ predicate on the "updated_at" field.
+func UpdatedAtEQ(v time.Time) predicate.Upscale {
+	return predicate.Upscale(sql.FieldEQ(FieldUpdatedAt, v))
+}
+
+// UpdatedAtNEQ applies the NEQ predicate on the "updated_at" field.
+func UpdatedAtNEQ(v time.Time) predicate.Upscale {
+	return predicate.Upscale(sql.FieldNEQ(FieldUpdatedAt, v))
+}
+
+// UpdatedAtIn applies the In predicate on the "updated_at" field.
+func UpdatedAtIn(vs ...time.Time) predicate.Upscale {
+	return predicate.Upscale(sql.FieldIn(FieldUpdatedAt, vs...))
+}
+
+// UpdatedAtNotIn applies the NotIn predicate on the "updated_at" field.
+func UpdatedAtNotIn(vs ...time.Time) predicate.Upscale {
+	return predicate.Upscale(sql.FieldNotIn(FieldUpdatedAt, vs...))
+}
+
+// UpdatedAtGT applies the GT predicate on the "updated_at" field.
+func UpdatedAtGT(v time.Time) predicate.Upscale {
+	return predicate.Upscale(sql.FieldGT(FieldUpdatedAt, v))
+}
+
+// UpdatedAtGTE applies the GTE predicate on the "updated_at" field.
+func UpdatedAtGTE(v time.Time) predicate.Upscale {
+	return predicate.Upscale(sql.FieldGTE(FieldUpdatedAt, v))
+}
+
+// UpdatedAtLT applies the LT predicate on the "updated_at" field.
+func UpdatedAtLT(v time.Time) predicate.Upscale {
+	return predicate.Upscale(sql.FieldLT(FieldUpdatedAt, v))
+}
+
+// UpdatedAtLTE applies the LTE predicate on the "updated_at" field.
+func UpdatedAtLTE(v time.Time) predicate.Upscale {
+	return predicate.Upscale(sql.FieldLTE(FieldUpdatedAt, v))
+}
+
+// UserIDEQ applies the EQ predicate on the "user_id" field.
+func UserIDEQ(v uuid.UUID) predicate.Upscale {
+	return predicate.Upscale(sql.FieldEQ(FieldUserID, v))
+}
+
+// UserIDNEQ applies the NEQ predicate on the "user_id" field.
+func UserIDNEQ(v uuid.UUID) predicate.Upscale {
+	return predicate.Upscale(sql.FieldNEQ(FieldUserID, v))
+}
+
+// UserIDIn applies the In predicate on the "user_id" field.
+func UserIDIn(vs ...uuid.UUID) predicate.Upscale {
+	return predicate.Upscale(sql.FieldIn(FieldUserID, vs...))
+}
+
+// UserIDNotIn applies the NotIn predicate on the "user_id" field.
+func UserIDNotIn(vs ...uuid.UUID) predicate.Upscale {
+	return predicate.Upscale(sql.FieldNotIn(FieldUserID, vs...))
+}
+
+// UserTierEQ applies the EQ predicate on the "user_tier" field.
+func UserTierEQ(v UserTier) predicate.Upscale {
+	return predicate.Upscale(sql.FieldEQ(FieldUserTier, v))
+}
+
+// UserTierNEQ applies the NEQ predicate on the "user_tier" field.
+func UserTierNEQ(v UserTier) predicate.Upscale {
+	return predicate.Upscale(sql.FieldNEQ(FieldUserTier, v))
+}
+
+// UserTierIn applies the In predicate on the "user_tier" field.
+func UserTierIn(vs ...UserTier) predicate.Upscale {
+	return predicate.Upscale(sql.FieldIn(FieldUserTier, vs...))
+}
+
+// UserTierNotIn applies the NotIn predicate on the "user_tier" field.
+func UserTierNotIn(vs ...UserTier) predicate.Upscale {
+	return predicate.Upscale(sql.FieldNotIn(FieldUserTier, vs...))
+}
+
+// HasUser applies the HasEdge predicate on the "user" edge.
+func HasUser() predicate.Upscale {
+	return predicate.Upscale(func(s *sql.Selector) {
+		step := sqlgraph.NewStep(
+			sqlgraph.From(Table, FieldID),
+			sqlgraph.Edge(sqlgraph.M2O, true, UserTable, UserColumn),
+		)
+		sqlgraph.HasNeighbors(s, step)
+	})
+}
+
+// HasUserWith applies the HasEdge predicate on the "user" edge with a given conditions (other predicates).
+func HasUserWith(preds ...predicate.User) predicate.Upscale {
+	return predicate.Upscale(func(s *sql.Selector) {
+		step := sqlgraph.NewStep(
+			sqlgraph.From(Table, FieldID),
+			sqlgraph.To(UserInverseTable, FieldID),
+			sqlgraph.Edge(sqlgraph.M2O, true, UserTable, UserColumn),
+		)
+		sqlgraph.HasNeighborsWith(s, step, func(s *sql.Selector) {
+			for _, p := range preds {
+				p(s)
+			}
+		})
+	})
 }
 
 // And groups predicates with the AND operator between them.

@@ -3,18 +3,40 @@
 package ent
 
 import (
+	"encoding/json"
 	"fmt"
 	"strings"
+	"time"
 
 	"entgo.io/ent/dialect/sql"
+	"github.com/google/uuid"
 	"github.com/yekta/stablecog/go-apps/database/ent/server"
 )
 
 // Server is the model entity for the Server schema.
 type Server struct {
-	config
+	config `json:"-"`
 	// ID of the ent.
-	ID int `json:"id,omitempty"`
+	ID uuid.UUID `json:"id,omitempty"`
+	// URL holds the value of the "url" field.
+	URL string `json:"url,omitempty"`
+	// Healthy holds the value of the "healthy" field.
+	Healthy bool `json:"healthy,omitempty"`
+	// Enabled holds the value of the "enabled" field.
+	Enabled bool `json:"enabled,omitempty"`
+	// Features holds the value of the "features" field.
+	Features struct {
+		Name   string   "json:\"name\""
+		Values []string "json:\"values,omitempty\""
+	} `json:"features,omitempty"`
+	// LastHealthCheckAt holds the value of the "last_health_check_at" field.
+	LastHealthCheckAt time.Time `json:"last_health_check_at,omitempty"`
+	// CreatedAt holds the value of the "created_at" field.
+	CreatedAt time.Time `json:"created_at,omitempty"`
+	// UpdatedAt holds the value of the "updated_at" field.
+	UpdatedAt time.Time `json:"updated_at,omitempty"`
+	// UserTier holds the value of the "user_tier" field.
+	UserTier server.UserTier `json:"user_tier,omitempty"`
 }
 
 // scanValues returns the types for scanning values from sql.Rows.
@@ -22,8 +44,16 @@ func (*Server) scanValues(columns []string) ([]any, error) {
 	values := make([]any, len(columns))
 	for i := range columns {
 		switch columns[i] {
+		case server.FieldFeatures:
+			values[i] = new([]byte)
+		case server.FieldHealthy, server.FieldEnabled:
+			values[i] = new(sql.NullBool)
+		case server.FieldURL, server.FieldUserTier:
+			values[i] = new(sql.NullString)
+		case server.FieldLastHealthCheckAt, server.FieldCreatedAt, server.FieldUpdatedAt:
+			values[i] = new(sql.NullTime)
 		case server.FieldID:
-			values[i] = new(sql.NullInt64)
+			values[i] = new(uuid.UUID)
 		default:
 			return nil, fmt.Errorf("unexpected column %q for type Server", columns[i])
 		}
@@ -40,11 +70,61 @@ func (s *Server) assignValues(columns []string, values []any) error {
 	for i := range columns {
 		switch columns[i] {
 		case server.FieldID:
-			value, ok := values[i].(*sql.NullInt64)
-			if !ok {
-				return fmt.Errorf("unexpected type %T for field id", value)
+			if value, ok := values[i].(*uuid.UUID); !ok {
+				return fmt.Errorf("unexpected type %T for field id", values[i])
+			} else if value != nil {
+				s.ID = *value
 			}
-			s.ID = int(value.Int64)
+		case server.FieldURL:
+			if value, ok := values[i].(*sql.NullString); !ok {
+				return fmt.Errorf("unexpected type %T for field url", values[i])
+			} else if value.Valid {
+				s.URL = value.String
+			}
+		case server.FieldHealthy:
+			if value, ok := values[i].(*sql.NullBool); !ok {
+				return fmt.Errorf("unexpected type %T for field healthy", values[i])
+			} else if value.Valid {
+				s.Healthy = value.Bool
+			}
+		case server.FieldEnabled:
+			if value, ok := values[i].(*sql.NullBool); !ok {
+				return fmt.Errorf("unexpected type %T for field enabled", values[i])
+			} else if value.Valid {
+				s.Enabled = value.Bool
+			}
+		case server.FieldFeatures:
+			if value, ok := values[i].(*[]byte); !ok {
+				return fmt.Errorf("unexpected type %T for field features", values[i])
+			} else if value != nil && len(*value) > 0 {
+				if err := json.Unmarshal(*value, &s.Features); err != nil {
+					return fmt.Errorf("unmarshal field features: %w", err)
+				}
+			}
+		case server.FieldLastHealthCheckAt:
+			if value, ok := values[i].(*sql.NullTime); !ok {
+				return fmt.Errorf("unexpected type %T for field last_health_check_at", values[i])
+			} else if value.Valid {
+				s.LastHealthCheckAt = value.Time
+			}
+		case server.FieldCreatedAt:
+			if value, ok := values[i].(*sql.NullTime); !ok {
+				return fmt.Errorf("unexpected type %T for field created_at", values[i])
+			} else if value.Valid {
+				s.CreatedAt = value.Time
+			}
+		case server.FieldUpdatedAt:
+			if value, ok := values[i].(*sql.NullTime); !ok {
+				return fmt.Errorf("unexpected type %T for field updated_at", values[i])
+			} else if value.Valid {
+				s.UpdatedAt = value.Time
+			}
+		case server.FieldUserTier:
+			if value, ok := values[i].(*sql.NullString); !ok {
+				return fmt.Errorf("unexpected type %T for field user_tier", values[i])
+			} else if value.Valid {
+				s.UserTier = server.UserTier(value.String)
+			}
 		}
 	}
 	return nil
@@ -72,7 +152,30 @@ func (s *Server) Unwrap() *Server {
 func (s *Server) String() string {
 	var builder strings.Builder
 	builder.WriteString("Server(")
-	builder.WriteString(fmt.Sprintf("id=%v", s.ID))
+	builder.WriteString(fmt.Sprintf("id=%v, ", s.ID))
+	builder.WriteString("url=")
+	builder.WriteString(s.URL)
+	builder.WriteString(", ")
+	builder.WriteString("healthy=")
+	builder.WriteString(fmt.Sprintf("%v", s.Healthy))
+	builder.WriteString(", ")
+	builder.WriteString("enabled=")
+	builder.WriteString(fmt.Sprintf("%v", s.Enabled))
+	builder.WriteString(", ")
+	builder.WriteString("features=")
+	builder.WriteString(fmt.Sprintf("%v", s.Features))
+	builder.WriteString(", ")
+	builder.WriteString("last_health_check_at=")
+	builder.WriteString(s.LastHealthCheckAt.Format(time.ANSIC))
+	builder.WriteString(", ")
+	builder.WriteString("created_at=")
+	builder.WriteString(s.CreatedAt.Format(time.ANSIC))
+	builder.WriteString(", ")
+	builder.WriteString("updated_at=")
+	builder.WriteString(s.UpdatedAt.Format(time.ANSIC))
+	builder.WriteString(", ")
+	builder.WriteString("user_tier=")
+	builder.WriteString(fmt.Sprintf("%v", s.UserTier))
 	builder.WriteByte(')')
 	return builder.String()
 }

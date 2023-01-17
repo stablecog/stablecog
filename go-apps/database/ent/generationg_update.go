@@ -6,12 +6,20 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"time"
 
 	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"
 	"entgo.io/ent/schema/field"
+	"github.com/google/uuid"
 	"github.com/yekta/stablecog/go-apps/database/ent/generationg"
+	"github.com/yekta/stablecog/go-apps/database/ent/model"
+	"github.com/yekta/stablecog/go-apps/database/ent/negativeprompt"
 	"github.com/yekta/stablecog/go-apps/database/ent/predicate"
+	"github.com/yekta/stablecog/go-apps/database/ent/prompt"
+	"github.com/yekta/stablecog/go-apps/database/ent/scheduler"
+	"github.com/yekta/stablecog/go-apps/database/ent/user"
+	"github.com/yekta/stablecog/go-apps/database/enttypes"
 )
 
 // GenerationGUpdate is the builder for updating GenerationG entities.
@@ -27,13 +35,218 @@ func (gg *GenerationGUpdate) Where(ps ...predicate.GenerationG) *GenerationGUpda
 	return gg
 }
 
+// SetPromptID sets the "prompt_id" field.
+func (gg *GenerationGUpdate) SetPromptID(u uuid.UUID) *GenerationGUpdate {
+	gg.mutation.SetPromptID(u)
+	return gg
+}
+
+// SetNegativePromptID sets the "negative_prompt_id" field.
+func (gg *GenerationGUpdate) SetNegativePromptID(u uuid.UUID) *GenerationGUpdate {
+	gg.mutation.SetNegativePromptID(u)
+	return gg
+}
+
+// SetModelID sets the "model_id" field.
+func (gg *GenerationGUpdate) SetModelID(u uuid.UUID) *GenerationGUpdate {
+	gg.mutation.SetModelID(u)
+	return gg
+}
+
+// SetImageID sets the "image_id" field.
+func (gg *GenerationGUpdate) SetImageID(s string) *GenerationGUpdate {
+	gg.mutation.SetImageID(s)
+	return gg
+}
+
+// SetWidth sets the "width" field.
+func (gg *GenerationGUpdate) SetWidth(i int) *GenerationGUpdate {
+	gg.mutation.ResetWidth()
+	gg.mutation.SetWidth(i)
+	return gg
+}
+
+// AddWidth adds i to the "width" field.
+func (gg *GenerationGUpdate) AddWidth(i int) *GenerationGUpdate {
+	gg.mutation.AddWidth(i)
+	return gg
+}
+
+// SetHeight sets the "height" field.
+func (gg *GenerationGUpdate) SetHeight(i int) *GenerationGUpdate {
+	gg.mutation.ResetHeight()
+	gg.mutation.SetHeight(i)
+	return gg
+}
+
+// AddHeight adds i to the "height" field.
+func (gg *GenerationGUpdate) AddHeight(i int) *GenerationGUpdate {
+	gg.mutation.AddHeight(i)
+	return gg
+}
+
+// SetSeed sets the "seed" field.
+func (gg *GenerationGUpdate) SetSeed(ei enttypes.BigInt) *GenerationGUpdate {
+	gg.mutation.ResetSeed()
+	gg.mutation.SetSeed(ei)
+	return gg
+}
+
+// SetNillableSeed sets the "seed" field if the given value is not nil.
+func (gg *GenerationGUpdate) SetNillableSeed(ei *enttypes.BigInt) *GenerationGUpdate {
+	if ei != nil {
+		gg.SetSeed(*ei)
+	}
+	return gg
+}
+
+// AddSeed adds ei to the "seed" field.
+func (gg *GenerationGUpdate) AddSeed(ei enttypes.BigInt) *GenerationGUpdate {
+	gg.mutation.AddSeed(ei)
+	return gg
+}
+
+// ClearSeed clears the value of the "seed" field.
+func (gg *GenerationGUpdate) ClearSeed() *GenerationGUpdate {
+	gg.mutation.ClearSeed()
+	return gg
+}
+
+// SetNumInferenceSteps sets the "num_inference_steps" field.
+func (gg *GenerationGUpdate) SetNumInferenceSteps(i int) *GenerationGUpdate {
+	gg.mutation.ResetNumInferenceSteps()
+	gg.mutation.SetNumInferenceSteps(i)
+	return gg
+}
+
+// AddNumInferenceSteps adds i to the "num_inference_steps" field.
+func (gg *GenerationGUpdate) AddNumInferenceSteps(i int) *GenerationGUpdate {
+	gg.mutation.AddNumInferenceSteps(i)
+	return gg
+}
+
+// SetGuidanceScale sets the "guidance_scale" field.
+func (gg *GenerationGUpdate) SetGuidanceScale(f float64) *GenerationGUpdate {
+	gg.mutation.ResetGuidanceScale()
+	gg.mutation.SetGuidanceScale(f)
+	return gg
+}
+
+// AddGuidanceScale adds f to the "guidance_scale" field.
+func (gg *GenerationGUpdate) AddGuidanceScale(f float64) *GenerationGUpdate {
+	gg.mutation.AddGuidanceScale(f)
+	return gg
+}
+
+// SetHidden sets the "hidden" field.
+func (gg *GenerationGUpdate) SetHidden(b bool) *GenerationGUpdate {
+	gg.mutation.SetHidden(b)
+	return gg
+}
+
+// SetNillableHidden sets the "hidden" field if the given value is not nil.
+func (gg *GenerationGUpdate) SetNillableHidden(b *bool) *GenerationGUpdate {
+	if b != nil {
+		gg.SetHidden(*b)
+	}
+	return gg
+}
+
+// SetSchedulerID sets the "scheduler_id" field.
+func (gg *GenerationGUpdate) SetSchedulerID(u uuid.UUID) *GenerationGUpdate {
+	gg.mutation.SetSchedulerID(u)
+	return gg
+}
+
+// SetUserID sets the "user_id" field.
+func (gg *GenerationGUpdate) SetUserID(u uuid.UUID) *GenerationGUpdate {
+	gg.mutation.SetUserID(u)
+	return gg
+}
+
+// SetUserTier sets the "user_tier" field.
+func (gg *GenerationGUpdate) SetUserTier(gt generationg.UserTier) *GenerationGUpdate {
+	gg.mutation.SetUserTier(gt)
+	return gg
+}
+
+// SetNillableUserTier sets the "user_tier" field if the given value is not nil.
+func (gg *GenerationGUpdate) SetNillableUserTier(gt *generationg.UserTier) *GenerationGUpdate {
+	if gt != nil {
+		gg.SetUserTier(*gt)
+	}
+	return gg
+}
+
+// SetUpdatedAt sets the "updated_at" field.
+func (gg *GenerationGUpdate) SetUpdatedAt(t time.Time) *GenerationGUpdate {
+	gg.mutation.SetUpdatedAt(t)
+	return gg
+}
+
+// SetUser sets the "user" edge to the User entity.
+func (gg *GenerationGUpdate) SetUser(u *User) *GenerationGUpdate {
+	return gg.SetUserID(u.ID)
+}
+
+// SetModel sets the "model" edge to the Model entity.
+func (gg *GenerationGUpdate) SetModel(m *Model) *GenerationGUpdate {
+	return gg.SetModelID(m.ID)
+}
+
+// SetPrompt sets the "prompt" edge to the Prompt entity.
+func (gg *GenerationGUpdate) SetPrompt(p *Prompt) *GenerationGUpdate {
+	return gg.SetPromptID(p.ID)
+}
+
+// SetNegativePrompt sets the "negative_prompt" edge to the NegativePrompt entity.
+func (gg *GenerationGUpdate) SetNegativePrompt(n *NegativePrompt) *GenerationGUpdate {
+	return gg.SetNegativePromptID(n.ID)
+}
+
+// SetScheduler sets the "scheduler" edge to the Scheduler entity.
+func (gg *GenerationGUpdate) SetScheduler(s *Scheduler) *GenerationGUpdate {
+	return gg.SetSchedulerID(s.ID)
+}
+
 // Mutation returns the GenerationGMutation object of the builder.
 func (gg *GenerationGUpdate) Mutation() *GenerationGMutation {
 	return gg.mutation
 }
 
+// ClearUser clears the "user" edge to the User entity.
+func (gg *GenerationGUpdate) ClearUser() *GenerationGUpdate {
+	gg.mutation.ClearUser()
+	return gg
+}
+
+// ClearModel clears the "model" edge to the Model entity.
+func (gg *GenerationGUpdate) ClearModel() *GenerationGUpdate {
+	gg.mutation.ClearModel()
+	return gg
+}
+
+// ClearPrompt clears the "prompt" edge to the Prompt entity.
+func (gg *GenerationGUpdate) ClearPrompt() *GenerationGUpdate {
+	gg.mutation.ClearPrompt()
+	return gg
+}
+
+// ClearNegativePrompt clears the "negative_prompt" edge to the NegativePrompt entity.
+func (gg *GenerationGUpdate) ClearNegativePrompt() *GenerationGUpdate {
+	gg.mutation.ClearNegativePrompt()
+	return gg
+}
+
+// ClearScheduler clears the "scheduler" edge to the Scheduler entity.
+func (gg *GenerationGUpdate) ClearScheduler() *GenerationGUpdate {
+	gg.mutation.ClearScheduler()
+	return gg
+}
+
 // Save executes the query and returns the number of nodes affected by the update operation.
 func (gg *GenerationGUpdate) Save(ctx context.Context) (int, error) {
+	gg.defaults()
 	return withHooks[int, GenerationGMutation](ctx, gg.sqlSave, gg.mutation, gg.hooks)
 }
 
@@ -59,13 +272,49 @@ func (gg *GenerationGUpdate) ExecX(ctx context.Context) {
 	}
 }
 
+// defaults sets the default values of the builder before save.
+func (gg *GenerationGUpdate) defaults() {
+	if _, ok := gg.mutation.UpdatedAt(); !ok {
+		v := generationg.UpdateDefaultUpdatedAt()
+		gg.mutation.SetUpdatedAt(v)
+	}
+}
+
+// check runs all checks and user-defined validators on the builder.
+func (gg *GenerationGUpdate) check() error {
+	if v, ok := gg.mutation.UserTier(); ok {
+		if err := generationg.UserTierValidator(v); err != nil {
+			return &ValidationError{Name: "user_tier", err: fmt.Errorf(`ent: validator failed for field "GenerationG.user_tier": %w`, err)}
+		}
+	}
+	if _, ok := gg.mutation.UserID(); gg.mutation.UserCleared() && !ok {
+		return errors.New(`ent: clearing a required unique edge "GenerationG.user"`)
+	}
+	if _, ok := gg.mutation.ModelID(); gg.mutation.ModelCleared() && !ok {
+		return errors.New(`ent: clearing a required unique edge "GenerationG.model"`)
+	}
+	if _, ok := gg.mutation.PromptID(); gg.mutation.PromptCleared() && !ok {
+		return errors.New(`ent: clearing a required unique edge "GenerationG.prompt"`)
+	}
+	if _, ok := gg.mutation.NegativePromptID(); gg.mutation.NegativePromptCleared() && !ok {
+		return errors.New(`ent: clearing a required unique edge "GenerationG.negative_prompt"`)
+	}
+	if _, ok := gg.mutation.SchedulerID(); gg.mutation.SchedulerCleared() && !ok {
+		return errors.New(`ent: clearing a required unique edge "GenerationG.scheduler"`)
+	}
+	return nil
+}
+
 func (gg *GenerationGUpdate) sqlSave(ctx context.Context) (n int, err error) {
+	if err := gg.check(); err != nil {
+		return n, err
+	}
 	_spec := &sqlgraph.UpdateSpec{
 		Node: &sqlgraph.NodeSpec{
 			Table:   generationg.Table,
 			Columns: generationg.Columns,
 			ID: &sqlgraph.FieldSpec{
-				Type:   field.TypeInt,
+				Type:   field.TypeUUID,
 				Column: generationg.FieldID,
 			},
 		},
@@ -76,6 +325,226 @@ func (gg *GenerationGUpdate) sqlSave(ctx context.Context) (n int, err error) {
 				ps[i](selector)
 			}
 		}
+	}
+	if value, ok := gg.mutation.ImageID(); ok {
+		_spec.SetField(generationg.FieldImageID, field.TypeString, value)
+	}
+	if value, ok := gg.mutation.Width(); ok {
+		_spec.SetField(generationg.FieldWidth, field.TypeInt, value)
+	}
+	if value, ok := gg.mutation.AddedWidth(); ok {
+		_spec.AddField(generationg.FieldWidth, field.TypeInt, value)
+	}
+	if value, ok := gg.mutation.Height(); ok {
+		_spec.SetField(generationg.FieldHeight, field.TypeInt, value)
+	}
+	if value, ok := gg.mutation.AddedHeight(); ok {
+		_spec.AddField(generationg.FieldHeight, field.TypeInt, value)
+	}
+	if value, ok := gg.mutation.Seed(); ok {
+		_spec.SetField(generationg.FieldSeed, field.TypeInt, value)
+	}
+	if value, ok := gg.mutation.AddedSeed(); ok {
+		_spec.AddField(generationg.FieldSeed, field.TypeInt, value)
+	}
+	if gg.mutation.SeedCleared() {
+		_spec.ClearField(generationg.FieldSeed, field.TypeInt)
+	}
+	if value, ok := gg.mutation.NumInferenceSteps(); ok {
+		_spec.SetField(generationg.FieldNumInferenceSteps, field.TypeInt, value)
+	}
+	if value, ok := gg.mutation.AddedNumInferenceSteps(); ok {
+		_spec.AddField(generationg.FieldNumInferenceSteps, field.TypeInt, value)
+	}
+	if value, ok := gg.mutation.GuidanceScale(); ok {
+		_spec.SetField(generationg.FieldGuidanceScale, field.TypeFloat64, value)
+	}
+	if value, ok := gg.mutation.AddedGuidanceScale(); ok {
+		_spec.AddField(generationg.FieldGuidanceScale, field.TypeFloat64, value)
+	}
+	if value, ok := gg.mutation.Hidden(); ok {
+		_spec.SetField(generationg.FieldHidden, field.TypeBool, value)
+	}
+	if value, ok := gg.mutation.UserTier(); ok {
+		_spec.SetField(generationg.FieldUserTier, field.TypeEnum, value)
+	}
+	if value, ok := gg.mutation.UpdatedAt(); ok {
+		_spec.SetField(generationg.FieldUpdatedAt, field.TypeTime, value)
+	}
+	if gg.mutation.UserCleared() {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.M2O,
+			Inverse: true,
+			Table:   generationg.UserTable,
+			Columns: []string{generationg.UserColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeUUID,
+					Column: user.FieldID,
+				},
+			},
+		}
+		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
+	}
+	if nodes := gg.mutation.UserIDs(); len(nodes) > 0 {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.M2O,
+			Inverse: true,
+			Table:   generationg.UserTable,
+			Columns: []string{generationg.UserColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeUUID,
+					Column: user.FieldID,
+				},
+			},
+		}
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_spec.Edges.Add = append(_spec.Edges.Add, edge)
+	}
+	if gg.mutation.ModelCleared() {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.M2O,
+			Inverse: true,
+			Table:   generationg.ModelTable,
+			Columns: []string{generationg.ModelColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeUUID,
+					Column: model.FieldID,
+				},
+			},
+		}
+		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
+	}
+	if nodes := gg.mutation.ModelIDs(); len(nodes) > 0 {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.M2O,
+			Inverse: true,
+			Table:   generationg.ModelTable,
+			Columns: []string{generationg.ModelColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeUUID,
+					Column: model.FieldID,
+				},
+			},
+		}
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_spec.Edges.Add = append(_spec.Edges.Add, edge)
+	}
+	if gg.mutation.PromptCleared() {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.M2O,
+			Inverse: true,
+			Table:   generationg.PromptTable,
+			Columns: []string{generationg.PromptColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeUUID,
+					Column: prompt.FieldID,
+				},
+			},
+		}
+		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
+	}
+	if nodes := gg.mutation.PromptIDs(); len(nodes) > 0 {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.M2O,
+			Inverse: true,
+			Table:   generationg.PromptTable,
+			Columns: []string{generationg.PromptColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeUUID,
+					Column: prompt.FieldID,
+				},
+			},
+		}
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_spec.Edges.Add = append(_spec.Edges.Add, edge)
+	}
+	if gg.mutation.NegativePromptCleared() {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.M2O,
+			Inverse: true,
+			Table:   generationg.NegativePromptTable,
+			Columns: []string{generationg.NegativePromptColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeUUID,
+					Column: negativeprompt.FieldID,
+				},
+			},
+		}
+		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
+	}
+	if nodes := gg.mutation.NegativePromptIDs(); len(nodes) > 0 {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.M2O,
+			Inverse: true,
+			Table:   generationg.NegativePromptTable,
+			Columns: []string{generationg.NegativePromptColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeUUID,
+					Column: negativeprompt.FieldID,
+				},
+			},
+		}
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_spec.Edges.Add = append(_spec.Edges.Add, edge)
+	}
+	if gg.mutation.SchedulerCleared() {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.M2O,
+			Inverse: true,
+			Table:   generationg.SchedulerTable,
+			Columns: []string{generationg.SchedulerColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeUUID,
+					Column: scheduler.FieldID,
+				},
+			},
+		}
+		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
+	}
+	if nodes := gg.mutation.SchedulerIDs(); len(nodes) > 0 {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.M2O,
+			Inverse: true,
+			Table:   generationg.SchedulerTable,
+			Columns: []string{generationg.SchedulerColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeUUID,
+					Column: scheduler.FieldID,
+				},
+			},
+		}
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_spec.Edges.Add = append(_spec.Edges.Add, edge)
 	}
 	if n, err = sqlgraph.UpdateNodes(ctx, gg.driver, _spec); err != nil {
 		if _, ok := err.(*sqlgraph.NotFoundError); ok {
@@ -97,9 +566,213 @@ type GenerationGUpdateOne struct {
 	mutation *GenerationGMutation
 }
 
+// SetPromptID sets the "prompt_id" field.
+func (ggo *GenerationGUpdateOne) SetPromptID(u uuid.UUID) *GenerationGUpdateOne {
+	ggo.mutation.SetPromptID(u)
+	return ggo
+}
+
+// SetNegativePromptID sets the "negative_prompt_id" field.
+func (ggo *GenerationGUpdateOne) SetNegativePromptID(u uuid.UUID) *GenerationGUpdateOne {
+	ggo.mutation.SetNegativePromptID(u)
+	return ggo
+}
+
+// SetModelID sets the "model_id" field.
+func (ggo *GenerationGUpdateOne) SetModelID(u uuid.UUID) *GenerationGUpdateOne {
+	ggo.mutation.SetModelID(u)
+	return ggo
+}
+
+// SetImageID sets the "image_id" field.
+func (ggo *GenerationGUpdateOne) SetImageID(s string) *GenerationGUpdateOne {
+	ggo.mutation.SetImageID(s)
+	return ggo
+}
+
+// SetWidth sets the "width" field.
+func (ggo *GenerationGUpdateOne) SetWidth(i int) *GenerationGUpdateOne {
+	ggo.mutation.ResetWidth()
+	ggo.mutation.SetWidth(i)
+	return ggo
+}
+
+// AddWidth adds i to the "width" field.
+func (ggo *GenerationGUpdateOne) AddWidth(i int) *GenerationGUpdateOne {
+	ggo.mutation.AddWidth(i)
+	return ggo
+}
+
+// SetHeight sets the "height" field.
+func (ggo *GenerationGUpdateOne) SetHeight(i int) *GenerationGUpdateOne {
+	ggo.mutation.ResetHeight()
+	ggo.mutation.SetHeight(i)
+	return ggo
+}
+
+// AddHeight adds i to the "height" field.
+func (ggo *GenerationGUpdateOne) AddHeight(i int) *GenerationGUpdateOne {
+	ggo.mutation.AddHeight(i)
+	return ggo
+}
+
+// SetSeed sets the "seed" field.
+func (ggo *GenerationGUpdateOne) SetSeed(ei enttypes.BigInt) *GenerationGUpdateOne {
+	ggo.mutation.ResetSeed()
+	ggo.mutation.SetSeed(ei)
+	return ggo
+}
+
+// SetNillableSeed sets the "seed" field if the given value is not nil.
+func (ggo *GenerationGUpdateOne) SetNillableSeed(ei *enttypes.BigInt) *GenerationGUpdateOne {
+	if ei != nil {
+		ggo.SetSeed(*ei)
+	}
+	return ggo
+}
+
+// AddSeed adds ei to the "seed" field.
+func (ggo *GenerationGUpdateOne) AddSeed(ei enttypes.BigInt) *GenerationGUpdateOne {
+	ggo.mutation.AddSeed(ei)
+	return ggo
+}
+
+// ClearSeed clears the value of the "seed" field.
+func (ggo *GenerationGUpdateOne) ClearSeed() *GenerationGUpdateOne {
+	ggo.mutation.ClearSeed()
+	return ggo
+}
+
+// SetNumInferenceSteps sets the "num_inference_steps" field.
+func (ggo *GenerationGUpdateOne) SetNumInferenceSteps(i int) *GenerationGUpdateOne {
+	ggo.mutation.ResetNumInferenceSteps()
+	ggo.mutation.SetNumInferenceSteps(i)
+	return ggo
+}
+
+// AddNumInferenceSteps adds i to the "num_inference_steps" field.
+func (ggo *GenerationGUpdateOne) AddNumInferenceSteps(i int) *GenerationGUpdateOne {
+	ggo.mutation.AddNumInferenceSteps(i)
+	return ggo
+}
+
+// SetGuidanceScale sets the "guidance_scale" field.
+func (ggo *GenerationGUpdateOne) SetGuidanceScale(f float64) *GenerationGUpdateOne {
+	ggo.mutation.ResetGuidanceScale()
+	ggo.mutation.SetGuidanceScale(f)
+	return ggo
+}
+
+// AddGuidanceScale adds f to the "guidance_scale" field.
+func (ggo *GenerationGUpdateOne) AddGuidanceScale(f float64) *GenerationGUpdateOne {
+	ggo.mutation.AddGuidanceScale(f)
+	return ggo
+}
+
+// SetHidden sets the "hidden" field.
+func (ggo *GenerationGUpdateOne) SetHidden(b bool) *GenerationGUpdateOne {
+	ggo.mutation.SetHidden(b)
+	return ggo
+}
+
+// SetNillableHidden sets the "hidden" field if the given value is not nil.
+func (ggo *GenerationGUpdateOne) SetNillableHidden(b *bool) *GenerationGUpdateOne {
+	if b != nil {
+		ggo.SetHidden(*b)
+	}
+	return ggo
+}
+
+// SetSchedulerID sets the "scheduler_id" field.
+func (ggo *GenerationGUpdateOne) SetSchedulerID(u uuid.UUID) *GenerationGUpdateOne {
+	ggo.mutation.SetSchedulerID(u)
+	return ggo
+}
+
+// SetUserID sets the "user_id" field.
+func (ggo *GenerationGUpdateOne) SetUserID(u uuid.UUID) *GenerationGUpdateOne {
+	ggo.mutation.SetUserID(u)
+	return ggo
+}
+
+// SetUserTier sets the "user_tier" field.
+func (ggo *GenerationGUpdateOne) SetUserTier(gt generationg.UserTier) *GenerationGUpdateOne {
+	ggo.mutation.SetUserTier(gt)
+	return ggo
+}
+
+// SetNillableUserTier sets the "user_tier" field if the given value is not nil.
+func (ggo *GenerationGUpdateOne) SetNillableUserTier(gt *generationg.UserTier) *GenerationGUpdateOne {
+	if gt != nil {
+		ggo.SetUserTier(*gt)
+	}
+	return ggo
+}
+
+// SetUpdatedAt sets the "updated_at" field.
+func (ggo *GenerationGUpdateOne) SetUpdatedAt(t time.Time) *GenerationGUpdateOne {
+	ggo.mutation.SetUpdatedAt(t)
+	return ggo
+}
+
+// SetUser sets the "user" edge to the User entity.
+func (ggo *GenerationGUpdateOne) SetUser(u *User) *GenerationGUpdateOne {
+	return ggo.SetUserID(u.ID)
+}
+
+// SetModel sets the "model" edge to the Model entity.
+func (ggo *GenerationGUpdateOne) SetModel(m *Model) *GenerationGUpdateOne {
+	return ggo.SetModelID(m.ID)
+}
+
+// SetPrompt sets the "prompt" edge to the Prompt entity.
+func (ggo *GenerationGUpdateOne) SetPrompt(p *Prompt) *GenerationGUpdateOne {
+	return ggo.SetPromptID(p.ID)
+}
+
+// SetNegativePrompt sets the "negative_prompt" edge to the NegativePrompt entity.
+func (ggo *GenerationGUpdateOne) SetNegativePrompt(n *NegativePrompt) *GenerationGUpdateOne {
+	return ggo.SetNegativePromptID(n.ID)
+}
+
+// SetScheduler sets the "scheduler" edge to the Scheduler entity.
+func (ggo *GenerationGUpdateOne) SetScheduler(s *Scheduler) *GenerationGUpdateOne {
+	return ggo.SetSchedulerID(s.ID)
+}
+
 // Mutation returns the GenerationGMutation object of the builder.
 func (ggo *GenerationGUpdateOne) Mutation() *GenerationGMutation {
 	return ggo.mutation
+}
+
+// ClearUser clears the "user" edge to the User entity.
+func (ggo *GenerationGUpdateOne) ClearUser() *GenerationGUpdateOne {
+	ggo.mutation.ClearUser()
+	return ggo
+}
+
+// ClearModel clears the "model" edge to the Model entity.
+func (ggo *GenerationGUpdateOne) ClearModel() *GenerationGUpdateOne {
+	ggo.mutation.ClearModel()
+	return ggo
+}
+
+// ClearPrompt clears the "prompt" edge to the Prompt entity.
+func (ggo *GenerationGUpdateOne) ClearPrompt() *GenerationGUpdateOne {
+	ggo.mutation.ClearPrompt()
+	return ggo
+}
+
+// ClearNegativePrompt clears the "negative_prompt" edge to the NegativePrompt entity.
+func (ggo *GenerationGUpdateOne) ClearNegativePrompt() *GenerationGUpdateOne {
+	ggo.mutation.ClearNegativePrompt()
+	return ggo
+}
+
+// ClearScheduler clears the "scheduler" edge to the Scheduler entity.
+func (ggo *GenerationGUpdateOne) ClearScheduler() *GenerationGUpdateOne {
+	ggo.mutation.ClearScheduler()
+	return ggo
 }
 
 // Select allows selecting one or more fields (columns) of the returned entity.
@@ -111,6 +784,7 @@ func (ggo *GenerationGUpdateOne) Select(field string, fields ...string) *Generat
 
 // Save executes the query and returns the updated GenerationG entity.
 func (ggo *GenerationGUpdateOne) Save(ctx context.Context) (*GenerationG, error) {
+	ggo.defaults()
 	return withHooks[*GenerationG, GenerationGMutation](ctx, ggo.sqlSave, ggo.mutation, ggo.hooks)
 }
 
@@ -136,13 +810,49 @@ func (ggo *GenerationGUpdateOne) ExecX(ctx context.Context) {
 	}
 }
 
+// defaults sets the default values of the builder before save.
+func (ggo *GenerationGUpdateOne) defaults() {
+	if _, ok := ggo.mutation.UpdatedAt(); !ok {
+		v := generationg.UpdateDefaultUpdatedAt()
+		ggo.mutation.SetUpdatedAt(v)
+	}
+}
+
+// check runs all checks and user-defined validators on the builder.
+func (ggo *GenerationGUpdateOne) check() error {
+	if v, ok := ggo.mutation.UserTier(); ok {
+		if err := generationg.UserTierValidator(v); err != nil {
+			return &ValidationError{Name: "user_tier", err: fmt.Errorf(`ent: validator failed for field "GenerationG.user_tier": %w`, err)}
+		}
+	}
+	if _, ok := ggo.mutation.UserID(); ggo.mutation.UserCleared() && !ok {
+		return errors.New(`ent: clearing a required unique edge "GenerationG.user"`)
+	}
+	if _, ok := ggo.mutation.ModelID(); ggo.mutation.ModelCleared() && !ok {
+		return errors.New(`ent: clearing a required unique edge "GenerationG.model"`)
+	}
+	if _, ok := ggo.mutation.PromptID(); ggo.mutation.PromptCleared() && !ok {
+		return errors.New(`ent: clearing a required unique edge "GenerationG.prompt"`)
+	}
+	if _, ok := ggo.mutation.NegativePromptID(); ggo.mutation.NegativePromptCleared() && !ok {
+		return errors.New(`ent: clearing a required unique edge "GenerationG.negative_prompt"`)
+	}
+	if _, ok := ggo.mutation.SchedulerID(); ggo.mutation.SchedulerCleared() && !ok {
+		return errors.New(`ent: clearing a required unique edge "GenerationG.scheduler"`)
+	}
+	return nil
+}
+
 func (ggo *GenerationGUpdateOne) sqlSave(ctx context.Context) (_node *GenerationG, err error) {
+	if err := ggo.check(); err != nil {
+		return _node, err
+	}
 	_spec := &sqlgraph.UpdateSpec{
 		Node: &sqlgraph.NodeSpec{
 			Table:   generationg.Table,
 			Columns: generationg.Columns,
 			ID: &sqlgraph.FieldSpec{
-				Type:   field.TypeInt,
+				Type:   field.TypeUUID,
 				Column: generationg.FieldID,
 			},
 		},
@@ -170,6 +880,226 @@ func (ggo *GenerationGUpdateOne) sqlSave(ctx context.Context) (_node *Generation
 				ps[i](selector)
 			}
 		}
+	}
+	if value, ok := ggo.mutation.ImageID(); ok {
+		_spec.SetField(generationg.FieldImageID, field.TypeString, value)
+	}
+	if value, ok := ggo.mutation.Width(); ok {
+		_spec.SetField(generationg.FieldWidth, field.TypeInt, value)
+	}
+	if value, ok := ggo.mutation.AddedWidth(); ok {
+		_spec.AddField(generationg.FieldWidth, field.TypeInt, value)
+	}
+	if value, ok := ggo.mutation.Height(); ok {
+		_spec.SetField(generationg.FieldHeight, field.TypeInt, value)
+	}
+	if value, ok := ggo.mutation.AddedHeight(); ok {
+		_spec.AddField(generationg.FieldHeight, field.TypeInt, value)
+	}
+	if value, ok := ggo.mutation.Seed(); ok {
+		_spec.SetField(generationg.FieldSeed, field.TypeInt, value)
+	}
+	if value, ok := ggo.mutation.AddedSeed(); ok {
+		_spec.AddField(generationg.FieldSeed, field.TypeInt, value)
+	}
+	if ggo.mutation.SeedCleared() {
+		_spec.ClearField(generationg.FieldSeed, field.TypeInt)
+	}
+	if value, ok := ggo.mutation.NumInferenceSteps(); ok {
+		_spec.SetField(generationg.FieldNumInferenceSteps, field.TypeInt, value)
+	}
+	if value, ok := ggo.mutation.AddedNumInferenceSteps(); ok {
+		_spec.AddField(generationg.FieldNumInferenceSteps, field.TypeInt, value)
+	}
+	if value, ok := ggo.mutation.GuidanceScale(); ok {
+		_spec.SetField(generationg.FieldGuidanceScale, field.TypeFloat64, value)
+	}
+	if value, ok := ggo.mutation.AddedGuidanceScale(); ok {
+		_spec.AddField(generationg.FieldGuidanceScale, field.TypeFloat64, value)
+	}
+	if value, ok := ggo.mutation.Hidden(); ok {
+		_spec.SetField(generationg.FieldHidden, field.TypeBool, value)
+	}
+	if value, ok := ggo.mutation.UserTier(); ok {
+		_spec.SetField(generationg.FieldUserTier, field.TypeEnum, value)
+	}
+	if value, ok := ggo.mutation.UpdatedAt(); ok {
+		_spec.SetField(generationg.FieldUpdatedAt, field.TypeTime, value)
+	}
+	if ggo.mutation.UserCleared() {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.M2O,
+			Inverse: true,
+			Table:   generationg.UserTable,
+			Columns: []string{generationg.UserColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeUUID,
+					Column: user.FieldID,
+				},
+			},
+		}
+		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
+	}
+	if nodes := ggo.mutation.UserIDs(); len(nodes) > 0 {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.M2O,
+			Inverse: true,
+			Table:   generationg.UserTable,
+			Columns: []string{generationg.UserColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeUUID,
+					Column: user.FieldID,
+				},
+			},
+		}
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_spec.Edges.Add = append(_spec.Edges.Add, edge)
+	}
+	if ggo.mutation.ModelCleared() {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.M2O,
+			Inverse: true,
+			Table:   generationg.ModelTable,
+			Columns: []string{generationg.ModelColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeUUID,
+					Column: model.FieldID,
+				},
+			},
+		}
+		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
+	}
+	if nodes := ggo.mutation.ModelIDs(); len(nodes) > 0 {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.M2O,
+			Inverse: true,
+			Table:   generationg.ModelTable,
+			Columns: []string{generationg.ModelColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeUUID,
+					Column: model.FieldID,
+				},
+			},
+		}
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_spec.Edges.Add = append(_spec.Edges.Add, edge)
+	}
+	if ggo.mutation.PromptCleared() {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.M2O,
+			Inverse: true,
+			Table:   generationg.PromptTable,
+			Columns: []string{generationg.PromptColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeUUID,
+					Column: prompt.FieldID,
+				},
+			},
+		}
+		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
+	}
+	if nodes := ggo.mutation.PromptIDs(); len(nodes) > 0 {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.M2O,
+			Inverse: true,
+			Table:   generationg.PromptTable,
+			Columns: []string{generationg.PromptColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeUUID,
+					Column: prompt.FieldID,
+				},
+			},
+		}
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_spec.Edges.Add = append(_spec.Edges.Add, edge)
+	}
+	if ggo.mutation.NegativePromptCleared() {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.M2O,
+			Inverse: true,
+			Table:   generationg.NegativePromptTable,
+			Columns: []string{generationg.NegativePromptColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeUUID,
+					Column: negativeprompt.FieldID,
+				},
+			},
+		}
+		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
+	}
+	if nodes := ggo.mutation.NegativePromptIDs(); len(nodes) > 0 {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.M2O,
+			Inverse: true,
+			Table:   generationg.NegativePromptTable,
+			Columns: []string{generationg.NegativePromptColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeUUID,
+					Column: negativeprompt.FieldID,
+				},
+			},
+		}
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_spec.Edges.Add = append(_spec.Edges.Add, edge)
+	}
+	if ggo.mutation.SchedulerCleared() {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.M2O,
+			Inverse: true,
+			Table:   generationg.SchedulerTable,
+			Columns: []string{generationg.SchedulerColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeUUID,
+					Column: scheduler.FieldID,
+				},
+			},
+		}
+		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
+	}
+	if nodes := ggo.mutation.SchedulerIDs(); len(nodes) > 0 {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.M2O,
+			Inverse: true,
+			Table:   generationg.SchedulerTable,
+			Columns: []string{generationg.SchedulerColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeUUID,
+					Column: scheduler.FieldID,
+				},
+			},
+		}
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_spec.Edges.Add = append(_spec.Edges.Add, edge)
 	}
 	_node = &GenerationG{config: ggo.config}
 	_spec.Assign = _node.assignValues

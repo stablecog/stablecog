@@ -4,10 +4,15 @@ package ent
 
 import (
 	"context"
+	"errors"
 	"fmt"
+	"time"
 
 	"entgo.io/ent/dialect/sql/sqlgraph"
 	"entgo.io/ent/schema/field"
+	"github.com/google/uuid"
+	"github.com/yekta/stablecog/go-apps/database/ent/generation"
+	"github.com/yekta/stablecog/go-apps/database/ent/generationg"
 	"github.com/yekta/stablecog/go-apps/database/ent/model"
 )
 
@@ -18,6 +23,84 @@ type ModelCreate struct {
 	hooks    []Hook
 }
 
+// SetName sets the "name" field.
+func (mc *ModelCreate) SetName(s string) *ModelCreate {
+	mc.mutation.SetName(s)
+	return mc
+}
+
+// SetCreatedAt sets the "created_at" field.
+func (mc *ModelCreate) SetCreatedAt(t time.Time) *ModelCreate {
+	mc.mutation.SetCreatedAt(t)
+	return mc
+}
+
+// SetNillableCreatedAt sets the "created_at" field if the given value is not nil.
+func (mc *ModelCreate) SetNillableCreatedAt(t *time.Time) *ModelCreate {
+	if t != nil {
+		mc.SetCreatedAt(*t)
+	}
+	return mc
+}
+
+// SetUpdatedAt sets the "updated_at" field.
+func (mc *ModelCreate) SetUpdatedAt(t time.Time) *ModelCreate {
+	mc.mutation.SetUpdatedAt(t)
+	return mc
+}
+
+// SetNillableUpdatedAt sets the "updated_at" field if the given value is not nil.
+func (mc *ModelCreate) SetNillableUpdatedAt(t *time.Time) *ModelCreate {
+	if t != nil {
+		mc.SetUpdatedAt(*t)
+	}
+	return mc
+}
+
+// SetID sets the "id" field.
+func (mc *ModelCreate) SetID(u uuid.UUID) *ModelCreate {
+	mc.mutation.SetID(u)
+	return mc
+}
+
+// SetNillableID sets the "id" field if the given value is not nil.
+func (mc *ModelCreate) SetNillableID(u *uuid.UUID) *ModelCreate {
+	if u != nil {
+		mc.SetID(*u)
+	}
+	return mc
+}
+
+// AddGenerationIDs adds the "generation" edge to the Generation entity by IDs.
+func (mc *ModelCreate) AddGenerationIDs(ids ...uuid.UUID) *ModelCreate {
+	mc.mutation.AddGenerationIDs(ids...)
+	return mc
+}
+
+// AddGeneration adds the "generation" edges to the Generation entity.
+func (mc *ModelCreate) AddGeneration(g ...*Generation) *ModelCreate {
+	ids := make([]uuid.UUID, len(g))
+	for i := range g {
+		ids[i] = g[i].ID
+	}
+	return mc.AddGenerationIDs(ids...)
+}
+
+// AddGenerationGIDs adds the "generation_g" edge to the GenerationG entity by IDs.
+func (mc *ModelCreate) AddGenerationGIDs(ids ...uuid.UUID) *ModelCreate {
+	mc.mutation.AddGenerationGIDs(ids...)
+	return mc
+}
+
+// AddGenerationG adds the "generation_g" edges to the GenerationG entity.
+func (mc *ModelCreate) AddGenerationG(g ...*GenerationG) *ModelCreate {
+	ids := make([]uuid.UUID, len(g))
+	for i := range g {
+		ids[i] = g[i].ID
+	}
+	return mc.AddGenerationGIDs(ids...)
+}
+
 // Mutation returns the ModelMutation object of the builder.
 func (mc *ModelCreate) Mutation() *ModelMutation {
 	return mc.mutation
@@ -25,6 +108,7 @@ func (mc *ModelCreate) Mutation() *ModelMutation {
 
 // Save creates the Model in the database.
 func (mc *ModelCreate) Save(ctx context.Context) (*Model, error) {
+	mc.defaults()
 	return withHooks[*Model, ModelMutation](ctx, mc.sqlSave, mc.mutation, mc.hooks)
 }
 
@@ -50,8 +134,33 @@ func (mc *ModelCreate) ExecX(ctx context.Context) {
 	}
 }
 
+// defaults sets the default values of the builder before save.
+func (mc *ModelCreate) defaults() {
+	if _, ok := mc.mutation.CreatedAt(); !ok {
+		v := model.DefaultCreatedAt()
+		mc.mutation.SetCreatedAt(v)
+	}
+	if _, ok := mc.mutation.UpdatedAt(); !ok {
+		v := model.DefaultUpdatedAt()
+		mc.mutation.SetUpdatedAt(v)
+	}
+	if _, ok := mc.mutation.ID(); !ok {
+		v := model.DefaultID()
+		mc.mutation.SetID(v)
+	}
+}
+
 // check runs all checks and user-defined validators on the builder.
 func (mc *ModelCreate) check() error {
+	if _, ok := mc.mutation.Name(); !ok {
+		return &ValidationError{Name: "name", err: errors.New(`ent: missing required field "Model.name"`)}
+	}
+	if _, ok := mc.mutation.CreatedAt(); !ok {
+		return &ValidationError{Name: "created_at", err: errors.New(`ent: missing required field "Model.created_at"`)}
+	}
+	if _, ok := mc.mutation.UpdatedAt(); !ok {
+		return &ValidationError{Name: "updated_at", err: errors.New(`ent: missing required field "Model.updated_at"`)}
+	}
 	return nil
 }
 
@@ -66,8 +175,13 @@ func (mc *ModelCreate) sqlSave(ctx context.Context) (*Model, error) {
 		}
 		return nil, err
 	}
-	id := _spec.ID.Value.(int64)
-	_node.ID = int(id)
+	if _spec.ID.Value != nil {
+		if id, ok := _spec.ID.Value.(*uuid.UUID); ok {
+			_node.ID = *id
+		} else if err := _node.ID.Scan(_spec.ID.Value); err != nil {
+			return nil, err
+		}
+	}
 	mc.mutation.id = &_node.ID
 	mc.mutation.done = true
 	return _node, nil
@@ -79,11 +193,65 @@ func (mc *ModelCreate) createSpec() (*Model, *sqlgraph.CreateSpec) {
 		_spec = &sqlgraph.CreateSpec{
 			Table: model.Table,
 			ID: &sqlgraph.FieldSpec{
-				Type:   field.TypeInt,
+				Type:   field.TypeUUID,
 				Column: model.FieldID,
 			},
 		}
 	)
+	if id, ok := mc.mutation.ID(); ok {
+		_node.ID = id
+		_spec.ID.Value = &id
+	}
+	if value, ok := mc.mutation.Name(); ok {
+		_spec.SetField(model.FieldName, field.TypeString, value)
+		_node.Name = value
+	}
+	if value, ok := mc.mutation.CreatedAt(); ok {
+		_spec.SetField(model.FieldCreatedAt, field.TypeTime, value)
+		_node.CreatedAt = value
+	}
+	if value, ok := mc.mutation.UpdatedAt(); ok {
+		_spec.SetField(model.FieldUpdatedAt, field.TypeTime, value)
+		_node.UpdatedAt = value
+	}
+	if nodes := mc.mutation.GenerationIDs(); len(nodes) > 0 {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.O2M,
+			Inverse: false,
+			Table:   model.GenerationTable,
+			Columns: []string{model.GenerationColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeUUID,
+					Column: generation.FieldID,
+				},
+			},
+		}
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_spec.Edges = append(_spec.Edges, edge)
+	}
+	if nodes := mc.mutation.GenerationGIDs(); len(nodes) > 0 {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.O2M,
+			Inverse: false,
+			Table:   model.GenerationGTable,
+			Columns: []string{model.GenerationGColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeUUID,
+					Column: generationg.FieldID,
+				},
+			},
+		}
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_spec.Edges = append(_spec.Edges, edge)
+	}
 	return _node, _spec
 }
 
@@ -101,6 +269,7 @@ func (mcb *ModelCreateBulk) Save(ctx context.Context) ([]*Model, error) {
 	for i := range mcb.builders {
 		func(i int, root context.Context) {
 			builder := mcb.builders[i]
+			builder.defaults()
 			var mut Mutator = MutateFunc(func(ctx context.Context, m Mutation) (Value, error) {
 				mutation, ok := m.(*ModelMutation)
 				if !ok {
@@ -127,10 +296,6 @@ func (mcb *ModelCreateBulk) Save(ctx context.Context) ([]*Model, error) {
 					return nil, err
 				}
 				mutation.id = &nodes[i].ID
-				if specs[i].ID.Value != nil {
-					id := specs[i].ID.Value.(int64)
-					nodes[i].ID = int(id)
-				}
 				mutation.done = true
 				return nodes[i], nil
 			})

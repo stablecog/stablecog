@@ -6,6 +6,7 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"time"
 
 	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"
@@ -27,6 +28,12 @@ func (au *AdminUpdate) Where(ps ...predicate.Admin) *AdminUpdate {
 	return au
 }
 
+// SetUpdatedAt sets the "updated_at" field.
+func (au *AdminUpdate) SetUpdatedAt(t time.Time) *AdminUpdate {
+	au.mutation.SetUpdatedAt(t)
+	return au
+}
+
 // Mutation returns the AdminMutation object of the builder.
 func (au *AdminUpdate) Mutation() *AdminMutation {
 	return au.mutation
@@ -34,6 +41,7 @@ func (au *AdminUpdate) Mutation() *AdminMutation {
 
 // Save executes the query and returns the number of nodes affected by the update operation.
 func (au *AdminUpdate) Save(ctx context.Context) (int, error) {
+	au.defaults()
 	return withHooks[int, AdminMutation](ctx, au.sqlSave, au.mutation, au.hooks)
 }
 
@@ -59,13 +67,21 @@ func (au *AdminUpdate) ExecX(ctx context.Context) {
 	}
 }
 
+// defaults sets the default values of the builder before save.
+func (au *AdminUpdate) defaults() {
+	if _, ok := au.mutation.UpdatedAt(); !ok {
+		v := admin.UpdateDefaultUpdatedAt()
+		au.mutation.SetUpdatedAt(v)
+	}
+}
+
 func (au *AdminUpdate) sqlSave(ctx context.Context) (n int, err error) {
 	_spec := &sqlgraph.UpdateSpec{
 		Node: &sqlgraph.NodeSpec{
 			Table:   admin.Table,
 			Columns: admin.Columns,
 			ID: &sqlgraph.FieldSpec{
-				Type:   field.TypeInt,
+				Type:   field.TypeUUID,
 				Column: admin.FieldID,
 			},
 		},
@@ -76,6 +92,9 @@ func (au *AdminUpdate) sqlSave(ctx context.Context) (n int, err error) {
 				ps[i](selector)
 			}
 		}
+	}
+	if value, ok := au.mutation.UpdatedAt(); ok {
+		_spec.SetField(admin.FieldUpdatedAt, field.TypeTime, value)
 	}
 	if n, err = sqlgraph.UpdateNodes(ctx, au.driver, _spec); err != nil {
 		if _, ok := err.(*sqlgraph.NotFoundError); ok {
@@ -97,6 +116,12 @@ type AdminUpdateOne struct {
 	mutation *AdminMutation
 }
 
+// SetUpdatedAt sets the "updated_at" field.
+func (auo *AdminUpdateOne) SetUpdatedAt(t time.Time) *AdminUpdateOne {
+	auo.mutation.SetUpdatedAt(t)
+	return auo
+}
+
 // Mutation returns the AdminMutation object of the builder.
 func (auo *AdminUpdateOne) Mutation() *AdminMutation {
 	return auo.mutation
@@ -111,6 +136,7 @@ func (auo *AdminUpdateOne) Select(field string, fields ...string) *AdminUpdateOn
 
 // Save executes the query and returns the updated Admin entity.
 func (auo *AdminUpdateOne) Save(ctx context.Context) (*Admin, error) {
+	auo.defaults()
 	return withHooks[*Admin, AdminMutation](ctx, auo.sqlSave, auo.mutation, auo.hooks)
 }
 
@@ -136,13 +162,21 @@ func (auo *AdminUpdateOne) ExecX(ctx context.Context) {
 	}
 }
 
+// defaults sets the default values of the builder before save.
+func (auo *AdminUpdateOne) defaults() {
+	if _, ok := auo.mutation.UpdatedAt(); !ok {
+		v := admin.UpdateDefaultUpdatedAt()
+		auo.mutation.SetUpdatedAt(v)
+	}
+}
+
 func (auo *AdminUpdateOne) sqlSave(ctx context.Context) (_node *Admin, err error) {
 	_spec := &sqlgraph.UpdateSpec{
 		Node: &sqlgraph.NodeSpec{
 			Table:   admin.Table,
 			Columns: admin.Columns,
 			ID: &sqlgraph.FieldSpec{
-				Type:   field.TypeInt,
+				Type:   field.TypeUUID,
 				Column: admin.FieldID,
 			},
 		},
@@ -170,6 +204,9 @@ func (auo *AdminUpdateOne) sqlSave(ctx context.Context) (_node *Admin, err error
 				ps[i](selector)
 			}
 		}
+	}
+	if value, ok := auo.mutation.UpdatedAt(); ok {
+		_spec.SetField(admin.FieldUpdatedAt, field.TypeTime, value)
 	}
 	_node = &Admin{config: auo.config}
 	_spec.Assign = _node.assignValues

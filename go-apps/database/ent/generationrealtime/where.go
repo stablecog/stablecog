@@ -3,53 +3,451 @@
 package generationrealtime
 
 import (
+	"time"
+
 	"entgo.io/ent/dialect/sql"
+	"github.com/google/uuid"
 	"github.com/yekta/stablecog/go-apps/database/ent/predicate"
 )
 
 // ID filters vertices based on their ID field.
-func ID(id int) predicate.GenerationRealtime {
+func ID(id uuid.UUID) predicate.GenerationRealtime {
 	return predicate.GenerationRealtime(sql.FieldEQ(FieldID, id))
 }
 
 // IDEQ applies the EQ predicate on the ID field.
-func IDEQ(id int) predicate.GenerationRealtime {
+func IDEQ(id uuid.UUID) predicate.GenerationRealtime {
 	return predicate.GenerationRealtime(sql.FieldEQ(FieldID, id))
 }
 
 // IDNEQ applies the NEQ predicate on the ID field.
-func IDNEQ(id int) predicate.GenerationRealtime {
+func IDNEQ(id uuid.UUID) predicate.GenerationRealtime {
 	return predicate.GenerationRealtime(sql.FieldNEQ(FieldID, id))
 }
 
 // IDIn applies the In predicate on the ID field.
-func IDIn(ids ...int) predicate.GenerationRealtime {
+func IDIn(ids ...uuid.UUID) predicate.GenerationRealtime {
 	return predicate.GenerationRealtime(sql.FieldIn(FieldID, ids...))
 }
 
 // IDNotIn applies the NotIn predicate on the ID field.
-func IDNotIn(ids ...int) predicate.GenerationRealtime {
+func IDNotIn(ids ...uuid.UUID) predicate.GenerationRealtime {
 	return predicate.GenerationRealtime(sql.FieldNotIn(FieldID, ids...))
 }
 
 // IDGT applies the GT predicate on the ID field.
-func IDGT(id int) predicate.GenerationRealtime {
+func IDGT(id uuid.UUID) predicate.GenerationRealtime {
 	return predicate.GenerationRealtime(sql.FieldGT(FieldID, id))
 }
 
 // IDGTE applies the GTE predicate on the ID field.
-func IDGTE(id int) predicate.GenerationRealtime {
+func IDGTE(id uuid.UUID) predicate.GenerationRealtime {
 	return predicate.GenerationRealtime(sql.FieldGTE(FieldID, id))
 }
 
 // IDLT applies the LT predicate on the ID field.
-func IDLT(id int) predicate.GenerationRealtime {
+func IDLT(id uuid.UUID) predicate.GenerationRealtime {
 	return predicate.GenerationRealtime(sql.FieldLT(FieldID, id))
 }
 
 // IDLTE applies the LTE predicate on the ID field.
-func IDLTE(id int) predicate.GenerationRealtime {
+func IDLTE(id uuid.UUID) predicate.GenerationRealtime {
 	return predicate.GenerationRealtime(sql.FieldLTE(FieldID, id))
+}
+
+// CountryCode applies equality check predicate on the "country_code" field. It's identical to CountryCodeEQ.
+func CountryCode(v string) predicate.GenerationRealtime {
+	return predicate.GenerationRealtime(sql.FieldEQ(FieldCountryCode, v))
+}
+
+// DurationMs applies equality check predicate on the "duration_ms" field. It's identical to DurationMsEQ.
+func DurationMs(v int) predicate.GenerationRealtime {
+	return predicate.GenerationRealtime(sql.FieldEQ(FieldDurationMs, v))
+}
+
+// UsesDefaultServer applies equality check predicate on the "uses_default_server" field. It's identical to UsesDefaultServerEQ.
+func UsesDefaultServer(v bool) predicate.GenerationRealtime {
+	return predicate.GenerationRealtime(sql.FieldEQ(FieldUsesDefaultServer, v))
+}
+
+// Width applies equality check predicate on the "width" field. It's identical to WidthEQ.
+func Width(v int) predicate.GenerationRealtime {
+	return predicate.GenerationRealtime(sql.FieldEQ(FieldWidth, v))
+}
+
+// Height applies equality check predicate on the "height" field. It's identical to HeightEQ.
+func Height(v int) predicate.GenerationRealtime {
+	return predicate.GenerationRealtime(sql.FieldEQ(FieldHeight, v))
+}
+
+// NumInterferenceSteps applies equality check predicate on the "num_interference_steps" field. It's identical to NumInterferenceStepsEQ.
+func NumInterferenceSteps(v int) predicate.GenerationRealtime {
+	return predicate.GenerationRealtime(sql.FieldEQ(FieldNumInterferenceSteps, v))
+}
+
+// CreatedAt applies equality check predicate on the "created_at" field. It's identical to CreatedAtEQ.
+func CreatedAt(v time.Time) predicate.GenerationRealtime {
+	return predicate.GenerationRealtime(sql.FieldEQ(FieldCreatedAt, v))
+}
+
+// UpdatedAt applies equality check predicate on the "updated_at" field. It's identical to UpdatedAtEQ.
+func UpdatedAt(v time.Time) predicate.GenerationRealtime {
+	return predicate.GenerationRealtime(sql.FieldEQ(FieldUpdatedAt, v))
+}
+
+// CountryCodeEQ applies the EQ predicate on the "country_code" field.
+func CountryCodeEQ(v string) predicate.GenerationRealtime {
+	return predicate.GenerationRealtime(sql.FieldEQ(FieldCountryCode, v))
+}
+
+// CountryCodeNEQ applies the NEQ predicate on the "country_code" field.
+func CountryCodeNEQ(v string) predicate.GenerationRealtime {
+	return predicate.GenerationRealtime(sql.FieldNEQ(FieldCountryCode, v))
+}
+
+// CountryCodeIn applies the In predicate on the "country_code" field.
+func CountryCodeIn(vs ...string) predicate.GenerationRealtime {
+	return predicate.GenerationRealtime(sql.FieldIn(FieldCountryCode, vs...))
+}
+
+// CountryCodeNotIn applies the NotIn predicate on the "country_code" field.
+func CountryCodeNotIn(vs ...string) predicate.GenerationRealtime {
+	return predicate.GenerationRealtime(sql.FieldNotIn(FieldCountryCode, vs...))
+}
+
+// CountryCodeGT applies the GT predicate on the "country_code" field.
+func CountryCodeGT(v string) predicate.GenerationRealtime {
+	return predicate.GenerationRealtime(sql.FieldGT(FieldCountryCode, v))
+}
+
+// CountryCodeGTE applies the GTE predicate on the "country_code" field.
+func CountryCodeGTE(v string) predicate.GenerationRealtime {
+	return predicate.GenerationRealtime(sql.FieldGTE(FieldCountryCode, v))
+}
+
+// CountryCodeLT applies the LT predicate on the "country_code" field.
+func CountryCodeLT(v string) predicate.GenerationRealtime {
+	return predicate.GenerationRealtime(sql.FieldLT(FieldCountryCode, v))
+}
+
+// CountryCodeLTE applies the LTE predicate on the "country_code" field.
+func CountryCodeLTE(v string) predicate.GenerationRealtime {
+	return predicate.GenerationRealtime(sql.FieldLTE(FieldCountryCode, v))
+}
+
+// CountryCodeContains applies the Contains predicate on the "country_code" field.
+func CountryCodeContains(v string) predicate.GenerationRealtime {
+	return predicate.GenerationRealtime(sql.FieldContains(FieldCountryCode, v))
+}
+
+// CountryCodeHasPrefix applies the HasPrefix predicate on the "country_code" field.
+func CountryCodeHasPrefix(v string) predicate.GenerationRealtime {
+	return predicate.GenerationRealtime(sql.FieldHasPrefix(FieldCountryCode, v))
+}
+
+// CountryCodeHasSuffix applies the HasSuffix predicate on the "country_code" field.
+func CountryCodeHasSuffix(v string) predicate.GenerationRealtime {
+	return predicate.GenerationRealtime(sql.FieldHasSuffix(FieldCountryCode, v))
+}
+
+// CountryCodeEqualFold applies the EqualFold predicate on the "country_code" field.
+func CountryCodeEqualFold(v string) predicate.GenerationRealtime {
+	return predicate.GenerationRealtime(sql.FieldEqualFold(FieldCountryCode, v))
+}
+
+// CountryCodeContainsFold applies the ContainsFold predicate on the "country_code" field.
+func CountryCodeContainsFold(v string) predicate.GenerationRealtime {
+	return predicate.GenerationRealtime(sql.FieldContainsFold(FieldCountryCode, v))
+}
+
+// DurationMsEQ applies the EQ predicate on the "duration_ms" field.
+func DurationMsEQ(v int) predicate.GenerationRealtime {
+	return predicate.GenerationRealtime(sql.FieldEQ(FieldDurationMs, v))
+}
+
+// DurationMsNEQ applies the NEQ predicate on the "duration_ms" field.
+func DurationMsNEQ(v int) predicate.GenerationRealtime {
+	return predicate.GenerationRealtime(sql.FieldNEQ(FieldDurationMs, v))
+}
+
+// DurationMsIn applies the In predicate on the "duration_ms" field.
+func DurationMsIn(vs ...int) predicate.GenerationRealtime {
+	return predicate.GenerationRealtime(sql.FieldIn(FieldDurationMs, vs...))
+}
+
+// DurationMsNotIn applies the NotIn predicate on the "duration_ms" field.
+func DurationMsNotIn(vs ...int) predicate.GenerationRealtime {
+	return predicate.GenerationRealtime(sql.FieldNotIn(FieldDurationMs, vs...))
+}
+
+// DurationMsGT applies the GT predicate on the "duration_ms" field.
+func DurationMsGT(v int) predicate.GenerationRealtime {
+	return predicate.GenerationRealtime(sql.FieldGT(FieldDurationMs, v))
+}
+
+// DurationMsGTE applies the GTE predicate on the "duration_ms" field.
+func DurationMsGTE(v int) predicate.GenerationRealtime {
+	return predicate.GenerationRealtime(sql.FieldGTE(FieldDurationMs, v))
+}
+
+// DurationMsLT applies the LT predicate on the "duration_ms" field.
+func DurationMsLT(v int) predicate.GenerationRealtime {
+	return predicate.GenerationRealtime(sql.FieldLT(FieldDurationMs, v))
+}
+
+// DurationMsLTE applies the LTE predicate on the "duration_ms" field.
+func DurationMsLTE(v int) predicate.GenerationRealtime {
+	return predicate.GenerationRealtime(sql.FieldLTE(FieldDurationMs, v))
+}
+
+// StatusEQ applies the EQ predicate on the "status" field.
+func StatusEQ(v Status) predicate.GenerationRealtime {
+	return predicate.GenerationRealtime(sql.FieldEQ(FieldStatus, v))
+}
+
+// StatusNEQ applies the NEQ predicate on the "status" field.
+func StatusNEQ(v Status) predicate.GenerationRealtime {
+	return predicate.GenerationRealtime(sql.FieldNEQ(FieldStatus, v))
+}
+
+// StatusIn applies the In predicate on the "status" field.
+func StatusIn(vs ...Status) predicate.GenerationRealtime {
+	return predicate.GenerationRealtime(sql.FieldIn(FieldStatus, vs...))
+}
+
+// StatusNotIn applies the NotIn predicate on the "status" field.
+func StatusNotIn(vs ...Status) predicate.GenerationRealtime {
+	return predicate.GenerationRealtime(sql.FieldNotIn(FieldStatus, vs...))
+}
+
+// UsesDefaultServerEQ applies the EQ predicate on the "uses_default_server" field.
+func UsesDefaultServerEQ(v bool) predicate.GenerationRealtime {
+	return predicate.GenerationRealtime(sql.FieldEQ(FieldUsesDefaultServer, v))
+}
+
+// UsesDefaultServerNEQ applies the NEQ predicate on the "uses_default_server" field.
+func UsesDefaultServerNEQ(v bool) predicate.GenerationRealtime {
+	return predicate.GenerationRealtime(sql.FieldNEQ(FieldUsesDefaultServer, v))
+}
+
+// WidthEQ applies the EQ predicate on the "width" field.
+func WidthEQ(v int) predicate.GenerationRealtime {
+	return predicate.GenerationRealtime(sql.FieldEQ(FieldWidth, v))
+}
+
+// WidthNEQ applies the NEQ predicate on the "width" field.
+func WidthNEQ(v int) predicate.GenerationRealtime {
+	return predicate.GenerationRealtime(sql.FieldNEQ(FieldWidth, v))
+}
+
+// WidthIn applies the In predicate on the "width" field.
+func WidthIn(vs ...int) predicate.GenerationRealtime {
+	return predicate.GenerationRealtime(sql.FieldIn(FieldWidth, vs...))
+}
+
+// WidthNotIn applies the NotIn predicate on the "width" field.
+func WidthNotIn(vs ...int) predicate.GenerationRealtime {
+	return predicate.GenerationRealtime(sql.FieldNotIn(FieldWidth, vs...))
+}
+
+// WidthGT applies the GT predicate on the "width" field.
+func WidthGT(v int) predicate.GenerationRealtime {
+	return predicate.GenerationRealtime(sql.FieldGT(FieldWidth, v))
+}
+
+// WidthGTE applies the GTE predicate on the "width" field.
+func WidthGTE(v int) predicate.GenerationRealtime {
+	return predicate.GenerationRealtime(sql.FieldGTE(FieldWidth, v))
+}
+
+// WidthLT applies the LT predicate on the "width" field.
+func WidthLT(v int) predicate.GenerationRealtime {
+	return predicate.GenerationRealtime(sql.FieldLT(FieldWidth, v))
+}
+
+// WidthLTE applies the LTE predicate on the "width" field.
+func WidthLTE(v int) predicate.GenerationRealtime {
+	return predicate.GenerationRealtime(sql.FieldLTE(FieldWidth, v))
+}
+
+// HeightEQ applies the EQ predicate on the "height" field.
+func HeightEQ(v int) predicate.GenerationRealtime {
+	return predicate.GenerationRealtime(sql.FieldEQ(FieldHeight, v))
+}
+
+// HeightNEQ applies the NEQ predicate on the "height" field.
+func HeightNEQ(v int) predicate.GenerationRealtime {
+	return predicate.GenerationRealtime(sql.FieldNEQ(FieldHeight, v))
+}
+
+// HeightIn applies the In predicate on the "height" field.
+func HeightIn(vs ...int) predicate.GenerationRealtime {
+	return predicate.GenerationRealtime(sql.FieldIn(FieldHeight, vs...))
+}
+
+// HeightNotIn applies the NotIn predicate on the "height" field.
+func HeightNotIn(vs ...int) predicate.GenerationRealtime {
+	return predicate.GenerationRealtime(sql.FieldNotIn(FieldHeight, vs...))
+}
+
+// HeightGT applies the GT predicate on the "height" field.
+func HeightGT(v int) predicate.GenerationRealtime {
+	return predicate.GenerationRealtime(sql.FieldGT(FieldHeight, v))
+}
+
+// HeightGTE applies the GTE predicate on the "height" field.
+func HeightGTE(v int) predicate.GenerationRealtime {
+	return predicate.GenerationRealtime(sql.FieldGTE(FieldHeight, v))
+}
+
+// HeightLT applies the LT predicate on the "height" field.
+func HeightLT(v int) predicate.GenerationRealtime {
+	return predicate.GenerationRealtime(sql.FieldLT(FieldHeight, v))
+}
+
+// HeightLTE applies the LTE predicate on the "height" field.
+func HeightLTE(v int) predicate.GenerationRealtime {
+	return predicate.GenerationRealtime(sql.FieldLTE(FieldHeight, v))
+}
+
+// NumInterferenceStepsEQ applies the EQ predicate on the "num_interference_steps" field.
+func NumInterferenceStepsEQ(v int) predicate.GenerationRealtime {
+	return predicate.GenerationRealtime(sql.FieldEQ(FieldNumInterferenceSteps, v))
+}
+
+// NumInterferenceStepsNEQ applies the NEQ predicate on the "num_interference_steps" field.
+func NumInterferenceStepsNEQ(v int) predicate.GenerationRealtime {
+	return predicate.GenerationRealtime(sql.FieldNEQ(FieldNumInterferenceSteps, v))
+}
+
+// NumInterferenceStepsIn applies the In predicate on the "num_interference_steps" field.
+func NumInterferenceStepsIn(vs ...int) predicate.GenerationRealtime {
+	return predicate.GenerationRealtime(sql.FieldIn(FieldNumInterferenceSteps, vs...))
+}
+
+// NumInterferenceStepsNotIn applies the NotIn predicate on the "num_interference_steps" field.
+func NumInterferenceStepsNotIn(vs ...int) predicate.GenerationRealtime {
+	return predicate.GenerationRealtime(sql.FieldNotIn(FieldNumInterferenceSteps, vs...))
+}
+
+// NumInterferenceStepsGT applies the GT predicate on the "num_interference_steps" field.
+func NumInterferenceStepsGT(v int) predicate.GenerationRealtime {
+	return predicate.GenerationRealtime(sql.FieldGT(FieldNumInterferenceSteps, v))
+}
+
+// NumInterferenceStepsGTE applies the GTE predicate on the "num_interference_steps" field.
+func NumInterferenceStepsGTE(v int) predicate.GenerationRealtime {
+	return predicate.GenerationRealtime(sql.FieldGTE(FieldNumInterferenceSteps, v))
+}
+
+// NumInterferenceStepsLT applies the LT predicate on the "num_interference_steps" field.
+func NumInterferenceStepsLT(v int) predicate.GenerationRealtime {
+	return predicate.GenerationRealtime(sql.FieldLT(FieldNumInterferenceSteps, v))
+}
+
+// NumInterferenceStepsLTE applies the LTE predicate on the "num_interference_steps" field.
+func NumInterferenceStepsLTE(v int) predicate.GenerationRealtime {
+	return predicate.GenerationRealtime(sql.FieldLTE(FieldNumInterferenceSteps, v))
+}
+
+// CreatedAtEQ applies the EQ predicate on the "created_at" field.
+func CreatedAtEQ(v time.Time) predicate.GenerationRealtime {
+	return predicate.GenerationRealtime(sql.FieldEQ(FieldCreatedAt, v))
+}
+
+// CreatedAtNEQ applies the NEQ predicate on the "created_at" field.
+func CreatedAtNEQ(v time.Time) predicate.GenerationRealtime {
+	return predicate.GenerationRealtime(sql.FieldNEQ(FieldCreatedAt, v))
+}
+
+// CreatedAtIn applies the In predicate on the "created_at" field.
+func CreatedAtIn(vs ...time.Time) predicate.GenerationRealtime {
+	return predicate.GenerationRealtime(sql.FieldIn(FieldCreatedAt, vs...))
+}
+
+// CreatedAtNotIn applies the NotIn predicate on the "created_at" field.
+func CreatedAtNotIn(vs ...time.Time) predicate.GenerationRealtime {
+	return predicate.GenerationRealtime(sql.FieldNotIn(FieldCreatedAt, vs...))
+}
+
+// CreatedAtGT applies the GT predicate on the "created_at" field.
+func CreatedAtGT(v time.Time) predicate.GenerationRealtime {
+	return predicate.GenerationRealtime(sql.FieldGT(FieldCreatedAt, v))
+}
+
+// CreatedAtGTE applies the GTE predicate on the "created_at" field.
+func CreatedAtGTE(v time.Time) predicate.GenerationRealtime {
+	return predicate.GenerationRealtime(sql.FieldGTE(FieldCreatedAt, v))
+}
+
+// CreatedAtLT applies the LT predicate on the "created_at" field.
+func CreatedAtLT(v time.Time) predicate.GenerationRealtime {
+	return predicate.GenerationRealtime(sql.FieldLT(FieldCreatedAt, v))
+}
+
+// CreatedAtLTE applies the LTE predicate on the "created_at" field.
+func CreatedAtLTE(v time.Time) predicate.GenerationRealtime {
+	return predicate.GenerationRealtime(sql.FieldLTE(FieldCreatedAt, v))
+}
+
+// UpdatedAtEQ applies the EQ predicate on the "updated_at" field.
+func UpdatedAtEQ(v time.Time) predicate.GenerationRealtime {
+	return predicate.GenerationRealtime(sql.FieldEQ(FieldUpdatedAt, v))
+}
+
+// UpdatedAtNEQ applies the NEQ predicate on the "updated_at" field.
+func UpdatedAtNEQ(v time.Time) predicate.GenerationRealtime {
+	return predicate.GenerationRealtime(sql.FieldNEQ(FieldUpdatedAt, v))
+}
+
+// UpdatedAtIn applies the In predicate on the "updated_at" field.
+func UpdatedAtIn(vs ...time.Time) predicate.GenerationRealtime {
+	return predicate.GenerationRealtime(sql.FieldIn(FieldUpdatedAt, vs...))
+}
+
+// UpdatedAtNotIn applies the NotIn predicate on the "updated_at" field.
+func UpdatedAtNotIn(vs ...time.Time) predicate.GenerationRealtime {
+	return predicate.GenerationRealtime(sql.FieldNotIn(FieldUpdatedAt, vs...))
+}
+
+// UpdatedAtGT applies the GT predicate on the "updated_at" field.
+func UpdatedAtGT(v time.Time) predicate.GenerationRealtime {
+	return predicate.GenerationRealtime(sql.FieldGT(FieldUpdatedAt, v))
+}
+
+// UpdatedAtGTE applies the GTE predicate on the "updated_at" field.
+func UpdatedAtGTE(v time.Time) predicate.GenerationRealtime {
+	return predicate.GenerationRealtime(sql.FieldGTE(FieldUpdatedAt, v))
+}
+
+// UpdatedAtLT applies the LT predicate on the "updated_at" field.
+func UpdatedAtLT(v time.Time) predicate.GenerationRealtime {
+	return predicate.GenerationRealtime(sql.FieldLT(FieldUpdatedAt, v))
+}
+
+// UpdatedAtLTE applies the LTE predicate on the "updated_at" field.
+func UpdatedAtLTE(v time.Time) predicate.GenerationRealtime {
+	return predicate.GenerationRealtime(sql.FieldLTE(FieldUpdatedAt, v))
+}
+
+// UserTierEQ applies the EQ predicate on the "user_tier" field.
+func UserTierEQ(v UserTier) predicate.GenerationRealtime {
+	return predicate.GenerationRealtime(sql.FieldEQ(FieldUserTier, v))
+}
+
+// UserTierNEQ applies the NEQ predicate on the "user_tier" field.
+func UserTierNEQ(v UserTier) predicate.GenerationRealtime {
+	return predicate.GenerationRealtime(sql.FieldNEQ(FieldUserTier, v))
+}
+
+// UserTierIn applies the In predicate on the "user_tier" field.
+func UserTierIn(vs ...UserTier) predicate.GenerationRealtime {
+	return predicate.GenerationRealtime(sql.FieldIn(FieldUserTier, vs...))
+}
+
+// UserTierNotIn applies the NotIn predicate on the "user_tier" field.
+func UserTierNotIn(vs ...UserTier) predicate.GenerationRealtime {
+	return predicate.GenerationRealtime(sql.FieldNotIn(FieldUserTier, vs...))
 }
 
 // And groups predicates with the AND operator between them.

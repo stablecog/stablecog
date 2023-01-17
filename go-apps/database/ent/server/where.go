@@ -3,53 +3,311 @@
 package server
 
 import (
+	"time"
+
 	"entgo.io/ent/dialect/sql"
+	"github.com/google/uuid"
 	"github.com/yekta/stablecog/go-apps/database/ent/predicate"
 )
 
 // ID filters vertices based on their ID field.
-func ID(id int) predicate.Server {
+func ID(id uuid.UUID) predicate.Server {
 	return predicate.Server(sql.FieldEQ(FieldID, id))
 }
 
 // IDEQ applies the EQ predicate on the ID field.
-func IDEQ(id int) predicate.Server {
+func IDEQ(id uuid.UUID) predicate.Server {
 	return predicate.Server(sql.FieldEQ(FieldID, id))
 }
 
 // IDNEQ applies the NEQ predicate on the ID field.
-func IDNEQ(id int) predicate.Server {
+func IDNEQ(id uuid.UUID) predicate.Server {
 	return predicate.Server(sql.FieldNEQ(FieldID, id))
 }
 
 // IDIn applies the In predicate on the ID field.
-func IDIn(ids ...int) predicate.Server {
+func IDIn(ids ...uuid.UUID) predicate.Server {
 	return predicate.Server(sql.FieldIn(FieldID, ids...))
 }
 
 // IDNotIn applies the NotIn predicate on the ID field.
-func IDNotIn(ids ...int) predicate.Server {
+func IDNotIn(ids ...uuid.UUID) predicate.Server {
 	return predicate.Server(sql.FieldNotIn(FieldID, ids...))
 }
 
 // IDGT applies the GT predicate on the ID field.
-func IDGT(id int) predicate.Server {
+func IDGT(id uuid.UUID) predicate.Server {
 	return predicate.Server(sql.FieldGT(FieldID, id))
 }
 
 // IDGTE applies the GTE predicate on the ID field.
-func IDGTE(id int) predicate.Server {
+func IDGTE(id uuid.UUID) predicate.Server {
 	return predicate.Server(sql.FieldGTE(FieldID, id))
 }
 
 // IDLT applies the LT predicate on the ID field.
-func IDLT(id int) predicate.Server {
+func IDLT(id uuid.UUID) predicate.Server {
 	return predicate.Server(sql.FieldLT(FieldID, id))
 }
 
 // IDLTE applies the LTE predicate on the ID field.
-func IDLTE(id int) predicate.Server {
+func IDLTE(id uuid.UUID) predicate.Server {
 	return predicate.Server(sql.FieldLTE(FieldID, id))
+}
+
+// URL applies equality check predicate on the "url" field. It's identical to URLEQ.
+func URL(v string) predicate.Server {
+	return predicate.Server(sql.FieldEQ(FieldURL, v))
+}
+
+// Healthy applies equality check predicate on the "healthy" field. It's identical to HealthyEQ.
+func Healthy(v bool) predicate.Server {
+	return predicate.Server(sql.FieldEQ(FieldHealthy, v))
+}
+
+// Enabled applies equality check predicate on the "enabled" field. It's identical to EnabledEQ.
+func Enabled(v bool) predicate.Server {
+	return predicate.Server(sql.FieldEQ(FieldEnabled, v))
+}
+
+// LastHealthCheckAt applies equality check predicate on the "last_health_check_at" field. It's identical to LastHealthCheckAtEQ.
+func LastHealthCheckAt(v time.Time) predicate.Server {
+	return predicate.Server(sql.FieldEQ(FieldLastHealthCheckAt, v))
+}
+
+// CreatedAt applies equality check predicate on the "created_at" field. It's identical to CreatedAtEQ.
+func CreatedAt(v time.Time) predicate.Server {
+	return predicate.Server(sql.FieldEQ(FieldCreatedAt, v))
+}
+
+// UpdatedAt applies equality check predicate on the "updated_at" field. It's identical to UpdatedAtEQ.
+func UpdatedAt(v time.Time) predicate.Server {
+	return predicate.Server(sql.FieldEQ(FieldUpdatedAt, v))
+}
+
+// URLEQ applies the EQ predicate on the "url" field.
+func URLEQ(v string) predicate.Server {
+	return predicate.Server(sql.FieldEQ(FieldURL, v))
+}
+
+// URLNEQ applies the NEQ predicate on the "url" field.
+func URLNEQ(v string) predicate.Server {
+	return predicate.Server(sql.FieldNEQ(FieldURL, v))
+}
+
+// URLIn applies the In predicate on the "url" field.
+func URLIn(vs ...string) predicate.Server {
+	return predicate.Server(sql.FieldIn(FieldURL, vs...))
+}
+
+// URLNotIn applies the NotIn predicate on the "url" field.
+func URLNotIn(vs ...string) predicate.Server {
+	return predicate.Server(sql.FieldNotIn(FieldURL, vs...))
+}
+
+// URLGT applies the GT predicate on the "url" field.
+func URLGT(v string) predicate.Server {
+	return predicate.Server(sql.FieldGT(FieldURL, v))
+}
+
+// URLGTE applies the GTE predicate on the "url" field.
+func URLGTE(v string) predicate.Server {
+	return predicate.Server(sql.FieldGTE(FieldURL, v))
+}
+
+// URLLT applies the LT predicate on the "url" field.
+func URLLT(v string) predicate.Server {
+	return predicate.Server(sql.FieldLT(FieldURL, v))
+}
+
+// URLLTE applies the LTE predicate on the "url" field.
+func URLLTE(v string) predicate.Server {
+	return predicate.Server(sql.FieldLTE(FieldURL, v))
+}
+
+// URLContains applies the Contains predicate on the "url" field.
+func URLContains(v string) predicate.Server {
+	return predicate.Server(sql.FieldContains(FieldURL, v))
+}
+
+// URLHasPrefix applies the HasPrefix predicate on the "url" field.
+func URLHasPrefix(v string) predicate.Server {
+	return predicate.Server(sql.FieldHasPrefix(FieldURL, v))
+}
+
+// URLHasSuffix applies the HasSuffix predicate on the "url" field.
+func URLHasSuffix(v string) predicate.Server {
+	return predicate.Server(sql.FieldHasSuffix(FieldURL, v))
+}
+
+// URLEqualFold applies the EqualFold predicate on the "url" field.
+func URLEqualFold(v string) predicate.Server {
+	return predicate.Server(sql.FieldEqualFold(FieldURL, v))
+}
+
+// URLContainsFold applies the ContainsFold predicate on the "url" field.
+func URLContainsFold(v string) predicate.Server {
+	return predicate.Server(sql.FieldContainsFold(FieldURL, v))
+}
+
+// HealthyEQ applies the EQ predicate on the "healthy" field.
+func HealthyEQ(v bool) predicate.Server {
+	return predicate.Server(sql.FieldEQ(FieldHealthy, v))
+}
+
+// HealthyNEQ applies the NEQ predicate on the "healthy" field.
+func HealthyNEQ(v bool) predicate.Server {
+	return predicate.Server(sql.FieldNEQ(FieldHealthy, v))
+}
+
+// EnabledEQ applies the EQ predicate on the "enabled" field.
+func EnabledEQ(v bool) predicate.Server {
+	return predicate.Server(sql.FieldEQ(FieldEnabled, v))
+}
+
+// EnabledNEQ applies the NEQ predicate on the "enabled" field.
+func EnabledNEQ(v bool) predicate.Server {
+	return predicate.Server(sql.FieldNEQ(FieldEnabled, v))
+}
+
+// LastHealthCheckAtEQ applies the EQ predicate on the "last_health_check_at" field.
+func LastHealthCheckAtEQ(v time.Time) predicate.Server {
+	return predicate.Server(sql.FieldEQ(FieldLastHealthCheckAt, v))
+}
+
+// LastHealthCheckAtNEQ applies the NEQ predicate on the "last_health_check_at" field.
+func LastHealthCheckAtNEQ(v time.Time) predicate.Server {
+	return predicate.Server(sql.FieldNEQ(FieldLastHealthCheckAt, v))
+}
+
+// LastHealthCheckAtIn applies the In predicate on the "last_health_check_at" field.
+func LastHealthCheckAtIn(vs ...time.Time) predicate.Server {
+	return predicate.Server(sql.FieldIn(FieldLastHealthCheckAt, vs...))
+}
+
+// LastHealthCheckAtNotIn applies the NotIn predicate on the "last_health_check_at" field.
+func LastHealthCheckAtNotIn(vs ...time.Time) predicate.Server {
+	return predicate.Server(sql.FieldNotIn(FieldLastHealthCheckAt, vs...))
+}
+
+// LastHealthCheckAtGT applies the GT predicate on the "last_health_check_at" field.
+func LastHealthCheckAtGT(v time.Time) predicate.Server {
+	return predicate.Server(sql.FieldGT(FieldLastHealthCheckAt, v))
+}
+
+// LastHealthCheckAtGTE applies the GTE predicate on the "last_health_check_at" field.
+func LastHealthCheckAtGTE(v time.Time) predicate.Server {
+	return predicate.Server(sql.FieldGTE(FieldLastHealthCheckAt, v))
+}
+
+// LastHealthCheckAtLT applies the LT predicate on the "last_health_check_at" field.
+func LastHealthCheckAtLT(v time.Time) predicate.Server {
+	return predicate.Server(sql.FieldLT(FieldLastHealthCheckAt, v))
+}
+
+// LastHealthCheckAtLTE applies the LTE predicate on the "last_health_check_at" field.
+func LastHealthCheckAtLTE(v time.Time) predicate.Server {
+	return predicate.Server(sql.FieldLTE(FieldLastHealthCheckAt, v))
+}
+
+// CreatedAtEQ applies the EQ predicate on the "created_at" field.
+func CreatedAtEQ(v time.Time) predicate.Server {
+	return predicate.Server(sql.FieldEQ(FieldCreatedAt, v))
+}
+
+// CreatedAtNEQ applies the NEQ predicate on the "created_at" field.
+func CreatedAtNEQ(v time.Time) predicate.Server {
+	return predicate.Server(sql.FieldNEQ(FieldCreatedAt, v))
+}
+
+// CreatedAtIn applies the In predicate on the "created_at" field.
+func CreatedAtIn(vs ...time.Time) predicate.Server {
+	return predicate.Server(sql.FieldIn(FieldCreatedAt, vs...))
+}
+
+// CreatedAtNotIn applies the NotIn predicate on the "created_at" field.
+func CreatedAtNotIn(vs ...time.Time) predicate.Server {
+	return predicate.Server(sql.FieldNotIn(FieldCreatedAt, vs...))
+}
+
+// CreatedAtGT applies the GT predicate on the "created_at" field.
+func CreatedAtGT(v time.Time) predicate.Server {
+	return predicate.Server(sql.FieldGT(FieldCreatedAt, v))
+}
+
+// CreatedAtGTE applies the GTE predicate on the "created_at" field.
+func CreatedAtGTE(v time.Time) predicate.Server {
+	return predicate.Server(sql.FieldGTE(FieldCreatedAt, v))
+}
+
+// CreatedAtLT applies the LT predicate on the "created_at" field.
+func CreatedAtLT(v time.Time) predicate.Server {
+	return predicate.Server(sql.FieldLT(FieldCreatedAt, v))
+}
+
+// CreatedAtLTE applies the LTE predicate on the "created_at" field.
+func CreatedAtLTE(v time.Time) predicate.Server {
+	return predicate.Server(sql.FieldLTE(FieldCreatedAt, v))
+}
+
+// UpdatedAtEQ applies the EQ predicate on the "updated_at" field.
+func UpdatedAtEQ(v time.Time) predicate.Server {
+	return predicate.Server(sql.FieldEQ(FieldUpdatedAt, v))
+}
+
+// UpdatedAtNEQ applies the NEQ predicate on the "updated_at" field.
+func UpdatedAtNEQ(v time.Time) predicate.Server {
+	return predicate.Server(sql.FieldNEQ(FieldUpdatedAt, v))
+}
+
+// UpdatedAtIn applies the In predicate on the "updated_at" field.
+func UpdatedAtIn(vs ...time.Time) predicate.Server {
+	return predicate.Server(sql.FieldIn(FieldUpdatedAt, vs...))
+}
+
+// UpdatedAtNotIn applies the NotIn predicate on the "updated_at" field.
+func UpdatedAtNotIn(vs ...time.Time) predicate.Server {
+	return predicate.Server(sql.FieldNotIn(FieldUpdatedAt, vs...))
+}
+
+// UpdatedAtGT applies the GT predicate on the "updated_at" field.
+func UpdatedAtGT(v time.Time) predicate.Server {
+	return predicate.Server(sql.FieldGT(FieldUpdatedAt, v))
+}
+
+// UpdatedAtGTE applies the GTE predicate on the "updated_at" field.
+func UpdatedAtGTE(v time.Time) predicate.Server {
+	return predicate.Server(sql.FieldGTE(FieldUpdatedAt, v))
+}
+
+// UpdatedAtLT applies the LT predicate on the "updated_at" field.
+func UpdatedAtLT(v time.Time) predicate.Server {
+	return predicate.Server(sql.FieldLT(FieldUpdatedAt, v))
+}
+
+// UpdatedAtLTE applies the LTE predicate on the "updated_at" field.
+func UpdatedAtLTE(v time.Time) predicate.Server {
+	return predicate.Server(sql.FieldLTE(FieldUpdatedAt, v))
+}
+
+// UserTierEQ applies the EQ predicate on the "user_tier" field.
+func UserTierEQ(v UserTier) predicate.Server {
+	return predicate.Server(sql.FieldEQ(FieldUserTier, v))
+}
+
+// UserTierNEQ applies the NEQ predicate on the "user_tier" field.
+func UserTierNEQ(v UserTier) predicate.Server {
+	return predicate.Server(sql.FieldNEQ(FieldUserTier, v))
+}
+
+// UserTierIn applies the In predicate on the "user_tier" field.
+func UserTierIn(vs ...UserTier) predicate.Server {
+	return predicate.Server(sql.FieldIn(FieldUserTier, vs...))
+}
+
+// UserTierNotIn applies the NotIn predicate on the "user_tier" field.
+func UserTierNotIn(vs ...UserTier) predicate.Server {
+	return predicate.Server(sql.FieldNotIn(FieldUserTier, vs...))
 }
 
 // And groups predicates with the AND operator between them.

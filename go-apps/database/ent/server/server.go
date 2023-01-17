@@ -2,11 +2,34 @@
 
 package server
 
+import (
+	"fmt"
+	"time"
+
+	"github.com/google/uuid"
+)
+
 const (
 	// Label holds the string label denoting the server type in the database.
 	Label = "server"
 	// FieldID holds the string denoting the id field in the database.
 	FieldID = "id"
+	// FieldURL holds the string denoting the url field in the database.
+	FieldURL = "url"
+	// FieldHealthy holds the string denoting the healthy field in the database.
+	FieldHealthy = "healthy"
+	// FieldEnabled holds the string denoting the enabled field in the database.
+	FieldEnabled = "enabled"
+	// FieldFeatures holds the string denoting the features field in the database.
+	FieldFeatures = "features"
+	// FieldLastHealthCheckAt holds the string denoting the last_health_check_at field in the database.
+	FieldLastHealthCheckAt = "last_health_check_at"
+	// FieldCreatedAt holds the string denoting the created_at field in the database.
+	FieldCreatedAt = "created_at"
+	// FieldUpdatedAt holds the string denoting the updated_at field in the database.
+	FieldUpdatedAt = "updated_at"
+	// FieldUserTier holds the string denoting the user_tier field in the database.
+	FieldUserTier = "user_tier"
 	// Table holds the table name of the server in the database.
 	Table = "server"
 )
@@ -14,6 +37,14 @@ const (
 // Columns holds all SQL columns for server fields.
 var Columns = []string{
 	FieldID,
+	FieldURL,
+	FieldHealthy,
+	FieldEnabled,
+	FieldFeatures,
+	FieldLastHealthCheckAt,
+	FieldCreatedAt,
+	FieldUpdatedAt,
+	FieldUserTier,
 }
 
 // ValidColumn reports if the column name is valid (part of the table columns).
@@ -24,4 +55,47 @@ func ValidColumn(column string) bool {
 		}
 	}
 	return false
+}
+
+var (
+	// DefaultHealthy holds the default value on creation for the "healthy" field.
+	DefaultHealthy bool
+	// DefaultEnabled holds the default value on creation for the "enabled" field.
+	DefaultEnabled bool
+	// DefaultLastHealthCheckAt holds the default value on creation for the "last_health_check_at" field.
+	DefaultLastHealthCheckAt func() time.Time
+	// DefaultCreatedAt holds the default value on creation for the "created_at" field.
+	DefaultCreatedAt func() time.Time
+	// DefaultUpdatedAt holds the default value on creation for the "updated_at" field.
+	DefaultUpdatedAt func() time.Time
+	// UpdateDefaultUpdatedAt holds the default value on update for the "updated_at" field.
+	UpdateDefaultUpdatedAt func() time.Time
+	// DefaultID holds the default value on creation for the "id" field.
+	DefaultID func() uuid.UUID
+)
+
+// UserTier defines the type for the "user_tier" enum field.
+type UserTier string
+
+// UserTierFREE is the default value of the UserTier enum.
+const DefaultUserTier = UserTierFREE
+
+// UserTier values.
+const (
+	UserTierFREE UserTier = "FREE"
+	UserTierPRO  UserTier = "PRO"
+)
+
+func (ut UserTier) String() string {
+	return string(ut)
+}
+
+// UserTierValidator is a validator for the "user_tier" field enum values. It is called by the builders before save.
+func UserTierValidator(ut UserTier) error {
+	switch ut {
+	case UserTierFREE, UserTierPRO:
+		return nil
+	default:
+		return fmt.Errorf("server: invalid enum value for user_tier field: %q", ut)
+	}
 }

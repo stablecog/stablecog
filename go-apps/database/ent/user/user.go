@@ -2,18 +2,73 @@
 
 package user
 
+import (
+	"fmt"
+	"time"
+
+	"github.com/google/uuid"
+)
+
 const (
 	// Label holds the string label denoting the user type in the database.
 	Label = "user"
 	// FieldID holds the string denoting the id field in the database.
 	FieldID = "id"
+	// FieldEmail holds the string denoting the email field in the database.
+	FieldEmail = "email"
+	// FieldStripeCustomerID holds the string denoting the stripe_customer_id field in the database.
+	FieldStripeCustomerID = "stripe_customer_id"
+	// FieldSubscriptionTier holds the string denoting the subscription_tier field in the database.
+	FieldSubscriptionTier = "subscription_tier"
+	// FieldSubscriptionCategory holds the string denoting the subscription_category field in the database.
+	FieldSubscriptionCategory = "subscription_category"
+	// FieldCreatedAt holds the string denoting the created_at field in the database.
+	FieldCreatedAt = "created_at"
+	// FieldUpdatedAt holds the string denoting the updated_at field in the database.
+	FieldUpdatedAt = "updated_at"
+	// FieldConfirmedAt holds the string denoting the confirmed_at field in the database.
+	FieldConfirmedAt = "confirmed_at"
+	// EdgeUpscale holds the string denoting the upscale edge name in mutations.
+	EdgeUpscale = "upscale"
+	// EdgeGeneration holds the string denoting the generation edge name in mutations.
+	EdgeGeneration = "generation"
+	// EdgeGenerationG holds the string denoting the generation_g edge name in mutations.
+	EdgeGenerationG = "generation_g"
 	// Table holds the table name of the user in the database.
 	Table = "user"
+	// UpscaleTable is the table that holds the upscale relation/edge.
+	UpscaleTable = "upscale"
+	// UpscaleInverseTable is the table name for the Upscale entity.
+	// It exists in this package in order to avoid circular dependency with the "upscale" package.
+	UpscaleInverseTable = "upscale"
+	// UpscaleColumn is the table column denoting the upscale relation/edge.
+	UpscaleColumn = "user_id"
+	// GenerationTable is the table that holds the generation relation/edge.
+	GenerationTable = "generation"
+	// GenerationInverseTable is the table name for the Generation entity.
+	// It exists in this package in order to avoid circular dependency with the "generation" package.
+	GenerationInverseTable = "generation"
+	// GenerationColumn is the table column denoting the generation relation/edge.
+	GenerationColumn = "user_id"
+	// GenerationGTable is the table that holds the generation_g relation/edge.
+	GenerationGTable = "generation_g"
+	// GenerationGInverseTable is the table name for the GenerationG entity.
+	// It exists in this package in order to avoid circular dependency with the "generationg" package.
+	GenerationGInverseTable = "generation_g"
+	// GenerationGColumn is the table column denoting the generation_g relation/edge.
+	GenerationGColumn = "user_id"
 )
 
 // Columns holds all SQL columns for user fields.
 var Columns = []string{
 	FieldID,
+	FieldEmail,
+	FieldStripeCustomerID,
+	FieldSubscriptionTier,
+	FieldSubscriptionCategory,
+	FieldCreatedAt,
+	FieldUpdatedAt,
+	FieldConfirmedAt,
 }
 
 // ValidColumn reports if the column name is valid (part of the table columns).
@@ -24,4 +79,64 @@ func ValidColumn(column string) bool {
 		}
 	}
 	return false
+}
+
+var (
+	// DefaultCreatedAt holds the default value on creation for the "created_at" field.
+	DefaultCreatedAt func() time.Time
+	// DefaultUpdatedAt holds the default value on creation for the "updated_at" field.
+	DefaultUpdatedAt func() time.Time
+	// UpdateDefaultUpdatedAt holds the default value on update for the "updated_at" field.
+	UpdateDefaultUpdatedAt func() time.Time
+	// DefaultID holds the default value on creation for the "id" field.
+	DefaultID func() uuid.UUID
+)
+
+// SubscriptionTier defines the type for the "subscription_tier" enum field.
+type SubscriptionTier string
+
+// SubscriptionTierFREE is the default value of the SubscriptionTier enum.
+const DefaultSubscriptionTier = SubscriptionTierFREE
+
+// SubscriptionTier values.
+const (
+	SubscriptionTierFREE SubscriptionTier = "FREE"
+	SubscriptionTierPRO  SubscriptionTier = "PRO"
+)
+
+func (st SubscriptionTier) String() string {
+	return string(st)
+}
+
+// SubscriptionTierValidator is a validator for the "subscription_tier" field enum values. It is called by the builders before save.
+func SubscriptionTierValidator(st SubscriptionTier) error {
+	switch st {
+	case SubscriptionTierFREE, SubscriptionTierPRO:
+		return nil
+	default:
+		return fmt.Errorf("user: invalid enum value for subscription_tier field: %q", st)
+	}
+}
+
+// SubscriptionCategory defines the type for the "subscription_category" enum field.
+type SubscriptionCategory string
+
+// SubscriptionCategory values.
+const (
+	SubscriptionCategoryGIFTED        SubscriptionCategory = "GIFTED"
+	SubscriptionCategoryFRIEND_BOUGHT SubscriptionCategory = "FRIEND_BOUGHT"
+)
+
+func (sc SubscriptionCategory) String() string {
+	return string(sc)
+}
+
+// SubscriptionCategoryValidator is a validator for the "subscription_category" field enum values. It is called by the builders before save.
+func SubscriptionCategoryValidator(sc SubscriptionCategory) error {
+	switch sc {
+	case SubscriptionCategoryGIFTED, SubscriptionCategoryFRIEND_BOUGHT:
+		return nil
+	default:
+		return fmt.Errorf("user: invalid enum value for subscription_category field: %q", sc)
+	}
 }

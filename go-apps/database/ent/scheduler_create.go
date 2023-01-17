@@ -4,10 +4,15 @@ package ent
 
 import (
 	"context"
+	"errors"
 	"fmt"
+	"time"
 
 	"entgo.io/ent/dialect/sql/sqlgraph"
 	"entgo.io/ent/schema/field"
+	"github.com/google/uuid"
+	"github.com/yekta/stablecog/go-apps/database/ent/generation"
+	"github.com/yekta/stablecog/go-apps/database/ent/generationg"
 	"github.com/yekta/stablecog/go-apps/database/ent/scheduler"
 )
 
@@ -18,6 +23,84 @@ type SchedulerCreate struct {
 	hooks    []Hook
 }
 
+// SetName sets the "name" field.
+func (sc *SchedulerCreate) SetName(s string) *SchedulerCreate {
+	sc.mutation.SetName(s)
+	return sc
+}
+
+// SetCreatedAt sets the "created_at" field.
+func (sc *SchedulerCreate) SetCreatedAt(t time.Time) *SchedulerCreate {
+	sc.mutation.SetCreatedAt(t)
+	return sc
+}
+
+// SetNillableCreatedAt sets the "created_at" field if the given value is not nil.
+func (sc *SchedulerCreate) SetNillableCreatedAt(t *time.Time) *SchedulerCreate {
+	if t != nil {
+		sc.SetCreatedAt(*t)
+	}
+	return sc
+}
+
+// SetUpdatedAt sets the "updated_at" field.
+func (sc *SchedulerCreate) SetUpdatedAt(t time.Time) *SchedulerCreate {
+	sc.mutation.SetUpdatedAt(t)
+	return sc
+}
+
+// SetNillableUpdatedAt sets the "updated_at" field if the given value is not nil.
+func (sc *SchedulerCreate) SetNillableUpdatedAt(t *time.Time) *SchedulerCreate {
+	if t != nil {
+		sc.SetUpdatedAt(*t)
+	}
+	return sc
+}
+
+// SetID sets the "id" field.
+func (sc *SchedulerCreate) SetID(u uuid.UUID) *SchedulerCreate {
+	sc.mutation.SetID(u)
+	return sc
+}
+
+// SetNillableID sets the "id" field if the given value is not nil.
+func (sc *SchedulerCreate) SetNillableID(u *uuid.UUID) *SchedulerCreate {
+	if u != nil {
+		sc.SetID(*u)
+	}
+	return sc
+}
+
+// AddGenerationIDs adds the "generation" edge to the Generation entity by IDs.
+func (sc *SchedulerCreate) AddGenerationIDs(ids ...uuid.UUID) *SchedulerCreate {
+	sc.mutation.AddGenerationIDs(ids...)
+	return sc
+}
+
+// AddGeneration adds the "generation" edges to the Generation entity.
+func (sc *SchedulerCreate) AddGeneration(g ...*Generation) *SchedulerCreate {
+	ids := make([]uuid.UUID, len(g))
+	for i := range g {
+		ids[i] = g[i].ID
+	}
+	return sc.AddGenerationIDs(ids...)
+}
+
+// AddGenerationGIDs adds the "generation_g" edge to the GenerationG entity by IDs.
+func (sc *SchedulerCreate) AddGenerationGIDs(ids ...uuid.UUID) *SchedulerCreate {
+	sc.mutation.AddGenerationGIDs(ids...)
+	return sc
+}
+
+// AddGenerationG adds the "generation_g" edges to the GenerationG entity.
+func (sc *SchedulerCreate) AddGenerationG(g ...*GenerationG) *SchedulerCreate {
+	ids := make([]uuid.UUID, len(g))
+	for i := range g {
+		ids[i] = g[i].ID
+	}
+	return sc.AddGenerationGIDs(ids...)
+}
+
 // Mutation returns the SchedulerMutation object of the builder.
 func (sc *SchedulerCreate) Mutation() *SchedulerMutation {
 	return sc.mutation
@@ -25,6 +108,7 @@ func (sc *SchedulerCreate) Mutation() *SchedulerMutation {
 
 // Save creates the Scheduler in the database.
 func (sc *SchedulerCreate) Save(ctx context.Context) (*Scheduler, error) {
+	sc.defaults()
 	return withHooks[*Scheduler, SchedulerMutation](ctx, sc.sqlSave, sc.mutation, sc.hooks)
 }
 
@@ -50,8 +134,33 @@ func (sc *SchedulerCreate) ExecX(ctx context.Context) {
 	}
 }
 
+// defaults sets the default values of the builder before save.
+func (sc *SchedulerCreate) defaults() {
+	if _, ok := sc.mutation.CreatedAt(); !ok {
+		v := scheduler.DefaultCreatedAt()
+		sc.mutation.SetCreatedAt(v)
+	}
+	if _, ok := sc.mutation.UpdatedAt(); !ok {
+		v := scheduler.DefaultUpdatedAt()
+		sc.mutation.SetUpdatedAt(v)
+	}
+	if _, ok := sc.mutation.ID(); !ok {
+		v := scheduler.DefaultID()
+		sc.mutation.SetID(v)
+	}
+}
+
 // check runs all checks and user-defined validators on the builder.
 func (sc *SchedulerCreate) check() error {
+	if _, ok := sc.mutation.Name(); !ok {
+		return &ValidationError{Name: "name", err: errors.New(`ent: missing required field "Scheduler.name"`)}
+	}
+	if _, ok := sc.mutation.CreatedAt(); !ok {
+		return &ValidationError{Name: "created_at", err: errors.New(`ent: missing required field "Scheduler.created_at"`)}
+	}
+	if _, ok := sc.mutation.UpdatedAt(); !ok {
+		return &ValidationError{Name: "updated_at", err: errors.New(`ent: missing required field "Scheduler.updated_at"`)}
+	}
 	return nil
 }
 
@@ -66,8 +175,13 @@ func (sc *SchedulerCreate) sqlSave(ctx context.Context) (*Scheduler, error) {
 		}
 		return nil, err
 	}
-	id := _spec.ID.Value.(int64)
-	_node.ID = int(id)
+	if _spec.ID.Value != nil {
+		if id, ok := _spec.ID.Value.(*uuid.UUID); ok {
+			_node.ID = *id
+		} else if err := _node.ID.Scan(_spec.ID.Value); err != nil {
+			return nil, err
+		}
+	}
 	sc.mutation.id = &_node.ID
 	sc.mutation.done = true
 	return _node, nil
@@ -79,11 +193,65 @@ func (sc *SchedulerCreate) createSpec() (*Scheduler, *sqlgraph.CreateSpec) {
 		_spec = &sqlgraph.CreateSpec{
 			Table: scheduler.Table,
 			ID: &sqlgraph.FieldSpec{
-				Type:   field.TypeInt,
+				Type:   field.TypeUUID,
 				Column: scheduler.FieldID,
 			},
 		}
 	)
+	if id, ok := sc.mutation.ID(); ok {
+		_node.ID = id
+		_spec.ID.Value = &id
+	}
+	if value, ok := sc.mutation.Name(); ok {
+		_spec.SetField(scheduler.FieldName, field.TypeString, value)
+		_node.Name = value
+	}
+	if value, ok := sc.mutation.CreatedAt(); ok {
+		_spec.SetField(scheduler.FieldCreatedAt, field.TypeTime, value)
+		_node.CreatedAt = value
+	}
+	if value, ok := sc.mutation.UpdatedAt(); ok {
+		_spec.SetField(scheduler.FieldUpdatedAt, field.TypeTime, value)
+		_node.UpdatedAt = value
+	}
+	if nodes := sc.mutation.GenerationIDs(); len(nodes) > 0 {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.O2M,
+			Inverse: false,
+			Table:   scheduler.GenerationTable,
+			Columns: []string{scheduler.GenerationColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeUUID,
+					Column: generation.FieldID,
+				},
+			},
+		}
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_spec.Edges = append(_spec.Edges, edge)
+	}
+	if nodes := sc.mutation.GenerationGIDs(); len(nodes) > 0 {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.O2M,
+			Inverse: false,
+			Table:   scheduler.GenerationGTable,
+			Columns: []string{scheduler.GenerationGColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeUUID,
+					Column: generationg.FieldID,
+				},
+			},
+		}
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_spec.Edges = append(_spec.Edges, edge)
+	}
 	return _node, _spec
 }
 
@@ -101,6 +269,7 @@ func (scb *SchedulerCreateBulk) Save(ctx context.Context) ([]*Scheduler, error) 
 	for i := range scb.builders {
 		func(i int, root context.Context) {
 			builder := scb.builders[i]
+			builder.defaults()
 			var mut Mutator = MutateFunc(func(ctx context.Context, m Mutation) (Value, error) {
 				mutation, ok := m.(*SchedulerMutation)
 				if !ok {
@@ -127,10 +296,6 @@ func (scb *SchedulerCreateBulk) Save(ctx context.Context) ([]*Scheduler, error) 
 					return nil, err
 				}
 				mutation.id = &nodes[i].ID
-				if specs[i].ID.Value != nil {
-					id := specs[i].ID.Value.(int64)
-					nodes[i].ID = int(id)
-				}
 				mutation.done = true
 				return nodes[i], nil
 			})

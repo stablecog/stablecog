@@ -10,6 +10,7 @@ import (
 	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"
 	"entgo.io/ent/schema/field"
+	"github.com/google/uuid"
 	"github.com/yekta/stablecog/go-apps/database/ent/predicate"
 	"github.com/yekta/stablecog/go-apps/database/ent/upscalerealtime"
 )
@@ -84,8 +85,8 @@ func (urq *UpscaleRealtimeQuery) FirstX(ctx context.Context) *UpscaleRealtime {
 
 // FirstID returns the first UpscaleRealtime ID from the query.
 // Returns a *NotFoundError when no UpscaleRealtime ID was found.
-func (urq *UpscaleRealtimeQuery) FirstID(ctx context.Context) (id int, err error) {
-	var ids []int
+func (urq *UpscaleRealtimeQuery) FirstID(ctx context.Context) (id uuid.UUID, err error) {
+	var ids []uuid.UUID
 	if ids, err = urq.Limit(1).IDs(newQueryContext(ctx, TypeUpscaleRealtime, "FirstID")); err != nil {
 		return
 	}
@@ -97,7 +98,7 @@ func (urq *UpscaleRealtimeQuery) FirstID(ctx context.Context) (id int, err error
 }
 
 // FirstIDX is like FirstID, but panics if an error occurs.
-func (urq *UpscaleRealtimeQuery) FirstIDX(ctx context.Context) int {
+func (urq *UpscaleRealtimeQuery) FirstIDX(ctx context.Context) uuid.UUID {
 	id, err := urq.FirstID(ctx)
 	if err != nil && !IsNotFound(err) {
 		panic(err)
@@ -135,8 +136,8 @@ func (urq *UpscaleRealtimeQuery) OnlyX(ctx context.Context) *UpscaleRealtime {
 // OnlyID is like Only, but returns the only UpscaleRealtime ID in the query.
 // Returns a *NotSingularError when more than one UpscaleRealtime ID is found.
 // Returns a *NotFoundError when no entities are found.
-func (urq *UpscaleRealtimeQuery) OnlyID(ctx context.Context) (id int, err error) {
-	var ids []int
+func (urq *UpscaleRealtimeQuery) OnlyID(ctx context.Context) (id uuid.UUID, err error) {
+	var ids []uuid.UUID
 	if ids, err = urq.Limit(2).IDs(newQueryContext(ctx, TypeUpscaleRealtime, "OnlyID")); err != nil {
 		return
 	}
@@ -152,7 +153,7 @@ func (urq *UpscaleRealtimeQuery) OnlyID(ctx context.Context) (id int, err error)
 }
 
 // OnlyIDX is like OnlyID, but panics if an error occurs.
-func (urq *UpscaleRealtimeQuery) OnlyIDX(ctx context.Context) int {
+func (urq *UpscaleRealtimeQuery) OnlyIDX(ctx context.Context) uuid.UUID {
 	id, err := urq.OnlyID(ctx)
 	if err != nil {
 		panic(err)
@@ -180,8 +181,8 @@ func (urq *UpscaleRealtimeQuery) AllX(ctx context.Context) []*UpscaleRealtime {
 }
 
 // IDs executes the query and returns a list of UpscaleRealtime IDs.
-func (urq *UpscaleRealtimeQuery) IDs(ctx context.Context) ([]int, error) {
-	var ids []int
+func (urq *UpscaleRealtimeQuery) IDs(ctx context.Context) ([]uuid.UUID, error) {
+	var ids []uuid.UUID
 	ctx = newQueryContext(ctx, TypeUpscaleRealtime, "IDs")
 	if err := urq.Select(upscalerealtime.FieldID).Scan(ctx, &ids); err != nil {
 		return nil, err
@@ -190,7 +191,7 @@ func (urq *UpscaleRealtimeQuery) IDs(ctx context.Context) ([]int, error) {
 }
 
 // IDsX is like IDs, but panics if an error occurs.
-func (urq *UpscaleRealtimeQuery) IDsX(ctx context.Context) []int {
+func (urq *UpscaleRealtimeQuery) IDsX(ctx context.Context) []uuid.UUID {
 	ids, err := urq.IDs(ctx)
 	if err != nil {
 		panic(err)
@@ -260,6 +261,18 @@ func (urq *UpscaleRealtimeQuery) Clone() *UpscaleRealtimeQuery {
 
 // GroupBy is used to group vertices by one or more fields/columns.
 // It is often used with aggregate functions, like: count, max, mean, min, sum.
+//
+// Example:
+//
+//	var v []struct {
+//		Status upscalerealtime.Status `json:"status,omitempty"`
+//		Count int `json:"count,omitempty"`
+//	}
+//
+//	client.UpscaleRealtime.Query().
+//		GroupBy(upscalerealtime.FieldStatus).
+//		Aggregate(ent.Count()).
+//		Scan(ctx, &v)
 func (urq *UpscaleRealtimeQuery) GroupBy(field string, fields ...string) *UpscaleRealtimeGroupBy {
 	urq.fields = append([]string{field}, fields...)
 	grbuild := &UpscaleRealtimeGroupBy{build: urq}
@@ -271,6 +284,16 @@ func (urq *UpscaleRealtimeQuery) GroupBy(field string, fields ...string) *Upscal
 
 // Select allows the selection one or more fields/columns for the given query,
 // instead of selecting all fields in the entity.
+//
+// Example:
+//
+//	var v []struct {
+//		Status upscalerealtime.Status `json:"status,omitempty"`
+//	}
+//
+//	client.UpscaleRealtime.Query().
+//		Select(upscalerealtime.FieldStatus).
+//		Scan(ctx, &v)
 func (urq *UpscaleRealtimeQuery) Select(fields ...string) *UpscaleRealtimeSelect {
 	urq.fields = append(urq.fields, fields...)
 	sbuild := &UpscaleRealtimeSelect{UpscaleRealtimeQuery: urq}
@@ -350,7 +373,7 @@ func (urq *UpscaleRealtimeQuery) querySpec() *sqlgraph.QuerySpec {
 			Table:   upscalerealtime.Table,
 			Columns: upscalerealtime.Columns,
 			ID: &sqlgraph.FieldSpec{
-				Type:   field.TypeInt,
+				Type:   field.TypeUUID,
 				Column: upscalerealtime.FieldID,
 			},
 		},

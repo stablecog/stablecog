@@ -4,10 +4,13 @@ package ent
 
 import (
 	"context"
+	"errors"
 	"fmt"
+	"time"
 
 	"entgo.io/ent/dialect/sql/sqlgraph"
 	"entgo.io/ent/schema/field"
+	"github.com/google/uuid"
 	"github.com/yekta/stablecog/go-apps/database/ent/server"
 )
 
@@ -18,6 +21,119 @@ type ServerCreate struct {
 	hooks    []Hook
 }
 
+// SetURL sets the "url" field.
+func (sc *ServerCreate) SetURL(s string) *ServerCreate {
+	sc.mutation.SetURL(s)
+	return sc
+}
+
+// SetHealthy sets the "healthy" field.
+func (sc *ServerCreate) SetHealthy(b bool) *ServerCreate {
+	sc.mutation.SetHealthy(b)
+	return sc
+}
+
+// SetNillableHealthy sets the "healthy" field if the given value is not nil.
+func (sc *ServerCreate) SetNillableHealthy(b *bool) *ServerCreate {
+	if b != nil {
+		sc.SetHealthy(*b)
+	}
+	return sc
+}
+
+// SetEnabled sets the "enabled" field.
+func (sc *ServerCreate) SetEnabled(b bool) *ServerCreate {
+	sc.mutation.SetEnabled(b)
+	return sc
+}
+
+// SetNillableEnabled sets the "enabled" field if the given value is not nil.
+func (sc *ServerCreate) SetNillableEnabled(b *bool) *ServerCreate {
+	if b != nil {
+		sc.SetEnabled(*b)
+	}
+	return sc
+}
+
+// SetFeatures sets the "features" field.
+func (sc *ServerCreate) SetFeatures(s struct {
+	Name   string   "json:\"name\""
+	Values []string "json:\"values,omitempty\""
+}) *ServerCreate {
+	sc.mutation.SetFeatures(s)
+	return sc
+}
+
+// SetLastHealthCheckAt sets the "last_health_check_at" field.
+func (sc *ServerCreate) SetLastHealthCheckAt(t time.Time) *ServerCreate {
+	sc.mutation.SetLastHealthCheckAt(t)
+	return sc
+}
+
+// SetNillableLastHealthCheckAt sets the "last_health_check_at" field if the given value is not nil.
+func (sc *ServerCreate) SetNillableLastHealthCheckAt(t *time.Time) *ServerCreate {
+	if t != nil {
+		sc.SetLastHealthCheckAt(*t)
+	}
+	return sc
+}
+
+// SetCreatedAt sets the "created_at" field.
+func (sc *ServerCreate) SetCreatedAt(t time.Time) *ServerCreate {
+	sc.mutation.SetCreatedAt(t)
+	return sc
+}
+
+// SetNillableCreatedAt sets the "created_at" field if the given value is not nil.
+func (sc *ServerCreate) SetNillableCreatedAt(t *time.Time) *ServerCreate {
+	if t != nil {
+		sc.SetCreatedAt(*t)
+	}
+	return sc
+}
+
+// SetUpdatedAt sets the "updated_at" field.
+func (sc *ServerCreate) SetUpdatedAt(t time.Time) *ServerCreate {
+	sc.mutation.SetUpdatedAt(t)
+	return sc
+}
+
+// SetNillableUpdatedAt sets the "updated_at" field if the given value is not nil.
+func (sc *ServerCreate) SetNillableUpdatedAt(t *time.Time) *ServerCreate {
+	if t != nil {
+		sc.SetUpdatedAt(*t)
+	}
+	return sc
+}
+
+// SetUserTier sets the "user_tier" field.
+func (sc *ServerCreate) SetUserTier(st server.UserTier) *ServerCreate {
+	sc.mutation.SetUserTier(st)
+	return sc
+}
+
+// SetNillableUserTier sets the "user_tier" field if the given value is not nil.
+func (sc *ServerCreate) SetNillableUserTier(st *server.UserTier) *ServerCreate {
+	if st != nil {
+		sc.SetUserTier(*st)
+	}
+	return sc
+}
+
+// SetID sets the "id" field.
+func (sc *ServerCreate) SetID(u uuid.UUID) *ServerCreate {
+	sc.mutation.SetID(u)
+	return sc
+}
+
+// SetNillableID sets the "id" field if the given value is not nil.
+func (sc *ServerCreate) SetNillableID(u *uuid.UUID) *ServerCreate {
+	if u != nil {
+		sc.SetID(*u)
+	}
+	return sc
+}
+
 // Mutation returns the ServerMutation object of the builder.
 func (sc *ServerCreate) Mutation() *ServerMutation {
 	return sc.mutation
@@ -25,6 +141,7 @@ func (sc *ServerCreate) Mutation() *ServerMutation {
 
 // Save creates the Server in the database.
 func (sc *ServerCreate) Save(ctx context.Context) (*Server, error) {
+	sc.defaults()
 	return withHooks[*Server, ServerMutation](ctx, sc.sqlSave, sc.mutation, sc.hooks)
 }
 
@@ -50,8 +167,69 @@ func (sc *ServerCreate) ExecX(ctx context.Context) {
 	}
 }
 
+// defaults sets the default values of the builder before save.
+func (sc *ServerCreate) defaults() {
+	if _, ok := sc.mutation.Healthy(); !ok {
+		v := server.DefaultHealthy
+		sc.mutation.SetHealthy(v)
+	}
+	if _, ok := sc.mutation.Enabled(); !ok {
+		v := server.DefaultEnabled
+		sc.mutation.SetEnabled(v)
+	}
+	if _, ok := sc.mutation.LastHealthCheckAt(); !ok {
+		v := server.DefaultLastHealthCheckAt()
+		sc.mutation.SetLastHealthCheckAt(v)
+	}
+	if _, ok := sc.mutation.CreatedAt(); !ok {
+		v := server.DefaultCreatedAt()
+		sc.mutation.SetCreatedAt(v)
+	}
+	if _, ok := sc.mutation.UpdatedAt(); !ok {
+		v := server.DefaultUpdatedAt()
+		sc.mutation.SetUpdatedAt(v)
+	}
+	if _, ok := sc.mutation.UserTier(); !ok {
+		v := server.DefaultUserTier
+		sc.mutation.SetUserTier(v)
+	}
+	if _, ok := sc.mutation.ID(); !ok {
+		v := server.DefaultID()
+		sc.mutation.SetID(v)
+	}
+}
+
 // check runs all checks and user-defined validators on the builder.
 func (sc *ServerCreate) check() error {
+	if _, ok := sc.mutation.URL(); !ok {
+		return &ValidationError{Name: "url", err: errors.New(`ent: missing required field "Server.url"`)}
+	}
+	if _, ok := sc.mutation.Healthy(); !ok {
+		return &ValidationError{Name: "healthy", err: errors.New(`ent: missing required field "Server.healthy"`)}
+	}
+	if _, ok := sc.mutation.Enabled(); !ok {
+		return &ValidationError{Name: "enabled", err: errors.New(`ent: missing required field "Server.enabled"`)}
+	}
+	if _, ok := sc.mutation.Features(); !ok {
+		return &ValidationError{Name: "features", err: errors.New(`ent: missing required field "Server.features"`)}
+	}
+	if _, ok := sc.mutation.LastHealthCheckAt(); !ok {
+		return &ValidationError{Name: "last_health_check_at", err: errors.New(`ent: missing required field "Server.last_health_check_at"`)}
+	}
+	if _, ok := sc.mutation.CreatedAt(); !ok {
+		return &ValidationError{Name: "created_at", err: errors.New(`ent: missing required field "Server.created_at"`)}
+	}
+	if _, ok := sc.mutation.UpdatedAt(); !ok {
+		return &ValidationError{Name: "updated_at", err: errors.New(`ent: missing required field "Server.updated_at"`)}
+	}
+	if _, ok := sc.mutation.UserTier(); !ok {
+		return &ValidationError{Name: "user_tier", err: errors.New(`ent: missing required field "Server.user_tier"`)}
+	}
+	if v, ok := sc.mutation.UserTier(); ok {
+		if err := server.UserTierValidator(v); err != nil {
+			return &ValidationError{Name: "user_tier", err: fmt.Errorf(`ent: validator failed for field "Server.user_tier": %w`, err)}
+		}
+	}
 	return nil
 }
 
@@ -66,8 +244,13 @@ func (sc *ServerCreate) sqlSave(ctx context.Context) (*Server, error) {
 		}
 		return nil, err
 	}
-	id := _spec.ID.Value.(int64)
-	_node.ID = int(id)
+	if _spec.ID.Value != nil {
+		if id, ok := _spec.ID.Value.(*uuid.UUID); ok {
+			_node.ID = *id
+		} else if err := _node.ID.Scan(_spec.ID.Value); err != nil {
+			return nil, err
+		}
+	}
 	sc.mutation.id = &_node.ID
 	sc.mutation.done = true
 	return _node, nil
@@ -79,11 +262,47 @@ func (sc *ServerCreate) createSpec() (*Server, *sqlgraph.CreateSpec) {
 		_spec = &sqlgraph.CreateSpec{
 			Table: server.Table,
 			ID: &sqlgraph.FieldSpec{
-				Type:   field.TypeInt,
+				Type:   field.TypeUUID,
 				Column: server.FieldID,
 			},
 		}
 	)
+	if id, ok := sc.mutation.ID(); ok {
+		_node.ID = id
+		_spec.ID.Value = &id
+	}
+	if value, ok := sc.mutation.URL(); ok {
+		_spec.SetField(server.FieldURL, field.TypeString, value)
+		_node.URL = value
+	}
+	if value, ok := sc.mutation.Healthy(); ok {
+		_spec.SetField(server.FieldHealthy, field.TypeBool, value)
+		_node.Healthy = value
+	}
+	if value, ok := sc.mutation.Enabled(); ok {
+		_spec.SetField(server.FieldEnabled, field.TypeBool, value)
+		_node.Enabled = value
+	}
+	if value, ok := sc.mutation.Features(); ok {
+		_spec.SetField(server.FieldFeatures, field.TypeJSON, value)
+		_node.Features = value
+	}
+	if value, ok := sc.mutation.LastHealthCheckAt(); ok {
+		_spec.SetField(server.FieldLastHealthCheckAt, field.TypeTime, value)
+		_node.LastHealthCheckAt = value
+	}
+	if value, ok := sc.mutation.CreatedAt(); ok {
+		_spec.SetField(server.FieldCreatedAt, field.TypeTime, value)
+		_node.CreatedAt = value
+	}
+	if value, ok := sc.mutation.UpdatedAt(); ok {
+		_spec.SetField(server.FieldUpdatedAt, field.TypeTime, value)
+		_node.UpdatedAt = value
+	}
+	if value, ok := sc.mutation.UserTier(); ok {
+		_spec.SetField(server.FieldUserTier, field.TypeEnum, value)
+		_node.UserTier = value
+	}
 	return _node, _spec
 }
 
@@ -101,6 +320,7 @@ func (scb *ServerCreateBulk) Save(ctx context.Context) ([]*Server, error) {
 	for i := range scb.builders {
 		func(i int, root context.Context) {
 			builder := scb.builders[i]
+			builder.defaults()
 			var mut Mutator = MutateFunc(func(ctx context.Context, m Mutation) (Value, error) {
 				mutation, ok := m.(*ServerMutation)
 				if !ok {
@@ -127,10 +347,6 @@ func (scb *ServerCreateBulk) Save(ctx context.Context) ([]*Server, error) {
 					return nil, err
 				}
 				mutation.id = &nodes[i].ID
-				if specs[i].ID.Value != nil {
-					id := specs[i].ID.Value.(int64)
-					nodes[i].ID = int(id)
-				}
 				mutation.done = true
 				return nodes[i], nil
 			})

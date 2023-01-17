@@ -4,10 +4,16 @@ package ent
 
 import (
 	"context"
+	"errors"
 	"fmt"
+	"time"
 
 	"entgo.io/ent/dialect/sql/sqlgraph"
 	"entgo.io/ent/schema/field"
+	"github.com/google/uuid"
+	"github.com/yekta/stablecog/go-apps/database/ent/generation"
+	"github.com/yekta/stablecog/go-apps/database/ent/generationg"
+	"github.com/yekta/stablecog/go-apps/database/ent/upscale"
 	"github.com/yekta/stablecog/go-apps/database/ent/user"
 )
 
@@ -18,6 +24,131 @@ type UserCreate struct {
 	hooks    []Hook
 }
 
+// SetEmail sets the "email" field.
+func (uc *UserCreate) SetEmail(s string) *UserCreate {
+	uc.mutation.SetEmail(s)
+	return uc
+}
+
+// SetStripeCustomerID sets the "stripe_customer_id" field.
+func (uc *UserCreate) SetStripeCustomerID(s string) *UserCreate {
+	uc.mutation.SetStripeCustomerID(s)
+	return uc
+}
+
+// SetSubscriptionTier sets the "subscription_tier" field.
+func (uc *UserCreate) SetSubscriptionTier(ut user.SubscriptionTier) *UserCreate {
+	uc.mutation.SetSubscriptionTier(ut)
+	return uc
+}
+
+// SetNillableSubscriptionTier sets the "subscription_tier" field if the given value is not nil.
+func (uc *UserCreate) SetNillableSubscriptionTier(ut *user.SubscriptionTier) *UserCreate {
+	if ut != nil {
+		uc.SetSubscriptionTier(*ut)
+	}
+	return uc
+}
+
+// SetSubscriptionCategory sets the "subscription_category" field.
+func (uc *UserCreate) SetSubscriptionCategory(value user.SubscriptionCategory) *UserCreate {
+	uc.mutation.SetSubscriptionCategory(value)
+	return uc
+}
+
+// SetCreatedAt sets the "created_at" field.
+func (uc *UserCreate) SetCreatedAt(t time.Time) *UserCreate {
+	uc.mutation.SetCreatedAt(t)
+	return uc
+}
+
+// SetNillableCreatedAt sets the "created_at" field if the given value is not nil.
+func (uc *UserCreate) SetNillableCreatedAt(t *time.Time) *UserCreate {
+	if t != nil {
+		uc.SetCreatedAt(*t)
+	}
+	return uc
+}
+
+// SetUpdatedAt sets the "updated_at" field.
+func (uc *UserCreate) SetUpdatedAt(t time.Time) *UserCreate {
+	uc.mutation.SetUpdatedAt(t)
+	return uc
+}
+
+// SetNillableUpdatedAt sets the "updated_at" field if the given value is not nil.
+func (uc *UserCreate) SetNillableUpdatedAt(t *time.Time) *UserCreate {
+	if t != nil {
+		uc.SetUpdatedAt(*t)
+	}
+	return uc
+}
+
+// SetConfirmedAt sets the "confirmed_at" field.
+func (uc *UserCreate) SetConfirmedAt(t time.Time) *UserCreate {
+	uc.mutation.SetConfirmedAt(t)
+	return uc
+}
+
+// SetID sets the "id" field.
+func (uc *UserCreate) SetID(u uuid.UUID) *UserCreate {
+	uc.mutation.SetID(u)
+	return uc
+}
+
+// SetNillableID sets the "id" field if the given value is not nil.
+func (uc *UserCreate) SetNillableID(u *uuid.UUID) *UserCreate {
+	if u != nil {
+		uc.SetID(*u)
+	}
+	return uc
+}
+
+// AddUpscaleIDs adds the "upscale" edge to the Upscale entity by IDs.
+func (uc *UserCreate) AddUpscaleIDs(ids ...uuid.UUID) *UserCreate {
+	uc.mutation.AddUpscaleIDs(ids...)
+	return uc
+}
+
+// AddUpscale adds the "upscale" edges to the Upscale entity.
+func (uc *UserCreate) AddUpscale(u ...*Upscale) *UserCreate {
+	ids := make([]uuid.UUID, len(u))
+	for i := range u {
+		ids[i] = u[i].ID
+	}
+	return uc.AddUpscaleIDs(ids...)
+}
+
+// AddGenerationIDs adds the "generation" edge to the Generation entity by IDs.
+func (uc *UserCreate) AddGenerationIDs(ids ...uuid.UUID) *UserCreate {
+	uc.mutation.AddGenerationIDs(ids...)
+	return uc
+}
+
+// AddGeneration adds the "generation" edges to the Generation entity.
+func (uc *UserCreate) AddGeneration(g ...*Generation) *UserCreate {
+	ids := make([]uuid.UUID, len(g))
+	for i := range g {
+		ids[i] = g[i].ID
+	}
+	return uc.AddGenerationIDs(ids...)
+}
+
+// AddGenerationGIDs adds the "generation_g" edge to the GenerationG entity by IDs.
+func (uc *UserCreate) AddGenerationGIDs(ids ...uuid.UUID) *UserCreate {
+	uc.mutation.AddGenerationGIDs(ids...)
+	return uc
+}
+
+// AddGenerationG adds the "generation_g" edges to the GenerationG entity.
+func (uc *UserCreate) AddGenerationG(g ...*GenerationG) *UserCreate {
+	ids := make([]uuid.UUID, len(g))
+	for i := range g {
+		ids[i] = g[i].ID
+	}
+	return uc.AddGenerationGIDs(ids...)
+}
+
 // Mutation returns the UserMutation object of the builder.
 func (uc *UserCreate) Mutation() *UserMutation {
 	return uc.mutation
@@ -25,6 +156,7 @@ func (uc *UserCreate) Mutation() *UserMutation {
 
 // Save creates the User in the database.
 func (uc *UserCreate) Save(ctx context.Context) (*User, error) {
+	uc.defaults()
 	return withHooks[*User, UserMutation](ctx, uc.sqlSave, uc.mutation, uc.hooks)
 }
 
@@ -50,8 +182,59 @@ func (uc *UserCreate) ExecX(ctx context.Context) {
 	}
 }
 
+// defaults sets the default values of the builder before save.
+func (uc *UserCreate) defaults() {
+	if _, ok := uc.mutation.SubscriptionTier(); !ok {
+		v := user.DefaultSubscriptionTier
+		uc.mutation.SetSubscriptionTier(v)
+	}
+	if _, ok := uc.mutation.CreatedAt(); !ok {
+		v := user.DefaultCreatedAt()
+		uc.mutation.SetCreatedAt(v)
+	}
+	if _, ok := uc.mutation.UpdatedAt(); !ok {
+		v := user.DefaultUpdatedAt()
+		uc.mutation.SetUpdatedAt(v)
+	}
+	if _, ok := uc.mutation.ID(); !ok {
+		v := user.DefaultID()
+		uc.mutation.SetID(v)
+	}
+}
+
 // check runs all checks and user-defined validators on the builder.
 func (uc *UserCreate) check() error {
+	if _, ok := uc.mutation.Email(); !ok {
+		return &ValidationError{Name: "email", err: errors.New(`ent: missing required field "User.email"`)}
+	}
+	if _, ok := uc.mutation.StripeCustomerID(); !ok {
+		return &ValidationError{Name: "stripe_customer_id", err: errors.New(`ent: missing required field "User.stripe_customer_id"`)}
+	}
+	if _, ok := uc.mutation.SubscriptionTier(); !ok {
+		return &ValidationError{Name: "subscription_tier", err: errors.New(`ent: missing required field "User.subscription_tier"`)}
+	}
+	if v, ok := uc.mutation.SubscriptionTier(); ok {
+		if err := user.SubscriptionTierValidator(v); err != nil {
+			return &ValidationError{Name: "subscription_tier", err: fmt.Errorf(`ent: validator failed for field "User.subscription_tier": %w`, err)}
+		}
+	}
+	if _, ok := uc.mutation.SubscriptionCategory(); !ok {
+		return &ValidationError{Name: "subscription_category", err: errors.New(`ent: missing required field "User.subscription_category"`)}
+	}
+	if v, ok := uc.mutation.SubscriptionCategory(); ok {
+		if err := user.SubscriptionCategoryValidator(v); err != nil {
+			return &ValidationError{Name: "subscription_category", err: fmt.Errorf(`ent: validator failed for field "User.subscription_category": %w`, err)}
+		}
+	}
+	if _, ok := uc.mutation.CreatedAt(); !ok {
+		return &ValidationError{Name: "created_at", err: errors.New(`ent: missing required field "User.created_at"`)}
+	}
+	if _, ok := uc.mutation.UpdatedAt(); !ok {
+		return &ValidationError{Name: "updated_at", err: errors.New(`ent: missing required field "User.updated_at"`)}
+	}
+	if _, ok := uc.mutation.ConfirmedAt(); !ok {
+		return &ValidationError{Name: "confirmed_at", err: errors.New(`ent: missing required field "User.confirmed_at"`)}
+	}
 	return nil
 }
 
@@ -66,8 +249,13 @@ func (uc *UserCreate) sqlSave(ctx context.Context) (*User, error) {
 		}
 		return nil, err
 	}
-	id := _spec.ID.Value.(int64)
-	_node.ID = int(id)
+	if _spec.ID.Value != nil {
+		if id, ok := _spec.ID.Value.(*uuid.UUID); ok {
+			_node.ID = *id
+		} else if err := _node.ID.Scan(_spec.ID.Value); err != nil {
+			return nil, err
+		}
+	}
 	uc.mutation.id = &_node.ID
 	uc.mutation.done = true
 	return _node, nil
@@ -79,11 +267,100 @@ func (uc *UserCreate) createSpec() (*User, *sqlgraph.CreateSpec) {
 		_spec = &sqlgraph.CreateSpec{
 			Table: user.Table,
 			ID: &sqlgraph.FieldSpec{
-				Type:   field.TypeInt,
+				Type:   field.TypeUUID,
 				Column: user.FieldID,
 			},
 		}
 	)
+	if id, ok := uc.mutation.ID(); ok {
+		_node.ID = id
+		_spec.ID.Value = &id
+	}
+	if value, ok := uc.mutation.Email(); ok {
+		_spec.SetField(user.FieldEmail, field.TypeString, value)
+		_node.Email = value
+	}
+	if value, ok := uc.mutation.StripeCustomerID(); ok {
+		_spec.SetField(user.FieldStripeCustomerID, field.TypeString, value)
+		_node.StripeCustomerID = &value
+	}
+	if value, ok := uc.mutation.SubscriptionTier(); ok {
+		_spec.SetField(user.FieldSubscriptionTier, field.TypeEnum, value)
+		_node.SubscriptionTier = value
+	}
+	if value, ok := uc.mutation.SubscriptionCategory(); ok {
+		_spec.SetField(user.FieldSubscriptionCategory, field.TypeEnum, value)
+		_node.SubscriptionCategory = &value
+	}
+	if value, ok := uc.mutation.CreatedAt(); ok {
+		_spec.SetField(user.FieldCreatedAt, field.TypeTime, value)
+		_node.CreatedAt = value
+	}
+	if value, ok := uc.mutation.UpdatedAt(); ok {
+		_spec.SetField(user.FieldUpdatedAt, field.TypeTime, value)
+		_node.UpdatedAt = value
+	}
+	if value, ok := uc.mutation.ConfirmedAt(); ok {
+		_spec.SetField(user.FieldConfirmedAt, field.TypeTime, value)
+		_node.ConfirmedAt = &value
+	}
+	if nodes := uc.mutation.UpscaleIDs(); len(nodes) > 0 {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.O2M,
+			Inverse: false,
+			Table:   user.UpscaleTable,
+			Columns: []string{user.UpscaleColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeUUID,
+					Column: upscale.FieldID,
+				},
+			},
+		}
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_spec.Edges = append(_spec.Edges, edge)
+	}
+	if nodes := uc.mutation.GenerationIDs(); len(nodes) > 0 {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.O2M,
+			Inverse: false,
+			Table:   user.GenerationTable,
+			Columns: []string{user.GenerationColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeUUID,
+					Column: generation.FieldID,
+				},
+			},
+		}
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_spec.Edges = append(_spec.Edges, edge)
+	}
+	if nodes := uc.mutation.GenerationGIDs(); len(nodes) > 0 {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.O2M,
+			Inverse: false,
+			Table:   user.GenerationGTable,
+			Columns: []string{user.GenerationGColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeUUID,
+					Column: generationg.FieldID,
+				},
+			},
+		}
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_spec.Edges = append(_spec.Edges, edge)
+	}
 	return _node, _spec
 }
 
@@ -101,6 +378,7 @@ func (ucb *UserCreateBulk) Save(ctx context.Context) ([]*User, error) {
 	for i := range ucb.builders {
 		func(i int, root context.Context) {
 			builder := ucb.builders[i]
+			builder.defaults()
 			var mut Mutator = MutateFunc(func(ctx context.Context, m Mutation) (Value, error) {
 				mutation, ok := m.(*UserMutation)
 				if !ok {
@@ -127,10 +405,6 @@ func (ucb *UserCreateBulk) Save(ctx context.Context) ([]*User, error) {
 					return nil, err
 				}
 				mutation.id = &nodes[i].ID
-				if specs[i].ID.Value != nil {
-					id := specs[i].ID.Value.(int64)
-					nodes[i].ID = int(id)
-				}
 				mutation.done = true
 				return nodes[i], nil
 			})

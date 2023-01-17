@@ -4,10 +4,15 @@ package ent
 
 import (
 	"context"
+	"errors"
 	"fmt"
+	"time"
 
 	"entgo.io/ent/dialect/sql/sqlgraph"
 	"entgo.io/ent/schema/field"
+	"github.com/google/uuid"
+	"github.com/yekta/stablecog/go-apps/database/ent/generation"
+	"github.com/yekta/stablecog/go-apps/database/ent/generationg"
 	"github.com/yekta/stablecog/go-apps/database/ent/prompt"
 )
 
@@ -18,6 +23,84 @@ type PromptCreate struct {
 	hooks    []Hook
 }
 
+// SetText sets the "text" field.
+func (pc *PromptCreate) SetText(s string) *PromptCreate {
+	pc.mutation.SetText(s)
+	return pc
+}
+
+// SetCreatedAt sets the "created_at" field.
+func (pc *PromptCreate) SetCreatedAt(t time.Time) *PromptCreate {
+	pc.mutation.SetCreatedAt(t)
+	return pc
+}
+
+// SetNillableCreatedAt sets the "created_at" field if the given value is not nil.
+func (pc *PromptCreate) SetNillableCreatedAt(t *time.Time) *PromptCreate {
+	if t != nil {
+		pc.SetCreatedAt(*t)
+	}
+	return pc
+}
+
+// SetUpdatedAt sets the "updated_at" field.
+func (pc *PromptCreate) SetUpdatedAt(t time.Time) *PromptCreate {
+	pc.mutation.SetUpdatedAt(t)
+	return pc
+}
+
+// SetNillableUpdatedAt sets the "updated_at" field if the given value is not nil.
+func (pc *PromptCreate) SetNillableUpdatedAt(t *time.Time) *PromptCreate {
+	if t != nil {
+		pc.SetUpdatedAt(*t)
+	}
+	return pc
+}
+
+// SetID sets the "id" field.
+func (pc *PromptCreate) SetID(u uuid.UUID) *PromptCreate {
+	pc.mutation.SetID(u)
+	return pc
+}
+
+// SetNillableID sets the "id" field if the given value is not nil.
+func (pc *PromptCreate) SetNillableID(u *uuid.UUID) *PromptCreate {
+	if u != nil {
+		pc.SetID(*u)
+	}
+	return pc
+}
+
+// AddGenerationIDs adds the "generation" edge to the Generation entity by IDs.
+func (pc *PromptCreate) AddGenerationIDs(ids ...uuid.UUID) *PromptCreate {
+	pc.mutation.AddGenerationIDs(ids...)
+	return pc
+}
+
+// AddGeneration adds the "generation" edges to the Generation entity.
+func (pc *PromptCreate) AddGeneration(g ...*Generation) *PromptCreate {
+	ids := make([]uuid.UUID, len(g))
+	for i := range g {
+		ids[i] = g[i].ID
+	}
+	return pc.AddGenerationIDs(ids...)
+}
+
+// AddGenerationGIDs adds the "generation_g" edge to the GenerationG entity by IDs.
+func (pc *PromptCreate) AddGenerationGIDs(ids ...uuid.UUID) *PromptCreate {
+	pc.mutation.AddGenerationGIDs(ids...)
+	return pc
+}
+
+// AddGenerationG adds the "generation_g" edges to the GenerationG entity.
+func (pc *PromptCreate) AddGenerationG(g ...*GenerationG) *PromptCreate {
+	ids := make([]uuid.UUID, len(g))
+	for i := range g {
+		ids[i] = g[i].ID
+	}
+	return pc.AddGenerationGIDs(ids...)
+}
+
 // Mutation returns the PromptMutation object of the builder.
 func (pc *PromptCreate) Mutation() *PromptMutation {
 	return pc.mutation
@@ -25,6 +108,7 @@ func (pc *PromptCreate) Mutation() *PromptMutation {
 
 // Save creates the Prompt in the database.
 func (pc *PromptCreate) Save(ctx context.Context) (*Prompt, error) {
+	pc.defaults()
 	return withHooks[*Prompt, PromptMutation](ctx, pc.sqlSave, pc.mutation, pc.hooks)
 }
 
@@ -50,8 +134,33 @@ func (pc *PromptCreate) ExecX(ctx context.Context) {
 	}
 }
 
+// defaults sets the default values of the builder before save.
+func (pc *PromptCreate) defaults() {
+	if _, ok := pc.mutation.CreatedAt(); !ok {
+		v := prompt.DefaultCreatedAt()
+		pc.mutation.SetCreatedAt(v)
+	}
+	if _, ok := pc.mutation.UpdatedAt(); !ok {
+		v := prompt.DefaultUpdatedAt()
+		pc.mutation.SetUpdatedAt(v)
+	}
+	if _, ok := pc.mutation.ID(); !ok {
+		v := prompt.DefaultID()
+		pc.mutation.SetID(v)
+	}
+}
+
 // check runs all checks and user-defined validators on the builder.
 func (pc *PromptCreate) check() error {
+	if _, ok := pc.mutation.Text(); !ok {
+		return &ValidationError{Name: "text", err: errors.New(`ent: missing required field "Prompt.text"`)}
+	}
+	if _, ok := pc.mutation.CreatedAt(); !ok {
+		return &ValidationError{Name: "created_at", err: errors.New(`ent: missing required field "Prompt.created_at"`)}
+	}
+	if _, ok := pc.mutation.UpdatedAt(); !ok {
+		return &ValidationError{Name: "updated_at", err: errors.New(`ent: missing required field "Prompt.updated_at"`)}
+	}
 	return nil
 }
 
@@ -66,8 +175,13 @@ func (pc *PromptCreate) sqlSave(ctx context.Context) (*Prompt, error) {
 		}
 		return nil, err
 	}
-	id := _spec.ID.Value.(int64)
-	_node.ID = int(id)
+	if _spec.ID.Value != nil {
+		if id, ok := _spec.ID.Value.(*uuid.UUID); ok {
+			_node.ID = *id
+		} else if err := _node.ID.Scan(_spec.ID.Value); err != nil {
+			return nil, err
+		}
+	}
 	pc.mutation.id = &_node.ID
 	pc.mutation.done = true
 	return _node, nil
@@ -79,11 +193,65 @@ func (pc *PromptCreate) createSpec() (*Prompt, *sqlgraph.CreateSpec) {
 		_spec = &sqlgraph.CreateSpec{
 			Table: prompt.Table,
 			ID: &sqlgraph.FieldSpec{
-				Type:   field.TypeInt,
+				Type:   field.TypeUUID,
 				Column: prompt.FieldID,
 			},
 		}
 	)
+	if id, ok := pc.mutation.ID(); ok {
+		_node.ID = id
+		_spec.ID.Value = &id
+	}
+	if value, ok := pc.mutation.Text(); ok {
+		_spec.SetField(prompt.FieldText, field.TypeString, value)
+		_node.Text = value
+	}
+	if value, ok := pc.mutation.CreatedAt(); ok {
+		_spec.SetField(prompt.FieldCreatedAt, field.TypeTime, value)
+		_node.CreatedAt = value
+	}
+	if value, ok := pc.mutation.UpdatedAt(); ok {
+		_spec.SetField(prompt.FieldUpdatedAt, field.TypeTime, value)
+		_node.UpdatedAt = value
+	}
+	if nodes := pc.mutation.GenerationIDs(); len(nodes) > 0 {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.O2M,
+			Inverse: false,
+			Table:   prompt.GenerationTable,
+			Columns: []string{prompt.GenerationColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeUUID,
+					Column: generation.FieldID,
+				},
+			},
+		}
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_spec.Edges = append(_spec.Edges, edge)
+	}
+	if nodes := pc.mutation.GenerationGIDs(); len(nodes) > 0 {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.O2M,
+			Inverse: false,
+			Table:   prompt.GenerationGTable,
+			Columns: []string{prompt.GenerationGColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeUUID,
+					Column: generationg.FieldID,
+				},
+			},
+		}
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_spec.Edges = append(_spec.Edges, edge)
+	}
 	return _node, _spec
 }
 
@@ -101,6 +269,7 @@ func (pcb *PromptCreateBulk) Save(ctx context.Context) ([]*Prompt, error) {
 	for i := range pcb.builders {
 		func(i int, root context.Context) {
 			builder := pcb.builders[i]
+			builder.defaults()
 			var mut Mutator = MutateFunc(func(ctx context.Context, m Mutation) (Value, error) {
 				mutation, ok := m.(*PromptMutation)
 				if !ok {
@@ -127,10 +296,6 @@ func (pcb *PromptCreateBulk) Save(ctx context.Context) ([]*Prompt, error) {
 					return nil, err
 				}
 				mutation.id = &nodes[i].ID
-				if specs[i].ID.Value != nil {
-					id := specs[i].ID.Value.(int64)
-					nodes[i].ID = int(id)
-				}
 				mutation.done = true
 				return nodes[i], nil
 			})

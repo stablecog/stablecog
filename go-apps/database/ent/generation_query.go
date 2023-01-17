@@ -10,20 +10,31 @@ import (
 	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"
 	"entgo.io/ent/schema/field"
+	"github.com/google/uuid"
 	"github.com/yekta/stablecog/go-apps/database/ent/generation"
+	"github.com/yekta/stablecog/go-apps/database/ent/model"
+	"github.com/yekta/stablecog/go-apps/database/ent/negativeprompt"
 	"github.com/yekta/stablecog/go-apps/database/ent/predicate"
+	"github.com/yekta/stablecog/go-apps/database/ent/prompt"
+	"github.com/yekta/stablecog/go-apps/database/ent/scheduler"
+	"github.com/yekta/stablecog/go-apps/database/ent/user"
 )
 
 // GenerationQuery is the builder for querying Generation entities.
 type GenerationQuery struct {
 	config
-	limit      *int
-	offset     *int
-	unique     *bool
-	order      []OrderFunc
-	fields     []string
-	inters     []Interceptor
-	predicates []predicate.Generation
+	limit              *int
+	offset             *int
+	unique             *bool
+	order              []OrderFunc
+	fields             []string
+	inters             []Interceptor
+	predicates         []predicate.Generation
+	withUser           *UserQuery
+	withModel          *ModelQuery
+	withPrompt         *PromptQuery
+	withNegativePrompt *NegativePromptQuery
+	withScheduler      *SchedulerQuery
 	// intermediate query (i.e. traversal path).
 	sql  *sql.Selector
 	path func(context.Context) (*sql.Selector, error)
@@ -60,6 +71,116 @@ func (gq *GenerationQuery) Order(o ...OrderFunc) *GenerationQuery {
 	return gq
 }
 
+// QueryUser chains the current query on the "user" edge.
+func (gq *GenerationQuery) QueryUser() *UserQuery {
+	query := (&UserClient{config: gq.config}).Query()
+	query.path = func(ctx context.Context) (fromU *sql.Selector, err error) {
+		if err := gq.prepareQuery(ctx); err != nil {
+			return nil, err
+		}
+		selector := gq.sqlQuery(ctx)
+		if err := selector.Err(); err != nil {
+			return nil, err
+		}
+		step := sqlgraph.NewStep(
+			sqlgraph.From(generation.Table, generation.FieldID, selector),
+			sqlgraph.To(user.Table, user.FieldID),
+			sqlgraph.Edge(sqlgraph.M2O, true, generation.UserTable, generation.UserColumn),
+		)
+		fromU = sqlgraph.SetNeighbors(gq.driver.Dialect(), step)
+		return fromU, nil
+	}
+	return query
+}
+
+// QueryModel chains the current query on the "model" edge.
+func (gq *GenerationQuery) QueryModel() *ModelQuery {
+	query := (&ModelClient{config: gq.config}).Query()
+	query.path = func(ctx context.Context) (fromU *sql.Selector, err error) {
+		if err := gq.prepareQuery(ctx); err != nil {
+			return nil, err
+		}
+		selector := gq.sqlQuery(ctx)
+		if err := selector.Err(); err != nil {
+			return nil, err
+		}
+		step := sqlgraph.NewStep(
+			sqlgraph.From(generation.Table, generation.FieldID, selector),
+			sqlgraph.To(model.Table, model.FieldID),
+			sqlgraph.Edge(sqlgraph.M2O, true, generation.ModelTable, generation.ModelColumn),
+		)
+		fromU = sqlgraph.SetNeighbors(gq.driver.Dialect(), step)
+		return fromU, nil
+	}
+	return query
+}
+
+// QueryPrompt chains the current query on the "prompt" edge.
+func (gq *GenerationQuery) QueryPrompt() *PromptQuery {
+	query := (&PromptClient{config: gq.config}).Query()
+	query.path = func(ctx context.Context) (fromU *sql.Selector, err error) {
+		if err := gq.prepareQuery(ctx); err != nil {
+			return nil, err
+		}
+		selector := gq.sqlQuery(ctx)
+		if err := selector.Err(); err != nil {
+			return nil, err
+		}
+		step := sqlgraph.NewStep(
+			sqlgraph.From(generation.Table, generation.FieldID, selector),
+			sqlgraph.To(prompt.Table, prompt.FieldID),
+			sqlgraph.Edge(sqlgraph.M2O, true, generation.PromptTable, generation.PromptColumn),
+		)
+		fromU = sqlgraph.SetNeighbors(gq.driver.Dialect(), step)
+		return fromU, nil
+	}
+	return query
+}
+
+// QueryNegativePrompt chains the current query on the "negative_prompt" edge.
+func (gq *GenerationQuery) QueryNegativePrompt() *NegativePromptQuery {
+	query := (&NegativePromptClient{config: gq.config}).Query()
+	query.path = func(ctx context.Context) (fromU *sql.Selector, err error) {
+		if err := gq.prepareQuery(ctx); err != nil {
+			return nil, err
+		}
+		selector := gq.sqlQuery(ctx)
+		if err := selector.Err(); err != nil {
+			return nil, err
+		}
+		step := sqlgraph.NewStep(
+			sqlgraph.From(generation.Table, generation.FieldID, selector),
+			sqlgraph.To(negativeprompt.Table, negativeprompt.FieldID),
+			sqlgraph.Edge(sqlgraph.M2O, true, generation.NegativePromptTable, generation.NegativePromptColumn),
+		)
+		fromU = sqlgraph.SetNeighbors(gq.driver.Dialect(), step)
+		return fromU, nil
+	}
+	return query
+}
+
+// QueryScheduler chains the current query on the "scheduler" edge.
+func (gq *GenerationQuery) QueryScheduler() *SchedulerQuery {
+	query := (&SchedulerClient{config: gq.config}).Query()
+	query.path = func(ctx context.Context) (fromU *sql.Selector, err error) {
+		if err := gq.prepareQuery(ctx); err != nil {
+			return nil, err
+		}
+		selector := gq.sqlQuery(ctx)
+		if err := selector.Err(); err != nil {
+			return nil, err
+		}
+		step := sqlgraph.NewStep(
+			sqlgraph.From(generation.Table, generation.FieldID, selector),
+			sqlgraph.To(scheduler.Table, scheduler.FieldID),
+			sqlgraph.Edge(sqlgraph.M2O, true, generation.SchedulerTable, generation.SchedulerColumn),
+		)
+		fromU = sqlgraph.SetNeighbors(gq.driver.Dialect(), step)
+		return fromU, nil
+	}
+	return query
+}
+
 // First returns the first Generation entity from the query.
 // Returns a *NotFoundError when no Generation was found.
 func (gq *GenerationQuery) First(ctx context.Context) (*Generation, error) {
@@ -84,8 +205,8 @@ func (gq *GenerationQuery) FirstX(ctx context.Context) *Generation {
 
 // FirstID returns the first Generation ID from the query.
 // Returns a *NotFoundError when no Generation ID was found.
-func (gq *GenerationQuery) FirstID(ctx context.Context) (id int, err error) {
-	var ids []int
+func (gq *GenerationQuery) FirstID(ctx context.Context) (id uuid.UUID, err error) {
+	var ids []uuid.UUID
 	if ids, err = gq.Limit(1).IDs(newQueryContext(ctx, TypeGeneration, "FirstID")); err != nil {
 		return
 	}
@@ -97,7 +218,7 @@ func (gq *GenerationQuery) FirstID(ctx context.Context) (id int, err error) {
 }
 
 // FirstIDX is like FirstID, but panics if an error occurs.
-func (gq *GenerationQuery) FirstIDX(ctx context.Context) int {
+func (gq *GenerationQuery) FirstIDX(ctx context.Context) uuid.UUID {
 	id, err := gq.FirstID(ctx)
 	if err != nil && !IsNotFound(err) {
 		panic(err)
@@ -135,8 +256,8 @@ func (gq *GenerationQuery) OnlyX(ctx context.Context) *Generation {
 // OnlyID is like Only, but returns the only Generation ID in the query.
 // Returns a *NotSingularError when more than one Generation ID is found.
 // Returns a *NotFoundError when no entities are found.
-func (gq *GenerationQuery) OnlyID(ctx context.Context) (id int, err error) {
-	var ids []int
+func (gq *GenerationQuery) OnlyID(ctx context.Context) (id uuid.UUID, err error) {
+	var ids []uuid.UUID
 	if ids, err = gq.Limit(2).IDs(newQueryContext(ctx, TypeGeneration, "OnlyID")); err != nil {
 		return
 	}
@@ -152,7 +273,7 @@ func (gq *GenerationQuery) OnlyID(ctx context.Context) (id int, err error) {
 }
 
 // OnlyIDX is like OnlyID, but panics if an error occurs.
-func (gq *GenerationQuery) OnlyIDX(ctx context.Context) int {
+func (gq *GenerationQuery) OnlyIDX(ctx context.Context) uuid.UUID {
 	id, err := gq.OnlyID(ctx)
 	if err != nil {
 		panic(err)
@@ -180,8 +301,8 @@ func (gq *GenerationQuery) AllX(ctx context.Context) []*Generation {
 }
 
 // IDs executes the query and returns a list of Generation IDs.
-func (gq *GenerationQuery) IDs(ctx context.Context) ([]int, error) {
-	var ids []int
+func (gq *GenerationQuery) IDs(ctx context.Context) ([]uuid.UUID, error) {
+	var ids []uuid.UUID
 	ctx = newQueryContext(ctx, TypeGeneration, "IDs")
 	if err := gq.Select(generation.FieldID).Scan(ctx, &ids); err != nil {
 		return nil, err
@@ -190,7 +311,7 @@ func (gq *GenerationQuery) IDs(ctx context.Context) ([]int, error) {
 }
 
 // IDsX is like IDs, but panics if an error occurs.
-func (gq *GenerationQuery) IDsX(ctx context.Context) []int {
+func (gq *GenerationQuery) IDsX(ctx context.Context) []uuid.UUID {
 	ids, err := gq.IDs(ctx)
 	if err != nil {
 		panic(err)
@@ -245,12 +366,17 @@ func (gq *GenerationQuery) Clone() *GenerationQuery {
 		return nil
 	}
 	return &GenerationQuery{
-		config:     gq.config,
-		limit:      gq.limit,
-		offset:     gq.offset,
-		order:      append([]OrderFunc{}, gq.order...),
-		inters:     append([]Interceptor{}, gq.inters...),
-		predicates: append([]predicate.Generation{}, gq.predicates...),
+		config:             gq.config,
+		limit:              gq.limit,
+		offset:             gq.offset,
+		order:              append([]OrderFunc{}, gq.order...),
+		inters:             append([]Interceptor{}, gq.inters...),
+		predicates:         append([]predicate.Generation{}, gq.predicates...),
+		withUser:           gq.withUser.Clone(),
+		withModel:          gq.withModel.Clone(),
+		withPrompt:         gq.withPrompt.Clone(),
+		withNegativePrompt: gq.withNegativePrompt.Clone(),
+		withScheduler:      gq.withScheduler.Clone(),
 		// clone intermediate query.
 		sql:    gq.sql.Clone(),
 		path:   gq.path,
@@ -258,8 +384,75 @@ func (gq *GenerationQuery) Clone() *GenerationQuery {
 	}
 }
 
+// WithUser tells the query-builder to eager-load the nodes that are connected to
+// the "user" edge. The optional arguments are used to configure the query builder of the edge.
+func (gq *GenerationQuery) WithUser(opts ...func(*UserQuery)) *GenerationQuery {
+	query := (&UserClient{config: gq.config}).Query()
+	for _, opt := range opts {
+		opt(query)
+	}
+	gq.withUser = query
+	return gq
+}
+
+// WithModel tells the query-builder to eager-load the nodes that are connected to
+// the "model" edge. The optional arguments are used to configure the query builder of the edge.
+func (gq *GenerationQuery) WithModel(opts ...func(*ModelQuery)) *GenerationQuery {
+	query := (&ModelClient{config: gq.config}).Query()
+	for _, opt := range opts {
+		opt(query)
+	}
+	gq.withModel = query
+	return gq
+}
+
+// WithPrompt tells the query-builder to eager-load the nodes that are connected to
+// the "prompt" edge. The optional arguments are used to configure the query builder of the edge.
+func (gq *GenerationQuery) WithPrompt(opts ...func(*PromptQuery)) *GenerationQuery {
+	query := (&PromptClient{config: gq.config}).Query()
+	for _, opt := range opts {
+		opt(query)
+	}
+	gq.withPrompt = query
+	return gq
+}
+
+// WithNegativePrompt tells the query-builder to eager-load the nodes that are connected to
+// the "negative_prompt" edge. The optional arguments are used to configure the query builder of the edge.
+func (gq *GenerationQuery) WithNegativePrompt(opts ...func(*NegativePromptQuery)) *GenerationQuery {
+	query := (&NegativePromptClient{config: gq.config}).Query()
+	for _, opt := range opts {
+		opt(query)
+	}
+	gq.withNegativePrompt = query
+	return gq
+}
+
+// WithScheduler tells the query-builder to eager-load the nodes that are connected to
+// the "scheduler" edge. The optional arguments are used to configure the query builder of the edge.
+func (gq *GenerationQuery) WithScheduler(opts ...func(*SchedulerQuery)) *GenerationQuery {
+	query := (&SchedulerClient{config: gq.config}).Query()
+	for _, opt := range opts {
+		opt(query)
+	}
+	gq.withScheduler = query
+	return gq
+}
+
 // GroupBy is used to group vertices by one or more fields/columns.
 // It is often used with aggregate functions, like: count, max, mean, min, sum.
+//
+// Example:
+//
+//	var v []struct {
+//		PromptID uuid.UUID `json:"prompt_id,omitempty"`
+//		Count int `json:"count,omitempty"`
+//	}
+//
+//	client.Generation.Query().
+//		GroupBy(generation.FieldPromptID).
+//		Aggregate(ent.Count()).
+//		Scan(ctx, &v)
 func (gq *GenerationQuery) GroupBy(field string, fields ...string) *GenerationGroupBy {
 	gq.fields = append([]string{field}, fields...)
 	grbuild := &GenerationGroupBy{build: gq}
@@ -271,6 +464,16 @@ func (gq *GenerationQuery) GroupBy(field string, fields ...string) *GenerationGr
 
 // Select allows the selection one or more fields/columns for the given query,
 // instead of selecting all fields in the entity.
+//
+// Example:
+//
+//	var v []struct {
+//		PromptID uuid.UUID `json:"prompt_id,omitempty"`
+//	}
+//
+//	client.Generation.Query().
+//		Select(generation.FieldPromptID).
+//		Scan(ctx, &v)
 func (gq *GenerationQuery) Select(fields ...string) *GenerationSelect {
 	gq.fields = append(gq.fields, fields...)
 	sbuild := &GenerationSelect{GenerationQuery: gq}
@@ -312,8 +515,15 @@ func (gq *GenerationQuery) prepareQuery(ctx context.Context) error {
 
 func (gq *GenerationQuery) sqlAll(ctx context.Context, hooks ...queryHook) ([]*Generation, error) {
 	var (
-		nodes = []*Generation{}
-		_spec = gq.querySpec()
+		nodes       = []*Generation{}
+		_spec       = gq.querySpec()
+		loadedTypes = [5]bool{
+			gq.withUser != nil,
+			gq.withModel != nil,
+			gq.withPrompt != nil,
+			gq.withNegativePrompt != nil,
+			gq.withScheduler != nil,
+		}
 	)
 	_spec.ScanValues = func(columns []string) ([]any, error) {
 		return (*Generation).scanValues(nil, columns)
@@ -321,6 +531,7 @@ func (gq *GenerationQuery) sqlAll(ctx context.Context, hooks ...queryHook) ([]*G
 	_spec.Assign = func(columns []string, values []any) error {
 		node := &Generation{config: gq.config}
 		nodes = append(nodes, node)
+		node.Edges.loadedTypes = loadedTypes
 		return node.assignValues(columns, values)
 	}
 	for i := range hooks {
@@ -332,7 +543,177 @@ func (gq *GenerationQuery) sqlAll(ctx context.Context, hooks ...queryHook) ([]*G
 	if len(nodes) == 0 {
 		return nodes, nil
 	}
+	if query := gq.withUser; query != nil {
+		if err := gq.loadUser(ctx, query, nodes, nil,
+			func(n *Generation, e *User) { n.Edges.User = e }); err != nil {
+			return nil, err
+		}
+	}
+	if query := gq.withModel; query != nil {
+		if err := gq.loadModel(ctx, query, nodes, nil,
+			func(n *Generation, e *Model) { n.Edges.Model = e }); err != nil {
+			return nil, err
+		}
+	}
+	if query := gq.withPrompt; query != nil {
+		if err := gq.loadPrompt(ctx, query, nodes, nil,
+			func(n *Generation, e *Prompt) { n.Edges.Prompt = e }); err != nil {
+			return nil, err
+		}
+	}
+	if query := gq.withNegativePrompt; query != nil {
+		if err := gq.loadNegativePrompt(ctx, query, nodes, nil,
+			func(n *Generation, e *NegativePrompt) { n.Edges.NegativePrompt = e }); err != nil {
+			return nil, err
+		}
+	}
+	if query := gq.withScheduler; query != nil {
+		if err := gq.loadScheduler(ctx, query, nodes, nil,
+			func(n *Generation, e *Scheduler) { n.Edges.Scheduler = e }); err != nil {
+			return nil, err
+		}
+	}
 	return nodes, nil
+}
+
+func (gq *GenerationQuery) loadUser(ctx context.Context, query *UserQuery, nodes []*Generation, init func(*Generation), assign func(*Generation, *User)) error {
+	ids := make([]uuid.UUID, 0, len(nodes))
+	nodeids := make(map[uuid.UUID][]*Generation)
+	for i := range nodes {
+		if nodes[i].UserID == nil {
+			continue
+		}
+		fk := *nodes[i].UserID
+		if _, ok := nodeids[fk]; !ok {
+			ids = append(ids, fk)
+		}
+		nodeids[fk] = append(nodeids[fk], nodes[i])
+	}
+	query.Where(user.IDIn(ids...))
+	neighbors, err := query.All(ctx)
+	if err != nil {
+		return err
+	}
+	for _, n := range neighbors {
+		nodes, ok := nodeids[n.ID]
+		if !ok {
+			return fmt.Errorf(`unexpected foreign-key "user_id" returned %v`, n.ID)
+		}
+		for i := range nodes {
+			assign(nodes[i], n)
+		}
+	}
+	return nil
+}
+func (gq *GenerationQuery) loadModel(ctx context.Context, query *ModelQuery, nodes []*Generation, init func(*Generation), assign func(*Generation, *Model)) error {
+	ids := make([]uuid.UUID, 0, len(nodes))
+	nodeids := make(map[uuid.UUID][]*Generation)
+	for i := range nodes {
+		fk := nodes[i].ModelID
+		if _, ok := nodeids[fk]; !ok {
+			ids = append(ids, fk)
+		}
+		nodeids[fk] = append(nodeids[fk], nodes[i])
+	}
+	query.Where(model.IDIn(ids...))
+	neighbors, err := query.All(ctx)
+	if err != nil {
+		return err
+	}
+	for _, n := range neighbors {
+		nodes, ok := nodeids[n.ID]
+		if !ok {
+			return fmt.Errorf(`unexpected foreign-key "model_id" returned %v`, n.ID)
+		}
+		for i := range nodes {
+			assign(nodes[i], n)
+		}
+	}
+	return nil
+}
+func (gq *GenerationQuery) loadPrompt(ctx context.Context, query *PromptQuery, nodes []*Generation, init func(*Generation), assign func(*Generation, *Prompt)) error {
+	ids := make([]uuid.UUID, 0, len(nodes))
+	nodeids := make(map[uuid.UUID][]*Generation)
+	for i := range nodes {
+		if nodes[i].PromptID == nil {
+			continue
+		}
+		fk := *nodes[i].PromptID
+		if _, ok := nodeids[fk]; !ok {
+			ids = append(ids, fk)
+		}
+		nodeids[fk] = append(nodeids[fk], nodes[i])
+	}
+	query.Where(prompt.IDIn(ids...))
+	neighbors, err := query.All(ctx)
+	if err != nil {
+		return err
+	}
+	for _, n := range neighbors {
+		nodes, ok := nodeids[n.ID]
+		if !ok {
+			return fmt.Errorf(`unexpected foreign-key "prompt_id" returned %v`, n.ID)
+		}
+		for i := range nodes {
+			assign(nodes[i], n)
+		}
+	}
+	return nil
+}
+func (gq *GenerationQuery) loadNegativePrompt(ctx context.Context, query *NegativePromptQuery, nodes []*Generation, init func(*Generation), assign func(*Generation, *NegativePrompt)) error {
+	ids := make([]uuid.UUID, 0, len(nodes))
+	nodeids := make(map[uuid.UUID][]*Generation)
+	for i := range nodes {
+		if nodes[i].NegativePromptID == nil {
+			continue
+		}
+		fk := *nodes[i].NegativePromptID
+		if _, ok := nodeids[fk]; !ok {
+			ids = append(ids, fk)
+		}
+		nodeids[fk] = append(nodeids[fk], nodes[i])
+	}
+	query.Where(negativeprompt.IDIn(ids...))
+	neighbors, err := query.All(ctx)
+	if err != nil {
+		return err
+	}
+	for _, n := range neighbors {
+		nodes, ok := nodeids[n.ID]
+		if !ok {
+			return fmt.Errorf(`unexpected foreign-key "negative_prompt_id" returned %v`, n.ID)
+		}
+		for i := range nodes {
+			assign(nodes[i], n)
+		}
+	}
+	return nil
+}
+func (gq *GenerationQuery) loadScheduler(ctx context.Context, query *SchedulerQuery, nodes []*Generation, init func(*Generation), assign func(*Generation, *Scheduler)) error {
+	ids := make([]uuid.UUID, 0, len(nodes))
+	nodeids := make(map[uuid.UUID][]*Generation)
+	for i := range nodes {
+		fk := nodes[i].SchedulerID
+		if _, ok := nodeids[fk]; !ok {
+			ids = append(ids, fk)
+		}
+		nodeids[fk] = append(nodeids[fk], nodes[i])
+	}
+	query.Where(scheduler.IDIn(ids...))
+	neighbors, err := query.All(ctx)
+	if err != nil {
+		return err
+	}
+	for _, n := range neighbors {
+		nodes, ok := nodeids[n.ID]
+		if !ok {
+			return fmt.Errorf(`unexpected foreign-key "scheduler_id" returned %v`, n.ID)
+		}
+		for i := range nodes {
+			assign(nodes[i], n)
+		}
+	}
+	return nil
 }
 
 func (gq *GenerationQuery) sqlCount(ctx context.Context) (int, error) {
@@ -350,7 +731,7 @@ func (gq *GenerationQuery) querySpec() *sqlgraph.QuerySpec {
 			Table:   generation.Table,
 			Columns: generation.Columns,
 			ID: &sqlgraph.FieldSpec{
-				Type:   field.TypeInt,
+				Type:   field.TypeUUID,
 				Column: generation.FieldID,
 			},
 		},

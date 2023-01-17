@@ -5,16 +5,75 @@ package ent
 import (
 	"fmt"
 	"strings"
+	"time"
 
 	"entgo.io/ent/dialect/sql"
+	"github.com/google/uuid"
 	"github.com/yekta/stablecog/go-apps/database/ent/user"
 )
 
 // User is the model entity for the User schema.
 type User struct {
-	config
+	config `json:"-"`
 	// ID of the ent.
-	ID int `json:"id,omitempty"`
+	ID uuid.UUID `json:"id,omitempty"`
+	// Email holds the value of the "email" field.
+	Email string `json:"email,omitempty"`
+	// StripeCustomerID holds the value of the "stripe_customer_id" field.
+	StripeCustomerID *string `json:"stripe_customer_id,omitempty"`
+	// SubscriptionTier holds the value of the "subscription_tier" field.
+	SubscriptionTier user.SubscriptionTier `json:"subscription_tier,omitempty"`
+	// SubscriptionCategory holds the value of the "subscription_category" field.
+	SubscriptionCategory *user.SubscriptionCategory `json:"subscription_category,omitempty"`
+	// CreatedAt holds the value of the "created_at" field.
+	CreatedAt time.Time `json:"created_at,omitempty"`
+	// UpdatedAt holds the value of the "updated_at" field.
+	UpdatedAt time.Time `json:"updated_at,omitempty"`
+	// ConfirmedAt holds the value of the "confirmed_at" field.
+	ConfirmedAt *time.Time `json:"confirmed_at,omitempty"`
+	// Edges holds the relations/edges for other nodes in the graph.
+	// The values are being populated by the UserQuery when eager-loading is set.
+	Edges UserEdges `json:"edges"`
+}
+
+// UserEdges holds the relations/edges for other nodes in the graph.
+type UserEdges struct {
+	// Upscale holds the value of the upscale edge.
+	Upscale []*Upscale `json:"upscale,omitempty"`
+	// Generation holds the value of the generation edge.
+	Generation []*Generation `json:"generation,omitempty"`
+	// GenerationG holds the value of the generation_g edge.
+	GenerationG []*GenerationG `json:"generation_g,omitempty"`
+	// loadedTypes holds the information for reporting if a
+	// type was loaded (or requested) in eager-loading or not.
+	loadedTypes [3]bool
+}
+
+// UpscaleOrErr returns the Upscale value or an error if the edge
+// was not loaded in eager-loading.
+func (e UserEdges) UpscaleOrErr() ([]*Upscale, error) {
+	if e.loadedTypes[0] {
+		return e.Upscale, nil
+	}
+	return nil, &NotLoadedError{edge: "upscale"}
+}
+
+// GenerationOrErr returns the Generation value or an error if the edge
+// was not loaded in eager-loading.
+func (e UserEdges) GenerationOrErr() ([]*Generation, error) {
+	if e.loadedTypes[1] {
+		return e.Generation, nil
+	}
+	return nil, &NotLoadedError{edge: "generation"}
+}
+
+// GenerationGOrErr returns the GenerationG value or an error if the edge
+// was not loaded in eager-loading.
+func (e UserEdges) GenerationGOrErr() ([]*GenerationG, error) {
+	if e.loadedTypes[2] {
+		return e.GenerationG, nil
+	}
+	return nil, &NotLoadedError{edge: "generation_g"}
 }
 
 // scanValues returns the types for scanning values from sql.Rows.
@@ -22,8 +81,12 @@ func (*User) scanValues(columns []string) ([]any, error) {
 	values := make([]any, len(columns))
 	for i := range columns {
 		switch columns[i] {
+		case user.FieldEmail, user.FieldStripeCustomerID, user.FieldSubscriptionTier, user.FieldSubscriptionCategory:
+			values[i] = new(sql.NullString)
+		case user.FieldCreatedAt, user.FieldUpdatedAt, user.FieldConfirmedAt:
+			values[i] = new(sql.NullTime)
 		case user.FieldID:
-			values[i] = new(sql.NullInt64)
+			values[i] = new(uuid.UUID)
 		default:
 			return nil, fmt.Errorf("unexpected column %q for type User", columns[i])
 		}
@@ -40,14 +103,74 @@ func (u *User) assignValues(columns []string, values []any) error {
 	for i := range columns {
 		switch columns[i] {
 		case user.FieldID:
-			value, ok := values[i].(*sql.NullInt64)
-			if !ok {
-				return fmt.Errorf("unexpected type %T for field id", value)
+			if value, ok := values[i].(*uuid.UUID); !ok {
+				return fmt.Errorf("unexpected type %T for field id", values[i])
+			} else if value != nil {
+				u.ID = *value
 			}
-			u.ID = int(value.Int64)
+		case user.FieldEmail:
+			if value, ok := values[i].(*sql.NullString); !ok {
+				return fmt.Errorf("unexpected type %T for field email", values[i])
+			} else if value.Valid {
+				u.Email = value.String
+			}
+		case user.FieldStripeCustomerID:
+			if value, ok := values[i].(*sql.NullString); !ok {
+				return fmt.Errorf("unexpected type %T for field stripe_customer_id", values[i])
+			} else if value.Valid {
+				u.StripeCustomerID = new(string)
+				*u.StripeCustomerID = value.String
+			}
+		case user.FieldSubscriptionTier:
+			if value, ok := values[i].(*sql.NullString); !ok {
+				return fmt.Errorf("unexpected type %T for field subscription_tier", values[i])
+			} else if value.Valid {
+				u.SubscriptionTier = user.SubscriptionTier(value.String)
+			}
+		case user.FieldSubscriptionCategory:
+			if value, ok := values[i].(*sql.NullString); !ok {
+				return fmt.Errorf("unexpected type %T for field subscription_category", values[i])
+			} else if value.Valid {
+				u.SubscriptionCategory = new(user.SubscriptionCategory)
+				*u.SubscriptionCategory = user.SubscriptionCategory(value.String)
+			}
+		case user.FieldCreatedAt:
+			if value, ok := values[i].(*sql.NullTime); !ok {
+				return fmt.Errorf("unexpected type %T for field created_at", values[i])
+			} else if value.Valid {
+				u.CreatedAt = value.Time
+			}
+		case user.FieldUpdatedAt:
+			if value, ok := values[i].(*sql.NullTime); !ok {
+				return fmt.Errorf("unexpected type %T for field updated_at", values[i])
+			} else if value.Valid {
+				u.UpdatedAt = value.Time
+			}
+		case user.FieldConfirmedAt:
+			if value, ok := values[i].(*sql.NullTime); !ok {
+				return fmt.Errorf("unexpected type %T for field confirmed_at", values[i])
+			} else if value.Valid {
+				u.ConfirmedAt = new(time.Time)
+				*u.ConfirmedAt = value.Time
+			}
 		}
 	}
 	return nil
+}
+
+// QueryUpscale queries the "upscale" edge of the User entity.
+func (u *User) QueryUpscale() *UpscaleQuery {
+	return (&UserClient{config: u.config}).QueryUpscale(u)
+}
+
+// QueryGeneration queries the "generation" edge of the User entity.
+func (u *User) QueryGeneration() *GenerationQuery {
+	return (&UserClient{config: u.config}).QueryGeneration(u)
+}
+
+// QueryGenerationG queries the "generation_g" edge of the User entity.
+func (u *User) QueryGenerationG() *GenerationGQuery {
+	return (&UserClient{config: u.config}).QueryGenerationG(u)
 }
 
 // Update returns a builder for updating this User.
@@ -72,7 +195,33 @@ func (u *User) Unwrap() *User {
 func (u *User) String() string {
 	var builder strings.Builder
 	builder.WriteString("User(")
-	builder.WriteString(fmt.Sprintf("id=%v", u.ID))
+	builder.WriteString(fmt.Sprintf("id=%v, ", u.ID))
+	builder.WriteString("email=")
+	builder.WriteString(u.Email)
+	builder.WriteString(", ")
+	if v := u.StripeCustomerID; v != nil {
+		builder.WriteString("stripe_customer_id=")
+		builder.WriteString(*v)
+	}
+	builder.WriteString(", ")
+	builder.WriteString("subscription_tier=")
+	builder.WriteString(fmt.Sprintf("%v", u.SubscriptionTier))
+	builder.WriteString(", ")
+	if v := u.SubscriptionCategory; v != nil {
+		builder.WriteString("subscription_category=")
+		builder.WriteString(fmt.Sprintf("%v", *v))
+	}
+	builder.WriteString(", ")
+	builder.WriteString("created_at=")
+	builder.WriteString(u.CreatedAt.Format(time.ANSIC))
+	builder.WriteString(", ")
+	builder.WriteString("updated_at=")
+	builder.WriteString(u.UpdatedAt.Format(time.ANSIC))
+	builder.WriteString(", ")
+	if v := u.ConfirmedAt; v != nil {
+		builder.WriteString("confirmed_at=")
+		builder.WriteString(v.Format(time.ANSIC))
+	}
 	builder.WriteByte(')')
 	return builder.String()
 }

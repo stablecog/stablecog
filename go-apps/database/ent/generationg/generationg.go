@@ -2,18 +2,115 @@
 
 package generationg
 
+import (
+	"fmt"
+	"time"
+
+	"github.com/google/uuid"
+)
+
 const (
 	// Label holds the string label denoting the generationg type in the database.
 	Label = "generationg"
 	// FieldID holds the string denoting the id field in the database.
 	FieldID = "id"
+	// FieldPromptID holds the string denoting the prompt_id field in the database.
+	FieldPromptID = "prompt_id"
+	// FieldNegativePromptID holds the string denoting the negative_prompt_id field in the database.
+	FieldNegativePromptID = "negative_prompt_id"
+	// FieldModelID holds the string denoting the model_id field in the database.
+	FieldModelID = "model_id"
+	// FieldImageID holds the string denoting the image_id field in the database.
+	FieldImageID = "image_id"
+	// FieldWidth holds the string denoting the width field in the database.
+	FieldWidth = "width"
+	// FieldHeight holds the string denoting the height field in the database.
+	FieldHeight = "height"
+	// FieldSeed holds the string denoting the seed field in the database.
+	FieldSeed = "seed"
+	// FieldNumInferenceSteps holds the string denoting the num_inference_steps field in the database.
+	FieldNumInferenceSteps = "num_inference_steps"
+	// FieldGuidanceScale holds the string denoting the guidance_scale field in the database.
+	FieldGuidanceScale = "guidance_scale"
+	// FieldHidden holds the string denoting the hidden field in the database.
+	FieldHidden = "hidden"
+	// FieldSchedulerID holds the string denoting the scheduler_id field in the database.
+	FieldSchedulerID = "scheduler_id"
+	// FieldUserID holds the string denoting the user_id field in the database.
+	FieldUserID = "user_id"
+	// FieldUserTier holds the string denoting the user_tier field in the database.
+	FieldUserTier = "user_tier"
+	// FieldCreatedAt holds the string denoting the created_at field in the database.
+	FieldCreatedAt = "created_at"
+	// FieldUpdatedAt holds the string denoting the updated_at field in the database.
+	FieldUpdatedAt = "updated_at"
+	// EdgeUser holds the string denoting the user edge name in mutations.
+	EdgeUser = "user"
+	// EdgeModel holds the string denoting the model edge name in mutations.
+	EdgeModel = "model"
+	// EdgePrompt holds the string denoting the prompt edge name in mutations.
+	EdgePrompt = "prompt"
+	// EdgeNegativePrompt holds the string denoting the negative_prompt edge name in mutations.
+	EdgeNegativePrompt = "negative_prompt"
+	// EdgeScheduler holds the string denoting the scheduler edge name in mutations.
+	EdgeScheduler = "scheduler"
 	// Table holds the table name of the generationg in the database.
 	Table = "generation_g"
+	// UserTable is the table that holds the user relation/edge.
+	UserTable = "generation_g"
+	// UserInverseTable is the table name for the User entity.
+	// It exists in this package in order to avoid circular dependency with the "user" package.
+	UserInverseTable = "user"
+	// UserColumn is the table column denoting the user relation/edge.
+	UserColumn = "user_id"
+	// ModelTable is the table that holds the model relation/edge.
+	ModelTable = "generation_g"
+	// ModelInverseTable is the table name for the Model entity.
+	// It exists in this package in order to avoid circular dependency with the "model" package.
+	ModelInverseTable = "model"
+	// ModelColumn is the table column denoting the model relation/edge.
+	ModelColumn = "model_id"
+	// PromptTable is the table that holds the prompt relation/edge.
+	PromptTable = "generation_g"
+	// PromptInverseTable is the table name for the Prompt entity.
+	// It exists in this package in order to avoid circular dependency with the "prompt" package.
+	PromptInverseTable = "prompt"
+	// PromptColumn is the table column denoting the prompt relation/edge.
+	PromptColumn = "prompt_id"
+	// NegativePromptTable is the table that holds the negative_prompt relation/edge.
+	NegativePromptTable = "generation_g"
+	// NegativePromptInverseTable is the table name for the NegativePrompt entity.
+	// It exists in this package in order to avoid circular dependency with the "negativeprompt" package.
+	NegativePromptInverseTable = "negative_prompt"
+	// NegativePromptColumn is the table column denoting the negative_prompt relation/edge.
+	NegativePromptColumn = "negative_prompt_id"
+	// SchedulerTable is the table that holds the scheduler relation/edge.
+	SchedulerTable = "generation_g"
+	// SchedulerInverseTable is the table name for the Scheduler entity.
+	// It exists in this package in order to avoid circular dependency with the "scheduler" package.
+	SchedulerInverseTable = "scheduler"
+	// SchedulerColumn is the table column denoting the scheduler relation/edge.
+	SchedulerColumn = "scheduler_id"
 )
 
 // Columns holds all SQL columns for generationg fields.
 var Columns = []string{
 	FieldID,
+	FieldPromptID,
+	FieldNegativePromptID,
+	FieldModelID,
+	FieldImageID,
+	FieldWidth,
+	FieldHeight,
+	FieldSeed,
+	FieldNumInferenceSteps,
+	FieldGuidanceScale,
+	FieldHidden,
+	FieldSchedulerID,
+	FieldUserID,
+	FieldUserTier,
+	FieldCreatedAt,
+	FieldUpdatedAt,
 }
 
 // ValidColumn reports if the column name is valid (part of the table columns).
@@ -24,4 +121,43 @@ func ValidColumn(column string) bool {
 		}
 	}
 	return false
+}
+
+var (
+	// DefaultHidden holds the default value on creation for the "hidden" field.
+	DefaultHidden bool
+	// DefaultCreatedAt holds the default value on creation for the "created_at" field.
+	DefaultCreatedAt func() time.Time
+	// DefaultUpdatedAt holds the default value on creation for the "updated_at" field.
+	DefaultUpdatedAt func() time.Time
+	// UpdateDefaultUpdatedAt holds the default value on update for the "updated_at" field.
+	UpdateDefaultUpdatedAt func() time.Time
+	// DefaultID holds the default value on creation for the "id" field.
+	DefaultID func() uuid.UUID
+)
+
+// UserTier defines the type for the "user_tier" enum field.
+type UserTier string
+
+// UserTierFREE is the default value of the UserTier enum.
+const DefaultUserTier = UserTierFREE
+
+// UserTier values.
+const (
+	UserTierFREE UserTier = "FREE"
+	UserTierPRO  UserTier = "PRO"
+)
+
+func (ut UserTier) String() string {
+	return string(ut)
+}
+
+// UserTierValidator is a validator for the "user_tier" field enum values. It is called by the builders before save.
+func UserTierValidator(ut UserTier) error {
+	switch ut {
+	case UserTierFREE, UserTierPRO:
+		return nil
+	default:
+		return fmt.Errorf("generationg: invalid enum value for user_tier field: %q", ut)
+	}
 }

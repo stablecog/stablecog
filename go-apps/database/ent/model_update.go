@@ -6,10 +6,14 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"time"
 
 	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"
 	"entgo.io/ent/schema/field"
+	"github.com/google/uuid"
+	"github.com/yekta/stablecog/go-apps/database/ent/generation"
+	"github.com/yekta/stablecog/go-apps/database/ent/generationg"
 	"github.com/yekta/stablecog/go-apps/database/ent/model"
 	"github.com/yekta/stablecog/go-apps/database/ent/predicate"
 )
@@ -27,13 +31,98 @@ func (mu *ModelUpdate) Where(ps ...predicate.Model) *ModelUpdate {
 	return mu
 }
 
+// SetName sets the "name" field.
+func (mu *ModelUpdate) SetName(s string) *ModelUpdate {
+	mu.mutation.SetName(s)
+	return mu
+}
+
+// SetUpdatedAt sets the "updated_at" field.
+func (mu *ModelUpdate) SetUpdatedAt(t time.Time) *ModelUpdate {
+	mu.mutation.SetUpdatedAt(t)
+	return mu
+}
+
+// AddGenerationIDs adds the "generation" edge to the Generation entity by IDs.
+func (mu *ModelUpdate) AddGenerationIDs(ids ...uuid.UUID) *ModelUpdate {
+	mu.mutation.AddGenerationIDs(ids...)
+	return mu
+}
+
+// AddGeneration adds the "generation" edges to the Generation entity.
+func (mu *ModelUpdate) AddGeneration(g ...*Generation) *ModelUpdate {
+	ids := make([]uuid.UUID, len(g))
+	for i := range g {
+		ids[i] = g[i].ID
+	}
+	return mu.AddGenerationIDs(ids...)
+}
+
+// AddGenerationGIDs adds the "generation_g" edge to the GenerationG entity by IDs.
+func (mu *ModelUpdate) AddGenerationGIDs(ids ...uuid.UUID) *ModelUpdate {
+	mu.mutation.AddGenerationGIDs(ids...)
+	return mu
+}
+
+// AddGenerationG adds the "generation_g" edges to the GenerationG entity.
+func (mu *ModelUpdate) AddGenerationG(g ...*GenerationG) *ModelUpdate {
+	ids := make([]uuid.UUID, len(g))
+	for i := range g {
+		ids[i] = g[i].ID
+	}
+	return mu.AddGenerationGIDs(ids...)
+}
+
 // Mutation returns the ModelMutation object of the builder.
 func (mu *ModelUpdate) Mutation() *ModelMutation {
 	return mu.mutation
 }
 
+// ClearGeneration clears all "generation" edges to the Generation entity.
+func (mu *ModelUpdate) ClearGeneration() *ModelUpdate {
+	mu.mutation.ClearGeneration()
+	return mu
+}
+
+// RemoveGenerationIDs removes the "generation" edge to Generation entities by IDs.
+func (mu *ModelUpdate) RemoveGenerationIDs(ids ...uuid.UUID) *ModelUpdate {
+	mu.mutation.RemoveGenerationIDs(ids...)
+	return mu
+}
+
+// RemoveGeneration removes "generation" edges to Generation entities.
+func (mu *ModelUpdate) RemoveGeneration(g ...*Generation) *ModelUpdate {
+	ids := make([]uuid.UUID, len(g))
+	for i := range g {
+		ids[i] = g[i].ID
+	}
+	return mu.RemoveGenerationIDs(ids...)
+}
+
+// ClearGenerationG clears all "generation_g" edges to the GenerationG entity.
+func (mu *ModelUpdate) ClearGenerationG() *ModelUpdate {
+	mu.mutation.ClearGenerationG()
+	return mu
+}
+
+// RemoveGenerationGIDs removes the "generation_g" edge to GenerationG entities by IDs.
+func (mu *ModelUpdate) RemoveGenerationGIDs(ids ...uuid.UUID) *ModelUpdate {
+	mu.mutation.RemoveGenerationGIDs(ids...)
+	return mu
+}
+
+// RemoveGenerationG removes "generation_g" edges to GenerationG entities.
+func (mu *ModelUpdate) RemoveGenerationG(g ...*GenerationG) *ModelUpdate {
+	ids := make([]uuid.UUID, len(g))
+	for i := range g {
+		ids[i] = g[i].ID
+	}
+	return mu.RemoveGenerationGIDs(ids...)
+}
+
 // Save executes the query and returns the number of nodes affected by the update operation.
 func (mu *ModelUpdate) Save(ctx context.Context) (int, error) {
+	mu.defaults()
 	return withHooks[int, ModelMutation](ctx, mu.sqlSave, mu.mutation, mu.hooks)
 }
 
@@ -59,13 +148,21 @@ func (mu *ModelUpdate) ExecX(ctx context.Context) {
 	}
 }
 
+// defaults sets the default values of the builder before save.
+func (mu *ModelUpdate) defaults() {
+	if _, ok := mu.mutation.UpdatedAt(); !ok {
+		v := model.UpdateDefaultUpdatedAt()
+		mu.mutation.SetUpdatedAt(v)
+	}
+}
+
 func (mu *ModelUpdate) sqlSave(ctx context.Context) (n int, err error) {
 	_spec := &sqlgraph.UpdateSpec{
 		Node: &sqlgraph.NodeSpec{
 			Table:   model.Table,
 			Columns: model.Columns,
 			ID: &sqlgraph.FieldSpec{
-				Type:   field.TypeInt,
+				Type:   field.TypeUUID,
 				Column: model.FieldID,
 			},
 		},
@@ -76,6 +173,120 @@ func (mu *ModelUpdate) sqlSave(ctx context.Context) (n int, err error) {
 				ps[i](selector)
 			}
 		}
+	}
+	if value, ok := mu.mutation.Name(); ok {
+		_spec.SetField(model.FieldName, field.TypeString, value)
+	}
+	if value, ok := mu.mutation.UpdatedAt(); ok {
+		_spec.SetField(model.FieldUpdatedAt, field.TypeTime, value)
+	}
+	if mu.mutation.GenerationCleared() {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.O2M,
+			Inverse: false,
+			Table:   model.GenerationTable,
+			Columns: []string{model.GenerationColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeUUID,
+					Column: generation.FieldID,
+				},
+			},
+		}
+		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
+	}
+	if nodes := mu.mutation.RemovedGenerationIDs(); len(nodes) > 0 && !mu.mutation.GenerationCleared() {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.O2M,
+			Inverse: false,
+			Table:   model.GenerationTable,
+			Columns: []string{model.GenerationColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeUUID,
+					Column: generation.FieldID,
+				},
+			},
+		}
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
+	}
+	if nodes := mu.mutation.GenerationIDs(); len(nodes) > 0 {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.O2M,
+			Inverse: false,
+			Table:   model.GenerationTable,
+			Columns: []string{model.GenerationColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeUUID,
+					Column: generation.FieldID,
+				},
+			},
+		}
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_spec.Edges.Add = append(_spec.Edges.Add, edge)
+	}
+	if mu.mutation.GenerationGCleared() {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.O2M,
+			Inverse: false,
+			Table:   model.GenerationGTable,
+			Columns: []string{model.GenerationGColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeUUID,
+					Column: generationg.FieldID,
+				},
+			},
+		}
+		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
+	}
+	if nodes := mu.mutation.RemovedGenerationGIDs(); len(nodes) > 0 && !mu.mutation.GenerationGCleared() {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.O2M,
+			Inverse: false,
+			Table:   model.GenerationGTable,
+			Columns: []string{model.GenerationGColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeUUID,
+					Column: generationg.FieldID,
+				},
+			},
+		}
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
+	}
+	if nodes := mu.mutation.GenerationGIDs(); len(nodes) > 0 {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.O2M,
+			Inverse: false,
+			Table:   model.GenerationGTable,
+			Columns: []string{model.GenerationGColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeUUID,
+					Column: generationg.FieldID,
+				},
+			},
+		}
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_spec.Edges.Add = append(_spec.Edges.Add, edge)
 	}
 	if n, err = sqlgraph.UpdateNodes(ctx, mu.driver, _spec); err != nil {
 		if _, ok := err.(*sqlgraph.NotFoundError); ok {
@@ -97,9 +308,93 @@ type ModelUpdateOne struct {
 	mutation *ModelMutation
 }
 
+// SetName sets the "name" field.
+func (muo *ModelUpdateOne) SetName(s string) *ModelUpdateOne {
+	muo.mutation.SetName(s)
+	return muo
+}
+
+// SetUpdatedAt sets the "updated_at" field.
+func (muo *ModelUpdateOne) SetUpdatedAt(t time.Time) *ModelUpdateOne {
+	muo.mutation.SetUpdatedAt(t)
+	return muo
+}
+
+// AddGenerationIDs adds the "generation" edge to the Generation entity by IDs.
+func (muo *ModelUpdateOne) AddGenerationIDs(ids ...uuid.UUID) *ModelUpdateOne {
+	muo.mutation.AddGenerationIDs(ids...)
+	return muo
+}
+
+// AddGeneration adds the "generation" edges to the Generation entity.
+func (muo *ModelUpdateOne) AddGeneration(g ...*Generation) *ModelUpdateOne {
+	ids := make([]uuid.UUID, len(g))
+	for i := range g {
+		ids[i] = g[i].ID
+	}
+	return muo.AddGenerationIDs(ids...)
+}
+
+// AddGenerationGIDs adds the "generation_g" edge to the GenerationG entity by IDs.
+func (muo *ModelUpdateOne) AddGenerationGIDs(ids ...uuid.UUID) *ModelUpdateOne {
+	muo.mutation.AddGenerationGIDs(ids...)
+	return muo
+}
+
+// AddGenerationG adds the "generation_g" edges to the GenerationG entity.
+func (muo *ModelUpdateOne) AddGenerationG(g ...*GenerationG) *ModelUpdateOne {
+	ids := make([]uuid.UUID, len(g))
+	for i := range g {
+		ids[i] = g[i].ID
+	}
+	return muo.AddGenerationGIDs(ids...)
+}
+
 // Mutation returns the ModelMutation object of the builder.
 func (muo *ModelUpdateOne) Mutation() *ModelMutation {
 	return muo.mutation
+}
+
+// ClearGeneration clears all "generation" edges to the Generation entity.
+func (muo *ModelUpdateOne) ClearGeneration() *ModelUpdateOne {
+	muo.mutation.ClearGeneration()
+	return muo
+}
+
+// RemoveGenerationIDs removes the "generation" edge to Generation entities by IDs.
+func (muo *ModelUpdateOne) RemoveGenerationIDs(ids ...uuid.UUID) *ModelUpdateOne {
+	muo.mutation.RemoveGenerationIDs(ids...)
+	return muo
+}
+
+// RemoveGeneration removes "generation" edges to Generation entities.
+func (muo *ModelUpdateOne) RemoveGeneration(g ...*Generation) *ModelUpdateOne {
+	ids := make([]uuid.UUID, len(g))
+	for i := range g {
+		ids[i] = g[i].ID
+	}
+	return muo.RemoveGenerationIDs(ids...)
+}
+
+// ClearGenerationG clears all "generation_g" edges to the GenerationG entity.
+func (muo *ModelUpdateOne) ClearGenerationG() *ModelUpdateOne {
+	muo.mutation.ClearGenerationG()
+	return muo
+}
+
+// RemoveGenerationGIDs removes the "generation_g" edge to GenerationG entities by IDs.
+func (muo *ModelUpdateOne) RemoveGenerationGIDs(ids ...uuid.UUID) *ModelUpdateOne {
+	muo.mutation.RemoveGenerationGIDs(ids...)
+	return muo
+}
+
+// RemoveGenerationG removes "generation_g" edges to GenerationG entities.
+func (muo *ModelUpdateOne) RemoveGenerationG(g ...*GenerationG) *ModelUpdateOne {
+	ids := make([]uuid.UUID, len(g))
+	for i := range g {
+		ids[i] = g[i].ID
+	}
+	return muo.RemoveGenerationGIDs(ids...)
 }
 
 // Select allows selecting one or more fields (columns) of the returned entity.
@@ -111,6 +406,7 @@ func (muo *ModelUpdateOne) Select(field string, fields ...string) *ModelUpdateOn
 
 // Save executes the query and returns the updated Model entity.
 func (muo *ModelUpdateOne) Save(ctx context.Context) (*Model, error) {
+	muo.defaults()
 	return withHooks[*Model, ModelMutation](ctx, muo.sqlSave, muo.mutation, muo.hooks)
 }
 
@@ -136,13 +432,21 @@ func (muo *ModelUpdateOne) ExecX(ctx context.Context) {
 	}
 }
 
+// defaults sets the default values of the builder before save.
+func (muo *ModelUpdateOne) defaults() {
+	if _, ok := muo.mutation.UpdatedAt(); !ok {
+		v := model.UpdateDefaultUpdatedAt()
+		muo.mutation.SetUpdatedAt(v)
+	}
+}
+
 func (muo *ModelUpdateOne) sqlSave(ctx context.Context) (_node *Model, err error) {
 	_spec := &sqlgraph.UpdateSpec{
 		Node: &sqlgraph.NodeSpec{
 			Table:   model.Table,
 			Columns: model.Columns,
 			ID: &sqlgraph.FieldSpec{
-				Type:   field.TypeInt,
+				Type:   field.TypeUUID,
 				Column: model.FieldID,
 			},
 		},
@@ -170,6 +474,120 @@ func (muo *ModelUpdateOne) sqlSave(ctx context.Context) (_node *Model, err error
 				ps[i](selector)
 			}
 		}
+	}
+	if value, ok := muo.mutation.Name(); ok {
+		_spec.SetField(model.FieldName, field.TypeString, value)
+	}
+	if value, ok := muo.mutation.UpdatedAt(); ok {
+		_spec.SetField(model.FieldUpdatedAt, field.TypeTime, value)
+	}
+	if muo.mutation.GenerationCleared() {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.O2M,
+			Inverse: false,
+			Table:   model.GenerationTable,
+			Columns: []string{model.GenerationColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeUUID,
+					Column: generation.FieldID,
+				},
+			},
+		}
+		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
+	}
+	if nodes := muo.mutation.RemovedGenerationIDs(); len(nodes) > 0 && !muo.mutation.GenerationCleared() {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.O2M,
+			Inverse: false,
+			Table:   model.GenerationTable,
+			Columns: []string{model.GenerationColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeUUID,
+					Column: generation.FieldID,
+				},
+			},
+		}
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
+	}
+	if nodes := muo.mutation.GenerationIDs(); len(nodes) > 0 {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.O2M,
+			Inverse: false,
+			Table:   model.GenerationTable,
+			Columns: []string{model.GenerationColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeUUID,
+					Column: generation.FieldID,
+				},
+			},
+		}
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_spec.Edges.Add = append(_spec.Edges.Add, edge)
+	}
+	if muo.mutation.GenerationGCleared() {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.O2M,
+			Inverse: false,
+			Table:   model.GenerationGTable,
+			Columns: []string{model.GenerationGColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeUUID,
+					Column: generationg.FieldID,
+				},
+			},
+		}
+		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
+	}
+	if nodes := muo.mutation.RemovedGenerationGIDs(); len(nodes) > 0 && !muo.mutation.GenerationGCleared() {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.O2M,
+			Inverse: false,
+			Table:   model.GenerationGTable,
+			Columns: []string{model.GenerationGColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeUUID,
+					Column: generationg.FieldID,
+				},
+			},
+		}
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
+	}
+	if nodes := muo.mutation.GenerationGIDs(); len(nodes) > 0 {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.O2M,
+			Inverse: false,
+			Table:   model.GenerationGTable,
+			Columns: []string{model.GenerationGColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeUUID,
+					Column: generationg.FieldID,
+				},
+			},
+		}
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_spec.Edges.Add = append(_spec.Edges.Add, edge)
 	}
 	_node = &Model{config: muo.config}
 	_spec.Assign = _node.assignValues

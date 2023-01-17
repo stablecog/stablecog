@@ -5,16 +5,87 @@ package ent
 import (
 	"fmt"
 	"strings"
+	"time"
 
 	"entgo.io/ent/dialect/sql"
+	"github.com/google/uuid"
 	"github.com/yekta/stablecog/go-apps/database/ent/upscale"
+	"github.com/yekta/stablecog/go-apps/database/ent/user"
+	"github.com/yekta/stablecog/go-apps/database/enttypes"
 )
 
 // Upscale is the model entity for the Upscale schema.
 type Upscale struct {
-	config
+	config `json:"-"`
 	// ID of the ent.
-	ID int `json:"id,omitempty"`
+	ID uuid.UUID `json:"id,omitempty"`
+	// Width holds the value of the "width" field.
+	Width int `json:"width,omitempty"`
+	// Height holds the value of the "height" field.
+	Height int `json:"height,omitempty"`
+	// Scale holds the value of the "scale" field.
+	Scale int `json:"scale,omitempty"`
+	// Status holds the value of the "status" field.
+	Status upscale.Status `json:"status,omitempty"`
+	// ServerURL holds the value of the "server_url" field.
+	ServerURL string `json:"server_url,omitempty"`
+	// DurationMsg holds the value of the "duration_msg" field.
+	DurationMsg *int `json:"duration_msg,omitempty"`
+	// Type holds the value of the "type" field.
+	Type *string `json:"type,omitempty"`
+	// Prompt holds the value of the "prompt" field.
+	Prompt *string `json:"prompt,omitempty"`
+	// NegativePrompt holds the value of the "negative_prompt" field.
+	NegativePrompt *string `json:"negative_prompt,omitempty"`
+	// Seed holds the value of the "seed" field.
+	Seed *enttypes.BigInt `json:"seed,omitempty"`
+	// NumInferenceSteps holds the value of the "num_inference_steps" field.
+	NumInferenceSteps *int `json:"num_inference_steps,omitempty"`
+	// GuidanceScale holds the value of the "guidance_scale" field.
+	GuidanceScale *float64 `json:"guidance_scale,omitempty"`
+	// CountryCode holds the value of the "country_code" field.
+	CountryCode *string `json:"country_code,omitempty"`
+	// DeviceType holds the value of the "device_type" field.
+	DeviceType *string `json:"device_type,omitempty"`
+	// DeviceOs holds the value of the "device_os" field.
+	DeviceOs *string `json:"device_os,omitempty"`
+	// DeviceBrowser holds the value of the "device_browser" field.
+	DeviceBrowser *string `json:"device_browser,omitempty"`
+	// UserAgent holds the value of the "user_agent" field.
+	UserAgent *string `json:"user_agent,omitempty"`
+	// CreatedAt holds the value of the "created_at" field.
+	CreatedAt time.Time `json:"created_at,omitempty"`
+	// UpdatedAt holds the value of the "updated_at" field.
+	UpdatedAt time.Time `json:"updated_at,omitempty"`
+	// UserID holds the value of the "user_id" field.
+	UserID *uuid.UUID `json:"user_id,omitempty"`
+	// UserTier holds the value of the "user_tier" field.
+	UserTier upscale.UserTier `json:"user_tier,omitempty"`
+	// Edges holds the relations/edges for other nodes in the graph.
+	// The values are being populated by the UpscaleQuery when eager-loading is set.
+	Edges UpscaleEdges `json:"edges"`
+}
+
+// UpscaleEdges holds the relations/edges for other nodes in the graph.
+type UpscaleEdges struct {
+	// User holds the value of the user edge.
+	User *User `json:"user,omitempty"`
+	// loadedTypes holds the information for reporting if a
+	// type was loaded (or requested) in eager-loading or not.
+	loadedTypes [1]bool
+}
+
+// UserOrErr returns the User value or an error if the edge
+// was not loaded in eager-loading, or loaded but was not found.
+func (e UpscaleEdges) UserOrErr() (*User, error) {
+	if e.loadedTypes[0] {
+		if e.User == nil {
+			// Edge was loaded but was not found.
+			return nil, &NotFoundError{label: user.Label}
+		}
+		return e.User, nil
+	}
+	return nil, &NotLoadedError{edge: "user"}
 }
 
 // scanValues returns the types for scanning values from sql.Rows.
@@ -22,8 +93,20 @@ func (*Upscale) scanValues(columns []string) ([]any, error) {
 	values := make([]any, len(columns))
 	for i := range columns {
 		switch columns[i] {
-		case upscale.FieldID:
+		case upscale.FieldSeed:
+			values[i] = &sql.NullScanner{S: new(enttypes.BigInt)}
+		case upscale.FieldUserID:
+			values[i] = &sql.NullScanner{S: new(uuid.UUID)}
+		case upscale.FieldGuidanceScale:
+			values[i] = new(sql.NullFloat64)
+		case upscale.FieldWidth, upscale.FieldHeight, upscale.FieldScale, upscale.FieldDurationMsg, upscale.FieldNumInferenceSteps:
 			values[i] = new(sql.NullInt64)
+		case upscale.FieldStatus, upscale.FieldServerURL, upscale.FieldType, upscale.FieldPrompt, upscale.FieldNegativePrompt, upscale.FieldCountryCode, upscale.FieldDeviceType, upscale.FieldDeviceOs, upscale.FieldDeviceBrowser, upscale.FieldUserAgent, upscale.FieldUserTier:
+			values[i] = new(sql.NullString)
+		case upscale.FieldCreatedAt, upscale.FieldUpdatedAt:
+			values[i] = new(sql.NullTime)
+		case upscale.FieldID:
+			values[i] = new(uuid.UUID)
 		default:
 			return nil, fmt.Errorf("unexpected column %q for type Upscale", columns[i])
 		}
@@ -40,14 +123,158 @@ func (u *Upscale) assignValues(columns []string, values []any) error {
 	for i := range columns {
 		switch columns[i] {
 		case upscale.FieldID:
-			value, ok := values[i].(*sql.NullInt64)
-			if !ok {
-				return fmt.Errorf("unexpected type %T for field id", value)
+			if value, ok := values[i].(*uuid.UUID); !ok {
+				return fmt.Errorf("unexpected type %T for field id", values[i])
+			} else if value != nil {
+				u.ID = *value
 			}
-			u.ID = int(value.Int64)
+		case upscale.FieldWidth:
+			if value, ok := values[i].(*sql.NullInt64); !ok {
+				return fmt.Errorf("unexpected type %T for field width", values[i])
+			} else if value.Valid {
+				u.Width = int(value.Int64)
+			}
+		case upscale.FieldHeight:
+			if value, ok := values[i].(*sql.NullInt64); !ok {
+				return fmt.Errorf("unexpected type %T for field height", values[i])
+			} else if value.Valid {
+				u.Height = int(value.Int64)
+			}
+		case upscale.FieldScale:
+			if value, ok := values[i].(*sql.NullInt64); !ok {
+				return fmt.Errorf("unexpected type %T for field scale", values[i])
+			} else if value.Valid {
+				u.Scale = int(value.Int64)
+			}
+		case upscale.FieldStatus:
+			if value, ok := values[i].(*sql.NullString); !ok {
+				return fmt.Errorf("unexpected type %T for field status", values[i])
+			} else if value.Valid {
+				u.Status = upscale.Status(value.String)
+			}
+		case upscale.FieldServerURL:
+			if value, ok := values[i].(*sql.NullString); !ok {
+				return fmt.Errorf("unexpected type %T for field server_url", values[i])
+			} else if value.Valid {
+				u.ServerURL = value.String
+			}
+		case upscale.FieldDurationMsg:
+			if value, ok := values[i].(*sql.NullInt64); !ok {
+				return fmt.Errorf("unexpected type %T for field duration_msg", values[i])
+			} else if value.Valid {
+				u.DurationMsg = new(int)
+				*u.DurationMsg = int(value.Int64)
+			}
+		case upscale.FieldType:
+			if value, ok := values[i].(*sql.NullString); !ok {
+				return fmt.Errorf("unexpected type %T for field type", values[i])
+			} else if value.Valid {
+				u.Type = new(string)
+				*u.Type = value.String
+			}
+		case upscale.FieldPrompt:
+			if value, ok := values[i].(*sql.NullString); !ok {
+				return fmt.Errorf("unexpected type %T for field prompt", values[i])
+			} else if value.Valid {
+				u.Prompt = new(string)
+				*u.Prompt = value.String
+			}
+		case upscale.FieldNegativePrompt:
+			if value, ok := values[i].(*sql.NullString); !ok {
+				return fmt.Errorf("unexpected type %T for field negative_prompt", values[i])
+			} else if value.Valid {
+				u.NegativePrompt = new(string)
+				*u.NegativePrompt = value.String
+			}
+		case upscale.FieldSeed:
+			if value, ok := values[i].(*sql.NullScanner); !ok {
+				return fmt.Errorf("unexpected type %T for field seed", values[i])
+			} else if value.Valid {
+				u.Seed = new(enttypes.BigInt)
+				*u.Seed = *value.S.(*enttypes.BigInt)
+			}
+		case upscale.FieldNumInferenceSteps:
+			if value, ok := values[i].(*sql.NullInt64); !ok {
+				return fmt.Errorf("unexpected type %T for field num_inference_steps", values[i])
+			} else if value.Valid {
+				u.NumInferenceSteps = new(int)
+				*u.NumInferenceSteps = int(value.Int64)
+			}
+		case upscale.FieldGuidanceScale:
+			if value, ok := values[i].(*sql.NullFloat64); !ok {
+				return fmt.Errorf("unexpected type %T for field guidance_scale", values[i])
+			} else if value.Valid {
+				u.GuidanceScale = new(float64)
+				*u.GuidanceScale = value.Float64
+			}
+		case upscale.FieldCountryCode:
+			if value, ok := values[i].(*sql.NullString); !ok {
+				return fmt.Errorf("unexpected type %T for field country_code", values[i])
+			} else if value.Valid {
+				u.CountryCode = new(string)
+				*u.CountryCode = value.String
+			}
+		case upscale.FieldDeviceType:
+			if value, ok := values[i].(*sql.NullString); !ok {
+				return fmt.Errorf("unexpected type %T for field device_type", values[i])
+			} else if value.Valid {
+				u.DeviceType = new(string)
+				*u.DeviceType = value.String
+			}
+		case upscale.FieldDeviceOs:
+			if value, ok := values[i].(*sql.NullString); !ok {
+				return fmt.Errorf("unexpected type %T for field device_os", values[i])
+			} else if value.Valid {
+				u.DeviceOs = new(string)
+				*u.DeviceOs = value.String
+			}
+		case upscale.FieldDeviceBrowser:
+			if value, ok := values[i].(*sql.NullString); !ok {
+				return fmt.Errorf("unexpected type %T for field device_browser", values[i])
+			} else if value.Valid {
+				u.DeviceBrowser = new(string)
+				*u.DeviceBrowser = value.String
+			}
+		case upscale.FieldUserAgent:
+			if value, ok := values[i].(*sql.NullString); !ok {
+				return fmt.Errorf("unexpected type %T for field user_agent", values[i])
+			} else if value.Valid {
+				u.UserAgent = new(string)
+				*u.UserAgent = value.String
+			}
+		case upscale.FieldCreatedAt:
+			if value, ok := values[i].(*sql.NullTime); !ok {
+				return fmt.Errorf("unexpected type %T for field created_at", values[i])
+			} else if value.Valid {
+				u.CreatedAt = value.Time
+			}
+		case upscale.FieldUpdatedAt:
+			if value, ok := values[i].(*sql.NullTime); !ok {
+				return fmt.Errorf("unexpected type %T for field updated_at", values[i])
+			} else if value.Valid {
+				u.UpdatedAt = value.Time
+			}
+		case upscale.FieldUserID:
+			if value, ok := values[i].(*sql.NullScanner); !ok {
+				return fmt.Errorf("unexpected type %T for field user_id", values[i])
+			} else if value.Valid {
+				u.UserID = new(uuid.UUID)
+				*u.UserID = *value.S.(*uuid.UUID)
+			}
+		case upscale.FieldUserTier:
+			if value, ok := values[i].(*sql.NullString); !ok {
+				return fmt.Errorf("unexpected type %T for field user_tier", values[i])
+			} else if value.Valid {
+				u.UserTier = upscale.UserTier(value.String)
+			}
 		}
 	}
 	return nil
+}
+
+// QueryUser queries the "user" edge of the Upscale entity.
+func (u *Upscale) QueryUser() *UserQuery {
+	return (&UpscaleClient{config: u.config}).QueryUser(u)
 }
 
 // Update returns a builder for updating this Upscale.
@@ -72,7 +299,95 @@ func (u *Upscale) Unwrap() *Upscale {
 func (u *Upscale) String() string {
 	var builder strings.Builder
 	builder.WriteString("Upscale(")
-	builder.WriteString(fmt.Sprintf("id=%v", u.ID))
+	builder.WriteString(fmt.Sprintf("id=%v, ", u.ID))
+	builder.WriteString("width=")
+	builder.WriteString(fmt.Sprintf("%v", u.Width))
+	builder.WriteString(", ")
+	builder.WriteString("height=")
+	builder.WriteString(fmt.Sprintf("%v", u.Height))
+	builder.WriteString(", ")
+	builder.WriteString("scale=")
+	builder.WriteString(fmt.Sprintf("%v", u.Scale))
+	builder.WriteString(", ")
+	builder.WriteString("status=")
+	builder.WriteString(fmt.Sprintf("%v", u.Status))
+	builder.WriteString(", ")
+	builder.WriteString("server_url=")
+	builder.WriteString(u.ServerURL)
+	builder.WriteString(", ")
+	if v := u.DurationMsg; v != nil {
+		builder.WriteString("duration_msg=")
+		builder.WriteString(fmt.Sprintf("%v", *v))
+	}
+	builder.WriteString(", ")
+	if v := u.Type; v != nil {
+		builder.WriteString("type=")
+		builder.WriteString(*v)
+	}
+	builder.WriteString(", ")
+	if v := u.Prompt; v != nil {
+		builder.WriteString("prompt=")
+		builder.WriteString(*v)
+	}
+	builder.WriteString(", ")
+	if v := u.NegativePrompt; v != nil {
+		builder.WriteString("negative_prompt=")
+		builder.WriteString(*v)
+	}
+	builder.WriteString(", ")
+	if v := u.Seed; v != nil {
+		builder.WriteString("seed=")
+		builder.WriteString(fmt.Sprintf("%v", *v))
+	}
+	builder.WriteString(", ")
+	if v := u.NumInferenceSteps; v != nil {
+		builder.WriteString("num_inference_steps=")
+		builder.WriteString(fmt.Sprintf("%v", *v))
+	}
+	builder.WriteString(", ")
+	if v := u.GuidanceScale; v != nil {
+		builder.WriteString("guidance_scale=")
+		builder.WriteString(fmt.Sprintf("%v", *v))
+	}
+	builder.WriteString(", ")
+	if v := u.CountryCode; v != nil {
+		builder.WriteString("country_code=")
+		builder.WriteString(*v)
+	}
+	builder.WriteString(", ")
+	if v := u.DeviceType; v != nil {
+		builder.WriteString("device_type=")
+		builder.WriteString(*v)
+	}
+	builder.WriteString(", ")
+	if v := u.DeviceOs; v != nil {
+		builder.WriteString("device_os=")
+		builder.WriteString(*v)
+	}
+	builder.WriteString(", ")
+	if v := u.DeviceBrowser; v != nil {
+		builder.WriteString("device_browser=")
+		builder.WriteString(*v)
+	}
+	builder.WriteString(", ")
+	if v := u.UserAgent; v != nil {
+		builder.WriteString("user_agent=")
+		builder.WriteString(*v)
+	}
+	builder.WriteString(", ")
+	builder.WriteString("created_at=")
+	builder.WriteString(u.CreatedAt.Format(time.ANSIC))
+	builder.WriteString(", ")
+	builder.WriteString("updated_at=")
+	builder.WriteString(u.UpdatedAt.Format(time.ANSIC))
+	builder.WriteString(", ")
+	if v := u.UserID; v != nil {
+		builder.WriteString("user_id=")
+		builder.WriteString(fmt.Sprintf("%v", *v))
+	}
+	builder.WriteString(", ")
+	builder.WriteString("user_tier=")
+	builder.WriteString(fmt.Sprintf("%v", u.UserTier))
 	builder.WriteByte(')')
 	return builder.String()
 }
