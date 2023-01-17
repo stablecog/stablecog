@@ -13,6 +13,7 @@ var LanguageDetector lingua.LanguageDetector
 const targetLangFlores = "eng_Latn"
 const targetLangMaxScore float64 = 0.9
 const targetLangMinDif float64 = 0.1
+const targetLangAcceptableScore float64 = 0.2
 
 func PrimeLanguageDetector() {
 	LanguageDetector = lingua.NewLanguageDetectorBuilder().FromAllLanguages().Build()
@@ -56,7 +57,8 @@ func GetFloresCode(text string) string {
 		}
 	}
 
-	if targetLangScore > targetLangMaxScore || detectedLangScore-targetLangScore < targetLangMinDif {
+	if targetLangScore > targetLangMaxScore ||
+		(targetLangScore > targetLangAcceptableScore && detectedLangScore-targetLangScore < targetLangMinDif) {
 		return targetLangFlores
 	}
 
