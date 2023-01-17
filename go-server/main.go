@@ -48,6 +48,7 @@ func main() {
 	// ! I don't like either of these
 	shared.SetupRedis()
 	shared.InitSyncMap()
+	shared.PrimeLanguageDetector()
 
 	app := fiber.New()
 	cors := cors.New(cors.Config{
