@@ -16,6 +16,7 @@ import (
 	cronHealth "github.com/yekta/stablecog/go-server/cron/health"
 	cronMeili "github.com/yekta/stablecog/go-server/cron/meili"
 	cronStats "github.com/yekta/stablecog/go-server/cron/stats"
+	"github.com/yekta/stablecog/go-server/handlers/detect_language"
 	"github.com/yekta/stablecog/go-server/handlers/gallery"
 	"github.com/yekta/stablecog/go-server/handlers/generate"
 	generationGImage "github.com/yekta/stablecog/go-server/handlers/generation-g-image"
@@ -79,6 +80,7 @@ func main() {
 	app.Get("/stats", func(c *fiber.Ctx) error {
 		return c.JSON(cronStats.Stats)
 	})
+	app.Post("/detect_lang", detect_language.Handler)
 
 	app.Post(fmt.Sprintf("/queue/webhook/%s", shared.QUEUE_SECRET), queueWebhook.Handler)
 	app.Put(fmt.Sprintf("/queue/upload/%s/*", shared.QUEUE_SECRET), queueUpload.Handler)

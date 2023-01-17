@@ -16,6 +16,7 @@ require (
 	github.com/joho/godotenv v1.4.0
 	github.com/meilisearch/meilisearch-go v0.22.0
 	github.com/mileusna/useragent v1.2.1
+	github.com/pemistahl/lingua-go v1.3.1
 	github.com/robfig/cron/v3 v3.0.1
 	github.com/supabase-community/gotrue-go v1.0.1
 	github.com/supabase-community/storage-go v0.5.7
@@ -49,11 +50,14 @@ require (
 	github.com/mattn/go-runewidth v0.0.14 // indirect
 	github.com/onsi/gomega v1.24.1 // indirect
 	github.com/rivo/uniseg v0.2.0 // indirect
+	github.com/shopspring/decimal v1.3.1 // indirect
 	github.com/tomnomnom/linkheader v0.0.0-20180905144013-02ca5825eb80 // indirect
 	github.com/valyala/bytebufferpool v1.0.0 // indirect
 	github.com/valyala/fasthttp v1.41.0 // indirect
 	github.com/valyala/tcplisten v1.0.0 // indirect
+	golang.org/x/exp v0.0.0-20221106115401-f9659909a136 // indirect
 	golang.org/x/net v0.3.0 // indirect
 	golang.org/x/sys v0.3.0 // indirect
 	golang.org/x/text v0.5.0 // indirect
+	google.golang.org/protobuf v1.28.1 // indirect
 )
