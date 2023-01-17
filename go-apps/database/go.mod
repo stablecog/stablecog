@@ -2,13 +2,23 @@ module github.com/yekta/stablecog/go-apps/database
 
 go 1.19
 
+require github.com/go-redis/redis/v9 v9.0.0-rc.2
+
+require (
+	github.com/alicebob/gopher-json v0.0.0-20200520072559-a9ecdc9d1d3a // indirect
+	github.com/yuin/gopher-lua v0.0.0-20220504180219-658193537a64 // indirect
+)
+
 require (
 	ariga.io/atlas v0.8.4-0.20221212165942-e53dd27a603d // indirect
 	entgo.io/ent v0.11.5 // indirect
 	github.com/agext/levenshtein v1.2.1 // indirect
+	github.com/alicebob/miniredis/v2 v2.30.0
 	github.com/apparentlymart/go-textseg/v13 v13.0.0 // indirect
+	github.com/cespare/xxhash/v2 v2.1.2 // indirect
+	github.com/dgryski/go-rendezvous v0.0.0-20200823014737-9f7001d12a5f // indirect
 	github.com/go-openapi/inflect v0.19.0 // indirect
-	github.com/google/go-cmp v0.5.6 // indirect
+	github.com/google/go-cmp v0.5.9 // indirect
 	github.com/google/uuid v1.3.0 // indirect
 	github.com/hashicorp/hcl/v2 v2.13.0 // indirect
 	github.com/inconshreveable/mousetrap v1.0.1 // indirect
@@ -20,6 +30,6 @@ require (
 	github.com/zclconf/go-cty v1.8.0 // indirect
 	golang.org/x/mod v0.7.0 // indirect
 	golang.org/x/sys v0.2.0 // indirect
-	golang.org/x/text v0.3.7 // indirect
+	golang.org/x/text v0.4.0 // indirect
 	golang.org/x/tools v0.3.1-0.20221202221704-aa9f4b2f3d57 // indirect
 )
