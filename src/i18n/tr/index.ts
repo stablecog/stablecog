@@ -199,7 +199,7 @@ const tr: Translation = {
 			},
 			'fc06f6ab-ed14-4186-a7c0-aaec288d4f38': {
 				realName: '22h Diffusion v0.1',
-				simpleName: 'Artistic'
+				simpleName: 'Artistik'
 			}
 		},
 		SchedulerOptions: {
@@ -226,7 +226,7 @@ const tr: Translation = {
 		MoreOptionsTitle: 'Daha Fazla Seçenek',
 		LessOptionsTitle: 'Daha Az Seçenek',
 		TryAgainButton: 'Yeniden Dene',
-		RefreshButton: 'Refresh'
+		RefreshButton: 'Yenile'
 	},
 	Error: {
 		SomethingWentWrong: 'Bir şeyler ters gitti :(',
@@ -242,7 +242,7 @@ const tr: Translation = {
 		InvalidCredentials: 'Geçersiz kimlik.',
 		InvalidCode: 'Geçersiz kod.',
 		OnceEvery60Seconds: 'Her 60 saniyede sadece bir link talebinde bulunabilirsin.',
-		NewVersionAvailable: 'There is a new version! Refresh the page to get it.'
+		NewVersionAvailable: 'Yeni versiyon mevcut. Görmek için sayfayı yenile.'
 	},
 	Admin: {
 		AdminPanelTitle: 'Yönetici',
