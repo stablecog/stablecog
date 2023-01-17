@@ -35,26 +35,9 @@
 			data-domains="stablecog.com"
 			src="https://um.stablecog.com/umami.js"
 		></script>
-		<script>
-			window.onload = () => {
-				try {
-					const version = document.body.getAttribute('version');
-					const appVersion = window.localStorage.getItem('appVersion');
-					if (version && !appVersion) {
-						window.localStorage.setItem('appVersion', version);
-					} else if (version && version !== appVersion) {
-						window.localStorage.setItem('appVersion', version);
-						console.log('Reloading to update to the new version');
-						document.location.reload();
-					}
-				} catch (error) {
-					console.log(error);
-				}
-			};
-		</script>
 		%sveltekit.head%
 	</head>
-	<body version="3.29">
+	<body app-version="3.30">
 		<div>%sveltekit.body%</div>
 	</body>
 </html>

@@ -45,6 +45,7 @@ export interface TGenerationRequest {
 	prompt_strength?: number;
 	should_submit_to_gallery?: boolean;
 	access_token?: string;
+	app_version: string;
 }
 
 export interface TGenerationResponse {

@@ -21,6 +21,7 @@
 	import { afterNavigate, invalidateAll } from '$app/navigation';
 	import { mLogPageview } from '$ts/helpers/loggers';
 	import { setCookie } from '$ts/helpers/setCookie';
+	import { appVersion } from '$ts/stores/appVersion';
 
 	export let data: LayoutData;
 	setLocale(data.locale);
@@ -56,6 +57,7 @@
 		} = supabase.auth.onAuthStateChange(() => {
 			invalidateAll();
 		});
+		appVersion.set(document.body.getAttribute('app-version') || 'unknown');
 		setBodyClasses();
 		if ($localeLS && isLocale($localeLS) && $localeLS !== $locale) {
 			await loadLocaleAsync($localeLS);

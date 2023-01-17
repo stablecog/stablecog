@@ -17,12 +17,14 @@ export async function generateImage({
 	prompt_strength,
 	mask,
 	output_image_ext = 'jpg',
-	access_token
+	access_token,
+	app_version
 }: TGenerationRequest) {
 	const response = await fetch(`${apiBase}/generate`, {
 		method: 'POST',
 		headers: {
-			'Content-Type': 'application/json'
+			'Content-Type': 'application/json',
+			'X-App-Version': app_version
 		},
 		body: JSON.stringify({
 			server_url,
@@ -63,12 +65,14 @@ export async function generateImageV2({
 	prompt_strength,
 	mask,
 	output_image_ext = 'jpg',
-	access_token
+	access_token,
+	app_version
 }: TGenerationRequest) {
 	const response = await fetch(`${apiBase}/v2/generate`, {
 		method: 'POST',
 		headers: {
-			'Content-Type': 'application/json'
+			'Content-Type': 'application/json',
+			'X-App-Version': app_version
 		},
 		body: JSON.stringify({
 			server_url,

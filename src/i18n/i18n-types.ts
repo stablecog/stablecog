@@ -641,6 +641,10 @@ type RootTranslation = {
 		 * T​r​y​ ​A​g​a​i​n
 		 */
 		TryAgainButton: string
+		/**
+		 * R​e​f​r​e​s​h
+		 */
+		RefreshButton: string
 	}
 	Error: {
 		/**
@@ -691,6 +695,10 @@ type RootTranslation = {
 		 * Y​o​u​ ​c​a​n​ ​o​n​l​y​ ​r​e​q​u​e​s​t​ ​a​ ​l​i​n​k​ ​o​n​c​e​ ​e​v​e​r​y​ ​6​0​ ​s​e​c​o​n​d​s​.
 		 */
 		OnceEvery60Seconds: string
+		/**
+		 * T​h​e​r​e​ ​i​s​ ​a​ ​n​e​w​ ​v​e​r​s​i​o​n​!​ ​R​e​f​r​e​s​h​ ​t​h​e​ ​p​a​g​e​ ​t​o​ ​g​e​t​ ​i​t​.
+		 */
+		NewVersionAvailable: string
 	}
 	Admin: {
 		/**
@@ -1751,6 +1759,10 @@ export type TranslationFunctions = {
 		 * Try Again
 		 */
 		TryAgainButton: () => LocalizedString
+		/**
+		 * Refresh
+		 */
+		RefreshButton: () => LocalizedString
 	}
 	Error: {
 		/**
@@ -1801,6 +1813,10 @@ export type TranslationFunctions = {
 		 * You can only request a link once every 60 seconds.
 		 */
 		OnceEvery60Seconds: () => LocalizedString
+		/**
+		 * There is a new version! Refresh the page to get it.
+		 */
+		NewVersionAvailable: () => LocalizedString
 	}
 	Admin: {
 		/**

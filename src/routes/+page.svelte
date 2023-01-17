@@ -46,6 +46,9 @@
 	} from '$ts/stores/generationSettings';
 	import { page } from '$app/stores';
 	import { homePageContainer } from '$ts/stores/homePageContainer';
+	import { appVersion } from '$ts/stores/appVersion';
+	import Button from '$components/buttons/Button.svelte';
+	import IconConfetti from '$components/icons/IconConfetti.svelte';
 
 	export let data: THomePageData;
 
@@ -148,7 +151,8 @@
 				num_inference_steps: lastGeneration.num_inference_steps,
 				should_submit_to_gallery:
 					$shouldSubmitToGallery === undefined ? false : $shouldSubmitToGallery,
-				access_token: $page.data.session?.access_token
+				access_token: $page.data.session?.access_token,
+				app_version: $appVersion
 			});
 			let { data, error } = res;
 			if (data && data.image_b64 && !error) {
@@ -284,15 +288,35 @@
 			{#if status === 'error'}
 				<div
 					transition:expandCollapse|local={{ duration: 300 }}
-					class="flex flex-col justify-start origin-top px-6"
+					class="flex flex-col justify-start origin-top rounded-2xl"
 				>
-					<p class="w-full max-w-2xl leading-relaxed text-c-on-bg/40 text-center py-4 md:py-2">
-						{generationError
-							? generationError.message === 'NSFW'
-								? $LL.Error.NSFW()
-								: generationError.message
-							: $LL.Error.SomethingWentWrong()}
-					</p>
+					{#if generationError && generationError.message === 'NEW_VERSION_AVAILABLE'}
+						<div class="w-full max-w-md py-2 md:py-0 px-4">
+							<div
+								class="w-full flex flex-col items-center p-3 md:p-4 bg-c-primary/8 border-2 border-c-primary/8 rounded-2xl"
+							>
+								<div class="w-full flex justify-start items-center gap-3 -mt-0.5 md:-mt-1 px-2">
+									<IconConfetti class="w-7 h-7 flex-shrink-0 text-c-primary" />
+									<p class="flex-1 min-w-0 leading-normal text-c-primary text-left">
+										{$LL.Error.NewVersionAvailable()}
+									</p>
+								</div>
+								<Button onClick={() => document.location.reload()} size="sm" class="mt-4 w-full">
+									{$LL.Shared.RefreshButton()}
+								</Button>
+							</div>
+						</div>
+					{:else}
+						<p
+							class="w-full max-w-2xl leading-relaxed text-c-on-bg/40 text-center py-4 md:py-2 px-6"
+						>
+							{generationError
+								? generationError.message === 'NSFW'
+									? $LL.Error.NSFW()
+									: generationError.message
+								: $LL.Error.SomethingWentWrong()}
+						</p>
+					{/if}
 				</div>
 			{:else if status === 'success' && lastGeneration && lastGeneration.imageUrl}
 				{@const aspectRatio = lastGeneration.width / lastGeneration.height}
