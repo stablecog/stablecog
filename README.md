@@ -18,7 +18,7 @@ This is an app for creating AI generated images using [Stable Diffusion](https:/
 | :--------------------------------------------------------------: |
 |                           <b>Live</b>                            |
 
-The app knows how to communicate with this cog to generate images: [Stable Diffusion Cog](https://github.com/yekta/stable-diffusion-cog). It is available on Docker Hub at: [yekta/sc](https://hub.docker.com/r/yekta/sc). However, as long as your server has the endpoints and the parameters the app uses, it'll work.
+The app knows how to communicate with this cog to generate images: [Stable Diffusion Cog](https://github.com/stablecog/stable-diffusion-cog). It is available on Docker Hub at: [yekta/sc](https://hub.docker.com/r/yekta/sc). However, as long as your server has the endpoints and the parameters the app uses, it'll work.
 
 For example, the following cogs would also work with the app:
 
