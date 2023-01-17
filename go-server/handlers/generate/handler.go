@@ -412,6 +412,22 @@ func Handler(c *fiber.Ctx) error {
 func HandlerV2(c *fiber.Ctx) error {
 	start := time.Now().UTC().UnixMilli()
 
+	version := c.Get("X-App-Version")
+	versionF, vErr := strconv.ParseFloat(version, 64)
+	if vErr != nil {
+		log.Printf("-- Couldn't parse client version version: %v --", vErr)
+		return c.Status(http.StatusBadRequest).JSON(
+			SGenerateResponse{Error: "There is a new version 🎉. Refresh the page to get it!"},
+		)
+	}
+
+	if versionF < shared.APP_VERSION {
+		log.Printf(`-- Client version "%f" is smaller than server version "%f" --`, versionF, shared.APP_VERSION)
+		return c.Status(http.StatusBadRequest).JSON(
+			SGenerateResponse{Error: "There is a new version 🎉. Refresh the page to get it!"},
+		)
+	}
+
 	countryCode := c.Get("CF-IPCountry")
 	if countryCode == "" {
 		countryCode = c.Get("X-Vercel-IP-Country")
