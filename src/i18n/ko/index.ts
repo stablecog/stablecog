@@ -225,7 +225,8 @@ const ko: Translation = {
 		UnknownTitle: '알 수 없음',
 		MoreOptionsTitle: '더 많은 옵션 보기',
 		LessOptionsTitle: '옵션 숨기기',
-		TryAgainButton: '다시 시도하기'
+		TryAgainButton: '다시 시도하기',
+		RefreshButton: 'Refresh'
 	},
 	Error: {
 		SomethingWentWrong: '웁스.. 뭔가 잘못됐어요. :(',
@@ -240,7 +241,8 @@ const ko: Translation = {
 		SomethingWentWrongTryAgain: '무언가 잘못되었습니다. 다시 시도해주세요.',
 		InvalidCredentials: '이메일과 비밀번호를 다시 확인해주세요.',
 		InvalidCode: '올바르지 않은 코드입니다. 다시 시도해주세요.',
-		OnceEvery60Seconds: 'You can only request a link once every 60 seconds.'
+		OnceEvery60Seconds: 'You can only request a link once every 60 seconds.',
+		NewVersionAvailable: 'There is a new version! Refresh the page to get it.'
 	},
 	Admin: {
 		AdminPanelTitle: '관리자',

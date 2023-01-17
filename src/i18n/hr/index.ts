@@ -224,7 +224,8 @@ const hr: Translation = {
 		UnknownTitle: 'Nepoznato',
 		MoreOptionsTitle: 'Više opcija',
 		LessOptionsTitle: 'Manje opcija',
-		TryAgainButton: 'Pokušaj ponovno'
+		TryAgainButton: 'Pokušaj ponovno',
+		RefreshButton: 'Refresh'
 	},
 	Error: {
 		SomethingWentWrong: 'Dogodila se greška :(',
@@ -239,7 +240,8 @@ const hr: Translation = {
 		SomethingWentWrongTryAgain: 'Nešto je pošlo naopako. Pokušaj ponovo.',
 		InvalidCredentials: 'Netočni podaci.',
 		InvalidCode: 'Nevažeći kod.',
-		OnceEvery60Seconds: 'Možeš zatražiti link samo svakih 60 sekundi.'
+		OnceEvery60Seconds: 'Možeš zatražiti link samo svakih 60 sekundi.',
+		NewVersionAvailable: 'There is a new version! Refresh the page to get it.'
 	},
 	Admin: {
 		AdminPanelTitle: 'Administrator',

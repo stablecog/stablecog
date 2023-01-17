@@ -225,7 +225,8 @@ const tr: Translation = {
 		UnknownTitle: 'Bilinmeyen',
 		MoreOptionsTitle: 'Daha Fazla Seçenek',
 		LessOptionsTitle: 'Daha Az Seçenek',
-		TryAgainButton: 'Yeniden Dene'
+		TryAgainButton: 'Yeniden Dene',
+		RefreshButton: 'Refresh'
 	},
 	Error: {
 		SomethingWentWrong: 'Bir şeyler ters gitti :(',
@@ -240,7 +241,8 @@ const tr: Translation = {
 		SomethingWentWrongTryAgain: 'Bir sıkıntı çıktı, tekrar dene.',
 		InvalidCredentials: 'Geçersiz kimlik.',
 		InvalidCode: 'Geçersiz kod.',
-		OnceEvery60Seconds: 'Her 60 saniyede sadece bir link talebinde bulunabilirsin.'
+		OnceEvery60Seconds: 'Her 60 saniyede sadece bir link talebinde bulunabilirsin.',
+		NewVersionAvailable: 'There is a new version! Refresh the page to get it.'
 	},
 	Admin: {
 		AdminPanelTitle: 'Yönetici',

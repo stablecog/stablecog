@@ -225,7 +225,8 @@ const fr: Translation = {
 		UnknownTitle: 'Inconnu',
 		MoreOptionsTitle: "Plus D'Options",
 		LessOptionsTitle: "Moins D'Options",
-		TryAgainButton: 'Réessayer'
+		TryAgainButton: 'Réessayer',
+		RefreshButton: 'Refresh'
 	},
 	Error: {
 		SomethingWentWrong: "Une erreur s'est produite :(",
@@ -241,7 +242,8 @@ const fr: Translation = {
 		SomethingWentWrongTryAgain: "Une erreur s'est produite, veuillez réessayer.",
 		InvalidCredentials: 'Identifiants incorrects.',
 		InvalidCode: 'Code non valide.',
-		OnceEvery60Seconds: 'You can only request a link once every 60 seconds.'
+		OnceEvery60Seconds: 'You can only request a link once every 60 seconds.',
+		NewVersionAvailable: 'There is a new version! Refresh the page to get it.'
 	},
 	Admin: {
 		AdminPanelTitle: 'Administration',

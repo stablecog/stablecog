@@ -225,7 +225,8 @@ const vi: Translation = {
 		UnknownTitle: 'Không xác định',
 		MoreOptionsTitle: 'Tuỳ chọn khác',
 		LessOptionsTitle: 'Tùy chọn ít hơn',
-		TryAgainButton: 'Thử lại'
+		TryAgainButton: 'Thử lại',
+		RefreshButton: 'Refresh'
 	},
 	Error: {
 		SomethingWentWrong: 'Đã xảy ra lỗi :(',
@@ -241,7 +242,8 @@ const vi: Translation = {
 		SomethingWentWrongTryAgain: 'Có sự cố. Xin vui lòng thử lại.',
 		InvalidCredentials: 'Thông tin dùng để xác thực không hợp lệ.',
 		InvalidCode: 'Mã không hợp lệ.',
-		OnceEvery60Seconds: 'You can only request a link once every 60 seconds.'
+		OnceEvery60Seconds: 'You can only request a link once every 60 seconds.',
+		NewVersionAvailable: 'There is a new version! Refresh the page to get it.'
 	},
 	Admin: {
 		AdminPanelTitle: 'Quản trị',

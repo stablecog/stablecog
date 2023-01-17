@@ -224,7 +224,8 @@ const hi: Translation = {
 		UnknownTitle: 'अनजान',
 		MoreOptionsTitle: 'अधिक विकल्प',
 		LessOptionsTitle: 'कम विकल्प',
-		TryAgainButton: 'Try Again'
+		TryAgainButton: 'Try Again',
+		RefreshButton: 'Refresh'
 	},
 	Error: {
 		SomethingWentWrong: 'कुछ गलत हो गया :(',
@@ -239,7 +240,8 @@ const hi: Translation = {
 		SomethingWentWrongTryAgain: 'Something went wrong, try again.',
 		InvalidCredentials: 'Invalid credentials.',
 		InvalidCode: 'Invalid code.',
-		OnceEvery60Seconds: 'You can only request a link once every 60 seconds.'
+		OnceEvery60Seconds: 'You can only request a link once every 60 seconds.',
+		NewVersionAvailable: 'There is a new version! Refresh the page to get it.'
 	},
 	Admin: {
 		AdminPanelTitle: 'Admin',

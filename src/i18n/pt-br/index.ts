@@ -224,7 +224,8 @@ const ptBr: Translation = {
 		UnknownTitle: 'Desconhecido',
 		MoreOptionsTitle: 'Mais Opções',
 		LessOptionsTitle: 'Menos Opções',
-		TryAgainButton: 'Tente Novamente'
+		TryAgainButton: 'Tente Novamente',
+		RefreshButton: 'Refresh'
 	},
 	Error: {
 		SomethingWentWrong: 'Algo deu errado :(',
@@ -240,7 +241,8 @@ const ptBr: Translation = {
 		SomethingWentWrongTryAgain: 'Algo deu errado, tente novamente.',
 		InvalidCredentials: 'Credenciais inválidas.',
 		InvalidCode: 'Código inválido.',
-		OnceEvery60Seconds: 'You can only request a link once every 60 seconds.'
+		OnceEvery60Seconds: 'You can only request a link once every 60 seconds.',
+		NewVersionAvailable: 'There is a new version! Refresh the page to get it.'
 	},
 	Admin: {
 		AdminPanelTitle: 'Administrador',

@@ -224,7 +224,8 @@ const de: Translation = {
 		UnknownTitle: 'Unbekannt',
 		MoreOptionsTitle: 'Weitere Optionen',
 		LessOptionsTitle: 'Weniger Optionen',
-		TryAgainButton: 'Try Again'
+		TryAgainButton: 'Try Again',
+		RefreshButton: 'Refresh'
 	},
 	Error: {
 		SomethingWentWrong: 'Etwas ist schiefgelaufen :(',
@@ -239,7 +240,8 @@ const de: Translation = {
 		SomethingWentWrongTryAgain: 'Something went wrong, try again.',
 		InvalidCredentials: 'Invalid credentials.',
 		InvalidCode: 'Invalid code.',
-		OnceEvery60Seconds: 'You can only request a link once every 60 seconds.'
+		OnceEvery60Seconds: 'You can only request a link once every 60 seconds.',
+		NewVersionAvailable: 'There is a new version! Refresh the page to get it.'
 	},
 	Admin: {
 		AdminPanelTitle: 'Admin',

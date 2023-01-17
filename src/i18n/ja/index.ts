@@ -225,7 +225,8 @@ const ja: Translation = {
 		UnknownTitle: '不明',
 		MoreOptionsTitle: 'オプションを表示',
 		LessOptionsTitle: 'オプションを隠す',
-		TryAgainButton: '再試行'
+		TryAgainButton: '再試行',
+		RefreshButton: 'Refresh'
 	},
 	Error: {
 		SomethingWentWrong: '不具合が発生しました。',
@@ -241,7 +242,8 @@ const ja: Translation = {
 		SomethingWentWrongTryAgain: 'エラーが発生しました。再試行してください。',
 		InvalidCredentials: '不正な認証情報',
 		InvalidCode: 'コードが無効です。',
-		OnceEvery60Seconds: 'リンクは60秒ごとに1回しかリクエストできません。'
+		OnceEvery60Seconds: 'リンクは60秒ごとに1回しかリクエストできません。',
+		NewVersionAvailable: 'There is a new version! Refresh the page to get it.'
 	},
 	Admin: {
 		AdminPanelTitle: 'アドミ',
