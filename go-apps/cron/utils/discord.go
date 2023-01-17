@@ -2,33 +2,66 @@ package utils
 
 import (
 	"bytes"
+	"context"
 	"encoding/json"
 	"fmt"
 	"log"
 	"net/http"
 	"strings"
 	"time"
+
+	"github.com/go-redis/redis/v9"
+	"github.com/yekta/stablecog/go-apps/cron/models"
+	"github.com/yekta/stablecog/go-apps/database/ent"
+	dbgeneration "github.com/yekta/stablecog/go-apps/database/ent/generation"
+	"github.com/yekta/stablecog/go-apps/utils"
 )
 
-func SendDiscordNotificationIfNeeded(
+// General redis key prefix
+const redisDiscordKeyPrefix = "discord_notification"
+
+// Keep state of health with these keys
+var lastHealthyKey = fmt.Sprintf("%s:last_healthy", redisDiscordKeyPrefix)
+var lastUnhealthyKey = fmt.Sprintf("%s:last_unhealthy", redisDiscordKeyPrefix)
+
+// Constants
+const unhealthyNotificationInterval = 5 * time.Minute
+const healthyNotificationInterval = 1 * time.Hour
+const rTTL = 2 * time.Hour
+
+type DiscordHealthTracker struct {
+	ctx                           context.Context
+	webhookUrl                    string
+	lastNotificationTime          time.Time
+	lastUnhealthyNotificationTime time.Time
+	lastHealthyNotificationTime   time.Time
+	redis                         *redis.Client
+}
+
+func NewDiscordHealthTracker(ctx context.Context, redis *redis.Client) *DiscordHealthTracker {
+	return &DiscordHealthTracker{
+		ctx:        ctx,
+		webhookUrl: utils.GetEnv("DISCORD_WEBHOOK_URL", ""),
+		redis:      redis,
+	}
+}
+
+func (d *DiscordHealthTracker) SendDiscordNotificationIfNeeded(
 	status string,
 	statusPrev string,
-	servers []shared.SDBServer,
+	servers []*ent.Server,
 	serversStateChanged bool,
-	generations []shared.SDBGeneration,
+	generations []*ent.Generation,
 	lastGenerationTime time.Time,
 	lastCheckTime time.Time,
 ) {
-	var rctx = shared.Redis.Context()
-	lastHealthyKey := fmt.Sprintf("%s:last_healthy", groupKey)
-	lastUnhealthyKey := fmt.Sprintf("%s:last_unhealthy", groupKey)
-	lastHealthyStr := shared.Redis.Get(rctx, lastHealthyKey).Val()
-	lastUnhealthyStr := shared.Redis.Get(rctx, lastUnhealthyKey).Val()
-	lastHealthyNotificationTime, _ = time.Parse(time.RFC3339, lastHealthyStr)
-	lastUnhealthyNotificationTime, _ = time.Parse(time.RFC3339, lastUnhealthyStr)
+	lastHealthyStr := d.redis.Get(d.ctx, lastHealthyKey).Val()
+	lastUnhealthyStr := d.redis.Get(d.ctx, lastUnhealthyKey).Val()
+	d.lastHealthyNotificationTime, _ = time.Parse(time.RFC3339, lastHealthyStr)
+	d.lastUnhealthyNotificationTime, _ = time.Parse(time.RFC3339, lastUnhealthyStr)
 
-	sinceHealthyNotification := time.Since(lastHealthyNotificationTime)
-	sinceUnhealthyNotification := time.Since(lastUnhealthyNotificationTime)
+	sinceHealthyNotification := time.Since(d.lastHealthyNotificationTime)
+	sinceUnhealthyNotification := time.Since(d.lastUnhealthyNotificationTime)
 
 	if statusPrev == "unknown" || (status == statusPrev &&
 		!serversStateChanged &&
@@ -46,18 +79,18 @@ func SendDiscordNotificationIfNeeded(
 		log.Printf("Error marshalling webhook body: %s", err)
 		return
 	}
-	res, postErr := http.Post(discordWebhookUrl, "application/json", bytes.NewBuffer(reqBody))
+	res, postErr := http.Post(d.webhookUrl, "application/json", bytes.NewBuffer(reqBody))
 	if postErr != nil {
 		log.Printf("Error sending webhook: %s", postErr)
 	}
-	lastNotificationTime = time.Now()
+	d.lastNotificationTime = time.Now()
 	if status == "healthy" {
-		err := shared.Redis.Set(rctx, lastHealthyKey, lastNotificationTime.Format(time.RFC3339), rTTL).Err()
+		err := d.redis.Set(d.ctx, lastHealthyKey, d.lastNotificationTime.Format(time.RFC3339), rTTL).Err()
 		if err != nil {
 			log.Printf("Redis - Error setting last healthy key: %v", err)
 		}
 	} else {
-		err := shared.Redis.Set(rctx, lastUnhealthyKey, lastNotificationTime.Format(time.RFC3339), rTTL).Err()
+		err := d.redis.Set(d.ctx, lastUnhealthyKey, d.lastNotificationTime.Format(time.RFC3339), rTTL).Err()
 		if err != nil {
 			log.Printf("Redis - Error setting last unhealthy key: %v", err)
 		}
@@ -69,11 +102,11 @@ func SendDiscordNotificationIfNeeded(
 
 func getDiscordWebhookBody(
 	status string,
-	servers []shared.SDBServer,
-	generations []shared.SDBGeneration,
+	servers []*ent.Server,
+	generations []*ent.Generation,
 	lastGenerationTime time.Time,
 	lastCheckTime time.Time,
-) shared.SDiscordWebhookBody {
+) models.DiscordWebhookBody {
 	var statusStr string
 	if status == "unhealthy" {
 		statusStr = "🔴💀🔴"
@@ -94,25 +127,27 @@ func getDiscordWebhookBody(
 		}
 	}
 	for _, generation := range generations {
-		if generation.Status == "failed" {
-			if generation.FailureReason == "NSFW" {
-				generationsStrArr = append(generationsStrArr, "🌶️")
+		if generation.Status != nil {
+			if *generation.Status == dbgeneration.StatusFailed {
+				if *generation.FailureReason == "NSFW" {
+					generationsStrArr = append(generationsStrArr, "🌶️")
+				} else {
+					generationsStrArr = append(generationsStrArr, "🔴")
+				}
+			} else if *generation.Status == "started" {
+				generationsStrArr = append(generationsStrArr, "🟡")
 			} else {
-				generationsStrArr = append(generationsStrArr, "🔴")
+				generationsStrArr = append(generationsStrArr, "🟢")
 			}
-		} else if generation.Status == "started" {
-			generationsStrArr = append(generationsStrArr, "🟡")
-		} else {
-			generationsStrArr = append(generationsStrArr, "🟢")
 		}
 	}
 	serversStr = strings.Join(serversStrArr, "  ")
 	generationsStr = strings.Join(generationsStrArr, "")
-	body := shared.SDiscordWebhookBody{
-		Embeds: []shared.SDiscordWebhookEmbed{
+	body := models.DiscordWebhookBody{
+		Embeds: []models.DiscordWebhookEmbed{
 			{
 				Color: 11437547,
-				Fields: []shared.SDiscordWebhookField{
+				Fields: []models.DiscordWebhookField{
 					{
 						Name:  "Status",
 						Value: fmt.Sprintf("```%s```", statusStr),
@@ -127,15 +162,15 @@ func getDiscordWebhookBody(
 					},
 					{
 						Name:  "Last Generation",
-						Value: fmt.Sprintf("```%s```", shared.RelativeTimeStr(lastGenerationTime)),
+						Value: fmt.Sprintf("```%s```", utils.RelativeTimeStr(lastGenerationTime)),
 					},
 				},
-				Footer: shared.SDiscordWebhookEmbedFooter{
+				Footer: models.DiscordWebhookEmbedFooter{
 					Text: lastCheckTime.Format(time.RFC1123),
 				},
 			},
 		},
-		Attachments: []shared.SDiscordWebhookAttachment{},
+		Attachments: []models.DiscordWebhookAttachment{},
 	}
 	return body
 }
