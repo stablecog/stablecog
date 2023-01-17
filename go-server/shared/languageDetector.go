@@ -8,17 +8,16 @@ import (
 	"github.com/pemistahl/lingua-go"
 )
 
-var LanguageDetector lingua.LanguageDetector
+var LanguageDetector = lingua.NewLanguageDetectorBuilder().
+	FromAllLanguages().
+	WithPreloadedLanguageModels().
+	Build()
 
 const targetLangFlores = "eng_Latn"
 const targetLangMaxScore float64 = 0.9
 const targetLangMinDif float64 = 0.1
 const targetLangAcceptableScore float64 = 0.2
-
-func PrimeLanguageDetector() {
-	LanguageDetector = lingua.NewLanguageDetectorBuilder().FromAllLanguages().Build()
-	LanguageDetector.DetectLanguageOf("Hello, world!")
-}
+const maxTextLength = 150
 
 func GetPromptFloresCodes(prompt string, negativePrompt string) (string, string) {
 	s := time.Now()
@@ -31,6 +30,10 @@ func GetPromptFloresCodes(prompt string, negativePrompt string) (string, string)
 func GetFloresCode(text string) string {
 	if text == "" {
 		return targetLangFlores
+	}
+
+	if len(text) > maxTextLength {
+		text = text[:maxTextLength]
 	}
 
 	confidenceValues := LanguageDetector.ComputeLanguageConfidenceValues(text)

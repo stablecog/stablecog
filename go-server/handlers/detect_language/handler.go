@@ -8,13 +8,19 @@ import (
 	"github.com/yekta/stablecog/go-server/shared"
 )
 
+const maxTextLength = 150
+
 func Handler(c *fiber.Ctx) error {
 	var req SRequestBody
 	if err := c.BodyParser(&req); err != nil {
 		log.Printf("-- Invalid request body: %v --", err)
 		return c.Status(http.StatusBadRequest).JSON("Invalid request body")
 	}
-	values := shared.LanguageDetector.ComputeLanguageConfidenceValues(req.Text)
+	text := req.Text
+	if len(text) > maxTextLength {
+		text = text[:maxTextLength]
+	}
+	values := shared.LanguageDetector.ComputeLanguageConfidenceValues(text)
 	valueNames := make([]SValue, len(values))
 	for i, value := range values {
 		valueNames[i] = SValue{
