@@ -6,6 +6,7 @@ import (
 	"flag"
 	"fmt"
 	"log"
+	"strconv"
 	"time"
 
 	"github.com/getsentry/sentry-go"
@@ -74,6 +75,25 @@ func main() {
 	app.Get("/gallery", gallery.Handler)
 	app.Post("/health", health.Handler)
 	app.Get("/stats", func(c *fiber.Ctx) error {
+		stats := map[string]*int64{
+			"generation_count": nil,
+			"upscale_count":    nil,
+		}
+		upscaleCount := shared.Redis.Get(shared.Redis.Context(), "stats:upscale_count").Val()
+		if upscaleCount != "" {
+			num, err := strconv.ParseInt(upscaleCount, 10, 64)
+			if err == nil {
+				stats["upscale_count"] = &num
+			}
+		}
+		generationCount := shared.Redis.Get(shared.Redis.Context(), "stats:generation_count").Val()
+		if upscaleCount != "" {
+			num, err := strconv.ParseInt(generationCount, 10, 64)
+			if err == nil {
+				stats["generation_count"] = &num
+			}
+		}
+		// Get stats from redis
 		return c.JSON(cronStats.Stats)
 	})
 	app.Post("/detect_language", detect_language.Handler)
