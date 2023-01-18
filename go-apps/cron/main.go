@@ -7,7 +7,8 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/appditto/pippin_nano_wallet/apps/server"
+	"github.com/yekta/stablecog/go-apps/cron/jobs"
+	"github.com/yekta/stablecog/go-apps/cron/utils"
 	"github.com/yekta/stablecog/go-apps/database"
 	"k8s.io/klog/v2"
 )
@@ -36,14 +37,40 @@ func main() {
 	ctx := context.Background()
 
 	// Setup redis
-	_, err := database.NewRedis(ctx)
+	redis, err := database.NewRedis(ctx)
 	if err != nil {
 		klog.Fatalf("Error connecting to redis: %v", err)
 		os.Exit(1)
 	}
 
+	// Setup sql
+	klog.Infoln("🏡 Connecting to database...")
+	dbconn, err := database.GetSqlDbConn(false)
+	if err != nil {
+		klog.Fatalf("Failed to connect to database: %v", err)
+		os.Exit(1)
+	}
+	entClient, err := database.NewEntClient(dbconn)
+	if err != nil {
+		klog.Fatalf("Failed to create ent client: %v", err)
+		os.Exit(1)
+	}
+	defer entClient.Close()
+
+	// Create a job runner
+	jobRunner := jobs.JobRunner{
+		Ctx:     ctx,
+		Db:      entClient,
+		Redis:   redis,
+		Discord: utils.NewDiscordHealthTracker(ctx, redis),
+	}
+
 	if *healthCheck {
-		server.StartPippinServer()
+		err := jobRunner.CheckHealth()
+		if err != nil {
+			klog.Fatalf("Error running health check: %v", err)
+			os.Exit(1)
+		}
 		os.Exit(0)
 	}
 

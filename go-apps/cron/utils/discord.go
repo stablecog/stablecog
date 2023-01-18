@@ -5,7 +5,6 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
-	"log"
 	"net/http"
 	"strings"
 	"time"
@@ -15,6 +14,7 @@ import (
 	"github.com/yekta/stablecog/go-apps/database/ent"
 	dbgeneration "github.com/yekta/stablecog/go-apps/database/ent/generation"
 	"github.com/yekta/stablecog/go-apps/utils"
+	"k8s.io/klog/v2"
 )
 
 // General redis key prefix
@@ -28,6 +28,9 @@ var lastUnhealthyKey = fmt.Sprintf("%s:last_unhealthy", redisDiscordKeyPrefix)
 const unhealthyNotificationInterval = 5 * time.Minute
 const healthyNotificationInterval = 1 * time.Hour
 const rTTL = 2 * time.Hour
+
+// For mocking
+var klogInfof = klog.Infof
 
 type DiscordHealthTracker struct {
 	ctx                           context.Context
@@ -54,7 +57,7 @@ func (d *DiscordHealthTracker) SendDiscordNotificationIfNeeded(
 	generations []*ent.Generation,
 	lastGenerationTime time.Time,
 	lastCheckTime time.Time,
-) {
+) error {
 	lastHealthyStr := d.redis.Get(d.ctx, lastHealthyKey).Val()
 	lastUnhealthyStr := d.redis.Get(d.ctx, lastUnhealthyKey).Val()
 	d.lastHealthyNotificationTime, _ = time.Parse(time.RFC3339, lastHealthyStr)
@@ -67,37 +70,41 @@ func (d *DiscordHealthTracker) SendDiscordNotificationIfNeeded(
 		!serversStateChanged &&
 		((status == "unhealthy" && sinceUnhealthyNotification < unhealthyNotificationInterval) ||
 			(status == "healthy" && sinceHealthyNotification < healthyNotificationInterval))) {
-		log.Printf("Skipping Discord notification, not needed")
-		return
+		klogInfof("Skipping Discord notification, not needed")
+		return nil
 	}
 
 	start := time.Now().UnixMilli()
-	log.Printf("Sending Discord notification...")
+	klog.Infoln("Sending Discord notification...")
 	webhookBody := getDiscordWebhookBody(status, servers, generations, lastGenerationTime, lastCheckTime)
 	reqBody, err := json.Marshal(webhookBody)
 	if err != nil {
-		log.Printf("Error marshalling webhook body: %s", err)
-		return
+		klog.Errorf("Error marshalling webhook body: %s", err)
+		return err
 	}
 	res, postErr := http.Post(d.webhookUrl, "application/json", bytes.NewBuffer(reqBody))
 	if postErr != nil {
-		log.Printf("Error sending webhook: %s", postErr)
+		klog.Errorf("Error sending webhook: %s", postErr)
+		return postErr
 	}
+	defer res.Body.Close()
 	d.lastNotificationTime = time.Now()
 	if status == "healthy" {
 		err := d.redis.Set(d.ctx, lastHealthyKey, d.lastNotificationTime.Format(time.RFC3339), rTTL).Err()
 		if err != nil {
-			log.Printf("Redis - Error setting last healthy key: %v", err)
+			klog.Error("Redis - Error setting last healthy key: %v", err)
+			return err
 		}
 	} else {
 		err := d.redis.Set(d.ctx, lastUnhealthyKey, d.lastNotificationTime.Format(time.RFC3339), rTTL).Err()
 		if err != nil {
-			log.Printf("Redis - Error setting last unhealthy key: %v", err)
+			klog.Errorf("Redis - Error setting last unhealthy key: %v", err)
+			return err
 		}
 	}
 	end := time.Now().UnixMilli()
-	log.Printf("Sent Discord notification in: %dms", end-start)
-	defer res.Body.Close()
+	klog.Infof("Sent Discord notification in: %dms", end-start)
+	return nil
 }
 
 func getDiscordWebhookBody(
@@ -129,7 +136,7 @@ func getDiscordWebhookBody(
 	for _, generation := range generations {
 		if generation.Status != nil {
 			if *generation.Status == dbgeneration.StatusFailed {
-				if *generation.FailureReason == "NSFW" {
+				if generation.FailureReason != nil && *generation.FailureReason == "NSFW" {
 					generationsStrArr = append(generationsStrArr, "🌶️")
 				} else {
 					generationsStrArr = append(generationsStrArr, "🔴")
