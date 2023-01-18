@@ -19,7 +19,6 @@ import (
 	"github.com/yekta/stablecog/go-server/handlers/detect_language"
 	"github.com/yekta/stablecog/go-server/handlers/gallery"
 	"github.com/yekta/stablecog/go-server/handlers/generate"
-	generationGImage "github.com/yekta/stablecog/go-server/handlers/generation-g-image"
 	"github.com/yekta/stablecog/go-server/handlers/health"
 	queueUpload "github.com/yekta/stablecog/go-server/handlers/queue/upload"
 	queueWebhook "github.com/yekta/stablecog/go-server/handlers/queue/webhook"
@@ -77,7 +76,6 @@ func main() {
 	app.Post("/v2/upscale", upscale.HandlerV2)
 	app.Get("/gallery", gallery.Handler)
 	app.Post("/health", health.Handler)
-	app.Get("/generation-g-image/:imageIdWithExt", generationGImage.Handler)
 	app.Get("/stats", func(c *fiber.Ctx) error {
 		return c.JSON(cronStats.Stats)
 	})

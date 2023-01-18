@@ -92,7 +92,7 @@ Following people have contributed by translating the app to their language. Than
 - [**Arkhath**](https://twitter.com/Arkhath): French
 - [**Behoney**](https://github.com/behoney): Korean
 - [**Chibi**](https://twitter.com/CryptoChibs): Spanish
-- [**Jatt**](https://twitter.com/BananoJatt): Hindu
+- [**Jatt**](https://twitter.com/BananoJatt): Hindi
 - [**Just_Dmitry**](https://github.com/justdmitry): Russian
 - **Mongoose#3074**: Chinese Traditional
 - [**Nnq2603**](mailto:5vil@live.com): Vietnamese

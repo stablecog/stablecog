@@ -1,17 +1,21 @@
-FROM appditto/libvips:latest as builder
+FROM golang:1.18.2-bullseye AS build
 
-WORKDIR /root
+WORKDIR /go/src/stablecog-go
 
-# add source code
-ADD . .
-# Build
-RUN go build -o /root/app
+# Copy all the Code and stuff to compile everything
+COPY . .
 
-FROM appditto/libvips:latest
+# Downloads all the dependencies in advance (could be left out, but it's more clear this way)
+RUN go mod download
 
-COPY --from=builder /root/app /usr/local/bin/app
+# Builds the application as a staticly linked one, to allow it to run on alpine
+RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -a -installsuffix cgo -o app .
 
-ENV MALLOC_ARENA_MAX=2
+# Moving the binary to the 'final Image' to make it smaller
+FROM golang:1.18.2-alpine
 
-# run main.go
-CMD ["app"]
+WORKDIR /app
+
+COPY --from=build /go/src/stablecog-go/app .
+
+CMD ["./app"]
