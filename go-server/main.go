@@ -12,9 +12,6 @@ import (
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/cors"
 	"github.com/h2non/bimg"
-	"github.com/robfig/cron/v3"
-	cronHealth "github.com/yekta/stablecog/go-server/cron/health"
-	cronMeili "github.com/yekta/stablecog/go-server/cron/meili"
 	cronStats "github.com/yekta/stablecog/go-server/cron/stats"
 	"github.com/yekta/stablecog/go-server/handlers/detect_language"
 	"github.com/yekta/stablecog/go-server/handlers/gallery"
@@ -56,19 +53,19 @@ func main() {
 	})
 	app.Use(cors)
 
-	cron := cron.New()
+	// cron := cron.New()
 
 	if !shared.IsDev {
 		shared.RandomWaitMs(5000)
 	}
-	cron.AddFunc("@every 15s", cronHealth.CheckHealth)
-	cron.AddFunc("@every 10s", cronStats.GetAndSetStats)
-	cron.AddFunc("@every 60s", cronMeili.SyncMeili)
-	cron.Start()
+	// cron.AddFunc("@every 15s", cronHealth.CheckHealth)
+	// cron.AddFunc("@every 10s", cronStats.GetAndSetStats)
+	// cron.AddFunc("@every 60s", cronMeili.SyncMeili)
+	// cron.Start()
 
-	go cronHealth.CheckHealth()
-	go cronStats.GetAndSetStats()
-	go cronMeili.SyncMeili()
+	// go cronHealth.CheckHealth()
+	// go cronStats.GetAndSetStats()
+	// go cronMeili.SyncMeili()
 
 	app.Post("/generate", generate.Handler)
 	app.Post("/v2/generate", generate.HandlerV2)
