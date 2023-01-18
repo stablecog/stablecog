@@ -13,7 +13,6 @@ import (
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/cors"
 	"github.com/h2non/bimg"
-	cronStats "github.com/yekta/stablecog/go-server/cron/stats"
 	"github.com/yekta/stablecog/go-server/handlers/detect_language"
 	"github.com/yekta/stablecog/go-server/handlers/gallery"
 	"github.com/yekta/stablecog/go-server/handlers/generate"
@@ -94,7 +93,7 @@ func main() {
 			}
 		}
 		// Get stats from redis
-		return c.JSON(cronStats.Stats)
+		return c.JSON(stats)
 	})
 	app.Post("/detect_language", detect_language.Handler)
 
