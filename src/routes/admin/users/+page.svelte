@@ -183,7 +183,7 @@
 				<div class="flex gap-3 items-center">
 					<TierBadge tier={'FREE'} size="md" />
 					<p class="font-bold text-xl text-c-on-bg pr-4">
-						{freeCount !== undefined ? freeCount : '----'}
+						{freeCount !== undefined ? freeCount : '-----'}
 					</p>
 				</div>
 			</div>
