@@ -5,5 +5,5 @@
 
 <div class="w-full flex flex-wrap justify-center items-center px-6 py-6 gap-3">
 	<SocialBar withBlog withEmail />
-	<p class="text-xs text-c-on-bg/50 font-semibold -mt-1">{companyInfo}</p>
+	<p class="text-xs text-c-on-bg/50 font-semibold py-1 -mt-1.5">{companyInfo}</p>
 </div>
