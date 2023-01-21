@@ -9,10 +9,9 @@
 	export let color: 'faded' | 'normal' = 'faded';
 	export let withBlog = false;
 	export let withEmail = false;
-	export let fullWidth = false;
 </script>
 
-<div class="{fullWidth ? 'w-full' : ''} flex flex-wrap justify-center">
+<div class="w-full flex flex-wrap justify-center">
 	{#if withBlog}
 		<IconButton name="Blog" href={'/blog'}>
 			<IconBlog

@@ -87,7 +87,7 @@
 				{$LL.Shared.JoinUsTitle()}
 			</p>
 			<div class="flex flex-wrap justify-center items-center p-2">
-				<SocialBar fullWidth size="md" color="normal" />
+				<SocialBar size="md" color="normal" />
 			</div>
 		</div>
 		<div class="w-full flex flex-col items-center gap-5">
