@@ -15,3 +15,5 @@ export const socialUrls = {
 	producthunt: 'https://www.producthunt.com/posts/stablecog',
 	email: 'hello@stablecog.com'
 };
+
+export const companyInfo = '© 2023 Stablecog, Inc.';

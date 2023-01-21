@@ -29,7 +29,7 @@
 				</div>
 			</LinkButton>
 		</div>
-		<SocialBar />
+		<SocialBar fullWidth />
 		<div class="w-full h-2px bg-c-on-bg/5 rounded-full my-4" />
 		<nav class="toc max-h-full overflow-y-auto max-w-[15rem] pb-16 px-2 rounded-2xl">
 			{@html toc}
