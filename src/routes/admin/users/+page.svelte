@@ -30,8 +30,6 @@
 	let startDate: Date;
 	let proCount: number;
 	let freeCount: number;
-	let giftedCount: number;
-	let friendBoughtCount: number;
 	let searchString: string;
 	const maxResCount = 100;
 
@@ -48,46 +46,22 @@
 				.order('created_at', { ascending: false })
 				.not('confirmed_at', 'is', null)
 				.limit(maxResCount);
-			if (userRes.data) {
+			if (userRes.data !== null) {
 				users = userRes.data;
 				initialUsers = [...users];
 			}
-			const [proCountRes, freeCountRes, giftedCountRes, friendBoughtCountRes, startDateRes] =
-				await Promise.all([
-					supabase
-						.from('user')
-						.select('*', { head: true, count: 'exact' })
-						.match({ subscription_tier: 'PRO' }),
-					supabase
-						.from('user')
-						.select('*', { head: true, count: 'exact' })
-						.filter('subscription_tier', 'eq', 'FREE')
-						.not('confirmed_at', 'is', null),
-					supabase
-						.from('user')
-						.select('*', { head: true, count: 'exact' })
-						.match({ subscription_category: 'GIFTED' }),
-					supabase
-						.from('user')
-						.select('*', { head: true, count: 'exact' })
-						.match({ subscription_category: 'FRIEND_BOUGHT' }),
-					supabase
-						.from('user')
-						.select('created_at')
-						.order('created_at', { ascending: true })
-						.limit(1)
-				]);
-			if (
-				proCountRes.count &&
-				freeCountRes.count &&
-				giftedCountRes.count &&
-				friendBoughtCountRes.count &&
-				startDateRes.data?.[0].created_at
-			) {
-				proCount = proCountRes.count;
+			const [proCountRes, freeCountRes, startDateRes] = await Promise.all([
+				supabase.rpc('get_pro_user_count').maybeSingle(),
+				supabase
+					.from('user')
+					.select('*', { head: true, count: 'exact' })
+					.filter('subscription_tier', 'eq', 'FREE')
+					.not('confirmed_at', 'is', null),
+				supabase.from('user').select('created_at').order('created_at', { ascending: true }).limit(1)
+			]);
+			if (freeCountRes.count !== null && startDateRes.data?.[0].created_at) {
+				proCount = proCountRes.data;
 				freeCount = freeCountRes.count;
-				giftedCount = giftedCountRes.count;
-				friendBoughtCount = friendBoughtCountRes.count;
 				startDate = new Date(startDateRes.data?.[0].created_at);
 			}
 		} catch (error) {
@@ -177,7 +151,7 @@
 				<div class="flex gap-3 items-center">
 					<TierBadge tier={'PRO'} size="md" />
 					<p class="font-bold text-xl text-c-primary pr-4">
-						{proCount !== undefined ? proCount - giftedCount - friendBoughtCount : '---'}
+						{proCount !== undefined ? proCount : '---'}
 					</p>
 				</div>
 				<div class="flex gap-3 items-center">
