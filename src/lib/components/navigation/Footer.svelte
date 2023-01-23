@@ -8,7 +8,7 @@
 	<div class="w-full md:w-auto flex justify-center items-center">
 		<p
 			class="text-center leading-relaxed text-xs text-c-on-bg/50 
-			font-semibold py-1.5 px-3 bg-c-bg rounded-lg border-2 border-c-bg-secondary"
+			font-semibold py-1 -mt-1 md:my-auto rounded-lg"
 		>
 			{companyInfo}
 		</p>
