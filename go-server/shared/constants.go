@@ -13,7 +13,7 @@ import (
 	"github.com/supabase/postgrest-go"
 )
 
-var APP_VERSION float64 = 3.30
+var APP_VERSION float64 = 3.31
 var SUPABASE_ADMIN_KEY = GetEnv("SUPABASE_ADMIN_KEY", "")
 var SUPABASE_URL = GetEnv("PUBLIC_SUPABASE_URL", "")
 var SUPABASE_REFERENCE_ID = GetEnv("PUBLIC_SUPABASE_REFERENCE_ID", "")
