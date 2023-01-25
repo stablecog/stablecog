@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+	</head>
+	<body
+		style="
+			padding: 0;
+			margin: 0;
+			font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu,
+				Cantarell, 'Helvetica Neue', sans-serif;
+		"
+	>
+		<table
+			cellspacing="0"
+			cellpadding="0"
+			style="
+				width: 100%;
+				max-width: 500px;
+				margin: 0 auto;
+				background: #201f22;
+				border-radius: 1rem;
+				border: solid 4px #29282b;
+				color: #dbd5e7;
+				overflow: hidden;
+				z-index: 0;
+				position: relative;
+			"
+		>
+			<tr>
+				<td>
+					<img
+						style="width: 100%; height: auto; padding: 0; margin: 0"
+						src="https://r2.stablecog.com/general/email-banner.png"
+					/>
+				</td>
+			</tr>
+			<tr style="text-align: center">
+				<td style="padding-top: 1.5rem; font-weight: bold; font-size: 1.2rem">
+					Your confirmation code is:
+				</td>
+			</tr>
+			<tr style="text-align: center">
+				<td style="padding-top: 1.5rem; padding-bottom: 1rem">
+					<div
+						style="
+							color: #ae85ff;
+							font-size: 2rem;
+							font-weight: bold;
+							padding: 0.75rem 1.5rem;
+							background: #29282b;
+							border-radius: 0.75rem;
+							text-align: center;
+							display: inline-block;
+							letter-spacing: 0.25ch;
+						"
+					>
+						{{ .Token }}
+					</div>
+				</td>
+			</tr>
+			<tr style="text-align: center">
+				<td style="padding-top: 0.75rem; padding-bottom: 1.5rem">
+					<a style="color: #dbd5e7; font-weight: 600" href="https://stablecog.com" target="_blank">
+						&nbsp;© 2023 Stablecog, Inc.&nbsp;
+					</a>
+				</td>
+			</tr>
+		</table>
+	</body>
+</html>
