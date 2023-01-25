@@ -243,6 +243,10 @@ const ja: Translation = {
 		InvalidCredentials: '不正な認証情報',
 		InvalidCode: 'コードが無効です。',
 		OnceEvery60Seconds: 'リンクは60秒ごとに1回しかリクエストできません。',
+		LinkExpired: {
+			Title: 'Link Expired',
+			Paragraph: 'The link can only be used once and expires after 24 hours.'
+		},
 		NewVersionAvailable: 'There is a new version! Refresh the page to get it.'
 	},
 	Admin: {

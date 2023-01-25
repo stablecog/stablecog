@@ -242,6 +242,10 @@ const tr: Translation = {
 		InvalidCredentials: 'Geçersiz kimlik.',
 		InvalidCode: 'Geçersiz kod.',
 		OnceEvery60Seconds: 'Her 60 saniyede sadece bir link talebinde bulunabilirsin.',
+		LinkExpired: {
+			Title: 'Link Expired',
+			Paragraph: 'The link can only be used once and expires after 24 hours.'
+		},
 		NewVersionAvailable: 'Yeni versiyon mevcut. Görmek için sayfayı yenile.'
 	},
 	Admin: {

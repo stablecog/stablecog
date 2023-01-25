@@ -243,6 +243,10 @@ const fr: Translation = {
 		InvalidCredentials: 'Identifiants incorrects.',
 		InvalidCode: 'Code non valide.',
 		OnceEvery60Seconds: 'You can only request a link once every 60 seconds.',
+		LinkExpired: {
+			Title: 'Link Expired',
+			Paragraph: 'The link can only be used once and expires after 24 hours.'
+		},
 		NewVersionAvailable: 'There is a new version! Refresh the page to get it.'
 	},
 	Admin: {

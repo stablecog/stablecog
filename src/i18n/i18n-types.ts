@@ -695,6 +695,16 @@ type RootTranslation = {
 		 * Y​o​u​ ​c​a​n​ ​o​n​l​y​ ​r​e​q​u​e​s​t​ ​a​ ​l​i​n​k​ ​o​n​c​e​ ​e​v​e​r​y​ ​6​0​ ​s​e​c​o​n​d​s​.
 		 */
 		OnceEvery60Seconds: string
+		LinkExpired: {
+			/**
+			 * L​i​n​k​ ​E​x​p​i​r​e​d
+			 */
+			Title: string
+			/**
+			 * T​h​e​ ​l​i​n​k​ ​c​a​n​ ​o​n​l​y​ ​b​e​ ​u​s​e​d​ ​o​n​c​e​ ​a​n​d​ ​e​x​p​i​r​e​s​ ​a​f​t​e​r​ ​2​4​ ​h​o​u​r​s​.
+			 */
+			Paragraph: string
+		}
 		/**
 		 * T​h​e​r​e​ ​i​s​ ​a​ ​n​e​w​ ​v​e​r​s​i​o​n​!​ ​R​e​f​r​e​s​h​ ​t​h​e​ ​p​a​g​e​ ​t​o​ ​g​e​t​ ​i​t​.
 		 */
@@ -1813,6 +1823,16 @@ export type TranslationFunctions = {
 		 * You can only request a link once every 60 seconds.
 		 */
 		OnceEvery60Seconds: () => LocalizedString
+		LinkExpired: {
+			/**
+			 * Link Expired
+			 */
+			Title: () => LocalizedString
+			/**
+			 * The link can only be used once and expires after 24 hours.
+			 */
+			Paragraph: () => LocalizedString
+		}
 		/**
 		 * There is a new version! Refresh the page to get it.
 		 */

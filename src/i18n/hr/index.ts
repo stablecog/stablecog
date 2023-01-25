@@ -241,6 +241,10 @@ const hr: Translation = {
 		InvalidCredentials: 'Netočni podaci.',
 		InvalidCode: 'Nevažeći kod.',
 		OnceEvery60Seconds: 'Možeš zatražiti link samo svakih 60 sekundi.',
+		LinkExpired: {
+			Title: 'Link Expired',
+			Paragraph: 'The link can only be used once and expires after 24 hours.'
+		},
 		NewVersionAvailable: 'There is a new version! Refresh the page to get it.'
 	},
 	Admin: {

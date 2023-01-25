@@ -242,6 +242,10 @@ const ko: Translation = {
 		InvalidCredentials: '이메일과 비밀번호를 다시 확인해주세요.',
 		InvalidCode: '올바르지 않은 코드입니다. 다시 시도해주세요.',
 		OnceEvery60Seconds: 'You can only request a link once every 60 seconds.',
+		LinkExpired: {
+			Title: 'Link Expired',
+			Paragraph: 'The link can only be used once and expires after 24 hours.'
+		},
 		NewVersionAvailable: 'There is a new version! Refresh the page to get it.'
 	},
 	Admin: {

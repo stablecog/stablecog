@@ -243,6 +243,10 @@ const vi: Translation = {
 		InvalidCredentials: 'Thông tin dùng để xác thực không hợp lệ.',
 		InvalidCode: 'Mã không hợp lệ.',
 		OnceEvery60Seconds: 'You can only request a link once every 60 seconds.',
+		LinkExpired: {
+			Title: 'Link Expired',
+			Paragraph: 'The link can only be used once and expires after 24 hours.'
+		},
 		NewVersionAvailable: 'There is a new version! Refresh the page to get it.'
 	},
 	Admin: {
