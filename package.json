@@ -80,7 +80,7 @@
 		"sharp": "^0.31.1",
 		"svelte-meta-tags": "^2.6.3",
 		"typesafe-i18n": "^5.16.3",
-		"ua-parser-js": "^1.0.2",
+		"ua-parser-js": "^1.0.33",
 		"uuid": "^9.0.0"
 	}
 }
