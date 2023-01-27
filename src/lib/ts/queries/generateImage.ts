@@ -20,11 +20,12 @@ export async function generateImage({
 	access_token,
 	app_version
 }: TGenerationRequest) {
-	const response = await fetch(`${apiBase}/generate`, {
+	const response = await fetch(`${apiBase}/v1/auth/generate`, {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json',
-			'X-App-Version': app_version
+			'X-App-Version': app_version,
+			Authorization: 'Bearer ' + access_token
 		},
 		body: JSON.stringify({
 			server_url,

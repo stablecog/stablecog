@@ -22,6 +22,7 @@
 	import { mLogPageview } from '$ts/helpers/loggers';
 	import { setCookie } from '$ts/helpers/setCookie';
 	import { appVersion } from '$ts/stores/appVersion';
+	import { PUBLIC_GO_SERVER_URL_DEV } from '$env/static/public';
 
 	export let data: LayoutData;
 	setLocale(data.locale);
@@ -40,14 +41,34 @@
 	let innerWidth: number;
 
 	let mounted = false;
+	let sessionId: string | undefined;
 
 	$: [$themeApp], setBodyClasses();
 	$: [innerWidth, innerHeight], setWindowStores();
 
+	let ws: WebSocket;
 	$: if (mounted && $page.data.session?.user.id) {
 		mixpanel.identify($page.data.session?.user.id);
 		mixpanel.people.set({ $email: $page.data.session?.user.email });
 		mixpanel.people.set({ 'SC - Plan': $page.data.plan });
+		const apiUrl = new URL(PUBLIC_GO_SERVER_URL_DEV);
+		if (ws) {
+			ws.close();
+		}
+		sessionId = generateSessionId();
+		ws = new WebSocket(`ws://${apiUrl.host}/v1/ws?session_id=${sessionId}`);
+		ws.onopen = () => {
+			console.log(`Connected to websocket with session_id: ${sessionId}`);
+		};
+		ws.onmessage = (event) => {
+			console.log('Message from websocket', event.data);
+		};
+		ws.onerror = (event) => {
+			console.log('Error from websocket', event);
+		};
+		ws.onclose = (event) => {
+			console.log('Closed websocket', event);
+		};
 	}
 
 	onMount(async () => {
@@ -104,6 +125,13 @@
 
 	const runIfMounted = (fn: () => void) => {
 		if (mounted) fn();
+	};
+
+	const generateSessionId = () => {
+		const bytes = crypto.getRandomValues(new Uint8Array(32));
+		const array = Array.from(bytes);
+		const hexPairs = array.map((b) => b.toString(16).padStart(2, '0'));
+		return hexPairs.join('');
 	};
 
 	$: $locale, runIfMounted(() => setCookie(`sc-locale=${$locale}`));
