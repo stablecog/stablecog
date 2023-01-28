@@ -76,7 +76,7 @@
 
 <div
 	class="max-w-full flex flex-col items-center justify-center bg-c-bg ring-c-bg-secondary ring-2 px-3 py-4 
-	md:px-10 md:py-7 rounded-3xl {isModal
+	md:px-8 md:py-7 rounded-3xl {isModal
 		? 'shadow-2xl shadow-c-shadow/[var(--o-shadow-strong)]'
 		: 'shadow-xl shadow-c-shadow/[var(--o-shadow-normal)]'}"
 >
