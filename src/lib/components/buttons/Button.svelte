@@ -45,7 +45,11 @@
 			? 'bg-c-danger'
 			: 'bg-c-primary'} {classes}"
 	>
-		<div class="w-[200%] h-full absolute left-0 top-0 flex items-center justify-center">
+		<div
+			class="w-[200%] h-full absolute left-0 top-0 flex items-center justify-center {$isTouchscreen
+				? 'hidden'
+				: 'flex'}"
+		>
 			<div
 				class="w-full aspect-square origin-left rounded-full transition transform -translate-x-full 
 				{type === 'success'
@@ -108,7 +112,11 @@
 			? 'bg-c-danger'
 			: 'bg-c-primary'} {classes}"
 	>
-		<div class="w-[200%] h-full absolute left-0 top-0 flex items-center justify-center">
+		<div
+			class="w-[200%] h-full absolute left-0 top-0 flex items-center justify-center {$isTouchscreen
+				? 'hidden'
+				: 'flex'}"
+		>
 			<div
 				class="w-full aspect-square origin-left rounded-full transition transform -translate-x-full 
 					{type === 'success'
