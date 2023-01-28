@@ -51,10 +51,14 @@
 			? 'bg-[#5865F2]'
 			: 'bg-c-primary'} {classes}"
 	>
-		<div class="w-[200%] h-full absolute left-0 top-0 flex items-center justify-center">
+		<div
+			class="w-[200%] h-full absolute left-0 top-0 flex items-center justify-center  {$isTouchscreen
+				? 'hidden'
+				: 'flex'}"
+		>
 			<div
 				class="w-full aspect-square origin-left rounded-full transition transform -translate-x-full 
-			{provider === 'google'
+				{provider === 'google'
 					? 'bg-indigo-200'
 					: provider === 'discord'
 					? 'bg-[#4854d7]'
@@ -124,7 +128,11 @@
 			? 'bg-[#5865F2]'
 			: 'bg-c-primary'} {classes}"
 	>
-		<div class="w-[200%] h-full absolute left-0 top-0 flex items-center justify-center">
+		<div
+			class="w-[200%] h-full absolute left-0 top-0 items-center justify-center {$isTouchscreen
+				? 'hidden'
+				: 'flex'}"
+		>
 			<div
 				class="w-full aspect-square origin-left rounded-full transition transform -translate-x-full 
 				{provider === 'google'
