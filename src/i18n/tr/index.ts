@@ -243,8 +243,8 @@ const tr: Translation = {
 		InvalidCode: 'Geçersiz kod.',
 		OnceEvery60Seconds: 'Her 60 saniyede sadece bir link talebinde bulunabilirsin.',
 		LinkExpired: {
-			Title: 'Link Expired',
-			Paragraph: 'The link can only be used once and expires after 24 hours.'
+			Title: 'Link Geçersiz',
+			Paragraph: 'Link sadece bir kere kullanılabilir ve 24 saat sonunda geçersiz hale gelir.'
 		},
 		NewVersionAvailable: 'Yeni versiyon mevcut. Görmek için sayfayı yenile.'
 	},
@@ -281,8 +281,8 @@ const tr: Translation = {
 		}
 	},
 	SignIn: {
-		PageTitleGetStarted: 'Get Started',
-		GetStartedButton: 'Get Started',
+		PageTitleGetStarted: 'Hemen Başla',
+		GetStartedButton: 'Başla',
 		PageTitle: 'Giriş Yap',
 		PageParagraph: "Stablecog'u üyeliğine sağlanan tüm özelliklerle kullanmaya başla.",
 		PageTitleCreateAccountOrSignIn: 'Üye ol veya giriş yap',
