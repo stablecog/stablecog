@@ -148,7 +148,7 @@
 					</div>
 				</div>
 				<div
-					class="flex items-center gap-4 my-5 md:my-6 -mx-5 md:-mx-10 w-[calc(100%+2.5rem)] md:w-[calc(100%+5rem)]"
+					class="flex items-center gap-4 my-5 md:my-6 -mx-5 md:-mx-10 w-[calc(100%+1.5rem)] md:w-[calc(100%+4rem)]"
 				>
 					<div class="flex-1 h-2px rounded-r-full bg-c-bg-secondary" />
 					<p class="text-sm text-c-on-bg/50 text-center inline-block">
