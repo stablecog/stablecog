@@ -51,7 +51,7 @@
 			? 'bg-[#5865F2]'
 			: 'bg-c-primary'} {classes}"
 	>
-		<div
+		<!-- <div
 			class="w-[200%] h-full absolute left-0 top-0 flex items-center justify-center  {$isTouchscreen
 				? 'hidden'
 				: 'flex'}"
@@ -64,7 +64,7 @@
 					? 'bg-[#4854d7]'
 					: 'bg-c-secondary'} {!$isTouchscreen ? 'group-hover:translate-x-[-45%]' : ''}"
 			/>
-		</div>
+		</div> -->
 		<div class="w-full relative">
 			{#if withSpinner}
 				<div class="max-w-full flex items-center justify-between gap-2">
@@ -128,7 +128,7 @@
 			? 'bg-[#5865F2]'
 			: 'bg-c-primary'} {classes}"
 	>
-		<div
+		<!-- <div
 			class="w-[200%] h-full absolute left-0 top-0 items-center justify-center {$isTouchscreen
 				? 'hidden'
 				: 'flex'}"
@@ -141,7 +141,7 @@
 					? 'bg-[#4854d7]'
 					: 'bg-c-secondary'} {!$isTouchscreen ? 'group-hover:translate-x-[-45%]' : ''}"
 			/>
-		</div>
+		</div> -->
 		<div class="w-full relative">
 			{#if withSpinner}
 				<div
