@@ -65,7 +65,7 @@
 			{#if withSpinner}
 				<div class="max-w-full flex items-center justify-between gap-2">
 					<IconOAuthProvider {provider} class="w-7 h-7 flex-shrink-0" />
-					<div class="flex-1 min-w-0">
+					<div class="flex-1 min-w-0 px-1">
 						<slot />
 					</div>
 					<div class="w-7 h-7 flex-shrink-0" />
@@ -84,7 +84,7 @@
 			{:else}
 				<div class="max-w-full flex items-center justify-between gap-2">
 					<IconOAuthProvider {provider} class="w-7 h-7 flex-shrink-0" />
-					<div class="flex-1 min-w-0">
+					<div class="flex-1 min-w-0 px-1">
 						<slot />
 					</div>
 					<div class="w-7 h-7 flex-shrink-0" />
@@ -143,7 +143,7 @@
 				>
 					<div class="max-w-full flex items-center justify-between gap-2">
 						<IconOAuthProvider {provider} class="w-7 h-7 flex-shrink-0" />
-						<div class="flex-1 min-w-0">
+						<div class="flex-1 min-w-0 px-1">
 							<slot />
 						</div>
 						<div class="w-7 h-7 flex-shrink-0" />
@@ -163,7 +163,7 @@
 			{:else}
 				<div class="max-w-full flex items-center justify-between gap-2">
 					<IconOAuthProvider {provider} class="w-7 h-7 flex-shrink-0" />
-					<div class="flex-1 min-w-0">
+					<div class="flex-1 min-w-0 px-1">
 						<slot />
 					</div>
 					<div class="w-7 h-7 flex-shrink-0" />
