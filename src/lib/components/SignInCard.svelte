@@ -19,6 +19,7 @@
 
 	let email: string;
 	let signInStatus: 'idle' | 'loading' | 'error' | 'sent-otp' = 'idle';
+	let provider: Provider | null | 'email' = null;
 	let errorText: string | null = null;
 
 	async function signIn() {
@@ -27,6 +28,7 @@
 			return;
 		}
 		signInStatus = 'loading';
+		provider = 'email';
 		const { data: sData, error: sError } = await supabase.auth.signInWithOtp({
 			email,
 			options: {
@@ -51,10 +53,11 @@
 		signInStatus = 'sent-otp';
 	}
 
-	async function signInWithOAuth(provider: Provider) {
+	async function signInWithOAuth(prov: Provider) {
 		signInStatus = 'loading';
+		provider = prov;
 		const { data: sData, error: sError } = await supabase.auth.signInWithOAuth({
-			provider,
+			provider: prov,
 			options: {
 				redirectTo: `${$page.url.origin}/api/auth/callback?redirect_to=${
 					redirectTo ? encodeURIComponent(redirectTo) : ''
@@ -72,7 +75,7 @@
 </script>
 
 <div
-	class="max-w-full flex flex-col items-center justify-center bg-c-bg ring-c-bg-secondary ring-2 p-5 
+	class="max-w-full flex flex-col items-center justify-center bg-c-bg ring-c-bg-secondary ring-2 px-4 py-5 
 	md:px-10 md:py-7 rounded-3xl {isModal
 		? 'shadow-2xl shadow-c-shadow/[var(--o-shadow-strong)]'
 		: 'shadow-xl shadow-c-shadow/[var(--o-shadow-normal)]'}"
@@ -82,13 +85,13 @@
 			<IconEmail class="w-20 h-20 text-c-on-bg" />
 		</div>
 	{/if}
-	<h1 class="text-center font-bold max-w-lg leading-tight text-xl md:text-2xl mt-1 px-4">
+	<h1 class="text-center font-bold max-w-lg leading-normal text-xl md:text-2xl mt-1 px-8">
 		{signInStatus === 'sent-otp'
 			? $LL.SignIn.PageTitleSentLink()
 			: $LL.SignIn.PageTitleCreateAccountOrSignIn()}
 	</h1>
-	<div class="w-full flex flex-col items-center justify-start mt-2">
-		<p class="max-w-sm text-c-on-bg/60 text-center leading-relaxed mb-4">
+	<div class="w-full flex flex-col items-center justify-start mt-2 md:mt-2.5">
+		<p class="max-w-sm text-sm md:text-base text-c-on-bg/60 text-center leading-relaxed mb-4">
 			{signInStatus === 'sent-otp'
 				? $LL.SignIn.PageParagraphSentLink()
 				: $LL.SignIn.PageParagraph()}
@@ -115,21 +118,32 @@
 				transition:expandCollapse|local={{ duration: 200, easing: quadOut, opacity: 0 }}
 				class="relative z-0 flex flex-col justify-start items-center w-full"
 			>
-				<div class="w-full flex flex-col items-center justify-start p-1 md:pb-2 max-w-xs">
-					<div class="w-full flex flex-col items-center justify-start">
+				<div class="w-full flex flex-col items-center justify-start p-1 mt-1 max-w-[21rem]">
+					<div class="w-full flex flex-col items-center justify-start gap-3">
 						<ButtonOAuth
 							withSpinner
-							loading={signInStatus === 'loading'}
+							disabled={signInStatus === 'loading'}
+							loading={signInStatus === 'loading' && provider === 'google'}
 							class="w-full"
 							onClick={() => signInWithOAuth('google')}
-							provider={'google'}
+							provider="google"
 						>
 							{$LL.SignIn.ContinueWithProviderButton({ provider: 'Google' })}
+						</ButtonOAuth>
+						<ButtonOAuth
+							withSpinner
+							disabled={signInStatus === 'loading'}
+							loading={signInStatus === 'loading' && provider === 'discord'}
+							class="w-full"
+							onClick={() => signInWithOAuth('discord')}
+							provider="discord"
+						>
+							<p class="w-full">{$LL.SignIn.ContinueWithProviderButton({ provider: 'Discord' })}</p>
 						</ButtonOAuth>
 					</div>
 				</div>
 				<div
-					class="flex items-center gap-4 mt-4 -mx-5 md:-mx-10 w-[calc(100%+2.5rem)] md:w-[calc(100%+5rem)]"
+					class="flex items-center gap-4 my-5 md:my-6 -mx-5 md:-mx-10 w-[calc(100%+2.5rem)] md:w-[calc(100%+5rem)]"
 				>
 					<div class="flex-1 h-2px rounded-r-full bg-c-bg-secondary" />
 					<p class="text-sm text-c-on-bg/50 text-center inline-block">
@@ -140,7 +154,7 @@
 				<form
 					on:input={() => (errorText = null)}
 					on:submit|preventDefault={signIn}
-					class="w-full flex flex-col max-w-xs p-1 md:pb-2 mt-4 md:mt-5"
+					class="w-full flex flex-col p-1 md:pb-2 max-w-[21rem]"
 				>
 					<div class="w-full flex flex-col justify-start">
 						<Input
@@ -156,7 +170,12 @@
 					{#if errorText}
 						<ErrorLine text={errorText} class="text-xs" />
 					{/if}
-					<Button class="mt-4" loading={signInStatus === 'loading'} withSpinner>
+					<Button
+						class="mt-4"
+						disabled={signInStatus === 'loading'}
+						loading={signInStatus === 'loading' && provider == 'email'}
+						withSpinner
+					>
 						{$LL.SignIn.ContinueButton()}
 					</Button>
 				</form>
