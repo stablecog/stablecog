@@ -85,12 +85,12 @@
 			<IconEmail class="w-20 h-20 text-c-on-bg" />
 		</div>
 	{/if}
-	<h1 class="max-w-sm text-center font-bold leading-normal text-xl md:text-2xl px-8">
+	<h1 class="max-w-sm text-center font-bold leading-normal mt-1 md:-mt-1 text-2xl px-8">
 		{signInStatus === 'sent-otp'
 			? $LL.SignIn.PageTitleSentLink()
 			: $LL.SignIn.PageTitleGetStarted()}
 	</h1>
-	<div class="w-full flex flex-col items-center justify-start mt-2 md:mt-2.5">
+	<div class="w-full flex flex-col items-center justify-start mt-1">
 		<p
 			class="px-3 md:px-0 max-w-sm text-sm md:text-base text-c-on-bg/60 text-center leading-relaxed mb-4"
 		>
@@ -120,7 +120,7 @@
 				transition:expandCollapse|local={{ duration: 200, easing: quadOut, opacity: 0 }}
 				class="relative z-0 flex flex-col justify-start items-center w-full"
 			>
-				<div class="w-full flex flex-col items-center justify-start p-1 mt-1 max-w-[21rem]">
+				<div class="w-full flex flex-col items-center justify-start p-1 mt-1 md:mt-2 max-w-[21rem]">
 					<div class="w-full flex flex-col items-center justify-start gap-3">
 						<ButtonOAuth
 							withSpinner
