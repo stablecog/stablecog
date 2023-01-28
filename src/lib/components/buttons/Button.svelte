@@ -24,7 +24,7 @@
 		class="{noPadding
 			? 'p-0'
 			: size === 'xs'
-			? 'px-5 py-3'
+			? 'px-4.5 py-3'
 			: size === 'sm'
 			? 'px-6 md:px-8 py-4'
 			: 'px-6 md:px-8 py-5'} {size === 'xs'
@@ -87,7 +87,7 @@
 		class="{noPadding
 			? 'p-0'
 			: size === 'xs'
-			? 'px-5 py-3'
+			? 'px-4.5 py-3'
 			: size === 'sm'
 			? 'px-6 md:px-8 py-4'
 			: 'px-6 md:px-8 py-5'} {size === 'xs'

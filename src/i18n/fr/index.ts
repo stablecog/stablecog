@@ -284,6 +284,8 @@ const fr: Translation = {
 		}
 	},
 	SignIn: {
+		PageTitleGetStarted: 'Get Started',
+		GetStartedButton: 'Get Started',
 		PageTitle: 'Se connecter',
 		PageParagraph:
 			'Commencez à utiliser Stablecog avec toutes les fonctionnalités disponibles sur votre compte.',

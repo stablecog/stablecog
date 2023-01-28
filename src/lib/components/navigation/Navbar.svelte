@@ -136,7 +136,7 @@
 					</div>
 				{:else if $page.url.pathname !== '/sign-in'}
 					<Button class="-mx-1" size="xs" onClick={() => (isSignInModalOpen = true)}>
-						{$LL.SignIn.SignInButton()}
+						{$LL.SignIn.GetStartedButton()}
 					</Button>
 				{/if}
 			</div>

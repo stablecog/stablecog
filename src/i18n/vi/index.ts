@@ -284,6 +284,8 @@ const vi: Translation = {
 		}
 	},
 	SignIn: {
+		PageTitleGetStarted: 'Get Started',
+		GetStartedButton: 'Get Started',
 		PageTitle: 'Đăng nhập',
 		PageParagraph:
 			'Bắt đầu dùng Stablecog với tất cả các tính năng sẵn có trong tài khoản của bạn.',

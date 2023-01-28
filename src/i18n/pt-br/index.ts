@@ -283,6 +283,8 @@ const ptBr: Translation = {
 		}
 	},
 	SignIn: {
+		PageTitleGetStarted: 'Get Started',
+		GetStartedButton: 'Get Started',
 		PageTitle: 'Iniciar Sessão',
 		PageParagraph: 'Comece a usar o Stablecog com todos os recursos disponíveis para a sua conta.',
 		PageTitleCreateAccountOrSignIn: 'Create an account or sign in',

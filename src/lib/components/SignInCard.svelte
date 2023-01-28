@@ -75,7 +75,7 @@
 </script>
 
 <div
-	class="max-w-full flex flex-col items-center justify-center bg-c-bg ring-c-bg-secondary ring-2 px-4 py-5 
+	class="max-w-full flex flex-col items-center justify-center bg-c-bg ring-c-bg-secondary ring-2 px-3 py-4 
 	md:px-10 md:py-7 rounded-3xl {isModal
 		? 'shadow-2xl shadow-c-shadow/[var(--o-shadow-strong)]'
 		: 'shadow-xl shadow-c-shadow/[var(--o-shadow-normal)]'}"
@@ -85,13 +85,15 @@
 			<IconEmail class="w-20 h-20 text-c-on-bg" />
 		</div>
 	{/if}
-	<h1 class="text-center font-bold max-w-lg leading-normal text-xl md:text-2xl mt-1 px-8">
+	<h1 class="max-w-xs md:max-w-sm text-center font-bold leading-normal text-xl md:text-2xl px-8">
 		{signInStatus === 'sent-otp'
 			? $LL.SignIn.PageTitleSentLink()
-			: $LL.SignIn.PageTitleCreateAccountOrSignIn()}
+			: $LL.SignIn.PageTitleGetStarted()}
 	</h1>
 	<div class="w-full flex flex-col items-center justify-start mt-2 md:mt-2.5">
-		<p class="max-w-sm text-sm md:text-base text-c-on-bg/60 text-center leading-relaxed mb-4">
+		<p
+			class="px-3 md:px-0 max-w-xs md:max-w-sm text-sm md:text-base text-c-on-bg/60 text-left leading-relaxed mb-4"
+		>
 			{signInStatus === 'sent-otp'
 				? $LL.SignIn.PageParagraphSentLink()
 				: $LL.SignIn.PageParagraph()}

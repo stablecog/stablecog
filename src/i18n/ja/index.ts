@@ -283,6 +283,8 @@ const ja: Translation = {
 		}
 	},
 	SignIn: {
+		PageTitleGetStarted: 'Get Started',
+		GetStartedButton: 'Get Started',
 		PageTitle: 'サインイン',
 		PageParagraph: 'あなたのアカウントで利用可能なすべての機能でStablecogを利用しよう！',
 		PageTitleCreateAccountOrSignIn: 'アカウントの作成またはサインイン',

@@ -281,6 +281,8 @@ const tr: Translation = {
 		}
 	},
 	SignIn: {
+		PageTitleGetStarted: 'Get Started',
+		GetStartedButton: 'Get Started',
 		PageTitle: 'Giriş Yap',
 		PageParagraph: "Stablecog'u üyeliğine sağlanan tüm özelliklerle kullanmaya başla.",
 		PageTitleCreateAccountOrSignIn: 'Üye ol veya giriş yap',

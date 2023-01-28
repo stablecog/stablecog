@@ -278,6 +278,8 @@ const zhHans: Translation = {
 		}
 	},
 	SignIn: {
+		PageTitleGetStarted: 'Get Started',
+		GetStartedButton: 'Get Started',
 		PageTitle: 'Sign In',
 		PageParagraph: 'Start using Stablecog with all features that are available to your account.',
 		PageTitleCreateAccountOrSignIn: 'Create an account or sign in',
