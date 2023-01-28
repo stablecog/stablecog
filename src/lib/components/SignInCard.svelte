@@ -175,14 +175,14 @@
 					{#if errorText}
 						<ErrorLine text={errorText} class="text-xs" />
 					{/if}
-					<Button
+					<!-- <Button
 						class="mt-4"
 						disabled={signInStatus === 'loading'}
 						loading={signInStatus === 'loading' && provider == 'email'}
 						withSpinner
 					>
 						{$LL.SignIn.ContinueButton()}
-					</Button>
+					</Button> -->
 				</form>
 			</div>
 		{/if}
