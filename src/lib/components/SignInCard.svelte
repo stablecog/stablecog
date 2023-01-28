@@ -92,7 +92,7 @@
 	</h1>
 	<div class="w-full flex flex-col items-center justify-start mt-2 md:mt-2.5">
 		<p
-			class="px-3 md:px-0 max-w-sm text-sm md:text-base text-c-on-bg/60 text-left leading-relaxed mb-4"
+			class="px-3 md:px-0 max-w-sm text-sm md:text-base text-c-on-bg/60 text-center leading-relaxed mb-4"
 		>
 			{signInStatus === 'sent-otp'
 				? $LL.SignIn.PageParagraphSentLink()
