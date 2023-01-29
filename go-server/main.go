@@ -48,7 +48,9 @@ func main() {
 	shared.InitSyncMap()
 	shared.PrimeLanguageDetector()
 
-	app := fiber.New()
+	app := fiber.New(fiber.Config{
+		BodyLimit: 100 * 1024 * 1024, // 100MB
+	})
 	cors := cors.New(cors.Config{
 		AllowOrigins:     fmt.Sprintf("%s, %s, %s, %s", shared.GetEnv("PUBLIC_CANONICAL_URL", ""), "https://stablecog.vercel.app", "http://localhost:5173", "http://localhost:3000"),
 		AllowCredentials: true,
