@@ -106,13 +106,7 @@ export const POST: RequestHandler = async (event) => {
 						'SC - Stripe ID': customerId
 					});
 					try {
-						const { count } = await supabaseAdmin
-							.from('user')
-							.select('*', { count: 'exact', head: true })
-							.filter('subscription_tier', 'eq', prod.name.toUpperCase())
-							.or(
-								'subscription_category.is.null,subscription_category.not.in.("GIFTED","FRIEND_BOUGHT")'
-							);
+						const { data } = await supabaseAdmin.rpc('get_pro_user_count').maybeSingle();
 						await fetch(DISCORD_WEBHOOK_SUBSCRIBER_URL, {
 							method: 'POST',
 							headers: { 'Content-Type': 'application/json' },
@@ -122,7 +116,7 @@ export const POST: RequestHandler = async (event) => {
 									plan: prod.name.toUpperCase(),
 									stripeId: customerId.toString(),
 									supabaseId: user.id,
-									count
+									count: data
 								})
 							)
 						});
