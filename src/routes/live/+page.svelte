@@ -354,12 +354,6 @@
 																: generationOrUpscale.status === 'succeeded'
 																? $LL.Live.GenerationTooltip.Status.Succeeded()
 																: $LL.Live.GenerationTooltip.Status.Failed()
-													},
-													{
-														key: $LL.Live.GenerationTooltip.Server.Title() + ':',
-														value: generationOrUpscale.uses_default_server
-															? $LL.Live.GenerationTooltip.Server.Default()
-															: $LL.Live.GenerationTooltip.Server.Custom()
 													}
 												],
 												...tooltipStyleProps
