@@ -183,7 +183,7 @@
 	>
 		<div
 			use:clickoutside={{ callback: () => (isSignInModalOpen = false) }}
-			class="w-full max-w-2xl flex justify-center my-auto"
+			class="max-w-full my-auto"
 		>
 			<SignInCard isModal={true} redirectTo={$page.url.pathname} />
 		</div>
