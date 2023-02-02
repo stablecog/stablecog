@@ -816,6 +816,14 @@ type RootTranslation = {
 	}
 	SignIn: {
 		/**
+		 * G​e​t​ ​S​t​a​r​t​e​d
+		 */
+		PageTitleGetStarted: string
+		/**
+		 * G​e​t​ ​S​t​a​r​t​e​d
+		 */
+		GetStartedButton: string
+		/**
 		 * S​i​g​n​ ​I​n
 		 */
 		PageTitle: string
@@ -1943,6 +1951,14 @@ export type TranslationFunctions = {
 		}
 	}
 	SignIn: {
+		/**
+		 * Get Started
+		 */
+		PageTitleGetStarted: () => LocalizedString
+		/**
+		 * Get Started
+		 */
+		GetStartedButton: () => LocalizedString
 		/**
 		 * Sign In
 		 */

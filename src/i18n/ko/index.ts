@@ -282,6 +282,8 @@ const ko: Translation = {
 		}
 	},
 	SignIn: {
+		PageTitleGetStarted: 'Get Started',
+		GetStartedButton: 'Get Started',
 		PageTitle: '로그인',
 		PageParagraph: '로그인을 통해 Stablecog의 모든 기능을 사용해보세요!',
 		PageTitleCreateAccountOrSignIn: 'Create an account or sign in',

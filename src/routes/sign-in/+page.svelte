@@ -27,7 +27,7 @@
 />
 
 <PageWrapper>
-	<div class="w-full flex justify-center items-center my-auto">
+	<div class="w-[100%+1rem] flex justify-center items-center my-auto -mx-2">
 		<SignInCard redirectTo={data.redirect_to} />
 	</div>
 </PageWrapper>

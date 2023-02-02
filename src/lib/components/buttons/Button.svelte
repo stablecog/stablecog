@@ -24,7 +24,7 @@
 		class="{noPadding
 			? 'p-0'
 			: size === 'xs'
-			? 'px-5 py-3'
+			? 'px-4.5 py-3'
 			: size === 'sm'
 			? 'px-6 md:px-8 py-4'
 			: 'px-6 md:px-8 py-5'} {size === 'xs'
@@ -45,7 +45,11 @@
 			? 'bg-c-danger'
 			: 'bg-c-primary'} {classes}"
 	>
-		<div class="w-[200%] h-full absolute left-0 top-0 flex items-center justify-center">
+		<div
+			class="w-[200%] h-full absolute left-0 top-0 flex items-center justify-center {$isTouchscreen
+				? 'hidden'
+				: 'flex'}"
+		>
 			<div
 				class="w-full aspect-square origin-left rounded-full transition transform -translate-x-full 
 				{type === 'success'
@@ -87,7 +91,7 @@
 		class="{noPadding
 			? 'p-0'
 			: size === 'xs'
-			? 'px-5 py-3'
+			? 'px-4.5 py-3'
 			: size === 'sm'
 			? 'px-6 md:px-8 py-4'
 			: 'px-6 md:px-8 py-5'} {size === 'xs'
@@ -108,7 +112,11 @@
 			? 'bg-c-danger'
 			: 'bg-c-primary'} {classes}"
 	>
-		<div class="w-[200%] h-full absolute left-0 top-0 flex items-center justify-center">
+		<div
+			class="w-[200%] h-full absolute left-0 top-0 flex items-center justify-center {$isTouchscreen
+				? 'hidden'
+				: 'flex'}"
+		>
 			<div
 				class="w-full aspect-square origin-left rounded-full transition transform -translate-x-full 
 					{type === 'success'

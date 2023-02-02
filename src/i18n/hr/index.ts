@@ -280,6 +280,8 @@ const hr: Translation = {
 		}
 	},
 	SignIn: {
+		PageTitleGetStarted: 'Get Started',
+		GetStartedButton: 'Get Started',
 		PageTitle: 'Prijavi se',
 		PageParagraph: 'Počni koristiti Stablecog sa svim opcijama dostupnim na tvom računu.',
 		PageTitleCreateAccountOrSignIn: 'Stvori račun ili se prijavi',

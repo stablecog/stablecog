@@ -136,7 +136,7 @@
 					</div>
 				{:else if $page.url.pathname !== '/sign-in'}
 					<Button class="-mx-1" size="xs" onClick={() => (isSignInModalOpen = true)}>
-						{$LL.SignIn.SignInButton()}
+						{$LL.SignIn.GetStartedButton()}
 					</Button>
 				{/if}
 			</div>
@@ -183,7 +183,7 @@
 	>
 		<div
 			use:clickoutside={{ callback: () => (isSignInModalOpen = false) }}
-			class="w-full max-w-2xl flex justify-center my-auto"
+			class="max-w-full my-auto"
 		>
 			<SignInCard isModal={true} redirectTo={$page.url.pathname} />
 		</div>
