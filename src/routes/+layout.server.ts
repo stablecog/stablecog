@@ -10,12 +10,13 @@ export const load: LayoutServerLoad = async (event) => {
 	if (session?.user.id) {
 		try {
 			const { data } = await supabaseClient
-				.from('user')
-				.select('subscription_tier')
-				.eq('id', session.user.id)
+				.from('subscriptions')
+				.select('subscription_tier:subscription_tier_id(name)')
+				.match({ user_id: session.user.id })
 				.maybeSingle();
 			if (data && data.subscription_tier) {
-				plan = data.subscription_tier;
+				//@ts-ignore
+				plan = data.subscription_tier.name.toUpperCase();
 			} else {
 				let { data } = await supabaseClient.auth.refreshSession(session);
 				if (data && data.session) {

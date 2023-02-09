@@ -7,9 +7,6 @@
 	import {
 		availableHeightsFree,
 		availableInferenceStepsFree,
-		availableModelIds,
-		availableModelIdsFree,
-		availableSchedulerIds,
 		availableWidthsFree,
 		guidanceScaleDefault,
 		guidanceScaleMax,
@@ -19,8 +16,6 @@
 		inferenceStepsDefault,
 		inferenceStepsTabs,
 		maxPromptLength,
-		modelIdDefault,
-		schedulerIdDefault,
 		widthDefault,
 		widthTabs
 	} from '$ts/constants/main';
@@ -44,7 +39,6 @@
 		promptInputValue,
 		negativePromptInputValue
 	} from '$ts/stores/generationSettings';
-	import type { TStatus } from '$ts/types/main';
 	import { onMount, tick } from 'svelte';
 	import LL, { locale } from '$i18n/i18n-svelte';
 	import { isValue } from '$ts/helpers/isValue';
@@ -62,11 +56,12 @@
 	import { fade, fly } from 'svelte/transition';
 	import { quadOut } from 'svelte/easing';
 	import { browser } from '$app/environment';
+	import { availableModelIds, modelIdDefault } from '$ts/constants/models';
+	import { availableSchedulerIds, schedulerIdDefault } from '$ts/constants/schedulers';
+	import { generations } from '$ts/stores/generation';
 
 	export let serverData: THomePageData;
 	export let onCreate: () => Promise<void>;
-	export let status: TStatus;
-	export let startTimestamp: number | undefined;
 	export let estimatedDuration: number;
 	export { classes as class };
 	let classes = '';
@@ -109,10 +104,7 @@
 			: guidanceScaleDefault
 	);
 	generationModelId.set(
-		isValue(serverData.model_id) &&
-			serverData.model_id !== null &&
-			(availableModelIdsFree.includes(serverData.model_id) ||
-				($page.data.plan !== 'FREE' && $page.data.plan !== 'ANONYMOUS'))
+		isValue(serverData.model_id) && serverData.model_id !== null
 			? serverData.model_id
 			: modelIdDefault
 	);
@@ -126,7 +118,6 @@
 		isValue(serverData.seed) && serverData.seed !== null ? serverData.seed : undefined
 	);
 
-	let submitting = false;
 	$: placeholder = $LL.Home.PromptInput.Placeholder();
 	let now: number | undefined;
 	let nowInterval: NodeJS.Timeout | undefined;
@@ -135,16 +126,21 @@
 	let isGenerationSettingsSheetOpen = false;
 	let isSignInModalOpen = false;
 
-	$: loadingOrSubmitting = status === 'loading' || submitting;
+	$: loadingOrSubmitting =
+		$generations !== null &&
+		($generations[0].status === 'queued' || $generations[0].status === 'server-received');
 	$: sinceSec =
-		now !== undefined && startTimestamp !== undefined
-			? Math.max(now - startTimestamp, 0) / 1000
+		now !== undefined && $generations && $generations[0].start_timestamp !== undefined
+			? Math.max(now - $generations[0].start_timestamp, 0) / 1000
 			: 0;
-	$: [status], createOrDestroyInterval();
+	$: [$generations], createOrDestroyInterval();
 
 	async function createOrDestroyInterval() {
 		if (nowInterval) clearInterval(nowInterval);
-		if (status === 'loading') {
+		if (
+			$generations &&
+			($generations[0].status === 'queued' || $generations[0].status === 'server-received')
+		) {
 			nowInterval = setInterval(() => {
 				now = Date.now();
 			}, 100);
@@ -165,20 +161,17 @@
 		promptInputElement.scrollTo(0, 0);
 		promptInputElement.blur();
 		setTimeout(async () => {
-			submitting = true;
 			if (!$promptInputValue) {
 				await new Promise((resolve) => setTimeout(resolve, 75));
 				await tick();
 				promptInputValue.set(placeholder);
 			}
 			await onCreate();
-			submitting = false;
 		});
 	}
 
 	let isCheckComplete = false;
 
-	$: $page.data.plan, onTierStateChanged();
 	$: [$generationWidth, $generationHeight], setLocalImageSize();
 	$: [$generationInferenceSteps], setLocalInferenceSteps();
 	$: [$generationGuidanceScale], setLocalGuidanceScale();
@@ -192,23 +185,6 @@
 	$: if (browser && $page.data.session?.user.id) {
 		isSignInModalOpen = false;
 	}
-
-	const onTierStateChanged = () => {
-		if (isCheckComplete && ($page.data.plan === 'FREE' || $page.data.plan === 'ANONYMOUS')) {
-			if (!availableWidthsFree.includes($generationWidth)) {
-				generationWidth.set(widthDefault);
-			}
-			if (!availableHeightsFree.includes($generationHeight)) {
-				generationHeight.set(heightDefault);
-			}
-			if (!availableInferenceStepsFree.includes($generationInferenceSteps)) {
-				generationInferenceSteps.set(inferenceStepsDefault);
-			}
-			if (!availableModelIdsFree.includes($generationModelId)) {
-				generationModelId.set(modelIdDefault);
-			}
-		}
-	};
 
 	const setLocalImageSize = () => {
 		if (isCheckComplete) {
@@ -286,11 +262,7 @@
 			const widthIndex = widthTabs
 				.map((w) => w.value)
 				.findIndex((i) => i === $imageSize?.width?.toString());
-			if (
-				widthIndex >= 0 &&
-				(availableWidthsFree.includes(widthTabs[widthIndex].value) ||
-					($page.data.plan !== 'FREE' && $page.data.plan !== 'ANONYMOUS'))
-			) {
+			if (widthIndex >= 0) {
 				generationWidth.set(widthTabs[widthIndex].value);
 			}
 		}
@@ -349,12 +321,7 @@
 			isValue($modelId) &&
 			availableModelIds.includes($modelId)
 		) {
-			if (
-				availableModelIdsFree.includes($modelId) ||
-				($page.data.plan !== 'FREE' && $page.data.plan !== 'ANONYMOUS')
-			) {
-				generationModelId.set($modelId);
-			}
+			generationModelId.set($modelId);
 		}
 		if (
 			!isValue(serverData.scheduler_id) &&
@@ -377,6 +344,24 @@
 		}
 		isCheckComplete = true;
 	});
+
+	let transitionState: 'idle' | 'transitioning' | 'completed' = 'idle';
+	$: [$generations], setTransition();
+
+	async function setTransition() {
+		if (!$generations) return;
+		if ($generations[0].status === 'queued') {
+			transitionState = 'idle';
+			await tick();
+			setTimeout(() => {
+				transitionState = 'transitioning';
+			}, 100);
+			return;
+		} else if ($generations[0].status === 'succeeded' || $generations[0].status === 'failed') {
+			transitionState = 'completed';
+			return;
+		}
+	}
 </script>
 
 <form
@@ -434,15 +419,15 @@
 				class="w-full h-full rounded-xl overflow-hidden z-0 absolute left-0 top-0 pointer-events-none"
 			>
 				<div
-					style="transition-duration: {status === 'loading'
+					style="transition-duration: {transitionState === 'transitioning'
 						? estimatedDuration
-						: status === 'success' || status === 'error'
+						: transitionState === 'completed'
 						? 0.5
 						: 0}s"
 					class="w-full h-full ease-image-generation transition bg-c-secondary/10 
-					absolute left-0 top-0 rounded-xl {status === 'loading'
+						absolute left-0 top-0 rounded-xl {transitionState === 'transitioning'
 						? 'translate-x-0'
-						: status === 'success' || status === 'error'
+						: transitionState === 'completed'
 						? 'translate-x-full'
 						: '-translate-x-full'}"
 				/>
@@ -465,7 +450,7 @@
 		</Button>
 	</div>
 	<!-- Tab bars -->
-	{#if status !== 'loading'}
+	{#if !$generations || ($generations[0].status !== 'queued' && $generations[0].status !== 'server-received')}
 		<div
 			class="w-full flex flex-col justify-start items-center px-4"
 			transition:expandCollapse|local={{ duration: 300 }}

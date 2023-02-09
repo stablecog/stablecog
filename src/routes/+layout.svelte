@@ -23,9 +23,19 @@
 	import { setCookie } from '$ts/helpers/setCookie';
 	import { appVersion } from '$ts/stores/appVersion';
 	import { PUBLIC_GO_SERVER_URL_DEV } from '$env/static/public';
+	import { streamId } from '$ts/stores/sse';
+	import {
+		generations,
+		setGenerationToFailed,
+		setGenerationToServerReceived,
+		setGenerationToSucceeded,
+		submitGeneration
+	} from '$ts/stores/generation';
 
 	export let data: LayoutData;
 	setLocale(data.locale);
+
+	const apiUrl = new URL(PUBLIC_GO_SERVER_URL_DEV);
 
 	const th = data.themeStore;
 	themeApp.set($th);
@@ -41,34 +51,34 @@
 	let innerWidth: number;
 
 	let mounted = false;
-	let sessionId: string | undefined;
 
 	$: [$themeApp], setBodyClasses();
 	$: [innerWidth, innerHeight], setWindowStores();
 
-	let ws: WebSocket;
+	let sse: EventSource;
 	$: if (mounted && $page.data.session?.user.id) {
 		mixpanel.identify($page.data.session?.user.id);
 		mixpanel.people.set({ $email: $page.data.session?.user.email });
 		mixpanel.people.set({ 'SC - Plan': $page.data.plan });
-		const apiUrl = new URL(PUBLIC_GO_SERVER_URL_DEV);
-		if (ws) {
-			ws.close();
+		if (!sse || sse.readyState === sse.CLOSED) {
+			streamId.set(generateSSEStreamId());
+			sse = new EventSource(`${apiUrl.href}v1/sse?stream_id=${$streamId}`);
+			sse.onopen = () => {
+				console.log(`Connected to SSE with stream_id: ${$streamId}`);
+			};
+			sse.onmessage = (event) => {
+				const data = JSON.parse(event.data);
+				console.log('Message from SSE', data);
+				if (data.id && data.status === 'succeeded' && data.outputs && data.outputs.length > 0) {
+					setGenerationToSucceeded(data.id, data.outputs);
+				} else if (data.id && data.status === 'failed') {
+					setGenerationToFailed(data.id);
+				}
+			};
+			sse.onerror = (event) => {
+				console.log('Error from SSE', event);
+			};
 		}
-		sessionId = generateSessionId();
-		ws = new WebSocket(`ws://${apiUrl.host}/v1/ws?session_id=${sessionId}`);
-		ws.onopen = () => {
-			console.log(`Connected to websocket with session_id: ${sessionId}`);
-		};
-		ws.onmessage = (event) => {
-			console.log('Message from websocket', event.data);
-		};
-		ws.onerror = (event) => {
-			console.log('Error from websocket', event);
-		};
-		ws.onclose = (event) => {
-			console.log('Closed websocket', event);
-		};
 	}
 
 	onMount(async () => {
@@ -127,7 +137,7 @@
 		if (mounted) fn();
 	};
 
-	const generateSessionId = () => {
+	const generateSSEStreamId = () => {
 		const bytes = crypto.getRandomValues(new Uint8Array(32));
 		const array = Array.from(bytes);
 		const hexPairs = array.map((b) => b.toString(16).padStart(2, '0'));
@@ -137,6 +147,35 @@
 	$: $locale, runIfMounted(() => setCookie(`sc-locale=${$locale}`));
 	$: $themeApp, runIfMounted(() => setCookie(`sc-theme=${$themeApp}`));
 	$: $advancedModeApp, runIfMounted(() => setCookie(`sc-advanced-mode=${$advancedModeApp}`));
+	$: $generations, onGenerationsChanged();
+
+	let isSubmitting = false;
+	async function onGenerationsChanged() {
+		if (isSubmitting) return;
+		if (!$generations || $generations.length === 0) return;
+		for (let i = 0; i < $generations.length; i++) {
+			const generation = $generations[i];
+			if (generation.status === 'queued') {
+				isSubmitting = true;
+				try {
+					const res = await submitGeneration({
+						...generation,
+						access_token: $page.data.session?.access_token || '',
+						app_version: $appVersion,
+						stream_id: $streamId || '',
+						output_image_extension: 'jpeg',
+						process_type: 'generate'
+					});
+					const { id } = res;
+					setGenerationToServerReceived(id);
+				} catch (error) {
+					console.log(error);
+				} finally {
+					isSubmitting = false;
+				}
+			}
+		}
+	}
 </script>
 
 <svelte:window bind:innerHeight bind:innerWidth />

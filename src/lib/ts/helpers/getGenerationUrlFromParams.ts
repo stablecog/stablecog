@@ -6,7 +6,7 @@ export function getGenerationUrlFromParams({
 	width,
 	height,
 	guidance_scale,
-	num_inference_steps,
+	inference_steps,
 	seed
 }: TGenerationUrlFromParamsParams) {
 	const baseUrl = '/?';
@@ -16,7 +16,7 @@ export function getGenerationUrlFromParams({
 	if (width) params.push(`w=${width}`);
 	if (height) params.push(`h=${height}`);
 	if (guidance_scale) params.push(`gs=${guidance_scale}`);
-	if (num_inference_steps) params.push(`is=${num_inference_steps}`);
+	if (inference_steps) params.push(`is=${inference_steps}`);
 	if (seed || seed === 0) params.push(`s=${seed}`);
 	if (model_id) params.push(`mi=${model_id}`);
 	if (scheduler_id) params.push(`si=${scheduler_id}`);
@@ -31,6 +31,6 @@ export interface TGenerationUrlFromParamsParams {
 	width?: number;
 	height?: number;
 	seed?: number;
-	num_inference_steps?: number;
+	inference_steps?: number;
 	guidance_scale?: number;
 }

@@ -1,4 +1,5 @@
-import type { TGenerationUI } from '$ts/types/main';
+import type { TGeneration, TGenerationOutput } from '$ts/stores/generation';
 import { writable } from 'svelte/store';
 
-export const activeGeneration = writable<TGenerationUI | undefined>(undefined);
+export const activeGeneration = writable<TGeneration | null>(null);
+export const activeOutput = writable<TGenerationOutput | null>(null);

@@ -75,8 +75,8 @@ var SchedulerIdToSchedulerNameCog = map[string]string{
 	"af2679a4-dbbb-4950-8c06-c3bb15416ef6": "K_EULER_ANCESTRAL",
 	"162b6989-f635-4bfe-a2f5-24d4246df318": "PNDM",
 	"efee957a-dea5-48b2-a66a-1990dc2265c5": "HEUN",
-	"9d175114-9a26-4371-861c-729ba9ecb4da": "DPM",
-	"7e98751f-e135-4206-b855-48b141e7b98f": "DPM_SINGLESTEP",
+	"9d175114-9a26-4371-861c-729ba9ecb4da": "DPM++_2M",
+	"7e98751f-e135-4206-b855-48b141e7b98f": "DPM++_2S",
 }
 
 var green = color.New(color.FgHiGreen).SprintFunc()

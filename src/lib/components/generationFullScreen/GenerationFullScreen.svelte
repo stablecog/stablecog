@@ -10,9 +10,9 @@
 	import { elementreceive, elementsend } from '$ts/animation/transitions';
 	import { urlFromBase64 } from '$ts/helpers/base64';
 	import { getImageFileNameFromGeneration } from '$ts/helpers/getImageFileNameFromGeneration';
-	import { activeGeneration } from '$ts/stores/activeGeneration';
+	import { activeGeneration, activeOutput } from '$ts/stores/activeGeneration';
 	import { windowHeight, windowWidth } from '$ts/stores/window';
-	import type { TGenerationUI, TUpscaleStatus } from '$ts/types/main';
+	import type { TUpscaleStatus } from '$ts/types/main';
 	import { copy } from 'svelte-copy';
 	import IconChevronDown from '$components/icons/IconChevronDown.svelte';
 	import IconButton from '$components/buttons/IconButton.svelte';
@@ -39,14 +39,7 @@
 	import { createEventDispatcher } from 'svelte';
 	import TabBar from '$components/tabBars/TabBar.svelte';
 	import { lastUpscaleDurationSec } from '$ts/stores/lastUpscaleDurationSec';
-	import {
-		availableHeightsFree,
-		availableModelIdsFree,
-		availableSchedulerIdsFree,
-		availableWidthsFree,
-		estimatedDurationBufferRatio,
-		serverUrl
-	} from '$ts/constants/main';
+	import { estimatedDurationBufferRatio, serverUrl } from '$ts/constants/main';
 	import { mLogUpscale, uLogUpscale } from '$ts/helpers/loggers';
 	import LL, { locale } from '$i18n/i18n-svelte';
 	import { negativePromptTooltipAlt } from '$ts/constants/tooltips';
@@ -55,15 +48,15 @@
 	import IconTrashcanFilledOpen from '$components/icons/IconTrashcanFilledOpen.svelte';
 	import { advancedModeApp } from '$ts/stores/advancedMode';
 	import TierBadge from '$components/TierBadge.svelte';
-	import type { TAvailableProReason } from '.svelte-kit/types/src/routes/pro/proxy+page.server';
 	import IconCancel from '$components/icons/IconCancel.svelte';
+	import type { TGeneration, TGenerationOutput } from '$ts/stores/generation';
 
-	export let generation: TGenerationUI;
+	export let generation: TGeneration;
+	export let output: TGenerationOutput;
 	export let upscaleStatus: TUpscaleStatus = 'idle';
 
 	let upscaleErrorText: string | undefined;
-	let currentImageUrl: string;
-	let currentImageDataB64: string;
+	let currentImageUrl = output.image_url;
 	let upscaledImageWidth: number | undefined;
 	let upscaledImageHeight: number | undefined;
 	$: generation, onGenerationChanged();
@@ -108,13 +101,6 @@
 	let regenerateUrl: string;
 
 	const onGenerationChanged = () => {
-		currentImageDataB64 = generation.upscaledImageDataB64 ?? generation.imageDataB64;
-		currentImageUrl =
-			generation.upscaledImageUrl ?? generation.imageUrl ?? urlFromBase64(currentImageDataB64);
-		if (generation.upscaledImageUrl) upscaledTabValue = 'upscaled';
-		upscaledImageWidth = undefined;
-		upscaledImageHeight = undefined;
-
 		const { seed, ...rest } = generation;
 		rerollUrl = getGenerationUrlFromParams(rest);
 		regenerateUrl = getGenerationUrlFromParams(generation);
@@ -237,7 +223,7 @@
 				prompt: generation.prompt,
 				negative_prompt: generation.negative_prompt,
 				seed: generation.seed,
-				num_inference_steps: generation.num_inference_steps,
+				num_inference_steps: generation.inference_steps,
 				guidance_scale: generation.guidance_scale,
 				height: generation.height,
 				width: generation.width,
@@ -283,16 +269,14 @@
 	$: upscaledTabValue, setCurrentImageUrl();
 
 	function setCurrentImageUrl() {
-		if (upscaledTabValue === 'upscaled' && generation.upscaledImageDataB64) {
-			currentImageDataB64 = generation.upscaledImageDataB64;
-			currentImageUrl = generation.upscaledImageUrl ?? urlFromBase64(currentImageDataB64);
+		if (upscaledTabValue === 'upscaled') {
+			currentImageUrl = output.upscaled_image_url || '';
 		} else {
-			currentImageDataB64 = generation.imageDataB64;
-			currentImageUrl = generation.imageUrl ?? urlFromBase64(currentImageDataB64);
+			currentImageUrl = output.image_url;
 		}
 	}
 
-	let upscaledTabValue: TUpscaleTabValue = 'upscaled';
+	let upscaledTabValue: TUpscaleTabValue = 'original';
 	type TUpscaleTabValue = 'original' | 'upscaled';
 	let upscaledOrDefaultTabs: { label: string; value: TUpscaleTabValue }[];
 
@@ -333,7 +317,8 @@
 			await tick();
 			setTimeout(() => (deleteStatus = 'loading'));
 			await deleteGenerationFromDb(id);
-			activeGeneration.set(undefined);
+			activeGeneration.set(null);
+			activeOutput.set(null);
 			deleteStatus = 'success';
 			setTimeout(() => {
 				dispatchDelete('delete', { generation });
@@ -343,21 +328,6 @@
 			deleteStatus = 'idle';
 		}
 	}
-
-	$: showTierBadge =
-		($page.data.plan === 'FREE' || $page.data.plan === 'ANONYMOUS') &&
-		(!availableWidthsFree.map((i) => Number(i)).includes(generation.width) ||
-			!availableHeightsFree.map((i) => Number(i)).includes(generation.height) ||
-			(generation.model_id && !availableModelIdsFree.includes(generation.model_id)) ||
-			(generation.scheduler_id && !availableSchedulerIdsFree.includes(generation.scheduler_id)));
-
-	let showTierBadgeReason: TAvailableProReason;
-	$: showTierBadgeReason =
-		generation.model_id && !availableModelIdsFree.includes(generation.model_id)
-			? 'model_generation'
-			: generation.scheduler_id && !availableSchedulerIdsFree.includes(generation.scheduler_id)
-			? 'scheduler_generation'
-			: 'dimensions_generation';
 
 	onMount(() => {
 		setSidebarWrapperVars();
@@ -375,7 +345,7 @@
 				name="Close"
 				onClick={() => {
 					if (canClose) {
-						activeGeneration.set(undefined);
+						activeGeneration.set(null);
 					}
 				}}
 			>
@@ -401,7 +371,7 @@
 			use:clickoutside={{
 				callback: () => {
 					if (canClose) {
-						activeGeneration.set(undefined);
+						activeGeneration.set(null);
 					}
 				}
 			}}
@@ -420,7 +390,7 @@
 			<div class="relative self-stretch flex items-center">
 				<img
 					class="w-full h-full absolute left-0 top-0 transform scale-125 blur-xl"
-					src={generation.imageUrl}
+					src={output.image_url}
 					alt="Blurred background for: {generation.prompt}"
 					width={generation.width}
 					height={generation.height}
@@ -437,7 +407,7 @@
 						class="{upscaleStatus === 'loading'
 							? 'blur-2xl'
 							: ''} w-full transition h-auto lg:h-full lg:object-contain absolute lg:left-0 lg:top-0"
-						src={generation.imageUrl}
+						src={output.image_url}
 						alt="Blurred background 2 for: {generation.prompt}"
 						width={generation.width}
 						height={generation.height}
@@ -575,8 +545,8 @@
 										prompt: generation.prompt,
 										seed: generation.seed,
 										guidanceScale: generation.guidance_scale,
-										inferenceSteps: generation.num_inference_steps,
-										b64: currentImageDataB64
+										inferenceSteps: generation.inference_steps,
+										imageUrl: output.image_url
 									})}
 									state={imageDownloading ? 'success' : 'idle'}
 								>
@@ -593,42 +563,20 @@
 								</SubtleButton>
 								{#if $page.url.pathname !== '/'}
 									<div class="flex relative">
-										<SubtleButton
-											target="_self"
-											prefetch={true}
-											href={showTierBadge ? `/pro?reason=${showTierBadgeReason}` : rerollUrl}
-										>
+										<SubtleButton target="_self" prefetch={true} href={rerollUrl}>
 											<div class="flex items-center justify-center gap-1.5">
 												<IconDice class="w-5 h-5 -ml-0.5" />
 												<p>{$LL.GenerationFullscreen.RerollButton()}</p>
 											</div>
 										</SubtleButton>
-										{#if showTierBadge}
-											<TierBadge
-												size="xs"
-												tier="PRO"
-												class="absolute -right-1.5 -top-1.5 pointer-events-none"
-											/>
-										{/if}
 									</div>
 									<div class="flex relative">
-										<SubtleButton
-											target="_self"
-											prefetch={true}
-											href={showTierBadge ? `/pro?reason=${showTierBadgeReason}` : regenerateUrl}
-										>
+										<SubtleButton target="_self" prefetch={true} href={regenerateUrl}>
 											<div class="flex items-center justify-center gap-1.5">
 												<IconRefresh class="w-5 h-5 -ml-0.5" />
 												<p>{$LL.GenerationFullscreen.RegenerateButton()}</p>
 											</div>
 										</SubtleButton>
-										{#if showTierBadge}
-											<TierBadge
-												size="xs"
-												tier="PRO"
-												class="absolute -right-1.5 -top-1.5 pointer-events-none"
-											/>
-										{/if}
 									</div>
 								{/if}
 								<div use:copy={generation.prompt} on:svelte-copy={onPromptCopied}>

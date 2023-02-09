@@ -20,12 +20,6 @@
 	import {
 		availableHeights,
 		availableHeightsFree,
-		availableInferenceSteps,
-		availableInferenceStepsFree,
-		availableModelIdDropdownItems,
-		availableModelIds,
-		availableModelIdsFree,
-		availableSchedulerIdDropdownItems,
 		availableWidths,
 		availableWidthsFree,
 		guidanceScaleMax,
@@ -35,10 +29,10 @@
 		maxProPixelSteps,
 		maxPromptLength,
 		maxSeed,
-		widthTabs,
-		availableSchedulerIds,
-		availableSchedulerIdsFree
+		widthTabs
 	} from '$ts/constants/main';
+	import { availableModelIdDropdownItems } from '$ts/constants/models';
+	import { availableSchedulerIdDropdownItems } from '$ts/constants/schedulers';
 	import {
 		guidanceScaleTooltip,
 		heightTooltip,
@@ -165,7 +159,6 @@
 			outline={$page.data.plan === 'FREE' || $page.data.plan === 'ANONYMOUS'
 				? 'primary'
 				: 'bg-secondary'}
-			hasBackgroundPattern={$page.data.plan === 'FREE' || $page.data.plan === 'ANONYMOUS'}
 			bind:value={$generationHeight}
 			name="Height"
 			hideSelected={!isCheckComplete}
@@ -194,10 +187,6 @@
 		bind:value={$generationModelId}
 		{disabled}
 		items={$availableModelIdDropdownItems}
-		badgeHref="/pro?reason=model"
-		badgeAppliedTo={$page.data.plan === 'FREE' || $page.data.plan === 'ANONYMOUS'
-			? availableModelIds.filter((i) => !availableModelIdsFree.includes(i))
-			: undefined}
 		name="Model"
 	>
 		<div slot="title" use:tooltip={$modelTooltip} class="p-3.5 flex items-center justify-center">
@@ -230,14 +219,6 @@
 				{disabled}
 				class="w-full"
 				tabs={inferenceStepsTabs}
-				badgeHref="/pro?reason=steps"
-				badgeAppliedTo={$page.data.plan === 'FREE' || $page.data.plan === 'ANONYMOUS'
-					? availableInferenceSteps.filter((i) => !availableInferenceStepsFree.includes(i))
-					: undefined}
-				outline={$page.data.plan === 'FREE' || $page.data.plan === 'ANONYMOUS'
-					? 'primary'
-					: 'bg-secondary'}
-				hasBackgroundPattern={$page.data.plan === 'FREE' || $page.data.plan === 'ANONYMOUS'}
 				isValid={isInferenceStepsValid}
 				bind:value={$generationInferenceSteps}
 				name="Steps"
@@ -271,10 +252,6 @@
 			bind:value={$generationSchedulerId}
 			items={$availableSchedulerIdDropdownItems}
 			name="Scheduler"
-			badgeHref="/pro?reason=scheduler"
-			badgeAppliedTo={$page.data.plan === 'FREE' || $page.data.plan === 'ANONYMOUS'
-				? availableSchedulerIds.filter((i) => !availableSchedulerIdsFree.includes(i))
-				: undefined}
 		>
 			<div
 				slot="title"
