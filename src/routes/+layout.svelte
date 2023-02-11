@@ -28,9 +28,10 @@
 		generations,
 		setGenerationToFailed,
 		setGenerationToServerReceived,
-		setGenerationToSucceeded,
-		submitGeneration
+		setGenerationToSucceeded
 	} from '$ts/stores/generation';
+	import { generateId } from '$ts/helpers/generateId';
+	import { submitInitialGenerationRequest } from '$ts/stores/generation';
 
 	export let data: LayoutData;
 	setLocale(data.locale);
@@ -57,13 +58,13 @@
 
 	let sse: EventSource;
 	$: if (mounted && $page.data.session?.user.id) {
-		console.log('Mounted and has user id')
+		console.log('Mounted and has user id');
 		mixpanel.identify($page.data.session?.user.id);
 		mixpanel.people.set({ $email: $page.data.session?.user.email });
 		mixpanel.people.set({ 'SC - Plan': $page.data.plan });
 		if (!sse || sse.readyState === sse.CLOSED) {
-			console.log('SSE not connected or closed, starting new connection')
-			streamId.set(generateSSEStreamId());
+			console.log('SSE not connected or closed, starting new connection');
+			streamId.set(generateId());
 			sse = new EventSource(`${apiUrl.href}v1/sse?stream_id=${$streamId}`);
 			sse.onopen = () => {
 				console.log(`Connected to SSE with stream_id: ${$streamId}`);
@@ -139,39 +140,55 @@
 		if (mounted) fn();
 	};
 
-	const generateSSEStreamId = () => {
-		const bytes = crypto.getRandomValues(new Uint8Array(32));
-		const array = Array.from(bytes);
-		const hexPairs = array.map((b) => b.toString(16).padStart(2, '0'));
-		return hexPairs.join('');
-	};
-
 	$: $locale, runIfMounted(() => setCookie(`sc-locale=${$locale}`));
 	$: $themeApp, runIfMounted(() => setCookie(`sc-theme=${$themeApp}`));
 	$: $advancedModeApp, runIfMounted(() => setCookie(`sc-advanced-mode=${$advancedModeApp}`));
-	$: $generations, onGenerationsChanged();
+	$: $generations, onGenerationRequestsChanged();
 
 	let isSubmitting = false;
-	async function onGenerationsChanged() {
+	async function onGenerationRequestsChanged() {
+		console.log($generations);
 		if (isSubmitting) return;
-		if (!$generations || $generations.length === 0) return;
+		if (!$generations || $generations.length === 0) {
+			console.log('No generations, not submitting initial generation request');
+			return;
+		}
+		if (!$page.data.session?.access_token) {
+			console.log('No access token, not submitting initial generation request');
+			return;
+		}
+		if ($streamId === null) {
+			console.log('Stream id is null, not submitting initial generation request');
+			return;
+		}
 		for (let i = 0; i < $generations.length; i++) {
 			const generation = $generations[i];
-			if (generation.status === 'queued') {
+			if (generation.status === 'waiting') {
 				isSubmitting = true;
 				try {
-					const res = await submitGeneration({
-						...generation,
-						access_token: $page.data.session?.access_token || '',
-						app_version: $appVersion,
-						stream_id: $streamId || '',
-						output_image_extension: 'webp',
-						process_type: 'generate'
-					});
-					const { id } = res;
-					setGenerationToServerReceived(id);
+					console.log('Submitting initial generation request', generation);
+					const res = await submitInitialGenerationRequest(
+						{
+							...generation,
+							stream_id: $streamId,
+							output_image_extension: 'jpeg',
+							process_type: 'generate'
+						},
+						$page.data.session.access_token,
+						$appVersion
+					);
+					const { id, error } = res;
+					if (error || !id) {
+						console.log('Generation failed:', error);
+						setGenerationToFailed(generation.id || generation.ui_id, error);
+					} else {
+						setGenerationToServerReceived(id);
+					}
 				} catch (error) {
+					const err = error as Error;
 					console.log(error);
+					setGenerationToFailed(generation.id || generation.ui_id, err.message);
+					console.log($generations);
 				} finally {
 					isSubmitting = false;
 				}

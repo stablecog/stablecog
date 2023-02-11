@@ -125,22 +125,22 @@
 	let formElement: HTMLFormElement;
 	let isGenerationSettingsSheetOpen = false;
 	let isSignInModalOpen = false;
+	let started_at: number;
 
 	$: loadingOrSubmitting =
 		$generations !== null &&
-		($generations[0].status === 'queued' || $generations[0].status === 'server-received');
+		($generations[0].status === 'waiting' || $generations[0].status === 'server-received');
 	$: sinceSec =
-		now !== undefined && $generations && $generations[0].start_timestamp !== undefined
-			? Math.max(now - $generations[0].start_timestamp, 0) / 1000
-			: 0;
+		now !== undefined && started_at !== undefined ? Math.max(now - started_at, 0) / 1000 : 0;
 	$: [$generations], createOrDestroyInterval();
 
 	async function createOrDestroyInterval() {
 		if (nowInterval) clearInterval(nowInterval);
 		if (
 			$generations &&
-			($generations[0].status === 'queued' || $generations[0].status === 'server-received')
+			($generations[0].status === 'waiting' || $generations[0].status === 'server-received')
 		) {
+			started_at = $generations[0].started_at;
 			nowInterval = setInterval(() => {
 				now = Date.now();
 			}, 100);
@@ -350,7 +350,7 @@
 
 	async function setTransition() {
 		if (!$generations) return;
-		if ($generations[0].status === 'queued') {
+		if ($generations[0].status === 'waiting') {
 			transitionState = 'idle';
 			await tick();
 			setTimeout(() => {
@@ -450,7 +450,7 @@
 		</Button>
 	</div>
 	<!-- Tab bars -->
-	{#if !$generations || ($generations[0].status !== 'queued' && $generations[0].status !== 'server-received')}
+	{#if !$generations || ($generations[0].status !== 'waiting' && $generations[0].status !== 'server-received')}
 		<div
 			class="w-full flex flex-col justify-start items-center px-4"
 			transition:expandCollapse|local={{ duration: 300 }}

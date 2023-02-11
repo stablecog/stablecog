@@ -1,6 +1,4 @@
 import {
-	availableModelIds,
-	availableSchedulerIds,
 	guidanceScaleMax,
 	guidanceScaleMin,
 	heightTabs,
@@ -11,10 +9,10 @@ import {
 	widthTabs,
 	type TAvailableHeight,
 	type TAvailableInferenceSteps,
-	type TAvailableModelId,
-	type TAvailableSchedulerId,
 	type TAvailableWidth
 } from '$ts/constants/main';
+import { availableModelIds, type TAvailableModelId } from '$ts/constants/models';
+import { availableSchedulerIds, type TAvailableSchedulerId } from '$ts/constants/schedulers';
 import type { ServerLoad } from '@sveltejs/kit';
 
 export const load: ServerLoad = ({ url }) => {

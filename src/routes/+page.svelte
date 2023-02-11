@@ -39,8 +39,9 @@
 	import Button from '$components/buttons/Button.svelte';
 	import IconConfetti from '$components/icons/IconConfetti.svelte';
 	import { streamId } from '$ts/stores/sse';
-	import { generations, queueGeneration } from '$ts/stores/generation';
+	import { generations, qeueuInitialGenerationRequest } from '$ts/stores/generation';
 	import { schedulerIdDefault } from '$ts/constants/schedulers';
+	import { generateId } from '$ts/helpers/generateId';
 
 	export let data: THomePageData;
 
@@ -75,7 +76,7 @@
 			!$promptInputValue && console.log('no input');
 			return;
 		}
-		queueGeneration({
+		qeueuInitialGenerationRequest({
 			prompt: $promptInputValue,
 			negative_prompt:
 				($advancedModeApp || isValue(data.negative_prompt)) && $negativePromptInputValue
@@ -101,7 +102,13 @@
 				($advancedModeApp || isValue(data.seed))
 					? Number($generationSeed)
 					: Math.round(Math.random() * maxSeed),
-			num_outputs: 4
+			num_outputs: 4,
+			output_image_extension: 'jpeg',
+			process_type: 'generate',
+			started_at: Date.now(),
+			stream_id: $streamId,
+			status: 'waiting',
+			ui_id: generateId()
 		});
 	}
 
@@ -176,7 +183,7 @@
 					transition:expandCollapse|local={{ duration: 300 }}
 					class="flex flex-col justify-start origin-top rounded-2xl"
 				>
-					{#if generationError && generationError.message === 'NEW_VERSION_AVAILABLE'}
+					{#if $generations[0].error === 'NEW_VERSION_AVAILABLE'}
 						<div class="w-full max-w-md py-2 md:py-0 px-4">
 							<div
 								class="w-full flex flex-col items-center p-3 md:p-4 bg-c-primary/8 border-2 border-c-primary/8 rounded-2xl"
@@ -196,11 +203,11 @@
 						<p
 							class="w-full max-w-2xl leading-relaxed text-c-on-bg/40 text-center py-4 md:py-2 px-6"
 						>
-							{generationError
-								? generationError.message === 'NSFW'
-									? $LL.Error.NSFW()
-									: generationError.message
-								: $LL.Error.SomethingWentWrong()}
+							{#if $generations[0].error}
+								{$generations[0].error === 'NSFW' ? $LL.Error.NSFW() : $generations[0].error}
+							{:else}
+								{$LL.Error.SomethingWentWrong()}
+							{/if}
 						</p>
 					{/if}
 				</div>

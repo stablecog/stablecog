@@ -5,33 +5,26 @@ import { writable } from 'svelte/store';
 
 export const generations = writable<TGeneration[] | null>(null);
 
-export const queueGeneration = async (generationBase: TGenerationBase) => {
-	const generation: TGeneration = {
-		...generationBase,
-		status: 'queued',
-		start_timestamp: Date.now()
-	};
-	generations.update(($generations) => {
-		if ($generations === null) {
-			$generations = [generation];
-			return $generations;
-		}
-		$generations = [generation, ...$generations];
-		return $generations;
-	});
-};
-
-export const setGenerationToFailed = (id: string) => {
+export const setGenerationToFailed = (id: string, error?: string) => {
 	generations.update(($generations) => {
 		if ($generations === null) {
 			return $generations;
 		}
 		const index = $generations.findIndex((gen) => gen.id === id);
 		if (index === -1) {
+			const ui_index = $generations.findIndex((gen) => gen.ui_id === id);
+			if (ui_index === -1) {
+				return $generations;
+			} else {
+				$generations[ui_index].status = 'failed';
+				$generations[ui_index].error = error;
+				return $generations;
+			}
+		} else {
+			$generations[index].status = 'failed';
+			$generations[index].error = error;
 			return $generations;
 		}
-		$generations[index].status = 'failed';
-		return $generations;
 	});
 };
 
@@ -69,8 +62,21 @@ export const setGenerationToServerReceived = (id: string) => {
 	});
 };
 
-export async function submitGeneration(request: TGenerationRequest) {
-	const { app_version, access_token, ...rest } = request;
+export async function qeueuInitialGenerationRequest(request: TInitialGenerationRequest) {
+	generations.update(($generations) => {
+		if ($generations === null) {
+			return [request];
+		}
+		$generations = [request, ...$generations];
+		return $generations;
+	});
+}
+
+export async function submitInitialGenerationRequest(
+	request: TInitialGenerationRequest,
+	access_token: string,
+	app_version: string
+) {
 	const response = await fetch(`${apiBase}/v1/user/generation/create`, {
 		method: 'POST',
 		headers: {
@@ -78,12 +84,10 @@ export async function submitGeneration(request: TGenerationRequest) {
 			'X-App-Version': app_version,
 			Authorization: 'Bearer ' + access_token
 		},
-		body: JSON.stringify({
-			...rest
-		})
+		body: JSON.stringify(request)
 	});
-	const resJSON: TGenerationInitialResponse = await response.json();
-	console.log('Res JSON:', resJSON);
+	const resJSON: TInitialGenerationResponse = await response.json();
+	console.log('Generation request response:', resJSON);
 	return resJSON;
 }
 
@@ -94,7 +98,12 @@ function getUrl(url: string) {
 	return `https://b.stablecog.com/${path.join('/')}`;
 }
 
-type TProcessType = 'generate' | 'generate_and_upscale' | 'upscale';
+export interface TInitialGenerationResponse {
+	id?: string;
+	error?: string;
+}
+
+export type TProcessType = 'generate' | 'generate_and_upscale' | 'upscale';
 
 export interface TGenerationBase {
 	prompt: string;
@@ -109,23 +118,21 @@ export interface TGenerationBase {
 	num_outputs: number;
 }
 
-export interface TGenerationRequest extends TGenerationBase {
-	access_token: string;
-	app_version: string;
+export interface TInitialGenerationRequest extends TGenerationBase {
+	ui_id: string;
 	stream_id: string;
 	output_image_extension: 'jpeg' | 'png' | 'webp';
+	started_at: number;
 	process_type: TProcessType;
+	status: TGenerationStatus;
 }
-
-export interface TGenerationInitialResponse {
-	id: string;
-}
-
 export interface TGeneration extends TGenerationBase {
 	status: TGenerationStatus;
+	error?: string;
 	id?: string;
+	ui_id: string;
 	outputs?: TGenerationOutput[];
-	start_timestamp?: number;
+	started_at: number;
 }
 
 export interface TGenerationOutput {
@@ -138,7 +145,7 @@ export interface TGenerationOutput {
 }
 
 export type TGenerationStatus =
-	| 'queued'
+	| 'waiting'
 	| 'server-received'
 	| 'server-processing'
 	| 'succeeded'
