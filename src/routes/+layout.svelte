@@ -57,10 +57,12 @@
 
 	let sse: EventSource;
 	$: if (mounted && $page.data.session?.user.id) {
+		console.log('Mounted and has user id')
 		mixpanel.identify($page.data.session?.user.id);
 		mixpanel.people.set({ $email: $page.data.session?.user.email });
 		mixpanel.people.set({ 'SC - Plan': $page.data.plan });
 		if (!sse || sse.readyState === sse.CLOSED) {
+			console.log('SSE not connected or closed, starting new connection')
 			streamId.set(generateSSEStreamId());
 			sse = new EventSource(`${apiUrl.href}v1/sse?stream_id=${$streamId}`);
 			sse.onopen = () => {
@@ -163,7 +165,7 @@
 						access_token: $page.data.session?.access_token || '',
 						app_version: $appVersion,
 						stream_id: $streamId || '',
-						output_image_extension: 'jpeg',
+						output_image_extension: 'webp',
 						process_type: 'generate'
 					});
 					const { id } = res;
