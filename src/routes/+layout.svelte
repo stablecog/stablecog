@@ -31,7 +31,9 @@
 	import {
 		generations,
 		setGenerationToFailed,
-		setGenerationToSucceeded
+		setGenerationToServerReceived,
+		setGenerationToSucceeded,
+		submitInitialGenerationRequest
 	} from '$ts/stores/generation';
 	import { generateSSEId } from '$ts/helpers/generateSSEId';
 
@@ -155,6 +157,57 @@
 	$: $locale, runIfMounted(() => setCookie(`sc-locale=${$locale}`));
 	$: $themeApp, runIfMounted(() => setCookie(`sc-theme=${$themeApp}`));
 	$: $advancedModeApp, runIfMounted(() => setCookie(`sc-advanced-mode=${$advancedModeApp}`));
+	$: $generations, onGenerationRequestsChanged();
+
+	let isSubmitting = false;
+	async function onGenerationRequestsChanged() {
+		if (isSubmitting) return;
+		if (!$generations || $generations.length === 0) {
+			console.log('No generations, not submitting initial generation request');
+			return;
+		}
+		if (!$page.data.session?.access_token) {
+			console.log('No access token, not submitting initial generation request');
+			return;
+		}
+		if ($sseId === null) {
+			console.log('Stream id is null, not submitting initial generation request');
+			return;
+		}
+		for (let i = 0; i < $generations.length; i++) {
+			const generation = $generations[i];
+			if (generation.status === 'to-be-submitted') {
+				isSubmitting = true;
+				try {
+					console.log('Submitting initial generation request', generation);
+					const res = await submitInitialGenerationRequest(
+						{
+							...generation,
+							stream_id: $sseId,
+							output_image_extension: 'jpeg',
+							process_type: 'generate'
+						},
+						$page.data.session.access_token,
+						$appVersion
+					);
+					const { id, error } = res;
+					if (error || !id) {
+						console.log('Generation failed:', error);
+						setGenerationToFailed(generation.id || generation.ui_id, error);
+					} else {
+						setGenerationToServerReceived(id);
+					}
+				} catch (error) {
+					const err = error as Error;
+					console.log(error);
+					setGenerationToFailed(generation.id || generation.ui_id, err.message);
+					console.log($generations);
+				} finally {
+					isSubmitting = false;
+				}
+			}
+		}
+	}
 </script>
 
 <svelte:window bind:innerHeight bind:innerWidth />
