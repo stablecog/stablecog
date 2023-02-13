@@ -24,7 +24,7 @@
 		mainContainerMaxHeight,
 		mainContainerPadding,
 		sidebarWidth
-	} from '$components/generationFullScreen/Shared';
+	} from '$components/generationFullScreen/constants';
 	import ParamsSectionG from '$components/generationFullScreen/ParamsSectionG.svelte';
 	import { urlFromImageId } from '$ts/helpers/imageId';
 	import IconWand from '$components/icons/IconWand.svelte';

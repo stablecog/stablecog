@@ -7,11 +7,8 @@
 	import ModalWrapper from '$components/ModalWrapper.svelte';
 	import Morpher from '$components/Morpher.svelte';
 	import { clickoutside } from '$ts/actions/clickoutside';
-	import { elementreceive, elementsend } from '$ts/animation/transitions';
 	import { urlFromBase64 } from '$ts/helpers/base64';
-	import { getImageFileNameFromGeneration } from '$ts/helpers/getImageFileNameFromGeneration';
-	import { activeGeneration } from '$ts/stores/activeGeneration';
-	import { windowHeight, windowWidth } from '$ts/stores/window';
+	import { windowWidth } from '$ts/stores/window';
 	import type { TGenerationUI, TUpscaleStatus } from '$ts/types/main';
 	import { copy } from 'svelte-copy';
 	import IconChevronDown from '$components/icons/IconChevronDown.svelte';
@@ -29,11 +26,11 @@
 		copyTimeoutDuration,
 		lgBreakpoint,
 		sidebarWidth
-	} from '$components/generationFullScreen/Shared';
+	} from '$components/generationFullScreen/constants';
 	import ParamsSection from '$components/generationFullScreen/ParamsSection.svelte';
 	import Button from '$components/buttons/Button.svelte';
 	import IconUpscale from '$components/icons/IconUpscale.svelte';
-	import { upscaleImage } from '$ts/queries/upscaleImage';
+	import { upscaleGenerationOutput, upscaleImage } from '$ts/queries/upscale';
 	import { createEventDispatcher } from 'svelte';
 	import TabBar from '$components/tabBars/TabBar.svelte';
 	import { lastUpscaleDurationSec } from '$ts/stores/lastUpscaleDurationSec';
@@ -47,13 +44,16 @@
 	import { advancedModeApp } from '$ts/stores/advancedMode';
 	import IconCancel from '$components/icons/IconCancel.svelte';
 	import GenerationFullScreenContainer from '$components/generationFullScreen/GenerationFullScreenContainer.svelte';
+	import { activeGeneration, type TGeneration } from '$ts/stores/generation';
+	import { downloadGenerationImage } from '$ts/helpers/dowloadGenerationImage';
 
-	export let generation: TGenerationUI;
+	export let generation: TGeneration;
 	export let upscaleStatus: TUpscaleStatus = 'idle';
+
+	$: selectedOutput = generation.outputs[generation.selected_output_index];
 
 	let upscaleErrorText: string | undefined;
 	let currentImageUrl: string;
-	let currentImageDataB64: string;
 	let upscaledImageWidth: number | undefined;
 	let upscaledImageHeight: number | undefined;
 	$: generation, onGenerationChanged();
@@ -81,10 +81,8 @@
 	let regenerateUrl: string;
 
 	const onGenerationChanged = () => {
-		currentImageDataB64 = generation.upscaledImageDataB64 ?? generation.imageDataB64;
-		currentImageUrl =
-			generation.upscaledImageUrl ?? generation.imageUrl ?? urlFromBase64(currentImageDataB64);
-		if (generation.upscaledImageUrl) upscaledTabValue = 'upscaled';
+		currentImageUrl = selectedOutput.upscaled_image_url ?? selectedOutput.image_url;
+		if (selectedOutput.upscaled_image_url) upscaledTabValue = 'upscaled';
 		upscaledImageWidth = undefined;
 		upscaledImageHeight = undefined;
 
@@ -130,14 +128,23 @@
 		clearTimeout(promptCopiedTimeout);
 	};
 
-	let imageDownloadingTimeout: NodeJS.Timeout;
 	let imageDownloading = false;
-	const onDownloadImageClicked = () => {
+	const onDownloadImageClicked = async () => {
 		imageDownloading = true;
-		clearTimeout(imageDownloadingTimeout);
-		imageDownloadingTimeout = setTimeout(() => {
-			imageDownloading = false;
-		}, copyTimeoutDuration);
+		try {
+			await downloadGenerationImage({
+				url: currentImageUrl,
+				guidanceScale: generation.guidance_scale,
+				inferenceSteps: generation.inference_steps,
+				isUpscaled:
+					generation.outputs[generation.selected_output_index].upscaled_image_url !== undefined,
+				prompt: generation.prompt,
+				seed: generation.seed
+			});
+		} catch (error) {
+			console.log("Couldn't download image", error);
+		}
+		imageDownloading = false;
 	};
 
 	const sidebarWrapperOnScroll = () => {
@@ -175,17 +182,8 @@
 		await tick();
 		setTimeout(() => (upscaleStatus = 'loading'));
 		try {
-			const res = await upscaleImage({
-				image_b64: generation.imageDataB64,
-				server_url: serverUrl,
-				prompt: generation.prompt,
-				negative_prompt: generation.negative_prompt,
-				seed: generation.seed,
-				num_inference_steps: generation.num_inference_steps,
-				guidance_scale: generation.guidance_scale,
-				height: generation.height,
-				width: generation.width,
-				access_token: $page.data.session?.access_token
+			const res = await upscaleGenerationOutput({
+				output_id: selectedOutput.id
 			});
 			if (res.error) {
 				throw new Error(res.error);
@@ -227,12 +225,10 @@
 	$: upscaledTabValue, setCurrentImageUrl();
 
 	function setCurrentImageUrl() {
-		if (upscaledTabValue === 'upscaled' && generation.upscaledImageDataB64) {
-			currentImageDataB64 = generation.upscaledImageDataB64;
-			currentImageUrl = generation.upscaledImageUrl ?? urlFromBase64(currentImageDataB64);
+		if (upscaledTabValue === 'upscaled' && selectedOutput.upscaled_image_url !== undefined) {
+			currentImageUrl = selectedOutput.upscaled_image_url;
 		} else {
-			currentImageDataB64 = generation.imageDataB64;
-			currentImageUrl = generation.imageUrl ?? urlFromBase64(currentImageDataB64);
+			currentImageUrl = selectedOutput.image_url;
 		}
 	}
 
@@ -324,7 +320,7 @@
 		<div class="relative self-stretch flex items-center">
 			<img
 				class="w-full h-full absolute left-0 top-0 transform scale-125 blur-xl"
-				src={generation.imageUrl}
+				src={selectedOutput.image_url}
 				alt="Blurred background for: {generation.prompt}"
 				width={generation.width}
 				height={generation.height}
@@ -341,7 +337,7 @@
 					class="{upscaleStatus === 'loading'
 						? 'blur-2xl'
 						: ''} w-full transition h-auto lg:h-full lg:object-contain absolute lg:left-0 lg:top-0"
-					src={generation.imageUrl}
+					src={selectedOutput.image_url}
 					alt="Blurred background 2 for: {generation.prompt}"
 					width={generation.width}
 					height={generation.height}
@@ -409,7 +405,7 @@
 				>
 					<div class="w-full flex flex-col gap-4 md:gap-5 px-5 py-4 md:px-7 md:py-5">
 						<div class="w-full pt-1.5">
-							{#if !generation.upscaledImageDataB64}
+							{#if !selectedOutput.upscaled_image_url}
 								<div class="w-fulll relative">
 									<Button
 										onClick={onUpscaleClicked}
@@ -432,7 +428,7 @@
 										</div>
 									</Button>
 								</div>
-							{:else if generation.upscaledImageDataB64}
+							{:else}
 								<TabBar
 									bind:value={upscaledTabValue}
 									tabs={upscaledOrDefaultTabs}
@@ -458,14 +454,6 @@
 						<div class="w-full flex flex-wrap gap-3">
 							<SubtleButton
 								onClick={onDownloadImageClicked}
-								href={currentImageUrl}
-								download={getImageFileNameFromGeneration({
-									prompt: generation.prompt,
-									seed: generation.seed,
-									guidanceScale: generation.guidance_scale,
-									inferenceSteps: generation.num_inference_steps,
-									b64: currentImageDataB64
-								})}
 								state={imageDownloading ? 'success' : 'idle'}
 							>
 								<Morpher morphed={imageDownloading}>

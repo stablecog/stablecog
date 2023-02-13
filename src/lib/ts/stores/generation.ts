@@ -3,6 +3,7 @@ import type { TAvailableModelId } from '$ts/constants/models';
 import type { TAvailableSchedulerId } from '$ts/constants/schedulers';
 import { writable } from 'svelte/store';
 
+export const activeGeneration = writable<TGeneration | undefined>(undefined);
 export const generations = writable<TGeneration[] | null>(null);
 
 export const setGenerationToFailed = (id: string, error?: string) => {
@@ -66,7 +67,9 @@ export async function qeueuInitialGenerationRequest(request: TInitialGenerationR
 	generations.update(($generations) => {
 		const generationToSubmit: TGeneration = {
 			...request,
-			status: 'to-be-submitted'
+			status: 'to-be-submitted',
+			outputs: [],
+			selected_output_index: 0
 		};
 		if ($generations === null) {
 			return [generationToSubmit];
@@ -135,9 +138,10 @@ export interface TGeneration extends TGenerationBase {
 	error?: string;
 	id?: string;
 	ui_id: string;
-	outputs?: TGenerationOutput[];
+	outputs: TGenerationOutput[];
 	started_at?: number;
 	submitted_at: number;
+	selected_output_index: number;
 }
 
 export interface TGenerationOutput {

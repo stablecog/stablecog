@@ -1,30 +1,34 @@
 <script lang="ts">
 	import IconDownload from '$components/icons/IconDownload.svelte';
-	import { getImageFileNameFromGeneration } from '$ts/helpers/getImageFileNameFromGeneration';
+	import { downloadGenerationImage } from '$ts/helpers/dowloadGenerationImage';
 	import { isTouchscreen } from '$ts/stores/isTouchscreen';
 
 	export let url: string;
-	export let b64: string;
 	export let prompt: string;
 	export let seed: number;
 	export let inferenceSteps: number;
 	export let guidanceScale: number;
+	export let isUpscaled: boolean;
 	export { classes as class };
-	export let disabled = false;
 	let classes = '';
 
-	let element: HTMLAnchorElement;
+	let element: HTMLButtonElement;
 </script>
 
-<a
+<button
 	bind:this={element}
-	on:click={() => {
+	on:click={async () => {
+		await downloadGenerationImage({
+			url,
+			prompt,
+			seed,
+			inferenceSteps,
+			guidanceScale,
+			isUpscaled
+		});
 		element.blur();
 	}}
-	{disabled}
 	class="transition rounded-lg group-1 {classes}"
-	href={url}
-	download={getImageFileNameFromGeneration({ prompt, seed, guidanceScale, inferenceSteps, b64 })}
 	aria-label="Download Image"
 >
 	<div class="p-2.5 rounded-full bg-c-bg relative overflow-hidden z-0">
@@ -39,6 +43,5 @@
 				? 'group-1-hover:text-c-on-primary'
 				: ''}"
 		/>
-		<p class="hidden">Download Image</p>
 	</div>
-</a>
+</button>

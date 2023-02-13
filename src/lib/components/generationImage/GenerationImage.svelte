@@ -2,38 +2,29 @@
 	import CopyButton from '$components/buttons/CopyButton.svelte';
 	import DownloadGenerationButton from '$components/buttons/DownloadGenerationButton.svelte';
 	import IconChatBubbleCancel from '$components/icons/IconChatBubbleCancel.svelte';
-	import IconClock from '$components/icons/IconClock.svelte';
 	import IconScale from '$components/icons/IconScale.svelte';
 	import IconSteps from '$components/icons/IconSteps.svelte';
-	import { locale } from '$i18n/i18n-svelte';
-	import { urlFromBase64 } from '$ts/helpers/base64';
 	import { doesContainTarget } from '$ts/helpers/doesContainTarget';
-	import { activeGeneration } from '$ts/stores/activeGeneration';
 	import { advancedModeApp } from '$ts/stores/advancedMode';
-	import type { TGenerationUI } from '$ts/types/main';
+	import { activeGeneration, type TGeneration } from '$ts/stores/generation';
 
-	export let generation: TGenerationUI;
-	export let prioritizeUpscaled = false;
+	export let generation: TGeneration;
+	export let useUpscaledImage = true;
 	export let scrollPrompt = false;
-
-	if (generation.imageUrl === undefined) {
-		generation.imageUrl = urlFromBase64(generation.imageDataB64);
-	}
-	if (generation.upscaledImageUrl === undefined && generation.upscaledImageDataB64 !== undefined) {
-		generation.upscaledImageUrl = urlFromBase64(generation.upscaledImageDataB64);
-	}
 
 	let promptCopied = false;
 	let promptCopiedTimeout: NodeJS.Timeout;
 	let rightButtonContainer: HTMLDivElement;
+
+	$: selectedOutput = generation.outputs[generation.selected_output_index];
 </script>
 
 <img
 	loading="lazy"
 	class="w-full h-full absolute left-0 top-0"
-	src={prioritizeUpscaled && generation.upscaledImageUrl
-		? generation.upscaledImageUrl
-		: generation.imageUrl}
+	src={useUpscaledImage && selectedOutput.upscaled_image_url
+		? selectedOutput.upscaled_image_url
+		: selectedOutput.image_url}
 	alt={generation.prompt}
 	width={generation.width}
 	height={generation.height}
@@ -42,12 +33,6 @@
 	on:click={(e) => {
 		if (doesContainTarget(e.target, [rightButtonContainer])) {
 			return;
-		}
-		if (!generation.imageUrl) {
-			generation.imageUrl = urlFromBase64(generation.imageDataB64);
-		}
-		if (!generation.upscaledImageUrl && generation.upscaledImageDataB64) {
-			generation.upscaledImageUrl = urlFromBase64(generation.upscaledImageDataB64);
 		}
 		activeGeneration.set(generation);
 	}}
@@ -76,22 +61,7 @@
 					<p
 						class="flex-1 cursor-default whitespace-nowrap flex-shrink min-w-0 overflow-hidden overflow-ellipsis text-left"
 					>
-						{generation.num_inference_steps}
-					</p>
-				</div>
-			{/if}
-			{#if generation.duration_ms !== undefined}
-				<div
-					class="max-w-full flex items-center text-xs gap-1.5 rounded-lg bg-c-bg pl-2 pr-2.5 py-1.5"
-				>
-					<IconClock class="w-4 h-4" />
-					<p
-						class="flex-1 cursor-default whitespace-nowrap flex-shrink min-w-0 overflow-hidden overflow-ellipsis text-left"
-					>
-						{(generation.duration_ms / 1000).toLocaleString($locale, {
-							minimumFractionDigits: 0,
-							maximumFractionDigits: 1
-						})}
+						{generation.inference_steps}
 					</p>
 				</div>
 			{/if}
@@ -109,12 +79,14 @@
 			/>
 			<DownloadGenerationButton
 				class="p-1.5 -ml-1.5"
-				url={generation.upscaledImageUrl ?? String(generation.imageUrl)}
-				b64={generation.upscaledImageDataB64 ?? generation.imageDataB64}
+				url={useUpscaledImage && selectedOutput.upscaled_image_url
+					? selectedOutput.upscaled_image_url
+					: selectedOutput.image_url}
+				isUpscaled={useUpscaledImage && selectedOutput.upscaled_image_url !== undefined}
 				prompt={generation.prompt}
 				seed={generation.seed}
 				guidanceScale={generation.guidance_scale}
-				inferenceSteps={generation.num_inference_steps}
+				inferenceSteps={generation.inference_steps}
 			/>
 		</div>
 	</div>

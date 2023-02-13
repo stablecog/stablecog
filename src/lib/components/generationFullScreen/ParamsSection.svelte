@@ -21,10 +21,10 @@
 		schedulerTooltipAlt,
 		seedTooltipAlt
 	} from '$ts/constants/tooltips';
-	import type { TGenerationUI } from '$ts/types/main';
+	import type { TGeneration } from '$ts/stores/generation';
 	import { copy } from 'svelte-copy';
 
-	export let generation: TGenerationUI;
+	export let generation: TGeneration;
 	export let currentImageWidth: number;
 	export let currentImageHeight: number;
 	export let onSeedCopyClicked: () => void;
@@ -76,7 +76,7 @@
 				<IconSteps class="w-4 h-4" />
 				<p>{$LL.Home.InferenceStepsTabBar.Title()}</p>
 			</div>
-			<p class="font-bold">{generation.num_inference_steps}</p>
+			<p class="font-bold">{generation.inference_steps}</p>
 		</div>
 		<div class="min-w-[calc(50%-0.75rem)] flex flex-col items-start gap-1">
 			<div
@@ -122,19 +122,5 @@
 			</div>
 			<p class="font-bold">{currentImageWidth} × {currentImageHeight}</p>
 		</div>
-		{#if generation.duration_ms}
-			<div class="min-w-[calc(50%-0.75rem)] flex flex-col items-start gap-1">
-				<div class="flex items-center gap-1.5 text-c-on-bg/75 text-sm cursor-default">
-					<IconClock class="w-4 h-4" />
-					<p>{$LL.GenerationFullscreen.Duration.Title()}</p>
-				</div>
-				<p class="font-bold">
-					{(generation.duration_ms / 1000).toLocaleString($locale, {
-						minimumFractionDigits: 0,
-						maximumFractionDigits: 1
-					})}
-				</p>
-			</div>
-		{/if}
 	</div>
 </div>

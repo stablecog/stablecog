@@ -57,27 +57,6 @@ export interface TGenerationResponse {
 	error?: string;
 }
 
-export interface TUpscaleRequest {
-	image_b64: string;
-	width?: number;
-	height?: number;
-	server_url: string;
-	seed?: number;
-	num_inference_steps?: number;
-	guidance_scale?: number;
-	prompt?: string;
-	negative_prompt?: string;
-	access_token?: string;
-}
-
-export interface TUpscaleResponse {
-	data?: {
-		image_b64: string;
-		duration_ms: number;
-	};
-	error?: string;
-}
-
 export interface TTab<T> {
 	label: string;
 	value: T;

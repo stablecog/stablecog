@@ -4,14 +4,13 @@
 		sidebarWidth,
 		mainContainerMaxHeight,
 		mainContainerPadding
-	} from '$components/generationFullScreen/Shared';
+	} from '$components/generationFullScreen/constants';
 	import { clickoutside } from '$ts/actions/clickoutside';
 	import { elementreceive, elementsend } from '$ts/animation/transitions';
-	import { activeGeneration } from '$ts/stores/activeGeneration';
+	import { activeGeneration, type TGeneration } from '$ts/stores/generation';
 	import { windowHeight, windowWidth } from '$ts/stores/window';
-	import type { TGenerationUI } from '$ts/types/main';
 
-	export let generation: TGenerationUI;
+	export let generation: TGeneration;
 	export let canClose: boolean;
 
 	let imageContainerWidth = 0;
