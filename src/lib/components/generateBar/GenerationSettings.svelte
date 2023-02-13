@@ -14,20 +14,13 @@
 	import TabLikeDropdown from '$components/tabBars/TabLikeDropdown.svelte';
 	import TabLikeInput from '$components/tabBars/TabLikeInput.svelte';
 	import TabLikeRangeInput from '$components/tabBars/TabLikeRangeInput.svelte';
-	import TierBadge from '$components/TierBadge.svelte';
 	import LL from '$i18n/i18n-svelte';
 	import { tooltip } from '$ts/actions/tooltip';
 	import {
-		availableHeights,
-		availableHeightsFree,
 		availableInferenceSteps,
 		availableInferenceStepsFree,
 		availableModelIdDropdownItems,
-		availableModelIds,
-		availableModelIdsFree,
 		availableSchedulerIdDropdownItems,
-		availableWidths,
-		availableWidthsFree,
 		guidanceScaleMax,
 		guidanceScaleMin,
 		heightTabs,
@@ -122,68 +115,46 @@
 			</div>
 		</TabLikeInput>
 	{/if}
-	<div class="w-full md:w-84 max-w-full order-2 relative">
-		<TabBar
-			{disabled}
-			class="w-full"
-			tabs={widthTabs}
-			badgeHref="/pro?reason=width"
-			badgeAppliedTo={$page.data.plan === 'FREE' || $page.data.plan === 'ANONYMOUS'
-				? availableWidths.filter((i) => !availableWidthsFree.includes(i))
-				: undefined}
-			outline={$page.data.plan === 'FREE' || $page.data.plan === 'ANONYMOUS'
-				? 'primary'
-				: 'bg-secondary'}
-			hasBackgroundPattern={$page.data.plan === 'FREE' || $page.data.plan === 'ANONYMOUS'}
-			bind:value={$generationWidth}
-			name="Width"
-			hideSelected={!isCheckComplete}
-		>
-			<div slot="title" use:tooltip={$widthTooltip} class="p-3.5 flex items-center justify-center">
-				<IconWidth
-					class="w-6 h-6 {$page.data.plan === 'FREE' || $page.data.plan === 'ANONYMOUS'
-						? 'text-c-primary/40'
-						: 'text-c-on-bg/25'}"
-				/>
-			</div>
-		</TabBar>
-		{#if $page.data.plan === 'FREE' || $page.data.plan === 'ANONYMOUS'}
-			<div class="absolute -top-2 pointer-events-none -left-1.25">
-				<TierBadge tier="PRO" outline="primary" />
-			</div>
-		{/if}
-	</div>
-	<div class="w-full md:w-84 max-w-full order-2 relative">
-		<TabBar
-			{disabled}
-			class="w-full"
-			tabs={heightTabs}
-			badgeHref="/pro?reason=height"
-			badgeAppliedTo={$page.data.plan === 'FREE' || $page.data.plan === 'ANONYMOUS'
-				? availableHeights.filter((i) => !availableHeightsFree.includes(i))
-				: undefined}
-			outline={$page.data.plan === 'FREE' || $page.data.plan === 'ANONYMOUS'
-				? 'primary'
-				: 'bg-secondary'}
-			hasBackgroundPattern={$page.data.plan === 'FREE' || $page.data.plan === 'ANONYMOUS'}
-			bind:value={$generationHeight}
-			name="Height"
-			hideSelected={!isCheckComplete}
-		>
-			<div slot="title" use:tooltip={$heightTooltip} class="p-3.5 flex items-center justify-center">
-				<IconHeight
-					class="w-6 h-6 {$page.data.plan === 'FREE' || $page.data.plan === 'ANONYMOUS'
-						? 'text-c-primary/40'
-						: 'text-c-on-bg/25'}"
-				/>
-			</div>
-		</TabBar>
-		{#if $page.data.plan === 'FREE' || $page.data.plan === 'ANONYMOUS'}
-			<div class="absolute -top-2 pointer-events-none -left-1.25">
-				<TierBadge tier="PRO" outline="primary" />
-			</div>
-		{/if}
-	</div>
+	<TabBar
+		{disabled}
+		class="w-full md:w-84 max-w-full order-2 relative"
+		tabs={widthTabs}
+		outline={$page.data.plan === 'FREE' || $page.data.plan === 'ANONYMOUS'
+			? 'primary'
+			: 'bg-secondary'}
+		hasBackgroundPattern={$page.data.plan === 'FREE' || $page.data.plan === 'ANONYMOUS'}
+		bind:value={$generationWidth}
+		name="Width"
+		hideSelected={!isCheckComplete}
+	>
+		<div slot="title" use:tooltip={$widthTooltip} class="p-3.5 flex items-center justify-center">
+			<IconWidth
+				class="w-6 h-6 {$page.data.plan === 'FREE' || $page.data.plan === 'ANONYMOUS'
+					? 'text-c-primary/40'
+					: 'text-c-on-bg/25'}"
+			/>
+		</div>
+	</TabBar>
+	<TabBar
+		{disabled}
+		class="w-full md:w-84 max-w-full order-2 relative"
+		tabs={heightTabs}
+		outline={$page.data.plan === 'FREE' || $page.data.plan === 'ANONYMOUS'
+			? 'primary'
+			: 'bg-secondary'}
+		hasBackgroundPattern={$page.data.plan === 'FREE' || $page.data.plan === 'ANONYMOUS'}
+		bind:value={$generationHeight}
+		name="Height"
+		hideSelected={!isCheckComplete}
+	>
+		<div slot="title" use:tooltip={$heightTooltip} class="p-3.5 flex items-center justify-center">
+			<IconHeight
+				class="w-6 h-6 {$page.data.plan === 'FREE' || $page.data.plan === 'ANONYMOUS'
+					? 'text-c-primary/40'
+					: 'text-c-on-bg/25'}"
+			/>
+		</div>
+	</TabBar>
 
 	<TabLikeDropdown
 		class="w-full md:w-84 max-w-full {$advancedModeApp ? 'order-1' : 'order-2'}"
@@ -194,20 +165,11 @@
 		bind:value={$generationModelId}
 		{disabled}
 		items={$availableModelIdDropdownItems}
-		badgeHref="/pro?reason=model"
-		badgeAppliedTo={$page.data.plan === 'FREE' || $page.data.plan === 'ANONYMOUS'
-			? availableModelIds.filter((i) => !availableModelIdsFree.includes(i))
-			: undefined}
 		name="Model"
 	>
 		<div slot="title" use:tooltip={$modelTooltip} class="p-3.5 flex items-center justify-center">
 			<IconBrain class="w-6 h-6 text-c-on-bg/25" />
 		</div>
-		<TierBadge
-			slot="badge"
-			tier="PRO"
-			class="absolute transform top-1/2 -translate-y-1/2 right-3 pointer-events-none"
-		/>
 	</TabLikeDropdown>
 	{#if $advancedModeApp}
 		<TabLikeRangeInput
@@ -230,10 +192,6 @@
 				{disabled}
 				class="w-full"
 				tabs={inferenceStepsTabs}
-				badgeHref="/pro?reason=steps"
-				badgeAppliedTo={$page.data.plan === 'FREE' || $page.data.plan === 'ANONYMOUS'
-					? availableInferenceSteps.filter((i) => !availableInferenceStepsFree.includes(i))
-					: undefined}
 				outline={$page.data.plan === 'FREE' || $page.data.plan === 'ANONYMOUS'
 					? 'primary'
 					: 'bg-secondary'}
@@ -255,11 +213,6 @@
 					/>
 				</div>
 			</TabBar>
-			{#if $page.data.plan === 'FREE' || $page.data.plan === 'ANONYMOUS'}
-				<div class="absolute -top-2 pointer-events-none -left-1.25">
-					<TierBadge tier="PRO" outline="primary" />
-				</div>
-			{/if}
 		</div>
 		<TabLikeDropdown
 			class="w-full md:w-84 max-w-full order-2"
@@ -271,10 +224,6 @@
 			bind:value={$generationSchedulerId}
 			items={$availableSchedulerIdDropdownItems}
 			name="Scheduler"
-			badgeHref="/pro?reason=scheduler"
-			badgeAppliedTo={$page.data.plan === 'FREE' || $page.data.plan === 'ANONYMOUS'
-				? availableSchedulerIds.filter((i) => !availableSchedulerIdsFree.includes(i))
-				: undefined}
 		>
 			<div
 				slot="title"
@@ -283,11 +232,6 @@
 			>
 				<IconBubbles class="w-6 h-6 text-c-on-bg/25" />
 			</div>
-			<TierBadge
-				slot="badge"
-				tier="PRO"
-				class="absolute transform top-1/2 -translate-y-1/2 right-3 pointer-events-none"
-			/>
 		</TabLikeDropdown>
 		<TabLikeInput
 			disabled={!isCheckComplete || disabled}

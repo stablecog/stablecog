@@ -178,7 +178,6 @@
 
 	let isCheckComplete = false;
 
-	$: $page.data.plan, onTierStateChanged();
 	$: [$generationWidth, $generationHeight], setLocalImageSize();
 	$: [$generationInferenceSteps], setLocalInferenceSteps();
 	$: [$generationGuidanceScale], setLocalGuidanceScale();
@@ -192,23 +191,6 @@
 	$: if (browser && $page.data.session?.user.id) {
 		isSignInModalOpen = false;
 	}
-
-	const onTierStateChanged = () => {
-		if (isCheckComplete && ($page.data.plan === 'FREE' || $page.data.plan === 'ANONYMOUS')) {
-			if (!availableWidthsFree.includes($generationWidth)) {
-				generationWidth.set(widthDefault);
-			}
-			if (!availableHeightsFree.includes($generationHeight)) {
-				generationHeight.set(heightDefault);
-			}
-			if (!availableInferenceStepsFree.includes($generationInferenceSteps)) {
-				generationInferenceSteps.set(inferenceStepsDefault);
-			}
-			if (!availableModelIdsFree.includes($generationModelId)) {
-				generationModelId.set(modelIdDefault);
-			}
-		}
-	};
 
 	const setLocalImageSize = () => {
 		if (isCheckComplete) {
@@ -286,11 +268,7 @@
 			const widthIndex = widthTabs
 				.map((w) => w.value)
 				.findIndex((i) => i === $imageSize?.width?.toString());
-			if (
-				widthIndex >= 0 &&
-				(availableWidthsFree.includes(widthTabs[widthIndex].value) ||
-					($page.data.plan !== 'FREE' && $page.data.plan !== 'ANONYMOUS'))
-			) {
+			if (widthIndex >= 0) {
 				generationWidth.set(widthTabs[widthIndex].value);
 			}
 		}
@@ -298,11 +276,7 @@
 			const heightIndex = heightTabs
 				.map((h) => h.value)
 				.findIndex((i) => i === $imageSize?.height?.toString());
-			if (
-				heightIndex >= 0 &&
-				(availableHeightsFree.includes(heightTabs[heightIndex].value) ||
-					($page.data.plan !== 'FREE' && $page.data.plan !== 'ANONYMOUS'))
-			) {
+			if (heightIndex >= 0) {
 				generationHeight.set(heightTabs[heightIndex].value);
 			}
 		}
@@ -310,11 +284,7 @@
 			const inferenceStepsIndex = inferenceStepsTabs
 				.map((i) => i.value)
 				.findIndex((i) => i === $inferenceSteps?.toString());
-			if (
-				inferenceStepsIndex >= 0 &&
-				(availableInferenceStepsFree.includes(inferenceStepsTabs[inferenceStepsIndex].value) ||
-					($page.data.plan !== 'FREE' && $page.data.plan !== 'ANONYMOUS'))
-			) {
+			if (inferenceStepsIndex >= 0) {
 				generationInferenceSteps.set(inferenceStepsTabs[inferenceStepsIndex].value);
 			}
 		}
