@@ -60,7 +60,7 @@
 			sse.set(new EventSource(`${apiUrl.href}v1/sse?id=${$sseId}`));
 			if ($sse !== null) {
 				$sse.onopen = () => {
-					console.log(`Connected to SSE with stream_id: ${$sseId}`);
+					console.log(`Connected to SSE with ID: ${$sseId}`);
 				};
 				$sse.onmessage = (event) => {
 					const data = JSON.parse(event.data);
