@@ -137,17 +137,6 @@
 				plan: $page.data.plan
 			})
 		);
-		try {
-		} catch (error) {
-			const _error = error as Error;
-			uLogGeneration(_error.message === 'NSFW' ? 'Failed-NSFW' : 'Failed');
-			mLogGeneration(_error.message === 'NSFW' ? 'Failed-NSFW' : 'Failed', generationMinimal);
-			status = 'error';
-			generationError = _error;
-			console.log('Generation error', _error);
-		} finally {
-			endTimestamp = Date.now();
-		}
 	}
 
 	const getComputeRate = (w: number, h: number, s: number) => {

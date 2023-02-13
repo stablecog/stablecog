@@ -20,6 +20,7 @@
 	import { supabase } from '$ts/constants/supabase';
 	import { afterNavigate, invalidateAll } from '$app/navigation';
 	import {
+		logGenerationFailed,
 		mLogGeneration,
 		mLogGenerationPropsFromGeneration,
 		mLogPageview,
@@ -63,65 +64,6 @@
 		mixpanel.people.set({ $email: $page.data.session?.user.email });
 		mixpanel.people.set({ 'SC - Plan': $page.data.plan });
 	}
-
-	onMount(async () => {
-		if (!$sse || $sse.readyState === $sse.CLOSED) {
-			console.log('SSE not connected or closed, starting new connection');
-			sseId.set(generateSSEId());
-			sse.set(new EventSource(`${apiUrl.href}v1/sse?id=${$sseId}`));
-			if ($sse !== null) {
-				$sse.onopen = () => {
-					console.log(`Connected to SSE with ID: ${$sseId}`);
-				};
-				$sse.onmessage = (event) => {
-					const data = JSON.parse(event.data);
-					console.log('Message from SSE', data);
-					if (data.id && data.status === 'succeeded' && data.outputs && data.outputs.length > 0) {
-						setGenerationToSucceeded(data.id, data.outputs);
-						const generationIndex = $generations.findIndex((g) => g.id === data.id);
-						const generation = $generations[generationIndex];
-						uLogGeneration('Succeeded');
-						mLogGeneration(
-							'Succeeded',
-							mLogGenerationPropsFromGeneration({
-								generation,
-								advancedModeApp: $advancedModeApp,
-								locale: $locale,
-								plan: $page.data.plan
-							})
-						);
-					} else if (data.id && data.status === 'failed') {
-						setGenerationToFailed(data.id);
-					}
-				};
-				$sse.onerror = (event) => {
-					console.log('Error from SSE', event);
-				};
-			}
-		}
-		setBodyClasses();
-		mixpanel.init(env.PUBLIC_MIXPANEL_ID, { api_host: env.PUBLIC_MIXPANEL_URL });
-		appVersion.set(document.body.getAttribute('app-version') || 'unknown');
-		const {
-			data: { subscription }
-		} = supabase.auth.onAuthStateChange(() => {
-			invalidateAll();
-		});
-		if ($localeLS && isLocale($localeLS) && $localeLS !== $locale) {
-			await loadLocaleAsync($localeLS);
-			setLocale($localeLS);
-		}
-		if (($advancedMode === true || $advancedMode === false) && $advancedMode !== $advancedModeApp) {
-			advancedModeApp.set($advancedMode);
-		}
-		if ($theme !== null && $theme !== $themeApp) {
-			themeApp.set($theme);
-		}
-		mounted = true;
-		return () => {
-			subscription.unsubscribe();
-		};
-	});
 
 	afterNavigate(() => {
 		const props = {
@@ -194,6 +136,13 @@
 					if (error || !id) {
 						console.log('Generation failed:', error);
 						setGenerationToFailed(generation.id || generation.ui_id, error);
+						logGenerationFailed({
+							generation,
+							error,
+							advancedModeApp: $advancedModeApp,
+							locale: $locale,
+							plan: $page.data.plan
+						});
 					} else {
 						setGenerationToServerReceived(id);
 					}
@@ -201,6 +150,13 @@
 					const err = error as Error;
 					console.log(error);
 					setGenerationToFailed(generation.id || generation.ui_id, err.message);
+					logGenerationFailed({
+						generation,
+						error: err.message,
+						advancedModeApp: $advancedModeApp,
+						locale: $locale,
+						plan: $page.data.plan
+					});
 					console.log($generations);
 				} finally {
 					isSubmitting = false;
@@ -208,6 +164,65 @@
 			}
 		}
 	}
+
+	onMount(async () => {
+		if (!$sse || $sse.readyState === $sse.CLOSED) {
+			console.log('SSE not connected or closed, starting new connection');
+			sseId.set(generateSSEId());
+			sse.set(new EventSource(`${apiUrl.href}v1/sse?id=${$sseId}`));
+			if ($sse !== null) {
+				$sse.onopen = () => {
+					console.log(`Connected to SSE with ID: ${$sseId}`);
+				};
+				$sse.onmessage = (event) => {
+					const data = JSON.parse(event.data);
+					console.log('Message from SSE', data);
+					if (data.id && data.status === 'succeeded' && data.outputs && data.outputs.length > 0) {
+						setGenerationToSucceeded(data.id, data.outputs);
+						const generationIndex = $generations.findIndex((g) => g.id === data.id);
+						const generation = $generations[generationIndex];
+						uLogGeneration('Succeeded');
+						mLogGeneration(
+							'Succeeded',
+							mLogGenerationPropsFromGeneration({
+								generation,
+								advancedModeApp: $advancedModeApp,
+								locale: $locale,
+								plan: $page.data.plan
+							})
+						);
+					} else if (data.id && data.status === 'failed') {
+						setGenerationToFailed(data.id);
+					}
+				};
+				$sse.onerror = (event) => {
+					console.log('Error from SSE', event);
+				};
+			}
+		}
+		setBodyClasses();
+		mixpanel.init(env.PUBLIC_MIXPANEL_ID, { api_host: env.PUBLIC_MIXPANEL_URL });
+		appVersion.set(document.body.getAttribute('app-version') || 'unknown');
+		const {
+			data: { subscription }
+		} = supabase.auth.onAuthStateChange(() => {
+			invalidateAll();
+		});
+		if ($localeLS && isLocale($localeLS) && $localeLS !== $locale) {
+			await loadLocaleAsync($localeLS);
+			setLocale($localeLS);
+		}
+		if (($advancedMode === true || $advancedMode === false) && $advancedMode !== $advancedModeApp) {
+			advancedModeApp.set($advancedMode);
+		}
+		if ($theme !== null && $theme !== $themeApp) {
+			themeApp.set($theme);
+		}
+		mounted = true;
+		return () => {
+			subscription.unsubscribe();
+		};
+	});
 </script>
 
 <svelte:window bind:innerHeight bind:innerWidth />

@@ -76,6 +76,29 @@ export function mLogGallerySearch(props: IGallerySearchProps) {
 	});
 }
 
+export function logGenerationFailed({
+	generation,
+	error,
+	advancedModeApp,
+	locale,
+	plan
+}: {
+	generation: TGeneration | TInitialGenerationRequest;
+	error?: string;
+	advancedModeApp: boolean;
+	locale: string;
+	plan: IUserPlan;
+}) {
+	const props = mLogGenerationPropsFromGeneration({
+		generation,
+		advancedModeApp,
+		locale,
+		plan
+	});
+	uLogGeneration(error === 'NSFW' ? 'Failed-NSFW' : 'Failed');
+	mLogGeneration(error === 'NSFW' ? 'Failed-NSFW' : 'Failed', props);
+}
+
 export function mLogGenerationPropsFromGeneration({
 	generation,
 	advancedModeApp,
