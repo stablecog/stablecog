@@ -39,14 +39,7 @@
 	import { createEventDispatcher } from 'svelte';
 	import TabBar from '$components/tabBars/TabBar.svelte';
 	import { lastUpscaleDurationSec } from '$ts/stores/lastUpscaleDurationSec';
-	import {
-		availableHeightsFree,
-		availableModelIdsFree,
-		availableSchedulerIdsFree,
-		availableWidthsFree,
-		estimatedDurationBufferRatio,
-		serverUrl
-	} from '$ts/constants/main';
+	import { estimatedDurationBufferRatio, serverUrl } from '$ts/constants/main';
 	import { mLogUpscale, uLogUpscale } from '$ts/helpers/loggers';
 	import LL, { locale } from '$i18n/i18n-svelte';
 	import { negativePromptTooltipAlt } from '$ts/constants/tooltips';
@@ -54,8 +47,6 @@
 	import { deleteGenerationFromDb } from '$ts/queries/indexedDb';
 	import IconTrashcanFilledOpen from '$components/icons/IconTrashcanFilledOpen.svelte';
 	import { advancedModeApp } from '$ts/stores/advancedMode';
-	import TierBadge from '$components/TierBadge.svelte';
-	import type { TAvailableProReason } from '.svelte-kit/types/src/routes/pro/proxy+page.server';
 	import IconCancel from '$components/icons/IconCancel.svelte';
 
 	export let generation: TGenerationUI;
@@ -344,21 +335,6 @@
 		}
 	}
 
-	$: showTierBadge =
-		($page.data.plan === 'FREE' || $page.data.plan === 'ANONYMOUS') &&
-		(!availableWidthsFree.map((i) => Number(i)).includes(generation.width) ||
-			!availableHeightsFree.map((i) => Number(i)).includes(generation.height) ||
-			(generation.model_id && !availableModelIdsFree.includes(generation.model_id)) ||
-			(generation.scheduler_id && !availableSchedulerIdsFree.includes(generation.scheduler_id)));
-
-	let showTierBadgeReason: TAvailableProReason;
-	$: showTierBadgeReason =
-		generation.model_id && !availableModelIdsFree.includes(generation.model_id)
-			? 'model_generation'
-			: generation.scheduler_id && !availableSchedulerIdsFree.includes(generation.scheduler_id)
-			? 'scheduler_generation'
-			: 'dimensions_generation';
-
 	onMount(() => {
 		setSidebarWrapperVars();
 	});
@@ -507,42 +483,26 @@
 							<div class="w-full pt-1.5">
 								{#if !generation.upscaledImageDataB64}
 									<div class="w-fulll relative">
-										{#if $page.data.plan === 'FREE' || $page.data.plan === 'ANONYMOUS'}
-											<Button href="/pro?reason=upscale" target="_blank" class="w-full" size="sm">
-												<div class="flex items-center gap-2">
+										<Button
+											onClick={onUpscaleClicked}
+											loading={upscaleStatus === 'loading'}
+											class="w-full"
+											size="sm"
+										>
+											<div class="flex items-center gap-2">
+												{#if upscaleStatus === 'loading'}
+													<p>
+														{upscaleDurationSec.toLocaleString('en-US', {
+															minimumFractionDigits: 1,
+															maximumFractionDigits: 1
+														})}
+													</p>
+												{:else}
 													<IconUpscale class="w-5 h-5" />
 													<p>{$LL.GenerationFullscreen.UpscaleButton()}</p>
-												</div>
-											</Button>
-										{:else}
-											<Button
-												onClick={onUpscaleClicked}
-												loading={upscaleStatus === 'loading'}
-												class="w-full"
-												size="sm"
-											>
-												<div class="flex items-center gap-2">
-													{#if upscaleStatus === 'loading'}
-														<p>
-															{upscaleDurationSec.toLocaleString('en-US', {
-																minimumFractionDigits: 1,
-																maximumFractionDigits: 1
-															})}
-														</p>
-													{:else}
-														<IconUpscale class="w-5 h-5" />
-														<p>{$LL.GenerationFullscreen.UpscaleButton()}</p>
-													{/if}
-												</div>
-											</Button>
-										{/if}
-										{#if $page.data.plan === 'FREE' || $page.data.plan === 'ANONYMOUS'}
-											<TierBadge
-												size="md"
-												tier="PRO"
-												class="absolute transform -right-1.5 -top-2 pointer-events-none"
-											/>
-										{/if}
+												{/if}
+											</div>
+										</Button>
 									</div>
 								{:else if generation.upscaledImageDataB64}
 									<TabBar
@@ -593,42 +553,20 @@
 								</SubtleButton>
 								{#if $page.url.pathname !== '/'}
 									<div class="flex relative">
-										<SubtleButton
-											target="_self"
-											prefetch={true}
-											href={showTierBadge ? `/pro?reason=${showTierBadgeReason}` : rerollUrl}
-										>
+										<SubtleButton target="_self" prefetch={true} href={rerollUrl}>
 											<div class="flex items-center justify-center gap-1.5">
 												<IconDice class="w-5 h-5 -ml-0.5" />
 												<p>{$LL.GenerationFullscreen.RerollButton()}</p>
 											</div>
 										</SubtleButton>
-										{#if showTierBadge}
-											<TierBadge
-												size="xs"
-												tier="PRO"
-												class="absolute -right-1.5 -top-1.5 pointer-events-none"
-											/>
-										{/if}
 									</div>
 									<div class="flex relative">
-										<SubtleButton
-											target="_self"
-											prefetch={true}
-											href={showTierBadge ? `/pro?reason=${showTierBadgeReason}` : regenerateUrl}
-										>
+										<SubtleButton target="_self" prefetch={true} href={regenerateUrl}>
 											<div class="flex items-center justify-center gap-1.5">
 												<IconRefresh class="w-5 h-5 -ml-0.5" />
 												<p>{$LL.GenerationFullscreen.RegenerateButton()}</p>
 											</div>
 										</SubtleButton>
-										{#if showTierBadge}
-											<TierBadge
-												size="xs"
-												tier="PRO"
-												class="absolute -right-1.5 -top-1.5 pointer-events-none"
-											/>
-										{/if}
 									</div>
 								{/if}
 								<div use:copy={generation.prompt} on:svelte-copy={onPromptCopied}>

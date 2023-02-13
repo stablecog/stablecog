@@ -36,13 +36,6 @@
 	import { generationGPreviewUrlFromId } from '$ts/helpers/generationGPreviewUrlFromId';
 	import { mLogGalleryGenerateClicked } from '$ts/helpers/loggers';
 	import { advancedModeApp } from '$ts/stores/advancedMode';
-	import {
-		availableHeightsFree,
-		availableModelIdsFree,
-		availableWidthsFree
-	} from '$ts/constants/main';
-	import TierBadge from '$components/TierBadge.svelte';
-	import type { TAvailableProReason } from '.svelte-kit/types/src/routes/pro/proxy+page.server';
 	import IconCancel from '$components/icons/IconCancel.svelte';
 
 	export let generation: TGenerationGWithLoaded | TGenerationGAdmin;
@@ -205,18 +198,6 @@
 		sidebarWrapperScrollHeight = sidebarWrapper.scrollHeight;
 	};
 
-	$: showTierBadge =
-		($page.data.plan === 'FREE' || $page.data.plan === 'ANONYMOUS') &&
-		(!availableWidthsFree.map((i) => Number(i)).includes(generation.width) ||
-			!availableHeightsFree.map((i) => Number(i)).includes(generation.height) ||
-			(generation.model?.id && !availableModelIdsFree.includes(generation.model.id)));
-
-	let showTierBadgeReason: TAvailableProReason;
-	$: showTierBadgeReason =
-		generation.model?.id && !availableModelIdsFree.includes(generation.model.id)
-			? 'model_generation'
-			: 'dimensions_generation';
-
 	onMount(() => {
 		setSidebarWrapperVars();
 	});
@@ -337,7 +318,7 @@
 								<div class="flex relative">
 									<SubtleButton
 										onClick={() => mLogGalleryGenerateClicked(logProps)}
-										href={showTierBadge ? `/pro?reason=${showTierBadgeReason}` : generateUrl}
+										href={generateUrl}
 										target="_blank"
 									>
 										<div class="flex items-center justify-center gap-1.5">
@@ -345,13 +326,6 @@
 											<p>{$LL.GenerationFullscreen.GenerateButton()}</p>
 										</div>
 									</SubtleButton>
-									{#if showTierBadge}
-										<TierBadge
-											size="xs"
-											tier="PRO"
-											class="absolute -right-1.5 -top-1.5 pointer-events-none"
-										/>
-									{/if}
 								</div>
 								<div use:copy={generation.prompt.text} on:svelte-copy={onPromptCopied}>
 									<SubtleButton state={promptCopied ? 'success' : 'idle'}>
