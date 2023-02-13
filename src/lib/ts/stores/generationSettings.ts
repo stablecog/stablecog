@@ -1,8 +1,6 @@
 import { writable as writableLocal } from 'svelte-local-storage-store';
 import { guidanceScaleDefault } from '$ts/constants/main';
 import { inferenceStepsDefault, type TAvailableInferenceSteps } from '$ts/constants/main';
-import { modelIdDefault, type TAvailableModelId } from '$ts/constants/main';
-import { schedulerIdDefault, type TAvailableSchedulerId } from '$ts/constants/main';
 import {
 	heightDefault,
 	widthDefault,
@@ -10,6 +8,8 @@ import {
 	type TAvailableWidth
 } from '$ts/constants/main';
 import { writable } from 'svelte/store';
+import { schedulerIdDefault, type TAvailableSchedulerId } from '$ts/constants/schedulers';
+import { modelIdDefault, type TAvailableModelId } from '$ts/constants/models';
 
 export const prompt = writableLocal<string | null>('prompt', null);
 export const negativePrompt = writableLocal<string | null>('negativePrompt', null);

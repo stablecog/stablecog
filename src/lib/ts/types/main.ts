@@ -1,4 +1,5 @@
-import type { TAvailableModelId, TAvailableSchedulerId } from '$ts/constants/main';
+import type { TAvailableModelId } from '$ts/constants/models';
+import type { TAvailableSchedulerId } from '$ts/constants/schedulers';
 import type { TDBGenerationG } from '$ts/types/db';
 
 export type TStatus = 'idle' | 'loading' | 'success' | 'error';

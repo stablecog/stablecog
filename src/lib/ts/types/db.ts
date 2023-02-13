@@ -1,4 +1,5 @@
-import type { TAvailableModelId, TAvailableSchedulerId } from '$ts/constants/main';
+import type { TAvailableModelId } from '$ts/constants/models';
+import type { TAvailableSchedulerId } from '$ts/constants/schedulers';
 import type { TGenerationBase } from '$ts/types/main';
 import type { IStripeSubscriptionTier } from '$ts/types/stripe';
 

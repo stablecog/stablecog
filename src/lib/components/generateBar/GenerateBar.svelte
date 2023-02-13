@@ -7,9 +7,6 @@
 	import {
 		availableHeightsFree,
 		availableInferenceStepsFree,
-		availableModelIds,
-		availableModelIdsFree,
-		availableSchedulerIds,
 		availableWidthsFree,
 		guidanceScaleDefault,
 		guidanceScaleMax,
@@ -19,8 +16,6 @@
 		inferenceStepsDefault,
 		inferenceStepsTabs,
 		maxPromptLength,
-		modelIdDefault,
-		schedulerIdDefault,
 		widthDefault,
 		widthTabs
 	} from '$ts/constants/main';
@@ -62,6 +57,8 @@
 	import { fade, fly } from 'svelte/transition';
 	import { quadOut } from 'svelte/easing';
 	import { browser } from '$app/environment';
+	import { availableModelIds, modelIdDefault } from '$ts/constants/models';
+	import { availableSchedulerIds, schedulerIdDefault } from '$ts/constants/schedulers';
 
 	export let serverData: THomePageData;
 	export let onCreate: () => Promise<void>;
@@ -109,10 +106,7 @@
 			: guidanceScaleDefault
 	);
 	generationModelId.set(
-		isValue(serverData.model_id) &&
-			serverData.model_id !== null &&
-			(availableModelIdsFree.includes(serverData.model_id) ||
-				($page.data.plan !== 'FREE' && $page.data.plan !== 'ANONYMOUS'))
+		isValue(serverData.model_id) && serverData.model_id !== null
 			? serverData.model_id
 			: modelIdDefault
 	);
@@ -319,12 +313,7 @@
 			isValue($modelId) &&
 			availableModelIds.includes($modelId)
 		) {
-			if (
-				availableModelIdsFree.includes($modelId) ||
-				($page.data.plan !== 'FREE' && $page.data.plan !== 'ANONYMOUS')
-			) {
-				generationModelId.set($modelId);
-			}
+			generationModelId.set($modelId);
 		}
 		if (
 			!isValue(serverData.scheduler_id) &&

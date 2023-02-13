@@ -17,10 +17,6 @@
 	import LL from '$i18n/i18n-svelte';
 	import { tooltip } from '$ts/actions/tooltip';
 	import {
-		availableInferenceSteps,
-		availableInferenceStepsFree,
-		availableModelIdDropdownItems,
-		availableSchedulerIdDropdownItems,
 		guidanceScaleMax,
 		guidanceScaleMin,
 		heightTabs,
@@ -28,10 +24,10 @@
 		maxProPixelSteps,
 		maxPromptLength,
 		maxSeed,
-		widthTabs,
-		availableSchedulerIds,
-		availableSchedulerIdsFree
+		widthTabs
 	} from '$ts/constants/main';
+	import { availableModelIdDropdownItems } from '$ts/constants/models';
+	import { availableSchedulerIdDropdownItems } from '$ts/constants/schedulers';
 	import {
 		guidanceScaleTooltip,
 		heightTooltip,
@@ -55,7 +51,6 @@
 		negativePromptInputValue
 	} from '$ts/stores/generationSettings';
 	import { isTouchscreen } from '$ts/stores/isTouchscreen';
-
 	import type { TTab } from '$ts/types/main';
 
 	export let isCheckComplete: boolean;

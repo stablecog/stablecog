@@ -11,12 +11,8 @@
 	import Morpher from '$components/Morpher.svelte';
 	import LL from '$i18n/i18n-svelte';
 	import { tooltip } from '$ts/actions/tooltip';
-	import {
-		modelIdDefault,
-		modelIdToDisplayName,
-		schedulerIdDefault,
-		schedulerIdToDisplayName
-	} from '$ts/constants/main';
+	import { modelIdDefault, modelIdToDisplayName } from '$ts/constants/models';
+	import { schedulerIdDefault, schedulerIdToDisplayName } from '$ts/constants/schedulers';
 	import {
 		guidanceScaleTooltipAlt,
 		inferenceStepsTooltipAlt,

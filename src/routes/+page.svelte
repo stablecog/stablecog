@@ -9,7 +9,6 @@
 		guidanceScaleDefault,
 		inferenceStepsDefault,
 		maxSeed,
-		schedulerIdDefault,
 		serverUrl
 	} from '$ts/constants/main';
 	import { urlFromBase64 } from '$ts/helpers/base64';
@@ -49,6 +48,7 @@
 	import { appVersion } from '$ts/stores/appVersion';
 	import Button from '$components/buttons/Button.svelte';
 	import IconConfetti from '$components/icons/IconConfetti.svelte';
+	import { schedulerIdDefault } from '$ts/constants/schedulers';
 
 	export let data: THomePageData;
 
