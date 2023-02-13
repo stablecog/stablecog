@@ -15,13 +15,15 @@
 	import { loadLocaleAsync } from '$i18n/i18n-util.async';
 	import { isLocale } from '$i18n/i18n-util';
 	import { advancedMode, advancedModeApp } from '$ts/stores/advancedMode';
-	import { routesWithHiddenFooter } from '$ts/constants/main';
+	import { apiUrl, routesWithHiddenFooter } from '$ts/constants/main';
 	import mixpanel from 'mixpanel-browser';
 	import { supabase } from '$ts/constants/supabase';
 	import { afterNavigate, invalidateAll } from '$app/navigation';
 	import { mLogPageview } from '$ts/helpers/loggers';
 	import { setCookie } from '$ts/helpers/setCookie';
 	import { appVersion } from '$ts/stores/appVersion';
+	import { sse, sseId } from '$ts/stores/sse';
+	import { setGenerationToFailed, setGenerationToSucceeded } from '$ts/stores/generation';
 
 	export let data: LayoutData;
 	setLocale(data.locale);
@@ -51,6 +53,28 @@
 	}
 
 	onMount(async () => {
+		if (!$sse || $sse.readyState === $sse.CLOSED) {
+			console.log('SSE not connected or closed, starting new connection');
+			sseId.set(generateId());
+			sse.set(new EventSource(`${apiUrl.href}v1/sse?id=${$sseId}`));
+			if ($sse !== null) {
+				$sse.onopen = () => {
+					console.log(`Connected to SSE with stream_id: ${$sseId}`);
+				};
+				$sse.onmessage = (event) => {
+					const data = JSON.parse(event.data);
+					console.log('Message from SSE', data);
+					if (data.id && data.status === 'succeeded' && data.outputs && data.outputs.length > 0) {
+						setGenerationToSucceeded(data.id, data.outputs);
+					} else if (data.id && data.status === 'failed') {
+						setGenerationToFailed(data.id);
+					}
+				};
+				$sse.onerror = (event) => {
+					console.log('Error from SSE', event);
+				};
+			}
+		}
 		mixpanel.init(env.PUBLIC_MIXPANEL_ID, { api_host: env.PUBLIC_MIXPANEL_URL });
 		const {
 			data: { subscription }

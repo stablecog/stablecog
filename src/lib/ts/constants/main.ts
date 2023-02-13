@@ -7,10 +7,11 @@ export const estimatedDurationDefault = 20;
 export const estimatedDurationUpscaleDefault = 15;
 export const canonicalUrl = 'https://stablecog.com';
 export const defaultLocale: Locales = 'en';
-export const apiBase =
+export const apiUrl = new URL(
 	env.PUBLIC_APP_MODE === 'development'
 		? env.PUBLIC_GO_SERVER_URL_DEV
-		: env.PUBLIC_GO_SERVER_URL_PROD;
+		: env.PUBLIC_GO_SERVER_URL_PROD
+);
 
 export const routesWithHealthCheck = ['/', '/history', '/canvas'];
 export const routesWithHiddenFooter = ['/canvas'];
