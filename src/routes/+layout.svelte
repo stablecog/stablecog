@@ -24,6 +24,7 @@
 	import { appVersion } from '$ts/stores/appVersion';
 	import { sse, sseId } from '$ts/stores/sse';
 	import { setGenerationToFailed, setGenerationToSucceeded } from '$ts/stores/generation';
+	import { generateSSEId } from '$ts/helpers/generateSSEId';
 
 	export let data: LayoutData;
 	setLocale(data.locale);
@@ -55,7 +56,7 @@
 	onMount(async () => {
 		if (!$sse || $sse.readyState === $sse.CLOSED) {
 			console.log('SSE not connected or closed, starting new connection');
-			sseId.set(generateId());
+			sseId.set(generateSSEId());
 			sse.set(new EventSource(`${apiUrl.href}v1/sse?id=${$sseId}`));
 			if ($sse !== null) {
 				$sse.onopen = () => {
@@ -75,14 +76,14 @@
 				};
 			}
 		}
+		setBodyClasses();
 		mixpanel.init(env.PUBLIC_MIXPANEL_ID, { api_host: env.PUBLIC_MIXPANEL_URL });
+		appVersion.set(document.body.getAttribute('app-version') || 'unknown');
 		const {
 			data: { subscription }
 		} = supabase.auth.onAuthStateChange(() => {
 			invalidateAll();
 		});
-		appVersion.set(document.body.getAttribute('app-version') || 'unknown');
-		setBodyClasses();
 		if ($localeLS && isLocale($localeLS) && $localeLS !== $locale) {
 			await loadLocaleAsync($localeLS);
 			setLocale($localeLS);

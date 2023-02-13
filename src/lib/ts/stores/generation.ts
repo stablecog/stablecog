@@ -1,4 +1,4 @@
-import { apiBase } from '$ts/constants/main';
+import { apiUrl } from '$ts/constants/main';
 import type { TAvailableModelId } from '$ts/constants/models';
 import type { TAvailableSchedulerId } from '$ts/constants/schedulers';
 import { writable } from 'svelte/store';
@@ -84,7 +84,7 @@ export async function submitInitialGenerationRequest(
 	access_token: string,
 	app_version: string
 ) {
-	const response = await fetch(`${apiBase}/v1/user/generation/create`, {
+	const response = await fetch(`${apiUrl.href}v1/user/generation/create`, {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json',
