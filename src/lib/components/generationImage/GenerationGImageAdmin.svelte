@@ -10,7 +10,7 @@
 	import { doesContainTarget } from '$ts/helpers/doesContainTarget';
 	import { isValue } from '$ts/helpers/isValue';
 	import { urlFromImageId } from '$ts/helpers/imageId';
-	import { activeGenerationG } from '$ts/stores/activeGenerationG';
+	import { activeGenerationG } from '$ts/stores/generationG';
 	import type { TGenerationGAdmin } from '$ts/types/main';
 	import type { PostgrestError } from '@supabase/supabase-js';
 	import { quadOut } from 'svelte/easing';

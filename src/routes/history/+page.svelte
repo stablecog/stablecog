@@ -8,7 +8,7 @@
 	import { maxLocallyStoredImage } from '$ts/constants/indexedDb';
 	import { apiBase, canonicalUrl } from '$ts/constants/main';
 	import { getGenerationsFromDb, updateGenerationInDb } from '$ts/queries/indexedDb';
-	import { activeGeneration } from '$ts/stores/activeGeneration';
+	import { activeGeneration } from '$ts/stores/generation';
 	import type { TDBGeneration, TIndexedDBGeneration } from '$ts/types/db';
 	import type { TGenerationUI, TTab, TUpscaleStatus } from '$ts/types/main';
 	import { onMount } from 'svelte';

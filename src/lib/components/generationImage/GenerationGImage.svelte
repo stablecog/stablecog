@@ -10,7 +10,7 @@
 	import { isValue } from '$ts/helpers/isValue';
 	import { mLogGalleryGenerationOpened } from '$ts/helpers/loggers';
 	import { urlFromImageId } from '$ts/helpers/imageId';
-	import { activeGenerationG } from '$ts/stores/activeGenerationG';
+	import { activeGenerationG } from '$ts/stores/generationG';
 	import { advancedModeApp } from '$ts/stores/advancedMode';
 	import type { TGenerationGWithLoaded } from '$ts/types/main';
 

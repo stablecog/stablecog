@@ -30,11 +30,11 @@
 	import ParamsSection from '$components/generationFullScreen/ParamsSection.svelte';
 	import Button from '$components/buttons/Button.svelte';
 	import IconUpscale from '$components/icons/IconUpscale.svelte';
-	import { upscaleGenerationOutput, upscaleImage } from '$ts/queries/upscale';
+	import { upscaleGenerationOutput } from '$ts/queries/upscale';
 	import { createEventDispatcher } from 'svelte';
 	import TabBar from '$components/tabBars/TabBar.svelte';
 	import { lastUpscaleDurationSec } from '$ts/stores/lastUpscaleDurationSec';
-	import { estimatedDurationBufferRatio, serverUrl } from '$ts/constants/main';
+	import { estimatedDurationBufferRatio } from '$ts/constants/main';
 	import { mLogUpscale, uLogUpscale } from '$ts/helpers/loggers';
 	import LL, { locale } from '$i18n/i18n-svelte';
 	import { negativePromptTooltipAlt } from '$ts/constants/tooltips';

@@ -9,7 +9,7 @@
 	import { elementreceive, elementsend } from '$ts/animation/transitions';
 	import { canonicalUrl } from '$ts/constants/main';
 	import { isValue } from '$ts/helpers/isValue';
-	import { activeGenerationG } from '$ts/stores/activeGenerationG';
+	import { activeGenerationG } from '$ts/stores/generationG';
 	import type { TGalleryResponse, TGenerationGAdmin } from '$ts/types/main';
 	import { MasonryInfiniteGrid } from '@egjs/svelte-infinitegrid';
 	import type { PageServerData } from './$types';

@@ -7,7 +7,7 @@
 	import Morpher from '$components/Morpher.svelte';
 	import { clickoutside } from '$ts/actions/clickoutside';
 	import { elementreceive, elementsend } from '$ts/animation/transitions';
-	import { activeGenerationG } from '$ts/stores/activeGenerationG';
+	import { activeGenerationG } from '$ts/stores/generationG';
 	import { windowHeight, windowWidth } from '$ts/stores/window';
 	import { copy } from 'svelte-copy';
 	import IconChevronDown from '$components/icons/IconChevronDown.svelte';

@@ -25,7 +25,7 @@
 	import GenerationImage from '$components/generationImage/GenerationImage.svelte';
 	import { advancedModeApp } from '$ts/stores/advancedMode';
 	import { mLogGeneration, uLogGeneration } from '$ts/helpers/loggers';
-	import { activeGeneration } from '$ts/stores/activeGeneration';
+	import { activeGeneration } from '$ts/stores/generation';
 	import type { THomePageData } from '$routes/+page.server';
 	import { isValue } from '$ts/helpers/isValue';
 	import { shouldSubmitToGallery } from '$ts/stores/shouldSubmitToGallery';

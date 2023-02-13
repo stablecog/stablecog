@@ -5,7 +5,7 @@
 	import ImagePlaceholder from '$components/ImagePlaceholder.svelte';
 	import LL from '$i18n/i18n-svelte';
 	import { elementreceive, elementsend } from '$ts/animation/transitions';
-	import { activeGeneration } from '$ts/stores/activeGeneration';
+	import { activeGeneration } from '$ts/stores/generation';
 	import type { TIndexedDBGeneration } from '$ts/types/db';
 	import { MasonryInfiniteGrid } from '@egjs/svelte-infinitegrid';
 

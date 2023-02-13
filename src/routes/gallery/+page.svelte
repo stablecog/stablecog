@@ -13,7 +13,7 @@
 	import { generationGPreviewUrlFromId } from '$ts/helpers/generationGPreviewUrlFromId';
 	import { isValue } from '$ts/helpers/isValue';
 	import { mLogGallerySearch } from '$ts/helpers/loggers';
-	import { activeGenerationG } from '$ts/stores/activeGenerationG';
+	import { activeGenerationG } from '$ts/stores/generationG';
 	import { advancedModeApp } from '$ts/stores/advancedMode';
 	import { navbarHeight } from '$ts/stores/navbarHeight';
 	import type { TGalleryResponse } from '$ts/types/main';
