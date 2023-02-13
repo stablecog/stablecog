@@ -21,8 +21,8 @@
 	import {
 		copyTimeoutDuration,
 		lgBreakpoint,
-		maxHeight,
-		padding,
+		mainContainerMaxHeight,
+		mainContainerPadding,
 		sidebarWidth
 	} from '$components/generationFullScreen/Shared';
 	import ParamsSectionG from '$components/generationFullScreen/ParamsSectionG.svelte';
@@ -62,10 +62,10 @@
 		$windowWidth >= lgBreakpoint;
 
 	$: mainContainerWidth = Math.min($windowWidth || 0, maxWidthConstant);
-	$: mainContainerHeight = Math.min($windowHeight || 0, maxHeight);
+	$: mainContainerHeight = Math.min($windowHeight || 0, mainContainerMaxHeight);
 
-	$: modalMaxWidth = mainContainerWidth - 2 * padding;
-	$: modalMaxHeight = mainContainerHeight - 2 * padding;
+	$: modalMaxWidth = mainContainerWidth - 2 * mainContainerPadding;
+	$: modalMaxHeight = mainContainerHeight - 2 * mainContainerPadding;
 
 	$: modalMinHeight = Math.min(modalMaxHeight, 575);
 
