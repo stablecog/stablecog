@@ -61,7 +61,7 @@
 	import { availableSchedulerIds, schedulerIdDefault } from '$ts/constants/schedulers';
 
 	export let serverData: THomePageData;
-	export let onCreate: () => Promise<void>;
+	export let queueGeneration: () => Promise<void>;
 	export let status: TStatus;
 	export let startTimestamp: number | undefined;
 	export let estimatedDuration: number;
@@ -165,7 +165,7 @@
 				await tick();
 				promptInputValue.set(placeholder);
 			}
-			await onCreate();
+			await queueGeneration();
 			submitting = false;
 		});
 	}

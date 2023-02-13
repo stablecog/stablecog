@@ -4,7 +4,8 @@ import type { TAvailableSchedulerId } from '$ts/constants/schedulers';
 import { writable } from 'svelte/store';
 
 export const activeGeneration = writable<TGeneration | undefined>(undefined);
-export const generations = writable<TGeneration[] | null>(null);
+export const activeGenerationOutputIndex = writable(0);
+export const generations = writable<TGeneration[]>([]);
 
 export const setGenerationToFailed = (id: string, error?: string) => {
 	generations.update(($generations) => {
@@ -68,8 +69,7 @@ export async function qeueuInitialGenerationRequest(request: TInitialGenerationR
 		const generationToSubmit: TGeneration = {
 			...request,
 			status: 'to-be-submitted',
-			outputs: [],
-			selected_output_index: 0
+			outputs: []
 		};
 		if ($generations === null) {
 			return [generationToSubmit];
@@ -130,7 +130,8 @@ export interface TInitialGenerationRequest extends TGenerationBase {
 	stream_id: string;
 	output_image_extension: 'jpeg' | 'png' | 'webp';
 	process_type: TProcessType;
-	submitted_at: number;
+	queued_at: number;
+	submit_to_gallery: boolean;
 }
 
 export interface TGeneration extends TGenerationBase {
@@ -140,8 +141,8 @@ export interface TGeneration extends TGenerationBase {
 	ui_id: string;
 	outputs: TGenerationOutput[];
 	started_at?: number;
-	submitted_at: number;
-	selected_output_index: number;
+	queued_at: number;
+	submit_to_gallery: boolean;
 }
 
 export interface TGenerationOutput {

@@ -8,24 +8,28 @@
 		estimatedDurationDefault,
 		guidanceScaleDefault,
 		inferenceStepsDefault,
-		maxSeed,
-		serverUrl
+		maxSeed
 	} from '$ts/constants/main';
 	import { urlFromBase64 } from '$ts/helpers/base64';
-	import {
-		addGenerationToDb,
-		isStorageAvailableIfNotPrune,
-		updateGenerationInDb
-	} from '$ts/queries/indexedDb';
-	import { generateImage } from '$ts/queries/generateImage';
+	import { updateGenerationInDb } from '$ts/queries/indexedDb';
 	import { computeRatePerSec } from '$ts/stores/computeRatePerSec';
 	import type { TGenerationUI, TStatus, TUpscaleStatus } from '$ts/types/main';
 	import { onDestroy, onMount, tick } from 'svelte';
 	import ImagePlaceholder from '$components/ImagePlaceholder.svelte';
 	import GenerationImage from '$components/generationImage/GenerationImage.svelte';
 	import { advancedModeApp } from '$ts/stores/advancedMode';
-	import { mLogGeneration, uLogGeneration } from '$ts/helpers/loggers';
-	import { activeGeneration } from '$ts/stores/generation';
+	import {
+		mLogGeneration,
+		mLogGenerationPropsFromGeneration,
+		uLogGeneration
+	} from '$ts/helpers/loggers';
+	import {
+		activeGeneration,
+		activeGenerationOutputIndex,
+		generations,
+		qeueuInitialGenerationRequest,
+		type TInitialGenerationRequest
+	} from '$ts/stores/generation';
 	import type { THomePageData } from '$routes/+page.server';
 	import { isValue } from '$ts/helpers/isValue';
 	import { shouldSubmitToGallery } from '$ts/stores/shouldSubmitToGallery';
@@ -45,10 +49,11 @@
 	} from '$ts/stores/generationSettings';
 	import { page } from '$app/stores';
 	import { homePageContainer } from '$ts/stores/homePageContainer';
-	import { appVersion } from '$ts/stores/appVersion';
 	import Button from '$components/buttons/Button.svelte';
 	import IconConfetti from '$components/icons/IconConfetti.svelte';
 	import { schedulerIdDefault } from '$ts/constants/schedulers';
+	import { sseId } from '$ts/stores/sse';
+	import { generateSSEId } from '$ts/helpers/generateSSEId';
 
 	export let data: THomePageData;
 
@@ -77,14 +82,17 @@
 		estimatedDuration = Math.ceil((rate / $computeRatePerSec) * (1 + estimatedDurationBufferRatio));
 	}
 
-	async function onCreate() {
+	async function queueGeneration() {
 		if (!$promptInputValue) {
-			!$promptInputValue && console.log('no input');
+			console.log("No prompt, can't create generation");
+			return;
+		}
+		if (!$sseId) {
+			console.log("No SSE ID, can't create generation");
 			return;
 		}
 		generationError = undefined;
-		lastGeneration = {
-			server_url: serverUrl,
+		const initialRequestProps: TInitialGenerationRequest = {
 			prompt: $promptInputValue,
 			negative_prompt:
 				($advancedModeApp || isValue(data.negative_prompt)) && $negativePromptInputValue
@@ -98,7 +106,7 @@
 			guidance_scale: Number(
 				$advancedModeApp || data.guidance_scale ? $generationGuidanceScale : guidanceScaleDefault
 			),
-			num_inference_steps: Number(
+			inference_steps: Number(
 				$advancedModeApp || data.num_inference_steps
 					? $generationInferenceSteps
 					: inferenceStepsDefault
@@ -110,102 +118,26 @@
 				($advancedModeApp || isValue(data.seed))
 					? Number($generationSeed)
 					: Math.round(Math.random() * maxSeed),
-			imageDataB64: ''
+			num_outputs: 4,
+			output_image_extension: 'jpeg',
+			process_type: 'generate',
+			queued_at: Date.now(),
+			stream_id: $sseId,
+			ui_id: generateSSEId(),
+			submit_to_gallery: $shouldSubmitToGallery ?? false
 		};
-		const generationMinimal = {
-			'SC - Width': lastGeneration.width,
-			'SC - Height': lastGeneration.height,
-			'SC - Inference Steps': lastGeneration.num_inference_steps,
-			'SC - Guidance Scale': lastGeneration.guidance_scale,
-			'SC - Model Id': lastGeneration.model_id,
-			'SC - Scheduler Id': lastGeneration.scheduler_id,
-			'SC - Advanced Mode': $advancedModeApp,
-			'SC - Locale': $locale,
-			'SC - Submit to Gallery': $shouldSubmitToGallery ?? false,
-			'SC - Plan': $page.data.plan
-		};
+		qeueuInitialGenerationRequest(initialRequestProps);
 		uLogGeneration('Started');
-		mLogGeneration('Started', generationMinimal);
-		console.log('generation', lastGeneration);
-		console.log('estimatedDuration', estimatedDuration);
-		status = 'idle';
-		await tick();
-		setTimeout(() => {
-			if (status !== 'error') {
-				status = 'loading';
-			}
-		}, 10);
-		endTimestamp = undefined;
-		startTimestamp = Date.now();
+		mLogGeneration(
+			'Started',
+			mLogGenerationPropsFromGeneration({
+				generation: initialRequestProps,
+				advancedModeApp: $advancedModeApp,
+				locale: $locale,
+				plan: $page.data.plan
+			})
+		);
 		try {
-			let res = await generateImage({
-				server_url: lastGeneration.server_url,
-				prompt: lastGeneration.prompt,
-				negative_prompt: lastGeneration.negative_prompt,
-				model_id: lastGeneration.model_id,
-				scheduler_id: lastGeneration.scheduler_id,
-				width: lastGeneration.width,
-				height: lastGeneration.height,
-				seed: lastGeneration.seed,
-				guidance_scale: lastGeneration.guidance_scale,
-				num_inference_steps: lastGeneration.num_inference_steps,
-				should_submit_to_gallery:
-					$shouldSubmitToGallery === undefined ? false : $shouldSubmitToGallery,
-				access_token: $page.data.session?.access_token,
-				app_version: $appVersion
-			});
-			let { data, error } = res;
-			if (data && data.image_b64 && !error) {
-				uLogGeneration('Succeeded');
-				mLogGeneration('Succeeded', { ...generationMinimal, 'SC - Duration': data.duration_ms });
-				lastGeneration.imageDataB64 = data.image_b64;
-				lastGeneration.duration_ms = data.duration_ms;
-				let id: number | undefined = undefined;
-				try {
-					const canWrite = await isStorageAvailableIfNotPrune();
-					if (canWrite) {
-						const resId = await addGenerationToDb({
-							...lastGeneration,
-							imageDataB64: data.image_b64
-						});
-						if (resId !== undefined && resId !== null) {
-							id = Number(resId);
-						}
-					}
-				} catch (error) {
-					console.log('indexedDB error', error);
-				}
-				if (id === undefined) {
-					lastGeneration.id = Math.round(Math.random() * Math.pow(10, 15));
-				} else {
-					lastGeneration.id = id;
-				}
-				const imageUrl = urlFromBase64(data.image_b64);
-				const img = new Image();
-				img.src = imageUrl;
-				img.onload = () => {
-					if (lastGeneration) {
-						lastGeneration.imageUrl = imageUrl;
-						lastGeneration = lastGeneration;
-					}
-					if (lastGeneration && startTimestamp !== undefined) {
-						const rate = getComputeRate(
-							Number($generationWidth),
-							Number($generationHeight),
-							Number($generationInferenceSteps)
-						);
-						lastGeneration.computeRatePerSec = Math.ceil(
-							rate / ((Date.now() - startTimestamp) / 1000)
-						);
-						computeRatePerSec.set(lastGeneration.computeRatePerSec);
-						setEstimatedDuration();
-					}
-					status = 'success';
-					console.log('image loaded for:', `"${lastGeneration?.prompt}"`);
-				};
-			} else {
-				throw new Error(error);
-			}
 		} catch (error) {
 			const _error = error as Error;
 			uLogGeneration(_error.message === 'NSFW' ? 'Failed-NSFW' : 'Failed');
@@ -215,7 +147,6 @@
 			console.log('Generation error', _error);
 		} finally {
 			endTimestamp = Date.now();
-			console.log('generation duration:', (endTimestamp - startTimestamp) / 1000, 's');
 		}
 	}
 
@@ -284,7 +215,13 @@
 >
 	<div class="w-full flex flex-col items-center justify-center">
 		<div class="w-[calc(100%+2rem)] flex flex-col justify-start items-center z-0 -mx-4">
-			<GenerateBar serverData={data} {status} {onCreate} {startTimestamp} {estimatedDuration} />
+			<GenerateBar
+				serverData={data}
+				{status}
+				{queueGeneration}
+				{startTimestamp}
+				{estimatedDuration}
+			/>
 			{#if status === 'error'}
 				<div
 					transition:expandCollapse|local={{ duration: 300 }}
@@ -318,43 +255,49 @@
 						</p>
 					{/if}
 				</div>
-			{:else if status === 'success' && lastGeneration && lastGeneration.imageUrl}
+			{:else if $generations && $generations[0].outputs}
 				{@const aspectRatio = lastGeneration.width / lastGeneration.height}
 				<div
 					transition:expandCollapse|local={{ duration: 300 }}
-					class="max-w-full flex flex-col items-center justify-start rounded-xl origin-top relative z-0 px-4"
+					class="w-full flex items-center justify-center rounded-xl origin-top relative z-0 px-4"
 				>
-					<div class="max-w-full flex flex-col items-center md:px-5 gap-4 py-3 md:pt-0">
-						<div
-							class="{aspectRatio >= 6 / 2
-								? 'w-180'
-								: aspectRatio >= 4 / 2
-								? 'w-160'
-								: aspectRatio >= 3 / 2
-								? 'w-140'
-								: aspectRatio >= 4 / 3
-								? 'w-128'
-								: aspectRatio >= 1 / 1
-								? 'w-112'
-								: aspectRatio >= 3 / 4
-								? 'w-92'
-								: aspectRatio >= 2 / 3
-								? 'w-84'
-								: 'w-72'} max-w-full h-auto relative"
-						>
-							<ImagePlaceholder width={lastGeneration.width} height={lastGeneration.height} />
-							{#if !($activeGeneration && $activeGeneration.id === lastGeneration.id)}
-								<div
-									class="absolute w-full h-full left-0 top-0 rounded-2xl bg-c-bg-secondary z-0 overflow-hidden border-4 
+					{#each $generations[0].outputs as _, index}
+						<div class="max-w-full flex flex-col items-center md:px-5 gap-4 py-3 md:pt-0">
+							<div
+								class="{aspectRatio >= 6 / 2
+									? 'w-180'
+									: aspectRatio >= 4 / 2
+									? 'w-160'
+									: aspectRatio >= 3 / 2
+									? 'w-140'
+									: aspectRatio >= 4 / 3
+									? 'w-128'
+									: aspectRatio >= 1 / 1
+									? 'w-112'
+									: aspectRatio >= 3 / 4
+									? 'w-92'
+									: aspectRatio >= 2 / 3
+									? 'w-84'
+									: 'w-72'} max-w-full h-auto relative"
+							>
+								<ImagePlaceholder width={lastGeneration.width} height={lastGeneration.height} />
+								{#if !($activeGeneration && $activeGeneration.id === lastGeneration.id)}
+									<div
+										class="absolute w-full h-full left-0 top-0 rounded-2xl bg-c-bg-secondary z-0 overflow-hidden border-4 
 											shadow-lg shadow-c-shadow/[var(--o-shadow-normal)] border-c-bg-secondary group"
-									in:elementreceive|local={{ key: lastGeneration.id }}
-									out:elementsend|local={{ key: lastGeneration.id }}
-								>
-									<GenerationImage generation={lastGeneration} prioritizeUpscaled={true} />
-								</div>
-							{/if}
+										in:elementreceive|local={{ key: lastGeneration.id }}
+										out:elementsend|local={{ key: lastGeneration.id }}
+									>
+										<GenerationImage
+											generation={$generations[0]}
+											selectedOutputIndex={index}
+											useUpscaledImage
+										/>
+									</div>
+								{/if}
+							</div>
 						</div>
-					</div>
+					{/each}
 				</div>
 			{/if}
 			{#if status === 'success' && $shouldSubmitToGallery === undefined}
@@ -370,5 +313,6 @@
 		on:delete={onDelete}
 		on:upscale={onUpscale}
 		generation={$activeGeneration}
+		generationOutputIndex={$activeGenerationOutputIndex}
 	/>
 {/if}

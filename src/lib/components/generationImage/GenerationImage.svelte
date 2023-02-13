@@ -9,6 +9,7 @@
 	import { activeGeneration, type TGeneration } from '$ts/stores/generation';
 
 	export let generation: TGeneration;
+	export let selectedOutputIndex: number;
 	export let useUpscaledImage = true;
 	export let scrollPrompt = false;
 
@@ -16,7 +17,7 @@
 	let promptCopiedTimeout: NodeJS.Timeout;
 	let rightButtonContainer: HTMLDivElement;
 
-	$: selectedOutput = generation.outputs[generation.selected_output_index];
+	$: selectedOutput = generation.outputs[selectedOutputIndex];
 </script>
 
 <img

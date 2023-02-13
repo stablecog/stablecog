@@ -45,12 +45,13 @@
 	import IconCancel from '$components/icons/IconCancel.svelte';
 	import GenerationFullScreenContainer from '$components/generationFullScreen/GenerationFullScreenContainer.svelte';
 	import { activeGeneration, type TGeneration } from '$ts/stores/generation';
-	import { downloadGenerationImage } from '$ts/helpers/dowloadGenerationImage';
+	import { downloadGenerationImage } from '$ts/helpers/downloadGenerationImage';
 
 	export let generation: TGeneration;
+	export let generationOutputIndex: number;
 	export let upscaleStatus: TUpscaleStatus = 'idle';
 
-	$: selectedOutput = generation.outputs[generation.selected_output_index];
+	$: selectedOutput = generation.outputs[generationOutputIndex];
 
 	let upscaleErrorText: string | undefined;
 	let currentImageUrl: string;
@@ -136,8 +137,7 @@
 				url: currentImageUrl,
 				guidanceScale: generation.guidance_scale,
 				inferenceSteps: generation.inference_steps,
-				isUpscaled:
-					generation.outputs[generation.selected_output_index].upscaled_image_url !== undefined,
+				isUpscaled: generation.outputs[generationOutputIndex].upscaled_image_url !== undefined,
 				prompt: generation.prompt,
 				seed: generation.seed
 			});

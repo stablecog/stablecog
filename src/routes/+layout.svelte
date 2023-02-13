@@ -19,11 +19,20 @@
 	import mixpanel from 'mixpanel-browser';
 	import { supabase } from '$ts/constants/supabase';
 	import { afterNavigate, invalidateAll } from '$app/navigation';
-	import { mLogPageview } from '$ts/helpers/loggers';
+	import {
+		mLogGeneration,
+		mLogGenerationPropsFromGeneration,
+		mLogPageview,
+		uLogGeneration
+	} from '$ts/helpers/loggers';
 	import { setCookie } from '$ts/helpers/setCookie';
 	import { appVersion } from '$ts/stores/appVersion';
 	import { sse, sseId } from '$ts/stores/sse';
-	import { setGenerationToFailed, setGenerationToSucceeded } from '$ts/stores/generation';
+	import {
+		generations,
+		setGenerationToFailed,
+		setGenerationToSucceeded
+	} from '$ts/stores/generation';
 	import { generateSSEId } from '$ts/helpers/generateSSEId';
 
 	export let data: LayoutData;
@@ -67,6 +76,18 @@
 					console.log('Message from SSE', data);
 					if (data.id && data.status === 'succeeded' && data.outputs && data.outputs.length > 0) {
 						setGenerationToSucceeded(data.id, data.outputs);
+						const generationIndex = $generations.findIndex((g) => g.id === data.id);
+						const generation = $generations[generationIndex];
+						uLogGeneration('Succeeded');
+						mLogGeneration(
+							'Succeeded',
+							mLogGenerationPropsFromGeneration({
+								generation,
+								advancedModeApp: $advancedModeApp,
+								locale: $locale,
+								plan: $page.data.plan
+							})
+						);
 					} else if (data.id && data.status === 'failed') {
 						setGenerationToFailed(data.id);
 					}

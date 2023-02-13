@@ -29,26 +29,6 @@ export interface TGenerationUI extends TGenerationBase {
 	computeRatePerSec?: number;
 }
 
-export interface TGenerationRequest {
-	server_url: string;
-	prompt: string;
-	negative_prompt?: string;
-	model_id?: TAvailableModelId;
-	scheduler_id?: TAvailableSchedulerId;
-	width?: number;
-	height?: number;
-	seed?: number;
-	num_inference_steps?: number;
-	guidance_scale?: number;
-	output_image_ext?: 'jpg' | 'png';
-	init_image?: string;
-	mask?: string;
-	prompt_strength?: number;
-	should_submit_to_gallery?: boolean;
-	access_token?: string;
-	app_version: string;
-}
-
 export interface TGenerationResponse {
 	data?: {
 		image_b64: string;

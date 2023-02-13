@@ -1,3 +1,4 @@
+import type { TGeneration, TInitialGenerationRequest } from '$ts/stores/generation';
 import type { IUserPlan } from '$ts/types/stripe';
 import mixpanel from 'mixpanel-browser';
 
@@ -73,6 +74,31 @@ export function mLogGallerySearch(props: IGallerySearchProps) {
 	mixpanel.track('Gallery Search', {
 		...props
 	});
+}
+
+export function mLogGenerationPropsFromGeneration({
+	generation,
+	advancedModeApp,
+	locale,
+	plan
+}: {
+	generation: TGeneration | TInitialGenerationRequest;
+	advancedModeApp: boolean;
+	locale: string;
+	plan: IUserPlan;
+}) {
+	return {
+		'SC - Width': generation.width,
+		'SC - Height': generation.height,
+		'SC - Inference Steps': generation.inference_steps,
+		'SC - Guidance Scale': generation.guidance_scale,
+		'SC - Model Id': generation.model_id,
+		'SC - Scheduler Id': generation.scheduler_id,
+		'SC - Advanced Mode': advancedModeApp,
+		'SC - Locale': locale,
+		'SC - Submit to Gallery': generation.submit_to_gallery,
+		'SC - Plan': plan
+	};
 }
 
 interface ISubmitToGalleryToggledMinimal {
