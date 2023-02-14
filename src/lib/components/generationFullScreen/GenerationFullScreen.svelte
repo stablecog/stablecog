@@ -52,10 +52,9 @@
 	export let upscaleStatus: TUpscaleStatus = 'idle';
 
 	let selectedOutput = generation.outputs[generationOutputIndex];
-	let currentImageUrl =
-		selectedOutput.upscaled_image_url && selectedOutput.upscaled_image_url != ''
-			? selectedOutput.upscaled_image_url
-			: selectedOutput.image_url;
+	let currentImageUrl = selectedOutput.upscaled_image_url
+		? selectedOutput.upscaled_image_url
+		: selectedOutput.image_url;
 	$: console.log('currentImageUrl', currentImageUrl);
 
 	let upscaleErrorText: string | undefined;
@@ -229,11 +228,7 @@
 	$: upscaledTabValue, setCurrentImageUrl();
 
 	function setCurrentImageUrl() {
-		if (
-			upscaledTabValue === 'upscaled' &&
-			selectedOutput.upscaled_image_url !== undefined &&
-			selectedOutput.upscaled_image_url !== ''
-		) {
+		if (upscaledTabValue === 'upscaled' && selectedOutput.upscaled_image_url !== undefined) {
 			currentImageUrl = selectedOutput.upscaled_image_url;
 		} else {
 			currentImageUrl = selectedOutput.image_url;
