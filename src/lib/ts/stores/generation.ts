@@ -13,20 +13,18 @@ export const setGenerationToFailed = (id: string, error?: string) => {
 			return $generations;
 		}
 		const index = $generations.findIndex((gen) => gen.id === id);
-		if (index === -1) {
-			const ui_index = $generations.findIndex((gen) => gen.ui_id === id);
-			if (ui_index === -1) {
-				return $generations;
-			} else {
-				$generations[ui_index].status = 'failed';
-				$generations[ui_index].error = error;
-				return $generations;
-			}
-		} else {
+		if (index >= 0) {
 			$generations[index].status = 'failed';
 			$generations[index].error = error;
 			return $generations;
 		}
+		const ui_index = $generations.findIndex((gen) => gen.ui_id === id);
+		if (ui_index >= 0) {
+			$generations[ui_index].status = 'failed';
+			$generations[ui_index].error = error;
+			return $generations;
+		}
+		return $generations;
 	});
 };
 
