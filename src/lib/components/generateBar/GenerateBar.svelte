@@ -118,7 +118,6 @@
 		isValue(serverData.seed) && serverData.seed !== null ? serverData.seed : undefined
 	);
 
-	let submitting = false;
 	$: placeholder = $LL.Home.PromptInput.Placeholder();
 	let now: number | undefined;
 	let nowInterval: NodeJS.Timeout | undefined;
@@ -130,21 +129,36 @@
 	let lastGenerationStatus: TGenerationStatus | undefined;
 	$: lastGenerationStatus = $generations.length > 0 ? $generations[0].status : undefined;
 	$: lastGenerationQueuedAt = $generations.length > 0 ? $generations[0].queued_at : undefined;
-	$: lastGenerationContinuing =
-		lastGenerationStatus === 'to-be-submitted' || lastGenerationStatus === 'server-processing';
+	$: lastGenerationBeingCreated =
+		lastGenerationStatus === 'to-be-submitted' ||
+		lastGenerationStatus === 'server-received' ||
+		lastGenerationStatus === 'server-processing';
 
 	$: sinceSec =
-		now !== undefined && lastGenerationContinuing && lastGenerationQueuedAt
+		now !== undefined && lastGenerationBeingCreated && lastGenerationQueuedAt
 			? Math.max(now - lastGenerationQueuedAt, 0) / 1000
 			: 0;
-	$: [lastGenerationStatus], createOrDestroyInterval();
+	$: [lastGenerationStatus], onLastGenerationStatusChanged();
 
-	async function createOrDestroyInterval() {
-		if (nowInterval) clearInterval(nowInterval);
+	let lastGenerationAnimationStatus: 'idle' | 'should-animate' | 'should-complete' = 'idle';
+
+	async function onLastGenerationStatusChanged() {
 		if (lastGenerationStatus === 'succeeded' || lastGenerationStatus === 'failed') {
+			lastGenerationAnimationStatus = 'should-complete';
+		}
+		if (
+			lastGenerationStatus === 'server-received' ||
+			lastGenerationStatus === 'server-processing'
+		) {
 			return;
 		}
+		if (nowInterval) clearInterval(nowInterval);
 		if (lastGenerationStatus === 'to-be-submitted') {
+			lastGenerationAnimationStatus = 'idle';
+			await tick();
+			setTimeout(() => {
+				lastGenerationAnimationStatus = 'should-animate';
+			});
 			nowInterval = setInterval(() => {
 				now = Date.now();
 			}, 100);
@@ -165,14 +179,12 @@
 		promptInputElement.scrollTo(0, 0);
 		promptInputElement.blur();
 		setTimeout(async () => {
-			submitting = true;
 			if (!$promptInputValue) {
 				await new Promise((resolve) => setTimeout(resolve, 75));
 				await tick();
 				promptInputValue.set(placeholder);
 			}
 			await queueGeneration();
-			submitting = false;
 		});
 	}
 
@@ -187,7 +199,7 @@
 	$: [$generationModelId], setLocalModelId();
 	$: [$generationSchedulerId], setLocalSchedulerId();
 	$: showClearPromptInputButton =
-		$promptInputValue !== undefined && $promptInputValue !== '' && !lastGenerationContinuing;
+		$promptInputValue !== undefined && $promptInputValue !== '' && !lastGenerationBeingCreated;
 	$: if (browser && $page.data.session?.user.id) {
 		isSignInModalOpen = false;
 	}
@@ -371,7 +383,7 @@
 						promptInputValue.set($promptInputValue.slice(0, maxPromptLength));
 					}
 				}}
-				disabled={lastGenerationContinuing || !isCheckComplete}
+				disabled={lastGenerationBeingCreated || !isCheckComplete}
 				{placeholder}
 				rows="1"
 				style="transition: height 0.1s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.2s cubic-bezier(0.4, 0, 0.2, 1), padding 0.2s cubic-bezier(0.4, 0, 0.2, 1)"
@@ -379,13 +391,13 @@
 					scroll-smooth resize-none transition relative pl-5 md:pl-6 py-5 rounded-xl 
 					focus:ring-2 focus:ring-c-primary/30 ring-0 ring-c-primary/20 placeholder:text-c-on-bg/30 {!$isTouchscreen
 					? 'enabled:hover:ring-2'
-					: ''} {classes} {lastGenerationContinuing
+					: ''} {classes} {lastGenerationBeingCreated
 					? 'text-c-secondary/75'
-					: 'text-c-on-bg'} {!$isTouchscreen && !lastGenerationContinuing
+					: 'text-c-on-bg'} {!$isTouchscreen && !lastGenerationBeingCreated
 					? 'group-hover:ring-2'
-					: ''} {lastGenerationContinuing ? 'overflow-hidden' : ''}"
+					: ''} {lastGenerationBeingCreated ? 'overflow-hidden' : ''}"
 			/>
-			{#if lastGenerationContinuing}
+			{#if lastGenerationBeingCreated}
 				<div
 					class="w-full h-full flex items-end absolute left-0 top-0 overflow-hidden z-0 rounded-xl pointer-events-none"
 				>
@@ -399,15 +411,15 @@
 				class="w-full h-full rounded-xl overflow-hidden z-0 absolute left-0 top-0 pointer-events-none"
 			>
 				<div
-					style="transition-duration: {lastGenerationContinuing
+					style="transition-duration: {lastGenerationAnimationStatus === 'should-animate'
 						? estimatedDuration
-						: lastGenerationStatus === 'succeeded' || lastGenerationStatus === 'failed'
-						? 0.5
+						: lastGenerationAnimationStatus === 'should-complete'
+						? 0.3
 						: 0}s"
 					class="w-full h-full ease-image-generation transition bg-c-secondary/10 
-					absolute left-0 top-0 rounded-xl {lastGenerationContinuing
+					absolute left-0 top-0 rounded-xl {lastGenerationAnimationStatus === 'should-animate'
 						? 'translate-x-0'
-						: lastGenerationStatus === 'succeeded' || lastGenerationStatus === 'failed'
+						: lastGenerationAnimationStatus === 'should-complete'
 						? 'translate-x-full'
 						: '-translate-x-full'}"
 				/>
@@ -415,15 +427,15 @@
 			<ClearButton show={showClearPromptInputButton} onClick={clearPrompt} />
 		</div>
 		<Button
-			disabled={lastGenerationContinuing || !isCheckComplete}
-			loading={lastGenerationContinuing}
+			disabled={lastGenerationBeingCreated || !isCheckComplete}
+			loading={lastGenerationBeingCreated}
 			class="w-full md:w-auto md:min-w-[9.5rem]"
 		>
-			<p class={lastGenerationContinuing ? 'opacity-0' : 'opacity-100'}>
+			<p class={lastGenerationBeingCreated ? 'opacity-0' : 'opacity-100'}>
 				{$LL.Home.GenerateButton()}
 			</p>
 			<p
-				class="{lastGenerationContinuing
+				class="{lastGenerationBeingCreated
 					? 'opacity-100'
 					: 'opacity-0'} absolute left-0 top-0 w-full h-full flex items-center justify-center"
 			>
@@ -432,7 +444,7 @@
 		</Button>
 	</div>
 	<!-- Tab bars -->
-	{#if !lastGenerationContinuing}
+	{#if !lastGenerationBeingCreated}
 		<div
 			class="w-full flex flex-col justify-start items-center px-4"
 			transition:expandCollapse|local={{ duration: 300 }}
@@ -443,14 +455,14 @@
 					container={$homePageContainer}
 					containerTopMinDistance={12}
 					containerBottomMinDistance={12}
-					disabled={lastGenerationContinuing}
+					disabled={lastGenerationBeingCreated}
 					{formElement}
 					{isCheckComplete}
 				/>
 			</div>
 			<div class="w-full flex flex-col md:hidden justify-start pt-2 items-center relative">
 				<NoBgButton
-					disabled={lastGenerationContinuing || isGenerationSettingsSheetOpen}
+					disabled={lastGenerationBeingCreated || isGenerationSettingsSheetOpen}
 					onClick={() => (isGenerationSettingsSheetOpen = !isGenerationSettingsSheetOpen)}
 				>
 					<div
@@ -465,13 +477,13 @@
 			</div>
 		</div>
 	{/if}
-	{#if lastGenerationContinuing}
+	{#if lastGenerationBeingCreated}
 		<div transition:expandCollapse|local={{ duration: 300 }} class="w-full h-[2vh] md:h-[4vh]" />
 	{/if}
 </form>
 
 <GenerationSettingsSheet
-	disabled={!isGenerationSettingsSheetOpen || lastGenerationContinuing}
+	disabled={!isGenerationSettingsSheetOpen || lastGenerationBeingCreated}
 	bind:isGenerationSettingsSheetOpen
 	{formElement}
 	{isCheckComplete}

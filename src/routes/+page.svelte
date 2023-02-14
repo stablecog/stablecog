@@ -232,7 +232,7 @@
 						</p>
 					{/if}
 				</div>
-			{:else if $generations && $generations.length > 0 && $generations[0].outputs}
+			{:else if $generations && $generations.length > 0 && $generations[0].outputs && $generations[0].status === 'succeeded'}
 				<div
 					transition:expandCollapse|local={{ duration: 300 }}
 					class="w-full flex items-start justify-center rounded-xl origin-top relative z-0 px-4"

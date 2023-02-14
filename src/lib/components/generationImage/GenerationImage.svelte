@@ -22,11 +22,17 @@
 	let rightButtonContainer: HTMLDivElement;
 
 	$: selectedOutput = generation.outputs[selectedOutputIndex];
+
+	let isImageLoaded = false;
+	const onImageLoaded = () => (isImageLoaded = true);
 </script>
 
 <img
+	on:load={onImageLoaded}
 	loading="lazy"
-	class="w-full h-full absolute left-0 top-0"
+	class="w-full h-full absolute left-0 top-0 duration-300 transition {isImageLoaded
+		? 'opacity-100'
+		: 'opacity-0'}"
 	src={useUpscaledImage && selectedOutput.upscaled_image_url
 		? selectedOutput.upscaled_image_url
 		: selectedOutput.image_url}
