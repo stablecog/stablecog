@@ -6,7 +6,11 @@
 	import IconSteps from '$components/icons/IconSteps.svelte';
 	import { doesContainTarget } from '$ts/helpers/doesContainTarget';
 	import { advancedModeApp } from '$ts/stores/advancedMode';
-	import { activeGeneration, type TGeneration } from '$ts/stores/generation';
+	import {
+		activeGeneration,
+		activeGenerationOutputIndex,
+		type TGeneration
+	} from '$ts/stores/generation';
 
 	export let generation: TGeneration;
 	export let selectedOutputIndex: number;
@@ -36,6 +40,7 @@
 			return;
 		}
 		activeGeneration.set(generation);
+		activeGenerationOutputIndex.set(selectedOutputIndex);
 	}}
 	class="w-full h-full absolute left-0 top-0 flex flex-col justify-between items-end overflow-hidden gap-4 cursor-pointer"
 >

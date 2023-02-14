@@ -38,15 +38,7 @@ export const setGenerationToSucceeded = (id: string, outputs: TGenerationOutput[
 			return $generations;
 		}
 		$generations[index].status = 'succeeded';
-		const outputsEdited = outputs.map((o) => {
-			const { image_url, upscaled_image_url, ...rest } = o;
-			return {
-				...rest,
-				image_url: getUrl(image_url),
-				upscaled_image_url: upscaled_image_url ? getUrl(upscaled_image_url) : undefined
-			};
-		});
-		$generations[index].outputs = outputsEdited;
+		$generations[index].outputs = outputs;
 		return $generations;
 	});
 };
@@ -94,13 +86,6 @@ export async function submitInitialGenerationRequest(
 	const resJSON: TInitialGenerationResponse = await response.json();
 	console.log('Generation request response:', resJSON);
 	return resJSON;
-}
-
-function getUrl(url: string) {
-	const prefix = 's3://';
-	const withoutPrefix = url.slice(prefix.length);
-	const [_bucket, ...path] = withoutPrefix.split('/');
-	return `https://b.stablecog.com/${path.join('/')}`;
 }
 
 export interface TInitialGenerationResponse {

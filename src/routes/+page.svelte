@@ -235,28 +235,11 @@
 			{:else if $generations && $generations.length > 0 && $generations[0].outputs}
 				<div
 					transition:expandCollapse|local={{ duration: 300 }}
-					class="w-full flex items-center justify-center rounded-xl origin-top relative z-0 px-4"
+					class="w-full flex items-start justify-center rounded-xl origin-top relative z-0 px-4"
 				>
-					{#each $generations[0].outputs as output, index}
-						{@const aspectRatio = $generations[0].width / $generations[0].height}
-						<div class="max-w-full flex flex-col items-center md:px-5 gap-4 py-3 md:pt-0">
-							<div
-								class="{aspectRatio >= 6 / 2
-									? 'w-180'
-									: aspectRatio >= 4 / 2
-									? 'w-160'
-									: aspectRatio >= 3 / 2
-									? 'w-140'
-									: aspectRatio >= 4 / 3
-									? 'w-128'
-									: aspectRatio >= 1 / 1
-									? 'w-112'
-									: aspectRatio >= 3 / 4
-									? 'w-92'
-									: aspectRatio >= 2 / 3
-									? 'w-84'
-									: 'w-72'} max-w-full h-auto relative"
-							>
+					<div class="w-full max-w-7xl flex items-start justify-center gap-1 md:px-5 py-3 md:pt-0">
+						{#each $generations[0].outputs as output, index}
+							<div class="w-1/4 max-w-full h-auto relative">
 								<ImagePlaceholder width={$generations[0].width} height={$generations[0].height} />
 								{#if !($activeGeneration && $activeGenerationOutputIndex === index)}
 									<div
@@ -273,8 +256,8 @@
 									</div>
 								{/if}
 							</div>
-						</div>
-					{/each}
+						{/each}
+					</div>
 				</div>
 			{/if}
 			{#if $generations.length > 0 && $generations[0].status === 'succeeded' && $shouldSubmitToGallery === undefined}

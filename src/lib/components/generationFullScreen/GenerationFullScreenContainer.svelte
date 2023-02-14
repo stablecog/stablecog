@@ -11,6 +11,7 @@
 	import { windowHeight, windowWidth } from '$ts/stores/window';
 
 	export let generation: TGeneration;
+	export let generationOutputIndex: number;
 	export let canClose: boolean;
 
 	let imageContainerWidth = 0;
@@ -67,8 +68,8 @@
 		overflow-auto lg:my-auto lg:overflow-hidden"
 >
 	<div
-		in:elementreceive|local={{ key: generation.id }}
-		out:elementsend|local={{ key: generation.id }}
+		in:elementreceive|local={{ key: generation.outputs[generationOutputIndex].id }}
+		out:elementsend|local={{ key: generation.outputs[generationOutputIndex].id }}
 		use:clickoutside={{
 			callback: () => {
 				if (canClose) {

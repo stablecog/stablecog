@@ -51,10 +51,14 @@
 	export let generationOutputIndex: number;
 	export let upscaleStatus: TUpscaleStatus = 'idle';
 
-	$: selectedOutput = generation.outputs[generationOutputIndex];
+	let selectedOutput = generation.outputs[generationOutputIndex];
+	let currentImageUrl =
+		selectedOutput.upscaled_image_url && selectedOutput.upscaled_image_url != ''
+			? selectedOutput.upscaled_image_url
+			: selectedOutput.image_url;
+	$: console.log('currentImageUrl', currentImageUrl);
 
 	let upscaleErrorText: string | undefined;
-	let currentImageUrl: string;
 	let upscaledImageWidth: number | undefined;
 	let upscaledImageHeight: number | undefined;
 	$: generation, onGenerationChanged();
@@ -193,14 +197,14 @@
 				mLogUpscale('Succeeded', { ...upscaleMinimal, 'SC - Duration': res.data.duration_ms });
 				const base64 = res.data.image_b64;
 				const url = urlFromBase64(base64);
-				const { upscaledImageDataB64, upscaledImageUrl, ...rest } = generation;
+				/* const { upscaledImageDataB64, upscaledImageUrl, ...rest } = generation;
 				dispatchUpscale('upscale', {
 					generation: {
 						...rest,
 						upscaledImageDataB64: base64,
 						upscaledImageUrl: url
 					}
-				});
+				}); */
 			} else {
 				throw new Error('No image data in response');
 			}
@@ -225,7 +229,11 @@
 	$: upscaledTabValue, setCurrentImageUrl();
 
 	function setCurrentImageUrl() {
-		if (upscaledTabValue === 'upscaled' && selectedOutput.upscaled_image_url !== undefined) {
+		if (
+			upscaledTabValue === 'upscaled' &&
+			selectedOutput.upscaled_image_url !== undefined &&
+			selectedOutput.upscaled_image_url !== ''
+		) {
 			currentImageUrl = selectedOutput.upscaled_image_url;
 		} else {
 			currentImageUrl = selectedOutput.image_url;
@@ -275,9 +283,9 @@
 			await deleteGenerationFromDb(id);
 			activeGeneration.set(undefined);
 			deleteStatus = 'success';
-			setTimeout(() => {
+			/* setTimeout(() => {
 				dispatchDelete('delete', { generation });
-			}, 300);
+			}, 300); */
 		} catch (error) {
 			console.log(error);
 			deleteStatus = 'idle';
@@ -312,6 +320,7 @@
 	</div>
 	<GenerationFullScreenContainer
 		{generation}
+		{generationOutputIndex}
 		{canClose}
 		let:imageContainerWidth
 		let:imageContainerHeight
