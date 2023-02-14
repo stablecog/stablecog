@@ -10,11 +10,10 @@
 		inferenceStepsDefault,
 		maxSeed
 	} from '$ts/constants/main';
-	import { urlFromBase64 } from '$ts/helpers/base64';
 	import { updateGenerationInDb } from '$ts/queries/indexedDb';
 	import { computeRatePerSec } from '$ts/stores/computeRatePerSec';
-	import type { TGenerationUI, TStatus, TUpscaleStatus } from '$ts/types/main';
-	import { onDestroy, onMount, tick } from 'svelte';
+	import type { TGenerationUI, TUpscaleStatus } from '$ts/types/main';
+	import { onDestroy, onMount } from 'svelte';
 	import ImagePlaceholder from '$components/ImagePlaceholder.svelte';
 	import GenerationImage from '$components/generationImage/GenerationImage.svelte';
 	import { advancedModeApp } from '$ts/stores/advancedMode';
@@ -57,11 +56,7 @@
 
 	export let data: THomePageData;
 
-	let status: TStatus = 'idle';
 	let nowInterval: NodeJS.Timeout | undefined;
-	let startTimestamp: number | undefined;
-	let endTimestamp: number | undefined;
-	let generationError: Error | undefined;
 	let estimatedDuration = estimatedDurationDefault;
 	let upscaleStatus: TUpscaleStatus;
 
@@ -90,7 +85,6 @@
 			console.log("No SSE ID, can't create generation");
 			return;
 		}
-		generationError = undefined;
 		const initialRequestProps: TInitialGenerationRequest = {
 			prompt: $promptInputValue,
 			negative_prompt:
@@ -126,6 +120,7 @@
 			submit_to_gallery: $shouldSubmitToGallery ?? false
 		};
 		qeueuInitialGenerationRequest(initialRequestProps);
+		console.log('Queued generation', $generations);
 		uLogGeneration('Started');
 		mLogGeneration(
 			'Started',
@@ -173,7 +168,7 @@
 	function onDelete(event: CustomEvent<{ generation: TGenerationUI }>) {
 		const { generation } = event.detail;
 		console.log('Deleted', generation);
-		status = 'idle';
+		/* status = 'idle'; */
 	}
 
 	let mounted = false;
@@ -203,19 +198,13 @@
 >
 	<div class="w-full flex flex-col items-center justify-center">
 		<div class="w-[calc(100%+2rem)] flex flex-col justify-start items-center z-0 -mx-4">
-			<GenerateBar
-				serverData={data}
-				{status}
-				{queueGeneration}
-				{startTimestamp}
-				{estimatedDuration}
-			/>
-			{#if status === 'error'}
+			<GenerateBar serverData={data} {queueGeneration} {estimatedDuration} />
+			{#if $generations.length > 0 && $generations[0].status === 'failed'}
 				<div
 					transition:expandCollapse|local={{ duration: 300 }}
 					class="flex flex-col justify-start origin-top rounded-2xl"
 				>
-					{#if generationError && generationError.message === 'NEW_VERSION_AVAILABLE'}
+					{#if $generations[0].error === 'NEW_VERSION_AVAILABLE'}
 						<div class="w-full max-w-md py-2 md:py-0 px-4">
 							<div
 								class="w-full flex flex-col items-center p-3 md:p-4 bg-c-primary/8 border-2 border-c-primary/8 rounded-2xl"
@@ -235,11 +224,11 @@
 						<p
 							class="w-full max-w-2xl leading-relaxed text-c-on-bg/40 text-center py-4 md:py-2 px-6"
 						>
-							{generationError
-								? generationError.message === 'NSFW'
-									? $LL.Error.NSFW()
-									: generationError.message
-								: $LL.Error.SomethingWentWrong()}
+							{#if $generations[0].error}
+								{$generations[0].error === 'NSFW' ? $LL.Error.NSFW() : $generations[0].error}
+							{:else}
+								{$LL.Error.SomethingWentWrong()}
+							{/if}
 						</p>
 					{/if}
 				</div>
@@ -288,7 +277,7 @@
 					{/each}
 				</div>
 			{/if}
-			{#if status === 'success' && $shouldSubmitToGallery === undefined}
+			{#if $generations.length > 0 && $generations[0].status === 'succeeded' && $shouldSubmitToGallery === undefined}
 				<SubmitToGallery />
 			{/if}
 		</div>

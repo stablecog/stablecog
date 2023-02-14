@@ -84,7 +84,7 @@ export async function submitInitialGenerationRequest(
 	access_token: string,
 	app_version: string
 ) {
-	const response = await fetch(`${apiUrl.href}v1/user/generation/create`, {
+	const response = await fetch(`${apiUrl.href}v1/user/generation`, {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json',

@@ -39,7 +39,6 @@
 		promptInputValue,
 		negativePromptInputValue
 	} from '$ts/stores/generationSettings';
-	import type { TStatus } from '$ts/types/main';
 	import { onMount, tick } from 'svelte';
 	import LL, { locale } from '$i18n/i18n-svelte';
 	import { isValue } from '$ts/helpers/isValue';
@@ -59,11 +58,10 @@
 	import { browser } from '$app/environment';
 	import { availableModelIds, modelIdDefault } from '$ts/constants/models';
 	import { availableSchedulerIds, schedulerIdDefault } from '$ts/constants/schedulers';
+	import { generations, type TGenerationStatus } from '$ts/stores/generation';
 
 	export let serverData: THomePageData;
 	export let queueGeneration: () => Promise<void>;
-	export let status: TStatus;
-	export let startTimestamp: number | undefined;
 	export let estimatedDuration: number;
 	export { classes as class };
 	let classes = '';
@@ -129,16 +127,24 @@
 	let isGenerationSettingsSheetOpen = false;
 	let isSignInModalOpen = false;
 
-	$: loadingOrSubmitting = status === 'loading' || submitting;
+	let lastGenerationStatus: TGenerationStatus | undefined;
+	$: lastGenerationStatus = $generations.length > 0 ? $generations[0].status : undefined;
+	$: lastGenerationQueuedAt = $generations.length > 0 ? $generations[0].queued_at : undefined;
+	$: lastGenerationContinuing =
+		lastGenerationStatus === 'to-be-submitted' || lastGenerationStatus === 'server-processing';
+
 	$: sinceSec =
-		now !== undefined && startTimestamp !== undefined
-			? Math.max(now - startTimestamp, 0) / 1000
+		now !== undefined && lastGenerationContinuing && lastGenerationQueuedAt
+			? Math.max(now - lastGenerationQueuedAt, 0) / 1000
 			: 0;
-	$: [status], createOrDestroyInterval();
+	$: [lastGenerationStatus], createOrDestroyInterval();
 
 	async function createOrDestroyInterval() {
 		if (nowInterval) clearInterval(nowInterval);
-		if (status === 'loading') {
+		if (lastGenerationStatus === 'succeeded' || lastGenerationStatus === 'failed') {
+			return;
+		}
+		if (lastGenerationStatus === 'to-be-submitted') {
 			nowInterval = setInterval(() => {
 				now = Date.now();
 			}, 100);
@@ -181,7 +187,7 @@
 	$: [$generationModelId], setLocalModelId();
 	$: [$generationSchedulerId], setLocalSchedulerId();
 	$: showClearPromptInputButton =
-		$promptInputValue !== undefined && $promptInputValue !== '' && !loadingOrSubmitting;
+		$promptInputValue !== undefined && $promptInputValue !== '' && !lastGenerationContinuing;
 	$: if (browser && $page.data.session?.user.id) {
 		isSignInModalOpen = false;
 	}
@@ -365,7 +371,7 @@
 						promptInputValue.set($promptInputValue.slice(0, maxPromptLength));
 					}
 				}}
-				disabled={loadingOrSubmitting || !isCheckComplete}
+				disabled={lastGenerationContinuing || !isCheckComplete}
 				{placeholder}
 				rows="1"
 				style="transition: height 0.1s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.2s cubic-bezier(0.4, 0, 0.2, 1), padding 0.2s cubic-bezier(0.4, 0, 0.2, 1)"
@@ -373,13 +379,13 @@
 					scroll-smooth resize-none transition relative pl-5 md:pl-6 py-5 rounded-xl 
 					focus:ring-2 focus:ring-c-primary/30 ring-0 ring-c-primary/20 placeholder:text-c-on-bg/30 {!$isTouchscreen
 					? 'enabled:hover:ring-2'
-					: ''} {classes} {loadingOrSubmitting
+					: ''} {classes} {lastGenerationContinuing
 					? 'text-c-secondary/75'
-					: 'text-c-on-bg'} {!$isTouchscreen && !loadingOrSubmitting
+					: 'text-c-on-bg'} {!$isTouchscreen && !lastGenerationContinuing
 					? 'group-hover:ring-2'
-					: ''} {loadingOrSubmitting ? 'overflow-hidden' : ''}"
+					: ''} {lastGenerationContinuing ? 'overflow-hidden' : ''}"
 			/>
-			{#if loadingOrSubmitting}
+			{#if lastGenerationContinuing}
 				<div
 					class="w-full h-full flex items-end absolute left-0 top-0 overflow-hidden z-0 rounded-xl pointer-events-none"
 				>
@@ -393,15 +399,15 @@
 				class="w-full h-full rounded-xl overflow-hidden z-0 absolute left-0 top-0 pointer-events-none"
 			>
 				<div
-					style="transition-duration: {status === 'loading'
+					style="transition-duration: {lastGenerationContinuing
 						? estimatedDuration
-						: status === 'success' || status === 'error'
+						: lastGenerationStatus === 'succeeded' || lastGenerationStatus === 'failed'
 						? 0.5
 						: 0}s"
 					class="w-full h-full ease-image-generation transition bg-c-secondary/10 
-					absolute left-0 top-0 rounded-xl {status === 'loading'
+					absolute left-0 top-0 rounded-xl {lastGenerationContinuing
 						? 'translate-x-0'
-						: status === 'success' || status === 'error'
+						: lastGenerationStatus === 'succeeded' || lastGenerationStatus === 'failed'
 						? 'translate-x-full'
 						: '-translate-x-full'}"
 				/>
@@ -409,13 +415,15 @@
 			<ClearButton show={showClearPromptInputButton} onClick={clearPrompt} />
 		</div>
 		<Button
-			disabled={loadingOrSubmitting || !isCheckComplete}
-			loading={loadingOrSubmitting}
+			disabled={lastGenerationContinuing || !isCheckComplete}
+			loading={lastGenerationContinuing}
 			class="w-full md:w-auto md:min-w-[9.5rem]"
 		>
-			<p class={loadingOrSubmitting ? 'opacity-0' : 'opacity-100'}>{$LL.Home.GenerateButton()}</p>
+			<p class={lastGenerationContinuing ? 'opacity-0' : 'opacity-100'}>
+				{$LL.Home.GenerateButton()}
+			</p>
 			<p
-				class="{loadingOrSubmitting
+				class="{lastGenerationContinuing
 					? 'opacity-100'
 					: 'opacity-0'} absolute left-0 top-0 w-full h-full flex items-center justify-center"
 			>
@@ -424,7 +432,7 @@
 		</Button>
 	</div>
 	<!-- Tab bars -->
-	{#if status !== 'loading'}
+	{#if !lastGenerationContinuing}
 		<div
 			class="w-full flex flex-col justify-start items-center px-4"
 			transition:expandCollapse|local={{ duration: 300 }}
@@ -435,14 +443,14 @@
 					container={$homePageContainer}
 					containerTopMinDistance={12}
 					containerBottomMinDistance={12}
-					disabled={loadingOrSubmitting}
+					disabled={lastGenerationContinuing}
 					{formElement}
 					{isCheckComplete}
 				/>
 			</div>
 			<div class="w-full flex flex-col md:hidden justify-start pt-2 items-center relative">
 				<NoBgButton
-					disabled={loadingOrSubmitting || isGenerationSettingsSheetOpen}
+					disabled={lastGenerationContinuing || isGenerationSettingsSheetOpen}
 					onClick={() => (isGenerationSettingsSheetOpen = !isGenerationSettingsSheetOpen)}
 				>
 					<div
@@ -457,13 +465,13 @@
 			</div>
 		</div>
 	{/if}
-	{#if loadingOrSubmitting}
+	{#if lastGenerationContinuing}
 		<div transition:expandCollapse|local={{ duration: 300 }} class="w-full h-[2vh] md:h-[4vh]" />
 	{/if}
 </form>
 
 <GenerationSettingsSheet
-	disabled={!isGenerationSettingsSheetOpen || loadingOrSubmitting}
+	disabled={!isGenerationSettingsSheetOpen || lastGenerationContinuing}
 	bind:isGenerationSettingsSheetOpen
 	{formElement}
 	{isCheckComplete}

@@ -145,10 +145,11 @@
 						});
 					} else {
 						setGenerationToServerReceived(id);
+						console.log('After set server received', $generations);
 					}
 				} catch (error) {
 					const err = error as Error;
-					console.log(error);
+					console.log('Initial generation submisssion error', error);
 					setGenerationToFailed(generation.id || generation.ui_id, err.message);
 					logGenerationFailed({
 						generation,
@@ -157,7 +158,6 @@
 						locale: $locale,
 						plan: $page.data.plan
 					});
-					console.log($generations);
 				} finally {
 					isSubmitting = false;
 				}
@@ -177,6 +177,9 @@
 				$sse.onmessage = (event) => {
 					const data = JSON.parse(event.data);
 					console.log('Message from SSE', data);
+					if (data.type === 'live_generation') {
+						return;
+					}
 					if (data.id && data.status === 'succeeded' && data.outputs && data.outputs.length > 0) {
 						setGenerationToSucceeded(data.id, data.outputs);
 						const generationIndex = $generations.findIndex((g) => g.id === data.id);
@@ -192,7 +195,7 @@
 							})
 						);
 					} else if (data.id && data.status === 'failed') {
-						setGenerationToFailed(data.id);
+						setGenerationToFailed(data.id, data.error);
 					}
 				};
 				$sse.onerror = (event) => {
