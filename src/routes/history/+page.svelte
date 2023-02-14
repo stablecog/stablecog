@@ -22,9 +22,12 @@
 	onMount(async () => {
 		loading = true;
 		try {
-			const { total, generations } = await getUserGenerations({ perPage, offset: lastOffset });
-			if (total) {
-				totalGenerations = total;
+			const { total_count, generations } = await getUserGenerations({
+				perPage,
+				offset: lastOffset
+			});
+			if (total_count) {
+				totalGenerations = total_count;
 			}
 			for (let i = 0; i < generations.length; i++) {
 				const generation = generations[i];
@@ -62,7 +65,7 @@
 		});
 		const data: {
 			generations: TGeneration[];
-			total?: number;
+			total_count?: number;
 		} = await res.json();
 		console.log(data);
 		return data;
@@ -82,6 +85,9 @@
 			<div class="flex gap-2 items-center">
 				<p class="font-bold text-xl md:text-2xl">
 					{$LL.History.GenerationsTitle()}
+				</p>
+				<p class="text-sm md:text-base text-c-on-bg/50 font-semibold mt-0.5 md:mt-1">
+					({totalGenerations !== undefined ? totalGenerations : '...'})
 				</p>
 			</div>
 		</div>
