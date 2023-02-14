@@ -16,12 +16,16 @@
 	let generationOutputsWithGeneration: TGenerationOutputWithGeneration[];
 	let lastOffset: string;
 	const perPage = 50;
+	let totalGenerations: number;
 
 	let loading = true;
 	onMount(async () => {
 		loading = true;
 		try {
-			const generations = await getUserGenerations({ perPage, offset: lastOffset });
+			const { total, generations } = await getUserGenerations({ perPage, offset: lastOffset });
+			if (total) {
+				totalGenerations = total;
+			}
 			for (let i = 0; i < generations.length; i++) {
 				const generation = generations[i];
 				const outputsWithGeneration: TGenerationOutputWithGeneration[] = generation.outputs.map(
@@ -56,7 +60,10 @@
 				Authorization: 'Bearer ' + $page.data.session?.access_token
 			}
 		});
-		const data: TGeneration[] = await res.json();
+		const data: {
+			generations: TGeneration[];
+			total?: number;
+		} = await res.json();
 		console.log(data);
 		return data;
 	}
