@@ -31,6 +31,9 @@
 			}
 			for (let i = 0; i < generations.length; i++) {
 				const generation = generations[i];
+				if (!generation.outputs || generation.outputs.length === 0) {
+					continue;
+				}
 				const outputsWithGeneration: TGenerationOutputWithGeneration[] = generation.outputs.map(
 					(output) => {
 						return {

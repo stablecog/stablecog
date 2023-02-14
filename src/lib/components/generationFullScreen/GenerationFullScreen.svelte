@@ -51,11 +51,10 @@
 	export let generationOutputIndex: number;
 	export let upscaleStatus: TUpscaleStatus = 'idle';
 
-	let selectedOutput = generation.outputs[generationOutputIndex];
-	let currentImageUrl = selectedOutput.upscaled_image_url
+	$: selectedOutput = generation.outputs[generationOutputIndex];
+	$: currentImageUrl = selectedOutput.upscaled_image_url
 		? selectedOutput.upscaled_image_url
 		: selectedOutput.image_url;
-	$: console.log('currentImageUrl', currentImageUrl);
 
 	let upscaleErrorText: string | undefined;
 	let upscaledImageWidth: number | undefined;
