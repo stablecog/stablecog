@@ -1,6 +1,6 @@
 <script lang="ts">
 	import IconDownload from '$components/icons/IconDownload.svelte';
-	import { downloadGenerationImage } from '$ts/helpers/dowloadGenerationImage';
+	import { downloadGenerationImage } from '$ts/helpers/downloadGenerationImage';
 	import { isTouchscreen } from '$ts/stores/isTouchscreen';
 
 	export let url: string;

@@ -61,7 +61,6 @@
 	let nowInterval: NodeJS.Timeout | undefined;
 	let startTimestamp: number | undefined;
 	let endTimestamp: number | undefined;
-	let lastGeneration: TGenerationUI;
 	let generationError: Error | undefined;
 	let estimatedDuration = estimatedDurationDefault;
 	let upscaleStatus: TUpscaleStatus;
@@ -162,13 +161,13 @@
 		} catch (error) {
 			console.log('IndexDB error', error);
 		}
-		lastGeneration.upscaledImageDataB64 = rest.upscaledImageDataB64;
+		/* lastGeneration.upscaledImageDataB64 = rest.upscaledImageDataB64;
 		if (rest.upscaledImageDataB64) {
 			lastGeneration.upscaledImageUrl = urlFromBase64(rest.upscaledImageDataB64);
 		}
 		if ($activeGeneration) {
 			activeGeneration.set(lastGeneration);
-		}
+		} */
 	}
 
 	function onDelete(event: CustomEvent<{ generation: TGenerationUI }>) {
@@ -244,13 +243,13 @@
 						</p>
 					{/if}
 				</div>
-			{:else if $generations && $generations[0].outputs}
-				{@const aspectRatio = lastGeneration.width / lastGeneration.height}
+			{:else if $generations && $generations.length > 0 && $generations[0].outputs}
 				<div
 					transition:expandCollapse|local={{ duration: 300 }}
 					class="w-full flex items-center justify-center rounded-xl origin-top relative z-0 px-4"
 				>
-					{#each $generations[0].outputs as _, index}
+					{#each $generations[0].outputs as output, index}
+						{@const aspectRatio = $generations[0].width / $generations[0].height}
 						<div class="max-w-full flex flex-col items-center md:px-5 gap-4 py-3 md:pt-0">
 							<div
 								class="{aspectRatio >= 6 / 2
@@ -269,13 +268,13 @@
 									? 'w-84'
 									: 'w-72'} max-w-full h-auto relative"
 							>
-								<ImagePlaceholder width={lastGeneration.width} height={lastGeneration.height} />
-								{#if !($activeGeneration && $activeGeneration.id === lastGeneration.id)}
+								<ImagePlaceholder width={$generations[0].width} height={$generations[0].height} />
+								{#if !($activeGeneration && $activeGenerationOutputIndex === index)}
 									<div
 										class="absolute w-full h-full left-0 top-0 rounded-2xl bg-c-bg-secondary z-0 overflow-hidden border-4 
 											shadow-lg shadow-c-shadow/[var(--o-shadow-normal)] border-c-bg-secondary group"
-										in:elementreceive|local={{ key: lastGeneration.id }}
-										out:elementsend|local={{ key: lastGeneration.id }}
+										in:elementreceive|local={{ key: output.id }}
+										out:elementsend|local={{ key: output.id }}
 									>
 										<GenerationImage
 											generation={$generations[0]}

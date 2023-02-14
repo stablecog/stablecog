@@ -1,8 +1,8 @@
-import { apiBase } from '$ts/constants/main';
+import { apiUrl } from '$ts/constants/main';
 
 export async function upscaleGenerationOutput({ output_id }: TUpscaleRequest) {
 	const endpoint = 'upscale';
-	const response = await fetch(`${apiBase}/${endpoint}`, {
+	const response = await fetch(`${apiUrl.href}${endpoint}`, {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json'
