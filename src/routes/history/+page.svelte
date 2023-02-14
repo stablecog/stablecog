@@ -26,7 +26,7 @@
 				perPage,
 				offset: lastOffset
 			});
-			if (total_count) {
+			if (total_count !== undefined) {
 				totalGenerations = total_count;
 			}
 			for (let i = 0; i < generations.length; i++) {
