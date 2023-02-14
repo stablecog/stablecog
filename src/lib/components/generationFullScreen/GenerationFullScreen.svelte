@@ -530,10 +530,7 @@
 										deleteStatus === 'should-confirm' ? (deleteStatus = 'idle') : null
 								}}
 							>
-								<SubtleButton
-									disabled={deleteStatus === 'loading'}
-									onClick={() => deleteGeneration(generation.id)}
-								>
+								<SubtleButton disabled={deleteStatus === 'loading'} onClick={() => null}>
 									<Morpher morphed={deleteStatus === 'should-confirm'}>
 										<div
 											slot="item-0"

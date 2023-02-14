@@ -5,6 +5,7 @@ import { writable } from 'svelte/store';
 
 export const activeGeneration = writable<TGeneration | undefined>(undefined);
 export const activeGenerationOutputIndex = writable(0);
+export const activeGenerationOutputId = writable<string | undefined>(undefined);
 export const generations = writable<TGeneration[]>([]);
 
 export const setGenerationToFailed = (id: string, error?: string) => {
@@ -135,6 +136,10 @@ export interface TGenerationOutput {
 	created_at: string;
 	updated_at: string;
 	generation_id: string;
+}
+
+export interface TGenerationOutputWithGeneration extends TGenerationOutput {
+	generation: TGeneration;
 }
 
 export type TGenerationStatus =

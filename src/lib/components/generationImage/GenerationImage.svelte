@@ -8,6 +8,7 @@
 	import { advancedModeApp } from '$ts/stores/advancedMode';
 	import {
 		activeGeneration,
+		activeGenerationOutputId,
 		activeGenerationOutputIndex,
 		type TGeneration
 	} from '$ts/stores/generation';
@@ -47,6 +48,7 @@
 		}
 		activeGeneration.set(generation);
 		activeGenerationOutputIndex.set(selectedOutputIndex);
+		activeGenerationOutputId.set(selectedOutput.id);
 	}}
 	class="w-full h-full absolute left-0 top-0 flex flex-col justify-between items-end overflow-hidden gap-4 cursor-pointer"
 >

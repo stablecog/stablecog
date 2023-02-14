@@ -24,6 +24,7 @@
 	} from '$ts/helpers/loggers';
 	import {
 		activeGeneration,
+		activeGenerationOutputId,
 		activeGenerationOutputIndex,
 		generations,
 		qeueuInitialGenerationRequest,
@@ -267,7 +268,7 @@
 	</div>
 </div>
 
-{#if $activeGeneration}
+{#if $activeGeneration && $activeGenerationOutputId && $activeGenerationOutputIndex !== undefined}
 	<GenerationFullScreen
 		bind:upscaleStatus
 		on:delete={onDelete}
