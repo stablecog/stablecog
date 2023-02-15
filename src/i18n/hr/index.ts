@@ -225,7 +225,8 @@ const hr: Translation = {
 		MoreOptionsTitle: 'Više opcija',
 		LessOptionsTitle: 'Manje opcija',
 		TryAgainButton: 'Pokušaj ponovno',
-		RefreshButton: 'Refresh'
+		RefreshButton: 'Refresh',
+		LoadMoreButton: 'Load More'
 	},
 	Error: {
 		SomethingWentWrong: 'Dogodila se greška :(',

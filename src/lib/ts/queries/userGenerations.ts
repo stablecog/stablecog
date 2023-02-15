@@ -1,7 +1,7 @@
 import { apiUrl } from '$ts/constants/main';
 import type { TGeneration, TGenerationOutputWithGeneration } from '$ts/stores/generation';
 
-const perPage = 100;
+const perPage = 50;
 export async function getUserGenerations({
 	cursor,
 	access_token

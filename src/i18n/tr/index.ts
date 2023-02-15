@@ -226,7 +226,8 @@ const tr: Translation = {
 		MoreOptionsTitle: 'Daha Fazla Seçenek',
 		LessOptionsTitle: 'Daha Az Seçenek',
 		TryAgainButton: 'Yeniden Dene',
-		RefreshButton: 'Yenile'
+		RefreshButton: 'Yenile',
+		LoadMoreButton: 'Load More'
 	},
 	Error: {
 		SomethingWentWrong: 'Bir şeyler ters gitti :(',

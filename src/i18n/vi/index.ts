@@ -226,7 +226,8 @@ const vi: Translation = {
 		MoreOptionsTitle: 'Tuỳ chọn khác',
 		LessOptionsTitle: 'Tùy chọn ít hơn',
 		TryAgainButton: 'Thử lại',
-		RefreshButton: 'Refresh'
+		RefreshButton: 'Refresh',
+		LoadMoreButton: 'Load More'
 	},
 	Error: {
 		SomethingWentWrong: 'Đã xảy ra lỗi :(',

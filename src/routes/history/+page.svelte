@@ -34,7 +34,7 @@
 		if (!$userGenerationsQuery.data?.pages) return;
 		for (let i = 0; i < $userGenerationsQuery.data.pages.length; i++) {
 			let page = $userGenerationsQuery.data.pages[i];
-			if (page.total_count) {
+			if (page.total_count !== undefined) {
 				totalGenerations = page.total_count;
 			}
 		}

@@ -226,7 +226,8 @@ const en: BaseTranslation = {
 		MoreOptionsTitle: 'More Options',
 		LessOptionsTitle: 'Less Options',
 		TryAgainButton: 'Try Again',
-		RefreshButton: 'Refresh'
+		RefreshButton: 'Refresh',
+		LoadMoreButton: 'Load More'
 	},
 	Error: {
 		SomethingWentWrong: 'Something went wrong :(',

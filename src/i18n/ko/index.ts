@@ -226,7 +226,8 @@ const ko: Translation = {
 		MoreOptionsTitle: '더 많은 옵션 보기',
 		LessOptionsTitle: '옵션 숨기기',
 		TryAgainButton: '다시 시도하기',
-		RefreshButton: 'Refresh'
+		RefreshButton: 'Refresh',
+		LoadMoreButton: 'Load More'
 	},
 	Error: {
 		SomethingWentWrong: '웁스.. 뭔가 잘못됐어요. :(',

@@ -645,6 +645,10 @@ type RootTranslation = {
 		 * R​e​f​r​e​s​h
 		 */
 		RefreshButton: string
+		/**
+		 * L​o​a​d​ ​M​o​r​e
+		 */
+		LoadMoreButton: string
 	}
 	Error: {
 		/**
@@ -1781,6 +1785,10 @@ export type TranslationFunctions = {
 		 * Refresh
 		 */
 		RefreshButton: () => LocalizedString
+		/**
+		 * Load More
+		 */
+		LoadMoreButton: () => LocalizedString
 	}
 	Error: {
 		/**

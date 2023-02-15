@@ -223,7 +223,8 @@ const zhHans: Translation = {
 		MoreOptionsTitle: 'More Options',
 		LessOptionsTitle: 'Less Options',
 		TryAgainButton: 'Try Again',
-		RefreshButton: 'Refresh'
+		RefreshButton: 'Refresh',
+		LoadMoreButton: 'Load More'
 	},
 	Error: {
 		SomethingWentWrong: '出了问题:(',

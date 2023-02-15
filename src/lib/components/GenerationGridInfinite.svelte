@@ -39,13 +39,17 @@
 	<div class="w-full flex-1 flex flex-col justify-center items-center pt-8 px-5 gap-6">
 		<p class="text-c-on-bg/50">{$LL.History.NoGenerationsYet()}</p>
 		<Button href="/">{$LL.Shared.StartGeneratingButton()}</Button>
-		<div class="h-[1vh]" />
+		<div class="h-[2vh]" />
 	</div>
 {:else if $generationsQuery.isSuccess}
-	<div class="w-full flex flex-row flex-wrap">
-		{#if $generationsQuery.data.pages.length === 1 && $generationsQuery.data.pages[0].generationOutputsWithGeneration.length === 0}
-			<p>{$generationsQuery.data.pages.length}</p>
-		{:else}
+	{#if $generationsQuery.data.pages.length === 1 && $generationsQuery.data.pages[0].generationOutputsWithGeneration.length === 0}
+		<div class="w-full flex-1 flex flex-col justify-center items-center pt-8 px-5 gap-6">
+			<p class="text-c-on-bg/50">{$LL.History.NoGenerationsYet()}</p>
+			<Button href="/">{$LL.Shared.StartGeneratingButton()}</Button>
+			<div class="h-[1vh]" />
+		</div>
+	{:else}
+		<div class="w-full flex-1 flex flex-row flex-wrap">
 			{#each $generationsQuery.data.pages as { generationOutputsWithGeneration }}
 				{#each generationOutputsWithGeneration as generationOutputWithGeneration}
 					<div class="w-full sm:w-1/2 md:w-1/3 lg:w-1/4 p-0.5">
@@ -80,20 +84,20 @@
 					</div>
 				{/each}
 			{/each}
-		{/if}
-		<div class="w-full flex flex-row items-center justify-center mt-5">
-			{#if $generationsQuery.hasNextPage}
-				<Button
-					withSpinner
-					size="sm"
-					loading={$generationsQuery.isFetchingNextPage}
-					onClick={() => {
-						$generationsQuery.fetchNextPage();
-					}}
-				>
-					Load More
-				</Button>
-			{/if}
+			<div class="w-full flex flex-row items-center justify-center mt-5">
+				{#if $generationsQuery.hasNextPage}
+					<Button
+						withSpinner
+						size="sm"
+						loading={$generationsQuery.isFetchingNextPage}
+						onClick={() => {
+							$generationsQuery.fetchNextPage();
+						}}
+					>
+						{$LL.Shared.LoadMoreButton()}
+					</Button>
+				{/if}
+			</div>
 		</div>
-	</div>
+	{/if}
 {/if}

@@ -226,7 +226,8 @@ const es: Translation = {
 		MoreOptionsTitle: 'Más Opciones',
 		LessOptionsTitle: 'Menos Opciones',
 		TryAgainButton: 'Try Again',
-		RefreshButton: 'Refresh'
+		RefreshButton: 'Refresh',
+		LoadMoreButton: 'Load More'
 	},
 	Error: {
 		SomethingWentWrong: 'Algo salió mal :(',

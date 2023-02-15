@@ -226,7 +226,8 @@ const ru: Translation = {
 		MoreOptionsTitle: 'Больше опций',
 		LessOptionsTitle: 'Меньше опций',
 		TryAgainButton: 'Try Again',
-		RefreshButton: 'Refresh'
+		RefreshButton: 'Refresh',
+		LoadMoreButton: 'Load More'
 	},
 	Error: {
 		SomethingWentWrong: 'Что-то пошло не так :(',

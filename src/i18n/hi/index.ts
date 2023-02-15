@@ -225,7 +225,8 @@ const hi: Translation = {
 		MoreOptionsTitle: 'अधिक विकल्प',
 		LessOptionsTitle: 'कम विकल्प',
 		TryAgainButton: 'Try Again',
-		RefreshButton: 'Refresh'
+		RefreshButton: 'Refresh',
+		LoadMoreButton: 'Load More'
 	},
 	Error: {
 		SomethingWentWrong: 'कुछ गलत हो गया :(',

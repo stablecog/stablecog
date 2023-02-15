@@ -225,7 +225,8 @@ const ptBr: Translation = {
 		MoreOptionsTitle: 'Mais Opções',
 		LessOptionsTitle: 'Menos Opções',
 		TryAgainButton: 'Tente Novamente',
-		RefreshButton: 'Refresh'
+		RefreshButton: 'Refresh',
+		LoadMoreButton: 'Load More'
 	},
 	Error: {
 		SomethingWentWrong: 'Algo deu errado :(',

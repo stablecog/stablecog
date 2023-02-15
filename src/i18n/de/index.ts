@@ -225,7 +225,8 @@ const de: Translation = {
 		MoreOptionsTitle: 'Weitere Optionen',
 		LessOptionsTitle: 'Weniger Optionen',
 		TryAgainButton: 'Try Again',
-		RefreshButton: 'Refresh'
+		RefreshButton: 'Refresh',
+		LoadMoreButton: 'Load More'
 	},
 	Error: {
 		SomethingWentWrong: 'Etwas ist schiefgelaufen :(',

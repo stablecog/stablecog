@@ -226,7 +226,8 @@ const ja: Translation = {
 		MoreOptionsTitle: 'オプションを表示',
 		LessOptionsTitle: 'オプションを隠す',
 		TryAgainButton: '再試行',
-		RefreshButton: 'Refresh'
+		RefreshButton: 'Refresh',
+		LoadMoreButton: 'Load More'
 	},
 	Error: {
 		SomethingWentWrong: '不具合が発生しました。',
