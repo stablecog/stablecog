@@ -50,6 +50,7 @@
 		activeGenerationOutputIndex.set(selectedOutputIndex);
 		activeGenerationOutputId.set(selectedOutput.id);
 	}}
+	on:keydown={() => null}
 	class="w-full h-full absolute left-0 top-0 flex flex-col justify-between items-end overflow-hidden gap-4 cursor-pointer"
 >
 	<div class="w-full flex justify-between items-start gap-8">

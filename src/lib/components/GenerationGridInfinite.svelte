@@ -5,100 +5,95 @@
 	import ImagePlaceholder from '$components/ImagePlaceholder.svelte';
 	import LL from '$i18n/i18n-svelte';
 	import { elementreceive, elementsend } from '$ts/animation/transitions';
+	import type { TUserGenerationOutputsWithGenerationsPage } from '$ts/queries/userGenerations';
 	import {
 		activeGeneration,
 		activeGenerationOutputId,
 		activeGenerationOutputIndex,
-		type TGeneration,
-		type TGenerationOutputWithGeneration
+		type TGeneration
 	} from '$ts/stores/generation';
-	import { MasonryInfiniteGrid } from '@egjs/svelte-infinitegrid';
+	import type { CreateInfiniteQueryResult } from '@tanstack/svelte-query';
 
-	export let generationOutputsWithGeneration: TGenerationOutputWithGeneration[] | undefined =
-		undefined;
-	export let loading = true;
+	export let generationsQuery: CreateInfiniteQueryResult<
+		TUserGenerationOutputsWithGenerationsPage,
+		unknown
+	>;
 
-	const batchSize = 50;
-	$: items =
-		generationOutputsWithGeneration?.slice(0, batchSize).map((_, i) => ({
-			groupKey: 0,
-			key: i
-		})) || Array.from({ length: batchSize }, (_, i) => ({ groupKey: 0, key: i }));
-
-	function getItems(nextGroupKey: number) {
-		const nextItems = [];
-		for (let i = 0; i < batchSize; ++i) {
-			const nextKey = nextGroupKey * batchSize + i;
-			nextItems.push({ groupKey: nextGroupKey, key: nextKey });
+	const getOutputIndex = (generationOutputId: string, generation: TGeneration) => {
+		let generationOutputIndex = 0;
+		for (let i = 0; i < generation.outputs.length; i++) {
+			if (generation.outputs[i].id === generationOutputId) {
+				generationOutputIndex = i;
+				break;
+			}
 		}
-		return nextItems;
-	}
-
-	const getOutputIndex = (id: string, generation: TGeneration) => {
-		const index = generation.outputs.findIndex((output) => output.id === id);
-		return index === -1 ? 0 : index;
+		return generationOutputIndex;
 	};
 </script>
 
-{#if generationOutputsWithGeneration && generationOutputsWithGeneration.length > 0}
-	<MasonryInfiniteGrid
-		align="center"
-		resizeDebounce={1}
-		gap={0}
-		column={0}
-		threshold={1000}
-		{items}
-		let:visibleItems
-	>
-		{#each visibleItems as item (item.key)}
-			<div class="w-full sm:w-1/2 md:w-1/3 lg:w-1/4 p-0.5">
-				<div class="w-full relative group">
-					<ImagePlaceholder
-						width={generationOutputsWithGeneration
-							? generationOutputsWithGeneration[item.key].generation.width
-							: 512}
-						height={generationOutputsWithGeneration
-							? generationOutputsWithGeneration[item.key].generation.height
-							: 512}
-					/>
-					{#if !$activeGeneration || $activeGenerationOutputIndex === undefined || $activeGenerationOutputId !== generationOutputsWithGeneration[item.key].id}
-						<div
-							in:elementreceive|local={{
-								key: generationOutputsWithGeneration
-									? generationOutputsWithGeneration[item.key].id
-									: '1'
-							}}
-							out:elementsend|local={{
-								key: generationOutputsWithGeneration
-									? generationOutputsWithGeneration[item.key].id
-									: '1'
-							}}
-							class="absolute left-0 top-0 w-full h-full rounded-xl bg-c-bg-secondary z-0 overflow-hidden border-4 
-						shadow-lg shadow-c-shadow/[var(--o-shadow-normal)] border-c-bg-secondary"
-						>
-							{#if generationOutputsWithGeneration !== undefined}
-								<GenerationImage
-									generation={generationOutputsWithGeneration[item.key].generation}
-									selectedOutputIndex={getOutputIndex(
-										generationOutputsWithGeneration[item.key].id,
-										generationOutputsWithGeneration[item.key].generation
-									)}
-								/>
-							{/if}
-						</div>
-					{/if}
-				</div>
-			</div>
-		{/each}
-	</MasonryInfiniteGrid>
-{:else if loading || !generationOutputsWithGeneration || items.length !== generationOutputsWithGeneration.length}
+{#if $generationsQuery.isLoading}
 	<div class="w-full flex flex-col flex-1 items-center justify-center py-12">
 		<IconLoadingSlim class="animate-spin-faster w-12 h-12 text-c-on-bg/50" />
 	</div>
-{:else}
+{:else if $generationsQuery.data?.pages.length === 0}
 	<div class="w-full flex-1 flex flex-col justify-center items-center pt-8 px-5 gap-6">
 		<p class="text-c-on-bg/50">{$LL.History.NoGenerationsYet()}</p>
 		<Button href="/">{$LL.Shared.StartGeneratingButton()}</Button>
 		<div class="h-[1vh]" />
+	</div>
+{:else if $generationsQuery.isSuccess}
+	<div class="w-full flex flex-row flex-wrap">
+		{#if $generationsQuery.data.pages.length === 1 && $generationsQuery.data.pages[0].generationOutputsWithGeneration.length === 0}
+			<p>{$generationsQuery.data.pages.length}</p>
+		{:else}
+			{#each $generationsQuery.data.pages as { generationOutputsWithGeneration }}
+				{#each generationOutputsWithGeneration as generationOutputWithGeneration}
+					<div class="w-full sm:w-1/2 md:w-1/3 lg:w-1/4 p-0.5">
+						<div class="w-full relative group">
+							<ImagePlaceholder
+								width={generationOutputWithGeneration.generation.width}
+								height={generationOutputWithGeneration.generation.height}
+							/>
+							{#if !$activeGeneration || $activeGenerationOutputIndex === undefined || $activeGenerationOutputId !== generationOutputWithGeneration.id}
+								<div
+									in:elementreceive|local={{
+										key: generationOutputWithGeneration.id
+									}}
+									out:elementsend|local={{
+										key: generationOutputWithGeneration.id
+									}}
+									class="absolute left-0 top-0 w-full h-full rounded-xl bg-c-bg-secondary z-0 overflow-hidden border-4 
+										shadow-lg shadow-c-shadow/[var(--o-shadow-normal)] border-c-bg-secondary"
+								>
+									{#if generationOutputsWithGeneration !== undefined}
+										<GenerationImage
+											generation={generationOutputWithGeneration.generation}
+											selectedOutputIndex={getOutputIndex(
+												generationOutputWithGeneration.id,
+												generationOutputWithGeneration.generation
+											)}
+										/>
+									{/if}
+								</div>
+							{/if}
+						</div>
+					</div>
+				{/each}
+			{/each}
+		{/if}
+		<div class="w-full flex flex-row items-center justify-center mt-5">
+			{#if $generationsQuery.hasNextPage}
+				<Button
+					withSpinner
+					size="sm"
+					loading={$generationsQuery.isFetchingNextPage}
+					onClick={() => {
+						$generationsQuery.fetchNextPage();
+					}}
+				>
+					Load More
+				</Button>
+			{/if}
+		</div>
 	</div>
 {/if}

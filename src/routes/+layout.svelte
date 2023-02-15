@@ -37,9 +37,18 @@
 		submitInitialGenerationRequest
 	} from '$ts/stores/generation';
 	import { generateSSEId } from '$ts/helpers/generateSSEId';
+	import { QueryClient, QueryClientProvider } from '@tanstack/svelte-query';
 
 	export let data: LayoutData;
 	setLocale(data.locale);
+
+	const queryClient = new QueryClient({
+		defaultOptions: {
+			queries: {
+				enabled: browser
+			}
+		}
+	});
 
 	const th = data.themeStore;
 	themeApp.set($th);
@@ -230,26 +239,28 @@
 
 <svelte:window bind:innerHeight bind:innerWidth />
 
-<div
-	class="w-full relative bg-c-bg text-c-on-bg
-	min-h-screen flex flex-col {$themeApp === 'light' ? 'theme-light' : 'theme-dark'}"
-	style="background-image: url({$themeApp === 'light'
-		? '/illustrations/grid-on-light.svg'
-		: '/illustrations/grid-on-dark.svg'}); background-size: 24px;{innerHeight !== undefined
-		? `min-height: ${innerHeight}px`
-		: ''}"
->
-	<Navbar />
-	<main class="w-full flex-1 flex flex-col relative break-words">
-		<slot />
-	</main>
-	{#if !routesWithHiddenFooter.includes($page.url.pathname)}
-		<Footer />
-	{/if}
-	<NavbarBottom class="md:hidden h-[calc(3.75rem+env(safe-area-inset-bottom))]" />
-	<div class="md:hidden h-[calc(3.75rem+env(safe-area-inset-bottom))]" />
+<QueryClientProvider client={queryClient}>
 	<div
-		id="tooltip-container"
-		class="absolute overflow-x-hidden left-0 top-0 w-full h-full pointer-events-none"
-	/>
-</div>
+		class="w-full relative bg-c-bg text-c-on-bg
+	min-h-screen flex flex-col {$themeApp === 'light' ? 'theme-light' : 'theme-dark'}"
+		style="background-image: url({$themeApp === 'light'
+			? '/illustrations/grid-on-light.svg'
+			: '/illustrations/grid-on-dark.svg'}); background-size: 24px;{innerHeight !== undefined
+			? `min-height: ${innerHeight}px`
+			: ''}"
+	>
+		<Navbar />
+		<main class="w-full flex-1 flex flex-col relative break-words">
+			<slot />
+		</main>
+		{#if !routesWithHiddenFooter.includes($page.url.pathname)}
+			<Footer />
+		{/if}
+		<NavbarBottom class="md:hidden h-[calc(3.75rem+env(safe-area-inset-bottom))]" />
+		<div class="md:hidden h-[calc(3.75rem+env(safe-area-inset-bottom))]" />
+		<div
+			id="tooltip-container"
+			class="absolute overflow-x-hidden left-0 top-0 w-full h-full pointer-events-none"
+		/>
+	</div>
+</QueryClientProvider>

@@ -4,75 +4,41 @@
 	import GenerationGridInfinite from '$components/GenerationGridInfinite.svelte';
 	import MetaTag from '$components/MetaTag.svelte';
 	import LL from '$i18n/i18n-svelte';
-	import { apiUrl, canonicalUrl } from '$ts/constants/main';
+	import { canonicalUrl } from '$ts/constants/main';
 	import {
-		activeGeneration,
-		activeGenerationOutputIndex,
-		type TGeneration,
-		type TGenerationOutputWithGeneration
-	} from '$ts/stores/generation';
-	import { onMount } from 'svelte';
+		getUserGenerations,
+		type TUserGenerationOutputsWithGenerationsPage
+	} from '$ts/queries/userGenerations';
+	import { activeGeneration, activeGenerationOutputIndex } from '$ts/stores/generation';
+	import { createInfiniteQuery } from '@tanstack/svelte-query';
 
-	let generationOutputsWithGeneration: TGenerationOutputWithGeneration[];
-	let lastOffset: string;
-	const perPage = 50;
 	let totalGenerations: number;
 
-	let loading = true;
-	onMount(async () => {
-		loading = true;
-		try {
-			const { total_count, generations } = await getUserGenerations({
-				perPage,
-				offset: lastOffset
+	$: userGenerationsQuery = createInfiniteQuery({
+		queryKey: ['user_generations'],
+		queryFn: (lastPage) => {
+			return getUserGenerations({
+				access_token: $page.data.session?.access_token || '',
+				cursor: lastPage?.pageParam
 			});
-			if (total_count !== undefined) {
-				totalGenerations = total_count;
-			}
-			for (let i = 0; i < generations.length; i++) {
-				const generation = generations[i];
-				if (!generation.outputs || generation.outputs.length === 0) {
-					continue;
-				}
-				const outputsWithGeneration: TGenerationOutputWithGeneration[] = generation.outputs.map(
-					(output) => {
-						return {
-							...output,
-							generation
-						};
-					}
-				);
-				if (!generationOutputsWithGeneration) {
-					generationOutputsWithGeneration = [];
-				}
-				generationOutputsWithGeneration.push(...outputsWithGeneration);
-			}
-		} catch (error) {
-			console.log('Generations error', error);
+		},
+		getNextPageParam: (lastPage: TUserGenerationOutputsWithGenerationsPage) => {
+			if (!lastPage.next) return undefined;
+			return lastPage.next;
 		}
-		loading = false;
 	});
 
-	async function getUserGenerations({ perPage, offset }: { perPage: number; offset: string }) {
-		const query = new URLSearchParams();
-		query.append('per_page', perPage.toString());
-		if (offset) {
-			query.append('offset', offset);
-		}
-		const url = `${apiUrl.href}v1/user/generation?${query.toString()}`;
-		const res = await fetch(url, {
-			headers: {
-				'Content-Type': 'application/json',
-				Authorization: 'Bearer ' + $page.data.session?.access_token
+	$: $userGenerationsQuery.data?.pages, onPagesChanged();
+
+	const onPagesChanged = () => {
+		if (!$userGenerationsQuery.data?.pages) return;
+		for (let i = 0; i < $userGenerationsQuery.data.pages.length; i++) {
+			let page = $userGenerationsQuery.data.pages[i];
+			if (page.total_count) {
+				totalGenerations = page.total_count;
 			}
-		});
-		const data: {
-			generations: TGeneration[];
-			total_count?: number;
-		} = await res.json();
-		console.log(data);
-		return data;
-	}
+		}
+	};
 </script>
 
 <MetaTag
@@ -96,7 +62,7 @@
 		</div>
 	</div>
 	<div class="w-full flex-1 max-w-7xl flex flex-col">
-		<GenerationGridInfinite {generationOutputsWithGeneration} {loading} />
+		<GenerationGridInfinite generationsQuery={userGenerationsQuery} />
 	</div>
 </div>
 
