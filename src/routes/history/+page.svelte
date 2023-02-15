@@ -6,36 +6,36 @@
 	import LL from '$i18n/i18n-svelte';
 	import { canonicalUrl } from '$ts/constants/main';
 	import {
-		getUserGenerations,
-		type TUserGenerationOutputsWithGenerationsPage
+		getUserGenerationFullOutputs,
+		type TUserGenerationFullOutputsPage
 	} from '$ts/queries/userGenerations';
 	import { activeGeneration, activeGenerationOutputIndex } from '$ts/stores/generation';
 	import { createInfiniteQuery } from '@tanstack/svelte-query';
 
-	let totalGenerations: number;
+	let totalOutputs: number;
 
-	$: userGenerationsQuery = createInfiniteQuery({
+	$: userGenerationFullOutputsQuery = createInfiniteQuery({
 		queryKey: ['user_generations'],
 		queryFn: (lastPage) => {
-			return getUserGenerations({
+			return getUserGenerationFullOutputs({
 				access_token: $page.data.session?.access_token || '',
 				cursor: lastPage?.pageParam
 			});
 		},
-		getNextPageParam: (lastPage: TUserGenerationOutputsWithGenerationsPage) => {
+		getNextPageParam: (lastPage: TUserGenerationFullOutputsPage) => {
 			if (!lastPage.next) return undefined;
 			return lastPage.next;
 		}
 	});
 
-	$: $userGenerationsQuery.data?.pages, onPagesChanged();
+	$: $userGenerationFullOutputsQuery.data?.pages, onPagesChanged();
 
 	const onPagesChanged = () => {
-		if (!$userGenerationsQuery.data?.pages) return;
-		for (let i = 0; i < $userGenerationsQuery.data.pages.length; i++) {
-			let page = $userGenerationsQuery.data.pages[i];
+		if (!$userGenerationFullOutputsQuery.data?.pages) return;
+		for (let i = 0; i < $userGenerationFullOutputsQuery.data.pages.length; i++) {
+			let page = $userGenerationFullOutputsQuery.data.pages[i];
 			if (page.total_count !== undefined) {
-				totalGenerations = page.total_count;
+				totalOutputs = page.total_count;
 			}
 		}
 	};
@@ -56,13 +56,13 @@
 					{$LL.History.GenerationsTitle()}
 				</p>
 				<p class="text-sm md:text-base text-c-on-bg/50 font-semibold mt-0.5 md:mt-1">
-					({totalGenerations !== undefined ? totalGenerations : '...'})
+					({totalOutputs !== undefined ? totalOutputs : '...'})
 				</p>
 			</div>
 		</div>
 	</div>
 	<div class="w-full flex-1 max-w-7xl flex flex-col">
-		<GenerationGridInfinite generationsQuery={userGenerationsQuery} />
+		<GenerationGridInfinite generationsQuery={userGenerationFullOutputsQuery} />
 	</div>
 </div>
 

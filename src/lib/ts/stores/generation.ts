@@ -109,15 +109,6 @@ export interface TGenerationBase {
 	num_outputs: number;
 }
 
-export interface TInitialGenerationRequest extends TGenerationBase {
-	ui_id: string;
-	stream_id: string;
-	output_image_extension: 'jpeg' | 'png' | 'webp';
-	process_type: TProcessType;
-	queued_at: number;
-	submit_to_gallery: boolean;
-}
-
 export interface TGeneration extends TGenerationBase {
 	status: TGenerationStatus;
 	error?: string;
@@ -138,8 +129,17 @@ export interface TGenerationOutput {
 	generation_id: string;
 }
 
-export interface TGenerationOutputWithGeneration extends TGenerationOutput {
+export interface TGenerationFullOutput extends TGenerationOutput {
 	generation: TGeneration;
+}
+
+export interface TInitialGenerationRequest extends TGenerationBase {
+	ui_id: string;
+	stream_id: string;
+	output_image_extension: 'jpeg' | 'png' | 'webp';
+	process_type: TProcessType;
+	queued_at: number;
+	submit_to_gallery: boolean;
 }
 
 export type TGenerationStatus =
