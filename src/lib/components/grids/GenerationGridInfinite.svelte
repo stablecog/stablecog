@@ -8,6 +8,7 @@
 	import type { TUserGenerationFullOutputsPage } from '$ts/queries/userGenerations';
 	import { activeGeneration, type TGeneration } from '$ts/stores/generation';
 	import type { CreateInfiniteQueryResult } from '@tanstack/svelte-query';
+	import Masonry from 'svelte-bricks';
 
 	export let generationsQuery: CreateInfiniteQueryResult<TUserGenerationFullOutputsPage, unknown>;
 
@@ -41,48 +42,49 @@
 			<div class="h-[1vh]" />
 		</div>
 	{:else}
-		<div class="w-full flex-1 flex flex-row flex-wrap">
-			{#each $generationsQuery.data.pages as { outputs }}
-				{#each outputs as output}
-					<div class="w-full sm:w-1/2 md:w-1/3 lg:w-1/4 p-0.5">
-						<div class="w-full relative group">
-							<ImagePlaceholder width={output.generation.width} height={output.generation.height} />
-							{#if $activeGeneration === undefined || $activeGeneration.selected_output.id !== output.id}
-								<div
-									in:elementreceive|local={{
-										key: output.id
-									}}
-									out:elementsend|local={{
-										key: output.id
-									}}
-									class="absolute left-0 top-0 w-full h-full rounded-xl bg-c-bg-secondary z-0 overflow-hidden border-4 
+		<Masonry
+			items={$generationsQuery.data.pages.flatMap((page) => page.outputs)}
+			let:item={output}
+			minColWidth={300}
+			maxColWidth={600}
+			gap={0}
+			animate={false}
+		>
+			<div class="w-full p-0.5">
+				<div class="w-full relative group">
+					<ImagePlaceholder width={output.generation.width} height={output.generation.height} />
+					{#if $activeGeneration === undefined || $activeGeneration.selected_output.id !== output.id}
+						<div
+							in:elementreceive|local={{
+								key: output.id
+							}}
+							out:elementsend|local={{
+								key: output.id
+							}}
+							class="absolute left-0 top-0 w-full h-full rounded-xl bg-c-bg-secondary z-0 overflow-hidden border-4 
 										shadow-lg shadow-c-shadow/[var(--o-shadow-normal)] border-c-bg-secondary"
-								>
-									{#if outputs !== undefined}
-										<GenerationImage
-											generation={{ ...output.generation, selected_output: output }}
-										/>
-									{/if}
-								</div>
+						>
+							{#if output.generation.outputs !== undefined}
+								<GenerationImage generation={{ ...output.generation, selected_output: output }} />
 							{/if}
 						</div>
-					</div>
-				{/each}
-			{/each}
-			<div class="w-full flex flex-row items-center justify-center mt-6">
-				{#if $generationsQuery.hasNextPage}
-					<Button
-						withSpinner
-						size="sm"
-						loading={$generationsQuery.isFetchingNextPage}
-						onClick={() => {
-							$generationsQuery.fetchNextPage();
-						}}
-					>
-						{$LL.Shared.LoadMoreButton()}
-					</Button>
-				{/if}
+					{/if}
+				</div>
 			</div>
+		</Masonry>
+		<div class="w-full flex flex-row items-center justify-center mt-6">
+			{#if $generationsQuery.hasNextPage}
+				<Button
+					withSpinner
+					size="sm"
+					loading={$generationsQuery.isFetchingNextPage}
+					onClick={() => {
+						$generationsQuery.fetchNextPage();
+					}}
+				>
+					{$LL.Shared.LoadMoreButton()}
+				</Button>
+			{/if}
 		</div>
 	{/if}
 {/if}

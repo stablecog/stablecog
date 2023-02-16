@@ -49,6 +49,7 @@
 		"remark-rehype": "^10.1.0",
 		"stripe": "^11.4.0",
 		"svelte": "^3.44.0",
+		"svelte-bricks": "^0.1.7",
 		"svelte-check": "^2.7.1",
 		"svelte-confetti": "^1.2.2",
 		"svelte-copy": "^1.2.4",
