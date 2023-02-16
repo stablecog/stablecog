@@ -611,7 +611,7 @@ CREATE TABLE public."user" (
     "id" UUID REFERENCES auth.users(id) ON DELETE CASCADE NOT NULL,
     "email" TEXT NOT NULL,
     "subscription_tier" user_subscription_tier_enum DEFAULT 'FREE' NOT NULL,
-    "subscription_category" user_subscription_cateogry_enum,
+    "subscription_category" user_subscription_category_enum,
     "created_at" TIMESTAMPTZ DEFAULT TIMEZONE(' utc ' :: TEXT, NOW()) NOT NULL,
     "updated_at" TIMESTAMPTZ DEFAULT TIMEZONE(' utc ' :: TEXT, NOW()) NOT NULL,
     "confirmed_at" TIMESTAMPTZ DEFAULT TIMEZONE(' utc ' :: TEXT, NOW()) NOT NULL,
