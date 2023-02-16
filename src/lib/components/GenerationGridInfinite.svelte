@@ -6,12 +6,7 @@
 	import LL from '$i18n/i18n-svelte';
 	import { elementreceive, elementsend } from '$ts/animation/transitions';
 	import type { TUserGenerationFullOutputsPage } from '$ts/queries/userGenerations';
-	import {
-		activeGeneration,
-		activeGenerationOutputId,
-		activeGenerationOutputIndex,
-		type TGeneration
-	} from '$ts/stores/generation';
+	import { activeGeneration, type TGeneration } from '$ts/stores/generation';
 	import type { CreateInfiniteQueryResult } from '@tanstack/svelte-query';
 
 	export let generationsQuery: CreateInfiniteQueryResult<TUserGenerationFullOutputsPage, unknown>;
@@ -52,7 +47,7 @@
 					<div class="w-full sm:w-1/2 md:w-1/3 lg:w-1/4 p-0.5">
 						<div class="w-full relative group">
 							<ImagePlaceholder width={output.generation.width} height={output.generation.height} />
-							{#if !$activeGeneration || $activeGenerationOutputIndex === undefined || $activeGenerationOutputId !== output.id}
+							{#if $activeGeneration === undefined || $activeGeneration.selected_output.id !== output.id}
 								<div
 									in:elementreceive|local={{
 										key: output.id
@@ -65,8 +60,7 @@
 								>
 									{#if outputs !== undefined}
 										<GenerationImage
-											generation={output.generation}
-											selectedOutputIndex={getOutputIndex(output.id, output.generation)}
+											generation={{ ...output.generation, selected_output: output }}
 										/>
 									{/if}
 								</div>

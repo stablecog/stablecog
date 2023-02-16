@@ -9,7 +9,7 @@
 		getUserGenerationFullOutputs,
 		type TUserGenerationFullOutputsPage
 	} from '$ts/queries/userGenerations';
-	import { activeGeneration, activeGenerationOutputIndex } from '$ts/stores/generation';
+	import { activeGeneration } from '$ts/stores/generation';
 	import { createInfiniteQuery } from '@tanstack/svelte-query';
 
 	let totalOutputs: number;
@@ -66,9 +66,6 @@
 	</div>
 </div>
 
-{#if $activeGeneration && $activeGenerationOutputIndex !== undefined}
-	<GenerationFullScreen
-		generation={$activeGeneration}
-		generationOutputIndex={$activeGenerationOutputIndex}
-	/>
+{#if $activeGeneration}
+	<GenerationFullScreen generation={$activeGeneration} />
 {/if}

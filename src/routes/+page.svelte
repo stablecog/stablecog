@@ -24,8 +24,6 @@
 	} from '$ts/helpers/loggers';
 	import {
 		activeGeneration,
-		activeGenerationOutputId,
-		activeGenerationOutputIndex,
 		generations,
 		qeueuInitialGenerationRequest,
 		type TInitialGenerationRequest
@@ -242,7 +240,7 @@
 						{#each $generations[0].outputs as output, index}
 							<div class="w-1/4 max-w-full h-auto relative">
 								<ImagePlaceholder width={$generations[0].width} height={$generations[0].height} />
-								{#if !($activeGeneration && $activeGenerationOutputIndex === index)}
+								{#if $activeGeneration === undefined || $activeGeneration.selected_output.id !== output.id}
 									<div
 										class="absolute w-full h-full left-0 top-0 rounded-2xl bg-c-bg-secondary z-0 overflow-hidden border-4 
 											shadow-lg shadow-c-shadow/[var(--o-shadow-normal)] border-c-bg-secondary group"
@@ -250,8 +248,7 @@
 										out:elementsend|local={{ key: output.id }}
 									>
 										<GenerationImage
-											generation={$generations[0]}
-											selectedOutputIndex={index}
+											generation={{ ...$generations[0], selected_output: output }}
 											useUpscaledImage
 										/>
 									</div>
@@ -268,12 +265,11 @@
 	</div>
 </div>
 
-{#if $activeGeneration && $activeGenerationOutputId && $activeGenerationOutputIndex !== undefined}
+{#if $activeGeneration}
 	<GenerationFullScreen
 		bind:upscaleStatus
 		on:delete={onDelete}
 		on:upscale={onUpscale}
 		generation={$activeGeneration}
-		generationOutputIndex={$activeGenerationOutputIndex}
 	/>
 {/if}

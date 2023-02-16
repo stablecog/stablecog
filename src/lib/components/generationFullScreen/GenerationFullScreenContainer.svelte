@@ -7,11 +7,10 @@
 	} from '$components/generationFullScreen/constants';
 	import { clickoutside } from '$ts/actions/clickoutside';
 	import { elementreceive, elementsend } from '$ts/animation/transitions';
-	import { activeGeneration, type TGeneration } from '$ts/stores/generation';
+	import { activeGeneration, type TGenerationWithSelectedOutput } from '$ts/stores/generation';
 	import { windowHeight, windowWidth } from '$ts/stores/window';
 
-	export let generation: TGeneration;
-	export let generationOutputIndex: number;
+	export let generation: TGenerationWithSelectedOutput;
 	export let canClose: boolean;
 
 	let imageContainerWidth = 0;
@@ -68,8 +67,10 @@
 		overflow-auto lg:my-auto lg:overflow-hidden"
 >
 	<div
-		in:elementreceive|local={{ key: generation.outputs[generationOutputIndex].id }}
-		out:elementsend|local={{ key: generation.outputs[generationOutputIndex].id }}
+		in:elementreceive|local={{
+			key: generation.selected_output.id
+		}}
+		out:elementsend|local={{ key: generation.selected_output.id }}
 		use:clickoutside={{
 			callback: () => {
 				if (canClose) {

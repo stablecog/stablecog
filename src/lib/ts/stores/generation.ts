@@ -3,10 +3,8 @@ import type { TAvailableModelId } from '$ts/constants/models';
 import type { TAvailableSchedulerId } from '$ts/constants/schedulers';
 import { writable } from 'svelte/store';
 
-export const activeGeneration = writable<TGeneration | undefined>(undefined);
-export const activeGenerationOutputIndex = writable(0);
-export const activeGenerationOutputId = writable<string | undefined>(undefined);
 export const generations = writable<TGeneration[]>([]);
+export const activeGeneration = writable<TGenerationWithSelectedOutput | undefined>(undefined);
 
 export const setGenerationToFailed = (id: string, error?: string) => {
 	generations.update(($generations) => {
@@ -131,6 +129,10 @@ export interface TGenerationOutput {
 
 export interface TGenerationFullOutput extends TGenerationOutput {
 	generation: TGeneration;
+}
+
+export interface TGenerationWithSelectedOutput extends TGeneration {
+	selected_output: TGenerationOutput;
 }
 
 export interface TInitialGenerationRequest extends TGenerationBase {

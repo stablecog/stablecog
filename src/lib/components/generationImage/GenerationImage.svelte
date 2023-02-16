@@ -6,23 +6,15 @@
 	import IconSteps from '$components/icons/IconSteps.svelte';
 	import { doesContainTarget } from '$ts/helpers/doesContainTarget';
 	import { advancedModeApp } from '$ts/stores/advancedMode';
-	import {
-		activeGeneration,
-		activeGenerationOutputId,
-		activeGenerationOutputIndex,
-		type TGeneration
-	} from '$ts/stores/generation';
+	import { activeGeneration, type TGenerationWithSelectedOutput } from '$ts/stores/generation';
 
-	export let generation: TGeneration;
-	export let selectedOutputIndex: number;
+	export let generation: TGenerationWithSelectedOutput;
 	export let useUpscaledImage = true;
 	export let scrollPrompt = false;
 
 	let promptCopied = false;
 	let promptCopiedTimeout: NodeJS.Timeout;
 	let rightButtonContainer: HTMLDivElement;
-
-	$: selectedOutput = generation.outputs[selectedOutputIndex];
 
 	let isImageLoaded = false;
 	const onImageLoaded = () => (isImageLoaded = true);
@@ -34,9 +26,9 @@
 	class="w-full h-full absolute left-0 top-0 duration-300 transition {isImageLoaded
 		? 'opacity-100'
 		: 'opacity-0'}"
-	src={useUpscaledImage && selectedOutput.upscaled_image_url
-		? selectedOutput.upscaled_image_url
-		: selectedOutput.image_url}
+	src={useUpscaledImage && generation.selected_output.upscaled_image_url
+		? generation.selected_output.upscaled_image_url
+		: generation.selected_output.image_url}
 	alt={generation.prompt}
 	width={generation.width}
 	height={generation.height}
@@ -47,8 +39,6 @@
 			return;
 		}
 		activeGeneration.set(generation);
-		activeGenerationOutputIndex.set(selectedOutputIndex);
-		activeGenerationOutputId.set(selectedOutput.id);
 	}}
 	on:keydown={() => null}
 	class="w-full h-full absolute left-0 top-0 flex flex-col justify-between items-end overflow-hidden gap-4 cursor-pointer"
@@ -94,10 +84,10 @@
 			/>
 			<DownloadGenerationButton
 				class="p-1.5 -ml-1.5"
-				url={useUpscaledImage && selectedOutput.upscaled_image_url
-					? selectedOutput.upscaled_image_url
-					: selectedOutput.image_url}
-				isUpscaled={useUpscaledImage && selectedOutput.upscaled_image_url !== undefined}
+				url={useUpscaledImage && generation.selected_output.upscaled_image_url
+					? generation.selected_output.upscaled_image_url
+					: generation.selected_output.image_url}
+				isUpscaled={useUpscaledImage && generation.selected_output.upscaled_image_url !== undefined}
 				prompt={generation.prompt}
 				seed={generation.seed}
 				guidanceScale={generation.guidance_scale}

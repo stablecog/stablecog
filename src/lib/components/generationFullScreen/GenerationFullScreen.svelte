@@ -44,17 +44,15 @@
 	import { advancedModeApp } from '$ts/stores/advancedMode';
 	import IconCancel from '$components/icons/IconCancel.svelte';
 	import GenerationFullScreenContainer from '$components/generationFullScreen/GenerationFullScreenContainer.svelte';
-	import { activeGeneration, type TGeneration } from '$ts/stores/generation';
 	import { downloadGenerationImage } from '$ts/helpers/downloadGenerationImage';
+	import { activeGeneration, type TGenerationWithSelectedOutput } from '$ts/stores/generation';
 
-	export let generation: TGeneration;
-	export let generationOutputIndex: number;
+	export let generation: TGenerationWithSelectedOutput;
 	export let upscaleStatus: TUpscaleStatus = 'idle';
 
-	$: selectedOutput = generation.outputs[generationOutputIndex];
-	$: currentImageUrl = selectedOutput.upscaled_image_url
-		? selectedOutput.upscaled_image_url
-		: selectedOutput.image_url;
+	$: currentImageUrl = generation.selected_output.upscaled_image_url
+		? generation.selected_output.upscaled_image_url
+		: generation.selected_output.image_url;
 
 	let upscaleErrorText: string | undefined;
 	let upscaledImageWidth: number | undefined;
@@ -84,14 +82,18 @@
 	let regenerateUrl: string;
 
 	const onGenerationChanged = () => {
-		currentImageUrl = selectedOutput.upscaled_image_url ?? selectedOutput.image_url;
-		if (selectedOutput.upscaled_image_url) upscaledTabValue = 'upscaled';
+		currentImageUrl =
+			generation.selected_output.upscaled_image_url ?? generation.selected_output.image_url;
+		if (generation.selected_output.upscaled_image_url) upscaledTabValue = 'upscaled';
 		upscaledImageWidth = undefined;
 		upscaledImageHeight = undefined;
 
-		const { seed, ...rest } = generation;
+		const { seed, selected_output, ...rest } = generation;
 		rerollUrl = getGenerationUrlFromParams(rest);
-		regenerateUrl = getGenerationUrlFromParams(generation);
+		regenerateUrl = getGenerationUrlFromParams({
+			...rest,
+			seed
+		});
 	};
 
 	let promptCopiedTimeout: NodeJS.Timeout;
@@ -139,7 +141,7 @@
 				url: currentImageUrl,
 				guidanceScale: generation.guidance_scale,
 				inferenceSteps: generation.inference_steps,
-				isUpscaled: generation.outputs[generationOutputIndex].upscaled_image_url !== undefined,
+				isUpscaled: generation.selected_output.upscaled_image_url !== undefined,
 				prompt: generation.prompt,
 				seed: generation.seed
 			});
@@ -185,7 +187,7 @@
 		setTimeout(() => (upscaleStatus = 'loading'));
 		try {
 			const res = await upscaleGenerationOutput({
-				output_id: selectedOutput.id
+				output_id: generation.selected_output.id
 			});
 			if (res.error) {
 				throw new Error(res.error);
@@ -227,10 +229,13 @@
 	$: upscaledTabValue, setCurrentImageUrl();
 
 	function setCurrentImageUrl() {
-		if (upscaledTabValue === 'upscaled' && selectedOutput.upscaled_image_url !== undefined) {
-			currentImageUrl = selectedOutput.upscaled_image_url;
+		if (
+			upscaledTabValue === 'upscaled' &&
+			generation.selected_output.upscaled_image_url !== undefined
+		) {
+			currentImageUrl = generation.selected_output.upscaled_image_url;
 		} else {
-			currentImageUrl = selectedOutput.image_url;
+			currentImageUrl = generation.selected_output.image_url;
 		}
 	}
 
@@ -275,7 +280,6 @@
 			await tick();
 			setTimeout(() => (deleteStatus = 'loading'));
 			await deleteGenerationFromDb(id);
-			activeGeneration.set(undefined);
 			deleteStatus = 'success';
 			/* setTimeout(() => {
 				dispatchDelete('delete', { generation });
@@ -302,7 +306,9 @@
 				name="Close"
 				onClick={() => {
 					if (canClose) {
-						activeGeneration.set(undefined);
+						if ($activeGeneration !== undefined) {
+							activeGeneration.set(undefined);
+						}
 					}
 				}}
 			>
@@ -314,7 +320,6 @@
 	</div>
 	<GenerationFullScreenContainer
 		{generation}
-		{generationOutputIndex}
 		{canClose}
 		let:imageContainerWidth
 		let:imageContainerHeight
@@ -323,7 +328,7 @@
 		<div class="relative self-stretch flex items-center">
 			<img
 				class="w-full h-full absolute left-0 top-0 transform scale-125 blur-xl"
-				src={selectedOutput.image_url}
+				src={generation.selected_output.image_url}
 				alt="Blurred background for: {generation.prompt}"
 				width={generation.width}
 				height={generation.height}
@@ -340,7 +345,7 @@
 					class="{upscaleStatus === 'loading'
 						? 'blur-2xl'
 						: ''} w-full transition h-auto lg:h-full lg:object-contain absolute lg:left-0 lg:top-0"
-					src={selectedOutput.image_url}
+					src={generation.selected_output.image_url}
 					alt="Blurred background 2 for: {generation.prompt}"
 					width={generation.width}
 					height={generation.height}
@@ -408,7 +413,7 @@
 				>
 					<div class="w-full flex flex-col gap-4 md:gap-5 px-5 py-4 md:px-7 md:py-5">
 						<div class="w-full pt-1.5">
-							{#if !selectedOutput.upscaled_image_url}
+							{#if !generation.selected_output.upscaled_image_url}
 								<div class="w-fulll relative">
 									<Button
 										onClick={onUpscaleClicked}
