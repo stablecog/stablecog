@@ -74,6 +74,8 @@
 		mixpanel.people.set({ 'SC - Plan': $page.data.plan });
 	}
 
+	$: console.log('SSE ID:', $sseId);
+
 	afterNavigate(() => {
 		const props = {
 			'SC - Page': `${$page.url.pathname}${$page.url.search}`,
@@ -176,7 +178,6 @@
 
 	onMount(async () => {
 		if (!$sse || $sse.readyState === $sse.CLOSED) {
-			console.log('SSE not connected or closed, starting new connection');
 			sseId.set(generateSSEId());
 			sse.set(new EventSource(`${apiUrl.href}v1/sse?id=${$sseId}`));
 			if ($sse !== null) {

@@ -46,6 +46,8 @@
 	import GenerationFullScreenContainer from '$components/generationFullScreen/GenerationFullScreenContainer.svelte';
 	import { downloadGenerationImage } from '$ts/helpers/downloadGenerationImage';
 	import { activeGeneration, type TGenerationWithSelectedOutput } from '$ts/stores/generation';
+	import { appVersion } from '$ts/stores/appVersion';
+	import { sseId } from '$ts/stores/sse';
 
 	export let generation: TGenerationWithSelectedOutput;
 	export let upscaleStatus: TUpscaleStatus = 'idle';
@@ -187,7 +189,10 @@
 		setTimeout(() => (upscaleStatus = 'loading'));
 		try {
 			const res = await upscaleGenerationOutput({
-				output_id: generation.selected_output.id
+				input: generation.selected_output.id,
+				access_token: $page.data.session?.access_token || '',
+				app_version: $appVersion,
+				stream_id: $sseId || ''
 			});
 			if (res.error) {
 				throw new Error(res.error);
@@ -292,10 +297,6 @@
 
 	onMount(() => {
 		setSidebarWrapperVars();
-	});
-
-	onDestroy(() => {
-		upscaleStatus = 'idle';
 	});
 </script>
 
