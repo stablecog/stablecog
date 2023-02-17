@@ -15,7 +15,7 @@
 	let totalOutputs: number;
 
 	$: userGenerationFullOutputsQuery = createInfiniteQuery({
-		queryKey: ['user_generations'],
+		queryKey: ['user_generation_full_outputs'],
 		queryFn: (lastPage) => {
 			return getUserGenerationFullOutputs({
 				access_token: $page.data.session?.access_token || '',

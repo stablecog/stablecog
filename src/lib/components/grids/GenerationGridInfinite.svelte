@@ -11,17 +11,6 @@
 	import Masonry from 'svelte-bricks';
 
 	export let generationsQuery: CreateInfiniteQueryResult<TUserGenerationFullOutputsPage, unknown>;
-
-	const getOutputIndex = (generationOutputId: string, generation: TGeneration) => {
-		let generationOutputIndex = 0;
-		for (let i = 0; i < generation.outputs.length; i++) {
-			if (generation.outputs[i].id === generationOutputId) {
-				generationOutputIndex = i;
-				break;
-			}
-		}
-		return generationOutputIndex;
-	};
 </script>
 
 {#if $generationsQuery.isLoading}
