@@ -6,11 +6,25 @@
 	import LL from '$i18n/i18n-svelte';
 	import { elementreceive, elementsend } from '$ts/animation/transitions';
 	import type { TUserGenerationFullOutputsPage } from '$ts/queries/userGenerations';
-	import { activeGeneration, type TGeneration } from '$ts/stores/generation';
+	import { activeGeneration } from '$ts/stores/generation';
 	import type { CreateInfiniteQueryResult } from '@tanstack/svelte-query';
 	import Masonry from 'svelte-bricks';
+	import IntersectionObserver from 'svelte-intersection-observer';
 
 	export let generationsQuery: CreateInfiniteQueryResult<TUserGenerationFullOutputsPage, unknown>;
+	let bottomDiv: HTMLDivElement;
+
+	let canAutoFetch = true;
+	let canAutoFetchTimeout: NodeJS.Timeout;
+	const autoFetchNextPage = () => {
+		if (!canAutoFetch || $generationsQuery.isFetchingNextPage) return;
+		clearTimeout(canAutoFetchTimeout);
+		canAutoFetch = false;
+		$generationsQuery.fetchNextPage();
+		canAutoFetchTimeout = setTimeout(() => {
+			canAutoFetch = true;
+		}, 1000);
+	};
 </script>
 
 {#if $generationsQuery.isLoading}
@@ -18,14 +32,14 @@
 		<IconLoadingSlim class="animate-spin-faster w-12 h-12 text-c-on-bg/50" />
 	</div>
 {:else if $generationsQuery.data?.pages.length === 0}
-	<div class="w-full flex-1 flex flex-col justify-center items-center pt-8 px-5 gap-6">
+	<div class="w-full flex-1 flex flex-col justify-center items-center py-8 px-5 gap-6">
 		<p class="text-c-on-bg/50">{$LL.History.NoGenerationsYet()}</p>
 		<Button href="/">{$LL.Shared.StartGeneratingButton()}</Button>
-		<div class="h-[2vh]" />
+		<div class="h-[1vh]" />
 	</div>
 {:else if $generationsQuery.isSuccess}
 	{#if $generationsQuery.data.pages.length === 1 && $generationsQuery.data.pages[0].outputs.length === 0}
-		<div class="w-full flex-1 flex flex-col justify-center items-center pt-8 px-5 gap-6">
+		<div class="w-full flex-1 flex flex-col justify-center items-center py-8 px-5 gap-6">
 			<p class="text-c-on-bg/50">{$LL.History.NoGenerationsYet()}</p>
 			<Button href="/">{$LL.Shared.StartGeneratingButton()}</Button>
 			<div class="h-[1vh]" />
@@ -61,19 +75,19 @@
 				</div>
 			</div>
 		</Masonry>
-		<div class="w-full flex flex-row items-center justify-center mt-6">
-			{#if $generationsQuery.hasNextPage}
-				<Button
-					withSpinner
-					size="sm"
-					loading={$generationsQuery.isFetchingNextPage}
-					onClick={() => {
-						$generationsQuery.fetchNextPage();
-					}}
-				>
-					{$LL.Shared.LoadMoreButton()}
-				</Button>
-			{/if}
-		</div>
+		<IntersectionObserver on:intersect={autoFetchNextPage} rootMargin="100%" element={bottomDiv}>
+			<div bind:this={bottomDiv} class="w-full flex flex-row items-center justify-center mt-6">
+				{#if $generationsQuery.hasNextPage}
+					<Button
+						withSpinner
+						size="sm"
+						loading={$generationsQuery.isFetchingNextPage}
+						onClick={() => $generationsQuery.fetchNextPage()}
+					>
+						{$LL.Shared.LoadMoreButton()}
+					</Button>
+				{/if}
+			</div>
+		</IntersectionObserver>
 	{/if}
 {/if}

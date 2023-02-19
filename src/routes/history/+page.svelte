@@ -48,7 +48,7 @@
 	canonical="{canonicalUrl}{$page.url.pathname}"
 />
 
-<div class="w-full flex-1 flex flex-col items-center px-2 gap-2 md:pt-6 pb-8 md:px-8">
+<div class="w-full flex-1 flex flex-col items-center px-2 gap-2 md:py-6 md:px-8">
 	<div class="w-full max-w-7xl flex justify-center px-1.5">
 		<div class="w-full flex flex-wrap gap-4 items-center px-2 py-2 md:px-4 md:py-3 rounded-xl">
 			<div class="flex gap-2 items-center">
