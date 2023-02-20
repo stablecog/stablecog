@@ -51,7 +51,7 @@ export const setUpscaleToServerReceived = (id: string) => {
 	});
 };
 
-export async function qeueuInitialUpscaleRequest(request: TInitialUpscaleRequest) {
+export async function queueInitialUpscaleRequest(request: TInitialUpscaleRequest) {
 	upscales.update(($upscales) => {
 		const upscalesToSubmit: TUpscale = {
 			...request,
@@ -76,7 +76,7 @@ export async function submitInitialUpscaleRequest(
 		headers: {
 			'Content-Type': 'application/json',
 			'X-App-Version': app_version,
-			Authorization: 'Bearer ' + access_token
+			Authorization: `Bearer ${access_token}`
 		},
 		body: JSON.stringify(request)
 	});
@@ -115,6 +115,8 @@ export interface TInitialUpscaleRequest extends TUpscaleBase {
 export interface TUpscaleOutput {
 	id: string;
 	image_url: string;
+	input_image_url: string;
+	output_id?: string;
 }
 
 export type TUpscaleStatus =

@@ -1,41 +1,8 @@
-import type { TAvailableModelId } from '$ts/constants/generationModels';
-import type { TAvailableSchedulerId } from '$ts/constants/schedulers';
 import type { TDBGenerationG } from '$ts/types/db';
 
 export type TStatus = 'idle' | 'loading' | 'success' | 'error';
 
 export type THrefTarget = '_blank' | '_self';
-
-export interface TGenerationBase {
-	prompt: string;
-	negative_prompt?: string;
-	model_id?: TAvailableModelId;
-	scheduler_id?: TAvailableSchedulerId;
-	width: number;
-	height: number;
-	seed: number;
-	num_inference_steps: number;
-	guidance_scale: number;
-	duration_ms?: number;
-	server_url: string;
-	imageDataB64: string;
-	upscaledImageDataB64?: string;
-}
-
-export interface TGenerationUI extends TGenerationBase {
-	id?: number;
-	imageUrl?: string;
-	upscaledImageUrl?: string;
-	computeRatePerSec?: number;
-}
-
-export interface TGenerationResponse {
-	data?: {
-		image_b64: string;
-		duration_ms: number;
-	};
-	error?: string;
-}
 
 export interface TTab<T> {
 	label: string;
@@ -107,8 +74,6 @@ export interface TToC {
 }
 
 export type TTabBarPlacement = 'bottom' | 'normal';
-
-export type TUpscaleStatus = 'idle' | 'success' | 'loading' | 'error';
 
 export interface TGalleryResponse {
 	generations: TDBGenerationG[];

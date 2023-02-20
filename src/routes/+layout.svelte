@@ -41,6 +41,7 @@
 	} from '$userStores/sse';
 	import {
 		generations,
+		setGenerationOutputUpscaledImageUrl,
 		setGenerationToFailed,
 		setGenerationToServerReceived,
 		setGenerationToSucceeded,
@@ -210,34 +211,49 @@
 		}
 		for (let i = 0; i < $upscales.length; i++) {
 			const upscale = $upscales[i];
-			if (upscale.status !== 'to-be-submitted') continue;
-			isSubmittingUpscales = true;
-			try {
-				const res = await submitInitialUpscaleRequest(
-					{
-						...upscale,
-						stream_id: $sseId
-					},
-					$page.data.session.access_token,
-					$appVersion
+			if (upscale.status === 'succeeded' && upscale.outputs[0].output_id) {
+				setGenerationOutputUpscaledImageUrl(
+					upscale.outputs[0].output_id,
+					upscale.outputs[0].image_url
 				);
-				const { id, error } = res;
-				if (error || !id) {
-					console.log('Upscale failed:', error);
-					setUpscaleToFailed(upscale.id || upscale.ui_id, error);
+			} else if (upscale.status === 'to-be-submitted') {
+				isSubmittingUpscales = true;
+				try {
+					const res = await submitInitialUpscaleRequest(
+						{
+							...upscale,
+							stream_id: $sseId
+						},
+						$page.data.session.access_token,
+						$appVersion
+					);
+					const { id, error } = res;
+					if (error || !id) {
+						console.log('Upscale failed:', error);
+						setUpscaleToFailed(upscale.id || upscale.ui_id, error);
+						logUpscaleFailed({
+							upscale,
+							advancedModeApp: $advancedModeApp,
+							locale: $locale,
+							plan: $page.data.plan
+						});
+					} else {
+						setUpscaleToServerReceived(id);
+						console.log('Upscales - After set server received', $upscales);
+					}
+				} catch (error) {
+					const err = error as Error;
+					console.log('Initial upscale submisssion error', error);
+					setUpscaleToFailed(upscale.id || upscale.ui_id, err.message);
 					logUpscaleFailed({
 						upscale,
 						advancedModeApp: $advancedModeApp,
 						locale: $locale,
 						plan: $page.data.plan
 					});
-				} else {
-					setUpscaleToServerReceived(id);
-					console.log('Upscales - After set server received', $upscales);
+				} finally {
+					isSubmittingUpscales = false;
 				}
-			} catch (error) {
-			} finally {
-				isSubmittingUpscales = false;
 			}
 		}
 	}

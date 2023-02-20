@@ -7,14 +7,12 @@
 	import ModalWrapper from '$components/ModalWrapper.svelte';
 	import Morpher from '$components/Morpher.svelte';
 	import { clickoutside } from '$ts/actions/clickoutside';
-	import { urlFromBase64 } from '$ts/helpers/base64';
 	import { windowWidth } from '$ts/stores/window';
-	import type { TGenerationUI, TUpscaleStatus } from '$ts/types/main';
 	import { copy } from 'svelte-copy';
 	import IconChevronDown from '$components/icons/IconChevronDown.svelte';
 	import IconButton from '$components/buttons/IconButton.svelte';
 	import { isTouchscreen } from '$ts/stores/isTouchscreen';
-	import { onMount, onDestroy, tick } from 'svelte';
+	import { onMount, tick } from 'svelte';
 	import { quadOut } from 'svelte/easing';
 	import { fly } from 'svelte/transition';
 	import { tooltip } from '$ts/actions/tooltip';
@@ -30,12 +28,10 @@
 	import ParamsSection from '$components/generationFullScreen/ParamsSection.svelte';
 	import Button from '$components/buttons/Button.svelte';
 	import IconUpscale from '$components/icons/IconUpscale.svelte';
-	import { upscaleGenerationOutput } from '$ts/queries/upscale';
-	import { createEventDispatcher } from 'svelte';
 	import TabBar from '$components/tabBars/TabBar.svelte';
 	import { lastUpscaleDurationSec } from '$ts/stores/lastUpscaleDurationSec';
 	import { estimatedDurationBufferRatio } from '$ts/constants/main';
-	import { mLogUpscale, uLogUpscale } from '$ts/helpers/loggers';
+	import { mLogUpscale, mLogUpscalePropsFromUpscale, uLogUpscale } from '$ts/helpers/loggers';
 	import LL, { locale } from '$i18n/i18n-svelte';
 	import { negativePromptTooltipAlt } from '$ts/constants/tooltips';
 	import IconTrashcan from '$components/icons/IconTrashcan.svelte';
@@ -45,23 +41,45 @@
 	import IconCancel from '$components/icons/IconCancel.svelte';
 	import GenerationFullScreenContainer from '$components/generationFullScreen/GenerationFullScreenContainer.svelte';
 	import { downloadGenerationImage } from '$ts/helpers/downloadGenerationImage';
-	import { activeGeneration, type TGenerationWithSelectedOutput } from '$userStores/generation';
-	import { appVersion } from '$ts/stores/appVersion';
+	import {
+		activeGeneration,
+		setActiveGenerationToUndefined,
+		type TGenerationWithSelectedOutput
+	} from '$userStores/generation';
 	import { sseId } from '$userStores/sse';
+	import {
+		queueInitialUpscaleRequest,
+		upscales,
+		type TInitialUpscaleRequest,
+		type TUpscale,
+		type TUpscaleStatus
+	} from '$ts/stores/user/upscale';
+	import { upscaleModelIdDefault } from '$ts/constants/upscaleModels';
+	import { generateSSEId } from '$ts/helpers/generateSSEId';
 
 	export let generation: TGenerationWithSelectedOutput;
-	export let upscaleStatus: TUpscaleStatus = 'idle';
 
 	$: currentImageUrl = generation.selected_output.upscaled_image_url
 		? generation.selected_output.upscaled_image_url
 		: generation.selected_output.image_url;
 
-	let upscaleErrorText: string | undefined;
 	let upscaledImageWidth: number | undefined;
 	let upscaledImageHeight: number | undefined;
 	$: generation, onGenerationChanged();
 
-	$: canClose = upscaleStatus !== 'loading';
+	let lastUpscaleStatus: TUpscaleStatus | undefined;
+	$: lastUpscaleMatching = getIsLastUpscaleMatching(generation, $upscales);
+	$: lastUpscaleStatus =
+		$upscales.length > 0 && lastUpscaleMatching ? $upscales[0].status : undefined;
+	$: lastUpscaleQueuedAt =
+		$upscales.length > 0 && lastUpscaleMatching ? $upscales[0].queued_at : undefined;
+	$: lastUpscaleBeingCreated =
+		lastUpscaleMatching &&
+		(lastUpscaleStatus === 'to-be-submitted' ||
+			lastUpscaleStatus === 'server-received' ||
+			lastUpscaleStatus === 'server-processing' ||
+			(lastUpscaleMatching && lastUpscaleStatus === 'succeeded' && !isUpscaledImageLoaded));
+	$: canClose = !lastUpscaleBeingCreated;
 
 	let sidebarWrapperHeight: number;
 	let sidebarWrapper: HTMLDivElement;
@@ -93,6 +111,21 @@
 			...rest,
 			seed
 		});
+	};
+
+	const getIsLastUpscaleMatching = (
+		generation: TGenerationWithSelectedOutput,
+		upscales: TUpscale[]
+	) => {
+		if (!upscales || upscales.length === 0) return true;
+		const upscale = upscales[0];
+		const outputs = upscale.outputs;
+		if (!outputs || outputs.length === 0) return true;
+		const output = outputs[0];
+		if (upscale.status === 'succeeded' && output.output_id !== generation.selected_output.id) {
+			return false;
+		}
+		return true;
 	};
 
 	let promptCopiedTimeout: NodeJS.Timeout;
@@ -160,72 +193,68 @@
 		sidebarWrapperScrollHeight = sidebarWrapper.scrollHeight;
 	};
 
-	let upscaleDurationSec = 0;
-	let upscaleDurationSecCalcInterval: NodeJS.Timeout;
-
 	$: estimatedUpscaleDurationSec = $lastUpscaleDurationSec * (1 + estimatedDurationBufferRatio);
 
 	async function onUpscaleClicked() {
-		const upscaleMinimal = {
-			'SC - Width': generation.width,
-			'SC - Height': generation.height,
-			'SC - Advanced Mode': $advancedModeApp,
-			'SC - Locale': $locale,
-			'SC - Plan': $page.data.plan
+		if (!$sseId) {
+			console.log('No SSE ID, cannot upscale');
+			return;
+		}
+		const initialRequestProps: TInitialUpscaleRequest = {
+			input: generation.selected_output.id,
+			model_id: upscaleModelIdDefault,
+			type: 'from_output',
+			queued_at: Date.now(),
+			stream_id: $sseId,
+			ui_id: generateSSEId()
 		};
 		uLogUpscale('Started');
-		mLogUpscale('Started', upscaleMinimal);
-		const start = Date.now();
-		clearTimeout(upscaleDurationSecCalcInterval);
-		upscaleDurationSecCalcInterval = setInterval(() => {
-			upscaleDurationSec = (Date.now() - start) / 1000;
-		}, 100);
-		upscaleStatus = 'idle';
-		upscaleErrorText = undefined;
-		await tick();
-		setTimeout(() => (upscaleStatus = 'loading'));
-		try {
-			const res = await upscaleGenerationOutput({
-				input: generation.selected_output.id,
-				access_token: $page.data.session?.access_token || '',
-				app_version: $appVersion,
-				stream_id: $sseId || ''
+		mLogUpscale(
+			'Started',
+			mLogUpscalePropsFromUpscale({
+				upscale: initialRequestProps,
+				advancedModeApp: $advancedModeApp,
+				locale: $locale,
+				plan: $page.data.plan
+			})
+		);
+		queueInitialUpscaleRequest(initialRequestProps);
+		console.log('Upscale request queued', $upscales);
+	}
+
+	let now: number;
+	let nowInterval: NodeJS.Timeout;
+	$: upscaleSinceSec =
+		now !== undefined && lastUpscaleBeingCreated && lastUpscaleQueuedAt
+			? Math.max(now - lastUpscaleQueuedAt, 0) / 1000
+			: 0;
+	$: [lastUpscaleStatus, lastUpscaleBeingCreated], onLastUpscaleStatusChanged();
+
+	let lastUpscaleAnimationStatus: 'idle' | 'should-animate' | 'should-complete' = 'idle';
+
+	async function onLastUpscaleStatusChanged() {
+		if (
+			lastUpscaleStatus === 'server-received' ||
+			lastUpscaleStatus === 'server-processing' ||
+			(lastUpscaleStatus === 'succeeded' && lastUpscaleBeingCreated)
+		) {
+			return;
+		} else if (lastUpscaleStatus === 'failed') {
+			lastUpscaleAnimationStatus = 'should-complete';
+		} else if (lastUpscaleStatus === 'succeeded') {
+			lastUpscaleAnimationStatus = 'should-complete';
+		}
+		if (nowInterval) clearInterval(nowInterval);
+		if (lastUpscaleStatus === 'to-be-submitted') {
+			lastUpscaleAnimationStatus = 'idle';
+			await tick();
+			setTimeout(() => {
+				lastUpscaleAnimationStatus = 'should-animate';
 			});
-			if (res.error) {
-				throw new Error(res.error);
-			}
-			if (res.data?.image_b64) {
-				uLogUpscale('Succeeded');
-				mLogUpscale('Succeeded', { ...upscaleMinimal, 'SC - Duration': res.data.duration_ms });
-				const base64 = res.data.image_b64;
-				const url = urlFromBase64(base64);
-				/* const { upscaledImageDataB64, upscaledImageUrl, ...rest } = generation;
-				dispatchUpscale('upscale', {
-					generation: {
-						...rest,
-						upscaledImageDataB64: base64,
-						upscaledImageUrl: url
-					}
-				}); */
-			} else {
-				throw new Error('No image data in response');
-			}
-		} catch (error) {
-			uLogUpscale('Failed');
-			mLogUpscale('Failed', upscaleMinimal);
-			console.log('Upscale image error:', error);
-			upscaleStatus = 'error';
-			if ((error as Error).message) {
-				upscaleErrorText = (error as Error).message;
-			}
+			nowInterval = setInterval(() => {
+				now = Date.now();
+			}, 100);
 		}
-		if (upscaleStatus !== 'error') {
-			upscaledTabValue = 'upscaled';
-			lastUpscaleDurationSec.set(upscaleDurationSec);
-			upscaleStatus = 'success';
-			upscaleErrorText = undefined;
-		}
-		clearTimeout(upscaleDurationSecCalcInterval);
 	}
 
 	$: upscaledTabValue, setCurrentImageUrl();
@@ -242,6 +271,7 @@
 	}
 
 	let upscaledTabValue: TUpscaleTabValue = 'upscaled';
+	let isUpscaledImageLoaded = false;
 	type TUpscaleTabValue = 'original' | 'upscaled';
 	let upscaledOrDefaultTabs: { label: string; value: TUpscaleTabValue }[];
 
@@ -260,9 +290,11 @@
 		const target = e.target as HTMLImageElement;
 		if (generation.width !== target.naturalWidth) {
 			upscaledImageWidth = target.naturalWidth;
+			isUpscaledImageLoaded = true;
 		}
 		if (generation.height !== target.naturalHeight) {
 			upscaledImageHeight = target.naturalHeight;
+			isUpscaledImageLoaded = true;
 		}
 	};
 
@@ -305,7 +337,7 @@
 				onClick={() => {
 					if (canClose) {
 						if ($activeGeneration !== undefined) {
-							activeGeneration.set(undefined);
+							setActiveGenerationToUndefined();
 						}
 					}
 				}}
@@ -340,7 +372,7 @@
 			>
 				<img
 					style="transition: filter 0.5s cubic-bezier(0.4, 0, 0.2, 1);"
-					class="{upscaleStatus === 'loading'
+					class="{lastUpscaleBeingCreated
 						? 'blur-2xl'
 						: ''} w-full transition h-auto lg:h-full lg:object-contain absolute lg:left-0 lg:top-0"
 					src={generation.selected_output.image_url}
@@ -351,7 +383,7 @@
 				<img
 					on:load={onImageLoad}
 					style="transition: filter 0.5s cubic-bezier(0.4, 0, 0.2, 1);"
-					class="{upscaleStatus === 'loading'
+					class="{lastUpscaleBeingCreated
 						? 'blur-2xl'
 						: ''} filter w-full relative transition h-auto lg:h-full lg:object-contain lg:absolute lg:left-0 lg:top-0"
 					src={currentImageUrl}
@@ -363,7 +395,7 @@
 						? upscaledImageHeight
 						: generation.height}
 				/>
-				{#if upscaleStatus === 'error'}
+				{#if $upscales && $upscales.length > 0 && $upscales[0].status === 'failed'}
 					<div
 						transition:fly={{ duration: 200, easing: quadOut, y: -50 }}
 						class="w-full absolute left-0 top-0 flex items-center justify-center p-3"
@@ -371,22 +403,22 @@
 						<p
 							class="text-center font-medium text-xs md:text-sm shadow-lg shadow-c-shadow/[var(--o-shadow-stronger)] bg-c-bg-secondary px-4 py-3 rounded-xl"
 						>
-							{upscaleErrorText ?? $LL.Error.SomethingWentWrong()}
+							{$upscales[0].error ?? $LL.Error.SomethingWentWrong()}
 						</p>
 					</div>
 				{/if}
 			</div>
 			<div class="w-full h-full overflow-hidden z-0 absolute left-0 top-0 pointer-events-none">
 				<div
-					style="transition-duration: {upscaleStatus === 'loading'
+					style="transition-duration: {lastUpscaleAnimationStatus === 'should-animate'
 						? estimatedUpscaleDurationSec
-						: upscaleStatus === 'success' || upscaleStatus === 'error'
-						? 0.5
+						: lastUpscaleAnimationStatus === 'should-complete'
+						? 0.3
 						: 0}s"
 					class="w-[110%] h-full ease-image-generation transition bg-c-secondary/50 
-						absolute left-0 top-0 rounded-xl {upscaleStatus === 'loading'
+						absolute left-0 top-0 rounded-xl {lastUpscaleAnimationStatus === 'should-animate'
 						? '-translate-x-[5%]'
-						: upscaleStatus === 'success' || upscaleStatus === 'error'
+						: lastUpscaleAnimationStatus === 'should-complete'
 						? 'translate-x-full'
 						: '-translate-x-full'}"
 				/>
@@ -411,18 +443,18 @@
 				>
 					<div class="w-full flex flex-col gap-4 md:gap-5 px-5 py-4 md:px-7 md:py-5">
 						<div class="w-full pt-1.5">
-							{#if !generation.selected_output.upscaled_image_url}
+							{#if !generation.selected_output.upscaled_image_url || lastUpscaleBeingCreated}
 								<div class="w-fulll relative">
 									<Button
 										onClick={onUpscaleClicked}
-										loading={upscaleStatus === 'loading'}
+										loading={lastUpscaleBeingCreated}
 										class="w-full"
 										size="sm"
 									>
 										<div class="flex items-center gap-2">
-											{#if upscaleStatus === 'loading'}
+											{#if lastUpscaleBeingCreated}
 												<p>
-													{upscaleDurationSec.toLocaleString('en-US', {
+													{upscaleSinceSec.toLocaleString('en-US', {
 														minimumFractionDigits: 1,
 														maximumFractionDigits: 1
 													})}

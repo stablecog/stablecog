@@ -12,7 +12,6 @@
 	} from '$ts/constants/main';
 	import { updateGenerationInDb } from '$ts/queries/indexedDb';
 	import { computeRatePerSec } from '$ts/stores/computeRatePerSec';
-	import type { TGenerationUI, TUpscaleStatus } from '$ts/types/main';
 	import { onDestroy, onMount } from 'svelte';
 	import ImagePlaceholder from '$components/ImagePlaceholder.svelte';
 	import GenerationImage from '$components/generationImage/GenerationImage.svelte';
@@ -25,7 +24,8 @@
 	import {
 		activeGeneration,
 		generations,
-		qeueuInitialGenerationRequest,
+		queueInitialGenerationRequest,
+		setActiveGenerationToUndefined,
 		type TInitialGenerationRequest
 	} from '$userStores/generation';
 	import type { THomePageData } from '$routes/+page.server';
@@ -57,7 +57,6 @@
 
 	let nowInterval: NodeJS.Timeout | undefined;
 	let estimatedDuration = estimatedDurationDefault;
-	let upscaleStatus: TUpscaleStatus;
 
 	$: [$generationWidth, $generationHeight, $generationInferenceSteps], setEstimatedDuration();
 
@@ -118,8 +117,6 @@
 			ui_id: generateSSEId(),
 			submit_to_gallery: $shouldSubmitToGallery ?? false
 		};
-		qeueuInitialGenerationRequest(initialRequestProps);
-		console.log('Queued generation', $generations);
 		uLogGeneration('Started');
 		mLogGeneration(
 			'Started',
@@ -130,6 +127,8 @@
 				plan: $page.data.plan
 			})
 		);
+		queueInitialGenerationRequest(initialRequestProps);
+		console.log('Generation request queued', $generations);
 	}
 
 	const getComputeRate = (w: number, h: number, s: number) => {
@@ -140,34 +139,11 @@
 	};
 
 	function onKeyDown({ key }: KeyboardEvent) {
-		if ($activeGeneration !== undefined && upscaleStatus !== 'loading') {
+		if ($activeGeneration !== undefined) {
 			if (key === 'Escape') {
-				activeGeneration.set(undefined);
+				setActiveGenerationToUndefined();
 			}
 		}
-	}
-
-	async function onUpscale(event: CustomEvent<{ generation: TGenerationUI }>) {
-		const { generation } = event.detail;
-		const { imageUrl, upscaledImageUrl, computeRatePerSec, ...rest } = generation;
-		try {
-			await updateGenerationInDb(rest);
-		} catch (error) {
-			console.log('IndexDB error', error);
-		}
-		/* lastGeneration.upscaledImageDataB64 = rest.upscaledImageDataB64;
-		if (rest.upscaledImageDataB64) {
-			lastGeneration.upscaledImageUrl = urlFromBase64(rest.upscaledImageDataB64);
-		}
-		if ($activeGeneration) {
-			activeGeneration.set(lastGeneration);
-		} */
-	}
-
-	function onDelete(event: CustomEvent<{ generation: TGenerationUI }>) {
-		const { generation } = event.detail;
-		console.log('Deleted', generation);
-		/* status = 'idle'; */
 	}
 
 	let mounted = false;
@@ -266,10 +242,5 @@
 </div>
 
 {#if $activeGeneration}
-	<GenerationFullScreen
-		bind:upscaleStatus
-		on:delete={onDelete}
-		on:upscale={onUpscale}
-		generation={$activeGeneration}
-	/>
+	<GenerationFullScreen generation={$activeGeneration} />
 {/if}

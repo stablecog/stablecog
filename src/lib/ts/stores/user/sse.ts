@@ -23,6 +23,8 @@ export interface TSSEGenerationMessageOutput {
 export interface TSSEUpscaleMessageOutput {
 	id: string;
 	image_url: string;
+	input_image_url: string;
+	output_id?: string;
 }
 
 type TGalleryStatus = 'submitted';

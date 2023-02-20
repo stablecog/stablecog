@@ -7,7 +7,11 @@
 	} from '$components/generationFullScreen/constants';
 	import { clickoutside } from '$ts/actions/clickoutside';
 	import { elementreceive, elementsend } from '$ts/animation/transitions';
-	import { activeGeneration, type TGenerationWithSelectedOutput } from '$userStores/generation';
+	import {
+		activeGeneration,
+		setActiveGenerationToUndefined,
+		type TGenerationWithSelectedOutput
+	} from '$userStores/generation';
 	import { windowHeight, windowWidth } from '$ts/stores/window';
 
 	export let generation: TGenerationWithSelectedOutput;
@@ -74,7 +78,7 @@
 		use:clickoutside={{
 			callback: () => {
 				if (canClose) {
-					activeGeneration.set(undefined);
+					setActiveGenerationToUndefined();
 				}
 			}
 		}}
