@@ -21,23 +21,40 @@
 	import { afterNavigate, invalidateAll } from '$app/navigation';
 	import {
 		logGenerationFailed,
+		logUpscaleFailed,
 		mLogGeneration,
 		mLogGenerationPropsFromGeneration,
 		mLogPageview,
-		uLogGeneration
+		mLogUpscale,
+		mLogUpscalePropsFromUpscale,
+		uLogGeneration,
+		uLogUpscale
 	} from '$ts/helpers/loggers';
 	import { setCookie } from '$ts/helpers/setCookie';
 	import { appVersion } from '$ts/stores/appVersion';
-	import { sse, sseId } from '$ts/stores/sse';
+	import {
+		sse,
+		sseId,
+		type TSSEGenerationMessageOutput,
+		type TSSEGenerationOrUpscaleMessage,
+		type TSSEUpscaleMessageOutput
+	} from '$userStores/sse';
 	import {
 		generations,
 		setGenerationToFailed,
 		setGenerationToServerReceived,
 		setGenerationToSucceeded,
 		submitInitialGenerationRequest
-	} from '$ts/stores/generation';
+	} from '$userStores/generation';
 	import { generateSSEId } from '$ts/helpers/generateSSEId';
 	import { QueryClient, QueryClientProvider } from '@tanstack/svelte-query';
+	import {
+		setUpscaleToFailed,
+		setUpscaleToServerReceived,
+		setUpscaleToSucceeded,
+		submitInitialUpscaleRequest,
+		upscales
+	} from '$ts/stores/user/upscale';
 
 	export let data: LayoutData;
 	setLocale(data.locale);
@@ -110,11 +127,12 @@
 	$: $locale, runIfMounted(() => setCookie(`sc-locale=${$locale}`));
 	$: $themeApp, runIfMounted(() => setCookie(`sc-theme=${$themeApp}`));
 	$: $advancedModeApp, runIfMounted(() => setCookie(`sc-advanced-mode=${$advancedModeApp}`));
-	$: $generations, onGenerationRequestsChanged();
+	$: $generations, onGenerationsChanged();
+	$: $upscales, onUpscalesChanged();
 
-	let isSubmitting = false;
-	async function onGenerationRequestsChanged() {
-		if (isSubmitting) return;
+	let isSubmittingGenerations = false;
+	async function onGenerationsChanged() {
+		if (isSubmittingGenerations) return;
 		if (!$generations || $generations.length === 0) {
 			console.log('No generations, not submitting initial generation request');
 			return;
@@ -129,49 +147,146 @@
 		}
 		for (let i = 0; i < $generations.length; i++) {
 			const generation = $generations[i];
-			if (generation.status === 'to-be-submitted') {
-				isSubmitting = true;
-				try {
-					console.log('Submitting initial generation request', generation);
-					const res = await submitInitialGenerationRequest(
-						{
-							...generation,
-							stream_id: $sseId,
-							output_image_extension: 'jpeg',
-							process_type: 'generate'
-						},
-						$page.data.session.access_token,
-						$appVersion
-					);
-					const { id, error } = res;
-					if (error || !id) {
-						console.log('Generation failed:', error);
-						setGenerationToFailed(generation.id || generation.ui_id, error);
-						logGenerationFailed({
-							generation,
-							error,
-							advancedModeApp: $advancedModeApp,
-							locale: $locale,
-							plan: $page.data.plan
-						});
-					} else {
-						setGenerationToServerReceived(id);
-						console.log('After set server received', $generations);
-					}
-				} catch (error) {
-					const err = error as Error;
-					console.log('Initial generation submisssion error', error);
-					setGenerationToFailed(generation.id || generation.ui_id, err.message);
+			if (generation.status !== 'to-be-submitted') continue;
+			isSubmittingGenerations = true;
+			try {
+				console.log('Submitting initial generation request', generation);
+				const res = await submitInitialGenerationRequest(
+					{
+						...generation,
+						stream_id: $sseId,
+						output_image_extension: 'jpeg',
+						process_type: 'generate'
+					},
+					$page.data.session.access_token,
+					$appVersion
+				);
+				const { id, error } = res;
+				if (error || !id) {
+					console.log('Generation failed:', error);
+					setGenerationToFailed(generation.id || generation.ui_id, error);
 					logGenerationFailed({
 						generation,
-						error: err.message,
+						error,
 						advancedModeApp: $advancedModeApp,
 						locale: $locale,
 						plan: $page.data.plan
 					});
-				} finally {
-					isSubmitting = false;
+				} else {
+					setGenerationToServerReceived(id);
+					console.log('Generations - After set server received', $generations);
 				}
+			} catch (error) {
+				const err = error as Error;
+				console.log('Initial generation submisssion error', error);
+				setGenerationToFailed(generation.id || generation.ui_id, err.message);
+				logGenerationFailed({
+					generation,
+					error: err.message,
+					advancedModeApp: $advancedModeApp,
+					locale: $locale,
+					plan: $page.data.plan
+				});
+			} finally {
+				isSubmittingGenerations = false;
+			}
+		}
+	}
+
+	let isSubmittingUpscales = false;
+	async function onUpscalesChanged() {
+		if (isSubmittingUpscales) return;
+		if (!$upscales || $upscales.length === 0) {
+			console.log('No upscales, not submitting initial upscale request');
+			return;
+		}
+		if (!$page.data.session?.access_token) {
+			console.log('No access token, not submitting initial upscale request');
+			return;
+		}
+		if ($sseId === null) {
+			console.log('Stream id is null, not submitting initial upscale request');
+			return;
+		}
+		for (let i = 0; i < $upscales.length; i++) {
+			const upscale = $upscales[i];
+			if (upscale.status !== 'to-be-submitted') continue;
+			isSubmittingUpscales = true;
+			try {
+				const res = await submitInitialUpscaleRequest(
+					{
+						...upscale,
+						stream_id: $sseId
+					},
+					$page.data.session.access_token,
+					$appVersion
+				);
+				const { id, error } = res;
+				if (error || !id) {
+					console.log('Upscale failed:', error);
+					setUpscaleToFailed(upscale.id || upscale.ui_id, error);
+					logUpscaleFailed({
+						upscale,
+						advancedModeApp: $advancedModeApp,
+						locale: $locale,
+						plan: $page.data.plan
+					});
+				} else {
+					setUpscaleToServerReceived(id);
+					console.log('Upscales - After set server received', $upscales);
+				}
+			} catch (error) {
+			} finally {
+				isSubmittingUpscales = false;
+			}
+		}
+	}
+
+	function setGenerationOrUpscaleStatus(data: TSSEGenerationOrUpscaleMessage) {
+		if (
+			data.process_type !== 'upscale' &&
+			data.process_type !== 'generate' &&
+			data.process_type !== 'generate_and_upscale'
+		) {
+			return;
+		}
+		if (data.process_type === 'generate' || data.process_type === 'generate_and_upscale') {
+			if (data.id && data.status === 'succeeded' && data.outputs && data.outputs.length > 0) {
+				const outputs = data.outputs as TSSEGenerationMessageOutput[];
+				setGenerationToSucceeded(data.id, outputs);
+				const generationIndex = $generations.findIndex((g) => g.id === data.id);
+				const generation = $generations[generationIndex];
+				uLogGeneration('Succeeded');
+				mLogGeneration(
+					'Succeeded',
+					mLogGenerationPropsFromGeneration({
+						generation,
+						advancedModeApp: $advancedModeApp,
+						locale: $locale,
+						plan: $page.data.plan
+					})
+				);
+			} else if (data.id && data.status === 'failed') {
+				setGenerationToFailed(data.id, data.error);
+			}
+		} else if (data.process_type === 'upscale') {
+			if (data.id && data.status === 'succeeded' && data.outputs && data.outputs.length > 0) {
+				const outputs = data.outputs as TSSEUpscaleMessageOutput[];
+				setUpscaleToSucceeded(data.id, outputs);
+				const upscaleIndex = $upscales.findIndex((u) => u.id === data.id);
+				const upscale = $upscales[upscaleIndex];
+				uLogUpscale('Succeeded');
+				mLogUpscale(
+					'Succeeded',
+					mLogUpscalePropsFromUpscale({
+						upscale,
+						advancedModeApp: $advancedModeApp,
+						locale: $locale,
+						plan: $page.data.plan
+					})
+				);
+			} else if (data.id && data.status === 'failed') {
+				setUpscaleToFailed(data.id, data.error);
 			}
 		}
 	}
@@ -187,26 +302,7 @@
 				$sse.onmessage = (event) => {
 					const data = JSON.parse(event.data);
 					console.log('Message from SSE', data);
-					if (data.type === 'live_generation') {
-						return;
-					}
-					if (data.id && data.status === 'succeeded' && data.outputs && data.outputs.length > 0) {
-						setGenerationToSucceeded(data.id, data.outputs);
-						const generationIndex = $generations.findIndex((g) => g.id === data.id);
-						const generation = $generations[generationIndex];
-						uLogGeneration('Succeeded');
-						mLogGeneration(
-							'Succeeded',
-							mLogGenerationPropsFromGeneration({
-								generation,
-								advancedModeApp: $advancedModeApp,
-								locale: $locale,
-								plan: $page.data.plan
-							})
-						);
-					} else if (data.id && data.status === 'failed') {
-						setGenerationToFailed(data.id, data.error);
-					}
+					setGenerationOrUpscaleStatus(data);
 				};
 				$sse.onerror = (event) => {
 					console.log('Error from SSE', event);

@@ -45,9 +45,9 @@
 	import IconCancel from '$components/icons/IconCancel.svelte';
 	import GenerationFullScreenContainer from '$components/generationFullScreen/GenerationFullScreenContainer.svelte';
 	import { downloadGenerationImage } from '$ts/helpers/downloadGenerationImage';
-	import { activeGeneration, type TGenerationWithSelectedOutput } from '$ts/stores/generation';
+	import { activeGeneration, type TGenerationWithSelectedOutput } from '$userStores/generation';
 	import { appVersion } from '$ts/stores/appVersion';
-	import { sseId } from '$ts/stores/sse';
+	import { sseId } from '$userStores/sse';
 
 	export let generation: TGenerationWithSelectedOutput;
 	export let upscaleStatus: TUpscaleStatus = 'idle';
@@ -60,9 +60,6 @@
 	let upscaledImageWidth: number | undefined;
 	let upscaledImageHeight: number | undefined;
 	$: generation, onGenerationChanged();
-
-	const dispatchUpscale = createEventDispatcher<{ upscale: { generation: TGenerationUI } }>();
-	const dispatchDelete = createEventDispatcher<{ delete: { generation: TGenerationUI } }>();
 
 	$: canClose = upscaleStatus !== 'loading';
 

@@ -27,7 +27,7 @@
 		generations,
 		qeueuInitialGenerationRequest,
 		type TInitialGenerationRequest
-	} from '$ts/stores/generation';
+	} from '$userStores/generation';
 	import type { THomePageData } from '$routes/+page.server';
 	import { isValue } from '$ts/helpers/isValue';
 	import { shouldSubmitToGallery } from '$ts/stores/shouldSubmitToGallery';
@@ -50,7 +50,7 @@
 	import Button from '$components/buttons/Button.svelte';
 	import IconConfetti from '$components/icons/IconConfetti.svelte';
 	import { schedulerIdDefault } from '$ts/constants/schedulers';
-	import { sseId } from '$ts/stores/sse';
+	import { sseId } from '$userStores/sse';
 	import { generateSSEId } from '$ts/helpers/generateSSEId';
 
 	export let data: THomePageData;

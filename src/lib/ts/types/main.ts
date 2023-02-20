@@ -1,4 +1,4 @@
-import type { TAvailableModelId } from '$ts/constants/models';
+import type { TAvailableModelId } from '$ts/constants/generationModels';
 import type { TAvailableSchedulerId } from '$ts/constants/schedulers';
 import type { TDBGenerationG } from '$ts/types/db';
 

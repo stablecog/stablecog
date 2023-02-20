@@ -26,7 +26,7 @@
 		maxSeed,
 		widthTabs
 	} from '$ts/constants/main';
-	import { availableModelIdDropdownItems } from '$ts/constants/models';
+	import { availableModelIdDropdownItems } from '$ts/constants/generationModels';
 	import { availableSchedulerIdDropdownItems } from '$ts/constants/schedulers';
 	import {
 		guidanceScaleTooltip,

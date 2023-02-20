@@ -1,11 +1,9 @@
 import LL from '$i18n/i18n-svelte';
 import { advancedModeApp } from '$ts/stores/advancedMode';
-import type { TModelNameCog } from '$ts/types/cog';
 import type { TTab } from '$ts/types/main';
 import { derived, type Readable, type Writable } from 'svelte/store';
 
-// Model IDs
-export const availableModelIds = [
+export const availableGenerationModelIds = [
 	'048b4aa3-5586-47ed-900f-f4341c96bdb2',
 	'897461c5-d8e8-49f6-95a2-1c7d697b8644',
 	'8acfe4c8-751d-4aa6-8c3c-844e3ef478e0',
@@ -17,18 +15,15 @@ export const availableModelIds = [
 	'fc06f6ab-ed14-4186-a7c0-aaec288d4f38'
 ] as const;
 
-export type TAvailableModelId = typeof availableModelIds[number];
+export type TAvailableGenerationModelId = typeof availableGenerationModelIds[number];
 
-export const availableModelIdsFree: TAvailableModelId[] = [
-	'048b4aa3-5586-47ed-900f-f4341c96bdb2',
-	'8acfe4c8-751d-4aa6-8c3c-844e3ef478e0',
-	'48a7031d-43b6-4a23-9f8c-8020eb6862e4',
-	'f7f3d973-ac6f-4a7a-9db8-e89e4fba03a9'
-];
+export const generationModelIdDefault: TAvailableGenerationModelId =
+	'048b4aa3-5586-47ed-900f-f4341c96bdb2';
 
-export const modelIdDefault: TAvailableModelId = '048b4aa3-5586-47ed-900f-f4341c96bdb2';
-
-export const modelIdToModelNameCog: Record<TAvailableModelId, TModelNameCog> = {
+export const generationModelIdToNameCog: Record<
+	TAvailableGenerationModelId,
+	TGenerationModelNameCog
+> = {
 	'048b4aa3-5586-47ed-900f-f4341c96bdb2': 'Stable Diffusion v1.5',
 	'897461c5-d8e8-49f6-95a2-1c7d697b8644': 'Stable Diffusion v1.5 Inpaint',
 	'8acfe4c8-751d-4aa6-8c3c-844e3ef478e0': 'Openjourney',
@@ -42,7 +37,7 @@ export const modelIdToModelNameCog: Record<TAvailableModelId, TModelNameCog> = {
 
 export const modelIdToDisplayName = derived<
 	[Writable<boolean>, Readable<TranslationFunctions>],
-	Record<TAvailableModelId, string>
+	Record<TAvailableGenerationModelId, string>
 >([advancedModeApp, LL], ([$advancedModeApp, $LL]) => {
 	return {
 		'048b4aa3-5586-47ed-900f-f4341c96bdb2': $advancedModeApp
@@ -76,7 +71,7 @@ export const modelIdToDisplayName = derived<
 export const availableModelIdDropdownItems = derived(
 	modelIdToDisplayName,
 	($modelIdToDisplayName) => {
-		const items: TTab<TAvailableModelId>[] = [
+		const items: TTab<TAvailableGenerationModelId>[] = [
 			{
 				label: $modelIdToDisplayName['048b4aa3-5586-47ed-900f-f4341c96bdb2'],
 				value: '048b4aa3-5586-47ed-900f-f4341c96bdb2'
@@ -113,3 +108,14 @@ export const availableModelIdDropdownItems = derived(
 		return items;
 	}
 );
+
+export type TGenerationModelNameCog =
+	| 'Stable Diffusion v1.5'
+	| 'Stable Diffusion v1.5 Inpaint'
+	| 'Openjourney'
+	| 'Arcane Diffusion'
+	| 'Ghibli Diffusion'
+	| 'Mo-Di Diffusion'
+	| 'Redshift Diffusion'
+	| 'Waifu Diffusion v1.4'
+	| '22h Diffusion v0.1';

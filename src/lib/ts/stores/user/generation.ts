@@ -1,5 +1,5 @@
 import { apiUrl } from '$ts/constants/main';
-import type { TAvailableModelId } from '$ts/constants/models';
+import type { TAvailableGenerationModelId } from '$ts/constants/generationModels';
 import type { TAvailableSchedulerId } from '$ts/constants/schedulers';
 import { writable } from 'svelte/store';
 
@@ -92,12 +92,12 @@ export interface TInitialGenerationResponse {
 	error?: string;
 }
 
-export type TProcessType = 'generate' | 'generate_and_upscale' | 'upscale';
+export type TProcessType = 'generate' | 'generate_and_upscale';
 
 export interface TGenerationBase {
 	prompt: string;
 	negative_prompt?: string;
-	model_id: TAvailableModelId;
+	model_id: TAvailableGenerationModelId;
 	scheduler_id: TAvailableSchedulerId;
 	width: number;
 	height: number;
@@ -122,9 +122,8 @@ export interface TGenerationOutput {
 	id: string;
 	image_url: string;
 	upscaled_image_url?: string;
-	created_at: string;
-	updated_at: string;
-	generation_id: string;
+	created_at?: string;
+	updated_at?: string;
 }
 
 export interface TGenerationFullOutput extends TGenerationOutput {

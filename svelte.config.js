@@ -14,6 +14,7 @@ const config = {
 			'$md/*': './src/lib/md',
 			'$routes/*': './src/routes',
 			'$i18n/*': './src/i18n',
+			'$userStores/*': './src/lib/ts/stores/user'
 		},
 		inlineStyleThreshold: 60 * 1024
 	}

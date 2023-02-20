@@ -129,7 +129,7 @@ func Handler(c *fiber.Ctx) error {
 
 	// Generation setting checks for the free tier
 	if plan == "FREE" {
-		if shared.Contains(shared.AvailableModelIdsFree, req.ModelId) == false {
+		if shared.Contains(shared.availableGenerationModelIdsFree, req.ModelId) == false {
 			return c.Status(http.StatusBadRequest).JSON(
 				SGenerateResponse{Error: "That model is not available on the free plan :("},
 			)
@@ -510,7 +510,7 @@ func HandlerV2(c *fiber.Ctx) error {
 
 	// Generation setting checks for the free tier
 	if plan == "FREE" {
-		if shared.Contains(shared.AvailableModelIdsFree, req.ModelId) == false {
+		if shared.Contains(shared.availableGenerationModelIdsFree, req.ModelId) == false {
 			return c.Status(http.StatusBadRequest).JSON(
 				SGenerateResponseV2{Error: "That model is not available on the free plan :("},
 			)

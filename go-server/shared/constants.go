@@ -9,7 +9,7 @@ import (
 	"github.com/meilisearch/meilisearch-go"
 
 	"github.com/supabase-community/gotrue-go"
-	"github.com/supabase-community/storage-go"
+	storage_go "github.com/supabase-community/storage-go"
 	"github.com/supabase/postgrest-go"
 )
 
@@ -90,7 +90,7 @@ const DBTimeLayout = "2006-01-02T15:04:05.999999-07:00"
 var AvailableWidthsFree = []int{512}
 var AvailableHeightsFree = []int{512}
 var AvailableInferenceStepsFree = []int{30}
-var AvailableModelIdsFree = []string{
+var availableGenerationModelIdsFree = []string{
 	"048b4aa3-5586-47ed-900f-f4341c96bdb2",
 	"8acfe4c8-751d-4aa6-8c3c-844e3ef478e0",
 	"48a7031d-43b6-4a23-9f8c-8020eb6862e4",

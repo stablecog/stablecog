@@ -16,15 +16,4 @@ export type TSchedulerNameCog =
 	| 'DPM'
 	| 'DPM_SINGLESTEP';
 
-export type TModelNameCog =
-	| 'Stable Diffusion v1.5'
-	| 'Stable Diffusion v1.5 Inpaint'
-	| 'Openjourney'
-	| 'Arcane Diffusion'
-	| 'Ghibli Diffusion'
-	| 'Mo-Di Diffusion'
-	| 'Redshift Diffusion'
-	| 'Waifu Diffusion v1.4'
-	| '22h Diffusion v0.1';
-
 export type TOutputImageExtCog = 'png' | 'jpg';

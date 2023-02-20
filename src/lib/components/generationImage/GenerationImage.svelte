@@ -6,7 +6,7 @@
 	import IconSteps from '$components/icons/IconSteps.svelte';
 	import { doesContainTarget } from '$ts/helpers/doesContainTarget';
 	import { advancedModeApp } from '$ts/stores/advancedMode';
-	import { activeGeneration, type TGenerationWithSelectedOutput } from '$ts/stores/generation';
+	import { activeGeneration, type TGenerationWithSelectedOutput } from '$userStores/generation';
 
 	export let generation: TGenerationWithSelectedOutput;
 	export let useUpscaledImage = true;

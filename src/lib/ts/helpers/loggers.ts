@@ -1,6 +1,7 @@
-import type { TGeneration, TInitialGenerationRequest } from '$ts/stores/generation';
+import type { TGeneration, TInitialGenerationRequest } from '$userStores/generation';
 import type { IUserPlan } from '$ts/types/stripe';
 import mixpanel from 'mixpanel-browser';
+import type { TInitialUpscaleRequest, TUpscale } from '$ts/stores/user/upscale';
 
 export function uLogGeneration(status: IGenerationStatus) {
 	if (window.umami) {
@@ -124,6 +125,47 @@ export function mLogGenerationPropsFromGeneration({
 	};
 }
 
+export function logUpscaleFailed({
+	upscale,
+	advancedModeApp,
+	locale,
+	plan
+}: {
+	upscale: TUpscale | TInitialUpscaleRequest;
+	advancedModeApp: boolean;
+	locale: string;
+	plan: IUserPlan;
+}) {
+	const props = mLogUpscalePropsFromUpscale({
+		upscale,
+		advancedModeApp,
+		locale,
+		plan
+	});
+	uLogUpscale('Failed');
+	mLogUpscale('Failed', props);
+}
+
+export function mLogUpscalePropsFromUpscale({
+	upscale,
+	advancedModeApp,
+	locale,
+	plan
+}: {
+	upscale: TUpscale | TInitialUpscaleRequest;
+	advancedModeApp: boolean;
+	locale: string;
+	plan: IUserPlan;
+}) {
+	return {
+		'SC - Type': upscale.type,
+		'SC - Input': upscale.input,
+		'SC - Advanced Mode': advancedModeApp,
+		'SC - Locale': locale,
+		'SC - Plan': plan
+	};
+}
+
 interface ISubmitToGalleryToggledMinimal {
 	'SC - Advanced Mode': boolean;
 	'SC - Plan': IUserPlan;
@@ -147,8 +189,8 @@ interface IAdvancedModeToggledProps {
 }
 
 interface IUpscaleMinimal {
-	'SC - Width': number;
-	'SC - Height': number;
+	'SC - Image to Upscale'?: string;
+	'SC - Output ID'?: string;
 	'SC - Advanced Mode': boolean;
 	'SC - Locale': string;
 	'SC - Duration'?: number;

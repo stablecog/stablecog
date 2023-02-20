@@ -56,9 +56,12 @@
 	import { fade, fly } from 'svelte/transition';
 	import { quadOut } from 'svelte/easing';
 	import { browser } from '$app/environment';
-	import { availableModelIds, modelIdDefault } from '$ts/constants/models';
+	import {
+		availableGenerationModelIds,
+		generationModelIdDefault
+	} from '$ts/constants/generationModels';
 	import { availableSchedulerIds, schedulerIdDefault } from '$ts/constants/schedulers';
-	import { generations, type TGenerationStatus } from '$ts/stores/generation';
+	import { generations, type TGenerationStatus } from '$userStores/generation';
 
 	export let serverData: THomePageData;
 	export let queueGeneration: () => Promise<void>;
@@ -106,7 +109,7 @@
 	generationModelId.set(
 		isValue(serverData.model_id) && serverData.model_id !== null
 			? serverData.model_id
-			: modelIdDefault
+			: generationModelIdDefault
 	);
 	generationSchedulerId.set(
 		isValue(serverData.scheduler_id) && serverData.scheduler_id !== null
@@ -329,7 +332,7 @@
 		if (
 			!isValue(serverData.model_id) &&
 			isValue($modelId) &&
-			availableModelIds.includes($modelId)
+			availableGenerationModelIds.includes($modelId)
 		) {
 			generationModelId.set($modelId);
 		}

@@ -1,5 +1,5 @@
 import { apiUrl } from '$ts/constants/main';
-import type { TGenerationFullOutput } from '$ts/stores/generation';
+import type { TGenerationFullOutput } from '$userStores/generation';
 
 const perPage = 50;
 export async function getUserGenerationFullOutputs({

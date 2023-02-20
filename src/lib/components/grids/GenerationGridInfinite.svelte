@@ -6,7 +6,7 @@
 	import LL from '$i18n/i18n-svelte';
 	import { elementreceive, elementsend } from '$ts/animation/transitions';
 	import type { TUserGenerationFullOutputsPage } from '$ts/queries/userGenerations';
-	import { activeGeneration } from '$ts/stores/generation';
+	import { activeGeneration } from '$userStores/generation';
 	import type { CreateInfiniteQueryResult } from '@tanstack/svelte-query';
 	import Masonry from 'svelte-bricks';
 	import IntersectionObserver from 'svelte-intersection-observer';

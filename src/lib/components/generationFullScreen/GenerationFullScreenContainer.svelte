@@ -7,7 +7,7 @@
 	} from '$components/generationFullScreen/constants';
 	import { clickoutside } from '$ts/actions/clickoutside';
 	import { elementreceive, elementsend } from '$ts/animation/transitions';
-	import { activeGeneration, type TGenerationWithSelectedOutput } from '$ts/stores/generation';
+	import { activeGeneration, type TGenerationWithSelectedOutput } from '$userStores/generation';
 	import { windowHeight, windowWidth } from '$ts/stores/window';
 
 	export let generation: TGenerationWithSelectedOutput;

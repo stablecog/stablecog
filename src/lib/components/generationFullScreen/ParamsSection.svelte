@@ -2,7 +2,6 @@
 	import SubtleButton from '$components/buttons/SubtleButton.svelte';
 	import IconBrain from '$components/icons/IconBrain.svelte';
 	import IconBubbles from '$components/icons/IconBubbles.svelte';
-	import IconClock from '$components/icons/IconClock.svelte';
 	import IconCopy from '$components/icons/IconCopy.svelte';
 	import IconDimensions from '$components/icons/IconDimensions.svelte';
 	import IconScale from '$components/icons/IconScale.svelte';
@@ -10,9 +9,9 @@
 	import IconSteps from '$components/icons/IconSteps.svelte';
 	import IconTick from '$components/icons/IconTick.svelte';
 	import Morpher from '$components/Morpher.svelte';
-	import LL, { locale } from '$i18n/i18n-svelte';
+	import LL from '$i18n/i18n-svelte';
 	import { tooltip } from '$ts/actions/tooltip';
-	import { modelIdDefault, modelIdToDisplayName } from '$ts/constants/models';
+	import { generationModelIdDefault, modelIdToDisplayName } from '$ts/constants/generationModels';
 	import { schedulerIdDefault, schedulerIdToDisplayName } from '$ts/constants/schedulers';
 	import {
 		guidanceScaleTooltipAlt,
@@ -21,7 +20,7 @@
 		schedulerTooltipAlt,
 		seedTooltipAlt
 	} from '$ts/constants/tooltips';
-	import type { TGeneration } from '$ts/stores/generation';
+	import type { TGeneration } from '$userStores/generation';
 	import { copy } from 'svelte-copy';
 
 	export let generation: TGeneration;
@@ -55,7 +54,8 @@
 				<p>{$LL.Home.ModelDropdown.Title()}</p>
 			</div>
 			<p class="font-bold">
-				{$modelIdToDisplayName[generation.model_id ?? modelIdDefault] ?? $LL.Shared.UnknownTitle()}
+				{$modelIdToDisplayName[generation.model_id ?? generationModelIdDefault] ??
+					$LL.Shared.UnknownTitle()}
 			</p>
 		</div>
 		<div class="min-w-[calc(50%-0.75rem)] flex flex-col items-start gap-1">

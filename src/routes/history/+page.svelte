@@ -9,7 +9,7 @@
 		getUserGenerationFullOutputs,
 		type TUserGenerationFullOutputsPage
 	} from '$ts/queries/userGenerations';
-	import { activeGeneration } from '$ts/stores/generation';
+	import { activeGeneration } from '$userStores/generation';
 	import { createInfiniteQuery } from '@tanstack/svelte-query';
 
 	let totalOutputs: number;

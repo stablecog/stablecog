@@ -1,5 +1,5 @@
 import {
-	availableModelIds,
+	availableGenerationModelIds,
 	availableSchedulerIds,
 	guidanceScaleMax,
 	guidanceScaleMin,
@@ -64,7 +64,7 @@ export const load: ServerLoad = ({ url }) => {
 			? (_height as TAvailableHeight)
 			: null;
 	const model_id =
-		_model_id !== null && availableModelIds.includes(_model_id as TAvailableModelId)
+		_model_id !== null && availableGenerationModelIds.includes(_model_id as TAvailableModelId)
 			? (_model_id as TAvailableModelId)
 			: null;
 	const scheduler_id =

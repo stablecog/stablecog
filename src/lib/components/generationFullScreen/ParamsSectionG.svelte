@@ -11,7 +11,7 @@
 	import Morpher from '$components/Morpher.svelte';
 	import LL from '$i18n/i18n-svelte';
 	import { tooltip } from '$ts/actions/tooltip';
-	import { modelIdDefault, modelIdToDisplayName } from '$ts/constants/models';
+	import { generationModelIdDefault, modelIdToDisplayName } from '$ts/constants/generationModels';
 	import { schedulerIdDefault, schedulerIdToDisplayName } from '$ts/constants/schedulers';
 	import {
 		guidanceScaleTooltipAlt,
@@ -52,7 +52,8 @@
 				<p>{$LL.Home.ModelDropdown.Title()}</p>
 			</div>
 			<p class="font-bold">
-				{$modelIdToDisplayName[generation.model?.id ?? modelIdDefault] ?? $LL.Shared.UnknownTitle()}
+				{$modelIdToDisplayName[generation.model?.id ?? generationModelIdDefault] ??
+					$LL.Shared.UnknownTitle()}
 			</p>
 		</div>
 		<div class="min-w-[calc(50%-0.75rem)] flex flex-col items-start gap-1">
