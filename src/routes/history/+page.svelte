@@ -3,6 +3,7 @@
 	import GenerationFullScreen from '$components/generationFullScreen/GenerationFullScreen.svelte';
 	import GenerationGridInfinite from '$components/grids/GenerationGridInfinite.svelte';
 	import MetaTag from '$components/MetaTag.svelte';
+	import SignInCard from '$components/SignInCard.svelte';
 	import LL from '$i18n/i18n-svelte';
 	import { canonicalUrl } from '$ts/constants/main';
 	import {
@@ -10,27 +11,34 @@
 		type TUserGenerationFullOutputsPage
 	} from '$ts/queries/userGenerations';
 	import { activeGeneration } from '$userStores/generation';
-	import { createInfiniteQuery } from '@tanstack/svelte-query';
+	import { createInfiniteQuery, type CreateInfiniteQueryResult } from '@tanstack/svelte-query';
 
 	let totalOutputs: number;
 
-	$: userGenerationFullOutputsQuery = createInfiniteQuery({
-		queryKey: ['user_generation_full_outputs'],
-		queryFn: (lastPage) => {
-			return getUserGenerationFullOutputs({
-				access_token: $page.data.session?.access_token || '',
-				cursor: lastPage?.pageParam
-			});
-		},
-		getNextPageParam: (lastPage: TUserGenerationFullOutputsPage) => {
-			if (!lastPage.next) return undefined;
-			return lastPage.next;
-		}
-	});
+	let userGenerationFullOutputsQuery:
+		| CreateInfiniteQueryResult<TUserGenerationFullOutputsPage, unknown>
+		| undefined;
 
-	$: $userGenerationFullOutputsQuery.data?.pages, onPagesChanged();
+	$: userGenerationFullOutputsQuery = $page.data.session?.user.id
+		? createInfiniteQuery({
+				queryKey: ['user_generation_full_outputs'],
+				queryFn: (lastPage) => {
+					return getUserGenerationFullOutputs({
+						access_token: $page.data.session?.access_token || '',
+						cursor: lastPage?.pageParam
+					});
+				},
+				getNextPageParam: (lastPage: TUserGenerationFullOutputsPage) => {
+					if (!lastPage.next) return undefined;
+					return lastPage.next;
+				}
+		  })
+		: undefined;
+
+	$: $userGenerationFullOutputsQuery?.data?.pages, onPagesChanged();
 
 	const onPagesChanged = () => {
+		if (!$page.data.session?.user.id || !$userGenerationFullOutputsQuery) return;
 		if (!$userGenerationFullOutputsQuery.data?.pages) return;
 		for (let i = 0; i < $userGenerationFullOutputsQuery.data.pages.length; i++) {
 			let page = $userGenerationFullOutputsQuery.data.pages[i];
@@ -49,21 +57,32 @@
 />
 
 <div class="w-full flex-1 flex flex-col items-center px-2 gap-2 md:py-6 md:px-8">
-	<div class="w-full max-w-7xl flex justify-center px-1.5">
-		<div class="w-full flex flex-wrap gap-4 items-center px-2 py-2 md:px-4 md:py-3 rounded-xl">
-			<div class="flex gap-2 items-center">
-				<p class="font-bold text-xl md:text-2xl">
-					{$LL.History.GenerationsTitle()}
-				</p>
-				<p class="text-sm md:text-base text-c-on-bg/50 font-semibold mt-0.5 md:mt-1">
-					({totalOutputs !== undefined ? totalOutputs : '...'})
-				</p>
+	{#if !$page.data.session?.user.id}
+		<div class="w-full flex-1 max-w-7xl flex justify-center px-2 py-4 md:py-2">
+			<div class="my-auto flex flex-col">
+				<SignInCard redirectTo="/history" />
+				<div class="w-full h-[1vh]" />
 			</div>
 		</div>
-	</div>
-	<div class="w-full flex-1 max-w-7xl flex flex-col">
-		<GenerationGridInfinite generationsQuery={userGenerationFullOutputsQuery} />
-	</div>
+	{:else}
+		<div class="w-full max-w-7xl flex justify-center px-1.5">
+			<div class="w-full flex flex-wrap gap-4 items-center px-2 py-2 md:px-4 md:py-3 rounded-xl">
+				<div class="flex gap-2 items-center">
+					<p class="font-bold text-xl md:text-2xl">
+						{$LL.History.GenerationsTitle()}
+					</p>
+					<p class="text-sm md:text-base text-c-on-bg/50 font-semibold mt-0.5 md:mt-1">
+						({totalOutputs !== undefined ? totalOutputs : '...'})
+					</p>
+				</div>
+			</div>
+		</div>
+		<div class="w-full flex-1 max-w-7xl flex flex-col">
+			{#if userGenerationFullOutputsQuery !== undefined}
+				<GenerationGridInfinite generationsQuery={userGenerationFullOutputsQuery} />
+			{/if}
+		</div>
+	{/if}
 </div>
 
 {#if $activeGeneration}
