@@ -2,25 +2,79 @@
 	import { page } from '$app/stores';
 	import MetaTag from '$components/MetaTag.svelte';
 	import { elementreceive, elementsend, expandCollapse } from '$ts/animation/transitions';
-	import { canonicalUrl } from '$ts/constants/main';
-	import { supabase } from '$ts/constants/supabase';
-	import { onDestroy, onMount } from 'svelte';
+	import { apiUrl, canonicalUrl } from '$ts/constants/main';
+	import { onMount, onDestroy } from 'svelte';
 	import { flip } from 'svelte/animate';
 	import { quadOut } from 'svelte/easing';
 	import { scale } from 'svelte/transition';
 	import { tweened } from 'svelte/motion';
 	import { tooltip, type TTooltipProps } from '$ts/actions/tooltip';
-	import type { RealtimeChannel } from '@supabase/supabase-js';
 	import IconPulsing from '$components/icons/IconPulsing.svelte';
-	import type { TDBGenerationRealtimePayload, TDBUpscaleRealtimePayload } from '$ts/types/db';
 	import LL, { locale } from '$i18n/i18n-svelte';
+	import { browser } from '$app/environment';
 
-	type TProcessType = 'upscale' | 'generation';
-	interface TDBGenerationRealtimePayloadExt extends TDBGenerationRealtimePayload {
-		type: TProcessType;
-	}
-	interface TDBUpscaleRealtimePayloadExt extends TDBUpscaleRealtimePayload {
-		type: TProcessType;
+	let sse: EventSource | undefined = undefined;
+	$: if (browser && (!sse || sse.readyState === sse.CLOSED)) {
+		sse = new EventSource(`${apiUrl.href}v1/sse?id=live`);
+		sse.onopen = () => {
+			console.log(`Connected to SSE with ID: live`);
+		};
+		sse.onmessage = (event) => {
+			const data = JSON.parse(event.data);
+			if (data.process_type === 'generate') {
+				const generation = data as TDBGenerationRealtimePayloadExt;
+				// check if generation is already in the array
+				const generationAlreadyInArray = generations.find((g) => g.id === generation.id);
+				if (!generationAlreadyInArray) {
+					generations = [data, ...generations];
+				} else {
+					// update the generation in the array
+					generations = generations.map((g) => {
+						if (g.id === generation.id) {
+							return generation;
+						} else {
+							return g;
+						}
+					});
+					if (generation.status === 'succeeded') {
+						const newCount = $generationTotalCount + 1;
+						generationTotalCount = tweened($generationTotalCount, {
+							duration: calculateAnimationDuration($generationTotalCount, newCount),
+							easing: quadOut
+						});
+						generationTotalCount.set(newCount);
+					}
+				}
+			} else if (data.process_type === 'upscale') {
+				const upscale = data as TDBUpscaleRealtimePayloadExt;
+				// check if upscale is already in the array
+				const upscaleAlreadyInArray = upscales.find((u) => u.id === upscale.id);
+				if (!upscaleAlreadyInArray) {
+					upscales = [data, ...upscales];
+				} else {
+					// update the upscale in the array
+					upscales = upscales.map((u) => {
+						if (u.id === upscale.id) {
+							return upscale;
+						} else {
+							return u;
+						}
+					});
+					if (upscale.status === 'succeeded') {
+						const newCount = $upscaleTotalCount + 1;
+						upscaleTotalCount = tweened($upscaleTotalCount, {
+							duration: calculateAnimationDuration($upscaleTotalCount, newCount),
+							easing: quadOut
+						});
+						upscaleTotalCount.set(newCount);
+					}
+				}
+			}
+			console.log('Message from SSE', data);
+		};
+		sse.onerror = (event) => {
+			console.log('Error from SSE', event);
+		};
 	}
 
 	let generations: TDBGenerationRealtimePayloadExt[] = [];
@@ -42,15 +96,35 @@
 		easing: quadOut
 	});
 
-	let lastPulled = 0;
-	let pullInterval = 1000 * 5;
+	type TProcessType = 'upscale' | 'generate';
+	type TStatus = 'queued' | 'succeeded' | 'failed' | 'processing';
+	interface TDBGenerationRealtimePayloadExt {
+		process_type: TProcessType;
+		id: string;
+		country_code: string;
+		status: TStatus;
+		created_at: string;
+		started_at?: string;
+		completed_at?: string;
+		width: number;
+		height: number;
+	}
+	interface TDBUpscaleRealtimePayloadExt {
+		process_type: TProcessType;
+		id: string;
+		country_code: string;
+		status: TStatus;
+		created_at: string;
+		started_at?: string;
+		completed_at?: string;
+		width: number;
+		height: number;
+	}
 
 	const calculateAnimationDuration = (curr: number, next: number) => {
 		return Math.min((next - curr) * msForEachDifference, maxDuration);
 	};
 
-	let channelGeneration: RealtimeChannel | undefined;
-	let channelUpscale: RealtimeChannel | undefined;
 	const getCountryName = (locale: Locales, countryCode: string) => {
 		try {
 			const displayName = new Intl.DisplayNames([locale], { type: 'region' });
@@ -69,131 +143,61 @@
 		generationsAndUpscales = [...allSorted];
 	}
 
+	const getDurationSec = (
+		generationOrUpscale: TDBGenerationRealtimePayloadExt | TDBUpscaleRealtimePayloadExt
+	) => {
+		const createdAt = new Date(generationOrUpscale.created_at).getTime();
+		const completedAt = generationOrUpscale.completed_at
+			? new Date(generationOrUpscale.completed_at).getTime()
+			: Date.now();
+		return (completedAt - createdAt) / 1000;
+	};
+
 	function getOptionalInfo(
 		$LL: TranslationFunctions,
 		generationOrUpscale: TDBGenerationRealtimePayloadExt | TDBUpscaleRealtimePayloadExt
 	) {
 		const asGeneration = generationOrUpscale as TDBGenerationRealtimePayloadExt;
 		const asUpscale = generationOrUpscale as TDBUpscaleRealtimePayloadExt;
-		if (generationOrUpscale.type === 'upscale' && asUpscale.scale) {
-			return asUpscale.scale
-				? [
-						{
-							key: $LL.Live.GenerationTooltip.ScaleTitle() + ':',
-							value: asUpscale.scale.toString()
-						}
-				  ]
-				: [];
-		} else {
-			return asGeneration.num_inference_steps
-				? [
-						{
-							key: $LL.Live.GenerationTooltip.StepsTitle() + ':',
-							value: asGeneration.num_inference_steps.toString()
-						}
-				  ]
-				: [];
+		if (generationOrUpscale.process_type === 'upscale') {
+			return [];
+		} else if (generationOrUpscale.process_type === 'generate') {
+			return [];
 		}
+		return [];
 	}
 
-	onMount(async () => {
-		if (supabase) {
-			getAndSetTotals();
-			channelGeneration = supabase
-				.channel('generation-realtime-changes')
-				.on(
-					'postgres_changes',
-					{ event: '*', schema: 'public', table: 'generation_realtime' },
-					(payload) => {
-						const newData = payload.new as TDBGenerationRealtimePayload;
-						if (newData.id && newData.status && newData.created_at) {
-							if (generations.map((i) => i.id).includes(newData.id)) {
-								const index = generations.findIndex((i) => i.id === newData.id);
-								generations[index] = {
-									...newData,
-									type: 'generation'
-								};
-								generations = [...generations];
-								if (newData.status === 'succeeded') {
-									generationTotalCount.set($generationTotalCount + 1);
-								}
-							} else {
-								generations = [{ ...newData, type: 'generation' }, ...generations];
-							}
-							if (Date.now() - lastPulled > pullInterval) {
-								lastPulled = Date.now();
-								getAndSetTotals();
-							}
-						}
-					}
-				)
-				.subscribe((status, err) => {
-					console.log('generation realtime status:', status);
-					if (err) console.log('generation realtime error:', err);
-				});
-			channelUpscale = supabase
-				.channel('upscale-realtime-changes')
-				.on(
-					'postgres_changes',
-					{ event: '*', schema: 'public', table: 'upscale_realtime' },
-					(payload) => {
-						const newData = payload.new as TDBUpscaleRealtimePayload;
-						if (newData.id && newData.status && newData.created_at) {
-							if (upscales.map((i) => i.id).includes(newData.id)) {
-								const index = upscales.findIndex((i) => i.id === newData.id);
-								upscales[index] = { ...newData, type: 'upscale' };
-								upscales = [...upscales];
-								if (newData.status === 'succeeded') {
-									upscaleTotalCount.set($upscaleTotalCount + 1);
-								}
-							} else {
-								upscales = [{ ...newData, type: 'upscale' }, ...upscales];
-							}
-							if (Date.now() - lastPulled > pullInterval) {
-								lastPulled = Date.now();
-								getAndSetTotals();
-							}
-						}
-					}
-				)
-				.subscribe((status, err) => {
-					console.log('upscale realtime status:', status);
-					if (err) console.log('upscale realtime error:', err);
-				});
-		} else {
-			console.log('Supabase is not detected.');
-		}
+	let getAndSetTotalsInterval: NodeJS.Timeout;
+	const getAndSetTotalsIntervalTime = 10 * 1000;
+
+	onMount(() => {
+		getAndSetTotals();
+		getAndSetTotalsInterval = setInterval(getAndSetTotals, getAndSetTotalsIntervalTime);
 	});
 
 	onDestroy(() => {
-		channelGeneration?.unsubscribe();
-		channelUpscale?.unsubscribe();
-		supabase?.removeAllChannels();
+		clearInterval(getAndSetTotalsInterval);
 	});
 
 	async function getAndSetTotals() {
-		try {
-			const res = await fetch(`${apiBase}/stats`);
-			const resJson: IStatsRes = await res.json();
-			const { generation_count: gCount, upscale_count: uCount } = resJson;
-			if (gCount > $generationTotalCount) {
-				generationTotalCount = tweened($generationTotalCount, {
-					duration: calculateAnimationDuration($generationTotalCount, gCount),
-					easing: quadOut
-				});
-				generationTotalCount.set(gCount);
-				console.log('generationTotalCount:', gCount);
-			}
-			if (uCount > $upscaleTotalCount) {
-				upscaleTotalCount = tweened($upscaleTotalCount, {
-					duration: calculateAnimationDuration($upscaleTotalCount, uCount),
-					easing: quadOut
-				});
-				upscaleTotalCount.set(uCount);
-				console.log('upscaleTotalCount:', uCount);
-			}
-		} catch (error) {
-			console.log('Error getting totals:', error);
+		const res = await fetch(`${apiUrl}v1/stats`);
+		const resJson: IStatsRes = await res.json();
+		const { generation_output_count: gCount, upscale_output_count: uCount } = resJson;
+		if (gCount > $generationTotalCount) {
+			generationTotalCount = tweened($generationTotalCount, {
+				duration: calculateAnimationDuration($generationTotalCount, gCount),
+				easing: quadOut
+			});
+			generationTotalCount.set(gCount);
+			console.log('generationTotalCount:', gCount);
+		}
+		if (uCount > $upscaleTotalCount) {
+			upscaleTotalCount = tweened($upscaleTotalCount, {
+				duration: calculateAnimationDuration($upscaleTotalCount, uCount),
+				easing: quadOut
+			});
+			upscaleTotalCount.set(uCount);
+			console.log('upscaleTotalCount:', uCount);
 		}
 	}
 
@@ -213,20 +217,12 @@
 	};
 
 	interface IStatsRes {
-		generation_duration_ms_total_estimate_with_constant: number;
-		upscale_duration_ms_total_estimate_with_constant: number;
-		generation_count: number;
-		upscale_count: number;
+		generation_output_count: number;
+		upscale_output_count: number;
 	}
 
 	function tierBasedColor(entry: TDBGenerationRealtimePayloadExt | TDBUpscaleRealtimePayloadExt) {
-		return entry.user_tier !== 'FREE'
-			? entry.status === 'succeeded'
-				? 'rgb(var(--c-success-secondary))'
-				: entry.status === 'failed'
-				? 'rgb(var(--c-danger-secondary))'
-				: 'rgb(var(--c-primary-secondary))'
-			: 'transparent';
+		return 'transparent';
 	}
 </script>
 
@@ -266,25 +262,26 @@
 							in:elementreceive|local={{ key: generationOrUpscale.id }}
 							out:elementsend|local={{ key: generationOrUpscale.id }}
 							animate:flip={{ duration: 300, easing: quadOut }}
-							class="flex items-center justify-center relative overflow-hidden z-0 {generationOrUpscale.type ===
-							'generation'
+							class="flex items-center justify-center relative overflow-hidden z-0 {generationOrUpscale.process_type ===
+							'generate'
 								? 'rounded-full'
 								: 'rounded-xl'} -m-3"
 						>
 							<div
-								class="p-8 relative overflow-hidden z-0 {generationOrUpscale.type === 'generation'
+								class="p-8 relative overflow-hidden z-0 {generationOrUpscale.process_type ===
+								'generate'
 									? 'rounded-full'
 									: 'rounded-xl'}"
 							>
-								{#if generationOrUpscale.status === 'started'}
+								{#if generationOrUpscale.status === 'queued' || generationOrUpscale.status === 'processing'}
 									<div
 										transition:scale|local={{ duration: 300, easing: quadOut }}
 										class="absolute w-full h-full left-0 top-0 origin-center"
 									>
 										<div class="w-full h-full">
 											<div
-												class="w-full h-full absolute left-0 top-0 {generationOrUpscale.type ===
-												'generation'
+												class="w-full h-full absolute left-0 top-0 {generationOrUpscale.process_type ===
+												'generate'
 													? 'rounded-full'
 													: 'rounded-4xl'} bg-c-primary/50 animate-ping-custom"
 											/>
@@ -292,11 +289,11 @@
 									</div>
 								{/if}
 								<div class="w-10 h-10 relative">
-									{#if generationOrUpscale.status === 'started'}
+									{#if generationOrUpscale.status === 'queued' || generationOrUpscale.status === 'processing'}
 										<div
 											transition:scale|local={{ duration: 300, easing: quadOut }}
-											class="w-full h-full absolute left-0 top-0 {generationOrUpscale.type ===
-											'generation'
+											class="w-full h-full absolute left-0 top-0 {generationOrUpscale.process_type ===
+											'generate'
 												? 'rounded-full'
 												: 'rounded-xl'} bg-c-primary animate-ping-custom-bg"
 										/>
@@ -314,7 +311,7 @@
 												{
 													key: $LL.Live.GenerationTooltip.Type.Title() + ':',
 													value:
-														generationOrUpscale.type === 'upscale'
+														generationOrUpscale.process_type === 'upscale'
 															? $LL.Live.GenerationTooltip.Type.Upscale()
 															: $LL.Live.GenerationTooltip.Type.Generation()
 												},
@@ -330,25 +327,24 @@
 													  ]
 													: []),
 												...getOptionalInfo($LL, generationOrUpscale),
-												...(generationOrUpscale.duration_ms
+												...(generationOrUpscale.completed_at !== undefined
 													? [
 															{
 																key: $LL.Live.GenerationTooltip.DurationTitle() + ':',
-																value: generationOrUpscale.duration_ms
-																	? `${(generationOrUpscale.duration_ms / 1000).toLocaleString(
-																			$locale,
-																			{
-																				maximumFractionDigits: 1
-																			}
-																	  )}`
-																	: $LL.Live.DurationStatusUnknown()
+																value: `${getDurationSec(generationOrUpscale).toLocaleString(
+																	$locale,
+																	{
+																		maximumFractionDigits: 1
+																	}
+																)}`
 															}
 													  ]
 													: []),
 												{
 													key: $LL.Live.GenerationTooltip.Status.Title() + ':',
 													value:
-														generationOrUpscale.status === 'started'
+														generationOrUpscale.status === 'queued' ||
+														generationOrUpscale.status === 'processing'
 															? $LL.Live.GenerationTooltip.Status.Started()
 															: generationOrUpscale.status === 'succeeded'
 															? $LL.Live.GenerationTooltip.Status.Succeeded()
@@ -357,7 +353,7 @@
 											],
 											...tooltipStyleProps
 										}}
-										class="w-full h-full {generationOrUpscale.type === 'generation'
+										class="w-full h-full {generationOrUpscale.process_type === 'generate'
 											? 'rounded-full'
 											: 'rounded-xl'} transition-all duration-300 flex items-center justify-center relative overflow-hidden z-0 {generationOrUpscale.status ===
 										'succeeded'
