@@ -2,7 +2,7 @@
 	import { page } from '$app/stores';
 	import MetaTag from '$components/MetaTag.svelte';
 	import { elementreceive, elementsend, expandCollapse } from '$ts/animation/transitions';
-	import { apiBase, canonicalUrl } from '$ts/constants/main';
+	import { canonicalUrl } from '$ts/constants/main';
 	import { supabase } from '$ts/constants/supabase';
 	import { onDestroy, onMount } from 'svelte';
 	import { flip } from 'svelte/animate';
@@ -239,187 +239,174 @@
 
 <div class="w-full flex-1 flex justify-center pb-[calc(2vh)]">
 	<div class="w-full flex flex-col items-center justify-center max-w-5xl">
-		{#if supabase}
-			<div
-				class="w-full px-8 md:px-16 flex flex-wrap items-center justify-center py-2 md:pt-10 gap-10 lg:gap-14"
-			>
-				<div class="w-full lg:w-64 max-w-full flex flex-col gap-1.5 text-center lg:text-right">
-					<h1 class="text-c-on-bg/50 text-sm">{$LL.Live.GenerationsTitle()}</h1>
-					<p class="font-bold text-4xl">
-						{Math.floor($generationTotalCount).toLocaleString($locale)}
-					</p>
-				</div>
-				<div class="w-full lg:w-64 max-w-full flex flex-col gap-1.5 text-center lg:text-left">
-					<h1 class="text-c-on-bg/50 text-sm">{$LL.Live.UpscalesTitle()}</h1>
-					<p class="font-bold text-4xl">
-						{Math.floor($upscaleTotalCount).toLocaleString($locale)}
-					</p>
-				</div>
+		<div
+			class="w-full px-8 md:px-16 flex flex-wrap items-center justify-center py-2 md:pt-10 gap-10 lg:gap-14"
+		>
+			<div class="w-full lg:w-64 max-w-full flex flex-col gap-1.5 text-center lg:text-right">
+				<h1 class="text-c-on-bg/50 text-sm">{$LL.Live.GenerationsTitle()}</h1>
+				<p class="font-bold text-4xl">
+					{Math.floor($generationTotalCount).toLocaleString($locale)}
+				</p>
 			</div>
-			{#if generationsAndUpscales.length > 0}
-				<div
-					transition:expandCollapse|local={{ duration: 300 }}
-					class="w-full px-8 md:px-24 z-0 relative"
-				>
-					<div class="w-full flex flex-wrap items-center justify-center py-4">
-						{#each generationsAndUpscales as generationOrUpscale (generationOrUpscale.id)}
+			<div class="w-full lg:w-64 max-w-full flex flex-col gap-1.5 text-center lg:text-left">
+				<h1 class="text-c-on-bg/50 text-sm">{$LL.Live.UpscalesTitle()}</h1>
+				<p class="font-bold text-4xl">
+					{Math.floor($upscaleTotalCount).toLocaleString($locale)}
+				</p>
+			</div>
+		</div>
+		{#if generationsAndUpscales.length > 0}
+			<div
+				transition:expandCollapse|local={{ duration: 300 }}
+				class="w-full px-8 md:px-24 z-0 relative"
+			>
+				<div class="w-full flex flex-wrap items-center justify-center py-4">
+					{#each generationsAndUpscales as generationOrUpscale (generationOrUpscale.id)}
+						<div
+							in:elementreceive|local={{ key: generationOrUpscale.id }}
+							out:elementsend|local={{ key: generationOrUpscale.id }}
+							animate:flip={{ duration: 300, easing: quadOut }}
+							class="flex items-center justify-center relative overflow-hidden z-0 {generationOrUpscale.type ===
+							'generation'
+								? 'rounded-full'
+								: 'rounded-xl'} -m-3"
+						>
 							<div
-								in:elementreceive|local={{ key: generationOrUpscale.id }}
-								out:elementsend|local={{ key: generationOrUpscale.id }}
-								animate:flip={{ duration: 300, easing: quadOut }}
-								class="flex items-center justify-center relative overflow-hidden z-0 {generationOrUpscale.type ===
-								'generation'
+								class="p-8 relative overflow-hidden z-0 {generationOrUpscale.type === 'generation'
 									? 'rounded-full'
-									: 'rounded-xl'} -m-3"
+									: 'rounded-xl'}"
 							>
-								<div
-									class="p-8 relative overflow-hidden z-0 {generationOrUpscale.type === 'generation'
-										? 'rounded-full'
-										: 'rounded-xl'}"
-								>
-									{#if generationOrUpscale.status === 'started'}
-										<div
-											transition:scale|local={{ duration: 300, easing: quadOut }}
-											class="absolute w-full h-full left-0 top-0 origin-center"
-										>
-											<div class="w-full h-full">
-												<div
-													class="w-full h-full absolute left-0 top-0 {generationOrUpscale.type ===
-													'generation'
-														? 'rounded-full'
-														: 'rounded-4xl'} bg-c-primary/50 animate-ping-custom"
-												/>
-											</div>
-										</div>
-									{/if}
-									<div class="w-10 h-10 relative">
-										{#if generationOrUpscale.status === 'started'}
+								{#if generationOrUpscale.status === 'started'}
+									<div
+										transition:scale|local={{ duration: 300, easing: quadOut }}
+										class="absolute w-full h-full left-0 top-0 origin-center"
+									>
+										<div class="w-full h-full">
 											<div
-												transition:scale|local={{ duration: 300, easing: quadOut }}
 												class="w-full h-full absolute left-0 top-0 {generationOrUpscale.type ===
 												'generation'
 													? 'rounded-full'
-													: 'rounded-xl'} bg-c-primary animate-ping-custom-bg"
+													: 'rounded-4xl'} bg-c-primary/50 animate-ping-custom"
 											/>
-										{/if}
+										</div>
+									</div>
+								{/if}
+								<div class="w-10 h-10 relative">
+									{#if generationOrUpscale.status === 'started'}
 										<div
-											use:tooltip={{
-												rows: [
-													{
-														key: $LL.Live.GenerationTooltip.CountryTitle() + ':',
-														value: generationOrUpscale.country_code
-															? getCountryName($locale, generationOrUpscale.country_code) ??
-															  $LL.Live.GenerationTooltip.UnknownTitle()
-															: $LL.Live.GenerationTooltip.UnknownTitle()
-													},
-													{
-														key: $LL.Live.GenerationTooltip.Type.Title() + ':',
-														value:
-															generationOrUpscale.type === 'upscale'
-																? $LL.Live.GenerationTooltip.Type.Upscale()
-																: $LL.Live.GenerationTooltip.Type.Generation()
-													},
-													...(generationOrUpscale.width && generationOrUpscale.height
-														? [
-																{
-																	key: $LL.Live.GenerationTooltip.DimensionsTitle() + ':',
-																	value:
-																		generationOrUpscale.width && generationOrUpscale.height
-																			? `${generationOrUpscale.width} × ${generationOrUpscale.height}`
-																			: $LL.Live.GenerationTooltip.UnknownTitle()
-																}
-														  ]
-														: []),
-													...getOptionalInfo($LL, generationOrUpscale),
-													...(generationOrUpscale.duration_ms
-														? [
-																{
-																	key: $LL.Live.GenerationTooltip.DurationTitle() + ':',
-																	value: generationOrUpscale.duration_ms
-																		? `${(generationOrUpscale.duration_ms / 1000).toLocaleString(
-																				$locale,
-																				{
-																					maximumFractionDigits: 1
-																				}
-																		  )}`
-																		: $LL.Live.DurationStatusUnknown()
-																}
-														  ]
-														: []),
-													{
-														key: $LL.Live.GenerationTooltip.Status.Title() + ':',
-														value:
-															generationOrUpscale.status === 'started'
-																? $LL.Live.GenerationTooltip.Status.Started()
-																: generationOrUpscale.status === 'succeeded'
-																? $LL.Live.GenerationTooltip.Status.Succeeded()
-																: $LL.Live.GenerationTooltip.Status.Failed()
-													}
-												],
-												...tooltipStyleProps
-											}}
-											class="w-full h-full {generationOrUpscale.type === 'generation'
+											transition:scale|local={{ duration: 300, easing: quadOut }}
+											class="w-full h-full absolute left-0 top-0 {generationOrUpscale.type ===
+											'generation'
 												? 'rounded-full'
-												: 'rounded-xl'} transition-all duration-300 flex items-center justify-center relative overflow-hidden z-0 {generationOrUpscale.status ===
-											'succeeded'
-												? 'bg-c-success'
-												: generationOrUpscale.status === 'failed'
-												? 'bg-c-danger'
-												: 'bg-c-primary'}"
-										>
-											<div
-												class="w-full h-full flex items-center justify-center"
-												style="
+												: 'rounded-xl'} bg-c-primary animate-ping-custom-bg"
+										/>
+									{/if}
+									<div
+										use:tooltip={{
+											rows: [
+												{
+													key: $LL.Live.GenerationTooltip.CountryTitle() + ':',
+													value: generationOrUpscale.country_code
+														? getCountryName($locale, generationOrUpscale.country_code) ??
+														  $LL.Live.GenerationTooltip.UnknownTitle()
+														: $LL.Live.GenerationTooltip.UnknownTitle()
+												},
+												{
+													key: $LL.Live.GenerationTooltip.Type.Title() + ':',
+													value:
+														generationOrUpscale.type === 'upscale'
+															? $LL.Live.GenerationTooltip.Type.Upscale()
+															: $LL.Live.GenerationTooltip.Type.Generation()
+												},
+												...(generationOrUpscale.width && generationOrUpscale.height
+													? [
+															{
+																key: $LL.Live.GenerationTooltip.DimensionsTitle() + ':',
+																value:
+																	generationOrUpscale.width && generationOrUpscale.height
+																		? `${generationOrUpscale.width} × ${generationOrUpscale.height}`
+																		: $LL.Live.GenerationTooltip.UnknownTitle()
+															}
+													  ]
+													: []),
+												...getOptionalInfo($LL, generationOrUpscale),
+												...(generationOrUpscale.duration_ms
+													? [
+															{
+																key: $LL.Live.GenerationTooltip.DurationTitle() + ':',
+																value: generationOrUpscale.duration_ms
+																	? `${(generationOrUpscale.duration_ms / 1000).toLocaleString(
+																			$locale,
+																			{
+																				maximumFractionDigits: 1
+																			}
+																	  )}`
+																	: $LL.Live.DurationStatusUnknown()
+															}
+													  ]
+													: []),
+												{
+													key: $LL.Live.GenerationTooltip.Status.Title() + ':',
+													value:
+														generationOrUpscale.status === 'started'
+															? $LL.Live.GenerationTooltip.Status.Started()
+															: generationOrUpscale.status === 'succeeded'
+															? $LL.Live.GenerationTooltip.Status.Succeeded()
+															: $LL.Live.GenerationTooltip.Status.Failed()
+												}
+											],
+											...tooltipStyleProps
+										}}
+										class="w-full h-full {generationOrUpscale.type === 'generation'
+											? 'rounded-full'
+											: 'rounded-xl'} transition-all duration-300 flex items-center justify-center relative overflow-hidden z-0 {generationOrUpscale.status ===
+										'succeeded'
+											? 'bg-c-success'
+											: generationOrUpscale.status === 'failed'
+											? 'bg-c-danger'
+											: 'bg-c-primary'}"
+									>
+										<div
+											class="w-full h-full flex items-center justify-center"
+											style="
 													background-color: transparent;
 													background-image:  linear-gradient(135deg, {tierBasedColor(
-													generationOrUpscale
-												)} 25%, transparent 25%), linear-gradient(225deg, {tierBasedColor(
-													generationOrUpscale
-												)} 25%, transparent 25%), linear-gradient(45deg, {tierBasedColor(
-													generationOrUpscale
-												)} 25%, transparent 25%), linear-gradient(315deg, {tierBasedColor(
-													generationOrUpscale
-												)} 25%, transparent 25%);
+												generationOrUpscale
+											)} 25%, transparent 25%), linear-gradient(225deg, {tierBasedColor(
+												generationOrUpscale
+											)} 25%, transparent 25%), linear-gradient(45deg, {tierBasedColor(
+												generationOrUpscale
+											)} 25%, transparent 25%), linear-gradient(315deg, {tierBasedColor(
+												generationOrUpscale
+											)} 25%, transparent 25%);
 													background-position:  8px 0, 8px 0, 0 0, 0 0;
 													background-size: 8px 8px;
 													background-repeat: repeat;
 												"
-											>
-												{#if generationOrUpscale.country_code}
-													<p
-														class="text-center text-xs font-bold text-c-on-primary/75 cursor-default relative"
-													>
-														{generationOrUpscale.country_code}
-													</p>
-												{/if}
-											</div>
+										>
+											{#if generationOrUpscale.country_code}
+												<p
+													class="text-center text-xs font-bold text-c-on-primary/75 cursor-default relative"
+												>
+													{generationOrUpscale.country_code}
+												</p>
+											{/if}
 										</div>
 									</div>
 								</div>
 							</div>
-						{/each}
-					</div>
+						</div>
+					{/each}
 				</div>
-			{:else}
-				<div
-					transition:expandCollapse|local={{ duration: 300 }}
-					class="w-full px-8 lg:px-16 relative max-w-lg"
-				>
-					<div class="w-full flex flex-col items-center justify-center py-4">
-						<IconPulsing />
-						<p class="w-full text-c-on-bg/40 text-center mt-1.5">{$LL.Live.WaitingTitle()}</p>
-					</div>
-				</div>
-			{/if}
+			</div>
 		{:else}
 			<div
 				transition:expandCollapse|local={{ duration: 300 }}
 				class="w-full px-8 lg:px-16 relative max-w-lg"
 			>
-				<div class="w-full flex flex-col items-center justify-center gap-5 py-4">
-					<p class="w-full leading-loose text-c-on-bg/40 text-center">
-						{$LL.Error.SupabaseNotFoundCantListen()}
-					</p>
+				<div class="w-full flex flex-col items-center justify-center py-4">
+					<IconPulsing />
+					<p class="w-full text-c-on-bg/40 text-center mt-1.5">{$LL.Live.WaitingTitle()}</p>
 				</div>
 			</div>
 		{/if}

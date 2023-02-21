@@ -6,7 +6,6 @@
 		mainContainerPadding
 	} from '$components/generationFullScreen/constants';
 	import { clickoutside } from '$ts/actions/clickoutside';
-	import { elementreceive, elementsend } from '$ts/animation/transitions';
 	import { activeGeneration, type TGenerationWithSelectedOutput } from '$userStores/generation';
 	import { windowHeight, windowWidth } from '$ts/stores/window';
 
@@ -67,10 +66,6 @@
 		overflow-auto lg:my-auto lg:overflow-hidden"
 >
 	<div
-		in:elementreceive|local={{
-			key: generation.selected_output.id
-		}}
-		out:elementsend|local={{ key: generation.selected_output.id }}
 		use:clickoutside={{
 			callback: () => {
 				if (canClose) {

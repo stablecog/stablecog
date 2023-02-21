@@ -327,7 +327,7 @@
 
 <ModalWrapper hasPadding={false}>
 	<div class="w-full flex items-center justify-start md:hidden pt-2 px-2">
-		<div transition:fly|local={{ duration: 200, easing: quadOut, opacity: 0, x: -50 }}>
+		<div>
 			<IconButton
 				name="Close"
 				onClick={() => {

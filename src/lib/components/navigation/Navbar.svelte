@@ -22,6 +22,7 @@
 	import { fade, fly } from 'svelte/transition';
 	import SignInCard from '$components/SignInCard.svelte';
 	import { navbarHeight } from '$ts/stores/navbarHeight';
+	import { modalBgTransitionProps, modalTransitionProps } from '$ts/animation/constants';
 
 	let isSignInModalOpen = false;
 	let isSettingsOpen = false;
@@ -173,12 +174,12 @@
 {#if isSignInModalOpen && !$page.data.session?.user.id}
 	<div
 		use:portal={'body'}
-		transition:fade|local={{ duration: 300, easing: quadOut }}
+		transition:fade|local={modalBgTransitionProps}
 		class="w-full h-full bg-c-barrier/80 fixed left-0 top-0 px-3 z-[10000]"
 	/>
 	<div
 		use:portal={'body'}
-		transition:fly|local={{ duration: 200, y: 50, easing: quadOut }}
+		transition:fly|local={modalTransitionProps}
 		class="w-full h-full flex flex-col items-center fixed left-0 top-0 px-3 py-20 z-[10001] overflow-auto"
 	>
 		<div

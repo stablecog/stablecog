@@ -93,8 +93,6 @@
 		mixpanel.people.set({ 'SC - Plan': $page.data.plan });
 	}
 
-	$: console.log('SSE ID:', $sseId);
-
 	afterNavigate(() => {
 		const props = {
 			'SC - Page': `${$page.url.pathname}${$page.url.search}`,
@@ -309,24 +307,26 @@
 		}
 	}
 
-	onMount(async () => {
-		if (!$sse || $sse.readyState === $sse.CLOSED) {
-			sseId.set(generateSSEId());
-			sse.set(new EventSource(`${apiUrl.href}v1/sse?id=${$sseId}`));
-			if ($sse !== null) {
-				$sse.onopen = () => {
-					console.log(`Connected to SSE with ID: ${$sseId}`);
-				};
-				$sse.onmessage = (event) => {
-					const data = JSON.parse(event.data);
-					console.log('Message from SSE', data);
-					setGenerationOrUpscaleStatus(data);
-				};
-				$sse.onerror = (event) => {
-					console.log('Error from SSE', event);
-				};
-			}
+	$: if (browser && (!$sse || $sse.readyState === $sse.CLOSED)) {
+		sseId.set(generateSSEId());
+		console.log('SSE ID:', $sseId);
+		sse.set(new EventSource(`${apiUrl.href}v1/sse?id=${$sseId}`));
+		if ($sse !== null) {
+			$sse.onopen = () => {
+				console.log(`Connected to SSE with ID: ${$sseId}`);
+			};
+			$sse.onmessage = (event) => {
+				const data = JSON.parse(event.data);
+				console.log('Message from SSE', data);
+				setGenerationOrUpscaleStatus(data);
+			};
+			$sse.onerror = (event) => {
+				console.log('Error from SSE', event);
+			};
 		}
+	}
+
+	onMount(async () => {
 		setBodyClasses();
 		mixpanel.init(env.PUBLIC_MIXPANEL_ID, { api_host: env.PUBLIC_MIXPANEL_URL });
 		appVersion.set(document.body.getAttribute('app-version') || 'unknown');

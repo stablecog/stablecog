@@ -93,6 +93,10 @@ export const setGenerationOutputUpscaledImageUrl = (
 	currentlyActiveGeneration: TGenerationWithSelectedOutput | undefined
 ) => {
 	generations.update(($generations) => {
+		if (currentlyActiveGeneration?.selected_output?.id === outputId) {
+			currentlyActiveGeneration.selected_output.upscaled_image_url = upscaled_image_url;
+			activeGeneration.set(currentlyActiveGeneration);
+		}
 		if ($generations === null) {
 			return $generations;
 		}
@@ -100,13 +104,8 @@ export const setGenerationOutputUpscaledImageUrl = (
 			const generation = $generations[i];
 			for (let j = 0; j < generation.outputs.length; j++) {
 				const output = generation.outputs[j];
-				if (output.upscaled_image_url) continue;
-				if (output.id === outputId && output.upscaled_image_url === undefined) {
+				if (output.id === outputId && !output.upscaled_image_url) {
 					output.upscaled_image_url = upscaled_image_url;
-					if (currentlyActiveGeneration?.selected_output.id === outputId) {
-						currentlyActiveGeneration.selected_output = output;
-						activeGeneration.set(currentlyActiveGeneration);
-					}
 					return $generations;
 				}
 			}

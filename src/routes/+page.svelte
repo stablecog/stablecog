@@ -1,7 +1,7 @@
 <script lang="ts">
 	import GenerateBar from '$components/generateBar/GenerateBar.svelte';
 	import MetaTag from '$components/MetaTag.svelte';
-	import { elementreceive, elementsend, expandCollapse } from '$ts/animation/transitions';
+	import { expandCollapse } from '$ts/animation/transitions';
 	import {
 		canonicalUrl,
 		estimatedDurationBufferRatio,
@@ -10,7 +10,6 @@
 		inferenceStepsDefault,
 		maxSeed
 	} from '$ts/constants/main';
-	import { updateGenerationInDb } from '$ts/queries/indexedDb';
 	import { computeRatePerSec } from '$ts/stores/computeRatePerSec';
 	import { onDestroy, onMount } from 'svelte';
 	import ImagePlaceholder from '$components/ImagePlaceholder.svelte';
@@ -51,6 +50,8 @@
 	import { schedulerIdDefault } from '$ts/constants/schedulers';
 	import { sseId } from '$userStores/sse';
 	import { generateSSEId } from '$ts/helpers/generateSSEId';
+	import { imageTransitionProps } from '$ts/animation/constants';
+	import { fly } from 'svelte/transition';
 
 	export let data: THomePageData;
 
@@ -219,8 +220,7 @@
 									<div
 										class="absolute w-full h-full left-0 top-0 rounded-2xl bg-c-bg-secondary z-0 overflow-hidden border-4 
 											shadow-lg shadow-c-shadow/[var(--o-shadow-normal)] border-c-bg-secondary group"
-										in:elementreceive|local={{ key: output.id }}
-										out:elementsend|local={{ key: output.id }}
+										transition:fly|local={imageTransitionProps}
 									>
 										<GenerationImage
 											generation={{ ...$generations[0], selected_output: output }}

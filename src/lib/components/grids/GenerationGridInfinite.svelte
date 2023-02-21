@@ -4,12 +4,13 @@
 	import IconLoadingSlim from '$components/icons/IconLoadingSlim.svelte';
 	import ImagePlaceholder from '$components/ImagePlaceholder.svelte';
 	import LL from '$i18n/i18n-svelte';
-	import { elementreceive, elementsend } from '$ts/animation/transitions';
+	import { imageTransitionProps } from '$ts/animation/constants';
 	import type { TUserGenerationFullOutputsPage } from '$ts/queries/userGenerations';
 	import { activeGeneration } from '$userStores/generation';
 	import type { CreateInfiniteQueryResult } from '@tanstack/svelte-query';
 	import Masonry from 'svelte-bricks';
 	import IntersectionObserver from 'svelte-intersection-observer';
+	import { fly } from 'svelte/transition';
 
 	export let generationsQuery: CreateInfiniteQueryResult<TUserGenerationFullOutputsPage, unknown>;
 	let bottomDiv: HTMLDivElement;
@@ -58,17 +59,15 @@
 					<ImagePlaceholder width={output.generation.width} height={output.generation.height} />
 					{#if $activeGeneration === undefined || $activeGeneration.selected_output.id !== output.id}
 						<div
-							in:elementreceive|local={{
-								key: output.id
-							}}
-							out:elementsend|local={{
-								key: output.id
-							}}
+							transition:fly|local={imageTransitionProps}
 							class="absolute left-0 top-0 w-full h-full rounded-xl bg-c-bg-secondary z-0 overflow-hidden border-4 
 										shadow-lg shadow-c-shadow/[var(--o-shadow-normal)] border-c-bg-secondary"
 						>
 							{#if output.generation.outputs !== undefined}
-								<GenerationImage generation={{ ...output.generation, selected_output: output }} />
+								<GenerationImage
+									useUpscaledImage={false}
+									generation={{ ...output.generation, selected_output: output }}
+								/>
 							{/if}
 						</div>
 					{/if}
