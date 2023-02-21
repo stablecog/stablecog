@@ -1,6 +1,8 @@
 import {
 	availableGenerationModelIds,
-	availableSchedulerIds,
+	type TAvailableGenerationModelId
+} from '$ts/constants/generationModels';
+import {
 	guidanceScaleMax,
 	guidanceScaleMin,
 	heightTabs,
@@ -11,10 +13,9 @@ import {
 	widthTabs,
 	type TAvailableHeight,
 	type TAvailableInferenceSteps,
-	type TAvailableModelId,
-	type TAvailableSchedulerId,
 	type TAvailableWidth
 } from '$ts/constants/main';
+import { availableSchedulerIds, type TAvailableSchedulerId } from '$ts/constants/schedulers';
 import type { ServerLoad } from '@sveltejs/kit';
 
 export const load: ServerLoad = ({ url }) => {
@@ -64,8 +65,9 @@ export const load: ServerLoad = ({ url }) => {
 			? (_height as TAvailableHeight)
 			: null;
 	const model_id =
-		_model_id !== null && availableGenerationModelIds.includes(_model_id as TAvailableModelId)
-			? (_model_id as TAvailableModelId)
+		_model_id !== null &&
+		availableGenerationModelIds.includes(_model_id as TAvailableGenerationModelId)
+			? (_model_id as TAvailableGenerationModelId)
 			: null;
 	const scheduler_id =
 		_scheduler_id !== null && availableSchedulerIds.includes(_scheduler_id as TAvailableSchedulerId)
@@ -97,7 +99,7 @@ export const load: ServerLoad = ({ url }) => {
 export interface THomePageData {
 	prompt: string | null;
 	negative_prompt: string | null;
-	model_id: TAvailableModelId | null;
+	model_id: TAvailableGenerationModelId | null;
 	scheduler_id: TAvailableSchedulerId | null;
 	seed: number | null;
 	guidance_scale: number | null;

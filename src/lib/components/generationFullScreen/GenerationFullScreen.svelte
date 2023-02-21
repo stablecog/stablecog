@@ -41,11 +41,7 @@
 	import IconCancel from '$components/icons/IconCancel.svelte';
 	import GenerationFullScreenContainer from '$components/generationFullScreen/GenerationFullScreenContainer.svelte';
 	import { downloadGenerationImage } from '$ts/helpers/downloadGenerationImage';
-	import {
-		activeGeneration,
-		setActiveGenerationToUndefined,
-		type TGenerationWithSelectedOutput
-	} from '$userStores/generation';
+	import { activeGeneration, type TGenerationWithSelectedOutput } from '$userStores/generation';
 	import { sseId } from '$userStores/sse';
 	import {
 		queueInitialUpscaleRequest,
@@ -337,7 +333,7 @@
 				onClick={() => {
 					if (canClose) {
 						if ($activeGeneration !== undefined) {
-							setActiveGenerationToUndefined();
+							activeGeneration.set(undefined);
 						}
 					}
 				}}

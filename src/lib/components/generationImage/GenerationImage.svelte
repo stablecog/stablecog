@@ -6,7 +6,7 @@
 	import IconSteps from '$components/icons/IconSteps.svelte';
 	import { doesContainTarget } from '$ts/helpers/doesContainTarget';
 	import { advancedModeApp } from '$ts/stores/advancedMode';
-	import { setActiveGeneration, type TGenerationWithSelectedOutput } from '$userStores/generation';
+	import { activeGeneration, type TGenerationWithSelectedOutput } from '$userStores/generation';
 
 	export let generation: TGenerationWithSelectedOutput;
 	export let useUpscaledImage = true;
@@ -38,7 +38,7 @@
 		if (doesContainTarget(e.target, [rightButtonContainer])) {
 			return;
 		}
-		setActiveGeneration(generation);
+		activeGeneration.set(generation);
 	}}
 	on:keydown={() => null}
 	class="w-full h-full absolute left-0 top-0 flex flex-col justify-between items-end overflow-hidden gap-4 cursor-pointer"

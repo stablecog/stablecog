@@ -1,43 +1,10 @@
 import { apiUrl } from '$ts/constants/main';
 import type { TAvailableGenerationModelId } from '$ts/constants/generationModels';
 import type { TAvailableSchedulerId } from '$ts/constants/schedulers';
-import { derived, writable, type Writable } from 'svelte/store';
+import { writable } from 'svelte/store';
 
 export const generations = writable<TGeneration[]>([]);
-export const activeGenerationId = writable<string | undefined>(undefined);
-export const activeOutputId = writable<string | undefined>(undefined);
-export const activeGeneration = derived<
-	[Writable<TGeneration[]>, Writable<string | undefined>, Writable<string | undefined>],
-	TGenerationWithSelectedOutput | undefined
->(
-	[generations, activeGenerationId, activeOutputId],
-	([$generations, $activeGenerationId, $activeOutputId]) => {
-		if ($generations === null || $activeGenerationId === undefined) {
-			return undefined;
-		}
-		const generation = $generations.find((gen) => gen.id === $activeGenerationId);
-		if (generation === undefined) {
-			return undefined;
-		}
-		const output = generation.outputs.find((out) => out.id === $activeOutputId);
-		if (output === undefined) {
-			return undefined;
-		}
-		const generationWithSelectedOutput: TGenerationWithSelectedOutput = {
-			...generation,
-			selected_output: output
-		};
-		return generationWithSelectedOutput;
-	}
-);
-export const setActiveGenerationToUndefined = () => {
-	activeGenerationId.set(undefined);
-	activeOutputId.set(undefined);
-};
-export const setActiveGeneration = (gen: TGenerationWithSelectedOutput) => {
-	activeGenerationId.set(gen.id);
-	activeOutputId.set(gen.selected_output.id);
-};
+export const activeGeneration = writable<TGenerationWithSelectedOutput | undefined>(undefined);
 
 export const setGenerationToFailed = (id: string, error?: string) => {
 	generations.update(($generations) => {
@@ -122,7 +89,8 @@ export async function submitInitialGenerationRequest(
 
 export const setGenerationOutputUpscaledImageUrl = (
 	outputId: string,
-	upscaled_image_url: string
+	upscaled_image_url: string,
+	currentlyActiveGeneration: TGenerationWithSelectedOutput | undefined
 ) => {
 	generations.update(($generations) => {
 		if ($generations === null) {
@@ -133,8 +101,12 @@ export const setGenerationOutputUpscaledImageUrl = (
 			for (let j = 0; j < generation.outputs.length; j++) {
 				const output = generation.outputs[j];
 				if (output.upscaled_image_url) continue;
-				if (output.id === outputId) {
+				if (output.id === outputId && output.upscaled_image_url === undefined) {
 					output.upscaled_image_url = upscaled_image_url;
+					if (currentlyActiveGeneration?.selected_output.id === outputId) {
+						currentlyActiveGeneration.selected_output = output;
+						activeGeneration.set(currentlyActiveGeneration);
+					}
 					return $generations;
 				}
 			}

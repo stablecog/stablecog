@@ -25,7 +25,6 @@
 		activeGeneration,
 		generations,
 		queueInitialGenerationRequest,
-		setActiveGenerationToUndefined,
 		type TInitialGenerationRequest
 	} from '$userStores/generation';
 	import type { THomePageData } from '$routes/+page.server';
@@ -141,7 +140,7 @@
 	function onKeyDown({ key }: KeyboardEvent) {
 		if ($activeGeneration !== undefined) {
 			if (key === 'Escape') {
-				setActiveGenerationToUndefined();
+				activeGeneration.set(undefined);
 			}
 		}
 	}

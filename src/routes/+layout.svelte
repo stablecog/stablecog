@@ -40,6 +40,7 @@
 		type TSSEUpscaleMessageOutput
 	} from '$userStores/sse';
 	import {
+		activeGeneration,
 		generations,
 		setGenerationOutputUpscaledImageUrl,
 		setGenerationToFailed,
@@ -214,7 +215,8 @@
 			if (upscale.status === 'succeeded' && upscale.outputs[0].output_id) {
 				setGenerationOutputUpscaledImageUrl(
 					upscale.outputs[0].output_id,
-					upscale.outputs[0].image_url
+					upscale.outputs[0].image_url,
+					$activeGeneration
 				);
 			} else if (upscale.status === 'to-be-submitted') {
 				isSubmittingUpscales = true;
