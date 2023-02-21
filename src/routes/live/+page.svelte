@@ -36,8 +36,8 @@
 							return g;
 						}
 					});
-					if (generation.status === 'succeeded') {
-						const newCount = $generationTotalCount + generation.num_outputs;
+					if (generation.status === 'succeeded' && generation.actual_num_outputs) {
+						const newCount = $generationTotalCount + generation.actual_num_outputs;
 						generationTotalCount = tweened($generationTotalCount, {
 							duration: calculateAnimationDuration($generationTotalCount, newCount),
 							easing: quadOut
@@ -60,8 +60,8 @@
 							return u;
 						}
 					});
-					if (upscale.status === 'succeeded') {
-						const newCount = $upscaleTotalCount + upscale.num_outputs;
+					if (upscale.status === 'succeeded' && upscale.actual_num_outputs) {
+						const newCount = $upscaleTotalCount + upscale.actual_num_outputs;
 						upscaleTotalCount = tweened($upscaleTotalCount, {
 							duration: calculateAnimationDuration($upscaleTotalCount, newCount),
 							easing: quadOut
@@ -108,7 +108,8 @@
 		completed_at?: string;
 		width: number;
 		height: number;
-		num_outputs: number;
+		target_num_outputs: number;
+		actual_num_outputs?: number;
 	}
 	interface TGenerationRealtimePayloadExt extends TBaseRealtimePayload {}
 	interface TUpscaleRealtimePayloadExt extends TBaseRealtimePayload {}
@@ -318,10 +319,14 @@
 															}
 													  ]
 													: []),
-												{
-													key: $LL.Live.GenerationTooltip.OutputsTitle() + ':',
-													value: generationOrUpscale.num_outputs.toString()
-												},
+												...(generationOrUpscale.actual_num_outputs
+													? [
+															{
+																key: $LL.Live.GenerationTooltip.OutputsTitle() + ':',
+																value: generationOrUpscale.actual_num_outputs.toString()
+															}
+													  ]
+													: []),
 												...getOptionalInfo($LL, generationOrUpscale),
 												...(generationOrUpscale.completed_at !== undefined
 													? [

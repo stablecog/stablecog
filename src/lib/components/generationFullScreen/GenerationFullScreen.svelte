@@ -55,6 +55,8 @@
 
 	export let generation: TGenerationWithSelectedOutput;
 
+	let hadUpscaledImageUrlOnMount = generation.selected_output.upscaled_image_url !== undefined;
+
 	$: currentImageUrl = generation.selected_output.upscaled_image_url
 		? generation.selected_output.upscaled_image_url
 		: generation.selected_output.image_url;
@@ -63,18 +65,24 @@
 	let upscaledImageHeight: number | undefined;
 	$: generation, onGenerationChanged();
 
-	let lastUpscaleStatus: TUpscaleStatus | undefined;
+	let lastUpscaleStatus: TUpscaleStatus | undefined = hadUpscaledImageUrlOnMount
+		? 'succeeded'
+		: undefined;
 	$: lastUpscaleMatching = getIsLastUpscaleMatching(generation, $upscales);
-	$: lastUpscaleStatus =
-		$upscales.length > 0 && lastUpscaleMatching ? $upscales[0].status : undefined;
+	$: lastUpscaleStatus = hadUpscaledImageUrlOnMount
+		? 'succeeded'
+		: $upscales.length > 0 && lastUpscaleMatching
+		? $upscales[0].status
+		: undefined;
 	$: lastUpscaleQueuedAt =
 		$upscales.length > 0 && lastUpscaleMatching ? $upscales[0].queued_at : undefined;
-	$: lastUpscaleBeingCreated =
-		lastUpscaleMatching &&
-		(lastUpscaleStatus === 'to-be-submitted' ||
-			lastUpscaleStatus === 'server-received' ||
-			lastUpscaleStatus === 'server-processing' ||
-			(lastUpscaleMatching && lastUpscaleStatus === 'succeeded' && !isUpscaledImageLoaded));
+	$: lastUpscaleBeingCreated = hadUpscaledImageUrlOnMount
+		? false
+		: lastUpscaleMatching &&
+		  (lastUpscaleStatus === 'to-be-submitted' ||
+				lastUpscaleStatus === 'server-received' ||
+				lastUpscaleStatus === 'server-processing' ||
+				(lastUpscaleMatching && lastUpscaleStatus === 'succeeded' && !isUpscaledImageLoaded));
 	$: canClose = !lastUpscaleBeingCreated;
 
 	let sidebarWrapperHeight: number;
@@ -224,11 +232,13 @@
 		now !== undefined && lastUpscaleBeingCreated && lastUpscaleQueuedAt
 			? Math.max(now - lastUpscaleQueuedAt, 0) / 1000
 			: 0;
+
 	$: [lastUpscaleStatus, lastUpscaleBeingCreated], onLastUpscaleStatusChanged();
 
 	let lastUpscaleAnimationStatus: 'idle' | 'should-animate' | 'should-complete' = 'idle';
 
 	async function onLastUpscaleStatusChanged() {
+		if (hadUpscaledImageUrlOnMount) return;
 		if (
 			lastUpscaleStatus === 'server-received' ||
 			lastUpscaleStatus === 'server-processing' ||
@@ -320,8 +330,10 @@
 		}
 	}
 
+	let mounted = false;
 	onMount(() => {
 		setSidebarWrapperVars();
+		mounted = true;
 	});
 </script>
 
