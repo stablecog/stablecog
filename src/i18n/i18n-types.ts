@@ -239,6 +239,10 @@ type RootTranslation = {
 			 * U​n​k​n​o​w​n
 			 */
 			UnknownTitle: string
+			/**
+			 * O​u​t​p​u​t​s
+			 */
+			OutputsTitle: string
 		}
 		/**
 		 * W​a​i​t​i​n​g​ ​f​o​r​ ​g​e​n​e​r​a​t​i​o​n​s
@@ -1382,6 +1386,10 @@ export type TranslationFunctions = {
 			 * Unknown
 			 */
 			UnknownTitle: () => LocalizedString
+			/**
+			 * Outputs
+			 */
+			OutputsTitle: () => LocalizedString
 		}
 		/**
 		 * Waiting for generations

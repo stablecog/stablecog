@@ -81,7 +81,8 @@ const ru: Translation = {
 				Default: 'По умолчанию',
 				Custom: 'Свой'
 			},
-			UnknownTitle: 'Неизвестно'
+			UnknownTitle: 'Неизвестно',
+			OutputsTitle: 'Outputs'
 		},
 		WaitingTitle: 'В ожидании генераций',
 		DurationStatusUnknown: 'Неизвестно'

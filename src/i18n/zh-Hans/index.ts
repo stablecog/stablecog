@@ -78,7 +78,8 @@ const zhHans: Translation = {
 				Default: '默认设置',
 				Custom: '自定'
 			},
-			UnknownTitle: '未知'
+			UnknownTitle: '未知',
+			OutputsTitle: 'Outputs'
 		},
 		WaitingTitle: '正在等待被生成的图像',
 		DurationStatusUnknown: '未知'

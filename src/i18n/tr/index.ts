@@ -81,7 +81,8 @@ const tr: Translation = {
 				Default: 'Varsayılan',
 				Custom: 'Özel'
 			},
-			UnknownTitle: 'Bilinmeyen'
+			UnknownTitle: 'Bilinmeyen',
+			OutputsTitle: 'Outputs'
 		},
 		WaitingTitle: 'Üretimler bekleniyor',
 		DurationStatusUnknown: 'Bilinmeyen'

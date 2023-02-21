@@ -80,7 +80,8 @@ const hi: Translation = {
 				Default: 'डिफ़ॉल्ट',
 				Custom: 'कस्टम'
 			},
-			UnknownTitle: 'अनजान'
+			UnknownTitle: 'अनजान',
+			OutputsTitle: 'Outputs'
 		},
 		WaitingTitle: 'बनावटो का इंतजार किया जा रहा है',
 		DurationStatusUnknown: 'अनजान'

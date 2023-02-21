@@ -81,7 +81,8 @@ const ko: Translation = {
 				Default: '일반',
 				Custom: '커스텀'
 			},
-			UnknownTitle: '알 수 없음'
+			UnknownTitle: '알 수 없음',
+			OutputsTitle: 'Outputs'
 		},
 		WaitingTitle: '이미지 생성을 기다리는 중',
 		DurationStatusUnknown: '알 수 없음'

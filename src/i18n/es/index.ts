@@ -81,7 +81,8 @@ const es: Translation = {
 				Default: 'Predeterminado',
 				Custom: 'Personalizado'
 			},
-			UnknownTitle: 'Desconocido'
+			UnknownTitle: 'Desconocido',
+			OutputsTitle: 'Outputs'
 		},
 		WaitingTitle: 'Esperando las generaciones',
 		DurationStatusUnknown: 'Desconocido'

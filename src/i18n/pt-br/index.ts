@@ -80,7 +80,8 @@ const ptBr: Translation = {
 				Default: 'Padrão',
 				Custom: 'Personalizado'
 			},
-			UnknownTitle: 'Desconhecido'
+			UnknownTitle: 'Desconhecido',
+			OutputsTitle: 'Outputs'
 		},
 		WaitingTitle: 'Aguardando por gerações',
 		DurationStatusUnknown: 'Desconhecido'

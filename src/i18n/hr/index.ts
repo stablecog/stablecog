@@ -80,7 +80,8 @@ const hr: Translation = {
 				Default: 'Zadani',
 				Custom: 'Prilagođeni'
 			},
-			UnknownTitle: 'Nepoznato'
+			UnknownTitle: 'Nepoznato',
+			OutputsTitle: 'Outputs'
 		},
 		WaitingTitle: 'Čekanje generacija',
 		DurationStatusUnknown: 'Nepoznato'

@@ -81,7 +81,8 @@ const fr: Translation = {
 				Default: 'Défaut',
 				Custom: 'Personnalisé'
 			},
-			UnknownTitle: 'Inconnu'
+			UnknownTitle: 'Inconnu',
+			OutputsTitle: 'Outputs'
 		},
 		WaitingTitle: "En attente de génération d'images",
 		DurationStatusUnknown: 'Inconnu'

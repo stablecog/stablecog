@@ -80,7 +80,8 @@ const ptPt: Translation = {
 				Default: 'Predefinição',
 				Custom: 'Personalizado'
 			},
-			UnknownTitle: 'Desconhecido'
+			UnknownTitle: 'Desconhecido',
+			OutputsTitle: 'Outputs'
 		},
 		WaitingTitle: 'Esperando por gerações',
 		DurationStatusUnknown: 'Desconhecido'

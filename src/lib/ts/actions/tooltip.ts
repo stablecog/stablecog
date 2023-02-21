@@ -245,7 +245,7 @@ export interface TTooltipProps {
 	rows?: TRow[];
 }
 
-interface TRow {
+export interface TRow {
 	key: string;
 	value: string;
 }

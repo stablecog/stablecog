@@ -81,7 +81,8 @@ const vi: Translation = {
 				Default: 'Mặc định',
 				Custom: 'Tùy chỉnh'
 			},
-			UnknownTitle: 'Không xác định'
+			UnknownTitle: 'Không xác định',
+			OutputsTitle: 'Outputs'
 		},
 		WaitingTitle: 'Chờ khởi tạo',
 		DurationStatusUnknown: 'Không xác định'

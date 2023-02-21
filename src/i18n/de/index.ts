@@ -80,7 +80,8 @@ const de: Translation = {
 				Default: 'Standard',
 				Custom: 'Benutzerdefiniert'
 			},
-			UnknownTitle: 'Unbekannt'
+			UnknownTitle: 'Unbekannt',
+			OutputsTitle: 'Outputs'
 		},
 		WaitingTitle: 'Warte auf Generierungen',
 		DurationStatusUnknown: 'Unbekannt'

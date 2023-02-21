@@ -81,7 +81,8 @@ const en: BaseTranslation = {
 				Default: 'Default',
 				Custom: 'Custom'
 			},
-			UnknownTitle: 'Unknown'
+			UnknownTitle: 'Unknown',
+			OutputsTitle: 'Outputs'
 		},
 		WaitingTitle: 'Waiting for generations',
 		DurationStatusUnknown: 'Unknown'

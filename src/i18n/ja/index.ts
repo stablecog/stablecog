@@ -81,7 +81,8 @@ const ja: Translation = {
 				Default: '既定値',
 				Custom: 'カスタム設定'
 			},
-			UnknownTitle: '不明'
+			UnknownTitle: '不明',
+			OutputsTitle: 'Outputs'
 		},
 		WaitingTitle: '生成待機中',
 		DurationStatusUnknown: '不明'

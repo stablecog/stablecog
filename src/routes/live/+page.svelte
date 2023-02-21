@@ -8,7 +8,7 @@
 	import { quadOut } from 'svelte/easing';
 	import { scale } from 'svelte/transition';
 	import { tweened } from 'svelte/motion';
-	import { tooltip, type TTooltipProps } from '$ts/actions/tooltip';
+	import { tooltip, type TRow, type TTooltipProps } from '$ts/actions/tooltip';
 	import IconPulsing from '$components/icons/IconPulsing.svelte';
 	import LL, { locale } from '$i18n/i18n-svelte';
 	import { browser } from '$app/environment';
@@ -22,7 +22,7 @@
 		sse.onmessage = (event) => {
 			const data = JSON.parse(event.data);
 			if (data.process_type === 'generate') {
-				const generation = data as TDBGenerationRealtimePayloadExt;
+				const generation = data as TGenerationRealtimePayloadExt;
 				// check if generation is already in the array
 				const generationAlreadyInArray = generations.find((g) => g.id === generation.id);
 				if (!generationAlreadyInArray) {
@@ -37,7 +37,7 @@
 						}
 					});
 					if (generation.status === 'succeeded') {
-						const newCount = $generationTotalCount + 1;
+						const newCount = $generationTotalCount + generation.num_outputs;
 						generationTotalCount = tweened($generationTotalCount, {
 							duration: calculateAnimationDuration($generationTotalCount, newCount),
 							easing: quadOut
@@ -46,7 +46,7 @@
 					}
 				}
 			} else if (data.process_type === 'upscale') {
-				const upscale = data as TDBUpscaleRealtimePayloadExt;
+				const upscale = data as TUpscaleRealtimePayloadExt;
 				// check if upscale is already in the array
 				const upscaleAlreadyInArray = upscales.find((u) => u.id === upscale.id);
 				if (!upscaleAlreadyInArray) {
@@ -61,7 +61,7 @@
 						}
 					});
 					if (upscale.status === 'succeeded') {
-						const newCount = $upscaleTotalCount + 1;
+						const newCount = $upscaleTotalCount + upscale.num_outputs;
 						upscaleTotalCount = tweened($upscaleTotalCount, {
 							duration: calculateAnimationDuration($upscaleTotalCount, newCount),
 							easing: quadOut
@@ -77,10 +77,9 @@
 		};
 	}
 
-	let generations: TDBGenerationRealtimePayloadExt[] = [];
-	let upscales: TDBUpscaleRealtimePayloadExt[] = [];
-	let generationsAndUpscales: (TDBGenerationRealtimePayloadExt | TDBUpscaleRealtimePayloadExt)[] =
-		[];
+	let generations: TGenerationRealtimePayloadExt[] = [];
+	let upscales: TUpscaleRealtimePayloadExt[] = [];
+	let generationsAndUpscales: (TGenerationRealtimePayloadExt | TUpscaleRealtimePayloadExt)[] = [];
 
 	$: [generations, upscales], setGenerationsAndUpscales();
 
@@ -98,7 +97,8 @@
 
 	type TProcessType = 'upscale' | 'generate';
 	type TStatus = 'queued' | 'succeeded' | 'failed' | 'processing';
-	interface TDBGenerationRealtimePayloadExt {
+
+	interface TBaseRealtimePayload {
 		process_type: TProcessType;
 		id: string;
 		country_code: string;
@@ -108,18 +108,10 @@
 		completed_at?: string;
 		width: number;
 		height: number;
+		num_outputs: number;
 	}
-	interface TDBUpscaleRealtimePayloadExt {
-		process_type: TProcessType;
-		id: string;
-		country_code: string;
-		status: TStatus;
-		created_at: string;
-		started_at?: string;
-		completed_at?: string;
-		width: number;
-		height: number;
-	}
+	interface TGenerationRealtimePayloadExt extends TBaseRealtimePayload {}
+	interface TUpscaleRealtimePayloadExt extends TBaseRealtimePayload {}
 
 	const calculateAnimationDuration = (curr: number, next: number) => {
 		return Math.min((next - curr) * msForEachDifference, maxDuration);
@@ -144,7 +136,7 @@
 	}
 
 	const getDurationSec = (
-		generationOrUpscale: TDBGenerationRealtimePayloadExt | TDBUpscaleRealtimePayloadExt
+		generationOrUpscale: TGenerationRealtimePayloadExt | TUpscaleRealtimePayloadExt
 	) => {
 		const createdAt = new Date(generationOrUpscale.created_at).getTime();
 		const completedAt = generationOrUpscale.completed_at
@@ -155,10 +147,10 @@
 
 	function getOptionalInfo(
 		$LL: TranslationFunctions,
-		generationOrUpscale: TDBGenerationRealtimePayloadExt | TDBUpscaleRealtimePayloadExt
-	) {
-		const asGeneration = generationOrUpscale as TDBGenerationRealtimePayloadExt;
-		const asUpscale = generationOrUpscale as TDBUpscaleRealtimePayloadExt;
+		generationOrUpscale: TGenerationRealtimePayloadExt | TUpscaleRealtimePayloadExt
+	): TRow[] {
+		const asGeneration = generationOrUpscale as TGenerationRealtimePayloadExt;
+		const asUpscale = generationOrUpscale as TUpscaleRealtimePayloadExt;
 		if (generationOrUpscale.process_type === 'upscale') {
 			return [];
 		} else if (generationOrUpscale.process_type === 'generate') {
@@ -221,7 +213,7 @@
 		upscale_output_count: number;
 	}
 
-	function tierBasedColor(entry: TDBGenerationRealtimePayloadExt | TDBUpscaleRealtimePayloadExt) {
+	function tierBasedColor(entry: TGenerationRealtimePayloadExt | TUpscaleRealtimePayloadExt) {
 		return 'transparent';
 	}
 </script>
@@ -326,6 +318,10 @@
 															}
 													  ]
 													: []),
+												{
+													key: $LL.Live.GenerationTooltip.OutputsTitle() + ':',
+													value: generationOrUpscale.num_outputs.toString()
+												},
 												...getOptionalInfo($LL, generationOrUpscale),
 												...(generationOrUpscale.completed_at !== undefined
 													? [
