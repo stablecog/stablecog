@@ -11,8 +11,8 @@ export function getGenerationUrlFromParams({
 }: TGenerationUrlFromParamsParams) {
 	const baseUrl = '/?';
 	let params: string[] = [];
-	if (prompt) params.push(`p=${encodeURIComponent(prompt)}`);
-	if (negative_prompt) params.push(`np=${encodeURIComponent(negative_prompt)}`);
+	if (prompt) params.push(`p=${encodeURIComponent(prompt.text)}`);
+	if (negative_prompt) params.push(`np=${encodeURIComponent(negative_prompt.text)}`);
 	if (width) params.push(`w=${width}`);
 	if (height) params.push(`h=${height}`);
 	if (guidance_scale) params.push(`gs=${guidance_scale}`);
@@ -24,8 +24,14 @@ export function getGenerationUrlFromParams({
 }
 
 export interface TGenerationUrlFromParamsParams {
-	prompt?: string;
-	negative_prompt?: string;
+	prompt: {
+		id: string;
+		text: string;
+	};
+	negative_prompt?: {
+		id: string;
+		text: string;
+	};
 	model_id?: string;
 	scheduler_id?: string;
 	width?: number;

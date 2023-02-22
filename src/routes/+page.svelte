@@ -84,10 +84,16 @@
 			return;
 		}
 		const initialRequestProps: TInitialGenerationRequest = {
-			prompt: $promptInputValue,
+			prompt: {
+				id: 'prompt',
+				text: $promptInputValue
+			},
 			negative_prompt:
 				($advancedModeApp || isValue(data.negative_prompt)) && $negativePromptInputValue
-					? $negativePromptInputValue
+					? {
+							id: 'negative_prompt',
+							text: $negativePromptInputValue
+					  }
 					: undefined,
 			model_id: $generationModelId,
 			scheduler_id:

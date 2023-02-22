@@ -49,7 +49,17 @@ export async function getGalleryGenerationFullOutputs({
 				model_id: hit.model_id as TAvailableGenerationModelId,
 				scheduler_id: hit.scheduler_id as TAvailableSchedulerId,
 				created_at: Date.now(),
-				prompt: hit.prompt_text,
+				prompt: {
+					id: hit.prompt_id,
+					text: hit.prompt_text
+				},
+				negative_prompt:
+					hit.negative_prompt_id && hit.negative_prompt_text
+						? {
+								id: hit.negative_prompt_id,
+								text: hit.negative_prompt_text
+						  }
+						: undefined,
 				outputs: [output],
 				status: 'succeeded',
 				seed: hit.seed,

@@ -73,6 +73,14 @@ export async function submitInitialGenerationRequest(
 	access_token: string,
 	app_version: string
 ) {
+	const promptText = request.prompt.text;
+	const negativePromptText = request.negative_prompt?.text;
+	const { prompt, negative_prompt, ...rest } = request;
+	const finalRequest = {
+		...rest,
+		prompt: promptText,
+		negative_prompt: negativePromptText
+	};
 	const response = await fetch(`${apiUrl.href}v1/user/generation`, {
 		method: 'POST',
 		headers: {
@@ -80,7 +88,7 @@ export async function submitInitialGenerationRequest(
 			'X-App-Version': app_version,
 			Authorization: `Bearer ${access_token}`
 		},
-		body: JSON.stringify(request)
+		body: JSON.stringify(finalRequest)
 	});
 	const resJSON: TInitialGenerationResponse = await response.json();
 	console.log('Generation request response:', resJSON);
@@ -122,8 +130,14 @@ export interface TInitialGenerationResponse {
 export type TProcessType = 'generate' | 'generate_and_upscale';
 
 export interface TGenerationBase {
-	prompt: string;
-	negative_prompt?: string;
+	prompt: {
+		id: string;
+		text: string;
+	};
+	negative_prompt?: {
+		id: string;
+		text: string;
+	};
 	model_id: TAvailableGenerationModelId;
 	scheduler_id: TAvailableSchedulerId;
 	width: number;

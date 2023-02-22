@@ -29,7 +29,7 @@
 	src={useUpscaledImage && generation.selected_output.upscaled_image_url
 		? generation.selected_output.upscaled_image_url
 		: generation.selected_output.image_url}
-	alt={generation.prompt}
+	alt={generation.prompt.text}
 	width={generation.width}
 	height={generation.height}
 />
@@ -78,7 +78,7 @@
 		>
 			<CopyButton
 				class="p-1.5"
-				stringToCopy={generation.prompt}
+				stringToCopy={generation.prompt.text}
 				bind:copied={promptCopied}
 				bind:copiedTimeout={promptCopiedTimeout}
 			/>
@@ -88,7 +88,7 @@
 					? generation.selected_output.upscaled_image_url
 					: generation.selected_output.image_url}
 				isUpscaled={useUpscaledImage && generation.selected_output.upscaled_image_url !== undefined}
-				prompt={generation.prompt}
+				prompt={generation.prompt.text}
 				seed={generation.seed}
 				guidanceScale={generation.guidance_scale}
 				inferenceSteps={generation.inference_steps}
@@ -105,14 +105,14 @@
 				: 'overflow-hidden'} w-full max-h-full list-fade px-4 py-3 flex flex-col gap-2 cursor-default"
 		>
 			<p class="w-full font-medium leading-normal transition text-c-on-bg transform">
-				{generation.prompt}
+				{generation.prompt.text}
 			</p>
-			{#if generation.negative_prompt !== undefined && generation.negative_prompt !== ''}
+			{#if generation.negative_prompt !== undefined && generation.negative_prompt.text !== ''}
 				<div class="w-full flex items-start justify-start gap-1.5">
 					<IconChatBubbleCancel class="text-c-danger h-4 w-4 mt-0.25" />
 					<div class="flex-1 min-w-0">
 						<p class="w-full text-c-danger">
-							{generation.negative_prompt}
+							{generation.negative_prompt.text}
 						</p>
 					</div>
 				</div>
