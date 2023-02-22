@@ -2,7 +2,7 @@ import type { LayoutLoad } from './$types';
 import { loadLocaleAsync } from '$i18n/i18n-util.async';
 import { getSupabase } from '@supabase/auth-helpers-sveltekit';
 import type { IUserPlan } from '$ts/types/stripe';
-import { writable } from 'svelte/store';
+import { readable, writable } from 'svelte/store';
 import type { TAvailableThemes } from '$ts/stores/theme';
 
 export const load: LayoutLoad = async (event) => {
@@ -17,6 +17,7 @@ export const load: LayoutLoad = async (event) => {
 		theme,
 		advancedMode,
 		advancedModeStore: writable(false),
-		themeStore: writable<TAvailableThemes>('dark')
+		themeStore: writable<TAvailableThemes>('dark'),
+		globalSeedStore: writable<number>(Math.round(Math.random() * Math.pow(10, 12)))
 	};
 };

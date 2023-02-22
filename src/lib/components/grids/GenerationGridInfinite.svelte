@@ -29,21 +29,25 @@
 </script>
 
 {#if $generationsQuery.isLoading}
-	<div class="w-full flex flex-col flex-1 items-center justify-center py-12">
-		<IconLoadingSlim class="animate-spin-faster w-12 h-12 text-c-on-bg/50" />
+	<div class="w-full flex flex-col flex-1 items-center py-12">
+		<IconLoadingSlim class="animate-spin-faster w-12 h-12 text-c-on-bg/50 my-auto" />
 	</div>
 {:else if $generationsQuery.data?.pages.length === 0}
-	<div class="w-full flex-1 flex flex-col justify-center items-center py-8 px-5 gap-6">
-		<p class="text-c-on-bg/50">{$LL.History.NoGenerationsYet()}</p>
-		<Button href="/">{$LL.Shared.StartGeneratingButton()}</Button>
-		<div class="h-[1vh]" />
-	</div>
-{:else if $generationsQuery.isSuccess}
-	{#if $generationsQuery.data.pages.length === 1 && $generationsQuery.data.pages[0].outputs.length === 0}
-		<div class="w-full flex-1 flex flex-col justify-center items-center py-8 px-5 gap-6">
+	<div class="w-full flex-1 flex flex-col items-center py-8 px-5">
+		<div class="flex flex-col my-auto items-center gap-6">
 			<p class="text-c-on-bg/50">{$LL.History.NoGenerationsYet()}</p>
 			<Button href="/">{$LL.Shared.StartGeneratingButton()}</Button>
 			<div class="h-[1vh]" />
+		</div>
+	</div>
+{:else if $generationsQuery.isSuccess}
+	{#if $generationsQuery.data.pages.length === 1 && $generationsQuery.data.pages[0].outputs.length === 0}
+		<div class="w-full flex-1 flex flex-col items-center py-8 px-5">
+			<div class="flex flex-col my-auto items-center gap-6">
+				<p class="text-c-on-bg/50">{$LL.History.NoGenerationsYet()}</p>
+				<Button href="/">{$LL.Shared.StartGeneratingButton()}</Button>
+				<div class="h-[1vh]" />
+			</div>
 		</div>
 	{:else}
 		<Masonry

@@ -141,7 +141,7 @@ export interface TGeneration extends TGenerationBase {
 	ui_id: string;
 	outputs: TGenerationOutput[];
 	started_at?: number;
-	queued_at: number;
+	created_at: number;
 	submit_to_gallery: boolean;
 }
 
@@ -166,7 +166,7 @@ export interface TInitialGenerationRequest extends TGenerationBase {
 	stream_id: string;
 	output_image_extension: 'jpeg' | 'png' | 'webp';
 	process_type: TProcessType;
-	queued_at: number;
+	created_at: number;
 	submit_to_gallery: boolean;
 }
 

@@ -57,9 +57,13 @@
 		submitInitialUpscaleRequest,
 		upscales
 	} from '$ts/stores/user/upscale';
+	import { globalSeed } from '$ts/stores/globalSeed';
 
 	export let data: LayoutData;
 	setLocale(data.locale);
+
+	const gss = data.globalSeedStore;
+	globalSeed.set($gss);
 
 	const queryClient = new QueryClient({
 		defaultOptions: {

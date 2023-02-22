@@ -112,7 +112,7 @@
 			num_outputs: 4,
 			output_image_extension: 'jpeg',
 			process_type: 'generate',
-			queued_at: Date.now(),
+			created_at: Date.now(),
 			stream_id: $sseId,
 			ui_id: generateSSEId(),
 			submit_to_gallery: $shouldSubmitToGallery ?? false

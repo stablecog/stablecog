@@ -103,13 +103,13 @@ export interface TUpscale extends TUpscaleBase {
 	ui_id: string;
 	outputs: TUpscaleOutput[];
 	started_at?: number;
-	queued_at: number;
+	created_at: number;
 }
 
 export interface TInitialUpscaleRequest extends TUpscaleBase {
 	ui_id: string;
 	stream_id: string;
-	queued_at: number;
+	created_at: number;
 }
 
 export interface TUpscaleOutput {

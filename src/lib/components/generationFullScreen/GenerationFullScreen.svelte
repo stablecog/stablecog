@@ -75,15 +75,15 @@
 		? $upscales[0].status
 		: undefined;
 	$: lastUpscaleQueuedAt =
-		$upscales.length > 0 && lastUpscaleMatching ? $upscales[0].queued_at : undefined;
-	$: lastUpscaleBeingCreated = hadUpscaledImageUrlOnMount
+		$upscales.length > 0 && lastUpscaleMatching ? $upscales[0].created_at : undefined;
+	$: lastUpscaleBeingProcessed = hadUpscaledImageUrlOnMount
 		? false
 		: lastUpscaleMatching &&
 		  (lastUpscaleStatus === 'to-be-submitted' ||
 				lastUpscaleStatus === 'server-received' ||
 				lastUpscaleStatus === 'server-processing' ||
 				(lastUpscaleMatching && lastUpscaleStatus === 'succeeded' && !isUpscaledImageLoaded));
-	$: canClose = !lastUpscaleBeingCreated;
+	$: canClose = !lastUpscaleBeingProcessed;
 
 	let sidebarWrapperHeight: number;
 	let sidebarWrapper: HTMLDivElement;
@@ -208,7 +208,7 @@
 			input: generation.selected_output.id,
 			model_id: upscaleModelIdDefault,
 			type: 'from_output',
-			queued_at: Date.now(),
+			created_at: Date.now(),
 			stream_id: $sseId,
 			ui_id: generateSSEId()
 		};
@@ -229,11 +229,11 @@
 	let now: number;
 	let nowInterval: NodeJS.Timeout;
 	$: upscaleSinceSec =
-		now !== undefined && lastUpscaleBeingCreated && lastUpscaleQueuedAt
+		now !== undefined && lastUpscaleBeingProcessed && lastUpscaleQueuedAt
 			? Math.max(now - lastUpscaleQueuedAt, 0) / 1000
 			: 0;
 
-	$: [lastUpscaleStatus, lastUpscaleBeingCreated], onLastUpscaleStatusChanged();
+	$: [lastUpscaleStatus, lastUpscaleBeingProcessed], onLastUpscaleStatusChanged();
 
 	let lastUpscaleAnimationStatus: 'idle' | 'should-animate' | 'should-complete' = 'idle';
 
@@ -242,7 +242,7 @@
 		if (
 			lastUpscaleStatus === 'server-received' ||
 			lastUpscaleStatus === 'server-processing' ||
-			(lastUpscaleStatus === 'succeeded' && lastUpscaleBeingCreated)
+			(lastUpscaleStatus === 'succeeded' && lastUpscaleBeingProcessed)
 		) {
 			return;
 		} else if (lastUpscaleStatus === 'failed') {
@@ -380,7 +380,7 @@
 			>
 				<img
 					style="transition: filter 0.5s cubic-bezier(0.4, 0, 0.2, 1);"
-					class="{lastUpscaleBeingCreated
+					class="{lastUpscaleBeingProcessed
 						? 'blur-2xl'
 						: ''} w-full transition h-auto lg:h-full lg:object-contain absolute lg:left-0 lg:top-0"
 					src={generation.selected_output.image_url}
@@ -391,7 +391,7 @@
 				<img
 					on:load={onImageLoad}
 					style="transition: filter 0.5s cubic-bezier(0.4, 0, 0.2, 1);"
-					class="{lastUpscaleBeingCreated
+					class="{lastUpscaleBeingProcessed
 						? 'blur-2xl'
 						: ''} filter w-full relative transition h-auto lg:h-full lg:object-contain lg:absolute lg:left-0 lg:top-0"
 					src={currentImageUrl}
@@ -451,16 +451,16 @@
 				>
 					<div class="w-full flex flex-col gap-4 md:gap-5 px-5 py-4 md:px-7 md:py-5">
 						<div class="w-full pt-1.5">
-							{#if !generation.selected_output.upscaled_image_url || lastUpscaleBeingCreated}
+							{#if !generation.selected_output.upscaled_image_url || lastUpscaleBeingProcessed}
 								<div class="w-fulll relative">
 									<Button
 										onClick={onUpscaleClicked}
-										loading={lastUpscaleBeingCreated}
+										loading={lastUpscaleBeingProcessed}
 										class="w-full"
 										size="sm"
 									>
 										<div class="flex items-center gap-2">
-											{#if lastUpscaleBeingCreated}
+											{#if lastUpscaleBeingProcessed}
 												<p>
 													{upscaleSinceSec.toLocaleString('en-US', {
 														minimumFractionDigits: 1,

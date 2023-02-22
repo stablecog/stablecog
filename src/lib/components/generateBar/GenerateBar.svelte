@@ -130,24 +130,24 @@
 	let isSignInModalOpen = false;
 
 	let lastGenerationStatus = $generations?.[0]?.status;
-	let lastGenerationBeingCreated =
+	let lastGenerationBeingProcessed =
 		lastGenerationStatus === 'to-be-submitted' ||
 		lastGenerationStatus === 'server-received' ||
 		lastGenerationStatus === 'server-processing';
 	$: lastGenerationStatus = $generations?.[0]?.status;
-	$: lastGenerationQueuedAt = $generations?.[0]?.queued_at;
-	$: lastGenerationBeingCreated =
+	$: lastGenerationCreatedAt = $generations?.[0]?.created_at;
+	$: lastGenerationBeingProcessed =
 		lastGenerationStatus === 'to-be-submitted' ||
 		lastGenerationStatus === 'server-received' ||
 		lastGenerationStatus === 'server-processing';
 
 	$: sinceSec =
-		now !== undefined && lastGenerationBeingCreated && lastGenerationQueuedAt
-			? Math.max(now - lastGenerationQueuedAt, 0) / 1000
+		now !== undefined && lastGenerationBeingProcessed && lastGenerationCreatedAt
+			? Math.max(now - lastGenerationCreatedAt, 0) / 1000
 			: 0;
 
 	let lastGenerationAnimationStatus: 'idle' | 'should-animate' | 'should-complete' =
-		lastGenerationBeingCreated ? 'should-animate' : 'idle';
+		lastGenerationBeingProcessed ? 'should-animate' : 'idle';
 	$: [lastGenerationStatus], onLastGenerationStatusChanged();
 
 	async function onLastGenerationStatusChanged() {
@@ -207,7 +207,7 @@
 	$: [$generationModelId], setLocalModelId();
 	$: [$generationSchedulerId], setLocalSchedulerId();
 	$: showClearPromptInputButton =
-		$promptInputValue !== undefined && $promptInputValue !== '' && !lastGenerationBeingCreated;
+		$promptInputValue !== undefined && $promptInputValue !== '' && !lastGenerationBeingProcessed;
 	$: if (browser && $page.data.session?.user.id) {
 		isSignInModalOpen = false;
 	}
@@ -360,7 +360,7 @@
 		) {
 			advancedModeApp.set($advancedMode);
 		}
-		if (lastGenerationBeingCreated) {
+		if (lastGenerationBeingProcessed) {
 			if (nowInterval) clearInterval(nowInterval);
 			nowInterval = setInterval(() => {
 				now = Date.now();
@@ -401,7 +401,7 @@
 						promptInputValue.set($promptInputValue.slice(0, maxPromptLength));
 					}
 				}}
-				disabled={lastGenerationBeingCreated || !isCheckComplete}
+				disabled={lastGenerationBeingProcessed || !isCheckComplete}
 				{placeholder}
 				rows="1"
 				style="transition: height 0.1s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.2s cubic-bezier(0.4, 0, 0.2, 1), padding 0.2s cubic-bezier(0.4, 0, 0.2, 1)"
@@ -409,13 +409,13 @@
 					scroll-smooth resize-none transition relative pl-5 md:pl-6 py-5 rounded-xl 
 					focus:ring-2 focus:ring-c-primary/30 ring-0 ring-c-primary/20 placeholder:text-c-on-bg/30 {!$isTouchscreen
 					? 'enabled:hover:ring-2'
-					: ''} {classes} {lastGenerationBeingCreated
+					: ''} {classes} {lastGenerationBeingProcessed
 					? 'text-c-secondary/75'
-					: 'text-c-on-bg'} {!$isTouchscreen && !lastGenerationBeingCreated
+					: 'text-c-on-bg'} {!$isTouchscreen && !lastGenerationBeingProcessed
 					? 'group-hover:ring-2'
-					: ''} {lastGenerationBeingCreated ? 'overflow-hidden' : ''}"
+					: ''} {lastGenerationBeingProcessed ? 'overflow-hidden' : ''}"
 			/>
-			{#if lastGenerationBeingCreated}
+			{#if lastGenerationBeingProcessed}
 				<div
 					class="w-full h-full flex items-end absolute left-0 top-0 overflow-hidden z-0 rounded-xl pointer-events-none"
 				>
@@ -445,15 +445,15 @@
 			<ClearButton show={showClearPromptInputButton} onClick={clearPrompt} />
 		</div>
 		<Button
-			disabled={lastGenerationBeingCreated || !isCheckComplete}
-			loading={lastGenerationBeingCreated}
+			disabled={lastGenerationBeingProcessed || !isCheckComplete}
+			loading={lastGenerationBeingProcessed}
 			class="w-full md:w-auto md:min-w-[9.5rem]"
 		>
-			<p class={lastGenerationBeingCreated ? 'opacity-0' : 'opacity-100'}>
+			<p class={lastGenerationBeingProcessed ? 'opacity-0' : 'opacity-100'}>
 				{$LL.Home.GenerateButton()}
 			</p>
 			<p
-				class="{lastGenerationBeingCreated
+				class="{lastGenerationBeingProcessed
 					? 'opacity-100'
 					: 'opacity-0'} absolute left-0 top-0 w-full h-full flex items-center justify-center"
 			>
@@ -462,7 +462,7 @@
 		</Button>
 	</div>
 	<!-- Tab bars -->
-	{#if !lastGenerationBeingCreated}
+	{#if !lastGenerationBeingProcessed}
 		<div
 			class="w-full flex flex-col justify-start items-center px-4"
 			transition:expandCollapse|local={{ duration: 300 }}
@@ -473,14 +473,14 @@
 					container={$homePageContainer}
 					containerTopMinDistance={12}
 					containerBottomMinDistance={12}
-					disabled={lastGenerationBeingCreated}
+					disabled={lastGenerationBeingProcessed}
 					{formElement}
 					{isCheckComplete}
 				/>
 			</div>
 			<div class="w-full flex flex-col md:hidden justify-start pt-2 items-center relative">
 				<NoBgButton
-					disabled={lastGenerationBeingCreated || isGenerationSettingsSheetOpen}
+					disabled={lastGenerationBeingProcessed || isGenerationSettingsSheetOpen}
 					onClick={() => (isGenerationSettingsSheetOpen = !isGenerationSettingsSheetOpen)}
 				>
 					<div
@@ -495,13 +495,13 @@
 			</div>
 		</div>
 	{/if}
-	{#if lastGenerationBeingCreated}
+	{#if lastGenerationBeingProcessed}
 		<div transition:expandCollapse|local={{ duration: 300 }} class="w-full h-[2vh] md:h-[4vh]" />
 	{/if}
 </form>
 
 <GenerationSettingsSheet
-	disabled={!isGenerationSettingsSheetOpen || lastGenerationBeingCreated}
+	disabled={!isGenerationSettingsSheetOpen || lastGenerationBeingProcessed}
 	bind:isGenerationSettingsSheetOpen
 	{formElement}
 	{isCheckComplete}
