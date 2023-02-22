@@ -18,11 +18,14 @@
 	import IconStar from '$components/icons/IconStar.svelte';
 	import Avatar from '$components/Avatar.svelte';
 	import { portal } from 'svelte-portal';
-	import { quadOut } from 'svelte/easing';
 	import { fade, fly } from 'svelte/transition';
 	import SignInCard from '$components/SignInCard.svelte';
 	import { navbarHeight } from '$ts/stores/navbarHeight';
-	import { modalBgTransitionProps, modalTransitionProps } from '$ts/animation/constants';
+	import {
+		modalBgTransitionProps,
+		modalInTransitionProps,
+		modalOutTransitionProps
+	} from '$ts/animation/constants';
 
 	let isSignInModalOpen = false;
 	let isSettingsOpen = false;
@@ -179,7 +182,8 @@
 	/>
 	<div
 		use:portal={'body'}
-		transition:fly|local={modalTransitionProps}
+		in:fly|local={modalInTransitionProps}
+		out:fly|local={modalOutTransitionProps}
 		class="w-full h-full flex flex-col items-center fixed left-0 top-0 px-3 py-20 z-[10001] overflow-auto"
 	>
 		<div

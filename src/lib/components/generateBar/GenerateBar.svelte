@@ -39,7 +39,7 @@
 		promptInputValue,
 		negativePromptInputValue
 	} from '$ts/stores/generationSettings';
-	import { onMount, tick } from 'svelte';
+	import { onDestroy, onMount, tick } from 'svelte';
 	import LL, { locale } from '$i18n/i18n-svelte';
 	import { isValue } from '$ts/helpers/isValue';
 	import GenerationSettingsSheet from '$components/generateBar/GenerationSettingsSheet.svelte';
@@ -129,9 +129,13 @@
 	let isGenerationSettingsSheetOpen = false;
 	let isSignInModalOpen = false;
 
-	let lastGenerationStatus: TGenerationStatus | undefined;
-	$: lastGenerationStatus = $generations.length > 0 ? $generations[0].status : undefined;
-	$: lastGenerationQueuedAt = $generations.length > 0 ? $generations[0].queued_at : undefined;
+	let lastGenerationStatus = $generations?.[0]?.status;
+	let lastGenerationBeingCreated =
+		lastGenerationStatus === 'to-be-submitted' ||
+		lastGenerationStatus === 'server-received' ||
+		lastGenerationStatus === 'server-processing';
+	$: lastGenerationStatus = $generations?.[0]?.status;
+	$: lastGenerationQueuedAt = $generations?.[0]?.queued_at;
 	$: lastGenerationBeingCreated =
 		lastGenerationStatus === 'to-be-submitted' ||
 		lastGenerationStatus === 'server-received' ||
@@ -141,30 +145,31 @@
 		now !== undefined && lastGenerationBeingCreated && lastGenerationQueuedAt
 			? Math.max(now - lastGenerationQueuedAt, 0) / 1000
 			: 0;
-	$: [lastGenerationStatus], onLastGenerationStatusChanged();
 
-	let lastGenerationAnimationStatus: 'idle' | 'should-animate' | 'should-complete' = 'idle';
+	let lastGenerationAnimationStatus: 'idle' | 'should-animate' | 'should-complete' =
+		lastGenerationBeingCreated ? 'should-animate' : 'idle';
+	$: [lastGenerationStatus], onLastGenerationStatusChanged();
 
 	async function onLastGenerationStatusChanged() {
 		if (lastGenerationStatus === 'succeeded' || lastGenerationStatus === 'failed') {
 			lastGenerationAnimationStatus = 'should-complete';
-		}
-		if (
+			return;
+		} else if (
 			lastGenerationStatus === 'server-received' ||
 			lastGenerationStatus === 'server-processing'
 		) {
 			return;
-		}
-		if (nowInterval) clearInterval(nowInterval);
-		if (lastGenerationStatus === 'to-be-submitted') {
+		} else if (lastGenerationStatus === 'to-be-submitted') {
+			if (nowInterval) clearInterval(nowInterval);
+			nowInterval = setInterval(() => {
+				now = Date.now();
+			}, 100);
 			lastGenerationAnimationStatus = 'idle';
 			await tick();
 			setTimeout(() => {
 				lastGenerationAnimationStatus = 'should-animate';
 			});
-			nowInterval = setInterval(() => {
-				now = Date.now();
-			}, 100);
+			return;
 		}
 	}
 
@@ -355,7 +360,17 @@
 		) {
 			advancedModeApp.set($advancedMode);
 		}
+		if (lastGenerationBeingCreated) {
+			if (nowInterval) clearInterval(nowInterval);
+			nowInterval = setInterval(() => {
+				now = Date.now();
+			}, 100);
+		}
 		isCheckComplete = true;
+	});
+
+	onDestroy(() => {
+		if (nowInterval) clearInterval(nowInterval);
 	});
 </script>
 

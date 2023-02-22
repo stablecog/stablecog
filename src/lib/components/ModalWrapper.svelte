@@ -1,5 +1,9 @@
 <script lang="ts">
-	import { modalBgTransitionProps, modalTransitionProps } from '$ts/animation/constants';
+	import {
+		modalBgTransitionProps,
+		modalInTransitionProps,
+		modalOutTransitionProps
+	} from '$ts/animation/constants';
 	import { windowHeight, windowWidth } from '$ts/stores/window';
 	import { fade, fly } from 'svelte/transition';
 
@@ -7,13 +11,14 @@
 </script>
 
 <div
-	transition:fade={modalBgTransitionProps}
+	transition:fade|local={modalBgTransitionProps}
 	style="width: {$windowWidth}px; height: {$windowHeight}px;"
 	class="flex flex-col items-center fixed left-0 
     top-0 bg-c-barrier/90 z-[100]"
 />
 <div
-	transition:fly={modalTransitionProps}
+	in:fly|local={modalInTransitionProps}
+	out:fly|local={modalOutTransitionProps}
 	style="width: {$windowWidth}px; height: {$windowHeight}px;"
 	class="flex flex-col items-center fixed left-0 top-0 z-[101] overflow-auto {hasPadding
 		? 'px-4 py-16'
