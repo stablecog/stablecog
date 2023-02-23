@@ -79,12 +79,15 @@
 		</div>
 		<div class="w-full flex-1 max-w-7xl flex flex-col">
 			{#if userGenerationFullOutputsQuery !== undefined}
-				<GenerationGridInfinite generationsQuery={userGenerationFullOutputsQuery} />
+				<GenerationGridInfinite
+					generationsQuery={userGenerationFullOutputsQuery}
+					cardType="history"
+				/>
 			{/if}
 		</div>
 	{/if}
 </div>
 
 {#if $activeGeneration}
-	<GenerationFullScreen generation={$activeGeneration} />
+	<GenerationFullScreen generation={$activeGeneration} modalType="history" />
 {/if}

@@ -1,5 +1,4 @@
 <script lang="ts">
-	import { page } from '$app/stores';
 	import SubtleButton from '$components/buttons/SubtleButton.svelte';
 	import IconCopy from '$components/icons/IconCopy.svelte';
 	import IconDice from '$components/icons/IconDice.svelte';
@@ -17,6 +16,8 @@
 	import { copy } from 'svelte-copy';
 	import { tick } from 'svelte';
 	import { copyTimeoutDuration } from './constants';
+	import type { TGenerationFullScreenModalType } from '$components/generationFullScreen/types';
+	import IconWand from '$components/icons/IconWand.svelte';
 
 	export let generation: TGenerationWithSelectedOutput;
 	export let rerollUrl: string;
@@ -28,6 +29,7 @@
 	export let negativePromptCopiedTimeout: NodeJS.Timeout;
 	export let seedCopiedTimeout: NodeJS.Timeout;
 	export let currentImageUrl: string;
+	export let modalType: TGenerationFullScreenModalType;
 
 	const onPromptCopied = () => {
 		promptCopied = true;
@@ -98,28 +100,32 @@
 	}
 </script>
 
-<div class="w-full flex flex-wrap gap-3">
-	<SubtleButton onClick={onDownloadImageClicked} state={imageDownloading ? 'success' : 'idle'}>
-		<Morpher morphed={imageDownloading}>
-			<div slot="item-0" class="flex items-center justify-center gap-1.5">
-				<IconDownload class="w-5 h-5 -ml-0.5" />
-				<p>{$LL.GenerationFullscreen.DownloadButton()}</p>
-			</div>
-			<div slot="item-1" class="flex items-center justify-center gap-1.5">
-				<IconTick class="w-5 h-5 -ml-0.5 transform scale-110" />
-				<p>{$LL.GenerationFullscreen.DoneButtonState()}</p>
-			</div>
-		</Morpher>
-	</SubtleButton>
-	{#if $page.url.pathname !== '/'}
+<div class="w-full flex flex-wrap gap-3 pb-1">
+	{#if modalType === 'generate' || modalType === 'history'}
+		<SubtleButton onClick={onDownloadImageClicked} state={imageDownloading ? 'success' : 'idle'}>
+			<Morpher morphed={imageDownloading}>
+				<div slot="item-0" class="flex items-center justify-center gap-1.5">
+					<IconDownload class="w-5 h-5 -ml-0.5" />
+					<p>{$LL.GenerationFullscreen.DownloadButton()}</p>
+				</div>
+				<div slot="item-1" class="flex items-center justify-center gap-1.5">
+					<IconTick class="w-5 h-5 -ml-0.5 transform scale-110" />
+					<p>{$LL.GenerationFullscreen.DoneButtonState()}</p>
+				</div>
+			</Morpher>
+		</SubtleButton>
+	{/if}
+	{#if modalType === 'history' || modalType === 'gallery'}
 		<div class="flex relative">
 			<SubtleButton target="_self" prefetch={true} href={rerollUrl}>
 				<div class="flex items-center justify-center gap-1.5">
-					<IconDice class="w-5 h-5 -ml-0.5" />
-					<p>{$LL.GenerationFullscreen.RerollButton()}</p>
+					<IconWand class="w-5 h-5 -ml-0.5" />
+					<p>{$LL.GenerationFullscreen.GenerateSimilarButton()}</p>
 				</div>
 			</SubtleButton>
 		</div>
+	{/if}
+	{#if modalType === 'history'}
 		<div class="flex relative">
 			<SubtleButton target="_self" prefetch={true} href={regenerateUrl}>
 				<div class="flex items-center justify-center gap-1.5">
@@ -143,37 +149,23 @@
 			</Morpher>
 		</SubtleButton>
 	</div>
-	{#if generation.negative_prompt}
-		<div use:copy={generation.negative_prompt.text} on:svelte-copy={onNegativePromptCopied}>
-			<SubtleButton state={negativePromptCopied ? 'success' : 'idle'}>
-				<Morpher morphed={negativePromptCopied}>
-					<div slot="item-0" class="flex items-center justify-center gap-1.5">
-						<IconCopy class="w-5 h-5 -ml-0.5" />
-						<p>{$LL.GenerationFullscreen.CopyNegativePromptButton()}</p>
+	{#if modalType === 'generate' || modalType === 'history'}
+		<div
+			use:clickoutside={{
+				callback: () => (deleteStatus === 'should-confirm' ? (deleteStatus = 'idle') : null)
+			}}
+		>
+			<SubtleButton disabled={deleteStatus === 'loading'} onClick={() => null}>
+				<Morpher morphed={deleteStatus === 'should-confirm'}>
+					<div slot="item-0" class="flex items-center justify-center gap-1.5 text-c-danger">
+						<IconTrashcan class="w-5 h-5 -ml-0.5" />
+						<p>{$LL.Shared.DeleteButton()}</p>
 					</div>
-					<div slot="item-1" class="flex items-center justify-center gap-1.5">
-						<IconTick class="w-5 h-5 -ml-0.5 scale-110" />
-						<p>{$LL.GenerationFullscreen.CopiedButtonState()}</p>
+					<div slot="item-1" class="flex items-center justify-center gap-1.5 text-c-danger">
+						<IconTrashcanFilledOpen class="w-5 h-5 -ml-0.5 scale-110" />
 					</div>
 				</Morpher>
 			</SubtleButton>
 		</div>
 	{/if}
-	<div
-		use:clickoutside={{
-			callback: () => (deleteStatus === 'should-confirm' ? (deleteStatus = 'idle') : null)
-		}}
-	>
-		<SubtleButton disabled={deleteStatus === 'loading'} onClick={() => null}>
-			<Morpher morphed={deleteStatus === 'should-confirm'}>
-				<div slot="item-0" class="flex items-center justify-center gap-1.5 text-c-danger">
-					<IconTrashcan class="w-5 h-5 -ml-0.5" />
-					<p>{$LL.Shared.DeleteButton()}</p>
-				</div>
-				<div slot="item-1" class="flex items-center justify-center gap-1.5 text-c-danger">
-					<IconTrashcanFilledOpen class="w-5 h-5 -ml-0.5 scale-110" />
-				</div>
-			</Morpher>
-		</SubtleButton>
-	</div>
 </div>

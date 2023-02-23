@@ -161,12 +161,15 @@
 			</div>
 		{:else if galleryGenerationFullOutputsQuery !== undefined}
 			<div class="w-full flex-1 flex flex-col">
-				<GenerationGridInfinite generationsQuery={galleryGenerationFullOutputsQuery} />
+				<GenerationGridInfinite
+					cardType="gallery"
+					generationsQuery={galleryGenerationFullOutputsQuery}
+				/>
 			</div>
 		{/if}
 	</div>
 </div>
 
 {#if $activeGeneration}
-	<GenerationFullScreen generation={$activeGeneration} />
+	<GenerationFullScreen generation={$activeGeneration} modalType="gallery" />
 {/if}

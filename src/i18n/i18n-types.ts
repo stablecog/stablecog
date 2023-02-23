@@ -331,6 +331,10 @@ type RootTranslation = {
 		 */
 		CopiedButtonState: string
 		/**
+		 * G​e​n​e​r​a​t​e​ ​S​i​m​i​l​a​r
+		 */
+		GenerateSimilarButton: string
+		/**
 		 * R​e​r​o​l​l
 		 */
 		RerollButton: string
@@ -1477,6 +1481,10 @@ export type TranslationFunctions = {
 		 * Copied!
 		 */
 		CopiedButtonState: () => LocalizedString
+		/**
+		 * Generate Similar
+		 */
+		GenerateSimilarButton: () => LocalizedString
 		/**
 		 * Reroll
 		 */

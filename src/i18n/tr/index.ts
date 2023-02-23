@@ -110,6 +110,7 @@ const tr: Translation = {
 		CopyPromptButton: 'Komutu Kopyala',
 		CopyNegativePromptButton: 'Negatif Komutu Kopyala',
 		CopiedButtonState: 'Kopyalandı!',
+		GenerateSimilarButton: 'Generate Similar',
 		RerollButton: 'Rastgele Üret',
 		RegenerateButton: 'Tekrar Üret',
 		GenerateButton: 'Üret',

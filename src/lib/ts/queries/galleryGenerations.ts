@@ -35,6 +35,7 @@ export async function getGalleryGenerationFullOutputs({
 		const output: TGenerationOutput = {
 			id: hit.id,
 			image_url: hit.image_url,
+			upscaled_image_url: hit.upscaled_image_url,
 			created_at: hit.created_at,
 			updated_at: hit.updated_at
 		};
@@ -62,7 +63,7 @@ export async function getGalleryGenerationFullOutputs({
 						: undefined,
 				outputs: [output],
 				status: 'succeeded',
-				seed: hit.seed,
+				seed: 1,
 				num_outputs: 1,
 				submit_to_gallery: true
 			},
@@ -85,13 +86,13 @@ export interface TGalleryGenerationHit {
 	id: string;
 	generation_id: string;
 	image_url: string;
+	upscaled_image_url?: string;
 	created_at: string;
 	updated_at: string;
 	width: number;
 	height: number;
 	inference_steps: number;
 	guidance_scale: number;
-	seed: number;
 	model_id: string;
 	scheduler_id: string;
 	prompt_text: string;

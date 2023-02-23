@@ -109,6 +109,7 @@ const de: Translation = {
 		CopyPromptButton: 'Eingabewörter kopieren',
 		CopyNegativePromptButton: 'Ausgeschlossene Wörter kopieren',
 		CopiedButtonState: 'Kopiert!',
+		GenerateSimilarButton: 'Generate Similar',
 		RerollButton: 'Seed durchmischen',
 		RegenerateButton: 'Erneut generieren',
 		GenerateButton: 'Generieren',

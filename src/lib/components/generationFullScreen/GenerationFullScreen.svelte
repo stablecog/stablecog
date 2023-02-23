@@ -26,7 +26,7 @@
 	import { negativePromptTooltipAlt } from '$ts/constants/tooltips';
 	import { advancedModeApp } from '$ts/stores/advancedMode';
 	import IconCancel from '$components/icons/IconCancel.svelte';
-	import GenerationFullScreenContainer from '$components/generationFullScreen/GenerationFullScreenContainer.svelte';
+	import Container from '$components/generationFullScreen/Container.svelte';
 	import { activeGeneration, type TGenerationWithSelectedOutput } from '$userStores/generation';
 	import { sseId } from '$userStores/sse';
 	import {
@@ -40,8 +40,11 @@
 	import { generateSSEId } from '$ts/helpers/generateSSEId';
 	import ButtonsSection from '$components/generationFullScreen/ButtonsSection.svelte';
 	import SidebarChevron from '$components/generationFullScreen/SidebarChevron.svelte';
+	import type { TGenerationFullScreenModalType } from '$components/generationFullScreen/types';
+	import Divider from '$components/generationFullScreen/Divider.svelte';
 
 	export let generation: TGenerationWithSelectedOutput;
+	export let modalType: TGenerationFullScreenModalType;
 
 	let hadUpscaledImageUrlOnMount = generation.selected_output.upscaled_image_url !== undefined;
 
@@ -262,7 +265,7 @@
 			</IconButton>
 		</div>
 	</div>
-	<GenerationFullScreenContainer
+	<Container
 		{generation}
 		{canClose}
 		let:imageContainerWidth
@@ -338,6 +341,7 @@
 				/>
 			</div>
 		</div>
+		<!-- Right side of the panel -->
 		<div
 			style={$windowWidth >= lgBreakpoint
 				? `width: ${sidebarWidth}px; height: ${imageContainerHeight}px; min-height: ${modalMinHeight}px;`
@@ -356,40 +360,43 @@
 					class="w-full flex flex-col items-start justify-start"
 				>
 					<div class="w-full flex flex-col gap-4 md:gap-5 px-5 py-4 md:px-7 md:py-5">
-						<div class="w-full pt-1.5">
-							{#if !generation.selected_output.upscaled_image_url || lastUpscaleBeingProcessed}
-								<div class="w-fulll relative">
-									<Button
-										onClick={onUpscaleClicked}
-										loading={lastUpscaleBeingProcessed}
-										class="w-full"
-										size="sm"
-									>
-										<div class="flex items-center gap-2">
-											{#if lastUpscaleBeingProcessed}
-												<p>
-													{upscaleSinceSec.toLocaleString('en-US', {
-														minimumFractionDigits: 1,
-														maximumFractionDigits: 1
-													})}
-												</p>
-											{:else}
-												<IconUpscale class="w-5 h-5" />
-												<p>{$LL.GenerationFullscreen.UpscaleButton()}</p>
-											{/if}
-										</div>
-									</Button>
-								</div>
-							{:else}
-								<TabBar
-									bind:value={upscaledTabValue}
-									tabs={upscaledOrDefaultTabs}
-									hasTitle={false}
-									dontScale={true}
-									name="Upscaled or Default Image"
-								/>
-							{/if}
-						</div>
+						{#if modalType === 'generate' || modalType === 'history'}
+							<div class="w-full pt-1.5">
+								{#if !generation.selected_output.upscaled_image_url || lastUpscaleBeingProcessed}
+									<div class="w-fulll relative">
+										<Button
+											onClick={onUpscaleClicked}
+											loading={lastUpscaleBeingProcessed}
+											class="w-full"
+											size="sm"
+										>
+											<div class="flex items-center gap-2">
+												{#if lastUpscaleBeingProcessed}
+													<p>
+														{upscaleSinceSec.toLocaleString('en-US', {
+															minimumFractionDigits: 1,
+															maximumFractionDigits: 1
+														})}
+													</p>
+												{:else}
+													<IconUpscale class="w-5 h-5" />
+													<p>{$LL.GenerationFullscreen.UpscaleButton()}</p>
+												{/if}
+											</div>
+										</Button>
+									</div>
+								{:else}
+									<TabBar
+										bind:value={upscaledTabValue}
+										tabs={upscaledOrDefaultTabs}
+										hasTitle={false}
+										dontScale={true}
+										name="Upscaled or Default Image"
+									/>
+								{/if}
+							</div>
+						{/if}
+						<!-- Prompt and Negative Prompt -->
 						<div class="flex flex-col items-start gap-3">
 							<p class="max-w-full text-sm leading-normal">{generation.prompt.text}</p>
 							{#if generation.negative_prompt}
@@ -408,6 +415,7 @@
 							{rerollUrl}
 							{regenerateUrl}
 							{currentImageUrl}
+							{modalType}
 							bind:promptCopiedTimeout
 							bind:negativePromptCopiedTimeout
 							bind:seedCopiedTimeout
@@ -416,11 +424,7 @@
 							bind:seedCopied
 						/>
 					</div>
-					<!-- Divider -->
-					<div class="w-full pt-1.5 pb-0.5">
-						<div class="w-full h-2px bg-c-bg-tertiary rounded-full" />
-					</div>
-					<!-- Divider -->
+					<Divider />
 					<ParamsSection
 						class="flex flex-col px-5 py-4 md:px-7 md:py-5 lg:pb-8 gap-6"
 						currentImageWidth={upscaledTabValue === 'upscaled' && upscaledImageWidth
@@ -434,6 +438,7 @@
 						bind:seedCopiedTimeout
 						{copyTimeoutDuration}
 						{onSeedCopyClicked}
+						{modalType}
 					/>
 				</div>
 			</div>
@@ -445,5 +450,5 @@
 				bind:sidebarWrapperScrollTop
 			/>
 		</div>
-	</GenerationFullScreenContainer>
+	</Container>
 </ModalWrapper>

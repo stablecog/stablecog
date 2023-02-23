@@ -109,6 +109,7 @@ const ptPt: Translation = {
 		CopyPromptButton: 'Copiar Prompt',
 		CopyNegativePromptButton: 'Copiar Prompt Negativa',
 		CopiedButtonState: 'Copiado!',
+		GenerateSimilarButton: 'Generate Similar',
 		RerollButton: 'Reroll',
 		RegenerateButton: 'Regenerar',
 		GenerateButton: 'Gerar',

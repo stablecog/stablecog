@@ -109,6 +109,7 @@ const hi: Translation = {
 		CopyPromptButton: 'संकेत कॉपी करें',
 		CopyNegativePromptButton: 'नकारात्मक संकेत कॉपी करें',
 		CopiedButtonState: 'कॉपी हो गया!',
+		GenerateSimilarButton: 'Generate Similar',
 		RerollButton: 'नया बनाए',
 		RegenerateButton: 'दोबारा बनाए',
 		GenerateButton: 'बनाए',

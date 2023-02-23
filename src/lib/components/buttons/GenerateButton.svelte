@@ -2,9 +2,10 @@
 	import IconWand from '$components/icons/IconWand.svelte';
 	import { getGenerationUrlFromParams } from '$ts/helpers/getGenerationUrlFromParams';
 	import { isTouchscreen } from '$ts/stores/isTouchscreen';
+	import type { TGenerationWithSelectedOutput } from '$ts/stores/user/generation';
 	import type { TDBGenerationG } from '$ts/types/db';
 
-	export let generation: TDBGenerationG;
+	export let generation: TGenerationWithSelectedOutput;
 	export { classes as class };
 	let classes = '';
 
@@ -17,14 +18,13 @@
 		element.blur();
 	}}
 	data-sveltekit-prefetch
-	target="_blank"
 	class="transition rounded-lg group-1 {classes}"
 	href={getGenerationUrlFromParams({
-		prompt: generation.prompt.text,
-		negative_prompt: generation.negative_prompt?.text ?? undefined,
-		model_id: generation.model?.id ?? undefined,
-		scheduler_id: generation.scheduler?.id ?? undefined,
-		num_inference_steps: generation.num_inference_steps ?? undefined,
+		prompt: generation.prompt,
+		negative_prompt: generation.negative_prompt ?? undefined,
+		model_id: generation.model_id ?? undefined,
+		scheduler_id: generation.scheduler_id ?? undefined,
+		num_inference_steps: generation.inference_steps ?? undefined,
 		guidance_scale: generation.guidance_scale ?? undefined,
 		width: generation.width,
 		height: generation.height

@@ -1,16 +1,16 @@
 <script lang="ts">
 	import CopyButton from '$components/buttons/CopyButton.svelte';
 	import DownloadGenerationButton from '$components/buttons/DownloadGenerationButton.svelte';
+	import GenerateButton from '$components/buttons/GenerateButton.svelte';
+	import type { TGenerationImageCardType } from '$components/generationImage/types';
 	import IconChatBubbleCancel from '$components/icons/IconChatBubbleCancel.svelte';
-	import IconScale from '$components/icons/IconScale.svelte';
-	import IconSteps from '$components/icons/IconSteps.svelte';
 	import { doesContainTarget } from '$ts/helpers/doesContainTarget';
-	import { advancedModeApp } from '$ts/stores/advancedMode';
 	import { activeGeneration, type TGenerationWithSelectedOutput } from '$userStores/generation';
 
 	export let generation: TGenerationWithSelectedOutput;
 	export let useUpscaledImage = true;
 	export let scrollPrompt = false;
+	export let cardType: TGenerationImageCardType;
 
 	let promptCopied = false;
 	let promptCopiedTimeout: NodeJS.Timeout;
@@ -47,30 +47,7 @@
 		<div
 			class="flex-1 min-w-0 overflow-hidden flex flex-row flex-wrap items-start justify-start gap-1 transition transform 
 				-translate-x-full group-focus-within:translate-x-0 group-hover:translate-x-0 p-1.5"
-		>
-			{#if $advancedModeApp}
-				<div
-					class="max-w-full flex items-center text-xs gap-1.5 rounded-lg bg-c-bg pl-2 pr-2.5 py-1.5"
-				>
-					<IconScale class="w-4 h-4" />
-					<p
-						class="flex-1 cursor-default whitespace-nowrap flex-shrink min-w-0 overflow-hidden overflow-ellipsis text-left"
-					>
-						{generation.guidance_scale}
-					</p>
-				</div>
-				<div
-					class="max-w-full flex items-center text-xs gap-1.5 rounded-lg bg-c-bg pl-2 pr-2.5 py-1.5"
-				>
-					<IconSteps class="w-4 h-4" />
-					<p
-						class="flex-1 cursor-default whitespace-nowrap flex-shrink min-w-0 overflow-hidden overflow-ellipsis text-left"
-					>
-						{generation.inference_steps}
-					</p>
-				</div>
-			{/if}
-		</div>
+		/>
 		<div
 			bind:this={rightButtonContainer}
 			class="flex flex-row items-end justify-start transition transform 
@@ -82,17 +59,22 @@
 				bind:copied={promptCopied}
 				bind:copiedTimeout={promptCopiedTimeout}
 			/>
-			<DownloadGenerationButton
-				class="p-1.5 -ml-1.5"
-				url={useUpscaledImage && generation.selected_output.upscaled_image_url
-					? generation.selected_output.upscaled_image_url
-					: generation.selected_output.image_url}
-				isUpscaled={useUpscaledImage && generation.selected_output.upscaled_image_url !== undefined}
-				prompt={generation.prompt.text}
-				seed={generation.seed}
-				guidanceScale={generation.guidance_scale}
-				inferenceSteps={generation.inference_steps}
-			/>
+			{#if cardType === 'generate' || cardType === 'history'}
+				<DownloadGenerationButton
+					class="p-1.5 -ml-1.5"
+					url={useUpscaledImage && generation.selected_output.upscaled_image_url
+						? generation.selected_output.upscaled_image_url
+						: generation.selected_output.image_url}
+					isUpscaled={useUpscaledImage &&
+						generation.selected_output.upscaled_image_url !== undefined}
+					prompt={generation.prompt.text}
+					seed={generation.seed}
+					guidanceScale={generation.guidance_scale}
+					inferenceSteps={generation.inference_steps}
+				/>
+			{:else if cardType === 'gallery'}
+				<GenerateButton {generation} class="p-1.5 -ml-1.5" />
+			{/if}
 		</div>
 	</div>
 	<div

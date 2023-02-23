@@ -110,6 +110,7 @@ const vi: Translation = {
 		CopyPromptButton: 'Sao chép mô tả',
 		CopyNegativePromptButton: 'Sao chép mô tả nghịch đảo',
 		CopiedButtonState: 'Đã sao chép!',
+		GenerateSimilarButton: 'Generate Similar',
 		RerollButton: 'Tái tạo ngẫu nhiên',
 		RegenerateButton: 'Tái tạo',
 		GenerateButton: 'Khởi tạo',

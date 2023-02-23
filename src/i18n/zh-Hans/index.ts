@@ -107,6 +107,7 @@ const zhHans: Translation = {
 		CopyPromptButton: '复制提示',
 		CopyNegativePromptButton: '复制否定提示',
 		CopiedButtonState: '已复制！',
+		GenerateSimilarButton: 'Generate Similar',
 		RerollButton: '随机种子',
 		RegenerateButton: '再生成',
 		GenerateButton: '生成',

@@ -1,6 +1,7 @@
 <script lang="ts">
 	import Button from '$components/buttons/Button.svelte';
 	import GenerationImage from '$components/generationImage/GenerationImage.svelte';
+	import type { TGenerationImageCardType } from '$components/generationImage/types';
 	import IconLoadingSlim from '$components/icons/IconLoadingSlim.svelte';
 	import ImagePlaceholder from '$components/ImagePlaceholder.svelte';
 	import LL from '$i18n/i18n-svelte';
@@ -13,6 +14,7 @@
 	import { fly } from 'svelte/transition';
 
 	export let generationsQuery: CreateInfiniteQueryResult<TUserGenerationFullOutputsPage, unknown>;
+	export let cardType: TGenerationImageCardType;
 	let bottomDiv: HTMLDivElement;
 
 	let canAutoFetch = true;
@@ -69,6 +71,7 @@
 						>
 							{#if output.generation.outputs !== undefined}
 								<GenerationImage
+									{cardType}
 									useUpscaledImage={false}
 									generation={{ ...output.generation, selected_output: output }}
 								/>

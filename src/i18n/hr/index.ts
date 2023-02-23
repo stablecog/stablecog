@@ -109,6 +109,7 @@ const hr: Translation = {
 		CopyPromptButton: 'Kopiraj opis',
 		CopyNegativePromptButton: 'Kopiraj negativni opis',
 		CopiedButtonState: 'Kopirano!',
+		GenerateSimilarButton: 'Generate Similar',
 		RerollButton: 'Obnovi',
 		RegenerateButton: 'Regeneriraj',
 		GenerateButton: 'Generiraj',

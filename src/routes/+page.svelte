@@ -231,6 +231,7 @@
 										<GenerationImage
 											generation={{ ...$generations[0], selected_output: output }}
 											useUpscaledImage
+											cardType="generate"
 										/>
 									</div>
 								{/if}
@@ -247,5 +248,5 @@
 </div>
 
 {#if $activeGeneration}
-	<GenerationFullScreen generation={$activeGeneration} />
+	<GenerationFullScreen generation={$activeGeneration} modalType="generate" />
 {/if}

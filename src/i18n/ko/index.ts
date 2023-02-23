@@ -110,6 +110,7 @@ const ko: Translation = {
 		CopyPromptButton: '문구 복사하기',
 		CopyNegativePromptButton: '미포함 문구 복사하기',
 		CopiedButtonState: '복사 완료!',
+		GenerateSimilarButton: 'Generate Similar',
 		RerollButton: '다시하기',
 		RegenerateButton: '다시 생성하기',
 		GenerateButton: '나도 생성해보기',
