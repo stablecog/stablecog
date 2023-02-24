@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { page } from '$app/stores';
+	import Button from '$components/buttons/Button.svelte';
 	import GenerationFullScreen from '$components/generationFullScreen/GenerationFullScreen.svelte';
 	import GenerationGridInfinite from '$components/grids/GenerationGridInfinite.svelte';
 	import MetaTag from '$components/MetaTag.svelte';
@@ -79,10 +80,20 @@
 		</div>
 		<div class="w-full flex-1 max-w-7xl flex flex-col">
 			{#if userGenerationFullOutputsQuery !== undefined}
-				<GenerationGridInfinite
-					generationsQuery={userGenerationFullOutputsQuery}
-					cardType="history"
-				/>
+				{#if $userGenerationFullOutputsQuery?.data?.pages.length === 1 && $userGenerationFullOutputsQuery.data.pages[0].outputs.length === 0}
+					<div class="w-full flex-1 flex flex-col items-center py-8 px-5">
+						<div class="flex flex-col my-auto items-center gap-6">
+							<p class="text-c-on-bg/50">{$LL.History.NoGenerationsYet()}</p>
+							<Button href="/">{$LL.Shared.StartGeneratingButton()}</Button>
+							<div class="h-[1vh]" />
+						</div>
+					</div>
+				{:else}
+					<GenerationGridInfinite
+						generationsQuery={userGenerationFullOutputsQuery}
+						cardType="history"
+					/>
+				{/if}
 			{/if}
 		</div>
 	{/if}

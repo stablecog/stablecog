@@ -30,70 +30,58 @@
 	};
 </script>
 
-{#if $generationsQuery.isLoading}
-	<div class="w-full flex flex-col flex-1 items-center py-12">
-		<IconLoadingSlim class="animate-spin-faster w-12 h-12 text-c-on-bg/50 my-auto" />
-	</div>
-{:else if $generationsQuery.data?.pages.length === 0}
-	<div class="w-full flex-1 flex flex-col items-center py-8 px-5">
-		<div class="flex flex-col my-auto items-center gap-6">
-			<p class="text-c-on-bg/50">{$LL.History.NoGenerationsYet()}</p>
-			<Button href="/">{$LL.Shared.StartGeneratingButton()}</Button>
-			<div class="h-[1vh]" />
+{#if $generationsQuery.isInitialLoading}
+	<div
+		class="w-full flex flex-col text-c-on-bg/60 flex-1 py-6 px-4 justify-center items-center text-center"
+	>
+		<div class="w-16 h-16">
+			<IconLoadingSlim class="animate-spin-faster w-full h-full" />
 		</div>
+		<p class="mt-2 opacity-0">Loading</p>
+		<div class="h-[2vh]" />
 	</div>
-{:else if $generationsQuery.isSuccess}
-	{#if $generationsQuery.data.pages.length === 1 && $generationsQuery.data.pages[0].outputs.length === 0}
-		<div class="w-full flex-1 flex flex-col items-center py-8 px-5">
-			<div class="flex flex-col my-auto items-center gap-6">
-				<p class="text-c-on-bg/50">{$LL.History.NoGenerationsYet()}</p>
-				<Button href="/">{$LL.Shared.StartGeneratingButton()}</Button>
-				<div class="h-[1vh]" />
-			</div>
-		</div>
-	{:else}
-		<Masonry
-			items={$generationsQuery.data.pages.flatMap((page) => page.outputs)}
-			let:item={output}
-			minColWidth={300}
-			maxColWidth={600}
-			gap={0}
-			animate={false}
-		>
-			<div class="w-full p-0.5">
-				<div class="w-full relative group">
-					<ImagePlaceholder width={output.generation.width} height={output.generation.height} />
-					{#if $activeGeneration === undefined || $activeGeneration.selected_output.id !== output.id}
-						<div
-							transition:fly|local={imageTransitionProps}
-							class="absolute left-0 top-0 w-full h-full rounded-xl bg-c-bg-secondary z-0 overflow-hidden border-4 
+{:else if $generationsQuery.isSuccess && $generationsQuery.data.pages.length > 0}
+	<Masonry
+		items={$generationsQuery.data.pages.flatMap((page) => page.outputs)}
+		let:item={output}
+		minColWidth={300}
+		maxColWidth={600}
+		gap={0}
+		animate={false}
+	>
+		<div class="w-full p-0.5">
+			<div class="w-full relative group">
+				<ImagePlaceholder width={output.generation.width} height={output.generation.height} />
+				{#if $activeGeneration === undefined || $activeGeneration.selected_output.id !== output.id}
+					<div
+						transition:fly|local={imageTransitionProps}
+						class="absolute left-0 top-0 w-full h-full rounded-xl bg-c-bg-secondary z-0 overflow-hidden border-4 
 										shadow-lg shadow-c-shadow/[var(--o-shadow-normal)] border-c-bg-secondary"
-						>
-							{#if output.generation.outputs !== undefined}
-								<GenerationImage
-									{cardType}
-									useUpscaledImage={false}
-									generation={{ ...output.generation, selected_output: output }}
-								/>
-							{/if}
-						</div>
-					{/if}
-				</div>
-			</div>
-		</Masonry>
-		<IntersectionObserver on:intersect={autoFetchNextPage} rootMargin="100%" element={bottomDiv}>
-			<div bind:this={bottomDiv} class="w-full flex flex-row items-center justify-center mt-6">
-				{#if $generationsQuery.hasNextPage}
-					<Button
-						withSpinner
-						size="sm"
-						loading={$generationsQuery.isFetchingNextPage}
-						onClick={() => $generationsQuery.fetchNextPage()}
 					>
-						{$LL.Shared.LoadMoreButton()}
-					</Button>
+						{#if output.generation.outputs !== undefined}
+							<GenerationImage
+								{cardType}
+								useUpscaledImage={false}
+								generation={{ ...output.generation, selected_output: output }}
+							/>
+						{/if}
+					</div>
 				{/if}
 			</div>
-		</IntersectionObserver>
-	{/if}
+		</div>
+	</Masonry>
+	<IntersectionObserver on:intersect={autoFetchNextPage} rootMargin="100%" element={bottomDiv}>
+		<div bind:this={bottomDiv} class="w-full flex flex-row items-center justify-center mt-6">
+			{#if $generationsQuery.hasNextPage}
+				<Button
+					withSpinner
+					size="sm"
+					loading={$generationsQuery.isFetchingNextPage}
+					onClick={() => $generationsQuery.fetchNextPage()}
+				>
+					{$LL.Shared.LoadMoreButton()}
+				</Button>
+			{/if}
+		</div>
+	</IntersectionObserver>
 {/if}

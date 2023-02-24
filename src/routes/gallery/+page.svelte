@@ -31,7 +31,6 @@
 	let searchStringDebounced: string | undefined = undefined;
 	let searchTimeout: NodeJS.Timeout;
 	let searchDebounceMs = 400;
-	let searchStatus: 'idle' | 'searching' | 'searched' = 'idle';
 	$: searchString, setDebouncedSearch(searchString);
 
 	$: galleryGenerationFullOutputsQuery = browser
@@ -51,6 +50,17 @@
 		  })
 		: undefined;
 
+	let isLoadedBefore = false;
+	$: $galleryGenerationFullOutputsQuery?.data?.pages.length, setIsLoadedBefore();
+	const setIsLoadedBefore = () => {
+		if (
+			$galleryGenerationFullOutputsQuery?.data?.pages?.length !== undefined &&
+			$galleryGenerationFullOutputsQuery?.data?.pages?.length > 0
+		) {
+			isLoadedBefore = true;
+		}
+	};
+
 	let scrollDirection: 'up' | 'down' = 'up';
 	let oldScrollY = 0;
 	let atTheTop = true;
@@ -60,10 +70,8 @@
 		clearTimeout(searchTimeout);
 		if (!searchString) {
 			searchStringDebounced = '';
-			searchStatus = 'searched';
 			return;
 		}
-		searchStatus = 'searching';
 		searchTimeout = setTimeout(async () => {
 			if (searchString) {
 				searchStringDebounced = searchString;
@@ -73,10 +81,8 @@
 					'SC - Locale': $locale,
 					'SC - Plan': $page.data.plan
 				});
-				searchStatus = 'searched';
 			} else {
 				searchStringDebounced = '';
-				searchStatus = 'searched';
 			}
 		}, searchDebounceMs);
 	}
@@ -145,19 +151,37 @@
 		</Input>
 	</div>
 	<div class="w-full px-2 py-3 relative flex flex-col flex-1">
-		{#if searchStatus === 'searching'}
+		{#if $galleryGenerationFullOutputsQuery?.isInitialLoading}
 			<div
-				class="w-full flex flex-col flex-1 text-c-on-bg/60 pt-6 pb-10 px-4 justify-center items-center text-center"
+				class="w-full flex flex-col text-c-on-bg/60 flex-1 py-6 px-4 justify-center items-center text-center"
 			>
 				<div
-					in:scale|local={{ duration: 200, easing: quadOut, opacity: 0, start: 0.5 }}
+					in:scale|local={{
+						duration: 200,
+						easing: quadOut,
+						opacity: 0,
+						start: 0.5
+					}}
 					class="w-16 h-16"
 				>
 					<IconLoadingSlim class="animate-spin-faster w-full h-full" />
 				</div>
-				<p class="mt-2">
+				<p class="mt-2 opacity-0">
 					{$LL.Gallery.SearchingTitle()}
 				</p>
+				<div class="h-[2vh]" />
+			</div>
+		{:else if $galleryGenerationFullOutputsQuery?.data?.pages.length === 1 && $galleryGenerationFullOutputsQuery.data.pages[0].outputs.length === 0}
+			<div
+				class="w-full flex flex-col text-c-on-bg/60 flex-1 py-6 px-4 justify-center items-center text-center"
+			>
+				<div class="w-16 h-16">
+					<IconSearch class="w-full h-full" />
+				</div>
+				<p class="mt-2">
+					{$LL.Gallery.NoMatchingGenerationTitle()}
+				</p>
+				<div class="h-[2vh]" />
 			</div>
 		{:else if galleryGenerationFullOutputsQuery !== undefined}
 			<div class="w-full flex-1 flex flex-col">
