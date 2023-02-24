@@ -102,6 +102,26 @@ module.exports = {
 				135: '135deg',
 				270: '270deg'
 			},
+			fontSize: {
+				'3.5xl': [
+					'2rem',
+					{
+						lineHeight: '2.25rem'
+					}
+				],
+				xxs: [
+					'0.6rem',
+					{
+						lineHeight: '0.75rem'
+					}
+				],
+				'4.5xl': [
+					'2.5rem',
+					{
+						lineHeight: '2.5rem'
+					}
+				]
+			},
 			lineHeight: {
 				4.5: '1.125rem'
 			},
@@ -160,10 +180,6 @@ module.exports = {
 				lg2: '0.625rem',
 				'4xl': '2rem',
 				'5xl': '2.5rem'
-			},
-			fontSize: {
-				'3.5xl': '2rem',
-				xxs: '0.6rem'
 			},
 			keyframes: {
 				'pulse-custom': {

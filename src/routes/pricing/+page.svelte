@@ -2,7 +2,6 @@
 	import { goto } from '$app/navigation';
 	import { page } from '$app/stores';
 	import Button from '$components/buttons/Button.svelte';
-	import IconStar from '$components/icons/IconStar.svelte';
 	import IconTickOnly from '$components/icons/IconTickOnly.svelte';
 	import MetaTag from '$components/MetaTag.svelte';
 	import LL from '$i18n/i18n-svelte';
@@ -21,41 +20,54 @@
 		PUBLIC_STRIPE_PRICE_ID_STARTER_TEST,
 		PUBLIC_STRIPE_PRICE_ID_ULTIMATE_TEST
 	} from '$env/static/public';
+	import { STRIPE_CURRENCY_TO_SYMBOL, STRIPE_PRODUCTS } from '$ts/constants/stripePublic';
 
 	export let data: PageData;
-
-	const starter = data.prices.find((price) => price.id === PUBLIC_STRIPE_PRICE_ID_STARTER_TEST);
-	const pro = data.prices.find((price) => price.id === PUBLIC_STRIPE_PRICE_ID_PRO_TEST);
-	const ultimate = data.prices.find((price) => price.id === PUBLIC_STRIPE_PRICE_ID_ULTIMATE_TEST);
 
 	const cards = [
 		{
 			title: 'Starter',
-			priceId: starter?.id!,
-			currency: starter?.currency!,
-			currencySymbol: starter?.currencySymbol!,
-			amount: starter?.amount!
+			priceId: PUBLIC_STRIPE_PRICE_ID_STARTER_TEST,
+			currency: data.currency,
+			currencySymbol: STRIPE_CURRENCY_TO_SYMBOL[data.currency],
+			amount:
+				data.currency === 'eur'
+					? STRIPE_PRODUCTS[PUBLIC_STRIPE_PRICE_ID_STARTER_TEST].currencies.eur.amount
+					: STRIPE_PRODUCTS[PUBLIC_STRIPE_PRICE_ID_STARTER_TEST].currencies.usd.amount,
+			features: ['1,750 generations per month', 'Commercial Use', 'Images are public'],
+			ringClass: 'ring-c-bg-secondary'
 		},
 		{
 			title: 'Pro',
-			priceId: pro?.id!,
-			currency: pro?.currency!,
-			currencySymbol: pro?.currencySymbol!,
-			amount: pro?.amount!
+			priceId: PUBLIC_STRIPE_PRICE_ID_PRO_TEST,
+			currency: data.currency,
+			currencySymbol: STRIPE_CURRENCY_TO_SYMBOL[data.currency],
+			amount:
+				data.currency === 'eur'
+					? STRIPE_PRODUCTS[PUBLIC_STRIPE_PRICE_ID_PRO_TEST].currencies.eur.amount
+					: STRIPE_PRODUCTS[PUBLIC_STRIPE_PRICE_ID_PRO_TEST].currencies.usd.amount,
+			features: ['4,500 generations per month', 'Commercial Use', 'Images are private'],
+			ringClass: 'ring-c-primary',
+			badgeText: 'Recommended',
+			badgeClasses: 'bg-c-primary text-c-on-primary'
 		},
 		{
 			title: 'Ultimate',
-			priceId: ultimate?.id!,
-			currency: ultimate?.currency!,
-			currencySymbol: ultimate?.currencySymbol!,
-			amount: ultimate?.amount!
+			priceId: PUBLIC_STRIPE_PRICE_ID_ULTIMATE_TEST,
+			currency: data.currency,
+			currencySymbol: STRIPE_CURRENCY_TO_SYMBOL[data.currency],
+			amount:
+				data.currency === 'eur'
+					? STRIPE_PRODUCTS[PUBLIC_STRIPE_PRICE_ID_ULTIMATE_TEST].currencies.eur.amount
+					: STRIPE_PRODUCTS[PUBLIC_STRIPE_PRICE_ID_ULTIMATE_TEST].currencies.usd.amount,
+			features: ['10,000 generations per month', 'Commercial Use', 'Images are private'],
+			ringClass: 'ring-c-bg-secondary'
 		}
 	];
 
-	console.log('cards', cards);
-
 	let checkoutCreationStatus: 'idle' | 'loading' | 'success' | 'error' = 'idle';
 	let isSignInModalOpen = false;
+	let selectedPriceId: string | undefined = undefined;
 
 	async function createCheckoutSessionAndRedirect({
 		priceId,
@@ -64,6 +76,7 @@
 		priceId: string;
 		currency: string;
 	}) {
+		selectedPriceId = priceId;
 		try {
 			checkoutCreationStatus = 'loading';
 			const res = await fetch(
@@ -81,6 +94,7 @@
 			await goto(checkoutSession.url);
 		} catch (error) {
 			checkoutCreationStatus = 'error';
+			selectedPriceId = undefined;
 			console.log(error);
 		}
 	}
@@ -107,79 +121,55 @@
 
 <PageWrapper>
 	<div class="w-full flex flex-col items-center justify-start my-auto">
-		<h1 class="text-center font-bold text-4xl">{$LL.Pro.PageTitle()}</h1>
-		<p class="max-w-2xl mt-4 text-center leading-relaxed text-c-on-bg/75">
-			{$LL.Pro.PageParagraph()}
+		<h1 class="text-center font-bold text-4xl">Subscriptions</h1>
+		<p class="max-w-xl mt-4 text-center leading-relaxed text-c-on-bg/75">
+			Choose the plan that works for you.
 		</p>
-		<div class="w-full max-w-7xl flex gap-5">
+		<div class="w-full max-w-7xl flex flex-wrap justify-center gap-6 mt-12">
 			{#each cards as card}
 				<div
-					class="mt-8 max-w-[34rem] bg-c-bg shadow-xl shadow-c-shadow/[var(--o-shadow-strong)] 
-					 p-4 md:p-6 rounded-2xl md:rounded-3xl ring-2 ring-c-primary"
+					class="w-full max-w-sm bg-c-bg shadow-xl shadow-c-shadow/[var(--o-shadow-strong)] 
+					 p-4 md:p-6 rounded-2xl md:rounded-3xl ring-2 {card.ringClass} relative"
 				>
-					<h2
-						class="font-bold text-3xl text-c-primary md:-mt-2 flex justify-center items-center gap-2 text-center"
-					>
+					{#if card.badgeText && card.badgeClasses}
+						<div
+							class="absolute -right-3 -top-3 rounded-full px-3.5 py-2 text-sm text-right 
+							font-bold {card.badgeClasses}"
+						>
+							{card.badgeText}
+						</div>
+					{/if}
+					<h2 class="w-full text-c-on-bg text-center font-bold text-2xl md:-mt-2 gap-2">
 						{card.title}
 					</h2>
 					<h3
-						class="w-[calc(100%+2rem)] md:w-[calc(100%+3rem)] text-center bg-c-primary text-c-on-primary
-				-mx-4 md:-mx-6 mt-4 px-5 py-3 font-bold flex justify-center items-start"
+						class="w-[100%+2rem] md:w-[100%+3rem] -mx-4 md:-mx-6 text-center bg-c-bg-secondary 
+						text-c-on-bg mt-4 py-2.5 font-bold flex justify-center items-start"
 					>
-						<span class="text-xl">{card.currencySymbol}</span><span class="text-4xl font-extrabold">
+						<span class="text-xl">{card.currencySymbol}</span><span class="text-4.5xl font-bold">
 							{card.amount}
 						</span>
-						<span class="self-end mb-1">{$LL.Pro.Month()}</span>
+						<span class="self-end mb-1 text-c-on-bg/60 font-medium">{$LL.Pro.Month()}</span>
 					</h3>
-					<ul class="mt-6 flex flex-col gap-3 px-4 md:px-6">
-						<li class="flex items-center gap-3">
-							<IconTickOnly class="text-c-primary w-5 h-5 shrink-0 -ml-2" />
-							{$LL.Pro.Features.FullSpeed()}
-						</li>
-						<li class="flex items-center gap-3">
-							<IconTickOnly class="text-c-primary w-5 h-5 shrink-0 -ml-2" />
-							{$LL.Pro.Features.ImageDimensions()}
-						</li>
-						<li class="flex items-center gap-3">
-							<IconTickOnly class="text-c-primary w-5 h-5 shrink-0 -ml-2" />
-							{$LL.Pro.Features.Upscale()}
-						</li>
-						<li class="flex items-center gap-3">
-							<IconTickOnly class="text-c-primary w-5 h-5 shrink-0 -ml-2" />
-							{$LL.Pro.Features.Steps()}
-						</li>
-						<li class="flex items-center gap-3">
-							<IconTickOnly class="text-c-primary w-5 h-5 shrink-0 -ml-2" />
-							{$LL.Pro.Features.MoreModels()}
-						</li>
-						<li class="flex items-center gap-3">
-							<IconTickOnly class="text-c-primary w-5 h-5 shrink-0 -ml-2" />
-							{$LL.Pro.Features.SavedToCloud()}
-						</li>
-						<li class="flex items-center gap-3">
-							<IconTickOnly class="text-c-primary w-5 h-5 shrink-0 -ml-2" />
-							{$LL.Pro.Features.CommercialUse()}
-						</li>
-						<li class="flex items-center gap-3">
-							<IconTickOnly class="text-c-primary w-5 h-5 shrink-0 -ml-2" />
-							{$LL.Pro.Features.MoreSchedulers()}
-							<span class="text-c-on-bg/50">{$LL.Pro.Soon()}</span>
-						</li>
-						<li class="flex items-center gap-3">
-							<IconTickOnly class="text-c-primary w-5 h-5 shrink-0 -ml-2" />
-							{$LL.Pro.Features.Upcoming()}
-						</li>
+					<ul class="w-full mt-6 flex flex-col gap-3 px-1">
+						{#each card.features as feature}
+							<li class="flex items-center gap-3">
+								<span class="text-c-on-bg/60">-</span>
+								{feature}
+							</li>
+						{/each}
 					</ul>
 					{#if $page.data.session?.user.email}
 						<Button
 							withSpinner
-							loading={checkoutCreationStatus === 'loading'}
+							disabled={checkoutCreationStatus === 'loading'}
+							loading={card.priceId === selectedPriceId && checkoutCreationStatus === 'loading'}
 							onClick={() =>
 								createCheckoutSessionAndRedirect({
 									priceId: card.priceId,
 									currency: card.currency
 								})}
-							class="w-full mt-8">{$LL.Pro.BecomeProButton()}</Button
+							class="w-full mt-8">Subscribe</Button
 						>
 					{:else}
 						<Button onClick={() => (isSignInModalOpen = true)} class="w-full mt-8">

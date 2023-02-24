@@ -1,10 +1,10 @@
-import { eurCountryCodes } from '$ts/constants/main';
+import { stripe } from '$ts/constants/stripe';
 import {
-	stripe,
+	STRIPE_CURRENCIES,
 	STRIPE_PRICE_IDS,
-	supportedCurrencies,
-	type TSupportedCurrency
-} from '$ts/constants/stripe';
+	type TStripeSupportedCurrency,
+	type TStripeSupportedPriceId
+} from '$ts/constants/stripePublic';
 import { supabaseAdmin } from '$ts/constants/supabaseAdmin';
 import { getSupabase } from '@supabase/auth-helpers-sveltekit';
 import type { RequestHandler } from '@sveltejs/kit';
@@ -19,11 +19,12 @@ export const GET: RequestHandler = async (event) => {
 	if (!priceId) {
 		return new Response(JSON.stringify({ error: 'Invalid price ID' }));
 	}
+	const priceIdValidated = priceId as TStripeSupportedPriceId;
 	const currencyParam = event.url.searchParams.get('currency');
-	if (!supportedCurrencies.includes(currencyParam as TSupportedCurrency)) {
+	if (!STRIPE_CURRENCIES.includes(currencyParam as TStripeSupportedCurrency)) {
 		return new Response(JSON.stringify({ error: 'Invalid currency' }));
 	}
-	const currency = currencyParam as TSupportedCurrency;
+	const currencyValidated = currencyParam as TStripeSupportedCurrency;
 	const url = event.url;
 	const baseUrl = `${url.protocol}//${url.host}`;
 
@@ -40,11 +41,11 @@ export const GET: RequestHandler = async (event) => {
 		customer: customer.id,
 		line_items: [
 			{
-				price: priceId,
+				price: priceIdValidated,
 				quantity: 1
 			}
 		],
-		currency: 'eur',
+		currency: currencyValidated,
 		mode: 'subscription',
 		success_url: `${baseUrl}/pro/success`,
 		cancel_url: `${baseUrl}/pro/cancel`
