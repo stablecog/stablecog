@@ -37,7 +37,7 @@
 		<div class="w-16 h-16">
 			<IconLoadingSlim class="animate-spin-faster w-full h-full" />
 		</div>
-		<p class="mt-2 opacity-0">Loading</p>
+		<p class="mt-2 opacity-0">{$LL.Gallery.SearchingTitle()}</p>
 		<div class="h-[2vh]" />
 	</div>
 {:else if $generationsQuery.isSuccess && $generationsQuery.data.pages.length > 0}
