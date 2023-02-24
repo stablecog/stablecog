@@ -10,26 +10,25 @@ export const stripe = new Stripe(STRIPE_SECRET_KEY_TEST, {
 	apiVersion: '2022-11-15'
 });
 
+export const STRIPE_CURRENCIES = ['usd', 'eur'] as const;
 export const STRIPE_PRICE_IDS = [
 	PUBLIC_STRIPE_PRICE_ID_STARTER_TEST,
 	PUBLIC_STRIPE_PRICE_ID_PRO_TEST,
 	PUBLIC_STRIPE_PRICE_ID_ULTIMATE_TEST
 ] as const;
 
-export const supportedCurrencies = ['usd', 'eur'] as const;
+export type TStripeSupportedPriceId = typeof STRIPE_PRICE_IDS[number];
+export type TStripeSupportedCurrency = typeof STRIPE_CURRENCIES[number];
 
-export type TSupportedCurrency = typeof supportedCurrencies[number];
-export type TSupportedPriceId = typeof STRIPE_PRICE_IDS[number];
-
-export const currencyToSymbol: { [currency in TSupportedCurrency]: string } = {
+export const currencyToSymbol: { [currency in TStripeSupportedCurrency]: string } = {
 	usd: '$',
 	eur: '€'
 } as const;
 
 export const stripeProducts: {
-	[priceId in TSupportedPriceId]: {
+	[priceId in TStripeSupportedPriceId]: {
 		currencies: {
-			[currency in TSupportedCurrency]: {
+			[currency in TStripeSupportedCurrency]: {
 				amount: number;
 			};
 		};
