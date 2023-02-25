@@ -17,7 +17,7 @@
 
 <MetaTag
 	title="Succeeded | Stablecog"
-	description="Become a pro member on Stablecog to unlock all of its features."
+	description="Choose a plan that works for you and start using Stablecog."
 	imageUrl="{canonicalUrl}/previews{$page.url.pathname}.png"
 	canonical="{canonicalUrl}{$page.url.pathname}"
 />
@@ -26,10 +26,10 @@
 	<div class="w-full flex flex-col items-center justify-start my-auto">
 		<IconConfetti class="w-24 h-24 text-c-primary" />
 		<h1 class="text-center font-bold text-4xl mt-4 text-c-primary">
-			{$LL.Pro.Success.PageTitle()}
+			{$LL.Pricing.Purchase.Succeeded.PageTitle()}
 		</h1>
-		<p class="max-w-2xl mt-4 text-center leading-relaxed text-c-on-bg/75">
-			{@html $LL.Pro.Success.PageParagraph({ platform: '__discord__' }).replace(
+		<p class="max-w-xl mt-4 text-center leading-relaxed text-c-on-bg/75">
+			{@html $LL.Pricing.Purchase.Succeeded.PageParagraph({ platform: '__discord__' }).replace(
 				'__discord__',
 				`<a class="text-c-primary font-bold hover:underline" href="/discord" target="_blank">Discord</a>`
 			)}

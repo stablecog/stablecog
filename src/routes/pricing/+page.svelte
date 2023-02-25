@@ -2,7 +2,6 @@
 	import { goto } from '$app/navigation';
 	import { page } from '$app/stores';
 	import Button from '$components/buttons/Button.svelte';
-	import IconTickOnly from '$components/icons/IconTickOnly.svelte';
 	import MetaTag from '$components/MetaTag.svelte';
 	import LL from '$i18n/i18n-svelte';
 	import { canonicalUrl } from '$ts/constants/main';
@@ -16,9 +15,9 @@
 	import { portal } from 'svelte-portal';
 	import type { PageData } from './$types';
 	import {
-		PUBLIC_STRIPE_PRICE_ID_PRO_TEST,
-		PUBLIC_STRIPE_PRICE_ID_STARTER_TEST,
-		PUBLIC_STRIPE_PRICE_ID_ULTIMATE_TEST
+		PUBLIC_STRIPE_PRICE_ID_PRO_MO_TEST,
+		PUBLIC_STRIPE_PRICE_ID_STARTER_MO_TEST,
+		PUBLIC_STRIPE_PRICE_ID_ULTIMATE_MO_TEST
 	} from '$env/static/public';
 	import { STRIPE_CURRENCY_TO_SYMBOL, STRIPE_PRODUCTS } from '$ts/constants/stripePublic';
 
@@ -27,25 +26,25 @@
 	const cards = [
 		{
 			title: 'Starter',
-			priceId: PUBLIC_STRIPE_PRICE_ID_STARTER_TEST,
+			priceId: PUBLIC_STRIPE_PRICE_ID_STARTER_MO_TEST,
 			currency: data.currency,
 			currencySymbol: STRIPE_CURRENCY_TO_SYMBOL[data.currency],
 			amount:
 				data.currency === 'eur'
-					? STRIPE_PRODUCTS[PUBLIC_STRIPE_PRICE_ID_STARTER_TEST].currencies.eur.amount
-					: STRIPE_PRODUCTS[PUBLIC_STRIPE_PRICE_ID_STARTER_TEST].currencies.usd.amount,
+					? STRIPE_PRODUCTS[PUBLIC_STRIPE_PRICE_ID_STARTER_MO_TEST].currencies.eur.amount
+					: STRIPE_PRODUCTS[PUBLIC_STRIPE_PRICE_ID_STARTER_MO_TEST].currencies.usd.amount,
 			features: ['1,750 images per month', 'Commercial Use', 'Images are public'],
 			ringClass: 'ring-c-bg-secondary'
 		},
 		{
 			title: 'Pro',
-			priceId: PUBLIC_STRIPE_PRICE_ID_PRO_TEST,
+			priceId: PUBLIC_STRIPE_PRICE_ID_PRO_MO_TEST,
 			currency: data.currency,
 			currencySymbol: STRIPE_CURRENCY_TO_SYMBOL[data.currency],
 			amount:
 				data.currency === 'eur'
-					? STRIPE_PRODUCTS[PUBLIC_STRIPE_PRICE_ID_PRO_TEST].currencies.eur.amount
-					: STRIPE_PRODUCTS[PUBLIC_STRIPE_PRICE_ID_PRO_TEST].currencies.usd.amount,
+					? STRIPE_PRODUCTS[PUBLIC_STRIPE_PRICE_ID_PRO_MO_TEST].currencies.eur.amount
+					: STRIPE_PRODUCTS[PUBLIC_STRIPE_PRICE_ID_PRO_MO_TEST].currencies.usd.amount,
 			features: ['4,500 images per month', 'Commercial Use', 'Images are private'],
 			ringClass: 'ring-c-primary',
 			badgeText: 'Recommended',
@@ -53,13 +52,13 @@
 		},
 		{
 			title: 'Ultimate',
-			priceId: PUBLIC_STRIPE_PRICE_ID_ULTIMATE_TEST,
+			priceId: PUBLIC_STRIPE_PRICE_ID_ULTIMATE_MO_TEST,
 			currency: data.currency,
 			currencySymbol: STRIPE_CURRENCY_TO_SYMBOL[data.currency],
 			amount:
 				data.currency === 'eur'
-					? STRIPE_PRODUCTS[PUBLIC_STRIPE_PRICE_ID_ULTIMATE_TEST].currencies.eur.amount
-					: STRIPE_PRODUCTS[PUBLIC_STRIPE_PRICE_ID_ULTIMATE_TEST].currencies.usd.amount,
+					? STRIPE_PRODUCTS[PUBLIC_STRIPE_PRICE_ID_ULTIMATE_MO_TEST].currencies.eur.amount
+					: STRIPE_PRODUCTS[PUBLIC_STRIPE_PRICE_ID_ULTIMATE_MO_TEST].currencies.usd.amount,
 			features: ['10,000 images per month', 'Commercial Use', 'Images are private'],
 			ringClass: 'ring-c-bg-secondary'
 		}
@@ -113,17 +112,17 @@
 </script>
 
 <MetaTag
-	title="Pro | Stablecog"
-	description="Become a pro member on Stablecog to unlock all of its features."
+	title="Pricing | Stablecog"
+	description="Choose a plan that works for you and start using Stablecog."
 	imageUrl="{canonicalUrl}/previews{$page.url.pathname}.png"
 	canonical="{canonicalUrl}{$page.url.pathname}"
 />
 
 <PageWrapper>
 	<div class="w-full flex flex-col items-center justify-start my-auto">
-		<h1 class="text-center font-bold text-4xl">Plans</h1>
+		<h1 class="text-center font-bold text-4xl">{$LL.Pricing.PageTitle()}</h1>
 		<p class="max-w-xl mt-4 text-center leading-relaxed text-c-on-bg/75">
-			Choose the plan that works for you.
+			{$LL.Pricing.PageParagraph()}
 		</p>
 		<div class="w-full max-w-7xl flex flex-wrap justify-center gap-6 mt-12">
 			{#each cards as card}
@@ -169,8 +168,10 @@
 									priceId: card.priceId,
 									currency: card.currency
 								})}
-							class="w-full mt-8">Subscribe</Button
+							class="w-full mt-8"
 						>
+							{$LL.Pricing.SubscribeButton()}
+						</Button>
 					{:else}
 						<Button onClick={() => (isSignInModalOpen = true)} class="w-full mt-8">
 							{$LL.SignUp.SignUpButton()}

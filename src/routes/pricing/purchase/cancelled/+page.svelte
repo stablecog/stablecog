@@ -10,7 +10,7 @@
 
 <MetaTag
 	title="Cancelled | Stablecog"
-	description="Become a pro member on Stablecog to unlock all of its features."
+	description="Choose a plan that works for you and start using Stablecog."
 	imageUrl="{canonicalUrl}/previews{$page.url.pathname}.png"
 	canonical="{canonicalUrl}{$page.url.pathname}"
 />
@@ -18,10 +18,12 @@
 <PageWrapper>
 	<div class="w-full flex flex-col items-center justify-start my-auto">
 		<IconSadFace class="w-24 h-24 text-c-primary" />
-		<h1 class="text-center font-bold text-4xl mt-4 text-c-primary">{$LL.Pro.Cancel.PageTitle()}</h1>
+		<h1 class="text-center font-bold text-4xl mt-4 text-c-primary">
+			{$LL.Pricing.Purchase.Cancelled.PageTitle()}
+		</h1>
 		<p class="max-w-xl mt-4 leading-relaxed text-center text-c-on-bg/75">
-			{$LL.Pro.Cancel.PageParagraph()}
+			{$LL.Pricing.Purchase.Cancelled.PageParagraph()}
 		</p>
-		<Button href="/pro" withSpinner class=" mt-6">{$LL.Shared.TryAgainButton()}</Button>
+		<Button href="/pricing" withSpinner class=" mt-6">{$LL.Shared.TryAgainButton()}</Button>
 	</div>
 </PageWrapper>

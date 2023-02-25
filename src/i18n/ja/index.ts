@@ -406,6 +406,24 @@ const ja: Translation = {
 		},
 		SearchingTitle: '検索中...',
 		NoMatchingGenerationTitle: '一致する生成がありません'
+	},
+	Pricing: {
+		PageTitle: 'Plans',
+		PageParagraph: 'Choose a plan that works for you.',
+		SubscribeButton: 'Subscribe',
+		PurchaseButton: 'Purchase',
+		Purchase: {
+			Succeeded: {
+				PageTitle: "You're all set!",
+				PageParagraph:
+					'Thank you for your purchase. If you have any questions, feel free to reach out to us on {platform}.'
+			},
+			Cancelled: {
+				PageTitle: 'Purchase Cancelled',
+				PageParagraph:
+					'You have cancelled the purchase process. If it was a mistake, you can try again.'
+			}
+		}
 	}
 };
 export default ja;

@@ -1175,6 +1175,47 @@ type RootTranslation = {
 		 */
 		NoMatchingGenerationTitle: string
 	}
+	Pricing: {
+		/**
+		 * P​l​a​n​s
+		 */
+		PageTitle: string
+		/**
+		 * C​h​o​o​s​e​ ​a​ ​p​l​a​n​ ​t​h​a​t​ ​w​o​r​k​s​ ​f​o​r​ ​y​o​u​.
+		 */
+		PageParagraph: string
+		/**
+		 * S​u​b​s​c​r​i​b​e
+		 */
+		SubscribeButton: string
+		/**
+		 * P​u​r​c​h​a​s​e
+		 */
+		PurchaseButton: string
+		Purchase: {
+			Succeeded: {
+				/**
+				 * Y​o​u​'​r​e​ ​a​l​l​ ​s​e​t​!
+				 */
+				PageTitle: string
+				/**
+				 * T​h​a​n​k​ ​y​o​u​ ​f​o​r​ ​y​o​u​r​ ​p​u​r​c​h​a​s​e​.​ ​I​f​ ​y​o​u​ ​h​a​v​e​ ​a​n​y​ ​q​u​e​s​t​i​o​n​s​,​ ​f​e​e​l​ ​f​r​e​e​ ​t​o​ ​r​e​a​c​h​ ​o​u​t​ ​t​o​ ​u​s​ ​o​n​ ​{​p​l​a​t​f​o​r​m​}​.
+				 * @param {unknown} platform
+				 */
+				PageParagraph: RequiredParams<'platform'>
+			}
+			Cancelled: {
+				/**
+				 * P​u​r​c​h​a​s​e​ ​C​a​n​c​e​l​l​e​d
+				 */
+				PageTitle: string
+				/**
+				 * Y​o​u​ ​h​a​v​e​ ​c​a​n​c​e​l​l​e​d​ ​t​h​e​ ​p​u​r​c​h​a​s​e​ ​p​r​o​c​e​s​s​.​ ​I​f​ ​i​t​ ​w​a​s​ ​a​ ​m​i​s​t​a​k​e​,​ ​y​o​u​ ​c​a​n​ ​t​r​y​ ​a​g​a​i​n​.
+				 */
+				PageParagraph: string
+			}
+		}
+	}
 }
 
 export type TranslationFunctions = {
@@ -2319,6 +2360,46 @@ export type TranslationFunctions = {
 		 * No matching generation
 		 */
 		NoMatchingGenerationTitle: () => LocalizedString
+	}
+	Pricing: {
+		/**
+		 * Plans
+		 */
+		PageTitle: () => LocalizedString
+		/**
+		 * Choose a plan that works for you.
+		 */
+		PageParagraph: () => LocalizedString
+		/**
+		 * Subscribe
+		 */
+		SubscribeButton: () => LocalizedString
+		/**
+		 * Purchase
+		 */
+		PurchaseButton: () => LocalizedString
+		Purchase: {
+			Succeeded: {
+				/**
+				 * You're all set!
+				 */
+				PageTitle: () => LocalizedString
+				/**
+				 * Thank you for your purchase. If you have any questions, feel free to reach out to us on {platform}.
+				 */
+				PageParagraph: (arg: { platform: unknown }) => LocalizedString
+			}
+			Cancelled: {
+				/**
+				 * Purchase Cancelled
+				 */
+				PageTitle: () => LocalizedString
+				/**
+				 * You have cancelled the purchase process. If it was a mistake, you can try again.
+				 */
+				PageParagraph: () => LocalizedString
+			}
+		}
 	}
 }
 
