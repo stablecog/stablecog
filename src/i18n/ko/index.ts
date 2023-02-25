@@ -372,7 +372,9 @@ const ko: Translation = {
 		ManageSubscriptionButton: '구독 설정',
 		ManageAccountButton: '계정 설정',
 		MyAccountButton: '로그인 계정',
-		SubscriptionPlanTitle: '가입 요금제'
+		SubscriptionPlanTitle: '가입 요금제',
+		RemainingImagesTitle: 'Remaining Images',
+		RemainingCreditsTitle: 'Remaining Credits'
 	},
 	ForgotPassword: {
 		PageTitle: '비밀번호 재설정',
@@ -409,7 +411,30 @@ const ko: Translation = {
 		PageTitle: 'Plans',
 		PageParagraph: 'Choose a plan that works for you.',
 		SubscribeButton: 'Subscribe',
+		SubscribedButton: 'Subscribed',
+		UpgradeButton: 'Upgrade',
+		DowngradeButton: 'Downgrade',
 		PurchaseButton: 'Purchase',
+		MonthlyTitle: 'Monthly',
+		YearlyTitle: 'Yearly',
+		SlashMonth: '/month',
+		Plans: {
+			FreeTitle: 'Free',
+			StarterTitle: 'Starter',
+			ProTitle: 'Pro',
+			UltimateTitle: 'Ultimate'
+		},
+		Features: {
+			MonthlyImages: '{count} images per month.',
+			CommercialUse: 'Commercial Use',
+			ImagesArePublic: 'Images are public.',
+			ImagesArePrivate: 'Images are private.'
+		},
+		Badges: {
+			Recommended: 'Recommended',
+			MostPopular: 'Most Popular',
+			BestValue: 'Best Value'
+		},
 		Purchase: {
 			Succeeded: {
 				PageTitle: "You're all set!",

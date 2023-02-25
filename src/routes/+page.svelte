@@ -52,6 +52,7 @@
 	import { generateSSEId } from '$ts/helpers/generateSSEId';
 	import { imageTransitionProps } from '$ts/animation/constants';
 	import { fly } from 'svelte/transition';
+	import { userSummary } from '$ts/stores/user/summary';
 
 	export let data: THomePageData;
 

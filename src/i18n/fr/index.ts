@@ -377,7 +377,9 @@ const fr: Translation = {
 		ManageSubscriptionButton: 'Gérer votre abonnement',
 		ManageAccountButton: 'Gérer votre compte',
 		MyAccountButton: 'Mon compte',
-		SubscriptionPlanTitle: 'Abonnement'
+		SubscriptionPlanTitle: 'Abonnement',
+		RemainingImagesTitle: 'Remaining Images',
+		RemainingCreditsTitle: 'Remaining Credits'
 	},
 	ForgotPassword: {
 		PageTitle: 'Réinitialiser le mot de passe',
@@ -415,7 +417,30 @@ const fr: Translation = {
 		PageTitle: 'Plans',
 		PageParagraph: 'Choose a plan that works for you.',
 		SubscribeButton: 'Subscribe',
+		SubscribedButton: 'Subscribed',
+		UpgradeButton: 'Upgrade',
+		DowngradeButton: 'Downgrade',
 		PurchaseButton: 'Purchase',
+		MonthlyTitle: 'Monthly',
+		YearlyTitle: 'Yearly',
+		SlashMonth: '/month',
+		Plans: {
+			FreeTitle: 'Free',
+			StarterTitle: 'Starter',
+			ProTitle: 'Pro',
+			UltimateTitle: 'Ultimate'
+		},
+		Features: {
+			MonthlyImages: '{count} images per month.',
+			CommercialUse: 'Commercial Use',
+			ImagesArePublic: 'Images are public.',
+			ImagesArePrivate: 'Images are private.'
+		},
+		Badges: {
+			Recommended: 'Recommended',
+			MostPopular: 'Most Popular',
+			BestValue: 'Best Value'
+		},
 		Purchase: {
 			Succeeded: {
 				PageTitle: "You're all set!",

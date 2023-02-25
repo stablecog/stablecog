@@ -2,6 +2,7 @@ import type { LayoutServerLoad } from './$types';
 import { getServerSession, getSupabase } from '@supabase/auth-helpers-sveltekit';
 import { loadLocaleAsync } from '$i18n/i18n-util.async';
 import { apiUrl } from '$ts/constants/main';
+import type { TUserSummary } from '$ts/stores/user/summary';
 
 export const load: LayoutServerLoad = async (event) => {
 	let session = await getServerSession(event);
@@ -14,7 +15,7 @@ export const load: LayoutServerLoad = async (event) => {
 	});
 	if (userRes.ok) {
 		const userResJson: TUserSummary = await userRes.json();
-		console.log(userResJson);
+		userSummary = userResJson;
 	}
 	const locale = event.locals.locale;
 	const theme = event.locals.theme;
@@ -24,11 +25,7 @@ export const load: LayoutServerLoad = async (event) => {
 		locale,
 		session,
 		theme,
-		advancedMode
+		advancedMode,
+		userSummary
 	};
 };
-
-export interface TUserSummary {
-	total_remaining_credits: number;
-	product?: string;
-}

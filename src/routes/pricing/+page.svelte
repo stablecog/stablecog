@@ -3,10 +3,9 @@
 	import { page } from '$app/stores';
 	import Button from '$components/buttons/Button.svelte';
 	import MetaTag from '$components/MetaTag.svelte';
-	import LL from '$i18n/i18n-svelte';
+	import LL, { locale } from '$i18n/i18n-svelte';
 	import { canonicalUrl } from '$ts/constants/main';
 	import type Stripe from 'stripe';
-	import { onMount } from 'svelte';
 	import PageWrapper from '$components/PageWrapper.svelte';
 	import SignInCard from '$components/SignInCard.svelte';
 	import { clickoutside } from '$ts/actions/clickoutside';
@@ -15,51 +14,93 @@
 	import { portal } from 'svelte-portal';
 	import type { PageData } from './$types';
 	import {
-		PUBLIC_STRIPE_PRICE_ID_PRO_MO_TEST,
 		PUBLIC_STRIPE_PRICE_ID_STARTER_MO_TEST,
-		PUBLIC_STRIPE_PRICE_ID_ULTIMATE_MO_TEST
+		PUBLIC_STRIPE_PRICE_ID_PRO_MO_TEST,
+		PUBLIC_STRIPE_PRICE_ID_ULTIMATE_MO_TEST,
+		PUBLIC_STRIPE_PRODUCT_ID_STARTER_TEST,
+		PUBLIC_STRIPE_PRODUCT_ID_PRO_TEST,
+		PUBLIC_STRIPE_PRODUCT_ID_ULTIMATE_TEST
 	} from '$env/static/public';
-	import { STRIPE_CURRENCY_TO_SYMBOL, STRIPE_PRODUCTS } from '$ts/constants/stripePublic';
+	import { STRIPE_CURRENCY_TO_SYMBOL, STRIPE_PRODUCT_ID_OBJECTS } from '$ts/constants/stripePublic';
 
 	export let data: PageData;
 
-	const cards = [
+	$: cards = [
 		{
-			title: 'Starter',
-			priceId: PUBLIC_STRIPE_PRICE_ID_STARTER_MO_TEST,
+			title: $LL.Pricing.Plans.StarterTitle(),
+			priceIdMo: PUBLIC_STRIPE_PRICE_ID_STARTER_MO_TEST,
 			currency: data.currency,
 			currencySymbol: STRIPE_CURRENCY_TO_SYMBOL[data.currency],
 			amount:
 				data.currency === 'eur'
-					? STRIPE_PRODUCTS[PUBLIC_STRIPE_PRICE_ID_STARTER_MO_TEST].currencies.eur.amount
-					: STRIPE_PRODUCTS[PUBLIC_STRIPE_PRICE_ID_STARTER_MO_TEST].currencies.usd.amount,
-			features: ['1,750 images per month', 'Commercial Use', 'Images are public'],
+					? STRIPE_PRODUCT_ID_OBJECTS[PUBLIC_STRIPE_PRODUCT_ID_STARTER_TEST].prices[
+							PUBLIC_STRIPE_PRICE_ID_STARTER_MO_TEST
+					  ].currencies.eur.amount
+					: STRIPE_PRODUCT_ID_OBJECTS[PUBLIC_STRIPE_PRODUCT_ID_STARTER_TEST].prices[
+							PUBLIC_STRIPE_PRICE_ID_STARTER_MO_TEST
+					  ].currencies.usd.amount,
+			features: [
+				`${$LL.Pricing.Features.MonthlyImages({
+					count:
+						STRIPE_PRODUCT_ID_OBJECTS[
+							PUBLIC_STRIPE_PRODUCT_ID_STARTER_TEST
+						].monthly_images.toLocaleString($locale)
+				})}`,
+				$LL.Pricing.Features.CommercialUse(),
+				$LL.Pricing.Features.ImagesArePublic()
+			],
 			ringClass: 'ring-c-bg-secondary'
 		},
 		{
-			title: 'Pro',
-			priceId: PUBLIC_STRIPE_PRICE_ID_PRO_MO_TEST,
+			title: $LL.Pricing.Plans.ProTitle(),
+			priceIdMo: PUBLIC_STRIPE_PRICE_ID_PRO_MO_TEST,
 			currency: data.currency,
 			currencySymbol: STRIPE_CURRENCY_TO_SYMBOL[data.currency],
 			amount:
 				data.currency === 'eur'
-					? STRIPE_PRODUCTS[PUBLIC_STRIPE_PRICE_ID_PRO_MO_TEST].currencies.eur.amount
-					: STRIPE_PRODUCTS[PUBLIC_STRIPE_PRICE_ID_PRO_MO_TEST].currencies.usd.amount,
-			features: ['4,500 images per month', 'Commercial Use', 'Images are private'],
+					? STRIPE_PRODUCT_ID_OBJECTS[PUBLIC_STRIPE_PRODUCT_ID_PRO_TEST].prices[
+							PUBLIC_STRIPE_PRICE_ID_PRO_MO_TEST
+					  ].currencies.eur.amount
+					: STRIPE_PRODUCT_ID_OBJECTS[PUBLIC_STRIPE_PRODUCT_ID_PRO_TEST].prices[
+							PUBLIC_STRIPE_PRICE_ID_PRO_MO_TEST
+					  ].currencies.usd.amount,
+			features: [
+				`${$LL.Pricing.Features.MonthlyImages({
+					count:
+						STRIPE_PRODUCT_ID_OBJECTS[
+							PUBLIC_STRIPE_PRODUCT_ID_PRO_TEST
+						].monthly_images.toLocaleString($locale)
+				})}`,
+				$LL.Pricing.Features.CommercialUse(),
+				$LL.Pricing.Features.ImagesArePrivate()
+			],
 			ringClass: 'ring-c-primary',
-			badgeText: 'Recommended',
+			badgeText: $LL.Pricing.Badges.Recommended(),
 			badgeClasses: 'bg-c-primary text-c-on-primary'
 		},
 		{
-			title: 'Ultimate',
-			priceId: PUBLIC_STRIPE_PRICE_ID_ULTIMATE_MO_TEST,
+			title: $LL.Pricing.Plans.UltimateTitle(),
+			priceIdMo: PUBLIC_STRIPE_PRICE_ID_ULTIMATE_MO_TEST,
 			currency: data.currency,
 			currencySymbol: STRIPE_CURRENCY_TO_SYMBOL[data.currency],
 			amount:
 				data.currency === 'eur'
-					? STRIPE_PRODUCTS[PUBLIC_STRIPE_PRICE_ID_ULTIMATE_MO_TEST].currencies.eur.amount
-					: STRIPE_PRODUCTS[PUBLIC_STRIPE_PRICE_ID_ULTIMATE_MO_TEST].currencies.usd.amount,
-			features: ['10,000 images per month', 'Commercial Use', 'Images are private'],
+					? STRIPE_PRODUCT_ID_OBJECTS[PUBLIC_STRIPE_PRODUCT_ID_ULTIMATE_TEST].prices[
+							PUBLIC_STRIPE_PRICE_ID_ULTIMATE_MO_TEST
+					  ].currencies.eur.amount
+					: STRIPE_PRODUCT_ID_OBJECTS[PUBLIC_STRIPE_PRODUCT_ID_ULTIMATE_TEST].prices[
+							PUBLIC_STRIPE_PRICE_ID_ULTIMATE_MO_TEST
+					  ].currencies.usd.amount,
+			features: [
+				`${$LL.Pricing.Features.MonthlyImages({
+					count:
+						STRIPE_PRODUCT_ID_OBJECTS[
+							PUBLIC_STRIPE_PRODUCT_ID_ULTIMATE_TEST
+						].monthly_images.toLocaleString($locale)
+				})}`,
+				$LL.Pricing.Features.CommercialUse(),
+				$LL.Pricing.Features.ImagesArePrivate()
+			],
 			ringClass: 'ring-c-bg-secondary'
 		}
 	];
@@ -104,11 +145,6 @@
 		};
 		error: string;
 	}
-
-	let mounted = false;
-	onMount(() => {
-		mounted = true;
-	});
 </script>
 
 <MetaTag
@@ -127,28 +163,30 @@
 		<div class="w-full max-w-7xl flex flex-wrap justify-center gap-6 mt-10">
 			{#each cards as card}
 				<div
-					class="w-full max-w-sm bg-c-bg shadow-xl shadow-c-shadow/[var(--o-shadow-strong)] 
-					 p-4 md:p-6 rounded-2xl md:rounded-3xl ring-2 {card.ringClass} relative"
+					class="w-full max-w-[22rem] bg-c-bg shadow-xl shadow-c-shadow/[var(--o-shadow-strong)] 
+					 p-4 md:p-5 rounded-2xl md:rounded-3xl ring-2 {card.ringClass} relative"
 				>
 					{#if card.badgeText && card.badgeClasses}
 						<div
-							class="absolute -right-3 -top-3 rounded-full px-3.5 py-2 text-sm text-right 
+							class="absolute -right-3 -top-3 rounded-full px-4 py-2 text-sm text-right 
 							font-bold {card.badgeClasses}"
 						>
 							{card.badgeText}
 						</div>
 					{/if}
-					<h2 class="w-full text-c-on-bg text-center font-bold text-2xl md:-mt-2 gap-2">
+					<h2 class="w-full text-c-on-bg text-center font-bold text-2xl md:-mt-1.5 gap-2">
 						{card.title}
 					</h2>
 					<h3
-						class="w-[100%+2rem] md:w-[100%+3rem] -mx-4 md:-mx-6 text-center bg-c-bg-secondary 
+						class="w-[100%+2rem] md:w-[100%+2.5rem] -mx-4 md:-mx-5 text-center bg-c-bg-secondary 
 						text-c-on-bg mt-4 py-2.5 font-bold flex justify-center items-start"
 					>
 						<span class="text-xl">{card.currencySymbol}</span><span class="text-4xl font-bold">
-							{card.amount}
+							{card.amount.toLocaleString($locale)}
 						</span>
-						<span class="self-end mb-0.75 text-c-on-bg/60 font-medium">{$LL.Pro.Month()}</span>
+						<span class="self-end mb-0.75 text-c-on-bg/60 font-medium"
+							>{$LL.Pricing.SlashMonth()}</span
+						>
 					</h3>
 					<ul class="w-full mt-6 flex flex-col gap-3 px-1">
 						{#each card.features as feature}
@@ -162,10 +200,10 @@
 						<Button
 							withSpinner
 							disabled={checkoutCreationStatus === 'loading'}
-							loading={card.priceId === selectedPriceId && checkoutCreationStatus === 'loading'}
+							loading={card.priceIdMo === selectedPriceId && checkoutCreationStatus === 'loading'}
 							onClick={() =>
 								createCheckoutSessionAndRedirect({
-									priceId: card.priceId,
+									priceId: card.priceIdMo,
 									currency: card.currency
 								})}
 							class="w-full mt-8"
@@ -174,7 +212,7 @@
 						</Button>
 					{:else}
 						<Button onClick={() => (isSignInModalOpen = true)} class="w-full mt-8">
-							{$LL.SignUp.SignUpButton()}
+							{$LL.Pricing.SubscribeButton()}
 						</Button>
 					{/if}
 				</div>

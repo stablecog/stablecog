@@ -19,6 +19,7 @@ export const load: ServerLoad = async (event) => {
 			customerPortalSession
 		};
 	} catch (e) {
+		console.log(e);
 		return {
 			customerPortalSession: null
 		};

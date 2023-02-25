@@ -1084,6 +1084,14 @@ type RootTranslation = {
 		 * P​l​a​n
 		 */
 		SubscriptionPlanTitle: string
+		/**
+		 * R​e​m​a​i​n​i​n​g​ ​I​m​a​g​e​s
+		 */
+		RemainingImagesTitle: string
+		/**
+		 * R​e​m​a​i​n​i​n​g​ ​C​r​e​d​i​t​s
+		 */
+		RemainingCreditsTitle: string
 	}
 	ForgotPassword: {
 		/**
@@ -1189,9 +1197,84 @@ type RootTranslation = {
 		 */
 		SubscribeButton: string
 		/**
+		 * S​u​b​s​c​r​i​b​e​d
+		 */
+		SubscribedButton: string
+		/**
+		 * U​p​g​r​a​d​e
+		 */
+		UpgradeButton: string
+		/**
+		 * D​o​w​n​g​r​a​d​e
+		 */
+		DowngradeButton: string
+		/**
 		 * P​u​r​c​h​a​s​e
 		 */
 		PurchaseButton: string
+		/**
+		 * M​o​n​t​h​l​y
+		 */
+		MonthlyTitle: string
+		/**
+		 * Y​e​a​r​l​y
+		 */
+		YearlyTitle: string
+		/**
+		 * /​m​o​n​t​h
+		 */
+		SlashMonth: string
+		Plans: {
+			/**
+			 * F​r​e​e
+			 */
+			FreeTitle: string
+			/**
+			 * S​t​a​r​t​e​r
+			 */
+			StarterTitle: string
+			/**
+			 * P​r​o
+			 */
+			ProTitle: string
+			/**
+			 * U​l​t​i​m​a​t​e
+			 */
+			UltimateTitle: string
+		}
+		Features: {
+			/**
+			 * {​c​o​u​n​t​}​ ​i​m​a​g​e​s​ ​p​e​r​ ​m​o​n​t​h​.
+			 * @param {unknown} count
+			 */
+			MonthlyImages: RequiredParams<'count'>
+			/**
+			 * C​o​m​m​e​r​c​i​a​l​ ​U​s​e
+			 */
+			CommercialUse: string
+			/**
+			 * I​m​a​g​e​s​ ​a​r​e​ ​p​u​b​l​i​c​.
+			 */
+			ImagesArePublic: string
+			/**
+			 * I​m​a​g​e​s​ ​a​r​e​ ​p​r​i​v​a​t​e​.
+			 */
+			ImagesArePrivate: string
+		}
+		Badges: {
+			/**
+			 * R​e​c​o​m​m​e​n​d​e​d
+			 */
+			Recommended: string
+			/**
+			 * M​o​s​t​ ​P​o​p​u​l​a​r
+			 */
+			MostPopular: string
+			/**
+			 * B​e​s​t​ ​V​a​l​u​e
+			 */
+			BestValue: string
+		}
 		Purchase: {
 			Succeeded: {
 				/**
@@ -2270,6 +2353,14 @@ export type TranslationFunctions = {
 		 * Plan
 		 */
 		SubscriptionPlanTitle: () => LocalizedString
+		/**
+		 * Remaining Images
+		 */
+		RemainingImagesTitle: () => LocalizedString
+		/**
+		 * Remaining Credits
+		 */
+		RemainingCreditsTitle: () => LocalizedString
 	}
 	ForgotPassword: {
 		/**
@@ -2375,9 +2466,83 @@ export type TranslationFunctions = {
 		 */
 		SubscribeButton: () => LocalizedString
 		/**
+		 * Subscribed
+		 */
+		SubscribedButton: () => LocalizedString
+		/**
+		 * Upgrade
+		 */
+		UpgradeButton: () => LocalizedString
+		/**
+		 * Downgrade
+		 */
+		DowngradeButton: () => LocalizedString
+		/**
 		 * Purchase
 		 */
 		PurchaseButton: () => LocalizedString
+		/**
+		 * Monthly
+		 */
+		MonthlyTitle: () => LocalizedString
+		/**
+		 * Yearly
+		 */
+		YearlyTitle: () => LocalizedString
+		/**
+		 * /month
+		 */
+		SlashMonth: () => LocalizedString
+		Plans: {
+			/**
+			 * Free
+			 */
+			FreeTitle: () => LocalizedString
+			/**
+			 * Starter
+			 */
+			StarterTitle: () => LocalizedString
+			/**
+			 * Pro
+			 */
+			ProTitle: () => LocalizedString
+			/**
+			 * Ultimate
+			 */
+			UltimateTitle: () => LocalizedString
+		}
+		Features: {
+			/**
+			 * {count} images per month.
+			 */
+			MonthlyImages: (arg: { count: unknown }) => LocalizedString
+			/**
+			 * Commercial Use
+			 */
+			CommercialUse: () => LocalizedString
+			/**
+			 * Images are public.
+			 */
+			ImagesArePublic: () => LocalizedString
+			/**
+			 * Images are private.
+			 */
+			ImagesArePrivate: () => LocalizedString
+		}
+		Badges: {
+			/**
+			 * Recommended
+			 */
+			Recommended: () => LocalizedString
+			/**
+			 * Most Popular
+			 */
+			MostPopular: () => LocalizedString
+			/**
+			 * Best Value
+			 */
+			BestValue: () => LocalizedString
+		}
 		Purchase: {
 			Succeeded: {
 				/**

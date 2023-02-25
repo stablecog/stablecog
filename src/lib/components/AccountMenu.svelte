@@ -4,11 +4,13 @@
 	import DropdownItem from '$components/DropdownItem.svelte';
 	import IconSignOut from '$components/icons/IconSignOut.svelte';
 	import IconUser from '$components/icons/IconUser.svelte';
+	import PlanBadge from '$components/PlanBadge.svelte';
 	import LL, { locale } from '$i18n/i18n-svelte';
 	import { supabase } from '$ts/constants/supabase';
 	import { mLogSignOut } from '$ts/helpers/loggers';
 	import { advancedModeApp } from '$ts/stores/advancedMode';
 	import { isTouchscreen } from '$ts/stores/isTouchscreen';
+	import { userSummary } from '$ts/stores/user/summary';
 	import DropdownWrapper from './DropdownWrapper.svelte';
 
 	export let closeAccountMenu: () => void;
@@ -31,6 +33,20 @@
 			</p>
 		</div>
 	</div>
+	{#if $userSummary}
+		<div class="w-full flex justify-stretch px-5 py-1 -mt-1">
+			<PlanBadge class="w-full" productId={$userSummary.product_id} size="lg" />
+		</div>
+		<div class="w-full relative z-20 mt-4">
+			<div class="w-full h-2px rounded-full bg-c-bg-tertiary" />
+		</div>
+		<div class="w-full flex flex-col items-start px-5 py-3">
+			<p class="text-c-on-bg/50 text-xs">{$LL.Account.RemainingImagesTitle()}</p>
+			<p class="font-bold text-lg mt-1">
+				{$userSummary.total_remaining_credits.toLocaleString($locale)}
+			</p>
+		</div>
+	{/if}
 	<div class="w-full relative z-20">
 		<div class="w-full h-2px rounded-full bg-c-bg-tertiary" />
 	</div>

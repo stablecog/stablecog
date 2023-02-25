@@ -4,7 +4,7 @@ import { supabaseAdmin } from '$ts/constants/supabaseAdmin';
 export async function createStripeCustomerPortalSession(id: string, returnUrl: string) {
 	let customerPortalSession = null;
 	const { data: userData, error: userError } = await supabaseAdmin
-		.from('user')
+		.from('users')
 		.select('stripe_customer_id')
 		.eq('id', id)
 		.maybeSingle();

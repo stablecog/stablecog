@@ -88,9 +88,7 @@
 							? data.customerPortalSession.url
 							: '/pricing'}
 					>
-						{data.customerPortalSession &&
-						$page.data.plan !== 'FREE' &&
-						$page.data.plan !== 'ANONYMOUS'
+						{data.customerPortalSession
 							? $LL.Account.ManageSubscriptionButton()
 							: $LL.Pro.BecomeProButton()}
 					</Button>

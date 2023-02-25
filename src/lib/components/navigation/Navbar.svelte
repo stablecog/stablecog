@@ -60,7 +60,7 @@
 
 <nav bind:clientHeight={$navbarHeight} class="w-full flex flex-col sticky -top-px z-50 transition">
 	{#if mounted && ($lastClosedNotification === null || $lastClosedNotification !== lastNotification) && $page.data.plan !== 'PRO' && $page.url.pathname !== '/pro'}
-		<Banner
+		<!-- <Banner
 			href="/pro"
 			target="_self"
 			onClose={() => {
@@ -73,7 +73,7 @@
 					Become a pro and unlock all features!
 				</p>
 			</div>
-		</Banner>
+		</Banner> -->
 	{/if}
 	<div class="w-full flex flex-row items-center justify-between relative z-0">
 		<PageLoadProgressBar />
