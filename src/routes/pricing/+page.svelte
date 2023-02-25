@@ -121,10 +121,10 @@
 <PageWrapper>
 	<div class="w-full flex flex-col items-center justify-start my-auto">
 		<h1 class="text-center font-bold text-4xl">{$LL.Pricing.PageTitle()}</h1>
-		<p class="max-w-xl mt-4 text-center leading-relaxed text-c-on-bg/75">
+		<p class="max-w-xl mt-3 text-center leading-relaxed text-c-on-bg/75">
 			{$LL.Pricing.PageParagraph()}
 		</p>
-		<div class="w-full max-w-7xl flex flex-wrap justify-center gap-6 mt-12">
+		<div class="w-full max-w-7xl flex flex-wrap justify-center gap-6 mt-10">
 			{#each cards as card}
 				<div
 					class="w-full max-w-sm bg-c-bg shadow-xl shadow-c-shadow/[var(--o-shadow-strong)] 
