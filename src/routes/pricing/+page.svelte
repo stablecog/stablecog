@@ -34,7 +34,7 @@
 				data.currency === 'eur'
 					? STRIPE_PRODUCTS[PUBLIC_STRIPE_PRICE_ID_STARTER_TEST].currencies.eur.amount
 					: STRIPE_PRODUCTS[PUBLIC_STRIPE_PRICE_ID_STARTER_TEST].currencies.usd.amount,
-			features: ['1,750 generations per month', 'Commercial Use', 'Images are public'],
+			features: ['1,750 images per month', 'Commercial Use', 'Images are public'],
 			ringClass: 'ring-c-bg-secondary'
 		},
 		{
@@ -46,7 +46,7 @@
 				data.currency === 'eur'
 					? STRIPE_PRODUCTS[PUBLIC_STRIPE_PRICE_ID_PRO_TEST].currencies.eur.amount
 					: STRIPE_PRODUCTS[PUBLIC_STRIPE_PRICE_ID_PRO_TEST].currencies.usd.amount,
-			features: ['4,500 generations per month', 'Commercial Use', 'Images are private'],
+			features: ['4,500 images per month', 'Commercial Use', 'Images are private'],
 			ringClass: 'ring-c-primary',
 			badgeText: 'Recommended',
 			badgeClasses: 'bg-c-primary text-c-on-primary'
@@ -60,7 +60,7 @@
 				data.currency === 'eur'
 					? STRIPE_PRODUCTS[PUBLIC_STRIPE_PRICE_ID_ULTIMATE_TEST].currencies.eur.amount
 					: STRIPE_PRODUCTS[PUBLIC_STRIPE_PRICE_ID_ULTIMATE_TEST].currencies.usd.amount,
-			features: ['10,000 generations per month', 'Commercial Use', 'Images are private'],
+			features: ['10,000 images per month', 'Commercial Use', 'Images are private'],
 			ringClass: 'ring-c-bg-secondary'
 		}
 	];
@@ -121,7 +121,7 @@
 
 <PageWrapper>
 	<div class="w-full flex flex-col items-center justify-start my-auto">
-		<h1 class="text-center font-bold text-4xl">Subscriptions</h1>
+		<h1 class="text-center font-bold text-4xl">Plans</h1>
 		<p class="max-w-xl mt-4 text-center leading-relaxed text-c-on-bg/75">
 			Choose the plan that works for you.
 		</p>
@@ -146,10 +146,10 @@
 						class="w-[100%+2rem] md:w-[100%+3rem] -mx-4 md:-mx-6 text-center bg-c-bg-secondary 
 						text-c-on-bg mt-4 py-2.5 font-bold flex justify-center items-start"
 					>
-						<span class="text-xl">{card.currencySymbol}</span><span class="text-4.5xl font-bold">
+						<span class="text-xl">{card.currencySymbol}</span><span class="text-4xl font-bold">
 							{card.amount}
 						</span>
-						<span class="self-end mb-1 text-c-on-bg/60 font-medium">{$LL.Pro.Month()}</span>
+						<span class="self-end mb-0.75 text-c-on-bg/60 font-medium">{$LL.Pro.Month()}</span>
 					</h3>
 					<ul class="w-full mt-6 flex flex-col gap-3 px-1">
 						{#each card.features as feature}
@@ -179,6 +179,7 @@
 				</div>
 			{/each}
 		</div>
+		<div class="w-full h-[1vh]" />
 	</div>
 </PageWrapper>
 
