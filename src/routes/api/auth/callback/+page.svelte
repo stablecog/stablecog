@@ -33,7 +33,7 @@
 				return;
 			}
 			if ($page.data.plan === 'FREE') {
-				await goto('/pro');
+				await goto('/pricing');
 				return;
 			}
 			await goto('/');

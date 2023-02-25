@@ -21,6 +21,7 @@ export const maxProPixelSteps = 640 * 640 * 50;
 export const allowedRedirectRoutes = [
 	'/',
 	'/pro',
+	'/pricing',
 	'/history',
 	'/gallery',
 	'/live',

@@ -86,7 +86,7 @@
 						$page.data.plan !== 'FREE' &&
 						$page.data.plan !== 'ANONYMOUS'
 							? data.customerPortalSession.url
-							: '/pro'}
+							: '/pricing'}
 					>
 						{data.customerPortalSession &&
 						$page.data.plan !== 'FREE' &&
