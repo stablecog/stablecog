@@ -82,7 +82,7 @@
 
 <TabBarWrapper class="{classes} {isDropdownOpen ? 'z-20' : 'z-10'} relative" {dontScale}>
 	{#if hasTitle}
-		<div class="self-stretch flex text-c-on-bg/30">
+		<div class="self-stretch flex text-c-on-bg/50">
 			<slot name="title" />
 		</div>
 	{/if}
@@ -123,13 +123,13 @@
 			</div>
 			<p
 				class="flex-shrink whitespace-nowrap overflow-hidden overflow-ellipsis text-base font-medium relative transition
-					max-w-full z-0 text-c-on-bg/75 {!$isTouchscreen ? 'group-hover:text-c-primary' : ''}"
+					max-w-full z-0 text-c-on-bg {!$isTouchscreen ? 'group-hover:text-c-primary' : ''}"
 			>
 				{selectedItem?.label}
 			</p>
 			<div class="flex-shrink-0 w-5 h-5 transition {isDropdownOpen ? 'rotate-180' : 'rotate-0'}">
 				<IconChevronDown
-					class="relative w-full h-full transition text-c-on-bg/25 {!$isTouchscreen
+					class="relative w-full h-full transition text-c-on-bg/50 {!$isTouchscreen
 						? 'group-hover:text-c-primary'
 						: ''}"
 				/>
@@ -194,7 +194,7 @@
 									</div>
 									<p
 										class="flex-shrink whitespace-nowrap overflow-hidden overflow-ellipsis text-base font-medium relative transition
-												max-w-full z-0 text-c-on-bg/75 {!$isTouchscreen ? 'group-hover:text-c-primary' : ''}"
+												max-w-full z-0 text-c-on-bg {!$isTouchscreen ? 'group-hover:text-c-primary' : ''}"
 									>
 										{item.label}
 									</p>

@@ -38,7 +38,7 @@
 		<IconCancel
 			class="{type === 'sm'
 				? 'w-6 h-6'
-				: 'w-7 h-7'} transition text-c-on-bg/15 group-1-focus:text-c-primary {!$isTouchscreen
+				: 'w-7 h-7'} transition text-c-on-bg/25 group-1-focus:text-c-primary {!$isTouchscreen
 				? 'group-1-hover:text-c-primary'
 				: 'group-1-active:text-c-primary'}"
 		/>

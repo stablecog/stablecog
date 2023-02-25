@@ -88,6 +88,7 @@ export async function submitInitialUpscaleRequest(
 export interface TInitialUpscaleResponse {
 	id?: string;
 	error?: string;
+	total_remaining_credits?: number;
 }
 
 export interface TUpscaleBase {

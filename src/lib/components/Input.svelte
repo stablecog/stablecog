@@ -40,7 +40,7 @@
 				: 'shadow-c-shadow/[var(--o-shadow-normal)]'} focus:ring-2 ring-0 {bg === 'bg-secondary'
 				? 'ring-c-primary/20 focus:ring-c-primary/30'
 				: 'ring-c-primary/20 focus:ring-c-primary/35'}  
-      placeholder:text-c-on-bg/30 {!$isTouchscreen ? 'enabled:hover:ring-2' : ''} {!$isTouchscreen
+      placeholder:text-c-on-bg/40 {!$isTouchscreen ? 'enabled:hover:ring-2' : ''} {!$isTouchscreen
 				? 'enabled:group-hover:ring-2'
 				: ''} "
 		/>
@@ -65,7 +65,7 @@
 				: 'shadow-c-shadow/[var(--o-shadow-normal)]'} focus:ring-2 ring-0 {bg === 'bg-secondary'
 				? 'ring-c-primary/20 focus:ring-c-primary/30'
 				: 'ring-c-primary/20 focus:ring-c-primary/35'} 
-      placeholder:text-c-on-bg/30 {!$isTouchscreen ? 'enabled:hover:ring-2' : ''} {!$isTouchscreen
+      placeholder:text-c-on-bg/40 {!$isTouchscreen ? 'enabled:hover:ring-2' : ''} {!$isTouchscreen
 				? 'enabled:group-hover:ring-2'
 				: ''}"
 		/>
@@ -90,7 +90,7 @@
 				: 'shadow-c-shadow/[var(--o-shadow-normal)]'} focus:ring-2 ring-0 {bg === 'bg-secondary'
 				? 'ring-c-primary/20 focus:ring-c-primary/30'
 				: 'ring-c-primary/20 focus:ring-c-primary/35'}  
-      placeholder:text-c-on-bg/30 {!$isTouchscreen ? 'enabled:hover:ring-2' : ''} {!$isTouchscreen
+      placeholder:text-c-on-bg/40 {!$isTouchscreen ? 'enabled:hover:ring-2' : ''} {!$isTouchscreen
 				? 'enabled:group-hover:ring-2'
 				: ''}"
 		/>
@@ -115,7 +115,7 @@
 				: 'shadow-c-shadow/[var(--o-shadow-normal)]'} focus:ring-2 ring-0 {bg === 'bg-secondary'
 				? 'ring-c-primary/20 focus:ring-c-primary/30'
 				: 'ring-c-primary/20 focus:ring-c-primary/35'}  
-      placeholder:text-c-on-bg/30 {!$isTouchscreen ? 'enabled:hover:ring-2' : ''} {!$isTouchscreen
+      placeholder:text-c-on-bg/40 {!$isTouchscreen ? 'enabled:hover:ring-2' : ''} {!$isTouchscreen
 				? 'enabled:group-hover:ring-2'
 				: ''}"
 		/>

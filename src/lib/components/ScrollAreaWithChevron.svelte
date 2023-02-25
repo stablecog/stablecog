@@ -50,7 +50,7 @@
 			class="absolute left-1/2 transform -translate-x-1/2 bottom-0 flex justify-center items-end p-2 z-50
       	pointer-events-none"
 		>
-			<IconChevronDown class="w-6 h-6 text-c-on-bg/25 transition" />
+			<IconChevronDown class="w-6 h-6 text-c-on-bg/40 transition" />
 		</div>
 	{/if}
 </div>

@@ -55,7 +55,7 @@
 				>
 					<div class="p-2.5">
 						<IconCancel
-							class="text-c-on-bg/25 w-6 h-6 transition {!$isTouchscreen
+							class="text-c-on-bg/40 w-6 h-6 transition {!$isTouchscreen
 								? 'group-hover:text-c-primary'
 								: ''}"
 						/>

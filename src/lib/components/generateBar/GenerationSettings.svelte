@@ -106,7 +106,7 @@
 				use:tooltip={$negativePromptTooltip}
 				class="p-3.5 flex items-center justify-center"
 			>
-				<IconChatBubbleCancel class="w-6 h-6 text-c-on-bg/25" />
+				<IconChatBubbleCancel class="w-6 h-6 text-c-on-bg/35" />
 			</div>
 		</TabLikeInput>
 	{/if}
@@ -114,40 +114,26 @@
 		{disabled}
 		class="w-full md:w-84 max-w-full order-2 relative"
 		tabs={widthTabs}
-		outline={$page.data.plan === 'FREE' || $page.data.plan === 'ANONYMOUS'
-			? 'primary'
-			: 'bg-secondary'}
-		hasBackgroundPattern={$page.data.plan === 'FREE' || $page.data.plan === 'ANONYMOUS'}
+		outline="bg-secondary"
 		bind:value={$generationWidth}
 		name="Width"
 		hideSelected={!isCheckComplete}
 	>
 		<div slot="title" use:tooltip={$widthTooltip} class="p-3.5 flex items-center justify-center">
-			<IconWidth
-				class="w-6 h-6 {$page.data.plan === 'FREE' || $page.data.plan === 'ANONYMOUS'
-					? 'text-c-primary/40'
-					: 'text-c-on-bg/25'}"
-			/>
+			<IconWidth class="w-6 h-6 text-c-on-bg/35" />
 		</div>
 	</TabBar>
 	<TabBar
 		{disabled}
 		class="w-full md:w-84 max-w-full order-2 relative"
 		tabs={heightTabs}
-		outline={$page.data.plan === 'FREE' || $page.data.plan === 'ANONYMOUS'
-			? 'primary'
-			: 'bg-secondary'}
-		hasBackgroundPattern={$page.data.plan === 'FREE' || $page.data.plan === 'ANONYMOUS'}
+		outline="bg-secondary"
 		bind:value={$generationHeight}
 		name="Height"
 		hideSelected={!isCheckComplete}
 	>
 		<div slot="title" use:tooltip={$heightTooltip} class="p-3.5 flex items-center justify-center">
-			<IconHeight
-				class="w-6 h-6 {$page.data.plan === 'FREE' || $page.data.plan === 'ANONYMOUS'
-					? 'text-c-primary/40'
-					: 'text-c-on-bg/25'}"
-			/>
+			<IconHeight class="w-6 h-6 text-c-on-bg/35" />
 		</div>
 	</TabBar>
 
@@ -163,7 +149,7 @@
 		name="Model"
 	>
 		<div slot="title" use:tooltip={$modelTooltip} class="p-3.5 flex items-center justify-center">
-			<IconBrain class="w-6 h-6 text-c-on-bg/25" />
+			<IconBrain class="w-6 h-6 text-c-on-bg/35" />
 		</div>
 	</TabLikeDropdown>
 	{#if $advancedModeApp}
@@ -179,7 +165,7 @@
 				use:tooltip={$guidanceScaleTooltip}
 				class="p-3.5 flex items-center justify-center"
 			>
-				<IconScale class="w-6 h-6 text-c-on-bg/25" />
+				<IconScale class="w-6 h-6 text-c-on-bg/35" />
 			</div>
 		</TabLikeRangeInput>
 		<div class="w-full md:w-84 max-w-full order-2 relative">
@@ -187,10 +173,7 @@
 				{disabled}
 				class="w-full"
 				tabs={inferenceStepsTabs}
-				outline={$page.data.plan === 'FREE' || $page.data.plan === 'ANONYMOUS'
-					? 'primary'
-					: 'bg-secondary'}
-				hasBackgroundPattern={$page.data.plan === 'FREE' || $page.data.plan === 'ANONYMOUS'}
+				outline="bg-secondary"
 				isValid={isInferenceStepsValid}
 				bind:value={$generationInferenceSteps}
 				name="Steps"
@@ -201,11 +184,7 @@
 					use:tooltip={$inferenceStepsTooltip}
 					class="p-3.5 flex items-center justify-center"
 				>
-					<IconSteps
-						class="w-6 h-6 {$page.data.plan === 'FREE' || $page.data.plan === 'ANONYMOUS'
-							? 'text-c-primary/40'
-							: 'text-c-on-bg/25'}"
-					/>
+					<IconSteps class="w-6 h-6 text-c-on-bg/35" />
 				</div>
 			</TabBar>
 		</div>
@@ -225,7 +204,7 @@
 				use:tooltip={$schedulerTooltip}
 				class="p-3.5 flex items-center justify-center"
 			>
-				<IconBubbles class="w-6 h-6 text-c-on-bg/25" />
+				<IconBubbles class="w-6 h-6 text-c-on-bg/35" />
 			</div>
 		</TabLikeDropdown>
 		<TabLikeInput
@@ -238,7 +217,7 @@
 			{formElement}
 		>
 			<div slot="title" use:tooltip={$seedTooltip} class="p-3.5 flex items-center justify-center">
-				<IconSeed class="w-6 h-6 text-c-on-bg/25" />
+				<IconSeed class="w-6 h-6 text-c-on-bg/35" />
 			</div>
 		</TabLikeInput>
 	{/if}
@@ -261,13 +240,13 @@
 						: 'rotate-0'}"
 				>
 					<IconChevronDown
-						class="w-full h-full transition text-c-on-bg/25 {!$isTouchscreen
+						class="w-full h-full transition text-c-on-bg/40 {!$isTouchscreen
 							? 'group-hover:text-c-primary'
 							: ''}"
 					/>
 				</div>
 				<p
-					class="flex-shrink whitespace-nowrap overflow-hidden overflow-ellipsis text-c-on-bg/25 transition {!$isTouchscreen
+					class="flex-shrink whitespace-nowrap overflow-hidden overflow-ellipsis text-c-on-bg/40 transition {!$isTouchscreen
 						? 'group-hover:text-c-primary'
 						: ''}"
 				>

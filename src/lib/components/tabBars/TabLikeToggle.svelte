@@ -11,7 +11,7 @@
 </script>
 
 <TabBarWrapper class={classes}>
-	<div class="self-stretch flex text-c-on-bg/30">
+	<div class="self-stretch flex text-c-on-bg/50">
 		<slot name="title" />
 	</div>
 	<div class="w-2px -ml-px self-stretch">

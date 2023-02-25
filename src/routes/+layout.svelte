@@ -168,7 +168,10 @@
 					$page.data.session.access_token,
 					$appVersion
 				);
-				const { id, error } = res;
+				const { id, error, total_remaining_credits } = res;
+				if (total_remaining_credits !== undefined) {
+					userSummary.set({ ...$userSummary, total_remaining_credits });
+				}
 				if (error || !id) {
 					console.log('Generation failed:', error);
 					setGenerationToFailed(generation.id || generation.ui_id, error);
@@ -234,7 +237,10 @@
 						$page.data.session.access_token,
 						$appVersion
 					);
-					const { id, error } = res;
+					const { id, error, total_remaining_credits } = res;
+					if (total_remaining_credits !== undefined) {
+						userSummary.set({ ...$userSummary, total_remaining_credits });
+					}
 					if (error || !id) {
 						console.log('Upscale failed:', error);
 						setUpscaleToFailed(upscale.id || upscale.ui_id, error);
@@ -325,6 +331,12 @@
 			$sse.onmessage = (event) => {
 				const data = JSON.parse(event.data);
 				console.log('Message from SSE', data);
+				if (data.total_remaining_credits !== undefined) {
+					userSummary.set({
+						...$userSummary,
+						total_remaining_credits: data.total_remaining_credits
+					});
+				}
 				setGenerationOrUpscaleStatus(data);
 			};
 			$sse.onerror = (event) => {

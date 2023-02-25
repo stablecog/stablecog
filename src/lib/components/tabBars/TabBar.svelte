@@ -38,7 +38,7 @@
 		</div>
 	{/if}
 	{#if hasTitle}
-		<div class="self-stretch flex text-c-on-bg/25 relative">
+		<div class="self-stretch flex text-c-on-bg/40 relative">
 			<slot name="title" />
 		</div>
 		<div class="w-2px mr-px -ml-px self-stretch relative">
@@ -88,8 +88,8 @@
 						slot="item-0"
 						class="flex-1 font-medium relative transition overflow-hidden overflow-ellipsis max-w-full z-0 {value ===
 							tab.value && !hideSelected
-							? 'text-c-on-bg/75'
-							: 'text-c-on-bg/30'} {value === tab.value && !hideSelected && !$isTouchscreen
+							? 'text-c-on-bg'
+							: 'text-c-on-bg/50'} {value === tab.value && !hideSelected && !$isTouchscreen
 							? 'group-hover:text-c-primary'
 							: ''}"
 					>
@@ -99,8 +99,8 @@
 						slot="item-1"
 						class="flex-1 font-medium relative transition overflow-hidden overflow-ellipsis max-w-full z-0 {value ===
 							tab.value && !hideSelected
-							? 'text-c-on-bg/75'
-							: 'text-c-on-bg/30'} {value === tab.value && !hideSelected && !$isTouchscreen
+							? 'text-c-on-bg'
+							: 'text-c-on-bg/50'} {value === tab.value && !hideSelected && !$isTouchscreen
 							? 'group-hover:text-c-primary'
 							: ''}"
 					>

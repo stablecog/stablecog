@@ -37,7 +37,7 @@
 </script>
 
 <TabBarWrapper class={classes}>
-	<div class="self-stretch flex text-c-on-bg/30">
+	<div class="self-stretch flex text-c-on-bg/50">
 		<slot name="title" />
 	</div>
 	<div class="w-2px mr-px -ml-px self-stretch">
@@ -71,7 +71,7 @@
 			min={guidanceScaleMin}
 			max={guidanceScaleMax}
 			bind:value
-			class="text-xs md:text-sm text-c-on-bg/75"
+			class="text-xs md:text-sm text-c-on-bg"
 			showWheel={focused}
 		/>
 		<RangeInput

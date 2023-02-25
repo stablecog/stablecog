@@ -125,6 +125,7 @@ export const setGenerationOutputUpscaledImageUrl = (
 export interface TInitialGenerationResponse {
 	id?: string;
 	error?: string;
+	total_remaining_credits?: number;
 }
 
 export type TProcessType = 'generate' | 'generate_and_upscale';
