@@ -5,7 +5,6 @@
 	import MetaTag from '$components/MetaTag.svelte';
 	import LL, { locale } from '$i18n/i18n-svelte';
 	import { apiUrl, canonicalUrl } from '$ts/constants/main';
-	import type Stripe from 'stripe';
 	import PageWrapper from '$components/PageWrapper.svelte';
 	import SignInCard from '$components/SignInCard.svelte';
 	import { clickoutside } from '$ts/actions/clickoutside';
