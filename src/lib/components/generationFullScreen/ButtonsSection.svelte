@@ -97,7 +97,7 @@
 			deleteStatus = 'deleted';
 		} catch (error) {
 			console.log('Error deleting generation output', error);
-			deleteStatus = 'idle';
+			resetDeleteStatus();
 		}
 	}
 
