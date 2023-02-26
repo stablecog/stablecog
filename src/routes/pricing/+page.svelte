@@ -166,20 +166,25 @@
 		</p>
 		<div class="w-full max-w-7xl flex flex-wrap justify-center gap-6 mt-10">
 			{#each cards as card}
+				{@const subscribedProductId = cards.find(
+					(c) => c.productId === $userSummary?.product_id
+				)?.productId}
 				{@const subscribedAmount = cards.find(
 					(c) => c.productId === $userSummary?.product_id
 				)?.amount}
-				{@const isSubscribedToPlan = subscribedAmount === card.amount}
+				{@const isSubscribed = subscribedProductId === card.productId}
+				{@const isUpgrade = subscribedAmount !== undefined && subscribedAmount < card.amount}
+				{@const isDowngrade = subscribedAmount !== undefined && subscribedAmount > card.amount}
 				<div
 					class="w-full max-w-[22rem] bg-c-bg shadow-xl shadow-c-shadow/[var(--o-shadow-strong)] 
-					 p-4 md:p-5 rounded-2xl md:rounded-3xl ring-2 {isSubscribedToPlan
+					 p-4 md:p-5 rounded-2xl md:rounded-3xl ring-2 {isSubscribed
 						? 'ring-c-success'
 						: card.ringClass} relative"
 				>
-					{#if card.badgeText && card.badgeClasses}
+					{#if card.badgeText && card.badgeClasses && (!$userSummary?.product_id || !isDowngrade)}
 						<div
 							class="absolute -right-3 -top-3 rounded-full px-4 py-2 text-sm text-right 
-							font-bold {isSubscribedToPlan ? 'bg-c-success text-c-on-primary' : card.badgeClasses}"
+							font-bold {isSubscribed ? 'bg-c-success text-c-on-primary' : card.badgeClasses}"
 						>
 							{card.badgeText}
 						</div>
@@ -209,8 +214,8 @@
 					{#if $page.data.session?.user.email}
 						<Button
 							withSpinner
-							type={isSubscribedToPlan ? 'success' : 'primary'}
-							disabled={isSubscribedToPlan}
+							type={isSubscribed ? 'success' : 'primary'}
+							disabled={isSubscribed}
 							loading={card.priceIdMo === selectedPriceId && checkoutCreationStatus === 'loading'}
 							onClick={() =>
 								createCheckoutSessionAndRedirect({
@@ -219,11 +224,11 @@
 								})}
 							class="w-full mt-8"
 						>
-							{#if isSubscribedToPlan}
+							{#if isSubscribed}
 								{$LL.Pricing.SubscribedButton()}
-							{:else if subscribedAmount !== undefined && subscribedAmount < card.amount}
+							{:else if isUpgrade}
 								{$LL.Pricing.UpgradeButton()}
-							{:else if subscribedAmount !== undefined && subscribedAmount > card.amount}
+							{:else if isDowngrade}
 								{$LL.Pricing.DowngradeButton()}
 							{:else}
 								{$LL.Pricing.SubscribeButton()}
