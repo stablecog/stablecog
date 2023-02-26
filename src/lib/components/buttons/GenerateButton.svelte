@@ -3,7 +3,6 @@
 	import { getGenerationUrlFromParams } from '$ts/helpers/getGenerationUrlFromParams';
 	import { isTouchscreen } from '$ts/stores/isTouchscreen';
 	import type { TGenerationWithSelectedOutput } from '$ts/stores/user/generation';
-	import type { TDBGenerationG } from '$ts/types/db';
 
 	export let generation: TGenerationWithSelectedOutput;
 	export { classes as class };
