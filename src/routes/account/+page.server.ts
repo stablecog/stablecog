@@ -8,7 +8,7 @@ export const load: ServerLoad = async (event) => {
 		throw redirect(307, `/sign-in?redirect_to=${encodeURIComponent(event.url.pathname)}`);
 	}
 	try {
-		const return_url = event.url.origin;
+		const return_url = `${event.url.origin}/account`;
 		const res = await fetch(`${apiUrl.origin}/v1/user/subscription/portal`, {
 			body: JSON.stringify({
 				return_url
