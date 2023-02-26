@@ -10,10 +10,9 @@
 	import LL from '$i18n/i18n-svelte';
 	import { clickoutside } from '$ts/actions/clickoutside';
 	import { downloadGenerationImage } from '$ts/helpers/downloadGenerationImage';
-	import type { TGenerationWithSelectedOutput } from '$ts/stores/user/generation';
+	import { activeGeneration, type TGenerationWithSelectedOutput } from '$ts/stores/user/generation';
 	import { copy } from 'svelte-copy';
 	import type {
-		TButtonObjectState,
 		TButtonObjectsWithState,
 		TGenerationFullScreenModalType,
 		TSetButtonObjectWithState
@@ -21,6 +20,9 @@
 	import IconWand from '$components/icons/IconWand.svelte';
 	import IconLink from '$components/icons/IconLink.svelte';
 	import IconLoading from '$components/icons/IconLoading.svelte';
+	import { apiUrl } from '$ts/constants/main';
+	import { page } from '$app/stores';
+	import { createEventDispatcher } from 'svelte';
 
 	export let generation: TGenerationWithSelectedOutput;
 	export let generateSimilarUrl: string;
@@ -49,32 +51,57 @@
 		}
 	};
 
-	let deleteStatus: 'idle' | 'loading' | 'success' | 'should-confirm' = 'idle';
+	let deleteStatus: 'idle' | 'should-confirm' | 'loading' | 'deleted' = 'idle';
 
-	async function deleteGeneration(id: number | undefined) {}
+	const dispatch = createEventDispatcher();
+
+	async function deleteGeneration() {
+		if (deleteStatus === 'idle') {
+			deleteStatus = 'should-confirm';
+			return;
+		}
+		deleteStatus = 'loading';
+		try {
+			const res = await fetch(`${apiUrl}v1/user/generation`, {
+				method: 'DELETE',
+				headers: {
+					'Content-Type': 'application/json',
+					Authorization: `Bearer ${$page.data.session?.access_token}`
+				},
+				body: JSON.stringify({ generation_output_ids: [generation.selected_output.id] })
+			});
+			console.log('Delete generation output response', res);
+			dispatch('generationOutputDeleted', { generationOutputId: generation.selected_output.id });
+			activeGeneration.set(undefined);
+		} catch (error) {
+			console.log('Error deleting generation output', error);
+		}
+	}
+
+	const resetDeleteStatus = () => (deleteStatus = 'idle');
 </script>
 
 <div class="w-full flex flex-wrap gap-3 pb-1">
 	{#if modalType === 'generate' || modalType === 'history'}
 		<SubtleButton
 			onClick={onDownloadImageClicked}
-			disabled={buttonObjectsWithState.download.state == 'loading'}
-			state={buttonObjectsWithState.download.state == 'success' ? 'success' : 'idle'}
+			disabled={buttonObjectsWithState.download.state === 'loading'}
+			state={buttonObjectsWithState.download.state === 'success' ? 'success' : 'idle'}
 		>
 			<Morpher morphed={buttonObjectsWithState.download.state === 'success'}>
 				<div slot="item-0" class="flex items-center justify-center gap-1.5">
 					<Morpher morphed={buttonObjectsWithState.download.state === 'loading'}>
 						<div slot="item-0" class="flex items-center justify-center gap-1.5">
-							<IconDownload class="w-5 h-5 -ml-0.5" />
+							<IconDownload class="w-5 h-5 -ml-0.5 text-c-on-bg" />
 							<p>{$LL.GenerationFullscreen.DownloadButton()}</p>
 						</div>
 						<div slot="item-1" class="flex items-center justify-center gap-1.5">
-							<IconLoading class="w-5 h-5 animate-spin-faster" />
+							<IconLoading class="w-5 h-5 animate-spin-faster text-c-on-bg" />
 						</div>
 					</Morpher>
 				</div>
 				<div slot="item-1" class="flex items-center justify-center gap-1.5">
-					<IconTick class="w-5 h-5 -ml-0.5 transform scale-110" />
+					<IconTick class="w-5 h-5 -ml-0.5 transform scale-110 text-c-on-primary" />
 					<p>{$LL.GenerationFullscreen.DoneButtonState()}</p>
 				</div>
 			</Morpher>
@@ -134,19 +161,26 @@
 		</div>
 	{/if}
 	{#if modalType === 'generate' || modalType === 'history'}
-		<div
-			use:clickoutside={{
-				callback: () => (deleteStatus === 'should-confirm' ? (deleteStatus = 'idle') : null)
-			}}
-		>
-			<SubtleButton disabled={deleteStatus === 'loading'} onClick={() => null}>
+		<div use:clickoutside={{ callback: resetDeleteStatus }}>
+			<SubtleButton
+				disabled={deleteStatus === 'loading'}
+				onClick={deleteGeneration}
+				state={deleteStatus === 'should-confirm' || deleteStatus === 'loading' ? 'danger' : 'idle'}
+			>
 				<Morpher morphed={deleteStatus === 'should-confirm'}>
 					<div slot="item-0" class="flex items-center justify-center gap-1.5 text-c-danger">
-						<IconTrashcan class="w-5 h-5 -ml-0.5" />
-						<p>{$LL.Shared.DeleteButton()}</p>
+						<Morpher morphed={deleteStatus === 'loading'}>
+							<div slot="item-0" class="flex items-center justify-center gap-1.5 text-c-danger">
+								<IconTrashcan class="w-5 h-5 -ml-0.5" />
+								<p>{$LL.Shared.DeleteButton()}</p>
+							</div>
+							<div slot="item-1" class="flex items-center justify-center gap-1.5 text-c-on-primary">
+								<IconLoading class="w-5 h-5 animate-spin-faster" />
+							</div>
+						</Morpher>
 					</div>
-					<div slot="item-1" class="flex items-center justify-center gap-1.5 text-c-danger">
-						<IconTrashcanFilledOpen class="w-5 h-5 -ml-0.5 scale-110" />
+					<div slot="item-1" class="flex items-center justify-center gap-1.5">
+						<IconTrashcanFilledOpen class="w-5 h-5 -ml-0.5 scale-110 text-c-on-primary" />
 					</div>
 				</Morpher>
 			</SubtleButton>

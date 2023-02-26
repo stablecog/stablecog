@@ -10,11 +10,7 @@
 	import { tooltip } from '$ts/actions/tooltip';
 	import { getGenerationUrlFromParams } from '$ts/helpers/getGenerationUrlFromParams';
 	import { page } from '$app/stores';
-	import {
-		copyTimeoutDuration,
-		lgBreakpoint,
-		sidebarWidth
-	} from '$components/generationFullScreen/constants';
+	import { lgBreakpoint, sidebarWidth } from '$components/generationFullScreen/constants';
 	import ParamsSection from '$components/generationFullScreen/ParamsSection.svelte';
 	import Button from '$components/buttons/Button.svelte';
 	import IconUpscale from '$components/icons/IconUpscale.svelte';

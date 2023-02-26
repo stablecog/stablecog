@@ -3,7 +3,7 @@
 	import type { THrefTarget } from '$ts/types/main';
 
 	export let onClick: (() => void) | undefined = undefined;
-	export let state: 'idle' | 'success' = 'idle';
+	export let state: 'idle' | 'success' | 'danger' = 'idle';
 	export let href: string | undefined = undefined;
 	export let download: string | undefined = undefined;
 	export let noPadding = false;
@@ -42,6 +42,8 @@
 			class="relative flex items-center justify-center text-center transition-none {state ===
 			'success'
 				? 'text-c-on-primary'
+				: state === 'danger'
+				? 'text-c-on-primary'
 				: 'text-c-on-bg'}"
 		>
 			<slot />
@@ -54,6 +56,8 @@
 		disabled={disabled || loading}
 		class="{state === 'success'
 			? 'bg-c-success ring-c-success'
+			: state === 'danger'
+			? 'bg-c-danger ring-c-danger'
 			: 'bg-c-bg-secondary ring-c-bg-tertiary'} {noPadding
 			? ''
 			: 'px-3 py-2.5'} shadow-lg shadow-c-shadow/[var(--o-shadow-strong)]
@@ -63,6 +67,8 @@
 			<div
 				class="{state === 'success'
 					? 'bg-c-success translate-x-[-45%]'
+					: state === 'danger'
+					? 'bg-c-danger translate-x-[-45%]'
 					: 'bg-c-bg-tertiary'} w-full aspect-square origin-left rounded-full transition transform -translate-x-full {!$isTouchscreen
 					? 'group-enabled:group-hover:translate-x-[-45%]'
 					: ''} {loading ? 'translate-x-[-45%]' : ''}"
@@ -71,6 +77,8 @@
 		<div
 			class="relative flex items-center justify-center text-center transition-none {state ===
 			'success'
+				? 'text-c-on-primary'
+				: state === 'danger'
 				? 'text-c-on-primary'
 				: 'text-c-on-bg'}"
 		>
