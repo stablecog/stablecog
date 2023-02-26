@@ -95,6 +95,25 @@ export async function submitInitialGenerationRequest(
 	return resJSON;
 }
 
+export const setGenerationOutputToDeleted = (outputId: string) => {
+	generations.update(($generations) => {
+		if ($generations === null) {
+			return $generations;
+		}
+		for (let i = 0; i < $generations.length; i++) {
+			const generation = $generations[i];
+			for (let j = 0; j < generation.outputs.length; j++) {
+				const output = generation.outputs[j];
+				if (output.id === outputId) {
+					generation.outputs[j].is_deleted = true;
+					return $generations;
+				}
+			}
+		}
+		return $generations;
+	});
+};
+
 export const setGenerationOutputUpscaledImageUrl = (
 	outputId: string,
 	upscaled_image_url: string,
@@ -166,6 +185,7 @@ export interface TGenerationOutput {
 	upscaled_image_url?: string;
 	created_at?: string;
 	updated_at?: string;
+	is_deleted?: boolean;
 }
 
 export interface TGenerationFullOutput extends TGenerationOutput {

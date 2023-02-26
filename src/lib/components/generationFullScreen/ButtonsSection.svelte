@@ -10,7 +10,11 @@
 	import LL from '$i18n/i18n-svelte';
 	import { clickoutside } from '$ts/actions/clickoutside';
 	import { downloadGenerationImage } from '$ts/helpers/downloadGenerationImage';
-	import { activeGeneration, type TGenerationWithSelectedOutput } from '$ts/stores/user/generation';
+	import {
+		activeGeneration,
+		setGenerationOutputToDeleted,
+		type TGenerationWithSelectedOutput
+	} from '$ts/stores/user/generation';
 	import { copy } from 'svelte-copy';
 	import type {
 		TButtonObjectsWithState,
@@ -22,7 +26,8 @@
 	import IconLoading from '$components/icons/IconLoading.svelte';
 	import { apiUrl } from '$ts/constants/main';
 	import { page } from '$app/stores';
-	import { createEventDispatcher } from 'svelte';
+	import { useQueryClient } from '@tanstack/svelte-query';
+	import type { TUserGenerationFullOutputsPage } from '$ts/queries/userGenerations';
 
 	export let generation: TGenerationWithSelectedOutput;
 	export let generateSimilarUrl: string;
@@ -33,6 +38,7 @@
 	export let currentImageUrl: string;
 	export let modalType: TGenerationFullScreenModalType;
 
+	const queryClient = useQueryClient();
 	const onDownloadImageClicked = async () => {
 		try {
 			setButtonObjectWithState('download', 'loading');
@@ -53,8 +59,6 @@
 
 	let deleteStatus: 'idle' | 'should-confirm' | 'loading' | 'deleted' = 'idle';
 
-	const dispatch = createEventDispatcher();
-
 	async function deleteGeneration() {
 		if (deleteStatus === 'idle') {
 			deleteStatus = 'should-confirm';
@@ -71,10 +75,28 @@
 				body: JSON.stringify({ generation_output_ids: [generation.selected_output.id] })
 			});
 			console.log('Delete generation output response', res);
-			dispatch('generationOutputDeleted', { generationOutputId: generation.selected_output.id });
+			if (modalType === 'history') {
+				queryClient.setQueryData(['user_generation_full_outputs'], (data: any) => ({
+					...data,
+					pages: data.pages.map((page: TUserGenerationFullOutputsPage) => {
+						return {
+							...page,
+							outputs: page.outputs.map((output) =>
+								output.id === generation.selected_output.id
+									? { ...output, is_deleted: true }
+									: output
+							)
+						};
+					})
+				}));
+			} else if (modalType === 'generate') {
+				setGenerationOutputToDeleted(generation.selected_output.id);
+			}
 			activeGeneration.set(undefined);
+			deleteStatus = 'deleted';
 		} catch (error) {
 			console.log('Error deleting generation output', error);
+			deleteStatus = 'idle';
 		}
 	}
 

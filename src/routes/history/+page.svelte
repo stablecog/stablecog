@@ -48,8 +48,6 @@
 			}
 		}
 	};
-
-	function onGenerationOutputDeleted(event: CustomEvent) {}
 </script>
 
 <MetaTag
