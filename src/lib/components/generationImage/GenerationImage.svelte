@@ -62,11 +62,10 @@
 			{#if cardType === 'generate' || cardType === 'history'}
 				<DownloadGenerationButton
 					class="p-1.5 -ml-1.5"
-					url={useUpscaledImage && generation.selected_output.upscaled_image_url
+					url={generation.selected_output.upscaled_image_url
 						? generation.selected_output.upscaled_image_url
 						: generation.selected_output.image_url}
-					isUpscaled={useUpscaledImage &&
-						generation.selected_output.upscaled_image_url !== undefined}
+					isUpscaled={generation.selected_output.upscaled_image_url !== undefined}
 					prompt={generation.prompt.text}
 					seed={generation.seed}
 					guidanceScale={generation.guidance_scale}

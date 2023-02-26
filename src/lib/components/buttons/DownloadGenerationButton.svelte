@@ -1,5 +1,7 @@
 <script lang="ts">
 	import IconDownload from '$components/icons/IconDownload.svelte';
+	import IconLoading from '$components/icons/IconLoading.svelte';
+	import Morpher from '$components/Morpher.svelte';
 	import { downloadGenerationImage } from '$ts/helpers/downloadGenerationImage';
 	import { isTouchscreen } from '$ts/stores/isTouchscreen';
 
@@ -13,21 +15,32 @@
 	let classes = '';
 
 	let element: HTMLButtonElement;
+
+	let downloadStatus: 'idle' | 'downloading' = 'idle';
+
+	const downloadImage = async () => {
+		downloadStatus = 'downloading';
+		try {
+			await downloadGenerationImage({
+				url,
+				prompt,
+				seed,
+				inferenceSteps,
+				guidanceScale,
+				isUpscaled
+			});
+		} catch (error) {
+			console.log(error);
+		}
+		element.blur();
+		downloadStatus = 'idle';
+	};
 </script>
 
 <button
 	bind:this={element}
-	on:click={async () => {
-		await downloadGenerationImage({
-			url,
-			prompt,
-			seed,
-			inferenceSteps,
-			guidanceScale,
-			isUpscaled
-		});
-		element.blur();
-	}}
+	on:click={downloadImage}
+	disabled={downloadStatus === 'downloading'}
 	class="transition rounded-lg group-1 {classes}"
 	aria-label="Download Image"
 >
@@ -38,10 +51,19 @@
 				? 'group-1-hover:translate-x-0'
 				: ''}"
 		/>
-		<IconDownload
-			class="w-7 h-7 transition text-c-on-bg relative group-1-focus:text-c-on-primary {!$isTouchscreen
-				? 'group-1-hover:text-c-on-primary'
-				: ''}"
-		/>
+		<Morpher morphed={downloadStatus === 'downloading'} class="w-7 h-7">
+			<IconDownload
+				slot="item-0"
+				class="w-7 h-7 transition text-c-on-bg relative group-1-focus:text-c-on-primary {!$isTouchscreen
+					? 'group-1-hover:text-c-on-primary'
+					: ''}"
+			/>
+			<IconLoading
+				slot="item-1"
+				class="animate-spin-faster w-7 h-7 transition text-c-on-bg relative group-1-focus:text-c-on-primary {!$isTouchscreen
+					? 'group-1-hover:text-c-on-primary'
+					: ''}"
+			/>
+		</Morpher>
 	</div>
 </button>

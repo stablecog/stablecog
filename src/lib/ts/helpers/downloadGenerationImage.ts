@@ -1,3 +1,4 @@
+import { PUBLIC_BUCKET_ORIGIN_URL, PUBLIC_BUCKET_URL } from '$env/static/public';
 import { getImageFileNameFromGeneration } from '$ts/helpers/getImageFileNameFromGeneration';
 
 export async function downloadGenerationImage({
@@ -8,7 +9,7 @@ export async function downloadGenerationImage({
 	guidanceScale,
 	inferenceSteps
 }: TDownloadGenerationImageProps) {
-	const res = await fetch(url);
+	const res = await fetch(url.replace(PUBLIC_BUCKET_URL, PUBLIC_BUCKET_ORIGIN_URL));
 	const blob = await res.blob();
 	const fileName = getImageFileNameFromGeneration({
 		url,

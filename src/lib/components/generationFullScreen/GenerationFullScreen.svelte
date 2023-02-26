@@ -40,7 +40,10 @@
 	import { generateSSEId } from '$ts/helpers/generateSSEId';
 	import ButtonsSection from '$components/generationFullScreen/ButtonsSection.svelte';
 	import SidebarChevron from '$components/generationFullScreen/SidebarChevron.svelte';
-	import type { TGenerationFullScreenModalType } from '$components/generationFullScreen/types';
+	import type {
+		TCopiableButtonsObjects,
+		TGenerationFullScreenModalType
+	} from '$components/generationFullScreen/types';
 	import Divider from '$components/generationFullScreen/Divider.svelte';
 
 	export let generation: TGenerationWithSelectedOutput;
@@ -82,8 +85,9 @@
 	let sidebarWrapperScrollTop: number;
 	let sidebarInnerContainerHeight: number;
 
-	let rerollUrl: string;
+	let generateSimilarUrl: string;
 	let regenerateUrl: string;
+	let linkUrl: string;
 
 	const onGenerationChanged = () => {
 		currentImageUrl =
@@ -93,7 +97,7 @@
 		upscaledImageHeight = undefined;
 
 		const { seed, selected_output, ...rest } = generation;
-		rerollUrl = getGenerationUrlFromParams(rest);
+		generateSimilarUrl = getGenerationUrlFromParams(rest);
 		regenerateUrl = getGenerationUrlFromParams({
 			...rest,
 			seed
@@ -115,18 +119,36 @@
 		return true;
 	};
 
-	let promptCopiedTimeout: NodeJS.Timeout;
-	let negativePromptCopiedTimeout: NodeJS.Timeout;
-	let seedCopiedTimeout: NodeJS.Timeout;
-	let promptCopied = false;
-	let negativePromptCopied = false;
-	let seedCopied = false;
+	let copiableButtonObjects: TCopiableButtonsObjects = {
+		prompt: {
+			copied: false
+		},
+		seed: {
+			copied: false
+		},
+		link: {
+			copied: false
+		}
+	};
 
-	const onSeedCopyClicked = () => {
-		promptCopied = false;
-		negativePromptCopied = false;
-		clearTimeout(negativePromptCopiedTimeout);
-		clearTimeout(promptCopiedTimeout);
+	const clearCopiedExcept = (key: string) => {
+		for (const buttonKey in copiableButtonObjects) {
+			if (buttonKey !== key) {
+				copiableButtonObjects[buttonKey].copied = false;
+				if (copiableButtonObjects[buttonKey].timeout) {
+					clearTimeout(copiableButtonObjects[buttonKey].timeout);
+				}
+				copiableButtonObjects = { ...copiableButtonObjects };
+			}
+		}
+	};
+	const onCopied = (key: string) => {
+		copiableButtonObjects[key].copied = true;
+		copiableButtonObjects[key].timeout = setTimeout(() => {
+			copiableButtonObjects[key].copied = false;
+		}, 2000);
+		clearCopiedExcept('seed');
+		copiableButtonObjects = { ...copiableButtonObjects };
 	};
 
 	const setSidebarWrapperVars = () => {
@@ -412,16 +434,13 @@
 						</div>
 						<ButtonsSection
 							{generation}
-							{rerollUrl}
+							{generateSimilarUrl}
 							{regenerateUrl}
+							{linkUrl}
 							{currentImageUrl}
 							{modalType}
-							bind:promptCopiedTimeout
-							bind:negativePromptCopiedTimeout
-							bind:seedCopiedTimeout
-							bind:promptCopied
-							bind:negativePromptCopied
-							bind:seedCopied
+							{onCopied}
+							bind:copiableButtonObjects
 						/>
 					</div>
 					<Divider />
@@ -434,10 +453,8 @@
 							? upscaledImageHeight
 							: generation.height}
 						{generation}
-						bind:seedCopied
-						bind:seedCopiedTimeout
-						{copyTimeoutDuration}
-						{onSeedCopyClicked}
+						{onCopied}
+						bind:copiableButtonObjects
 						{modalType}
 					/>
 				</div>
