@@ -41,8 +41,9 @@
 	import ButtonsSection from '$components/generationFullScreen/ButtonsSection.svelte';
 	import SidebarChevron from '$components/generationFullScreen/SidebarChevron.svelte';
 	import type {
-		TCopiableButtonsObjects,
-		TGenerationFullScreenModalType
+		TButtonObjectsWithState,
+		TGenerationFullScreenModalType,
+		TSetButtonObjectWithState
 	} from '$components/generationFullScreen/types';
 	import Divider from '$components/generationFullScreen/Divider.svelte';
 
@@ -120,36 +121,40 @@
 		return true;
 	};
 
-	let copiableButtonObjects: TCopiableButtonsObjects = {
+	let buttonObjectsWithState: TButtonObjectsWithState = {
 		prompt: {
-			copied: false
+			state: 'idle'
 		},
 		seed: {
-			copied: false
+			state: 'idle'
 		},
 		link: {
-			copied: false
+			state: 'idle'
+		},
+		download: {
+			state: 'idle'
 		}
 	};
 
-	const clearCopiedExcept = (key: string) => {
-		for (const buttonKey in copiableButtonObjects) {
-			if (buttonKey !== key) {
-				copiableButtonObjects[buttonKey].copied = false;
-				if (copiableButtonObjects[buttonKey].timeout) {
-					clearTimeout(copiableButtonObjects[buttonKey].timeout);
+	const setButtonObjectWithState: TSetButtonObjectWithState = (key, state) => {
+		buttonObjectsWithState[key].state = state;
+		if (state === 'success') {
+			if (buttonObjectsWithState[key].timeout) {
+				clearTimeout(buttonObjectsWithState[key].timeout);
+			}
+			buttonObjectsWithState[key].timeout = setTimeout(() => {
+				buttonObjectsWithState[key].state = 'idle';
+			}, 2000);
+			for (const buttonKey in buttonObjectsWithState) {
+				if (buttonKey !== key) {
+					buttonObjectsWithState[buttonKey].state = 'idle';
+					if (buttonObjectsWithState[buttonKey].timeout) {
+						clearTimeout(buttonObjectsWithState[buttonKey].timeout);
+					}
 				}
-				copiableButtonObjects = { ...copiableButtonObjects };
 			}
 		}
-	};
-	const onCopied = (key: string) => {
-		copiableButtonObjects[key].copied = true;
-		copiableButtonObjects[key].timeout = setTimeout(() => {
-			copiableButtonObjects[key].copied = false;
-		}, 2000);
-		clearCopiedExcept('seed');
-		copiableButtonObjects = { ...copiableButtonObjects };
+		buttonObjectsWithState = { ...buttonObjectsWithState };
 	};
 
 	const setSidebarWrapperVars = () => {
@@ -440,8 +445,8 @@
 							{linkUrl}
 							{currentImageUrl}
 							{modalType}
-							{onCopied}
-							bind:copiableButtonObjects
+							{setButtonObjectWithState}
+							bind:buttonObjectsWithState
 						/>
 					</div>
 					<Divider />
@@ -454,8 +459,8 @@
 							? upscaledImageHeight
 							: generation.height}
 						{generation}
-						{onCopied}
-						bind:copiableButtonObjects
+						{setButtonObjectWithState}
+						bind:buttonObjectsWithState
 						{modalType}
 					/>
 				</div>

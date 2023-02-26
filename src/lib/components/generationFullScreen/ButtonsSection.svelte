@@ -13,26 +13,27 @@
 	import type { TGenerationWithSelectedOutput } from '$ts/stores/user/generation';
 	import { copy } from 'svelte-copy';
 	import type {
-		TCopiableButtonsObjects,
-		TGenerationFullScreenModalType
+		TButtonObjectState,
+		TButtonObjectsWithState,
+		TGenerationFullScreenModalType,
+		TSetButtonObjectWithState
 	} from '$components/generationFullScreen/types';
 	import IconWand from '$components/icons/IconWand.svelte';
-	import { getGenerationUrlFromParams } from '$ts/helpers/getGenerationUrlFromParams';
 	import IconLink from '$components/icons/IconLink.svelte';
+	import IconLoading from '$components/icons/IconLoading.svelte';
 
 	export let generation: TGenerationWithSelectedOutput;
 	export let generateSimilarUrl: string;
 	export let regenerateUrl: string;
 	export let linkUrl: string;
-	export let onCopied: (key: string) => void;
-	export let copiableButtonObjects: TCopiableButtonsObjects;
+	export let setButtonObjectWithState: TSetButtonObjectWithState;
+	export let buttonObjectsWithState: TButtonObjectsWithState;
 	export let currentImageUrl: string;
 	export let modalType: TGenerationFullScreenModalType;
 
-	let imageDownloading = false;
 	const onDownloadImageClicked = async () => {
-		imageDownloading = true;
 		try {
+			setButtonObjectWithState('download', 'loading');
 			await downloadGenerationImage({
 				url: currentImageUrl,
 				guidanceScale: generation.guidance_scale,
@@ -41,10 +42,11 @@
 				prompt: generation.prompt.text,
 				seed: generation.seed
 			});
+			setButtonObjectWithState('download', 'success');
 		} catch (error) {
 			console.log("Couldn't download image", error);
+			setButtonObjectWithState('download', 'idle');
 		}
-		imageDownloading = false;
 	};
 
 	let deleteStatus: 'idle' | 'loading' | 'success' | 'should-confirm' = 'idle';
@@ -54,11 +56,22 @@
 
 <div class="w-full flex flex-wrap gap-3 pb-1">
 	{#if modalType === 'generate' || modalType === 'history'}
-		<SubtleButton onClick={onDownloadImageClicked} state={imageDownloading ? 'success' : 'idle'}>
-			<Morpher morphed={imageDownloading}>
+		<SubtleButton
+			onClick={onDownloadImageClicked}
+			disabled={buttonObjectsWithState.download.state == 'loading'}
+			state={buttonObjectsWithState.download.state == 'success' ? 'success' : 'idle'}
+		>
+			<Morpher morphed={buttonObjectsWithState.download.state === 'success'}>
 				<div slot="item-0" class="flex items-center justify-center gap-1.5">
-					<IconDownload class="w-5 h-5 -ml-0.5" />
-					<p>{$LL.GenerationFullscreen.DownloadButton()}</p>
+					<Morpher morphed={buttonObjectsWithState.download.state === 'loading'}>
+						<div slot="item-0" class="flex items-center justify-center gap-1.5">
+							<IconDownload class="w-5 h-5 -ml-0.5" />
+							<p>{$LL.GenerationFullscreen.DownloadButton()}</p>
+						</div>
+						<div slot="item-1" class="flex items-center justify-center gap-1.5">
+							<IconLoading class="w-5 h-5 animate-spin-faster" />
+						</div>
+					</Morpher>
 				</div>
 				<div slot="item-1" class="flex items-center justify-center gap-1.5">
 					<IconTick class="w-5 h-5 -ml-0.5 transform scale-110" />
@@ -87,9 +100,12 @@
 			</SubtleButton>
 		</div>
 	{/if}
-	<div use:copy={generation.prompt.text} on:svelte-copy={() => onCopied('prompt')}>
-		<SubtleButton state={copiableButtonObjects.prompt.copied ? 'success' : 'idle'}>
-			<Morpher morphed={copiableButtonObjects.prompt.copied}>
+	<div
+		use:copy={generation.prompt.text}
+		on:svelte-copy={() => setButtonObjectWithState('prompt', 'success')}
+	>
+		<SubtleButton state={buttonObjectsWithState.prompt.state === 'success' ? 'success' : 'idle'}>
+			<Morpher morphed={buttonObjectsWithState.prompt.state === 'success'}>
 				<div slot="item-0" class="flex items-center justify-center gap-1.5">
 					<IconCopy class="w-5 h-5 -ml-0.5" />
 					<p>{$LL.GenerationFullscreen.CopyPromptButton()}</p>
@@ -102,9 +118,9 @@
 		</SubtleButton>
 	</div>
 	{#if modalType === 'gallery'}
-		<div use:copy={linkUrl} on:svelte-copy={() => onCopied('link')}>
-			<SubtleButton state={copiableButtonObjects.link.copied ? 'success' : 'idle'}>
-				<Morpher morphed={copiableButtonObjects.link.copied}>
+		<div use:copy={linkUrl} on:svelte-copy={() => setButtonObjectWithState('link', 'success')}>
+			<SubtleButton state={buttonObjectsWithState.link.state === 'success' ? 'success' : 'idle'}>
+				<Morpher morphed={buttonObjectsWithState.link.state === 'success'}>
 					<div slot="item-0" class="flex items-center justify-center gap-1.5">
 						<IconLink class="w-5 h-5 -ml-0.5" />
 						<p>{$LL.Shared.CopyLinkButton()}</p>

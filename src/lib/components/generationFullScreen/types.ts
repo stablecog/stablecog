@@ -1,9 +1,13 @@
 export type TGenerationFullScreenModalType = 'generate' | 'history' | 'gallery';
-export interface TCopiableButtonsObjects {
-	[key: string]: TCopiableButtonsObject;
+export interface TButtonObjectsWithState {
+	[key: string]: TButtonObjectWithState;
 }
 
-export interface TCopiableButtonsObject {
-	copied: boolean;
+export interface TButtonObjectWithState {
+	state: TButtonObjectState;
 	timeout?: NodeJS.Timeout | undefined;
 }
+
+export type TButtonObjectState = 'idle' | 'loading' | 'success';
+
+export type TSetButtonObjectWithState = (key: string, state: TButtonObjectState) => void;

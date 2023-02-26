@@ -1,8 +1,10 @@
 <script lang="ts">
 	import SubtleButton from '$components/buttons/SubtleButton.svelte';
 	import type {
-		TCopiableButtonsObjects,
-		TGenerationFullScreenModalType
+		TButtonObjectState,
+		TButtonObjectsWithState,
+		TGenerationFullScreenModalType,
+		TSetButtonObjectWithState
 	} from '$components/generationFullScreen/types';
 	import IconBrain from '$components/icons/IconBrain.svelte';
 	import IconBubbles from '$components/icons/IconBubbles.svelte';
@@ -30,8 +32,8 @@
 	export let generation: TGeneration;
 	export let currentImageWidth: number;
 	export let currentImageHeight: number;
-	export let onCopied: (key: string) => void;
-	export let copiableButtonObjects: TCopiableButtonsObjects;
+	export let setButtonObjectWithState: TSetButtonObjectWithState;
+	export let buttonObjectsWithState: TButtonObjectsWithState;
 	export let modalType: TGenerationFullScreenModalType;
 	export { classes as class };
 	let classes = '';
@@ -97,13 +99,16 @@
 					</div>
 					<p class="font-bold">{generation.seed}</p>
 				</div>
-				<div use:copy={String(generation.seed)} on:svelte-copy={() => onCopied('seed')}>
+				<div
+					use:copy={String(generation.seed)}
+					on:svelte-copy={() => setButtonObjectWithState('seed', 'success')}
+				>
 					<SubtleButton
 						noPadding
 						class="p-2.5"
-						state={copiableButtonObjects.seed.copied ? 'success' : 'idle'}
+						state={buttonObjectsWithState.seed.state === 'success' ? 'success' : 'idle'}
 					>
-						<Morpher morphed={copiableButtonObjects.seed.copied}>
+						<Morpher morphed={buttonObjectsWithState.seed.state === 'success'}>
 							<div slot="item-0" class="flex items-center justify-center gap-1.5">
 								<IconCopy class="w-5 h-5" />
 							</div>
