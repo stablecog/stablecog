@@ -7,7 +7,7 @@ import type { TUserSummary } from '$ts/stores/user/summary';
 export const load: LayoutServerLoad = async (event) => {
 	let session = await getServerSession(event);
 	let userSummary: TUserSummary | undefined = undefined;
-	const userRes = await fetch(`${apiUrl}v1/user`, {
+	const userRes = await fetch(`${apiUrl.origin}/v1/user`, {
 		headers: {
 			'Content-Type': 'application/json',
 			Authorization: `Bearer ${session?.access_token}`

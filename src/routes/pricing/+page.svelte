@@ -4,7 +4,7 @@
 	import Button from '$components/buttons/Button.svelte';
 	import MetaTag from '$components/MetaTag.svelte';
 	import LL, { locale } from '$i18n/i18n-svelte';
-	import { canonicalUrl } from '$ts/constants/main';
+	import { apiUrl, canonicalUrl } from '$ts/constants/main';
 	import type Stripe from 'stripe';
 	import PageWrapper from '$components/PageWrapper.svelte';
 	import SignInCard from '$components/SignInCard.svelte';
@@ -123,19 +123,29 @@
 		selectedPriceId = priceId;
 		try {
 			checkoutCreationStatus = 'loading';
-			const res = await fetch(
-				`/api/stripe/create-checkout-session?price_id=${priceId}&currency=${currency}`
-			);
-			const resJson: ICheckoutSessionRes = await res.json();
+			const res = await fetch(`${apiUrl.origin}/v1/user/subscription/checkout`, {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+					Authorization: `Bearer ${$page.data.session?.access_token}`
+				},
+				body: JSON.stringify({
+					target_price_id: priceId,
+					success_url: `${window.location.origin}/pricing/purchase/succeeded`,
+					cancel_url: `${window.location.origin}/pricing/purchase/cancelled`,
+					currency
+				})
+			});
+			const resJson: TCheckoutSessionRes = await res.json();
 			if (resJson.error) {
 				throw new Error(resJson.error);
 			}
-			const checkoutSession = resJson.data.checkoutSession;
-			if (!checkoutSession.url) {
+			const { checkout_url } = resJson;
+			if (!checkout_url) {
 				throw new Error('No checkout session url returned');
 			}
+			await goto(checkout_url);
 			checkoutCreationStatus = 'success';
-			await goto(checkoutSession.url);
 		} catch (error) {
 			checkoutCreationStatus = 'error';
 			selectedPriceId = undefined;
@@ -143,11 +153,9 @@
 		}
 	}
 
-	interface ICheckoutSessionRes {
-		data: {
-			checkoutSession: Stripe.Response<Stripe.Checkout.Session>;
-		};
-		error: string;
+	interface TCheckoutSessionRes {
+		checkout_url?: string;
+		error?: string;
 	}
 </script>
 

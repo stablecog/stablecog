@@ -35,7 +35,7 @@
 	</div>
 	{#if $userSummary}
 		<div class="w-full flex justify-stretch px-5 py-1 -mt-1">
-			<PlanBadge class="w-full" productId={$userSummary.product_id} size="lg" />
+			<PlanBadge class="w-full" productId={$userSummary.product_id} />
 		</div>
 		<div class="w-full relative z-20 mt-4">
 			<div class="w-full h-2px rounded-full bg-c-bg-tertiary" />

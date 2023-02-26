@@ -173,7 +173,7 @@
 	});
 
 	async function getAndSetTotals() {
-		const res = await fetch(`${apiUrl}v1/stats`);
+		const res = await fetch(`${apiUrl.origin}/v1/stats`);
 		const resJson: IStatsRes = await res.json();
 		const { generation_output_count: gCount, upscale_output_count: uCount } = resJson;
 		if (gCount > $generationTotalCount) {

@@ -9,13 +9,14 @@
 	import IconSignOut from '$components/icons/IconSignOut.svelte';
 	import MetaTag from '$components/MetaTag.svelte';
 	import PageWrapper from '$components/PageWrapper.svelte';
-	import TierBadge from '$components/TierBadge.svelte';
+	import PlanBadge from '$components/PlanBadge.svelte';
 	import LL, { locale } from '$i18n/i18n-svelte';
 	import { canonicalUrl } from '$ts/constants/main';
 	import { supabase } from '$ts/constants/supabase';
 	import { mLogSignOut } from '$ts/helpers/loggers';
 	import { advancedModeApp } from '$ts/stores/advancedMode';
 	import { isTouchscreen } from '$ts/stores/isTouchscreen';
+	import { userSummary } from '$ts/stores/user/summary';
 	import type { PageServerData } from './$types';
 
 	export let data: PageServerData;
@@ -55,7 +56,7 @@
 		<div class="w-full flex flex-col items-center justify-center my-auto">
 			<h1 class="text-4xl font-bold">{$LL.Account.PageTitle()}</h1>
 			<div
-				class="w-full max-w-xl mt-6 flex flex-col rounded-2xl bg-c-bg overflow-hidden relative z-0 
+				class="w-full max-w-md md:max-w-xl mt-6 flex flex-col rounded-2xl bg-c-bg overflow-hidden relative z-0 
 				shadow-xl shadow-c-shadow/[var(--o-shadow-strong)] ring-2 ring-c-bg-secondary"
 			>
 				<div class="w-full flex items-center gap-4 px-5 py-4 md:p-6 overflow-hidden">
@@ -74,24 +75,31 @@
 					class="w-full flex flex-wrap items-center justify-between px-4 py-5 md:p-5 gap-5 md:gap-8"
 				>
 					<div class="flex flex-col items-start px-0.5 -mt-2">
-						<p class="text-c-on-bg font-bold px-1">
+						<p class="text-c-on-bg/60 font-semibold px-1">
 							{$LL.Account.SubscriptionPlanTitle()}
 						</p>
-						<TierBadge class="mt-2" size="lg" tier={$page.data.plan} />
+						<PlanBadge class="mt-2" productId={$userSummary?.product_id} size="lg" />
 					</div>
 					<Button
 						class="w-full md:w-auto"
 						size="sm"
-						href={data.customerPortalSession &&
-						$page.data.plan !== 'FREE' &&
-						$page.data.plan !== 'ANONYMOUS'
-							? data.customerPortalSession.url
+						href={data.customer_portal_url && $userSummary?.product_id
+							? data.customer_portal_url
 							: '/pricing'}
 					>
-						{data.customerPortalSession
+						{$userSummary?.product_id
 							? $LL.Account.ManageSubscriptionButton()
-							: $LL.Pro.BecomeProButton()}
+							: $LL.Pricing.SubscribeButton()}
 					</Button>
+				</div>
+				<div class="w-full h-2px bg-c-bg-secondary" />
+				<div class="w-full flex flex-col">
+					<div class="w-full flex items-center flex-wrap justify-between py-5 gap-2">
+						<p class="font-semibold text-c-on-bg/60 px-5 md:px-6">Remaining Images</p>
+						<p class="font-bold text-right text-xl px-5 md:px-6">
+							{($userSummary?.total_remaining_credits || 0).toLocaleString($locale)}
+						</p>
+					</div>
 				</div>
 				<div class="w-full h-2px bg-c-bg-secondary" />
 				<div class="w-full flex flex-wrap items-stretch">

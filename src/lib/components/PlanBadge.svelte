@@ -8,7 +8,7 @@
 	import type { TStripeSupportedProductId } from '$ts/constants/stripePublic';
 
 	export let productId: TStripeSupportedProductId | undefined;
-	export let size: 'xs' | 'sm' | 'md' | 'lg' = 'sm';
+	export let size: 'sm' | 'md' | 'lg' = 'md';
 	export { classes as class };
 	let classes = '';
 
@@ -32,34 +32,28 @@
 	class="bg-c-bg border-2 overflow-hidden z-10 shadow-lg flex-shrink-0
   shadow-c-shadow/[var(--o-shadow-normal)] {productId !== undefined
 		? 'border-c-primary/30'
-		: 'border-c-on-bg/25'} {size === 'xs'
-		? 'rounded-md'
+		: 'border-c-on-bg/25'} {size === 'sm'
+		? 'rounded-lg'
 		: size === 'md'
 		? 'rounded-lg2'
-		: size === 'lg'
-		? 'rounded-lg2'
-		: 'rounded-lg'} {classes}"
+		: 'rounded-lg2'} {classes}"
 >
 	<div
 		class="flex items-center justify-center z-10 {productId !== undefined
 			? 'text-c-primary bg-c-primary/15'
 			: 'text-c-on-bg bg-c-on-bg/15'}
-    {size === 'xs'
-			? 'gap-1 px-1 py-0.5'
+    {size === 'sm'
+			? 'gap-1.5 px-3 py-1.25'
 			: size === 'md'
 			? 'gap-1.5 px-3 py-1.25'
-			: size === 'lg'
-			? 'gap-1.5 px-3 py-1.25'
-			: 'gap-1.5 px-2 py-1'}"
+			: 'gap-1.5 px-4 py-1.5'}"
 	>
 		<p
-			class={size === 'xs'
-				? 'text-xxs font-semibold'
-				: size === 'md'
+			class={size === 'sm'
 				? 'text-sm font-bold'
-				: size === 'lg'
+				: size === 'md'
 				? 'text-base font-bold'
-				: 'text-xs font-semibold'}
+				: 'text-lg font-bold'}
 		>
 			{planText}
 		</p>

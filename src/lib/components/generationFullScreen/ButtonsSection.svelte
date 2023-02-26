@@ -66,7 +66,7 @@
 		}
 		deleteStatus = 'loading';
 		try {
-			const res = await fetch(`${apiUrl}v1/user/generation`, {
+			const res = await fetch(`${apiUrl.origin}/v1/user/generation`, {
 				method: 'DELETE',
 				headers: {
 					'Content-Type': 'application/json',
