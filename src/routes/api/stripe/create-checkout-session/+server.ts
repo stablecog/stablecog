@@ -47,7 +47,7 @@ export const GET: RequestHandler = async (event) => {
 		],
 		currency: currencyValidated,
 		mode: 'subscription',
-		success_url: `${baseUrl}/pricing/purchase/succedded`,
+		success_url: `${baseUrl}/pricing/purchase/succeeded`,
 		cancel_url: `${baseUrl}/pricing/purchase/cancelled`
 	});
 	return new Response(

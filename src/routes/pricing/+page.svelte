@@ -22,6 +22,7 @@
 		PUBLIC_STRIPE_PRODUCT_ID_ULTIMATE_TEST
 	} from '$env/static/public';
 	import { STRIPE_CURRENCY_TO_SYMBOL, STRIPE_PRODUCT_ID_OBJECTS } from '$ts/constants/stripePublic';
+	import { userSummary } from '$ts/stores/user/summary';
 
 	export let data: PageData;
 
@@ -29,6 +30,7 @@
 		{
 			title: $LL.Pricing.Plans.StarterTitle(),
 			priceIdMo: PUBLIC_STRIPE_PRICE_ID_STARTER_MO_TEST,
+			productId: PUBLIC_STRIPE_PRODUCT_ID_STARTER_TEST,
 			currency: data.currency,
 			currencySymbol: STRIPE_CURRENCY_TO_SYMBOL[data.currency],
 			amount:
@@ -54,6 +56,7 @@
 		{
 			title: $LL.Pricing.Plans.ProTitle(),
 			priceIdMo: PUBLIC_STRIPE_PRICE_ID_PRO_MO_TEST,
+			productId: PUBLIC_STRIPE_PRODUCT_ID_PRO_TEST,
 			currency: data.currency,
 			currencySymbol: STRIPE_CURRENCY_TO_SYMBOL[data.currency],
 			amount:
@@ -74,13 +77,14 @@
 				$LL.Pricing.Features.CommercialUse(),
 				$LL.Pricing.Features.ImagesArePrivate()
 			],
-			ringClass: 'ring-c-primary',
+			ringClass: 'ring-c-bg-secondary',
 			badgeText: $LL.Pricing.Badges.Recommended(),
 			badgeClasses: 'bg-c-primary text-c-on-primary'
 		},
 		{
 			title: $LL.Pricing.Plans.UltimateTitle(),
 			priceIdMo: PUBLIC_STRIPE_PRICE_ID_ULTIMATE_MO_TEST,
+			productId: PUBLIC_STRIPE_PRODUCT_ID_ULTIMATE_TEST,
 			currency: data.currency,
 			currencySymbol: STRIPE_CURRENCY_TO_SYMBOL[data.currency],
 			amount:
@@ -162,14 +166,20 @@
 		</p>
 		<div class="w-full max-w-7xl flex flex-wrap justify-center gap-6 mt-10">
 			{#each cards as card}
+				{@const subscribedAmount = cards.find(
+					(c) => c.productId === $userSummary?.product_id
+				)?.amount}
+				{@const isSubscribedToPlan = subscribedAmount === card.amount}
 				<div
 					class="w-full max-w-[22rem] bg-c-bg shadow-xl shadow-c-shadow/[var(--o-shadow-strong)] 
-					 p-4 md:p-5 rounded-2xl md:rounded-3xl ring-2 {card.ringClass} relative"
+					 p-4 md:p-5 rounded-2xl md:rounded-3xl ring-2 {isSubscribedToPlan
+						? 'ring-c-success'
+						: card.ringClass} relative"
 				>
 					{#if card.badgeText && card.badgeClasses}
 						<div
 							class="absolute -right-3 -top-3 rounded-full px-4 py-2 text-sm text-right 
-							font-bold {card.badgeClasses}"
+							font-bold {isSubscribedToPlan ? 'bg-c-success text-c-on-primary' : card.badgeClasses}"
 						>
 							{card.badgeText}
 						</div>
@@ -199,7 +209,8 @@
 					{#if $page.data.session?.user.email}
 						<Button
 							withSpinner
-							disabled={checkoutCreationStatus === 'loading'}
+							type={isSubscribedToPlan ? 'success' : 'primary'}
+							disabled={isSubscribedToPlan}
 							loading={card.priceIdMo === selectedPriceId && checkoutCreationStatus === 'loading'}
 							onClick={() =>
 								createCheckoutSessionAndRedirect({
@@ -208,7 +219,15 @@
 								})}
 							class="w-full mt-8"
 						>
-							{$LL.Pricing.SubscribeButton()}
+							{#if isSubscribedToPlan}
+								{$LL.Pricing.SubscribedButton()}
+							{:else if subscribedAmount !== undefined && subscribedAmount < card.amount}
+								{$LL.Pricing.UpgradeButton()}
+							{:else if subscribedAmount !== undefined && subscribedAmount > card.amount}
+								{$LL.Pricing.DowngradeButton()}
+							{:else}
+								{$LL.Pricing.SubscribeButton()}
+							{/if}
 						</Button>
 					{:else}
 						<Button onClick={() => (isSignInModalOpen = true)} class="w-full mt-8">

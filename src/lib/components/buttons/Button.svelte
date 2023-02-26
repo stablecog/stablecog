@@ -13,6 +13,7 @@
 	export let target: THrefTarget = '_self';
 	export { classes as class };
 	export let type: 'primary' | 'success' | 'danger' = 'primary';
+	export let fadeOnDisabled = false;
 	let classes = '';
 </script>
 
@@ -110,7 +111,7 @@
 			? 'bg-c-success'
 			: type === 'danger'
 			? 'bg-c-danger'
-			: 'bg-c-primary'} {classes}"
+			: 'bg-c-primary'} {fadeOnDisabled && disabled ? 'opacity-75' : ''} {classes}"
 	>
 		<div
 			class="w-[200%] h-full absolute left-0 top-0 flex items-center justify-center {$isTouchscreen
