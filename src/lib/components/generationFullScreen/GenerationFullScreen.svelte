@@ -102,6 +102,7 @@
 			...rest,
 			seed
 		});
+		linkUrl = `${$page.url.origin}/gallery?generation=${generation.id}`;
 	};
 
 	const getIsLastUpscaleMatching = (
