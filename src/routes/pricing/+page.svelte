@@ -184,14 +184,14 @@
 							{card.badgeText}
 						</div>
 					{/if}
-					<h2 class="w-full text-c-on-bg text-center font-bold text-2xl md:-mt-1.5 gap-2">
+					<h2 class="w-full text-c-on-bg text-center font-bold text-xl md:-mt-1.5 py-0.5 gap-2">
 						{card.title}
 					</h2>
 					<h3
 						class="w-[100%+2rem] md:w-[100%+2.5rem] -mx-4 md:-mx-5 text-center bg-c-bg-secondary 
-						text-c-on-bg mt-4 py-2.5 font-bold flex justify-center items-start"
+						text-c-on-bg mt-4 py-3 font-bold flex justify-center items-start"
 					>
-						<span class="text-xl">{card.currencySymbol}</span><span class="text-4xl font-bold">
+						<span class="text-xl">{card.currencySymbol}</span><span class="text-3xl font-bold">
 							{card.amount.toLocaleString($locale)}
 						</span>
 						<span class="self-end mb-0.75 text-c-on-bg/60 font-medium"
