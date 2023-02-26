@@ -181,7 +181,7 @@
 						? 'ring-c-success'
 						: card.ringClass} relative"
 				>
-					{#if card.badgeText && card.badgeClasses && (!$userSummary?.product_id || !isDowngrade)}
+					{#if card.badgeText && card.badgeClasses && !isDowngrade}
 						<div
 							class="absolute -right-3 -top-3 rounded-full px-4 py-2 text-sm text-right 
 							font-bold {isSubscribed ? 'bg-c-success text-c-on-primary' : card.badgeClasses}"
