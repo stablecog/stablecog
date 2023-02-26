@@ -74,6 +74,7 @@
 				},
 				body: JSON.stringify({ generation_output_ids: [generation.selected_output.id] })
 			});
+			if (!res.ok) throw new Error('Response not ok');
 			console.log('Delete generation output response', res);
 			if (modalType === 'history') {
 				queryClient.setQueryData(['user_generation_full_outputs'], (data: any) => ({
