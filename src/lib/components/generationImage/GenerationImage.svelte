@@ -1,12 +1,15 @@
 <script lang="ts">
+	import { page } from '$app/stores';
 	import CopyButton from '$components/buttons/CopyButton.svelte';
 	import DownloadGenerationButton from '$components/buttons/DownloadGenerationButton.svelte';
 	import GenerateButton from '$components/buttons/GenerateButton.svelte';
 	import type { TGenerationImageCardType } from '$components/generationImage/types';
-	import IconCancelCircle from '$components/icons/IconCancelCircle.svelte';
 	import IconChatBubbleCancel from '$components/icons/IconChatBubbleCancel.svelte';
 	import IconTrashcan from '$components/icons/IconTrashcan.svelte';
 	import { doesContainTarget } from '$ts/helpers/doesContainTarget';
+	import { mLogGalleryGenerationOpened } from '$ts/helpers/loggers';
+	import { advancedModeApp } from '$ts/stores/advancedMode';
+	import { userSummary } from '$ts/stores/user/summary';
 	import { activeGeneration, type TGenerationWithSelectedOutput } from '$userStores/generation';
 	import { quadOut } from 'svelte/easing';
 	import { fade, scale } from 'svelte/transition';
@@ -22,6 +25,12 @@
 
 	let isImageLoaded = false;
 	const onImageLoaded = () => (isImageLoaded = true);
+
+	$: logProps = {
+		'SC - Generation Id': generation.id || generation.ui_id,
+		'SC - Plan': $userSummary?.product_id || 'Free',
+		'SC - Advanced Mode': $advancedModeApp
+	};
 </script>
 
 {#if generation.selected_output.is_deleted}
@@ -49,15 +58,17 @@
 	height={generation.height}
 />
 {#if !generation.selected_output.is_deleted}
-	<div
-		on:click={(e) => {
+	<a
+		href="/gallery?generation={generation.id}"
+		on:click|preventDefault={(e) => {
 			if (doesContainTarget(e.target, [rightButtonContainer])) {
 				return;
 			}
+			mLogGalleryGenerationOpened(logProps);
 			activeGeneration.set(generation);
+			window.history.replaceState({}, '', `/gallery?generation=${generation.id}`);
 		}}
-		on:keydown={() => null}
-		class="w-full h-full absolute left-0 top-0 flex flex-col justify-between items-end overflow-hidden gap-4 cursor-pointer"
+		class="w-full h-full absolute left-0 top-0 flex flex-col justify-between items-end overflow-hidden gap-4"
 	>
 		<div class="w-full flex justify-between items-start gap-8">
 			<div
@@ -116,7 +127,7 @@
 				{/if}
 			</div>
 		</div>
-	</div>
+	</a>
 {/if}
 
 <style>

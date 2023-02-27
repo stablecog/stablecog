@@ -8,6 +8,7 @@
 	import { clickoutside } from '$ts/actions/clickoutside';
 	import { activeGeneration, type TGenerationWithSelectedOutput } from '$userStores/generation';
 	import { windowHeight, windowWidth } from '$ts/stores/window';
+	import { page } from '$app/stores';
 
 	export let generation: TGenerationWithSelectedOutput;
 	export let canClose: boolean;
@@ -70,6 +71,9 @@
 			callback: () => {
 				if (canClose) {
 					activeGeneration.set(undefined);
+					if ($page.url.pathname === '/gallery') {
+						window.history.replaceState({}, '', `/gallery`);
+					}
 				}
 			}
 		}}
