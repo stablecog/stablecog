@@ -5,7 +5,6 @@
 	import { onMount } from 'svelte';
 	import { browser } from '$app/environment';
 	import Footer from '$components/navigation/Footer.svelte';
-	import { env } from '$env/dynamic/public';
 	import NavbarBottom from '$components/navigation/NavbarBottom.svelte';
 	import { page } from '$app/stores';
 	import { windowHeight, windowWidth } from '$ts/stores/window';
@@ -59,6 +58,13 @@
 	} from '$ts/stores/user/upscale';
 	import { globalSeed } from '$ts/stores/globalSeed';
 	import { userSummary } from '$ts/stores/user/summary';
+	import posthog from 'posthog-js';
+	import {
+		PUBLIC_MIXPANEL_ID,
+		PUBLIC_MIXPANEL_URL,
+		PUBLIC_POSTHOG_ID,
+		PUBLIC_POSTHOG_URL
+	} from '$env/static/public';
 
 	export let data: LayoutData;
 	setLocale(data.locale);
@@ -95,9 +101,12 @@
 	$: [innerWidth, innerHeight], setWindowStores();
 
 	$: if (mounted && $page.data.session?.user.id) {
-		mixpanel.identify($page.data.session?.user.id);
-		mixpanel.people.set({ $email: $page.data.session?.user.email });
+		mixpanel.identify($page.data.session.user.id);
+		mixpanel.people.set({ $email: $page.data.session.user.email });
 		mixpanel.people.set({ 'SC - Plan': $page.data.plan });
+		posthog.identify($page.data.session.user.id, {
+			email: $page.data.session.user.email
+		});
 	}
 
 	afterNavigate(() => {
@@ -347,7 +356,10 @@
 
 	onMount(async () => {
 		setBodyClasses();
-		mixpanel.init(env.PUBLIC_MIXPANEL_ID, { api_host: env.PUBLIC_MIXPANEL_URL });
+		mixpanel.init(PUBLIC_MIXPANEL_ID, { api_host: PUBLIC_MIXPANEL_URL });
+		posthog.init(PUBLIC_POSTHOG_ID, {
+			api_host: PUBLIC_POSTHOG_URL
+		});
 		appVersion.set(document.body.getAttribute('app-version') || 'unknown');
 		const {
 			data: { subscription }
