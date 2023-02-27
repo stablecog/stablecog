@@ -5,7 +5,6 @@
 	import { canonicalUrl } from '$ts/constants/main';
 	import { onMount } from 'svelte';
 	import PageWrapper from '$components/PageWrapper.svelte';
-	import TierBadge from '$components/TierBadge.svelte';
 	import { getRelativeDate } from '$ts/helpers/getRelativeDate';
 	import { isTouchscreen } from '$ts/stores/isTouchscreen';
 	import { navbarHeight } from '$ts/stores/navbarHeight';
@@ -24,18 +23,39 @@
 	let searchString: string;
 	let searchStringDebounced: string | undefined = undefined;
 	let searchTimeout: NodeJS.Timeout;
-	let searchDebounceMs = 400;
+	let searchDebounceMs = 300;
 	$: searchString, setDebouncedSearch(searchString);
+
+	interface TCount {
+		product_id: string;
+		count: number;
+	}
+	let totalCounts: TCount[];
 
 	$: allUsersQuery = browser
 		? createInfiniteQuery({
 				queryKey: ['all_users_query', searchStringDebounced],
 				queryFn: async (lastPage) => {
-					return getAllUsers({
+					const res = await getAllUsers({
 						cursor: lastPage?.pageParam,
 						search: searchStringDebounced,
 						access_token: $page.data.session?.access_token
 					});
+					const { total_count, total_count_by_product_id } = res;
+					if (total_count !== undefined && total_count_by_product_id !== undefined) {
+						let withProductIdTotal = 0;
+						let withProductId: TCount[] = [];
+						for (const productId in total_count_by_product_id) {
+							withProductIdTotal += total_count_by_product_id[productId];
+							withProductId.push({
+								product_id: productId,
+								count: total_count_by_product_id[productId]
+							});
+						}
+						const freeCount = total_count - withProductIdTotal;
+						totalCounts = [{ product_id: 'free', count: freeCount }, ...withProductId];
+					}
+					return res;
 				},
 				getNextPageParam: (lastPage: TAllUsersPage) => {
 					if (!lastPage.next) return undefined;
@@ -117,10 +137,25 @@
 			shadow-c-shadow/[var(--o-shadow-normal)] -mx-3.5"
 		>
 			<div class="flex flex-wrap gap-3 md:gap-8 p-3">
-				<div class="flex gap-3 items-center">
-					<PlanBadge productId={'asdf'} size="md" />
-					<p class="font-bold text-xl text-c-primary pr-4">----</p>
-				</div>
+				{#each totalCounts ?? Array(3)
+						.fill(1)
+						.map((i) => ({ product_id: '----', count: '----' })) as item}
+					<div class="flex gap-3 items-center">
+						<PlanBadge
+							productId={item.product_id}
+							planText={item.product_id === '----' ? item.product_id : undefined}
+							size="md"
+						/>
+						<p
+							class="font-bold text-xl pr-4  {item.product_id !== undefined &&
+							item.product_id !== 'free'
+								? 'text-c-primary'
+								: 'text-c-on-bg'}"
+						>
+							{item.count}
+						</p>
+					</div>
+				{/each}
 			</div>
 		</div>
 	</div>

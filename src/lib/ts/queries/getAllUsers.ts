@@ -28,14 +28,16 @@ export async function getAllUsers({
 			Authorization: `Bearer ${access_token}`
 		}
 	});
-	const resJson = await res.json();
-	console.log(resJson);
+	const resJson: TAllUsersPage = await res.json();
 	return resJson;
 }
 
 export interface TAllUsersPage {
 	users: TUserForAdmin[];
 	total_count?: number;
+	total_count_by_product_id?: {
+		[productId: string]: number;
+	};
 	next?: string;
 }
 

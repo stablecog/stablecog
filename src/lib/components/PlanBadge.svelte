@@ -10,27 +10,30 @@
 	export let productId: TStripeSupportedProductId | undefined;
 	export let size: 'sm' | 'md' | 'lg' = 'md';
 	export { classes as class };
+	export let planText: string | undefined = undefined;
 	let classes = '';
 
-	let planText: string;
-	$: [$LL], setPlanText();
+	let _planText: string;
+	$: [$LL, planText], setPlanText();
 
 	function setPlanText() {
-		if (productId === PUBLIC_STRIPE_PRODUCT_ID_STARTER_TEST) {
-			planText = $LL.Pricing.Plans.StarterTitle();
+		if (planText !== undefined) {
+			_planText = planText;
+		} else if (productId === PUBLIC_STRIPE_PRODUCT_ID_STARTER_TEST) {
+			_planText = $LL.Pricing.Plans.StarterTitle();
 		} else if (productId === PUBLIC_STRIPE_PRODUCT_ID_PRO_TEST) {
-			planText = $LL.Pricing.Plans.ProTitle();
+			_planText = $LL.Pricing.Plans.ProTitle();
 		} else if (productId === PUBLIC_STRIPE_PRODUCT_ID_ULTIMATE_TEST) {
-			planText = $LL.Pricing.Plans.UltimateTitle();
+			_planText = $LL.Pricing.Plans.UltimateTitle();
 		} else {
-			planText = $LL.Pricing.Plans.FreeTitle();
+			_planText = $LL.Pricing.Plans.FreeTitle();
 		}
 	}
 </script>
 
 <div
 	class="bg-c-bg border-2 overflow-hidden z-10 shadow-lg flex-shrink-0
-  shadow-c-shadow/[var(--o-shadow-normal)] {productId !== undefined
+  shadow-c-shadow/[var(--o-shadow-normal)] {productId !== undefined && productId !== 'free'
 		? 'border-c-primary/30'
 		: 'border-c-on-bg/25'} {size === 'sm'
 		? 'rounded-lg'
@@ -39,7 +42,7 @@
 		: 'rounded-lg2'} {classes}"
 >
 	<div
-		class="flex items-center justify-center z-10 {productId !== undefined
+		class="flex items-center justify-center z-10 {productId !== undefined && productId !== 'free'
 			? 'text-c-primary bg-c-primary/15'
 			: 'text-c-on-bg bg-c-on-bg/15'}
     {size === 'sm'
@@ -55,7 +58,7 @@
 				? 'text-base font-bold'
 				: 'text-lg font-bold'}
 		>
-			{planText}
+			{_planText}
 		</p>
 	</div>
 </div>
