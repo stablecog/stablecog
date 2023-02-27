@@ -41,7 +41,6 @@
 						search: searchStringDebounced,
 						access_token: $page.data.session?.access_token
 					});
-					console.log(res);
 					const { total_count, total_count_by_product_id } = res;
 					if (total_count !== undefined && total_count_by_product_id !== undefined) {
 						let withProductIdTotal = 0;
