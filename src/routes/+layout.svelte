@@ -105,7 +105,8 @@
 		mixpanel.people.set({ $email: $page.data.session.user.email });
 		mixpanel.people.set({ 'SC - Plan': $page.data.plan });
 		posthog.identify($page.data.session.user.id, {
-			email: $page.data.session.user.email
+			email: $page.data.session.user.email,
+			'SC - Plan': $userSummary?.product_id
 		});
 	}
 

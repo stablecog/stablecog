@@ -172,24 +172,24 @@ export function mLogUpscalePropsFromUpscale({
 
 interface ISubmitToGalleryToggledMinimal {
 	'SC - Advanced Mode': boolean;
-	'SC - Plan': string;
+	'SC - Plan'?: string;
 }
 type IOnOff = 'On' | 'Off';
 
 interface IGalleryGenerationOpenedProps {
 	'SC - Generation Id': string;
-	'SC - Plan': string;
+	'SC - Plan'?: string;
 	'SC - Advanced Mode': boolean;
 }
 
 interface IGalleryGenerateClickedProps {
 	'SC - Generation Id': string;
-	'SC - Plan': string;
+	'SC - Plan'?: string;
 	'SC - Advanced Mode': boolean;
 }
 
 interface IAdvancedModeToggledProps {
-	'SC - Plan': string;
+	'SC - Plan'?: string;
 }
 
 interface IUpscaleMinimal {
@@ -198,7 +198,7 @@ interface IUpscaleMinimal {
 	'SC - Advanced Mode': boolean;
 	'SC - Locale': string;
 	'SC - Duration'?: number;
-	'SC - Plan': string;
+	'SC - Plan'?: string;
 }
 
 type IGenerationStatus = 'Started' | 'Succeeded' | 'Failed' | 'Failed-NSFW';
@@ -216,20 +216,20 @@ interface IGenerationMinimal {
 	'SC - Locale': string;
 	'SC - Submit to Gallery': boolean;
 	'SC - Duration'?: number;
-	'SC - Plan': string;
+	'SC - Plan'?: string;
 }
 
 interface IPageviewProps {
 	'SC - Page': string;
 	'SC - Locale': string;
 	'SC - Advanced Mode': boolean;
-	'SC - Plan': string;
+	'SC - Plan'?: string;
 }
 
 interface ISignInProps {
 	'SC - Locale': string;
 	'SC - Advanced Mode': boolean;
-	'SC - Plan': string;
+	'SC - Plan'?: string;
 	'SC - Page': string;
 	'SC - Email': string;
 }
@@ -237,20 +237,20 @@ interface ISignInProps {
 interface ISignOutProps {
 	'SC - Locale': string;
 	'SC - Advanced Mode': boolean;
-	'SC - Plan': string;
+	'SC - Plan'?: string;
 	'SC - Page': string;
 }
 
 interface ISignUpProps {
 	'SC - Locale': string;
 	'SC - Advanced Mode': boolean;
-	'SC - Plan': string;
+	'SC - Plan'?: string;
 	'SC - Page': string;
 }
 
 interface IGallerySearchProps {
 	'SC - Locale': string;
 	'SC - Advanced Mode': boolean;
-	'SC - Plan': string;
+	'SC - Plan'?: string;
 	'SC - Search Query': string;
 }
