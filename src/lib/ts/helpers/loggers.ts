@@ -58,7 +58,7 @@ export function mLogAdvancedMode(status: IOnOff, props: IAdvancedModeToggledProp
 
 export function mLogPageview(props: IPageviewProps) {
 	mixpanel.track('Pageview', { ...props });
-	posthog.capture('Pageview', { ...props });
+	posthog.capture('$pageview', { ...props });
 }
 
 export function mLogSignIn(props: ISignInProps) {
