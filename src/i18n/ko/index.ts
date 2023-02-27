@@ -229,7 +229,9 @@ const ko: Translation = {
 		LessOptionsTitle: '옵션 숨기기',
 		TryAgainButton: '다시 시도하기',
 		RefreshButton: 'Refresh',
-		LoadMoreButton: 'Load More'
+		LoadMoreButton: 'Load More',
+		SearchingTitle: 'Searching',
+		NoResultsFoundTitle: 'No results found'
 	},
 	Error: {
 		SomethingWentWrong: '웁스.. 뭔가 잘못됐어요. :(',

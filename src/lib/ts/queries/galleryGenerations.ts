@@ -23,7 +23,7 @@ export async function getGalleryGenerationFullOutputs({
 	query.append('seed', seed.toString());
 	let queryString = query.toString();
 	if (queryString) queryString = `?${queryString}`;
-	const url = `${apiUrl.href}v1/gallery${queryString}`;
+	const url = `${apiUrl.origin}/v1/gallery${queryString}`;
 	const res = await fetch(url, {
 		headers: {
 			'Content-Type': 'application/json'

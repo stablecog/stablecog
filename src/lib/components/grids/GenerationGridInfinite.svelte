@@ -70,9 +70,9 @@
 			</div>
 		</div>
 	</Masonry>
-	<IntersectionObserver on:intersect={autoFetchNextPage} rootMargin="100%" element={bottomDiv}>
-		<div bind:this={bottomDiv} class="w-full flex flex-row items-center justify-center mt-6">
-			{#if $generationsQuery.hasNextPage}
+	{#if $generationsQuery.hasNextPage}
+		<IntersectionObserver on:intersect={autoFetchNextPage} rootMargin="100%" element={bottomDiv}>
+			<div bind:this={bottomDiv} class="w-full flex flex-row items-center justify-center mt-6">
 				<Button
 					withSpinner
 					size="sm"
@@ -81,7 +81,7 @@
 				>
 					{$LL.Shared.LoadMoreButton()}
 				</Button>
-			{/if}
-		</div>
-	</IntersectionObserver>
+			</div>
+		</IntersectionObserver>
+	{/if}
 {/if}

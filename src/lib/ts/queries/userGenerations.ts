@@ -15,7 +15,7 @@ export async function getUserGenerationFullOutputs({
 	if (cursor) {
 		query.append('cursor', cursor);
 	}
-	const url = `${apiUrl.href}v1/user/outputs?${query.toString()}`;
+	const url = `${apiUrl.origin}/v1/user/outputs?${query.toString()}`;
 	const res = await fetch(url, {
 		headers: {
 			'Content-Type': 'application/json',

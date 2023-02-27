@@ -229,7 +229,9 @@ const vi: Translation = {
 		LessOptionsTitle: 'Tùy chọn ít hơn',
 		TryAgainButton: 'Thử lại',
 		RefreshButton: 'Refresh',
-		LoadMoreButton: 'Load More'
+		LoadMoreButton: 'Load More',
+		SearchingTitle: 'Searching',
+		NoResultsFoundTitle: 'No results found'
 	},
 	Error: {
 		SomethingWentWrong: 'Đã xảy ra lỗi :(',

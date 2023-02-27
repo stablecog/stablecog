@@ -226,7 +226,9 @@ const zhHans: Translation = {
 		LessOptionsTitle: 'Less Options',
 		TryAgainButton: 'Try Again',
 		RefreshButton: 'Refresh',
-		LoadMoreButton: 'Load More'
+		LoadMoreButton: 'Load More',
+		SearchingTitle: 'Searching',
+		NoResultsFoundTitle: 'No results found'
 	},
 	Error: {
 		SomethingWentWrong: '出了问题:(',

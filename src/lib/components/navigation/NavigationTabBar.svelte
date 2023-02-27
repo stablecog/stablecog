@@ -52,11 +52,6 @@
 			icon: 'home'
 		},
 		{
-			name: $LL.Admin.ServersTab(),
-			href: '/admin/servers',
-			icon: 'servers'
-		},
-		{
 			name: $LL.Navbar.GalleryTab(),
 			href: '/admin/gallery',
 			icon: 'gallery'

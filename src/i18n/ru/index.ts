@@ -229,7 +229,9 @@ const ru: Translation = {
 		LessOptionsTitle: 'Меньше опций',
 		TryAgainButton: 'Try Again',
 		RefreshButton: 'Refresh',
-		LoadMoreButton: 'Load More'
+		LoadMoreButton: 'Load More',
+		SearchingTitle: 'Searching',
+		NoResultsFoundTitle: 'No results found'
 	},
 	Error: {
 		SomethingWentWrong: 'Что-то пошло не так :(',

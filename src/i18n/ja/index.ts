@@ -229,7 +229,9 @@ const ja: Translation = {
 		LessOptionsTitle: 'オプションを隠す',
 		TryAgainButton: '再試行',
 		RefreshButton: 'Refresh',
-		LoadMoreButton: 'Load More'
+		LoadMoreButton: 'Load More',
+		SearchingTitle: 'Searching',
+		NoResultsFoundTitle: 'No results found'
 	},
 	Error: {
 		SomethingWentWrong: '不具合が発生しました。',

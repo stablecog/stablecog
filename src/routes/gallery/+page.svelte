@@ -18,8 +18,7 @@
 	import { globalSeed } from '$ts/stores/globalSeed';
 	import { navbarHeight } from '$ts/stores/navbarHeight';
 	import { activeGeneration } from '$ts/stores/user/generation';
-	import { createInfiniteQuery, type CreateInfiniteQueryResult } from '@tanstack/svelte-query';
-	import { onMount, tick } from 'svelte';
+	import { createInfiniteQuery } from '@tanstack/svelte-query';
 	import { quadOut } from 'svelte/easing';
 	import { scale } from 'svelte/transition';
 	import type { PageServerData } from './$types';
@@ -50,17 +49,6 @@
 		  })
 		: undefined;
 
-	let isLoadedBefore = false;
-	$: $galleryGenerationFullOutputsQuery?.data?.pages.length, setIsLoadedBefore();
-	const setIsLoadedBefore = () => {
-		if (
-			$galleryGenerationFullOutputsQuery?.data?.pages?.length !== undefined &&
-			$galleryGenerationFullOutputsQuery?.data?.pages?.length > 0
-		) {
-			isLoadedBefore = true;
-		}
-	};
-
 	let scrollDirection: 'up' | 'down' = 'up';
 	let oldScrollY = 0;
 	let atTheTop = true;
@@ -85,10 +73,6 @@
 				searchStringDebounced = '';
 			}
 		}, searchDebounceMs);
-	}
-
-	function capitalize(string: string) {
-		return string.charAt(0).toUpperCase() + string.slice(1);
 	}
 
 	function onKeyDown(event: KeyboardEvent) {}

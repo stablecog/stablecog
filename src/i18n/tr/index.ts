@@ -229,7 +229,9 @@ const tr: Translation = {
 		LessOptionsTitle: 'Daha Az Seçenek',
 		TryAgainButton: 'Yeniden Dene',
 		RefreshButton: 'Yenile',
-		LoadMoreButton: 'Load More'
+		LoadMoreButton: 'Load More',
+		SearchingTitle: 'Searching',
+		NoResultsFoundTitle: 'No results found'
 	},
 	Error: {
 		SomethingWentWrong: 'Bir şeyler ters gitti :(',

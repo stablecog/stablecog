@@ -228,7 +228,9 @@ const hr: Translation = {
 		LessOptionsTitle: 'Manje opcija',
 		TryAgainButton: 'Pokušaj ponovno',
 		RefreshButton: 'Refresh',
-		LoadMoreButton: 'Load More'
+		LoadMoreButton: 'Load More',
+		SearchingTitle: 'Searching',
+		NoResultsFoundTitle: 'No results found'
 	},
 	Error: {
 		SomethingWentWrong: 'Dogodila se greška :(',

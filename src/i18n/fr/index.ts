@@ -229,7 +229,9 @@ const fr: Translation = {
 		LessOptionsTitle: "Moins D'Options",
 		TryAgainButton: 'Réessayer',
 		RefreshButton: 'Refresh',
-		LoadMoreButton: 'Load More'
+		LoadMoreButton: 'Load More',
+		SearchingTitle: 'Searching',
+		NoResultsFoundTitle: 'No results found'
 	},
 	Error: {
 		SomethingWentWrong: "Une erreur s'est produite :(",

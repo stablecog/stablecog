@@ -6,8 +6,11 @@ import type { Handle } from '@sveltejs/kit';
 import type { RequestEvent } from '.svelte-kit/types/src/routes/$types';
 import '$ts/constants/supabase';
 import type { TAvailableThemes } from '$ts/stores/theme';
+import { apiUrl } from '$ts/constants/main';
 
 loadAllLocales();
+
+const superAdminRole = 'SUPER_ADMIN';
 
 export const handle: Handle = async ({ event, resolve }) => {
 	let preferredLocale = getPreferredLocale(event);
@@ -36,38 +39,30 @@ export const handle: Handle = async ({ event, resolve }) => {
 	if (event.url.pathname.startsWith('/admin')) {
 		const redirectRoute = `/sign-in?redirect_to=${encodeURIComponent(event.url.pathname)}`;
 		try {
-			const { session, supabaseClient } = await getSupabase(event);
+			const { session } = await getSupabase(event);
 			const userId = session?.user?.id;
-			const { data, error } = await supabaseClient.from('admin').select('id');
-			const admins = data?.map((a) => a.id);
-			if (!data || error || !admins || !userId) {
-				console.log(
-					`Admin access error - Not signed in - Redirecting to: "${redirectRoute}"`,
-					error,
-					admins,
-					userId
-				);
-				return new Response(null, {
-					status: 303,
-					headers: { location: redirectRoute }
-				});
+			if (!userId) {
+				return notAuthorizedResponse(redirectRoute);
 			}
-			if (!admins.includes(userId)) {
-				console.log(
-					`Admin access error - User isn't admin - Redirecting to: "/"`,
-					error,
-					admins,
-					userId
-				);
-				return new Response(null, {
-					status: 303,
-					headers: { location: '/' }
-				});
+			const res = await fetch(`${apiUrl.origin}/v1/user`, {
+				method: 'GET',
+				headers: {
+					'Content-Type': 'application/json',
+					Authorization: `Bearer ${session.access_token}`
+				}
+			});
+			if (!res.ok) {
+				console.log('Not OK', res.status);
+				return notAuthorizedResponse(redirectRoute);
 			}
-			console.log('Admin user access:', userId);
+			const { roles } = await res.json();
+			if (roles?.includes(superAdminRole)) {
+				return resolve(event);
+			}
+			return notAuthorizedResponse(redirectRoute);
 		} catch (error) {
 			console.log('Admin access error:', error);
-			return new Response(null, { status: 303, headers: { location: redirectRoute } });
+			return notAuthorizedResponse(redirectRoute);
 		}
 	}
 	return resolve(event);
@@ -76,4 +71,11 @@ export const handle: Handle = async ({ event, resolve }) => {
 const getPreferredLocale = ({ request }: RequestEvent) => {
 	const acceptLanguageDetector = initAcceptLanguageHeaderDetector(request);
 	return detectLocale(acceptLanguageDetector);
+};
+
+const notAuthorizedResponse = (route: string) => {
+	return new Response(null, {
+		status: 303,
+		headers: { location: route }
+	});
 };

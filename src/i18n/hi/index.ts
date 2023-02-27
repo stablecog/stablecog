@@ -228,7 +228,9 @@ const hi: Translation = {
 		LessOptionsTitle: 'कम विकल्प',
 		TryAgainButton: 'Try Again',
 		RefreshButton: 'Refresh',
-		LoadMoreButton: 'Load More'
+		LoadMoreButton: 'Load More',
+		SearchingTitle: 'Searching',
+		NoResultsFoundTitle: 'No results found'
 	},
 	Error: {
 		SomethingWentWrong: 'कुछ गलत हो गया :(',

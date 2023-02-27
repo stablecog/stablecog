@@ -657,6 +657,14 @@ type RootTranslation = {
 		 * L​o​a​d​ ​M​o​r​e
 		 */
 		LoadMoreButton: string
+		/**
+		 * S​e​a​r​c​h​i​n​g
+		 */
+		SearchingTitle: string
+		/**
+		 * N​o​ ​r​e​s​u​l​t​s​ ​f​o​u​n​d
+		 */
+		NoResultsFoundTitle: string
 	}
 	Error: {
 		/**
@@ -1929,6 +1937,14 @@ export type TranslationFunctions = {
 		 * Load More
 		 */
 		LoadMoreButton: () => LocalizedString
+		/**
+		 * Searching
+		 */
+		SearchingTitle: () => LocalizedString
+		/**
+		 * No results found
+		 */
+		NoResultsFoundTitle: () => LocalizedString
 	}
 	Error: {
 		/**

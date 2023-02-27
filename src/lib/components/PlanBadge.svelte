@@ -43,7 +43,7 @@
 			? 'text-c-primary bg-c-primary/15'
 			: 'text-c-on-bg bg-c-on-bg/15'}
     {size === 'sm'
-			? 'gap-1.5 px-3 py-1.25'
+			? 'gap-1.5 px-2.5 py-1'
 			: size === 'md'
 			? 'gap-1.5 px-3 py-1.25'
 			: 'gap-1.5 px-4 py-1.5'}"

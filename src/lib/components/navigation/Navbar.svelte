@@ -15,7 +15,6 @@
 	import LL from '$i18n/i18n-svelte';
 	import Button from '$components/buttons/Button.svelte';
 	import AccountMenu from '$components/AccountMenu.svelte';
-	import IconStar from '$components/icons/IconStar.svelte';
 	import Avatar from '$components/Avatar.svelte';
 	import { portal } from 'svelte-portal';
 	import { fade, fly } from 'svelte/transition';

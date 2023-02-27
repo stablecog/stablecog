@@ -229,7 +229,9 @@ const en: BaseTranslation = {
 		LessOptionsTitle: 'Less Options',
 		TryAgainButton: 'Try Again',
 		RefreshButton: 'Refresh',
-		LoadMoreButton: 'Load More'
+		LoadMoreButton: 'Load More',
+		SearchingTitle: 'Searching',
+		NoResultsFoundTitle: 'No results found'
 	},
 	Error: {
 		SomethingWentWrong: 'Something went wrong :(',

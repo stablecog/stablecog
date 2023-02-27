@@ -228,7 +228,9 @@ const ptPt: Translation = {
 		LessOptionsTitle: 'Menos Opções',
 		TryAgainButton: 'Try Again',
 		RefreshButton: 'Refresh',
-		LoadMoreButton: 'Load More'
+		LoadMoreButton: 'Load More',
+		SearchingTitle: 'Searching',
+		NoResultsFoundTitle: 'No results found'
 	},
 	Error: {
 		SomethingWentWrong: 'Ocorreu algo de errado :(',
