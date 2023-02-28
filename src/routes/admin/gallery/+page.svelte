@@ -7,6 +7,7 @@
 	import IconFunnel from '$components/icons/IconFunnel.svelte';
 	import IconLoadingSlim from '$components/icons/IconLoadingSlim.svelte';
 	import IconSadFace from '$components/icons/IconSadFace.svelte';
+	import IconTick from '$components/icons/IconTick.svelte';
 	import MetaTag from '$components/MetaTag.svelte';
 	import Morpher from '$components/Morpher.svelte';
 	import SignInCard from '$components/SignInCard.svelte';
@@ -23,17 +24,18 @@
 		adminGalleryFilter,
 		isAdminGalleryEditActive,
 		adminGalleryScheduledIds,
-		type TAdminGalleryAction
+		type TAdminGalleryAction,
+		lastFetchedAdminGalleryFilter
 	} from '$ts/stores/admin/gallery';
 	import { navbarHeight } from '$ts/stores/navbarHeight';
-	import { activeGeneration } from '$userStores/generation';
+	import { activeGeneration, type TGalleryStatus } from '$userStores/generation';
 	import {
 		createInfiniteQuery,
 		useQueryClient,
 		type CreateInfiniteQueryResult
 	} from '@tanstack/svelte-query';
 	import { quadOut } from 'svelte/easing';
-	import { fly, scale } from 'svelte/transition';
+	import { fly } from 'svelte/transition';
 
 	let totalOutputs: number;
 
@@ -50,8 +52,15 @@
 					return getAllUserGenerationFullOutputs({
 						access_token: $page.data.session?.access_token || '',
 						cursor: lastPage?.pageParam,
-						gallery_status: $adminGalleryFilter
+						gallery_status: $adminGalleryFilter,
+						order_by:
+							$adminGalleryFilter === 'approved' || $adminGalleryFilter === 'rejected'
+								? 'updated_at'
+								: 'created_at'
 					});
+				},
+				onSuccess: () => {
+					lastFetchedAdminGalleryFilter.set($adminGalleryFilter);
 				},
 				getNextPageParam: (lastPage: TUserGenerationFullOutputsPage) => {
 					if (!lastPage.next) return undefined;
@@ -242,25 +251,14 @@
 					]}
 					bind:value={$adminGalleryFilter}
 				>
-					<div slot="title">
-						<Morpher
-							morphed={allUserGenerationFullOutputsQuery === undefined ||
-								$allUserGenerationFullOutputsQuery === undefined ||
-								$allUserGenerationFullOutputsQuery.isFetching}
-						>
-							<div slot="item-0" class="p-3.5 flex items-center justify-center">
-								<IconFunnel class="w-6 h-6 text-c-on-bg/35" />
-							</div>
-							<div slot="item-1" class="transform transition">
-								<IconLoadingSlim class="w-8 h-8 animate-spin-faster text-c-on-bg/35" />
-							</div>
-						</Morpher>
+					<div slot="title" class="p-3.5 flex items-center justify-center">
+						<IconFunnel class="w-6 h-6 text-c-on-bg/35" />
 					</div>
 				</TabLikeDropdown>
 			</div>
 		</div>
 		<div class="w-full flex-1 max-w-7xl flex flex-col">
-			{#if allUserGenerationFullOutputsQuery === undefined || $allUserGenerationFullOutputsQuery === undefined || $allUserGenerationFullOutputsQuery.isLoading}
+			{#if allUserGenerationFullOutputsQuery === undefined || $allUserGenerationFullOutputsQuery === undefined || $allUserGenerationFullOutputsQuery.isInitialLoading || ($allUserGenerationFullOutputsQuery.isFetching && $lastFetchedAdminGalleryFilter !== $adminGalleryFilter)}
 				<div
 					class="w-full flex flex-col text-c-on-bg/60 flex-1 py-6 px-4 justify-center items-center text-center"
 				>
@@ -272,9 +270,9 @@
 				</div>
 			{:else if $allUserGenerationFullOutputsQuery?.data?.pages?.length === 1 && $allUserGenerationFullOutputsQuery.data.pages[0].outputs.length === 0}
 				<div class="w-full flex-1 flex flex-col items-center py-8 px-5">
-					<div class="flex flex-col my-auto items-center gap-6">
-						<p class="text-c-on-bg/50">{$LL.History.NoGenerationsYet()}</p>
-						<Button href="/">{$LL.Shared.StartGeneratingButton()}</Button>
+					<div class="flex flex-col my-auto items-center gap-2 text-c-on-bg/50 text-center">
+						<IconTick class="w-16 h-16" />
+						<p>{$LL.Admin.Gallery.NoGenerationsToReview()}</p>
 						<div class="h-[1vh]" />
 					</div>
 				</div>

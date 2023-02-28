@@ -29,11 +29,13 @@ export async function getUserGenerationFullOutputs({
 export async function getAllUserGenerationFullOutputs({
 	cursor,
 	access_token,
-	gallery_status
+	gallery_status,
+	order_by
 }: {
 	cursor?: string;
 	gallery_status?: string;
 	access_token: string;
+	order_by?: string;
 }) {
 	console.log('getAllUserOutputs');
 	const query = new URLSearchParams();
@@ -43,6 +45,9 @@ export async function getAllUserGenerationFullOutputs({
 	}
 	if (gallery_status) {
 		query.append('gallery_status', gallery_status);
+	}
+	if (order_by) {
+		query.append('order_by', order_by);
 	}
 	const url = `${apiUrl.origin}/v1/admin/outputs?${query.toString()}`;
 	const res = await fetch(url, {

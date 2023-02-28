@@ -834,6 +834,10 @@ type RootTranslation = {
 				 */
 				Private: string
 			}
+			/**
+			 * N​o​ ​g​e​n​e​r​a​t​i​o​n​s​ ​t​o​ ​r​e​v​i​e​w
+			 */
+			NoGenerationsToReview: string
 		}
 	}
 	SignUp: {
@@ -2160,6 +2164,10 @@ export type TranslationFunctions = {
 				 */
 				Private: () => LocalizedString
 			}
+			/**
+			 * No generations to review
+			 */
+			NoGenerationsToReview: () => LocalizedString
 		}
 	}
 	SignUp: {

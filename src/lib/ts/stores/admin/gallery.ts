@@ -7,6 +7,7 @@ export const adminGalleryActionableItems = writableLocal<TAdminGalleryActionItem
 	[]
 );
 export const adminGalleryFilter = writable<TGalleryStatus>('submitted');
+export const lastFetchedAdminGalleryFilter = writable<TGalleryStatus>('submitted');
 
 export const adminGalleryScheduledIds = derived(
 	[adminGalleryActionableItems, adminGalleryFilter],

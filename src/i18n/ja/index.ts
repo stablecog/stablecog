@@ -282,7 +282,8 @@ const ja: Translation = {
 				Rejected: 'Rejected',
 				Deleted: 'Deleted',
 				Private: 'Private'
-			}
+			},
+			NoGenerationsToReview: 'No generations to review'
 		}
 	},
 	SignUp: {
