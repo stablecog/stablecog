@@ -4,21 +4,18 @@
 	import DownloadGenerationButton from '$components/buttons/DownloadGenerationButton.svelte';
 	import GenerateButton from '$components/buttons/GenerateButton.svelte';
 	import type { TGenerationImageCardType } from '$components/generationImage/types';
+	import IconCancelCircle from '$components/icons/IconCancelCircle.svelte';
 	import IconChatBubbleCancel from '$components/icons/IconChatBubbleCancel.svelte';
+	import IconTick from '$components/icons/IconTick.svelte';
 	import IconTrashcan from '$components/icons/IconTrashcan.svelte';
 	import { doesContainTarget } from '$ts/helpers/doesContainTarget';
 	import { mLogGalleryGenerationOpened } from '$ts/helpers/loggers';
-	import {
-		adminGalleryActionableItems,
-		currentAdminGalleryAction,
-		isAdminGalleryEditActive,
-		type TAdminGalleryAction
-	} from '$ts/stores/admin/gallery';
+	import { adminGalleryActionableItems, isAdminGalleryEditActive } from '$ts/stores/admin/gallery';
 	import { advancedModeApp } from '$ts/stores/advancedMode';
 	import { userSummary } from '$ts/stores/user/summary';
 	import { activeGeneration, type TGenerationWithSelectedOutput } from '$userStores/generation';
 	import { quadOut } from 'svelte/easing';
-	import { fade, scale } from 'svelte/transition';
+	import { fade, fly, scale } from 'svelte/transition';
 
 	export let generation: TGenerationWithSelectedOutput;
 	export let useUpscaledImage = true;
@@ -32,17 +29,22 @@
 	let isImageLoaded = false;
 	const onImageLoaded = () => (isImageLoaded = true);
 
+	let inAdminGalleryActionable = false;
+
 	const addToAdminGalleryActionableItems = (id: string) => {
-		if (inAdminGalleryActionableItems(id)) return;
+		if (inAdminGalleryActionable) return;
 		adminGalleryActionableItems.set([...$adminGalleryActionableItems, id]);
 	};
-
-	const inAdminGalleryActionableItems = (id: string) =>
-		$adminGalleryActionableItems.find((i) => i === id);
 
 	const removeFromAdminGalleryActionableItems = (id: string) => {
 		adminGalleryActionableItems.set($adminGalleryActionableItems.filter((i) => i !== id));
 	};
+
+	const setInAdminGalleryActionable = () => {
+		inAdminGalleryActionable = $adminGalleryActionableItems.includes(generation.selected_output.id);
+	};
+
+	$: [$adminGalleryActionableItems, generation], setInAdminGalleryActionable();
 
 	$: logProps = {
 		'SC - Generation Id': generation.id || generation.ui_id,
@@ -62,29 +64,40 @@
 		class="w-full h-full absolute left-0 top-0 bg-c-bg-secondary/85 z-10"
 	/>
 {/if}
+{#if cardType === 'admin-gallery' && $isAdminGalleryEditActive && (generation.selected_output.gallery_status === 'approved' || generation.selected_output.gallery_status === 'rejected')}
+	<div class="w-full h-full absolute left-0 top-0 flex items-center justify-center p-4 z-20">
+		<div in:scale={{ duration: 300, easing: quadOut, opacity: 0, start: 0.5 }}>
+			{#if generation.selected_output.gallery_status === 'approved'}
+				<IconTick class="text-c-success w-12 h-12" />
+			{:else}
+				<IconCancelCircle class="text-c-danger w-12 h-12" />
+			{/if}
+		</div>
+	</div>
+	<div
+		in:fade={{ duration: 300, easing: quadOut }}
+		class="w-full h-full absolute left-0 top-0 bg-c-bg-secondary/85 z-10"
+	/>
+{/if}
 {#if cardType === 'admin-gallery' && $isAdminGalleryEditActive}
 	<button
 		on:click={(e) => {
-			inAdminGalleryActionableItems(generation.selected_output.id)
+			inAdminGalleryActionable
 				? removeFromAdminGalleryActionableItems(generation.selected_output.id)
 				: addToAdminGalleryActionableItems(generation.selected_output.id);
 			e.currentTarget.blur();
 		}}
 		class="w-full h-full absolute left-0 top-0 flex flex-col justify-start items-start z-30"
 	>
-		<div class="w-full flex items-center justify-between p-1.5">
+		<div class="w-full flex items-center justify-between transform transition p-1">
 			<div />
 			<div
-				transition:scale|local={{ duration: 150, easing: quadOut, opacity: 0, start: 0.5 }}
-				class="p-1 bg-c-bg-secondary rounded-full"
+				transition:fly|local={{ duration: 200, easing: quadOut, y: -50 }}
+				class="rounded-full ring-2 ring-c-primary w-5 h-5 transition p-0.75 {inAdminGalleryActionable
+					? 'scale-100 opacity-100'
+					: 'scale-0 opacity-0'}"
 			>
-				<div
-					class="w-8 h-8 rounded-full bg-c-primary transform transition duration-150 {$adminGalleryActionableItems.includes(
-						generation.selected_output.id
-					)
-						? 'scale-100 opacity-100'
-						: 'scale-50 opacity-0'}"
-				/>
+				<div class="w-full h-full rounded-full bg-c-primary" />
 			</div>
 		</div>
 	</button>
@@ -92,9 +105,11 @@
 <img
 	on:load={onImageLoaded}
 	loading="lazy"
-	class="w-full h-full absolute left-0 top-0 duration-300 transition {isImageLoaded
+	class="w-full h-full absolute left-0 top-0 duration-300 transition transform {isImageLoaded
 		? 'opacity-100'
-		: 'opacity-0'}"
+		: 'opacity-0'} {$isAdminGalleryEditActive && inAdminGalleryActionable
+		? 'translate-y-8'
+		: 'translate-0'}"
 	src={useUpscaledImage && generation.selected_output.upscaled_image_url
 		? generation.selected_output.upscaled_image_url
 		: generation.selected_output.image_url}
@@ -104,7 +119,7 @@
 />
 {#if !generation.selected_output.is_deleted}
 	<AnchorOrDiv
-		href={cardType === 'gallery' ? '/gallery?generation={generation.id}' : undefined}
+		href={cardType === 'gallery' ? `/gallery?generation=${generation.id}` : undefined}
 		anchorPreventDefault={cardType === 'gallery'}
 		onClick={(e) => {
 			if (doesContainTarget(e.target, [rightButtonContainer])) {
@@ -155,7 +170,7 @@
 		</div>
 		<div
 			class="w-full max-h-[max(4rem,min(35%,5.3rem))] transition bg-c-bg/90 text-xs relative z-0 overflow-hidden
-		translate-y-full group-focus-within:translate-y-0 group-hover:translate-y-0 pointer-events-none"
+			translate-y-full group-focus-within:translate-y-0 group-hover:translate-y-0 pointer-events-none"
 		>
 			<div
 				class="{scrollPrompt

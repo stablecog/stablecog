@@ -186,9 +186,10 @@ export interface TGenerationOutput {
 	created_at?: string;
 	updated_at?: string;
 	is_deleted?: boolean;
-	is_approved?: boolean;
-	is_rejected?: boolean;
+	gallery_status: TGalleryStatus;
 }
+
+export type TGalleryStatus = 'submitted' | 'approved' | 'rejected' | 'not-submitted';
 
 export interface TGenerationFullOutput extends TGenerationOutput {
 	generation: TGeneration;

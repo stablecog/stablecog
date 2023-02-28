@@ -55,8 +55,8 @@
 				{#if $activeGeneration === undefined || $activeGeneration.selected_output.id !== output.id}
 					<div
 						transition:fly|local={imageTransitionProps}
-						class="absolute left-0 top-0 w-full h-full rounded-xl bg-c-bg-secondary z-0 overflow-hidden border-4 
-										shadow-lg shadow-c-shadow/[var(--o-shadow-normal)] border-c-bg-secondary"
+						class="absolute left-0 top-0 w-full h-full rounded-xl bg-c-bg-secondary transition border-4
+										border-c-bg-secondary z-0 overflow-hidden shadow-lg shadow-c-shadow/[var(--o-shadow-normal)]"
 					>
 						{#if output.generation.outputs !== undefined}
 							<GenerationImage

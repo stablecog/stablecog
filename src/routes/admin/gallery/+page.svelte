@@ -1,12 +1,15 @@
 <script lang="ts">
 	import { page } from '$app/stores';
 	import Button from '$components/buttons/Button.svelte';
+	import SubtleButton from '$components/buttons/SubtleButton.svelte';
 	import GenerationFullScreen from '$components/generationFullScreen/GenerationFullScreen.svelte';
 	import GenerationGridInfinite from '$components/grids/GenerationGridInfinite.svelte';
+	import IconLoadingSlim from '$components/icons/IconLoadingSlim.svelte';
 	import MetaTag from '$components/MetaTag.svelte';
+	import Morpher from '$components/Morpher.svelte';
 	import SignInCard from '$components/SignInCard.svelte';
 	import LL from '$i18n/i18n-svelte';
-	import { canonicalUrl } from '$ts/constants/main';
+	import { apiUrl, canonicalUrl } from '$ts/constants/main';
 	import {
 		getAllUserGenerationFullOutputs,
 		type TUserGenerationFullOutputsPage
@@ -17,10 +20,17 @@
 		isAdminGalleryEditActive,
 		type TAdminGalleryAction
 	} from '$ts/stores/admin/gallery';
+	import { navbarHeight } from '$ts/stores/navbarHeight';
 	import { activeGeneration } from '$userStores/generation';
-	import { createInfiniteQuery, type CreateInfiniteQueryResult } from '@tanstack/svelte-query';
+	import {
+		createInfiniteQuery,
+		useQueryClient,
+		type CreateInfiniteQueryResult
+	} from '@tanstack/svelte-query';
 
 	let totalOutputs: number;
+
+	const queryClient = useQueryClient();
 
 	let allUserGenerationFullOutputsQuery:
 		| CreateInfiniteQueryResult<TUserGenerationFullOutputsPage, unknown>
@@ -44,10 +54,17 @@
 
 	$: $allUserGenerationFullOutputsQuery?.data?.pages, onPagesChanged();
 
+	let approveOrRejectStatus: 'idle' | 'approving' | 'rejecting' = 'idle';
+
 	async function doActionOnItems(action: TAdminGalleryAction) {
 		const ids = $adminGalleryActionableItems;
+		if (action === 'approve') {
+			approveOrRejectStatus = 'approving';
+		} else if (action === 'reject') {
+			approveOrRejectStatus = 'rejecting';
+		}
 		try {
-			const res = await fetch('/api/admin/gallery', {
+			const res = await fetch(`${apiUrl.origin}/v1/admin/gallery`, {
 				method: 'PUT',
 				headers: {
 					'Content-Type': 'application/json',
@@ -60,10 +77,32 @@
 			});
 			if (!res.ok) throw new Error('Error approving/rejecting generation outputs');
 			const resJson = await res.json();
-			console.log(resJson);
 			adminGalleryActionableItems.set($adminGalleryActionableItems.filter((i) => !ids.includes(i)));
+			queryClient.setQueryData(['user_generation_full_outputs'], (data: any) => ({
+				...data,
+				pages: data.pages.map((page: TUserGenerationFullOutputsPage) => {
+					return {
+						...page,
+						outputs: page.outputs.map((output) =>
+							ids.includes(output.id)
+								? {
+										...output,
+										gallery_status:
+											action === 'approve'
+												? 'approved'
+												: action === 'reject'
+												? 'rejected'
+												: undefined
+								  }
+								: output
+						)
+					};
+				})
+			}));
 		} catch (error) {
 			console.log(error);
+		} finally {
+			approveOrRejectStatus = 'idle';
 		}
 	}
 
@@ -86,7 +125,7 @@
 	canonical="{canonicalUrl}{$page.url.pathname}"
 />
 
-<div class="w-full flex-1 flex flex-col items-center px-2 gap-2 md:py-6 md:px-8">
+<div class="w-full flex-1 flex flex-col items-center px-2 gap-2 md:py-6 md:px-8 relative">
 	{#if !$page.data.session?.user.id}
 		<div class="w-full flex-1 max-w-7xl flex justify-center px-2 py-4 md:py-2">
 			<div class="my-auto flex flex-col">
@@ -95,7 +134,7 @@
 			</div>
 		</div>
 	{:else}
-		<div class="w-full max-w-7xl flex justify-center px-1.5">
+		<div class="w-full max-w-7xl flex flex-col justify-center px-1.5">
 			<div class="w-full flex flex-wrap gap-4 items-center px-2 py-2 md:px-4 md:py-3 rounded-xl">
 				<div class="flex gap-2 items-center">
 					<p class="font-bold text-xl md:text-2xl">
@@ -105,10 +144,60 @@
 						({totalOutputs !== undefined ? totalOutputs : '...'})
 					</p>
 				</div>
-				<Button size="sm" onClick={() => isAdminGalleryEditActive.set(!$isAdminGalleryEditActive)}>
-					{$isAdminGalleryEditActive ? 'Stop Editing' : 'Edit'}
-				</Button>
 			</div>
+		</div>
+		<div
+			style="top: {$navbarHeight + 4}px"
+			class="w-full max-w-7xl flex flex-wrap gap-3 md:gap-4 p-2 md:p-3 shadow-lg shadow-c-shadow/[var(--o-shadow-strong)] 
+			rounded-xl bg-c-bg-secondary sticky z-10 -mt-2"
+		>
+			<SubtleButton onClick={() => isAdminGalleryEditActive.set(!$isAdminGalleryEditActive)}>
+				<p class="text-sm md:text-base px-1 md:px-3">
+					{$isAdminGalleryEditActive ? 'Stop Editing' : 'Edit'}
+				</p>
+			</SubtleButton>
+			{#if $isAdminGalleryEditActive}
+				<SubtleButton
+					disabled={approveOrRejectStatus === 'rejecting'}
+					loading={approveOrRejectStatus === 'approving'}
+					onClick={() => doActionOnItems('approve')}
+				>
+					<Morpher morphed={approveOrRejectStatus === 'approving'}>
+						<p
+							slot="item-0"
+							class="text-sm md:text-base px-1 md:px-3 text-c-success {approveOrRejectStatus !==
+							'approving'
+								? 'opacity-100 scale-100'
+								: 'opacity-0 scale-50'}"
+						>
+							Approve ({$adminGalleryActionableItems.length})
+						</p>
+						<div slot="item-1">
+							<IconLoadingSlim class="w-8 h-8 text-c-success animate-spin-faster" />
+						</div>
+					</Morpher>
+				</SubtleButton>
+				<SubtleButton
+					disabled={approveOrRejectStatus === 'approving'}
+					loading={approveOrRejectStatus === 'rejecting'}
+					onClick={() => doActionOnItems('reject')}
+				>
+					<Morpher morphed={approveOrRejectStatus === 'rejecting'}>
+						<p
+							slot="item-0"
+							class="text-sm md:text-base px-1 md:px-3 text-c-danger {approveOrRejectStatus !==
+							'rejecting'
+								? 'opacity-100 scale-100'
+								: 'opacity-0 scale-50'}"
+						>
+							Reject ({$adminGalleryActionableItems.length})
+						</p>
+						<div slot="item-1">
+							<IconLoadingSlim class="w-8 h-8 text-c-danger animate-spin-faster" />
+						</div>
+					</Morpher>
+				</SubtleButton>
+			{/if}
 		</div>
 		<div class="w-full flex-1 max-w-7xl flex flex-col">
 			{#if allUserGenerationFullOutputsQuery !== undefined}
