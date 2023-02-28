@@ -33,7 +33,7 @@
 		type CreateInfiniteQueryResult
 	} from '@tanstack/svelte-query';
 	import { quadOut } from 'svelte/easing';
-	import { fly } from 'svelte/transition';
+	import { fly, scale } from 'svelte/transition';
 
 	let totalOutputs: number;
 
@@ -230,8 +230,9 @@
 					{/if}
 				</div>
 			{/if}
-			<div class="w-full md:w-64 max-w-full ml-auto">
+			<div class="w-full md:w-64 max-w-full flex ml-auto">
 				<TabLikeDropdown
+					class="w-full"
 					name="Filter"
 					items={[
 						{ label: $LL.Admin.Gallery.StatusDropdown.Submitted(), value: 'submitted' },
@@ -241,14 +242,25 @@
 					]}
 					bind:value={$adminGalleryFilter}
 				>
-					<div slot="title" class="p-3.5 flex items-center justify-center">
-						<IconFunnel class="w-6 h-6 text-c-on-bg/35" />
+					<div slot="title">
+						<Morpher
+							morphed={allUserGenerationFullOutputsQuery === undefined ||
+								$allUserGenerationFullOutputsQuery === undefined ||
+								$allUserGenerationFullOutputsQuery.isFetching}
+						>
+							<div slot="item-0" class="p-3.5 flex items-center justify-center">
+								<IconFunnel class="w-6 h-6 text-c-on-bg/35" />
+							</div>
+							<div slot="item-1" class="transform transition">
+								<IconLoadingSlim class="w-8 h-8 animate-spin-faster text-c-on-bg/35" />
+							</div>
+						</Morpher>
 					</div>
 				</TabLikeDropdown>
 			</div>
 		</div>
 		<div class="w-full flex-1 max-w-7xl flex flex-col">
-			{#if allUserGenerationFullOutputsQuery === undefined || $allUserGenerationFullOutputsQuery === undefined || $allUserGenerationFullOutputsQuery.isInitialLoading || ($allUserGenerationFullOutputsQuery.isFetching && !$allUserGenerationFullOutputsQuery.isFetchingNextPage)}
+			{#if allUserGenerationFullOutputsQuery === undefined || $allUserGenerationFullOutputsQuery === undefined || $allUserGenerationFullOutputsQuery.isLoading}
 				<div
 					class="w-full flex flex-col text-c-on-bg/60 flex-1 py-6 px-4 justify-center items-center text-center"
 				>
