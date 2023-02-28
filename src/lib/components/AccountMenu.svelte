@@ -1,12 +1,15 @@
 <script lang="ts">
 	import { page } from '$app/stores';
 	import Avatar from '$components/Avatar.svelte';
+	import Button from '$components/buttons/Button.svelte';
 	import DropdownItem from '$components/DropdownItem.svelte';
 	import IconSignOut from '$components/icons/IconSignOut.svelte';
 	import IconUser from '$components/icons/IconUser.svelte';
+	import IconWrench from '$components/icons/IconWrench.svelte';
 	import PlanBadge from '$components/PlanBadge.svelte';
 	import LL, { locale } from '$i18n/i18n-svelte';
 	import { supabase } from '$ts/constants/supabase';
+	import { isSuperAdmin } from '$ts/helpers/admin/roles';
 	import { mLogSignOut } from '$ts/helpers/loggers';
 	import { advancedModeApp } from '$ts/stores/advancedMode';
 	import { isTouchscreen } from '$ts/stores/isTouchscreen';
@@ -35,7 +38,13 @@
 	</div>
 	{#if $userSummary}
 		<div class="w-full flex justify-stretch px-5 py-1 -mt-1">
-			<PlanBadge class="w-full" productId={$userSummary.product_id} />
+			{#if $userSummary.product_id}
+				<PlanBadge class="w-full mt-0.25" productId={$userSummary.product_id} />
+			{:else}
+				<Button class="w-full mt-0.25" href="/pricing" size="sm">
+					{$LL.Pricing.SubscribeButton()}
+				</Button>
+			{/if}
 		</div>
 		<div class="w-full relative z-20 mt-4">
 			<div class="w-full h-2px rounded-full bg-c-bg-tertiary" />
@@ -51,6 +60,24 @@
 		<div class="w-full h-2px rounded-full bg-c-bg-tertiary" />
 	</div>
 	<div class="w-full flex flex-col justify-start">
+		{#if isSuperAdmin($userSummary?.roles || [])}
+			<DropdownItem href="/admin" onClick={closeAccountMenu}>
+				<div class="flex-1 min-w-0 flex items-center justify-start gap-2.5">
+					<IconWrench
+						class="transition w-6 h-6 text-c-text {!$isTouchscreen
+							? 'group-hover:text-c-primary'
+							: ''}"
+					/>
+					<p
+						class="flex-1 min-w-0 overflow-hidden overflow-ellipsis text-left transition text-c-on-bg {!$isTouchscreen
+							? 'group-hover:text-c-primary'
+							: ''}"
+					>
+						{$LL.Admin.AdminTab()}
+					</p>
+				</div>
+			</DropdownItem>
+		{/if}
 		<DropdownItem href="/account" onClick={closeAccountMenu}>
 			<div class="flex-1 min-w-0 flex items-center justify-start gap-2.5">
 				<IconUser

@@ -7,10 +7,9 @@ import type { RequestEvent } from '.svelte-kit/types/src/routes/$types';
 import '$ts/constants/supabase';
 import type { TAvailableThemes } from '$ts/stores/theme';
 import { apiUrl } from '$ts/constants/main';
+import { isSuperAdmin } from '$ts/helpers/admin/roles';
 
 loadAllLocales();
-
-const superAdminRole = 'SUPER_ADMIN';
 
 export const handle: Handle = async ({ event, resolve }) => {
 	let preferredLocale = getPreferredLocale(event);
@@ -37,12 +36,15 @@ export const handle: Handle = async ({ event, resolve }) => {
 
 	// protect requests to all routes that start with /admin
 	if (event.url.pathname.startsWith('/admin')) {
-		const redirectRoute = `/sign-in?redirect_to=${encodeURIComponent(event.url.pathname)}`;
+		const notSignedInRedirectRoute = `/sign-in?redirect_to=${encodeURIComponent(
+			event.url.pathname
+		)}`;
+		const notAuthorizedRedirectRoute = `/`;
 		try {
 			const { session } = await getSupabase(event);
 			const userId = session?.user?.id;
 			if (!userId) {
-				return notAuthorizedResponse(redirectRoute);
+				return notSignedInResponse(notSignedInRedirectRoute);
 			}
 			const res = await fetch(`${apiUrl.origin}/v1/user`, {
 				method: 'GET',
@@ -53,16 +55,16 @@ export const handle: Handle = async ({ event, resolve }) => {
 			});
 			if (!res.ok) {
 				console.log('Not OK', res.status);
-				return notAuthorizedResponse(redirectRoute);
+				return notAuthorizedResponse(notAuthorizedRedirectRoute);
 			}
 			const { roles } = await res.json();
-			if (roles?.includes(superAdminRole)) {
+			if (isSuperAdmin(roles)) {
 				return resolve(event);
 			}
-			return notAuthorizedResponse(redirectRoute);
+			return notAuthorizedResponse(notAuthorizedRedirectRoute);
 		} catch (error) {
 			console.log('Admin access error:', error);
-			return notAuthorizedResponse(redirectRoute);
+			return notAuthorizedResponse(notAuthorizedRedirectRoute);
 		}
 	}
 	return resolve(event);
@@ -74,7 +76,14 @@ const getPreferredLocale = ({ request }: RequestEvent) => {
 };
 
 const notAuthorizedResponse = (route: string) => {
-	return new Response(null, {
+	return new Response('Not authorized', {
+		status: 303,
+		headers: { location: route }
+	});
+};
+
+const notSignedInResponse = (route: string) => {
+	return new Response('Not logged in', {
 		status: 303,
 		headers: { location: route }
 	});

@@ -1,7 +1,6 @@
 <script lang="ts">
 	import SubtleButton from '$components/buttons/SubtleButton.svelte';
 	import type {
-		TButtonObjectState,
 		TButtonObjectsWithState,
 		TGenerationFullScreenModalType,
 		TSetButtonObjectWithState
@@ -87,7 +86,7 @@
 					$LL.Shared.UnknownTitle()}
 			</p>
 		</div>
-		{#if modalType === 'generate' || modalType === 'history'}
+		{#if modalType === 'generate' || modalType === 'history' || modalType === 'admin-gallery'}
 			<div class="min-w-[calc(50%-0.75rem)] flex flex-wrap items-center gap-3.5">
 				<div class="flex flex-col items-start gap-1">
 					<div

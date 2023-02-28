@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { page } from '$app/stores';
+	import AnchorOrDiv from '$components/AnchorOrDiv.svelte';
 	import CopyButton from '$components/buttons/CopyButton.svelte';
 	import DownloadGenerationButton from '$components/buttons/DownloadGenerationButton.svelte';
 	import GenerateButton from '$components/buttons/GenerateButton.svelte';
@@ -58,15 +58,18 @@
 	height={generation.height}
 />
 {#if !generation.selected_output.is_deleted}
-	<a
-		href="/gallery?generation={generation.id}"
-		on:click|preventDefault={(e) => {
+	<AnchorOrDiv
+		href={cardType === 'gallery' ? '/gallery?generation={generation.id}' : undefined}
+		anchorPreventDefault={cardType === 'gallery'}
+		onClick={(e) => {
 			if (doesContainTarget(e.target, [rightButtonContainer])) {
 				return;
 			}
 			mLogGalleryGenerationOpened(logProps);
 			activeGeneration.set(generation);
-			window.history.replaceState({}, '', `/gallery?generation=${generation.id}`);
+			if (cardType === 'gallery') {
+				window.history.replaceState({}, '', `/gallery?generation=${generation.id}`);
+			}
 		}}
 		class="w-full h-full absolute left-0 top-0 flex flex-col justify-between items-end overflow-hidden gap-4"
 	>
@@ -80,12 +83,14 @@
 				class="flex flex-row items-end justify-start transition transform 
 			translate-x-full group-focus-within:translate-x-0 group-hover:translate-x-0"
 			>
-				<CopyButton
-					class="p-1.5"
-					stringToCopy={generation.prompt.text}
-					bind:copied={promptCopied}
-					bind:copiedTimeout={promptCopiedTimeout}
-				/>
+				{#if cardType !== 'admin-gallery'}
+					<CopyButton
+						class="p-1.5"
+						stringToCopy={generation.prompt.text}
+						bind:copied={promptCopied}
+						bind:copiedTimeout={promptCopiedTimeout}
+					/>
+				{/if}
 				{#if cardType === 'generate' || cardType === 'history'}
 					<DownloadGenerationButton
 						class="p-1.5 -ml-1.5"
@@ -127,7 +132,7 @@
 				{/if}
 			</div>
 		</div>
-	</a>
+	</AnchorOrDiv>
 {/if}
 
 <style>

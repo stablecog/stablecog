@@ -26,6 +26,30 @@ export async function getUserGenerationFullOutputs({
 	return data;
 }
 
+export async function getAllUserGenerationFullOutputs({
+	cursor,
+	access_token
+}: {
+	cursor?: string;
+	access_token: string;
+}) {
+	console.log('getAllUserOutputs');
+	const query = new URLSearchParams();
+	query.append('per_page', perPage.toString());
+	if (cursor) {
+		query.append('cursor', cursor);
+	}
+	const url = `${apiUrl.origin}/v1/admin/outputs?${query.toString()}`;
+	const res = await fetch(url, {
+		headers: {
+			'Content-Type': 'application/json',
+			Authorization: 'Bearer ' + access_token
+		}
+	});
+	const data: TUserGenerationFullOutputsPage = await res.json();
+	return data;
+}
+
 export interface TUserGenerationFullOutputsPage {
 	outputs: TGenerationFullOutput[];
 	total_count?: number;
