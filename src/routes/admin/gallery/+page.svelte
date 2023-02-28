@@ -11,6 +11,12 @@
 		getAllUserGenerationFullOutputs,
 		type TUserGenerationFullOutputsPage
 	} from '$ts/queries/userGenerations';
+	import {
+		adminGalleryActionableItems,
+		currentAdminGalleryAction,
+		isAdminGalleryEditActive,
+		type TAdminGalleryAction
+	} from '$ts/stores/admin/gallery';
 	import { activeGeneration } from '$userStores/generation';
 	import { createInfiniteQuery, type CreateInfiniteQueryResult } from '@tanstack/svelte-query';
 
@@ -37,6 +43,29 @@
 		: undefined;
 
 	$: $allUserGenerationFullOutputsQuery?.data?.pages, onPagesChanged();
+
+	async function doActionOnItems(action: TAdminGalleryAction) {
+		const ids = $adminGalleryActionableItems;
+		try {
+			const res = await fetch('/api/admin/gallery', {
+				method: 'PUT',
+				headers: {
+					'Content-Type': 'application/json',
+					Authorization: `Bearer ${$page.data.session?.access_token}`
+				},
+				body: JSON.stringify({
+					action,
+					generation_output_ids: ids
+				})
+			});
+			if (!res.ok) throw new Error('Error approving/rejecting generation outputs');
+			const resJson = await res.json();
+			console.log(resJson);
+			adminGalleryActionableItems.set($adminGalleryActionableItems.filter((i) => !ids.includes(i)));
+		} catch (error) {
+			console.log(error);
+		}
+	}
 
 	const onPagesChanged = () => {
 		if (!$page.data.session?.user.id || !$allUserGenerationFullOutputsQuery) return;
@@ -76,6 +105,9 @@
 						({totalOutputs !== undefined ? totalOutputs : '...'})
 					</p>
 				</div>
+				<Button size="sm" onClick={() => isAdminGalleryEditActive.set(!$isAdminGalleryEditActive)}>
+					{$isAdminGalleryEditActive ? 'Stop Editing' : 'Edit'}
+				</Button>
 			</div>
 		</div>
 		<div class="w-full flex-1 max-w-7xl flex flex-col">

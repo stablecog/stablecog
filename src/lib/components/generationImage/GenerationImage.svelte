@@ -8,6 +8,12 @@
 	import IconTrashcan from '$components/icons/IconTrashcan.svelte';
 	import { doesContainTarget } from '$ts/helpers/doesContainTarget';
 	import { mLogGalleryGenerationOpened } from '$ts/helpers/loggers';
+	import {
+		adminGalleryActionableItems,
+		currentAdminGalleryAction,
+		isAdminGalleryEditActive,
+		type TAdminGalleryAction
+	} from '$ts/stores/admin/gallery';
 	import { advancedModeApp } from '$ts/stores/advancedMode';
 	import { userSummary } from '$ts/stores/user/summary';
 	import { activeGeneration, type TGenerationWithSelectedOutput } from '$userStores/generation';
@@ -26,6 +32,18 @@
 	let isImageLoaded = false;
 	const onImageLoaded = () => (isImageLoaded = true);
 
+	const addToAdminGalleryActionableItems = (id: string) => {
+		if (inAdminGalleryActionableItems(id)) return;
+		adminGalleryActionableItems.set([...$adminGalleryActionableItems, id]);
+	};
+
+	const inAdminGalleryActionableItems = (id: string) =>
+		$adminGalleryActionableItems.find((i) => i === id);
+
+	const removeFromAdminGalleryActionableItems = (id: string) => {
+		adminGalleryActionableItems.set($adminGalleryActionableItems.filter((i) => i !== id));
+	};
+
 	$: logProps = {
 		'SC - Generation Id': generation.id || generation.ui_id,
 		'SC - Plan': $userSummary?.product_id,
@@ -43,6 +61,33 @@
 		in:fade={{ duration: 300, easing: quadOut }}
 		class="w-full h-full absolute left-0 top-0 bg-c-bg-secondary/85 z-10"
 	/>
+{/if}
+{#if cardType === 'admin-gallery' && $isAdminGalleryEditActive}
+	<button
+		on:click={(e) => {
+			inAdminGalleryActionableItems(generation.selected_output.id)
+				? removeFromAdminGalleryActionableItems(generation.selected_output.id)
+				: addToAdminGalleryActionableItems(generation.selected_output.id);
+			e.currentTarget.blur();
+		}}
+		class="w-full h-full absolute left-0 top-0 flex flex-col justify-start items-start z-30"
+	>
+		<div class="w-full flex items-center justify-between p-1.5">
+			<div />
+			<div
+				transition:scale|local={{ duration: 150, easing: quadOut, opacity: 0, start: 0.5 }}
+				class="p-1 bg-c-bg-secondary rounded-full"
+			>
+				<div
+					class="w-8 h-8 rounded-full bg-c-primary transform transition duration-150 {$adminGalleryActionableItems.includes(
+						generation.selected_output.id
+					)
+						? 'scale-100 opacity-100'
+						: 'scale-50 opacity-0'}"
+				/>
+			</div>
+		</div>
+	</button>
 {/if}
 <img
 	on:load={onImageLoaded}
@@ -81,7 +126,7 @@
 			<div
 				bind:this={rightButtonContainer}
 				class="flex flex-row items-end justify-start transition transform 
-			translate-x-full group-focus-within:translate-x-0 group-hover:translate-x-0"
+				translate-x-full group-focus-within:translate-x-0 group-hover:translate-x-0"
 			>
 				{#if cardType !== 'admin-gallery'}
 					<CopyButton

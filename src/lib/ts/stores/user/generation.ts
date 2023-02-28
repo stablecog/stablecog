@@ -186,6 +186,8 @@ export interface TGenerationOutput {
 	created_at?: string;
 	updated_at?: string;
 	is_deleted?: boolean;
+	is_approved?: boolean;
+	is_rejected?: boolean;
 }
 
 export interface TGenerationFullOutput extends TGenerationOutput {
