@@ -257,6 +257,11 @@ const ptBr: Translation = {
 		AdminPanelTitle: 'Administrador',
 		DeleteButton: 'Deletar',
 		ApproveButton: 'Aprovar',
+		RejectButton: 'Reject',
+		EditButton: 'Edit',
+		EditViewButton: 'Edit View',
+		NormalViewButton: 'Normal View',
+		StopEditButton: 'Stop Editing',
 		NoGenerationsToReview: 'Sem gerações para revisar.',
 		ServersButton: 'Servidores',
 		AdminGalleryButton: 'Galeria',
@@ -268,7 +273,15 @@ const ptBr: Translation = {
 		Gallery: {
 			TotalTitle: 'Total',
 			ApprovedTitle: 'Aprovadas',
-			DeletedTitle: 'Deletadas'
+			DeletedTitle: 'Deletadas',
+			StatusDropdown: {
+				All: 'All',
+				Submitted: 'Submitted',
+				Approved: 'Approved',
+				Rejected: 'Rejected',
+				Deleted: 'Deleted',
+				Private: 'Private'
+			}
 		}
 	},
 	SignUp: {

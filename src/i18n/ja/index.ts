@@ -258,6 +258,11 @@ const ja: Translation = {
 		AdminPanelTitle: 'アドミ',
 		DeleteButton: '削除',
 		ApproveButton: '承認',
+		RejectButton: 'Reject',
+		EditButton: 'Edit',
+		EditViewButton: 'Edit View',
+		NormalViewButton: 'Normal View',
+		StopEditButton: 'Stop Editing',
 		NoGenerationsToReview: 'レビューする生成がありません。',
 		ServersButton: 'サーバ',
 		AdminGalleryButton: 'ギャラリー',
@@ -269,7 +274,15 @@ const ja: Translation = {
 		Gallery: {
 			TotalTitle: '合計',
 			ApprovedTitle: '承認済',
-			DeletedTitle: '削除済'
+			DeletedTitle: '削除済',
+			StatusDropdown: {
+				All: 'All',
+				Submitted: 'Submitted',
+				Approved: 'Approved',
+				Rejected: 'Rejected',
+				Deleted: 'Deleted',
+				Private: 'Private'
+			}
 		}
 	},
 	SignUp: {

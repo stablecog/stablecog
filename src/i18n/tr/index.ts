@@ -257,6 +257,11 @@ const tr: Translation = {
 		AdminPanelTitle: 'Yönetici',
 		DeleteButton: 'Sil',
 		ApproveButton: 'Onayla',
+		RejectButton: 'Reject',
+		EditButton: 'Edit',
+		EditViewButton: 'Edit View',
+		NormalViewButton: 'Normal View',
+		StopEditButton: 'Stop Editing',
 		NoGenerationsToReview: 'İncelecek üretim yok.',
 		ServersButton: 'Sunucular',
 		AdminGalleryButton: 'Galeri',
@@ -268,7 +273,15 @@ const tr: Translation = {
 		Gallery: {
 			TotalTitle: 'Toplam',
 			ApprovedTitle: 'Onaylanan',
-			DeletedTitle: 'Silinen'
+			DeletedTitle: 'Silinen',
+			StatusDropdown: {
+				All: 'All',
+				Submitted: 'Submitted',
+				Approved: 'Approved',
+				Rejected: 'Rejected',
+				Deleted: 'Deleted',
+				Private: 'Private'
+			}
 		}
 	},
 	SignUp: {

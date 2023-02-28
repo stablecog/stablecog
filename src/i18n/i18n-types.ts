@@ -744,6 +744,26 @@ type RootTranslation = {
 		 */
 		ApproveButton: string
 		/**
+		 * R​e​j​e​c​t
+		 */
+		RejectButton: string
+		/**
+		 * E​d​i​t
+		 */
+		EditButton: string
+		/**
+		 * E​d​i​t​ ​V​i​e​w
+		 */
+		EditViewButton: string
+		/**
+		 * N​o​r​m​a​l​ ​V​i​e​w
+		 */
+		NormalViewButton: string
+		/**
+		 * S​t​o​p​ ​E​d​i​t​i​n​g
+		 */
+		StopEditButton: string
+		/**
 		 * N​o​ ​g​e​n​e​r​a​t​i​o​n​s​ ​t​o​ ​r​e​v​i​e​w​.
 		 */
 		NoGenerationsToReview: string
@@ -788,6 +808,32 @@ type RootTranslation = {
 			 * D​e​l​e​t​e​d
 			 */
 			DeletedTitle: string
+			StatusDropdown: {
+				/**
+				 * A​l​l
+				 */
+				All: string
+				/**
+				 * S​u​b​m​i​t​t​e​d
+				 */
+				Submitted: string
+				/**
+				 * A​p​p​r​o​v​e​d
+				 */
+				Approved: string
+				/**
+				 * R​e​j​e​c​t​e​d
+				 */
+				Rejected: string
+				/**
+				 * D​e​l​e​t​e​d
+				 */
+				Deleted: string
+				/**
+				 * P​r​i​v​a​t​e
+				 */
+				Private: string
+			}
 		}
 	}
 	SignUp: {
@@ -2024,6 +2070,26 @@ export type TranslationFunctions = {
 		 */
 		ApproveButton: () => LocalizedString
 		/**
+		 * Reject
+		 */
+		RejectButton: () => LocalizedString
+		/**
+		 * Edit
+		 */
+		EditButton: () => LocalizedString
+		/**
+		 * Edit View
+		 */
+		EditViewButton: () => LocalizedString
+		/**
+		 * Normal View
+		 */
+		NormalViewButton: () => LocalizedString
+		/**
+		 * Stop Editing
+		 */
+		StopEditButton: () => LocalizedString
+		/**
 		 * No generations to review.
 		 */
 		NoGenerationsToReview: () => LocalizedString
@@ -2068,6 +2134,32 @@ export type TranslationFunctions = {
 			 * Deleted
 			 */
 			DeletedTitle: () => LocalizedString
+			StatusDropdown: {
+				/**
+				 * All
+				 */
+				All: () => LocalizedString
+				/**
+				 * Submitted
+				 */
+				Submitted: () => LocalizedString
+				/**
+				 * Approved
+				 */
+				Approved: () => LocalizedString
+				/**
+				 * Rejected
+				 */
+				Rejected: () => LocalizedString
+				/**
+				 * Deleted
+				 */
+				Deleted: () => LocalizedString
+				/**
+				 * Private
+				 */
+				Private: () => LocalizedString
+			}
 		}
 	}
 	SignUp: {

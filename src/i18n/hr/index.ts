@@ -256,6 +256,11 @@ const hr: Translation = {
 		AdminPanelTitle: 'Administrator',
 		DeleteButton: 'Izbriši',
 		ApproveButton: 'Odobri',
+		RejectButton: 'Reject',
+		EditButton: 'Edit',
+		EditViewButton: 'Edit View',
+		NormalViewButton: 'Normal View',
+		StopEditButton: 'Stop Editing',
 		NoGenerationsToReview: 'Nema generacija za pregled.',
 		ServersButton: 'Serveri',
 		AdminGalleryButton: 'Galerija',
@@ -267,7 +272,15 @@ const hr: Translation = {
 		Gallery: {
 			TotalTitle: 'Ukupno',
 			ApprovedTitle: 'Odobreno',
-			DeletedTitle: 'Izbrisano'
+			DeletedTitle: 'Izbrisano',
+			StatusDropdown: {
+				All: 'All',
+				Submitted: 'Submitted',
+				Approved: 'Approved',
+				Rejected: 'Rejected',
+				Deleted: 'Deleted',
+				Private: 'Private'
+			}
 		}
 	},
 	SignUp: {

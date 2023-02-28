@@ -4,10 +4,14 @@
 	import SubtleButton from '$components/buttons/SubtleButton.svelte';
 	import GenerationFullScreen from '$components/generationFullScreen/GenerationFullScreen.svelte';
 	import GenerationGridInfinite from '$components/grids/GenerationGridInfinite.svelte';
+	import IconFunnel from '$components/icons/IconFunnel.svelte';
 	import IconLoadingSlim from '$components/icons/IconLoadingSlim.svelte';
+	import IconSadFace from '$components/icons/IconSadFace.svelte';
 	import MetaTag from '$components/MetaTag.svelte';
 	import Morpher from '$components/Morpher.svelte';
 	import SignInCard from '$components/SignInCard.svelte';
+	import TabLikeDropdown from '$components/tabBars/TabLikeDropdown.svelte';
+	import ToggleIndicator from '$components/ToggleIndicator.svelte';
 	import LL from '$i18n/i18n-svelte';
 	import { apiUrl, canonicalUrl } from '$ts/constants/main';
 	import {
@@ -16,8 +20,9 @@
 	} from '$ts/queries/userGenerations';
 	import {
 		adminGalleryActionableItems,
-		currentAdminGalleryAction,
+		adminGalleryFilter,
 		isAdminGalleryEditActive,
+		adminGalleryScheduledIds,
 		type TAdminGalleryAction
 	} from '$ts/stores/admin/gallery';
 	import { navbarHeight } from '$ts/stores/navbarHeight';
@@ -27,6 +32,8 @@
 		useQueryClient,
 		type CreateInfiniteQueryResult
 	} from '@tanstack/svelte-query';
+	import { quadOut } from 'svelte/easing';
+	import { fly } from 'svelte/transition';
 
 	let totalOutputs: number;
 
@@ -42,7 +49,8 @@
 				queryFn: (lastPage) => {
 					return getAllUserGenerationFullOutputs({
 						access_token: $page.data.session?.access_token || '',
-						cursor: lastPage?.pageParam
+						cursor: lastPage?.pageParam,
+						gallery_status: $adminGalleryFilter
 					});
 				},
 				getNextPageParam: (lastPage: TUserGenerationFullOutputsPage) => {
@@ -57,13 +65,13 @@
 	let approveOrRejectStatus: 'idle' | 'approving' | 'rejecting' = 'idle';
 
 	async function doActionOnItems(action: TAdminGalleryAction) {
-		const ids = $adminGalleryActionableItems;
 		if (action === 'approve') {
 			approveOrRejectStatus = 'approving';
 		} else if (action === 'reject') {
 			approveOrRejectStatus = 'rejecting';
 		}
 		try {
+			const ids = $adminGalleryScheduledIds;
 			const res = await fetch(`${apiUrl.origin}/v1/admin/gallery`, {
 				method: 'PUT',
 				headers: {
@@ -77,7 +85,9 @@
 			});
 			if (!res.ok) throw new Error('Error approving/rejecting generation outputs');
 			const resJson = await res.json();
-			adminGalleryActionableItems.set($adminGalleryActionableItems.filter((i) => !ids.includes(i)));
+			adminGalleryActionableItems.set(
+				$adminGalleryActionableItems.filter((i) => !ids.includes(i.id))
+			);
 			queryClient.setQueryData(['user_generation_full_outputs'], (data: any) => ({
 				...data,
 				pages: data.pages.map((page: TUserGenerationFullOutputsPage) => {
@@ -149,72 +159,125 @@
 		<div
 			style="top: {$navbarHeight + 4}px"
 			class="w-full max-w-7xl flex flex-wrap gap-3 md:gap-4 p-2 md:p-3 shadow-lg shadow-c-shadow/[var(--o-shadow-strong)] 
-			rounded-xl bg-c-bg-secondary sticky z-10 -mt-2"
+			rounded-2xl bg-c-bg sticky z-10 -mt-2 border-2 border-c-bg-secondary"
 		>
-			<SubtleButton onClick={() => isAdminGalleryEditActive.set(!$isAdminGalleryEditActive)}>
-				<p class="text-sm md:text-base px-1 md:px-3">
-					{$isAdminGalleryEditActive ? 'Stop Editing' : 'Edit'}
-				</p>
+			<SubtleButton
+				class="z-10"
+				onClick={() => isAdminGalleryEditActive.set(!$isAdminGalleryEditActive)}
+			>
+				<div class="flex items-center justify-center gap-4 px-1 md:px-2">
+					<p class="text-sm md:text-base">
+						{$LL.Admin.EditViewButton()}
+					</p>
+					<div class="-mr-1">
+						<ToggleIndicator isToggled={$isAdminGalleryEditActive} />
+					</div>
+				</div>
 			</SubtleButton>
 			{#if $isAdminGalleryEditActive}
-				<SubtleButton
-					disabled={approveOrRejectStatus === 'rejecting'}
-					loading={approveOrRejectStatus === 'approving'}
-					onClick={() => doActionOnItems('approve')}
+				<div
+					transition:fly|local={{ opacity: 0, x: -100, easing: quadOut, duration: 150 }}
+					class="flex flex-wrap gap-3 md:gap-4"
 				>
-					<Morpher morphed={approveOrRejectStatus === 'approving'}>
-						<p
-							slot="item-0"
-							class="text-sm md:text-base px-1 md:px-3 text-c-success {approveOrRejectStatus !==
-							'approving'
-								? 'opacity-100 scale-100'
-								: 'opacity-0 scale-50'}"
+					{#if $adminGalleryFilter !== 'approved'}
+						<SubtleButton
+							disabled={approveOrRejectStatus === 'rejecting'}
+							loading={approveOrRejectStatus === 'approving'}
+							onClick={() => doActionOnItems('approve')}
 						>
-							Approve ({$adminGalleryActionableItems.length})
-						</p>
-						<div slot="item-1">
-							<IconLoadingSlim class="w-8 h-8 text-c-success animate-spin-faster" />
-						</div>
-					</Morpher>
-				</SubtleButton>
-				<SubtleButton
-					disabled={approveOrRejectStatus === 'approving'}
-					loading={approveOrRejectStatus === 'rejecting'}
-					onClick={() => doActionOnItems('reject')}
-				>
-					<Morpher morphed={approveOrRejectStatus === 'rejecting'}>
-						<p
-							slot="item-0"
-							class="text-sm md:text-base px-1 md:px-3 text-c-danger {approveOrRejectStatus !==
-							'rejecting'
-								? 'opacity-100 scale-100'
-								: 'opacity-0 scale-50'}"
+							<Morpher morphed={approveOrRejectStatus === 'approving'}>
+								<p
+									slot="item-0"
+									class="text-sm md:text-base text-c-success px-1 md:px-3 {approveOrRejectStatus !==
+									'approving'
+										? 'opacity-100 scale-100'
+										: 'opacity-0 scale-50'}"
+								>
+									{$LL.Admin.ApproveButton()}<span
+										class="text-sm ml-1 font-normal text-c-success/75"
+										>({$adminGalleryScheduledIds.length})</span
+									>
+								</p>
+								<div slot="item-1">
+									<IconLoadingSlim class="w-8 h-8 text-c-success animate-spin-faster" />
+								</div>
+							</Morpher>
+						</SubtleButton>
+					{/if}
+					{#if $adminGalleryFilter !== 'rejected'}
+						<SubtleButton
+							disabled={approveOrRejectStatus === 'approving'}
+							loading={approveOrRejectStatus === 'rejecting'}
+							onClick={() => doActionOnItems('reject')}
 						>
-							Reject ({$adminGalleryActionableItems.length})
-						</p>
-						<div slot="item-1">
-							<IconLoadingSlim class="w-8 h-8 text-c-danger animate-spin-faster" />
-						</div>
-					</Morpher>
-				</SubtleButton>
+							<Morpher morphed={approveOrRejectStatus === 'rejecting'}>
+								<p
+									slot="item-0"
+									class="text-sm md:text-base text-c-danger px-1 md:px-3 {approveOrRejectStatus !==
+									'rejecting'
+										? 'opacity-100 scale-100'
+										: 'opacity-0 scale-50'}"
+								>
+									{$LL.Admin.RejectButton()}<span class="text-sm ml-1 font-normal text-c-danger/75"
+										>({$adminGalleryScheduledIds.length})</span
+									>
+								</p>
+								<div slot="item-1">
+									<IconLoadingSlim class="w-8 h-8 text-c-danger animate-spin-faster" />
+								</div>
+							</Morpher>
+						</SubtleButton>
+					{/if}
+				</div>
 			{/if}
+			<div class="w-full md:w-64 max-w-full ml-auto">
+				<TabLikeDropdown
+					name="Filter"
+					items={[
+						{ label: $LL.Admin.Gallery.StatusDropdown.Submitted(), value: 'submitted' },
+						{ label: $LL.Admin.Gallery.StatusDropdown.Approved(), value: 'approved' },
+						{ label: $LL.Admin.Gallery.StatusDropdown.Rejected(), value: 'rejected' },
+						{ label: $LL.Admin.Gallery.StatusDropdown.Private(), value: 'not_submitted' }
+					]}
+					bind:value={$adminGalleryFilter}
+				>
+					<div slot="title" class="p-3.5 flex items-center justify-center">
+						<IconFunnel class="w-6 h-6 text-c-on-bg/35" />
+					</div>
+				</TabLikeDropdown>
+			</div>
 		</div>
 		<div class="w-full flex-1 max-w-7xl flex flex-col">
-			{#if allUserGenerationFullOutputsQuery !== undefined}
-				{#if $allUserGenerationFullOutputsQuery?.data?.pages.length === 1 && $allUserGenerationFullOutputsQuery.data.pages[0].outputs.length === 0}
-					<div class="w-full flex-1 flex flex-col items-center py-8 px-5">
-						<div class="flex flex-col my-auto items-center gap-6">
-							<p class="text-c-on-bg/50">{$LL.History.NoGenerationsYet()}</p>
-							<Button href="/">{$LL.Shared.StartGeneratingButton()}</Button>
-							<div class="h-[1vh]" />
-						</div>
+			{#if allUserGenerationFullOutputsQuery === undefined || $allUserGenerationFullOutputsQuery === undefined || $allUserGenerationFullOutputsQuery.isInitialLoading || ($allUserGenerationFullOutputsQuery.isFetching && !$allUserGenerationFullOutputsQuery.isFetchingNextPage)}
+				<div
+					class="w-full flex flex-col text-c-on-bg/60 flex-1 py-6 px-4 justify-center items-center text-center"
+				>
+					<div class="w-16 h-16">
+						<IconLoadingSlim class="animate-spin-faster w-full h-full" />
 					</div>
-				{:else}
-					<GenerationGridInfinite
-						generationsQuery={allUserGenerationFullOutputsQuery}
-						cardType="admin-gallery"
-					/>
-				{/if}
+					<p class="mt-2 opacity-0">{$LL.Gallery.SearchingTitle()}</p>
+					<div class="h-[2vh]" />
+				</div>
+			{:else if $allUserGenerationFullOutputsQuery?.data?.pages?.length === 1 && $allUserGenerationFullOutputsQuery.data.pages[0].outputs.length === 0}
+				<div class="w-full flex-1 flex flex-col items-center py-8 px-5">
+					<div class="flex flex-col my-auto items-center gap-6">
+						<p class="text-c-on-bg/50">{$LL.History.NoGenerationsYet()}</p>
+						<Button href="/">{$LL.Shared.StartGeneratingButton()}</Button>
+						<div class="h-[1vh]" />
+					</div>
+				</div>
+			{:else if $allUserGenerationFullOutputsQuery.isError}
+				<div class="w-full flex-1 flex flex-col items-center py-8 px-5">
+					<div class="flex flex-col my-auto items-center gap-2">
+						<IconSadFace class="w-16 h-16 text-c-on-bg/50" />
+						<p class="text-c-on-bg/50">{$LL.Error.SomethingWentWrong()}</p>
+					</div>
+				</div>
+			{:else}
+				<GenerationGridInfinite
+					generationsQuery={allUserGenerationFullOutputsQuery}
+					cardType="admin-gallery"
+				/>
 			{/if}
 		</div>
 	{/if}

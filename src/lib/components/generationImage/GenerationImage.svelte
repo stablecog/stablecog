@@ -10,7 +10,12 @@
 	import IconTrashcan from '$components/icons/IconTrashcan.svelte';
 	import { doesContainTarget } from '$ts/helpers/doesContainTarget';
 	import { mLogGalleryGenerationOpened } from '$ts/helpers/loggers';
-	import { adminGalleryActionableItems, isAdminGalleryEditActive } from '$ts/stores/admin/gallery';
+	import {
+		adminGalleryActionableItems,
+		adminGalleryFilter,
+		isAdminGalleryEditActive,
+		adminGalleryScheduledIds
+	} from '$ts/stores/admin/gallery';
 	import { advancedModeApp } from '$ts/stores/advancedMode';
 	import { userSummary } from '$ts/stores/user/summary';
 	import { activeGeneration, type TGenerationWithSelectedOutput } from '$userStores/generation';
@@ -29,22 +34,32 @@
 	let isImageLoaded = false;
 	const onImageLoaded = () => (isImageLoaded = true);
 
-	let inAdminGalleryActionable = false;
+	$: inAdminGalleryScheduledIds = $isAdminGalleryEditActive
+		? $adminGalleryScheduledIds.includes(generation.selected_output.id)
+		: false;
 
 	const addToAdminGalleryActionableItems = (id: string) => {
-		if (inAdminGalleryActionable) return;
-		adminGalleryActionableItems.set([...$adminGalleryActionableItems, id]);
+		if (inAdminGalleryScheduledIds) return;
+		adminGalleryActionableItems.set([
+			...$adminGalleryActionableItems,
+			{
+				id,
+				filter: $adminGalleryFilter
+			}
+		]);
 	};
 
 	const removeFromAdminGalleryActionableItems = (id: string) => {
-		adminGalleryActionableItems.set($adminGalleryActionableItems.filter((i) => i !== id));
+		adminGalleryActionableItems.set($adminGalleryActionableItems.filter((i) => i.id !== id));
 	};
 
-	const setInAdminGalleryActionable = () => {
-		inAdminGalleryActionable = $adminGalleryActionableItems.includes(generation.selected_output.id);
-	};
-
-	$: [$adminGalleryActionableItems, generation], setInAdminGalleryActionable();
+	$: showAdminGalleryBarrier =
+		cardType === 'admin-gallery' &&
+		$isAdminGalleryEditActive &&
+		((generation.selected_output.gallery_status === 'approved' &&
+			$adminGalleryFilter !== 'approved') ||
+			(generation.selected_output.gallery_status === 'rejected' &&
+				$adminGalleryFilter !== 'rejected'));
 
 	$: logProps = {
 		'SC - Generation Id': generation.id || generation.ui_id,
@@ -64,7 +79,7 @@
 		class="w-full h-full absolute left-0 top-0 bg-c-bg-secondary/85 z-10"
 	/>
 {/if}
-{#if cardType === 'admin-gallery' && $isAdminGalleryEditActive && (generation.selected_output.gallery_status === 'approved' || generation.selected_output.gallery_status === 'rejected')}
+{#if showAdminGalleryBarrier}
 	<div class="w-full h-full absolute left-0 top-0 flex items-center justify-center p-4 z-20">
 		<div in:scale={{ duration: 300, easing: quadOut, opacity: 0, start: 0.5 }}>
 			{#if generation.selected_output.gallery_status === 'approved'}
@@ -82,18 +97,18 @@
 {#if cardType === 'admin-gallery' && $isAdminGalleryEditActive}
 	<button
 		on:click={(e) => {
-			inAdminGalleryActionable
+			inAdminGalleryScheduledIds
 				? removeFromAdminGalleryActionableItems(generation.selected_output.id)
 				: addToAdminGalleryActionableItems(generation.selected_output.id);
 			e.currentTarget.blur();
 		}}
 		class="w-full h-full absolute left-0 top-0 flex flex-col justify-start items-start z-30"
 	>
-		<div class="w-full flex items-center justify-between transform transition p-1">
+		<div class="w-full flex items-center justify-between transform transition p-1.5">
 			<div />
 			<div
 				transition:fly|local={{ duration: 200, easing: quadOut, y: -50 }}
-				class="rounded-full ring-2 ring-c-primary w-5 h-5 transition p-0.75 {inAdminGalleryActionable
+				class="rounded-full ring-2 ring-c-primary w-6 h-6 transition p-0.75 {inAdminGalleryScheduledIds
 					? 'scale-100 opacity-100'
 					: 'scale-0 opacity-0'}"
 			>
@@ -107,8 +122,8 @@
 	loading="lazy"
 	class="w-full h-full absolute left-0 top-0 duration-300 transition transform {isImageLoaded
 		? 'opacity-100'
-		: 'opacity-0'} {$isAdminGalleryEditActive && inAdminGalleryActionable
-		? 'translate-y-8'
+		: 'opacity-0'} {$isAdminGalleryEditActive && inAdminGalleryScheduledIds
+		? 'translate-y-10'
 		: 'translate-0'}"
 	src={useUpscaledImage && generation.selected_output.upscaled_image_url
 		? generation.selected_output.upscaled_image_url

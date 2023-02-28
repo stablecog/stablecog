@@ -253,6 +253,11 @@ const zhHans: Translation = {
 		AdminPanelTitle: 'Admin',
 		DeleteButton: 'Delete',
 		ApproveButton: 'Approve',
+		RejectButton: 'Reject',
+		EditButton: 'Edit',
+		EditViewButton: 'Edit View',
+		NormalViewButton: 'Normal View',
+		StopEditButton: 'Stop Editing',
 		NoGenerationsToReview: 'No generations to review.',
 		ServersButton: 'Servers',
 		AdminGalleryButton: 'Gallery',
@@ -264,7 +269,15 @@ const zhHans: Translation = {
 		Gallery: {
 			TotalTitle: 'Total',
 			ApprovedTitle: 'Approved',
-			DeletedTitle: 'Deleted'
+			DeletedTitle: 'Deleted',
+			StatusDropdown: {
+				All: 'All',
+				Submitted: 'Submitted',
+				Approved: 'Approved',
+				Rejected: 'Rejected',
+				Deleted: 'Deleted',
+				Private: 'Private'
+			}
 		}
 	},
 	SignUp: {

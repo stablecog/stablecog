@@ -258,6 +258,11 @@ const fr: Translation = {
 		AdminPanelTitle: 'Administration',
 		DeleteButton: 'Supprimer',
 		ApproveButton: 'Approuver',
+		RejectButton: 'Reject',
+		EditButton: 'Edit',
+		EditViewButton: 'Edit View',
+		NormalViewButton: 'Normal View',
+		StopEditButton: 'Stop Editing',
 		NoGenerationsToReview: 'Aucune image à approuver.',
 		ServersButton: 'Serveurs',
 		AdminGalleryButton: 'Galerie',
@@ -269,7 +274,15 @@ const fr: Translation = {
 		Gallery: {
 			TotalTitle: 'Total',
 			ApprovedTitle: 'Approuvé',
-			DeletedTitle: 'Supprimé'
+			DeletedTitle: 'Supprimé',
+			StatusDropdown: {
+				All: 'All',
+				Submitted: 'Submitted',
+				Approved: 'Approved',
+				Rejected: 'Rejected',
+				Deleted: 'Deleted',
+				Private: 'Private'
+			}
 		}
 	},
 	SignUp: {

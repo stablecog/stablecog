@@ -28,9 +28,11 @@ export async function getUserGenerationFullOutputs({
 
 export async function getAllUserGenerationFullOutputs({
 	cursor,
-	access_token
+	access_token,
+	gallery_status
 }: {
 	cursor?: string;
+	gallery_status?: string;
 	access_token: string;
 }) {
 	console.log('getAllUserOutputs');
@@ -38,6 +40,9 @@ export async function getAllUserGenerationFullOutputs({
 	query.append('per_page', perPage.toString());
 	if (cursor) {
 		query.append('cursor', cursor);
+	}
+	if (gallery_status) {
+		query.append('gallery_status', gallery_status);
 	}
 	const url = `${apiUrl.origin}/v1/admin/outputs?${query.toString()}`;
 	const res = await fetch(url, {

@@ -258,6 +258,11 @@ const vi: Translation = {
 		AdminPanelTitle: 'Quản trị',
 		DeleteButton: 'Xóa',
 		ApproveButton: 'Phê duyệt',
+		RejectButton: 'Reject',
+		EditButton: 'Edit',
+		EditViewButton: 'Edit View',
+		NormalViewButton: 'Normal View',
+		StopEditButton: 'Stop Editing',
 		NoGenerationsToReview: 'Chưa có ảnh để duyệt.',
 		ServersButton: 'Máy chủ',
 		AdminGalleryButton: 'Thư viện',
@@ -269,7 +274,15 @@ const vi: Translation = {
 		Gallery: {
 			TotalTitle: 'Tổng',
 			ApprovedTitle: 'Đã duyệt',
-			DeletedTitle: 'Đã xóa'
+			DeletedTitle: 'Đã xóa',
+			StatusDropdown: {
+				All: 'All',
+				Submitted: 'Submitted',
+				Approved: 'Approved',
+				Rejected: 'Rejected',
+				Deleted: 'Deleted',
+				Private: 'Private'
+			}
 		}
 	},
 	SignUp: {

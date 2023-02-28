@@ -257,6 +257,11 @@ const ko: Translation = {
 		AdminPanelTitle: '관리자',
 		DeleteButton: '삭제하기',
 		ApproveButton: '확인됨',
+		RejectButton: 'Reject',
+		EditButton: 'Edit',
+		EditViewButton: 'Edit View',
+		NormalViewButton: 'Normal View',
+		StopEditButton: 'Stop Editing',
 		NoGenerationsToReview: '확인할 이미지 없음',
 		ServersButton: '서버 관리',
 		AdminGalleryButton: '갤러리',
@@ -268,7 +273,15 @@ const ko: Translation = {
 		Gallery: {
 			TotalTitle: '전체',
 			ApprovedTitle: '승인됨',
-			DeletedTitle: '삭제됨'
+			DeletedTitle: '삭제됨',
+			StatusDropdown: {
+				All: 'All',
+				Submitted: 'Submitted',
+				Approved: 'Approved',
+				Rejected: 'Rejected',
+				Deleted: 'Deleted',
+				Private: 'Private'
+			}
 		}
 	},
 	SignUp: {
