@@ -254,3 +254,13 @@ interface IGallerySearchProps {
 	'SC - Plan'?: string;
 	'SC - Search Query': string;
 }
+
+interface TLogProps {
+	event: string;
+	props: { [key: string]: string };
+}
+
+export function logEvent(logProps: TLogProps) {
+	mixpanel.track(logProps.event, logProps.props);
+	posthog.capture(logProps.event, logProps.props);
+}
