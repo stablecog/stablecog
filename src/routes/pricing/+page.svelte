@@ -19,13 +19,15 @@
 		PUBLIC_STRIPE_PRODUCT_ID_STARTER_SUBSCRIPTION_TEST,
 		PUBLIC_STRIPE_PRODUCT_ID_PRO_SUBSCRIPTION_TEST,
 		PUBLIC_STRIPE_PRODUCT_ID_ULTIMATE_SUBSCRIPTION_TEST,
-		PUBLIC_STRIPE_PRICE_ID_1500_CREDITS_TEST,
-		PUBLIC_STRIPE_PRODUCT_ID_1500_CREDITS_TEST
+		PUBLIC_STRIPE_PRICE_ID_MEDIUM_PACK_TEST,
+		PUBLIC_STRIPE_PRODUCT_ID_MEDIUM_PACK_TEST,
+		PUBLIC_STRIPE_PRODUCT_ID_LARGE_PACK_TEST,
+		PUBLIC_STRIPE_PRICE_ID_LARGE_PACK_TEST
 	} from '$env/static/public';
 	import {
 		STRIPE_CURRENCY_TO_SYMBOL,
 		STRIPE_PRODUCT_ID_OBJECTS_SUBSCRIPTIONS_MO,
-		STRIPE_PRODUCT_ID_OBJECTS_CREDITS
+		STRIPE_PRODUCT_ID_OBJECTS_CREDIT_PACKS
 	} from '$ts/constants/stripePublic';
 	import { userSummary } from '$ts/stores/user/summary';
 
@@ -47,7 +49,7 @@
 							PUBLIC_STRIPE_PRODUCT_ID_STARTER_SUBSCRIPTION_TEST
 					  ].prices[PUBLIC_STRIPE_PRICE_ID_STARTER_SUBSCRIPTION_MO_TEST].currencies.usd.amount,
 			features: [
-				`${$LL.Pricing.Features.MonthlyGenerations({
+				`${$LL.Pricing.Features.MonthlyImages({
 					count:
 						STRIPE_PRODUCT_ID_OBJECTS_SUBSCRIPTIONS_MO[
 							PUBLIC_STRIPE_PRODUCT_ID_STARTER_SUBSCRIPTION_TEST
@@ -73,7 +75,7 @@
 							PUBLIC_STRIPE_PRODUCT_ID_PRO_SUBSCRIPTION_TEST
 					  ].prices[PUBLIC_STRIPE_PRICE_ID_PRO_SUBSCRIPTION_MO_TEST].currencies.usd.amount,
 			features: [
-				`${$LL.Pricing.Features.MonthlyGenerations({
+				`${$LL.Pricing.Features.MonthlyImages({
 					count:
 						STRIPE_PRODUCT_ID_OBJECTS_SUBSCRIPTIONS_MO[
 							PUBLIC_STRIPE_PRODUCT_ID_PRO_SUBSCRIPTION_TEST
@@ -101,7 +103,7 @@
 							PUBLIC_STRIPE_PRODUCT_ID_ULTIMATE_SUBSCRIPTION_TEST
 					  ].prices[PUBLIC_STRIPE_PRICE_ID_ULTIMATE_SUBSCRIPTION_MO_TEST].currencies.usd.amount,
 			features: [
-				`${$LL.Pricing.Features.MonthlyGenerations({
+				`${$LL.Pricing.Features.MonthlyImages({
 					count:
 						STRIPE_PRODUCT_ID_OBJECTS_SUBSCRIPTIONS_MO[
 							PUBLIC_STRIPE_PRODUCT_ID_ULTIMATE_SUBSCRIPTION_TEST
@@ -116,24 +118,49 @@
 
 	$: creditPackCards = [
 		{
-			title: '1500 Credits',
-			priceId: PUBLIC_STRIPE_PRICE_ID_1500_CREDITS_TEST,
-			productId: PUBLIC_STRIPE_PRICE_ID_1500_CREDITS_TEST,
+			title: 'Medium Pack',
+			priceId: PUBLIC_STRIPE_PRICE_ID_MEDIUM_PACK_TEST,
+			productId: PUBLIC_STRIPE_PRICE_ID_MEDIUM_PACK_TEST,
 			currency: data.currency,
 			currencySymbol: STRIPE_CURRENCY_TO_SYMBOL[data.currency],
 			amount:
 				data.currency === 'eur'
-					? STRIPE_PRODUCT_ID_OBJECTS_CREDITS[PUBLIC_STRIPE_PRODUCT_ID_1500_CREDITS_TEST].prices[
-							PUBLIC_STRIPE_PRICE_ID_1500_CREDITS_TEST
+					? STRIPE_PRODUCT_ID_OBJECTS_CREDIT_PACKS[PUBLIC_STRIPE_PRODUCT_ID_MEDIUM_PACK_TEST]
+							.prices[PUBLIC_STRIPE_PRICE_ID_MEDIUM_PACK_TEST].currencies.eur.amount
+					: STRIPE_PRODUCT_ID_OBJECTS_CREDIT_PACKS[PUBLIC_STRIPE_PRODUCT_ID_MEDIUM_PACK_TEST]
+							.prices[PUBLIC_STRIPE_PRICE_ID_MEDIUM_PACK_TEST].currencies.usd.amount,
+			features: [
+				$LL.Pricing.Features.Images({
+					count:
+						STRIPE_PRODUCT_ID_OBJECTS_CREDIT_PACKS[
+							PUBLIC_STRIPE_PRODUCT_ID_MEDIUM_PACK_TEST
+						].images.toLocaleString($locale)
+				}),
+				$LL.Pricing.Features.NeverExpires()
+			],
+			ringClass: 'ring-c-bg-secondary',
+			badgeText: undefined,
+			badgeClasses: undefined
+		},
+		{
+			title: 'Large Pack',
+			priceId: PUBLIC_STRIPE_PRICE_ID_LARGE_PACK_TEST,
+			productId: PUBLIC_STRIPE_PRICE_ID_LARGE_PACK_TEST,
+			currency: data.currency,
+			currencySymbol: STRIPE_CURRENCY_TO_SYMBOL[data.currency],
+			amount:
+				data.currency === 'eur'
+					? STRIPE_PRODUCT_ID_OBJECTS_CREDIT_PACKS[PUBLIC_STRIPE_PRODUCT_ID_LARGE_PACK_TEST].prices[
+							PUBLIC_STRIPE_PRICE_ID_LARGE_PACK_TEST
 					  ].currencies.eur.amount
-					: STRIPE_PRODUCT_ID_OBJECTS_CREDITS[PUBLIC_STRIPE_PRODUCT_ID_1500_CREDITS_TEST].prices[
-							PUBLIC_STRIPE_PRICE_ID_1500_CREDITS_TEST
+					: STRIPE_PRODUCT_ID_OBJECTS_CREDIT_PACKS[PUBLIC_STRIPE_PRODUCT_ID_LARGE_PACK_TEST].prices[
+							PUBLIC_STRIPE_PRICE_ID_LARGE_PACK_TEST
 					  ].currencies.usd.amount,
 			features: [
-				$LL.Pricing.Features.Generations({
+				$LL.Pricing.Features.Images({
 					count:
-						STRIPE_PRODUCT_ID_OBJECTS_CREDITS[
-							PUBLIC_STRIPE_PRODUCT_ID_1500_CREDITS_TEST
+						STRIPE_PRODUCT_ID_OBJECTS_CREDIT_PACKS[
+							PUBLIC_STRIPE_PRODUCT_ID_LARGE_PACK_TEST
 						].images.toLocaleString($locale)
 				}),
 				$LL.Pricing.Features.NeverExpires()
@@ -203,9 +230,9 @@
 <PageWrapper>
 	<div class="w-full flex flex-col items-center justify-start my-auto">
 		<section id="plans" class="w-full flex flex-col items-center justify-start">
-			<h1 class="text-center font-bold text-3xl">{$LL.Pricing.PageTitle()}</h1>
+			<h1 class="text-center font-bold text-4xl">{$LL.Pricing.PlansTitle()}</h1>
 			<p class="max-w-xl mt-3 text-center leading-relaxed text-c-on-bg/75">
-				{$LL.Pricing.PageParagraph()}
+				{$LL.Pricing.PlansParagraph()}
 			</p>
 			<div class="w-full max-w-7xl flex flex-wrap justify-center gap-6 mt-8">
 				{#each subscriptionCards as card}
@@ -215,29 +242,36 @@
 					{@const subscribedAmount = subscriptionCards.find(
 						(c) => c.productId === $userSummary?.product_id
 					)?.amount}
-					{@const isSubscribed = subscribedProductId === card.productId}
-					{@const isUpgrade = subscribedAmount !== undefined && subscribedAmount < card.amount}
-					{@const isDowngrade = subscribedAmount !== undefined && subscribedAmount > card.amount}
+					{@const isSubscribed =
+						subscribedProductId === card.productId && $page.data.session?.user.id !== undefined}
+					{@const isUpgrade =
+						subscribedAmount !== undefined &&
+						subscribedAmount < card.amount &&
+						$page.data.session?.user.id !== undefined}
+					{@const isDowngrade =
+						subscribedAmount !== undefined &&
+						subscribedAmount > card.amount &&
+						$page.data.session?.user.id !== undefined}
 					<div
 						class="w-full max-w-[22rem] bg-c-bg shadow-xl shadow-c-shadow/[var(--o-shadow-strong)] 
-					 p-4 md:p-5 rounded-2xl md:rounded-3xl ring-2 {isSubscribed
+					 	p-4 md:p-5 rounded-2xl md:rounded-3xl ring-2 {isSubscribed
 							? 'ring-c-success'
 							: card.ringClass} relative"
 					>
 						{#if card.badgeText && card.badgeClasses && !isDowngrade}
 							<div
 								class="absolute -right-3 -top-3 rounded-full px-4 py-2 text-sm text-right 
-							font-bold {isSubscribed ? 'bg-c-success text-c-on-primary' : card.badgeClasses}"
+								font-bold {isSubscribed ? 'bg-c-success text-c-on-primary' : card.badgeClasses}"
 							>
 								{card.badgeText}
 							</div>
 						{/if}
-						<h2 class="w-full text-c-on-bg text-center font-bold text-xl md:-mt-1.5 py-0.5 gap-2">
+						<h3 class="w-full text-c-on-bg text-center font-bold text-xl md:-mt-1.5 py-0.5 gap-2">
 							{card.title}
-						</h2>
-						<h3
+						</h3>
+						<h4
 							class="w-[100%+2rem] md:w-[100%+2.5rem] -mx-4 md:-mx-5 text-center bg-c-bg-secondary 
-						text-c-on-bg mt-4 py-3 font-bold flex justify-center items-start"
+							text-c-on-bg mt-4 py-3 font-bold flex justify-center items-start"
 						>
 							<span class="text-xl">{card.currencySymbol}</span><span class="text-3xl font-bold">
 								{card.amount.toLocaleString($locale)}
@@ -245,7 +279,7 @@
 							<span class="self-end mb-0.75 text-c-on-bg/60 font-medium"
 								>{$LL.Pricing.SlashMonth()}</span
 							>
-						</h3>
+						</h4>
 						<ul class="w-full mt-6 flex flex-col gap-3 px-1">
 							{#each card.features as feature}
 								<li class="flex items-center gap-3">
@@ -287,11 +321,11 @@
 			</div>
 			<div class="w-full h-[1vh]" />
 		</section>
-		{#if $userSummary?.product_id}
+		{#if $userSummary?.product_id && $page.data.session?.user.id !== undefined}
 			<section id="credit-packs" class="w-full flex flex-col items-center justify-start mt-12">
-				<h1 class="text-center font-bold text-3xl">Credit Packs</h1>
+				<h2 class="text-center font-bold text-4xl">{$LL.Pricing.CreditPacksTitle()}</h2>
 				<p class="max-w-xl mt-3 text-center leading-relaxed text-c-on-bg/75">
-					You are subscribed but want more credits? You can also buy credit packs.
+					{$LL.Pricing.CreditPacksParagraph()}
 				</p>
 				<div class="w-full max-w-7xl flex flex-wrap justify-center gap-6 mt-8">
 					{#each creditPackCards as card}
@@ -307,17 +341,17 @@
 									{card.badgeText}
 								</div>
 							{/if}
-							<h2 class="w-full text-c-on-bg text-center font-bold text-xl md:-mt-1.5 py-0.5 gap-2">
+							<h3 class="w-full text-c-on-bg text-center font-bold text-xl md:-mt-1.5 py-0.5 gap-2">
 								{card.title}
-							</h2>
-							<h3
+							</h3>
+							<h4
 								class="w-[100%+2rem] md:w-[100%+2.5rem] -mx-4 md:-mx-5 text-center bg-c-bg-secondary 
-							text-c-on-bg mt-4 py-3 font-bold flex justify-center items-start"
+								text-c-on-bg mt-4 py-3 font-bold flex justify-center items-start"
 							>
 								<span class="text-xl">{card.currencySymbol}</span><span class="text-3xl font-bold">
 									{card.amount.toLocaleString($locale)}
 								</span>
-							</h3>
+							</h4>
 							<ul class="w-full mt-6 flex flex-col gap-3 px-1">
 								{#each card.features as feature}
 									<li class="flex items-center gap-3">

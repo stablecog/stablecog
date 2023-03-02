@@ -1253,11 +1253,19 @@ type RootTranslation = {
 		/**
 		 * P​l​a​n​s
 		 */
-		PageTitle: string
+		PlansTitle: string
 		/**
 		 * C​h​o​o​s​e​ ​a​ ​p​l​a​n​ ​t​h​a​t​ ​w​o​r​k​s​ ​f​o​r​ ​y​o​u​.
 		 */
-		PageParagraph: string
+		PlansParagraph: string
+		/**
+		 * C​r​e​d​i​t​ ​P​a​c​k​s
+		 */
+		CreditPacksTitle: string
+		/**
+		 * N​e​e​d​ ​m​o​r​e​?​ ​Y​o​u​ ​c​a​n​ ​p​u​r​c​h​a​s​e​ ​a​d​d​i​t​i​o​n​a​l​ ​c​r​e​d​i​t​s​ ​a​n​y​t​i​m​e​.
+		 */
+		CreditPacksParagraph: string
 		/**
 		 * S​u​b​s​c​r​i​b​e
 		 */
@@ -1311,6 +1319,16 @@ type RootTranslation = {
 			 * U​l​t​i​m​a​t​e
 			 */
 			UltimateTitle: string
+		}
+		CreditPacks: {
+			/**
+			 * M​e​d​i​u​m​ ​P​a​c​k
+			 */
+			MediumTitle: string
+			/**
+			 * L​a​r​g​e​ ​P​a​c​k
+			 */
+			LargeTitle: string
 		}
 		Features: {
 			/**
@@ -1394,7 +1412,7 @@ type RootTranslation = {
 		 */
 		Title: string
 		/**
-		 * W​e​ ​g​i​v​e​ ​a​l​l​ ​u​s​e​r​s​ ​{​a​m​o​u​n​t​}​ ​g​e​n​e​r​a​t​i​o​n​s​ ​p​e​r​ ​m​o​n​t​h​ ​f​o​r​ ​f​r​e​e​.​ ​Y​o​u​ ​c​a​n​ ​g​e​t​ ​m​o​r​e​ ​b​y​ ​s​u​b​s​c​r​i​b​i​n​g​ ​t​o​ ​a​ ​p​l​a​n​ ​o​r​ ​j​o​i​n​i​n​g​ ​e​v​e​n​t​s​ ​o​n​ ​o​u​r​ ​D​i​s​c​o​r​d​.
+		 * W​e​ ​g​i​v​e​ ​a​l​l​ ​u​s​e​r​s​ ​{​a​m​o​u​n​t​}​ ​i​m​a​g​e​s​ ​p​e​r​ ​m​o​n​t​h​ ​f​o​r​ ​f​r​e​e​.​ ​Y​o​u​ ​c​a​n​ ​g​e​t​ ​m​o​r​e​ ​b​y​ ​s​u​b​s​c​r​i​b​i​n​g​ ​t​o​ ​a​ ​p​l​a​n​ ​o​r​ ​b​y​ ​p​a​r​t​i​c​i​p​a​t​i​n​g​ ​i​n​ ​o​u​r​ ​e​v​e​n​t​s​.
 		 * @param {unknown} amount
 		 */
 		FreeParagraph: RequiredParams<'amount'>
@@ -2630,11 +2648,19 @@ export type TranslationFunctions = {
 		/**
 		 * Plans
 		 */
-		PageTitle: () => LocalizedString
+		PlansTitle: () => LocalizedString
 		/**
 		 * Choose a plan that works for you.
 		 */
-		PageParagraph: () => LocalizedString
+		PlansParagraph: () => LocalizedString
+		/**
+		 * Credit Packs
+		 */
+		CreditPacksTitle: () => LocalizedString
+		/**
+		 * Need more? You can purchase additional credits anytime.
+		 */
+		CreditPacksParagraph: () => LocalizedString
 		/**
 		 * Subscribe
 		 */
@@ -2688,6 +2714,16 @@ export type TranslationFunctions = {
 			 * Ultimate
 			 */
 			UltimateTitle: () => LocalizedString
+		}
+		CreditPacks: {
+			/**
+			 * Medium Pack
+			 */
+			MediumTitle: () => LocalizedString
+			/**
+			 * Large Pack
+			 */
+			LargeTitle: () => LocalizedString
 		}
 		Features: {
 			/**
@@ -2766,7 +2802,7 @@ export type TranslationFunctions = {
 		 */
 		Title: () => LocalizedString
 		/**
-		 * We give all users {amount} generations per month for free. You can get more by subscribing to a plan or joining events on our Discord.
+		 * We give all users {amount} images per month for free. You can get more by subscribing to a plan or by participating in our events.
 		 */
 		FreeParagraph: (arg: { amount: unknown }) => LocalizedString
 		/**

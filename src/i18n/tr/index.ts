@@ -425,8 +425,10 @@ const tr: Translation = {
 		NoMatchingGenerationTitle: 'Benzer bir üretim bulunamadı'
 	},
 	Pricing: {
-		PageTitle: 'Plans',
-		PageParagraph: 'Choose a plan that works for you.',
+		PlansTitle: 'Plans',
+		PlansParagraph: 'Choose a plan that works for you.',
+		CreditPacksTitle: 'Credit Packs',
+		CreditPacksParagraph: 'Need more? You can purchase additional credits anytime.',
 		SubscribeButton: 'Subscribe',
 		SubscribedButton: 'Subscribed',
 		UpgradeButton: 'Upgrade',
@@ -441,6 +443,10 @@ const tr: Translation = {
 			StarterTitle: 'Starter',
 			ProTitle: 'Pro',
 			UltimateTitle: 'Ultimate'
+		},
+		CreditPacks: {
+			MediumTitle: 'Medium Pack',
+			LargeTitle: 'Large Pack'
 		},
 		Features: {
 			MonthlyImages: '{count} images per month.',
@@ -473,7 +479,7 @@ const tr: Translation = {
 	LowOnCreditsCard: {
 		Title: "You're low on credits",
 		FreeParagraph:
-			'We give all users {amount} images per month for free. You can get more by subscribing to a plan or joining events on our Discord.',
+			'We give all users {amount} images per month for free. You can get more by subscribing to a plan or by participating in our events.',
 		HighestPlanParagraph: 'You can buy a credit pack.',
 		OtherPlansParagraph: 'You can upgrade to a higher plan or buy a credit pack.'
 	}

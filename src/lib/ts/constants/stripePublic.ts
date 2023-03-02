@@ -5,8 +5,10 @@ import {
 	PUBLIC_STRIPE_PRODUCT_ID_STARTER_SUBSCRIPTION_TEST,
 	PUBLIC_STRIPE_PRODUCT_ID_PRO_SUBSCRIPTION_TEST,
 	PUBLIC_STRIPE_PRODUCT_ID_ULTIMATE_SUBSCRIPTION_TEST,
-	PUBLIC_STRIPE_PRICE_ID_1500_CREDITS_TEST,
-	PUBLIC_STRIPE_PRODUCT_ID_1500_CREDITS_TEST
+	PUBLIC_STRIPE_PRICE_ID_MEDIUM_PACK_TEST,
+	PUBLIC_STRIPE_PRODUCT_ID_MEDIUM_PACK_TEST,
+	PUBLIC_STRIPE_PRODUCT_ID_LARGE_PACK_TEST,
+	PUBLIC_STRIPE_PRICE_ID_LARGE_PACK_TEST
 } from '$env/static/public';
 
 export const STRIPE_CURRENCIES = ['usd', 'eur'] as const;
@@ -23,8 +25,8 @@ export const STRIPE_PRODUCT_IDS_SUBSCRIPTIONS = [
 	PUBLIC_STRIPE_PRODUCT_ID_ULTIMATE_SUBSCRIPTION_TEST
 ] as const;
 
-export const STRIPE_PRICE_IDS_CREDITS = [PUBLIC_STRIPE_PRICE_ID_1500_CREDITS_TEST];
-export const STRIPE_PRODUCT_IDS_CREDITS = [PUBLIC_STRIPE_PRODUCT_ID_1500_CREDITS_TEST];
+export const STRIPE_PRICE_IDS_CREDIT_PACKS = [PUBLIC_STRIPE_PRICE_ID_MEDIUM_PACK_TEST];
+export const STRIPE_PRODUCT_IDS_CREDIT_PACKS = [PUBLIC_STRIPE_PRODUCT_ID_MEDIUM_PACK_TEST];
 
 export const STRIPE_HIGHEST_PRODUCT_ID_SUBSCRIPTIONS =
 	STRIPE_PRODUCT_IDS_SUBSCRIPTIONS[STRIPE_PRODUCT_IDS_SUBSCRIPTIONS.length - 1];
@@ -41,8 +43,8 @@ export type TStripeSupportedProductIdSubscriptions =
 	typeof STRIPE_PRODUCT_IDS_SUBSCRIPTIONS[number];
 export type TStripeSupportedCurrency = typeof STRIPE_CURRENCIES[number];
 
-export type TStripeSupportedPriceIdCredits = typeof STRIPE_PRICE_IDS_CREDITS[number];
-export type TStripeSupportedProductIdCredits = typeof STRIPE_PRODUCT_IDS_CREDITS[number];
+export type TStripeSupportedPriceIdCreditPacks = typeof STRIPE_PRICE_IDS_CREDIT_PACKS[number];
+export type TStripeSupportedProductIdCreditPacks = typeof STRIPE_PRODUCT_IDS_CREDIT_PACKS[number];
 
 export const STRIPE_PRODUCT_ID_OBJECTS_SUBSCRIPTIONS_MO: {
 	[prodcutId in TStripeSupportedProductIdSubscriptions]: {
@@ -109,12 +111,12 @@ export const STRIPE_PRODUCT_ID_OBJECTS_SUBSCRIPTIONS_MO: {
 	}
 } as const;
 
-export const STRIPE_PRODUCT_ID_OBJECTS_CREDITS: {
-	[prodcutId in TStripeSupportedProductIdCredits]: {
-		product_id: TStripeSupportedProductIdCredits;
+export const STRIPE_PRODUCT_ID_OBJECTS_CREDIT_PACKS: {
+	[prodcutId in TStripeSupportedProductIdCreditPacks]: {
+		product_id: TStripeSupportedProductIdCreditPacks;
 		images: number;
 		prices: {
-			[priceId in TStripeSupportedPriceIdCredits]: {
+			[priceId in TStripeSupportedPriceIdCreditPacks]: {
 				currencies: {
 					[currency in TStripeSupportedCurrency]: {
 						amount: number;
@@ -124,17 +126,33 @@ export const STRIPE_PRODUCT_ID_OBJECTS_CREDITS: {
 		};
 	};
 } = {
-	[PUBLIC_STRIPE_PRODUCT_ID_1500_CREDITS_TEST]: {
-		product_id: PUBLIC_STRIPE_PRODUCT_ID_1500_CREDITS_TEST,
+	[PUBLIC_STRIPE_PRODUCT_ID_MEDIUM_PACK_TEST]: {
+		product_id: PUBLIC_STRIPE_PRODUCT_ID_MEDIUM_PACK_TEST,
 		images: 1500,
 		prices: {
-			[PUBLIC_STRIPE_PRICE_ID_1500_CREDITS_TEST]: {
+			[PUBLIC_STRIPE_PRICE_ID_MEDIUM_PACK_TEST]: {
 				currencies: {
 					usd: {
 						amount: 10
 					},
 					eur: {
 						amount: 10
+					}
+				}
+			}
+		}
+	},
+	[PUBLIC_STRIPE_PRODUCT_ID_LARGE_PACK_TEST]: {
+		product_id: PUBLIC_STRIPE_PRODUCT_ID_LARGE_PACK_TEST,
+		images: 4000,
+		prices: {
+			[PUBLIC_STRIPE_PRICE_ID_LARGE_PACK_TEST]: {
+				currencies: {
+					usd: {
+						amount: 25
+					},
+					eur: {
+						amount: 25
 					}
 				}
 			}
