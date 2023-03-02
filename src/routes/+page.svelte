@@ -154,7 +154,7 @@
 		}
 	}
 
-	const lowCreditsThreshold = 1000000;
+	const lowCreditsThreshold = 10;
 
 	let mounted = false;
 
