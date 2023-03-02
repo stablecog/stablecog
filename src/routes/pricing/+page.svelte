@@ -118,7 +118,7 @@
 
 	$: creditPackCards = [
 		{
-			title: 'Medium Pack',
+			title: $LL.Pricing.CreditPacks.MediumTitle(),
 			priceId: PUBLIC_STRIPE_PRICE_ID_MEDIUM_PACK_TEST,
 			productId: PUBLIC_STRIPE_PRICE_ID_MEDIUM_PACK_TEST,
 			currency: data.currency,
@@ -143,7 +143,7 @@
 			badgeClasses: undefined
 		},
 		{
-			title: 'Large Pack',
+			title: $LL.Pricing.CreditPacks.LargeTitle(),
 			priceId: PUBLIC_STRIPE_PRICE_ID_LARGE_PACK_TEST,
 			productId: PUBLIC_STRIPE_PRICE_ID_LARGE_PACK_TEST,
 			currency: data.currency,
