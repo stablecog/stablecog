@@ -63,7 +63,7 @@
 
 	$: logProps = {
 		'SC - Generation Id': generation.id || generation.ui_id,
-		'SC - Plan': $userSummary?.product_id,
+		'SC - Product Id': $userSummary?.product_id,
 		'SC - Advanced Mode': $advancedModeApp
 	};
 </script>

@@ -132,7 +132,7 @@
 				generation: initialRequestProps,
 				advancedModeApp: $advancedModeApp,
 				locale: $locale,
-				plan: $page.data.plan
+				stripeProductId: $userSummary?.product_id
 			})
 		);
 		queueInitialGenerationRequest(initialRequestProps);

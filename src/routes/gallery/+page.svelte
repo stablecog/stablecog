@@ -18,6 +18,7 @@
 	import { globalSeed } from '$ts/stores/globalSeed';
 	import { navbarHeight } from '$ts/stores/navbarHeight';
 	import { activeGeneration } from '$ts/stores/user/generation';
+	import { userSummary } from '$ts/stores/user/summary';
 	import { createInfiniteQuery } from '@tanstack/svelte-query';
 	import { quadOut } from 'svelte/easing';
 	import { scale } from 'svelte/transition';
@@ -67,7 +68,7 @@
 					'SC - Search Query': searchStringDebounced,
 					'SC - Advanced Mode': $advancedModeApp,
 					'SC - Locale': $locale,
-					'SC - Plan': $page.data.plan
+					'SC - Stripe Product Id': $userSummary?.product_id
 				});
 			} else {
 				searchStringDebounced = '';

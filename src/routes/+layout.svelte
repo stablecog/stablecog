@@ -103,10 +103,10 @@
 	$: if (mounted && $page.data.session?.user.id) {
 		mixpanel.identify($page.data.session.user.id);
 		mixpanel.people.set({ $email: $page.data.session.user.email });
-		mixpanel.people.set({ 'SC - Plan': $page.data.plan });
+		mixpanel.people.set({ 'SC - Stripe Product Id': $userSummary?.product_id });
 		posthog.identify($page.data.session.user.id, {
 			email: $page.data.session.user.email,
-			'SC - Plan': $userSummary?.product_id
+			'SC - Stripe Product Id': $userSummary?.product_id
 		});
 	}
 
@@ -115,7 +115,7 @@
 			'SC - Page': `${$page.url.pathname}${$page.url.search}`,
 			'SC - Locale': $locale,
 			'SC - Advanced Mode': $advancedModeApp,
-			'SC - Plan': $page.data.plan
+			'SC - Stripe Product Id': $userSummary?.product_id
 		};
 		mLogPageview(props);
 	});
@@ -179,7 +179,7 @@
 					$appVersion
 				);
 				const { id, error, total_remaining_credits } = res;
-				if (total_remaining_credits !== undefined) {
+				if (total_remaining_credits !== undefined && $userSummary) {
 					userSummary.set({ ...$userSummary, total_remaining_credits });
 				}
 				if (error || !id) {
@@ -190,7 +190,7 @@
 						error,
 						advancedModeApp: $advancedModeApp,
 						locale: $locale,
-						plan: $page.data.plan
+						stripeProductId: $userSummary?.product_id
 					});
 				} else {
 					setGenerationToServerReceived(id);
@@ -205,7 +205,7 @@
 					error: err.message,
 					advancedModeApp: $advancedModeApp,
 					locale: $locale,
-					plan: $page.data.plan
+					stripeProductId: $userSummary?.product_id
 				});
 			} finally {
 				isSubmittingGenerations = false;
@@ -248,7 +248,7 @@
 						$appVersion
 					);
 					const { id, error, total_remaining_credits } = res;
-					if (total_remaining_credits !== undefined) {
+					if (total_remaining_credits !== undefined && $userSummary) {
 						userSummary.set({ ...$userSummary, total_remaining_credits });
 					}
 					if (error || !id) {
@@ -258,7 +258,7 @@
 							upscale,
 							advancedModeApp: $advancedModeApp,
 							locale: $locale,
-							plan: $page.data.plan
+							stripeProductId: $userSummary?.product_id
 						});
 					} else {
 						setUpscaleToServerReceived(id);
@@ -272,7 +272,7 @@
 						upscale,
 						advancedModeApp: $advancedModeApp,
 						locale: $locale,
-						plan: $page.data.plan
+						stripeProductId: $userSummary?.product_id
 					});
 				} finally {
 					isSubmittingUpscales = false;
@@ -302,7 +302,7 @@
 						generation,
 						advancedModeApp: $advancedModeApp,
 						locale: $locale,
-						plan: $page.data.plan
+						stripeProductId: $userSummary?.product_id
 					})
 				);
 			} else if (data.id && data.status === 'failed') {
@@ -321,7 +321,7 @@
 						upscale,
 						advancedModeApp: $advancedModeApp,
 						locale: $locale,
-						plan: $page.data.plan
+						stripeProductId: $userSummary?.product_id
 					})
 				);
 			} else if (data.id && data.status === 'failed') {
@@ -341,7 +341,7 @@
 			$sse.onmessage = (event) => {
 				const data = JSON.parse(event.data);
 				console.log('Message from SSE', data);
-				if (data.total_remaining_credits !== undefined) {
+				if (data.total_remaining_credits !== undefined && $userSummary) {
 					userSummary.set({
 						...$userSummary,
 						total_remaining_credits: data.total_remaining_credits

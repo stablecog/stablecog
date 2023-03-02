@@ -5,10 +5,11 @@
 	import { mLogSubmitToGallery, uLogSubmitToGallery } from '$ts/helpers/loggers';
 	import { advancedModeApp } from '$ts/stores/advancedMode';
 	import { shouldSubmitToGallery } from '$ts/stores/shouldSubmitToGallery';
+	import { userSummary } from '$ts/stores/user/summary';
 	import SubtleButton from './buttons/SubtleButton.svelte';
 
 	$: logProps = {
-		'SC - Plan': $page.data.plan,
+		'SC - Stripe Product Id': $userSummary?.product_id,
 		'SC - Advanced Mode': $advancedModeApp
 	};
 </script>

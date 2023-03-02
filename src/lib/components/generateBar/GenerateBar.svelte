@@ -76,19 +76,10 @@
 		serverData.negative_prompt !== null ? serverData.negative_prompt : undefined
 	);
 	generationWidth.set(
-		isValue(serverData.width) &&
-			serverData.width !== null &&
-			(availableWidthsFree.includes(serverData.width) ||
-				($page.data.plan !== 'FREE' && $page.data.plan !== 'ANONYMOUS'))
-			? serverData.width
-			: widthDefault
+		isValue(serverData.width) && serverData.width !== null ? serverData.width : widthDefault
 	);
 	generationHeight.set(
-		isValue(serverData.height) &&
-			serverData.height !== null &&
-			serverData &&
-			(availableHeightsFree.includes(serverData.height) ||
-				($page.data.plan !== 'FREE' && $page.data.plan !== 'ANONYMOUS'))
+		isValue(serverData.height) && serverData.height !== null && serverData
 			? serverData.height
 			: heightDefault
 	);
@@ -97,9 +88,7 @@
 			serverData.num_inference_steps !== null &&
 			inferenceStepsTabs
 				.map((i) => i.value)
-				.findIndex((i) => i === serverData.num_inference_steps) >= 0 &&
-			(availableInferenceStepsFree.includes(serverData.num_inference_steps) ||
-				($page.data.plan !== 'FREE' && $page.data.plan !== 'ANONYMOUS'))
+				.findIndex((i) => i === serverData.num_inference_steps) >= 0
 			? serverData.num_inference_steps
 			: inferenceStepsDefault
 	);

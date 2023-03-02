@@ -8,6 +8,7 @@
 	import LL, { locale } from '$i18n/i18n-svelte';
 	import { mLogSignIn } from '$ts/helpers/loggers';
 	import { advancedModeApp } from '$ts/stores/advancedMode';
+	import { userSummary } from '$ts/stores/user/summary';
 	import { onMount } from 'svelte';
 	import type { PageServerData } from './$types';
 
@@ -22,7 +23,7 @@
 		if (!$page.data.session?.user.id || !$page.data.session.user.email) return;
 		mLogSignIn({
 			'SC - Page': `${$page.url.pathname}${$page.url.search}`,
-			'SC - Plan': $page.data.plan,
+			'SC - Stripe Product Id': $userSummary?.product_id,
 			'SC - Locale': $locale,
 			'SC - Advanced Mode': $advancedModeApp,
 			'SC - Email': $page.data.session?.user.email
@@ -30,10 +31,6 @@
 		setTimeout(async () => {
 			if (data.redirect_to) {
 				await goto(data.redirect_to);
-				return;
-			}
-			if ($page.data.plan === 'FREE') {
-				await goto('/pricing');
 				return;
 			}
 			await goto('/');

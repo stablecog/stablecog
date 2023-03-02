@@ -100,7 +100,7 @@
 				try {
 					await supabase.auth.signOut();
 					mLogSignOut({
-						'SC - Plan': $page.data.plan,
+						'SC - Stripe Product Id': $userSummary?.product_id,
 						'SC - Locale': $locale,
 						'SC - Advanced Mode': $advancedModeApp,
 						'SC - Page': `${$page.url.pathname}${$page.url.search}`

@@ -86,19 +86,19 @@ export function logGenerationFailed({
 	error,
 	advancedModeApp,
 	locale,
-	plan
+	stripeProductId
 }: {
 	generation: TGeneration | TInitialGenerationRequest;
 	error?: string;
 	advancedModeApp: boolean;
 	locale: string;
-	plan: string;
+	stripeProductId?: string;
 }) {
 	const props = mLogGenerationPropsFromGeneration({
 		generation,
 		advancedModeApp,
 		locale,
-		plan
+		stripeProductId
 	});
 	uLogGeneration(error === 'NSFW' ? 'Failed-NSFW' : 'Failed');
 	mLogGeneration(error === 'NSFW' ? 'Failed-NSFW' : 'Failed', props);
@@ -108,12 +108,12 @@ export function mLogGenerationPropsFromGeneration({
 	generation,
 	advancedModeApp,
 	locale,
-	plan
+	stripeProductId
 }: {
 	generation: TGeneration | TInitialGenerationRequest;
 	advancedModeApp: boolean;
 	locale: string;
-	plan: string;
+	stripeProductId?: string;
 }) {
 	return {
 		'SC - Width': generation.width,
@@ -125,7 +125,7 @@ export function mLogGenerationPropsFromGeneration({
 		'SC - Advanced Mode': advancedModeApp,
 		'SC - Locale': locale,
 		'SC - Submit to Gallery': generation.submit_to_gallery,
-		'SC - Plan': plan
+		'SC - Stripe Product Id': stripeProductId
 	};
 }
 
@@ -133,18 +133,18 @@ export function logUpscaleFailed({
 	upscale,
 	advancedModeApp,
 	locale,
-	plan
+	stripeProductId
 }: {
 	upscale: TUpscale | TInitialUpscaleRequest;
 	advancedModeApp: boolean;
 	locale: string;
-	plan: string;
+	stripeProductId?: string;
 }) {
 	const props = mLogUpscalePropsFromUpscale({
 		upscale,
 		advancedModeApp,
 		locale,
-		plan
+		stripeProductId
 	});
 	uLogUpscale('Failed');
 	mLogUpscale('Failed', props);
@@ -154,42 +154,42 @@ export function mLogUpscalePropsFromUpscale({
 	upscale,
 	advancedModeApp,
 	locale,
-	plan
+	stripeProductId
 }: {
 	upscale: TUpscale | TInitialUpscaleRequest;
 	advancedModeApp: boolean;
 	locale: string;
-	plan: string;
+	stripeProductId?: string;
 }) {
 	return {
 		'SC - Type': upscale.type,
 		'SC - Input': upscale.input,
 		'SC - Advanced Mode': advancedModeApp,
 		'SC - Locale': locale,
-		'SC - Plan': plan
+		'SC - Stripe Product Id': stripeProductId
 	};
 }
 
 interface ISubmitToGalleryToggledMinimal {
 	'SC - Advanced Mode': boolean;
-	'SC - Plan'?: string;
+	'SC - Stripe Product Id'?: string;
 }
 type IOnOff = 'On' | 'Off';
 
 interface IGalleryGenerationOpenedProps {
 	'SC - Generation Id': string;
-	'SC - Plan'?: string;
+	'SC - Stripe Product Id'?: string;
 	'SC - Advanced Mode': boolean;
 }
 
 interface IGalleryGenerateClickedProps {
 	'SC - Generation Id': string;
-	'SC - Plan'?: string;
+	'SC - Stripe Product Id'?: string;
 	'SC - Advanced Mode': boolean;
 }
 
 interface IAdvancedModeToggledProps {
-	'SC - Plan'?: string;
+	'SC - Stripe Product Id'?: string;
 }
 
 interface IUpscaleMinimal {
@@ -198,7 +198,7 @@ interface IUpscaleMinimal {
 	'SC - Advanced Mode': boolean;
 	'SC - Locale': string;
 	'SC - Duration'?: number;
-	'SC - Plan'?: string;
+	'SC - Stripe Product Id'?: string;
 }
 
 type IGenerationStatus = 'Started' | 'Succeeded' | 'Failed' | 'Failed-NSFW';
@@ -216,20 +216,20 @@ interface IGenerationMinimal {
 	'SC - Locale': string;
 	'SC - Submit to Gallery': boolean;
 	'SC - Duration'?: number;
-	'SC - Plan'?: string;
+	'SC - Stripe Product Id'?: string;
 }
 
 interface IPageviewProps {
 	'SC - Page': string;
 	'SC - Locale': string;
 	'SC - Advanced Mode': boolean;
-	'SC - Plan'?: string;
+	'SC - Stripe Product Id'?: string;
 }
 
 interface ISignInProps {
 	'SC - Locale': string;
 	'SC - Advanced Mode': boolean;
-	'SC - Plan'?: string;
+	'SC - Stripe Product Id'?: string;
 	'SC - Page': string;
 	'SC - Email': string;
 }
@@ -237,21 +237,21 @@ interface ISignInProps {
 interface ISignOutProps {
 	'SC - Locale': string;
 	'SC - Advanced Mode': boolean;
-	'SC - Plan'?: string;
+	'SC - Stripe Product Id'?: string;
 	'SC - Page': string;
 }
 
 interface ISignUpProps {
 	'SC - Locale': string;
 	'SC - Advanced Mode': boolean;
-	'SC - Plan'?: string;
+	'SC - Stripe Product Id'?: string;
 	'SC - Page': string;
 }
 
 interface IGallerySearchProps {
 	'SC - Locale': string;
 	'SC - Advanced Mode': boolean;
-	'SC - Plan'?: string;
+	'SC - Stripe Product Id'?: string;
 	'SC - Search Query': string;
 }
 

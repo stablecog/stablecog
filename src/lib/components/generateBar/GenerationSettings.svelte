@@ -52,6 +52,7 @@
 	} from '$ts/stores/generationSettings';
 	import { isTouchscreen } from '$ts/stores/isTouchscreen';
 	import type { TTab } from '$ts/types/main';
+	import { userSummary } from '$ts/stores/user/summary';
 
 	export let isCheckComplete: boolean;
 	export let formElement: HTMLFormElement;
@@ -86,7 +87,7 @@
 	}
 
 	$: logProps = {
-		'SC - Plan': $page.data.plan
+		'SC - Stripe Product Id': $userSummary?.product_id
 	};
 </script>
 

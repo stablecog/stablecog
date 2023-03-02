@@ -42,6 +42,7 @@
 		TSetButtonObjectWithState
 	} from '$components/generationFullScreen/types';
 	import Divider from '$components/generationFullScreen/Divider.svelte';
+	import { userSummary } from '$ts/stores/user/summary';
 
 	export let generation: TGenerationWithSelectedOutput;
 	export let modalType: TGenerationFullScreenModalType;
@@ -180,7 +181,7 @@
 				upscale: initialRequestProps,
 				advancedModeApp: $advancedModeApp,
 				locale: $locale,
-				plan: $page.data.plan
+				stripeProductId: $userSummary?.product_id
 			})
 		);
 		queueInitialUpscaleRequest(initialRequestProps);

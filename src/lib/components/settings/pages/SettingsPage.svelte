@@ -15,6 +15,7 @@
 	import { isTouchscreen } from '$ts/stores/isTouchscreen';
 	import { shouldSubmitToGallery } from '$ts/stores/shouldSubmitToGallery';
 	import { theme, themeApp } from '$ts/stores/theme';
+	import { userSummary } from '$ts/stores/user/summary';
 	import type { TCurrentSettingsPage } from '$ts/types/main';
 
 	export let navigateToLanguagePage: () => void;
@@ -22,11 +23,11 @@
 	export let currentPage: TCurrentSettingsPage;
 
 	$: submitToGalleryLogProps = {
-		'SC - Plan': $page.data.plan,
+		'SC - Stripe Product Id': $userSummary?.product_id,
 		'SC - Advanced Mode': $advancedModeApp
 	};
 	$: advancedModeLogProps = {
-		'SC - Plan': $page.data.plan
+		'SC - Stripe Product Id': $userSummary?.product_id
 	};
 </script>
 
