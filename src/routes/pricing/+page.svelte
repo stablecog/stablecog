@@ -195,7 +195,7 @@
 <PageWrapper>
 	<div class="w-full flex flex-col items-center justify-start my-auto">
 		<section id="plans" class="w-full flex flex-col items-center justify-start">
-			<h1 class="text-center font-bold text-4xl">{$LL.Pricing.PageTitle()}</h1>
+			<h1 class="text-center font-bold text-3xl">{$LL.Pricing.PageTitle()}</h1>
 			<p class="max-w-xl mt-3 text-center leading-relaxed text-c-on-bg/75">
 				{$LL.Pricing.PageParagraph()}
 			</p>
@@ -281,7 +281,7 @@
 		</section>
 		{#if $userSummary?.product_id}
 			<section id="credit-packs" class="w-full flex flex-col items-center justify-start mt-12">
-				<h1 class="text-center font-bold text-4xl">Credit Packs</h1>
+				<h1 class="text-center font-bold text-3xl">Credit Packs</h1>
 				<p class="max-w-xl mt-3 text-center leading-relaxed text-c-on-bg/75">
 					You are subscribed but want more credits? You can also buy credit packs.
 				</p>
