@@ -480,7 +480,7 @@ const ptPt: Translation = {
 	LowOnCreditsCard: {
 		Title: "You're low on credits",
 		FreeParagraph:
-			'We give all users {amount} images per month for free. You can get more by subscribing to a plan or by participating in our events.',
+			'We give all active users free images daily. You can get more by subscribing to a plan or by participating in our events.',
 		HighestPlanParagraph: 'You can buy a credit pack.',
 		OtherPlansParagraph: 'You can upgrade to a higher plan or buy a credit pack.'
 	}
