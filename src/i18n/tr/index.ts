@@ -147,6 +147,7 @@ const tr: Translation = {
 		JoinUsTitle: 'Bize Katıl',
 		GoHomeButton: 'Eve Dön',
 		SwitchToDefaultServerButton: 'Varsayılan Sunucuya Geç',
+		JoinOnDiscord: 'Join on Discord',
 		JoinUsOnTitle: 'Bize katıl: {name}',
 		ShareButton: 'Paylaş',
 		ShareOnButton: 'Paylaş: {name}',
@@ -161,6 +162,7 @@ const tr: Translation = {
 		DeleteButton: 'Sil',
 		LoadingTitle: 'Yükleniyor',
 		LoadingParagraph: 'Yükleniyor...',
+		NotEnoughCreditsTitle: 'Not Enough Credits',
 		ServerUrlInput: {
 			Placeholder: 'Sunucu adresi'
 		},
@@ -430,6 +432,7 @@ const tr: Translation = {
 		UpgradeButton: 'Upgrade',
 		DowngradeButton: 'Downgrade',
 		PurchaseButton: 'Purchase',
+		BuyCreditsButton: 'Buy Credits',
 		MonthlyTitle: 'Monthly',
 		YearlyTitle: 'Yearly',
 		SlashMonth: '/month',
@@ -462,6 +465,13 @@ const tr: Translation = {
 					'You have cancelled the purchase process. If it was a mistake, you can try again.'
 			}
 		}
+	},
+	LowOnCreditsCard: {
+		Title: "You're low on credits",
+		FreeParagraph:
+			'We give all users {amount} images per month for free. You can get more by subscribing to a plan or joining events on our Discord.',
+		HighestPlanParagraph: 'You can buy a credit pack.',
+		OtherPlansParagraph: 'You can upgrade to a higher plan or buy a credit pack.'
 	}
 };
 export default tr;

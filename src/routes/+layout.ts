@@ -9,15 +9,23 @@ import type { TUserSummary } from '$ts/stores/user/summary';
 export const load: LayoutLoad = async (event) => {
 	let { session } = await getSupabase(event);
 	let userSummary: TUserSummary | undefined = undefined;
-	const userRes = await fetch(`${apiUrl.origin}/v1/user`, {
-		headers: {
-			'Content-Type': 'application/json',
-			Authorization: `Bearer ${session?.access_token}`
+	if (session?.access_token) {
+		try {
+			const userRes = await fetch(`${apiUrl.origin}/v1/user`, {
+				headers: {
+					'Content-Type': 'application/json',
+					Authorization: `Bearer ${session?.access_token}`
+				}
+			});
+			if (userRes.ok) {
+				const userResJson: TUserSummary = await userRes.json();
+				userSummary = userResJson;
+			} else {
+				session = null;
+			}
+		} catch (error) {
+			console.log(error);
 		}
-	});
-	if (userRes.ok) {
-		const userResJson: TUserSummary = await userRes.json();
-		userSummary = userResJson;
 	}
 	const locale = event.data.locale;
 	await loadLocaleAsync(locale);

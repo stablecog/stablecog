@@ -27,7 +27,7 @@
 			: size === 'xs'
 			? 'px-4.5 py-3'
 			: size === 'sm'
-			? 'px-6 md:px-8 py-4'
+			? 'px-4 md:px-6 py-4'
 			: 'px-6 md:px-8 py-5'} {size === 'xs'
 			? 'text-sm rounded-lg2'
 			: size === 'sm'

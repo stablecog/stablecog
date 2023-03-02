@@ -147,6 +147,7 @@ const fr: Translation = {
 		JoinUsTitle: 'Rejoignez-nous',
 		GoHomeButton: "Retour à l'accueil",
 		SwitchToDefaultServerButton: 'Basculer vers le serveur par défaut',
+		JoinOnDiscord: 'Join on Discord',
 		JoinUsOnTitle: 'Rejoignez-nous sur {name}',
 		ShareButton: 'Partager',
 		ShareOnButton: 'Partager sur {name}',
@@ -161,6 +162,7 @@ const fr: Translation = {
 		DeleteButton: 'Supprimer',
 		LoadingTitle: 'Chargement en cours',
 		LoadingParagraph: 'Chargement en cours...',
+		NotEnoughCreditsTitle: 'Not Enough Credits',
 		ServerUrlInput: {
 			Placeholder: 'URL du serveur'
 		},
@@ -437,6 +439,7 @@ const fr: Translation = {
 		UpgradeButton: 'Upgrade',
 		DowngradeButton: 'Downgrade',
 		PurchaseButton: 'Purchase',
+		BuyCreditsButton: 'Buy Credits',
 		MonthlyTitle: 'Monthly',
 		YearlyTitle: 'Yearly',
 		SlashMonth: '/month',
@@ -469,6 +472,13 @@ const fr: Translation = {
 					'You have cancelled the purchase process. If it was a mistake, you can try again.'
 			}
 		}
+	},
+	LowOnCreditsCard: {
+		Title: "You're low on credits",
+		FreeParagraph:
+			'We give all users {amount} images per month for free. You can get more by subscribing to a plan or joining events on our Discord.',
+		HighestPlanParagraph: 'You can buy a credit pack.',
+		OtherPlansParagraph: 'You can upgrade to a higher plan or buy a credit pack.'
 	}
 };
 export default fr;

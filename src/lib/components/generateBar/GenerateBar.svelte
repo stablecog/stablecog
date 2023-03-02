@@ -37,10 +37,11 @@
 		generationSchedulerId,
 		generationSeed,
 		promptInputValue,
-		negativePromptInputValue
+		negativePromptInputValue,
+		numOutputs
 	} from '$ts/stores/generationSettings';
-	import { onDestroy, onMount, tick } from 'svelte';
-	import LL, { locale } from '$i18n/i18n-svelte';
+	import { onMount, tick } from 'svelte';
+	import LL from '$i18n/i18n-svelte';
 	import { isValue } from '$ts/helpers/isValue';
 	import GenerationSettingsSheet from '$components/generateBar/GenerationSettingsSheet.svelte';
 	import GenerationSettings from '$components/generateBar/GenerationSettings.svelte';
@@ -62,6 +63,7 @@
 	} from '$ts/constants/generationModels';
 	import { availableSchedulerIds, schedulerIdDefault } from '$ts/constants/schedulers';
 	import { generations, type TGenerationStatus } from '$userStores/generation';
+	import { userSummary } from '$ts/stores/user/summary';
 
 	export let serverData: THomePageData;
 	export let queueGeneration: () => Promise<void>;
@@ -122,8 +124,6 @@
 	);
 
 	$: placeholder = $LL.Home.PromptInput.Placeholder();
-	let now: number | undefined;
-	let nowInterval: NodeJS.Timeout | undefined;
 	let promptInputElement: HTMLTextAreaElement;
 	let formElement: HTMLFormElement;
 	let isGenerationSettingsSheetOpen = false;
@@ -135,16 +135,10 @@
 		lastGenerationStatus === 'server-received' ||
 		lastGenerationStatus === 'server-processing';
 	$: lastGenerationStatus = $generations?.[0]?.status;
-	$: lastGenerationCreatedAt = $generations?.[0]?.created_at;
 	$: lastGenerationBeingProcessed =
 		lastGenerationStatus === 'to-be-submitted' ||
 		lastGenerationStatus === 'server-received' ||
 		lastGenerationStatus === 'server-processing';
-
-	$: sinceSec =
-		now !== undefined && lastGenerationBeingProcessed && lastGenerationCreatedAt
-			? Math.max(now - lastGenerationCreatedAt, 0) / 1000
-			: 0;
 
 	let lastGenerationAnimationStatus: 'idle' | 'should-animate' | 'should-complete' =
 		lastGenerationBeingProcessed ? 'should-animate' : 'idle';
@@ -160,10 +154,6 @@
 		) {
 			return;
 		} else if (lastGenerationStatus === 'to-be-submitted') {
-			if (nowInterval) clearInterval(nowInterval);
-			nowInterval = setInterval(() => {
-				now = Date.now();
-			}, 100);
 			lastGenerationAnimationStatus = 'idle';
 			await tick();
 			setTimeout(() => {
@@ -211,6 +201,9 @@
 	$: if (browser && $page.data.session?.user.id) {
 		isSignInModalOpen = false;
 	}
+
+	$: doesntHaveEnoughCredits =
+		isCheckComplete && $userSummary && $userSummary.total_remaining_credits < $numOutputs;
 
 	const setLocalImageSize = () => {
 		if (isCheckComplete) {
@@ -360,17 +353,7 @@
 		) {
 			advancedModeApp.set($advancedMode);
 		}
-		if (lastGenerationBeingProcessed) {
-			if (nowInterval) clearInterval(nowInterval);
-			nowInterval = setInterval(() => {
-				now = Date.now();
-			}, 100);
-		}
 		isCheckComplete = true;
-	});
-
-	onDestroy(() => {
-		if (nowInterval) clearInterval(nowInterval);
 	});
 </script>
 
@@ -381,7 +364,7 @@
 >
 	<!-- Prompt bar -->
 	<div class="w-full flex flex-col md:flex-row gap-3 items-center pb-2 px-4">
-		<div class="w-full flex relative group">
+		<div class="w-full md:w-auto md:flex-1 flex relative group">
 			<textarea
 				use:autoresize={{ maxRows: 3, placeholder }}
 				bind:this={promptInputElement}
@@ -445,19 +428,18 @@
 			<ClearButton show={showClearPromptInputButton} onClick={clearPrompt} />
 		</div>
 		<Button
-			disabled={lastGenerationBeingProcessed || !isCheckComplete}
+			disabled={!isCheckComplete || doesntHaveEnoughCredits}
 			loading={lastGenerationBeingProcessed}
+			withSpinner
+			fadeOnDisabled={isCheckComplete}
 			class="w-full md:w-auto md:min-w-[9.5rem]"
 		>
 			<p class={lastGenerationBeingProcessed ? 'opacity-0' : 'opacity-100'}>
-				{$LL.Home.GenerateButton()}
-			</p>
-			<p
-				class="{lastGenerationBeingProcessed
-					? 'opacity-100'
-					: 'opacity-0'} absolute left-0 top-0 w-full h-full flex items-center justify-center"
-			>
-				{sinceSec.toLocaleString($locale, { minimumFractionDigits: 1, maximumFractionDigits: 1 })}
+				{#if doesntHaveEnoughCredits && !lastGenerationBeingProcessed}
+					{$LL.Shared.NotEnoughCreditsTitle()}
+				{:else}
+					{$LL.Home.GenerateButton()}
+				{/if}
 			</p>
 		</Button>
 	</div>

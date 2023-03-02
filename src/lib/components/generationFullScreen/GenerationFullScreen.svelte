@@ -187,13 +187,6 @@
 		console.log('Upscale request queued', $upscales);
 	}
 
-	let now: number;
-	let nowInterval: NodeJS.Timeout;
-	$: upscaleSinceSec =
-		now !== undefined && lastUpscaleBeingProcessed && lastUpscaleQueuedAt
-			? Math.max(now - lastUpscaleQueuedAt, 0) / 1000
-			: 0;
-
 	$: [lastUpscaleStatus, lastUpscaleBeingProcessed], onLastUpscaleStatusChanged();
 
 	let lastUpscaleAnimationStatus: 'idle' | 'should-animate' | 'should-complete' = 'idle';
@@ -211,16 +204,12 @@
 		} else if (lastUpscaleStatus === 'succeeded') {
 			lastUpscaleAnimationStatus = 'should-complete';
 		}
-		if (nowInterval) clearInterval(nowInterval);
 		if (lastUpscaleStatus === 'to-be-submitted') {
 			lastUpscaleAnimationStatus = 'idle';
 			await tick();
 			setTimeout(() => {
 				lastUpscaleAnimationStatus = 'should-animate';
 			});
-			nowInterval = setInterval(() => {
-				now = Date.now();
-			}, 100);
 		}
 	}
 
@@ -391,21 +380,13 @@
 										<Button
 											onClick={onUpscaleClicked}
 											loading={lastUpscaleBeingProcessed}
+											withSpinner
 											class="w-full"
 											size="sm"
 										>
 											<div class="flex items-center gap-2">
-												{#if lastUpscaleBeingProcessed}
-													<p>
-														{upscaleSinceSec.toLocaleString('en-US', {
-															minimumFractionDigits: 1,
-															maximumFractionDigits: 1
-														})}
-													</p>
-												{:else}
-													<IconUpscale class="w-5 h-5" />
-													<p>{$LL.GenerationFullscreen.UpscaleButton()}</p>
-												{/if}
+												<IconUpscale class="w-5 h-5" />
+												<p>{$LL.GenerationFullscreen.UpscaleButton()}</p>
 											</div>
 										</Button>
 									</div>

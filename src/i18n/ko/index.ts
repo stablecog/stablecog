@@ -147,6 +147,7 @@ const ko: Translation = {
 		JoinUsTitle: '함께 해요!',
 		GoHomeButton: '홈페이지로 가기',
 		SwitchToDefaultServerButton: '기본 설정된 서버를 사용하기',
+		JoinOnDiscord: 'Join on Discord',
 		JoinUsOnTitle: '{name}에서 더보기',
 		ShareButton: '공유하기',
 		ShareOnButton: '{name}에 공유하기',
@@ -161,6 +162,7 @@ const ko: Translation = {
 		DeleteButton: '삭제하기',
 		LoadingTitle: '로딩 중',
 		LoadingParagraph: '조금만 기다려주세요...',
+		NotEnoughCreditsTitle: 'Not Enough Credits',
 		ServerUrlInput: {
 			Placeholder: '커스텀 서버 주소'
 		},
@@ -431,6 +433,7 @@ const ko: Translation = {
 		UpgradeButton: 'Upgrade',
 		DowngradeButton: 'Downgrade',
 		PurchaseButton: 'Purchase',
+		BuyCreditsButton: 'Buy Credits',
 		MonthlyTitle: 'Monthly',
 		YearlyTitle: 'Yearly',
 		SlashMonth: '/month',
@@ -463,6 +466,13 @@ const ko: Translation = {
 					'You have cancelled the purchase process. If it was a mistake, you can try again.'
 			}
 		}
+	},
+	LowOnCreditsCard: {
+		Title: "You're low on credits",
+		FreeParagraph:
+			'We give all users {amount} images per month for free. You can get more by subscribing to a plan or joining events on our Discord.',
+		HighestPlanParagraph: 'You can buy a credit pack.',
+		OtherPlansParagraph: 'You can upgrade to a higher plan or buy a credit pack.'
 	}
 };
 export default ko;

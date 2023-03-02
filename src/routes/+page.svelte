@@ -53,6 +53,7 @@
 	import { imageTransitionProps } from '$ts/animation/constants';
 	import { fly } from 'svelte/transition';
 	import { userSummary } from '$ts/stores/user/summary';
+	import LowOnCreditsCard from '$components/LowOnCreditsCard.svelte';
 
 	export let data: THomePageData;
 
@@ -153,6 +154,8 @@
 		}
 	}
 
+	const lowCreditsThreshold = 1000000;
+
 	let mounted = false;
 
 	onMount(() => {
@@ -180,6 +183,16 @@
 >
 	<div class="w-full flex flex-col items-center justify-center">
 		<div class="w-[calc(100%+2rem)] flex flex-col justify-start items-center z-0 -mx-4">
+			{#if $page.data.session?.user.id && $userSummary && $userSummary.total_remaining_credits < lowCreditsThreshold}
+				<div
+					transition:expandCollapse|local={{ duration: 300 }}
+					class="w-full flex flex-col justify-start items-center px-4 md:px-8"
+				>
+					<div class="px-1 pt-1 pb-4">
+						<LowOnCreditsCard />
+					</div>
+				</div>
+			{/if}
 			<GenerateBar serverData={data} {queueGeneration} {estimatedDuration} />
 			{#if $generations.length > 0 && $generations[0].status === 'failed'}
 				<div
@@ -220,7 +233,7 @@
 					class="w-full flex items-start justify-center rounded-xl origin-top relative z-0 px-4"
 				>
 					<div class="w-full max-w-7xl flex items-start justify-center gap-1 md:px-5 py-3 md:pt-0">
-						{#each $generations[0].outputs as output, index}
+						{#each $generations[0].outputs as output}
 							<div class="w-1/4 max-w-full h-auto relative">
 								<ImagePlaceholder width={$generations[0].width} height={$generations[0].height} />
 								{#if $activeGeneration === undefined || $activeGeneration.selected_output.id !== output.id}

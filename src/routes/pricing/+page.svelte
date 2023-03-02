@@ -13,38 +13,44 @@
 	import { portal } from 'svelte-portal';
 	import type { PageData } from './$types';
 	import {
-		PUBLIC_STRIPE_PRICE_ID_STARTER_MO_TEST,
-		PUBLIC_STRIPE_PRICE_ID_PRO_MO_TEST,
-		PUBLIC_STRIPE_PRICE_ID_ULTIMATE_MO_TEST,
-		PUBLIC_STRIPE_PRODUCT_ID_STARTER_TEST,
-		PUBLIC_STRIPE_PRODUCT_ID_PRO_TEST,
-		PUBLIC_STRIPE_PRODUCT_ID_ULTIMATE_TEST
+		PUBLIC_STRIPE_PRICE_ID_STARTER_SUBSCRIPTION_MO_TEST,
+		PUBLIC_STRIPE_PRICE_ID_PRO_SUBSCRIPTION_MO_TEST,
+		PUBLIC_STRIPE_PRICE_ID_ULTIMATE_SUBSCRIPTION_MO_TEST,
+		PUBLIC_STRIPE_PRODUCT_ID_STARTER_SUBSCRIPTION_TEST,
+		PUBLIC_STRIPE_PRODUCT_ID_PRO_SUBSCRIPTION_TEST,
+		PUBLIC_STRIPE_PRODUCT_ID_ULTIMATE_SUBSCRIPTION_TEST,
+		PUBLIC_STRIPE_PRICE_ID_1500_CREDITS_TEST,
+		PUBLIC_STRIPE_PRODUCT_ID_1500_CREDITS_TEST
 	} from '$env/static/public';
-	import { STRIPE_CURRENCY_TO_SYMBOL, STRIPE_PRODUCT_ID_OBJECTS } from '$ts/constants/stripePublic';
+	import {
+		STRIPE_CURRENCY_TO_SYMBOL,
+		STRIPE_PRODUCT_ID_OBJECTS_SUBSCRIPTIONS_MO,
+		STRIPE_PRODUCT_ID_OBJECTS_CREDITS
+	} from '$ts/constants/stripePublic';
 	import { userSummary } from '$ts/stores/user/summary';
 
 	export let data: PageData;
 
-	$: cards = [
+	$: subscriptionCards = [
 		{
 			title: $LL.Pricing.Plans.StarterTitle(),
-			priceIdMo: PUBLIC_STRIPE_PRICE_ID_STARTER_MO_TEST,
-			productId: PUBLIC_STRIPE_PRODUCT_ID_STARTER_TEST,
+			priceIdMo: PUBLIC_STRIPE_PRICE_ID_STARTER_SUBSCRIPTION_MO_TEST,
+			productId: PUBLIC_STRIPE_PRODUCT_ID_STARTER_SUBSCRIPTION_TEST,
 			currency: data.currency,
 			currencySymbol: STRIPE_CURRENCY_TO_SYMBOL[data.currency],
 			amount:
 				data.currency === 'eur'
-					? STRIPE_PRODUCT_ID_OBJECTS[PUBLIC_STRIPE_PRODUCT_ID_STARTER_TEST].prices[
-							PUBLIC_STRIPE_PRICE_ID_STARTER_MO_TEST
-					  ].currencies.eur.amount
-					: STRIPE_PRODUCT_ID_OBJECTS[PUBLIC_STRIPE_PRODUCT_ID_STARTER_TEST].prices[
-							PUBLIC_STRIPE_PRICE_ID_STARTER_MO_TEST
-					  ].currencies.usd.amount,
+					? STRIPE_PRODUCT_ID_OBJECTS_SUBSCRIPTIONS_MO[
+							PUBLIC_STRIPE_PRODUCT_ID_STARTER_SUBSCRIPTION_TEST
+					  ].prices[PUBLIC_STRIPE_PRICE_ID_STARTER_SUBSCRIPTION_MO_TEST].currencies.eur.amount
+					: STRIPE_PRODUCT_ID_OBJECTS_SUBSCRIPTIONS_MO[
+							PUBLIC_STRIPE_PRODUCT_ID_STARTER_SUBSCRIPTION_TEST
+					  ].prices[PUBLIC_STRIPE_PRICE_ID_STARTER_SUBSCRIPTION_MO_TEST].currencies.usd.amount,
 			features: [
 				`${$LL.Pricing.Features.MonthlyImages({
 					count:
-						STRIPE_PRODUCT_ID_OBJECTS[
-							PUBLIC_STRIPE_PRODUCT_ID_STARTER_TEST
+						STRIPE_PRODUCT_ID_OBJECTS_SUBSCRIPTIONS_MO[
+							PUBLIC_STRIPE_PRODUCT_ID_STARTER_SUBSCRIPTION_TEST
 						].monthly_images.toLocaleString($locale)
 				})}`,
 				$LL.Pricing.Features.CommercialUse(),
@@ -54,23 +60,23 @@
 		},
 		{
 			title: $LL.Pricing.Plans.ProTitle(),
-			priceIdMo: PUBLIC_STRIPE_PRICE_ID_PRO_MO_TEST,
-			productId: PUBLIC_STRIPE_PRODUCT_ID_PRO_TEST,
+			priceIdMo: PUBLIC_STRIPE_PRICE_ID_PRO_SUBSCRIPTION_MO_TEST,
+			productId: PUBLIC_STRIPE_PRODUCT_ID_PRO_SUBSCRIPTION_TEST,
 			currency: data.currency,
 			currencySymbol: STRIPE_CURRENCY_TO_SYMBOL[data.currency],
 			amount:
 				data.currency === 'eur'
-					? STRIPE_PRODUCT_ID_OBJECTS[PUBLIC_STRIPE_PRODUCT_ID_PRO_TEST].prices[
-							PUBLIC_STRIPE_PRICE_ID_PRO_MO_TEST
-					  ].currencies.eur.amount
-					: STRIPE_PRODUCT_ID_OBJECTS[PUBLIC_STRIPE_PRODUCT_ID_PRO_TEST].prices[
-							PUBLIC_STRIPE_PRICE_ID_PRO_MO_TEST
-					  ].currencies.usd.amount,
+					? STRIPE_PRODUCT_ID_OBJECTS_SUBSCRIPTIONS_MO[
+							PUBLIC_STRIPE_PRODUCT_ID_PRO_SUBSCRIPTION_TEST
+					  ].prices[PUBLIC_STRIPE_PRICE_ID_PRO_SUBSCRIPTION_MO_TEST].currencies.eur.amount
+					: STRIPE_PRODUCT_ID_OBJECTS_SUBSCRIPTIONS_MO[
+							PUBLIC_STRIPE_PRODUCT_ID_PRO_SUBSCRIPTION_TEST
+					  ].prices[PUBLIC_STRIPE_PRICE_ID_PRO_SUBSCRIPTION_MO_TEST].currencies.usd.amount,
 			features: [
 				`${$LL.Pricing.Features.MonthlyImages({
 					count:
-						STRIPE_PRODUCT_ID_OBJECTS[
-							PUBLIC_STRIPE_PRODUCT_ID_PRO_TEST
+						STRIPE_PRODUCT_ID_OBJECTS_SUBSCRIPTIONS_MO[
+							PUBLIC_STRIPE_PRODUCT_ID_PRO_SUBSCRIPTION_TEST
 						].monthly_images.toLocaleString($locale)
 				})}`,
 				$LL.Pricing.Features.CommercialUse(),
@@ -82,29 +88,51 @@
 		},
 		{
 			title: $LL.Pricing.Plans.UltimateTitle(),
-			priceIdMo: PUBLIC_STRIPE_PRICE_ID_ULTIMATE_MO_TEST,
-			productId: PUBLIC_STRIPE_PRODUCT_ID_ULTIMATE_TEST,
+			priceIdMo: PUBLIC_STRIPE_PRICE_ID_ULTIMATE_SUBSCRIPTION_MO_TEST,
+			productId: PUBLIC_STRIPE_PRODUCT_ID_ULTIMATE_SUBSCRIPTION_TEST,
 			currency: data.currency,
 			currencySymbol: STRIPE_CURRENCY_TO_SYMBOL[data.currency],
 			amount:
 				data.currency === 'eur'
-					? STRIPE_PRODUCT_ID_OBJECTS[PUBLIC_STRIPE_PRODUCT_ID_ULTIMATE_TEST].prices[
-							PUBLIC_STRIPE_PRICE_ID_ULTIMATE_MO_TEST
-					  ].currencies.eur.amount
-					: STRIPE_PRODUCT_ID_OBJECTS[PUBLIC_STRIPE_PRODUCT_ID_ULTIMATE_TEST].prices[
-							PUBLIC_STRIPE_PRICE_ID_ULTIMATE_MO_TEST
-					  ].currencies.usd.amount,
+					? STRIPE_PRODUCT_ID_OBJECTS_SUBSCRIPTIONS_MO[
+							PUBLIC_STRIPE_PRODUCT_ID_ULTIMATE_SUBSCRIPTION_TEST
+					  ].prices[PUBLIC_STRIPE_PRICE_ID_ULTIMATE_SUBSCRIPTION_MO_TEST].currencies.eur.amount
+					: STRIPE_PRODUCT_ID_OBJECTS_SUBSCRIPTIONS_MO[
+							PUBLIC_STRIPE_PRODUCT_ID_ULTIMATE_SUBSCRIPTION_TEST
+					  ].prices[PUBLIC_STRIPE_PRICE_ID_ULTIMATE_SUBSCRIPTION_MO_TEST].currencies.usd.amount,
 			features: [
 				`${$LL.Pricing.Features.MonthlyImages({
 					count:
-						STRIPE_PRODUCT_ID_OBJECTS[
-							PUBLIC_STRIPE_PRODUCT_ID_ULTIMATE_TEST
+						STRIPE_PRODUCT_ID_OBJECTS_SUBSCRIPTIONS_MO[
+							PUBLIC_STRIPE_PRODUCT_ID_ULTIMATE_SUBSCRIPTION_TEST
 						].monthly_images.toLocaleString($locale)
 				})}`,
 				$LL.Pricing.Features.CommercialUse(),
 				$LL.Pricing.Features.ImagesArePrivate()
 			],
 			ringClass: 'ring-c-bg-secondary'
+		}
+	];
+
+	$: creditPackCards = [
+		{
+			title: '1500 Credits',
+			priceId: PUBLIC_STRIPE_PRICE_ID_1500_CREDITS_TEST,
+			productId: PUBLIC_STRIPE_PRICE_ID_1500_CREDITS_TEST,
+			currency: data.currency,
+			currencySymbol: STRIPE_CURRENCY_TO_SYMBOL[data.currency],
+			amount:
+				data.currency === 'eur'
+					? STRIPE_PRODUCT_ID_OBJECTS_CREDITS[PUBLIC_STRIPE_PRODUCT_ID_1500_CREDITS_TEST].prices[
+							PUBLIC_STRIPE_PRICE_ID_1500_CREDITS_TEST
+					  ].currencies.eur.amount
+					: STRIPE_PRODUCT_ID_OBJECTS_CREDITS[PUBLIC_STRIPE_PRODUCT_ID_1500_CREDITS_TEST].prices[
+							PUBLIC_STRIPE_PRICE_ID_1500_CREDITS_TEST
+					  ].currencies.usd.amount,
+			features: [`1,500 images`, `Never expires`],
+			ringClass: 'ring-c-bg-secondary',
+			badgeText: undefined,
+			badgeClasses: undefined
 		}
 	];
 
@@ -148,7 +176,6 @@
 		} catch (error) {
 			checkoutCreationStatus = 'error';
 			selectedPriceId = undefined;
-			console.log(error);
 		}
 	}
 
@@ -167,89 +194,155 @@
 
 <PageWrapper>
 	<div class="w-full flex flex-col items-center justify-start my-auto">
-		<h1 class="text-center font-bold text-4xl">{$LL.Pricing.PageTitle()}</h1>
-		<p class="max-w-xl mt-3 text-center leading-relaxed text-c-on-bg/75">
-			{$LL.Pricing.PageParagraph()}
-		</p>
-		<div class="w-full max-w-7xl flex flex-wrap justify-center gap-6 mt-10">
-			{#each cards as card}
-				{@const subscribedProductId = cards.find(
-					(c) => c.productId === $userSummary?.product_id
-				)?.productId}
-				{@const subscribedAmount = cards.find(
-					(c) => c.productId === $userSummary?.product_id
-				)?.amount}
-				{@const isSubscribed = subscribedProductId === card.productId}
-				{@const isUpgrade = subscribedAmount !== undefined && subscribedAmount < card.amount}
-				{@const isDowngrade = subscribedAmount !== undefined && subscribedAmount > card.amount}
-				<div
-					class="w-full max-w-[22rem] bg-c-bg shadow-xl shadow-c-shadow/[var(--o-shadow-strong)] 
+		<section id="plans" class="w-full flex flex-col items-center justify-start">
+			<h1 class="text-center font-bold text-4xl">{$LL.Pricing.PageTitle()}</h1>
+			<p class="max-w-xl mt-3 text-center leading-relaxed text-c-on-bg/75">
+				{$LL.Pricing.PageParagraph()}
+			</p>
+			<div class="w-full max-w-7xl flex flex-wrap justify-center gap-6 mt-8">
+				{#each subscriptionCards as card}
+					{@const subscribedProductId = subscriptionCards.find(
+						(c) => c.productId === $userSummary?.product_id
+					)?.productId}
+					{@const subscribedAmount = subscriptionCards.find(
+						(c) => c.productId === $userSummary?.product_id
+					)?.amount}
+					{@const isSubscribed = subscribedProductId === card.productId}
+					{@const isUpgrade = subscribedAmount !== undefined && subscribedAmount < card.amount}
+					{@const isDowngrade = subscribedAmount !== undefined && subscribedAmount > card.amount}
+					<div
+						class="w-full max-w-[22rem] bg-c-bg shadow-xl shadow-c-shadow/[var(--o-shadow-strong)] 
 					 p-4 md:p-5 rounded-2xl md:rounded-3xl ring-2 {isSubscribed
-						? 'ring-c-success'
-						: card.ringClass} relative"
-				>
-					{#if card.badgeText && card.badgeClasses && !isDowngrade}
-						<div
-							class="absolute -right-3 -top-3 rounded-full px-4 py-2 text-sm text-right 
-							font-bold {isSubscribed ? 'bg-c-success text-c-on-primary' : card.badgeClasses}"
-						>
-							{card.badgeText}
-						</div>
-					{/if}
-					<h2 class="w-full text-c-on-bg text-center font-bold text-xl md:-mt-1.5 py-0.5 gap-2">
-						{card.title}
-					</h2>
-					<h3
-						class="w-[100%+2rem] md:w-[100%+2.5rem] -mx-4 md:-mx-5 text-center bg-c-bg-secondary 
-						text-c-on-bg mt-4 py-3 font-bold flex justify-center items-start"
+							? 'ring-c-success'
+							: card.ringClass} relative"
 					>
-						<span class="text-xl">{card.currencySymbol}</span><span class="text-3xl font-bold">
-							{card.amount.toLocaleString($locale)}
-						</span>
-						<span class="self-end mb-0.75 text-c-on-bg/60 font-medium"
-							>{$LL.Pricing.SlashMonth()}</span
+						{#if card.badgeText && card.badgeClasses && !isDowngrade}
+							<div
+								class="absolute -right-3 -top-3 rounded-full px-4 py-2 text-sm text-right 
+							font-bold {isSubscribed ? 'bg-c-success text-c-on-primary' : card.badgeClasses}"
+							>
+								{card.badgeText}
+							</div>
+						{/if}
+						<h2 class="w-full text-c-on-bg text-center font-bold text-xl md:-mt-1.5 py-0.5 gap-2">
+							{card.title}
+						</h2>
+						<h3
+							class="w-[100%+2rem] md:w-[100%+2.5rem] -mx-4 md:-mx-5 text-center bg-c-bg-secondary 
+						text-c-on-bg mt-4 py-3 font-bold flex justify-center items-start"
 						>
-					</h3>
-					<ul class="w-full mt-6 flex flex-col gap-3 px-1">
-						{#each card.features as feature}
-							<li class="flex items-center gap-3">
-								<span class="text-c-on-bg/60">-</span>
-								{feature}
-							</li>
-						{/each}
-					</ul>
-					{#if $page.data.session?.user.email}
-						<Button
-							withSpinner
-							type={isSubscribed ? 'success' : 'primary'}
-							disabled={isSubscribed}
-							loading={card.priceIdMo === selectedPriceId && checkoutCreationStatus === 'loading'}
-							onClick={() =>
-								createCheckoutSessionAndRedirect({
-									priceId: card.priceIdMo,
-									currency: card.currency
-								})}
-							class="w-full mt-8"
-						>
-							{#if isSubscribed}
-								{$LL.Pricing.SubscribedButton()}
-							{:else if isUpgrade}
-								{$LL.Pricing.UpgradeButton()}
-							{:else if isDowngrade}
-								{$LL.Pricing.DowngradeButton()}
-							{:else}
+							<span class="text-xl">{card.currencySymbol}</span><span class="text-3xl font-bold">
+								{card.amount.toLocaleString($locale)}
+							</span>
+							<span class="self-end mb-0.75 text-c-on-bg/60 font-medium"
+								>{$LL.Pricing.SlashMonth()}</span
+							>
+						</h3>
+						<ul class="w-full mt-6 flex flex-col gap-3 px-1">
+							{#each card.features as feature}
+								<li class="flex items-center gap-3">
+									<span class="text-c-on-bg/60">-</span>
+									{feature}
+								</li>
+							{/each}
+						</ul>
+						{#if $page.data.session?.user.email}
+							<Button
+								withSpinner
+								type={isSubscribed ? 'success' : 'primary'}
+								disabled={isSubscribed}
+								loading={card.priceIdMo === selectedPriceId && checkoutCreationStatus === 'loading'}
+								onClick={() =>
+									createCheckoutSessionAndRedirect({
+										priceId: card.priceIdMo,
+										currency: card.currency
+									})}
+								class="w-full mt-8"
+							>
+								{#if isSubscribed}
+									{$LL.Pricing.SubscribedButton()}
+								{:else if isUpgrade}
+									{$LL.Pricing.UpgradeButton()}
+								{:else if isDowngrade}
+									{$LL.Pricing.DowngradeButton()}
+								{:else}
+									{$LL.Pricing.SubscribeButton()}
+								{/if}
+							</Button>
+						{:else}
+							<Button onClick={() => (isSignInModalOpen = true)} class="w-full mt-8">
 								{$LL.Pricing.SubscribeButton()}
+							</Button>
+						{/if}
+					</div>
+				{/each}
+			</div>
+			<div class="w-full h-[1vh]" />
+		</section>
+		{#if $userSummary?.product_id}
+			<section id="credit-packs" class="w-full flex flex-col items-center justify-start mt-12">
+				<h1 class="text-center font-bold text-4xl">Credit Packs</h1>
+				<p class="max-w-xl mt-3 text-center leading-relaxed text-c-on-bg/75">
+					You are subscribed but want more credits? You can also buy credit packs.
+				</p>
+				<div class="w-full max-w-7xl flex flex-wrap justify-center gap-6 mt-8">
+					{#each creditPackCards as card}
+						<div
+							class="w-full max-w-[22rem] bg-c-bg shadow-xl shadow-c-shadow/[var(--o-shadow-strong)] 
+							p-4 md:p-5 rounded-2xl md:rounded-3xl ring-2 {card.ringClass} relative"
+						>
+							{#if card.badgeText && card.badgeClasses}
+								<div
+									class="absolute -right-3 -top-3 rounded-full px-4 py-2 text-sm text-right 
+								font-bold {card.badgeClasses}"
+								>
+									{card.badgeText}
+								</div>
 							{/if}
-						</Button>
-					{:else}
-						<Button onClick={() => (isSignInModalOpen = true)} class="w-full mt-8">
-							{$LL.Pricing.SubscribeButton()}
-						</Button>
-					{/if}
+							<h2 class="w-full text-c-on-bg text-center font-bold text-xl md:-mt-1.5 py-0.5 gap-2">
+								{card.title}
+							</h2>
+							<h3
+								class="w-[100%+2rem] md:w-[100%+2.5rem] -mx-4 md:-mx-5 text-center bg-c-bg-secondary 
+							text-c-on-bg mt-4 py-3 font-bold flex justify-center items-start"
+							>
+								<span class="text-xl">{card.currencySymbol}</span><span class="text-3xl font-bold">
+									{card.amount.toLocaleString($locale)}
+								</span>
+							</h3>
+							<ul class="w-full mt-6 flex flex-col gap-3 px-1">
+								{#each card.features as feature}
+									<li class="flex items-center gap-3">
+										<span class="text-c-on-bg/60">-</span>
+										{feature}
+									</li>
+								{/each}
+							</ul>
+							{#if $page.data.session?.user.email}
+								<Button
+									withSpinner
+									type={'primary'}
+									loading={card.priceId === selectedPriceId && checkoutCreationStatus === 'loading'}
+									onClick={() =>
+										createCheckoutSessionAndRedirect({
+											priceId: card.priceId,
+											currency: card.currency
+										})}
+									class="w-full mt-8"
+								>
+									Purchase
+								</Button>
+							{:else}
+								<Button onClick={() => (isSignInModalOpen = true)} class="w-full mt-8">
+									Purchase
+								</Button>
+							{/if}
+						</div>
+					{/each}
 				</div>
-			{/each}
-		</div>
-		<div class="w-full h-[1vh]" />
+				<div class="w-full h-[1vh]" />
+			</section>
+		{/if}
 	</div>
 </PageWrapper>
 

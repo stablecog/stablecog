@@ -9,7 +9,10 @@ import {
 } from '$ts/constants/main';
 import { writable } from 'svelte/store';
 import { schedulerIdDefault, type TAvailableSchedulerId } from '$ts/constants/schedulers';
-import { generationModelIdDefault, type TAvailableModelId } from '$ts/constants/generationModels';
+import {
+	generationModelIdDefault,
+	type TAvailableGenerationModelId
+} from '$ts/constants/generationModels';
 
 export const prompt = writableLocal<string | null>('prompt', null);
 export const negativePrompt = writableLocal<string | null>('negativePrompt', null);
@@ -28,9 +31,14 @@ export const inferenceSteps = writableLocal<TAvailableInferenceSteps>(
 	inferenceStepsDefault
 );
 
-export const modelId = writableLocal<TAvailableModelId>('modelId', generationModelIdDefault);
+export const modelId = writableLocal<TAvailableGenerationModelId>(
+	'modelId',
+	generationModelIdDefault
+);
 
 export const schedulerId = writableLocal<TAvailableSchedulerId>('schedulerId', schedulerIdDefault);
+
+export const numOutputs = writableLocal<number>('numOutputs', 4);
 
 export interface TImageSize {
 	width: TAvailableWidth;
@@ -44,5 +52,5 @@ export const generationHeight = writable<TAvailableHeight>(heightDefault);
 export const generationInferenceSteps = writable<TAvailableInferenceSteps>(inferenceStepsDefault);
 export const generationGuidanceScale = writable<number>(guidanceScaleDefault);
 export const generationSeed = writable<string | number | undefined | null>(undefined);
-export const generationModelId = writable<TAvailableModelId>(generationModelIdDefault);
+export const generationModelId = writable<TAvailableGenerationModelId>(generationModelIdDefault);
 export const generationSchedulerId = writable<TAvailableSchedulerId>(schedulerIdDefault);

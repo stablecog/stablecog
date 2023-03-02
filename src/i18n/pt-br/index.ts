@@ -146,6 +146,7 @@ const ptBr: Translation = {
 		JoinUsTitle: 'Junte-se a Nós',
 		GoHomeButton: 'Ir para a Página Inicial',
 		SwitchToDefaultServerButton: 'Alternar para o Servidor Padrão',
+		JoinOnDiscord: 'Join on Discord',
 		JoinUsOnTitle: 'Junte-se a nós no {name}',
 		ShareButton: 'Compartilhar',
 		ShareOnButton: 'Compartilhe no {name}',
@@ -160,6 +161,7 @@ const ptBr: Translation = {
 		DeleteButton: 'Deletar',
 		LoadingTitle: 'Carregando',
 		LoadingParagraph: 'Carregando...',
+		NotEnoughCreditsTitle: 'Not Enough Credits',
 		ServerUrlInput: {
 			Placeholder: 'URL do Servidor'
 		},
@@ -435,6 +437,7 @@ const ptBr: Translation = {
 		UpgradeButton: 'Upgrade',
 		DowngradeButton: 'Downgrade',
 		PurchaseButton: 'Purchase',
+		BuyCreditsButton: 'Buy Credits',
 		MonthlyTitle: 'Monthly',
 		YearlyTitle: 'Yearly',
 		SlashMonth: '/month',
@@ -467,6 +470,13 @@ const ptBr: Translation = {
 					'You have cancelled the purchase process. If it was a mistake, you can try again.'
 			}
 		}
+	},
+	LowOnCreditsCard: {
+		Title: "You're low on credits",
+		FreeParagraph:
+			'We give all users {amount} images per month for free. You can get more by subscribing to a plan or joining events on our Discord.',
+		HighestPlanParagraph: 'You can buy a credit pack.',
+		OtherPlansParagraph: 'You can upgrade to a higher plan or buy a credit pack.'
 	}
 };
 export default ptBr;

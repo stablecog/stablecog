@@ -146,6 +146,7 @@ const hi: Translation = {
 		JoinUsTitle: 'हमसे जुड़े',
 		GoHomeButton: 'होम जाए',
 		SwitchToDefaultServerButton: 'डिफॉल्ट सर्वर पर वापसी करे',
+		JoinOnDiscord: 'Join on Discord',
 		JoinUsOnTitle: 'Join us on {name}',
 		ShareButton: 'शेयर',
 		ShareOnButton: '{name} पर शेयर करे',
@@ -160,6 +161,7 @@ const hi: Translation = {
 		DeleteButton: 'हटाए',
 		LoadingTitle: 'लोड हो रहा है',
 		LoadingParagraph: 'लोड हो रहा है...',
+		NotEnoughCreditsTitle: 'Not Enough Credits',
 		ServerUrlInput: {
 			Placeholder: 'सर्वर URL'
 		},
@@ -430,6 +432,7 @@ const hi: Translation = {
 		UpgradeButton: 'Upgrade',
 		DowngradeButton: 'Downgrade',
 		PurchaseButton: 'Purchase',
+		BuyCreditsButton: 'Buy Credits',
 		MonthlyTitle: 'Monthly',
 		YearlyTitle: 'Yearly',
 		SlashMonth: '/month',
@@ -462,6 +465,13 @@ const hi: Translation = {
 					'You have cancelled the purchase process. If it was a mistake, you can try again.'
 			}
 		}
+	},
+	LowOnCreditsCard: {
+		Title: "You're low on credits",
+		FreeParagraph:
+			'We give all users {amount} images per month for free. You can get more by subscribing to a plan or joining events on our Discord.',
+		HighestPlanParagraph: 'You can buy a credit pack.',
+		OtherPlansParagraph: 'You can upgrade to a higher plan or buy a credit pack.'
 	}
 };
 export default hi;

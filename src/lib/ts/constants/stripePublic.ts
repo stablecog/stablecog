@@ -1,41 +1,55 @@
 import {
-	PUBLIC_STRIPE_PRICE_ID_STARTER_MO_TEST,
-	PUBLIC_STRIPE_PRICE_ID_PRO_MO_TEST,
-	PUBLIC_STRIPE_PRICE_ID_ULTIMATE_MO_TEST,
-	PUBLIC_STRIPE_PRODUCT_ID_STARTER_TEST,
-	PUBLIC_STRIPE_PRODUCT_ID_PRO_TEST,
-	PUBLIC_STRIPE_PRODUCT_ID_ULTIMATE_TEST
+	PUBLIC_STRIPE_PRICE_ID_STARTER_SUBSCRIPTION_MO_TEST,
+	PUBLIC_STRIPE_PRICE_ID_PRO_SUBSCRIPTION_MO_TEST,
+	PUBLIC_STRIPE_PRICE_ID_ULTIMATE_SUBSCRIPTION_MO_TEST,
+	PUBLIC_STRIPE_PRODUCT_ID_STARTER_SUBSCRIPTION_TEST,
+	PUBLIC_STRIPE_PRODUCT_ID_PRO_SUBSCRIPTION_TEST,
+	PUBLIC_STRIPE_PRODUCT_ID_ULTIMATE_SUBSCRIPTION_TEST,
+	PUBLIC_STRIPE_PRICE_ID_1500_CREDITS_TEST,
+	PUBLIC_STRIPE_PRODUCT_ID_1500_CREDITS_TEST
 } from '$env/static/public';
 
 export const STRIPE_CURRENCIES = ['usd', 'eur'] as const;
 
-export const STRIPE_PRICE_IDS = [
-	PUBLIC_STRIPE_PRICE_ID_STARTER_MO_TEST,
-	PUBLIC_STRIPE_PRICE_ID_PRO_MO_TEST,
-	PUBLIC_STRIPE_PRICE_ID_ULTIMATE_MO_TEST
+export const STRIPE_PRICE_IDS_SUBSCRIPTIONS_MO = [
+	PUBLIC_STRIPE_PRICE_ID_STARTER_SUBSCRIPTION_MO_TEST,
+	PUBLIC_STRIPE_PRICE_ID_PRO_SUBSCRIPTION_MO_TEST,
+	PUBLIC_STRIPE_PRICE_ID_ULTIMATE_SUBSCRIPTION_MO_TEST
 ] as const;
 
-export const STRIPE_PRODUCT_IDS = [
-	PUBLIC_STRIPE_PRODUCT_ID_STARTER_TEST,
-	PUBLIC_STRIPE_PRODUCT_ID_PRO_TEST,
-	PUBLIC_STRIPE_PRODUCT_ID_ULTIMATE_TEST
+export const STRIPE_PRODUCT_IDS_SUBSCRIPTIONS = [
+	PUBLIC_STRIPE_PRODUCT_ID_STARTER_SUBSCRIPTION_TEST,
+	PUBLIC_STRIPE_PRODUCT_ID_PRO_SUBSCRIPTION_TEST,
+	PUBLIC_STRIPE_PRODUCT_ID_ULTIMATE_SUBSCRIPTION_TEST
 ] as const;
+
+export const STRIPE_PRICE_IDS_CREDITS = [PUBLIC_STRIPE_PRICE_ID_1500_CREDITS_TEST];
+export const STRIPE_PRODUCT_IDS_CREDITS = [PUBLIC_STRIPE_PRODUCT_ID_1500_CREDITS_TEST];
+
+export const STRIPE_HIGHEST_PRODUCT_ID_SUBSCRIPTIONS =
+	STRIPE_PRODUCT_IDS_SUBSCRIPTIONS[STRIPE_PRODUCT_IDS_SUBSCRIPTIONS.length - 1];
 
 export const STRIPE_CURRENCY_TO_SYMBOL: { [currency in TStripeSupportedCurrency]: string } = {
 	usd: '$',
 	eur: '€'
 } as const;
 
-export type TStripeSupportedPriceId = typeof STRIPE_PRICE_IDS[number];
-export type TStripeSupportedProductId = typeof STRIPE_PRODUCT_IDS[number];
+export type TStripeSupportedPriceIdSubscriptionsMo =
+	typeof STRIPE_PRICE_IDS_SUBSCRIPTIONS_MO[number];
+
+export type TStripeSupportedProductIdSubscriptions =
+	typeof STRIPE_PRODUCT_IDS_SUBSCRIPTIONS[number];
 export type TStripeSupportedCurrency = typeof STRIPE_CURRENCIES[number];
 
-export const STRIPE_PRODUCT_ID_OBJECTS: {
-	[prodcutId in TStripeSupportedProductId]: {
-		product_id: TStripeSupportedProductId;
+export type TStripeSupportedPriceIdCredits = typeof STRIPE_PRICE_IDS_CREDITS[number];
+export type TStripeSupportedProductIdCredits = typeof STRIPE_PRODUCT_IDS_CREDITS[number];
+
+export const STRIPE_PRODUCT_ID_OBJECTS_SUBSCRIPTIONS_MO: {
+	[prodcutId in TStripeSupportedProductIdSubscriptions]: {
+		product_id: TStripeSupportedProductIdSubscriptions;
 		monthly_images: number;
 		prices: {
-			[priceId in TStripeSupportedPriceId]: {
+			[priceId in TStripeSupportedPriceIdSubscriptionsMo]: {
 				currencies: {
 					[currency in TStripeSupportedCurrency]: {
 						amount: number;
@@ -45,11 +59,11 @@ export const STRIPE_PRODUCT_ID_OBJECTS: {
 		};
 	};
 } = {
-	[PUBLIC_STRIPE_PRODUCT_ID_STARTER_TEST]: {
-		product_id: PUBLIC_STRIPE_PRODUCT_ID_STARTER_TEST,
+	[PUBLIC_STRIPE_PRODUCT_ID_STARTER_SUBSCRIPTION_TEST]: {
+		product_id: PUBLIC_STRIPE_PRODUCT_ID_STARTER_SUBSCRIPTION_TEST,
 		monthly_images: 1750,
 		prices: {
-			[PUBLIC_STRIPE_PRICE_ID_STARTER_MO_TEST]: {
+			[PUBLIC_STRIPE_PRICE_ID_STARTER_SUBSCRIPTION_MO_TEST]: {
 				currencies: {
 					usd: {
 						amount: 10
@@ -61,11 +75,11 @@ export const STRIPE_PRODUCT_ID_OBJECTS: {
 			}
 		}
 	},
-	[PUBLIC_STRIPE_PRODUCT_ID_PRO_TEST]: {
-		product_id: PUBLIC_STRIPE_PRODUCT_ID_PRO_TEST,
+	[PUBLIC_STRIPE_PRODUCT_ID_PRO_SUBSCRIPTION_TEST]: {
+		product_id: PUBLIC_STRIPE_PRODUCT_ID_PRO_SUBSCRIPTION_TEST,
 		monthly_images: 4500,
 		prices: {
-			[PUBLIC_STRIPE_PRICE_ID_PRO_MO_TEST]: {
+			[PUBLIC_STRIPE_PRICE_ID_PRO_SUBSCRIPTION_MO_TEST]: {
 				currencies: {
 					usd: {
 						amount: 25
@@ -77,17 +91,50 @@ export const STRIPE_PRODUCT_ID_OBJECTS: {
 			}
 		}
 	},
-	[PUBLIC_STRIPE_PRODUCT_ID_ULTIMATE_TEST]: {
-		product_id: PUBLIC_STRIPE_PRODUCT_ID_ULTIMATE_TEST,
+	[PUBLIC_STRIPE_PRODUCT_ID_ULTIMATE_SUBSCRIPTION_TEST]: {
+		product_id: PUBLIC_STRIPE_PRODUCT_ID_ULTIMATE_SUBSCRIPTION_TEST,
 		monthly_images: 10000,
 		prices: {
-			[PUBLIC_STRIPE_PRICE_ID_ULTIMATE_MO_TEST]: {
+			[PUBLIC_STRIPE_PRICE_ID_ULTIMATE_SUBSCRIPTION_MO_TEST]: {
 				currencies: {
 					usd: {
 						amount: 50
 					},
 					eur: {
 						amount: 50
+					}
+				}
+			}
+		}
+	}
+} as const;
+
+export const STRIPE_PRODUCT_ID_OBJECTS_CREDITS: {
+	[prodcutId in TStripeSupportedProductIdCredits]: {
+		product_id: TStripeSupportedProductIdCredits;
+		images: number;
+		prices: {
+			[priceId in TStripeSupportedPriceIdCredits]: {
+				currencies: {
+					[currency in TStripeSupportedCurrency]: {
+						amount: number;
+					};
+				};
+			};
+		};
+	};
+} = {
+	[PUBLIC_STRIPE_PRODUCT_ID_1500_CREDITS_TEST]: {
+		product_id: PUBLIC_STRIPE_PRODUCT_ID_1500_CREDITS_TEST,
+		images: 1500,
+		prices: {
+			[PUBLIC_STRIPE_PRICE_ID_1500_CREDITS_TEST]: {
+				currencies: {
+					usd: {
+						amount: 10
+					},
+					eur: {
+						amount: 10
 					}
 				}
 			}

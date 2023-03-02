@@ -147,6 +147,7 @@ const ru: Translation = {
 		JoinUsTitle: 'Присоединяйтесь к нам',
 		GoHomeButton: 'Домой',
 		SwitchToDefaultServerButton: 'Переключиться на сервер по умолчанию',
+		JoinOnDiscord: 'Join on Discord',
 		JoinUsOnTitle: 'Join us on {name}',
 		ShareButton: 'Поделиться',
 		ShareOnButton: 'Поделиться в {name}',
@@ -161,6 +162,7 @@ const ru: Translation = {
 		DeleteButton: 'Удалить',
 		LoadingTitle: 'Загружается',
 		LoadingParagraph: 'Загружается...',
+		NotEnoughCreditsTitle: 'Not Enough Credits',
 		ServerUrlInput: {
 			Placeholder: 'URL-адрес сервера'
 		},
@@ -432,6 +434,7 @@ const ru: Translation = {
 		UpgradeButton: 'Upgrade',
 		DowngradeButton: 'Downgrade',
 		PurchaseButton: 'Purchase',
+		BuyCreditsButton: 'Buy Credits',
 		MonthlyTitle: 'Monthly',
 		YearlyTitle: 'Yearly',
 		SlashMonth: '/month',
@@ -464,6 +467,13 @@ const ru: Translation = {
 					'You have cancelled the purchase process. If it was a mistake, you can try again.'
 			}
 		}
+	},
+	LowOnCreditsCard: {
+		Title: "You're low on credits",
+		FreeParagraph:
+			'We give all users {amount} images per month for free. You can get more by subscribing to a plan or joining events on our Discord.',
+		HighestPlanParagraph: 'You can buy a credit pack.',
+		OtherPlansParagraph: 'You can upgrade to a higher plan or buy a credit pack.'
 	}
 };
 export default ru;

@@ -438,6 +438,10 @@ type RootTranslation = {
 		 */
 		SwitchToDefaultServerButton: string
 		/**
+		 * J​o​i​n​ ​o​n​ ​D​i​s​c​o​r​d
+		 */
+		JoinOnDiscord: string
+		/**
 		 * J​o​i​n​ ​u​s​ ​o​n​ ​{​n​a​m​e​}
 		 * @param {unknown} name
 		 */
@@ -495,6 +499,10 @@ type RootTranslation = {
 		 * L​o​a​d​i​n​g​.​.​.
 		 */
 		LoadingParagraph: string
+		/**
+		 * N​o​t​ ​E​n​o​u​g​h​ ​C​r​e​d​i​t​s
+		 */
+		NotEnoughCreditsTitle: string
 		ServerUrlInput: {
 			/**
 			 * S​e​r​v​e​r​ ​U​R​L
@@ -1271,6 +1279,10 @@ type RootTranslation = {
 		 */
 		PurchaseButton: string
 		/**
+		 * B​u​y​ ​C​r​e​d​i​t​s
+		 */
+		BuyCreditsButton: string
+		/**
 		 * M​o​n​t​h​l​y
 		 */
 		MonthlyTitle: string
@@ -1356,6 +1368,25 @@ type RootTranslation = {
 				PageParagraph: string
 			}
 		}
+	}
+	LowOnCreditsCard: {
+		/**
+		 * Y​o​u​'​r​e​ ​l​o​w​ ​o​n​ ​c​r​e​d​i​t​s
+		 */
+		Title: string
+		/**
+		 * W​e​ ​g​i​v​e​ ​a​l​l​ ​u​s​e​r​s​ ​{​a​m​o​u​n​t​}​ ​i​m​a​g​e​s​ ​p​e​r​ ​m​o​n​t​h​ ​f​o​r​ ​f​r​e​e​.​ ​Y​o​u​ ​c​a​n​ ​g​e​t​ ​m​o​r​e​ ​b​y​ ​s​u​b​s​c​r​i​b​i​n​g​ ​t​o​ ​a​ ​p​l​a​n​ ​o​r​ ​j​o​i​n​i​n​g​ ​e​v​e​n​t​s​ ​o​n​ ​o​u​r​ ​D​i​s​c​o​r​d​.
+		 * @param {unknown} amount
+		 */
+		FreeParagraph: RequiredParams<'amount'>
+		/**
+		 * Y​o​u​ ​c​a​n​ ​b​u​y​ ​a​ ​c​r​e​d​i​t​ ​p​a​c​k​.
+		 */
+		HighestPlanParagraph: string
+		/**
+		 * Y​o​u​ ​c​a​n​ ​u​p​g​r​a​d​e​ ​t​o​ ​a​ ​h​i​g​h​e​r​ ​p​l​a​n​ ​o​r​ ​b​u​y​ ​a​ ​c​r​e​d​i​t​ ​p​a​c​k​.
+		 */
+		OtherPlansParagraph: string
 	}
 }
 
@@ -1770,6 +1801,10 @@ export type TranslationFunctions = {
 		 */
 		SwitchToDefaultServerButton: () => LocalizedString
 		/**
+		 * Join on Discord
+		 */
+		JoinOnDiscord: () => LocalizedString
+		/**
 		 * Join us on {name}
 		 */
 		JoinUsOnTitle: (arg: { name: unknown }) => LocalizedString
@@ -1825,6 +1860,10 @@ export type TranslationFunctions = {
 		 * Loading...
 		 */
 		LoadingParagraph: () => LocalizedString
+		/**
+		 * Not Enough Credits
+		 */
+		NotEnoughCreditsTitle: () => LocalizedString
 		ServerUrlInput: {
 			/**
 			 * Server URL
@@ -2598,6 +2637,10 @@ export type TranslationFunctions = {
 		 */
 		PurchaseButton: () => LocalizedString
 		/**
+		 * Buy Credits
+		 */
+		BuyCreditsButton: () => LocalizedString
+		/**
 		 * Monthly
 		 */
 		MonthlyTitle: () => LocalizedString
@@ -2681,6 +2724,24 @@ export type TranslationFunctions = {
 				PageParagraph: () => LocalizedString
 			}
 		}
+	}
+	LowOnCreditsCard: {
+		/**
+		 * You're low on credits
+		 */
+		Title: () => LocalizedString
+		/**
+		 * We give all users {amount} images per month for free. You can get more by subscribing to a plan or joining events on our Discord.
+		 */
+		FreeParagraph: (arg: { amount: unknown }) => LocalizedString
+		/**
+		 * You can buy a credit pack.
+		 */
+		HighestPlanParagraph: () => LocalizedString
+		/**
+		 * You can upgrade to a higher plan or buy a credit pack.
+		 */
+		OtherPlansParagraph: () => LocalizedString
 	}
 }
 

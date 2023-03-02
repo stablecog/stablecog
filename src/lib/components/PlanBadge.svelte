@@ -1,13 +1,13 @@
 <script lang="ts">
 	import {
-		PUBLIC_STRIPE_PRODUCT_ID_STARTER_TEST,
-		PUBLIC_STRIPE_PRODUCT_ID_PRO_TEST,
-		PUBLIC_STRIPE_PRODUCT_ID_ULTIMATE_TEST
+		PUBLIC_STRIPE_PRODUCT_ID_STARTER_SUBSCRIPTION_TEST,
+		PUBLIC_STRIPE_PRODUCT_ID_PRO_SUBSCRIPTION_TEST,
+		PUBLIC_STRIPE_PRODUCT_ID_ULTIMATE_SUBSCRIPTION_TEST
 	} from '$env/static/public';
 	import LL from '$i18n/i18n-svelte';
-	import type { TStripeSupportedProductId } from '$ts/constants/stripePublic';
+	import type { TStripeSupportedProductIdSubscriptions } from '$ts/constants/stripePublic';
 
-	export let productId: TStripeSupportedProductId | undefined;
+	export let productId: TStripeSupportedProductIdSubscriptions | undefined;
 	export let size: 'sm' | 'md' | 'lg' = 'md';
 	export { classes as class };
 	export let planText: string | undefined = undefined;
@@ -19,11 +19,11 @@
 	function setPlanText() {
 		if (planText !== undefined) {
 			_planText = planText;
-		} else if (productId === PUBLIC_STRIPE_PRODUCT_ID_STARTER_TEST) {
+		} else if (productId === PUBLIC_STRIPE_PRODUCT_ID_STARTER_SUBSCRIPTION_TEST) {
 			_planText = $LL.Pricing.Plans.StarterTitle();
-		} else if (productId === PUBLIC_STRIPE_PRODUCT_ID_PRO_TEST) {
+		} else if (productId === PUBLIC_STRIPE_PRODUCT_ID_PRO_SUBSCRIPTION_TEST) {
 			_planText = $LL.Pricing.Plans.ProTitle();
-		} else if (productId === PUBLIC_STRIPE_PRODUCT_ID_ULTIMATE_TEST) {
+		} else if (productId === PUBLIC_STRIPE_PRODUCT_ID_ULTIMATE_SUBSCRIPTION_TEST) {
 			_planText = $LL.Pricing.Plans.UltimateTitle();
 		} else {
 			_planText = $LL.Pricing.Plans.FreeTitle();

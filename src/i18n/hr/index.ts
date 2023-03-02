@@ -146,6 +146,7 @@ const hr: Translation = {
 		JoinUsTitle: 'Pridruži nam se',
 		GoHomeButton: 'Idite na početnu stranicu',
 		SwitchToDefaultServerButton: 'Prebaci na zadani server',
+		JoinOnDiscord: 'Join on Discord',
 		JoinUsOnTitle: 'Pridruži nam se na {name}',
 		ShareButton: 'Podijeli',
 		ShareOnButton: 'Podijeli na {name}',
@@ -160,6 +161,7 @@ const hr: Translation = {
 		DeleteButton: 'Obriši',
 		LoadingTitle: 'Učitavanje',
 		LoadingParagraph: 'Učitavanje...',
+		NotEnoughCreditsTitle: 'Not Enough Credits',
 		ServerUrlInput: {
 			Placeholder: 'URL servera'
 		},
@@ -428,6 +430,7 @@ const hr: Translation = {
 		UpgradeButton: 'Upgrade',
 		DowngradeButton: 'Downgrade',
 		PurchaseButton: 'Purchase',
+		BuyCreditsButton: 'Buy Credits',
 		MonthlyTitle: 'Monthly',
 		YearlyTitle: 'Yearly',
 		SlashMonth: '/month',
@@ -460,6 +463,13 @@ const hr: Translation = {
 					'You have cancelled the purchase process. If it was a mistake, you can try again.'
 			}
 		}
+	},
+	LowOnCreditsCard: {
+		Title: "You're low on credits",
+		FreeParagraph:
+			'We give all users {amount} images per month for free. You can get more by subscribing to a plan or joining events on our Discord.',
+		HighestPlanParagraph: 'You can buy a credit pack.',
+		OtherPlansParagraph: 'You can upgrade to a higher plan or buy a credit pack.'
 	}
 };
 export default hr;

@@ -147,6 +147,7 @@ const ja: Translation = {
 		JoinUsTitle: '今すぐ参加',
 		GoHomeButton: 'ホームに戻る',
 		SwitchToDefaultServerButton: 'デフォルトのサーバーに切り替える',
+		JoinOnDiscord: 'Join on Discord',
 		JoinUsOnTitle: '{name} にて参加してください',
 		ShareButton: '共有',
 		ShareOnButton: '{name} にて共有',
@@ -161,6 +162,7 @@ const ja: Translation = {
 		DeleteButton: '削除',
 		LoadingTitle: '読み込み中',
 		LoadingParagraph: '読み込み中...',
+		NotEnoughCreditsTitle: 'Not Enough Credits',
 		ServerUrlInput: {
 			Placeholder: 'サーバ URL'
 		},
@@ -433,6 +435,7 @@ const ja: Translation = {
 		UpgradeButton: 'Upgrade',
 		DowngradeButton: 'Downgrade',
 		PurchaseButton: 'Purchase',
+		BuyCreditsButton: 'Buy Credits',
 		MonthlyTitle: 'Monthly',
 		YearlyTitle: 'Yearly',
 		SlashMonth: '/month',
@@ -465,6 +468,13 @@ const ja: Translation = {
 					'You have cancelled the purchase process. If it was a mistake, you can try again.'
 			}
 		}
+	},
+	LowOnCreditsCard: {
+		Title: "You're low on credits",
+		FreeParagraph:
+			'We give all users {amount} images per month for free. You can get more by subscribing to a plan or joining events on our Discord.',
+		HighestPlanParagraph: 'You can buy a credit pack.',
+		OtherPlansParagraph: 'You can upgrade to a higher plan or buy a credit pack.'
 	}
 };
 export default ja;
