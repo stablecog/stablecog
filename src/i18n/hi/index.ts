@@ -444,7 +444,11 @@ const hi: Translation = {
 		},
 		Features: {
 			MonthlyImages: '{count} images per month.',
-			CommercialUse: 'Commercial Use',
+			MonthlyGenerations: '{count} generations per month.',
+			Images: '{count} images.',
+			Generations: '{count} generations.',
+			NeverExpires: 'Never expires.',
+			CommercialUse: 'Commercial use.',
 			ImagesArePublic: 'Images are public.',
 			ImagesArePrivate: 'Images are private.'
 		},

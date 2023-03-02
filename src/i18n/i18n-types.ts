@@ -1319,7 +1319,26 @@ type RootTranslation = {
 			 */
 			MonthlyImages: RequiredParams<'count'>
 			/**
-			 * C​o​m​m​e​r​c​i​a​l​ ​U​s​e
+			 * {​c​o​u​n​t​}​ ​g​e​n​e​r​a​t​i​o​n​s​ ​p​e​r​ ​m​o​n​t​h​.
+			 * @param {unknown} count
+			 */
+			MonthlyGenerations: RequiredParams<'count'>
+			/**
+			 * {​c​o​u​n​t​}​ ​i​m​a​g​e​s​.
+			 * @param {unknown} count
+			 */
+			Images: RequiredParams<'count'>
+			/**
+			 * {​c​o​u​n​t​}​ ​g​e​n​e​r​a​t​i​o​n​s​.
+			 * @param {unknown} count
+			 */
+			Generations: RequiredParams<'count'>
+			/**
+			 * N​e​v​e​r​ ​e​x​p​i​r​e​s​.
+			 */
+			NeverExpires: string
+			/**
+			 * C​o​m​m​e​r​c​i​a​l​ ​u​s​e​.
 			 */
 			CommercialUse: string
 			/**
@@ -1375,7 +1394,7 @@ type RootTranslation = {
 		 */
 		Title: string
 		/**
-		 * W​e​ ​g​i​v​e​ ​a​l​l​ ​u​s​e​r​s​ ​{​a​m​o​u​n​t​}​ ​i​m​a​g​e​s​ ​p​e​r​ ​m​o​n​t​h​ ​f​o​r​ ​f​r​e​e​.​ ​Y​o​u​ ​c​a​n​ ​g​e​t​ ​m​o​r​e​ ​b​y​ ​s​u​b​s​c​r​i​b​i​n​g​ ​t​o​ ​a​ ​p​l​a​n​ ​o​r​ ​j​o​i​n​i​n​g​ ​e​v​e​n​t​s​ ​o​n​ ​o​u​r​ ​D​i​s​c​o​r​d​.
+		 * W​e​ ​g​i​v​e​ ​a​l​l​ ​u​s​e​r​s​ ​{​a​m​o​u​n​t​}​ ​g​e​n​e​r​a​t​i​o​n​s​ ​p​e​r​ ​m​o​n​t​h​ ​f​o​r​ ​f​r​e​e​.​ ​Y​o​u​ ​c​a​n​ ​g​e​t​ ​m​o​r​e​ ​b​y​ ​s​u​b​s​c​r​i​b​i​n​g​ ​t​o​ ​a​ ​p​l​a​n​ ​o​r​ ​j​o​i​n​i​n​g​ ​e​v​e​n​t​s​ ​o​n​ ​o​u​r​ ​D​i​s​c​o​r​d​.
 		 * @param {unknown} amount
 		 */
 		FreeParagraph: RequiredParams<'amount'>
@@ -2676,7 +2695,23 @@ export type TranslationFunctions = {
 			 */
 			MonthlyImages: (arg: { count: unknown }) => LocalizedString
 			/**
-			 * Commercial Use
+			 * {count} generations per month.
+			 */
+			MonthlyGenerations: (arg: { count: unknown }) => LocalizedString
+			/**
+			 * {count} images.
+			 */
+			Images: (arg: { count: unknown }) => LocalizedString
+			/**
+			 * {count} generations.
+			 */
+			Generations: (arg: { count: unknown }) => LocalizedString
+			/**
+			 * Never expires.
+			 */
+			NeverExpires: () => LocalizedString
+			/**
+			 * Commercial use.
 			 */
 			CommercialUse: () => LocalizedString
 			/**
@@ -2731,7 +2766,7 @@ export type TranslationFunctions = {
 		 */
 		Title: () => LocalizedString
 		/**
-		 * We give all users {amount} images per month for free. You can get more by subscribing to a plan or joining events on our Discord.
+		 * We give all users {amount} generations per month for free. You can get more by subscribing to a plan or joining events on our Discord.
 		 */
 		FreeParagraph: (arg: { amount: unknown }) => LocalizedString
 		/**

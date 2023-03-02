@@ -47,7 +47,7 @@
 							PUBLIC_STRIPE_PRODUCT_ID_STARTER_SUBSCRIPTION_TEST
 					  ].prices[PUBLIC_STRIPE_PRICE_ID_STARTER_SUBSCRIPTION_MO_TEST].currencies.usd.amount,
 			features: [
-				`${$LL.Pricing.Features.MonthlyImages({
+				`${$LL.Pricing.Features.MonthlyGenerations({
 					count:
 						STRIPE_PRODUCT_ID_OBJECTS_SUBSCRIPTIONS_MO[
 							PUBLIC_STRIPE_PRODUCT_ID_STARTER_SUBSCRIPTION_TEST
@@ -73,7 +73,7 @@
 							PUBLIC_STRIPE_PRODUCT_ID_PRO_SUBSCRIPTION_TEST
 					  ].prices[PUBLIC_STRIPE_PRICE_ID_PRO_SUBSCRIPTION_MO_TEST].currencies.usd.amount,
 			features: [
-				`${$LL.Pricing.Features.MonthlyImages({
+				`${$LL.Pricing.Features.MonthlyGenerations({
 					count:
 						STRIPE_PRODUCT_ID_OBJECTS_SUBSCRIPTIONS_MO[
 							PUBLIC_STRIPE_PRODUCT_ID_PRO_SUBSCRIPTION_TEST
@@ -101,7 +101,7 @@
 							PUBLIC_STRIPE_PRODUCT_ID_ULTIMATE_SUBSCRIPTION_TEST
 					  ].prices[PUBLIC_STRIPE_PRICE_ID_ULTIMATE_SUBSCRIPTION_MO_TEST].currencies.usd.amount,
 			features: [
-				`${$LL.Pricing.Features.MonthlyImages({
+				`${$LL.Pricing.Features.MonthlyGenerations({
 					count:
 						STRIPE_PRODUCT_ID_OBJECTS_SUBSCRIPTIONS_MO[
 							PUBLIC_STRIPE_PRODUCT_ID_ULTIMATE_SUBSCRIPTION_TEST
@@ -129,7 +129,15 @@
 					: STRIPE_PRODUCT_ID_OBJECTS_CREDITS[PUBLIC_STRIPE_PRODUCT_ID_1500_CREDITS_TEST].prices[
 							PUBLIC_STRIPE_PRICE_ID_1500_CREDITS_TEST
 					  ].currencies.usd.amount,
-			features: [`1,500 images`, `Never expires`],
+			features: [
+				$LL.Pricing.Features.Generations({
+					count:
+						STRIPE_PRODUCT_ID_OBJECTS_CREDITS[
+							PUBLIC_STRIPE_PRODUCT_ID_1500_CREDITS_TEST
+						].images.toLocaleString($locale)
+				}),
+				$LL.Pricing.Features.NeverExpires()
+			],
 			ringClass: 'ring-c-bg-secondary',
 			badgeText: undefined,
 			badgeClasses: undefined
@@ -330,11 +338,11 @@
 										})}
 									class="w-full mt-8"
 								>
-									Purchase
+									{$LL.Pricing.PurchaseButton()}
 								</Button>
 							{:else}
 								<Button onClick={() => (isSignInModalOpen = true)} class="w-full mt-8">
-									Purchase
+									{$LL.Pricing.PurchaseButton()}
 								</Button>
 							{/if}
 						</div>

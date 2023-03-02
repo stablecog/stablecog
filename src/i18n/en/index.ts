@@ -445,7 +445,11 @@ const en: BaseTranslation = {
 		},
 		Features: {
 			MonthlyImages: '{count} images per month.',
-			CommercialUse: 'Commercial Use',
+			MonthlyGenerations: '{count} generations per month.',
+			Images: '{count} images.',
+			Generations: '{count} generations.',
+			NeverExpires: 'Never expires.',
+			CommercialUse: 'Commercial use.',
 			ImagesArePublic: 'Images are public.',
 			ImagesArePrivate: 'Images are private.'
 		},
@@ -470,7 +474,7 @@ const en: BaseTranslation = {
 	LowOnCreditsCard: {
 		Title: "You're low on credits",
 		FreeParagraph:
-			'We give all users {amount} images per month for free. You can get more by subscribing to a plan or joining events on our Discord.',
+			'We give all users {amount} generations per month for free. You can get more by subscribing to a plan or joining events on our Discord.',
 		HighestPlanParagraph: 'You can buy a credit pack.',
 		OtherPlansParagraph: 'You can upgrade to a higher plan or buy a credit pack.'
 	}
