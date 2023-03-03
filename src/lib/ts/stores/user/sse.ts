@@ -5,6 +5,7 @@ export let sseId = writable<string | null>(null);
 
 export interface TSSEGenerationOrUpscaleMessage {
 	id: string;
+	ui_id?: string;
 	status?: TSSEGenerationOrUpscaleMessageStatus;
 	outputs?: TSSEGenerationMessageOutput[] | TSSEUpscaleMessageOutput[];
 	process_type: TProcessType;

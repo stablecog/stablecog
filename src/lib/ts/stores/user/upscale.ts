@@ -48,36 +48,45 @@ export const setUpscaleToSucceeded = (id: string, outputs: TUpscaleOutput[]) => 
 	});
 };
 
-export const setUpscaleToServerReceived = (id: string) => {
+export const setUpscaleToServerReceived = (ui_id: string, id: string) => {
 	upscales.update(($upscales) => {
 		if ($upscales === null) {
 			return $upscales;
 		}
+		const ups = $upscales.find((ups) => ups.ui_id === ui_id);
+		if (!ups) return $upscales;
 		if (
-			$upscales[0].status !== 'server-processing' &&
-			$upscales[0].status !== 'succeeded' &&
-			$upscales[0].status !== 'failed'
+			ups.status === 'server-processing' ||
+			ups.status === 'succeeded' ||
+			ups.status === 'failed'
 		) {
-			$upscales[0].id = id;
-			$upscales[0].status = 'server-received';
+			return $upscales;
 		}
+		ups.id = id;
+		ups.status = 'server-received';
 		return $upscales;
 	});
 };
 
-export const setUpscaleToServerProcessing = (id: string) => {
+export const setUpscaleToServerProcessing = (ui_id: string, id: string) => {
 	upscales.update(($upscales) => {
 		if ($upscales === null) {
 			return $upscales;
 		}
-		const index = $upscales.findIndex((ups) => ups.id === id);
-		if (index === -1) {
+		const ups = $upscales.find((ups) => ups.id === id);
+		if (ups && ups.status !== 'succeeded' && ups.status !== 'failed') {
+			ups.status = 'server-processing';
+			ups.started_at = Date.now();
+			if (!ups.ui_id) ups.ui_id = ui_id;
 			return $upscales;
 		}
-		if ($upscales[index].status !== 'succeeded' && $upscales[index].status !== 'failed') {
-			$upscales[index].status = 'server-processing';
+		const ups2 = $upscales.find((ups) => ups.ui_id === ui_id);
+		if (ups2 && ups2.status !== 'succeeded' && ups2.status !== 'failed') {
+			ups2.status = 'server-processing';
+			ups2.started_at = Date.now();
+			if (!ups2.id) ups2.id = id;
+			return $upscales;
 		}
-		$upscales[index].started_at = Date.now();
 		return $upscales;
 	});
 };
@@ -114,7 +123,7 @@ export async function submitInitialUpscaleRequest(
 	});
 	const resJSON: TInitialUpscaleResponse = await response.json();
 	console.log('Upscale request response:', resJSON);
-	return resJSON;
+	return { ...resJSON, ui_id: request.ui_id };
 }
 
 export interface TInitialUpscaleResponse {

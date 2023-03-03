@@ -169,7 +169,6 @@
 			isSubmittingGenerations = true;
 			try {
 				console.log('Submitting initial generation request', generation);
-				console.log('BEFORE RES EXECUTED');
 				const res = await submitInitialGenerationRequest(
 					{
 						...generation,
@@ -180,12 +179,11 @@
 					$page.data.session.access_token,
 					$appVersion
 				);
-				console.log('RES EXECUTED');
 				const { id, error, total_remaining_credits, ui_id } = res;
 				if (total_remaining_credits !== undefined && $userSummary) {
 					userSummary.set({ ...$userSummary, total_remaining_credits });
 				}
-				if (error || !id) {
+				if (error || !id || !ui_id) {
 					console.log('Generation failed:', error);
 					setGenerationToFailed(generation.id || generation.ui_id, error);
 					logGenerationFailed({
@@ -196,7 +194,6 @@
 						stripeProductId: $userSummary?.product_id
 					});
 				} else {
-					console.log('BEFORE SET GENERATION TO SERVER RECEIVED');
 					setGenerationToServerReceived(ui_id, id);
 				}
 			} catch (error) {
@@ -249,11 +246,11 @@
 						$page.data.session.access_token,
 						$appVersion
 					);
-					const { id, error, total_remaining_credits } = res;
+					const { id, error, total_remaining_credits, ui_id } = res;
 					if (total_remaining_credits !== undefined && $userSummary) {
 						userSummary.set({ ...$userSummary, total_remaining_credits });
 					}
-					if (error || !id) {
+					if (error || !id || !ui_id) {
 						console.log('Upscale failed:', error);
 						setUpscaleToFailed(upscale.id || upscale.ui_id, error);
 						logUpscaleFailed({
@@ -263,7 +260,7 @@
 							stripeProductId: $userSummary?.product_id
 						});
 					} else {
-						setUpscaleToServerReceived(id);
+						setUpscaleToServerReceived(ui_id, id);
 					}
 				} catch (error) {
 					const err = error as Error;
@@ -291,11 +288,11 @@
 			return;
 		}
 		if (data.process_type === 'generate' || data.process_type === 'generate_and_upscale') {
-			if (data.id && data.status === 'processing') {
-				console.log('BEFORE SET GENERATION TO SERVER PROCESSING');
-				setGenerationToServerProcessing(data.id);
+			if (data.id && data.ui_id && data.status === 'processing') {
+				setGenerationToServerProcessing(data.ui_id, data.id);
 			} else if (
 				data.id &&
+				data.ui_id &&
 				data.status === 'succeeded' &&
 				data.outputs &&
 				data.outputs.length > 0
@@ -318,8 +315,8 @@
 				setGenerationToFailed(data.id, data.error);
 			}
 		} else if (data.process_type === 'upscale') {
-			if (data.id && data.status === 'processing') {
-				setUpscaleToServerProcessing(data.id);
+			if (data.id && data.ui_id && data.status === 'processing') {
+				setUpscaleToServerProcessing(data.ui_id, data.id);
 			} else if (
 				data.id &&
 				data.status === 'succeeded' &&

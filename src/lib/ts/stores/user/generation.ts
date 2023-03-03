@@ -71,21 +71,27 @@ export const setGenerationToServerReceived = (ui_id: string, id: string) => {
 	});
 };
 
-export const setGenerationToServerProcessing = (id: string) => {
+export const setGenerationToServerProcessing = (ui_id: string, id: string) => {
 	generations.update(($generations) => {
 		if ($generations === null || $generations.length === 0) {
 			return $generations;
 		}
 		const gen = $generations.find((g) => g.id === id);
-		console.log('gen', gen);
-		if (!gen) {
+		if (gen && gen.status !== 'succeeded' && gen.status !== 'failed') {
+			gen.status = 'server-processing';
+			gen.started_at = Date.now();
+			if (!gen.ui_id) gen.ui_id = ui_id;
+			console.log('set based on id');
 			return $generations;
 		}
-		if (gen.status === 'succeeded' || gen.status === 'failed') {
+		const gen2 = $generations.find((g) => g.ui_id === ui_id);
+		if (gen2 && gen2.status !== 'succeeded' && gen2.status !== 'failed') {
+			gen2.status = 'server-processing';
+			gen2.started_at = Date.now();
+			if (!gen2.id) gen2.id = id;
+			console.log('set based on ui_id');
 			return $generations;
 		}
-		gen.status = 'server-processing';
-		gen.started_at = Date.now();
 		return $generations;
 	});
 };
