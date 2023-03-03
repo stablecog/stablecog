@@ -12,7 +12,7 @@ export const activeGeneration = writable<TGenerationWithSelectedOutput | undefin
 
 export const setGenerationToFailed = (id: string, error?: string) => {
 	generations.update(($generations) => {
-		if ($generations === null) {
+		if ($generations === null || $generations.length === 0) {
 			return $generations;
 		}
 		const index = $generations.findIndex((gen) => gen.id === id);
@@ -35,7 +35,7 @@ export const setGenerationToFailed = (id: string, error?: string) => {
 
 export const setGenerationToSucceeded = (id: string, outputs: TGenerationOutput[]) => {
 	generations.update(($generations) => {
-		if ($generations === null) {
+		if ($generations === null || $generations.length === 0) {
 			return $generations;
 		}
 		const index = $generations.findIndex((gen) => gen.id === id);
@@ -55,7 +55,7 @@ export const setGenerationToSucceeded = (id: string, outputs: TGenerationOutput[
 
 export const setGenerationToServerReceived = (id: string) => {
 	generations.update(($generations) => {
-		if ($generations === null) {
+		if ($generations === null || $generations.length === 0) {
 			return $generations;
 		}
 		if (
@@ -74,7 +74,7 @@ export const setGenerationToServerProcessing = (id: string) => {
 	console.log('called');
 	generations.update(($generations) => {
 		console.log('called2');
-		if ($generations === null) {
+		if ($generations === null || $generations.length === 0) {
 			return $generations;
 		}
 		console.log('called3', id, $generations);
@@ -110,7 +110,7 @@ export async function queueInitialGenerationRequest(request: TInitialGenerationR
 			created_at: Date.now(),
 			outputs: []
 		};
-		if ($generations === null) {
+		if ($generations === null || $generations.length === 0) {
 			return [generationToSubmit];
 		}
 		$generations = [generationToSubmit, ...$generations];
@@ -147,7 +147,7 @@ export async function submitInitialGenerationRequest(
 
 export const setGenerationOutputToDeleted = (outputId: string) => {
 	generations.update(($generations) => {
-		if ($generations === null) {
+		if ($generations === null || $generations.length === 0) {
 			return $generations;
 		}
 		for (let i = 0; i < $generations.length; i++) {
@@ -174,7 +174,7 @@ export const setGenerationOutputUpscaledImageUrl = (
 			currentlyActiveGeneration.selected_output.upscaled_image_url = upscaled_image_url;
 			activeGeneration.set(currentlyActiveGeneration);
 		}
-		if ($generations === null) {
+		if ($generations === null || $generations.length === 0) {
 			return $generations;
 		}
 		for (let i = 0; i < $generations.length; i++) {
