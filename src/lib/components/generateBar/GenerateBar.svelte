@@ -138,13 +138,6 @@
 				await tick();
 				break;
 			case 'server-received':
-				if (
-					lastGenerationAnimationStatus === 'should-animate' ||
-					lastGenerationAnimationStatus === 'should-complete'
-				) {
-					break;
-				}
-				lastGenerationAnimationStatus = 'should-animate';
 				break;
 			case 'server-processing':
 				lastGenerationAnimationStatus = 'idle';

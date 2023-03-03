@@ -153,7 +153,6 @@
 	async function onGenerationsChanged() {
 		if (isSubmittingGenerations) return;
 		if (!$generations || $generations.length === 0) {
-			console.log('No generations, not submitting initial generation request');
 			return;
 		}
 		if (!$page.data.session?.access_token) {
@@ -180,7 +179,8 @@
 					$page.data.session.access_token,
 					$appVersion
 				);
-				const { id, error, total_remaining_credits } = res;
+				console.log('RES EXECUTED');
+				const { id, error, total_remaining_credits, ui_id } = res;
 				if (total_remaining_credits !== undefined && $userSummary) {
 					userSummary.set({ ...$userSummary, total_remaining_credits });
 				}
@@ -195,7 +195,8 @@
 						stripeProductId: $userSummary?.product_id
 					});
 				} else {
-					setGenerationToServerReceived(id);
+					console.log('BEFORE SET GENERATION TO SERVER RECEIVED');
+					setGenerationToServerReceived(ui_id, id);
 				}
 			} catch (error) {
 				const err = error as Error;
@@ -218,7 +219,6 @@
 	async function onUpscalesChanged() {
 		if (isSubmittingUpscales) return;
 		if (!$upscales || $upscales.length === 0) {
-			console.log('No upscales, not submitting initial upscale request');
 			return;
 		}
 		if (!$page.data.session?.access_token) {
@@ -291,6 +291,7 @@
 		}
 		if (data.process_type === 'generate' || data.process_type === 'generate_and_upscale') {
 			if (data.id && data.status === 'processing') {
+				console.log('BEFORE SET GENERATION TO SERVER PROCESSING');
 				setGenerationToServerProcessing(data.id);
 			} else if (
 				data.id &&

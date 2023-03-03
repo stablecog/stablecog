@@ -15,18 +15,16 @@ export const setGenerationToFailed = (id: string, error?: string) => {
 		if ($generations === null || $generations.length === 0) {
 			return $generations;
 		}
-		const index = $generations.findIndex((gen) => gen.id === id);
-		if (index >= 0) {
-			$generations[index].status = 'failed';
-			$generations[index].error = error;
-			$generations[index].completed_at = Date.now();
+		const genById = $generations.find((g) => g.id === id);
+		if (genById) {
+			genById.status = 'failed';
+			genById.error = error;
 			return $generations;
 		}
-		const ui_index = $generations.findIndex((gen) => gen.ui_id === id);
-		if (ui_index >= 0) {
-			$generations[ui_index].status = 'failed';
-			$generations[ui_index].error = error;
-			$generations[index].completed_at = Date.now();
+		const genByUiId = $generations.find((g) => g.ui_id === id);
+		if (genByUiId) {
+			genByUiId.status = 'failed';
+			genByUiId.error = error;
 			return $generations;
 		}
 		return $generations;
@@ -38,14 +36,14 @@ export const setGenerationToSucceeded = (id: string, outputs: TGenerationOutput[
 		if ($generations === null || $generations.length === 0) {
 			return $generations;
 		}
-		const index = $generations.findIndex((gen) => gen.id === id);
-		if (index === -1) {
+		const gen = $generations.find((g) => g.id === id);
+		if (!gen) {
 			return $generations;
 		}
-		$generations[index].status = 'succeeded';
-		$generations[index].outputs = outputs;
-		$generations[index].completed_at = Date.now();
-		const costCompletionPerMs = getCostCompletionPerMsFromGeneration($generations[index]);
+		gen.status = 'succeeded';
+		gen.outputs = outputs;
+		gen.completed_at = Date.now();
+		const costCompletionPerMs = getCostCompletionPerMsFromGeneration(gen);
 		if (costCompletionPerMs !== null) {
 			generationCostCompletionPerMs.set(costCompletionPerMs);
 		}
@@ -53,51 +51,41 @@ export const setGenerationToSucceeded = (id: string, outputs: TGenerationOutput[
 	});
 };
 
-export const setGenerationToServerReceived = (id: string) => {
+export const setGenerationToServerReceived = (ui_id: string, id: string) => {
 	generations.update(($generations) => {
 		if ($generations === null || $generations.length === 0) {
 			return $generations;
 		}
+		const gen = $generations.find((g) => g.ui_id === ui_id);
+		if (!gen) return $generations;
 		if (
-			$generations[0].status !== 'server-processing' &&
-			$generations[0].status !== 'succeeded' &&
-			$generations[0].status !== 'failed'
+			gen.status === 'server-processing' ||
+			gen.status === 'succeeded' ||
+			gen.status === 'failed'
 		) {
-			$generations[0].id = id;
-			$generations[0].status = 'server-received';
+			return $generations;
 		}
+		gen.id = id;
+		gen.status = 'server-received';
 		return $generations;
 	});
 };
 
 export const setGenerationToServerProcessing = (id: string) => {
-	console.log('called');
 	generations.update(($generations) => {
-		console.log('called2');
 		if ($generations === null || $generations.length === 0) {
 			return $generations;
 		}
-		console.log('called3', id, $generations);
-		console.log('called3', id, $generations);
-		console.log('called3', id, $generations);
-		console.log('called3', id, $generations);
-		console.log('called3', id, $generations);
-		console.log('called3.5', typeof $generations, typeof $generations[0].id);
-		for (const item of $generations) {
-			for (const k of Object.keys(item)) {
-				console.log('item', k, item[k]);
-			}
-		}
 		const gen = $generations.find((g) => g.id === id);
-		console.log('called4', gen);
+		console.log('gen', gen);
 		if (!gen) {
 			return $generations;
 		}
-		if (gen.status !== 'succeeded' && gen.status !== 'failed') {
-			gen.status = 'server-processing';
+		if (gen.status === 'succeeded' || gen.status === 'failed') {
+			return $generations;
 		}
+		gen.status = 'server-processing';
 		gen.started_at = Date.now();
-		console.log('REACHED HERE');
 		return $generations;
 	});
 };
@@ -142,7 +130,7 @@ export async function submitInitialGenerationRequest(
 	});
 	const resJSON: TInitialGenerationResponse = await response.json();
 	console.log('Generation request response:', resJSON);
-	return resJSON;
+	return { ...resJSON, ui_id: request.ui_id };
 }
 
 export const setGenerationOutputToDeleted = (outputId: string) => {
