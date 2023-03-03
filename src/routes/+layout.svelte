@@ -169,6 +169,7 @@
 			isSubmittingGenerations = true;
 			try {
 				console.log('Submitting initial generation request', generation);
+				console.log('BEFORE RES EXECUTED');
 				const res = await submitInitialGenerationRequest(
 					{
 						...generation,
