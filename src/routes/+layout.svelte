@@ -43,6 +43,7 @@
 		generations,
 		setGenerationOutputUpscaledImageUrl,
 		setGenerationToFailed,
+		setGenerationToServerProcessing,
 		setGenerationToServerReceived,
 		setGenerationToSucceeded,
 		submitInitialGenerationRequest
@@ -51,6 +52,7 @@
 	import { QueryClient, QueryClientProvider } from '@tanstack/svelte-query';
 	import {
 		setUpscaleToFailed,
+		setUpscaleToServerProcessing,
 		setUpscaleToServerReceived,
 		setUpscaleToSucceeded,
 		submitInitialUpscaleRequest,
@@ -194,7 +196,6 @@
 					});
 				} else {
 					setGenerationToServerReceived(id);
-					console.log('Generations - After set server received', $generations);
 				}
 			} catch (error) {
 				const err = error as Error;
@@ -262,7 +263,6 @@
 						});
 					} else {
 						setUpscaleToServerReceived(id);
-						console.log('Upscales - After set server received', $upscales);
 					}
 				} catch (error) {
 					const err = error as Error;
@@ -290,7 +290,14 @@
 			return;
 		}
 		if (data.process_type === 'generate' || data.process_type === 'generate_and_upscale') {
-			if (data.id && data.status === 'succeeded' && data.outputs && data.outputs.length > 0) {
+			if (data.id && data.status === 'processing') {
+				setGenerationToServerProcessing(data.id);
+			} else if (
+				data.id &&
+				data.status === 'succeeded' &&
+				data.outputs &&
+				data.outputs.length > 0
+			) {
 				const outputs = data.outputs as TSSEGenerationMessageOutput[];
 				setGenerationToSucceeded(data.id, outputs);
 				const generationIndex = $generations.findIndex((g) => g.id === data.id);
@@ -309,7 +316,14 @@
 				setGenerationToFailed(data.id, data.error);
 			}
 		} else if (data.process_type === 'upscale') {
-			if (data.id && data.status === 'succeeded' && data.outputs && data.outputs.length > 0) {
+			if (data.id && data.status === 'processing') {
+				setUpscaleToServerProcessing(data.id);
+			} else if (
+				data.id &&
+				data.status === 'succeeded' &&
+				data.outputs &&
+				data.outputs.length > 0
+			) {
 				const outputs = data.outputs as TSSEUpscaleMessageOutput[];
 				setUpscaleToSucceeded(data.id, outputs);
 				const upscaleIndex = $upscales.findIndex((u) => u.id === data.id);
@@ -341,13 +355,13 @@
 			$sse.onmessage = (event) => {
 				const data = JSON.parse(event.data);
 				console.log('Message from SSE', data);
+				setGenerationOrUpscaleStatus(data);
 				if (data.total_remaining_credits !== undefined && $userSummary) {
 					userSummary.set({
 						...$userSummary,
 						total_remaining_credits: data.total_remaining_credits
 					});
 				}
-				setGenerationOrUpscaleStatus(data);
 			};
 			$sse.onerror = (event) => {
 				console.log('Error from SSE', event);

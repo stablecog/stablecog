@@ -1,5 +1,5 @@
 import { writable as writableLocal } from 'svelte-local-storage-store';
-import { guidanceScaleDefault } from '$ts/constants/main';
+import { guidanceScaleDefault, numOutputsDefault } from '$ts/constants/main';
 import { inferenceStepsDefault, type TAvailableInferenceSteps } from '$ts/constants/main';
 import {
 	heightDefault,
@@ -54,3 +54,4 @@ export const generationGuidanceScale = writable<number>(guidanceScaleDefault);
 export const generationSeed = writable<string | number | undefined | null>(undefined);
 export const generationModelId = writable<TAvailableGenerationModelId>(generationModelIdDefault);
 export const generationSchedulerId = writable<TAvailableSchedulerId>(schedulerIdDefault);
+export const generationNumOutputs = writable<string>(numOutputsDefault.toString());

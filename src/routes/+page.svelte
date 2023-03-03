@@ -4,13 +4,10 @@
 	import { expandCollapse } from '$ts/animation/transitions';
 	import {
 		canonicalUrl,
-		estimatedDurationBufferRatio,
-		estimatedDurationDefault,
 		guidanceScaleDefault,
 		inferenceStepsDefault,
 		maxSeed
 	} from '$ts/constants/main';
-	import { computeRatePerSec } from '$ts/stores/computeRatePerSec';
 	import { onDestroy, onMount } from 'svelte';
 	import ImagePlaceholder from '$components/ImagePlaceholder.svelte';
 	import GenerationImage from '$components/generationImage/GenerationImage.svelte';
@@ -58,23 +55,6 @@
 	export let data: THomePageData;
 
 	let nowInterval: NodeJS.Timeout | undefined;
-	let estimatedDuration = estimatedDurationDefault;
-
-	$: [$generationWidth, $generationHeight, $generationInferenceSteps], setEstimatedDuration();
-
-	async function setEstimatedDuration() {
-		if (!mounted) return;
-		if (!$computeRatePerSec || !$generationWidth || !$generationHeight) {
-			estimatedDuration = estimatedDurationDefault;
-			return;
-		}
-		const rate = getComputeRate(
-			Number($generationWidth),
-			Number($generationHeight),
-			Number($generationInferenceSteps)
-		);
-		estimatedDuration = Math.ceil((rate / $computeRatePerSec) * (1 + estimatedDurationBufferRatio));
-	}
 
 	async function queueGeneration() {
 		if (!$promptInputValue) {
@@ -120,7 +100,6 @@
 			num_outputs: 4,
 			output_image_extension: 'jpeg',
 			process_type: 'generate',
-			created_at: Date.now(),
 			stream_id: $sseId,
 			ui_id: generateSSEId(),
 			submit_to_gallery: $shouldSubmitToGallery ?? false
@@ -136,15 +115,7 @@
 			})
 		);
 		queueInitialGenerationRequest(initialRequestProps);
-		console.log('Generation request queued', $generations);
 	}
-
-	const getComputeRate = (w: number, h: number, s: number) => {
-		const area = Number(w) * Number(h);
-		const steps = Number(s);
-		const rate = area * Math.pow(steps, 1 / 2);
-		return rate;
-	};
 
 	function onKeyDown({ key }: KeyboardEvent) {
 		if ($activeGeneration !== undefined) {
@@ -155,13 +126,6 @@
 	}
 
 	const lowCreditsThreshold = 10;
-
-	let mounted = false;
-
-	onMount(() => {
-		mounted = true;
-		setEstimatedDuration();
-	});
 
 	onDestroy(() => {
 		clearInterval(nowInterval);
@@ -193,7 +157,7 @@
 					</div>
 				</div>
 			{/if}
-			<GenerateBar serverData={data} {queueGeneration} {estimatedDuration} />
+			<GenerateBar serverData={data} {queueGeneration} />
 			{#if $generations.length > 0 && $generations[0].status === 'failed'}
 				<div
 					transition:expandCollapse|local={{ duration: 300 }}

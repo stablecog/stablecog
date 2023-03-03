@@ -2,6 +2,10 @@ import { apiUrl } from '$ts/constants/main';
 import type { TAvailableGenerationModelId } from '$ts/constants/generationModels';
 import type { TAvailableSchedulerId } from '$ts/constants/schedulers';
 import { writable } from 'svelte/store';
+import {
+	generationCostCompletionPerMs,
+	getCostCompletionPerMsFromGeneration
+} from '$ts/stores/cost';
 
 export const generations = writable<TGeneration[]>([]);
 export const activeGeneration = writable<TGenerationWithSelectedOutput | undefined>(undefined);
@@ -15,12 +19,14 @@ export const setGenerationToFailed = (id: string, error?: string) => {
 		if (index >= 0) {
 			$generations[index].status = 'failed';
 			$generations[index].error = error;
+			$generations[index].completed_at = Date.now();
 			return $generations;
 		}
 		const ui_index = $generations.findIndex((gen) => gen.ui_id === id);
 		if (ui_index >= 0) {
 			$generations[ui_index].status = 'failed';
 			$generations[ui_index].error = error;
+			$generations[index].completed_at = Date.now();
 			return $generations;
 		}
 		return $generations;
@@ -38,6 +44,11 @@ export const setGenerationToSucceeded = (id: string, outputs: TGenerationOutput[
 		}
 		$generations[index].status = 'succeeded';
 		$generations[index].outputs = outputs;
+		$generations[index].completed_at = Date.now();
+		const costCompletionPerMs = getCostCompletionPerMsFromGeneration($generations[index]);
+		if (costCompletionPerMs !== null) {
+			generationCostCompletionPerMs.set(costCompletionPerMs);
+		}
 		return $generations;
 	});
 };
@@ -47,8 +58,46 @@ export const setGenerationToServerReceived = (id: string) => {
 		if ($generations === null) {
 			return $generations;
 		}
-		$generations[0].id = id;
-		$generations[0].status = 'server-received';
+		if (
+			$generations[0].status !== 'server-processing' &&
+			$generations[0].status !== 'succeeded' &&
+			$generations[0].status !== 'failed'
+		) {
+			$generations[0].id = id;
+			$generations[0].status = 'server-received';
+		}
+		return $generations;
+	});
+};
+
+export const setGenerationToServerProcessing = (id: string) => {
+	console.log('called');
+	generations.update(($generations) => {
+		console.log('called2');
+		if ($generations === null) {
+			return $generations;
+		}
+		console.log('called3', id, $generations);
+		console.log('called3', id, $generations);
+		console.log('called3', id, $generations);
+		console.log('called3', id, $generations);
+		console.log('called3', id, $generations);
+		console.log('called3.5', typeof $generations, typeof $generations[0].id);
+		for (const item of $generations) {
+			for (const k of Object.keys(item)) {
+				console.log('item', k, item[k]);
+			}
+		}
+		const gen = $generations.find((g) => g.id === id);
+		console.log('called4', gen);
+		if (!gen) {
+			return $generations;
+		}
+		if (gen.status !== 'succeeded' && gen.status !== 'failed') {
+			gen.status = 'server-processing';
+		}
+		gen.started_at = Date.now();
+		console.log('REACHED HERE');
 		return $generations;
 	});
 };
@@ -58,6 +107,7 @@ export async function queueInitialGenerationRequest(request: TInitialGenerationR
 		const generationToSubmit: TGeneration = {
 			...request,
 			status: 'to-be-submitted',
+			created_at: Date.now(),
 			outputs: []
 		};
 		if ($generations === null) {
@@ -176,6 +226,7 @@ export interface TGeneration extends TGenerationBase {
 	outputs: TGenerationOutput[];
 	started_at?: number;
 	created_at: number;
+	completed_at?: number;
 	submit_to_gallery: boolean;
 }
 
@@ -204,7 +255,6 @@ export interface TInitialGenerationRequest extends TGenerationBase {
 	stream_id: string;
 	output_image_extension: 'jpeg' | 'png' | 'webp';
 	process_type: TProcessType;
-	created_at: number;
 	submit_to_gallery: boolean;
 }
 

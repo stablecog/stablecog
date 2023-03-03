@@ -15,8 +15,6 @@
 	import Button from '$components/buttons/Button.svelte';
 	import IconUpscale from '$components/icons/IconUpscale.svelte';
 	import TabBar from '$components/tabBars/TabBar.svelte';
-	import { lastUpscaleDurationSec } from '$ts/stores/lastUpscaleDurationSec';
-	import { estimatedDurationBufferRatio } from '$ts/constants/main';
 	import { mLogUpscale, mLogUpscalePropsFromUpscale, uLogUpscale } from '$ts/helpers/loggers';
 	import LL, { locale } from '$i18n/i18n-svelte';
 	import { negativePromptTooltipAlt } from '$ts/constants/tooltips';
@@ -43,6 +41,7 @@
 	} from '$components/generationFullScreen/types';
 	import Divider from '$components/generationFullScreen/Divider.svelte';
 	import { userSummary } from '$ts/stores/user/summary';
+	import { estimatedUpscaleDurationMs } from '$ts/stores/cost';
 
 	export let generation: TGenerationWithSelectedOutput;
 	export let modalType: TGenerationFullScreenModalType;
@@ -66,8 +65,6 @@
 		: $upscales.length > 0 && lastUpscaleMatching
 		? $upscales[0].status
 		: undefined;
-	$: lastUpscaleQueuedAt =
-		$upscales.length > 0 && lastUpscaleMatching ? $upscales[0].created_at : undefined;
 	$: lastUpscaleBeingProcessed = hadUpscaledImageUrlOnMount
 		? false
 		: lastUpscaleMatching &&
@@ -159,8 +156,6 @@
 		sidebarWrapperScrollHeight = sidebarWrapper.scrollHeight;
 	};
 
-	$: estimatedUpscaleDurationSec = $lastUpscaleDurationSec * (1 + estimatedDurationBufferRatio);
-
 	async function onUpscaleClicked() {
 		if (!$sseId) {
 			console.log('No SSE ID, cannot upscale');
@@ -170,7 +165,6 @@
 			input: generation.selected_output.id,
 			model_id: upscaleModelIdDefault,
 			type: 'from_output',
-			created_at: Date.now(),
 			stream_id: $sseId,
 			ui_id: generateSSEId()
 		};
@@ -194,23 +188,32 @@
 
 	async function onLastUpscaleStatusChanged() {
 		if (hadUpscaledImageUrlOnMount) return;
-		if (
-			lastUpscaleStatus === 'server-received' ||
-			lastUpscaleStatus === 'server-processing' ||
-			(lastUpscaleStatus === 'succeeded' && lastUpscaleBeingProcessed)
-		) {
-			return;
-		} else if (lastUpscaleStatus === 'failed') {
-			lastUpscaleAnimationStatus = 'should-complete';
-		} else if (lastUpscaleStatus === 'succeeded') {
-			lastUpscaleAnimationStatus = 'should-complete';
-		}
-		if (lastUpscaleStatus === 'to-be-submitted') {
-			lastUpscaleAnimationStatus = 'idle';
-			await tick();
-			setTimeout(() => {
+		switch (lastUpscaleStatus) {
+			case 'to-be-submitted':
+				lastUpscaleAnimationStatus = 'idle';
+				await tick();
+				break;
+			case 'server-received':
+				if (
+					lastUpscaleAnimationStatus === 'should-animate' ||
+					lastUpscaleAnimationStatus === 'should-complete'
+				) {
+					break;
+				}
 				lastUpscaleAnimationStatus = 'should-animate';
-			});
+				break;
+			case 'server-processing':
+				lastUpscaleAnimationStatus = 'idle';
+				await tick();
+				lastUpscaleAnimationStatus = 'should-animate';
+				break;
+			case 'succeeded':
+				if (lastUpscaleBeingProcessed) break;
+				lastUpscaleAnimationStatus = 'should-complete';
+				break;
+			case 'failed':
+				lastUpscaleAnimationStatus = 'should-complete';
+				break;
 		}
 	}
 
@@ -342,7 +345,7 @@
 			<div class="w-full h-full overflow-hidden z-0 absolute left-0 top-0 pointer-events-none">
 				<div
 					style="transition-duration: {lastUpscaleAnimationStatus === 'should-animate'
-						? estimatedUpscaleDurationSec
+						? $estimatedUpscaleDurationMs / 1000
 						: lastUpscaleAnimationStatus === 'should-complete'
 						? 0.3
 						: 0}s"

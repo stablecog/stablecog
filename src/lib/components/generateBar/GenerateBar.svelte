@@ -5,9 +5,6 @@
 	import { autoresize } from '$ts/actions/textarea/autoresize';
 	import { expandCollapse } from '$ts/animation/transitions';
 	import {
-		availableHeightsFree,
-		availableInferenceStepsFree,
-		availableWidthsFree,
 		guidanceScaleDefault,
 		guidanceScaleMax,
 		guidanceScaleMin,
@@ -38,7 +35,7 @@
 		generationSeed,
 		promptInputValue,
 		negativePromptInputValue,
-		numOutputs
+		generationNumOutputs
 	} from '$ts/stores/generationSettings';
 	import { onMount, tick } from 'svelte';
 	import LL from '$i18n/i18n-svelte';
@@ -62,14 +59,15 @@
 		generationModelIdDefault
 	} from '$ts/constants/generationModels';
 	import { availableSchedulerIds, schedulerIdDefault } from '$ts/constants/schedulers';
-	import { generations, type TGenerationStatus } from '$userStores/generation';
+	import { generations } from '$userStores/generation';
 	import { userSummary } from '$ts/stores/user/summary';
+	import { calculateGenerationCost, generationCostCompletionPerMs } from '$ts/stores/cost';
 
 	export let serverData: THomePageData;
 	export let queueGeneration: () => Promise<void>;
-	export let estimatedDuration: number;
 	export { classes as class };
 	let classes = '';
+	let estimatedGenerationDurationSec: number;
 
 	promptInputValue.set(serverData.prompt !== null ? serverData.prompt : undefined);
 	negativePromptInputValue.set(
@@ -134,21 +132,31 @@
 	$: [lastGenerationStatus], onLastGenerationStatusChanged();
 
 	async function onLastGenerationStatusChanged() {
-		if (lastGenerationStatus === 'succeeded' || lastGenerationStatus === 'failed') {
-			lastGenerationAnimationStatus = 'should-complete';
-			return;
-		} else if (
-			lastGenerationStatus === 'server-received' ||
-			lastGenerationStatus === 'server-processing'
-		) {
-			return;
-		} else if (lastGenerationStatus === 'to-be-submitted') {
-			lastGenerationAnimationStatus = 'idle';
-			await tick();
-			setTimeout(() => {
+		switch (lastGenerationStatus) {
+			case 'to-be-submitted':
+				lastGenerationAnimationStatus = 'idle';
+				await tick();
+				break;
+			case 'server-received':
+				if (
+					lastGenerationAnimationStatus === 'should-animate' ||
+					lastGenerationAnimationStatus === 'should-complete'
+				) {
+					break;
+				}
 				lastGenerationAnimationStatus = 'should-animate';
-			});
-			return;
+				break;
+			case 'server-processing':
+				lastGenerationAnimationStatus = 'idle';
+				await tick();
+				lastGenerationAnimationStatus = 'should-animate';
+				break;
+			case 'succeeded':
+				lastGenerationAnimationStatus = 'should-complete';
+				break;
+			case 'failed':
+				lastGenerationAnimationStatus = 'should-complete';
+				break;
 		}
 	}
 
@@ -192,7 +200,9 @@
 	}
 
 	$: doesntHaveEnoughCredits =
-		isCheckComplete && $userSummary && $userSummary.total_remaining_credits < $numOutputs;
+		isCheckComplete &&
+		$userSummary &&
+		$userSummary.total_remaining_credits < Number($generationNumOutputs);
 
 	const setLocalImageSize = () => {
 		if (isCheckComplete) {
@@ -263,6 +273,21 @@
 		promptInputElement.blur();
 		promptInputElement.focus();
 	};
+
+	$: [$generationWidth, $generationHeight, $generationInferenceSteps, $generationNumOutputs],
+		setEstimatedGenerationDuration();
+
+	function setEstimatedGenerationDuration() {
+		if ($generationCostCompletionPerMs !== null) {
+			const cost = calculateGenerationCost(
+				Number($generationWidth),
+				Number($generationHeight),
+				Number($generationInferenceSteps),
+				Number($generationNumOutputs)
+			);
+			estimatedGenerationDurationSec = cost / $generationCostCompletionPerMs / 1000;
+		}
+	}
 
 	onMount(() => {
 		isCheckComplete = false;
@@ -342,6 +367,7 @@
 		) {
 			advancedModeApp.set($advancedMode);
 		}
+		setEstimatedGenerationDuration();
 		isCheckComplete = true;
 	});
 </script>
@@ -402,7 +428,7 @@
 			>
 				<div
 					style="transition-duration: {lastGenerationAnimationStatus === 'should-animate'
-						? estimatedDuration
+						? estimatedGenerationDurationSec
 						: lastGenerationAnimationStatus === 'should-complete'
 						? 0.3
 						: 0}s"

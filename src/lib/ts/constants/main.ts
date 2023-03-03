@@ -2,9 +2,6 @@ import { env } from '$env/dynamic/public';
 import type { TTab } from '$ts/types/main';
 
 export const serverUrl = env.PUBLIC_DEFAULT_SERVER_URL;
-export const estimatedDurationBufferRatio = 0.1;
-export const estimatedDurationDefault = 20;
-export const estimatedDurationUpscaleDefault = 15;
 export const canonicalUrl = 'https://stablecog.com';
 export const defaultLocale: Locales = 'en';
 export const apiUrl = new URL(
@@ -59,6 +56,8 @@ export const widthTabs: TTab<TAvailableWidth>[] = [
 	{ label: '768', value: '768' }
 ];
 export const widthDefault: TAvailableWidth = '512';
+
+export const numOutputsDefault = 4;
 
 export const availableHeights = ['384', '512', '640', '768'] as const;
 export type TAvailableHeight = typeof availableWidths[number];
