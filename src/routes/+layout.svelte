@@ -185,7 +185,7 @@
 				}
 				if (error || !id || !ui_id) {
 					console.log('Generation failed:', error);
-					setGenerationToFailed(generation.id || generation.ui_id, error);
+					setGenerationToFailed({ id: generation.id || generation.ui_id, error: error });
 					logGenerationFailed({
 						generation,
 						error,
@@ -194,12 +194,12 @@
 						stripeProductId: $userSummary?.product_id
 					});
 				} else {
-					setGenerationToServerReceived(ui_id, id);
+					setGenerationToServerReceived({ ui_id: ui_id, id: id });
 				}
 			} catch (error) {
 				const err = error as Error;
 				console.log('Initial generation submisssion error', error);
-				setGenerationToFailed(generation.id || generation.ui_id, err.message);
+				setGenerationToFailed({ id: generation.id || generation.ui_id, error: err.message });
 				logGenerationFailed({
 					generation,
 					error: err.message,
@@ -230,29 +230,29 @@
 		for (let i = 0; i < $upscales.length; i++) {
 			const upscale = $upscales[i];
 			if (upscale.status === 'succeeded' && upscale.outputs[0].output_id) {
-				setGenerationOutputUpscaledImageUrl(
-					upscale.outputs[0].output_id,
-					upscale.outputs[0].image_url,
-					$activeGeneration
-				);
+				setGenerationOutputUpscaledImageUrl({
+					output_id: upscale.outputs[0].output_id,
+					upscaled_image_url: upscale.outputs[0].image_url,
+					currently_active_generation: $activeGeneration
+				});
 			} else if (upscale.status === 'to-be-submitted') {
 				isSubmittingUpscales = true;
 				try {
-					const res = await submitInitialUpscaleRequest(
-						{
+					const res = await submitInitialUpscaleRequest({
+						request: {
 							...upscale,
 							stream_id: $sseId
 						},
-						$page.data.session.access_token,
-						$appVersion
-					);
+						access_token: $page.data.session.access_token,
+						app_version: $appVersion
+					});
 					const { id, error, total_remaining_credits, ui_id } = res;
 					if (total_remaining_credits !== undefined && $userSummary) {
 						userSummary.set({ ...$userSummary, total_remaining_credits });
 					}
 					if (error || !id || !ui_id) {
 						console.log('Upscale failed:', error);
-						setUpscaleToFailed(upscale.id || upscale.ui_id, error);
+						setUpscaleToFailed({ id: upscale.id || upscale.ui_id, error: error });
 						logUpscaleFailed({
 							upscale,
 							advancedModeApp: $advancedModeApp,
@@ -260,12 +260,12 @@
 							stripeProductId: $userSummary?.product_id
 						});
 					} else {
-						setUpscaleToServerReceived(ui_id, id);
+						setUpscaleToServerReceived({ ui_id: ui_id, id: id });
 					}
 				} catch (error) {
 					const err = error as Error;
 					console.log('Initial upscale submisssion error', error);
-					setUpscaleToFailed(upscale.id || upscale.ui_id, err.message);
+					setUpscaleToFailed({ id: upscale.id || upscale.ui_id, error: err.message });
 					logUpscaleFailed({
 						upscale,
 						advancedModeApp: $advancedModeApp,
@@ -289,7 +289,7 @@
 		}
 		if (data.process_type === 'generate' || data.process_type === 'generate_and_upscale') {
 			if (data.id && data.ui_id && data.status === 'processing') {
-				setGenerationToServerProcessing(data.ui_id, data.id);
+				setGenerationToServerProcessing({ ui_id: data.ui_id, id: data.id });
 			} else if (
 				data.id &&
 				data.ui_id &&
@@ -298,7 +298,7 @@
 				data.outputs.length > 0
 			) {
 				const outputs = data.outputs as TSSEGenerationMessageOutput[];
-				setGenerationToSucceeded(data.id, outputs);
+				setGenerationToSucceeded({ id: data.id, outputs: outputs });
 				const generationIndex = $generations.findIndex((g) => g.id === data.id);
 				const generation = $generations[generationIndex];
 				uLogGeneration('Succeeded');
@@ -312,11 +312,11 @@
 					})
 				);
 			} else if (data.id && data.status === 'failed') {
-				setGenerationToFailed(data.id, data.error);
+				setGenerationToFailed({ id: data.id, error: data.error });
 			}
 		} else if (data.process_type === 'upscale') {
 			if (data.id && data.ui_id && data.status === 'processing') {
-				setUpscaleToServerProcessing(data.ui_id, data.id);
+				setUpscaleToServerProcessing({ ui_id: data.ui_id, id: data.id });
 			} else if (
 				data.id &&
 				data.status === 'succeeded' &&
@@ -324,7 +324,7 @@
 				data.outputs.length > 0
 			) {
 				const outputs = data.outputs as TSSEUpscaleMessageOutput[];
-				setUpscaleToSucceeded(data.id, outputs);
+				setUpscaleToSucceeded({ id: data.id, outputs: outputs });
 				const upscaleIndex = $upscales.findIndex((u) => u.id === data.id);
 				const upscale = $upscales[upscaleIndex];
 				uLogUpscale('Succeeded');
@@ -338,15 +338,17 @@
 					})
 				);
 			} else if (data.id && data.status === 'failed') {
-				setUpscaleToFailed(data.id, data.error);
+				setUpscaleToFailed({ id: data.id, error: data.error });
 			}
 		}
 	}
 
 	$: if (browser && (!$sse || $sse.readyState === $sse.CLOSED)) {
 		sseId.set(generateSSEId());
+		const sseUrl = `${apiUrl.origin}/v1/sse?id=${$sseId}`;
 		console.log('SSE ID:', $sseId);
-		sse.set(new EventSource(`${apiUrl.href}v1/sse?id=${$sseId}`));
+		console.log('SSE URL:', sseUrl);
+		sse.set(new EventSource(sseUrl));
 		if ($sse !== null) {
 			$sse.onopen = () => {
 				console.log(`Connected to SSE with ID: ${$sseId}`);

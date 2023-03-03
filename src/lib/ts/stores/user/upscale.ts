@@ -5,7 +5,7 @@ import { writable } from 'svelte/store';
 
 export const upscales = writable<TUpscale[]>([]);
 
-export const setUpscaleToFailed = (id: string, error?: string) => {
+export const setUpscaleToFailed = ({ id, error }: { id: string; error?: string }) => {
 	upscales.update(($upscales) => {
 		if ($upscales === null) {
 			return $upscales;
@@ -28,7 +28,13 @@ export const setUpscaleToFailed = (id: string, error?: string) => {
 	});
 };
 
-export const setUpscaleToSucceeded = (id: string, outputs: TUpscaleOutput[]) => {
+export const setUpscaleToSucceeded = ({
+	id,
+	outputs
+}: {
+	id: string;
+	outputs: TUpscaleOutput[];
+}) => {
 	upscales.update(($upscales) => {
 		if ($upscales === null) {
 			return $upscales;
@@ -48,7 +54,7 @@ export const setUpscaleToSucceeded = (id: string, outputs: TUpscaleOutput[]) => 
 	});
 };
 
-export const setUpscaleToServerReceived = (ui_id: string, id: string) => {
+export const setUpscaleToServerReceived = ({ ui_id, id }: { ui_id: string; id: string }) => {
 	upscales.update(($upscales) => {
 		if ($upscales === null) {
 			return $upscales;
@@ -68,7 +74,7 @@ export const setUpscaleToServerReceived = (ui_id: string, id: string) => {
 	});
 };
 
-export const setUpscaleToServerProcessing = (ui_id: string, id: string) => {
+export const setUpscaleToServerProcessing = ({ ui_id, id }: { ui_id: string; id: string }) => {
 	upscales.update(($upscales) => {
 		if ($upscales === null) {
 			return $upscales;
@@ -107,12 +113,16 @@ export async function queueInitialUpscaleRequest(request: TInitialUpscaleRequest
 	});
 }
 
-export async function submitInitialUpscaleRequest(
-	request: TInitialUpscaleRequest,
-	access_token: string,
-	app_version: string
-) {
-	const response = await fetch(`${apiUrl.href}v1/user/upscale`, {
+export async function submitInitialUpscaleRequest({
+	request,
+	access_token,
+	app_version
+}: {
+	request: TInitialUpscaleRequest;
+	access_token: string;
+	app_version: string;
+}) {
+	const response = await fetch(`${apiUrl.origin}/v1/user/upscale`, {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json',

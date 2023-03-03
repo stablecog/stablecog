@@ -10,7 +10,7 @@ import {
 export const generations = writable<TGeneration[]>([]);
 export const activeGeneration = writable<TGenerationWithSelectedOutput | undefined>(undefined);
 
-export const setGenerationToFailed = (id: string, error?: string) => {
+export const setGenerationToFailed = ({ id, error }: { id: string; error?: string }) => {
 	generations.update(($generations) => {
 		if ($generations === null || $generations.length === 0) {
 			return $generations;
@@ -31,7 +31,13 @@ export const setGenerationToFailed = (id: string, error?: string) => {
 	});
 };
 
-export const setGenerationToSucceeded = (id: string, outputs: TGenerationOutput[]) => {
+export const setGenerationToSucceeded = ({
+	id,
+	outputs
+}: {
+	id: string;
+	outputs: TGenerationOutput[];
+}) => {
 	generations.update(($generations) => {
 		if ($generations === null || $generations.length === 0) {
 			return $generations;
@@ -51,7 +57,7 @@ export const setGenerationToSucceeded = (id: string, outputs: TGenerationOutput[
 	});
 };
 
-export const setGenerationToServerReceived = (ui_id: string, id: string) => {
+export const setGenerationToServerReceived = ({ ui_id, id }: { ui_id: string; id: string }) => {
 	generations.update(($generations) => {
 		if ($generations === null || $generations.length === 0) {
 			return $generations;
@@ -71,7 +77,7 @@ export const setGenerationToServerReceived = (ui_id: string, id: string) => {
 	});
 };
 
-export const setGenerationToServerProcessing = (ui_id: string, id: string) => {
+export const setGenerationToServerProcessing = ({ ui_id, id }: { ui_id: string; id: string }) => {
 	generations.update(($generations) => {
 		if ($generations === null || $generations.length === 0) {
 			return $generations;
@@ -125,7 +131,7 @@ export async function submitInitialGenerationRequest(
 		prompt: promptText,
 		negative_prompt: negativePromptText
 	};
-	const response = await fetch(`${apiUrl.href}v1/user/generation`, {
+	const response = await fetch(`${apiUrl.origin}/v1/user/generation`, {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json',
@@ -139,7 +145,7 @@ export async function submitInitialGenerationRequest(
 	return { ...resJSON, ui_id: request.ui_id };
 }
 
-export const setGenerationOutputToDeleted = (outputId: string) => {
+export const setGenerationOutputToDeleted = (output_id: string) => {
 	generations.update(($generations) => {
 		if ($generations === null || $generations.length === 0) {
 			return $generations;
@@ -148,7 +154,7 @@ export const setGenerationOutputToDeleted = (outputId: string) => {
 			const generation = $generations[i];
 			for (let j = 0; j < generation.outputs.length; j++) {
 				const output = generation.outputs[j];
-				if (output.id === outputId) {
+				if (output.id === output_id) {
 					generation.outputs[j].is_deleted = true;
 					return $generations;
 				}
@@ -158,15 +164,19 @@ export const setGenerationOutputToDeleted = (outputId: string) => {
 	});
 };
 
-export const setGenerationOutputUpscaledImageUrl = (
-	outputId: string,
-	upscaled_image_url: string,
-	currentlyActiveGeneration: TGenerationWithSelectedOutput | undefined
-) => {
+export const setGenerationOutputUpscaledImageUrl = ({
+	output_id,
+	upscaled_image_url,
+	currently_active_generation
+}: {
+	output_id: string;
+	upscaled_image_url: string;
+	currently_active_generation: TGenerationWithSelectedOutput | undefined;
+}) => {
 	generations.update(($generations) => {
-		if (currentlyActiveGeneration?.selected_output?.id === outputId) {
-			currentlyActiveGeneration.selected_output.upscaled_image_url = upscaled_image_url;
-			activeGeneration.set(currentlyActiveGeneration);
+		if (currently_active_generation?.selected_output?.id === output_id) {
+			currently_active_generation.selected_output.upscaled_image_url = upscaled_image_url;
+			activeGeneration.set(currently_active_generation);
 		}
 		if ($generations === null || $generations.length === 0) {
 			return $generations;
@@ -175,7 +185,7 @@ export const setGenerationOutputUpscaledImageUrl = (
 			const generation = $generations[i];
 			for (let j = 0; j < generation.outputs.length; j++) {
 				const output = generation.outputs[j];
-				if (output.id === outputId && !output.upscaled_image_url) {
+				if (output.id === output_id && !output.upscaled_image_url) {
 					output.upscaled_image_url = upscaled_image_url;
 					return $generations;
 				}

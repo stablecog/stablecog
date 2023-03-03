@@ -8,7 +8,7 @@
 		inferenceStepsDefault,
 		maxSeed
 	} from '$ts/constants/main';
-	import { onDestroy, onMount } from 'svelte';
+	import { onDestroy } from 'svelte';
 	import ImagePlaceholder from '$components/ImagePlaceholder.svelte';
 	import GenerationImage from '$components/generationImage/GenerationImage.svelte';
 	import { advancedModeApp } from '$ts/stores/advancedMode';
@@ -34,6 +34,7 @@
 		generationHeight,
 		generationInferenceSteps,
 		generationModelId,
+		generationNumOutputs,
 		generationSchedulerId,
 		generationSeed,
 		generationWidth,
@@ -97,7 +98,7 @@
 				($advancedModeApp || isValue(data.seed))
 					? Number($generationSeed)
 					: Math.round(Math.random() * maxSeed),
-			num_outputs: 4,
+			num_outputs: Number($generationNumOutputs),
 			output_image_extension: 'jpeg',
 			process_type: 'generate',
 			stream_id: $sseId,
