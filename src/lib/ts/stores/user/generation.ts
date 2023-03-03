@@ -87,7 +87,6 @@ export const setGenerationToServerProcessing = ({ ui_id, id }: { ui_id: string; 
 			gen.status = 'server-processing';
 			gen.started_at = Date.now();
 			if (!gen.ui_id) gen.ui_id = ui_id;
-			console.log('set based on id');
 			return $generations;
 		}
 		const gen2 = $generations.find((g) => g.ui_id === ui_id);
@@ -95,7 +94,6 @@ export const setGenerationToServerProcessing = ({ ui_id, id }: { ui_id: string; 
 			gen2.status = 'server-processing';
 			gen2.started_at = Date.now();
 			if (!gen2.id) gen2.id = id;
-			console.log('set based on ui_id');
 			return $generations;
 		}
 		return $generations;
