@@ -194,13 +194,8 @@
 				await tick();
 				break;
 			case 'server-received':
-				if (
-					lastUpscaleAnimationStatus === 'should-animate' ||
-					lastUpscaleAnimationStatus === 'should-complete'
-				) {
-					break;
-				}
-				lastUpscaleAnimationStatus = 'should-animate';
+				lastUpscaleAnimationStatus = 'idle';
+				await tick();
 				break;
 			case 'server-processing':
 				lastUpscaleAnimationStatus = 'idle';

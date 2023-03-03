@@ -138,6 +138,8 @@
 				await tick();
 				break;
 			case 'server-received':
+				lastGenerationAnimationStatus = 'idle';
+				await tick();
 				break;
 			case 'server-processing':
 				lastGenerationAnimationStatus = 'idle';
