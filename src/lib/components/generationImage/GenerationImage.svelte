@@ -148,41 +148,7 @@
 		}}
 		class="w-full h-full absolute left-0 top-0 flex flex-col justify-between items-end overflow-hidden gap-4"
 	>
-		<div class="w-full flex justify-between items-start gap-8">
-			<div
-				class="flex-1 min-w-0 overflow-hidden flex flex-row flex-wrap items-start justify-start gap-1 transition transform 
-				-translate-x-full group-focus-within:translate-x-0 group-hover:translate-x-0 p-1.5"
-			/>
-			<div
-				bind:this={rightButtonContainer}
-				class="flex flex-row items-end justify-start transition transform 
-				translate-x-full group-focus-within:translate-x-0 group-hover:translate-x-0"
-			>
-				{#if cardType !== 'admin-gallery'}
-					<CopyButton
-						class="p-1.5"
-						stringToCopy={generation.prompt.text}
-						bind:copied={promptCopied}
-						bind:copiedTimeout={promptCopiedTimeout}
-					/>
-				{/if}
-				{#if cardType === 'generate' || cardType === 'history'}
-					<DownloadGenerationButton
-						class="p-1.5 -ml-1.5"
-						url={generation.selected_output.upscaled_image_url
-							? generation.selected_output.upscaled_image_url
-							: generation.selected_output.image_url}
-						isUpscaled={generation.selected_output.upscaled_image_url !== undefined}
-						prompt={generation.prompt.text}
-						seed={generation.seed}
-						guidanceScale={generation.guidance_scale}
-						inferenceSteps={generation.inference_steps}
-					/>
-				{:else if cardType === 'gallery'}
-					<GenerateButton {generation} class="p-1.5 -ml-1.5" />
-				{/if}
-			</div>
-		</div>
+		<div class="w-full h-16" />
 		<div
 			class="w-full max-h-[max(4rem,min(35%,5.3rem))] transition bg-c-bg/90 text-xs relative z-0 overflow-hidden
 			translate-y-full group-focus-within:translate-y-0 group-hover:translate-y-0 pointer-events-none"
@@ -190,7 +156,7 @@
 			<div
 				class="{scrollPrompt
 					? 'overflow-auto'
-					: 'overflow-hidden'} w-full max-h-full list-fade px-4 py-3 flex flex-col gap-2 cursor-default"
+					: 'overflow-hidden'} w-full max-h-full list-fade px-3 md:px-4 py-3 flex flex-col gap-2 cursor-default"
 			>
 				<p class="w-full font-medium leading-normal transition text-c-on-bg transform">
 					{generation.prompt.text}
@@ -209,6 +175,40 @@
 		</div>
 	</AnchorOrDiv>
 {/if}
+<div class="w-full h-full absolute left-0 top-0 pointer-events-none">
+	<div class="w-full flex justify-end items-start">
+		<div
+			bind:this={rightButtonContainer}
+			class="flex flex-row items-end justify-start transition transform 
+			translate-x-full group-focus-within:translate-x-0 group-hover:translate-x-0 pointer-events-auto"
+		>
+			{#if cardType !== 'admin-gallery'}
+				<CopyButton
+					class="p-1.5"
+					stringToCopy={generation.prompt.text}
+					bind:copied={promptCopied}
+					bind:copiedTimeout={promptCopiedTimeout}
+				/>
+			{/if}
+			{#if cardType === 'generate' || cardType === 'history'}
+				<DownloadGenerationButton
+					class="p-1.5 -ml-1.5"
+					url={generation.selected_output.upscaled_image_url
+						? generation.selected_output.upscaled_image_url
+						: generation.selected_output.image_url}
+					isUpscaled={generation.selected_output.upscaled_image_url !== undefined}
+					prompt={generation.prompt.text}
+					seed={generation.seed}
+					guidanceScale={generation.guidance_scale}
+					inferenceSteps={generation.inference_steps}
+				/>
+			{:else if cardType === 'gallery'}
+				<GenerateButton {generation} class="p-1.5 -ml-1.5" />
+			{/if}
+		</div>
+	</div>
+	<div />
+</div>
 
 <style>
 	.list-fade {

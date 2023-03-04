@@ -9,13 +9,12 @@
 	import type { TUserGenerationFullOutputsPage } from '$ts/queries/userGenerations';
 	import { activeGeneration } from '$userStores/generation';
 	import type { CreateInfiniteQueryResult } from '@tanstack/svelte-query';
-	import Masonry from 'svelte-bricks';
-	import IntersectionObserver from 'svelte-intersection-observer';
-	import { fly } from 'svelte/transition';
+	import { MasonryInfiniteGrid } from '@egjs/svelte-infinitegrid';
+	import { fade, fly } from 'svelte/transition';
+	import { quadOut } from 'svelte/easing';
 
 	export let generationsQuery: CreateInfiniteQueryResult<TUserGenerationFullOutputsPage, unknown>;
 	export let cardType: TGenerationImageCardType;
-	let bottomDiv: HTMLDivElement;
 
 	let canAutoFetch = true;
 	let canAutoFetchTimeout: NodeJS.Timeout;
@@ -28,6 +27,14 @@
 			canAutoFetch = true;
 		}, 1000);
 	};
+
+	const batch = 50;
+	$: outputs = $generationsQuery.data?.pages.flatMap((page) => page.outputs);
+	$: items = outputs?.map((output, index) => ({
+		key: index,
+		id: output.id,
+		groupKey: Math.floor(index / batch)
+	}));
 </script>
 
 {#if $generationsQuery.isInitialLoading}
@@ -40,48 +47,63 @@
 		<p class="mt-2 opacity-0">{$LL.Gallery.SearchingTitle()}</p>
 		<div class="h-[2vh]" />
 	</div>
-{:else if $generationsQuery.isSuccess && $generationsQuery.data.pages.length > 0}
-	<Masonry
-		items={$generationsQuery.data.pages.flatMap((page) => page.outputs)}
-		let:item={output}
-		minColWidth={300}
-		maxColWidth={600}
-		gap={0}
-		animate={false}
+{:else if $generationsQuery.isSuccess && $generationsQuery.data.pages.length > 0 && outputs !== undefined && items !== undefined}
+	<MasonryInfiniteGrid
+		{items}
+		let:visibleItems
+		align="center"
+		on:requestAppend={() => {
+			if ($generationsQuery.isFetchingNextPage) return;
+			if (!$generationsQuery.hasNextPage) return;
+			$generationsQuery.fetchNextPage();
+		}}
 	>
-		<div class="w-full p-0.5">
-			<div class="w-full relative group">
-				<ImagePlaceholder width={output.generation.width} height={output.generation.height} />
-				{#if $activeGeneration === undefined || $activeGeneration.selected_output.id !== output.id}
-					<div
-						transition:fly|local={imageTransitionProps}
-						class="absolute left-0 top-0 w-full h-full rounded-xl bg-c-bg-secondary transition border-4
+		{#each visibleItems as item (item.key)}
+			<div
+				class="w-1/2 sm:w-1/3 lg:w-1/4 {cardType === 'history'
+					? ''
+					: 'xl:w-1/5 2xl:w-1/6 3xl:w-1/7'} p-0.5"
+			>
+				<div class="w-full relative group">
+					<ImagePlaceholder
+						width={outputs[item.key].generation.width}
+						height={outputs[item.key].generation.height}
+					/>
+					{#if $activeGeneration === undefined || $activeGeneration.selected_output.id !== outputs[item.key].id}
+						<div
+							transition:fly|local={imageTransitionProps}
+							class="absolute left-0 top-0 w-full h-full rounded-xl bg-c-bg-secondary transition border-4
 										border-c-bg-secondary z-0 overflow-hidden shadow-lg shadow-c-shadow/[var(--o-shadow-normal)]"
-					>
-						{#if output.generation.outputs !== undefined}
-							<GenerationImage
-								{cardType}
-								useUpscaledImage={false}
-								generation={{ ...output.generation, selected_output: output }}
-							/>
-						{/if}
-					</div>
-				{/if}
+						>
+							{#if outputs[item.key].generation.outputs !== undefined}
+								<GenerationImage
+									{cardType}
+									useUpscaledImage={false}
+									generation={{
+										...outputs[item.key].generation,
+										selected_output: outputs[item.key]
+									}}
+								/>
+							{/if}
+						</div>
+					{/if}
+				</div>
 			</div>
-		</div>
-	</Masonry>
+		{/each}
+	</MasonryInfiniteGrid>
 	{#if $generationsQuery.hasNextPage}
-		<IntersectionObserver on:intersect={autoFetchNextPage} rootMargin="100%" element={bottomDiv}>
-			<div bind:this={bottomDiv} class="w-full flex flex-row items-center justify-center mt-6">
-				<Button
-					withSpinner
-					size="sm"
-					loading={$generationsQuery.isFetchingNextPage}
-					onClick={() => $generationsQuery.fetchNextPage()}
-				>
-					{$LL.Shared.LoadMoreButton()}
-				</Button>
-			</div>
-		</IntersectionObserver>
+		<div
+			in:fade|local={{ duration: 300, easing: quadOut }}
+			class="w-full flex-1 flex flex-row items-center justify-center mt-6"
+		>
+			<Button
+				withSpinner
+				size="sm"
+				loading={$generationsQuery.isFetchingNextPage}
+				onClick={() => $generationsQuery.fetchNextPage()}
+			>
+				{$LL.Shared.LoadMoreButton()}
+			</Button>
+		</div>
 	{/if}
 {/if}
