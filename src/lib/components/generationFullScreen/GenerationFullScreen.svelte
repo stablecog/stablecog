@@ -41,7 +41,7 @@
 	} from '$components/generationFullScreen/types';
 	import Divider from '$components/generationFullScreen/Divider.svelte';
 	import { userSummary } from '$ts/stores/user/summary';
-	import { estimatedUpscaleDurationMs } from '$ts/stores/cost';
+	import { estimatedUpscaleDurationMs, getUpscaleDurationMsFromUpscale } from '$ts/stores/cost';
 
 	export let generation: TGenerationWithSelectedOutput;
 	export let modalType: TGenerationFullScreenModalType;
@@ -201,10 +201,16 @@
 				lastUpscaleAnimationStatus = 'idle';
 				await tick();
 				lastUpscaleAnimationStatus = 'should-animate';
+				``;
 				break;
 			case 'succeeded':
 				if (lastUpscaleBeingProcessed) break;
 				lastUpscaleAnimationStatus = 'should-complete';
+				const durationMs = getUpscaleDurationMsFromUpscale($upscales[0]);
+				if (durationMs !== null && $upscales[0].completed_at) {
+					const loadTimeMs = Date.now() - $upscales[0].completed_at;
+					estimatedUpscaleDurationMs.set(loadTimeMs + durationMs);
+				}
 				break;
 			case 'failed':
 				lastUpscaleAnimationStatus = 'should-complete';

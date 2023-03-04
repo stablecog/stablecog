@@ -1,6 +1,5 @@
 import { apiUrl } from '$ts/constants/main';
 import type { TAvailableUpscaleModelId } from '$ts/constants/upscaleModels';
-import { estimatedUpscaleDurationMs, getUpscaleDurationMsFromUpscale } from '$ts/stores/cost';
 import { writable } from 'svelte/store';
 
 export const upscales = writable<TUpscale[]>([]);
@@ -46,10 +45,6 @@ export const setUpscaleToSucceeded = ({
 		$upscales[index].status = 'succeeded';
 		$upscales[index].outputs = outputs;
 		$upscales[index].completed_at = Date.now();
-		const durationMs = getUpscaleDurationMsFromUpscale($upscales[index]);
-		if (durationMs !== null) {
-			estimatedUpscaleDurationMs.set(durationMs);
-		}
 		return $upscales;
 	});
 };
