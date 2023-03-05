@@ -252,7 +252,10 @@ const vi: Translation = {
 			Title: 'Link Expired',
 			Paragraph: 'The link can only be used once and expires after 24 hours.'
 		},
-		NewVersionAvailable: 'There is a new version! Refresh the page to get it.'
+		UpdateAvailable: {
+			Title: 'Update Available',
+			Paragraph: 'There is an update! Refresh the page to get it.'
+		}
 	},
 	Admin: {
 		AdminPanelTitle: 'Quản trị',

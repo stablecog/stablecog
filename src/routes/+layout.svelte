@@ -30,7 +30,7 @@
 		uLogUpscale
 	} from '$ts/helpers/loggers';
 	import { setCookie } from '$ts/helpers/setCookie';
-	import { appVersion } from '$ts/stores/appVersion';
+	import { appVersion, serverVersion } from '$ts/stores/appVersion';
 	import {
 		sse,
 		sseId,
@@ -352,13 +352,16 @@
 			$sse.onmessage = (event) => {
 				const data = JSON.parse(event.data);
 				console.log('Message from SSE', data);
-				setGenerationOrUpscaleStatus(data);
 				if (data.total_remaining_credits !== undefined && $userSummary) {
 					userSummary.set({
 						...$userSummary,
 						total_remaining_credits: data.total_remaining_credits
 					});
 				}
+				if (data.version) {
+					serverVersion.set(data.version);
+				}
+				setGenerationOrUpscaleStatus(data);
 			};
 			$sse.onerror = (event) => {
 				console.log('Error from SSE', event);
@@ -391,7 +394,7 @@
 		/* posthog.init(PUBLIC_POSTHOG_ID, {
 			api_host: PUBLIC_POSTHOG_URL
 		}); */
-		appVersion.set(document.body.getAttribute('app-version') || 'unknown');
+		appVersion.set(document.body.getAttribute('app-version') ?? 'unknown');
 		const {
 			data: { subscription }
 		} = supabase.auth.onAuthStateChange(() => {

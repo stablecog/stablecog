@@ -251,7 +251,7 @@ const tr: Translation = {
 			Title: 'Link Geçersiz',
 			Paragraph: 'Link sadece bir kere kullanılabilir ve 24 saat sonunda geçersiz hale gelir.'
 		},
-		NewVersionAvailable: 'Yeni versiyon mevcut. Görmek için sayfayı yenile.'
+		UpdateAvailable: 'Yeni versiyon mevcut. Görmek için sayfayı yenile.'
 	},
 	Admin: {
 		AdminPanelTitle: 'Yönetici',

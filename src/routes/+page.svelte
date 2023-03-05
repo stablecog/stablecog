@@ -52,6 +52,7 @@
 	import { fly } from 'svelte/transition';
 	import { userSummary } from '$ts/stores/user/summary';
 	import LowOnCreditsCard from '$components/LowOnCreditsCard.svelte';
+	import { appVersion, serverVersion } from '$ts/stores/appVersion';
 
 	export let data: THomePageData;
 
@@ -147,39 +148,48 @@
 	class="w-full flex flex-col items-center flex-1 justify-center md:pt-4"
 >
 	<div class="w-full flex flex-col justify-start items-center z-0">
-		{#if $page.data.session?.user.id && $userSummary && $userSummary.total_remaining_credits < lowCreditsThreshold}
+		{#if Number($serverVersion) > Number($appVersion)}
 			<div
-				transition:expandCollapse|local={{ duration: 300 }}
-				class="w-full flex flex-col justify-start items-center px-4 md:px-8"
+				transition:expandCollapse|local={{ duration: 200 }}
+				class="w-full flex flex-col items-center justify-start"
 			>
-				<div class="px-1 pt-1 pb-4">
-					<LowOnCreditsCard />
-				</div>
-			</div>
-		{/if}
-		<GenerateBar serverData={data} {queueGeneration} />
-		{#if $generations.length > 0 && $generations[0].status === 'failed'}
-			<div
-				transition:expandCollapse|local={{ duration: 300 }}
-				class="flex flex-col justify-start origin-top rounded-2xl"
-			>
-				{#if $generations[0].error === 'NEW_VERSION_AVAILABLE'}
-					<div class="w-full max-w-md py-2 md:py-0 px-4">
-						<div
-							class="w-full flex flex-col items-center p-3 md:p-4 bg-c-primary/8 border-2 border-c-primary/8 rounded-2xl"
-						>
-							<div class="w-full flex justify-start items-center gap-3 -mt-0.5 md:-mt-1 px-2">
-								<IconConfetti class="w-7 h-7 flex-shrink-0 text-c-primary" />
-								<p class="flex-1 min-w-0 leading-normal text-c-primary text-left">
-									{$LL.Error.NewVersionAvailable()}
-								</p>
-							</div>
-							<Button onClick={() => document.location.reload()} size="sm" class="mt-4 w-full">
-								{$LL.Shared.RefreshButton()}
-							</Button>
+				<div class="w-full flex justify-center items-start max-w-md py-4 px-4">
+					<div
+						class="flex flex-col justify-start items-center p-3 md:p-4 bg-c-primary/10 ring-2 ring-c-primary/20 rounded-2xl"
+					>
+						<div class="w-full flex items-center gap-3 px-2">
+							<IconConfetti class="w-8 h-8 text-c-primary flex-shrink-0" />
+							<h1 class="flex-1 font-bold text-2xl text-c-primary">
+								{$LL.Error.UpdateAvailable.Title()}
+							</h1>
 						</div>
+						<p class="w-full leading-normal text-c-on-bg text-left px-2 mt-3">
+							{$LL.Error.UpdateAvailable.Paragraph()}
+						</p>
+						<Button onClick={() => document.location.reload()} class="mt-5 w-full">
+							{$LL.Shared.RefreshButton()}
+						</Button>
 					</div>
-				{:else}
+				</div>
+				<div class="w-full h-[2vh]" />
+			</div>
+		{:else}
+			{#if $page.data.session?.user.id && $userSummary && $userSummary.total_remaining_credits < lowCreditsThreshold}
+				<div
+					transition:expandCollapse|local={{ duration: 200 }}
+					class="w-full flex flex-col justify-start items-center px-4 md:px-8"
+				>
+					<div class="px-1 pt-1 pb-4">
+						<LowOnCreditsCard />
+					</div>
+				</div>
+			{/if}
+			<GenerateBar serverData={data} {queueGeneration} />
+			{#if $generations.length > 0 && $generations[0].status === 'failed'}
+				<div
+					transition:expandCollapse|local={{ duration: 300 }}
+					class="flex flex-col justify-start origin-top rounded-2xl"
+				>
 					<p class="w-full max-w-2xl leading-relaxed text-c-on-bg/40 text-center py-4 md:py-2 px-6">
 						{#if $generations[0].error}
 							{$generations[0].error === 'NSFW' ? $LL.Error.NSFW() : $generations[0].error}
@@ -187,60 +197,63 @@
 							{$LL.Error.SomethingWentWrong()}
 						{/if}
 					</p>
-				{/if}
-			</div>
-		{:else if $generations && $generations.length > 0 && $generations[0].outputs && $generations[0].status === 'succeeded'}
-			<div
-				transition:expandCollapse|local={{ duration: 300 }}
-				class="w-full flex items-start justify-center rounded-xl origin-top relative z-0 px-2"
-			>
+				</div>
+			{:else if $generations && $generations.length > 0 && $generations[0].outputs && $generations[0].status === 'succeeded'}
 				<div
-					class="w-full max-w-7xl flex flex-wrap items-start justify-center md:px-4 py-3 md:pt-0"
+					transition:expandCollapse|local={{ duration: 300 }}
+					class="w-full flex items-start justify-center rounded-xl origin-top relative z-0 px-2"
 				>
-					{#each $generations[0].outputs as output}
-						<div class="p-0.5 w-1/2 lg:w-1/4 max-w-xs lg:max-w-auto">
-							<div class="w-full h-auto relative">
-								<ImagePlaceholder width={$generations[0].width} height={$generations[0].height} />
-								{#if $activeGeneration === undefined || $activeGeneration.selected_output.id !== output.id}
-									<div
-										class="absolute w-full h-full left-0 top-0 rounded-2xl bg-c-bg-secondary z-0 overflow-hidden border-4 
-										shadow-lg shadow-c-shadow/[var(--o-shadow-normal)] border-c-bg-secondary group"
-										transition:fly|local={imageTransitionProps}
-									>
-										<GenerationImage
-											generation={{ ...$generations[0], selected_output: output }}
-											useUpscaledImage
-											cardType="generate"
-										/>
-									</div>
-								{/if}
-							</div>
-						</div>
-					{/each}
-					{#if $generations[0].outputs.length !== 0 && $generations[0].outputs.length < $generations[0].num_outputs}
-						{#each [...Array($generations[0].num_outputs - $generations[0].outputs.length).keys()] as _}
+					<div
+						class="w-full max-w-7xl flex flex-wrap items-start justify-center md:px-4 py-3 md:pt-0"
+					>
+						{#each $generations[0].outputs as output}
 							<div class="p-0.5 w-1/2 lg:w-1/4 max-w-xs lg:max-w-auto">
 								<div class="w-full h-auto relative">
 									<ImagePlaceholder width={$generations[0].width} height={$generations[0].height} />
-									<div
-										class="absolute w-full h-full flex items-center justify-center left-0 top-0 rounded-2xl bg-c-bg-secondary z-0 overflow-hidden border-4 
+									{#if $activeGeneration === undefined || $activeGeneration.selected_output.id !== output.id}
+										<div
+											class="absolute w-full h-full left-0 top-0 rounded-2xl bg-c-bg-secondary z-0 overflow-hidden border-4 
 										shadow-lg shadow-c-shadow/[var(--o-shadow-normal)] border-c-bg-secondary group"
-									>
-										<div class="w-full h-full flex items-center justify-center">
-											<p class="text-sm text-c-on-bg/50 px-5 py-3 text-center leading-relaxed">
-												{$LL.Error.ImageWasNSFW()}
-											</p>
+											transition:fly|local={imageTransitionProps}
+										>
+											<GenerationImage
+												generation={{ ...$generations[0], selected_output: output }}
+												useUpscaledImage
+												cardType="generate"
+											/>
 										</div>
-									</div>
+									{/if}
 								</div>
 							</div>
 						{/each}
-					{/if}
+						{#if $generations[0].outputs.length !== 0 && $generations[0].outputs.length < $generations[0].num_outputs}
+							{#each [...Array($generations[0].num_outputs - $generations[0].outputs.length).keys()] as _}
+								<div class="p-0.5 w-1/2 lg:w-1/4 max-w-xs lg:max-w-auto">
+									<div class="w-full h-auto relative">
+										<ImagePlaceholder
+											width={$generations[0].width}
+											height={$generations[0].height}
+										/>
+										<div
+											class="absolute w-full h-full flex items-center justify-center left-0 top-0 rounded-2xl bg-c-bg-secondary z-0 overflow-hidden border-4 
+										shadow-lg shadow-c-shadow/[var(--o-shadow-normal)] border-c-bg-secondary group"
+										>
+											<div class="w-full h-full flex items-center justify-center">
+												<p class="text-sm text-c-on-bg/50 px-5 py-3 text-center leading-relaxed">
+													{$LL.Error.ImageWasNSFW()}
+												</p>
+											</div>
+										</div>
+									</div>
+								</div>
+							{/each}
+						{/if}
+					</div>
 				</div>
-			</div>
-		{/if}
-		{#if $generations.length > 0 && $generations[0].status === 'succeeded' && $shouldSubmitToGallery === undefined}
-			<SubmitToGallery />
+			{/if}
+			{#if $generations.length > 0 && $generations[0].status === 'succeeded' && $shouldSubmitToGallery === undefined}
+				<SubmitToGallery />
+			{/if}
 		{/if}
 	</div>
 </div>

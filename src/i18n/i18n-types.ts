@@ -733,10 +733,16 @@ type RootTranslation = {
 			 */
 			Paragraph: string
 		}
-		/**
-		 * T​h​e​r​e​ ​i​s​ ​a​ ​n​e​w​ ​v​e​r​s​i​o​n​!​ ​R​e​f​r​e​s​h​ ​t​h​e​ ​p​a​g​e​ ​t​o​ ​g​e​t​ ​i​t​.
-		 */
-		NewVersionAvailable: string
+		UpdateAvailable: {
+			/**
+			 * U​p​d​a​t​e​ ​A​v​a​i​l​a​b​l​e
+			 */
+			Title: string
+			/**
+			 * T​h​e​r​e​ ​i​s​ ​a​n​ ​u​p​d​a​t​e​!​ ​R​e​f​r​e​s​h​ ​t​h​e​ ​p​a​g​e​ ​t​o​ ​g​e​t​ ​i​t​.
+			 */
+			Paragraph: string
+		}
 	}
 	Admin: {
 		/**
@@ -2129,10 +2135,16 @@ export type TranslationFunctions = {
 			 */
 			Paragraph: () => LocalizedString
 		}
-		/**
-		 * There is a new version! Refresh the page to get it.
-		 */
-		NewVersionAvailable: () => LocalizedString
+		UpdateAvailable: {
+			/**
+			 * Update Available
+			 */
+			Title: () => LocalizedString
+			/**
+			 * There is an update! Refresh the page to get it.
+			 */
+			Paragraph: () => LocalizedString
+		}
 	}
 	Admin: {
 		/**
