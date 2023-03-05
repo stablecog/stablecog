@@ -162,7 +162,7 @@ const en: BaseTranslation = {
 		DeleteButton: 'Delete',
 		LoadingTitle: 'Loading',
 		LoadingParagraph: 'Loading...',
-		NotEnoughCreditsTitle: 'Not Enough Credits',
+		InsufficientCreditsTitle: 'Insufficient credits ({remainingCredits}/{neededCredits})',
 		ServerUrlInput: {
 			Placeholder: 'Server URL'
 		},
@@ -478,9 +478,9 @@ const en: BaseTranslation = {
 		}
 	},
 	LowOnCreditsCard: {
-		Title: "You're low on credits",
+		Title: "You're low on credits ({remainingCredits})",
 		FreeParagraph:
-			'We give all active users free images daily. You can get more by subscribing to a plan or by participating in our events.',
+			'We give all active users free credits daily. You can get more by subscribing to a plan or by participating in our events.',
 		HighestPlanParagraph: 'You can buy a credit pack.',
 		OtherPlansParagraph: 'You can upgrade to a higher plan or buy a credit pack.'
 	}

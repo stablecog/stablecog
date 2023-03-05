@@ -13,7 +13,7 @@
 	import { browser } from '$app/environment';
 	import { createInfiniteQuery } from '@tanstack/svelte-query';
 	import { getAllUsers, type TAllUsersPage } from '$ts/queries/getAllUsers';
-	import PlanBadge from '$components/PlanBadge.svelte';
+	import ProductIdBadge from '$components/ProductIdBadge.svelte';
 	import { scale } from 'svelte/transition';
 	import IconLoadingSlim from '$components/icons/IconLoadingSlim.svelte';
 	import { quadOut } from 'svelte/easing';
@@ -141,7 +141,7 @@
 						.fill(1)
 						.map((i) => ({ product_id: '----', count: '----' })) as item}
 					<div class="flex gap-3 items-center">
-						<PlanBadge
+						<ProductIdBadge
 							productId={item.product_id}
 							planText={item.product_id === '----' ? item.product_id : undefined}
 							size="md"
@@ -238,7 +238,7 @@
 								</p>
 							</div>
 							<div class="flex flex-col items-end justify-center">
-								<PlanBadge productId={user.product_id} size="sm" />
+								<ProductIdBadge productId={user.product_id} size="sm" />
 								<a
 									rel="noreferrer"
 									href="https://dashboard.stripe.com/customers/{user.stripe_customer_id}"

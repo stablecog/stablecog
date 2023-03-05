@@ -500,9 +500,11 @@ type RootTranslation = {
 		 */
 		LoadingParagraph: string
 		/**
-		 * N​o​t​ ​E​n​o​u​g​h​ ​C​r​e​d​i​t​s
+		 * I​n​s​u​f​f​i​c​i​e​n​t​ ​c​r​e​d​i​t​s​ ​(​{​r​e​m​a​i​n​i​n​g​C​r​e​d​i​t​s​}​/​{​n​e​e​d​e​d​C​r​e​d​i​t​s​}​)
+		 * @param {unknown} neededCredits
+		 * @param {unknown} remainingCredits
 		 */
-		NotEnoughCreditsTitle: string
+		InsufficientCreditsTitle: RequiredParams<'neededCredits' | 'remainingCredits'>
 		ServerUrlInput: {
 			/**
 			 * S​e​r​v​e​r​ ​U​R​L
@@ -1408,11 +1410,12 @@ type RootTranslation = {
 	}
 	LowOnCreditsCard: {
 		/**
-		 * Y​o​u​'​r​e​ ​l​o​w​ ​o​n​ ​c​r​e​d​i​t​s
+		 * Y​o​u​'​r​e​ ​l​o​w​ ​o​n​ ​c​r​e​d​i​t​s​ ​(​{​r​e​m​a​i​n​i​n​g​C​r​e​d​i​t​s​}​)
+		 * @param {unknown} remainingCredits
 		 */
-		Title: string
+		Title: RequiredParams<'remainingCredits'>
 		/**
-		 * W​e​ ​g​i​v​e​ ​a​l​l​ ​a​c​t​i​v​e​ ​u​s​e​r​s​ ​f​r​e​e​ ​i​m​a​g​e​s​ ​d​a​i​l​y​.​ ​Y​o​u​ ​c​a​n​ ​g​e​t​ ​m​o​r​e​ ​b​y​ ​s​u​b​s​c​r​i​b​i​n​g​ ​t​o​ ​a​ ​p​l​a​n​ ​o​r​ ​b​y​ ​p​a​r​t​i​c​i​p​a​t​i​n​g​ ​i​n​ ​o​u​r​ ​e​v​e​n​t​s​.
+		 * W​e​ ​g​i​v​e​ ​a​l​l​ ​a​c​t​i​v​e​ ​u​s​e​r​s​ ​f​r​e​e​ ​c​r​e​d​i​t​s​ ​d​a​i​l​y​.​ ​Y​o​u​ ​c​a​n​ ​g​e​t​ ​m​o​r​e​ ​b​y​ ​s​u​b​s​c​r​i​b​i​n​g​ ​t​o​ ​a​ ​p​l​a​n​ ​o​r​ ​b​y​ ​p​a​r​t​i​c​i​p​a​t​i​n​g​ ​i​n​ ​o​u​r​ ​e​v​e​n​t​s​.
 		 */
 		FreeParagraph: string
 		/**
@@ -1897,9 +1900,9 @@ export type TranslationFunctions = {
 		 */
 		LoadingParagraph: () => LocalizedString
 		/**
-		 * Not Enough Credits
+		 * Insufficient credits ({remainingCredits}/{neededCredits})
 		 */
-		NotEnoughCreditsTitle: () => LocalizedString
+		InsufficientCreditsTitle: (arg: { neededCredits: unknown, remainingCredits: unknown }) => LocalizedString
 		ServerUrlInput: {
 			/**
 			 * Server URL
@@ -2797,11 +2800,11 @@ export type TranslationFunctions = {
 	}
 	LowOnCreditsCard: {
 		/**
-		 * You're low on credits
+		 * You're low on credits ({remainingCredits})
 		 */
-		Title: () => LocalizedString
+		Title: (arg: { remainingCredits: unknown }) => LocalizedString
 		/**
-		 * We give all active users free images daily. You can get more by subscribing to a plan or by participating in our events.
+		 * We give all active users free credits daily. You can get more by subscribing to a plan or by participating in our events.
 		 */
 		FreeParagraph: () => LocalizedString
 		/**

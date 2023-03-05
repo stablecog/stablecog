@@ -9,7 +9,7 @@
 	import IconSignOut from '$components/icons/IconSignOut.svelte';
 	import MetaTag from '$components/MetaTag.svelte';
 	import PageWrapper from '$components/PageWrapper.svelte';
-	import PlanBadge from '$components/PlanBadge.svelte';
+	import ProductIdBadge from '$components/ProductIdBadge.svelte';
 	import LL, { locale } from '$i18n/i18n-svelte';
 	import { canonicalUrl } from '$ts/constants/main';
 	import { supabase } from '$ts/constants/supabase';
@@ -78,7 +78,7 @@
 						<p class="text-c-on-bg/60 font-semibold px-1">
 							{$LL.Account.SubscriptionPlanTitle()}
 						</p>
-						<PlanBadge class="mt-2" productId={$userSummary?.product_id} size="lg" />
+						<ProductIdBadge class="mt-2" productId={$userSummary?.product_id} size="lg" />
 					</div>
 					<Button
 						class="w-full md:w-auto"

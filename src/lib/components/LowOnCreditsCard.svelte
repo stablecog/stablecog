@@ -12,10 +12,12 @@
 	class="max-w-full flex flex-col md:flex-row items-center gap-4 md:gap-8 rounded-2xl bg-c-primary/10 ring-2 ring-c-primary/20 p-3 md:p-4 {classes}"
 >
 	<div class="flex flex-1 flex-col px-1 max-w-xl">
-		<p class="font-bold text-lg text-c-primary -mt-0.5 md:-mt-1">{$LL.LowOnCreditsCard.Title()}</p>
+		<p class="font-bold text-lg text-c-primary -mt-0.5 md:-mt-1">
+			{$LL.LowOnCreditsCard.Title({ remainingCredits: $userSummary?.total_remaining_credits })}
+		</p>
 		<p class="mt-1 leading-relaxed text-sm">
 			{#if !$userSummary?.product_id}
-				{$LL.LowOnCreditsCard.FreeParagraph({ amount: $userSummary?.free_credit_amount })}
+				{$LL.LowOnCreditsCard.FreeParagraph()}
 			{:else if $userSummary?.product_id === STRIPE_HIGHEST_PRODUCT_ID_SUBSCRIPTIONS}
 				{$LL.LowOnCreditsCard.HighestPlanParagraph()}
 			{:else}

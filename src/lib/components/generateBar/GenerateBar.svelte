@@ -51,7 +51,7 @@
 	import SignInCard from '$components/SignInCard.svelte';
 	import { portal } from 'svelte-portal';
 	import { clickoutside } from '$ts/actions/clickoutside';
-	import { fade, fly } from 'svelte/transition';
+	import { fade, fly, scale } from 'svelte/transition';
 	import { quadOut } from 'svelte/easing';
 	import { browser } from '$app/environment';
 	import {
@@ -62,6 +62,7 @@
 	import { generations } from '$userStores/generation';
 	import { userSummary } from '$ts/stores/user/summary';
 	import { calculateGenerationCost, generationCostCompletionPerMs } from '$ts/stores/cost';
+	import InsufficientCreditsBadge from '$components/badges/InsufficientCreditsBadge.svelte';
 
 	export let serverData: THomePageData;
 	export let queueGeneration: () => Promise<void>;
@@ -437,21 +438,25 @@
 			</div>
 			<ClearButton show={showClearPromptInputButton} onClick={clearPrompt} />
 		</div>
-		<Button
-			disabled={!isCheckComplete || doesntHaveEnoughCredits}
-			loading={lastGenerationBeingProcessed}
-			withSpinner
-			fadeOnDisabled={isCheckComplete}
-			class="w-full md:w-auto md:min-w-[9.5rem]"
-		>
-			<p class={lastGenerationBeingProcessed ? 'opacity-0' : 'opacity-100'}>
-				{#if doesntHaveEnoughCredits && !lastGenerationBeingProcessed}
-					{$LL.Shared.NotEnoughCreditsTitle()}
-				{:else}
+		<div class="w-full md:w-auto md:min-w-[9.5rem] relative">
+			<Button
+				disabled={!isCheckComplete || doesntHaveEnoughCredits}
+				loading={lastGenerationBeingProcessed}
+				withSpinner
+				fadeOnDisabled={isCheckComplete}
+				class="w-full flex flex-col relative"
+			>
+				<p class={lastGenerationBeingProcessed ? 'opacity-0' : 'opacity-100'}>
 					{$LL.Home.GenerateButton()}
-				{/if}
-			</p>
-		</Button>
+				</p>
+			</Button>
+			{#if doesntHaveEnoughCredits && !lastGenerationBeingProcessed && $userSummary}
+				<InsufficientCreditsBadge
+					neededCredits={Number($generationNumOutputs)}
+					remainingCredits={$userSummary.total_remaining_credits}
+				/>
+			{/if}
+		</div>
 	</div>
 	<!-- Tab bars -->
 	{#if !lastGenerationBeingProcessed}

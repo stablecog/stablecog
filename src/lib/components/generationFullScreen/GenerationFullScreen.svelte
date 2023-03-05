@@ -42,6 +42,7 @@
 	import Divider from '$components/generationFullScreen/Divider.svelte';
 	import { userSummary } from '$ts/stores/user/summary';
 	import { estimatedUpscaleDurationMs, getUpscaleDurationMsFromUpscale } from '$ts/stores/cost';
+	import InsufficientCreditsBadge from '$components/badges/InsufficientCreditsBadge.svelte';
 
 	export let generation: TGenerationWithSelectedOutput;
 	export let modalType: TGenerationFullScreenModalType;
@@ -118,6 +119,10 @@
 		}
 	];
 
+	const upscaleCreditCost = 1;
+	$: doesntHaveEnoughCredits =
+		$userSummary && $userSummary.total_remaining_credits < upscaleCreditCost;
+
 	const onGenerationChanged = () => {
 		currentImageUrl =
 			generation.selected_output.upscaled_image_url ?? generation.selected_output.image_url;
@@ -132,21 +137,6 @@
 			seed
 		});
 		linkUrl = `${$page.url.origin}/gallery?generation=${generation.id}`;
-	};
-
-	const getIsLastUpscaleMatching = (
-		generation: TGenerationWithSelectedOutput,
-		upscales: TUpscale[]
-	) => {
-		if (!upscales || upscales.length === 0) return true;
-		const upscale = upscales[0];
-		const outputs = upscale.outputs;
-		if (!outputs || outputs.length === 0) return true;
-		const output = outputs[0];
-		if (upscale.status === 'succeeded' && output.output_id !== generation.selected_output.id) {
-			return false;
-		}
-		return true;
 	};
 
 	let buttonObjectsWithState: TButtonObjectsWithState = {
@@ -391,10 +381,12 @@
 						{#if modalType === 'generate' || modalType === 'history'}
 							<div class="w-full pt-1.5">
 								{#if !generation.selected_output.upscaled_image_url || upscaleBeingProcessed}
-									<div class="w-fulll relative">
+									<div class="w-full relative">
 										<Button
 											onClick={onUpscaleClicked}
 											loading={upscaleBeingProcessed}
+											disabled={doesntHaveEnoughCredits}
+											fadeOnDisabled={doesntHaveEnoughCredits}
 											withSpinner
 											class="w-full"
 											size="sm"
@@ -404,6 +396,12 @@
 												<p>{$LL.GenerationFullscreen.UpscaleButton()}</p>
 											</div>
 										</Button>
+										{#if doesntHaveEnoughCredits && !upscaleBeingProcessed && $userSummary}
+											<InsufficientCreditsBadge
+												neededCredits={upscaleCreditCost}
+												remainingCredits={$userSummary.total_remaining_credits}
+											/>
+										{/if}
 									</div>
 								{:else}
 									<TabBar

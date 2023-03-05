@@ -162,7 +162,7 @@ const ko: Translation = {
 		DeleteButton: '삭제하기',
 		LoadingTitle: '로딩 중',
 		LoadingParagraph: '조금만 기다려주세요...',
-		NotEnoughCreditsTitle: 'Not Enough Credits',
+		InsufficientCreditsTitle: 'Insufficient credits ({remainingCredits}/{neededCredits})',
 		ServerUrlInput: {
 			Placeholder: '커스텀 서버 주소'
 		},
@@ -478,9 +478,9 @@ const ko: Translation = {
 		}
 	},
 	LowOnCreditsCard: {
-		Title: "You're low on credits",
+		Title: "You're low on credits ({remainingCredits})",
 		FreeParagraph:
-			'We give all active users free images daily. You can get more by subscribing to a plan or by participating in our events.',
+			'We give all active users free credits daily. You can get more by subscribing to a plan or by participating in our events.',
 		HighestPlanParagraph: 'You can buy a credit pack.',
 		OtherPlansParagraph: 'You can upgrade to a higher plan or buy a credit pack.'
 	}
