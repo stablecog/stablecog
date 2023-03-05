@@ -19,15 +19,15 @@
 	import { advancedModeApp } from '$ts/stores/advancedMode';
 	import { globalSeed } from '$ts/stores/globalSeed';
 	import { navbarHeight } from '$ts/stores/navbarHeight';
-	import { activeGeneration, type TGenerationFullOutput } from '$ts/stores/user/generation';
+	import { activeGeneration } from '$ts/stores/user/generation';
 	import { userSummary } from '$ts/stores/user/summary';
 	import { createInfiniteQuery } from '@tanstack/svelte-query';
 	import { quadOut } from 'svelte/easing';
 	import { scale } from 'svelte/transition';
 	import type { PageServerData } from './$types';
 
-	/* export let data: PageServerData;
-	const { generationFullOutputFromData } = data; */
+	export let data: PageServerData;
+	const { generationFullOutput: generationFullOutputFromData } = data;
 
 	let searchString: string;
 	let searchStringDebounced: string | undefined = undefined;
@@ -90,18 +90,20 @@
 	const minScrollThreshold = 40;
 </script>
 
-<!-- <MetaTag
+<MetaTag
 	title="Gallery | Stablecog"
 	description={generationFullOutputFromData
 		? getGalleryMetaTagDescriptionFromPromptText(
 				generationFullOutputFromData.generation.prompt.text
 		  )
 		: 'A gallery full of images created with Stable Diffusion. Check out the images and their metadata including their prompt, negative prompt, inference steps, guidance scale and seed. Generate similar images directly from the gallery or submit your own.'}
-	imageUrl={getPreviewImageUrlFromOutputId(generationFullOutputFromData.id)}
+	imageUrl={generationFullOutputFromData
+		? getPreviewImageUrlFromOutputId(generationFullOutputFromData.id)
+		: `${canonicalUrl}/previews${$page.url.pathname}.png`}
 	canonical={generationFullOutputFromData
 		? `${canonicalUrl}${$page.url.pathname}?output=${generationFullOutputFromData.id}`
 		: `${canonicalUrl}${$page.url.pathname}`}
-/> -->
+/>
 
 <svelte:window
 	on:keydown={onKeyDown}

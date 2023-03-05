@@ -136,7 +136,7 @@
 			...rest,
 			seed
 		});
-		linkUrl = `${$page.url.origin}/gallery?generation=${generation.id}`;
+		linkUrl = `${$page.url.origin}/gallery?output=${generation.id}`;
 	};
 
 	let buttonObjectsWithState: TButtonObjectsWithState = {
