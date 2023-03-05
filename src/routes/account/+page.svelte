@@ -13,7 +13,7 @@
 	import LL, { locale } from '$i18n/i18n-svelte';
 	import { canonicalUrl } from '$ts/constants/main';
 	import { supabase } from '$ts/constants/supabase';
-	import { mLogSignOut } from '$ts/helpers/loggers';
+	import { logSignOut } from '$ts/helpers/loggers';
 	import { advancedModeApp } from '$ts/stores/advancedMode';
 	import { isTouchscreen } from '$ts/stores/isTouchscreen';
 	import { userSummary } from '$ts/stores/user/summary';
@@ -28,7 +28,7 @@
 	async function signOut() {
 		try {
 			await supabase.auth.signOut();
-			mLogSignOut({
+			logSignOut({
 				'SC - Stripe Product Id': $userSummary?.product_id,
 				'SC - Locale': $locale,
 				'SC - Advanced Mode': $advancedModeApp,

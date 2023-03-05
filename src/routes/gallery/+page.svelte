@@ -11,7 +11,7 @@
 	import { canonicalUrl } from '$ts/constants/main';
 	import { getGalleryMetaTagDescriptionFromPromptText } from '$ts/helpers/metaTag';
 	import { getPreviewImageUrlFromOutputId } from '$ts/helpers/getPreviewImageUrl';
-	import { mLogGallerySearch } from '$ts/helpers/loggers';
+	import { logGallerySearch } from '$ts/helpers/loggers';
 	import {
 		getGalleryGenerationFullOutputs,
 		type TGalleryGenerationFullOutputsPage
@@ -66,7 +66,7 @@
 		searchTimeout = setTimeout(async () => {
 			if (searchString) {
 				searchStringDebounced = searchString;
-				mLogGallerySearch({
+				logGallerySearch({
 					'SC - Search Query': searchStringDebounced,
 					'SC - Advanced Mode': $advancedModeApp,
 					'SC - Locale': $locale,

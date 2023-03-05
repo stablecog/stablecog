@@ -21,11 +21,11 @@
 	import {
 		logGenerationFailed,
 		logUpscaleFailed,
-		mLogGeneration,
-		mLogGenerationPropsFromGeneration,
-		mLogPageview,
-		mLogUpscale,
-		mLogUpscalePropsFromUpscale,
+		logGeneration,
+		logGenerationPropsFromGeneration,
+		logPageview,
+		logUpscale,
+		logUpscalePropsFromUpscale,
 		uLogGeneration,
 		uLogUpscale
 	} from '$ts/helpers/loggers';
@@ -60,13 +60,8 @@
 	} from '$ts/stores/user/upscale';
 	import { globalSeed } from '$ts/stores/globalSeed';
 	import { userSummary } from '$ts/stores/user/summary';
-	import posthog from 'posthog-js';
-	import {
-		PUBLIC_MIXPANEL_ID,
-		PUBLIC_MIXPANEL_URL,
-		PUBLIC_POSTHOG_ID,
-		PUBLIC_POSTHOG_URL
-	} from '$env/static/public';
+	/* 	import posthog from 'posthog-js'; */
+	import { PUBLIC_MIXPANEL_ID, PUBLIC_MIXPANEL_URL } from '$env/static/public';
 
 	export let data: LayoutData;
 	setLocale(data.locale);
@@ -106,10 +101,10 @@
 		mixpanel.identify($page.data.session.user.id);
 		mixpanel.people.set({ $email: $page.data.session.user.email });
 		mixpanel.people.set({ 'SC - Stripe Product Id': $userSummary?.product_id });
-		posthog.identify($page.data.session.user.id, {
+		/* posthog.identify($page.data.session.user.id, {
 			email: $page.data.session.user.email,
 			'SC - Stripe Product Id': $userSummary?.product_id
-		});
+		}); */
 	}
 
 	afterNavigate(() => {
@@ -119,7 +114,7 @@
 			'SC - Advanced Mode': $advancedModeApp,
 			'SC - Stripe Product Id': $userSummary?.product_id
 		};
-		mLogPageview(props);
+		logPageview(props);
 	});
 
 	function setWindowStores() {
@@ -302,9 +297,9 @@
 				const generationIndex = $generations.findIndex((g) => g.id === data.id);
 				const generation = $generations[generationIndex];
 				uLogGeneration('Succeeded');
-				mLogGeneration(
+				logGeneration(
 					'Succeeded',
-					mLogGenerationPropsFromGeneration({
+					logGenerationPropsFromGeneration({
 						generation,
 						advancedModeApp: $advancedModeApp,
 						locale: $locale,
@@ -328,9 +323,9 @@
 				const upscaleIndex = $upscales.findIndex((u) => u.id === data.id);
 				const upscale = $upscales[upscaleIndex];
 				uLogUpscale('Succeeded');
-				mLogUpscale(
+				logUpscale(
 					'Succeeded',
-					mLogUpscalePropsFromUpscale({
+					logUpscalePropsFromUpscale({
 						upscale,
 						advancedModeApp: $advancedModeApp,
 						locale: $locale,
@@ -373,9 +368,9 @@
 	onMount(async () => {
 		setBodyClasses();
 		mixpanel.init(PUBLIC_MIXPANEL_ID, { api_host: PUBLIC_MIXPANEL_URL });
-		posthog.init(PUBLIC_POSTHOG_ID, {
+		/* posthog.init(PUBLIC_POSTHOG_ID, {
 			api_host: PUBLIC_POSTHOG_URL
-		});
+		}); */
 		appVersion.set(document.body.getAttribute('app-version') || 'unknown');
 		const {
 			data: { subscription }

@@ -1,6 +1,6 @@
 import type { TGeneration, TInitialGenerationRequest } from '$userStores/generation';
 import mixpanel from 'mixpanel-browser';
-import posthog from 'posthog-js';
+/* import posthog from 'posthog-js'; */
 
 import type { TInitialUpscaleRequest, TUpscale } from '$ts/stores/user/upscale';
 
@@ -22,63 +22,58 @@ export function uLogSubmitToGallery(status: IOnOff) {
 	}
 }
 
-export function mLogGeneration(status: IGenerationStatus, generation: IGenerationMinimal) {
+export function logGeneration(status: IGenerationStatus, generation: IGenerationMinimal) {
 	mixpanel.track(`Generation | ${status}`, {
 		...generation
 	});
-	posthog.capture(`Generation | ${status}`, {
+	/* posthog.capture(`Generation | ${status}`, {
 		...generation
-	});
+	}); */
 }
 
-export function mLogUpscale(status: IUpscaleStatus, upscale: IUpscaleMinimal) {
+export function logUpscale(status: IUpscaleStatus, upscale: IUpscaleMinimal) {
 	mixpanel.track(`Upscale | ${status}`, { ...upscale });
-	posthog.capture(`Upscale | ${status}`, { ...upscale });
+	/* posthog.capture(`Upscale | ${status}`, { ...upscale }); */
 }
 
-export function mLogSubmitToGallery(status: IOnOff, props: ISubmitToGalleryToggledMinimal) {
+export function logSubmitToGallery(status: IOnOff, props: ISubmitToGalleryToggledMinimal) {
 	mixpanel.track(`Submit to Gallery | ${status}`, { ...props });
-	posthog.capture(`Submit to Gallery | ${status}`, { ...props });
+	/* posthog.capture(`Submit to Gallery | ${status}`, { ...props }); */
 }
 
-export function mLogGalleryGenerationOpened(props: IGalleryGenerationOpenedProps) {
+export function logGalleryGenerationOpened(props: IGalleryGenerationOpenedProps) {
 	mixpanel.track('Gallery | Generation Opened', { ...props });
-	posthog.capture('Gallery | Generation Opened', { ...props });
+	/* posthog.capture('Gallery | Generation Opened', { ...props }); */
 }
 
-export function mLogGalleryGenerateClicked(props: IGalleryGenerateClickedProps) {
+export function logGalleryGenerateSimilarClicked(props: IGalleryGenerateClickedProps) {
 	mixpanel.track('Gallery | Generate Clicked', { ...props });
-	posthog.capture('Gallery | Generate Clicked', { ...props });
+	/* posthog.capture('Gallery | Generate Clicked', { ...props }); */
 }
 
-export function mLogAdvancedMode(status: IOnOff, props: IAdvancedModeToggledProps) {
+export function logAdvancedMode(status: IOnOff, props: IAdvancedModeToggledProps) {
 	mixpanel.track(`Advanced Mode | ${status}`, { ...props });
-	posthog.capture(`Advanced Mode | ${status}`, { ...props });
+	/* posthog.capture(`Advanced Mode | ${status}`, { ...props }); */
 }
 
-export function mLogPageview(props: IPageviewProps) {
+export function logPageview(props: IPageviewProps) {
 	mixpanel.track('Pageview', { ...props });
-	posthog.capture('$pageview', { ...props });
+	/* posthog.capture('$pageview', { ...props }); */
 }
 
-export function mLogSignIn(props: ISignInProps) {
+export function logSignIn(props: ISignInProps) {
 	mixpanel.track('Sign In', { ...props });
-	posthog.capture('Sign In', { ...props });
+	/* posthog.capture('Sign In', { ...props }); */
 }
 
-export function mLogSignOut(props: ISignOutProps) {
+export function logSignOut(props: ISignOutProps) {
 	mixpanel.track('Sign Out', { ...props });
-	posthog.capture('Sign Out', { ...props });
+	/* posthog.capture('Sign Out', { ...props }); */
 }
 
-export function mLogSignUp(props: ISignUpProps) {
-	mixpanel.track('Sign Up', { ...props });
-	posthog.capture('Sign Up', { ...props });
-}
-
-export function mLogGallerySearch(props: IGallerySearchProps) {
+export function logGallerySearch(props: IGallerySearchProps) {
 	mixpanel.track('Gallery Search', { ...props });
-	posthog.capture('Gallery Search', { ...props });
+	/* posthog.capture('Gallery Search', { ...props }); */
 }
 
 export function logGenerationFailed({
@@ -94,17 +89,17 @@ export function logGenerationFailed({
 	locale: string;
 	stripeProductId?: string;
 }) {
-	const props = mLogGenerationPropsFromGeneration({
+	const props = logGenerationPropsFromGeneration({
 		generation,
 		advancedModeApp,
 		locale,
 		stripeProductId
 	});
 	uLogGeneration(error === 'NSFW' ? 'Failed-NSFW' : 'Failed');
-	mLogGeneration(error === 'NSFW' ? 'Failed-NSFW' : 'Failed', props);
+	logGeneration(error === 'NSFW' ? 'Failed-NSFW' : 'Failed', props);
 }
 
-export function mLogGenerationPropsFromGeneration({
+export function logGenerationPropsFromGeneration({
 	generation,
 	advancedModeApp,
 	locale,
@@ -140,17 +135,17 @@ export function logUpscaleFailed({
 	locale: string;
 	stripeProductId?: string;
 }) {
-	const props = mLogUpscalePropsFromUpscale({
+	const props = logUpscalePropsFromUpscale({
 		upscale,
 		advancedModeApp,
 		locale,
 		stripeProductId
 	});
 	uLogUpscale('Failed');
-	mLogUpscale('Failed', props);
+	logUpscale('Failed', props);
 }
 
-export function mLogUpscalePropsFromUpscale({
+export function logUpscalePropsFromUpscale({
 	upscale,
 	advancedModeApp,
 	locale,
@@ -177,13 +172,13 @@ interface ISubmitToGalleryToggledMinimal {
 type IOnOff = 'On' | 'Off';
 
 interface IGalleryGenerationOpenedProps {
-	'SC - Generation Id': string;
+	'SC - Output Id': string;
 	'SC - Stripe Product Id'?: string;
 	'SC - Advanced Mode': boolean;
 }
 
 interface IGalleryGenerateClickedProps {
-	'SC - Generation Id': string;
+	'SC - Output Id': string;
 	'SC - Stripe Product Id'?: string;
 	'SC - Advanced Mode': boolean;
 }
@@ -253,14 +248,4 @@ interface IGallerySearchProps {
 	'SC - Advanced Mode': boolean;
 	'SC - Stripe Product Id'?: string;
 	'SC - Search Query': string;
-}
-
-interface TLogProps {
-	event: string;
-	props: { [key: string]: string };
-}
-
-export function logEvent(logProps: TLogProps) {
-	mixpanel.track(logProps.event, logProps.props);
-	posthog.capture(logProps.event, logProps.props);
 }

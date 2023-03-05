@@ -13,8 +13,8 @@
 	import GenerationImage from '$components/generationImage/GenerationImage.svelte';
 	import { advancedModeApp } from '$ts/stores/advancedMode';
 	import {
-		mLogGeneration,
-		mLogGenerationPropsFromGeneration,
+		logGeneration,
+		logGenerationPropsFromGeneration,
 		uLogGeneration
 	} from '$ts/helpers/loggers';
 	import {
@@ -106,9 +106,9 @@
 			submit_to_gallery: $shouldSubmitToGallery ?? false
 		};
 		uLogGeneration('Started');
-		mLogGeneration(
+		logGeneration(
 			'Started',
-			mLogGenerationPropsFromGeneration({
+			logGenerationPropsFromGeneration({
 				generation: initialRequestProps,
 				advancedModeApp: $advancedModeApp,
 				locale: $locale,

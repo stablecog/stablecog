@@ -15,7 +15,7 @@
 	import Button from '$components/buttons/Button.svelte';
 	import IconUpscale from '$components/icons/IconUpscale.svelte';
 	import TabBar from '$components/tabBars/TabBar.svelte';
-	import { mLogUpscale, mLogUpscalePropsFromUpscale, uLogUpscale } from '$ts/helpers/loggers';
+	import { logUpscale, logUpscalePropsFromUpscale, uLogUpscale } from '$ts/helpers/loggers';
 	import LL, { locale } from '$i18n/i18n-svelte';
 	import { negativePromptTooltipAlt } from '$ts/constants/tooltips';
 	import { advancedModeApp } from '$ts/stores/advancedMode';
@@ -193,9 +193,9 @@
 			ui_id: generateSSEId()
 		};
 		uLogUpscale('Started');
-		mLogUpscale(
+		logUpscale(
 			'Started',
-			mLogUpscalePropsFromUpscale({
+			logUpscalePropsFromUpscale({
 				upscale: initialRequestProps,
 				advancedModeApp: $advancedModeApp,
 				locale: $locale,

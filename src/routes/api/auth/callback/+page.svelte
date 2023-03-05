@@ -6,7 +6,7 @@
 	import IconLoadingSlim from '$components/icons/IconLoadingSlim.svelte';
 	import PageWrapper from '$components/PageWrapper.svelte';
 	import LL, { locale } from '$i18n/i18n-svelte';
-	import { mLogSignIn } from '$ts/helpers/loggers';
+	import { logSignIn } from '$ts/helpers/loggers';
 	import { advancedModeApp } from '$ts/stores/advancedMode';
 	import { userSummary } from '$ts/stores/user/summary';
 	import { onMount } from 'svelte';
@@ -21,7 +21,7 @@
 	async function redirect() {
 		if (!browser) return;
 		if (!$page.data.session?.user.id || !$page.data.session.user.email) return;
-		mLogSignIn({
+		logSignIn({
 			'SC - Page': `${$page.url.pathname}${$page.url.search}`,
 			'SC - Stripe Product Id': $userSummary?.product_id,
 			'SC - Locale': $locale,

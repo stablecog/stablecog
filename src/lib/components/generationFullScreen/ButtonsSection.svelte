@@ -28,6 +28,9 @@
 	import { page } from '$app/stores';
 	import { useQueryClient } from '@tanstack/svelte-query';
 	import type { TUserGenerationFullOutputsPage } from '$ts/queries/userGenerations';
+	import { logGalleryGenerateSimilarClicked } from '$ts/helpers/loggers';
+	import { advancedModeApp } from '$ts/stores/advancedMode';
+	import { userSummary } from '$ts/stores/user/summary';
 
 	export let generation: TGenerationWithSelectedOutput;
 	export let generateSimilarUrl: string;
@@ -132,7 +135,20 @@
 	{/if}
 	{#if modalType === 'history' || modalType === 'gallery'}
 		<div class="flex relative">
-			<SubtleButton target="_self" prefetch={true} href={generateSimilarUrl}>
+			<SubtleButton
+				target="_self"
+				prefetch={true}
+				href={generateSimilarUrl}
+				onClick={() => {
+					if (modalType === 'gallery') {
+						logGalleryGenerateSimilarClicked({
+							'SC - Advanced Mode': $advancedModeApp,
+							'SC - Output Id': generation.selected_output.id,
+							'SC - Stripe Product Id': $userSummary?.product_id
+						});
+					}
+				}}
+			>
 				<div class="flex items-center justify-center gap-1.5">
 					<IconWand class="w-5 h-5 -ml-0.5" />
 					<p>{$LL.GenerationFullscreen.GenerateSimilarButton()}</p>

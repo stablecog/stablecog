@@ -9,7 +9,7 @@
 	import IconTick from '$components/icons/IconTick.svelte';
 	import IconTrashcan from '$components/icons/IconTrashcan.svelte';
 	import { doesContainTarget } from '$ts/helpers/doesContainTarget';
-	import { mLogGalleryGenerationOpened } from '$ts/helpers/loggers';
+	import { logGalleryGenerationOpened } from '$ts/helpers/loggers';
 	import {
 		adminGalleryActionableItems,
 		adminGalleryFilter,
@@ -62,7 +62,7 @@
 				$adminGalleryFilter !== 'rejected'));
 
 	$: logProps = {
-		'SC - Generation Id': generation.id || generation.ui_id,
+		'SC - Output Id': generation.selected_output.id,
 		'SC - Product Id': $userSummary?.product_id,
 		'SC - Advanced Mode': $advancedModeApp
 	};
@@ -140,7 +140,7 @@
 			if (doesContainTarget(e.target, [rightButtonContainer])) {
 				return;
 			}
-			mLogGalleryGenerationOpened(logProps);
+			logGalleryGenerationOpened(logProps);
 			activeGeneration.set(generation);
 			if (cardType === 'gallery') {
 				window.history.replaceState({}, '', `/gallery?output=${generation.selected_output.id}`);

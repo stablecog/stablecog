@@ -1,8 +1,7 @@
 <script>
-	import { page } from '$app/stores';
 	import LL from '$i18n/i18n-svelte';
 	import { expandCollapse } from '$ts/animation/transitions';
-	import { mLogSubmitToGallery, uLogSubmitToGallery } from '$ts/helpers/loggers';
+	import { logSubmitToGallery, uLogSubmitToGallery } from '$ts/helpers/loggers';
 	import { advancedModeApp } from '$ts/stores/advancedMode';
 	import { shouldSubmitToGallery } from '$ts/stores/shouldSubmitToGallery';
 	import { userSummary } from '$ts/stores/user/summary';
@@ -36,7 +35,7 @@
 					onClick={() => {
 						shouldSubmitToGallery.set(true);
 						uLogSubmitToGallery('On');
-						mLogSubmitToGallery('On', logProps);
+						logSubmitToGallery('On', logProps);
 					}}
 					class="flex-1"
 				>
@@ -46,7 +45,7 @@
 					onClick={() => {
 						shouldSubmitToGallery.set(false);
 						uLogSubmitToGallery('Off');
-						mLogSubmitToGallery('Off', logProps);
+						logSubmitToGallery('Off', logProps);
 					}}
 					class="flex-1"
 				>

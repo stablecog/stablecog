@@ -10,7 +10,7 @@
 	import ToggleIndicator from '$components/ToggleIndicator.svelte';
 	import LL, { locale } from '$i18n/i18n-svelte';
 	import { languageName } from '$ts/helpers/languageName';
-	import { mLogAdvancedMode, mLogSubmitToGallery, uLogSubmitToGallery } from '$ts/helpers/loggers';
+	import { logAdvancedMode, logSubmitToGallery, uLogSubmitToGallery } from '$ts/helpers/loggers';
 	import { advancedMode, advancedModeApp } from '$ts/stores/advancedMode';
 	import { isTouchscreen } from '$ts/stores/isTouchscreen';
 	import { shouldSubmitToGallery } from '$ts/stores/shouldSubmitToGallery';
@@ -43,10 +43,10 @@
 				shouldSubmitToGallery.set(val);
 				if (val) {
 					uLogSubmitToGallery('On');
-					mLogSubmitToGallery('On', submitToGalleryLogProps);
+					logSubmitToGallery('On', submitToGalleryLogProps);
 				} else {
 					uLogSubmitToGallery('Off');
-					mLogSubmitToGallery('Off', submitToGalleryLogProps);
+					logSubmitToGallery('Off', submitToGalleryLogProps);
 				}
 			}}
 		>
@@ -74,7 +74,7 @@
 			disabled={currentPage !== 'settings'}
 			onClick={() => {
 				const val = $advancedModeApp === false ? true : false;
-				mLogAdvancedMode(val === true ? 'On' : 'Off', advancedModeLogProps);
+				logAdvancedMode(val === true ? 'On' : 'Off', advancedModeLogProps);
 				advancedModeApp.set(val);
 				advancedMode.set(val);
 			}}
