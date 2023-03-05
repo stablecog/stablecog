@@ -13,7 +13,7 @@
 	import { browser } from '$app/environment';
 	import { createInfiniteQuery } from '@tanstack/svelte-query';
 	import { getAllUsers, type TAllUsersPage } from '$ts/queries/getAllUsers';
-	import ProductIdBadge from '$components/ProductIdBadge.svelte';
+	import ProductIdBadge from '$components/badges/ProductIdBadge.svelte';
 	import { scale } from 'svelte/transition';
 	import IconLoadingSlim from '$components/icons/IconLoadingSlim.svelte';
 	import { quadOut } from 'svelte/easing';

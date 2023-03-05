@@ -144,7 +144,7 @@
 	canonical="{canonicalUrl}{$page.url.pathname}"
 />
 
-<div class="w-full flex-1 flex flex-col items-center px-2 gap-2 md:py-6 md:px-8 relative">
+<div class="w-full flex-1 flex flex-col items-center px-2 gap-2 md:py-6 relative">
 	{#if !$page.data.session?.user.id}
 		<div class="w-full flex-1 max-w-7xl flex justify-center px-2 py-4 md:py-2">
 			<div class="my-auto flex flex-col">
@@ -257,7 +257,7 @@
 				</TabLikeDropdown>
 			</div>
 		</div>
-		<div class="w-full flex-1 max-w-7xl flex flex-col">
+		<div class="w-full flex-1 flex flex-col">
 			{#if allUserGenerationFullOutputsQuery === undefined || $allUserGenerationFullOutputsQuery === undefined || $allUserGenerationFullOutputsQuery.isInitialLoading || ($allUserGenerationFullOutputsQuery.isFetching && $lastFetchedAdminGalleryFilter !== $adminGalleryFilter)}
 				<div
 					class="w-full flex flex-col text-c-on-bg/60 flex-1 py-6 px-4 justify-center items-center text-center"

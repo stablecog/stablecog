@@ -9,7 +9,7 @@
 	import IconSignOut from '$components/icons/IconSignOut.svelte';
 	import MetaTag from '$components/MetaTag.svelte';
 	import PageWrapper from '$components/PageWrapper.svelte';
-	import ProductIdBadge from '$components/ProductIdBadge.svelte';
+	import ProductIdBadge from '$components/badges/ProductIdBadge.svelte';
 	import LL, { locale } from '$i18n/i18n-svelte';
 	import { canonicalUrl } from '$ts/constants/main';
 	import { supabase } from '$ts/constants/supabase';
