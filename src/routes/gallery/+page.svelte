@@ -76,7 +76,13 @@
 		}, searchDebounceMs);
 	}
 
-	function onKeyDown(event: KeyboardEvent) {}
+	function onKeyDown({ key }: KeyboardEvent) {
+		if ($activeGeneration !== undefined) {
+			if (key === 'Escape') {
+				activeGeneration.set(undefined);
+			}
+		}
+	}
 
 	const atTheTopThreshold = 50;
 	const minScrollThreshold = 40;

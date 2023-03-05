@@ -46,7 +46,33 @@
 	export let generation: TGenerationWithSelectedOutput;
 	export let modalType: TGenerationFullScreenModalType;
 
-	let hadUpscaledImageUrlOnMount = generation.selected_output.upscaled_image_url !== undefined;
+	$: upscaleFromStore = $upscales.find(
+		(upscale) => upscale.type === 'from_output' && upscale.input === generation.selected_output.id
+	);
+
+	$: [upscaleFromStore], onUpscaleFromStoreChanged();
+
+	const getUpscaledImageUrlFromStore = () => {
+		const upscale = $upscales.find(
+			(upscale) => upscale.type === 'from_output' && upscale.input === generation.selected_output.id
+		);
+		if (upscale && upscale.outputs && upscale.outputs.length > 0 && upscale.outputs[0].image_url) {
+			return upscale.outputs[0].image_url;
+		}
+		return undefined;
+	};
+
+	const onUpscaleFromStoreChanged = () => {
+		const upscaledImageUrl = getUpscaledImageUrlFromStore();
+		if (upscaledImageUrl !== undefined && !generation.selected_output.upscaled_image_url) {
+			generation.selected_output.upscaled_image_url = upscaledImageUrl;
+		}
+	};
+
+	let hadUpscaledImageUrlOnMount =
+		generation.selected_output.upscaled_image_url !== undefined ||
+		getUpscaledImageUrlFromStore() !== undefined;
+	let isUpscaledImageLoaded = hadUpscaledImageUrlOnMount ? true : false;
 
 	$: currentImageUrl = generation.selected_output.upscaled_image_url
 		? generation.selected_output.upscaled_image_url
@@ -55,24 +81,17 @@
 	let upscaledImageWidth: number | undefined;
 	let upscaledImageHeight: number | undefined;
 	$: generation, onGenerationChanged();
-
-	let lastUpscaleStatus: TUpscaleStatus | undefined = hadUpscaledImageUrlOnMount
+	$: upscaleStatus = hadUpscaledImageUrlOnMount
 		? 'succeeded'
+		: upscaleFromStore
+		? upscaleFromStore.status
 		: undefined;
-	$: lastUpscaleMatching = getIsLastUpscaleMatching(generation, $upscales);
-	$: lastUpscaleStatus = hadUpscaledImageUrlOnMount
-		? 'succeeded'
-		: $upscales.length > 0 && lastUpscaleMatching
-		? $upscales[0].status
-		: undefined;
-	$: lastUpscaleBeingProcessed = hadUpscaledImageUrlOnMount
+	$: upscaleBeingProcessed = hadUpscaledImageUrlOnMount
 		? false
-		: lastUpscaleMatching &&
-		  (lastUpscaleStatus === 'to-be-submitted' ||
-				lastUpscaleStatus === 'server-received' ||
-				lastUpscaleStatus === 'server-processing' ||
-				(lastUpscaleMatching && lastUpscaleStatus === 'succeeded' && !isUpscaledImageLoaded));
-	$: canClose = !lastUpscaleBeingProcessed;
+		: upscaleStatus === 'to-be-submitted' ||
+		  upscaleStatus === 'server-received' ||
+		  upscaleStatus === 'server-processing' ||
+		  (upscaleStatus === 'succeeded' && !isUpscaledImageLoaded);
 
 	let sidebarWrapper: HTMLDivElement;
 	let sidebarWrapperHeight: number;
@@ -83,6 +102,21 @@
 	let generateSimilarUrl: string;
 	let regenerateUrl: string;
 	let linkUrl: string;
+
+	let upscaledTabValue: TUpscaleTabValue = 'upscaled';
+	type TUpscaleTabValue = 'original' | 'upscaled';
+	let upscaledOrDefaultTabs: { label: string; value: TUpscaleTabValue }[];
+
+	$: upscaledOrDefaultTabs = [
+		{
+			label: $LL.GenerationFullscreen.UpscaleTabBar.UpscaledTitle(),
+			value: 'upscaled'
+		},
+		{
+			label: $LL.GenerationFullscreen.UpscaleTabBar.OriginalTitle(),
+			value: 'original'
+		}
+	];
 
 	const onGenerationChanged = () => {
 		currentImageUrl =
@@ -182,13 +216,13 @@
 		console.log('Upscale request queued', $upscales);
 	}
 
-	$: [lastUpscaleStatus, lastUpscaleBeingProcessed], onLastUpscaleStatusChanged();
+	$: [upscaleStatus, upscaleBeingProcessed], onupscaleStatusChanged();
 
 	let lastUpscaleAnimationStatus: 'idle' | 'should-animate' | 'should-complete' = 'idle';
 
-	async function onLastUpscaleStatusChanged() {
+	async function onupscaleStatusChanged() {
 		if (hadUpscaledImageUrlOnMount) return;
-		switch (lastUpscaleStatus) {
+		switch (upscaleStatus) {
 			case 'to-be-submitted':
 				lastUpscaleAnimationStatus = 'idle';
 				await tick();
@@ -204,7 +238,7 @@
 				``;
 				break;
 			case 'succeeded':
-				if (lastUpscaleBeingProcessed) break;
+				if (upscaleBeingProcessed) break;
 				lastUpscaleAnimationStatus = 'should-complete';
 				const durationMs = getUpscaleDurationMsFromUpscale($upscales[0]);
 				if (durationMs !== null && $upscales[0].completed_at) {
@@ -231,22 +265,6 @@
 		}
 	}
 
-	let upscaledTabValue: TUpscaleTabValue = 'upscaled';
-	let isUpscaledImageLoaded = false;
-	type TUpscaleTabValue = 'original' | 'upscaled';
-	let upscaledOrDefaultTabs: { label: string; value: TUpscaleTabValue }[];
-
-	$: upscaledOrDefaultTabs = [
-		{
-			label: $LL.GenerationFullscreen.UpscaleTabBar.UpscaledTitle(),
-			value: 'upscaled'
-		},
-		{
-			label: $LL.GenerationFullscreen.UpscaleTabBar.OriginalTitle(),
-			value: 'original'
-		}
-	];
-
 	const onImageLoad = (e: Event) => {
 		const target = e.target as HTMLImageElement;
 		if (generation.width !== target.naturalWidth) {
@@ -270,10 +288,8 @@
 			<IconButton
 				name="Close"
 				onClick={() => {
-					if (canClose) {
-						if ($activeGeneration !== undefined) {
-							activeGeneration.set(undefined);
-						}
+					if ($activeGeneration !== undefined) {
+						activeGeneration.set(undefined);
 					}
 				}}
 			>
@@ -283,13 +299,7 @@
 			</IconButton>
 		</div>
 	</div>
-	<Container
-		{generation}
-		{canClose}
-		let:imageContainerWidth
-		let:imageContainerHeight
-		let:modalMinHeight
-	>
+	<Container {generation} let:imageContainerWidth let:imageContainerHeight let:modalMinHeight>
 		<div class="relative self-stretch flex items-center">
 			<img
 				class="w-full h-full absolute left-0 top-0 transform scale-125 blur-xl"
@@ -307,7 +317,7 @@
 			>
 				<img
 					style="transition: filter 0.5s cubic-bezier(0.4, 0, 0.2, 1);"
-					class="{lastUpscaleBeingProcessed
+					class="{upscaleBeingProcessed
 						? 'blur-2xl'
 						: ''} w-full transition h-auto lg:h-full lg:object-contain absolute lg:left-0 lg:top-0"
 					src={generation.selected_output.image_url}
@@ -318,7 +328,7 @@
 				<img
 					on:load={onImageLoad}
 					style="transition: filter 0.5s cubic-bezier(0.4, 0, 0.2, 1);"
-					class="{lastUpscaleBeingProcessed
+					class="{upscaleBeingProcessed
 						? 'blur-2xl'
 						: ''} filter w-full relative transition h-auto lg:h-full lg:object-contain lg:absolute lg:left-0 lg:top-0"
 					src={currentImageUrl}
@@ -380,11 +390,11 @@
 					<div class="w-full flex flex-col gap-4 md:gap-5 px-5 py-4 md:px-7 md:py-5">
 						{#if modalType === 'generate' || modalType === 'history'}
 							<div class="w-full pt-1.5">
-								{#if !generation.selected_output.upscaled_image_url || lastUpscaleBeingProcessed}
+								{#if !generation.selected_output.upscaled_image_url || upscaleBeingProcessed}
 									<div class="w-fulll relative">
 										<Button
 											onClick={onUpscaleClicked}
-											loading={lastUpscaleBeingProcessed}
+											loading={upscaleBeingProcessed}
 											withSpinner
 											class="w-full"
 											size="sm"

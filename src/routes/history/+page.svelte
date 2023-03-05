@@ -48,6 +48,14 @@
 			}
 		}
 	};
+
+	function onKeyDown({ key }: KeyboardEvent) {
+		if ($activeGeneration !== undefined) {
+			if (key === 'Escape') {
+				activeGeneration.set(undefined);
+			}
+		}
+	}
 </script>
 
 <MetaTag
@@ -56,6 +64,8 @@
 	imageUrl="{canonicalUrl}/previews{$page.url.pathname}.png"
 	canonical="{canonicalUrl}{$page.url.pathname}"
 />
+
+<svelte:window on:keydown={onKeyDown} />
 
 <div class="w-full flex-1 flex flex-col items-center px-2 gap-2 md:py-6 md:px-8">
 	{#if !$page.data.session?.user.id}

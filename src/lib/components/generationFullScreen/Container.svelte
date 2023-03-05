@@ -11,7 +11,6 @@
 	import { page } from '$app/stores';
 
 	export let generation: TGenerationWithSelectedOutput;
-	export let canClose: boolean;
 
 	let imageContainerWidth = 0;
 	let imageContainerHeight = 0;
@@ -69,7 +68,7 @@
 	<div
 		use:clickoutside={{
 			callback: () => {
-				if (canClose) {
+				if ($activeGeneration !== undefined) {
 					activeGeneration.set(undefined);
 					if ($page.url.pathname === '/gallery') {
 						window.history.replaceState({}, '', `/gallery`);
