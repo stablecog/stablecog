@@ -440,7 +440,8 @@
 		</div>
 		<div class="w-full md:w-auto md:min-w-[9.5rem] relative">
 			<Button
-				disabled={!isCheckComplete || doesntHaveEnoughCredits}
+				disabled={!isCheckComplete ||
+					(doesntHaveEnoughCredits && $page.data.session?.user.id !== undefined)}
 				loading={lastGenerationBeingProcessed}
 				withSpinner
 				fadeOnDisabled={isCheckComplete}
@@ -450,7 +451,7 @@
 					{$LL.Home.GenerateButton()}
 				</p>
 			</Button>
-			{#if doesntHaveEnoughCredits && !lastGenerationBeingProcessed && $userSummary}
+			{#if doesntHaveEnoughCredits && !lastGenerationBeingProcessed && $userSummary && $page.data.session?.user.id}
 				<InsufficientCreditsBadge
 					neededCredits={Number($generationNumOutputs)}
 					remainingCredits={$userSummary.total_remaining_credits}

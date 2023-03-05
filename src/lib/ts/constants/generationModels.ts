@@ -5,14 +5,12 @@ import { derived, type Readable, type Writable } from 'svelte/store';
 
 export const availableGenerationModelIds = [
 	'048b4aa3-5586-47ed-900f-f4341c96bdb2',
-	'897461c5-d8e8-49f6-95a2-1c7d697b8644',
 	'8acfe4c8-751d-4aa6-8c3c-844e3ef478e0',
-	'36d9d835-646f-4fc7-b9fe-98654464bf8e',
-	'48a7031d-43b6-4a23-9f8c-8020eb6862e4',
-	'790c80e1-65b1-4556-9332-196344389572',
-	'eaa438e1-dbf9-48fd-be71-206f0f257617',
+	'fc06f6ab-ed14-4186-a7c0-aaec288d4f38',
 	'f7f3d973-ac6f-4a7a-9db8-e89e4fba03a9',
-	'fc06f6ab-ed14-4186-a7c0-aaec288d4f38'
+	'eaa438e1-dbf9-48fd-be71-206f0f257617',
+	'36d9d835-646f-4fc7-b9fe-98654464bf8e',
+	'48a7031d-43b6-4a23-9f8c-8020eb6862e4'
 ] as const;
 
 export type TAvailableGenerationModelId = typeof availableGenerationModelIds[number];
@@ -25,14 +23,12 @@ export const generationModelIdToNameCog: Record<
 	TGenerationModelNameCog
 > = {
 	'048b4aa3-5586-47ed-900f-f4341c96bdb2': 'Stable Diffusion v1.5',
-	'897461c5-d8e8-49f6-95a2-1c7d697b8644': 'Stable Diffusion v1.5 Inpaint',
 	'8acfe4c8-751d-4aa6-8c3c-844e3ef478e0': 'Openjourney',
+	'fc06f6ab-ed14-4186-a7c0-aaec288d4f38': '22h Diffusion v0.1',
+	'f7f3d973-ac6f-4a7a-9db8-e89e4fba03a9': 'Waifu Diffusion v1.4',
 	'eaa438e1-dbf9-48fd-be71-206f0f257617': 'Redshift Diffusion',
 	'36d9d835-646f-4fc7-b9fe-98654464bf8e': 'Arcane Diffusion',
-	'790c80e1-65b1-4556-9332-196344389572': 'Mo-Di Diffusion',
-	'48a7031d-43b6-4a23-9f8c-8020eb6862e4': 'Ghibli Diffusion',
-	'f7f3d973-ac6f-4a7a-9db8-e89e4fba03a9': 'Waifu Diffusion v1.4',
-	'fc06f6ab-ed14-4186-a7c0-aaec288d4f38': '22h Diffusion v0.1'
+	'48a7031d-43b6-4a23-9f8c-8020eb6862e4': 'Ghibli Diffusion'
 };
 
 export const modelIdToDisplayName = derived<
@@ -44,18 +40,16 @@ export const modelIdToDisplayName = derived<
 			$LL.Shared.ModelOptions['048b4aa3-5586-47ed-900f-f4341c96bdb2'].realName(),
 		'8acfe4c8-751d-4aa6-8c3c-844e3ef478e0':
 			$LL.Shared.ModelOptions['8acfe4c8-751d-4aa6-8c3c-844e3ef478e0'].realName(),
+		'fc06f6ab-ed14-4186-a7c0-aaec288d4f38':
+			$LL.Shared.ModelOptions['fc06f6ab-ed14-4186-a7c0-aaec288d4f38'].realName(),
+		'f7f3d973-ac6f-4a7a-9db8-e89e4fba03a9':
+			$LL.Shared.ModelOptions['f7f3d973-ac6f-4a7a-9db8-e89e4fba03a9'].realName(),
+		'eaa438e1-dbf9-48fd-be71-206f0f257617':
+			$LL.Shared.ModelOptions['eaa438e1-dbf9-48fd-be71-206f0f257617'].realName(),
 		'36d9d835-646f-4fc7-b9fe-98654464bf8e':
 			$LL.Shared.ModelOptions['36d9d835-646f-4fc7-b9fe-98654464bf8e'].realName(),
 		'48a7031d-43b6-4a23-9f8c-8020eb6862e4':
-			$LL.Shared.ModelOptions['48a7031d-43b6-4a23-9f8c-8020eb6862e4'].realName(),
-		'790c80e1-65b1-4556-9332-196344389572':
-			$LL.Shared.ModelOptions['790c80e1-65b1-4556-9332-196344389572'].realName(),
-		'eaa438e1-dbf9-48fd-be71-206f0f257617':
-			$LL.Shared.ModelOptions['eaa438e1-dbf9-48fd-be71-206f0f257617'].realName(),
-		'f7f3d973-ac6f-4a7a-9db8-e89e4fba03a9':
-			$LL.Shared.ModelOptions['f7f3d973-ac6f-4a7a-9db8-e89e4fba03a9'].realName(),
-		'fc06f6ab-ed14-4186-a7c0-aaec288d4f38':
-			$LL.Shared.ModelOptions['fc06f6ab-ed14-4186-a7c0-aaec288d4f38'].realName()
+			$LL.Shared.ModelOptions['48a7031d-43b6-4a23-9f8c-8020eb6862e4'].realName()
 	};
 });
 
@@ -84,10 +78,6 @@ export const availableModelIdDropdownItems = derived(
 				value: 'eaa438e1-dbf9-48fd-be71-206f0f257617'
 			},
 			{
-				label: $modelIdToDisplayName['790c80e1-65b1-4556-9332-196344389572'],
-				value: '790c80e1-65b1-4556-9332-196344389572'
-			},
-			{
 				label: $modelIdToDisplayName['36d9d835-646f-4fc7-b9fe-98654464bf8e'],
 				value: '36d9d835-646f-4fc7-b9fe-98654464bf8e'
 			},
@@ -102,11 +92,9 @@ export const availableModelIdDropdownItems = derived(
 
 export type TGenerationModelNameCog =
 	| 'Stable Diffusion v1.5'
-	| 'Stable Diffusion v1.5 Inpaint'
 	| 'Openjourney'
 	| 'Arcane Diffusion'
 	| 'Ghibli Diffusion'
-	| 'Mo-Di Diffusion'
 	| 'Redshift Diffusion'
 	| 'Waifu Diffusion v1.4'
 	| '22h Diffusion v0.1';

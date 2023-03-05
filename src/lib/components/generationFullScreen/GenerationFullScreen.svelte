@@ -385,7 +385,8 @@
 										<Button
 											onClick={onUpscaleClicked}
 											loading={upscaleBeingProcessed}
-											disabled={doesntHaveEnoughCredits}
+											disabled={doesntHaveEnoughCredits &&
+												$page.data.session?.user.id !== undefined}
 											fadeOnDisabled={doesntHaveEnoughCredits}
 											withSpinner
 											class="w-full"
@@ -396,7 +397,7 @@
 												<p>{$LL.GenerationFullscreen.UpscaleButton()}</p>
 											</div>
 										</Button>
-										{#if doesntHaveEnoughCredits && !upscaleBeingProcessed && $userSummary}
+										{#if doesntHaveEnoughCredits && !upscaleBeingProcessed && $userSummary && $page.data.session?.user.id}
 											<InsufficientCreditsBadge
 												neededCredits={upscaleCreditCost}
 												remainingCredits={$userSummary.total_remaining_credits}

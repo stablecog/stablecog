@@ -216,11 +216,8 @@ const en: BaseTranslation = {
 			'af2679a4-dbbb-4950-8c06-c3bb15416ef6': {
 				realName: 'Euler A.'
 			},
-			'efee957a-dea5-48b2-a66a-1990dc2265c5': {
-				realName: 'Heun'
-			},
 			'9d175114-9a26-4371-861c-729ba9ecb4da': {
-				realName: 'DPM'
+				realName: 'DPM Multistep'
 			},
 			'7e98751f-e135-4206-b855-48b141e7b98f': {
 				realName: 'DPM Singlestep'

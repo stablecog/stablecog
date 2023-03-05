@@ -624,15 +624,9 @@ type RootTranslation = {
 				 */
 				realName: string
 			}
-			'efee957a-dea5-48b2-a66a-1990dc2265c5': {
-				/**
-				 * H​e​u​n
-				 */
-				realName: string
-			}
 			'9d175114-9a26-4371-861c-729ba9ecb4da': {
 				/**
-				 * D​P​M
+				 * D​P​M​ ​M​u​l​t​i​s​t​e​p
 				 */
 				realName: string
 			}
@@ -2022,15 +2016,9 @@ export type TranslationFunctions = {
 				 */
 				realName: () => LocalizedString
 			}
-			'efee957a-dea5-48b2-a66a-1990dc2265c5': {
-				/**
-				 * Heun
-				 */
-				realName: () => LocalizedString
-			}
 			'9d175114-9a26-4371-861c-729ba9ecb4da': {
 				/**
-				 * DPM
+				 * DPM Multistep
 				 */
 				realName: () => LocalizedString
 			}

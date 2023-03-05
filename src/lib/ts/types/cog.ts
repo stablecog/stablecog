@@ -7,13 +7,4 @@ export type TTaskUCog =
 
 export type TProcessTypeCog = 'generate' | 'upscale' | 'generate-and-upscale';
 
-export type TSchedulerNameCog =
-	| 'K_LMS'
-	| 'K_EULER'
-	| 'K_EULER_ANCESTRAL'
-	| 'PNDM'
-	| 'HEUN'
-	| 'DPM'
-	| 'DPM_SINGLESTEP';
-
 export type TOutputImageExtCog = 'png' | 'jpg';
