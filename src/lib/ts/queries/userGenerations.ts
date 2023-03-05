@@ -1,7 +1,8 @@
 import { apiUrl } from '$ts/constants/main';
 import type { TGenerationFullOutput } from '$userStores/generation';
 
-const perPage = 50;
+export const generationsPerPage = 50;
+
 export async function getUserGenerationFullOutputs({
 	cursor,
 	access_token
@@ -11,7 +12,7 @@ export async function getUserGenerationFullOutputs({
 }) {
 	console.log('getUserOutputs');
 	const query = new URLSearchParams();
-	query.append('per_page', perPage.toString());
+	query.append('per_page', generationsPerPage.toString());
 	if (cursor) {
 		query.append('cursor', cursor);
 	}
@@ -39,7 +40,7 @@ export async function getAllUserGenerationFullOutputs({
 }) {
 	console.log('getAllUserOutputs');
 	const query = new URLSearchParams();
-	query.append('per_page', perPage.toString());
+	query.append('per_page', generationsPerPage.toString());
 	if (cursor) {
 		query.append('cursor', cursor);
 	}

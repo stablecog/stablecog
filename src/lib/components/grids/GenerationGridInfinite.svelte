@@ -6,7 +6,10 @@
 	import ImagePlaceholder from '$components/ImagePlaceholder.svelte';
 	import LL from '$i18n/i18n-svelte';
 	import { imageTransitionProps } from '$ts/animation/constants';
-	import type { TUserGenerationFullOutputsPage } from '$ts/queries/userGenerations';
+	import {
+		generationsPerPage,
+		type TUserGenerationFullOutputsPage
+	} from '$ts/queries/userGenerations';
 	import { activeGeneration } from '$userStores/generation';
 	import type { CreateInfiniteQueryResult } from '@tanstack/svelte-query';
 	import { MasonryInfiniteGrid } from '@egjs/svelte-infinitegrid';
@@ -16,24 +19,11 @@
 	export let generationsQuery: CreateInfiniteQueryResult<TUserGenerationFullOutputsPage, unknown>;
 	export let cardType: TGenerationImageCardType;
 
-	let canAutoFetch = true;
-	let canAutoFetchTimeout: NodeJS.Timeout;
-	const autoFetchNextPage = () => {
-		if (!canAutoFetch || $generationsQuery.isFetchingNextPage) return;
-		clearTimeout(canAutoFetchTimeout);
-		canAutoFetch = false;
-		$generationsQuery.fetchNextPage();
-		canAutoFetchTimeout = setTimeout(() => {
-			canAutoFetch = true;
-		}, 1000);
-	};
-
-	const batch = 50;
 	$: outputs = $generationsQuery.data?.pages.flatMap((page) => page.outputs);
 	$: items = outputs?.map((output, index) => ({
 		key: index,
 		id: output.id,
-		groupKey: Math.floor(index / batch)
+		groupKey: Math.floor(index / generationsPerPage)
 	}));
 </script>
 

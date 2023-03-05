@@ -239,7 +239,7 @@ export interface TGenerationOutput {
 	created_at?: string;
 	updated_at?: string;
 	is_deleted?: boolean;
-	gallery_status: TGalleryStatus;
+	gallery_status?: TGalleryStatus;
 }
 
 export type TGalleryStatus = 'submitted' | 'approved' | 'rejected' | 'not-submitted';

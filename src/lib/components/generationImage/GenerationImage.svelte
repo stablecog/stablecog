@@ -134,7 +134,7 @@
 />
 {#if !generation.selected_output.is_deleted}
 	<AnchorOrDiv
-		href={cardType === 'gallery' ? `/gallery?generation=${generation.id}` : undefined}
+		href={cardType === 'gallery' ? `/gallery?output=${generation.selected_output.id}` : undefined}
 		anchorPreventDefault={cardType === 'gallery'}
 		onClick={(e) => {
 			if (doesContainTarget(e.target, [rightButtonContainer])) {
@@ -143,7 +143,7 @@
 			mLogGalleryGenerationOpened(logProps);
 			activeGeneration.set(generation);
 			if (cardType === 'gallery') {
-				window.history.replaceState({}, '', `/gallery?generation=${generation.id}`);
+				window.history.replaceState({}, '', `/gallery?output=${generation.selected_output.id}`);
 			}
 		}}
 		class="w-full h-full absolute left-0 top-0 flex flex-col justify-between items-end overflow-hidden gap-4"

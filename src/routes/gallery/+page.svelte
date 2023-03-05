@@ -9,6 +9,8 @@
 	import MetaTag from '$components/MetaTag.svelte';
 	import LL, { locale } from '$i18n/i18n-svelte';
 	import { canonicalUrl } from '$ts/constants/main';
+	import { getGalleryMetaTagDescriptionFromPromptText } from '$ts/helpers/metaTag';
+	import { getPreviewImageUrlFromOutputId } from '$ts/helpers/getPreviewImageUrl';
 	import { mLogGallerySearch } from '$ts/helpers/loggers';
 	import {
 		getGalleryGenerationFullOutputs,
@@ -17,15 +19,15 @@
 	import { advancedModeApp } from '$ts/stores/advancedMode';
 	import { globalSeed } from '$ts/stores/globalSeed';
 	import { navbarHeight } from '$ts/stores/navbarHeight';
-	import { activeGeneration } from '$ts/stores/user/generation';
+	import { activeGeneration, type TGenerationFullOutput } from '$ts/stores/user/generation';
 	import { userSummary } from '$ts/stores/user/summary';
 	import { createInfiniteQuery } from '@tanstack/svelte-query';
 	import { quadOut } from 'svelte/easing';
 	import { scale } from 'svelte/transition';
 	import type { PageServerData } from './$types';
 
-	export let data: PageServerData;
-	const {} = data;
+	/* export let data: PageServerData;
+	const { generationFullOutputFromData } = data; */
 
 	let searchString: string;
 	let searchStringDebounced: string | undefined = undefined;
@@ -90,16 +92,14 @@
 
 <!-- <MetaTag
 	title="Gallery | Stablecog"
-	description={generationData
-		? `Check out this generation on the gallery: "${capitalize(
-				generationData.prompt.text.slice(0, 200)
-		  )}${generationData.prompt.text.length > 200 ? '...' : ''}".`
+	description={generationFullOutputFromData
+		? getGalleryMetaTagDescriptionFromPromptText(
+				generationFullOutputFromData.generation.prompt.text
+		  )
 		: 'A gallery full of images created with Stable Diffusion. Check out the images and their metadata including their prompt, negative prompt, inference steps, guidance scale and seed. Generate similar images directly from the gallery or submit your own.'}
-	imageUrl={generationData
-		? generationGPreviewUrlFromId(generationData.id)
-		: `${canonicalUrl}/previews${$page.url.pathname}.png`}
-	canonical={generationData
-		? `${canonicalUrl}${$page.url.pathname}?generation=${generationData.id}`
+	imageUrl={getPreviewImageUrlFromOutputId(generationFullOutputFromData.id)}
+	canonical={generationFullOutputFromData
+		? `${canonicalUrl}${$page.url.pathname}?output=${generationFullOutputFromData.id}`
 		: `${canonicalUrl}${$page.url.pathname}`}
 /> -->
 
