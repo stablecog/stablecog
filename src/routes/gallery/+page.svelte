@@ -25,6 +25,7 @@
 	import { quadOut } from 'svelte/easing';
 	import { scale } from 'svelte/transition';
 	import type { PageServerData } from './$types';
+	import { onMount } from 'svelte';
 
 	export let data: PageServerData;
 	const { generationFullOutput: generationFullOutputFromData } = data;
@@ -88,6 +89,15 @@
 
 	const atTheTopThreshold = 50;
 	const minScrollThreshold = 40;
+
+	onMount(() => {
+		if (generationFullOutputFromData) {
+			activeGeneration.set({
+				...generationFullOutputFromData.generation,
+				selected_output: generationFullOutputFromData
+			});
+		}
+	});
 </script>
 
 <MetaTag
@@ -189,6 +199,6 @@
 	</div>
 </div>
 
-{#if $activeGeneration}
+{#if $activeGeneration && $galleryGenerationFullOutputsQuery?.isInitialLoading === false}
 	<GenerationFullScreen generation={$activeGeneration} modalType="gallery" />
 {/if}
