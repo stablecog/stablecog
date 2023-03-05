@@ -233,6 +233,7 @@ const hi: Translation = {
 	},
 	Error: {
 		SomethingWentWrong: 'कुछ गलत हो गया :(',
+		ImageWasNSFW: 'This image was NSFW :(',
 		NSFW: 'अश्लील सामग्री पता चला, कोई और संकेत का प्रयास करें :(',
 		ServerSeemsOffline:
 			'सर्वर ऑफ़लाइन लगता है। हो सकता है कि आप पेज को रीफ्रेश करना चाहें या सेटिंग से कोई अन्य सर्वर सेट करना चाहें।',

@@ -231,6 +231,7 @@ const zhHans: Translation = {
 	},
 	Error: {
 		SomethingWentWrong: '出了问题:(',
+		ImageWasNSFW: 'This image was NSFW :(',
 		NSFW: '检测到不适宜工作场所的内容，请尝试另一个提示 :(',
 		ServerSeemsOffline: '服务器似乎离线。您可能想要刷新页面或从设置中切换另一台服务器。',
 		ServerSetNotWorking: '此服务器不兼容或未响应。',

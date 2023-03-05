@@ -62,6 +62,7 @@
 	import { userSummary } from '$ts/stores/user/summary';
 	/* 	import posthog from 'posthog-js'; */
 	import { PUBLIC_MIXPANEL_ID, PUBLIC_MIXPANEL_URL } from '$env/static/public';
+	import { getUserSummary } from '$ts/helpers/user/user';
 
 	export let data: LayoutData;
 	setLocale(data.locale);
@@ -365,6 +366,25 @@
 		}
 	}
 
+	$: $page.data.session?.user.id, getAndSetUserSummary();
+
+	async function getAndSetUserSummary() {
+		if ($page.data.session?.user.id && !$userSummary) {
+			try {
+				const summary = await getUserSummary($page.data.session.access_token);
+				if (summary) {
+					userSummary.set(summary);
+				}
+			} catch (error) {
+				console.log('Error getting user summary', error);
+			}
+			return;
+		}
+		if (!$page.data.session?.user.id) {
+			userSummary.set(undefined);
+		}
+	}
+
 	onMount(async () => {
 		setBodyClasses();
 		mixpanel.init(PUBLIC_MIXPANEL_ID, { api_host: PUBLIC_MIXPANEL_URL });
@@ -399,7 +419,7 @@
 <QueryClientProvider client={queryClient}>
 	<div
 		class="w-full relative bg-c-bg text-c-on-bg
-	min-h-screen flex flex-col {$themeApp === 'light' ? 'theme-light' : 'theme-dark'}"
+		min-h-screen flex flex-col {$themeApp === 'light' ? 'theme-light' : 'theme-dark'}"
 		style="background-image: url({$themeApp === 'light'
 			? '/illustrations/grid-on-light.svg'
 			: '/illustrations/grid-on-dark.svg'}); background-size: 24px;{innerHeight !== undefined

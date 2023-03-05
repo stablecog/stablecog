@@ -234,6 +234,7 @@ const en: BaseTranslation = {
 	},
 	Error: {
 		SomethingWentWrong: 'Something went wrong :(',
+		ImageWasNSFW: 'This image was NSFW :(',
 		NSFW: 'NSFW content detected, try another prompt :(',
 		ServerSeemsOffline:
 			'The server seems offline. You might want to refresh the page or set another server from the settings.',

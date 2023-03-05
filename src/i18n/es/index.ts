@@ -234,6 +234,7 @@ const es: Translation = {
 	},
 	Error: {
 		SomethingWentWrong: 'Algo salió mal :(',
+		ImageWasNSFW: 'This image was NSFW :(',
 		NSFW: 'Contenido inapropiado detectado, intente con otra indicación :(',
 		ServerSeemsOffline:
 			'El servidor parece estar fuera de línea. Puede que desee refrescar la página o establecer otro servidor desde la configuración.',

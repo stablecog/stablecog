@@ -234,6 +234,7 @@ const ko: Translation = {
 	},
 	Error: {
 		SomethingWentWrong: '웁스.. 뭔가 잘못됐어요. :(',
+		ImageWasNSFW: 'This image was NSFW :(',
 		NSFW: '부적절한 단어가 포함된 것 같아요, 새로운 문구를 입력해주세요 :(',
 		ServerSeemsOffline:
 			'서버와 연결이 끊긴 것 같아요. 웹사이트를 새로고침하거나 설정 화면을 통해 다른 서버를 지정해주세요.',

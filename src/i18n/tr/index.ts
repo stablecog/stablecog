@@ -234,6 +234,7 @@ const tr: Translation = {
 	},
 	Error: {
 		SomethingWentWrong: 'Bir şeyler ters gitti :(',
+		ImageWasNSFW: 'This image was NSFW :(',
 		NSFW: 'Sıkıntılı içerik, başka bir komut dene :(',
 		ServerSeemsOffline:
 			'Sunucudan cevap alamadık. Sayfayı yenilemeyi veya ayarlardan başka bir sunucuya geçmeyi deneyebilirsin.',

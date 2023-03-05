@@ -233,6 +233,7 @@ const de: Translation = {
 	},
 	Error: {
 		SomethingWentWrong: 'Etwas ist schiefgelaufen :(',
+		ImageWasNSFW: 'This image was NSFW :(',
 		NSFW: 'NSFW-Inhalt erkannt, versuche andere Eingabewörter :(',
 		ServerSeemsOffline:
 			'Der Server scheint offline zu sein. Versuche die Seite zu aktualisieren oder wechsle in den Einstellungen zu einem anderen Server.',

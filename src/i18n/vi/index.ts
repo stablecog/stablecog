@@ -234,6 +234,7 @@ const vi: Translation = {
 	},
 	Error: {
 		SomethingWentWrong: 'Đã xảy ra lỗi :(',
+		ImageWasNSFW: 'This image was NSFW :(',
 		NSFW: 'Phát hiện nội dung không lành mạnh, hãy viết lời mô tả khác :(',
 		ServerSeemsOffline:
 			'Máy chủ có lẽ ngoại tuyến. Bạn thử F5 hoặc chọn máy chủ khác trong phần cài đặt.',

@@ -233,6 +233,7 @@ const ptBr: Translation = {
 	},
 	Error: {
 		SomethingWentWrong: 'Algo deu errado :(',
+		ImageWasNSFW: 'This image was NSFW :(',
 		NSFW: 'Conteúdo impróprio detectado, tente outro prompt :(',
 		ServerSeemsOffline:
 			'O servidor parece estar offline. Talvez você queira atualizar a página ou definir outro servidor nas configurações.',

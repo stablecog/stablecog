@@ -233,6 +233,7 @@ const hr: Translation = {
 	},
 	Error: {
 		SomethingWentWrong: 'Dogodila se greška :(',
+		ImageWasNSFW: 'This image was NSFW :(',
 		NSFW: 'Otkriven NSFW sadržaj, pokušaj sa drugim opisom :(',
 		ServerSeemsOffline:
 			'Server je isključen. Pokušaj osvježiti stranicu ili postavi drugi server u postavkama.',

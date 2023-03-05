@@ -234,6 +234,7 @@ const ja: Translation = {
 	},
 	Error: {
 		SomethingWentWrong: '不具合が発生しました。',
+		ImageWasNSFW: 'This image was NSFW :(',
 		NSFW: 'NSFW (閲覧注意) コンテンツが検出されました。別のプロンプトを試してください ☹️',
 		ServerSeemsOffline:
 			'サーバーはオフラインの様です。ページを更新するか、設定から別のサーバーを設定してください。',

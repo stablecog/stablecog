@@ -234,6 +234,7 @@ const ru: Translation = {
 	},
 	Error: {
 		SomethingWentWrong: 'Что-то пошло не так :(',
+		ImageWasNSFW: 'This image was NSFW :(',
 		NSFW: 'Обнаружен NSFW-контент, попробуйте другую подсказку :(',
 		ServerSeemsOffline:
 			'Сервер недоступен. Возможно, вы захотите обновить страницу или установить другой сервер в настройках.',
