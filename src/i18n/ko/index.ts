@@ -163,6 +163,7 @@ const ko: Translation = {
 		LoadingTitle: '로딩 중',
 		LoadingParagraph: '조금만 기다려주세요...',
 		InsufficientCreditsTitle: 'Insufficient credits ({remainingCredits}/{neededCredits})',
+		ConfirmButton: 'Confirm',
 		ServerUrlInput: {
 			Placeholder: '커스텀 서버 주소'
 		},
@@ -393,7 +394,23 @@ const ko: Translation = {
 		MyAccountButton: '로그인 계정',
 		SubscriptionPlanTitle: '가입 요금제',
 		RemainingImagesTitle: 'Remaining Images',
-		RemainingCreditsTitle: 'Remaining Credits'
+		RemainingCreditsTitle: 'Remaining Credits',
+		Subscription: {
+			UpdateSubscriptionTitle: 'Update Subscription',
+			CurrentPlanTitle: 'Current Plan',
+			Downgrade: {
+				DowngradingToTitle: 'Downgrading to',
+				Explanation: 'Your existing credits will remain.'
+			},
+			Failed: {
+				PageTitle: 'Failed to update',
+				PageParagraph: 'Something went wrong while updating your subscription. Please try again.'
+			},
+			Succeeded: {
+				PageTitle: 'Subscription updated',
+				PageParagraph: 'Your subscription has been successfully updated.'
+			}
+		}
 	},
 	ForgotPassword: {
 		PageTitle: '비밀번호 재설정',

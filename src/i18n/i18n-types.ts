@@ -505,6 +505,10 @@ type RootTranslation = {
 		 * @param {unknown} remainingCredits
 		 */
 		InsufficientCreditsTitle: RequiredParams<'neededCredits' | 'remainingCredits'>
+		/**
+		 * C​o​n​f​i​r​m
+		 */
+		ConfirmButton: string
 		ServerUrlInput: {
 			/**
 			 * S​e​r​v​e​r​ ​U​R​L
@@ -1164,6 +1168,46 @@ type RootTranslation = {
 		 * R​e​m​a​i​n​i​n​g​ ​C​r​e​d​i​t​s
 		 */
 		RemainingCreditsTitle: string
+		Subscription: {
+			/**
+			 * U​p​d​a​t​e​ ​S​u​b​s​c​r​i​p​t​i​o​n
+			 */
+			UpdateSubscriptionTitle: string
+			/**
+			 * C​u​r​r​e​n​t​ ​P​l​a​n
+			 */
+			CurrentPlanTitle: string
+			Downgrade: {
+				/**
+				 * D​o​w​n​g​r​a​d​i​n​g​ ​t​o
+				 */
+				DowngradingToTitle: string
+				/**
+				 * Y​o​u​r​ ​e​x​i​s​t​i​n​g​ ​c​r​e​d​i​t​s​ ​w​i​l​l​ ​r​e​m​a​i​n​.
+				 */
+				Explanation: string
+			}
+			Failed: {
+				/**
+				 * F​a​i​l​e​d​ ​t​o​ ​u​p​d​a​t​e
+				 */
+				PageTitle: string
+				/**
+				 * S​o​m​e​t​h​i​n​g​ ​w​e​n​t​ ​w​r​o​n​g​ ​w​h​i​l​e​ ​u​p​d​a​t​i​n​g​ ​y​o​u​r​ ​s​u​b​s​c​r​i​p​t​i​o​n​.​ ​P​l​e​a​s​e​ ​t​r​y​ ​a​g​a​i​n​.
+				 */
+				PageParagraph: string
+			}
+			Succeeded: {
+				/**
+				 * S​u​b​s​c​r​i​p​t​i​o​n​ ​u​p​d​a​t​e​d
+				 */
+				PageTitle: string
+				/**
+				 * Y​o​u​r​ ​s​u​b​s​c​r​i​p​t​i​o​n​ ​h​a​s​ ​b​e​e​n​ ​s​u​c​c​e​s​s​f​u​l​l​y​ ​u​p​d​a​t​e​d​.
+				 */
+				PageParagraph: string
+			}
+		}
 	}
 	ForgotPassword: {
 		/**
@@ -1907,6 +1951,10 @@ export type TranslationFunctions = {
 		 * Insufficient credits ({remainingCredits}/{neededCredits})
 		 */
 		InsufficientCreditsTitle: (arg: { neededCredits: unknown, remainingCredits: unknown }) => LocalizedString
+		/**
+		 * Confirm
+		 */
+		ConfirmButton: () => LocalizedString
 		ServerUrlInput: {
 			/**
 			 * Server URL
@@ -2563,6 +2611,46 @@ export type TranslationFunctions = {
 		 * Remaining Credits
 		 */
 		RemainingCreditsTitle: () => LocalizedString
+		Subscription: {
+			/**
+			 * Update Subscription
+			 */
+			UpdateSubscriptionTitle: () => LocalizedString
+			/**
+			 * Current Plan
+			 */
+			CurrentPlanTitle: () => LocalizedString
+			Downgrade: {
+				/**
+				 * Downgrading to
+				 */
+				DowngradingToTitle: () => LocalizedString
+				/**
+				 * Your existing credits will remain.
+				 */
+				Explanation: () => LocalizedString
+			}
+			Failed: {
+				/**
+				 * Failed to update
+				 */
+				PageTitle: () => LocalizedString
+				/**
+				 * Something went wrong while updating your subscription. Please try again.
+				 */
+				PageParagraph: () => LocalizedString
+			}
+			Succeeded: {
+				/**
+				 * Subscription updated
+				 */
+				PageTitle: () => LocalizedString
+				/**
+				 * Your subscription has been successfully updated.
+				 */
+				PageParagraph: () => LocalizedString
+			}
+		}
 	}
 	ForgotPassword: {
 		/**

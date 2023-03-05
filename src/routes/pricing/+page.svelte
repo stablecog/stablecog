@@ -30,6 +30,7 @@
 		STRIPE_PRODUCT_ID_OBJECTS_CREDIT_PACKS
 	} from '$ts/constants/stripePublic';
 	import { userSummary } from '$ts/stores/user/summary';
+	import { downgradeSubscription } from '$ts/helpers/user/user';
 
 	export let data: PageData;
 
@@ -294,11 +295,14 @@
 								type={isSubscribed ? 'success' : 'primary'}
 								disabled={isSubscribed}
 								loading={card.priceIdMo === selectedPriceId && checkoutCreationStatus === 'loading'}
+								href={isDowngrade ? '/account/subscription/downgrade' : undefined}
 								onClick={() =>
-									createCheckoutSessionAndRedirect({
-										priceId: card.priceIdMo,
-										currency: card.currency
-									})}
+									!isDowngrade
+										? createCheckoutSessionAndRedirect({
+												priceId: card.priceIdMo,
+												currency: card.currency
+										  })
+										: null}
 								class="w-full mt-8"
 							>
 								{#if isSubscribed}

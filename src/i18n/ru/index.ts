@@ -163,6 +163,7 @@ const ru: Translation = {
 		LoadingTitle: 'Загружается',
 		LoadingParagraph: 'Загружается...',
 		InsufficientCreditsTitle: 'Insufficient credits ({remainingCredits}/{neededCredits})',
+		ConfirmButton: 'Confirm',
 		ServerUrlInput: {
 			Placeholder: 'URL-адрес сервера'
 		},
@@ -395,7 +396,23 @@ const ru: Translation = {
 		MyAccountButton: 'My Account',
 		SubscriptionPlanTitle: 'Plan',
 		RemainingImagesTitle: 'Remaining Images',
-		RemainingCreditsTitle: 'Remaining Credits'
+		RemainingCreditsTitle: 'Remaining Credits',
+		Subscription: {
+			UpdateSubscriptionTitle: 'Update Subscription',
+			CurrentPlanTitle: 'Current Plan',
+			Downgrade: {
+				DowngradingToTitle: 'Downgrading to',
+				Explanation: 'Your existing credits will remain.'
+			},
+			Failed: {
+				PageTitle: 'Failed to update',
+				PageParagraph: 'Something went wrong while updating your subscription. Please try again.'
+			},
+			Succeeded: {
+				PageTitle: 'Subscription updated',
+				PageParagraph: 'Your subscription has been successfully updated.'
+			}
+		}
 	},
 	ForgotPassword: {
 		PageTitle: 'Reset Password',

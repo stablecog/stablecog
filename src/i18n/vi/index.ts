@@ -163,6 +163,7 @@ const vi: Translation = {
 		LoadingTitle: 'Đang tải',
 		LoadingParagraph: 'Đang tải...',
 		InsufficientCreditsTitle: 'Insufficient credits ({remainingCredits}/{neededCredits})',
+		ConfirmButton: 'Confirm',
 		ServerUrlInput: {
 			Placeholder: 'Đường dẫn máy chủ'
 		},
@@ -396,7 +397,23 @@ const vi: Translation = {
 		MyAccountButton: 'Tài khoản của tôi',
 		SubscriptionPlanTitle: 'Gói',
 		RemainingImagesTitle: 'Remaining Images',
-		RemainingCreditsTitle: 'Remaining Credits'
+		RemainingCreditsTitle: 'Remaining Credits',
+		Subscription: {
+			UpdateSubscriptionTitle: 'Update Subscription',
+			CurrentPlanTitle: 'Current Plan',
+			Downgrade: {
+				DowngradingToTitle: 'Downgrading to',
+				Explanation: 'Your existing credits will remain.'
+			},
+			Failed: {
+				PageTitle: 'Failed to update',
+				PageParagraph: 'Something went wrong while updating your subscription. Please try again.'
+			},
+			Succeeded: {
+				PageTitle: 'Subscription updated',
+				PageParagraph: 'Your subscription has been successfully updated.'
+			}
+		}
 	},
 	ForgotPassword: {
 		PageTitle: 'Đặt lại mật khẩu',

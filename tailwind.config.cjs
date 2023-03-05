@@ -97,6 +97,7 @@ module.exports = {
 				'4px': '4px'
 			},
 			rotate: {
+				90: '90deg',
 				15: '15deg',
 				360: '360deg',
 				135: '135deg',

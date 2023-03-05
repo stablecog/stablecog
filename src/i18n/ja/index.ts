@@ -163,6 +163,7 @@ const ja: Translation = {
 		LoadingTitle: '読み込み中',
 		LoadingParagraph: '読み込み中...',
 		InsufficientCreditsTitle: 'Insufficient credits ({remainingCredits}/{neededCredits})',
+		ConfirmButton: 'Confirm',
 		ServerUrlInput: {
 			Placeholder: 'サーバ URL'
 		},
@@ -395,7 +396,23 @@ const ja: Translation = {
 		MyAccountButton: 'アカウント',
 		SubscriptionPlanTitle: 'プラン',
 		RemainingImagesTitle: 'Remaining Images',
-		RemainingCreditsTitle: 'Remaining Credits'
+		RemainingCreditsTitle: 'Remaining Credits',
+		Subscription: {
+			UpdateSubscriptionTitle: 'Update Subscription',
+			CurrentPlanTitle: 'Current Plan',
+			Downgrade: {
+				DowngradingToTitle: 'Downgrading to',
+				Explanation: 'Your existing credits will remain.'
+			},
+			Failed: {
+				PageTitle: 'Failed to update',
+				PageParagraph: 'Something went wrong while updating your subscription. Please try again.'
+			},
+			Succeeded: {
+				PageTitle: 'Subscription updated',
+				PageParagraph: 'Your subscription has been successfully updated.'
+			}
+		}
 	},
 	ForgotPassword: {
 		PageTitle: 'パスワードのリセット',
