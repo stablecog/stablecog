@@ -252,7 +252,10 @@ const tr: Translation = {
 			Title: 'Link Geçersiz',
 			Paragraph: 'Link sadece bir kere kullanılabilir ve 24 saat sonunda geçersiz hale gelir.'
 		},
-		UpdateAvailable: 'Yeni versiyon mevcut. Görmek için sayfayı yenile.'
+		UpdateAvailable: {
+			Title: 'Update Available',
+			Paragraph: 'There is an update! Refresh the page to get it.'
+		}
 	},
 	Admin: {
 		AdminPanelTitle: 'Yönetici',
@@ -393,18 +396,24 @@ const tr: Translation = {
 		RemainingCreditsTitle: 'Remaining Credits',
 		Subscription: {
 			UpdateSubscriptionTitle: 'Update Subscription',
+			ChangePlanTitle: 'Change Plan',
 			CurrentPlanTitle: 'Current Plan',
+			NewPlanTitle: 'New plan',
 			Downgrade: {
 				DowngradingToTitle: 'Downgrading to',
 				Explanation: 'Your existing credits will remain.'
 			},
+			Upgrade: {
+				UpgadingToTitle: 'Upgrading to',
+				Explanation: 'Your existing credits will remain.'
+			},
 			Failed: {
 				PageTitle: 'Failed to update',
-				PageParagraph: 'Something went wrong while updating your subscription. Please try again.'
+				PageParagraph: 'Something went wrong while changing your plan. Please try again.'
 			},
 			Succeeded: {
-				PageTitle: 'Subscription updated',
-				PageParagraph: 'Your subscription has been successfully updated.'
+				PageTitle: 'Changed plan',
+				PageParagraph: 'Your plan has been changed successfully.'
 			}
 		}
 	},

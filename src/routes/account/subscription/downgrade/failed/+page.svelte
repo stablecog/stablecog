@@ -9,8 +9,8 @@
 </script>
 
 <MetaTag
-	title="Update Subscription | Stablecog"
-	description="Update your Stablecog subscription."
+	title="Change Plan | Stablecog"
+	description="Change your Stablecog subscription plan."
 	imageUrl="{canonicalUrl}/previews{$page.url.pathname}.png"
 	canonical="{canonicalUrl}{$page.url.pathname}"
 />
@@ -24,8 +24,6 @@
 		<p class="max-w-xl mt-4 leading-relaxed text-center text-c-on-bg/75">
 			{$LL.Account.Subscription.Failed.PageParagraph()}
 		</p>
-		<Button href="/account/subscription" withSpinner class=" mt-6"
-			>{$LL.Shared.TryAgainButton()}</Button
-		>
+		<Button href="/pricing" withSpinner class="mt-6">{$LL.Shared.TryAgainButton()}</Button>
 	</div>
 </PageWrapper>

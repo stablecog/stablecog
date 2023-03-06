@@ -295,7 +295,11 @@
 								type={isSubscribed ? 'success' : 'primary'}
 								disabled={isSubscribed}
 								loading={card.priceIdMo === selectedPriceId && checkoutCreationStatus === 'loading'}
-								href={isDowngrade ? '/account/subscription/downgrade' : undefined}
+								href={isDowngrade
+									? `/account/subscription/downgrade?price_id=${
+											card.priceIdMo
+									  }&from=${encodeURIComponent($page.url.pathname)}`
+									: undefined}
 								onClick={() =>
 									!isDowngrade
 										? createCheckoutSessionAndRedirect({

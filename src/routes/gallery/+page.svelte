@@ -24,8 +24,8 @@
 	import { createInfiniteQuery } from '@tanstack/svelte-query';
 	import { quadOut } from 'svelte/easing';
 	import { scale } from 'svelte/transition';
-	import type { PageServerData } from './$types';
 	import { onMount } from 'svelte';
+	import type { PageServerData } from './$types';
 
 	export let data: PageServerData;
 	const { generationFullOutput: generationFullOutputFromData } = data;

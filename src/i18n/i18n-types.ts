@@ -1174,14 +1174,32 @@ type RootTranslation = {
 			 */
 			UpdateSubscriptionTitle: string
 			/**
+			 * C​h​a​n​g​e​ ​P​l​a​n
+			 */
+			ChangePlanTitle: string
+			/**
 			 * C​u​r​r​e​n​t​ ​P​l​a​n
 			 */
 			CurrentPlanTitle: string
+			/**
+			 * N​e​w​ ​p​l​a​n
+			 */
+			NewPlanTitle: string
 			Downgrade: {
 				/**
 				 * D​o​w​n​g​r​a​d​i​n​g​ ​t​o
 				 */
 				DowngradingToTitle: string
+				/**
+				 * Y​o​u​r​ ​e​x​i​s​t​i​n​g​ ​c​r​e​d​i​t​s​ ​w​i​l​l​ ​r​e​m​a​i​n​.
+				 */
+				Explanation: string
+			}
+			Upgrade: {
+				/**
+				 * U​p​g​r​a​d​i​n​g​ ​t​o
+				 */
+				UpgadingToTitle: string
 				/**
 				 * Y​o​u​r​ ​e​x​i​s​t​i​n​g​ ​c​r​e​d​i​t​s​ ​w​i​l​l​ ​r​e​m​a​i​n​.
 				 */
@@ -1193,17 +1211,17 @@ type RootTranslation = {
 				 */
 				PageTitle: string
 				/**
-				 * S​o​m​e​t​h​i​n​g​ ​w​e​n​t​ ​w​r​o​n​g​ ​w​h​i​l​e​ ​u​p​d​a​t​i​n​g​ ​y​o​u​r​ ​s​u​b​s​c​r​i​p​t​i​o​n​.​ ​P​l​e​a​s​e​ ​t​r​y​ ​a​g​a​i​n​.
+				 * S​o​m​e​t​h​i​n​g​ ​w​e​n​t​ ​w​r​o​n​g​ ​w​h​i​l​e​ ​c​h​a​n​g​i​n​g​ ​y​o​u​r​ ​p​l​a​n​.​ ​P​l​e​a​s​e​ ​t​r​y​ ​a​g​a​i​n​.
 				 */
 				PageParagraph: string
 			}
 			Succeeded: {
 				/**
-				 * S​u​b​s​c​r​i​p​t​i​o​n​ ​u​p​d​a​t​e​d
+				 * C​h​a​n​g​e​d​ ​p​l​a​n
 				 */
 				PageTitle: string
 				/**
-				 * Y​o​u​r​ ​s​u​b​s​c​r​i​p​t​i​o​n​ ​h​a​s​ ​b​e​e​n​ ​s​u​c​c​e​s​s​f​u​l​l​y​ ​u​p​d​a​t​e​d​.
+				 * Y​o​u​r​ ​p​l​a​n​ ​h​a​s​ ​b​e​e​n​ ​c​h​a​n​g​e​d​ ​s​u​c​c​e​s​s​f​u​l​l​y​.
 				 */
 				PageParagraph: string
 			}
@@ -2617,14 +2635,32 @@ export type TranslationFunctions = {
 			 */
 			UpdateSubscriptionTitle: () => LocalizedString
 			/**
+			 * Change Plan
+			 */
+			ChangePlanTitle: () => LocalizedString
+			/**
 			 * Current Plan
 			 */
 			CurrentPlanTitle: () => LocalizedString
+			/**
+			 * New plan
+			 */
+			NewPlanTitle: () => LocalizedString
 			Downgrade: {
 				/**
 				 * Downgrading to
 				 */
 				DowngradingToTitle: () => LocalizedString
+				/**
+				 * Your existing credits will remain.
+				 */
+				Explanation: () => LocalizedString
+			}
+			Upgrade: {
+				/**
+				 * Upgrading to
+				 */
+				UpgadingToTitle: () => LocalizedString
 				/**
 				 * Your existing credits will remain.
 				 */
@@ -2636,17 +2672,17 @@ export type TranslationFunctions = {
 				 */
 				PageTitle: () => LocalizedString
 				/**
-				 * Something went wrong while updating your subscription. Please try again.
+				 * Something went wrong while changing your plan. Please try again.
 				 */
 				PageParagraph: () => LocalizedString
 			}
 			Succeeded: {
 				/**
-				 * Subscription updated
+				 * Changed plan
 				 */
 				PageTitle: () => LocalizedString
 				/**
-				 * Your subscription has been successfully updated.
+				 * Your plan has been changed successfully.
 				 */
 				PageParagraph: () => LocalizedString
 			}

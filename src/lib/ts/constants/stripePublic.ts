@@ -159,3 +159,15 @@ export const STRIPE_PRODUCT_ID_OBJECTS_CREDIT_PACKS: {
 		}
 	}
 } as const;
+
+export const getProductIdFromPriceId = (priceId: string) => {
+	const productId = Object.keys(STRIPE_PRODUCT_ID_OBJECTS_SUBSCRIPTIONS_MO).find((productId) =>
+		Object.keys(STRIPE_PRODUCT_ID_OBJECTS_SUBSCRIPTIONS_MO[productId].prices).includes(priceId)
+	);
+	if (productId) {
+		return productId;
+	}
+	return Object.keys(STRIPE_PRODUCT_ID_OBJECTS_CREDIT_PACKS).find((productId) =>
+		Object.keys(STRIPE_PRODUCT_ID_OBJECTS_CREDIT_PACKS[productId].prices).includes(priceId)
+	);
+};

@@ -2,7 +2,7 @@
 	import { isTouchscreen } from '$ts/stores/isTouchscreen';
 	import type { THrefTarget } from '$ts/types/main';
 	export let href: string | undefined = undefined;
-	export let target: THrefTarget = '_blank';
+	export let target: THrefTarget = '_self';
 	export let type: 'sm' | 'md' = 'md';
 	export let prefetch: boolean = false;
 	export let onClick: (() => void) | undefined = undefined;
