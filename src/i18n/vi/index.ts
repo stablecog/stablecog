@@ -251,7 +251,8 @@ const vi: Translation = {
 		UpdateAvailable: {
 			Title: 'Update Available',
 			Paragraph: 'There is an update! Refresh the page to get it.'
-		}
+		},
+		EmailProviderNotAllowed: "This email provider isn't allowed."
 	},
 	Admin: {
 		AdminPanelTitle: 'Quản trị',

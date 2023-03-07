@@ -33,6 +33,22 @@
 		}
 		signInStatus = 'loading';
 		provider = 'email';
+		const domain = email.split('@')[1];
+		const { data: dData, error: dError } = await supabase
+			.from('disposable_emails')
+			.select('domain')
+			.eq('domain', domain);
+		if (dError) {
+			console.log(dError);
+			errorText = $LL.Error.SomethingWentWrong();
+			signInStatus = 'error';
+			return;
+		}
+		if (dData.length > 0) {
+			errorText = $LL.Error.EmailProviderNotAllowed();
+			signInStatus = 'error';
+			return;
+		}
 		const { data: sData, error: sError } = await supabase.auth.signInWithOtp({
 			email,
 			options: {
@@ -229,7 +245,7 @@
 						<IconEmail slot="icon" class="w-full h-full" />
 					</Input>
 					{#if errorText}
-						<ErrorLine text={errorText} class="text-xs" />
+						<ErrorLine text={errorText} class="text-xs -mt-1" />
 					{/if}
 					<Button
 						class="mt-3"

@@ -721,6 +721,10 @@ type RootTranslation = {
 			 */
 			Paragraph: string
 		}
+		/**
+		 * T​h​i​s​ ​e​m​a​i​l​ ​p​r​o​v​i​d​e​r​ ​i​s​n​'​t​ ​a​l​l​o​w​e​d​.
+		 */
+		EmailProviderNotAllowed: string
 	}
 	Admin: {
 		/**
@@ -2159,6 +2163,10 @@ export type TranslationFunctions = {
 			 */
 			Paragraph: () => LocalizedString
 		}
+		/**
+		 * This email provider isn't allowed.
+		 */
+		EmailProviderNotAllowed: () => LocalizedString
 	}
 	Admin: {
 		/**
