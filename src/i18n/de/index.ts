@@ -174,36 +174,31 @@ const de: Translation = {
 		},
 		ModelOptions: {
 			'048b4aa3-5586-47ed-900f-f4341c96bdb2': {
-				realName: 'Stabile Diffusion 1,5',
-				simpleName: 'Allgemein'
+				realName: 'Stable Diffusion 1.5'
 			},
 			'8acfe4c8-751d-4aa6-8c3c-844e3ef478e0': {
-				realName: 'Openjourney',
-				simpleName: '3D Digital Art'
+				realName: 'Openjourney'
 			},
 			'36d9d835-646f-4fc7-b9fe-98654464bf8e': {
-				realName: 'Arcane Diffusion',
-				simpleName: '3D-Comic'
+				realName: 'Arcane Diffusion'
 			},
 			'48a7031d-43b6-4a23-9f8c-8020eb6862e4': {
-				realName: 'Ghibli Diffusion',
-				simpleName: 'Anime 2'
+				realName: 'Ghibli Diffusion'
 			},
 			'790c80e1-65b1-4556-9332-196344389572': {
-				realName: 'Mo-Di Diffusion',
-				simpleName: 'Animierter Film'
+				realName: 'Mo-Di Diffusion'
 			},
 			'eaa438e1-dbf9-48fd-be71-206f0f257617': {
-				realName: 'Redshift Diffusion',
-				simpleName: '3D Render'
+				realName: 'Redshift Diffusion'
 			},
 			'f7f3d973-ac6f-4a7a-9db8-e89e4fba03a9': {
-				realName: 'Waifu Diffusion v1.4',
-				simpleName: 'Anime'
+				realName: 'Waifu Diffusion v1.4'
 			},
 			'fc06f6ab-ed14-4186-a7c0-aaec288d4f38': {
-				realName: '22h Diffusion v0.1',
-				simpleName: 'Artistic'
+				realName: '22h Diffusion v0.1'
+			},
+			'b6c1372f-31a7-457c-907c-d292a6ffef97': {
+				realName: 'Luna Diffusion'
 			}
 		},
 		SchedulerOptions: {

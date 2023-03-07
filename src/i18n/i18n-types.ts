@@ -533,80 +533,54 @@ type RootTranslation = {
 				 * S​t​a​b​l​e​ ​D​i​f​f​u​s​i​o​n​ ​1​.​5
 				 */
 				realName: string
-				/**
-				 * G​e​n​e​r​a​l
-				 */
-				simpleName: string
 			}
 			'8acfe4c8-751d-4aa6-8c3c-844e3ef478e0': {
 				/**
 				 * O​p​e​n​j​o​u​r​n​e​y
 				 */
 				realName: string
-				/**
-				 * 3​D​ ​D​i​g​i​t​a​l​ ​A​r​t
-				 */
-				simpleName: string
 			}
 			'36d9d835-646f-4fc7-b9fe-98654464bf8e': {
 				/**
 				 * A​r​c​a​n​e​ ​D​i​f​f​u​s​i​o​n
 				 */
 				realName: string
-				/**
-				 * 3​D​ ​C​o​m​i​c
-				 */
-				simpleName: string
 			}
 			'48a7031d-43b6-4a23-9f8c-8020eb6862e4': {
 				/**
 				 * G​h​i​b​l​i​ ​D​i​f​f​u​s​i​o​n
 				 */
 				realName: string
-				/**
-				 * A​n​i​m​e​ ​2
-				 */
-				simpleName: string
 			}
 			'790c80e1-65b1-4556-9332-196344389572': {
 				/**
 				 * M​o​-​D​i​ ​D​i​f​f​u​s​i​o​n
 				 */
 				realName: string
-				/**
-				 * A​n​i​m​a​t​e​d​ ​M​o​v​i​e
-				 */
-				simpleName: string
 			}
 			'eaa438e1-dbf9-48fd-be71-206f0f257617': {
 				/**
 				 * R​e​d​s​h​i​f​t​ ​D​i​f​f​u​s​i​o​n
 				 */
 				realName: string
-				/**
-				 * 3​D​ ​R​e​n​d​e​r
-				 */
-				simpleName: string
 			}
 			'f7f3d973-ac6f-4a7a-9db8-e89e4fba03a9': {
 				/**
 				 * W​a​i​f​u​ ​D​i​f​f​u​s​i​o​n​ ​v​1​.​4
 				 */
 				realName: string
-				/**
-				 * A​n​i​m​e
-				 */
-				simpleName: string
 			}
 			'fc06f6ab-ed14-4186-a7c0-aaec288d4f38': {
 				/**
 				 * 2​2​h​ ​D​i​f​f​u​s​i​o​n​ ​v​0​.​1
 				 */
 				realName: string
+			}
+			'b6c1372f-31a7-457c-907c-d292a6ffef97': {
 				/**
-				 * A​r​t​i​s​t​i​c
+				 * L​u​n​a​ ​D​i​f​f​u​s​i​o​n
 				 */
-				simpleName: string
+				realName: string
 			}
 		}
 		SchedulerOptions: {
@@ -1997,80 +1971,54 @@ export type TranslationFunctions = {
 				 * Stable Diffusion 1.5
 				 */
 				realName: () => LocalizedString
-				/**
-				 * General
-				 */
-				simpleName: () => LocalizedString
 			}
 			'8acfe4c8-751d-4aa6-8c3c-844e3ef478e0': {
 				/**
 				 * Openjourney
 				 */
 				realName: () => LocalizedString
-				/**
-				 * 3D Digital Art
-				 */
-				simpleName: () => LocalizedString
 			}
 			'36d9d835-646f-4fc7-b9fe-98654464bf8e': {
 				/**
 				 * Arcane Diffusion
 				 */
 				realName: () => LocalizedString
-				/**
-				 * 3D Comic
-				 */
-				simpleName: () => LocalizedString
 			}
 			'48a7031d-43b6-4a23-9f8c-8020eb6862e4': {
 				/**
 				 * Ghibli Diffusion
 				 */
 				realName: () => LocalizedString
-				/**
-				 * Anime 2
-				 */
-				simpleName: () => LocalizedString
 			}
 			'790c80e1-65b1-4556-9332-196344389572': {
 				/**
 				 * Mo-Di Diffusion
 				 */
 				realName: () => LocalizedString
-				/**
-				 * Animated Movie
-				 */
-				simpleName: () => LocalizedString
 			}
 			'eaa438e1-dbf9-48fd-be71-206f0f257617': {
 				/**
 				 * Redshift Diffusion
 				 */
 				realName: () => LocalizedString
-				/**
-				 * 3D Render
-				 */
-				simpleName: () => LocalizedString
 			}
 			'f7f3d973-ac6f-4a7a-9db8-e89e4fba03a9': {
 				/**
 				 * Waifu Diffusion v1.4
 				 */
 				realName: () => LocalizedString
-				/**
-				 * Anime
-				 */
-				simpleName: () => LocalizedString
 			}
 			'fc06f6ab-ed14-4186-a7c0-aaec288d4f38': {
 				/**
 				 * 22h Diffusion v0.1
 				 */
 				realName: () => LocalizedString
+			}
+			'b6c1372f-31a7-457c-907c-d292a6ffef97': {
 				/**
-				 * Artistic
+				 * Luna Diffusion
 				 */
-				simpleName: () => LocalizedString
+				realName: () => LocalizedString
 			}
 		}
 		SchedulerOptions: {

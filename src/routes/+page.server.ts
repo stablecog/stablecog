@@ -3,17 +3,19 @@ import {
 	type TAvailableGenerationModelId
 } from '$ts/constants/generationModels';
 import {
+	heightTabs,
+	widthTabs,
+	type TAvailableHeight,
+	type TAvailableWidth
+} from '$ts/constants/generationSize';
+import {
 	guidanceScaleMax,
 	guidanceScaleMin,
-	heightTabs,
 	inferenceStepsDefault,
 	inferenceStepsTabs,
 	maxPromptLength,
 	maxSeed,
-	widthTabs,
-	type TAvailableHeight,
-	type TAvailableInferenceSteps,
-	type TAvailableWidth
+	type TAvailableInferenceSteps
 } from '$ts/constants/main';
 import { availableSchedulerIds, type TAvailableSchedulerId } from '$ts/constants/schedulers';
 import type { ServerLoad } from '@sveltejs/kit';

@@ -19,12 +19,10 @@
 	import {
 		guidanceScaleMax,
 		guidanceScaleMin,
-		heightTabs,
 		inferenceStepsTabs,
 		maxProPixelSteps,
 		maxPromptLength,
-		maxSeed,
-		widthTabs
+		maxSeed
 	} from '$ts/constants/main';
 	import { availableModelIdDropdownItems } from '$ts/constants/generationModels';
 	import { availableSchedulerIdDropdownItems } from '$ts/constants/schedulers';
@@ -53,6 +51,7 @@
 	import { isTouchscreen } from '$ts/stores/isTouchscreen';
 	import type { TTab } from '$ts/types/main';
 	import { userSummary } from '$ts/stores/user/summary';
+	import { heightTabs, widthTabs } from '$ts/constants/generationSize';
 
 	export let isCheckComplete: boolean;
 	export let formElement: HTMLFormElement;

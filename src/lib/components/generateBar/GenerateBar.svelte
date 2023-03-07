@@ -8,13 +8,9 @@
 		guidanceScaleDefault,
 		guidanceScaleMax,
 		guidanceScaleMin,
-		heightDefault,
-		heightTabs,
 		inferenceStepsDefault,
 		inferenceStepsTabs,
-		maxPromptLength,
-		widthDefault,
-		widthTabs
+		maxPromptLength
 	} from '$ts/constants/main';
 	import { formatPrompt } from '$ts/helpers/formatPrompt';
 	import {
@@ -63,6 +59,7 @@
 	import { userSummary } from '$ts/stores/user/summary';
 	import { calculateGenerationCost, generationCostCompletionPerMs } from '$ts/stores/cost';
 	import InsufficientCreditsBadge from '$components/badges/InsufficientCreditsBadge.svelte';
+	import { heightDefault, heightTabs, widthDefault, widthTabs } from '$ts/constants/generationSize';
 
 	export let serverData: THomePageData;
 	export let queueGeneration: () => Promise<void>;

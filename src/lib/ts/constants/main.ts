@@ -46,29 +46,7 @@ export const modalCloseDelay = 120;
 export const maxSeed = 2147483647;
 export const maxPromptLength = 500;
 
-export const availableWidths = ['384', '512', '640', '768'] as const;
-export type TAvailableWidth = typeof availableWidths[number];
-export const availableWidthsFree: TAvailableWidth[] = ['512'];
-export const widthTabs: TTab<TAvailableWidth>[] = [
-	{ label: '384', value: '384' },
-	{ label: '512', value: '512' },
-	{ label: '640', value: '640' },
-	{ label: '768', value: '768' }
-];
-export const widthDefault: TAvailableWidth = '512';
-
 export const numOutputsDefault = 4;
-
-export const availableHeights = ['384', '512', '640', '768'] as const;
-export type TAvailableHeight = typeof availableWidths[number];
-export const availableHeightsFree: TAvailableHeight[] = ['512'];
-export const heightTabs: TTab<TAvailableHeight>[] = [
-	{ label: '384', value: '384' },
-	{ label: '512', value: '512' },
-	{ label: '640', value: '640' },
-	{ label: '768', value: '768' }
-];
-export const heightDefault: TAvailableHeight = '512';
 
 export const availableInferenceSteps = ['30', '40', '50'] as const;
 export type TAvailableInferenceSteps = typeof availableInferenceSteps[number];
