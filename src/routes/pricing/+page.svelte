@@ -254,7 +254,7 @@
 						subscribedAmount > card.amount &&
 						$page.data.session?.user.id !== undefined}
 					<div
-						class="w-full max-w-[22rem] bg-c-bg shadow-xl shadow-c-shadow/[var(--o-shadow-strong)] 
+						class="w-full max-w-md md:max-w-[22rem] bg-c-bg shadow-xl shadow-c-shadow/[var(--o-shadow-strong)] 
 					 	p-4 md:p-5 rounded-2xl md:rounded-3xl ring-2 {isSubscribed
 							? 'ring-c-success'
 							: card.ringClass} relative"
