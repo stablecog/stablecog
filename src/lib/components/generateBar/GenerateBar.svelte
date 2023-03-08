@@ -267,7 +267,13 @@
 		promptInputElement.focus();
 	};
 
-	$: [$generationWidth, $generationHeight, $generationInferenceSteps, $generationNumOutputs],
+	$: [
+		$generationWidth,
+		$generationHeight,
+		$generationInferenceSteps,
+		$generationNumOutputs,
+		$generationCostCompletionPerMs
+	],
 		setEstimatedGenerationDuration();
 
 	function setEstimatedGenerationDuration() {
