@@ -26,7 +26,6 @@
 	import type { THomePageData } from '$routes/+page.server';
 	import { isValue } from '$ts/helpers/isValue';
 	import { shouldSubmitToGallery } from '$ts/stores/shouldSubmitToGallery';
-	import SubmitToGallery from '$components/SubmitToGallery.svelte';
 	import LL, { locale } from '$i18n/i18n-svelte';
 	import GenerationFullScreen from '$components/generationFullScreen/GenerationFullScreen.svelte';
 	import {
