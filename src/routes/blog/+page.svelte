@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { page } from '$app/stores';
 	import MetaTag from '$components/MetaTag.svelte';
-	import { PUBLIC_R2_URL } from '$env/static/public';
+	import { PUBLIC_BUCKET_AUX_URL } from '$env/static/public';
 	import LL from '$i18n/i18n-svelte';
 	import { canonicalUrl } from '$ts/constants/main';
 	import { isTouchscreen } from '$ts/stores/isTouchscreen';
@@ -40,7 +40,7 @@
 				<div class="w-full h-auto relative z-0 overflow-hidden">
 					<svg class="w-full h-auto relative" viewBox="0 0 1200 630" />
 					<img
-						src="{PUBLIC_R2_URL}/blog/previews/{post.slug}.jpg"
+						src="{PUBLIC_BUCKET_AUX_URL}/blog/previews/{post.slug}.jpg"
 						class="bg-c-tertiary w-full h-auto absolute left-0 top-0 origin-top transition transform"
 						alt={post.title}
 						width="1200"

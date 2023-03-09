@@ -7,7 +7,7 @@
 	import MetaTag from '$components/MetaTag.svelte';
 	import SocialBar from '$components/SocialBar.svelte';
 	import '$css/blog.css';
-	import { PUBLIC_R2_URL } from '$env/static/public';
+	import { PUBLIC_BUCKET_AUX_URL } from '$env/static/public';
 	import LL from '$i18n/i18n-svelte';
 	import { canonicalUrl } from '$ts/constants/main';
 	import { isTouchscreen } from '$ts/stores/isTouchscreen';
@@ -29,7 +29,7 @@
 <MetaTag
 	title="{title} | Blog"
 	{description}
-	imageUrl="{PUBLIC_R2_URL}/blog/previews/{frontmatter.slug}.jpg"
+	imageUrl="{PUBLIC_BUCKET_AUX_URL}/blog/previews/{frontmatter.slug}.jpg"
 	canonical="{canonicalUrl}{$page.url.pathname}"
 />
 
@@ -48,7 +48,7 @@
 				{#if author}
 					<p class="mt-0.75 text-c-on-bg/40 font-medium text-center leading-relaxed">
 						{#if author_url}
-							<a class="blog-link" href={author_url} target="_blank">{author}</a>
+							<a rel="noreferrer" class="blog-link" href={author_url} target="_blank">{author}</a>
 						{:else}
 							<span>{author}</span>
 						{/if}

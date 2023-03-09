@@ -6,11 +6,11 @@ author_url: https://twitter.com/ngyekta
 date: 2022-03-10T13:00:00.000Z
 ---
 
-We've been working on a big update to our systems that will make Stablecog faster, better and sustainable. It's finally released! Here's what's new:
+We've been working on a big update to our systems that will make Stablecog faster, better, and sustainable. It's finally released! Here's what's new.
 
 ## A Better System
 
-We've overhauled our system to make it more robust and scalable. We're also using NVIDIA A100s now, which are significantly faster. Since they are so fast, we can finally make generating 4 images at a time the default. We've made the new system open-source like before: [github.com/stablecog](https://github.com/stablecog).
+We've overhauled our system to make it more robust, and scalable. We're also using NVIDIA A100s now, which are significantly faster. Since they are so fast, we can finally make generating 4 images at a time the default. We've made the new system open-source like before: [github.com/stablecog](https://github.com/stablecog).
 
 ## Using Cloud Storage
 
@@ -24,12 +24,20 @@ Going forward, we are switching to an image based pricing model which align our 
 
 [Check Out Plans](https://stablecog.com/pricing)<!--rehype:button=true-->
 
+![New Plans](https://ba.stablecog.com/blog/plans.jpg)<!--rehype:width=2560   &height= 1200-->
+
 If you are a pro user and aren't happy with the new plans, please email us at [hello@stablecog.com](mailto:hello@stablecog.com) and we'll work something out.
 
 ## New Default Model
 
-Our new default model is Luna Diffusion, created by [@proximasan](https://twitter.com/proximasan). It's a more stylized model that is good at a variety of styles while not requiring long prompts. Using longer prompts, you can still tweak the model to produce variety of styles.
+Our new default model is Luna Diffusion, created by [@proximasan](https://twitter.com/proximasan). It's a more stylized model that is good at a variety of styles while not requiring long prompts. Using longer prompts, you can tweak the model to a style of your choice.
+
+![Luna Diffusion](https://ba.stablecog.com/blog/luna-diffusion.jpg)<!--rehype:width=2560   &height= 1440-->
 
 ## New Schedulers
 
 We've added two new schedulers: "DPM Multistep" and "DPM Singlestep". These schedulers are good at small details.
+
+## Upcoming Features
+
+Now that we have a better system and our incentives are aligned, we can focus on adding new features fast. Image to image generation, outpainting with a canvas, a semantically searchable gallery, gallery likes, usernames, and more are coming soon.
