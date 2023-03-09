@@ -1,12 +1,12 @@
 ---
 title: Our First Big Update
-description: We've been working on a big update to our systems that will make Stablecog faster, better and sustainable. It's finally released! We have a new system, a new pricing model, a new default model and new schedulers.
+description: We've been working on a big update to our systems to make Stablecog faster, mor robust and sustainable. It's finally here! We have a new system, a new pricing model, a new default model and new schedulers.
 author: M. Yekta Güngör
 author_url: https://twitter.com/ngyekta
 date: 2022-03-10T13:00:00.000Z
 ---
 
-We've been working on a big update to our systems that will make Stablecog faster, better, and sustainable. It's finally released! Here's what's new.
+We've been working on a big update to our systems to make Stablecog faster, more robust, and sustainable. It's finally here! Here's what's new.
 
 ## A Better System
 
@@ -14,7 +14,7 @@ We've overhauled our system to make it more robust and scalable. We're also usin
 
 ## Using Cloud Storage
 
-We have been storing pro user's generations on cloud since the start, and started storing free generations on cloud about a month ago. Now, we are switching to cloud for everyone. [History page](https://stablecog.com/history) will now show you all your generations, not just the ones that are saved locally to your browser.
+We have been storing pro users' generations on cloud since the start, and started storing free generations on cloud about a month ago. Now, we are switching to cloud completely. [History page](https://stablecog.com/history) will now show you all your generations, not just the ones that are saved locally to your browser.
 
 ## New Pricing Model
 
