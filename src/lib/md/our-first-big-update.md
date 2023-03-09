@@ -1,0 +1,35 @@
+---
+title: Our First Big Update
+description: We've been working on a big update to our systems that will make Stablecog faster, better and sustainable. It's finally released! We have a new system, a new pricing model, a new default model and new schedulers.
+author: M. Yekta Güngör
+author_url: https://twitter.com/ngyekta
+date: 2022-03-10T13:00:00.000Z
+---
+
+We've been working on a big update to our systems that will make Stablecog faster, better and sustainable. It's finally released! Here's what's new:
+
+## A Better System
+
+We've overhauled our system to make it more robust and scalable. We're also using NVIDIA A100s now, which are significantly faster. Since they are so fast, we can finally make generating 4 images at a time the default. We've made the new system open-source like before: [github.com/stablecog](https://github.com/stablecog).
+
+## Using Cloud Storage
+
+We have been storing pro user's generations on cloud since the start, and started storing free generations on cloud about a month ago. Now, we are switching to cloud for everyone. [History page](https://stablecog.com/history) will now show you all your generations, not just the ones that are saved locally to your browser.
+
+## New Pricing Model
+
+Turns out, offering tens of thousands of generations to everyone for free wasn't sustainable :) We weren't only losing money on free users but even our pro plan's price wasn't enough to cover the GPU cost a pro user generates on average (let alone any other cost we have).
+
+Going forward, we are switching to an image based pricing model which align our incentives better. We are still offering free generations to everyone, but in a sustainable way. You can also [participate in our events](https://stablecog.com/discord) to get more free generations.
+
+[Check Out Plans](https://stablecog.com/pricing)<!--rehype:button=true-->
+
+If you are a pro user and aren't happy with the new plans, please email us at [hello@stablecog.com](mailto:hello@stablecog.com) and we'll work something out.
+
+## New Default Model
+
+Our new default model is Luna Diffusion, created by [@proximasan](https://twitter.com/proximasan). It's a more stylized model that is good at a variety of styles while not requiring long prompts. Using longer prompts, you can still tweak the model to produce variety of styles.
+
+## New Schedulers
+
+We've added two new schedulers: "DPM Multistep" and "DPM Singlestep". These schedulers are good at small details.

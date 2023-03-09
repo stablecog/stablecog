@@ -12,7 +12,7 @@ Stable Diffusion is an open source AI model to generate images. It is like DALL-
 
 Openjourney is a fine-tuned Stable Diffusion model that tries to mimic the style of [Midjourney](https://midjourney.com). It is created by [Prompthero](https://twitter.com/prompthero) and [available on Hugging Face](https://huggingface.co/prompthero/openjourney) for everyone to download and use for free. Openjourney is one of the most popular fine-tuned Stable Diffusion models on Hugging Face with 56K+ downloads last month at the time of writing.
 
-[![Openjourney](https://r2.stablecog.com/blog/openjourney.jpg)<!--rehype:width=2560&height=3840-->](https://huggingface.co/prompthero/openjourney)
+[![Openjourney](https://ba.stablecog.com/blog/openjourney.jpg)<!--rehype:width=2560&height=3840-->](https://huggingface.co/prompthero/openjourney)
 
 In my experience, it does a relatively good job of mimicking the style of Midjourney with certain kinds of prompts. However, it tends to give results that are sometimes too similar to each other, a narrowed down "Midjourney style" if you will. In exchange, you can get pretty good results with relatively short prompts.
 
@@ -26,7 +26,7 @@ Openjourney will be pre-selected for you in the UI, you can enter a prompt and j
 
 Arcane Diffusion tries to mimic the style of the popular TV series [Arcane](https://www.imdb.com/title/tt11126994/). It is created by [@nitrosocke](https://twitter.com/nitrosocke) and [available on Hugging Face](https://huggingface.co/nitrosocke/Arcane-Diffusion) for everyone to download and use for free. Arcane Diffusion is one of the most popular fine-tuned Stable Diffusion models on Hugging Face with 30K+ downloads last month at the time of writing.
 
-[![Arcane Diffusion](https://r2.stablecog.com/blog/arcane-diffusion.jpg)<!--rehype:width=2560&height=4480-->](https://huggingface.co/nitrosocke/Arcane-Diffusion)
+[![Arcane Diffusion](https://ba.stablecog.com/blog/arcane-diffusion.jpg)<!--rehype:width=2560&height=4480-->](https://huggingface.co/nitrosocke/Arcane-Diffusion)
 
 In my experience, it does a very good job of mimicking the style of the TV series Arcane. However, since that series has such a unique and well-defined world, using Arcane Diffusion for certain kinds of prompts might not produce good results.
 
@@ -40,7 +40,7 @@ Arcane Diffusion will be pre-selected for you in the UI, you can enter a prompt 
 
 Mo-Di Diffusion tries to mimic the style of Disney's modern animated films. It is created by [@nitrosocke](https://twitter.com/nitrosocke) and [available on Hugging Face](https://huggingface.co/nitrosocke/mo-di-diffusion) for everyone to download and use for free. Mo-Di Diffusion is another very popular fine-tuned Stable Diffusion model with 26K+ downloads last month on Hugging Face at the time of writing.
 
-[![Mo-Di Diffusion](https://r2.stablecog.com/blog/mo-di-diffusion.jpg)<!--rehype:width=2560&height=3840-->](https://huggingface.co/nitrosocke/mo-di-diffusion)
+[![Mo-Di Diffusion](https://ba.stablecog.com/blog/mo-di-diffusion.jpg)<!--rehype:width=2560&height=3840-->](https://huggingface.co/nitrosocke/mo-di-diffusion)
 
 In my experience, it does a good job of mimicking the style of the Disney's modern animated films. It seems like the dataset used to fine-tune the model includes a relatively good variety of subjects and it is able to generate a variety of subjects in the style of Disney's modern animated films.
 
@@ -54,7 +54,7 @@ Mo-Di Diffusion will be pre-selected for you in the UI, you can enter a prompt a
 
 Waifu Diffusion is an anime style model. It is created by [harubaru](https://github.com/harubaru) and [available on Hugging Face](https://huggingface.co/hakurei/waifu-diffusion) for everyone to download and use for free. Waifu Diffusion is by far the most popular model in this list with 176K+ downloads last month on Hugging Face at the time of writing.
 
-[![Waifu Diffusion](https://r2.stablecog.com/blog/waifu-diffusion.jpg)<!--rehype:width=2560&height=4480-->](https://huggingface.co/hakurei/waifu-diffusion)
+[![Waifu Diffusion](https://ba.stablecog.com/blog/waifu-diffusion.jpg)<!--rehype:width=2560&height=4480-->](https://huggingface.co/hakurei/waifu-diffusion)
 
 In my experience, it does a good job within the anime style. However, if you want a SFW results, this model might not be for you. In my trials it was generating too many NSFW images for prompts that are completely family friendly.
 
@@ -64,7 +64,7 @@ Waifu Diffusion isn't available on Stablecog since Stablecog is a SFW tool and g
 
 Ghibli Diffusion tries to mimic the style of [Studio Ghibli](https://www.studioghibli.com.au). It is created by [@nitrosocke](https://twitter.com/nitrosocke) and [available on Hugging Face](https://huggingface.co/nitrosocke/Ghibli-Diffusion) for everyone to download and use for free. Ghibli Diffusion is less popular compared to others in this list with 2.8K+ downloads last month on Hugging Face at the time of writing.
 
-[![Ghibli Diffusion](https://r2.stablecog.com/blog/ghibli-diffusion.jpg)<!--rehype:width=2560&height=4480-->](https://huggingface.co/nitrosocke/Ghibli-Diffusion)
+[![Ghibli Diffusion](https://ba.stablecog.com/blog/ghibli-diffusion.jpg)<!--rehype:width=2560&height=4480-->](https://huggingface.co/nitrosocke/Ghibli-Diffusion)
 
 In my experience, it does a good job of mimicking the style of some of the Studio Ghibli's work. However, it produces artifacts with some prompts and the dataset used to fine tune Stable Diffusion doesn't seem particularly large judging by the results.
 
