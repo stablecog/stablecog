@@ -10,7 +10,7 @@ We've been working on a big update to our systems that will make Stablecog faste
 
 ## A Better System
 
-We've overhauled our system to make it more robust, and scalable. We're also using NVIDIA A100s now, which are significantly faster. Since they are so fast, we can finally make generating 4 images at a time the default. We've made the new system open-source like before: [github.com/stablecog](https://github.com/stablecog).
+We've overhauled our system to make it more robust and scalable. We're also using NVIDIA A100s now, which are significantly faster. Since they are so fast, we can finally make generating 4 images at a time the default. We've made the new system open-source like before: [github.com/stablecog](https://github.com/stablecog).
 
 ## Using Cloud Storage
 
