@@ -25,6 +25,7 @@
 		modalInTransitionProps,
 		modalOutTransitionProps
 	} from '$ts/animation/constants';
+	import IconBolt from '$components/icons/IconBolt.svelte';
 
 	let isSignInModalOpen = false;
 	let isSettingsOpen = false;
@@ -52,27 +53,25 @@
 		mounted = true;
 	});
 
-	const lastNotification = 'go-pro-1';
+	const lastNotification = 'our-first-big-update';
 </script>
 
 <svelte:window on:scroll={setNotAtTheTop} />
 
 <nav bind:clientHeight={$navbarHeight} class="w-full flex flex-col sticky -top-px z-50 transition">
 	{#if mounted && ($lastClosedNotification === null || $lastClosedNotification !== lastNotification)}
-		<!-- <Banner
-			href="/pro"
+		<Banner
+			href="/blog/our-first-big-update"
 			target="_self"
 			onClose={() => {
 				lastClosedNotification.set(lastNotification);
 			}}
 		>
 			<div class="flex items-center justify-center gap-2">
-				<IconStar class="w-7 h-7 flex-shrink-0" />
-				<p class="flex-shrink min-w-0 overflow-hidden overflow-ellipsis">
-					Become a pro and unlock all features!
-				</p>
+				<IconBolt class="w-6 h-6 flex-shrink-0" />
+				<p class="flex-shrink min-w-0 overflow-hidden overflow-ellipsis">Our big update is here!</p>
 			</div>
-		</Banner> -->
+		</Banner>
 	{/if}
 	<div class="w-full flex flex-row items-center justify-between relative z-0">
 		<PageLoadProgressBar />
