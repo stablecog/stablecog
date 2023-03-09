@@ -116,7 +116,7 @@
 
 <div
 	class="max-w-full flex flex-col items-center justify-center bg-c-bg ring-c-bg-secondary ring-2 px-3 py-4 
-	md:px-8 md:py-7 rounded-3xl relative z-10 overflow-hidden {isModal
+	md:px-10 md:py-7 rounded-3xl relative z-10 overflow-hidden {isModal
 		? 'shadow-2xl shadow-c-shadow/[var(--o-shadow-strong)]'
 		: 'shadow-xl shadow-c-shadow/[var(--o-shadow-normal)]'}"
 >
@@ -143,7 +143,7 @@
 		</p>
 		{#if signInStatus === 'sent-otp'}
 			<div
-				class="mt-4 md:mt-6 -mx-5 md:-mx-10 -mb-4 md:-mb-7 border-t-2 border-c-bg-secondary w-[calc(100%+1.5rem)] md:w-[calc(100%+4rem)] 
+				class="mt-4 md:mt-6 -mx-5 md:-mx-10 -mb-4 md:-mb-7 border-t-2 border-c-bg-secondary w-[calc(100%+1.5rem)] md:w-[calc(100%+5rem)] 
 				flex flex-col items-center justify-start relative z-0"
 			>
 				<!-- {#if codeSignInStatus === 'idle'}
@@ -222,7 +222,7 @@
 					</div>
 				</div>
 				<div
-					class="flex items-center gap-4 my-5 md:my-6 -mx-5 md:-mx-10 w-[calc(100%+1.5rem)] md:w-[calc(100%+4rem)]"
+					class="flex items-center gap-4 my-5 md:my-6 -mx-5 md:-mx-10 w-[calc(100%+1.5rem)] md:w-[calc(100%+5rem)]"
 				>
 					<div class="flex-1 h-2px rounded-r-full bg-c-bg-secondary" />
 					<p class="text-sm text-c-on-bg/50 text-center inline-block">
