@@ -236,7 +236,7 @@
 										/>
 										<div
 											class="absolute w-full h-full flex items-center justify-center left-0 top-0 rounded-2xl bg-c-bg-secondary z-0 overflow-hidden border-4 
-										shadow-lg shadow-c-shadow/[var(--o-shadow-normal)] border-c-bg-secondary group"
+											shadow-lg shadow-c-shadow/[var(--o-shadow-normal)] border-c-bg-secondary group"
 										>
 											<div class="w-full h-full flex items-center justify-center">
 												<p class="text-sm text-c-on-bg/50 px-5 py-3 text-center leading-relaxed">
@@ -250,9 +250,6 @@
 						{/if}
 					</div>
 				</div>
-			{/if}
-			{#if $generations.length > 0 && $generations[0].status === 'succeeded' && $shouldSubmitToGallery === undefined}
-				<SubmitToGallery />
 			{/if}
 		{/if}
 	</div>

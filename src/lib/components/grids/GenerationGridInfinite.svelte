@@ -38,54 +38,53 @@
 		<div class="h-[2vh]" />
 	</div>
 {:else if $generationsQuery.isSuccess && $generationsQuery.data.pages.length > 0 && outputs !== undefined && items !== undefined}
-	<MasonryInfiniteGrid
-		{items}
-		let:visibleItems
-		align="center"
-		on:requestAppend={() => {
-			if ($generationsQuery.isFetchingNextPage) return;
-			if (!$generationsQuery.hasNextPage) return;
-			$generationsQuery.fetchNextPage();
-		}}
-	>
-		{#each visibleItems as item (item.key)}
-			<div
-				class="w-1/2 sm:w-1/3 lg:w-1/4 {cardType === 'history'
-					? ''
-					: 'xl:w-1/5 2xl:w-1/6 3xl:w-1/7'} p-0.5"
-			>
-				<div class="w-full relative group">
-					<ImagePlaceholder
-						width={outputs[item.key].generation.width}
-						height={outputs[item.key].generation.height}
-					/>
-					{#if $activeGeneration === undefined || $activeGeneration.selected_output.id !== outputs[item.key].id}
-						<div
-							transition:fly|local={imageTransitionProps}
-							class="absolute left-0 top-0 w-full h-full rounded-xl bg-c-bg-secondary transition border-4
-										border-c-bg-secondary z-0 overflow-hidden shadow-lg shadow-c-shadow/[var(--o-shadow-normal)]"
-						>
-							{#if outputs[item.key].generation.outputs !== undefined}
-								<GenerationImage
-									{cardType}
-									useUpscaledImage={false}
-									generation={{
-										...outputs[item.key].generation,
-										selected_output: outputs[item.key]
-									}}
-								/>
-							{/if}
-						</div>
-					{/if}
-				</div>
-			</div>
-		{/each}
-	</MasonryInfiniteGrid>
-	{#if $generationsQuery.hasNextPage}
-		<div
-			in:fade|local={{ duration: 300, easing: quadOut }}
-			class="w-full flex-1 flex flex-row items-center justify-center mt-6"
+	<div class="w-full flex-1">
+		<MasonryInfiniteGrid
+			{items}
+			let:visibleItems
+			align="center"
+			on:requestAppend={() => {
+				if ($generationsQuery.isFetchingNextPage) return;
+				if (!$generationsQuery.hasNextPage) return;
+				$generationsQuery.fetchNextPage();
+			}}
 		>
+			{#each visibleItems as item (item.key)}
+				<div
+					class="w-1/2 sm:w-1/3 lg:w-1/4 {cardType === 'history'
+						? ''
+						: 'xl:w-1/5 2xl:w-1/6 3xl:w-1/7'} p-0.5"
+				>
+					<div class="w-full relative group">
+						<ImagePlaceholder
+							width={outputs[item.key].generation.width}
+							height={outputs[item.key].generation.height}
+						/>
+						{#if $activeGeneration === undefined || $activeGeneration.selected_output.id !== outputs[item.key].id}
+							<div
+								transition:fly|local={imageTransitionProps}
+								class="absolute left-0 top-0 w-full h-full rounded-xl bg-c-bg-secondary transition border-4
+										border-c-bg-secondary z-0 overflow-hidden shadow-lg shadow-c-shadow/[var(--o-shadow-normal)]"
+							>
+								{#if outputs[item.key].generation.outputs !== undefined}
+									<GenerationImage
+										{cardType}
+										useUpscaledImage={false}
+										generation={{
+											...outputs[item.key].generation,
+											selected_output: outputs[item.key]
+										}}
+									/>
+								{/if}
+							</div>
+						{/if}
+					</div>
+				</div>
+			{/each}
+		</MasonryInfiniteGrid>
+	</div>
+	{#if $generationsQuery.hasNextPage}
+		<div class="w-full flex flex-row items-center justify-center mt-6">
 			<Button
 				withSpinner
 				size="sm"

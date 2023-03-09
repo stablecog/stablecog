@@ -80,17 +80,25 @@
 						</p>
 						<ProductIdBadge class="mt-2" productId={$userSummary?.product_id} size="lg" />
 					</div>
-					<Button
-						class="w-full md:w-auto"
-						size="sm"
-						href={data.customer_portal_url && $userSummary?.product_id
-							? data.customer_portal_url
-							: '/pricing'}
-					>
-						{$userSummary?.product_id
-							? $LL.Account.ManageSubscriptionButton()
-							: $LL.Pricing.SubscribeButton()}
-					</Button>
+					<div class="w-full md:w-auto flex flex-col">
+						<Button
+							noPadding
+							class="w-full px-6 py-3.5"
+							size="sm"
+							href={data.customer_portal_url && $userSummary?.product_id
+								? data.customer_portal_url
+								: '/pricing'}
+						>
+							{data.customer_portal_url && $userSummary?.product_id
+								? $LL.Account.ManageSubscriptionButton()
+								: $LL.Pricing.SubscribeButton()}
+						</Button>
+						{#if data.customer_portal_url && $userSummary?.product_id}
+							<Button noPadding class="w-full px-6 py-3.5 mt-2" size="sm" href={'/pricing'}>
+								Compare Plans
+							</Button>
+						{/if}
+					</div>
 				</div>
 				<div class="w-full h-2px bg-c-bg-secondary" />
 				<div class="w-full flex flex-col">
