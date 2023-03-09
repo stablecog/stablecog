@@ -31,7 +31,7 @@
 			<a
 				href="/blog/{post.slug}"
 				data-sveltekit-prefetch
-				class="w-full max-w-md md:max-w-sm bg-c-bg-secondary ring-2 ring-c-bg-tertiary relative z-0 overflow-hidden
+				class="w-full self-stretch max-w-md md:max-w-sm bg-c-bg-secondary ring-2 ring-c-bg-tertiary relative z-0 overflow-hidden
 				rounded-xl flex flex-col shadow-lg shadow-c-shadow/[var(--o-shadow-normal)] transition group
 				{!$isTouchscreen
 					? 'hover:ring-4 hover:shadow-xl hover:shadow-c-shadow/[var(--o-shadow-strong)] hover:-translate-y-1.5'
