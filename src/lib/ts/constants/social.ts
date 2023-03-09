@@ -7,6 +7,15 @@ export const socialAppUrls = {
 	email: 'mailto:hello@stablecog.com'
 };
 
+export const socialAppUrlsAbsolute = {
+	discord: 'https://discord.gg/AJyYd6AUEn',
+	twitter: 'https://twitter.com/stablecogcom',
+	instagram: 'https://instagram.com/stablecog',
+	github: 'https://github.com/stablecog/stablecog',
+	producthunt: 'https://www.producthunt.com/posts/stablecog',
+	email: 'mailto:hello@stablecog.com'
+};
+
 export const socialUrls = {
 	discord: 'https://discord.gg/AJyYd6AUEn',
 	twitter: 'https://twitter.com/stablecogcom',

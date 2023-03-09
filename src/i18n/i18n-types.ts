@@ -1471,6 +1471,16 @@ type RootTranslation = {
 		 */
 		OtherPlansParagraph: string
 	}
+	UnderDevelopment: {
+		/**
+		 * W​e​'​l​l​ ​b​e​ ​b​a​c​k​ ​s​o​o​n​!
+		 */
+		PageTitle: string
+		/**
+		 * W​e​'​r​e​ ​u​p​g​r​a​d​i​n​g​ ​o​u​r​ ​s​y​s​t​e​m​s​.​ ​W​e​'​l​l​ ​b​e​ ​b​a​c​k​ ​i​n​ ​a​ ​c​o​u​p​l​e​ ​o​f​ ​h​o​u​r​s​.
+		 */
+		PageParagraph: string
+	}
 }
 
 export type TranslationFunctions = {
@@ -2903,6 +2913,16 @@ export type TranslationFunctions = {
 		 * You can upgrade to a higher plan or buy a credit pack.
 		 */
 		OtherPlansParagraph: () => LocalizedString
+	}
+	UnderDevelopment: {
+		/**
+		 * We'll be back soon!
+		 */
+		PageTitle: () => LocalizedString
+		/**
+		 * We're upgrading our systems. We'll be back in a couple of hours.
+		 */
+		PageParagraph: () => LocalizedString
 	}
 }
 

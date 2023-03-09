@@ -9,7 +9,7 @@
 	import { page } from '$app/stores';
 	import { windowHeight, windowWidth } from '$ts/stores/window';
 	import type { LayoutData } from './$types';
-	import { locale, setLocale } from '$i18n/i18n-svelte';
+	import LL, { locale, setLocale } from '$i18n/i18n-svelte';
 	import { localeLS } from '$ts/stores/localeLS';
 	import { loadLocaleAsync } from '$i18n/i18n-util.async';
 	import { isLocale } from '$i18n/i18n-util';
@@ -63,6 +63,9 @@
 	/* 	import posthog from 'posthog-js'; */
 	import { PUBLIC_MIXPANEL_ID, PUBLIC_MIXPANEL_URL } from '$env/static/public';
 	import { getUserSummary } from '$ts/helpers/user/user';
+	import Logo from '$components/Logo.svelte';
+	import SocialBar from '$components/SocialBar.svelte';
+	import UnderDevelopment from '$components/UnderDevelopment.svelte';
 
 	export let data: LayoutData;
 	setLocale(data.locale);
@@ -415,6 +418,8 @@
 			subscription.unsubscribe();
 		};
 	});
+
+	const underDevelopment = false;
 </script>
 
 <svelte:window bind:innerHeight bind:innerWidth />
@@ -429,18 +434,22 @@
 			? `min-height: ${innerHeight}px`
 			: ''}"
 	>
-		<Navbar />
-		<main class="w-full flex-1 flex flex-col relative break-words">
-			<slot />
-		</main>
-		{#if !routesWithHiddenFooter.includes($page.url.pathname)}
-			<Footer />
+		{#if underDevelopment}
+			<UnderDevelopment />
+		{:else}
+			<Navbar />
+			<main class="w-full flex-1 flex flex-col relative break-words">
+				<slot />
+			</main>
+			{#if !routesWithHiddenFooter.includes($page.url.pathname)}
+				<Footer />
+			{/if}
+			<NavbarBottom class="md:hidden h-[calc(3.75rem+env(safe-area-inset-bottom))]" />
+			<div class="md:hidden h-[calc(3.75rem+env(safe-area-inset-bottom))]" />
+			<div
+				id="tooltip-container"
+				class="absolute overflow-x-hidden left-0 top-0 w-full h-full pointer-events-none"
+			/>
 		{/if}
-		<NavbarBottom class="md:hidden h-[calc(3.75rem+env(safe-area-inset-bottom))]" />
-		<div class="md:hidden h-[calc(3.75rem+env(safe-area-inset-bottom))]" />
-		<div
-			id="tooltip-container"
-			class="absolute overflow-x-hidden left-0 top-0 w-full h-full pointer-events-none"
-		/>
 	</div>
 </QueryClientProvider>

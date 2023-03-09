@@ -503,6 +503,10 @@ const en: BaseTranslation = {
 			'We give all active users free credits daily. You can get more by subscribing to a plan or by participating in our events.',
 		HighestPlanParagraph: 'You can buy a credit pack.',
 		OtherPlansParagraph: 'You can upgrade to a higher plan or buy a credit pack.'
+	},
+	UnderDevelopment: {
+		PageTitle: "We'll be back soon!",
+		PageParagraph: "We're upgrading our systems. We'll be back in a couple of hours."
 	}
 };
 
