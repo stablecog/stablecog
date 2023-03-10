@@ -386,6 +386,7 @@ const ko: Translation = {
 	Account: {
 		PageTitle: '로그인 계정',
 		ManageSubscriptionButton: '구독 설정',
+		ComparePlansButton: 'Compare Plans',
 		ManageAccountButton: '계정 설정',
 		MyAccountButton: '로그인 계정',
 		SubscriptionPlanTitle: '가입 요금제',

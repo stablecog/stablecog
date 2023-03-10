@@ -1127,6 +1127,10 @@ type RootTranslation = {
 		 */
 		ManageSubscriptionButton: string
 		/**
+		 * C​o​m​p​a​r​e​ ​P​l​a​n​s
+		 */
+		ComparePlansButton: string
+		/**
 		 * M​a​n​a​g​e​ ​A​c​c​o​u​n​t
 		 */
 		ManageAccountButton: string
@@ -2575,6 +2579,10 @@ export type TranslationFunctions = {
 		 * Manage Subscription
 		 */
 		ManageSubscriptionButton: () => LocalizedString
+		/**
+		 * Compare Plans
+		 */
+		ComparePlansButton: () => LocalizedString
 		/**
 		 * Manage Account
 		 */

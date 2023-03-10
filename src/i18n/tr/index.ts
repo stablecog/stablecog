@@ -385,6 +385,7 @@ const tr: Translation = {
 	Account: {
 		PageTitle: 'Üyelik',
 		ManageSubscriptionButton: 'Aboneliği Yönet',
+		ComparePlansButton: 'Compare Plans',
 		ManageAccountButton: 'Üyeliği Yönet',
 		MyAccountButton: 'Üyeliğim',
 		SubscriptionPlanTitle: 'Üyelik Tipi',

@@ -391,6 +391,7 @@ const fr: Translation = {
 	Account: {
 		PageTitle: 'Compte',
 		ManageSubscriptionButton: 'Gérer votre abonnement',
+		ComparePlansButton: 'Compare Plans',
 		ManageAccountButton: 'Gérer votre compte',
 		MyAccountButton: 'Mon compte',
 		SubscriptionPlanTitle: 'Abonnement',

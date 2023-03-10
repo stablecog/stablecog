@@ -389,6 +389,7 @@ const ptBr: Translation = {
 	Account: {
 		PageTitle: 'Conta',
 		ManageSubscriptionButton: 'Gerenciar assinatura',
+		ComparePlansButton: 'Compare Plans',
 		ManageAccountButton: 'Gerenciar Conta',
 		MyAccountButton: 'Minha conta',
 		SubscriptionPlanTitle: 'Plano',

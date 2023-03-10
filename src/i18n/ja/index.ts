@@ -388,6 +388,7 @@ const ja: Translation = {
 	Account: {
 		PageTitle: 'アカウント',
 		ManageSubscriptionButton: 'サブスクリプションを管理',
+		ComparePlansButton: 'Compare Plans',
 		ManageAccountButton: 'アカウントを管理',
 		MyAccountButton: 'アカウント',
 		SubscriptionPlanTitle: 'プラン',

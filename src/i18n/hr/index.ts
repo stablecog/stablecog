@@ -384,6 +384,7 @@ const hr: Translation = {
 	Account: {
 		PageTitle: 'Račun',
 		ManageSubscriptionButton: 'Upravljanje pretplatom',
+		ComparePlansButton: 'Compare Plans',
 		ManageAccountButton: 'Upravljanje računom',
 		MyAccountButton: 'Moj račun',
 		SubscriptionPlanTitle: 'Plan',

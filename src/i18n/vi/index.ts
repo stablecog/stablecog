@@ -389,6 +389,7 @@ const vi: Translation = {
 	Account: {
 		PageTitle: 'Tài khoản',
 		ManageSubscriptionButton: 'Quản lý gói đăng ký',
+		ComparePlansButton: 'Compare Plans',
 		ManageAccountButton: 'Quản lý tài khoản',
 		MyAccountButton: 'Tài khoản của tôi',
 		SubscriptionPlanTitle: 'Gói',

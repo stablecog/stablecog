@@ -95,7 +95,7 @@
 						</Button>
 						{#if data.customer_portal_url && $userSummary?.product_id}
 							<Button noPadding class="w-full px-6 py-3.5 mt-2" size="sm" href={'/pricing'}>
-								Compare Plans
+								{$LL.Account.ComparePlansButton()}
 							</Button>
 						{/if}
 					</div>

@@ -66,6 +66,7 @@
 	import Logo from '$components/Logo.svelte';
 	import SocialBar from '$components/SocialBar.svelte';
 	import UnderDevelopment from '$components/UnderDevelopment.svelte';
+	import { isSuperAdmin } from '$ts/helpers/admin/roles';
 
 	export let data: LayoutData;
 	setLocale(data.locale);
@@ -419,7 +420,7 @@
 		};
 	});
 
-	const underDevelopment = false;
+	const underDevelopment = true;
 </script>
 
 <svelte:window bind:innerHeight bind:innerWidth />
@@ -434,7 +435,7 @@
 			? `min-height: ${innerHeight}px`
 			: ''}"
 	>
-		{#if underDevelopment}
+		{#if underDevelopment && (!$userSummary || !isSuperAdmin($userSummary.roles)) && !$page.url.pathname.startsWith('/admin') && !$page.url.pathname.startsWith('/api/auth') && !$page.url.pathname.startsWith('/sign-in')}
 			<UnderDevelopment />
 		{:else}
 			<Navbar />

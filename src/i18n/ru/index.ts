@@ -388,6 +388,7 @@ const ru: Translation = {
 	Account: {
 		PageTitle: 'Account',
 		ManageSubscriptionButton: 'Manage Subscription',
+		ComparePlansButton: 'Compare Plans',
 		ManageAccountButton: 'Manage Account',
 		MyAccountButton: 'My Account',
 		SubscriptionPlanTitle: 'Plan',
