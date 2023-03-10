@@ -6,11 +6,13 @@
 	} from '$env/static/public';
 	import LL from '$i18n/i18n-svelte';
 	import type { TStripeSupportedProductIdSubscriptions } from '$ts/constants/stripePublic';
+	import { isTouchscreen } from '$ts/stores/isTouchscreen';
 
 	export let productId: TStripeSupportedProductIdSubscriptions | undefined;
 	export let size: 'sm' | 'md' | 'lg' = 'md';
 	export { classes as class };
 	export let planText: string | undefined = undefined;
+	export let href: string | undefined = undefined;
 	let classes = '';
 
 	let _planText: string;
@@ -31,34 +33,81 @@
 	}
 </script>
 
-<div
-	class="bg-c-bg border-2 overflow-hidden z-10 shadow-lg flex-shrink-0
-  shadow-c-shadow/[var(--o-shadow-normal)] {productId !== undefined && productId !== 'free'
-		? 'border-c-primary/30'
-		: 'border-c-on-bg/25'} {size === 'sm'
-		? 'rounded-lg'
-		: size === 'md'
-		? 'rounded-lg2'
-		: 'rounded-lg2'} {classes}"
->
-	<div
-		class="flex items-center justify-center z-10 {productId !== undefined && productId !== 'free'
-			? 'text-c-primary bg-c-primary/15'
-			: 'text-c-on-bg bg-c-on-bg/15'}
-    {size === 'sm'
-			? 'gap-1.5 px-2.5 py-1'
+{#if href}
+	<a
+		{href}
+		data-sveltekit-prefetch
+		class="bg-c-bg border-2 overflow-hidden z-10 shadow-lg flex-shrink-0
+  	shadow-c-shadow/[var(--o-shadow-normal)] group relative {productId !== undefined &&
+		productId !== 'free'
+			? 'border-c-primary/30'
+			: 'border-c-on-bg/25'} {size === 'sm'
+			? 'rounded-lg'
 			: size === 'md'
-			? 'gap-1.5 px-3 py-1.25'
-			: 'gap-1.5 px-4 py-1.5'}"
+			? 'rounded-lg2'
+			: 'rounded-lg2'} {classes}"
 	>
-		<p
-			class={size === 'sm'
-				? 'text-sm font-bold'
-				: size === 'md'
-				? 'text-base font-bold'
-				: 'text-lg font-bold'}
+		<div
+			class="w-[200%] h-full absolute left-0 top-0 flex items-center justify-center {$isTouchscreen
+				? 'hidden'
+				: 'flex'}"
 		>
-			{_planText}
-		</p>
+			<div
+				class="w-full aspect-square origin-left rounded-full transition transform -translate-x-full 
+					bg-c-primary/15 {!$isTouchscreen ? 'group-hover:translate-x-[-45%]' : ''}"
+			/>
+		</div>
+		<div
+			class="flex items-center justify-center z-10 {productId !== undefined && productId !== 'free'
+				? 'text-c-primary bg-c-primary/15'
+				: 'text-c-on-bg bg-c-on-bg/15'}
+    	{size === 'sm'
+				? 'gap-1.5 px-2.5 py-1'
+				: size === 'md'
+				? 'gap-1.5 px-3 py-1.25'
+				: 'gap-1.5 px-4 py-1.5'}"
+		>
+			<p
+				class={size === 'sm'
+					? 'text-sm font-bold'
+					: size === 'md'
+					? 'text-base font-bold'
+					: 'text-lg font-bold'}
+			>
+				{_planText}
+			</p>
+		</div>
+	</a>
+{:else}
+	<div
+		class="bg-c-bg border-2 overflow-hidden z-10 shadow-lg flex-shrink-0
+  	shadow-c-shadow/[var(--o-shadow-normal)] {productId !== undefined && productId !== 'free'
+			? 'border-c-primary/30'
+			: 'border-c-on-bg/25'} {size === 'sm'
+			? 'rounded-lg'
+			: size === 'md'
+			? 'rounded-lg2'
+			: 'rounded-lg2'} {classes}"
+	>
+		<div
+			class="flex items-center justify-center z-10 {productId !== undefined && productId !== 'free'
+				? 'text-c-primary bg-c-primary/15'
+				: 'text-c-on-bg bg-c-on-bg/15'}
+    {size === 'sm'
+				? 'gap-1.5 px-2.5 py-1'
+				: size === 'md'
+				? 'gap-1.5 px-3 py-1.25'
+				: 'gap-1.5 px-4 py-1.5'}"
+		>
+			<p
+				class={size === 'sm'
+					? 'text-sm font-bold'
+					: size === 'md'
+					? 'text-base font-bold'
+					: 'text-lg font-bold'}
+			>
+				{_planText}
+			</p>
+		</div>
 	</div>
-</div>
+{/if}
