@@ -6,7 +6,7 @@
 	import { isLocale, locales } from '$i18n/i18n-util';
 	import { loadLocaleAsync } from '$i18n/i18n-util.async';
 	import { modalCloseDelay } from '$ts/constants/main';
-	import { languageName } from '$ts/helpers/languageName';
+	import { languageName } from '$ts/helpers/language';
 	import { isTouchscreen } from '$ts/stores/isTouchscreen';
 	import { localeLS } from '$ts/stores/localeLS';
 	import type { TCurrentSettingsPage } from '$ts/types/main';
