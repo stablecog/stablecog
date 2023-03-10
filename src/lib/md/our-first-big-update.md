@@ -12,6 +12,10 @@ We've been working on a big update to our systems to make Stablecog faster, more
 
 We've overhauled our system to make it more robust and scalable. We're also using NVIDIA A100s now, which are significantly faster. Since they are so fast, we can finally make generating 4 images at a time the default. We've made the new system open-source like before: [github.com/stablecog](https://github.com/stablecog).
 
+## A Better User Experience
+
+The new interface keeps track of your generations or upscales regardless of which page you are on which means you can start a generation or an upscale, visit other pages you like and come back to see the results. It also saves the results of your previous actions. So if you visited history, then another page, and then came back to history, you'll see your history load instantly.
+
 ## Using Cloud Storage
 
 We have been storing pro users' generations on cloud since the start, and started storing free generations on cloud about a month ago. Now, we are switching to cloud completely. [History page](https://stablecog.com/history) will now show you all your generations, not just the ones that are saved locally to your browser.
