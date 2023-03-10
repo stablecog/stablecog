@@ -25,7 +25,6 @@
 	} from '$userStores/generation';
 	import type { THomePageData } from '$routes/+page.server';
 	import { isValue } from '$ts/helpers/isValue';
-	import { shouldSubmitToGallery } from '$ts/stores/shouldSubmitToGallery';
 	import LL, { locale } from '$i18n/i18n-svelte';
 	import GenerationFullScreen from '$components/generationFullScreen/GenerationFullScreen.svelte';
 	import {
@@ -103,7 +102,7 @@
 			process_type: 'generate',
 			stream_id: $sseId,
 			ui_id: generateSSEId(),
-			submit_to_gallery: $shouldSubmitToGallery ?? false
+			submit_to_gallery: false
 		};
 		uLogGeneration('Started');
 		logGeneration(

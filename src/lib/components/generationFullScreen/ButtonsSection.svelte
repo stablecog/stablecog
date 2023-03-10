@@ -2,7 +2,6 @@
 	import SubtleButton from '$components/buttons/SubtleButton.svelte';
 	import IconCopy from '$components/icons/IconCopy.svelte';
 	import IconDownload from '$components/icons/IconDownload.svelte';
-	import IconRefresh from '$components/icons/IconRefresh.svelte';
 	import IconTick from '$components/icons/IconTick.svelte';
 	import IconTrashcan from '$components/icons/IconTrashcan.svelte';
 	import IconTrashcanFilledOpen from '$components/icons/IconTrashcanFilledOpen.svelte';
@@ -34,7 +33,6 @@
 
 	export let generation: TGenerationWithSelectedOutput;
 	export let generateSimilarUrl: string;
-	export let regenerateUrl: string;
 	export let linkUrl: string;
 	export let setButtonObjectWithState: TSetButtonObjectWithState;
 	export let buttonObjectsWithState: TButtonObjectsWithState;
@@ -152,16 +150,6 @@
 				<div class="flex items-center justify-center gap-1.5">
 					<IconWand class="w-5 h-5 -ml-0.5" />
 					<p>{$LL.GenerationFullscreen.GenerateSimilarButton()}</p>
-				</div>
-			</SubtleButton>
-		</div>
-	{/if}
-	{#if modalType === 'history'}
-		<div class="flex relative">
-			<SubtleButton target="_self" prefetch={true} href={regenerateUrl}>
-				<div class="flex items-center justify-center gap-1.5">
-					<IconRefresh class="w-5 h-5 -ml-0.5" />
-					<p>{$LL.GenerationFullscreen.RegenerateButton()}</p>
 				</div>
 			</SubtleButton>
 		</div>

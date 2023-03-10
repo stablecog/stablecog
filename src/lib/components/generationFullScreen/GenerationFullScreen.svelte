@@ -26,9 +26,7 @@
 	import {
 		queueInitialUpscaleRequest,
 		upscales,
-		type TInitialUpscaleRequest,
-		type TUpscale,
-		type TUpscaleStatus
+		type TInitialUpscaleRequest
 	} from '$ts/stores/user/upscale';
 	import { upscaleModelIdDefault } from '$ts/constants/upscaleModels';
 	import { generateSSEId } from '$ts/helpers/generateSSEId';
@@ -101,7 +99,6 @@
 	let sidebarInnerContainerHeight: number;
 
 	let generateSimilarUrl: string;
-	let regenerateUrl: string;
 	let linkUrl: string;
 
 	let upscaledTabValue: TUpscaleTabValue = 'upscaled';
@@ -132,10 +129,6 @@
 
 		const { seed, selected_output, ...rest } = generation;
 		generateSimilarUrl = getGenerationUrlFromParams(rest);
-		regenerateUrl = getGenerationUrlFromParams({
-			...rest,
-			seed
-		});
 		linkUrl = `${$page.url.origin}/gallery?output=${generation.id}`;
 	};
 
@@ -432,7 +425,6 @@
 						<ButtonsSection
 							{generation}
 							{generateSimilarUrl}
-							{regenerateUrl}
 							{linkUrl}
 							{currentImageUrl}
 							{modalType}
