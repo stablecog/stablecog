@@ -9,7 +9,7 @@
 	import { page } from '$app/stores';
 	import { windowHeight, windowWidth } from '$ts/stores/window';
 	import type { LayoutData } from './$types';
-	import LL, { locale, setLocale } from '$i18n/i18n-svelte';
+	import { locale, setLocale } from '$i18n/i18n-svelte';
 	import { localeLS } from '$ts/stores/localeLS';
 	import { loadLocaleAsync } from '$i18n/i18n-util.async';
 	import { isLocale } from '$i18n/i18n-util';
@@ -63,8 +63,6 @@
 	/* 	import posthog from 'posthog-js'; */
 	import { PUBLIC_MIXPANEL_ID, PUBLIC_MIXPANEL_URL } from '$env/static/public';
 	import { getUserSummary } from '$ts/helpers/user/user';
-	import Logo from '$components/Logo.svelte';
-	import SocialBar from '$components/SocialBar.svelte';
 	import UnderDevelopment from '$components/UnderDevelopment.svelte';
 	import { isSuperAdmin } from '$ts/helpers/admin/roles';
 
