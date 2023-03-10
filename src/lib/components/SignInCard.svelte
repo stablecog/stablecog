@@ -90,7 +90,6 @@
 			errorText = $LL.Error.InvalidCode();
 			return;
 		}
-		signInStatus = 'sent-otp';
 		console.log(sData);
 	}
 
