@@ -162,6 +162,25 @@ export const setGenerationOutputToDeleted = (output_id: string) => {
 	});
 };
 
+export const setGenerationOutputToSubmitted = (output_id: string) => {
+	generations.update(($generations) => {
+		if ($generations === null || $generations.length === 0) {
+			return $generations;
+		}
+		for (let i = 0; i < $generations.length; i++) {
+			const generation = $generations[i];
+			for (let j = 0; j < generation.outputs.length; j++) {
+				const output = generation.outputs[j];
+				if (output.id === output_id) {
+					generation.outputs[j].gallery_status = 'submitted';
+					return $generations;
+				}
+			}
+		}
+		return $generations;
+	});
+};
+
 export const setGenerationOutputUpscaledImageUrl = ({
 	output_id,
 	upscaled_image_url,
@@ -242,7 +261,7 @@ export interface TGenerationOutput {
 	gallery_status?: TGalleryStatus;
 }
 
-export type TGalleryStatus = 'submitted' | 'approved' | 'rejected' | 'not-submitted';
+export type TGalleryStatus = 'submitted' | 'approved' | 'rejected' | 'not_submitted';
 
 export interface TGenerationFullOutput extends TGenerationOutput {
 	generation: TGeneration;

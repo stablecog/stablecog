@@ -114,6 +114,8 @@ const ptBr: Translation = {
 		RegenerateButton: 'Regenerar',
 		GenerateButton: 'Gerar',
 		UpscaleButton: 'Melhoria',
+		SubmitToGalleryButton: 'Submit to Gallery',
+		SubmittedTitle: 'Submitted',
 		UpscaleTabBar: {
 			UpscaledTitle: 'Melhorado',
 			OriginalTitle: 'Original'

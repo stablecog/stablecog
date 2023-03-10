@@ -115,6 +115,8 @@ const ja: Translation = {
 		RegenerateButton: '再生成',
 		GenerateButton: '生成',
 		UpscaleButton: 'アップスケール',
+		SubmitToGalleryButton: 'Submit to Gallery',
+		SubmittedTitle: 'Submitted',
 		UpscaleTabBar: {
 			UpscaledTitle: 'アップスケール済',
 			OriginalTitle: 'オリジナル'

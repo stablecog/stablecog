@@ -114,6 +114,8 @@ const ptPt: Translation = {
 		RegenerateButton: 'Regenerar',
 		GenerateButton: 'Gerar',
 		UpscaleButton: 'Interpolação',
+		SubmitToGalleryButton: 'Submit to Gallery',
+		SubmittedTitle: 'Submitted',
 		UpscaleTabBar: {
 			UpscaledTitle: 'Interpolado',
 			OriginalTitle: 'Original'

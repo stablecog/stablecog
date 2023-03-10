@@ -12,6 +12,7 @@
 	import {
 		activeGeneration,
 		setGenerationOutputToDeleted,
+		setGenerationOutputToSubmitted,
 		type TGenerationWithSelectedOutput
 	} from '$ts/stores/user/generation';
 	import { copy } from 'svelte-copy';
@@ -30,6 +31,8 @@
 	import { logGalleryGenerateSimilarClicked } from '$ts/helpers/loggers';
 	import { advancedModeApp } from '$ts/stores/advancedMode';
 	import { userSummary } from '$ts/stores/user/summary';
+	import IconUpload from '$components/icons/IconUpload.svelte';
+	import IconTickOnly from '$components/icons/IconTickOnly.svelte';
 
 	export let generation: TGenerationWithSelectedOutput;
 	export let generateSimilarUrl: string;
@@ -58,7 +61,9 @@
 		}
 	};
 
-	let deleteStatus: 'idle' | 'should-confirm' | 'loading' | 'deleted' = 'idle';
+	let deleteStatus: 'idle' | 'should-confirm' | 'loading' | 'success' = 'idle';
+
+	let submitToGalleryStatus: 'idle' | 'loading' | 'success' = 'idle';
 
 	async function deleteGeneration() {
 		if (deleteStatus === 'idle') {
@@ -95,14 +100,52 @@
 				setGenerationOutputToDeleted(generation.selected_output.id);
 			}
 			activeGeneration.set(undefined);
-			deleteStatus = 'deleted';
+			deleteStatus = 'success';
 		} catch (error) {
 			console.log('Error deleting generation output', error);
 			resetDeleteStatus();
 		}
 	}
-
 	const resetDeleteStatus = () => (deleteStatus = 'idle');
+
+	async function submitToGallery() {
+		submitToGalleryStatus = 'loading';
+		try {
+			const res = await fetch(`${apiUrl.origin}/v1/user/gallery`, {
+				method: 'PUT',
+				headers: {
+					'Content-Type': 'application/json',
+					Authorization: `Bearer ${$page.data.session?.access_token}`
+				},
+				body: JSON.stringify({ generation_output_ids: [generation.selected_output.id] })
+			});
+			if (!res.ok) throw new Error('Response not ok');
+			console.log('Submit to gallery response', res);
+			if (modalType === 'history') {
+				queryClient.setQueryData(['user_generation_full_outputs'], (data: any) => ({
+					...data,
+					pages: data.pages.map((page: TUserGenerationFullOutputsPage) => {
+						return {
+							...page,
+							outputs: page.outputs.map((output) =>
+								output.id === generation.selected_output.id
+									? { ...output, gallery_status: 'submitted' }
+									: output
+							)
+						};
+					})
+				}));
+			} else if (modalType === 'generate') {
+				setGenerationOutputToSubmitted(generation.selected_output.id);
+			}
+			submitToGalleryStatus = 'success';
+		} catch (error) {
+			console.log('Error submitting generation', error);
+			resetSubmitToGalleryStatus();
+		}
+	}
+
+	const resetSubmitToGalleryStatus = () => (submitToGalleryStatus = 'idle');
 </script>
 
 <div class="w-full flex flex-wrap gap-3 pb-1">
@@ -188,6 +231,30 @@
 		</div>
 	{/if}
 	{#if modalType === 'generate' || modalType === 'history'}
+		{#if $userSummary?.product_id}
+			{#if submitToGalleryStatus === 'success' || generation.selected_output.gallery_status !== 'not_submitted'}
+				<SubtleButton disabled={true}>
+					<div class="flex items-center justify-center gap-1.5 text-c-success">
+						<IconTickOnly class="w-4.5 h-4.5 -ml-0.5" />
+						<p>{$LL.GenerationFullscreen.SubmittedTitle()}</p>
+					</div>
+				</SubtleButton>
+			{:else}
+				<SubtleButton disabled={submitToGalleryStatus === 'loading'} onClick={submitToGallery}>
+					<div class="flex items-center justify-center gap-1.5 text-c-on-bg">
+						<Morpher morphed={submitToGalleryStatus === 'loading'}>
+							<div slot="item-0" class="flex items-center justify-center gap-1.5 text-c-on-bg">
+								<IconUpload class="w-5 h-5 -ml-0.5" />
+								<p>{$LL.GenerationFullscreen.SubmitToGalleryButton()}</p>
+							</div>
+							<div slot="item-1" class="flex items-center justify-center gap-1.5 text-c-on-bg">
+								<IconLoading class="w-5 h-5 animate-spin-faster" />
+							</div>
+						</Morpher>
+					</div>
+				</SubtleButton>
+			{/if}
+		{/if}
 		<div use:clickoutside={{ callback: resetDeleteStatus }}>
 			<SubtleButton
 				disabled={deleteStatus === 'loading'}

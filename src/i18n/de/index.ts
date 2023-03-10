@@ -114,6 +114,8 @@ const de: Translation = {
 		RegenerateButton: 'Erneut generieren',
 		GenerateButton: 'Generieren',
 		UpscaleButton: 'Hochskalieren',
+		SubmitToGalleryButton: 'Submit to Gallery',
+		SubmittedTitle: 'Submitted',
 		UpscaleTabBar: {
 			UpscaledTitle: 'Hochskaliert',
 			OriginalTitle: 'Original'

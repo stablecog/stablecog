@@ -115,6 +115,8 @@ const en: BaseTranslation = {
 		RegenerateButton: 'Regenerate',
 		GenerateButton: 'Generate',
 		UpscaleButton: 'Upscale',
+		SubmitToGalleryButton: 'Submit to Gallery',
+		SubmittedTitle: 'Submitted',
 		UpscaleTabBar: {
 			UpscaledTitle: 'Upscaled',
 			OriginalTitle: 'Original'

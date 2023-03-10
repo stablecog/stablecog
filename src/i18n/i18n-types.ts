@@ -350,6 +350,14 @@ type RootTranslation = {
 		 * U​p​s​c​a​l​e
 		 */
 		UpscaleButton: string
+		/**
+		 * S​u​b​m​i​t​ ​t​o​ ​G​a​l​l​e​r​y
+		 */
+		SubmitToGalleryButton: string
+		/**
+		 * S​u​b​m​i​t​t​e​d
+		 */
+		SubmittedTitle: string
 		UpscaleTabBar: {
 			/**
 			 * U​p​s​c​a​l​e​d
@@ -566,13 +574,13 @@ type RootTranslation = {
 			}
 			'f7f3d973-ac6f-4a7a-9db8-e89e4fba03a9': {
 				/**
-				 * W​a​i​f​u​ ​D​i​f​f​u​s​i​o​n​ ​v​1​.​4
+				 * W​a​i​f​u​ ​D​i​f​f​u​s​i​o​n
 				 */
 				realName: string
 			}
 			'fc06f6ab-ed14-4186-a7c0-aaec288d4f38': {
 				/**
-				 * 2​2​h​ ​D​i​f​f​u​s​i​o​n​ ​v​0​.​1
+				 * 2​2​h​ ​D​i​f​f​u​s​i​o​n
 				 */
 				realName: string
 			}
@@ -1815,6 +1823,14 @@ export type TranslationFunctions = {
 		 * Upscale
 		 */
 		UpscaleButton: () => LocalizedString
+		/**
+		 * Submit to Gallery
+		 */
+		SubmitToGalleryButton: () => LocalizedString
+		/**
+		 * Submitted
+		 */
+		SubmittedTitle: () => LocalizedString
 		UpscaleTabBar: {
 			/**
 			 * Upscaled
@@ -2026,13 +2042,13 @@ export type TranslationFunctions = {
 			}
 			'f7f3d973-ac6f-4a7a-9db8-e89e4fba03a9': {
 				/**
-				 * Waifu Diffusion v1.4
+				 * Waifu Diffusion
 				 */
 				realName: () => LocalizedString
 			}
 			'fc06f6ab-ed14-4186-a7c0-aaec288d4f38': {
 				/**
-				 * 22h Diffusion v0.1
+				 * 22h Diffusion
 				 */
 				realName: () => LocalizedString
 			}

@@ -115,6 +115,8 @@ const tr: Translation = {
 		RegenerateButton: 'Tekrar Üret',
 		GenerateButton: 'Üret',
 		UpscaleButton: 'Büyüt',
+		SubmitToGalleryButton: 'Submit to Gallery',
+		SubmittedTitle: 'Submitted',
 		UpscaleTabBar: {
 			UpscaledTitle: 'Büyütülmüş',
 			OriginalTitle: 'Orijinal'

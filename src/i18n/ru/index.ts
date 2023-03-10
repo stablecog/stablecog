@@ -115,6 +115,8 @@ const ru: Translation = {
 		RegenerateButton: 'Улучшить',
 		GenerateButton: 'Сгенерировать',
 		UpscaleButton: 'Масштабировать',
+		SubmitToGalleryButton: 'Submit to Gallery',
+		SubmittedTitle: 'Submitted',
 		UpscaleTabBar: {
 			UpscaledTitle: 'Масштабированное',
 			OriginalTitle: 'Оригинал'
