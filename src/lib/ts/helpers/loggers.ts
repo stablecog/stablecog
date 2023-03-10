@@ -77,7 +77,13 @@ export function logGallerySearch(props: IGallerySearchProps) {
 }
 
 export function logGenerationOutputDeleted(props: IGenerationOutputDeletedProps) {
-	mixpanel.track('Generation Output Deleted', { ...props });
+	mixpanel.track('Generation Output | Deleted', { ...props });
+}
+
+export function logGenerationOutputSubmittedToGallery(
+	props: IGenerationOutputSubmittedToGalleryProps
+) {
+	mixpanel.track('Generation Output | Submitted to Gallery', { ...props });
 }
 
 export function logGenerationFailed({
@@ -250,6 +256,15 @@ interface IGallerySearchProps {
 }
 
 interface IGenerationOutputDeletedProps {
+	'SC - Generation Id'?: string;
+	'SC - Output Id': string;
+	'SC - Locale': string;
+	'SC - Advanced Mode': boolean;
+	'SC - Stripe Product Id'?: string;
+	'SC - Page': string;
+}
+
+interface IGenerationOutputSubmittedToGalleryProps {
 	'SC - Generation Id'?: string;
 	'SC - Output Id': string;
 	'SC - Locale': string;

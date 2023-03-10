@@ -30,7 +30,8 @@
 	import type { TUserGenerationFullOutputsPage } from '$ts/queries/userGenerations';
 	import {
 		logGalleryGenerateSimilarClicked,
-		logGenerationOutputDeleted
+		logGenerationOutputDeleted,
+		logGenerationOutputSubmittedToGallery
 	} from '$ts/helpers/loggers';
 	import { advancedModeApp } from '$ts/stores/advancedMode';
 	import { userSummary } from '$ts/stores/user/summary';
@@ -68,6 +69,15 @@
 
 	let submitToGalleryStatus: 'idle' | 'loading' | 'success' = 'idle';
 
+	$: logProps = {
+		'SC - Generation Id': generation.id,
+		'SC - Output Id': generation.selected_output.id,
+		'SC - Advanced Mode': $advancedModeApp,
+		'SC - Locale': $locale,
+		'SC - Page': `${$page.url.pathname}${$page.url.search}`,
+		'SC - Stripe Product Id': $userSummary?.product_id
+	};
+
 	async function deleteGeneration() {
 		if (deleteStatus === 'idle') {
 			deleteStatus = 'should-confirm';
@@ -85,14 +95,7 @@
 			});
 			if (!res.ok) throw new Error('Response not ok');
 			console.log('Delete generation output response', res);
-			logGenerationOutputDeleted({
-				'SC - Generation Id': generation.id,
-				'SC - Output Id': generation.selected_output.id,
-				'SC - Advanced Mode': $advancedModeApp,
-				'SC - Locale': $locale,
-				'SC - Page': `${$page.url.pathname}${$page.url.search}`,
-				'SC - Stripe Product Id': $userSummary?.product_id
-			});
+			logGenerationOutputDeleted(logProps);
 			if (modalType === 'history') {
 				queryClient.setQueryData(['user_generation_full_outputs'], (data: any) => ({
 					...data,
@@ -132,6 +135,7 @@
 			});
 			if (!res.ok) throw new Error('Response not ok');
 			console.log('Submit to gallery response', res);
+			logGenerationOutputSubmittedToGallery(logProps);
 			if (modalType === 'history') {
 				queryClient.setQueryData(['user_generation_full_outputs'], (data: any) => ({
 					...data,
