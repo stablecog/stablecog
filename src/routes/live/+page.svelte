@@ -12,6 +12,7 @@
 	import IconPulsing from '$components/icons/IconPulsing.svelte';
 	import LL, { locale } from '$i18n/i18n-svelte';
 	import { browser } from '$app/environment';
+	import { getTitleFromProductId } from '$ts/helpers/stripe/plan';
 
 	let sse: EventSource | undefined = undefined;
 	$: if (browser && (!sse || sse.readyState === sse.CLOSED)) {
@@ -110,6 +111,7 @@
 		height: number;
 		target_num_outputs: number;
 		actual_num_outputs?: number;
+		product_id?: string;
 	}
 	interface TGenerationRealtimePayloadExt extends TBaseRealtimePayload {}
 	interface TUpscaleRealtimePayloadExt extends TBaseRealtimePayload {}
@@ -214,8 +216,14 @@
 		upscale_output_count: number;
 	}
 
-	function tierBasedColor(entry: TGenerationRealtimePayloadExt | TUpscaleRealtimePayloadExt) {
-		return 'transparent';
+	function planBasedColor(entry: TGenerationRealtimePayloadExt | TUpscaleRealtimePayloadExt) {
+		return entry.product_id
+			? entry.status === 'succeeded'
+				? 'rgb(var(--c-success-secondary))'
+				: entry.status === 'failed'
+				? 'rgb(var(--c-danger-secondary))'
+				: 'rgb(var(--c-primary-secondary))'
+			: 'transparent';
 	}
 </script>
 
@@ -302,6 +310,10 @@
 														: $LL.Live.GenerationTooltip.UnknownTitle()
 												},
 												{
+													key: $LL.Account.SubscriptionPlanTitle() + ':',
+													value: getTitleFromProductId($LL, generationOrUpscale.product_id)
+												},
+												{
 													key: $LL.Live.GenerationTooltip.Type.Title() + ':',
 													value:
 														generationOrUpscale.process_type === 'upscale'
@@ -367,13 +379,13 @@
 											class="w-full h-full flex items-center justify-center"
 											style="
 													background-color: transparent;
-													background-image:  linear-gradient(135deg, {tierBasedColor(
+													background-image:  linear-gradient(135deg, {planBasedColor(
 												generationOrUpscale
-											)} 25%, transparent 25%), linear-gradient(225deg, {tierBasedColor(
+											)} 25%, transparent 25%), linear-gradient(225deg, {planBasedColor(
 												generationOrUpscale
-											)} 25%, transparent 25%), linear-gradient(45deg, {tierBasedColor(
+											)} 25%, transparent 25%), linear-gradient(45deg, {planBasedColor(
 												generationOrUpscale
-											)} 25%, transparent 25%), linear-gradient(315deg, {tierBasedColor(
+											)} 25%, transparent 25%), linear-gradient(315deg, {planBasedColor(
 												generationOrUpscale
 											)} 25%, transparent 25%);
 													background-position:  8px 0, 8px 0, 0 0, 0 0;
