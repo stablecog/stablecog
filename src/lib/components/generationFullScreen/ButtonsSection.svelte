@@ -6,7 +6,7 @@
 	import IconTrashcan from '$components/icons/IconTrashcan.svelte';
 	import IconTrashcanFilledOpen from '$components/icons/IconTrashcanFilledOpen.svelte';
 	import Morpher from '$components/Morpher.svelte';
-	import LL from '$i18n/i18n-svelte';
+	import LL, { locale } from '$i18n/i18n-svelte';
 	import { clickoutside } from '$ts/actions/clickoutside';
 	import { downloadGenerationImage } from '$ts/helpers/downloadGenerationImage';
 	import {
@@ -28,7 +28,10 @@
 	import { page } from '$app/stores';
 	import { useQueryClient } from '@tanstack/svelte-query';
 	import type { TUserGenerationFullOutputsPage } from '$ts/queries/userGenerations';
-	import { logGalleryGenerateSimilarClicked } from '$ts/helpers/loggers';
+	import {
+		logGalleryGenerateSimilarClicked,
+		logGenerationOutputDeleted
+	} from '$ts/helpers/loggers';
 	import { advancedModeApp } from '$ts/stores/advancedMode';
 	import { userSummary } from '$ts/stores/user/summary';
 	import IconUpload from '$components/icons/IconUpload.svelte';
@@ -82,6 +85,14 @@
 			});
 			if (!res.ok) throw new Error('Response not ok');
 			console.log('Delete generation output response', res);
+			logGenerationOutputDeleted({
+				'SC - Generation Id': generation.id,
+				'SC - Output Id': generation.selected_output.id,
+				'SC - Advanced Mode': $advancedModeApp,
+				'SC - Locale': $locale,
+				'SC - Page': `${$page.url.pathname}${$page.url.search}`,
+				'SC - Stripe Product Id': $userSummary?.product_id
+			});
 			if (modalType === 'history') {
 				queryClient.setQueryData(['user_generation_full_outputs'], (data: any) => ({
 					...data,

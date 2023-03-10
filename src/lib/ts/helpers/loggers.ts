@@ -76,6 +76,10 @@ export function logGallerySearch(props: IGallerySearchProps) {
 	/* posthog.capture('Gallery Search', { ...props }); */
 }
 
+export function logGenerationOutputDeleted(props: IGenerationOutputDeletedProps) {
+	mixpanel.track('Generation Output Deleted', { ...props });
+}
+
 export function logGenerationFailed({
 	generation,
 	error,
@@ -238,16 +242,18 @@ interface ISignOutProps {
 	'SC - Page': string;
 }
 
-interface ISignUpProps {
-	'SC - Locale': string;
-	'SC - Advanced Mode': boolean;
-	'SC - Stripe Product Id'?: string;
-	'SC - Page': string;
-}
-
 interface IGallerySearchProps {
 	'SC - Locale': string;
 	'SC - Advanced Mode': boolean;
 	'SC - Stripe Product Id'?: string;
 	'SC - Search Query': string;
+}
+
+interface IGenerationOutputDeletedProps {
+	'SC - Generation Id'?: string;
+	'SC - Output Id': string;
+	'SC - Locale': string;
+	'SC - Advanced Mode': boolean;
+	'SC - Stripe Product Id'?: string;
+	'SC - Page': string;
 }
