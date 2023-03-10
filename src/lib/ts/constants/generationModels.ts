@@ -5,7 +5,7 @@ import { derived, type Readable } from 'svelte/store';
 export const generationModelIdToNameCog = {
 	'b6c1372f-31a7-457c-907c-d292a6ffef97': 'Luna Diffusion',
 	'048b4aa3-5586-47ed-900f-f4341c96bdb2': 'Stable Diffusion v1.5',
-	'fc06f6ab-ed14-4186-a7c0-aaec288d4f38': '22h Diffusion v0.1',
+	'fc06f6ab-ed14-4186-a7c0-aaec288d4f38': '22h Diffusion',
 	'f7f3d973-ac6f-4a7a-9db8-e89e4fba03a9': 'Waifu Diffusion v1.4',
 	'8acfe4c8-751d-4aa6-8c3c-844e3ef478e0': 'Openjourney',
 	'eaa438e1-dbf9-48fd-be71-206f0f257617': 'Redshift Diffusion',

@@ -193,10 +193,10 @@ const en: BaseTranslation = {
 				realName: 'Redshift Diffusion'
 			},
 			'f7f3d973-ac6f-4a7a-9db8-e89e4fba03a9': {
-				realName: 'Waifu Diffusion v1.4'
+				realName: 'Waifu Diffusion'
 			},
 			'fc06f6ab-ed14-4186-a7c0-aaec288d4f38': {
-				realName: '22h Diffusion v0.1'
+				realName: '22h Diffusion'
 			},
 			'b6c1372f-31a7-457c-907c-d292a6ffef97': {
 				realName: 'Luna Diffusion'
