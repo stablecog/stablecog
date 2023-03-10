@@ -12,7 +12,7 @@
 	import Banner from '$components/Banner.svelte';
 	import IconSocial from '$components/icons/IconSocial.svelte';
 	import { lastClosedNotification } from '$ts/stores/lastClosedNotification';
-	import LL from '$i18n/i18n-svelte';
+	import LL, { locale } from '$i18n/i18n-svelte';
 	import Button from '$components/buttons/Button.svelte';
 	import AccountMenu from '$components/AccountMenu.svelte';
 	import Avatar from '$components/Avatar.svelte';
@@ -26,6 +26,7 @@
 		modalOutTransitionProps
 	} from '$ts/animation/constants';
 	import IconBolt from '$components/icons/IconBolt.svelte';
+	import { userSummary } from '$ts/stores/user/summary';
 
 	let isSignInModalOpen = false;
 	let isSettingsOpen = false;
@@ -104,6 +105,14 @@
 		</div>
 		<div class="flex flex-1 flex-wrap items-center justify-end relative">
 			<div class="flex items-center justify-end px-3">
+				{#if $page.data.session && $userSummary}
+					<div class="flex flex-col items-end px-5">
+						<p class="text-xs text-c-on-bg/60">{$LL.Account.RemainingTitle()}</p>
+						<p class="text-sm font-semibold mt-0.5">
+							{$userSummary.total_remaining_credits.toLocaleString($locale)}
+						</p>
+					</div>
+				{/if}
 				<!-- Account -->
 				{#if $page.data.session?.user.email}
 					<div

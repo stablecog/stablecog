@@ -392,6 +392,7 @@ const ko: Translation = {
 		SubscriptionPlanTitle: '가입 요금제',
 		RemainingImagesTitle: 'Remaining Images',
 		RemainingCreditsTitle: 'Remaining Credits',
+		RemainingTitle: 'Remaining',
 		Subscription: {
 			UpdateSubscriptionTitle: 'Update Subscription',
 			ChangePlanTitle: 'Change Plan',

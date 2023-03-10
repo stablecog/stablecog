@@ -394,6 +394,7 @@ const es: Translation = {
 		SubscriptionPlanTitle: 'Plan',
 		RemainingImagesTitle: 'Remaining Images',
 		RemainingCreditsTitle: 'Remaining Credits',
+		RemainingTitle: 'Remaining',
 		Subscription: {
 			UpdateSubscriptionTitle: 'Update Subscription',
 			ChangePlanTitle: 'Change Plan',

@@ -1150,6 +1150,10 @@ type RootTranslation = {
 		 * R​e​m​a​i​n​i​n​g​ ​C​r​e​d​i​t​s
 		 */
 		RemainingCreditsTitle: string
+		/**
+		 * R​e​m​a​i​n​i​n​g
+		 */
+		RemainingTitle: string
 		Subscription: {
 			/**
 			 * U​p​d​a​t​e​ ​S​u​b​s​c​r​i​p​t​i​o​n
@@ -2603,6 +2607,10 @@ export type TranslationFunctions = {
 		 * Remaining Credits
 		 */
 		RemainingCreditsTitle: () => LocalizedString
+		/**
+		 * Remaining
+		 */
+		RemainingTitle: () => LocalizedString
 		Subscription: {
 			/**
 			 * Update Subscription

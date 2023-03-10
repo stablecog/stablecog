@@ -394,6 +394,7 @@ const ja: Translation = {
 		SubscriptionPlanTitle: 'プラン',
 		RemainingImagesTitle: 'Remaining Images',
 		RemainingCreditsTitle: 'Remaining Credits',
+		RemainingTitle: 'Remaining',
 		Subscription: {
 			UpdateSubscriptionTitle: 'Update Subscription',
 			ChangePlanTitle: 'Change Plan',

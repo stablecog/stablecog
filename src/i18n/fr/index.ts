@@ -397,6 +397,7 @@ const fr: Translation = {
 		SubscriptionPlanTitle: 'Abonnement',
 		RemainingImagesTitle: 'Remaining Images',
 		RemainingCreditsTitle: 'Remaining Credits',
+		RemainingTitle: 'Remaining',
 		Subscription: {
 			UpdateSubscriptionTitle: 'Update Subscription',
 			ChangePlanTitle: 'Change Plan',

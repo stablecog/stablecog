@@ -395,6 +395,7 @@ const vi: Translation = {
 		SubscriptionPlanTitle: 'Gói',
 		RemainingImagesTitle: 'Remaining Images',
 		RemainingCreditsTitle: 'Remaining Credits',
+		RemainingTitle: 'Remaining',
 		Subscription: {
 			UpdateSubscriptionTitle: 'Update Subscription',
 			ChangePlanTitle: 'Change Plan',
