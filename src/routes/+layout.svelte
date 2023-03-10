@@ -420,7 +420,7 @@
 		};
 	});
 
-	const underDevelopment = true;
+	const underDevelopment = false;
 </script>
 
 <svelte:window bind:innerHeight bind:innerWidth />
