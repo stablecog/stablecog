@@ -1,6 +1,5 @@
 <script lang="ts">
 	import { page } from '$app/stores';
-	import Button from '$components/buttons/Button.svelte';
 	import SubtleButton from '$components/buttons/SubtleButton.svelte';
 	import GenerationFullScreen from '$components/generationFullScreen/GenerationFullScreen.svelte';
 	import GenerationGridInfinite from '$components/grids/GenerationGridInfinite.svelte';
@@ -28,7 +27,7 @@
 		lastFetchedAdminGalleryFilter
 	} from '$ts/stores/admin/gallery';
 	import { navbarHeight } from '$ts/stores/navbarHeight';
-	import { activeGeneration, type TGalleryStatus } from '$userStores/generation';
+	import { activeGeneration } from '$userStores/generation';
 	import {
 		createInfiniteQuery,
 		useQueryClient,
@@ -135,6 +134,12 @@
 			}
 		}
 	};
+
+	function onKeyDown({ key }: KeyboardEvent) {
+		if (key === 'e') {
+			isAdminGalleryEditActive.set(!$isAdminGalleryEditActive);
+		}
+	}
 </script>
 
 <MetaTag
@@ -143,6 +148,8 @@
 	imageUrl="{canonicalUrl}/previews{$page.url.pathname}.png"
 	canonical="{canonicalUrl}{$page.url.pathname}"
 />
+
+<svelte:window on:keydown={onKeyDown} />
 
 <div class="w-full flex-1 flex flex-col items-center px-2 gap-2 md:py-6 relative">
 	{#if !$page.data.session?.user.id}
