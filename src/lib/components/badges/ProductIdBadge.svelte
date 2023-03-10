@@ -1,8 +1,8 @@
 <script lang="ts">
 	import {
-		PUBLIC_STRIPE_PRODUCT_ID_STARTER_SUBSCRIPTION_TEST,
-		PUBLIC_STRIPE_PRODUCT_ID_PRO_SUBSCRIPTION_TEST,
-		PUBLIC_STRIPE_PRODUCT_ID_ULTIMATE_SUBSCRIPTION_TEST
+		PUBLIC_STRIPE_PRODUCT_ID_STARTER_SUBSCRIPTION,
+		PUBLIC_STRIPE_PRODUCT_ID_PRO_SUBSCRIPTION,
+		PUBLIC_STRIPE_PRODUCT_ID_ULTIMATE_SUBSCRIPTION
 	} from '$env/static/public';
 	import LL from '$i18n/i18n-svelte';
 	import type { TStripeSupportedProductIdSubscriptions } from '$ts/constants/stripePublic';
@@ -19,11 +19,11 @@
 	function setPlanText() {
 		if (planText !== undefined) {
 			_planText = planText;
-		} else if (productId === PUBLIC_STRIPE_PRODUCT_ID_STARTER_SUBSCRIPTION_TEST) {
+		} else if (productId === PUBLIC_STRIPE_PRODUCT_ID_STARTER_SUBSCRIPTION) {
 			_planText = $LL.Pricing.Plans.StarterTitle();
-		} else if (productId === PUBLIC_STRIPE_PRODUCT_ID_PRO_SUBSCRIPTION_TEST) {
+		} else if (productId === PUBLIC_STRIPE_PRODUCT_ID_PRO_SUBSCRIPTION) {
 			_planText = $LL.Pricing.Plans.ProTitle();
-		} else if (productId === PUBLIC_STRIPE_PRODUCT_ID_ULTIMATE_SUBSCRIPTION_TEST) {
+		} else if (productId === PUBLIC_STRIPE_PRODUCT_ID_ULTIMATE_SUBSCRIPTION) {
 			_planText = $LL.Pricing.Plans.UltimateTitle();
 		} else {
 			_planText = $LL.Pricing.Plans.FreeTitle();

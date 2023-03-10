@@ -1,4 +1,3 @@
-import { PUBLIC_STRIPE_PRODUCT_ID_STARTER_SUBSCRIPTION_TEST } from '$env/static/public';
 import { eurCountryCodes } from '$ts/constants/main';
 import {
 	getProductIdFromPriceId,
