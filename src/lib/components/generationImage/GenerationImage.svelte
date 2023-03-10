@@ -157,9 +157,9 @@
 			if (doesContainTarget(e.target, [rightButtonContainer])) {
 				return;
 			}
-			logGalleryGenerationOpened(logProps);
 			activeGeneration.set(generation);
 			if (cardType === 'gallery') {
+				logGalleryGenerationOpened(logProps);
 				window.history.replaceState({}, '', `/gallery?output=${generation.selected_output.id}`);
 			}
 		}}
