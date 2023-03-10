@@ -61,7 +61,7 @@
 	import { globalSeed } from '$ts/stores/globalSeed';
 	import { userSummary } from '$ts/stores/user/summary';
 	/* 	import posthog from 'posthog-js'; */
-	import { PUBLIC_MIXPANEL_ID, PUBLIC_MIXPANEL_URL } from '$env/static/public';
+	import { PUBLIC_MIXPANEL_ID /* , PUBLIC_MIXPANEL_URL */ } from '$env/static/public';
 	import { getUserSummary } from '$ts/helpers/user/user';
 	import UnderDevelopment from '$components/UnderDevelopment.svelte';
 	import { isSuperAdmin } from '$ts/helpers/admin/roles';
@@ -392,7 +392,7 @@
 
 	onMount(async () => {
 		setBodyClasses();
-		mixpanel.init(PUBLIC_MIXPANEL_ID, { api_host: PUBLIC_MIXPANEL_URL });
+		mixpanel.init(PUBLIC_MIXPANEL_ID /* , { api_host: PUBLIC_MIXPANEL_URL } */);
 		/* posthog.init(PUBLIC_POSTHOG_ID, {
 			api_host: PUBLIC_POSTHOG_URL
 		}); */
