@@ -106,7 +106,7 @@
 </script>
 
 <div class="w-full flex flex-wrap gap-3 pb-1">
-	{#if modalType === 'generate' || modalType === 'history'}
+	{#if (modalType === 'generate' || modalType === 'history') && !generation.selected_output.image_url.includes('placeholder')}
 		<SubtleButton
 			onClick={onDownloadImageClicked}
 			disabled={buttonObjectsWithState.download.state === 'loading'}

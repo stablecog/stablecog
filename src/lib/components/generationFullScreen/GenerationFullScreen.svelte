@@ -41,6 +41,7 @@
 	import { userSummary } from '$ts/stores/user/summary';
 	import { estimatedUpscaleDurationMs, getUpscaleDurationMsFromUpscale } from '$ts/stores/cost';
 	import InsufficientCreditsBadge from '$components/badges/InsufficientCreditsBadge.svelte';
+	import IconNoImage from '$components/icons/IconNoImage.svelte';
 
 	export let generation: TGenerationWithSelectedOutput;
 	export let modalType: TGenerationFullScreenModalType;
@@ -284,13 +285,15 @@
 	</div>
 	<Container {generation} let:imageContainerWidth let:imageContainerHeight let:modalMinHeight>
 		<div class="relative self-stretch flex items-center">
-			<img
-				class="w-full h-full absolute left-0 top-0 transform scale-125 blur-xl"
-				src={generation.selected_output.image_url}
-				alt="Blurred background for: {generation.prompt.text}"
-				width={generation.width}
-				height={generation.height}
-			/>
+			{#if generation.selected_output.image_url}
+				<img
+					class="w-full h-full absolute left-0 top-0 transform scale-125 blur-xl"
+					src={generation.selected_output.image_url}
+					alt="Blurred background for: {generation.prompt.text}"
+					width={generation.width}
+					height={generation.height}
+				/>
+			{/if}
 			<div class="w-full h-full absolute left-0 top-0 bg-c-bg/50" />
 			<div
 				style={$windowWidth >= lgBreakpoint
@@ -298,42 +301,58 @@
 					: ''}
 				class="w-full lg:h-full relative"
 			>
-				<img
-					style="transition: filter 0.5s cubic-bezier(0.4, 0, 0.2, 1);"
-					class="{upscaleBeingProcessed
-						? 'blur-2xl'
-						: ''} w-full transition h-auto lg:h-full lg:object-contain absolute lg:left-0 lg:top-0"
-					src={generation.selected_output.image_url}
-					alt="Blurred background 2 for: {generation.prompt.text}"
-					width={generation.width}
-					height={generation.height}
-				/>
-				<img
-					on:load={onImageLoad}
-					style="transition: filter 0.5s cubic-bezier(0.4, 0, 0.2, 1);"
-					class="{upscaleBeingProcessed
-						? 'blur-2xl'
-						: ''} filter w-full relative transition h-auto lg:h-full lg:object-contain lg:absolute lg:left-0 lg:top-0"
-					src={currentImageUrl}
-					alt={generation.prompt.text}
-					width={upscaledTabValue === 'upscaled' && upscaledImageWidth
-						? upscaledImageWidth
-						: generation.width}
-					height={upscaledTabValue === 'upscaled' && upscaledImageHeight
-						? upscaledImageHeight
-						: generation.height}
-				/>
-				{#if $upscales && $upscales.length > 0 && $upscales[0].status === 'failed'}
-					<div
-						transition:fly={{ duration: 200, easing: quadOut, y: -50 }}
-						class="w-full absolute left-0 top-0 flex items-center justify-center p-3"
+				{#if generation.selected_output.image_url.includes('placeholder')}
+					<svg
+						class="w-full h-auto text-c-bg-secondary"
+						width={generation.width}
+						height={generation.height}
+						viewBox="0 0 {generation.width} {generation.height}"
+						fill="none"
+						xmlns="http://www.w3.org/2000/svg"
 					>
-						<p
-							class="text-center font-medium text-xs md:text-sm shadow-lg shadow-c-shadow/[var(--o-shadow-stronger)] bg-c-bg-secondary px-4 py-3 rounded-xl"
-						>
-							{$upscales[0].error ?? $LL.Error.SomethingWentWrong()}
-						</p>
+						<rect width={generation.width} height={generation.height} fill="currentColor" />
+					</svg>
+					<div class="w-full h-full absolute left-0 top-0 p-5 flex items-center justify-center">
+						<IconNoImage class="w-16 h-16 text-c-on-bg/40" />
 					</div>
+				{:else}
+					<img
+						style="transition: filter 0.5s cubic-bezier(0.4, 0, 0.2, 1);"
+						class="{upscaleBeingProcessed
+							? 'blur-2xl'
+							: ''} w-full transition h-auto lg:h-full lg:object-contain absolute lg:left-0 lg:top-0"
+						src={generation.selected_output.image_url}
+						alt="Blurred background 2 for: {generation.prompt.text}"
+						width={generation.width}
+						height={generation.height}
+					/>
+					<img
+						on:load={onImageLoad}
+						style="transition: filter 0.5s cubic-bezier(0.4, 0, 0.2, 1);"
+						class="{upscaleBeingProcessed
+							? 'blur-2xl'
+							: ''} filter w-full relative transition h-auto lg:h-full lg:object-contain lg:absolute lg:left-0 lg:top-0"
+						src={currentImageUrl}
+						alt={generation.prompt.text}
+						width={upscaledTabValue === 'upscaled' && upscaledImageWidth
+							? upscaledImageWidth
+							: generation.width}
+						height={upscaledTabValue === 'upscaled' && upscaledImageHeight
+							? upscaledImageHeight
+							: generation.height}
+					/>
+					{#if $upscales && $upscales.length > 0 && $upscales[0].status === 'failed'}
+						<div
+							transition:fly={{ duration: 200, easing: quadOut, y: -50 }}
+							class="w-full absolute left-0 top-0 flex items-center justify-center p-3"
+						>
+							<p
+								class="text-center font-medium text-xs md:text-sm shadow-lg shadow-c-shadow/[var(--o-shadow-stronger)] bg-c-bg-secondary px-4 py-3 rounded-xl"
+							>
+								{$upscales[0].error ?? $LL.Error.SomethingWentWrong()}
+							</p>
+						</div>
+					{/if}
 				{/if}
 			</div>
 			<div class="w-full h-full overflow-hidden z-0 absolute left-0 top-0 pointer-events-none">
@@ -371,7 +390,7 @@
 					class="w-full flex flex-col items-start justify-start"
 				>
 					<div class="w-full flex flex-col gap-4 md:gap-5 px-5 py-4 md:px-7 md:py-5">
-						{#if modalType === 'generate' || modalType === 'history'}
+						{#if (modalType === 'generate' || modalType === 'history') && !generation.selected_output.image_url.includes('placeholder')}
 							<div class="w-full pt-1.5">
 								{#if !generation.selected_output.upscaled_image_url || upscaleBeingProcessed}
 									<div class="w-full relative">

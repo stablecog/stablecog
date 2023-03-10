@@ -6,6 +6,7 @@
 	import type { TGenerationImageCardType } from '$components/generationImage/types';
 	import IconCancelCircle from '$components/icons/IconCancelCircle.svelte';
 	import IconChatBubbleCancel from '$components/icons/IconChatBubbleCancel.svelte';
+	import IconNoImage from '$components/icons/IconNoImage.svelte';
 	import IconTick from '$components/icons/IconTick.svelte';
 	import IconTrashcan from '$components/icons/IconTrashcan.svelte';
 	import { doesContainTarget } from '$ts/helpers/doesContainTarget';
@@ -117,21 +118,37 @@
 		</div>
 	</button>
 {/if}
-<img
-	on:load={onImageLoaded}
-	loading="lazy"
-	class="w-full h-full absolute left-0 top-0 duration-300 transition transform {isImageLoaded
-		? 'opacity-100'
-		: 'opacity-0'} {$isAdminGalleryEditActive && inAdminGalleryScheduledIds
-		? 'translate-y-10'
-		: 'translate-0'}"
-	src={useUpscaledImage && generation.selected_output.upscaled_image_url
-		? generation.selected_output.upscaled_image_url
-		: generation.selected_output.image_url}
-	alt={generation.prompt.text}
-	width={generation.width}
-	height={generation.height}
-/>
+{#if generation.selected_output.image_url.includes('placeholder')}
+	<svg
+		class="w-full h-full absolute left-0 top-0 text-c-bg-secondary"
+		width={generation.width}
+		height={generation.height}
+		viewBox="0 0 {generation.width} {generation.height}"
+		fill="none"
+		xmlns="http://www.w3.org/2000/svg"
+	>
+		<rect width={generation.width} height={generation.height} fill="currentColor" />
+	</svg>
+	<div class="w-full h-full absolute left-0 top-0 p-5 flex items-center justify-center">
+		<IconNoImage class="w-12 h-12 text-c-on-bg/40" />
+	</div>
+{:else}
+	<img
+		on:load={onImageLoaded}
+		loading="lazy"
+		class="w-full h-full absolute left-0 top-0 duration-300 transition transform {isImageLoaded
+			? 'opacity-100'
+			: 'opacity-0'} {$isAdminGalleryEditActive && inAdminGalleryScheduledIds
+			? 'translate-y-10'
+			: 'translate-0'}"
+		src={useUpscaledImage && generation.selected_output.upscaled_image_url
+			? generation.selected_output.upscaled_image_url
+			: generation.selected_output.image_url}
+		alt={generation.prompt.text}
+		width={generation.width}
+		height={generation.height}
+	/>
+{/if}
 {#if !generation.selected_output.is_deleted}
 	<AnchorOrDiv
 		href={cardType === 'gallery' ? `/gallery?output=${generation.selected_output.id}` : undefined}
