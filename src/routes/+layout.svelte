@@ -392,7 +392,7 @@
 
 	onMount(async () => {
 		setBodyClasses();
-		mixpanel.init(PUBLIC_MIXPANEL_ID /* , { api_host: PUBLIC_MIXPANEL_URL } */);
+		mixpanel.init(PUBLIC_MIXPANEL_ID, { api_host: PUBLIC_MIXPANEL_URL });
 		/* posthog.init(PUBLIC_POSTHOG_ID, {
 			api_host: PUBLIC_POSTHOG_URL
 		}); */
