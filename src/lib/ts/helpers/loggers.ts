@@ -120,7 +120,8 @@ export function logGenerationPropsFromGeneration({
 		'SC - Advanced Mode': advancedModeApp,
 		'SC - Locale': locale,
 		'SC - Submit to Gallery': generation.submit_to_gallery,
-		'SC - Stripe Product Id': stripeProductId
+		'SC - Stripe Product Id': stripeProductId,
+		'SC - Number of Outputs': generation.num_outputs
 	};
 }
 
@@ -212,6 +213,7 @@ interface IGenerationMinimal {
 	'SC - Submit to Gallery': boolean;
 	'SC - Duration'?: number;
 	'SC - Stripe Product Id'?: string;
+	'SC - Number of Outputs': number;
 }
 
 interface IPageviewProps {
