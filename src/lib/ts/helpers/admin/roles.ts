@@ -1,6 +1,8 @@
 const superAdminRole = 'SUPER_ADMIN';
 const galleryAdminRole = 'GALLERY_ADMIN';
 
+export const galleryAdminAllowedRoutes = ['/admin', '/admin/gallery'];
+
 export const isSuperAdmin = (roles: string | string[] | undefined) => {
 	if (!roles) {
 		return false;
