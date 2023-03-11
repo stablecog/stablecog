@@ -7,7 +7,7 @@ import type { RequestEvent } from '.svelte-kit/types/src/routes/$types';
 import '$ts/constants/supabase';
 import type { TAvailableThemes } from '$ts/stores/theme';
 import { apiUrl } from '$ts/constants/main';
-import { isSuperAdmin } from '$ts/helpers/admin/roles';
+import { isGalleryAdmin, isSuperAdmin } from '$ts/helpers/admin/roles';
 
 loadAllLocales();
 
@@ -58,10 +58,17 @@ export const handle: Handle = async ({ event, resolve }) => {
 				return notAuthorizedResponse(notAuthorizedRedirectRoute);
 			}
 			const { roles } = await res.json();
-			if (isSuperAdmin(roles)) {
-				return resolve(event);
+			if (!isSuperAdmin(roles) && !isGalleryAdmin(roles)) {
+				return notAuthorizedResponse(notAuthorizedRedirectRoute);
 			}
-			return notAuthorizedResponse(notAuthorizedRedirectRoute);
+			if (
+				isGalleryAdmin(roles) &&
+				event.url.pathname !== '/admin/gallery' &&
+				event.url.pathname !== '/admin'
+			) {
+				return notAuthorizedResponse('/admin');
+			}
+			return resolve(event);
 		} catch (error) {
 			console.log('Admin access error:', error);
 			return notAuthorizedResponse(notAuthorizedRedirectRoute);

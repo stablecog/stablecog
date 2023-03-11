@@ -13,8 +13,7 @@
 	import { activeGeneration } from '$userStores/generation';
 	import type { CreateInfiniteQueryResult } from '@tanstack/svelte-query';
 	import { MasonryInfiniteGrid } from '@egjs/svelte-infinitegrid';
-	import { fade, fly } from 'svelte/transition';
-	import { quadOut } from 'svelte/easing';
+	import { fly } from 'svelte/transition';
 
 	export let generationsQuery: CreateInfiniteQueryResult<TUserGenerationFullOutputsPage, unknown>;
 	export let cardType: TGenerationImageCardType;

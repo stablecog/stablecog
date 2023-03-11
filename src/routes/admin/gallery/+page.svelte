@@ -14,6 +14,7 @@
 	import ToggleIndicator from '$components/ToggleIndicator.svelte';
 	import LL from '$i18n/i18n-svelte';
 	import { apiUrl, canonicalUrl } from '$ts/constants/main';
+	import { isSuperAdmin } from '$ts/helpers/admin/roles';
 	import {
 		getAllUserGenerationFullOutputs,
 		type TUserGenerationFullOutputsPage
@@ -27,6 +28,7 @@
 		lastFetchedAdminGalleryFilter
 	} from '$ts/stores/admin/gallery';
 	import { navbarHeight } from '$ts/stores/navbarHeight';
+	import { userSummary } from '$ts/stores/user/summary';
 	import { activeGeneration } from '$userStores/generation';
 	import {
 		createInfiniteQuery,
@@ -254,7 +256,9 @@
 						{ label: $LL.Admin.Gallery.StatusDropdown.Submitted(), value: 'submitted' },
 						{ label: $LL.Admin.Gallery.StatusDropdown.Approved(), value: 'approved' },
 						{ label: $LL.Admin.Gallery.StatusDropdown.Rejected(), value: 'rejected' },
-						{ label: $LL.Admin.Gallery.StatusDropdown.Private(), value: 'not_submitted' }
+						...(isSuperAdmin($userSummary?.roles || [])
+							? [{ label: $LL.Admin.Gallery.StatusDropdown.Private(), value: 'not_submitted' }]
+							: [])
 					]}
 					bind:value={$adminGalleryFilter}
 				>

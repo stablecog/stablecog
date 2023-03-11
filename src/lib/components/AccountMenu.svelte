@@ -9,7 +9,7 @@
 	import ProductIdBadge from '$components/badges/ProductIdBadge.svelte';
 	import LL, { locale } from '$i18n/i18n-svelte';
 	import { supabase } from '$ts/constants/supabase';
-	import { isSuperAdmin } from '$ts/helpers/admin/roles';
+	import { isGalleryAdmin, isSuperAdmin } from '$ts/helpers/admin/roles';
 	import { logSignOut } from '$ts/helpers/loggers';
 	import { advancedModeApp } from '$ts/stores/advancedMode';
 	import { isTouchscreen } from '$ts/stores/isTouchscreen';
@@ -64,7 +64,7 @@
 		<div class="w-full h-2px rounded-full bg-c-bg-tertiary" />
 	</div>
 	<div class="w-full flex flex-col justify-start">
-		{#if isSuperAdmin($userSummary?.roles || [])}
+		{#if isSuperAdmin($userSummary?.roles || []) || isGalleryAdmin($userSummary?.roles || [])}
 			<DropdownItem href="/admin" onClick={closeAccountMenu}>
 				<div class="flex-1 min-w-0 flex items-center justify-start gap-2.5">
 					<IconWrench

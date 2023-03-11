@@ -5,6 +5,8 @@
 	import type { TNavbarRoute, TTabBarPlacement } from '$ts/types/main';
 	import TabBarWrapper from '$components/tabBars/TabBarWrapper.svelte';
 	import LL from '$i18n/i18n-svelte';
+	import { isSuperAdmin } from '$ts/helpers/admin/roles';
+	import { userSummary } from '$ts/stores/user/summary';
 
 	export let type: TTabBarPlacement = 'normal';
 
@@ -45,6 +47,14 @@
 		}
 	];
 	let adminRoutes: TNavbarRoute[];
+	const superAdminRoutes: TNavbarRoute[] = [
+		{
+			name: $LL.Admin.UsersTab(),
+			href: '/admin/users',
+			icon: 'users'
+		}
+	];
+
 	$: adminRoutes = [
 		{
 			name: $LL.Admin.AdminTab(),
@@ -56,11 +66,7 @@
 			href: '/admin/gallery',
 			icon: 'gallery'
 		},
-		{
-			name: $LL.Admin.UsersTab(),
-			href: '/admin/users',
-			icon: 'users'
-		}
+		...(isSuperAdmin($userSummary?.roles || []) ? superAdminRoutes : [])
 	];
 </script>
 

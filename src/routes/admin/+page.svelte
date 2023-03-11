@@ -4,6 +4,8 @@
 	import MetaTag from '$components/MetaTag.svelte';
 	import LL from '$i18n/i18n-svelte';
 	import { canonicalUrl } from '$ts/constants/main';
+	import { isSuperAdmin } from '$ts/helpers/admin/roles';
+	import { userSummary } from '$ts/stores/user/summary';
 </script>
 
 <MetaTag
@@ -18,7 +20,9 @@
 		<h1 class="font-bold text-4xl">{$LL.Admin.AdminPanelTitle()}</h1>
 		<div class="w-full flex flex-row flex-wrap items-center justify-center gap-4">
 			<Button href="admin/gallery">{$LL.Admin.AdminGalleryButton()}</Button>
-			<Button href="admin/users">{$LL.Admin.UsersButton()}</Button>
+			{#if isSuperAdmin($userSummary?.roles || [])}
+				<Button href="admin/users">{$LL.Admin.UsersButton()}</Button>
+			{/if}
 		</div>
 	</div>
 </div>
