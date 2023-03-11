@@ -27,5 +27,15 @@ export function getRelativeDate({
 	}
 	const days = hours / 24;
 	const daysRounded = Math.round(days * Math.pow(10, decimals)) / Math.pow(10, decimals);
-	return rtf1.format(daysRounded, 'day');
+	if (Math.abs(daysRounded) < 30) {
+		return rtf1.format(daysRounded, 'day');
+	}
+	const months = days / 30;
+	const monthsRounded = Math.round(months * Math.pow(10, decimals)) / Math.pow(10, decimals);
+	if (Math.abs(monthsRounded) < 12) {
+		return rtf1.format(monthsRounded, 'month');
+	}
+	const years = days / 365;
+	const yearsRounded = Math.round(years * Math.pow(10, decimals)) / Math.pow(10, decimals);
+	return rtf1.format(yearsRounded, 'year');
 }

@@ -53,10 +53,16 @@ export interface TUserForAdmin {
 export interface TUserCredit {
 	remaining_amount: number;
 	expires_at: string;
+	credits: TUserCredit[];
+}
+
+export interface TUserCredit {
+	expires_at: string;
 	credit_type: TUserCreditType;
+	remaining_amount: number;
 }
 
 export interface TUserCreditType {
 	name: string;
-	product_id: string;
+	stripe_product_id?: string;
 }

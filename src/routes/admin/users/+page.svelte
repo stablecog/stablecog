@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { page } from '$app/stores';
 	import MetaTag from '$components/MetaTag.svelte';
-	import LL from '$i18n/i18n-svelte';
+	import LL, { locale } from '$i18n/i18n-svelte';
 	import { canonicalUrl } from '$ts/constants/main';
 	import { onMount } from 'svelte';
 	import PageWrapper from '$components/PageWrapper.svelte';
@@ -19,6 +19,7 @@
 	import { quadOut } from 'svelte/easing';
 	import Button from '$components/buttons/Button.svelte';
 	import IntersectionObserver from 'svelte-intersection-observer';
+	import { getTitleFromProductId } from '$ts/helpers/stripe/plan';
 
 	let searchString: string;
 	let searchStringDebounced: string | undefined = undefined;
@@ -182,7 +183,7 @@
 		<div class="w-full md:max-w-4xl flex flex-col items-center justify-center gap-2">
 			{#if !$allUsersQuery || $allUsersQuery.isInitialLoading}
 				<div
-					class="w-full flex flex-col text-c-on-bg/60 flex-1 py-6 px-4 justify-center items-center text-center"
+					class="w-full flex flex-col text-c-on-bg/50 flex-1 py-6 px-4 justify-center items-center text-center"
 				>
 					<div
 						in:scale|local={{
@@ -204,7 +205,7 @@
 				<p class="text-c-on-bg/50 py-6.5">{$allUsersQuery.error}</p>
 			{:else if $allUsersQuery.data.pages.length === 1 && (!$allUsersQuery.data.pages[0].users || $allUsersQuery.data.pages[0].users.length === 0)}
 				<div
-					class="w-full flex flex-col text-c-on-bg/60 flex-1 py-6 px-4 justify-center items-center text-center"
+					class="w-full flex flex-col text-c-on-bg/50 flex-1 py-6 px-4 justify-center items-center text-center"
 				>
 					<div class="w-12 h-12">
 						<IconSearch class="w-full h-full" />
@@ -218,38 +219,61 @@
 				{#each $allUsersQuery.data.pages as allUsersQueryPage}
 					{#each allUsersQueryPage.users as user (user.id)}
 						<div
-							class="w-full max-w-2xl flex justify-between items-stretch gap-5 
+							class="w-full max-w-2xl flex flex-col 
 							bg-c-bg-secondary rounded-xl shadow-lg shadow-c-shadow/[var(--o-shadow-normal)] p-3 md:p-4"
 						>
-							<div class="flex flex-col justify-center flex-shrink min-w-0 overflow-hidden">
-								<p
-									class="max-w-full overflow-hidden overflow-ellipsis whitespace-nowrap 
-									text-sm font-semibold text-c-on-bg/75 px-1.5 -mt-0.5"
-								>
-									{user.email}
-								</p>
-								<p
-									class="max-w-full text-xxs text-c-on-bg/40 bg-c-on-bg/5 rounded-md px-2 py-1 mt-2 break-all"
-								>
-									{user.id}
-								</p>
-								<p class="max-w-full text-xxs text-c-on-bg/40 mt-2 break-all px-1.5">
-									{getRelativeDate({ date: user.created_at })}
-								</p>
+							<div class="w-full flex flex-row items-center justify-between gap-5">
+								<div class="flex flex-col justify-center flex-shrink min-w-0 overflow-hidden">
+									<p
+										class="max-w-full overflow-hidden overflow-ellipsis whitespace-nowrap 
+										text-sm font-semibold px-1.5 -mt-0.5"
+									>
+										{user.email}
+									</p>
+									<p
+										class="max-w-full text-xxs text-c-on-bg/50 bg-c-on-bg/5 rounded-md px-2 py-1 mt-2 break-all"
+									>
+										{user.id}
+									</p>
+									<p class="max-w-full text-xxs text-c-on-bg/50 mt-2 break-all px-1.5">
+										{getRelativeDate({ date: user.created_at })}
+									</p>
+								</div>
+								<div class="flex flex-col items-end justify-center">
+									<ProductIdBadge productId={user.product_id} size="sm" />
+									<a
+										rel="noreferrer"
+										href="https://dashboard.stripe.com/customers/{user.stripe_customer_id}"
+										target="_blank"
+										class="text-xs text-c-on-bg/50 bg-c-on-bg/5 rounded-lg px-2.5 py-1.5 mt-2.5 transition ring-0 ring-c-primary/20 {!$isTouchscreen
+											? 'hover:text-c-primary hover:bg-c-primary/10 hover:ring-2'
+											: ''}"
+									>
+										{user.stripe_customer_id}
+									</a>
+								</div>
 							</div>
-							<div class="flex flex-col items-end justify-center">
-								<ProductIdBadge productId={user.product_id} size="sm" />
-								<a
-									rel="noreferrer"
-									href="https://dashboard.stripe.com/customers/{user.stripe_customer_id}"
-									target="_blank"
-									class="text-xs text-c-on-bg/40 bg-c-on-bg/5 rounded-lg px-2.5 py-1.5 mt-2.5 transition ring-0 ring-c-primary/20 {!$isTouchscreen
-										? 'hover:text-c-primary hover:bg-c-primary/10 hover:ring-2'
-										: ''}"
-								>
-									{user.stripe_customer_id}
-								</a>
-							</div>
+							{#if user.credits}
+								<div class="w-full mt-2.5">
+									{#each user.credits as credit, index}
+										<div
+											class="w-full flex py-1 {index % 2 === 0
+												? 'bg-c-on-bg/5'
+												: ''} text-xs rounded-md gap-3"
+										>
+											<p class="w-1/3 md:w-24 px-2 text-c-on-bg/75">
+												{getTitleFromProductId($LL, credit.credit_type.stripe_product_id)}
+											</p>
+											<p class="w-1/3 md:w-24 px-2 text-c-on-bg/75">
+												{credit.remaining_amount.toLocaleString($locale)}
+											</p>
+											<p class="w-1/3 md:w-24 px-2 text-c-on-bg/50">
+												{getRelativeDate({ date: credit.expires_at })}
+											</p>
+										</div>
+									{/each}
+								</div>
+							{/if}
 						</div>
 					{/each}
 				{/each}
