@@ -425,9 +425,10 @@
 
 <QueryClientProvider client={queryClient}>
 	<div
-		class="w-full relative bg-c-bg text-c-on-bg
-		min-h-[100svh] flex flex-col {$themeApp === 'light' ? 'theme-light' : 'theme-dark'}"
-		style="background-image: url({$themeApp === 'light'
+		class="w-full relative bg-c-bg text-c-on-bg flex flex-col {$themeApp === 'light'
+			? 'theme-light'
+			: 'theme-dark'}"
+		style="min-height: 100vh; min-height: 100svh; background-image: url({$themeApp === 'light'
 			? '/illustrations/grid-on-light.svg'
 			: '/illustrations/grid-on-dark.svg'}); background-size: 24px;"
 	>
