@@ -84,6 +84,7 @@
 		try {
 			hasLegacyGenerations = await doesUserHaveLegacyGenerations();
 		} catch (error) {
+			console.log(error);
 			hasLegacyGenerations = false;
 		}
 	});
