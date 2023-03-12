@@ -165,8 +165,8 @@
 <PageWrapper noPadding>
 	<div class="w-full flex justify-center py-2.5">
 		<div
-			class="flex flex-col bg-c-bg ring-2 ring-c-bg-secondary rounded-2xl shadow-lg 
-			shadow-c-shadow/[var(--o-shadow-normal)] -mx-3.5"
+			class="w-[calc(100%+1.75rem)] max-w-2xl -mx-3.5 flex flex-col bg-c-bg ring-2 ring-c-bg-secondary rounded-2xl shadow-lg 
+			shadow-c-shadow/[var(--o-shadow-normal)]"
 		>
 			<div class="flex flex-wrap gap-3 md:gap-8 p-3">
 				{#each totalCounts ?? Array(3)
@@ -193,12 +193,13 @@
 	</div>
 	<div
 		style="top: {$navbarHeight}px"
-		class="w-full py-2 flex justify-center sticky z-10 transition {scrollDirection === 'up'
+		class="w-[calc(100%+1.75rem)] -mx-3.5 py-2 flex justify-center sticky z-10 transition {scrollDirection ===
+		'up'
 			? 'translate-y-0 opacity-100'
 			: '-translate-y-22 pointer-events-none opacity-0'}"
 	>
-		<div class="w-full flex max-w-2xl -mx-3.5 gap-3">
-			<div class="flex-1 rounded-xl">
+		<div class="w-full flex max-w-2xl gap-2">
+			<div class="flex-1 min-w-0 rounded-xl">
 				<Input
 					disabled={scrollDirection === 'down'}
 					class="w-full"
@@ -213,7 +214,7 @@
 				</Input>
 			</div>
 			<div
-				class="flex w-48 max-w-full rounded-xl {!atTheTop
+				class="flex w-36 max-w-full rounded-xl transition {!atTheTop
 					? 'shadow-lg shadow-c-shadow/[var(--o-shadow-strongest)]'
 					: ''}"
 			>
@@ -221,12 +222,9 @@
 					class="w-full"
 					name="Active Product ID"
 					items={activeProductItems}
+					hasTitle={false}
 					bind:value={selectedActiveProductId}
-				>
-					<div slot="title" class="p-3.5 flex items-center justify-center">
-						<IconFunnel class="w-6 h-6 text-c-on-bg/35" />
-					</div>
-				</TabLikeDropdown>
+				/>
 			</div>
 		</div>
 	</div>

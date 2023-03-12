@@ -80,7 +80,7 @@
 	});
 </script>
 
-<TabBarWrapper class="{classes} {isDropdownOpen ? 'z-20' : 'z-10'} relative" {dontScale}>
+<TabBarWrapper {dontScale} class="{classes} {isDropdownOpen ? 'z-20' : 'z-10'} relative">
 	{#if hasTitle}
 		<div class="self-stretch flex text-c-on-bg/50">
 			<slot name="title" />
@@ -88,7 +88,9 @@
 	{/if}
 	<div
 		use:clickoutside={{ callback: () => (isDropdownOpen = false) }}
-		class="ml-px flex-1 min-w-0 flex flex-col relative rounded-r-xl"
+		class="{hasTitle ? 'ml-px' : ''} flex-1 min-w-0 flex flex-col relative rounded-r-xl {!hasTitle
+			? 'rounded-l-xl'
+			: ''}"
 	>
 		<button
 			{disabled}
@@ -101,18 +103,18 @@
 			class="flex-1 ring-2 text-left flex items-center justify-between min-w-0 px-4 py-3.25 md:py-3.5 relative 
 				group transition-all duration-150 z-30 gap-2 {isDropdownOpen
 				? dropdownPlacement === 'top'
-					? 'rounded-br-xl bg-c-bg-secondary ring-c-bg-tertiary'
-					: 'rounded-tr-xl bg-c-bg-secondary ring-c-bg-tertiary'
-				: 'rounded-r-xl bg-c-bg ring-c-bg-secondary'}"
+					? `rounded-br-xl ${!hasTitle ? 'rounded-bl-xl' : ''} bg-c-bg-secondary ring-c-bg-tertiary`
+					: `rounded-tr-xl ${!hasTitle ? 'rounded-tl-xl' : ''} bg-c-bg-secondary ring-c-bg-tertiary`
+				: `rounded-r-xl ${!hasTitle ? 'rounded-l-xl' : ''} bg-c-bg ring-c-bg-secondary`}"
 			type="button"
 			aria-label={name}
 		>
 			<div
 				class="w-full h-full absolute left-0 top-0 overflow-hidden z-0 transition-all duration-150 {isDropdownOpen
 					? dropdownPlacement === 'top'
-						? 'rounded-br-xl'
-						: 'rounded-tr-xl'
-					: 'rounded-r-xl'}"
+						? `rounded-br-xl ${!hasTitle ? 'rounded-bl-xl' : ''}`
+						: `rounded-tr-xl ${!hasTitle ? 'rounded-tl-xl' : ''}`
+					: `rounded-r-xl ${!hasTitle ? 'rounded-l-xl' : ''}`}"
 			>
 				<div class="w-[200%] h-full absolute left-0 top-0 flex items-center justify-center">
 					<div
