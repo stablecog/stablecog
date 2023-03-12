@@ -55,11 +55,18 @@
 	});
 
 	const lastNotification = 'our-first-big-update';
+
+	const nonStickyNavbarRoutes = ['/admin/gallery'];
+
+	$: isStickNavbarRoute = !nonStickyNavbarRoutes.includes($page.url.pathname);
 </script>
 
 <svelte:window on:scroll={setNotAtTheTop} />
 
-<nav bind:clientHeight={$navbarHeight} class="w-full flex flex-col sticky -top-px z-50 transition">
+<nav
+	bind:clientHeight={$navbarHeight}
+	class="w-full flex flex-col {isStickNavbarRoute ? 'sticky -top-px z-50' : ''}"
+>
 	{#if mounted && ($lastClosedNotification === null || $lastClosedNotification !== lastNotification)}
 		<Banner
 			href="/blog/our-first-big-update"
@@ -78,9 +85,10 @@
 		<PageLoadProgressBar />
 		<div
 			class="pointer-events-none w-full h-full rounded-b-xl absolute left-0 top-0 transform transition duration-300 bg-c-bg 
-			shadow-navbar shadow-c-shadow/[var(--o-shadow-stronger)] ring-2 ring-c-bg-secondary {notAtTheTop
-				? 'translate-y-0 opacity-100'
-				: '-translate-y-24 opacity-0'}"
+			shadow-navbar shadow-c-shadow/[var(--o-shadow-stronger)] ring-2 ring-c-bg-secondary {!notAtTheTop ||
+			!isStickNavbarRoute
+				? '-translate-y-24 opacity-0'
+				: 'translate-y-0 opacity-100'}"
 		/>
 		<div class="flex xl:flex-1 self-stretch">
 			<a

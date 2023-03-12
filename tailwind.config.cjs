@@ -152,6 +152,9 @@ module.exports = {
 				'generation-modal': '0 1rem 2rem 0',
 				sheet: '0 0 2rem 0'
 			},
+			backgroundImage: {
+				'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))'
+			},
 			screens: {
 				'1.5xl': '1408px',
 				'2.5xl': '1728px',

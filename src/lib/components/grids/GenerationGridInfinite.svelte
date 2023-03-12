@@ -14,6 +14,7 @@
 	import type { CreateInfiniteQueryResult } from '@tanstack/svelte-query';
 	import { MasonryInfiniteGrid } from '@egjs/svelte-infinitegrid';
 	import { fly } from 'svelte/transition';
+	import { adminGalleryActionableItems, isAdminGalleryEditActive } from '$ts/stores/admin/gallery';
 
 	export let generationsQuery: CreateInfiniteQueryResult<TUserGenerationFullOutputsPage, unknown>;
 	export let cardType: TGenerationImageCardType;
@@ -62,8 +63,13 @@
 						{#if $activeGeneration === undefined || $activeGeneration.selected_output.id !== outputs[item.key].id}
 							<div
 								transition:fly|local={imageTransitionProps}
-								class="absolute left-0 top-0 w-full h-full rounded-xl bg-c-bg-secondary transition border-4
-										border-c-bg-secondary z-0 overflow-hidden shadow-lg shadow-c-shadow/[var(--o-shadow-normal)]"
+								class="absolute left-0 top-0 w-full h-full rounded-xl bg-c-bg-secondary transition border-4 {cardType ===
+									'admin-gallery' &&
+								$isAdminGalleryEditActive &&
+								$adminGalleryActionableItems.map((i) => i.id).includes(outputs[item.key].id)
+									? 'border-c-primary'
+									: 'border-c-bg-secondary'}
+										 z-0 overflow-hidden shadow-lg shadow-c-shadow/[var(--o-shadow-normal)]"
 							>
 								{#if outputs[item.key].generation.outputs !== undefined}
 									<GenerationImage

@@ -62,6 +62,10 @@
 			(generation.selected_output.gallery_status === 'rejected' &&
 				$adminGalleryFilter !== 'rejected'));
 
+	$: shouldShowSelectMarker = inAdminGalleryScheduledIds
+		? true
+		: $adminGalleryFilter === generation.selected_output.gallery_status;
+
 	$: logProps = {
 		'SC - Output Id': generation.selected_output.id,
 		'SC - Product Id': $userSummary?.product_id,
@@ -105,15 +109,26 @@
 		}}
 		class="w-full h-full absolute left-0 top-0 flex flex-col justify-start items-start z-30"
 	>
-		<div class="w-full flex items-center justify-between transform transition p-1.5">
+		<div
+			transition:fly|local={{ duration: 200, easing: quadOut, y: -50 }}
+			class="pointer-events-none w-full flex items-center justify-between transform transition p-2 {shouldShowSelectMarker
+				? 'translate-y-0'
+				: '-translate-y-40'}"
+		>
+			<div
+				class="absolute filter blur-xl rounded-full w-40 h-40 -right-20 -top-20 bg-gradient-radial from-c-bg-secondary to-c-bg-secondary/25"
+			/>
 			<div />
 			<div
-				transition:fly|local={{ duration: 200, easing: quadOut, y: -50 }}
-				class="rounded-full ring-2 ring-c-primary w-6 h-6 transition p-0.75 {inAdminGalleryScheduledIds
+				class="rounded-full border-2 border-c-primary w-6 h-6 transition p-0.75 {$isAdminGalleryEditActive
 					? 'scale-100 opacity-100'
 					: 'scale-0 opacity-0'}"
 			>
-				<div class="w-full h-full rounded-full bg-c-primary" />
+				<div
+					class="w-full h-full rounded-full bg-c-primary transform transition {inAdminGalleryScheduledIds
+						? 'scale-100 opacity-100'
+						: 'scale-0 opacity-0'}"
+				/>
 			</div>
 		</div>
 	</button>

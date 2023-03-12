@@ -175,8 +175,7 @@
 			</div>
 		</div>
 		<div
-			style="top: {$navbarHeight + 4}px"
-			class="w-full max-w-7xl flex flex-wrap gap-3 md:gap-4 p-2 md:p-3 shadow-lg shadow-c-shadow/[var(--o-shadow-strong)] 
+			class="top-1 w-full max-w-7xl flex flex-wrap gap-3 md:gap-4 p-2 md:p-3 shadow-lg shadow-c-shadow/[var(--o-shadow-strong)] 
 			rounded-2xl bg-c-bg sticky z-10 -mt-2 border-2 border-c-bg-secondary"
 		>
 			<SubtleButton
@@ -185,7 +184,7 @@
 			>
 				<div class="flex items-center justify-center gap-4 px-1 md:px-2">
 					<p class="text-sm md:text-base">
-						{$LL.Admin.EditViewButton()}
+						{$LL.Admin.EditButton()}
 					</p>
 					<div class="-mr-1">
 						<ToggleIndicator isToggled={$isAdminGalleryEditActive} />
