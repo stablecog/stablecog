@@ -74,7 +74,7 @@
 		try {
 			await downloadLegacyGenerations();
 		} catch (error) {
-			console.log();
+			console.log(error);
 		} finally {
 			legacyGenerationsDownloadStatus = 'idle';
 		}
