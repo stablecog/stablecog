@@ -62,7 +62,7 @@
 <PageWrapper>
 	{#if !$page.data.session?.user.email}
 		<div class="w-full flex justify-center items-center my-auto">
-			<IconLoading class="w-10 h-10 text-c-on-bg/50 animate-spin-faster" />
+			<IconLoading class="w-10 h-10 text-c-on-bg/60 animate-spin-faster" />
 		</div>
 	{:else}
 		<div class="w-full flex flex-col items-center justify-center my-auto">
@@ -93,7 +93,7 @@
 						<div class="flex flex-col items-end justify-start">
 							<IconButton name="Extra Settings" onClick={toggleExtraAccountSettings}>
 								<IconThreeDots
-									class="w-8 h-8 transform transition text-c-on-bg {!$isTouchscreen
+									class="w-8 h-8 transform transition text-c-on-bg/60 {!$isTouchscreen
 										? 'group-hover:text-c-primary'
 										: ''} {isExtraAccountSettingsOpen ? 'rotate-90 text-c-primary' : 'rotate-0'}"
 								/>
