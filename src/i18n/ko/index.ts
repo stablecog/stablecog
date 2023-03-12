@@ -163,6 +163,7 @@ const ko: Translation = {
 		CopyButton: '복사하기',
 		DeleteButton: '삭제하기',
 		LoadingTitle: '로딩 중',
+		ContinueButton: 'Continue',
 		LoadingParagraph: '조금만 기다려주세요...',
 		InsufficientCreditsTitle: 'Insufficient credits ({remainingCredits}/{neededCredits})',
 		ConfirmButton: 'Confirm',
@@ -416,6 +417,20 @@ const ko: Translation = {
 				PageTitle: 'Changed plan',
 				PageParagraph: 'Your plan has been changed successfully.'
 			}
+		},
+		ChangeEmail: {
+			PageTitle: 'Change Email',
+			PageParagraph: 'Enter a new email address for your account.',
+			ChangeEmailButton: 'Change Email',
+			NewEmailInput: {
+				Placeholder: 'New Email'
+			},
+			PageTitleSentLink: 'Check your email',
+			PageParagraphSentLink:
+				"We've sent links to both addresses. Confirm both to change your account's email address.",
+			PageTitleConfirmOtherEmail: 'Confirm Other Email',
+			PageParagraphConfirmOtherEmail:
+				"We've also sent a link to your other email address. Confirm that one as well to complete the process."
 		}
 	},
 	ForgotPassword: {

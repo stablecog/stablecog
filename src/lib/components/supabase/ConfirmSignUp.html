@@ -1,0 +1,60 @@
+<table cellspacing="0" cellpadding="0" style="width: 100%;
+    max-width: 500px;
+    margin: 0 auto;
+    background: #201f22;
+    border-radius: 1.25rem;
+    border: solid 4px #29282b;
+    color: #dbd5e7;
+    overflow: hidden;
+    z-index: 0;
+    position: relative;
+    word-break: break-all;
+    font-size: 1rem;">
+  <tbody><tr>
+    <td>
+      <img style="width: 100%; height: auto; padding: 0; margin: 0" src="https://ba.stablecog.com/general/email-banner.png">
+    </td>
+  </tr>
+  <tr style="text-align: center">
+    <td style="padding-top: 1.5rem; padding-left: 1.5rem; padding-right: 1.5rem; line-height: 1.5;">Click the button below to sign up to Stablecog:</td>
+  </tr>
+  <tr style="text-align: center">
+    <td style="padding-top: 1rem; padding-bottom: 1rem">
+      <a href="{{ .ConfirmationURL }}" style="background: #ae85ff;
+          color: #29282b;
+          box-shadow: 0rem 0.5rem 1rem rgba(0, 0, 0, 0.3);
+          font-size: 1.1rem;
+          font-weight: bold;
+          padding: 1.25rem 2rem;
+          border-radius: 0.9rem;
+          text-align: center;
+          display: inline-block;
+          text-decoration: none;">
+        Sign up to Stablecog
+      </a>
+    </td>
+  </tr>
+  <tr style="text-align: center">
+    <td style="padding-top: 1.25rem; padding-left: 1.5rem; padding-right: 1.5rem; line-height: 1.5;">Or you can copy this link into your browser:</td>
+  </tr>
+  <tr style="text-align: center">
+    <td style="padding: 0rem 2rem">
+      <p style="color: #ae85ff;
+          font-size: 0.75rem;
+          font-weight: normal;
+          text-align: left;
+          display: inline-block;
+          text-decoration: none;">
+        {{ .ConfirmationURL }}
+      </p>
+    </td>
+  </tr>
+  <tr style="text-align: center">
+    <td style="padding-top: 1rem; padding-bottom: 1.75rem">
+      <a style="color: #dbd5e7" href="https://stablecog.com">
+        © 2023 Stablecog, Inc.
+      </a>
+    </td>
+  </tr>
+</tbody>
+</table>

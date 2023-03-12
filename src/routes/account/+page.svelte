@@ -18,6 +18,10 @@
 	import { isTouchscreen } from '$ts/stores/isTouchscreen';
 	import { userSummary } from '$ts/stores/user/summary';
 	import type { PageServerData } from './$types';
+	import IconButton from '$components/buttons/IconButton.svelte';
+	import IconThreeDots from '$components/icons/IconThreeDots.svelte';
+	import DropdownWrapper from '$components/DropdownWrapper.svelte';
+	import { clickoutside } from '$ts/actions/clickoutside';
 
 	export let data: PageServerData;
 
@@ -38,6 +42,14 @@
 			console.log(error);
 		}
 	}
+
+	let isExtraAccountSettingsOpen = false;
+	const toggleExtraAccountSettings = () => {
+		isExtraAccountSettingsOpen = !isExtraAccountSettingsOpen;
+	};
+	const closeExtraAccountSettings = () => {
+		isExtraAccountSettingsOpen = false;
+	};
 </script>
 
 <MetaTag
@@ -56,19 +68,52 @@
 		<div class="w-full flex flex-col items-center justify-center my-auto">
 			<h1 class="text-4xl font-bold">{$LL.Account.PageTitle()}</h1>
 			<div
-				class="w-full max-w-md md:max-w-xl mt-6 flex flex-col rounded-2xl bg-c-bg overflow-hidden relative z-0 
+				class="w-full max-w-md md:max-w-xl mt-6 flex flex-col rounded-2xl bg-c-bg relative z-0 
 				shadow-xl shadow-c-shadow/[var(--o-shadow-strong)] ring-2 ring-c-bg-secondary"
 			>
-				<div class="w-full flex items-center gap-4 px-5 py-4 md:p-6 overflow-hidden">
-					<div
-						class="w-9 h-9 ring-2 ring-c-on-bg/25 overflow-hidden rounded-full transition transform 
+				<div class="w-full flex flex-wrap items-center justify-between gap-8 px-5 py-4 md:p-6">
+					<div class="flex items-center gap-4">
+						<div
+							class="w-9 h-9 ring-2 ring-c-on-bg/25 overflow-hidden rounded-full transition transform 
 						relative shadow-lg shadow-c-shadow/[var(--o-shadow-strong)]"
-					>
-						<Avatar str={$page.data.session?.user.email || ''} class="w-full h-full relative" />
+						>
+							<Avatar str={$page.data.session?.user.email || ''} class="w-full h-full relative" />
+						</div>
+						<p class="font-semibold flex-shrink overflow-hidden overflow-ellipsis">
+							{$page.data.session.user.email}
+						</p>
 					</div>
-					<p class="font-semibold flex-shrink overflow-hidden overflow-ellipsis">
-						{$page.data.session.user.email}
-					</p>
+					<div
+						use:clickoutside={{ callback: closeExtraAccountSettings }}
+						class="flex items-end justify-end -m-2"
+					>
+						<div class="flex flex-col items-end justify-start">
+							<IconButton name="Extra Settings" onClick={toggleExtraAccountSettings}>
+								<IconThreeDots
+									class="w-8 h-8 transform transition text-c-on-bg {!$isTouchscreen
+										? 'group-hover:text-c-primary'
+										: ''} {isExtraAccountSettingsOpen ? 'rotate-90 text-c-primary' : 'rotate-0'}"
+								/>
+							</IconButton>
+							<div class="relative bg-c-primary">
+								{#if isExtraAccountSettingsOpen}
+									<DropdownWrapper class="w-52 mt-1.5">
+										<div class="flex flex-col items-end">
+											<DropdownItem href="/account/change-email">
+												<p
+													class="text-c-on-bg transition {!$isTouchscreen
+														? 'group-hover:text-c-primary'
+														: ''}"
+												>
+													{$LL.Account.ChangeEmail.ChangeEmailButton()}
+												</p>
+											</DropdownItem>
+										</div>
+									</DropdownWrapper>
+								{/if}
+							</div>
+						</div>
+					</div>
 				</div>
 				<div class="w-full h-2px bg-c-bg-secondary" />
 				<div

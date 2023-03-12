@@ -504,6 +504,10 @@ type RootTranslation = {
 		 */
 		LoadingTitle: string
 		/**
+		 * C​o​n​t​i​n​u​e
+		 */
+		ContinueButton: string
+		/**
 		 * L​o​a​d​i​n​g​.​.​.
 		 */
 		LoadingParagraph: string
@@ -1219,6 +1223,42 @@ type RootTranslation = {
 				 */
 				PageParagraph: string
 			}
+		}
+		ChangeEmail: {
+			/**
+			 * C​h​a​n​g​e​ ​E​m​a​i​l
+			 */
+			PageTitle: string
+			/**
+			 * E​n​t​e​r​ ​a​ ​n​e​w​ ​e​m​a​i​l​ ​a​d​d​r​e​s​s​ ​f​o​r​ ​y​o​u​r​ ​a​c​c​o​u​n​t​.
+			 */
+			PageParagraph: string
+			/**
+			 * C​h​a​n​g​e​ ​E​m​a​i​l
+			 */
+			ChangeEmailButton: string
+			NewEmailInput: {
+				/**
+				 * N​e​w​ ​E​m​a​i​l
+				 */
+				Placeholder: string
+			}
+			/**
+			 * C​h​e​c​k​ ​y​o​u​r​ ​e​m​a​i​l
+			 */
+			PageTitleSentLink: string
+			/**
+			 * W​e​'​v​e​ ​s​e​n​t​ ​l​i​n​k​s​ ​t​o​ ​b​o​t​h​ ​a​d​d​r​e​s​s​e​s​.​ ​C​o​n​f​i​r​m​ ​b​o​t​h​ ​t​o​ ​c​h​a​n​g​e​ ​y​o​u​r​ ​a​c​c​o​u​n​t​'​s​ ​e​m​a​i​l​ ​a​d​d​r​e​s​s​.
+			 */
+			PageParagraphSentLink: string
+			/**
+			 * C​o​n​f​i​r​m​ ​O​t​h​e​r​ ​E​m​a​i​l
+			 */
+			PageTitleConfirmOtherEmail: string
+			/**
+			 * W​e​'​v​e​ ​a​l​s​o​ ​s​e​n​t​ ​a​ ​l​i​n​k​ ​t​o​ ​y​o​u​r​ ​o​t​h​e​r​ ​e​m​a​i​l​ ​a​d​d​r​e​s​s​.​ ​C​o​n​f​i​r​m​ ​t​h​a​t​ ​o​n​e​ ​a​s​ ​w​e​l​l​ ​t​o​ ​c​o​m​p​l​e​t​e​ ​t​h​e​ ​p​r​o​c​e​s​s​.
+			 */
+			PageParagraphConfirmOtherEmail: string
 		}
 	}
 	ForgotPassword: {
@@ -1974,6 +2014,10 @@ export type TranslationFunctions = {
 		 */
 		LoadingTitle: () => LocalizedString
 		/**
+		 * Continue
+		 */
+		ContinueButton: () => LocalizedString
+		/**
 		 * Loading...
 		 */
 		LoadingParagraph: () => LocalizedString
@@ -2684,6 +2728,42 @@ export type TranslationFunctions = {
 				 */
 				PageParagraph: () => LocalizedString
 			}
+		}
+		ChangeEmail: {
+			/**
+			 * Change Email
+			 */
+			PageTitle: () => LocalizedString
+			/**
+			 * Enter a new email address for your account.
+			 */
+			PageParagraph: () => LocalizedString
+			/**
+			 * Change Email
+			 */
+			ChangeEmailButton: () => LocalizedString
+			NewEmailInput: {
+				/**
+				 * New Email
+				 */
+				Placeholder: () => LocalizedString
+			}
+			/**
+			 * Check your email
+			 */
+			PageTitleSentLink: () => LocalizedString
+			/**
+			 * We've sent links to both addresses. Confirm both to change your account's email address.
+			 */
+			PageParagraphSentLink: () => LocalizedString
+			/**
+			 * Confirm Other Email
+			 */
+			PageTitleConfirmOtherEmail: () => LocalizedString
+			/**
+			 * We've also sent a link to your other email address. Confirm that one as well to complete the process.
+			 */
+			PageParagraphConfirmOtherEmail: () => LocalizedString
 		}
 	}
 	ForgotPassword: {

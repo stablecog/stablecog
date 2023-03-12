@@ -28,7 +28,7 @@
 					class="w-full h-full ease-out transition transform {type === 'on-primary'
 						? 'bg-c-on-primary/15'
 						: 'bg-c-primary/25'} 
-        	absolute left-0 top-0 rounded-xl -translate-x-full {!$isTouchscreen
+        		absolute left-0 top-0 rounded-xl -translate-x-full {!$isTouchscreen
 						? 'group-hover:translate-x-0'
 						: ''}"
 				/>

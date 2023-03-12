@@ -8,7 +8,7 @@
 		inferenceStepsDefault,
 		maxSeed
 	} from '$ts/constants/main';
-	import { onDestroy } from 'svelte';
+	import { onDestroy, onMount } from 'svelte';
 	import ImagePlaceholder from '$components/ImagePlaceholder.svelte';
 	import GenerationImage from '$components/generationImage/GenerationImage.svelte';
 	import { advancedModeApp } from '$ts/stores/advancedMode';
@@ -51,6 +51,7 @@
 	import { userSummary } from '$ts/stores/user/summary';
 	import LowOnCreditsCard from '$components/LowOnCreditsCard.svelte';
 	import { appVersion, serverVersion } from '$ts/stores/appVersion';
+	import { goto } from '$app/navigation';
 
 	export let data: THomePageData;
 
@@ -126,6 +127,15 @@
 	}
 
 	const lowCreditsThreshold = 10;
+
+	const confirmOtherEmailHash =
+		'#message=Confirmation+link+accepted.+Please+proceed+to+confirm+link+sent+to+the+other+email';
+
+	onMount(async () => {
+		if ($page.url.hash === confirmOtherEmailHash) {
+			await goto('/account/change-email?confirm_other_email=true');
+		}
+	});
 
 	onDestroy(() => {
 		clearInterval(nowInterval);

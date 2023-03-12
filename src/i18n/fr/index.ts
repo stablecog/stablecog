@@ -163,6 +163,7 @@ const fr: Translation = {
 		CopyButton: 'Copier',
 		DeleteButton: 'Supprimer',
 		LoadingTitle: 'Chargement en cours',
+		ContinueButton: 'Continue',
 		LoadingParagraph: 'Chargement en cours...',
 		InsufficientCreditsTitle: 'Insufficient credits ({remainingCredits}/{neededCredits})',
 		ConfirmButton: 'Confirm',
@@ -421,6 +422,20 @@ const fr: Translation = {
 				PageTitle: 'Changed plan',
 				PageParagraph: 'Your plan has been changed successfully.'
 			}
+		},
+		ChangeEmail: {
+			PageTitle: 'Change Email',
+			PageParagraph: 'Enter a new email address for your account.',
+			ChangeEmailButton: 'Change Email',
+			NewEmailInput: {
+				Placeholder: 'New Email'
+			},
+			PageTitleSentLink: 'Check your email',
+			PageParagraphSentLink:
+				"We've sent links to both addresses. Confirm both to change your account's email address.",
+			PageTitleConfirmOtherEmail: 'Confirm Other Email',
+			PageParagraphConfirmOtherEmail:
+				"We've also sent a link to your other email address. Confirm that one as well to complete the process."
 		}
 	},
 	ForgotPassword: {
