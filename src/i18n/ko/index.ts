@@ -254,7 +254,8 @@ const ko: Translation = {
 			Title: 'Update Available',
 			Paragraph: 'There is an update! Refresh the page to get it.'
 		},
-		EmailProviderNotAllowed: "This email provider isn't allowed."
+		EmailProviderNotAllowed: "This email provider isn't allowed.",
+		EmailAlreadyInUse: 'This email is already in use.'
 	},
 	Admin: {
 		AdminPanelTitle: '관리자',

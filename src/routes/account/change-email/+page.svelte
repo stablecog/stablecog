@@ -55,6 +55,8 @@
 				sError.message === 'For security purposes, you can only request this once every 60 seconds'
 			) {
 				errorText = $LL.Error.OnceEvery60Seconds();
+			} else if (sError.message === 'A user with this email address has already been registered') {
+				errorText = $LL.Error.EmailAlreadyInUse();
 			} else {
 				errorText = $LL.Error.SomethingWentWrong();
 			}
