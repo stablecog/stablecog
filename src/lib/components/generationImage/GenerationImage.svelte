@@ -153,9 +153,7 @@
 		loading="lazy"
 		class="w-full h-full absolute left-0 top-0 duration-300 transition transform {isImageLoaded
 			? 'opacity-100'
-			: 'opacity-0'} {$isAdminGalleryEditActive && inAdminGalleryScheduledIds
-			? 'translate-y-10'
-			: 'translate-0'}"
+			: 'opacity-0'}"
 		src={useUpscaledImage && generation.selected_output.upscaled_image_url
 			? generation.selected_output.upscaled_image_url
 			: generation.selected_output.image_url}
