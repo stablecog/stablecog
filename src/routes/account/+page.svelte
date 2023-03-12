@@ -71,21 +71,24 @@
 				class="w-full max-w-md md:max-w-xl mt-6 flex flex-col rounded-2xl bg-c-bg relative z-0 
 				shadow-xl shadow-c-shadow/[var(--o-shadow-strong)] ring-2 ring-c-bg-secondary"
 			>
-				<div class="w-full flex flex-wrap items-center justify-between gap-8 px-5 py-4 md:p-6">
-					<div class="flex items-center gap-4">
+				<div class="w-full flex items-center justify-start">
+					<div class="flex flex-shrink overflow-hidden items-center gap-4 px-5 py-4 md:p-6">
 						<div
 							class="w-9 h-9 ring-2 ring-c-on-bg/25 overflow-hidden rounded-full transition transform 
-						relative shadow-lg shadow-c-shadow/[var(--o-shadow-strong)]"
+							relative shadow-lg shadow-c-shadow/[var(--o-shadow-strong)] flex-shrink-0"
 						>
-							<Avatar str={$page.data.session?.user.email || ''} class="w-full h-full relative" />
+							<Avatar
+								str={$page.data.session?.user.email || ''}
+								class="w-full h-full relative flex-shrink-0"
+							/>
 						</div>
-						<p class="font-semibold flex-shrink overflow-hidden overflow-ellipsis">
+						<p class="overflow-hidden font-semibold flex-shrink overflow-ellipsis">
 							{$page.data.session.user.email}
 						</p>
 					</div>
 					<div
 						use:clickoutside={{ callback: closeExtraAccountSettings }}
-						class="flex items-end justify-end -m-2"
+						class="flex items-end justify-start -m-2 px-5 py-4 md:p-6 -ml-8 md:-ml-10"
 					>
 						<div class="flex flex-col items-end justify-start">
 							<IconButton name="Extra Settings" onClick={toggleExtraAccountSettings}>
