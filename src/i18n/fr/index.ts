@@ -53,6 +53,7 @@ const fr: Translation = {
 	History: {
 		GenerationsTitle: 'Images générées',
 		GenerationsMaxSavedCountWarning: '{count} dernières uniquement',
+		DownloadLegacyGenerationsButton: 'Download Legacy Generations',
 		NoGenerationsYet: "Vous n'avez encore généré aucune image."
 	},
 	Live: {

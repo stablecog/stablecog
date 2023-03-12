@@ -53,6 +53,7 @@ const tr: Translation = {
 	History: {
 		GenerationsTitle: 'Üretimler',
 		GenerationsMaxSavedCountWarning: 'Sadece son {count}',
+		DownloadLegacyGenerationsButton: 'Download Legacy Generations',
 		NoGenerationsYet: 'Henüz fotoğraf üretmedin.'
 	},
 	Live: {

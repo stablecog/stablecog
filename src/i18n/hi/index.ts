@@ -52,6 +52,7 @@ const hi: Translation = {
 	History: {
 		GenerationsTitle: 'बनावटे',
 		GenerationsMaxSavedCountWarning: 'आखरी {count} ही',
+		DownloadLegacyGenerationsButton: 'Download Legacy Generations',
 		NoGenerationsYet: 'आपने अभी तक कोई चित्र नहीं बनाया है।'
 	},
 	Live: {

@@ -53,6 +53,7 @@ const ko: Translation = {
 	History: {
 		GenerationsTitle: '생성한 이미지',
 		GenerationsMaxSavedCountWarning: '최근 {count}개',
+		DownloadLegacyGenerationsButton: 'Download Legacy Generations',
 		NoGenerationsYet: '아직 생성한 이미지가 없어요.'
 	},
 	Live: {

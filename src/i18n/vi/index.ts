@@ -53,6 +53,7 @@ const vi: Translation = {
 	History: {
 		GenerationsTitle: 'Các hình ảnh',
 		GenerationsMaxSavedCountWarning: 'Chỉ hiện thị {count}',
+		DownloadLegacyGenerationsButton: 'Download Legacy Generations',
 		NoGenerationsYet: 'Bạn chưa tạo hình ảnh nào cả.'
 	},
 	Live: {

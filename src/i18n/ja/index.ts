@@ -53,6 +53,7 @@ const ja: Translation = {
 	History: {
 		GenerationsTitle: '生成画像',
 		GenerationsMaxSavedCountWarning: '最新の {count} のみ',
+		DownloadLegacyGenerationsButton: 'Download Legacy Generations',
 		NoGenerationsYet: 'まだ画像を生成していません。'
 	},
 	Live: {

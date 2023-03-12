@@ -52,6 +52,7 @@ const ptBr: Translation = {
 	History: {
 		GenerationsTitle: 'Gerações',
 		GenerationsMaxSavedCountWarning: 'Somente os {count} últimos',
+		DownloadLegacyGenerationsButton: 'Download Legacy Generations',
 		NoGenerationsYet: 'Você ainda não gerou nenhuma imagem.'
 	},
 	Live: {

@@ -6,7 +6,12 @@ export function getImageFileNameFromGeneration({
 	inferenceSteps,
 	guidanceScale
 }: IGetImageFileNameFromGenerationProps) {
-	const extension = url.split('.').pop();
+	let extension: string;
+	if (url.startsWith('data:image/')) {
+		extension = url.split(';')[0].split('/')[1];
+	} else {
+		extension = url.split('.').pop() || 'jpeg';
+	}
 	return `[s_${seed}]-[gs_${guidanceScale}]-[is_${inferenceSteps}]-[u_${
 		isUpscaled ? '1' : '0'
 	}]-${prompt}.${extension}`;

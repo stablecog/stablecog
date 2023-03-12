@@ -50,6 +50,7 @@ const zhHans: Translation = {
 	History: {
 		GenerationsTitle: '生成的图像',
 		GenerationsMaxSavedCountWarning: '只限于前 {count} 个生成的图像',
+		DownloadLegacyGenerationsButton: 'Download Legacy Generations',
 		NoGenerationsYet: '您还没有生成任何图像。'
 	},
 	Live: {

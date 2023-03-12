@@ -53,6 +53,7 @@ const ru: Translation = {
 	History: {
 		GenerationsTitle: 'Сгенерированные изображения',
 		GenerationsMaxSavedCountWarning: 'Только последние {count}',
+		DownloadLegacyGenerationsButton: 'Download Legacy Generations',
 		NoGenerationsYet: 'Вы еще не сгенерировали ни одного изображения.'
 	},
 	Live: {

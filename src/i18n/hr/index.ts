@@ -52,6 +52,7 @@ const hr: Translation = {
 	History: {
 		GenerationsTitle: 'Generacije',
 		GenerationsMaxSavedCountWarning: 'Samo {count} posljednjih',
+		DownloadLegacyGenerationsButton: 'Download Legacy Generations',
 		NoGenerationsYet: 'Još nisi generirao niti jednu sliku.'
 	},
 	Live: {
