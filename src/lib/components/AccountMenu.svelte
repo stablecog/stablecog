@@ -40,7 +40,7 @@
 		<div class="w-full flex justify-stretch px-5 py-1 -mt-1">
 			{#if $userSummary.product_id}
 				<ProductIdBadge
-					href="/pricing"
+					href="/pricing#plans"
 					class="w-full mt-0.25"
 					productId={$userSummary.product_id}
 				/>

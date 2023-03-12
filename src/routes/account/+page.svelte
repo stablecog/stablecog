@@ -126,7 +126,12 @@
 						<p class="text-c-on-bg/60 font-semibold px-1">
 							{$LL.Account.SubscriptionPlanTitle()}
 						</p>
-						<ProductIdBadge class="mt-2" productId={$userSummary?.product_id} size="lg" />
+						<ProductIdBadge
+							href="/pricing#plans"
+							class="mt-2"
+							productId={$userSummary?.product_id}
+							size="lg"
+						/>
 					</div>
 					<div class="w-full md:w-auto flex flex-col">
 						<Button
