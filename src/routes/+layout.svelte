@@ -429,9 +429,7 @@
 		min-h-[100svh] flex flex-col {$themeApp === 'light' ? 'theme-light' : 'theme-dark'}"
 		style="background-image: url({$themeApp === 'light'
 			? '/illustrations/grid-on-light.svg'
-			: '/illustrations/grid-on-dark.svg'}); background-size: 24px;{innerHeight !== undefined
-			? `min-height: ${innerHeight}px`
-			: ''}"
+			: '/illustrations/grid-on-dark.svg'}); background-size: 24px;"
 	>
 		{#if underDevelopment && (!$userSummary || !isSuperAdmin($userSummary.roles)) && !$page.url.pathname.startsWith('/admin') && !$page.url.pathname.startsWith('/api/auth') && !$page.url.pathname.startsWith('/sign-in')}
 			<UnderDevelopment />
