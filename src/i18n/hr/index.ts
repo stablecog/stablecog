@@ -166,6 +166,7 @@ const hr: Translation = {
 		ContinueButton: 'Continue',
 		LoadingParagraph: 'Učitavanje...',
 		InsufficientCreditsTitle: 'Insufficient credits ({remainingCredits}/{neededCredits})',
+		AllTitle: 'All',
 		ConfirmButton: 'Confirm',
 		ServerUrlInput: {
 			Placeholder: 'URL servera'
@@ -296,6 +297,7 @@ const hr: Translation = {
 		PageTitleConfirmAlt: 'Provjeri svoj e-mail',
 		PageParagraphConfirm: 'Poslali smo ti 6-znamenkasti kod. Unesi ispod za potvrdu svog računa.',
 		SignUpButton: 'Registriraj se',
+		AllTitle: 'All',
 		ConfirmButton: 'Potvrdi',
 		AlreadyHaveAnAccountTitle: 'Već imaš račun?',
 		LoginInsteadButton: 'Ulogiraj se',

@@ -164,6 +164,7 @@ const zhHans: Translation = {
 		ContinueButton: 'Continue',
 		LoadingParagraph: '加载中...',
 		InsufficientCreditsTitle: 'Insufficient credits ({remainingCredits}/{neededCredits})',
+		AllTitle: 'All',
 		ConfirmButton: 'Confirm',
 		ServerUrlInput: {
 			Placeholder: '服务器 URL'
@@ -294,6 +295,7 @@ const zhHans: Translation = {
 		PageParagraphConfirm:
 			"We've emailed you a 6-digit code. Enter it below to confirm your account.",
 		SignUpButton: 'Sign Up',
+		AllTitle: 'All',
 		ConfirmButton: 'Confirm',
 		AlreadyHaveAnAccountTitle: 'Already have an account?',
 		LoginInsteadButton: 'Login instead',

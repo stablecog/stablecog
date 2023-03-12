@@ -167,6 +167,7 @@ const fr: Translation = {
 		ContinueButton: 'Continue',
 		LoadingParagraph: 'Chargement en cours...',
 		InsufficientCreditsTitle: 'Insufficient credits ({remainingCredits}/{neededCredits})',
+		AllTitle: 'All',
 		ConfirmButton: 'Confirm',
 		ServerUrlInput: {
 			Placeholder: 'URL du serveur'
@@ -300,6 +301,7 @@ const fr: Translation = {
 		PageParagraphConfirm:
 			'Nous vous avons envoyé un code à 6 chiffres. Saisissez-le ci-dessous pour confirmer votre compte.',
 		SignUpButton: 'Créer un compte',
+		AllTitle: 'All',
 		ConfirmButton: 'Confirmer',
 		AlreadyHaveAnAccountTitle: 'Vous avez déjà un compte ?',
 		LoginInsteadButton: 'Se connecter',

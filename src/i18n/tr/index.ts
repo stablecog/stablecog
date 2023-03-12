@@ -167,6 +167,7 @@ const tr: Translation = {
 		ContinueButton: 'Continue',
 		LoadingParagraph: 'Yükleniyor...',
 		InsufficientCreditsTitle: 'Insufficient credits ({remainingCredits}/{neededCredits})',
+		AllTitle: 'All',
 		ConfirmButton: 'Confirm',
 		ServerUrlInput: {
 			Placeholder: 'Sunucu adresi'
@@ -297,6 +298,7 @@ const tr: Translation = {
 		PageTitleConfirmAlt: 'Posta kutunu kontrol et',
 		PageParagraphConfirm: 'Sana 6 haneli bir kod yolladık. Üyeliğini onaylamak için onu aşağı gir.',
 		SignUpButton: 'Üye Ol',
+		AllTitle: 'All',
 		ConfirmButton: 'Onayla',
 		AlreadyHaveAnAccountTitle: 'Zaten üye misin?',
 		LoginInsteadButton: 'Giriş yap',

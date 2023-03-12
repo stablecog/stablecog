@@ -167,6 +167,7 @@ const vi: Translation = {
 		ContinueButton: 'Continue',
 		LoadingParagraph: 'Đang tải...',
 		InsufficientCreditsTitle: 'Insufficient credits ({remainingCredits}/{neededCredits})',
+		AllTitle: 'All',
 		ConfirmButton: 'Confirm',
 		ServerUrlInput: {
 			Placeholder: 'Đường dẫn máy chủ'
@@ -300,6 +301,7 @@ const vi: Translation = {
 		PageParagraphConfirm:
 			'Chúng tôi đã gửi cho bạn mã gồm 6 chữ số qua email. Nhập nó phía dưới để xác nhận tài khoản.',
 		SignUpButton: 'Đăng ký',
+		AllTitle: 'All',
 		ConfirmButton: 'Xác nhận',
 		AlreadyHaveAnAccountTitle: 'Đã có một tài khoản?',
 		LoginInsteadButton: 'Đăng Nhập',

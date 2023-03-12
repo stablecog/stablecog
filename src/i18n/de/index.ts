@@ -166,6 +166,7 @@ const de: Translation = {
 		ContinueButton: 'Continue',
 		LoadingParagraph: 'Wird geladen...',
 		InsufficientCreditsTitle: 'Insufficient credits ({remainingCredits}/{neededCredits})',
+		AllTitle: 'All',
 		ConfirmButton: 'Confirm',
 		ServerUrlInput: {
 			Placeholder: 'Server-URL'
@@ -297,6 +298,7 @@ const de: Translation = {
 		PageParagraphConfirm:
 			"We've emailed you a 6-digit code. Enter it below to confirm your account.",
 		SignUpButton: 'Sign Up',
+		AllTitle: 'All',
 		ConfirmButton: 'Confirm',
 		AlreadyHaveAnAccountTitle: 'Already have an account?',
 		LoginInsteadButton: 'Login instead',

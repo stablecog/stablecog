@@ -166,6 +166,7 @@ const ptBr: Translation = {
 		ContinueButton: 'Continue',
 		LoadingParagraph: 'Carregando...',
 		InsufficientCreditsTitle: 'Insufficient credits ({remainingCredits}/{neededCredits})',
+		AllTitle: 'All',
 		ConfirmButton: 'Confirm',
 		ServerUrlInput: {
 			Placeholder: 'URL do Servidor'
@@ -299,6 +300,7 @@ const ptBr: Translation = {
 		PageParagraphConfirm:
 			'Nós lhe enviamos um código com 6 dígitos. Insira-o abaixo para confirmar a sua conta.',
 		SignUpButton: 'Cadastre-se',
+		AllTitle: 'All',
 		ConfirmButton: 'Confirmar',
 		AlreadyHaveAnAccountTitle: 'Já possui uma conta?',
 		LoginInsteadButton: 'Efetuar Login',

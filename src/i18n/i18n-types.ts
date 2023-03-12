@@ -522,6 +522,10 @@ type RootTranslation = {
 		 */
 		InsufficientCreditsTitle: RequiredParams<'neededCredits' | 'remainingCredits'>
 		/**
+		 * A​l​l
+		 */
+		AllTitle: string
+		/**
 		 * C​o​n​f​i​r​m
 		 */
 		ConfirmButton: string
@@ -881,6 +885,10 @@ type RootTranslation = {
 		 * S​i​g​n​ ​U​p
 		 */
 		SignUpButton: string
+		/**
+		 * A​l​l
+		 */
+		AllTitle: string
 		/**
 		 * C​o​n​f​i​r​m
 		 */
@@ -2038,6 +2046,10 @@ export type TranslationFunctions = {
 		 */
 		InsufficientCreditsTitle: (arg: { neededCredits: unknown, remainingCredits: unknown }) => LocalizedString
 		/**
+		 * All
+		 */
+		AllTitle: () => LocalizedString
+		/**
 		 * Confirm
 		 */
 		ConfirmButton: () => LocalizedString
@@ -2397,6 +2409,10 @@ export type TranslationFunctions = {
 		 * Sign Up
 		 */
 		SignUpButton: () => LocalizedString
+		/**
+		 * All
+		 */
+		AllTitle: () => LocalizedString
 		/**
 		 * Confirm
 		 */

@@ -167,6 +167,7 @@ const ko: Translation = {
 		ContinueButton: 'Continue',
 		LoadingParagraph: '조금만 기다려주세요...',
 		InsufficientCreditsTitle: 'Insufficient credits ({remainingCredits}/{neededCredits})',
+		AllTitle: 'All',
 		ConfirmButton: 'Confirm',
 		ServerUrlInput: {
 			Placeholder: '커스텀 서버 주소'
@@ -298,6 +299,7 @@ const ko: Translation = {
 		PageParagraphConfirm:
 			'가입한 이메일로 6자리 인증코드를 발송했어요. 아래에 인증코드를 입력해주세요.',
 		SignUpButton: '가입하기',
+		AllTitle: 'All',
 		ConfirmButton: '이메일 인증하기',
 		AlreadyHaveAnAccountTitle: '이미 계정이 있으신가요?',
 		LoginInsteadButton: '다음으로 로그인하기',

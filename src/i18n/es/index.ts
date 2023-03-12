@@ -167,6 +167,7 @@ const es: Translation = {
 		ContinueButton: 'Continue',
 		LoadingParagraph: 'Loading...',
 		InsufficientCreditsTitle: 'Insufficient credits ({remainingCredits}/{neededCredits})',
+		AllTitle: 'All',
 		ConfirmButton: 'Confirm',
 		ServerUrlInput: {
 			Placeholder: 'URL del Servidor'
@@ -299,6 +300,7 @@ const es: Translation = {
 		PageParagraphConfirm:
 			"We've emailed you a 6-digit code. Enter it below to confirm your account.",
 		SignUpButton: 'Sign Up',
+		AllTitle: 'All',
 		ConfirmButton: 'Confirm',
 		AlreadyHaveAnAccountTitle: 'Already have an account?',
 		LoginInsteadButton: 'Login instead',

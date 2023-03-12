@@ -99,7 +99,7 @@
 				toggleDropdown();
 			}}
 			class="flex-1 ring-2 text-left flex items-center justify-between min-w-0 px-4 py-3.25 md:py-3.5 relative 
-				group transition-all duration-150 z-30 {isDropdownOpen
+				group transition-all duration-150 z-30 gap-2 {isDropdownOpen
 				? dropdownPlacement === 'top'
 					? 'rounded-br-xl bg-c-bg-secondary ring-c-bg-tertiary'
 					: 'rounded-tr-xl bg-c-bg-secondary ring-c-bg-tertiary'

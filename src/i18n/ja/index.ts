@@ -167,6 +167,7 @@ const ja: Translation = {
 		ContinueButton: 'Continue',
 		LoadingParagraph: '読み込み中...',
 		InsufficientCreditsTitle: 'Insufficient credits ({remainingCredits}/{neededCredits})',
+		AllTitle: 'All',
 		ConfirmButton: 'Confirm',
 		ServerUrlInput: {
 			Placeholder: 'サーバ URL'
@@ -299,6 +300,7 @@ const ja: Translation = {
 		PageParagraphConfirm:
 			'6桁のコードをメールで送信しました。アカウントを確認するには以下に入力してください。',
 		SignUpButton: '新規登録',
+		AllTitle: 'All',
 		ConfirmButton: '確認',
 		AlreadyHaveAnAccountTitle: '既にアカウントをお持ちですか？',
 		LoginInsteadButton: '代わりにログインする',

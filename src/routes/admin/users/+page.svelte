@@ -20,6 +20,16 @@
 	import Button from '$components/buttons/Button.svelte';
 	import IntersectionObserver from 'svelte-intersection-observer';
 	import { getTitleFromProductId } from '$ts/helpers/stripe/plan';
+	import type { TStripeSupportedProductIdSubscriptions } from '$ts/constants/stripePublic';
+	import type { TTab } from '$ts/types/main';
+	import {
+		PUBLIC_STRIPE_PRODUCT_ID_PRO_SUBSCRIPTION,
+		PUBLIC_STRIPE_PRODUCT_ID_PRO_SUBSCRIPTION_TEST,
+		PUBLIC_STRIPE_PRODUCT_ID_STARTER_SUBSCRIPTION,
+		PUBLIC_STRIPE_PRODUCT_ID_ULTIMATE_SUBSCRIPTION
+	} from '$env/static/public';
+	import TabLikeDropdown from '$components/tabBars/TabLikeDropdown.svelte';
+	import IconFunnel from '$components/icons/IconFunnel.svelte';
 
 	let searchString: string;
 	let searchStringDebounced: string | undefined = undefined;
@@ -32,6 +42,26 @@
 		count: number;
 	}
 	let totalCounts: TCount[];
+	let selectedActiveProductId: TStripeSupportedProductIdSubscriptions = '';
+
+	const activeProductItems: TTab<TStripeSupportedProductIdSubscriptions>[] = [
+		{
+			label: $LL.Shared.AllTitle(),
+			value: ''
+		},
+		{
+			label: getTitleFromProductId($LL, PUBLIC_STRIPE_PRODUCT_ID_STARTER_SUBSCRIPTION),
+			value: PUBLIC_STRIPE_PRODUCT_ID_STARTER_SUBSCRIPTION
+		},
+		{
+			label: getTitleFromProductId($LL, PUBLIC_STRIPE_PRODUCT_ID_PRO_SUBSCRIPTION),
+			value: PUBLIC_STRIPE_PRODUCT_ID_PRO_SUBSCRIPTION
+		},
+		{
+			label: getTitleFromProductId($LL, PUBLIC_STRIPE_PRODUCT_ID_ULTIMATE_SUBSCRIPTION),
+			value: PUBLIC_STRIPE_PRODUCT_ID_ULTIMATE_SUBSCRIPTION
+		}
+	];
 
 	$: allUsersQuery = browser
 		? createInfiniteQuery({
@@ -40,7 +70,8 @@
 					const res = await getAllUsers({
 						cursor: lastPage?.pageParam,
 						search: searchStringDebounced,
-						access_token: $page.data.session?.access_token
+						access_token: $page.data.session?.access_token,
+						active_product_id: selectedActiveProductId
 					});
 					const { total_count, total_count_by_product_id } = res;
 					if (total_count !== undefined && total_count_by_product_id !== undefined) {
@@ -166,18 +197,38 @@
 			? 'translate-y-0 opacity-100'
 			: '-translate-y-22 pointer-events-none opacity-0'}"
 	>
-		<Input
-			disabled={scrollDirection === 'down'}
-			class="w-full max-w-2xl -mx-3.5"
-			bind:value={searchString}
-			title={$LL.Gallery.SearchInput.Title()}
-			hasIcon
-			hasClearButton
-			bg="bg-secondary"
-			shadow={!atTheTop ? 'strongest' : 'normal'}
-		>
-			<IconSearch slot="icon" class="w-full h-full" />
-		</Input>
+		<div class="w-full flex max-w-2xl -mx-3.5 gap-3">
+			<div class="flex-1 rounded-xl">
+				<Input
+					disabled={scrollDirection === 'down'}
+					class="w-full"
+					bind:value={searchString}
+					title={$LL.Gallery.SearchInput.Title()}
+					hasIcon
+					hasClearButton
+					bg="bg-secondary"
+					shadow={!atTheTop ? 'strongest' : 'normal'}
+				>
+					<IconSearch slot="icon" class="w-full h-full" />
+				</Input>
+			</div>
+			<div
+				class="flex w-48 max-w-full rounded-xl {!atTheTop
+					? 'shadow-lg shadow-c-shadow/[var(--o-shadow-strongest)]'
+					: ''}"
+			>
+				<TabLikeDropdown
+					class="w-full"
+					name="Active Product ID"
+					items={activeProductItems}
+					bind:value={selectedActiveProductId}
+				>
+					<div slot="title" class="p-3.5 flex items-center justify-center">
+						<IconFunnel class="w-6 h-6 text-c-on-bg/35" />
+					</div>
+				</TabLikeDropdown>
+			</div>
+		</div>
 	</div>
 	<div class="flex flex-col items-center my-auto gap-8 z-0 mt-2 -mx-3.5 pb-2">
 		<div class="w-full md:max-w-4xl flex flex-col items-center justify-center gap-2">

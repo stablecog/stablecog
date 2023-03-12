@@ -1,15 +1,18 @@
 import { apiUrl } from '$ts/constants/main';
+import type { TStripeSupportedProductIdSubscriptions } from '$ts/constants/stripePublic';
 
 const perPage = 50;
 
 export async function getAllUsers({
 	cursor,
 	search,
-	access_token
+	access_token,
+	active_product_id
 }: {
 	cursor?: string;
 	search?: string;
 	access_token?: string;
+	active_product_id?: TStripeSupportedProductIdSubscriptions;
 }) {
 	console.log('getAllUsers');
 	const query = new URLSearchParams();
@@ -19,6 +22,9 @@ export async function getAllUsers({
 	}
 	if (search) {
 		query.append('search', search);
+	}
+	if (active_product_id !== undefined && active_product_id) {
+		query.append('active_product_ids', active_product_id);
 	}
 	const url = `${apiUrl.origin}/v1/admin/users?${query.toString()}`;
 	const res = await fetch(url, {
