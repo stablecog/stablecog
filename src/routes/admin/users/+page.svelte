@@ -23,12 +23,10 @@
 	import type { TTab } from '$ts/types/main';
 	import {
 		PUBLIC_STRIPE_PRODUCT_ID_PRO_SUBSCRIPTION,
-		PUBLIC_STRIPE_PRODUCT_ID_PRO_SUBSCRIPTION_TEST,
 		PUBLIC_STRIPE_PRODUCT_ID_STARTER_SUBSCRIPTION,
 		PUBLIC_STRIPE_PRODUCT_ID_ULTIMATE_SUBSCRIPTION
 	} from '$env/static/public';
 	import TabLikeDropdown from '$components/tabBars/TabLikeDropdown.svelte';
-	import IconFunnel from '$components/icons/IconFunnel.svelte';
 	import IconAnimatedSpinner from '$components/icons/IconAnimatedSpinner.svelte';
 
 	let searchString: string;
