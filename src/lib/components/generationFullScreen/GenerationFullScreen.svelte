@@ -202,7 +202,11 @@
 
 	$: [upscaleStatus, upscaleBeingProcessed], onupscaleStatusChanged();
 
-	let lastUpscaleAnimationStatus: 'idle' | 'should-animate' | 'should-complete' = 'idle';
+	let lastUpscaleAnimationStatus:
+		| 'idle'
+		| 'should-animate-slow'
+		| 'should-animate'
+		| 'should-complete' = 'idle';
 
 	async function onupscaleStatusChanged() {
 		if (hadUpscaledImageUrlOnMount) return;
@@ -210,19 +214,19 @@
 			case 'to-be-submitted':
 				lastUpscaleAnimationStatus = 'idle';
 				await tick();
+				lastUpscaleAnimationStatus = 'should-animate-slow';
 				break;
 			case 'server-received':
-				lastUpscaleAnimationStatus = 'idle';
 				await tick();
+				lastUpscaleAnimationStatus = 'should-animate-slow';
 				break;
 			case 'server-processing':
-				lastUpscaleAnimationStatus = 'idle';
 				await tick();
 				lastUpscaleAnimationStatus = 'should-animate';
-				``;
 				break;
 			case 'succeeded':
 				if (upscaleBeingProcessed) break;
+				await tick();
 				lastUpscaleAnimationStatus = 'should-complete';
 				const durationMs = getUpscaleDurationMsFromUpscale($upscales[0]);
 				if (durationMs !== null && $upscales[0].completed_at) {
@@ -231,6 +235,7 @@
 				}
 				break;
 			case 'failed':
+				await tick();
 				lastUpscaleAnimationStatus = 'should-complete';
 				break;
 		}
@@ -357,13 +362,17 @@
 			</div>
 			<div class="w-full h-full overflow-hidden z-0 absolute left-0 top-0 pointer-events-none">
 				<div
-					style="transition-duration: {lastUpscaleAnimationStatus === 'should-animate'
+					style="transition-duration: {lastUpscaleAnimationStatus === 'should-animate-slow'
+						? ($estimatedUpscaleDurationMs / 1000) * 4
+						: lastUpscaleAnimationStatus === 'should-animate'
 						? $estimatedUpscaleDurationMs / 1000
 						: lastUpscaleAnimationStatus === 'should-complete'
 						? 0.3
 						: 0}s"
 					class="w-[110%] h-full ease-image-generation transition bg-c-secondary/50 
-						absolute left-0 top-0 rounded-xl {lastUpscaleAnimationStatus === 'should-animate'
+						absolute left-0 top-0 rounded-xl {lastUpscaleAnimationStatus === 'should-animate-slow'
+						? 'translate-x-1/5'
+						: lastUpscaleAnimationStatus === 'should-animate'
 						? '-translate-x-[5%]'
 						: lastUpscaleAnimationStatus === 'should-complete'
 						? 'translate-x-full'

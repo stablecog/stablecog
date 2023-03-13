@@ -125,8 +125,11 @@
 		lastGenerationStatus === 'server-received' ||
 		lastGenerationStatus === 'server-processing';
 
-	let lastGenerationAnimationStatus: 'idle' | 'should-animate' | 'should-complete' =
-		lastGenerationBeingProcessed ? 'should-animate' : 'idle';
+	let lastGenerationAnimationStatus:
+		| 'idle'
+		| 'should-animate-slow'
+		| 'should-animate'
+		| 'should-complete' = lastGenerationBeingProcessed ? 'should-animate' : 'idle';
 	$: [lastGenerationStatus], onLastGenerationStatusChanged();
 
 	async function onLastGenerationStatusChanged() {
@@ -134,20 +137,22 @@
 			case 'to-be-submitted':
 				lastGenerationAnimationStatus = 'idle';
 				await tick();
+				lastGenerationAnimationStatus = 'should-animate-slow';
 				break;
 			case 'server-received':
-				lastGenerationAnimationStatus = 'idle';
 				await tick();
+				lastGenerationAnimationStatus = 'should-animate-slow';
 				break;
 			case 'server-processing':
-				lastGenerationAnimationStatus = 'idle';
 				await tick();
 				lastGenerationAnimationStatus = 'should-animate';
 				break;
 			case 'succeeded':
+				await tick();
 				lastGenerationAnimationStatus = 'should-complete';
 				break;
 			case 'failed':
+				await tick();
 				lastGenerationAnimationStatus = 'should-complete';
 				break;
 		}
@@ -426,13 +431,17 @@
 				class="w-full h-full rounded-xl overflow-hidden z-0 absolute left-0 top-0 pointer-events-none"
 			>
 				<div
-					style="transition-duration: {lastGenerationAnimationStatus === 'should-animate'
+					style="transition-duration: {lastGenerationAnimationStatus === 'should-animate-slow'
+						? estimatedGenerationDurationSec * 4
+						: lastGenerationAnimationStatus === 'should-animate'
 						? estimatedGenerationDurationSec
 						: lastGenerationAnimationStatus === 'should-complete'
 						? 0.3
 						: 0}s"
 					class="w-full h-full ease-image-generation transition bg-c-secondary/10 
-					absolute left-0 top-0 rounded-xl {lastGenerationAnimationStatus === 'should-animate'
+					absolute left-0 top-0 rounded-xl {lastGenerationAnimationStatus === 'should-animate-slow'
+						? 'translate-x-1/4'
+						: lastGenerationAnimationStatus === 'should-animate'
 						? 'translate-x-0'
 						: lastGenerationAnimationStatus === 'should-complete'
 						? 'translate-x-full'

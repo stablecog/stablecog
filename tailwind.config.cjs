@@ -83,6 +83,9 @@ module.exports = {
 				'4vh': '4vh',
 				'5vh': '5vh'
 			},
+			translate: {
+				'1/5': '20%'
+			},
 			opacity: {
 				2: '0.02',
 				3: '0.03',
