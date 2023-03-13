@@ -1,182 +1,182 @@
 import type { Translation } from '../i18n-types';
 
 const tr: Translation = {
-	Language: 'Dil',
+	Language: 'Language',
 	Home: {
-		GenerateButton: 'Üret',
+		GenerateButton: 'Generate',
 		PromptInput: {
-			Placeholder: 'Kedi portesi, Van Gogh tarzında'
+			Placeholder: 'Portrait of a cat by Van Gogh'
 		},
 		WidthTabBar: {
-			Title: 'Genişlik',
-			Paragraph: 'Fotoğrafın genişliği.'
+			Title: 'Width',
+			Paragraph: 'The width of the image.'
 		},
 		HeightTabBar: {
-			Title: 'Yükseklik',
-			Paragraph: 'Fotoğrafın yüksekliği.'
+			Title: 'Height',
+			Paragraph: 'The height of the image.'
 		},
 		InferenceStepsTabBar: {
-			Title: 'Tahmin Adımları',
-			Paragraph: 'Fotoğrafı üretmek için kaç tahmin adımı kullanılacağı.'
+			Title: 'Inference Steps',
+			Paragraph: 'How many steps will be taken to generate (diffuse) the image.'
 		},
 		GuidanceScaleSlider: {
-			Title: 'Benzeme Ölçeği',
+			Title: 'Guidance Scale',
 			Paragraph:
-				'Fotoğrafın komutuna ne derecede benzeyeceğinin ölçüsü. Yüksek sayılar fotoğrafı komutuna daha çok benzetir.'
+				'How similar the image will be to your prompt. Higher values make the image closer to your prompt.'
 		},
 		NegativePromptInput: {
-			Title: 'Negatif Komut',
-			Placeholder: 'Negatif komut',
+			Title: 'Negative Prompt',
+			Placeholder: 'Negative prompt',
 			Paragraph:
-				'İstemediğin şeyleri üretilecek fotoğraftan çıkartmak için. Komutun yaptığının tam tersini yapar.'
+				'To remove unwanted things from the image. It does the opposite of what the prompt does.'
 		},
 		SeedInput: {
-			Title: 'Tohum',
-			Placeholder: 'Tohum numarası',
+			Title: 'Seed',
+			Placeholder: 'Seed number',
 			Paragraph:
-				'Tekrarlanabilir sonuçlar almak için. Spesifik bir tohum diğer ayarlar sabitken aynı fotoğrafı üretir.'
+				'Get repeatable results. A seed combined with the same prompt and options generates the same image.'
 		},
 		ModelDropdown: {
 			Title: 'Model',
-			Paragraph: 'Fotoğrafı üretecek olan yapay zeka modeli.'
+			Paragraph: 'The AI Model that will be used to generate the image.'
 		},
 		SchedulerDropdown: {
-			Title: 'Planlayıcı',
+			Title: 'Scheduler',
 			Paragraph:
-				'Üretim sürecininin planını değiştirir. Üretilecek fotoğrafı ciddi şekilde farklılaştırabilir. Bazı planlayıcılar düzgün sonuç vermek için daha az tahmin adımına ihtiyaç duyar.'
+				'Diffuse the image in a certain way. It can drastically change the generated image. Some require less steps to produce good results.'
 		},
 		SubmitToGalleryQuestion: {
-			Title: 'Üretimler galeriye gönderilsin mi?',
-			Paragraph: 'Tercihini daha sonra ayarlardan değiştirebilirsin.'
+			Title: 'Submit generations to the gallery?',
+			Paragraph: 'You can change your preference from the settings later.'
 		}
 	},
 	History: {
-		GenerationsTitle: 'Üretimler',
-		GenerationsMaxSavedCountWarning: 'Sadece son {count}',
+		GenerationsTitle: 'Generations',
+		GenerationsMaxSavedCountWarning: 'Last {count} only',
 		DownloadLegacyGenerationsButton: 'Download Legacy Generations',
-		NoGenerationsYet: 'Henüz fotoğraf üretmedin.'
+		NoGenerationsYet: "You haven't generated any images yet."
 	},
 	Live: {
-		GenerationsTitle: 'Üretimler',
-		TotalDurationTitle: 'Toplam Süre',
-		UpscalesTitle: 'Büyütmeler',
+		GenerationsTitle: 'Generations',
+		TotalDurationTitle: 'Total Duration',
+		UpscalesTitle: 'Upscales',
 		GenerationTooltip: {
-			CountryTitle: 'Ülke',
+			CountryTitle: 'Country',
 			Type: {
-				Title: 'Tip',
-				Generation: 'Üretim',
-				Upscale: 'Büyütme'
+				Title: 'Type',
+				Generation: 'Generation',
+				Upscale: 'Upscale'
 			},
-			DimensionsTitle: 'Ölçüler',
-			StepsTitle: 'Adım Sayısı',
-			ScaleTitle: 'Çarpan',
-			DurationTitle: 'Süre',
+			DimensionsTitle: 'Dimensions',
+			StepsTitle: 'Steps',
+			ScaleTitle: 'Scale',
+			DurationTitle: 'Duration',
 			Status: {
-				Title: 'Durum',
-				Started: 'Başladı',
-				Succeeded: 'Başarılı',
-				Failed: 'Başarısız'
+				Title: 'Status',
+				Started: 'Started',
+				Succeeded: 'Succeeded',
+				Failed: 'Failed'
 			},
 			Server: {
-				Title: 'Sunucu',
-				Default: 'Varsayılan',
-				Custom: 'Özel'
+				Title: 'Server',
+				Default: 'Default',
+				Custom: 'Custom'
 			},
-			UnknownTitle: 'Bilinmeyen',
+			UnknownTitle: 'Unknown',
 			OutputsTitle: 'Outputs'
 		},
-		WaitingTitle: 'Üretimler bekleniyor',
-		DurationStatusUnknown: 'Bilinmeyen'
+		WaitingTitle: 'Waiting for generations',
+		DurationStatusUnknown: 'Unknown'
 	},
 	Navbar: {
-		HomeTab: 'Ev',
-		HistoryTab: 'Tarihçe',
-		GalleryTab: 'Galeri',
-		LiveTab: 'Canlı'
+		HomeTab: 'Home',
+		HistoryTab: 'History',
+		GalleryTab: 'Gallery',
+		LiveTab: 'Live'
 	},
 	Settings: {
-		Title: 'Ayarlar',
-		SwitchServerButton: 'Sunucu Değiştir',
-		SubmitToGalleryToggle: 'Galeriye Gönder',
-		AdvancedModeToggle: 'Gelişmiş Mod',
-		AdvancedOptionsDropdown: 'Ekstra Seçenekler',
-		AdvancedDropdown: 'Ekstra',
-		GenerationSettingsButton: 'Üretim Ayarları',
-		GenerationSettingsTitle: 'Üretim Ayarları',
-		DarkModeToggle: 'Karanlık Mod'
+		Title: 'Settings',
+		SwitchServerButton: 'Switch Server',
+		SubmitToGalleryToggle: 'Submit to Gallery',
+		AdvancedModeToggle: 'Advanced Mode',
+		AdvancedOptionsDropdown: 'Advanced Options',
+		AdvancedDropdown: 'Advanced',
+		GenerationSettingsButton: 'Generation Settings',
+		GenerationSettingsTitle: 'Generation Settings',
+		DarkModeToggle: 'Dark Mode'
 	},
 	GenerationFullscreen: {
-		DownloadButton: 'İndir',
-		DoneButtonState: 'Bitti!',
-		CopyPromptButton: 'Komutu Kopyala',
-		CopyNegativePromptButton: 'Negatif Komutu Kopyala',
-		CopiedButtonState: 'Kopyalandı!',
+		DownloadButton: 'Download',
+		DoneButtonState: 'Done!',
+		CopyPromptButton: 'Copy Prompt',
+		CopyNegativePromptButton: 'Copy Negative Prompt',
+		CopiedButtonState: 'Copied!',
 		GenerateSimilarButton: 'Generate Similar',
-		RerollButton: 'Rastgele Üret',
-		RegenerateButton: 'Tekrar Üret',
-		GenerateButton: 'Üret',
-		UpscaleButton: 'Büyüt',
+		RerollButton: 'Reroll',
+		RegenerateButton: 'Regenerate',
+		GenerateButton: 'Generate',
+		UpscaleButton: 'Upscale',
 		SubmitToGalleryButton: 'Submit to Gallery',
 		SubmittedTitle: 'Submitted',
 		UpscaleTabBar: {
-			UpscaledTitle: 'Büyütülmüş',
-			OriginalTitle: 'Orijinal'
+			UpscaledTitle: 'Upscaled',
+			OriginalTitle: 'Original'
 		},
 		Dimensions: {
-			Title: 'Ölçüler'
+			Title: 'Dimensions'
 		},
 		Duration: {
-			Title: 'Süre'
+			Title: 'Duration'
 		}
 	},
 	SetServerModal: {
-		SetServerTitle: 'Sunucu Seç',
-		SwitchServerTitle: 'Sunucu Değiştir',
-		Paragraph: 'Bu sunucu fotoğraf üretimlerini yapacak.',
-		SetButton: 'Tamam',
-		DefaultButton: 'Varsayılan'
+		SetServerTitle: 'Set Server',
+		SwitchServerTitle: 'Switch Server',
+		Paragraph: 'The server will be used for generating images.',
+		SetButton: 'Set',
+		DefaultButton: 'Default'
 	},
 	Blog: {
-		Title: 'Blog Yazıları',
+		Title: 'Blog Posts',
 		TitleAlt: 'Blog',
-		BackToBlogButton: 'Bloğa Dön'
+		BackToBlogButton: 'Back to Blog'
 	},
 	Redirect: {
-		RedirectingToTitle: 'Yönlendiriliyor: {name}'
+		RedirectingToTitle: 'Redirecting to {name}'
 	},
 	Shared: {
-		StartGeneratingTitle: 'Süper fotoğraflar üretmeye hemen başla!',
-		StartGeneratingButton: 'Üretmeye Başla',
-		JoinUsTitle: 'Bize Katıl',
-		GoHomeButton: 'Eve Dön',
-		SwitchToDefaultServerButton: 'Varsayılan Sunucuya Geç',
+		StartGeneratingTitle: 'Start generating beautiful images!',
+		StartGeneratingButton: 'Start Generating',
+		JoinUsTitle: 'Join Us',
+		GoHomeButton: 'Go Home',
+		SwitchToDefaultServerButton: 'Switch to Default Server',
 		JoinOnDiscord: 'Join on Discord',
-		JoinUsOnTitle: 'Bize katıl: {name}',
-		ShareButton: 'Paylaş',
-		ShareOnButton: 'Paylaş: {name}',
-		GoBackButton: 'Geri Dön',
-		YesButton: 'Evet',
-		NoButton: 'Hayır',
-		EnableButton: 'Aktifleştir',
-		DisableButton: 'Durdur',
-		AddButton: 'Ekle',
-		CopyLinkButton: 'Linki Kopyala',
-		CopyButton: 'Kopyala',
-		DeleteButton: 'Sil',
-		LoadingTitle: 'Yükleniyor',
+		JoinUsOnTitle: 'Join us on {name}',
+		ShareButton: 'Share',
+		ShareOnButton: 'Share on {name}',
+		GoBackButton: 'Go Back',
+		YesButton: 'Yes',
+		NoButton: 'No',
+		EnableButton: 'Enable',
+		DisableButton: 'Disable',
+		AddButton: 'Add',
+		CopyLinkButton: 'Copy Link',
+		CopyButton: 'Copy',
+		DeleteButton: 'Delete',
+		LoadingTitle: 'Loading',
 		ContinueButton: 'Continue',
-		LoadingParagraph: 'Yükleniyor...',
+		LoadingParagraph: 'Loading...',
 		InsufficientCreditsTitle: 'Insufficient credits ({remainingCredits}/{neededCredits})',
 		AllTitle: 'All',
 		ConfirmButton: 'Confirm',
 		ServerUrlInput: {
-			Placeholder: 'Sunucu adresi'
+			Placeholder: 'Server URL'
 		},
 		EmailInput: {
-			Placeholder: 'E-posta'
+			Placeholder: 'Email'
 		},
 		PasswordInput: {
-			Placeholder: 'Şifre'
+			Placeholder: 'Password'
 		},
 		ModelOptions: {
 			'048b4aa3-5586-47ed-900f-f4341c96bdb2': {
@@ -224,33 +224,33 @@ const tr: Translation = {
 				realName: 'DPM Singlestep'
 			}
 		},
-		UnknownTitle: 'Bilinmeyen',
-		MoreOptionsTitle: 'Daha Fazla Seçenek',
-		LessOptionsTitle: 'Daha Az Seçenek',
-		TryAgainButton: 'Yeniden Dene',
-		RefreshButton: 'Yenile',
+		UnknownTitle: 'Unknown',
+		MoreOptionsTitle: 'More Options',
+		LessOptionsTitle: 'Less Options',
+		TryAgainButton: 'Try Again',
+		RefreshButton: 'Refresh',
 		LoadMoreButton: 'Load More',
 		SearchingTitle: 'Searching',
 		NoResultsFoundTitle: 'No results found'
 	},
 	Error: {
-		SomethingWentWrong: 'Bir şeyler ters gitti :(',
+		SomethingWentWrong: 'Something went wrong :(',
 		ImageWasNSFW: 'This image was NSFW :(',
-		NSFW: 'Sıkıntılı içerik, başka bir komut dene :(',
+		NSFW: 'NSFW content detected, try another prompt :(',
 		ServerSeemsOffline:
-			'Sunucudan cevap alamadık. Sayfayı yenilemeyi veya ayarlardan başka bir sunucuya geçmeyi deneyebilirsin.',
-		ServerSetNotWorking: 'Sunucu uyumlu değil ya da cevap vermiyor.',
-		NotFound: 'Bulunamadı',
-		SupabaseNotFoundCantListen: 'Supabase bulunamadı. Üretimler izlenemeyecek.',
-		InvalidEmail: 'Geçerli bir e-posta gir.',
-		PasswordTooShort: 'Şifre en az 8 karakterli olmalı.',
-		SomethingWentWrongTryAgain: 'Bir sıkıntı çıktı, tekrar dene.',
-		InvalidCredentials: 'Geçersiz kimlik.',
-		InvalidCode: 'Geçersiz kod.',
-		OnceEvery60Seconds: 'Her 60 saniyede sadece bir link talebinde bulunabilirsin.',
+			'The server seems offline. You might want to refresh the page or set another server from the settings.',
+		ServerSetNotWorking: "This server isn't compatible or not responding.",
+		NotFound: 'Not Found',
+		SupabaseNotFoundCantListen: "Supabase instance not found. Can't listen for generations.",
+		InvalidEmail: 'Enter a valid email.',
+		PasswordTooShort: 'Password must be at least 8 characters.',
+		SomethingWentWrongTryAgain: 'Something went wrong, try again.',
+		InvalidCredentials: 'Invalid credentials.',
+		InvalidCode: 'Invalid code.',
+		OnceEvery60Seconds: 'You can only request a link once every 60 seconds.',
 		LinkExpired: {
-			Title: 'Link Geçersiz',
-			Paragraph: 'Link sadece bir kere kullanılabilir ve 24 saat sonunda geçersiz hale gelir.'
+			Title: 'Link Expired',
+			Paragraph: 'The link can only be used once and expires after 24 hours.'
 		},
 		UpdateAvailable: {
 			Title: 'Update Available',
@@ -260,26 +260,26 @@ const tr: Translation = {
 		EmailAlreadyInUse: 'This email is already in use.'
 	},
 	Admin: {
-		AdminPanelTitle: 'Yönetici',
-		DeleteButton: 'Sil',
-		ApproveButton: 'Onayla',
+		AdminPanelTitle: 'Admin',
+		DeleteButton: 'Delete',
+		ApproveButton: 'Approve',
 		RejectButton: 'Reject',
 		EditButton: 'Edit',
 		EditViewButton: 'Edit View',
 		NormalViewButton: 'Normal View',
 		StopEditButton: 'Stop Editing',
-		NoGenerationsToReview: 'İncelecek üretim yok.',
-		ServersButton: 'Sunucular',
-		AdminGalleryButton: 'Galeri',
-		UsersButton: 'Kullanıcılar',
+		NoGenerationsToReview: 'No generations to review.',
+		ServersButton: 'Servers',
+		AdminGalleryButton: 'Gallery',
+		UsersButton: 'Users',
 		AdminTab: 'Admin',
-		ServersTab: 'Sunucular',
-		AdminGalleryTab: 'Galeri',
-		UsersTab: 'Kullanıcılar',
+		ServersTab: 'Servers',
+		AdminGalleryTab: 'Gallery',
+		UsersTab: 'Users',
 		Gallery: {
-			TotalTitle: 'Toplam',
-			ApprovedTitle: 'Onaylanan',
-			DeletedTitle: 'Silinen',
+			TotalTitle: 'Total',
+			ApprovedTitle: 'Approved',
+			DeletedTitle: 'Deleted',
 			StatusDropdown: {
 				All: 'All',
 				Submitted: 'Submitted',
@@ -292,110 +292,112 @@ const tr: Translation = {
 		}
 	},
 	SignUp: {
-		PageTitle: 'Üye Ol',
-		PageParagraph: "Tüm özelliklere erişmek için Stablecog'a katıl ve pro üye ol.",
-		PageTitleConfirm: 'Onayla',
-		PageTitleConfirmAlt: 'Posta kutunu kontrol et',
-		PageParagraphConfirm: 'Sana 6 haneli bir kod yolladık. Üyeliğini onaylamak için onu aşağı gir.',
-		SignUpButton: 'Üye Ol',
+		PageTitle: 'Sign Up',
+		PageParagraph: 'Join Stablecog to become a pro member and unlock its full potential.',
+		PageTitleConfirm: 'Confirm',
+		PageTitleConfirmAlt: 'Check your email',
+		PageParagraphConfirm:
+			"We've emailed you a 6-digit code. Enter it below to confirm your account.",
+		SignUpButton: 'Sign Up',
 		AllTitle: 'All',
-		ConfirmButton: 'Onayla',
-		AlreadyHaveAnAccountTitle: 'Zaten üye misin?',
-		LoginInsteadButton: 'Giriş yap',
+		ConfirmButton: 'Confirm',
+		AlreadyHaveAnAccountTitle: 'Already have an account?',
+		LoginInsteadButton: 'Login instead',
 		SixDigitCodeInput: {
-			Placeholder: '6 Haneli Kod'
+			Placeholder: '6-Digit Code'
 		}
 	},
 	SignIn: {
-		PageTitleGetStarted: 'Hemen Başla',
-		GetStartedButton: 'Başla',
-		PageTitle: 'Giriş Yap',
-		PageParagraph: "Stablecog'u üyeliğine sağlanan tüm özelliklerle kullanmaya başla.",
-		PageTitleCreateAccountOrSignIn: 'Üye ol veya giriş yap',
+		PageTitleGetStarted: 'Get Started',
+		GetStartedButton: 'Get Started',
+		PageTitle: 'Sign In',
+		PageParagraph: 'Start using Stablecog with all features that are available to your account.',
+		PageTitleCreateAccountOrSignIn: 'Create an account or sign in',
 		PageParagraphCreateAccountOrSignIn:
-			"Stablecog'u üyeliğine sağlanan tüm özelliklerle kullanmaya başla.",
-		PageTitleSentLink: 'Posta kutunu kontrol et',
+			'Start using Stablecog with all features that are available to your account.',
+		PageTitleSentLink: 'Check your email',
 		PageParagraphSentLink:
-			'Giriş yapabilmen için sana bir link yolladık. Bulamadıysan spam klasörüne bak.',
-		ContinueButton: 'Devam Et',
-		ContinueWithProviderButton: '{provider} ile devam et',
-		SignInWithProviderButton: '{provider} ile giriş yap',
-		OrContinueWithEmailTitle: 'Veya e-posta ile devam et',
-		DontHaveAnAccountTitle: 'Üyeliğin yok mu?',
-		SignUpInsteadButton: 'Üye ol',
-		SignInButton: 'Giriş Yap',
-		SignOutButton: 'Çıkış Yap'
+			"We've emailed you a sign-in link. If you don't see it, check your spam folder.",
+		ContinueButton: 'Continue',
+		ContinueWithProviderButton: 'Continue with {provider}',
+		SignInWithProviderButton: 'Sign in with {provider}',
+		OrContinueWithEmailTitle: 'Or continue with email',
+		DontHaveAnAccountTitle: "Don't have an account?",
+		SignUpInsteadButton: 'Sign up instead',
+		SignInButton: 'Sign In',
+		SignOutButton: 'Sign Out'
 	},
 	Pro: {
-		PageTitle: 'Pro Ol',
+		PageTitle: 'Become a Pro',
 		PageParagraph:
-			"Stablecog'un bütün özelliklerine eriş ve projeyi destekle. Pro üyeler olmadan Stablecog tamamen açık kaynak kodlu kalamaz, herkese ücretsiz fotoğraf üretimi imkanı sunamazdı.",
-		PageTitleAlreadyPro: 'Zaten Prosun!',
+			"Unlock all features of Stablecog and support the project. Without the pro members, Stablecog wouldn't be able to stay completely open-source and offer free generations to everyone.",
+		PageTitleAlreadyPro: 'Already a Pro!',
 		PageParagraphAlreadyPro:
-			"Pro üye olarak projeyi desteklediğin için teşekkürler. Stablecog'un keyfini çıkarmanı ve arkadaşlarınla paylaşmanı tavsiye ederiz.",
+			'You are already a pro member. Thank you for supporting the project! Go ahead and enjoy Stablecog, and consider sharing it with your friends.',
 		ProPlanTitle: 'Pro',
 		Features: {
-			FullSpeed: 'Gecikmesiz tam hız üretim',
-			ImageDimensions: 'Farklı fotoğraf boyutları',
-			Upscale: 'Büyütme/çözünürlük arttırma',
-			Steps: 'Farklı tahmin adımı seçenekleri',
-			MoreModels: 'Daha fazla AI modeli',
-			MoreSchedulers: 'Daha fazla planlayıcı',
-			SavedToCloud: 'Üretimleri buluta kaydetme',
-			Upcoming: 'Gelecek özellikler',
-			CommercialUse: 'Ticari kullanım'
+			FullSpeed: 'Full speed without set limits',
+			ImageDimensions: 'Different image dimensions',
+			Upscale: 'Upscale images',
+			Steps: 'Different inference steps',
+			MoreModels: 'More models',
+			MoreSchedulers: 'More schedulers',
+			SavedToCloud: 'Generations saved to the cloud',
+			Upcoming: 'Upcoming features',
+			CommercialUse: 'Commercial Use'
 		},
-		Soon: '(yakında)',
-		Month: '/ay',
-		BecomeProButton: 'Pro Ol',
+		Soon: '(soon)',
+		Month: '/month',
+		BecomeProButton: 'Become a Pro',
 		Success: {
-			PageTitle: 'Pro oldun!',
+			PageTitle: "You're a Pro!",
 			PageParagraph:
-				"Artık Stablecog'un tüm özelliklerine erişimin var. Soruların varsa bize buradan ulaşabilirsin: {platform}."
+				'You now have access to everything Stablecog has to offer. If you have any questions, reach out to us on {platform}.'
 		},
 		Cancel: {
-			PageTitle: 'İptal Ettin',
-			PageParagraph: 'Üyelik sürecini iptal ettin. Bir yanlışlık olduysa tekrar deneyebilirsin.'
+			PageTitle: "You've cancelled",
+			PageParagraph:
+				"You've cancelled the subscription process. If it was a mistake, you can try again."
 		},
 		Reason: {
-			ParagraphWidth: 'O fotoğraf genişliği ayarı ücretsiz planda mevcut değil.',
-			ParagraphHeight: 'O fotoğraf yüksekliği ayarı ücretsiz planda mevcut değil.',
-			ParagraphDimensions: 'O fotoğraf boyutu ücretsiz planda mevcut değil.',
-			ParagraphUpscale: 'Büyütme özelliği ücretsiz planda mevcut değil.',
-			ParagraphInferenceSteps: 'O tahmin adımı seçeneği ücretsiz planda mevcut değil.',
-			ParagraphModel: 'O AI modeli ücretsiz planda mevcut değil.',
-			ParagraphScheduler: 'O planlayıcı ücretsiz planda mevcut değil.',
+			ParagraphWidth: "That image width isn't available on the free plan.",
+			ParagraphHeight: "That image height isn't available on the free plan.",
+			ParagraphDimensions: "Those image dimensions aren't available on the free plan.",
+			ParagraphUpscale: "Upscale feature isn't available on the free plan.",
+			ParagraphInferenceSteps: "That inference steps setting isn't available on the free plan.",
+			ParagraphModel: "That AI model isn't available on the free plan.",
+			ParagraphScheduler: "That scheduler isn't available on the free plan.",
 			ParagraphWidthGeneration:
-				'O üretim ücretsiz planda mevcut olmayan bir fotoğraf genişliği ayarı ile yapıldı.',
+				"That generation was created using an image width that isn't available on the free plan.",
 			ParagraphHeightGeneration:
-				'O üretim ücretsiz planda mevcut olmayan bir fotoğraf yüksekliği ayarı ile yapıldı.',
+				"That generation was created using an image height that isn't available on the free plan.",
 			ParagraphDimensionsGeneration:
-				'O üretim ücretsiz planda mevcut olmayan bir fotoğraf boyutu ayarı ile yapıldı.',
+				"That generation was created using image dimensions that aren't available on the free plan.",
 			ParagraphInferenceStepsGeneration:
-				'O üretim ücretsiz planda mevcut olmayan bir tahmin adımı ayarı ile yapıldı.',
+				"That generation was created using an inference steps setting that isn't available on the free plan.",
 			ParagraphModelGeneration:
-				'O üretim ücretsiz planda mevcut olmayan bir AI modeli ile yapıldı.',
+				"That generation was created using an AI model that isn't available on the free plan.",
 			ParagraphSchedulerGeneration:
-				'O üretim ücretsiz planda mevcut olmayan bir planlayıcı seçeneği ile yapıldı.'
+				"That generation was created using a scheduler that isn't available on the free plan."
 		},
 		Tier: {
 			Title: {
-				Free: 'Ücretsiz',
+				Free: 'Free',
 				Pro: 'Pro'
 			},
 			Badge: {
-				Free: 'ÜCRETSİZ',
+				Free: 'FREE',
 				Pro: 'PRO'
 			}
 		}
 	},
 	Account: {
-		PageTitle: 'Üyelik',
-		ManageSubscriptionButton: 'Aboneliği Yönet',
+		PageTitle: 'Account',
+		ManageSubscriptionButton: 'Manage Subscription',
 		ComparePlansButton: 'Compare Plans',
-		ManageAccountButton: 'Üyeliği Yönet',
-		MyAccountButton: 'Üyeliğim',
-		SubscriptionPlanTitle: 'Üyelik Tipi',
+		ManageAccountButton: 'Manage Account',
+		MyAccountButton: 'My Account',
+		SubscriptionPlanTitle: 'Plan',
 		RemainingImagesTitle: 'Remaining Images',
 		RemainingCreditsTitle: 'Remaining Credits',
 		RemainingTitle: 'Remaining',
@@ -437,35 +439,34 @@ const tr: Translation = {
 		}
 	},
 	ForgotPassword: {
-		PageTitle: 'Şifre Yenile',
-		PageParagraph: 'E-posta adresine 6 haneli bir kod yollayacağız.',
-		SendResetCodeButton: 'Kodu Yolla',
-		PageTitleConfirmCode: 'Doğrula',
-		PageTitleConfirmCodeAlt: 'E-posta Yolladık',
-		PageParagraphConfirmCode:
-			'E-posta adresine 6 haneli bir kod yolladık. Devam etmek için onu aşağı gir.',
-		ConfirmCodeButton: 'Onayla',
-		PageTitleNewPassword: 'Yeni Şifre',
-		PageParagraphNewPassword: 'Üyeliğin için yeni bir şifre gir.',
+		PageTitle: 'Reset Password',
+		PageParagraph: 'We will send a 6-digit code to your email for resetting your password.',
+		SendResetCodeButton: 'Send Code',
+		PageTitleConfirmCode: 'Confirm',
+		PageTitleConfirmCodeAlt: 'Check Your Email',
+		PageParagraphConfirmCode: "We've emailed you a 6-digit code. Enter it below to continue.",
+		ConfirmCodeButton: 'Confirm',
+		PageTitleNewPassword: 'New Password',
+		PageParagraphNewPassword: 'Enter a new password for your account.',
 		NewPasswordInput: {
-			Placeholder: 'Yeni Şifre'
+			Placeholder: 'New Password'
 		},
-		SetNewPasswordButton: 'Şifreyi Güncelle',
-		PageTitleSuccess: 'Tamamdır!',
-		PageParagraphSuccess: 'Şifren başarıyla güncellendi.',
-		ForgotPasswordButton: 'Şifremi Unuttum'
+		SetNewPasswordButton: 'Set New Password',
+		PageTitleSuccess: 'Done!',
+		PageParagraphSuccess: 'Your password has been successfully reset.',
+		ForgotPasswordButton: 'Forgot Password?'
 	},
 	FeaturedOn: {
-		PageTitle: 'Basında'
+		PageTitle: 'We Are Featured On'
 	},
 	Gallery: {
-		PageTitle: 'Galeri',
-		PageParagraph: 'Diğer insanların Stablecog ile ürettiklerini incele.',
+		PageTitle: 'Gallery',
+		PageParagraph: 'Check out what others have created with Stablecog.',
 		SearchInput: {
-			Title: 'Ara'
+			Title: 'Search'
 		},
-		SearchingTitle: 'Arıyor',
-		NoMatchingGenerationTitle: 'Benzer bir üretim bulunamadı'
+		SearchingTitle: 'Searching',
+		NoMatchingGenerationTitle: 'No matching generation'
 	},
 	Pricing: {
 		PlansTitle: 'Plans',
@@ -528,7 +529,7 @@ const tr: Translation = {
 	},
 	UnderDevelopment: {
 		PageTitle: "We'll be back soon!",
-		PageParagraph: "We're making some upgrades. We'll be back in a couple of hours."
+		PageParagraph: "We're upgrading our systems. We'll be back in a couple of hours."
 	}
 };
 export default tr;
