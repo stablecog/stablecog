@@ -216,7 +216,7 @@
 									>
 								</p>
 								<div slot="item-1">
-									<IconAnimatedSpinner class="w-8 h-8 text-c-success" />
+									<IconAnimatedSpinner class="w-7 h-7 text-c-success" />
 								</div>
 							</Morpher>
 						</SubtleButton>
@@ -240,7 +240,7 @@
 									>
 								</p>
 								<div slot="item-1">
-									<IconAnimatedSpinner class="w-8 h-8 text-c-danger" />
+									<IconAnimatedSpinner class="w-7 h-7 text-c-danger" />
 								</div>
 							</Morpher>
 						</SubtleButton>
