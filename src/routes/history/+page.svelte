@@ -4,8 +4,8 @@
 	import SubtleButton from '$components/buttons/SubtleButton.svelte';
 	import GenerationFullScreen from '$components/generationFullScreen/GenerationFullScreen.svelte';
 	import GenerationGridInfinite from '$components/grids/GenerationGridInfinite.svelte';
+	import IconAnimatedSpinner from '$components/icons/IconAnimatedSpinner.svelte';
 	import IconDownload from '$components/icons/IconDownload.svelte';
-	import IconLoading from '$components/icons/IconLoading.svelte';
 	import MetaTag from '$components/MetaTag.svelte';
 	import Morpher from '$components/Morpher.svelte';
 	import SignInCard from '$components/SignInCard.svelte';
@@ -132,7 +132,7 @@
 								<p>{$LL.History.DownloadLegacyGenerationsButton()}</p>
 							</div>
 							<div slot="item-1" class="flex items-center justify-center gap-1.5">
-								<IconLoading class="w-5 h-5 animate-spin-faster" />
+								<IconAnimatedSpinner class="w-5 h-5" />
 							</div>
 						</Morpher>
 					</SubtleButton>

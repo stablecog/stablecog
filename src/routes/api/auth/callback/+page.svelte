@@ -2,8 +2,8 @@
 	import { browser } from '$app/environment';
 	import { goto } from '$app/navigation';
 	import { page } from '$app/stores';
+	import IconAnimatedSpinner from '$components/icons/IconAnimatedSpinner.svelte';
 	import IconHourglass from '$components/icons/IconHourglass.svelte';
-	import IconLoadingSlim from '$components/icons/IconLoadingSlim.svelte';
 	import PageWrapper from '$components/PageWrapper.svelte';
 	import LL, { locale } from '$i18n/i18n-svelte';
 	import { logSignIn } from '$ts/helpers/loggers';
@@ -55,7 +55,7 @@
 				{$LL.Error.LinkExpired.Paragraph()}
 			</p>
 		{:else}
-			<IconLoadingSlim class="animate-spin-faster w-16 h-16" />
+			<IconAnimatedSpinner class="w-12 h-12" />
 		{/if}
 	</div>
 </PageWrapper>

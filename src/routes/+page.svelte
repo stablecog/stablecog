@@ -52,6 +52,7 @@
 	import LowOnCreditsCard from '$components/LowOnCreditsCard.svelte';
 	import { appVersion, serverVersion } from '$ts/stores/appVersion';
 	import { goto } from '$app/navigation';
+	import IconAnimatedSpinner from '$components/icons/IconAnimatedSpinner.svelte';
 
 	export let data: THomePageData;
 

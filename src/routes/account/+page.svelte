@@ -5,7 +5,6 @@
 	import Button from '$components/buttons/Button.svelte';
 	import DropdownItem from '$components/DropdownItem.svelte';
 	import IconHome from '$components/icons/IconHome.svelte';
-	import IconLoading from '$components/icons/IconLoading.svelte';
 	import IconSignOut from '$components/icons/IconSignOut.svelte';
 	import MetaTag from '$components/MetaTag.svelte';
 	import PageWrapper from '$components/PageWrapper.svelte';
@@ -22,6 +21,7 @@
 	import IconThreeDots from '$components/icons/IconThreeDots.svelte';
 	import DropdownWrapper from '$components/DropdownWrapper.svelte';
 	import { clickoutside } from '$ts/actions/clickoutside';
+	import IconAnimatedSpinner from '$components/icons/IconAnimatedSpinner.svelte';
 
 	export let data: PageServerData;
 
@@ -62,7 +62,7 @@
 <PageWrapper>
 	{#if !$page.data.session?.user.email}
 		<div class="w-full flex justify-center items-center my-auto">
-			<IconLoading class="w-10 h-10 text-c-on-bg/60 animate-spin-faster" />
+			<IconAnimatedSpinner class="w-10 h-10 text-c-on-bg/60" />
 		</div>
 	{:else}
 		<div class="w-full flex flex-col items-center justify-center my-auto">

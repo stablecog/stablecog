@@ -1,10 +1,11 @@
 <script lang="ts">
 	export { classes as class };
-	let classes = 'w-12 h-12';
+	export let loading = true;
+	let classes = 'w-6 h-6';
 </script>
 
 <svg
-	class="{classes} rotation-animation"
+	class="{classes} {loading ? 'rotation-animation' : ''}"
 	width="24"
 	height="24"
 	viewBox="0 0 24 24"
@@ -12,12 +13,12 @@
 	xmlns="http://www.w3.org/2000/svg"
 >
 	<circle
-		class="path"
-		cx="50%"
-		cy="50%"
-		r="40%"
+		class={loading ? 'path' : ''}
+		cx="12"
+		cy="12"
+		r="9"
 		stroke="currentColor"
-		stroke-width="15%"
+		stroke-width="4"
 		stroke-linecap="round"
 		stroke-linejoin="round"
 	/>
@@ -25,23 +26,23 @@
 
 <style>
 	.path {
-		stroke-dasharray: 50% 90%;
+		stroke-dasharray: 18 10;
 		stroke-dashoffset: 0%;
 		animation-name: path-animation;
-		animation-duration: 2s;
+		animation-duration: 1.5s;
 		animation-iteration-count: infinite;
 	}
 
 	@keyframes path-animation {
 		0% {
-			stroke-dasharray: 80% 30%;
+			stroke-dasharray: 24 12;
 		}
 		50% {
-			stroke-dasharray: 20% 160%;
+			stroke-dasharray: 6 12;
 			animation-timing-function: cubic-bezier(0.3, 0, 0.7, 1);
 		}
 		100% {
-			stroke-dasharray: 80% 30%;
+			stroke-dasharray: 24 12;
 		}
 	}
 

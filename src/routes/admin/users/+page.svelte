@@ -15,7 +15,6 @@
 	import { getAllUsers, type TAllUsersPage } from '$ts/queries/getAllUsers';
 	import ProductIdBadge from '$components/badges/ProductIdBadge.svelte';
 	import { scale } from 'svelte/transition';
-	import IconLoadingSlim from '$components/icons/IconLoadingSlim.svelte';
 	import { quadOut } from 'svelte/easing';
 	import Button from '$components/buttons/Button.svelte';
 	import IntersectionObserver from 'svelte-intersection-observer';
@@ -30,6 +29,7 @@
 	} from '$env/static/public';
 	import TabLikeDropdown from '$components/tabBars/TabLikeDropdown.svelte';
 	import IconFunnel from '$components/icons/IconFunnel.svelte';
+	import IconAnimatedSpinner from '$components/icons/IconAnimatedSpinner.svelte';
 
 	let searchString: string;
 	let searchStringDebounced: string | undefined = undefined;
@@ -243,7 +243,7 @@
 						}}
 						class="w-12 h-12"
 					>
-						<IconLoadingSlim class="animate-spin-faster w-full h-full" />
+						<IconAnimatedSpinner class="w-full h-full" />
 					</div>
 					<p class="mt-2 opacity-0">
 						{$LL.Shared.SearchingTitle()}

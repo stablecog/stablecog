@@ -3,8 +3,8 @@
 	import SubtleButton from '$components/buttons/SubtleButton.svelte';
 	import GenerationFullScreen from '$components/generationFullScreen/GenerationFullScreen.svelte';
 	import GenerationGridInfinite from '$components/grids/GenerationGridInfinite.svelte';
+	import IconAnimatedSpinner from '$components/icons/IconAnimatedSpinner.svelte';
 	import IconFunnel from '$components/icons/IconFunnel.svelte';
-	import IconLoadingSlim from '$components/icons/IconLoadingSlim.svelte';
 	import IconSadFace from '$components/icons/IconSadFace.svelte';
 	import IconTick from '$components/icons/IconTick.svelte';
 	import MetaTag from '$components/MetaTag.svelte';
@@ -216,7 +216,7 @@
 									>
 								</p>
 								<div slot="item-1">
-									<IconLoadingSlim class="w-8 h-8 text-c-success animate-spin-faster" />
+									<IconAnimatedSpinner class="w-8 h-8 text-c-success" />
 								</div>
 							</Morpher>
 						</SubtleButton>
@@ -240,7 +240,7 @@
 									>
 								</p>
 								<div slot="item-1">
-									<IconLoadingSlim class="w-8 h-8 text-c-danger animate-spin-faster" />
+									<IconAnimatedSpinner class="w-8 h-8 text-c-danger" />
 								</div>
 							</Morpher>
 						</SubtleButton>
@@ -272,9 +272,7 @@
 				<div
 					class="w-full flex flex-col text-c-on-bg/60 flex-1 py-6 px-4 justify-center items-center text-center"
 				>
-					<div class="w-16 h-16">
-						<IconLoadingSlim class="animate-spin-faster w-full h-full" />
-					</div>
+					<IconAnimatedSpinner class="w-12 h-12" />
 					<p class="mt-2 opacity-0">{$LL.Gallery.SearchingTitle()}</p>
 					<div class="h-[2vh]" />
 				</div>

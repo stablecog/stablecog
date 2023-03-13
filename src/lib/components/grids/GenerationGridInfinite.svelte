@@ -2,7 +2,6 @@
 	import Button from '$components/buttons/Button.svelte';
 	import GenerationImage from '$components/generationImage/GenerationImage.svelte';
 	import type { TGenerationImageCardType } from '$components/generationImage/types';
-	import IconLoadingSlim from '$components/icons/IconLoadingSlim.svelte';
 	import ImagePlaceholder from '$components/ImagePlaceholder.svelte';
 	import LL from '$i18n/i18n-svelte';
 	import { imageTransitionProps } from '$ts/animation/constants';
@@ -15,6 +14,7 @@
 	import { MasonryInfiniteGrid } from '@egjs/svelte-infinitegrid';
 	import { fly } from 'svelte/transition';
 	import { adminGalleryActionableItems, isAdminGalleryEditActive } from '$ts/stores/admin/gallery';
+	import IconAnimatedSpinner from '$components/icons/IconAnimatedSpinner.svelte';
 
 	export let generationsQuery: CreateInfiniteQueryResult<TUserGenerationFullOutputsPage, unknown>;
 	export let cardType: TGenerationImageCardType;
@@ -31,9 +31,7 @@
 	<div
 		class="w-full flex flex-col text-c-on-bg/60 flex-1 py-6 px-4 justify-center items-center text-center"
 	>
-		<div class="w-16 h-16">
-			<IconLoadingSlim class="animate-spin-faster w-full h-full" />
-		</div>
+		<IconAnimatedSpinner class="w-12 h-12" />
 		<p class="mt-2 opacity-0">{$LL.Gallery.SearchingTitle()}</p>
 		<div class="h-[2vh]" />
 	</div>

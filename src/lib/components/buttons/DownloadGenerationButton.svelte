@@ -1,6 +1,6 @@
 <script lang="ts">
+	import IconAnimatedSpinner from '$components/icons/IconAnimatedSpinner.svelte';
 	import IconDownload from '$components/icons/IconDownload.svelte';
-	import IconLoading from '$components/icons/IconLoading.svelte';
 	import Morpher from '$components/Morpher.svelte';
 	import { downloadGenerationImage } from '$ts/helpers/downloadGenerationImage';
 	import { isTouchscreen } from '$ts/stores/isTouchscreen';
@@ -58,9 +58,9 @@
 					? 'group-1-hover:text-c-on-primary'
 					: ''}"
 			/>
-			<IconLoading
+			<IconAnimatedSpinner
 				slot="item-1"
-				class="animate-spin-faster w-7 h-7 transition text-c-on-bg relative group-1-focus:text-c-on-primary {!$isTouchscreen
+				class="w-7 h-7 text-c-on-bg relative group-1-focus:text-c-on-primary {!$isTouchscreen
 					? 'group-1-hover:text-c-on-primary'
 					: ''}"
 			/>

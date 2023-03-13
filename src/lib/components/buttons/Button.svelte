@@ -1,5 +1,5 @@
 <script lang="ts">
-	import IconLoading from '$components/icons/IconLoading.svelte';
+	import IconAnimatedSpinner from '$components/icons/IconAnimatedSpinner.svelte';
 	import { isTouchscreen } from '$ts/stores/isTouchscreen';
 	import type { THrefTarget } from '$ts/types/main';
 	export let disabled = false;
@@ -73,11 +73,11 @@
 					class="w-full h-full absolute left-0 top-0 pointer-events-none flex justify-center items-center"
 				>
 					<div
-						class="{size === 'sm' ? 'w-5 h-5' : 'w-6 h-6'} transition transform {loading
+						class="{size === 'sm' ? 'w-6 h-6' : 'w-7 h-7'} transition transform {loading
 							? 'scale-100'
 							: 'scale-0'}"
 					>
-						<IconLoading class="w-full h-full {loading ? 'animate-spin-faster' : ''}" />
+						<IconAnimatedSpinner class="w-full h-full" {loading} />
 					</div>
 				</div>
 			{:else}
@@ -142,11 +142,11 @@
 					class="w-full h-full absolute left-0 top-0 pointer-events-none flex justify-center items-center"
 				>
 					<div
-						class="{size === 'sm' ? 'w-5 h-5' : 'w-6 h-6'} transition transform {loading
+						class="{size === 'sm' ? 'w-6 h-6' : 'w-7 h-7'} transition transform {loading
 							? 'scale-100'
 							: 'scale-0'}"
 					>
-						<IconLoading class="w-full h-full {loading ? 'animate-spin-faster' : ''}" />
+						<IconAnimatedSpinner class="w-full h-full" {loading} />
 					</div>
 				</div>
 			{:else}

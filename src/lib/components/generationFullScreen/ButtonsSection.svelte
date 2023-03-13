@@ -23,7 +23,6 @@
 	} from '$components/generationFullScreen/types';
 	import IconWand from '$components/icons/IconWand.svelte';
 	import IconLink from '$components/icons/IconLink.svelte';
-	import IconLoading from '$components/icons/IconLoading.svelte';
 	import { apiUrl } from '$ts/constants/main';
 	import { page } from '$app/stores';
 	import { useQueryClient } from '@tanstack/svelte-query';
@@ -37,6 +36,7 @@
 	import { userSummary } from '$ts/stores/user/summary';
 	import IconUpload from '$components/icons/IconUpload.svelte';
 	import IconTickOnly from '$components/icons/IconTickOnly.svelte';
+	import IconAnimatedSpinner from '$components/icons/IconAnimatedSpinner.svelte';
 
 	export let generation: TGenerationWithSelectedOutput;
 	export let generateSimilarUrl: string;
@@ -178,7 +178,7 @@
 							<p>{$LL.GenerationFullscreen.DownloadButton()}</p>
 						</div>
 						<div slot="item-1" class="flex items-center justify-center gap-1.5">
-							<IconLoading class="w-5 h-5 animate-spin-faster text-c-on-bg" />
+							<IconAnimatedSpinner class="w-5 h-5 text-c-on-bg" />
 						</div>
 					</Morpher>
 				</div>
@@ -263,7 +263,7 @@
 								<p>{$LL.GenerationFullscreen.SubmitToGalleryButton()}</p>
 							</div>
 							<div slot="item-1" class="flex items-center justify-center gap-1.5 text-c-on-bg">
-								<IconLoading class="w-5 h-5 animate-spin-faster" />
+								<IconAnimatedSpinner class="w-5 h-5" />
 							</div>
 						</Morpher>
 					</div>
@@ -284,7 +284,7 @@
 								<p>{$LL.Shared.DeleteButton()}</p>
 							</div>
 							<div slot="item-1" class="flex items-center justify-center gap-1.5 text-c-on-primary">
-								<IconLoading class="w-5 h-5 animate-spin-faster" />
+								<IconAnimatedSpinner class="w-5 h-5" />
 							</div>
 						</Morpher>
 					</div>

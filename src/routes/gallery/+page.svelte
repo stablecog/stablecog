@@ -3,7 +3,6 @@
 	import { page } from '$app/stores';
 	import GenerationFullScreen from '$components/generationFullScreen/GenerationFullScreen.svelte';
 	import GenerationGridInfinite from '$components/grids/GenerationGridInfinite.svelte';
-	import IconLoadingSlim from '$components/icons/IconLoadingSlim.svelte';
 	import IconSearch from '$components/icons/IconSearch.svelte';
 	import Input from '$components/Input.svelte';
 	import MetaTag from '$components/MetaTag.svelte';
@@ -26,6 +25,7 @@
 	import { scale } from 'svelte/transition';
 	import { onMount } from 'svelte';
 	import type { PageServerData } from './$types';
+	import IconAnimatedSpinner from '$components/icons/IconAnimatedSpinner.svelte';
 
 	export let data: PageServerData;
 	const { generationFullOutput: generationFullOutputFromData } = data;
@@ -165,9 +165,9 @@
 						opacity: 0,
 						start: 0.5
 					}}
-					class="w-16 h-16"
+					class="w-12 h-12"
 				>
-					<IconLoadingSlim class="animate-spin-faster w-full h-full" />
+					<IconAnimatedSpinner class="w-full h-full" />
 				</div>
 				<p class="mt-2 opacity-0">
 					{$LL.Gallery.SearchingTitle()}
