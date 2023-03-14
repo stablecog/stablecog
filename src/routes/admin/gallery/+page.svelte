@@ -100,7 +100,7 @@
 					(i) => !ids.includes(i.id) || i.filter !== $adminGalleryFilter
 				)
 			);
-			queryClient.setQueryData(['user_generation_full_outputs'], (data: any) => ({
+			queryClient.setQueryData(['admin_user_generation_full_outputs'], (data: any) => ({
 				...data,
 				pages: data.pages.map((page: TUserGenerationFullOutputsPage) => {
 					return {
