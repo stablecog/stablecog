@@ -130,6 +130,8 @@
 		| 'should-animate-slow'
 		| 'should-animate'
 		| 'should-complete' = lastGenerationBeingProcessed ? 'should-animate' : 'idle';
+
+	let isInitialCheck = true;
 	$: [lastGenerationStatus], onLastGenerationStatusChanged();
 
 	async function onLastGenerationStatusChanged() {
@@ -148,14 +150,17 @@
 				lastGenerationAnimationStatus = 'should-animate';
 				break;
 			case 'succeeded':
+				if (isInitialCheck) break;
 				await tick();
 				lastGenerationAnimationStatus = 'should-complete';
 				break;
 			case 'failed':
+				if (isInitialCheck) break;
 				await tick();
 				lastGenerationAnimationStatus = 'should-complete';
 				break;
 		}
+		isInitialCheck = false;
 	}
 
 	async function onSubmit() {
