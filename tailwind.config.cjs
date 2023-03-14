@@ -183,6 +183,7 @@ module.exports = {
 				1.5: '1.5px'
 			},
 			zIndex: {
+				60: '60',
 				100: '100'
 			},
 			borderRadius: {

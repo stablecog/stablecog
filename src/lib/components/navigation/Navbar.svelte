@@ -65,7 +65,7 @@
 
 <nav
 	bind:clientHeight={$navbarHeight}
-	class="w-full flex flex-col {isStickNavbarRoute ? 'sticky -top-px z-50' : ''}"
+	class="w-full flex flex-col z-50 {isStickNavbarRoute ? 'sticky -top-px' : ''}"
 >
 	{#if mounted && ($lastClosedNotification === null || $lastClosedNotification !== lastNotification)}
 		<Banner
