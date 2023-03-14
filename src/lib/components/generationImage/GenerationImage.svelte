@@ -18,6 +18,12 @@
 		adminGalleryScheduledIds
 	} from '$ts/stores/admin/gallery';
 	import { advancedModeApp } from '$ts/stores/advancedMode';
+	import {
+		isUserGalleryEditActive,
+		userGalleryActionableItems,
+		userGalleryScheduledIds,
+		userGalleryView
+	} from '$ts/stores/user/gallery';
 	import { userSummary } from '$ts/stores/user/summary';
 	import { activeGeneration, type TGenerationWithSelectedOutput } from '$userStores/generation';
 	import { quadOut } from 'svelte/easing';
@@ -35,23 +41,40 @@
 	let isImageLoaded = false;
 	const onImageLoaded = () => (isImageLoaded = true);
 
-	$: isInAdminGalleryScheduledIds = $isAdminGalleryEditActive
-		? $adminGalleryScheduledIds.includes(generation.selected_output.id)
-		: false;
+	$: isInGalleryScheduledIds =
+		$isUserGalleryEditActive && cardType === 'history'
+			? $userGalleryScheduledIds.includes(generation.selected_output.id)
+			: $isAdminGalleryEditActive && cardType === 'admin-gallery'
+			? $adminGalleryScheduledIds.includes(generation.selected_output.id)
+			: false;
 
-	const addToAdminGalleryActionableItems = (id: string) => {
-		if (isInAdminGalleryScheduledIds) return;
-		adminGalleryActionableItems.set([
-			...$adminGalleryActionableItems,
-			{
-				id,
-				filter: $adminGalleryFilter
-			}
-		]);
+	const addToGalleryActionableItems = (id: string) => {
+		if (isInGalleryScheduledIds) return;
+		if (cardType === 'history') {
+			userGalleryActionableItems.set([
+				...$userGalleryActionableItems,
+				{
+					id,
+					view: $userGalleryView
+				}
+			]);
+		} else {
+			adminGalleryActionableItems.set([
+				...$adminGalleryActionableItems,
+				{
+					id,
+					filter: $adminGalleryFilter
+				}
+			]);
+		}
 	};
 
-	const removeFromAdminGalleryActionableItems = (id: string) => {
-		adminGalleryActionableItems.set($adminGalleryActionableItems.filter((i) => i.id !== id));
+	const removeFromGalleryActionableItems = (id: string) => {
+		if (cardType === 'history') {
+			userGalleryActionableItems.set($userGalleryActionableItems.filter((i) => i.id !== id));
+		} else {
+			adminGalleryActionableItems.set($adminGalleryActionableItems.filter((i) => i.id !== id));
+		}
 	};
 
 	$: showAdminGalleryBarrier =
@@ -62,9 +85,15 @@
 			(generation.selected_output.gallery_status === 'rejected' &&
 				$adminGalleryFilter !== 'rejected'));
 
-	$: shouldShowSelectMarker = isInAdminGalleryScheduledIds
+	$: shouldShowSelectMarker = isInGalleryScheduledIds
 		? true
-		: $adminGalleryFilter === generation.selected_output.gallery_status;
+		: (cardType === 'history' && $userGalleryView === 'normal') ||
+		  (cardType === 'admin-gallery' &&
+				$adminGalleryFilter === generation.selected_output.gallery_status);
+
+	$: isGalleryEditActive =
+		(cardType === 'admin-gallery' && $isAdminGalleryEditActive) ||
+		(cardType === 'history' && $isUserGalleryEditActive);
 
 	$: logProps = {
 		'SC - Output Id': generation.selected_output.id,
@@ -99,12 +128,12 @@
 		class="w-full h-full absolute left-0 top-0 bg-c-bg-secondary/85 z-10"
 	/>
 {/if}
-{#if cardType === 'admin-gallery' && $isAdminGalleryEditActive}
+{#if (cardType === 'admin-gallery' && $isAdminGalleryEditActive) || (cardType === 'history' && $isUserGalleryEditActive)}
 	<button
 		on:click={(e) => {
-			isInAdminGalleryScheduledIds
-				? removeFromAdminGalleryActionableItems(generation.selected_output.id)
-				: addToAdminGalleryActionableItems(generation.selected_output.id);
+			isInGalleryScheduledIds
+				? removeFromGalleryActionableItems(generation.selected_output.id)
+				: addToGalleryActionableItems(generation.selected_output.id);
 			e.currentTarget.blur();
 		}}
 		class="w-full h-full absolute left-0 top-0 flex flex-col justify-start items-start z-30"
@@ -120,12 +149,12 @@
 			/>
 			<div />
 			<div
-				class="rounded-full border-2 border-c-primary w-6 h-6 transition p-0.75 {$isAdminGalleryEditActive
+				class="rounded-full border-2 border-c-primary w-6 h-6 transition p-0.75 {isGalleryEditActive
 					? 'scale-100 opacity-100'
 					: 'scale-0 opacity-0'}"
 			>
 				<div
-					class="w-full h-full rounded-full bg-c-primary transform transition {isInAdminGalleryScheduledIds
+					class="w-full h-full rounded-full bg-c-primary transform transition {isInGalleryScheduledIds
 						? 'scale-100 opacity-100'
 						: 'scale-0 opacity-0'}"
 				/>
@@ -153,7 +182,7 @@
 		loading="lazy"
 		class="w-full h-full absolute left-0 top-0 duration-300 transition transform {isImageLoaded
 			? 'opacity-100'
-			: 'opacity-0'} {isInAdminGalleryScheduledIds ? 'scale-110' : 'scale-100'}"
+			: 'opacity-0'} {isInGalleryScheduledIds ? 'scale-110' : 'scale-100'}"
 		src={useUpscaledImage && generation.selected_output.upscaled_image_url
 			? generation.selected_output.upscaled_image_url
 			: generation.selected_output.image_url}
@@ -205,40 +234,42 @@
 		</div>
 	</AnchorOrDiv>
 {/if}
-<div class="w-full h-full absolute left-0 top-0 pointer-events-none">
-	<div class="w-full flex justify-end items-start">
-		<div
-			bind:this={rightButtonContainer}
-			class="flex flex-row items-end justify-start transition transform 
-			translate-x-full group-focus-within:translate-x-0 group-hover:translate-x-0 pointer-events-auto"
-		>
-			{#if cardType !== 'admin-gallery'}
-				<CopyButton
-					class="p-1.5"
-					stringToCopy={generation.prompt.text}
-					bind:copied={promptCopied}
-					bind:copiedTimeout={promptCopiedTimeout}
-				/>
-			{/if}
-			{#if cardType === 'generate' || cardType === 'history'}
-				<DownloadGenerationButton
-					class="p-1.5 -ml-1.5"
-					url={generation.selected_output.upscaled_image_url
-						? generation.selected_output.upscaled_image_url
-						: generation.selected_output.image_url}
-					isUpscaled={generation.selected_output.upscaled_image_url !== undefined}
-					prompt={generation.prompt.text}
-					seed={generation.seed}
-					guidanceScale={generation.guidance_scale}
-					inferenceSteps={generation.inference_steps}
-				/>
-			{:else if cardType === 'gallery'}
-				<GenerateButton {generation} class="p-1.5 -ml-1.5" />
-			{/if}
+{#if !isGalleryEditActive}
+	<div class="w-full h-full absolute left-0 top-0 pointer-events-none">
+		<div class="w-full flex justify-end items-start">
+			<div
+				bind:this={rightButtonContainer}
+				class="flex flex-row items-end justify-start transition transform 
+				translate-x-full group-focus-within:translate-x-0 group-hover:translate-x-0 pointer-events-auto"
+			>
+				{#if cardType !== 'admin-gallery'}
+					<CopyButton
+						class="p-1.5"
+						stringToCopy={generation.prompt.text}
+						bind:copied={promptCopied}
+						bind:copiedTimeout={promptCopiedTimeout}
+					/>
+				{/if}
+				{#if cardType === 'generate' || cardType === 'history'}
+					<DownloadGenerationButton
+						class="p-1.5 -ml-1.5"
+						url={generation.selected_output.upscaled_image_url
+							? generation.selected_output.upscaled_image_url
+							: generation.selected_output.image_url}
+						isUpscaled={generation.selected_output.upscaled_image_url !== undefined}
+						prompt={generation.prompt.text}
+						seed={generation.seed}
+						guidanceScale={generation.guidance_scale}
+						inferenceSteps={generation.inference_steps}
+					/>
+				{:else if cardType === 'gallery'}
+					<GenerateButton {generation} class="p-1.5 -ml-1.5" />
+				{/if}
+			</div>
 		</div>
+		<div />
 	</div>
-	<div />
-</div>
+{/if}
 
 <style>
 	.list-fade {

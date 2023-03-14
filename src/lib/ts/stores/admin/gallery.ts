@@ -2,8 +2,8 @@ import type { TGalleryStatus } from '$ts/stores/user/generation';
 import { writable as writableLocal } from 'svelte-local-storage-store';
 import { derived, writable } from 'svelte/store';
 
-export const adminGalleryActionableItems = writableLocal<TAdminGalleryActionItem[]>(
-	'gallery_actionable_items',
+export const adminGalleryActionableItems = writableLocal<TAdminGalleryActionableItem[]>(
+	'admin_gallery_actionable_items',
 	[]
 );
 export const adminGalleryFilter = writable<TGalleryStatus>('submitted');
@@ -20,7 +20,7 @@ export const isAdminGalleryEditActive = writable<boolean>(false);
 
 export type TAdminGalleryAction = 'approve' | 'reject';
 
-export interface TAdminGalleryActionItem {
+export interface TAdminGalleryActionableItem {
 	id: string;
 	filter: TGalleryStatus;
 }

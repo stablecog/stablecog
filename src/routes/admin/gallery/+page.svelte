@@ -96,7 +96,9 @@
 			if (!res.ok) throw new Error('Error approving/rejecting generation outputs');
 			const resJson = await res.json();
 			adminGalleryActionableItems.set(
-				$adminGalleryActionableItems.filter((i) => !ids.includes(i.id))
+				$adminGalleryActionableItems.filter(
+					(i) => !ids.includes(i.id) || i.filter !== $adminGalleryFilter
+				)
 			);
 			queryClient.setQueryData(['user_generation_full_outputs'], (data: any) => ({
 				...data,

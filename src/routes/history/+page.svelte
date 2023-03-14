@@ -120,23 +120,25 @@
 						({totalOutputs !== undefined ? totalOutputs : '...'})
 					</p>
 				</div>
-				{#if hasLegacyGenerations}
-					<SubtleButton
-						loading={legacyGenerationsDownloadStatus === 'downloading'}
-						onClick={_downloadLegacyGenerations}
-						class="-my-1"
-					>
-						<Morpher morphed={legacyGenerationsDownloadStatus === 'downloading'}>
-							<div slot="item-0" class="flex items-center justify-center gap-1.5">
-								<IconDownload class="w-5 h-5 -ml-0.5" />
-								<p>{$LL.History.DownloadLegacyGenerationsButton()}</p>
-							</div>
-							<div slot="item-1" class="flex items-center justify-center gap-1.5">
-								<IconAnimatedSpinner class="w-5 h-5" />
-							</div>
-						</Morpher>
-					</SubtleButton>
-				{/if}
+				<div class="flex items-center justify-end gap-3">
+					{#if hasLegacyGenerations}
+						<SubtleButton
+							loading={legacyGenerationsDownloadStatus === 'downloading'}
+							onClick={_downloadLegacyGenerations}
+							class="-my-1"
+						>
+							<Morpher morphed={legacyGenerationsDownloadStatus === 'downloading'}>
+								<div slot="item-0" class="flex items-center justify-center gap-1.5">
+									<IconDownload class="w-5 h-5 -ml-0.5" />
+									<p>{$LL.History.DownloadLegacyGenerationsButton()}</p>
+								</div>
+								<div slot="item-1" class="flex items-center justify-center gap-1.5">
+									<IconAnimatedSpinner class="w-5 h-5" />
+								</div>
+							</Morpher>
+						</SubtleButton>
+					{/if}
+				</div>
 			</div>
 		</div>
 		<div class="w-full flex-1 max-w-7xl flex flex-col">
