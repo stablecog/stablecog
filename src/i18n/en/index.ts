@@ -527,6 +527,11 @@ const en: BaseTranslation = {
 		HighestPlanParagraph: 'You can buy a credit pack.',
 		OtherPlansParagraph: 'You can upgrade to a higher plan or buy a credit pack.'
 	},
+	Support: {
+		PageTitle: 'Support',
+		PageParagraph:
+			"If you have any questions, please reach out to us using the links below and we'll answer them as soon as possible."
+	},
 	UnderDevelopment: {
 		PageTitle: "We'll be back soon!",
 		PageParagraph: "We're upgrading our systems. We'll be back in a couple of hours."

@@ -524,6 +524,11 @@ const tr: Translation = {
 		HighestPlanParagraph: 'Kredi paketi satın alabilirsin.',
 		OtherPlansParagraph: 'Paketini yükseltebilir veya kredi paketi satın alabilirsin.'
 	},
+	Support: {
+		PageTitle: 'Support',
+		PageParagraph:
+			"If you have any questions, please reach out to us using the links below and we'll answer them as soon as possible."
+	},
 	UnderDevelopment: {
 		PageTitle: 'Geri döneceğiz!',
 		PageParagraph: 'Sistemlerimizi güncelliyoruz. Birkaç saate döneceğiz.'
