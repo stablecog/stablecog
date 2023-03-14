@@ -35,12 +35,12 @@
 	let isImageLoaded = false;
 	const onImageLoaded = () => (isImageLoaded = true);
 
-	$: inAdminGalleryScheduledIds = $isAdminGalleryEditActive
+	$: isInAdminGalleryScheduledIds = $isAdminGalleryEditActive
 		? $adminGalleryScheduledIds.includes(generation.selected_output.id)
 		: false;
 
 	const addToAdminGalleryActionableItems = (id: string) => {
-		if (inAdminGalleryScheduledIds) return;
+		if (isInAdminGalleryScheduledIds) return;
 		adminGalleryActionableItems.set([
 			...$adminGalleryActionableItems,
 			{
@@ -62,7 +62,7 @@
 			(generation.selected_output.gallery_status === 'rejected' &&
 				$adminGalleryFilter !== 'rejected'));
 
-	$: shouldShowSelectMarker = inAdminGalleryScheduledIds
+	$: shouldShowSelectMarker = isInAdminGalleryScheduledIds
 		? true
 		: $adminGalleryFilter === generation.selected_output.gallery_status;
 
@@ -102,7 +102,7 @@
 {#if cardType === 'admin-gallery' && $isAdminGalleryEditActive}
 	<button
 		on:click={(e) => {
-			inAdminGalleryScheduledIds
+			isInAdminGalleryScheduledIds
 				? removeFromAdminGalleryActionableItems(generation.selected_output.id)
 				: addToAdminGalleryActionableItems(generation.selected_output.id);
 			e.currentTarget.blur();
@@ -125,7 +125,7 @@
 					: 'scale-0 opacity-0'}"
 			>
 				<div
-					class="w-full h-full rounded-full bg-c-primary transform transition {inAdminGalleryScheduledIds
+					class="w-full h-full rounded-full bg-c-primary transform transition {isInAdminGalleryScheduledIds
 						? 'scale-100 opacity-100'
 						: 'scale-0 opacity-0'}"
 				/>
@@ -153,7 +153,7 @@
 		loading="lazy"
 		class="w-full h-full absolute left-0 top-0 duration-300 transition transform {isImageLoaded
 			? 'opacity-100'
-			: 'opacity-0'}"
+			: 'opacity-0'} {isInAdminGalleryScheduledIds ? 'scale-110' : 'scale-100'}"
 		src={useUpscaledImage && generation.selected_output.upscaled_image_url
 			? generation.selected_output.upscaled_image_url
 			: generation.selected_output.image_url}
