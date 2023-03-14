@@ -48,7 +48,7 @@
 
 	$: allUserGenerationFullOutputsQuery = $page.data.session?.user.id
 		? createInfiniteQuery({
-				queryKey: ['user_generation_full_outputs'],
+				queryKey: ['admin_user_generation_full_outputs'],
 				queryFn: (lastPage) => {
 					return getAllUserGenerationFullOutputs({
 						access_token: $page.data.session?.access_token || '',
