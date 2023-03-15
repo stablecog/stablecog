@@ -52,12 +52,10 @@
 	import { estimatedUpscaleDurationMs, getUpscaleDurationMsFromUpscale } from '$ts/stores/cost';
 	import InsufficientCreditsBadge from '$components/badges/InsufficientCreditsBadge.svelte';
 	import IconNoImage from '$components/icons/IconNoImage.svelte';
-	import IconStarOutlined from '$components/icons/IconStarOutlined.svelte';
 	import { apiUrl } from '$ts/constants/main';
 	import { userGenerationFullOutputsQueryKey } from '$ts/stores/user/keys';
 	import { useQueryClient } from '@tanstack/svelte-query';
 	import type { TUserGenerationFullOutputsPage } from '$ts/queries/userGenerations';
-	import IconStar from '$components/icons/IconStar.svelte';
 	import IconFavorite from '$components/icons/IconFavorite.svelte';
 
 	export let generation: TGenerationWithSelectedOutput;
@@ -424,20 +422,6 @@
 							? upscaledImageHeight
 							: generation.height}
 					/>
-					{#if modalType === 'history' || modalType === 'generate'}
-						<div class="absolute right-1.5 top-1.5">
-							<div class="flex bg-c-bg/75 rounded-full">
-								<IconButton
-									type="secondary"
-									name="Favorite"
-									onClick={() =>
-										favoriteOutput(generation.selected_output.is_favorited ? 'remove' : 'add')}
-								>
-									<IconFavorite favorited={generation.selected_output.is_favorited} />
-								</IconButton>
-							</div>
-						</div>
-					{/if}
 					{#if $upscales && $upscales.length > 0 && $upscales[0].status === 'failed'}
 						<div
 							transition:fly={{ duration: 200, easing: quadOut, y: -50 }}
@@ -470,6 +454,21 @@
 						? 'translate-x-full'
 						: '-translate-x-full'}"
 				/>
+				{#if modalType === 'history' || modalType === 'generate'}
+					<div class="absolute right-1.5 top-1.5">
+						<div class="flex bg-c-bg/75 rounded-full">
+							<IconButton
+								type="secondary"
+								name="Favorite"
+								class="pointer-events-auto"
+								onClick={() =>
+									favoriteOutput(generation.selected_output.is_favorited ? 'remove' : 'add')}
+							>
+								<IconFavorite favorited={generation.selected_output.is_favorited} />
+							</IconButton>
+						</div>
+					</div>
+				{/if}
 			</div>
 		</div>
 		<!-- Right side of the panel -->
