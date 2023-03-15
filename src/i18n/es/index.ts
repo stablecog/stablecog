@@ -54,6 +54,11 @@ const es: Translation = {
 		GenerationsTitle: 'Generaciones',
 		GenerationsMaxSavedCountWarning: 'Últimas {count} solamente',
 		DownloadLegacyGenerationsButton: 'Download Legacy Generations',
+		NoFavoritesYet: "You don't have any favorites yet.",
+		Views: {
+			All: 'All',
+			Favorites: 'Favorites'
+		},
 		NoGenerationsYet: 'No has generado ninguna imagen todavía.'
 	},
 	Live: {

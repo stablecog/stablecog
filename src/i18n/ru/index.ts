@@ -54,6 +54,11 @@ const ru: Translation = {
 		GenerationsTitle: 'Сгенерированные изображения',
 		GenerationsMaxSavedCountWarning: 'Только последние {count}',
 		DownloadLegacyGenerationsButton: 'Download Legacy Generations',
+		NoFavoritesYet: "You don't have any favorites yet.",
+		Views: {
+			All: 'All',
+			Favorites: 'Favorites'
+		},
 		NoGenerationsYet: 'Вы еще не сгенерировали ни одного изображения.'
 	},
 	Live: {

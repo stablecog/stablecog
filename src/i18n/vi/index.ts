@@ -54,6 +54,11 @@ const vi: Translation = {
 		GenerationsTitle: 'Các hình ảnh',
 		GenerationsMaxSavedCountWarning: 'Chỉ hiện thị {count}',
 		DownloadLegacyGenerationsButton: 'Download Legacy Generations',
+		NoFavoritesYet: "You don't have any favorites yet.",
+		Views: {
+			All: 'All',
+			Favorites: 'Favorites'
+		},
 		NoGenerationsYet: 'Bạn chưa tạo hình ảnh nào cả.'
 	},
 	Live: {

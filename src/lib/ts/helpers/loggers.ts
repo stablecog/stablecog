@@ -76,8 +76,16 @@ export function logGallerySearch(props: IGallerySearchProps) {
 	/* posthog.capture('Gallery Search', { ...props }); */
 }
 
-export function logGenerationOutputDeleted(props: IGenerationOutputDeletedProps) {
+export function logGenerationOutputDeleted(props: IGenerationOutputActionProps) {
 	mixpanel.track('Generation Output | Deleted', { ...props });
+}
+
+export function logGenerationOutputFavorited(props: IGenerationOutputActionProps) {
+	mixpanel.track('Generation Output | Favorited', { ...props });
+}
+
+export function logGenerationOutputUnfavorited(props: IGenerationOutputActionProps) {
+	mixpanel.track('Generation Output | Unfavorited', { ...props });
 }
 
 export function logGenerationOutputSubmittedToGallery(
@@ -255,7 +263,7 @@ interface IGallerySearchProps {
 	'SC - Search Query': string;
 }
 
-interface IGenerationOutputDeletedProps {
+interface IGenerationOutputActionProps {
 	'SC - Generation Id'?: string;
 	'SC - Output Id': string;
 	'SC - Locale': string;

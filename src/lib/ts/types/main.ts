@@ -5,6 +5,7 @@ export type THrefTarget = '_blank' | '_self';
 export interface TTab<T> {
 	label: string;
 	value: T;
+	icon?: ConstructorOfATypedSvelteComponent;
 }
 
 export type TIconSocial =

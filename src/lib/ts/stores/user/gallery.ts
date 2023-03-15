@@ -5,23 +5,24 @@ export const userGalleryActionableItems = writableLocal<TUserGalleryActionableIt
 	'user_gallery_actionable_items',
 	[]
 );
-export const userGalleryView = writable<TUserGalleryView>('normal');
-export const lastFetchedUserGalleryView = writable<TUserGalleryView>('normal');
 
-export const userGalleryScheduledIds = derived(
-	[userGalleryActionableItems, userGalleryView],
-	([$items, $view]) => {
-		return $items.filter((i) => i.view === undefined || i.view === $view).map((i) => i.id);
-	}
+export const lastFetchedUserGalleryView = writable<TUserGalleryView>('all');
+export const userGalleryCurrentView = writableLocal<TUserGalleryView>(
+	'userGalleryCurrentView',
+	'all'
 );
-
 export const isUserGalleryEditActive = writable<boolean>(false);
 
-export type TAdminGalleryAction = 'approve' | 'reject';
+export const userGallerySelectedIds = derived(
+	[userGalleryActionableItems, userGalleryCurrentView],
+	([$items, $userGalleryCurrentView]) => {
+		return $items.filter((i) => i.view === $userGalleryCurrentView).map((i) => i.id);
+	}
+);
 
 export interface TUserGalleryActionableItem {
 	id: string;
 	view: TUserGalleryView;
 }
 
-export type TUserGalleryView = 'normal';
+export type TUserGalleryView = 'all' | 'favorites';

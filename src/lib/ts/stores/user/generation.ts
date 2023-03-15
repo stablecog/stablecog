@@ -162,6 +162,25 @@ export const setGenerationOutputToDeleted = (output_id: string) => {
 	});
 };
 
+export const setGenerationOutputToFavorited = (output_id: string) => {
+	generations.update(($generations) => {
+		if ($generations === null || $generations.length === 0) {
+			return $generations;
+		}
+		for (let i = 0; i < $generations.length; i++) {
+			const generation = $generations[i];
+			for (let j = 0; j < generation.outputs.length; j++) {
+				const output = generation.outputs[j];
+				if (output.id === output_id) {
+					generation.outputs[j].is_favorited = true;
+					return $generations;
+				}
+			}
+		}
+		return $generations;
+	});
+};
+
 export const setGenerationOutputToSubmitted = (output_id: string) => {
 	generations.update(($generations) => {
 		if ($generations === null || $generations.length === 0) {
@@ -258,6 +277,7 @@ export interface TGenerationOutput {
 	created_at?: string;
 	updated_at?: string;
 	is_deleted?: boolean;
+	is_favorited?: boolean;
 	gallery_status?: TGalleryStatus;
 }
 

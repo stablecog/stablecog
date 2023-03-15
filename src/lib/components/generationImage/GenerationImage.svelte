@@ -7,6 +7,7 @@
 	import IconCancelCircle from '$components/icons/IconCancelCircle.svelte';
 	import IconChatBubbleCancel from '$components/icons/IconChatBubbleCancel.svelte';
 	import IconNoImage from '$components/icons/IconNoImage.svelte';
+	import IconStarOutlined from '$components/icons/IconStarOutlined.svelte';
 	import IconTick from '$components/icons/IconTick.svelte';
 	import IconTrashcan from '$components/icons/IconTrashcan.svelte';
 	import { doesContainTarget } from '$ts/helpers/doesContainTarget';
@@ -15,14 +16,14 @@
 		adminGalleryActionableItems,
 		adminGalleryFilter,
 		isAdminGalleryEditActive,
-		adminGalleryScheduledIds
+		adminGallerySelectedIds
 	} from '$ts/stores/admin/gallery';
 	import { advancedModeApp } from '$ts/stores/advancedMode';
 	import {
 		isUserGalleryEditActive,
 		userGalleryActionableItems,
-		userGalleryScheduledIds,
-		userGalleryView
+		userGalleryCurrentView,
+		userGallerySelectedIds
 	} from '$ts/stores/user/gallery';
 	import { userSummary } from '$ts/stores/user/summary';
 	import { activeGeneration, type TGenerationWithSelectedOutput } from '$userStores/generation';
@@ -41,24 +42,24 @@
 	let isImageLoaded = false;
 	const onImageLoaded = () => (isImageLoaded = true);
 
-	$: isInGalleryScheduledIds =
+	$: isInGallerySelectedIds =
 		$isUserGalleryEditActive && cardType === 'history'
-			? $userGalleryScheduledIds.includes(generation.selected_output.id)
+			? $userGallerySelectedIds.includes(generation.selected_output.id)
 			: $isAdminGalleryEditActive && cardType === 'admin-gallery'
-			? $adminGalleryScheduledIds.includes(generation.selected_output.id)
+			? $adminGallerySelectedIds.includes(generation.selected_output.id)
 			: false;
 
 	const addToGalleryActionableItems = (id: string) => {
-		if (isInGalleryScheduledIds) return;
+		if (isInGallerySelectedIds) return;
 		if (cardType === 'history') {
 			userGalleryActionableItems.set([
 				...$userGalleryActionableItems,
 				{
 					id,
-					view: $userGalleryView
+					view: $userGalleryCurrentView
 				}
 			]);
-		} else {
+		} else if (cardType === 'admin-gallery') {
 			adminGalleryActionableItems.set([
 				...$adminGalleryActionableItems,
 				{
@@ -72,22 +73,21 @@
 	const removeFromGalleryActionableItems = (id: string) => {
 		if (cardType === 'history') {
 			userGalleryActionableItems.set($userGalleryActionableItems.filter((i) => i.id !== id));
-		} else {
+		} else if (cardType === 'admin-gallery') {
 			adminGalleryActionableItems.set($adminGalleryActionableItems.filter((i) => i.id !== id));
 		}
 	};
 
 	$: showAdminGalleryBarrier =
 		cardType === 'admin-gallery' &&
-		$isAdminGalleryEditActive &&
 		((generation.selected_output.gallery_status === 'approved' &&
 			$adminGalleryFilter !== 'approved') ||
 			(generation.selected_output.gallery_status === 'rejected' &&
 				$adminGalleryFilter !== 'rejected'));
 
-	$: shouldShowSelectMarker = isInGalleryScheduledIds
+	$: shouldShowSelectMarker = isInGallerySelectedIds
 		? true
-		: (cardType === 'history' && $userGalleryView === 'normal') ||
+		: ($isUserGalleryEditActive && cardType === 'history') ||
 		  (cardType === 'admin-gallery' &&
 				$adminGalleryFilter === generation.selected_output.gallery_status);
 
@@ -113,9 +113,15 @@
 		class="w-full h-full absolute left-0 top-0 bg-c-bg-secondary/85 z-10"
 	/>
 {/if}
-{#if showAdminGalleryBarrier}
+{#if (cardType === 'generate' || cardType === 'history') && $userGalleryCurrentView === 'favorites' && !generation.selected_output.is_favorited}
+	<div
+		in:fade|local={{ duration: 300, easing: quadOut }}
+		class="w-full h-full absolute left-0 top-0 bg-c-bg-secondary/85 z-10 pointer-events-none"
+	/>
+{/if}
+{#if cardType === 'admin-gallery' && showAdminGalleryBarrier}
 	<div class="w-full h-full absolute left-0 top-0 flex items-center justify-center p-4 z-20">
-		<div in:scale={{ duration: 300, easing: quadOut, opacity: 0, start: 0.5 }}>
+		<div in:scale|local={{ duration: 300, easing: quadOut, opacity: 0, start: 0.5 }}>
 			{#if generation.selected_output.gallery_status === 'approved'}
 				<IconTick class="text-c-success w-12 h-12" />
 			{:else}
@@ -124,14 +130,14 @@
 		</div>
 	</div>
 	<div
-		in:fade={{ duration: 300, easing: quadOut }}
+		in:fade|local={{ duration: 300, easing: quadOut }}
 		class="w-full h-full absolute left-0 top-0 bg-c-bg-secondary/85 z-10"
 	/>
 {/if}
 {#if (cardType === 'admin-gallery' && $isAdminGalleryEditActive) || (cardType === 'history' && $isUserGalleryEditActive)}
 	<button
 		on:click={(e) => {
-			isInGalleryScheduledIds
+			isInGallerySelectedIds
 				? removeFromGalleryActionableItems(generation.selected_output.id)
 				: addToGalleryActionableItems(generation.selected_output.id);
 			e.currentTarget.blur();
@@ -154,7 +160,7 @@
 					: 'scale-0 opacity-0'}"
 			>
 				<div
-					class="w-full h-full rounded-full bg-c-primary transform transition {isInGalleryScheduledIds
+					class="w-full h-full rounded-full bg-c-primary transform transition {isInGallerySelectedIds
 						? 'scale-100 opacity-100'
 						: 'scale-0 opacity-0'}"
 				/>
@@ -182,7 +188,7 @@
 		loading="lazy"
 		class="w-full h-full absolute left-0 top-0 duration-300 transition transform {isImageLoaded
 			? 'opacity-100'
-			: 'opacity-0'} {isInGalleryScheduledIds ? 'scale-110' : 'scale-100'}"
+			: 'opacity-0'} {isInGallerySelectedIds ? 'scale-110' : 'scale-100'}"
 		src={useUpscaledImage && generation.selected_output.upscaled_image_url
 			? generation.selected_output.upscaled_image_url
 			: generation.selected_output.image_url}
@@ -235,7 +241,10 @@
 	</AnchorOrDiv>
 {/if}
 {#if !isGalleryEditActive}
-	<div class="w-full h-full absolute left-0 top-0 pointer-events-none">
+	<div
+		transition:fly|local={{ duration: 200, easing: quadOut, opacity: 0, x: 100 }}
+		class="w-full h-full absolute left-0 top-0 pointer-events-none"
+	>
 		<div class="w-full flex justify-end items-start">
 			<div
 				bind:this={rightButtonContainer}

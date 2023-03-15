@@ -53,6 +53,15 @@
 		  })
 		: undefined;
 
+	$: gridRerenderKey = `gallery_generation_full_outputs_${searchStringDebounced}_${
+		$galleryGenerationFullOutputsQuery?.isInitialLoading
+	}_${$galleryGenerationFullOutputsQuery?.isStale}_${
+		$galleryGenerationFullOutputsQuery?.data?.pages?.[0]?.outputs &&
+		$galleryGenerationFullOutputsQuery.data.pages[0].outputs.length > 0
+			? $galleryGenerationFullOutputsQuery.data.pages[0].outputs[0].id
+			: false
+	}`;
+
 	let scrollDirection: 'up' | 'down' = 'up';
 	let oldScrollY = 0;
 	let atTheTop = true;
@@ -190,6 +199,7 @@
 			{#key searchStringDebounced}
 				<div class="w-full flex-1 flex flex-col">
 					<GenerationGridInfinite
+						rerenderKey={gridRerenderKey}
 						cardType="gallery"
 						generationsQuery={galleryGenerationFullOutputsQuery}
 					/>

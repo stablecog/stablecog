@@ -5,16 +5,21 @@ export const generationsPerPage = 50;
 
 export async function getUserGenerationFullOutputs({
 	cursor,
-	access_token
+	access_token,
+	is_favorited
 }: {
 	cursor?: string;
 	access_token: string;
+	is_favorited: boolean;
 }) {
 	console.log('getUserOutputs');
 	const query = new URLSearchParams();
 	query.append('per_page', generationsPerPage.toString());
 	if (cursor) {
 		query.append('cursor', cursor);
+	}
+	if (is_favorited) {
+		query.append('is_favorited', is_favorited.toString());
 	}
 	const url = `${apiUrl.origin}/v1/user/outputs?${query.toString()}`;
 	const res = await fetch(url, {

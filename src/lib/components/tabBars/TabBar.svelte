@@ -3,8 +3,6 @@
 	import TabBarWrapper from '$components/tabBars/TabBarWrapper.svelte';
 	import { isTouchscreen } from '$ts/stores/isTouchscreen';
 	import type { TTab } from '$ts/types/main';
-	import { quadOut } from 'svelte/easing';
-	import { fade } from 'svelte/transition';
 
 	type T = $$Generic;
 	export let tabs: TTab<T>[];
@@ -17,26 +15,12 @@
 	export let disabled = false;
 	export let isValid: (v: T) => boolean = () => true;
 	export let outline: 'primary' | 'bg-secondary' = 'bg-secondary';
-	export let hasBackgroundPattern = false;
 	export let size: 'sm' | 'md' = 'md';
 
 	let classes = '';
 </script>
 
 <TabBarWrapper {outline} class={classes} {dontScale}>
-	{#if hasBackgroundPattern}
-		<div class="w-full h-full absolute left-0 top-0 rounded-xl overflow-hidden z-0">
-			<div
-				transition:fade|local={{ duration: 200, easing: quadOut }}
-				style="
-				background-color: transparent;
-				opacity: 0.8;
-				background: repeating-linear-gradient(-45deg, rgb(var(--c-primary)/0.15), rgb(var(--c-primary)/0.15) 2px, transparent 2px, transparent 8px);
-			"
-				class="w-full h-full"
-			/>
-		</div>
-	{/if}
 	{#if hasTitle}
 		<div class="self-stretch flex text-c-on-bg/40 relative">
 			<slot name="title" />
@@ -84,20 +68,30 @@
 					</div>
 				</div>
 				<Morpher morphed={!isValid(tab.value)}>
-					<p
+					<div
 						slot="item-0"
-						class="flex-1 font-medium relative transition overflow-hidden overflow-ellipsis max-w-full z-0 {value ===
-							tab.value && !hideSelected
+						class="flex-1 px-1 flex justify-center items-center gap-1.5 {value === tab.value &&
+						!hideSelected
 							? 'text-c-on-bg'
 							: 'text-c-on-bg/50'} {value === tab.value && !hideSelected && !$isTouchscreen
 							? 'group-hover:text-c-primary'
 							: ''}"
 					>
-						{tab.label}
-					</p>
+						{#if tab.icon}
+							<svelte:component
+								this={tab.icon}
+								class="{dontScale ? 'w-5 h-5' : 'w-4 h-4 md:w-5 md:h-5'} flex-shrink-0"
+							/>
+						{/if}
+						<p
+							class="flex-shrink overflow-hidden overflow-ellipsis max-w-full whitespace-nowrap font-medium relative transition z-0"
+						>
+							{tab.label}
+						</p>
+					</div>
 					<p
 						slot="item-1"
-						class="flex-1 font-medium relative transition overflow-hidden overflow-ellipsis max-w-full z-0 {value ===
+						class="flex-1 px-1 overflow-hidden overflow-ellipsis whitespace-nowrap font-medium relative transition max-w-full z-0 {value ===
 							tab.value && !hideSelected
 							? 'text-c-on-bg'
 							: 'text-c-on-bg/50'} {value === tab.value && !hideSelected && !$isTouchscreen

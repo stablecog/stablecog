@@ -9,7 +9,7 @@ export const adminGalleryActionableItems = writableLocal<TAdminGalleryActionable
 export const adminGalleryFilter = writable<TGalleryStatus>('submitted');
 export const lastFetchedAdminGalleryFilter = writable<TGalleryStatus>('submitted');
 
-export const adminGalleryScheduledIds = derived(
+export const adminGallerySelectedIds = derived(
 	[adminGalleryActionableItems, adminGalleryFilter],
 	([$items, $filter]) => {
 		return $items.filter((i) => i.filter === undefined || i.filter === $filter).map((i) => i.id);

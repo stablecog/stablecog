@@ -155,6 +155,20 @@ type RootTranslation = {
 		 */
 		DownloadLegacyGenerationsButton: string
 		/**
+		 * Y​o​u​ ​d​o​n​'​t​ ​h​a​v​e​ ​a​n​y​ ​f​a​v​o​r​i​t​e​s​ ​y​e​t​.
+		 */
+		NoFavoritesYet: string
+		Views: {
+			/**
+			 * A​l​l
+			 */
+			All: string
+			/**
+			 * F​a​v​o​r​i​t​e​s
+			 */
+			Favorites: string
+		}
+		/**
 		 * Y​o​u​ ​h​a​v​e​n​'​t​ ​g​e​n​e​r​a​t​e​d​ ​a​n​y​ ​i​m​a​g​e​s​ ​y​e​t​.
 		 */
 		NoGenerationsYet: string
@@ -1693,6 +1707,20 @@ export type TranslationFunctions = {
 		 * Download Legacy Generations
 		 */
 		DownloadLegacyGenerationsButton: () => LocalizedString
+		/**
+		 * You don't have any favorites yet.
+		 */
+		NoFavoritesYet: () => LocalizedString
+		Views: {
+			/**
+			 * All
+			 */
+			All: () => LocalizedString
+			/**
+			 * Favorites
+			 */
+			Favorites: () => LocalizedString
+		}
 		/**
 		 * You haven't generated any images yet.
 		 */

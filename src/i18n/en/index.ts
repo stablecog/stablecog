@@ -54,6 +54,11 @@ const en: BaseTranslation = {
 		GenerationsTitle: 'Generations',
 		GenerationsMaxSavedCountWarning: 'Last {count} only',
 		DownloadLegacyGenerationsButton: 'Download Legacy Generations',
+		NoFavoritesYet: "You don't have any favorites yet.",
+		Views: {
+			All: 'All',
+			Favorites: 'Favorites'
+		},
 		NoGenerationsYet: "You haven't generated any images yet."
 	},
 	Live: {

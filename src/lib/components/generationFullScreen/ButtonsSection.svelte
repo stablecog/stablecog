@@ -37,6 +37,7 @@
 	import IconUpload from '$components/icons/IconUpload.svelte';
 	import IconTickOnly from '$components/icons/IconTickOnly.svelte';
 	import IconAnimatedSpinner from '$components/icons/IconAnimatedSpinner.svelte';
+	import { userGenerationFullOutputsQueryKey } from '$ts/stores/user/keys';
 
 	export let generation: TGenerationWithSelectedOutput;
 	export let generateSimilarUrl: string;
@@ -97,7 +98,7 @@
 			console.log('Delete generation output response', res);
 			logGenerationOutputDeleted(logProps);
 			if (modalType === 'history') {
-				queryClient.setQueryData(['user_generation_full_outputs'], (data: any) => ({
+				queryClient.setQueryData($userGenerationFullOutputsQueryKey, (data: any) => ({
 					...data,
 					pages: data.pages.map((page: TUserGenerationFullOutputsPage) => {
 						return {
@@ -137,7 +138,7 @@
 			console.log('Submit to gallery response', res);
 			logGenerationOutputSubmittedToGallery(logProps);
 			if (modalType === 'history') {
-				queryClient.setQueryData(['user_generation_full_outputs'], (data: any) => ({
+				queryClient.setQueryData($userGenerationFullOutputsQueryKey, (data: any) => ({
 					...data,
 					pages: data.pages.map((page: TUserGenerationFullOutputsPage) => {
 						return {
@@ -174,11 +175,11 @@
 				<div slot="item-0" class="flex items-center justify-center gap-1.5">
 					<Morpher morphed={buttonObjectsWithState.download.state === 'loading'}>
 						<div slot="item-0" class="flex items-center justify-center gap-1.5">
-							<IconDownload class="w-5 h-5 -ml-0.5 text-c-on-bg" />
+							<IconDownload class="w-5 h-5 -ml-0.5" />
 							<p>{$LL.GenerationFullscreen.DownloadButton()}</p>
 						</div>
 						<div slot="item-1" class="flex items-center justify-center gap-1.5">
-							<IconAnimatedSpinner class="w-5 h-5 text-c-on-bg" />
+							<IconAnimatedSpinner class="w-5 h-5" />
 						</div>
 					</Morpher>
 				</div>

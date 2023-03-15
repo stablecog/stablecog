@@ -53,6 +53,11 @@ const hi: Translation = {
 		GenerationsTitle: 'बनावटे',
 		GenerationsMaxSavedCountWarning: 'आखरी {count} ही',
 		DownloadLegacyGenerationsButton: 'Download Legacy Generations',
+		NoFavoritesYet: "You don't have any favorites yet.",
+		Views: {
+			All: 'All',
+			Favorites: 'Favorites'
+		},
 		NoGenerationsYet: 'आपने अभी तक कोई चित्र नहीं बनाया है।'
 	},
 	Live: {

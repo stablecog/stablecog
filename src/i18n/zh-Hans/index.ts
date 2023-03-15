@@ -51,6 +51,11 @@ const zhHans: Translation = {
 		GenerationsTitle: '生成的图像',
 		GenerationsMaxSavedCountWarning: '只限于前 {count} 个生成的图像',
 		DownloadLegacyGenerationsButton: 'Download Legacy Generations',
+		NoFavoritesYet: "You don't have any favorites yet.",
+		Views: {
+			All: 'All',
+			Favorites: 'Favorites'
+		},
 		NoGenerationsYet: '您还没有生成任何图像。'
 	},
 	Live: {

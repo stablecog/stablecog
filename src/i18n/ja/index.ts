@@ -54,6 +54,11 @@ const ja: Translation = {
 		GenerationsTitle: '生成画像',
 		GenerationsMaxSavedCountWarning: '最新の {count} のみ',
 		DownloadLegacyGenerationsButton: 'Download Legacy Generations',
+		NoFavoritesYet: "You don't have any favorites yet.",
+		Views: {
+			All: 'All',
+			Favorites: 'Favorites'
+		},
 		NoGenerationsYet: 'まだ画像を生成していません。'
 	},
 	Live: {

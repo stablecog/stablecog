@@ -23,11 +23,10 @@
 		adminGalleryActionableItems,
 		adminGalleryFilter,
 		isAdminGalleryEditActive,
-		adminGalleryScheduledIds,
+		adminGallerySelectedIds,
 		type TAdminGalleryAction,
 		lastFetchedAdminGalleryFilter
 	} from '$ts/stores/admin/gallery';
-	import { navbarHeight } from '$ts/stores/navbarHeight';
 	import { userSummary } from '$ts/stores/user/summary';
 	import { activeGeneration } from '$userStores/generation';
 	import {
@@ -46,9 +45,13 @@
 		| CreateInfiniteQueryResult<TUserGenerationFullOutputsPage, unknown>
 		| undefined;
 
+	$: allUserGenerationFullOutputsQueryKey = [
+		'admin_user_generation_full_outputs',
+		$adminGalleryFilter
+	];
 	$: allUserGenerationFullOutputsQuery = $page.data.session?.user.id
 		? createInfiniteQuery({
-				queryKey: ['admin_user_generation_full_outputs'],
+				queryKey: allUserGenerationFullOutputsQueryKey,
 				queryFn: (lastPage) => {
 					return getAllUserGenerationFullOutputs({
 						access_token: $page.data.session?.access_token || '',
@@ -71,6 +74,14 @@
 		: undefined;
 
 	$: $allUserGenerationFullOutputsQuery?.data?.pages, onPagesChanged();
+	$: gridRerenderKey = `admin_user_generation_full_outputs_${$adminGalleryFilter}_${
+		$allUserGenerationFullOutputsQuery?.isInitialLoading
+	}_${$allUserGenerationFullOutputsQuery?.isStale}_${
+		$allUserGenerationFullOutputsQuery?.data?.pages?.[0]?.outputs &&
+		$allUserGenerationFullOutputsQuery.data.pages[0].outputs.length > 0
+			? $allUserGenerationFullOutputsQuery.data.pages[0].outputs[0].id
+			: false
+	}`;
 
 	let approveOrRejectStatus: 'idle' | 'approving' | 'rejecting' = 'idle';
 
@@ -81,7 +92,7 @@
 			approveOrRejectStatus = 'rejecting';
 		}
 		try {
-			const ids = $adminGalleryScheduledIds;
+			const ids = $adminGallerySelectedIds;
 			const res = await fetch(`${apiUrl.origin}/v1/admin/gallery`, {
 				method: 'PUT',
 				headers: {
@@ -100,7 +111,7 @@
 					(i) => !ids.includes(i.id) || i.filter !== $adminGalleryFilter
 				)
 			);
-			queryClient.setQueryData(['admin_user_generation_full_outputs'], (data: any) => ({
+			queryClient.setQueryData(allUserGenerationFullOutputsQueryKey, (data: any) => ({
 				...data,
 				pages: data.pages.map((page: TUserGenerationFullOutputsPage) => {
 					return {
@@ -214,7 +225,7 @@
 								>
 									{$LL.Admin.ApproveButton()}<span
 										class="text-sm ml-1 font-normal text-c-success/75"
-										>({$adminGalleryScheduledIds.length})</span
+										>({$adminGallerySelectedIds.length})</span
 									>
 								</p>
 								<div slot="item-1">
@@ -238,7 +249,7 @@
 										: 'opacity-0 scale-50'}"
 								>
 									{$LL.Admin.RejectButton()}<span class="text-sm ml-1 font-normal text-c-danger/75"
-										>({$adminGalleryScheduledIds.length})</span
+										>({$adminGallerySelectedIds.length})</span
 									>
 								</p>
 								<div slot="item-1">
@@ -270,7 +281,7 @@
 			</div>
 		</div>
 		<div class="w-full flex-1 flex flex-col">
-			{#if allUserGenerationFullOutputsQuery === undefined || $allUserGenerationFullOutputsQuery === undefined || $allUserGenerationFullOutputsQuery.isInitialLoading || ($allUserGenerationFullOutputsQuery.isFetching && $lastFetchedAdminGalleryFilter !== $adminGalleryFilter)}
+			{#if allUserGenerationFullOutputsQuery === undefined || $allUserGenerationFullOutputsQuery === undefined || $allUserGenerationFullOutputsQuery.isInitialLoading}
 				<div
 					class="w-full flex flex-col text-c-on-bg/60 flex-1 py-6 px-4 justify-center items-center text-center"
 				>
@@ -296,6 +307,7 @@
 			{:else}
 				<GenerationGridInfinite
 					generationsQuery={allUserGenerationFullOutputsQuery}
+					rerenderKey={gridRerenderKey}
 					cardType="admin-gallery"
 				/>
 			{/if}

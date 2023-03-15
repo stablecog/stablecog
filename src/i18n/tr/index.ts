@@ -54,6 +54,11 @@ const tr: Translation = {
 		GenerationsTitle: 'Üretimler',
 		GenerationsMaxSavedCountWarning: 'Sadece son {count}',
 		DownloadLegacyGenerationsButton: 'Eski Üretimleri İndir',
+		NoFavoritesYet: "You don't have any favorites yet.",
+		Views: {
+			All: 'All',
+			Favorites: 'Favorites'
+		},
 		NoGenerationsYet: 'Henüz fotoğraf üretmedin.'
 	},
 	Live: {
