@@ -53,8 +53,8 @@ const zhHans: Translation = {
 		DownloadLegacyGenerationsButton: 'Download Legacy Generations',
 		NoFavoritesYet: "You don't have any favorites yet.",
 		Views: {
-			All: 'All',
-			Favorites: 'Favorites'
+			AllTitle: 'All',
+			FavoritesTitle: 'Favorites'
 		},
 		NoGenerationsYet: '您还没有生成任何图像。'
 	},

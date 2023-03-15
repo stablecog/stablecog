@@ -54,10 +54,10 @@ const tr: Translation = {
 		GenerationsTitle: 'Üretimler',
 		GenerationsMaxSavedCountWarning: 'Sadece son {count}',
 		DownloadLegacyGenerationsButton: 'Eski Üretimleri İndir',
-		NoFavoritesYet: "You don't have any favorites yet.",
+		NoFavoritesYet: 'Henüz favorin yok.',
 		Views: {
-			All: 'All',
-			Favorites: 'Favorites'
+			AllTitle: 'Hepsi',
+			FavoritesTitle: 'Favoriler'
 		},
 		NoGenerationsYet: 'Henüz fotoğraf üretmedin.'
 	},
@@ -530,9 +530,8 @@ const tr: Translation = {
 		OtherPlansParagraph: 'Paketini yükseltebilir veya kredi paketi satın alabilirsin.'
 	},
 	Support: {
-		PageTitle: 'Support',
-		PageParagraph:
-			"If you have any questions, please reach out to us using the links below and we'll answer them as soon as possible."
+		PageTitle: 'Desktek',
+		PageParagraph: 'Herhangi bir soru sormak istersen aşağıdaki linklerden bize ulaşabilirsin.'
 	},
 	UnderDevelopment: {
 		PageTitle: 'Geri döneceğiz!',

@@ -52,11 +52,11 @@ const de: Translation = {
 	History: {
 		GenerationsTitle: 'Generierte Bilder',
 		GenerationsMaxSavedCountWarning: 'Nur die letzten {count}',
-		DownloadLegacyGenerationsButton: 'Download Legacy Generations',
+		DownloadLegacyGenerationsButton: 'Legacy Generierungen herunterladen',
 		NoFavoritesYet: "You don't have any favorites yet.",
 		Views: {
-			All: 'All',
-			Favorites: 'Favorites'
+			AllTitle: 'All',
+			FavoritesTitle: 'Favorites'
 		},
 		NoGenerationsYet: 'Du hast noch keine Bilder generiert.'
 	},
@@ -87,7 +87,7 @@ const de: Translation = {
 				Custom: 'Benutzerdefiniert'
 			},
 			UnknownTitle: 'Unbekannt',
-			OutputsTitle: 'Outputs'
+			OutputsTitle: 'Ausgabe'
 		},
 		WaitingTitle: 'Warte auf Generierungen',
 		DurationStatusUnknown: 'Unbekannt'
@@ -115,13 +115,13 @@ const de: Translation = {
 		CopyPromptButton: 'Eingabewörter kopieren',
 		CopyNegativePromptButton: 'Ausgeschlossene Wörter kopieren',
 		CopiedButtonState: 'Kopiert!',
-		GenerateSimilarButton: 'Generate Similar',
+		GenerateSimilarButton: 'Ähnliches generieren',
 		RerollButton: 'Seed durchmischen',
 		RegenerateButton: 'Erneut generieren',
 		GenerateButton: 'Generieren',
 		UpscaleButton: 'Hochskalieren',
-		SubmitToGalleryButton: 'Submit to Gallery',
-		SubmittedTitle: 'Submitted',
+		SubmitToGalleryButton: 'Für die Galerie einreichen',
+		SubmittedTitle: 'Eingereicht',
 		UpscaleTabBar: {
 			UpscaledTitle: 'Hochskaliert',
 			OriginalTitle: 'Original'
@@ -154,11 +154,11 @@ const de: Translation = {
 		JoinUsTitle: 'Folge uns',
 		GoHomeButton: 'Zurück zur Startseite',
 		SwitchToDefaultServerButton: 'Zum Standard-Server wechseln',
-		JoinOnDiscord: 'Join on Discord',
-		JoinUsOnTitle: 'Join us on {name}',
+		JoinOnDiscord: 'Auf Discord beitreten',
+		JoinUsOnTitle: 'Auf {name} folgen',
 		ShareButton: 'Teilen',
 		ShareOnButton: 'Auf {name} teilen',
-		GoBackButton: 'Go Back',
+		GoBackButton: 'Zurück',
 		YesButton: 'Ja',
 		NoButton: 'Nein',
 		EnableButton: 'Aktivieren',
@@ -168,11 +168,11 @@ const de: Translation = {
 		CopyButton: 'Kopieren',
 		DeleteButton: 'Löschen',
 		LoadingTitle: 'Wird geladen',
-		ContinueButton: 'Continue',
+		ContinueButton: 'Weiter',
 		LoadingParagraph: 'Wird geladen...',
-		InsufficientCreditsTitle: 'Insufficient credits ({remainingCredits}/{neededCredits})',
-		AllTitle: 'All',
-		ConfirmButton: 'Confirm',
+		InsufficientCreditsTitle: 'Unzureichendes Guthaben ({remainingCredits}/{neededCredits})',
+		AllTitle: 'Alle',
+		ConfirmButton: 'Bestätigen',
 		ServerUrlInput: {
 			Placeholder: 'Server-URL'
 		},
@@ -184,7 +184,7 @@ const de: Translation = {
 		},
 		ModelOptions: {
 			'048b4aa3-5586-47ed-900f-f4341c96bdb2': {
-				realName: 'Stable Diffusion 1.5'
+				realName: 'Stabile Diffusion 1,5'
 			},
 			'8acfe4c8-751d-4aa6-8c3c-844e3ef478e0': {
 				realName: 'Openjourney'
@@ -208,7 +208,7 @@ const de: Translation = {
 				realName: '22h Diffusion'
 			},
 			'b6c1372f-31a7-457c-907c-d292a6ffef97': {
-				realName: 'Luna Diffusion'
+				realName: '22h Diffusion'
 			}
 		},
 		SchedulerOptions: {
@@ -231,305 +231,311 @@ const de: Translation = {
 		UnknownTitle: 'Unbekannt',
 		MoreOptionsTitle: 'Weitere Optionen',
 		LessOptionsTitle: 'Weniger Optionen',
-		TryAgainButton: 'Try Again',
-		RefreshButton: 'Refresh',
-		LoadMoreButton: 'Load More',
-		SearchingTitle: 'Searching',
-		NoResultsFoundTitle: 'No results found'
+		TryAgainButton: 'Nochmals versuchen',
+		RefreshButton: 'Aktualisieren',
+		LoadMoreButton: 'Weitere laden',
+		SearchingTitle: 'Suche…',
+		NoResultsFoundTitle: 'Keine Ergebnisse gefunden'
 	},
 	Error: {
 		SomethingWentWrong: 'Etwas ist schiefgelaufen :(',
-		ImageWasNSFW: 'This image was NSFW :(',
+		ImageWasNSFW: 'Dieses Bild war NSFW :(',
 		NSFW: 'NSFW-Inhalt erkannt, versuche andere Eingabewörter :(',
 		ServerSeemsOffline:
 			'Der Server scheint offline zu sein. Versuche die Seite zu aktualisieren oder wechsle in den Einstellungen zu einem anderen Server.',
 		ServerSetNotWorking: 'Dieser Server ist nicht kompatibel oder antwortet nicht.',
 		NotFound: 'Nicht gefunden',
 		SupabaseNotFoundCantListen: 'Supabase-Instanz nicht gefunden. Kann keine Generierung annehmen.',
-		InvalidEmail: 'Enter a valid email.',
-		PasswordTooShort: 'Password must be at least 8 characters.',
-		SomethingWentWrongTryAgain: 'Something went wrong, try again.',
-		InvalidCredentials: 'Invalid credentials.',
-		InvalidCode: 'Invalid code.',
-		OnceEvery60Seconds: 'You can only request a link once every 60 seconds.',
+		InvalidEmail: 'Bitte eine gültige E-Mail eingeben.',
+		PasswordTooShort: 'Passwort muss mindestens 8 Zeichen lang sein.',
+		SomethingWentWrongTryAgain: 'Etwas ist schiefgelaufen. Erneut versuchen.',
+		InvalidCredentials: 'Ungültige Anmeldedaten.',
+		InvalidCode: 'Ungültiger Code.',
+		OnceEvery60Seconds: 'Du kannst nur einmal alle 60 Sekunden einen Link anfordern.',
 		LinkExpired: {
-			Title: 'Link Expired',
-			Paragraph: 'The link can only be used once and expires after 24 hours.'
+			Title: 'Link abgelaufen',
+			Paragraph: 'Der Link kann nur einmal verwendet werden und läuft nach 24 Stunden ab.'
 		},
 		UpdateAvailable: {
-			Title: 'Update Available',
-			Paragraph: 'There is an update! Refresh the page to get it.'
+			Title: 'Aktualisierung verfügbar',
+			Paragraph: 'Es gibt ein Update! Aktualisiere die Seite, um es zu erhalten.'
 		},
-		EmailProviderNotAllowed: "This email provider isn't allowed.",
-		EmailAlreadyInUse: 'This email is already in use.'
+		EmailProviderNotAllowed: 'Dieser E-Mail-Anbieter ist nicht zulässig.',
+		EmailAlreadyInUse: 'Diese E-Mail-Adresse wird bereits verwendet.'
 	},
 	Admin: {
 		AdminPanelTitle: 'Admin',
-		DeleteButton: 'Delete',
-		ApproveButton: 'Approve',
-		RejectButton: 'Reject',
-		EditButton: 'Edit',
-		EditViewButton: 'Edit View',
-		NormalViewButton: 'Normal View',
-		StopEditButton: 'Stop Editing',
-		NoGenerationsToReview: 'No generations to review.',
-		ServersButton: 'Servers',
-		AdminGalleryButton: 'Gallery',
-		UsersButton: 'Users',
+		DeleteButton: 'Löschen',
+		ApproveButton: 'Freigeben',
+		RejectButton: 'Ablehnen',
+		EditButton: 'Bearbeiten',
+		EditViewButton: 'Bearbeitungsansicht',
+		NormalViewButton: 'Normale Ansicht',
+		StopEditButton: 'Bearbeiten beenden',
+		NoGenerationsToReview: 'Keine Generierung zu prüfen.',
+		ServersButton: 'Server',
+		AdminGalleryButton: 'Galerie',
+		UsersButton: 'Benutzer',
 		AdminTab: 'Admin',
-		ServersTab: 'Servers',
-		AdminGalleryTab: 'Gallery',
-		UsersTab: 'Users',
+		ServersTab: 'Server',
+		AdminGalleryTab: 'Galerie',
+		UsersTab: 'Benutzer',
 		Gallery: {
-			TotalTitle: 'Total',
-			ApprovedTitle: 'Approved',
-			DeletedTitle: 'Deleted',
+			TotalTitle: 'Gesamt',
+			ApprovedTitle: 'Freigegeben',
+			DeletedTitle: 'Gelöscht',
 			StatusDropdown: {
-				All: 'All',
-				Submitted: 'Submitted',
-				Approved: 'Approved',
-				Rejected: 'Rejected',
-				Deleted: 'Deleted',
-				Private: 'Private'
+				All: 'Alle',
+				Submitted: 'Eingereicht',
+				Approved: 'Genehmigt',
+				Rejected: 'Abgelehnt',
+				Deleted: 'Gelöscht',
+				Private: 'Privat'
 			},
-			NoGenerationsToReview: 'No generations to review'
+			NoGenerationsToReview: 'Keine Generierungen zu prüfen'
 		}
 	},
 	SignUp: {
-		PageTitle: 'Sign Up',
-		PageParagraph: 'Join Stablecog to become a pro member and unlock its full potential.',
-		PageTitleConfirm: 'Confirm',
-		PageTitleConfirmAlt: 'Check Your Email',
+		PageTitle: 'Registrieren',
+		PageParagraph:
+			'Treten Sie Stablecog bei, um Pro Mitglied zu werden und sein volles Potenzial freizuschalten.',
+		PageTitleConfirm: 'Bestätigen',
+		PageTitleConfirmAlt: 'Überprüfe Deinen E-Mail-Posteingang',
 		PageParagraphConfirm:
-			"We've emailed you a 6-digit code. Enter it below to confirm your account.",
-		SignUpButton: 'Sign Up',
-		AllTitle: 'All',
-		ConfirmButton: 'Confirm',
-		AlreadyHaveAnAccountTitle: 'Already have an account?',
-		LoginInsteadButton: 'Login instead',
+			'Wir haben dir einen 6-stelligen Code per E-Mail zugeschickt. Gib ihn unten ein, um dein Konto zu bestätigen.',
+		SignUpButton: 'Registrieren',
+		AllTitle: 'Alle',
+		ConfirmButton: 'Bestätigen',
+		AlreadyHaveAnAccountTitle: 'Hast Du bereits ein Konto?',
+		LoginInsteadButton: 'Stattdessen anmelden',
 		SixDigitCodeInput: {
-			Placeholder: '6-Digit Code'
+			Placeholder: '6-stelliger Code'
 		}
 	},
 	SignIn: {
-		PageTitleGetStarted: 'Get Started',
-		GetStartedButton: 'Get Started',
-		PageTitle: 'Sign In',
-		PageParagraph: 'Start using Stablecog with all features that are available to your account.',
-		PageTitleCreateAccountOrSignIn: 'Create an account or sign in',
+		PageTitleGetStarted: 'Jetzt loslegen',
+		GetStartedButton: 'Jetzt loslegen',
+		PageTitle: 'Einloggen',
+		PageParagraph: 'Benutze Stablecog mit allen Funktionen, die Deinem Konto zur Verfügung stehen.',
+		PageTitleCreateAccountOrSignIn: 'Registrieren oder einloggen',
 		PageParagraphCreateAccountOrSignIn:
-			'Start using Stablecog with all features that are available to your account.',
-		PageTitleSentLink: 'Check your email',
+			'Benutze Stablecog mit allen Funktionen, die Deinem Konto zur Verfügung stehen.',
+		PageTitleSentLink: 'Überprüfe Deinen E-Mail-Posteingang',
 		PageParagraphSentLink:
-			"We've emailed you a sign-in link. If you don't see it, check your spam folder.",
-		ContinueButton: 'Continue',
-		ContinueWithProviderButton: 'Continue with {provider}',
-		SignInWithProviderButton: 'Sign in with {provider}',
-		OrContinueWithEmailTitle: 'Or continue with email',
-		DontHaveAnAccountTitle: "Don't have an account?",
-		SignUpInsteadButton: 'Sign up instead',
-		SignInButton: 'Sign In',
-		SignOutButton: 'Sign Out'
+			'Wir haben Dir einen Login-Link per E-Mail zugeschickt. Falls Du ihn nicht siehst, überprüfe Deinen Spam-Ordner.',
+		ContinueButton: 'Weiter',
+		ContinueWithProviderButton: 'Weiter mit {provider}',
+		SignInWithProviderButton: 'Einloggen mit {provider}',
+		OrContinueWithEmailTitle: 'Oder weiter mit E-Mail',
+		DontHaveAnAccountTitle: 'Du hast noch kein Konto?',
+		SignUpInsteadButton: 'Stattdessen registrieren',
+		SignInButton: 'Einloggen',
+		SignOutButton: 'Ausloggen'
 	},
 	Pro: {
-		PageTitle: 'Become a Pro',
+		PageTitle: 'Auf Pro upgraden',
 		PageParagraph:
-			"Unlock all features of Stablecog and support the project. Without the pro members, Stablecog wouldn't be able to stay completely open-source and offer free generations to everyone.",
-		ProPlanTitle: 'Pro',
-		PageTitleAlreadyPro: 'Already a Pro!',
+			'Schalte alle Funktionen von Stablecog frei und unterstütze das Projekt. Ohne die Pro Mitglieder wäre Stablecog nicht in der Lage, völlig Open-Source zu bleiben und es für alle kostenlos anzubieten.',
+		PageTitleAlreadyPro: 'Du bist schon ein Pro!',
 		PageParagraphAlreadyPro:
-			'You are already a pro member. Thank you for supporting the project! Go ahead and enjoy Stablecog, and consider sharing it with your friends.',
+			'Du bist bereits Pro-Mitglied. Danke, dass du das Projekt unterstützt! Viel Spaß mit Stablecog, und erwäge es, es mit deinen Freunden teilen.',
+		ProPlanTitle: 'Pro',
 		Features: {
-			FullSpeed: 'Full speed without set limits',
-			ImageDimensions: 'Different image dimensions',
-			Upscale: 'Upscale images',
-			Steps: 'Different inference steps',
-			MoreModels: 'More models',
-			MoreSchedulers: 'More schedulers',
-			SavedToCloud: 'Generations saved to the cloud',
-			Upcoming: 'Upcoming features',
-			CommercialUse: 'Commercial Use'
+			FullSpeed: 'Volle Geschwindigkeit ohne festgelegte Grenzwerte',
+			ImageDimensions: 'Verschiedene Bildgrößen',
+			Upscale: 'Bilder hochskalieren',
+			Steps: 'Verschiedene Inferenzschritte',
+			MoreModels: 'Mehr Modelle',
+			MoreSchedulers: 'Mehr scheduler',
+			SavedToCloud: 'Generierungen in der Cloud gespeichert',
+			Upcoming: 'Zukünftige Funktionen',
+			CommercialUse: 'Kommerzielle Nutzung'
 		},
-		Soon: '(soon)',
-		Month: '/month',
-		BecomeProButton: 'Become a Pro',
+		Soon: '(bald)',
+		Month: '/ Monat',
+		BecomeProButton: 'Auf Pro upgraden',
 		Success: {
-			PageTitle: "You're a Pro!",
+			PageTitle: 'Du bist ein Pro!',
 			PageParagraph:
-				'You now have access to everything Stablecog has to offer. If you have any questions, reach out to us on {platform}.'
+				'Jetzt hast Du Zugriff auf alles, was Stablecog zu bieten hat. Wenn Du irgendwelche Fragen hast, kontaktiere uns gerne auf {platform}.'
 		},
 		Cancel: {
-			PageTitle: "You've cancelled",
+			PageTitle: 'Du hast abgebrochen',
 			PageParagraph:
-				"You've cancelled the subscription process. If it was a mistake, you can try again."
+				'Du hast den Kaufvorgang abgebrochen. Wenn es ein Fehler war, kannst Du es erneut versuchen.'
 		},
 		Reason: {
-			ParagraphWidth: "That image width isn't available on the free plan.",
-			ParagraphHeight: "That image height isn't available on the free plan.",
-			ParagraphDimensions: "Those image dimensions aren't available on the free plan.",
-			ParagraphUpscale: "Upscale feature isn't available on the free plan.",
-			ParagraphInferenceSteps: "That inference steps setting isn't available on the free plan.",
-			ParagraphModel: "That AI model isn't available on the free plan.",
-			ParagraphScheduler: "That scheduler isn't available on the free plan.",
+			ParagraphWidth: 'Diese Bildbreite ist in der kostenlosen Version nicht verfügbar.',
+			ParagraphHeight: 'Diese Bildbreite ist in der kostenlosen Version nicht verfügbar.',
+			ParagraphDimensions: 'Diese Bildgröße ist in der kostenlosen Version nicht verfügbar.',
+			ParagraphUpscale: 'Die Hochskalen-Funktion ist in der kostenlosen Version nicht verfügbar.',
+			ParagraphInferenceSteps:
+				'Diese Inferenzschritte sind in der kostenlosen Version nicht verfügbar.',
+			ParagraphModel: 'Dieses KI-Modell ist in der kostenlosen Version nicht verfügbar.',
+			ParagraphScheduler: 'Dieser Scheduler ist in der kostenlosen Version nicht verfügbar.',
 			ParagraphWidthGeneration:
-				"That generation was created using an image width that isn't available on the free plan.",
+				'Diese Generierung wurde mit einer Bildbreite erzeugt, die in der kostenlosen Version nicht verfügbar ist.',
 			ParagraphHeightGeneration:
-				"That generation was created using an image height that isn't available on the free plan.",
+				'Diese Generierung wurde mit einer Bildhöhe erzeugt, die in der kostenlosen Version nicht verfügbar ist.',
 			ParagraphDimensionsGeneration:
-				"That generation was created using image dimensions that aren't available on the free plan.",
+				'Diese Generierung wurde mit einer Bildgröße erzeugt, die in der kostenlosen Version nicht verfügbar ist.',
 			ParagraphInferenceStepsGeneration:
-				"That generation was created using an inference steps setting that isn't available on the free plan.",
+				'Diese Generierung wurde mit Interferenzschritten erzeugt, die in der kostenlosen Version nicht verfügbar sind.',
 			ParagraphModelGeneration:
-				"That generation was created using an AI model that isn't available on the free plan.",
+				'Diese Generierung wurde mit einem KI-Modell erzeugt, das in der kostenlosen Version nicht verfügbar ist.',
 			ParagraphSchedulerGeneration:
-				"That generation was created using a scheduler that isn't available on the free plan."
+				'Diese Generierung wurde mit einem Scheduler erzeugt, der in der kostenlosen Version nicht verfügbar ist.'
 		},
 		Tier: {
 			Title: {
-				Free: 'Free',
+				Free: 'Kostenlos',
 				Pro: 'Pro'
 			},
 			Badge: {
-				Free: 'FREE',
+				Free: 'KOSTENLOS',
 				Pro: 'PRO'
 			}
 		}
 	},
 	Account: {
-		PageTitle: 'Account',
-		ManageSubscriptionButton: 'Manage Subscription',
-		ComparePlansButton: 'Compare Plans',
-		ManageAccountButton: 'Manage Account',
-		MyAccountButton: 'My Account',
-		SubscriptionPlanTitle: 'Plan',
-		RemainingImagesTitle: 'Remaining Images',
-		RemainingCreditsTitle: 'Remaining Credits',
-		RemainingTitle: 'Remaining',
+		PageTitle: 'Benutzerkonto',
+		ManageSubscriptionButton: 'Abonnements verwalten',
+		ComparePlansButton: 'Abonnements vergleichen',
+		ManageAccountButton: 'Benutzerkonto verwalten',
+		MyAccountButton: 'Mein Benutzerkonto',
+		SubscriptionPlanTitle: 'Abonnement',
+		RemainingImagesTitle: 'Verbleibende Bilder',
+		RemainingCreditsTitle: 'Verbleibendes Guthaben',
+		RemainingTitle: 'Verbleibend',
 		Subscription: {
-			UpdateSubscriptionTitle: 'Update Subscription',
-			ChangePlanTitle: 'Change Plan',
-			CurrentPlanTitle: 'Current Plan',
-			NewPlanTitle: 'New plan',
+			UpdateSubscriptionTitle: 'Abonnement erneuern',
+			ChangePlanTitle: 'Abonnement ändern',
+			CurrentPlanTitle: 'Aktuelles Abonnement',
+			NewPlanTitle: 'Neues Abonnement',
 			Downgrade: {
-				DowngradingToTitle: 'Downgrading to',
-				Explanation: 'Your existing credits will remain.'
+				DowngradingToTitle: 'Downgrade auf',
+				Explanation: 'Dein bestehendes Guthaben bleibt erhalten.'
 			},
 			Upgrade: {
-				UpgadingToTitle: 'Upgrading to',
-				Explanation: 'Your existing credits will remain.'
+				UpgadingToTitle: 'Upgraden auf',
+				Explanation: 'Dein bestehendes Guthaben bleibt erhalten.'
 			},
 			Failed: {
-				PageTitle: 'Failed to update',
-				PageParagraph: 'Something went wrong while changing your plan. Please try again.'
+				PageTitle: 'Update fehlgeschlagen',
+				PageParagraph:
+					'Beim Ändern des Abonnements ist etwas schiefgelaufen. Bitte versuche es erneut.'
 			},
 			Succeeded: {
-				PageTitle: 'Changed plan',
-				PageParagraph: 'Your plan has been changed successfully.'
+				PageTitle: 'Abonnement geändert',
+				PageParagraph: 'Dein Abonnement wurde erfolgreich geändert.'
 			}
 		},
 		ChangeEmail: {
-			PageTitle: 'Change Email',
-			PageParagraph: 'Enter a new email address for your account.',
-			ChangeEmailButton: 'Change Email',
+			PageTitle: 'E-Mail-Adresse ändern',
+			PageParagraph: 'Gib eine E-Mail-Adresse für dein Benutzerkonto ein.',
+			ChangeEmailButton: 'E-Mail-Adresse ändern',
 			NewEmailInput: {
-				Placeholder: 'New Email'
+				Placeholder: 'Neue E-Mail-Adresse'
 			},
-			PageTitleSentLink: 'Check your email',
+			PageTitleSentLink: 'Überprüfe Deinen E-Mail-Posteingang',
 			PageParagraphSentLink:
-				"We've sent links to both addresses. Confirm both to change your account's email address.",
-			PageTitleConfirmOtherEmail: 'Confirm Other Email',
+				'Wir haben Links zu beiden Adressen gesendet. Bestätige sie beide, um die E-Mail-Adresse Deines Kontos zu ändern.',
+			PageTitleConfirmOtherEmail: 'Andere E-Mail bestätigen',
 			PageParagraphConfirmOtherEmail:
-				"We've also sent a link to your other email address. Confirm that one as well to complete the process."
+				'Wir haben auch einen Link an Ihre andere E-Mail-Adresse gesendet. Bestätige sie, damit Du den Vorgang ebenfalls abschließen kannst.'
 		}
 	},
 	ForgotPassword: {
-		PageTitle: 'Reset Password',
-		PageParagraph: 'We will send a 6-digit code to your email for resetting your password.',
-		SendResetCodeButton: 'Send Code',
-		PageTitleConfirmCode: 'Confirm',
-		PageTitleConfirmCodeAlt: 'Check Your Email',
-		PageParagraphConfirmCode: "We've emailed you a 6-digit code. Enter it below to continue.",
-		ConfirmCodeButton: 'Confirm',
-		PageTitleNewPassword: 'New Password',
-		PageParagraphNewPassword: 'Enter a new password for your account.',
+		PageTitle: 'Passwort zurücksetzen',
+		PageParagraph:
+			'Wir senden Dir per E-Mail einen 6-stelligen Code, um Dein Passwort zurückzusetzen.',
+		SendResetCodeButton: 'Code senden',
+		PageTitleConfirmCode: 'Bestätigen',
+		PageTitleConfirmCodeAlt: 'Überprüfe Deinen E-Mail-Posteingang',
+		PageParagraphConfirmCode:
+			'Wir haben Dir einen 6-stelligen Code per E-Mail zugeschickt. Gib ihn unten ein, um Dein Konto zu bestätigen.',
+		ConfirmCodeButton: 'Bestätigen',
+		PageTitleNewPassword: 'Neues Passwort',
+		PageParagraphNewPassword: 'Gib ein neues Passwort für dein Konto ein.',
 		NewPasswordInput: {
-			Placeholder: 'New Password'
+			Placeholder: 'Neues Passwort'
 		},
-		SetNewPasswordButton: 'Set New Password',
-		PageTitleSuccess: 'Done!',
-		PageParagraphSuccess: 'Your password has been successfully reset.',
-		ForgotPasswordButton: 'Forgot Password?'
+		SetNewPasswordButton: 'Neues Passwort setzen',
+		PageTitleSuccess: 'Geschafft!',
+		PageParagraphSuccess: 'Dein Passwort wurde erfolgreich zurückgesetzt.',
+		ForgotPasswordButton: 'Passwort vergessen?'
 	},
 	FeaturedOn: {
-		PageTitle: 'We Are Featured On'
+		PageTitle: 'Wir sind gefeaturt auf'
 	},
 	Gallery: {
-		PageTitle: 'Gallery',
-		PageParagraph: 'Check out what others have created with Stablecog.',
+		PageTitle: 'Galerie',
+		PageParagraph: 'Schau Dir an, was andere mit Stablecog erstellt haben.',
 		SearchInput: {
-			Title: 'Search'
+			Title: 'Suche'
 		},
-		SearchingTitle: 'Searching',
-		NoMatchingGenerationTitle: 'No matching generation'
+		SearchingTitle: 'Suchen...',
+		NoMatchingGenerationTitle: 'Nichts Passendes gefunden'
 	},
 	Pricing: {
-		PlansTitle: 'Plans',
-		PlansParagraph: 'Choose a plan that works for you.',
-		CreditPacksTitle: 'Credit Packs',
-		CreditPacksParagraph: 'Need more? You can purchase additional credits anytime.',
-		SubscribeButton: 'Subscribe',
-		SubscribedButton: 'Subscribed',
-		UpgradeButton: 'Upgrade',
-		DowngradeButton: 'Downgrade',
-		PurchaseButton: 'Purchase',
-		BuyCreditsButton: 'Buy Credits',
-		MonthlyTitle: 'Monthly',
-		YearlyTitle: 'Yearly',
-		SlashMonth: '/month',
+		PlansTitle: 'Abonnements',
+		PlansParagraph: 'Wähle ein Abonnement, das für dich geeignet ist.',
+		CreditPacksTitle: 'Guthaben-Pakete',
+		CreditPacksParagraph: 'Brauchst Du mehr? Du kannst jederzeit zusätzliches Guthaben erwerben.',
+		SubscribeButton: 'Abonnieren',
+		SubscribedButton: 'Abonniert',
+		UpgradeButton: 'Upgraden',
+		DowngradeButton: 'Downgraden',
+		PurchaseButton: 'Kostenpflichtig Kaufen',
+		BuyCreditsButton: 'Guthaben kaufen',
+		MonthlyTitle: 'Monatlich',
+		YearlyTitle: 'Jährlich',
+		SlashMonth: '/ Monat',
 		Plans: {
-			FreeTitle: 'Free',
+			FreeTitle: 'Gratis',
 			StarterTitle: 'Starter',
 			ProTitle: 'Pro',
 			UltimateTitle: 'Ultimate'
 		},
 		CreditPacks: {
-			MediumTitle: 'Medium Pack',
-			LargeTitle: 'Large Pack'
+			MediumTitle: 'Mittleres Paket',
+			LargeTitle: 'Großes Paket'
 		},
 		Features: {
-			MonthlyImages: '{count} images per month.',
-			MonthlyGenerations: '{count} generations per month.',
-			Images: '{count} images.',
-			Generations: '{count} generations.',
-			NeverExpires: 'Never expires.',
-			CommercialUse: 'Commercial use.',
-			ImagesArePublic: 'Images are public.',
-			ImagesArePrivate: 'Images are private.'
+			MonthlyImages: '{count} Bilder pro Monat.',
+			MonthlyGenerations: '{count} Generierungen pro Monat.',
+			Images: '%{count} Bilder.',
+			Generations: '{count} Generierungen.',
+			NeverExpires: 'Läuft nie ab.',
+			CommercialUse: 'Kommerzielle Nutzung.',
+			ImagesArePublic: 'Bilder sind öffentlich.',
+			ImagesArePrivate: 'Bilder sind privat.'
 		},
 		Badges: {
-			Recommended: 'Recommended',
-			MostPopular: 'Most Popular',
-			BestValue: 'Best Value'
+			Recommended: 'Empfohlen',
+			MostPopular: 'Am beliebtesten',
+			BestValue: 'Bestes Preis-Leistungs-Verhältnis'
 		},
 		Purchase: {
 			Succeeded: {
-				PageTitle: "You're all set!",
+				PageTitle: 'Es kann los gehen!',
 				PageParagraph:
-					'Thank you for your purchase. If you have any questions, feel free to reach out to us on {platform}.'
+					'Vielen Dank für Deinen Einkauf. Wenn Du Fragen hast, zögere nicht, uns auf {platform} zu kontaktieren.'
 			},
 			Cancelled: {
-				PageTitle: 'Purchase Cancelled',
+				PageTitle: 'Kauf abgebrochen',
 				PageParagraph:
-					'You have cancelled the purchase process. If it was a mistake, you can try again.'
+					'Du hast den Kaufvorgang abgebrochen. Wenn es ein Fehler war, kannst Du es erneut versuchen.'
 			}
 		}
 	},
 	LowOnCreditsCard: {
-		Title: "You're low on credits ({remainingCredits})",
+		Title: 'Du hast wenig Guthaben ({remainingCredits})',
 		FreeParagraph:
-			'We give all active users free credits daily. You can get more by subscribing to a plan or by participating in our events.',
-		HighestPlanParagraph: 'You can buy a credit pack.',
-		OtherPlansParagraph: 'You can upgrade to a higher plan or buy a credit pack.'
+			'Täglich gewähren wir allen aktiven Nutzern kostenloses Guthaben. Du kannst mehr erhalten, indem Du ein Abonnement buchst oder an unseren Veranstaltungen teilnimmst.',
+		HighestPlanParagraph: 'Du kannst ein Guthabenpaket kaufen.',
+		OtherPlansParagraph:
+			'Du kannst auf ein höheres Abonnement upgraden oder ein Guthaben-Paket kaufen.'
 	},
 	Support: {
 		PageTitle: 'Support',
@@ -537,8 +543,8 @@ const de: Translation = {
 			"If you have any questions, please reach out to us using the links below and we'll answer them as soon as possible."
 	},
 	UnderDevelopment: {
-		PageTitle: "We'll be back soon!",
-		PageParagraph: "We're upgrading our systems. We'll be back in a couple of hours."
+		PageTitle: 'Wir sind bald wieder da!',
+		PageParagraph: 'Wir upgraden unsere Systeme. Wir sind in ein paar Stunden wieder da.'
 	}
 };
 export default de;

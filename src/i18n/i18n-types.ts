@@ -162,11 +162,11 @@ type RootTranslation = {
 			/**
 			 * A​l​l
 			 */
-			All: string
+			AllTitle: string
 			/**
 			 * F​a​v​o​r​i​t​e​s
 			 */
-			Favorites: string
+			FavoritesTitle: string
 		}
 		/**
 		 * Y​o​u​ ​h​a​v​e​n​'​t​ ​g​e​n​e​r​a​t​e​d​ ​a​n​y​ ​i​m​a​g​e​s​ ​y​e​t​.
@@ -1715,11 +1715,11 @@ export type TranslationFunctions = {
 			/**
 			 * All
 			 */
-			All: () => LocalizedString
+			AllTitle: () => LocalizedString
 			/**
 			 * Favorites
 			 */
-			Favorites: () => LocalizedString
+			FavoritesTitle: () => LocalizedString
 		}
 		/**
 		 * You haven't generated any images yet.

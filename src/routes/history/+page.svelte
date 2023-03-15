@@ -76,14 +76,15 @@
 			: false
 	}`;
 
-	const userGalleryTabs: TTab<TUserGalleryView>[] = [
+	let userGalleryTabs: TTab<TUserGalleryView>[];
+	$: userGalleryTabs = [
 		{
-			label: 'All',
+			label: $LL.History.Views.AllTitle(),
 			value: 'all',
 			icon: IconFolderOutlined
 		},
 		{
-			label: 'Favorites',
+			label: $LL.History.Views.FavoritesTitle(),
 			value: 'favorites',
 			icon: IconStarOutlined
 		}
@@ -157,7 +158,9 @@
 				>
 					<div class="flex gap-2 items-center px-1.5 md:px-3">
 						<p class="font-bold text-xl md:text-2xl">
-							{$LL.History.GenerationsTitle()}
+							{$userGalleryCurrentView === 'favorites'
+								? $LL.History.Views.FavoritesTitle()
+								: $LL.History.GenerationsTitle()}
 						</p>
 						<p class="text-sm md:text-base text-c-on-bg/50 font-semibold mt-0.5 md:mt-1">
 							({totalOutputs !== undefined ? totalOutputs : '...'})
