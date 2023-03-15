@@ -113,7 +113,7 @@
 		class="w-full h-full absolute left-0 top-0 bg-c-bg-secondary/85 z-10"
 	/>
 {/if}
-{#if (cardType === 'generate' || cardType === 'history') && $userGalleryCurrentView === 'favorites' && !generation.selected_output.is_favorited}
+{#if cardType === 'history' && $userGalleryCurrentView === 'favorites' && !generation.selected_output.is_favorited}
 	<div
 		in:fade|local={{ duration: 300, easing: quadOut }}
 		class="w-full h-full absolute left-0 top-0 bg-c-bg-secondary/85 z-10 pointer-events-none"
