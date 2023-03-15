@@ -191,7 +191,7 @@
 	</div>
 	<div
 		style="top: {$navbarHeight}px"
-		class="w-[calc(100%+1.75rem)] -mx-3.5 py-2 flex justify-center sticky z-50 transition {scrollDirection ===
+		class="w-[calc(100%+1.75rem)] -mx-3.5 py-2 flex justify-center sticky z-40 transition {scrollDirection ===
 		'up'
 			? 'translate-y-0 opacity-100'
 			: '-translate-y-22 pointer-events-none opacity-0'}"
