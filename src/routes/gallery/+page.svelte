@@ -162,7 +162,7 @@
 			<IconSearch slot="icon" class="w-full h-full" />
 		</Input>
 	</div>
-	<div class="w-full px-2 py-3 relative flex flex-col flex-1">
+	<div class="w-full px-1 pb-3 md:pt-3 relative flex flex-col flex-1">
 		{#if $galleryGenerationFullOutputsQuery?.isInitialLoading}
 			<div
 				class="w-full flex flex-col text-c-on-bg/60 flex-1 py-6 px-4 justify-center items-center text-center"

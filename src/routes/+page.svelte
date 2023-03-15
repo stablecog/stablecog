@@ -210,7 +210,7 @@
 			{:else if $generations && $generations.length > 0 && $generations[0].outputs && $generations[0].status === 'succeeded'}
 				<div
 					transition:expandCollapse|local={{ duration: 300 }}
-					class="w-full flex items-start justify-center rounded-xl origin-top relative z-0 px-2"
+					class="w-full flex items-start justify-center rounded-xl origin-top relative z-0 px-1"
 				>
 					<div
 						class="w-full max-w-7xl flex flex-wrap items-start justify-center md:px-4 py-3 md:pt-0"

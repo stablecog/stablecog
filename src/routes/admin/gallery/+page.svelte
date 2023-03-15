@@ -166,7 +166,7 @@
 
 <svelte:window on:keydown={onKeyDown} />
 
-<div class="w-full flex-1 flex flex-col items-center px-2 gap-2 md:py-6 relative">
+<div class="w-full flex-1 flex flex-col items-center px-1 gap-2 md:py-6 relative">
 	{#if !$page.data.session?.user.id}
 		<div class="w-full flex-1 max-w-7xl flex justify-center px-2 py-4 md:py-2">
 			<div class="my-auto flex flex-col">
@@ -187,97 +187,100 @@
 				</div>
 			</div>
 		</div>
-		<div
-			class="top-1 w-full max-w-7xl flex flex-wrap gap-3 md:gap-4 p-2 md:p-3 shadow-lg shadow-c-shadow/[var(--o-shadow-strong)] 
-			rounded-2xl bg-c-bg sticky z-10 -mt-2 border-2 border-c-bg-secondary"
-		>
-			<SubtleButton
-				class="z-10"
-				onClick={() => isAdminGalleryEditActive.set(!$isAdminGalleryEditActive)}
+		<div class="top-1 px-0.5 w-full max-w-7xl sticky z-10 -mt-2">
+			<div
+				class="w-full flex flex-wrap gap-3 md:gap-4 p-2 md:p-3 shadow-lg shadow-c-shadow/[var(--o-shadow-strong)] 
+				rounded-2xl bg-c-bg border-2 border-c-bg-secondary"
 			>
-				<div class="flex items-center justify-center gap-4 px-1 md:px-2">
-					<p class="text-sm md:text-base">
-						{$LL.Admin.EditButton()}
-					</p>
-					<div class="-mr-1">
-						<ToggleIndicator isToggled={$isAdminGalleryEditActive} />
-					</div>
-				</div>
-			</SubtleButton>
-			{#if $isAdminGalleryEditActive}
-				<div
-					transition:fly|local={{ opacity: 0, x: -100, easing: quadOut, duration: 150 }}
-					class="flex flex-wrap gap-3 md:gap-4"
+				<SubtleButton
+					class="z-10"
+					onClick={() => isAdminGalleryEditActive.set(!$isAdminGalleryEditActive)}
 				>
-					{#if $adminGalleryFilter !== 'approved'}
-						<SubtleButton
-							disabled={approveOrRejectStatus === 'rejecting'}
-							loading={approveOrRejectStatus === 'approving'}
-							onClick={() => doActionOnItems('approve')}
-						>
-							<Morpher morphed={approveOrRejectStatus === 'approving'}>
-								<p
-									slot="item-0"
-									class="text-sm md:text-base text-c-success px-1 md:px-3 {approveOrRejectStatus !==
-									'approving'
-										? 'opacity-100 scale-100'
-										: 'opacity-0 scale-50'}"
-								>
-									{$LL.Admin.ApproveButton()}<span
-										class="text-sm ml-1 font-normal text-c-success/75"
-										>({$adminGallerySelectedIds.length})</span
-									>
-								</p>
-								<div slot="item-1">
-									<IconAnimatedSpinner class="w-7 h-7 text-c-success" />
-								</div>
-							</Morpher>
-						</SubtleButton>
-					{/if}
-					{#if $adminGalleryFilter !== 'rejected'}
-						<SubtleButton
-							disabled={approveOrRejectStatus === 'approving'}
-							loading={approveOrRejectStatus === 'rejecting'}
-							onClick={() => doActionOnItems('reject')}
-						>
-							<Morpher morphed={approveOrRejectStatus === 'rejecting'}>
-								<p
-									slot="item-0"
-									class="text-sm md:text-base text-c-danger px-1 md:px-3 {approveOrRejectStatus !==
-									'rejecting'
-										? 'opacity-100 scale-100'
-										: 'opacity-0 scale-50'}"
-								>
-									{$LL.Admin.RejectButton()}<span class="text-sm ml-1 font-normal text-c-danger/75"
-										>({$adminGallerySelectedIds.length})</span
-									>
-								</p>
-								<div slot="item-1">
-									<IconAnimatedSpinner class="w-7 h-7 text-c-danger" />
-								</div>
-							</Morpher>
-						</SubtleButton>
-					{/if}
-				</div>
-			{/if}
-			<div class="w-full md:w-64 max-w-full flex ml-auto">
-				<TabLikeDropdown
-					class="w-full"
-					name="Filter"
-					items={[
-						{ label: $LL.Admin.Gallery.StatusDropdown.Submitted(), value: 'submitted' },
-						{ label: $LL.Admin.Gallery.StatusDropdown.Approved(), value: 'approved' },
-						{ label: $LL.Admin.Gallery.StatusDropdown.Rejected(), value: 'rejected' },
-						...(isSuperAdmin($userSummary?.roles || [])
-							? [{ label: $LL.Admin.Gallery.StatusDropdown.Private(), value: 'not_submitted' }]
-							: [])
-					]}
-					bind:value={$adminGalleryFilter}
-				>
-					<div slot="title" class="p-3.5 flex items-center justify-center">
-						<IconFunnel class="w-6 h-6 text-c-on-bg/35" />
+					<div class="flex items-center justify-center gap-4 px-1 md:px-2">
+						<p class="text-sm md:text-base">
+							{$LL.Admin.EditButton()}
+						</p>
+						<div class="-mr-1">
+							<ToggleIndicator isToggled={$isAdminGalleryEditActive} />
+						</div>
 					</div>
-				</TabLikeDropdown>
+				</SubtleButton>
+				{#if $isAdminGalleryEditActive}
+					<div
+						transition:fly|local={{ opacity: 0, x: -100, easing: quadOut, duration: 150 }}
+						class="flex flex-wrap gap-3 md:gap-4"
+					>
+						{#if $adminGalleryFilter !== 'approved'}
+							<SubtleButton
+								disabled={approveOrRejectStatus === 'rejecting'}
+								loading={approveOrRejectStatus === 'approving'}
+								onClick={() => doActionOnItems('approve')}
+							>
+								<Morpher morphed={approveOrRejectStatus === 'approving'}>
+									<p
+										slot="item-0"
+										class="text-sm md:text-base text-c-success px-1 md:px-3 {approveOrRejectStatus !==
+										'approving'
+											? 'opacity-100 scale-100'
+											: 'opacity-0 scale-50'}"
+									>
+										{$LL.Admin.ApproveButton()}<span
+											class="text-sm ml-1 font-normal text-c-success/75"
+											>({$adminGallerySelectedIds.length})</span
+										>
+									</p>
+									<div slot="item-1">
+										<IconAnimatedSpinner class="w-7 h-7 text-c-success" />
+									</div>
+								</Morpher>
+							</SubtleButton>
+						{/if}
+						{#if $adminGalleryFilter !== 'rejected'}
+							<SubtleButton
+								disabled={approveOrRejectStatus === 'approving'}
+								loading={approveOrRejectStatus === 'rejecting'}
+								onClick={() => doActionOnItems('reject')}
+							>
+								<Morpher morphed={approveOrRejectStatus === 'rejecting'}>
+									<p
+										slot="item-0"
+										class="text-sm md:text-base text-c-danger px-1 md:px-3 {approveOrRejectStatus !==
+										'rejecting'
+											? 'opacity-100 scale-100'
+											: 'opacity-0 scale-50'}"
+									>
+										{$LL.Admin.RejectButton()}<span
+											class="text-sm ml-1 font-normal text-c-danger/75"
+											>({$adminGallerySelectedIds.length})</span
+										>
+									</p>
+									<div slot="item-1">
+										<IconAnimatedSpinner class="w-7 h-7 text-c-danger" />
+									</div>
+								</Morpher>
+							</SubtleButton>
+						{/if}
+					</div>
+				{/if}
+				<div class="w-full md:w-64 max-w-full flex ml-auto">
+					<TabLikeDropdown
+						class="w-full"
+						name="Filter"
+						items={[
+							{ label: $LL.Admin.Gallery.StatusDropdown.Submitted(), value: 'submitted' },
+							{ label: $LL.Admin.Gallery.StatusDropdown.Approved(), value: 'approved' },
+							{ label: $LL.Admin.Gallery.StatusDropdown.Rejected(), value: 'rejected' },
+							...(isSuperAdmin($userSummary?.roles || [])
+								? [{ label: $LL.Admin.Gallery.StatusDropdown.Private(), value: 'not_submitted' }]
+								: [])
+						]}
+						bind:value={$adminGalleryFilter}
+					>
+						<div slot="title" class="p-3.5 flex items-center justify-center">
+							<IconFunnel class="w-6 h-6 text-c-on-bg/35" />
+						</div>
+					</TabLikeDropdown>
+				</div>
 			</div>
 		</div>
 		<div class="w-full flex-1 flex flex-col">

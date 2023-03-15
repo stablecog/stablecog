@@ -142,7 +142,7 @@
 
 <svelte:window on:keydown={onKeyDown} />
 
-<div class="w-full flex-1 flex flex-col items-center px-2 gap-2 md:py-6 md:px-8">
+<div class="w-full flex-1 flex flex-col items-center px-1 gap-2 md:py-6 md:px-8">
 	{#if !$page.data.session?.user.id}
 		<div class="w-full flex-1 max-w-7xl flex justify-center px-2 py-4 md:py-2">
 			<div class="my-auto flex flex-col">
@@ -151,12 +151,12 @@
 			</div>
 		</div>
 	{:else}
-		<div class="w-full max-w-7xl flex justify-center px-1.5">
+		<div class="w-full max-w-7xl flex justify-center px-1">
 			<div class="w-full flex flex-wrap gap-4 items-center justify-between py-2 md:py-3 rounded-xl">
 				<div
 					class="w-full flex flex-col md:flex-row gap-5 items-start md:items-center justify-start md:justify-between"
 				>
-					<div class="flex gap-2 items-center px-1.5 md:px-3">
+					<div class="flex gap-2 items-center px-2 md:px-3">
 						<p class="font-bold text-xl md:text-2xl">
 							{$userGalleryCurrentView === 'favorites'
 								? $LL.History.Views.FavoritesTitle()
