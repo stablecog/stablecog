@@ -204,9 +204,7 @@
 {/if}
 {#if !generation.selected_output.is_deleted}
 	<AnchorOrDiv
-		href={modalShouldOpen && cardType === 'gallery'
-			? `/gallery?output=${generation.selected_output.id}`
-			: undefined}
+		href={cardType === 'gallery' ? `/gallery?output=${generation.selected_output.id}` : undefined}
 		anchorPreventDefault={cardType === 'gallery'}
 		onClick={(e) => {
 			if (!modalShouldOpen) {
