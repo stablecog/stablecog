@@ -167,7 +167,7 @@
 						</p>
 					</div>
 					<div
-						class="w-full md:w-auto flex flex-1 items-center justify-end gap-4 -mt-1 -mb-2 md:-my-2"
+						class="w-full md:w-auto flex flex-1 items-center justify-end gap-4 px-0.5 -mt-1 -mb-2 md:-my-2"
 					>
 						<TabBar
 							dontScale
