@@ -61,32 +61,29 @@
 								width={outputs[item.key].generation.width}
 								height={outputs[item.key].generation.height}
 							/>
-							{#if $activeGeneration === undefined || $activeGeneration.selected_output.id !== outputs[item.key].id}
-								<div
-									transition:fly|local={imageTransitionProps}
-									class="absolute left-0 top-0 w-full h-full rounded-xl bg-c-bg-secondary transition border-4 {(cardType ===
-										'history' &&
-										$isUserGalleryEditActive &&
-										$userGalleryActionableItems.map((i) => i.id).includes(outputs[item.key].id)) ||
-									(cardType === 'admin-gallery' &&
-										$isAdminGalleryEditActive &&
-										$adminGalleryActionableItems.map((i) => i.id).includes(outputs[item.key].id))
-										? 'border-c-primary'
-										: 'border-c-bg-secondary'}
+							<div
+								class="absolute left-0 top-0 w-full h-full rounded-xl bg-c-bg-secondary transition border-4 {(cardType ===
+									'history' &&
+									$isUserGalleryEditActive &&
+									$userGalleryActionableItems.map((i) => i.id).includes(outputs[item.key].id)) ||
+								(cardType === 'admin-gallery' &&
+									$isAdminGalleryEditActive &&
+									$adminGalleryActionableItems.map((i) => i.id).includes(outputs[item.key].id))
+									? 'border-c-primary'
+									: 'border-c-bg-secondary'}
 										 z-0 overflow-hidden shadow-lg shadow-c-shadow/[var(--o-shadow-normal)]"
-								>
-									{#if outputs[item.key].generation.outputs !== undefined}
-										<GenerationImage
-											{cardType}
-											useUpscaledImage={false}
-											generation={{
-												...outputs[item.key].generation,
-												selected_output: outputs[item.key]
-											}}
-										/>
-									{/if}
-								</div>
-							{/if}
+							>
+								{#if outputs[item.key].generation.outputs !== undefined}
+									<GenerationImage
+										{cardType}
+										useUpscaledImage={false}
+										generation={{
+											...outputs[item.key].generation,
+											selected_output: outputs[item.key]
+										}}
+									/>
+								{/if}
+							</div>
 						</div>
 					</div>
 				{/each}

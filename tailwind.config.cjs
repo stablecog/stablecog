@@ -110,6 +110,12 @@ module.exports = {
 				270: '270deg'
 			},
 			fontSize: {
+				'1.375xl': [
+					'1.75rem',
+					{
+						lineHeight: '1.875rem'
+					}
+				],
 				'3.5xl': [
 					'2rem',
 					{

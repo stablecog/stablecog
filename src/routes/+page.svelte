@@ -219,19 +219,16 @@
 							<div class="p-0.5 w-1/2 lg:w-1/4 max-w-xs lg:max-w-auto">
 								<div class="w-full h-auto relative">
 									<ImagePlaceholder width={$generations[0].width} height={$generations[0].height} />
-									{#if $activeGeneration === undefined || $activeGeneration.selected_output.id !== output.id}
-										<div
-											class="absolute w-full h-full left-0 top-0 rounded-2xl bg-c-bg-secondary z-0 overflow-hidden border-4 
-										shadow-lg shadow-c-shadow/[var(--o-shadow-normal)] border-c-bg-secondary group"
-											transition:fly|local={imageTransitionProps}
-										>
-											<GenerationImage
-												generation={{ ...$generations[0], selected_output: output }}
-												useUpscaledImage
-												cardType="generate"
-											/>
-										</div>
-									{/if}
+									<div
+										class="absolute w-full h-full left-0 top-0 rounded-2xl bg-c-bg-secondary z-0 overflow-hidden border-4 
+											shadow-lg shadow-c-shadow/[var(--o-shadow-normal)] border-c-bg-secondary group"
+									>
+										<GenerationImage
+											generation={{ ...$generations[0], selected_output: output }}
+											useUpscaledImage
+											cardType="generate"
+										/>
+									</div>
 								</div>
 							</div>
 						{/each}

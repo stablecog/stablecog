@@ -8,7 +8,7 @@
 	import MetaTag from '$components/MetaTag.svelte';
 	import SignInCard from '$components/SignInCard.svelte';
 	import TabBar from '$components/tabBars/TabBar.svelte';
-	import LL from '$i18n/i18n-svelte';
+	import LL, { locale } from '$i18n/i18n-svelte';
 	import { canonicalUrl } from '$ts/constants/main';
 	/* import {
 		doesUserHaveLegacyGenerations,
@@ -156,14 +156,14 @@
 				<div
 					class="w-full flex flex-col md:flex-row gap-5 items-start md:items-center justify-start md:justify-between"
 				>
-					<div class="flex gap-2 items-center px-2 md:px-3">
+					<div class="flex gap-2 items-center px-3 md:px-3">
 						<p class="font-bold text-xl md:text-2xl">
 							{$userGalleryCurrentView === 'favorites'
 								? $LL.History.Views.FavoritesTitle()
 								: $LL.History.GenerationsTitle()}
 						</p>
 						<p class="text-sm md:text-base text-c-on-bg/50 font-semibold mt-0.5 md:mt-1">
-							({totalOutputs !== undefined ? totalOutputs : '...'})
+							({totalOutputs !== undefined ? totalOutputs.toLocaleString($locale) : '...'})
 						</p>
 					</div>
 					<div class="w-full md:w-auto flex flex-1 items-center justify-end gap-4 -my-2">

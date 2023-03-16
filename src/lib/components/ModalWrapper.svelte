@@ -11,14 +11,11 @@
 </script>
 
 <div
-	transition:fade|local={modalBgTransitionProps}
 	style="width: {$windowWidth}px; height: {$windowHeight}px;"
 	class="flex flex-col items-center fixed left-0 
     top-0 bg-c-barrier/90 z-[100]"
 />
 <div
-	in:fly|local={modalInTransitionProps}
-	out:fly|local={modalOutTransitionProps}
 	style="width: {$windowWidth}px; height: {$windowHeight}px;"
 	class="flex flex-col items-center fixed left-0 top-0 z-[101] overflow-auto {hasPadding
 		? 'px-4 py-16'
