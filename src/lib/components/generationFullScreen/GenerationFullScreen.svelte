@@ -57,6 +57,7 @@
 	import { useQueryClient } from '@tanstack/svelte-query';
 	import type { TUserGenerationFullOutputsPage } from '$ts/queries/userGenerations';
 	import IconFavorite from '$components/icons/IconFavorite.svelte';
+	import { lastClickedOutputId } from '$ts/stores/lastClickedOutputId';
 
 	export let generation: TGenerationWithSelectedOutput;
 	export let modalType: TGenerationFullScreenModalType;
@@ -344,6 +345,7 @@
 
 	onMount(() => {
 		setSidebarWrapperVars();
+		lastClickedOutputId.set(undefined);
 	});
 </script>
 

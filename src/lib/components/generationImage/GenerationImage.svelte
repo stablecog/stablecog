@@ -7,7 +7,6 @@
 	import IconCancelCircle from '$components/icons/IconCancelCircle.svelte';
 	import IconChatBubbleCancel from '$components/icons/IconChatBubbleCancel.svelte';
 	import IconNoImage from '$components/icons/IconNoImage.svelte';
-	import IconStarOutlined from '$components/icons/IconStarOutlined.svelte';
 	import IconTick from '$components/icons/IconTick.svelte';
 	import IconTrashcan from '$components/icons/IconTrashcan.svelte';
 	import { doesContainTarget } from '$ts/helpers/doesContainTarget';
@@ -19,6 +18,8 @@
 		adminGallerySelectedIds
 	} from '$ts/stores/admin/gallery';
 	import { advancedModeApp } from '$ts/stores/advancedMode';
+	import { isTouchscreen } from '$ts/stores/isTouchscreen';
+	import { lastClickedOutputId } from '$ts/stores/lastClickedOutputId';
 	import {
 		isUserGalleryEditActive,
 		userGalleryActionableItems,
@@ -94,6 +95,10 @@
 	$: isGalleryEditActive =
 		(cardType === 'admin-gallery' && $isAdminGalleryEditActive) ||
 		(cardType === 'history' && $isUserGalleryEditActive);
+
+	$: modalShouldOpen = !$isTouchscreen || $lastClickedOutputId === generation.selected_output.id;
+
+	$: overlayShouldShow = $isTouchscreen && $lastClickedOutputId === generation.selected_output.id;
 
 	$: logProps = {
 		'SC - Output Id': generation.selected_output.id,
@@ -199,9 +204,15 @@
 {/if}
 {#if !generation.selected_output.is_deleted}
 	<AnchorOrDiv
-		href={cardType === 'gallery' ? `/gallery?output=${generation.selected_output.id}` : undefined}
+		href={modalShouldOpen && cardType === 'gallery'
+			? `/gallery?output=${generation.selected_output.id}`
+			: undefined}
 		anchorPreventDefault={cardType === 'gallery'}
 		onClick={(e) => {
+			if (!modalShouldOpen) {
+				lastClickedOutputId.set(generation.selected_output.id);
+				return;
+			}
 			if (doesContainTarget(e.target, [rightButtonContainer])) {
 				return;
 			}
@@ -216,7 +227,9 @@
 		<div class="w-full h-16" />
 		<div
 			class="w-full max-h-[max(4rem,min(35%,5.3rem))] transition bg-c-bg/90 text-xs relative z-0 overflow-hidden
-			translate-y-full group-focus-within:translate-y-0 group-hover:translate-y-0 pointer-events-none"
+			 pointer-events-none {!$isTouchscreen
+				? 'group-focus-within:translate-y-0 group-hover:translate-y-0'
+				: ''} {overlayShouldShow ? 'translate-y-0' : 'translate-y-full'}"
 		>
 			<div
 				class="{scrollPrompt
@@ -249,7 +262,9 @@
 			<div
 				bind:this={rightButtonContainer}
 				class="flex flex-row items-end justify-start transition transform 
-				translate-x-full group-focus-within:translate-x-0 group-hover:translate-x-0 pointer-events-auto"
+				pointer-events-auto {!$isTouchscreen
+					? 'group-focus-within:translate-x-0 group-hover:translate-x-0'
+					: ''} {overlayShouldShow ? 'translate-x-0' : 'translate-x-full'}"
 			>
 				{#if cardType !== 'admin-gallery'}
 					<CopyButton

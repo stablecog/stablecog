@@ -157,7 +157,7 @@
 					class="w-full flex flex-col md:flex-row gap-5 items-start md:items-center justify-start md:justify-between"
 				>
 					<div class="flex gap-2 items-center px-3 md:px-3">
-						<p class="font-bold text-xl md:text-2xl">
+						<p class="font-bold text-1.5xl md:text-2xl">
 							{$userGalleryCurrentView === 'favorites'
 								? $LL.History.Views.FavoritesTitle()
 								: $LL.History.GenerationsTitle()}
@@ -166,7 +166,9 @@
 							({totalOutputs !== undefined ? totalOutputs.toLocaleString($locale) : '...'})
 						</p>
 					</div>
-					<div class="w-full md:w-auto flex flex-1 items-center justify-end gap-4 -my-2">
+					<div
+						class="w-full md:w-auto flex flex-1 items-center justify-end gap-4 -mt-1 -mb-2 md:-my-2"
+					>
 						<TabBar
 							dontScale
 							hasTitle={false}

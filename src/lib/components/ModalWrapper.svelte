@@ -1,11 +1,5 @@
 <script lang="ts">
-	import {
-		modalBgTransitionProps,
-		modalInTransitionProps,
-		modalOutTransitionProps
-	} from '$ts/animation/constants';
 	import { windowHeight, windowWidth } from '$ts/stores/window';
-	import { fade, fly } from 'svelte/transition';
 
 	export let hasPadding = true;
 </script>
