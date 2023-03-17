@@ -17,7 +17,7 @@
 		element.blur();
 	}}
 	data-sveltekit-prefetch
-	class="transition rounded-lg group-1 {classes}"
+	class="transition rounded-lg group/generatebutton {classes}"
 	href={getGenerationUrlFromParams({
 		prompt: generation.prompt,
 		negative_prompt: generation.negative_prompt ?? undefined,
@@ -32,13 +32,13 @@
 	<div class="p-2.5 rounded-full bg-c-bg relative overflow-hidden z-0">
 		<div
 			class="w-full h-full rounded-full transition transform -translate-x-full 
-			bg-c-primary absolute left-0 top-0 group-1-focus:translate-x-0 {!$isTouchscreen
-				? 'group-1-hover:translate-x-0'
+			bg-c-primary absolute left-0 top-0 group-focus/generatebutton:translate-x-0 {!$isTouchscreen
+				? 'group-hover/generatebutton:translate-x-0'
 				: ''}"
 		/>
 		<IconWand
-			class="w-7 h-7 transition text-c-on-bg relative group-1-focus:text-c-on-primary {!$isTouchscreen
-				? 'group-1-hover:text-c-on-primary'
+			class="w-7 h-7 transition text-c-on-bg relative group-focus/generatebutton:text-c-on-primary {!$isTouchscreen
+				? 'group-hover/generatebutton:text-c-on-primary'
 				: ''}"
 		/>
 		<p class="hidden">Generate</p>

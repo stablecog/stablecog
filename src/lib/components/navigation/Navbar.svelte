@@ -27,6 +27,7 @@
 	} from '$ts/animation/constants';
 	import IconBolt from '$components/icons/IconBolt.svelte';
 	import { userSummary } from '$ts/stores/user/summary';
+	import { isUserGalleryEditActive } from '$ts/stores/user/gallery';
 
 	let isSignInModalOpen = false;
 	let isSettingsOpen = false;
@@ -56,16 +57,21 @@
 
 	const lastNotification = 'our-first-big-update';
 
-	const nonStickyNavbarRoutes = ['/admin/gallery'];
+	$: nonStickyNavbarRoutes = [
+		{ route: '/admin/gallery', nonStickyIfTrue: true },
+		{ route: '/history', nonStickyIfTrue: $isUserGalleryEditActive }
+	];
 
-	$: isStickNavbarRoute = !nonStickyNavbarRoutes.includes($page.url.pathname);
+	$: isStickyNavbarRoute = !nonStickyNavbarRoutes.find(
+		(r) => r.nonStickyIfTrue && r.route === $page.url.pathname
+	);
 </script>
 
 <svelte:window on:scroll={setNotAtTheTop} />
 
 <nav
 	bind:clientHeight={$navbarHeight}
-	class="w-full flex flex-col z-50 {isStickNavbarRoute ? 'sticky -top-px' : ''}"
+	class="w-full flex flex-col z-50 {isStickyNavbarRoute ? 'sticky -top-px' : ''}"
 >
 	{#if mounted && ($lastClosedNotification === null || $lastClosedNotification !== lastNotification)}
 		<Banner
@@ -86,7 +92,7 @@
 		<div
 			class="pointer-events-none w-full h-full rounded-b-xl absolute left-0 top-0 transform transition duration-300 bg-c-bg 
 			shadow-navbar shadow-c-shadow/[var(--o-shadow-stronger)] ring-2 ring-c-bg-secondary {!notAtTheTop ||
-			!isStickNavbarRoute
+			!isStickyNavbarRoute
 				? '-translate-y-24 opacity-0'
 				: 'translate-y-0 opacity-100'}"
 		/>
@@ -122,7 +128,7 @@
 					</div>
 				{/if}
 				<!-- Account -->
-				{#if $page.data.session?.user.email}
+				{#if $page.data.session?.user.email && $userSummary}
 					<div
 						use:clickoutside={{ callback: closeAccountMenu }}
 						class="flex flex-col items-end relative"

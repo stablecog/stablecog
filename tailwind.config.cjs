@@ -251,6 +251,5 @@ module.exports = {
 				}
 			}
 		}
-	},
-	plugins: [require('tailwindcss-labeled-groups')(['1', '2', '3'])]
+	}
 };

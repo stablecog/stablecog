@@ -174,6 +174,14 @@ const vi: Translation = {
 		InsufficientCreditsTitle: 'Insufficient credits ({remainingCredits}/{neededCredits})',
 		AllTitle: 'All',
 		ConfirmButton: 'Confirm',
+		BatchEditBar: {
+			PauseEditingButton: 'Pause Editing',
+			DeselectButton: 'Deselect ({selectedCount})',
+			DeleteButton: 'Delete ({selectedCount})',
+			FavoriteButton: 'Favorite ({selectedCount})',
+			ApproveButton: 'Approve ({selectedCount})',
+			RejectButton: 'Reject ({selectedCount})'
+		},
 		ServerUrlInput: {
 			Placeholder: 'Đường dẫn máy chủ'
 		},

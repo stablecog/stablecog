@@ -12,6 +12,10 @@
 	export let disabled = false;
 	export let loading = false;
 	export let target: THrefTarget = '_self';
+	export let size: 'sm' | 'md' = 'sm';
+	export let textColor: 'on-bg' | 'secondary' | 'danger' = 'on-bg';
+	export let icon: ConstructorOfATypedSvelteComponent | undefined = undefined;
+
 	let classes = '';
 </script>
 
@@ -27,7 +31,9 @@
 			: 'bg-c-bg-secondary ring-c-bg-tertiary text-c-on-bg'} {noPadding
 			? ''
 			: 'px-3 py-2.5'} shadow-lg shadow-c-shadow/[var(--o-shadow-strong)]
-    	rounded-lg font-bold transition text-xs ring-2 relative overflow-hidden z-0 group {classes}"
+    	rounded-lg font-bold transition {size === 'md'
+			? 'text-sm'
+			: 'text-xs'} ring-2 relative overflow-hidden z-0 group {classes}"
 	>
 		<div class="w-[200%] h-full absolute left-0 top-0 flex items-center justify-center">
 			<div
@@ -39,13 +45,23 @@
 			/>
 		</div>
 		<div
-			class="relative flex items-center justify-center text-center transition-none {state ===
+			class="relative flex items-center justify-center text-center transition-none gap-1.5 {state ===
 			'success'
 				? 'text-c-on-primary'
 				: state === 'danger'
 				? 'text-c-on-primary'
+				: textColor === 'danger'
+				? 'text-c-danger'
+				: textColor === 'secondary'
+				? 'text-c-secondary'
 				: 'text-c-on-bg'}"
 		>
+			{#if icon}
+				<svelte:component
+					this={icon}
+					class="{size === 'md' ? 'w-5 h-5 -ml-0.5' : 'w-4 h-4 -ml-0.25'} flex-shrink-0"
+				/>
+			{/if}
 			<slot />
 		</div>
 	</a>
@@ -61,7 +77,9 @@
 			: 'bg-c-bg-secondary ring-c-bg-tertiary'} {noPadding
 			? ''
 			: 'px-3 py-2.5'} shadow-lg shadow-c-shadow/[var(--o-shadow-strong)]
-    	rounded-lg font-bold transition text-xs ring-2 relative overflow-hidden z-0 group {classes}"
+    	rounded-lg font-bold transition {size === 'md'
+			? 'text-sm'
+			: 'text-xs'} ring-2 relative overflow-hidden z-0 group {classes}"
 	>
 		<div class="w-[200%] h-full absolute left-0 top-0 flex items-center justify-center">
 			<div
@@ -75,13 +93,23 @@
 			/>
 		</div>
 		<div
-			class="relative flex items-center justify-center text-center transition-none {state ===
+			class="relative flex items-center justify-center text-center transition-none gap-1.5 {state ===
 			'success'
 				? 'text-c-on-primary'
 				: state === 'danger'
 				? 'text-c-on-primary'
+				: textColor === 'danger'
+				? 'text-c-danger'
+				: textColor === 'secondary'
+				? 'text-c-secondary'
 				: 'text-c-on-bg'}"
 		>
+			{#if icon}
+				<svelte:component
+					this={icon}
+					class="{size === 'md' ? 'w-5 h-5 -ml-0.5' : 'w-4 h-4 -ml-0.25'} flex-shrink-0"
+				/>
+			{/if}
 			<slot />
 		</div>
 	</button>

@@ -4,18 +4,24 @@
 	import type { TGenerationImageCardType } from '$components/generationImage/types';
 	import ImagePlaceholder from '$components/ImagePlaceholder.svelte';
 	import LL from '$i18n/i18n-svelte';
-	import { imageTransitionProps } from '$ts/animation/constants';
 	import {
 		generationsPerPage,
 		type TUserGenerationFullOutputsPage
 	} from '$ts/queries/userGenerations';
-	import { activeGeneration } from '$userStores/generation';
 	import type { CreateInfiniteQueryResult } from '@tanstack/svelte-query';
 	import { MasonryInfiniteGrid } from '@egjs/svelte-infinitegrid';
-	import { fly } from 'svelte/transition';
-	import { adminGalleryActionableItems, isAdminGalleryEditActive } from '$ts/stores/admin/gallery';
+	import {
+		adminGalleryActionableItems,
+		adminGalleryCurrentFilter,
+		isAdminGalleryEditActive
+	} from '$ts/stores/admin/gallery';
 	import IconAnimatedSpinner from '$components/icons/IconAnimatedSpinner.svelte';
-	import { isUserGalleryEditActive, userGalleryActionableItems } from '$ts/stores/user/gallery';
+	import {
+		isUserGalleryEditActive,
+		userGalleryActionableItems,
+		userGalleryCurrentView
+	} from '$ts/stores/user/gallery';
+	import { isTouchscreen } from '$ts/stores/isTouchscreen';
 
 	export let generationsQuery: CreateInfiniteQueryResult<TUserGenerationFullOutputsPage, unknown>;
 	export let rerenderKey: string;
@@ -27,6 +33,20 @@
 		id: output.id,
 		groupKey: Math.floor(index / generationsPerPage)
 	}));
+
+	$: selectedItems =
+		cardType === 'history' && $isUserGalleryEditActive
+			? $userGalleryActionableItems
+					.filter((i) => i.view === $userGalleryCurrentView)
+					.map((i) => i.output_id)
+			: cardType === 'admin-gallery' && $isAdminGalleryEditActive
+			? $adminGalleryActionableItems
+					.filter((i) => i.filter === $adminGalleryCurrentFilter)
+					.map((i) => i.output_id)
+			: [];
+	$: isHoverAllowed =
+		(cardType === 'history' && $isUserGalleryEditActive) ||
+		(cardType === 'admin-gallery' && $isAdminGalleryEditActive);
 </script>
 
 {#if $generationsQuery.isInitialLoading}
@@ -51,6 +71,18 @@
 				}}
 			>
 				{#each visibleItems as item (item.key)}
+					{@const isOutputSelected = selectedItems.includes(outputs[item.key].id)}
+					{@const isOutputHoverable =
+						isHoverAllowed &&
+						!isOutputSelected &&
+						!$isTouchscreen &&
+						!(
+							cardType === 'history' &&
+							$isUserGalleryEditActive &&
+							$userGalleryCurrentView === 'favorites' &&
+							!outputs[item.key].is_favorited
+						) &&
+						!outputs[item.key].is_deleted}
 					<div
 						class="w-1/2 sm:w-1/3 lg:w-1/4 {cardType === 'history'
 							? ''
@@ -62,15 +94,9 @@
 								height={outputs[item.key].generation.height}
 							/>
 							<div
-								class="absolute left-0 top-0 w-full h-full rounded-xl bg-c-bg-secondary transition border-4 {(cardType ===
-									'history' &&
-									$isUserGalleryEditActive &&
-									$userGalleryActionableItems.map((i) => i.id).includes(outputs[item.key].id)) ||
-								(cardType === 'admin-gallery' &&
-									$isAdminGalleryEditActive &&
-									$adminGalleryActionableItems.map((i) => i.id).includes(outputs[item.key].id))
+								class="absolute left-0 top-0 w-full h-full rounded-xl bg-c-bg-secondary transition border-4 {isOutputSelected
 									? 'border-c-primary'
-									: 'border-c-bg-secondary'}
+									: 'border-c-bg-secondary'} {isOutputHoverable ? 'hover:border-c-primary/75' : ''}
 										 z-0 overflow-hidden shadow-lg shadow-c-shadow/[var(--o-shadow-normal)]"
 							>
 								{#if outputs[item.key].generation.outputs !== undefined}

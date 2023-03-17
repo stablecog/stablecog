@@ -21,9 +21,9 @@
 	} from '$ts/queries/userGenerations';
 	import {
 		adminGalleryActionableItems,
-		adminGalleryFilter,
+		adminGalleryCurrentFilter,
 		isAdminGalleryEditActive,
-		adminGallerySelectedIds,
+		adminGallerySelectedOutputIds,
 		type TAdminGalleryAction,
 		lastFetchedAdminGalleryFilter
 	} from '$ts/stores/admin/gallery';
@@ -47,7 +47,7 @@
 
 	$: allUserGenerationFullOutputsQueryKey = [
 		'admin_user_generation_full_outputs',
-		$adminGalleryFilter
+		$adminGalleryCurrentFilter
 	];
 	$: allUserGenerationFullOutputsQuery = $page.data.session?.user.id
 		? createInfiniteQuery({
@@ -56,15 +56,15 @@
 					return getAllUserGenerationFullOutputs({
 						access_token: $page.data.session?.access_token || '',
 						cursor: lastPage?.pageParam,
-						gallery_status: $adminGalleryFilter,
+						gallery_status: $adminGalleryCurrentFilter,
 						order_by:
-							$adminGalleryFilter === 'approved' || $adminGalleryFilter === 'rejected'
+							$adminGalleryCurrentFilter === 'approved' || $adminGalleryCurrentFilter === 'rejected'
 								? 'updated_at'
 								: 'created_at'
 					});
 				},
 				onSuccess: () => {
-					lastFetchedAdminGalleryFilter.set($adminGalleryFilter);
+					lastFetchedAdminGalleryFilter.set($adminGalleryCurrentFilter);
 				},
 				getNextPageParam: (lastPage: TUserGenerationFullOutputsPage) => {
 					if (!lastPage.next) return undefined;
@@ -74,7 +74,7 @@
 		: undefined;
 
 	$: $allUserGenerationFullOutputsQuery?.data?.pages, onPagesChanged();
-	$: gridRerenderKey = `admin_user_generation_full_outputs_${$adminGalleryFilter}_${
+	$: gridRerenderKey = `admin_user_generation_full_outputs_${$adminGalleryCurrentFilter}_${
 		$allUserGenerationFullOutputsQuery?.isInitialLoading
 	}_${$allUserGenerationFullOutputsQuery?.isStale}_${
 		$allUserGenerationFullOutputsQuery?.data?.pages?.[0]?.outputs &&
@@ -92,7 +92,7 @@
 			approveOrRejectStatus = 'rejecting';
 		}
 		try {
-			const ids = $adminGallerySelectedIds;
+			const ids = $adminGallerySelectedOutputIds;
 			const res = await fetch(`${apiUrl.origin}/v1/admin/gallery`, {
 				method: 'PUT',
 				headers: {
@@ -108,7 +108,7 @@
 			const resJson = await res.json();
 			adminGalleryActionableItems.set(
 				$adminGalleryActionableItems.filter(
-					(i) => !ids.includes(i.id) || i.filter !== $adminGalleryFilter
+					(i) => !ids.includes(i.output_id) || i.filter !== $adminGalleryCurrentFilter
 				)
 			);
 			queryClient.setQueryData(allUserGenerationFullOutputsQueryKey, (data: any) => ({
@@ -210,7 +210,7 @@
 						transition:fly|local={{ opacity: 0, x: -100, easing: quadOut, duration: 150 }}
 						class="flex flex-wrap gap-3 md:gap-4"
 					>
-						{#if $adminGalleryFilter !== 'approved'}
+						{#if $adminGalleryCurrentFilter !== 'approved'}
 							<SubtleButton
 								disabled={approveOrRejectStatus === 'rejecting'}
 								loading={approveOrRejectStatus === 'approving'}
@@ -226,7 +226,7 @@
 									>
 										{$LL.Admin.ApproveButton()}<span
 											class="text-sm ml-1 font-normal text-c-success/75"
-											>({$adminGallerySelectedIds.length})</span
+											>({$adminGallerySelectedOutputIds.length})</span
 										>
 									</p>
 									<div slot="item-1">
@@ -235,7 +235,7 @@
 								</Morpher>
 							</SubtleButton>
 						{/if}
-						{#if $adminGalleryFilter !== 'rejected'}
+						{#if $adminGalleryCurrentFilter !== 'rejected'}
 							<SubtleButton
 								disabled={approveOrRejectStatus === 'approving'}
 								loading={approveOrRejectStatus === 'rejecting'}
@@ -251,7 +251,7 @@
 									>
 										{$LL.Admin.RejectButton()}<span
 											class="text-sm ml-1 font-normal text-c-danger/75"
-											>({$adminGallerySelectedIds.length})</span
+											>({$adminGallerySelectedOutputIds.length})</span
 										>
 									</p>
 									<div slot="item-1">
@@ -274,7 +274,7 @@
 								? [{ label: $LL.Admin.Gallery.StatusDropdown.Private(), value: 'not_submitted' }]
 								: [])
 						]}
-						bind:value={$adminGalleryFilter}
+						bind:value={$adminGalleryCurrentFilter}
 					>
 						<div slot="title" class="p-3.5 flex items-center justify-center">
 							<IconFunnel class="w-6 h-6 text-c-on-bg/35" />

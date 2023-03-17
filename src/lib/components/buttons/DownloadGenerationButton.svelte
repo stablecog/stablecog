@@ -41,27 +41,27 @@
 	bind:this={element}
 	on:click={downloadImage}
 	disabled={downloadStatus === 'downloading'}
-	class="transition rounded-lg group-1 {classes}"
+	class="transition rounded-lg group/downloadbutton {classes}"
 	aria-label="Download Image"
 >
 	<div class="p-2.5 rounded-full bg-c-bg relative overflow-hidden z-0">
 		<div
 			class="w-full h-full rounded-full transition transform -translate-x-full 
-			bg-c-primary absolute left-0 top-0 group-1-focus:translate-x-0 {!$isTouchscreen
-				? 'group-1-hover:translate-x-0'
+			bg-c-primary absolute left-0 top-0 group-focus/downloadbutton:translate-x-0 {!$isTouchscreen
+				? 'group-hover/downloadbutton:translate-x-0'
 				: ''}"
 		/>
 		<Morpher morphed={downloadStatus === 'downloading'} class="w-7 h-7">
 			<IconDownload
 				slot="item-0"
-				class="w-7 h-7 transition text-c-on-bg relative group-1-focus:text-c-on-primary {!$isTouchscreen
-					? 'group-1-hover:text-c-on-primary'
+				class="w-7 h-7 transition text-c-on-bg relative group-focus/downloadbutton:text-c-on-primary {!$isTouchscreen
+					? 'group-hover/downloadbutton:text-c-on-primary'
 					: ''}"
 			/>
 			<IconAnimatedSpinner
 				slot="item-1"
-				class="w-7 h-7 text-c-on-bg relative group-1-focus:text-c-on-primary {!$isTouchscreen
-					? 'group-1-hover:text-c-on-primary'
+				class="w-7 h-7 text-c-on-bg relative group-focus/downloadbutton:text-c-on-primary {!$isTouchscreen
+					? 'group-hover/downloadbutton:text-c-on-primary'
 					: ''}"
 			/>
 		</Morpher>

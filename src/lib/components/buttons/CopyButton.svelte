@@ -32,14 +32,14 @@
 	use:copy={stringToCopy}
 	on:svelte-copy={onCopy}
 	{disabled}
-	class="transition rounded-lg group-1 {classes}"
+	class="transition rounded-lg group/copybutton {classes}"
 	aria-label="Copy to Clipboard"
 >
 	<div class="rounded-full bg-c-bg relative overflow-hidden z-0">
 		<div
 			class="w-full h-full rounded-full transition transform -translate-x-full absolute left-0 top-0 {copied
 				? 'bg-c-bg'
-				: 'bg-c-primary'} {!$isTouchscreen ? 'group-1-hover:translate-x-0' : ''}"
+				: 'bg-c-primary'} {!$isTouchscreen ? 'group-hover/copybutton:translate-x-0' : ''}"
 		/>
 		<div class="w-12 h-12 p-2.5">
 			<div class="w-full h-full relative">
@@ -47,7 +47,7 @@
 					class="{copied
 						? 'scale-0 opacity-0'
 						: 'scale-100 opacity-100'} w-full h-full absolute left-0 top-0 transition text-c-on-bg {!$isTouchscreen
-						? 'group-1-hover:text-c-on-primary'
+						? 'group-hover/copybutton:text-c-on-primary'
 						: ''}"
 				/>
 				<IconTick

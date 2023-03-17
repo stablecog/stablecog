@@ -15,7 +15,7 @@
 >
 	<button
 		on:click|preventDefault={onClick}
-		class="w-full h-full relative rounded-r-xl flex items-center justify-center group-1
+		class="w-full h-full relative rounded-r-xl flex items-center justify-center group/clearbutton
 			transition {show ? 'focus:translate-x-0 translate-x-0 opacity-100' : 'translate-x-full opacity-0'}"
 		disabled={!show || disabled}
 		type="button"
@@ -29,18 +29,18 @@
 			<div class="w-full h-full rounded-lg relative z-0 overflow-hidden">
 				<div
 					class="w-full h-full origin-left rounded-lg transition transform -translate-x-full
-						bg-c-primary/25 group-1-focus:translate-x-0 {!$isTouchscreen
-						? 'group-1-hover:translate-x-0'
-						: 'group-1-active:translate-x-0'}"
+						bg-c-primary/25 group-focus/clearbutton:translate-x-0 {!$isTouchscreen
+						? 'group-hover/clearbutton:translate-x-0'
+						: 'group-active/clearbutton:translate-x-0'}"
 				/>
 			</div>
 		</div>
 		<IconCancel
 			class="{type === 'sm'
 				? 'w-6 h-6'
-				: 'w-7 h-7'} transition text-c-on-bg/25 group-1-focus:text-c-primary {!$isTouchscreen
-				? 'group-1-hover:text-c-primary'
-				: 'group-1-active:text-c-primary'}"
+				: 'w-7 h-7'} transition text-c-on-bg/25 group-focus/clearbutton:text-c-primary {!$isTouchscreen
+				? 'group-hover/clearbutton:text-c-primary'
+				: 'group-active/clearbutton:text-c-primary'}"
 		/>
 	</button>
 </div>

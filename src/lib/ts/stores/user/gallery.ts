@@ -13,15 +13,23 @@ export const userGalleryCurrentView = writableLocal<TUserGalleryView>(
 );
 export const isUserGalleryEditActive = writable<boolean>(false);
 
-export const userGallerySelectedIds = derived(
+export const userGallerySelectedOutputObjects = derived(
 	[userGalleryActionableItems, userGalleryCurrentView],
 	([$items, $userGalleryCurrentView]) => {
-		return $items.filter((i) => i.view === $userGalleryCurrentView).map((i) => i.id);
+		return $items.filter((i) => i.view === $userGalleryCurrentView);
+	}
+);
+
+export const userGallerySelectedOutputIds = derived(
+	[userGallerySelectedOutputObjects],
+	([$userGallerySelectedOutputObjects]) => {
+		return $userGallerySelectedOutputObjects.map((i) => i.output_id);
 	}
 );
 
 export interface TUserGalleryActionableItem {
-	id: string;
+	output_id: string;
+	generation_id: string;
 	view: TUserGalleryView;
 }
 

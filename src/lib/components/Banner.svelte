@@ -3,6 +3,7 @@
 	import IconCancel from '$components/icons/IconCancel.svelte';
 	import { expandCollapse } from '$ts/animation/transitions';
 	import { isTouchscreen } from '$ts/stores/isTouchscreen';
+	import { quadOut } from 'svelte/easing';
 
 	export let onClick: (() => void) | undefined = undefined;
 	export let href: string | undefined = undefined;
@@ -12,7 +13,7 @@
 </script>
 
 <div
-	transition:expandCollapse={{ duration: 200 }}
+	transition:expandCollapse={{ duration: 200, easing: quadOut }}
 	class="w-full relative text-c-on-primary font-bold"
 >
 	{#if href}

@@ -19,7 +19,7 @@
 		data-sveltekit-prefetch={prefetch && target === '_self' ? '' : 'off'}
 		{href}
 		{target}
-		class="group rounded-xl {classes}"
+		class="group-[iconbutton] rounded-xl {classes}"
 		aria-label={name}
 	>
 		<div class="rounded-lg relative">
@@ -29,7 +29,7 @@
 						? 'bg-c-on-primary/15'
 						: 'bg-c-primary/25'} 
         		absolute left-0 top-0 rounded-xl -translate-x-full {!$isTouchscreen
-						? 'group-hover:translate-x-0'
+						? 'group-hover/iconbutton:translate-x-0'
 						: ''}"
 				/>
 			</div>
@@ -43,7 +43,7 @@
 		type="button"
 		{disabled}
 		on:click={onClick}
-		class="group rounded-xl {classes}"
+		class="group/iconbutton rounded-xl {classes}"
 		aria-label={name}
 	>
 		<div class="rounded-lg relative">
@@ -55,7 +55,7 @@
 						? 'bg-c-on-primary/25'
 						: 'bg-c-primary/25'} 
           	absolute left-0 top-0 rounded-xl -translate-x-full {!$isTouchscreen
-						? 'group-hover:translate-x-0'
+						? 'group-hover/iconbutton:translate-x-0'
 						: ''}"
 				/>
 			</div>

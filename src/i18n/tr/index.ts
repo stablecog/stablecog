@@ -174,6 +174,14 @@ const tr: Translation = {
 		InsufficientCreditsTitle: 'Yetersiz kredi ({remainingCredits}/{neededCredits})',
 		AllTitle: 'Hepsi',
 		ConfirmButton: 'Onayla',
+		BatchEditBar: {
+			PauseEditingButton: 'Pause Editing',
+			DeselectButton: 'Deselect ({selectedCount})',
+			DeleteButton: 'Delete ({selectedCount})',
+			FavoriteButton: 'Favorite ({selectedCount})',
+			ApproveButton: 'Approve ({selectedCount})',
+			RejectButton: 'Reject ({selectedCount})'
+		},
 		ServerUrlInput: {
 			Placeholder: 'Sunucu adresi'
 		},

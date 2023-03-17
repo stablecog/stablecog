@@ -1,14 +1,20 @@
 <script lang="ts">
 	import { page } from '$app/stores';
+	import BatchEditBar from '$components/BatchEditBar.svelte';
 	import Button from '$components/buttons/Button.svelte';
+	import SubtleButton from '$components/buttons/SubtleButton.svelte';
 	import GenerationFullScreen from '$components/generationFullScreen/GenerationFullScreen.svelte';
 	import GenerationGridInfinite from '$components/grids/GenerationGridInfinite.svelte';
+	import IconCancel from '$components/icons/IconCancel.svelte';
 	import IconFolderOutlined from '$components/icons/IconFolderOutlined.svelte';
+	import IconPause from '$components/icons/IconPause.svelte';
 	import IconStarOutlined from '$components/icons/IconStarOutlined.svelte';
+	import IconTrashcan from '$components/icons/IconTrashcan.svelte';
 	import MetaTag from '$components/MetaTag.svelte';
 	import SignInCard from '$components/SignInCard.svelte';
 	import TabBar from '$components/tabBars/TabBar.svelte';
 	import LL, { locale } from '$i18n/i18n-svelte';
+	import { expandCollapse } from '$ts/animation/transitions';
 	import { canonicalUrl } from '$ts/constants/main';
 	/* import {
 		doesUserHaveLegacyGenerations,
@@ -18,10 +24,13 @@
 		getUserGenerationFullOutputs,
 		type TUserGenerationFullOutputsPage
 	} from '$ts/queries/userGenerations';
+	import { navbarHeight } from '$ts/stores/navbarHeight';
 	import {
 		isUserGalleryEditActive,
 		lastFetchedUserGalleryView,
+		userGalleryActionableItems,
 		userGalleryCurrentView,
+		userGallerySelectedOutputIds,
 		type TUserGalleryView
 	} from '$ts/stores/user/gallery';
 	import { userGenerationFullOutputsQueryKey } from '$ts/stores/user/keys';
@@ -29,6 +38,7 @@
 	import { activeGeneration } from '$userStores/generation';
 	import { createInfiniteQuery, type CreateInfiniteQueryResult } from '@tanstack/svelte-query';
 	import { onMount } from 'svelte';
+	import { quadOut } from 'svelte/easing';
 	/* import SubtleButton from '$components/buttons/SubtleButton.svelte';
 	import IconAnimatedSpinner from '$components/icons/IconAnimatedSpinner.svelte';
 	import IconDownload from '$components/icons/IconDownload.svelte';
@@ -102,9 +112,9 @@
 	};
 
 	function onKeyDown({ key }: KeyboardEvent) {
-		/* if (key === 'e') {
+		if (key === 'e') {
 			isUserGalleryEditActive.set(!$isUserGalleryEditActive);
-		} else  */ if ($activeGeneration !== undefined) {
+		} else if ($activeGeneration !== undefined) {
 			if (key === 'Escape') {
 				activeGeneration.set(undefined);
 			}
@@ -142,7 +152,7 @@
 
 <svelte:window on:keydown={onKeyDown} />
 
-<div class="w-full flex-1 flex flex-col items-center px-1 gap-2 md:py-6 md:px-8">
+<div class="w-full flex-1 flex flex-col items-center px-1 md:py-6 md:px-8">
 	{#if !$page.data.session?.user.id}
 		<div class="w-full flex-1 max-w-7xl flex justify-center px-2 py-4 md:py-2">
 			<div class="my-auto flex flex-col">
@@ -151,10 +161,10 @@
 			</div>
 		</div>
 	{:else}
-		<div class="w-full max-w-7xl flex justify-center px-1">
-			<div class="w-full flex flex-wrap gap-4 items-center justify-between py-2 md:py-3 rounded-xl">
+		<div class="w-full max-w-7xl flex justify-center px-1 md:px-0.5 pt-2">
+			<div class="w-full flex flex-wrap gap-4 items-center justify-between rounded-xl">
 				<div
-					class="w-full flex flex-col md:flex-row gap-5 items-start md:items-center justify-start md:justify-between"
+					class="w-full flex flex-col md:flex-row gap-4 md:gap-5 items-start md:items-center justify-start md:justify-between"
 				>
 					<div class="flex gap-2 items-center px-3 md:px-3">
 						<p class="font-bold text-1.5xl md:text-2xl">
@@ -162,13 +172,11 @@
 								? $LL.History.Views.FavoritesTitle()
 								: $LL.History.GenerationsTitle()}
 						</p>
-						<p class="text-sm md:text-base text-c-on-bg/50 font-semibold mt-0.5 md:mt-1">
+						<p class="text-sm md:text-base text-c-on-bg/50 font-semibold">
 							({totalOutputs !== undefined ? totalOutputs.toLocaleString($locale) : '...'})
 						</p>
 					</div>
-					<div
-						class="w-full md:w-auto flex flex-1 items-center justify-end gap-4 px-0.5 -mt-1 -mb-2 md:-my-2"
-					>
+					<div class="w-full md:w-auto flex flex-1 items-center justify-end gap-4">
 						<TabBar
 							dontScale
 							hasTitle={false}
@@ -198,7 +206,17 @@
 				</div>
 			</div>
 		</div>
-		<div class="w-full flex-1 max-w-7xl flex flex-col">
+		<!-- Edit bar -->
+		<div
+			class="w-full top-1 max-w-7xl px-0.5 transition-all sticky z-40 {$isUserGalleryEditActive
+				? 'mt-3'
+				: 'mt-0'}"
+		>
+			{#if $isUserGalleryEditActive}
+				<BatchEditBar type="history" />
+			{/if}
+		</div>
+		<div class="w-full flex-1 max-w-7xl flex flex-col mt-2">
 			{#if userGenerationFullOutputsQuery !== undefined}
 				{#if $userGalleryCurrentView === 'favorites' && $userGenerationFullOutputsQuery?.data?.pages.length === 1 && $userGenerationFullOutputsQuery.data.pages[0].outputs.length === 0}
 					<div class="w-full flex-1 flex flex-col items-center py-8 px-5">

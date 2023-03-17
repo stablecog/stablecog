@@ -173,6 +173,14 @@ const hi: Translation = {
 		InsufficientCreditsTitle: 'Insufficient credits ({remainingCredits}/{neededCredits})',
 		AllTitle: 'All',
 		ConfirmButton: 'Confirm',
+		BatchEditBar: {
+			PauseEditingButton: 'Pause Editing',
+			DeselectButton: 'Deselect ({selectedCount})',
+			DeleteButton: 'Delete ({selectedCount})',
+			FavoriteButton: 'Favorite ({selectedCount})',
+			ApproveButton: 'Approve ({selectedCount})',
+			RejectButton: 'Reject ({selectedCount})'
+		},
 		ServerUrlInput: {
 			Placeholder: 'सर्वर URL'
 		},

@@ -2,7 +2,9 @@
 	import AnchorOrDiv from '$components/AnchorOrDiv.svelte';
 	import CopyButton from '$components/buttons/CopyButton.svelte';
 	import DownloadGenerationButton from '$components/buttons/DownloadGenerationButton.svelte';
+	import FavoriteButton from '$components/buttons/FavoriteButton.svelte';
 	import GenerateButton from '$components/buttons/GenerateButton.svelte';
+	import IconButton from '$components/buttons/IconButton.svelte';
 	import type { TGenerationImageCardType } from '$components/generationImage/types';
 	import IconCancelCircle from '$components/icons/IconCancelCircle.svelte';
 	import IconChatBubbleCancel from '$components/icons/IconChatBubbleCancel.svelte';
@@ -13,9 +15,9 @@
 	import { logGalleryGenerationOpened } from '$ts/helpers/loggers';
 	import {
 		adminGalleryActionableItems,
-		adminGalleryFilter,
+		adminGalleryCurrentFilter,
 		isAdminGalleryEditActive,
-		adminGallerySelectedIds
+		adminGallerySelectedOutputIds
 	} from '$ts/stores/admin/gallery';
 	import { advancedModeApp } from '$ts/stores/advancedMode';
 	import { isTouchscreen } from '$ts/stores/isTouchscreen';
@@ -24,10 +26,12 @@
 		isUserGalleryEditActive,
 		userGalleryActionableItems,
 		userGalleryCurrentView,
-		userGallerySelectedIds
+		userGallerySelectedOutputIds
 	} from '$ts/stores/user/gallery';
 	import { userSummary } from '$ts/stores/user/summary';
 	import { activeGeneration, type TGenerationWithSelectedOutput } from '$userStores/generation';
+	import { stringToArray } from 'konva/lib/shapes/Text';
+	import { tick } from 'svelte';
 	import { quadOut } from 'svelte/easing';
 	import { fade, fly, scale } from 'svelte/transition';
 
@@ -39,58 +43,93 @@
 	let promptCopied = false;
 	let promptCopiedTimeout: NodeJS.Timeout;
 	let rightButtonContainer: HTMLDivElement;
+	let leftButtonContainer: HTMLDivElement;
 
 	let isImageLoaded = false;
 	const onImageLoaded = () => (isImageLoaded = true);
 
 	$: isInGallerySelectedIds =
 		$isUserGalleryEditActive && cardType === 'history'
-			? $userGallerySelectedIds.includes(generation.selected_output.id)
+			? $userGallerySelectedOutputIds.includes(generation.selected_output.id)
 			: $isAdminGalleryEditActive && cardType === 'admin-gallery'
-			? $adminGallerySelectedIds.includes(generation.selected_output.id)
+			? $adminGallerySelectedOutputIds.includes(generation.selected_output.id)
 			: false;
 
-	const addToGalleryActionableItems = (id: string) => {
+	const addToGalleryActionableItems = ({
+		output_id,
+		generation_id
+	}: {
+		output_id: string;
+		generation_id: string;
+	}) => {
 		if (isInGallerySelectedIds) return;
 		if (cardType === 'history') {
+			if (
+				$userGalleryActionableItems.find(
+					(i) => i.output_id === output_id && i.view === $userGalleryCurrentView
+				)
+			) {
+				return;
+			}
 			userGalleryActionableItems.set([
 				...$userGalleryActionableItems,
 				{
-					id,
+					output_id,
+					generation_id,
 					view: $userGalleryCurrentView
 				}
 			]);
 		} else if (cardType === 'admin-gallery') {
+			if (
+				$adminGalleryActionableItems.find(
+					(i) => i.output_id === output_id && i.filter === $adminGalleryCurrentFilter
+				)
+			) {
+				return;
+			}
 			adminGalleryActionableItems.set([
 				...$adminGalleryActionableItems,
 				{
-					id,
-					filter: $adminGalleryFilter
+					output_id,
+					generation_id,
+					filter: $adminGalleryCurrentFilter
 				}
 			]);
 		}
 	};
 
-	const removeFromGalleryActionableItems = (id: string) => {
+	const removeFromGalleryActionableItems = (output_id: string) => {
 		if (cardType === 'history') {
-			userGalleryActionableItems.set($userGalleryActionableItems.filter((i) => i.id !== id));
+			userGalleryActionableItems.set(
+				$userGalleryActionableItems.filter((i) => i.output_id !== output_id)
+			);
 		} else if (cardType === 'admin-gallery') {
-			adminGalleryActionableItems.set($adminGalleryActionableItems.filter((i) => i.id !== id));
+			adminGalleryActionableItems.set(
+				$adminGalleryActionableItems.filter((i) => i.output_id !== output_id)
+			);
+		}
+	};
+
+	const toggleGalleryActionableItemsState = ({
+		output_id,
+		generation_id
+	}: {
+		output_id: string;
+		generation_id: string;
+	}) => {
+		if (isInGallerySelectedIds) {
+			removeFromGalleryActionableItems(output_id);
+		} else {
+			addToGalleryActionableItems({ output_id, generation_id });
 		}
 	};
 
 	$: showAdminGalleryBarrier =
 		cardType === 'admin-gallery' &&
 		((generation.selected_output.gallery_status === 'approved' &&
-			$adminGalleryFilter !== 'approved') ||
+			$adminGalleryCurrentFilter !== 'approved') ||
 			(generation.selected_output.gallery_status === 'rejected' &&
-				$adminGalleryFilter !== 'rejected'));
-
-	$: shouldShowSelectMarker = isInGallerySelectedIds
-		? true
-		: ($isUserGalleryEditActive && cardType === 'history') ||
-		  (cardType === 'admin-gallery' &&
-				$adminGalleryFilter === generation.selected_output.gallery_status);
+				$adminGalleryCurrentFilter !== 'rejected'));
 
 	$: isGalleryEditActive =
 		(cardType === 'admin-gallery' && $isAdminGalleryEditActive) ||
@@ -105,6 +144,18 @@
 		'SC - Product Id': $userSummary?.product_id,
 		'SC - Advanced Mode': $advancedModeApp
 	};
+
+	async function onSelectButtonClicked(
+		e: MouseEvent & {
+			currentTarget: EventTarget & HTMLButtonElement;
+		}
+	) {
+		toggleGalleryActionableItemsState({
+			output_id: generation.selected_output.id,
+			generation_id: generation.id || ''
+		});
+		e.currentTarget.blur();
+	}
 </script>
 
 {#if generation.selected_output.is_deleted}
@@ -116,12 +167,6 @@
 	<div
 		in:fade={{ duration: 300, easing: quadOut }}
 		class="w-full h-full absolute left-0 top-0 bg-c-bg-secondary/85 z-10"
-	/>
-{/if}
-{#if cardType === 'history' && $userGalleryCurrentView === 'favorites' && !generation.selected_output.is_favorited}
-	<div
-		in:fade|local={{ duration: 300, easing: quadOut }}
-		class="w-full h-full absolute left-0 top-0 bg-c-bg-secondary/85 z-10 pointer-events-none"
 	/>
 {/if}
 {#if cardType === 'admin-gallery' && showAdminGalleryBarrier}
@@ -138,40 +183,6 @@
 		in:fade|local={{ duration: 300, easing: quadOut }}
 		class="w-full h-full absolute left-0 top-0 bg-c-bg-secondary/85 z-10"
 	/>
-{/if}
-{#if (cardType === 'admin-gallery' && $isAdminGalleryEditActive) || (cardType === 'history' && $isUserGalleryEditActive)}
-	<button
-		on:click={(e) => {
-			isInGallerySelectedIds
-				? removeFromGalleryActionableItems(generation.selected_output.id)
-				: addToGalleryActionableItems(generation.selected_output.id);
-			e.currentTarget.blur();
-		}}
-		class="w-full h-full absolute left-0 top-0 flex flex-col justify-start items-start z-30"
-	>
-		<div
-			transition:fly|local={{ duration: 200, easing: quadOut, y: -50 }}
-			class="pointer-events-none w-full flex items-center justify-between transform transition p-2 {shouldShowSelectMarker
-				? 'translate-y-0'
-				: '-translate-y-40'}"
-		>
-			<div
-				class="absolute filter blur-xl rounded-full w-40 h-40 -right-20 -top-20 bg-gradient-radial from-c-bg-secondary to-c-bg-secondary/25"
-			/>
-			<div />
-			<div
-				class="rounded-full border-2 border-c-primary w-6 h-6 transition p-0.75 {isGalleryEditActive
-					? 'scale-100 opacity-100'
-					: 'scale-0 opacity-0'}"
-			>
-				<div
-					class="w-full h-full rounded-full bg-c-primary transform transition {isInGallerySelectedIds
-						? 'scale-100 opacity-100'
-						: 'scale-0 opacity-0'}"
-				/>
-			</div>
-		</div>
-	</button>
 {/if}
 {#if generation.selected_output.image_url.includes('placeholder')}
 	<svg
@@ -202,7 +213,7 @@
 		height={generation.height}
 	/>
 {/if}
-{#if !generation.selected_output.is_deleted}
+{#if !generation.selected_output.is_deleted && !isGalleryEditActive}
 	<AnchorOrDiv
 		href={cardType === 'gallery' ? `/gallery?output=${generation.selected_output.id}` : undefined}
 		anchorPreventDefault={cardType === 'gallery'}
@@ -211,7 +222,7 @@
 				lastClickedOutputId.set(generation.selected_output.id);
 				return;
 			}
-			if (doesContainTarget(e.target, [rightButtonContainer])) {
+			if (doesContainTarget(e.target, [rightButtonContainer, leftButtonContainer])) {
 				return;
 			}
 			activeGeneration.set(generation);
@@ -251,18 +262,51 @@
 		</div>
 	</AnchorOrDiv>
 {/if}
-{#if !isGalleryEditActive}
+<div
+	transition:fly|local={{ duration: 200, easing: quadOut, opacity: 0, y: -100 }}
+	class="w-full h-full absolute left-0 top-0 pointer-events-none flex items-start justify-between"
+>
 	<div
-		transition:fly|local={{ duration: 200, easing: quadOut, opacity: 0, x: 100 }}
-		class="w-full h-full absolute left-0 top-0 pointer-events-none"
+		class="w-full flex justify-between transition items-start {!$isTouchscreen
+			? 'group-focus-within:translate-y-0 group-hover:translate-y-0'
+			: ''} {isGalleryEditActive || overlayShouldShow ? 'translate-y-0' : '-translate-y-full'}"
 	>
-		<div class="w-full flex justify-end items-start">
+		<div bind:this={leftButtonContainer} class="pointer-events-none relative">
+			{#if (cardType === 'admin-gallery' || cardType === 'history') && !(cardType === 'history' && generation.selected_output.is_deleted) && !(cardType === 'history' && $userGalleryCurrentView === 'favorites' && !generation.selected_output.is_favorited)}
+				<div
+					class="absolute pointer-events-none filter blur-xl rounded-full w-40 h-40 -left-20 -top-20 bg-gradient-radial from-c-bg-secondary to-c-bg-secondary/50"
+				/>
+				<IconButton
+					class="p-0.5 pointer-events-auto"
+					name="Select"
+					onClick={() => {
+						if (cardType === 'admin-gallery' && !$isAdminGalleryEditActive) {
+							isAdminGalleryEditActive.set(true);
+						} else if (cardType === 'history' && !$isUserGalleryEditActive) {
+							isUserGalleryEditActive.set(true);
+						}
+						addToGalleryActionableItems({
+							output_id: generation.selected_output.id,
+							generation_id: generation.id || ''
+						});
+					}}
+				>
+					<div class="rounded-full border-2 border-c-primary w-6 h-6 transition p-0.75">
+						<div
+							class="w-full h-full rounded-full bg-c-primary transform transition {isInGallerySelectedIds
+								? 'scale-100 opacity-100'
+								: 'scale-0 opacity-0'}"
+						/>
+					</div>
+				</IconButton>
+			{/if}
+		</div>
+		{#if !isGalleryEditActive}
 			<div
+				transition:fly|local={{ duration: 200, easing: quadOut, opacity: 0, y: -100 }}
 				bind:this={rightButtonContainer}
-				class="flex flex-row items-end justify-start transition transform 
-				pointer-events-auto {!$isTouchscreen
-					? 'group-focus-within:translate-x-0 group-hover:translate-x-0'
-					: ''} {overlayShouldShow ? 'translate-x-0' : 'translate-x-full'}"
+				class="flex flex-row flex-wrap items-center justify-end transition transform 
+				pointer-events-auto"
 			>
 				{#if cardType !== 'admin-gallery'}
 					<CopyButton
@@ -288,9 +332,29 @@
 					<GenerateButton {generation} class="p-1.5 -ml-1.5" />
 				{/if}
 			</div>
-		</div>
-		<div />
+		{:else if cardType === 'history' && $userGalleryCurrentView !== 'favorites' && generation.selected_output.is_favorited && !generation.selected_output.is_deleted}
+			<div class="p-1">
+				<FavoriteButton {generation} modalType="history" />
+			</div>
+		{/if}
 	</div>
+	<div />
+</div>
+{#if (cardType === 'admin-gallery' && $isAdminGalleryEditActive) || (cardType === 'history' && $isUserGalleryEditActive)}
+	<button
+		disabled={(cardType === 'history' && generation.selected_output.is_deleted) ||
+			(cardType === 'history' &&
+				$userGalleryCurrentView === 'favorites' &&
+				!generation.selected_output.is_favorited)}
+		on:click={onSelectButtonClicked}
+		class="w-full h-full absolute left-0 top-0 flex flex-col justify-start items-start z-30"
+	/>
+{/if}
+{#if cardType === 'history' && $userGalleryCurrentView === 'favorites' && !generation.selected_output.is_favorited}
+	<div
+		in:fade|local={{ duration: 300, easing: quadOut }}
+		class="w-full h-full absolute left-0 top-0 bg-c-bg-secondary/85 z-40 pointer-events-none"
+	/>
 {/if}
 
 <style>

@@ -173,6 +173,14 @@ const de: Translation = {
 		InsufficientCreditsTitle: 'Unzureichendes Guthaben ({remainingCredits}/{neededCredits})',
 		AllTitle: 'Alle',
 		ConfirmButton: 'Bestätigen',
+		BatchEditBar: {
+			PauseEditingButton: 'Pause Editing',
+			DeselectButton: 'Deselect ({selectedCount})',
+			DeleteButton: 'Delete ({selectedCount})',
+			FavoriteButton: 'Favorite ({selectedCount})',
+			ApproveButton: 'Approve ({selectedCount})',
+			RejectButton: 'Reject ({selectedCount})'
+		},
 		ServerUrlInput: {
 			Placeholder: 'Server-URL'
 		},

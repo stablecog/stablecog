@@ -543,6 +543,112 @@ type RootTranslation = {
 		 * C​o​n​f​i​r​m
 		 */
 		ConfirmButton: string
+		BatchEditBar: {
+			/**
+			 * P​a​u​s​e​ ​E​d​i​t​i​n​g
+			 */
+			PauseEditingButton: string
+			/**
+			 * D​e​s​e​l​e​c​t​ ​(​{​s​e​l​e​c​t​e​d​C​o​u​n​t​}​)
+			 * @param {unknown} selectedCount
+			 */
+			DeselectButton: RequiredParams<'selectedCount'>
+			/**
+			 * D​e​l​e​t​e​ ​(​{​s​e​l​e​c​t​e​d​C​o​u​n​t​}​)
+			 * @param {unknown} selectedCount
+			 */
+			DeleteButton: RequiredParams<'selectedCount'>
+			/**
+			 * F​a​v​o​r​i​t​e​ ​(​{​s​e​l​e​c​t​e​d​C​o​u​n​t​}​)
+			 * @param {unknown} selectedCount
+			 */
+			FavoriteButton: RequiredParams<'selectedCount'>
+			/**
+			 * A​p​p​r​o​v​e​ ​(​{​s​e​l​e​c​t​e​d​C​o​u​n​t​}​)
+			 * @param {unknown} selectedCount
+			 */
+			ApproveButton: RequiredParams<'selectedCount'>
+			/**
+			 * R​e​j​e​c​t​ ​(​{​s​e​l​e​c​t​e​d​C​o​u​n​t​}​)
+			 * @param {unknown} selectedCount
+			 */
+			RejectButton: RequiredParams<'selectedCount'>
+			/**
+			 * U​n​f​a​v​o​r​i​t​e​ ​(​{​s​e​l​e​c​t​e​d​C​o​u​n​t​}​)
+			 * @param {unknown} selectedCount
+			 */
+			UnfavoriteButton: RequiredParams<'selectedCount'>
+			ConfirmationModal: {
+				/**
+				 * C​a​n​c​e​l
+				 */
+				CancelButton: string
+				Deselect: {
+					/**
+					 * D​e​s​e​l​e​c​t​ ​{​s​e​l​e​c​t​e​d​C​o​u​n​t​}​ ​i​t​e​m​(​s​)​?
+					 * @param {unknown} selectedCount
+					 */
+					Title: RequiredParams<'selectedCount'>
+					/**
+					 * A​r​e​ ​y​o​u​ ​s​u​r​e​ ​y​o​u​ ​w​a​n​t​ ​t​o​ ​d​e​s​e​l​e​c​t​ ​{​s​e​l​e​c​t​e​d​C​o​u​n​t​}​ ​i​t​e​m​(​s​)​?
+					 * @param {unknown} selectedCount
+					 */
+					Paragraph: RequiredParams<'selectedCount'>
+					/**
+					 * D​e​s​e​l​e​c​t
+					 */
+					ConfirmButton: string
+				}
+				Delete: {
+					/**
+					 * D​e​l​e​t​e​ ​{​s​e​l​e​c​t​e​d​C​o​u​n​t​}​ ​i​t​e​m​(​s​)​?
+					 * @param {unknown} selectedCount
+					 */
+					Title: RequiredParams<'selectedCount'>
+					/**
+					 * A​r​e​ ​y​o​u​ ​s​u​r​e​ ​y​o​u​ ​w​a​n​t​ ​t​o​ ​d​e​l​e​t​e​ ​{​s​e​l​e​c​t​e​d​C​o​u​n​t​}​ ​i​t​e​m​(​s​)​?
+					 * @param {unknown} selectedCount
+					 */
+					Paragraph: RequiredParams<'selectedCount'>
+					/**
+					 * D​e​l​e​t​e
+					 */
+					ConfirmButton: string
+				}
+				Favorite: {
+					/**
+					 * F​a​v​o​r​i​t​e​ ​{​s​e​l​e​c​t​e​d​C​o​u​n​t​}​ ​i​t​e​m​(​s​)​?
+					 * @param {unknown} selectedCount
+					 */
+					Title: RequiredParams<'selectedCount'>
+					/**
+					 * A​r​e​ ​y​o​u​ ​s​u​r​e​ ​y​o​u​ ​w​a​n​t​ ​t​o​ ​f​a​v​o​r​i​t​e​ ​{​s​e​l​e​c​t​e​d​C​o​u​n​t​}​ ​i​t​e​m​(​s​)​?
+					 * @param {unknown} selectedCount
+					 */
+					Paragraph: RequiredParams<'selectedCount'>
+					/**
+					 * F​a​v​o​r​i​t​e
+					 */
+					ConfirmButton: string
+				}
+				Unfavorite: {
+					/**
+					 * U​n​f​a​v​o​r​i​t​e​ ​{​s​e​l​e​c​t​e​d​C​o​u​n​t​}​ ​i​t​e​m​(​s​)​?
+					 * @param {unknown} selectedCount
+					 */
+					Title: RequiredParams<'selectedCount'>
+					/**
+					 * A​r​e​ ​y​o​u​ ​s​u​r​e​ ​y​o​u​ ​w​a​n​t​ ​t​o​ ​u​n​f​a​v​o​r​i​t​e​ ​{​s​e​l​e​c​t​e​d​C​o​u​n​t​}​ ​i​t​e​m​(​s​)​?
+					 * @param {unknown} selectedCount
+					 */
+					Paragraph: RequiredParams<'selectedCount'>
+					/**
+					 * U​n​f​a​v​o​r​i​t​e
+					 */
+					ConfirmButton: string
+				}
+			}
+		}
 		ServerUrlInput: {
 			/**
 			 * S​e​r​v​e​r​ ​U​R​L
@@ -2091,6 +2197,98 @@ export type TranslationFunctions = {
 		 * Confirm
 		 */
 		ConfirmButton: () => LocalizedString
+		BatchEditBar: {
+			/**
+			 * Pause Editing
+			 */
+			PauseEditingButton: () => LocalizedString
+			/**
+			 * Deselect ({selectedCount})
+			 */
+			DeselectButton: (arg: { selectedCount: unknown }) => LocalizedString
+			/**
+			 * Delete ({selectedCount})
+			 */
+			DeleteButton: (arg: { selectedCount: unknown }) => LocalizedString
+			/**
+			 * Favorite ({selectedCount})
+			 */
+			FavoriteButton: (arg: { selectedCount: unknown }) => LocalizedString
+			/**
+			 * Approve ({selectedCount})
+			 */
+			ApproveButton: (arg: { selectedCount: unknown }) => LocalizedString
+			/**
+			 * Reject ({selectedCount})
+			 */
+			RejectButton: (arg: { selectedCount: unknown }) => LocalizedString
+			/**
+			 * Unfavorite ({selectedCount})
+			 */
+			UnfavoriteButton: (arg: { selectedCount: unknown }) => LocalizedString
+			ConfirmationModal: {
+				/**
+				 * Cancel
+				 */
+				CancelButton: () => LocalizedString
+				Deselect: {
+					/**
+					 * Deselect {selectedCount} item(s)?
+					 */
+					Title: (arg: { selectedCount: unknown }) => LocalizedString
+					/**
+					 * Are you sure you want to deselect {selectedCount} item(s)?
+					 */
+					Paragraph: (arg: { selectedCount: unknown }) => LocalizedString
+					/**
+					 * Deselect
+					 */
+					ConfirmButton: () => LocalizedString
+				}
+				Delete: {
+					/**
+					 * Delete {selectedCount} item(s)?
+					 */
+					Title: (arg: { selectedCount: unknown }) => LocalizedString
+					/**
+					 * Are you sure you want to delete {selectedCount} item(s)?
+					 */
+					Paragraph: (arg: { selectedCount: unknown }) => LocalizedString
+					/**
+					 * Delete
+					 */
+					ConfirmButton: () => LocalizedString
+				}
+				Favorite: {
+					/**
+					 * Favorite {selectedCount} item(s)?
+					 */
+					Title: (arg: { selectedCount: unknown }) => LocalizedString
+					/**
+					 * Are you sure you want to favorite {selectedCount} item(s)?
+					 */
+					Paragraph: (arg: { selectedCount: unknown }) => LocalizedString
+					/**
+					 * Favorite
+					 */
+					ConfirmButton: () => LocalizedString
+				}
+				Unfavorite: {
+					/**
+					 * Unfavorite {selectedCount} item(s)?
+					 */
+					Title: (arg: { selectedCount: unknown }) => LocalizedString
+					/**
+					 * Are you sure you want to unfavorite {selectedCount} item(s)?
+					 */
+					Paragraph: (arg: { selectedCount: unknown }) => LocalizedString
+					/**
+					 * Unfavorite
+					 */
+					ConfirmButton: () => LocalizedString
+				}
+			}
+		}
 		ServerUrlInput: {
 			/**
 			 * Server URL

@@ -12,7 +12,7 @@
 	export let noPadding = false;
 	export let target: THrefTarget = '_self';
 	export { classes as class };
-	export let type: 'primary' | 'success' | 'danger' = 'primary';
+	export let type: 'primary' | 'success' | 'danger' | 'no-bg-on-bg' = 'primary';
 	export let fadeOnDisabled = false;
 	let classes = '';
 </script>
@@ -32,9 +32,12 @@
 			? 'text-sm rounded-lg2'
 			: size === 'sm'
 			? 'text-sm rounded-lg2'
-			: 'text-base rounded-xl'} relative flex items-center justify-center text-center
-			shadow-lg shadow-c-shadow/[var(--o-shadow-strong)] text-c-on-primary font-bold gap-2 
-			overflow-hidden z-0 group {loading
+			: 'text-base rounded-xl'} relative flex items-center justify-center text-center font-bold gap-2 
+			overflow-hidden z-0 group {type === 'no-bg-on-bg'
+			? ''
+			: 'shadow-lg shadow-c-shadow/[var(--o-shadow-strong)]'} {type === 'no-bg-on-bg'
+			? 'text-c-on-bg/60'
+			: 'text-c-on-primary'} {loading
 			? type === 'success'
 				? 'bg-c-success-secondary'
 				: type === 'danger'
@@ -44,6 +47,8 @@
 			? 'bg-c-success'
 			: type === 'danger'
 			? 'bg-c-danger'
+			: type === 'no-bg-on-bg'
+			? 'bg-c-primary/0'
 			: 'bg-c-primary'} {classes}"
 	>
 		<div
@@ -57,6 +62,8 @@
 					? 'bg-c-success-secondary'
 					: type === 'danger'
 					? 'bg-c-danger-secondary'
+					: type === 'no-bg-on-bg'
+					? 'bg-c-on-bg/10'
 					: 'bg-c-secondary'} {!$isTouchscreen ? 'group-hover:translate-x-[-45%]' : ''}"
 			/>
 		</div>
@@ -99,9 +106,12 @@
 			? 'text-sm rounded-lg2'
 			: size === 'sm'
 			? 'text-sm rounded-lg2'
-			: 'text-base rounded-xl'} relative flex items-center justify-center text-center
-			shadow-lg shadow-c-shadow/[var(--o-shadow-strong)] text-c-on-primary font-bold gap-2 
-			overflow-hidden z-0 group {loading
+			: 'text-base rounded-xl'} relative flex items-center justify-center text-center font-bold gap-2 
+			overflow-hidden z-0 group {type === 'no-bg-on-bg'
+			? ''
+			: 'shadow-lg shadow-c-shadow/[var(--o-shadow-strong)]'} {type === 'no-bg-on-bg'
+			? 'text-c-on-bg/60'
+			: 'text-c-on-primary'} {loading
 			? type === 'success'
 				? 'bg-c-success-secondary'
 				: type === 'danger'
@@ -111,6 +121,8 @@
 			? 'bg-c-success'
 			: type === 'danger'
 			? 'bg-c-danger'
+			: type === 'no-bg-on-bg'
+			? 'bg-c-primary/0'
 			: 'bg-c-primary'} {fadeOnDisabled && disabled ? 'opacity-75' : ''} {classes}"
 	>
 		<div
@@ -124,6 +136,8 @@
 					? 'bg-c-success-secondary'
 					: type === 'danger'
 					? 'bg-c-danger-secondary'
+					: type === 'no-bg-on-bg'
+					? 'bg-c-on-bg/10'
 					: 'bg-c-secondary'} {!$isTouchscreen
 					? 'group-enabled:group-hover:translate-x-[-45%]'
 					: ''}"
