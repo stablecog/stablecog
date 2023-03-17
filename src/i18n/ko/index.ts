@@ -180,7 +180,31 @@ const ko: Translation = {
 			DeleteButton: 'Delete ({selectedCount})',
 			FavoriteButton: 'Favorite ({selectedCount})',
 			ApproveButton: 'Approve ({selectedCount})',
-			RejectButton: 'Reject ({selectedCount})'
+			RejectButton: 'Reject ({selectedCount})',
+			UnfavoriteButton: 'Unfavorite ({selectedCount})',
+			ConfirmationModal: {
+				CancelButton: 'Cancel',
+				Deselect: {
+					Title: 'Deselect {selectedCount} item(s)?',
+					Paragraph: 'Are you sure you want to deselect {selectedCount} item(s)?',
+					ConfirmButton: 'Deselect'
+				},
+				Delete: {
+					Title: 'Delete {selectedCount} item(s)?',
+					Paragraph: 'Are you sure you want to delete {selectedCount} item(s)?',
+					ConfirmButton: 'Delete'
+				},
+				Favorite: {
+					Title: 'Favorite {selectedCount} item(s)?',
+					Paragraph: 'Are you sure you want to favorite {selectedCount} item(s)?',
+					ConfirmButton: 'Favorite'
+				},
+				Unfavorite: {
+					Title: 'Unfavorite {selectedCount} item(s)?',
+					Paragraph: 'Are you sure you want to unfavorite {selectedCount} item(s)?',
+					ConfirmButton: 'Unfavorite'
+				}
+			}
 		},
 		ServerUrlInput: {
 			Placeholder: '커스텀 서버 주소'
