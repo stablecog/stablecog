@@ -1,3 +1,5 @@
+const maxPromptLength = 100;
+
 export function getImageFileNameFromGeneration({
 	url,
 	isUpscaled,
@@ -14,7 +16,11 @@ export function getImageFileNameFromGeneration({
 	}
 	return `[s_${seed}]-[gs_${guidanceScale}]-[is_${inferenceSteps}]-[u_${
 		isUpscaled ? '1' : '0'
-	}]-${prompt}.${extension}`;
+	}]-${replaceSpaces(prompt.slice(0, maxPromptLength))}.${extension}`;
+}
+
+function replaceSpaces(str: string) {
+	return str.replace(/ /g, '_');
 }
 
 interface IGetImageFileNameFromGenerationProps {
