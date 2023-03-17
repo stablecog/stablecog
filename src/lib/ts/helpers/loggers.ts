@@ -94,6 +94,11 @@ export function logGenerationOutputSubmittedToGallery(
 	mixpanel.track('Generation Output | Submitted to Gallery', { ...props });
 }
 
+export function logBatchEditActived(props: IBatchEditActivedProps) {
+	mixpanel.track('Batch Edit | Activated', { ...props });
+	/* posthog.capture('Batch Edit | Activated', { ...props }); */
+}
+
 export function logGenerationFailed({
 	generation,
 	error,
@@ -279,4 +284,11 @@ interface IGenerationOutputSubmittedToGalleryProps {
 	'SC - Advanced Mode': boolean;
 	'SC - Stripe Product Id'?: string;
 	'SC - Page': string;
+}
+
+interface IBatchEditActivedProps {
+	'SC - Locale': string;
+	'SC - Advanced Mode': boolean;
+	'SC - Page': string;
+	'SC - Stripe Product Id'?: string;
 }

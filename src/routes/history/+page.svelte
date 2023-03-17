@@ -16,6 +16,7 @@
 	import LL, { locale } from '$i18n/i18n-svelte';
 	import { expandCollapse } from '$ts/animation/transitions';
 	import { canonicalUrl } from '$ts/constants/main';
+	import { logBatchEditActived } from '$ts/helpers/loggers';
 	/* import {
 		doesUserHaveLegacyGenerations,
 		downloadLegacyGenerations
@@ -24,6 +25,7 @@
 		getUserGenerationFullOutputs,
 		type TUserGenerationFullOutputsPage
 	} from '$ts/queries/userGenerations';
+	import { advancedModeApp } from '$ts/stores/advancedMode';
 	import { navbarHeight } from '$ts/stores/navbarHeight';
 	import {
 		isUserGalleryEditActive,
@@ -34,6 +36,7 @@
 		type TUserGalleryView
 	} from '$ts/stores/user/gallery';
 	import { userGenerationFullOutputsQueryKey } from '$ts/stores/user/keys';
+	import { userSummary } from '$ts/stores/user/summary';
 	import type { TTab } from '$ts/types/main';
 	import { activeGeneration } from '$userStores/generation';
 	import { createInfiniteQuery, type CreateInfiniteQueryResult } from '@tanstack/svelte-query';
@@ -99,6 +102,18 @@
 			icon: IconStarOutlined
 		}
 	];
+
+	$: $isUserGalleryEditActive, onUserGalleryEditActiveChanged();
+
+	function onUserGalleryEditActiveChanged() {
+		if (!$isUserGalleryEditActive) return;
+		logBatchEditActived({
+			'SC - Stripe Product Id': $userSummary?.product_id,
+			'SC - Locale': $locale,
+			'SC - Advanced Mode': $advancedModeApp,
+			'SC - Page': `${$page.url.pathname}${$page.url.search}`
+		});
+	}
 
 	const onPagesChanged = () => {
 		if (!$page.data.session?.user.id || !$userGenerationFullOutputsQuery) return;
