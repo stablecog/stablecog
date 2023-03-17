@@ -28,6 +28,7 @@
 	import IconBolt from '$components/icons/IconBolt.svelte';
 	import { userSummary } from '$ts/stores/user/summary';
 	import { isUserGalleryEditActive } from '$ts/stores/user/gallery';
+	import { isAdminGalleryEditActive } from '$ts/stores/admin/gallery';
 
 	let isSignInModalOpen = false;
 	let isSettingsOpen = false;
@@ -58,7 +59,7 @@
 	const lastNotification = 'our-first-big-update';
 
 	$: nonStickyNavbarRoutes = [
-		{ route: '/admin/gallery', nonStickyIfTrue: true },
+		{ route: '/admin/gallery', nonStickyIfTrue: $isAdminGalleryEditActive },
 		{ route: '/history', nonStickyIfTrue: $isUserGalleryEditActive }
 	];
 

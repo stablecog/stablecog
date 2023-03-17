@@ -1,7 +1,6 @@
 <script lang="ts">
 	import { page } from '$app/stores';
 	import Button from '$components/buttons/Button.svelte';
-	import NoBgButton from '$components/buttons/NoBgButton.svelte';
 	import SubtleButton from '$components/buttons/SubtleButton.svelte';
 	import IconCancel from '$components/icons/IconCancel.svelte';
 	import IconPause from '$components/icons/IconPause.svelte';
@@ -28,7 +27,8 @@
 		adminGalleryCurrentFilter,
 		adminGallerySelectedOutputIds,
 		adminGallerySelectedOutputObjects,
-		isAdminGalleryEditActive
+		isAdminGalleryEditActive,
+		type TAdminGalleryAction
 	} from '$ts/stores/admin/gallery';
 	import { advancedModeApp } from '$ts/stores/advancedMode';
 	import {
@@ -64,6 +64,14 @@
 	let isDeselectModalOpen = false;
 
 	let actionStatus: TActionStatus = 'idle';
+	let actionType:
+		| 'delete'
+		| 'favorite'
+		| 'unfavorite'
+		| 'deselect'
+		| 'approve'
+		| 'reject'
+		| undefined = undefined;
 	type TActionStatus = 'idle' | 'loading' | 'error';
 
 	function deselectOutputs() {
@@ -259,14 +267,70 @@
 		deselectOutputs();
 		actionStatus = 'idle';
 	}
+
+	async function approveOrReject(action: TAdminGalleryAction) {
+		actionStatus = 'loading';
+		actionType = action;
+		try {
+			const ids = [...$adminGallerySelectedOutputIds];
+			const res = await fetch(`${apiUrl.origin}/v1/admin/gallery`, {
+				method: 'PUT',
+				headers: {
+					'Content-Type': 'application/json',
+					Authorization: `Bearer ${$page.data.session?.access_token}`
+				},
+				body: JSON.stringify({
+					action,
+					generation_output_ids: ids
+				})
+			});
+			if (!res.ok) throw new Error('Error approving/rejecting generation outputs');
+			const resJson = await res.json();
+			adminGalleryActionableItems.set(
+				$adminGalleryActionableItems.filter(
+					(i) => !ids.includes(i.output_id) || i.filter !== $adminGalleryCurrentFilter
+				)
+			);
+			queryClient.setQueryData(
+				['admin_user_generation_full_outputs', $adminGalleryCurrentFilter],
+				(data: any) => ({
+					...data,
+					pages: data.pages.map((page: TUserGenerationFullOutputsPage) => {
+						return {
+							...page,
+							outputs: page.outputs.map((output) =>
+								ids.includes(output.id)
+									? {
+											...output,
+											gallery_status:
+												action === 'approve'
+													? 'approved'
+													: action === 'reject'
+													? 'rejected'
+													: undefined
+									  }
+									: output
+							)
+						};
+					})
+				})
+			);
+		} catch (error) {
+			console.log(error);
+		}
+		actionStatus = 'idle';
+		actionType = undefined;
+		closeModal();
+		deselectOutputs();
+	}
 </script>
 
 <div
 	transition:expandCollapse={{ duration: 200, easing: quadOut }}
-	class="w-full flex flex-col justify-start items-start bg-c-bg rounded-xl 
+	class="w-full flex flex-row flex-wrap justify-between items-center bg-c-bg rounded-xl 
 	shadow-lg shadow-c-shadow/[var(--o-shadow-strong)] ring-2 ring-c-bg-secondary"
 >
-	<div class="w-full flex flex-wrap items-center gap-2.5 p-2">
+	<div class="flex flex-wrap items-center gap-2.5 p-2">
 		<SubtleButton size="md" icon={IconPause} onClick={pauseEdit}
 			>{$LL.Shared.BatchEditBar.PauseEditingButton()}</SubtleButton
 		>
@@ -317,6 +381,38 @@
 					selectedCount: selectedOutputIds.length
 				})}
 			</SubtleButton>
+		{/if}
+		{#if type === 'admin-gallery'}
+			{#if $adminGalleryCurrentFilter !== 'rejected'}
+				<SubtleButton
+					disabled={selectedOutputIds.length === 0 || actionStatus === 'loading'}
+					loading={actionStatus === 'loading' && actionType === 'reject'}
+					withSpinner
+					size="md"
+					icon={IconTrashcan}
+					textColor="danger"
+					onClick={() => approveOrReject('reject')}
+				>
+					{$LL.Shared.BatchEditBar.RejectButton({
+						selectedCount: selectedOutputIds.length
+					})}
+				</SubtleButton>
+			{/if}
+			{#if $adminGalleryCurrentFilter !== 'approved'}
+				<SubtleButton
+					disabled={selectedOutputIds.length === 0 || actionStatus === 'loading'}
+					loading={actionStatus === 'loading' && actionType === 'approve'}
+					withSpinner
+					size="md"
+					icon={IconTrashcan}
+					textColor="success"
+					onClick={() => approveOrReject('approve')}
+				>
+					{$LL.Shared.BatchEditBar.ApproveButton({
+						selectedCount: selectedOutputIds.length
+					})}
+				</SubtleButton>
+			{/if}
 		{/if}
 	</div>
 </div>

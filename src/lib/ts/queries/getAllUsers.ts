@@ -53,6 +53,7 @@ export interface TUserForAdmin {
 	stripe_customer_id: string;
 	credits?: TUserCredit[];
 	created_at: string;
+	last_sign_in_at: string;
 	product_id?: string;
 }
 

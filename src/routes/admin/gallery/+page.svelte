@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { page } from '$app/stores';
-	import SubtleButton from '$components/buttons/SubtleButton.svelte';
+	import BatchEditBar from '$components/BatchEditBar.svelte';
 	import GenerationFullScreen from '$components/generationFullScreen/GenerationFullScreen.svelte';
 	import GenerationGridInfinite from '$components/grids/GenerationGridInfinite.svelte';
 	import IconAnimatedSpinner from '$components/icons/IconAnimatedSpinner.svelte';
@@ -8,38 +8,25 @@
 	import IconSadFace from '$components/icons/IconSadFace.svelte';
 	import IconTick from '$components/icons/IconTick.svelte';
 	import MetaTag from '$components/MetaTag.svelte';
-	import Morpher from '$components/Morpher.svelte';
 	import SignInCard from '$components/SignInCard.svelte';
 	import TabLikeDropdown from '$components/tabBars/TabLikeDropdown.svelte';
-	import ToggleIndicator from '$components/ToggleIndicator.svelte';
 	import LL from '$i18n/i18n-svelte';
-	import { apiUrl, canonicalUrl } from '$ts/constants/main';
+	import { canonicalUrl } from '$ts/constants/main';
 	import { isSuperAdmin } from '$ts/helpers/admin/roles';
 	import {
 		getAllUserGenerationFullOutputs,
 		type TUserGenerationFullOutputsPage
 	} from '$ts/queries/userGenerations';
 	import {
-		adminGalleryActionableItems,
 		adminGalleryCurrentFilter,
 		isAdminGalleryEditActive,
-		adminGallerySelectedOutputIds,
-		type TAdminGalleryAction,
 		lastFetchedAdminGalleryFilter
 	} from '$ts/stores/admin/gallery';
 	import { userSummary } from '$ts/stores/user/summary';
 	import { activeGeneration } from '$userStores/generation';
-	import {
-		createInfiniteQuery,
-		useQueryClient,
-		type CreateInfiniteQueryResult
-	} from '@tanstack/svelte-query';
-	import { quadOut } from 'svelte/easing';
-	import { fly } from 'svelte/transition';
+	import { createInfiniteQuery, type CreateInfiniteQueryResult } from '@tanstack/svelte-query';
 
 	let totalOutputs: number;
-
-	const queryClient = useQueryClient();
 
 	let allUserGenerationFullOutputsQuery:
 		| CreateInfiniteQueryResult<TUserGenerationFullOutputsPage, unknown>
@@ -83,62 +70,6 @@
 			: false
 	}`;
 
-	let approveOrRejectStatus: 'idle' | 'approving' | 'rejecting' = 'idle';
-
-	async function doActionOnItems(action: TAdminGalleryAction) {
-		if (action === 'approve') {
-			approveOrRejectStatus = 'approving';
-		} else if (action === 'reject') {
-			approveOrRejectStatus = 'rejecting';
-		}
-		try {
-			const ids = $adminGallerySelectedOutputIds;
-			const res = await fetch(`${apiUrl.origin}/v1/admin/gallery`, {
-				method: 'PUT',
-				headers: {
-					'Content-Type': 'application/json',
-					Authorization: `Bearer ${$page.data.session?.access_token}`
-				},
-				body: JSON.stringify({
-					action,
-					generation_output_ids: ids
-				})
-			});
-			if (!res.ok) throw new Error('Error approving/rejecting generation outputs');
-			const resJson = await res.json();
-			adminGalleryActionableItems.set(
-				$adminGalleryActionableItems.filter(
-					(i) => !ids.includes(i.output_id) || i.filter !== $adminGalleryCurrentFilter
-				)
-			);
-			queryClient.setQueryData(allUserGenerationFullOutputsQueryKey, (data: any) => ({
-				...data,
-				pages: data.pages.map((page: TUserGenerationFullOutputsPage) => {
-					return {
-						...page,
-						outputs: page.outputs.map((output) =>
-							ids.includes(output.id)
-								? {
-										...output,
-										gallery_status:
-											action === 'approve'
-												? 'approved'
-												: action === 'reject'
-												? 'rejected'
-												: undefined
-								  }
-								: output
-						)
-					};
-				})
-			}));
-		} catch (error) {
-			console.log(error);
-		} finally {
-			approveOrRejectStatus = 'idle';
-		}
-	}
-
 	const onPagesChanged = () => {
 		if (!$page.data.session?.user.id || !$allUserGenerationFullOutputsQuery) return;
 		if (!$allUserGenerationFullOutputsQuery.data?.pages) return;
@@ -166,7 +97,7 @@
 
 <svelte:window on:keydown={onKeyDown} />
 
-<div class="w-full flex-1 flex flex-col items-center px-1 gap-2 md:py-6 relative">
+<div class="w-full flex-1 flex flex-col items-center px-1 pt-2 md:py-6 relative">
 	{#if !$page.data.session?.user.id}
 		<div class="w-full flex-1 max-w-7xl flex justify-center px-2 py-4 md:py-2">
 			<div class="my-auto flex flex-col">
@@ -175,115 +106,51 @@
 			</div>
 		</div>
 	{:else}
-		<div class="w-full max-w-7xl flex flex-col justify-center px-1.5">
-			<div class="w-full flex flex-wrap gap-4 items-center px-2 py-2 md:px-4 md:py-3 rounded-xl">
-				<div class="flex gap-2 items-center">
-					<p class="font-bold text-xl md:text-2xl">
-						{$LL.History.GenerationsTitle()}
-					</p>
-					<p class="text-sm md:text-base text-c-on-bg/50 font-semibold mt-0.5 md:mt-1">
-						({totalOutputs !== undefined ? totalOutputs : '...'})
-					</p>
-				</div>
+		<div class="w-full max-w-7xl flex flex-col md:flex-row md:justify-between md:items-center px-1">
+			<div class="flex flex-wrap gap-2 items-center px-3">
+				<p class="font-bold text-1.5xl md:text-2xl">
+					{$LL.History.GenerationsTitle()}
+				</p>
+				<p class="text-sm md:text-base text-c-on-bg/50 font-semibold mt-0.5 md:mt-1">
+					({totalOutputs !== undefined ? totalOutputs : '...'})
+				</p>
 			</div>
-		</div>
-		<div class="top-1 px-0.5 w-full max-w-7xl sticky z-10 -mt-2">
-			<div
-				class="w-full flex flex-wrap gap-3 md:gap-4 p-2 md:p-3 shadow-lg shadow-c-shadow/[var(--o-shadow-strong)] 
-				rounded-2xl bg-c-bg border-2 border-c-bg-secondary"
-			>
-				<SubtleButton
-					class="z-10"
-					onClick={() => isAdminGalleryEditActive.set(!$isAdminGalleryEditActive)}
+			<div class="w-full md:w-64 flex z-50 mt-4 md:mt-0">
+				<TabLikeDropdown
+					class="w-full"
+					name="Filter"
+					items={[
+						{ label: $LL.Admin.Gallery.StatusDropdown.Submitted(), value: 'submitted' },
+						{ label: $LL.Admin.Gallery.StatusDropdown.Approved(), value: 'approved' },
+						{ label: $LL.Admin.Gallery.StatusDropdown.Rejected(), value: 'rejected' },
+						...(isSuperAdmin($userSummary?.roles || [])
+							? [
+									{
+										label: $LL.Admin.Gallery.StatusDropdown.Private(),
+										value: 'not_submitted'
+									}
+							  ]
+							: [])
+					]}
+					bind:value={$adminGalleryCurrentFilter}
 				>
-					<div class="flex items-center justify-center gap-4 px-1 md:px-2">
-						<p class="text-sm md:text-base">
-							{$LL.Admin.EditButton()}
-						</p>
-						<div class="-mr-1">
-							<ToggleIndicator isToggled={$isAdminGalleryEditActive} />
-						</div>
+					<div slot="title" class="p-3.5 flex items-center justify-center">
+						<IconFunnel class="w-6 h-6 text-c-on-bg/35" />
 					</div>
-				</SubtleButton>
-				{#if $isAdminGalleryEditActive}
-					<div
-						transition:fly|local={{ opacity: 0, x: -100, easing: quadOut, duration: 150 }}
-						class="flex flex-wrap gap-3 md:gap-4"
-					>
-						{#if $adminGalleryCurrentFilter !== 'approved'}
-							<SubtleButton
-								disabled={approveOrRejectStatus === 'rejecting'}
-								loading={approveOrRejectStatus === 'approving'}
-								onClick={() => doActionOnItems('approve')}
-							>
-								<Morpher morphed={approveOrRejectStatus === 'approving'}>
-									<p
-										slot="item-0"
-										class="text-sm md:text-base text-c-success px-1 md:px-3 {approveOrRejectStatus !==
-										'approving'
-											? 'opacity-100 scale-100'
-											: 'opacity-0 scale-50'}"
-									>
-										{$LL.Admin.ApproveButton()}<span
-											class="text-sm ml-1 font-normal text-c-success/75"
-											>({$adminGallerySelectedOutputIds.length})</span
-										>
-									</p>
-									<div slot="item-1">
-										<IconAnimatedSpinner class="w-7 h-7 text-c-success" />
-									</div>
-								</Morpher>
-							</SubtleButton>
-						{/if}
-						{#if $adminGalleryCurrentFilter !== 'rejected'}
-							<SubtleButton
-								disabled={approveOrRejectStatus === 'approving'}
-								loading={approveOrRejectStatus === 'rejecting'}
-								onClick={() => doActionOnItems('reject')}
-							>
-								<Morpher morphed={approveOrRejectStatus === 'rejecting'}>
-									<p
-										slot="item-0"
-										class="text-sm md:text-base text-c-danger px-1 md:px-3 {approveOrRejectStatus !==
-										'rejecting'
-											? 'opacity-100 scale-100'
-											: 'opacity-0 scale-50'}"
-									>
-										{$LL.Admin.RejectButton()}<span
-											class="text-sm ml-1 font-normal text-c-danger/75"
-											>({$adminGallerySelectedOutputIds.length})</span
-										>
-									</p>
-									<div slot="item-1">
-										<IconAnimatedSpinner class="w-7 h-7 text-c-danger" />
-									</div>
-								</Morpher>
-							</SubtleButton>
-						{/if}
-					</div>
-				{/if}
-				<div class="w-full md:w-64 max-w-full flex ml-auto">
-					<TabLikeDropdown
-						class="w-full"
-						name="Filter"
-						items={[
-							{ label: $LL.Admin.Gallery.StatusDropdown.Submitted(), value: 'submitted' },
-							{ label: $LL.Admin.Gallery.StatusDropdown.Approved(), value: 'approved' },
-							{ label: $LL.Admin.Gallery.StatusDropdown.Rejected(), value: 'rejected' },
-							...(isSuperAdmin($userSummary?.roles || [])
-								? [{ label: $LL.Admin.Gallery.StatusDropdown.Private(), value: 'not_submitted' }]
-								: [])
-						]}
-						bind:value={$adminGalleryCurrentFilter}
-					>
-						<div slot="title" class="p-3.5 flex items-center justify-center">
-							<IconFunnel class="w-6 h-6 text-c-on-bg/35" />
-						</div>
-					</TabLikeDropdown>
-				</div>
+				</TabLikeDropdown>
 			</div>
 		</div>
-		<div class="w-full flex-1 flex flex-col">
+		<!-- Edit bar -->
+		<div
+			class="w-full top-1 max-w-7xl px-1 transition-all sticky z-40 {$isAdminGalleryEditActive
+				? 'mt-4'
+				: 'mt-0'}"
+		>
+			{#if $isAdminGalleryEditActive}
+				<BatchEditBar type="admin-gallery" />
+			{/if}
+		</div>
+		<div class="w-full flex-1 flex flex-col mt-3">
 			{#if allUserGenerationFullOutputsQuery === undefined || $allUserGenerationFullOutputsQuery === undefined || $allUserGenerationFullOutputsQuery.isInitialLoading}
 				<div
 					class="w-full flex flex-col text-c-on-bg/60 flex-1 py-6 px-4 justify-center items-center text-center"

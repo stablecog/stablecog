@@ -1,4 +1,6 @@
 <script lang="ts">
+	import IconAnimatedSpinner from '$components/icons/IconAnimatedSpinner.svelte';
+	import Morpher from '$components/Morpher.svelte';
 	import { isTouchscreen } from '$ts/stores/isTouchscreen';
 	import type { THrefTarget } from '$ts/types/main';
 
@@ -11,9 +13,10 @@
 	export { classes as class };
 	export let disabled = false;
 	export let loading = false;
+	export let withSpinner = false;
 	export let target: THrefTarget = '_self';
 	export let size: 'sm' | 'md' = 'sm';
-	export let textColor: 'on-bg' | 'secondary' | 'danger' = 'on-bg';
+	export let textColor: 'on-bg' | 'secondary' | 'danger' | 'success' = 'on-bg';
 	export let icon: ConstructorOfATypedSvelteComponent | undefined = undefined;
 
 	let classes = '';
@@ -52,17 +55,36 @@
 				? 'text-c-on-primary'
 				: textColor === 'danger'
 				? 'text-c-danger'
+				: textColor === 'success'
+				? 'text-c-success'
 				: textColor === 'secondary'
 				? 'text-c-secondary'
 				: 'text-c-on-bg'}"
 		>
-			{#if icon}
-				<svelte:component
-					this={icon}
-					class="{size === 'md' ? 'w-5 h-5 -ml-0.5' : 'w-4 h-4 -ml-0.25'} flex-shrink-0"
-				/>
+			{#if withSpinner}
+				<Morpher morphed={loading}>
+					<div slot="item-0" class="w-full flex gap-1.5">
+						{#if icon}
+							<svelte:component
+								this={icon}
+								class="{size === 'md' ? 'w-5 h-5 -ml-0.5' : 'w-4 h-4 -ml-0.25'} flex-shrink-0"
+							/>
+						{/if}
+						<slot />
+					</div>
+					<div slot="item-1">
+						<IconAnimatedSpinner {loading} class={size === 'md' ? 'w-5 h-5' : 'w-4 h-4'} />
+					</div>
+				</Morpher>
+			{:else}
+				{#if icon}
+					<svelte:component
+						this={icon}
+						class="{size === 'md' ? 'w-5 h-5 -ml-0.5' : 'w-4 h-4 -ml-0.25'} flex-shrink-0"
+					/>
+				{/if}
+				<slot />
 			{/if}
-			<slot />
 		</div>
 	</a>
 {:else}
@@ -100,17 +122,36 @@
 				? 'text-c-on-primary'
 				: textColor === 'danger'
 				? 'text-c-danger'
+				: textColor === 'success'
+				? 'text-c-success'
 				: textColor === 'secondary'
 				? 'text-c-secondary'
 				: 'text-c-on-bg'}"
 		>
-			{#if icon}
-				<svelte:component
-					this={icon}
-					class="{size === 'md' ? 'w-5 h-5 -ml-0.5' : 'w-4 h-4 -ml-0.25'} flex-shrink-0"
-				/>
+			{#if withSpinner}
+				<Morpher morphed={loading}>
+					<div slot="item-0" class="w-full flex gap-1.5">
+						{#if icon}
+							<svelte:component
+								this={icon}
+								class="{size === 'md' ? 'w-5 h-5 -ml-0.5' : 'w-4 h-4 -ml-0.25'} flex-shrink-0"
+							/>
+						{/if}
+						<slot />
+					</div>
+					<div slot="item-1">
+						<IconAnimatedSpinner {loading} class={size === 'md' ? 'w-5 h-5' : 'w-4 h-4'} />
+					</div>
+				</Morpher>
+			{:else}
+				{#if icon}
+					<svelte:component
+						this={icon}
+						class="{size === 'md' ? 'w-5 h-5 -ml-0.5' : 'w-4 h-4 -ml-0.25'} flex-shrink-0"
+					/>
+				{/if}
+				<slot />
 			{/if}
-			<slot />
 		</div>
 	</button>
 {/if}
