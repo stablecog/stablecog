@@ -57,7 +57,15 @@
 				inferenceSteps: generation.inference_steps,
 				isUpscaled: generation.selected_output.upscaled_image_url !== undefined,
 				prompt: generation.prompt.text,
-				seed: generation.seed
+				seed: generation.seed,
+				logProps: {
+					'SC - Advanced Mode': $advancedModeApp,
+					'SC - Locale': $locale,
+					'SC - Output Id': generation.selected_output.id,
+					'SC - Page': `${$page.url.pathname}${$page.url.search}`,
+					'SC - Generation Id': generation.id,
+					'SC - Stripe Product Id': $userSummary?.product_id
+				}
 			});
 			setButtonObjectWithState('download', 'success');
 		} catch (error) {

@@ -1,16 +1,17 @@
 <script lang="ts">
+	import { page } from '$app/stores';
 	import IconAnimatedSpinner from '$components/icons/IconAnimatedSpinner.svelte';
 	import IconDownload from '$components/icons/IconDownload.svelte';
 	import Morpher from '$components/Morpher.svelte';
+	import { locale } from '$i18n/i18n-svelte';
 	import { downloadGenerationImage } from '$ts/helpers/downloadGenerationImage';
+	import { advancedModeApp } from '$ts/stores/advancedMode';
 	import { isTouchscreen } from '$ts/stores/isTouchscreen';
+	import type { TGenerationWithSelectedOutput } from '$ts/stores/user/generation';
+	import { userSummary } from '$ts/stores/user/summary';
 
-	export let url: string;
-	export let prompt: string;
-	export let seed: number;
-	export let inferenceSteps: number;
-	export let guidanceScale: number;
-	export let isUpscaled: boolean;
+	export let generation: TGenerationWithSelectedOutput;
+
 	export { classes as class };
 	let classes = '';
 
@@ -22,12 +23,22 @@
 		downloadStatus = 'downloading';
 		try {
 			await downloadGenerationImage({
-				url,
-				prompt,
-				seed,
-				inferenceSteps,
-				guidanceScale,
-				isUpscaled
+				url: generation.selected_output.upscaled_image_url
+					? generation.selected_output.upscaled_image_url
+					: generation.selected_output.image_url,
+				prompt: generation.prompt.text,
+				seed: generation.seed,
+				inferenceSteps: generation.inference_steps,
+				guidanceScale: generation.guidance_scale,
+				isUpscaled: generation.selected_output.upscaled_image_url !== undefined,
+				logProps: {
+					'SC - Advanced Mode': $advancedModeApp,
+					'SC - Locale': $locale,
+					'SC - Output Id': generation.selected_output.id,
+					'SC - Page': `${$page.url.pathname}${$page.url.search}`,
+					'SC - Generation Id': generation.id,
+					'SC - Stripe Product Id': $userSummary?.product_id
+				}
 			});
 		} catch (error) {
 			console.log(error);

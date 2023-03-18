@@ -78,20 +78,27 @@ export function logGallerySearch(props: IGallerySearchProps) {
 
 export function logGenerationOutputDeleted(props: IGenerationOutputActionProps) {
 	mixpanel.track('Generation Output | Deleted', { ...props });
+	/* posthog.capture('Generation Output | Deleted', { ...props }); */
 }
 
 export function logGenerationOutputFavorited(props: IGenerationOutputActionProps) {
 	mixpanel.track('Generation Output | Favorited', { ...props });
+	/* posthog.capture('Generation Output | Favorited', { ...props }); */
 }
 
 export function logGenerationOutputUnfavorited(props: IGenerationOutputActionProps) {
 	mixpanel.track('Generation Output | Unfavorited', { ...props });
+	/* posthog.capture('Generation Output | Unfavorited', { ...props }); */
 }
 
-export function logGenerationOutputSubmittedToGallery(
-	props: IGenerationOutputSubmittedToGalleryProps
-) {
+export function logGenerationOutputSubmittedToGallery(props: IGenerationOutputActionProps) {
 	mixpanel.track('Generation Output | Submitted to Gallery', { ...props });
+	/* posthog.capture('Generation Output | Submitted to Gallery', { ...props }); */
+}
+
+export function logGenerationOutputDownloaded(props: IGenerationOutputActionProps) {
+	mixpanel.track('Generation Output | Downloaded', { ...props });
+	/* posthog.capture('Generation Output | Downloaded', { ...props }); */
 }
 
 export function logBatchEditActived(props: IBatchEditActivedProps) {
@@ -273,16 +280,7 @@ interface IGallerySearchProps {
 	'SC - Search Query': string;
 }
 
-interface IGenerationOutputActionProps {
-	'SC - Generation Id'?: string;
-	'SC - Output Id': string;
-	'SC - Locale': string;
-	'SC - Advanced Mode': boolean;
-	'SC - Stripe Product Id'?: string;
-	'SC - Page': string;
-}
-
-interface IGenerationOutputSubmittedToGalleryProps {
+export interface IGenerationOutputActionProps {
 	'SC - Generation Id'?: string;
 	'SC - Output Id': string;
 	'SC - Locale': string;

@@ -30,8 +30,6 @@
 	} from '$ts/stores/user/gallery';
 	import { userSummary } from '$ts/stores/user/summary';
 	import { activeGeneration, type TGenerationWithSelectedOutput } from '$userStores/generation';
-	import { stringToArray } from 'konva/lib/shapes/Text';
-	import { tick } from 'svelte';
 	import { quadOut } from 'svelte/easing';
 	import { fade, fly, scale } from 'svelte/transition';
 
@@ -317,17 +315,7 @@
 					/>
 				{/if}
 				{#if cardType === 'generate' || cardType === 'history'}
-					<DownloadGenerationButton
-						class="p-1.5 -ml-1.5"
-						url={generation.selected_output.upscaled_image_url
-							? generation.selected_output.upscaled_image_url
-							: generation.selected_output.image_url}
-						isUpscaled={generation.selected_output.upscaled_image_url !== undefined}
-						prompt={generation.prompt.text}
-						seed={generation.seed}
-						guidanceScale={generation.guidance_scale}
-						inferenceSteps={generation.inference_steps}
-					/>
+					<DownloadGenerationButton class="p-1.5 -ml-1.5" {generation} />
 				{:else if cardType === 'gallery'}
 					<GenerateButton {generation} class="p-1.5 -ml-1.5" />
 				{/if}

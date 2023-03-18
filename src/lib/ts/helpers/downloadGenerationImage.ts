@@ -1,5 +1,9 @@
 import { PUBLIC_BUCKET_ORIGIN_URL, PUBLIC_BUCKET_URL } from '$env/static/public';
 import { getImageFileNameFromGeneration } from '$ts/helpers/getImageFileNameFromGeneration';
+import {
+	logGenerationOutputDownloaded,
+	type IGenerationOutputActionProps
+} from '$ts/helpers/loggers';
 
 export async function downloadGenerationImage({
 	url,
@@ -7,7 +11,8 @@ export async function downloadGenerationImage({
 	prompt,
 	seed,
 	guidanceScale,
-	inferenceSteps
+	inferenceSteps,
+	logProps
 }: TDownloadGenerationImageProps) {
 	const res = await fetch(`${url}?download=true`);
 	const blob = await res.blob();
@@ -24,6 +29,7 @@ export async function downloadGenerationImage({
 	a.download = fileName;
 	a.click();
 	a.remove();
+	logGenerationOutputDownloaded(logProps);
 }
 
 interface TDownloadGenerationImageProps {
@@ -33,4 +39,5 @@ interface TDownloadGenerationImageProps {
 	seed: number;
 	guidanceScale: number;
 	inferenceSteps: number;
+	logProps: IGenerationOutputActionProps;
 }
