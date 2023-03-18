@@ -101,7 +101,7 @@ export function logBatchEditActived(props: IBatchEditActivedProps) {
 
 export function logBatchEditDeactivated(props: IBatchEditActivedProps) {
 	mixpanel.track('Batch Edit | Deactivated', { ...props });
-	/* posthog.capture('Batch Edit | Activated', { ...props }); */
+	/* posthog.capture('Batch Edit | Deactivated', { ...props }); */
 }
 
 export function logGenerationFailed({
