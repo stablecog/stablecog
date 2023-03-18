@@ -92,8 +92,10 @@
 
 	$: if (mounted && $page.data.session?.user.id) {
 		mixpanel.identify($page.data.session.user.id);
-		mixpanel.people.set({ $email: $page.data.session.user.email });
-		mixpanel.people.set({ 'SC - Stripe Product Id': $userSummary?.product_id });
+		mixpanel.people.set({
+			$email: $page.data.session.user.email,
+			'SC - Stripe Product Id': $userSummary?.product_id
+		});
 		posthog.identify($page.data.session.user.id, {
 			email: $page.data.session.user.email,
 			'SC - Stripe Product Id': $userSummary?.product_id
