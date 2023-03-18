@@ -94,7 +94,7 @@
 							<IconButton name="Extra Settings" onClick={toggleExtraAccountSettings}>
 								<IconThreeDots
 									class="w-8 h-8 transform transition text-c-on-bg/60 {!$isTouchscreen
-										? 'group-hover:text-c-primary'
+										? 'group-hover/iconbutton:text-c-primary'
 										: ''} {isExtraAccountSettingsOpen ? 'rotate-90 text-c-primary' : 'rotate-0'}"
 								/>
 							</IconButton>
