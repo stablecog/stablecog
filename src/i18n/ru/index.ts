@@ -320,6 +320,7 @@ const ru: Translation = {
 			DeletedTitle: 'Deleted',
 			StatusDropdown: {
 				All: 'All',
+				ManuallySubmitted: 'Manually Submitted',
 				Submitted: 'Submitted',
 				Approved: 'Approved',
 				Rejected: 'Rejected',

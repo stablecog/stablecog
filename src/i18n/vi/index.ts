@@ -320,6 +320,7 @@ const vi: Translation = {
 			DeletedTitle: 'Đã xóa',
 			StatusDropdown: {
 				All: 'All',
+				ManuallySubmitted: 'Manually Submitted',
 				Submitted: 'Submitted',
 				Approved: 'Approved',
 				Rejected: 'Rejected',

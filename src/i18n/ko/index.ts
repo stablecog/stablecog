@@ -319,6 +319,7 @@ const ko: Translation = {
 			DeletedTitle: '삭제됨',
 			StatusDropdown: {
 				All: 'All',
+				ManuallySubmitted: 'Manually Submitted',
 				Submitted: 'Submitted',
 				Approved: 'Approved',
 				Rejected: 'Rejected',

@@ -319,6 +319,7 @@ const ptBr: Translation = {
 			DeletedTitle: 'Deletadas',
 			StatusDropdown: {
 				All: 'All',
+				ManuallySubmitted: 'Manually Submitted',
 				Submitted: 'Submitted',
 				Approved: 'Approved',
 				Rejected: 'Rejected',

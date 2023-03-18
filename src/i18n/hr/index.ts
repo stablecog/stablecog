@@ -318,6 +318,7 @@ const hr: Translation = {
 			DeletedTitle: 'Izbrisano',
 			StatusDropdown: {
 				All: 'All',
+				ManuallySubmitted: 'Manually Submitted',
 				Submitted: 'Submitted',
 				Approved: 'Approved',
 				Rejected: 'Rejected',

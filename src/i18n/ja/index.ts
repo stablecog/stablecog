@@ -320,6 +320,7 @@ const ja: Translation = {
 			DeletedTitle: '削除済',
 			StatusDropdown: {
 				All: 'All',
+				ManuallySubmitted: 'Manually Submitted',
 				Submitted: 'Submitted',
 				Approved: 'Approved',
 				Rejected: 'Rejected',

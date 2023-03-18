@@ -11,7 +11,8 @@ export interface TUserSummary {
 	product_id?: TStripeSupportedProductIdSubscriptions;
 	price_id?: TStripeSupportedPriceIdSubscriptionsMo;
 	roles?: string[];
-	free_credit_amount: number;
 	renews_at?: string;
 	cancels_at?: string;
+	more_credits_at?: string;
+	free_credit_amount?: number;
 }

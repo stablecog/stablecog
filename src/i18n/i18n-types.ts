@@ -954,6 +954,10 @@ type RootTranslation = {
 				 */
 				All: string
 				/**
+				 * M​a​n​u​a​l​l​y​ ​S​u​b​m​i​t​t​e​d
+				 */
+				ManuallySubmitted: string
+				/**
 				 * S​u​b​m​i​t​t​e​d
 				 */
 				Submitted: string
@@ -2593,6 +2597,10 @@ export type TranslationFunctions = {
 				 * All
 				 */
 				All: () => LocalizedString
+				/**
+				 * Manually Submitted
+				 */
+				ManuallySubmitted: () => LocalizedString
 				/**
 				 * Submitted
 				 */

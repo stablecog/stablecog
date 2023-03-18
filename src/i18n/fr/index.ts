@@ -320,6 +320,7 @@ const fr: Translation = {
 			DeletedTitle: 'Supprimé',
 			StatusDropdown: {
 				All: 'All',
+				ManuallySubmitted: 'Manually Submitted',
 				Submitted: 'Submitted',
 				Approved: 'Approved',
 				Rejected: 'Rejected',

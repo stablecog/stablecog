@@ -318,6 +318,7 @@ const de: Translation = {
 			DeletedTitle: 'Gelöscht',
 			StatusDropdown: {
 				All: 'Alle',
+				ManuallySubmitted: 'Manually Submitted',
 				Submitted: 'Eingereicht',
 				Approved: 'Genehmigt',
 				Rejected: 'Abgelehnt',

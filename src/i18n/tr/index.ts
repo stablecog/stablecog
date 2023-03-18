@@ -319,6 +319,7 @@ const tr: Translation = {
 			DeletedTitle: 'Silinen',
 			StatusDropdown: {
 				All: 'Hepsi',
+				ManuallySubmitted: 'Manually Submitted',
 				Submitted: 'Gönderilenler',
 				Approved: 'Onaylananlar',
 				Rejected: 'Reddedilenler',
