@@ -99,6 +99,11 @@ export function logBatchEditActived(props: IBatchEditActivedProps) {
 	/* posthog.capture('Batch Edit | Activated', { ...props }); */
 }
 
+export function logBatchEditDeactivated(props: IBatchEditActivedProps) {
+	mixpanel.track('Batch Edit | Deactivated', { ...props });
+	/* posthog.capture('Batch Edit | Activated', { ...props }); */
+}
+
 export function logGenerationFailed({
 	generation,
 	error,

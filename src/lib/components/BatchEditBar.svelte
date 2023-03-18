@@ -18,6 +18,7 @@
 	import { expandCollapse } from '$ts/animation/transitions';
 	import { apiUrl } from '$ts/constants/main';
 	import {
+		logBatchEditDeactivated,
 		logGenerationOutputDeleted,
 		logGenerationOutputFavorited,
 		logGenerationOutputUnfavorited
@@ -101,6 +102,12 @@
 		} else if (type === 'history') {
 			isUserGalleryEditActive.set(false);
 		}
+		logBatchEditDeactivated({
+			'SC - Advanced Mode': $advancedModeApp,
+			'SC - Locale': $locale,
+			'SC - Page': `${$page.url.pathname}${$page.url.search}`,
+			'SC - Stripe Product Id': $userSummary?.product_id
+		});
 	}
 
 	function onDeleteButtonClicked() {
