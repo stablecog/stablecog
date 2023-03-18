@@ -41,7 +41,7 @@
 			<div class="p-0.5">
 				<IconChevronDown
 					class="w-7 h-7 text-c-on-bg/40 transition {!$isTouchscreen
-						? 'group-hover:text-c-primary'
+						? 'group-hover/iconbutton:text-c-primary'
 						: ''}"
 				/>
 			</div>

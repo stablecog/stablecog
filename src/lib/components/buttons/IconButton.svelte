@@ -19,7 +19,7 @@
 		data-sveltekit-prefetch={prefetch && target === '_self' ? '' : 'off'}
 		{href}
 		{target}
-		class="group-[iconbutton] rounded-xl {classes}"
+		class="group/iconbutton rounded-xl {classes}"
 		aria-label={name}
 	>
 		<div class="rounded-lg relative">
