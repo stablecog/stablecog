@@ -285,6 +285,8 @@
 									<p class="max-w-full text-xxs text-c-on-bg/50 mt-2 break-all px-1.5">
 										{getRelativeDate({ date: user.created_at })} • {getRelativeDate({
 											date: user.last_sign_in_at
+										})} • {getRelativeDate({
+											date: user.last_seen_at
 										})}
 									</p>
 								</div>

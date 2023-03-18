@@ -54,6 +54,7 @@ export interface TUserForAdmin {
 	credits?: TUserCredit[];
 	created_at: string;
 	last_sign_in_at: string;
+	last_seen_at: string;
 	product_id?: string;
 }
 
