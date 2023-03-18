@@ -9,7 +9,7 @@ export async function downloadGenerationImage({
 	guidanceScale,
 	inferenceSteps
 }: TDownloadGenerationImageProps) {
-	const res = await fetch(url.replace(PUBLIC_BUCKET_URL, PUBLIC_BUCKET_ORIGIN_URL));
+	const res = await fetch(`${url}?download=true`);
 	const blob = await res.blob();
 	const fileName = getImageFileNameFromGeneration({
 		url,
