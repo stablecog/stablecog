@@ -18,7 +18,6 @@
 	import { expandCollapse } from '$ts/animation/transitions';
 	import { apiUrl } from '$ts/constants/main';
 	import {
-		logBatchEditDeactivated,
 		logGenerationOutputDeleted,
 		logGenerationOutputFavorited,
 		logGenerationOutputUnfavorited
@@ -40,7 +39,6 @@
 		userGallerySelectedOutputIds,
 		userGallerySelectedOutputObjects
 	} from '$ts/stores/user/gallery';
-	import { setGenerationOutputToFavorited } from '$ts/stores/user/generation';
 	import { userGenerationFullOutputsQueryKey } from '$ts/stores/user/keys';
 	import { userSummary } from '$ts/stores/user/summary';
 	import { useQueryClient } from '@tanstack/svelte-query';
@@ -102,12 +100,6 @@
 		} else if (type === 'history') {
 			isUserGalleryEditActive.set(false);
 		}
-		logBatchEditDeactivated({
-			'SC - Advanced Mode': $advancedModeApp,
-			'SC - Locale': $locale,
-			'SC - Page': `${$page.url.pathname}${$page.url.search}`,
-			'SC - Stripe Product Id': $userSummary?.product_id
-		});
 	}
 
 	function onDeleteButtonClicked() {

@@ -2,21 +2,16 @@
 	import { page } from '$app/stores';
 	import BatchEditBar from '$components/BatchEditBar.svelte';
 	import Button from '$components/buttons/Button.svelte';
-	import SubtleButton from '$components/buttons/SubtleButton.svelte';
 	import GenerationFullScreen from '$components/generationFullScreen/GenerationFullScreen.svelte';
 	import GenerationGridInfinite from '$components/grids/GenerationGridInfinite.svelte';
-	import IconCancel from '$components/icons/IconCancel.svelte';
 	import IconFolderOutlined from '$components/icons/IconFolderOutlined.svelte';
-	import IconPause from '$components/icons/IconPause.svelte';
 	import IconStarOutlined from '$components/icons/IconStarOutlined.svelte';
-	import IconTrashcan from '$components/icons/IconTrashcan.svelte';
 	import MetaTag from '$components/MetaTag.svelte';
 	import SignInCard from '$components/SignInCard.svelte';
 	import TabBar from '$components/tabBars/TabBar.svelte';
 	import LL, { locale } from '$i18n/i18n-svelte';
-	import { expandCollapse } from '$ts/animation/transitions';
 	import { canonicalUrl } from '$ts/constants/main';
-	import { logBatchEditActived } from '$ts/helpers/loggers';
+	import { logBatchEditActived, logBatchEditDeactivated } from '$ts/helpers/loggers';
 	/* import {
 		doesUserHaveLegacyGenerations,
 		downloadLegacyGenerations
@@ -26,13 +21,10 @@
 		type TUserGenerationFullOutputsPage
 	} from '$ts/queries/userGenerations';
 	import { advancedModeApp } from '$ts/stores/advancedMode';
-	import { navbarHeight } from '$ts/stores/navbarHeight';
 	import {
 		isUserGalleryEditActive,
 		lastFetchedUserGalleryView,
-		userGalleryActionableItems,
 		userGalleryCurrentView,
-		userGallerySelectedOutputIds,
 		type TUserGalleryView
 	} from '$ts/stores/user/gallery';
 	import { userGenerationFullOutputsQueryKey } from '$ts/stores/user/keys';
@@ -41,7 +33,6 @@
 	import { activeGeneration } from '$userStores/generation';
 	import { createInfiniteQuery, type CreateInfiniteQueryResult } from '@tanstack/svelte-query';
 	import { onMount } from 'svelte';
-	import { quadOut } from 'svelte/easing';
 	/* import SubtleButton from '$components/buttons/SubtleButton.svelte';
 	import IconAnimatedSpinner from '$components/icons/IconAnimatedSpinner.svelte';
 	import IconDownload from '$components/icons/IconDownload.svelte';
@@ -103,16 +94,23 @@
 		}
 	];
 
+	let userGalleryEditActivatedOnce = false;
 	$: $isUserGalleryEditActive, onUserGalleryEditActiveChanged();
 
 	function onUserGalleryEditActiveChanged() {
-		if (!$isUserGalleryEditActive) return;
-		logBatchEditActived({
-			'SC - Stripe Product Id': $userSummary?.product_id,
-			'SC - Locale': $locale,
+		if (!userGalleryEditActivatedOnce && !$isUserGalleryEditActive) return;
+		const props = {
 			'SC - Advanced Mode': $advancedModeApp,
-			'SC - Page': `${$page.url.pathname}${$page.url.search}`
-		});
+			'SC - Locale': $locale,
+			'SC - Page': `${$page.url.pathname}${$page.url.search}`,
+			'SC - Stripe Product Id': $userSummary?.product_id
+		};
+		if ($isUserGalleryEditActive) {
+			logBatchEditActived(props);
+			userGalleryEditActivatedOnce = true;
+		} else {
+			logBatchEditDeactivated(props);
+		}
 	}
 
 	const onPagesChanged = () => {
