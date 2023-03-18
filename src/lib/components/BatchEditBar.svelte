@@ -6,6 +6,7 @@
 	import IconPause from '$components/icons/IconPause.svelte';
 	import IconStarCrossedOutlined from '$components/icons/IconStarCrossedOutlined.svelte';
 	import IconStarOutlined from '$components/icons/IconStarOutlined.svelte';
+	import IconTickOnly from '$components/icons/IconTickOnly.svelte';
 	import IconTrashcan from '$components/icons/IconTrashcan.svelte';
 	import LL, { locale } from '$i18n/i18n-svelte';
 	import { clickoutside } from '$ts/actions/clickoutside';
@@ -389,7 +390,7 @@
 					loading={actionStatus === 'loading' && actionType === 'reject'}
 					withSpinner
 					size="md"
-					icon={IconTrashcan}
+					icon={IconCancel}
 					textColor="danger"
 					onClick={() => approveOrReject('reject')}
 				>
@@ -404,7 +405,7 @@
 					loading={actionStatus === 'loading' && actionType === 'approve'}
 					withSpinner
 					size="md"
-					icon={IconTrashcan}
+					icon={IconTickOnly}
 					textColor="success"
 					onClick={() => approveOrReject('approve')}
 				>
