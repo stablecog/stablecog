@@ -384,21 +384,6 @@
 			</SubtleButton>
 		{/if}
 		{#if type === 'admin-gallery'}
-			{#if $adminGalleryCurrentFilter !== 'rejected'}
-				<SubtleButton
-					disabled={selectedOutputIds.length === 0 || actionStatus === 'loading'}
-					loading={actionStatus === 'loading' && actionType === 'reject'}
-					withSpinner
-					size="md"
-					icon={IconCancel}
-					textColor="danger"
-					onClick={() => approveOrReject('reject')}
-				>
-					{$LL.Shared.BatchEditBar.RejectButton({
-						selectedCount: selectedOutputIds.length
-					})}
-				</SubtleButton>
-			{/if}
 			{#if $adminGalleryCurrentFilter !== 'approved'}
 				<SubtleButton
 					disabled={selectedOutputIds.length === 0 || actionStatus === 'loading'}
@@ -410,6 +395,21 @@
 					onClick={() => approveOrReject('approve')}
 				>
 					{$LL.Shared.BatchEditBar.ApproveButton({
+						selectedCount: selectedOutputIds.length
+					})}
+				</SubtleButton>
+			{/if}
+			{#if $adminGalleryCurrentFilter !== 'rejected'}
+				<SubtleButton
+					disabled={selectedOutputIds.length === 0 || actionStatus === 'loading'}
+					loading={actionStatus === 'loading' && actionType === 'reject'}
+					withSpinner
+					size="md"
+					icon={IconCancel}
+					textColor="danger"
+					onClick={() => approveOrReject('reject')}
+				>
+					{$LL.Shared.BatchEditBar.RejectButton({
 						selectedCount: selectedOutputIds.length
 					})}
 				</SubtleButton>
