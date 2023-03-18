@@ -107,15 +107,6 @@
 			submit_to_gallery: false
 		};
 		uLogGeneration('Started');
-		logGeneration(
-			'Started',
-			logGenerationPropsFromGeneration({
-				generation: initialRequestProps,
-				advancedModeApp: $advancedModeApp,
-				locale: $locale,
-				stripeProductId: $userSummary?.product_id
-			})
-		);
 		queueInitialGenerationRequest(initialRequestProps);
 	}
 

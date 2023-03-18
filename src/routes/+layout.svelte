@@ -18,17 +18,7 @@
 	import mixpanel from 'mixpanel-browser';
 	import { supabase } from '$ts/constants/supabase';
 	import { afterNavigate, invalidateAll } from '$app/navigation';
-	import {
-		logGenerationFailed,
-		logUpscaleFailed,
-		logGeneration,
-		logGenerationPropsFromGeneration,
-		logPageview,
-		logUpscale,
-		logUpscalePropsFromUpscale,
-		uLogGeneration,
-		uLogUpscale
-	} from '$ts/helpers/loggers';
+	import { logPageview, uLogGeneration, uLogUpscale } from '$ts/helpers/loggers';
 	import { setCookie } from '$ts/helpers/setCookie';
 	import { appVersion, serverVersion } from '$ts/stores/appVersion';
 	import {
@@ -60,8 +50,8 @@
 	} from '$ts/stores/user/upscale';
 	import { globalSeed } from '$ts/stores/globalSeed';
 	import { userSummary } from '$ts/stores/user/summary';
-	/* 	import posthog from 'posthog-js'; */
-	import { PUBLIC_MIXPANEL_ID /* , PUBLIC_MIXPANEL_URL */ } from '$env/static/public';
+	import posthog from 'posthog-js';
+	import { PUBLIC_MIXPANEL_ID, PUBLIC_POSTHOG_ID, PUBLIC_POSTHOG_URL } from '$env/static/public';
 	import { getUserSummary } from '$ts/helpers/user/user';
 	import UnderDevelopment from '$components/UnderDevelopment.svelte';
 	import { isSuperAdmin } from '$ts/helpers/admin/roles';
@@ -104,10 +94,10 @@
 		mixpanel.identify($page.data.session.user.id);
 		mixpanel.people.set({ $email: $page.data.session.user.email });
 		mixpanel.people.set({ 'SC - Stripe Product Id': $userSummary?.product_id });
-		/* posthog.identify($page.data.session.user.id, {
+		posthog.identify($page.data.session.user.id, {
 			email: $page.data.session.user.email,
 			'SC - Stripe Product Id': $userSummary?.product_id
-		}); */
+		});
 	}
 
 	afterNavigate(() => {
@@ -184,13 +174,6 @@
 				if (error || !id || !ui_id) {
 					console.log('Generation failed:', error);
 					setGenerationToFailed({ id: generation.id || generation.ui_id, error: error });
-					logGenerationFailed({
-						generation,
-						error,
-						advancedModeApp: $advancedModeApp,
-						locale: $locale,
-						stripeProductId: $userSummary?.product_id
-					});
 				} else {
 					setGenerationToServerReceived({ ui_id: ui_id, id: id });
 				}
@@ -198,13 +181,6 @@
 				const err = error as Error;
 				console.log('Initial generation submisssion error', error);
 				setGenerationToFailed({ id: generation.id || generation.ui_id, error: err.message });
-				logGenerationFailed({
-					generation,
-					error: err.message,
-					advancedModeApp: $advancedModeApp,
-					locale: $locale,
-					stripeProductId: $userSummary?.product_id
-				});
 			} finally {
 				isSubmittingGenerations = false;
 			}
@@ -251,12 +227,6 @@
 					if (error || !id || !ui_id) {
 						console.log('Upscale failed:', error);
 						setUpscaleToFailed({ id: upscale.id || upscale.ui_id, error: error });
-						logUpscaleFailed({
-							upscale,
-							advancedModeApp: $advancedModeApp,
-							locale: $locale,
-							stripeProductId: $userSummary?.product_id
-						});
 					} else {
 						setUpscaleToServerReceived({ ui_id: ui_id, id: id });
 					}
@@ -264,12 +234,6 @@
 					const err = error as Error;
 					console.log('Initial upscale submisssion error', error);
 					setUpscaleToFailed({ id: upscale.id || upscale.ui_id, error: err.message });
-					logUpscaleFailed({
-						upscale,
-						advancedModeApp: $advancedModeApp,
-						locale: $locale,
-						stripeProductId: $userSummary?.product_id
-					});
 				} finally {
 					isSubmittingUpscales = false;
 				}
@@ -300,15 +264,6 @@
 				const generationIndex = $generations.findIndex((g) => g.id === data.id);
 				const generation = $generations[generationIndex];
 				uLogGeneration('Succeeded');
-				logGeneration(
-					'Succeeded',
-					logGenerationPropsFromGeneration({
-						generation,
-						advancedModeApp: $advancedModeApp,
-						locale: $locale,
-						stripeProductId: $userSummary?.product_id
-					})
-				);
 			} else if (data.id && data.status === 'failed') {
 				setGenerationToFailed({ id: data.id, error: data.error });
 			}
@@ -323,18 +278,7 @@
 			) {
 				const outputs = data.outputs as TSSEUpscaleMessageOutput[];
 				setUpscaleToSucceeded({ id: data.id, outputs: outputs });
-				const upscaleIndex = $upscales.findIndex((u) => u.id === data.id);
-				const upscale = $upscales[upscaleIndex];
 				uLogUpscale('Succeeded');
-				logUpscale(
-					'Succeeded',
-					logUpscalePropsFromUpscale({
-						upscale,
-						advancedModeApp: $advancedModeApp,
-						locale: $locale,
-						stripeProductId: $userSummary?.product_id
-					})
-				);
 			} else if (data.id && data.status === 'failed') {
 				setUpscaleToFailed({ id: data.id, error: data.error });
 			}
@@ -392,10 +336,10 @@
 
 	onMount(async () => {
 		setBodyClasses();
-		mixpanel.init(PUBLIC_MIXPANEL_ID /* , { api_host: PUBLIC_MIXPANEL_URL } */);
-		/* posthog.init(PUBLIC_POSTHOG_ID, {
+		mixpanel.init(PUBLIC_MIXPANEL_ID);
+		posthog.init(PUBLIC_POSTHOG_ID, {
 			api_host: PUBLIC_POSTHOG_URL
-		}); */
+		});
 		appVersion.set(document.body.getAttribute('app-version') ?? 'unknown');
 		const {
 			data: { subscription }

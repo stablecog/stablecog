@@ -15,10 +15,9 @@
 	import Button from '$components/buttons/Button.svelte';
 	import IconUpscale from '$components/icons/IconUpscale.svelte';
 	import TabBar from '$components/tabBars/TabBar.svelte';
-	import { logUpscale, logUpscalePropsFromUpscale, uLogUpscale } from '$ts/helpers/loggers';
-	import LL, { locale } from '$i18n/i18n-svelte';
+	import { uLogUpscale } from '$ts/helpers/loggers';
+	import LL from '$i18n/i18n-svelte';
 	import { negativePromptTooltipAlt } from '$ts/constants/tooltips';
-	import { advancedModeApp } from '$ts/stores/advancedMode';
 	import IconCancel from '$components/icons/IconCancel.svelte';
 	import Container from '$components/generationFullScreen/Container.svelte';
 	import { activeGeneration, type TGenerationWithSelectedOutput } from '$userStores/generation';
@@ -189,15 +188,6 @@
 			ui_id: generateSSEId()
 		};
 		uLogUpscale('Started');
-		logUpscale(
-			'Started',
-			logUpscalePropsFromUpscale({
-				upscale: initialRequestProps,
-				advancedModeApp: $advancedModeApp,
-				locale: $locale,
-				stripeProductId: $userSummary?.product_id
-			})
-		);
 		queueInitialUpscaleRequest(initialRequestProps);
 		console.log('Upscale request queued', $upscales);
 	}

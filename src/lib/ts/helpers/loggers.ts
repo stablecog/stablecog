@@ -1,6 +1,6 @@
 import type { TGeneration, TInitialGenerationRequest } from '$userStores/generation';
 import mixpanel from 'mixpanel-browser';
-/* import posthog from 'posthog-js'; */
+import posthog from 'posthog-js';
 
 import type { TInitialUpscaleRequest, TUpscale } from '$ts/stores/user/upscale';
 
@@ -26,89 +26,89 @@ export function logGeneration(status: IGenerationStatus, generation: IGeneration
 	mixpanel.track(`Generation | ${status}`, {
 		...generation
 	});
-	/* posthog.capture(`Generation | ${status}`, {
+	posthog.capture(`Generation | ${status}`, {
 		...generation
-	}); */
+	});
 }
 
 export function logUpscale(status: IUpscaleStatus, upscale: IUpscaleMinimal) {
 	mixpanel.track(`Upscale | ${status}`, { ...upscale });
-	/* posthog.capture(`Upscale | ${status}`, { ...upscale }); */
+	posthog.capture(`Upscale | ${status}`, { ...upscale });
 }
 
 export function logSubmitToGallery(status: IOnOff, props: ISubmitToGalleryToggledMinimal) {
 	mixpanel.track(`Submit to Gallery | ${status}`, { ...props });
-	/* posthog.capture(`Submit to Gallery | ${status}`, { ...props }); */
+	posthog.capture(`Submit to Gallery | ${status}`, { ...props });
 }
 
 export function logGalleryGenerationOpened(props: IGalleryGenerationOpenedProps) {
 	mixpanel.track('Gallery | Generation Opened', { ...props });
-	/* posthog.capture('Gallery | Generation Opened', { ...props }); */
+	posthog.capture('Gallery | Generation Opened', { ...props });
 }
 
 export function logGalleryGenerateSimilarClicked(props: IGalleryGenerateClickedProps) {
 	mixpanel.track('Gallery | Generate Clicked', { ...props });
-	/* posthog.capture('Gallery | Generate Clicked', { ...props }); */
+	posthog.capture('Gallery | Generate Clicked', { ...props });
 }
 
 export function logAdvancedMode(status: IOnOff, props: IAdvancedModeToggledProps) {
 	mixpanel.track(`Advanced Mode | ${status}`, { ...props });
-	/* posthog.capture(`Advanced Mode | ${status}`, { ...props }); */
+	posthog.capture(`Advanced Mode | ${status}`, { ...props });
 }
 
 export function logPageview(props: IPageviewProps) {
 	mixpanel.track('Pageview', { ...props });
-	/* posthog.capture('$pageview', { ...props }); */
+	posthog.capture('$pageview', { ...props });
 }
 
 export function logSignIn(props: ISignInProps) {
 	mixpanel.track('Sign In', { ...props });
-	/* posthog.capture('Sign In', { ...props }); */
+	posthog.capture('Sign In', { ...props });
 }
 
 export function logSignOut(props: ISignOutProps) {
 	mixpanel.track('Sign Out', { ...props });
-	/* posthog.capture('Sign Out', { ...props }); */
+	posthog.capture('Sign Out', { ...props });
 }
 
 export function logGallerySearch(props: IGallerySearchProps) {
 	mixpanel.track('Gallery Search', { ...props });
-	/* posthog.capture('Gallery Search', { ...props }); */
+	posthog.capture('Gallery Search', { ...props });
 }
 
 export function logGenerationOutputDeleted(props: IGenerationOutputActionProps) {
 	mixpanel.track('Generation Output | Deleted', { ...props });
-	/* posthog.capture('Generation Output | Deleted', { ...props }); */
+	posthog.capture('Generation Output | Deleted', { ...props });
 }
 
 export function logGenerationOutputFavorited(props: IGenerationOutputActionProps) {
 	mixpanel.track('Generation Output | Favorited', { ...props });
-	/* posthog.capture('Generation Output | Favorited', { ...props }); */
+	posthog.capture('Generation Output | Favorited', { ...props });
 }
 
 export function logGenerationOutputUnfavorited(props: IGenerationOutputActionProps) {
 	mixpanel.track('Generation Output | Unfavorited', { ...props });
-	/* posthog.capture('Generation Output | Unfavorited', { ...props }); */
+	posthog.capture('Generation Output | Unfavorited', { ...props });
 }
 
 export function logGenerationOutputSubmittedToGallery(props: IGenerationOutputActionProps) {
 	mixpanel.track('Generation Output | Submitted to Gallery', { ...props });
-	/* posthog.capture('Generation Output | Submitted to Gallery', { ...props }); */
+	posthog.capture('Generation Output | Submitted to Gallery', { ...props });
 }
 
 export function logGenerationOutputDownloaded(props: IGenerationOutputActionProps) {
 	mixpanel.track('Generation Output | Downloaded', { ...props });
-	/* posthog.capture('Generation Output | Downloaded', { ...props }); */
+	posthog.capture('Generation Output | Downloaded', { ...props });
 }
 
 export function logBatchEditActived(props: IBatchEditActivedProps) {
 	mixpanel.track('Batch Edit | Activated', { ...props });
-	/* posthog.capture('Batch Edit | Activated', { ...props }); */
+	posthog.capture('Batch Edit | Activated', { ...props });
 }
 
 export function logBatchEditDeactivated(props: IBatchEditActivedProps) {
 	mixpanel.track('Batch Edit | Deactivated', { ...props });
-	/* posthog.capture('Batch Edit | Deactivated', { ...props }); */
+	posthog.capture('Batch Edit | Deactivated', { ...props });
 }
 
 export function logGenerationFailed({
