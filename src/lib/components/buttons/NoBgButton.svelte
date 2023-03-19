@@ -14,7 +14,7 @@
 
 {#if href}
 	<a
-		data-sveltekit-prefetch={prefetch && target === '_self' ? '' : 'off'}
+		data-sveltekit-preload-data={prefetch && target === '_self' ? 'hover' : 'off'}
 		class="max-w-full relative overflow-hidden z-0 px-4 py-3.5 font-semibold transition pointer-events-auto 
 		flex items-center gap-1.5 group rounded-xl {!$isTouchscreen ? 'hover:text-c-primary' : ''} {type ===
 		'sm'

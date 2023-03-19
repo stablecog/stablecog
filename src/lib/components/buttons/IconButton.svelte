@@ -16,7 +16,7 @@
 
 {#if href}
 	<a
-		data-sveltekit-prefetch={prefetch && target === '_self' ? '' : 'off'}
+		data-sveltekit-preload-data={prefetch && target === '_self' ? 'hover' : 'off'}
 		{href}
 		{target}
 		class="group/iconbutton rounded-xl {classes}"

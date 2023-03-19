@@ -22,7 +22,7 @@
 	<a
 		{href}
 		{target}
-		data-sveltekit-prefetch={prefetch && target === '_self' ? '' : 'off'}
+		data-sveltekit-preload-data={prefetch && target === '_self' ? 'hover' : 'off'}
 		class="{noPadding
 			? 'p-0'
 			: size === 'xs'

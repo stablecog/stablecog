@@ -21,7 +21,7 @@
 			on:click={onClose}
 			{target}
 			{href}
-			data-sveltekit-prefetch={prefetch && target === '_self' ? '' : 'off'}
+			data-sveltekit-preload-data={prefetch && target === '_self' ? 'hover' : 'off'}
 			class="w-full flex flex-row justify-center items-center px-10 py-2.5 z-10 relative bg-c-primary transition {!$isTouchscreen
 				? 'hover:bg-c-secondary'
 				: ''}"

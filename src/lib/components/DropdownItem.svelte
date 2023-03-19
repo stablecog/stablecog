@@ -16,7 +16,7 @@
 	<a
 		{href}
 		{target}
-		data-sveltekit-prefetch={prefetch && target === '_self' ? '' : 'off'}
+		data-sveltekit-preload-data={prefetch && target === '_self' ? 'hover' : 'off'}
 		on:click={onClick}
 		class="flex items-center justify-center font-bold px-5 {padding === 'sm'
 			? 'py-3'

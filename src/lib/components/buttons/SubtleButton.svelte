@@ -28,7 +28,7 @@
 		{href}
 		{download}
 		{target}
-		data-sveltekit-prefetch={prefetch && target === '_self' ? '' : 'off'}
+		data-sveltekit-preload-data={prefetch && target === '_self' ? 'hover' : 'off'}
 		class="{state === 'success'
 			? 'bg-c-success ring-c-success text-c-on-primary'
 			: 'bg-c-bg-secondary ring-c-bg-tertiary text-c-on-bg'} {noPadding

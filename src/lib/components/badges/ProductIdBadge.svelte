@@ -36,7 +36,7 @@
 {#if href}
 	<a
 		{href}
-		data-sveltekit-prefetch
+		data-sveltekit-preload-data="hover"
 		class="bg-c-bg border-2 overflow-hidden z-10 shadow-lg flex-shrink-0
   	shadow-c-shadow/[var(--o-shadow-normal)] group relative {productId !== undefined &&
 		productId !== 'free'

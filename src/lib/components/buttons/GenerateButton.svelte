@@ -16,7 +16,7 @@
 	on:click={() => {
 		element.blur();
 	}}
-	data-sveltekit-prefetch
+	data-sveltekit-preload-data="hover"
 	class="transition rounded-lg group/generatebutton {classes}"
 	href={getGenerationUrlFromParams({
 		prompt: generation.prompt,

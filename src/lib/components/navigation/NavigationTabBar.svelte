@@ -92,7 +92,7 @@
 			{#each routes as route}
 				<a
 					aria-label="Go to {route.name}"
-					data-sveltekit-prefetch
+					data-sveltekit-preload-data="hover"
 					class="flex-1 rounded-lg whitespace-nowrap overflow-hidden group self-stretch flex 
 					items-center justify-center px-4 transition-all relative {type === 'bottom'
 						? 'pt-4 pb-4.5'
