@@ -156,32 +156,6 @@
 	}
 </script>
 
-{#if generation.selected_output.is_deleted}
-	<div class="w-full h-full absolute left-0 top-0 flex items-center justify-center p-4 z-20">
-		<div in:scale={{ duration: 300, easing: quadOut, opacity: 0, start: 0.5 }}>
-			<IconTrashcan class="text-c-danger w-12 h-12" />
-		</div>
-	</div>
-	<div
-		in:fade={{ duration: 300, easing: quadOut }}
-		class="w-full h-full absolute left-0 top-0 bg-c-bg-secondary/85 z-10"
-	/>
-{/if}
-{#if cardType === 'admin-gallery' && showAdminGalleryBarrier}
-	<div class="w-full h-full absolute left-0 top-0 flex items-center justify-center p-4 z-20">
-		<div in:scale|local={{ duration: 300, easing: quadOut, opacity: 0, start: 0.5 }}>
-			{#if generation.selected_output.gallery_status === 'approved'}
-				<IconTick class="text-c-success w-12 h-12" />
-			{:else}
-				<IconCancelCircle class="text-c-danger w-12 h-12" />
-			{/if}
-		</div>
-	</div>
-	<div
-		in:fade|local={{ duration: 300, easing: quadOut }}
-		class="w-full h-full absolute left-0 top-0 bg-c-bg-secondary/85 z-10"
-	/>
-{/if}
 {#if generation.selected_output.image_url.includes('placeholder')}
 	<svg
 		class="w-full h-full absolute left-0 top-0 text-c-bg-secondary"
@@ -202,7 +176,7 @@
 		loading="lazy"
 		class="w-full h-full absolute left-0 top-0 duration-300 transition transform {isImageLoaded
 			? 'opacity-100'
-			: 'opacity-0'}"
+			: 'opacity-0'} {isInGallerySelectedIds ? 'scale-110' : 'scale-100'}"
 		src={useUpscaledImage && generation.selected_output.upscaled_image_url
 			? generation.selected_output.upscaled_image_url
 			: generation.selected_output.image_url}
@@ -261,7 +235,6 @@
 	</AnchorOrDiv>
 {/if}
 <div
-	transition:fly|local={{ duration: 200, easing: quadOut, opacity: 0, y: -100 }}
 	class="w-full h-full absolute left-0 top-0 pointer-events-none flex items-start justify-between"
 >
 	<div
@@ -301,7 +274,6 @@
 		</div>
 		{#if !isGalleryEditActive}
 			<div
-				transition:fly|local={{ duration: 200, easing: quadOut, opacity: 0, y: -100 }}
 				bind:this={rightButtonContainer}
 				class="flex flex-row flex-wrap items-center justify-end transition transform 
 				pointer-events-auto"
@@ -328,6 +300,18 @@
 	</div>
 	<div />
 </div>
+{#if generation.selected_output.is_deleted || (cardType === 'admin-gallery' && showAdminGalleryBarrier)}
+	<div class="w-full h-full absolute left-0 top-0 flex items-center justify-center p-4 z-20">
+		{#if generation.selected_output.is_deleted}
+			<IconTrashcan class="text-c-danger w-12 h-12" />
+		{:else if generation.selected_output.gallery_status === 'approved'}
+			<IconTick class="text-c-success w-12 h-12" />
+		{:else if generation.selected_output.gallery_status === 'rejected'}
+			<IconCancelCircle class="text-c-danger w-12 h-12" />
+		{/if}
+	</div>
+	<div class="w-full h-full absolute left-0 top-0 bg-c-bg-secondary/85 z-10" />
+{/if}
 {#if (cardType === 'admin-gallery' && $isAdminGalleryEditActive) || (cardType === 'history' && $isUserGalleryEditActive)}
 	<button
 		disabled={(cardType === 'history' && generation.selected_output.is_deleted) ||
@@ -339,10 +323,7 @@
 	/>
 {/if}
 {#if cardType === 'history' && $userGalleryCurrentView === 'favorites' && !generation.selected_output.is_favorited}
-	<div
-		in:fade|local={{ duration: 300, easing: quadOut }}
-		class="w-full h-full absolute left-0 top-0 bg-c-bg-secondary/85 z-40 pointer-events-none"
-	/>
+	<div class="w-full h-full absolute left-0 top-0 bg-c-bg-secondary/85 z-40 pointer-events-none" />
 {/if}
 
 <style>
