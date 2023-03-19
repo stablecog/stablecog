@@ -6,7 +6,7 @@
 
 <div class="w-full flex flex-wrap justify-center items-center px-6 py-5 gap-1.5 md:gap-2.5">
 	<SocialBar isInline withBlog withEmail />
-	<div class="w-full md:w-auto flex flex-col flex-wrap items-start -mt-1.5 md:-mt-1">
+	<div class="w-full md:w-auto flex flex-col flex-wrap items-start -mt-1 md:-mt-1.5">
 		<div class="w-full md:w-auto flex flex-row justify-center items-center gap-1.5">
 			<a
 				href="/terms"
@@ -22,7 +22,7 @@
 				font-semibold md:my-auto rounded-lg">{$LL.Legal.PrivacyPolicyTitle()}</a
 			>
 		</div>
-		<div class="w-full md:w-auto flex justify-center items-center gap-2 mt-1 md:mt-0">
+		<div class="w-full md:w-auto flex justify-center items-center mt-0.5 md:mt-0">
 			<p
 				class="text-center leading-relaxed text-xs text-c-on-bg/50 
 				font-semibold rounded-lg"
