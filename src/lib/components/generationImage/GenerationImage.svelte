@@ -30,8 +30,6 @@
 	} from '$ts/stores/user/gallery';
 	import { userSummary } from '$ts/stores/user/summary';
 	import { activeGeneration, type TGenerationWithSelectedOutput } from '$userStores/generation';
-	import { quadOut } from 'svelte/easing';
-	import { fade, fly, scale } from 'svelte/transition';
 
 	export let generation: TGenerationWithSelectedOutput;
 	export let useUpscaledImage = true;
@@ -300,7 +298,7 @@
 	</div>
 	<div />
 </div>
-{#if generation.selected_output.is_deleted || (cardType === 'admin-gallery' && showAdminGalleryBarrier)}
+{#if generation.selected_output.is_deleted || (cardType === 'admin-gallery' && showAdminGalleryBarrier) || (cardType === 'history' && $userGalleryCurrentView === 'favorites' && !generation.selected_output.is_favorited)}
 	<div class="w-full h-full absolute left-0 top-0 flex items-center justify-center p-4 z-20">
 		{#if generation.selected_output.is_deleted}
 			<IconTrashcan class="text-c-danger w-12 h-12" />
@@ -321,9 +319,6 @@
 		on:click={onSelectButtonClicked}
 		class="w-full h-full absolute left-0 top-0 flex flex-col justify-start items-start z-30"
 	/>
-{/if}
-{#if cardType === 'history' && $userGalleryCurrentView === 'favorites' && !generation.selected_output.is_favorited}
-	<div class="w-full h-full absolute left-0 top-0 bg-c-bg-secondary/85 z-40 pointer-events-none" />
 {/if}
 
 <style>
