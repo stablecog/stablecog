@@ -46,13 +46,10 @@
 	import { schedulerIdDefault } from '$ts/constants/schedulers';
 	import { sseId } from '$userStores/sse';
 	import { generateSSEId } from '$ts/helpers/generateSSEId';
-	import { imageTransitionProps } from '$ts/animation/constants';
-	import { fly } from 'svelte/transition';
 	import { userSummary } from '$ts/stores/user/summary';
 	import LowOnCreditsCard from '$components/LowOnCreditsCard.svelte';
 	import { appVersion, serverVersion } from '$ts/stores/appVersion';
 	import { goto } from '$app/navigation';
-	import IconAnimatedSpinner from '$components/icons/IconAnimatedSpinner.svelte';
 
 	export let data: THomePageData;
 

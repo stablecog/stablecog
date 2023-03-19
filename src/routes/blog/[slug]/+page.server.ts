@@ -47,11 +47,11 @@ const r = unified()
 	.use(rehypeToC)
 	.use(rehypeStringify);
 
-const getPath = (slug: string | undefined) => `/src/lib/md/${slug}.md`;
+const getPath = (slug: string | undefined) => `/src/lib/md/blog/${slug}.md`;
 
 export const load: ServerLoad = async ({ params }) => {
 	const { slug } = params;
-	const blogPostsImport = import.meta.glob('$md/*.md');
+	const blogPostsImport = import.meta.glob('$md/blog/*.md');
 	if (!blogPostsImport[getPath(slug)]) {
 		throw error(404, 'Blog post not found');
 	}
