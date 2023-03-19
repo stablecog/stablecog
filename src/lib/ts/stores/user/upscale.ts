@@ -20,7 +20,6 @@ export const setUpscaleToFailed = ({ id, error }: { id: string; error?: string }
 		if (ui_index >= 0) {
 			$upscales[ui_index].status = 'failed';
 			$upscales[ui_index].error = error;
-			$upscales[index].completed_at = Date.now();
 			return $upscales;
 		}
 		return $upscales;

@@ -51,28 +51,25 @@
 		(upscale) => upscale.type === 'from_output' && upscale.input === generation.selected_output.id
 	);
 
+	$: upscaledImageUrlFromStore =
+		upscaleFromStore &&
+		upscaleFromStore.outputs &&
+		upscaleFromStore.outputs.length > 0 &&
+		upscaleFromStore.outputs[0].image_url
+			? upscaleFromStore.outputs[0].image_url
+			: undefined;
+
 	$: [upscaleFromStore], onUpscaleFromStoreChanged();
 
-	const getUpscaledImageUrlFromStore = () => {
-		const upscale = $upscales.find(
-			(upscale) => upscale.type === 'from_output' && upscale.input === generation.selected_output.id
-		);
-		if (upscale && upscale.outputs && upscale.outputs.length > 0 && upscale.outputs[0].image_url) {
-			return upscale.outputs[0].image_url;
+	function onUpscaleFromStoreChanged() {
+		if (upscaledImageUrlFromStore !== undefined && !generation.selected_output.upscaled_image_url) {
+			generation.selected_output.upscaled_image_url = upscaledImageUrlFromStore;
 		}
-		return undefined;
-	};
-
-	const onUpscaleFromStoreChanged = () => {
-		const upscaledImageUrl = getUpscaledImageUrlFromStore();
-		if (upscaledImageUrl !== undefined && !generation.selected_output.upscaled_image_url) {
-			generation.selected_output.upscaled_image_url = upscaledImageUrl;
-		}
-	};
+	}
 
 	let hadUpscaledImageUrlOnMount =
 		generation.selected_output.upscaled_image_url !== undefined ||
-		getUpscaledImageUrlFromStore() !== undefined;
+		upscaledImageUrlFromStore !== undefined;
 	let isUpscaledImageLoaded = hadUpscaledImageUrlOnMount ? true : false;
 
 	$: currentImageUrl = generation.selected_output.upscaled_image_url
@@ -192,43 +189,43 @@
 		console.log('Upscale request queued', $upscales);
 	}
 
-	$: [upscaleStatus, upscaleBeingProcessed], onupscaleStatusChanged();
+	$: [upscaleStatus, upscaleBeingProcessed], onUpscaleStatusChanged();
 
-	let lastUpscaleAnimationStatus:
+	let upscaleAnimationStatus:
 		| 'idle'
 		| 'should-animate-slow'
 		| 'should-animate'
 		| 'should-complete' = 'idle';
 
-	async function onupscaleStatusChanged() {
+	async function onUpscaleStatusChanged() {
 		if (hadUpscaledImageUrlOnMount) return;
 		switch (upscaleStatus) {
 			case 'to-be-submitted':
-				lastUpscaleAnimationStatus = 'idle';
+				upscaleAnimationStatus = 'idle';
 				await tick();
-				lastUpscaleAnimationStatus = 'should-animate-slow';
+				upscaleAnimationStatus = 'should-animate-slow';
 				break;
 			case 'server-received':
 				await tick();
-				lastUpscaleAnimationStatus = 'should-animate-slow';
+				upscaleAnimationStatus = 'should-animate-slow';
 				break;
 			case 'server-processing':
 				await tick();
-				lastUpscaleAnimationStatus = 'should-animate';
+				upscaleAnimationStatus = 'should-animate';
 				break;
 			case 'succeeded':
-				if (upscaleBeingProcessed) break;
+				if (upscaleBeingProcessed || !upscaleFromStore) break;
 				await tick();
-				lastUpscaleAnimationStatus = 'should-complete';
-				const durationMs = getUpscaleDurationMsFromUpscale($upscales[0]);
-				if (durationMs !== null && $upscales[0].completed_at) {
-					const loadTimeMs = Date.now() - $upscales[0].completed_at;
+				upscaleAnimationStatus = 'should-complete';
+				const durationMs = getUpscaleDurationMsFromUpscale(upscaleFromStore);
+				if (durationMs !== null && upscaleFromStore.completed_at) {
+					const loadTimeMs = Date.now() - upscaleFromStore.completed_at;
 					estimatedUpscaleDurationMs.set(loadTimeMs + durationMs);
 				}
 				break;
 			case 'failed':
 				await tick();
-				lastUpscaleAnimationStatus = 'should-complete';
+				upscaleAnimationStatus = 'should-complete';
 				break;
 		}
 	}
@@ -265,23 +262,21 @@
 </script>
 
 <ModalWrapper hasPadding={false}>
-	<div class="w-full flex items-center justify-start md:hidden pt-2 px-2">
-		<div>
-			<IconButton
-				name="Close"
-				onClick={() => {
-					if ($activeGeneration !== undefined) {
-						activeGeneration.set(undefined);
-					}
-				}}
-			>
-				<IconCancel
-					class="w-9 h-9 transition {!$isTouchscreen
-						? 'group-hover/iconbutton:text-c-primary'
-						: ''}"
-				/>
-			</IconButton>
-		</div>
+	<div class="w-full flex items-center justify-start md:hidden pt-2 pb-1 px-2">
+		<IconButton
+			name="Close"
+			onClick={() => {
+				console.log('Close clicked');
+				console.log($activeGeneration);
+				if ($activeGeneration !== undefined) {
+					activeGeneration.set(undefined);
+				}
+			}}
+		>
+			<IconCancel
+				class="w-9 h-9 transition {!$isTouchscreen ? 'group-hover/iconbutton:text-c-primary' : ''}"
+			/>
+		</IconButton>
 	</div>
 	<Container {generation} let:imageContainerWidth let:imageContainerHeight let:modalMinHeight>
 		<div class="relative self-stretch flex items-center">
@@ -341,7 +336,7 @@
 							? upscaledImageHeight
 							: generation.height}
 					/>
-					{#if $upscales && $upscales.length > 0 && $upscales[0].status === 'failed'}
+					{#if $upscales && $upscales.length > 0 && upscaleFromStore?.status === 'failed'}
 						<div
 							transition:fly={{ duration: 200, easing: quadOut, y: -50 }}
 							class="w-full absolute left-0 top-0 flex items-center justify-center p-3"
@@ -349,7 +344,7 @@
 							<p
 								class="text-center font-medium text-xs md:text-sm shadow-lg shadow-c-shadow/[var(--o-shadow-stronger)] bg-c-bg-secondary px-4 py-3 rounded-xl"
 							>
-								{$upscales[0].error ?? $LL.Error.SomethingWentWrong()}
+								{upscaleFromStore?.error ?? $LL.Error.SomethingWentWrong()}
 							</p>
 						</div>
 					{/if}
@@ -357,19 +352,19 @@
 			</div>
 			<div class="w-full h-full overflow-hidden z-0 absolute left-0 top-0 pointer-events-none">
 				<div
-					style="transition-duration: {lastUpscaleAnimationStatus === 'should-animate-slow'
+					style="transition-duration: {upscaleAnimationStatus === 'should-animate-slow'
 						? ($estimatedUpscaleDurationMs / 1000) * 4
-						: lastUpscaleAnimationStatus === 'should-animate'
+						: upscaleAnimationStatus === 'should-animate'
 						? $estimatedUpscaleDurationMs / 1000
-						: lastUpscaleAnimationStatus === 'should-complete'
+						: upscaleAnimationStatus === 'should-complete'
 						? 0.3
 						: 0}s"
 					class="w-[110%] h-full ease-image-generation transition bg-c-secondary/50 
-						absolute left-0 top-0 rounded-xl {lastUpscaleAnimationStatus === 'should-animate-slow'
+						absolute left-0 top-0 rounded-xl {upscaleAnimationStatus === 'should-animate-slow'
 						? 'translate-x-1/5'
-						: lastUpscaleAnimationStatus === 'should-animate'
+						: upscaleAnimationStatus === 'should-animate'
 						? '-translate-x-[5%]'
-						: lastUpscaleAnimationStatus === 'should-complete'
+						: upscaleAnimationStatus === 'should-complete'
 						? 'translate-x-full'
 						: '-translate-x-full'}"
 				/>
