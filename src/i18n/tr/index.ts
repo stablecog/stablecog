@@ -349,6 +349,7 @@ const tr: Translation = {
 		GetStartedButton: 'Başla',
 		PageTitle: 'Giriş Yap',
 		PageParagraph: "Stablecog'u üyeliğine sağlanan tüm özelliklerle kullanmaya başla.",
+		PageParagraphV2: 'Start creating amazing art in seconds for free, no credit card required.',
 		PageTitleCreateAccountOrSignIn: 'Üye ol veya giriş yap',
 		PageParagraphCreateAccountOrSignIn:
 			"Stablecog'u üyeliğine sağlanan tüm özelliklerle kullanmaya başla.",
@@ -565,6 +566,12 @@ const tr: Translation = {
 	Support: {
 		PageTitle: 'Desktek',
 		PageParagraph: 'Herhangi bir soru sormak istersen aşağıdaki linklerden bize ulaşabilirsin.'
+	},
+	Legal: {
+		TermsOfServiceTitle: 'Terms of Service',
+		PrivacyPolicyTitle: 'Privacy Policy',
+		RefundPolicyTitle: 'Refund Policy',
+		ContentPolicyTitle: 'Content Policy'
 	},
 	UnderDevelopment: {
 		PageTitle: 'Geri döneceğiz!',

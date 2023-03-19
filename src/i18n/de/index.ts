@@ -350,6 +350,7 @@ const de: Translation = {
 		GetStartedButton: 'Jetzt loslegen',
 		PageTitle: 'Einloggen',
 		PageParagraph: 'Benutze Stablecog mit allen Funktionen, die Deinem Konto zur Verfügung stehen.',
+		PageParagraphV2: 'Start creating amazing art in seconds for free, no credit card required.',
 		PageTitleCreateAccountOrSignIn: 'Registrieren oder einloggen',
 		PageParagraphCreateAccountOrSignIn:
 			'Benutze Stablecog mit allen Funktionen, die Deinem Konto zur Verfügung stehen.',
@@ -574,6 +575,12 @@ const de: Translation = {
 		PageTitle: 'Support',
 		PageParagraph:
 			"If you have any questions, please reach out to us using the links below and we'll answer them as soon as possible."
+	},
+	Legal: {
+		TermsOfServiceTitle: 'Terms of Service',
+		PrivacyPolicyTitle: 'Privacy Policy',
+		RefundPolicyTitle: 'Refund Policy',
+		ContentPolicyTitle: 'Content Policy'
 	},
 	UnderDevelopment: {
 		PageTitle: 'Wir sind bald wieder da!',

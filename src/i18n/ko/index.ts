@@ -350,6 +350,7 @@ const ko: Translation = {
 		GetStartedButton: 'Get Started',
 		PageTitle: '로그인',
 		PageParagraph: '로그인을 통해 Stablecog의 모든 기능을 사용해보세요!',
+		PageParagraphV2: 'Start creating amazing art in seconds for free, no credit card required.',
 		PageTitleCreateAccountOrSignIn: 'Create an account or sign in',
 		PageParagraphCreateAccountOrSignIn:
 			'Start using Stablecog with all features that are available to your account.',
@@ -569,6 +570,12 @@ const ko: Translation = {
 		PageTitle: 'Support',
 		PageParagraph:
 			"If you have any questions, please reach out to us using the links below and we'll answer them as soon as possible."
+	},
+	Legal: {
+		TermsOfServiceTitle: 'Terms of Service',
+		PrivacyPolicyTitle: 'Privacy Policy',
+		RefundPolicyTitle: 'Refund Policy',
+		ContentPolicyTitle: 'Content Policy'
 	},
 	UnderDevelopment: {
 		PageTitle: "We'll be back soon!",

@@ -1,5 +1,6 @@
 <script lang="ts">
 	import SocialBar from '$components/SocialBar.svelte';
+	import LL from '$i18n/i18n-svelte';
 	import { companyInfo } from '$ts/constants/social';
 </script>
 
@@ -10,13 +11,13 @@
 			<a
 				href="/terms"
 				class="text-center hover:underline hover:text-c-primary leading-relaxed text-xs text-c-on-bg/50 
-				font-semibold md:my-auto rounded-lg">Terms of Service</a
+				font-semibold md:my-auto rounded-lg">{$LL.Legal.TermsOfServiceTitle()}</a
 			>
 			<span class="text-c-on-bg/25">•</span>
 			<a
 				href="/privacy"
 				class="text-center hover:underline hover:text-c-primary transition leading-relaxed text-xs text-c-on-bg/50 
-				font-semibold md:my-auto rounded-lg">Privacy Policy</a
+				font-semibold md:my-auto rounded-lg">{$LL.Legal.PrivacyPolicyTitle()}</a
 			>
 		</div>
 		<div class="w-full md:w-auto flex justify-center items-center gap-2 mt-1 md:mt-0">

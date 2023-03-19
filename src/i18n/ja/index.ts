@@ -351,6 +351,7 @@ const ja: Translation = {
 		GetStartedButton: 'Get Started',
 		PageTitle: 'サインイン',
 		PageParagraph: 'あなたのアカウントで利用可能なすべての機能でStablecogを利用しよう！',
+		PageParagraphV2: 'Start creating amazing art in seconds for free, no credit card required.',
 		PageTitleCreateAccountOrSignIn: 'アカウントの作成またはサインイン',
 		PageParagraphCreateAccountOrSignIn:
 			'アカウントで利用可能な全ての機能でStablecogを利用しましょう。',
@@ -571,6 +572,12 @@ const ja: Translation = {
 		PageTitle: 'Support',
 		PageParagraph:
 			"If you have any questions, please reach out to us using the links below and we'll answer them as soon as possible."
+	},
+	Legal: {
+		TermsOfServiceTitle: 'Terms of Service',
+		PrivacyPolicyTitle: 'Privacy Policy',
+		RefundPolicyTitle: 'Refund Policy',
+		ContentPolicyTitle: 'Content Policy'
 	},
 	UnderDevelopment: {
 		PageTitle: "We'll be back soon!",

@@ -348,6 +348,7 @@ const hr: Translation = {
 		GetStartedButton: 'Get Started',
 		PageTitle: 'Prijavi se',
 		PageParagraph: 'Počni koristiti Stablecog sa svim opcijama dostupnim na tvom računu.',
+		PageParagraphV2: 'Start creating amazing art in seconds for free, no credit card required.',
 		PageTitleCreateAccountOrSignIn: 'Stvori račun ili se prijavi',
 		PageParagraphCreateAccountOrSignIn:
 			'Počni koristiti Stablecog sa svim opcijama dostupnim na tvom računu.',
@@ -566,6 +567,12 @@ const hr: Translation = {
 		PageTitle: 'Support',
 		PageParagraph:
 			"If you have any questions, please reach out to us using the links below and we'll answer them as soon as possible."
+	},
+	Legal: {
+		TermsOfServiceTitle: 'Terms of Service',
+		PrivacyPolicyTitle: 'Privacy Policy',
+		RefundPolicyTitle: 'Refund Policy',
+		ContentPolicyTitle: 'Content Policy'
 	},
 	UnderDevelopment: {
 		PageTitle: "We'll be back soon!",

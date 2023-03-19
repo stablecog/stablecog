@@ -138,7 +138,7 @@
 		>
 			{signInStatus === 'sent-otp'
 				? $LL.SignIn.PageParagraphSentLink()
-				: $LL.SignIn.PageParagraph()}
+				: $LL.SignIn.PageParagraphV2()}
 		</p>
 		{#if signInStatus === 'sent-otp'}
 			<div

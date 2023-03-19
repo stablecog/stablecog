@@ -1050,6 +1050,10 @@ type RootTranslation = {
 		 */
 		PageParagraph: string
 		/**
+		 * S​t​a​r​t​ ​c​r​e​a​t​i​n​g​ ​a​m​a​z​i​n​g​ ​a​r​t​ ​i​n​ ​s​e​c​o​n​d​s​ ​f​o​r​ ​f​r​e​e​,​ ​n​o​ ​c​r​e​d​i​t​ ​c​a​r​d​ ​r​e​q​u​i​r​e​d​.
+		 */
+		PageParagraphV2: string
+		/**
 		 * C​r​e​a​t​e​ ​a​n​ ​a​c​c​o​u​n​t​ ​o​r​ ​s​i​g​n​ ​i​n
 		 */
 		PageTitleCreateAccountOrSignIn: string
@@ -1676,6 +1680,24 @@ type RootTranslation = {
 		 * I​f​ ​y​o​u​ ​h​a​v​e​ ​a​n​y​ ​q​u​e​s​t​i​o​n​s​,​ ​p​l​e​a​s​e​ ​r​e​a​c​h​ ​o​u​t​ ​t​o​ ​u​s​ ​u​s​i​n​g​ ​t​h​e​ ​l​i​n​k​s​ ​b​e​l​o​w​ ​a​n​d​ ​w​e​'​l​l​ ​a​n​s​w​e​r​ ​t​h​e​m​ ​a​s​ ​s​o​o​n​ ​a​s​ ​p​o​s​s​i​b​l​e​.
 		 */
 		PageParagraph: string
+	}
+	Legal: {
+		/**
+		 * T​e​r​m​s​ ​o​f​ ​S​e​r​v​i​c​e
+		 */
+		TermsOfServiceTitle: string
+		/**
+		 * P​r​i​v​a​c​y​ ​P​o​l​i​c​y
+		 */
+		PrivacyPolicyTitle: string
+		/**
+		 * R​e​f​u​n​d​ ​P​o​l​i​c​y
+		 */
+		RefundPolicyTitle: string
+		/**
+		 * C​o​n​t​e​n​t​ ​P​o​l​i​c​y
+		 */
+		ContentPolicyTitle: string
 	}
 	UnderDevelopment: {
 		/**
@@ -2694,6 +2716,10 @@ export type TranslationFunctions = {
 		 */
 		PageParagraph: () => LocalizedString
 		/**
+		 * Start creating amazing art in seconds for free, no credit card required.
+		 */
+		PageParagraphV2: () => LocalizedString
+		/**
 		 * Create an account or sign in
 		 */
 		PageTitleCreateAccountOrSignIn: () => LocalizedString
@@ -3311,6 +3337,24 @@ export type TranslationFunctions = {
 		 * If you have any questions, please reach out to us using the links below and we'll answer them as soon as possible.
 		 */
 		PageParagraph: () => LocalizedString
+	}
+	Legal: {
+		/**
+		 * Terms of Service
+		 */
+		TermsOfServiceTitle: () => LocalizedString
+		/**
+		 * Privacy Policy
+		 */
+		PrivacyPolicyTitle: () => LocalizedString
+		/**
+		 * Refund Policy
+		 */
+		RefundPolicyTitle: () => LocalizedString
+		/**
+		 * Content Policy
+		 */
+		ContentPolicyTitle: () => LocalizedString
 	}
 	UnderDevelopment: {
 		/**
