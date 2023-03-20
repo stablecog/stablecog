@@ -5,7 +5,9 @@ export const serverUrl = env.PUBLIC_DEFAULT_SERVER_URL;
 export const canonicalUrl = 'https://stablecog.com';
 export const defaultLocale: Locales = 'en';
 export const apiUrl = new URL(
-	env.PUBLIC_APP_MODE === 'development'
+	env.PUBLIC_APP_MODE === 'qa'
+		? env.PUBLIC_GO_SERVER_URL_QA
+		: env.PUBLIC_APP_MODE === 'dev'
 		? env.PUBLIC_GO_SERVER_URL_DEV
 		: env.PUBLIC_GO_SERVER_URL_PROD
 );
@@ -49,7 +51,7 @@ export const maxPromptLength = 500;
 export const numOutputsDefault = 4;
 
 export const availableInferenceSteps = ['30', '40', '50'] as const;
-export type TAvailableInferenceSteps = typeof availableInferenceSteps[number];
+export type TAvailableInferenceSteps = (typeof availableInferenceSteps)[number];
 export const availableInferenceStepsFree: TAvailableInferenceSteps[] = ['30'];
 export const inferenceStepsTabs: TTab<TAvailableInferenceSteps>[] = [
 	{ label: '30', value: '30' },

@@ -313,7 +313,9 @@
 												: ''} text-xs rounded-md gap-3"
 										>
 											<p class="w-1/3 md:w-24 px-2 text-c-on-bg/75">
-												{getTitleFromProductId($LL, credit.credit_type.stripe_product_id)}
+												{credit.credit_type.stripe_product_id || credit.credit_type.name === 'Free'
+													? getTitleFromProductId($LL, credit.credit_type.stripe_product_id)
+													: credit.credit_type.name}
 											</p>
 											<p class="w-1/3 md:w-24 px-2 text-c-on-bg/75">
 												{credit.remaining_amount.toLocaleString($locale)}
