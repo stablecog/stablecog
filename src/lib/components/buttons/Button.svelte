@@ -10,7 +10,7 @@
 	export let size: 'md' | 'sm' | 'xs' = 'md';
 	export let withSpinner = false;
 	export let noPadding = false;
-	export let target: THrefTarget = '_self';
+	export let target: THrefTarget = undefined;
 	export { classes as class };
 	export let type: 'primary' | 'success' | 'danger' | 'no-bg-on-bg' = 'primary';
 	export let fadeOnDisabled = false;
@@ -21,7 +21,9 @@
 	<a
 		{href}
 		{target}
-		data-sveltekit-preload-data={prefetch && target === '_self' ? 'hover' : 'off'}
+		data-sveltekit-preload-data={prefetch && (target === '_self' || target === undefined)
+			? 'hover'
+			: 'off'}
 		class="{noPadding
 			? 'p-0'
 			: size === 'xs'

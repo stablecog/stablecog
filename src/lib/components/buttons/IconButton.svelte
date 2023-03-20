@@ -7,7 +7,7 @@
 	export let name: string;
 	export { classes as class };
 	export let prefetch: boolean = true;
-	export let target: THrefTarget = '_self';
+	export let target: THrefTarget = undefined;
 	export let noPadding = false;
 	export let disabled = false;
 	export let type: 'on-primary' | 'primary' | 'secondary' = 'primary';
@@ -16,9 +16,11 @@
 
 {#if href}
 	<a
-		data-sveltekit-preload-data={prefetch && target === '_self' ? 'hover' : 'off'}
 		{href}
 		{target}
+		data-sveltekit-preload-data={prefetch && (target === '_self' || target === undefined)
+			? 'hover'
+			: 'off'}
 		class="group/iconbutton rounded-xl {classes}"
 		aria-label={name}
 	>

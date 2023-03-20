@@ -142,7 +142,7 @@
 		</div>
 		<!-- Edit bar -->
 		<div
-			class="w-full top-1 max-w-7xl px-1 transition-all sticky z-40 {$isAdminGalleryEditActive
+			class="w-full top-1 max-w-7xl px-1 transition-all sticky z-30 {$isAdminGalleryEditActive
 				? 'mt-4'
 				: 'mt-0'}"
 		>

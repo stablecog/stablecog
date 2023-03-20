@@ -19,9 +19,9 @@
 	<div class="my-auto w-full flex flex-col items-center max-w-xl gap-6">
 		<h1 class="font-bold text-4xl">{$LL.Admin.AdminPanelTitle()}</h1>
 		<div class="w-full flex flex-row flex-wrap items-center justify-center gap-4">
-			<Button href="admin/gallery">{$LL.Admin.AdminGalleryButton()}</Button>
+			<Button href="/admin/gallery">{$LL.Admin.AdminGalleryButton()}</Button>
 			{#if isSuperAdmin($userSummary?.roles || [])}
-				<Button href="admin/users">{$LL.Admin.UsersButton()}</Button>
+				<Button href="/admin/users">{$LL.Admin.UsersButton()}</Button>
 			{/if}
 		</div>
 	</div>

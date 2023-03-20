@@ -2,7 +2,7 @@
 	import { isTouchscreen } from '$ts/stores/isTouchscreen';
 	import type { THrefTarget } from '$ts/types/main';
 	export let href: string | undefined = undefined;
-	export let target: THrefTarget = '_self';
+	export let target: THrefTarget = undefined;
 	export let type: 'sm' | 'md' = 'md';
 	export let prefetch: boolean = false;
 	export let onClick: (() => void) | undefined = undefined;
@@ -14,14 +14,16 @@
 
 {#if href}
 	<a
-		data-sveltekit-preload-data={prefetch && target === '_self' ? 'hover' : 'off'}
+		{href}
+		{target}
+		data-sveltekit-preload-data={prefetch && (target === '_self' || target === undefined)
+			? 'hover'
+			: 'off'}
 		class="max-w-full relative overflow-hidden z-0 px-4 py-3.5 font-semibold transition pointer-events-auto 
 		flex items-center gap-1.5 group rounded-xl {!$isTouchscreen ? 'hover:text-c-primary' : ''} {type ===
 		'sm'
 			? 'text-sm '
 			: 'text-base'} {classes}"
-		{target}
-		{href}
 	>
 		<div class="w-full h-full absolute left-0 top-0 p-0.5">
 			<div class="w-full h-full relative z-0 overflow-hidden rounded-xl">

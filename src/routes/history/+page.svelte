@@ -221,7 +221,7 @@
 		</div>
 		<!-- Edit bar -->
 		<div
-			class="w-full top-1 max-w-7xl px-0.5 transition-all sticky z-40 {$isUserGalleryEditActive
+			class="w-full top-1 max-w-7xl px-0.5 transition-all sticky z-30 {$isUserGalleryEditActive
 				? 'mt-3'
 				: 'mt-0'}"
 		>

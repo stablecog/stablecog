@@ -1,6 +1,6 @@
 export type TStatus = 'idle' | 'loading' | 'success' | 'error';
 
-export type THrefTarget = '_blank' | '_self';
+export type THrefTarget = '_blank' | '_self' | undefined;
 
 export interface TTab<T> {
 	label: string;

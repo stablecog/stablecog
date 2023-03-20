@@ -14,7 +14,7 @@
 	export let disabled = false;
 	export let loading = false;
 	export let withSpinner = false;
-	export let target: THrefTarget = '_self';
+	export let target: THrefTarget = undefined;
 	export let size: 'sm' | 'md' = 'sm';
 	export let textColor: 'on-bg' | 'secondary' | 'danger' | 'success' = 'on-bg';
 	export let icon: ConstructorOfATypedSvelteComponent | undefined = undefined;
@@ -28,7 +28,9 @@
 		{href}
 		{download}
 		{target}
-		data-sveltekit-preload-data={prefetch && target === '_self' ? 'hover' : 'off'}
+		data-sveltekit-preload-data={prefetch && (target === '_self' || target === undefined)
+			? 'hover'
+			: 'off'}
 		class="{state === 'success'
 			? 'bg-c-success ring-c-success text-c-on-primary'
 			: 'bg-c-bg-secondary ring-c-bg-tertiary text-c-on-bg'} {noPadding
