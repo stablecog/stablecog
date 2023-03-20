@@ -115,7 +115,7 @@
 					({totalOutputs !== undefined ? totalOutputs : '...'})
 				</p>
 			</div>
-			<div class="w-full md:w-64 flex z-50 mt-4 md:mt-0">
+			<div class="w-full md:w-64 flex z-40 mt-4 md:mt-0">
 				<TabLikeDropdown
 					class="w-full"
 					name="Filter"
