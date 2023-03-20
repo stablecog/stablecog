@@ -55,6 +55,7 @@
 	import { getUserSummary } from '$ts/helpers/user/user';
 	import UnderDevelopment from '$components/UnderDevelopment.svelte';
 	import { isSuperAdmin } from '$ts/helpers/admin/roles';
+	import { isHydrated, setIsHydratedToTrue } from '$ts/helpers/isHydrated';
 
 	export let data: LayoutData;
 	setLocale(data.locale);
@@ -103,13 +104,18 @@
 	}
 
 	afterNavigate(() => {
-		const props = {
-			'SC - Page': `${$page.url.pathname}${$page.url.search}`,
-			'SC - Locale': $locale,
-			'SC - Advanced Mode': $advancedModeApp,
-			'SC - Stripe Product Id': $userSummary?.product_id
-		};
-		logPageview(props);
+		if (!isHydrated) {
+			setIsHydratedToTrue();
+			return;
+		} else {
+			const props = {
+				'SC - Page': `${$page.url.pathname}${$page.url.search}`,
+				'SC - Locale': $locale,
+				'SC - Advanced Mode': $advancedModeApp,
+				'SC - Stripe Product Id': $userSummary?.product_id
+			};
+			logPageview(props);
+		}
 	});
 
 	function setWindowStores() {
