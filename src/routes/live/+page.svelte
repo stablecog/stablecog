@@ -172,6 +172,7 @@
 
 	onDestroy(() => {
 		clearInterval(getAndSetTotalsInterval);
+		sse?.close();
 	});
 
 	async function getAndSetTotals() {

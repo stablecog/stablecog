@@ -270,7 +270,7 @@
 				</IconButton>
 			{/if}
 		</div>
-		{#if !isGalleryEditActive}
+		{#if !isGalleryEditActive && !generation.selected_output.is_deleted}
 			<div
 				bind:this={rightButtonContainer}
 				class="flex flex-row flex-wrap items-center justify-end transition transform 

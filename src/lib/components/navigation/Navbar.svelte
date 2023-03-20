@@ -196,7 +196,7 @@
 	</div>
 </nav>
 
-{#if isSignInModalOpen && !$page.data.session?.user.id}
+{#if isSignInModalOpen && (!$page.data.session?.user.id || !$userSummary)}
 	<div
 		use:portal={'body'}
 		transition:fade|local={modalBgTransitionProps}

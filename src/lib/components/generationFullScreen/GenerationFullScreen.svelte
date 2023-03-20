@@ -78,6 +78,7 @@
 
 	let upscaledImageWidth: number | undefined;
 	let upscaledImageHeight: number | undefined;
+
 	$: generation, onGenerationChanged();
 	$: upscaleStatus = hadUpscaledImageUrlOnMount
 		? 'succeeded'
@@ -168,6 +169,7 @@
 	};
 
 	const setSidebarWrapperVars = () => {
+		if (!sidebarWrapper) return;
 		sidebarWrapperScrollTop = sidebarWrapper.scrollTop;
 		sidebarWrapperScrollHeight = sidebarWrapper.scrollHeight;
 	};
@@ -245,11 +247,14 @@
 
 	const onImageLoad = (e: Event) => {
 		const target = e.target as HTMLImageElement;
-		if (generation.width !== target.naturalWidth) {
+		if (generation.width !== target.naturalWidth && generation.selected_output.upscaled_image_url) {
 			upscaledImageWidth = target.naturalWidth;
 			isUpscaledImageLoaded = true;
 		}
-		if (generation.height !== target.naturalHeight) {
+		if (
+			generation.height !== target.naturalHeight &&
+			generation.selected_output.upscaled_image_url
+		) {
 			upscaledImageHeight = target.naturalHeight;
 			isUpscaledImageLoaded = true;
 		}
@@ -338,7 +343,7 @@
 					/>
 					{#if $upscales && $upscales.length > 0 && upscaleFromStore?.status === 'failed'}
 						<div
-							transition:fly={{ duration: 200, easing: quadOut, y: -50 }}
+							transition:fly|local={{ duration: 200, easing: quadOut, y: -50 }}
 							class="w-full absolute left-0 top-0 flex items-center justify-center p-3"
 						>
 							<p

@@ -69,10 +69,10 @@
 		use:clickoutside={{
 			callback: () => {
 				if ($activeGeneration !== undefined) {
-					activeGeneration.set(undefined);
 					if ($page.url.pathname === '/gallery') {
 						window.history.replaceState({}, '', `/gallery`);
 					}
+					activeGeneration.set(undefined);
 				}
 			}
 		}}
