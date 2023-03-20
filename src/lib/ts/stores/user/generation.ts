@@ -256,6 +256,7 @@ export interface TGenerationBase {
 	inference_steps: number;
 	guidance_scale: number;
 	num_outputs: number;
+	init_image_url?: string;
 }
 
 export interface TGeneration extends TGenerationBase {

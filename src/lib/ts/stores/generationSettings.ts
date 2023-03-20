@@ -55,3 +55,4 @@ export const generationSeed = writable<string | number | undefined | null>(undef
 export const generationModelId = writable<TAvailableGenerationModelId>(generationModelIdDefault);
 export const generationSchedulerId = writable<TAvailableSchedulerId>(schedulerIdDefault);
 export const generationNumOutputs = writable<string>(numOutputsDefault.toString());
+export const generationInitImageUrl = writable<string | undefined>(undefined);

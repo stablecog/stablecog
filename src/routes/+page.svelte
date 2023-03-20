@@ -31,6 +31,7 @@
 		generationGuidanceScale,
 		generationHeight,
 		generationInferenceSteps,
+		generationInitImageUrl,
 		generationModelId,
 		generationNumOutputs,
 		generationSchedulerId,
@@ -101,6 +102,7 @@
 			process_type: 'generate',
 			stream_id: $sseId,
 			ui_id: generateSSEId(),
+			init_image_url: $generationInitImageUrl,
 			submit_to_gallery: false
 		};
 		uLogGeneration('Started');
