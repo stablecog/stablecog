@@ -95,11 +95,13 @@
 		mixpanel.identify($page.data.session.user.id);
 		mixpanel.people.set({
 			$email: $page.data.session.user.email,
-			'SC - Stripe Product Id': $userSummary?.product_id
+			'SC - Stripe Product Id': $userSummary?.product_id,
+			'SC - App Version': $appVersion
 		});
 		posthog.identify($page.data.session.user.id, {
 			email: $page.data.session.user.email,
-			'SC - Stripe Product Id': $userSummary?.product_id
+			'SC - Stripe Product Id': $userSummary?.product_id,
+			'SC - App Version': $appVersion
 		});
 	}
 
