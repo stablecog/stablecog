@@ -7,9 +7,11 @@ interface TAutoResizeProps {
 	placeholder?: string;
 }
 
-export function autoresize(node: HTMLTextAreaElement, props?: TAutoResizeProps) {
-	const { minRows, maxRows } = props || {};
-	const resize = () => {
+export function autoresize(node: HTMLTextAreaElement, props: TAutoResizeProps) {
+	let currentProps = props;
+
+	const resize = (props: TAutoResizeProps) => {
+		currentProps = props;
 		const nodeSizingData = getSizingData(node);
 		if (!nodeSizingData) {
 			return;
@@ -17,28 +19,31 @@ export function autoresize(node: HTMLTextAreaElement, props?: TAutoResizeProps) 
 		const height = calculateNodeHeight(
 			nodeSizingData,
 			node.value || node.placeholder || 'x',
-			minRows,
-			maxRows
+			props.minRows,
+			props.maxRows
 		);
 		node.style.setProperty('height', `${height[0]}px`, 'important');
 	};
-	node.addEventListener('input', resize);
-	node.addEventListener('focus', resize);
-	node.addEventListener('blur', resize);
-	window.addEventListener('resize', resize);
-	resize();
+
+	const resizeWithProps = () => resize(currentProps);
+	resizeWithProps();
+
+	node.addEventListener('input', resizeWithProps);
+	node.addEventListener('focus', resizeWithProps);
+	node.addEventListener('blur', resizeWithProps);
+	window.addEventListener('resize', resizeWithProps);
 	setTimeout(() => {
-		resize();
+		resizeWithProps();
 	});
 	return {
 		destroy() {
-			node.removeEventListener('input', resize);
-			node.removeEventListener('focus', resize);
-			node.removeEventListener('blur', resize);
-			window.removeEventListener('resize', resize);
+			node.removeEventListener('input', resizeWithProps);
+			node.removeEventListener('focus', resizeWithProps);
+			node.removeEventListener('blur', resizeWithProps);
+			window.removeEventListener('resize', resizeWithProps);
 		},
-		update(_: TAutoResizeProps) {
-			resize();
+		update(props: TAutoResizeProps) {
+			resize(props);
 		}
 	};
 }
