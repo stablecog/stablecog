@@ -185,7 +185,6 @@
 				easing: quadOut
 			});
 			generationTotalCount.set(gCount);
-			console.log('generationTotalCount:', gCount);
 		}
 		if (uCount > $upscaleTotalCount) {
 			upscaleTotalCount = tweened($upscaleTotalCount, {
@@ -193,7 +192,6 @@
 				easing: quadOut
 			});
 			upscaleTotalCount.set(uCount);
-			console.log('upscaleTotalCount:', uCount);
 		}
 	}
 

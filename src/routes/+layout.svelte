@@ -91,7 +91,13 @@
 	$: [$themeApp], setBodyClasses();
 	$: [innerWidth, innerHeight], setWindowStores();
 
-	$: if (mounted && $page.data.session?.user.id) {
+	let lastIdentity: string | undefined = undefined;
+	$: [mounted, $page], identifyUser();
+
+	function identifyUser() {
+		if (!mounted || !$page.data.session?.user.id || lastIdentity === $page.data.session?.user.id) {
+			return;
+		}
 		mixpanel.identify($page.data.session.user.id);
 		mixpanel.people.set({
 			$email: $page.data.session.user.email,
@@ -103,6 +109,7 @@
 			'SC - Stripe Product Id': $userSummary?.product_id,
 			'SC - App Version': $appVersion
 		});
+		lastIdentity = $page.data.session?.user.id;
 	}
 
 	afterNavigate(() => {

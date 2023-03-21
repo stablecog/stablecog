@@ -29,7 +29,6 @@ export async function getUserGenerationFullOutputs({
 		}
 	});
 	const data: TUserGenerationFullOutputsPage = await res.json();
-	console.log(data);
 	return data;
 }
 
