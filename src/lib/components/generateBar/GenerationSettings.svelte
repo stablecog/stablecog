@@ -52,6 +52,7 @@
 	import type { TTab } from '$ts/types/main';
 	import { userSummary } from '$ts/stores/user/summary';
 	import { heightTabs, widthTabs } from '$ts/constants/generationSize';
+	import { appVersion } from '$ts/stores/appVersion';
 
 	export let isCheckComplete: boolean;
 	export let formElement: HTMLFormElement;
@@ -86,7 +87,8 @@
 	}
 
 	$: logProps = {
-		'SC - Stripe Product Id': $userSummary?.product_id
+		'SC - Stripe Product Id': $userSummary?.product_id,
+		'SC - App Version': $appVersion
 	};
 </script>
 

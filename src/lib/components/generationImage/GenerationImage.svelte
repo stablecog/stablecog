@@ -20,6 +20,7 @@
 		adminGallerySelectedOutputIds
 	} from '$ts/stores/admin/gallery';
 	import { advancedModeApp } from '$ts/stores/advancedMode';
+	import { appVersion } from '$ts/stores/appVersion';
 	import { isTouchscreen } from '$ts/stores/isTouchscreen';
 	import { lastClickedOutputId } from '$ts/stores/lastClickedOutputId';
 	import {
@@ -137,8 +138,9 @@
 
 	$: logProps = {
 		'SC - Output Id': generation.selected_output.id,
-		'SC - Product Id': $userSummary?.product_id,
-		'SC - Advanced Mode': $advancedModeApp
+		'SC - Stripe Product Id': $userSummary?.product_id,
+		'SC - Advanced Mode': $advancedModeApp,
+		'SC - App Version': $appVersion
 	};
 
 	async function onSelectButtonClicked(

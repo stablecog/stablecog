@@ -22,6 +22,7 @@
 	import DropdownWrapper from '$components/DropdownWrapper.svelte';
 	import { clickoutside } from '$ts/actions/clickoutside';
 	import IconAnimatedSpinner from '$components/icons/IconAnimatedSpinner.svelte';
+	import { appVersion } from '$ts/stores/appVersion';
 
 	export let data: PageServerData;
 
@@ -36,7 +37,8 @@
 				'SC - Stripe Product Id': $userSummary?.product_id,
 				'SC - Locale': $locale,
 				'SC - Advanced Mode': $advancedModeApp,
-				'SC - Page': `${$page.url.pathname}${$page.url.search}`
+				'SC - Page': `${$page.url.pathname}${$page.url.search}`,
+				'SC - App Version': $appVersion
 			});
 		} catch (error) {
 			console.log(error);

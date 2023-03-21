@@ -32,6 +32,7 @@
 		type TAdminGalleryAction
 	} from '$ts/stores/admin/gallery';
 	import { advancedModeApp } from '$ts/stores/advancedMode';
+	import { appVersion } from '$ts/stores/appVersion';
 	import {
 		isUserGalleryEditActive,
 		userGalleryActionableItems,
@@ -188,7 +189,8 @@
 				'SC - Advanced Mode': $advancedModeApp,
 				'SC - Locale': $locale,
 				'SC - Page': `${$page.url.pathname}${$page.url.search}`,
-				'SC - Stripe Product Id': $userSummary?.product_id
+				'SC - Stripe Product Id': $userSummary?.product_id,
+				'SC - App Version': $appVersion
 			};
 			if (action === 'add') {
 				logGenerationOutputFavorited(logProps);
@@ -241,7 +243,8 @@
 					'SC - Advanced Mode': $advancedModeApp,
 					'SC - Locale': $locale,
 					'SC - Page': `${$page.url.pathname}${$page.url.search}`,
-					'SC - Stripe Product Id': $userSummary?.product_id
+					'SC - Stripe Product Id': $userSummary?.product_id,
+					'SC - App Version': $appVersion
 				};
 				logGenerationOutputDeleted(logProps);
 			}

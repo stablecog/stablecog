@@ -38,6 +38,7 @@
 	import IconTickOnly from '$components/icons/IconTickOnly.svelte';
 	import IconAnimatedSpinner from '$components/icons/IconAnimatedSpinner.svelte';
 	import { userGenerationFullOutputsQueryKey } from '$ts/stores/user/keys';
+	import { appVersion } from '$ts/stores/appVersion';
 
 	export let generation: TGenerationWithSelectedOutput;
 	export let generateSimilarUrl: string;
@@ -64,7 +65,8 @@
 					'SC - Output Id': generation.selected_output.id,
 					'SC - Page': `${$page.url.pathname}${$page.url.search}`,
 					'SC - Generation Id': generation.id,
-					'SC - Stripe Product Id': $userSummary?.product_id
+					'SC - Stripe Product Id': $userSummary?.product_id,
+					'SC - App Version': $appVersion
 				}
 			});
 			setButtonObjectWithState('download', 'success');
@@ -84,7 +86,8 @@
 		'SC - Advanced Mode': $advancedModeApp,
 		'SC - Locale': $locale,
 		'SC - Page': `${$page.url.pathname}${$page.url.search}`,
-		'SC - Stripe Product Id': $userSummary?.product_id
+		'SC - Stripe Product Id': $userSummary?.product_id,
+		'SC - App Version': $appVersion
 	};
 
 	async function deleteGeneration() {
@@ -209,7 +212,8 @@
 						logGalleryGenerateSimilarClicked({
 							'SC - Advanced Mode': $advancedModeApp,
 							'SC - Output Id': generation.selected_output.id,
-							'SC - Stripe Product Id': $userSummary?.product_id
+							'SC - Stripe Product Id': $userSummary?.product_id,
+							'SC - App Version': $appVersion
 						});
 					}
 				}}

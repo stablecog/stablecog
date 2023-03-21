@@ -8,6 +8,7 @@
 	import LL, { locale } from '$i18n/i18n-svelte';
 	import { logSignIn } from '$ts/helpers/loggers';
 	import { advancedModeApp } from '$ts/stores/advancedMode';
+	import { appVersion } from '$ts/stores/appVersion';
 	import { userSummary } from '$ts/stores/user/summary';
 	import { onMount } from 'svelte';
 	import type { PageServerData } from './$types';
@@ -26,7 +27,8 @@
 			'SC - Stripe Product Id': $userSummary?.product_id,
 			'SC - Locale': $locale,
 			'SC - Advanced Mode': $advancedModeApp,
-			'SC - Email': $page.data.session?.user.email
+			'SC - Email': $page.data.session?.user.email,
+			'SC - App Version': $appVersion
 		});
 		setTimeout(async () => {
 			if (data.redirect_to) {

@@ -26,6 +26,7 @@
 	import { onMount } from 'svelte';
 	import type { PageServerData } from './$types';
 	import IconAnimatedSpinner from '$components/icons/IconAnimatedSpinner.svelte';
+	import { appVersion } from '$ts/stores/appVersion';
 
 	export let data: PageServerData;
 	const { generationFullOutput: generationFullOutputFromData } = data;
@@ -80,7 +81,8 @@
 					'SC - Search Query': searchStringDebounced,
 					'SC - Advanced Mode': $advancedModeApp,
 					'SC - Locale': $locale,
-					'SC - Stripe Product Id': $userSummary?.product_id
+					'SC - Stripe Product Id': $userSummary?.product_id,
+					'SC - App Version': $appVersion
 				});
 			} else {
 				searchStringDebounced = '';

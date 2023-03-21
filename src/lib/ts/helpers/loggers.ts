@@ -116,18 +116,21 @@ export function logGenerationFailed({
 	error,
 	advancedModeApp,
 	locale,
+	appVersion,
 	stripeProductId
 }: {
 	generation: TGeneration | TInitialGenerationRequest;
 	error?: string;
 	advancedModeApp: boolean;
 	locale: string;
+	appVersion: string;
 	stripeProductId?: string;
 }) {
 	const props = logGenerationPropsFromGeneration({
 		generation,
 		advancedModeApp,
 		locale,
+		appVersion,
 		stripeProductId
 	});
 	uLogGeneration(error === 'NSFW' ? 'Failed-NSFW' : 'Failed');
@@ -138,11 +141,13 @@ export function logGenerationPropsFromGeneration({
 	generation,
 	advancedModeApp,
 	locale,
+	appVersion,
 	stripeProductId
 }: {
 	generation: TGeneration | TInitialGenerationRequest;
 	advancedModeApp: boolean;
 	locale: string;
+	appVersion: string;
 	stripeProductId?: string;
 }) {
 	return {
@@ -156,7 +161,8 @@ export function logGenerationPropsFromGeneration({
 		'SC - Locale': locale,
 		'SC - Submit to Gallery': generation.submit_to_gallery,
 		'SC - Stripe Product Id': stripeProductId,
-		'SC - Number of Outputs': generation.num_outputs
+		'SC - Number of Outputs': generation.num_outputs,
+		'SC - App Version': appVersion
 	};
 }
 
@@ -164,16 +170,19 @@ export function logUpscaleFailed({
 	upscale,
 	advancedModeApp,
 	locale,
+	appVersion,
 	stripeProductId
 }: {
 	upscale: TUpscale | TInitialUpscaleRequest;
 	advancedModeApp: boolean;
 	locale: string;
+	appVersion: string;
 	stripeProductId?: string;
 }) {
 	const props = logUpscalePropsFromUpscale({
 		upscale,
 		advancedModeApp,
+		appVersion,
 		locale,
 		stripeProductId
 	});
@@ -185,11 +194,13 @@ export function logUpscalePropsFromUpscale({
 	upscale,
 	advancedModeApp,
 	locale,
+	appVersion,
 	stripeProductId
 }: {
 	upscale: TUpscale | TInitialUpscaleRequest;
 	advancedModeApp: boolean;
 	locale: string;
+	appVersion: string;
 	stripeProductId?: string;
 }) {
 	return {
@@ -197,30 +208,35 @@ export function logUpscalePropsFromUpscale({
 		'SC - Input': upscale.input,
 		'SC - Advanced Mode': advancedModeApp,
 		'SC - Locale': locale,
-		'SC - Stripe Product Id': stripeProductId
+		'SC - Stripe Product Id': stripeProductId,
+		'SC - App Version': appVersion
 	};
 }
 
 interface ISubmitToGalleryToggledMinimal {
 	'SC - Advanced Mode': boolean;
-	'SC - Stripe Product Id'?: string;
+	'SC - Stripe Product Id': string | undefined;
+	'SC - App Version': string;
 }
 type IOnOff = 'On' | 'Off';
 
 interface IGalleryGenerationOpenedProps {
 	'SC - Output Id': string;
-	'SC - Stripe Product Id'?: string;
+	'SC - Stripe Product Id': string | undefined;
 	'SC - Advanced Mode': boolean;
+	'SC - App Version': string;
 }
 
 interface IGalleryGenerateClickedProps {
 	'SC - Output Id': string;
-	'SC - Stripe Product Id'?: string;
+	'SC - Stripe Product Id': string | undefined;
 	'SC - Advanced Mode': boolean;
+	'SC - App Version': string;
 }
 
 interface IAdvancedModeToggledProps {
-	'SC - Stripe Product Id'?: string;
+	'SC - Stripe Product Id': string | undefined;
+	'SC - App Version': string;
 }
 
 interface IUpscaleMinimal {
@@ -229,7 +245,8 @@ interface IUpscaleMinimal {
 	'SC - Advanced Mode': boolean;
 	'SC - Locale': string;
 	'SC - Duration'?: number;
-	'SC - Stripe Product Id'?: string;
+	'SC - Stripe Product Id': string | undefined;
+	'SC - App Version': string;
 }
 
 type IGenerationStatus = 'Started' | 'Succeeded' | 'Failed' | 'Failed-NSFW';
@@ -247,7 +264,7 @@ interface IGenerationMinimal {
 	'SC - Locale': string;
 	'SC - Submit to Gallery': boolean;
 	'SC - Duration'?: number;
-	'SC - Stripe Product Id'?: string;
+	'SC - Stripe Product Id': string | undefined;
 	'SC - Number of Outputs': number;
 }
 
@@ -255,29 +272,33 @@ interface IPageviewProps {
 	'SC - Page': string;
 	'SC - Locale': string;
 	'SC - Advanced Mode': boolean;
-	'SC - Stripe Product Id'?: string;
+	'SC - Stripe Product Id': string | undefined;
+	'SC - App Version': string;
 }
 
 interface ISignInProps {
 	'SC - Locale': string;
 	'SC - Advanced Mode': boolean;
-	'SC - Stripe Product Id'?: string;
+	'SC - Stripe Product Id': string | undefined;
 	'SC - Page': string;
 	'SC - Email': string;
+	'SC - App Version': string;
 }
 
 interface ISignOutProps {
 	'SC - Locale': string;
 	'SC - Advanced Mode': boolean;
-	'SC - Stripe Product Id'?: string;
+	'SC - Stripe Product Id': string | undefined;
 	'SC - Page': string;
+	'SC - App Version': string;
 }
 
 interface IGallerySearchProps {
 	'SC - Locale': string;
 	'SC - Advanced Mode': boolean;
-	'SC - Stripe Product Id'?: string;
+	'SC - Stripe Product Id': string | undefined;
 	'SC - Search Query': string;
+	'SC - App Version': string;
 }
 
 export interface IGenerationOutputActionProps {
@@ -285,13 +306,15 @@ export interface IGenerationOutputActionProps {
 	'SC - Output Id': string;
 	'SC - Locale': string;
 	'SC - Advanced Mode': boolean;
-	'SC - Stripe Product Id'?: string;
+	'SC - Stripe Product Id': string | undefined;
 	'SC - Page': string;
+	'SC - App Version': string;
 }
 
 interface IBatchEditActivedProps {
 	'SC - Locale': string;
 	'SC - Advanced Mode': boolean;
 	'SC - Page': string;
-	'SC - Stripe Product Id'?: string;
+	'SC - Stripe Product Id': string | undefined;
+	'SC - App Version': string;
 }

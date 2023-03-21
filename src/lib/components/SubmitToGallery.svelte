@@ -3,13 +3,15 @@
 	import { expandCollapse } from '$ts/animation/transitions';
 	import { logSubmitToGallery, uLogSubmitToGallery } from '$ts/helpers/loggers';
 	import { advancedModeApp } from '$ts/stores/advancedMode';
+	import { appVersion } from '$ts/stores/appVersion';
 	import { shouldSubmitToGallery } from '$ts/stores/shouldSubmitToGallery';
 	import { userSummary } from '$ts/stores/user/summary';
 	import SubtleButton from './buttons/SubtleButton.svelte';
 
 	$: logProps = {
 		'SC - Stripe Product Id': $userSummary?.product_id,
-		'SC - Advanced Mode': $advancedModeApp
+		'SC - Advanced Mode': $advancedModeApp,
+		'SC - App Version': $appVersion
 	};
 </script>
 

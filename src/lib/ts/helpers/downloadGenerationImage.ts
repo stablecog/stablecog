@@ -1,4 +1,3 @@
-import { PUBLIC_BUCKET_ORIGIN_URL, PUBLIC_BUCKET_URL } from '$env/static/public';
 import { getImageFileNameFromGeneration } from '$ts/helpers/getImageFileNameFromGeneration';
 import {
 	logGenerationOutputDownloaded,

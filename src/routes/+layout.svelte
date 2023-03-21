@@ -112,7 +112,8 @@
 				'SC - Page': `${$page.url.pathname}${$page.url.search}`,
 				'SC - Locale': $locale,
 				'SC - Advanced Mode': $advancedModeApp,
-				'SC - Stripe Product Id': $userSummary?.product_id
+				'SC - Stripe Product Id': $userSummary?.product_id,
+				'SC - App Version': $appVersion
 			};
 			logPageview(props);
 		}

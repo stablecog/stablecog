@@ -12,11 +12,7 @@
 	import ImagePlaceholder from '$components/ImagePlaceholder.svelte';
 	import GenerationImage from '$components/generationImage/GenerationImage.svelte';
 	import { advancedModeApp } from '$ts/stores/advancedMode';
-	import {
-		logGeneration,
-		logGenerationPropsFromGeneration,
-		uLogGeneration
-	} from '$ts/helpers/loggers';
+	import { uLogGeneration } from '$ts/helpers/loggers';
 	import {
 		activeGeneration,
 		generations,
@@ -25,7 +21,7 @@
 	} from '$userStores/generation';
 	import type { THomePageData } from '$routes/+page.server';
 	import { isValue } from '$ts/helpers/isValue';
-	import LL, { locale } from '$i18n/i18n-svelte';
+	import LL from '$i18n/i18n-svelte';
 	import GenerationFullScreen from '$components/generationFullScreen/GenerationFullScreen.svelte';
 	import {
 		generationGuidanceScale,
