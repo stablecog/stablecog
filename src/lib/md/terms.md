@@ -6,7 +6,7 @@ _Last updated March 19, 2023_
 
 We are Stablecog, Inc. ("**Company**", "**we**", "**us**", "**our**"), a company registered in Oregon, United States at 9450 SW Gemini Dr, Beaverton, OR 97008, USA, Beaverton, OR 97008.
 
-We operate the website **[stablecog.com](https://stablecog.com)** (the "**Site**"), as well as any other related products and services that refer or link to these legal terms (the "**Legal Terms**") (collectively, the "Services").
+We operate the website **[stablecog.com](https://stablecog.com)** (the "**Site**"), as well as any other related products and services that refer or link to these legal terms (the "**Legal Terms**") (collectively, the "**Services**").
 
 You can contact us by phone at (+1)5033808391, email at hello@stablecog.com, or by mail to 9450 SW Gemini Dr, Beaverton, OR 97008, USA, Beaverton, OR 97008, United States.
 
