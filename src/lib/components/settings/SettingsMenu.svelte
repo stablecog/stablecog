@@ -16,7 +16,7 @@
 	const navigateToLanguagePage = () => (currentPage = 'language');
 </script>
 
-<DropdownWrapper class="w-80 max-w-[calc(100vw-1.5rem)]">
+<DropdownWrapper class="w-72 max-w-[calc(100vw-1.5rem)]">
 	<div class="w-full flex">
 		<button
 			class="w-full relative bg-c-bg-secondary z-20 text-left px-6 h-full flex items-center transition-all self-stretch group"
