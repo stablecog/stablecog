@@ -56,6 +56,8 @@
 	import UnderDevelopment from '$components/UnderDevelopment.svelte';
 	import { isSuperAdmin } from '$ts/helpers/admin/roles';
 	import { isHydrated, setIsHydratedToTrue } from '$ts/helpers/isHydrated';
+	import { navbarHeight } from '$ts/stores/navbarHeight';
+	import { navbarStickyType } from '$ts/stores/stickyNavbar';
 
 	export let data: LayoutData;
 	setLocale(data.locale);
@@ -352,8 +354,32 @@
 		}
 	}
 
+	const underDevelopment = false;
+
+	let notAtTheVeryTop = false;
+	const notAtTheVeryTopThreshold = 5;
+	let oldScrollY = 0;
+	const minScrollThreshold = 40;
+	let scrollDirection: 'up' | 'down' = 'down';
+
+	const setNavbarState = () => {
+		const scroll = window.scrollY;
+		const _notAtTheVeryTop = scroll > notAtTheVeryTopThreshold;
+		if (_notAtTheVeryTop !== notAtTheVeryTop) {
+			notAtTheVeryTop = _notAtTheVeryTop;
+		}
+		if (Math.abs(window.scrollY - oldScrollY) < minScrollThreshold) return;
+		if (window.scrollY > oldScrollY) {
+			scrollDirection = 'down';
+		} else {
+			scrollDirection = 'up';
+		}
+		oldScrollY = scroll;
+	};
+
 	onMount(async () => {
 		setBodyClasses();
+		setNavbarState();
 		mixpanel.init(PUBLIC_MIXPANEL_ID);
 		posthog.init(PUBLIC_POSTHOG_ID, {
 			api_host: PUBLIC_POSTHOG_URL
@@ -379,11 +405,9 @@
 			subscription.unsubscribe();
 		};
 	});
-
-	const underDevelopment = false;
 </script>
 
-<svelte:window bind:innerHeight bind:innerWidth />
+<svelte:window bind:innerHeight bind:innerWidth on:scroll={setNavbarState} />
 
 <QueryClientProvider client={queryClient}>
 	<div
@@ -399,7 +423,10 @@
 		{#if underDevelopment && (!$userSummary || !isSuperAdmin($userSummary.roles)) && !$page.url.pathname.startsWith('/admin') && !$page.url.pathname.startsWith('/api/auth') && !$page.url.pathname.startsWith('/sign-in')}
 			<UnderDevelopment />
 		{:else}
-			<Navbar />
+			<Navbar {notAtTheVeryTop} {scrollDirection} />
+			{#if $navbarStickyType === undefined || $navbarStickyType !== 'not-sticky'}
+				<div style={$navbarHeight ? `height: ${$navbarHeight}px` : ``} class="h-20 w-full" />
+			{/if}
 			<main class="w-full flex-1 flex flex-col relative break-words">
 				<slot />
 			</main>

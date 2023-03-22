@@ -98,7 +98,7 @@
 		}
 	}
 
-	const atTheTopThreshold = 50;
+	const atTheTopThreshold = 5;
 	const minScrollThreshold = 40;
 
 	onMount(() => {

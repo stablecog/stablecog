@@ -27,8 +27,10 @@
 	} from '$ts/animation/constants';
 	import IconBolt from '$components/icons/IconBolt.svelte';
 	import { userSummary } from '$ts/stores/user/summary';
-	import { isUserGalleryEditActive } from '$ts/stores/user/gallery';
-	import { isAdminGalleryEditActive } from '$ts/stores/admin/gallery';
+	import { navbarStickyType } from '$ts/stores/stickyNavbar';
+
+	export let notAtTheVeryTop = false;
+	export let scrollDirection: 'up' | 'down' = 'down';
 
 	let isSignInModalOpen = false;
 	let isSettingsOpen = false;
@@ -40,39 +42,24 @@
 	const toggleAccountMenu = () => (isAccountMenuOpen = !isAccountMenuOpen);
 	const closeAccountMenu = () => (isAccountMenuOpen = false);
 
-	let notAtTheTop = false;
-	const notAtTheTopThreshold = 1;
-
-	const setNotAtTheTop = () => {
-		const t = window.scrollY > notAtTheTopThreshold;
-		if (t !== notAtTheTop) {
-			notAtTheTop = t;
-		}
-	};
-
 	let mounted = false;
 	onMount(() => {
-		setNotAtTheTop();
 		mounted = true;
 	});
 
 	const lastNotification = 'our-first-big-update';
-
-	$: nonStickyNavbarRoutes = [
-		{ route: '/admin/gallery', nonStickyIfTrue: $isAdminGalleryEditActive },
-		{ route: '/history', nonStickyIfTrue: $isUserGalleryEditActive }
-	];
-
-	$: isStickyNavbarRoute = !nonStickyNavbarRoutes.find(
-		(r) => r.nonStickyIfTrue && r.route === $page.url.pathname
-	);
 </script>
-
-<svelte:window on:scroll={setNotAtTheTop} />
 
 <nav
 	bind:clientHeight={$navbarHeight}
-	class="w-full flex flex-col z-50 {isStickyNavbarRoute ? 'sticky -top-px' : ''}"
+	class="w-full flex flex-col z-50 -mt-px transform transition duration-150 {$navbarStickyType ===
+	'not-sticky'
+		? ''
+		: 'top-0 left-0 fixed'} {notAtTheVeryTop &&
+	$navbarStickyType === 'auto' &&
+	scrollDirection === 'down'
+		? '-translate-y-full'
+		: ''}"
 >
 	{#if mounted && ($lastClosedNotification === null || $lastClosedNotification !== lastNotification)}
 		<Banner
@@ -92,17 +79,17 @@
 		<PageLoadProgressBar />
 		<div
 			class="pointer-events-none w-full h-full rounded-b-xl absolute left-0 top-0 transform transition duration-300 bg-c-bg 
-			shadow-navbar shadow-c-shadow/[var(--o-shadow-stronger)] ring-2 ring-c-bg-secondary {!notAtTheTop ||
-			!isStickyNavbarRoute
-				? '-translate-y-24 opacity-0'
-				: 'translate-y-0 opacity-100'}"
+			shadow-navbar shadow-c-shadow/[var(--o-shadow-stronger)] ring-2 ring-c-bg-secondary {$navbarStickyType ===
+				'not-sticky' || !notAtTheVeryTop
+				? '-translate-y-full opacity-0'
+				: ''}"
 		/>
 		<div class="flex xl:flex-1 self-stretch">
 			<a
 				aria-label="Go to Home"
 				href="/"
 				data-sveltekit-preload-data="hover"
-				class="px-3.5 py-4.5 md:py-5.5 self-stretch flex items-center justify-center relative rounded-xl z-0 group"
+				class="px-3 md:px-3.5 py-4.5 md:py-5.5 self-stretch flex items-center justify-center relative rounded-xl z-0 group"
 			>
 				<div class="w-full h-full absolute left-0 top-0 pointer-events-none p-1.5">
 					<div class="w-full h-full rounded-xl relative z-0 overflow-hidden">
