@@ -359,12 +359,12 @@
 	let notAtTheVeryTop = false;
 	const notAtTheVeryTopThreshold = 5;
 	let oldScrollY = 0;
-	const minScrollThreshold = 40;
+	const minScrollThreshold = 50;
 	let scrollDirection: 'up' | 'down' = 'down';
 
 	const setNavbarState = () => {
-		const scroll = window.scrollY;
-		const _notAtTheVeryTop = scroll > notAtTheVeryTopThreshold;
+		const scrollY = window.scrollY;
+		const _notAtTheVeryTop = scrollY > notAtTheVeryTopThreshold;
 		if (_notAtTheVeryTop !== notAtTheVeryTop) {
 			notAtTheVeryTop = _notAtTheVeryTop;
 		}
@@ -374,7 +374,7 @@
 		} else {
 			scrollDirection = 'up';
 		}
-		oldScrollY = scroll;
+		oldScrollY = scrollY;
 	};
 
 	onMount(async () => {

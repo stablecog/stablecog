@@ -63,9 +63,9 @@
 			: false
 	}`;
 
-	let scrollDirection: 'up' | 'down' = 'up';
+	let scrollDirection: 'up' | 'down' = 'down';
 	let oldScrollY = 0;
-	let atTheVeryTop = true;
+	let notAtTheVeryTop = false;
 
 	async function setDebouncedSearch(searchString: string | undefined) {
 		if (!browser) return;
@@ -98,8 +98,23 @@
 		}
 	}
 
-	const atTheVeryTopThreshold = 5;
-	const minScrollThreshold = 40;
+	const notAtTheVeryTopThreshold = 5;
+	const minScrollThreshold = 50;
+
+	function onScroll() {
+		const scrollY = window.scrollY;
+		const _notAtTheVeryTop = scrollY > notAtTheVeryTopThreshold;
+		if (_notAtTheVeryTop !== notAtTheVeryTop) {
+			notAtTheVeryTop = _notAtTheVeryTop;
+		}
+		if (Math.abs(window.scrollY - oldScrollY) < minScrollThreshold) return;
+		if (window.scrollY > oldScrollY) {
+			scrollDirection = 'down';
+		} else {
+			scrollDirection = 'up';
+		}
+		oldScrollY = scrollY;
+	}
 
 	onMount(() => {
 		if (generationFullOutputFromData) {
@@ -126,31 +141,14 @@
 		: `${canonicalUrl}${$page.url.pathname}`}
 />
 
-<svelte:window
-	on:keydown={onKeyDown}
-	on:scroll={() => {
-		if (window.scrollY < atTheVeryTopThreshold) {
-			atTheVeryTop = true;
-			return;
-		} else {
-			atTheVeryTop = false;
-		}
-		if (Math.abs(window.scrollY - oldScrollY) < minScrollThreshold) return;
-		if (window.scrollY > oldScrollY) {
-			scrollDirection = 'down';
-		} else {
-			scrollDirection = 'up';
-		}
-		oldScrollY = window.scrollY;
-	}}
-/>
+<svelte:window on:keydown={onKeyDown} on:scroll={onScroll} />
 <div class="w-full flex-1 flex flex-col items-center relative">
 	<div
 		style="top: {$navbarHeight}px"
 		class="w-full px-2 py-2 flex justify-center sticky z-10 transition duration-200 {scrollDirection ===
-		'up'
-			? 'translate-y-0 opacity-100'
-			: '-translate-y-22 pointer-events-none opacity-0'}"
+			'down' && notAtTheVeryTop
+			? '-translate-y-22 pointer-events-none opacity-0'
+			: 'translate-y-0 opacity-100'}"
 	>
 		<Input
 			disabled={scrollDirection === 'down'}
@@ -160,7 +158,7 @@
 			hasIcon
 			hasClearButton
 			bg="bg-secondary"
-			shadow={!atTheVeryTop ? 'strongest' : 'normal'}
+			shadow={notAtTheVeryTop ? 'strongest' : 'normal'}
 		>
 			<IconSearch slot="icon" class="w-full h-full" />
 		</Input>
