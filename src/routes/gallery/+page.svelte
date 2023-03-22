@@ -147,7 +147,8 @@
 <div class="w-full flex-1 flex flex-col items-center relative">
 	<div
 		style="top: {$navbarHeight}px"
-		class="w-full px-2 py-2 flex justify-center sticky z-10 transition {scrollDirection === 'up'
+		class="w-full px-2 py-2 flex justify-center sticky z-10 transition duration-200 {scrollDirection ===
+		'up'
 			? 'translate-y-0 opacity-100'
 			: '-translate-y-22 pointer-events-none opacity-0'}"
 	>

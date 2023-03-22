@@ -425,7 +425,10 @@
 		{:else}
 			<Navbar {notAtTheVeryTop} {scrollDirection} />
 			{#if $navbarStickyType === undefined || $navbarStickyType !== 'not-sticky'}
-				<div style={$navbarHeight ? `height: ${$navbarHeight}px` : ``} class="h-20 w-full" />
+				<div
+					style={$navbarHeight ? `height: ${$navbarHeight}px` : ``}
+					class="h-18 md:h-20 w-full -mt-px"
+				/>
 			{/if}
 			<main class="w-full flex-1 flex flex-col relative break-words">
 				<slot />

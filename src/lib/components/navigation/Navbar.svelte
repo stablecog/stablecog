@@ -52,7 +52,7 @@
 
 <nav
 	bind:clientHeight={$navbarHeight}
-	class="w-full flex flex-col z-50 -mt-px transform transition duration-150 {$navbarStickyType ===
+	class="w-full flex flex-col z-50 -mt-px transform transition duration-200 {$navbarStickyType ===
 	'not-sticky'
 		? ''
 		: 'top-0 left-0 fixed'} {notAtTheVeryTop &&
@@ -78,7 +78,7 @@
 	<div class="w-full flex flex-row items-center justify-between relative z-0">
 		<PageLoadProgressBar />
 		<div
-			class="pointer-events-none w-full h-full rounded-b-xl absolute left-0 top-0 transform transition duration-300 bg-c-bg 
+			class="pointer-events-none w-full h-full rounded-b-xl absolute left-0 top-0 transform transition duration-200 bg-c-bg 
 			shadow-navbar shadow-c-shadow/[var(--o-shadow-stronger)] ring-2 ring-c-bg-secondary {$navbarStickyType ===
 				'not-sticky' || !notAtTheVeryTop
 				? '-translate-y-full opacity-0'
