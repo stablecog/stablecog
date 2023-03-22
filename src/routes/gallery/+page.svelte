@@ -65,7 +65,7 @@
 
 	let scrollDirection: 'up' | 'down' = 'up';
 	let oldScrollY = 0;
-	let atTheTop = true;
+	let atTheVeryTop = true;
 
 	async function setDebouncedSearch(searchString: string | undefined) {
 		if (!browser) return;
@@ -98,7 +98,7 @@
 		}
 	}
 
-	const atTheTopThreshold = 5;
+	const atTheVeryTopThreshold = 5;
 	const minScrollThreshold = 40;
 
 	onMount(() => {
@@ -129,11 +129,11 @@
 <svelte:window
 	on:keydown={onKeyDown}
 	on:scroll={() => {
-		if (Math.abs(window.scrollY) < atTheTopThreshold) {
-			atTheTop = true;
+		if (window.scrollY < atTheVeryTopThreshold) {
+			atTheVeryTop = true;
 			return;
 		} else {
-			atTheTop = false;
+			atTheVeryTop = false;
 		}
 		if (Math.abs(window.scrollY - oldScrollY) < minScrollThreshold) return;
 		if (window.scrollY > oldScrollY) {
@@ -159,7 +159,7 @@
 			hasIcon
 			hasClearButton
 			bg="bg-secondary"
-			shadow={!atTheTop ? 'strongest' : 'normal'}
+			shadow={!atTheVeryTop ? 'strongest' : 'normal'}
 		>
 			<IconSearch slot="icon" class="w-full h-full" />
 		</Input>
