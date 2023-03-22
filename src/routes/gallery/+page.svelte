@@ -101,6 +101,8 @@
 	const notAtTheVeryTopThreshold = 5;
 	const minScrollThreshold = 40;
 
+	$: hideSearchBar = scrollDirection === 'down' && notAtTheVeryTop;
+
 	function onScroll() {
 		const scrollY = window.scrollY;
 		const _notAtTheVeryTop = scrollY > notAtTheVeryTopThreshold;
@@ -145,12 +147,12 @@
 <div class="w-full flex-1 flex flex-col items-center relative">
 	<div
 		style="top: {$navbarHeight}px"
-		class="w-full px-2 py-2 flex justify-center sticky z-10 transition duration-200 {scrollDirection ===
-			'down' && notAtTheVeryTop
+		class="w-full px-2 py-2 flex justify-center sticky z-10 transition duration-200 {hideSearchBar
 			? '-translate-y-22 pointer-events-none opacity-0'
 			: 'translate-y-0 opacity-100'}"
 	>
 		<Input
+			disabled={hideSearchBar}
 			class="max-w-2xl"
 			bind:value={searchString}
 			title={$LL.Gallery.SearchInput.Title()}
