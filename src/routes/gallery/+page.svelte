@@ -151,7 +151,6 @@
 			: 'translate-y-0 opacity-100'}"
 	>
 		<Input
-			disabled={scrollDirection === 'down'}
 			class="max-w-2xl"
 			bind:value={searchString}
 			title={$LL.Gallery.SearchInput.Title()}
