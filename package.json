@@ -15,7 +15,6 @@
 		"i18n": "typesafe-i18n"
 	},
 	"devDependencies": {
-		"@egjs/svelte-infinitegrid": "^4.7.1",
 		"@jsdevtools/rehype-toc": "^3.0.2",
 		"@sveltejs/adapter-auto": "^2.0.0",
 		"@sveltejs/adapter-node": "^1.2.3",
@@ -69,6 +68,7 @@
 	},
 	"type": "module",
 	"dependencies": {
+		"@egjs/svelte-infinitegrid": "^4.9.0-beta.7",
 		"@resvg/resvg-wasm": "^2.1.0",
 		"@supabase/auth-helpers-sveltekit": "^0.8.3",
 		"@supabase/supabase-js": "^2.0.0",

@@ -27,6 +27,8 @@
 	export let rerenderKey: string;
 	export let cardType: TGenerationImageCardType;
 
+	let lastRerenderKey = rerenderKey;
+
 	$: outputs = $generationsQuery.data?.pages.flatMap((page) => page.outputs);
 	$: items = outputs?.map((output, index) => ({
 		key: index,
@@ -47,6 +49,17 @@
 	$: isHoverAllowed =
 		(cardType === 'history' && $isUserGalleryEditActive) ||
 		(cardType === 'admin-gallery' && $isAdminGalleryEditActive);
+
+	let ig: MasonryInfiniteGrid;
+
+	$: rerenderKey, rerenderGrid();
+	function rerenderGrid() {
+		if (!ig) return;
+		if (lastRerenderKey !== rerenderKey) {
+			ig.updateItems();
+			lastRerenderKey = rerenderKey;
+		}
+	}
 </script>
 
 {#if $generationsQuery.isInitialLoading}
@@ -59,61 +72,63 @@
 	</div>
 {:else if $generationsQuery.isSuccess && $generationsQuery.data.pages.length > 0 && outputs !== undefined && items !== undefined}
 	<div class="w-full flex-1">
-		{#key rerenderKey}
-			<MasonryInfiniteGrid
-				{items}
-				let:visibleItems
-				align="center"
-				on:requestAppend={() => {
-					if ($generationsQuery.isFetchingNextPage) return;
-					if (!$generationsQuery.hasNextPage) return;
-					$generationsQuery.fetchNextPage();
-				}}
-			>
-				{#each visibleItems as item (item.key)}
-					{@const isOutputSelected = selectedItems.includes(outputs[item.key].id)}
-					{@const isOutputHoverable =
-						isHoverAllowed &&
-						!isOutputSelected &&
-						!$isTouchscreen &&
-						!(
-							cardType === 'history' &&
-							$isUserGalleryEditActive &&
-							$userGalleryCurrentView === 'favorites' &&
-							!outputs[item.key].is_favorited
-						) &&
-						!outputs[item.key].is_deleted}
-					<div
-						class="w-1/2 sm:w-1/3 lg:w-1/4 {cardType === 'history'
-							? ''
-							: 'xl:w-1/5 2xl:w-1/6 3xl:w-1/7'} p-0.5"
-					>
-						<div class="w-full relative group">
-							<ImagePlaceholder
-								width={outputs[item.key].generation.width}
-								height={outputs[item.key].generation.height}
-							/>
-							<div
-								class="absolute left-0 top-0 w-full h-full rounded-xl bg-c-bg-secondary transition border-4 {isOutputSelected
-									? 'border-c-primary'
-									: 'border-c-bg-secondary'} {isOutputHoverable ? 'hover:border-c-primary/75' : ''}
+		<MasonryInfiniteGrid
+			bind:this={ig}
+			{items}
+			let:visibleItems
+			align="center"
+			threshold={2000}
+			on:requestAppend={() => {
+				if ($generationsQuery.isFetchingNextPage) return;
+				if (!$generationsQuery.hasNextPage) return;
+				$generationsQuery.fetchNextPage();
+			}}
+		>
+			{#each visibleItems as item (item.key)}
+				{@const isOutputSelected = selectedItems.includes(outputs[item.key].id)}
+				{@const isOutputHoverable =
+					isHoverAllowed &&
+					!isOutputSelected &&
+					!$isTouchscreen &&
+					!(
+						cardType === 'history' &&
+						$isUserGalleryEditActive &&
+						$userGalleryCurrentView === 'favorites' &&
+						!outputs[item.key].is_favorited
+					) &&
+					!outputs[item.key].is_deleted}
+				<div
+					style="position: absolute;left: -9999px;top: -9999px;"
+					class="w-1/2 sm:w-1/3 lg:w-1/4 {cardType === 'history'
+						? ''
+						: 'xl:w-1/5 2xl:w-1/6 3xl:w-1/7'} p-0.5"
+				>
+					<div class="w-full relative group">
+						<ImagePlaceholder
+							width={outputs[item.key].generation.width}
+							height={outputs[item.key].generation.height}
+						/>
+						<div
+							class="absolute left-0 top-0 w-full h-full rounded-xl bg-c-bg-secondary transition border-4 {isOutputSelected
+								? 'border-c-primary'
+								: 'border-c-bg-secondary'} {isOutputHoverable ? 'hover:border-c-primary/75' : ''}
 										 z-0 overflow-hidden shadow-lg shadow-c-shadow/[var(--o-shadow-normal)]"
-							>
-								{#if outputs[item.key].generation.outputs !== undefined}
-									<GenerationImage
-										{cardType}
-										useUpscaledImage={false}
-										generation={{
-											...outputs[item.key].generation,
-											selected_output: outputs[item.key]
-										}}
-									/>
-								{/if}
-							</div>
+						>
+							{#if outputs[item.key].generation.outputs !== undefined}
+								<GenerationImage
+									{cardType}
+									useUpscaledImage={false}
+									generation={{
+										...outputs[item.key].generation,
+										selected_output: outputs[item.key]
+									}}
+								/>
+							{/if}
 						</div>
 					</div>
-				{/each}
-			</MasonryInfiniteGrid>{/key}
+				</div>
+			{/each}
+		</MasonryInfiniteGrid>
 	</div>
 	{#if $generationsQuery.hasNextPage}
 		<div class="w-full flex flex-row items-center justify-center mt-6">

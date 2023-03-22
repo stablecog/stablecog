@@ -198,15 +198,13 @@
 				<div class="h-[2vh]" />
 			</div>
 		{:else if galleryGenerationFullOutputsQuery !== undefined}
-			{#key searchStringDebounced}
-				<div class="w-full flex-1 flex flex-col">
-					<GenerationGridInfinite
-						rerenderKey={gridRerenderKey}
-						cardType="gallery"
-						generationsQuery={galleryGenerationFullOutputsQuery}
-					/>
-				</div>
-			{/key}
+			<div class="w-full flex-1 flex flex-col">
+				<GenerationGridInfinite
+					rerenderKey={gridRerenderKey}
+					cardType="gallery"
+					generationsQuery={galleryGenerationFullOutputsQuery}
+				/>
+			</div>
 		{/if}
 	</div>
 </div>
