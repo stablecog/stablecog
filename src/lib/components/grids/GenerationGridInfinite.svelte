@@ -77,11 +77,12 @@
 			{items}
 			let:visibleItems
 			align="center"
-			threshold={2000}
-			on:requestAppend={() => {
+			threshold={3000}
+			on:requestAppend={({ detail: e }) => {
 				if ($generationsQuery.isFetchingNextPage) return;
 				if (!$generationsQuery.hasNextPage) return;
-				$generationsQuery.fetchNextPage();
+				e.wait();
+				$generationsQuery.fetchNextPage().finally(() => e.ready());
 			}}
 		>
 			{#each visibleItems as item (item.key)}
