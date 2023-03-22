@@ -99,7 +99,7 @@
 	}
 
 	const notAtTheVeryTopThreshold = 5;
-	const minScrollThreshold = 50;
+	const minScrollThreshold = 40;
 
 	function onScroll() {
 		const scrollY = window.scrollY;

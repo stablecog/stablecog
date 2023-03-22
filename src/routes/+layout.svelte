@@ -359,7 +359,7 @@
 	let notAtTheVeryTop = false;
 	const notAtTheVeryTopThreshold = 5;
 	let oldScrollY = 0;
-	const minScrollThreshold = 50;
+	const minScrollThreshold = 40;
 	let scrollDirection: 'up' | 'down' = 'down';
 
 	const setNavbarState = () => {
