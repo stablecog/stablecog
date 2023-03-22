@@ -154,7 +154,7 @@
 								</div>
 							</IconButton>
 						</div>
-						<div class="relative -mr-14 md:-mr-1.5">
+						<div class="relative -mr-15 md:-mr-1.5">
 							{#if isAccountMenuOpen}
 								<AccountMenu {closeAccountMenu} />
 							{/if}

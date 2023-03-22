@@ -15,11 +15,12 @@
 	import { isTouchscreen } from '$ts/stores/isTouchscreen';
 	import { userSummary } from '$ts/stores/user/summary';
 	import DropdownWrapper from './DropdownWrapper.svelte';
+	import { appVersion } from '$ts/stores/appVersion';
 
 	export let closeAccountMenu: () => void;
 </script>
 
-<DropdownWrapper class="w-72 max-w-[calc(100vw-1.75rem)]">
+<DropdownWrapper class="w-72 max-w-[calc(100vw-1.5rem)]">
 	<div class="w-full flex gap-4 items-center px-5 py-4">
 		<div
 			class="w-9 h-9 ring-2 ring-c-on-bg/25 overflow-hidden rounded-full transition transform 
@@ -107,7 +108,8 @@
 						'SC - Stripe Product Id': $userSummary?.product_id,
 						'SC - Locale': $locale,
 						'SC - Advanced Mode': $advancedModeApp,
-						'SC - Page': `${$page.url.pathname}${$page.url.search}`
+						'SC - Page': `${$page.url.pathname}${$page.url.search}`,
+						'SC - App Version': $appVersion
 					});
 				} catch (error) {
 					console.log(error);
