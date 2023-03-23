@@ -338,7 +338,7 @@
 				<div class="w-full max-w-7xl flex flex-wrap justify-center gap-7 mt-8">
 					{#each creditPackCards as card}
 						<div
-							class="w-full max-w-[20rem] bg-c-bg shadow-xl shadow-c-shadow/[var(--o-shadow-strong)] 
+							class="w-full max-w-md md:max-w-[20rem] bg-c-bg shadow-xl shadow-c-shadow/[var(--o-shadow-strong)] 
 							p-4 md:p-5 rounded-2xl md:rounded-3xl ring-2 {card.ringClass} relative"
 						>
 							{#if card.badgeText && card.badgeClasses}
