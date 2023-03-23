@@ -437,7 +437,7 @@
 			>
 				<div
 					style="transition-duration: {lastGenerationAnimationStatus === 'should-animate-slow'
-						? estimatedGenerationDurationSec * 4
+						? estimatedGenerationDurationSec * 2
 						: lastGenerationAnimationStatus === 'should-animate'
 						? estimatedGenerationDurationSec
 						: lastGenerationAnimationStatus === 'should-complete'
