@@ -358,7 +358,7 @@
 			<div class="w-full h-full overflow-hidden z-0 absolute left-0 top-0 pointer-events-none">
 				<div
 					style="transition-duration: {upscaleAnimationStatus === 'should-animate-slow'
-						? ($estimatedUpscaleDurationMs / 1000) * 2
+						? ($estimatedUpscaleDurationMs / 1000) * 3
 						: upscaleAnimationStatus === 'should-animate'
 						? $estimatedUpscaleDurationMs / 1000
 						: upscaleAnimationStatus === 'should-complete'
@@ -366,7 +366,7 @@
 						: 0}s"
 					class="w-[110%] h-full ease-image-generation transition bg-c-secondary/50 
 						absolute left-0 top-0 rounded-xl {upscaleAnimationStatus === 'should-animate-slow'
-						? '-translate-x-3/4'
+						? '-translate-x-2/4'
 						: upscaleAnimationStatus === 'should-animate'
 						? '-translate-x-[5%]'
 						: upscaleAnimationStatus === 'should-complete'

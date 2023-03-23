@@ -437,7 +437,7 @@
 			>
 				<div
 					style="transition-duration: {lastGenerationAnimationStatus === 'should-animate-slow'
-						? estimatedGenerationDurationSec * 2
+						? estimatedGenerationDurationSec * 3
 						: lastGenerationAnimationStatus === 'should-animate'
 						? estimatedGenerationDurationSec
 						: lastGenerationAnimationStatus === 'should-complete'
@@ -445,7 +445,7 @@
 						: 0}s"
 					class="w-full h-full ease-image-generation transition bg-c-secondary/10 
 					absolute left-0 top-0 rounded-xl {lastGenerationAnimationStatus === 'should-animate-slow'
-						? '-translate-x-3/4'
+						? '-translate-x-2/4'
 						: lastGenerationAnimationStatus === 'should-animate'
 						? 'translate-x-0'
 						: lastGenerationAnimationStatus === 'should-complete'
