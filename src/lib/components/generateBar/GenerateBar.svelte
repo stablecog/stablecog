@@ -444,8 +444,8 @@
 						? 0.3
 						: 0}s"
 					class="w-full h-full ease-image-generation transition bg-c-secondary/10 
-					absolute left-0 top-0 rounded-xl {lastGenerationAnimationStatus === 'should-animate-slow'
-						? 'translate-x-1/4'
+					absolute left-0 top-0 rounded-xl {lastGenerationAnimationStatus === 'should-animate-slow' || true
+						? '-translate-x-3/4'
 						: lastGenerationAnimationStatus === 'should-animate'
 						? 'translate-x-0'
 						: lastGenerationAnimationStatus === 'should-complete'
