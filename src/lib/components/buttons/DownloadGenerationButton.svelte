@@ -32,6 +32,9 @@
 				inferenceSteps: generation.inference_steps,
 				guidanceScale: generation.guidance_scale,
 				isUpscaled: generation.selected_output.upscaled_image_url !== undefined,
+				outputIndex: generation.outputs.findIndex(
+					(output) => output.id === generation.selected_output.id
+				),
 				logProps: {
 					'SC - Advanced Mode': $advancedModeApp,
 					'SC - Locale': $locale,

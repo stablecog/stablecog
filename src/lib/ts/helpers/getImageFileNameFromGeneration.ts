@@ -6,7 +6,8 @@ export function getImageFileNameFromGeneration({
 	prompt,
 	seed,
 	inferenceSteps,
-	guidanceScale
+	guidanceScale,
+	outputIndex
 }: IGetImageFileNameFromGenerationProps) {
 	let extension: string;
 	if (url.startsWith('data:image/')) {
@@ -16,7 +17,7 @@ export function getImageFileNameFromGeneration({
 	}
 	return `[s_${seed}]-[gs_${guidanceScale}]-[is_${inferenceSteps}]-[u_${
 		isUpscaled ? '1' : '0'
-	}]-${replaceSpaces(prompt.slice(0, maxPromptLength))}.${extension}`;
+	}]-[oi_${outputIndex}]-${replaceSpaces(prompt.slice(0, maxPromptLength))}.${extension}`;
 }
 
 function replaceSpaces(str: string) {
@@ -30,4 +31,5 @@ interface IGetImageFileNameFromGenerationProps {
 	seed: number;
 	guidanceScale: number;
 	inferenceSteps: number;
+	outputIndex: number;
 }
