@@ -187,6 +187,11 @@
 		height={generation.height}
 	/>
 {/if}
+<div
+	class="w-full h-full absolute left-0 top-0 flex items-center justify-center transition pointer-events-none {overlayShouldShow
+		? 'bg-c-bg/50'
+		: 'bg-c-bg/0'}"
+/>
 {#if !generation.selected_output.is_deleted && !isGalleryEditActive}
 	<AnchorOrDiv
 		href={cardType === 'gallery' ? `/gallery?output=${generation.selected_output.id}` : undefined}
