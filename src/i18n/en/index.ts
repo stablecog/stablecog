@@ -24,12 +24,26 @@ const en: BaseTranslation = {
 			Paragraph:
 				'How similar the image will be to your prompt. Higher values make the image closer to your prompt.'
 		},
+		AspectRatioTabBar: {
+			Title: 'Aspect Ratio',
+			Paragraph: 'Aspect ratio of the image.'
+		},
+		InitialImageTabBar: {
+			Title: 'Initial Image',
+			Paragraph: 'The generation will be created based on this image.'
+		},
+		InitialImageStrengthTabBar: {
+			Title: 'Initial Image Strength',
+			Paragraph:
+				'Controls the influence of the initial image. The bigger the value, the more influence the initial image has.'
+		},
 		NegativePromptInput: {
 			Title: 'Negative Prompt',
 			Placeholder: 'Negative prompt',
 			Paragraph:
 				'To remove unwanted things from the image. It does the opposite of what the prompt does.'
 		},
+		ImageInput: { Title: 'Upload Image' },
 		SeedInput: {
 			Title: 'Seed',
 			Placeholder: 'Seed number',
@@ -284,6 +298,7 @@ const en: BaseTranslation = {
 		SomethingWentWrongTryAgain: 'Something went wrong, try again.',
 		InvalidCredentials: 'Invalid credentials.',
 		InvalidCode: 'Invalid code.',
+		TryAnotherImage: 'Try another image :(',
 		OnceEvery60Seconds: 'You can only request a link once every 60 seconds.',
 		LinkExpired: {
 			Title: 'Link Expired',

@@ -65,7 +65,7 @@
 		>
 			{#if withSpinner}
 				<Morpher morphed={loading}>
-					<div slot="item-0" class="w-full flex gap-1.5">
+					<div slot="0" class="w-full flex gap-1.5">
 						{#if icon}
 							<svelte:component
 								this={icon}
@@ -74,7 +74,7 @@
 						{/if}
 						<slot />
 					</div>
-					<div slot="item-1">
+					<div slot="1">
 						<IconAnimatedSpinner {loading} class={size === 'md' ? 'w-5 h-5' : 'w-4 h-4'} />
 					</div>
 				</Morpher>
@@ -132,7 +132,7 @@
 		>
 			{#if withSpinner}
 				<Morpher morphed={loading}>
-					<div slot="item-0" class="w-full flex gap-1.5">
+					<div slot="0" class="w-full flex gap-1.5">
 						{#if icon}
 							<svelte:component
 								this={icon}
@@ -141,7 +141,7 @@
 						{/if}
 						<slot />
 					</div>
-					<div slot="item-1">
+					<div slot="1">
 						<IconAnimatedSpinner {loading} class={size === 'md' ? 'w-5 h-5' : 'w-4 h-4'} />
 					</div>
 				</Morpher>

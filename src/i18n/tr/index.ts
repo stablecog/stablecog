@@ -24,12 +24,26 @@ const tr: Translation = {
 			Paragraph:
 				'Fotoğrafın komutuna ne derecede benzeyeceğinin ölçüsü. Yüksek sayılar fotoğrafı komutuna daha çok benzetir.'
 		},
+		AspectRatioTabBar: {
+			Title: 'Aspect Ratio',
+			Paragraph: 'Aspect ratio of the image.'
+		},
+		InitialImageTabBar: {
+			Title: 'Initial Image',
+			Paragraph: 'The generation will be created based on this image.'
+		},
+		InitialImageStrengthTabBar: {
+			Title: 'Initial Image Strength',
+			Paragraph:
+				'Controls the influence of the initial image. The bigger the value, the more influence the initial image has.'
+		},
 		NegativePromptInput: {
 			Title: 'Negatif Komut',
 			Placeholder: 'Negatif komut',
 			Paragraph:
 				'İstemediğin şeyleri üretilecek fotoğraftan çıkartmak için. Komutun yaptığının tam tersini yapar.'
 		},
+		ImageInput: { Title: 'Upload Image' },
 		SeedInput: {
 			Title: 'Tohum',
 			Placeholder: 'Tohum numarası',
@@ -284,6 +298,7 @@ const tr: Translation = {
 		SomethingWentWrongTryAgain: 'Bir sıkıntı çıktı, tekrar dene.',
 		InvalidCredentials: 'Geçersiz kimlik.',
 		InvalidCode: 'Geçersiz kod.',
+		TryAnotherImage: 'Try another image :(',
 		OnceEvery60Seconds: 'Her 60 saniyede sadece bir link talebinde bulunabilirsin.',
 		LinkExpired: {
 			Title: 'Link Geçersiz',

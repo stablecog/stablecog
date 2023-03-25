@@ -2,20 +2,26 @@
 	export let max: number;
 	export let min: number;
 	export let value: number;
+	export let step = 1;
 	export let showWheel = false;
+	export let maxDecimals = 1;
+	export let numeratorFormatter: (value: number) => string = (value) => value.toString();
 	export { classes as class };
 	let classes = '';
 
 	let itemHeight: number;
 
-	$: array = Array.from({ length: max - min + 1 }, (_, i) => i + min);
+	$: array = Array.from(
+		{ length: (max - min) / step + 1 },
+		(_, i) => Math.round((i * step + min) * Math.pow(10, maxDecimals)) / Math.pow(10, maxDecimals)
+	);
 </script>
 
 <div class="relative py-0.5">
 	<div class="overflow-hidden relative py-3.5 {classes}">
 		<div class="relative z-0 text-center">
 			<p bind:clientHeight={itemHeight} class="opacity-0 leading-4 md:leading-5 select-none">
-				{max}
+				{numeratorFormatter(max)}
 			</p>
 			<div
 				style="transform: translateY(-{array.findIndex((i) => i === value) * itemHeight}px)"
@@ -27,7 +33,7 @@
 							? 'scale-100'
 							: 'scale-75 opacity-50'} leading-4 md:leading-5"
 					>
-						{n}
+						{numeratorFormatter(n)}
 					</p>
 				{/each}
 			</div>

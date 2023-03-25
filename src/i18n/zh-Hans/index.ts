@@ -23,11 +23,25 @@ const zhHans: Translation = {
 			Title: '指导量表',
 			Paragraph: '图像与您的提示有多么相似。值越高，图像就越靠近您的提示。'
 		},
+		AspectRatioTabBar: {
+			Title: 'Aspect Ratio',
+			Paragraph: 'Aspect ratio of the image.'
+		},
+		InitialImageTabBar: {
+			Title: 'Initial Image',
+			Paragraph: 'The generation will be created based on this image.'
+		},
+		InitialImageStrengthTabBar: {
+			Title: 'Initial Image Strength',
+			Paragraph:
+				'Controls the influence of the initial image. The bigger the value, the more influence the initial image has.'
+		},
 		NegativePromptInput: {
 			Title: '否定提示',
 			Placeholder: '否定提示',
 			Paragraph: '从图像中移除不想要的东西。它与提示的作用相反。'
 		},
+		ImageInput: { Title: 'Upload Image' },
 		SeedInput: {
 			Title: '种子',
 			Placeholder: '种子编号',
@@ -280,6 +294,7 @@ const zhHans: Translation = {
 		SomethingWentWrongTryAgain: 'Something went wrong, try again.',
 		InvalidCredentials: 'Invalid credentials.',
 		InvalidCode: 'Invalid code.',
+		TryAnotherImage: 'Try another image :(',
 		OnceEvery60Seconds: 'You can only request a link once every 60 seconds.',
 		LinkExpired: {
 			Title: 'Link Expired',

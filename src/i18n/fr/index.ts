@@ -24,12 +24,26 @@ const fr: Translation = {
 			Paragraph:
 				"A quel point l'image doit respecter la description textuelle. Une valeur plus élevée donnera une image plus proche de la description."
 		},
+		AspectRatioTabBar: {
+			Title: 'Aspect Ratio',
+			Paragraph: 'Aspect ratio of the image.'
+		},
+		InitialImageTabBar: {
+			Title: 'Initial Image',
+			Paragraph: 'The generation will be created based on this image.'
+		},
+		InitialImageStrengthTabBar: {
+			Title: 'Initial Image Strength',
+			Paragraph:
+				'Controls the influence of the initial image. The bigger the value, the more influence the initial image has.'
+		},
 		NegativePromptInput: {
 			Title: 'Description négative',
 			Placeholder: 'Description négative',
 			Paragraph:
 				"Supprime ce que vous ne voulez pas voir dans l'image. L'opposé de la description textuelle."
 		},
+		ImageInput: { Title: 'Upload Image' },
 		SeedInput: {
 			Title: 'Graine aléatoire (seed)',
 			Placeholder: 'Graine aléatoire',
@@ -285,6 +299,7 @@ const fr: Translation = {
 		SomethingWentWrongTryAgain: "Une erreur s'est produite, veuillez réessayer.",
 		InvalidCredentials: 'Identifiants incorrects.',
 		InvalidCode: 'Code non valide.',
+		TryAnotherImage: 'Try another image :(',
 		OnceEvery60Seconds: 'You can only request a link once every 60 seconds.',
 		LinkExpired: {
 			Title: 'Link Expired',

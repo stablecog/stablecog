@@ -10,6 +10,9 @@
 		guidanceScaleMin,
 		inferenceStepsDefault,
 		inferenceStepsTabs,
+		initImageStrengthDefault,
+		initImageStrengthMax,
+		initImageStrengthMin,
 		maxPromptLength
 	} from '$ts/constants/main';
 	import { formatPrompt } from '$ts/helpers/formatPrompt';
@@ -31,7 +34,11 @@
 		generationSeed,
 		promptInputValue,
 		negativePromptInputValue,
-		generationNumOutputs
+		generationNumOutputs,
+		generationAspectRatio,
+		generationInitImageStrength,
+		initImageStrength,
+		generationInitImageFilesState
 	} from '$ts/stores/generationSettings';
 	import { onMount, tick } from 'svelte';
 	import LL from '$i18n/i18n-svelte';
@@ -47,7 +54,7 @@
 	import SignInCard from '$components/SignInCard.svelte';
 	import { portal } from 'svelte-portal';
 	import { clickoutside } from '$ts/actions/clickoutside';
-	import { fade, fly, scale } from 'svelte/transition';
+	import { fade, fly } from 'svelte/transition';
 	import { quadOut } from 'svelte/easing';
 	import { browser } from '$app/environment';
 	import {
@@ -59,7 +66,18 @@
 	import { userSummary } from '$ts/stores/user/summary';
 	import { calculateGenerationCost, generationCostCompletionPerMs } from '$ts/stores/cost';
 	import InsufficientCreditsBadge from '$components/badges/InsufficientCreditsBadge.svelte';
-	import { heightDefault, heightTabs, widthDefault, widthTabs } from '$ts/constants/generationSize';
+	import {
+		aspectRatioDefault,
+		aspectRatioTabs,
+		aspectRatioToImageSize,
+		getAspectRatioFromWidthAndHeight,
+		heightDefault,
+		heightTabs,
+		widthDefault,
+		widthTabs,
+		type TAvailableHeight,
+		type TAvailableWidth
+	} from '$ts/constants/generationSize';
 
 	export let serverData: THomePageData;
 	export let queueGeneration: () => Promise<void>;
@@ -79,6 +97,24 @@
 			? serverData.height
 			: heightDefault
 	);
+	generationModelId.set(
+		isValue(serverData.model_id) && serverData.model_id !== null
+			? serverData.model_id
+			: generationModelIdDefault
+	);
+	if (!isValue(serverData.width) && !isValue(serverData.height)) {
+		generationAspectRatio.set(
+			isValue(serverData.aspect_ratio) && serverData.aspect_ratio !== null
+				? serverData.aspect_ratio
+				: aspectRatioDefault
+		);
+		setWidthAndHeightBasedOnAspectRatio();
+	} else if (isValue(serverData.width) && isValue(serverData.height)) {
+		const ratio = getAspectRatioFromWidthAndHeight(serverData.width, serverData.height);
+		if (ratio) {
+			generationAspectRatio.set(ratio);
+		}
+	}
 	generationInferenceSteps.set(
 		isValue(serverData.num_inference_steps) &&
 			serverData.num_inference_steps !== null &&
@@ -93,19 +129,18 @@
 			? serverData.guidance_scale
 			: guidanceScaleDefault
 	);
-	generationModelId.set(
-		isValue(serverData.model_id) && serverData.model_id !== null
-			? serverData.model_id
-			: generationModelIdDefault
-	);
 	generationSchedulerId.set(
 		isValue(serverData.scheduler_id) && serverData.scheduler_id !== null
 			? serverData.scheduler_id
 			: schedulerIdDefault
 	);
-
 	generationSeed.set(
 		isValue(serverData.seed) && serverData.seed !== null ? serverData.seed : undefined
+	);
+	generationInitImageStrength.set(
+		isValue(serverData.init_image_strength) && serverData.init_image_strength !== null
+			? serverData.init_image_strength
+			: initImageStrengthDefault
 	);
 
 	$: placeholder = $LL.Home.PromptInput.Placeholder();
@@ -165,7 +200,10 @@
 
 	async function onSubmit() {
 		if (!$page.data.session?.user.id) {
-			isSignInModalOpen = true;
+			openSignInModal();
+			return;
+		}
+		if ($generationInitImageFilesState === 'uploading') {
 			return;
 		}
 		if ($promptInputValue) {
@@ -186,16 +224,22 @@
 		});
 	}
 
+	function openSignInModal() {
+		isSignInModalOpen = true;
+	}
+
 	let isCheckComplete = false;
 
-	$: [$generationWidth, $generationHeight], setLocalImageSize();
-	$: [$generationInferenceSteps], setLocalInferenceSteps();
-	$: [$generationGuidanceScale], setLocalGuidanceScale();
-	$: [$generationSeed], setLocalSeed();
-	$: [$promptInputValue], setLocalPrompt();
-	$: [$negativePromptInputValue], setLocalNegativePrompt();
-	$: [$generationModelId], setLocalModelId();
-	$: [$generationSchedulerId], setLocalSchedulerId();
+	$: [$generationModelId], withCheck(setLocalModelId);
+	$: [$generationWidth, $generationHeight], withCheck(setLocalImageSizeBasedOnWidthAndHeight);
+	$: [$generationAspectRatio], withCheck(setLocalImageSizeBasedOnAspectRatio);
+	$: [$generationInferenceSteps], withCheck(setLocalInferenceSteps);
+	$: [$generationGuidanceScale], withCheck(setLocalGuidanceScale);
+	$: [$generationSeed], withCheck(setLocalSeed);
+	$: [$promptInputValue], withCheck(setLocalPrompt);
+	$: [$negativePromptInputValue], withCheck(setLocalNegativePrompt);
+	$: [$generationSchedulerId], withCheck(setLocalSchedulerId);
+	$: [$generationInitImageStrength], withCheck(setLocalInitImageStrength);
 	$: showClearPromptInputButton =
 		$promptInputValue !== undefined && $promptInputValue !== '' && !lastGenerationBeingProcessed;
 	$: if (browser && $page.data.session?.user.id) {
@@ -207,67 +251,87 @@
 		$userSummary &&
 		$userSummary.total_remaining_credits < Number($generationNumOutputs);
 
-	const setLocalImageSize = () => {
-		if (isCheckComplete) {
-			imageSize.set({
-				width: $generationWidth,
-				height: $generationHeight
-			});
+	const withCheck = (fn: () => void) => {
+		if (!isCheckComplete) return;
+		fn();
+	};
+
+	const setLocalImageSizeBasedOnWidthAndHeight = () => {
+		imageSize.set({
+			width: $generationWidth,
+			height: $generationHeight,
+			aspectRatio: $generationAspectRatio
+		});
+	};
+
+	function setWidthAndHeightBasedOnAspectRatio() {
+		const obj = aspectRatioToImageSize[$generationAspectRatio];
+		let newWidth: TAvailableWidth;
+		let newHeight: TAvailableHeight;
+		const modelAspectRatio = obj[$generationModelId];
+		if (modelAspectRatio) {
+			newWidth = modelAspectRatio.width;
+			newHeight = modelAspectRatio.height;
+		} else {
+			newWidth = obj.default.width;
+			newHeight = obj.default.height;
 		}
+		generationWidth.set(newWidth);
+		generationHeight.set(newHeight);
+	}
+
+	const setLocalImageSizeBasedOnAspectRatio = () => {
+		setWidthAndHeightBasedOnAspectRatio();
+		imageSize.set({
+			width: $generationWidth,
+			height: $generationHeight,
+			aspectRatio: $generationAspectRatio
+		});
 	};
 
 	const setLocalInferenceSteps = () => {
-		if (isCheckComplete) {
-			inferenceSteps.set($generationInferenceSteps);
-		}
+		inferenceSteps.set($generationInferenceSteps);
 	};
 
 	const setLocalGuidanceScale = () => {
-		if (isCheckComplete) {
-			guidanceScale.set(Math.round($generationGuidanceScale));
-		}
+		guidanceScale.set(Math.round($generationGuidanceScale));
 	};
 
 	const setLocalSeed = () => {
-		if (isCheckComplete) {
-			if ($generationSeed !== undefined && $generationSeed !== null) {
-				seed.set(parseInt($generationSeed.toString()));
-			} else {
-				localStorage.removeItem('seed');
-			}
+		if ($generationSeed !== undefined && $generationSeed !== null) {
+			seed.set(parseInt($generationSeed.toString()));
+		} else {
+			localStorage.removeItem('seed');
 		}
 	};
 
 	const setLocalPrompt = () => {
-		if (isCheckComplete) {
-			prompt.set(
-				$promptInputValue !== '' && $promptInputValue !== undefined ? $promptInputValue : ''
-			);
-		}
+		prompt.set(
+			$promptInputValue !== '' && $promptInputValue !== undefined ? $promptInputValue : ''
+		);
 	};
 
 	const setLocalNegativePrompt = () => {
-		if (isCheckComplete) {
-			negativePrompt.set(
-				$negativePromptInputValue !== '' &&
-					$negativePromptInputValue !== undefined &&
-					$negativePromptInputValue !== null
-					? $negativePromptInputValue
-					: ''
-			);
-		}
+		negativePrompt.set(
+			$negativePromptInputValue !== '' &&
+				$negativePromptInputValue !== undefined &&
+				$negativePromptInputValue !== null
+				? $negativePromptInputValue
+				: ''
+		);
 	};
 
 	const setLocalModelId = () => {
-		if (isCheckComplete) {
-			modelId.set($generationModelId);
-		}
+		modelId.set($generationModelId);
+		setLocalImageSizeBasedOnAspectRatio();
 	};
 
 	const setLocalSchedulerId = () => {
-		if (isCheckComplete) {
-			schedulerId.set($generationSchedulerId);
-		}
+		schedulerId.set($generationSchedulerId);
+	};
+
+	const setLocalInitImageStrength = () => {
+		initImageStrength.set($generationInitImageStrength);
 	};
 
 	const clearPrompt = () => {
@@ -300,7 +364,7 @@
 
 	onMount(() => {
 		isCheckComplete = false;
-		if (!isValue(serverData.width)) {
+		if (!isValue(serverData.width) && !isValue(serverData.aspect_ratio)) {
 			const widthIndex = widthTabs
 				.map((w) => w.value)
 				.findIndex((i) => i === $imageSize?.width?.toString());
@@ -308,12 +372,24 @@
 				generationWidth.set(widthTabs[widthIndex].value);
 			}
 		}
-		if (!isValue(serverData.height)) {
+		if (!isValue(serverData.height) && !isValue(serverData.aspect_ratio)) {
 			const heightIndex = heightTabs
 				.map((h) => h.value)
 				.findIndex((i) => i === $imageSize?.height?.toString());
 			if (heightIndex >= 0) {
 				generationHeight.set(heightTabs[heightIndex].value);
+			}
+		}
+		if (
+			!isValue(serverData.height) &&
+			!isValue(serverData.width) &&
+			!isValue(serverData.aspect_ratio)
+		) {
+			const aspectRatioIndex = aspectRatioTabs
+				.map((a) => a.value)
+				.findIndex((i) => i === $imageSize?.aspectRatio?.toString());
+			if (aspectRatioIndex >= 0) {
+				generationAspectRatio.set(aspectRatioTabs[aspectRatioIndex].value);
 			}
 		}
 		if (!isValue(serverData.num_inference_steps)) {
@@ -364,6 +440,13 @@
 		) {
 			generationSchedulerId.set($schedulerId);
 		}
+		if (
+			!isValue(serverData.init_image_strength) &&
+			$initImageStrength >= initImageStrengthMin &&
+			$initImageStrength <= initImageStrengthMax
+		) {
+			generationInitImageStrength.set($initImageStrength);
+		}
 		if (serverData.advanced_mode === true) {
 			console.log('advanced mode server data true');
 			advancedModeApp.set(true);
@@ -384,7 +467,7 @@
 <form
 	bind:this={formElement}
 	on:submit|preventDefault={onSubmit}
-	class="w-full max-w-2xl md:max-w-6.5xl md:px-4 lg:px-12 flex flex-col items-center pt-2"
+	class="w-full max-w-2xl md:max-w-6.5xl md:px-2 lg:px-12 flex flex-col items-center pt-2"
 >
 	<!-- Prompt bar -->
 	<div class="w-full flex flex-col md:flex-row gap-3 items-center pb-2 px-2">
@@ -460,6 +543,7 @@
 				disabled={!isCheckComplete ||
 					(doesntHaveEnoughCredits && $page.data.session?.user.id !== undefined)}
 				loading={lastGenerationBeingProcessed}
+				uploading={$generationInitImageFilesState === 'uploading'}
 				withSpinner
 				fadeOnDisabled={isCheckComplete}
 				class="w-full flex flex-col relative"
@@ -479,7 +563,7 @@
 	<!-- Tab bars -->
 	{#if !lastGenerationBeingProcessed}
 		<div
-			class="w-full flex flex-col justify-start items-center px-4"
+			class="w-full flex flex-col justify-start items-center px-2"
 			transition:expandCollapse|local={{ duration: 300 }}
 		>
 			<div class="w-full hidden md:flex flex-col justify-start">
@@ -490,6 +574,7 @@
 					containerBottomMinDistance={12}
 					disabled={lastGenerationBeingProcessed}
 					{formElement}
+					{openSignInModal}
 					{isCheckComplete}
 				/>
 			</div>
@@ -520,6 +605,7 @@
 	bind:isGenerationSettingsSheetOpen
 	{formElement}
 	{isCheckComplete}
+	{openSignInModal}
 />
 
 {#if isSignInModalOpen && !$page.data.session?.user.id}
@@ -535,7 +621,7 @@
 	>
 		<div
 			use:clickoutside={{ callback: () => (isSignInModalOpen = false) }}
-			class="w-full max-w-2xl flex justify-center my-auto"
+			class="flex justify-center my-auto"
 		>
 			<SignInCard isModal={true} redirectTo="/" />
 		</div>

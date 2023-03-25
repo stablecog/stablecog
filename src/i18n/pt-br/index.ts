@@ -24,11 +24,25 @@ const ptBr: Translation = {
 			Paragraph:
 				'O quão semelhante a imagem será do seu prompt.\nValores maiores tornam a imagem mais próxima do seu prompt.'
 		},
+		AspectRatioTabBar: {
+			Title: 'Aspect Ratio',
+			Paragraph: 'Aspect ratio of the image.'
+		},
+		InitialImageTabBar: {
+			Title: 'Initial Image',
+			Paragraph: 'The generation will be created based on this image.'
+		},
+		InitialImageStrengthTabBar: {
+			Title: 'Initial Image Strength',
+			Paragraph:
+				'Controls the influence of the initial image. The bigger the value, the more influence the initial image has.'
+		},
 		NegativePromptInput: {
 			Title: 'Prompt Negativo',
 			Placeholder: 'Prompt Negativo',
 			Paragraph: 'Remove coisas indesejadas da imagem. Faz o oposto do que o prompt faz.'
 		},
+		ImageInput: { Title: 'Upload Image' },
 		SeedInput: {
 			Title: 'Semente',
 			Placeholder: 'Número de semente',
@@ -284,6 +298,7 @@ const ptBr: Translation = {
 		SomethingWentWrongTryAgain: 'Algo deu errado, tente novamente.',
 		InvalidCredentials: 'Credenciais inválidas.',
 		InvalidCode: 'Código inválido.',
+		TryAnotherImage: 'Try another image :(',
 		OnceEvery60Seconds: 'You can only request a link once every 60 seconds.',
 		LinkExpired: {
 			Title: 'Link Expired',

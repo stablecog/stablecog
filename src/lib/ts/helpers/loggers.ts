@@ -106,6 +106,16 @@ export function logBatchEditActived(props: IBatchEditActivedProps) {
 	posthog.capture('Batch Edit | Activated', { ...props });
 }
 
+export function logInitImageAdded(props: IInitImageActionProps) {
+	mixpanel.track('Init Image | Added', { ...props });
+	posthog.capture('Init Image | Added', { ...props });
+}
+
+export function logInitImageRemoved(props: IInitImageActionProps) {
+	mixpanel.track('Init Image | Removed', { ...props });
+	posthog.capture('Init Image | Removed', { ...props });
+}
+
 export function logBatchEditDeactivated(props: IBatchEditActivedProps) {
 	mixpanel.track('Batch Edit | Deactivated', { ...props });
 	posthog.capture('Batch Edit | Deactivated', { ...props });
@@ -117,6 +127,7 @@ export function logGenerationFailed({
 	advancedModeApp,
 	locale,
 	appVersion,
+	userId,
 	stripeProductId
 }: {
 	generation: TGeneration | TInitialGenerationRequest;
@@ -124,6 +135,7 @@ export function logGenerationFailed({
 	advancedModeApp: boolean;
 	locale: string;
 	appVersion: string;
+	userId?: string;
 	stripeProductId?: string;
 }) {
 	const props = logGenerationPropsFromGeneration({
@@ -131,6 +143,7 @@ export function logGenerationFailed({
 		advancedModeApp,
 		locale,
 		appVersion,
+		userId,
 		stripeProductId
 	});
 	uLogGeneration(error === 'NSFW' ? 'Failed-NSFW' : 'Failed');
@@ -142,12 +155,14 @@ export function logGenerationPropsFromGeneration({
 	advancedModeApp,
 	locale,
 	appVersion,
+	userId,
 	stripeProductId
 }: {
 	generation: TGeneration | TInitialGenerationRequest;
 	advancedModeApp: boolean;
 	locale: string;
 	appVersion: string;
+	userId?: string;
 	stripeProductId?: string;
 }) {
 	return {
@@ -160,6 +175,7 @@ export function logGenerationPropsFromGeneration({
 		'SC - Advanced Mode': advancedModeApp,
 		'SC - Locale': locale,
 		'SC - Submit to Gallery': generation.submit_to_gallery,
+		'SC - User Id': userId,
 		'SC - Stripe Product Id': stripeProductId,
 		'SC - Number of Outputs': generation.num_outputs,
 		'SC - App Version': appVersion
@@ -171,12 +187,14 @@ export function logUpscaleFailed({
 	advancedModeApp,
 	locale,
 	appVersion,
+	userId,
 	stripeProductId
 }: {
 	upscale: TUpscale | TInitialUpscaleRequest;
 	advancedModeApp: boolean;
 	locale: string;
 	appVersion: string;
+	userId?: string;
 	stripeProductId?: string;
 }) {
 	const props = logUpscalePropsFromUpscale({
@@ -184,6 +202,7 @@ export function logUpscaleFailed({
 		advancedModeApp,
 		appVersion,
 		locale,
+		userId,
 		stripeProductId
 	});
 	uLogUpscale('Failed');
@@ -195,12 +214,14 @@ export function logUpscalePropsFromUpscale({
 	advancedModeApp,
 	locale,
 	appVersion,
+	userId,
 	stripeProductId
 }: {
 	upscale: TUpscale | TInitialUpscaleRequest;
 	advancedModeApp: boolean;
 	locale: string;
 	appVersion: string;
+	userId?: string;
 	stripeProductId?: string;
 }) {
 	return {
@@ -208,6 +229,7 @@ export function logUpscalePropsFromUpscale({
 		'SC - Input': upscale.input,
 		'SC - Advanced Mode': advancedModeApp,
 		'SC - Locale': locale,
+		'SC - User Id': userId,
 		'SC - Stripe Product Id': stripeProductId,
 		'SC - App Version': appVersion
 	};
@@ -215,6 +237,7 @@ export function logUpscalePropsFromUpscale({
 
 interface ISubmitToGalleryToggledMinimal {
 	'SC - Advanced Mode': boolean;
+	'SC - User Id': string | undefined;
 	'SC - Stripe Product Id': string | undefined;
 	'SC - App Version': string;
 }
@@ -222,6 +245,7 @@ type IOnOff = 'On' | 'Off';
 
 interface IGalleryGenerationOpenedProps {
 	'SC - Output Id': string;
+	'SC - User Id': string | undefined;
 	'SC - Stripe Product Id': string | undefined;
 	'SC - Advanced Mode': boolean;
 	'SC - App Version': string;
@@ -229,12 +253,14 @@ interface IGalleryGenerationOpenedProps {
 
 interface IGalleryGenerateClickedProps {
 	'SC - Output Id': string;
+	'SC - User Id': string | undefined;
 	'SC - Stripe Product Id': string | undefined;
 	'SC - Advanced Mode': boolean;
 	'SC - App Version': string;
 }
 
 interface IAdvancedModeToggledProps {
+	'SC - User Id': string | undefined;
 	'SC - Stripe Product Id': string | undefined;
 	'SC - App Version': string;
 }
@@ -245,6 +271,7 @@ interface IUpscaleMinimal {
 	'SC - Advanced Mode': boolean;
 	'SC - Locale': string;
 	'SC - Duration'?: number;
+	'SC - User Id': string | undefined;
 	'SC - Stripe Product Id': string | undefined;
 	'SC - App Version': string;
 }
@@ -264,6 +291,7 @@ interface IGenerationMinimal {
 	'SC - Locale': string;
 	'SC - Submit to Gallery': boolean;
 	'SC - Duration'?: number;
+	'SC - User Id': string | undefined;
 	'SC - Stripe Product Id': string | undefined;
 	'SC - Number of Outputs': number;
 }
@@ -272,6 +300,7 @@ interface IPageviewProps {
 	'SC - Page': string;
 	'SC - Locale': string;
 	'SC - Advanced Mode': boolean;
+	'SC - User Id': string | undefined;
 	'SC - Stripe Product Id': string | undefined;
 	'SC - App Version': string;
 }
@@ -279,6 +308,7 @@ interface IPageviewProps {
 interface ISignInProps {
 	'SC - Locale': string;
 	'SC - Advanced Mode': boolean;
+	'SC - User Id': string | undefined;
 	'SC - Stripe Product Id': string | undefined;
 	'SC - Page': string;
 	'SC - Email': string;
@@ -288,6 +318,7 @@ interface ISignInProps {
 interface ISignOutProps {
 	'SC - Locale': string;
 	'SC - Advanced Mode': boolean;
+	'SC - User Id': string | undefined;
 	'SC - Stripe Product Id': string | undefined;
 	'SC - Page': string;
 	'SC - App Version': string;
@@ -296,6 +327,7 @@ interface ISignOutProps {
 interface IGallerySearchProps {
 	'SC - Locale': string;
 	'SC - Advanced Mode': boolean;
+	'SC - User Id': string | undefined;
 	'SC - Stripe Product Id': string | undefined;
 	'SC - Search Query': string;
 	'SC - App Version': string;
@@ -306,8 +338,18 @@ export interface IGenerationOutputActionProps {
 	'SC - Output Id': string;
 	'SC - Locale': string;
 	'SC - Advanced Mode': boolean;
+	'SC - User Id': string | undefined;
 	'SC - Stripe Product Id': string | undefined;
 	'SC - Page': string;
+	'SC - App Version': string;
+}
+
+interface IInitImageActionProps {
+	'SC - Locale': string;
+	'SC - Advanced Mode': boolean;
+	'SC - Page': string;
+	'SC - User Id': string | undefined;
+	'SC - Stripe Product Id': string | undefined;
 	'SC - App Version': string;
 }
 
@@ -315,6 +357,7 @@ interface IBatchEditActivedProps {
 	'SC - Locale': string;
 	'SC - Advanced Mode': boolean;
 	'SC - Page': string;
+	'SC - User Id': string | undefined;
 	'SC - Stripe Product Id': string | undefined;
 	'SC - App Version': string;
 }

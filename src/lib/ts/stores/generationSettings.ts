@@ -1,5 +1,9 @@
 import { writable as writableLocal } from 'svelte-local-storage-store';
-import { guidanceScaleDefault, numOutputsDefault } from '$ts/constants/main';
+import {
+	guidanceScaleDefault,
+	initImageStrengthDefault,
+	numOutputsDefault
+} from '$ts/constants/main';
 import { inferenceStepsDefault, type TAvailableInferenceSteps } from '$ts/constants/main';
 import { writable } from 'svelte/store';
 import { schedulerIdDefault, type TAvailableSchedulerId } from '$ts/constants/schedulers';
@@ -8,8 +12,10 @@ import {
 	type TAvailableGenerationModelId
 } from '$ts/constants/generationModels';
 import {
+	aspectRatioDefault,
 	heightDefault,
 	widthDefault,
+	type TAvailableAspectRatio,
 	type TAvailableHeight,
 	type TAvailableWidth
 } from '$ts/constants/generationSize';
@@ -19,8 +25,14 @@ export const negativePrompt = writableLocal<string | null>('negativePrompt', nul
 
 export const imageSize = writableLocal<TImageSize>('imageSize', {
 	width: widthDefault,
-	height: heightDefault
+	height: heightDefault,
+	aspectRatio: aspectRatioDefault
 });
+
+export const initImageStrength = writableLocal<number>(
+	'initImageStrength',
+	initImageStrengthDefault
+);
 
 export const seed = writableLocal<number | null>('seed', null);
 
@@ -43,12 +55,14 @@ export const numOutputs = writableLocal<number>('numOutputs', 4);
 export interface TImageSize {
 	width: TAvailableWidth;
 	height: TAvailableHeight;
+	aspectRatio: TAvailableAspectRatio;
 }
 
 export const promptInputValue = writable<string | undefined>(undefined);
 export const negativePromptInputValue = writable<string | undefined>(undefined);
 export const generationWidth = writable<TAvailableWidth>(widthDefault);
 export const generationHeight = writable<TAvailableHeight>(heightDefault);
+export const generationAspectRatio = writable<TAvailableAspectRatio>(aspectRatioDefault);
 export const generationInferenceSteps = writable<TAvailableInferenceSteps>(inferenceStepsDefault);
 export const generationGuidanceScale = writable<number>(guidanceScaleDefault);
 export const generationSeed = writable<string | number | undefined | null>(undefined);
@@ -56,3 +70,12 @@ export const generationModelId = writable<TAvailableGenerationModelId>(generatio
 export const generationSchedulerId = writable<TAvailableSchedulerId>(schedulerIdDefault);
 export const generationNumOutputs = writable<string>(numOutputsDefault.toString());
 export const generationInitImageUrl = writable<string | undefined>(undefined);
+export const generationInitImageStrength = writable<number>(initImageStrengthDefault);
+export const generationInitImageFiles = writable<FileList | undefined>(undefined);
+export const generationInitImageFilesState = writable<'idle' | 'uploading' | 'uploaded' | 'error'>(
+	'idle'
+);
+export const generationInitImageFilesError = writable<string | undefined>(undefined);
+export const generationInitImageSrc = writable<string | undefined>(undefined);
+export const generationInitImageWidth = writable<number | undefined>(undefined);
+export const generationInitImageHeight = writable<number | undefined>(undefined);

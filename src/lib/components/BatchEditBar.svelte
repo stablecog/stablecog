@@ -189,6 +189,7 @@
 				'SC - Advanced Mode': $advancedModeApp,
 				'SC - Locale': $locale,
 				'SC - Page': `${$page.url.pathname}${$page.url.search}`,
+				'SC - User Id': $page.data.session?.user.id,
 				'SC - Stripe Product Id': $userSummary?.product_id,
 				'SC - App Version': $appVersion
 			};
@@ -243,6 +244,7 @@
 					'SC - Advanced Mode': $advancedModeApp,
 					'SC - Locale': $locale,
 					'SC - Page': `${$page.url.pathname}${$page.url.search}`,
+					'SC - User Id': $page.data.session?.user.id,
 					'SC - Stripe Product Id': $userSummary?.product_id,
 					'SC - App Version': $appVersion
 				};

@@ -62,8 +62,7 @@
 	style={$windowWidth >= lgBreakpoint
 		? `max-width: ${mainContainerWidth}px; max-height: ${mainContainerHeight}px`
 		: ''}
-	class="relative w-full h-full px-2.5 pt-1 pb-20 md:p-20 lg:p-0 flex lg:items-center justify-center z-10 
-		overflow-auto lg:my-auto lg:overflow-hidden"
+	class="relative w-full lg:h-full px-2.5 pt-1 pb-20 md:p-20 lg:p-0 flex lg:items-center justify-center z-10 my-auto lg:overflow-hidden"
 >
 	<div
 		use:clickoutside={{

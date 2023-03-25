@@ -24,11 +24,25 @@ const hr: Translation = {
 			Paragraph:
 				'Koliko će slika biti slična tvom opisu. Veća vrijednost će stvoriti sliku sličniju tvom opisu.'
 		},
+		AspectRatioTabBar: {
+			Title: 'Aspect Ratio',
+			Paragraph: 'Aspect ratio of the image.'
+		},
+		InitialImageTabBar: {
+			Title: 'Initial Image',
+			Paragraph: 'The generation will be created based on this image.'
+		},
+		InitialImageStrengthTabBar: {
+			Title: 'Initial Image Strength',
+			Paragraph:
+				'Controls the influence of the initial image. The bigger the value, the more influence the initial image has.'
+		},
 		NegativePromptInput: {
 			Title: 'Negativan opis',
 			Placeholder: 'Negativan opis',
 			Paragraph: 'Služi za uklanjanje neželjenih stvari sa slike. Ima suprotno djelovanje od opisa.'
 		},
+		ImageInput: { Title: 'Upload Image' },
 		SeedInput: {
 			Title: 'Sjeme',
 			Placeholder: 'Broj sjemena',
@@ -283,6 +297,7 @@ const hr: Translation = {
 		SomethingWentWrongTryAgain: 'Nešto je pošlo naopako. Pokušaj ponovo.',
 		InvalidCredentials: 'Netočni podaci.',
 		InvalidCode: 'Nevažeći kod.',
+		TryAnotherImage: 'Try another image :(',
 		OnceEvery60Seconds: 'Možeš zatražiti link samo svakih 60 sekundi.',
 		LinkExpired: {
 			Title: 'Link Expired',

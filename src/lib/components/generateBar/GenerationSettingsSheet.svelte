@@ -7,6 +7,7 @@
 	import LL from '$i18n/i18n-svelte';
 	import { clickoutside } from '$ts/actions/clickoutside';
 	import { advancedModeApp } from '$ts/stores/advancedMode';
+	import { isInitImageModalOpen } from '$ts/stores/isInitImageModalOpen';
 	import { isTouchscreen } from '$ts/stores/isTouchscreen';
 	import { windowHeight, windowWidth } from '$ts/stores/window';
 	import { portal } from 'svelte-portal';
@@ -15,6 +16,8 @@
 	export let formElement: HTMLFormElement;
 	export let disabled = false;
 	export let isGenerationSettingsSheetOpen = false;
+	export let openSignInModal: () => void;
+
 	let innerContainer: HTMLDivElement;
 </script>
 
@@ -27,7 +30,11 @@
 >
 	<div
 		use:clickoutside={{
-			callback: () => (isGenerationSettingsSheetOpen = false)
+			callback: () => {
+				if (!$isInitImageModalOpen) {
+					isGenerationSettingsSheetOpen = false;
+				}
+			}
 		}}
 		class="{isGenerationSettingsSheetOpen
 			? 'translate-y-0'
@@ -65,7 +72,7 @@
 			<div bind:this={innerContainer} class="w-full flex flex-col justify-start flex-1 min-h-0">
 				<ScrollAreaWithChevron class="relative pb-[calc(env(safe-area-inset-bottom)+0.5rem)] pt-1">
 					<div class="w-full overflow-hidden relative z-10">
-						<div class="w-full flex flex-col items-start px-4">
+						<div class="w-full flex flex-col items-start px-2">
 							<GenerationSettings
 								calculateDistance={isGenerationSettingsSheetOpen}
 								container={innerContainer}
@@ -74,6 +81,7 @@
 								{disabled}
 								{formElement}
 								{isCheckComplete}
+								{openSignInModal}
 							/>
 						</div>
 					</div>

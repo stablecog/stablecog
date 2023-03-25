@@ -4,6 +4,7 @@
 	export let value: number;
 	export let min: number;
 	export let max: number;
+	export let step = 1;
 	export { classes as class };
 	let classes = '';
 	export let classInput = '';
@@ -37,6 +38,7 @@
 		type="range"
 		{min}
 		{max}
+		{step}
 	/>
 	<div class="track">
 		<div class="track-progressed" style="width: calc({progress * 100}%);" />

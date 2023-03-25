@@ -1,6 +1,6 @@
 <script lang="ts">
 	import IconBlog from '$components/icons/IconBlog.svelte';
-	import { socialAppUrls, socialAppUrlsAbsolute, socialUrls } from '$ts/constants/social';
+	import { socialAppUrls, socialAppUrlsAbsolute } from '$ts/constants/social';
 	import { isTouchscreen } from '$ts/stores/isTouchscreen';
 	import IconButton from './buttons/IconButton.svelte';
 	import IconSocial from './icons/IconSocial.svelte';

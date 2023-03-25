@@ -1,9 +1,11 @@
 <script lang="ts">
 	import IconAnimatedSpinner from '$components/icons/IconAnimatedSpinner.svelte';
+	import IconAnimatedUploading from '$components/icons/IconAnimatedUploading.svelte';
 	import { isTouchscreen } from '$ts/stores/isTouchscreen';
 	import type { THrefTarget } from '$ts/types/main';
 	export let disabled = false;
 	export let loading = false;
+	export let uploading = false;
 	export let href: string | undefined = undefined;
 	export let onClick: (() => void) | undefined = undefined;
 	export let prefetch: boolean = true;
@@ -89,6 +91,17 @@
 						<IconAnimatedSpinner class="w-full h-full" {loading} />
 					</div>
 				</div>
+				<div
+					class="w-full h-full absolute left-0 top-0 pointer-events-none flex justify-center items-center"
+				>
+					<div
+						class="{size === 'sm' ? 'w-6 h-6' : 'w-7 h-7'} transition transform {uploading
+							? 'scale-100'
+							: 'scale-0'}"
+					>
+						<IconAnimatedUploading class="w-full h-full" loading={uploading} />
+					</div>
+				</div>
 			{:else}
 				<slot />
 			{/if}
@@ -97,7 +110,7 @@
 {:else}
 	<button
 		on:click={onClick}
-		disabled={disabled || loading}
+		disabled={disabled || loading || uploading}
 		class="{noPadding
 			? 'p-0'
 			: size === 'xs'
@@ -113,7 +126,7 @@
 			? ''
 			: 'shadow-lg shadow-c-shadow/[var(--o-shadow-strong)]'} {type === 'no-bg-on-bg'
 			? 'text-c-on-bg/60'
-			: 'text-c-on-primary'} {loading
+			: 'text-c-on-primary'} {loading || uploading
 			? type === 'success'
 				? 'bg-c-success-secondary'
 				: type === 'danger'
@@ -148,7 +161,7 @@
 		<div class="relative">
 			{#if withSpinner}
 				<div
-					class="transform relative transition {loading
+					class="transform relative transition {loading || uploading
 						? 'scale-0 opacity-0'
 						: 'scale-100 opacity-100'}"
 				>
@@ -163,6 +176,17 @@
 							: 'scale-0'}"
 					>
 						<IconAnimatedSpinner class="w-full h-full" {loading} />
+					</div>
+				</div>
+				<div
+					class="w-full h-full absolute left-0 top-0 pointer-events-none flex justify-center items-center"
+				>
+					<div
+						class="{size === 'sm' ? 'w-6 h-6' : 'w-7 h-7'} transition transform {uploading
+							? 'scale-100'
+							: 'scale-0'}"
+					>
+						<IconAnimatedUploading class="w-full h-full" loading={uploading} />
 					</div>
 				</div>
 			{:else}

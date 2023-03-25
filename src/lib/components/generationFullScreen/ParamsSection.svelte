@@ -108,10 +108,10 @@
 						state={buttonObjectsWithState.seed.state === 'success' ? 'success' : 'idle'}
 					>
 						<Morpher morphed={buttonObjectsWithState.seed.state === 'success'}>
-							<div slot="item-0" class="flex items-center justify-center gap-1.5">
+							<div slot="0" class="flex items-center justify-center gap-1.5">
 								<IconCopy class="w-5 h-5" />
 							</div>
-							<div slot="item-1" class="flex items-center justify-center gap-1.5">
+							<div slot="1" class="flex items-center justify-center gap-1.5">
 								<IconTick class="w-8 h-8" />
 							</div>
 						</Morpher>

@@ -1,9 +1,9 @@
 <script lang="ts">
-	import type { PageServerData } from '../terms copy/$types';
 	import '$css/md-doc.css';
 	import { canonicalUrl } from '$ts/constants/main';
 	import MetaTag from '$components/MetaTag.svelte';
 	import { page } from '$app/stores';
+	import type { PageServerData } from './$types';
 
 	export let data: PageServerData;
 </script>

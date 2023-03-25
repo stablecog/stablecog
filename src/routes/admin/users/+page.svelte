@@ -333,7 +333,7 @@
 				{#if $allUsersQuery?.hasNextPage}
 					<IntersectionObserver
 						on:intersect={autoFetchNextPage}
-						rootMargin="100%"
+						rootMargin="200%"
 						element={bottomDiv}
 					>
 						<div

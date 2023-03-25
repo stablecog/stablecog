@@ -18,7 +18,7 @@
 	import mixpanel from 'mixpanel-browser';
 	import { supabase } from '$ts/constants/supabase';
 	import { afterNavigate, invalidateAll } from '$app/navigation';
-	import { logPageview, uLogGeneration, uLogUpscale } from '$ts/helpers/loggers';
+	import { logInitImageAdded, logPageview, uLogGeneration, uLogUpscale } from '$ts/helpers/loggers';
 	import { setCookie } from '$ts/helpers/setCookie';
 	import { appVersion, serverVersion } from '$ts/stores/appVersion';
 	import {
@@ -58,6 +58,15 @@
 	import { isHydrated, setIsHydratedToTrue } from '$ts/helpers/isHydrated';
 	import { navbarHeight } from '$ts/stores/navbarHeight';
 	import { navbarStickyType } from '$ts/stores/stickyNavbar';
+	import {
+		generationInitImageFiles,
+		generationInitImageFilesError,
+		generationInitImageFilesState,
+		generationInitImageHeight,
+		generationInitImageSrc,
+		generationInitImageUrl,
+		generationInitImageWidth
+	} from '$ts/stores/generationSettings';
 
 	export let data: LayoutData;
 	setLocale(data.locale);
@@ -103,11 +112,13 @@
 		mixpanel.identify($page.data.session.user.id);
 		mixpanel.people.set({
 			$email: $page.data.session.user.email,
+			'SC - User Id': $page.data.session.user.id,
 			'SC - Stripe Product Id': $userSummary?.product_id,
 			'SC - App Version': $appVersion
 		});
 		posthog.identify($page.data.session.user.id, {
 			email: $page.data.session.user.email,
+			'SC - User Id': $page.data.session.user.id,
 			'SC - Stripe Product Id': $userSummary?.product_id,
 			'SC - App Version': $appVersion
 		});
@@ -123,6 +134,7 @@
 				'SC - Page': `${$page.url.pathname}${$page.url.search}`,
 				'SC - Locale': $locale,
 				'SC - Advanced Mode': $advancedModeApp,
+				'SC - User Id': $page.data.session?.user.id,
 				'SC - Stripe Product Id': $userSummary?.product_id,
 				'SC - App Version': $appVersion
 			};
@@ -281,8 +293,6 @@
 			) {
 				const outputs = data.outputs as TSSEGenerationMessageOutput[];
 				setGenerationToSucceeded({ id: data.id, outputs: outputs });
-				const generationIndex = $generations.findIndex((g) => g.id === data.id);
-				const generation = $generations[generationIndex];
 				uLogGeneration('Succeeded');
 			} else if (data.id && data.status === 'failed') {
 				setGenerationToFailed({ id: data.id, error: data.error });
@@ -332,6 +342,61 @@
 			$sse.onerror = (event) => {
 				console.log('Error from SSE', event);
 			};
+		}
+	}
+
+	$: $generationInitImageFiles, onFilesChanged();
+
+	$: $generationInitImageFiles, onFilesChanged();
+
+	async function onFilesChanged() {
+		if (!$generationInitImageFiles) return;
+		const file = $generationInitImageFiles?.[0];
+		if (!file) return;
+		generationInitImageUrl.set(undefined);
+		generationInitImageFilesState.set('uploading');
+		generationInitImageFilesError.set(undefined);
+		generationInitImageSrc.set(undefined);
+		const imgSrc = URL.createObjectURL(file);
+		generationInitImageSrc.set(imgSrc);
+		const imgElement = new Image();
+		imgElement.onload = () => {
+			generationInitImageWidth.set(imgElement.width);
+			generationInitImageHeight.set(imgElement.height);
+		};
+		imgElement.src = imgSrc;
+		generationInitImageSrc.set(imgSrc);
+		const formData = new FormData();
+		formData.append('file', file);
+		logInitImageAdded({
+			'SC - User Id': $page.data.session?.user.id,
+			'SC - Stripe Product Id': $userSummary?.product_id,
+			'SC - Locale': $locale,
+			'SC - Advanced Mode': $advancedModeApp,
+			'SC - Page': `${$page.url.pathname}${$page.url.search}`,
+			'SC - App Version': $appVersion
+		});
+		try {
+			const res = await fetch(`${apiUrl.origin}/upload`, {
+				method: 'POST',
+				body: formData,
+				headers: {
+					Authorization: `Bearer ${$page.data.session?.access_token}`
+				}
+			});
+			if (!res.ok) throw new Error('Upload failed');
+			const resJson = await res.json();
+			if (!resJson.object) throw new Error('Upload failed, no object');
+			if ($generationInitImageFilesState === 'uploading' && $generationInitImageFiles) {
+				generationInitImageUrl.set(resJson.object);
+				generationInitImageFilesState.set('uploaded');
+			}
+		} catch (error) {
+			console.log(error);
+			if ($generationInitImageFilesState === 'uploading' && $generationInitImageFiles) {
+				generationInitImageFilesState.set('error');
+				generationInitImageFilesError.set(error as string);
+			}
 		}
 	}
 

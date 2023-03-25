@@ -24,12 +24,26 @@ const ja: Translation = {
 			Paragraph:
 				'生成画像がプロンプトにどれほど近似するかを指定します。値が高いほど、画像がプロンプトにより近似することを意味します。'
 		},
+		AspectRatioTabBar: {
+			Title: 'Aspect Ratio',
+			Paragraph: 'Aspect ratio of the image.'
+		},
+		InitialImageTabBar: {
+			Title: 'Initial Image',
+			Paragraph: 'The generation will be created based on this image.'
+		},
+		InitialImageStrengthTabBar: {
+			Title: 'Initial Image Strength',
+			Paragraph:
+				'Controls the influence of the initial image. The bigger the value, the more influence the initial image has.'
+		},
 		NegativePromptInput: {
 			Title: '負のプロンプト',
 			Placeholder: '負のプロンプト',
 			Paragraph:
 				'生成画像から除去したいもの指定します。プロンプトとは対照的な意味としてとらわれます。'
 		},
+		ImageInput: { Title: 'Upload Image' },
 		SeedInput: {
 			Title: 'シード値',
 			Placeholder: 'シード値',
@@ -285,6 +299,7 @@ const ja: Translation = {
 		SomethingWentWrongTryAgain: 'エラーが発生しました。再試行してください。',
 		InvalidCredentials: '不正な認証情報',
 		InvalidCode: 'コードが無効です。',
+		TryAnotherImage: 'Try another image :(',
 		OnceEvery60Seconds: 'リンクは60秒ごとに1回しかリクエストできません。',
 		LinkExpired: {
 			Title: 'Link Expired',

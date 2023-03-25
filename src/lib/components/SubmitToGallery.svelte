@@ -1,4 +1,5 @@
 <script>
+	import { page } from '$app/stores';
 	import LL from '$i18n/i18n-svelte';
 	import { expandCollapse } from '$ts/animation/transitions';
 	import { logSubmitToGallery, uLogSubmitToGallery } from '$ts/helpers/loggers';
@@ -9,6 +10,7 @@
 	import SubtleButton from './buttons/SubtleButton.svelte';
 
 	$: logProps = {
+		'SC - User Id': $page.data.session?.user.id,
 		'SC - Stripe Product Id': $userSummary?.product_id,
 		'SC - Advanced Mode': $advancedModeApp,
 		'SC - App Version': $appVersion

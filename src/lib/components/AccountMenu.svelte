@@ -105,6 +105,7 @@
 				try {
 					await supabase.auth.signOut();
 					logSignOut({
+						'SC - User Id': $page.data.session?.user.id,
 						'SC - Stripe Product Id': $userSummary?.product_id,
 						'SC - Locale': $locale,
 						'SC - Advanced Mode': $advancedModeApp,

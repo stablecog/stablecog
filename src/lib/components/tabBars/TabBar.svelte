@@ -16,6 +16,8 @@
 	export let isValid: (v: T) => boolean = () => true;
 	export let outline: 'primary' | 'bg-secondary' = 'bg-secondary';
 	export let size: 'sm' | 'md' = 'md';
+	export let vertical: boolean = false;
+	export let iconSet: ConstructorOfATypedSvelteComponent | undefined = undefined;
 
 	let classes = '';
 </script>
@@ -51,7 +53,9 @@
 					value = tab.value;
 					e.currentTarget.blur();
 				}}
-				class="flex-1 min-w-0 px-2 {size === 'sm'
+				class="flex-1 min-w-0 px-1 {vertical
+					? 'py-1.5'
+					: size === 'sm'
 					? 'py-3.5'
 					: 'py-4'} relative text-center rounded-lg group transition"
 				type="button"
@@ -69,9 +73,10 @@
 				</div>
 				<Morpher morphed={!isValid(tab.value)}>
 					<div
-						slot="item-0"
-						class="flex-1 px-1 flex justify-center items-center gap-1.5 {value === tab.value &&
-						!hideSelected
+						slot="0"
+						class="flex-1 px-1 flex {vertical
+							? 'flex-col gap-0.5'
+							: 'gap-1.5'} justify-center items-center {value === tab.value && !hideSelected
 							? 'text-c-on-bg'
 							: 'text-c-on-bg/50'} {value === tab.value && !hideSelected && !$isTouchscreen
 							? 'group-hover:text-c-primary'
@@ -82,15 +87,19 @@
 								this={tab.icon}
 								class="{dontScale ? 'w-5 h-5' : 'w-4 h-4 md:w-5 md:h-5'} flex-shrink-0"
 							/>
+						{:else if iconSet}
+							<svelte:component this={iconSet} type={tab.value} class="w-4 h-4 flex-shrink-0" />
 						{/if}
 						<p
-							class="flex-shrink overflow-hidden overflow-ellipsis max-w-full whitespace-nowrap font-medium relative transition z-0"
+							class="flex-shrink overflow-hidden overflow-ellipsis max-w-full whitespace-nowrap font-medium relative transition z-0 {vertical
+								? 'text-xxs'
+								: ''}"
 						>
 							{tab.label}
 						</p>
 					</div>
 					<p
-						slot="item-1"
+						slot="1"
 						class="flex-1 px-1 overflow-hidden overflow-ellipsis whitespace-nowrap font-medium relative transition max-w-full z-0 {value ===
 							tab.value && !hideSelected
 							? 'text-c-on-bg'

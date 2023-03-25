@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { page } from '$app/stores';
 	import AnchorOrDiv from '$components/AnchorOrDiv.svelte';
 	import CopyButton from '$components/buttons/CopyButton.svelte';
 	import DownloadGenerationButton from '$components/buttons/DownloadGenerationButton.svelte';
@@ -138,6 +139,7 @@
 
 	$: logProps = {
 		'SC - Output Id': generation.selected_output.id,
+		'SC - User Id': $page.data.session?.user.id,
 		'SC - Stripe Product Id': $userSummary?.product_id,
 		'SC - Advanced Mode': $advancedModeApp,
 		'SC - App Version': $appVersion

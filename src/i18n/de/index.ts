@@ -24,11 +24,25 @@ const de: Translation = {
 			Paragraph:
 				'Wie ähnlich das Bild den Eingabewörtern ist. Je höher der Wert ist, umso ähnlicher wird das Bild.'
 		},
+		AspectRatioTabBar: {
+			Title: 'Aspect Ratio',
+			Paragraph: 'Aspect ratio of the image.'
+		},
+		InitialImageTabBar: {
+			Title: 'Initial Image',
+			Paragraph: 'The generation will be created based on this image.'
+		},
+		InitialImageStrengthTabBar: {
+			Title: 'Initial Image Strength',
+			Paragraph:
+				'Controls the influence of the initial image. The bigger the value, the more influence the initial image has.'
+		},
 		NegativePromptInput: {
 			Title: 'Wörter ausschließen',
 			Placeholder: 'Wörter ausschließen',
 			Paragraph: 'Um ungewollte Dinge auszuschließen. Bewirkt das Gegenteil von Eingabewörtern.'
 		},
+		ImageInput: { Title: 'Upload Image' },
 		SeedInput: {
 			Title: 'Seed',
 			Placeholder: 'Seed-Nummer',
@@ -283,6 +297,7 @@ const de: Translation = {
 		SomethingWentWrongTryAgain: 'Etwas ist schiefgelaufen. Erneut versuchen.',
 		InvalidCredentials: 'Ungültige Anmeldedaten.',
 		InvalidCode: 'Ungültiger Code.',
+		TryAnotherImage: 'Try another image :(',
 		OnceEvery60Seconds: 'Du kannst nur einmal alle 60 Sekunden einen Link anfordern.',
 		LinkExpired: {
 			Title: 'Link abgelaufen',

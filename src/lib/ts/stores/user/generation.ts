@@ -257,6 +257,7 @@ export interface TGenerationBase {
 	guidance_scale: number;
 	num_outputs: number;
 	init_image_url?: string;
+	prompt_strength?: number;
 }
 
 export interface TGeneration extends TGenerationBase {
@@ -298,6 +299,7 @@ export interface TInitialGenerationRequest extends TGenerationBase {
 	output_image_extension: 'jpeg' | 'png' | 'webp';
 	process_type: TProcessType;
 	submit_to_gallery: boolean;
+	init_image_file?: FileList;
 }
 
 export type TGenerationStatus =

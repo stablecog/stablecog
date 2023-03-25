@@ -266,22 +266,31 @@
 	});
 </script>
 
-<ModalWrapper hasPadding={false}>
-	<div class="w-full flex items-center justify-start md:hidden pt-2 pb-1 px-2">
-		<IconButton
-			name="Close"
-			onClick={() => {
-				console.log('Close clicked');
-				console.log($activeGeneration);
-				if ($activeGeneration !== undefined) {
-					activeGeneration.set(undefined);
-				}
-			}}
+<ModalWrapper hasPadding={false} let:scrollY>
+	<div class="w-full sticky z-20 top-0 flex items-center justify-start md:hidden pt-1 pb-1 px-1">
+		<div
+			class="flex items-center justify-center transition duration-150 rounded-full {scrollY &&
+			scrollY > 5
+				? 'bg-c-bg-secondary/75'
+				: 'bg-c-bg-secondary/0'}"
 		>
-			<IconCancel
-				class="w-9 h-9 transition {!$isTouchscreen ? 'group-hover/iconbutton:text-c-primary' : ''}"
-			/>
-		</IconButton>
+			<IconButton
+				name="Close"
+				onClick={() => {
+					console.log('Close clicked');
+					console.log($activeGeneration);
+					if ($activeGeneration !== undefined) {
+						activeGeneration.set(undefined);
+					}
+				}}
+			>
+				<IconCancel
+					class="w-9 h-9 transition {!$isTouchscreen
+						? 'group-hover/iconbutton:text-c-primary'
+						: ''}"
+				/>
+			</IconButton>
+		</div>
 	</div>
 	<Container {generation} let:imageContainerWidth let:imageContainerHeight let:modalMinHeight>
 		<div class="relative self-stretch flex items-center">

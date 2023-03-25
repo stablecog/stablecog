@@ -6,6 +6,7 @@
 	import { locale } from '$i18n/i18n-svelte';
 	import { downloadGenerationImage } from '$ts/helpers/downloadGenerationImage';
 	import { advancedModeApp } from '$ts/stores/advancedMode';
+	import { appVersion } from '$ts/stores/appVersion';
 	import { isTouchscreen } from '$ts/stores/isTouchscreen';
 	import type { TGenerationWithSelectedOutput } from '$ts/stores/user/generation';
 	import { userSummary } from '$ts/stores/user/summary';
@@ -37,7 +38,9 @@
 					'SC - Output Id': generation.selected_output.id,
 					'SC - Page': `${$page.url.pathname}${$page.url.search}`,
 					'SC - Generation Id': generation.id,
-					'SC - Stripe Product Id': $userSummary?.product_id
+					'SC - User Id': $page.data.session?.user.id,
+					'SC - Stripe Product Id': $userSummary?.product_id,
+					'SC - App Version': $appVersion
 				}
 			});
 		} catch (error) {
@@ -64,13 +67,13 @@
 		/>
 		<Morpher morphed={downloadStatus === 'downloading'} class="w-7 h-7">
 			<IconDownload
-				slot="item-0"
+				slot="0"
 				class="w-7 h-7 transition text-c-on-bg relative group-focus/downloadbutton:text-c-on-primary {!$isTouchscreen
 					? 'group-hover/downloadbutton:text-c-on-primary'
 					: ''}"
 			/>
 			<IconAnimatedSpinner
-				slot="item-1"
+				slot="1"
 				class="w-7 h-7 text-c-on-bg relative group-focus/downloadbutton:text-c-on-primary {!$isTouchscreen
 					? 'group-hover/downloadbutton:text-c-on-primary'
 					: ''}"

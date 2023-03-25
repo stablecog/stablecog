@@ -104,6 +104,7 @@
 			'SC - Advanced Mode': $advancedModeApp,
 			'SC - Locale': $locale,
 			'SC - Page': `${$page.url.pathname}${$page.url.search}`,
+			'SC - User Id': $page.data.session?.user.id,
 			'SC - Stripe Product Id': $userSummary?.product_id,
 			'SC - App Version': $appVersion
 		};
@@ -207,11 +208,11 @@
 								class="-my-1"
 							>
 								<Morpher morphed={legacyGenerationsDownloadStatus === 'downloading'}>
-									<div slot="item-0" class="flex items-center justify-center gap-1.5">
+									<div slot="0" class="flex items-center justify-center gap-1.5">
 										<IconDownload class="w-5 h-5 -ml-0.5" />
 										<p>{$LL.History.DownloadLegacyGenerationsButton()}</p>
 									</div>
-									<div slot="item-1" class="flex items-center justify-center gap-1.5">
+									<div slot="1" class="flex items-center justify-center gap-1.5">
 										<IconAnimatedSpinner class="w-5 h-5" />
 									</div>
 								</Morpher>

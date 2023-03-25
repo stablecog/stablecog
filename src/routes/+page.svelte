@@ -27,6 +27,8 @@
 		generationGuidanceScale,
 		generationHeight,
 		generationInferenceSteps,
+		generationInitImageFiles,
+		generationInitImageStrength,
 		generationInitImageUrl,
 		generationModelId,
 		generationNumOutputs,
@@ -78,6 +80,12 @@
 				$advancedModeApp || data.scheduler_id ? $generationSchedulerId : schedulerIdDefault,
 			width: Number($generationWidth),
 			height: Number($generationHeight),
+			init_image_url: $generationInitImageUrl,
+			init_image_file: $generationInitImageFiles,
+			prompt_strength:
+				$generationInitImageUrl && $generationInitImageStrength
+					? 1 - $generationInitImageStrength
+					: undefined,
 			guidance_scale: Number(
 				$advancedModeApp || data.guidance_scale ? $generationGuidanceScale : guidanceScaleDefault
 			),
@@ -98,7 +106,6 @@
 			process_type: 'generate',
 			stream_id: $sseId,
 			ui_id: generateSSEId(),
-			init_image_url: $generationInitImageUrl,
 			submit_to_gallery: false
 		};
 		uLogGeneration('Started');

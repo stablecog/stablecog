@@ -24,12 +24,26 @@ const ko: Translation = {
 			Paragraph:
 				'입력한 문구와 이미지가 유사한 정도를 의미합니다. 값이 높을 수록 이미지가 입력 문구와 비슷해집니다.'
 		},
+		AspectRatioTabBar: {
+			Title: 'Aspect Ratio',
+			Paragraph: 'Aspect ratio of the image.'
+		},
+		InitialImageTabBar: {
+			Title: 'Initial Image',
+			Paragraph: 'The generation will be created based on this image.'
+		},
+		InitialImageStrengthTabBar: {
+			Title: 'Initial Image Strength',
+			Paragraph:
+				'Controls the influence of the initial image. The bigger the value, the more influence the initial image has.'
+		},
 		NegativePromptInput: {
 			Title: '포함하지 않을 문구',
 			Placeholder: '포함하지 않을 문구',
 			Paragraph:
 				'원하지 않는 결과를 없애기 위한 문구입니다. 원하는 문구를 입력하는 것과 반대되는 역할을 합니다.'
 		},
+		ImageInput: { Title: 'Upload Image' },
 		SeedInput: {
 			Title: '난수 시드',
 			Placeholder: '난수 시드 값',
@@ -284,6 +298,7 @@ const ko: Translation = {
 		SomethingWentWrongTryAgain: '무언가 잘못되었습니다. 다시 시도해주세요.',
 		InvalidCredentials: '이메일과 비밀번호를 다시 확인해주세요.',
 		InvalidCode: '올바르지 않은 코드입니다. 다시 시도해주세요.',
+		TryAnotherImage: 'Try another image :(',
 		OnceEvery60Seconds: 'You can only request a link once every 60 seconds.',
 		LinkExpired: {
 			Title: 'Link Expired',

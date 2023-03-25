@@ -81,6 +81,36 @@ type RootTranslation = {
 			 */
 			Paragraph: string
 		}
+		AspectRatioTabBar: {
+			/**
+			 * A​s​p​e​c​t​ ​R​a​t​i​o
+			 */
+			Title: string
+			/**
+			 * A​s​p​e​c​t​ ​r​a​t​i​o​ ​o​f​ ​t​h​e​ ​i​m​a​g​e​.
+			 */
+			Paragraph: string
+		}
+		InitialImageTabBar: {
+			/**
+			 * I​n​i​t​i​a​l​ ​I​m​a​g​e
+			 */
+			Title: string
+			/**
+			 * T​h​e​ ​g​e​n​e​r​a​t​i​o​n​ ​w​i​l​l​ ​b​e​ ​c​r​e​a​t​e​d​ ​b​a​s​e​d​ ​o​n​ ​t​h​i​s​ ​i​m​a​g​e​.
+			 */
+			Paragraph: string
+		}
+		InitialImageStrengthTabBar: {
+			/**
+			 * I​n​i​t​i​a​l​ ​I​m​a​g​e​ ​S​t​r​e​n​g​t​h
+			 */
+			Title: string
+			/**
+			 * C​o​n​t​r​o​l​s​ ​t​h​e​ ​i​n​f​l​u​e​n​c​e​ ​o​f​ ​t​h​e​ ​i​n​i​t​i​a​l​ ​i​m​a​g​e​.​ ​T​h​e​ ​b​i​g​g​e​r​ ​t​h​e​ ​v​a​l​u​e​,​ ​t​h​e​ ​m​o​r​e​ ​i​n​f​l​u​e​n​c​e​ ​t​h​e​ ​i​n​i​t​i​a​l​ ​i​m​a​g​e​ ​h​a​s​.
+			 */
+			Paragraph: string
+		}
 		NegativePromptInput: {
 			/**
 			 * N​e​g​a​t​i​v​e​ ​P​r​o​m​p​t
@@ -94,6 +124,12 @@ type RootTranslation = {
 			 * T​o​ ​r​e​m​o​v​e​ ​u​n​w​a​n​t​e​d​ ​t​h​i​n​g​s​ ​f​r​o​m​ ​t​h​e​ ​i​m​a​g​e​.​ ​I​t​ ​d​o​e​s​ ​t​h​e​ ​o​p​p​o​s​i​t​e​ ​o​f​ ​w​h​a​t​ ​t​h​e​ ​p​r​o​m​p​t​ ​d​o​e​s​.
 			 */
 			Paragraph: string
+		}
+		ImageInput: {
+			/**
+			 * U​p​l​o​a​d​ ​I​m​a​g​e
+			 */
+			Title: string
 		}
 		SeedInput: {
 			/**
@@ -837,6 +873,10 @@ type RootTranslation = {
 		 * I​n​v​a​l​i​d​ ​c​o​d​e​.
 		 */
 		InvalidCode: string
+		/**
+		 * T​r​y​ ​a​n​o​t​h​e​r​ ​i​m​a​g​e​ ​:​(
+		 */
+		TryAnotherImage: string
 		/**
 		 * Y​o​u​ ​c​a​n​ ​o​n​l​y​ ​r​e​q​u​e​s​t​ ​a​ ​l​i​n​k​ ​o​n​c​e​ ​e​v​e​r​y​ ​6​0​ ​s​e​c​o​n​d​s​.
 		 */
@@ -1767,6 +1807,36 @@ export type TranslationFunctions = {
 			 */
 			Paragraph: () => LocalizedString
 		}
+		AspectRatioTabBar: {
+			/**
+			 * Aspect Ratio
+			 */
+			Title: () => LocalizedString
+			/**
+			 * Aspect ratio of the image.
+			 */
+			Paragraph: () => LocalizedString
+		}
+		InitialImageTabBar: {
+			/**
+			 * Initial Image
+			 */
+			Title: () => LocalizedString
+			/**
+			 * The generation will be created based on this image.
+			 */
+			Paragraph: () => LocalizedString
+		}
+		InitialImageStrengthTabBar: {
+			/**
+			 * Initial Image Strength
+			 */
+			Title: () => LocalizedString
+			/**
+			 * Controls the influence of the initial image. The bigger the value, the more influence the initial image has.
+			 */
+			Paragraph: () => LocalizedString
+		}
 		NegativePromptInput: {
 			/**
 			 * Negative Prompt
@@ -1780,6 +1850,12 @@ export type TranslationFunctions = {
 			 * To remove unwanted things from the image. It does the opposite of what the prompt does.
 			 */
 			Paragraph: () => LocalizedString
+		}
+		ImageInput: {
+			/**
+			 * Upload Image
+			 */
+			Title: () => LocalizedString
 		}
 		SeedInput: {
 			/**
@@ -2503,6 +2579,10 @@ export type TranslationFunctions = {
 		 * Invalid code.
 		 */
 		InvalidCode: () => LocalizedString
+		/**
+		 * Try another image :(
+		 */
+		TryAnotherImage: () => LocalizedString
 		/**
 		 * You can only request a link once every 60 seconds.
 		 */

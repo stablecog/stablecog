@@ -24,12 +24,26 @@ const vi: Translation = {
 			Paragraph:
 				'Hình ảnh sẽ theo sát lời mô tả đến đâu. Giá trị cao hơn khiến hình ảnh dược tạo ra sát với lời mô tả hơn.'
 		},
+		AspectRatioTabBar: {
+			Title: 'Aspect Ratio',
+			Paragraph: 'Aspect ratio of the image.'
+		},
+		InitialImageTabBar: {
+			Title: 'Initial Image',
+			Paragraph: 'The generation will be created based on this image.'
+		},
+		InitialImageStrengthTabBar: {
+			Title: 'Initial Image Strength',
+			Paragraph:
+				'Controls the influence of the initial image. The bigger the value, the more influence the initial image has.'
+		},
 		NegativePromptInput: {
 			Title: 'Mô tả nghịch đảo',
 			Placeholder: 'Mô tả nghịch đảo',
 			Paragraph:
 				'Để xóa những thứ không mong muốn xuất hiện trong hình ảnh. Nó có tác dụng ngược so với lời mô tả.'
 		},
+		ImageInput: { Title: 'Upload Image' },
 		SeedInput: {
 			Title: 'Số khởi tạo',
 			Placeholder: 'Số khởi tạo',
@@ -285,6 +299,7 @@ const vi: Translation = {
 		SomethingWentWrongTryAgain: 'Có sự cố. Xin vui lòng thử lại.',
 		InvalidCredentials: 'Thông tin dùng để xác thực không hợp lệ.',
 		InvalidCode: 'Mã không hợp lệ.',
+		TryAnotherImage: 'Try another image :(',
 		OnceEvery60Seconds: 'You can only request a link once every 60 seconds.',
 		LinkExpired: {
 			Title: 'Link Expired',

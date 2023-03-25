@@ -63,6 +63,10 @@ export const inferenceStepsDefault: TAvailableInferenceSteps = '30';
 export const guidanceScaleMax = 20;
 export const guidanceScaleMin = 1;
 export const guidanceScaleDefault = 7;
+export const initImageStrengthDefault = 0.4;
+export const initImageStrengthMin = 0.1;
+export const initImageStrengthMax = 0.9;
+export const initImageStrengthStep = 0.1;
 
 export const eurCountryCodes = [
 	'BE',

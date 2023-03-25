@@ -57,7 +57,7 @@
 				{$LL.Error.LinkExpired.Paragraph()}
 			</p>
 		{:else}
-			<IconAnimatedSpinner class="w-12 h-12" />
+			<IconAnimatedSpinner class="w-12 h-12 text-c-on-bg/60" />
 		{/if}
 	</div>
 </PageWrapper>

@@ -65,6 +65,7 @@
 					'SC - Output Id': generation.selected_output.id,
 					'SC - Page': `${$page.url.pathname}${$page.url.search}`,
 					'SC - Generation Id': generation.id,
+					'SC - User Id': $page.data.session?.user.id,
 					'SC - Stripe Product Id': $userSummary?.product_id,
 					'SC - App Version': $appVersion
 				}
@@ -86,6 +87,7 @@
 		'SC - Advanced Mode': $advancedModeApp,
 		'SC - Locale': $locale,
 		'SC - Page': `${$page.url.pathname}${$page.url.search}`,
+		'SC - User Id': $page.data.session?.user.id,
 		'SC - Stripe Product Id': $userSummary?.product_id,
 		'SC - App Version': $appVersion
 	};
@@ -183,18 +185,18 @@
 			state={buttonObjectsWithState.download.state === 'success' ? 'success' : 'idle'}
 		>
 			<Morpher morphed={buttonObjectsWithState.download.state === 'success'}>
-				<div slot="item-0" class="flex items-center justify-center gap-1.5">
+				<div slot="0" class="flex items-center justify-center gap-1.5">
 					<Morpher morphed={buttonObjectsWithState.download.state === 'loading'}>
-						<div slot="item-0" class="flex items-center justify-center gap-1.5">
+						<div slot="0" class="flex items-center justify-center gap-1.5">
 							<IconDownload class="w-5 h-5 -ml-0.5" />
 							<p>{$LL.GenerationFullscreen.DownloadButton()}</p>
 						</div>
-						<div slot="item-1" class="flex items-center justify-center gap-1.5">
+						<div slot="1" class="flex items-center justify-center gap-1.5">
 							<IconAnimatedSpinner class="w-5 h-5" />
 						</div>
 					</Morpher>
 				</div>
-				<div slot="item-1" class="flex items-center justify-center gap-1.5">
+				<div slot="1" class="flex items-center justify-center gap-1.5">
 					<IconTick class="w-5 h-5 -ml-0.5 transform scale-110 text-c-on-primary" />
 					<p>{$LL.GenerationFullscreen.DoneButtonState()}</p>
 				</div>
@@ -212,6 +214,7 @@
 						logGalleryGenerateSimilarClicked({
 							'SC - Advanced Mode': $advancedModeApp,
 							'SC - Output Id': generation.selected_output.id,
+							'SC - User Id': $page.data.session?.user.id,
 							'SC - Stripe Product Id': $userSummary?.product_id,
 							'SC - App Version': $appVersion
 						});
@@ -231,11 +234,11 @@
 	>
 		<SubtleButton state={buttonObjectsWithState.prompt.state === 'success' ? 'success' : 'idle'}>
 			<Morpher morphed={buttonObjectsWithState.prompt.state === 'success'}>
-				<div slot="item-0" class="flex items-center justify-center gap-1.5">
+				<div slot="0" class="flex items-center justify-center gap-1.5">
 					<IconCopy class="w-5 h-5 -ml-0.5" />
 					<p>{$LL.GenerationFullscreen.CopyPromptButton()}</p>
 				</div>
-				<div slot="item-1" class="flex items-center justify-center gap-1.5">
+				<div slot="1" class="flex items-center justify-center gap-1.5">
 					<IconTick class="w-5 h-5 -ml-0.5 scale-110" />
 					<p>{$LL.GenerationFullscreen.CopiedButtonState()}</p>
 				</div>
@@ -246,11 +249,11 @@
 		<div use:copy={linkUrl} on:svelte-copy={() => setButtonObjectWithState('link', 'success')}>
 			<SubtleButton state={buttonObjectsWithState.link.state === 'success' ? 'success' : 'idle'}>
 				<Morpher morphed={buttonObjectsWithState.link.state === 'success'}>
-					<div slot="item-0" class="flex items-center justify-center gap-1.5">
+					<div slot="0" class="flex items-center justify-center gap-1.5">
 						<IconLink class="w-5 h-5 -ml-0.5" />
 						<p>{$LL.Shared.CopyLinkButton()}</p>
 					</div>
-					<div slot="item-1" class="flex items-center justify-center gap-1.5">
+					<div slot="1" class="flex items-center justify-center gap-1.5">
 						<IconTick class="w-5 h-5 -ml-0.5 scale-110" />
 						<p>{$LL.GenerationFullscreen.CopiedButtonState()}</p>
 					</div>
@@ -271,11 +274,11 @@
 				<SubtleButton disabled={submitToGalleryStatus === 'loading'} onClick={submitToGallery}>
 					<div class="flex items-center justify-center gap-1.5 text-c-on-bg">
 						<Morpher morphed={submitToGalleryStatus === 'loading'}>
-							<div slot="item-0" class="flex items-center justify-center gap-1.5 text-c-on-bg">
+							<div slot="0" class="flex items-center justify-center gap-1.5 text-c-on-bg">
 								<IconUpload class="w-5 h-5 -ml-0.5" />
 								<p>{$LL.GenerationFullscreen.SubmitToGalleryButton()}</p>
 							</div>
-							<div slot="item-1" class="flex items-center justify-center gap-1.5 text-c-on-bg">
+							<div slot="1" class="flex items-center justify-center gap-1.5 text-c-on-bg">
 								<IconAnimatedSpinner class="w-5 h-5" />
 							</div>
 						</Morpher>
@@ -290,18 +293,18 @@
 				state={deleteStatus === 'should-confirm' || deleteStatus === 'loading' ? 'danger' : 'idle'}
 			>
 				<Morpher morphed={deleteStatus === 'should-confirm'}>
-					<div slot="item-0" class="flex items-center justify-center gap-1.5 text-c-danger">
+					<div slot="0" class="flex items-center justify-center gap-1.5 text-c-danger">
 						<Morpher morphed={deleteStatus === 'loading'}>
-							<div slot="item-0" class="flex items-center justify-center gap-1.5 text-c-danger">
+							<div slot="0" class="flex items-center justify-center gap-1.5 text-c-danger">
 								<IconTrashcan class="w-5 h-5 -ml-0.5" />
 								<p>{$LL.Shared.DeleteButton()}</p>
 							</div>
-							<div slot="item-1" class="flex items-center justify-center gap-1.5 text-c-on-primary">
+							<div slot="1" class="flex items-center justify-center gap-1.5 text-c-on-primary">
 								<IconAnimatedSpinner class="w-5 h-5" />
 							</div>
 						</Morpher>
 					</div>
-					<div slot="item-1" class="flex items-center justify-center gap-1.5">
+					<div slot="1" class="flex items-center justify-center gap-1.5">
 						<IconTrashcanFilledOpen class="w-5 h-5 -ml-0.5 scale-110 text-c-on-primary" />
 					</div>
 				</Morpher>

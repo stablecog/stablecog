@@ -30,7 +30,6 @@
 		STRIPE_PRODUCT_ID_OBJECTS_CREDIT_PACKS
 	} from '$ts/constants/stripePublic';
 	import { userSummary } from '$ts/stores/user/summary';
-	import { downgradeSubscription } from '$ts/helpers/user/user';
 
 	export let data: PageData;
 

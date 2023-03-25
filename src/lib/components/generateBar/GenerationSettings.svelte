@@ -1,15 +1,12 @@
 <script lang="ts">
-	import { page } from '$app/stores';
 	import NoBgButton from '$components/buttons/NoBgButton.svelte';
 	import IconBrain from '$components/icons/IconBrain.svelte';
 	import IconBubbles from '$components/icons/IconBubbles.svelte';
 	import IconChatBubbleCancel from '$components/icons/IconChatBubbleCancel.svelte';
 	import IconChevronDown from '$components/icons/IconChevronDown.svelte';
-	import IconHeight from '$components/icons/IconHeight.svelte';
 	import IconScale from '$components/icons/IconScale.svelte';
 	import IconSeed from '$components/icons/IconSeed.svelte';
 	import IconSteps from '$components/icons/IconSteps.svelte';
-	import IconWidth from '$components/icons/IconWidth.svelte';
 	import TabBar from '$components/tabBars/TabBar.svelte';
 	import TabLikeDropdown from '$components/tabBars/TabLikeDropdown.svelte';
 	import TabLikeInput from '$components/tabBars/TabLikeInput.svelte';
@@ -28,17 +25,20 @@
 	import { availableSchedulerIdDropdownItems } from '$ts/constants/schedulers';
 	import {
 		guidanceScaleTooltip,
-		heightTooltip,
 		inferenceStepsTooltip,
 		modelTooltip,
 		negativePromptTooltip,
 		schedulerTooltip,
 		seedTooltip,
-		widthTooltip
+		initialImageTabBarTooltip,
+		aspectRatioTooltip,
+		initialImageStrengthTabBarTooltip
 	} from '$ts/constants/tooltips';
 	import { logAdvancedMode } from '$ts/helpers/loggers';
 	import { advancedMode, advancedModeApp } from '$ts/stores/advancedMode';
 	import {
+		generationAspectRatio,
+		generationInitImageFilesState,
 		generationGuidanceScale,
 		generationHeight,
 		generationInferenceSteps,
@@ -51,8 +51,19 @@
 	import { isTouchscreen } from '$ts/stores/isTouchscreen';
 	import type { TTab } from '$ts/types/main';
 	import { userSummary } from '$ts/stores/user/summary';
-	import { heightTabs, widthTabs } from '$ts/constants/generationSize';
+	import { aspectRatioTabs } from '$ts/constants/generationSize';
 	import { appVersion } from '$ts/stores/appVersion';
+	import IconDimensions from '$components/icons/IconDimensions.svelte';
+	import IconAspectRatio from '$components/icons/IconAspectRatio.svelte';
+	import TabLikeInitImageUploader from '$components/tabBars/TabLikeInitImageUploader.svelte';
+	import IconAddImage from '$components/icons/IconAddImage.svelte';
+	import IconAnimatedSpinner from '$components/icons/IconAnimatedSpinner.svelte';
+	import IconTickOnly from '$components/icons/IconTickOnly.svelte';
+	import IconWarningOutline from '$components/icons/IconWarningOutline.svelte';
+	import Morpher from '$components/Morpher.svelte';
+	import Morpher3 from '$components/Morpher3.svelte';
+	import IconAnimatedUploading from '$components/icons/IconAnimatedUploading.svelte';
+	import { page } from '$app/stores';
 
 	export let isCheckComplete: boolean;
 	export let formElement: HTMLFormElement;
@@ -61,6 +72,7 @@
 	export let container: HTMLDivElement | undefined = undefined;
 	export let containerTopMinDistance = 0;
 	export let containerBottomMinDistance = 0;
+	export let openSignInModal: () => void;
 
 	$: isInferenceStepsValid = <T>(s: T) => {
 		return Number(s) * Number($generationHeight) * Number($generationWidth) < maxProPixelSteps;
@@ -87,16 +99,17 @@
 	}
 
 	$: logProps = {
+		'SC - User Id': $page.data.session?.user.id,
 		'SC - Stripe Product Id': $userSummary?.product_id,
 		'SC - App Version': $appVersion
 	};
 </script>
 
-<div class="w-full flex flex-wrap items-start justify-center px-2px py-4 gap-4">
+<div class="w-full flex flex-wrap items-start justify-center px-2px py-2 md:py-4 gap-4">
 	{#if $advancedModeApp}
 		<TabLikeInput
 			disabled={!isCheckComplete || disabled}
-			class="w-full md:w-172 max-w-full order-1"
+			class="w-full md:w-182 max-w-full order-1"
 			placeholder={$LL.Home.NegativePromptInput.Placeholder()}
 			type="text"
 			bind:value={$negativePromptInputValue}
@@ -114,7 +127,67 @@
 	{/if}
 	<TabBar
 		{disabled}
-		class="w-full md:w-84 max-w-full order-2 relative"
+		class="w-full md:w-89 max-w-full relative {$advancedModeApp ? 'order-2' : 'order-1'}"
+		vertical
+		iconSet={IconAspectRatio}
+		tabs={aspectRatioTabs}
+		outline="bg-secondary"
+		bind:value={$generationAspectRatio}
+		name="Width"
+		hideSelected={!isCheckComplete}
+	>
+		<div
+			slot="title"
+			use:tooltip={$aspectRatioTooltip}
+			class="p-3.5 flex items-center justify-center"
+		>
+			<IconDimensions class="w-6 h-6 text-c-on-bg/35" />
+		</div>
+	</TabBar>
+	<TabLikeInitImageUploader
+		{openSignInModal}
+		class="w-full md:w-89 max-w-full relative {$advancedModeApp ? 'order-2' : 'order-3'}"
+	>
+		<div
+			slot="title"
+			use:tooltip={$generationInitImageFilesState === 'idle'
+				? $initialImageTabBarTooltip
+				: $initialImageStrengthTabBarTooltip}
+			class="p-3.5 flex items-center justify-center"
+		>
+			<Morpher morphed={$generationInitImageFilesState !== 'idle'}>
+				<div slot="0" class="w-6 h-6">
+					<IconAddImage class="w-6 h-6 text-c-on-bg/35" />
+				</div>
+				<div slot="1" class="w-6 h-6">
+					<Morpher3
+						class="w-full h-full"
+						state={$generationInitImageFilesState === 'uploaded'
+							? 1
+							: $generationInitImageFilesState === 'error'
+							? 2
+							: 0}
+					>
+						<div class="w-full h-full" slot="0">
+							<IconAnimatedUploading
+								loading={$generationInitImageFilesState !== 'idle'}
+								class="w-full h-full text-c-on-bg/35"
+							/>
+						</div>
+						<div class="w-full h-full" slot="1">
+							<IconTickOnly class="w-full h-full text-c-success/75" />
+						</div>
+						<div class="w-full h-full" slot="2">
+							<IconWarningOutline class="w-full h-full text-c-danger/75" />
+						</div>
+					</Morpher3>
+				</div>
+			</Morpher>
+		</div>
+	</TabLikeInitImageUploader>
+	<!-- 	<TabBar
+		{disabled}
+		class="w-full md:w-89 max-w-full order-2 relative"
 		tabs={widthTabs}
 		outline="bg-secondary"
 		bind:value={$generationWidth}
@@ -127,7 +200,7 @@
 	</TabBar>
 	<TabBar
 		{disabled}
-		class="w-full md:w-84 max-w-full order-2 relative"
+		class="w-full md:w-89 max-w-full order-2 relative"
 		tabs={heightTabs}
 		outline="bg-secondary"
 		bind:value={$generationHeight}
@@ -137,10 +210,10 @@
 		<div slot="title" use:tooltip={$heightTooltip} class="p-3.5 flex items-center justify-center">
 			<IconHeight class="w-6 h-6 text-c-on-bg/35" />
 		</div>
-	</TabBar>
+	</TabBar> -->
 
 	<TabLikeDropdown
-		class="w-full md:w-84 max-w-full {$advancedModeApp ? 'order-1' : 'order-2'}"
+		class="w-full md:w-89 max-w-full {$advancedModeApp ? 'order-1' : 'order-3'}"
 		{calculateDistance}
 		{container}
 		{containerTopMinDistance}
@@ -157,10 +230,11 @@
 	{#if $advancedModeApp}
 		<TabLikeRangeInput
 			{disabled}
-			class="w-full md:w-84 max-w-full order-2"
+			class="w-full md:w-89 max-w-full order-2"
 			bind:value={$generationGuidanceScale}
 			min={guidanceScaleMin}
 			max={guidanceScaleMax}
+			step={1}
 		>
 			<div
 				slot="title"
@@ -170,7 +244,7 @@
 				<IconScale class="w-6 h-6 text-c-on-bg/35" />
 			</div>
 		</TabLikeRangeInput>
-		<div class="w-full md:w-84 max-w-full order-2 relative">
+		<div class="w-full md:w-89 max-w-full order-2 relative">
 			<TabBar
 				{disabled}
 				class="w-full"
@@ -191,7 +265,7 @@
 			</TabBar>
 		</div>
 		<TabLikeDropdown
-			class="w-full md:w-84 max-w-full order-2"
+			class="w-full md:w-89 max-w-full order-2"
 			{calculateDistance}
 			{container}
 			{containerTopMinDistance}
@@ -211,7 +285,7 @@
 		</TabLikeDropdown>
 		<TabLikeInput
 			disabled={!isCheckComplete || disabled}
-			class="w-full md:w-84 max-w-full order-2"
+			class="w-full md:w-89 max-w-full order-2"
 			placeholder={$LL.Home.SeedInput.Placeholder()}
 			bind:value={$generationSeed}
 			type="number"
