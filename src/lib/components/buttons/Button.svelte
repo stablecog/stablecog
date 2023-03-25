@@ -126,7 +126,7 @@
 			? ''
 			: 'shadow-lg shadow-c-shadow/[var(--o-shadow-strong)]'} {type === 'no-bg-on-bg'
 			? 'text-c-on-bg/60'
-			: 'text-c-on-primary'} {loading || uploading
+			: 'text-c-on-primary'} {loading
 			? type === 'success'
 				? 'bg-c-success-secondary'
 				: type === 'danger'

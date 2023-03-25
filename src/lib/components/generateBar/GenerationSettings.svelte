@@ -175,10 +175,10 @@
 							/>
 						</div>
 						<div class="w-full h-full" slot="1">
-							<IconTickOnly class="w-full h-full text-c-success/75" />
+							<IconTickOnly class="w-full h-full text-c-success/85" />
 						</div>
 						<div class="w-full h-full" slot="2">
-							<IconWarningOutline class="w-full h-full text-c-danger/75" />
+							<IconWarningOutline class="w-full h-full text-c-danger/85" />
 						</div>
 					</Morpher3>
 				</div>
