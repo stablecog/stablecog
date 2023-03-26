@@ -50,7 +50,12 @@ export async function getAllUserGenerationFullOutputs({
 		query.append('cursor', cursor);
 	}
 	if (gallery_status) {
-		query.append('gallery_status', gallery_status);
+		if (gallery_status === 'manually_submitted') {
+			query.append('was_auto_submitted', 'false');
+			query.append('gallery_status', 'submitted');
+		} else {
+			query.append('gallery_status', gallery_status);
+		}
 	}
 	if (order_by) {
 		query.append('order_by', order_by);

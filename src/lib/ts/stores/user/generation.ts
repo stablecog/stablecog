@@ -283,7 +283,12 @@ export interface TGenerationOutput {
 	gallery_status?: TGalleryStatus;
 }
 
-export type TGalleryStatus = 'submitted' | 'approved' | 'rejected' | 'not_submitted';
+export type TGalleryStatus =
+	| 'submitted'
+	| 'approved'
+	| 'rejected'
+	| 'not_submitted'
+	| 'manually_submitted';
 
 export interface TGenerationFullOutput extends TGenerationOutput {
 	generation: TGeneration;

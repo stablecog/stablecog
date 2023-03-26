@@ -141,6 +141,10 @@
 					name="Filter"
 					items={[
 						{ label: $LL.Admin.Gallery.StatusDropdown.Submitted(), value: 'submitted' },
+						{
+							label: $LL.Admin.Gallery.StatusDropdown.ManuallySubmitted(),
+							value: 'manually_submitted'
+						},
 						{ label: $LL.Admin.Gallery.StatusDropdown.Approved(), value: 'approved' },
 						{ label: $LL.Admin.Gallery.StatusDropdown.Rejected(), value: 'rejected' },
 						...(isSuperAdmin($userSummary?.roles || [])
