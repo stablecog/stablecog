@@ -100,9 +100,7 @@
 					!outputs[item.key].is_deleted}
 				<div
 					style="position: absolute;left: -9999px;top: -9999px;"
-					class="w-1/2 sm:w-1/3 lg:w-1/4 {cardType === 'history'
-						? ''
-						: 'xl:w-1/5 2xl:w-1/6 3xl:w-1/7'} p-0.5"
+					class="w-1/2 sm:w-1/3 lg:w-1/4 xl:w-1/5 2xl:w-1/6 3xl:w-1/7 p-0.5"
 				>
 					<div class="w-full relative group">
 						<ImagePlaceholder

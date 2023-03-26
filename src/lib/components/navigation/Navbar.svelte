@@ -58,7 +58,7 @@
 		: 'top-0 left-0 fixed'} {notAtTheVeryTop &&
 	$navbarStickyType === 'auto' &&
 	scrollDirection === 'down'
-		? '-translate-y-full'
+		? '-translate-y-[calc(100%+2px)]'
 		: ''}"
 >
 	{#if mounted && ($lastClosedNotification === null || $lastClosedNotification !== lastNotification)}

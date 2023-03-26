@@ -143,14 +143,14 @@
 		<!-- Edit bar -->
 		<div
 			class="w-full top-1 max-w-7xl px-1 transition-all sticky z-30 {$isAdminGalleryEditActive
-				? 'mt-4'
+				? 'mt-3'
 				: 'mt-0'}"
 		>
 			{#if $isAdminGalleryEditActive}
 				<BatchEditBar type="admin-gallery" />
 			{/if}
 		</div>
-		<div class="w-full flex-1 flex flex-col mt-3">
+		<div class="w-full flex-1 flex flex-col mt-2">
 			{#if allUserGenerationFullOutputsQuery === undefined || $allUserGenerationFullOutputsQuery === undefined || $allUserGenerationFullOutputsQuery.isInitialLoading}
 				<div
 					class="w-full flex flex-col text-c-on-bg/60 flex-1 py-6 px-4 justify-center items-center text-center"

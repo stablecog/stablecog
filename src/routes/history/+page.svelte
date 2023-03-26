@@ -168,16 +168,16 @@
 
 <svelte:window on:keydown={onKeyDown} />
 
-<div class="w-full flex-1 flex flex-col items-center px-1 md:py-6 md:px-8">
+<div class="w-full flex-1 flex flex-col items-center px-1 md:py-6">
 	{#if !$page.data.session?.user.id}
-		<div class="w-full flex-1 max-w-7xl flex justify-center px-2 py-4 md:py-2">
+		<div class="w-full flex-1 max-w-7xl flex justify-center px-2 py-4 md:py-2 md:px-8">
 			<div class="my-auto flex flex-col">
 				<SignInCard redirectTo="/history" />
 				<div class="w-full h-[1vh]" />
 			</div>
 		</div>
 	{:else}
-		<div class="w-full max-w-7xl flex justify-center px-1 md:px-0.5 pt-2">
+		<div class="w-full max-w-7xl flex justify-center px-1 pt-2">
 			<div class="w-full flex flex-wrap gap-4 items-center justify-between rounded-xl">
 				<div
 					class="w-full flex flex-col md:flex-row gap-4 md:gap-5 items-start md:items-center justify-start md:justify-between"
@@ -224,7 +224,7 @@
 		</div>
 		<!-- Edit bar -->
 		<div
-			class="w-full top-1 max-w-7xl px-0.5 transition-all sticky z-30 {$isUserGalleryEditActive
+			class="w-full top-1 max-w-7xl px-1 transition-all sticky z-30 {$isUserGalleryEditActive
 				? 'mt-3'
 				: 'mt-0'}"
 		>
@@ -232,7 +232,7 @@
 				<BatchEditBar type="history" />
 			{/if}
 		</div>
-		<div class="w-full flex-1 max-w-7xl flex flex-col mt-2">
+		<div class="w-full flex-1 flex flex-col mt-2">
 			{#if userGenerationFullOutputsQuery !== undefined}
 				{#if $userGalleryCurrentView === 'favorites' && $userGenerationFullOutputsQuery?.data?.pages.length === 1 && $userGenerationFullOutputsQuery.data.pages[0].outputs.length === 0}
 					<div class="w-full flex-1 flex flex-col items-center py-8 px-5">
