@@ -113,10 +113,9 @@
 	}
 
 	function onKeyDown({ key }: KeyboardEvent) {
-		if ($activeGeneration !== undefined) {
-			if (key === 'Escape') {
-				activeGeneration.set(undefined);
-			}
+		if ($activeGeneration === undefined) return;
+		if (key === 'Escape') {
+			activeGeneration.set(undefined);
 		}
 	}
 

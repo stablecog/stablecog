@@ -17,7 +17,6 @@ export const navbarRouteDefinitions = derived(
 	[isAdminGalleryEditActive, isUserGalleryEditActive, windowWidth],
 	([$isAdminGalleryEditActive, $isUserGalleryEditActive, $windowWidth]) => {
 		const routeDefinitions: TNavbarRouteDefinition[] = [
-			{ pathname: '/admin/gallery', stickyType: $isAdminGalleryEditActive ? 'not-sticky' : 'auto' },
 			{
 				pathname: '/history',
 				stickyType: $isUserGalleryEditActive
@@ -27,6 +26,22 @@ export const navbarRouteDefinitions = derived(
 					: 'sticky'
 			},
 			{ pathname: '/gallery', stickyType: $windowWidth < mdBreakpoint ? 'auto' : 'sticky' },
+			{
+				pathname: '/admin/gallery',
+				stickyType: $isAdminGalleryEditActive
+					? 'not-sticky'
+					: $windowWidth < mdBreakpoint
+					? 'auto'
+					: 'sticky'
+			},
+			{
+				pathname: '/admin/users',
+				stickyType: $isAdminGalleryEditActive
+					? 'not-sticky'
+					: $windowWidth < mdBreakpoint
+					? 'auto'
+					: 'sticky'
+			},
 			{ pathname: '/', stickyType: $windowWidth < mdBreakpoint ? 'auto' : 'sticky' }
 		];
 		return routeDefinitions;
