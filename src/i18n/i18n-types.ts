@@ -224,6 +224,10 @@ type RootTranslation = {
 		UpscalesTitle: string
 		GenerationTooltip: {
 			/**
+			 * A​s​p​e​c​t​ ​R​a​t​i​o
+			 */
+			AspectRatioTitle: string
+			/**
 			 * C​o​u​n​t​r​y
 			 */
 			CountryTitle: string
@@ -1948,6 +1952,10 @@ export type TranslationFunctions = {
 		 */
 		UpscalesTitle: () => LocalizedString
 		GenerationTooltip: {
+			/**
+			 * Aspect Ratio
+			 */
+			AspectRatioTitle: () => LocalizedString
 			/**
 			 * Country
 			 */

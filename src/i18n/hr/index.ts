@@ -79,6 +79,7 @@ const hr: Translation = {
 		TotalDurationTitle: 'Ukupno trajanje',
 		UpscalesTitle: 'Uvećavanja',
 		GenerationTooltip: {
+			AspectRatioTitle: 'Aspect Ratio',
 			CountryTitle: 'Država',
 			Type: {
 				Title: 'Tip',

@@ -80,6 +80,7 @@ const en: BaseTranslation = {
 		TotalDurationTitle: 'Total Duration',
 		UpscalesTitle: 'Upscales',
 		GenerationTooltip: {
+			AspectRatioTitle: 'Aspect Ratio',
 			CountryTitle: 'Country',
 			Type: {
 				Title: 'Type',

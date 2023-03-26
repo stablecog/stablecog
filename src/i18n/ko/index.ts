@@ -80,6 +80,7 @@ const ko: Translation = {
 		TotalDurationTitle: '총 생성 시간',
 		UpscalesTitle: '화질 개선 횟수',
 		GenerationTooltip: {
+			AspectRatioTitle: 'Aspect Ratio',
 			CountryTitle: '국가',
 			Type: {
 				Title: '타입',

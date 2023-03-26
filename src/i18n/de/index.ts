@@ -79,6 +79,7 @@ const de: Translation = {
 		TotalDurationTitle: 'Gesamtlaufzeit',
 		UpscalesTitle: 'Hochskalierungen',
 		GenerationTooltip: {
+			AspectRatioTitle: 'Aspect Ratio',
 			CountryTitle: 'Land',
 			Type: {
 				Title: 'Typ',

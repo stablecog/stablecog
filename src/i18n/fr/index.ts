@@ -80,6 +80,7 @@ const fr: Translation = {
 		TotalDurationTitle: 'Durée totale',
 		UpscalesTitle: 'Images upscalées',
 		GenerationTooltip: {
+			AspectRatioTitle: 'Aspect Ratio',
 			CountryTitle: 'Pays',
 			Type: {
 				Title: 'Type',

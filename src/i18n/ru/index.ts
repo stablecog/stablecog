@@ -80,6 +80,7 @@ const ru: Translation = {
 		TotalDurationTitle: 'Общая длительность',
 		UpscalesTitle: 'Масштабирования',
 		GenerationTooltip: {
+			AspectRatioTitle: 'Aspect Ratio',
 			CountryTitle: 'Страна',
 			Type: {
 				Title: 'Тип',

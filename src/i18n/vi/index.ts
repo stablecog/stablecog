@@ -80,6 +80,7 @@ const vi: Translation = {
 		TotalDurationTitle: 'Tổng thời gian',
 		UpscalesTitle: 'Số lệnh phóng to',
 		GenerationTooltip: {
+			AspectRatioTitle: 'Aspect Ratio',
 			CountryTitle: 'Quốc gia',
 			Type: {
 				Title: 'Kiểu',

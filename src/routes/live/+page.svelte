@@ -13,6 +13,7 @@
 	import LL, { locale } from '$i18n/i18n-svelte';
 	import { browser } from '$app/environment';
 	import { getTitleFromProductId } from '$ts/helpers/stripe/plan';
+	import { getAspectRatioFromWidthAndHeight } from '$ts/constants/generationSize';
 
 	let sse: EventSource | undefined = undefined;
 	$: if (browser && (!sse || sse.readyState === sse.CLOSED)) {
@@ -23,18 +24,18 @@
 		sse.onmessage = (event) => {
 			const data = JSON.parse(event.data);
 			if (data.process_type === 'generate') {
-				const generation = data as TGenerationRealtimePayloadExt;
+				const generation = data as TBaseRealtimePayload;
 				// check if generation is already in the array
 				const generationAlreadyInArray = generations.find((g) => g.id === generation.id);
 				if (!generationAlreadyInArray) {
-					generations = [data, ...generations];
+					generations = [withAspectRatio(generation), ...generations];
 				} else {
 					// update the generation in the array
 					generations = generations.map((g) => {
 						if (g.id === generation.id) {
-							return generation;
+							return withAspectRatio(generation);
 						} else {
-							return g;
+							return withAspectRatio(g);
 						}
 					});
 					if (generation.status === 'succeeded' && generation.actual_num_outputs) {
@@ -51,14 +52,14 @@
 				// check if upscale is already in the array
 				const upscaleAlreadyInArray = upscales.find((u) => u.id === upscale.id);
 				if (!upscaleAlreadyInArray) {
-					upscales = [data, ...upscales];
+					upscales = [withAspectRatio(upscale), ...upscales];
 				} else {
 					// update the upscale in the array
 					upscales = upscales.map((u) => {
 						if (u.id === upscale.id) {
-							return upscale;
+							return withAspectRatio(upscale);
 						} else {
-							return u;
+							return withAspectRatio(u);
 						}
 					});
 					if (upscale.status === 'succeeded' && upscale.actual_num_outputs) {
@@ -113,8 +114,12 @@
 		actual_num_outputs?: number;
 		product_id?: string;
 	}
-	interface TGenerationRealtimePayloadExt extends TBaseRealtimePayload {}
-	interface TUpscaleRealtimePayloadExt extends TBaseRealtimePayload {}
+	interface TGenerationRealtimePayloadExt extends TBaseRealtimePayload {
+		aspect_ratio?: string;
+	}
+	interface TUpscaleRealtimePayloadExt extends TBaseRealtimePayload {
+		aspect_ratio?: string;
+	}
 
 	const calculateAnimationDuration = (curr: number, next: number) => {
 		return Math.min((next - curr) * msForEachDifference, maxDuration);
@@ -160,6 +165,14 @@
 			return [];
 		}
 		return [];
+	}
+
+	function withAspectRatio(payload: TBaseRealtimePayload) {
+		const aspect_ratio = getAspectRatioFromWidthAndHeight(payload.width, payload.height);
+		return {
+			...payload,
+			aspect_ratio: aspect_ratio ?? undefined
+		} as TGenerationRealtimePayloadExt | TUpscaleRealtimePayloadExt;
 	}
 
 	let getAndSetTotalsInterval: NodeJS.Timeout;
@@ -323,10 +336,15 @@
 													? [
 															{
 																key: $LL.Live.GenerationTooltip.DimensionsTitle() + ':',
-																value:
-																	generationOrUpscale.width && generationOrUpscale.height
-																		? `${generationOrUpscale.width} × ${generationOrUpscale.height}`
-																		: $LL.Live.GenerationTooltip.UnknownTitle()
+																value: `${generationOrUpscale.width} × ${generationOrUpscale.height}`
+															}
+													  ]
+													: []),
+												...(generationOrUpscale.aspect_ratio
+													? [
+															{
+																key: $LL.Live.GenerationTooltip.AspectRatioTitle() + ':',
+																value: generationOrUpscale.aspect_ratio
 															}
 													  ]
 													: []),

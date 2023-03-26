@@ -80,6 +80,7 @@ const ja: Translation = {
 		TotalDurationTitle: '合計所用時間',
 		UpscalesTitle: 'アップスケール数',
 		GenerationTooltip: {
+			AspectRatioTitle: 'Aspect Ratio',
 			CountryTitle: '国',
 			Type: {
 				Title: '種類',

@@ -79,6 +79,7 @@ const hi: Translation = {
 		TotalDurationTitle: 'कुल अवधि',
 		UpscalesTitle: 'निखार',
 		GenerationTooltip: {
+			AspectRatioTitle: 'Aspect Ratio',
 			CountryTitle: 'देश',
 			Type: {
 				Title: 'प्रकार',

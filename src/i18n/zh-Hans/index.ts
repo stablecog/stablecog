@@ -77,6 +77,7 @@ const zhHans: Translation = {
 		TotalDurationTitle: '总时长',
 		UpscalesTitle: '图像被分辨率提高的总次数',
 		GenerationTooltip: {
+			AspectRatioTitle: 'Aspect Ratio',
 			CountryTitle: '国家/地区',
 			Type: {
 				Title: '类型',

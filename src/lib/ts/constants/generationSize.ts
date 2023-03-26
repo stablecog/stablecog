@@ -92,13 +92,23 @@ export const aspectRatioToImageSize: {
 };
 
 export function getAspectRatioFromWidthAndHeight(
-	width: TAvailableWidth | null,
-	height: TAvailableHeight | null
+	width: string | number | null | undefined,
+	height: string | number | null | undefined
 ) {
 	if (!width || !height) {
 		return null;
 	}
-	const [widthNumber, heightNumber] = [parseInt(width), parseInt(height)];
+	let widthNumber, heightNumber: number;
+	if (typeof width === 'string') {
+		widthNumber = parseInt(width);
+	} else {
+		widthNumber = width;
+	}
+	if (typeof height === 'string') {
+		heightNumber = parseInt(height);
+	} else {
+		heightNumber = height;
+	}
 	const ratio = widthNumber / heightNumber;
 	const pow = Math.pow(10, 4);
 	const resIndex = availableAspectRatioValues.findIndex(

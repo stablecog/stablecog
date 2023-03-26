@@ -79,6 +79,7 @@ const ptBr: Translation = {
 		TotalDurationTitle: 'Duração Total',
 		UpscalesTitle: 'Melhorias',
 		GenerationTooltip: {
+			AspectRatioTitle: 'Aspect Ratio',
 			CountryTitle: 'País',
 			Type: {
 				Title: 'Tipo',
