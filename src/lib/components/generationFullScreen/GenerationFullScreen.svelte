@@ -61,6 +61,11 @@
 
 	$: [upscaleFromStore], onUpscaleFromStoreChanged();
 
+	function setUpscaleFromStore() {
+		upscaleFromStore = $upscales.find(
+			(upscale) => upscale.type === 'from_output' && upscale.input === generation.selected_output.id
+		);
+	}
 	function onUpscaleFromStoreChanged() {
 		if (upscaledImageUrlFromStore !== undefined && !generation.selected_output.upscaled_image_url) {
 			generation.selected_output.upscaled_image_url = upscaledImageUrlFromStore;
@@ -121,12 +126,12 @@
 		$userSummary && $userSummary.total_remaining_credits < upscaleCreditCost;
 
 	const onGenerationChanged = () => {
+		setUpscaleFromStore();
 		currentImageUrl =
 			generation.selected_output.upscaled_image_url ?? generation.selected_output.image_url;
 		if (generation.selected_output.upscaled_image_url) upscaledTabValue = 'upscaled';
 		upscaledImageWidth = undefined;
 		upscaledImageHeight = undefined;
-
 		const { seed, selected_output, ...rest } = generation;
 		generateSimilarUrl = getGenerationUrlFromParams(rest);
 		linkUrl = `${$page.url.origin}/gallery?output=${generation.id}`;
@@ -200,7 +205,10 @@
 		| 'should-complete' = 'idle';
 
 	async function onUpscaleStatusChanged() {
-		if (hadUpscaledImageUrlOnMount) return;
+		if (hadUpscaledImageUrlOnMount) {
+			upscaleAnimationStatus = 'idle';
+			return;
+		}
 		switch (upscaleStatus) {
 			case 'to-be-submitted':
 				upscaleAnimationStatus = 'idle';
@@ -228,6 +236,9 @@
 			case 'failed':
 				await tick();
 				upscaleAnimationStatus = 'should-complete';
+				break;
+			default:
+				upscaleAnimationStatus = 'idle';
 				break;
 		}
 	}

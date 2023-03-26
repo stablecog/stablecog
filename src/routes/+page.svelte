@@ -116,6 +116,19 @@
 		if ($activeGeneration === undefined) return;
 		if (key === 'Escape') {
 			activeGeneration.set(undefined);
+			return;
+		}
+		if (key === 'ArrowLeft' || key === 'ArrowRight') {
+			const outputs = $activeGeneration.outputs;
+			const index = outputs.findIndex((g) => g.id === $activeGeneration?.selected_output.id);
+			if (index === -1) return;
+			const addition = key === 'ArrowLeft' ? -1 : 1;
+			const newIndex =
+				(index + addition + $activeGeneration.outputs.length) % $activeGeneration.outputs.length;
+			activeGeneration.set({
+				...$activeGeneration,
+				selected_output: $activeGeneration.outputs[newIndex]
+			});
 		}
 	}
 
