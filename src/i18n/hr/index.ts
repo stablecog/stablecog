@@ -328,6 +328,9 @@ const hr: Translation = {
 		ServersTab: 'Serveri',
 		AdminGalleryTab: 'Galerija',
 		UsersTab: 'Korisnici',
+		Users: {
+			GiftCreditsButton: 'Gift Credits'
+		},
 		Gallery: {
 			TotalTitle: 'Ukupno',
 			ApprovedTitle: 'Odobreno',
@@ -545,6 +548,7 @@ const hr: Translation = {
 			LargeTitle: 'Large Pack'
 		},
 		Features: {
+			MonthlyCredits: '{count} credits per month.',
 			MonthlyImages: '{count} images per month.',
 			MonthlyGenerations: '{count} generations per month.',
 			Images: '{count} images.',

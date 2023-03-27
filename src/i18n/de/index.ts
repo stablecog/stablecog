@@ -328,6 +328,9 @@ const de: Translation = {
 		ServersTab: 'Server',
 		AdminGalleryTab: 'Galerie',
 		UsersTab: 'Benutzer',
+		Users: {
+			GiftCreditsButton: 'Gift Credits'
+		},
 		Gallery: {
 			TotalTitle: 'Gesamt',
 			ApprovedTitle: 'Freigegeben',
@@ -552,6 +555,7 @@ const de: Translation = {
 			LargeTitle: 'Großes Paket'
 		},
 		Features: {
+			MonthlyCredits: '{count} credits per month.',
 			MonthlyImages: '{count} Bilder pro Monat.',
 			MonthlyGenerations: '{count} Generierungen pro Monat.',
 			Images: '%{count} Bilder.',

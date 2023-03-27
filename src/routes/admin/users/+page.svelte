@@ -11,7 +11,7 @@
 	import Input from '$components/Input.svelte';
 	import IconSearch from '$components/icons/IconSearch.svelte';
 	import { browser } from '$app/environment';
-	import { createInfiniteQuery } from '@tanstack/svelte-query';
+	import { createInfiniteQuery, createQuery } from '@tanstack/svelte-query';
 	import { getAllUsers, type TAllUsersPage } from '$ts/queries/getAllUsers';
 	import ProductIdBadge from '$components/badges/ProductIdBadge.svelte';
 	import { scale } from 'svelte/transition';
@@ -28,6 +28,12 @@
 	} from '$env/static/public';
 	import TabLikeDropdown from '$components/tabBars/TabLikeDropdown.svelte';
 	import IconAnimatedSpinner from '$components/icons/IconAnimatedSpinner.svelte';
+	import { getCreditOptions } from '$ts/queries/getCreditsList';
+	import DropdownWrapper from '$components/DropdownWrapper.svelte';
+	import DropdownItem from '$components/DropdownItem.svelte';
+	import { clickoutside } from '$ts/actions/clickoutside';
+	import ScrollAreaWithChevron from '$components/ScrollAreaWithChevron.svelte';
+	import { giftCreditsToUser } from '$ts/queries/giftCreditsToUser';
 
 	let searchString: string;
 	let searchStringDebounced: string | undefined = undefined;
@@ -94,6 +100,33 @@
 		  })
 		: undefined;
 
+	type TDropdownState = 'main' | 'gift-credits';
+	let isDropdownOpen: undefined | { [id: string]: { isOpen: boolean; state: TDropdownState } };
+	$: $allUsersQuery, onAllUsersQueryChanged();
+
+	function onAllUsersQueryChanged() {
+		$allUsersQuery?.data?.pages
+			.flatMap((page) => page.users)
+			.forEach((user) => {
+				if (!isDropdownOpen) isDropdownOpen = {};
+				isDropdownOpen[user.id] = { isOpen: false, state: 'main' };
+				console.log(isDropdownOpen);
+			});
+		isDropdownOpen = { ...isDropdownOpen };
+	}
+
+	$: creditOptions = browser
+		? createQuery({
+				queryKey: ['admin_credit_options'],
+				queryFn: async () => {
+					const res = await getCreditOptions({
+						access_token: $page.data.session?.access_token
+					});
+					return res;
+				}
+		  })
+		: undefined;
+
 	async function setDebouncedSearch(searchString: string | undefined) {
 		if (!browser) return;
 		clearTimeout(searchTimeout);
@@ -110,8 +143,6 @@
 			}
 		}, searchDebounceMs);
 	}
-
-	onMount(async () => {});
 
 	const atTheTopThreshold = 80;
 	const minScrollThreshold = 40;
@@ -133,6 +164,34 @@
 			canAutoFetch = true;
 		}, 1000);
 	};
+
+	function toggleUserDropdown(id: string, shouldOpen?: boolean) {
+		if (!isDropdownOpen) return;
+		const newIsOpen = shouldOpen !== undefined ? shouldOpen : !isDropdownOpen[id].isOpen;
+		for (const key in isDropdownOpen) {
+			isDropdownOpen[key] = { isOpen: false, state: 'main' };
+		}
+		isDropdownOpen[id] = {
+			isOpen: newIsOpen,
+			state: 'main'
+		};
+	}
+
+	function changeUserDropdownState(id: string, state: TDropdownState) {
+		if (!isDropdownOpen) return;
+		isDropdownOpen[id] = { isOpen: true, state };
+	}
+
+	async function giftCredits(user_id: string, credit_type_id: string) {
+		toggleUserDropdown(user_id, false);
+		const res = await giftCreditsToUser({
+			access_token: $page.data.session?.access_token,
+			user_id,
+			credit_type_id
+		});
+		if (!res.added) return;
+		$allUsersQuery?.refetch();
+	}
 </script>
 
 <MetaTag
@@ -163,11 +222,11 @@
 <PageWrapper noPadding>
 	<div class="w-full flex justify-center py-2.5">
 		<div
-			class="w-[calc(100%+1.75rem)] max-w-2xl -mx-3.5 flex flex-col bg-c-bg ring-2 ring-c-bg-secondary rounded-2xl shadow-lg 
+			class="w-[calc(100%+1.75rem)] max-w-3xl -mx-3.5 flex flex-col bg-c-bg ring-2 ring-c-bg-secondary rounded-2xl shadow-lg 
 			shadow-c-shadow/[var(--o-shadow-normal)]"
 		>
 			<div class="flex flex-wrap gap-3 md:gap-8 p-3">
-				{#each totalCounts ?? Array(3)
+				{#each totalCounts ?? Array(4)
 						.fill(1)
 						.map((i) => ({ product_id: '----', count: '----' })) as item}
 					<div class="flex gap-3 items-center">
@@ -265,18 +324,77 @@
 			{:else}
 				{#each $allUsersQuery.data.pages as allUsersQueryPage}
 					{#each allUsersQueryPage.users as user (user.id)}
+						{@const isUserDropdownOpen = isDropdownOpen?.[user.id].isOpen}
+						{@const userDropdownState = isDropdownOpen?.[user.id].state || 'main'}
 						<div
 							class="w-full max-w-2xl flex flex-col 
 							bg-c-bg-secondary rounded-xl shadow-lg shadow-c-shadow/[var(--o-shadow-normal)] p-3 md:p-4"
 						>
 							<div class="w-full flex flex-row items-center justify-between gap-5">
-								<div class="flex flex-col justify-center flex-shrink min-w-0 overflow-hidden">
-									<p
-										class="max-w-full overflow-hidden overflow-ellipsis whitespace-nowrap 
-										text-sm font-semibold px-1.5 -mt-0.5"
-									>
-										{user.email}
-									</p>
+								<div class="flex flex-col items-start justify-center flex-shrink min-w-0">
+									<div class="flex flex-col">
+										<button
+											class="flex flex-col items-start justify-start transition rounded {!$isTouchscreen
+												? 'hover:bg-c-primary/15 hover:text-c-primary'
+												: ''}"
+											on:click={() => toggleUserDropdown(user.id)}
+										>
+											<p
+												class="max-w-full overflow-hidden overflow-ellipsis whitespace-nowrap 
+												text-sm font-semibold px-1.5 py-0.5 -mt-0.5"
+											>
+												{user.email}
+											</p>
+										</button>
+										<div class="relative">
+											{#if isUserDropdownOpen}
+												<DropdownWrapper alignment="left-0 top-0" class="w-52 mt-1.5">
+													<ScrollAreaWithChevron
+														class="w-full flex flex-col justify-start max-h-[min(50vh,20rem)] relative"
+													>
+														<div class="w-full bg-c-bg-secondary flex flex-col justify-start">
+															{#if userDropdownState === 'gift-credits' && $creditOptions && $creditOptions.data && $creditOptions.data.length > 0}
+																{#each $creditOptions.data.sort((a, b) => b.amount - a.amount) as creditOption}
+																	<DropdownItem
+																		onClick={() => giftCredits(user.id, creditOption.id)}
+																	>
+																		<div class="w-full flex justify-between">
+																			<p
+																				class="text-c-on-bg transition text-sm text-left font-medium text-c-on-bg/75 {!$isTouchscreen
+																					? 'group-hover:text-c-primary'
+																					: ''}"
+																			>
+																				{creditOption.name}
+																			</p>
+																			<p
+																				class="text-c-on-bg transition text-sm text-left font-bold {!$isTouchscreen
+																					? 'group-hover:text-c-primary'
+																					: ''}"
+																			>
+																				{creditOption.amount.toLocaleString($locale)}
+																			</p>
+																		</div>
+																	</DropdownItem>
+																{/each}
+															{:else}
+																<DropdownItem
+																	onClick={() => changeUserDropdownState(user.id, 'gift-credits')}
+																>
+																	<p
+																		class="text-c-on-bg transition {!$isTouchscreen
+																			? 'group-hover:text-c-primary'
+																			: ''}"
+																	>
+																		Gift Credits
+																	</p>
+																</DropdownItem>
+															{/if}
+														</div>
+													</ScrollAreaWithChevron>
+												</DropdownWrapper>
+											{/if}
+										</div>
+									</div>
 									<p
 										class="max-w-full text-xxs text-c-on-bg/50 bg-c-on-bg/5 rounded-md px-2 py-1 mt-2 break-all"
 									>

@@ -330,6 +330,9 @@ const vi: Translation = {
 		ServersTab: 'Máy chủ',
 		AdminGalleryTab: 'Thư viện',
 		UsersTab: 'Người dùng',
+		Users: {
+			GiftCreditsButton: 'Gift Credits'
+		},
 		Gallery: {
 			TotalTitle: 'Tổng',
 			ApprovedTitle: 'Đã duyệt',
@@ -551,6 +554,7 @@ const vi: Translation = {
 			LargeTitle: 'Large Pack'
 		},
 		Features: {
+			MonthlyCredits: '{count} credits per month.',
 			MonthlyImages: '{count} images per month.',
 			MonthlyGenerations: '{count} generations per month.',
 			Images: '{count} images.',

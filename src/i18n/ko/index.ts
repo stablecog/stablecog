@@ -329,6 +329,9 @@ const ko: Translation = {
 		ServersTab: '서버',
 		AdminGalleryTab: '갤러리',
 		UsersTab: '사용자',
+		Users: {
+			GiftCreditsButton: 'Gift Credits'
+		},
 		Gallery: {
 			TotalTitle: '전체',
 			ApprovedTitle: '승인됨',
@@ -548,6 +551,7 @@ const ko: Translation = {
 			LargeTitle: 'Large Pack'
 		},
 		Features: {
+			MonthlyCredits: '{count} credits per month.',
 			MonthlyImages: '{count} images per month.',
 			MonthlyGenerations: '{count} generations per month.',
 			Images: '{count} images.',

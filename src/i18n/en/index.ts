@@ -329,6 +329,9 @@ const en: BaseTranslation = {
 		ServersTab: 'Servers',
 		AdminGalleryTab: 'Gallery',
 		UsersTab: 'Users',
+		Users: {
+			GiftCreditsButton: 'Gift Credits'
+		},
 		Gallery: {
 			TotalTitle: 'Total',
 			ApprovedTitle: 'Approved',
@@ -548,6 +551,7 @@ const en: BaseTranslation = {
 			LargeTitle: 'Large Pack'
 		},
 		Features: {
+			MonthlyCredits: '{count} credits per month.',
 			MonthlyImages: '{count} images per month.',
 			MonthlyGenerations: '{count} generations per month.',
 			Images: '{count} images.',

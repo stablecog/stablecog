@@ -979,6 +979,12 @@ type RootTranslation = {
 		 * U​s​e​r​s
 		 */
 		UsersTab: string
+		Users: {
+			/**
+			 * G​i​f​t​ ​C​r​e​d​i​t​s
+			 */
+			GiftCreditsButton: string
+		}
 		Gallery: {
 			/**
 			 * T​o​t​a​l
@@ -1621,6 +1627,11 @@ type RootTranslation = {
 			LargeTitle: string
 		}
 		Features: {
+			/**
+			 * {​c​o​u​n​t​}​ ​c​r​e​d​i​t​s​ ​p​e​r​ ​m​o​n​t​h​.
+			 * @param {unknown} count
+			 */
+			MonthlyCredits: RequiredParams<'count'>
 			/**
 			 * {​c​o​u​n​t​}​ ​i​m​a​g​e​s​ ​p​e​r​ ​m​o​n​t​h​.
 			 * @param {unknown} count
@@ -2689,6 +2700,12 @@ export type TranslationFunctions = {
 		 * Users
 		 */
 		UsersTab: () => LocalizedString
+		Users: {
+			/**
+			 * Gift Credits
+			 */
+			GiftCreditsButton: () => LocalizedString
+		}
 		Gallery: {
 			/**
 			 * Total
@@ -3328,6 +3345,10 @@ export type TranslationFunctions = {
 			LargeTitle: () => LocalizedString
 		}
 		Features: {
+			/**
+			 * {count} credits per month.
+			 */
+			MonthlyCredits: (arg: { count: unknown }) => LocalizedString
 			/**
 			 * {count} images per month.
 			 */

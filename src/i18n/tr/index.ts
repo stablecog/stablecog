@@ -329,6 +329,9 @@ const tr: Translation = {
 		ServersTab: 'Sunucular',
 		AdminGalleryTab: 'Galeri',
 		UsersTab: 'Kullanıcılar',
+		Users: {
+			GiftCreditsButton: 'Gift Credits'
+		},
 		Gallery: {
 			TotalTitle: 'Toplam',
 			ApprovedTitle: 'Onaylanan',
@@ -547,6 +550,7 @@ const tr: Translation = {
 			LargeTitle: 'Büyük Paket'
 		},
 		Features: {
+			MonthlyCredits: '{count} credits per month.',
 			MonthlyImages: 'Ayda {count} fotoğraf.',
 			MonthlyGenerations: 'Ayda {count} üretim.',
 			Images: '{count} fotoğraf.',

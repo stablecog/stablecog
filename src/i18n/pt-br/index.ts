@@ -329,6 +329,9 @@ const ptBr: Translation = {
 		ServersTab: 'Servidores',
 		AdminGalleryTab: 'Galeria',
 		UsersTab: 'Usuários',
+		Users: {
+			GiftCreditsButton: 'Gift Credits'
+		},
 		Gallery: {
 			TotalTitle: 'Total',
 			ApprovedTitle: 'Aprovadas',
@@ -552,6 +555,7 @@ const ptBr: Translation = {
 			LargeTitle: 'Large Pack'
 		},
 		Features: {
+			MonthlyCredits: '{count} credits per month.',
 			MonthlyImages: '{count} images per month.',
 			MonthlyGenerations: '{count} generations per month.',
 			Images: '{count} images.',

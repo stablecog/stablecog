@@ -325,6 +325,9 @@ const zhHans: Translation = {
 		ServersTab: 'Servers',
 		AdminGalleryTab: 'Gallery',
 		UsersTab: 'Users',
+		Users: {
+			GiftCreditsButton: 'Gift Credits'
+		},
 		Gallery: {
 			TotalTitle: 'Total',
 			ApprovedTitle: 'Approved',
@@ -544,6 +547,7 @@ const zhHans: Translation = {
 			LargeTitle: 'Large Pack'
 		},
 		Features: {
+			MonthlyCredits: '{count} credits per month.',
 			MonthlyImages: '{count} images per month.',
 			MonthlyGenerations: '{count} generations per month.',
 			Images: '{count} images.',

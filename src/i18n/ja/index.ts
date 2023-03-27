@@ -330,6 +330,9 @@ const ja: Translation = {
 		ServersTab: 'サーバ',
 		AdminGalleryTab: 'ギャラリー',
 		UsersTab: 'ユーザー',
+		Users: {
+			GiftCreditsButton: 'Gift Credits'
+		},
 		Gallery: {
 			TotalTitle: '合計',
 			ApprovedTitle: '承認済',
@@ -550,6 +553,7 @@ const ja: Translation = {
 			LargeTitle: 'Large Pack'
 		},
 		Features: {
+			MonthlyCredits: '{count} credits per month.',
 			MonthlyImages: '{count} images per month.',
 			MonthlyGenerations: '{count} generations per month.',
 			Images: '{count} images.',

@@ -101,7 +101,7 @@
 										: ''} {isExtraAccountSettingsOpen ? 'rotate-90 text-c-primary' : 'rotate-0'}"
 								/>
 							</IconButton>
-							<div class="relative bg-c-primary">
+							<div class="relative">
 								{#if isExtraAccountSettingsOpen}
 									<DropdownWrapper class="w-52 mt-1.5">
 										<div class="flex flex-col items-end">
