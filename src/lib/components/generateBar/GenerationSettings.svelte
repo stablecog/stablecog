@@ -105,7 +105,7 @@
 	};
 </script>
 
-<div class="w-full flex flex-wrap items-start justify-center px-2px py-2 md:py-4 gap-4">
+<div class="w-full flex flex-wrap items-start justify-center px-2px py-2 md:py-4 gap-3 md:gap-4">
 	{#if $advancedModeApp}
 		<TabLikeInput
 			disabled={!isCheckComplete || disabled}

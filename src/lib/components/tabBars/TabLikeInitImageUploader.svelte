@@ -110,7 +110,7 @@
 						on:click|stopPropagation={openImageModal}
 						on:keydown={() => null}
 						style="background-image: url({$generationInitImageSrc});"
-						class="ml-px w-10.5 h-10.5 bg-cover bg-center rounded transition ring-2 ring-c-bg-secondary 
+						class="bg-c-bg-secondary ml-px w-10.5 h-10.5 bg-cover bg-center rounded transition ring-2 ring-c-bg-secondary 
 						shadow-md shadow-c-shadow/[var(--o-shadow-strongest)] hover:cursor-pointer {!$isTouchscreen
 							? 'hover:ring-c-primary/75'
 							: ''}"
@@ -237,7 +237,7 @@
 						<img
 							width={$generationInitImageWidth}
 							height={$generationInitImageHeight}
-							class="w-full h-auto ring-4 ring-c-bg-secondary rounded-xl shadow-2xl shadow-c-shadow/[var(--o-shadow-stronger)]"
+							class="w-full h-auto bg-c-bg-secondary ring-4 ring-c-bg-secondary rounded-xl shadow-2xl shadow-c-shadow/[var(--o-shadow-stronger)]"
 							src={$generationInitImageSrc}
 							alt="Init"
 						/>
