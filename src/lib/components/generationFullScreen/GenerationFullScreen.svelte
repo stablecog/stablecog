@@ -306,13 +306,15 @@
 	<Container {generation} let:imageContainerWidth let:imageContainerHeight let:modalMinHeight>
 		<div class="relative self-stretch flex items-center">
 			{#if generation.selected_output.image_url}
-				<img
-					class="w-full h-full absolute left-0 top-0 transform scale-125 blur-xl"
-					src={generation.selected_output.image_url}
-					alt="Blurred background for: {generation.prompt.text}"
-					width={generation.width}
-					height={generation.height}
-				/>
+				{#key generation.selected_output.id}
+					<img
+						class="w-full h-full absolute left-0 top-0 transform scale-125 blur-xl"
+						src={generation.selected_output.image_url}
+						alt="Blurred background for: {generation.prompt.text}"
+						width={generation.width}
+						height={generation.height}
+					/>
+				{/key}
 			{/if}
 			<div class="w-full h-full absolute left-0 top-0 bg-c-bg/50" />
 			<div
@@ -336,31 +338,33 @@
 						<IconNoImage class="w-16 h-16 text-c-on-bg/40" />
 					</div>
 				{:else}
-					<img
-						style="transition: filter 0.5s cubic-bezier(0.4, 0, 0.2, 1);"
-						class="{upscaleBeingProcessed
-							? 'blur-2xl'
-							: ''} w-full transition h-auto lg:h-full lg:object-contain absolute lg:left-0 lg:top-0"
-						src={generation.selected_output.image_url}
-						alt="Blurred background 2 for: {generation.prompt.text}"
-						width={generation.width}
-						height={generation.height}
-					/>
-					<img
-						on:load={onImageLoad}
-						style="transition: filter 0.5s cubic-bezier(0.4, 0, 0.2, 1);"
-						class="{upscaleBeingProcessed
-							? 'blur-2xl'
-							: ''} filter w-full relative transition h-auto lg:h-full lg:object-contain lg:absolute lg:left-0 lg:top-0"
-						src={currentImageUrl}
-						alt={generation.prompt.text}
-						width={upscaledTabValue === 'upscaled' && upscaledImageWidth
-							? upscaledImageWidth
-							: generation.width}
-						height={upscaledTabValue === 'upscaled' && upscaledImageHeight
-							? upscaledImageHeight
-							: generation.height}
-					/>
+					{#key generation.selected_output.id}
+						<img
+							style="transition: filter 0.5s cubic-bezier(0.4, 0, 0.2, 1);"
+							class="{upscaleBeingProcessed
+								? 'blur-2xl'
+								: ''} w-full transition h-auto lg:h-full lg:object-contain absolute lg:left-0 lg:top-0"
+							src={generation.selected_output.image_url}
+							alt="Blurred background 2 for: {generation.prompt.text}"
+							width={generation.width}
+							height={generation.height}
+						/>
+						<img
+							on:load={onImageLoad}
+							style="transition: filter 0.5s cubic-bezier(0.4, 0, 0.2, 1);"
+							class="{upscaleBeingProcessed
+								? 'blur-2xl'
+								: ''} filter w-full relative transition h-auto lg:h-full lg:object-contain lg:absolute lg:left-0 lg:top-0"
+							src={currentImageUrl}
+							alt={generation.prompt.text}
+							width={upscaledTabValue === 'upscaled' && upscaledImageWidth
+								? upscaledImageWidth
+								: generation.width}
+							height={upscaledTabValue === 'upscaled' && upscaledImageHeight
+								? upscaledImageHeight
+								: generation.height}
+						/>
+					{/key}
 					{#if $upscales && $upscales.length > 0 && upscaleFromStore?.status === 'failed'}
 						<div
 							transition:fly|local={{ duration: 200, easing: quadOut, y: -50 }}
