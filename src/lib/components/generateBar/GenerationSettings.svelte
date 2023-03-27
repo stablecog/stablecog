@@ -133,7 +133,7 @@
 		tabs={aspectRatioTabs}
 		outline="bg-secondary"
 		bind:value={$generationAspectRatio}
-		name="Width"
+		name="Aspect Ratio"
 		hideSelected={!isCheckComplete}
 	>
 		<div
