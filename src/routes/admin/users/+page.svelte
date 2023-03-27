@@ -101,16 +101,22 @@
 		: undefined;
 
 	type TDropdownState = 'main' | 'gift-credits';
-	let isDropdownOpen: undefined | { [id: string]: { isOpen: boolean; state: TDropdownState } };
+	let isDropdownOpen: {
+		[id: string]: { isOpen: boolean; state: TDropdownState; buttonElement?: HTMLElement };
+	} = {};
 	$: $allUsersQuery, onAllUsersQueryChanged();
 
 	function onAllUsersQueryChanged() {
+		if (!browser) return;
 		$allUsersQuery?.data?.pages
 			.flatMap((page) => page.users)
 			.forEach((user) => {
 				if (!isDropdownOpen) isDropdownOpen = {};
-				isDropdownOpen[user.id] = { isOpen: false, state: 'main' };
-				console.log(isDropdownOpen);
+				isDropdownOpen[user.id] = {
+					isOpen: false,
+					state: 'main',
+					buttonElement: undefined
+				};
 			});
 		isDropdownOpen = { ...isDropdownOpen };
 	}
@@ -169,9 +175,10 @@
 		if (!isDropdownOpen) return;
 		const newIsOpen = shouldOpen !== undefined ? shouldOpen : !isDropdownOpen[id].isOpen;
 		for (const key in isDropdownOpen) {
-			isDropdownOpen[key] = { isOpen: false, state: 'main' };
+			isDropdownOpen[key] = { ...isDropdownOpen[key], isOpen: false, state: 'main' };
 		}
 		isDropdownOpen[id] = {
+			...isDropdownOpen[id],
 			isOpen: newIsOpen,
 			state: 'main'
 		};
@@ -179,7 +186,7 @@
 
 	function changeUserDropdownState(id: string, state: TDropdownState) {
 		if (!isDropdownOpen) return;
-		isDropdownOpen[id] = { isOpen: true, state };
+		isDropdownOpen[id] = { ...isDropdownOpen[id], isOpen: true, state };
 	}
 
 	async function giftCredits(user_id: string, credit_type_id: string) {
@@ -334,6 +341,7 @@
 								<div class="flex flex-col items-start justify-center flex-shrink min-w-0">
 									<div class="flex flex-col">
 										<button
+											bind:this={isDropdownOpen[user.id].buttonElement}
 											class="flex flex-col items-start justify-start transition rounded {!$isTouchscreen
 												? 'hover:bg-c-primary/15 hover:text-c-primary'
 												: ''}"
@@ -348,35 +356,45 @@
 										</button>
 										<div class="relative">
 											{#if isUserDropdownOpen}
-												<DropdownWrapper alignment="left-0 top-0" class="w-52 mt-1.5">
-													<ScrollAreaWithChevron
-														class="w-full flex flex-col justify-start max-h-[min(50vh,20rem)] relative"
-													>
-														<div class="w-full bg-c-bg-secondary flex flex-col justify-start">
-															{#if userDropdownState === 'gift-credits' && $creditOptions && $creditOptions.data && $creditOptions.data.length > 0}
-																{#each $creditOptions.data.sort((a, b) => b.amount - a.amount) as creditOption}
-																	<DropdownItem
-																		onClick={() => giftCredits(user.id, creditOption.id)}
-																	>
-																		<div class="w-full flex justify-between">
-																			<p
-																				class="text-c-on-bg transition text-sm text-left font-medium text-c-on-bg/75 {!$isTouchscreen
-																					? 'group-hover:text-c-primary'
-																					: ''}"
-																			>
-																				{creditOption.name}
-																			</p>
-																			<p
-																				class="text-c-on-bg transition text-sm text-left font-bold {!$isTouchscreen
-																					? 'group-hover:text-c-primary'
-																					: ''}"
-																			>
-																				{creditOption.amount.toLocaleString($locale)}
-																			</p>
-																		</div>
-																	</DropdownItem>
-																{/each}
-															{:else}
+												<div
+													use:clickoutside={{
+														callback: () => toggleUserDropdown(user.id, false),
+														exclude: isDropdownOpen[user.id].buttonElement
+													}}
+													class="relative"
+												>
+													<DropdownWrapper alignment="left-0 top-0" class="w-52 mt-1.5">
+														{#if userDropdownState === 'gift-credits' && $creditOptions && $creditOptions.data && $creditOptions.data.length > 0}
+															<ScrollAreaWithChevron
+																class="w-full flex flex-col justify-start max-h-[min(50vh,20rem)] relative"
+															>
+																<div class="w-full bg-c-bg-secondary flex flex-col justify-start">
+																	{#each $creditOptions.data.sort((a, b) => b.amount - a.amount) as creditOption}
+																		<DropdownItem
+																			onClick={() => giftCredits(user.id, creditOption.id)}
+																		>
+																			<div class="w-full flex justify-between">
+																				<p
+																					class="text-c-on-bg transition text-sm text-left font-medium text-c-on-bg/75 {!$isTouchscreen
+																						? 'group-hover:text-c-primary'
+																						: ''}"
+																				>
+																					{creditOption.name}
+																				</p>
+																				<p
+																					class="text-c-on-bg transition text-sm text-left font-bold {!$isTouchscreen
+																						? 'group-hover:text-c-primary'
+																						: ''}"
+																				>
+																					{creditOption.amount.toLocaleString($locale)}
+																				</p>
+																			</div>
+																		</DropdownItem>
+																	{/each}
+																</div>
+															</ScrollAreaWithChevron>
+														{:else}
+															<div class="w-full bg-c-bg-secondary flex flex-col justify-start">
 																<DropdownItem
 																	onClick={() => changeUserDropdownState(user.id, 'gift-credits')}
 																>
@@ -385,13 +403,13 @@
 																			? 'group-hover:text-c-primary'
 																			: ''}"
 																	>
-																		Gift Credits
+																		{$LL.Admin.Users.GiftCreditsButton()}
 																	</p>
 																</DropdownItem>
-															{/if}
-														</div>
-													</ScrollAreaWithChevron>
-												</DropdownWrapper>
+															</div>
+														{/if}
+													</DropdownWrapper>
+												</div>
 											{/if}
 										</div>
 									</div>
