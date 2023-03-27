@@ -345,7 +345,7 @@
 											class="flex flex-col items-start justify-start transition rounded {!$isTouchscreen
 												? 'hover:bg-c-primary/15 hover:text-c-primary'
 												: ''}"
-											on:click={() => toggleUserDropdown(user.id)}
+											on:click|stopPropagation|capture={() => toggleUserDropdown(user.id)}
 										>
 											<p
 												class="max-w-full overflow-hidden overflow-ellipsis whitespace-nowrap 
@@ -359,7 +359,8 @@
 												<div
 													use:clickoutside={{
 														callback: () => toggleUserDropdown(user.id, false),
-														exclude: isDropdownOpen[user.id].buttonElement
+														exclude: isDropdownOpen[user.id].buttonElement,
+														capture: false
 													}}
 													class="relative"
 												>
@@ -399,7 +400,7 @@
 																	onClick={() => changeUserDropdownState(user.id, 'gift-credits')}
 																>
 																	<p
-																		class="text-c-on-bg transition {!$isTouchscreen
+																		class="text-left text-c-on-bg transition {!$isTouchscreen
 																			? 'group-hover:text-c-primary'
 																			: ''}"
 																	>
@@ -469,7 +470,7 @@
 				{#if $allUsersQuery?.hasNextPage}
 					<IntersectionObserver
 						on:intersect={autoFetchNextPage}
-						rootMargin="200%"
+						rootMargin="300%"
 						element={bottomDiv}
 					>
 						<div

@@ -1,6 +1,10 @@
 export function clickoutside(
 	node: HTMLElement,
-	{ callback, exclude }: { callback: () => void; exclude?: HTMLElement | undefined }
+	{
+		callback,
+		exclude,
+		capture = true
+	}: { callback: () => void; exclude?: HTMLElement | undefined; capture?: boolean }
 ) {
 	let startedFromOutside = false;
 	function onMouseDown(event: Event) {
@@ -21,14 +25,14 @@ export function clickoutside(
 		}
 	}
 
-	document.addEventListener('click', onClick, true);
-	document.addEventListener('mousedown', onMouseDown, true);
-	document.addEventListener('focus', onFocus, true);
+	document.addEventListener('click', onClick, capture);
+	document.addEventListener('mousedown', onMouseDown, capture);
+	document.addEventListener('focus', onFocus, capture);
 	return {
 		destroy() {
-			document.removeEventListener('click', onClick, true);
-			document.removeEventListener('mousedown', onMouseDown, true);
-			document.removeEventListener('focus', onFocus, true);
+			document.removeEventListener('click', onClick, capture);
+			document.removeEventListener('mousedown', onMouseDown, capture);
+			document.removeEventListener('focus', onFocus, capture);
 		}
 	};
 }
