@@ -374,16 +374,17 @@
 																		<DropdownItem
 																			onClick={() => giftCredits(user.id, creditOption.id)}
 																		>
-																			<div class="w-full flex justify-between">
+																			<div class="w-full flex justify-between items-center gap-5">
 																				<p
-																					class="text-c-on-bg transition text-sm text-left font-medium text-c-on-bg/75 {!$isTouchscreen
+																					class="flex-shrink min-w-0
+																					text-c-on-bg transition text-sm text-left font-medium text-c-on-bg/60 {!$isTouchscreen
 																						? 'group-hover:text-c-primary'
 																						: ''}"
 																				>
 																					{creditOption.name}
 																				</p>
 																				<p
-																					class="text-c-on-bg transition text-sm text-left font-bold {!$isTouchscreen
+																					class="text-c-on-bg transition text-sm text-right font-bold {!$isTouchscreen
 																						? 'group-hover:text-c-primary'
 																						: ''}"
 																				>
