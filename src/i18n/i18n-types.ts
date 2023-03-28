@@ -583,6 +583,10 @@ type RootTranslation = {
 		 * C​o​n​f​i​r​m
 		 */
 		ConfirmButton: string
+		/**
+		 * C​o​n​f​i​r​m​?
+		 */
+		ConfirmQuestionMarkButton: string
 		BatchEditBar: {
 			/**
 			 * P​a​u​s​e​ ​E​d​i​t​i​n​g
@@ -2318,6 +2322,10 @@ export type TranslationFunctions = {
 		 * Confirm
 		 */
 		ConfirmButton: () => LocalizedString
+		/**
+		 * Confirm?
+		 */
+		ConfirmQuestionMarkButton: () => LocalizedString
 		BatchEditBar: {
 			/**
 			 * Pause Editing

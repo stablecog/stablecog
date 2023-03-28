@@ -165,6 +165,7 @@
 			isOpen: newIsOpen,
 			state: 'main'
 		};
+		if (!newIsOpen) creditToAdd = undefined;
 	}
 
 	function changeUserDropdownState(id: string, state: TDropdownState) {
@@ -172,6 +173,7 @@
 		isDropdownOpen[id] = { ...isDropdownOpen[id], isOpen: true, state };
 	}
 
+	let creditToAdd: { user_id: string; credit_type_id: string } | undefined = undefined;
 	async function giftCredits(user_id: string, credit_type_id: string) {
 		toggleUserDropdown(user_id, false);
 		const res = await giftCreditsToUser({
@@ -180,6 +182,7 @@
 			credit_type_id
 		});
 		if (!res.added) return;
+		creditToAdd = undefined;
 		$allUsersQuery?.refetch();
 	}
 </script>
@@ -355,24 +358,47 @@
 																<div class="w-full bg-c-bg-secondary flex flex-col justify-start">
 																	{#each $creditOptions.data.sort((a, b) => b.amount - a.amount) as creditOption}
 																		<DropdownItem
-																			onClick={() => giftCredits(user.id, creditOption.id)}
+																			onClick={() => {
+																				if (
+																					creditToAdd === undefined ||
+																					creditToAdd.user_id !== user.id ||
+																					creditToAdd.credit_type_id !== creditOption.id
+																				) {
+																					creditToAdd = {
+																						user_id: user.id,
+																						credit_type_id: creditOption.id
+																					};
+																					return;
+																				}
+																				giftCredits(user.id, creditOption.id);
+																			}}
 																		>
 																			<div class="w-full flex justify-between items-center gap-5">
-																				<p
-																					class="flex-shrink min-w-0
-																					text-c-on-bg transition text-sm text-left font-medium text-c-on-bg/60 {!$isTouchscreen
-																						? 'group-hover:text-c-primary'
-																						: ''}"
-																				>
-																					{creditOption.name}
-																				</p>
-																				<p
-																					class="text-c-on-bg transition text-sm text-right font-bold {!$isTouchscreen
-																						? 'group-hover:text-c-primary'
-																						: ''}"
-																				>
-																					{creditOption.amount.toLocaleString($locale)}
-																				</p>
+																				{#if creditToAdd && creditToAdd.user_id === user.id && creditToAdd.credit_type_id === creditOption.id}
+																					<p
+																						class="w-full text-c-on-bg transition text-sm text-center font-bold {!$isTouchscreen
+																							? 'group-hover:text-c-primary'
+																							: ''}"
+																					>
+																						{$LL.Shared.ConfirmQuestionMarkButton()}
+																					</p>
+																				{:else}
+																					<p
+																						class="flex-shrink min-w-0
+																					 text-c-on-bg transition text-sm text-left font-medium text-c-on-bg/60 {!$isTouchscreen
+																							? 'group-hover:text-c-primary'
+																							: ''}"
+																					>
+																						{creditOption.name}
+																					</p>
+																					<p
+																						class="text-c-on-bg transition text-sm text-right font-bold {!$isTouchscreen
+																							? 'group-hover:text-c-primary'
+																							: ''}"
+																					>
+																						{creditOption.amount.toLocaleString($locale)}
+																					</p>
+																				{/if}
 																			</div>
 																		</DropdownItem>
 																	{/each}

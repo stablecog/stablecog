@@ -189,6 +189,7 @@ const tr: Translation = {
 		InsufficientCreditsTitle: 'Yetersiz kredi ({remainingCredits}/{neededCredits})',
 		AllTitle: 'Hepsi',
 		ConfirmButton: 'Onayla',
+		ConfirmQuestionMarkButton: 'Confirm?',
 		BatchEditBar: {
 			PauseEditingButton: 'Pause Editing',
 			DeselectButton: 'Deselect ({selectedCount})',

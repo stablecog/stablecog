@@ -188,6 +188,7 @@ const de: Translation = {
 		InsufficientCreditsTitle: 'Unzureichendes Guthaben ({remainingCredits}/{neededCredits})',
 		AllTitle: 'Alle',
 		ConfirmButton: 'Bestätigen',
+		ConfirmQuestionMarkButton: 'Confirm?',
 		BatchEditBar: {
 			PauseEditingButton: 'Pause Editing',
 			DeselectButton: 'Deselect ({selectedCount})',

@@ -188,6 +188,7 @@ const ptBr: Translation = {
 		InsufficientCreditsTitle: 'Insufficient credits ({remainingCredits}/{neededCredits})',
 		AllTitle: 'All',
 		ConfirmButton: 'Confirm',
+		ConfirmQuestionMarkButton: 'Confirm?',
 		BatchEditBar: {
 			PauseEditingButton: 'Pause Editing',
 			DeselectButton: 'Deselect ({selectedCount})',
