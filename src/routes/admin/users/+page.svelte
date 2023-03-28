@@ -41,11 +41,6 @@
 	let searchDebounceMs = 300;
 	$: searchString, setDebouncedSearch(searchString);
 
-	interface TCount {
-		product_id: string;
-		count: number;
-	}
-	let totalCounts: TCount[];
 	let selectedActiveProductId: TStripeSupportedProductIdSubscriptions = '';
 
 	const activeProductItems: TTab<TStripeSupportedProductIdSubscriptions>[] = [
@@ -77,20 +72,6 @@
 						access_token: $page.data.session?.access_token,
 						active_product_id: selectedActiveProductId
 					});
-					const { total_count, total_count_by_product_id } = res;
-					if (total_count !== undefined && total_count_by_product_id !== undefined) {
-						let withProductIdTotal = 0;
-						let withProductId: TCount[] = [];
-						for (const productId in total_count_by_product_id) {
-							withProductIdTotal += total_count_by_product_id[productId];
-							withProductId.push({
-								product_id: productId,
-								count: total_count_by_product_id[productId]
-							});
-						}
-						const freeCount = total_count - withProductIdTotal;
-						totalCounts = [{ product_id: 'free', count: freeCount }, ...withProductId];
-					}
 					return res;
 				},
 				getNextPageParam: (lastPage: TAllUsersPage) => {
@@ -99,6 +80,8 @@
 				}
 		  })
 		: undefined;
+
+	$: totalCounts = $allUsersQuery?.data?.pages?.[0]?.total_counts;
 
 	type TDropdownState = 'main' | 'gift-credits';
 	let isDropdownOpen: {

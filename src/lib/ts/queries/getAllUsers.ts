@@ -2,6 +2,10 @@ import { apiUrl } from '$ts/constants/main';
 import type { TStripeSupportedProductIdSubscriptions } from '$ts/constants/stripePublic';
 
 const perPage = 50;
+interface TCount {
+	product_id: string;
+	count: number;
+}
 
 export async function getAllUsers({
 	cursor,
@@ -35,7 +39,22 @@ export async function getAllUsers({
 		}
 	});
 	const resJson: TAllUsersPage = await res.json();
-	return resJson;
+	const { total_count, total_count_by_product_id } = resJson;
+	let total_counts: TCount[] | undefined;
+	if (total_count !== undefined && total_count_by_product_id !== undefined) {
+		let withProductIdTotal = 0;
+		let withProductId: TCount[] = [];
+		for (const productId in total_count_by_product_id) {
+			withProductIdTotal += total_count_by_product_id[productId];
+			withProductId.push({
+				product_id: productId,
+				count: total_count_by_product_id[productId]
+			});
+		}
+		const freeCount = total_count - withProductIdTotal;
+		total_counts = [{ product_id: 'free', count: freeCount }, ...withProductId];
+	}
+	return { ...resJson, total_counts };
 }
 
 export interface TAllUsersPage {
