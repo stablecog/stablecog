@@ -212,9 +212,9 @@
 		}}
 		class="w-full h-full absolute left-0 top-0 flex flex-col justify-between items-end overflow-hidden gap-4"
 	>
-		<div class="w-full h-16" />
+		<div class="w-full h-12 flex-shrink-0" />
 		<div
-			class="w-full max-h-[max(4rem,min(35%,5.3rem))] transition bg-c-bg/90 text-xs relative z-0 overflow-hidden
+			class="w-full flex-shrink min-h-0 max-h-[max(4rem,min(35%,5.3rem))] transition bg-c-bg/90 text-xs relative z-0 overflow-hidden
 			 pointer-events-none {!$isTouchscreen
 				? 'group-focus-within:translate-y-0 group-hover:translate-y-0'
 				: ''} {overlayShouldShow ? 'translate-y-0' : 'translate-y-full'}"
