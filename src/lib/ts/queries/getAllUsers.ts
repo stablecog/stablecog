@@ -61,6 +61,7 @@ export interface TUserForAdmin {
 export interface TUserCredit {
 	remaining_amount: number;
 	expires_at: string;
+	replenished_at?: string;
 	credits: TUserCredit[];
 }
 

@@ -446,20 +446,25 @@
 								<div class="w-full mt-2.5">
 									{#each user.credits as credit, index}
 										<div
-											class="w-full flex py-1 {index % 2 === 0
+											class="w-full flex items-center py-1 {index % 2 === 0
 												? 'bg-c-on-bg/5'
 												: ''} text-xs rounded-md gap-3"
 										>
-											<p class="w-1/3 md:w-24 px-2 text-c-on-bg/75">
+											<p class="w-1/4 md:w-24 px-2 text-c-on-bg/75">
 												{credit.credit_type.stripe_product_id || credit.credit_type.name === 'Free'
 													? getTitleFromProductId($LL, credit.credit_type.stripe_product_id)
 													: credit.credit_type.name}
 											</p>
-											<p class="w-1/3 md:w-24 px-2 text-c-on-bg/75">
+											<p class="w-1/4 md:w-24 px-2 text-c-on-bg/75">
 												{credit.remaining_amount.toLocaleString($locale)}
 											</p>
-											<p class="w-1/3 md:w-24 px-2 text-c-on-bg/50">
+											<p class="w-1/4 md:w-24 px-2 text-c-on-bg/50">
 												{getRelativeDate({ date: credit.expires_at })}
+											</p>
+											<p class="w-1/4 md:w-24 px-2 text-c-on-bg/50">
+												{credit.replenished_at
+													? getRelativeDate({ date: credit.replenished_at })
+													: ''}
 											</p>
 										</div>
 									{/each}
