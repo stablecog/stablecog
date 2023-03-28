@@ -324,18 +324,17 @@
 							bg-c-bg-secondary rounded-xl shadow-lg shadow-c-shadow/[var(--o-shadow-normal)] p-3 md:p-4"
 						>
 							<div class="w-full flex flex-row items-center justify-between gap-5">
-								<div class="flex flex-col items-start justify-center flex-shrink min-w-0">
-									<div class="flex flex-col">
+								<div class="flex-shrink min-w-0 flex flex-col items-start justify-center">
+									<div class="max-w-full flex flex-col">
 										<button
 											bind:this={isDropdownOpen[user.id].buttonElement}
-											class="flex flex-col items-start justify-start transition rounded {!$isTouchscreen
+											class="flex-shrink min-w-0 flex flex-col items-start justify-start transition rounded {!$isTouchscreen
 												? 'hover:bg-c-primary/15 hover:text-c-primary'
 												: ''}"
 											on:click|stopPropagation|capture={() => toggleUserDropdown(user.id)}
 										>
 											<p
-												class="max-w-full overflow-hidden overflow-ellipsis whitespace-nowrap 
-												text-sm font-semibold px-1.5 py-0.5 -mt-0.5"
+												class="text-left max-w-full overflow-hidden text-sm font-semibold px-1.5 py-0.5 -mt-0.5 break-all"
 											>
 												{user.email}
 											</p>
