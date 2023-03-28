@@ -39,33 +39,31 @@
 />
 
 <div class="w-full flex-1 flex justify-center px-5 py-6 md:py-8 pb-[calc(3vh)]">
-	<div class="my-auto w-full flex flex-col items-center max-w-7xl gap-6">
-		<div class="w-full flex flex-row flex-wrap items-center justify-center gap-5">
-			{#each adminRoutes as route}
-				<a
-					href={route.href}
-					data-sveltekit-preload-data="hover"
-					class="w-full max-w-md md:max-w-xs p-5 md:p-6 gap-2 self-stretch bg-c-bg-secondary ring-2 ring-c-bg-tertiary relative z-0 overflow-hidden
+	<div class="w-full flex flex-row flex-wrap items-center justify-center gap-4 my-auto max-w-7xl">
+		{#each adminRoutes as route}
+			<a
+				href={route.href}
+				data-sveltekit-preload-data="hover"
+				class="w-full max-w-md md:max-w-xs p-5 md:p-6 gap-2 self-stretch bg-c-bg-secondary ring-2 ring-c-bg-tertiary relative z-0 overflow-hidden
 					rounded-xl flex flex-col items-center shadow-lg shadow-c-shadow/[var(--o-shadow-normal)] transition group
 					{!$isTouchscreen
-						? 'hover:ring-4 hover:shadow-xl hover:shadow-c-shadow/[var(--o-shadow-strong)] hover:-translate-y-1.5'
+					? 'hover:ring-4 hover:shadow-xl hover:shadow-c-shadow/[var(--o-shadow-strong)] hover:-translate-y-1.5'
+					: ''}"
+			>
+				<IconNavbarRoute
+					class="w-14 h-14 -mt-0.5 md:-mt-1 transition {!$isTouchscreen
+						? 'group-hover:text-c-primary'
+						: ''}"
+					type={route.icon}
+				/>
+				<p
+					class="text-center font-bold text-xl leading-snug text-c-on-bg transition {!$isTouchscreen
+						? 'group-hover:text-c-primary'
 						: ''}"
 				>
-					<IconNavbarRoute
-						class="w-14 h-14 md:-mt-1 transition {!$isTouchscreen
-							? 'group-hover:text-c-primary'
-							: ''}"
-						type={route.icon}
-					/>
-					<p
-						class="text-center font-bold text-xl leading-snug text-c-on-bg transition {!$isTouchscreen
-							? 'group-hover:text-c-primary'
-							: ''}"
-					>
-						{route.title}
-					</p>
-				</a>
-			{/each}
-		</div>
+					{route.title}
+				</p>
+			</a>
+		{/each}
 	</div>
 </div>
