@@ -25,17 +25,17 @@ const tr: Translation = {
 				'Fotoğrafın komutuna ne derecede benzeyeceğinin ölçüsü. Yüksek sayılar fotoğrafı komutuna daha çok benzetir.'
 		},
 		AspectRatioTabBar: {
-			Title: 'Aspect Ratio',
-			Paragraph: 'Aspect ratio of the image.'
+			Title: 'Oran',
+			Paragraph: 'Fotoğrafın oranı.'
 		},
 		InitialImageTabBar: {
-			Title: 'Initial Image',
-			Paragraph: 'The generation will be created based on this image.'
+			Title: 'Baz Fotoğraf',
+			Paragraph: 'Üretim bu fotoğrafı baz alarak yapılacak.'
 		},
 		InitialImageStrengthTabBar: {
-			Title: 'Initial Image Strength',
+			Title: 'Baz Fotoğraf Gücü',
 			Paragraph:
-				'Controls the influence of the initial image. The bigger the value, the more influence the initial image has.'
+				'Baz fotoğrafın üretimi ne kadar etkileyeceğinin ölçüsü. Değer ne kadar büyükse baz fotoğrafın etkisi o kadar yüksek olur.'
 		},
 		NegativePromptInput: {
 			Title: 'Negatif Komut',
@@ -43,7 +43,9 @@ const tr: Translation = {
 			Paragraph:
 				'İstemediğin şeyleri üretilecek fotoğraftan çıkartmak için. Komutun yaptığının tam tersini yapar.'
 		},
-		ImageInput: { Title: 'Upload Image' },
+		ImageInput: {
+			Title: 'Fotoğraf Yükle'
+		},
 		SeedInput: {
 			Title: 'Tohum',
 			Placeholder: 'Tohum numarası',
@@ -80,7 +82,7 @@ const tr: Translation = {
 		TotalDurationTitle: 'Toplam Süre',
 		UpscalesTitle: 'Büyütmeler',
 		GenerationTooltip: {
-			AspectRatioTitle: 'Aspect Ratio',
+			AspectRatioTitle: 'Oran',
 			CountryTitle: 'Ülke',
 			Type: {
 				Title: 'Tip',
@@ -189,36 +191,36 @@ const tr: Translation = {
 		InsufficientCreditsTitle: 'Yetersiz kredi ({remainingCredits}/{neededCredits})',
 		AllTitle: 'Hepsi',
 		ConfirmButton: 'Onayla',
-		ConfirmQuestionMarkButton: 'Confirm?',
+		ConfirmQuestionMarkButton: 'Onayla?',
 		BatchEditBar: {
-			PauseEditingButton: 'Pause Editing',
-			DeselectButton: 'Deselect ({selectedCount})',
-			DeleteButton: 'Delete ({selectedCount})',
-			FavoriteButton: 'Favorite ({selectedCount})',
-			ApproveButton: 'Approve ({selectedCount})',
-			RejectButton: 'Reject ({selectedCount})',
-			UnfavoriteButton: 'Unfavorite ({selectedCount})',
+			PauseEditingButton: 'Düzenlemeyi Bitir',
+			DeselectButton: 'Seçimi Kaldır ({selectedCount})',
+			DeleteButton: 'Sil ({selectedCount})',
+			FavoriteButton: 'Favorile ({selectedCount})',
+			ApproveButton: 'Onayla ({selectedCount})',
+			RejectButton: 'Reddet ({selectedCount})',
+			UnfavoriteButton: 'Favoriyi Kaldır ({selectedCount})',
 			ConfirmationModal: {
-				CancelButton: 'Cancel',
+				CancelButton: 'Vazgeç',
 				Deselect: {
-					Title: 'Deselect {selectedCount} item(s)?',
-					Paragraph: 'Are you sure you want to deselect {selectedCount} item(s)?',
-					ConfirmButton: 'Deselect'
+					Title: '{selectedCount} adet seçimi kaldır?',
+					Paragraph: '{selectedCount} adet seçimi kaldırmak istediğini emin misin?',
+					ConfirmButton: 'Seçimi Kaldır'
 				},
 				Delete: {
-					Title: 'Delete {selectedCount} item(s)?',
-					Paragraph: 'Are you sure you want to delete {selectedCount} item(s)?',
-					ConfirmButton: 'Delete'
+					Title: '{selectedCount} öğeyi sil?',
+					Paragraph: '{selectedCount} öğeyi silmek istedine emin misin?',
+					ConfirmButton: 'Sil'
 				},
 				Favorite: {
-					Title: 'Favorite {selectedCount} item(s)?',
-					Paragraph: 'Are you sure you want to favorite {selectedCount} item(s)?',
-					ConfirmButton: 'Favorite'
+					Title: '{selectedCount} öğeyi favorile?',
+					Paragraph: '{selectedCount} adet öğeyi favorilemek istediğine emin misin?',
+					ConfirmButton: 'Favorile'
 				},
 				Unfavorite: {
-					Title: 'Unfavorite {selectedCount} item(s)?',
-					Paragraph: 'Are you sure you want to unfavorite {selectedCount} item(s)?',
-					ConfirmButton: 'Unfavorite'
+					Title: '{selectedCount} öğeyi favoriden çıkar?',
+					Paragraph: '{selectedCount} öğeyi favoriden çıkarmak istediğine emin misin?',
+					ConfirmButton: 'Favoriden Çıkar'
 				}
 			}
 		},
@@ -300,7 +302,7 @@ const tr: Translation = {
 		SomethingWentWrongTryAgain: 'Bir sıkıntı çıktı, tekrar dene.',
 		InvalidCredentials: 'Geçersiz kimlik.',
 		InvalidCode: 'Geçersiz kod.',
-		TryAnotherImage: 'Try another image :(',
+		TryAnotherImage: 'Başka fotoğraf dene :(',
 		OnceEvery60Seconds: 'Her 60 saniyede sadece bir link talebinde bulunabilirsin.',
 		LinkExpired: {
 			Title: 'Link Geçersiz',
@@ -331,7 +333,7 @@ const tr: Translation = {
 		AdminGalleryTab: 'Galeri',
 		UsersTab: 'Kullanıcılar',
 		Users: {
-			GiftCreditsButton: 'Gift Credits'
+			GiftCreditsButton: 'Kredi Hediye Et'
 		},
 		Gallery: {
 			TotalTitle: 'Toplam',
@@ -339,7 +341,7 @@ const tr: Translation = {
 			DeletedTitle: 'Silinen',
 			StatusDropdown: {
 				All: 'Hepsi',
-				ManuallySubmitted: 'Manually Submitted',
+				ManuallySubmitted: 'Manuel Gönderilmiş',
 				Submitted: 'Gönderilenler',
 				Approved: 'Onaylananlar',
 				Rejected: 'Reddedilenler',
@@ -369,7 +371,7 @@ const tr: Translation = {
 		GetStartedButton: 'Başla',
 		PageTitle: 'Giriş Yap',
 		PageParagraph: "Stablecog'u üyeliğine sağlanan tüm özelliklerle kullanmaya başla.",
-		PageParagraphV2: 'Start creating amazing art in seconds for free, no credit card required.',
+		PageParagraphV2: 'Hemen ücretsiz olarak süper fotoğraflar üretmeye başla.',
 		PageTitleCreateAccountOrSignIn: 'Üye ol veya giriş yap',
 		PageParagraphCreateAccountOrSignIn:
 			"Stablecog'u üyeliğine sağlanan tüm özelliklerle kullanmaya başla.",
@@ -551,7 +553,7 @@ const tr: Translation = {
 			LargeTitle: 'Büyük Paket'
 		},
 		Features: {
-			MonthlyCredits: '{count} credits per month.',
+			MonthlyCredits: '{count} kredi/ay.',
 			MonthlyImages: 'Ayda {count} fotoğraf.',
 			MonthlyGenerations: 'Ayda {count} üretim.',
 			Images: '{count} fotoğraf.',
@@ -589,14 +591,15 @@ const tr: Translation = {
 		PageParagraph: 'Herhangi bir soru sormak istersen aşağıdaki linklerden bize ulaşabilirsin.'
 	},
 	Legal: {
-		TermsOfServiceTitle: 'Terms of Service',
-		PrivacyPolicyTitle: 'Privacy Policy',
-		RefundPolicyTitle: 'Refund Policy',
-		ContentPolicyTitle: 'Content Policy'
+		TermsOfServiceTitle: 'Kullanım Şartları',
+		PrivacyPolicyTitle: 'Gizlilik Politikası',
+		RefundPolicyTitle: 'İade Politikası',
+		ContentPolicyTitle: 'İçerik Politikası'
 	},
 	UnderDevelopment: {
 		PageTitle: 'Geri döneceğiz!',
 		PageParagraph: 'Sistemlerimizi güncelliyoruz. Birkaç saate döneceğiz.'
 	}
 };
+
 export default tr;
