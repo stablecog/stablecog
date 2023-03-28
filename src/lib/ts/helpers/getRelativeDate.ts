@@ -1,15 +1,17 @@
 export function getRelativeDate({
 	date,
 	now = Date.now(),
-	decimals = 0
+	decimals = 0,
+	locale
 }: {
 	date: string | number | undefined;
 	now?: number;
 	decimals?: number;
+	locale: Locales;
 }) {
 	if (date === undefined || (typeof date === 'number' && isNaN(date))) return 'Unknown';
 	const d = new Date(date);
-	const rtf1 = new Intl.RelativeTimeFormat('en-US', { style: 'short' });
+	const rtf1 = new Intl.RelativeTimeFormat(locale, { style: 'short' });
 	const seconds = (d.getTime() - now) / 1000;
 	const secondsRounded = Math.round(seconds);
 	if (Math.abs(secondsRounded) < 60) {

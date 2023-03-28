@@ -229,7 +229,7 @@
 <PageWrapper noPadding class="z-10">
 	<div class="w-full flex justify-center py-2.5 relative">
 		<div
-			class="w-[calc(100%+1.75rem)] max-w-3xl -mx-3.5 flex flex-col bg-c-bg ring-2 ring-c-bg-secondary rounded-2xl shadow-lg 
+			class="max-w-[calc(100%+1.75rem)] -mx-3.5 flex flex-col bg-c-bg ring-2 ring-c-bg-secondary rounded-2xl shadow-lg 
 			shadow-c-shadow/[var(--o-shadow-normal)]"
 		>
 			<div class="flex flex-wrap gap-3 md:gap-8 p-3">
@@ -367,7 +367,7 @@
 													<DropdownWrapper alignment="left-0 top-0" class="w-52 mt-1.5">
 														{#if userDropdownState === 'gift-credits' && $creditOptions && $creditOptions.data && $creditOptions.data.length > 0}
 															<ScrollAreaWithChevron
-																class="w-full flex flex-col justify-start max-h-[min(50vh,20rem)] relative"
+																class="w-full flex flex-col justify-start max-h-[min(50vh,16rem)] relative"
 															>
 																<div class="w-full bg-c-bg-secondary flex flex-col justify-start">
 																	{#each $creditOptions.data.sort((a, b) => b.amount - a.amount) as creditOption}
@@ -421,10 +421,14 @@
 										{user.id}
 									</p>
 									<p class="max-w-full text-xxs text-c-on-bg/50 mt-2 break-all px-1.5">
-										{getRelativeDate({ date: user.created_at })} • {getRelativeDate({
-											date: user.last_sign_in_at
-										})} • {getRelativeDate({
-											date: user.last_seen_at
+										{getRelativeDate({ date: user.created_at, locale: $locale })} • {getRelativeDate(
+											{
+												date: user.last_sign_in_at,
+												locale: $locale
+											}
+										)} • {getRelativeDate({
+											date: user.last_seen_at,
+											locale: $locale
 										})}
 									</p>
 								</div>
@@ -450,20 +454,20 @@
 												? 'bg-c-on-bg/5'
 												: ''} text-xs rounded-md gap-3"
 										>
-											<p class="w-1/4 md:w-24 px-2 text-c-on-bg/75">
+											<p class="w-1/4 md:w-32 px-2 text-c-on-bg/75">
 												{credit.credit_type.stripe_product_id || credit.credit_type.name === 'Free'
 													? getTitleFromProductId($LL, credit.credit_type.stripe_product_id)
 													: credit.credit_type.name}
 											</p>
-											<p class="w-1/4 md:w-24 px-2 text-c-on-bg/75">
+											<p class="w-1/4 md:w-32 px-2 text-c-on-bg/75">
 												{credit.remaining_amount.toLocaleString($locale)}
 											</p>
-											<p class="w-1/4 md:w-24 px-2 text-c-on-bg/50">
-												{getRelativeDate({ date: credit.expires_at })}
+											<p class="w-1/4 md:w-32 px-2 text-c-on-bg/50">
+												{getRelativeDate({ date: credit.expires_at, locale: $locale })}
 											</p>
-											<p class="w-1/4 md:w-24 px-2 text-c-on-bg/50">
+											<p class="w-1/4 md:w-32 px-2 text-c-on-bg/50">
 												{credit.replenished_at
-													? getRelativeDate({ date: credit.replenished_at })
+													? getRelativeDate({ date: credit.replenished_at, locale: $locale })
 													: ''}
 											</p>
 										</div>
