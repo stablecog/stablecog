@@ -371,7 +371,7 @@ const tr: Translation = {
 		GetStartedButton: 'Başla',
 		PageTitle: 'Giriş Yap',
 		PageParagraph: "Stablecog'u üyeliğine sağlanan tüm özelliklerle kullanmaya başla.",
-		PageParagraphV2: 'Hemen ücretsiz olarak süper fotoğraflar üretmeye başla.',
+		PageParagraphV2: 'Ücretsiz olarak süper fotoğraflar üretmeye hemen başla.',
 		PageTitleCreateAccountOrSignIn: 'Üye ol veya giriş yap',
 		PageParagraphCreateAccountOrSignIn:
 			"Stablecog'u üyeliğine sağlanan tüm özelliklerle kullanmaya başla.",
