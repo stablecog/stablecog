@@ -226,8 +226,8 @@
 	}}
 />
 
-<PageWrapper noPadding>
-	<div class="w-full flex justify-center py-2.5">
+<PageWrapper noPadding class="z-10">
+	<div class="w-full flex justify-center py-2.5 relative">
 		<div
 			class="w-[calc(100%+1.75rem)] max-w-3xl -mx-3.5 flex flex-col bg-c-bg ring-2 ring-c-bg-secondary rounded-2xl shadow-lg 
 			shadow-c-shadow/[var(--o-shadow-normal)]"
