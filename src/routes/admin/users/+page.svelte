@@ -328,7 +328,7 @@
 									<div class="max-w-full flex flex-col">
 										<button
 											bind:this={isDropdownOpen[user.id].buttonElement}
-											class="flex-shrink min-w-0 flex flex-col items-start justify-start transition rounded {!$isTouchscreen
+											class="max-w-full flex flex-col items-start justify-start transition rounded {!$isTouchscreen
 												? 'hover:bg-c-primary/15 hover:text-c-primary'
 												: ''}"
 											on:click|stopPropagation|capture={() => toggleUserDropdown(user.id)}
