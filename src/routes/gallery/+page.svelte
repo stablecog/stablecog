@@ -159,10 +159,10 @@
 />
 
 <svelte:window on:keydown={onKeyDown} on:scroll={onScroll} />
-<div class="w-full flex-1 flex flex-col items-center relative">
+<div class="w-full flex-1 flex flex-col items-center relative mt-1 md:mt-0">
 	<div
 		style="top: {$navbarHeight}px"
-		class="w-full px-2 py-2 flex justify-center sticky z-10 transition duration-200 {hideSearchBar
+		class="w-full px-2 py-1 md:py-2 flex justify-center sticky z-10 transition duration-200 {hideSearchBar
 			? '-translate-y-22 pointer-events-none opacity-0'
 			: 'translate-y-0 opacity-100'}"
 	>
@@ -179,7 +179,7 @@
 			<IconSearch slot="icon" class="w-full h-full" />
 		</Input>
 	</div>
-	<div class="w-full px-1 pb-3 md:pt-3 relative flex flex-col flex-1">
+	<div class="w-full px-1 pb-3 pt-1 md:pt-3 relative flex flex-col flex-1">
 		{#if $galleryGenerationFullOutputsQuery?.isInitialLoading}
 			<div
 				class="w-full flex flex-col text-c-on-bg/60 flex-1 py-6 px-4 justify-center items-center text-center"
