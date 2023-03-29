@@ -237,7 +237,7 @@
 						<img
 							width={$generationInitImageWidth}
 							height={$generationInitImageHeight}
-							class="w-full h-auto bg-c-bg-secondary ring-4 ring-c-bg-secondary rounded-xl shadow-2xl shadow-c-shadow/[var(--o-shadow-stronger)]"
+							class="w-full h-auto bg-c-bg-secondary ring-4 ring-c-bg-secondary rounded-xl shadow-generation-modal shadow-c-shadow/[var(--o-shadow-stronger)]"
 							src={$generationInitImageSrc}
 							alt="Init"
 						/>
