@@ -552,7 +552,8 @@ const vi: Translation = {
 		},
 		CreditPacks: {
 			MediumTitle: 'Medium Pack',
-			LargeTitle: 'Large Pack'
+			LargeTitle: 'Large Pack',
+			MegaTitle: 'Mega Pack'
 		},
 		Features: {
 			MonthlyCredits: '{count} credits per month.',

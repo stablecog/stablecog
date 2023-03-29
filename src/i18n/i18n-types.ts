@@ -1629,6 +1629,10 @@ type RootTranslation = {
 			 * L​a​r​g​e​ ​P​a​c​k
 			 */
 			LargeTitle: string
+			/**
+			 * M​e​g​a​ ​P​a​c​k
+			 */
+			MegaTitle: string
 		}
 		Features: {
 			/**
@@ -3351,6 +3355,10 @@ export type TranslationFunctions = {
 			 * Large Pack
 			 */
 			LargeTitle: () => LocalizedString
+			/**
+			 * Mega Pack
+			 */
+			MegaTitle: () => LocalizedString
 		}
 		Features: {
 			/**

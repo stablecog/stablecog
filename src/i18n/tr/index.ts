@@ -550,7 +550,8 @@ const tr: Translation = {
 		},
 		CreditPacks: {
 			MediumTitle: 'Orta Paket',
-			LargeTitle: 'Büyük Paket'
+			LargeTitle: 'Büyük Paket',
+			MegaTitle: 'Mega Paket'
 		},
 		Features: {
 			MonthlyCredits: '{count} kredi/ay.',

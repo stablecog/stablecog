@@ -22,7 +22,9 @@
 		PUBLIC_STRIPE_PRICE_ID_MEDIUM_PACK,
 		PUBLIC_STRIPE_PRODUCT_ID_MEDIUM_PACK,
 		PUBLIC_STRIPE_PRODUCT_ID_LARGE_PACK,
-		PUBLIC_STRIPE_PRICE_ID_LARGE_PACK
+		PUBLIC_STRIPE_PRICE_ID_LARGE_PACK,
+		PUBLIC_STRIPE_PRICE_ID_MEGA_PACK,
+		PUBLIC_STRIPE_PRODUCT_ID_MEGA_PACK
 	} from '$env/static/public';
 	import {
 		STRIPE_CURRENCY_TO_SYMBOL,
@@ -166,6 +168,33 @@
 				$LL.Pricing.Features.NeverExpires()
 			],
 			ringClass: 'ring-c-bg-secondary',
+			badgeText: $LL.Pricing.Badges.MostPopular(),
+			badgeClasses: 'bg-c-primary text-c-on-primary'
+		},
+		{
+			title: $LL.Pricing.CreditPacks.MegaTitle(),
+			priceId: PUBLIC_STRIPE_PRICE_ID_MEGA_PACK,
+			productId: PUBLIC_STRIPE_PRICE_ID_MEGA_PACK,
+			currency: data.currency,
+			currencySymbol: STRIPE_CURRENCY_TO_SYMBOL[data.currency],
+			amount:
+				data.currency === 'eur'
+					? STRIPE_PRODUCT_ID_OBJECTS_CREDIT_PACKS[PUBLIC_STRIPE_PRODUCT_ID_MEGA_PACK].prices[
+							PUBLIC_STRIPE_PRICE_ID_MEGA_PACK
+					  ].currencies.eur.amount
+					: STRIPE_PRODUCT_ID_OBJECTS_CREDIT_PACKS[PUBLIC_STRIPE_PRODUCT_ID_MEGA_PACK].prices[
+							PUBLIC_STRIPE_PRICE_ID_MEGA_PACK
+					  ].currencies.usd.amount,
+			features: [
+				$LL.Pricing.Features.Images({
+					count:
+						STRIPE_PRODUCT_ID_OBJECTS_CREDIT_PACKS[
+							PUBLIC_STRIPE_PRODUCT_ID_MEGA_PACK
+						].images.toLocaleString($locale)
+				}),
+				$LL.Pricing.Features.NeverExpires()
+			],
+			ringClass: 'ring-c-bg-secondary',
 			badgeText: undefined,
 			badgeClasses: undefined
 		}
@@ -260,7 +289,7 @@
 					>
 						{#if card.badgeText && card.badgeClasses && !isDowngrade}
 							<div
-								class="absolute -right-3 -top-4 rounded-full px-3.5 py-1.5 text-sm text-right 
+								class="absolute -right-2.5 -top-3 rounded-full px-3.5 py-1.5 text-xs text-right 
 								font-bold {isSubscribed ? 'bg-c-success text-c-on-primary' : card.badgeClasses}"
 							>
 								{card.badgeText}
@@ -342,7 +371,7 @@
 						>
 							{#if card.badgeText && card.badgeClasses}
 								<div
-									class="absolute -right-3 -top-4 rounded-full px-3.5 py-1.5 text-sm text-right 
+									class="absolute -right-2.5 -top-3 rounded-full px-3.5 py-1.5 text-xs text-right 
 									font-bold {card.badgeClasses}"
 								>
 									{card.badgeText}
