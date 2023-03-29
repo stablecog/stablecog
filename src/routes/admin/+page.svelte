@@ -51,13 +51,11 @@
 					: ''}"
 			>
 				<IconNavbarRoute
-					class="w-14 h-14 -mt-0.5 md:-mt-1 transition {!$isTouchscreen
-						? 'group-hover:text-c-primary'
-						: ''}"
+					class="w-14 h-14 -mt-0.5 transition {!$isTouchscreen ? 'group-hover:text-c-primary' : ''}"
 					type={route.icon}
 				/>
 				<p
-					class="text-center font-bold text-xl leading-snug text-c-on-bg transition {!$isTouchscreen
+					class="max-w-full text-center font-bold text-lg leading-snug text-c-on-bg transition {!$isTouchscreen
 						? 'group-hover:text-c-primary'
 						: ''}"
 				>
