@@ -6,9 +6,41 @@
 	import LL from '$i18n/i18n-svelte';
 	import { tooltip } from '$ts/actions/tooltip';
 	import { availableModelIdDropdownItems } from '$ts/constants/generationModels';
-	import { AspectRatioDropdownItems } from '$ts/constants/generationSize';
+	import {
+		AspectRatioDropdownItems,
+		aspectRatioToImageSize,
+		type TAvailableHeight,
+		type TAvailableWidth
+	} from '$ts/constants/generationSize';
 	import { aspectRatioTooltip, modelTooltip } from '$ts/constants/tooltips';
-	import { generationAspectRatio, generationModelId } from '$ts/stores/generationSettings';
+	import {
+		generationAspectRatio,
+		generationHeight,
+		generationModelId,
+		generationWidth
+	} from '$ts/stores/generationSettings';
+
+	$: [$generationAspectRatio], onAspectRatioChanged();
+
+	function onAspectRatioChanged() {
+		setWidthAndHeightBasedOnAspectRatio();
+	}
+
+	function setWidthAndHeightBasedOnAspectRatio() {
+		const obj = aspectRatioToImageSize[$generationAspectRatio];
+		let newWidth: TAvailableWidth;
+		let newHeight: TAvailableHeight;
+		const modelAspectRatio = obj[$generationModelId];
+		if (modelAspectRatio) {
+			newWidth = modelAspectRatio.width;
+			newHeight = modelAspectRatio.height;
+		} else {
+			newWidth = obj.default.width;
+			newHeight = obj.default.height;
+		}
+		generationWidth.set(newWidth);
+		generationHeight.set(newHeight);
+	}
 </script>
 
 <div
