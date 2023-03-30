@@ -1,96 +1,57 @@
 <script lang="ts">
 	import { browser } from '$app/environment';
-	import Button from '$components/buttons/Button.svelte';
 	import GenerationFullScreen from '$components/generationFullScreen/GenerationFullScreen.svelte';
 	import GenerationImage from '$components/generationImage/GenerationImage.svelte';
 	import IconAnimatedSpinner from '$components/icons/IconAnimatedSpinner.svelte';
 	import ImagePlaceholder from '$components/ImagePlaceholder.svelte';
 	import SettingsPanel from '$routes/create/SettingsPanel.svelte';
-	import { maxSeed } from '$ts/constants/main';
-	import { generateSSEId } from '$ts/helpers/generateSSEId';
-	import { uLogGeneration } from '$ts/helpers/loggers';
-	import {
-		generationGuidanceScale,
-		generationHeight,
-		generationInferenceSteps,
-		generationInitImageFiles,
-		generationInitImageStrength,
-		generationInitImageUrl,
-		generationModelId,
-		generationNumOutputs,
-		generationSchedulerId,
-		generationSeed,
-		generationWidth,
-		initImageStrength,
-		negativePromptInputValue,
-		promptInputValue
-	} from '$ts/stores/generationSettings';
-	import { isTouchscreen } from '$ts/stores/isTouchscreen';
-	import { navbarHeight } from '$ts/stores/navbarHeight';
-	import {
-		activeGeneration,
-		generations,
-		queueInitialGenerationRequest,
-		type TInitialGenerationRequest
-	} from '$ts/stores/user/generation';
-	import { sseId } from '$ts/stores/user/sse';
-	import { windowHeight, windowWidth } from '$ts/stores/window';
+	import { activeGeneration, generations } from '$ts/stores/user/generation';
+	import { windowHeight } from '$ts/stores/window';
 	import { onDestroy, onMount } from 'svelte';
+	import { navbarHeight } from '$ts/stores/navbarHeight';
+	import PromptBar from '$routes/create/PromptBar.svelte';
+	import { quadOut } from 'svelte/easing';
+	import { fade, fly } from 'svelte/transition';
+	import { portal } from 'svelte-portal';
+	import { clickoutside } from '$ts/actions/clickoutside';
+	import SignInCard from '$components/SignInCard.svelte';
+	import { page } from '$app/stores';
 
 	let topbarHeight: number;
 	let leftPanelHeight: number;
 
-	async function queueGeneration() {
-		if (!$promptInputValue) {
-			console.log("No prompt, can't create generation");
+	let isCheckCompleted = false;
+	let isSignInModalOpen = false;
+
+	function openSignInModal() {
+		isSignInModalOpen = true;
+	}
+
+	function onKeyDown({ key }: KeyboardEvent) {
+		if ($activeGeneration === undefined) return;
+		if (key === 'Escape') {
+			activeGeneration.set(undefined);
 			return;
 		}
-		if (!$sseId) {
-			console.log("No SSE ID, can't create generation");
-			return;
+		if (key === 'ArrowLeft' || key === 'ArrowRight') {
+			const outputs = $activeGeneration.outputs;
+			const index = outputs.findIndex((g) => g.id === $activeGeneration?.selected_output.id);
+			if (index === -1) return;
+			const addition = key === 'ArrowLeft' ? -1 : 1;
+			const newIndex =
+				(index + addition + $activeGeneration.outputs.length) % $activeGeneration.outputs.length;
+			activeGeneration.set({
+				...$activeGeneration,
+				selected_output: $activeGeneration.outputs[newIndex]
+			});
 		}
-		const initialRequestProps: TInitialGenerationRequest = {
-			prompt: {
-				id: 'prompt',
-				text: $promptInputValue
-			},
-			negative_prompt: $negativePromptInputValue
-				? {
-						id: 'negative_prompt',
-						text: $negativePromptInputValue
-				  }
-				: undefined,
-			model_id: $generationModelId,
-			scheduler_id: $generationSchedulerId,
-			width: Number($generationWidth),
-			height: Number($generationHeight),
-			init_image_url: $generationInitImageUrl,
-			init_image_file: $generationInitImageFiles,
-			prompt_strength:
-				$generationInitImageUrl && $generationInitImageStrength !== undefined
-					? 1 - Number($generationInitImageStrength)
-					: undefined,
-			guidance_scale: Number($generationGuidanceScale),
-			inference_steps: Number($generationInferenceSteps),
-			seed:
-				$generationSeed !== undefined && $generationSeed !== null && $generationSeed !== ''
-					? Number($generationSeed)
-					: Math.round(Math.random() * maxSeed),
-			num_outputs: Number($generationNumOutputs),
-			output_image_extension: 'jpeg',
-			process_type: 'generate',
-			stream_id: $sseId,
-			ui_id: generateSSEId(),
-			submit_to_gallery: false
-		};
-		uLogGeneration('Started');
-		queueInitialGenerationRequest(initialRequestProps);
 	}
 
 	onMount(() => {
 		if (!browser) return;
 		document.body.style.overflow = 'hidden';
 		document.body.style.height = '100%';
+		isCheckCompleted = true;
 	});
 
 	onDestroy(() => {
@@ -100,29 +61,20 @@
 	});
 </script>
 
+<svelte:window on:keydown={onKeyDown} />
+
 <div
 	style="height: {$windowHeight && $navbarHeight ? $windowHeight - $navbarHeight + 'px' : '100vh'}"
 	class="w-full flex flex-row items-stretch overflow-hidden"
 >
 	<div bind:clientHeight={leftPanelHeight} class="flex-1 h-full flex flex-col px-5 relative">
-		<form
-			on:submit|preventDefault={queueGeneration}
-			bind:clientHeight={topbarHeight}
-			class="w-full flex items-center gap-3 sticky top-0 pt-2.5"
+		<div bind:clientHeight={topbarHeight} class="w-full pt-3">
+			<PromptBar {isCheckCompleted} {openSignInModal} />
+		</div>
+		<div
+			style="height: {leftPanelHeight - topbarHeight}px"
+			class="w-full flex-1 flex flex-col py-5"
 		>
-			<input
-				bind:value={$promptInputValue}
-				placeholder="Portrait of a cat by Van Gogh"
-				style="transition: height 0.1s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.2s cubic-bezier(0.4, 0, 0.2, 1), padding 0.2s cubic-bezier(0.4, 0, 0.2, 1)"
-				class="w-full bg-c-bg-secondary shadow-lg pr-12 md:pr-17 hide-scrollbar shadow-c-shadow/[var(--o-shadow-normal)] 
-        scroll-smooth resize-none transition relative pl-5 md:pl-6 py-5 rounded-xl 
-        focus:ring-2 focus:ring-c-primary/30 ring-0 ring-c-primary/20 placeholder:text-c-on-bg/40 {!$isTouchscreen
-					? 'enabled:hover:ring-2'
-					: ''} text-c-on-bg {!$isTouchscreen ? 'group-hover:ring-2' : ''}"
-			/>
-			<Button>Generate</Button>
-		</form>
-		<div style="height: {leftPanelHeight - topbarHeight}px" class="w-full flex flex-col py-5">
 			<div
 				class="w-full min-h-full rounded-3xl px-2 py-2 pb-6 flex flex-wrap overflow-auto bg-c-bg
         shadow-2xl shadow-c-shadow/[var(--o-shadow-strongest)] border-4 border-c-bg-secondary"
@@ -176,4 +128,24 @@
 
 {#if $activeGeneration}
 	<GenerationFullScreen generation={$activeGeneration} modalType="generate" />
+{/if}
+
+{#if isSignInModalOpen && !$page.data.session?.user.id}
+	<div
+		use:portal={'body'}
+		transition:fade|local={{ duration: 300, easing: quadOut }}
+		class="w-full h-full bg-c-barrier/80 fixed left-0 top-0 px-3 z-[10000]"
+	/>
+	<div
+		use:portal={'body'}
+		transition:fly|local={{ duration: 200, y: 50, easing: quadOut }}
+		class="w-full h-full flex flex-col items-center fixed left-0 top-0 px-3 py-20 z-[10001] overflow-auto"
+	>
+		<div
+			use:clickoutside={{ callback: () => (isSignInModalOpen = false) }}
+			class="flex justify-center my-auto"
+		>
+			<SignInCard isModal={true} redirectTo="/create" />
+		</div>
+	</div>
 {/if}
