@@ -23,6 +23,18 @@ const zhHans: Translation = {
 			Title: '指导量表',
 			Paragraph: '图像与您的提示有多么相似。值越高，图像就越靠近您的提示。'
 		},
+		AspectRatioDropdown: {
+			Title: 'Aspect Ratio',
+			Paragraph: 'Aspect ratio of the image',
+			Options: {
+				Square: 'Square (1:1)',
+				Portrait: 'Portrait (2:3)',
+				Landscape: 'Landscape (3:2)',
+				Mobile: 'Mobile (9:16)',
+				Desktop: 'Desktop (16:9)',
+				Squarish: 'Squarish (4:5)'
+			}
+		},
 		AspectRatioTabBar: {
 			Title: 'Aspect Ratio',
 			Paragraph: 'Aspect ratio of the image.'

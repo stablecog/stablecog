@@ -24,6 +24,18 @@ const fr: Translation = {
 			Paragraph:
 				"A quel point l'image doit respecter la description textuelle. Une valeur plus élevée donnera une image plus proche de la description."
 		},
+		AspectRatioDropdown: {
+			Title: 'Aspect Ratio',
+			Paragraph: 'Aspect ratio of the image',
+			Options: {
+				Square: 'Square (1:1)',
+				Portrait: 'Portrait (2:3)',
+				Landscape: 'Landscape (3:2)',
+				Mobile: 'Mobile (9:16)',
+				Desktop: 'Desktop (16:9)',
+				Squarish: 'Squarish (4:5)'
+			}
+		},
 		AspectRatioTabBar: {
 			Title: 'Aspect Ratio',
 			Paragraph: 'Aspect ratio of the image.'

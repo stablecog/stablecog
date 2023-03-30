@@ -24,6 +24,18 @@ const hi: Translation = {
 			Paragraph:
 				'चित्र आपके संकेत से कितना मिलता-जुलता होगा। उच्च मान चित्र को आपके संकेत के करीब बनाता हैं।'
 		},
+		AspectRatioDropdown: {
+			Title: 'Aspect Ratio',
+			Paragraph: 'Aspect ratio of the image',
+			Options: {
+				Square: 'Square (1:1)',
+				Portrait: 'Portrait (2:3)',
+				Landscape: 'Landscape (3:2)',
+				Mobile: 'Mobile (9:16)',
+				Desktop: 'Desktop (16:9)',
+				Squarish: 'Squarish (4:5)'
+			}
+		},
 		AspectRatioTabBar: {
 			Title: 'Aspect Ratio',
 			Paragraph: 'Aspect ratio of the image.'

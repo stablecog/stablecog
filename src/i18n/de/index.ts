@@ -24,6 +24,18 @@ const de: Translation = {
 			Paragraph:
 				'Wie ähnlich das Bild den Eingabewörtern ist. Je höher der Wert ist, umso ähnlicher wird das Bild.'
 		},
+		AspectRatioDropdown: {
+			Title: 'Aspect Ratio',
+			Paragraph: 'Aspect ratio of the image',
+			Options: {
+				Square: 'Square (1:1)',
+				Portrait: 'Portrait (2:3)',
+				Landscape: 'Landscape (3:2)',
+				Mobile: 'Mobile (9:16)',
+				Desktop: 'Desktop (16:9)',
+				Squarish: 'Squarish (4:5)'
+			}
+		},
 		AspectRatioTabBar: {
 			Title: 'Aspect Ratio',
 			Paragraph: 'Aspect ratio of the image.'

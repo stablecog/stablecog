@@ -24,6 +24,18 @@ const vi: Translation = {
 			Paragraph:
 				'Hình ảnh sẽ theo sát lời mô tả đến đâu. Giá trị cao hơn khiến hình ảnh dược tạo ra sát với lời mô tả hơn.'
 		},
+		AspectRatioDropdown: {
+			Title: 'Aspect Ratio',
+			Paragraph: 'Aspect ratio of the image',
+			Options: {
+				Square: 'Square (1:1)',
+				Portrait: 'Portrait (2:3)',
+				Landscape: 'Landscape (3:2)',
+				Mobile: 'Mobile (9:16)',
+				Desktop: 'Desktop (16:9)',
+				Squarish: 'Squarish (4:5)'
+			}
+		},
 		AspectRatioTabBar: {
 			Title: 'Aspect Ratio',
 			Paragraph: 'Aspect ratio of the image.'

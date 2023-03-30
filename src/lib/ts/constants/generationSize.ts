@@ -1,4 +1,6 @@
+import LL from '$i18n/i18n-svelte';
 import type { TTab } from '$ts/types/main';
+import { derived, type Readable } from 'svelte/store';
 
 export const availableWidths = ['384', '432', '512', '608', '640', '760', '768'] as const;
 export type TAvailableWidth = (typeof availableWidths)[number];
@@ -35,6 +37,20 @@ export const aspectRatioTabs: TTab<TAvailableAspectRatio>[] = [
 	{ label: '9:16', value: '9:16' },
 	{ label: '16:9', value: '16:9' }
 ];
+export const AspectRatioDropdownItems = derived<
+	[Readable<TranslationFunctions>],
+	TTab<TAvailableAspectRatio>[]
+>([LL], ([$LL]) => {
+	const tabs: TTab<TAvailableAspectRatio>[] = [
+		{ label: $LL.Home.AspectRatioDropdown.Options.Square(), value: '1:1' },
+		{ label: $LL.Home.AspectRatioDropdown.Options.Squarish(), value: '4:5' },
+		{ label: $LL.Home.AspectRatioDropdown.Options.Landscape(), value: '2:3' },
+		{ label: $LL.Home.AspectRatioDropdown.Options.Portrait(), value: '3:2' },
+		{ label: $LL.Home.AspectRatioDropdown.Options.Mobile(), value: '9:16' },
+		{ label: $LL.Home.AspectRatioDropdown.Options.Desktop(), value: '16:9' }
+	];
+	return tabs;
+});
 export const aspectRatioDefault: TAvailableAspectRatio = '2:3';
 
 export const aspectRatioToImageSize: {

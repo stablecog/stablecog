@@ -1,5 +1,7 @@
 <script lang="ts">
+	import { browser } from '$app/environment';
 	import Button from '$components/buttons/Button.svelte';
+	import SettingsPanel from '$routes/create/SettingsPanel.svelte';
 	import { isTouchscreen } from '$ts/stores/isTouchscreen';
 	import { navbarHeight } from '$ts/stores/navbarHeight';
 	import { windowHeight, windowWidth } from '$ts/stores/window';
@@ -9,11 +11,13 @@
 	let leftPanelHeight: number;
 
 	onMount(() => {
+		if (!browser) return;
 		document.body.style.overflow = 'hidden';
 		document.body.style.height = '100%';
 	});
 
 	onDestroy(() => {
+		if (!browser) return;
 		document.body.style.overflow = 'auto';
 		document.body.style.height = 'auto';
 	});
@@ -53,10 +57,7 @@
 			</div>
 		</div>
 	</div>
-	<div class="w-96 h-full pr-6 pb-6 pt-2.5">
-		<div
-			class="w-full h-full bg-c-bg rounded-3xl border-4 border-c-bg-secondary
-      shadow-2xl shadow-c-shadow/[var(--o-shadow-strongest)] p-5"
-		/>
+	<div class="w-80 lg:w-96 h-full pr-6 pb-6 pt-2.5">
+		<SettingsPanel />
 	</div>
 </div>

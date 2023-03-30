@@ -81,6 +81,42 @@ type RootTranslation = {
 			 */
 			Paragraph: string
 		}
+		AspectRatioDropdown: {
+			/**
+			 * A​s​p​e​c​t​ ​R​a​t​i​o
+			 */
+			Title: string
+			/**
+			 * A​s​p​e​c​t​ ​r​a​t​i​o​ ​o​f​ ​t​h​e​ ​i​m​a​g​e
+			 */
+			Paragraph: string
+			Options: {
+				/**
+				 * S​q​u​a​r​e​ ​(​1​:​1​)
+				 */
+				Square: string
+				/**
+				 * P​o​r​t​r​a​i​t​ ​(​2​:​3​)
+				 */
+				Portrait: string
+				/**
+				 * L​a​n​d​s​c​a​p​e​ ​(​3​:​2​)
+				 */
+				Landscape: string
+				/**
+				 * M​o​b​i​l​e​ ​(​9​:​1​6​)
+				 */
+				Mobile: string
+				/**
+				 * D​e​s​k​t​o​p​ ​(​1​6​:​9​)
+				 */
+				Desktop: string
+				/**
+				 * S​q​u​a​r​i​s​h​ ​(​4​:​5​)
+				 */
+				Squarish: string
+			}
+		}
 		AspectRatioTabBar: {
 			/**
 			 * A​s​p​e​c​t​ ​R​a​t​i​o
@@ -1829,6 +1865,42 @@ export type TranslationFunctions = {
 			 * How similar the image will be to your prompt. Higher values make the image closer to your prompt.
 			 */
 			Paragraph: () => LocalizedString
+		}
+		AspectRatioDropdown: {
+			/**
+			 * Aspect Ratio
+			 */
+			Title: () => LocalizedString
+			/**
+			 * Aspect ratio of the image
+			 */
+			Paragraph: () => LocalizedString
+			Options: {
+				/**
+				 * Square (1:1)
+				 */
+				Square: () => LocalizedString
+				/**
+				 * Portrait (2:3)
+				 */
+				Portrait: () => LocalizedString
+				/**
+				 * Landscape (3:2)
+				 */
+				Landscape: () => LocalizedString
+				/**
+				 * Mobile (9:16)
+				 */
+				Mobile: () => LocalizedString
+				/**
+				 * Desktop (16:9)
+				 */
+				Desktop: () => LocalizedString
+				/**
+				 * Squarish (4:5)
+				 */
+				Squarish: () => LocalizedString
+			}
 		}
 		AspectRatioTabBar: {
 			/**
