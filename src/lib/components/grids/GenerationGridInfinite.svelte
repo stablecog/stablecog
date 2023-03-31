@@ -22,14 +22,24 @@
 		userGalleryCurrentView
 	} from '$ts/stores/user/gallery';
 	import { isTouchscreen } from '$ts/stores/isTouchscreen';
+	import type { TGenerationFullOutput } from '$ts/stores/user/generation';
 
 	export let generationsQuery: CreateInfiniteQueryResult<TUserGenerationFullOutputsPage, unknown>;
+	export let pinnedFullOutputs: TGenerationFullOutput[] | undefined = undefined;
 	export let rerenderKey: string;
 	export let cardType: TGenerationImageCardType;
+	export let gridClasses = 'w-full flex-1';
+	export let cardWidthClasses = 'w-1/2 sm:w-1/3 lg:w-1/4 xl:w-1/5 2xl:w-1/6 3xl:w-1/7';
+	export let gridScrollContainer: HTMLElement;
 
 	let lastRerenderKey = rerenderKey;
 
-	$: outputs = $generationsQuery.data?.pages.flatMap((page) => page.outputs);
+	$: outputs = $generationsQuery.data?.pages
+		? [
+				...(pinnedFullOutputs ?? []),
+				...$generationsQuery.data?.pages.flatMap((page) => page.outputs)
+		  ]
+		: undefined;
 	$: items = outputs?.map((output, index) => ({
 		key: index,
 		id: output.id,
@@ -71,14 +81,16 @@
 		<div class="h-[2vh]" />
 	</div>
 {:else if $generationsQuery.isSuccess && $generationsQuery.data.pages.length > 0 && outputs !== undefined && items !== undefined}
-	<div class="w-full flex-1">
+	<div class={gridClasses} bind:this={gridScrollContainer}>
 		<MasonryInfiniteGrid
+			scrollContainer={gridScrollContainer}
 			bind:this={ig}
 			{items}
 			let:visibleItems
 			align="center"
 			threshold={3000}
 			on:requestAppend={({ detail: e }) => {
+				console.log('requestAppend');
 				if ($generationsQuery.isFetchingNextPage) return;
 				if (!$generationsQuery.hasNextPage) return;
 				e.wait();
@@ -100,7 +112,7 @@
 					!outputs[item.key].is_deleted}
 				<div
 					style="position: absolute;left: -9999px;top: -9999px;"
-					class="w-1/2 sm:w-1/3 lg:w-1/4 xl:w-1/5 2xl:w-1/6 3xl:w-1/7 p-0.5"
+					class="{cardWidthClasses} p-0.5"
 				>
 					<div class="w-full relative group">
 						<ImagePlaceholder
@@ -114,14 +126,20 @@
 										 z-0 overflow-hidden shadow-lg shadow-c-shadow/[var(--o-shadow-normal)]"
 						>
 							{#if outputs[item.key].generation.outputs !== undefined}
-								<GenerationImage
-									{cardType}
-									useUpscaledImage={false}
-									generation={{
-										...outputs[item.key].generation,
-										selected_output: outputs[item.key]
-									}}
-								/>
+								{#if outputs[item.key].status === undefined || outputs[item.key].status === 'succeeded'}
+									<GenerationImage
+										{cardType}
+										useUpscaledImage={false}
+										generation={{
+											...outputs[item.key].generation,
+											selected_output: outputs[item.key]
+										}}
+									/>
+								{:else}
+									<div class="w-full h-full flex items-center justify-center">
+										<IconAnimatedSpinner class="w-10 h-10 text-c-on-bg/50" loading={true} />
+									</div>
+								{/if}
 							{/if}
 						</div>
 					</div>

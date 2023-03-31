@@ -160,13 +160,13 @@
 		lastGenerationStatus === 'server-received' ||
 		lastGenerationStatus === 'server-processing';
 
+	let isInitialCheck = true;
 	let lastGenerationAnimationStatus:
 		| 'idle'
 		| 'should-animate-slow'
 		| 'should-animate'
 		| 'should-complete' = lastGenerationBeingProcessed ? 'should-animate' : 'idle';
 
-	let isInitialCheck = true;
 	$: [lastGenerationStatus], onLastGenerationStatusChanged();
 
 	async function onLastGenerationStatusChanged() {

@@ -6,6 +6,7 @@ import {
 	generationCostCompletionPerMs,
 	getCostCompletionPerMsFromGeneration
 } from '$ts/stores/cost';
+import { generateSSEId } from '$ts/helpers/generateSSEId';
 
 export const generations = writable<TGeneration[]>([]);
 export const activeGeneration = writable<TGenerationWithSelectedOutput | undefined>(undefined);
@@ -18,12 +19,14 @@ export const setGenerationToFailed = ({ id, error }: { id: string; error?: strin
 		const genById = $generations.find((g) => g.id === id);
 		if (genById) {
 			genById.status = 'failed';
+			genById.outputs = genById.outputs.map((o) => ({ ...o, status: 'failed' }));
 			genById.error = error;
 			return $generations;
 		}
 		const genByUiId = $generations.find((g) => g.ui_id === id);
 		if (genByUiId) {
 			genByUiId.status = 'failed';
+			genByUiId.outputs = genByUiId.outputs.map((o) => ({ ...o, status: 'failed' }));
 			genByUiId.error = error;
 			return $generations;
 		}
@@ -47,6 +50,7 @@ export const setGenerationToSucceeded = ({
 			return $generations;
 		}
 		gen.status = 'succeeded';
+		gen.outputs = outputs.map((o) => ({ ...o, status: 'succeeded' }));
 		gen.outputs = outputs;
 		gen.completed_at = Date.now();
 		const costCompletionPerMs = getCostCompletionPerMsFromGeneration(gen);
@@ -73,6 +77,7 @@ export const setGenerationToServerReceived = ({ ui_id, id }: { ui_id: string; id
 		}
 		gen.id = id;
 		gen.status = 'server-received';
+		gen.outputs = gen.outputs.map((o) => ({ ...o, status: 'server-received' }));
 		return $generations;
 	});
 };
@@ -85,6 +90,7 @@ export const setGenerationToServerProcessing = ({ ui_id, id }: { ui_id: string; 
 		const gen = $generations.find((g) => g.id === id);
 		if (gen && gen.status !== 'succeeded' && gen.status !== 'failed') {
 			gen.status = 'server-processing';
+			gen.outputs = gen.outputs.map((o) => ({ ...o, status: 'server-processing' }));
 			gen.started_at = Date.now();
 			if (!gen.ui_id) gen.ui_id = ui_id;
 			return $generations;
@@ -92,6 +98,7 @@ export const setGenerationToServerProcessing = ({ ui_id, id }: { ui_id: string; 
 		const gen2 = $generations.find((g) => g.ui_id === ui_id);
 		if (gen2 && gen2.status !== 'succeeded' && gen2.status !== 'failed') {
 			gen2.status = 'server-processing';
+			gen2.outputs = gen2.outputs.map((o) => ({ ...o, status: 'server-processing' }));
 			gen2.started_at = Date.now();
 			if (!gen2.id) gen2.id = id;
 			return $generations;
@@ -106,7 +113,11 @@ export async function queueInitialGenerationRequest(request: TInitialGenerationR
 			...request,
 			status: 'to-be-submitted',
 			created_at: Date.now(),
-			outputs: []
+			outputs: [...Array(request.num_outputs)].map(() => ({
+				id: generateSSEId(),
+				image_url: '',
+				status: 'to-be-submitted'
+			}))
 		};
 		if ($generations === null || $generations.length === 0) {
 			return [generationToSubmit];
@@ -281,6 +292,7 @@ export interface TGenerationOutput {
 	is_deleted?: boolean;
 	is_favorited?: boolean;
 	gallery_status?: TGalleryStatus;
+	status?: TGenerationOutputStatus;
 }
 
 export type TGalleryStatus =
@@ -289,6 +301,14 @@ export type TGalleryStatus =
 	| 'rejected'
 	| 'not_submitted'
 	| 'manually_submitted';
+
+export type TGenerationOutputStatus =
+	| 'to-be-submitted'
+	| 'server-received'
+	| 'server-processing'
+	| 'succeeded'
+	| 'failed'
+	| 'failed-nsfw';
 
 export interface TGenerationFullOutput extends TGenerationOutput {
 	generation: TGeneration;

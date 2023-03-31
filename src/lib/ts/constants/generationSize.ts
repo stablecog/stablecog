@@ -43,11 +43,11 @@ export const AspectRatioDropdownItems = derived<
 >([LL], ([$LL]) => {
 	const tabs: TTab<TAvailableAspectRatio>[] = [
 		{ label: $LL.Home.AspectRatioDropdown.Options.Square(), value: '1:1' },
-		{ label: $LL.Home.AspectRatioDropdown.Options.Squarish(), value: '4:5' },
-		{ label: $LL.Home.AspectRatioDropdown.Options.Landscape(), value: '2:3' },
-		{ label: $LL.Home.AspectRatioDropdown.Options.Portrait(), value: '3:2' },
+		{ label: $LL.Home.AspectRatioDropdown.Options.Portrait(), value: '2:3' },
+		{ label: $LL.Home.AspectRatioDropdown.Options.Landscape(), value: '3:2' },
 		{ label: $LL.Home.AspectRatioDropdown.Options.Mobile(), value: '9:16' },
-		{ label: $LL.Home.AspectRatioDropdown.Options.Desktop(), value: '16:9' }
+		{ label: $LL.Home.AspectRatioDropdown.Options.Desktop(), value: '16:9' },
+		{ label: $LL.Home.AspectRatioDropdown.Options.Squarish(), value: '4:5' }
 	];
 	return tabs;
 });
