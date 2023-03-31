@@ -1,12 +1,12 @@
 <script lang="ts">
 	import { browser } from '$app/environment';
 	import GenerationFullScreen from '$components/generationFullScreen/GenerationFullScreen.svelte';
-	import SettingsPanel from '$routes/create/SettingsPanel.svelte';
+	import SettingsPanel from '$routes/admin/create/SettingsPanel.svelte';
 	import { activeGeneration, generations } from '$ts/stores/user/generation';
-	import { windowHeight } from '$ts/stores/window';
+
 	import { onDestroy, onMount } from 'svelte';
 	import { navbarHeight } from '$ts/stores/navbarHeight';
-	import PromptBar from '$routes/create/PromptBar.svelte';
+	import PromptBar from '$routes/admin/create/PromptBar.svelte';
 	import { quadOut } from 'svelte/easing';
 	import { fade, fly } from 'svelte/transition';
 	import { portal } from 'svelte-portal';
@@ -20,6 +20,7 @@
 	} from '$ts/queries/userGenerations';
 	import { createPageUserGenerationFullOutputsQueryKey } from '$ts/stores/user/keys';
 	import GenerationGridInfinite from '$components/grids/GenerationGridInfinite.svelte';
+	import { windowHeight } from '$ts/stores/window';
 
 	let topbarHeight: number;
 	let leftPanelHeight: number;
