@@ -23,6 +23,7 @@
 	} from '$ts/stores/user/gallery';
 	import { isTouchscreen } from '$ts/stores/isTouchscreen';
 	import type { TGenerationFullOutput } from '$ts/stores/user/generation';
+	import IconAnimatedGeneration from '$components/icons/IconAnimatedGeneration.svelte';
 
 	export let generationsQuery: CreateInfiniteQueryResult<TUserGenerationFullOutputsPage, unknown>;
 	export let pinnedFullOutputs: TGenerationFullOutput[] | undefined = undefined;
@@ -137,7 +138,18 @@
 									/>
 								{:else}
 									<div class="w-full h-full flex items-center justify-center">
-										<IconAnimatedSpinner class="w-10 h-10 text-c-on-bg/50" loading={true} />
+										{#if outputs[item.key].status === 'failed' || outputs[item.key].status === 'failed-nsfw'}
+											<p class="text-sm text-c-on-bg/50 px-5 py-3 text-center leading-relaxed">
+												{outputs[item.key].status === 'failed-nsfw'
+													? $LL.Error.ImageWasNSFW()
+													: $LL.Error.SomethingWentWrong()}
+											</p>
+										{:else}
+											<IconAnimatedGeneration
+												class="w-24 max-w-full h-auto opacity-50 text-c-primary"
+												loading={true}
+											/>
+										{/if}
 									</div>
 								{/if}
 							{/if}

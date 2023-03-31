@@ -7,6 +7,7 @@ import {
 	getCostCompletionPerMsFromGeneration
 } from '$ts/stores/cost';
 import { generateSSEId } from '$ts/helpers/generateSSEId';
+import { numOutputs } from '$ts/stores/generationSettings';
 
 export const generations = writable<TGeneration[]>([]);
 export const activeGeneration = writable<TGenerationWithSelectedOutput | undefined>(undefined);
@@ -19,14 +20,20 @@ export const setGenerationToFailed = ({ id, error }: { id: string; error?: strin
 		const genById = $generations.find((g) => g.id === id);
 		if (genById) {
 			genById.status = 'failed';
-			genById.outputs = genById.outputs.map((o) => ({ ...o, status: 'failed' }));
+			genById.outputs = genById.outputs.map((o) => ({
+				...o,
+				status: error === 'NSFW' ? 'failed-nsfw' : 'failed'
+			}));
 			genById.error = error;
 			return $generations;
 		}
 		const genByUiId = $generations.find((g) => g.ui_id === id);
 		if (genByUiId) {
 			genByUiId.status = 'failed';
-			genByUiId.outputs = genByUiId.outputs.map((o) => ({ ...o, status: 'failed' }));
+			genByUiId.outputs = genByUiId.outputs.map((o) => ({
+				...o,
+				status: error === 'NSFW' ? 'failed-nsfw' : 'failed'
+			}));
 			genByUiId.error = error;
 			return $generations;
 		}
@@ -50,8 +57,14 @@ export const setGenerationToSucceeded = ({
 			return $generations;
 		}
 		gen.status = 'succeeded';
-		gen.outputs = outputs.map((o) => ({ ...o, status: 'succeeded' }));
-		gen.outputs = outputs;
+		gen.outputs = [
+			...outputs.map((o) => ({ ...o, status: 'succeeded' as TGenerationOutputStatus })),
+			...Array.from({ length: gen.num_outputs - outputs.length }).map(() => ({
+				id: generateSSEId(),
+				image_url: '',
+				status: 'failed-nsfw' as TGenerationOutputStatus
+			}))
+		];
 		gen.completed_at = Date.now();
 		const costCompletionPerMs = getCostCompletionPerMsFromGeneration(gen);
 		if (costCompletionPerMs !== null) {
