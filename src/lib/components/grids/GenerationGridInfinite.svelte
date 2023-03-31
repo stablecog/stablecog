@@ -23,7 +23,8 @@
 	} from '$ts/stores/user/gallery';
 	import { isTouchscreen } from '$ts/stores/isTouchscreen';
 	import type { TGenerationFullOutput } from '$ts/stores/user/generation';
-	import IconAnimatedGeneration from '$components/icons/IconAnimatedGeneration.svelte';
+	import { fade } from 'svelte/transition';
+	import { quadIn } from 'svelte/easing';
 
 	export let generationsQuery: CreateInfiniteQueryResult<TUserGenerationFullOutputsPage, unknown>;
 	export let pinnedFullOutputs: TGenerationFullOutput[] | undefined = undefined;
@@ -111,6 +112,7 @@
 						!outputs[item.key].is_favorited
 					) &&
 					!outputs[item.key].is_deleted}
+				{@const status = outputs[item.key].status}
 				<div
 					style="position: absolute;left: -9999px;top: -9999px;"
 					class="{cardWidthClasses} p-0.5"
@@ -127,29 +129,32 @@
 										 z-0 overflow-hidden shadow-lg shadow-c-shadow/[var(--o-shadow-normal)]"
 						>
 							{#if outputs[item.key].generation.outputs !== undefined}
-								{#if outputs[item.key].status === undefined || outputs[item.key].status === 'succeeded'}
-									<GenerationImage
-										{cardType}
-										useUpscaledImage={false}
-										generation={{
-											...outputs[item.key].generation,
-											selected_output: outputs[item.key]
-										}}
-									/>
+								{#if status !== 'failed' && status !== 'failed-nsfw'}
+									{#if status !== undefined && status !== 'succeeded'}
+										<div
+											out:fade|local={{ duration: 3000, easing: quadIn }}
+											class="w-full h-full absolute left-0 top-0 flex items-center justify-center"
+										>
+											<IconAnimatedSpinner class="w-10 h-10 text-c-on-bg/35" />
+										</div>
+									{/if}
+									{#if status === undefined || status === 'succeeded'}
+										<GenerationImage
+											{cardType}
+											useUpscaledImage={false}
+											generation={{
+												...outputs[item.key].generation,
+												selected_output: outputs[item.key]
+											}}
+										/>
+									{/if}
 								{:else}
 									<div class="w-full h-full flex items-center justify-center">
-										{#if outputs[item.key].status === 'failed' || outputs[item.key].status === 'failed-nsfw'}
-											<p class="text-sm text-c-on-bg/50 px-5 py-3 text-center leading-relaxed">
-												{outputs[item.key].status === 'failed-nsfw'
-													? $LL.Error.ImageWasNSFW()
-													: $LL.Error.SomethingWentWrong()}
-											</p>
-										{:else}
-											<IconAnimatedGeneration
-												class="w-24 max-w-full h-auto opacity-50 text-c-primary"
-												loading={true}
-											/>
-										{/if}
+										<p class="text-sm text-c-on-bg/50 px-5 py-3 text-center leading-relaxed">
+											{status === 'failed-nsfw'
+												? $LL.Error.ImageWasNSFW()
+												: $LL.Error.SomethingWentWrong()}
+										</p>
 									</div>
 								{/if}
 							{/if}
