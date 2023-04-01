@@ -4,6 +4,7 @@
 	import IconDimensions from '$components/icons/IconDimensions.svelte';
 	import TabLikeDropdown from '$components/tabBars/TabLikeDropdown.svelte';
 	import LL from '$i18n/i18n-svelte';
+	import { estimatedGenerationDurationMs } from '$routes/admin/create/estimatedGenerationDurationMs';
 	import { tooltip } from '$ts/actions/tooltip';
 	import { availableModelIdDropdownItems } from '$ts/constants/generationModels';
 	import {
@@ -13,10 +14,13 @@
 		type TAvailableWidth
 	} from '$ts/constants/generationSize';
 	import { aspectRatioTooltip, modelTooltip } from '$ts/constants/tooltips';
+	import { calculateGenerationCost, generationCostCompletionPerMs } from '$ts/stores/cost';
 	import {
 		generationAspectRatio,
 		generationHeight,
+		generationInferenceSteps,
 		generationModelId,
+		generationNumOutputs,
 		generationWidth
 	} from '$ts/stores/generationSettings';
 
@@ -40,6 +44,27 @@
 		}
 		generationWidth.set(newWidth);
 		generationHeight.set(newHeight);
+	}
+
+	$: [
+		$generationWidth,
+		$generationHeight,
+		$generationInferenceSteps,
+		$generationNumOutputs,
+		$generationCostCompletionPerMs
+	],
+		setEstimatedGenerationDuration();
+
+	function setEstimatedGenerationDuration() {
+		if ($generationCostCompletionPerMs !== null) {
+			const cost = calculateGenerationCost(
+				Number($generationWidth),
+				Number($generationHeight),
+				Number($generationInferenceSteps),
+				Number($generationNumOutputs)
+			);
+			estimatedGenerationDurationMs.set(cost / $generationCostCompletionPerMs);
+		}
 	}
 </script>
 

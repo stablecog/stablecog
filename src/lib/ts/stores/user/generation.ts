@@ -1,13 +1,18 @@
 import { apiUrl } from '$ts/constants/main';
 import type { TAvailableGenerationModelId } from '$ts/constants/generationModels';
 import type { TAvailableSchedulerId } from '$ts/constants/schedulers';
-import { writable } from 'svelte/store';
+import { get, writable } from 'svelte/store';
 import {
 	generationCostCompletionPerMs,
 	getCostCompletionPerMsFromGeneration
 } from '$ts/stores/cost';
 import { generateSSEId } from '$ts/helpers/generateSSEId';
-import { numOutputs } from '$ts/stores/generationSettings';
+import { estimatedGenerationDurationMs } from '$routes/admin/create/estimatedGenerationDurationMs';
+import {
+	newGenerationCompleteAnimation,
+	newGenerationStartAnimation
+} from '$ts/animation/generationAnimation';
+import type { Tweened } from 'svelte/motion';
 
 export const generations = writable<TGeneration[]>([]);
 export const activeGeneration = writable<TGenerationWithSelectedOutput | undefined>(undefined);
@@ -104,6 +109,9 @@ export const setGenerationToServerProcessing = ({ ui_id, id }: { ui_id: string; 
 		if (gen && gen.status !== 'succeeded' && gen.status !== 'failed') {
 			gen.status = 'server-processing';
 			gen.outputs = gen.outputs.map((o) => ({ ...o, status: 'server-processing' }));
+			gen.outputs.forEach((o) => {
+				o.animation = newGenerationCompleteAnimation(o.animation);
+			});
 			gen.started_at = Date.now();
 			if (!gen.ui_id) gen.ui_id = ui_id;
 			return $generations;
@@ -112,6 +120,9 @@ export const setGenerationToServerProcessing = ({ ui_id, id }: { ui_id: string; 
 		if (gen2 && gen2.status !== 'succeeded' && gen2.status !== 'failed') {
 			gen2.status = 'server-processing';
 			gen2.outputs = gen2.outputs.map((o) => ({ ...o, status: 'server-processing' }));
+			gen2.outputs.forEach((o) => {
+				o.animation = newGenerationCompleteAnimation(o.animation);
+			});
 			gen2.started_at = Date.now();
 			if (!gen2.id) gen2.id = id;
 			return $generations;
@@ -122,6 +133,7 @@ export const setGenerationToServerProcessing = ({ ui_id, id }: { ui_id: string; 
 
 export async function queueInitialGenerationRequest(request: TInitialGenerationRequest) {
 	generations.update(($generations) => {
+		const estimatedDurationMs = get(estimatedGenerationDurationMs);
 		const generationToSubmit: TGeneration = {
 			...request,
 			status: 'to-be-submitted',
@@ -129,7 +141,8 @@ export async function queueInitialGenerationRequest(request: TInitialGenerationR
 			outputs: [...Array(request.num_outputs)].map(() => ({
 				id: generateSSEId(),
 				image_url: '',
-				status: 'to-be-submitted'
+				status: 'to-be-submitted',
+				animation: newGenerationStartAnimation()
 			}))
 		};
 		if ($generations === null || $generations.length === 0) {
@@ -306,6 +319,7 @@ export interface TGenerationOutput {
 	is_favorited?: boolean;
 	gallery_status?: TGalleryStatus;
 	status?: TGenerationOutputStatus;
+	animation?: Tweened<number>;
 }
 
 export type TGalleryStatus =
