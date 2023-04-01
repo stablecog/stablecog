@@ -7,6 +7,7 @@ import '$ts/constants/supabase';
 import type { TAvailableThemes } from '$ts/stores/theme';
 import { apiUrl } from '$ts/constants/main';
 import { galleryAdminAllowedRoutes, isGalleryAdmin, isSuperAdmin } from '$ts/helpers/admin/roles';
+import { CLIPAPI_AUTH_TOKEN } from '$env/static/private';
 
 loadAllLocales();
 
@@ -63,6 +64,7 @@ export const handle: Handle = async ({ event, resolve }) => {
 			if (isGalleryAdmin(roles) && !galleryAdminAllowedRoutes.includes(event.url.pathname)) {
 				return notAuthorizedResponse('/admin');
 			}
+			event.locals.clipApiToken = CLIPAPI_AUTH_TOKEN;
 			return resolve(event);
 		} catch (error) {
 			console.log('Admin access error:', error);

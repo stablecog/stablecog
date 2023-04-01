@@ -12,6 +12,8 @@
 	import IconSadFace from '$components/icons/IconSadFace.svelte';
 	import { PUBLIC_BUCKET_URL, PUBLIC_GO_SERVER_URL_QA } from '$env/static/public';
 
+	export let data;
+
 	let searchString: string;
 	let searchStringDebounced: string | undefined = undefined;
 	let currentText: string;
@@ -38,7 +40,7 @@
 					const res = await fetch(`${endpoint}?${params.toString()}`, {
 						method: 'GET',
 						headers: {
-							Authorization: 'Bearer ' + $page.data.session?.access_token
+							Authorization: data.clipApiToken || ''
 						}
 					});
 					if (!res.ok) {

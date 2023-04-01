@@ -14,6 +14,7 @@ declare namespace App {
 		countryCode: string | null;
 		theme: TAvailableThemes | null;
 		advancedMode: boolean | null;
+		clipApiToken: string | undefined;
 	}
 
 	// interface Error {}
