@@ -32,8 +32,8 @@
 	export let cardType: TGenerationImageCardType;
 	export let gridClasses = 'w-full flex-1';
 	export let cardWidthClasses = 'w-1/2 sm:w-1/3 lg:w-1/4 xl:w-1/5 2xl:w-1/6 3xl:w-1/7';
-	export let gridScrollContainer: HTMLElement;
 
+	let gridScrollContainer: HTMLElement;
 	let lastRerenderKey = rerenderKey;
 
 	$: outputs = $generationsQuery.data?.pages
