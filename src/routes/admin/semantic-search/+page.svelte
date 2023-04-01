@@ -9,16 +9,15 @@
 	import { quadOut } from 'svelte/easing';
 	import { scale } from 'svelte/transition';
 	import IconAnimatedSpinner from '$components/icons/IconAnimatedSpinner.svelte';
-	import { apiUrl } from '$ts/constants/main';
 	import IconSadFace from '$components/icons/IconSadFace.svelte';
-	import { PUBLIC_BUCKET_URL } from '$env/static/public';
+	import { PUBLIC_BUCKET_URL, PUBLIC_GO_SERVER_URL_QA } from '$env/static/public';
 
 	let searchString: string;
 	let searchStringDebounced: string | undefined = undefined;
 	let searchTimeout: NodeJS.Timeout;
 	let searchDebounceMs = 400;
 	$: searchString, setDebouncedSearch(searchString);
-	const endpoint = `${apiUrl.origin}/v1/user/clip`;
+	const endpoint = `${PUBLIC_GO_SERVER_URL_QA}/v1/user/clip`;
 
 	const getUrlFromImagePath = (imagePath: string) => {
 		return `${PUBLIC_BUCKET_URL}/${imagePath}`;
