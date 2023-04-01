@@ -17,7 +17,7 @@
 	let searchTimeout: NodeJS.Timeout;
 	let searchDebounceMs = 400;
 	$: searchString, setDebouncedSearch(searchString);
-	const endpoint = `${PUBLIC_GO_SERVER_URL_QA}/v1/user/clip`;
+	const endpoint = `${PUBLIC_GO_SERVER_URL_QA}/clip`;
 
 	const getUrlFromImagePath = (imagePath: string) => {
 		return `${PUBLIC_BUCKET_URL}/${imagePath}`;
@@ -44,7 +44,6 @@
 						throw new Error('Non-200 response');
 					}
 					const resJson: string[] = await res.json();
-					console.log(resJson);
 					return resJson;
 				}
 		  })
@@ -156,7 +155,7 @@
 		{:else if $semanticSearchQuery?.data?.length > 0}
 			<div class="w-full flex-1 flex flex-wrap justify-center">
 				{#each $semanticSearchQuery.data as data}
-					<div class="w-1/2 md:w-1/3 lg:w-1/4 xl:w-1/5 2xl:w-1/6 p-1">
+					<div class="w-1/2 md:w-1/3 lg:w-1/4 xl:w-1/5 2xl:w-1/6 p-1.5">
 						<img
 							class="w-full h-auto rounded-lg ring-4 
 							ring-c-bg-secondary bg-c-bg-secondary shadow-xl shadow-c-shadow/var(--o-shadow-stronger)"
