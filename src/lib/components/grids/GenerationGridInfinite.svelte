@@ -152,7 +152,7 @@
 										/>
 									{/if}
 								{:else}
-									<div class="w-full h-full flex items-center justify-center">
+									<div class="w-full h-full flex items-center bg-c-bg-secondary justify-center">
 										<p class="text-sm text-c-on-bg/50 px-5 py-3 text-center leading-relaxed">
 											{status === 'failed-nsfw'
 												? $LL.Error.ImageWasNSFW()

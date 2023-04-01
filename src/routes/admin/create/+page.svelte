@@ -143,7 +143,6 @@
 							pinnedFullOutputs={$generations.flatMap((g) =>
 								g.outputs.map((o) => ({ ...o, generation: g }))
 							)}
-							{gridScrollContainer}
 							cardWidthClasses="w-1/2 sm:w-1/3 lg:w-1/4 xl:w-1/5"
 							cardType="generate"
 							generationsQuery={userGenerationFullOutputsQuery}

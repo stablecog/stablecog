@@ -18,7 +18,7 @@
 	let searchTimeout: NodeJS.Timeout;
 	let searchDebounceMs = 400;
 	$: searchString, setDebouncedSearch(searchString);
-	const endpoint = `${PUBLIC_GO_SERVER_URL_QA}/clip`;
+	const endpoint = `${PUBLIC_GO_SERVER_URL_QA}/clippg`;
 
 	const getUrlFromImagePath = (imagePath: string) => {
 		return `${PUBLIC_BUCKET_URL}/${imagePath}`;
