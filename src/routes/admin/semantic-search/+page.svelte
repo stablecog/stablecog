@@ -180,7 +180,9 @@
 								src={getUrlFromImagePath(object.image)}
 								alt={object.prompt}
 							/>
-							<div class="w-full absolute bottom-0 left-0 bg-c-bg/75 px-3 py-2">
+							<div
+								class="w-full absolute bottom-0 left-0 bg-c-bg/85 px-3 py-2 max-h-[4rem] overflow-hidden"
+							>
 								<p class="w-full text-xxs leading-normal">{object.prompt}</p>
 							</div>
 						</div>
