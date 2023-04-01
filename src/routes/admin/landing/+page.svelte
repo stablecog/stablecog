@@ -10,12 +10,12 @@
 
 <div class="w-full flex flex-col flex-1">
 	<div
-		class="w-full min-h-[calc(100vh-8rem)] min-h-[calc(100svh-8rem)] md:min-h-[calc(100vh-6rem)] md:min-h-[calc(100svh-6rem)]
-		lg:min-h-0 flex-1 flex flex-col lg:flex-row justify-between items-center my-auto"
+		class="hero-container w-full flex-1 flex flex-col lg:flex-row 
+		justify-between items-center my-auto"
 	>
 		<div
 			class="px-8 lg:pl-[max(calc((100%-1280px)/2),4rem)] flex flex-col order-1 lg:order-0 items-center lg:items-start gap-6 
-			pb-24 md:pb-18 lg:pt-12 lg:pb-48"
+			pb-18 md:pb-18 lg:pt-12 lg:pb-48"
 		>
 			<h1
 				class="max-w-md text-center lg:text-left leading-tight lg:leading-tight text-3xl lg:text-4.5xl font-bold"
@@ -33,3 +33,21 @@
 		</div>
 	</div>
 </div>
+
+<style>
+	.hero-container {
+		min-height: calc(100vh - 8rem);
+		min-height: calc(100svh - 8rem);
+	}
+	@media screen and (min-width: 768px) {
+		.hero-container {
+			min-height: calc(100vh - 6rem);
+			min-height: calc(100svh - 6rem);
+		}
+	}
+	@media screen and (min-width: 1024px) {
+		.hero-container {
+			min-height: 0px;
+		}
+	}
+</style>
