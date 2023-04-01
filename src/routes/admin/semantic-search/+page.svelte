@@ -44,8 +44,11 @@
 					if (!res.ok) {
 						throw new Error('Non-200 response');
 					}
-					const resJson: { data: string[]; translated_text?: string; input_text: string } =
-						await res.json();
+					const resJson: {
+						data: { image: string; prompt: string }[];
+						translated_text?: string;
+						input_text: string;
+					} = await res.json();
 					currentText = resJson.translated_text || resJson.input_text;
 					return resJson;
 				}
@@ -166,14 +169,21 @@
 			</div>
 		{:else if $semanticSearchQuery?.data?.data.length > 0}
 			<div class="w-full flex-1 flex flex-wrap justify-center">
-				{#each $semanticSearchQuery.data.data as imagePaths}
+				{#each $semanticSearchQuery.data.data as object}
 					<div class="w-1/2 md:w-1/3 lg:w-1/4 xl:w-1/5 2xl:w-1/6 p-1.5">
-						<img
-							class="w-full h-auto rounded-lg ring-4 
-							ring-c-bg-secondary bg-c-bg-secondary shadow-xl shadow-c-shadow/var(--o-shadow-stronger)"
-							src={getUrlFromImagePath(imagePaths)}
-							alt={imagePaths}
-						/>
+						<div
+							class="w-full rounded-lg ring-4 relative
+							ring-c-bg-secondary bg-c-bg-secondary shadow-xl shadow-c-shadow/var(--o-shadow-stronger) overflow-hidden"
+						>
+							<img
+								class="w-full h-auto"
+								src={getUrlFromImagePath(object.image)}
+								alt={object.prompt}
+							/>
+							<div class="w-full absolute bottom-0 left-0 bg-c-bg/75 px-3 py-2">
+								<p class="w-full text-xxs leading-normal">{object.prompt}</p>
+							</div>
+						</div>
 					</div>
 				{/each}
 			</div>
