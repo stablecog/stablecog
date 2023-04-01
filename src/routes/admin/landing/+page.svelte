@@ -14,7 +14,8 @@
 		lg:min-h-0 flex-1 flex flex-col lg:flex-row justify-between items-center my-auto"
 	>
 		<div
-			class="px-8 lg:pl-[max(calc((100%-1280px)/2),4rem)] flex flex-col order-1 lg:order-0 items-center lg:items-start gap-6 pb-18 lg:pt-12 lg:pb-48"
+			class="px-8 lg:pl-[max(calc((100%-1280px)/2),4rem)] flex flex-col order-1 lg:order-0 items-center lg:items-start gap-6 
+			pb-24 md:pb-18 lg:pt-12 lg:pb-48"
 		>
 			<h1
 				class="max-w-md text-center lg:text-left leading-tight lg:leading-tight text-3xl lg:text-4.5xl font-bold"
