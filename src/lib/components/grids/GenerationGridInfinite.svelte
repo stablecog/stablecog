@@ -25,7 +25,7 @@
 	import type { TGenerationFullOutput } from '$ts/stores/user/generation';
 	import GenerationAnimation from '$components/grids/GenerationAnimation.svelte';
 	import { fade } from 'svelte/transition';
-	import { quadIn } from 'svelte/easing';
+	import { quadIn, quadOut } from 'svelte/easing';
 	export let generationsQuery: CreateInfiniteQueryResult<TUserGenerationFullOutputsPage, unknown>;
 	export let pinnedFullOutputs: TGenerationFullOutput[] | undefined = undefined;
 	export let rerenderKey: string;
@@ -153,7 +153,7 @@
 									{/if}
 								{:else}
 									<div
-										in:fade={{ duration: 150, easing: quadIn }}
+										in:fade={{ duration: 200, easing: quadOut }}
 										class="w-full h-full flex items-center bg-c-bg-secondary justify-center relative"
 									>
 										<p class="text-sm text-c-on-bg/50 px-5 py-3 text-center leading-relaxed">
