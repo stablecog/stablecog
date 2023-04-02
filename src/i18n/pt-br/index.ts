@@ -201,6 +201,14 @@ const ptBr: Translation = {
 		AllTitle: 'All',
 		ConfirmButton: 'Confirm',
 		ConfirmQuestionMarkButton: 'Confirm?',
+		Credits: {
+			CreditsTable: {
+				CreditTypeTitle: 'Credit Type',
+				RemainingCreditsTitle: 'Remaining',
+				ExpiryTitle: 'Expiry',
+				LastReplenish: 'Last Replenish'
+			}
+		},
 		BatchEditBar: {
 			PauseEditingButton: 'Pause Editing',
 			DeselectButton: 'Deselect ({selectedCount})',
@@ -495,6 +503,11 @@ const ptBr: Translation = {
 				PageTitle: 'Changed plan',
 				PageParagraph: 'Your plan has been changed successfully.'
 			}
+		},
+		Meta: {
+			AccountCreationTitle: 'Creation',
+			LastSignInTitle: 'Last Sign-in',
+			LastSeenTitle: 'Last Seen'
 		},
 		ChangeEmail: {
 			PageTitle: 'Change Email',

@@ -324,7 +324,7 @@
 							bg-c-bg-secondary rounded-xl shadow-lg shadow-c-shadow/[var(--o-shadow-normal)] p-3 md:p-4"
 						>
 							<div class="w-full flex flex-row items-center justify-between gap-5">
-								<div class="flex-shrink min-w-0 flex flex-col items-start justify-center">
+								<div class="flex flex-col items-start justify-center">
 									<div class="max-w-full flex flex-col">
 										<button
 											bind:this={isDropdownOpen[user.id].buttonElement}
@@ -424,29 +424,36 @@
 										</div>
 									</div>
 									<p
-										class="max-w-full text-xxs text-c-on-bg/50 bg-c-on-bg/5 rounded-md px-2 py-1 mt-2 break-all"
+										class="max-w-full text-xxs text-c-on-bg/50 bg-c-on-bg/5 rounded-md px-2 py-1 mt-1 break-all"
 									>
 										{user.id}
 									</p>
-									<p class="max-w-full text-xxs text-c-on-bg/50 mt-2 break-all px-1.5">
-										{getRelativeDate({ date: user.created_at, locale: $locale })} • {getRelativeDate(
-											{
-												date: user.last_sign_in_at,
-												locale: $locale
-											}
-										)} • {getRelativeDate({
-											date: user.last_seen_at,
-											locale: $locale
-										})}
-									</p>
+									<div class="max-w-full flex flex-wrap text-xxs mt-2.5 gap-3">
+										<div class="flex flex-col px-1 md:px-2">
+											<p class="text-c-on-bg/75 font-semibold">
+												{$LL.Account.Meta.AccountCreationTitle()}
+											</p>
+											<p class="mt-1 text-c-on-bg/50">
+												{getRelativeDate({ date: user.created_at, locale: $locale })}
+											</p>
+										</div>
+										<div class="flex flex-col px-1 md:px-2">
+											<p class="text-c-on-bg/75 font-semibold">
+												{$LL.Account.Meta.LastSeenTitle()}
+											</p>
+											<p class="mt-1 text-c-on-bg/50">
+												{getRelativeDate({ date: user.created_at, locale: $locale })}
+											</p>
+										</div>
+									</div>
 								</div>
-								<div class="flex flex-col items-end justify-center">
-									<ProductIdBadge productId={user.product_id} size="sm" />
+								<div class="min-w-[4rem] flex flex-col items-end justify-center">
+									<ProductIdBadge class="max-w-full" productId={user.product_id} size="sm" />
 									<a
 										rel="noreferrer"
 										href="https://dashboard.stripe.com/customers/{user.stripe_customer_id}"
 										target="_blank"
-										class="text-xs text-c-on-bg/50 bg-c-on-bg/5 rounded-lg px-2.5 py-1.5 mt-2.5 transition ring-0 ring-c-primary/20 {!$isTouchscreen
+										class="max-w-full text-xs text-c-on-bg/50 bg-c-on-bg/5 rounded-lg px-2.5 py-1.5 mt-2.5 transition ring-0 ring-c-primary/20 {!$isTouchscreen
 											? 'hover:text-c-primary hover:bg-c-primary/10 hover:ring-2'
 											: ''}"
 									>
@@ -455,25 +462,41 @@
 								</div>
 							</div>
 							{#if user.credits}
-								<div class="w-full mt-2.5">
+								<div class="w-full mt-3 text-xxs md:text-xs">
+									<div class="w-full flex items-center py-1.5 bg-c-on-bg/6 rounded-t-md gap-3">
+										<p class="max-w-full break-all w-1/4 px-2 text-c-on-bg/75 font-semibold">
+											{$LL.Shared.Credits.CreditsTable.CreditTypeTitle()}
+										</p>
+										<p class="max-w-full break-all w-1/4 px-2 text-c-on-bg/75 font-semibold">
+											{$LL.Shared.Credits.CreditsTable.RemainingCreditsTitle()}
+										</p>
+										<p class="max-w-full break-all w-1/4 px-2 text-c-on-bg/75 font-semibold">
+											{$LL.Shared.Credits.CreditsTable.ExpiryTitle()}
+										</p>
+										<p class="max-w-full break-all w-1/4 px-2 text-c-on-bg/75 font-semibold">
+											{$LL.Shared.Credits.CreditsTable.LastReplenish()}
+										</p>
+									</div>
 									{#each user.credits as credit, index}
 										<div
-											class="w-full flex items-center py-1 {index % 2 === 0
-												? 'bg-c-on-bg/5'
-												: ''} text-xs rounded-md gap-3"
+											class="w-full flex items-center py-1.5 {(index + 1) % 2 === 0
+												? 'bg-c-on-bg/6'
+												: 'bg-c-on-bg/3'} {index === user.credits.length - 1
+												? 'rounded-b-md'
+												: ''} gap-3"
 										>
-											<p class="w-1/4 md:w-32 px-2 text-c-on-bg/75">
+											<p class="max-w-full break-all w-1/4 px-2 text-c-on-bg/50">
 												{credit.credit_type.stripe_product_id || credit.credit_type.name === 'Free'
 													? getTitleFromProductId($LL, credit.credit_type.stripe_product_id)
 													: credit.credit_type.name}
 											</p>
-											<p class="w-1/4 md:w-32 px-2 text-c-on-bg/75">
+											<p class="max-w-full break-all w-1/4 px-2 text-c-on-bg/50">
 												{credit.remaining_amount.toLocaleString($locale)}
 											</p>
-											<p class="w-1/4 md:w-32 px-2 text-c-on-bg/50">
+											<p class="max-w-full break-all w-1/4 px-2 text-c-on-bg/50">
 												{getRelativeDate({ date: credit.expires_at, locale: $locale })}
 											</p>
-											<p class="w-1/4 md:w-32 px-2 text-c-on-bg/50">
+											<p class="max-w-full break-all w-1/4 px-2 text-c-on-bg/50">
 												{credit.replenished_at
 													? getRelativeDate({ date: credit.replenished_at, locale: $locale })
 													: ''}

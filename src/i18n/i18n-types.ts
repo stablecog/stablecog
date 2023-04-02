@@ -623,6 +623,26 @@ type RootTranslation = {
 		 * C​o​n​f​i​r​m​?
 		 */
 		ConfirmQuestionMarkButton: string
+		Credits: {
+			CreditsTable: {
+				/**
+				 * C​r​e​d​i​t​ ​T​y​p​e
+				 */
+				CreditTypeTitle: string
+				/**
+				 * R​e​m​a​i​n​i​n​g
+				 */
+				RemainingCreditsTitle: string
+				/**
+				 * E​x​p​i​r​y
+				 */
+				ExpiryTitle: string
+				/**
+				 * L​a​s​t​ ​R​e​p​l​e​n​i​s​h
+				 */
+				LastReplenish: string
+			}
+		}
 		BatchEditBar: {
 			/**
 			 * P​a​u​s​e​ ​E​d​i​t​i​n​g
@@ -1457,6 +1477,20 @@ type RootTranslation = {
 				 */
 				PageParagraph: string
 			}
+		}
+		Meta: {
+			/**
+			 * C​r​e​a​t​i​o​n
+			 */
+			AccountCreationTitle: string
+			/**
+			 * L​a​s​t​ ​S​i​g​n​-​i​n
+			 */
+			LastSignInTitle: string
+			/**
+			 * L​a​s​t​ ​S​e​e​n
+			 */
+			LastSeenTitle: string
 		}
 		ChangeEmail: {
 			/**
@@ -2402,6 +2436,26 @@ export type TranslationFunctions = {
 		 * Confirm?
 		 */
 		ConfirmQuestionMarkButton: () => LocalizedString
+		Credits: {
+			CreditsTable: {
+				/**
+				 * Credit Type
+				 */
+				CreditTypeTitle: () => LocalizedString
+				/**
+				 * Remaining
+				 */
+				RemainingCreditsTitle: () => LocalizedString
+				/**
+				 * Expiry
+				 */
+				ExpiryTitle: () => LocalizedString
+				/**
+				 * Last Replenish
+				 */
+				LastReplenish: () => LocalizedString
+			}
+		}
 		BatchEditBar: {
 			/**
 			 * Pause Editing
@@ -3219,6 +3273,20 @@ export type TranslationFunctions = {
 				 */
 				PageParagraph: () => LocalizedString
 			}
+		}
+		Meta: {
+			/**
+			 * Creation
+			 */
+			AccountCreationTitle: () => LocalizedString
+			/**
+			 * Last Sign-in
+			 */
+			LastSignInTitle: () => LocalizedString
+			/**
+			 * Last Seen
+			 */
+			LastSeenTitle: () => LocalizedString
 		}
 		ChangeEmail: {
 			/**

@@ -204,6 +204,14 @@ const tr: Translation = {
 		AllTitle: 'Hepsi',
 		ConfirmButton: 'Onayla',
 		ConfirmQuestionMarkButton: 'Onayla?',
+		Credits: {
+			CreditsTable: {
+				CreditTypeTitle: 'Credit Type',
+				RemainingCreditsTitle: 'Remaining',
+				ExpiryTitle: 'Expiry',
+				LastReplenish: 'Last Replenish'
+			}
+		},
 		BatchEditBar: {
 			PauseEditingButton: 'Düzenlemeyi Bitir',
 			DeselectButton: 'Seçimi Kaldır ({selectedCount})',
@@ -493,6 +501,11 @@ const tr: Translation = {
 				PageTitle: 'Paket değiştirildi',
 				PageParagraph: 'Paketin başarıyla değiştirildi.'
 			}
+		},
+		Meta: {
+			AccountCreationTitle: 'Creation',
+			LastSignInTitle: 'Last Sign-in',
+			LastSeenTitle: 'Last Seen'
 		},
 		ChangeEmail: {
 			PageTitle: 'E-posta Değiştir',

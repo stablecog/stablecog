@@ -201,6 +201,14 @@ const de: Translation = {
 		AllTitle: 'Alle',
 		ConfirmButton: 'Bestätigen',
 		ConfirmQuestionMarkButton: 'Confirm?',
+		Credits: {
+			CreditsTable: {
+				CreditTypeTitle: 'Credit Type',
+				RemainingCreditsTitle: 'Remaining',
+				ExpiryTitle: 'Expiry',
+				LastReplenish: 'Last Replenish'
+			}
+		},
 		BatchEditBar: {
 			PauseEditingButton: 'Pause Editing',
 			DeselectButton: 'Deselect ({selectedCount})',
@@ -495,6 +503,11 @@ const de: Translation = {
 				PageTitle: 'Abonnement geändert',
 				PageParagraph: 'Dein Abonnement wurde erfolgreich geändert.'
 			}
+		},
+		Meta: {
+			AccountCreationTitle: 'Creation',
+			LastSignInTitle: 'Last Sign-in',
+			LastSeenTitle: 'Last Seen'
 		},
 		ChangeEmail: {
 			PageTitle: 'E-Mail-Adresse ändern',

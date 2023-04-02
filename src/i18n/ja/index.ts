@@ -204,6 +204,14 @@ const ja: Translation = {
 		AllTitle: '全て',
 		ConfirmButton: 'Confirm',
 		ConfirmQuestionMarkButton: 'Confirm?',
+		Credits: {
+			CreditsTable: {
+				CreditTypeTitle: 'Credit Type',
+				RemainingCreditsTitle: 'Remaining',
+				ExpiryTitle: 'Expiry',
+				LastReplenish: 'Last Replenish'
+			}
+		},
 		BatchEditBar: {
 			PauseEditingButton: '編集を一時停止',
 			DeselectButton: '選択解除 ({selectedCount})',
@@ -496,6 +504,11 @@ const ja: Translation = {
 				PageTitle: 'プランを変更',
 				PageParagraph: 'プランが変更されました。'
 			}
+		},
+		Meta: {
+			AccountCreationTitle: 'Creation',
+			LastSignInTitle: 'Last Sign-in',
+			LastSeenTitle: 'Last Seen'
 		},
 		ChangeEmail: {
 			PageTitle: 'メールアドレスを変更',
