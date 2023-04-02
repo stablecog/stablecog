@@ -27,11 +27,13 @@
 	} from '$ts/stores/generationSettings';
 	import { isTouchscreen } from '$ts/stores/isTouchscreen';
 	import {
+		generations,
 		queueInitialGenerationRequest,
 		type TInitialGenerationRequest
 	} from '$ts/stores/user/generation';
 	import { sseId } from '$ts/stores/user/sse';
 	import { userSummary } from '$ts/stores/user/summary';
+	import { maxOngoingGenerationsCount } from '$routes/admin/create/constants';
 
 	export let isCheckCompleted = false;
 	export let openSignInModal: () => void;
@@ -48,7 +50,15 @@
 
 	$: promptInputPlaceholder = $LL.Home.PromptInput.Placeholder();
 
+	$: onGoingGenerationsCount = $generations
+		.map((g) => g.status)
+		.filter((s) => s !== 'succeeded' && s !== 'failed').length;
+	$: maxOngoingGenerationsCountReached = onGoingGenerationsCount >= $maxOngoingGenerationsCount;
+
 	async function onPromptFormSubmitted() {
+		if (maxOngoingGenerationsCountReached) {
+			return;
+		}
 		if (!$page.data.session?.user.id) {
 			openSignInModal();
 			return;
@@ -165,6 +175,7 @@
 			disabled={!isCheckCompleted ||
 				(doesntHaveEnoughCredits && $page.data.session?.user.id !== undefined)}
 			uploading={$generationInitImageFilesState === 'uploading'}
+			loading={onGoingGenerationsCount >= $maxOngoingGenerationsCount}
 			withSpinner
 			fadeOnDisabled={isCheckCompleted}
 			class="w-full flex flex-col relative"
