@@ -9,7 +9,7 @@
 	import { page } from '$app/stores';
 	import { windowHeight, windowWidth } from '$ts/stores/window';
 	import type { LayoutData } from './$types';
-	import { locale, setLocale } from '$i18n/i18n-svelte';
+	import LL, { locale, setLocale } from '$i18n/i18n-svelte';
 	import { localeLS } from '$ts/stores/localeLS';
 	import { loadLocaleAsync } from '$i18n/i18n-util.async';
 	import { isLocale } from '$i18n/i18n-util';
@@ -67,6 +67,10 @@
 		generationInitImageUrl,
 		generationInitImageWidth
 	} from '$ts/stores/generationSettings';
+	import { expandCollapse } from '$ts/animation/transitions';
+	import IconConfetti from '$components/icons/IconConfetti.svelte';
+	import Button from '$components/buttons/Button.svelte';
+	import UpdateAvailableCard from '$components/UpdateAvailableCard.svelte';
 
 	export let data: LayoutData;
 	setLocale(data.locale);
@@ -486,7 +490,13 @@
 			: '/illustrations/grid-on-dark.svg'}); background-size: 24px;"
 	>
 		{#if underDevelopment && (!$userSummary || !isSuperAdmin($userSummary.roles)) && !$page.url.pathname.startsWith('/admin') && !$page.url.pathname.startsWith('/api/auth') && !$page.url.pathname.startsWith('/sign-in')}
-			<UnderDevelopment />
+			{#if Number($serverVersion) > Number($appVersion)}
+				<div class="w-full flex-1 flex flex-col items-center justify-center my-auto py-4">
+					<UpdateAvailableCard />
+				</div>
+			{:else}
+				<UnderDevelopment />
+			{/if}
 		{:else}
 			<Navbar {notAtTheVeryTop} {scrollDirection} />
 			{#if $navbarStickyType === undefined || $navbarStickyType !== 'not-sticky'}
