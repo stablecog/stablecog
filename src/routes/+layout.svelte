@@ -419,7 +419,7 @@
 		}
 	}
 
-	const underDevelopment = true;
+	const underDevelopment = false;
 
 	let notAtTheVeryTop = false;
 	const notAtTheVeryTopThreshold = 5;
