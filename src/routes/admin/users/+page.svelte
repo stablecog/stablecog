@@ -324,7 +324,7 @@
 							bg-c-bg-secondary rounded-xl shadow-lg shadow-c-shadow/[var(--o-shadow-normal)] p-3 md:p-4"
 						>
 							<div class="w-full flex flex-row items-center justify-between gap-5">
-								<div class="flex flex-col items-start justify-center">
+								<div class="flex-1 flex flex-col items-start justify-center">
 									<div class="max-w-full flex flex-col">
 										<button
 											bind:this={isDropdownOpen[user.id].buttonElement}
@@ -447,7 +447,7 @@
 										</div>
 									</div>
 								</div>
-								<div class="min-w-[4rem] flex flex-col items-end justify-center">
+								<div class="flex-1 flex flex-col items-end justify-center">
 									<ProductIdBadge class="max-w-full" productId={user.product_id} size="sm" />
 									<a
 										rel="noreferrer"
@@ -462,7 +462,7 @@
 								</div>
 							</div>
 							{#if user.credits}
-								<div class="w-full mt-3 text-xxs md:text-xs">
+								<div class="w-full mt-3.5 text-xxs md:text-xs">
 									<div class="w-full flex items-center py-1.5 bg-c-on-bg/6 rounded-t-md gap-3">
 										<p class="max-w-full break-all w-1/4 px-2 text-c-on-bg/75 font-semibold">
 											{$LL.Shared.Credits.CreditsTable.CreditTypeTitle()}
