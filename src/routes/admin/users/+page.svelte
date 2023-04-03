@@ -429,7 +429,7 @@
 										{user.id}
 									</p>
 									<div class="max-w-full flex flex-wrap text-xxs mt-2.5 gap-3">
-										<div class="flex flex-col px-1 md:px-2">
+										<div class="flex flex-col px-1.5">
 											<p class="text-c-on-bg/75 font-semibold">
 												{$LL.Account.Meta.AccountCreationTitle()}
 											</p>
@@ -437,12 +437,12 @@
 												{getRelativeDate({ date: user.created_at, locale: $locale })}
 											</p>
 										</div>
-										<div class="flex flex-col px-1 md:px-2">
+										<div class="flex flex-col px-1.5">
 											<p class="text-c-on-bg/75 font-semibold">
 												{$LL.Account.Meta.LastSeenTitle()}
 											</p>
 											<p class="mt-1 text-c-on-bg/50">
-												{getRelativeDate({ date: user.created_at, locale: $locale })}
+												{getRelativeDate({ date: user.last_seen_at, locale: $locale })}
 											</p>
 										</div>
 									</div>
