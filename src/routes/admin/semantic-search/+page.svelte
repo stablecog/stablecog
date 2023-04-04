@@ -1,6 +1,5 @@
 <script lang="ts">
 	import { browser } from '$app/environment';
-	import { page } from '$app/stores';
 	import IconSearch from '$components/icons/IconSearch.svelte';
 	import Input from '$components/Input.svelte';
 	import LL from '$i18n/i18n-svelte';
@@ -20,7 +19,7 @@
 	let searchTimeout: NodeJS.Timeout;
 	let searchDebounceMs = 400;
 	$: searchString, setDebouncedSearch(searchString);
-	const endpoint = `${PUBLIC_GO_SERVER_URL_QA}/clippg`;
+	const endpoint = `${PUBLIC_GO_SERVER_URL_QA}/clipq`;
 
 	const getUrlFromImagePath = (imagePath: string) => {
 		return `${PUBLIC_BUCKET_URL}/${imagePath}`;
