@@ -14,6 +14,7 @@
 	import { browser } from '$app/environment';
 	import { getTitleFromProductId } from '$ts/helpers/stripe/plan';
 	import { getAspectRatioFromWidthAndHeight } from '$ts/constants/generationSize';
+	import IconRobot from '$components/icons/IconRobot.svelte';
 
 	let sse: EventSource | undefined = undefined;
 	$: if (browser && (!sse || sse.readyState === sse.CLOSED)) {
@@ -113,6 +114,7 @@
 		target_num_outputs: number;
 		actual_num_outputs?: number;
 		product_id?: string;
+		system_generated?: boolean;
 	}
 	interface TGenerationRealtimePayloadExt extends TBaseRealtimePayload {
 		aspect_ratio?: string;
@@ -410,7 +412,9 @@
 													background-repeat: repeat;
 												"
 										>
-											{#if generationOrUpscale.country_code}
+											{#if generationOrUpscale.system_generated === true}
+												<IconRobot class="text-c-on-primary/75 w-6 h-6 -mt-1" />
+											{:else if generationOrUpscale.country_code}
 												<p
 													class="text-center text-xs font-bold text-c-on-primary/75 cursor-default relative"
 												>
