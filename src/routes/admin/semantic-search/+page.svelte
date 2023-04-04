@@ -17,7 +17,7 @@
 	let searchStringDebounced: string | undefined = undefined;
 	let currentText: string;
 	let searchTimeout: NodeJS.Timeout;
-	let searchDebounceMs = 400;
+	let searchDebounceMs = 500;
 	$: searchString, setDebouncedSearch(searchString);
 	const endpoint = `${PUBLIC_GO_SERVER_URL_QA}/clipq`;
 
