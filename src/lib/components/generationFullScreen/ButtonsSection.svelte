@@ -265,7 +265,7 @@
 		</div>
 	{/if}
 	{#if modalType === 'generate' || modalType === 'history'}
-		{#if $userSummary?.product_id}
+		{#if $userSummary?.product_id || $userSummary?.has_nonfree_credits}
 			{#if submitToGalleryStatus === 'success' || generation.selected_output.gallery_status !== 'not_submitted'}
 				<SubtleButton disabled={true}>
 					<div class="flex items-center justify-center gap-1.5 text-c-success">

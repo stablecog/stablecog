@@ -15,4 +15,5 @@ export interface TUserSummary {
 	cancels_at?: string;
 	more_credits_at?: string;
 	free_credit_amount?: number;
+	has_nonfree_credits?: boolean;
 }
