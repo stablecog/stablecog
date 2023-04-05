@@ -4,7 +4,7 @@
 	import { windowWidth } from '$ts/stores/window';
 	import IconButton from '$components/buttons/IconButton.svelte';
 	import { isTouchscreen } from '$ts/stores/isTouchscreen';
-	import { onMount, tick } from 'svelte';
+	import { onDestroy, onMount, tick } from 'svelte';
 	import { quadOut } from 'svelte/easing';
 	import { fly } from 'svelte/transition';
 	import { tooltip } from '$ts/actions/tooltip';
@@ -275,7 +275,26 @@
 		setSidebarWrapperVars();
 		lastClickedOutputId.set(undefined);
 	});
+
+	const onPopState: svelte.JSX.EventHandler<PopStateEvent, Window> | null | undefined = (e) => {
+		const searchParams = new URLSearchParams(e.currentTarget.location.search);
+		const hasOutputParam = searchParams.has('output');
+		if (!hasOutputParam) {
+			activeGeneration.set(undefined);
+		}
+	};
+
+	onDestroy(() => {
+		const searchParams = new URLSearchParams(window.location.search);
+		if (searchParams.has('output')) {
+			searchParams.delete('output');
+			const newSearch = searchParams.toString();
+			window.history.pushState({}, '', `${$page.url.pathname}${newSearch ? `?${newSearch}` : ''}`);
+		}
+	});
 </script>
+
+<svelte:window on:popstate={onPopState} />
 
 <ModalWrapper hasPadding={false} let:scrollY>
 	<div class="w-full sticky z-20 top-0 flex items-center justify-start md:hidden pt-1 pb-1 px-1">

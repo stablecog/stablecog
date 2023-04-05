@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { browser } from '$app/environment';
 	import { page } from '$app/stores';
 	import AnchorOrDiv from '$components/AnchorOrDiv.svelte';
 	import CopyButton from '$components/buttons/CopyButton.svelte';
@@ -145,6 +146,20 @@
 		'SC - App Version': $appVersion
 	};
 
+	let imageClickHref: string;
+
+	$: {
+		let params: string;
+		if (browser && window && window.location.search !== $page.url.search) {
+			const searchParams = new URLSearchParams(window.location.search);
+			searchParams.set('output', generation.selected_output.id);
+			params = searchParams.toString();
+		} else {
+			params = `output=${generation.selected_output.id}`;
+		}
+		imageClickHref = `${$page.url.pathname}?${params}`;
+	}
+
 	async function onSelectButtonClicked(
 		e: MouseEvent & {
 			currentTarget: EventTarget & HTMLButtonElement;
@@ -194,8 +209,8 @@
 />
 {#if !generation.selected_output.is_deleted && !isGalleryEditActive}
 	<AnchorOrDiv
-		href={cardType === 'gallery' ? `/gallery?output=${generation.selected_output.id}` : undefined}
-		anchorPreventDefault={cardType === 'gallery'}
+		href={imageClickHref}
+		anchorPreventDefault={true}
 		onClick={(e) => {
 			if (!modalShouldOpen) {
 				lastClickedOutputId.set(generation.selected_output.id);
@@ -205,10 +220,12 @@
 				return;
 			}
 			activeGeneration.set(generation);
-			if (cardType === 'gallery') {
+			if ($page.url.pathname === '/gallery') {
 				logGalleryGenerationOpened(logProps);
-				window.history.replaceState({}, '', `/gallery?output=${generation.selected_output.id}`);
 			}
+			const searchParams = new URLSearchParams(window.location.search);
+			searchParams.set('output', generation.selected_output.id);
+			window.history.pushState({}, '', `${$page.url.pathname}?${searchParams.toString()}`);
 		}}
 		class="w-full h-full absolute left-0 top-0 flex flex-col justify-between items-end overflow-hidden gap-4"
 	>
