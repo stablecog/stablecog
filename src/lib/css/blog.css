@@ -34,13 +34,30 @@
 .blog h2 + h3 {
 	margin-top: 1rem;
 }
-.blog p {
+.blog p, .blog li{
 	width: 100%;
 	font-size: 1rem;
 	line-height: 1.75;
 	margin-top: 1rem;
 	color: rgba(var(--c-on-bg) / 0.75);
 	font-weight: 200;
+}
+.blog ol {
+	margin-top: 1rem;
+	list-style: decimal;
+	margin-left: 2.5rem;
+}
+.blog ul {
+	margin-top: 1rem;
+	list-style: disc;
+	margin-left: 2.5rem;
+}
+.blog ol li, .blog ul li {
+	margin-top: 0.5rem;
+}
+.blog p + ol, .blog p + ul {
+	margin-top: 0rem;
+	margin-bottom: 1rem;
 }
 .blog p:first-child {
 	margin-top: 0rem;
