@@ -28,7 +28,8 @@
 			'SC - Locale': $locale,
 			'SC - Advanced Mode': $advancedModeApp,
 			'SC - Email': $page.data.session?.user.email,
-			'SC - App Version': $appVersion
+			'SC - App Version': $appVersion,
+			'SC - User Id': $page.data.session?.user.id
 		});
 		setTimeout(async () => {
 			if (data.redirect_to) {
