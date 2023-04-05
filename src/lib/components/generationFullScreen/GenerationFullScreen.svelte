@@ -43,6 +43,7 @@
 	import IconNoImage from '$components/icons/IconNoImage.svelte';
 	import { lastClickedOutputId } from '$ts/stores/lastClickedOutputId';
 	import FavoriteButton from '$components/buttons/FavoriteButton.svelte';
+	import { browser } from '$app/environment';
 
 	export let generation: TGenerationWithSelectedOutput;
 	export let modalType: TGenerationFullScreenModalType;
@@ -85,6 +86,7 @@
 	let upscaledImageHeight: number | undefined;
 
 	$: generation, onGenerationChanged();
+	let initialGenerationChange = true;
 	$: upscaleStatus = hadUpscaledImageUrlOnMount
 		? 'succeeded'
 		: upscaleFromStore
@@ -135,6 +137,13 @@
 		const { seed, selected_output, ...rest } = generation;
 		generateSimilarUrl = getGenerationUrlFromParams(rest);
 		linkUrl = `${$page.url.origin}/gallery?output=${generation.id}`;
+		if (browser && window && !initialGenerationChange) {
+			const searchParams = new URLSearchParams(window.location.search);
+			searchParams.set('output', generation.selected_output.id);
+			const params = searchParams.toString();
+			window.history.replaceState({}, '', `${window.location.pathname}?${params}`);
+		}
+		initialGenerationChange = false;
 	};
 
 	let buttonObjectsWithState: TButtonObjectsWithState = {
