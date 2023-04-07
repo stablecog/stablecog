@@ -85,7 +85,7 @@
 	let upscaledImageWidth: number | undefined;
 	let upscaledImageHeight: number | undefined;
 
-	$: generation, onGenerationChanged();
+	$: generation.selected_output, onGenerationChanged();
 	let initialGenerationChange = true;
 	$: upscaleStatus = hadUpscaledImageUrlOnMount
 		? 'succeeded'
@@ -134,6 +134,7 @@
 		if (generation.selected_output.upscaled_image_url) upscaledTabValue = 'upscaled';
 		upscaledImageWidth = undefined;
 		upscaledImageHeight = undefined;
+		buttonObjectsWithState = { ...initialButtonObjectsWithState };
 		const { seed, selected_output, ...rest } = generation;
 		generateSimilarUrl = getGenerationUrlFromParams(rest);
 		linkUrl = `${$page.url.origin}/gallery?output=${generation.id}`;
@@ -146,7 +147,7 @@
 		initialGenerationChange = false;
 	};
 
-	let buttonObjectsWithState: TButtonObjectsWithState = {
+	const initialButtonObjectsWithState: TButtonObjectsWithState = {
 		prompt: {
 			state: 'idle'
 		},
@@ -160,6 +161,8 @@
 			state: 'idle'
 		}
 	};
+
+	let buttonObjectsWithState = { ...initialButtonObjectsWithState };
 
 	const setButtonObjectWithState: TSetButtonObjectWithState = (key, state) => {
 		buttonObjectsWithState[key].state = state;
@@ -502,15 +505,17 @@
 								</div>
 							{/if}
 						</div>
-						<ButtonsSection
-							{generation}
-							{generateSimilarUrl}
-							{linkUrl}
-							{currentImageUrl}
-							{modalType}
-							{setButtonObjectWithState}
-							bind:buttonObjectsWithState
-						/>
+						{#key generation.selected_output.id}
+							<ButtonsSection
+								{generation}
+								{generateSimilarUrl}
+								{linkUrl}
+								{currentImageUrl}
+								{modalType}
+								{setButtonObjectWithState}
+								bind:buttonObjectsWithState
+							/>
+						{/key}
 					</div>
 					<Divider />
 					<ParamsSection
