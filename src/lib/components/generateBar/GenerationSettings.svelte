@@ -21,8 +21,11 @@
 		maxPromptLength,
 		maxSeed
 	} from '$ts/constants/main';
-	import { availableModelIdDropdownItems } from '$ts/constants/generationModels';
-	import { availableSchedulerIdDropdownItems } from '$ts/constants/schedulers';
+	import { availableModelIdDropdownItems, generationModels } from '$ts/constants/generationModels';
+	import {
+		availableSchedulerIdDropdownItems,
+		type TAvailableSchedulerId
+	} from '$ts/constants/schedulers';
 	import {
 		guidanceScaleTooltip,
 		inferenceStepsTooltip,
@@ -57,13 +60,13 @@
 	import IconAspectRatio from '$components/icons/IconAspectRatio.svelte';
 	import TabLikeInitImageUploader from '$components/tabBars/TabLikeInitImageUploader.svelte';
 	import IconAddImage from '$components/icons/IconAddImage.svelte';
-	import IconAnimatedSpinner from '$components/icons/IconAnimatedSpinner.svelte';
 	import IconTickOnly from '$components/icons/IconTickOnly.svelte';
 	import IconWarningOutline from '$components/icons/IconWarningOutline.svelte';
 	import Morpher from '$components/Morpher.svelte';
 	import Morpher3 from '$components/Morpher3.svelte';
 	import IconAnimatedUploading from '$components/icons/IconAnimatedUploading.svelte';
 	import { page } from '$app/stores';
+	import { browser } from '$app/environment';
 
 	export let isCheckComplete: boolean;
 	export let formElement: HTMLFormElement;
@@ -97,6 +100,26 @@
 		}
 		return value;
 	}
+
+	$: schedulerIdDropdownItems = $availableSchedulerIdDropdownItems.filter((i) =>
+		generationModels[$generationModelId].supportedSchedulerIds.includes(
+			// @ts-ignore
+			i.value
+		)
+	);
+
+	$: $generationModelId, adjustSchedulerId();
+
+	const adjustSchedulerId = () => {
+		if (
+			!browser ||
+			// @ts-ignore
+			generationModels[$generationModelId].supportedSchedulerIds.includes($generationSchedulerId)
+		) {
+			return;
+		}
+		generationSchedulerId.set(generationModels[$generationModelId].supportedSchedulerIds[0]);
+	};
 
 	$: logProps = {
 		'SC - User Id': $page.data.session?.user.id,
@@ -272,7 +295,7 @@
 			{containerBottomMinDistance}
 			{disabled}
 			bind:value={$generationSchedulerId}
-			items={$availableSchedulerIdDropdownItems}
+			items={schedulerIdDropdownItems}
 			name="Scheduler"
 		>
 			<div

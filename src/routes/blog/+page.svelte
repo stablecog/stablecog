@@ -47,7 +47,7 @@
 						height="630"
 					/>
 				</div>
-				<div class="w-full flex flex-col items-start px-5 pt-3 pb-4 relative">
+				<div class="w-full flex flex-col items-start px-5 pt-3 pb-4 relative flex-1">
 					<p
 						class="font-bold text-lg leading-snug text-c-on-bg transition {!$isTouchscreen
 							? 'group-hover:text-c-primary'
@@ -56,8 +56,9 @@
 						{post.title}
 					</p>
 					<p class="text-xs text-c-on-bg/60 mt-2 leading-normal">{post.description}</p>
+					<div class="flex-1" />
 					<p
-						class="text-xs flex font-medium justify-start mt-2 bg-c-on-bg/8 text-c-on-bg/60 px-1.5 py-0.5 rounded"
+						class="mb-auto text-xs flex font-medium justify-start mt-2 bg-c-on-bg/8 text-c-on-bg/60 px-2 py-0.75 rounded"
 					>
 						{new Date(post.date).toLocaleDateString('en-US', {
 							year: 'numeric',

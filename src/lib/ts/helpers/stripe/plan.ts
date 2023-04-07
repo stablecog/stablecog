@@ -1,6 +1,7 @@
 import {
 	PUBLIC_STRIPE_PRODUCT_ID_LARGE_PACK,
 	PUBLIC_STRIPE_PRODUCT_ID_MEDIUM_PACK,
+	PUBLIC_STRIPE_PRODUCT_ID_MEGA_PACK,
 	PUBLIC_STRIPE_PRODUCT_ID_PRO_SUBSCRIPTION,
 	PUBLIC_STRIPE_PRODUCT_ID_STARTER_SUBSCRIPTION,
 	PUBLIC_STRIPE_PRODUCT_ID_ULTIMATE_SUBSCRIPTION
@@ -18,6 +19,8 @@ export const getTitleFromProductId = ($LL: TranslationFunctions, productId: stri
 			return $LL.Pricing.CreditPacks.MediumTitle();
 		case PUBLIC_STRIPE_PRODUCT_ID_LARGE_PACK:
 			return $LL.Pricing.CreditPacks.LargeTitle();
+		case PUBLIC_STRIPE_PRODUCT_ID_MEGA_PACK:
+			return $LL.Pricing.CreditPacks.MegaTitle();
 		default:
 			return $LL.Pricing.Plans.FreeTitle();
 	}

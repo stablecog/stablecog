@@ -59,7 +59,8 @@
 	import { browser } from '$app/environment';
 	import {
 		availableGenerationModelIds,
-		generationModelIdDefault
+		generationModelIdDefault,
+		generationModels
 	} from '$ts/constants/generationModels';
 	import { availableSchedulerIds, schedulerIdDefault } from '$ts/constants/schedulers';
 	import { generations } from '$userStores/generation';
@@ -439,6 +440,12 @@
 			availableSchedulerIds.includes($schedulerId)
 		) {
 			generationSchedulerId.set($schedulerId);
+		}
+		if (
+			// @ts-ignore
+			!generationModels[$generationModelId].supportedSchedulerIds.includes($generationSchedulerId)
+		) {
+			generationSchedulerId.set(generationModels[$generationModelId].supportedSchedulerIds[0]);
 		}
 		if (
 			!isValue(serverData.init_image_strength) &&

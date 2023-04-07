@@ -822,6 +822,12 @@ type RootTranslation = {
 				 */
 				realName: string
 			}
+			'22b0857d-7edc-4d00-9cd9-45aa509db093': {
+				/**
+				 * K​a​n​d​i​n​s​k​y
+				 */
+				realName: string
+			}
 		}
 		SchedulerOptions: {
 			'55027f8b-f046-4e71-bc51-53d5448661e0': {
@@ -851,6 +857,18 @@ type RootTranslation = {
 			'7e98751f-e135-4206-b855-48b141e7b98f': {
 				/**
 				 * D​P​M​ ​S​i​n​g​l​e​s​t​e​p
+				 */
+				realName: string
+			}
+			'82cf78dd-6afb-48cc-aca6-14224cca6950': {
+				/**
+				 * D​D​I​M
+				 */
+				realName: string
+			}
+			'b7224e56-1440-43b9-ac86-66d66f9e8c91': {
+				/**
+				 * P​ ​S​a​m​p​l​e​r
 				 */
 				realName: string
 			}
@@ -2621,6 +2639,12 @@ export type TranslationFunctions = {
 				 */
 				realName: () => LocalizedString
 			}
+			'22b0857d-7edc-4d00-9cd9-45aa509db093': {
+				/**
+				 * Kandinsky
+				 */
+				realName: () => LocalizedString
+			}
 		}
 		SchedulerOptions: {
 			'55027f8b-f046-4e71-bc51-53d5448661e0': {
@@ -2650,6 +2674,18 @@ export type TranslationFunctions = {
 			'7e98751f-e135-4206-b855-48b141e7b98f': {
 				/**
 				 * DPM Singlestep
+				 */
+				realName: () => LocalizedString
+			}
+			'82cf78dd-6afb-48cc-aca6-14224cca6950': {
+				/**
+				 * DDIM
+				 */
+				realName: () => LocalizedString
+			}
+			'b7224e56-1440-43b9-ac86-66d66f9e8c91': {
+				/**
+				 * P Sampler
 				 */
 				realName: () => LocalizedString
 			}

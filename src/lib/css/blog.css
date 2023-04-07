@@ -151,6 +151,10 @@
 	z-index: 10;
 }
 
+.blog a[width-full] {
+	width: 100%;
+}
+
 .blog a[hasimage] {
 	transition: all 0.2s var(--e-default);
 	padding: 0;

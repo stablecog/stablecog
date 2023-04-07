@@ -2,25 +2,67 @@ import LL from '$i18n/i18n-svelte';
 import type { TTab } from '$ts/types/main';
 import { derived, type Readable } from 'svelte/store';
 
-export const availableWidths = ['384', '432', '512', '608', '640', '760', '768'] as const;
+export const availableWidths = [
+	'384',
+	'432',
+	'512',
+	'576',
+	'608',
+	'640',
+	'672',
+	'760',
+	'768',
+	'800',
+	'840',
+	'912',
+	'1024'
+] as const;
 export type TAvailableWidth = (typeof availableWidths)[number];
 export const widthTabs: TTab<TAvailableWidth>[] = [
 	{ label: '384', value: '384' },
 	{ label: '512', value: '512' },
+	{ label: '576', value: '576' },
+	{ label: '608', value: '608' },
 	{ label: '640', value: '640' },
-	{ label: '768', value: '768' }
+	{ label: '672', value: '672' },
+	{ label: '768', value: '768' },
+	{ label: '800', value: '800' },
+	{ label: '840', value: '840' },
+	{ label: '912', value: '912' },
+	{ label: '1024', value: '1024' }
 ];
-export const widthDefault: TAvailableWidth = '512';
+export const widthDefault: TAvailableWidth = '608';
 
-export const availableHeights = ['384', '432', '512', '608', '640', '760', '768'] as const;
+export const availableHeights = [
+	'384',
+	'432',
+	'512',
+	'576',
+	'608',
+	'640',
+	'672',
+	'760',
+	'768',
+	'800',
+	'840',
+	'912',
+	'1024'
+] as const;
 export type TAvailableHeight = (typeof availableWidths)[number];
 export const heightTabs: TTab<TAvailableHeight>[] = [
 	{ label: '384', value: '384' },
 	{ label: '512', value: '512' },
+	{ label: '576', value: '576' },
+	{ label: '608', value: '608' },
 	{ label: '640', value: '640' },
-	{ label: '768', value: '768' }
+	{ label: '672', value: '672' },
+	{ label: '768', value: '768' },
+	{ label: '800', value: '800' },
+	{ label: '840', value: '840' },
+	{ label: '912', value: '912' },
+	{ label: '1024', value: '1024' }
 ];
-export const heightDefault: TAvailableHeight = '768';
+export const heightDefault: TAvailableHeight = '912';
 
 export const availableAspectRatios = ['1:1', '4:5', '2:3', '3:2', '9:16', '16:9'] as const;
 export const availableAspectRatioValues = availableAspectRatios.map((ratio) => {
@@ -66,6 +108,10 @@ export const aspectRatioToImageSize: {
 			width: '768',
 			height: '768'
 		},
+		'22b0857d-7edc-4d00-9cd9-45aa509db093': {
+			width: '768',
+			height: '768'
+		},
 		default: {
 			width: '512',
 			height: '512'
@@ -73,8 +119,12 @@ export const aspectRatioToImageSize: {
 	},
 	'4:5': {
 		'b6c1372f-31a7-457c-907c-d292a6ffef97': {
-			width: '608',
-			height: '760'
+			width: '672',
+			height: '840'
+		},
+		'22b0857d-7edc-4d00-9cd9-45aa509db093': {
+			width: '672',
+			height: '840'
 		},
 		default: {
 			width: '512',
@@ -82,24 +132,56 @@ export const aspectRatioToImageSize: {
 		}
 	},
 	'2:3': {
+		'b6c1372f-31a7-457c-907c-d292a6ffef97': {
+			width: '608',
+			height: '912'
+		},
+		'22b0857d-7edc-4d00-9cd9-45aa509db093': {
+			width: '608',
+			height: '912'
+		},
 		default: {
 			width: '512',
 			height: '768'
 		}
 	},
 	'3:2': {
+		'b6c1372f-31a7-457c-907c-d292a6ffef97': {
+			width: '912',
+			height: '608'
+		},
+		'22b0857d-7edc-4d00-9cd9-45aa509db093': {
+			width: '912',
+			height: '608'
+		},
 		default: {
 			width: '768',
 			height: '512'
 		}
 	},
 	'9:16': {
+		'b6c1372f-31a7-457c-907c-d292a6ffef97': {
+			width: '576',
+			height: '1024'
+		},
+		'22b0857d-7edc-4d00-9cd9-45aa509db093': {
+			width: '576',
+			height: '1024'
+		},
 		default: {
 			width: '432',
 			height: '768'
 		}
 	},
 	'16:9': {
+		'b6c1372f-31a7-457c-907c-d292a6ffef97': {
+			width: '1024',
+			height: '576'
+		},
+		'22b0857d-7edc-4d00-9cd9-45aa509db093': {
+			width: '1024',
+			height: '576'
+		},
 		default: {
 			width: '768',
 			height: '432'

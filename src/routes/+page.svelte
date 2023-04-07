@@ -77,8 +77,7 @@
 					  }
 					: undefined,
 			model_id: $generationModelId,
-			scheduler_id:
-				$advancedModeApp || data.scheduler_id ? $generationSchedulerId : schedulerIdDefault,
+			scheduler_id: $generationSchedulerId,
 			width: Number($generationWidth),
 			height: Number($generationHeight),
 			init_image_url: $generationInitImageUrl,

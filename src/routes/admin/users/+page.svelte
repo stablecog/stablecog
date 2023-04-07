@@ -3,7 +3,6 @@
 	import MetaTag from '$components/MetaTag.svelte';
 	import LL, { locale } from '$i18n/i18n-svelte';
 	import { canonicalUrl } from '$ts/constants/main';
-	import { onMount } from 'svelte';
 	import PageWrapper from '$components/PageWrapper.svelte';
 	import { getRelativeDate } from '$ts/helpers/getRelativeDate';
 	import { isTouchscreen } from '$ts/stores/isTouchscreen';

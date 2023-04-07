@@ -276,7 +276,10 @@ const de: Translation = {
 				realName: '22h Diffusion'
 			},
 			'b6c1372f-31a7-457c-907c-d292a6ffef97': {
-				realName: '22h Diffusion'
+				realName: 'Luna Diffusion'
+			},
+			'22b0857d-7edc-4d00-9cd9-45aa509db093': {
+				realName: 'Kandinsky'
 			}
 		},
 		SchedulerOptions: {
@@ -294,6 +297,12 @@ const de: Translation = {
 			},
 			'7e98751f-e135-4206-b855-48b141e7b98f': {
 				realName: 'DPM Singlestep'
+			},
+			'82cf78dd-6afb-48cc-aca6-14224cca6950': {
+				realName: 'DDIM'
+			},
+			'b7224e56-1440-43b9-ac86-66d66f9e8c91': {
+				realName: 'P Sampler'
 			}
 		},
 		UnknownTitle: 'Unbekannt',
@@ -578,7 +587,8 @@ const de: Translation = {
 		},
 		CreditPacks: {
 			MediumTitle: 'Mittleres Paket',
-			LargeTitle: 'Großes Paket'
+			LargeTitle: 'Großes Paket',
+			MegaTitle: 'Mega Package'
 		},
 		Features: {
 			MonthlyCredits: '{count} credits per month.',
