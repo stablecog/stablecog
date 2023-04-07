@@ -15,7 +15,7 @@ People have started calling it the open source Midjourney alternative. After som
 ![Kandinsky](https://ba.stablecog.com/blog/kandinsky.jpg)<!--rehype:width=3840&height=3208-->
 [Try Kandinsky](https://stablecog.com/?mi=22b0857d-7edc-4d00-9cd9-45aa509db093)<!--rehype:button=true&width-full=true-->
 
-It's not based on Stable Diffusion, it's created from scratch. It's very good at different aspect ratios and resolutions. It doesn't seem to have the "doubling" problem some Stable Diffusion models has. It also produces artistic results without the need for long prompts.
+It's not based on Stable Diffusion, it's created from scratch. It's very good at different aspect ratios and resolutions. It doesn't seem to have the "doubling" problem some Stable Diffusion models have. It also produces artistic results without the need for long prompts.
 
 ## Features
 
