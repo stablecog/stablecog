@@ -10,6 +10,7 @@
 	import IconAnimatedSpinner from '$components/icons/IconAnimatedSpinner.svelte';
 	import IconSadFace from '$components/icons/IconSadFace.svelte';
 	import { PUBLIC_BUCKET_URL, PUBLIC_GO_SERVER_URL_QA } from '$env/static/public';
+	import { apiUrl } from '$ts/constants/main.js';
 
 	export let data;
 
@@ -19,7 +20,7 @@
 	let searchTimeout: NodeJS.Timeout;
 	let searchDebounceMs = 500;
 	$: searchString, setDebouncedSearch(searchString);
-	const endpoint = `${PUBLIC_GO_SERVER_URL_QA}/clipq`;
+	const endpoint = `${apiUrl.origin}/clipq`;
 
 	const getUrlFromImagePath = (imagePath: string) => {
 		return `${PUBLIC_BUCKET_URL}/${imagePath}`;
