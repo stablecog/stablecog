@@ -34,7 +34,7 @@
 	let searchString: string;
 	let searchStringDebounced: string | undefined = undefined;
 	let searchTimeout: NodeJS.Timeout;
-	let searchDebounceMs = 400;
+	let searchDebounceMs = 500;
 	$: searchString, setDebouncedSearch(searchString);
 
 	$: galleryGenerationFullOutputsQuery = browser

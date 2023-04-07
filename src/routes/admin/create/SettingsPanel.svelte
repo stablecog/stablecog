@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { browser } from '$app/environment';
 	import IconAspectRatio from '$components/icons/IconAspectRatio.svelte';
 	import IconBrain from '$components/icons/IconBrain.svelte';
 	import IconDimensions from '$components/icons/IconDimensions.svelte';
@@ -6,7 +7,7 @@
 	import LL from '$i18n/i18n-svelte';
 	import { estimatedGenerationDurationMs } from '$routes/admin/create/estimatedGenerationDurationMs';
 	import { tooltip } from '$ts/actions/tooltip';
-	import { availableModelIdDropdownItems } from '$ts/constants/generationModels';
+	import { availableModelIdDropdownItems, generationModels } from '$ts/constants/generationModels';
 	import {
 		AspectRatioDropdownItems,
 		aspectRatioToImageSize,
@@ -21,6 +22,7 @@
 		generationInferenceSteps,
 		generationModelId,
 		generationNumOutputs,
+		generationSchedulerId,
 		generationWidth
 	} from '$ts/stores/generationSettings';
 
@@ -66,6 +68,18 @@
 			estimatedGenerationDurationMs.set(cost / $generationCostCompletionPerMs);
 		}
 	}
+
+	$: $generationModelId, adjustSchedulerId();
+
+	const adjustSchedulerId = () => {
+		if (
+			!browser ||
+			generationModels[$generationModelId].supportedSchedulerIds.includes($generationSchedulerId)
+		) {
+			return;
+		}
+		generationSchedulerId.set(generationModels[$generationModelId].supportedSchedulerIds[0]);
+	};
 </script>
 
 <div

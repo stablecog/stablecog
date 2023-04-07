@@ -76,6 +76,6 @@ export async function getAllUserGenerationFullOutputs({
 export interface TUserGenerationFullOutputsPage {
 	outputs: TGenerationFullOutput[];
 	total_count?: number;
-	next?: string;
+	next?: string | number;
 	error?: string;
 }

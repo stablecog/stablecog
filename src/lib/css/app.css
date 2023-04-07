@@ -2,21 +2,21 @@
 @tailwind components;
 
 :root {
-	--c-bg: 32 31 34;
-	--c-bg-secondary: 41 40 43;
-	--c-bg-tertiary: 51 50 53;
+	--c-bg: 27 26 29;
+	--c-bg-secondary: 36 35 38;
+	--c-bg-tertiary: 46 45 48;
 	--c-on-bg: 219 213 231;
 	--c-on-bg-secondary: 93 92 98;
 	--c-primary: 181 140 255;
 	--c-primary-secondary: 199 158 250;
-	--c-on-primary: 32 31 34;
+	--c-on-primary: 27 26 29;
 	--c-secondary: 255 174 116;
 	--c-danger: 249 128 128;
 	--c-danger-secondary: 254 133 133;
 	--c-success: 129 209 116;
 	--c-success-secondary: 173 243 150;
 	--c-shadow: 0 0 0;
-	--c-barrier: 32 31 34;
+	--c-barrier: 27 26 29;
 	--o-shadow-normal: 0.15;
 	--o-shadow-strong: 0.25;
 	--o-shadow-stronger: 0.4;
@@ -24,21 +24,21 @@
 }
 
 .theme-dark {
-	--c-bg: 32 31 34;
-	--c-bg-secondary: 41 40 43;
-	--c-bg-tertiary: 51 50 53;
+	--c-bg: 27 26 29;
+	--c-bg-secondary: 36 35 38;
+	--c-bg-tertiary: 46 45 48;
 	--c-on-bg: 219 213 231;
 	--c-on-bg-secondary: 93 92 98;
 	--c-primary: 181 140 255;
 	--c-primary-secondary: 199 158 250;
-	--c-on-primary: 32 31 34;
+	--c-on-primary: 27 26 29;
 	--c-secondary: 255 174 116;
 	--c-danger: 249 128 128;
 	--c-danger-secondary: 254 133 133;
 	--c-success: 129 209 116;
 	--c-success-secondary: 173 243 150;
 	--c-shadow: 0 0 0;
-	--c-barrier: 32 31 34;
+	--c-barrier: 27 26 29;
 	--o-shadow-normal: 0.15;
 	--o-shadow-strong: 0.25;
 	--o-shadow-stronger: 0.4;
@@ -83,6 +83,7 @@ body {
 input,
 textarea {
 	-webkit-appearance: none;
+	appearance: none;
 }
 
 input:focus,
@@ -99,6 +100,7 @@ input::-webkit-inner-spin-button {
 /* Firefox */
 input[type='number'] {
 	-moz-appearance: textfield;
+	appearance: textfield;
 }
 
 a:focus-visible,

@@ -10,7 +10,18 @@ const sdSharedSchedulerIds: TAvailableSchedulerId[] = [
 	'7e98751f-e135-4206-b855-48b141e7b98f',
 	'55027f8b-f046-4e71-bc51-53d5448661e0'
 ];
-export const generationModels = {
+
+const kandinskySchedulerIds: TAvailableSchedulerId[] = [
+	'b7224e56-1440-43b9-ac86-66d66f9e8c91',
+	'82cf78dd-6afb-48cc-aca6-14224cca6950'
+];
+
+export const generationModels: {
+	[key: string]: {
+		name: string;
+		supportedSchedulerIds: TAvailableSchedulerId[];
+	};
+} = {
 	'b6c1372f-31a7-457c-907c-d292a6ffef97': {
 		name: 'Luna Diffusion',
 		supportedSchedulerIds: sdSharedSchedulerIds
@@ -45,10 +56,7 @@ export const generationModels = {
 	},
 	'22b0857d-7edc-4d00-9cd9-45aa509db093': {
 		name: 'Kandinsky',
-		supportedSchedulerIds: [
-			'b7224e56-1440-43b9-ac86-66d66f9e8c91',
-			'82cf78dd-6afb-48cc-aca6-14224cca6950'
-		]
+		supportedSchedulerIds: kandinskySchedulerIds
 	}
 } as const;
 
@@ -63,11 +71,10 @@ export const modelIdToDisplayName = derived<
 	[Readable<TranslationFunctions>],
 	Record<TAvailableGenerationModelId, string>
 >([LL], ([$LL]) => {
-	// @ts-ignore
 	let obj: Record<TAvailableGenerationModelId, string> = {};
 	for (const modelId in generationModels) {
-		obj[modelId as TAvailableGenerationModelId] =
-			$LL.Shared.ModelOptions[modelId as TAvailableGenerationModelId].realName();
+		// @ts-ignore
+		obj[modelId as TAvailableGenerationModelId] = $LL.Shared.ModelOptions[modelId].realName();
 	}
 	return obj;
 });

@@ -103,5 +103,5 @@ export interface TGalleryGenerationHit {
 
 export interface TGalleryGenerationFullOutputsPage {
 	outputs: TGenerationFullOutput[];
-	next?: string;
+	next?: string | number;
 }

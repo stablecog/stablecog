@@ -102,10 +102,7 @@
 	}
 
 	$: schedulerIdDropdownItems = $availableSchedulerIdDropdownItems.filter((i) =>
-		generationModels[$generationModelId].supportedSchedulerIds.includes(
-			// @ts-ignore
-			i.value
-		)
+		generationModels[$generationModelId].supportedSchedulerIds.includes(i.value)
 	);
 
 	$: $generationModelId, adjustSchedulerId();
@@ -113,7 +110,6 @@
 	const adjustSchedulerId = () => {
 		if (
 			!browser ||
-			// @ts-ignore
 			generationModels[$generationModelId].supportedSchedulerIds.includes($generationSchedulerId)
 		) {
 			return;
