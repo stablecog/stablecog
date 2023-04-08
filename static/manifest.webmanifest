@@ -3,7 +3,7 @@
 	"short_name": "Stablecog",
 	"start_url": "/",
 	"display": "standalone",
-	"background_color": "#1F1F22",
+	"background_color": "#1B1A1D",
 	"theme_color": "#AE85FF",
 	"icons": [
 		{
