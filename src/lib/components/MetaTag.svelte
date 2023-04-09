@@ -7,8 +7,22 @@
 	export let imageUrl: string | undefined = undefined;
 	export let imageWidth = 1200;
 	export let imageHeight = 630;
+	export let article_published_time: string | undefined = undefined;
+	export let article_author: string | undefined = undefined;
+	export let article_publisher: string | undefined = undefined;
 </script>
 
+<svelte:head>
+	{#if article_author}
+		<meta property="article:author" content={article_author} />
+	{/if}
+	{#if article_publisher}
+		<meta property="article:publisher" content={article_publisher} />
+	{/if}
+	{#if article_published_time}
+		<meta property="article:published_time" content={article_published_time} />
+	{/if}
+</svelte:head>
 <MetaTags
 	{title}
 	{description}
