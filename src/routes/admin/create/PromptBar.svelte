@@ -22,6 +22,7 @@
 		generationSeed,
 		generationWidth,
 		negativePromptInputValue,
+		prompt,
 		promptInputValue
 	} from '$ts/stores/generationSettings';
 	import { isTouchscreen } from '$ts/stores/isTouchscreen';
@@ -35,10 +36,13 @@
 	import { maxOngoingGenerationsCount } from '$routes/admin/create/constants';
 
 	export let isCheckCompleted = false;
+	export let withCheck: (fn: () => void) => void;
 	export let openSignInModal: () => void;
 
 	let promptInputElement: HTMLTextAreaElement;
 	let promptFormElement: HTMLFormElement;
+
+	$: [$promptInputValue], withCheck(setLocalPrompt);
 
 	$: doesntHaveEnoughCredits =
 		isCheckCompleted &&
@@ -46,7 +50,6 @@
 		$userSummary.total_remaining_credits < Number($generationNumOutputs);
 
 	$: showClearPromptInputButton = $promptInputValue !== undefined && $promptInputValue !== '';
-
 	$: promptInputPlaceholder = $LL.Home.PromptInput.Placeholder();
 
 	$: onGoingGenerationsCount = $generations
@@ -128,6 +131,12 @@
 		promptInputElement.value = '';
 		promptInputElement.blur();
 		promptInputElement.focus();
+	}
+
+	function setLocalPrompt() {
+		prompt.set(
+			$promptInputValue !== '' && $promptInputValue !== undefined ? $promptInputValue : ''
+		);
 	}
 </script>
 

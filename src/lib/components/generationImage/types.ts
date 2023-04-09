@@ -1,1 +1,6 @@
-export type TGenerationImageCardType = 'generate' | 'history' | 'gallery' | 'admin-gallery';
+export type TGenerationImageCardType =
+	| 'generate'
+	| 'history'
+	| 'gallery'
+	| 'admin-gallery'
+	| 'create';

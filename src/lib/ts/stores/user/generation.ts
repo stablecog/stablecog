@@ -307,6 +307,7 @@ export interface TGeneration extends TGenerationBase {
 	created_at: number;
 	completed_at?: number;
 	submit_to_gallery: boolean;
+	is_placeholder?: boolean;
 }
 
 export interface TGenerationOutput {

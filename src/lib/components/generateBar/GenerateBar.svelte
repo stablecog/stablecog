@@ -234,10 +234,10 @@
 	$: [$generationModelId], withCheck(setLocalModelId);
 	$: [$generationWidth, $generationHeight], withCheck(setLocalImageSizeBasedOnWidthAndHeight);
 	$: [$generationAspectRatio], withCheck(setLocalImageSizeBasedOnAspectRatio);
+	$: [$promptInputValue], withCheck(setLocalPrompt);
 	$: [$generationInferenceSteps], withCheck(setLocalInferenceSteps);
 	$: [$generationGuidanceScale], withCheck(setLocalGuidanceScale);
 	$: [$generationSeed], withCheck(setLocalSeed);
-	$: [$promptInputValue], withCheck(setLocalPrompt);
 	$: [$negativePromptInputValue], withCheck(setLocalNegativePrompt);
 	$: [$generationSchedulerId], withCheck(setLocalSchedulerId);
 	$: [$generationInitImageStrength], withCheck(setLocalInitImageStrength);

@@ -216,7 +216,11 @@
 				lastClickedOutputId.set(generation.selected_output.id);
 				return;
 			}
-			if (doesContainTarget(e.target, [rightButtonContainer, leftButtonContainer])) {
+			if (
+				rightButtonContainer &&
+				leftButtonContainer &&
+				doesContainTarget(e.target, [rightButtonContainer, leftButtonContainer])
+			) {
 				return;
 			}
 			activeGeneration.set(generation);
@@ -229,101 +233,105 @@
 		}}
 		class="w-full h-full absolute left-0 top-0 flex flex-col justify-between items-end overflow-hidden gap-4"
 	>
-		<div class="w-full h-12 flex-shrink-0" />
-		<div
-			class="w-full flex-shrink min-h-0 max-h-[max(4rem,min(35%,5.3rem))] transition bg-c-bg/90 text-xs relative z-0 overflow-hidden
+		{#if cardType !== 'create'}
+			<div class="w-full h-12 flex-shrink-0" />
+			<div
+				class="w-full flex-shrink min-h-0 max-h-[max(4rem,min(35%,5.3rem))] transition bg-c-bg/90 text-xs relative z-0 overflow-hidden
 			 pointer-events-none {!$isTouchscreen
-				? 'group-focus-within:translate-y-0 group-hover:translate-y-0'
-				: ''} {overlayShouldShow ? 'translate-y-0' : 'translate-y-full'}"
-		>
-			<div
-				class="{scrollPrompt
-					? 'overflow-auto'
-					: 'overflow-hidden'} w-full max-h-full list-fade px-3 md:px-4 py-3 flex flex-col gap-2 cursor-default"
+					? 'group-focus-within:translate-y-0 group-hover:translate-y-0'
+					: ''} {overlayShouldShow ? 'translate-y-0' : 'translate-y-full'}"
 			>
-				<p class="w-full font-medium leading-normal transition text-c-on-bg transform">
-					{generation.prompt.text}
-				</p>
-				{#if generation.negative_prompt !== undefined && generation.negative_prompt.text !== ''}
-					<div class="w-full flex items-start justify-start gap-1.5">
-						<IconChatBubbleCancel class="text-c-danger h-4 w-4 mt-0.25" />
-						<div class="flex-1 min-w-0">
-							<p class="w-full text-c-danger">
-								{generation.negative_prompt.text}
-							</p>
-						</div>
-					</div>
-				{/if}
-			</div>
-		</div>
-	</AnchorOrDiv>
-{/if}
-<div
-	class="w-full h-full absolute left-0 top-0 pointer-events-none flex items-start justify-between"
->
-	<div
-		class="w-full flex justify-between transition items-start {!$isTouchscreen
-			? 'group-focus-within:translate-y-0 group-hover:translate-y-0'
-			: ''} {isGalleryEditActive || overlayShouldShow ? 'translate-y-0' : '-translate-y-full'}"
-	>
-		<div bind:this={leftButtonContainer} class="pointer-events-none relative">
-			{#if (cardType === 'admin-gallery' || cardType === 'history') && !(cardType === 'history' && generation.selected_output.is_deleted) && !(cardType === 'history' && $userGalleryCurrentView === 'favorites' && !generation.selected_output.is_favorited)}
 				<div
-					class="absolute pointer-events-none filter blur-xl rounded-full w-40 h-40 -left-20 -top-20 bg-gradient-radial from-c-bg-secondary to-c-bg-secondary/50"
-				/>
-				<IconButton
-					class="p-0.5 pointer-events-auto"
-					name="Select"
-					onClick={() => {
-						if (cardType === 'admin-gallery' && !$isAdminGalleryEditActive) {
-							isAdminGalleryEditActive.set(true);
-						} else if (cardType === 'history' && !$isUserGalleryEditActive) {
-							isUserGalleryEditActive.set(true);
-						}
-						addToGalleryActionableItems({
-							output_id: generation.selected_output.id,
-							generation_id: generation.id || ''
-						});
-					}}
+					class="{scrollPrompt
+						? 'overflow-auto'
+						: 'overflow-hidden'} w-full max-h-full list-fade px-3 md:px-4 py-3 flex flex-col gap-2 cursor-default"
 				>
-					<div class="rounded-full border-2 border-c-primary w-6 h-6 transition p-0.75">
-						<div
-							class="w-full h-full rounded-full bg-c-primary transform transition {isInGallerySelectedIds
-								? 'scale-100 opacity-100'
-								: 'scale-0 opacity-0'}"
-						/>
-					</div>
-				</IconButton>
-			{/if}
-		</div>
-		{#if !isGalleryEditActive && !generation.selected_output.is_deleted}
-			<div
-				bind:this={rightButtonContainer}
-				class="flex flex-row flex-wrap items-center justify-end transition transform 
-				pointer-events-auto"
-			>
-				{#if cardType !== 'admin-gallery'}
-					<CopyButton
-						class="p-1.5"
-						stringToCopy={generation.prompt.text}
-						bind:copied={promptCopied}
-						bind:copiedTimeout={promptCopiedTimeout}
-					/>
-				{/if}
-				{#if cardType === 'generate' || cardType === 'history'}
-					<DownloadGenerationButton class="p-1.5 -ml-1.5" {generation} />
-				{:else if cardType === 'gallery'}
-					<GenerateButton {generation} class="p-1.5 -ml-1.5" />
-				{/if}
-			</div>
-		{:else if cardType === 'history' && $userGalleryCurrentView !== 'favorites' && generation.selected_output.is_favorited && !generation.selected_output.is_deleted}
-			<div class="p-1">
-				<FavoriteButton {generation} modalType="history" />
+					<p class="w-full font-medium leading-normal transition text-c-on-bg transform">
+						{generation.prompt.text}
+					</p>
+					{#if generation.negative_prompt !== undefined && generation.negative_prompt.text !== ''}
+						<div class="w-full flex items-start justify-start gap-1.5">
+							<IconChatBubbleCancel class="text-c-danger h-4 w-4 mt-0.25" />
+							<div class="flex-1 min-w-0">
+								<p class="w-full text-c-danger">
+									{generation.negative_prompt.text}
+								</p>
+							</div>
+						</div>
+					{/if}
+				</div>
 			</div>
 		{/if}
+	</AnchorOrDiv>
+{/if}
+{#if cardType !== 'create'}
+	<div
+		class="w-full h-full absolute left-0 top-0 pointer-events-none flex items-start justify-between"
+	>
+		<div
+			class="w-full flex justify-between transition items-start {!$isTouchscreen
+				? 'group-focus-within:translate-y-0 group-hover:translate-y-0'
+				: ''} {isGalleryEditActive || overlayShouldShow ? 'translate-y-0' : '-translate-y-full'}"
+		>
+			<div bind:this={leftButtonContainer} class="pointer-events-none relative">
+				{#if (cardType === 'admin-gallery' || cardType === 'history') && !(cardType === 'history' && generation.selected_output.is_deleted) && !(cardType === 'history' && $userGalleryCurrentView === 'favorites' && !generation.selected_output.is_favorited)}
+					<div
+						class="absolute pointer-events-none filter blur-xl rounded-full w-40 h-40 -left-20 -top-20 bg-gradient-radial from-c-bg-secondary to-c-bg-secondary/50"
+					/>
+					<IconButton
+						class="p-0.5 pointer-events-auto"
+						name="Select"
+						onClick={() => {
+							if (cardType === 'admin-gallery' && !$isAdminGalleryEditActive) {
+								isAdminGalleryEditActive.set(true);
+							} else if (cardType === 'history' && !$isUserGalleryEditActive) {
+								isUserGalleryEditActive.set(true);
+							}
+							addToGalleryActionableItems({
+								output_id: generation.selected_output.id,
+								generation_id: generation.id || ''
+							});
+						}}
+					>
+						<div class="rounded-full border-2 border-c-primary w-6 h-6 transition p-0.75">
+							<div
+								class="w-full h-full rounded-full bg-c-primary transform transition {isInGallerySelectedIds
+									? 'scale-100 opacity-100'
+									: 'scale-0 opacity-0'}"
+							/>
+						</div>
+					</IconButton>
+				{/if}
+			</div>
+			{#if !isGalleryEditActive && !generation.selected_output.is_deleted}
+				<div
+					bind:this={rightButtonContainer}
+					class="flex flex-row flex-wrap items-center justify-end transition transform 
+					pointer-events-auto"
+				>
+					{#if cardType !== 'admin-gallery'}
+						<CopyButton
+							class="p-1.5"
+							stringToCopy={generation.prompt.text}
+							bind:copied={promptCopied}
+							bind:copiedTimeout={promptCopiedTimeout}
+						/>
+					{/if}
+					{#if cardType === 'generate' || cardType === 'history'}
+						<DownloadGenerationButton class="p-1.5 -ml-1.5" {generation} />
+					{:else if cardType === 'gallery'}
+						<GenerateButton {generation} class="p-1.5 -ml-1.5" />
+					{/if}
+				</div>
+			{:else if cardType === 'history' && $userGalleryCurrentView !== 'favorites' && generation.selected_output.is_favorited && !generation.selected_output.is_deleted}
+				<div class="p-1">
+					<FavoriteButton {generation} modalType="history" />
+				</div>
+			{/if}
+		</div>
+		<div />
 	</div>
-	<div />
-</div>
+{/if}
 {#if generation.selected_output.is_deleted || (cardType === 'admin-gallery' && showAdminGalleryBarrier) || (cardType === 'history' && $userGalleryCurrentView === 'favorites' && !generation.selected_output.is_favorited)}
 	<div class="w-full h-full absolute left-0 top-0 flex items-center justify-center p-4 z-20">
 		{#if generation.selected_output.is_deleted}

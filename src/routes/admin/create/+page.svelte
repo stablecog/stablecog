@@ -23,6 +23,21 @@
 	import SidebarWrapper from '$routes/admin/create/SidebarWrapper.svelte';
 	import GenerateStage from '$routes/admin/create/GenerationStage.svelte';
 	import { themeApp } from '$ts/stores/theme';
+	import GenerationGridInfinite from '$components/grids/GenerationGridInfinite.svelte';
+	import { isValue } from '$ts/helpers/isValue';
+	import {
+		generationAspectRatio,
+		generationModelId,
+		generationSchedulerId,
+		imageSize,
+		modelId,
+		prompt,
+		promptInputValue,
+		schedulerId
+	} from '$ts/stores/generationSettings';
+	import { availableGenerationModelIds, generationModels } from '$ts/constants/generationModels';
+	import { availableSchedulerIds } from '$ts/constants/schedulers';
+	import { aspectRatioTabs } from '$ts/constants/generationSize';
 
 	let isCheckCompleted = false;
 	let isSignInModalOpen = false;
@@ -53,7 +68,11 @@
 					outputsPage = {
 						...outputsPage,
 						outputs: outputsPage.outputs.filter(
-							(o) => !$generations.map((g) => g.id).includes(o.generation.id)
+							(o) =>
+								!$generations
+									.filter((g, i) => i !== 0)
+									.map((g) => g.id)
+									.includes(o.generation.id)
 						)
 					};
 					return outputsPage;
@@ -104,6 +123,27 @@
 		if (!browser) return;
 		document.body.style.overflow = 'hidden';
 		document.body.style.height = '100%';
+		if (isValue($prompt) && $prompt !== null) {
+			promptInputValue.set($prompt);
+		}
+		const aspectRatioIndex = aspectRatioTabs
+			.map((a) => a.value)
+			.findIndex((i) => i === $imageSize?.aspectRatio?.toString());
+		if (aspectRatioIndex >= 0) {
+			generationAspectRatio.set(aspectRatioTabs[aspectRatioIndex].value);
+		}
+		if (isValue($modelId) && availableGenerationModelIds.includes($modelId)) {
+			generationModelId.set($modelId);
+		}
+		if (isValue($schedulerId) && availableSchedulerIds.includes($schedulerId)) {
+			generationSchedulerId.set($schedulerId);
+		}
+		if (
+			// @ts-ignore
+			!generationModels[$generationModelId].supportedSchedulerIds.includes($generationSchedulerId)
+		) {
+			generationSchedulerId.set(generationModels[$generationModelId].supportedSchedulerIds[0]);
+		}
 		isCheckCompleted = true;
 	});
 
@@ -112,6 +152,11 @@
 		document.body.style.overflow = 'auto';
 		document.body.style.height = 'auto';
 	});
+
+	function withCheck(fn: () => void) {
+		if (!isCheckCompleted) return;
+		fn();
+	}
 </script>
 
 <svelte:window on:keydown={onKeyDown} />
@@ -126,22 +171,37 @@
 >
 	<Navbar />
 	<!-- Main part -->
-	<div class="w-full h-full flex flex-row overflow-hidden px-4 pb-4 gap-4">
+	<div class="w-full h-full flex flex-row overflow-hidden pt-2 px-4 pb-4 gap-4">
 		<div class="h-full w-40 xl:w-80">
-			<SidebarWrapper />
+			<SidebarWrapper>
+				<div bind:this={gridScrollContainer} class="w-full flex-1 overflow-auto p-2">
+					{#if userGenerationFullOutputsQuery}
+						<GenerationGridInfinite
+							pinnedFullOutputs={$generations
+								.filter((g, i) => i !== 0)
+								.flatMap((g) => g.outputs.map((o) => ({ ...o, generation: g })))}
+							cardWidthClasses="w-1/2 md:w-1/2 xl:w-1/3"
+							cardType="create"
+							generationsQuery={userGenerationFullOutputsQuery}
+							rerenderKey={gridRerenderKey}
+							{gridScrollContainer}
+						/>
+					{/if}
+				</div>
+			</SidebarWrapper>
 		</div>
-		<div class="flex flex-col flex-1 h-full pt-1 gap-4">
-			<PromptBar {openSignInModal} {isCheckCompleted} />
-			<div class="flex-1 flex flex-col items-center justify-center w-full overflow-hidden p-8">
+		<div class="flex flex-col flex-1 h-full pt-0.5 gap-4">
+			<PromptBar {openSignInModal} {isCheckCompleted} {withCheck} />
+			<div class="flex-1 flex flex-col items-center justify-center w-full overflow-hidden p-6">
 				<div bind:clientWidth={stageWidth} bind:clientHeight={stageHeight} class="flex-1 w-full">
-					{#if $generations && $generations.length > 0}
+					{#if stageWidth && stageHeight}
 						<GenerateStage generation={$generations[0]} {stageWidth} {stageHeight} />
 					{/if}
 				</div>
 			</div>
 		</div>
 		<div class="h-full w-80">
-			<SettingsPanel />
+			<SettingsPanel {withCheck} />
 		</div>
 	</div>
 </div>

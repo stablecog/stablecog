@@ -24,29 +24,19 @@
 		generationModelId,
 		generationNumOutputs,
 		generationSchedulerId,
-		generationWidth
+		generationWidth,
+		imageSize,
+		modelId,
+		promptInputValue
 	} from '$ts/stores/generationSettings';
 
-	$: [$generationAspectRatio], onAspectRatioChanged();
+	export let withCheck: (callback: () => void) => void;
+
+	$: [$generationModelId], withCheck(setLocalModelId);
+	$: [$generationAspectRatio], withCheck(setLocalImageSizeBasedOnAspectRatio);
 
 	function onAspectRatioChanged() {
 		setWidthAndHeightBasedOnAspectRatio();
-	}
-
-	function setWidthAndHeightBasedOnAspectRatio() {
-		const obj = aspectRatioToImageSize[$generationAspectRatio];
-		let newWidth: TAvailableWidth;
-		let newHeight: TAvailableHeight;
-		const modelAspectRatio = obj[$generationModelId];
-		if (modelAspectRatio) {
-			newWidth = modelAspectRatio.width;
-			newHeight = modelAspectRatio.height;
-		} else {
-			newWidth = obj.default.width;
-			newHeight = obj.default.height;
-		}
-		generationWidth.set(newWidth);
-		generationHeight.set(newHeight);
 	}
 
 	$: [
@@ -81,6 +71,36 @@
 		}
 		generationSchedulerId.set(generationModels[$generationModelId].supportedSchedulerIds[0]);
 	};
+
+	function setWidthAndHeightBasedOnAspectRatio() {
+		const obj = aspectRatioToImageSize[$generationAspectRatio];
+		let newWidth: TAvailableWidth;
+		let newHeight: TAvailableHeight;
+		const modelAspectRatio = obj[$generationModelId];
+		if (modelAspectRatio) {
+			newWidth = modelAspectRatio.width;
+			newHeight = modelAspectRatio.height;
+		} else {
+			newWidth = obj.default.width;
+			newHeight = obj.default.height;
+		}
+		generationWidth.set(newWidth);
+		generationHeight.set(newHeight);
+	}
+
+	function setLocalImageSizeBasedOnAspectRatio() {
+		setWidthAndHeightBasedOnAspectRatio();
+		imageSize.set({
+			width: $generationWidth,
+			height: $generationHeight,
+			aspectRatio: $generationAspectRatio
+		});
+	}
+
+	function setLocalModelId() {
+		modelId.set($generationModelId);
+		setLocalImageSizeBasedOnAspectRatio();
+	}
 </script>
 
 <SidebarWrapper>
