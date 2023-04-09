@@ -25,7 +25,7 @@ const zhHans: Translation = {
 		},
 		AspectRatioDropdown: {
 			Title: 'Aspect Ratio',
-			Paragraph: 'Aspect ratio of the image',
+			Paragraph: 'Aspect ratio of the image.',
 			Options: {
 				Square: 'Square (1:1)',
 				Portrait: 'Portrait (2:3)',

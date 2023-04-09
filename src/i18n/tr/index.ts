@@ -25,15 +25,15 @@ const tr: Translation = {
 				'Fotoğrafın komutuna ne derecede benzeyeceğinin ölçüsü. Yüksek sayılar fotoğrafı komutuna daha çok benzetir.'
 		},
 		AspectRatioDropdown: {
-			Title: 'Aspect Ratio',
-			Paragraph: 'Aspect ratio of the image',
+			Title: 'Oran',
+			Paragraph: 'Fotoğrafın oranı.',
 			Options: {
-				Square: 'Square (1:1)',
-				Portrait: 'Portrait (2:3)',
-				Landscape: 'Landscape (3:2)',
-				Mobile: 'Mobile (9:16)',
-				Desktop: 'Desktop (16:9)',
-				Squarish: 'Squarish (4:5)'
+				Square: 'Kare (1:1)',
+				Portrait: 'Dikey (2:3)',
+				Landscape: 'Yatay (3:2)',
+				Mobile: 'Mobil (9:16)',
+				Desktop: 'Masaüstü (16:9)',
+				Squarish: 'Karemsi (4:5)'
 			}
 		},
 		AspectRatioTabBar: {
@@ -206,10 +206,10 @@ const tr: Translation = {
 		ConfirmQuestionMarkButton: 'Onayla?',
 		Credits: {
 			CreditsTable: {
-				CreditTypeTitle: 'Credit Type',
-				RemainingCreditsTitle: 'Remaining',
-				ExpiryTitle: 'Expiry',
-				LastReplenish: 'Last Replenish'
+				CreditTypeTitle: 'Kredi Tipi',
+				RemainingCreditsTitle: 'Kalan',
+				ExpiryTitle: 'Son Kullanma',
+				LastReplenish: 'Son Yenileme'
 			}
 		},
 		BatchEditBar: {
@@ -512,9 +512,9 @@ const tr: Translation = {
 			}
 		},
 		Meta: {
-			AccountCreationTitle: 'Creation',
-			LastSignInTitle: 'Last Sign-in',
-			LastSeenTitle: 'Last Seen'
+			AccountCreationTitle: 'Üyelik',
+			LastSignInTitle: 'Son Giriş',
+			LastSeenTitle: 'Son Görülme'
 		},
 		ChangeEmail: {
 			PageTitle: 'E-posta Değiştir',
@@ -636,5 +636,4 @@ const tr: Translation = {
 		PageParagraph: 'Sistemlerimizi güncelliyoruz. Birkaç saate döneceğiz.'
 	}
 };
-
 export default tr;

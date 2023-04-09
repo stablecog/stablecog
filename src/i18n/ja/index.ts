@@ -25,29 +25,29 @@ const ja: Translation = {
 				'生成画像がプロンプトにどれほど近似するかを指定します。値が高いほど、画像がプロンプトにより近似することを意味します。'
 		},
 		AspectRatioDropdown: {
-			Title: 'Aspect Ratio',
-			Paragraph: 'Aspect ratio of the image',
+			Title: '縦横比',
+			Paragraph: '画像の縦横比',
 			Options: {
-				Square: 'Square (1:1)',
-				Portrait: 'Portrait (2:3)',
-				Landscape: 'Landscape (3:2)',
-				Mobile: 'Mobile (9:16)',
-				Desktop: 'Desktop (16:9)',
-				Squarish: 'Squarish (4:5)'
+				Square: '正方形(1:1)',
+				Portrait: '縦向き (2:3)',
+				Landscape: '横 (3:2)',
+				Mobile: 'モバイル (9:16)',
+				Desktop: 'デスクトップ (16:9)',
+				Squarish: '四方形 (4:5)'
 			}
 		},
 		AspectRatioTabBar: {
-			Title: 'Aspect Ratio',
-			Paragraph: 'Aspect ratio of the image.'
+			Title: '縦横比',
+			Paragraph: '画像の縦横比。'
 		},
 		InitialImageTabBar: {
-			Title: 'Initial Image',
-			Paragraph: 'The generation will be created based on this image.'
+			Title: '初期画像',
+			Paragraph: 'この画像に基づいて生成されます。'
 		},
 		InitialImageStrengthTabBar: {
-			Title: 'Initial Image Strength',
+			Title: '初期画像強度',
 			Paragraph:
-				'Controls the influence of the initial image. The bigger the value, the more influence the initial image has.'
+				'初期画像による影響をコントロールします。値が大きいほど、初期画像の影響も増えます。'
 		},
 		NegativePromptInput: {
 			Title: '負のプロンプト',
@@ -82,7 +82,7 @@ const ja: Translation = {
 		GenerationsTitle: '生成画像',
 		GenerationsMaxSavedCountWarning: '最新の {count} のみ',
 		DownloadLegacyGenerationsButton: 'レガシー生成をダウンロード',
-		NoFavoritesYet: "You don't have any favorites yet.",
+		NoFavoritesYet: 'お気に入りがまだありません。',
 		Views: {
 			AllTitle: '全て',
 			FavoritesTitle: 'お気に入り'
@@ -94,7 +94,7 @@ const ja: Translation = {
 		TotalDurationTitle: '合計所用時間',
 		UpscalesTitle: 'アップスケール数',
 		GenerationTooltip: {
-			AspectRatioTitle: 'Aspect Ratio',
+			AspectRatioTitle: '縦横比',
 			CountryTitle: '国',
 			Type: {
 				Title: '種類',
@@ -202,8 +202,8 @@ const ja: Translation = {
 		LoadingParagraph: '読み込み中...',
 		InsufficientCreditsTitle: 'クレジットが不足しています({remainingCredits}/{neededCredits})',
 		AllTitle: '全て',
-		ConfirmButton: 'Confirm',
-		ConfirmQuestionMarkButton: 'Confirm?',
+		ConfirmButton: '確定',
+		ConfirmQuestionMarkButton: '確定しますか？',
 		Credits: {
 			CreditsTable: {
 				CreditTypeTitle: 'Credit Type',
@@ -218,29 +218,31 @@ const ja: Translation = {
 			DeleteButton: '削除 ({selectedCount})',
 			FavoriteButton: 'お気に入り ({selectedCount})',
 			ApproveButton: '承認 ({selectedCount})',
-			RejectButton: 'Reject ({selectedCount})',
+			RejectButton: '却下 ({selectedCount})',
 			UnfavoriteButton: 'お気に入り取り消し ({selectedCount})',
 			ConfirmationModal: {
 				CancelButton: 'キャンセル',
 				Deselect: {
-					Title: 'Deselect {selectedCount} item(s)?',
-					Paragraph: 'Are you sure you want to deselect {selectedCount} item(s)?',
+					Title: '{selectedCount} 個のアイテムを選択解除しますか？',
+					Paragraph: '{selectedCount} 個のアイテムを選択解除してもよろしいですか？',
 					ConfirmButton: '選択解除'
 				},
 				Delete: {
-					Title: 'Delete {selectedCount} item(s)?',
-					Paragraph: 'Are you sure you want to delete {selectedCount} item(s)?',
+					Title: '{selectedCount} 個のアイテムを削除しますか？',
+					Paragraph: '{selectedCount} 個のアイテムを削除してもよろしいですか？',
 					ConfirmButton: '削除'
 				},
 				Favorite: {
-					Title: 'Favorite {selectedCount} item(s)?',
-					Paragraph: 'Are you sure you want to favorite {selectedCount} item(s)?',
+					Title: '{selectedCount} 個のアイテムをお気に入りとして追加しますか？',
+					Paragraph:
+						'本当に{selectedCount} 個のアイテムをお気に入りとして追加してもよろしいですか？',
 					ConfirmButton: 'お気に入りに追加する'
 				},
 				Unfavorite: {
-					Title: 'Unfavorite {selectedCount} item(s)?',
-					Paragraph: 'Are you sure you want to unfavorite {selectedCount} item(s)?',
-					ConfirmButton: 'Unfavorite'
+					Title: '{selectedCount} 個のアイテムをお気に入りから外しますか？',
+					Paragraph:
+						'本当に選択した {selectedCount} 個の項目をお気に入りから外してよろしいですか？',
+					ConfirmButton: 'お気に入りを解除'
 				}
 			}
 		},
@@ -296,7 +298,7 @@ const ja: Translation = {
 				realName: 'Euler A.'
 			},
 			'9d175114-9a26-4371-861c-729ba9ecb4da': {
-				realName: 'DPM Multistep'
+				realName: 'DPM マルチステップ'
 			},
 			'7e98751f-e135-4206-b855-48b141e7b98f': {
 				realName: 'DPM Singlestep'
@@ -312,14 +314,14 @@ const ja: Translation = {
 		MoreOptionsTitle: 'オプションを表示',
 		LessOptionsTitle: 'オプションを隠す',
 		TryAgainButton: '再試行',
-		RefreshButton: 'Refresh',
-		LoadMoreButton: 'Load More',
-		SearchingTitle: 'Searching',
-		NoResultsFoundTitle: 'No results found'
+		RefreshButton: '更新',
+		LoadMoreButton: 'さらに読み込む',
+		SearchingTitle: '検索中',
+		NoResultsFoundTitle: '検索結果なし'
 	},
 	Error: {
 		SomethingWentWrong: '不具合が発生しました。',
-		ImageWasNSFW: 'This image was NSFW :(',
+		ImageWasNSFW: 'この画像は18禁でした (X_X)',
 		NSFW: 'NSFW (閲覧注意) コンテンツが検出されました。別のプロンプトを試してください ☹️',
 		ServerSeemsOffline:
 			'サーバーはオフラインの様です。ページを更新するか、設定から別のサーバーを設定してください。',
@@ -332,18 +334,18 @@ const ja: Translation = {
 		SomethingWentWrongTryAgain: 'エラーが発生しました。再試行してください。',
 		InvalidCredentials: '不正な認証情報',
 		InvalidCode: 'コードが無効です。',
-		TryAnotherImage: 'Try another image :(',
+		TryAnotherImage: '別の画像をお試しください (^_^);',
 		OnceEvery60Seconds: 'リンクは60秒ごとに1回しかリクエストできません。',
 		LinkExpired: {
-			Title: 'Link Expired',
-			Paragraph: 'The link can only be used once and expires after 24 hours.'
+			Title: 'リンクが期限切れ',
+			Paragraph: 'リンクは一度だけ使用でき、24時間後に期限切れになります。'
 		},
 		UpdateAvailable: {
-			Title: 'Update Available',
-			Paragraph: 'There is an update! Refresh the page to get it.'
+			Title: 'アップデートがあります',
+			Paragraph: 'アップデートがあります！ページを更新して取得してください。'
 		},
-		EmailProviderNotAllowed: "This email provider isn't allowed.",
-		EmailAlreadyInUse: 'This email is already in use.'
+		EmailProviderNotAllowed: 'このメールプロバイダは許可されていません。',
+		EmailAlreadyInUse: 'このメールアドレスは既に使用されています。'
 	},
 	Admin: {
 		AdminPanelTitle: 'アドミ',
@@ -351,9 +353,9 @@ const ja: Translation = {
 		ApproveButton: '承認',
 		RejectButton: '却下',
 		EditButton: '編集',
-		EditViewButton: 'Edit View',
+		EditViewButton: '編集ビュー',
 		NormalViewButton: '標準表示',
-		StopEditButton: 'Stop Editing',
+		StopEditButton: '編集停止',
 		NoGenerationsToReview: 'レビューする生成がありません。',
 		ServersButton: 'サーバ',
 		AdminGalleryButton: 'ギャラリー',
@@ -363,22 +365,22 @@ const ja: Translation = {
 		AdminGalleryTab: 'ギャラリー',
 		UsersTab: 'ユーザー',
 		Users: {
-			GiftCreditsButton: 'Gift Credits'
+			GiftCreditsButton: 'ギフトクレジット'
 		},
 		Gallery: {
 			TotalTitle: '合計',
 			ApprovedTitle: '承認済',
 			DeletedTitle: '削除済',
 			StatusDropdown: {
-				All: 'All',
-				ManuallySubmitted: 'Manually Submitted',
-				Submitted: 'Submitted',
-				Approved: 'Approved',
-				Rejected: 'Rejected',
-				Deleted: 'Deleted',
-				Private: 'Private'
+				All: '全て',
+				ManuallySubmitted: '手動で提出済み',
+				Submitted: '提出済み',
+				Approved: '承認済',
+				Rejected: '却下',
+				Deleted: '削除済み',
+				Private: '非公開'
 			},
-			NoGenerationsToReview: 'No generations to review'
+			NoGenerationsToReview: 'レビューする生成がありません'
 		}
 	},
 	SignUp: {
@@ -389,7 +391,7 @@ const ja: Translation = {
 		PageParagraphConfirm:
 			'6桁のコードをメールで送信しました。アカウントを確認するには以下に入力してください。',
 		SignUpButton: '新規登録',
-		AllTitle: 'All',
+		AllTitle: '全て',
 		ConfirmButton: '確認',
 		AlreadyHaveAnAccountTitle: '既にアカウントをお持ちですか？',
 		LoginInsteadButton: '代わりにログインする',
@@ -398,11 +400,12 @@ const ja: Translation = {
 		}
 	},
 	SignIn: {
-		PageTitleGetStarted: 'Get Started',
-		GetStartedButton: 'Get Started',
+		PageTitleGetStarted: 'はじめに',
+		GetStartedButton: 'はじめに',
 		PageTitle: 'サインイン',
 		PageParagraph: 'あなたのアカウントで利用可能なすべての機能でStablecogを利用しよう！',
-		PageParagraphV2: 'Start creating amazing art in seconds for free, no credit card required.',
+		PageParagraphV2:
+			'無料で素晴らしいアートをアッ！という間に作成し始めましょう。クレジットカードは不要です。',
 		PageTitleCreateAccountOrSignIn: 'アカウントの作成またはサインイン',
 		PageParagraphCreateAccountOrSignIn:
 			'アカウントで利用可能な全ての機能でStablecogを利用しましょう。',
@@ -485,29 +488,29 @@ const ja: Translation = {
 	Account: {
 		PageTitle: 'アカウント',
 		ManageSubscriptionButton: 'サブスクリプションを管理',
-		ComparePlansButton: 'Compare Plans',
+		ComparePlansButton: 'プランを比較',
 		ManageAccountButton: 'アカウントを管理',
 		MyAccountButton: 'アカウント',
 		SubscriptionPlanTitle: 'プラン',
-		RemainingImagesTitle: 'Remaining Images',
-		RemainingCreditsTitle: 'Remaining Credits',
-		RemainingTitle: 'Remaining',
+		RemainingImagesTitle: '残りの画像数',
+		RemainingCreditsTitle: 'クレジット残高',
+		RemainingTitle: '残り',
 		Subscription: {
-			UpdateSubscriptionTitle: 'Update Subscription',
-			ChangePlanTitle: 'Change Plan',
+			UpdateSubscriptionTitle: 'サブスクリプションを更新',
+			ChangePlanTitle: 'プランを変更',
 			CurrentPlanTitle: '現在のプラン',
-			NewPlanTitle: 'New plan',
+			NewPlanTitle: '新しいプラン',
 			Downgrade: {
-				DowngradingToTitle: 'Downgrading to',
-				Explanation: 'Your existing credits will remain.'
+				DowngradingToTitle: 'ダウングレード先',
+				Explanation: '既存のクレジットは残ります。'
 			},
 			Upgrade: {
-				UpgadingToTitle: 'Upgrading to',
-				Explanation: 'Your existing credits will remain.'
+				UpgadingToTitle: 'アップグレード先',
+				Explanation: '既存のクレジットは残ります。'
 			},
 			Failed: {
-				PageTitle: 'Failed to update',
-				PageParagraph: 'Something went wrong while changing your plan. Please try again.'
+				PageTitle: 'アップデートに失敗しました',
+				PageParagraph: 'プランを変更中に問題が発生しました。もう一度お試しください。'
 			},
 			Succeeded: {
 				PageTitle: 'プランを変更',
@@ -531,7 +534,7 @@ const ja: Translation = {
 				'両方のアドレスにリンクを送信しました。アカウントのメールアドレスを変更するには両方にてご確認ください。',
 			PageTitleConfirmOtherEmail: '他のメールアドレスを確認',
 			PageParagraphConfirmOtherEmail:
-				"We've also sent a link to your other email address. Confirm that one as well to complete the process."
+				'別のメールアドレスへもリンクを送信しました。プロセスを完了するために確認してください。'
 		}
 	},
 	ForgotPassword: {
@@ -588,7 +591,7 @@ const ja: Translation = {
 		CreditPacks: {
 			MediumTitle: 'Mパック',
 			LargeTitle: 'Lパック',
-			MegaTitle: 'Mega Pack'
+			MegaTitle: 'メガパック'
 		},
 		Features: {
 			MonthlyCredits: '月毎 {count} クレジット。',
@@ -603,8 +606,8 @@ const ja: Translation = {
 		},
 		Badges: {
 			Recommended: 'おすすめ',
-			MostPopular: 'Most Popular',
-			BestValue: 'Best Value'
+			MostPopular: '一番好評',
+			BestValue: 'お買い得'
 		},
 		Purchase: {
 			Succeeded: {
@@ -615,16 +618,16 @@ const ja: Translation = {
 			Cancelled: {
 				PageTitle: '購入がキャンセルされました',
 				PageParagraph:
-					'You have cancelled the purchase process. If it was a mistake, you can try again.'
+					'購入手続きが中断されました。誤って中断してしまった場合は、もう一度手続きを開始することができます。'
 			}
 		}
 	},
 	LowOnCreditsCard: {
-		Title: "You're low on credits ({remainingCredits})",
+		Title: 'クレジットが不足しています ({remainingCredits})',
 		FreeParagraph:
-			'We give all active users free credits daily. You can get more by subscribing to a plan or by participating in our events.',
+			'全てのアクティブ・ユーザーにクレジットが毎日無料で提供されます。プランに加入するか、当サイトのイベントに参加することによって、さらにクレジットを獲得できます。',
 		HighestPlanParagraph: 'クレジットパックを購入することができます。',
-		OtherPlansParagraph: 'You can upgrade to a higher plan or buy a credit pack.'
+		OtherPlansParagraph: 'プランにアップグレードするか、クレジットパックを購入することができます。'
 	},
 	Support: {
 		PageTitle: 'サポート',
@@ -642,5 +645,4 @@ const ja: Translation = {
 		PageParagraph: 'システムをアップグレードしています。数時間後に戻ります。'
 	}
 };
-
 export default ja;

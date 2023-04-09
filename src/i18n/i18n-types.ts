@@ -87,7 +87,7 @@ type RootTranslation = {
 			 */
 			Title: string
 			/**
-			 * A​s​p​e​c​t​ ​r​a​t​i​o​ ​o​f​ ​t​h​e​ ​i​m​a​g​e
+			 * A​s​p​e​c​t​ ​r​a​t​i​o​ ​o​f​ ​t​h​e​ ​i​m​a​g​e​.
 			 */
 			Paragraph: string
 			Options: {
@@ -1924,7 +1924,7 @@ export type TranslationFunctions = {
 			 */
 			Title: () => LocalizedString
 			/**
-			 * Aspect ratio of the image
+			 * Aspect ratio of the image.
 			 */
 			Paragraph: () => LocalizedString
 			Options: {
