@@ -18,7 +18,7 @@
 	import mixpanel from 'mixpanel-browser';
 	import { supabase } from '$ts/constants/supabase';
 	import { afterNavigate, invalidateAll } from '$app/navigation';
-	import { logInitImageAdded, logPageview, uLogGeneration, uLogUpscale } from '$ts/helpers/loggers';
+	import { logInitImageAdded, logPageview } from '$ts/helpers/loggers';
 	import { setCookie } from '$ts/helpers/setCookie';
 	import { appVersion, serverVersion } from '$ts/stores/appVersion';
 	import {
@@ -67,13 +67,12 @@
 		generationInitImageUrl,
 		generationInitImageWidth
 	} from '$ts/stores/generationSettings';
-	import { expandCollapse } from '$ts/animation/transitions';
-	import IconConfetti from '$components/icons/IconConfetti.svelte';
-	import Button from '$components/buttons/Button.svelte';
 	import UpdateAvailableCard from '$components/UpdateAvailableCard.svelte';
 
 	export let data: LayoutData;
 	setLocale(data.locale);
+
+	const rawRoutes = ['/admin/create'];
 
 	const gss = data.globalSeedStore;
 	globalSeed.set($gss);
@@ -297,7 +296,6 @@
 			) {
 				const outputs = data.outputs as TSSEGenerationMessageOutput[];
 				setGenerationToSucceeded({ id: data.id, outputs: outputs });
-				uLogGeneration('Succeeded');
 			} else if (data.id && data.status === 'failed') {
 				setGenerationToFailed({ id: data.id, error: data.error });
 			}
@@ -312,7 +310,6 @@
 			) {
 				const outputs = data.outputs as TSSEUpscaleMessageOutput[];
 				setUpscaleToSucceeded({ id: data.id, outputs: outputs });
-				uLogUpscale('Succeeded');
 			} else if (data.id && data.status === 'failed') {
 				setUpscaleToFailed({ id: data.id, error: data.error });
 			}
@@ -479,44 +476,48 @@
 <svelte:window bind:innerHeight bind:innerWidth on:scroll={setNavbarState} />
 
 <QueryClientProvider client={queryClient}>
-	<div
-		class="w-full relative bg-c-bg text-c-on-bg flex flex-col {$themeApp === 'light'
-			? 'theme-light'
-			: 'theme-dark'}"
-		style="min-height: 100vh; min-height: {innerHeight
-			? `${innerHeight}px`
-			: '100svh'}; background-image: url({$themeApp === 'light'
-			? '/illustrations/grid-on-light.svg'
-			: '/illustrations/grid-on-dark.svg'}); background-size: 24px;"
-	>
-		{#if underDevelopment && (!$userSummary || !isSuperAdmin($userSummary.roles)) && !$page.url.pathname.startsWith('/admin') && !$page.url.pathname.startsWith('/api/auth') && !$page.url.pathname.startsWith('/sign-in')}
-			{#if Number($serverVersion) > Number($appVersion)}
-				<div class="w-full flex-1 flex flex-col items-center justify-center my-auto py-4">
-					<UpdateAvailableCard />
-				</div>
+	{#if rawRoutes.includes($page.url.pathname)}
+		<slot />
+	{:else}
+		<div
+			class="w-full relative bg-c-bg text-c-on-bg flex flex-col {$themeApp === 'light'
+				? 'theme-light'
+				: 'theme-dark'}"
+			style="min-height: 100vh; min-height: {innerHeight
+				? `${innerHeight}px`
+				: '100svh'}; background-image: url({$themeApp === 'light'
+				? '/illustrations/grid-on-light.svg'
+				: '/illustrations/grid-on-dark.svg'}); background-size: 24px;"
+		>
+			{#if underDevelopment && (!$userSummary || !isSuperAdmin($userSummary.roles)) && !$page.url.pathname.startsWith('/admin') && !$page.url.pathname.startsWith('/api/auth') && !$page.url.pathname.startsWith('/sign-in')}
+				{#if Number($serverVersion) > Number($appVersion)}
+					<div class="w-full flex-1 flex flex-col items-center justify-center my-auto py-4">
+						<UpdateAvailableCard />
+					</div>
+				{:else}
+					<UnderDevelopment />
+				{/if}
 			{:else}
-				<UnderDevelopment />
-			{/if}
-		{:else}
-			<Navbar {notAtTheVeryTop} {scrollDirection} />
-			{#if $navbarStickyType === undefined || $navbarStickyType !== 'not-sticky'}
+				<Navbar {notAtTheVeryTop} {scrollDirection} />
+				{#if $navbarStickyType === undefined || $navbarStickyType !== 'not-sticky'}
+					<div
+						style={$navbarHeight ? `height: ${$navbarHeight}px` : ``}
+						class="h-18 md:h-20 w-full"
+					/>
+				{/if}
+				<main class="w-full flex-1 flex flex-col relative break-words">
+					<slot />
+				</main>
+				{#if !routesWithHiddenFooter.includes($page.url.pathname)}
+					<Footer />
+				{/if}
+				<NavbarBottom class="md:hidden h-[calc(3.75rem+env(safe-area-inset-bottom))]" />
+				<div class="md:hidden h-[calc(3.75rem+env(safe-area-inset-bottom))]" />
 				<div
-					style={$navbarHeight ? `height: ${$navbarHeight}px` : ``}
-					class="h-18 md:h-20 w-full"
+					id="tooltip-container"
+					class="absolute overflow-x-hidden left-0 top-0 w-full h-full pointer-events-none"
 				/>
 			{/if}
-			<main class="w-full flex-1 flex flex-col relative break-words">
-				<slot />
-			</main>
-			{#if !routesWithHiddenFooter.includes($page.url.pathname)}
-				<Footer />
-			{/if}
-			<NavbarBottom class="md:hidden h-[calc(3.75rem+env(safe-area-inset-bottom))]" />
-			<div class="md:hidden h-[calc(3.75rem+env(safe-area-inset-bottom))]" />
-			<div
-				id="tooltip-container"
-				class="absolute overflow-x-hidden left-0 top-0 w-full h-full pointer-events-none"
-			/>
-		{/if}
-	</div>
+		</div>
+	{/if}
 </QueryClientProvider>

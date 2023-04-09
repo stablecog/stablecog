@@ -8,7 +8,6 @@
 	import { maxPromptLength, maxSeed } from '$ts/constants/main';
 	import { formatPrompt } from '$ts/helpers/formatPrompt';
 	import { generateSSEId } from '$ts/helpers/generateSSEId';
-	import { uLogGeneration } from '$ts/helpers/loggers';
 	import {
 		generationGuidanceScale,
 		generationHeight,
@@ -121,7 +120,6 @@
 			ui_id: generateSSEId(),
 			submit_to_gallery: false
 		};
-		uLogGeneration('Started');
 		queueInitialGenerationRequest(initialRequestProps);
 	}
 

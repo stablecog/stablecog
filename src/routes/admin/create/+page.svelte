@@ -5,7 +5,6 @@
 	import { activeGeneration, generations } from '$ts/stores/user/generation';
 
 	import { onDestroy, onMount } from 'svelte';
-	import { navbarHeight } from '$ts/stores/navbarHeight';
 	import PromptBar from '$routes/admin/create/PromptBar.svelte';
 	import { quadOut } from 'svelte/easing';
 	import { fade, fly } from 'svelte/transition';
@@ -19,14 +18,16 @@
 		type TUserGenerationFullOutputsPage
 	} from '$ts/queries/userGenerations';
 	import { createPageUserGenerationFullOutputsQueryKey } from '$ts/stores/user/keys';
-	import GenerationGridInfinite from '$components/grids/GenerationGridInfinite.svelte';
 	import { windowHeight } from '$ts/stores/window';
-
-	let topbarHeight: number;
-	let leftPanelHeight: number;
+	import Navbar from '$components/navigation/Navbar.svelte';
+	import SidebarWrapper from '$routes/admin/create/SidebarWrapper.svelte';
+	import GenerateStage from '$routes/admin/create/GenerationStage.svelte';
+	import { themeApp } from '$ts/stores/theme';
 
 	let isCheckCompleted = false;
 	let isSignInModalOpen = false;
+	let stageWidth: number;
+	let stageHeight: number;
 
 	let gridScrollContainer: HTMLElement;
 
@@ -116,47 +117,32 @@
 <svelte:window on:keydown={onKeyDown} />
 
 <div
-	style="height: {$windowHeight && $navbarHeight ? $windowHeight - $navbarHeight + 'px' : '100vh'}"
-	class="w-full flex flex-row items-stretch overflow-hidden"
+	style="{$windowHeight
+		? `height: ${$windowHeight + 'px;'}`
+		: 'height: 100vh; height: 100svh;'} background-image: url({$themeApp === 'light'
+		? '/illustrations/grid-on-light.svg'
+		: '/illustrations/grid-on-dark.svg'}); background-size: 24px;"
+	class="w-full flex flex-col overflow-hidden"
 >
-	<div
-		bind:clientHeight={leftPanelHeight}
-		class="flex-1 h-full flex flex-col items-center px-5 relative"
-	>
-		<div bind:clientHeight={topbarHeight} class="w-full max-w-[90rem] pt-2">
-			<PromptBar {isCheckCompleted} {openSignInModal} />
+	<Navbar />
+	<!-- Main part -->
+	<div class="w-full h-full flex flex-row overflow-hidden px-4 pb-4 gap-4">
+		<div class="h-full w-40 xl:w-80">
+			<SidebarWrapper />
 		</div>
-		<div
-			style="height: {leftPanelHeight - topbarHeight}px"
-			class="w-full flex-1 flex flex-col py-5"
-		>
-			<div
-				class="w-full flex-1 flex flex-col overflow-hidden rounded-3xl bg-c-bg
-        shadow-2xl shadow-c-shadow/[var(--o-shadow-strongest)] border-4 border-c-bg-secondary"
-			>
-				<div
-					bind:this={gridScrollContainer}
-					class="w-full px-2 py-2 pb-6 flex flex-col flex-1 overflow-auto"
-				>
-					{#if userGenerationFullOutputsQuery}
-						<GenerationGridInfinite
-							pinnedFullOutputs={$generations.flatMap((g) =>
-								g.outputs.map((o) => ({ ...o, generation: g }))
-							)}
-							cardWidthClasses="w-1/2 sm:w-1/3 lg:w-1/4 xl:w-1/5"
-							cardType="generate"
-							generationsQuery={userGenerationFullOutputsQuery}
-							rerenderKey={gridRerenderKey}
-						/>
-					{:else}
-						<div class="m-auto">Create a generation</div>
+		<div class="flex flex-col flex-1 h-full pt-1 gap-4">
+			<PromptBar {openSignInModal} {isCheckCompleted} />
+			<div class="flex-1 flex flex-col items-center justify-center w-full overflow-hidden p-8">
+				<div bind:clientWidth={stageWidth} bind:clientHeight={stageHeight} class="flex-1 w-full">
+					{#if $generations && $generations.length > 0}
+						<GenerateStage generation={$generations[0]} {stageWidth} {stageHeight} />
 					{/if}
 				</div>
 			</div>
 		</div>
-	</div>
-	<div class="w-80 lg:w-96 h-full pr-5 pb-5 pt-2">
-		<SettingsPanel />
+		<div class="h-full w-80">
+			<SettingsPanel />
+		</div>
 	</div>
 </div>
 

@@ -12,7 +12,6 @@
 	import ImagePlaceholder from '$components/ImagePlaceholder.svelte';
 	import GenerationImage from '$components/generationImage/GenerationImage.svelte';
 	import { advancedModeApp } from '$ts/stores/advancedMode';
-	import { uLogGeneration } from '$ts/helpers/loggers';
 	import {
 		activeGeneration,
 		generations,
@@ -108,7 +107,6 @@
 			ui_id: generateSSEId(),
 			submit_to_gallery: false
 		};
-		uLogGeneration('Started');
 		queueInitialGenerationRequest(initialRequestProps);
 	}
 

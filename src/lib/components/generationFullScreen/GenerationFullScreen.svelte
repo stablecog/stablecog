@@ -15,7 +15,6 @@
 	import Button from '$components/buttons/Button.svelte';
 	import IconUpscale from '$components/icons/IconUpscale.svelte';
 	import TabBar from '$components/tabBars/TabBar.svelte';
-	import { uLogUpscale } from '$ts/helpers/loggers';
 	import LL from '$i18n/i18n-svelte';
 	import { negativePromptTooltipAlt } from '$ts/constants/tooltips';
 	import IconCancel from '$components/icons/IconCancel.svelte';
@@ -203,7 +202,6 @@
 			stream_id: $sseId,
 			ui_id: generateSSEId()
 		};
-		uLogUpscale('Started');
 		queueInitialUpscaleRequest(initialRequestProps);
 		console.log('Upscale request queued', $upscales);
 	}

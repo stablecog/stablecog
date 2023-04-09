@@ -2,7 +2,7 @@
 	import { page } from '$app/stores';
 	import LL from '$i18n/i18n-svelte';
 	import { expandCollapse } from '$ts/animation/transitions';
-	import { logSubmitToGallery, uLogSubmitToGallery } from '$ts/helpers/loggers';
+	import { logSubmitToGallery } from '$ts/helpers/loggers';
 	import { advancedModeApp } from '$ts/stores/advancedMode';
 	import { appVersion } from '$ts/stores/appVersion';
 	import { shouldSubmitToGallery } from '$ts/stores/shouldSubmitToGallery';
@@ -38,7 +38,6 @@
 				<SubtleButton
 					onClick={() => {
 						shouldSubmitToGallery.set(true);
-						uLogSubmitToGallery('On');
 						logSubmitToGallery('On', logProps);
 					}}
 					class="flex-1"
@@ -48,7 +47,6 @@
 				<SubtleButton
 					onClick={() => {
 						shouldSubmitToGallery.set(false);
-						uLogSubmitToGallery('Off');
 						logSubmitToGallery('Off', logProps);
 					}}
 					class="flex-1"

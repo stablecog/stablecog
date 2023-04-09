@@ -4,24 +4,6 @@ import posthog from 'posthog-js';
 
 import type { TInitialUpscaleRequest, TUpscale } from '$ts/stores/user/upscale';
 
-export function uLogGeneration(status: IGenerationStatus) {
-	if (window.umami) {
-		window.umami(`Generation | ${status}`);
-	}
-}
-
-export function uLogUpscale(status: IUpscaleStatus) {
-	if (window.umami) {
-		window.umami(`Upscale | ${status}`);
-	}
-}
-
-export function uLogSubmitToGallery(status: IOnOff) {
-	if (window.umami) {
-		window.umami(`Submit to Gallery | ${status}`);
-	}
-}
-
 export function logGeneration(status: IGenerationStatus, generation: IGenerationMinimal) {
 	mixpanel.track(`Generation | ${status}`, {
 		...generation
@@ -146,7 +128,6 @@ export function logGenerationFailed({
 		userId,
 		stripeProductId
 	});
-	uLogGeneration(error === 'NSFW' ? 'Failed-NSFW' : 'Failed');
 	logGeneration(error === 'NSFW' ? 'Failed-NSFW' : 'Failed', props);
 }
 
@@ -205,7 +186,6 @@ export function logUpscaleFailed({
 		userId,
 		stripeProductId
 	});
-	uLogUpscale('Failed');
 	logUpscale('Failed', props);
 }
 

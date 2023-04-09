@@ -124,5 +124,5 @@ export const availableModelIdDropdownItems = derived(
 	}
 );
 
-export type TAvailableGenerationModelId = keyof typeof generationModels;
+export type TAvailableGenerationModelId = string;
 export type TGenerationModelNameCog = (typeof generationModels)[TAvailableGenerationModelId];
