@@ -6,6 +6,7 @@ import type { Locales, Translations } from './i18n-types'
 import { loadedFormatters, loadedLocales, locales } from './i18n-util'
 
 import de from './de'
+import el from './el'
 import en from './en'
 import es from './es'
 import fr from './fr'
@@ -22,6 +23,7 @@ import zh_Hans from './zh-Hans'
 
 const localeTranslations = {
 	de,
+	el,
 	en,
 	es,
 	fr,

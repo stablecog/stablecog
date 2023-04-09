@@ -615,14 +615,14 @@ const tr: Translation = {
 		}
 	},
 	LowOnCreditsCard: {
-		Title: 'Kredin azalıyor ({remainingCredits})',
+		Title: 'Kredin az kaldı ({remainingCredits})',
 		FreeParagraph:
 			'Tüm aktif kullanıcılara her gün ücretsiz kredi veriyoruz. Bir plan satın alarak veya etkinliklerimize katılarak daha fazla kredi elde edebilirsin.',
 		HighestPlanParagraph: 'Kredi paketi satın alabilirsin.',
 		OtherPlansParagraph: 'Paketini yükseltebilir veya kredi paketi satın alabilirsin.'
 	},
 	Support: {
-		PageTitle: 'Desktek',
+		PageTitle: 'Destek',
 		PageParagraph: 'Herhangi bir soru sormak istersen aşağıdaki linklerden bize ulaşabilirsin.'
 	},
 	Legal: {
