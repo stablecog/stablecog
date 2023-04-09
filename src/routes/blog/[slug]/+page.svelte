@@ -43,27 +43,31 @@
 	<div class="w-full flex flex-row justify-between items-start">
 		<ToC {toc} />
 		<article class="flex-1 flex flex-col justify-start items-center lg:px-16">
-			<div class="max-w-2.5xl flex flex-col items-center mb-8 md:px-5">
-				<h1 class="font-extrabold text-center text-4xl leading-tight px-3">{title}</h1>
-				<time
-					datetime={frontmatter.date}
-					class="mt-3 text-c-on-bg/40 font-medium text-center leading-relaxed"
+			<h1 class="max-w-2.5xl px-3 md:px-5 font-extrabold text-center text-4xl leading-tight">
+				{title}
+			</h1>
+			<time
+				datetime={frontmatter.date}
+				class="max-w-2.5xl px-3 md:px-5 mt-3 text-c-on-bg/40 font-medium text-center leading-relaxed"
+			>
+				{formattedDate} • {reading_time} min read
+			</time>
+			{#if author}
+				<p
+					class="max-w-2.5xl px-3 md:px-5 mt-0.75 text-c-on-bg/40 font-medium text-center leading-relaxed"
 				>
-					{formattedDate} • {reading_time} min read
-				</time>
-				{#if author}
-					<p class="mt-0.75 text-c-on-bg/40 font-medium text-center leading-relaxed">
-						{#if author_url}
-							<a rel="noreferrer" class="blog-link" href={author_url} target="_blank">{author}</a>
-						{:else}
-							<span>{author}</span>
-						{/if}
-					</p>
-				{/if}
-			</div>
-			<div class="blog max-w-2.5xl w-full flex flex-col justify-start items-start relative">
+					{#if author_url}
+						<a rel="noreferrer" class="blog-link" href={author_url} target="_blank">{author}</a>
+					{:else}
+						<span>{author}</span>
+					{/if}
+				</p>
+			{/if}
+			<section
+				class="blog max-w-2.5xl w-full flex flex-col justify-start items-start relative mt-8"
+			>
 				{@html content}
-			</div>
+			</section>
 		</article>
 		<ToC {toc} class="hidden 1.5xl:flex opacity-0 pointer-events-none" />
 	</div>
