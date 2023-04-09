@@ -45,9 +45,12 @@
 		<div class="flex-1 flex flex-col justify-start items-center lg:px-16">
 			<div class="max-w-2.5xl flex flex-col items-center mb-8 md:px-5">
 				<h1 class="font-extrabold text-center text-4xl leading-tight px-3">{title}</h1>
-				<p class="mt-3 text-c-on-bg/40 font-medium text-center leading-relaxed">
+				<time
+					datetime={frontmatter.date}
+					class="mt-3 text-c-on-bg/40 font-medium text-center leading-relaxed"
+				>
 					{formattedDate} • {reading_time} min read
-				</p>
+				</time>
 				{#if author}
 					<p class="mt-0.75 text-c-on-bg/40 font-medium text-center leading-relaxed">
 						{#if author_url}
