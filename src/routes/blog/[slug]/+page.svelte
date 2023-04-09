@@ -42,7 +42,7 @@
 >
 	<div class="w-full flex flex-row justify-between items-start">
 		<ToC {toc} />
-		<div class="flex-1 flex flex-col justify-start items-center lg:px-16">
+		<article class="flex-1 flex flex-col justify-start items-center lg:px-16">
 			<div class="max-w-2.5xl flex flex-col items-center mb-8 md:px-5">
 				<h1 class="font-extrabold text-center text-4xl leading-tight px-3">{title}</h1>
 				<time
@@ -64,7 +64,7 @@
 			<div class="blog max-w-2.5xl w-full flex flex-col justify-start items-start relative">
 				{@html content}
 			</div>
-		</div>
+		</article>
 		<ToC {toc} class="hidden 1.5xl:flex opacity-0 pointer-events-none" />
 	</div>
 	<div class="w-full flex flex-col items-center mt-16 gap-5">
