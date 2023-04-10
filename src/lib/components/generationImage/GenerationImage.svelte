@@ -212,6 +212,7 @@
 		href={imageClickHref}
 		anchorPreventDefault={true}
 		onClick={(e) => {
+			e.currentTarget.blur();
 			if (!modalShouldOpen) {
 				lastClickedOutputId.set(generation.selected_output.id);
 				return;
