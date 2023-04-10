@@ -79,8 +79,8 @@
 			: generationAspectRatio >= 1
 			? 'max-w-xl'
 			: generationAspectRatio >= 2 / 3
-			? 'max-w-md'
-			: 'max-w-sm'} w-full lg:w-auto flex flex-col my-auto lg:flex-row bg-c-bg-secondary items-center shadow-generation-modal 
+			? 'max-w-lg'
+			: 'max-w-md'} w-full lg:w-auto flex flex-col my-auto lg:flex-row bg-c-bg-secondary items-center shadow-generation-modal 
 			shadow-c-shadow/[var(--o-shadow-stronger)] rounded-xl ring-4 ring-c-bg-tertiary overflow-hidden z-0 relative"
 	>
 		<slot {imageContainerWidth} {imageContainerHeight} {modalMinHeight} />
