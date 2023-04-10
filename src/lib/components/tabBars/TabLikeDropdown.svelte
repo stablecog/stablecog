@@ -131,7 +131,9 @@
 					<svelte:component
 						this={iconSet}
 						type={selectedItem?.value}
-						class="flex-shrink-0 -ml-1 mr-2"
+						class="flex-shrink-0 -ml-1 mr-2 text-c-on-bg {!$isTouchscreen
+							? 'group-hover:text-c-primary'
+							: ''}"
 					/>
 				{/if}
 				<p
@@ -213,7 +215,9 @@
 											<svelte:component
 												this={iconSet}
 												type={item.value}
-												class="flex-shrink-0 -ml-1 mr-2"
+												class="flex-shrink-0 -ml-1 mr-2 text-c-on-bg {!$isTouchscreen
+													? 'group-hover:text-c-primary'
+													: ''}"
 											/>
 										{/if}
 										<p

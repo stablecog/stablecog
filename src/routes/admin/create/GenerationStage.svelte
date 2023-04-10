@@ -33,12 +33,10 @@
 		seed: 1,
 		num_outputs: Number($generationNumOutputs),
 		status: 'succeeded',
-		outputs: Array.from({ length: Number($generationNumOutputs) }).map((i) => {
-			return {
-				id: '',
-				image_url: ''
-			};
-		})
+		outputs: Array.from({ length: Number($generationNumOutputs) }).map((i) => ({
+			id: '',
+			image_url: ''
+		}))
 	};
 
 	let cols: number;
@@ -58,6 +56,9 @@
 	let lastStageWidth: number;
 	let lastStageHeight: number;
 	let lastGenerationId: string | undefined;
+
+	const animationDuration = 0.15;
+	const animationEasing = 'cubic-bezier(0.45, 0, 0.55, 1)';
 
 	$: [$generationWidth, $generationHeight, $generationNumOutputs], setPlaceholderGeneration();
 	$: [stageWidth, stageHeight, generation], setDimensions();
@@ -144,7 +145,6 @@
 		{@const generationWithSelectedOutput = { ...generation, selected_output: output }}
 		{@const colIndex = index % cols}
 		{@const rowIndex = Math.floor(index / cols)}
-		{@const animationDuration = 0.15}
 		<div
 			style="
 					width: {cardWidth}px;
@@ -152,10 +152,10 @@
 					left: {colIndex * (cardWidth + gap) + marginLeft}px;
 					top: {rowIndex * (cardHeight + gap) + marginTop}px;
 					transition:
-						left {animationDuration}s ease-in-out,
-						top {animationDuration}s ease-in-out,
-						width {animationDuration}s ease-in-out,
-						height {animationDuration}s ease-in-out;
+						left {animationDuration}s {animationEasing},
+						top {animationDuration}s {animationEasing},
+						width {animationDuration}s {animationEasing},
+						height {animationDuration}s {animationEasing};
 				"
 			class="absolute"
 		>

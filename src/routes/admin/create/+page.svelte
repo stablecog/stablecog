@@ -180,7 +180,7 @@
 							pinnedFullOutputs={$generations
 								.filter((g, i) => i !== 0)
 								.flatMap((g) => g.outputs.map((o) => ({ ...o, generation: g })))}
-							cardWidthClasses="w-1/2 md:w-1/2 xl:w-1/3"
+							cardWidthClasses="w-full lg:w-1/2 xl:w-1/3"
 							cardType="create"
 							generationsQuery={userGenerationFullOutputsQuery}
 							rerenderKey={gridRerenderKey}
