@@ -212,7 +212,6 @@
 		href={imageClickHref}
 		anchorPreventDefault={true}
 		onClick={(e) => {
-			e.currentTarget.blur();
 			if (!modalShouldOpen) {
 				lastClickedOutputId.set(generation.selected_output.id);
 				return;
@@ -224,6 +223,7 @@
 			) {
 				return;
 			}
+			e.currentTarget.blur();
 			activeGeneration.set(generation);
 			if ($page.url.pathname === '/gallery') {
 				logGalleryGenerationOpened(logProps);
