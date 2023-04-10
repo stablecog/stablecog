@@ -50,7 +50,7 @@ export const modelId = writableLocal<TAvailableGenerationModelId>(
 
 export const schedulerId = writableLocal<TAvailableSchedulerId>('schedulerId', schedulerIdDefault);
 
-export const numOutputs = writableLocal<number>('numOutputs', 4);
+export const numOutputs = writableLocal<number>('numOutputs', numOutputsDefault);
 
 export interface TImageSize {
 	width: TAvailableWidth;
@@ -68,7 +68,7 @@ export const generationGuidanceScale = writable<number>(guidanceScaleDefault);
 export const generationSeed = writable<string | number | undefined | null>(undefined);
 export const generationModelId = writable<TAvailableGenerationModelId>(generationModelIdDefault);
 export const generationSchedulerId = writable<TAvailableSchedulerId>(schedulerIdDefault);
-export const generationNumOutputs = writable<string>(numOutputsDefault.toString());
+export const generationNumOutputs = writable<number>(numOutputsDefault);
 export const generationInitImageUrl = writable<string | undefined>(undefined);
 export const generationInitImageStrength = writable<number>(initImageStrengthDefault);
 export const generationInitImageFiles = writable<FileList | undefined>(undefined);

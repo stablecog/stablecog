@@ -94,7 +94,7 @@
 			generation.width / generation.height,
 			generation.outputs.length
 		);
-		rows = Math.floor(generation.outputs.length / cols);
+		rows = Math.ceil(generation.outputs.length / cols);
 		totalColGapWidth = (cols - 1) * gap;
 		totalRowGapHeight = (rows - 1) * gap;
 		stageWorkableWidth = stageWidth - totalColGapWidth;

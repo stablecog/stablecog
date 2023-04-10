@@ -6,7 +6,7 @@
 	export let min: number;
 	export let max: number;
 	export let step = 1;
-	export let disabled: boolean;
+	export let disabled: boolean = false;
 	export { classes as class };
 	let classes = '';
 </script>

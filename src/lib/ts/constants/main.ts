@@ -49,6 +49,8 @@ export const maxSeed = 2147483647;
 export const maxPromptLength = 500;
 
 export const numOutputsDefault = 4;
+export const numOutputsMin = 1;
+export const numOutputsMax = 4;
 
 export const availableInferenceSteps = ['30', '40', '50'] as const;
 export type TAvailableInferenceSteps = (typeof availableInferenceSteps)[number];

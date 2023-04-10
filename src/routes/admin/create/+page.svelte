@@ -28,9 +28,11 @@
 	import {
 		generationAspectRatio,
 		generationModelId,
+		generationNumOutputs,
 		generationSchedulerId,
 		imageSize,
 		modelId,
+		numOutputs,
 		prompt,
 		promptInputValue,
 		schedulerId
@@ -38,6 +40,7 @@
 	import { availableGenerationModelIds, generationModels } from '$ts/constants/generationModels';
 	import { availableSchedulerIds } from '$ts/constants/schedulers';
 	import { aspectRatioTabs } from '$ts/constants/generationSize';
+	import { numOutputsMax, numOutputsMin } from '$ts/constants/main';
 
 	let isCheckCompleted = false;
 	let isSignInModalOpen = false;
@@ -144,6 +147,9 @@
 		) {
 			generationSchedulerId.set(generationModels[$generationModelId].supportedSchedulerIds[0]);
 		}
+		if (isValue($numOutputs) && $numOutputs >= numOutputsMin && $numOutputs <= numOutputsMax) {
+			generationNumOutputs.set($numOutputs);
+		}
 		isCheckCompleted = true;
 	});
 
@@ -201,7 +207,7 @@
 			</div>
 		</div>
 		<div class="h-full w-80">
-			<SettingsPanel {withCheck} />
+			<SettingsPanel {withCheck} {isCheckCompleted} />
 		</div>
 	</div>
 </div>

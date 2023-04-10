@@ -3,7 +3,9 @@
 	import IconAspectRatio from '$components/icons/IconAspectRatio.svelte';
 	import IconBrain from '$components/icons/IconBrain.svelte';
 	import IconDimensions from '$components/icons/IconDimensions.svelte';
+	import IconImage from '$components/icons/IconImage.svelte';
 	import TabLikeDropdown from '$components/tabBars/TabLikeDropdown.svelte';
+	import TabLikeRangeInput from '$components/tabBars/TabLikeRangeInput.svelte';
 	import LL from '$i18n/i18n-svelte';
 	import SidebarWrapper from '$routes/admin/create/SidebarWrapper.svelte';
 	import { estimatedGenerationDurationMs } from '$routes/admin/create/estimatedGenerationDurationMs';
@@ -27,17 +29,15 @@
 		generationWidth,
 		imageSize,
 		modelId,
-		promptInputValue
+		numOutputs
 	} from '$ts/stores/generationSettings';
 
 	export let withCheck: (callback: () => void) => void;
+	export let isCheckCompleted: boolean;
 
 	$: [$generationModelId], withCheck(setLocalModelId);
 	$: [$generationAspectRatio], withCheck(setLocalImageSizeBasedOnAspectRatio);
-
-	function onAspectRatioChanged() {
-		setWidthAndHeightBasedOnAspectRatio();
-	}
+	$: [$generationNumOutputs], withCheck(setLocalNumOutputs);
 
 	$: [
 		$generationWidth,
@@ -101,6 +101,10 @@
 		modelId.set($generationModelId);
 		setLocalImageSizeBasedOnAspectRatio();
 	}
+
+	function setLocalNumOutputs() {
+		numOutputs.set($generationNumOutputs);
+	}
 </script>
 
 <SidebarWrapper>
@@ -136,6 +140,22 @@
 				hasTitle={false}
 				bind:value={$generationModelId}
 				name="Model"
+			/>
+		</div>
+		<div class="w-full flex flex-col items-start gap-3">
+			<div
+				use:tooltip={$modelTooltip}
+				class="max-w-full px-2 flex items-center text-c-on-bg/75 gap-2"
+			>
+				<IconImage class="w-5 h-5" />
+				<p class="flex-shrink font-medium">Number of Images</p>
+			</div>
+			<TabLikeRangeInput
+				disabled={!isCheckCompleted}
+				class="w-full"
+				min={1}
+				max={4}
+				bind:value={$generationNumOutputs}
 			/>
 		</div>
 	</div>

@@ -6,7 +6,8 @@
 		canonicalUrl,
 		guidanceScaleDefault,
 		inferenceStepsDefault,
-		maxSeed
+		maxSeed,
+		numOutputsDefault
 	} from '$ts/constants/main';
 	import { onDestroy, onMount } from 'svelte';
 	import ImagePlaceholder from '$components/ImagePlaceholder.svelte';
@@ -100,7 +101,7 @@
 				($advancedModeApp || isValue(data.seed))
 					? Number($generationSeed)
 					: Math.round(Math.random() * maxSeed),
-			num_outputs: Number($generationNumOutputs),
+			num_outputs: numOutputsDefault,
 			output_image_extension: 'jpeg',
 			process_type: 'generate',
 			stream_id: $sseId,
