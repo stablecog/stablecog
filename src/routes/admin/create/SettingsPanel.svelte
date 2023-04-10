@@ -151,10 +151,12 @@
 				<p class="flex-shrink font-medium">Number of Images</p>
 			</div>
 			<TabLikeRangeInput
+				hasTitle={false}
 				disabled={!isCheckCompleted}
 				class="w-full"
 				min={1}
 				max={4}
+				valueSize="md"
 				bind:value={$generationNumOutputs}
 			/>
 		</div>

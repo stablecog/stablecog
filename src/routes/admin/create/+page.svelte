@@ -196,7 +196,7 @@
 				</div>
 			</SidebarWrapper>
 		</div>
-		<div class="flex flex-col flex-1 h-full pt-0.5 gap-4">
+		<div class="flex flex-col items-center flex-1 h-full gap-4">
 			<PromptBar {openSignInModal} {isCheckCompleted} {withCheck} />
 			<div class="flex-1 flex flex-col items-center justify-center w-full overflow-hidden p-6">
 				<div bind:clientWidth={stageWidth} bind:clientHeight={stageHeight} class="flex-1 w-full">

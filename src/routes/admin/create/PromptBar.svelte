@@ -140,62 +140,64 @@
 	}
 </script>
 
-<form
-	bind:this={promptFormElement}
-	on:submit|preventDefault={onPromptFormSubmitted}
-	class="w-full flex flex-col md:flex-row gap-3 items-center"
->
-	<div class="w-full md:w-auto md:flex-1 flex relative group">
-		<textarea
-			use:autoresize={{ maxRows: 3, placeholder: promptInputPlaceholder }}
-			bind:this={promptInputElement}
-			bind:value={$promptInputValue}
-			on:keypress={(e) => {
-				if (e.key === 'Enter') {
-					e.preventDefault();
-					onPromptFormSubmitted();
-				}
-			}}
-			on:input={() => {
-				if (
-					$promptInputValue !== undefined &&
-					$promptInputValue !== null &&
-					$promptInputValue.length > maxPromptLength
-				) {
-					promptInputValue.set($promptInputValue.slice(0, maxPromptLength));
-				}
-			}}
-			disabled={!isCheckCompleted}
-			placeholder={promptInputPlaceholder}
-			rows="1"
-			style="transition: height 0.1s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.2s cubic-bezier(0.4, 0, 0.2, 1), padding 0.2s cubic-bezier(0.4, 0, 0.2, 1)"
-			class="w-full bg-c-bg-secondary shadow-lg pr-12 md:pr-17 hide-scrollbar shadow-c-shadow/[var(--o-shadow-normal)] 
+<div class="w-full flex justify-center">
+	<form
+		bind:this={promptFormElement}
+		on:submit|preventDefault={onPromptFormSubmitted}
+		class="w-full max-w-6xl flex flex-col md:flex-row gap-3 items-center"
+	>
+		<div class="w-full md:w-auto md:flex-1 flex relative group">
+			<textarea
+				use:autoresize={{ maxRows: 3, placeholder: promptInputPlaceholder }}
+				bind:this={promptInputElement}
+				bind:value={$promptInputValue}
+				on:keypress={(e) => {
+					if (e.key === 'Enter') {
+						e.preventDefault();
+						onPromptFormSubmitted();
+					}
+				}}
+				on:input={() => {
+					if (
+						$promptInputValue !== undefined &&
+						$promptInputValue !== null &&
+						$promptInputValue.length > maxPromptLength
+					) {
+						promptInputValue.set($promptInputValue.slice(0, maxPromptLength));
+					}
+				}}
+				disabled={!isCheckCompleted}
+				placeholder={promptInputPlaceholder}
+				rows="1"
+				style="transition: height 0.1s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.2s cubic-bezier(0.4, 0, 0.2, 1), padding 0.2s cubic-bezier(0.4, 0, 0.2, 1)"
+				class="w-full bg-c-bg-secondary shadow-lg pr-12 md:pr-17 hide-scrollbar shadow-c-shadow/[var(--o-shadow-normal)] 
 						scroll-smooth resize-none transition relative pl-5 md:pl-6 py-5 rounded-xl 
 						focus:ring-2 focus:ring-c-primary/30 ring-0 ring-c-primary/20 placeholder:text-c-on-bg/40 {!$isTouchscreen
-				? 'enabled:hover:ring-2'
-				: ''} text-c-on-bg {!$isTouchscreen ? 'group-hover:ring-2' : ''}"
-		/>
-		<ClearButton show={showClearPromptInputButton} onClick={clearPrompt} />
-	</div>
-	<div class="w-full md:w-auto md:min-w-[9.5rem] relative">
-		<Button
-			disabled={!isCheckCompleted ||
-				(doesntHaveEnoughCredits && $page.data.session?.user.id !== undefined)}
-			uploading={$generationInitImageFilesState === 'uploading'}
-			loading={onGoingGenerationsCount >= $maxOngoingGenerationsCount}
-			withSpinner
-			fadeOnDisabled={isCheckCompleted}
-			class="w-full flex flex-col relative"
-		>
-			<p>
-				{$LL.Home.GenerateButton()}
-			</p>
-		</Button>
-		{#if doesntHaveEnoughCredits && $userSummary && $page.data.session?.user.id}
-			<InsufficientCreditsBadge
-				neededCredits={Number($generationNumOutputs)}
-				remainingCredits={$userSummary.total_remaining_credits}
+					? 'enabled:hover:ring-2'
+					: ''} text-c-on-bg {!$isTouchscreen ? 'group-hover:ring-2' : ''}"
 			/>
-		{/if}
-	</div>
-</form>
+			<ClearButton show={showClearPromptInputButton} onClick={clearPrompt} />
+		</div>
+		<div class="w-full md:w-auto md:min-w-[9.5rem] relative">
+			<Button
+				disabled={!isCheckCompleted ||
+					(doesntHaveEnoughCredits && $page.data.session?.user.id !== undefined)}
+				uploading={$generationInitImageFilesState === 'uploading'}
+				loading={onGoingGenerationsCount >= $maxOngoingGenerationsCount}
+				withSpinner
+				fadeOnDisabled={isCheckCompleted}
+				class="w-full flex flex-col relative"
+			>
+				<p>
+					{$LL.Home.GenerateButton()}
+				</p>
+			</Button>
+			{#if doesntHaveEnoughCredits && $userSummary && $page.data.session?.user.id}
+				<InsufficientCreditsBadge
+					neededCredits={Number($generationNumOutputs)}
+					remainingCredits={$userSummary.total_remaining_credits}
+				/>
+			{/if}
+		</div>
+	</form>
+</div>
