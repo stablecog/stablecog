@@ -144,7 +144,7 @@
 	<form
 		bind:this={promptFormElement}
 		on:submit|preventDefault={onPromptFormSubmitted}
-		class="w-full max-w-6xl flex flex-col md:flex-row gap-3 items-center"
+		class="w-full max-w-7xl flex flex-col md:flex-row gap-3 items-center"
 	>
 		<div class="w-full md:w-auto md:flex-1 flex relative group">
 			<textarea

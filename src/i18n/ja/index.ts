@@ -68,6 +68,10 @@ const ja: Translation = {
 			Title: 'モデル',
 			Paragraph: '画像生成するために使用されるAIモデル。'
 		},
+		NumOutputsSlider: {
+			Title: 'Number of Images',
+			Paragraph: 'The number of images that will be generated.'
+		},
 		SchedulerDropdown: {
 			Title: 'スケジュラー',
 			Paragraph:

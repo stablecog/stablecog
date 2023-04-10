@@ -65,6 +65,10 @@ const hr: Translation = {
 			Title: 'Model',
 			Paragraph: 'AI model koji će se koristiti za generiranje slike.'
 		},
+		NumOutputsSlider: {
+			Title: 'Number of Images',
+			Paragraph: 'The number of images that will be generated.'
+		},
 		SchedulerDropdown: {
 			Title: 'Planer',
 			Paragraph:

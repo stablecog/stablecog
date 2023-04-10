@@ -50,6 +50,12 @@ export let aspectRatioTooltip: Readable<TTooltipProps> = derived(LL, ($LL) => ({
 	...tooltipStyleProps
 }));
 
+export let aspectRatioTooltipSettingsPanel: Readable<TTooltipProps> = derived(LL, ($LL) => ({
+	title: $LL.Home.AspectRatioTabBar.Title(),
+	description: $LL.Home.AspectRatioTabBar.Paragraph(),
+	...tooltipStylePropsSettingsPanel
+}));
+
 export let seedTooltip: Readable<TTooltipProps> = derived(LL, ($LL) => ({
 	title: $LL.Home.SeedInput.Title(),
 	description: $LL.Home.SeedInput.Paragraph(),
@@ -60,6 +66,18 @@ export let modelTooltip: Readable<TTooltipProps> = derived(LL, ($LL) => ({
 	title: $LL.Home.ModelDropdown.Title(),
 	description: $LL.Home.ModelDropdown.Paragraph(),
 	...tooltipStyleProps
+}));
+
+export let modelTooltipSettingsPanel: Readable<TTooltipProps> = derived(LL, ($LL) => ({
+	title: $LL.Home.ModelDropdown.Title(),
+	description: $LL.Home.ModelDropdown.Paragraph(),
+	...tooltipStylePropsSettingsPanel
+}));
+
+export let numOutputsTooltipSettingsPanel: Readable<TTooltipProps> = derived(LL, ($LL) => ({
+	title: $LL.Home.NumOutputsSlider.Title(),
+	description: $LL.Home.NumOutputsSlider.Paragraph(),
+	...tooltipStylePropsSettingsPanel
 }));
 
 export let schedulerTooltip: Readable<TTooltipProps> = derived(LL, ($LL) => ({
@@ -134,6 +152,10 @@ const tooltipStyleProps: TTooltipProps = {
 	containerAlign: 'left',
 	indicatorClass: 'w-5 h-5',
 	indicatorInnerClass: `w-5 h-5 transform rotate-135 bg-c-bg-secondary rounded`
+};
+const tooltipStylePropsSettingsPanel: TTooltipProps = {
+	...tooltipStyleProps,
+	containerAlign: 'center'
 };
 
 const tooltipStylePropsAlt: TTooltipProps = {

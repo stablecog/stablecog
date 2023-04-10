@@ -17,7 +17,11 @@
 		type TAvailableHeight,
 		type TAvailableWidth
 	} from '$ts/constants/generationSize';
-	import { aspectRatioTooltip, modelTooltip } from '$ts/constants/tooltips';
+	import {
+		aspectRatioTooltipSettingsPanel,
+		modelTooltipSettingsPanel,
+		numOutputsTooltipSettingsPanel
+	} from '$ts/constants/tooltips';
 	import { calculateGenerationCost, generationCostCompletionPerMs } from '$ts/stores/cost';
 	import {
 		generationAspectRatio,
@@ -34,6 +38,9 @@
 
 	export let withCheck: (callback: () => void) => void;
 	export let isCheckCompleted: boolean;
+
+	let settingsContainer: HTMLDivElement;
+	let containerDropdownPadding = 16;
 
 	$: [$generationModelId], withCheck(setLocalModelId);
 	$: [$generationAspectRatio], withCheck(setLocalImageSizeBasedOnAspectRatio);
@@ -108,10 +115,13 @@
 </script>
 
 <SidebarWrapper>
-	<div class="w-full h-full flex flex-col overflow-auto p-5 gap-7">
+	<div
+		bind:this={settingsContainer}
+		class="w-full h-full flex flex-col overflow-auto px-5 pt-5 pb-16 gap-7"
+	>
 		<div class="w-full flex flex-col items-start gap-3">
 			<div
-				use:tooltip={$aspectRatioTooltip}
+				use:tooltip={$aspectRatioTooltipSettingsPanel}
 				class="max-w-full px-2 flex items-center text-c-on-bg/75 gap-2"
 			>
 				<IconDimensions class="w-5 h-5" />
@@ -120,6 +130,9 @@
 			<TabLikeDropdown
 				class="w-full"
 				iconSet={IconAspectRatio}
+				container={settingsContainer}
+				containerTopMinDistance={containerDropdownPadding}
+				containerBottomMinDistance={containerDropdownPadding}
 				items={$AspectRatioDropdownItems}
 				hasTitle={false}
 				bind:value={$generationAspectRatio}
@@ -128,7 +141,7 @@
 		</div>
 		<div class="w-full flex flex-col items-start gap-3">
 			<div
-				use:tooltip={$modelTooltip}
+				use:tooltip={$modelTooltipSettingsPanel}
 				class="max-w-full px-2 flex items-center text-c-on-bg/75 gap-2"
 			>
 				<IconBrain class="w-5 h-5" />
@@ -136,6 +149,9 @@
 			</div>
 			<TabLikeDropdown
 				class="w-full"
+				container={settingsContainer}
+				containerTopMinDistance={containerDropdownPadding}
+				containerBottomMinDistance={containerDropdownPadding}
 				items={$availableModelIdDropdownItems}
 				hasTitle={false}
 				bind:value={$generationModelId}
@@ -144,11 +160,11 @@
 		</div>
 		<div class="w-full flex flex-col items-start gap-3">
 			<div
-				use:tooltip={$modelTooltip}
+				use:tooltip={$numOutputsTooltipSettingsPanel}
 				class="max-w-full px-2 flex items-center text-c-on-bg/75 gap-2"
 			>
 				<IconImage class="w-5 h-5" />
-				<p class="flex-shrink font-medium">Number of Images</p>
+				<p class="flex-shrink font-medium">{$LL.Home.NumOutputsSlider.Title()}</p>
 			</div>
 			<TabLikeRangeInput
 				hasTitle={false}

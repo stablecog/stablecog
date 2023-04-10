@@ -65,6 +65,10 @@ const hi: Translation = {
 			Title: 'मॉडल',
 			Paragraph: 'चित्र उत्पन्न करने के लिए उपयोग किया जाने वाला AI मॉडल।'
 		},
+		NumOutputsSlider: {
+			Title: 'Number of Images',
+			Paragraph: 'The number of images that will be generated.'
+		},
 		SchedulerDropdown: {
 			Title: 'अनुसूचक',
 			Paragraph:

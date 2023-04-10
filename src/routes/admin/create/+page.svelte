@@ -168,6 +168,7 @@
 <svelte:window on:keydown={onKeyDown} />
 
 <div
+	id="tooltip-container"
 	style="{$windowHeight
 		? `height: ${$windowHeight + 'px;'}`
 		: 'height: 100vh; height: 100svh;'} background-image: url({$themeApp === 'light'
@@ -180,7 +181,7 @@
 	<div class="w-full h-full flex flex-row overflow-hidden pt-2 px-4 pb-4 gap-4">
 		<div class="h-full w-40 xl:w-80">
 			<SidebarWrapper>
-				<div bind:this={gridScrollContainer} class="w-full flex-1 overflow-auto p-2">
+				<div bind:this={gridScrollContainer} class="w-full flex-1 overflow-auto px-2 pt-2 pb-16">
 					{#if userGenerationFullOutputsQuery}
 						<GenerationGridInfinite
 							pinnedFullOutputs={$generations

@@ -65,6 +65,10 @@ const ptBr: Translation = {
 			Title: 'Modelo',
 			Paragraph: 'O modelo da IA que será utilizado para gerar a imagem.'
 		},
+		NumOutputsSlider: {
+			Title: 'Number of Images',
+			Paragraph: 'The number of images that will be generated.'
+		},
 		SchedulerDropdown: {
 			Title: 'Agendador',
 			Paragraph:

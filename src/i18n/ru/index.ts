@@ -66,6 +66,10 @@ const ru: Translation = {
 			Title: 'Модель',
 			Paragraph: 'Модель ИИ, которая будет использоваться для создания изображения.'
 		},
+		NumOutputsSlider: {
+			Title: 'Number of Images',
+			Paragraph: 'The number of images that will be generated.'
+		},
 		SchedulerDropdown: {
 			Title: 'Планировщик',
 			Paragraph:

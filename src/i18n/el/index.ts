@@ -68,6 +68,10 @@ const es: Translation = {
 			Title: 'Μοντέλο',
 			Paragraph: 'Το μοντέλο AI που θα χρησιμοποιηθεί για τη δημιουργία της εικόνας.'
 		},
+		NumOutputsSlider: {
+			Title: 'Number of Images',
+			Paragraph: 'The number of images that will be generated.'
+		},
 		SchedulerDropdown: {
 			Title: 'Προγραμματισμός',
 			Paragraph:

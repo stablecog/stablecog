@@ -66,6 +66,10 @@ const vi: Translation = {
 			Title: 'Mẫu',
 			Paragraph: 'Kiểu mẫu AI sẽ được dùng để tạo hình ảnh.'
 		},
+		NumOutputsSlider: {
+			Title: 'Number of Images',
+			Paragraph: 'The number of images that will be generated.'
+		},
 		SchedulerDropdown: {
 			Title: 'Bộ lấy mẫu',
 			Paragraph:

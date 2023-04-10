@@ -66,6 +66,10 @@ const fr: Translation = {
 			Title: 'Modèle',
 			Paragraph: "Le modèle IA qui sera utilisé pour générer l'image."
 		},
+		NumOutputsSlider: {
+			Title: 'Number of Images',
+			Paragraph: 'The number of images that will be generated.'
+		},
 		SchedulerDropdown: {
 			Title: 'Programmateur',
 			Paragraph:

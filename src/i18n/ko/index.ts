@@ -66,6 +66,10 @@ const ko: Translation = {
 			Title: 'AI 모델',
 			Paragraph: '이미지를 생성하기 위한 AI 모델을 의미합니다.'
 		},
+		NumOutputsSlider: {
+			Title: 'Number of Images',
+			Paragraph: 'The number of images that will be generated.'
+		},
 		SchedulerDropdown: {
 			Title: '스케쥴러',
 			Paragraph:

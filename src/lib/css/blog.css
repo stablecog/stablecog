@@ -55,6 +55,13 @@
 .blog ol li, .blog ul li {
 	margin-top: 0.5rem;
 }
+
+.blog ol li, .blog ul li {
+	margin-top: 0.5rem;
+}
+.blog li ol, .blog li ul {
+	margin-top: 0rem;
+}
 .blog p + ol, .blog p + ul {
 	margin-top: 0rem;
 	margin-bottom: 1rem;
@@ -218,6 +225,6 @@
 	line-height: 1.4;
 	margin-top: 0.6rem;
 	margin-left: 0.5rem;
-	color: rgba(var(--c-on-bg) / 0.5);
+	color: rgba(var(--c-on-bg) / 0.6);
 	font-weight: 400;
 }

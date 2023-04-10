@@ -66,6 +66,10 @@ const en: BaseTranslation = {
 			Title: 'Model',
 			Paragraph: 'The AI Model that will be used to generate the image.'
 		},
+		NumOutputsSlider: {
+			Title: 'Number of Images',
+			Paragraph: 'The number of images that will be generated.'
+		},
 		SchedulerDropdown: {
 			Title: 'Scheduler',
 			Paragraph:

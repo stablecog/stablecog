@@ -192,6 +192,16 @@ type RootTranslation = {
 			 */
 			Paragraph: string
 		}
+		NumOutputsSlider: {
+			/**
+			 * N​u​m​b​e​r​ ​o​f​ ​I​m​a​g​e​s
+			 */
+			Title: string
+			/**
+			 * T​h​e​ ​n​u​m​b​e​r​ ​o​f​ ​i​m​a​g​e​s​ ​t​h​a​t​ ​w​i​l​l​ ​b​e​ ​g​e​n​e​r​a​t​e​d​.
+			 */
+			Paragraph: string
+		}
 		SchedulerDropdown: {
 			/**
 			 * S​c​h​e​d​u​l​e​r
@@ -2026,6 +2036,16 @@ export type TranslationFunctions = {
 			Title: () => LocalizedString
 			/**
 			 * The AI Model that will be used to generate the image.
+			 */
+			Paragraph: () => LocalizedString
+		}
+		NumOutputsSlider: {
+			/**
+			 * Number of Images
+			 */
+			Title: () => LocalizedString
+			/**
+			 * The number of images that will be generated.
 			 */
 			Paragraph: () => LocalizedString
 		}

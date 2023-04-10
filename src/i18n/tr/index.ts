@@ -68,6 +68,10 @@ const tr: Translation = {
 			Title: 'Model',
 			Paragraph: 'Fotoğrafı üretecek olan yapay zeka modeli.'
 		},
+		NumOutputsSlider: {
+			Title: 'Number of Images',
+			Paragraph: 'The number of images that will be generated.'
+		},
 		SchedulerDropdown: {
 			Title: 'Planlayıcı',
 			Paragraph:

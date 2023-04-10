@@ -65,6 +65,10 @@ const de: Translation = {
 			Title: 'Modell',
 			Paragraph: 'Das KI-Modell, das verwendet wird, um das Bild zu generieren.'
 		},
+		NumOutputsSlider: {
+			Title: 'Number of Images',
+			Paragraph: 'The number of images that will be generated.'
+		},
 		SchedulerDropdown: {
 			Title: 'Zeitplaner',
 			Paragraph:

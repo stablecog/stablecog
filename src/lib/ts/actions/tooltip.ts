@@ -125,6 +125,7 @@ export function tooltip(
 	};
 
 	const onMouseEnter = async () => {
+		console.log('onMouseEnter');
 		clearTimeout(mouseLeaveTimeout);
 		if (!document.getElementById(`${parentContainerId}`)?.contains(tooltipWrapper)) {
 			document.getElementById(`${parentContainerId}`)?.appendChild(tooltipWrapper);
