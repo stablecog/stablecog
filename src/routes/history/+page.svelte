@@ -5,6 +5,7 @@
 	import GenerationFullScreen from '$components/generationFullScreen/GenerationFullScreen.svelte';
 	import GenerationGridInfinite from '$components/grids/GenerationGridInfinite.svelte';
 	import IconFolderOutlined from '$components/icons/IconFolderOutlined.svelte';
+	import IconSadFace from '$components/icons/IconSadFace.svelte';
 	import IconStarOutlined from '$components/icons/IconStarOutlined.svelte';
 	import MetaTag from '$components/MetaTag.svelte';
 	import SignInCard from '$components/SignInCard.svelte';
@@ -47,9 +48,12 @@
 		| CreateInfiniteQueryResult<TUserGenerationFullOutputsPage, unknown>
 		| undefined;
 
+	let searchString: string;
+
 	$: userGenerationFullOutputsQueryKey.set([
 		'user_generation_full_outputs',
-		$userGalleryCurrentView
+		$userGalleryCurrentView,
+		searchString ? searchString : ''
 	]);
 	$: userGenerationFullOutputsQuery = $page.data.session?.user.id
 		? createInfiniteQuery({
@@ -58,7 +62,8 @@
 					return getUserGenerationFullOutputs({
 						access_token: $page.data.session?.access_token || '',
 						cursor: lastPage?.pageParam,
-						is_favorited: $userGalleryCurrentView === 'favorites'
+						is_favorited: $userGalleryCurrentView === 'favorites',
+						search: searchString
 					});
 				},
 				getNextPageParam: (lastPage: TUserGenerationFullOutputsPage) => {
@@ -128,10 +133,6 @@
 	};
 
 	function onKeyDown({ key }: KeyboardEvent) {
-		if (key === 'e') {
-			isUserGalleryEditActive.set(!$isUserGalleryEditActive);
-			return;
-		}
 		if (!$activeGeneration) return;
 		if (key === 'Escape') {
 			activeGeneration.set(undefined);
@@ -207,6 +208,7 @@
 						</p>
 					</div>
 					<div class="w-full md:w-auto flex flex-1 items-center justify-end gap-4">
+						<!-- <SearchAndFilterBar bind:searchString /> -->
 						<TabBar
 							dontScale
 							hasTitle={false}
@@ -248,7 +250,14 @@
 		</div>
 		<div class="w-full flex-1 flex flex-col mt-2">
 			{#if userGenerationFullOutputsQuery !== undefined}
-				{#if $userGalleryCurrentView === 'favorites' && $userGenerationFullOutputsQuery?.data?.pages.length === 1 && $userGenerationFullOutputsQuery.data.pages[0].outputs.length === 0}
+				{#if $userGenerationFullOutputsQuery?.isError || ($userGenerationFullOutputsQuery?.data && !$userGenerationFullOutputsQuery?.data?.pages)}
+					<div class="w-full flex-1 flex flex-col items-center py-8 px-5">
+						<div class="flex flex-col my-auto items-center gap-2">
+							<IconSadFace class="w-16 h-16 text-c-on-bg/50" />
+							<p class="text-c-on-bg/50">{$LL.Error.SomethingWentWrong()}</p>
+						</div>
+					</div>
+				{:else if $userGalleryCurrentView === 'favorites' && $userGenerationFullOutputsQuery?.data?.pages.length === 1 && $userGenerationFullOutputsQuery.data.pages[0].outputs.length === 0}
 					<div class="w-full flex-1 flex flex-col items-center py-8 px-5">
 						<div class="flex flex-col my-auto items-center gap-4">
 							<IconStarOutlined class="w-16 h-16 text-c-on-bg/50" />

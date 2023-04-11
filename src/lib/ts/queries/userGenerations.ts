@@ -2,15 +2,18 @@ import { apiUrl } from '$ts/constants/main';
 import type { TGenerationFullOutput } from '$userStores/generation';
 
 export const generationsPerPage = 50;
+const score_threshold = 50;
 
 export async function getUserGenerationFullOutputs({
 	cursor,
 	access_token,
-	is_favorited
+	is_favorited,
+	search
 }: {
 	cursor?: string;
 	access_token: string;
 	is_favorited: boolean;
+	search?: string;
 }) {
 	console.log('getUserOutputs');
 	const query = new URLSearchParams();
@@ -20,6 +23,10 @@ export async function getUserGenerationFullOutputs({
 	}
 	if (is_favorited) {
 		query.append('is_favorited', is_favorited.toString());
+	}
+	if (search && search !== '') {
+		query.append('search', search);
+		query.append('score_threshold', score_threshold.toString());
 	}
 	const url = `${apiUrl.origin}/v1/user/outputs?${query.toString()}`;
 	const res = await fetch(url, {

@@ -19,9 +19,9 @@ export async function getGalleryGenerationFullOutputs({
 	if (cursor) {
 		query.append('cursor', cursor);
 	}
-	if (search) {
-		query.append('score_threshold', score_threshold.toString());
+	if (search && search !== '') {
 		query.append('search', search);
+		query.append('score_threshold', score_threshold.toString());
 	}
 	query.append('seed', seed.toString());
 	let queryString = query.toString();

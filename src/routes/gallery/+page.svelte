@@ -4,49 +4,39 @@
 	import GenerationFullScreen from '$components/generationFullScreen/GenerationFullScreen.svelte';
 	import GenerationGridInfinite from '$components/grids/GenerationGridInfinite.svelte';
 	import IconSearch from '$components/icons/IconSearch.svelte';
-	import Input from '$components/Input.svelte';
 	import MetaTag from '$components/MetaTag.svelte';
-	import LL, { locale } from '$i18n/i18n-svelte';
+	import LL from '$i18n/i18n-svelte';
 	import { canonicalUrl } from '$ts/constants/main';
 	import { getGalleryMetaTagDescriptionFromPromptText } from '$ts/helpers/metaTag';
 	import { getPreviewImageUrlFromOutputId } from '$ts/helpers/getPreviewImageUrl';
-	import { logGallerySearch } from '$ts/helpers/loggers';
 	import {
 		getGalleryGenerationFullOutputs,
 		type TGalleryGenerationFullOutputsPage
 	} from '$ts/queries/galleryGenerations';
-	import { advancedModeApp } from '$ts/stores/advancedMode';
 	import { globalSeed } from '$ts/stores/globalSeed';
 	import { navbarHeight } from '$ts/stores/navbarHeight';
 	import { activeGeneration } from '$ts/stores/user/generation';
-	import { userSummary } from '$ts/stores/user/summary';
 	import { createInfiniteQuery } from '@tanstack/svelte-query';
 	import { quadOut } from 'svelte/easing';
 	import { scale } from 'svelte/transition';
 	import { onMount } from 'svelte';
 	import type { PageServerData } from './$types';
 	import IconAnimatedSpinner from '$components/icons/IconAnimatedSpinner.svelte';
-	import { appVersion } from '$ts/stores/appVersion';
+	import SearchAndFilterBar from '$components/SearchAndFilterBar.svelte';
+	import IconSadFace from '$components/icons/IconSadFace.svelte';
 
 	export let data: PageServerData;
 	const { generationFullOutput: generationFullOutputFromData } = data;
 
 	let searchString: string;
-	let searchStringDebounced: string | undefined = undefined;
-	let searchTimeout: NodeJS.Timeout;
-	let searchDebounceMs = 500;
-	$: searchString, setDebouncedSearch(searchString);
 
 	$: galleryGenerationFullOutputsQuery = browser
 		? createInfiniteQuery({
-				queryKey: [
-					'gallery_generation_full_outputs',
-					searchStringDebounced ? searchStringDebounced : undefined
-				],
+				queryKey: ['gallery_generation_full_outputs', searchString ? searchString : ''],
 				queryFn: async (lastPage) => {
 					return getGalleryGenerationFullOutputs({
 						cursor: lastPage?.pageParam,
-						search: searchStringDebounced,
+						search: searchString,
 						seed: $globalSeed
 					});
 				},
@@ -57,11 +47,9 @@
 		  })
 		: undefined;
 
-	$: gridRerenderKey = `gallery_generation_full_outputs_${
-		searchStringDebounced ? searchStringDebounced : undefined
-	}_${typeof searchStringDebounced}_${$galleryGenerationFullOutputsQuery?.isInitialLoading}_${
-		$galleryGenerationFullOutputsQuery?.isStale
-	}_${
+	$: gridRerenderKey = `gallery_generation_full_outputs_${searchString ? searchString : ''}_${
+		$galleryGenerationFullOutputsQuery?.isInitialLoading
+	}_${$galleryGenerationFullOutputsQuery?.isStale}_${
 		$galleryGenerationFullOutputsQuery?.data?.pages?.[0]?.outputs &&
 		$galleryGenerationFullOutputsQuery.data.pages[0].outputs.length > 0
 			? $galleryGenerationFullOutputsQuery.data.pages[0].outputs[0].id
@@ -71,30 +59,6 @@
 	let scrollDirection: 'up' | 'down' = 'down';
 	let oldScrollY = 0;
 	let notAtTheVeryTop = false;
-
-	async function setDebouncedSearch(searchString: string | undefined) {
-		if (!browser) return;
-		clearTimeout(searchTimeout);
-		if (!searchString) {
-			searchStringDebounced = '';
-			return;
-		}
-		searchTimeout = setTimeout(async () => {
-			if (searchString) {
-				searchStringDebounced = searchString;
-				logGallerySearch({
-					'SC - Search Query': searchStringDebounced,
-					'SC - Advanced Mode': $advancedModeApp,
-					'SC - Locale': $locale,
-					'SC - User Id': $page.data.session?.user.id,
-					'SC - Stripe Product Id': $userSummary?.product_id,
-					'SC - App Version': $appVersion
-				});
-			} else {
-				searchStringDebounced = '';
-			}
-		}, searchDebounceMs);
-	}
 
 	function onKeyDown({ key }: KeyboardEvent) {
 		if (!$activeGeneration) return;
@@ -171,18 +135,13 @@
 			? '-translate-y-22 pointer-events-none opacity-0'
 			: 'translate-y-0 opacity-100'}"
 	>
-		<Input
-			disabled={hideSearchBar}
-			class="max-w-2xl"
-			bind:value={searchString}
-			title={$LL.Gallery.SearchInput.Title()}
-			hasIcon
-			hasClearButton
-			bg="bg-secondary"
-			shadow={notAtTheVeryTop ? 'strongest' : 'normal'}
-		>
-			<IconSearch slot="icon" class="w-full h-full" />
-		</Input>
+		<div class="w-full flex max-w-3xl justify-center">
+			<SearchAndFilterBar
+				bind:searchString
+				disabled={hideSearchBar}
+				inputShadow={notAtTheVeryTop ? 'strongest' : 'normal'}
+			/>
+		</div>
 	</div>
 	<div class="w-full px-1 pb-3 pt-1 md:pt-3 relative flex flex-col flex-1">
 		{#if $galleryGenerationFullOutputsQuery?.isInitialLoading}
@@ -204,6 +163,13 @@
 					{$LL.Gallery.SearchingTitle()}
 				</p>
 				<div class="h-[2vh]" />
+			</div>
+		{:else if $galleryGenerationFullOutputsQuery?.isError || ($galleryGenerationFullOutputsQuery?.data && !$galleryGenerationFullOutputsQuery?.data?.pages)}
+			<div class="w-full flex-1 flex flex-col items-center py-8 px-5">
+				<div class="flex flex-col my-auto items-center gap-2">
+					<IconSadFace class="w-16 h-16 text-c-on-bg/50" />
+					<p class="text-c-on-bg/50">{$LL.Error.SomethingWentWrong()}</p>
+				</div>
 			</div>
 		{:else if $galleryGenerationFullOutputsQuery?.data?.pages.length === 1 && $galleryGenerationFullOutputsQuery.data.pages[0].outputs.length === 0}
 			<div
