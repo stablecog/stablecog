@@ -5,7 +5,7 @@
 	import GenerationGridInfinite from '$components/grids/GenerationGridInfinite.svelte';
 	import IconSearch from '$components/icons/IconSearch.svelte';
 	import MetaTag from '$components/MetaTag.svelte';
-	import LL from '$i18n/i18n-svelte';
+	import LL, { locale } from '$i18n/i18n-svelte';
 	import { canonicalUrl } from '$ts/constants/main';
 	import { getGalleryMetaTagDescriptionFromPromptText } from '$ts/helpers/metaTag';
 	import { getPreviewImageUrlFromOutputId } from '$ts/helpers/getPreviewImageUrl';
@@ -24,6 +24,10 @@
 	import IconAnimatedSpinner from '$components/icons/IconAnimatedSpinner.svelte';
 	import SearchAndFilterBar from '$components/SearchAndFilterBar.svelte';
 	import IconSadFace from '$components/icons/IconSadFace.svelte';
+	import { logGallerySearch } from '$ts/helpers/loggers';
+	import { advancedModeApp } from '$ts/stores/advancedMode';
+	import { userSummary } from '$ts/stores/user/summary';
+	import { appVersion } from '$ts/stores/appVersion';
 
 	export let data: PageServerData;
 	const { generationFullOutput: generationFullOutputFromData } = data;

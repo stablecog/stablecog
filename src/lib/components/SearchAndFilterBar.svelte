@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { browser } from '$app/environment';
 	import { page } from '$app/stores';
+	import Button from '$components/buttons/Button.svelte';
 	import LL, { locale } from '$i18n/i18n-svelte';
 	import { logGallerySearch } from '$ts/helpers/loggers';
 	import { advancedModeApp } from '$ts/stores/advancedMode';
@@ -15,46 +16,39 @@
 
 	let searchStringLocal: string;
 
-	let searchTimeout: NodeJS.Timeout;
-	let searchDebounceMs = 500;
-	$: searchStringLocal, setDebouncedSearch(searchStringLocal);
+	function search() {
+		setSearchString();
+		logGallerySearch({
+			'SC - Search Query': searchString,
+			'SC - Advanced Mode': $advancedModeApp,
+			'SC - Locale': $locale,
+			'SC - User Id': $page.data.session?.user.id,
+			'SC - Stripe Product Id': $userSummary?.product_id,
+			'SC - App Version': $appVersion
+		});
+	}
 
-	async function setDebouncedSearch(searchStringLocal: string | undefined) {
-		if (!browser) return;
-		clearTimeout(searchTimeout);
+	function setSearchString() {
 		if (!searchStringLocal) {
 			searchString = '';
 			return;
 		}
-		searchTimeout = setTimeout(async () => {
-			if (searchStringLocal) {
-				searchString = searchStringLocal;
-				if ($page.url.pathname === '/gallery') {
-					logGallerySearch({
-						'SC - Search Query': searchStringLocal,
-						'SC - Advanced Mode': $advancedModeApp,
-						'SC - Locale': $locale,
-						'SC - User Id': $page.data.session?.user.id,
-						'SC - Stripe Product Id': $userSummary?.product_id,
-						'SC - App Version': $appVersion
-					});
-				}
-			} else {
-				searchString = '';
-			}
-		}, searchDebounceMs);
+		searchString = searchStringLocal;
 	}
 </script>
 
-<Input
-	{disabled}
-	class="max-w-full"
-	bind:value={searchStringLocal}
-	title={$LL.Gallery.SearchInput.Title()}
-	hasIcon
-	hasClearButton
-	bg="bg-secondary"
-	shadow={inputShadow}
->
-	<IconSearch slot="icon" class="w-full h-full" />
-</Input>
+<form on:submit|preventDefault={search} class="w-full max-w-full flex gap-2">
+	<Input
+		{disabled}
+		class="flex-1 min-w-0"
+		bind:value={searchStringLocal}
+		title={$LL.Gallery.SearchInput.Title()}
+		hasIcon
+		hasClearButton
+		bg="bg-secondary"
+		shadow={inputShadow}
+		onClearButtonClicked={setSearchString}
+	>
+		<IconSearch slot="icon" class="w-full h-full" />
+	</Input>
+</form>

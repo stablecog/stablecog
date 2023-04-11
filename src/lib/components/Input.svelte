@@ -11,6 +11,16 @@
 	export let bg: 'bg-secondary' | 'bg-tertiary' = 'bg-tertiary';
 	export let hasClearButton = false;
 	export let shadow: 'normal' | 'strong' | 'strongest' = 'normal';
+	export let onClearButtonClicked: (() => void) | undefined = undefined;
+	export let enterkeyhint:
+		| 'enter'
+		| 'done'
+		| 'go'
+		| 'next'
+		| 'previous'
+		| 'search'
+		| 'send'
+		| undefined = undefined;
 	let classes = '';
 
 	let inputElement: HTMLInputElement;
@@ -23,6 +33,7 @@
 		<input
 			bind:value
 			bind:this={inputElement}
+			{enterkeyhint}
 			{disabled}
 			type="email"
 			name={title}
@@ -48,6 +59,7 @@
 		<input
 			bind:value
 			bind:this={inputElement}
+			{enterkeyhint}
 			{disabled}
 			type="password"
 			name={title}
@@ -73,6 +85,7 @@
 		<input
 			bind:value
 			bind:this={inputElement}
+			{enterkeyhint}
 			{disabled}
 			type="number"
 			name={title}
@@ -98,6 +111,7 @@
 		<input
 			bind:value
 			bind:this={inputElement}
+			{enterkeyhint}
 			{disabled}
 			type="text"
 			name={title}
@@ -142,6 +156,9 @@
 			onClick={() => {
 				value = '';
 				inputElement.focus();
+				if (onClearButtonClicked) {
+					onClearButtonClicked();
+				}
 			}}
 			type="md"
 		/>
