@@ -347,7 +347,7 @@
 	<div class="w-full h-full absolute left-0 top-0 bg-c-bg-secondary/85 z-10" />
 {/if}
 {#if cardType === 'admin-gallery' && generation.init_image_url}
-	<div class="absolute top-0 right-0 pr-1 pt-1 pl-2.5 pb-2.5 rounded-bl-xl bg-c-bg-secondary">
+	<div class="absolute -top-px -right-px pr-1 pt-1 pl-2 pb-2 rounded-bl-lg bg-c-bg-secondary">
 		<IconGalleryFilled class="text-c-danger" />
 	</div>
 {/if}
