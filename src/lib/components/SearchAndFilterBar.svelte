@@ -53,7 +53,7 @@
 	<Input
 		{disabled}
 		class="flex-1 min-w-0"
-		enterkeyhint="go"
+		enterkeyhint="search"
 		{onKeyPress}
 		bind:value={searchStringLocal}
 		bind:inputElement
