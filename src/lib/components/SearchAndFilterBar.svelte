@@ -41,6 +41,7 @@
 	<Input
 		{disabled}
 		class="flex-1 min-w-0"
+		enterkeyhint="go"
 		bind:value={searchStringLocal}
 		title={$LL.Gallery.SearchInput.Title()}
 		hasIcon
