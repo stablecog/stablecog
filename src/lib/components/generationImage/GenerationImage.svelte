@@ -10,6 +10,7 @@
 	import type { TGenerationImageCardType } from '$components/generationImage/types';
 	import IconCancelCircle from '$components/icons/IconCancelCircle.svelte';
 	import IconChatBubbleCancel from '$components/icons/IconChatBubbleCancel.svelte';
+	import IconGalleryFilled from '$components/icons/IconGalleryFilled.svelte';
 	import IconNoImage from '$components/icons/IconNoImage.svelte';
 	import IconTick from '$components/icons/IconTick.svelte';
 	import IconTrashcan from '$components/icons/IconTrashcan.svelte';
@@ -344,6 +345,11 @@
 		{/if}
 	</div>
 	<div class="w-full h-full absolute left-0 top-0 bg-c-bg-secondary/85 z-10" />
+{/if}
+{#if cardType === 'admin-gallery' && generation.init_image_url}
+	<div class="absolute top-0 right-0 pr-1 pt-1 pl-2.5 pb-2.5 rounded-bl-xl bg-c-bg-secondary">
+		<IconGalleryFilled class="text-c-danger" />
+	</div>
 {/if}
 {#if (cardType === 'admin-gallery' && $isAdminGalleryEditActive) || (cardType === 'history' && $isUserGalleryEditActive)}
 	<button
