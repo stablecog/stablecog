@@ -3,6 +3,8 @@ import { apiUrl } from '$ts/constants/main';
 import type { TAvailableSchedulerId } from '$ts/constants/schedulers';
 import type { TGenerationFullOutput, TGenerationOutput } from '$userStores/generation';
 
+const score_threshold = 50;
+
 export async function getGalleryGenerationFullOutputs({
 	cursor,
 	search,
@@ -18,6 +20,7 @@ export async function getGalleryGenerationFullOutputs({
 		query.append('cursor', cursor);
 	}
 	if (search) {
+		query.append('score_threshold', score_threshold.toString());
 		query.append('search', search);
 	}
 	query.append('seed', seed.toString());

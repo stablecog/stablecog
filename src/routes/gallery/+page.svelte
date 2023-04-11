@@ -39,7 +39,10 @@
 
 	$: galleryGenerationFullOutputsQuery = browser
 		? createInfiniteQuery({
-				queryKey: ['gallery_generation_full_outputs', searchStringDebounced],
+				queryKey: [
+					'gallery_generation_full_outputs',
+					searchStringDebounced ? searchStringDebounced : undefined
+				],
 				queryFn: async (lastPage) => {
 					return getGalleryGenerationFullOutputs({
 						cursor: lastPage?.pageParam,
@@ -54,9 +57,11 @@
 		  })
 		: undefined;
 
-	$: gridRerenderKey = `gallery_generation_full_outputs_${searchStringDebounced}_${
-		$galleryGenerationFullOutputsQuery?.isInitialLoading
-	}_${$galleryGenerationFullOutputsQuery?.isStale}_${
+	$: gridRerenderKey = `gallery_generation_full_outputs_${
+		searchStringDebounced ? searchStringDebounced : undefined
+	}_${typeof searchStringDebounced}_${$galleryGenerationFullOutputsQuery?.isInitialLoading}_${
+		$galleryGenerationFullOutputsQuery?.isStale
+	}_${
 		$galleryGenerationFullOutputsQuery?.data?.pages?.[0]?.outputs &&
 		$galleryGenerationFullOutputsQuery.data.pages[0].outputs.length > 0
 			? $galleryGenerationFullOutputsQuery.data.pages[0].outputs[0].id
