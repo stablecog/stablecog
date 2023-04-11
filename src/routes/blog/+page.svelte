@@ -2,7 +2,7 @@
 	import { page } from '$app/stores';
 	import MetaTag from '$components/MetaTag.svelte';
 	import { PUBLIC_BUCKET_AUX_URL } from '$env/static/public';
-	import LL from '$i18n/i18n-svelte';
+	import LL, { locale } from '$i18n/i18n-svelte';
 	import { canonicalUrl } from '$ts/constants/main';
 	import { isTouchscreen } from '$ts/stores/isTouchscreen';
 	import type { PageServerData } from './$types';
@@ -60,7 +60,7 @@
 					<p
 						class="mb-auto text-xs flex font-medium justify-start mt-2 bg-c-on-bg/8 text-c-on-bg/60 px-2 py-0.75 rounded"
 					>
-						{new Date(post.date).toLocaleDateString('en-US', {
+						{new Date(post.date).toLocaleDateString($locale, {
 							year: 'numeric',
 							month: 'short',
 							day: 'numeric'
