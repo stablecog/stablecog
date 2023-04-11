@@ -19,7 +19,9 @@ export async function getUserGenerationFullOutputs({
 	const query = new URLSearchParams();
 	query.append('per_page', generationsPerPage.toString());
 	if (cursor) {
-		query.append('cursor', cursor);
+		if ((search && typeof cursor === 'number') || (!search && typeof cursor === 'string')) {
+			query.append('cursor', cursor.toString());
+		}
 	}
 	if (is_favorited) {
 		query.append('is_favorited', is_favorited.toString());

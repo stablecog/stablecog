@@ -8,6 +8,7 @@
 	import IconSadFace from '$components/icons/IconSadFace.svelte';
 	import IconStarOutlined from '$components/icons/IconStarOutlined.svelte';
 	import MetaTag from '$components/MetaTag.svelte';
+	import SearchAndFilterBar from '$components/SearchAndFilterBar.svelte';
 	import SignInCard from '$components/SignInCard.svelte';
 	import TabBar from '$components/tabBars/TabBar.svelte';
 	import LL, { locale } from '$i18n/i18n-svelte';
@@ -192,7 +193,7 @@
 			</div>
 		</div>
 	{:else}
-		<div class="w-full max-w-7xl flex justify-center px-1 pt-2">
+		<div class="w-full max-w-5xl flex justify-center px-1 pt-2">
 			<div class="w-full flex flex-wrap gap-4 items-center justify-between rounded-xl">
 				<div
 					class="w-full flex flex-col md:flex-row gap-4 md:gap-5 items-start md:items-center justify-start md:justify-between"
@@ -208,7 +209,6 @@
 						</p>
 					</div>
 					<div class="w-full md:w-auto flex flex-1 items-center justify-end gap-4">
-						<!-- <SearchAndFilterBar bind:searchString /> -->
 						<TabBar
 							dontScale
 							hasTitle={false}
@@ -238,9 +238,12 @@
 				</div>
 			</div>
 		</div>
+		<div class="w-full flex max-w-5xl mt-3 px-1">
+			<SearchAndFilterBar bind:searchString />
+		</div>
 		<!-- Edit bar -->
 		<div
-			class="w-full top-1 max-w-7xl px-1 transition-all sticky z-30 {$isUserGalleryEditActive
+			class="w-full top-1 max-w-5xl px-1 transition-all sticky z-30 {$isUserGalleryEditActive
 				? 'mt-3'
 				: 'mt-0'}"
 		>
@@ -248,7 +251,7 @@
 				<BatchEditBar type="history" />
 			{/if}
 		</div>
-		<div class="w-full flex-1 flex flex-col mt-2">
+		<div class="w-full flex-1 flex flex-col mt-5">
 			{#if userGenerationFullOutputsQuery !== undefined}
 				{#if $userGenerationFullOutputsQuery?.isError || ($userGenerationFullOutputsQuery?.data && !$userGenerationFullOutputsQuery?.data?.pages)}
 					<div class="w-full flex-1 flex flex-col items-center py-8 px-5">
