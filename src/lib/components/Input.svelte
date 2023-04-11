@@ -8,10 +8,18 @@
 	export let disabled = false;
 	export { classes as class };
 	export let hasIcon = false;
+	export let inputElement: HTMLInputElement;
 	export let bg: 'bg-secondary' | 'bg-tertiary' = 'bg-tertiary';
 	export let hasClearButton = false;
 	export let shadow: 'normal' | 'strong' | 'strongest' = 'normal';
 	export let onClearButtonClicked: (() => void) | undefined = undefined;
+	export let onKeyPress:
+		| ((
+				e: KeyboardEvent & {
+					currentTarget: EventTarget & HTMLInputElement;
+				}
+		  ) => void)
+		| null = null;
 	export let enterkeyhint:
 		| 'enter'
 		| 'done'
@@ -23,8 +31,6 @@
 		| undefined = undefined;
 	let classes = '';
 
-	let inputElement: HTMLInputElement;
-
 	$: showClearButton = value !== undefined && value !== '' && value !== null;
 </script>
 
@@ -33,6 +39,7 @@
 		<input
 			bind:value
 			bind:this={inputElement}
+			on:keypress={onKeyPress}
 			{enterkeyhint}
 			{disabled}
 			type="email"
@@ -59,6 +66,7 @@
 		<input
 			bind:value
 			bind:this={inputElement}
+			on:keypress={onKeyPress}
 			{enterkeyhint}
 			{disabled}
 			type="password"
@@ -85,6 +93,7 @@
 		<input
 			bind:value
 			bind:this={inputElement}
+			on:keypress={onKeyPress}
 			{enterkeyhint}
 			{disabled}
 			type="number"
@@ -111,6 +120,7 @@
 		<input
 			bind:value
 			bind:this={inputElement}
+			on:keypress={onKeyPress}
 			{enterkeyhint}
 			{disabled}
 			type="text"

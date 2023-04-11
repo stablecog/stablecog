@@ -15,6 +15,7 @@
 	export let inputShadow: 'normal' | 'strongest' = 'normal';
 
 	let searchStringLocal: string;
+	let inputElement: HTMLInputElement;
 
 	function search() {
 		setSearchString();
@@ -35,6 +36,17 @@
 		}
 		searchString = searchStringLocal;
 	}
+
+	function onKeyPress(
+		e: KeyboardEvent & {
+			currentTarget: EventTarget & HTMLInputElement;
+		}
+	) {
+		const key = e.code;
+		if (key === 'Enter') {
+			inputElement.blur();
+		}
+	}
 </script>
 
 <form on:submit|preventDefault={search} class="w-full max-w-full flex gap-2">
@@ -42,7 +54,9 @@
 		{disabled}
 		class="flex-1 min-w-0"
 		enterkeyhint="go"
+		{onKeyPress}
 		bind:value={searchStringLocal}
+		bind:inputElement
 		title={$LL.Gallery.SearchInput.Title()}
 		hasIcon
 		hasClearButton
