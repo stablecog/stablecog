@@ -18,6 +18,8 @@
 	export let size: 'sm' | 'md' = 'sm';
 	export let textColor: 'on-bg' | 'secondary' | 'danger' | 'success' = 'on-bg';
 	export let icon: ConstructorOfATypedSvelteComponent | undefined = undefined;
+	export let hasRing = true;
+	export let shadow: 'normal' | 'strongest' = 'normal';
 
 	let classes = '';
 </script>
@@ -35,18 +37,20 @@
 			? 'bg-c-success ring-c-success text-c-on-primary'
 			: 'bg-c-bg-secondary ring-c-bg-tertiary text-c-on-bg'} {noPadding
 			? ''
-			: 'px-3 py-2.5'} shadow-lg shadow-c-shadow/[var(--o-shadow-strong)]
-    	rounded-lg font-bold transition {size === 'md'
-			? 'text-sm'
-			: 'text-xs'} ring-2 relative overflow-hidden z-0 group {classes}"
+			: 'px-3 py-2.5'} shadow-lg {shadow === 'strongest'
+			? 'shadow-c-shadow/[var(--o-shadow-strongest)]'
+			: 'shadow-c-shadow/[var(--o-shadow-strong)]'}
+    	rounded-lg font-bold transition {size === 'md' ? 'text-sm' : 'text-xs'} {!hasRing
+			? ''
+			: 'ring-2'} relative overflow-hidden z-0 group {classes}"
 	>
 		<div class="w-[200%] h-full absolute left-0 top-0 flex items-center justify-center">
 			<div
 				class="{state === 'success'
-					? 'bg-c-success translate-x-[-45%]'
+					? 'bg-c-success translate-x-[-43%]'
 					: 'bg-c-bg-tertiary'} w-full aspect-square origin-left rounded-full transition transform -translate-x-full {!$isTouchscreen
-					? 'group-hover:translate-x-[-45%]'
-					: ''} {loading ? 'translate-x-[-45%]' : ''}"
+					? 'group-hover:translate-x-[-43%]'
+					: ''} {loading ? 'translate-x-[-43%]' : ''}"
 			/>
 		</div>
 		<div
@@ -100,20 +104,22 @@
 			? 'bg-c-danger ring-c-danger'
 			: 'bg-c-bg-secondary ring-c-bg-tertiary'} {noPadding
 			? ''
-			: 'px-3 py-2.5'} shadow-lg shadow-c-shadow/[var(--o-shadow-strong)]
-    	rounded-lg font-bold transition {size === 'md'
-			? 'text-sm'
-			: 'text-xs'} ring-2 relative overflow-hidden z-0 group {classes}"
+			: 'px-3 py-2.5'} shadow-lg {shadow === 'strongest'
+			? 'shadow-c-shadow/[var(--o-shadow-strongest)]'
+			: 'shadow-c-shadow/[var(--o-shadow-strong)]'}
+    	rounded-lg font-bold transition {size === 'md' ? 'text-sm' : 'text-xs'} {!hasRing
+			? ''
+			: 'ring-2'} relative overflow-hidden z-0 group {classes}"
 	>
 		<div class="w-[200%] h-full absolute left-0 top-0 flex items-center justify-center">
 			<div
 				class="{state === 'success'
-					? 'bg-c-success translate-x-[-45%]'
+					? 'bg-c-success translate-x-[-43%]'
 					: state === 'danger'
-					? 'bg-c-danger translate-x-[-45%]'
+					? 'bg-c-danger translate-x-[-43%]'
 					: 'bg-c-bg-tertiary'} w-full aspect-square origin-left rounded-full transition transform -translate-x-full {!$isTouchscreen
-					? 'group-enabled:group-hover:translate-x-[-45%]'
-					: ''} {loading ? 'translate-x-[-45%]' : ''}"
+					? 'group-enabled:group-hover:translate-x-[-43%]'
+					: ''} {loading ? 'translate-x-[-43%]' : ''}"
 			/>
 		</div>
 		<div

@@ -1,3 +1,4 @@
+import type { TAvailableGenerationModelId } from '$ts/constants/generationModels';
 import { apiUrl } from '$ts/constants/main';
 import type { TGenerationFullOutput } from '$userStores/generation';
 
@@ -8,12 +9,14 @@ export async function getUserGenerationFullOutputs({
 	cursor,
 	access_token,
 	is_favorited,
-	search
+	search,
+	model_ids
 }: {
 	cursor?: string;
 	access_token: string;
 	is_favorited: boolean;
 	search?: string;
+	model_ids?: TAvailableGenerationModelId[];
 }) {
 	console.log('getUserOutputs');
 	const query = new URLSearchParams();
@@ -29,6 +32,9 @@ export async function getUserGenerationFullOutputs({
 	if (search && search !== '') {
 		query.append('search', search);
 		query.append('score_threshold', score_threshold.toString());
+	}
+	if (model_ids && model_ids.length > 0) {
+		query.append('model_ids', model_ids.join(','));
 	}
 	const url = `${apiUrl.origin}/v1/user/outputs?${query.toString()}`;
 	const res = await fetch(url, {

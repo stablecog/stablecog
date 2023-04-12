@@ -8,11 +8,13 @@ const score_threshold = 50;
 export async function getGalleryGenerationFullOutputs({
 	cursor,
 	search,
-	seed
+	seed,
+	model_ids
 }: {
 	cursor?: string;
 	search?: string;
 	seed: number;
+	model_ids?: TAvailableGenerationModelId[];
 }): Promise<TGalleryGenerationFullOutputsPage> {
 	console.log('getGalleryOutputs');
 	const query = new URLSearchParams();
@@ -24,6 +26,9 @@ export async function getGalleryGenerationFullOutputs({
 	if (search && search !== '') {
 		query.append('search', search);
 		query.append('score_threshold', score_threshold.toString());
+	}
+	if (model_ids && model_ids.length > 0) {
+		query.append('model_ids', model_ids.join(','));
 	}
 	query.append('seed', seed.toString());
 	let queryString = query.toString();

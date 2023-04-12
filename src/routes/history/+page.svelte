@@ -12,6 +12,7 @@
 	import SignInCard from '$components/SignInCard.svelte';
 	import TabBar from '$components/tabBars/TabBar.svelte';
 	import LL, { locale } from '$i18n/i18n-svelte';
+	import type { TAvailableGenerationModelId } from '$ts/constants/generationModels';
 	import { canonicalUrl } from '$ts/constants/main';
 	import { logBatchEditActived, logBatchEditDeactivated } from '$ts/helpers/loggers';
 	/* import {
@@ -42,6 +43,7 @@
 	import Morpher from '$components/Morpher.svelte'; */
 
 	let totalOutputs: number;
+	let modelIdFilters: TAvailableGenerationModelId[];
 	/* let hasLegacyGenerations = false;
 	let legacyGenerationsDownloadStatus: 'idle' | 'downloading' = 'idle'; */
 
@@ -54,7 +56,8 @@
 	$: userGenerationFullOutputsQueryKey.set([
 		'user_generation_full_outputs',
 		$userGalleryCurrentView,
-		searchString ? searchString : ''
+		searchString ? searchString : '',
+		modelIdFilters ? modelIdFilters.join(',') : ''
 	]);
 	$: userGenerationFullOutputsQuery = $page.data.session?.user.id
 		? createInfiniteQuery({
@@ -64,7 +67,8 @@
 						access_token: $page.data.session?.access_token || '',
 						cursor: lastPage?.pageParam,
 						is_favorited: $userGalleryCurrentView === 'favorites',
-						search: searchString
+						search: searchString,
+						model_ids: modelIdFilters
 					});
 				},
 				getNextPageParam: (lastPage: TUserGenerationFullOutputsPage) => {
@@ -80,7 +84,7 @@
 	$: $userGenerationFullOutputsQuery?.data?.pages, onPagesChanged();
 	$: gridRerenderKey = `user_generation_full_outputs_${$userGalleryCurrentView}_${
 		$userGenerationFullOutputsQuery?.isInitialLoading
-	}_${$userGenerationFullOutputsQuery?.isStale}_${
+	}_${modelIdFilters ? modelIdFilters.join(',') : ''}_${$userGenerationFullOutputsQuery?.isStale}_${
 		$userGenerationFullOutputsQuery?.data?.pages?.[0]?.outputs &&
 		$userGenerationFullOutputsQuery.data.pages[0].outputs.length > 0
 			? $userGenerationFullOutputsQuery.data.pages[0].outputs[0].id
@@ -239,7 +243,7 @@
 			</div>
 		</div>
 		<div class="w-full flex max-w-5xl mt-3 px-1">
-			<SearchAndFilterBar bind:searchString />
+			<SearchAndFilterBar bind:searchString bind:modelIdFilters />
 		</div>
 		<!-- Edit bar -->
 		<div

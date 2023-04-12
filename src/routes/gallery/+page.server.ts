@@ -7,16 +7,17 @@ import type { ServerLoad } from '@sveltejs/kit';
 
 export const load: ServerLoad = async ({ url }) => {
 	let outputId = url.searchParams.get('output');
+	let searchQuery = url.searchParams.get('q');
 	let generationFullOutput: TGenerationFullOutput | undefined = undefined;
 	if (!outputId) {
-		return { generationFullOutput };
+		return { generationFullOutput, searchQuery };
 	}
 	const res = await fetch(`${apiUrl.origin}/v1/gallery?output_id=${outputId}`);
 	if (!res.ok) {
-		return { generationFullOutput };
+		return { generationFullOutput, searchQuery };
 	}
 	const data: TGalleryGenerationFullOutputPageRes = await res.json();
-	if (!data.hits || !data.hits[0]) return { generationFullOutput };
+	if (!data.hits || !data.hits[0]) return { generationFullOutput, searchQuery };
 	const hit = data.hits[0];
 	const output: TGenerationOutput = {
 		id: hit.id,
@@ -56,6 +57,7 @@ export const load: ServerLoad = async ({ url }) => {
 		...output
 	};
 	return {
-		generationFullOutput
+		generationFullOutput,
+		searchQuery
 	};
 };

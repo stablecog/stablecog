@@ -24,24 +24,29 @@
 	import IconAnimatedSpinner from '$components/icons/IconAnimatedSpinner.svelte';
 	import SearchAndFilterBar from '$components/SearchAndFilterBar.svelte';
 	import IconSadFace from '$components/icons/IconSadFace.svelte';
-	import { logGallerySearch } from '$ts/helpers/loggers';
-	import { advancedModeApp } from '$ts/stores/advancedMode';
-	import { userSummary } from '$ts/stores/user/summary';
-	import { appVersion } from '$ts/stores/appVersion';
+	import type { TAvailableGenerationModelId } from '$ts/constants/generationModels';
 
 	export let data: PageServerData;
-	const { generationFullOutput: generationFullOutputFromData } = data;
+	const { generationFullOutput: generationFullOutputFromData, searchQuery: searchQueryParam } =
+		data;
 
-	let searchString: string;
+	let searchString = searchQueryParam ?? '';
+
+	let modelIdFilters: TAvailableGenerationModelId[];
 
 	$: galleryGenerationFullOutputsQuery = browser
 		? createInfiniteQuery({
-				queryKey: ['gallery_generation_full_outputs', searchString ? searchString : ''],
+				queryKey: [
+					'gallery_generation_full_outputs',
+					searchString ? searchString : '',
+					modelIdFilters ? modelIdFilters.join(',') : ''
+				],
 				queryFn: async (lastPage) => {
 					return getGalleryGenerationFullOutputs({
 						cursor: lastPage?.pageParam,
 						search: searchString,
-						seed: $globalSeed
+						seed: $globalSeed,
+						model_ids: modelIdFilters
 					});
 				},
 				getNextPageParam: (lastPage: TGalleryGenerationFullOutputsPage) => {
@@ -53,16 +58,14 @@
 
 	$: gridRerenderKey = `gallery_generation_full_outputs_${searchString ? searchString : ''}_${
 		$galleryGenerationFullOutputsQuery?.isInitialLoading
-	}_${$galleryGenerationFullOutputsQuery?.isStale}_${
+	}_${modelIdFilters ? modelIdFilters.join(',') : ''}_${
+		$galleryGenerationFullOutputsQuery?.isStale
+	}_${
 		$galleryGenerationFullOutputsQuery?.data?.pages?.[0]?.outputs &&
 		$galleryGenerationFullOutputsQuery.data.pages[0].outputs.length > 0
 			? $galleryGenerationFullOutputsQuery.data.pages[0].outputs[0].id
 			: false
 	}`;
-
-	let scrollDirection: 'up' | 'down' = 'down';
-	let oldScrollY = 0;
-	let notAtTheVeryTop = false;
 
 	function onKeyDown({ key }: KeyboardEvent) {
 		if (!$activeGeneration) return;
@@ -84,26 +87,6 @@
 				selected_output: outputs[newIndex]
 			});
 		}
-	}
-
-	const notAtTheVeryTopThreshold = 5;
-	const minScrollThreshold = 40;
-
-	$: hideSearchBar = scrollDirection === 'down' && notAtTheVeryTop;
-
-	function onScroll() {
-		const scrollY = window.scrollY;
-		const _notAtTheVeryTop = scrollY > notAtTheVeryTopThreshold;
-		if (_notAtTheVeryTop !== notAtTheVeryTop) {
-			notAtTheVeryTop = _notAtTheVeryTop;
-		}
-		if (Math.abs(window.scrollY - oldScrollY) < minScrollThreshold) return;
-		if (window.scrollY > oldScrollY) {
-			scrollDirection = 'down';
-		} else {
-			scrollDirection = 'up';
-		}
-		oldScrollY = scrollY;
 	}
 
 	onMount(() => {
@@ -131,20 +114,11 @@
 		: `${canonicalUrl}${$page.url.pathname}`}
 />
 
-<svelte:window on:keydown={onKeyDown} on:scroll={onScroll} />
+<svelte:window on:keydown={onKeyDown} />
 <div class="w-full flex-1 flex flex-col items-center relative mt-1 md:mt-0">
-	<div
-		style="top: {$navbarHeight}px"
-		class="w-full px-2 py-1 md:py-2 flex justify-center sticky z-10 transition duration-200 {hideSearchBar
-			? '-translate-y-22 pointer-events-none opacity-0'
-			: 'translate-y-0 opacity-100'}"
-	>
+	<div class="w-full px-2 py-1 md:py-2 flex justify-center">
 		<div class="w-full flex max-w-3xl justify-center">
-			<SearchAndFilterBar
-				bind:searchString
-				disabled={hideSearchBar}
-				inputShadow={notAtTheVeryTop ? 'strongest' : 'normal'}
-			/>
+			<SearchAndFilterBar bind:modelIdFilters bind:searchString />
 		</div>
 	</div>
 	<div class="w-full px-1 pb-3 pt-1 md:pt-3 relative flex flex-col flex-1">
