@@ -148,7 +148,7 @@
 	}
 </script>
 
-<div class="w-full flex justify-center pb-2 pl-2 md:p-0">
+<div class="w-full flex justify-center pb-3 pl-2 md:p-0">
 	<form
 		bind:this={promptFormElement}
 		on:submit|preventDefault={onPromptFormSubmitted}
