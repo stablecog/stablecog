@@ -58,6 +58,11 @@ export function logGallerySearch(props: IGallerySearchProps) {
 	posthog.capture('Gallery Search', { ...props });
 }
 
+export function logHistorySearch(props: IHistorySearchProps) {
+	mixpanel.track('History Search', { ...props });
+	posthog.capture('History Search', { ...props });
+}
+
 export function logGenerationOutputDeleted(props: IGenerationOutputActionProps) {
 	mixpanel.track('Generation Output | Deleted', { ...props });
 	posthog.capture('Generation Output | Deleted', { ...props });
@@ -309,7 +314,14 @@ interface IGallerySearchProps {
 	'SC - Advanced Mode': boolean;
 	'SC - User Id': string | undefined;
 	'SC - Stripe Product Id': string | undefined;
-	'SC - Search Query': string;
+	'SC - App Version': string;
+}
+
+interface IHistorySearchProps {
+	'SC - Locale': string;
+	'SC - Advanced Mode': boolean;
+	'SC - User Id': string | undefined;
+	'SC - Stripe Product Id': string | undefined;
 	'SC - App Version': string;
 }
 

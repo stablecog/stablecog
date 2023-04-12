@@ -3,7 +3,7 @@
 	import { page } from '$app/stores';
 	import Button from '$components/buttons/Button.svelte';
 	import LL, { locale } from '$i18n/i18n-svelte';
-	import { logGallerySearch } from '$ts/helpers/loggers';
+	import { logGallerySearch, logHistorySearch } from '$ts/helpers/loggers';
 	import { advancedModeApp } from '$ts/stores/advancedMode';
 	import { appVersion } from '$ts/stores/appVersion';
 	import { userSummary } from '$ts/stores/user/summary';
@@ -19,14 +19,23 @@
 
 	function search() {
 		setSearchString();
-		logGallerySearch({
-			'SC - Search Query': searchString,
-			'SC - Advanced Mode': $advancedModeApp,
-			'SC - Locale': $locale,
-			'SC - User Id': $page.data.session?.user.id,
-			'SC - Stripe Product Id': $userSummary?.product_id,
-			'SC - App Version': $appVersion
-		});
+		if ($page.url.pathname === '/gallery') {
+			logGallerySearch({
+				'SC - Advanced Mode': $advancedModeApp,
+				'SC - Locale': $locale,
+				'SC - User Id': $page.data.session?.user.id,
+				'SC - Stripe Product Id': $userSummary?.product_id,
+				'SC - App Version': $appVersion
+			});
+		} else if ($page.url.pathname === '/history') {
+			logHistorySearch({
+				'SC - Advanced Mode': $advancedModeApp,
+				'SC - Locale': $locale,
+				'SC - User Id': $page.data.session?.user.id,
+				'SC - Stripe Product Id': $userSummary?.product_id,
+				'SC - App Version': $appVersion
+			});
+		}
 	}
 
 	function setSearchString() {
