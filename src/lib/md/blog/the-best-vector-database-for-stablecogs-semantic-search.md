@@ -138,7 +138,7 @@ With our traditional search engine, the search query "a creature with 8 legs" wo
 
 Translation: A woman with yellow or green hair
 
-[![Stablecog Gallery Search: A woman with yellow or green hair](https://ba.stablecog.com/blog/stablecog-gallery-search-a-woman-with-yellow-or-green-hair.jpg)<!--rehype:width=2560   &height=1800-->](https://stablecog.com/gallery?q=Sarı+veya+yeşil+saşlı+bir+kadın)
+[![Stablecog Gallery Search: A woman with yellow or green hair](https://ba.stablecog.com/blog/stablecog-gallery-search-a-woman-with-yellow-or-green-hair.jpg)<!--rehype:width=2560   &height=1800-->](https://stablecog.com/gallery?q=Sarı+veya+yeşil+saçlı+bir+kadın)
 
 ### Japanese - [抽象芸術](https://stablecog.com/gallery?q=抽象芸術)
 
