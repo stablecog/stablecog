@@ -100,7 +100,7 @@ We did run into some drawbacks along the way, though:
 - The SDKs and API is not as nice to use as Milvus or Qdrant.
 - Like Milvus, it can only store 1 vector in a schema/collection.
 
-### Qdrant - Our Final Choice
+### Qdrant - Our Favorite
 
 [Qdrant](https://qdrant.tech/) is a purpose built vector database, the only one on our list written in [Rust](https://www.rust-lang.org/). It was the last and final vector database we tried, our initial impressions were extremely positive.
 
