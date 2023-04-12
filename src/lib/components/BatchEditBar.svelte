@@ -331,7 +331,7 @@
 </script>
 
 <div
-	transition:expandCollapse={{ duration: 200, easing: quadOut }}
+	transition:expandCollapse|local={{ duration: 200, easing: quadOut }}
 	class="w-full flex flex-row flex-wrap justify-between items-center bg-c-bg rounded-xl 
 	shadow-lg shadow-c-shadow/[var(--o-shadow-strong)] ring-2 ring-c-bg-secondary"
 >
