@@ -135,7 +135,10 @@
 		(cardType === 'admin-gallery' && $isAdminGalleryEditActive) ||
 		(cardType === 'history' && $isUserGalleryEditActive);
 
-	$: modalShouldOpen = !$isTouchscreen || $lastClickedOutputId === generation.selected_output.id;
+	$: modalShouldOpen =
+		!$isTouchscreen ||
+		$lastClickedOutputId === generation.selected_output.id ||
+		cardType === 'create';
 
 	$: overlayShouldShow = $isTouchscreen && $lastClickedOutputId === generation.selected_output.id;
 

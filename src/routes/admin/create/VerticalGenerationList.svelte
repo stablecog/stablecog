@@ -26,7 +26,7 @@
 			{#each outputs as output}
 				{@const status = output.status}
 				{@const animation = output.animation}
-				<div class="w-12 h-full relative group">
+				<div class="w-12 h-full relative group overflow-hidden">
 					<ImagePlaceholder width={output.generation.width} height={output.generation.height} />
 					<div
 						class="absolute left-0 top-0 w-full h-full bg-c-bg-secondary transition border-2 border-c-bg-secondary rounded-lg hover:border-c-primary

@@ -235,7 +235,7 @@
 			class="w-full bg-c-bg rounded-t-xl shadow-navbar shadow-c-shadow/[var(--o-shadow-stronger)] 
 			ring-2 ring-c-bg-secondary pb-[env(safe-area-inset-bottom)] overflow-hidden z-10"
 		>
-			<div class="w-full h-16 relative">
+			<div class="w-full h-14 flex flex-row overflow-hidden relative">
 				{#if userGenerationFullOutputsQuery}
 					<VerticalGenerationList
 						generationsQuery={userGenerationFullOutputsQuery}
