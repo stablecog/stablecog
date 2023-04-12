@@ -38,6 +38,7 @@
 
 	export let withCheck: (callback: () => void) => void;
 	export let isCheckCompleted: boolean;
+	export let rounding: 'all' | 'top' | 'bottom' = 'all';
 
 	let settingsContainer: HTMLDivElement;
 	let containerDropdownPadding = 16;
@@ -114,10 +115,10 @@
 	}
 </script>
 
-<SidebarWrapper>
+<SidebarWrapper {rounding}>
 	<div
 		bind:this={settingsContainer}
-		class="w-full h-full flex flex-col overflow-auto px-5 pt-5 pb-16 gap-7"
+		class="w-full h-full flex flex-col overflow-auto px-3 md:px-5 pt-4 md:pt-5 pb-16 gap-7"
 	>
 		<div class="w-full flex flex-col items-start gap-3">
 			<div

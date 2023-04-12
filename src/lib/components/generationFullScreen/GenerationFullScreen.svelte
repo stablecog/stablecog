@@ -317,8 +317,6 @@
 			<IconButton
 				name="Close"
 				onClick={() => {
-					console.log('Close clicked');
-					console.log($activeGeneration);
 					if ($activeGeneration !== undefined) {
 						activeGeneration.set(undefined);
 					}

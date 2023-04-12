@@ -34,10 +34,15 @@
 	import { sseId } from '$ts/stores/user/sse';
 	import { userSummary } from '$ts/stores/user/summary';
 	import { maxOngoingGenerationsCount } from '$routes/admin/create/constants';
+	import IconGenerationSettings from '$components/icons/IconGenerationSettings.svelte';
+	import IconButton from '$components/buttons/IconButton.svelte';
+	import { windowWidth } from '$ts/stores/window';
+	import { mdBreakpoint } from '$components/generationFullScreen/constants';
 
 	export let isCheckCompleted = false;
 	export let withCheck: (fn: () => void) => void;
 	export let openSignInModal: () => void;
+	export let openSettingsPanelModal: (() => void) | undefined = undefined;
 
 	let promptInputElement: HTMLTextAreaElement;
 	let promptFormElement: HTMLFormElement;
@@ -78,6 +83,9 @@
 			promptInputValue.set(promptInputPlaceholder);
 		}
 		queueGeneration();
+		if ($windowWidth < mdBreakpoint) {
+			promptInputElement.blur();
+		}
 	}
 
 	async function queueGeneration() {
@@ -140,13 +148,13 @@
 	}
 </script>
 
-<div class="w-full flex justify-center">
+<div class="w-full flex justify-center pb-2 pl-2 md:p-0">
 	<form
 		bind:this={promptFormElement}
 		on:submit|preventDefault={onPromptFormSubmitted}
-		class="w-full max-w-7xl flex flex-col md:flex-row gap-3 items-center"
+		class="w-full max-w-7xl flex flex-row md:gap-3 items-center"
 	>
-		<div class="w-full md:w-auto md:flex-1 flex relative group">
+		<div class="flex-1 flex relative group">
 			<textarea
 				use:autoresize={{ maxRows: 3, placeholder: promptInputPlaceholder }}
 				bind:this={promptInputElement}
@@ -168,17 +176,29 @@
 				}}
 				disabled={!isCheckCompleted}
 				placeholder={promptInputPlaceholder}
+				enterkeyhint="go"
 				rows="1"
 				style="transition: height 0.1s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.2s cubic-bezier(0.4, 0, 0.2, 1), padding 0.2s cubic-bezier(0.4, 0, 0.2, 1)"
-				class="w-full bg-c-bg-secondary shadow-lg pr-12 md:pr-17 hide-scrollbar shadow-c-shadow/[var(--o-shadow-normal)] 
-						scroll-smooth resize-none transition relative pl-5 md:pl-6 py-5 rounded-xl 
+				class="w-full text-sm md:text-base bg-c-bg-secondary shadow-lg pr-12 md:pr-17 hide-scrollbar shadow-c-shadow/[var(--o-shadow-normal)] 
+						scroll-smooth resize-none transition relative pl-3 md:pl-6 py-3.5 md:py-5 rounded-xl 
 						focus:ring-2 focus:ring-c-primary/30 ring-0 ring-c-primary/20 placeholder:text-c-on-bg/40 {!$isTouchscreen
 					? 'enabled:hover:ring-2'
 					: ''} text-c-on-bg {!$isTouchscreen ? 'group-hover:ring-2' : ''}"
 			/>
 			<ClearButton show={showClearPromptInputButton} onClick={clearPrompt} />
 		</div>
-		<div class="w-full md:w-auto md:min-w-[9.5rem] relative">
+		{#if openSettingsPanelModal}
+			<IconButton name="Generation Settings" onClick={openSettingsPanelModal}>
+				<div class="p-1">
+					<IconGenerationSettings
+						class="{!$isTouchscreen
+							? 'group-hover/iconbutton:text-c-primary'
+							: ''} text-c-on-bg transition"
+					/>
+				</div>
+			</IconButton>
+		{/if}
+		<div class="w-full md:w-auto md:min-w-[9.5rem] relative hidden md:block">
 			<Button
 				disabled={!isCheckCompleted ||
 					(doesntHaveEnoughCredits && $page.data.session?.user.id !== undefined)}

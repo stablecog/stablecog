@@ -18,7 +18,7 @@
 		type TUserGenerationFullOutputsPage
 	} from '$ts/queries/userGenerations';
 	import { createPageUserGenerationFullOutputsQueryKey } from '$ts/stores/user/keys';
-	import { windowHeight } from '$ts/stores/window';
+	import { windowHeight, windowWidth } from '$ts/stores/window';
 	import Navbar from '$components/navigation/Navbar.svelte';
 	import SidebarWrapper from '$routes/admin/create/SidebarWrapper.svelte';
 	import GenerateStage from '$routes/admin/create/GenerationStage.svelte';
@@ -41,11 +41,18 @@
 	import { availableSchedulerIds } from '$ts/constants/schedulers';
 	import { aspectRatioTabs } from '$ts/constants/generationSize';
 	import { numOutputsMax, numOutputsMin } from '$ts/constants/main';
+	import { mdBreakpoint } from '$components/generationFullScreen/constants';
+	import VerticalGenerationList from '$routes/admin/create/VerticalGenerationList.svelte';
 
 	let isCheckCompleted = false;
 	let isSignInModalOpen = false;
+	let isSettingsPanelModalOpen = false;
+
 	let stageWidth: number;
 	let stageHeight: number;
+
+	let stageWidthMobile: number;
+	let stageHeightMobile: number;
 
 	let gridScrollContainer: HTMLElement;
 
@@ -68,16 +75,6 @@
 						cursor: lastPage?.pageParam,
 						is_favorited: userGalleryCurrentView === 'favorites'
 					});
-					outputsPage = {
-						...outputsPage,
-						outputs: outputsPage.outputs.filter(
-							(o) =>
-								!$generations
-									.filter((g, i) => i !== 0)
-									.map((g) => g.id)
-									.includes(o.generation.id)
-						)
-					};
 					return outputsPage;
 				},
 				getNextPageParam: (lastPage: TUserGenerationFullOutputsPage) => {
@@ -98,8 +95,16 @@
 			: false
 	}`;
 
+	$: pinnedFullOutputs = $generations
+		.filter((g, i) => i !== 0)
+		.flatMap((g) => g.outputs.map((o) => ({ ...o, generation: g })));
+
 	function openSignInModal() {
 		isSignInModalOpen = true;
+	}
+
+	function openSettingsPanelModal() {
+		isSettingsPanelModalOpen = true;
 	}
 
 	function onKeyDown({ key }: KeyboardEvent) {
@@ -177,16 +182,14 @@
 	class="w-full flex flex-col overflow-hidden"
 >
 	<Navbar />
-	<!-- Main part -->
-	<div class="w-full h-full flex flex-row overflow-hidden pt-2 px-4 pb-4 gap-4">
+	<!-- Main part desktop -->
+	<div class="w-full h-full hidden md:flex flex-row overflow-hidden pt-2 px-4 pb-4 gap-4">
 		<div class="h-full w-40 xl:w-80">
 			<SidebarWrapper>
 				<div bind:this={gridScrollContainer} class="w-full flex-1 overflow-auto px-2 pt-2 pb-16">
-					{#if userGenerationFullOutputsQuery}
+					{#if userGenerationFullOutputsQuery && $windowWidth >= mdBreakpoint}
 						<GenerationGridInfinite
-							pinnedFullOutputs={$generations
-								.filter((g, i) => i !== 0)
-								.flatMap((g) => g.outputs.map((o) => ({ ...o, generation: g })))}
+							{pinnedFullOutputs}
 							cardWidthClasses="w-full lg:w-1/2 xl:w-1/3"
 							cardType="create"
 							generationsQuery={userGenerationFullOutputsQuery}
@@ -211,10 +214,65 @@
 			<SettingsPanel {withCheck} {isCheckCompleted} />
 		</div>
 	</div>
+	<!-- Main part mobile -->
+	<div class="w-full h-full flex md:hidden flex-col overflow-hidden gap-4">
+		<div class="w-full flex-1 flex flex-col px-4 pb-2">
+			<div
+				bind:clientWidth={stageWidthMobile}
+				bind:clientHeight={stageHeightMobile}
+				class="w-full flex-1"
+			>
+				{#if stageWidthMobile && stageHeightMobile}
+					<GenerateStage
+						generation={$generations[0]}
+						stageWidth={stageWidthMobile}
+						stageHeight={stageHeightMobile}
+					/>
+				{/if}
+			</div>
+		</div>
+		<div
+			class="w-full bg-c-bg rounded-t-xl shadow-navbar shadow-c-shadow/[var(--o-shadow-stronger)] 
+			ring-2 ring-c-bg-secondary pb-[env(safe-area-inset-bottom)] overflow-hidden z-10"
+		>
+			<div class="w-full h-16 relative">
+				{#if userGenerationFullOutputsQuery}
+					<VerticalGenerationList
+						generationsQuery={userGenerationFullOutputsQuery}
+						{pinnedFullOutputs}
+					/>
+				{/if}
+				<div class="h-full w-12 bg-gradient-to-r from-c-bg/0 to-c-bg absolute right-0 top-0 z-10" />
+			</div>
+			<PromptBar {openSignInModal} {isCheckCompleted} {withCheck} {openSettingsPanelModal} />
+		</div>
+	</div>
 </div>
 
 {#if $activeGeneration}
 	<GenerationFullScreen generation={$activeGeneration} modalType="generate" />
+{/if}
+
+{#if $windowWidth <= mdBreakpoint}
+	<div
+		use:portal={'body'}
+		class="w-full h-full fixed left-0 top-0 flex flex-col justify-end z-[10000] transition {isSettingsPanelModalOpen
+			? 'bg-c-barrier/80 opacity-100'
+			: 'opacity-0 pointer-events-none'}"
+	/>
+	<div
+		class="w-full h-full flex flex-col justify-end fixed left-0 top-0 transition z-[10001] {isSettingsPanelModalOpen
+			? 'translate-y-0'
+			: 'translate-y-full pointer-events-none'}"
+	>
+		<div
+			use:clickoutside={{ callback: () => (isSettingsPanelModalOpen = false) }}
+			style="max-height: {$windowHeight * 0.8}px"
+			class="w-full flex flex-col h-full max-h-[80vh]"
+		>
+			<SettingsPanel {withCheck} {isCheckCompleted} rounding="top" />
+		</div>
+	</div>
 {/if}
 
 {#if isSignInModalOpen && !$page.data.session?.user.id}
