@@ -36,7 +36,7 @@ By themselves, these vectors we create aren't particularly useful. We need a way
 
 Search index databases are not new. There are many options used by some of the largest companies in the world - including but not limited to [ElasticSearch](https://www.elastic.co/), [Typesense](https://typesense.org/), and [Algolia](https://www.algolia.com/).
 
-Many of these search-oriented databases also support similarilty searches uses vector embeddings, but they were not initially built with that functionality in mind. The solutions talked about below (with the exception of PostgreSQL), are purpose built around storing and searching vector embeddings - it is not just a feature of these databases, but exactly what they were built to do.
+Many of these search-oriented databases also support similarilty searches using vector embeddings, but they were not initially built with that functionality in mind. The solutions talked about below (with the exception of PostgreSQL), are purpose built around storing and searching vector embeddings - it is not just a feature of these databases, but exactly what they were built to do.
 
 In 2023, there is a rising number of "vector databases" which are specifically built to store and search vector embeddings - some of the more popular ones include:
 
