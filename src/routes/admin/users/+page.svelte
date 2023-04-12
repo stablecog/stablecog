@@ -38,6 +38,7 @@
 	let searchStringDebounced: string | undefined = undefined;
 	let searchTimeout: NodeJS.Timeout;
 	let searchDebounceMs = 300;
+	let usersInput: HTMLInputElement;
 	$: searchString, setDebouncedSearch(searchString);
 
 	let selectedActiveProductId: TStripeSupportedProductIdSubscriptions = '';
@@ -63,7 +64,7 @@
 
 	$: allUsersQuery = browser
 		? createInfiniteQuery({
-				queryKey: ['all_users_query', searchStringDebounced],
+				queryKey: ['all_users_query', searchStringDebounced, selectedActiveProductId ?? ''],
 				queryFn: async (lastPage) => {
 					const res = await getAllUsers({
 						cursor: lastPage?.pageParam,
@@ -250,6 +251,9 @@
 		<div class="w-full flex max-w-2xl gap-2">
 			<div class="flex-1 min-w-0 rounded-xl">
 				<Input
+					bind:inputElement={usersInput}
+					enterkeyhint="search"
+					type="text"
 					disabled={scrollDirection === 'down'}
 					class="w-full"
 					bind:value={searchString}

@@ -165,7 +165,7 @@
 			show={showClearButton}
 			onClick={() => {
 				value = '';
-				inputElement.focus();
+				inputElement?.focus();
 				if (onClearButtonClicked) {
 					onClearButtonClicked();
 				}
