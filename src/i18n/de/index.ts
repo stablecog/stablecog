@@ -193,6 +193,7 @@ const de: Translation = {
 		YesButton: 'Ja',
 		NoButton: 'Nein',
 		EnableButton: 'Aktivieren',
+		ClearAllButton: 'Clear All',
 		DisableButton: 'Deaktivieren',
 		AddButton: 'Hinzufügen',
 		CopyLinkButton: 'Link kopieren',

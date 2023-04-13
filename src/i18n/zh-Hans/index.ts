@@ -191,6 +191,7 @@ const zhHans: Translation = {
 		YesButton: '是',
 		NoButton: '否',
 		EnableButton: '启用',
+		ClearAllButton: 'Clear All',
 		DisableButton: '禁用',
 		AddButton: '添加',
 		CopyLinkButton: '复制链接',

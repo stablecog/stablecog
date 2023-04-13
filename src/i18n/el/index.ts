@@ -196,6 +196,7 @@ const es: Translation = {
 		YesButton: 'Ναι',
 		NoButton: 'Όχι',
 		EnableButton: 'Ενεργοποίηση',
+		ClearAllButton: 'Clear All',
 		DisableButton: 'Απενεργοποίηση',
 		AddButton: 'Προσθήκη',
 		CopyLinkButton: 'Αντιγραφή Συνδέσμου',

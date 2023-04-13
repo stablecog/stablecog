@@ -193,6 +193,7 @@ const hi: Translation = {
 		YesButton: 'हां',
 		NoButton: 'नही',
 		EnableButton: 'चालू करे',
+		ClearAllButton: 'Clear All',
 		DisableButton: 'बंद करे',
 		AddButton: 'जोड़े',
 		CopyLinkButton: 'लिंक कॉपी करे',

@@ -585,6 +585,10 @@ type RootTranslation = {
 		 */
 		EnableButton: string
 		/**
+		 * C​l​e​a​r​ ​A​l​l
+		 */
+		ClearAllButton: string
+		/**
 		 * D​i​s​a​b​l​e
 		 */
 		DisableButton: string
@@ -2427,6 +2431,10 @@ export type TranslationFunctions = {
 		 * Enable
 		 */
 		EnableButton: () => LocalizedString
+		/**
+		 * Clear All
+		 */
+		ClearAllButton: () => LocalizedString
 		/**
 		 * Disable
 		 */

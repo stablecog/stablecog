@@ -194,6 +194,7 @@ const en: BaseTranslation = {
 		YesButton: 'Yes',
 		NoButton: 'No',
 		EnableButton: 'Enable',
+		ClearAllButton: 'Clear All',
 		DisableButton: 'Disable',
 		AddButton: 'Add',
 		CopyLinkButton: 'Copy Link',

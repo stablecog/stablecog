@@ -196,6 +196,7 @@ const tr: Translation = {
 		YesButton: 'Evet',
 		NoButton: 'Hayır',
 		EnableButton: 'Aktifleştir',
+		ClearAllButton: 'Clear All',
 		DisableButton: 'Durdur',
 		AddButton: 'Ekle',
 		CopyLinkButton: 'Linki Kopyala',

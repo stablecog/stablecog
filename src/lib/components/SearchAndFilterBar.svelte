@@ -173,7 +173,7 @@
 						icon={IconTrashcan}
 						hasCancelIcon={false}
 						onClick={clearAllFilters}
-						text="Clear All"
+						text={$LL.Shared.ClearAllButton()}
 						color="secondary"
 					/>
 				{/if}

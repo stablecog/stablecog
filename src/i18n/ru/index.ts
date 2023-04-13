@@ -194,6 +194,7 @@ const ru: Translation = {
 		YesButton: 'Да',
 		NoButton: 'Нет',
 		EnableButton: 'Включить',
+		ClearAllButton: 'Clear All',
 		DisableButton: 'Выключить',
 		AddButton: 'Добавить',
 		CopyLinkButton: 'Копировать ссылку',

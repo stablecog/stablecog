@@ -193,6 +193,7 @@ const hr: Translation = {
 		YesButton: 'Da',
 		NoButton: 'Ne',
 		EnableButton: 'Omogući',
+		ClearAllButton: 'Clear All',
 		DisableButton: 'Onemogući',
 		AddButton: 'Dodaj',
 		CopyLinkButton: 'Kopiraj Link',

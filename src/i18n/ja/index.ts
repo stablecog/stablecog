@@ -196,6 +196,7 @@ const ja: Translation = {
 		YesButton: 'はい',
 		NoButton: 'いいえ',
 		EnableButton: '有効にする',
+		ClearAllButton: 'Clear All',
 		DisableButton: '無効にする',
 		AddButton: '追加',
 		CopyLinkButton: 'リンクをコピー',

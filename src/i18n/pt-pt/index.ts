@@ -193,6 +193,7 @@ const ptPt: Translation = {
 		YesButton: 'Sim',
 		NoButton: 'Não',
 		EnableButton: 'Ativar',
+		ClearAllButton: 'Clear All',
 		DisableButton: 'Desativar',
 		AddButton: 'Adicionar',
 		CopyLinkButton: 'Copiar Ligação',

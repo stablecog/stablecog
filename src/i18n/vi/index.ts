@@ -194,6 +194,7 @@ const vi: Translation = {
 		YesButton: 'Có',
 		NoButton: 'Không',
 		EnableButton: 'Cho phép',
+		ClearAllButton: 'Clear All',
 		DisableButton: 'Vô hiệu hóa',
 		AddButton: 'Thêm',
 		CopyLinkButton: 'Sao chép liên kết',
