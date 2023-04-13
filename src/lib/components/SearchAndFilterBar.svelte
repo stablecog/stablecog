@@ -25,6 +25,7 @@
 	import { tooltip } from '$ts/actions/tooltip';
 	import IconBrain from '$components/icons/IconBrain.svelte';
 	import { modelTooltip } from '$ts/constants/tooltips';
+	import { browser } from '$app/environment';
 
 	export let disabled = false;
 	export let searchString: string;
@@ -36,6 +37,7 @@
 	let isFiltersOpen = false;
 
 	$: hasAnyFilter = modelIdFilters?.length > 0;
+	$: searchStringLocal, onSearchStringLocalChanged();
 
 	function clearAllFilters() {
 		modelIdFilters = [];
@@ -63,17 +65,26 @@
 		}
 	}
 
+	function onSearchStringLocalChanged() {
+		if (!browser || searchStringLocal) return;
+		resetSearchString();
+	}
+
+	function resetSearchString() {
+		searchString = '';
+		const params = $page.url.searchParams;
+		params.delete('q');
+		const paramsString = params.toString();
+		window.history.replaceState(
+			{},
+			'',
+			`${$page.url.pathname}${paramsString !== '' ? '?' : ''}${params}`
+		);
+	}
+
 	function setSearchString() {
 		if (!searchStringLocal) {
-			searchString = '';
-			const params = $page.url.searchParams;
-			params.delete('q');
-			const paramsString = params.toString();
-			window.history.replaceState(
-				{},
-				'',
-				`${$page.url.pathname}${paramsString !== '' ? '?' : ''}${params}`
-			);
+			resetSearchString();
 			return;
 		}
 		searchString = searchStringLocal;
@@ -118,7 +129,7 @@
 				hasClearButton
 				bg="bg-secondary"
 				shadow={inputShadow}
-				onClearButtonClicked={setSearchString}
+				onClearButtonClicked={resetSearchString}
 			>
 				<IconSearch slot="icon" class="w-full h-full" />
 			</Input>
