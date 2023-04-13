@@ -12,7 +12,7 @@ export const schedulerIdToSchedulerNameCog = {
 	'82cf78dd-6afb-48cc-aca6-14224cca6950': 'DDIM'
 } as const;
 
-export const schedulerIdDefault: TAvailableSchedulerId = '6fb13b76-9900-4fa4-abf8-8f843e034a7f';
+export const schedulerIdDefault: TAvailableSchedulerId = 'b7224e56-1440-43b9-ac86-66d66f9e8c91';
 
 export const availableSchedulerIds = Object.keys(
 	schedulerIdToSchedulerNameCog
