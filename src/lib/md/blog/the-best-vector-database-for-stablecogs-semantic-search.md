@@ -134,7 +134,7 @@ With our traditional search engine, the search query "a creature with 8 legs" wo
 
 [![Stablecog Gallery Search: A creature with 8 legs](https://ba.stablecog.com/blog/stablecog-gallery-search-a-creature-with-8-legs.jpg)<!--rehype:width=2560   &height=1800-->](https://stablecog.com/gallery?q=A+creature+with+8+legs)
 
-### Turkish - [Sarı veya yeşil saçlı bir kadın](https://stablecog.com/gallery?q=Sarı+veya+yeşil+saşlı+bir+kadın)
+### Turkish - [Sarı veya yeşil saçlı bir kadın](https://stablecog.com/gallery?q=Sarı+veya+yeşil+saçlı+bir+kadın)
 
 Translation: A woman with yellow or green hair
 
