@@ -93,7 +93,7 @@
 		}
 	) {
 		const key = e.code;
-		if (key === 'Enter') {
+		if (key === 'Enter' && $isTouchscreen) {
 			inputElement.blur();
 		}
 	}
