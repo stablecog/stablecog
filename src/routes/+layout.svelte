@@ -51,7 +51,7 @@
 	import { globalSeed } from '$ts/stores/globalSeed';
 	import { userSummary } from '$ts/stores/user/summary';
 	import posthog from 'posthog-js';
-	import { PUBLIC_MIXPANEL_ID, PUBLIC_POSTHOG_ID, PUBLIC_POSTHOG_URL } from '$env/static/public';
+	import { PUBLIC_MP_URL, PUBLIC_MP_ID, PUBLIC_PH_ID, PUBLIC_PH_URL } from '$env/static/public';
 	import { getUserSummary } from '$ts/helpers/user/user';
 	import UnderDevelopment from '$components/UnderDevelopment.svelte';
 	import { isSuperAdmin } from '$ts/helpers/admin/roles';
@@ -447,9 +447,9 @@
 	onMount(async () => {
 		setBodyClasses();
 		setNavbarState();
-		mixpanel.init(PUBLIC_MIXPANEL_ID);
-		posthog.init(PUBLIC_POSTHOG_ID, {
-			api_host: PUBLIC_POSTHOG_URL
+		mixpanel.init(PUBLIC_MP_ID, { api_host: PUBLIC_MP_URL });
+		posthog.init(PUBLIC_PH_ID, {
+			api_host: PUBLIC_PH_URL
 		});
 		appVersion.set(document.body.getAttribute('app-version') ?? 'unknown');
 		const {
