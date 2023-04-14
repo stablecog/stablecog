@@ -14,7 +14,6 @@
 		type TGalleryGenerationFullOutputsPage
 	} from '$ts/queries/galleryGenerations';
 	import { globalSeed } from '$ts/stores/globalSeed';
-	import { navbarHeight } from '$ts/stores/navbarHeight';
 	import { activeGeneration } from '$ts/stores/user/generation';
 	import { createInfiniteQuery } from '@tanstack/svelte-query';
 	import { quadOut } from 'svelte/easing';

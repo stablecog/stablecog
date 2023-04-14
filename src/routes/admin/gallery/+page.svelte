@@ -8,9 +8,11 @@
 	import IconSadFace from '$components/icons/IconSadFace.svelte';
 	import IconTick from '$components/icons/IconTick.svelte';
 	import MetaTag from '$components/MetaTag.svelte';
+	import SearchAndFilterBar from '$components/SearchAndFilterBar.svelte';
 	import SignInCard from '$components/SignInCard.svelte';
 	import TabLikeDropdown from '$components/tabBars/TabLikeDropdown.svelte';
 	import LL from '$i18n/i18n-svelte';
+	import type { TAvailableGenerationModelId } from '$ts/constants/generationModels';
 	import { canonicalUrl } from '$ts/constants/main';
 	import { isSuperAdmin } from '$ts/helpers/admin/roles';
 	import {
@@ -19,6 +21,7 @@
 	} from '$ts/queries/userGenerations';
 	import {
 		adminGalleryCurrentFilter,
+		allUserGenerationFullOutputsQueryKey,
 		isAdminGalleryEditActive,
 		lastFetchedAdminGalleryFilter
 	} from '$ts/stores/admin/gallery';
@@ -27,18 +30,23 @@
 	import { createInfiniteQuery, type CreateInfiniteQueryResult } from '@tanstack/svelte-query';
 
 	let totalOutputs: number;
+	let searchString = '';
+	let searchInputIsFocused = false;
+	let modelIdFilters: TAvailableGenerationModelId[];
 
 	let allUserGenerationFullOutputsQuery:
 		| CreateInfiniteQueryResult<TUserGenerationFullOutputsPage, unknown>
 		| undefined;
 
-	$: allUserGenerationFullOutputsQueryKey = [
+	$: $allUserGenerationFullOutputsQueryKey = [
 		'admin_user_generation_full_outputs',
-		$adminGalleryCurrentFilter
+		$adminGalleryCurrentFilter,
+		searchString ? searchString : '',
+		modelIdFilters ? modelIdFilters.join(',') : ''
 	];
 	$: allUserGenerationFullOutputsQuery = $page.data.session?.user.id
 		? createInfiniteQuery({
-				queryKey: allUserGenerationFullOutputsQueryKey,
+				queryKey: $allUserGenerationFullOutputsQueryKey,
 				queryFn: (lastPage) => {
 					return getAllUserGenerationFullOutputs({
 						access_token: $page.data.session?.access_token || '',
@@ -47,7 +55,9 @@
 						order_by:
 							$adminGalleryCurrentFilter === 'approved' || $adminGalleryCurrentFilter === 'rejected'
 								? 'updated_at'
-								: 'created_at'
+								: 'created_at',
+						search: searchString,
+						model_ids: modelIdFilters
 					});
 				},
 				onSuccess: () => {
@@ -63,7 +73,9 @@
 	$: $allUserGenerationFullOutputsQuery?.data?.pages, onPagesChanged();
 	$: gridRerenderKey = `admin_user_generation_full_outputs_${$adminGalleryCurrentFilter}_${
 		$allUserGenerationFullOutputsQuery?.isInitialLoading
-	}_${$allUserGenerationFullOutputsQuery?.isStale}_${
+	}_${searchString ? searchString : ''}_${modelIdFilters ? modelIdFilters.join(',') : ''}_${
+		$allUserGenerationFullOutputsQuery?.isStale
+	}_${
 		$allUserGenerationFullOutputsQuery?.data?.pages?.[0]?.outputs &&
 		$allUserGenerationFullOutputsQuery.data.pages[0].outputs.length > 0
 			? $allUserGenerationFullOutputsQuery.data.pages[0].outputs[0].id
@@ -82,7 +94,7 @@
 	};
 
 	function onKeyDown({ key }: KeyboardEvent) {
-		if (key === 'e') {
+		if (key === 'e' && !searchInputIsFocused) {
 			isAdminGalleryEditActive.set(!$isAdminGalleryEditActive);
 			return;
 		}
@@ -117,16 +129,16 @@
 
 <svelte:window on:keydown={onKeyDown} />
 
-<div class="w-full flex-1 flex flex-col items-center px-1 pt-2 md:py-6 relative">
+<div class="w-full flex-1 flex flex-col items-center px-1 pt-2 md:py-7 relative">
 	{#if !$page.data.session?.user.id}
-		<div class="w-full flex-1 max-w-7xl flex justify-center px-2 py-4 md:py-2">
+		<div class="w-full flex-1 max-w-5xl flex justify-center px-2 py-4 md:py-2">
 			<div class="my-auto flex flex-col">
 				<SignInCard redirectTo="/history" />
 				<div class="w-full h-[1vh]" />
 			</div>
 		</div>
 	{:else}
-		<div class="w-full max-w-7xl flex flex-col md:flex-row md:justify-between md:items-center px-1">
+		<div class="w-full max-w-5xl flex flex-col md:flex-row md:justify-between md:items-center px-1">
 			<div class="flex flex-wrap gap-2 items-center px-3">
 				<p class="font-bold text-1.5xl md:text-2xl">
 					{$LL.History.GenerationsTitle()}
@@ -135,7 +147,7 @@
 					({totalOutputs !== undefined ? totalOutputs : '...'})
 				</p>
 			</div>
-			<div class="w-full md:w-64 flex z-40 mt-4 md:mt-0">
+			<div class="w-full md:w-64 flex z-50 mt-4 md:mt-0">
 				<TabLikeDropdown
 					class="w-full"
 					name="Filter"
@@ -164,9 +176,12 @@
 				</TabLikeDropdown>
 			</div>
 		</div>
+		<div class="w-full max-w-5xl mt-3 px-0.75 flex flex-row justify-center">
+			<SearchAndFilterBar bind:searchString bind:modelIdFilters bind:searchInputIsFocused />
+		</div>
 		<!-- Edit bar -->
 		<div
-			class="w-full top-1 max-w-7xl px-1 transition-all sticky z-30 {$isAdminGalleryEditActive
+			class="w-full top-1 max-w-5xl px-1 transition-all sticky z-30 {$isAdminGalleryEditActive
 				? 'mt-3'
 				: 'mt-0'}"
 		>
@@ -174,7 +189,7 @@
 				<BatchEditBar type="admin-gallery" />
 			{/if}
 		</div>
-		<div class="w-full flex-1 flex flex-col mt-2">
+		<div class="w-full flex-1 flex flex-col mt-5">
 			{#if allUserGenerationFullOutputsQuery === undefined || $allUserGenerationFullOutputsQuery === undefined || $allUserGenerationFullOutputsQuery.isInitialLoading}
 				<div
 					class="w-full flex flex-col text-c-on-bg/60 flex-1 py-6 px-4 justify-center items-center text-center"

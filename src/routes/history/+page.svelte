@@ -52,6 +52,7 @@
 		| undefined;
 
 	let searchString: string;
+	let searchInputIsFocused = false;
 
 	$: userGenerationFullOutputsQueryKey.set([
 		'user_generation_full_outputs',
@@ -138,6 +139,10 @@
 	};
 
 	function onKeyDown({ key }: KeyboardEvent) {
+		if (key === 'e' && !searchInputIsFocused) {
+			isUserGalleryEditActive.set(!$isUserGalleryEditActive);
+			return;
+		}
 		if (!$activeGeneration) return;
 		if (key === 'Escape') {
 			activeGeneration.set(undefined);
@@ -243,7 +248,7 @@
 			</div>
 		</div>
 		<div class="w-full flex max-w-5xl mt-3 px-1">
-			<SearchAndFilterBar bind:searchString bind:modelIdFilters />
+			<SearchAndFilterBar bind:searchString bind:modelIdFilters bind:searchInputIsFocused />
 		</div>
 		<!-- Edit bar -->
 		<div

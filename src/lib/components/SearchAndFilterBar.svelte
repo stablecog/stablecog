@@ -31,6 +31,7 @@
 	export let searchString: string;
 	export let inputShadow: 'normal' | 'strongest' = 'normal';
 	export let modelIdFilters: TAvailableGenerationModelId[];
+	export let searchInputIsFocused = false;
 
 	let searchStringLocal = searchString ?? '';
 	let inputElement: HTMLInputElement;
@@ -118,6 +119,8 @@
 	<div class="w-full flex gap-1.5">
 		<form on:submit|preventDefault={search} class="flex-1 min-w-0 flex gap-2">
 			<Input
+				onFocus={() => (searchInputIsFocused = true)}
+				onBlur={() => (searchInputIsFocused = false)}
 				{disabled}
 				class="w-full"
 				enterkeyhint="search"

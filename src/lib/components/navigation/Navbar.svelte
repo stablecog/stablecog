@@ -52,7 +52,7 @@
 
 <nav
 	bind:clientHeight={$navbarHeight}
-	class="w-full flex flex-col z-50 -mt-px transform transition duration-200 {$navbarStickyType ===
+	class="w-full flex flex-col z-60 -translate-x-px transform transition duration-200 {$navbarStickyType ===
 	'not-sticky'
 		? ''
 		: 'top-0 left-0 fixed'} {notAtTheVeryTop &&

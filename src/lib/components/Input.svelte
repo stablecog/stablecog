@@ -20,6 +20,8 @@
 				}
 		  ) => void)
 		| null = null;
+	export let onFocus: ((e: FocusEvent) => void) | null = null;
+	export let onBlur: ((e: FocusEvent) => void) | null = null;
 	export let enterkeyhint:
 		| 'enter'
 		| 'done'
@@ -40,6 +42,8 @@
 			bind:value
 			bind:this={inputElement}
 			on:keypress={onKeyPress}
+			on:focus={onFocus}
+			on:blur={onBlur}
 			{enterkeyhint}
 			{disabled}
 			type="email"
@@ -67,6 +71,8 @@
 			bind:value
 			bind:this={inputElement}
 			on:keypress={onKeyPress}
+			on:focus={onFocus}
+			on:blur={onBlur}
 			{enterkeyhint}
 			{disabled}
 			type="password"
@@ -94,6 +100,8 @@
 			bind:value
 			bind:this={inputElement}
 			on:keypress={onKeyPress}
+			on:focus={onFocus}
+			on:blur={onBlur}
 			{enterkeyhint}
 			{disabled}
 			type="number"
@@ -121,6 +129,8 @@
 			bind:value
 			bind:this={inputElement}
 			on:keypress={onKeyPress}
+			on:focus={onFocus}
+			on:blur={onBlur}
 			{enterkeyhint}
 			{disabled}
 			type="text"

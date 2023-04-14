@@ -28,6 +28,7 @@
 		adminGalleryCurrentFilter,
 		adminGallerySelectedOutputIds,
 		adminGallerySelectedOutputObjects,
+		allUserGenerationFullOutputsQueryKey,
 		isAdminGalleryEditActive,
 		type TAdminGalleryAction
 	} from '$ts/stores/admin/gallery';
@@ -236,20 +237,6 @@
 			});
 			if (!res.ok) throw new Error('Response not ok');
 			console.log('Delete generation output response', res);
-			for (let i = 0; i < idObjects.length; i++) {
-				let idObject = idObjects[i];
-				const logProps = {
-					'SC - Generation Id': idObject.generation_id,
-					'SC - Output Id': idObject.output_id,
-					'SC - Advanced Mode': $advancedModeApp,
-					'SC - Locale': $locale,
-					'SC - Page': `${$page.url.pathname}${$page.url.search}`,
-					'SC - User Id': $page.data.session?.user.id,
-					'SC - Stripe Product Id': $userSummary?.product_id,
-					'SC - App Version': $appVersion
-				};
-				logGenerationOutputDeleted(logProps);
-			}
 			if (type === 'history') {
 				queryClient.setQueryData($userGenerationFullOutputsQueryKey, (data: any) => ({
 					...data,
@@ -264,6 +251,20 @@
 						};
 					})
 				}));
+				for (let i = 0; i < idObjects.length; i++) {
+					let idObject = idObjects[i];
+					const logProps = {
+						'SC - Generation Id': idObject.generation_id,
+						'SC - Output Id': idObject.output_id,
+						'SC - Advanced Mode': $advancedModeApp,
+						'SC - Locale': $locale,
+						'SC - Page': `${$page.url.pathname}${$page.url.search}`,
+						'SC - User Id': $page.data.session?.user.id,
+						'SC - Stripe Product Id': $userSummary?.product_id,
+						'SC - App Version': $appVersion
+					};
+					logGenerationOutputDeleted(logProps);
+				}
 			}
 		} catch (error) {
 			console.log('Error deleting generation output', error);
@@ -296,30 +297,27 @@
 					(i) => !ids.includes(i.output_id) || i.filter !== $adminGalleryCurrentFilter
 				)
 			);
-			queryClient.setQueryData(
-				['admin_user_generation_full_outputs', $adminGalleryCurrentFilter],
-				(data: any) => ({
-					...data,
-					pages: data.pages.map((page: TUserGenerationFullOutputsPage) => {
-						return {
-							...page,
-							outputs: page.outputs.map((output) =>
-								ids.includes(output.id)
-									? {
-											...output,
-											gallery_status:
-												action === 'approve'
-													? 'approved'
-													: action === 'reject'
-													? 'rejected'
-													: undefined
-									  }
-									: output
-							)
-						};
-					})
+			queryClient.setQueryData($allUserGenerationFullOutputsQueryKey, (data: any) => ({
+				...data,
+				pages: data.pages.map((page: TUserGenerationFullOutputsPage) => {
+					return {
+						...page,
+						outputs: page.outputs.map((output) =>
+							ids.includes(output.id)
+								? {
+										...output,
+										gallery_status:
+											action === 'approve'
+												? 'approved'
+												: action === 'reject'
+												? 'rejected'
+												: undefined
+								  }
+								: output
+						)
+					};
 				})
-			);
+			}));
 		} catch (error) {
 			console.log(error);
 		}

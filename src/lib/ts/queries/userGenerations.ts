@@ -51,12 +51,16 @@ export async function getAllUserGenerationFullOutputs({
 	cursor,
 	access_token,
 	gallery_status,
-	order_by
+	order_by,
+	search,
+	model_ids
 }: {
 	cursor?: string;
 	gallery_status?: string;
 	access_token: string;
 	order_by?: string;
+	search?: string;
+	model_ids?: TAvailableGenerationModelId[];
 }) {
 	console.log('getAllUserOutputs');
 	const query = new URLSearchParams();
@@ -71,6 +75,13 @@ export async function getAllUserGenerationFullOutputs({
 		} else {
 			query.append('gallery_status', gallery_status);
 		}
+	}
+	if (search && search !== '') {
+		query.append('search', search);
+		query.append('score_threshold', score_threshold.toString());
+	}
+	if (model_ids && model_ids.length > 0) {
+		query.append('model_ids', model_ids.join(','));
 	}
 	if (order_by) {
 		query.append('order_by', order_by);
