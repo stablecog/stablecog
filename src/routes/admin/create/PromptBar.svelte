@@ -21,9 +21,9 @@
 		generationSchedulerId,
 		generationSeed,
 		generationWidth,
-		negativePromptInputValue,
+		generationNegativePrompt,
 		prompt,
-		promptInputValue
+		generationPrompt
 	} from '$ts/stores/generationSettings';
 	import { isTouchscreen } from '$ts/stores/isTouchscreen';
 	import {
@@ -38,23 +38,27 @@
 	import IconButton from '$components/buttons/IconButton.svelte';
 	import { windowWidth } from '$ts/stores/window';
 	import { mdBreakpoint } from '$components/generationFullScreen/constants';
+	import type { TCreatePageData } from '$routes/admin/create/+page.server';
+	import { onMount } from 'svelte';
+	import { isValue } from '$ts/helpers/isValue';
 
-	export let isCheckCompleted = false;
-	export let withCheck: (fn: () => void) => void;
 	export let openSignInModal: () => void;
 	export let openSettingsPanelModal: (() => void) | undefined = undefined;
+	export let serverData: TCreatePageData;
 
 	let promptInputElement: HTMLTextAreaElement;
-	let promptFormElement: HTMLFormElement;
+	let isCheckCompleted = false;
 
-	$: [$promptInputValue], withCheck(setLocalPrompt);
+	generationPrompt.set(serverData.prompt !== null ? serverData.prompt : undefined);
+
+	$: [$generationPrompt], withCheck(setLocalPrompt);
 
 	$: doesntHaveEnoughCredits =
 		isCheckCompleted &&
 		$userSummary &&
 		$userSummary.total_remaining_credits < Number($generationNumOutputs);
 
-	$: showClearPromptInputButton = $promptInputValue !== undefined && $promptInputValue !== '';
+	$: showClearPromptInputButton = $generationPrompt !== undefined && $generationPrompt !== '';
 	$: promptInputPlaceholder = $LL.Home.PromptInput.Placeholder();
 
 	$: onGoingGenerationsCount = $generations
@@ -73,14 +77,14 @@
 		if ($generationInitImageFilesState === 'uploading') {
 			return;
 		}
-		if ($promptInputValue) {
-			promptInputValue.set(formatPrompt($promptInputValue));
+		if ($generationPrompt) {
+			generationPrompt.set(formatPrompt($generationPrompt));
 		}
-		if ($negativePromptInputValue) {
-			negativePromptInputValue.set(formatPrompt($negativePromptInputValue));
+		if ($generationNegativePrompt) {
+			generationNegativePrompt.set(formatPrompt($generationNegativePrompt));
 		}
-		if (!$promptInputValue) {
-			promptInputValue.set(promptInputPlaceholder);
+		if (!$generationPrompt) {
+			generationPrompt.set(promptInputPlaceholder);
 		}
 		queueGeneration();
 		if ($windowWidth < mdBreakpoint) {
@@ -89,7 +93,7 @@
 	}
 
 	async function queueGeneration() {
-		if (!$promptInputValue) {
+		if (!$generationPrompt) {
 			console.log("No prompt, can't create generation");
 			return;
 		}
@@ -100,12 +104,12 @@
 		const initialRequestProps: TInitialGenerationRequest = {
 			prompt: {
 				id: 'prompt',
-				text: $promptInputValue
+				text: $generationPrompt
 			},
-			negative_prompt: $negativePromptInputValue
+			negative_prompt: $generationNegativePrompt
 				? {
 						id: 'negative_prompt',
-						text: $negativePromptInputValue
+						text: $generationNegativePrompt
 				  }
 				: undefined,
 			model_id: $generationModelId,
@@ -135,7 +139,7 @@
 	}
 
 	function clearPrompt() {
-		promptInputValue.set('');
+		generationPrompt.set('');
 		promptInputElement.value = '';
 		promptInputElement.blur();
 		promptInputElement.focus();
@@ -143,14 +147,26 @@
 
 	function setLocalPrompt() {
 		prompt.set(
-			$promptInputValue !== '' && $promptInputValue !== undefined ? $promptInputValue : ''
+			$generationPrompt !== '' && $generationPrompt !== undefined ? $generationPrompt : ''
 		);
 	}
+
+	function withCheck(fn: () => void) {
+		if (!isCheckCompleted) return;
+		fn();
+	}
+
+	onMount(() => {
+		isCheckCompleted = false;
+		if (!isValue(serverData.prompt) && isValue($prompt) && $prompt !== null) {
+			generationPrompt.set($prompt);
+		}
+		isCheckCompleted = true;
+	});
 </script>
 
 <div class="w-full flex justify-center pb-3 pl-2 md:p-0">
 	<form
-		bind:this={promptFormElement}
 		on:submit|preventDefault={onPromptFormSubmitted}
 		class="w-full max-w-7xl flex flex-row md:gap-3 items-center"
 	>
@@ -158,7 +174,7 @@
 			<textarea
 				use:autoresize={{ maxRows: 3, placeholder: promptInputPlaceholder }}
 				bind:this={promptInputElement}
-				bind:value={$promptInputValue}
+				bind:value={$generationPrompt}
 				on:keypress={(e) => {
 					if (e.key === 'Enter') {
 						e.preventDefault();
@@ -167,11 +183,11 @@
 				}}
 				on:input={() => {
 					if (
-						$promptInputValue !== undefined &&
-						$promptInputValue !== null &&
-						$promptInputValue.length > maxPromptLength
+						$generationPrompt !== undefined &&
+						$generationPrompt !== null &&
+						$generationPrompt.length > maxPromptLength
 					) {
-						promptInputValue.set($promptInputValue.slice(0, maxPromptLength));
+						generationPrompt.set($generationPrompt.slice(0, maxPromptLength));
 					}
 				}}
 				disabled={!isCheckCompleted}

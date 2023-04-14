@@ -158,6 +158,10 @@ type RootTranslation = {
 			 */
 			Placeholder: string
 			/**
+			 * E​n​t​e​r​ ​t​h​i​n​g​s​ ​t​o​ ​a​v​o​i​d
+			 */
+			PlaceholderAlt: string
+			/**
 			 * T​o​ ​r​e​m​o​v​e​ ​u​n​w​a​n​t​e​d​ ​t​h​i​n​g​s​ ​f​r​o​m​ ​t​h​e​ ​i​m​a​g​e​.​ ​I​t​ ​d​o​e​s​ ​t​h​e​ ​o​p​p​o​s​i​t​e​ ​o​f​ ​w​h​a​t​ ​t​h​e​ ​p​r​o​m​p​t​ ​d​o​e​s​.
 			 */
 			Paragraph: string
@@ -892,6 +896,10 @@ type RootTranslation = {
 		 * U​n​k​n​o​w​n
 		 */
 		UnknownTitle: string
+		/**
+		 * A​d​v​a​n​c​e​d​ ​S​e​t​t​i​n​g​s
+		 */
+		AdvancedSettingsButton: string
 		/**
 		 * M​o​r​e​ ​O​p​t​i​o​n​s
 		 */
@@ -2009,6 +2017,10 @@ export type TranslationFunctions = {
 			 */
 			Placeholder: () => LocalizedString
 			/**
+			 * Enter things to avoid
+			 */
+			PlaceholderAlt: () => LocalizedString
+			/**
 			 * To remove unwanted things from the image. It does the opposite of what the prompt does.
 			 */
 			Paragraph: () => LocalizedString
@@ -2723,6 +2735,10 @@ export type TranslationFunctions = {
 		 * Unknown
 		 */
 		UnknownTitle: () => LocalizedString
+		/**
+		 * Advanced Settings
+		 */
+		AdvancedSettingsButton: () => LocalizedString
 		/**
 		 * More Options
 		 */

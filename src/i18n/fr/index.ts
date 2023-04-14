@@ -52,6 +52,7 @@ const fr: Translation = {
 		NegativePromptInput: {
 			Title: 'Description négative',
 			Placeholder: 'Description négative',
+			PlaceholderAlt: 'Enter things to avoid',
 			Paragraph:
 				"Supprime ce que vous ne voulez pas voir dans l'image. L'opposé de la description textuelle."
 		},
@@ -312,6 +313,7 @@ const fr: Translation = {
 			}
 		},
 		UnknownTitle: 'Inconnu',
+		AdvancedSettingsButton: 'Advanced Settings',
 		MoreOptionsTitle: "Plus D'Options",
 		LessOptionsTitle: "Moins D'Options",
 		TryAgainButton: 'Réessayer',

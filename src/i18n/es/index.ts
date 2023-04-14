@@ -52,6 +52,7 @@ const es: Translation = {
 		NegativePromptInput: {
 			Title: 'Indicación Negativa',
 			Placeholder: 'Indicación negativa',
+			PlaceholderAlt: 'Enter things to avoid',
 			Paragraph:
 				'Para remover cosas no deseadas de la imagen. Hace lo contrario de lo que hace la indicación.'
 		},
@@ -312,6 +313,7 @@ const es: Translation = {
 			}
 		},
 		UnknownTitle: 'Desconocido',
+		AdvancedSettingsButton: 'Advanced Settings',
 		MoreOptionsTitle: 'Más Opciones',
 		LessOptionsTitle: 'Menos Opciones',
 		TryAgainButton: 'Try Again',

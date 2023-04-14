@@ -49,7 +49,7 @@
 		generationSchedulerId,
 		generationSeed,
 		generationWidth,
-		negativePromptInputValue
+		generationNegativePrompt
 	} from '$ts/stores/generationSettings';
 	import { isTouchscreen } from '$ts/stores/isTouchscreen';
 	import type { TTab } from '$ts/types/main';
@@ -131,7 +131,7 @@
 			class="w-full md:w-182 max-w-full order-1"
 			placeholder={$LL.Home.NegativePromptInput.Placeholder()}
 			type="text"
-			bind:value={$negativePromptInputValue}
+			bind:value={$generationNegativePrompt}
 			max={maxPromptLength}
 			{formElement}
 		>

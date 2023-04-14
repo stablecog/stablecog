@@ -52,6 +52,7 @@ const ptPt: Translation = {
 		NegativePromptInput: {
 			Title: 'Prompt negativa',
 			Placeholder: 'Prompt negativa',
+			PlaceholderAlt: 'Enter things to avoid',
 			Paragraph: 'Para remover coisas indesejadas da imagem. Ele faz o oposto do prompt faz.'
 		},
 		ImageInput: { Title: 'Upload Image' },
@@ -311,6 +312,7 @@ const ptPt: Translation = {
 			}
 		},
 		UnknownTitle: 'Desconhecido',
+		AdvancedSettingsButton: 'Advanced Settings',
 		MoreOptionsTitle: 'Mais Opções',
 		LessOptionsTitle: 'Menos Opções',
 		TryAgainButton: 'Try Again',

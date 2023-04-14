@@ -52,6 +52,7 @@ const hi: Translation = {
 		NegativePromptInput: {
 			Title: 'नकारात्मक संकेत',
 			Placeholder: 'नकारात्मक संकेत',
+			PlaceholderAlt: 'Enter things to avoid',
 			Paragraph: 'चित्र से अनचहित चीजों को हटाने के लिए। यह संकेत के विपरीत करता है।'
 		},
 		ImageInput: { Title: 'Upload Image' },
@@ -311,6 +312,7 @@ const hi: Translation = {
 			}
 		},
 		UnknownTitle: 'अनजान',
+		AdvancedSettingsButton: 'Advanced Settings',
 		MoreOptionsTitle: 'अधिक विकल्प',
 		LessOptionsTitle: 'कम विकल्प',
 		TryAgainButton: 'Try Again',

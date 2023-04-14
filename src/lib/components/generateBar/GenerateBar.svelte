@@ -32,8 +32,8 @@
 		generationModelId,
 		generationSchedulerId,
 		generationSeed,
-		promptInputValue,
-		negativePromptInputValue,
+		generationPrompt,
+		generationNegativePrompt,
 		generationNumOutputs,
 		generationAspectRatio,
 		generationInitImageStrength,
@@ -86,8 +86,8 @@
 	let classes = '';
 	let estimatedGenerationDurationSec: number;
 
-	promptInputValue.set(serverData.prompt !== null ? serverData.prompt : undefined);
-	negativePromptInputValue.set(
+	generationPrompt.set(serverData.prompt !== null ? serverData.prompt : undefined);
+	generationNegativePrompt.set(
 		serverData.negative_prompt !== null ? serverData.negative_prompt : undefined
 	);
 	generationWidth.set(
@@ -207,19 +207,19 @@
 		if ($generationInitImageFilesState === 'uploading') {
 			return;
 		}
-		if ($promptInputValue) {
-			promptInputValue.set(formatPrompt($promptInputValue));
+		if ($generationPrompt) {
+			generationPrompt.set(formatPrompt($generationPrompt));
 		}
-		if ($negativePromptInputValue) {
-			negativePromptInputValue.set(formatPrompt($negativePromptInputValue));
+		if ($generationNegativePrompt) {
+			generationNegativePrompt.set(formatPrompt($generationNegativePrompt));
 		}
 		promptInputElement.scrollTo(0, 0);
 		promptInputElement.blur();
 		setTimeout(async () => {
-			if (!$promptInputValue) {
+			if (!$generationPrompt) {
 				await new Promise((resolve) => setTimeout(resolve, 75));
 				await tick();
-				promptInputValue.set(placeholder);
+				generationPrompt.set(placeholder);
 			}
 			await queueGeneration();
 		});
@@ -234,15 +234,15 @@
 	$: [$generationModelId], withCheck(setLocalModelId);
 	$: [$generationWidth, $generationHeight], withCheck(setLocalImageSizeBasedOnWidthAndHeight);
 	$: [$generationAspectRatio], withCheck(setLocalImageSizeBasedOnAspectRatio);
-	$: [$promptInputValue], withCheck(setLocalPrompt);
+	$: [$generationPrompt], withCheck(setLocalPrompt);
 	$: [$generationInferenceSteps], withCheck(setLocalInferenceSteps);
 	$: [$generationGuidanceScale], withCheck(setLocalGuidanceScale);
 	$: [$generationSeed], withCheck(setLocalSeed);
-	$: [$negativePromptInputValue], withCheck(setLocalNegativePrompt);
+	$: [$generationNegativePrompt], withCheck(setLocalNegativePrompt);
 	$: [$generationSchedulerId], withCheck(setLocalSchedulerId);
 	$: [$generationInitImageStrength], withCheck(setLocalInitImageStrength);
 	$: showClearPromptInputButton =
-		$promptInputValue !== undefined && $promptInputValue !== '' && !lastGenerationBeingProcessed;
+		$generationPrompt !== undefined && $generationPrompt !== '' && !lastGenerationBeingProcessed;
 	$: if (browser && $page.data.session?.user.id) {
 		isSignInModalOpen = false;
 	}
@@ -308,16 +308,16 @@
 
 	const setLocalPrompt = () => {
 		prompt.set(
-			$promptInputValue !== '' && $promptInputValue !== undefined ? $promptInputValue : ''
+			$generationPrompt !== '' && $generationPrompt !== undefined ? $generationPrompt : ''
 		);
 	};
 
 	const setLocalNegativePrompt = () => {
 		negativePrompt.set(
-			$negativePromptInputValue !== '' &&
-				$negativePromptInputValue !== undefined &&
-				$negativePromptInputValue !== null
-				? $negativePromptInputValue
+			$generationNegativePrompt !== '' &&
+				$generationNegativePrompt !== undefined &&
+				$generationNegativePrompt !== null
+				? $generationNegativePrompt
 				: ''
 		);
 	};
@@ -336,7 +336,7 @@
 	};
 
 	const clearPrompt = () => {
-		promptInputValue.set('');
+		generationPrompt.set('');
 		promptInputElement.value = '';
 		promptInputElement.blur();
 		promptInputElement.focus();
@@ -417,7 +417,7 @@
 			generationSeed.set($seed);
 		}
 		if (!isValue(serverData.prompt) && isValue($prompt) && $prompt !== null) {
-			promptInputValue.set($prompt);
+			generationPrompt.set($prompt);
 		}
 		if (
 			!isValue(serverData.negative_prompt) &&
@@ -425,7 +425,7 @@
 			isValue($negativePrompt) &&
 			$negativePrompt !== null
 		) {
-			negativePromptInputValue.set($negativePrompt);
+			generationNegativePrompt.set($negativePrompt);
 		}
 		if (
 			!isValue(serverData.model_id) &&
@@ -482,7 +482,7 @@
 			<textarea
 				use:autoresize={{ maxRows: 3, placeholder }}
 				bind:this={promptInputElement}
-				bind:value={$promptInputValue}
+				bind:value={$generationPrompt}
 				on:keypress={(e) => {
 					if (e.key === 'Enter') {
 						e.preventDefault();
@@ -491,11 +491,11 @@
 				}}
 				on:input={() => {
 					if (
-						$promptInputValue !== undefined &&
-						$promptInputValue !== null &&
-						$promptInputValue.length > maxPromptLength
+						$generationPrompt !== undefined &&
+						$generationPrompt !== null &&
+						$generationPrompt.length > maxPromptLength
 					) {
-						promptInputValue.set($promptInputValue.slice(0, maxPromptLength));
+						generationPrompt.set($generationPrompt.slice(0, maxPromptLength));
 					}
 				}}
 				disabled={lastGenerationBeingProcessed || !isCheckComplete}

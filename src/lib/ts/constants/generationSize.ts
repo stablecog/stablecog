@@ -79,7 +79,7 @@ export const aspectRatioTabs: TTab<TAvailableAspectRatio>[] = [
 	{ label: '9:16', value: '9:16' },
 	{ label: '16:9', value: '16:9' }
 ];
-export const AspectRatioDropdownItems = derived<
+export const aspectRatioDropdownItems = derived<
 	[Readable<TranslationFunctions>],
 	TTab<TAvailableAspectRatio>[]
 >([LL], ([$LL]) => {

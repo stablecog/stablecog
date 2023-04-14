@@ -52,6 +52,7 @@ const es: Translation = {
 		NegativePromptInput: {
 			Title: 'Αρνητική περιγραφή',
 			Placeholder: 'Αρνητική περιγραφή',
+			PlaceholderAlt: 'Enter things to avoid',
 			Paragraph:
 				'Για να αφαιρέσετε τα ανεπιθύμητα αποτελέσματα από την εικόνα. Κάνει το αντίθετο από αυτό που κάνει η περιγραφή.'
 		},
@@ -316,6 +317,7 @@ const es: Translation = {
 			}
 		},
 		UnknownTitle: 'Άγνωστο',
+		AdvancedSettingsButton: 'Advanced Settings',
 		MoreOptionsTitle: 'Περισσότερες επιλογές',
 		LessOptionsTitle: 'Λιγότερες επιλογές',
 		TryAgainButton: 'Προσπαθήστε ξανά',

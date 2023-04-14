@@ -52,6 +52,7 @@ const ru: Translation = {
 		NegativePromptInput: {
 			Title: 'Исключения',
 			Placeholder: 'Исключения',
+			PlaceholderAlt: 'Enter things to avoid',
 			Paragraph:
 				'Чтобы убрать нежелательное содержимое из изображения. Противоположность основному запросу.'
 		},
@@ -312,6 +313,7 @@ const ru: Translation = {
 			}
 		},
 		UnknownTitle: 'Неизвестно',
+		AdvancedSettingsButton: 'Advanced Settings',
 		MoreOptionsTitle: 'Больше опций',
 		LessOptionsTitle: 'Меньше опций',
 		TryAgainButton: 'Try Again',

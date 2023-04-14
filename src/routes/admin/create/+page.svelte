@@ -24,35 +24,13 @@
 	import GenerateStage from '$routes/admin/create/GenerationStage.svelte';
 	import { themeApp } from '$ts/stores/theme';
 	import GenerationGridInfinite from '$components/grids/GenerationGridInfinite.svelte';
-	import { isValue } from '$ts/helpers/isValue';
-	import {
-		generationAspectRatio,
-		generationModelId,
-		generationNumOutputs,
-		generationSchedulerId,
-		imageSize,
-		modelId,
-		numOutputs,
-		prompt,
-		promptInputValue,
-		schedulerId
-	} from '$ts/stores/generationSettings';
-	import { availableGenerationModelIds, generationModels } from '$ts/constants/generationModels';
-	import { availableSchedulerIds } from '$ts/constants/schedulers';
-	import { aspectRatioTabs } from '$ts/constants/generationSize';
-	import { numOutputsMax, numOutputsMin } from '$ts/constants/main';
-	import { mdBreakpoint } from '$components/generationFullScreen/constants';
-	import VerticalGenerationList from '$routes/admin/create/VerticalGenerationList.svelte';
 
-	let isCheckCompleted = false;
+	export let data;
+
 	let isSignInModalOpen = false;
-	let isSettingsPanelModalOpen = false;
 
 	let stageWidth: number;
 	let stageHeight: number;
-
-	let stageWidthMobile: number;
-	let stageHeightMobile: number;
 
 	let gridScrollContainer: HTMLElement;
 
@@ -103,10 +81,6 @@
 		isSignInModalOpen = true;
 	}
 
-	function openSettingsPanelModal() {
-		isSettingsPanelModalOpen = true;
-	}
-
 	function onKeyDown({ key }: KeyboardEvent) {
 		if ($activeGeneration === undefined) return;
 		if (key === 'Escape') {
@@ -131,31 +105,6 @@
 		if (!browser) return;
 		document.body.style.overflow = 'hidden';
 		document.body.style.height = '100%';
-		if (isValue($prompt) && $prompt !== null) {
-			promptInputValue.set($prompt);
-		}
-		const aspectRatioIndex = aspectRatioTabs
-			.map((a) => a.value)
-			.findIndex((i) => i === $imageSize?.aspectRatio?.toString());
-		if (aspectRatioIndex >= 0) {
-			generationAspectRatio.set(aspectRatioTabs[aspectRatioIndex].value);
-		}
-		if (isValue($modelId) && availableGenerationModelIds.includes($modelId)) {
-			generationModelId.set($modelId);
-		}
-		if (isValue($schedulerId) && availableSchedulerIds.includes($schedulerId)) {
-			generationSchedulerId.set($schedulerId);
-		}
-		if (
-			// @ts-ignore
-			!generationModels[$generationModelId].supportedSchedulerIds.includes($generationSchedulerId)
-		) {
-			generationSchedulerId.set(generationModels[$generationModelId].supportedSchedulerIds[0]);
-		}
-		if (isValue($numOutputs) && $numOutputs >= numOutputsMin && $numOutputs <= numOutputsMax) {
-			generationNumOutputs.set($numOutputs);
-		}
-		isCheckCompleted = true;
 	});
 
 	onDestroy(() => {
@@ -163,11 +112,6 @@
 		document.body.style.overflow = 'auto';
 		document.body.style.height = 'auto';
 	});
-
-	function withCheck(fn: () => void) {
-		if (!isCheckCompleted) return;
-		fn();
-	}
 </script>
 
 <svelte:window on:keydown={onKeyDown} />
@@ -183,11 +127,14 @@
 >
 	<Navbar />
 	<!-- Main part desktop -->
-	<div class="w-full h-full hidden md:flex flex-row overflow-hidden pt-2 px-4 pb-4 gap-4">
+	<div class="w-full h-full flex flex-row overflow-hidden pt-2 px-4 pb-4 gap-4">
 		<div class="h-full w-40 xl:w-80">
-			<SidebarWrapper>
-				<div bind:this={gridScrollContainer} class="w-full flex-1 overflow-auto px-2 pt-2 pb-16">
-					{#if userGenerationFullOutputsQuery && $windowWidth >= mdBreakpoint}
+			{#if userGenerationFullOutputsQuery}
+				<SidebarWrapper>
+					<div
+						bind:this={gridScrollContainer}
+						class="w-full flex flex-col flex-1 overflow-auto px-2 pt-2 pb-16"
+					>
 						<GenerationGridInfinite
 							{pinnedFullOutputs}
 							cardWidthClasses="w-full lg:w-1/2 xl:w-1/3"
@@ -196,12 +143,12 @@
 							rerenderKey={gridRerenderKey}
 							{gridScrollContainer}
 						/>
-					{/if}
-				</div>
-			</SidebarWrapper>
+					</div>
+				</SidebarWrapper>
+			{/if}
 		</div>
 		<div class="flex flex-col items-center flex-1 h-full gap-4">
-			<PromptBar {openSignInModal} {isCheckCompleted} {withCheck} />
+			<PromptBar {openSignInModal} serverData={data} />
 			<div class="flex-1 flex flex-col items-center justify-center w-full overflow-hidden p-6">
 				<div bind:clientWidth={stageWidth} bind:clientHeight={stageHeight} class="flex-1 w-full">
 					{#if stageWidth && stageHeight}
@@ -211,68 +158,13 @@
 			</div>
 		</div>
 		<div class="h-full w-80">
-			<SettingsPanel {withCheck} {isCheckCompleted} />
-		</div>
-	</div>
-	<!-- Main part mobile -->
-	<div class="w-full h-full flex md:hidden flex-col overflow-hidden gap-4">
-		<div class="w-full flex-1 flex flex-col px-4 pb-2">
-			<div
-				bind:clientWidth={stageWidthMobile}
-				bind:clientHeight={stageHeightMobile}
-				class="w-full flex-1"
-			>
-				{#if stageWidthMobile && stageHeightMobile}
-					<GenerateStage
-						generation={$generations[0]}
-						stageWidth={stageWidthMobile}
-						stageHeight={stageHeightMobile}
-					/>
-				{/if}
-			</div>
-		</div>
-		<div
-			class="w-full bg-c-bg rounded-t-xl shadow-navbar shadow-c-shadow/[var(--o-shadow-stronger)] 
-			ring-2 ring-c-bg-secondary pb-[env(safe-area-inset-bottom)] overflow-hidden z-10"
-		>
-			<div class="w-full h-14 flex flex-row overflow-hidden relative">
-				{#if userGenerationFullOutputsQuery}
-					<VerticalGenerationList
-						generationsQuery={userGenerationFullOutputsQuery}
-						{pinnedFullOutputs}
-					/>
-				{/if}
-				<div class="h-full w-12 bg-gradient-to-r from-c-bg/0 to-c-bg absolute right-0 top-0 z-10" />
-			</div>
-			<PromptBar {openSignInModal} {isCheckCompleted} {withCheck} {openSettingsPanelModal} />
+			<SettingsPanel serverData={data} />
 		</div>
 	</div>
 </div>
 
 {#if $activeGeneration}
 	<GenerationFullScreen generation={$activeGeneration} modalType="generate" />
-{/if}
-
-{#if $windowWidth <= mdBreakpoint}
-	<div
-		use:portal={'body'}
-		class="w-full h-full fixed left-0 top-0 flex flex-col justify-end z-[10000] transition {isSettingsPanelModalOpen
-			? 'bg-c-barrier/80 opacity-100'
-			: 'opacity-0 pointer-events-none'}"
-	/>
-	<div
-		class="w-full h-full flex flex-col justify-end fixed left-0 top-0 transition z-[10001] {isSettingsPanelModalOpen
-			? 'translate-y-0'
-			: 'translate-y-full pointer-events-none'}"
-	>
-		<div
-			use:clickoutside={{ callback: () => (isSettingsPanelModalOpen = false) }}
-			style="max-height: {$windowHeight * 0.8}px"
-			class="w-full flex flex-col h-full max-h-[80vh]"
-		>
-			<SettingsPanel {withCheck} {isCheckCompleted} rounding="top" />
-		</div>
-	</div>
 {/if}
 
 {#if isSignInModalOpen && !$page.data.session?.user.id}

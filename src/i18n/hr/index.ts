@@ -52,6 +52,7 @@ const hr: Translation = {
 		NegativePromptInput: {
 			Title: 'Negativan opis',
 			Placeholder: 'Negativan opis',
+			PlaceholderAlt: 'Enter things to avoid',
 			Paragraph: 'Služi za uklanjanje neželjenih stvari sa slike. Ima suprotno djelovanje od opisa.'
 		},
 		ImageInput: { Title: 'Upload Image' },
@@ -311,6 +312,7 @@ const hr: Translation = {
 			}
 		},
 		UnknownTitle: 'Nepoznato',
+		AdvancedSettingsButton: 'Advanced Settings',
 		MoreOptionsTitle: 'Više opcija',
 		LessOptionsTitle: 'Manje opcija',
 		TryAgainButton: 'Pokušaj ponovno',

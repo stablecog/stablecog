@@ -52,6 +52,7 @@ const ko: Translation = {
 		NegativePromptInput: {
 			Title: '포함하지 않을 문구',
 			Placeholder: '포함하지 않을 문구',
+			PlaceholderAlt: 'Enter things to avoid',
 			Paragraph:
 				'원하지 않는 결과를 없애기 위한 문구입니다. 원하는 문구를 입력하는 것과 반대되는 역할을 합니다.'
 		},
@@ -312,6 +313,7 @@ const ko: Translation = {
 			}
 		},
 		UnknownTitle: '알 수 없음',
+		AdvancedSettingsButton: 'Advanced Settings',
 		MoreOptionsTitle: '더 많은 옵션 보기',
 		LessOptionsTitle: '옵션 숨기기',
 		TryAgainButton: '다시 시도하기',

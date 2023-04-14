@@ -52,6 +52,7 @@ const ja: Translation = {
 		NegativePromptInput: {
 			Title: '負のプロンプト',
 			Placeholder: '負のプロンプト',
+			PlaceholderAlt: 'Enter things to avoid',
 			Paragraph:
 				'生成画像から除去したいもの指定します。プロンプトとは対照的な意味としてとらわれます。'
 		},
@@ -316,6 +317,7 @@ const ja: Translation = {
 			}
 		},
 		UnknownTitle: '不明',
+		AdvancedSettingsButton: 'Advanced Settings',
 		MoreOptionsTitle: 'オプションを表示',
 		LessOptionsTitle: 'オプションを隠す',
 		TryAgainButton: '再試行',

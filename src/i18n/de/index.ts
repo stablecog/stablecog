@@ -52,6 +52,7 @@ const de: Translation = {
 		NegativePromptInput: {
 			Title: 'Wörter ausschließen',
 			Placeholder: 'Wörter ausschließen',
+			PlaceholderAlt: 'Enter things to avoid',
 			Paragraph: 'Um ungewollte Dinge auszuschließen. Bewirkt das Gegenteil von Eingabewörtern.'
 		},
 		ImageInput: { Title: 'Upload Image' },
@@ -311,6 +312,7 @@ const de: Translation = {
 			}
 		},
 		UnknownTitle: 'Unbekannt',
+		AdvancedSettingsButton: 'Advanced Settings',
 		MoreOptionsTitle: 'Weitere Optionen',
 		LessOptionsTitle: 'Weniger Optionen',
 		TryAgainButton: 'Nochmals versuchen',

@@ -20,10 +20,22 @@ export let guidanceScaleTooltip: Readable<TTooltipProps> = derived(LL, ($LL) => 
 	...tooltipStyleProps
 }));
 
+export let guidanceScaleTooltipSettingsPanel: Readable<TTooltipProps> = derived(LL, ($LL) => ({
+	title: $LL.Home.GuidanceScaleSlider.Title(),
+	description: $LL.Home.GuidanceScaleSlider.Paragraph(),
+	...tooltipStylePropsSettingsPanel
+}));
+
 export let inferenceStepsTooltip: Readable<TTooltipProps> = derived(LL, ($LL) => ({
 	title: $LL.Home.InferenceStepsTabBar.Title(),
 	description: $LL.Home.InferenceStepsTabBar.Paragraph(),
 	...tooltipStyleProps
+}));
+
+export let inferenceStepsTooltipSettingsPanel: Readable<TTooltipProps> = derived(LL, ($LL) => ({
+	title: $LL.Home.InferenceStepsTabBar.Title(),
+	description: $LL.Home.InferenceStepsTabBar.Paragraph(),
+	...tooltipStylePropsSettingsPanel
 }));
 
 export let negativePromptTooltip: Readable<TTooltipProps> = derived(LL, ($LL) => ({
@@ -56,10 +68,22 @@ export let aspectRatioTooltipSettingsPanel: Readable<TTooltipProps> = derived(LL
 	...tooltipStylePropsSettingsPanel
 }));
 
+export let negativePromptTooltipSettingsPanel: Readable<TTooltipProps> = derived(LL, ($LL) => ({
+	title: $LL.Home.NegativePromptInput.Title(),
+	description: $LL.Home.NegativePromptInput.Paragraph(),
+	...tooltipStylePropsSettingsPanel
+}));
+
 export let seedTooltip: Readable<TTooltipProps> = derived(LL, ($LL) => ({
 	title: $LL.Home.SeedInput.Title(),
 	description: $LL.Home.SeedInput.Paragraph(),
 	...tooltipStyleProps
+}));
+
+export let seedTooltipSettingsPanel: Readable<TTooltipProps> = derived(LL, ($LL) => ({
+	title: $LL.Home.SeedInput.Title(),
+	description: $LL.Home.SeedInput.Paragraph(),
+	...tooltipStylePropsSettingsPanel
 }));
 
 export let modelTooltip: Readable<TTooltipProps> = derived(LL, ($LL) => ({
@@ -84,6 +108,12 @@ export let schedulerTooltip: Readable<TTooltipProps> = derived(LL, ($LL) => ({
 	title: $LL.Home.SchedulerDropdown.Title(),
 	description: $LL.Home.SchedulerDropdown.Paragraph(),
 	...tooltipStyleProps
+}));
+
+export let schedulerTooltipSettingsPanel: Readable<TTooltipProps> = derived(LL, ($LL) => ({
+	title: $LL.Home.SchedulerDropdown.Title(),
+	description: $LL.Home.SchedulerDropdown.Paragraph(),
+	...tooltipStylePropsSettingsPanel
 }));
 
 export let advancedModeTooltip: Readable<TTooltipProps> = derived(LL, ($LL) => ({

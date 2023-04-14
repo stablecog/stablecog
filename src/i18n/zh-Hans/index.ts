@@ -51,6 +51,7 @@ const zhHans: Translation = {
 		NegativePromptInput: {
 			Title: '否定提示',
 			Placeholder: '否定提示',
+			PlaceholderAlt: 'Enter things to avoid',
 			Paragraph: '从图像中移除不想要的东西。它与提示的作用相反。'
 		},
 		ImageInput: { Title: 'Upload Image' },
@@ -309,6 +310,7 @@ const zhHans: Translation = {
 			}
 		},
 		UnknownTitle: 'Unknown',
+		AdvancedSettingsButton: 'Advanced Settings',
 		MoreOptionsTitle: 'More Options',
 		LessOptionsTitle: 'Less Options',
 		TryAgainButton: 'Try Again',

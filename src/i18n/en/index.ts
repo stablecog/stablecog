@@ -52,6 +52,7 @@ const en: BaseTranslation = {
 		NegativePromptInput: {
 			Title: 'Negative Prompt',
 			Placeholder: 'Negative prompt',
+			PlaceholderAlt: 'Enter things to avoid',
 			Paragraph:
 				'To remove unwanted things from the image. It does the opposite of what the prompt does.'
 		},
@@ -312,6 +313,7 @@ const en: BaseTranslation = {
 			}
 		},
 		UnknownTitle: 'Unknown',
+		AdvancedSettingsButton: 'Advanced Settings',
 		MoreOptionsTitle: 'More Options',
 		LessOptionsTitle: 'Less Options',
 		TryAgainButton: 'Try Again',

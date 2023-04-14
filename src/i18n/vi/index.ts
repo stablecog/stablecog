@@ -52,6 +52,7 @@ const vi: Translation = {
 		NegativePromptInput: {
 			Title: 'Mô tả nghịch đảo',
 			Placeholder: 'Mô tả nghịch đảo',
+			PlaceholderAlt: 'Enter things to avoid',
 			Paragraph:
 				'Để xóa những thứ không mong muốn xuất hiện trong hình ảnh. Nó có tác dụng ngược so với lời mô tả.'
 		},
@@ -312,6 +313,7 @@ const vi: Translation = {
 			}
 		},
 		UnknownTitle: 'Không xác định',
+		AdvancedSettingsButton: 'Advanced Settings',
 		MoreOptionsTitle: 'Tuỳ chọn khác',
 		LessOptionsTitle: 'Tùy chọn ít hơn',
 		TryAgainButton: 'Thử lại',

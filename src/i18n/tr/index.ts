@@ -52,6 +52,7 @@ const tr: Translation = {
 		NegativePromptInput: {
 			Title: 'Negatif Komut',
 			Placeholder: 'Negatif komut',
+			PlaceholderAlt: 'Enter things to avoid',
 			Paragraph:
 				'İstemediğin şeyleri üretilecek fotoğraftan çıkartmak için. Komutun yaptığının tam tersini yapar.'
 		},
@@ -314,6 +315,7 @@ const tr: Translation = {
 			}
 		},
 		UnknownTitle: 'Bilinmeyen',
+		AdvancedSettingsButton: 'Advanced Settings',
 		MoreOptionsTitle: 'Daha Fazla Seçenek',
 		LessOptionsTitle: 'Daha Az Seçenek',
 		TryAgainButton: 'Yeniden Dene',

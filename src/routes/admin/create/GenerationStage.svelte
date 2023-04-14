@@ -46,7 +46,7 @@
 	let stageWorkableWidth: number;
 	let stageWorkableHeight: number;
 	let isBoundByHeight: boolean;
-	let gap = 8;
+	let gap = 4;
 
 	let cardWidth: number;
 	let cardHeight: number;

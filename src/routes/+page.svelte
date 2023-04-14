@@ -35,8 +35,8 @@
 		generationSchedulerId,
 		generationSeed,
 		generationWidth,
-		negativePromptInputValue,
-		promptInputValue
+		generationNegativePrompt,
+		generationPrompt
 	} from '$ts/stores/generationSettings';
 	import { page } from '$app/stores';
 	import { homePageContainer } from '$ts/stores/homePageContainer';
@@ -56,7 +56,7 @@
 	let nowInterval: NodeJS.Timeout | undefined;
 
 	async function queueGeneration() {
-		if (!$promptInputValue) {
+		if (!$generationPrompt) {
 			console.log("No prompt, can't create generation");
 			return;
 		}
@@ -67,13 +67,13 @@
 		const initialRequestProps: TInitialGenerationRequest = {
 			prompt: {
 				id: 'prompt',
-				text: $promptInputValue
+				text: $generationPrompt
 			},
 			negative_prompt:
-				($advancedModeApp || isValue(data.negative_prompt)) && $negativePromptInputValue
+				($advancedModeApp || isValue(data.negative_prompt)) && $generationNegativePrompt
 					? {
 							id: 'negative_prompt',
-							text: $negativePromptInputValue
+							text: $generationNegativePrompt
 					  }
 					: undefined,
 			model_id: $generationModelId,

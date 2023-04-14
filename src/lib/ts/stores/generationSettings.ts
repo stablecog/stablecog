@@ -58,8 +58,8 @@ export interface TImageSize {
 	aspectRatio: TAvailableAspectRatio;
 }
 
-export const promptInputValue = writable<string | undefined>(undefined);
-export const negativePromptInputValue = writable<string | undefined>(undefined);
+export const generationPrompt = writable<string | undefined>(undefined);
+export const generationNegativePrompt = writable<string | undefined>(undefined);
 export const generationWidth = writable<TAvailableWidth>(widthDefault);
 export const generationHeight = writable<TAvailableHeight>(heightDefault);
 export const generationAspectRatio = writable<TAvailableAspectRatio>(aspectRatioDefault);
