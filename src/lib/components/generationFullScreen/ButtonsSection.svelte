@@ -209,7 +209,6 @@
 	{#if modalType === 'history' || modalType === 'gallery'}
 		<div class="flex relative">
 			<SubtleButton
-				target="_self"
 				prefetch={true}
 				href={generateSimilarUrl}
 				onClick={() => {

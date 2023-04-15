@@ -19,7 +19,7 @@
 		self-stretch"
 	>
 		<div class="w-full flex justify-center mb-1">
-			<LinkButton href="/blog" target="_self" prefetch={true}>
+			<LinkButton href="/blog" prefetch={true}>
 				<div class="flex items-center justify-center gap-2.5 px-2 py-1">
 					<IconBack
 						class="w-6 h-6 transform transition text-c-on-bg/50 group-hover:-translate-x-1

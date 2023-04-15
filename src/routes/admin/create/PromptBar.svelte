@@ -33,7 +33,7 @@
 	} from '$ts/stores/user/generation';
 	import { sseId } from '$ts/stores/user/sse';
 	import { userSummary } from '$ts/stores/user/summary';
-	import { maxOngoingGenerationsCount } from '$routes/admin/create/constants';
+	import { maxOngoingGenerationOutputsCount } from '$routes/admin/create/constants';
 	import IconGenerationSettings from '$components/icons/IconGenerationSettings.svelte';
 	import IconButton from '$components/buttons/IconButton.svelte';
 	import { windowWidth } from '$ts/stores/window';
@@ -41,6 +41,7 @@
 	import type { TCreatePageData } from '$routes/admin/create/+page.server';
 	import { onMount } from 'svelte';
 	import { isValue } from '$ts/helpers/isValue';
+	import { isSuperAdmin } from '$ts/helpers/admin/roles';
 
 	export let openSignInModal: () => void;
 	export let openSettingsPanelModal: (() => void) | undefined = undefined;
@@ -61,13 +62,15 @@
 	$: showClearPromptInputButton = $generationPrompt !== undefined && $generationPrompt !== '';
 	$: promptInputPlaceholder = $LL.Home.PromptInput.Placeholder();
 
-	$: onGoingGenerationsCount = $generations
+	$: ongoingGenerationOutputsCount = $generations
 		.map((g) => g.status)
 		.filter((s) => s !== 'succeeded' && s !== 'failed').length;
-	$: maxOngoingGenerationsCountReached = onGoingGenerationsCount >= $maxOngoingGenerationsCount;
+	$: maxOngoingGenerationOutputsCountReached = isSuperAdmin($userSummary?.roles)
+		? false
+		: ongoingGenerationOutputsCount >= $maxOngoingGenerationOutputsCount;
 
 	async function onPromptFormSubmitted() {
-		if (maxOngoingGenerationsCountReached) {
+		if (maxOngoingGenerationOutputsCountReached) {
 			return;
 		}
 		if (!$page.data.session?.user.id) {
@@ -219,7 +222,7 @@
 				disabled={!isCheckCompleted ||
 					(doesntHaveEnoughCredits && $page.data.session?.user.id !== undefined)}
 				uploading={$generationInitImageFilesState === 'uploading'}
-				loading={onGoingGenerationsCount >= $maxOngoingGenerationsCount}
+				loading={maxOngoingGenerationOutputsCountReached}
 				withSpinner
 				fadeOnDisabled={isCheckCompleted}
 				class="w-full flex flex-col relative"

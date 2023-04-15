@@ -31,7 +31,6 @@
 		generationInitImageStrength,
 		generationInitImageUrl,
 		generationModelId,
-		generationNumOutputs,
 		generationSchedulerId,
 		generationSeed,
 		generationWidth,
@@ -40,9 +39,6 @@
 	} from '$ts/stores/generationSettings';
 	import { page } from '$app/stores';
 	import { homePageContainer } from '$ts/stores/homePageContainer';
-	import Button from '$components/buttons/Button.svelte';
-	import IconConfetti from '$components/icons/IconConfetti.svelte';
-	import { schedulerIdDefault } from '$ts/constants/schedulers';
 	import { sseId } from '$userStores/sse';
 	import { generateSSEId } from '$ts/helpers/generateSSEId';
 	import { userSummary } from '$ts/stores/user/summary';

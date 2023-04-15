@@ -31,14 +31,17 @@ export const load: LayoutLoad = async (event) => {
 	await loadLocaleAsync(locale);
 	const theme = event.data.theme;
 	const advancedMode = event.data.advancedMode;
+	const globalSeed = Math.round(Math.random() * Math.pow(10, 12));
 	return {
 		locale,
 		session,
 		theme,
+		themeStore: writable<TAvailableThemes>('dark'),
 		advancedMode,
 		advancedModeStore: writable(false),
-		themeStore: writable<TAvailableThemes>('dark'),
-		globalSeedStore: writable<number>(Math.round(Math.random() * Math.pow(10, 12))),
-		userSummary
+		userSummary,
+		userSummaryStore: writable<TUserSummary | undefined>(userSummary),
+		globalSeed,
+		globalSeedStore: writable<number>(globalSeed)
 	};
 };

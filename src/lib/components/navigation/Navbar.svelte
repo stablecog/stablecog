@@ -64,7 +64,6 @@
 	{#if mounted && ($lastClosedNotification === null || $lastClosedNotification !== lastNotification)}
 		<Banner
 			href="/blog/our-first-big-update"
-			target="_self"
 			onClose={() => {
 				lastClosedNotification.set(lastNotification);
 			}}

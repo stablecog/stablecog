@@ -9,7 +9,7 @@
 	import { page } from '$app/stores';
 	import { windowHeight, windowWidth } from '$ts/stores/window';
 	import type { LayoutData } from './$types';
-	import LL, { locale, setLocale } from '$i18n/i18n-svelte';
+	import { locale, setLocale } from '$i18n/i18n-svelte';
 	import { localeLS } from '$ts/stores/localeLS';
 	import { loadLocaleAsync } from '$i18n/i18n-util.async';
 	import { isLocale } from '$i18n/i18n-util';
@@ -77,7 +77,8 @@
 	const gss = data.globalSeedStore;
 	globalSeed.set($gss);
 
-	userSummary.set(data.userSummary);
+	const us = data.userSummaryStore;
+	userSummary.set($us);
 
 	const queryClient = new QueryClient({
 		defaultOptions: {
