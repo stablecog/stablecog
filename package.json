@@ -1,6 +1,6 @@
 {
-	"name": "stablecog",
-	"version": "4.01",
+	"name": "Synthica",
+	"version": "4.0.1",
 	"private": true,
 	"scripts": {
 		"dev": "npm run i18n & vite dev",
@@ -16,8 +16,8 @@
 	},
 	"devDependencies": {
 		"@jsdevtools/rehype-toc": "^3.0.2",
-		"@lottiefiles/lottie-player": "^1.7.1",
 		"@sveltejs/adapter-auto": "^2.0.0",
+		"@sveltejs/adapter-netlify": "^2.0.6",
 		"@sveltejs/adapter-node": "^1.2.3",
 		"@sveltejs/adapter-static": "^2.0.1",
 		"@sveltejs/adapter-vercel": "^2.4.0",
@@ -33,7 +33,6 @@
 		"bezier-easing": "^2.1.0",
 		"html-to-text": "^8.2.1",
 		"intl-unofficial-duration-unit-format": "^3.1.0",
-		"lottie-web": "^5.10.2",
 		"mixpanel-browser": "^2.45.0",
 		"postcss": "^8.4.16",
 		"prettier": "^2.6.2",
