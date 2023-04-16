@@ -18,7 +18,7 @@
 		type TUserGenerationFullOutputsPage
 	} from '$ts/queries/userGenerations';
 	import { createPageUserGenerationFullOutputsQueryKey } from '$ts/stores/user/keys';
-	import { windowHeight, windowWidth } from '$ts/stores/window';
+	import { windowHeight } from '$ts/stores/window';
 	import Navbar from '$components/navigation/Navbar.svelte';
 	import SidebarWrapper from '$routes/admin/create/SidebarWrapper.svelte';
 	import GenerateStage from '$routes/admin/create/GenerationStage.svelte';

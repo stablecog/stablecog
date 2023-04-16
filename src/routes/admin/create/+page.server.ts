@@ -19,6 +19,8 @@ import {
 	initImageStrengthMin,
 	maxPromptLength,
 	maxSeed,
+	numOutputsMax,
+	numOutputsMin,
 	type TAvailableInferenceSteps
 } from '$ts/constants/main';
 import { availableSchedulerIds, type TAvailableSchedulerId } from '$ts/constants/schedulers';
@@ -37,6 +39,7 @@ export const load: ServerLoad = ({ url }) => {
 	const _scheduler_id = url.searchParams.get('si');
 	const _advanced_mode = url.searchParams.get('adv');
 	const _init_image_strength = url.searchParams.get('iis');
+	const _num_outputs = url.searchParams.get('no');
 
 	const prompt = _prompt !== null ? decodeURIComponent(_prompt.slice(0, maxPromptLength)) : null;
 	const negative_prompt =
@@ -102,6 +105,12 @@ export const load: ServerLoad = ({ url }) => {
 		init_image_strength_float <= initImageStrengthMax
 			? init_image_strength_float
 			: null;
+	const num_outputs_int = _num_outputs !== null ? parseInt(_num_outputs) : null;
+	const num_outputs =
+		num_outputs_int !== null && num_outputs_int >= numOutputsMin && num_outputs_int <= numOutputsMax
+			? num_outputs_int
+			: null;
+
 	const data: TCreatePageData = {
 		prompt,
 		negative_prompt,
@@ -114,7 +123,8 @@ export const load: ServerLoad = ({ url }) => {
 		height,
 		aspect_ratio,
 		advanced_mode,
-		init_image_strength
+		init_image_strength,
+		num_outputs
 	};
 	return data;
 };
@@ -132,4 +142,5 @@ export interface TCreatePageData {
 	aspect_ratio: TAvailableAspectRatio | null;
 	advanced_mode: boolean | null;
 	init_image_strength: number | null;
+	num_outputs: number | null;
 }

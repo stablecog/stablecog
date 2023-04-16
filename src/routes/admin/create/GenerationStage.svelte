@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { browser } from '$app/environment';
 	import GenerationCard from '$routes/admin/create/GenerationCard.svelte';
 	import { generationModelIdDefault } from '$ts/constants/generationModels';
 	import { schedulerIdDefault } from '$ts/constants/schedulers';
@@ -11,33 +12,43 @@
 		generationWidth
 	} from '$ts/stores/generationSettings';
 	import type { TGeneration } from '$ts/stores/user/generation';
+	import { onMount } from 'svelte';
 
 	export let stageWidth: number;
 	export let stageHeight: number;
 
-	export let generation: TGeneration = {
-		is_placeholder: true,
-		ui_id: generateSSEId(),
-		submit_to_gallery: false,
-		width: Number($generationWidth),
-		height: Number($generationHeight),
-		prompt: {
-			id: '',
-			text: ''
-		},
-		created_at: Date.now(),
-		guidance_scale: $generationGuidanceScale,
-		inference_steps: Number($generationInferenceSteps),
-		model_id: generationModelIdDefault,
-		scheduler_id: schedulerIdDefault,
-		seed: 1,
-		num_outputs: Number($generationNumOutputs),
-		status: 'succeeded',
-		outputs: Array.from({ length: Number($generationNumOutputs) }).map((i) => ({
-			id: '',
-			image_url: ''
-		}))
-	};
+	export let generation: TGeneration;
+
+	let generationPlaceholder: TGeneration | undefined;
+	$: generationPlaceholder = mounted
+		? {
+				is_placeholder: true,
+				ui_id: generateSSEId(),
+				submit_to_gallery: false,
+				width: Number($generationWidth),
+				height: Number($generationHeight),
+				prompt: {
+					id: '1234',
+					text: 'asdfafdsad'
+				},
+				negative_prompt: {
+					id: '1234',
+					text: 'asdfasdfsdf'
+				},
+				created_at: Date.now(),
+				guidance_scale: $generationGuidanceScale,
+				inference_steps: Number($generationInferenceSteps),
+				model_id: generationModelIdDefault,
+				scheduler_id: schedulerIdDefault,
+				seed: 1,
+				num_outputs: Number($generationNumOutputs),
+				status: 'succeeded',
+				outputs: Array.from({ length: Number($generationNumOutputs) }).map((i) => ({
+					id: '',
+					image_url: ''
+				}))
+		  }
+		: undefined;
 
 	let cols: number;
 	let rows: number;
@@ -60,48 +71,49 @@
 	const animationDuration = 0.15;
 	const animationEasing = 'cubic-bezier(0.45, 0, 0.55, 1)';
 
-	$: [$generationWidth, $generationHeight, $generationNumOutputs], setPlaceholderGeneration();
+	$: [$generationWidth, $generationHeight, $generationNumOutputs], setGenerationToCreate();
 	$: [stageWidth, stageHeight, generation], setDimensions();
 
-	function setPlaceholderGeneration() {
-		if (generation.is_placeholder) {
-			generation.id = generateSSEId();
-			generation.width = Number($generationWidth);
-			generation.height = Number($generationHeight);
-			generation.num_outputs = Number($generationNumOutputs);
-			generation.outputs = Array.from({ length: Number($generationNumOutputs) }).map((i) => {
+	function setGenerationToCreate() {
+		if (!generationPlaceholder) return;
+		generationPlaceholder.id = generateSSEId();
+		generationPlaceholder.width = Number($generationWidth);
+		generationPlaceholder.height = Number($generationHeight);
+		generationPlaceholder.num_outputs = Number($generationNumOutputs);
+		generationPlaceholder.outputs = Array.from({ length: Number($generationNumOutputs) }).map(
+			(i) => {
 				return {
 					id: '',
 					image_url: ''
 				};
-			});
-			generation = { ...generation };
-		}
+			}
+		);
+		generationPlaceholder = { ...generationPlaceholder };
 	}
 
 	function setDimensions() {
-		if (!generation) return;
+		if (!generationPlaceholder) return;
 		if (
 			stageWidth === lastStageWidth &&
 			stageHeight === lastStageHeight &&
-			lastGenerationId === generation.id
+			lastGenerationId === generationPlaceholder.id
 		) {
 			return;
 		}
-		const aspectRatio = generation.width / generation.height;
+		const aspectRatio = generationPlaceholder.width / generationPlaceholder.height;
 		cols = getOptimalColumnCount(
 			stageWidth / stageHeight,
-			generation.width / generation.height,
-			generation.outputs.length
+			generationPlaceholder.width / generationPlaceholder.height,
+			generationPlaceholder.outputs.length
 		);
-		rows = Math.ceil(generation.outputs.length / cols);
+		rows = Math.ceil(generationPlaceholder.outputs.length / cols);
 		totalColGapWidth = (cols - 1) * gap;
 		totalRowGapHeight = (rows - 1) * gap;
 		stageWorkableWidth = stageWidth - totalColGapWidth;
 		stageWorkableHeight = stageHeight - totalRowGapHeight;
 		isBoundByHeight =
-			stageWorkableHeight / (generation.height * rows) <
-			stageWorkableWidth / (generation.width * cols);
+			stageWorkableHeight / (generationPlaceholder.height * rows) <
+			stageWorkableWidth / (generationPlaceholder.width * cols);
 		if (isBoundByHeight) {
 			cardHeight = stageWorkableHeight / rows;
 			cardWidth = cardHeight * aspectRatio;
@@ -113,7 +125,7 @@
 		marginTop = (stageWorkableHeight - cardHeight * rows) / 2;
 		lastStageWidth = stageWidth;
 		lastStageHeight = stageHeight;
-		lastGenerationId = generation.id;
+		lastGenerationId = generationPlaceholder.id;
 	}
 
 	function getOptimalColumnCount(
@@ -138,15 +150,25 @@
 		}
 		return optimalColumns;
 	}
+
+	let mounted = false;
+	onMount(() => {
+		mounted = true;
+	});
 </script>
 
 <div style="width: {stageWidth}px; height: {stageHeight}px" class="absolute">
-	{#each generation.outputs as output, index}
-		{@const generationWithSelectedOutput = { ...generation, selected_output: output }}
-		{@const colIndex = index % cols}
-		{@const rowIndex = Math.floor(index / cols)}
-		<div
-			style="
+	{#if generationPlaceholder}
+		{@const selectedGeneration = generation ? generation : generationPlaceholder}
+		{#each selectedGeneration.outputs as output, index}
+			{@const generationWithSelectedOutput = {
+				...selectedGeneration,
+				selected_output: output
+			}}
+			{@const colIndex = index % cols}
+			{@const rowIndex = Math.floor(index / cols)}
+			<div
+				style="
 					width: {cardWidth}px;
 					height: {cardHeight}px;
 					left: {colIndex * (cardWidth + gap) + marginLeft}px;
@@ -157,9 +179,10 @@
 						width {animationDuration}s {animationEasing},
 						height {animationDuration}s {animationEasing};
 				"
-			class="absolute"
-		>
-			<GenerationCard generation={generationWithSelectedOutput} />
-		</div>
-	{/each}
+				class="absolute"
+			>
+				<GenerationCard generation={generationWithSelectedOutput} />
+			</div>
+		{/each}
+	{/if}
 </div>

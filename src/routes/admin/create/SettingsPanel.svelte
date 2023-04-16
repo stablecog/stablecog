@@ -41,7 +41,10 @@
 		initImageStrengthMax,
 		initImageStrengthMin,
 		maxProPixelSteps,
-		maxPromptLength
+		maxPromptLength,
+		numOutputsDefault,
+		numOutputsMax,
+		numOutputsMin
 	} from '$ts/constants/main';
 	import {
 		aspectRatioTooltipSettingsPanel,
@@ -161,6 +164,11 @@
 		isValue(serverData.init_image_strength) && serverData.init_image_strength !== null
 			? serverData.init_image_strength
 			: initImageStrengthDefault
+	);
+	generationNumOutputs.set(
+		isValue(serverData.num_outputs) && serverData.num_outputs !== null
+			? serverData.num_outputs
+			: numOutputsDefault
 	);
 
 	$: [$generationModelId], withCheck(setLocalModelId);
@@ -399,6 +407,13 @@
 			$advancedMode !== $advancedModeApp
 		) {
 			advancedModeApp.set($advancedMode);
+		}
+		if (
+			!isValue(serverData.num_outputs) &&
+			$numOutputs >= numOutputsMin &&
+			$numOutputs <= numOutputsMax
+		) {
+			generationNumOutputs.set($numOutputs);
 		}
 		setEstimatedGenerationDuration();
 		isCheckCompleted = true;
