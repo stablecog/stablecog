@@ -1,4 +1,5 @@
 <script lang="ts">
+	import ButtonHoverEffect from '$components/buttons/ButtonHoverEffect.svelte';
 	import { isTouchscreen } from '$ts/stores/isTouchscreen';
 	import type { THrefTarget } from '$ts/types/main';
 	export let href: string | undefined = undefined;
@@ -25,16 +26,7 @@
 			? 'text-sm '
 			: 'text-base'} {classes}"
 	>
-		<div class="w-full h-full absolute left-0 top-0 p-0.5">
-			<div class="w-full h-full relative z-0 overflow-hidden rounded-xl">
-				<div
-					class="w-full h-full origin-left transition transform {hoverFrom === 'top'
-						? '-translate-y-full'
-						: 'translate-y-full'}
-					bg-c-primary/15 rounded-xl {!$isTouchscreen ? 'group-hover:translate-y-0' : ''}"
-				/>
-			</div>
-		</div>
+		<ButtonHoverEffect {hoverFrom} />
 		<slot />
 	</a>
 {:else}

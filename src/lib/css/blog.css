@@ -179,18 +179,6 @@
 	box-shadow: none;
 }
 
-.toc nav {
-	margin-left: -0.75rem;
-}
-
-.toc nav ol {
-	margin-left: 0.75rem;
-}
-.toc nav li {
-	line-height: 2;
-}
-
-.toc a,
 .blog-link {
 	transition: all 0.2s var(--e-default);
 	position: relative;
@@ -200,9 +188,8 @@
 	box-shadow: 0 0px 0 0 rgba(var(--c-primary) / 0.5) inset;
 	z-index: 0;
 }
-.toc a:hover,
+
 .blog-link:hover,
-.toc a:focus-visible,
 .blog-link:focus-visible {
 	color: rgba(var(--c-on-primary));
 	border-radius: 4px;
@@ -210,21 +197,36 @@
 	font-weight: 700;
 }
 
+.toc li {
+	margin-left: 0;
+	list-style: none;
+	display: flex;
+	flex-direction: column;
+}
+.toc a {
+	padding: 0.3rem 0.5rem;
+	background-color: rgba(var(--c-primary) / 0);
+	transition: all 0.2s var(--e-default);
+	border-radius: 0.5rem;
+}
+.toc a:hover, .toc a:focus-visible {
+	background-color: rgba(var(--c-primary) / 0.15);
+	color: rgba(var(--c-primary));
+}
 .toc-item-h2 {
 	font-size: 1rem;
 	line-height: 1.4;
 	color: rgba(var(--c-on-bg) / 0.75);
 	font-weight: 600;
-	margin-top: 1.5rem;
+	margin-top: 1rem;
 }
 .toc-item-h2:first-child {
-	margin-top: 0.5rem;
+	margin-top: 0;
 }
 .toc-item-h3 {
 	font-size: 0.875rem;
 	line-height: 1.4;
-	margin-top: 0.6rem;
-	margin-left: 0.5rem;
+	padding-left: 0.5rem;
 	color: rgba(var(--c-on-bg) / 0.6);
 	font-weight: 400;
 }

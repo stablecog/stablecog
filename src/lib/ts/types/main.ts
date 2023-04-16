@@ -45,6 +45,16 @@ export interface TBlogPost {
 	date: string;
 }
 
+export interface TGuideEntryMetadata {
+	slug: string;
+	sidebar_title: string;
+	title: string;
+	description: string;
+	author: string;
+	author_url?: string;
+	date: string;
+}
+
 export interface TToC {
 	title: string;
 	description: string;
