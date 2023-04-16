@@ -1,6 +1,6 @@
 {
 	"name": "Synthica",
-	"version": "4.0.1",
+	"version": "4.1.0",
 	"private": true,
 	"scripts": {
 		"dev": "npm run i18n & vite dev",
@@ -21,7 +21,7 @@
 		"@sveltejs/adapter-node": "^1.2.3",
 		"@sveltejs/adapter-static": "^2.0.1",
 		"@sveltejs/adapter-vercel": "^2.4.0",
-		"@sveltejs/kit": "^1.12.0",
+		"@sveltejs/kit": "1.12.0",
 		"@types/file-saver": "^2.0.5",
 		"@types/html-to-text": "^8.1.1",
 		"@types/intl-unofficial-duration-unit-format": "^3.1.0",
@@ -70,6 +70,7 @@
 	"type": "module",
 	"dependencies": {
 		"@egjs/svelte-infinitegrid": "^4.9.0-beta.7",
+		"@lottiefiles/lottie-player": "^1.7.1",
 		"@resvg/resvg-wasm": "^2.1.0",
 		"@supabase/auth-helpers-sveltekit": "^0.8.3",
 		"@supabase/supabase-js": "^2.0.0",
