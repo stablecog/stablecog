@@ -16,8 +16,8 @@
 </script>
 
 <MetaTag
-	title="Succeeded | Stablecog"
-	description="Choose a plan that works for you and start using Stablecog."
+	title="Succeeded | Synthica"
+	description="Choose a plan that works for you and start using Synthica."
 	imageUrl="{canonicalUrl}/previews{$page.url.pathname}.png"
 	canonical="{canonicalUrl}{$page.url.pathname}"
 />

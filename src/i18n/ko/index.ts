@@ -387,7 +387,7 @@ const ko: Translation = {
 	},
 	SignUp: {
 		PageTitle: '회원 가입',
-		PageParagraph: 'Stablecog에 가입한 뒤 Pro 멤버가 되면 더 많은 기능을 쓸 수 있어요!',
+		PageParagraph: 'Synthica에 가입한 뒤 Pro 멤버가 되면 더 많은 기능을 쓸 수 있어요!',
 		PageTitleConfirm: '이메일 인증',
 		PageTitleConfirmAlt: '이메일 인증',
 		PageParagraphConfirm:
@@ -405,11 +405,11 @@ const ko: Translation = {
 		PageTitleGetStarted: 'Get Started',
 		GetStartedButton: 'Get Started',
 		PageTitle: '로그인',
-		PageParagraph: '로그인을 통해 Stablecog의 모든 기능을 사용해보세요!',
+		PageParagraph: '로그인을 통해 Synthica의 모든 기능을 사용해보세요!',
 		PageParagraphV2: 'Start creating amazing art in seconds for free, no credit card required.',
 		PageTitleCreateAccountOrSignIn: 'Create an account or sign in',
 		PageParagraphCreateAccountOrSignIn:
-			'Start using Stablecog with all features that are available to your account.',
+			'Start using Synthica with all features that are available to your account.',
 		PageTitleSentLink: 'Check your email',
 		PageParagraphSentLink:
 			"We've emailed you a sign-in link. If you don't see it, check your spam folder.",
@@ -425,10 +425,10 @@ const ko: Translation = {
 	Pro: {
 		PageTitle: '더 많은 기능을 사용해보세요!',
 		PageParagraph:
-			'프로 멤버에 가입해서 Stablecog의 모든 기능을 사용해보세요. Stablecog가 제공하는 오픈소스와 무료 기능은 프로 멤버들의 지원을 통해 유지될 수 있습니다.',
+			'프로 멤버에 가입해서 Synthica의 모든 기능을 사용해보세요. Synthica가 제공하는 오픈소스와 무료 기능은 프로 멤버들의 지원을 통해 유지될 수 있습니다.',
 		PageTitleAlreadyPro: '이미 프로 멤버에 가입하셨네요!',
 		PageParagraphAlreadyPro:
-			'이미 프로 멤버에 가입해 주셨네요. Stablecog 프로젝트가 유지될 수 있도록 도와주셔서 고맙습니다. Stablecog가 마음에 드신다면 주변에도 많이 소개해주세요!',
+			'이미 프로 멤버에 가입해 주셨네요. Synthica 프로젝트가 유지될 수 있도록 도와주셔서 고맙습니다. Synthica가 마음에 드신다면 주변에도 많이 소개해주세요!',
 		ProPlanTitle: 'Pro',
 		Features: {
 			FullSpeed: '가장 빠른 속도의 이미지 생성',
@@ -447,7 +447,7 @@ const ko: Translation = {
 		Success: {
 			PageTitle: '프로 멤버가 되어주셔서 감사합니다!',
 			PageParagraph:
-				'이제부터 Stablecog에서 제공하는 모든 기능을 사용할 수 있습니다. 궁금한 점이 있을 때면 {platform}을 통해 문의해주세요.'
+				'이제부터 Synthica에서 제공하는 모든 기능을 사용할 수 있습니다. 궁금한 점이 있을 때면 {platform}을 통해 문의해주세요.'
 		},
 		Cancel: {
 			PageTitle: '프로 멤버 가입이 중단됐어요.',
@@ -557,11 +557,11 @@ const ko: Translation = {
 		ForgotPasswordButton: '비밀번호를 잊으셨나요?'
 	},
 	FeaturedOn: {
-		PageTitle: 'Stablecog가 알려지고 있어요!'
+		PageTitle: 'Synthica가 알려지고 있어요!'
 	},
 	Gallery: {
 		PageTitle: 'Gallery',
-		PageParagraph: 'Check out what others have created with Stablecog.',
+		PageParagraph: 'Check out what others have created with Synthica.',
 		SearchInput: {
 			Title: 'Search'
 		},

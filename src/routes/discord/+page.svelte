@@ -7,6 +7,6 @@
 <RedirectPage
 	url={socialUrls.discord}
 	redirectingText={$LL.Redirect.RedirectingToTitle({ name: 'Discord' })}
-	title="Discord | Stablecog"
-	description="Join our Discord server to get updates on Stablecog, share your generations, and more!"
+	title="Discord | Synthica"
+	description="Join our Discord server to get updates on Synthica, share your generations, and more!"
 />

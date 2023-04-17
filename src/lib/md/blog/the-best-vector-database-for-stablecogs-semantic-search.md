@@ -1,6 +1,6 @@
 ---
-title: The Best Vector Database for Stablecog's Semantic Search
-description: An inside look at how we compared vector databases and CLIP models. As well as details about how we implemented semantic, image based search on Stablecog.
+title: The Best Vector Database for synthica's Semantic Search
+description: An inside look at how we compared vector databases and CLIP models. As well as details about how we implemented semantic, image based search on Synthica.
 author: Brandon Berhent
 author_url: https://twitter.com/bbedward_real
 date: 2023-04-12T13:00:00.000Z
@@ -10,9 +10,9 @@ Vector databases such as [Weaviate](https://weaviate.io/), [Milvus](https://milv
 
 ## What is a vector embedding?
 
-![Vector](https://ba.stablecog.com/blog/vector-embedding.jpg)<!--rehype:width=2400   &height=1260-->
+![Vector](https://ba.synthica.ai/blog/vector-embedding.jpg)<!--rehype:width=2400   &height=1260-->
 
-A vector is, essentially, just a list of numbers. The amount of numbers, referred to as dimensions, directly correlates to how much data a vector can represent. In our case the vectors we are interested in storing is a representation of the contextual meaning behind each and every image generated using Stablecog.
+A vector is, essentially, just a list of numbers. The amount of numbers, referred to as dimensions, directly correlates to how much data a vector can represent. In our case the vectors we are interested in storing is a representation of the contextual meaning behind each and every image generated using synthica.
 
 When we refer to an "embedding", we are talking about a lower-dimensional representation of a higher-dimensional object (images and prompts, in our case). Essentially with a 1,024 dimension vector consisting of 32-bit floats, we can represent every image in approximately ~4KB worth of data, while the images themselves contain much more data than that - typically over 100Kb each.
 
@@ -20,11 +20,11 @@ There's multiple ways to get a vector representation of an image such as [Cohere
 
 ## OpenCLIP and Why We Chose It
 
-[![OpenCLIP](https://ba.stablecog.com/blog/open_clip_github_repo.jpg)<!--rehype:width=2560&height=2178-->](https://github.com/mlfoundations/open_clip)
+[![OpenCLIP](https://ba.synthica.ai/blog/open_clip_github_repo.jpg)<!--rehype:width=2560&height=2178-->](https://github.com/mlfoundations/open_clip)
 
-We believe strongly in open source software, all of the models on Stablecog and [all of the source code for Stablecog](https://github.com/stablecog) is completely open source. Modern AI technologies are transforming the way human's work, how research is conducted, and overall these technologies will change our lives for many generations to come. In our opinion, progress will happen much faster if these technologies are kept open and available for others to continuously study, iterate, and improve. So naturally OpenCLIP was on our radar from the beginning when it came time to choose a model to create vector embeddings with Stablecog images and prompts.
+We believe strongly in open source software, all of the models on Synthica and [all of the source code for Synthica](https://github.com/stablecog) is completely open source. Modern AI technologies are transforming the way human's work, how research is conducted, and overall these technologies will change our lives for many generations to come. In our opinion, progress will happen much faster if these technologies are kept open and available for others to continuously study, iterate, and improve. So naturally OpenCLIP was on our radar from the beginning when it came time to choose a model to create vector embeddings with Stablecog images and prompts.
 
-Of course, open source was not the only consideration - we also wanted a model that accurately represented the images created on Stablecog, as well as the prompts used to create them. We chose [OpenCLIP ViT-h/14 - LAION 2B](https://huggingface.co/laion/CLIP-ViT-H-14-laion2B-s32B-b79K) which in our experience so far is able to preserve a lot of details in its vector embeddings - making our search results very relevant and accurate.
+Of course, open source was not the only consideration - we also wanted a model that accurately represented the images created on Synthica, as well as the prompts used to create them. We chose [OpenCLIP ViT-h/14 - LAION 2B](https://huggingface.co/laion/CLIP-ViT-H-14-laion2B-s32B-b79K) which in our experience so far is able to preserve a lot of details in its vector embeddings - making our search results very relevant and accurate.
 
 It is trained with the [open source LAION2B data set](https://huggingface.co/datasets/laion/laion2B-en), and creates vectors that are 1,024 dimensions.
 
@@ -32,7 +32,7 @@ By themselves, these vectors we create aren't particularly useful. We need a way
 
 ## Vector Databases
 
-![Vector Databases](https://ba.stablecog.com/blog/vector-dbs.jpg)<!--rehype:width=2400   &height=1260-->
+![Vector Databases](https://ba.synthica.ai/blog/vector-dbs.jpg)<!--rehype:width=2400   &height=1260-->
 
 Search index databases are not new. There are many options used by some of the largest companies in the world - including but not limited to [ElasticSearch](https://www.elastic.co/), [Typesense](https://typesense.org/), and [Algolia](https://www.algolia.com/).
 
@@ -122,26 +122,26 @@ The main downside we found:
 - Lack of built-in authentication, for self-hosted option
   - We created [sc-qdrant](https://github.com/stablecog/sc-qdrant) as a result, which makes it easy to deploy a cluster behind an nginx proxy with basic auth.
 
-## Semantic Search on Stablecog
+## Semantic Search on Synthica
 
-User's can now leverage semantic search in the [Stablecog gallery](https://stablecog.com/gallery), as well as for all of their own individual generations they created with our platform.
+User's can now leverage semantic search in the [Synthica gallery](https://Synthica.ai/gallery), as well as for all of their own individual generations they created with our platform.
 
 We leverage a custom [OpenCLIP API in sc-worker](https://github.com/stablecog/sc-worker/tree/master/clipapi) to translate and create embeddings for search queries. This embedding is then used in a similarity search in Qdrant, providing incredibly relevant results based on the search term used.
 
 With our traditional search engine, the search query "a creature with 8 legs" wouldn't return images of spiders. Because the old system would search based on words not meaning. Thanks to semantic search, we can now return images of spiders, and other 8 legged creatures even if the search query doesn't directly mention "a spider". Here are some examples:
 
-### English - [A creature with 8 legs](https://stablecog.com/gallery?q=A+creature+with+8+legs)
+### English - [A creature with 8 legs](https://Synthica.ai/gallery?q=A+creature+with+8+legs)
 
-[![Stablecog Gallery Search: A creature with 8 legs](https://ba.stablecog.com/blog/stablecog-gallery-search-a-creature-with-8-legs.jpg)<!--rehype:width=2560   &height=1800-->](https://stablecog.com/gallery?q=A+creature+with+8+legs)
+[![Synthica Gallery Search: A creature with 8 legs](https://ba.synthica.ai/blog/stablecog-gallery-search-a-creature-with-8-legs.jpg)<!--rehype:width=2560   &height=1800-->](https://Synthica.ai/gallery?q=A+creature+with+8+legs)
 
-### Turkish - [Sarı veya yeşil saçlı bir kadın](https://stablecog.com/gallery?q=Sarı+veya+yeşil+saçlı+bir+kadın)
+### Turkish - [Sarı veya yeşil saçlı bir kadın](https://Synthica.ai/gallery?q=Sarı+veya+yeşil+saçlı+bir+kadın)
 
 Translation: A woman with yellow or green hair
 
-[![Stablecog Gallery Search: A woman with yellow or green hair](https://ba.stablecog.com/blog/stablecog-gallery-search-a-woman-with-yellow-or-green-hair.jpg)<!--rehype:width=2560   &height=1800-->](https://stablecog.com/gallery?q=Sarı+veya+yeşil+saçlı+bir+kadın)
+[![Synthica Gallery Search: A woman with yellow or green hair](https://ba.synthica.ai/blog/stablecog-gallery-search-a-woman-with-yellow-or-green-hair.jpg)<!--rehype:width=2560   &height=1800-->](https://Synthica.ai/gallery?q=Sarı+veya+yeşil+saçlı+bir+kadın)
 
-### Japanese - [抽象芸術](https://stablecog.com/gallery?q=抽象芸術)
+### Japanese - [抽象芸術](https://Synthica.ai/gallery?q=抽象芸術)
 
 Translation: Abstract art
 
-[![Stablecog Gallery Search: Abstract art](https://ba.stablecog.com/blog/stablecog-gallery-search-abstract-art.jpg)<!--rehype:width=2560   &height=1800-->](https://stablecog.com/gallery?q=抽象芸術)
+[![Synthica Gallery Search: Abstract art](https://ba.synthica.ai/blog/stablecog-gallery-search-abstract-art.jpg)<!--rehype:width=2560   &height=1800-->](https://Synthica.ai/gallery?q=抽象芸術)

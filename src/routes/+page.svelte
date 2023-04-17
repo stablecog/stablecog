@@ -144,7 +144,7 @@
 </script>
 
 <MetaTag
-	title="Stablecog"
+	title="Synthica"
 	description="Free, easy to use, multilingual and open-source AI image generator using Stable Diffusion."
 	imageUrl="{canonicalUrl}/previews/home.png"
 	canonical={canonicalUrl}
@@ -200,7 +200,7 @@
 									<ImagePlaceholder width={$generations[0].width} height={$generations[0].height} />
 
 									<div
-										class="absolute w-full h-full left-0 top-0 rounded-2xl bg-c-bg-secondary z-0 overflow-hidden border-4 
+										class="absolute w-full h-full left-0 top-0 rounded-2xl bg-c-bg-secondary z-0 overflow-hidden border-4
 											shadow-lg shadow-c-shadow/[var(--o-shadow-normal)] border-c-bg-secondary group"
 									>
 										{#if output.status === 'failed' || output.status === 'failed-nsfw'}
@@ -231,7 +231,7 @@
 											height={$generations[0].height}
 										/>
 										<div
-											class="absolute w-full h-full flex items-center justify-center left-0 top-0 rounded-2xl bg-c-bg-secondary z-0 overflow-hidden border-4 
+											class="absolute w-full h-full flex items-center justify-center left-0 top-0 rounded-2xl bg-c-bg-secondary z-0 overflow-hidden border-4
 											shadow-lg shadow-c-shadow/[var(--o-shadow-normal)] border-c-bg-secondary group"
 										>
 											<div class="w-full h-full flex items-center justify-center">

@@ -32,7 +32,7 @@
 </script>
 
 <MetaTag
-	title="Admin | Stablecog"
+	title="Admin | Synthica"
 	description="Free, easy to use, multilingual and open-source AI image generator using Stable Diffusion."
 	imageUrl="{canonicalUrl}/previews/home.png"
 	canonical="{canonicalUrl}{$page.url.pathname}"

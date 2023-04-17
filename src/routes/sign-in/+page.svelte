@@ -20,8 +20,8 @@
 </script>
 
 <MetaTag
-	title="Sign In | Stablecog"
-	description="Sign in to Stablecog and use it with all features that are available to your account."
+	title="Sign In | Synthica"
+	description="Sign in to Synthica and use it with all features that are available to your account."
 	imageUrl="{canonicalUrl}/previews{$page.url.pathname}.png"
 	canonical="{canonicalUrl}{$page.url.pathname}"
 />

@@ -1,24 +1,8 @@
-# [Stablecog](https://stablecog.com) - Simple, free & open source AI image generator
+# [Synthica](https://Synthica,ai) - Simple, free & open source AI image generator
 
-This is an app for creating AI generated images using [Stable Diffusion](https://github.com/CompVis/stable-diffusion) cogs. It's made with [SvelteKit](https://kit.svelte.dev), uses [Supabase](https://supabase.com) for recording of metadata and for managing the default cog cluster. For more info on "cogs", you can check out: [Replicate](https://replicate.com). The app is hosted at [stablecog.com](https://stablecog.com).
+This is an app for creating AI generated images using [Stable Diffusion](https://github.com/CompVis/stable-diffusion) cogs. It's made with [SvelteKit](https://kit.svelte.dev), uses [Supabase](https://supabase.com) for recording of metadata and for managing the default cog cluster. For more info on "cogs", you can check out: [Replicate](https://replicate.com). The app is hosted at [Synthica.ai (https://Synthica.ai).
 
-| ![Stablecog Home (Default + Dark Mode)](https://stablecog.com/images/mockups/home-default.png) |
-| :--------------------------------------------------------------------------------------------: |
-|                               <b>Home (Default + Dark Mode)</b>                                |
-
-| ![Stablecog Home (Advanced + Light Mode)](https://stablecog.com/images/mockups/home-advanced-light.png) |
-| :-----------------------------------------------------------------------------------------------------: |
-|                                   <b>Home (Advanced + Light Mode)</b>                                   |
-
-| ![Stablecog Gallery](https://stablecog.com/images/mockups/gallery.png) |
-| :--------------------------------------------------------------------: |
-|                             <b>Gallery</b>                             |
-
-| ![Stablecog Live](https://stablecog.com/images/mockups/live.png) |
-| :--------------------------------------------------------------: |
-|                           <b>Live</b>                            |
-
-The app knows how to communicate with this cog to generate images: [Stable Diffusion Cog](https://github.com/stablecog/stable-diffusion-cog). It is available on Docker Hub at: [yekta/sc](https://hub.docker.com/r/yekta/sc). However, as long as your server has the endpoints and the parameters the app uses, it'll work.
+he app knows how to communicate with this cog to generate images: [Stable Diffusion Cog](https://github.com/Synthica/stable-diffusion-cog). It is available on Docker Hub at: [yekta/sc](https://hub.docker.com/r/yekta/sc). However, as long as your server has the endpoints and the parameters the app uses, it'll work.
 
 For example, the following cogs would also work with the app:
 

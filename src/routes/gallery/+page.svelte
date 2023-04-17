@@ -99,7 +99,7 @@
 </script>
 
 <MetaTag
-	title="Gallery | Stablecog"
+	title="Gallery | Synthica"
 	description={generationFullOutputFromData
 		? getGalleryMetaTagDescriptionFromPromptText(
 				generationFullOutputFromData.generation.prompt.text

@@ -389,7 +389,7 @@ const vi: Translation = {
 	SignUp: {
 		PageTitle: 'Đăng ký',
 		PageParagraph:
-			'Tham gia và trở thành người dùng trả phí để khai mở hết tiềm năng của Stablecog.',
+			'Tham gia và trở thành người dùng trả phí để khai mở hết tiềm năng của Synthica.',
 		PageTitleConfirm: 'Xác nhận',
 		PageTitleConfirmAlt: 'Kiểm tra Email của bạn',
 		PageParagraphConfirm:
@@ -408,11 +408,11 @@ const vi: Translation = {
 		GetStartedButton: 'Get Started',
 		PageTitle: 'Đăng nhập',
 		PageParagraph:
-			'Bắt đầu dùng Stablecog với tất cả các tính năng sẵn có trong tài khoản của bạn.',
+			'Bắt đầu dùng Synthica với tất cả các tính năng sẵn có trong tài khoản của bạn.',
 		PageParagraphV2: 'Start creating amazing art in seconds for free, no credit card required.',
 		PageTitleCreateAccountOrSignIn: 'Create an account or sign in',
 		PageParagraphCreateAccountOrSignIn:
-			'Start using Stablecog with all features that are available to your account.',
+			'Start using Synthica with all features that are available to your account.',
 		PageTitleSentLink: 'Check your email',
 		PageParagraphSentLink:
 			"We've emailed you a sign-in link. If you don't see it, check your spam folder.",
@@ -428,10 +428,10 @@ const vi: Translation = {
 	Pro: {
 		PageTitle: 'Trở thành người dùng trả phí',
 		PageParagraph:
-			'Mở khóa tất cả các tính năng của Stablecog và hỗ trợ dự án. Nếu không có các thành viên trả phí, Stablecog sẽ không thể duy trì nguồn mở hoàn toàn và tiếp tục miễn phí cho mọi người.',
+			'Mở khóa tất cả các tính năng của Synthica và hỗ trợ dự án. Nếu không có các thành viên trả phí, Synthica sẽ không thể duy trì nguồn mở hoàn toàn và tiếp tục miễn phí cho mọi người.',
 		PageTitleAlreadyPro: 'Đã là người dùng trả phí!',
 		PageParagraphAlreadyPro:
-			'Bạn đã là thành viên trả phí. Cảm ơn bạn đã ủng hộ dự án! Hãy tận hưởng Stablecog và chia sẻ với bạn bè của bạn.',
+			'Bạn đã là thành viên trả phí. Cảm ơn bạn đã ủng hộ dự án! Hãy tận hưởng Synthica và chia sẻ với bạn bè của bạn.',
 		ProPlanTitle: 'Trả phí',
 		Features: {
 			FullSpeed: 'Tốc độ đầy đủ không giới hạn',
@@ -450,7 +450,7 @@ const vi: Translation = {
 		Success: {
 			PageTitle: 'Bạn là người dùng trả phí!',
 			PageParagraph:
-				'Bây giờ bạn có quyền truy cập vào mọi thứ mà Stablecog cung cấp. Nếu bạn có bất kỳ câu hỏi nào, hãy liên hệ với chúng tôi tại {platform}.'
+				'Bây giờ bạn có quyền truy cập vào mọi thứ mà Synthica cung cấp. Nếu bạn có bất kỳ câu hỏi nào, hãy liên hệ với chúng tôi tại {platform}.'
 		},
 		Cancel: {
 			PageTitle: 'Bạn đã hủy bỏ',
@@ -564,7 +564,7 @@ const vi: Translation = {
 	},
 	Gallery: {
 		PageTitle: 'Gallery',
-		PageParagraph: 'Check out what others have created with Stablecog.',
+		PageParagraph: 'Check out what others have created with Synthica.',
 		SearchInput: {
 			Title: 'Search'
 		},

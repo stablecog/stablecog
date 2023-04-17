@@ -9,7 +9,7 @@
 </script>
 
 <MetaTag
-	title="Privacy Policy | Stablecog"
+	title="Privacy Policy | Synthica"
 	description="Check out the privacy policy for our free, multilingual and open-source AI image generator."
 	imageUrl="{canonicalUrl}/previews{$page.url.pathname}.png"
 	canonical="{canonicalUrl}{$page.url.pathname}"

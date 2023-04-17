@@ -386,7 +386,7 @@ const hr: Translation = {
 	},
 	SignUp: {
 		PageTitle: 'Registriraj se',
-		PageParagraph: 'Postani Stablecog pro korisnik i otključaj sve opcije.',
+		PageParagraph: 'Postani Synthica pro korisnik i otključaj sve opcije.',
 		PageTitleConfirm: 'Potvrdi',
 		PageTitleConfirmAlt: 'Provjeri svoj e-mail',
 		PageParagraphConfirm: 'Poslali smo ti 6-znamenkasti kod. Unesi ispod za potvrdu svog računa.',
@@ -403,11 +403,11 @@ const hr: Translation = {
 		PageTitleGetStarted: 'Get Started',
 		GetStartedButton: 'Get Started',
 		PageTitle: 'Prijavi se',
-		PageParagraph: 'Počni koristiti Stablecog sa svim opcijama dostupnim na tvom računu.',
+		PageParagraph: 'Počni koristiti Synthica sa svim opcijama dostupnim na tvom računu.',
 		PageParagraphV2: 'Start creating amazing art in seconds for free, no credit card required.',
 		PageTitleCreateAccountOrSignIn: 'Stvori račun ili se prijavi',
 		PageParagraphCreateAccountOrSignIn:
-			'Počni koristiti Stablecog sa svim opcijama dostupnim na tvom računu.',
+			'Počni koristiti Synthica sa svim opcijama dostupnim na tvom računu.',
 		PageTitleSentLink: 'Provjeri svoj e-mail',
 		PageParagraphSentLink:
 			'Poslali smo ti link za prijavu. Ako nije u pristigloj pošti, provjeri spam folder.',
@@ -423,10 +423,10 @@ const hr: Translation = {
 	Pro: {
 		PageTitle: 'Postani Pro',
 		PageParagraph:
-			'Otključaj sve opcije Stablecog-a i podrži naš projekt. Bez Pro članova, Stablecog ne bi mogao ostati potpuno open-source i omogućavati besplatno generiranje svima.',
+			'Otključaj sve opcije Synthica-a i podrži naš projekt. Bez Pro članova, Synthica ne bi mogao ostati potpuno open-source i omogućavati besplatno generiranje svima.',
 		PageTitleAlreadyPro: 'Već si Pro!',
 		PageParagraphAlreadyPro:
-			'Ti si već Pro član. Hvala ti što podržavaš projekt. Nastavi uživati u Stablecog-u i preporuči nas svojim prijateljima.',
+			'Ti si već Pro član. Hvala ti što podržavaš projekt. Nastavi uživati u Synthica-u i preporuči nas svojim prijateljima.',
 		ProPlanTitle: 'Pro',
 		Features: {
 			FullSpeed: 'Puna brzina bez ograničenja',
@@ -445,7 +445,7 @@ const hr: Translation = {
 		Success: {
 			PageTitle: 'Ti si Pro!',
 			PageParagraph:
-				'Sada imaš pristup svemu što Stablecog ima za ponuditi. Za sva pitanja obrati nam se na {platform}.'
+				'Sada imaš pristup svemu što Synthica ima za ponuditi. Za sva pitanja obrati nam se na {platform}.'
 		},
 		Cancel: {
 			PageTitle: 'Otkazao si',
@@ -558,7 +558,7 @@ const hr: Translation = {
 	},
 	Gallery: {
 		PageTitle: 'Galerija',
-		PageParagraph: 'Pogledaj što su drugi stvorili sa Stablecog-om.',
+		PageParagraph: 'Pogledaj što su drugi stvorili sa Synthica-om.',
 		SearchInput: {
 			Title: 'Pretraži'
 		},

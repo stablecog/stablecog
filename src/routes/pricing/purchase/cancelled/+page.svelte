@@ -9,8 +9,8 @@
 </script>
 
 <MetaTag
-	title="Cancelled | Stablecog"
-	description="Choose a plan that works for you and start using Stablecog."
+	title="Cancelled | Synthica"
+	description="Choose a plan that works for you and start using Synthica."
 	imageUrl="{canonicalUrl}/previews{$page.url.pathname}.png"
 	canonical="{canonicalUrl}{$page.url.pathname}"
 />

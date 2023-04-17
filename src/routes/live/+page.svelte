@@ -242,8 +242,8 @@
 </script>
 
 <MetaTag
-	title="Live | Stablecog"
-	description="Watch generations happening live on Stablecog (free and multi-lingual AI image generator)."
+	title="Live | Synthica"
+	description="Watch generations happening live on Synthica (free and multi-lingual AI image generator)."
 	imageUrl="{canonicalUrl}/previews{$page.url.pathname}.png"
 	canonical="{canonicalUrl}{$page.url.pathname}"
 />

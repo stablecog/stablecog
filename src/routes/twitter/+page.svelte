@@ -7,6 +7,6 @@
 <RedirectPage
 	url={socialUrls.twitter}
 	redirectingText={$LL.Redirect.RedirectingToTitle({ name: 'Twitter' })}
-	title="Twitter | Stablecog"
-	description="Follow us on Twitter for updates on Stablecog."
+	title="Twitter | Synthica"
+	description="Follow us on Twitter for updates on Synthica."
 />

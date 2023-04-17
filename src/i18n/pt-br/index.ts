@@ -388,7 +388,7 @@ const ptBr: Translation = {
 	SignUp: {
 		PageTitle: 'Cadastre-se',
 		PageParagraph:
-			'Junte-se ao Stablecog para se tornar um membro pro e desbloquear todo seu potencial.',
+			'Junte-se ao Synthica para se tornar um membro pro e desbloquear todo seu potencial.',
 		PageTitleConfirm: 'Confirmar',
 		PageTitleConfirmAlt: 'Verifique Seu E-mail',
 		PageParagraphConfirm:
@@ -406,11 +406,11 @@ const ptBr: Translation = {
 		PageTitleGetStarted: 'Get Started',
 		GetStartedButton: 'Get Started',
 		PageTitle: 'Iniciar Sessão',
-		PageParagraph: 'Comece a usar o Stablecog com todos os recursos disponíveis para a sua conta.',
+		PageParagraph: 'Comece a usar o Synthica com todos os recursos disponíveis para a sua conta.',
 		PageParagraphV2: 'Start creating amazing art in seconds for free, no credit card required.',
 		PageTitleCreateAccountOrSignIn: 'Create an account or sign in',
 		PageParagraphCreateAccountOrSignIn:
-			'Start using Stablecog with all features that are available to your account.',
+			'Start using Synthica with all features that are available to your account.',
 		PageTitleSentLink: 'Check your email',
 		PageParagraphSentLink:
 			"We've emailed you a sign-in link. If you don't see it, check your spam folder.",
@@ -426,10 +426,10 @@ const ptBr: Translation = {
 	Pro: {
 		PageTitle: 'Torne-se um Pro',
 		PageParagraph:
-			'Desbloqueie todos os recursos do Stablecog e apoie o projeto. Sem os membros pro, o Stablecog não seria capaz de ficar completamente fonte aberta (open-source) e oferecer gerações gratuitas a todos.',
+			'Desbloqueie todos os recursos do Synthica e apoie o projeto. Sem os membros pro, o Synthica não seria capaz de ficar completamente fonte aberta (open-source) e oferecer gerações gratuitas a todos.',
 		PageTitleAlreadyPro: 'Já é um Pro!',
 		PageParagraphAlreadyPro:
-			'Você já é um membro pro. Obrigado por apoiar o projeto! Vá em frente e aproveite o Stablecog, e considere compartilhá-lo com seus amigos.',
+			'Você já é um membro pro. Obrigado por apoiar o projeto! Vá em frente e aproveite o Synthica, e considere compartilhá-lo com seus amigos.',
 		ProPlanTitle: 'Pro',
 		Features: {
 			FullSpeed: 'Velocidade total sem limites definidos',
@@ -448,7 +448,7 @@ const ptBr: Translation = {
 		Success: {
 			PageTitle: 'Você é um Pro!',
 			PageParagraph:
-				'Agora você tem acesso a tudo que o Stablecog tem para oferecer. Em caso de dúvidas, entre em contato conosco no {platform}.'
+				'Agora você tem acesso a tudo que o Synthica tem para oferecer. Em caso de dúvidas, entre em contato conosco no {platform}.'
 		},
 		Cancel: {
 			PageTitle: 'Você cancelou',
@@ -565,7 +565,7 @@ const ptBr: Translation = {
 	},
 	Gallery: {
 		PageTitle: 'Gallery',
-		PageParagraph: 'Check out what others have created with Stablecog.',
+		PageParagraph: 'Check out what others have created with Synthica.',
 		SearchInput: {
 			Title: 'Search'
 		},

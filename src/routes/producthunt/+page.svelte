@@ -7,6 +7,6 @@
 <RedirectPage
 	url={socialUrls.producthunt}
 	redirectingText={$LL.Redirect.RedirectingToTitle({ name: 'Product Hunt' })}
-	title="Product Hunt | Stablecog"
-	description="Follow Stablecog on Product Hunt to get the latest updates on the app."
+	title="Product Hunt | Synthica"
+	description="Follow Synthica on Product Hunt to get the latest updates on the app."
 />

@@ -392,7 +392,7 @@ const ja: Translation = {
 	},
 	SignUp: {
 		PageTitle: '新規登録',
-		PageParagraph: 'Stablecogに参加してプロメンバーになり、その可能性を最大限に引き出しましょう。',
+		PageParagraph: 'Synthicaに参加してプロメンバーになり、その可能性を最大限に引き出しましょう。',
 		PageTitleConfirm: '確認',
 		PageTitleConfirmAlt: 'メールをチェックしてください',
 		PageParagraphConfirm:
@@ -410,12 +410,12 @@ const ja: Translation = {
 		PageTitleGetStarted: 'はじめに',
 		GetStartedButton: 'はじめに',
 		PageTitle: 'サインイン',
-		PageParagraph: 'あなたのアカウントで利用可能なすべての機能でStablecogを利用しよう！',
+		PageParagraph: 'あなたのアカウントで利用可能なすべての機能でSynthicaを利用しよう！',
 		PageParagraphV2:
 			'無料で素晴らしいアートをアッ！という間に作成し始めましょう。クレジットカードは不要です。',
 		PageTitleCreateAccountOrSignIn: 'アカウントの作成またはサインイン',
 		PageParagraphCreateAccountOrSignIn:
-			'アカウントで利用可能な全ての機能でStablecogを利用しましょう。',
+			'アカウントで利用可能な全ての機能でSynthicaを利用しましょう。',
 		PageTitleSentLink: 'メールを確認してください',
 		PageParagraphSentLink:
 			'サインインリンクをメールで送信しました。見つからない場合は、迷惑メールフォルダを確認してください。',
@@ -431,10 +431,10 @@ const ja: Translation = {
 	Pro: {
 		PageTitle: 'Pro版に登録',
 		PageParagraph:
-			'Stablecogの全ての機能のアンロックする事が、プロジェクトの援助となります。引き続きStablecogを完全にオープンソースとして無料の生成を提供することが可能なのは、プロメンバーの皆様のおかげであると感謝しております。',
+			'Synthicaの全ての機能のアンロックする事が、プロジェクトの援助となります。引き続きSynthicaを完全にオープンソースとして無料の生成を提供することが可能なのは、プロメンバーの皆様のおかげであると感謝しております。',
 		PageTitleAlreadyPro: '既にPro版に登録済です!',
 		PageParagraphAlreadyPro:
-			'あなたはすでにPro版のメンバーです。当プロジェクトをサポートしていただき誠に有難うございます！是非Stablecogを楽しんで、友達と共有してください。',
+			'あなたはすでにPro版のメンバーです。当プロジェクトをサポートしていただき誠に有難うございます！是非Synthicaを楽しんで、友達と共有してください。',
 		ProPlanTitle: 'プロ',
 		Features: {
 			FullSpeed: '制限なしのフルスピード',
@@ -453,7 +453,7 @@ const ja: Translation = {
 		Success: {
 			PageTitle: 'プロ版にアップグレードしました!',
 			PageParagraph:
-				'Stablecogが提供するすべての機能にアクセスできます。ご質問があれば、 {platform} までお問い合わせください。'
+				'Synthicaが提供するすべての機能にアクセスできます。ご質問があれば、 {platform} までお問い合わせください。'
 		},
 		Cancel: {
 			PageTitle: 'キャンセルされました',
@@ -568,7 +568,7 @@ const ja: Translation = {
 	},
 	Gallery: {
 		PageTitle: 'ギャラリー',
-		PageParagraph: 'Stablecogで他の人が作成したものをご覧ください。',
+		PageParagraph: 'Synthicaで他の人が作成したものをご覧ください。',
 		SearchInput: {
 			Title: '検索'
 		},

@@ -68,7 +68,7 @@
 </script>
 
 <MetaTag
-	title="Change Email | Stablecog"
+	title="Change Email | Synthica"
 	description="Change your account's email address."
 	imageUrl="{canonicalUrl}/previews{$page.url.pathname}.png"
 	canonical="{canonicalUrl}{$page.url.pathname}"
@@ -77,7 +77,7 @@
 <PageWrapper>
 	<div class="w-[100%+1rem] flex justify-center items-center my-auto -mx-2">
 		<div
-			class="max-w-full flex flex-col items-center justify-center bg-c-bg ring-c-bg-secondary ring-2 px-3 py-4 
+			class="max-w-full flex flex-col items-center justify-center bg-c-bg ring-c-bg-secondary ring-2 px-3 py-4
 				md:px-10 md:py-7 rounded-3xl relative z-10 overflow-hidden shadow-xl shadow-c-shadow/[var(--o-shadow-normal)]"
 		>
 			{#if changeEmailStatus === 'sent-otp' || changeEmailStatus === 'confirm-other-email'}
@@ -107,7 +107,7 @@
 				</p>
 				{#if changeEmailStatus === 'sent-otp' || changeEmailStatus === 'confirm-other-email'}
 					<div
-						class="mt-4 md:mt-6 -mx-5 md:-mx-10 -mb-4 md:-mb-7 border-t-2 border-c-bg-secondary w-[calc(100%+1.5rem)] md:w-[calc(100%+5rem)] 
+						class="mt-4 md:mt-6 -mx-5 md:-mx-10 -mb-4 md:-mb-7 border-t-2 border-c-bg-secondary w-[calc(100%+1.5rem)] md:w-[calc(100%+5rem)]
 						flex flex-col items-center justify-start relative z-0"
 					>
 						<DropdownItem onClick={() => (changeEmailStatus = 'idle')}>

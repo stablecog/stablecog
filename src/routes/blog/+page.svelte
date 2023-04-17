@@ -13,14 +13,14 @@
 </script>
 
 <MetaTag
-	title="Blog | Stablecog"
-	description="Articles about Stable Diffusion tips and tricks, Stable Diffusion experiments, other AI related topics and the latest Stablecog news."
+	title="Blog | Synthica"
+	description="Articles about Stable Diffusion tips and tricks, Stable Diffusion experiments, other AI related topics and the latest Synthica news."
 	imageUrl="{canonicalUrl}/previews{$page.url.pathname}.png"
 	canonical="{canonicalUrl}{$page.url.pathname}"
 />
 
 <div
-	class="w-full flex flex-col items-center flex-1 justify-center px-4 pt-2 
+	class="w-full flex flex-col items-center flex-1 justify-center px-4 pt-2
 		md:pt-8 pb-[calc(3vh+0.5rem)]"
 >
 	<div class="w-full max-w-7xl flex justify-center text-center">

@@ -389,7 +389,7 @@ const tr: Translation = {
 	},
 	SignUp: {
 		PageTitle: 'Üye Ol',
-		PageParagraph: "Tüm özelliklere erişmek için Stablecog'a katıl ve pro üye ol.",
+		PageParagraph: "Tüm özelliklere erişmek için Synthica'a katıl ve pro üye ol.",
 		PageTitleConfirm: 'Onayla',
 		PageTitleConfirmAlt: 'Posta kutunu kontrol et',
 		PageParagraphConfirm: 'Sana 6 haneli bir kod yolladık. Üyeliğini onaylamak için onu aşağı gir.',
@@ -406,11 +406,11 @@ const tr: Translation = {
 		PageTitleGetStarted: 'Hemen Başla',
 		GetStartedButton: 'Başla',
 		PageTitle: 'Giriş Yap',
-		PageParagraph: "Stablecog'u üyeliğine sağlanan tüm özelliklerle kullanmaya başla.",
+		PageParagraph: "Synthica'u üyeliğine sağlanan tüm özelliklerle kullanmaya başla.",
 		PageParagraphV2: 'Ücretsiz olarak süper fotoğraflar üretmeye hemen başla.',
 		PageTitleCreateAccountOrSignIn: 'Üye ol veya giriş yap',
 		PageParagraphCreateAccountOrSignIn:
-			"Stablecog'u üyeliğine sağlanan tüm özelliklerle kullanmaya başla.",
+			"Synthica'u üyeliğine sağlanan tüm özelliklerle kullanmaya başla.",
 		PageTitleSentLink: 'Posta kutunu kontrol et',
 		PageParagraphSentLink:
 			'Giriş yapabilmen için sana bir link yolladık. Bulamadıysan spam klasörüne bak.',
@@ -426,10 +426,10 @@ const tr: Translation = {
 	Pro: {
 		PageTitle: 'Pro Ol',
 		PageParagraph:
-			"Stablecog'un bütün özelliklerine eriş ve projeyi destekle. Pro üyeler olmadan Stablecog tamamen açık kaynak kodlu kalamaz, herkese ücretsiz fotoğraf üretimi imkanı sunamazdı.",
+			"Synthica'un bütün özelliklerine eriş ve projeyi destekle. Pro üyeler olmadan Synthica tamamen açık kaynak kodlu kalamaz, herkese ücretsiz fotoğraf üretimi imkanı sunamazdı.",
 		PageTitleAlreadyPro: 'Zaten Prosun!',
 		PageParagraphAlreadyPro:
-			"Pro üye olarak projeyi desteklediğin için teşekkürler. Stablecog'un keyfini çıkarmanı ve arkadaşlarınla paylaşmanı tavsiye ederiz.",
+			"Pro üye olarak projeyi desteklediğin için teşekkürler. Synthica'un keyfini çıkarmanı ve arkadaşlarınla paylaşmanı tavsiye ederiz.",
 		ProPlanTitle: 'Pro',
 		Features: {
 			FullSpeed: 'Gecikmesiz tam hız üretim',
@@ -448,7 +448,7 @@ const tr: Translation = {
 		Success: {
 			PageTitle: 'Pro oldun!',
 			PageParagraph:
-				"Artık Stablecog'un tüm özelliklerine erişimin var. Soruların varsa bize buradan ulaşabilirsin: {platform}."
+				"Artık Synthica'un tüm özelliklerine erişimin var. Soruların varsa bize buradan ulaşabilirsin: {platform}."
 		},
 		Cancel: {
 			PageTitle: 'İptal Ettin',
@@ -562,7 +562,7 @@ const tr: Translation = {
 	},
 	Gallery: {
 		PageTitle: 'Galeri',
-		PageParagraph: 'Diğer insanların Stablecog ile ürettiklerini incele.',
+		PageParagraph: 'Diğer insanların Synthica ile ürettiklerini incele.',
 		SearchInput: {
 			Title: 'Ara'
 		},

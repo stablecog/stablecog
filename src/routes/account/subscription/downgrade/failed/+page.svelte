@@ -9,8 +9,8 @@
 </script>
 
 <MetaTag
-	title="Change Plan | Stablecog"
-	description="Change your Stablecog subscription plan."
+	title="Change Plan | Synthica"
+	description="Change your Synthica subscription plan."
 	imageUrl="{canonicalUrl}/previews{$page.url.pathname}.png"
 	canonical="{canonicalUrl}{$page.url.pathname}"
 />

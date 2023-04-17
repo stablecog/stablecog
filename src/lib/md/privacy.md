@@ -2,14 +2,14 @@
 
 _Last updated March 19, 2023_
 
-This privacy notice for Stablecog, Inc. ("**Company**", "**we**", "**us**", or "**our**"), describes how and why we might collect, store, use, and/or share ("**process**") your information when you use our services ("Services"), such as when you:
+This privacy notice for IWANDO LLC (Synthica) ("**Company**", "**we**", "**us**", or "**our**"), describes how and why we might collect, store, use, and/or share ("**process**") your information when you use our services ("Services"), such as when you:
 
-- Visit our website at **[stablecog.com](https://stablecog.com)**, or any website of ours that links to this privacy notice
+- Visit our website at **[synthica.ai](https://Synthica.ai)**, or any website of ours that links to this privacy notice
 - Engage with us in other related ways, including any sales, marketing, or events
 
 ### Questions or concerns?
 
-Reading this privacy notice will help you understand your privacy rights and choices. If you do not agree with our policies and practices, please do not use our Services. If you still have any questions or concerns, please contact us at hello@stablecog.com.
+Reading this privacy notice will help you understand your privacy rights and choices. If you do not agree with our policies and practices, please do not use our Services. If you still have any questions or concerns, please contact us at hello@synthica.ai.
 
 ## SUMMARY OF KEY POINTS
 
@@ -17,7 +17,7 @@ _This summary provides key points from our privacy notice, but you can find out 
 
 ### What personal information do we process?
 
-When you visit, use, or navigate our Services, we may process personal information depending on how you interact with Stablecog, Inc. and the Services, the choices you make, and the products and features you use. Click **[here](#1-what-information-do-we-collect)** to learn more.
+When you visit, use, or navigate our Services, we may process personal information depending on how you interact with IWANDO LLC (Synthica) and the Services, the choices you make, and the products and features you use. Click **[here](#1-what-information-do-we-collect)** to learn more.
 
 ### Do we process any sensitive personal information?
 
@@ -45,9 +45,9 @@ Depending on where you are located geographically, the applicable privacy law ma
 
 ### How do you exercise your rights?
 
-The easiest way to exercise your rights is by contacting us: **[stablecog.com/support](https://stablecog.com/support)**. We will consider and act upon any request in accordance with applicable data protection laws.
+The easiest way to exercise your rights is by contacting us: **[synthica.ai/support](https://Synthica.ai/support)**. We will consider and act upon any request in accordance with applicable data protection laws.
 
-Want to learn more about what Stablecog, Inc. does with any information we collect? Click **[here](#table-of-contents)** to review the notice in full.
+Want to learn more about what IWANDO LLC (Synthica). does with any information we collect? Click **[here](#table-of-contents)** to review the notice in full.
 
 ## TABLE OF CONTENTS
 
@@ -209,7 +209,7 @@ We have implemented appropriate and reasonable technical and organizational secu
 
 _**In Short:** We do not knowingly collect data from or market to children under 18 years of age._
 
-We do not knowingly solicit data from or market to children under 18 years of age. By using the Services, you represent that you are at least 18 or that you are the parent or guardian of such a minor and consent to such minor dependent’s use of the Services. If we learn that personal information from users less than 18 years of age has been collected, we will deactivate the account and take reasonable measures to promptly delete such data from our records. If you become aware of any data we may have collected from children under age 18, please contact us at privacy@stablecog.com.
+We do not knowingly solicit data from or market to children under 18 years of age. By using the Services, you represent that you are at least 18 or that you are the parent or guardian of such a minor and consent to such minor dependent’s use of the Services. If we learn that personal information from users less than 18 years of age has been collected, we will deactivate the account and take reasonable measures to promptly delete such data from our records. If you become aware of any data we may have collected from children under age 18, please contact us at support@iwando.com.
 
 ## 11. WHAT ARE YOUR PRIVACY RIGHTS?
 
@@ -239,7 +239,7 @@ If you would at any time like to review or change the information in your accoun
 
 Cookies and similar technologies: Most Web browsers are set to accept cookies by default. If you prefer, you can usually choose to set your browser to remove cookies and to reject cookies. If you choose to remove cookies or reject cookies, this could affect certain features or services of our Services.
 
-If you have questions or comments about your privacy rights, you may email us at **privacy@stablecog.com**.
+If you have questions or comments about your privacy rights, you may email us at **support@iwando.com**.
 
 ## 12. CONTROLS FOR DO-NOT-TRACK FEATURES
 
@@ -333,7 +333,7 @@ We may also collect other personal information outside of these categories throu
 
 More information about our data collection and sharing practices can be found in this privacy notice.
 
-You may contact us by email at **privacy@stablecog.com**, or by referring to the contact details at the bottom of this document.
+You may contact us by email at **support@iwando.com**, or by referring to the contact details at the bottom of this document.
 
 If you are using an authorized agent to exercise your right to opt out we may deny a request if the authorized agent does not submit proof that they have been validly authorized to act on your behalf.
 
@@ -343,7 +343,7 @@ We may disclose your personal information with our service providers pursuant to
 
 We may use your personal information for our own business purposes, such as for undertaking internal research for technological development and demonstration. This is not considered to be "selling" of your personal information.
 
-Stablecog, Inc. has not disclosed, sold, or shared any personal information to third parties for a business or commercial purpose in the preceding twelve (12) months. Stablecog, Inc. will not sell or share personal information in the future belonging to website visitors, users, and other consumers.
+Synthica, Inc. has not disclosed, sold, or shared any personal information to third parties for a business or commercial purpose in the preceding twelve (12) months. IWANDO LLC, (Synthica). will not sell or share personal information in the future belonging to website visitors, users, and other consumers.
 
 #### Your rights with respect to your personal data
 
@@ -387,7 +387,7 @@ We will only use personal information provided in your request to verify your id
 - You can designate an authorized agent to make a request under the CCPA on your behalf. We may deny a request from an authorized agent that does not submit proof that they have been validly authorized to act on your behalf in accordance with the CCPA.
 - You may request to opt out from future selling or sharing of your personal information to third parties. Upon receiving an opt-out request, we will act upon the request as soon as feasibly possible, but no later than fifteen (15) days from the date of the request submission.
 
-To exercise these rights, you can contact us by email at **privacy@stablecog.com**, or by referring to the contact details at the bottom of this document. If you have a complaint about how we handle your data, we would like to hear from you.
+To exercise these rights, you can contact us by email at **support@iwando.com**, or by referring to the contact details at the bottom of this document. If you have a complaint about how we handle your data, we would like to hear from you.
 
 ## 14. DO VIRGINIA RESIDENTS HAVE SPECIFIC PRIVACY RIGHTS?
 
@@ -405,7 +405,7 @@ Under the Virginia Consumer Data Protection Act (CDPA):
 
 If this definition "consumer" applies to you, we must adhere to certain rights and obligations regarding your personal data.
 
-The information we collect, use, and disclose about you will vary depending on how you interact with Stablecog, Inc. and our Services. To find out more, please visit the following links:
+The information we collect, use, and disclose about you will vary depending on how you interact with IWANDO LLC (Synthica). and our Services. To find out more, please visit the following links:
 
 - [Personal data we collect](#1-what-information-do-we-collect)
 - [How we use your personal data](#2-how-do-we-process-your-information)
@@ -420,13 +420,13 @@ The information we collect, use, and disclose about you will vary depending on h
 - Right to obtain a copy of the personal data you previously shared with us
 - Right to opt out of the processing of your personal data if it is used for targeted advertising, the sale of personal data, or profiling in furtherance of decisions that produce legal or similarly significant effects ("profiling")
 
-Stablecog, Inc. has not sold any personal data to third parties for business or commercial purposes. Stablecog, Inc. will not sell personal data in the future belonging to website visitors, users, and other consumers.
+IWANDO LLC (Synthica), Inc. has not sold any personal data to third parties for business or commercial purposes. Synthica, Inc. will not sell personal data in the future belonging to website visitors, users, and other consumers.
 
 #### Exercise your rights provided under the Virginia CDPA
 
 More information about our data collection and sharing practices can be found in this privacy notice.
 
-You may contact us by email at **privacy@stablecog.com**, by visiting **[stablecog.com/support](https://stablecog.com/support)**, or by referring to the contact details at the bottom of this document.
+You may contact us by email at **support@iwando.com**, by visiting **[synthica.ai/support](https://Synthica.ai/support)**, or by referring to the contact details at the bottom of this document.
 
 If you are using an authorized agent to exercise your rights, we may deny a request if the authorized agent does not submit proof that they have been validly authorized to act on your behalf.
 
@@ -438,7 +438,7 @@ Upon receiving your request, we will respond without undue delay, but in all cas
 
 #### Right to appeal
 
-If we decline to take action regarding your request, we will inform you of our decision and reasoning behind it. If you wish to appeal our decision, please email us at **privacy@stablecog.com**. Within sixty (60) days of receipt of an appeal, we will inform you in writing of any action taken or not taken in response to the appeal, including a written explanation of the reasons for the decisions. If your appeal if denied, you may contact the Attorney General to **[submit a complaint](https://www.oag.state.va.us/consumer-protection/index.php/file-a-complaint)**.
+If we decline to take action regarding your request, we will inform you of our decision and reasoning behind it. If you wish to appeal our decision, please email us at **support@iwando.com**. Within sixty (60) days of receipt of an appeal, we will inform you in writing of any action taken or not taken in response to the appeal, including a written explanation of the reasons for the decisions. If your appeal if denied, you may contact the Attorney General to **[submit a complaint](https://www.oag.state.va.us/consumer-protection/index.php/file-a-complaint)**.
 
 ## 15. DO WE MAKE UPDATES TO THIS NOTICE?
 
@@ -448,13 +448,15 @@ We may update this privacy notice from time to time. The updated version will be
 
 ## 16. HOW CAN YOU CONTACT US ABOUT THIS NOTICE?
 
-If you have questions or comments about this notice, you may email us at privacy@stablecog.com or by post to:
+If you have questions or comments about this notice, you may email us at support@iwando.com or by post to:
 
-**Stablecog, Inc.\
-9450 Southwest Gemini Drive\
-Beaverton, OR 97008\
-United States**
+**IWANDO LLC (Synthica)\
+00 W El Camino Real 180\
+Mountain View, CA 94040\
+United States\
+Phone: (+1)5033808391\
+support@iwando.com**
 
 ## 17. HOW CAN YOU REVIEW, UPDATE, OR DELETE THE DATA WE COLLECT FROM YOU?
 
-You have the right to request access to the personal information we collect from you, change that information, or delete it. To request to review, update, or delete your personal information, please visit: **[stablecog.com/support](https://stablecog.com/support)**.
+You have the right to request access to the personal information we collect from you, change that information, or delete it. To request to review, update, or delete your personal information, please visit: **[synthica.ai/support](https://Synthica.ai/support)**.

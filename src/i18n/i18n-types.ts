@@ -2980,7 +2980,7 @@ export type TranslationFunctions = {
 		 */
 		PageTitle: () => LocalizedString
 		/**
-		 * Join Stablecog to become a pro member and unlock its full potential.
+		 * Join Synthica to become a pro member and unlock its full potential.
 		 */
 		PageParagraph: () => LocalizedString
 		/**
@@ -3036,7 +3036,7 @@ export type TranslationFunctions = {
 		 */
 		PageTitle: () => LocalizedString
 		/**
-		 * Start using Stablecog with all features that are available to your account.
+		 * Start using Synthica with all features that are available to your account.
 		 */
 		PageParagraph: () => LocalizedString
 		/**
@@ -3048,7 +3048,7 @@ export type TranslationFunctions = {
 		 */
 		PageTitleCreateAccountOrSignIn: () => LocalizedString
 		/**
-		 * Start using Stablecog with all features that are available to your account.
+		 * Start using Synthica with all features that are available to your account.
 		 */
 		PageParagraphCreateAccountOrSignIn: () => LocalizedString
 		/**
@@ -3098,7 +3098,7 @@ export type TranslationFunctions = {
 		 */
 		PageTitle: () => LocalizedString
 		/**
-		 * Unlock all features of Stablecog and support the project. Without the pro members, Stablecog wouldn't be able to stay completely open-source and offer free generations to everyone.
+		 * Unlock all features of Synthica and support the project. Without the pro members, Synthica wouldn't be able to stay completely open-source and offer free generations to everyone.
 		 */
 		PageParagraph: () => LocalizedString
 		/**
@@ -3106,7 +3106,7 @@ export type TranslationFunctions = {
 		 */
 		PageTitleAlreadyPro: () => LocalizedString
 		/**
-		 * You are already a pro member. Thank you for supporting the project! Go ahead and enjoy Stablecog, and consider sharing it with your friends.
+		 * You are already a pro member. Thank you for supporting the project! Go ahead and enjoy Synthica, and consider sharing it with your friends.
 		 */
 		PageParagraphAlreadyPro: () => LocalizedString
 		/**
@@ -3169,7 +3169,7 @@ export type TranslationFunctions = {
 			 */
 			PageTitle: () => LocalizedString
 			/**
-			 * You now have access to everything Stablecog has to offer. If you have any questions, reach out to us on {platform}.
+			 * You now have access to everything Synthica has to offer. If you have any questions, reach out to us on {platform}.
 			 */
 			PageParagraph: (arg: { platform: unknown }) => LocalizedString
 		}
@@ -3478,7 +3478,7 @@ export type TranslationFunctions = {
 		 */
 		PageTitle: () => LocalizedString
 		/**
-		 * Check out what others have created with Stablecog.
+		 * Check out what others have created with Synthica.
 		 */
 		PageParagraph: () => LocalizedString
 		SearchInput: {

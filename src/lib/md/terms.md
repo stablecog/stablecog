@@ -4,15 +4,15 @@ _Last updated March 19, 2023_
 
 ## AGREEMENT TO OUR LEGAL TERMS
 
-We are Stablecog, Inc. ("**Company**", "**we**", "**us**", "**our**"), a company registered in Oregon, United States at 9450 SW Gemini Dr, Beaverton, OR 97008, USA, Beaverton, OR 97008.
+We are IWANDO LLC (Synthica) ("**Company**", "**we**", "**us**", "**our**"), a company registered in California, United States at 800 W El Camino Real 180, Mountain View, 94040.
 
-We operate the website **[stablecog.com](https://stablecog.com)** (the "**Site**"), as well as any other related products and services that refer or link to these legal terms (the "**Legal Terms**") (collectively, the "**Services**").
+We operate the website **[synthica.ai](https://Synthica.ai)** (the "**Site**"), as well as any other related products and services that refer or link to these legal terms (the "**Legal Terms**") (collectively, the "**Services**").
 
-You can contact us by phone at (+1)5033808391, email at hello@stablecog.com, or by mail to 9450 SW Gemini Dr, Beaverton, OR 97008, USA, Beaverton, OR 97008, United States.
+You can contact us by phone at (+1)5033808391, email at hello@synthica.ai, or by mail to 800 W El Camino Real 180, Mountain View, CA 94040, United States
 
-These Legal Terms constitute a legally binding agreement made between you, whether personally or on behalf of an entity ("**you**"), and Stablecog, Inc., concerning your access to and use of the Services. You agree that by accessing the Services, you have read, understood, and agreed to be bound by all of these Legal Terms. IF YOU DO NOT AGREE WITH ALL OF THESE LEGAL TERMS, THEN YOU ARE EXPRESSLY PROHIBITED FROM USING THE SERVICES AND YOU MUST DISCONTINUE USE IMMEDIATELY.
+These Legal Terms constitute a legally binding agreement made between you, whether personally or on behalf of an entity ("**you**"), and IWANDO LLC (Synthica)., concerning your access to and use of the Services. You agree that by accessing the Services, you have read, understood, and agreed to be bound by all of these Legal Terms. IF YOU DO NOT AGREE WITH ALL OF THESE LEGAL TERMS, THEN YOU ARE EXPRESSLY PROHIBITED FROM USING THE SERVICES AND YOU MUST DISCONTINUE USE IMMEDIATELY.
 
-We will provide you with prior notice of any scheduled changes to the Services you are using. The modified Legal Terms will become effective upon posting or notifying you by **terms@stablecog.com**, as stated in the email message. By continuing to use the Services after the effective date of any changes, you agree to be bound by the modified terms.
+We will provide you with prior notice of any scheduled changes to the Services you are using. The modified Legal Terms will become effective upon posting or notifying you by **terms@synthica.ai**, as stated in the email message. By continuing to use the Services after the effective date of any changes, you agree to be bound by the modified terms.
 
 The Services are intended for users who are at least 18 years old. Persons under the age of 18 are not permitted to use or register for the Services.
 
@@ -76,7 +76,7 @@ solely for your personal, non-commercial use.
 
 Except as set out in this section or elsewhere in our Legal Terms, no part of the Services and no Content or Marks may be copied, reproduced, aggregated, republished, uploaded, posted, publicly displayed, encoded, translated, transmitted, distributed, sold, licensed, or otherwise exploited for any commercial purpose whatsoever, without our express prior written permission.
 
-If you wish to make any use of the Services, Content, or Marks other than as set out in this section or elsewhere in our Legal Terms, please address your request to: hello@stablecog.com. If we ever grant you the permission to post, reproduce, or publicly display any part of our Services or Content, you must identify us as the owners or licensors of the Services, Content, or Marks and ensure that any copyright or proprietary notice appears or is visible on posting, reproducing, or displaying our Content.
+If you wish to make any use of the Services, Content, or Marks other than as set out in this section or elsewhere in our Legal Terms, please address your request to: hello@synthica.ai. If we ever grant you the permission to post, reproduce, or publicly display any part of our Services or Content, you must identify us as the owners or licensors of the Services, Content, or Marks and ensure that any copyright or proprietary notice appears or is visible on posting, reproducing, or displaying our Content.
 
 We reserve all rights not expressly granted to you in and to the Services, Content, and Marks.
 
@@ -140,7 +140,7 @@ We reserve the right to refuse any order placed through the Services. We may, in
 
 You can cancel your subscription at any time by logging into your account. Your cancellation will take effect at the end of the current paid term.
 
-If you are unsatisfied with our Services, please email us at hello@stablecog.com or call us at (+1)5033808391.
+If you are unsatisfied with our Services, please email us at hello@synthica.ai or call us at (+1)5033808391.
 
 ## 7. PROHIBITED ACTIVITIES
 
@@ -219,7 +219,7 @@ We reserve the right, but not the obligation, to: (1) monitor the Services for v
 
 ## 14. PRIVACY POLICY
 
-We care about data privacy and security. Please review our Privacy Policy: [stablecog.com/privacy](https://stablecog.com/privacy). By using the Services, you agree to be bound by our Privacy Policy, which is incorporated into these Legal Terms. Please be advised the Services are hosted in the United States. If you access the Services from any other region of the world with laws or other requirements governing personal data collection, use, or disclosure that differ from applicable laws in the United States, then through your continued use of the Services, you are transferring your data to the United States, and you expressly consent to have your data transferred to and processed in the United States.
+We care about data privacy and security. Please review our Privacy Policy: [synthica.ai/privacy](https://Synthica.ai/privacy). By using the Services, you agree to be bound by our Privacy Policy, which is incorporated into these Legal Terms. Please be advised the Services are hosted in the United States. If you access the Services from any other region of the world with laws or other requirements governing personal data collection, use, or disclosure that differ from applicable laws in the United States, then through your continued use of the Services, you are transferring your data to the United States, and you expressly consent to have your data transferred to and processed in the United States.
 
 ## 15. COPYRIGHT INFRINGEMENTS
 
@@ -299,9 +299,9 @@ These Legal Terms and any policies or operating rules posted by us on the Servic
 
 In order to resolve a complaint regarding the Services or to receive further information regarding use of the Services, please contact us at:
 
-**Stablecog, Inc.\
-9450 SW Gemini Dr, Beaverton, OR 97008, USA\
-Beaverton, OR 97008\
+**IWANDO LLC (Synthica)\
+00 W El Camino Real 180\
+Mountain View, CA 94040\
 United States\
 Phone: (+1)5033808391\
-hello@stablecog.com**
+support@iwando.com**

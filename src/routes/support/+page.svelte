@@ -8,7 +8,7 @@
 </script>
 
 <MetaTag
-	title="Support | Stablecog"
+	title="Support | Synthica"
 	description="Reach out to us and we'll answer any questions you have."
 	imageUrl="{canonicalUrl}/previews{$page.url.pathname}.png"
 	canonical="{canonicalUrl}{$page.url.pathname}"

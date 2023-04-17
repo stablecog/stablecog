@@ -9,7 +9,7 @@
 </script>
 
 <MetaTag
-	title="Terms of Service | Stablecog"
+	title="Terms of Service | Synthica"
 	description="Check out the terms of service for our free, multilingual and open-source AI image generator."
 	imageUrl="{canonicalUrl}/previews{$page.url.pathname}.png"
 	canonical="{canonicalUrl}{$page.url.pathname}"

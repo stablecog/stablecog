@@ -7,6 +7,6 @@
 <RedirectPage
 	url={socialUrls.instagram}
 	redirectingText={$LL.Redirect.RedirectingToTitle({ name: 'Instagram' })}
-	title="Instagram | Stablecog"
-	description="Follow us on Instagram for updates on Stablecog, to see generations made with Stablecogs, and more..."
+	title="Instagram | Synthica"
+	description="Follow us on Instagram for updates on Synthica, to see generations made with Synthica, and more..."
 />

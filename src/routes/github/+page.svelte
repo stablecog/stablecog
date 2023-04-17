@@ -7,6 +7,6 @@
 <RedirectPage
 	url={socialUrls.github}
 	redirectingText={$LL.Redirect.RedirectingToTitle({ name: 'Github' })}
-	title="GitHub | Stablecog"
-	description="Check out the Stablecog repo on Github."
+	title="GitHub | Synthica"
+	description="Check out the Synthica repo on Github."
 />
