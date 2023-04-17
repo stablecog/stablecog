@@ -8,7 +8,7 @@ We are IWANDO LLC (Synthica) ("**Company**", "**we**", "**us**", "**our**"), a c
 
 We operate the website **[synthica.ai](https://Synthica.ai)** (the "**Site**"), as well as any other related products and services that refer or link to these legal terms (the "**Legal Terms**") (collectively, the "**Services**").
 
-You can contact us by phone at (+1)5033808391, email at hello@synthica.ai, or by mail to 800 W El Camino Real 180, Mountain View, CA 94040, United States
+You can contact us by phone at (+1)(650)-582-3402, email at hello@synthica.ai, or by mail to 800 W El Camino Real 180, Mountain View, CA 94040, United States
 
 These Legal Terms constitute a legally binding agreement made between you, whether personally or on behalf of an entity ("**you**"), and IWANDO LLC (Synthica)., concerning your access to and use of the Services. You agree that by accessing the Services, you have read, understood, and agreed to be bound by all of these Legal Terms. IF YOU DO NOT AGREE WITH ALL OF THESE LEGAL TERMS, THEN YOU ARE EXPRESSLY PROHIBITED FROM USING THE SERVICES AND YOU MUST DISCONTINUE USE IMMEDIATELY.
 
@@ -140,7 +140,7 @@ We reserve the right to refuse any order placed through the Services. We may, in
 
 You can cancel your subscription at any time by logging into your account. Your cancellation will take effect at the end of the current paid term.
 
-If you are unsatisfied with our Services, please email us at hello@synthica.ai or call us at (+1)5033808391.
+If you are unsatisfied with our Services, please email us at hello@synthica.ai or call us at (+1)(650)-582-3402.
 
 ## 7. PROHIBITED ACTIVITIES
 
@@ -303,5 +303,5 @@ In order to resolve a complaint regarding the Services or to receive further inf
 00 W El Camino Real 180\
 Mountain View, CA 94040\
 United States\
-Phone: (+1)5033808391\
+Phone: (+1)(650)-582-3402\
 support@iwando.com**

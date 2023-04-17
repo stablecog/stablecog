@@ -426,7 +426,7 @@ IWANDO LLC (Synthica), Inc. has not sold any personal data to third parties for 
 
 More information about our data collection and sharing practices can be found in this privacy notice.
 
-You may contact us by email at **support@iwando.com**, by visiting **[synthica.ai/support](https://Synthica.ai/support)**, or by referring to the contact details at the bottom of this document.
+You may contact us by email at **support@iwando.com**.
 
 If you are using an authorized agent to exercise your rights, we may deny a request if the authorized agent does not submit proof that they have been validly authorized to act on your behalf.
 
@@ -438,7 +438,7 @@ Upon receiving your request, we will respond without undue delay, but in all cas
 
 #### Right to appeal
 
-If we decline to take action regarding your request, we will inform you of our decision and reasoning behind it. If you wish to appeal our decision, please email us at **support@iwando.com**. Within sixty (60) days of receipt of an appeal, we will inform you in writing of any action taken or not taken in response to the appeal, including a written explanation of the reasons for the decisions. If your appeal if denied, you may contact the Attorney General to **[submit a complaint](https://www.oag.state.va.us/consumer-protection/index.php/file-a-complaint)**.
+If we decline to take action regarding your request, we will inform you of our decision and reasoning behind it. If you wish to appeal our decision, please email us at **support@iwando.com**. Within sixty (60) days of receipt of an appeal, we will inform you in writing of any action taken or not taken in response to the appeal, including a written explanation of the reasons for the decisions. If your appeal if denied, you may contact the Attorney General to **[submit a complaint](https://oag.ca.gov/contact/consumer-complaint-against-business-or-company)**.
 
 ## 15. DO WE MAKE UPDATES TO THIS NOTICE?
 
@@ -454,9 +454,9 @@ If you have questions or comments about this notice, you may email us at support
 00 W El Camino Real 180\
 Mountain View, CA 94040\
 United States\
-Phone: (+1)5033808391\
+Phone: (+1)(650)-582-3402\
 support@iwando.com**
 
 ## 17. HOW CAN YOU REVIEW, UPDATE, OR DELETE THE DATA WE COLLECT FROM YOU?
 
-You have the right to request access to the personal information we collect from you, change that information, or delete it. To request to review, update, or delete your personal information, please visit: **[synthica.ai/support](https://Synthica.ai/support)**.
+You have the right to request access to the personal information we collect from you, change that information, or delete it. To request to review, update, or delete your personal information, please email us at : **support@iwando.com**.
