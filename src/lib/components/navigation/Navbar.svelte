@@ -10,7 +10,7 @@
 	import { isTouchscreen } from '$ts/stores/isTouchscreen';
 	import { onMount } from 'svelte';
 	import Banner from '$components/Banner.svelte';
-	import IconSocial from '$components/icons/IconSocial.svelte';
+	import IconSc from '$components/icons/IconSc.svelte';
 	import { lastClosedNotification } from '$ts/stores/lastClosedNotification';
 	import LL, { locale } from '$i18n/i18n-svelte';
 	import Button from '$components/buttons/Button.svelte';
@@ -153,7 +153,7 @@
 				{/if}
 			</div>
 			<IconButton class="p-3 -mx-3 hidden md:block" href="/discord" target="_blank" name="Discord">
-				<IconSocial
+				<IconSc
 					type="discord"
 					class="w-8 h-8 relative transition transform {!$isTouchscreen
 						? 'group-hover/iconbutton:text-c-primary'

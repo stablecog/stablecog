@@ -24,6 +24,7 @@
 	import GenerateStage from '$routes/admin/create/GenerationStage.svelte';
 	import { themeApp } from '$ts/stores/theme';
 	import GenerationGridInfinite from '$components/grids/GenerationGridInfinite.svelte';
+	import type { TIsReadyMap } from '$routes/admin/create/types.js';
 
 	export let data;
 
@@ -33,6 +34,12 @@
 	let stageHeight: number;
 
 	let gridScrollContainer: HTMLElement;
+
+	let isReadyMap: TIsReadyMap = {
+		promptBar: false,
+		generationStage: false,
+		generationSettings: false
+	};
 
 	const userGalleryCurrentView: string = 'all';
 	let userGenerationFullOutputsQuery:
@@ -148,17 +155,22 @@
 			{/if}
 		</div>
 		<div class="flex flex-col items-center flex-1 h-full gap-4">
-			<PromptBar {openSignInModal} serverData={data} />
+			<PromptBar {openSignInModal} serverData={data} bind:isReadyMap />
 			<div class="flex-1 flex flex-col items-center justify-center w-full overflow-hidden p-6">
 				<div bind:clientWidth={stageWidth} bind:clientHeight={stageHeight} class="flex-1 w-full">
 					{#if stageWidth && stageHeight}
-						<GenerateStage generation={$generations[0]} {stageWidth} {stageHeight} />
+						<GenerateStage
+							generation={$generations[0]}
+							{stageWidth}
+							{stageHeight}
+							bind:isReadyMap
+						/>
 					{/if}
 				</div>
 			</div>
 		</div>
 		<div class="h-full w-80">
-			<SettingsPanel serverData={data} />
+			<SettingsPanel serverData={data} bind:isReadyMap />
 		</div>
 	</div>
 </div>

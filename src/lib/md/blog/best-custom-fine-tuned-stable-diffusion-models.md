@@ -54,11 +54,15 @@ Mo-Di Diffusion will be pre-selected for you in the UI, you can enter a prompt a
 
 Waifu Diffusion is an anime style model. It is created by [harubaru](https://github.com/harubaru) and [available on Hugging Face](https://huggingface.co/hakurei/waifu-diffusion) for everyone to download and use for free. Waifu Diffusion is by far the most popular model in this list with 176K+ downloads last month on Hugging Face at the time of writing.
 
-[![Waifu Diffusion](https://ba.stablecog.com/blog/waifu-diffusion.jpg)<!--rehype:width=2560&height=4480-->](https://huggingface.co/hakurei/waifu-diffusion)
+[![Waifu Diffusion](https://ba.stablecog.com/blog/waifu-diffusion.jpg)<!--rehype:width=2560&height=5760-->](https://huggingface.co/hakurei/waifu-diffusion)
 
-In my experience, it does a good job within the anime style. However, if you want a SFW results, this model might not be for you. In my trials it was generating too many NSFW images for prompts that are completely family friendly.
+In my experience, it does a good job within the anime style. However, it has a liking for NSFW content and tends to generate NSFW content even with relatively innocent prompts.
 
-Waifu Diffusion isn't available on Stablecog since Stablecog is a SFW tool and getting too many NSFW errors makes for a not so great experience. However, [harubaru](https://huggingface.co/hakurei/waifu-diffusion) announced that there will be a new release on December 26th. I'll be trying that model out to see if NSFW content is little more manageable.
+It is available on [Stablecog](https://stablecog.com/?mi=f7f3d973-ac6f-4a7a-9db8-e89e4fba03a9&adv=true) and you can use it for free by clicking the link below:
+
+[Try Waifu Diffusion](https://stablecog.com/?mi=f7f3d973-ac6f-4a7a-9db8-e89e4fba03a9&adv=true)<!--rehype:button=true-->
+
+Waifu Diffusion will be pre-selected for you in the UI, you can enter a prompt and just click "Generate".
 
 ## [Ghibli Diffusion](https://huggingface.co/nitrosocke/Ghibli-Diffusion)
 

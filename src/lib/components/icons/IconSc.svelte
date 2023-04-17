@@ -1,6 +1,6 @@
 <script lang="ts">
-	import type { TIconSocial } from '$ts/types/main';
-	export let type: TIconSocial;
+	import type { TIconSc } from '$ts/types/main';
+	export let type: TIconSc;
 	export { classes as class };
 	let classes = 'w-8 h-8';
 </script>

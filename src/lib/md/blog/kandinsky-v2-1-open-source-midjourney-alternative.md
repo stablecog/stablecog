@@ -6,7 +6,7 @@ author_url: https://twitter.com/ngyekta
 date: 2023-04-06T15:00:00.000Z
 ---
 
-[Kandinsky v2.1](https://github.com/ai-forever/Kandinsky-2) is an open-source and multilingual latent diffusion model. It is created by a [group of researchers](https://github.com/ai-forever/Kandinsky-2#authors) from Russia and have been gaining traction in the last couple of days.
+[Kandinsky v2.1](https://github.com/ai-forever/Kandinsky-2) is an open-source and multilingual latent diffusion model. It is created by a [group of researchers](https://github.com/ai-forever/Kandinsky-2#authors) from Russia and has been gaining traction in the last couple of days.
 
 ## Open Source Midjourney Alternative
 

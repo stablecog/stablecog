@@ -14,7 +14,7 @@
 .blog h2 {
 	font-weight: 700;
 	font-size: 1.75rem;
-	margin-top: 4rem;
+	margin-top: 3rem;
 	margin-bottom: 0.25rem;
 	line-height: 1.35;
 }
@@ -104,8 +104,8 @@
 	transition: box-shadow 0.2s var(--e-default);
 	background: rgba(var(--c-bg-tertiary));
 	border-radius: 0.5rem;
-	margin-top: 0.75rem;
-	margin-bottom: 1rem;
+	margin-top: 1rem;
+	margin-bottom: 1.25rem;
 	box-shadow: 0 0 0 2px rgba(var(--c-bg-tertiary)),
 		0 0.5rem 1rem rgba(var(--c-shadow) / var(--o-shadow-strong));
 }
@@ -204,10 +204,11 @@
 	flex-direction: column;
 }
 .toc a {
-	padding: 0.3rem 0.5rem;
+	padding: 0.5rem 0.75rem;
 	background-color: rgba(var(--c-primary) / 0);
 	transition: all 0.2s var(--e-default);
 	border-radius: 0.5rem;
+	font-size: 1rem;
 }
 .toc a:hover, .toc a:focus-visible {
 	background-color: rgba(var(--c-primary) / 0.15);
@@ -215,18 +216,16 @@
 }
 .toc-item-h2 {
 	font-size: 1rem;
-	line-height: 1.4;
-	color: rgba(var(--c-on-bg) / 0.75);
-	font-weight: 600;
-	margin-top: 1rem;
+	line-height: 1.5;
+	color: rgba(var(--c-on-bg));
+	font-weight: 500;
 }
 .toc-item-h2:first-child {
 	margin-top: 0;
 }
 .toc-item-h3 {
-	font-size: 0.875rem;
-	line-height: 1.4;
+	line-height: 1.5;
 	padding-left: 0.5rem;
-	color: rgba(var(--c-on-bg) / 0.6);
+	color: rgba(var(--c-on-bg) / 0.75);
 	font-weight: 400;
 }

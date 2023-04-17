@@ -5,7 +5,7 @@
 	import LinkButton from '$components/buttons/NoBgButton.svelte';
 	import IconBack from '$components/icons/IconBack.svelte';
 	import MetaTag from '$components/MetaTag.svelte';
-	import SocialBar from '$components/SocialBar.svelte';
+	import ScBar from '$components/ScBar.svelte';
 	import '$css/blog.css';
 	import { PUBLIC_BUCKET_AUX_URL } from '$env/static/public';
 	import LL from '$i18n/i18n-svelte';
@@ -97,7 +97,7 @@
 				{$LL.Shared.JoinUsTitle()}
 			</p>
 			<div class="flex flex-wrap justify-center items-center p-2">
-				<SocialBar size="md" color="normal" />
+				<ScBar size="md" color="normal" />
 			</div>
 		</div>
 		<div class="w-full flex flex-col items-center gap-5">

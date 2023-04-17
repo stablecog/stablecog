@@ -101,9 +101,11 @@
 	import { isTouchscreen } from '$ts/stores/isTouchscreen';
 	import IconSeed from '$components/icons/IconSeed.svelte';
 	import TabLikeInput from '$components/tabBars/TabLikeInput.svelte';
+	import type { TIsReadyMap } from '$routes/admin/create/types';
 
 	export let rounding: 'all' | 'top' | 'bottom' = 'all';
 	export let serverData: TCreatePageData;
+	export let isReadyMap: TIsReadyMap;
 
 	let settingsContainer: HTMLDivElement;
 	let containerDropdownPadding = 16;
@@ -417,6 +419,7 @@
 		}
 		setEstimatedGenerationDuration();
 		isCheckCompleted = true;
+		isReadyMap.generationSettings = true;
 	});
 </script>
 

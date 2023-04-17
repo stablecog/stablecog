@@ -54,7 +54,6 @@ export const numOutputsMax = 4;
 
 export const availableInferenceSteps = ['30', '40', '50'] as const;
 export type TAvailableInferenceSteps = (typeof availableInferenceSteps)[number];
-export const availableInferenceStepsFree: TAvailableInferenceSteps[] = ['30'];
 export const inferenceStepsTabs: TTab<TAvailableInferenceSteps>[] = [
 	{ label: '30', value: '30' },
 	{ label: '40', value: '40' },

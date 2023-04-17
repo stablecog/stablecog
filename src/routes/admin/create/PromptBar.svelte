@@ -42,10 +42,12 @@
 	import { onMount } from 'svelte';
 	import { isValue } from '$ts/helpers/isValue';
 	import { isSuperAdmin } from '$ts/helpers/admin/roles';
+	import type { TIsReadyMap } from '$routes/admin/create/types';
 
 	export let openSignInModal: () => void;
 	export let openSettingsPanelModal: (() => void) | undefined = undefined;
 	export let serverData: TCreatePageData;
+	export let isReadyMap: TIsReadyMap;
 
 	let promptInputElement: HTMLTextAreaElement;
 	let isCheckCompleted = false;
@@ -165,6 +167,7 @@
 			generationPrompt.set($prompt);
 		}
 		isCheckCompleted = true;
+		isReadyMap.promptBar = true;
 	});
 </script>
 
