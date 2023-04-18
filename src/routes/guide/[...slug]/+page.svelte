@@ -20,6 +20,9 @@
 	description={data.metadata.description}
 	imageUrl={data.metadata.preview_image_url}
 	canonical="{canonicalUrl}{$page.url.pathname}"
+	article_author={data.metadata.author}
+	article_publisher={canonicalUrl}
+	article_published_time={data.metadata.date}
 />
 
 <div class="w-full flex flex-col items-center pb-12">

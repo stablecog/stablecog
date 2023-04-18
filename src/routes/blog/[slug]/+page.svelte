@@ -32,7 +32,7 @@
 	imageUrl="{PUBLIC_BUCKET_AUX_URL}/blog/previews/{frontmatter.slug}.jpg"
 	canonical="{canonicalUrl}{$page.url.pathname}"
 	article_author={author}
-	article_publisher={`${canonicalUrl}/blog`}
+	article_publisher={canonicalUrl}
 	article_published_time={frontmatter.date}
 />
 
