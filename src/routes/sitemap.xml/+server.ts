@@ -1,4 +1,4 @@
-import { flatSidebarShallow, sidebar } from '$routes/guide/constants';
+import { flatSidebarShallow } from '$routes/guide/constants';
 import { canonicalUrl } from '$ts/constants/main';
 import { getBlogPosts } from '$ts/queries/blog/getBlogPosts';
 import type { RequestHandler } from '@sveltejs/kit';
@@ -48,7 +48,7 @@ export const GET: RequestHandler = async () => {
 		lastmod: todayString,
 		changefreq: 'weekly'
 	}));
-	const allRoutes = [...definedRoutes, ...blogPostRoutes /* , ...guideRoutes */];
+	const allRoutes = [...definedRoutes, ...blogPostRoutes, ...guideRoutes];
 	const headers = {
 		'Cache-Control': `public, max-age=${3600}, s-max-age=${3600}`,
 		'Content-Type': 'text/xml'
