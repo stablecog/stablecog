@@ -38,9 +38,9 @@
 	}}
 	style={$windowHeight ? `height: ${$windowHeight}px` : 'height: 100vh; height: 100svh'}
 	use:portal={'body'}
-	class="fixed md:hidden md:pointer-events-none w-4/5 bg-c-bg rounded-r-3xl ring-2 ring-c-bg-secondary left-0 top-0 z-[101] 
+	class="fixed md:hidden md:pointer-events-none w-[85%] bg-c-bg rounded-r-3xl border-4 border-c-bg-secondary left-0 top-0 z-[101] 
 	shadow-drawer shadow-c-shadow/[var(--o-shadow-stronger)] transition {$isDrawerOpen
-		? 'translate-x-0'
+		? '-translate-x-4px'
 		: 'pointer-events-none -translate-x-[calc(100%+4px)]'} overflow-hidden"
 >
 	<div class="w-full flex flex-row justify-between gap-5 items-stretch">
