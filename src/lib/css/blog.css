@@ -8,33 +8,43 @@
 	font-weight: 800;
 	font-size: 2rem;
 	text-align: center;
-	margin-bottom: 1.5rem;
-	line-height: 1.25;
+	margin-bottom: 1rem;
+	line-height: 1.35;
+	width: 100%;
 }
+
 .blog h2 {
 	font-weight: 700;
 	font-size: 1.75rem;
-	margin-top: 4rem;
+	margin-top: 3rem;
 	margin-bottom: 0.25rem;
 	line-height: 1.35;
+	width: 100%;
 }
+
 .blog h3 {
 	font-weight: 600;
 	font-size: 1.25rem;
 	margin-top: 2.5rem;
 	line-height: 1.5;
+	width: 100%;
 }
-.blog h1 + p,
-.blog h2 + p {
+
+.blog h1+p,
+.blog h2+p {
 	margin-top: 0.5rem;
 }
-.blog h3 + p {
+
+.blog h3+p {
 	margin-top: 0.5rem;
 }
-.blog h2 + h3 {
+
+.blog h2+h3 {
 	margin-top: 1rem;
 }
-.blog p, .blog li{
+
+.blog p,
+.blog li {
 	width: 100%;
 	font-size: 1rem;
 	line-height: 1.75;
@@ -42,33 +52,44 @@
 	color: rgba(var(--c-on-bg) / 0.75);
 	font-weight: 200;
 }
+
 .blog ol {
 	margin-top: 1rem;
 	list-style: decimal;
 	margin-left: 2.5rem;
 }
+
 .blog ul {
 	margin-top: 1rem;
 	list-style: disc;
 	margin-left: 2.5rem;
 }
-.blog ol li, .blog ul li {
+
+.blog ol li,
+.blog ul li {
 	margin-top: 0.5rem;
 }
 
-.blog ol li, .blog ul li {
+.blog ol li,
+.blog ul li {
 	margin-top: 0.5rem;
 }
-.blog li ol, .blog li ul {
+
+.blog li ol,
+.blog li ul {
 	margin-top: 0rem;
 }
-.blog p + ol, .blog p + ul {
+
+.blog p+ol,
+.blog p+ul {
 	margin-top: 0rem;
 	margin-bottom: 1rem;
 }
+
 .blog p:first-child {
 	margin-top: 0rem;
 }
+
 .blog a {
 	transition: all 0.2s var(--e-default);
 	position: relative;
@@ -78,6 +99,7 @@
 	box-shadow: 0 -2px 0 0 rgba(var(--c-primary) / 0.5) inset;
 	z-index: 0;
 }
+
 .blog a:hover,
 .blog a:focus-visible {
 	color: rgba(var(--c-on-primary));
@@ -85,6 +107,7 @@
 	box-shadow: 0 -1.75rem 0 0 rgba(var(--c-primary)) inset;
 	font-weight: 700;
 }
+
 .blog h2 a:hover,
 .blog h2 a:focus-visible {
 	color: rgba(var(--c-on-primary));
@@ -92,6 +115,7 @@
 	box-shadow: 0 -2.7rem 0 0 rgba(var(--c-primary)) inset;
 	font-weight: 700;
 }
+
 .blog h3 a:hover,
 .blog h3 a:focus-visible {
 	color: rgba(var(--c-on-primary));
@@ -100,21 +124,89 @@
 	font-weight: 700;
 }
 
+.blog img[class] {
+	transition: box-shadow 0.2s var(--e-default);
+	background: rgba(var(--c-bg-tertiary));
+	border-radius: 0;
+	margin: 0;
+	box-shadow: none
+}
+
+
+.blog .inline {
+	display: inline-block;
+}
+
+.blog .w-full {
+	width: 100%;
+}
+
+.blog .w-1\/2 {
+	width: 50%;
+}
+
+.blog .w-1\/3 {
+	width: 33.3333%;
+}
+
+.blog table {
+	text-align: left;
+	white-space: nowrap;
+	width: 100%;
+	font-weight: 400;
+	margin-top: 1rem;
+	display: flex;
+	flex-direction: column;
+}
+
+.blog table img {
+	margin: 0;
+}
+
+.blog th {
+	font-weight: 600;
+	padding: 0.25rem 0.5rem;
+	max-width: 100%;
+}
+
+.blog tr {
+	max-width: 100%;
+	display: flex;
+}
+
+.blog td {
+	padding: 0.3rem;
+}
+
+
+@media (min-width: 768px) {
+	.blog .md\:w-1\/2 {
+		width: 50%;
+	}
+}
+
+@media (min-width: 1024px) {
+	.blog .lg\:w-1\/3 {
+		width: 33.3333%;
+	}
+}
+
 .blog img {
 	transition: box-shadow 0.2s var(--e-default);
 	background: rgba(var(--c-bg-tertiary));
 	border-radius: 0.5rem;
-	margin-top: 0.75rem;
-	margin-bottom: 1rem;
+	margin-top: 1rem;
+	margin-bottom: 1.25rem;
 	box-shadow: 0 0 0 2px rgba(var(--c-bg-tertiary)),
 		0 0.5rem 1rem rgba(var(--c-shadow) / var(--o-shadow-strong));
 }
 
-.blog a:hover > img,
-.blog a:focus-visible > img {
+.blog a:hover>img,
+.blog a:focus-visible>img {
 	box-shadow: 0 0 0 3px rgba(var(--c-primary) / 0.5),
 		0 0.5rem 1rem rgba(var(--c-shadow) / var(--o-shadow-strong));
 }
+
 .blog a[button]::after {
 	content: '';
 	width: calc(100% + 2rem);
@@ -126,6 +218,7 @@
 	border-radius: 9999px;
 	position: absolute;
 }
+
 .blog a[button] {
 	display: inline-block;
 	position: relative;
@@ -203,30 +296,35 @@
 	display: flex;
 	flex-direction: column;
 }
+
 .toc a {
-	padding: 0.3rem 0.5rem;
+	padding: 0.5rem 0.75rem;
 	background-color: rgba(var(--c-primary) / 0);
 	transition: all 0.2s var(--e-default);
 	border-radius: 0.5rem;
+	font-size: 1rem;
 }
-.toc a:hover, .toc a:focus-visible {
+
+.toc a:hover,
+.toc a:focus-visible {
 	background-color: rgba(var(--c-primary) / 0.15);
 	color: rgba(var(--c-primary));
 }
+
 .toc-item-h2 {
 	font-size: 1rem;
-	line-height: 1.4;
-	color: rgba(var(--c-on-bg) / 0.75);
-	font-weight: 600;
-	margin-top: 1rem;
+	line-height: 1.5;
+	color: rgba(var(--c-on-bg));
+	font-weight: 500;
 }
+
 .toc-item-h2:first-child {
 	margin-top: 0;
 }
+
 .toc-item-h3 {
-	font-size: 0.875rem;
-	line-height: 1.4;
+	line-height: 1.5;
 	padding-left: 0.5rem;
-	color: rgba(var(--c-on-bg) / 0.6);
+	color: rgba(var(--c-on-bg) / 0.75);
 	font-weight: 400;
 }

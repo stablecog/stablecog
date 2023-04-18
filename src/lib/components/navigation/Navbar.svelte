@@ -10,7 +10,7 @@
 	import { isTouchscreen } from '$ts/stores/isTouchscreen';
 	import { onMount } from 'svelte';
 	import Banner from '$components/Banner.svelte';
-	import IconSocial from '$components/icons/IconSocial.svelte';
+	import IconSc from '$components/icons/IconSc.svelte';
 	import { lastClosedNotification } from '$ts/stores/lastClosedNotification';
 	import LL, { locale } from '$i18n/i18n-svelte';
 	import Button from '$components/buttons/Button.svelte';
@@ -28,6 +28,7 @@
 	import IconBolt from '$components/icons/IconBolt.svelte';
 	import { userSummary } from '$ts/stores/user/summary';
 	import { navbarStickyType } from '$ts/stores/stickyNavbar';
+	import { isDrawerOpen } from '$ts/stores/isDrawerOpen';
 
 	export let notAtTheVeryTop = false;
 	export let scrollDirection: 'up' | 'down' = 'down';
@@ -35,6 +36,8 @@
 	let isSignInModalOpen = false;
 	let isSettingsOpen = false;
 	let isAccountMenuOpen = false;
+
+	const routesWithDrawer = ['/guide'];
 
 	const toggleSettings = () => (isSettingsOpen = !isSettingsOpen);
 	const closeSettings = () => (isSettingsOpen = false);
@@ -77,13 +80,18 @@
 	<div class="w-full flex flex-row items-center justify-between relative z-0">
 		<PageLoadProgressBar />
 		<div
-			class="pointer-events-none w-full h-full rounded-b-xl absolute left-0 top-0 transform transition duration-200 bg-c-bg 
+			class="pointer-events-none w-full h-full rounded-b-xl absolute left-0 top-0 transform transition duration-200 bg-c-bg
 			shadow-navbar shadow-c-shadow/[var(--o-shadow-stronger)] ring-2 ring-c-bg-secondary {$navbarStickyType ===
 				'not-sticky' || !notAtTheVeryTop
 				? '-translate-y-full opacity-0'
 				: ''}"
 		/>
 		<div class="flex xl:flex-1 self-stretch">
+			{#if routesWithDrawer.includes($page.url.pathname) || routesWithDrawer.some( (route) => $page.url.pathname.startsWith(route) )}
+				<button on:click={() => isDrawerOpen.set(!$isDrawerOpen)} class="relative md:hidden p-4"
+					>A</button
+				>
+			{/if}
 			<a
 				aria-label="Go to Home"
 				href="/"
@@ -153,7 +161,7 @@
 				{/if}
 			</div>
 			<IconButton class="p-3 -mx-3 hidden md:block" href="/discord" target="_blank" name="Discord">
-				<IconSocial
+				<IconSc
 					type="discord"
 					class="w-8 h-8 relative transition transform {!$isTouchscreen
 						? 'group-hover/iconbutton:text-c-primary'

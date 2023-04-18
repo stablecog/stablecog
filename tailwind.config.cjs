@@ -166,6 +166,7 @@ module.exports = {
 			},
 			boxShadow: {
 				navbar: '0 0 1.5rem 0',
+				drawer: '0 0 2rem 0',
 				'settings-page': '0 0 1rem 0',
 				'generation-sidebar': '0 0 1rem 0',
 				'generation-modal': '0 1rem 2rem 0',

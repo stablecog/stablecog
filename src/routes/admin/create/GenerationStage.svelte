@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { browser } from '$app/environment';
 	import GenerationCard from '$routes/admin/create/GenerationCard.svelte';
+	import type { TIsReadyMap } from '$routes/admin/create/types';
 	import { generationModelIdDefault } from '$ts/constants/generationModels';
 	import { schedulerIdDefault } from '$ts/constants/schedulers';
 	import { generateSSEId } from '$ts/helpers/generateSSEId';
@@ -16,6 +17,7 @@
 
 	export let stageWidth: number;
 	export let stageHeight: number;
+	export let isReadyMap: TIsReadyMap;
 
 	export let generation: TGeneration;
 
@@ -67,12 +69,13 @@
 	let lastStageWidth: number;
 	let lastStageHeight: number;
 	let lastGenerationId: string | undefined;
+	let showStage = false;
 
 	const animationDuration = 0.15;
 	const animationEasing = 'cubic-bezier(0.45, 0, 0.55, 1)';
 
 	$: [$generationWidth, $generationHeight, $generationNumOutputs], setGenerationToCreate();
-	$: [stageWidth, stageHeight, generation], setDimensions();
+	$: [stageWidth, stageHeight, generation, generationPlaceholder], setDimensions();
 
 	function setGenerationToCreate() {
 		if (!generationPlaceholder) return;
@@ -92,7 +95,15 @@
 	}
 
 	function setDimensions() {
-		if (!generationPlaceholder) return;
+		let hasNonReady = false;
+		for (const key in isReadyMap) {
+			// @ts-ignore
+			if (!isReadyMap[key]) {
+				hasNonReady = true;
+				break;
+			}
+		}
+		if (!generationPlaceholder || hasNonReady) return;
 		if (
 			stageWidth === lastStageWidth &&
 			stageHeight === lastStageHeight &&
@@ -126,6 +137,7 @@
 		lastStageWidth = stageWidth;
 		lastStageHeight = stageHeight;
 		lastGenerationId = generationPlaceholder.id;
+		showStage = true;
 	}
 
 	function getOptimalColumnCount(
@@ -154,11 +166,12 @@
 	let mounted = false;
 	onMount(() => {
 		mounted = true;
+		isReadyMap.generationStage = true;
 	});
 </script>
 
 <div style="width: {stageWidth}px; height: {stageHeight}px" class="absolute">
-	{#if generationPlaceholder}
+	{#if generationPlaceholder && showStage}
 		{@const selectedGeneration = generation ? generation : generationPlaceholder}
 		{#each selectedGeneration.outputs as output, index}
 			{@const generationWithSelectedOutput = {

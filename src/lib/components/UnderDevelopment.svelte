@@ -1,7 +1,7 @@
 <script>
 	import LL from '$i18n/i18n-svelte';
 	import Logo from './Logo.svelte';
-	import SocialBar from './SocialBar.svelte';
+	import ScBar from './ScBar.svelte';
 </script>
 
 <div class="w-full flex-1 flex justify-center px-3 py-12">
@@ -15,7 +15,7 @@
 			<p class="text-c-on-bg/60 mt-2">
 				{$LL.UnderDevelopment.PageParagraph()}
 			</p>
-			<SocialBar isInline withEmail withAbsoluteUrls class="mt-2" />
+			<ScBar isInline withEmail withAbsoluteUrls class="mt-2" />
 		</div>
 		<div class="h-[2vh]" />
 	</div>

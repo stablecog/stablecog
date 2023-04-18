@@ -4,11 +4,11 @@
 	import LL from '$i18n/i18n-svelte';
 	import { canonicalUrl } from '$ts/constants/main';
 	import PageWrapper from '$components/PageWrapper.svelte';
-	import SocialBar from '$components/SocialBar.svelte';
+	import ScBar from '$components/ScBar.svelte';
 </script>
 
 <MetaTag
-	title="Support | Synthica"
+	title="Support | Stablecog"
 	description="Reach out to us and we'll answer any questions you have."
 	imageUrl="{canonicalUrl}/previews{$page.url.pathname}.png"
 	canonical="{canonicalUrl}{$page.url.pathname}"
@@ -24,7 +24,7 @@
 			<div
 				class="rounded-xl p-2 bg-c-bg ring-2 ring-c-bg-secondary mt-6 shadow-lg shadow-c-shadow/[var(--o-shadow-strong)]"
 			>
-				<SocialBar withEmail emailFirst color="normal" size="md" />
+				<ScBar withEmail emailFirst color="normal" size="md" />
 			</div>
 			<div class="w-full h-[2vh]" />
 		</section>

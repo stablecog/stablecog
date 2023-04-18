@@ -1,4 +1,7 @@
-import type { TAvailableGenerationModelId } from '$ts/constants/generationModels';
+import {
+	availableGenerationModelIds,
+	type TAvailableGenerationModelId
+} from '$ts/constants/generationModels';
 import { apiUrl } from '$ts/constants/main';
 import type { TAvailableSchedulerId } from '$ts/constants/schedulers';
 import type { TGalleryGenerationFullOutputPageRes } from '$ts/queries/galleryGenerations';
@@ -6,18 +9,24 @@ import type { TGenerationFullOutput, TGenerationOutput } from '$ts/stores/user/g
 import type { ServerLoad } from '@sveltejs/kit';
 
 export const load: ServerLoad = async ({ url }) => {
-	let outputId = url.searchParams.get('output');
-	let searchQuery = url.searchParams.get('q');
+	const outputId = url.searchParams.get('output');
+	const searchQuery = url.searchParams.get('q');
+	const modelIdQuery = url.searchParams.get('mi');
+	const modelIds = modelIdQuery ? modelIdQuery.split(',') : [];
+	const filteredModelIds = modelIds.filter((modelId) =>
+		availableGenerationModelIds.includes(modelId as TAvailableGenerationModelId)
+	);
 	let generationFullOutput: TGenerationFullOutput | undefined = undefined;
 	if (!outputId) {
-		return { generationFullOutput, searchQuery };
+		return { generationFullOutput, searchQuery, modelIds: filteredModelIds };
 	}
 	const res = await fetch(`${apiUrl.origin}/v1/gallery?output_id=${outputId}`);
 	if (!res.ok) {
-		return { generationFullOutput, searchQuery };
+		return { generationFullOutput, searchQuery, modelIds: filteredModelIds };
 	}
 	const data: TGalleryGenerationFullOutputPageRes = await res.json();
-	if (!data.hits || !data.hits[0]) return { generationFullOutput, searchQuery };
+	if (!data.hits || !data.hits[0])
+		return { generationFullOutput, searchQuery, modelIds: filteredModelIds };
 	const hit = data.hits[0];
 	const output: TGenerationOutput = {
 		id: hit.id,
@@ -58,6 +67,7 @@ export const load: ServerLoad = async ({ url }) => {
 	};
 	return {
 		generationFullOutput,
-		searchQuery
+		searchQuery,
+		modelIds: filteredModelIds
 	};
 };

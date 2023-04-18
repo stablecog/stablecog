@@ -1,4 +1,3 @@
-import type { TGuideEntryMetadata } from '$ts/types/main';
 import { unified } from 'unified';
 import rehypeExternalLinks from 'rehype-external-links';
 import remarkParse from 'remark-parse';
@@ -13,6 +12,8 @@ import remarkImages from 'remark-images';
 import rehypeRaw from 'rehype-raw';
 import rehypeAttributes from 'rehype-attributes';
 import yaml from 'yaml';
+import type { TGuideEntryMetadata, TGuideNode, TSidebarItem } from '$routes/guide/types';
+import { sidebar } from '$routes/guide/constants';
 
 const r = unified()
 	.use(remarkParse)
@@ -42,16 +43,6 @@ const r = unified()
 	.use(rehypeToC)
 	.use(rehypeStringify);
 
-export async function getGuideEntries() {
-	const guideEntriesImport = import.meta.glob(`/src/lib/md/guide/**/*`);
-	const keys = Object.keys(guideEntriesImport);
-	const prefix = '/src/lib/md/guide';
-	const modifiedKeys = keys.map((key) => key.split(prefix)[1]);
-	const dirStructure = await pathArrayToFileStructure(modifiedKeys, guideEntriesImport, prefix);
-	const guideNode = dirStructure;
-	return { guideNode };
-}
-
 function getSlugFromKey(key: string) {
 	const lastSlash = key.lastIndexOf('/');
 	const fileNameWithExtension = key.slice(lastSlash + 1);
@@ -60,30 +51,36 @@ function getSlugFromKey(key: string) {
 	return fileName;
 }
 
-export interface TGuideNode {
-	key: string;
-	importKey?: string;
-	dirKey: string;
-	type: 'file' | 'folder';
-	children?: { [key: string]: TGuideNode };
-	title: string;
-	metadata: TGuideEntryMetadata | undefined;
-}
-
 export async function getGuideEntryFromPathname(pathname: string) {
 	const guideEntriesImport = import.meta.glob(`/src/lib/md/guide/**/*`);
-	let importFunction = guideEntriesImport[`/src/lib/md${pathname}.md`];
+	let key = `/src/lib/md${pathname}.md`;
+	let importFunction = guideEntriesImport[key];
 	if (!importFunction) {
-		importFunction = guideEntriesImport[`/src/lib/md${pathname}/index.md`];
+		key = `/src/lib/md${pathname}/index.md`;
+		importFunction = guideEntriesImport[key];
 	}
+	const metadata = await getMetadataFromKey(key, importFunction);
 	const res: any = await importFunction();
+	const sidebarItem = getSidebarItemFromPathname(pathname, sidebar);
 	const unprocessedHTML = res.html;
 	const file = await r.process(unprocessedHTML);
 	const htmlString = file.toString();
 	const content = htmlString.split('</nav>')[1];
 	return {
-		content
+		content,
+		metadata,
+		sidebarItem
 	};
+}
+
+function getSidebarItemFromPathname(pathname: string, item: TSidebarItem): TSidebarItem | null {
+	if (!item.children || item.children.length < 1) return null;
+	for (let i = 0; i < item.children.length; i++) {
+		const child = item.children[i];
+		if (child.pathname === pathname) return child;
+		getSidebarItemFromPathname(pathname, child);
+	}
+	return null;
 }
 
 async function pathArrayToFileStructure(
@@ -96,7 +93,6 @@ async function pathArrayToFileStructure(
 		dirKey: '/',
 		type: 'folder',
 		children: {},
-		title: 'Guide',
 		metadata: undefined
 	};
 
@@ -107,21 +103,14 @@ async function pathArrayToFileStructure(
 		pathSegments.forEach(async (segment, index) => {
 			const key = '/' + pathSegments.slice(0, index + 1).join('/');
 			if (key.endsWith('index.md')) return;
+			const metadata = await getMetadataFromKey(key, importFunctions[importPrefix + key]);
 			if (index === pathSegments.length - 1) {
 				// If it is the last segment, it should be a file
-				const res: any = await importFunctions[importPrefix + key]();
-				console.log();
-				const toc = res.attributes;
-				const metadata: TGuideEntryMetadata = {
-					...toc,
-					slug: getSlugFromKey(key)
-				};
 				currentNode.children![segment] = {
 					key,
 					importKey: importPrefix + key,
 					dirKey: key.split('.')[0],
 					type: 'file',
-					title: metadata.sidebar_title,
 					metadata
 				};
 			} else {
@@ -133,8 +122,7 @@ async function pathArrayToFileStructure(
 						dirKey: key.split('.')[0],
 						type: 'folder',
 						children: {},
-						title: titleFromSlug(segment),
-						metadata: undefined
+						metadata: metadata
 					};
 				}
 				if (currentNode.children) {
@@ -147,8 +135,12 @@ async function pathArrayToFileStructure(
 	return root;
 }
 
-function titleFromSlug(slug: string) {
-	const words = slug.split('-');
-	const title = words.map((word) => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
-	return title;
+async function getMetadataFromKey(key: string, importFunction: () => Promise<unknown>) {
+	const res: any = await importFunction();
+	const toc = res.attributes;
+	const metadata: TGuideEntryMetadata = {
+		...toc,
+		slug: getSlugFromKey(key)
+	};
+	return metadata;
 }

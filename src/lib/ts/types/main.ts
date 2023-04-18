@@ -8,7 +8,7 @@ export interface TTab<T> {
 	icon?: ConstructorOfATypedSvelteComponent;
 }
 
-export type TIconSocial =
+export type TIconSc =
 	| 'discord'
 	| 'reddit'
 	| 'twitter'
@@ -38,16 +38,6 @@ export interface TNavbarRoute {
 
 export interface TBlogPost {
 	slug: string;
-	title: string;
-	description: string;
-	author: string;
-	author_url?: string;
-	date: string;
-}
-
-export interface TGuideEntryMetadata {
-	slug: string;
-	sidebar_title: string;
 	title: string;
 	description: string;
 	author: string;

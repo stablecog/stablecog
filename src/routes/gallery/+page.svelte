@@ -31,7 +31,7 @@
 
 	let searchString = searchQueryParam ?? '';
 
-	let modelIdFilters: TAvailableGenerationModelId[];
+	let modelIdFilters: TAvailableGenerationModelId[] = data.modelIds ?? [];
 
 	$: galleryGenerationFullOutputsQuery = browser
 		? createInfiniteQuery({
