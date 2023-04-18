@@ -3,11 +3,12 @@
 	import IconButton from '$components/buttons/IconButton.svelte';
 	import { mdBreakpoint } from '$components/generationFullScreen/constants';
 	import IconCancel from '$components/icons/IconCancel.svelte';
+	import LL from '$i18n/i18n-svelte';
 	import Sidebar from '$routes/guide/Sidebar.svelte';
 	import { sidebar } from '$routes/guide/constants';
 	import { clickoutside } from '$ts/actions/clickoutside';
 	import { isDrawerOpen } from '$ts/stores/isDrawerOpen';
-	import { windowWidth } from '$ts/stores/window';
+	import { windowHeight, windowWidth } from '$ts/stores/window';
 	import { portal } from 'svelte-portal';
 	import { quadIn } from 'svelte/easing';
 	import { fade } from 'svelte/transition';
@@ -35,18 +36,18 @@
 			isDrawerOpen.set(false);
 		}
 	}}
-	style="height: 100vh; height: 100svh"
+	style={$windowHeight ? `${$windowHeight}px` : 'height: 100vh; height: 100svh'}
 	use:portal={'body'}
 	class="fixed md:hidden md:pointer-events-none w-4/5 bg-c-bg rounded-r-3xl ring-2 ring-c-bg-secondary left-0 top-0 z-[101] 
 	shadow-drawer shadow-c-shadow/[var(--o-shadow-stronger)] transition {$isDrawerOpen
 		? 'translate-x-0'
-		: 'pointer-events-none -translate-x-full'} overflow-hidden"
+		: 'pointer-events-none -translate-x-[calc(100%+4px)]'} overflow-hidden"
 >
 	<div class="w-full flex flex-row justify-between gap-5 items-stretch">
 		<p
 			class="flex-1 min-w-0 overflow-hidden overflow-ellipsis px-5 font-bold text-2xl py-4 bg-c-bg relative z-10"
 		>
-			Guide
+			{$LL.Guide.PageTitle()}
 		</p>
 		<button
 			on:click={() => isDrawerOpen.set(false)}
