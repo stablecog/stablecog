@@ -1855,6 +1855,16 @@ type RootTranslation = {
 		 */
 		PageParagraph: string
 	}
+	Guide: {
+		/**
+		 * G​u​i​d​e
+		 */
+		PageTitle: string
+		/**
+		 * G​u​i​d​e
+		 */
+		GuideButton: string
+	}
 	Legal: {
 		/**
 		 * T​e​r​m​s​ ​o​f​ ​S​e​r​v​i​c​e
@@ -3683,6 +3693,16 @@ export type TranslationFunctions = {
 		 * If you have any questions, please reach out to us using the links below and we'll answer them as soon as possible.
 		 */
 		PageParagraph: () => LocalizedString
+	}
+	Guide: {
+		/**
+		 * Guide
+		 */
+		PageTitle: () => LocalizedString
+		/**
+		 * Guide
+		 */
+		GuideButton: () => LocalizedString
 	}
 	Legal: {
 		/**

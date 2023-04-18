@@ -29,6 +29,11 @@
 	import { userSummary } from '$ts/stores/user/summary';
 	import { navbarStickyType } from '$ts/stores/stickyNavbar';
 	import { isDrawerOpen } from '$ts/stores/isDrawerOpen';
+	import IconSidebar from '$components/icons/IconSidebar.svelte';
+	import ButtonHoverEffect from '$components/buttons/ButtonHoverEffect.svelte';
+	import { windowWidth } from '$ts/stores/window';
+	import { mdBreakpoint } from '$components/generationFullScreen/constants';
+	import LogoButton from '$components/buttons/LogoButton.svelte';
 
 	export let notAtTheVeryTop = false;
 	export let scrollDirection: 'up' | 'down' = 'down';
@@ -88,26 +93,23 @@
 		/>
 		<div class="flex xl:flex-1 self-stretch">
 			{#if routesWithDrawer.includes($page.url.pathname) || routesWithDrawer.some( (route) => $page.url.pathname.startsWith(route) )}
-				<button on:click={() => isDrawerOpen.set(!$isDrawerOpen)} class="relative md:hidden p-4"
-					>A</button
+				<button
+					on:click={() => isDrawerOpen.set(!$isDrawerOpen)}
+					class="relative self-stretch px-1 py-0.5 group overflow-hidden md:hidden"
 				>
-			{/if}
-			<a
-				aria-label="Go to Home"
-				href="/"
-				data-sveltekit-preload-data="hover"
-				class="px-3 md:px-3.5 py-4.5 md:py-5.5 self-stretch flex items-center justify-center relative rounded-xl z-0 group"
-			>
-				<div class="w-full h-full absolute left-0 top-0 pointer-events-none p-1.5">
-					<div class="w-full h-full rounded-xl relative z-0 overflow-hidden">
-						<div
-							class="w-full h-full origin-left rounded-xl transition transform -translate-x-full
-							bg-c-primary/25 {!$isTouchscreen ? 'group-hover:translate-x-0' : ''}"
+					<div class="h-full flex items-center justify-center p-3 relative overflow-hidden">
+						<ButtonHoverEffect hoverFrom="left" />
+						<IconSidebar
+							class="w-8 h-8 transition text-c-on-bg {!$isTouchscreen
+								? 'group-hover:text-c-primary'
+								: ''} transform {$isDrawerOpen ? 'rotate-90' : ''}"
 						/>
 					</div>
-				</div>
-				<Logo class="w-9 h-9" />
-			</a>
+				</button>
+				<LogoButton class="hidden md:flex" />
+			{:else}
+				<LogoButton />
+			{/if}
 		</div>
 		<div class="hidden md:flex md:w-full md:max-w-[19rem] lg:max-w-[36rem] md:ml-2 xl:ml-0">
 			<NavigationTabBar />
@@ -168,7 +170,10 @@
 						: 'text-c-on-bg'}"
 				/>
 			</IconButton>
-			<div use:clickoutside={{ callback: closeSettings }} class="flex flex-col items-end -ml-3">
+			<div
+				use:clickoutside={{ callback: closeSettings }}
+				class="flex flex-col items-end -ml-3 -mr-1"
+			>
 				<IconButton class="p-3" onClick={toggleSettings} name="Settings">
 					<IconSettings
 						class="w-8 h-8 relative transition transform {isSettingsOpen

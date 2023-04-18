@@ -16,6 +16,7 @@
 	import { userSummary } from '$ts/stores/user/summary';
 	import DropdownWrapper from './DropdownWrapper.svelte';
 	import { appVersion } from '$ts/stores/appVersion';
+	import IconGuide from '$components/icons/IconGuide.svelte';
 
 	export let closeAccountMenu: () => void;
 </script>
@@ -96,6 +97,22 @@
 						: ''}"
 				>
 					{$LL.Account.ManageAccountButton()}
+				</p>
+			</div>
+		</DropdownItem>
+		<DropdownItem href="/guide" onClick={closeAccountMenu}>
+			<div class="flex-1 min-w-0 flex items-center justify-start gap-2.5">
+				<IconGuide
+					class="transition w-6 h-6 text-c-text {!$isTouchscreen
+						? 'group-hover:text-c-primary'
+						: ''}"
+				/>
+				<p
+					class="flex-1 min-w-0 overflow-hidden overflow-ellipsis text-left transition text-c-on-bg {!$isTouchscreen
+						? 'group-hover:text-c-primary'
+						: ''}"
+				>
+					{$LL.Guide.GuideButton()}
 				</p>
 			</div>
 		</DropdownItem>

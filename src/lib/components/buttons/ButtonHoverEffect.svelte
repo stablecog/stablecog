@@ -6,11 +6,16 @@
 	export let color: 'primary' | 'on-bg' | 'bg-secondary' = 'primary';
 	export let hovered = false;
 	export let noPadding = false;
+	export let noRounding = false;
 </script>
 
 <div class="w-full h-full absolute left-0 top-0 {!noPadding ? 'p-0.5' : ''}">
 	<div
-		class="w-full h-full relative z-0 overflow-hidden {size === 'md' ? 'rounded-lg' : 'rounded-xl'}"
+		class="w-full h-full relative z-0 overflow-hidden {noRounding
+			? ''
+			: size === 'md'
+			? 'rounded-lg'
+			: 'rounded-xl'}"
 	>
 		<div
 			class="w-full h-full origin-left transition transform {hovered
@@ -26,7 +31,11 @@
 				? 'bg-c-on-bg/10'
 				: color === 'bg-secondary'
 				? 'bg-c-bg-secondary'
-				: 'bg-c-primary/15'} {size === 'md' ? 'rounded-lg' : 'rounded-xl'} {!$isTouchscreen
+				: 'bg-c-primary/15'} {noRounding
+				? ''
+				: size === 'md'
+				? 'rounded-lg'
+				: 'rounded-xl'} {!$isTouchscreen
 				? 'group-hover:translate-x-0 group-hover:translate-y-0 group-hover:opacity-100'
 				: ''}"
 		/>

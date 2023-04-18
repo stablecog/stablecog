@@ -16,7 +16,7 @@
 .blog h2 {
 	font-weight: 700;
 	font-size: 1.75rem;
-	margin-top: 3rem;
+	margin-top: 2rem;
 	margin-bottom: 0.25rem;
 	line-height: 1.35;
 	width: 100%;
@@ -139,6 +139,10 @@
 	flex-direction: column;
 }
 
+.blog table + p {
+	margin-top: 1.5rem;
+}
+
 .blog table img {
 	margin: 0;
 }
@@ -147,6 +151,9 @@
 	font-weight: 600;
 	padding: 0.25rem 0.5rem;
 	max-width: 100%;
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
 }
 
 .blog tr {
@@ -156,6 +163,7 @@
 
 .blog td {
 	padding: 0.3rem;
+	max-width: 100%;
 }
 
 

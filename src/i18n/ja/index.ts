@@ -641,6 +641,10 @@ const ja: Translation = {
 		PageParagraph:
 			'ご不明な点がございましたら、下記のリンクからお問い合わせください。できるだけ早く回答いたします。'
 	},
+	Guide: {
+		PageTitle: 'Guide',
+		GuideButton: 'Guide'
+	},
 	Legal: {
 		TermsOfServiceTitle: '利用規約',
 		PrivacyPolicyTitle: 'プライバシーポリシー',

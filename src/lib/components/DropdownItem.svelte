@@ -6,7 +6,7 @@
 	export let padding: 'xl' | 'lg' | 'md' | 'sm' = 'xl';
 	export let disabled = false;
 	export let href: string | undefined = undefined;
-	export let target: THrefTarget = '_self';
+	export let target: THrefTarget = undefined;
 	export let prefetch = true;
 	export { classes as class };
 	let classes = 'w-full';
@@ -16,7 +16,7 @@
 	<a
 		{href}
 		{target}
-		data-sveltekit-preload-data={prefetch && target === '_self' ? 'hover' : 'off'}
+		data-sveltekit-preload-data={prefetch && target === undefined ? 'hover' : 'off'}
 		on:click={onClick}
 		class="flex items-center justify-center font-bold px-5 {padding === 'sm'
 			? 'py-3'
