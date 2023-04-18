@@ -1,6 +1,6 @@
 ---
 title: Prompting Using Emotions
-description: Learn about how to use various emotions when prompting Stable Diffusion and Kandinsky models on Stablecog.
+description: Learn how to use various emotions when prompting Stable Diffusion and Kandinsky models on Stablecog.
 author: M. Yekta Güngör
 author_url: https://twitter.com/ngyekta
 date: 2023-04-18T15:00:00.000Z
