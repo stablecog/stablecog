@@ -12,7 +12,8 @@ import remarkImages from 'remark-images';
 import rehypeRaw from 'rehype-raw';
 import rehypeAttributes from 'rehype-attributes';
 import yaml from 'yaml';
-import type { TGuideEntryMetadata, TGuideNode } from '$routes/guide/types';
+import type { TGuideEntryMetadata, TGuideNode, TSidebarItem } from '$routes/guide/types';
+import { sidebar } from '$routes/guide/constants';
 
 const r = unified()
 	.use(remarkParse)
@@ -42,16 +43,6 @@ const r = unified()
 	.use(rehypeToC)
 	.use(rehypeStringify);
 
-export async function getGuideEntries() {
-	const guideEntriesImport = import.meta.glob(`/src/lib/md/guide/**/*`);
-	const keys = Object.keys(guideEntriesImport);
-	const prefix = '/src/lib/md/guide';
-	const modifiedKeys = keys.map((key) => key.split(prefix)[1]);
-	const dirStructure = await pathArrayToFileStructure(modifiedKeys, guideEntriesImport, prefix);
-	const guideNode = dirStructure;
-	return { guideNode };
-}
-
 function getSlugFromKey(key: string) {
 	const lastSlash = key.lastIndexOf('/');
 	const fileNameWithExtension = key.slice(lastSlash + 1);
@@ -70,14 +61,26 @@ export async function getGuideEntryFromPathname(pathname: string) {
 	}
 	const metadata = await getMetadataFromKey(key, importFunction);
 	const res: any = await importFunction();
+	const sidebarItem = getSidebarItemFromPathname(pathname, sidebar);
 	const unprocessedHTML = res.html;
 	const file = await r.process(unprocessedHTML);
 	const htmlString = file.toString();
 	const content = htmlString.split('</nav>')[1];
 	return {
 		content,
-		metadata
+		metadata,
+		sidebarItem
 	};
+}
+
+function getSidebarItemFromPathname(pathname: string, item: TSidebarItem): TSidebarItem | null {
+	if (!item.children || item.children.length < 1) return null;
+	for (let i = 0; i < item.children.length; i++) {
+		const child = item.children[i];
+		if (child.pathname === pathname) return child;
+		getSidebarItemFromPathname(pathname, child);
+	}
+	return null;
 }
 
 async function pathArrayToFileStructure(

@@ -28,6 +28,7 @@
 	import IconBolt from '$components/icons/IconBolt.svelte';
 	import { userSummary } from '$ts/stores/user/summary';
 	import { navbarStickyType } from '$ts/stores/stickyNavbar';
+	import { isDrawerOpen } from '$ts/stores/isDrawerOpen';
 
 	export let notAtTheVeryTop = false;
 	export let scrollDirection: 'up' | 'down' = 'down';
@@ -35,6 +36,8 @@
 	let isSignInModalOpen = false;
 	let isSettingsOpen = false;
 	let isAccountMenuOpen = false;
+
+	const routesWithDrawer = ['/guide'];
 
 	const toggleSettings = () => (isSettingsOpen = !isSettingsOpen);
 	const closeSettings = () => (isSettingsOpen = false);
@@ -84,6 +87,11 @@
 				: ''}"
 		/>
 		<div class="flex xl:flex-1 self-stretch">
+			{#if routesWithDrawer.includes($page.url.pathname) || routesWithDrawer.some( (route) => $page.url.pathname.startsWith(route) )}
+				<button on:click={() => isDrawerOpen.set(!$isDrawerOpen)} class="relative md:hidden p-4"
+					>A</button
+				>
+			{/if}
 			<a
 				aria-label="Go to Home"
 				href="/"

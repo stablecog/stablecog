@@ -38,23 +38,25 @@
 
 <div
 	class="w-full flex-1 flex flex-col transition relative items-center 
-	px-5 pt-5 md:px-12 lg:px-0 md:pt-12 pb-8"
+	px-5 md:px-12 lg:px-0 pb-8"
 >
 	<div class="w-full flex flex-row justify-between items-start">
 		<ToC {toc} />
-		<article class="flex-1 flex flex-col justify-start items-center lg:px-16">
-			<h1 class="max-w-2.5xl px-3 md:px-5 font-extrabold text-center text-4xl leading-tight">
+		<article class="flex-1 flex flex-col justify-start items-center lg:px-16 pt-8">
+			<h1
+				class="w-full max-w-2.5xl px-3 md:px-5 font-extrabold text-center text-[2rem] leading-[1.35]"
+			>
 				{title}
 			</h1>
 			<time
 				datetime={frontmatter.date}
-				class="max-w-2.5xl px-3 md:px-5 mt-3 text-c-on-bg/40 font-medium text-center leading-relaxed"
+				class="w-full max-w-2.5xl px-3 md:px-5 mt-3 text-c-on-bg/40 font-medium text-center leading-relaxed"
 			>
 				{formattedDate} • {reading_time} min read
 			</time>
 			{#if author}
 				<p
-					class="max-w-2.5xl px-3 md:px-5 mt-0.75 text-c-on-bg/40 font-medium text-center leading-relaxed"
+					class="w-full max-w-2.5xl px-3 md:px-5 mt-0.75 text-c-on-bg/40 font-medium text-center leading-relaxed"
 				>
 					{#if author_url}
 						<a rel="noreferrer" class="blog-link" href={author_url} target="_blank">{author}</a>
