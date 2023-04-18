@@ -36,7 +36,7 @@
 			isDrawerOpen.set(false);
 		}
 	}}
-	style={$windowHeight ? `${$windowHeight}px` : 'height: 100vh; height: 100svh'}
+	style={$windowHeight ? `height: ${$windowHeight}px` : 'height: 100vh; height: 100svh'}
 	use:portal={'body'}
 	class="fixed md:hidden md:pointer-events-none w-4/5 bg-c-bg rounded-r-3xl ring-2 ring-c-bg-secondary left-0 top-0 z-[101] 
 	shadow-drawer shadow-c-shadow/[var(--o-shadow-stronger)] transition {$isDrawerOpen
