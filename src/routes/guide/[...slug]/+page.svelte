@@ -23,7 +23,7 @@
 />
 
 <div class="w-full flex flex-col items-center pb-12">
-	<article class="w-full max-w-3xl px-5 md:px-12 pt-2 md:pt-6 pb-8 blog flex flex-row flex-wrap">
+	<article class="w-full max-w-3xl px-5 md:px-12 pt-4 md:pt-6 pb-8 blog flex flex-row flex-wrap">
 		{@html data.content}
 	</article>
 	{#if data.sidebarItem?.children}
