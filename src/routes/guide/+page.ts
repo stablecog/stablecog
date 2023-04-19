@@ -7,6 +7,6 @@ export const load: PageLoad = async ({ url }) => {
 	return {
 		content,
 		metadata,
-		sidebar
+		sidebarItem: sidebar
 	};
 };

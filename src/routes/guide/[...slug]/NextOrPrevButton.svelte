@@ -1,16 +1,20 @@
 <script lang="ts">
 	import ButtonHoverEffect from '$components/buttons/ButtonHoverEffect.svelte';
 	import IconArrowRight from '$components/icons/IconArrowRight.svelte';
+	import LL from '$i18n/i18n-svelte';
 	import type { TSidebarItem } from '$routes/guide/types';
 
 	export let item: TSidebarItem;
 	export let type: 'next' | 'prev';
+
+	$: hasChildren = item.children && item.children.length > 0 ? true : false;
 </script>
 
 <a
 	href={item.pathname}
 	class="w-full md:w-auto md:flex-1 max-w-full overflow-hidden gap-4 px-4 py-3 flex group justify-between items-center 
-  rounded-xl ring-2 ring-c-bg-secondary group relative {type === 'next'
+  rounded-xl ring-2 ring-c-bg-secondary group relative bg-c-bg shadow-lg shadow-c-shadow/[var(--o-shadow-normal)] {type ===
+	'next'
 		? 'text-left'
 		: 'text-right'}"
 >
@@ -32,7 +36,7 @@
 		<p
 			class="max-w-full font-normal overflow-hidden overflow-ellipsis whitespace-nowrap text-sm text-c-on-bg/50"
 		>
-			{type === 'next' ? 'Next' : 'Previous'}
+			{type === 'next' ? $LL.Guide.NextTitle() : $LL.Guide.PreviousTitle()}
 		</p>
 		<p
 			class="max-w-full font-semibold overflow-hidden overflow-ellipsis whitespace-nowrap mt-0.5 text-c-on-bg transition group-hover:text-c-primary"

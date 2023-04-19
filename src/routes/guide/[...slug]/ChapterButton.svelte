@@ -1,6 +1,7 @@
 <script lang="ts">
 	import ButtonHoverEffect from '$components/buttons/ButtonHoverEffect.svelte';
 	import IconArrowRight from '$components/icons/IconArrowRight.svelte';
+	import LL from '$i18n/i18n-svelte';
 	import type { TSidebarItem } from '$routes/guide/types';
 
 	export let item: TSidebarItem;
@@ -11,7 +12,7 @@
 <a
 	href={item.pathname}
 	class="flex-1 flex flex-col w-full overflow-hidden group justify-between items-center 
-  rounded-xl ring-2 p-3 ring-c-bg-secondary group relative {classes}"
+  rounded-xl ring-2 p-3 ring-c-bg-secondary group relative bg-c-bg shadow-lg shadow-c-shadow/[var(--o-shadow-normal)] {classes}"
 >
 	<ButtonHoverEffect noPadding color="bg-secondary" hoverFrom="left" />
 	<div class="w-full flex-1 flex flex-col relative">
@@ -20,10 +21,10 @@
 				<p
 					class="max-w-full font-normal overflow-hidden overflow-ellipsis whitespace-nowrap text-sm text-c-on-bg/50"
 				>
-					Chapter
+					{$LL.Guide.ChapterTitle()}
 				</p>
 				<h3
-					class="max-w-full font-semibold overflow-hidden overflow-ellipsis whitespace-nowrap mt-0.5 text-c-on-bg transition group-hover:text-c-primary"
+					class="mt-0.5 max-w-full text-lg font-semibold overflow-hidden overflow-ellipsis whitespace-nowrap text-c-on-bg transition group-hover:text-c-primary"
 				>
 					{item.title}
 				</h3>
@@ -35,7 +36,7 @@
 		<img
 			width="1200"
 			height="630"
-			class="w-full h-auto rounded-md mt-4 bg-c-bg-secondary border-2 border-c-bg-secondary shadow-lg shadow-c-shadow/[var(--o-shadow-normal)]"
+			class="w-full h-auto rounded-lg mt-3 bg-c-bg-secondary border-2 border-c-bg-secondary shadow-lg shadow-c-shadow/[var(--o-shadow-normal)]"
 			src={item.preview_image_url}
 			alt={item.title}
 		/>

@@ -649,7 +649,11 @@ const es: Translation = {
 	},
 	Guide: {
 		PageTitle: 'Guide',
-		GuideButton: 'Guide'
+		GuideButton: 'Guide',
+		PreviousTitle: 'Previous',
+		NextTitle: 'Next',
+		ChaptersTitle: 'Chapters',
+		ChapterTitle: 'Chapter'
 	},
 	Legal: {
 		TermsOfServiceTitle: 'Όροι χρήσης',

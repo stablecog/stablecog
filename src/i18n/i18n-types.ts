@@ -1864,6 +1864,22 @@ type RootTranslation = {
 		 * G​u​i​d​e
 		 */
 		GuideButton: string
+		/**
+		 * P​r​e​v​i​o​u​s
+		 */
+		PreviousTitle: string
+		/**
+		 * N​e​x​t
+		 */
+		NextTitle: string
+		/**
+		 * C​h​a​p​t​e​r​s
+		 */
+		ChaptersTitle: string
+		/**
+		 * C​h​a​p​t​e​r
+		 */
+		ChapterTitle: string
 	}
 	Legal: {
 		/**
@@ -3703,6 +3719,22 @@ export type TranslationFunctions = {
 		 * Guide
 		 */
 		GuideButton: () => LocalizedString
+		/**
+		 * Previous
+		 */
+		PreviousTitle: () => LocalizedString
+		/**
+		 * Next
+		 */
+		NextTitle: () => LocalizedString
+		/**
+		 * Chapters
+		 */
+		ChaptersTitle: () => LocalizedString
+		/**
+		 * Chapter
+		 */
+		ChapterTitle: () => LocalizedString
 	}
 	Legal: {
 		/**
