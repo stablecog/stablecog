@@ -172,11 +172,6 @@ const de: Translation = {
 		SetButton: 'Speichern',
 		DefaultButton: 'Standard'
 	},
-	Blog: {
-		Title: 'Blog-Beiträge',
-		TitleAlt: 'Blog',
-		BackToBlogButton: 'Zurück zum Blog'
-	},
 	Redirect: {
 		RedirectingToTitle: 'Weiterleitung zu {name}'
 	},

@@ -24,7 +24,6 @@ export const allowedRedirectRoutes = [
 	'/history',
 	'/gallery',
 	'/live',
-	'/blog',
 	'/account',
 	'/admin',
 	'/admin/servers',

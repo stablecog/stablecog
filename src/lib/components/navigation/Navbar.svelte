@@ -67,19 +67,6 @@
 		? '-translate-y-[calc(100%+2px)]'
 		: ''}"
 >
-	{#if mounted && ($lastClosedNotification === null || $lastClosedNotification !== lastNotification)}
-		<Banner
-			href="/blog/our-first-big-update"
-			onClose={() => {
-				lastClosedNotification.set(lastNotification);
-			}}
-		>
-			<div class="flex items-center justify-center gap-2">
-				<IconBolt class="w-6 h-6 flex-shrink-0" />
-				<p class="flex-shrink min-w-0 overflow-hidden overflow-ellipsis">Our big update is here!</p>
-			</div>
-		</Banner>
-	{/if}
 	<div class="w-full flex flex-row items-center justify-between relative z-0">
 		<PageLoadProgressBar />
 		<div

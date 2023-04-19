@@ -173,11 +173,6 @@ const es: Translation = {
 		SetButton: 'Establecer',
 		DefaultButton: 'Predeterminado'
 	},
-	Blog: {
-		Title: 'Entradas del Blog',
-		TitleAlt: 'Blog',
-		BackToBlogButton: 'Volver al Blog'
-	},
 	Redirect: {
 		RedirectingToTitle: 'Redirigiendo a {name}'
 	},

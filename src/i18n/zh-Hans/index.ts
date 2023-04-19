@@ -170,11 +170,6 @@ const zhHans: Translation = {
 		SetButton: '设定',
 		DefaultButton: '默认设置'
 	},
-	Blog: {
-		Title: '博客帖子',
-		TitleAlt: '博客',
-		BackToBlogButton: '返回博客'
-	},
 	Redirect: {
 		RedirectingToTitle: '重定向到 {name}'
 	},

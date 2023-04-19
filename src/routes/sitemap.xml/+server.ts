@@ -1,5 +1,4 @@
 import { canonicalUrl } from '$ts/constants/main';
-import { getBlogPosts } from '$ts/queries/blog/getBlogPosts';
 import type { RequestHandler } from '@sveltejs/kit';
 
 const today = new Date();
@@ -31,18 +30,11 @@ const definedRoutes: IRoute[] = [
 		loc: '/gallery',
 		lastmod: todayString,
 		changefreq: 'daily'
-	},
-	{ loc: '/blog', lastmod: todayString, changefreq: 'daily' }
+	}
 ];
 
 export const GET: RequestHandler = async () => {
-	const blogPosts = await getBlogPosts();
-	const blogPostRoutes = blogPosts.map((post) => ({
-		loc: `/blog/${post.slug}`,
-		lastmod: getDateStringFromDate(new Date(post.date)),
-		changefreq: 'weekly'
-	}));
-	const allRoutes = [...definedRoutes, ...blogPostRoutes];
+	const allRoutes = [...definedRoutes];
 	const headers = {
 		'Cache-Control': `public, max-age=${3600}, s-max-age=${3600}`,
 		'Content-Type': 'text/xml'

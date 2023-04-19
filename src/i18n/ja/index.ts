@@ -175,11 +175,6 @@ const ja: Translation = {
 		SetButton: '設定',
 		DefaultButton: '既定値'
 	},
-	Blog: {
-		Title: 'ブログの投稿',
-		TitleAlt: 'ブログ',
-		BackToBlogButton: 'ブログに戻る'
-	},
 	Redirect: {
 		RedirectingToTitle: '{name} に転送'
 	},

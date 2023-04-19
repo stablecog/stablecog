@@ -173,11 +173,6 @@ const en: BaseTranslation = {
 		SetButton: 'Set',
 		DefaultButton: 'Default'
 	},
-	Blog: {
-		Title: 'Blog Posts',
-		TitleAlt: 'Blog',
-		BackToBlogButton: 'Back to Blog'
-	},
 	Redirect: {
 		RedirectingToTitle: 'Redirecting to {name}'
 	},

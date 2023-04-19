@@ -175,11 +175,6 @@ const es: Translation = {
 		SetButton: 'Ορισμός',
 		DefaultButton: 'Προεπιλογή'
 	},
-	Blog: {
-		Title: 'Δημοσιεύσεις Ιστολογίου',
-		TitleAlt: 'Ιστολόγιο',
-		BackToBlogButton: 'Επιστροφή στο Ιστολόγιο'
-	},
 	Redirect: {
 		RedirectingToTitle: 'Ανακατεύθυνση σε {name}'
 	},

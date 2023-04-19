@@ -173,11 +173,6 @@ const ko: Translation = {
 		SetButton: '확인',
 		DefaultButton: '기본값 사용'
 	},
-	Blog: {
-		Title: '블로그',
-		TitleAlt: '블로그',
-		BackToBlogButton: '되돌아가기'
-	},
 	Redirect: {
 		RedirectingToTitle: '{name}으로 이동 중...'
 	},

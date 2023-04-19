@@ -173,11 +173,6 @@ const ru: Translation = {
 		SetButton: 'Использовать',
 		DefaultButton: 'По умолчанию'
 	},
-	Blog: {
-		Title: 'Записи блога',
-		TitleAlt: 'Блог',
-		BackToBlogButton: 'Назад к блогу'
-	},
 	Redirect: {
 		RedirectingToTitle: 'Перенаправление в {name}'
 	},

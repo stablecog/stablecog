@@ -172,11 +172,6 @@ const ptPt: Translation = {
 		SetButton: 'Definir',
 		DefaultButton: 'Predefinição'
 	},
-	Blog: {
-		Title: "Publicações do 'Blog'",
-		TitleAlt: 'Blog',
-		BackToBlogButton: 'Voltar para o blog'
-	},
 	Redirect: {
 		RedirectingToTitle: 'Redirecionando para {name}'
 	},

@@ -55,22 +55,6 @@
 			fill="currentColor"
 		/>
 	</svg>
-{:else if type === 'blog'}
-	<svg
-		class={classes}
-		width="24"
-		height="24"
-		viewBox="0 0 24 24"
-		fill="none"
-		xmlns="http://www.w3.org/2000/svg"
-	>
-		<path
-			fill-rule="evenodd"
-			clip-rule="evenodd"
-			d="M6 3a1 1 0 0 0-2 0v2c0 1.395.953 2.568 2.243 2.904l-.999 3.995a3 3 0 0 0 .415 2.392l5.509 8.264a1 1 0 0 0 1.664 0l5.457-8.186a3 3 0 0 0 .35-2.613l-1.26-3.78A3 3 0 0 0 20 5V3a1 1 0 1 0-2 0v2a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V3Zm2.28 5-1.095 4.384a1 1 0 0 0 .138.797L11 18.697v-4.965A2 2 0 0 1 12 10a2 2 0 0 1 1 3.732v4.965l3.625-5.438a1 1 0 0 0 .117-.87L15.279 8H8.281Z"
-			fill="currentColor"
-		/>
-	</svg>
 {:else if type === 'gallery'}
 	<IconImage class={classes} />
 {:else if type === 'servers'}

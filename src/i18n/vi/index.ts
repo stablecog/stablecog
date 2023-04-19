@@ -173,11 +173,6 @@ const vi: Translation = {
 		SetButton: 'Chọn',
 		DefaultButton: 'Mặc định'
 	},
-	Blog: {
-		Title: 'Bài đăng trên blog',
-		TitleAlt: 'Nhật ký',
-		BackToBlogButton: 'Quay lại nhật ký'
-	},
 	Redirect: {
 		RedirectingToTitle: 'Đang chuyển hướng đến {name}'
 	},

@@ -512,20 +512,6 @@ type RootTranslation = {
 		 */
 		DefaultButton: string
 	}
-	Blog: {
-		/**
-		 * B​l​o​g​ ​P​o​s​t​s
-		 */
-		Title: string
-		/**
-		 * B​l​o​g
-		 */
-		TitleAlt: string
-		/**
-		 * B​a​c​k​ ​t​o​ ​B​l​o​g
-		 */
-		BackToBlogButton: string
-	}
 	Redirect: {
 		/**
 		 * R​e​d​i​r​e​c​t​i​n​g​ ​t​o​ ​{​n​a​m​e​}
@@ -2369,20 +2355,6 @@ export type TranslationFunctions = {
 		 * Default
 		 */
 		DefaultButton: () => LocalizedString
-	}
-	Blog: {
-		/**
-		 * Blog Posts
-		 */
-		Title: () => LocalizedString
-		/**
-		 * Blog
-		 */
-		TitleAlt: () => LocalizedString
-		/**
-		 * Back to Blog
-		 */
-		BackToBlogButton: () => LocalizedString
 	}
 	Redirect: {
 		/**

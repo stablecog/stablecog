@@ -175,11 +175,6 @@ const tr: Translation = {
 		SetButton: 'Tamam',
 		DefaultButton: 'Varsayılan'
 	},
-	Blog: {
-		Title: 'Blog Yazıları',
-		TitleAlt: 'Blog',
-		BackToBlogButton: 'Bloğa Dön'
-	},
 	Redirect: {
 		RedirectingToTitle: 'Yönlendiriliyor: {name}'
 	},

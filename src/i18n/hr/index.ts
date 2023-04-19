@@ -172,11 +172,6 @@ const hr: Translation = {
 		SetButton: 'Postavi',
 		DefaultButton: 'Zadano'
 	},
-	Blog: {
-		Title: 'Blog objave',
-		TitleAlt: 'Blog',
-		BackToBlogButton: 'Povratak na blog'
-	},
 	Redirect: {
 		RedirectingToTitle: 'Preusmjeravanje na {name}'
 	},

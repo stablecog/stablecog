@@ -24,7 +24,6 @@ export type TIconSc =
 export type TNavbarRouteOption =
 	| 'home'
 	| 'live'
-	| 'blog'
 	| 'history'
 	| 'gallery'
 	| 'servers'
@@ -35,16 +34,6 @@ export interface TNavbarRoute {
 	href: string;
 	icon: TNavbarRouteOption;
 }
-
-export interface TBlogPost {
-	slug: string;
-	title: string;
-	description: string;
-	author: string;
-	author_url?: string;
-	date: string;
-}
-
 export interface TToC {
 	title: string;
 	description: string;

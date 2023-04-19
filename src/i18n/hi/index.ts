@@ -172,11 +172,6 @@ const hi: Translation = {
 		SetButton: 'चुने',
 		DefaultButton: 'डिफॉल्ट'
 	},
-	Blog: {
-		Title: 'ब्लॉग पोस्ट',
-		TitleAlt: 'ब्लॉग',
-		BackToBlogButton: 'ब्लॉग पर वापिस'
-	},
 	Redirect: {
 		RedirectingToTitle: '{name} पर लेजाया जा रहा है'
 	},
