@@ -10,6 +10,7 @@
 </script>
 
 <a
+	data-sveltekit-preload-data="hover"
 	href={item.pathname}
 	class="flex-1 flex flex-col w-full overflow-hidden group justify-between items-center 
   rounded-xl ring-2 p-3 ring-c-bg-secondary group relative bg-c-bg shadow-lg shadow-c-shadow/[var(--o-shadow-normal)] {classes}"

@@ -6,11 +6,10 @@
 
 	export let item: TSidebarItem;
 	export let type: 'next' | 'prev';
-
-	$: hasChildren = item.children && item.children.length > 0 ? true : false;
 </script>
 
 <a
+	data-sveltekit-preload-data="hover"
 	href={item.pathname}
 	class="w-full md:w-auto md:flex-1 max-w-full overflow-hidden gap-4 px-4 py-3 flex group justify-between items-center 
   rounded-xl ring-2 ring-c-bg-secondary group relative bg-c-bg shadow-lg shadow-c-shadow/[var(--o-shadow-normal)] {type ===
