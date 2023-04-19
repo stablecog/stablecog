@@ -222,6 +222,7 @@
 		{/if}
 		<div class="w-full md:w-auto md:min-w-[9.5rem] relative hidden md:block">
 			<Button
+				animateOnClick
 				disabled={!isCheckCompleted ||
 					(doesntHaveEnoughCredits && $page.data.session?.user.id !== undefined)}
 				uploading={$generationInitImageFilesState === 'uploading'}
