@@ -1,4 +1,4 @@
-import { getGuideEntryFromPathname } from '$ts/queries/guide/guide';
+import { getGuideEntryFromPathname } from '$routes/guide/guide';
 import type { PageLoad } from '../$types';
 
 export const load: PageLoad = async ({ url }) => {
