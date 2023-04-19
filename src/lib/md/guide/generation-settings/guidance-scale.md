@@ -17,25 +17,25 @@ Guidance scale can also be thought of as "prompt strength". If the prompt streng
 
 Here is the same generation created with guidance scale set to 1, 3, 7 and 15. The prompt is: "Dark, moody, high contrast, an alien with a tomato head".
 
-| G. Scale: 1                                                                                                                       |
+| Guidance Scale: 1                                                                                                                 |
 | --------------------------------------------------------------------------------------------------------------------------------- |
 | ![Guidance Scale: 1](https://ba.stablecog.com/guide/generation-settings/guidance_scale_1.jpg)<!--rehype:width=1024&height=1536--> |
 
 <!--rehype:class=w-full md:w-1/2-->
 
-| G. Scale: 3                                                                                                                       |
+| Guidance Scale: 3                                                                                                                 |
 | --------------------------------------------------------------------------------------------------------------------------------- |
 | ![Guidance Scale: 3](https://ba.stablecog.com/guide/generation-settings/guidance_scale_3.jpg)<!--rehype:width=1024&height=1536--> |
 
 <!--rehype:class=w-full md:w-1/2-->
 
-| G. Scale: 7                                                                                                                       |
+| Guidance Scale: 7                                                                                                                 |
 | --------------------------------------------------------------------------------------------------------------------------------- |
 | ![Guidance Scale: 7](https://ba.stablecog.com/guide/generation-settings/guidance_scale_7.jpg)<!--rehype:width=1024&height=1536--> |
 
 <!--rehype:class=w-full md:w-1/2-->
 
-| G. Scale: 15                                                                                                                        |
+| Guidance Scale: 15                                                                                                                  |
 | ----------------------------------------------------------------------------------------------------------------------------------- |
 | ![Guidance Scale: 15](https://ba.stablecog.com/guide/generation-settings/guidance_scale_15.jpg)<!--rehype:width=1024&height=1536--> |
 

@@ -15,39 +15,39 @@ Although it is sometimes seen as a "quality slider" it's not necessarily that. B
 
 ### Inference Steps Example
 
-Here is the same generation created with 5, 10, 20, 30, 40 and 50 inference steps.
+Here is the same generation created at 5, 10, 20, 30, 40 and 50 inference steps.
 
-| Steps: 5                                                                                                                            |
+| Inference Steps: 5                                                                                                                  |
 | ----------------------------------------------------------------------------------------------------------------------------------- |
 | ![Inference Steps: 5](https://ba.stablecog.com/guide/generation-settings/inference_steps_5.jpg)<!--rehype:width=1024&height=1536--> |
 
 <!--rehype:class=w-full md:w-1/2 lg:w-1/3-->
 
-| Steps: 10                                                                                                                             |
+| Inference Steps: 10                                                                                                                   |
 | ------------------------------------------------------------------------------------------------------------------------------------- |
 | ![Inference Steps: 10](https://ba.stablecog.com/guide/generation-settings/inference_steps_10.jpg)<!--rehype:width=1024&height=1536--> |
 
 <!--rehype:class=w-full md:w-1/2 lg:w-1/3-->
 
-| Steps: 20                                                                                                                             |
+| Inference Steps: 20                                                                                                                   |
 | ------------------------------------------------------------------------------------------------------------------------------------- |
 | ![Inference Steps: 20](https://ba.stablecog.com/guide/generation-settings/inference_steps_20.jpg)<!--rehype:width=1024&height=1536--> |
 
 <!--rehype:class=w-full md:w-1/2 lg:w-1/3-->
 
-| Steps: 30                                                                                                                             |
+| Inference Steps: 30                                                                                                                   |
 | ------------------------------------------------------------------------------------------------------------------------------------- |
 | ![Inference Steps: 30](https://ba.stablecog.com/guide/generation-settings/inference_steps_30.jpg)<!--rehype:width=1024&height=1536--> |
 
 <!--rehype:class=w-full md:w-1/2 lg:w-1/3-->
 
-| Steps: 40                                                                                                                             |
+| Inference Steps: 40                                                                                                                   |
 | ------------------------------------------------------------------------------------------------------------------------------------- |
 | ![Inference Steps: 40](https://ba.stablecog.com/guide/generation-settings/inference_steps_40.jpg)<!--rehype:width=1024&height=1536--> |
 
 <!--rehype:class=w-full md:w-1/2 lg:w-1/3-->
 
-| Steps: 50                                                                                                                             |
+| Inference Steps: 50                                                                                                                   |
 | ------------------------------------------------------------------------------------------------------------------------------------- |
 | ![Inference Steps: 50](https://ba.stablecog.com/guide/generation-settings/inference_steps_50.jpg)<!--rehype:width=1024&height=1536--> |
 

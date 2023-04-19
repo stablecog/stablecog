@@ -17,13 +17,13 @@ For example, Stable Diffusion and various other fine-tuned models aren't best wh
 
 Two generations below have the exact same settings except for the negative prompt. The left one doesn't have any negative prompts. Right one has "green tones" as the negative prompt. Notice how the model tries to steer away from green tones in the right one.
 
-| None                                                                                                                                   |
+| No negative prompt                                                                                                                     |
 | -------------------------------------------------------------------------------------------------------------------------------------- |
 | ![No negative prompt](https://ba.stablecog.com/guide/generation-settings/negative_prompt_none.jpg)<!--rehype:width=1024&height=1536--> |
 
 <!--rehype:class=w-full md:w-1/2-->
 
-| Green tones                                                                                                                                             |
+| Negative prompt: Green tones                                                                                                                            |
 | ------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | ![Negative prompt: green tones](https://ba.stablecog.com/guide/generation-settings/negative_prompt_green_tones.jpg)<!--rehype:width=1024&height=1536--> |
 

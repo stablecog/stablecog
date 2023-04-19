@@ -131,12 +131,12 @@
 
 .blog table {
 	text-align: left;
-	white-space: nowrap;
 	width: 100%;
 	font-weight: 400;
 	margin-top: 1rem;
 	display: flex;
 	flex-direction: column;
+	justify-content: end;
 }
 
 .blog table + p {
@@ -149,11 +149,8 @@
 
 .blog th {
 	font-weight: 600;
-	padding: 0.25rem 0.5rem;
+	padding: 0.4rem 0.6rem;
 	max-width: 100%;
-	overflow: hidden;
-	white-space: nowrap;
-	text-overflow: ellipsis;
 }
 
 .blog tr {
