@@ -24,7 +24,7 @@
 					{$LL.Guide.ChapterTitle()}
 				</p>
 				<h3
-					class="mt-0.5 max-w-full text-lg font-semibold overflow-hidden overflow-ellipsis whitespace-nowrap text-c-on-bg transition group-hover:text-c-primary"
+					class="max-w-full text-lg font-semibold overflow-hidden overflow-ellipsis whitespace-nowrap text-c-on-bg transition group-hover:text-c-primary"
 				>
 					{item.title}
 				</h3>
