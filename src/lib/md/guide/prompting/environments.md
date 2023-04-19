@@ -1,6 +1,6 @@
 ---
 title: Prompting Using Environments
-description: Learn how to use environments when prompting Stable Diffusion and Kandinsky models on Stablecog.
+description: Learn how to use environments when prompting fine-tuned Stable Diffusion models and Kandinsky on Stablecog.
 author: M. Yekta Güngör
 author_url: https://twitter.com/ngyekta
 date: 2023-04-18T15:00:00.000Z
