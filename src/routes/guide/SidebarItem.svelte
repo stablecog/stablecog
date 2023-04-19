@@ -11,8 +11,9 @@
 	export let level = 0;
 	let classes = 'w-full';
 
+	$: isSelected = $page.url.pathname === sidebarItem.pathname;
 	$: isOpen =
-		($page.url.pathname === sidebarItem.pathname ||
+		(isSelected ||
 			(sidebarItem.children &&
 				sidebarItem.children.some((c) => c.pathname === $page.url.pathname))) ??
 		false;
@@ -33,13 +34,13 @@
 				data-sveltekit-preload-data="hover"
 			>
 				<ButtonHoverEffect
-					color={$page.url.pathname === sidebarItem.pathname ? 'primary' : 'on-bg'}
+					color={isSelected ? 'primary' : 'on-bg'}
 					hoverFrom="left"
 					size="md"
-					hovered={$page.url.pathname === sidebarItem.pathname}
+					hovered={isSelected}
 				/>
 				<p
-					class="flex-1 transition-all {$page.url.pathname === sidebarItem.pathname
+					class="flex-1 transition-all {isSelected
 						? 'text-c-primary font-semibold'
 						: level === 0 || level === 1
 						? 'text-c-on-bg font-medium'
@@ -61,7 +62,7 @@
 					on:click={() => (isOpen = !isOpen)}
 					class="w-11 md:w-10 h-full absolute right-0 top-0 z-10 group"
 				>
-					<ButtonHoverEffect size="md" hoverFrom="left" />
+					<ButtonHoverEffect size="md" color={isSelected ? 'primary' : 'on-bg'} hoverFrom="left" />
 				</button>
 			{/if}
 		</div>
