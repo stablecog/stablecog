@@ -1,4 +1,4 @@
-/* import { flatSidebarShallow, sidebar } from '$routes/guide/constants'; */
+import { flatSidebarShallow } from '$routes/guide/constants';
 import { canonicalUrl } from '$ts/constants/main';
 import { getBlogPosts } from '$ts/queries/blog/getBlogPosts';
 import type { RequestHandler } from '@sveltejs/kit';
@@ -43,12 +43,12 @@ export const GET: RequestHandler = async () => {
 		lastmod: getDateStringFromDate(new Date(post.date)),
 		changefreq: 'weekly'
 	}));
-	/* 	const guideRoutes: IRoute[] = flatSidebarShallow.map((item) => ({
+	const guideRoutes: IRoute[] = flatSidebarShallow.map((item) => ({
 		loc: `${item.pathname}`,
 		lastmod: todayString,
 		changefreq: 'weekly'
-	})); */
-	const allRoutes = [...definedRoutes, ...blogPostRoutes /* , ...guideRoutes */];
+	}));
+	const allRoutes = [...definedRoutes, ...blogPostRoutes, ...guideRoutes];
 	const headers = {
 		'Cache-Control': `public, max-age=${3600}, s-max-age=${3600}`,
 		'Content-Type': 'text/xml'
@@ -61,11 +61,11 @@ function render(routes: IRoute[]) {
 	const xml = `<?xml version="1.0" encoding="UTF-8"?>
     <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     	${routes
-			.map(
-				(route) =>
-					`<url><loc>${canonicalUrl}${route.loc}</loc><lastmod>${route.lastmod}</lastmod><changefreq>${route.changefreq}</changefreq></url>`
-			)
-			.join('')}
+				.map(
+					(route) =>
+						`<url><loc>${canonicalUrl}${route.loc}</loc><lastmod>${route.lastmod}</lastmod><changefreq>${route.changefreq}</changefreq></url>`
+				)
+				.join('')}
     </urlset>`;
 	return xml;
 }

@@ -16,7 +16,7 @@
 .blog h2 {
 	font-weight: 700;
 	font-size: 1.75rem;
-	margin-top: 3rem;
+	margin-top: 2rem;
 	margin-bottom: 0.25rem;
 	line-height: 1.35;
 	width: 100%;
@@ -151,12 +151,16 @@
 
 .blog table {
 	text-align: left;
-	white-space: nowrap;
 	width: 100%;
 	font-weight: 400;
 	margin-top: 1rem;
 	display: flex;
 	flex-direction: column;
+	justify-content: end;
+}
+
+.blog table+p {
+	margin-top: 1.5rem;
 }
 
 .blog table img {
@@ -165,7 +169,7 @@
 
 .blog th {
 	font-weight: 600;
-	padding: 0.25rem 0.5rem;
+	padding: 0.4rem 0.6rem;
 	max-width: 100%;
 }
 
@@ -176,6 +180,7 @@
 
 .blog td {
 	padding: 0.3rem;
+	max-width: 100%;
 }
 
 

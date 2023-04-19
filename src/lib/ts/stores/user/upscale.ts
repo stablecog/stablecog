@@ -1,5 +1,10 @@
+import {
+	newUpscaleCompleteAnimation,
+	newUpscaleStartAnimation
+} from '$ts/animation/generationAnimation';
 import { apiUrl } from '$ts/constants/main';
 import type { TAvailableUpscaleModelId } from '$ts/constants/upscaleModels';
+import type { Tweened } from 'svelte/motion';
 import { writable } from 'svelte/store';
 
 export const upscales = writable<TUpscale[]>([]);
@@ -13,12 +18,14 @@ export const setUpscaleToFailed = ({ id, error }: { id: string; error?: string }
 		if (index >= 0) {
 			$upscales[index].status = 'failed';
 			$upscales[index].error = error;
+			$upscales[index].animation = newUpscaleCompleteAnimation($upscales[index].animation);
 			return $upscales;
 		}
 		const ui_index = $upscales.findIndex((ups) => ups.ui_id === id);
 		if (ui_index >= 0) {
 			$upscales[ui_index].status = 'failed';
 			$upscales[ui_index].error = error;
+			$upscales[index].animation = newUpscaleCompleteAnimation($upscales[index].animation);
 			return $upscales;
 		}
 		return $upscales;
@@ -77,6 +84,7 @@ export const setUpscaleToServerProcessing = ({ ui_id, id }: { ui_id: string; id:
 			ups.status = 'server-processing';
 			ups.started_at = Date.now();
 			if (!ups.ui_id) ups.ui_id = ui_id;
+			ups.animation = newUpscaleCompleteAnimation(ups.animation);
 			return $upscales;
 		}
 		const ups2 = $upscales.find((ups) => ups.ui_id === ui_id);
@@ -84,6 +92,7 @@ export const setUpscaleToServerProcessing = ({ ui_id, id }: { ui_id: string; id:
 			ups2.status = 'server-processing';
 			ups2.started_at = Date.now();
 			if (!ups2.id) ups2.id = id;
+			ups2.animation = newUpscaleCompleteAnimation(ups2.animation);
 			return $upscales;
 		}
 		return $upscales;
@@ -96,7 +105,8 @@ export async function queueInitialUpscaleRequest(request: TInitialUpscaleRequest
 			...request,
 			outputs: [],
 			created_at: Date.now(),
-			status: 'to-be-submitted'
+			status: 'to-be-submitted',
+			animation: newUpscaleStartAnimation()
 		};
 		if ($upscales === null) {
 			return [upscalesToSubmit];
@@ -150,6 +160,7 @@ export interface TUpscale extends TUpscaleBase {
 	started_at?: number;
 	created_at: number;
 	completed_at?: number;
+	animation?: Tweened<number>;
 }
 
 export interface TInitialUpscaleRequest extends TUpscaleBase {

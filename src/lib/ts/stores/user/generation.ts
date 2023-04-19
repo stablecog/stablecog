@@ -1,13 +1,12 @@
 import { apiUrl } from '$ts/constants/main';
 import type { TAvailableGenerationModelId } from '$ts/constants/generationModels';
 import type { TAvailableSchedulerId } from '$ts/constants/schedulers';
-import { get, writable } from 'svelte/store';
+import { writable } from 'svelte/store';
 import {
 	generationCostCompletionPerMs,
 	getCostCompletionPerMsFromGeneration
 } from '$ts/stores/cost';
 import { generateSSEId } from '$ts/helpers/generateSSEId';
-import { estimatedGenerationDurationMs } from '$routes/admin/create/estimatedGenerationDurationMs';
 import {
 	newGenerationCompleteAnimation,
 	newGenerationStartAnimation
@@ -133,7 +132,6 @@ export const setGenerationToServerProcessing = ({ ui_id, id }: { ui_id: string; 
 
 export async function queueInitialGenerationRequest(request: TInitialGenerationRequest) {
 	generations.update(($generations) => {
-		const estimatedDurationMs = get(estimatedGenerationDurationMs);
 		const generationToSubmit: TGeneration = {
 			...request,
 			status: 'to-be-submitted',

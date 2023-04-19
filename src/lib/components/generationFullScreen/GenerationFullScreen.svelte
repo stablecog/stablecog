@@ -43,6 +43,9 @@
 	import { lastClickedOutputId } from '$ts/stores/lastClickedOutputId';
 	import FavoriteButton from '$components/buttons/FavoriteButton.svelte';
 	import { browser } from '$app/environment';
+	import UpscaleAnimation from '$components/generationFullScreen/UpscaleAnimation.svelte';
+	import GenerationFullScreenImageSet from '$components/generationFullScreen/GenerationFullScreenImageSet.svelte';
+	import { generationHeight } from '$ts/stores/generationSettings';
 
 	export let generation: TGenerationWithSelectedOutput;
 	export let modalType: TGenerationFullScreenModalType;
@@ -208,47 +211,21 @@
 
 	$: [upscaleStatus, upscaleBeingProcessed], onUpscaleStatusChanged();
 
-	let upscaleAnimationStatus:
-		| 'idle'
-		| 'should-animate-slow'
-		| 'should-animate'
-		| 'should-complete' = 'idle';
-
 	async function onUpscaleStatusChanged() {
 		if (hadUpscaledImageUrlOnMount) {
-			upscaleAnimationStatus = 'idle';
 			return;
 		}
 		switch (upscaleStatus) {
-			case 'to-be-submitted':
-				upscaleAnimationStatus = 'idle';
-				await tick();
-				upscaleAnimationStatus = 'should-animate-slow';
-				break;
-			case 'server-received':
-				await tick();
-				upscaleAnimationStatus = 'should-animate-slow';
-				break;
-			case 'server-processing':
-				await tick();
-				upscaleAnimationStatus = 'should-animate';
-				break;
 			case 'succeeded':
 				if (upscaleBeingProcessed || !upscaleFromStore) break;
 				await tick();
-				upscaleAnimationStatus = 'should-complete';
 				const durationMs = getUpscaleDurationMsFromUpscale(upscaleFromStore);
 				if (durationMs !== null && upscaleFromStore.completed_at) {
 					const loadTimeMs = Date.now() - upscaleFromStore.completed_at;
 					estimatedUpscaleDurationMs.set(loadTimeMs + durationMs);
 				}
 				break;
-			case 'failed':
-				await tick();
-				upscaleAnimationStatus = 'should-complete';
-				break;
 			default:
-				upscaleAnimationStatus = 'idle';
 				break;
 		}
 	}
@@ -366,30 +343,20 @@
 					</div>
 				{:else}
 					{#key generation.selected_output.id}
-						<img
-							style="transition: filter 0.5s cubic-bezier(0.4, 0, 0.2, 1);"
-							class="{upscaleBeingProcessed
-								? 'blur-2xl'
-								: ''} w-full transition h-auto lg:h-full lg:object-contain absolute lg:left-0 lg:top-0"
-							src={generation.selected_output.image_url}
-							alt="Blurred background 2 for: {generation.prompt.text}"
-							width={generation.width}
-							height={generation.height}
-						/>
-						<img
-							on:load={onImageLoad}
-							style="transition: filter 0.5s cubic-bezier(0.4, 0, 0.2, 1);"
-							class="{upscaleBeingProcessed
-								? 'blur-2xl'
-								: ''} filter w-full relative transition h-auto lg:h-full lg:object-contain lg:absolute lg:left-0 lg:top-0"
-							src={currentImageUrl}
-							alt={generation.prompt.text}
-							width={upscaledTabValue === 'upscaled' && upscaledImageWidth
+						<GenerationFullScreenImageSet
+							{upscaleBeingProcessed}
+							prompt={generation.prompt.text}
+							backgroundImageUrl={generation.selected_output.image_url}
+							backgroundImageWidth={generation.width}
+							backgroundImageHeight={generation.height}
+							imageUrl={currentImageUrl}
+							imageWidth={upscaledTabValue === 'upscaled' && upscaledImageWidth
 								? upscaledImageWidth
 								: generation.width}
-							height={upscaledTabValue === 'upscaled' && upscaledImageHeight
+							imageHeight={upscaledTabValue === 'upscaled' && upscaledImageHeight
 								? upscaledImageHeight
 								: generation.height}
+							{onImageLoad}
 						/>
 					{/key}
 					{#if $upscales && $upscales.length > 0 && upscaleFromStore?.status === 'failed'}
@@ -407,23 +374,12 @@
 				{/if}
 			</div>
 			<div class="w-full h-full overflow-hidden z-0 absolute left-0 top-0 pointer-events-none">
-				<div
-					style="transition-duration: {upscaleAnimationStatus === 'should-animate-slow'
-						? ($estimatedUpscaleDurationMs / 1000) * 3
-						: upscaleAnimationStatus === 'should-animate'
-						? $estimatedUpscaleDurationMs / 1000
-						: upscaleAnimationStatus === 'should-complete'
-						? 0.3
-						: 0}s"
-					class="w-[110%] h-full ease-image-generation transition bg-c-secondary/50 
-						absolute left-0 top-0 rounded-xl {upscaleAnimationStatus === 'should-animate-slow'
-						? '-translate-x-2/4'
-						: upscaleAnimationStatus === 'should-animate'
-						? '-translate-x-[5%]'
-						: upscaleAnimationStatus === 'should-complete'
-						? 'translate-x-full'
-						: '-translate-x-full'}"
-				/>
+				{#if upscaleFromStore?.animation}
+					<UpscaleAnimation
+						animation={upscaleFromStore.animation}
+						isProcessing={upscaleBeingProcessed}
+					/>
+				{/if}
 				{#if modalType === 'history' || modalType === 'generate'}
 					<div class="absolute right-1.5 top-1.5">
 						<FavoriteButton {generation} {modalType} />
@@ -436,7 +392,7 @@
 			style={$windowWidth >= lgBreakpoint
 				? `width: ${sidebarWidth}px; height: ${imageContainerHeight}px; min-height: ${modalMinHeight}px;`
 				: ``}
-			class="w-full shadow-generation-sidebar shadow-c-shadow/[var(--o-shadow-stronger)] flex 
+			class="w-full shadow-generation-sidebar shadow-c-shadow/[var(--o-shadow-stronger)] flex
 				flex-col items-start justify-start bg-c-bg-secondary lg:border-l-2 border-c-bg-tertiary relative"
 		>
 			<div

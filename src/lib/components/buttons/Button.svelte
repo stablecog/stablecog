@@ -3,6 +3,7 @@
 	import IconAnimatedUploading from '$components/icons/IconAnimatedUploading.svelte';
 	import { isTouchscreen } from '$ts/stores/isTouchscreen';
 	import type { THrefTarget } from '$ts/types/main';
+	import { tick } from 'svelte';
 	export let disabled = false;
 	export let loading = false;
 	export let uploading = false;
@@ -16,11 +17,34 @@
 	export { classes as class };
 	export let type: 'primary' | 'success' | 'danger' | 'no-bg-on-bg' = 'primary';
 	export let fadeOnDisabled = false;
+	export let animateOnClick = false;
 	let classes = '';
+
+	function _onClick() {
+		if (animateOnClick) onClicked();
+		onClick?.();
+	}
+
+	let shouldAnimate = false;
+	let animationTimeout: NodeJS.Timeout | undefined = undefined;
+	async function onClicked() {
+		clearTimeout(animationTimeout);
+		if (animateOnClick) {
+			shouldAnimate = false;
+			await tick();
+			setTimeout(() => {
+				shouldAnimate = true;
+				animationTimeout = setTimeout(() => {
+					shouldAnimate = false;
+				}, 300);
+			});
+		}
+	}
 </script>
 
 {#if href}
 	<a
+		on:click={_onClick}
 		{href}
 		{target}
 		data-sveltekit-preload-data={prefetch && (target === '_self' || target === undefined)
@@ -36,7 +60,7 @@
 			? 'text-sm rounded-lg2'
 			: size === 'sm'
 			? 'text-sm rounded-lg2'
-			: 'text-base rounded-xl'} relative flex items-center justify-center text-center font-bold gap-2 
+			: 'text-base rounded-xl'} relative flex items-center justify-center text-center font-bold gap-2
 			overflow-hidden z-0 group {type === 'no-bg-on-bg'
 			? ''
 			: 'shadow-lg shadow-c-shadow/[var(--o-shadow-strong)]'} {type === 'no-bg-on-bg'
@@ -53,7 +77,7 @@
 			? 'bg-c-danger'
 			: type === 'no-bg-on-bg'
 			? 'bg-c-primary/0'
-			: 'bg-c-primary'} {classes}"
+			: 'bg-c-primary'} {classes} {shouldAnimate ? 'scale-animation' : ''}"
 	>
 		<div
 			class="w-[200%] h-full absolute left-0 top-0 flex items-center justify-center {$isTouchscreen
@@ -61,7 +85,7 @@
 				: 'flex'}"
 		>
 			<div
-				class="w-full aspect-square origin-left rounded-full transition transform -translate-x-full 
+				class="w-full aspect-square origin-left rounded-full transition transform -translate-x-full
 				{type === 'success'
 					? 'bg-c-success-secondary'
 					: type === 'danger'
@@ -109,7 +133,7 @@
 	</a>
 {:else}
 	<button
-		on:click={onClick}
+		on:click={_onClick}
 		disabled={disabled || loading || uploading}
 		class="{noPadding
 			? 'p-0'
@@ -121,7 +145,7 @@
 			? 'text-sm rounded-lg2'
 			: size === 'sm'
 			? 'text-sm rounded-lg2'
-			: 'text-base rounded-xl'} relative flex items-center justify-center text-center font-bold gap-2 
+			: 'text-base rounded-xl'} relative flex items-center justify-center text-center font-bold gap-2
 			overflow-hidden z-0 group {type === 'no-bg-on-bg'
 			? ''
 			: 'shadow-lg shadow-c-shadow/[var(--o-shadow-strong)]'} {type === 'no-bg-on-bg'
@@ -138,7 +162,9 @@
 			? 'bg-c-danger'
 			: type === 'no-bg-on-bg'
 			? 'bg-c-primary/0'
-			: 'bg-c-primary'} {fadeOnDisabled && disabled ? 'opacity-75' : ''} {classes}"
+			: 'bg-c-primary'} {fadeOnDisabled && disabled ? 'opacity-75' : ''} {classes} {shouldAnimate
+			? 'scale-animation'
+			: ''}"
 	>
 		<div
 			class="w-[200%] h-full absolute left-0 top-0 flex items-center justify-center {$isTouchscreen
@@ -146,7 +172,7 @@
 				: 'flex'}"
 		>
 			<div
-				class="w-full aspect-square origin-left rounded-full transition transform -translate-x-full 
+				class="w-full aspect-square origin-left rounded-full transition transform -translate-x-full
 					{type === 'success'
 					? 'bg-c-success-secondary'
 					: type === 'danger'
@@ -195,3 +221,21 @@
 		</div>
 	</button>
 {/if}
+
+<style>
+	.scale-animation {
+		animation: scale 0.175s;
+	}
+	@keyframes scale {
+		0% {
+			transform: scale(1);
+		}
+		50% {
+			transform: scale(0.95);
+			animation-timing-function: ease-in-out;
+		}
+		100% {
+			transform: scale(1);
+		}
+	}
+</style>

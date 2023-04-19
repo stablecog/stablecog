@@ -23,26 +23,27 @@ export const navbarRouteDefinitions = derived(
 				stickyType: $isUserGalleryEditActive
 					? 'not-sticky'
 					: $windowWidth < mdBreakpoint
-					? 'auto'
-					: 'sticky'
+						? 'auto'
+						: 'sticky'
 			},
 			{ pathname: '/gallery', stickyType: $windowWidth < mdBreakpoint ? 'auto' : 'sticky' },
 			{ pathname: '/blog', stickyType: $windowWidth < mdBreakpoint ? 'auto' : 'sticky' },
+			{ pathname: '/guide', stickyType: $windowWidth < mdBreakpoint ? 'auto' : 'sticky' },
 			{
 				pathname: '/admin/gallery',
 				stickyType: $isAdminGalleryEditActive
 					? 'not-sticky'
 					: $windowWidth < mdBreakpoint
-					? 'auto'
-					: 'sticky'
+						? 'auto'
+						: 'sticky'
 			},
 			{
 				pathname: '/admin/users',
 				stickyType: $isAdminGalleryEditActive
 					? 'not-sticky'
 					: $windowWidth < mdBreakpoint
-					? 'auto'
-					: 'sticky'
+						? 'auto'
+						: 'sticky'
 			},
 			{
 				pathname: '/admin/create',
