@@ -43,6 +43,8 @@ const r = unified()
 	.use(rehypeToC)
 	.use(rehypeStringify);
 
+const guideEntriesImport = import.meta.glob(`/src/lib/md/guide/**/*`);
+
 function getSlugFromKey(key: string) {
 	const lastSlash = key.lastIndexOf('/');
 	const fileNameWithExtension = key.slice(lastSlash + 1);
@@ -52,7 +54,6 @@ function getSlugFromKey(key: string) {
 }
 
 export async function getGuideEntryFromPathname(pathname: string) {
-	const guideEntriesImport = import.meta.glob(`/src/lib/md/guide/**/*`);
 	let key = `/src/lib/md${pathname}.md`;
 	let importFunction = guideEntriesImport[key];
 	if (!importFunction) {
