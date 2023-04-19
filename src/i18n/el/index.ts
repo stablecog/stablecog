@@ -647,14 +647,6 @@ const es: Translation = {
 		PageParagraph:
 			'Αν έχετε οποιεσδήποτε ερωτήσεις, παρακαλούμε επικοινωνήστε μαζί μας χρησιμοποιώντας τους παρακάτω συνδέσμους και θα απαντήσουμε το συντομότερο δυνατό.'
 	},
-	Guide: {
-		PageTitle: 'Guide',
-		GuideButton: 'Guide',
-		PreviousTitle: 'Previous',
-		NextTitle: 'Next',
-		ChaptersTitle: 'Chapters',
-		ChapterTitle: 'Chapter'
-	},
 	Legal: {
 		TermsOfServiceTitle: 'Όροι χρήσης',
 		PrivacyPolicyTitle: 'Πολιτική Απορρήτου',

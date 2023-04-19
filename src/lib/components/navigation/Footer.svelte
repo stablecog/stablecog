@@ -5,7 +5,7 @@
 </script>
 
 <div class="w-full flex flex-wrap justify-center items-center px-6 py-5 gap-1.5 md:gap-2.5">
-	<ScBar isInline withBlog withEmail withGuide />
+	<ScBar isInline withBlog withEmail />
 	<div class="w-full md:w-auto flex flex-col flex-wrap items-start -mt-1 md:-mt-1.5">
 		<div class="w-full md:w-auto flex flex-row justify-center items-center gap-1.5">
 			<a

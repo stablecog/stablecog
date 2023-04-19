@@ -632,14 +632,6 @@ const tr: Translation = {
 		PageTitle: 'Destek',
 		PageParagraph: 'Herhangi bir soru sormak istersen aşağıdaki linklerden bize ulaşabilirsin.'
 	},
-	Guide: {
-		PageTitle: 'Guide',
-		GuideButton: 'Guide',
-		PreviousTitle: 'Previous',
-		NextTitle: 'Next',
-		ChaptersTitle: 'Chapters',
-		ChapterTitle: 'Chapter'
-	},
 	Legal: {
 		TermsOfServiceTitle: 'Kullanım Şartları',
 		PrivacyPolicyTitle: 'Gizlilik Politikası',

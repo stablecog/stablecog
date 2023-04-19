@@ -34,7 +34,6 @@
 	import { windowWidth } from '$ts/stores/window';
 	import { mdBreakpoint } from '$components/generationFullScreen/constants';
 	import LogoButton from '$components/buttons/LogoButton.svelte';
-	import IconGuide from '$components/icons/IconGuide.svelte';
 
 	export let notAtTheVeryTop = false;
 	export let scrollDirection: 'up' | 'down' = 'down';
@@ -42,8 +41,6 @@
 	let isSignInModalOpen = false;
 	let isSettingsOpen = false;
 	let isAccountMenuOpen = false;
-
-	const routesWithDrawer = ['/guide'];
 
 	const toggleSettings = () => (isSettingsOpen = !isSettingsOpen);
 	const closeSettings = () => (isSettingsOpen = false);
@@ -166,13 +163,6 @@
 			<IconButton class="p-3 -mx-3 hidden md:block" href="/discord" target="_blank" name="Discord">
 				<IconSc
 					type="discord"
-					class="w-8 h-8 relative transition transform {!$isTouchscreen
-						? 'group-hover/iconbutton:text-c-primary'
-						: 'text-c-on-bg'}"
-				/>
-			</IconButton>
-			<IconButton class="p-3 -mx-3 hidden md:block" href="/guide" name="Guide">
-				<IconGuide
 					class="w-8 h-8 relative transition transform {!$isTouchscreen
 						? 'group-hover/iconbutton:text-c-primary'
 						: 'text-c-on-bg'}"

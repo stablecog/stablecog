@@ -16,7 +16,6 @@
 	import { userSummary } from '$ts/stores/user/summary';
 	import DropdownWrapper from './DropdownWrapper.svelte';
 	import { appVersion } from '$ts/stores/appVersion';
-	import IconGuide from '$components/icons/IconGuide.svelte';
 
 	export let closeAccountMenu: () => void;
 </script>
@@ -24,7 +23,7 @@
 <DropdownWrapper class="w-72 max-w-[calc(100vw-1.5rem)]">
 	<div class="w-full flex gap-4 items-center px-5 py-4">
 		<div
-			class="w-9 h-9 ring-2 ring-c-on-bg/25 overflow-hidden rounded-full transition transform 
+			class="w-9 h-9 ring-2 ring-c-on-bg/25 overflow-hidden rounded-full transition transform
 			relative shadow-lg shadow-c-shadow/[var(--o-shadow-strong)]"
 		>
 			<Avatar str={$page.data.session?.user.email || ''} class="w-full h-full relative" />
@@ -97,22 +96,6 @@
 						: ''}"
 				>
 					{$LL.Account.ManageAccountButton()}
-				</p>
-			</div>
-		</DropdownItem>
-		<DropdownItem href="/guide" onClick={closeAccountMenu}>
-			<div class="flex-1 min-w-0 flex items-center justify-start gap-2.5">
-				<IconGuide
-					class="transition w-6 h-6 text-c-text {!$isTouchscreen
-						? 'group-hover:text-c-primary'
-						: ''}"
-				/>
-				<p
-					class="flex-1 min-w-0 overflow-hidden overflow-ellipsis text-left transition text-c-on-bg {!$isTouchscreen
-						? 'group-hover:text-c-primary'
-						: ''}"
-				>
-					{$LL.Guide.GuideButton()}
 				</p>
 			</div>
 		</DropdownItem>
