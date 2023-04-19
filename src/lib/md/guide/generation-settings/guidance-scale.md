@@ -13,7 +13,7 @@ Guidance scale controls how similar the generated image will be to the prompt. A
 
 Guidance scale can also be thought of as "prompt strength". If the prompt strength is higher, then the model has less leeway to be more creative. The default value for guidance scale for various Stable Diffusion based models tends to be 7-7.5. We are using 7 on Stablecog.
 
-### Guidance Scale Example
+## Guidance Scale Examples
 
 Here is the same generation created with guidance scale set to 1, 3, 7 and 15. The prompt is: "Dark, moody, high contrast, an alien with a tomato head".
 

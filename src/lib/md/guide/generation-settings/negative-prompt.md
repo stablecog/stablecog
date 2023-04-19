@@ -13,7 +13,7 @@ Negative prompt can be considered the opposite of a prompt. With prompt, you des
 
 For example, Stable Diffusion and various other fine-tuned models aren't best when it comes to generating images of hands. So you might have "hands" as you negative prompt to tell the model to steer away from trying to create hands. Or you can use "NSFW" as a negative prompt to tell the model to steer away from creating NSFW images.
 
-### Negative Prompt Example
+## Negative Prompt Examples
 
 Two generations below have the exact same settings except for the negative prompt. The left one doesn't have any negative prompts. Right one has "green tones" as the negative prompt. Notice how the model tries to steer away from green tones in the right one.
 

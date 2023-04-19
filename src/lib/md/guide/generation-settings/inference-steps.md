@@ -13,7 +13,7 @@ Stable Diffusion starts with an image that consists of random noise. Then it con
 
 Although it is sometimes seen as a "quality slider" it's not necessarily that. Because after a certain number of steps, certain models in certain configurations will start introducing details that you might not like. The sweet spot for speed vs quality differs for each [scheduler](/guide/generation-settings/scheduler) but 30 is usually a good starting point to experiment.
 
-### Inference Steps Example
+## Inference Steps Examples
 
 Here is the same generation created at 5, 10, 20, 30, 40 and 50 inference steps.
 

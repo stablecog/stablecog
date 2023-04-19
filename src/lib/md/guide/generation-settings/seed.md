@@ -13,7 +13,7 @@ A seed is a way of initializing the random number generator that is used to gene
 
 Although it is not a very common use case, it can come in handy with comparing various settings. For example, you can use the same seed for two different models and compare the results. Or you can use the same seed for two different schedulers and compare the results.
 
-### Seed Example
+## Seed Examples
 
 Two generations below have the exact same settings except for the seed. Left one has the seed of 415798970 and the right one has the seed of 1000097042. Notice how changing the seed results in a completely different image. These seeds can later be used to reproduce the same images.
 

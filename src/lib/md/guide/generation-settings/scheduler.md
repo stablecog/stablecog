@@ -13,7 +13,7 @@ The scheduler controls the entire denoising process in which the model generates
 
 So, it is hard to name the "best" scheduler. It simply depends on what you are trying to create. Euler is a tried and true standard one. Euler Ancestral tends to be more creative and perform nicely as the inference steps go higher. DPM Multistep is good at fine details.
 
-### Scheduler Example
+## Scheduler Examples
 
 Below are 4 generations that have the exact same settings except for their schedulers. Some of them produces similar results while some are different.
 

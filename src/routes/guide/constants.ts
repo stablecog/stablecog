@@ -1,125 +1,111 @@
 import type { TSidebarItem } from '$routes/guide/types';
 
-const bucketUrl = 'https://ba.stablecog.com';
+const previewBaseUrl = 'https://ba.stablecog.com/guide/previews';
 
-export const sidebar: TSidebarItem = {
+function getPreviewUrlFromGuidePathname(pathname: string) {
+	const parts = pathname.split('/');
+	const lastPart = parts[parts.length - 1];
+	return `${previewBaseUrl}/${lastPart}.jpg`;
+}
+
+const _sidebar: TSidebarItem = {
 	title: 'Guide',
 	pathname: '/guide',
-	preview_image_url: `${bucketUrl}/guide/previews/guide.jpg`,
 	children: [
 		{
 			title: 'Overview',
-			pathname: '/guide',
-			preview_image_url: `${bucketUrl}/guide/previews/guide.jpg`
+			pathname: '/guide'
 		},
 		{
 			title: 'Prompting',
 			pathname: '/guide/prompting',
-			preview_image_url: `${bucketUrl}/guide/previews/prompting.jpg`,
 			children: [
 				{
 					title: 'Styles',
-					pathname: '/guide/prompting/styles',
-					preview_image_url: `${bucketUrl}/guide/previews/styles.jpg`
+					pathname: '/guide/prompting/styles'
 				},
 				{
 					title: 'Environments',
-					pathname: '/guide/prompting/environments',
-					preview_image_url: `${bucketUrl}/guide/previews/environments.jpg`
+					pathname: '/guide/prompting/environments'
 				},
 				{
 					title: 'Emotions',
-					pathname: '/guide/prompting/emotions',
-					preview_image_url: `${bucketUrl}/guide/previews/emotions.jpg`
+					pathname: '/guide/prompting/emotions'
 				}
 			]
 		},
 		{
 			title: 'Generation Settings',
 			pathname: '/guide/generation-settings',
-			preview_image_url: `${bucketUrl}/guide/previews/generation-settings.jpg`,
 			children: [
 				{
 					title: 'Inference Steps',
-					pathname: '/guide/generation-settings/inference-steps',
-					preview_image_url: `${bucketUrl}/guide/previews/inference-steps.jpg`
+					pathname: '/guide/generation-settings/inference-steps'
 				},
 				{
 					title: 'Guidance Scale',
-					pathname: '/guide/generation-settings/guidance-scale',
-					preview_image_url: `${bucketUrl}/guide/previews/guidance-scale.jpg`
+					pathname: '/guide/generation-settings/guidance-scale'
 				},
 				{
 					title: 'Negative Prompt',
-					pathname: '/guide/generation-settings/negative-prompt',
-					preview_image_url: `${bucketUrl}/guide/previews/negative-prompt.jpg`
+					pathname: '/guide/generation-settings/negative-prompt'
 				},
 				{
 					title: 'Scheduler',
-					pathname: '/guide/generation-settings/scheduler',
-					preview_image_url: `${bucketUrl}/guide/previews/scheduler.jpg`
+					pathname: '/guide/generation-settings/scheduler'
 				},
 				{
 					title: 'Seed',
-					pathname: '/guide/generation-settings/seed',
-					preview_image_url: `${bucketUrl}/guide/previews/seed.jpg`
+					pathname: '/guide/generation-settings/seed'
 				}
 			]
 		},
 		{
 			title: 'Models',
 			pathname: '/guide/models',
-			preview_image_url: `${bucketUrl}/guide/previews/models.jpg`,
 			children: [
 				{
 					title: 'Kandinsky',
-					pathname: '/guide/models/kandinsky',
-					preview_image_url: `${bucketUrl}/guide/previews/kandinsky.jpg`
+					pathname: '/guide/models/kandinsky'
 				},
 				{
 					title: 'Luna Diffusion',
-					pathname: '/guide/models/luna-diffusion',
-					preview_image_url: `${bucketUrl}/guide/previews/luna-diffusion.jpg`
+					pathname: '/guide/models/luna-diffusion'
 				},
 				{
 					title: 'Stable Diffusion',
-					pathname: '/guide/models/stable-diffusion',
-					preview_image_url: `${bucketUrl}/guide/previews/stable-diffusion.jpg`
+					pathname: '/guide/models/stable-diffusion'
 				},
 				{
 					title: 'Openjourney',
-					pathname: '/guide/models/openjourney',
-					preview_image_url: `${bucketUrl}/guide/previews/openjourney.jpg`
+					pathname: '/guide/models/openjourney'
 				},
 				{
 					title: 'Waifu Diffusion',
-					pathname: '/guide/models/waifu-diffusion',
-					preview_image_url: `${bucketUrl}/guide/previews/waifu-diffusion.jpg`
+					pathname: '/guide/models/waifu-diffusion'
 				},
 				{
 					title: '22h Diffusion',
-					pathname: '/guide/models/22h-diffusion',
-					preview_image_url: `${bucketUrl}/guide/previews/22h-diffusion.jpg`
+					pathname: '/guide/models/22h-diffusion'
 				},
 				{
 					title: 'Arcane Diffusion',
-					pathname: '/guide/models/arcane-diffusion',
-					preview_image_url: `${bucketUrl}/guide/previews/arcane-diffusion.jpg`
+					pathname: '/guide/models/arcane-diffusion'
 				},
 				{
 					title: 'Redshift Diffusion',
-					pathname: '/guide/models/redshift-diffusion',
-					preview_image_url: `${bucketUrl}/guide/previews/redshift-diffusion.jpg`
+					pathname: '/guide/models/redshift-diffusion'
 				},
 				{
 					title: 'Ghibli Diffusion',
-					pathname: '/guide/models/ghibli-diffusion',
-					preview_image_url: `${bucketUrl}/guide/previews/ghibli-diffusion.jpg`
+					pathname: '/guide/models/ghibli-diffusion'
 				}
 			]
 		}
 	]
 };
+
+export const sidebar = addImageUrlToSidebarItem(_sidebar);
 
 export const flatSidebarShallow = sidebar.children!.reduce((acc, item) => {
 	acc.push({ title: item.title, pathname: item.pathname });
@@ -128,3 +114,14 @@ export const flatSidebarShallow = sidebar.children!.reduce((acc, item) => {
 	}
 	return acc;
 }, [] as TSidebarItem[]);
+
+function addImageUrlToSidebarItem(item: TSidebarItem): TSidebarItem {
+	let obj = { ...item, preview_image_url: getPreviewUrlFromGuidePathname(item.pathname) };
+	if (item.children) {
+		obj = {
+			...obj,
+			children: item.children.map((child) => addImageUrlToSidebarItem(child))
+		};
+	}
+	return obj;
+}

@@ -13,7 +13,7 @@ You can put your subjects in different environments to set the mood of the image
 
 You can still tweak these environments to your liking. The environment you describe doesn't even need to exist in the real world. However, selecting a simple environment is a good way to get started.
 
-## Examples
+## Environment Examples
 
 The examples below are made with [Kandinsky v2.1](/guide/models/kandinsky).
 

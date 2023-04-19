@@ -13,7 +13,7 @@ You can use various emotions when promting. These emotions can be simple or comp
 
 Picking a simple emotion is a good place to start. As you get more familiar, you can introduce more complex emotions and see how the model you picked responds to it.
 
-## Examples
+## Emotion Examples
 
 The examples below are made with [Kandinsky v2.1](/guide/models/kandinsky).
 

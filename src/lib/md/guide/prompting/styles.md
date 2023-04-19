@@ -13,7 +13,7 @@ Using art styles is a great way to describe what you want in fewer words. Althou
 
 Some fine-tuned Stable Diffusion models are made specifically for certain styles like Waifu Diffusion being made for anime images. These kinds of models can ignore some of these styles. However, more general models like Kandinsky and Stable Diffusion v1.5 can use these styles more effectively.
 
-## Examples
+## Style Examples
 
 The examples below are made with [Kandinsky v2.1](/guide/models/kandinsky).
 
