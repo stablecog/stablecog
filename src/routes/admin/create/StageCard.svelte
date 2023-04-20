@@ -32,7 +32,7 @@
 				</div>
 			{/if}
 			{#if status === undefined || status === 'succeeded'}
-				<GenerationImage cardType="generate" useUpscaledImage {generation} />
+				<GenerationImage cardType="stage" useUpscaledImage {generation} />
 			{/if}
 		{:else}
 			<div

@@ -228,7 +228,7 @@
 				return;
 			}
 			e.currentTarget.blur();
-			activeGeneration.set(generation);
+			activeGeneration.set({ ...generation, card_type: cardType });
 			if ($page.url.pathname === '/gallery') {
 				logGalleryGenerationOpened(logProps);
 			}
