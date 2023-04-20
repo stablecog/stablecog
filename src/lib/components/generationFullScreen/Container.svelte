@@ -15,10 +15,9 @@
 	let imageContainerHeight = 0;
 
 	$: generationAspectRatio = generation.width / generation.height;
-	$: maxWidthConstant = generationAspectRatio >= 3 / 2 ? 1440 : 1280;
 
-	$: mainContainerWidth = Math.min($windowWidth || 0, maxWidthConstant);
-	$: mainContainerHeight = Math.min($windowHeight || 0, mainContainerMaxHeight);
+	$: mainContainerWidth = $windowWidth;
+	$: mainContainerHeight = $windowHeight;
 
 	$: modalMaxWidth = mainContainerWidth - 2 * mainContainerPadding;
 	$: modalMaxHeight = mainContainerHeight - 2 * mainContainerPadding;
