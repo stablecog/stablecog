@@ -183,6 +183,7 @@
 		for (let i = 0; i < $generations.length; i++) {
 			const generation = $generations[i];
 			if (generation.status !== 'to-be-submitted') continue;
+			if (generation.is_placeholder) continue;
 			isSubmittingGenerations = true;
 			try {
 				console.log('Submitting initial generation request', generation);

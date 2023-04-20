@@ -45,7 +45,6 @@
 	import { browser } from '$app/environment';
 	import UpscaleAnimation from '$components/generationFullScreen/UpscaleAnimation.svelte';
 	import GenerationFullScreenImageSet from '$components/generationFullScreen/GenerationFullScreenImageSet.svelte';
-	import { generationHeight } from '$ts/stores/generationSettings';
 
 	export let generation: TGenerationWithSelectedOutput;
 	export let modalType: TGenerationFullScreenModalType;

@@ -1,4 +1,10 @@
-export type TGenerationFullScreenModalType = 'generate' | 'history' | 'gallery' | 'admin-gallery';
+export type TGenerationFullScreenModalType =
+	| 'generate'
+	| 'history'
+	| 'gallery'
+	| 'admin-gallery'
+	| 'create'
+	| 'stage';
 export interface TButtonObjectsWithState {
 	[key: string]: TButtonObjectWithState;
 }

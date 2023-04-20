@@ -2,9 +2,14 @@
 	import { browser } from '$app/environment';
 	import GenerationFullScreen from '$components/generationFullScreen/GenerationFullScreen.svelte';
 	import SettingsPanel from '$routes/admin/create/SettingsPanel.svelte';
-	import { activeGeneration, generations } from '$ts/stores/user/generation';
+	import {
+		activeGeneration,
+		generations,
+		type TGeneration,
+		type TGenerationFullOutput
+	} from '$ts/stores/user/generation';
 
-	import { onDestroy, onMount } from 'svelte';
+	import { onDestroy, onMount, tick } from 'svelte';
 	import PromptBar from '$routes/admin/create/PromptBar.svelte';
 	import { quadOut } from 'svelte/easing';
 	import { fade, fly } from 'svelte/transition';
@@ -25,6 +30,16 @@
 	import { themeApp } from '$ts/stores/theme';
 	import GenerationGridInfinite from '$components/grids/GenerationGridInfinite.svelte';
 	import type { TIsReadyMap } from '$routes/admin/create/types.js';
+	import {
+		generationGuidanceScale,
+		generationHeight,
+		generationInferenceSteps,
+		generationNumOutputs,
+		generationWidth
+	} from '$ts/stores/generationSettings.js';
+	import { generateSSEId } from '$ts/helpers/generateSSEId.js';
+	import { generationModelIdDefault } from '$ts/constants/generationModels.js';
+	import { schedulerIdDefault } from '$ts/constants/schedulers.js';
 
 	export let data;
 
@@ -71,7 +86,7 @@
 
 	$: gridRerenderKey = `create_page_user_generation_full_outputs_${userGalleryCurrentView}_${
 		$generations.length
-	}_${$generations.flatMap((g) => g.outputs).length}_${
+	}_${$generations.flatMap((g) => g.outputs).length}_${pinnedFullOutputs.length}_${
 		$userGenerationFullOutputsQuery?.isInitialLoading
 	}_${$userGenerationFullOutputsQuery?.isStale}_${
 		$userGenerationFullOutputsQuery?.data?.pages?.[0]?.outputs &&
@@ -81,8 +96,43 @@
 	}`;
 
 	$: pinnedFullOutputs = $generations
-		.filter((g, i) => i !== 0)
+		.filter((g) => g.status !== 'pre-submit')
 		.flatMap((g) => g.outputs.map((o) => ({ ...o, generation: g })));
+
+	let mounted = false;
+	let generationPlaceholder: TGeneration | undefined;
+	$: generationPlaceholder = mounted
+		? {
+				is_placeholder: true,
+				ui_id: generateSSEId(),
+				submit_to_gallery: false,
+				width: Number($generationWidth),
+				height: Number($generationHeight),
+				prompt: {
+					id: '1',
+					text: 'placeholder prompt'
+				},
+				negative_prompt: {
+					id: '1',
+					text: 'placeholder negative prompt'
+				},
+				created_at: Date.now(),
+				guidance_scale: $generationGuidanceScale,
+				inference_steps: Number($generationInferenceSteps),
+				model_id: generationModelIdDefault,
+				scheduler_id: schedulerIdDefault,
+				seed: 1,
+				num_outputs: Number($generationNumOutputs),
+				status: 'pre-submit',
+				outputs: Array.from({ length: Number($generationNumOutputs) }).map((i) => ({
+					id: '',
+					image_url: ''
+				}))
+		  }
+		: undefined;
+
+	$: [mounted, generationPlaceholder, $generationNumOutputs, $generationWidth, $generationHeight],
+		addPlacholderGenerationToGenerations();
 
 	function openSignInModal() {
 		isSignInModalOpen = true;
@@ -95,23 +145,48 @@
 			return;
 		}
 		if (key === 'ArrowLeft' || key === 'ArrowRight') {
-			const outputs = $activeGeneration.outputs;
+			let outputs: TGenerationFullOutput[] | undefined;
+			if ($activeGeneration.card_type === 'create') {
+				const userGenerationOutputs = $userGenerationFullOutputsQuery?.data?.pages.flatMap(
+					(p) => p.outputs
+				);
+				outputs = [...pinnedFullOutputs, ...(userGenerationOutputs ? userGenerationOutputs : [])];
+				console.log(outputs.length);
+			} else {
+				outputs = $activeGeneration.outputs.map((o) => ({ ...o, generation: $activeGeneration! }));
+			}
+			if (!outputs) return;
+			outputs = outputs.filter((o) => o.image_url);
 			const index = outputs.findIndex((g) => g.id === $activeGeneration?.selected_output.id);
 			if (index === -1) return;
 			const addition = key === 'ArrowLeft' ? -1 : 1;
-			const newIndex =
-				(index + addition + $activeGeneration.outputs.length) % $activeGeneration.outputs.length;
+			const newIndex = (index + addition + outputs.length) % outputs.length;
+			const newOutput = outputs[newIndex];
 			activeGeneration.set({
-				...$activeGeneration,
-				selected_output: $activeGeneration.outputs[newIndex]
+				...newOutput.generation,
+				selected_output: newOutput,
+				card_type: $activeGeneration.card_type
 			});
 		}
 	}
 
-	onMount(() => {
+	function addPlacholderGenerationToGenerations() {
+		if ($generations && $generations[0] && $generations[0].status === 'pre-submit') return;
+		generations.update((gs) => [
+			...(generationPlaceholder !== undefined ? [generationPlaceholder] : []),
+			...gs
+		]);
+	}
+
+	onMount(async () => {
 		if (!browser) return;
 		document.body.style.overflow = 'hidden';
 		document.body.style.height = '100%';
+		mounted = true;
+		await tick();
+		if (generationPlaceholder) {
+			generations.set([generationPlaceholder]);
+		}
 	});
 
 	onDestroy(() => {

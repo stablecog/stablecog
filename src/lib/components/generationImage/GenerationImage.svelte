@@ -228,7 +228,7 @@
 				return;
 			}
 			e.currentTarget.blur();
-			activeGeneration.set(generation);
+			activeGeneration.set({ ...generation, card_type: cardType });
 			if ($page.url.pathname === '/gallery') {
 				logGalleryGenerationOpened(logProps);
 			}
@@ -311,7 +311,7 @@
 			{#if !isGalleryEditActive && !generation.selected_output.is_deleted}
 				<div
 					bind:this={rightButtonContainer}
-					class="flex flex-row flex-wrap items-center justify-end transition transform 
+					class="flex flex-row flex-wrap items-center justify-end transition transform
 					pointer-events-auto"
 				>
 					{#if cardType !== 'admin-gallery'}

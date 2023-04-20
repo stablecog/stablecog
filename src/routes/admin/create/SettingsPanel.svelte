@@ -102,6 +102,7 @@
 	import IconSeed from '$components/icons/IconSeed.svelte';
 	import TabLikeInput from '$components/tabBars/TabLikeInput.svelte';
 	import type { TIsReadyMap } from '$routes/admin/create/types';
+	import { generations } from '$ts/stores/user/generation';
 
 	export let rounding: 'all' | 'top' | 'bottom' = 'all';
 	export let serverData: TCreatePageData;
@@ -192,11 +193,31 @@
 	],
 		setEstimatedGenerationDuration();
 
+	$: [$generationWidth, $generationHeight, $generationNumOutputs], setGenerationOnStage();
+
 	$: isInferenceStepsValid = <T>(s: T) => {
 		return Number(s) * Number($generationHeight) * Number($generationWidth) < maxProPixelSteps;
 	};
 
 	$: [$generationHeight, $generationWidth], adjustInferenceSteps();
+	$: $generationModelId, adjustSchedulerId();
+
+	function setGenerationOnStage() {
+		if ($generations && $generations[0] && $generations[0].status === 'pre-submit') {
+			generations.update((generations) => {
+				generations[0].width = Number($generationWidth);
+				generations[0].height = Number($generationHeight);
+				generations[0].num_outputs = Number($generationNumOutputs);
+				generations[0].outputs = Array.from({ length: Number(generations[0].num_outputs) }).map(
+					(i) => ({
+						id: '',
+						image_url: ''
+					})
+				);
+				return generations;
+			});
+		}
+	}
 
 	function setEstimatedGenerationDuration() {
 		if ($generationCostCompletionPerMs !== null) {
@@ -209,8 +230,6 @@
 			estimatedGenerationDurationMs.set(cost / $generationCostCompletionPerMs);
 		}
 	}
-
-	$: $generationModelId, adjustSchedulerId();
 
 	const adjustSchedulerId = () => {
 		if (

@@ -12,6 +12,7 @@ import {
 	newGenerationStartAnimation
 } from '$ts/animation/generationAnimation';
 import type { Tweened } from 'svelte/motion';
+import type { TGenerationImageCardType } from '$components/generationImage/types';
 
 export const generations = writable<TGeneration[]>([]);
 export const activeGeneration = writable<TGenerationWithSelectedOutput | undefined>(undefined);
@@ -145,6 +146,10 @@ export async function queueInitialGenerationRequest(request: TInitialGenerationR
 		};
 		if ($generations === null || $generations.length === 0) {
 			return [generationToSubmit];
+		}
+		if ($generations[0].status === 'pre-submit') {
+			$generations[0] = { ...generationToSubmit };
+			return $generations;
 		}
 		$generations = [generationToSubmit, ...$generations];
 		return $generations;
@@ -342,6 +347,7 @@ export interface TGenerationFullOutput extends TGenerationOutput {
 
 export interface TGenerationWithSelectedOutput extends TGeneration {
 	selected_output: TGenerationOutput;
+	card_type?: TGenerationImageCardType;
 }
 
 export interface TInitialGenerationRequest extends TGenerationBase {
@@ -354,6 +360,7 @@ export interface TInitialGenerationRequest extends TGenerationBase {
 }
 
 export type TGenerationStatus =
+	| 'pre-submit'
 	| 'to-be-submitted'
 	| 'server-received'
 	| 'server-processing'

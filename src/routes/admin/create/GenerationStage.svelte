@@ -1,56 +1,13 @@
 <script lang="ts">
-	import { browser } from '$app/environment';
-	import GenerationCard from '$routes/admin/create/GenerationCard.svelte';
+	import StageCard from '$routes/admin/create/StageCard.svelte';
 	import type { TIsReadyMap } from '$routes/admin/create/types';
-	import { generationModelIdDefault } from '$ts/constants/generationModels';
-	import { schedulerIdDefault } from '$ts/constants/schedulers';
-	import { generateSSEId } from '$ts/helpers/generateSSEId';
-	import {
-		generationGuidanceScale,
-		generationHeight,
-		generationInferenceSteps,
-		generationNumOutputs,
-		generationWidth
-	} from '$ts/stores/generationSettings';
 	import type { TGeneration } from '$ts/stores/user/generation';
 	import { onMount } from 'svelte';
 
 	export let stageWidth: number;
 	export let stageHeight: number;
 	export let isReadyMap: TIsReadyMap;
-
 	export let generation: TGeneration;
-
-	let generationPlaceholder: TGeneration | undefined;
-	$: generationPlaceholder = mounted
-		? {
-				is_placeholder: true,
-				ui_id: generateSSEId(),
-				submit_to_gallery: false,
-				width: Number($generationWidth),
-				height: Number($generationHeight),
-				prompt: {
-					id: '1234',
-					text: 'asdfafdsad'
-				},
-				negative_prompt: {
-					id: '1234',
-					text: 'asdfasdfsdf'
-				},
-				created_at: Date.now(),
-				guidance_scale: $generationGuidanceScale,
-				inference_steps: Number($generationInferenceSteps),
-				model_id: generationModelIdDefault,
-				scheduler_id: schedulerIdDefault,
-				seed: 1,
-				num_outputs: Number($generationNumOutputs),
-				status: 'succeeded',
-				outputs: Array.from({ length: Number($generationNumOutputs) }).map((i) => ({
-					id: '',
-					image_url: ''
-				}))
-		  }
-		: undefined;
 
 	let cols: number;
 	let rows: number;
@@ -66,33 +23,12 @@
 	let marginLeft: number;
 	let marginTop: number;
 
-	let lastStageWidth: number;
-	let lastStageHeight: number;
-	let lastGenerationId: string | undefined;
 	let showStage = false;
 
 	const animationDuration = 0.15;
 	const animationEasing = 'cubic-bezier(0.45, 0, 0.55, 1)';
 
-	$: [$generationWidth, $generationHeight, $generationNumOutputs], setGenerationToCreate();
-	$: [stageWidth, stageHeight, generation, generationPlaceholder], setDimensions();
-
-	function setGenerationToCreate() {
-		if (!generationPlaceholder) return;
-		generationPlaceholder.id = generateSSEId();
-		generationPlaceholder.width = Number($generationWidth);
-		generationPlaceholder.height = Number($generationHeight);
-		generationPlaceholder.num_outputs = Number($generationNumOutputs);
-		generationPlaceholder.outputs = Array.from({ length: Number($generationNumOutputs) }).map(
-			(i) => {
-				return {
-					id: '',
-					image_url: ''
-				};
-			}
-		);
-		generationPlaceholder = { ...generationPlaceholder };
-	}
+	$: [stageWidth, stageHeight, generation], setDimensions();
 
 	function setDimensions() {
 		let hasNonReady = false;
@@ -103,28 +39,21 @@
 				break;
 			}
 		}
-		if (!generationPlaceholder || hasNonReady) return;
-		if (
-			stageWidth === lastStageWidth &&
-			stageHeight === lastStageHeight &&
-			lastGenerationId === generationPlaceholder.id
-		) {
-			return;
-		}
-		const aspectRatio = generationPlaceholder.width / generationPlaceholder.height;
+		if (!generation || hasNonReady) return;
+		const aspectRatio = generation.width / generation.height;
 		cols = getOptimalColumnCount(
 			stageWidth / stageHeight,
-			generationPlaceholder.width / generationPlaceholder.height,
-			generationPlaceholder.outputs.length
+			generation.width / generation.height,
+			generation.outputs.length
 		);
-		rows = Math.ceil(generationPlaceholder.outputs.length / cols);
+		rows = Math.ceil(generation.outputs.length / cols);
 		totalColGapWidth = (cols - 1) * gap;
 		totalRowGapHeight = (rows - 1) * gap;
 		stageWorkableWidth = stageWidth - totalColGapWidth;
 		stageWorkableHeight = stageHeight - totalRowGapHeight;
 		isBoundByHeight =
-			stageWorkableHeight / (generationPlaceholder.height * rows) <
-			stageWorkableWidth / (generationPlaceholder.width * cols);
+			stageWorkableHeight / (generation.height * rows) <
+			stageWorkableWidth / (generation.width * cols);
 		if (isBoundByHeight) {
 			cardHeight = stageWorkableHeight / rows;
 			cardWidth = cardHeight * aspectRatio;
@@ -134,9 +63,6 @@
 		}
 		marginLeft = (stageWorkableWidth - cardWidth * cols) / 2;
 		marginTop = (stageWorkableHeight - cardHeight * rows) / 2;
-		lastStageWidth = stageWidth;
-		lastStageHeight = stageHeight;
-		lastGenerationId = generationPlaceholder.id;
 		showStage = true;
 	}
 
@@ -163,19 +89,16 @@
 		return optimalColumns;
 	}
 
-	let mounted = false;
 	onMount(() => {
-		mounted = true;
 		isReadyMap.generationStage = true;
 	});
 </script>
 
 <div style="width: {stageWidth}px; height: {stageHeight}px" class="absolute">
-	{#if generationPlaceholder && showStage}
-		{@const selectedGeneration = generation ? generation : generationPlaceholder}
-		{#each selectedGeneration.outputs as output, index}
+	{#if generation && showStage}
+		{#each generation.outputs as output, index}
 			{@const generationWithSelectedOutput = {
-				...selectedGeneration,
+				...generation,
 				selected_output: output
 			}}
 			{@const colIndex = index % cols}
@@ -194,7 +117,7 @@
 				"
 				class="absolute"
 			>
-				<GenerationCard generation={generationWithSelectedOutput} />
+				<StageCard generation={generationWithSelectedOutput} />
 			</div>
 		{/each}
 	{/if}
