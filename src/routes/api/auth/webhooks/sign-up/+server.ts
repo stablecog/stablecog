@@ -1,8 +1,6 @@
 import type { RequestHandler } from '@sveltejs/kit';
-import Mixpanel from 'mixpanel';
-import { PUBLIC_MIXPANEL_ID } from '$env/static/public';
 import { supabaseAdmin } from '$ts/constants/supabaseAdmin';
-const mixpanel = Mixpanel.init(PUBLIC_MIXPANEL_ID);
+import posthog from 'posthog-js';
 
 export const POST: RequestHandler = async ({ request }) => {
 	const body: IBody = await request.json();
@@ -19,11 +17,11 @@ export const POST: RequestHandler = async ({ request }) => {
 		return new Response('Error', { status: 500 });
 	}
 
-	mixpanel.people.set(user.id, {
-		$email: user.email
+	posthog.identify(user.id, {
+		email: user.email
 	});
 
-	mixpanel.track('Sign Up', {
+	posthog.capture('Sign Up', {
 		distinct_id: user.id,
 		'SC - Email': user.email
 	});

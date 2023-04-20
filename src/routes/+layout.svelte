@@ -15,7 +15,6 @@
 	import { isLocale } from '$i18n/i18n-util';
 	import { advancedMode, advancedModeApp } from '$ts/stores/advancedMode';
 	import { apiUrl, routesWithHiddenFooter } from '$ts/constants/main';
-	import mixpanel from 'mixpanel-browser';
 	import { supabase } from '$ts/constants/supabase';
 	import { afterNavigate, invalidateAll } from '$app/navigation';
 	import { logInitImageAdded, logPageview } from '$ts/helpers/loggers';
@@ -114,13 +113,6 @@
 		if (!mounted || !$page.data.session?.user.id || lastIdentity === $page.data.session?.user.id) {
 			return;
 		}
-		mixpanel.identify($page.data.session.user.id);
-		mixpanel.people.set({
-			$email: $page.data.session.user.email,
-			'SC - User Id': $page.data.session.user.id,
-			'SC - Stripe Product Id': $userSummary?.product_id,
-			'SC - App Version': $appVersion
-		});
 		posthog.identify($page.data.session.user.id, {
 			email: $page.data.session.user.email,
 			'SC - User Id': $page.data.session.user.id,
@@ -448,7 +440,6 @@
 	onMount(async () => {
 		setBodyClasses();
 		setNavbarState();
-		mixpanel.init(PUBLIC_MP_ID, { api_host: PUBLIC_MP_URL });
 		posthog.init(PUBLIC_PH_ID, {
 			api_host: PUBLIC_PH_URL
 		});
