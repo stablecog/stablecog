@@ -68,6 +68,10 @@
 		(cardType === 'history' && $isUserGalleryEditActive) ||
 		(cardType === 'admin-gallery' && $isAdminGalleryEditActive);
 
+	$: isGalleryEditActive =
+		(cardType === 'admin-gallery' && $isAdminGalleryEditActive) ||
+		(cardType === 'history' && $isUserGalleryEditActive);
+
 	let ig: MasonryInfiniteGrid;
 
 	$: rerenderKey, rerenderGrid();
@@ -149,6 +153,7 @@
 									{#if status === undefined || status === 'succeeded'}
 										<GenerationImage
 											{cardType}
+											{isGalleryEditActive}
 											useUpscaledImage={false}
 											generation={{
 												...output.generation,
