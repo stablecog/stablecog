@@ -15,18 +15,18 @@ It is often called the open-source [Midjourney](https://midjourney.com). It inde
 
 ## Kandinsky v2.1 Examples
 
-Here are some images created with Kandinsky on Stablecog.
+Here are some images created with Kandinsky v2.1 on Stablecog.
 
 ![Kandinsky v2.1 Examples](https://ba.stablecog.com/guide/models/kandinsky.jpg)<!--rehype:width=2560&height=5520-->
 
 ## Try Kandinsky v2.1
 
-You can try Kandinsky on Stablecog for free. Just click the button below.
+You can try Kandinsky v2.1 on Stablecog for free. Just click the button below.
 
 [Try Kandinsky v2.1](https://stablecog.com/?mi=22b0857d-7edc-4d00-9cd9-45aa509db093&adv=true)<!--rehype:button=true-->
 
 ## Kandinsky v2.1 on Stablecog Gallery
 
-You can also see more examples of images created with Kandinsky in our gallery by clicking the button below.
+You can also see more examples of images created with Kandinsky v2.1 in our gallery by clicking the button below.
 
 [Expore on Gallery](https://stablecog.com/gallery?mi=22b0857d-7edc-4d00-9cd9-45aa509db093)<!--rehype:button=true-->
