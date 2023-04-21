@@ -46,6 +46,7 @@
 				...$generationsQuery.data?.pages.flatMap((page) => page.outputs)
 		  ]
 		: undefined;
+
 	$: items = outputs?.map((output, index) => ({
 		key: index,
 		id: output.id,
@@ -62,6 +63,7 @@
 					.filter((i) => i.filter === $adminGalleryCurrentFilter)
 					.map((i) => i.output_id)
 			: [];
+
 	$: isHoverAllowed =
 		(cardType === 'history' && $isUserGalleryEditActive) ||
 		(cardType === 'admin-gallery' && $isAdminGalleryEditActive);

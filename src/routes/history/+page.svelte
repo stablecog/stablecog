@@ -186,7 +186,7 @@
 
 <MetaTag
 	title="History | Stablecog"
-	description="See your generation history on Stablecog (free and multi-lingual AI image generator)."
+	description="See your generation history on Stablecog, free and multi-lingual AI image generator."
 	imageUrl="{canonicalUrl}/previews{$page.url.pathname}.png"
 	canonical="{canonicalUrl}{$page.url.pathname}"
 />

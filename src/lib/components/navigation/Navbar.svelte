@@ -128,7 +128,7 @@
 						use:clickoutside={{ callback: closeAccountMenu }}
 						class="flex flex-col items-end relative"
 					>
-						<div class="px-2.5 py-2 -mx-3">
+						<div class="px-2.5 py-3.5 -mx-3">
 							<IconButton
 								class="shadow-lg rounded-full flex items-center justify-center shadow-c-shadow/[var(--o-shadow-strong)]"
 								noPadding
@@ -148,7 +148,7 @@
 								</div>
 							</IconButton>
 						</div>
-						<div class="relative -mr-15 md:-mr-1.5">
+						<div class="relative -mr-13 md:-mr-1.5">
 							{#if isAccountMenuOpen}
 								<AccountMenu {closeAccountMenu} />
 							{/if}
@@ -191,7 +191,7 @@
 					/>
 				</IconButton>
 				<div class="pr-3">
-					<div class="relative -mt-1">
+					<div class="relative">
 						{#if isSettingsOpen}
 							<SettingsMenu {closeSettings} />
 						{/if}
