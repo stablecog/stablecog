@@ -16,6 +16,7 @@ export type Locales =
 	| 'hr'
 	| 'ja'
 	| 'ko'
+	| 'nl'
 	| 'pt-br'
 	| 'pt-pt'
 	| 'ru'

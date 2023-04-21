@@ -338,4 +338,17 @@
 		<path fill-rule="evenodd" clip-rule="evenodd" d="M0 0H512V170.7H0V0Z" fill="white" />
 		<path fill-rule="evenodd" clip-rule="evenodd" d="M0 170.7H512V341.3H0V170.7Z" fill="#00966E" />
 	</svg>
+{:else if locale === 'nl'}
+	<svg
+		class={classes}
+		width="512"
+		height="512"
+		viewBox="0 0 512 512"
+		fill="none"
+		xmlns="http://www.w3.org/2000/svg"
+	>
+		<path d="M0 0H512V512H0V0Z" fill="#21468B" />
+		<path d="M0 0H512V341.3H0V0Z" fill="white" />
+		<path d="M0 0H512V170.7H0V0Z" fill="#AE1C28" />
+	</svg>
 {/if}

@@ -15,6 +15,7 @@ import hi from './hi'
 import hr from './hr'
 import ja from './ja'
 import ko from './ko'
+import nl from './nl'
 import pt_br from './pt-br'
 import pt_pt from './pt-pt'
 import ru from './ru'
@@ -33,6 +34,7 @@ const localeTranslations = {
 	hr,
 	ja,
 	ko,
+	nl,
 	'pt-br': pt_br,
 	'pt-pt': pt_pt,
 	ru,
