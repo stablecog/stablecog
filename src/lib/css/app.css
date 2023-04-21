@@ -7,7 +7,7 @@
 	--c-bg-tertiary: 46 45 48;
 	--c-on-bg: 255 255 255;
 	--c-on-bg-secondary: 93 92 98;
-	--c-primary: 77, 255, 0;
+	--c-primary: 77 255 0;
 	--c-primary-secondary: 17, 195, 0;
 	--c-on-primary: 27 26 29;
 	--c-secondary: 5, 148, 15;
@@ -29,7 +29,7 @@
 	--c-bg-tertiary: 46 45 48;
 	--c-on-bg: 255 255 255;
 	--c-on-bg-secondary: 93 92 98;
-	--c-primary: 77, 255, 0;
+	--c-primary: 77 255 0;
 	--c-primary-secondary: 17, 195, 0;
 	--c-on-primary: 27 26 29;
 	--c-secondary: 5, 148, 15;
@@ -46,15 +46,15 @@
 }
 
 .theme-light {
-	--c-bg: 227 221 235;
-	--c-bg-secondary: 236 230 245;
-	--c-bg-tertiary: 240 238 255;
+	--c-bg: 255 255 255;
+	--c-bg-secondary: 255 255 255;
+	--c-bg-tertiary: 255 255 255;
 	--c-on-bg: 20 18 22;
 	--c-on-bg-secondary: 185 183 194;
 	--c-primary: 96 42 204;
 	--c-primary-secondary: 71 17 179;
 	--c-on-primary: 255 255 255;
-	--c-secondary: 210 108 34;
+	--c-secondary: 5 148 15;
 	--c-danger: 178 35 35;
 	--c-danger-secondary: 153 10 10;
 	--c-success: 12 150 0;
