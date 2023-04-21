@@ -15,7 +15,7 @@
 </script>
 
 <MetaTag
-	title="{data.metadata.title} | Guide"
+	title="{data.metadata.title} | Stablecog"
 	description={data.metadata.description}
 	imageUrl={data.metadata.preview_image_url}
 	canonical="{canonicalUrl}{$page.url.pathname}"
