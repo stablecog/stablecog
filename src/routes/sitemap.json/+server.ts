@@ -1,5 +1,5 @@
-import { flatSidebarShallow } from '$routes/guide/constants';
-import { canonicalUrl } from '$ts/constants/main';
+import { flatGuideSidebarShallow } from '$routes/guide/constants';
+import { flatTrySidebarShallow } from '$routes/try/constants';
 import { getBlogPosts } from '$ts/queries/blog/getBlogPosts';
 import type { RequestHandler } from '@sveltejs/kit';
 
@@ -43,12 +43,17 @@ export const GET: RequestHandler = async () => {
 		lastmod: getDateStringFromDate(new Date(post.date)),
 		changefreq: 'weekly'
 	}));
-	const guideRoutes: IRoute[] = flatSidebarShallow.map((item) => ({
+	const guideRoutes: IRoute[] = flatGuideSidebarShallow.map((item) => ({
 		loc: `${item.pathname}`,
 		lastmod: todayString,
 		changefreq: 'weekly'
 	}));
-	const allRoutes = [...definedRoutes, ...blogPostRoutes, ...guideRoutes];
+	const tryRoutes: IRoute[] = flatTrySidebarShallow.map((item) => ({
+		loc: `${item.pathname}`,
+		lastmod: todayString,
+		changefreq: 'weekly'
+	}));
+	const allRoutes = [...definedRoutes, ...blogPostRoutes, ...guideRoutes, ...tryRoutes];
 	const headers = {
 		'Cache-Control': `public, max-age=${3600}, s-max-age=${3600}`,
 		'Content-Type': 'application/json'
