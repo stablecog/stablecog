@@ -39,11 +39,7 @@ export const navbarRouteDefinitions = derived(
 			},
 			{
 				pathname: '/admin/users',
-				stickyType: $isAdminGalleryEditActive
-					? 'not-sticky'
-					: $windowWidth < mdBreakpoint
-					? 'auto'
-					: 'sticky'
+				stickyType: $windowWidth < mdBreakpoint ? 'auto' : 'sticky'
 			},
 			{
 				pathname: '/admin/create',

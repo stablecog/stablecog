@@ -3,7 +3,6 @@
 	import IconButton from '$components/buttons/IconButton.svelte';
 	import IconSettings from '$components/icons/IconSettings.svelte';
 	import PageLoadProgressBar from '$components/PageLoadProgressBar.svelte';
-	import Logo from '$components/Logo.svelte';
 	import NavigationTabBar from '$components/navigation/NavigationTabBar.svelte';
 	import SettingsMenu from '$components/settings/SettingsMenu.svelte';
 	import { clickoutside } from '$ts/actions/clickoutside';
@@ -31,8 +30,6 @@
 	import { isDrawerOpen } from '$ts/stores/isDrawerOpen';
 	import IconSidebar from '$components/icons/IconSidebar.svelte';
 	import ButtonHoverEffect from '$components/buttons/ButtonHoverEffect.svelte';
-	import { windowWidth } from '$ts/stores/window';
-	import { mdBreakpoint } from '$components/generationFullScreen/constants';
 	import LogoButton from '$components/buttons/LogoButton.svelte';
 	import IconGuide from '$components/icons/IconGuide.svelte';
 
@@ -61,7 +58,7 @@
 
 <nav
 	bind:clientHeight={$navbarHeight}
-	class="w-full flex flex-col z-60 -translate-x-px transform transition duration-200 {$navbarStickyType ===
+	class="w-full flex flex-col z-60 transform transition duration-200 {$navbarStickyType ===
 	'not-sticky'
 		? ''
 		: 'top-0 left-0 fixed'} {notAtTheVeryTop &&
@@ -178,10 +175,7 @@
 						: 'text-c-on-bg'}"
 				/>
 			</IconButton>
-			<div
-				use:clickoutside={{ callback: closeSettings }}
-				class="flex flex-col items-end -ml-3 -mr-1"
-			>
+			<div use:clickoutside={{ callback: closeSettings }} class="flex flex-col items-end -ml-3">
 				<IconButton class="p-3" onClick={toggleSettings} name="Settings">
 					<IconSettings
 						class="w-8 h-8 relative transition transform {isSettingsOpen

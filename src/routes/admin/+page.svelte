@@ -13,6 +13,7 @@
 		title: string;
 		href: string;
 		icon: TNavbarRouteOption;
+		show?: boolean;
 	}
 
 	let adminRoutes: TAdminRoute[];
@@ -40,7 +41,7 @@
 
 <div class="w-full flex-1 flex justify-center px-5 py-6 md:py-8 pb-[calc(3vh)]">
 	<div class="w-full flex flex-row flex-wrap items-center justify-center gap-4 my-auto max-w-7xl">
-		{#each adminRoutes as route}
+		{#each adminRoutes.filter((r) => r.show !== false) as route}
 			<a
 				href={route.href}
 				data-sveltekit-preload-data="hover"
