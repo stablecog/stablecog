@@ -10,13 +10,13 @@
 	aria-label="Go to Home"
 	href="/"
 	data-sveltekit-preload-data="hover"
-	class="px-3 md:px-3.5 py-4.5 md:py-5.5 self-stretch flex items-center justify-center relative rounded-xl z-0 group {classes}"
+	class="px-2 py-2 md:px-3 md:py-4.5 self-stretch flex items-center justify-center relative rounded-xl z-0 group {classes}"
 >
 	<div class="w-full h-full absolute left-0 top-0 pointer-events-none p-1.5">
 		<div class="w-full h-full rounded-xl relative z-0 overflow-hidden">
 			<div
 				class="w-full h-full origin-left rounded-xl transition transform -translate-x-full
-    bg-c-primary/25 {!$isTouchscreen ? 'group-hover:translate-x-0' : ''}"
+    		bg-c-primary/25 {!$isTouchscreen ? 'group-hover:translate-x-0' : ''}"
 			/>
 		</div>
 	</div>

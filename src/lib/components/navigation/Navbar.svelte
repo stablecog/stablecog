@@ -128,7 +128,7 @@
 						use:clickoutside={{ callback: closeAccountMenu }}
 						class="flex flex-col items-end relative"
 					>
-						<div class="px-2.5 py-3.5 -mx-3">
+						<div class="px-2.5 py-2 -mx-3">
 							<IconButton
 								class="shadow-lg rounded-full flex items-center justify-center shadow-c-shadow/[var(--o-shadow-strong)]"
 								noPadding
@@ -160,7 +160,12 @@
 					</Button>
 				{/if}
 			</div>
-			<IconButton class="p-3 -mx-3 hidden md:block" href="/discord" target="_blank" name="Discord">
+			<IconButton
+				class="px-3 py-2 -mx-3 hidden md:block"
+				href="/discord"
+				target="_blank"
+				name="Discord"
+			>
 				<IconSc
 					type="discord"
 					class="w-8 h-8 relative transition transform {!$isTouchscreen
@@ -168,7 +173,7 @@
 						: 'text-c-on-bg'}"
 				/>
 			</IconButton>
-			<IconButton class="p-3 -mx-3 hidden md:block" href="/guide" name="Guide">
+			<IconButton class="px-3 py-2 -mx-3 hidden md:block" href="/guide" name="Guide">
 				<IconGuide
 					class="w-8 h-8 relative transition transform {!$isTouchscreen
 						? 'group-hover/iconbutton:text-c-primary'
@@ -176,7 +181,7 @@
 				/>
 			</IconButton>
 			<div use:clickoutside={{ callback: closeSettings }} class="flex flex-col items-end -ml-3">
-				<IconButton class="p-3" onClick={toggleSettings} name="Settings">
+				<IconButton class="pl-3 pr-1 md:pr-2 py-2" onClick={toggleSettings} name="Settings">
 					<IconSettings
 						class="w-8 h-8 relative transition transform {isSettingsOpen
 							? 'text-c-primary rotate-360'

@@ -505,7 +505,7 @@
 				{#if $navbarStickyType === undefined || $navbarStickyType !== 'not-sticky'}
 					<div
 						style={$navbarHeight ? `height: ${$navbarHeight}px` : ``}
-						class="h-18 md:h-20 w-full"
+						class="h-16 md:h-18 w-full"
 					/>
 				{/if}
 				<main class="w-full flex-1 flex flex-col relative break-words">
