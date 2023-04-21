@@ -1,11 +1,10 @@
 <script lang="ts">
 	import ButtonHoverEffect from '$components/buttons/ButtonHoverEffect.svelte';
-	import IconButton from '$components/buttons/IconButton.svelte';
 	import { mdBreakpoint } from '$components/generationFullScreen/constants';
 	import IconCancel from '$components/icons/IconCancel.svelte';
 	import LL from '$i18n/i18n-svelte';
 	import Sidebar from '$routes/guide/Sidebar.svelte';
-	import { sidebar } from '$routes/guide/constants';
+	import { guideSidebar } from '$routes/guide/constants';
 	import { clickoutside } from '$ts/actions/clickoutside';
 	import { isDrawerOpen } from '$ts/stores/isDrawerOpen';
 	import { windowHeight, windowWidth } from '$ts/stores/window';
@@ -15,7 +14,7 @@
 </script>
 
 <div style="min-height: 100vh; min-height: 100svh" class="w-full flex items-stretch relative">
-	<Sidebar class="w-64 lg:w-72 hidden md:flex" {sidebar} />
+	<Sidebar class="w-64 lg:w-72 hidden md:flex" sidebar={guideSidebar} />
 	<div class="flex-1 overflow-hidden">
 		<slot />
 	</div>
@@ -58,5 +57,5 @@
 		</button>
 	</div>
 	<div class="w-full h-2px bg-c-bg-secondary" />
-	<Sidebar class="w-full h-full -mt-2" style="" {sidebar} />
+	<Sidebar class="w-full h-full -mt-2" style="" sidebar={guideSidebar} />
 </div>

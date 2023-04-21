@@ -273,6 +273,15 @@
 	font-weight: 700;
 }
 
+.blog .flex {
+	display: flex;
+	flex-direction: row;
+}
+
+.blog .justify-center {
+	justify-content: center;
+}
+
 .toc li {
 	margin-left: 0;
 	list-style: none;

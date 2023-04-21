@@ -1,5 +1,5 @@
-import { sidebar } from '$routes/guide/constants';
-import { getGuideEntryFromPathname } from '$routes/guide/guide';
+import { guideSidebar } from '$routes/guide/constants';
+import { getGuideEntryFromPathname } from '$ts/helpers/markdown';
 import type { PageLoad } from './$types';
 
 export const load: PageLoad = async ({ url }) => {
@@ -7,6 +7,6 @@ export const load: PageLoad = async ({ url }) => {
 	return {
 		content,
 		metadata,
-		sidebarItem: sidebar
+		sidebarItem: guideSidebar
 	};
 };

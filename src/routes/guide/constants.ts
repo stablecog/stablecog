@@ -105,9 +105,9 @@ const _sidebar: TSidebarItem = {
 	]
 };
 
-export const sidebar = addImageUrlToSidebarItem(_sidebar);
+export const guideSidebar = addImageUrlToSidebarItem(_sidebar);
 
-export const flatSidebarShallow = sidebar.children!.reduce((acc, item) => {
+export const flatGuideSidebarShallow = guideSidebar.children!.reduce((acc, item) => {
 	acc.push({ title: item.title, pathname: item.pathname });
 	if (item.children) {
 		acc.push(...item.children);

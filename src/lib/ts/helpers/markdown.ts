@@ -13,7 +13,7 @@ import rehypeRaw from 'rehype-raw';
 import rehypeAttributes from 'rehype-attributes';
 import yaml from 'yaml';
 import type { TGuideEntryMetadata, TGuideNode, TSidebarItem } from '$routes/guide/types';
-import { sidebar } from '$routes/guide/constants';
+import { guideSidebar } from '$routes/guide/constants';
 
 const r = unified()
 	.use(remarkParse)
@@ -44,6 +44,7 @@ const r = unified()
 	.use(rehypeStringify);
 
 const guideEntriesImport = import.meta.glob(`/src/lib/md/guide/**/*`);
+const tryEntriesImport = import.meta.glob(`/src/lib/md/try/**/*`);
 
 function getSlugFromKey(key: string) {
 	const lastSlash = key.lastIndexOf('/');
@@ -62,7 +63,28 @@ export async function getGuideEntryFromPathname(pathname: string) {
 	}
 	const metadata = await getMetadataFromKey(key, importFunction);
 	const res: any = await importFunction();
-	const sidebarItem = getSidebarItemFromPathname(pathname, sidebar);
+	const sidebarItem = getSidebarItemFromPathname(pathname, guideSidebar);
+	const unprocessedHTML = res.html;
+	const file = await r.process(unprocessedHTML);
+	const htmlString = file.toString();
+	const content = htmlString.split('</nav>')[1];
+	return {
+		content,
+		metadata,
+		sidebarItem
+	};
+}
+
+export async function getTryEntryFromPathname(pathname: string) {
+	let key = `/src/lib/md${pathname}.md`;
+	let importFunction = tryEntriesImport[key];
+	if (!importFunction) {
+		key = `/src/lib/md${pathname}/index.md`;
+		importFunction = tryEntriesImport[key];
+	}
+	const metadata = await getMetadataFromKey(key, importFunction);
+	const res: any = await importFunction();
+	const sidebarItem = getSidebarItemFromPathname(pathname, guideSidebar);
 	const unprocessedHTML = res.html;
 	const file = await r.process(unprocessedHTML);
 	const htmlString = file.toString();

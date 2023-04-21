@@ -18,7 +18,7 @@
 		<div class="w-full max-w-3xl px-5 md:px-12 pb-8 overflow-hidden">
 			<h2 class="font-bold text-[1.6rem] leading-[1.35]">{$LL.Guide.ChaptersTitle()}</h2>
 			<ul class="w-[calc(100%+1rem)] -mx-2 -mb-1 flex flex-row flex-wrap mt-3">
-				{#each sidebarItem.children.filter((c) => c.pathname !== '/guide') as child}
+				{#each sidebarItem.children.filter((c) => c.pathname !== '/try/models') as child}
 					<li class="w-full md:w-1/2 p-2">
 						<ChapterButton item={child} />
 					</li>

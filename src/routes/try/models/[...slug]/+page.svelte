@@ -1,17 +1,17 @@
 <script lang="ts">
 	import { page } from '$app/stores';
-	import { flatGuideSidebarShallow } from '$routes/guide/constants';
+	import { flatTrySidebarShallow } from '$routes/try/constants';
 	import '$css/blog.css';
 	import MetaTag from '$components/MetaTag.svelte';
 	import { canonicalUrl } from '$ts/constants/main';
-	import GuidePage from '$routes/guide/GuidePage.svelte';
+	import TryPage from '$routes/try/TryPage.svelte';
 
 	export let data;
 
 	$: pathname = $page.url.pathname;
-	$: index = flatGuideSidebarShallow.findIndex((item) => item.pathname === pathname);
-	$: prev = index - 1 >= 0 ? flatGuideSidebarShallow[index - 1] : null;
-	$: next = index + 1 < flatGuideSidebarShallow.length ? flatGuideSidebarShallow[index + 1] : null;
+	$: index = flatTrySidebarShallow.findIndex((item) => item.pathname === pathname);
+	$: prev = index - 1 >= 0 ? flatTrySidebarShallow[index - 1] : null;
+	$: next = index + 1 < flatTrySidebarShallow.length ? flatTrySidebarShallow[index + 1] : null;
 </script>
 
 <MetaTag
@@ -24,4 +24,4 @@
 	article_published_time={data.metadata.date}
 />
 
-<GuidePage content={data.content} sidebarItem={data.sidebarItem} {prev} {next} />
+<TryPage content={data.content} sidebarItem={data.sidebarItem} {prev} {next} />
