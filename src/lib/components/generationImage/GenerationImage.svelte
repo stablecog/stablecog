@@ -334,7 +334,7 @@
 		<div />
 	</div>
 {/if}
-{#if generation.selected_output.is_deleted || (cardType === 'admin-gallery' && showAdminGalleryBarrier) || (cardType === 'history' && $userGalleryCurrentView === 'favorites' && !generation.selected_output.is_favorited)}
+{#if generation.selected_output.is_deleted /* || (cardType === 'admin-gallery' && showAdminGalleryBarrier) */ || (cardType === 'history' && $userGalleryCurrentView === 'favorites' && !generation.selected_output.is_favorited)}
 	<div class="w-full h-full absolute left-0 top-0 flex items-center justify-center p-4 z-20">
 		{#if generation.selected_output.is_deleted}
 			<IconTrashcan class="text-c-danger w-12 h-12" />
@@ -351,7 +351,7 @@
 		<IconGalleryFilled class="text-c-danger" />
 	</div>
 {/if}
-{#if (cardType === 'admin-gallery' && $isAdminGalleryEditActive) || (cardType === 'history' && $isUserGalleryEditActive)}
+{#if cardType === 'history' && $isUserGalleryEditActive}
 	<button
 		disabled={(cardType === 'history' && generation.selected_output.is_deleted) ||
 			(cardType === 'history' &&
