@@ -168,34 +168,38 @@
 			searchParams.set('output', generation.selected_output.id);
 			window.history.pushState({}, '', `${$page.url.pathname}?${searchParams.toString()}`);
 		}}
-		class="w-full h-full absolute left-0 top-0 flex flex-col justify-between items-end overflow-hidden gap-4"
+		class="w-full h-full absolute left-0 top-0 flex flex-col justify-end items-start overflow-hidden gap-4"
 	>
 		{#if cardType !== 'create'}
-			<div class="w-full h-12 flex-shrink-0" />
 			<div
-				class="w-full flex-shrink min-h-0 max-h-[max(4rem,min(35%,5.3rem))] transition bg-c-bg/90 text-xs relative z-0 overflow-hidden
+				class="w-full h-full pt-16 flex flex-col justify-end items-start flex-shrink bg-gradient-to-t 
+				from-c-bg/90 to-bg-c/0 transition text-xs relative z-0 overflow-hidden
 			 	pointer-events-none {!$isTouchscreen
 					? 'group-focus-within:translate-y-0 group-hover:translate-y-0'
 					: ''} {overlayShouldShow ? 'translate-y-0' : 'translate-y-full'}"
 			>
 				<div
-					class="{scrollPrompt
-						? 'overflow-auto'
-						: 'overflow-hidden'} w-full max-h-full list-fade px-3 md:px-4 py-3 flex flex-col gap-2 cursor-default"
+					class="w-full flex flex-col justify-end items-start min-h-0 max-h-[max(4rem,min(35%,5.3rem))]"
 				>
-					<p class="w-full font-medium leading-normal transition text-c-on-bg transform">
-						{generation.prompt.text}
-					</p>
-					{#if generation.negative_prompt !== undefined && generation.negative_prompt.text !== ''}
-						<div class="w-full flex items-start justify-start gap-1.5">
-							<IconChatBubbleCancel class="text-c-danger h-4 w-4 mt-0.25" />
-							<div class="flex-1 min-w-0">
-								<p class="w-full text-c-danger">
-									{generation.negative_prompt.text}
-								</p>
+					<div
+						class="{scrollPrompt
+							? 'overflow-auto'
+							: 'overflow-hidden'} w-full max-h-full list-fade px-2 md:px-3 py-3 flex flex-col gap-2 cursor-default"
+					>
+						<p class="w-full font-medium leading-normal transition text-c-on-bg transform">
+							{generation.prompt.text}
+						</p>
+						{#if generation.negative_prompt !== undefined && generation.negative_prompt.text !== ''}
+							<div class="w-full flex items-start justify-start gap-1.5">
+								<IconChatBubbleCancel class="text-c-danger h-4 w-4 mt-0.25" />
+								<div class="flex-1 min-w-0">
+									<p class="w-full text-c-danger">
+										{generation.negative_prompt.text}
+									</p>
+								</div>
 							</div>
-						</div>
-					{/if}
+						{/if}
+					</div>
 				</div>
 			</div>
 		{/if}
@@ -206,16 +210,12 @@
 		class="w-full h-full absolute left-0 top-0 pointer-events-none flex items-start justify-between"
 	>
 		<div
-			class="w-full flex justify-between transition items-start {!$isTouchscreen
+			class="w-full pb-4 bg-gradient-to-b from-c-bg/90 to-c-bg/0 flex justify-between transition items-start {!$isTouchscreen
 				? 'group-focus-within:translate-y-0 group-hover:translate-y-0'
 				: ''} {isGalleryEditActive || overlayShouldShow ? 'translate-y-0' : '-translate-y-full'}"
 		>
 			<div bind:this={leftButtonContainer} class="pointer-events-none relative">
-				<!-- 
 				{#if (cardType === 'admin-gallery' || cardType === 'history') && !(cardType === 'history' && generation.selected_output.is_deleted) && !(cardType === 'history' && $userGalleryCurrentView === 'favorites' && !generation.selected_output.is_favorited)}
-					<div
-						class="absolute pointer-events-none filter blur-xl rounded-full w-40 h-40 -left-20 -top-20 bg-gradient-radial from-c-bg-secondary to-c-bg-secondary/50"
-					/>
 					<IconButton
 						class="p-0.5 pointer-events-auto"
 						name="Select"
@@ -241,7 +241,6 @@
 						</div>
 					</IconButton>
 				{/if}
-			 -->
 			</div>
 			{#if !isGalleryEditActive && !generation.selected_output.is_deleted}
 				<div
