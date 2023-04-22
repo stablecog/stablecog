@@ -211,6 +211,7 @@
 				: ''} {isGalleryEditActive || overlayShouldShow ? 'translate-y-0' : '-translate-y-full'}"
 		>
 			<div bind:this={leftButtonContainer} class="pointer-events-none relative">
+				<!-- 
 				{#if (cardType === 'admin-gallery' || cardType === 'history') && !(cardType === 'history' && generation.selected_output.is_deleted) && !(cardType === 'history' && $userGalleryCurrentView === 'favorites' && !generation.selected_output.is_favorited)}
 					<div
 						class="absolute pointer-events-none filter blur-xl rounded-full w-40 h-40 -left-20 -top-20 bg-gradient-radial from-c-bg-secondary to-c-bg-secondary/50"
@@ -240,6 +241,7 @@
 						</div>
 					</IconButton>
 				{/if}
+			 -->
 			</div>
 			{#if !isGalleryEditActive && !generation.selected_output.is_deleted}
 				<div
