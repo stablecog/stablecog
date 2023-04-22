@@ -151,15 +151,17 @@
 										</div>
 									{/if}
 									{#if status === undefined || status === 'succeeded'}
-										<GenerationImage
-											{cardType}
-											{isGalleryEditActive}
-											useUpscaledImage={false}
-											generation={{
-												...output.generation,
-												selected_output: output
-											}}
-										/>
+										{#if cardType !== 'admin-gallery'}
+											<GenerationImage
+												{cardType}
+												{isGalleryEditActive}
+												useUpscaledImage={false}
+												generation={{
+													...output.generation,
+													selected_output: output
+												}}
+											/>
+										{/if}
 									{/if}
 								{:else}
 									<div
