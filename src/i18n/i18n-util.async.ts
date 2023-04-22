@@ -15,6 +15,7 @@ const localeTranslationLoaders = {
 	hr: () => import('./hr'),
 	ja: () => import('./ja'),
 	ko: () => import('./ko'),
+	nl: () => import('./nl'),
 	'pt-br': () => import('./pt-br'),
 	'pt-pt': () => import('./pt-pt'),
 	ru: () => import('./ru'),

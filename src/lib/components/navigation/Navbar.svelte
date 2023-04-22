@@ -3,7 +3,6 @@
 	import IconButton from '$components/buttons/IconButton.svelte';
 	import IconSettings from '$components/icons/IconSettings.svelte';
 	import PageLoadProgressBar from '$components/PageLoadProgressBar.svelte';
-	import Logo from '$components/Logo.svelte';
 	import NavigationTabBar from '$components/navigation/NavigationTabBar.svelte';
 	import SettingsMenu from '$components/settings/SettingsMenu.svelte';
 	import { clickoutside } from '$ts/actions/clickoutside';
@@ -31,8 +30,6 @@
 	import { isDrawerOpen } from '$ts/stores/isDrawerOpen';
 	import IconSidebar from '$components/icons/IconSidebar.svelte';
 	import ButtonHoverEffect from '$components/buttons/ButtonHoverEffect.svelte';
-	import { windowWidth } from '$ts/stores/window';
-	import { mdBreakpoint } from '$components/generationFullScreen/constants';
 	import LogoButton from '$components/buttons/LogoButton.svelte';
 
 	export let notAtTheVeryTop = false;
@@ -58,7 +55,7 @@
 
 <nav
 	bind:clientHeight={$navbarHeight}
-	class="w-full flex flex-col z-60 -translate-x-px transform transition duration-200 {$navbarStickyType ===
+	class="w-full flex flex-col z-60 transform transition duration-200 {$navbarStickyType ===
 	'not-sticky'
 		? ''
 		: 'top-0 left-0 fixed'} {notAtTheVeryTop &&
@@ -118,7 +115,7 @@
 								</div>
 							</IconButton>
 						</div>
-						<div class="relative -mr-15 md:-mr-1.5">
+						<div class="relative -mr-13 md:-mr-1.5">
 							{#if isAccountMenuOpen}
 								<AccountMenu {closeAccountMenu} />
 							{/if}
@@ -130,7 +127,12 @@
 					</Button>
 				{/if}
 			</div>
-			<IconButton class="p-3 -mx-3 hidden md:block" href="/discord" target="_blank" name="Discord">
+			<IconButton
+				class="px-3 py-2 -mx-3 hidden md:block"
+				href="/discord"
+				target="_blank"
+				name="Discord"
+			>
 				<IconSc
 					type="discord"
 					class="w-8 h-8 relative transition transform {!$isTouchscreen
@@ -152,7 +154,7 @@
 					/>
 				</IconButton>
 				<div class="pr-3">
-					<div class="relative -mt-1">
+					<div class="relative">
 						{#if isSettingsOpen}
 							<SettingsMenu {closeSettings} />
 						{/if}

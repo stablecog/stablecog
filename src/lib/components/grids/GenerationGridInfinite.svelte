@@ -46,6 +46,7 @@
 				...$generationsQuery.data?.pages.flatMap((page) => page.outputs)
 		  ]
 		: undefined;
+
 	$: items = outputs?.map((output, index) => ({
 		key: index,
 		id: output.id,
@@ -62,9 +63,14 @@
 					.filter((i) => i.filter === $adminGalleryCurrentFilter)
 					.map((i) => i.output_id)
 			: [];
+
 	$: isHoverAllowed =
 		(cardType === 'history' && $isUserGalleryEditActive) ||
 		(cardType === 'admin-gallery' && $isAdminGalleryEditActive);
+
+	$: isGalleryEditActive =
+		(cardType === 'admin-gallery' && $isAdminGalleryEditActive) ||
+		(cardType === 'history' && $isUserGalleryEditActive);
 
 	let ig: MasonryInfiniteGrid;
 
@@ -138,7 +144,7 @@
 								{#if status !== 'failed' && status !== 'failed-nsfw'}
 									{#if status !== undefined && status !== 'succeeded' && animation !== undefined}
 										<div
-											out:fade={{ duration: 3000, easing: quadIn }}
+											out:fade|local={{ duration: 3000, easing: quadIn }}
 											class="w-full h-full absolute left-0 top-0"
 										>
 											<GenerationAnimation {animation} />
@@ -147,6 +153,7 @@
 									{#if status === undefined || status === 'succeeded'}
 										<GenerationImage
 											{cardType}
+											{isGalleryEditActive}
 											useUpscaledImage={false}
 											generation={{
 												...output.generation,
@@ -156,7 +163,7 @@
 									{/if}
 								{:else}
 									<div
-										in:fade={{ duration: 200, easing: quadOut }}
+										in:fade|local={{ duration: 200, easing: quadOut }}
 										class="w-full h-full flex items-center bg-c-bg-secondary justify-center relative"
 									>
 										<p class="text-sm text-c-on-bg/50 px-5 py-3 text-center leading-relaxed">

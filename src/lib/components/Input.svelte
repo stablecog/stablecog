@@ -8,7 +8,7 @@
 	export let disabled = false;
 	export { classes as class };
 	export let hasIcon = false;
-	export let inputElement: HTMLInputElement;
+	export let inputElement: HTMLInputElement | undefined = undefined;
 	export let bg: 'bg-secondary' | 'bg-tertiary' = 'bg-tertiary';
 	export let hasClearButton = false;
 	export let shadow: 'normal' | 'strong' | 'strongest' = 'normal';
@@ -54,7 +54,7 @@
 				? 'bg-c-bg-secondary'
 				: 'bg-c-bg-tertiary'} relative {hasIcon ? 'pl-12' : 'pl-5'} {hasClearButton
 				? 'pr-10 md:pr-16'
-				: 'pr-5'} pt-7 pb-3 rounded-xl transition 
+				: 'pr-5'} pt-7 pb-3 rounded-xl transition
       shadow-lg {shadow === 'strongest'
 				? 'shadow-c-shadow/[var(--o-shadow-strongest)]'
 				: shadow === 'strong'
@@ -83,7 +83,7 @@
 				? 'bg-c-bg-secondary'
 				: 'bg-c-bg-tertiary'} relative {hasIcon ? 'pl-12' : 'pl-5'} {hasClearButton
 				? 'pr-10 md:pr-16'
-				: 'pr-5'} pt-7 pb-3 rounded-xl transition 
+				: 'pr-5'} pt-7 pb-3 rounded-xl transition
       shadow-lg {shadow === 'strongest'
 				? 'shadow-c-shadow/[var(--o-shadow-strongest)]'
 				: shadow === 'strong'
@@ -112,7 +112,7 @@
 				? 'bg-c-bg-secondary'
 				: 'bg-c-bg-tertiary'} relative {hasIcon ? 'pl-12' : 'pl-5'} {hasClearButton
 				? 'pr-10 md:pr-16'
-				: 'pr-5'} pt-7 pb-3 rounded-xl transition 
+				: 'pr-5'} pt-7 pb-3 rounded-xl transition
       shadow-lg {shadow === 'strongest'
 				? 'shadow-c-shadow/[var(--o-shadow-strongest)]'
 				: shadow === 'strong'
@@ -141,7 +141,7 @@
 				? 'bg-c-bg-secondary'
 				: 'bg-c-bg-tertiary'} relative {hasIcon ? 'pl-12' : 'pl-5'} {hasClearButton
 				? 'pr-10 md:pr-16'
-				: 'pr-5'} pt-7 pb-3 rounded-xl transition 
+				: 'pr-5'} pt-7 pb-3 rounded-xl transition
       shadow-lg {shadow === 'strongest'
 				? 'shadow-c-shadow/[var(--o-shadow-strongest)]'
 				: shadow === 'strong'

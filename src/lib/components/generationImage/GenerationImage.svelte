@@ -39,6 +39,7 @@
 	export let useUpscaledImage = true;
 	export let scrollPrompt = false;
 	export let cardType: TGenerationImageCardType;
+	export let isGalleryEditActive: boolean = false;
 
 	let promptCopied = false;
 	let promptCopiedTimeout: NodeJS.Timeout;
@@ -130,10 +131,6 @@
 			$adminGalleryCurrentFilter !== 'approved') ||
 			(generation.selected_output.gallery_status === 'rejected' &&
 				$adminGalleryCurrentFilter !== 'rejected'));
-
-	$: isGalleryEditActive =
-		(cardType === 'admin-gallery' && $isAdminGalleryEditActive) ||
-		(cardType === 'history' && $isUserGalleryEditActive);
 
 	$: modalShouldOpen =
 		!$isTouchscreen ||

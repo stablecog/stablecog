@@ -302,7 +302,14 @@
 		<path d="M256 415a159 159 0 1 0 0-318 159 159 0 0 0 0 318Z" fill="#BC002D" />
 	</svg>
 {:else if locale === 'el'}
-	<svg xmlns="http://www.w3.org/2000/svg" id="flag-icons-gr" viewBox="0 0 512 512">
+	<svg
+		class={classes}
+		xmlns="http://www.w3.org/2000/svg"
+		id="flag-icons-gr"
+		width="512"
+		height="512"
+		viewBox="0 0 512 512"
+	>
 		<path fill="#0d5eaf" fill-rule="evenodd" d="M0 0h512v57H0z" />
 		<path fill="#fff" fill-rule="evenodd" d="M0 57h512v57H0z" />
 		<path fill="#0d5eaf" fill-rule="evenodd" d="M0 114h512v57H0z" />
@@ -317,5 +324,18 @@
 			<path d="M0 114h284.9v57H0z" />
 		</g>
 		<path fill="#0d5eaf" fill-rule="evenodd" d="M0 455h512v57H0z" />
+	</svg>
+{:else if locale === 'nl'}
+	<svg
+		class={classes}
+		width="512"
+		height="512"
+		viewBox="0 0 512 512"
+		fill="none"
+		xmlns="http://www.w3.org/2000/svg"
+	>
+		<path d="M0 0H512V512H0V0Z" fill="#21468B" />
+		<path d="M0 0H512V341.3H0V0Z" fill="white" />
+		<path d="M0 0H512V170.7H0V0Z" fill="#AE1C28" />
 	</svg>
 {/if}
