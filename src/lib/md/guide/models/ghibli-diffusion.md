@@ -9,7 +9,7 @@ preview_image_url: https://ba.stablecog.com/guide/previews/ghibli-diffusion.jpg
 
 # Ghibli Diffusion
 
-Ghibli Diffusion is a fine-tuned Stable Diffusion model trained images from the famous [Studio Ghibli](https://www.studioghibli.com.au). It is created by [nitrosocke](https://huggingface.co/nitrosocke). It is mainly intended anime style images, specifically in the style of Studio Ghibli. It is not a general purpose model but it does a good job at what it is designed for.
+Ghibli Diffusion is a fine-tuned Stable Diffusion model trained images from the famous [Studio Ghibli](https://www.studioghibli.com.au). It is created by [nitrosocke](https://huggingface.co/nitrosocke). It is mainly intended for creating anime style images, specifically in the style of Studio Ghibli. It is not a general purpose model but it does a good job at what it is designed for.
 
 ## Ghibli Diffusion Examples
 

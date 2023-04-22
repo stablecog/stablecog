@@ -9,7 +9,7 @@ preview_image_url: https://ba.stablecog.com/try/previews/ghibli-diffusion.jpg
 
 # Try Ghibli Diffusion for Free
 
-Ghibli Diffusion is a fine-tuned Stable Diffusion model trained images from the famous [Studio Ghibli](https://www.studioghibli.com.au). It is created by [nitrosocke](https://huggingface.co/nitrosocke). It is mainly intended anime style images, specifically in the style of Studio Ghibli. It is not a general purpose model but it does a good job at what it is designed for. You can try Ghibli Diffusion on Stablecog for free. Just click the button below.
+Ghibli Diffusion is a fine-tuned Stable Diffusion model trained images from the famous [Studio Ghibli](https://www.studioghibli.com.au). It is created by [nitrosocke](https://huggingface.co/nitrosocke). It is mainly intended for creating anime style images, specifically in the style of Studio Ghibli. It is not a general purpose model but it does a good job at what it is designed for. You can try Ghibli Diffusion on Stablecog for free. Just click the button below.
 
 [Try Ghibli Diffusion for Free](https://stablecog.com/?mi=48a7031d-43b6-4a23-9f8c-8020eb6862e4&adv=true)<!--rehype:button=true-->
 
