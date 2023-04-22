@@ -134,7 +134,13 @@ input[type='range']:focus-visible {
 }
 
 .list-fade {
-	mask-image: linear-gradient(to top, transparent, transparent 0.35rem, black 1.1rem);
+	mask-image: linear-gradient(to top, transparent, transparent 0.35rem, black 0.8rem);
+}
+
+@media (min-width: 768px) {
+	.list-fade {
+		mask-image: linear-gradient(to top, transparent, transparent 0rem, black 1rem);
+	}
 }
 
 input:-webkit-autofill,

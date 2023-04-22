@@ -184,7 +184,7 @@
 					<div
 						class="{scrollPrompt
 							? 'overflow-auto'
-							: 'overflow-hidden'} w-full max-h-full list-fade px-2 md:px-3 py-3 flex flex-col gap-2 cursor-default"
+							: 'overflow-hidden'} w-full max-h-full list-fade px-2 md:px-3 py-2 md:py-2.5 flex flex-col gap-2 cursor-default"
 					>
 						<p class="w-full font-medium leading-normal transition text-c-on-bg transform">
 							{generation.prompt.text}
