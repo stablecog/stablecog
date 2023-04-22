@@ -133,6 +133,10 @@ input[type='range']:focus-visible {
 	}
 }
 
+.list-fade {
+	mask-image: linear-gradient(to top, transparent, transparent 0.35rem, black 1.1rem);
+}
+
 input:-webkit-autofill,
 input:-webkit-autofill:hover,
 input:-webkit-autofill:focus,

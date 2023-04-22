@@ -17,7 +17,6 @@
 	import { doesContainTarget } from '$ts/helpers/doesContainTarget';
 	import { logGalleryGenerationOpened } from '$ts/helpers/loggers';
 	import {
-		adminGalleryActionableItems,
 		adminGalleryCurrentFilter,
 		isAdminGalleryEditActive,
 		adminGallerySelectedOutputIds
@@ -28,10 +27,13 @@
 	import { lastClickedOutputId } from '$ts/stores/lastClickedOutputId';
 	import {
 		isUserGalleryEditActive,
-		userGalleryActionableItems,
 		userGalleryCurrentView,
 		userGallerySelectedOutputIds
 	} from '$ts/stores/user/gallery';
+	import {
+		addToGalleryActionableItems,
+		toggleGalleryActionableItemsState
+	} from '$ts/stores/user/galleryActionableItems';
 	import { userSummary } from '$ts/stores/user/summary';
 	import { activeGeneration, type TGenerationWithSelectedOutput } from '$userStores/generation';
 
@@ -55,75 +57,6 @@
 			: $isAdminGalleryEditActive && cardType === 'admin-gallery'
 			? $adminGallerySelectedOutputIds.includes(generation.selected_output.id)
 			: false;
-
-	const addToGalleryActionableItems = ({
-		output_id,
-		generation_id
-	}: {
-		output_id: string;
-		generation_id: string;
-	}) => {
-		if (isInGallerySelectedIds) return;
-		if (cardType === 'history') {
-			if (
-				$userGalleryActionableItems.find(
-					(i) => i.output_id === output_id && i.view === $userGalleryCurrentView
-				)
-			) {
-				return;
-			}
-			userGalleryActionableItems.set([
-				...$userGalleryActionableItems,
-				{
-					output_id,
-					generation_id,
-					view: $userGalleryCurrentView
-				}
-			]);
-		} else if (cardType === 'admin-gallery') {
-			if (
-				$adminGalleryActionableItems.find(
-					(i) => i.output_id === output_id && i.filter === $adminGalleryCurrentFilter
-				)
-			) {
-				return;
-			}
-			adminGalleryActionableItems.set([
-				...$adminGalleryActionableItems,
-				{
-					output_id,
-					generation_id,
-					filter: $adminGalleryCurrentFilter
-				}
-			]);
-		}
-	};
-
-	const removeFromGalleryActionableItems = (output_id: string) => {
-		if (cardType === 'history') {
-			userGalleryActionableItems.set(
-				$userGalleryActionableItems.filter((i) => i.output_id !== output_id)
-			);
-		} else if (cardType === 'admin-gallery') {
-			adminGalleryActionableItems.set(
-				$adminGalleryActionableItems.filter((i) => i.output_id !== output_id)
-			);
-		}
-	};
-
-	const toggleGalleryActionableItemsState = ({
-		output_id,
-		generation_id
-	}: {
-		output_id: string;
-		generation_id: string;
-	}) => {
-		if (isInGallerySelectedIds) {
-			removeFromGalleryActionableItems(output_id);
-		} else {
-			addToGalleryActionableItems({ output_id, generation_id });
-		}
-	};
 
 	$: showAdminGalleryBarrier =
 		cardType === 'admin-gallery' &&
@@ -168,7 +101,9 @@
 	) {
 		toggleGalleryActionableItemsState({
 			output_id: generation.selected_output.id,
-			generation_id: generation.id || ''
+			generation_id: generation.id || '',
+			cardType,
+			type: isInGallerySelectedIds ? 'remove' : 'add'
 		});
 		e.currentTarget.blur();
 	}
@@ -239,7 +174,7 @@
 			<div class="w-full h-12 flex-shrink-0" />
 			<div
 				class="w-full flex-shrink min-h-0 max-h-[max(4rem,min(35%,5.3rem))] transition bg-c-bg/90 text-xs relative z-0 overflow-hidden
-			 pointer-events-none {!$isTouchscreen
+			 	pointer-events-none {!$isTouchscreen
 					? 'group-focus-within:translate-y-0 group-hover:translate-y-0'
 					: ''} {overlayShouldShow ? 'translate-y-0' : 'translate-y-full'}"
 			>
@@ -291,7 +226,8 @@
 							}
 							addToGalleryActionableItems({
 								output_id: generation.selected_output.id,
-								generation_id: generation.id || ''
+								generation_id: generation.id || '',
+								cardType
 							});
 						}}
 					>
@@ -334,7 +270,7 @@
 		<div />
 	</div>
 {/if}
-{#if generation.selected_output.is_deleted /* || (cardType === 'admin-gallery' && showAdminGalleryBarrier) */ || (cardType === 'history' && $userGalleryCurrentView === 'favorites' && !generation.selected_output.is_favorited)}
+{#if generation.selected_output.is_deleted || (cardType === 'admin-gallery' && showAdminGalleryBarrier) || (cardType === 'history' && $userGalleryCurrentView === 'favorites' && !generation.selected_output.is_favorited)}
 	<div class="w-full h-full absolute left-0 top-0 flex items-center justify-center p-4 z-20">
 		{#if generation.selected_output.is_deleted}
 			<IconTrashcan class="text-c-danger w-12 h-12" />
@@ -351,7 +287,7 @@
 		<IconGalleryFilled class="text-c-danger" />
 	</div>
 {/if}
-{#if cardType === 'history' && $isUserGalleryEditActive}
+{#if (cardType === 'admin-gallery' && $isAdminGalleryEditActive) || (cardType === 'history' && $isUserGalleryEditActive)}
 	<button
 		disabled={(cardType === 'history' && generation.selected_output.is_deleted) ||
 			(cardType === 'history' &&
@@ -361,9 +297,3 @@
 		class="w-full h-full absolute left-0 top-0 flex flex-col justify-start items-start z-30"
 	/>
 {/if}
-
-<style>
-	.list-fade {
-		mask-image: linear-gradient(to top, transparent, transparent 0.35rem, black 1.1rem);
-	}
-</style>
