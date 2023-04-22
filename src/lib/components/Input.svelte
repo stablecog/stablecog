@@ -8,7 +8,7 @@
 	export let disabled = false;
 	export { classes as class };
 	export let hasIcon = false;
-	export let inputElement: HTMLInputElement;
+	export let inputElement: HTMLInputElement | undefined = undefined;
 	export let bg: 'bg-secondary' | 'bg-tertiary' = 'bg-tertiary';
 	export let hasClearButton = false;
 	export let shadow: 'normal' | 'strong' | 'strongest' = 'normal';
