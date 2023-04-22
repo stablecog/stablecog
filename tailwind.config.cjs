@@ -109,6 +109,7 @@ module.exports = {
 			borderWidth: {
 				1.5: '1.5px',
 				'3px': '3px',
+				3: '3px',
 				'4px': '4px'
 			},
 			rotate: {

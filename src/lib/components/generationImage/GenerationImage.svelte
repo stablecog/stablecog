@@ -138,11 +138,13 @@
 		height={generation.height}
 	/>
 {/if}
-<div
-	class="w-full h-full absolute left-0 top-0 flex items-center justify-center transition pointer-events-none {overlayShouldShow
-		? 'bg-c-bg/50'
-		: 'bg-c-bg/0'}"
-/>
+{#if cardType !== 'create'}
+	<div
+		class="absolute top-0 left-0 w-full h-24 bg-gradient-to-b from-c-bg/80 to-c-bg/0 flex justify-between transition items-start {!$isTouchscreen
+			? 'group-focus-within:translate-y-0 group-hover:translate-y-0'
+			: ''} {isGalleryEditActive || overlayShouldShow ? 'translate-y-0' : '-translate-y-full'}"
+	/>
+{/if}
 {#if !generation.selected_output.is_deleted && !isGalleryEditActive}
 	<AnchorOrDiv
 		href={imageClickHref}
@@ -210,14 +212,14 @@
 		class="w-full h-full absolute left-0 top-0 pointer-events-none flex items-start justify-between"
 	>
 		<div
-			class="w-full pb-4 bg-gradient-to-b from-c-bg/90 to-c-bg/0 flex justify-between transition items-start {!$isTouchscreen
+			class="w-full flex justify-between transition items-start {!$isTouchscreen
 				? 'group-focus-within:translate-y-0 group-hover:translate-y-0'
 				: ''} {isGalleryEditActive || overlayShouldShow ? 'translate-y-0' : '-translate-y-full'}"
 		>
 			<div bind:this={leftButtonContainer} class="pointer-events-none relative">
 				{#if (cardType === 'admin-gallery' || cardType === 'history') && !(cardType === 'history' && generation.selected_output.is_deleted) && !(cardType === 'history' && $userGalleryCurrentView === 'favorites' && !generation.selected_output.is_favorited)}
 					<IconButton
-						class="p-0.5 pointer-events-auto"
+						class="p-2px pointer-events-auto"
 						name="Select"
 						onClick={() => {
 							if (cardType === 'admin-gallery' && !$isAdminGalleryEditActive) {
@@ -232,7 +234,7 @@
 							});
 						}}
 					>
-						<div class="rounded-full border-2 border-c-primary w-6 h-6 transition p-0.75">
+						<div class="rounded-full border-3 border-c-primary w-6 h-6 transition p-0.75">
 							<div
 								class="w-full h-full rounded-full bg-c-primary transform transition {isInGallerySelectedIds
 									? 'scale-100 opacity-100'
