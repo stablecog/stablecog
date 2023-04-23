@@ -1128,7 +1128,7 @@ type RootTranslation = {
 		 */
 		PageTitle: string
 		/**
-		 * J​o​i​n​ ​S​t​a​b​l​e​c​o​g​ ​t​o​ ​b​e​c​o​m​e​ ​a​ ​p​r​o​ ​m​e​m​b​e​r​ ​a​n​d​ ​u​n​l​o​c​k​ ​i​t​s​ ​f​u​l​l​ ​p​o​t​e​n​t​i​a​l​.
+		 * J​o​i​n​ ​S​y​n​t​h​i​c​a​ ​t​o​ ​b​e​c​o​m​e​ ​a​ ​p​r​o​ ​m​e​m​b​e​r​ ​a​n​d​ ​u​n​l​o​c​k​ ​i​t​s​ ​f​u​l​l​ ​p​o​t​e​n​t​i​a​l​.
 		 */
 		PageParagraph: string
 		/**
@@ -1184,7 +1184,7 @@ type RootTranslation = {
 		 */
 		PageTitle: string
 		/**
-		 * S​t​a​r​t​ ​u​s​i​n​g​ ​S​t​a​b​l​e​c​o​g​ ​w​i​t​h​ ​a​l​l​ ​f​e​a​t​u​r​e​s​ ​t​h​a​t​ ​a​r​e​ ​a​v​a​i​l​a​b​l​e​ ​t​o​ ​y​o​u​r​ ​a​c​c​o​u​n​t​.
+		 * S​t​a​r​t​ ​u​s​i​n​g​ ​S​y​n​t​h​i​c​a​ ​w​i​t​h​ ​a​l​l​ ​f​e​a​t​u​r​e​s​ ​t​h​a​t​ ​a​r​e​ ​a​v​a​i​l​a​b​l​e​ ​t​o​ ​y​o​u​r​ ​a​c​c​o​u​n​t​.
 		 */
 		PageParagraph: string
 		/**
@@ -1196,7 +1196,7 @@ type RootTranslation = {
 		 */
 		PageTitleCreateAccountOrSignIn: string
 		/**
-		 * S​t​a​r​t​ ​u​s​i​n​g​ ​S​t​a​b​l​e​c​o​g​ ​w​i​t​h​ ​a​l​l​ ​f​e​a​t​u​r​e​s​ ​t​h​a​t​ ​a​r​e​ ​a​v​a​i​l​a​b​l​e​ ​t​o​ ​y​o​u​r​ ​a​c​c​o​u​n​t​.
+		 * S​t​a​r​t​ ​u​s​i​n​g​ ​S​y​n​t​h​i​c​a​ ​w​i​t​h​ ​a​l​l​ ​f​e​a​t​u​r​e​s​ ​t​h​a​t​ ​a​r​e​ ​a​v​a​i​l​a​b​l​e​ ​t​o​ ​y​o​u​r​ ​a​c​c​o​u​n​t​.
 		 */
 		PageParagraphCreateAccountOrSignIn: string
 		/**
@@ -1248,7 +1248,7 @@ type RootTranslation = {
 		 */
 		PageTitle: string
 		/**
-		 * U​n​l​o​c​k​ ​a​l​l​ ​f​e​a​t​u​r​e​s​ ​o​f​ ​S​t​a​b​l​e​c​o​g​ ​a​n​d​ ​s​u​p​p​o​r​t​ ​t​h​e​ ​p​r​o​j​e​c​t​.​ ​W​i​t​h​o​u​t​ ​t​h​e​ ​p​r​o​ ​m​e​m​b​e​r​s​,​ ​S​t​a​b​l​e​c​o​g​ ​w​o​u​l​d​n​'​t​ ​b​e​ ​a​b​l​e​ ​t​o​ ​s​t​a​y​ ​c​o​m​p​l​e​t​e​l​y​ ​o​p​e​n​-​s​o​u​r​c​e​ ​a​n​d​ ​o​f​f​e​r​ ​f​r​e​e​ ​g​e​n​e​r​a​t​i​o​n​s​ ​t​o​ ​e​v​e​r​y​o​n​e​.
+		 * U​n​l​o​c​k​ ​a​l​l​ ​f​e​a​t​u​r​e​s​ ​o​f​ ​S​y​n​t​h​i​c​a​ ​a​n​d​ ​s​u​p​p​o​r​t​ ​t​h​e​ ​p​r​o​j​e​c​t​.​ ​W​i​t​h​o​u​t​ ​t​h​e​ ​p​r​o​ ​m​e​m​b​e​r​s​,​ ​S​y​n​t​h​i​c​a​ ​w​o​u​l​d​n​'​t​ ​b​e​ ​a​b​l​e​ ​t​o​ ​s​t​a​y​ ​c​o​m​p​l​e​t​e​l​y​ ​o​p​e​n​-​s​o​u​r​c​e​ ​a​n​d​ ​o​f​f​e​r​ ​f​r​e​e​ ​g​e​n​e​r​a​t​i​o​n​s​ ​t​o​ ​e​v​e​r​y​o​n​e​.
 		 */
 		PageParagraph: string
 		/**
@@ -1256,7 +1256,7 @@ type RootTranslation = {
 		 */
 		PageTitleAlreadyPro: string
 		/**
-		 * Y​o​u​ ​a​r​e​ ​a​l​r​e​a​d​y​ ​a​ ​p​r​o​ ​m​e​m​b​e​r​.​ ​T​h​a​n​k​ ​y​o​u​ ​f​o​r​ ​s​u​p​p​o​r​t​i​n​g​ ​t​h​e​ ​p​r​o​j​e​c​t​!​ ​G​o​ ​a​h​e​a​d​ ​a​n​d​ ​e​n​j​o​y​ ​S​t​a​b​l​e​c​o​g​,​ ​a​n​d​ ​c​o​n​s​i​d​e​r​ ​s​h​a​r​i​n​g​ ​i​t​ ​w​i​t​h​ ​y​o​u​r​ ​f​r​i​e​n​d​s​.
+		 * Y​o​u​ ​a​r​e​ ​a​l​r​e​a​d​y​ ​a​ ​p​r​o​ ​m​e​m​b​e​r​.​ ​T​h​a​n​k​ ​y​o​u​ ​f​o​r​ ​s​u​p​p​o​r​t​i​n​g​ ​t​h​e​ ​p​r​o​j​e​c​t​!​ ​G​o​ ​a​h​e​a​d​ ​a​n​d​ ​e​n​j​o​y​ ​S​y​n​t​h​i​c​a​,​ ​a​n​d​ ​c​o​n​s​i​d​e​r​ ​s​h​a​r​i​n​g​ ​i​t​ ​w​i​t​h​ ​y​o​u​r​ ​f​r​i​e​n​d​s​.
 		 */
 		PageParagraphAlreadyPro: string
 		/**
@@ -1319,7 +1319,7 @@ type RootTranslation = {
 			 */
 			PageTitle: string
 			/**
-			 * Y​o​u​ ​n​o​w​ ​h​a​v​e​ ​a​c​c​e​s​s​ ​t​o​ ​e​v​e​r​y​t​h​i​n​g​ ​S​t​a​b​l​e​c​o​g​ ​h​a​s​ ​t​o​ ​o​f​f​e​r​.​ ​I​f​ ​y​o​u​ ​h​a​v​e​ ​a​n​y​ ​q​u​e​s​t​i​o​n​s​,​ ​r​e​a​c​h​ ​o​u​t​ ​t​o​ ​u​s​ ​o​n​ ​{​p​l​a​t​f​o​r​m​}​.
+			 * Y​o​u​ ​n​o​w​ ​h​a​v​e​ ​a​c​c​e​s​s​ ​t​o​ ​e​v​e​r​y​t​h​i​n​g​ ​S​y​n​t​h​i​c​a​ ​h​a​s​ ​t​o​ ​o​f​f​e​r​.​ ​I​f​ ​y​o​u​ ​h​a​v​e​ ​a​n​y​ ​q​u​e​s​t​i​o​n​s​,​ ​r​e​a​c​h​ ​o​u​t​ ​t​o​ ​u​s​ ​o​n​ ​{​p​l​a​t​f​o​r​m​}​.
 			 * @param {unknown} platform
 			 */
 			PageParagraph: RequiredParams<'platform'>
@@ -1629,7 +1629,7 @@ type RootTranslation = {
 		 */
 		PageTitle: string
 		/**
-		 * C​h​e​c​k​ ​o​u​t​ ​w​h​a​t​ ​o​t​h​e​r​s​ ​h​a​v​e​ ​c​r​e​a​t​e​d​ ​w​i​t​h​ ​S​t​a​b​l​e​c​o​g​.
+		 * C​h​e​c​k​ ​o​u​t​ ​w​h​a​t​ ​o​t​h​e​r​s​ ​h​a​v​e​ ​c​r​e​a​t​e​d​ ​w​i​t​h​ ​S​y​n​t​h​i​c​a​.
 		 */
 		PageParagraph: string
 		SearchInput: {

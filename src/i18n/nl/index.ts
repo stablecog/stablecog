@@ -175,11 +175,6 @@ const nl: Translation = {
 		SetButton: 'Stel in',
 		DefaultButton: 'Standaard'
 	},
-	Blog: {
-		Title: 'Blogberichten',
-		TitleAlt: 'Blog',
-		BackToBlogButton: 'Terug naar Blog'
-	},
 	Redirect: {
 		RedirectingToTitle: 'Doorverwijzen naar {name}'
 	},
@@ -392,7 +387,7 @@ const nl: Translation = {
 	SignUp: {
 		PageTitle: 'Aanmelden',
 		PageParagraph:
-			'Sluit je aan bij Stablecog om pro lid te worden en alle mogelijkheden te ontgrendelen.',
+			'Sluit je aan bij Synthica om pro lid te worden en alle mogelijkheden te ontgrendelen.',
 		PageTitleConfirm: 'Bevestigen',
 		PageTitleConfirmAlt: 'Check je e-mail',
 		PageParagraphConfirm:
@@ -410,12 +405,12 @@ const nl: Translation = {
 		PageTitleGetStarted: 'Aan de slag',
 		GetStartedButton: 'Aan de slag',
 		PageTitle: 'Inloggen',
-		PageParagraph: 'Begin met Stablecog met alle functies die beschikbaar zijn op je account.',
+		PageParagraph: 'Begin met Synthica met alle functies die beschikbaar zijn op je account.',
 		PageParagraphV2:
 			'Begin binnen enkele seconden geweldige kunst te maken. Creditcard niet nodig.',
 		PageTitleCreateAccountOrSignIn: 'Maak een account aan of log in',
 		PageParagraphCreateAccountOrSignIn:
-			'Begin met Stablecog met alle functies die beschikbaar zijn op je account.',
+			'Begin met Synthica met alle functies die beschikbaar zijn op je account.',
 		PageTitleSentLink: 'Check je e-mail',
 		PageParagraphSentLink:
 			"We hebben je een aanmeldlink gestuurd. Als je 'm niet ziet, controleer dan je spamfolder.",
@@ -431,10 +426,10 @@ const nl: Translation = {
 	Pro: {
 		PageTitle: 'Word een Pro',
 		PageParagraph:
-			'Ontgrendel alle functies van Stablecog en ondersteun het project. Zonder de pro-leden kan Stablecog niet volledig open source blijven en iedereen gratis kunnen laten genereren.',
+			'Ontgrendel alle functies van Synthica en ondersteun het project. Zonder de pro-leden kan Synthica niet volledig open source blijven en iedereen gratis kunnen laten genereren.',
 		PageTitleAlreadyPro: 'Je bent al een Pro!',
 		PageParagraphAlreadyPro:
-			'Je bent al een pro lid. Bedankt voor het steunen van het project! Geniet van Stablecog, en overweeg het te delen met je vrienden.',
+			'Je bent al een pro lid. Bedankt voor het steunen van het project! Geniet van Synthica, en overweeg het te delen met je vrienden.',
 		ProPlanTitle: 'Pro',
 		Features: {
 			FullSpeed: 'Volledige snelheid zonder ingestelde limieten',
@@ -453,7 +448,7 @@ const nl: Translation = {
 		Success: {
 			PageTitle: 'Je bent een Pro!',
 			PageParagraph:
-				'Je hebt nu toegang tot alles wat Stablecog te bieden heeft. Als je vragen hebt, neem dan contact met ons op via {platform}.'
+				'Je hebt nu toegang tot alles wat Synthica te bieden heeft. Als je vragen hebt, neem dan contact met ons op via {platform}.'
 		},
 		Cancel: {
 			PageTitle: 'Je hebt geannuleerd',
@@ -571,7 +566,7 @@ const nl: Translation = {
 	},
 	Gallery: {
 		PageTitle: 'Galerij',
-		PageParagraph: 'Bekijk wat anderen met Stablecog hebben gecreëerd.',
+		PageParagraph: 'Bekijk wat anderen met Synthica hebben gecreëerd.',
 		SearchInput: {
 			Title: 'Zoeken'
 		},
@@ -643,14 +638,6 @@ const nl: Translation = {
 		PageTitle: 'Ondersteuning',
 		PageParagraph:
 			'Als je vragen hebt, neem dan contact met ons op via onderstaande links en we zullen ze zo snel mogelijk beantwoorden.'
-	},
-	Guide: {
-		PageTitle: 'Handleiding',
-		GuideButton: 'Handleiding',
-		PreviousTitle: 'Terug',
-		NextTitle: 'Verder',
-		ChaptersTitle: 'Hoofdstukken',
-		ChapterTitle: 'Hoofdstuk'
 	},
 	Legal: {
 		TermsOfServiceTitle: 'Gebruiksvoorwaarden',

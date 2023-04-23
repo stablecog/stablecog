@@ -2,7 +2,7 @@ import { env } from '$env/dynamic/public';
 import type { TTab } from '$ts/types/main';
 
 export const serverUrl = env.PUBLIC_DEFAULT_SERVER_URL;
-export const canonicalUrl = 'https://stablecog.com';
+export const canonicalUrl = 'https://synthica.ai/';
 export const defaultLocale: Locales = 'en';
 export const apiUrl = new URL(
 	env.PUBLIC_APP_MODE === 'qa'
