@@ -181,9 +181,7 @@
 		</div>
 		<!-- Edit bar -->
 		<div
-			class="w-full top-1 max-w-5xl px-1 transition-all sticky z-30 {$isAdminGalleryEditActive
-				? 'mt-3'
-				: 'mt-0'}"
+			class="w-full top-1 max-w-5xl px-1 sticky z-30 {$isAdminGalleryEditActive ? 'mt-3' : 'mt-0'}"
 		>
 			{#if $isAdminGalleryEditActive}
 				<BatchEditBar type="admin-gallery" />
