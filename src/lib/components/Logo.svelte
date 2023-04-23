@@ -2,7 +2,7 @@
 	import { themeApp } from '$ts/stores/theme';
 
 	export { classes as class };
-	let classes = 'w-60 h-18';
+	let classes = 'w-50 h-12';
 </script>
 
 {#if $themeApp === 'light'}
