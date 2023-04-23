@@ -139,7 +139,7 @@
 	/>
 {/if}
 <!-- Barriers -->
-{#if cardType !== 'create' && cardType !== 'gallery'}
+{#if cardType !== 'create' && cardType !== 'gallery' && cardType !== 'generate'}
 	<div
 		class="absolute top-0 left-0 w-full h-24 bg-gradient-to-b from-c-barrier/90 via-c-barrier/60 to-c-barrier/0 
 		flex justify-between transition items-start {!$isTouchscreen
