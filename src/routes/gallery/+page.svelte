@@ -114,7 +114,7 @@
 />
 
 <svelte:window on:keydown={onKeyDown} />
-<div class="w-full flex-1 flex flex-col items-center relative mt-1 md:mt-0">
+<div class="w-full flex-1 flex flex-col items-center relative pt-1.5">
 	<div class="w-full px-2 py-1 md:py-2 flex justify-center">
 		<div class="w-full flex max-w-3xl justify-center">
 			<SearchAndFilterBar bind:modelIdFilters bind:searchString />

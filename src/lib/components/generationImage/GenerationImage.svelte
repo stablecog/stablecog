@@ -140,7 +140,7 @@
 {/if}
 {#if cardType !== 'create'}
 	<div
-		class="absolute top-0 left-0 w-full h-24 bg-gradient-to-b from-c-bg/80 to-c-bg/0 flex justify-between transition items-start {!$isTouchscreen
+		class="absolute top-0 left-0 w-full h-24 bg-gradient-to-b from-c-barrier/70 to-c-barrier/0 flex justify-between transition items-start {!$isTouchscreen
 			? 'group-focus-within:translate-y-0 group-hover:translate-y-0'
 			: ''} {isGalleryEditActive || overlayShouldShow ? 'translate-y-0' : '-translate-y-full'}"
 	/>
@@ -175,7 +175,7 @@
 		{#if cardType !== 'create'}
 			<div
 				class="w-full h-full pt-16 flex flex-col justify-end items-start flex-shrink bg-gradient-to-t 
-				from-c-bg/90 to-bg-c/0 transition text-xs relative z-0 overflow-hidden
+				from-c-barrier/90 to-c-barrier/0 transition text-xs relative z-0 overflow-hidden
 			 	pointer-events-none {!$isTouchscreen
 					? 'group-focus-within:translate-y-0 group-hover:translate-y-0'
 					: ''} {overlayShouldShow ? 'translate-y-0' : 'translate-y-full'}"
