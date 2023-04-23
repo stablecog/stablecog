@@ -273,7 +273,9 @@
 		<div />
 	</div>
 {/if}
+<!-- Deleted, approved or rejected -->
 {#if generation.selected_output.is_deleted || (cardType === 'admin-gallery' && showAdminGalleryBarrier) || (cardType === 'history' && $userGalleryCurrentView === 'favorites' && !generation.selected_output.is_favorited)}
+	<div class="w-full h-full absolute left-0 top-0 bg-c-barrier/85 z-10" />
 	<div class="w-full h-full absolute left-0 top-0 flex items-center justify-center p-4 z-20">
 		{#if generation.selected_output.is_deleted}
 			<IconTrashcan class="text-c-danger w-12 h-12" />
@@ -283,7 +285,6 @@
 			<IconCancelCircle class="text-c-danger w-12 h-12" />
 		{/if}
 	</div>
-	<div class="w-full h-full absolute left-0 top-0 bg-c-bg-secondary/85 z-10" />
 {/if}
 {#if cardType === 'admin-gallery' && generation.init_image_url}
 	<div class="absolute -top-px -right-px pr-1 pt-1 pl-2 pb-2 rounded-bl-lg bg-c-bg-secondary">
