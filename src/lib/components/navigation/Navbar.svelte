@@ -93,10 +93,10 @@
 			{#if routesWithDrawer.includes($page.url.pathname) || routesWithDrawer.some( (route) => $page.url.pathname.startsWith(route) )}
 				<button
 					on:click={() => isDrawerOpen.set(!$isDrawerOpen)}
-					class="relative self-stretch px-1 py-0.5 group overflow-hidden md:hidden"
+					class="relative self-stretch p-0.5 group overflow-hidden md:hidden"
 				>
-					<div class="h-full flex items-center justify-center p-3 relative overflow-hidden">
-						<ButtonHoverEffect hoverFrom="left" />
+					<div class="h-full flex items-center justify-center px-2.5 py-3 relative overflow-hidden">
+						<ButtonHoverEffect hoverFrom="left" size="md" />
 						<IconSidebar
 							class="w-8 h-8 transition text-c-on-bg {!$isTouchscreen
 								? 'group-hover:text-c-primary'
