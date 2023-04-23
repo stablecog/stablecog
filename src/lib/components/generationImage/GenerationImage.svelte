@@ -138,20 +138,22 @@
 		height={generation.height}
 	/>
 {/if}
-{#if cardType !== 'create'}
+<!-- Barriers -->
+{#if cardType !== 'create' && cardType !== 'admin-gallery' && cardType !== 'gallery'}
 	<div
-		class="absolute top-0 left-0 w-full h-24 bg-gradient-to-b from-c-barrier/90 to-c-barrier/0 flex justify-between transition items-start {!$isTouchscreen
+		class="absolute top-0 left-0 w-full h-24 bg-gradient-to-b from-c-barrier/90 via-c-barrier/60 to-c-barrier/0 
+		flex justify-between transition items-start {!$isTouchscreen
 			? 'group-focus-within:opacity-100 group-hover:opacity-100'
 			: ''} {isGalleryEditActive || overlayShouldShow ? 'opacity-100' : 'opacity-0'}"
 	/>
-	{#if !generation.selected_output.is_deleted && !isGalleryEditActive}
-		<div
-			class="absolute bottom-0 left-0 w-full h-full max-h-[12rem] bg-gradient-to-t transition
-			from-c-barrier/90 to-c-barrier/0 {!$isTouchscreen
-				? 'group-focus-within:opacity-100 group-hover:opacity-100'
-				: ''} {overlayShouldShow ? 'opacity-100' : 'opacity-0'}"
-		/>
-	{/if}
+{/if}
+{#if cardType !== 'create' && !generation.selected_output.is_deleted && !isGalleryEditActive}
+	<div
+		class="absolute bottom-0 left-0 w-full h-full max-h-[12rem] bg-gradient-to-t transition
+		from-c-barrier/90 via-c-barrier/60 to-c-barrier/0 {!$isTouchscreen
+			? 'group-focus-within:opacity-100 group-hover:opacity-100'
+			: ''} {overlayShouldShow ? 'opacity-100' : 'opacity-0'}"
+	/>
 {/if}
 {#if !generation.selected_output.is_deleted && !isGalleryEditActive}
 	<AnchorOrDiv
