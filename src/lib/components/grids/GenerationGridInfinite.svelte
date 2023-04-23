@@ -26,6 +26,7 @@
 	import GenerationAnimation from '$components/grids/GenerationAnimation.svelte';
 	import { fade } from 'svelte/transition';
 	import { quadIn, quadOut } from 'svelte/easing';
+	import { windowHeight } from '$ts/stores/window';
 	export let generationsQuery: CreateInfiniteQueryResult<TUserGenerationFullOutputsPage, unknown>;
 	export let pinnedFullOutputs: TGenerationFullOutput[] | undefined = undefined;
 	export let rerenderKey: string;
@@ -100,7 +101,7 @@
 			{items}
 			let:visibleItems
 			align="center"
-			threshold={3000}
+			threshold={($windowHeight || 1000) * 5}
 			on:requestAppend={({ detail: e }) => {
 				console.log('requestAppend');
 				if ($generationsQuery.isFetchingNextPage) return;
@@ -125,17 +126,14 @@
 					!output.is_deleted}
 				{@const status = output.status}
 				{@const animation = output.animation}
-				<div
-					style="position: absolute;left: -9999px;top: -9999px;"
-					class="{cardWidthClasses} p-0.5"
-				>
+				<div style="position: absolute;left: -9999px;top: -9999px;" class="{cardWidthClasses} p-px">
 					<div class="w-full relative group">
 						<ImagePlaceholder width={output.generation.width} height={output.generation.height} />
 						<div
 							class="absolute left-0 top-0 w-full h-full bg-c-bg-secondary transition {cardType ===
 							'create'
 								? 'border-2 rounded-lg hover:border-c-primary'
-								: 'border-4 rounded-xl'} {isOutputSelected
+								: 'border-2 rounded-xl'} {isOutputSelected
 								? 'border-c-primary'
 								: 'border-c-bg-secondary'} {isOutputHoverable ? 'hover:border-c-primary/75' : ''}
 										 z-0 overflow-hidden shadow-lg shadow-c-shadow/[var(--o-shadow-normal)]"

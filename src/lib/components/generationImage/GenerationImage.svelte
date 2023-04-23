@@ -140,10 +140,18 @@
 {/if}
 {#if cardType !== 'create'}
 	<div
-		class="absolute top-0 left-0 w-full h-24 bg-gradient-to-b from-c-barrier/70 to-c-barrier/0 flex justify-between transition items-start {!$isTouchscreen
-			? 'group-focus-within:translate-y-0 group-hover:translate-y-0'
-			: ''} {isGalleryEditActive || overlayShouldShow ? 'translate-y-0' : '-translate-y-full'}"
+		class="absolute top-0 left-0 w-full h-24 bg-gradient-to-b from-c-barrier/90 to-c-barrier/0 flex justify-between transition items-start {!$isTouchscreen
+			? 'group-focus-within:opacity-100 group-hover:opacity-100'
+			: ''} {isGalleryEditActive || overlayShouldShow ? 'opacity-100' : 'opacity-0'}"
 	/>
+	{#if !generation.selected_output.is_deleted && !isGalleryEditActive}
+		<div
+			class="absolute bottom-0 left-0 w-full h-full max-h-[12rem] bg-gradient-to-t transition
+			from-c-barrier/90 to-c-barrier/0 {!$isTouchscreen
+				? 'group-focus-within:opacity-100 group-hover:opacity-100'
+				: ''} {overlayShouldShow ? 'opacity-100' : 'opacity-0'}"
+		/>
+	{/if}
 {/if}
 {#if !generation.selected_output.is_deleted && !isGalleryEditActive}
 	<AnchorOrDiv
@@ -174,8 +182,8 @@
 	>
 		{#if cardType !== 'create'}
 			<div
-				class="w-full h-full pt-16 flex flex-col justify-end items-start flex-shrink bg-gradient-to-t 
-				from-c-barrier/90 to-c-barrier/0 transition text-xs relative z-0 overflow-hidden
+				class="w-full h-full pt-16 flex flex-col justify-end items-start flex-shrink 
+				transition text-xs relative z-0 overflow-hidden
 			 	pointer-events-none {!$isTouchscreen
 					? 'group-focus-within:translate-y-0 group-hover:translate-y-0'
 					: ''} {overlayShouldShow ? 'translate-y-0' : 'translate-y-full'}"

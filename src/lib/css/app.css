@@ -177,4 +177,8 @@ select:-webkit-autofill:focus {
 		background 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
+.translate-3d-0 {
+	transform: translate3d(0, 0, 0);
+}
+
 @tailwind utilities;
