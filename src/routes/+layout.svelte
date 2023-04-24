@@ -83,7 +83,7 @@
 	const queryClient = new QueryClient({
 		defaultOptions: {
 			queries: {
-				staleTime: 30 * 1000,
+				staleTime: 10 * 1000,
 				enabled: browser
 			}
 		}
