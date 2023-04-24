@@ -4,9 +4,13 @@
 	font-size: 1rem;
 	line-height: 1.75;
 	margin-top: 1rem;
-	color: rgba(var(--c-on-bg) / 0.75);
 	font-weight: 200;
+	color: rgba(var(--c-on-bg));
 	--e-default: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.md-doc .p, .md-doc li {
+	color: rgba(var(--c-on-bg) / 0.75);
 }
 
 .md-doc h1 {
