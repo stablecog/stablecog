@@ -325,7 +325,7 @@ const bg: Translation = {
 	},
 	Error: {
 		SomethingWentWrong: 'Нещо се обърка :(',
-		ImageWasNSFW: 'Неподходящо за непълнолетни :(',
+		ImageWasNSFW: 'Неподходящо изображение :(',
 		NSFW: 'Съдържа неподходящи елементи, опитайте отново :(',
 		ServerSeemsOffline:
 			'Сървърът не е на линия. Опреснете странницата или изберете друг сървър от настройките.',
@@ -491,7 +491,7 @@ const bg: Translation = {
 		PageTitle: 'Профил',
 		ManageSubscriptionButton: 'Управление на абонамента',
 		ComparePlansButton: 'Сравнете планове',
-		ManageAccountButton: 'Управление на профа',
+		ManageAccountButton: 'Управление на профила',
 		MyAccountButton: 'Моят профил',
 		SubscriptionPlanTitle: 'План',
 		RemainingImagesTitle: 'Оставащи изработки',
@@ -587,7 +587,7 @@ const bg: Translation = {
 			FreeTitle: 'Безплатен',
 			StarterTitle: 'Начален',
 			ProTitle: 'Платен',
-			UltimateTitle: 'Върховен'
+			UltimateTitle: 'Професионален'
 		},
 		CreditPacks: {
 			MediumTitle: 'Среден пакет',
@@ -601,7 +601,7 @@ const bg: Translation = {
 			Images: '{count} изображения.',
 			Generations: '{count} изработки.',
 			NeverExpires: 'Постоянен.',
-			CommercialUse: 'Търговски приложим.',
+			CommercialUse: 'Търговски приложими.',
 			ImagesArePublic: 'Изображенията са публични.',
 			ImagesArePrivate: 'Изображенията са частни.'
 		},
@@ -653,4 +653,5 @@ const bg: Translation = {
 		PageParagraph: 'Обновяваме системите си. Ще се върнем след няколко часа.'
 	}
 };
+
 export default bg;
