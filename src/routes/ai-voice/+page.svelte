@@ -3,7 +3,6 @@
 	import { page } from '$app/stores';
 	import { canonicalUrl } from '$ts/constants/main';
 	import MetaTag from '$components/MetaTag.svelte';
-	import { onMount } from 'svelte';
 	
 	export let buttonDisabled = false;
 	export let buttonAutoPlay = true;
@@ -11,10 +10,6 @@
 	export let ariavaluenow = 0;
 	export let ariavaluemin = 0;
 	export let ariavaluemax = 100;
-
-	onMount(async () => {
-		
-	});
 </script>
 
 
@@ -45,7 +40,7 @@
 								any text or <button class="btn btn-xs btn-white btn-round">give me an
 									idea</button></span>
 							<div class="bg-white shadow-2xl rounded-md flex flex-col items-stretch relative">
-								<div class="relative px-8 py-8 pb-11"><textarea autofocus={autoFocus}
+								<div class="relative px-8 py-8 pb-11"><textarea
 										placeholder="Eleven lets you voice any length of text in top quality, all while automatically matching what is being said with how it’s being said. The model works best on longer texts, so type in at least a few sentences."
 										rows="5" maxlength="333"
 										class="font-serif text-lg bg-transparent p-0 resize-none w-full outline-none focus:ring-0 ring-0 border-none placeholder:text-gray-200"
