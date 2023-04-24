@@ -20,5 +20,5 @@
 			/>
 		</div>
 	</div>
-	<Logo class="w-50 h-12" />
+	<Logo class="w-50 h-16" />
 </a>
