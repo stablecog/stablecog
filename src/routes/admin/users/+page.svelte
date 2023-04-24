@@ -404,7 +404,7 @@
 										</div>
 									</div>
 								</div>
-								<div class="w-full h-2px rounded-full bg-c-on-bg/5 my-3" />
+								<div class="w-full h-2px rounded-full bg-c-on-bg/5 mt-4 mb-3" />
 							{/if}
 							<div class="w-full flex flex-row items-center justify-between gap-5">
 								<div class="flex-1 flex flex-col items-start justify-center">
