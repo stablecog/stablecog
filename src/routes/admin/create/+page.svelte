@@ -210,7 +210,7 @@
 	<Navbar />
 	<!-- Main part desktop -->
 	<div class="w-full h-full flex flex-row overflow-hidden pt-2 px-4 pb-4 gap-4">
-		<div class="h-full w-40 xl:w-80">
+		<div class="h-full w-36 xl:w-72">
 			{#if userGenerationFullOutputsQuery}
 				<SidebarWrapper>
 					<div
@@ -244,7 +244,7 @@
 				</div>
 			</div>
 		</div>
-		<div class="h-full w-80">
+		<div class="h-full w-72">
 			<SettingsPanel serverData={data} bind:isReadyMap />
 		</div>
 	</div>
