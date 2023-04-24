@@ -28,3 +28,17 @@ Two generations below have the exact same settings except for the negative promp
 | ![Negative prompt: green tones](https://ba.stablecog.com/guide/generation-settings/negative_prompt_green_tones.jpg)<!--rehype:width=1024&height=1536--> |
 
 <!--rehype:class=w-full md:w-1/2-->
+
+Here is another example. Again, both generations have the same settings except for the negative prompt. Left one has no negative prompt, right one has "angry" as the negative prompt. Notice how the model tries to steer away from an angry face in the right one.
+
+| No negative prompt                                                                                                                       |
+| ---------------------------------------------------------------------------------------------------------------------------------------- |
+| ![No negative prompt](https://ba.stablecog.com/guide/generation-settings/negative_prompt_2_none.jpg)<!--rehype:width=1024&height=1536--> |
+
+<!--rehype:class=w-full md:w-1/2-->
+
+| Negative prompt: Angry                                                                                                                        |
+| --------------------------------------------------------------------------------------------------------------------------------------------- |
+| ![Negative prompt: angry](https://ba.stablecog.com/guide/generation-settings/negative_prompt_2_angry.jpg)<!--rehype:width=1024&height=1536--> |
+
+<!--rehype:class=w-full md:w-1/2-->

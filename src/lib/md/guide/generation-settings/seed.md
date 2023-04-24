@@ -28,3 +28,17 @@ Two generations below have the exact same settings except for the seed. Left one
 | ![Seed: ](https://ba.stablecog.com/guide/generation-settings/seed_1000097042.jpg)<!--rehype:width=1024&height=1536--> |
 
 <!--rehype:class=w-full md:w-1/2-->
+
+Here is another example. The generations have the exact same settings except for the seed again. Left one has the seed of 1602969464 and the right one has the seed of 1720804046. Notice how changing the seed results in a completely different image.
+
+| Seed: 1602969464                                                                                                        |
+| ----------------------------------------------------------------------------------------------------------------------- |
+| ![Seed: ](https://ba.stablecog.com/guide/generation-settings/seed_2_1602969464.jpg)<!--rehype:width=1024&height=1536--> |
+
+<!--rehype:class=w-full md:w-1/2-->
+
+| Seed: 1720804046                                                                                                        |
+| ----------------------------------------------------------------------------------------------------------------------- |
+| ![Seed: ](https://ba.stablecog.com/guide/generation-settings/seed_2_1720804046.jpg)<!--rehype:width=1024&height=1536--> |
+
+<!--rehype:class=w-full md:w-1/2-->
