@@ -367,6 +367,17 @@ const ptBr: Translation = {
 		AdminGalleryTab: 'Galeria',
 		UsersTab: 'Usuários',
 		Users: {
+			ConfirmAction: {
+				ConfirmActionReferenceText: 'I confirm the action',
+				ConfirmActionParagraph: 'Type "{confirmActionText}" to confirm.',
+				ConfirmActionInput: { Placeholder: 'Confirm' }
+			},
+			DataDeletedAtTitle: 'Data Deleted',
+			WillBeDeletedTitle: 'Will Be Deleted',
+			BannedAtTitle: 'Banned',
+			BannedTitle: 'Banned',
+			UnbanUserButton: 'Unban User',
+			BanUserButton: 'Ban User',
 			GiftCreditsButton: 'Gift Credits'
 		},
 		Gallery: {

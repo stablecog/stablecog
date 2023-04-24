@@ -13,6 +13,7 @@
 	export let hasClearButton = false;
 	export let shadow: 'normal' | 'strong' | 'strongest' = 'normal';
 	export let onClearButtonClicked: (() => void) | undefined = undefined;
+	export let noAutocomplete = false;
 	export let onKeyPress:
 		| ((
 				e: KeyboardEvent & {
@@ -44,6 +45,7 @@
 			on:keypress={onKeyPress}
 			on:focus={onFocus}
 			on:blur={onBlur}
+			autocomplete={noAutocomplete ? 'off' : 'on'}
 			{enterkeyhint}
 			{disabled}
 			type="email"
@@ -73,6 +75,7 @@
 			on:keypress={onKeyPress}
 			on:focus={onFocus}
 			on:blur={onBlur}
+			autocomplete={noAutocomplete ? 'off' : 'on'}
 			{enterkeyhint}
 			{disabled}
 			type="password"
@@ -102,6 +105,7 @@
 			on:keypress={onKeyPress}
 			on:focus={onFocus}
 			on:blur={onBlur}
+			autocomplete={noAutocomplete ? 'off' : 'on'}
 			{enterkeyhint}
 			{disabled}
 			type="number"
@@ -131,6 +135,7 @@
 			on:keypress={onKeyPress}
 			on:focus={onFocus}
 			on:blur={onBlur}
+			autocomplete={noAutocomplete ? 'off' : 'on'}
 			{enterkeyhint}
 			{disabled}
 			type="text"

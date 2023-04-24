@@ -57,6 +57,31 @@ export async function getAllUsers({
 	return { ...resJson, total_counts };
 }
 
+export async function banOrUnbanUsers({
+	user_ids,
+	access_token,
+	action
+}: {
+	user_ids: string[];
+	access_token: string;
+	action: 'ban' | 'unban';
+}) {
+	const url = `${apiUrl.origin}/v1/admin/users/ban`;
+	const res = await fetch(url, {
+		method: 'POST',
+		headers: {
+			'Content-Type': 'application/json',
+			Authorization: `Bearer ${access_token}`
+		},
+		body: JSON.stringify({
+			user_ids: user_ids,
+			action
+		})
+	});
+	const resJson = await res.json();
+	return resJson;
+}
+
 export interface TAllUsersPage {
 	users: TUserForAdmin[];
 	total_count?: number;
@@ -75,6 +100,9 @@ export interface TUserForAdmin {
 	last_sign_in_at: string;
 	last_seen_at: string;
 	product_id?: string;
+	banned_at?: string;
+	scheduled_for_deletion_on?: string;
+	data_deleted_at?: string;
 }
 
 export interface TUserCredit {
