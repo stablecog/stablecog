@@ -9,7 +9,6 @@
 	import IconButton from '$components/buttons/IconButton.svelte';
 	import type { TGenerationImageCardType } from '$components/generationImage/types';
 	import IconCancelCircle from '$components/icons/IconCancelCircle.svelte';
-	import IconChatBubbleCancel from '$components/icons/IconChatBubbleCancel.svelte';
 	import IconGalleryFilled from '$components/icons/IconGalleryFilled.svelte';
 	import IconNoImage from '$components/icons/IconNoImage.svelte';
 	import IconTick from '$components/icons/IconTick.svelte';
