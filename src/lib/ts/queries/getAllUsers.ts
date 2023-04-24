@@ -11,12 +11,14 @@ export async function getAllUsers({
 	cursor,
 	search,
 	access_token,
-	active_product_id
+	active_product_id,
+	banned
 }: {
 	cursor?: string;
 	search?: string;
 	access_token?: string;
 	active_product_id?: TStripeSupportedProductIdSubscriptions;
+	banned?: boolean;
 }) {
 	console.log('getAllUsers');
 	const query = new URLSearchParams();
@@ -29,6 +31,9 @@ export async function getAllUsers({
 	}
 	if (active_product_id !== undefined && active_product_id) {
 		query.append('active_product_ids', active_product_id);
+	}
+	if (banned !== undefined) {
+		query.append('banned', banned.toString());
 	}
 	const url = `${apiUrl.origin}/v1/admin/users?${query.toString()}`;
 	const res = await fetch(url, {

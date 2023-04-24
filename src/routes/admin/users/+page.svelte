@@ -42,9 +42,9 @@
 	let usersInput: HTMLInputElement;
 	$: searchString, setDebouncedSearch(searchString);
 
-	let selectedActiveProductId: TStripeSupportedProductIdSubscriptions = '';
+	let selectedFilterDropdownItem: TStripeSupportedProductIdSubscriptions = '';
 
-	const activeProductItems: TTab<TStripeSupportedProductIdSubscriptions>[] = [
+	const filterDropdownItems: TTab<TStripeSupportedProductIdSubscriptions>[] = [
 		{
 			label: $LL.Shared.AllTitle(),
 			value: ''
@@ -60,18 +60,24 @@
 		{
 			label: getTitleFromProductId($LL, PUBLIC_STRIPE_PRODUCT_ID_ULTIMATE_SUBSCRIPTION),
 			value: PUBLIC_STRIPE_PRODUCT_ID_ULTIMATE_SUBSCRIPTION
+		},
+		{
+			label: $LL.Admin.Users.BannedTitle(),
+			value: 'banned'
 		}
 	];
 
 	$: allUsersQuery = browser
 		? createInfiniteQuery({
-				queryKey: ['all_users_query', searchStringDebounced, selectedActiveProductId ?? ''],
+				queryKey: ['all_users_query', searchStringDebounced, selectedFilterDropdownItem ?? ''],
 				queryFn: async (lastPage) => {
 					const res = await getAllUsers({
 						cursor: lastPage?.pageParam,
 						search: searchStringDebounced,
 						access_token: $page.data.session?.access_token,
-						active_product_id: selectedActiveProductId
+						active_product_id:
+							selectedFilterDropdownItem === 'banned' ? undefined : selectedFilterDropdownItem,
+						banned: selectedFilterDropdownItem === 'banned' ? true : undefined
 					});
 					return res;
 				},
@@ -308,9 +314,9 @@
 				<TabLikeDropdown
 					class="w-full"
 					name="Active Product ID"
-					items={activeProductItems}
+					items={filterDropdownItems}
 					hasTitle={false}
-					bind:value={selectedActiveProductId}
+					bind:value={selectedFilterDropdownItem}
 				/>
 			</div>
 		</div>
