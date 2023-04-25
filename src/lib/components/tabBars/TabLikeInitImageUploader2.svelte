@@ -137,44 +137,58 @@
 		{/if}
 		{#if $generationInitImageSrc && $generationInitImageWidth && $generationInitImageHeight}
 			<div class="w-full flex flex-col items-center relative">
-				<div class="w-full flex justify-center items-center pt-3 pb-3.5 px-3.5 gap-3">
+				<div class="w-full flex justify-center items-center gap-3">
+					<!-- Image container -->
 					<div
 						on:click|stopPropagation={openImageModal}
 						on:keydown={() => null}
 						style="background-image: url({$generationInitImageSrc});"
-						class="bg-c-bg-secondary ml-px w-16 h-16 bg-cover bg-center rounded-md transition ring-2 ring-c-bg-secondary 
-						shadow-lg shadow-c-shadow/[var(--o-shadow-stronger)] hover:cursor-pointer flex items-center justify-center {!$isTouchscreen
+						class="bg-c-bg w-full h-16 bg-contain bg-no-repeat bg-center transition hover:cursor-pointer flex items-center justify-between {!$isTouchscreen
 							? 'hover:ring-c-primary/75'
-							: ''} relative overflow-hidden"
-					>
-						{#if $generationInitImageFilesState === 'uploading' || $generationInitImageFilesState === 'uploaded' || $generationInitImageFilesState === 'error'}
-							<div
-								class="w-6 h-6 p-0.5 rounded bg-c-bg-secondary/75 flex items-center justify-center"
+							: ''} relative overflow-hidden rounded-t-xl z-0 transition ring-2 ring-c-bg-secondary {!$isTouchscreen
+							? 'hover:ring-c-primary/25'
+							: ''}"
+					/>
+					<!-- Uploading indicator -->
+					{#if $generationInitImageFilesState === 'uploading' || $generationInitImageFilesState === 'uploaded' || $generationInitImageFilesState === 'error'}
+						<div
+							class="w-10 h-10 pointer-events-none p-1.5 bg-c-bg/75 rounded-tl-xl rounded-br-xl flex items-center justify-center absolute left-0 top-0"
+						>
+							<Morpher
+								class="w-full h-full"
+								morphed={$generationInitImageFilesState === 'uploaded' ||
+									$generationInitImageFilesState === 'error'}
 							>
-								<Morpher
-									class="w-full h-full"
-									morphed={$generationInitImageFilesState === 'uploaded' ||
-										$generationInitImageFilesState === 'error'}
-								>
-									<div slot="0" class="w-full h-full">
-										<IconAnimatedUploading
-											loading={$generationInitImageFilesState === 'uploading'}
-											class="w-full h-full text-c-on-bg"
-										/>
-									</div>
-									<div class="w-full h-full" slot="1">
-										<Morpher morphed={$generationInitImageFilesState === 'error'}>
-											<div slot="0" class="w-full h-full">
-												<IconTickOnly class="w-full h-full text-c-success" />
-											</div>
-											<div slot="1" class="w-full h-full">
-												<IconWarningOutline class="w-full h-full text-c-danger" />
-											</div>
-										</Morpher>
-									</div>
-								</Morpher>
-							</div>
-						{/if}
+								<div slot="0" class="w-full h-full">
+									<IconAnimatedUploading
+										loading={$generationInitImageFilesState === 'uploading'}
+										class="w-full h-full text-c-on-bg"
+									/>
+								</div>
+								<div class="w-full h-full" slot="1">
+									<Morpher morphed={$generationInitImageFilesState === 'error'}>
+										<div slot="0" class="w-full h-full">
+											<IconTickOnly class="w-full h-full text-c-success" />
+										</div>
+										<div slot="1" class="w-full h-full">
+											<IconWarningOutline class="w-full h-full text-c-danger" />
+										</div>
+									</Morpher>
+								</div>
+							</Morpher>
+						</div>
+					{/if}
+					<!-- Delete image button -->
+					<div class="h-full flex justify-end items-start absolute right-0 top-0 z-10">
+						<div class="bg-c-bg/75 flex items-center justify-center rounded-tr-xl rounded-bl-xl">
+							<IconButton name="Reset Upload State" class="p-0.5" onClick={resetUploadState}>
+								<IconTrashcan
+									class="w-5 h-5 transition {!$isTouchscreen
+										? 'group-hover/iconbutton:text-c-primary'
+										: ''}"
+								/>
+							</IconButton>
+						</div>
 					</div>
 				</div>
 				{#if $generationInitImageFilesState === 'error'}
@@ -245,7 +259,7 @@
 						? 'group-hover:text-c-primary'
 						: ''}"
 				>
-					{$LL.Home.ImageInput.Paragraph() + 'as'}
+					{$LL.Home.ImageInput.Paragraph()}
 				</p>
 			</div>
 			{#if !$page.data.session?.user.id}
