@@ -128,7 +128,9 @@
 				<div class="w-[200%] h-full absolute left-0 top-0 flex items-center justify-center">
 					<div
 						class="w-full aspect-square origin-left rounded-full transition transform -translate-x-full opacity-0
-							bg-c-primary/10 {!$isTouchscreen ? 'group-hover:translate-x-[-45%] group-hover:opacity-100' : ''}"
+							bg-c-primary/10 {isDraggedInside ? 'opacity-100 translate-x-[-45%]' : ''} {!$isTouchscreen
+							? 'group-hover:translate-x-[-45%] group-hover:opacity-100'
+							: ''}"
 					/>
 				</div>
 			</div>
@@ -229,7 +231,7 @@
 				class="w-0 h-0 opacity-0"
 			/>
 			<div
-				class="w-full max-w-full flex flex-col items-center justify-start pl-3.5 pr-4 py-3.25 md:py-3.5 gap-2"
+				class="w-full max-w-full flex flex-col items-center justify-start px-4 py-3.25 md:py-3.5 gap-2"
 			>
 				<IconDropzone
 					class="w-6 h-6 shrink-0 transition transform {isDraggedInside
@@ -238,12 +240,12 @@
 				/>
 				<p
 					class="w-full text-center transform {isDraggedInside
-						? 'text-c-primary scale-105'
+						? 'text-c-primary scale-103'
 						: 'text-c-on-bg/50'} text-xs font-normal min-w-0 flex-1 leading-normal transition {!$isTouchscreen
 						? 'group-hover:text-c-primary'
 						: ''}"
 				>
-					{$LL.Home.ImageInput.Paragraph()}
+					{$LL.Home.ImageInput.Paragraph() + 'as'}
 				</p>
 			</div>
 			{#if !$page.data.session?.user.id}
