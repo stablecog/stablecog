@@ -245,7 +245,7 @@
 			</div>
 		</div>
 		<div class="h-full w-72">
-			<SettingsPanel serverData={data} bind:isReadyMap />
+			<SettingsPanel serverData={data} bind:isReadyMap {openSignInModal} />
 		</div>
 	</div>
 </div>

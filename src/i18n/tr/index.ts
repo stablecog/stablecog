@@ -45,6 +45,7 @@ const tr: Translation = {
 			Paragraph: 'Üretim bu fotoğrafı baz alarak yapılacak.'
 		},
 		InitialImageStrengthTabBar: {
+			TitleAlt: 'Image Strength',
 			Title: 'Baz Fotoğraf Gücü',
 			Paragraph:
 				'Baz fotoğrafın üretimi ne kadar etkileyeceğinin ölçüsü. Değer ne kadar büyükse baz fotoğrafın etkisi o kadar yüksek olur.'
@@ -57,6 +58,7 @@ const tr: Translation = {
 				'İstemediğin şeyleri üretilecek fotoğraftan çıkartmak için. Komutun yaptığının tam tersini yapar.'
 		},
 		ImageInput: {
+			Paragraph: 'Click or drop your image here',
 			Title: 'Fotoğraf Yükle'
 		},
 		SeedInput: {

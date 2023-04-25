@@ -45,6 +45,7 @@ const fr: Translation = {
 			Paragraph: 'The generation will be created based on this image.'
 		},
 		InitialImageStrengthTabBar: {
+			TitleAlt: 'Image Strength',
 			Title: 'Initial Image Strength',
 			Paragraph:
 				'Controls the influence of the initial image. The bigger the value, the more influence the initial image has.'
@@ -56,7 +57,7 @@ const fr: Translation = {
 			Paragraph:
 				"Supprime ce que vous ne voulez pas voir dans l'image. L'opposé de la description textuelle."
 		},
-		ImageInput: { Title: 'Upload Image' },
+		ImageInput: { Paragraph: 'Click or drop your image here', Title: 'Upload Image' },
 		SeedInput: {
 			Title: 'Graine aléatoire (seed)',
 			Placeholder: 'Graine aléatoire',

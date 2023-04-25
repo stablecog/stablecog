@@ -3,7 +3,7 @@
 	export let dontScale = false;
 	export { classes as class };
 	let classes = '';
-	export let outline: 'primary' | 'bg-secondary' = 'bg-secondary';
+	export let outline: 'primary' | 'bg-secondary' | 'primary-strong' = 'bg-secondary';
 </script>
 
 <div
@@ -11,7 +11,9 @@
 		? 'rounded-t-xl self-stretch shadow-navbar shadow-c-shadow/[var(--o-shadow-stronger)]'
 		: 'rounded-xl shadow-lg shadow-c-shadow/[var(--o-shadow-normal)]'} {dontScale
 		? 'text-sm'
-		: 'text-xs md:text-sm'} {outline === 'primary'
+		: 'text-xs md:text-sm'} {outline === 'primary-strong'
+		? 'ring-c-primary/50'
+		: outline === 'primary'
 		? 'ring-c-primary/15'
 		: 'ring-c-bg-secondary'} ring-2 flex items-stretch  bg-c-bg transition relative {classes}"
 >

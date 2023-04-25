@@ -45,6 +45,7 @@ const vi: Translation = {
 			Paragraph: 'The generation will be created based on this image.'
 		},
 		InitialImageStrengthTabBar: {
+			TitleAlt: 'Image Strength',
 			Title: 'Initial Image Strength',
 			Paragraph:
 				'Controls the influence of the initial image. The bigger the value, the more influence the initial image has.'
@@ -56,7 +57,7 @@ const vi: Translation = {
 			Paragraph:
 				'Để xóa những thứ không mong muốn xuất hiện trong hình ảnh. Nó có tác dụng ngược so với lời mô tả.'
 		},
-		ImageInput: { Title: 'Upload Image' },
+		ImageInput: { Paragraph: 'Click or drop your image here', Title: 'Upload Image' },
 		SeedInput: {
 			Title: 'Số khởi tạo',
 			Placeholder: 'Số khởi tạo',

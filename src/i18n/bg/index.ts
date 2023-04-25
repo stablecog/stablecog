@@ -45,6 +45,7 @@ const bg: Translation = {
 			Paragraph: 'Резултатът ще бъде базиран на това изображение.'
 		},
 		InitialImageStrengthTabBar: {
+			TitleAlt: 'Image Strength',
 			Title: 'Сила на въздействие',
 			Paragraph:
 				'Въздействието на първоначалното изображение. По-високи стойности оказват по-силно влияние на крайния резултат.'
@@ -56,6 +57,7 @@ const bg: Translation = {
 			Paragraph: 'Премахва нежелани елементи при изработване. Напътствия които да се избягват.'
 		},
 		ImageInput: {
+			Paragraph: 'Click or drop your image here',
 			Title: 'Качи изображение'
 		},
 		SeedInput: {

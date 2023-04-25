@@ -45,6 +45,7 @@ const nl: Translation = {
 			Paragraph: 'Het genereren zal worden uitgevoerd op basis van deze afbeelding.'
 		},
 		InitialImageStrengthTabBar: {
+			TitleAlt: 'Image Strength',
 			Title: 'Sterkte initiële afbeelding',
 			Paragraph:
 				'Bepaalt de invloed van de initiële afbeelding. Hoe groter de waarde, hoe meer invloed de initiële afbeelding heeft.'
@@ -57,6 +58,7 @@ const nl: Translation = {
 				'Om ongewenste dingen uit de afbeelding te verwijderen. Doet het tegenovergestelde van wat de prompt doet.'
 		},
 		ImageInput: {
+			Paragraph: 'Click or drop your image here',
 			Title: 'Upload Afbeelding'
 		},
 		SeedInput: {

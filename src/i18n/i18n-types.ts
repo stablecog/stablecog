@@ -142,6 +142,10 @@ type RootTranslation = {
 		}
 		InitialImageStrengthTabBar: {
 			/**
+			 * I​m​a​g​e​ ​S​t​r​e​n​g​t​h
+			 */
+			TitleAlt: string
+			/**
 			 * I​n​i​t​i​a​l​ ​I​m​a​g​e​ ​S​t​r​e​n​g​t​h
 			 */
 			Title: string
@@ -169,6 +173,10 @@ type RootTranslation = {
 			Paragraph: string
 		}
 		ImageInput: {
+			/**
+			 * C​l​i​c​k​ ​o​r​ ​d​r​o​p​ ​y​o​u​r​ ​i​m​a​g​e​ ​h​e​r​e
+			 */
+			Paragraph: string
 			/**
 			 * U​p​l​o​a​d​ ​I​m​a​g​e
 			 */
@@ -2068,6 +2076,10 @@ export type TranslationFunctions = {
 		}
 		InitialImageStrengthTabBar: {
 			/**
+			 * Image Strength
+			 */
+			TitleAlt: () => LocalizedString
+			/**
 			 * Initial Image Strength
 			 */
 			Title: () => LocalizedString
@@ -2095,6 +2107,10 @@ export type TranslationFunctions = {
 			Paragraph: () => LocalizedString
 		}
 		ImageInput: {
+			/**
+			 * Click or drop your image here
+			 */
+			Paragraph: () => LocalizedString
 			/**
 			 * Upload Image
 			 */

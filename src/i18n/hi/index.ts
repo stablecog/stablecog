@@ -45,6 +45,7 @@ const hi: Translation = {
 			Paragraph: 'The generation will be created based on this image.'
 		},
 		InitialImageStrengthTabBar: {
+			TitleAlt: 'Image Strength',
 			Title: 'Initial Image Strength',
 			Paragraph:
 				'Controls the influence of the initial image. The bigger the value, the more influence the initial image has.'
@@ -55,7 +56,7 @@ const hi: Translation = {
 			PlaceholderAlt: 'Enter things to avoid',
 			Paragraph: 'चित्र से अनचहित चीजों को हटाने के लिए। यह संकेत के विपरीत करता है।'
 		},
-		ImageInput: { Title: 'Upload Image' },
+		ImageInput: { Paragraph: 'Click or drop your image here', Title: 'Upload Image' },
 		SeedInput: {
 			Title: 'सीड',
 			Placeholder: 'सीड संख्या',
