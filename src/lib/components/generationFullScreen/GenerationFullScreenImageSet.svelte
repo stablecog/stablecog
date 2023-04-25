@@ -15,8 +15,8 @@
 <img
 	style="transition: filter 0.5s cubic-bezier(0.4, 0, 0.2, 1);"
 	class="{upscaleBeingProcessed
-		? 'blur-2xl'
-		: ''} w-full transition h-auto lg:h-full lg:object-contain absolute lg:left-0 lg:top-0"
+		? 'blur-xl translate-3d-0'
+		: ''} w-full transform transition h-auto lg:h-full lg:object-contain absolute lg:left-0 lg:top-0"
 	src={backgroundImageUrl}
 	alt="Blurred background 2 for: {prompt}"
 	width={backgroundImageWidth}
@@ -26,7 +26,7 @@
 	on:load={onImageLoad}
 	style="transition: filter 0.5s cubic-bezier(0.4, 0, 0.2, 1);"
 	class="{upscaleBeingProcessed
-		? 'blur-2xl'
+		? 'blur-xl translate-3d-0'
 		: ''} filter w-full relative transition h-auto lg:h-full lg:object-contain lg:absolute lg:left-0 lg:top-0"
 	src={imageUrl}
 	alt={prompt}

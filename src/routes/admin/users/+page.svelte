@@ -11,7 +11,7 @@
 	import IconSearch from '$components/icons/IconSearch.svelte';
 	import { browser } from '$app/environment';
 	import { createInfiniteQuery, createQuery } from '@tanstack/svelte-query';
-	import { getAllUsers, type TAllUsersPage } from '$ts/queries/getAllUsers';
+	import { banOrUnbanUsers, getAllUsers, type TAllUsersPage } from '$ts/queries/getAllUsers';
 	import ProductIdBadge from '$components/badges/ProductIdBadge.svelte';
 	import { scale } from 'svelte/transition';
 	import { quadOut } from 'svelte/easing';
@@ -33,6 +33,7 @@
 	import { clickoutside } from '$ts/actions/clickoutside';
 	import ScrollAreaWithChevron from '$components/ScrollAreaWithChevron.svelte';
 	import { giftCreditsToUser } from '$ts/queries/giftCreditsToUser';
+	import IconWarning from '$components/icons/IconWarning.svelte';
 
 	let searchString: string;
 	let searchStringDebounced: string | undefined = undefined;
@@ -41,9 +42,9 @@
 	let usersInput: HTMLInputElement;
 	$: searchString, setDebouncedSearch(searchString);
 
-	let selectedActiveProductId: TStripeSupportedProductIdSubscriptions = '';
+	let selectedFilterDropdownItem: TStripeSupportedProductIdSubscriptions = '';
 
-	const activeProductItems: TTab<TStripeSupportedProductIdSubscriptions>[] = [
+	const filterDropdownItems: TTab<TStripeSupportedProductIdSubscriptions>[] = [
 		{
 			label: $LL.Shared.AllTitle(),
 			value: ''
@@ -59,18 +60,24 @@
 		{
 			label: getTitleFromProductId($LL, PUBLIC_STRIPE_PRODUCT_ID_ULTIMATE_SUBSCRIPTION),
 			value: PUBLIC_STRIPE_PRODUCT_ID_ULTIMATE_SUBSCRIPTION
+		},
+		{
+			label: $LL.Admin.Users.BannedTitle(),
+			value: 'banned'
 		}
 	];
 
 	$: allUsersQuery = browser
 		? createInfiniteQuery({
-				queryKey: ['all_users_query', searchStringDebounced, selectedActiveProductId ?? ''],
+				queryKey: ['all_users_query', searchStringDebounced, selectedFilterDropdownItem ?? ''],
 				queryFn: async (lastPage) => {
 					const res = await getAllUsers({
 						cursor: lastPage?.pageParam,
 						search: searchStringDebounced,
 						access_token: $page.data.session?.access_token,
-						active_product_id: selectedActiveProductId
+						active_product_id:
+							selectedFilterDropdownItem === 'banned' ? undefined : selectedFilterDropdownItem,
+						banned: selectedFilterDropdownItem === 'banned' ? true : undefined
 					});
 					return res;
 				},
@@ -83,7 +90,7 @@
 
 	$: totalCounts = $allUsersQuery?.data?.pages?.[0]?.total_counts;
 
-	type TDropdownState = 'main' | 'gift-credits';
+	type TDropdownState = 'main' | 'gift-credits' | 'ban-user' | 'unban-user';
 	let isDropdownOpen: {
 		[id: string]: { isOpen: boolean; state: TDropdownState; buttonElement?: HTMLElement };
 	} = {};
@@ -141,6 +148,8 @@
 	let atTheTop = true;
 
 	let bottomDiv: HTMLElement;
+	let banOrUnbanUserInput: HTMLInputElement;
+	let banOrUnbanUserInputValue: string;
 
 	let canAutoFetch = true;
 	let canAutoFetchTimeout: NodeJS.Timeout;
@@ -156,6 +165,10 @@
 
 	function toggleUserDropdown(id: string, shouldOpen?: boolean) {
 		if (!isDropdownOpen) return;
+		if (banOrUnbanUserInput) {
+			banOrUnbanUserInputValue = '';
+			banOrUnbanUserInput.value = '';
+		}
 		const newIsOpen = shouldOpen !== undefined ? shouldOpen : !isDropdownOpen[id].isOpen;
 		for (const key in isDropdownOpen) {
 			isDropdownOpen[key] = { ...isDropdownOpen[key], isOpen: false, state: 'main' };
@@ -176,14 +189,41 @@
 	let creditToAdd: { user_id: string; credit_type_id: string } | undefined = undefined;
 	async function giftCredits(user_id: string, credit_type_id: string) {
 		toggleUserDropdown(user_id, false);
-		const res = await giftCreditsToUser({
-			access_token: $page.data.session?.access_token,
-			user_id,
-			credit_type_id
-		});
-		if (!res.added) return;
-		creditToAdd = undefined;
-		$allUsersQuery?.refetch();
+		try {
+			const res = await giftCreditsToUser({
+				access_token: $page.data.session?.access_token,
+				user_id,
+				credit_type_id
+			});
+			if (!res.added) return;
+			creditToAdd = undefined;
+			$allUsersQuery?.refetch();
+		} catch (e) {
+			console.log(e);
+		}
+	}
+
+	async function _banOrUnbanUsers({
+		user_ids,
+		action
+	}: {
+		user_ids: string[];
+		action: 'ban' | 'unban';
+	}) {
+		if (banOrUnbanUserInputValue !== $LL.Admin.Users.ConfirmAction.ConfirmActionReferenceText())
+			return;
+		try {
+			user_ids.forEach((id) => toggleUserDropdown(id, false));
+			const res = await banOrUnbanUsers({
+				access_token: $page.data.session?.access_token || '',
+				user_ids,
+				action
+			});
+			console.log(res);
+			$allUsersQuery?.refetch();
+		} catch (e) {
+			console.log(e);
+		}
 	}
 </script>
 
@@ -274,9 +314,9 @@
 				<TabLikeDropdown
 					class="w-full"
 					name="Active Product ID"
-					items={activeProductItems}
+					items={filterDropdownItems}
 					hasTitle={false}
-					bind:value={selectedActiveProductId}
+					bind:value={selectedFilterDropdownItem}
 				/>
 			</div>
 		</div>
@@ -326,9 +366,49 @@
 							class="w-full max-w-2xl flex flex-col 
 							bg-c-bg-secondary rounded-xl shadow-lg shadow-c-shadow/[var(--o-shadow-normal)] p-3 md:p-4"
 						>
+							{#if user.banned_at}
+								<div class="w-full flex items-center flex-wrap gap-2">
+									<div
+										class="font-bold bg-c-danger/15 text-c-danger rounded-md flex items-center gap-2 px-2 py-1 text-sm"
+									>
+										<IconWarning class="w-4 h-4 flex-shrink-0 -ml-0.5" />
+										<p class="flex-1 min-w-0 overflow-hidden overflow-ellipsis">
+											{$LL.Admin.Users.BannedTitle()}
+										</p>
+									</div>
+									<div class="flex items-center">
+										<div class="max-w-full flex flex-wrap text-xxs gap-3">
+											<div class="flex flex-col px-1.5">
+												<p class="text-c-on-bg/75 font-semibold">
+													{$LL.Admin.Users.BannedAtTitle()}
+												</p>
+												<p class="mt-1 text-c-on-bg/50">
+													{getRelativeDate({ date: user.banned_at, locale: $locale })}
+												</p>
+											</div>
+											<div class="flex flex-col px-1.5">
+												<p class="text-c-on-bg/75 font-semibold">
+													{user.data_deleted_at
+														? $LL.Admin.Users.DataDeletedAtTitle()
+														: $LL.Admin.Users.WillBeDeletedTitle()}
+												</p>
+												<p class="mt-1 text-c-on-bg/50">
+													{getRelativeDate({
+														date: user.data_deleted_at
+															? user.data_deleted_at
+															: user.scheduled_for_deletion_on,
+														locale: $locale
+													})}
+												</p>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="w-full h-2px rounded-full bg-c-on-bg/5 mt-4 mb-3" />
+							{/if}
 							<div class="w-full flex flex-row items-center justify-between gap-5">
 								<div class="flex-1 flex flex-col items-start justify-center">
-									<div class="max-w-full flex flex-col">
+									<div class="max-w-full flex flex-col items-start">
 										<button
 											bind:this={isDropdownOpen[user.id].buttonElement}
 											class="max-w-full flex flex-col items-start justify-start transition rounded {!$isTouchscreen
@@ -352,8 +432,49 @@
 													}}
 													class="relative"
 												>
-													<DropdownWrapper alignment="left-0 top-0" class="w-52 mt-1.5">
-														{#if userDropdownState === 'gift-credits' && $creditOptions && $creditOptions.data && $creditOptions.data.length > 0}
+													<DropdownWrapper
+														alignment="left-0 top-0"
+														class="w-64 max-w-[80vw] mt-1.5"
+													>
+														{#if userDropdownState === 'ban-user' || userDropdownState === 'unban-user'}
+															<ScrollAreaWithChevron
+																class="w-full flex flex-col justify-start max-h-[min(50vh,16rem)] relative"
+															>
+																<div class="px-2 py-2 flex flex-col gap-2">
+																	<p class="px-2 pt-1 pb-2 text-xs text-c-on-bg/50 leading-normal">
+																		{@html $LL.Admin.Users.ConfirmAction.ConfirmActionParagraph({
+																			confirmActionText: `<span class="text-c-danger">${$LL.Admin.Users.ConfirmAction.ConfirmActionReferenceText()}</span>`
+																		})}
+																	</p>
+																	<form
+																		on:submit={() =>
+																			_banOrUnbanUsers({
+																				user_ids: [user.id],
+																				action: user.banned_at ? 'unban' : 'ban'
+																			})}
+																		class="w-full flex flex-col gap-2"
+																	>
+																		<Input
+																			noAutocomplete
+																			title={$LL.Admin.Users.ConfirmAction.ConfirmActionInput.Placeholder()}
+																			bind:value={banOrUnbanUserInputValue}
+																			bind:inputElement={banOrUnbanUserInput}
+																		/>
+																		<Button
+																			disabled={banOrUnbanUserInputValue !==
+																				$LL.Admin.Users.ConfirmAction.ConfirmActionReferenceText()}
+																			fadeOnDisabled
+																			type="danger"
+																			size="sm"
+																		>
+																			{user.banned_at
+																				? $LL.Admin.Users.UnbanUserButton()
+																				: $LL.Admin.Users.BanUserButton()}
+																		</Button>
+																	</form>
+																</div>
+															</ScrollAreaWithChevron>
+														{:else if userDropdownState === 'gift-credits' && $creditOptions && $creditOptions.data && $creditOptions.data.length > 0}
 															<ScrollAreaWithChevron
 																class="w-full flex flex-col justify-start max-h-[min(50vh,16rem)] relative"
 															>
@@ -418,6 +539,29 @@
 																	>
 																		{$LL.Admin.Users.GiftCreditsButton()}
 																	</p>
+																</DropdownItem>
+																<DropdownItem
+																	onClick={() =>
+																		user.banned_at
+																			? changeUserDropdownState(user.id, 'unban-user')
+																			: changeUserDropdownState(user.id, 'ban-user')}
+																>
+																	<div class="max-w-full flex items-center gap-2">
+																		<IconWarning
+																			class="w-5 h-5 text-c-danger flex-shrink-0 {!$isTouchscreen
+																				? 'group-hover:text-c-primary'
+																				: ''}"
+																		/>
+																		<p
+																			class="flex-1 min-w-0 overflow-hidden overflow-ellipsis text-left text-c-danger transition {!$isTouchscreen
+																				? 'group-hover:text-c-primary'
+																				: ''}"
+																		>
+																			{user.banned_at
+																				? $LL.Admin.Users.UnbanUserButton()
+																				: $LL.Admin.Users.BanUserButton()}
+																		</p>
+																	</div>
 																</DropdownItem>
 															</div>
 														{/if}

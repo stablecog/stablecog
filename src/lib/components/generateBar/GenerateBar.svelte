@@ -502,8 +502,8 @@
 				{placeholder}
 				rows="1"
 				style="transition: height 0.1s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.2s cubic-bezier(0.4, 0, 0.2, 1), padding 0.2s cubic-bezier(0.4, 0, 0.2, 1)"
-				class="w-full bg-c-bg-secondary shadow-lg pr-12 md:pr-17 hide-scrollbar shadow-c-shadow/[var(--o-shadow-normal)] 
-					scroll-smooth resize-none transition relative pl-5 md:pl-6 py-5 rounded-xl 
+				class="w-full bg-c-bg-secondary shadow-lg pr-12 md:pr-17 hide-scrollbar shadow-c-shadow/[var(--o-shadow-normal)]
+					scroll-smooth resize-none transition relative pl-5 md:pl-6 py-5 rounded-xl
 					focus:ring-2 focus:ring-c-primary/30 ring-0 ring-c-primary/20 placeholder:text-c-on-bg/40 {!$isTouchscreen
 					? 'enabled:hover:ring-2'
 					: ''} {classes} {lastGenerationBeingProcessed
@@ -527,15 +527,15 @@
 			>
 				<div
 					style="transition-duration: {lastGenerationAnimationStatus === 'should-animate-slow'
-						? estimatedGenerationDurationSec * 3
+						? estimatedGenerationDurationSec * 5
 						: lastGenerationAnimationStatus === 'should-animate'
 						? estimatedGenerationDurationSec
 						: lastGenerationAnimationStatus === 'should-complete'
 						? 0.3
 						: 0}s"
-					class="w-full h-full ease-image-generation transition bg-c-secondary/10 
-					absolute left-0 top-0 rounded-xl {lastGenerationAnimationStatus === 'should-animate-slow'
-						? '-translate-x-2/4'
+					class="w-full h-full ease-image-generation transition bg-c-secondary/10
+			absolute left-0 top-0 rounded-xl {lastGenerationAnimationStatus === 'should-animate-slow'
+						? '-translate-x-1/4'
 						: lastGenerationAnimationStatus === 'should-animate'
 						? 'translate-x-0'
 						: lastGenerationAnimationStatus === 'should-complete'

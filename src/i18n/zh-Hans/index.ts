@@ -44,6 +44,7 @@ const zhHans: Translation = {
 			Paragraph: 'The generation will be created based on this image.'
 		},
 		InitialImageStrengthTabBar: {
+			TitleAlt: 'Image Strength',
 			Title: 'Initial Image Strength',
 			Paragraph:
 				'Controls the influence of the initial image. The bigger the value, the more influence the initial image has.'
@@ -54,7 +55,7 @@ const zhHans: Translation = {
 			PlaceholderAlt: 'Enter things to avoid',
 			Paragraph: '从图像中移除不想要的东西。它与提示的作用相反。'
 		},
-		ImageInput: { Title: 'Upload Image' },
+		ImageInput: { Paragraph: 'Click or drop your image here', Title: 'Upload Image' },
 		SeedInput: {
 			Title: '种子',
 			Placeholder: '种子编号',
@@ -358,6 +359,17 @@ const zhHans: Translation = {
 		AdminGalleryTab: 'Gallery',
 		UsersTab: 'Users',
 		Users: {
+			ConfirmAction: {
+				ConfirmActionReferenceText: 'I confirm the action',
+				ConfirmActionParagraph: 'Type "{confirmActionText}" to confirm.',
+				ConfirmActionInput: { Placeholder: 'Confirm' }
+			},
+			DataDeletedAtTitle: 'Data Deleted',
+			WillBeDeletedTitle: 'Will Be Deleted',
+			BannedAtTitle: 'Banned',
+			BannedTitle: 'Banned',
+			UnbanUserButton: 'Unban User',
+			BanUserButton: 'Ban User',
 			GiftCreditsButton: 'Gift Credits'
 		},
 		Gallery: {

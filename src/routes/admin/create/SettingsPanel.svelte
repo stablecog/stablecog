@@ -50,6 +50,7 @@
 		aspectRatioTooltipSettingsPanel,
 		guidanceScaleTooltipSettingsPanel,
 		inferenceStepsTooltipSettingsPanel,
+		initImageTooltipSettingsPanel,
 		modelTooltipSettingsPanel,
 		negativePromptTooltipSettingsPanel,
 		numOutputsTooltipSettingsPanel,
@@ -103,10 +104,12 @@
 	import TabLikeInput from '$components/tabBars/TabLikeInput.svelte';
 	import type { TIsReadyMap } from '$routes/admin/create/types';
 	import { generations } from '$ts/stores/user/generation';
+	import TabLikeInitImageUploader2 from '$components/tabBars/TabLikeInitImageUploader2.svelte';
 
 	export let rounding: 'all' | 'top' | 'bottom' = 'all';
 	export let serverData: TCreatePageData;
 	export let isReadyMap: TIsReadyMap;
+	export let openSignInModal: () => void;
 
 	let settingsContainer: HTMLDivElement;
 	let containerDropdownPadding = 16;
@@ -498,11 +501,21 @@
 				hasTitle={false}
 				disabled={!isCheckCompleted}
 				class="w-full"
-				min={1}
-				max={4}
+				min={numOutputsMin}
+				max={numOutputsMax}
 				valueSize="md"
 				bind:value={$generationNumOutputs}
 			/>
+		</div>
+		<div class="w-full flex flex-col items-start gap-3">
+			<div
+				use:tooltip={$initImageTooltipSettingsPanel}
+				class="max-w-full px-2 flex items-center text-c-on-bg/75 gap-2"
+			>
+				<IconImage class="w-5 h-5" />
+				<p class="flex-shrink font-medium">{$LL.Home.ImageInput.Title()}</p>
+			</div>
+			<TabLikeInitImageUploader2 disabled={!isCheckCompleted} class="w-full" {openSignInModal} />
 		</div>
 		<div class="w-full flex flex-col items-start gap-3">
 			<div

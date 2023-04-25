@@ -311,7 +311,7 @@
 			{#if generation.selected_output.image_url}
 				{#key generation.selected_output.id}
 					<img
-						class="w-full h-full absolute left-0 top-0 transform scale-125 blur-xl"
+						class="w-full h-full absolute left-0 top-0 transform scale-125 blur-xl translate-3d-0"
 						src={generation.selected_output.image_url}
 						alt="Blurred background for: {generation.prompt.text}"
 						width={generation.width}

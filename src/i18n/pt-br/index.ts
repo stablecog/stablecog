@@ -45,6 +45,7 @@ const ptBr: Translation = {
 			Paragraph: 'The generation will be created based on this image.'
 		},
 		InitialImageStrengthTabBar: {
+			TitleAlt: 'Image Strength',
 			Title: 'Initial Image Strength',
 			Paragraph:
 				'Controls the influence of the initial image. The bigger the value, the more influence the initial image has.'
@@ -55,7 +56,7 @@ const ptBr: Translation = {
 			PlaceholderAlt: 'Enter things to avoid',
 			Paragraph: 'Remove coisas indesejadas da imagem. Faz o oposto do que o prompt faz.'
 		},
-		ImageInput: { Title: 'Upload Image' },
+		ImageInput: { Paragraph: 'Click or drop your image here', Title: 'Upload Image' },
 		SeedInput: {
 			Title: 'Semente',
 			Placeholder: 'Número de semente',
@@ -362,6 +363,17 @@ const ptBr: Translation = {
 		AdminGalleryTab: 'Galeria',
 		UsersTab: 'Usuários',
 		Users: {
+			ConfirmAction: {
+				ConfirmActionReferenceText: 'I confirm the action',
+				ConfirmActionParagraph: 'Type "{confirmActionText}" to confirm.',
+				ConfirmActionInput: { Placeholder: 'Confirm' }
+			},
+			DataDeletedAtTitle: 'Data Deleted',
+			WillBeDeletedTitle: 'Will Be Deleted',
+			BannedAtTitle: 'Banned',
+			BannedTitle: 'Banned',
+			UnbanUserButton: 'Unban User',
+			BanUserButton: 'Ban User',
 			GiftCreditsButton: 'Gift Credits'
 		},
 		Gallery: {

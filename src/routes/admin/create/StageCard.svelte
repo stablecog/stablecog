@@ -17,7 +17,7 @@
 <div class="w-full h-full relative group">
 	<ImagePlaceholder width={generation.width} height={generation.height} />
 	<div
-		class="absolute left-0 top-0 w-full h-full rounded-xl bg-c-bg-secondary transition border-4 border-c-bg-secondary
+		class="absolute left-0 top-0 w-full h-full rounded-xl bg-c-bg-secondary transition border-2 border-c-bg-secondary
     z-0 overflow-hidden shadow-lg shadow-c-shadow/[var(--o-shadow-normal)]"
 	>
 		{#if generation.is_placeholder}

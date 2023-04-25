@@ -45,6 +45,7 @@ const tr: Translation = {
 			Paragraph: 'Üretim bu fotoğrafı baz alarak yapılacak.'
 		},
 		InitialImageStrengthTabBar: {
+			TitleAlt: 'Image Strength',
 			Title: 'Baz Fotoğraf Gücü',
 			Paragraph:
 				'Baz fotoğrafın üretimi ne kadar etkileyeceğinin ölçüsü. Değer ne kadar büyükse baz fotoğrafın etkisi o kadar yüksek olur.'
@@ -57,6 +58,7 @@ const tr: Translation = {
 				'İstemediğin şeyleri üretilecek fotoğraftan çıkartmak için. Komutun yaptığının tam tersini yapar.'
 		},
 		ImageInput: {
+			Paragraph: 'Click or drop your image here',
 			Title: 'Fotoğraf Yükle'
 		},
 		SeedInput: {
@@ -364,6 +366,17 @@ const tr: Translation = {
 		AdminGalleryTab: 'Galeri',
 		UsersTab: 'Kullanıcılar',
 		Users: {
+			ConfirmAction: {
+				ConfirmActionReferenceText: 'I confirm the action',
+				ConfirmActionParagraph: 'Type "{confirmActionText}" to confirm.',
+				ConfirmActionInput: { Placeholder: 'Confirm' }
+			},
+			DataDeletedAtTitle: 'Data Deleted',
+			WillBeDeletedTitle: 'Will Be Deleted',
+			BannedAtTitle: 'Banned',
+			BannedTitle: 'Banned',
+			UnbanUserButton: 'Unban User',
+			BanUserButton: 'Ban User',
 			GiftCreditsButton: 'Kredi Hediye Et'
 		},
 		Gallery: {

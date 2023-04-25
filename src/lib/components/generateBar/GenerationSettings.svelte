@@ -33,9 +33,9 @@
 		negativePromptTooltip,
 		schedulerTooltip,
 		seedTooltip,
-		initialImageTabBarTooltip,
+		initImageTabBarTooltip,
 		aspectRatioTooltip,
-		initialImageStrengthTabBarTooltip
+		initImageStrengthTabBarTooltip
 	} from '$ts/constants/tooltips';
 	import { logAdvancedMode } from '$ts/helpers/loggers';
 	import { advancedMode, advancedModeApp } from '$ts/stores/advancedMode';
@@ -170,8 +170,8 @@
 		<div
 			slot="title"
 			use:tooltip={$generationInitImageFilesState === 'idle'
-				? $initialImageTabBarTooltip
-				: $initialImageStrengthTabBarTooltip}
+				? $initImageTabBarTooltip
+				: $initImageStrengthTabBarTooltip}
 			class="p-3.5 flex items-center justify-center"
 		>
 			<Morpher morphed={$generationInitImageFilesState !== 'idle'}>

@@ -195,13 +195,12 @@
 						class="w-full max-w-7xl flex flex-wrap items-start justify-center md:px-4 py-3 md:pt-0"
 					>
 						{#each $generations[0].outputs as output}
-							<div class="p-0.5 w-1/2 lg:w-1/4 max-w-xs lg:max-w-auto">
+							<div class="p-px w-1/2 lg:w-1/4 max-w-xs lg:max-w-auto">
 								<div class="w-full h-auto relative">
 									<ImagePlaceholder width={$generations[0].width} height={$generations[0].height} />
-
 									<div
-										class="absolute w-full h-full left-0 top-0 rounded-2xl bg-c-bg-secondary z-0 overflow-hidden border-4
-											shadow-lg shadow-c-shadow/[var(--o-shadow-normal)] border-c-bg-secondary group"
+										class="absolute w-full h-full left-0 top-0 rounded-xl bg-c-bg-secondary z-0 overflow-hidden border-2
+										shadow-lg shadow-c-shadow/[var(--o-shadow-normal)] border-c-bg-secondary group"
 									>
 										{#if output.status === 'failed' || output.status === 'failed-nsfw'}
 											<div class="w-full h-full flex items-center justify-center">

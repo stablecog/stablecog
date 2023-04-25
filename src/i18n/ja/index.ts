@@ -45,6 +45,7 @@ const ja: Translation = {
 			Paragraph: 'この画像に基づいて生成されます。'
 		},
 		InitialImageStrengthTabBar: {
+			TitleAlt: 'Image Strength',
 			Title: '初期画像強度',
 			Paragraph:
 				'初期画像による影響をコントロールします。値が大きいほど、初期画像の影響も増えます。'
@@ -57,6 +58,7 @@ const ja: Translation = {
 				'生成画像から除去したいもの指定します。プロンプトとは対照的な意味としてとらわれます。'
 		},
 		ImageInput: {
+			Paragraph: 'Click or drop your image here', 
 			Title: '画像をアップロード'
 		},
 		SeedInput: {
@@ -367,6 +369,17 @@ const ja: Translation = {
 		AdminGalleryTab: 'ギャラリー',
 		UsersTab: 'ユーザー',
 		Users: {
+			ConfirmAction: {
+				ConfirmActionReferenceText: 'I confirm the action',
+				ConfirmActionParagraph: 'Type "{confirmActionText}" to confirm.',
+				ConfirmActionInput: { Placeholder: 'Confirm' }
+			},
+			DataDeletedAtTitle: 'Data Deleted',
+			WillBeDeletedTitle: 'Will Be Deleted',
+			BannedAtTitle: 'Banned',
+			BannedTitle: 'Banned',
+			UnbanUserButton: 'Unban User',
+			BanUserButton: 'Ban User',
 			GiftCreditsButton: 'ギフトクレジット'
 		},
 		Gallery: {

@@ -13,6 +13,7 @@
 	export let hasClearButton = false;
 	export let shadow: 'normal' | 'strong' | 'strongest' = 'normal';
 	export let onClearButtonClicked: (() => void) | undefined = undefined;
+	export let noAutocomplete = false;
 	export let onKeyPress:
 		| ((
 				e: KeyboardEvent & {
@@ -44,6 +45,7 @@
 			on:keypress={onKeyPress}
 			on:focus={onFocus}
 			on:blur={onBlur}
+			autocomplete={noAutocomplete ? 'off' : 'on'}
 			{enterkeyhint}
 			{disabled}
 			type="email"
@@ -54,7 +56,7 @@
 				? 'bg-c-bg-secondary'
 				: 'bg-c-bg-tertiary'} relative {hasIcon ? 'pl-12' : 'pl-5'} {hasClearButton
 				? 'pr-10 md:pr-16'
-				: 'pr-5'} pt-7 pb-3 rounded-xl transition
+				: 'pr-5'} pt-7 pb-3 rounded-xl transition 
       shadow-lg {shadow === 'strongest'
 				? 'shadow-c-shadow/[var(--o-shadow-strongest)]'
 				: shadow === 'strong'
@@ -73,6 +75,7 @@
 			on:keypress={onKeyPress}
 			on:focus={onFocus}
 			on:blur={onBlur}
+			autocomplete={noAutocomplete ? 'off' : 'on'}
 			{enterkeyhint}
 			{disabled}
 			type="password"
@@ -83,7 +86,7 @@
 				? 'bg-c-bg-secondary'
 				: 'bg-c-bg-tertiary'} relative {hasIcon ? 'pl-12' : 'pl-5'} {hasClearButton
 				? 'pr-10 md:pr-16'
-				: 'pr-5'} pt-7 pb-3 rounded-xl transition
+				: 'pr-5'} pt-7 pb-3 rounded-xl transition 
       shadow-lg {shadow === 'strongest'
 				? 'shadow-c-shadow/[var(--o-shadow-strongest)]'
 				: shadow === 'strong'
@@ -102,6 +105,7 @@
 			on:keypress={onKeyPress}
 			on:focus={onFocus}
 			on:blur={onBlur}
+			autocomplete={noAutocomplete ? 'off' : 'on'}
 			{enterkeyhint}
 			{disabled}
 			type="number"
@@ -112,7 +116,7 @@
 				? 'bg-c-bg-secondary'
 				: 'bg-c-bg-tertiary'} relative {hasIcon ? 'pl-12' : 'pl-5'} {hasClearButton
 				? 'pr-10 md:pr-16'
-				: 'pr-5'} pt-7 pb-3 rounded-xl transition
+				: 'pr-5'} pt-7 pb-3 rounded-xl transition 
       shadow-lg {shadow === 'strongest'
 				? 'shadow-c-shadow/[var(--o-shadow-strongest)]'
 				: shadow === 'strong'
@@ -131,6 +135,7 @@
 			on:keypress={onKeyPress}
 			on:focus={onFocus}
 			on:blur={onBlur}
+			autocomplete={noAutocomplete ? 'off' : 'on'}
 			{enterkeyhint}
 			{disabled}
 			type="text"
@@ -141,7 +146,7 @@
 				? 'bg-c-bg-secondary'
 				: 'bg-c-bg-tertiary'} relative {hasIcon ? 'pl-12' : 'pl-5'} {hasClearButton
 				? 'pr-10 md:pr-16'
-				: 'pr-5'} pt-7 pb-3 rounded-xl transition
+				: 'pr-5'} pt-7 pb-3 rounded-xl transition 
       shadow-lg {shadow === 'strongest'
 				? 'shadow-c-shadow/[var(--o-shadow-strongest)]'
 				: shadow === 'strong'

@@ -141,6 +141,10 @@ type RootTranslation = {
 		}
 		InitialImageStrengthTabBar: {
 			/**
+			 * I​m​a​g​e​ ​S​t​r​e​n​g​t​h
+			 */
+			TitleAlt: string
+			/**
 			 * I​n​i​t​i​a​l​ ​I​m​a​g​e​ ​S​t​r​e​n​g​t​h
 			 */
 			Title: string
@@ -168,6 +172,7 @@ type RootTranslation = {
 			Paragraph: string
 		}
 		ImageInput: {
+			Paragraph: string
 			/**
 			 * U​p​l​o​a​d​ ​I​m​a​g​e
 			 */
@@ -1068,6 +1073,47 @@ type RootTranslation = {
 		 */
 		UsersTab: string
 		Users: {
+			ConfirmAction: {
+				/**
+				 * I​ ​c​o​n​f​i​r​m​ ​t​h​e​ ​a​c​t​i​o​n
+				 */
+				ConfirmActionReferenceText: string
+				/**
+				 * T​y​p​e​ ​"​{​c​o​n​f​i​r​m​A​c​t​i​o​n​T​e​x​t​}​"​ ​t​o​ ​c​o​n​f​i​r​m​.
+				 * @param {unknown} confirmActionText
+				 */
+				ConfirmActionParagraph: RequiredParams<'confirmActionText'>
+				ConfirmActionInput: {
+					/**
+					 * C​o​n​f​i​r​m
+					 */
+					Placeholder: string
+				}
+			}
+			/**
+			 * D​a​t​a​ ​D​e​l​e​t​e​d
+			 */
+			DataDeletedAtTitle: string
+			/**
+			 * W​i​l​l​ ​B​e​ ​D​e​l​e​t​e​d
+			 */
+			WillBeDeletedTitle: string
+			/**
+			 * B​a​n​n​e​d
+			 */
+			BannedAtTitle: string
+			/**
+			 * B​a​n​n​e​d
+			 */
+			BannedTitle: string
+			/**
+			 * U​n​b​a​n​ ​U​s​e​r
+			 */
+			UnbanUserButton: string
+			/**
+			 * B​a​n​ ​U​s​e​r
+			 */
+			BanUserButton: string
 			/**
 			 * G​i​f​t​ ​C​r​e​d​i​t​s
 			 */
@@ -1986,6 +2032,10 @@ export type TranslationFunctions = {
 		}
 		InitialImageStrengthTabBar: {
 			/**
+			 * Image Strength
+			 */
+			TitleAlt: () => LocalizedString
+			/**
 			 * Initial Image Strength
 			 */
 			Title: () => LocalizedString
@@ -2013,6 +2063,10 @@ export type TranslationFunctions = {
 			Paragraph: () => LocalizedString
 		}
 		ImageInput: {
+			/**
+			 * Click or drop your image here
+			 */
+			Paragraph: () => LocalizedString
 			/**
 			 * Upload Image
 			 */
@@ -2893,6 +2947,46 @@ export type TranslationFunctions = {
 		 */
 		UsersTab: () => LocalizedString
 		Users: {
+			ConfirmAction: {
+				/**
+				 * I confirm the action
+				 */
+				ConfirmActionReferenceText: () => LocalizedString
+				/**
+				 * Type "{confirmActionText}" to confirm.
+				 */
+				ConfirmActionParagraph: (arg: { confirmActionText: unknown }) => LocalizedString
+				ConfirmActionInput: {
+					/**
+					 * Confirm
+					 */
+					Placeholder: () => LocalizedString
+				}
+			}
+			/**
+			 * Data Deleted
+			 */
+			DataDeletedAtTitle: () => LocalizedString
+			/**
+			 * Will Be Deleted
+			 */
+			WillBeDeletedTitle: () => LocalizedString
+			/**
+			 * Banned
+			 */
+			BannedAtTitle: () => LocalizedString
+			/**
+			 * Banned
+			 */
+			BannedTitle: () => LocalizedString
+			/**
+			 * Unban User
+			 */
+			UnbanUserButton: () => LocalizedString
+			/**
+			 * Ban User
+			 */
+			BanUserButton: () => LocalizedString
 			/**
 			 * Gift Credits
 			 */

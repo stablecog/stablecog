@@ -44,17 +44,32 @@ export let negativePromptTooltip: Readable<TTooltipProps> = derived(LL, ($LL) =>
 	...tooltipStyleProps
 }));
 
-export let initialImageTabBarTooltip: Readable<TTooltipProps> = derived(LL, ($LL) => ({
+export let initImageTabBarTooltip: Readable<TTooltipProps> = derived(LL, ($LL) => ({
 	title: $LL.Home.InitialImageTabBar.Title(),
 	description: $LL.Home.InitialImageTabBar.Paragraph(),
 	...tooltipStyleProps
 }));
 
-export let initialImageStrengthTabBarTooltip: Readable<TTooltipProps> = derived(LL, ($LL) => ({
+export let initImageTooltipSettingsPanel: Readable<TTooltipProps> = derived(LL, ($LL) => ({
+	title: $LL.Home.ImageInput.Title(),
+	description: $LL.Home.InitialImageTabBar.Paragraph(),
+	...tooltipStylePropsSettingsPanel
+}));
+
+export let initImageStrengthTabBarTooltip: Readable<TTooltipProps> = derived(LL, ($LL) => ({
 	title: $LL.Home.InitialImageStrengthTabBar.Title(),
 	description: $LL.Home.InitialImageStrengthTabBar.Paragraph(),
 	...tooltipStyleProps
 }));
+
+export let initImageStrengthTabBarTooltipSettingsPanel: Readable<TTooltipProps> = derived(
+	LL,
+	($LL) => ({
+		title: $LL.Home.InitialImageStrengthTabBar.TitleAlt(),
+		description: $LL.Home.InitialImageStrengthTabBar.Paragraph(),
+		...tooltipStylePropsSettingsPanel
+	})
+);
 
 export let aspectRatioTooltip: Readable<TTooltipProps> = derived(LL, ($LL) => ({
 	title: $LL.Home.AspectRatioTabBar.Title(),

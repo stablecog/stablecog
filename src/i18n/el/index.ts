@@ -45,6 +45,7 @@ const es: Translation = {
 			Paragraph: 'Η τελική σύνθεση θα δημιουργηθεί με βάση αυτή την εικόνα.'
 		},
 		InitialImageStrengthTabBar: {
+			TitleAlt: 'Image Strength',
 			Title: 'Αρχική Ισχύς Εικόνας',
 			Paragraph:
 				'Ελέγχει την επίδραση της αρχικής εικόνας. Όσο μεγαλύτερη είναι η τιμή, τόσο μεγαλύτερη επιρροή έχει η αρχική εικόνα.'
@@ -57,6 +58,7 @@ const es: Translation = {
 				'Για να αφαιρέσετε τα ανεπιθύμητα αποτελέσματα από την εικόνα. Κάνει το αντίθετο από αυτό που κάνει η περιγραφή.'
 		},
 		ImageInput: {
+			Paragraph: 'Click or drop your image here',
 			Title: 'Μεταφόρτωση εικόνας'
 		},
 		SeedInput: {
@@ -367,6 +369,17 @@ const es: Translation = {
 		AdminGalleryTab: 'Συλλογή',
 		UsersTab: 'Χρήστες',
 		Users: {
+			ConfirmAction: {
+				ConfirmActionReferenceText: 'I confirm the action',
+				ConfirmActionParagraph: 'Type "{confirmActionText}" to confirm.',
+				ConfirmActionInput: { Placeholder: 'Confirm' }
+			},
+			DataDeletedAtTitle: 'Data Deleted',
+			WillBeDeletedTitle: 'Will Be Deleted',
+			BannedAtTitle: 'Banned',
+			BannedTitle: 'Banned',
+			UnbanUserButton: 'Unban User',
+			BanUserButton: 'Ban User',
 			GiftCreditsButton: 'Δωρεάν μονάδες'
 		},
 		Gallery: {
