@@ -51,7 +51,7 @@ export let initImageTabBarTooltip: Readable<TTooltipProps> = derived(LL, ($LL) =
 }));
 
 export let initImageTooltipSettingsPanel: Readable<TTooltipProps> = derived(LL, ($LL) => ({
-	title: $LL.Home.InitialImageTabBar.Title(),
+	title: $LL.Home.ImageInput.Title(),
 	description: $LL.Home.InitialImageTabBar.Paragraph(),
 	...tooltipStylePropsSettingsPanel
 }));

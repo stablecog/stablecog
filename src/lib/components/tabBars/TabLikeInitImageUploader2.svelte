@@ -104,10 +104,15 @@
 			currentTarget: EventTarget & HTMLLabelElement;
 		}
 	) {
-		if (!fileInput) return;
-		if (!e.dataTransfer) return;
+		if (!fileInput || !e.dataTransfer) {
+			isDraggedInside = false;
+			return;
+		}
 		const files = makeSingleItemFileListFromFileList(e.dataTransfer.files);
-		if (files.length === 0) return;
+		if (files.length === 0 || !acceptedFileTypes.includes(files[0].type)) {
+			isDraggedInside = false;
+			return;
+		}
 		fileInput.files = files;
 		generationInitImageFiles.set(files);
 		isDraggedInside = false;
@@ -232,8 +237,8 @@
 						: 'text-c-on-bg/50'} {!$isTouchscreen ? 'group-hover:text-c-primary' : ''}"
 				/>
 				<p
-					class="w-full text-center {isDraggedInside
-						? 'text-c-primary'
+					class="w-full text-center transform {isDraggedInside
+						? 'text-c-primary scale-105'
 						: 'text-c-on-bg/50'} text-xs font-normal min-w-0 flex-1 leading-normal transition {!$isTouchscreen
 						? 'group-hover:text-c-primary'
 						: ''}"

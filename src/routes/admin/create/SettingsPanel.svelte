@@ -513,7 +513,7 @@
 				class="max-w-full px-2 flex items-center text-c-on-bg/75 gap-2"
 			>
 				<IconImage class="w-5 h-5" />
-				<p class="flex-shrink font-medium">{$LL.Home.InitialImageTabBar.Title()}</p>
+				<p class="flex-shrink font-medium">{$LL.Home.ImageInput.Title()}</p>
 			</div>
 			<TabLikeInitImageUploader2 disabled={!isCheckCompleted} class="w-full" {openSignInModal} />
 		</div>
