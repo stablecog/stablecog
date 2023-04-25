@@ -11,6 +11,7 @@
 
 	let cols: number;
 	let rows: number;
+	let amountOfColsNeededToBeFull: number;
 	let totalColGapWidth: number;
 	let totalRowGapHeight: number;
 	let stageWorkableWidth: number;
@@ -47,6 +48,7 @@
 			generation.outputs.length
 		);
 		rows = Math.ceil(generation.outputs.length / cols);
+		amountOfColsNeededToBeFull = cols * rows - generation.outputs.length;
 		totalColGapWidth = (cols - 1) * gap;
 		totalRowGapHeight = (rows - 1) * gap;
 		stageWorkableWidth = stageWidth - totalColGapWidth;
@@ -107,7 +109,9 @@
 				style="
 					width: {cardWidth}px;
 					height: {cardHeight}px;
-					left: {colIndex * (cardWidth + gap) + marginLeft}px;
+					left: {(colIndex + (rowIndex === rows - 1 ? amountOfColsNeededToBeFull / 2 : 0)) *
+					(cardWidth + gap) +
+					marginLeft}px;
 					top: {rowIndex * (cardHeight + gap) + marginTop}px;
 					transition:
 						left {animationDuration}s {animationEasing},

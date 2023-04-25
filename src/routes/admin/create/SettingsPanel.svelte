@@ -501,8 +501,8 @@
 				hasTitle={false}
 				disabled={!isCheckCompleted}
 				class="w-full"
-				min={1}
-				max={4}
+				min={numOutputsMin}
+				max={numOutputsMax}
 				valueSize="md"
 				bind:value={$generationNumOutputs}
 			/>
