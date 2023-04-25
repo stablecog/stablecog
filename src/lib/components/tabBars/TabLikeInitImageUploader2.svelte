@@ -142,7 +142,7 @@
 					>
 						{#if $generationInitImageFilesState === 'uploading' || $generationInitImageFilesState === 'uploaded' || $generationInitImageFilesState === 'error'}
 							<div
-								class="w-6 h-6 p-0.5 rounded-md bg-c-bg-secondary/75 flex items-center justify-center"
+								class="w-6 h-6 p-0.5 rounded bg-c-bg-secondary/75 flex items-center justify-center"
 							>
 								<Morpher
 									class="w-full h-full"
