@@ -41,7 +41,7 @@ Here are some of the features of Auto-GPT:
 - It can save files to your computer and shutdown automatically when it thinks the goals you set have been achieved.
 - It can even speak during the journey of achieving its goal (this part is optional and requires an [ElevenLabs](https://beta.elevenlabs.io/) account).
 
-## Join the experiment
+## Join the Experiment
 
 Although there is a bit of a setup needed to get it running, it doesn't take much time.
 
