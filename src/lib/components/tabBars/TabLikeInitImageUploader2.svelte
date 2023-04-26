@@ -143,7 +143,7 @@
 						on:click|stopPropagation={openImageModal}
 						on:keydown={() => null}
 						style="background-image: url({$generationInitImageSrc});"
-						class="bg-c-bg w-full h-16 bg-contain bg-no-repeat bg-center transition hover:cursor-pointer flex items-center justify-between {!$isTouchscreen
+						class="bg-c-bg w-full h-24 bg-contain bg-no-repeat bg-center transition hover:cursor-pointer flex items-center justify-between {!$isTouchscreen
 							? 'hover:ring-c-primary/30'
 							: ''} relative overflow-hidden rounded-t-xl z-0 transition ring-2 ring-c-bg-secondary {!$isTouchscreen
 							? 'hover:ring-c-primary/25'
@@ -159,7 +159,7 @@
 								morphed={$generationInitImageFilesState === 'uploaded' ||
 									$generationInitImageFilesState === 'error'}
 							>
-								<div slot="0" class="w-full h-full">
+								<div slot="0" class="w-full h-full transform scale-85">
 									<IconAnimatedUploading
 										loading={$generationInitImageFilesState === 'uploading'}
 										class="w-full h-full text-c-on-bg"
@@ -245,7 +245,7 @@
 				class="w-0 h-0 opacity-0"
 			/>
 			<div
-				class="w-full max-w-full flex flex-col items-center justify-start px-4 py-3.25 md:py-3.5 gap-2"
+				class="w-full max-w-full flex flex-col items-center justify-start px-4 pt-3 pb-3.5 gap-2"
 			>
 				<IconDropzone
 					class="w-6 h-6 shrink-0 transition transform {isDraggedInside
@@ -253,8 +253,8 @@
 						: 'text-c-on-bg/50'} {!$isTouchscreen ? 'group-hover:text-c-primary' : ''}"
 				/>
 				<p
-					class="w-full text-center transform {isDraggedInside
-						? 'text-c-primary scale-103'
+					class="w-full text-center {isDraggedInside
+						? 'text-c-primary'
 						: 'text-c-on-bg/50'} text-xs font-normal min-w-0 flex-1 leading-normal transition {!$isTouchscreen
 						? 'group-hover:text-c-primary'
 						: ''}"

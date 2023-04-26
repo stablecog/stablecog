@@ -36,9 +36,6 @@
 	export let gridScrollContainer: HTMLElement | undefined = undefined;
 
 	let _gridScrollContainer: HTMLElement;
-	if (gridScrollContainer) {
-		_gridScrollContainer = gridScrollContainer;
-	}
 	let lastRerenderKey = rerenderKey;
 
 	$: outputs = $generationsQuery.data?.pages
@@ -96,17 +93,19 @@
 {:else if $generationsQuery.isSuccess && $generationsQuery.data.pages.length > 0 && outputs !== undefined && items !== undefined}
 	<div class={gridClasses} bind:this={_gridScrollContainer}>
 		<MasonryInfiniteGrid
-			scrollContainer={_gridScrollContainer}
+			scrollContainer={gridScrollContainer ?? _gridScrollContainer}
 			bind:this={ig}
 			{items}
 			let:visibleItems
 			align="center"
-			threshold={($windowHeight || 1000) * 5}
+			threshold={($windowHeight || 1000) * 3}
 			on:requestAppend={({ detail: e }) => {
 				console.log('requestAppend');
-				if ($generationsQuery.isFetchingNextPage) return;
-				if (!$generationsQuery.hasNextPage) return;
 				e.wait();
+				if ($generationsQuery.isFetchingNextPage || !$generationsQuery.hasNextPage) {
+					e.ready();
+					return;
+				}
 				$generationsQuery.fetchNextPage().finally(() => e.ready());
 			}}
 		>
