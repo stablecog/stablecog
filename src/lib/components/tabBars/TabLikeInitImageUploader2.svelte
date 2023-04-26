@@ -144,7 +144,7 @@
 						on:keydown={() => null}
 						style="background-image: url({$generationInitImageSrc});"
 						class="bg-c-bg w-full h-16 bg-contain bg-no-repeat bg-center transition hover:cursor-pointer flex items-center justify-between {!$isTouchscreen
-							? 'hover:ring-c-primary/75'
+							? 'hover:ring-c-primary/30'
 							: ''} relative overflow-hidden rounded-t-xl z-0 transition ring-2 ring-c-bg-secondary {!$isTouchscreen
 							? 'hover:ring-c-primary/25'
 							: ''}"
