@@ -65,28 +65,54 @@
 		"unified": "^10.1.2",
 		"vite": "^4.2.0",
 		"vite-plugin-markdown": "^2.1.0",
+		"vite-plugin-wasm": "^3.2.2",
 		"yaml": "^2.1.3"
 	},
 	"type": "module",
+	"exports": {
+		".": {
+			"types": "./dist/esm/index.d.ts",
+			"import": "./dist/esm/index.js",
+			"require": "./dist/cjs/index.js"
+		},
+		"./*": "./*"
+	},
 	"dependencies": {
+		"@dqbd/tiktoken": "^1.0.6",
 		"@egjs/svelte-infinitegrid": "^4.9.0-beta.7",
+		"@emotion/react": "^11.10.6",
+		"@emotion/styled": "^11.10.6",
 		"@lottiefiles/lottie-player": "^1.7.1",
+		"@mui/icons-material": "^5.11.16",
+		"@mui/joy": "^5.0.0-alpha.76",
+		"@mui/material": "^5.12.1",
 		"@resvg/resvg-wasm": "^2.1.0",
 		"@supabase/auth-helpers-sveltekit": "^0.8.3",
 		"@supabase/supabase-js": "^2.0.0",
+		"@tanstack/react-query": "^4.29.3",
 		"@tanstack/svelte-query": "^4.24.6",
 		"aws-sdk": "^2.1243.0",
 		"dexie": "^3.2.2",
+		"eventsource-parser": "^1.0.0",
 		"file-saver": "^2.0.5",
 		"jszip": "^3.10.1",
 		"konva": "^8.3.14",
 		"mixpanel": "^0.17.0",
+		"next": "^13.3.0",
+		"pdfjs-dist": "^3.5.141",
 		"posthog-js": "^1.46.2",
+		"prismjs": "^1.29.0",
+		"react": "^18.2.0",
+		"react-dom": "^18.2.0",
+		"react-markdown": "^8.0.7",
+		"remark-gfm": "^3.0.1",
 		"satori": "^0.0.44",
 		"satori-html": "^0.3.0",
 		"svelte-meta-tags": "^2.6.3",
+		"svelte-preprocess-react": "^0.14.1",
 		"typesafe-i18n": "^5.16.3",
 		"ua-parser-js": "^1.0.33",
-		"uuid": "^9.0.0"
+		"uuid": "^9.0.0",
+		"zustand": "^4.3.7"
 	}
 }

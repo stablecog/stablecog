@@ -1,10 +1,16 @@
 import adapterNode from '@sveltejs/adapter-node';
 import adapterAuto from '@sveltejs/adapter-auto';
 import preprocess from 'svelte-preprocess';
+import preprocessReact from "svelte-preprocess-react/preprocessReact";
 
 /** @type {import('@sveltejs/kit').Config} */
 const config = {
-	preprocess: [preprocess({ postcss: true })],
+	preprocess: [
+		preprocess({ postcss: true }),
+		preprocessReact({
+			preprocess: preprocess({ sourceMap: true }),
+		}),
+	],
 	kit: {
 		adapter: process.env.VERCEL ? adapterAuto() : adapterNode(),
 		alias: {
@@ -14,7 +20,7 @@ const config = {
 			'$md/*': './src/lib/md',
 			'$routes/*': './src/routes',
 			'$i18n/*': './src/i18n',
-			'$userStores/*': './src/lib/ts/stores/user'
+			'$userStores/*': './src/lib/ts/stores/user',
 		},
 		inlineStyleThreshold: 60 * 1024
 	}
