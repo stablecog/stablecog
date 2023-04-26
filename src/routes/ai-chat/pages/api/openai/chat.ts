@@ -1,4 +1,5 @@
 import { env } from '$env/dynamic/public';
+import { NextRequest, NextResponse } from 'next/server';
 
 import type { OpenAIAPI } from '$routes/ai-chat/types/api-openai';
 
@@ -12,7 +13,7 @@ if (!env.OPENAI_API_KEY)
 
 // helper functions
 
-export async function extractOpenaiChatInputs(req: any): Promise<ApiChatInput> {
+export async function extractOpenaiChatInputs(req: NextRequest): Promise<ApiChatInput> {
   const {
     api: userApi = {},
     model,
@@ -94,6 +95,20 @@ export interface ApiChatInput {
 
 export interface ApiChatResponse {
   message: OpenAIAPI.Chat.Message;
+}
+
+export default async function handler(req: NextRequest) {
+  try {
+    const { api, ...rest } = await extractOpenaiChatInputs(req);
+    const response = await postToOpenAI(api, '/v1/chat/completions', chatCompletionPayload(rest, false));
+    const completion: OpenAIAPI.Chat.CompletionsResponse = await response.json();
+    return new NextResponse(JSON.stringify({
+      message: completion.choices[0].message,
+    } as ApiChatResponse));
+  } catch (error: any) {
+    console.error('Fetch request failed:', error);
+    return new NextResponse(`[Issue] ${error}`, { status: 400 });
+  }
 }
 
 // noinspection JSUnusedGlobalSymbols

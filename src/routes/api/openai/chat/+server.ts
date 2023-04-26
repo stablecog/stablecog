@@ -1,7 +1,7 @@
 import type { RequestHandler } from '@sveltejs/kit';
 import { extractOpenaiChatInputs, postToOpenAI, chatCompletionPayload, ApiChatResponse } from '$routes/api/openai/chat';
 
-import type { OpenAIAPI } from '$routes/chatgpt/types/api-openai';
+import type { OpenAIAPI } from '$routes/ai-chat/types/api-openai';
 
 export const POST : RequestHandler = async ({ request }) => {
   try {

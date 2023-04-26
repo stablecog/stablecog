@@ -1,10 +1,11 @@
+import { NextRequest, NextResponse } from 'next/server';
 import { createParser } from 'eventsource-parser';
 
 import { ApiChatInput, chatCompletionPayload, extractOpenaiChatInputs, postToOpenAI } from './chat';
 import { OpenAIAPI } from '$routes/ai-chat/types/api-openai';
 
 
-export async function chatStreamRepeater(input: ApiChatInput, signal: AbortSignal): Promise<ReadableStream> {
+async function chatStreamRepeater(input: ApiChatInput, signal: AbortSignal): Promise<ReadableStream> {
 
   // Handle the abort event when the connection is closed by the client
   signal.addEventListener('abort', () => {
@@ -97,6 +98,25 @@ export async function chatStreamRepeater(input: ApiChatInput, signal: AbortSigna
 export interface ApiChatFirstOutput {
   model: string;
 }
+
+export default async function handler(req: NextRequest): Promise<Response> {
+  try {
+    const apiChatInput = await extractOpenaiChatInputs(req);
+    const stream: ReadableStream = await chatStreamRepeater(apiChatInput, req.signal);
+    return new NextResponse(stream);
+  } catch (error: any) {
+    if (error.name === 'AbortError') {
+      console.log('Fetch request aborted in handler');
+      return new Response('Request aborted by the user.', { status: 499 }); // Use 499 status code for client closed request
+    } else if (error.code === 'ECONNRESET') {
+      console.log('Connection reset by the client in handler');
+      return new Response('Connection reset by the client.', { status: 499 }); // Use 499 status code for client closed request
+    } else {
+      console.error('Fetch request failed:', error);
+      return new NextResponse(`[Issue] ${error}`, { status: 400 });
+    }
+  }
+};
 
 //noinspection JSUnusedGlobalSymbols
 export const config = {
