@@ -26,13 +26,15 @@
 	import { advancedModeApp } from '$ts/stores/advancedMode';
 	import { appVersion } from '$ts/stores/appVersion';
 	import {
+		generationHeight,
 		generationInitImageFiles,
 		generationInitImageFilesState,
 		generationInitImageHeight,
 		generationInitImageSrc,
 		generationInitImageStrength,
 		generationInitImageUrl,
-		generationInitImageWidth
+		generationInitImageWidth,
+		generationWidth
 	} from '$ts/stores/generationSettings';
 	import { isInitImageModalOpen } from '$ts/stores/isInitImageModalOpen';
 	import { isTouchscreen } from '$ts/stores/isTouchscreen';
@@ -50,7 +52,35 @@
 	let scrollY: number | undefined = undefined;
 	const acceptedFileTypes = ['image/png', 'image/jpeg', 'image/webp'];
 	let isDraggedInside = false;
+	let uploadImageContainerWidth: number;
+	let uploadImageContainerHeight: number;
+	let uploadImageInnerContainerWidth: number;
+	let uploadImageInnerContainerHeight: number;
 
+	$: [
+		$generationWidth,
+		$generationHeight,
+		uploadImageContainerWidth,
+		uploadImageContainerHeight,
+		$generationInitImageSrc
+	],
+		setUploadImageInnerDimensions();
+
+	function setUploadImageInnerDimensions() {
+		if (!$generationWidth || !$generationHeight || !$generationInitImageSrc) return;
+		const boundByHeight =
+			uploadImageContainerHeight / Number($generationHeight) <
+			uploadImageContainerWidth / Number($generationWidth);
+		if (boundByHeight) {
+			uploadImageInnerContainerHeight = uploadImageContainerHeight;
+			uploadImageInnerContainerWidth =
+				(uploadImageContainerHeight / Number($generationHeight)) * Number($generationWidth);
+		} else {
+			uploadImageInnerContainerWidth = uploadImageContainerWidth;
+			uploadImageInnerContainerHeight =
+				(uploadImageContainerWidth / Number($generationWidth)) * Number($generationHeight);
+		}
+	}
 	function onKeyDown({ key }: KeyboardEvent) {
 		if (!isImageModalOpen) return;
 		if (key === 'Escape') {
@@ -142,13 +172,25 @@
 					<div
 						on:click|stopPropagation={openImageModal}
 						on:keydown={() => null}
-						style="background-image: url({$generationInitImageSrc});"
-						class="bg-c-bg w-full h-24 bg-contain bg-no-repeat bg-center transition hover:cursor-pointer flex items-center justify-between {!$isTouchscreen
+						bind:clientWidth={uploadImageContainerWidth}
+						bind:clientHeight={uploadImageContainerHeight}
+						class="bg-c-bg w-full h-22 bg-center transition hover:cursor-pointer flex items-center justify-center {!$isTouchscreen
 							? 'hover:ring-c-primary/30'
 							: ''} relative overflow-hidden rounded-t-xl z-0 transition ring-2 ring-c-bg-secondary {!$isTouchscreen
 							? 'hover:ring-c-primary/25'
-							: ''}"
-					/>
+							: ''} relative"
+					>
+						{#if uploadImageContainerWidth && uploadImageContainerHeight}
+							<div
+								style="
+									background-image: url({$generationInitImageSrc});
+									width: {uploadImageInnerContainerWidth}px;
+									height: {uploadImageInnerContainerHeight}px;
+								"
+								class="bg-cover bg-center bg-no-repeat absolute top-0 left-1/2 transform -translate-x-1/2"
+							/>
+						{/if}
+					</div>
 					<!-- Uploading indicator -->
 					{#if $generationInitImageFilesState === 'uploading' || $generationInitImageFilesState === 'uploaded' || $generationInitImageFilesState === 'error'}
 						<div
