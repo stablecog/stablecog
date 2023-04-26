@@ -56,18 +56,21 @@
 	let uploadImageContainerHeight: number;
 	let uploadImageInnerContainerWidth: number;
 	let uploadImageInnerContainerHeight: number;
+	const animationDuration = 0.15;
+	const animationEasing = 'cubic-bezier(0.45, 0, 0.55, 1)';
 
-	$: [
-		$generationWidth,
-		$generationHeight,
-		uploadImageContainerWidth,
-		uploadImageContainerHeight,
-		$generationInitImageSrc
-	],
+	$: [$generationWidth, $generationHeight, uploadImageContainerWidth, uploadImageContainerHeight],
 		setUploadImageInnerDimensions();
 
 	function setUploadImageInnerDimensions() {
-		if (!$generationWidth || !$generationHeight || !$generationInitImageSrc) return;
+		if (
+			!$generationWidth ||
+			!$generationHeight ||
+			!uploadImageContainerWidth ||
+			!uploadImageContainerHeight
+		) {
+			return;
+		}
 		const boundByHeight =
 			uploadImageContainerHeight / Number($generationHeight) <
 			uploadImageContainerWidth / Number($generationWidth);
@@ -186,7 +189,10 @@
 									background-image: url({$generationInitImageSrc});
 									width: {uploadImageInnerContainerWidth}px;
 									height: {uploadImageInnerContainerHeight}px;
-								"
+									transition:
+										width {animationDuration}s {animationEasing},
+										height {animationDuration}s {animationEasing};
+									"
 								class="bg-cover bg-center bg-no-repeat absolute top-0 left-1/2 transform -translate-x-1/2"
 							/>
 						{/if}
