@@ -15,7 +15,7 @@
 	--c-danger-secondary: 255 153 153;
 	--c-success: 129 209 116;
 	--c-success-secondary: 173 243 150;
-	--c-shadow: 4 4 9;
+	--c-shadow: 0 0 4;
 	--c-barrier: 8 8 13;
 	--o-shadow-normal: 0.15;
 	--o-shadow-strong: 0.25;
@@ -37,7 +37,7 @@
 	--c-danger-secondary: 255 153 153;
 	--c-success: 129 209 116;
 	--c-success-secondary: 173 243 150;
-	--c-shadow: 4 4 9;
+	--c-shadow: 0 0 4;
 	--c-barrier: 8 8 13;
 	--o-shadow-normal: 0.15;
 	--o-shadow-strong: 0.25;
