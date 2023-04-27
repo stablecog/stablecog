@@ -5,10 +5,10 @@
 }
 
 .blog h1 {
-	font-weight: 800;
+	font-weight: 700;
 	font-size: 2rem;
 	text-align: center;
-	margin-bottom: 1rem;
+	margin-bottom: 0.5rem;
 	line-height: 1.35;
 	width: 100%;
 }
@@ -28,7 +28,9 @@
 	line-height: 1.5;
 	width: 100%;
 }
-.blog h1 + p,
+.blog h1 + p {
+	margin-top: 0.25rem;
+}
 .blog h2 + p {
 	margin-top: 0.5rem;
 }
@@ -40,11 +42,11 @@
 }
 .blog p, .blog li{
 	width: 100%;
-	font-size: 1rem;
+	font-size: 1.1rem;
 	line-height: 1.75;
 	margin-top: 1rem;
 	color: rgba(var(--c-on-bg) / 0.75);
-	font-weight: 300;
+	font-weight: 400;
 }
 .blog ol {
 	margin-top: 1rem;
@@ -293,14 +295,14 @@
 	background-color: rgba(var(--c-primary) / 0);
 	transition: all 0.2s var(--e-default);
 	border-radius: 0.5rem;
-	font-size: 1rem;
+	font-size: 1.1rem;
 }
 .toc a:hover, .toc a:focus-visible {
 	background-color: rgba(var(--c-primary) / 0.15);
 	color: rgba(var(--c-primary));
 }
 .toc-item-h2 {
-	font-size: 1rem;
+	font-size: 1.1rem;
 	line-height: 1.5;
 	color: rgba(var(--c-on-bg));
 	font-weight: 500;

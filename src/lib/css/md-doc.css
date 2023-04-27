@@ -1,10 +1,10 @@
 .md-doc,
 .md-doc-link {
 	width: 100%;
-	font-size: 1rem;
+	font-size: 1.1rem;
 	line-height: 1.75;
 	margin-top: 1rem;
-	font-weight: 300;
+	font-weight: 400;
 	color: rgba(var(--c-on-bg));
 	--e-default: cubic-bezier(0.4, 0, 0.2, 1);
 }
@@ -14,7 +14,7 @@
 }
 
 .md-doc h1 {
-	font-weight: 800;
+	font-weight: 700;
 	font-size: 2rem;
 	text-align: center;
 	margin-bottom: 1.5rem;
@@ -48,6 +48,7 @@
 .md-doc h4 + h5 {
 	margin-top: 1rem;
 }
+
 .md-doc h1 + p,
 .md-doc h2 + p {
 	margin-top: 0.75rem;
@@ -82,11 +83,11 @@
 }
 .md-doc p {
 	width: 100%;
-	font-size: 1rem;
+	font-size: 1.1rem;
 	line-height: 1.75;
 	margin-top: 1rem;
 	color: rgba(var(--c-on-bg) / 0.75);
-	font-weight: 300;
+	font-weight: 400;
 }
 .md-doc strong {
 	font-weight: 700;

@@ -46,9 +46,9 @@
 				class="flex items-center gap-1.5 text-c-on-bg/75 text-sm cursor-default"
 			>
 				<IconBrain class="w-4 h-4" />
-				<p>{$LL.Home.ModelDropdown.Title()}</p>
+				<p class="font-medium">{$LL.Home.ModelDropdown.Title()}</p>
 			</div>
-			<p class="font-bold">
+			<p class="font-semibold">
 				{$modelIdToDisplayName[generation.model_id ?? generationModelIdDefault] ??
 					$LL.Shared.UnknownTitle()}
 			</p>
@@ -59,9 +59,9 @@
 				class="flex items-center gap-1.5 text-c-on-bg/75 text-sm cursor-default"
 			>
 				<IconScale class="w-4 h-4" />
-				<p>{$LL.Home.GuidanceScaleSlider.Title()}</p>
+				<p class="font-medium">{$LL.Home.GuidanceScaleSlider.Title()}</p>
 			</div>
-			<p class="font-bold">{generation.guidance_scale}</p>
+			<p class="font-semibold">{generation.guidance_scale}</p>
 		</div>
 		<div class="min-w-[calc(50%-0.75rem)] flex flex-col items-start gap-1">
 			<div
@@ -69,9 +69,9 @@
 				class="flex items-center gap-1.5 text-c-on-bg/75 text-sm cursor-default"
 			>
 				<IconSteps class="w-4 h-4" />
-				<p>{$LL.Home.InferenceStepsTabBar.Title()}</p>
+				<p class="font-medium">{$LL.Home.InferenceStepsTabBar.Title()}</p>
 			</div>
-			<p class="font-bold">{generation.inference_steps}</p>
+			<p class="font-semibold">{generation.inference_steps}</p>
 		</div>
 		<div class="min-w-[calc(50%-0.75rem)] flex flex-col items-start gap-1">
 			<div
@@ -79,9 +79,9 @@
 				class="flex items-center gap-1.5 text-c-on-bg/75 text-sm cursor-default"
 			>
 				<IconBubbles class="w-4 h-4" />
-				<p>{$LL.Home.SchedulerDropdown.Title()}</p>
+				<p class="font-medium">{$LL.Home.SchedulerDropdown.Title()}</p>
 			</div>
-			<p class="font-bold">
+			<p class="font-semibold">
 				{$schedulerIdToDisplayName[generation.scheduler_id ?? schedulerIdDefault] ??
 					$LL.Shared.UnknownTitle()}
 			</p>
@@ -94,9 +94,9 @@
 						class="flex items-center gap-1.5 text-c-on-bg/75 text-sm cursor-default"
 					>
 						<IconSeed class="w-4 h-4" />
-						<p>{$LL.Home.SeedInput.Title()}</p>
+						<p class="font-medium">{$LL.Home.SeedInput.Title()}</p>
 					</div>
-					<p class="font-bold">{generation.seed}</p>
+					<p class="font-semibold">{generation.seed}</p>
 				</div>
 				<div
 					use:copy={String(generation.seed)}
@@ -122,9 +122,9 @@
 		<div class="min-w-[calc(50%-0.75rem)] flex flex-col items-start gap-1">
 			<div class="flex items-center gap-1.5 text-c-on-bg/75 text-sm cursor-default">
 				<IconDimensions class="w-4 h-4" />
-				<p>{$LL.GenerationFullscreen.Dimensions.Title()}</p>
+				<p class="font-medium">{$LL.GenerationFullscreen.Dimensions.Title()}</p>
 			</div>
-			<p class="font-bold">{currentImageWidth} × {currentImageHeight}</p>
+			<p class="font-semibold">{currentImageWidth} × {currentImageHeight}</p>
 		</div>
 	</div>
 </div>

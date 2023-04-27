@@ -434,6 +434,7 @@
 								{:else}
 									<TabBar
 										bind:value={upscaledTabValue}
+										fontWeight={600}
 										tabs={upscaledOrDefaultTabs}
 										hasTitle={false}
 										dontScale={true}

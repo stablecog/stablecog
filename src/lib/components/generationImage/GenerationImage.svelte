@@ -184,7 +184,7 @@
 		{#if cardType !== 'create'}
 			<div
 				class="w-full h-full pt-16 flex flex-col justify-end items-start flex-shrink 
-				transition text-xs relative z-0 overflow-hidden
+				transition text-sm relative z-0 overflow-hidden
 			 	pointer-events-none {!$isTouchscreen
 					? 'group-focus-within:translate-y-0 group-hover:translate-y-0'
 					: ''} {overlayShouldShow ? 'translate-y-0' : 'translate-y-full'}"

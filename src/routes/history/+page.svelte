@@ -220,6 +220,7 @@
 					<div class="w-full md:w-auto flex flex-1 items-center justify-end gap-4">
 						<TabBar
 							dontScale
+							fontWeight={600}
 							hasTitle={false}
 							name="Tabs"
 							tabs={userGalleryTabs}

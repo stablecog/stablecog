@@ -30,7 +30,9 @@
 			<Avatar str={$page.data.session?.user.email || ''} class="w-full h-full relative" />
 		</div>
 		<div class="min-w-0 flex-1 flex flex-col -mt-0.5">
-			<p class="flex-1 min-w-0 overflow-hidden overflow-ellipsis font-bold text-xl">Account</p>
+			<p class="flex-1 min-w-0 overflow-hidden overflow-ellipsis font-bold text-xl">
+				{$LL.Account.PageTitle()}
+			</p>
 			<p
 				class="flex-1 min-w-0 overflow-hidden overflow-ellipsis font-semibold text-xs text-c-on-bg/50 mt-0.5"
 			>
@@ -56,8 +58,8 @@
 			<div class="w-full h-2px rounded-full bg-c-bg-tertiary" />
 		</div>
 		<div class="w-full flex flex-col items-start px-5 py-3">
-			<p class="text-c-on-bg/50 text-xs">{$LL.Account.RemainingImagesTitle()}</p>
-			<p class="font-bold text-lg mt-1">
+			<p class="text-c-on-bg/50 font-medium text-sm">{$LL.Account.RemainingTitle()}</p>
+			<p class="font-bold text-lg">
 				{$userSummary.total_remaining_credits.toLocaleString($locale)}
 			</p>
 		</div>

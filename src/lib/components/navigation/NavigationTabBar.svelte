@@ -94,12 +94,11 @@
 					aria-label="Go to {route.name}"
 					data-sveltekit-preload-data="hover"
 					class="flex-1 rounded-lg whitespace-nowrap overflow-hidden group self-stretch flex 
-					items-center justify-center px-4 transition-all relative {type === 'bottom'
+					items-center justify-center px-4 transition-all relative font-semibold {type === 'bottom'
 						? 'pt-4 pb-4.5'
 						: 'py-4'} {isSelected(route.href, $page.url.pathname)
-						? 'text-c-on-bg font-bold'
-						: 'text-c-on-bg/50 font-semibold'} {isSelected(route.href, $page.url.pathname) &&
-					!$isTouchscreen
+						? 'text-c-on-bg'
+						: 'text-c-on-bg/50'} {isSelected(route.href, $page.url.pathname) && !$isTouchscreen
 						? 'hover:text-c-primary'
 						: 'text-c-on-bg'}"
 					href={route.href}

@@ -116,7 +116,7 @@
 			<div class="flex items-center justify-end px-3">
 				{#if $page.data.session && $userSummary}
 					<div class="flex flex-col items-end px-5.5">
-						<p class="text-xs text-c-on-bg/60">{$LL.Account.RemainingTitle()}</p>
+						<p class="text-xs font-medium text-c-on-bg/60">{$LL.Account.RemainingTitle()}</p>
 						<p class="text-sm font-bold mt-0.5">
 							{$userSummary.total_remaining_credits.toLocaleString($locale)}
 						</p>
