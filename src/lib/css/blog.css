@@ -296,7 +296,7 @@
 	background-color: rgba(var(--c-primary) / 0);
 	transition: all 0.2s var(--e-default);
 	border-radius: 0.5rem;
-	font-size: 1.125rem;
+	font-size: 1rem;
 }
 .toc a:hover, .toc a:focus-visible {
 	background-color: rgba(var(--c-primary) / 0.15);

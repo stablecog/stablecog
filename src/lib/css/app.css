@@ -2,21 +2,21 @@
 @tailwind components;
 
 :root {
-	--c-bg: 27 26 29;
-	--c-bg-secondary: 36 35 38;
-	--c-bg-tertiary: 46 45 48;
-	--c-on-bg: 219 213 231;
-	--c-on-bg-secondary: 93 92 98;
+	--c-bg: 18 18 23;
+	--c-bg-secondary: 28 28 35;
+	--c-bg-tertiary: 38 38 45;
+	--c-on-bg: 220 220 234;
+	--c-on-bg-secondary: 100 100 114;
 	--c-primary: 181 140 255;
 	--c-primary-secondary: 199 158 250;
-	--c-on-primary: 27 26 29;
+	--c-on-primary: 18 18 23;
 	--c-secondary: 255 174 116;
 	--c-danger: 249 128 128;
 	--c-danger-secondary: 255 153 153;
 	--c-success: 129 209 116;
 	--c-success-secondary: 173 243 150;
-	--c-shadow: 0 0 0;
-	--c-barrier: 17 16 19;
+	--c-shadow: 4 4 9;
+	--c-barrier: 8 8 13;
 	--o-shadow-normal: 0.15;
 	--o-shadow-strong: 0.25;
 	--o-shadow-stronger: 0.4;
@@ -24,21 +24,21 @@
 }
 
 .theme-dark {
-	--c-bg: 27 26 29;
-	--c-bg-secondary: 36 35 38;
-	--c-bg-tertiary: 46 45 48;
-	--c-on-bg: 219 213 231;
-	--c-on-bg-secondary: 93 92 98;
+	--c-bg: 18 18 23;
+	--c-bg-secondary: 28 28 35;
+	--c-bg-tertiary: 38 38 45;
+	--c-on-bg: 220 220 234;
+	--c-on-bg-secondary: 100 100 114;
 	--c-primary: 181 140 255;
 	--c-primary-secondary: 199 158 250;
-	--c-on-primary: 27 26 29;
+	--c-on-primary: 18 18 23;
 	--c-secondary: 255 174 116;
 	--c-danger: 249 128 128;
 	--c-danger-secondary: 255 153 153;
 	--c-success: 129 209 116;
 	--c-success-secondary: 173 243 150;
-	--c-shadow: 0 0 0;
-	--c-barrier: 17 16 19;
+	--c-shadow: 4 4 9;
+	--c-barrier: 8 8 13;
 	--o-shadow-normal: 0.15;
 	--o-shadow-strong: 0.25;
 	--o-shadow-stronger: 0.4;
