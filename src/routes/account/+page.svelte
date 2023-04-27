@@ -159,7 +159,7 @@
 				<div class="w-full h-2px bg-c-bg-secondary" />
 				<div class="w-full flex flex-col">
 					<div class="w-full flex items-center flex-wrap justify-between py-5 gap-2">
-						<p class="font-semibold text-c-on-bg/60 px-5 md:px-6">Remaining Images</p>
+						<p class="font-medium text-c-on-bg/60 px-5 md:px-6">{$LL.Account.RemainingTitle()}</p>
 						<p class="font-bold text-right text-xl px-5 md:px-6">
 							{($userSummary?.total_remaining_credits || 0).toLocaleString($locale)}
 						</p>
