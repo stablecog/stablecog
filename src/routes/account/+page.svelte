@@ -126,7 +126,7 @@
 					class="w-full flex flex-wrap items-center justify-between px-4 py-5 md:p-5 gap-5 md:gap-8"
 				>
 					<div class="flex flex-col items-start px-0.5 -mt-2">
-						<p class="text-c-on-bg/60 font-semibold px-1">
+						<p class="text-c-on-bg/60 font-medium px-1">
 							{$LL.Account.SubscriptionPlanTitle()}
 						</p>
 						<ProductIdBadge

@@ -56,7 +56,7 @@
 				? 'bg-c-bg-secondary'
 				: 'bg-c-bg-tertiary'} relative {hasIcon ? 'pl-12' : 'pl-5'} {hasClearButton
 				? 'pr-10 md:pr-16'
-				: 'pr-5'} pt-7 pb-3 rounded-xl transition 
+				: 'pr-5'} pt-6.5 pb-2.5 rounded-xl transition 
       shadow-lg {shadow === 'strongest'
 				? 'shadow-c-shadow/[var(--o-shadow-strongest)]'
 				: shadow === 'strong'
@@ -86,7 +86,7 @@
 				? 'bg-c-bg-secondary'
 				: 'bg-c-bg-tertiary'} relative {hasIcon ? 'pl-12' : 'pl-5'} {hasClearButton
 				? 'pr-10 md:pr-16'
-				: 'pr-5'} pt-7 pb-3 rounded-xl transition 
+				: 'pr-5'} pt-6.5 pb-2.5 rounded-xl transition 
       shadow-lg {shadow === 'strongest'
 				? 'shadow-c-shadow/[var(--o-shadow-strongest)]'
 				: shadow === 'strong'
@@ -116,7 +116,7 @@
 				? 'bg-c-bg-secondary'
 				: 'bg-c-bg-tertiary'} relative {hasIcon ? 'pl-12' : 'pl-5'} {hasClearButton
 				? 'pr-10 md:pr-16'
-				: 'pr-5'} pt-7 pb-3 rounded-xl transition 
+				: 'pr-5'} pt-6.5 pb-2.5 rounded-xl transition 
       shadow-lg {shadow === 'strongest'
 				? 'shadow-c-shadow/[var(--o-shadow-strongest)]'
 				: shadow === 'strong'
@@ -146,7 +146,7 @@
 				? 'bg-c-bg-secondary'
 				: 'bg-c-bg-tertiary'} relative {hasIcon ? 'pl-12' : 'pl-5'} {hasClearButton
 				? 'pr-10 md:pr-16'
-				: 'pr-5'} pt-7 pb-3 rounded-xl transition 
+				: 'pr-5'} pt-6.5 pb-2.5 rounded-xl transition 
       shadow-lg {shadow === 'strongest'
 				? 'shadow-c-shadow/[var(--o-shadow-strongest)]'
 				: shadow === 'strong'

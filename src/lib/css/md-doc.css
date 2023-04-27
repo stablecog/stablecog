@@ -1,7 +1,7 @@
 .md-doc,
 .md-doc-link {
 	width: 100%;
-	font-size: 1.1rem;
+	font-size: 1.125rem;
 	line-height: 1.75;
 	margin-top: 1rem;
 	font-weight: 400;
@@ -41,7 +41,7 @@
 }
 .md-doc h5 {
 	font-weight: 700;
-	font-size: 1.1rem;
+	font-size: 1.125rem;
 	margin-top: 2.5rem;
 	line-height: 1.5;
 }
@@ -83,7 +83,7 @@
 }
 .md-doc p {
 	width: 100%;
-	font-size: 1.1rem;
+	font-size: 1.125rem;
 	line-height: 1.75;
 	margin-top: 1rem;
 	color: rgba(var(--c-on-bg) / 0.75);

@@ -436,7 +436,9 @@
 			>
 				<div class="w-full flex flex-col items-center justify-center py-4">
 					<IconPulsing />
-					<p class="w-full text-c-on-bg/40 text-center mt-1.5">{$LL.Live.WaitingTitle()}</p>
+					<p class="w-full text-c-on-bg/40 font-medium text-center mt-1.5">
+						{$LL.Live.WaitingTitle()}
+					</p>
 				</div>
 			</div>
 		{/if}

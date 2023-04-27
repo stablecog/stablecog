@@ -202,7 +202,7 @@
 				rows="1"
 				style="transition: height 0.1s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.2s cubic-bezier(0.4, 0, 0.2, 1), padding 0.2s cubic-bezier(0.4, 0, 0.2, 1)"
 				class="w-full text-base bg-c-bg-secondary shadow-lg pr-12 md:pr-17 hide-scrollbar shadow-c-shadow/[var(--o-shadow-normal)] 
-						scroll-smooth resize-none transition relative pl-3 md:pl-6 py-3.5 md:py-5 rounded-xl 
+						scroll-smooth resize-none transition relative pl-3 md:pl-5 py-3.5 md:py-4.5 rounded-xl 
 						focus:ring-2 focus:ring-c-primary/30 ring-0 ring-c-primary/20 placeholder:text-c-on-bg/40 {!$isTouchscreen
 					? 'enabled:hover:ring-2'
 					: ''} text-c-on-bg {!$isTouchscreen ? 'group-hover:ring-2' : ''}"

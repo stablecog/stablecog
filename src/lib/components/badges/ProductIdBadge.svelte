@@ -69,10 +69,10 @@
 		>
 			<p
 				class={size === 'sm'
-					? 'text-sm font-bold'
+					? 'text-sm font-semibold'
 					: size === 'md'
-					? 'text-base font-bold'
-					: 'text-lg font-bold'}
+					? 'text-base font-semibold'
+					: 'text-lg font-semibold'}
 			>
 				{_planText}
 			</p>
@@ -101,10 +101,10 @@
 		>
 			<p
 				class={size === 'sm'
-					? 'text-sm font-bold'
+					? 'text-sm font-semibold'
 					: size === 'md'
-					? 'text-base font-bold'
-					: 'text-lg font-bold'}
+					? 'text-base font-semibold'
+					: 'text-lg font-semibold'}
 			>
 				{_planText}
 			</p>
