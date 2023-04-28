@@ -448,9 +448,9 @@
 <SidebarWrapper {rounding}>
 	<div
 		bind:this={settingsContainer}
-		class="w-full h-full flex flex-col overflow-auto px-3 md:px-4 pt-4 md:pt-5 pb-36 gap-7"
+		class="w-full h-full flex flex-col overflow-auto pt-4 md:pt-5 pb-36 gap-7"
 	>
-		<div class="w-full flex flex-col items-start gap-3">
+		<div class="w-full flex flex-col items-start gap-3 px-3 md:px-4">
 			<div
 				use:tooltip={$aspectRatioTooltipSettingsPanel}
 				class="max-w-full px-2 flex items-center text-c-on-bg/75 gap-2"
@@ -470,7 +470,7 @@
 				name={$LL.Home.AspectRatioDropdown.Title()}
 			/>
 		</div>
-		<div class="w-full flex flex-col items-start gap-3">
+		<div class="w-full flex flex-col items-start gap-3 px-3 md:px-4">
 			<div
 				use:tooltip={$modelTooltipSettingsPanel}
 				class="max-w-full px-2 flex items-center text-c-on-bg/75 gap-2"
@@ -489,7 +489,7 @@
 				name="Model"
 			/>
 		</div>
-		<div class="w-full flex flex-col items-start gap-3">
+		<div class="w-full flex flex-col items-start gap-3 px-3 md:px-4">
 			<div
 				use:tooltip={$numOutputsTooltipSettingsPanel}
 				class="max-w-full px-2 flex items-center text-c-on-bg/75 gap-2"
@@ -507,7 +507,7 @@
 				bind:value={$generationNumOutputs}
 			/>
 		</div>
-		<div class="w-full flex flex-col items-start gap-3">
+		<div class="w-full flex flex-col items-start gap-3 px-3 md:px-4">
 			<div
 				use:tooltip={$initImageTooltipSettingsPanel}
 				class="max-w-full px-2 flex items-center text-c-on-bg/75 gap-2"
@@ -517,7 +517,7 @@
 			</div>
 			<TabLikeInitImageUploader2 disabled={!isCheckCompleted} class="w-full" {openSignInModal} />
 		</div>
-		<div class="w-full flex flex-col items-start gap-3">
+		<div class="w-full flex flex-col items-start gap-3 px-3 md:px-4">
 			<div
 				use:tooltip={$negativePromptTooltipSettingsPanel}
 				class="max-w-full px-2 flex items-center text-c-on-bg/75 gap-2"
@@ -533,7 +533,7 @@
 				hasTitle={false}
 			/>
 		</div>
-		<div class="w-[calc(100%+2rem)] flex flex-col ring-2 ring-c-bg-secondary -mx-4">
+		<div class="w-full flex flex-col ring-2 ring-c-bg-secondary">
 			<button
 				class="w-full group font-medium text-c-on-bg/75 px-4 py-4.5 flex justify-start transition {$advancedModeApp
 					? 'bg-c-bg-secondary'
@@ -567,8 +567,8 @@
 					transition:expandCollapse|local={{ duration: 200, easing: quadOut }}
 					class="w-full flex flex-col"
 				>
-					<div class="w-full px-4 pt-4 pb-6 flex flex-col gap-7">
-						<div class="w-full flex flex-col items-start gap-3">
+					<div class="w-full pt-4 pb-6 flex flex-col gap-7">
+						<div class="w-full flex flex-col items-start gap-3 px-3 md:px-4">
 							<div
 								use:tooltip={$guidanceScaleTooltipSettingsPanel}
 								class="max-w-full px-2 flex items-center text-c-on-bg/75 gap-2"
@@ -585,7 +585,7 @@
 								bind:value={$generationGuidanceScale}
 							/>
 						</div>
-						<div class="w-full flex flex-col items-start gap-3">
+						<div class="w-full flex flex-col items-start gap-3 px-3 md:px-4">
 							<div
 								use:tooltip={$schedulerTooltipSettingsPanel}
 								class="max-w-full px-2 flex items-center text-c-on-bg/75 gap-2"
@@ -604,7 +604,7 @@
 								name={$LL.Home.AspectRatioDropdown.Title()}
 							/>
 						</div>
-						<div class="w-full flex flex-col items-start gap-3">
+						<div class="w-full flex flex-col items-start gap-3 px-3 md:px-4">
 							<div
 								use:tooltip={$inferenceStepsTooltipSettingsPanel}
 								class="max-w-full px-2 flex items-center text-c-on-bg/75 gap-2"
@@ -621,7 +621,7 @@
 								tabs={inferenceStepsTabs}
 							/>
 						</div>
-						<div class="w-full flex flex-col items-start gap-3">
+						<div class="w-full flex flex-col items-start gap-3 px-3 md:px-4">
 							<div
 								use:tooltip={$seedTooltipSettingsPanel}
 								class="max-w-full px-2 flex items-center text-c-on-bg/75 gap-2"

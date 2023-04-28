@@ -41,6 +41,9 @@
 	import { schedulerIdDefault } from '$ts/constants/schedulers.js';
 	import type { TIsReadyMap } from '$components/generate/types.js';
 	import { mdBreakpoint } from '$components/generationFullScreen/constants.js';
+	import IconButton from '$components/buttons/IconButton.svelte';
+	import IconGenerationSettings from '$components/icons/IconGenerationSettings.svelte';
+	import ModalWrapper from '$components/ModalWrapper.svelte';
 
 	export let data;
 
@@ -56,6 +59,8 @@
 		generationStage: false,
 		generationSettings: false
 	};
+
+	let isGenerationSettingsSheetOpen = false;
 
 	const userGalleryCurrentView: string = 'all';
 	let userGenerationFullOutputsQuery:
@@ -179,6 +184,14 @@
 		]);
 	}
 
+	function closeSettingsSheet() {
+		isGenerationSettingsSheetOpen = false;
+	}
+
+	function toggleSettingsSheet() {
+		isGenerationSettingsSheetOpen = !isGenerationSettingsSheetOpen;
+	}
+
 	onMount(async () => {
 		if (!browser) return;
 		document.body.style.overflow = 'hidden';
@@ -209,8 +222,7 @@
 	class="w-full flex flex-col overflow-hidden"
 >
 	<Navbar />
-	<!-- Main part desktop -->
-	<div class="w-full h-full flex flex-row overflow-hidden pt-2 px-4 pb-4 gap-4">
+	<div class="w-full h-full flex flex-row overflow-hidden pt-2 md:px-4 md:pb-4 gap-4">
 		<div class="h-full hidden md:flex w-36 xl:w-72">
 			<SidebarWrapper>
 				{#if userGenerationFullOutputsQuery}
@@ -232,15 +244,21 @@
 				{/if}
 			</SidebarWrapper>
 		</div>
-		<div class="flex flex-col items-center flex-1 h-full gap-4 relative">
-			<PromptBar
-				class="absolute left-0 top-0"
-				{openSignInModal}
-				serverData={data}
-				bind:isReadyMap
-			/>
+		<div class="w-full md:w-auto flex flex-col items-center flex-1 h-full gap-4 relative">
+			<!-- Prompt bar -->
 			<div
-				class="flex-1 flex flex-col items-center justify-center w-full overflow-hidden pt-26 pb-8 px-6"
+				class="w-full gap-1 flex bg-c-bg rounded-t-2xl ring-2 ring-c-bg-secondary md:ring-0 md:rounded-none shadow-c-shadow/[var(--o-shadow-stronger)] shadow-navbar md:shadow-none md:bg-transparent 
+				pb-[calc(env(safe-area-inset-bottom)+0.75rem)] pt-2 pl-2 pr-1 md:p-0 absolute left-0 bottom-0 md:bottom-auto md:top-0 order-2"
+			>
+				<PromptBar class="flex-1" {openSignInModal} serverData={data} bind:isReadyMap />
+				<IconButton onClick={toggleSettingsSheet} class="md:hidden" name="Generation Settings">
+					<IconGenerationSettings
+						class="transition group-hover/iconbutton:text-c-primary w-6 h-6"
+					/>
+				</IconButton>
+			</div>
+			<div
+				class="flex-1 flex flex-col order-first items-center justify-center w-full overflow-hidden pb-[calc(env(safe-area-inset-bottom)+7rem)] md:pt-26 md:pb-8 px-2 md:px-6"
 			>
 				<div bind:clientWidth={stageWidth} bind:clientHeight={stageHeight} class="flex-1 w-full">
 					{#if stageWidth && stageHeight}
@@ -254,7 +272,7 @@
 				</div>
 			</div>
 		</div>
-		<div class="h-full w-72">
+		<div class="h-full w-72 hidden md:flex">
 			<SettingsPanel serverData={data} bind:isReadyMap {openSignInModal} />
 		</div>
 	</div>
@@ -262,6 +280,22 @@
 
 {#if $activeGeneration}
 	<GenerationFullScreen generation={$activeGeneration} modalType="generate" />
+{/if}
+
+{#if $windowWidth < mdBreakpoint}
+	<div
+		class="w-full h-full bg-c-barrier/80 {isGenerationSettingsSheetOpen
+			? 'opacity-1000'
+			: 'opacity-0 pointer-events-none'} transition fixed left-0 top-0 z-100 md:hidden"
+	/>
+	<div
+		use:clickoutside={{ callback: closeSettingsSheet }}
+		class="w-full transition fixed bottom-0 left-0 h-full max-h-[80vh] md:hidden z-101 {isGenerationSettingsSheetOpen
+			? 'opacity-100 translate-y-0'
+			: 'opacity-0 translate-y-full pointer-events-none'}"
+	>
+		<SettingsPanel rounding="top" serverData={data} bind:isReadyMap {openSignInModal} />
+	</div>
 {/if}
 
 {#if isSignInModalOpen && !$page.data.session?.user.id}
