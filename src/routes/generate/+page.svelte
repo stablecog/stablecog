@@ -40,21 +40,18 @@
 	import { generationModelIdDefault } from '$ts/constants/generationModels.js';
 	import { schedulerIdDefault } from '$ts/constants/schedulers.js';
 	import type { TIsReadyMap } from '$components/generate/types.js';
-	import { mdBreakpoint } from '$components/generationFullScreen/constants.js';
+	import { lgBreakpoint, mdBreakpoint } from '$components/generationFullScreen/constants.js';
 	import IconButton from '$components/buttons/IconButton.svelte';
 	import IconGenerationSettings from '$components/icons/IconGenerationSettings.svelte';
-	import ModalWrapper from '$components/ModalWrapper.svelte';
-	import { expandCollapse } from '$ts/animation/transitions.js';
 	import Morpher from '$components/Morpher.svelte';
 	import IconChevronDown from '$components/icons/IconChevronDown.svelte';
 	import { isTouchscreen } from '$ts/stores/isTouchscreen.js';
-	import { navbarHeight } from '$ts/stores/navbarHeight.js';
 
 	export let data;
 
 	let isSignInModalOpen = false;
 	let promptBarHeight: number;
-
+	let propmtBarEstimatedHeightRem = 4.25;
 	let stageWidth: number;
 	let stageHeight: number;
 
@@ -233,14 +230,14 @@
 >
 	<Navbar />
 	<div class="w-full h-full flex flex-row overflow-hidden pt-2 md:px-4 md:pb-4 gap-4">
-		<div class="h-full hidden md:flex w-36 xl:w-72">
+		<div class="h-full hidden lg:flex w-36 xl:w-72">
 			<SidebarWrapper>
 				{#if userGenerationFullOutputsQuery}
 					<div
 						bind:this={gridScrollContainer}
 						class="w-full flex flex-col flex-1 overflow-auto px-2 pt-2 pb-16"
 					>
-						{#if $windowWidth > mdBreakpoint}
+						{#if $windowWidth > lgBreakpoint}
 							<GenerationGridInfinite
 								{pinnedFullOutputs}
 								cardWidthClasses="w-full lg:w-1/2 xl:w-1/3"
@@ -258,19 +255,20 @@
 			{#if $windowWidth < mdBreakpoint && isGenerationSettingsSheetOpen}
 				<div
 					transition:fade|local={{ duration: 200, easing: quadOut }}
-					class="fixed w-full h-full left-0 top-0 bg-c-barrier/60 z-40"
+					class="fixed w-full h-full left-0 top-0 bg-c-barrier/70 z-40"
 				/>
 			{/if}
 			<div use:clickoutside={{ callback: closeSettingsSheet }}>
 				{#if !$windowWidth || $windowWidth < mdBreakpoint}
 					<div
 						style="transform: translateY({!$windowWidth || !promptBarHeight
-							? 'calc(100% - env(safe-area-inset-bottom) - 4.25rem)'
+							? `calc(100% - env(safe-area-inset-bottom) - ${propmtBarEstimatedHeightRem}rem)`
 							: $windowWidth < mdBreakpoint && isGenerationSettingsSheetOpen
 							? '0%'
 							: `calc(100% - env(safe-area-inset-bottom) - ${promptBarHeight}px)`});"
-						class="w-full max-h-[90%] z-40 gap-1 flex flex-col bg-c-bg rounded-t-2xl ring-4 ring-c-bg-secondary md:ring-0 md:rounded-none shadow-c-shadow/[var(--o-shadow-stronger)] 
-						shadow-navbar md:shadow-none md:bg-transparent absolute left-0 bottom-0 md:hidden transform transition overflow-hidden"
+						class="w-full max-h-[90%] z-40 gap-1 flex flex-col bg-c-bg rounded-t-2xl ring-4 ring-c-bg-secondary md:ring-0 \
+						md:rounded-none shadow-c-shadow/[var(--o-shadow-strongest)] shadow-sheet md:shadow-none 
+						md:bg-transparent absolute left-0 bottom-0 md:hidden transform transition overflow-hidden"
 					>
 						<div
 							class="w-full flex-1 overflow-hidden flex flex-col z-50 transition {$windowWidth &&
@@ -284,8 +282,8 @@
 						<div
 							class="flex-shrink-0"
 							style="height: calc(env(safe-area-inset-bottom) + {!$windowWidth || !promptBarHeight
-								? '6rem'
-								: `${promptBarHeight + 4}px`})"
+								? `${propmtBarEstimatedHeightRem}rem`
+								: `${promptBarHeight}px`})"
 						/>
 					</div>
 				{/if}
@@ -295,45 +293,22 @@
 					class="w-full z-50 gap-1 flex flex-col rounded-t-2xl md:rounded-none bg-c-bg md:bg-transparent absolute left-0 bottom-0 md:bottom-auto md:top-0 order-2"
 				>
 					<div
-						class="w-full flex gap-1 pt-2 pl-2 pr-1 md:p-0 pb-[calc(env(safe-area-inset-bottom)+0.75rem)] z-50"
+						class="w-full flex pt-2 pl-2 pr-1 md:p-0 pb-[calc(env(safe-area-inset-bottom)+0.75rem)] z-50"
 					>
 						<PromptBar
-							class="flex-1"
 							{openSignInModal}
 							serverData={data}
 							bind:isReadyMap
 							{onGenerate}
+							bind:isGenerationSettingsSheetOpen
+							{toggleSettingsSheet}
 						/>
-						<IconButton onClick={toggleSettingsSheet} class="md:hidden" name="Generation Settings">
-							<Morpher morphed={$windowWidth < mdBreakpoint && isGenerationSettingsSheetOpen}>
-								<div slot="0" class="w-6.5 h-6.5">
-									<IconGenerationSettings
-										class="transition {!$isTouchscreen
-											? 'group-hover/iconbutton:text-c-primary'
-											: ''} w-full h-full {$windowWidth < mdBreakpoint &&
-										isGenerationSettingsSheetOpen
-											? 'rotate-180'
-											: 'rotate-0'}"
-									/>
-								</div>
-								<div slot="1" class="w-6.5 h-6.5">
-									<IconChevronDown
-										class="transition transform {!$isTouchscreen
-											? 'group-hover/iconbutton:text-c-primary'
-											: ''} w-full h-full {$windowWidth < mdBreakpoint &&
-										!isGenerationSettingsSheetOpen
-											? '-rotate-180'
-											: 'rotate-0'}"
-									/>
-								</div>
-							</Morpher>
-						</IconButton>
 					</div>
 				</div>
 			</div>
 			<div
 				class="flex-1 flex flex-col order-first items-center justify-center w-full 
-				overflow-hidden pb-[calc(env(safe-area-inset-bottom)+6rem)] md:pt-26 md:pb-8 px-2 md:px-6"
+				overflow-hidden pb-[calc(env(safe-area-inset-bottom)+6rem)] md:pt-26 md:pb-8 px-2 md:px-4 lg:px-6"
 			>
 				<div bind:clientWidth={stageWidth} bind:clientHeight={stageHeight} class="flex-1 w-full">
 					{#if stageWidth && stageHeight}

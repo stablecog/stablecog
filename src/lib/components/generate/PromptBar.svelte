@@ -44,11 +44,15 @@
 	import type { TIsReadyMap } from '$components/generate/types';
 	import type { TCreatePageData } from '$routes/generate/+page.server';
 	import IconWand from '$components/icons/IconWand.svelte';
+	import Morpher from '$components/Morpher.svelte';
+	import IconChevronDown from '$components/icons/IconChevronDown.svelte';
 
 	export let openSignInModal: () => void;
 	export let serverData: TCreatePageData;
 	export let isReadyMap: TIsReadyMap;
 	export let onGenerate: undefined | (() => void) = undefined;
+	export let toggleSettingsSheet: () => void;
+	export let isGenerationSettingsSheetOpen: boolean;
 	export { classes as class };
 	let classes = '';
 	export { styles as style };
@@ -180,7 +184,7 @@
 <div style={styles} class="w-full flex justify-center {classes}">
 	<form
 		on:submit|preventDefault={onPromptFormSubmitted}
-		class="w-full max-w-7xl flex flex-row md:gap-3 items-center"
+		class="w-full max-w-7xl flex flex-row gap-1 md:gap-2 items-center"
 	>
 		<div class="flex-1 flex relative group">
 			<textarea
@@ -214,11 +218,11 @@
 					: ''} text-c-on-bg {!$isTouchscreen ? 'group-hover:ring-2' : ''}"
 			/>
 			<ClearButton
-				class="absolute right-11 top-0 md:right-0"
+				class="absolute right-11 md:right-13 top-0 lg:right-0"
 				show={showClearPromptInputButton}
 				onClick={clearPrompt}
 			/>
-			<div class="absolute right-0 top-0 h-full w-11 md:hidden">
+			<div class="absolute right-0 top-0 h-full w-11 md:w-13 lg:hidden">
 				<Button
 					disabled={!isCheckCompleted ||
 						(doesntHaveEnoughCredits && $page.data.session?.user.id !== undefined)}
@@ -226,26 +230,25 @@
 					loading={maxOngoingGenerationOutputsCountReached}
 					withSpinner
 					fadeOnDisabled={isCheckCompleted}
-					class="w-full h-full rounded-r-lg rounded-l-none absolute right-0 top-0"
+					class="w-full h-full rounded-r-lg md:rounded-r-xl rounded-l-none absolute right-0 top-0"
 					noPadding
 				>
-					<IconWand class="w-7 h-7" />
+					<IconWand class="w-7 h- md:w-8 h-8" />
 				</Button>
 			</div>
 		</div>
-		<div class="w-full md:w-auto md:min-w-[9.5rem] relative hidden md:block">
+		<div class="w-full md:w-auto relative hidden lg:block">
 			<Button
 				disabled={!isCheckCompleted ||
 					(doesntHaveEnoughCredits && $page.data.session?.user.id !== undefined)}
 				uploading={$generationInitImageFilesState === 'uploading'}
 				loading={maxOngoingGenerationOutputsCountReached}
 				withSpinner
+				noPadding
 				fadeOnDisabled={isCheckCompleted}
-				class="w-full flex flex-col relative"
+				class="w-full flex flex-col relative py-4.5 px-6 xl:px-8"
 			>
-				<p>
-					{$LL.Home.GenerateButton()}
-				</p>
+				{$LL.Home.GenerateButton()}
 			</Button>
 			{#if doesntHaveEnoughCredits && $userSummary && $page.data.session?.user.id}
 				<InsufficientCreditsBadge
@@ -254,5 +257,27 @@
 				/>
 			{/if}
 		</div>
+		<IconButton onClick={toggleSettingsSheet} class="md:hidden" name="Generation Settings">
+			<Morpher morphed={$windowWidth < mdBreakpoint && isGenerationSettingsSheetOpen}>
+				<div slot="0" class="w-7.5 h-7.5 p-0.5">
+					<IconGenerationSettings
+						class="transition {!$isTouchscreen
+							? 'group-hover/iconbutton:text-c-primary'
+							: ''} w-full h-full {$windowWidth < mdBreakpoint && isGenerationSettingsSheetOpen
+							? 'rotate-180'
+							: 'rotate-0'}"
+					/>
+				</div>
+				<div slot="1" class="w-7.5 h-7.5 p-0.5">
+					<IconChevronDown
+						class="transition transform {!$isTouchscreen
+							? 'group-hover/iconbutton:text-c-primary'
+							: ''} w-full h-full {$windowWidth < mdBreakpoint && !isGenerationSettingsSheetOpen
+							? '-rotate-180'
+							: 'rotate-0'}"
+					/>
+				</div>
+			</Morpher>
+		</IconButton>
 	</form>
 </div>
