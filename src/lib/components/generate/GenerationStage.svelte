@@ -1,6 +1,6 @@
 <script lang="ts">
-	import StageCard from '$routes/admin/create/StageCard.svelte';
-	import type { TIsReadyMap } from '$routes/admin/create/types';
+	import StageCard from '$components/generate/StageCard.svelte';
+	import type { TIsReadyMap } from '$components/generate/types';
 	import type { TGeneration } from '$ts/stores/user/generation';
 	import { onMount } from 'svelte';
 

@@ -36,6 +36,10 @@
 	export let gridScrollContainer: HTMLElement | undefined = undefined;
 
 	let _gridScrollContainer: HTMLElement;
+	let selectedScrollContainer: HTMLElement;
+
+	$: selectedScrollContainer = gridScrollContainer ?? _gridScrollContainer;
+
 	let lastRerenderKey = rerenderKey;
 
 	$: outputs = $generationsQuery.data?.pages
@@ -93,7 +97,7 @@
 {:else if $generationsQuery.isSuccess && $generationsQuery.data.pages.length > 0 && outputs !== undefined && items !== undefined}
 	<div class={gridClasses} bind:this={_gridScrollContainer}>
 		<MasonryInfiniteGrid
-			scrollContainer={gridScrollContainer ?? _gridScrollContainer}
+			scrollContainer={selectedScrollContainer}
 			bind:this={ig}
 			{items}
 			let:visibleItems
@@ -130,7 +134,7 @@
 						<ImagePlaceholder width={output.generation.width} height={output.generation.height} />
 						<div
 							class="absolute left-0 top-0 w-full h-full bg-c-bg-secondary transition {cardType ===
-							'create'
+							'generate'
 								? 'border-2 rounded-lg hover:border-c-primary'
 								: 'border-2 rounded-xl'} {isOutputSelected
 								? 'border-c-primary'

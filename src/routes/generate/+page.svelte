@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { browser } from '$app/environment';
 	import GenerationFullScreen from '$components/generationFullScreen/GenerationFullScreen.svelte';
-	import SettingsPanel from '$routes/admin/create/SettingsPanel.svelte';
+	import SettingsPanel from '$components/generate/SettingsPanel.svelte';
 	import {
 		activeGeneration,
 		generations,
@@ -10,7 +10,7 @@
 	} from '$ts/stores/user/generation';
 
 	import { onDestroy, onMount, tick } from 'svelte';
-	import PromptBar from '$routes/admin/create/PromptBar.svelte';
+	import PromptBar from '$components/generate/PromptBar.svelte';
 	import { quadOut } from 'svelte/easing';
 	import { fade, fly } from 'svelte/transition';
 	import { portal } from 'svelte-portal';
@@ -25,11 +25,10 @@
 	import { createPageUserGenerationFullOutputsQueryKey } from '$ts/stores/user/keys';
 	import { windowHeight } from '$ts/stores/window';
 	import Navbar from '$components/navigation/Navbar.svelte';
-	import SidebarWrapper from '$routes/admin/create/SidebarWrapper.svelte';
-	import GenerateStage from '$routes/admin/create/GenerationStage.svelte';
+	import SidebarWrapper from '$components/generate/SidebarWrapper.svelte';
+	import GenerateStage from '$components/generate/GenerationStage.svelte';
 	import { themeApp } from '$ts/stores/theme';
 	import GenerationGridInfinite from '$components/grids/GenerationGridInfinite.svelte';
-	import type { TIsReadyMap } from '$routes/admin/create/types.js';
 	import {
 		generationGuidanceScale,
 		generationHeight,
@@ -40,6 +39,7 @@
 	import { generateSSEId } from '$ts/helpers/generateSSEId.js';
 	import { generationModelIdDefault } from '$ts/constants/generationModels.js';
 	import { schedulerIdDefault } from '$ts/constants/schedulers.js';
+	import type { TIsReadyMap } from '$components/generate/types.js';
 
 	export let data;
 
@@ -146,7 +146,7 @@
 		}
 		if (key === 'ArrowLeft' || key === 'ArrowRight') {
 			let outputs: TGenerationFullOutput[] | undefined;
-			if ($activeGeneration.card_type === 'create') {
+			if ($activeGeneration.card_type === 'generate') {
 				const userGenerationOutputs = $userGenerationFullOutputsQuery?.data?.pages.flatMap(
 					(p) => p.outputs
 				);
@@ -220,7 +220,7 @@
 						<GenerationGridInfinite
 							{pinnedFullOutputs}
 							cardWidthClasses="w-full lg:w-1/2 xl:w-1/3"
-							cardType="create"
+							cardType="generate"
 							generationsQuery={userGenerationFullOutputsQuery}
 							rerenderKey={gridRerenderKey}
 							{gridScrollContainer}
@@ -229,9 +229,16 @@
 				</SidebarWrapper>
 			{/if}
 		</div>
-		<div class="flex flex-col items-center flex-1 h-full gap-4">
-			<PromptBar {openSignInModal} serverData={data} bind:isReadyMap />
-			<div class="flex-1 flex flex-col items-center justify-center w-full overflow-hidden p-6">
+		<div class="flex flex-col items-center flex-1 h-full gap-4 relative">
+			<PromptBar
+				class="absolute left-0 top-0"
+				{openSignInModal}
+				serverData={data}
+				bind:isReadyMap
+			/>
+			<div
+				class="flex-1 flex flex-col items-center justify-center w-full overflow-hidden pt-26 pb-8 px-6"
+			>
 				<div bind:clientWidth={stageWidth} bind:clientHeight={stageHeight} class="flex-1 w-full">
 					{#if stageWidth && stageHeight}
 						<GenerateStage
@@ -269,7 +276,7 @@
 			use:clickoutside={{ callback: () => (isSignInModalOpen = false) }}
 			class="flex justify-center my-auto"
 		>
-			<SignInCard isModal={true} redirectTo="/create" />
+			<SignInCard isModal={true} redirectTo="/generate" />
 		</div>
 	</div>
 {/if}

@@ -9,8 +9,8 @@
 	import TabLikeRangeInput from '$components/tabBars/TabLikeRangeInput.svelte';
 	import TabLikeTextArea from '$components/tabBars/TabLikeTextArea.svelte';
 	import LL from '$i18n/i18n-svelte';
-	import SidebarWrapper from '$routes/admin/create/SidebarWrapper.svelte';
-	import { estimatedGenerationDurationMs } from '$routes/admin/create/estimatedGenerationDurationMs';
+	import SidebarWrapper from '$components/generate/SidebarWrapper.svelte';
+	import { estimatedGenerationDurationMs } from '$components/generate/estimatedGenerationDurationMs';
 	import { tooltip } from '$ts/actions/tooltip';
 	import {
 		availableGenerationModelIds,
@@ -83,7 +83,6 @@
 		seed
 	} from '$ts/stores/generationSettings';
 	import { onMount } from 'svelte';
-	import type { TCreatePageData } from './proxy+page.server';
 	import { isValue } from '$ts/helpers/isValue';
 	import {
 		availableSchedulerIdDropdownItems,
@@ -102,9 +101,10 @@
 	import { isTouchscreen } from '$ts/stores/isTouchscreen';
 	import IconSeed from '$components/icons/IconSeed.svelte';
 	import TabLikeInput from '$components/tabBars/TabLikeInput.svelte';
-	import type { TIsReadyMap } from '$routes/admin/create/types';
+	import type { TIsReadyMap } from '$components/generate/types';
 	import { generations } from '$ts/stores/user/generation';
 	import TabLikeInitImageUploader2 from '$components/tabBars/TabLikeInitImageUploader2.svelte';
+	import type { TCreatePageData } from '$routes/generate/+page.server';
 
 	export let rounding: 'all' | 'top' | 'bottom' = 'all';
 	export let serverData: TCreatePageData;

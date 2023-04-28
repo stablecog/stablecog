@@ -72,7 +72,7 @@
 	export let data: LayoutData;
 	setLocale(data.locale);
 
-	const rawRoutes = ['/admin/create'];
+	const rawRoutes = ['/generate'];
 
 	const gss = data.globalSeedStore;
 	globalSeed.set($gss);

@@ -1,6 +1,6 @@
-import { estimatedGenerationDurationMs } from '$routes/admin/create/estimatedGenerationDurationMs';
+import { estimatedGenerationDurationMs } from '$components/generate/estimatedGenerationDurationMs';
 import { estimatedUpscaleDurationMs } from '$ts/stores/cost';
-import { linear, quadOut } from 'svelte/easing';
+import { quadOut } from 'svelte/easing';
 import { tweened, type Tweened } from 'svelte/motion';
 import { get } from 'svelte/store';
 

@@ -33,21 +33,23 @@
 	} from '$ts/stores/user/generation';
 	import { sseId } from '$ts/stores/user/sse';
 	import { userSummary } from '$ts/stores/user/summary';
-	import { maxOngoingGenerationOutputsCount } from '$routes/admin/create/constants';
+	import { maxOngoingGenerationOutputsCount } from '$components/generate/constants';
 	import IconGenerationSettings from '$components/icons/IconGenerationSettings.svelte';
 	import IconButton from '$components/buttons/IconButton.svelte';
 	import { windowWidth } from '$ts/stores/window';
 	import { mdBreakpoint } from '$components/generationFullScreen/constants';
-	import type { TCreatePageData } from '$routes/admin/create/+page.server';
 	import { onMount } from 'svelte';
 	import { isValue } from '$ts/helpers/isValue';
 	import { isSuperAdmin } from '$ts/helpers/admin/roles';
-	import type { TIsReadyMap } from '$routes/admin/create/types';
+	import type { TIsReadyMap } from '$components/generate/types';
+	import type { TCreatePageData } from '$routes/generate/+page.server';
 
 	export let openSignInModal: () => void;
 	export let openSettingsPanelModal: (() => void) | undefined = undefined;
 	export let serverData: TCreatePageData;
 	export let isReadyMap: TIsReadyMap;
+	export { classes as class };
+	let classes = '';
 
 	let promptInputElement: HTMLTextAreaElement;
 	let isCheckCompleted = false;
@@ -171,14 +173,14 @@
 	});
 </script>
 
-<div class="w-full flex justify-center pb-3 pl-2 md:p-0">
+<div class="w-full flex justify-center pb-3 pl-2 md:p-0 {classes}">
 	<form
 		on:submit|preventDefault={onPromptFormSubmitted}
 		class="w-full max-w-7xl flex flex-row md:gap-3 items-center"
 	>
 		<div class="flex-1 flex relative group">
 			<textarea
-				use:autoresize={{ maxRows: 3, placeholder: promptInputPlaceholder }}
+				use:autoresize={{ maxRows: 2, placeholder: promptInputPlaceholder }}
 				bind:this={promptInputElement}
 				bind:value={$generationPrompt}
 				on:keypress={(e) => {

@@ -27,7 +27,7 @@
 	$: regularRoutes = [
 		{
 			name: $LL.Navbar.HomeTab(),
-			href: '/',
+			href: '/generate',
 			icon: 'home'
 		},
 		{

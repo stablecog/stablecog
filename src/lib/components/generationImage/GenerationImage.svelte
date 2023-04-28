@@ -67,7 +67,7 @@
 	$: modalShouldOpen =
 		!$isTouchscreen ||
 		$lastClickedOutputId === generation.selected_output.id ||
-		cardType === 'create';
+		cardType === 'generate';
 
 	$: overlayShouldShow = $isTouchscreen && $lastClickedOutputId === generation.selected_output.id;
 
@@ -138,7 +138,7 @@
 	/>
 {/if}
 <!-- Barriers -->
-{#if cardType !== 'stage' && cardType !== 'create' && cardType !== 'gallery' && cardType !== 'generate'}
+{#if cardType !== 'stage' && cardType !== 'generate' && cardType !== 'gallery'}
 	<div
 		class="absolute top-0 left-0 w-full h-24 bg-gradient-to-b from-c-barrier/90 via-c-barrier/60 to-c-barrier/0 
 		flex justify-between transition items-start {!$isTouchscreen
@@ -146,7 +146,7 @@
 			: ''} {isGalleryEditActive || overlayShouldShow ? 'opacity-100' : 'opacity-0'}"
 	/>
 {/if}
-{#if cardType !== 'create' && !generation.selected_output.is_deleted && !isGalleryEditActive}
+{#if cardType !== 'generate' && !generation.selected_output.is_deleted && !isGalleryEditActive}
 	<div
 		class="absolute bottom-0 left-0 w-full h-full max-h-[12rem] bg-gradient-to-t transition
 		from-c-barrier/90 via-c-barrier/60 to-c-barrier/0 {!$isTouchscreen
@@ -181,7 +181,7 @@
 		}}
 		class="w-full h-full absolute left-0 top-0 flex flex-col justify-end items-start overflow-hidden gap-4"
 	>
-		{#if cardType !== 'create'}
+		{#if cardType !== 'generate'}
 			<div
 				class="w-full h-full pt-16 flex flex-col justify-end items-start flex-shrink 
 				transition text-sm relative z-0 overflow-hidden
@@ -206,7 +206,7 @@
 		{/if}
 	</AnchorOrDiv>
 {/if}
-{#if cardType !== 'create'}
+{#if cardType !== 'generate'}
 	<div
 		class="w-full h-full absolute left-0 top-0 pointer-events-none flex items-start justify-between"
 	>
@@ -257,7 +257,7 @@
 							bind:copiedTimeout={promptCopiedTimeout}
 						/>
 					{/if}
-					{#if cardType === 'generate' || cardType === 'history'}
+					{#if cardType === 'history' || cardType === 'stage'}
 						<DownloadGenerationButton class="p-1.5 -ml-1.5" {generation} />
 					{:else if cardType === 'gallery'}
 						<GenerateButton {generation} class="p-1.5 -ml-1.5" />
