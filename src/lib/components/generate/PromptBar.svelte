@@ -43,11 +43,13 @@
 	import { isSuperAdmin } from '$ts/helpers/admin/roles';
 	import type { TIsReadyMap } from '$components/generate/types';
 	import type { TCreatePageData } from '$routes/generate/+page.server';
+	import IconWand from '$components/icons/IconWand.svelte';
 
 	export let openSignInModal: () => void;
 	export let openSettingsPanelModal: (() => void) | undefined = undefined;
 	export let serverData: TCreatePageData;
 	export let isReadyMap: TIsReadyMap;
+	export let onGenerate: undefined | (() => void) = undefined;
 	export { classes as class };
 	let classes = '';
 	export { styles as style };
@@ -95,6 +97,7 @@
 		if (!$generationPrompt) {
 			generationPrompt.set(promptInputPlaceholder);
 		}
+		onGenerate?.();
 		queueGeneration();
 		if ($windowWidth < mdBreakpoint) {
 			promptInputElement.blur();
@@ -205,13 +208,31 @@
 				enterkeyhint="go"
 				rows="1"
 				style="transition: height 0.1s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.2s cubic-bezier(0.4, 0, 0.2, 1), padding 0.2s cubic-bezier(0.4, 0, 0.2, 1)"
-				class="w-full text-base bg-c-bg-secondary shadow-lg pr-12 md:pr-17 hide-scrollbar shadow-c-shadow/[var(--o-shadow-normal)] 
-						scroll-smooth resize-none transition relative pl-3 md:pl-5 py-3 md:py-4.5 rounded-xl 
+				class="w-full text-base bg-c-bg-secondary shadow-lg pr-20 md:pr-17 hide-scrollbar shadow-c-shadow/[var(--o-shadow-normal)] 
+						scroll-smooth resize-none transition relative pl-3 md:pl-5 py-3 md:py-4.5 rounded-lg md:rounded-xl 
 						focus:ring-2 focus:ring-c-primary/30 ring-0 ring-c-primary/20 placeholder:text-c-on-bg/40 {!$isTouchscreen
 					? 'enabled:hover:ring-2'
 					: ''} text-c-on-bg {!$isTouchscreen ? 'group-hover:ring-2' : ''}"
 			/>
-			<ClearButton show={showClearPromptInputButton} onClick={clearPrompt} />
+			<ClearButton
+				class="absolute right-10 top-0 md:right-0"
+				show={showClearPromptInputButton}
+				onClick={clearPrompt}
+			/>
+			<div class="absolute right-0 top-0 h-full w-10 md:hidden">
+				<Button
+					disabled={!isCheckCompleted ||
+						(doesntHaveEnoughCredits && $page.data.session?.user.id !== undefined)}
+					uploading={$generationInitImageFilesState === 'uploading'}
+					loading={maxOngoingGenerationOutputsCountReached}
+					withSpinner
+					fadeOnDisabled={isCheckCompleted}
+					class="w-full h-full rounded-r-lg rounded-l-none absolute right-0 top-0"
+					noPadding
+				>
+					<IconWand class="w-6 h-6" />
+				</Button>
+			</div>
 		</div>
 		{#if openSettingsPanelModal}
 			<IconButton name="Generation Settings" onClick={openSettingsPanelModal}>
@@ -219,14 +240,13 @@
 					<IconGenerationSettings
 						class="{!$isTouchscreen
 							? 'group-hover/iconbutton:text-c-primary'
-							: ''} text-c-on-bg transition"
+							: ''} text-c-on-bg transition w-6 h-6"
 					/>
 				</div>
 			</IconButton>
 		{/if}
 		<div class="w-full md:w-auto md:min-w-[9.5rem] relative hidden md:block">
 			<Button
-				animateOnClick
 				disabled={!isCheckCompleted ||
 					(doesntHaveEnoughCredits && $page.data.session?.user.id !== undefined)}
 				uploading={$generationInitImageFilesState === 'uploading'}

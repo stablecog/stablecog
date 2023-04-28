@@ -27,11 +27,16 @@ export function autoresize(node: HTMLTextAreaElement, props: TAutoResizeProps) {
 
 	const resizeWithProps = () => resize(currentProps);
 	resizeWithProps();
+	let resizeTimeout: NodeJS.Timeout;
+	const resizeWithTimeout = () => {
+		clearTimeout(resizeTimeout);
+		resizeTimeout = setTimeout(resizeWithProps, 150);
+	};
 
 	node.addEventListener('input', resizeWithProps);
 	node.addEventListener('focus', resizeWithProps);
 	node.addEventListener('blur', resizeWithProps);
-	window.addEventListener('resize', resizeWithProps);
+	window.addEventListener('resize', resizeWithTimeout);
 	setTimeout(() => {
 		resizeWithProps();
 	});

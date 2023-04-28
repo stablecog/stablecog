@@ -6,12 +6,14 @@
 	export let onClick: () => void;
 	export let type: 'sm' | 'md' = 'md';
 	export let disabled = false;
+	export { classes as class };
+	let classes = 'absolute right-0 top-0 rounded-r-xl';
 </script>
 
 <div
-	class="absolute right-0 top-0 h-full transition-all overflow-hidden rounded-r-xl {!show
+	class="transition-all h-full overflow-hidden {classes} {!show
 		? 'pointer-events-none'
-		: ''} {type === 'sm' ? 'w-10 md:w-12' : 'w-12 md:w-16'}"
+		: ''} {type === 'sm' ? 'w-10 md:w-12' : 'w-10 md:w-14'}"
 >
 	<button
 		on:click|preventDefault={onClick}
@@ -24,7 +26,7 @@
 		<div
 			class="w-full h-full absolute left-0 top-0 pointer-events-none {type === 'sm'
 				? 'p-1'
-				: 'p-1.5'}"
+				: 'p-0.75 md:p-1'}"
 		>
 			<div class="w-full h-full rounded-lg relative z-0 overflow-hidden">
 				<div
@@ -38,7 +40,7 @@
 		<IconCancel
 			class="{type === 'sm'
 				? 'w-6 h-6'
-				: 'w-7 h-7'} transition text-c-on-bg/25 group-focus/clearbutton:text-c-primary {!$isTouchscreen
+				: 'w-6 h-6 md:w-7 md:h-7'} transition text-c-on-bg/25 group-focus/clearbutton:text-c-primary {!$isTouchscreen
 				? 'group-hover/clearbutton:text-c-primary'
 				: 'group-active/clearbutton:text-c-primary'}"
 		/>

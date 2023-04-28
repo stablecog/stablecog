@@ -1,14 +1,18 @@
 <script lang="ts">
 	export let rounding: 'all' | 'top' | 'bottom' = 'all';
+	export let noWrapper = false;
 </script>
 
 <div
-	class="w-full h-full flex flex-col bg-c-bg {rounding === 'top'
+	class="w-full h-full flex flex-col bg-c-bg {noWrapper
+		? ''
+		: rounding === 'top'
 		? 'rounded-t-2xl'
 		: rounding === 'bottom'
 		? 'rounded-b-2xl'
-		: 'rounded-2xl'} ring-4 ring-c-bg-secondary
-  shadow-2xl shadow-c-shadow/[var(--o-shadow-strongest)] overflow-hidden relative"
+		: 'rounded-2xl'} {noWrapper
+		? ''
+		: 'ring-4 ring-c-bg-secondary shadow-2xl shadow-c-shadow/[var(--o-shadow-strongest)]'} overflow-hidden relative"
 >
 	<slot />
 	<div

@@ -110,6 +110,7 @@
 	export let serverData: TCreatePageData;
 	export let isReadyMap: TIsReadyMap;
 	export let openSignInModal: () => void;
+	export let noWrapper = false;
 
 	let settingsContainer: HTMLDivElement;
 	let containerDropdownPadding = 16;
@@ -445,7 +446,7 @@
 	});
 </script>
 
-<SidebarWrapper {rounding}>
+<SidebarWrapper {rounding} {noWrapper}>
 	<div
 		bind:this={settingsContainer}
 		class="w-full h-full flex flex-col overflow-auto pt-4 md:pt-5 pb-36 gap-7"
