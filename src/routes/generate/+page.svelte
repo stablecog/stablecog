@@ -41,19 +41,18 @@
 	import { schedulerIdDefault } from '$ts/constants/schedulers.js';
 	import type { TIsReadyMap } from '$components/generate/types.js';
 	import { lgBreakpoint, mdBreakpoint } from '$components/generationFullScreen/constants.js';
-	import IconButton from '$components/buttons/IconButton.svelte';
-	import IconGenerationSettings from '$components/icons/IconGenerationSettings.svelte';
-	import Morpher from '$components/Morpher.svelte';
-	import IconChevronDown from '$components/icons/IconChevronDown.svelte';
-	import { isTouchscreen } from '$ts/stores/isTouchscreen.js';
+	import HorizontalList from '$components/generate/HorizontalList.svelte';
 
 	export let data;
 
 	let isSignInModalOpen = false;
 	let promptBarHeight: number;
-	let propmtBarEstimatedHeightRem = 4.25;
 	let stageWidth: number;
 	let stageHeight: number;
+	let horizontalListImageHeight = 48;
+	let horizontalListPaddingTopRem = 0.5;
+	let horizontalListHeight: number;
+	let propmtBarEstimatedHeightRem = 4.25;
 
 	let gridScrollContainer: HTMLElement;
 
@@ -262,10 +261,12 @@
 				{#if !$windowWidth || $windowWidth < mdBreakpoint}
 					<div
 						style="transform: translateY({!$windowWidth || !promptBarHeight
-							? `calc(100% - env(safe-area-inset-bottom) - ${propmtBarEstimatedHeightRem}rem)`
+							? `calc(100% - env(safe-area-inset-bottom) - ${propmtBarEstimatedHeightRem}rem - ${horizontalListPaddingTopRem}rem - ${horizontalListImageHeight}px)`
 							: $windowWidth < mdBreakpoint && isGenerationSettingsSheetOpen
 							? '0%'
-							: `calc(100% - env(safe-area-inset-bottom) - ${promptBarHeight}px)`});"
+							: `calc(100% - env(safe-area-inset-bottom) - ${
+									promptBarHeight + horizontalListHeight
+							  }px)`});"
 						class="w-full max-h-[90%] z-40 gap-1 flex flex-col bg-c-bg rounded-t-2xl ring-2 ring-c-bg-secondary 
 						md:ring-0 md:rounded-none shadow-c-shadow/[var(--o-shadow-strongest)] shadow-sheet md:shadow-none 
 						md:bg-transparent absolute left-0 bottom-0 md:hidden transform transition overflow-hidden"
@@ -282,18 +283,35 @@
 						<div
 							class="flex-shrink-0"
 							style="height: calc(env(safe-area-inset-bottom) + {!$windowWidth || !promptBarHeight
-								? `${propmtBarEstimatedHeightRem}rem`
-								: `${promptBarHeight}px`})"
+								? `calc(${
+										propmtBarEstimatedHeightRem + horizontalListPaddingTopRem
+								  }rem + ${horizontalListImageHeight}px)`
+								: `${promptBarHeight + horizontalListHeight}px`})"
 						/>
 					</div>
 				{/if}
 				<!-- Prompt bar -->
 				<div
-					bind:clientHeight={promptBarHeight}
-					class="w-full z-50 gap-1 flex flex-col rounded-t-2xl md:rounded-none bg-c-bg md:bg-transparent absolute left-0 bottom-0 md:bottom-auto md:top-0 order-2"
+					class="w-full z-50 flex flex-col rounded-2xl overflow-hidden md:rounded-none bg-c-bg md:bg-transparent absolute left-0 bottom-0 
+					md:bottom-auto md:top-0 order-2"
 				>
+					<div bind:clientHeight={horizontalListHeight} class="w-full md:hidden">
+						{#if userGenerationFullOutputsQuery}
+							<HorizontalList
+								imageHeight={horizontalListImageHeight}
+								{pinnedFullOutputs}
+								generationsQuery={userGenerationFullOutputsQuery}
+								cardType="generate"
+							/>
+						{:else}
+							<div class="w-full pt-2">
+								<div style="height: {horizontalListHeight}px" class="w-full" />
+							</div>
+						{/if}
+					</div>
 					<div
-						class="w-full flex pt-2 pl-2 pr-1 md:p-0 pb-[calc(env(safe-area-inset-bottom)+0.75rem)] z-50"
+						bind:clientHeight={promptBarHeight}
+						class="w-full flex pl-2 pt-2 pr-1 md:p-0 pb-[calc(env(safe-area-inset-bottom)+0.75rem)] z-50"
 					>
 						<PromptBar
 							{openSignInModal}
