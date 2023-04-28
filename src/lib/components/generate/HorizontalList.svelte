@@ -10,7 +10,6 @@
 	import { quadIn, quadOut } from 'svelte/easing';
 	import type { TUserGenerationFullOutputsPage } from '$ts/queries/userGenerations';
 	import LL from '$i18n/i18n-svelte';
-	import { horizontalWheelScroll } from '$ts/actions/horizontalWheelScroll';
 
 	export let generationsQuery: CreateInfiniteQueryResult<TUserGenerationFullOutputsPage, unknown>;
 	export let pinnedFullOutputs: TGenerationFullOutput[] | undefined = undefined;
@@ -44,7 +43,6 @@
 			on:scroll={(e) => {
 				scroll = e.currentTarget.scrollLeft;
 			}}
-			use:horizontalWheelScroll
 			class="overflow-y-hidden overflow-x-auto flex flex-row overflow-auto 
       items-center justify-start hide-scrollbar list-fade-horizontal"
 		>
