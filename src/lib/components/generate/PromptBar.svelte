@@ -230,7 +230,7 @@
 					class="w-full h-full rounded-r-lg rounded-l-none absolute right-0 top-0"
 					noPadding
 				>
-					<IconWand class="w-6 h-6" />
+					<IconWand class="w-7 h-7" />
 				</Button>
 			</div>
 		</div>

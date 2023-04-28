@@ -11,20 +11,20 @@
 </script>
 
 <div
-	class="transition-all h-full overflow-hidden {classes} {!show
+	class="transition-all h-full overflow-hidden rounded-r-xl {classes} {!show
 		? 'pointer-events-none'
 		: ''} {type === 'sm' ? 'w-10 md:w-12' : 'w-10 md:w-14'}"
 >
 	<button
 		on:click|preventDefault={onClick}
-		class="w-full h-full relative rounded-r-xl flex items-center justify-center group/clearbutton
+		class="w-full h-full relative z-0 rounded-r-xl overflow-hidden flex items-center justify-center group/clearbutton
 			transition {show ? 'focus:translate-x-0 translate-x-0 opacity-100' : 'translate-x-full opacity-0'}"
 		disabled={!show || disabled}
 		type="button"
 		aria-label="Clear"
 	>
 		<div
-			class="w-full h-full absolute left-0 top-0 pointer-events-none {type === 'sm'
+			class="w-full h-full absolute left-0 top-0 pointer-events-none overflow-hidden {type === 'sm'
 				? 'p-1'
 				: 'p-0.75 md:p-1'}"
 		>
