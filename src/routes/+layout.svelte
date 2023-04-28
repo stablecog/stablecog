@@ -13,7 +13,7 @@
 	import { localeLS } from '$ts/stores/localeLS';
 	import { loadLocaleAsync } from '$i18n/i18n-util.async';
 	import { isLocale } from '$i18n/i18n-util';
-	import { advancedMode, advancedModeApp } from '$ts/stores/advancedMode';
+	import { advancedModeApp } from '$ts/stores/advancedMode';
 	import { apiUrl, routesWithHiddenFooter } from '$ts/constants/main';
 	import mixpanel from 'mixpanel-browser';
 	import { supabase } from '$ts/constants/supabase';
@@ -93,12 +93,6 @@
 	themeApp.set($th);
 	if (data.theme !== null) themeApp.set(data.theme);
 
-	const adv = data.advancedModeStore;
-	advancedModeApp.set($adv);
-	if (data.advancedMode !== null && data.advancedMode !== undefined) {
-		advancedModeApp.set(data.advancedMode);
-	}
-
 	let innerHeight: number;
 	let innerWidth: number;
 
@@ -170,7 +164,6 @@
 
 	$: $locale, runIfMounted(() => setCookie(`sc-locale=${$locale}`));
 	$: $themeApp, runIfMounted(() => setCookie(`sc-theme=${$themeApp}`));
-	$: $advancedModeApp, runIfMounted(() => setCookie(`sc-advanced-mode=${$advancedModeApp}`));
 	$: $generations, onGenerationsChanged();
 	$: $upscales, onUpscalesChanged();
 
@@ -462,9 +455,6 @@
 		if ($localeLS && isLocale($localeLS) && $localeLS !== $locale) {
 			await loadLocaleAsync($localeLS);
 			setLocale($localeLS);
-		}
-		if (($advancedMode === true || $advancedMode === false) && $advancedMode !== $advancedModeApp) {
-			advancedModeApp.set($advancedMode);
 		}
 		if ($theme !== null && $theme !== $themeApp) {
 			themeApp.set($theme);

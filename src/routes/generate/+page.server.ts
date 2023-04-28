@@ -26,7 +26,7 @@ import {
 import { availableSchedulerIds, type TAvailableSchedulerId } from '$ts/constants/schedulers';
 import type { ServerLoad } from '@sveltejs/kit';
 
-export const load: ServerLoad = ({ url }) => {
+export const load: ServerLoad = ({ url, locals }) => {
 	const _prompt = url.searchParams.get('p');
 	const _negative_prompt = url.searchParams.get('np');
 	const _seed = url.searchParams.get('s');
@@ -126,6 +126,7 @@ export const load: ServerLoad = ({ url }) => {
 		init_image_strength,
 		num_outputs
 	};
+
 	return data;
 };
 

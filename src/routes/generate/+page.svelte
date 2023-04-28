@@ -23,7 +23,7 @@
 		type TUserGenerationFullOutputsPage
 	} from '$ts/queries/userGenerations';
 	import { createPageUserGenerationFullOutputsQueryKey } from '$ts/stores/user/keys';
-	import { windowHeight } from '$ts/stores/window';
+	import { windowHeight, windowWidth } from '$ts/stores/window';
 	import Navbar from '$components/navigation/Navbar.svelte';
 	import SidebarWrapper from '$components/generate/SidebarWrapper.svelte';
 	import GenerateStage from '$components/generate/GenerationStage.svelte';
@@ -40,6 +40,7 @@
 	import { generationModelIdDefault } from '$ts/constants/generationModels.js';
 	import { schedulerIdDefault } from '$ts/constants/schedulers.js';
 	import type { TIsReadyMap } from '$components/generate/types.js';
+	import { mdBreakpoint } from '$components/generationFullScreen/constants.js';
 
 	export let data;
 
@@ -210,24 +211,26 @@
 	<Navbar />
 	<!-- Main part desktop -->
 	<div class="w-full h-full flex flex-row overflow-hidden pt-2 px-4 pb-4 gap-4">
-		<div class="h-full w-36 xl:w-72">
-			{#if userGenerationFullOutputsQuery}
-				<SidebarWrapper>
+		<div class="h-full hidden md:flex w-36 xl:w-72">
+			<SidebarWrapper>
+				{#if userGenerationFullOutputsQuery}
 					<div
 						bind:this={gridScrollContainer}
 						class="w-full flex flex-col flex-1 overflow-auto px-2 pt-2 pb-16"
 					>
-						<GenerationGridInfinite
-							{pinnedFullOutputs}
-							cardWidthClasses="w-full lg:w-1/2 xl:w-1/3"
-							cardType="generate"
-							generationsQuery={userGenerationFullOutputsQuery}
-							rerenderKey={gridRerenderKey}
-							{gridScrollContainer}
-						/>
+						{#if $windowWidth > mdBreakpoint}
+							<GenerationGridInfinite
+								{pinnedFullOutputs}
+								cardWidthClasses="w-full lg:w-1/2 xl:w-1/3"
+								cardType="generate"
+								generationsQuery={userGenerationFullOutputsQuery}
+								rerenderKey={gridRerenderKey}
+								{gridScrollContainer}
+							/>
+						{/if}
 					</div>
-				</SidebarWrapper>
-			{/if}
+				{/if}
+			</SidebarWrapper>
 		</div>
 		<div class="flex flex-col items-center flex-1 h-full gap-4 relative">
 			<PromptBar
