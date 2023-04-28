@@ -262,10 +262,11 @@
 			<div use:clickoutside={{ callback: closeSettingsSheet }}>
 				{#if !$windowWidth || $windowWidth < mdBreakpoint}
 					<div
-						style="transform: translateY({!$windowWidth ||
-							($windowWidth < mdBreakpoint && isGenerationSettingsSheetOpen
-								? '0%'
-								: 'calc(100% - env(safe-area-inset-bottom) - 4rem)')});"
+						style="transform: translateY({!$windowWidth
+							? 'calc(100% - env(safe-area-inset-bottom) - 4.25rem)'
+							: $windowWidth < mdBreakpoint && isGenerationSettingsSheetOpen
+							? '0%'
+							: 'calc(100% - env(safe-area-inset-bottom) - 4.25rem)'});"
 						class="w-full max-h-[80vh] z-40 gap-1 flex flex-col bg-c-bg rounded-t-2xl ring-4 ring-c-bg-secondary md:ring-0 md:rounded-none shadow-c-shadow/[var(--o-shadow-stronger)] 
 						shadow-navbar md:shadow-none md:bg-transparent absolute left-0 bottom-0 md:hidden transform transition }"
 					>
@@ -278,7 +279,7 @@
 						>
 							<SettingsPanel rounding="top" serverData={data} bind:isReadyMap {openSignInModal} />
 						</div>
-						<div class="h-[calc(env(safe-area-inset-bottom)+5.5rem)]" />
+						<div class="h-[calc(env(safe-area-inset-bottom)+6rem)]" />
 					</div>
 				{/if}
 				<!-- Prompt bar and bottom sheet -->
@@ -286,7 +287,7 @@
 					class="w-full z-50 gap-1 flex flex-col rounded-t-2xl md:rounded-none bg-c-bg md:bg-transparent absolute left-0 bottom-0 md:bottom-auto md:top-0 order-2"
 				>
 					<div
-						class="w-full flex gap-1 pt-2 pl-2 pr-1 md:p-0 pb-[calc(env(safe-area-inset-bottom)+0.5rem)] z-50"
+						class="w-full flex gap-1 pt-2 pl-2 pr-1 md:p-0 pb-[calc(env(safe-area-inset-bottom)+0.75rem)] z-50"
 					>
 						<PromptBar
 							class="flex-1"
