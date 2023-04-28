@@ -52,6 +52,7 @@
 	export let data;
 
 	let isSignInModalOpen = false;
+	let promptBarHeight: number;
 
 	let stageWidth: number;
 	let stageHeight: number;
@@ -262,13 +263,13 @@
 			<div use:clickoutside={{ callback: closeSettingsSheet }}>
 				{#if !$windowWidth || $windowWidth < mdBreakpoint}
 					<div
-						style="transform: translateY({!$windowWidth
+						style="transform: translateY({!$windowWidth || !promptBarHeight
 							? 'calc(100% - env(safe-area-inset-bottom) - 4.25rem)'
 							: $windowWidth < mdBreakpoint && isGenerationSettingsSheetOpen
 							? '0%'
-							: 'calc(100% - env(safe-area-inset-bottom) - 4.25rem)'});"
+							: `calc(100% - env(safe-area-inset-bottom) - ${promptBarHeight}px)`});"
 						class="w-full max-h-[80vh] z-40 gap-1 flex flex-col bg-c-bg rounded-t-2xl ring-4 ring-c-bg-secondary md:ring-0 md:rounded-none shadow-c-shadow/[var(--o-shadow-stronger)] 
-						shadow-navbar md:shadow-none md:bg-transparent absolute left-0 bottom-0 md:hidden transform transition }"
+						shadow-navbar md:shadow-none md:bg-transparent absolute left-0 bottom-0 md:hidden transform transition"
 					>
 						<div
 							class="w-full flex-1 overflow-hidden flex flex-col z-50 transition {$windowWidth &&
@@ -279,11 +280,17 @@
 						>
 							<SettingsPanel rounding="top" serverData={data} bind:isReadyMap {openSignInModal} />
 						</div>
-						<div class="h-[calc(env(safe-area-inset-bottom)+6rem)]" />
+						<div
+							class="flex-shrink-0"
+							style="height: calc(env(safe-area-inset-bottom) + {!$windowWidth || !promptBarHeight
+								? '6rem'
+								: `${promptBarHeight + 4}px`})"
+						/>
 					</div>
 				{/if}
-				<!-- Prompt bar and bottom sheet -->
+				<!-- Prompt bar -->
 				<div
+					bind:clientHeight={promptBarHeight}
 					class="w-full z-50 gap-1 flex flex-col rounded-t-2xl md:rounded-none bg-c-bg md:bg-transparent absolute left-0 bottom-0 md:bottom-auto md:top-0 order-2"
 				>
 					<div
@@ -324,7 +331,8 @@
 				</div>
 			</div>
 			<div
-				class="flex-1 flex flex-col order-first items-center justify-center w-full overflow-hidden pb-[calc(env(safe-area-inset-bottom)+7rem)] md:pt-26 md:pb-8 px-2 md:px-6"
+				class="flex-1 flex flex-col order-first items-center justify-center w-full 
+				overflow-hidden pb-[calc(env(safe-area-inset-bottom)+6rem)] md:pt-26 md:pb-8 px-2 md:px-6"
 			>
 				<div bind:clientWidth={stageWidth} bind:clientHeight={stageHeight} class="flex-1 w-full">
 					{#if stageWidth && stageHeight}
