@@ -46,7 +46,6 @@
 	import IconWand from '$components/icons/IconWand.svelte';
 
 	export let openSignInModal: () => void;
-	export let openSettingsPanelModal: (() => void) | undefined = undefined;
 	export let serverData: TCreatePageData;
 	export let isReadyMap: TIsReadyMap;
 	export let onGenerate: undefined | (() => void) = undefined;
@@ -234,17 +233,6 @@
 				</Button>
 			</div>
 		</div>
-		{#if openSettingsPanelModal}
-			<IconButton name="Generation Settings" onClick={openSettingsPanelModal}>
-				<div class="p-1">
-					<IconGenerationSettings
-						class="{!$isTouchscreen
-							? 'group-hover/iconbutton:text-c-primary'
-							: ''} text-c-on-bg transition w-6 h-6"
-					/>
-				</div>
-			</IconButton>
-		{/if}
 		<div class="w-full md:w-auto md:min-w-[9.5rem] relative hidden md:block">
 			<Button
 				disabled={!isCheckCompleted ||

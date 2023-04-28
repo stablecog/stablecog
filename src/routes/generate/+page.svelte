@@ -306,7 +306,7 @@
 						/>
 						<IconButton onClick={toggleSettingsSheet} class="md:hidden" name="Generation Settings">
 							<Morpher morphed={$windowWidth < mdBreakpoint && isGenerationSettingsSheetOpen}>
-								<div slot="0" class="w-6 h-6">
+								<div slot="0" class="w-6.5 h-6.5">
 									<IconGenerationSettings
 										class="transition {!$isTouchscreen
 											? 'group-hover/iconbutton:text-c-primary'
@@ -316,7 +316,7 @@
 											: 'rotate-0'}"
 									/>
 								</div>
-								<div slot="1" class="w-6 h-6">
+								<div slot="1" class="w-6.5 h-6.5">
 									<IconChevronDown
 										class="transition transform {!$isTouchscreen
 											? 'group-hover/iconbutton:text-c-primary'
