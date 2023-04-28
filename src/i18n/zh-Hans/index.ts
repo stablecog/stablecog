@@ -79,6 +79,7 @@ const zhHans: Translation = {
 			Paragraph: '您可以稍后从设置中更改您的偏好。'
 		}
 	},
+	Generate: { Grid: { NoGenerations: { Paragraph: 'Your generations will appear here.' } } },
 	History: {
 		GenerationsTitle: '生成的图像',
 		GenerationsMaxSavedCountWarning: '只限于前 {count} 个生成的图像',

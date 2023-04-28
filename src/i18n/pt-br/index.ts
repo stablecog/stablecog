@@ -81,6 +81,7 @@ const ptBr: Translation = {
 			Paragraph: 'Você pode alterar a sua preferência nas configurações quando quiser.'
 		}
 	},
+	Generate: { Grid: { NoGenerations: { Paragraph: 'Your generations will appear here.' } } },
 	History: {
 		GenerationsTitle: 'Gerações',
 		GenerationsMaxSavedCountWarning: 'Somente os {count} últimos',

@@ -85,6 +85,7 @@ const nl: Translation = {
 			Paragraph: 'Je kan later je voorkeur via de instellingen wijzigen.'
 		}
 	},
+	Generate: { Grid: { NoGenerations: { Paragraph: 'Your generations will appear here.' } } },
 	History: {
 		GenerationsTitle: 'Creaties',
 		GenerationsMaxSavedCountWarning: 'Alleen de laatste {count}',

@@ -84,6 +84,7 @@ const bg: Translation = {
 			Paragraph: 'Можете по-късно да промените настройките си.'
 		}
 	},
+	Generate: { Grid: { NoGenerations: { Paragraph: 'Your generations will appear here.' } } },
 	History: {
 		GenerationsTitle: 'Изработки',
 		GenerationsMaxSavedCountWarning: 'Само последните {count}',

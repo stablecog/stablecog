@@ -237,6 +237,16 @@ type RootTranslation = {
 			Paragraph: string
 		}
 	}
+	Generate: {
+		Grid: {
+			NoGenerations: {
+				/**
+				 * Y​o​u​r​ ​g​e​n​e​r​a​t​i​o​n​s​ ​w​i​l​l​ ​a​p​p​e​a​r​ ​h​e​r​e​.
+				 */
+				Paragraph: string
+			}
+		}
+	}
 	History: {
 		/**
 		 * G​e​n​e​r​a​t​i​o​n​s
@@ -2169,6 +2179,16 @@ export type TranslationFunctions = {
 			 * You can change your preference from the settings later.
 			 */
 			Paragraph: () => LocalizedString
+		}
+	}
+	Generate: {
+		Grid: {
+			NoGenerations: {
+				/**
+				 * Your generations will appear here.
+				 */
+				Paragraph: () => LocalizedString
+			}
 		}
 	}
 	History: {

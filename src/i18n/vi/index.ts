@@ -82,6 +82,7 @@ const vi: Translation = {
 			Paragraph: 'Bạn có thể thay đổi thiết lập này sau trong phần cài đặt.'
 		}
 	},
+	Generate: { Grid: { NoGenerations: { Paragraph: 'Your generations will appear here.' } } },
 	History: {
 		GenerationsTitle: 'Các hình ảnh',
 		GenerationsMaxSavedCountWarning: 'Chỉ hiện thị {count}',

@@ -82,6 +82,7 @@ const ko: Translation = {
 			Paragraph: '갤러리에 전시하는 옵션은 설정을 통해 언제든 키거나 끌 수 있어요.'
 		}
 	},
+	Generate: { Grid: { NoGenerations: { Paragraph: 'Your generations will appear here.' } } },
 	History: {
 		GenerationsTitle: '생성한 이미지',
 		GenerationsMaxSavedCountWarning: '최근 {count}개',

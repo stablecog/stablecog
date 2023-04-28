@@ -42,6 +42,7 @@
 	import type { TIsReadyMap } from '$components/generate/types.js';
 	import { lgBreakpoint, mdBreakpoint } from '$components/generationFullScreen/constants.js';
 	import HorizontalList from '$components/generate/HorizontalList.svelte';
+	import LL from '$i18n/i18n-svelte.js';
 
 	export let data;
 
@@ -269,7 +270,7 @@
 							  }px)`});"
 						class="w-full max-h-[90%] z-40 gap-1 flex flex-col bg-c-bg rounded-t-2xl ring-2 ring-c-bg-secondary 
 						md:ring-0 md:rounded-none shadow-c-shadow/[var(--o-shadow-strongest)] shadow-sheet md:shadow-none 
-						md:bg-transparent absolute left-0 bottom-0 md:hidden transform transition overflow-hidden"
+						md:bg-transparent absolute left-0 bottom-0 md:hidden transform transition overflow-hidden md:overflow-auto"
 					>
 						<div
 							class="w-full flex-1 overflow-hidden flex flex-col z-50 transition {$windowWidth &&
@@ -292,7 +293,7 @@
 				{/if}
 				<!-- Prompt bar -->
 				<div
-					class="w-full z-50 flex flex-col rounded-2xl overflow-hidden md:rounded-none bg-c-bg md:bg-transparent absolute left-0 bottom-0 
+					class="w-full z-50 flex flex-col rounded-2xl overflow-hidden md:overflow-visible md:rounded-none bg-c-bg md:bg-transparent absolute left-0 bottom-0 
 					md:bottom-auto md:top-0 order-2"
 				>
 					<div bind:clientHeight={horizontalListHeight} class="w-full md:hidden">
@@ -307,12 +308,19 @@
 							<div class="w-full pt-2">
 								<div
 									style="height: {horizontalListImageHeight}px"
-									class="w-full flex items-center justify-center"
+									class="w-full flex items-center justify-center relative"
 								>
-									<p
-										class="w-full overflow-hidden px-4 whitespace-nowrap text-sm overflow-ellipsis text-center text-c-on-bg/50"
+									<div
+										class="w-full h-full opacity-60 flex flex-row items-center justify-center absolute left-0 top-0 gap-1 px-2 z-0"
 									>
-										Your generations will appear here
+										{#each Array(10) as item}
+											<div class="flex-1 h-full bg-c-bg-secondary rounded-md" />
+										{/each}
+									</div>
+									<p
+										class="w-full overflow-hidden px-4 whitespace-nowrap text-sm overflow-ellipsis text-center text-c-on-bg/40 relative z-10"
+									>
+										{$LL.Generate.Grid.NoGenerations.Paragraph()}
 									</p>
 								</div>
 							</div>

@@ -81,6 +81,7 @@ const hr: Translation = {
 			Paragraph: 'Možeš promijeniti preference u postavkama kasnije.'
 		}
 	},
+	Generate: { Grid: { NoGenerations: { Paragraph: 'Your generations will appear here.' } } },
 	History: {
 		GenerationsTitle: 'Generacije',
 		GenerationsMaxSavedCountWarning: 'Samo {count} posljednjih',
