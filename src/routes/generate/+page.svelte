@@ -48,6 +48,7 @@
 	import Morpher from '$components/Morpher.svelte';
 	import IconChevronDown from '$components/icons/IconChevronDown.svelte';
 	import { isTouchscreen } from '$ts/stores/isTouchscreen.js';
+	import { navbarHeight } from '$ts/stores/navbarHeight.js';
 
 	export let data;
 
@@ -263,13 +264,15 @@
 			<div use:clickoutside={{ callback: closeSettingsSheet }}>
 				{#if !$windowWidth || $windowWidth < mdBreakpoint}
 					<div
-						style="transform: translateY({!$windowWidth || !promptBarHeight
+						style="max-height: {$navbarHeight
+							? `calc((100vh - ${$navbarHeight}px) * 0.9)`
+							: '80vh'}; transform: translateY({!$windowWidth || !promptBarHeight
 							? 'calc(100% - env(safe-area-inset-bottom) - 4.25rem)'
 							: $windowWidth < mdBreakpoint && isGenerationSettingsSheetOpen
 							? '0%'
 							: `calc(100% - env(safe-area-inset-bottom) - ${promptBarHeight}px)`});"
-						class="w-full max-h-[80vh] z-40 gap-1 flex flex-col bg-c-bg rounded-t-2xl ring-4 ring-c-bg-secondary md:ring-0 md:rounded-none shadow-c-shadow/[var(--o-shadow-stronger)] 
-						shadow-navbar md:shadow-none md:bg-transparent absolute left-0 bottom-0 md:hidden transform transition"
+						class="w-full z-40 gap-1 flex flex-col bg-c-bg rounded-t-2xl ring-4 ring-c-bg-secondary md:ring-0 md:rounded-none shadow-c-shadow/[var(--o-shadow-stronger)] 
+						shadow-navbar md:shadow-none md:bg-transparent absolute left-0 bottom-0 md:hidden transform transition overflow-hidden"
 					>
 						<div
 							class="w-full flex-1 overflow-hidden flex flex-col z-50 transition {$windowWidth &&
