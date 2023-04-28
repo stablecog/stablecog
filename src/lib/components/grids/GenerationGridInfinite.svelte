@@ -97,6 +97,7 @@
 {:else if $generationsQuery.isSuccess && $generationsQuery.data.pages.length > 0 && outputs !== undefined && items !== undefined}
 	<div class={gridClasses} bind:this={_gridScrollContainer}>
 		<MasonryInfiniteGrid
+			resizeDebounce={200}
 			scrollContainer={selectedScrollContainer}
 			bind:this={ig}
 			{items}

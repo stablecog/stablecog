@@ -12,7 +12,7 @@
 		? 'rounded-b-2xl'
 		: 'rounded-2xl'} {noWrapper
 		? ''
-		: 'ring-4 ring-c-bg-secondary shadow-2xl shadow-c-shadow/[var(--o-shadow-strongest)]'} overflow-hidden relative"
+		: 'ring-4 ring-c-bg-secondary shadow-xl shadow-c-shadow/[var(--o-shadow-stronger)]'} overflow-hidden relative"
 >
 	<slot />
 	<div
