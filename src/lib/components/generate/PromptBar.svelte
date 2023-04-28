@@ -215,11 +215,11 @@
 					: ''} text-c-on-bg {!$isTouchscreen ? 'group-hover:ring-2' : ''}"
 			/>
 			<ClearButton
-				class="absolute right-10 top-0 md:right-0"
+				class="absolute right-11 top-0 md:right-0"
 				show={showClearPromptInputButton}
 				onClick={clearPrompt}
 			/>
-			<div class="absolute right-0 top-0 h-full w-10 md:hidden">
+			<div class="absolute right-0 top-0 h-full w-11 md:hidden">
 				<Button
 					disabled={!isCheckCompleted ||
 						(doesntHaveEnoughCredits && $page.data.session?.user.id !== undefined)}
