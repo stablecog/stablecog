@@ -326,7 +326,7 @@
 			</div>
 			<div
 				class="flex-1 flex flex-col order-first items-center justify-center w-full 
-				overflow-hidden pb-[calc(env(safe-area-inset-bottom)+6rem)] md:pt-26 md:pb-8 px-2 lg:px-6"
+				overflow-hidden pb-[calc(env(safe-area-inset-bottom)+9.5rem)] md:pt-26 md:pb-8 px-2 lg:px-6"
 			>
 				<div bind:clientWidth={stageWidth} bind:clientHeight={stageHeight} class="flex-1 w-full">
 					{#if stageWidth && stageHeight}
