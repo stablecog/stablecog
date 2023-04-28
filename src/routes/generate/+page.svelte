@@ -305,7 +305,16 @@
 							/>
 						{:else}
 							<div class="w-full pt-2">
-								<div style="height: {horizontalListHeight}px" class="w-full" />
+								<div
+									style="height: {horizontalListImageHeight}px"
+									class="w-full flex items-center justify-center"
+								>
+									<p
+										class="w-full overflow-hidden px-4 whitespace-nowrap text-sm overflow-ellipsis text-center text-c-on-bg/50"
+									>
+										Your generations will appear here
+									</p>
+								</div>
 							</div>
 						{/if}
 					</div>
