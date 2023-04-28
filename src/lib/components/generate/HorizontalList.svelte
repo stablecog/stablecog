@@ -10,6 +10,7 @@
 	import { quadIn, quadOut } from 'svelte/easing';
 	import type { TUserGenerationFullOutputsPage } from '$ts/queries/userGenerations';
 	import LL from '$i18n/i18n-svelte';
+	import { horizontalWheelScroll } from '$ts/actions/horizontalWheelScroll';
 
 	export let generationsQuery: CreateInfiniteQueryResult<TUserGenerationFullOutputsPage, unknown>;
 	export let pinnedFullOutputs: TGenerationFullOutput[] | undefined = undefined;
@@ -43,10 +44,11 @@
 			on:scroll={(e) => {
 				scroll = e.currentTarget.scrollLeft;
 			}}
+			use:horizontalWheelScroll
 			class="overflow-y-hidden overflow-x-auto flex flex-row overflow-auto 
-        items-center justify-start px-2 pt-2 hide-scrollbar list-fade-horizontal"
+      items-center justify-start hide-scrollbar list-fade-horizontal"
 		>
-			<div bind:clientWidth={containerWidth} class="flex flex-row gap-1">
+			<div bind:clientWidth={containerWidth} class="flex flex-row gap-1 px-2 pt-2">
 				{#each outputs as output}
 					{@const status = output.status}
 					{@const animation = output.animation}
@@ -101,7 +103,7 @@
 		</div>
 		<div
 			class="absolute left-0 top-0 w-16 h-full bg-gradient-to-r from-c-bg to-c-bg/0 transition 
-      duration-100 pointer-events-none {scroll > 4 ? 'opacity-100' : 'opacity-0'}"
+      duration-100 pointer-events-none {scroll > 0 ? 'opacity-100' : 'opacity-0'}"
 		/>
 		<div
 			class="absolute right-0 top-0 w-16 h-full bg-gradient-to-l from-c-bg to-c-bg/0 transition duration-100 pointer-events-none {!containerWidth ||
