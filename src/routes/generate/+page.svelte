@@ -43,6 +43,8 @@
 	import { lgBreakpoint, mdBreakpoint } from '$components/generationFullScreen/constants.js';
 	import HorizontalList from '$components/generate/HorizontalList.svelte';
 	import LL from '$i18n/i18n-svelte.js';
+	import GenerateGridPlaceholder from '$components/generate/GenerateGridPlaceholder.svelte';
+	import GenerateHorizontalListPlaceholder from '$components/generate/GenerateHorizontalListPlaceholder.svelte';
 
 	export let data;
 
@@ -92,6 +94,10 @@
 				}
 		  })
 		: undefined;
+
+	$: hasNoGeneration =
+		$userGenerationFullOutputsQuery?.data?.pages.length === 1 &&
+		$userGenerationFullOutputsQuery.data.pages[0].outputs.length === 0;
 
 	$: gridRerenderKey = `create_page_user_generation_full_outputs_${userGalleryCurrentView}_${
 		$generations.length
@@ -233,26 +239,25 @@
 		<div class="h-full hidden lg:flex w-36 xl:w-72">
 			<SidebarWrapper>
 				{#if !$page.data.session?.user.id}
-					<div
-						class="w-full h-full flex flex-col items-center justify-center text-sm lg:px-6 xl:px-8 py-6 overflow-auto"
-					>
-						<p class="w-full text-center text-c-on-bg/25">
-							{$LL.Generate.Grid.NotSignedIn.Paragraph()}
-						</p>
+					<div class="w-full h-full p-2">
+						<GenerateGridPlaceholder text={$LL.Generate.Grid.NotSignedIn.Paragraph()} />
 					</div>
 				{:else if userGenerationFullOutputsQuery}
 					<div
 						bind:this={gridScrollContainer}
-						class="w-full flex flex-col flex-1 overflow-auto px-2 pt-2 pb-16"
+						class="w-full flex flex-col flex-1 overflow-auto px-2 py-2"
 					>
 						{#if $windowWidth > lgBreakpoint}
 							<GenerationGridInfinite
 								{pinnedFullOutputs}
+								noLoadingSpinnerAlignmentAdjustment
+								hasPlaceholder
 								cardWidthClasses="w-full lg:w-1/2 xl:w-1/3"
 								cardType="generate"
 								generationsQuery={userGenerationFullOutputsQuery}
 								rerenderKey={gridRerenderKey}
 								{gridScrollContainer}
+								bottomElementClass="w-full h-16 flex-shrink-0"
 							/>
 						{/if}
 					</div>
@@ -305,33 +310,18 @@
 					md:bottom-auto md:top-0 order-2"
 				>
 					<div bind:clientHeight={horizontalListHeight} class="w-full md:hidden">
-						{#if userGenerationFullOutputsQuery}
+						{#if !$page.data.session?.user.id}
+							<GenerateHorizontalListPlaceholder
+								imageHeight={horizontalListImageHeight}
+								text={$LL.Generate.Grid.NotSignedIn.Paragraph()}
+							/>
+						{:else if userGenerationFullOutputsQuery}
 							<HorizontalList
 								imageHeight={horizontalListImageHeight}
 								{pinnedFullOutputs}
 								generationsQuery={userGenerationFullOutputsQuery}
 								cardType="generate"
 							/>
-						{:else}
-							<div class="w-full pt-2">
-								<div
-									style="height: {horizontalListImageHeight}px"
-									class="w-full flex items-center justify-center relative"
-								>
-									<div
-										class="w-full h-full opacity-60 flex flex-row items-center justify-center absolute left-0 top-0 gap-1 px-2 z-0"
-									>
-										{#each Array(10) as item}
-											<div class="flex-1 h-full bg-c-bg-secondary rounded-md" />
-										{/each}
-									</div>
-									<p
-										class="w-full overflow-hidden px-6 whitespace-nowrap text-sm overflow-ellipsis text-center text-c-on-bg/25 relative z-10"
-									>
-										{$LL.Generate.Grid.NotSignedIn.Paragraph()}
-									</p>
-								</div>
-							</div>
 						{/if}
 					</div>
 					<div

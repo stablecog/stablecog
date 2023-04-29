@@ -11,6 +11,7 @@
 	import type { TUserGenerationFullOutputsPage } from '$ts/queries/userGenerations';
 	import LL from '$i18n/i18n-svelte';
 	import { isTouchscreen } from '$ts/stores/isTouchscreen';
+	import GenerateHorizontalListPlaceholder from '$components/generate/GenerateHorizontalListPlaceholder.svelte';
 
 	export let generationsQuery: CreateInfiniteQueryResult<TUserGenerationFullOutputsPage, unknown>;
 	export let pinnedFullOutputs: TGenerationFullOutput[] | undefined = undefined;
@@ -37,6 +38,11 @@
 			<IconAnimatedSpinner class="w-7 h-7" />
 		</div>
 	</div>
+{:else if $generationsQuery.isSuccess && outputs !== undefined && outputs.length === 0}
+	<GenerateHorizontalListPlaceholder
+		{imageHeight}
+		text={$LL.Generate.Grid.NoGeneration.Paragraph()}
+	/>
 {:else if $generationsQuery.isSuccess && $generationsQuery.data.pages.length > 0 && outputs !== undefined && outputs !== undefined}
 	<div class="w-full z-0 flex flex-row justify-start items-center overflow-hidden relative">
 		<div

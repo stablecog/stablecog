@@ -27,6 +27,7 @@
 	import { fade } from 'svelte/transition';
 	import { quadIn, quadOut } from 'svelte/easing';
 	import { windowHeight } from '$ts/stores/window';
+	import GenerateGridPlaceholder from '$components/generate/GenerateGridPlaceholder.svelte';
 	export let generationsQuery: CreateInfiniteQueryResult<TUserGenerationFullOutputsPage, unknown>;
 	export let pinnedFullOutputs: TGenerationFullOutput[] | undefined = undefined;
 	export let rerenderKey: string;
@@ -34,6 +35,9 @@
 	export let gridClasses = 'w-full flex-1';
 	export let cardWidthClasses = 'w-1/2 sm:w-1/3 lg:w-1/4 xl:w-1/5 2xl:w-1/6 3xl:w-1/7';
 	export let gridScrollContainer: HTMLElement | undefined = undefined;
+	export let noLoadingSpinnerAlignmentAdjustment = false;
+	export let hasPlaceholder = false;
+	export let bottomElementClass: string | undefined = undefined;
 
 	let _gridScrollContainer: HTMLElement;
 	let selectedScrollContainer: HTMLElement;
@@ -92,8 +96,10 @@
 	>
 		<IconAnimatedSpinner class="w-12 h-12" />
 		<p class="mt-2 opacity-0">{$LL.Gallery.SearchingTitle()}</p>
-		<div class="h-[2vh]" />
+		<div class="h-[2vh] {noLoadingSpinnerAlignmentAdjustment ? 'hidden' : ''}" />
 	</div>
+{:else if hasPlaceholder && $generationsQuery.isSuccess && outputs !== undefined && outputs.length === 0}
+	<GenerateGridPlaceholder text={$LL.Generate.Grid.NoGeneration.Paragraph()} />
 {:else if $generationsQuery.isSuccess && $generationsQuery.data.pages.length > 0 && outputs !== undefined && items !== undefined}
 	<div class={gridClasses} bind:this={_gridScrollContainer}>
 		<MasonryInfiniteGrid
@@ -193,5 +199,8 @@
 				{$LL.Shared.LoadMoreButton()}
 			</Button>
 		</div>
+	{/if}
+	{#if bottomElementClass}
+		<div class={bottomElementClass} />
 	{/if}
 {/if}
