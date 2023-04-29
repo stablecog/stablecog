@@ -239,7 +239,13 @@ type RootTranslation = {
 	}
 	Generate: {
 		Grid: {
-			NoGenerations: {
+			NotSignedIn: {
+				/**
+				 * S​i​g​n​ ​i​n​ ​t​o​ ​s​e​e​ ​y​o​u​r​ ​g​e​n​e​r​a​t​i​o​n​s​.
+				 */
+				Paragraph: string
+			}
+			NoGeneration: {
 				/**
 				 * Y​o​u​r​ ​g​e​n​e​r​a​t​i​o​n​s​ ​w​i​l​l​ ​a​p​p​e​a​r​ ​h​e​r​e​.
 				 */
@@ -2183,7 +2189,13 @@ export type TranslationFunctions = {
 	}
 	Generate: {
 		Grid: {
-			NoGenerations: {
+			NotSignedIn: {
+				/**
+				 * Sign in to see your generations.
+				 */
+				Paragraph: () => LocalizedString
+			}
+			NoGeneration: {
 				/**
 				 * Your generations will appear here.
 				 */

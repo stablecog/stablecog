@@ -82,7 +82,14 @@ const ru: Translation = {
 			Paragraph: 'Впоследствии вы сможете изменить это опцию в настройках.'
 		}
 	},
-	Generate: { Grid: { NoGenerations: { Paragraph: 'Your generations will appear here.' } } },
+	Generate: {
+		Grid: {
+			NotSignedIn: { Paragraph: 'Sign in to see your generations.' },
+			NoGeneration: {
+				Paragraph: 'Your generations will appear here.'
+			}
+		}
+	},
 	History: {
 		GenerationsTitle: 'Сгенерированные изображения',
 		GenerationsMaxSavedCountWarning: 'Только последние {count}',

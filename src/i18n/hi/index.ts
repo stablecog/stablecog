@@ -81,7 +81,14 @@ const hi: Translation = {
 			Paragraph: 'आप बाद में सेटिंग्स से अपनी प्राथमिकताएं बदल सकते हैं।'
 		}
 	},
-	Generate: { Grid: { NoGenerations: { Paragraph: 'Your generations will appear here.' } } },
+	Generate: {
+		Grid: {
+			NotSignedIn: { Paragraph: 'Sign in to see your generations.' },
+			NoGeneration: {
+				Paragraph: 'Your generations will appear here.'
+			}
+		}
+	},
 	History: {
 		GenerationsTitle: 'बनावटे',
 		GenerationsMaxSavedCountWarning: 'आखरी {count} ही',

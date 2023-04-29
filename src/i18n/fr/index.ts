@@ -82,7 +82,14 @@ const fr: Translation = {
 			Paragraph: 'Vous pourrez modifier vos préférences dans les paramètres.'
 		}
 	},
-	Generate: { Grid: { NoGenerations: { Paragraph: 'Your generations will appear here.' } } },
+	Generate: {
+		Grid: {
+			NotSignedIn: { Paragraph: 'Sign in to see your generations.' },
+			NoGeneration: {
+				Paragraph: 'Your generations will appear here.'
+			}
+		}
+	},
 	History: {
 		GenerationsTitle: 'Images générées',
 		GenerationsMaxSavedCountWarning: '{count} dernières uniquement',

@@ -85,7 +85,14 @@ const es: Translation = {
 			Paragraph: 'Μπορείτε να αλλάξετε την προτίμησή σας στις ρυθμίσεις αργότερα.'
 		}
 	},
-	Generate: { Grid: { NoGenerations: { Paragraph: 'Your generations will appear here.' } } },
+	Generate: {
+		Grid: {
+			NotSignedIn: { Paragraph: 'Sign in to see your generations.' },
+			NoGeneration: {
+				Paragraph: 'Your generations will appear here.'
+			}
+		}
+	},
 	History: {
 		GenerationsTitle: 'Παράγωγες εικόνες',
 		GenerationsMaxSavedCountWarning: 'Μόνο οι τελευταίες {count}',

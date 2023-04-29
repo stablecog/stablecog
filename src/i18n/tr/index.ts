@@ -85,7 +85,14 @@ const tr: Translation = {
 			Paragraph: 'Tercihini daha sonra ayarlardan değiştirebilirsin.'
 		}
 	},
-	Generate: { Grid: { NoGenerations: { Paragraph: 'Your generations will appear here.' } } },
+	Generate: {
+		Grid: {
+			NotSignedIn: { Paragraph: 'Sign in to see your generations.' },
+			NoGeneration: {
+				Paragraph: 'Your generations will appear here.'
+			}
+		}
+	},
 	History: {
 		GenerationsTitle: 'Üretimler',
 		GenerationsMaxSavedCountWarning: 'Sadece son {count}',

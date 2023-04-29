@@ -85,7 +85,14 @@ const ja: Translation = {
 			Paragraph: '後で設定から任意に変更できます。'
 		}
 	},
-	Generate: { Grid: { NoGenerations: { Paragraph: 'Your generations will appear here.' } } },
+	Generate: {
+		Grid: {
+			NotSignedIn: { Paragraph: 'Sign in to see your generations.' },
+			NoGeneration: {
+				Paragraph: 'Your generations will appear here.'
+			}
+		}
+	},
 	History: {
 		GenerationsTitle: '生成画像',
 		GenerationsMaxSavedCountWarning: '最新の {count} のみ',

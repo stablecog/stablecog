@@ -232,7 +232,15 @@
 	<div class="w-full h-full flex flex-row overflow-hidden pt-2 md:px-4 md:pb-4 gap-4">
 		<div class="h-full hidden lg:flex w-36 xl:w-72">
 			<SidebarWrapper>
-				{#if userGenerationFullOutputsQuery}
+				{#if !$page.data.session?.user.id}
+					<div
+						class="w-full h-full flex flex-col items-center justify-center text-sm lg:px-6 xl:px-8 py-6 overflow-auto"
+					>
+						<p class="w-full text-center text-c-on-bg/25">
+							{$LL.Generate.Grid.NotSignedIn.Paragraph()}
+						</p>
+					</div>
+				{:else if userGenerationFullOutputsQuery}
 					<div
 						bind:this={gridScrollContainer}
 						class="w-full flex flex-col flex-1 overflow-auto px-2 pt-2 pb-16"
@@ -318,9 +326,9 @@
 										{/each}
 									</div>
 									<p
-										class="w-full overflow-hidden px-4 whitespace-nowrap text-sm overflow-ellipsis text-center text-c-on-bg/40 relative z-10"
+										class="w-full overflow-hidden px-6 whitespace-nowrap text-sm overflow-ellipsis text-center text-c-on-bg/25 relative z-10"
 									>
-										{$LL.Generate.Grid.NoGenerations.Paragraph()}
+										{$LL.Generate.Grid.NotSignedIn.Paragraph()}
 									</p>
 								</div>
 							</div>

@@ -10,7 +10,11 @@
 	import { tooltip } from '$ts/actions/tooltip';
 	import { getGenerationUrlFromParams } from '$ts/helpers/getGenerationUrlFromParams';
 	import { page } from '$app/stores';
-	import { lgBreakpoint, sidebarWidth } from '$components/generationFullScreen/constants';
+	import {
+		lgBreakpoint,
+		mdBreakpoint,
+		sidebarWidth
+	} from '$components/generationFullScreen/constants';
 	import ParamsSection from '$components/generationFullScreen/ParamsSection.svelte';
 	import Button from '$components/buttons/Button.svelte';
 	import IconUpscale from '$components/icons/IconUpscale.svelte';
@@ -282,30 +286,16 @@
 
 <svelte:window on:popstate={onPopState} />
 
-<ModalWrapper hasPadding={false} let:scrollY>
-	<div class="w-full sticky z-20 top-0 flex items-center justify-start md:hidden pt-1 pb-1 px-1">
-		<div
-			class="flex items-center justify-center transition duration-150 rounded-full {scrollY &&
-			scrollY > 5
-				? 'bg-c-bg-secondary/75'
-				: 'bg-c-bg-secondary/0'}"
-		>
-			<IconButton
-				name="Close"
-				onClick={() => {
-					if ($activeGeneration !== undefined) {
-						activeGeneration.set(undefined);
-					}
-				}}
-			>
-				<IconCancel
-					class="w-9 h-9 transition {!$isTouchscreen
-						? 'group-hover/iconbutton:text-c-primary'
-						: ''}"
-				/>
-			</IconButton>
-		</div>
-	</div>
+<ModalWrapper
+	hasPadding={false}
+	onClose={$windowWidth < mdBreakpoint
+		? () => {
+				if ($activeGeneration !== undefined) {
+					activeGeneration.set(undefined);
+				}
+		  }
+		: undefined}
+>
 	<Container {generation} let:imageContainerWidth let:imageContainerHeight let:modalMinHeight>
 		<div class="relative self-stretch flex items-center">
 			{#if generation.selected_output.image_url}

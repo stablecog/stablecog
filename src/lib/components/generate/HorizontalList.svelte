@@ -10,6 +10,7 @@
 	import { quadIn, quadOut } from 'svelte/easing';
 	import type { TUserGenerationFullOutputsPage } from '$ts/queries/userGenerations';
 	import LL from '$i18n/i18n-svelte';
+	import { isTouchscreen } from '$ts/stores/isTouchscreen';
 
 	export let generationsQuery: CreateInfiniteQueryResult<TUserGenerationFullOutputsPage, unknown>;
 	export let pinnedFullOutputs: TGenerationFullOutput[] | undefined = undefined;
@@ -54,12 +55,14 @@
 						style="height: {imageHeight}px; width: {(output.generation.width /
 							output.generation.height) *
 							imageHeight}px;"
-						class="relative group flex-shrink-0 overflow-hidden"
+						class="relative group flex-shrink-0"
 					>
 						<ImagePlaceholder width={output.generation.width} height={output.generation.height} />
 						<div
 							class="absolute left-0 top-0 w-full h-full bg-c-bg-secondary transition 
-              z-0 overflow-hidden rounded-md"
+              z-0 rounded-md border overflow-hidden border-c-bg-secondary {!$isTouchscreen
+								? 'hover:border-c-primary'
+								: ''}"
 						>
 							{#if output.generation.outputs !== undefined}
 								{#if status !== 'failed' && status !== 'failed-nsfw'}
