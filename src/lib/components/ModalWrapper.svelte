@@ -31,7 +31,7 @@
 	{#if onClose}
 		<div
 			class="absolute left-1 top-1 flex items-center justify-center transition duration-150 z-[102] rounded-full {scrollY &&
-			scrollY > 5
+			scrollY > 0
 				? 'bg-c-bg-secondary/75'
 				: 'bg-c-bg-secondary/0'}"
 		>
