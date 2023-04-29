@@ -226,7 +226,7 @@
 		: 'height: 100vh; height: 100svh;'} background-image: url({$themeApp === 'light'
 		? '/illustrations/grid-on-light.svg'
 		: '/illustrations/grid-on-dark.svg'}); background-size: 24px;"
-	class="w-full flex flex-col overflow-hidden"
+	class="w-full flex flex-col overflow-hidden relative z-0"
 >
 	<Navbar />
 	<div class="w-full h-full flex flex-row overflow-hidden pt-2 md:px-4 md:pb-4 gap-4">

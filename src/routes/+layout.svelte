@@ -473,7 +473,8 @@
 		<slot />
 	{:else}
 		<div
-			class="w-full relative bg-c-bg text-c-on-bg flex flex-col {$themeApp === 'light'
+			class="w-full overflow-hidden relative z-0 bg-c-bg text-c-on-bg flex flex-col {$themeApp ===
+			'light'
 				? 'theme-light'
 				: 'theme-dark'}"
 			style="min-height: 100vh; min-height: {innerHeight

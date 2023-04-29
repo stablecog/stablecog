@@ -193,7 +193,7 @@
 
 <svelte:window on:keydown={onKeyDown} />
 
-<div class="w-full flex-1 flex flex-col items-center px-1 md:py-6">
+<div class="w-full z-0 relative overflow-hidden flex-1 flex flex-col items-center px-1 md:py-6">
 	{#if !$page.data.session?.user.id}
 		<div class="w-full flex-1 max-w-7xl flex justify-center px-2 py-4 md:py-2 md:px-8">
 			<div class="my-auto flex flex-col">
