@@ -284,29 +284,11 @@
 						</div>
 					</div>
 				{:else}
-					{#if $userGenerationFullOutputsQuery && $userGenerationFullOutputsQuery.isSuccess}
-						<div class="w-full flex flex-wrap">
-							{#each $userGenerationFullOutputsQuery.data.pages
-								.flatMap((p) => p.outputs)
-								.slice(30) as output}
-								<img
-									on:click={() =>
-										activeGeneration.set({ ...output.generation, selected_output: output })}
-									on:keypress={() => null}
-									class="w-1/2 h-auto md:w-1/3 lg:w-1/3 xl:w-1/4 2xl:w-1/6"
-									src={output.image_url}
-									width={output.generation.width}
-									height={output.generation.height}
-									alt={output.generation.prompt.text}
-								/>
-							{/each}
-						</div>
-					{/if}
-					<!-- 	<GenerationGridInfinite
+					<GenerationGridInfinite
 						rerenderKey={gridRerenderKey}
 						generationsQuery={userGenerationFullOutputsQuery}
 						cardType="history"
-					/> -->
+					/>
 				{/if}
 			{/if}
 		</div>
