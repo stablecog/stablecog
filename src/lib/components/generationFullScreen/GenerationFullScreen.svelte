@@ -269,12 +269,9 @@
 		}
 	};
 
-	let windowScroll: number;
-
 	onMount(() => {
 		setSidebarWrapperVars();
 		lastClickedOutputId.set(undefined);
-		document.body.style.overflow = 'hidden';
 	});
 
 	onDestroy(() => {
@@ -284,11 +281,10 @@
 			const newSearch = searchParams.toString();
 			window.history.pushState({}, '', `${$page.url.pathname}${newSearch ? `?${newSearch}` : ''}`);
 		}
-		document.body.style.overflow = 'auto';
 	});
 </script>
 
-<svelte:window on:popstate={onPopState} bind:scrollY={windowScroll} />
+<svelte:window on:popstate={onPopState} />
 
 <ModalWrapper
 	hasPadding={false}

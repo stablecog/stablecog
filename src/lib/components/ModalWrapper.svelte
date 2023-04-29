@@ -3,10 +3,18 @@
 	import IconCancel from '$components/icons/IconCancel.svelte';
 	import { isTouchscreen } from '$ts/stores/isTouchscreen';
 	import { windowHeight, windowWidth } from '$ts/stores/window';
+	import { onDestroy, onMount } from 'svelte';
 
 	export let hasPadding = true;
 	export let onClose: (() => void) | undefined = undefined;
 	let scrollY: number;
+
+	onMount(() => {
+		document.body.style.overflow = 'hidden';
+	});
+	onDestroy(() => {
+		document.body.style.overflow = 'auto';
+	});
 </script>
 
 <div
