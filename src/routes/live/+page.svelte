@@ -248,7 +248,7 @@
 	canonical="{canonicalUrl}{$page.url.pathname}"
 />
 
-<div class="w-full overflow-hidden relative z-0 flex-1 flex justify-center pb-[calc(2vh)]">
+<div class="w-full flex-1 flex justify-center pb-[calc(2vh)]">
 	<div class="w-full flex flex-col items-center justify-center max-w-5xl">
 		<div
 			class="w-full px-8 md:px-16 flex flex-wrap items-center justify-center py-2 md:pt-10 gap-10 lg:gap-14"

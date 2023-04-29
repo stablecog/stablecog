@@ -193,7 +193,7 @@
 
 <svelte:window on:keydown={onKeyDown} />
 
-<div class="w-full z-0 relative overflow-hidden flex-1 flex flex-col items-center px-1 md:py-6">
+<div class="w-full flex-1 flex flex-col items-center px-1 md:py-6">
 	{#if !$page.data.session?.user.id}
 		<div class="w-full flex-1 max-w-7xl flex justify-center px-2 py-4 md:py-2 md:px-8">
 			<div class="my-auto flex flex-col">
@@ -251,13 +251,13 @@
 		<div class="w-full flex max-w-5xl mt-3 px-1">
 			<SearchAndFilterBar bind:searchString bind:modelIdFilters bind:searchInputIsFocused />
 		</div>
-		<div
-			class="w-full top-1 max-w-5xl px-1 sticky z-30 {$isUserGalleryEditActive ? 'mt-3' : 'mt-0'}"
-		>
-			{#if $isUserGalleryEditActive}
+		{#if $isUserGalleryEditActive}
+			<div
+				class="w-full top-1 max-w-5xl px-1 sticky z-30 {$isUserGalleryEditActive ? 'mt-3' : 'mt-0'}"
+			>
 				<BatchEditBar type="history" />
-			{/if}
-		</div>
+			</div>
+		{/if}
 		<div class="w-full flex-1 flex flex-col mt-5">
 			{#if userGenerationFullOutputsQuery !== undefined}
 				{#if $userGenerationFullOutputsQuery?.isError || ($userGenerationFullOutputsQuery?.data && !$userGenerationFullOutputsQuery?.data?.pages)}
@@ -284,11 +284,29 @@
 						</div>
 					</div>
 				{:else}
-					<GenerationGridInfinite
+					{#if $userGenerationFullOutputsQuery && $userGenerationFullOutputsQuery.isSuccess}
+						<div class="w-full flex flex-wrap">
+							{#each $userGenerationFullOutputsQuery.data.pages
+								.flatMap((p) => p.outputs)
+								.slice(30) as output}
+								<img
+									on:click={() =>
+										activeGeneration.set({ ...output.generation, selected_output: output })}
+									on:keypress={() => null}
+									class="w-1/2 h-auto md:w-1/3 lg:w-1/3 xl:w-1/4 2xl:w-1/6"
+									src={output.image_url}
+									width={output.generation.width}
+									height={output.generation.height}
+									alt={output.generation.prompt.text}
+								/>
+							{/each}
+						</div>
+					{/if}
+					<!-- 	<GenerationGridInfinite
 						rerenderKey={gridRerenderKey}
 						generationsQuery={userGenerationFullOutputsQuery}
 						cardType="history"
-					/>
+					/> -->
 				{/if}
 			{/if}
 		</div>
