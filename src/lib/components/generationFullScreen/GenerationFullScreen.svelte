@@ -369,11 +369,11 @@
 						isProcessing={upscaleBeingProcessed}
 					/>
 				{/if}
-				<!-- {#if modalType === 'history' || modalType === 'generate'}
+				{#if modalType === 'history' || modalType === 'generate'}
 					<div class="absolute right-1.5 top-1.5">
 						<FavoriteButton {generation} {modalType} />
 					</div>
-				{/if} -->
+				{/if}
 			</div>
 		</div>
 		<!-- Right side of the panel -->
