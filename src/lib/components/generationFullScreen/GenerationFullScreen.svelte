@@ -332,7 +332,7 @@
 					</div>
 				{:else}
 					{#key generation.selected_output.id}
-						<GenerationFullScreenImageSet
+						<!-- <GenerationFullScreenImageSet
 							{upscaleBeingProcessed}
 							prompt={generation.prompt.text}
 							backgroundImageUrl={generation.selected_output.image_url}
@@ -346,7 +346,7 @@
 								? upscaledImageHeight
 								: generation.height}
 							{onImageLoad}
-						/>
+						/> -->
 					{/key}
 					{#if $upscales && $upscales.length > 0 && upscaleFromStore?.status === 'failed'}
 						<div
