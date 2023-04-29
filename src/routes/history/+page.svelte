@@ -248,7 +248,7 @@
 				</div>
 			</div>
 		</div>
-		<!-- <div class="w-full flex max-w-5xl mt-3 px-1">
+		<div class="w-full flex max-w-5xl mt-3 px-1">
 			<SearchAndFilterBar bind:searchString bind:modelIdFilters bind:searchInputIsFocused />
 		</div>
 		<div
@@ -257,7 +257,7 @@
 			{#if $isUserGalleryEditActive}
 				<BatchEditBar type="history" />
 			{/if}
-		</div> -->
+		</div>
 		<div class="w-full flex-1 flex flex-col mt-5">
 			{#if userGenerationFullOutputsQuery !== undefined}
 				{#if $userGenerationFullOutputsQuery?.isError || ($userGenerationFullOutputsQuery?.data && !$userGenerationFullOutputsQuery?.data?.pages)}
