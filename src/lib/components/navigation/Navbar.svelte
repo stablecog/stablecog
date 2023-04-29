@@ -180,23 +180,8 @@
 						: 'text-c-on-bg'}"
 				/>
 			</IconButton>
-			<div use:clickoutside={{ callback: closeSettings }} class="flex flex-col items-end -ml-3">
-				<IconButton class="pl-3 pr-1 md:pr-2 py-2" onClick={toggleSettings} name="Settings">
-					<IconSettings
-						class="w-8 h-8 relative transition transform {isSettingsOpen
-							? 'text-c-primary rotate-360'
-							: !$isTouchscreen
-							? 'group-hover/iconbutton:text-c-primary group-hover/iconbutton:rotate-90'
-							: 'text-c-on-bg'}"
-					/>
-				</IconButton>
-				<div class="pr-3">
-					<div class="relative">
-						{#if isSettingsOpen}
-							<SettingsMenu {closeSettings} />
-						{/if}
-					</div>
-				</div>
+			<div class="flex flex-col items-end -ml-3">
+				<SettingsMenu {closeSettings} />
 			</div>
 		</div>
 	</div>
