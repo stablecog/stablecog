@@ -261,11 +261,6 @@
 		}
 	};
 
-	onMount(() => {
-		setSidebarWrapperVars();
-		lastClickedOutputId.set(undefined);
-	});
-
 	const onPopState: svelte.JSX.EventHandler<PopStateEvent, Window> | null | undefined = (e) => {
 		const searchParams = new URLSearchParams(e.currentTarget.location.search);
 		const hasOutputParam = searchParams.has('output');
@@ -274,6 +269,14 @@
 		}
 	};
 
+	let windowScroll: number;
+
+	onMount(() => {
+		setSidebarWrapperVars();
+		lastClickedOutputId.set(undefined);
+		document.body.style.overflow = 'hidden';
+	});
+
 	onDestroy(() => {
 		const searchParams = new URLSearchParams(window.location.search);
 		if (searchParams.has('output')) {
@@ -281,10 +284,11 @@
 			const newSearch = searchParams.toString();
 			window.history.pushState({}, '', `${$page.url.pathname}${newSearch ? `?${newSearch}` : ''}`);
 		}
+		document.body.style.overflow = 'auto';
 	});
 </script>
 
-<svelte:window on:popstate={onPopState} />
+<svelte:window on:popstate={onPopState} bind:scrollY={windowScroll} />
 
 <ModalWrapper
 	hasPadding={false}
