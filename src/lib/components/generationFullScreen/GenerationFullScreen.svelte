@@ -331,15 +331,8 @@
 						<IconNoImage class="w-16 h-16 text-c-on-bg/40" />
 					</div>
 				{:else}
-					<img
-						class="w-full h-auto"
-						alt={generation.prompt.text}
-						src={generation.selected_output.image_url}
-						width={generation.width}
-						height={generation.height}
-					/>
 					{#key generation.selected_output.id}
-						<!-- <GenerationFullScreenImageSet
+						<GenerationFullScreenImageSet
 							{upscaleBeingProcessed}
 							prompt={generation.prompt.text}
 							backgroundImageUrl={generation.selected_output.image_url}
@@ -353,7 +346,7 @@
 								? upscaledImageHeight
 								: generation.height}
 							{onImageLoad}
-						/> -->
+						/>
 					{/key}
 					{#if $upscales && $upscales.length > 0 && upscaleFromStore?.status === 'failed'}
 						<div

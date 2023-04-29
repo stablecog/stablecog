@@ -6,6 +6,7 @@
 		"dev": "npm run i18n & vite dev",
 		"build": "vite build",
 		"preview": "vite preview",
+		"host": "vite --host",
 		"start": "export $(xargs <.env) && node ./build",
 		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
 		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
