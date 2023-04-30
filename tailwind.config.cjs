@@ -189,7 +189,9 @@ module.exports = {
 				'4xl': '2560px'
 			},
 			ringWidth: {
-				3: '3px'
+				3: '3px',
+				5: '5px',
+				6: '6px'
 			},
 			maxWidth: {
 				'2.5xl': '45rem',

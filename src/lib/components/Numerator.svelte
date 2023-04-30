@@ -3,12 +3,11 @@
 	export let min: number;
 	export let value: number;
 	export let step = 1;
-	export let showWheel = false;
 	export let maxDecimals = 1;
 	export let numeratorFormatter: (value: number) => string = (value) => value.toString();
 	export { classes as class };
+	export let showWheel = false;
 	let classes = '';
-
 	let itemHeight: number;
 
 	$: array = Array.from(

@@ -456,8 +456,6 @@
 		isCheckCompleted = true;
 		isReadyMap.generationSettings = true;
 	});
-
-	let sliderValue: number[];
 </script>
 
 <SidebarWrapper {rounding} {noWrapper}>
@@ -523,35 +521,8 @@
 			icon={IconImage}
 			tooltipObj={$numOutputsTooltipSettingsPanel}
 		>
-			<form class="flex-1 w-full flex items-center">
-				<p class="w-8">{sliderValue?.[0]}</p>
-				<Slider.Root
-					class="flex-1 touch-none select-none cursor-pointer relative flex 
-						items-center h-12"
-					bind:value={sliderValue}
-					min={numOutputsMin}
-					max={numOutputsMax}
-					step={1}
-					name={'Outputs'}
-					minStepsBetweenThumbs={1}
-					disabled={false}
-					aria-label="Number of Images"
-				>
-					<Slider.Track class="relative h-2 grow rounded-full bg-c-bg-tertiary">
-						<Slider.Range class="absolute h-2 rounded-full bg-c-on-bg-secondary" />
-					</Slider.Track>
-					<Slider.Thumb
-						class="block shadow-lg shadow-c-shadow/[var(--o-shadow-strongest)] h-6 w-6 rounded-full bg-c-on-bg-secondary"
-					/>
-				</Slider.Root>
-			</form>
-		</SettingsPanelItem>
-		<SettingsPanelItem
-			title={$LL.Home.NumOutputsSlider.Title()}
-			icon={IconImage}
-			tooltipObj={$numOutputsTooltipSettingsPanel}
-		>
 			<TabLikeRangeInput
+				name={$LL.Home.NumOutputsSlider.Title()}
 				hasTitle={false}
 				disabled={!isCheckCompleted}
 				class="w-full"
@@ -621,6 +592,7 @@
 							tooltipObj={$guidanceScaleTooltipSettingsPanel}
 						>
 							<TabLikeRangeInput
+								name={$LL.Home.GuidanceScaleSlider.Title()}
 								class="w-full"
 								hasTitle={false}
 								min={guidanceScaleMin}
