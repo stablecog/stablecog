@@ -105,6 +105,7 @@
 	import { generations } from '$ts/stores/user/generation';
 	import TabLikeInitImageUploader2 from '$components/tabBars/TabLikeInitImageUploader2.svelte';
 	import type { TCreatePageData } from '$routes/generate/+page.server';
+	import SettingsPanelItem from '$components/generate/SettingsPanelItem.svelte';
 
 	export let rounding: 'all' | 'top' | 'bottom' = 'all';
 	export let serverData: TCreatePageData;
@@ -454,14 +455,11 @@
 		bind:this={settingsContainer}
 		class="w-full h-full flex flex-col overflow-auto pt-4 md:pt-5 pb-36 gap-7"
 	>
-		<div class="w-full flex flex-col items-start gap-3 px-3 md:px-4">
-			<div
-				use:tooltip={$aspectRatioTooltipSettingsPanel}
-				class="max-w-full px-2 flex items-center text-c-on-bg/75 gap-2"
-			>
-				<IconDimensions class="w-5 h-5" />
-				<p class="flex-shrink font-medium">{$LL.Home.AspectRatioDropdown.Title()}</p>
-			</div>
+		<SettingsPanelItem
+			title={$LL.Home.AspectRatioDropdown.Title()}
+			icon={IconDimensions}
+			tooltipObj={$aspectRatioTooltipSettingsPanel}
+		>
 			<TabLikeDropdown
 				class="w-full"
 				iconSet={IconAspectRatio}
@@ -473,15 +471,12 @@
 				bind:value={$generationAspectRatio}
 				name={$LL.Home.AspectRatioDropdown.Title()}
 			/>
-		</div>
-		<div class="w-full flex flex-col items-start gap-3 px-3 md:px-4">
-			<div
-				use:tooltip={$modelTooltipSettingsPanel}
-				class="max-w-full px-2 flex items-center text-c-on-bg/75 gap-2"
-			>
-				<IconBrain class="w-5 h-5" />
-				<p class="flex-shrink font-medium">{$LL.Home.ModelDropdown.Title()}</p>
-			</div>
+		</SettingsPanelItem>
+		<SettingsPanelItem
+			title={$LL.Home.ModelDropdown.Title()}
+			icon={IconBrain}
+			tooltipObj={$modelTooltipSettingsPanel}
+		>
 			<TabLikeDropdown
 				class="w-full"
 				container={settingsContainer}
@@ -492,15 +487,32 @@
 				bind:value={$generationModelId}
 				name="Model"
 			/>
-		</div>
-		<div class="w-full flex flex-col items-start gap-3 px-3 md:px-4">
-			<div
-				use:tooltip={$numOutputsTooltipSettingsPanel}
-				class="max-w-full px-2 flex items-center text-c-on-bg/75 gap-2"
-			>
-				<IconImage class="w-5 h-5" />
-				<p class="flex-shrink font-medium">{$LL.Home.NumOutputsSlider.Title()}</p>
-			</div>
+		</SettingsPanelItem>
+		<SettingsPanelItem
+			title={$LL.Home.ImageInput.Title()}
+			icon={IconImage}
+			tooltipObj={$initImageTooltipSettingsPanel}
+		>
+			<TabLikeInitImageUploader2 disabled={!isCheckCompleted} class="w-full" {openSignInModal} />
+		</SettingsPanelItem>
+		<SettingsPanelItem
+			title={$LL.Home.NegativePromptInput.Title()}
+			icon={IconChatBubbleCancel}
+			tooltipObj={$negativePromptTooltipSettingsPanel}
+		>
+			<TabLikeTextArea
+				max={maxPromptLength}
+				placeholder={$LL.Home.NegativePromptInput.PlaceholderAlt()}
+				class="w-full"
+				bind:value={$generationNegativePrompt}
+				hasTitle={false}
+			/>
+		</SettingsPanelItem>
+		<SettingsPanelItem
+			title={$LL.Home.NumOutputsSlider.Title()}
+			icon={IconImage}
+			tooltipObj={$numOutputsTooltipSettingsPanel}
+		>
 			<TabLikeRangeInput
 				hasTitle={false}
 				disabled={!isCheckCompleted}
@@ -510,33 +522,7 @@
 				valueSize="md"
 				bind:value={$generationNumOutputs}
 			/>
-		</div>
-		<div class="w-full flex flex-col items-start gap-3 px-3 md:px-4">
-			<div
-				use:tooltip={$initImageTooltipSettingsPanel}
-				class="max-w-full px-2 flex items-center text-c-on-bg/75 gap-2"
-			>
-				<IconImage class="w-5 h-5" />
-				<p class="flex-shrink font-medium">{$LL.Home.ImageInput.Title()}</p>
-			</div>
-			<TabLikeInitImageUploader2 disabled={!isCheckCompleted} class="w-full" {openSignInModal} />
-		</div>
-		<div class="w-full flex flex-col items-start gap-3 px-3 md:px-4">
-			<div
-				use:tooltip={$negativePromptTooltipSettingsPanel}
-				class="max-w-full px-2 flex items-center text-c-on-bg/75 gap-2"
-			>
-				<IconChatBubbleCancel class="w-5 h-5" />
-				<p class="flex-shrink font-medium">{$LL.Home.NegativePromptInput.Title()}</p>
-			</div>
-			<TabLikeTextArea
-				max={maxPromptLength}
-				placeholder={$LL.Home.NegativePromptInput.PlaceholderAlt()}
-				class="w-full"
-				bind:value={$generationNegativePrompt}
-				hasTitle={false}
-			/>
-		</div>
+		</SettingsPanelItem>
 		<div class="w-full flex flex-col ring-2 ring-c-bg-secondary">
 			<button
 				class="w-full group font-medium text-c-on-bg/75 px-4 py-4.5 flex justify-start transition {$advancedModeApp
@@ -572,14 +558,11 @@
 					class="w-full flex flex-col"
 				>
 					<div class="w-full pt-4 pb-6 flex flex-col gap-7">
-						<div class="w-full flex flex-col items-start gap-3 px-3 md:px-4">
-							<div
-								use:tooltip={$guidanceScaleTooltipSettingsPanel}
-								class="max-w-full px-2 flex items-center text-c-on-bg/75 gap-2"
-							>
-								<IconScale class="w-5 h-5" />
-								<p class="flex-shrink font-medium">{$LL.Home.GuidanceScaleSlider.Title()}</p>
-							</div>
+						<SettingsPanelItem
+							title={$LL.Home.GuidanceScaleSlider.Title()}
+							icon={IconScale}
+							tooltipObj={$guidanceScaleTooltipSettingsPanel}
+						>
 							<TabLikeRangeInput
 								class="w-full"
 								hasTitle={false}
@@ -588,15 +571,12 @@
 								valueSize="md"
 								bind:value={$generationGuidanceScale}
 							/>
-						</div>
-						<div class="w-full flex flex-col items-start gap-3 px-3 md:px-4">
-							<div
-								use:tooltip={$schedulerTooltipSettingsPanel}
-								class="max-w-full px-2 flex items-center text-c-on-bg/75 gap-2"
-							>
-								<IconBubbles class="w-5 h-5" />
-								<p class="flex-shrink font-medium">{$LL.Home.SchedulerDropdown.Title()}</p>
-							</div>
+						</SettingsPanelItem>
+						<SettingsPanelItem
+							title={$LL.Home.SchedulerDropdown.Title()}
+							icon={IconBubbles}
+							tooltipObj={$schedulerTooltipSettingsPanel}
+						>
 							<TabLikeDropdown
 								class="w-full"
 								container={settingsContainer}
@@ -607,15 +587,12 @@
 								bind:value={$generationSchedulerId}
 								name={$LL.Home.AspectRatioDropdown.Title()}
 							/>
-						</div>
-						<div class="w-full flex flex-col items-start gap-3 px-3 md:px-4">
-							<div
-								use:tooltip={$inferenceStepsTooltipSettingsPanel}
-								class="max-w-full px-2 flex items-center text-c-on-bg/75 gap-2"
-							>
-								<IconSteps class="w-5 h-5" />
-								<p class="flex-shrink font-medium">{$LL.Home.InferenceStepsTabBar.Title()}</p>
-							</div>
+						</SettingsPanelItem>
+						<SettingsPanelItem
+							title={$LL.Home.InferenceStepsTabBar.Title()}
+							icon={IconSteps}
+							tooltipObj={$inferenceStepsTooltipSettingsPanel}
+						>
 							<TabBar
 								class="w-full"
 								isValid={isInferenceStepsValid}
@@ -624,22 +601,19 @@
 								hasTitle={false}
 								tabs={inferenceStepsTabs}
 							/>
-						</div>
-						<div class="w-full flex flex-col items-start gap-3 px-3 md:px-4">
-							<div
-								use:tooltip={$seedTooltipSettingsPanel}
-								class="max-w-full px-2 flex items-center text-c-on-bg/75 gap-2"
-							>
-								<IconSeed class="w-5 h-5" />
-								<p class="flex-shrink font-medium">{$LL.Home.SeedInput.Title()}</p>
-							</div>
+						</SettingsPanelItem>
+						<SettingsPanelItem
+							title={$LL.Home.SeedInput.Title()}
+							icon={IconSeed}
+							tooltipObj={$seedTooltipSettingsPanel}
+						>
 							<TabLikeInput
 								class="w-full"
 								bind:value={$generationSeed}
 								hasTitle={false}
 								placeholder={$LL.Home.SeedInput.Placeholder()}
 							/>
-						</div>
+						</SettingsPanelItem>
 					</div>
 				</div>
 			{/if}
