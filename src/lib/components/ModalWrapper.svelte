@@ -7,13 +7,18 @@
 
 	export let hasPadding = true;
 	export let onClose: (() => void) | undefined = undefined;
+	export let setOverflowHidden = true;
 	let scrollY: number;
 
 	onMount(() => {
-		document.body.style.overflow = 'hidden';
+		if (setOverflowHidden) {
+			document.body.style.overflow = 'hidden';
+		}
 	});
 	onDestroy(() => {
-		document.body.style.overflow = 'auto';
+		if (setOverflowHidden) {
+			document.body.style.overflow = 'auto';
+		}
 	});
 </script>
 

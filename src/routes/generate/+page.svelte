@@ -278,9 +278,7 @@
 							? `calc(100% - env(safe-area-inset-bottom) - ${propmtBarEstimatedHeightRem}rem - ${horizontalListPaddingTopRem}rem - ${horizontalListImageHeight}px)`
 							: $windowWidth < mdBreakpoint && isGenerationSettingsSheetOpen
 							? '0%'
-							: `calc(100% - env(safe-area-inset-bottom) - ${
-									promptBarHeight + horizontalListHeight
-							  }px)`});"
+							: `calc(100% - ${promptBarHeight + horizontalListHeight}px)`});"
 						class="w-full max-h-[90%] z-40 gap-1 flex flex-col bg-c-bg rounded-t-2xl ring-2 ring-c-bg-secondary 
 						md:ring-0 md:rounded-none shadow-c-shadow/[var(--o-shadow-strongest)] shadow-sheet md:shadow-none 
 						md:bg-transparent absolute left-0 bottom-0 md:hidden transform transition overflow-hidden md:overflow-auto"
@@ -295,12 +293,12 @@
 							<SettingsPanel rounding="top" serverData={data} bind:isReadyMap {openSignInModal} />
 						</div>
 						<div
-							class="flex-shrink-0"
-							style="height: calc(env(safe-area-inset-bottom) + {!$windowWidth || !promptBarHeight
-								? `calc(${
+							class="flex-shrink-0 w-full"
+							style="height: {!$windowWidth || !promptBarHeight
+								? `calc(env(safe-area-inset-bottom) + ${
 										propmtBarEstimatedHeightRem + horizontalListPaddingTopRem
 								  }rem + ${horizontalListImageHeight}px)`
-								: `${promptBarHeight + horizontalListHeight}px`})"
+								: `${promptBarHeight + horizontalListHeight}px`}"
 						/>
 					</div>
 				{/if}
