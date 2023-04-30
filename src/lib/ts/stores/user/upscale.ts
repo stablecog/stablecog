@@ -26,7 +26,7 @@ export const setUpscaleToFailed = ({ id, error }: { id: string; error?: string }
 		if (ui_index >= 0) {
 			$upscales[ui_index].status = 'failed';
 			$upscales[ui_index].error = error;
-			$upscales[index].animation = newUpscaleCompleteAnimation($upscales[index].animation);
+			$upscales[ui_index].animation = newUpscaleCompleteAnimation($upscales[ui_index].animation);
 			return $upscales;
 		}
 		return $upscales;

@@ -45,9 +45,13 @@
 	import LL from '$i18n/i18n-svelte.js';
 	import GenerateGridPlaceholder from '$components/generate/GenerateGridPlaceholder.svelte';
 	import GenerateHorizontalListPlaceholder from '$components/generate/GenerateHorizontalListPlaceholder.svelte';
+	import { expandCollapse } from '$ts/animation/transitions.js';
+	import { userSummary } from '$ts/stores/user/summary.js';
+	import LowOnCreditsCard from '$components/LowOnCreditsCard.svelte';
 
 	export let data;
 
+	const lowCreditsThreshold = 10;
 	let isSignInModalOpen = false;
 	let promptBarHeight: number;
 	let stageWidth: number;
@@ -335,17 +339,29 @@
 			</div>
 			<div
 				class="flex-1 flex flex-col order-first items-center justify-center w-full 
-				overflow-hidden pb-[calc(env(safe-area-inset-bottom)+9.5rem)] md:pt-26 md:pb-8 px-2 lg:px-6"
+				overflow-hidden pb-[calc(env(safe-area-inset-bottom)+9.5rem)] md:pt-26 md:pb-8"
 			>
-				<div bind:clientWidth={stageWidth} bind:clientHeight={stageHeight} class="flex-1 w-full">
-					{#if stageWidth && stageHeight}
-						<GenerateStage
-							generation={$generations[0]}
-							{stageWidth}
-							{stageHeight}
-							bind:isReadyMap
-						/>
-					{/if}
+				{#if $page.data.session?.user.id && $userSummary && $userSummary.total_remaining_credits < lowCreditsThreshold}
+					<div
+						transition:expandCollapse|local={{ duration: 200 }}
+						class="w-full flex flex-col justify-start items-center"
+					>
+						<div class="py-2px px-2 md:px-2px pb-6">
+							<LowOnCreditsCard />
+						</div>
+					</div>
+				{/if}
+				<div class="w-full flex-1 flex flex-col px-2 lg:px-6">
+					<div bind:clientWidth={stageWidth} bind:clientHeight={stageHeight} class="flex-1 w-full">
+						{#if stageWidth && stageHeight}
+							<GenerateStage
+								generation={$generations[0]}
+								{stageWidth}
+								{stageHeight}
+								bind:isReadyMap
+							/>
+						{/if}
+					</div>
 				</div>
 			</div>
 		</div>

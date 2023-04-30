@@ -33,7 +33,6 @@
 	} from '$ts/stores/user/generation';
 	import { sseId } from '$ts/stores/user/sse';
 	import { userSummary } from '$ts/stores/user/summary';
-	import { maxOngoingGenerationOutputsCount } from '$components/generate/constants';
 	import IconGenerationSettings from '$components/icons/IconGenerationSettings.svelte';
 	import IconButton from '$components/buttons/IconButton.svelte';
 	import { windowWidth } from '$ts/stores/window';
@@ -46,6 +45,7 @@
 	import IconWand from '$components/icons/IconWand.svelte';
 	import Morpher from '$components/Morpher.svelte';
 	import IconChevronDown from '$components/icons/IconChevronDown.svelte';
+	import { maxOngoingGenerationsCount } from '$components/generate/constants';
 
 	export let openSignInModal: () => void;
 	export let serverData: TCreatePageData;
@@ -73,15 +73,18 @@
 	$: showClearPromptInputButton = $generationPrompt !== undefined && $generationPrompt !== '';
 	$: promptInputPlaceholder = $LL.Home.PromptInput.Placeholder();
 
-	$: ongoingGenerationOutputsCount = $generations
-		.map((g) => g.status)
-		.filter((s) => s !== 'succeeded' && s !== 'failed').length;
-	$: maxOngoingGenerationOutputsCountReached = isSuperAdmin($userSummary?.roles)
+	$: ongoingGenerationsCount = $generations.filter(
+		(g) => g.status !== 'succeeded' && g.status !== 'failed' && g.status !== 'pre-submit'
+	).length;
+	$: maxOngoingGenerationsCountReached = isSuperAdmin($userSummary?.roles)
 		? false
-		: ongoingGenerationOutputsCount >= $maxOngoingGenerationOutputsCount;
+		: ongoingGenerationsCount >= $maxOngoingGenerationsCount;
 
 	async function onPromptFormSubmitted() {
-		if (maxOngoingGenerationOutputsCountReached) {
+		if (doesntHaveEnoughCredits) {
+			return;
+		}
+		if (maxOngoingGenerationsCountReached) {
 			return;
 		}
 		if (!$page.data.session?.user.id) {
@@ -227,7 +230,7 @@
 					disabled={!isCheckCompleted ||
 						(doesntHaveEnoughCredits && $page.data.session?.user.id !== undefined)}
 					uploading={$generationInitImageFilesState === 'uploading'}
-					loading={maxOngoingGenerationOutputsCountReached}
+					loading={maxOngoingGenerationsCountReached}
 					withSpinner
 					fadeOnDisabled={isCheckCompleted}
 					class="w-full h-full rounded-r-lg md:rounded-r-xl rounded-l-none absolute right-0 top-0"
@@ -235,6 +238,12 @@
 				>
 					<IconWand class="w-7 h- md:w-8 h-8" />
 				</Button>
+				{#if doesntHaveEnoughCredits && $userSummary && $page.data.session?.user.id}
+					<InsufficientCreditsBadge
+						neededCredits={Number($generationNumOutputs)}
+						remainingCredits={$userSummary.total_remaining_credits}
+					/>
+				{/if}
 			</div>
 		</div>
 		<div class="w-full md:w-auto relative hidden lg:block">
@@ -242,7 +251,7 @@
 				disabled={!isCheckCompleted ||
 					(doesntHaveEnoughCredits && $page.data.session?.user.id !== undefined)}
 				uploading={$generationInitImageFilesState === 'uploading'}
-				loading={maxOngoingGenerationOutputsCountReached}
+				loading={maxOngoingGenerationsCountReached}
 				withSpinner
 				noPadding
 				fadeOnDisabled={isCheckCompleted}
