@@ -5,8 +5,15 @@ import {
 import { apiUrl } from '$ts/constants/main';
 import type { TAvailableUpscaleModelId } from '$ts/constants/upscaleModels';
 import { estimatedUpscaleDurationMs } from '$ts/stores/cost';
+import { userSummary } from '$ts/stores/user/summary';
 import type { Tweened } from 'svelte/motion';
-import { get, writable } from 'svelte/store';
+import { derived, get, writable } from 'svelte/store';
+import {
+	PUBLIC_STRIPE_PRODUCT_ID_PRO_SUBSCRIPTION,
+	PUBLIC_STRIPE_PRODUCT_ID_STARTER_SUBSCRIPTION,
+	PUBLIC_STRIPE_PRODUCT_ID_ULTIMATE_SUBSCRIPTION
+} from '$env/static/public';
+import { isSuperAdmin } from '$ts/helpers/admin/roles';
 
 export const upscales = writable<TUpscale[]>([]);
 
@@ -157,6 +164,39 @@ export async function submitInitialUpscaleRequest({
 	console.log('Upscale request response:', resJSON);
 	return { ...resJSON, ui_id: request.ui_id };
 }
+
+const productIdToMaxOngoingUpscalesCountObject = {
+	[PUBLIC_STRIPE_PRODUCT_ID_STARTER_SUBSCRIPTION]: 2,
+	[PUBLIC_STRIPE_PRODUCT_ID_PRO_SUBSCRIPTION]: 3,
+	[PUBLIC_STRIPE_PRODUCT_ID_ULTIMATE_SUBSCRIPTION]: 4
+};
+
+const baseCount = 1;
+
+const productIdToMaxOngoingUpscalesCount = (productId: string | undefined) => {
+	if (!productId) return baseCount;
+	const count = productIdToMaxOngoingUpscalesCountObject[productId];
+	if (!count) return baseCount;
+	return count;
+};
+
+export const maxOngoingUpscalesCount = derived(userSummary, ($userSummary) => {
+	const active_product_id = $userSummary?.product_id;
+	return productIdToMaxOngoingUpscalesCount(active_product_id);
+});
+
+export const ongoingUpscalesCount = derived(upscales, ($upscales) => {
+	return $upscales.filter((g) => g.status !== 'succeeded' && g.status !== 'failed').length;
+});
+
+export const maxOngoingUpscalesCountReached = derived(
+	[ongoingUpscalesCount, maxOngoingUpscalesCount, userSummary],
+	([ongoingUpscalesCount, $maxOngoingUpscalesCount, $userSummary]) => {
+		return isSuperAdmin($userSummary?.roles)
+			? false
+			: ongoingUpscalesCount >= $maxOngoingUpscalesCount;
+	}
+);
 
 export interface TInitialUpscaleResponse {
 	id?: string;

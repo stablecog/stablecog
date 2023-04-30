@@ -25,7 +25,8 @@
 	import {
 		queueInitialUpscaleRequest,
 		upscales,
-		type TInitialUpscaleRequest
+		type TInitialUpscaleRequest,
+		maxOngoingUpscalesCountReached
 	} from '$ts/stores/user/upscale';
 	import { upscaleModelIdDefault } from '$ts/constants/upscaleModels';
 	import { generateSSEId } from '$ts/helpers/generateSSEId';
@@ -365,7 +366,7 @@
 									<div class="w-full relative">
 										<Button
 											onClick={onUpscaleClicked}
-											loading={upscaleBeingProcessed}
+											loading={upscaleBeingProcessed || $maxOngoingUpscalesCountReached}
 											disabled={doesntHaveEnoughCredits &&
 												$page.data.session?.user.id !== undefined}
 											fadeOnDisabled={doesntHaveEnoughCredits}
