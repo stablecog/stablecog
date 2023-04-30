@@ -95,10 +95,6 @@
 		  })
 		: undefined;
 
-	$: hasNoGeneration =
-		$userGenerationFullOutputsQuery?.data?.pages.length === 1 &&
-		$userGenerationFullOutputsQuery.data.pages[0].outputs.length === 0;
-
 	$: gridRerenderKey = `create_page_user_generation_full_outputs_${userGalleryCurrentView}_${
 		$generations.length
 	}_${$generations.flatMap((g) => g.outputs).length}_${pinnedFullOutputs.length}_${
@@ -147,7 +143,7 @@
 		: undefined;
 
 	$: [mounted, generationPlaceholder, $generationNumOutputs, $generationWidth, $generationHeight],
-		addPlacholderGenerationToGenerations();
+		addPlaceholderGenerationToGenerations();
 
 	function openSignInModal() {
 		isSignInModalOpen = true;
@@ -185,7 +181,7 @@
 		}
 	}
 
-	function addPlacholderGenerationToGenerations() {
+	function addPlaceholderGenerationToGenerations() {
 		if ($generations && $generations[0] && $generations[0].status === 'pre-submit') return;
 		generations.update((gs) => [
 			...(generationPlaceholder !== undefined ? [generationPlaceholder] : []),
