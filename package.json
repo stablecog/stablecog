@@ -83,6 +83,7 @@
 		"konva": "^8.3.14",
 		"mixpanel": "^0.17.0",
 		"posthog-js": "^1.46.2",
+		"radix-svelte": "^0.3.6",
 		"satori": "^0.0.44",
 		"satori-html": "^0.3.0",
 		"svelte-meta-tags": "^2.6.3",

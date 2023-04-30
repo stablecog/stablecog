@@ -106,6 +106,7 @@
 	import type { TCreatePageData } from '$routes/generate/+page.server';
 	import SettingsPanelItem from '$components/generate/SettingsPanelItem.svelte';
 	import IconAddImage from '$components/icons/IconAddImage.svelte';
+	import { Slider } from 'radix-svelte';
 
 	export let rounding: 'all' | 'top' | 'bottom' = 'all';
 	export let serverData: TCreatePageData;
@@ -455,6 +456,8 @@
 		isCheckCompleted = true;
 		isReadyMap.generationSettings = true;
 	});
+
+	let sliderValue: number[];
 </script>
 
 <SidebarWrapper {rounding} {noWrapper}>
@@ -514,6 +517,31 @@
 				bind:value={$generationNegativePrompt}
 				hasTitle={false}
 			/>
+		</SettingsPanelItem>
+		<SettingsPanelItem
+			title={$LL.Home.NumOutputsSlider.Title()}
+			icon={IconImage}
+			tooltipObj={$numOutputsTooltipSettingsPanel}
+		>
+			<form class="flex-1 w-full flex items-center">
+				<p class="w-8">{sliderValue?.[0]}</p>
+				<Slider.Root
+					class="flex-1 relative flex items-center py-3 rounded-full
+				"
+					bind:value={sliderValue}
+					min={numOutputsMin}
+					max={numOutputsMax}
+					step={1}
+					name={'Outputs'}
+					disabled={false}
+					aria-label="Number of Images"
+				>
+					<Slider.Track class="relative h-2 w-full rounded-full bg-c-bg-tertiary">
+						<Slider.Range class="absolute h-2 rounded-full bg-c-on-bg-secondary" />
+					</Slider.Track>
+					<Slider.Thumb class="block h-6 w-6 rounded-full bg-c-on-bg-secondary" />
+				</Slider.Root>
+			</form>
 		</SettingsPanelItem>
 		<SettingsPanelItem
 			title={$LL.Home.NumOutputsSlider.Title()}
