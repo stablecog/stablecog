@@ -11,7 +11,6 @@
 	import LL from '$i18n/i18n-svelte';
 	import SidebarWrapper from '$components/generate/SidebarWrapper.svelte';
 	import { estimatedGenerationDurationMs } from '$components/generate/estimatedGenerationDurationMs';
-	import { tooltip } from '$ts/actions/tooltip';
 	import {
 		availableGenerationModelIds,
 		availableModelIdDropdownItems,
@@ -106,6 +105,7 @@
 	import TabLikeInitImageUploader2 from '$components/tabBars/TabLikeInitImageUploader2.svelte';
 	import type { TCreatePageData } from '$routes/generate/+page.server';
 	import SettingsPanelItem from '$components/generate/SettingsPanelItem.svelte';
+	import IconAddImage from '$components/icons/IconAddImage.svelte';
 
 	export let rounding: 'all' | 'top' | 'bottom' = 'all';
 	export let serverData: TCreatePageData;
@@ -490,7 +490,7 @@
 		</SettingsPanelItem>
 		<SettingsPanelItem
 			title={$LL.Home.ImageInput.Title()}
-			icon={IconImage}
+			icon={IconAddImage}
 			tooltipObj={$initImageTooltipSettingsPanel}
 		>
 			<TabLikeInitImageUploader2 disabled={!isCheckCompleted} class="w-full" {openSignInModal} />
