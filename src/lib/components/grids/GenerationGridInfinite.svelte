@@ -111,7 +111,6 @@
 			align="center"
 			threshold={($windowHeight || 1000) * 3}
 			on:requestAppend={({ detail: e }) => {
-				console.log('requestAppend');
 				e.wait();
 				if ($generationsQuery.isFetchingNextPage || !$generationsQuery.hasNextPage) {
 					e.ready();

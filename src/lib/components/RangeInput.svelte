@@ -34,8 +34,8 @@
 
 <form class={classes}>
 	<Slider.Root
-		class="flex-1 touch-none select-none cursor-pointer relative flex 
-			items-center h-full group"
+		class="flex-1 h-full touch-none select-none cursor-pointer relative flex 
+			items-center group"
 		bind:value={valueInternal}
 		{min}
 		{max}
@@ -44,12 +44,8 @@
 		{disabled}
 		minStepsBetweenThumbs={step}
 	>
-		<Slider.Track
-			on:focus={() => console.log('root focused')}
-			class="relative h-2 grow rounded-full bg-c-bg-tertiary"
-		>
+		<Slider.Track class="relative h-2 grow rounded-full bg-c-bg-tertiary">
 			<Slider.Range
-				on:focus={() => console.log('root focused')}
 				class="absolute h-2 rounded-full transition bg-c-on-bg-secondary group-active:bg-c-primary"
 			/>
 		</Slider.Track>
