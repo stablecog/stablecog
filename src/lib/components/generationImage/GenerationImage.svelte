@@ -73,9 +73,13 @@
 
 	$: overlayShouldShow = $isTouchscreen && $lastClickedOutputId === generation.selected_output.id;
 
-	$: upscaleFromStore = $upscales.find(
-		(upscale) => upscale.type === 'from_output' && upscale.input === generation.selected_output.id
-	);
+	$: upscaleFromStore =
+		cardType !== 'gallery' && cardType !== 'admin-gallery'
+			? $upscales.find(
+					(upscale) =>
+						upscale.type === 'from_output' && upscale.input === generation.selected_output.id
+			  )
+			: undefined;
 
 	$: logProps = {
 		'SC - Output Id': generation.selected_output.id,

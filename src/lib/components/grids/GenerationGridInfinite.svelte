@@ -146,7 +146,10 @@
 								: 'border-2 rounded-xl'} {isOutputSelected
 								? 'border-c-primary'
 								: 'border-c-bg-secondary'} {isOutputHoverable ? 'hover:border-c-primary/75' : ''}
-										 z-0 overflow-hidden filter blur-none shadow-lg shadow-c-shadow/[var(--o-shadow-normal)]"
+										 z-0 overflow-hidden shadow-lg shadow-c-shadow/[var(--o-shadow-normal)] {cardType !== 'gallery' &&
+							cardType !== 'admin-gallery'
+								? 'filter blur-none'
+								: ''}"
 						>
 							{#if output.generation.outputs !== undefined}
 								{#if status !== 'failed' && status !== 'failed-nsfw'}
