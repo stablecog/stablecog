@@ -208,11 +208,12 @@
 					class="w-full h-full absolute left-0 top-0 pointer-events-none flex justify-center items-center"
 				>
 					<div
-						class="{size === 'sm' ? 'w-6 h-6' : 'w-7 h-7'} transition transform {uploading
+						class="{size === 'sm' ? 'w-6 h-6' : 'w-7 h-7'} transition transform {!loading &&
+						uploading
 							? 'scale-100'
 							: 'scale-0'}"
 					>
-						<IconAnimatedUploading class="w-full h-full" loading={uploading} />
+						<IconAnimatedUploading class="w-full h-full" loading={!loading && uploading} />
 					</div>
 				</div>
 			{:else}

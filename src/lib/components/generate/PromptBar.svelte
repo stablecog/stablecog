@@ -28,6 +28,7 @@
 	import { isTouchscreen } from '$ts/stores/isTouchscreen';
 	import {
 		generations,
+		maxOngoingGenerationsCountReached,
 		queueInitialGenerationRequest,
 		type TInitialGenerationRequest
 	} from '$ts/stores/user/generation';
@@ -45,7 +46,6 @@
 	import IconWand from '$components/icons/IconWand.svelte';
 	import Morpher from '$components/Morpher.svelte';
 	import IconChevronDown from '$components/icons/IconChevronDown.svelte';
-	import { maxOngoingGenerationsCount } from '$components/generate/constants';
 
 	export let openSignInModal: () => void;
 	export let serverData: TCreatePageData;
@@ -73,18 +73,11 @@
 	$: showClearPromptInputButton = $generationPrompt !== undefined && $generationPrompt !== '';
 	$: promptInputPlaceholder = $LL.Home.PromptInput.Placeholder();
 
-	$: ongoingGenerationsCount = $generations.filter(
-		(g) => g.status !== 'succeeded' && g.status !== 'failed' && g.status !== 'pre-submit'
-	).length;
-	$: maxOngoingGenerationsCountReached = isSuperAdmin($userSummary?.roles)
-		? false
-		: ongoingGenerationsCount >= $maxOngoingGenerationsCount;
-
 	async function onPromptFormSubmitted() {
 		if (doesntHaveEnoughCredits) {
 			return;
 		}
-		if (maxOngoingGenerationsCountReached) {
+		if ($maxOngoingGenerationsCountReached) {
 			return;
 		}
 		if (!$page.data.session?.user.id) {
@@ -230,7 +223,7 @@
 					disabled={!isCheckCompleted ||
 						(doesntHaveEnoughCredits && $page.data.session?.user.id !== undefined)}
 					uploading={$generationInitImageFilesState === 'uploading'}
-					loading={maxOngoingGenerationsCountReached}
+					loading={$maxOngoingGenerationsCountReached}
 					withSpinner
 					fadeOnDisabled={isCheckCompleted}
 					class="w-full h-full rounded-r-lg md:rounded-r-xl rounded-l-none absolute right-0 top-0"
@@ -251,7 +244,7 @@
 				disabled={!isCheckCompleted ||
 					(doesntHaveEnoughCredits && $page.data.session?.user.id !== undefined)}
 				uploading={$generationInitImageFilesState === 'uploading'}
-				loading={maxOngoingGenerationsCountReached}
+				loading={$maxOngoingGenerationsCountReached}
 				withSpinner
 				noPadding
 				fadeOnDisabled={isCheckCompleted}

@@ -275,11 +275,13 @@
 	}
 
 	function setLocalModelId() {
+		if ($generationModelId === undefined) return;
 		modelId.set($generationModelId);
 		setLocalImageSizeBasedOnAspectRatio();
 	}
 
 	function setLocalNumOutputs() {
+		if ($generationNumOutputs === undefined) return;
 		numOutputs.set($generationNumOutputs);
 	}
 
@@ -292,22 +294,27 @@
 	}
 
 	function setLocalInferenceSteps() {
+		if ($generationInferenceSteps === undefined) return;
 		inferenceSteps.set($generationInferenceSteps);
 	}
 
 	function setLocalGuidanceScale() {
+		if ($generationGuidanceScale === undefined) return;
 		guidanceScale.set($generationGuidanceScale);
 	}
 
 	function setLocalSchedulerId() {
+		if ($generationSchedulerId === undefined) return;
 		schedulerId.set($generationSchedulerId);
 	}
 
 	function setLocalSeed() {
+		if ($generationSeed === undefined) return;
 		seed.set(typeof $generationSeed === 'number' ? $generationSeed : null);
 	}
 
 	function setLocalAdvancedMode() {
+		if ($advancedModeApp === undefined) return;
 		advancedMode.set($advancedModeApp);
 	}
 
