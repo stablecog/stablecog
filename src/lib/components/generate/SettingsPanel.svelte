@@ -204,7 +204,10 @@
 	};
 
 	$: [$generationHeight, $generationWidth], adjustInferenceSteps();
-	$: $generationModelId, adjustSchedulerId();
+	$: supportedSchedulerIdDropdownItems = $availableSchedulerIdDropdownItems.filter((i) =>
+		generationModels[$generationModelId].supportedSchedulerIds.includes(i.value)
+	);
+	$: $generationModelId, enforceSupportedSchedulerId();
 
 	function setGenerationOnStage() {
 		if ($generations && $generations[0] && $generations[0].status === 'pre-submit') {
@@ -235,7 +238,7 @@
 		}
 	}
 
-	const adjustSchedulerId = () => {
+	const enforceSupportedSchedulerId = () => {
 		if (
 			!browser ||
 			generationModels[$generationModelId].supportedSchedulerIds.includes($generationSchedulerId)
@@ -599,7 +602,7 @@
 								container={settingsContainer}
 								containerTopMinDistance={containerDropdownPadding}
 								containerBottomMinDistance={containerDropdownPadding}
-								items={$availableSchedulerIdDropdownItems}
+								items={supportedSchedulerIdDropdownItems}
 								hasTitle={false}
 								bind:value={$generationSchedulerId}
 								name={$LL.Home.AspectRatioDropdown.Title()}
