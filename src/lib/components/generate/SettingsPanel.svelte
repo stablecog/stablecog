@@ -526,20 +526,23 @@
 			<form class="flex-1 w-full flex items-center">
 				<p class="w-8">{sliderValue?.[0]}</p>
 				<Slider.Root
-					class="flex-1 relative flex items-center py-3 rounded-full
-				"
+					class="flex-1 touch-none select-none cursor-pointer relative flex 
+						items-center h-12"
 					bind:value={sliderValue}
 					min={numOutputsMin}
 					max={numOutputsMax}
 					step={1}
 					name={'Outputs'}
+					minStepsBetweenThumbs={1}
 					disabled={false}
 					aria-label="Number of Images"
 				>
-					<Slider.Track class="relative h-2 w-full rounded-full bg-c-bg-tertiary">
+					<Slider.Track class="relative h-2 grow rounded-full bg-c-bg-tertiary">
 						<Slider.Range class="absolute h-2 rounded-full bg-c-on-bg-secondary" />
 					</Slider.Track>
-					<Slider.Thumb class="block h-6 w-6 rounded-full bg-c-on-bg-secondary" />
+					<Slider.Thumb
+						class="block shadow-lg shadow-c-shadow/[var(--o-shadow-strongest)] h-6 w-6 rounded-full bg-c-on-bg-secondary"
+					/>
 				</Slider.Root>
 			</form>
 		</SettingsPanelItem>
