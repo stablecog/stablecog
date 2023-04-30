@@ -43,7 +43,7 @@
 .blog p, .blog li{
 	width: 100%;
 	font-size: 1.125rem;
-	line-height: 1.75;
+	line-height: 1.7;
 	margin-top: 1rem;
 	color: rgba(var(--c-on-bg) / 0.75);
 	font-weight: 400;
@@ -78,8 +78,8 @@
 .blog a {
 	transition: all 0.2s var(--e-default);
 	position: relative;
-	padding: 2px 4px;
-	margin: -2px -4px;
+	padding: 0px 2px;
+	margin: 0px -2px;
 	border-radius: 0px;
 	box-shadow: 0 -2px 0 0 rgba(var(--c-primary) / 0.5) inset;
 	z-index: 0;
@@ -88,22 +88,19 @@
 .blog a:focus-visible {
 	color: rgba(var(--c-on-primary));
 	border-radius: 4px;
-	box-shadow: 0 -1.75rem 0 0 rgba(var(--c-primary)) inset;
-	font-weight: 700;
+	box-shadow: 0 -2.1rem 0 0 rgba(var(--c-primary)) inset;
 }
 .blog h2 a:hover,
 .blog h2 a:focus-visible {
 	color: rgba(var(--c-on-primary));
 	border-radius: 5px;
-	box-shadow: 0 -2.7rem 0 0 rgba(var(--c-primary)) inset;
-	font-weight: 700;
+	box-shadow: 0 -2.9rem 0 0 rgba(var(--c-primary)) inset;
 }
 .blog h3 a:hover,
 .blog h3 a:focus-visible {
 	color: rgba(var(--c-on-primary));
 	border-radius: 5px;
-	box-shadow: 0 -2.1rem 0 0 rgba(var(--c-primary)) inset;
-	font-weight: 700;
+	box-shadow: 0 -2.2rem 0 0 rgba(var(--c-primary)) inset;
 }
 
 .blog img[class] {
@@ -272,8 +269,7 @@
 .blog-link:focus-visible {
 	color: rgba(var(--c-on-primary));
 	border-radius: 4px;
-	box-shadow: 0 -1.75rem 0 0 rgba(var(--c-primary)) inset;
-	font-weight: 700;
+	box-shadow: 0 -2.1rem 0 0 rgba(var(--c-primary)) inset;
 }
 
 .blog .flex {
