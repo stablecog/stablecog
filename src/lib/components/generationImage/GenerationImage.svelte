@@ -7,7 +7,7 @@
 	import FavoriteButton from '$components/buttons/FavoriteButton.svelte';
 	import GenerateButton from '$components/buttons/GenerateButton.svelte';
 	import IconButton from '$components/buttons/IconButton.svelte';
-	import UpscaleAnimation from '$components/generationFullScreen/UpscaleAnimation.svelte';
+	import UpscaleAnimation from '$components/generate/UpscaleAnimation.svelte';
 	import type { TGenerationImageCardType } from '$components/generationImage/types';
 	import IconCancelCircle from '$components/icons/IconCancelCircle.svelte';
 	import IconGalleryFilled from '$components/icons/IconGalleryFilled.svelte';

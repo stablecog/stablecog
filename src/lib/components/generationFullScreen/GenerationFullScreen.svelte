@@ -43,8 +43,8 @@
 	import { lastClickedOutputId } from '$ts/stores/lastClickedOutputId';
 	import FavoriteButton from '$components/buttons/FavoriteButton.svelte';
 	import { browser } from '$app/environment';
-	import UpscaleAnimation from '$components/generationFullScreen/UpscaleAnimation.svelte';
 	import GenerationFullScreenImageSet from '$components/generationFullScreen/GenerationFullScreenImageSet.svelte';
+	import UpscaleAnimation from '$components/generate/UpscaleAnimation.svelte';
 
 	export let generation: TGenerationWithSelectedOutput;
 	export let modalType: TGenerationFullScreenModalType;
