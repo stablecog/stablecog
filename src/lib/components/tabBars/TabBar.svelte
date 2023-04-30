@@ -86,7 +86,7 @@
 						{#if tab.icon}
 							<svelte:component
 								this={tab.icon}
-								class="{dontScale ? 'w-5 h-5' : 'w-4 h-4 md:w-5 md:h-5'} flex-shrink-0"
+								class="{dontScale ? 'w-5 h-5' : 'w-5 h-5'} flex-shrink-0"
 							/>
 						{:else if iconSet}
 							<svelte:component this={iconSet} type={tab.value} class="w-4 h-4 flex-shrink-0" />

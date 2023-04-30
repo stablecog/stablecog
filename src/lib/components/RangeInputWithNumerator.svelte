@@ -22,14 +22,12 @@
 		{step}
 		{numeratorFormatter}
 		bind:value
-		class="{valueSize === 'md'
-			? 'text-sm md:text-base px-0.5 md:px-1'
-			: 'text-xs md:text-sm'} text-c-on-bg"
+		class="{valueSize === 'md' ? 'text-base px-0.5' : 'text-sm'} text-c-on-bg"
 		showWheel={focused}
 	/>
 	<RangeInput
 		{disabled}
-		class="flex-1 h-12 md:h-13"
+		class="flex-1 h-13"
 		classInput="rounded-lg"
 		bind:value
 		bind:focused

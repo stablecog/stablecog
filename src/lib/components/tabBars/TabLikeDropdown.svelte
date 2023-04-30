@@ -103,7 +103,7 @@
 			}}
 			class="flex-1 ring-2 text-left flex items-center justify-between min-w-0 {hasTitle
 				? 'px-4'
-				: 'px-5'} py-3.25 md:py-3.5 relative 
+				: 'px-5'} py-3.5 relative 
 				group transition-all duration-150 z-30 gap-2 {isDropdownOpen
 				? dropdownPlacement === 'top'
 					? `rounded-br-xl ${!hasTitle ? 'rounded-bl-xl' : ''} bg-c-bg-secondary ring-c-bg-tertiary`
@@ -190,7 +190,7 @@
 									}}
 									class="w-full text-left flex items-center justify-start min-w-0 {hasTitle
 										? 'px-4'
-										: 'px-5'} py-3.25 md:py-3.5 relative z-0 group
+										: 'px-5'} py-3.5 relative z-0 group
 											{index === items.filter((i) => i.value !== value).length - 1 ? 'rounded-b-lg' : ''}"
 									type="button"
 									aria-label={item.label}
