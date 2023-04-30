@@ -2,9 +2,7 @@
 	import IconChatBubbleCancel from '$components/icons/IconChatBubbleCancel.svelte';
 	import ModalWrapper from '$components/ModalWrapper.svelte';
 	import { windowWidth } from '$ts/stores/window';
-	import IconButton from '$components/buttons/IconButton.svelte';
-	import { isTouchscreen } from '$ts/stores/isTouchscreen';
-	import { onDestroy, onMount, tick } from 'svelte';
+	import { onDestroy, onMount } from 'svelte';
 	import { quadOut } from 'svelte/easing';
 	import { fly } from 'svelte/transition';
 	import { tooltip } from '$ts/actions/tooltip';
@@ -21,7 +19,6 @@
 	import TabBar from '$components/tabBars/TabBar.svelte';
 	import LL from '$i18n/i18n-svelte';
 	import { negativePromptTooltipAlt } from '$ts/constants/tooltips';
-	import IconCancel from '$components/icons/IconCancel.svelte';
 	import Container from '$components/generationFullScreen/Container.svelte';
 	import { activeGeneration, type TGenerationWithSelectedOutput } from '$userStores/generation';
 	import { sseId } from '$userStores/sse';
@@ -41,7 +38,6 @@
 	} from '$components/generationFullScreen/types';
 	import Divider from '$components/generationFullScreen/Divider.svelte';
 	import { userSummary } from '$ts/stores/user/summary';
-	import { estimatedUpscaleDurationMs, getUpscaleDurationMsFromUpscale } from '$ts/stores/cost';
 	import InsufficientCreditsBadge from '$components/badges/InsufficientCreditsBadge.svelte';
 	import IconNoImage from '$components/icons/IconNoImage.svelte';
 	import { lastClickedOutputId } from '$ts/stores/lastClickedOutputId';
@@ -81,7 +77,6 @@
 	let hadUpscaledImageUrlOnMount =
 		generation.selected_output.upscaled_image_url !== undefined ||
 		upscaledImageUrlFromStore !== undefined;
-	let isUpscaledImageLoaded = hadUpscaledImageUrlOnMount ? true : false;
 
 	$: currentImageUrl = generation.selected_output.upscaled_image_url
 		? generation.selected_output.upscaled_image_url
@@ -92,17 +87,9 @@
 
 	$: generation.selected_output, onGenerationChanged();
 	let initialGenerationChange = true;
-	$: upscaleStatus = hadUpscaledImageUrlOnMount
-		? 'succeeded'
-		: upscaleFromStore
-		? upscaleFromStore.status
-		: undefined;
-	$: upscaleBeingProcessed = hadUpscaledImageUrlOnMount
-		? false
-		: upscaleStatus === 'to-be-submitted' ||
-		  upscaleStatus === 'server-received' ||
-		  upscaleStatus === 'server-processing' ||
-		  (upscaleStatus === 'succeeded' && !isUpscaledImageLoaded);
+	$: upscaleBeingProcessed = upscaleFromStore
+		? upscaleFromStore.status !== 'succeeded' && upscaleFromStore.status !== 'failed'
+		: false;
 
 	let sidebarWrapper: HTMLDivElement;
 	let sidebarWrapperHeight: number;
@@ -212,27 +199,6 @@
 		console.log('Upscale request queued', $upscales);
 	}
 
-	$: [upscaleStatus, upscaleBeingProcessed], onUpscaleStatusChanged();
-
-	async function onUpscaleStatusChanged() {
-		if (hadUpscaledImageUrlOnMount) {
-			return;
-		}
-		switch (upscaleStatus) {
-			case 'succeeded':
-				if (upscaleBeingProcessed || !upscaleFromStore) break;
-				await tick();
-				const durationMs = getUpscaleDurationMsFromUpscale(upscaleFromStore);
-				if (durationMs !== null && upscaleFromStore.completed_at) {
-					const loadTimeMs = Date.now() - upscaleFromStore.completed_at;
-					estimatedUpscaleDurationMs.set(loadTimeMs + durationMs);
-				}
-				break;
-			default:
-				break;
-		}
-	}
-
 	$: upscaledTabValue, setCurrentImageUrl();
 
 	function setCurrentImageUrl() {
@@ -250,14 +216,12 @@
 		const target = e.target as HTMLImageElement;
 		if (generation.width !== target.naturalWidth && generation.selected_output.upscaled_image_url) {
 			upscaledImageWidth = target.naturalWidth;
-			isUpscaledImageLoaded = true;
 		}
 		if (
 			generation.height !== target.naturalHeight &&
 			generation.selected_output.upscaled_image_url
 		) {
 			upscaledImageHeight = target.naturalHeight;
-			isUpscaledImageLoaded = true;
 		}
 	};
 
@@ -334,7 +298,6 @@
 				{:else}
 					{#key generation.selected_output.id}
 						<GenerationFullScreenImageSet
-							{upscaleBeingProcessed}
 							prompt={generation.prompt.text}
 							backgroundImageUrl={generation.selected_output.image_url}
 							backgroundImageWidth={generation.width}

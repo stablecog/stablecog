@@ -4,8 +4,9 @@ import {
 } from '$ts/animation/generationAnimation';
 import { apiUrl } from '$ts/constants/main';
 import type { TAvailableUpscaleModelId } from '$ts/constants/upscaleModels';
+import { estimatedUpscaleDurationMs } from '$ts/stores/cost';
 import type { Tweened } from 'svelte/motion';
-import { writable } from 'svelte/store';
+import { get, writable } from 'svelte/store';
 
 export const upscales = writable<TUpscale[]>([]);
 
@@ -32,27 +33,45 @@ export const setUpscaleToFailed = ({ id, error }: { id: string; error?: string }
 	});
 };
 
-export const setUpscaleToSucceeded = ({
+export const setUpscaleToSucceeded = async ({
 	id,
 	outputs
 }: {
 	id: string;
 	outputs: TUpscaleOutput[];
 }) => {
-	upscales.update(($upscales) => {
-		if ($upscales === null) {
-			return $upscales;
+	const ups = get(upscales);
+	if (ups === null) return;
+	const index = ups.findIndex((gen) => gen.id === id);
+	if (index === -1) {
+		return;
+	}
+	ups[index].status = 'succeeded';
+	ups[index].outputs = outputs;
+	if (outputs[0].image_url) {
+		try {
+			await tryLoadingImage(outputs[0].image_url);
+		} catch (e) {
+			console.error(e);
 		}
-		const index = $upscales.findIndex((gen) => gen.id === id);
-		if (index === -1) {
-			return $upscales;
-		}
-		$upscales[index].status = 'succeeded';
-		$upscales[index].outputs = outputs;
-		$upscales[index].completed_at = Date.now();
-		return $upscales;
-	});
+	}
+	ups[index].completed_at = Date.now();
+	const started_at = ups[index].started_at;
+	const completed_at = ups[index].completed_at;
+	if (started_at && completed_at) {
+		estimatedUpscaleDurationMs.set(completed_at - started_at);
+	}
+	upscales.set(ups);
 };
+
+async function tryLoadingImage(url: string) {
+	return new Promise<HTMLImageElement>((resolve, reject) => {
+		const img = new Image();
+		img.onload = () => resolve(img);
+		img.onerror = () => resolve(img);
+		img.src = url;
+	});
+}
 
 export const setUpscaleToServerReceived = ({ ui_id, id }: { ui_id: string; id: string }) => {
 	upscales.update(($upscales) => {

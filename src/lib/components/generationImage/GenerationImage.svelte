@@ -7,6 +7,7 @@
 	import FavoriteButton from '$components/buttons/FavoriteButton.svelte';
 	import GenerateButton from '$components/buttons/GenerateButton.svelte';
 	import IconButton from '$components/buttons/IconButton.svelte';
+	import UpscaleAnimation from '$components/generationFullScreen/UpscaleAnimation.svelte';
 	import type { TGenerationImageCardType } from '$components/generationImage/types';
 	import IconCancelCircle from '$components/icons/IconCancelCircle.svelte';
 	import IconGalleryFilled from '$components/icons/IconGalleryFilled.svelte';
@@ -34,6 +35,7 @@
 		toggleGalleryActionableItemsState
 	} from '$ts/stores/user/galleryActionableItems';
 	import { userSummary } from '$ts/stores/user/summary';
+	import { upscales } from '$ts/stores/user/upscale';
 	import { activeGeneration, type TGenerationWithSelectedOutput } from '$userStores/generation';
 
 	export let generation: TGenerationWithSelectedOutput;
@@ -70,6 +72,10 @@
 		cardType === 'generate';
 
 	$: overlayShouldShow = $isTouchscreen && $lastClickedOutputId === generation.selected_output.id;
+
+	$: upscaleFromStore = $upscales.find(
+		(upscale) => upscale.type === 'from_output' && upscale.input === generation.selected_output.id
+	);
 
 	$: logProps = {
 		'SC - Output Id': generation.selected_output.id,
@@ -135,6 +141,12 @@
 		alt={generation.prompt.text}
 		width={generation.width}
 		height={generation.height}
+	/>
+{/if}
+{#if upscaleFromStore?.animation}
+	<UpscaleAnimation
+		animation={upscaleFromStore.animation}
+		isProcessing={upscaleFromStore.status !== 'failed' && upscaleFromStore.status !== 'succeeded'}
 	/>
 {/if}
 <!-- Barriers -->
