@@ -48,9 +48,9 @@ export const setUpscaleToSucceeded = async ({
 	}
 	ups[index].status = 'succeeded';
 	ups[index].outputs = outputs;
-	if (outputs[0].image_url) {
+	if (outputs && outputs.length > 0 && outputs[0].image_url) {
 		try {
-			await tryLoadingImage(outputs[0].image_url);
+			await loadImage(outputs[0].image_url);
 		} catch (e) {
 			console.error(e);
 		}
@@ -64,11 +64,11 @@ export const setUpscaleToSucceeded = async ({
 	upscales.set(ups);
 };
 
-async function tryLoadingImage(url: string) {
+async function loadImage(url: string) {
 	return new Promise<HTMLImageElement>((resolve, reject) => {
 		const img = new Image();
 		img.onload = () => resolve(img);
-		img.onerror = () => resolve(img);
+		img.onerror = () => reject(img);
 		img.src = url;
 	});
 }
