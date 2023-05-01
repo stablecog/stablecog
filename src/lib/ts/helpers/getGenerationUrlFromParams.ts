@@ -9,7 +9,7 @@ export function getGenerationUrlFromParams({
 	num_inference_steps,
 	seed
 }: TGenerationUrlFromParamsParams) {
-	const baseUrl = '/?';
+	const baseUrl = '/generate?';
 	let params: string[] = [];
 	if (prompt) params.push(`p=${encodeURIComponent(prompt.text)}`);
 	if (negative_prompt) params.push(`np=${encodeURIComponent(negative_prompt.text)}`);

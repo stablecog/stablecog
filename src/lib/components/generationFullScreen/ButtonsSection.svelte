@@ -181,6 +181,43 @@
 </script>
 
 <div class="w-full flex flex-wrap gap-3 pb-1">
+	<SubtleButton
+		prefetch={true}
+		href={generateSimilarUrl}
+		onClick={() => {
+			if (modalType === 'gallery') {
+				logGalleryGenerateSimilarClicked({
+					'SC - Advanced Mode': $advancedModeApp,
+					'SC - Output Id': generation.selected_output.id,
+					'SC - User Id': $page.data.session?.user.id,
+					'SC - Stripe Product Id': $userSummary?.product_id,
+					'SC - App Version': $appVersion
+				});
+			}
+		}}
+	>
+		<div class="flex items-center justify-center gap-1.5">
+			<IconWand class="w-5 h-5 -ml-0.5" />
+			<p>{$LL.GenerationFullscreen.GenerateSimilarButton()}</p>
+		</div>
+	</SubtleButton>
+	<div
+		use:copy={generation.prompt.text}
+		on:svelte-copy={() => setButtonObjectWithState('prompt', 'success')}
+	>
+		<SubtleButton state={buttonObjectsWithState.prompt.state === 'success' ? 'success' : 'idle'}>
+			<Morpher morphed={buttonObjectsWithState.prompt.state === 'success'}>
+				<div slot="0" class="flex items-center justify-center gap-1.5">
+					<IconCopy class="w-5 h-5 -ml-0.5" />
+					<p>{$LL.GenerationFullscreen.CopyPromptButton()}</p>
+				</div>
+				<div slot="1" class="flex items-center justify-center gap-1.5">
+					<IconTick class="w-5 h-5 -ml-0.5 scale-110" />
+					<p>{$LL.GenerationFullscreen.CopiedButtonState()}</p>
+				</div>
+			</Morpher>
+		</SubtleButton>
+	</div>
 	{#if (modalType === 'generate' || modalType === 'history') && !generation.selected_output.image_url.includes('placeholder')}
 		<SubtleButton
 			onClick={onDownloadImageClicked}
@@ -206,47 +243,6 @@
 			</Morpher>
 		</SubtleButton>
 	{/if}
-	{#if modalType === 'history' || modalType === 'gallery'}
-		<div class="flex relative">
-			<SubtleButton
-				prefetch={true}
-				href={generateSimilarUrl}
-				onClick={() => {
-					if (modalType === 'gallery') {
-						logGalleryGenerateSimilarClicked({
-							'SC - Advanced Mode': $advancedModeApp,
-							'SC - Output Id': generation.selected_output.id,
-							'SC - User Id': $page.data.session?.user.id,
-							'SC - Stripe Product Id': $userSummary?.product_id,
-							'SC - App Version': $appVersion
-						});
-					}
-				}}
-			>
-				<div class="flex items-center justify-center gap-1.5">
-					<IconWand class="w-5 h-5 -ml-0.5" />
-					<p>{$LL.GenerationFullscreen.GenerateSimilarButton()}</p>
-				</div>
-			</SubtleButton>
-		</div>
-	{/if}
-	<div
-		use:copy={generation.prompt.text}
-		on:svelte-copy={() => setButtonObjectWithState('prompt', 'success')}
-	>
-		<SubtleButton state={buttonObjectsWithState.prompt.state === 'success' ? 'success' : 'idle'}>
-			<Morpher morphed={buttonObjectsWithState.prompt.state === 'success'}>
-				<div slot="0" class="flex items-center justify-center gap-1.5">
-					<IconCopy class="w-5 h-5 -ml-0.5" />
-					<p>{$LL.GenerationFullscreen.CopyPromptButton()}</p>
-				</div>
-				<div slot="1" class="flex items-center justify-center gap-1.5">
-					<IconTick class="w-5 h-5 -ml-0.5 scale-110" />
-					<p>{$LL.GenerationFullscreen.CopiedButtonState()}</p>
-				</div>
-			</Morpher>
-		</SubtleButton>
-	</div>
 	{#if modalType === 'gallery'}
 		<div use:copy={linkUrl} on:svelte-copy={() => setButtonObjectWithState('link', 'success')}>
 			<SubtleButton state={buttonObjectsWithState.link.state === 'success' ? 'success' : 'idle'}>
