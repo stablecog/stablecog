@@ -1,16 +1,19 @@
 import getSizingData from './getSizingData';
 import calculateNodeHeight from './calculateNodeHeight';
+import { tick } from 'svelte';
 
 interface TAutoResizeProps {
 	minRows?: number;
 	maxRows?: number;
 	placeholder?: string;
+	value?: string;
 }
 
 export function autoresize(node: HTMLTextAreaElement, props: TAutoResizeProps) {
-	let currentProps = props;
+	let currentProps = { ...props };
 
-	const resize = (props: TAutoResizeProps) => {
+	const resize = async (props: TAutoResizeProps) => {
+		await tick();
 		currentProps = props;
 		const nodeSizingData = getSizingData(node);
 		if (!nodeSizingData) {

@@ -61,7 +61,7 @@
 	let promptInputElement: HTMLTextAreaElement;
 	let isCheckCompleted = false;
 
-	generationPrompt.set(serverData.prompt !== null ? serverData.prompt : undefined);
+	$: generationPrompt.set(serverData.prompt !== null ? serverData.prompt : undefined);
 
 	$: [$generationPrompt], withCheck(setLocalPrompt);
 
@@ -184,9 +184,14 @@
 	>
 		<div class="flex-1 flex relative group">
 			<textarea
-				use:autoresize={{ maxRows: 2, placeholder: promptInputPlaceholder }}
+				use:autoresize={{
+					maxRows: 2,
+					placeholder: promptInputPlaceholder,
+					value: $generationPrompt
+				}}
 				bind:this={promptInputElement}
 				bind:value={$generationPrompt}
+				on:change={() => console.log('changed')}
 				on:keypress={(e) => {
 					if (e.key === 'Enter') {
 						e.preventDefault();

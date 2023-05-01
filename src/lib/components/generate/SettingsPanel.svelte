@@ -106,7 +106,6 @@
 	import type { TCreatePageData } from '$routes/generate/+page.server';
 	import SettingsPanelItem from '$components/generate/SettingsPanelItem.svelte';
 	import IconAddImage from '$components/icons/IconAddImage.svelte';
-	import { Slider } from 'radix-svelte';
 
 	export let rounding: 'all' | 'top' | 'bottom' = 'all';
 	export let serverData: TCreatePageData;
@@ -118,23 +117,23 @@
 	let containerDropdownPadding = 16;
 	let isCheckCompleted = false;
 
-	generationNegativePrompt.set(
+	$: generationNegativePrompt.set(
 		serverData.negative_prompt !== null ? serverData.negative_prompt : undefined
 	);
-	generationWidth.set(
+	$: generationWidth.set(
 		isValue(serverData.width) && serverData.width !== null ? serverData.width : widthDefault
 	);
-	generationHeight.set(
+	$: generationHeight.set(
 		isValue(serverData.height) && serverData.height !== null && serverData
 			? serverData.height
 			: heightDefault
 	);
-	generationModelId.set(
+	$: generationModelId.set(
 		isValue(serverData.model_id) && serverData.model_id !== null
 			? serverData.model_id
 			: generationModelIdDefault
 	);
-	if (!isValue(serverData.width) && !isValue(serverData.height)) {
+	$: if (!isValue(serverData.width) && !isValue(serverData.height)) {
 		generationAspectRatio.set(
 			isValue(serverData.aspect_ratio) && serverData.aspect_ratio !== null
 				? serverData.aspect_ratio
@@ -147,7 +146,7 @@
 			generationAspectRatio.set(ratio);
 		}
 	}
-	generationInferenceSteps.set(
+	$: generationInferenceSteps.set(
 		isValue(serverData.num_inference_steps) &&
 			serverData.num_inference_steps !== null &&
 			inferenceStepsTabs
@@ -156,25 +155,25 @@
 			? serverData.num_inference_steps
 			: inferenceStepsDefault
 	);
-	generationGuidanceScale.set(
+	$: generationGuidanceScale.set(
 		isValue(serverData.guidance_scale) && serverData.guidance_scale !== null
 			? serverData.guidance_scale
 			: guidanceScaleDefault
 	);
-	generationSchedulerId.set(
+	$: generationSchedulerId.set(
 		isValue(serverData.scheduler_id) && serverData.scheduler_id !== null
 			? serverData.scheduler_id
 			: schedulerIdDefault
 	);
-	generationSeed.set(
+	$: generationSeed.set(
 		isValue(serverData.seed) && serverData.seed !== null ? serverData.seed : undefined
 	);
-	generationInitImageStrength.set(
+	$: generationInitImageStrength.set(
 		isValue(serverData.init_image_strength) && serverData.init_image_strength !== null
 			? serverData.init_image_strength
 			: initImageStrengthDefault
 	);
-	generationNumOutputs.set(
+	$: generationNumOutputs.set(
 		isValue(serverData.num_outputs) && serverData.num_outputs !== null
 			? serverData.num_outputs
 			: numOutputsDefault
