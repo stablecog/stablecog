@@ -1,10 +1,6 @@
 export function clickoutside(
 	node: HTMLElement,
-	{
-		callback,
-		exclude,
-		capture = true
-	}: { callback: () => void; exclude?: HTMLElement | undefined; capture?: boolean }
+	{ callback, exclude, capture = true }: TClickoutsideProps
 ) {
 	let startedFromOutside = false;
 	function onMouseDown(event: Event) {
@@ -33,15 +29,24 @@ export function clickoutside(
 			document.removeEventListener('click', onClick, capture);
 			document.removeEventListener('mousedown', onMouseDown, capture);
 			document.removeEventListener('focus', onFocus, capture);
+		},
+		update(newProps: TClickoutsideProps) {
+			exclude = newProps.exclude;
 		}
 	};
 }
 
-function isntInside(node: HTMLElement, event: Event, exclude?: HTMLElement | undefined) {
+function isntInside(node: HTMLElement, event: Event, exclude?: HTMLElement[] | undefined) {
 	return (
 		node !== event.target &&
 		!node.contains(event.target as Node) &&
-		!(exclude && exclude.contains(event.target as Node)) &&
-		!(exclude && exclude === event.target)
+		!(exclude && exclude.some((e) => e && e.contains(event.target as Node))) &&
+		!(exclude && exclude.some((e) => e && event.target === e))
 	);
+}
+
+interface TClickoutsideProps {
+	callback: () => void;
+	exclude?: HTMLElement[] | undefined;
+	capture?: boolean;
 }

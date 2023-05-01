@@ -49,6 +49,7 @@
 	import { userSummary } from '$ts/stores/user/summary.js';
 	import LowOnCreditsCard from '$components/LowOnCreditsCard.svelte';
 	import { convertToDBTimeString } from '$ts/helpers/convertToDBTimeString.js';
+	import { removeRepeatingOutputs } from '$ts/helpers/removeRepeatingOutputs.js';
 
 	export let data;
 
@@ -128,10 +129,13 @@
 		(p) => p.outputs
 	);
 
-	$: generateOutputs = [
-		...pinnedFullOutputs,
-		...(userGenerationOutputs ? userGenerationOutputs : [])
-	];
+	$: generateAllSucceededOutputs = userGenerationOutputs
+		? removeRepeatingOutputs({
+				outputsPinned: pinnedFullOutputs,
+				outputs: userGenerationOutputs,
+				onlySucceeded: true
+		  })
+		: [];
 
 	$: activeGenerationOutputs = $activeGeneration?.outputs.map((o) => ({
 		...o,
@@ -184,25 +188,30 @@
 			return;
 		}
 		if (key === 'ArrowLeft' || key === 'ArrowRight') {
-			let outputs: TGenerationFullOutput[] | undefined;
-			if ($activeGeneration.card_type === 'generate') {
-				outputs = generateOutputs;
-			} else {
-				outputs = activeGenerationOutputs;
-			}
-			if (!outputs) return;
-			outputs = outputs.filter((o) => o.image_url);
-			const index = outputs.findIndex((g) => g.id === $activeGeneration?.selected_output.id);
-			if (index === -1) return;
-			const addition = key === 'ArrowLeft' ? -1 : 1;
-			const newIndex = (index + addition + outputs.length) % outputs.length;
-			const newOutput = outputs[newIndex];
-			activeGeneration.set({
-				...newOutput.generation,
-				selected_output: newOutput,
-				card_type: $activeGeneration.card_type
-			});
+			goToSide(key === 'ArrowLeft' ? 'left' : 'right');
 		}
+	}
+
+	function goToSide(side: 'left' | 'right') {
+		if ($activeGeneration === undefined) return;
+		let outputs: TGenerationFullOutput[] | undefined;
+		if ($activeGeneration.card_type === 'generate') {
+			outputs = generateAllSucceededOutputs;
+		} else {
+			outputs = activeGenerationOutputs;
+		}
+		if (!outputs) return;
+		outputs = outputs.filter((o) => o.image_url);
+		const index = outputs.findIndex((g) => g.id === $activeGeneration?.selected_output.id);
+		if (index === -1) return;
+		const addition = side === 'left' ? -1 : 1;
+		const newIndex = (index + addition + outputs.length) % outputs.length;
+		const newOutput = outputs[newIndex];
+		activeGeneration.set({
+			...newOutput.generation,
+			selected_output: newOutput,
+			card_type: $activeGeneration.card_type
+		});
 	}
 
 	function addPlaceholderGenerationToGenerations() {
@@ -392,7 +401,12 @@
 </div>
 
 {#if $activeGeneration}
-	<GenerationFullScreen generation={$activeGeneration} modalType="generate" />
+	<GenerationFullScreen
+		onLeftButtonClicked={() => goToSide('left')}
+		onRightButtonClicked={() => goToSide('right')}
+		generation={$activeGeneration}
+		modalType="generate"
+	/>
 {/if}
 
 {#if isSignInModalOpen && !$page.data.session?.user.id}

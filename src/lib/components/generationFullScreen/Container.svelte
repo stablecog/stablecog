@@ -2,14 +2,15 @@
 	import {
 		lgBreakpoint,
 		sidebarWidth,
-		mainContainerMaxHeight,
-		mainContainerPadding
+		mainContainerPaddingX,
+		mainContainerPaddingY
 	} from '$components/generationFullScreen/constants';
 	import { clickoutside } from '$ts/actions/clickoutside';
 	import { activeGeneration, type TGenerationWithSelectedOutput } from '$userStores/generation';
 	import { windowHeight, windowWidth } from '$ts/stores/window';
 
 	export let generation: TGenerationWithSelectedOutput;
+	export let clickoutsideExceptions: HTMLElement[];
 
 	let imageContainerWidth = 0;
 	let imageContainerHeight = 0;
@@ -19,8 +20,8 @@
 	$: mainContainerWidth = $windowWidth;
 	$: mainContainerHeight = $windowHeight;
 
-	$: modalMaxWidth = mainContainerWidth - 2 * mainContainerPadding;
-	$: modalMaxHeight = mainContainerHeight - 2 * mainContainerPadding;
+	$: modalMaxWidth = mainContainerWidth - 2 * mainContainerPaddingX;
+	$: modalMaxHeight = mainContainerHeight - 2 * mainContainerPaddingY;
 
 	$: modalMinHeight = Math.min(modalMaxHeight, 575);
 
@@ -68,7 +69,8 @@
 				if ($activeGeneration !== undefined) {
 					activeGeneration.set(undefined);
 				}
-			}
+			},
+			exclude: clickoutsideExceptions
 		}}
 		style={$windowWidth >= lgBreakpoint
 			? `max-width: ${modalMaxWidth}px; max-height: ${modalMaxHeight}px`

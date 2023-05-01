@@ -30,6 +30,7 @@
 	import GenerateGridPlaceholder from '$components/generate/GenerateGridPlaceholder.svelte';
 	import IconEyeSlashOutline from '$components/icons/IconEyeSlashOutline.svelte';
 	import IconSadFaceOutline from '$components/icons/IconSadFaceOutline.svelte';
+	import { removeRepeatingOutputs } from '$ts/helpers/removeRepeatingOutputs';
 	export let generationsQuery: CreateInfiniteQueryResult<TUserGenerationFullOutputsPage, unknown>;
 	export let pinnedFullOutputs: TGenerationFullOutput[] | undefined = undefined;
 	export let rerenderKey: string;
@@ -49,9 +50,6 @@
 	let lastRerenderKey = rerenderKey;
 
 	$: onlyOutputs = $generationsQuery.data?.pages.flatMap((page) => page.outputs);
-	$: onlyOutputsIdsMap = onlyOutputs
-		? new Map<string, boolean>(onlyOutputs.map((output) => [output.id, true]))
-		: new Map<string, boolean>([]);
 
 	let outputs: TGenerationFullOutput[] | undefined;
 
@@ -66,27 +64,7 @@
 			outputs = [...onlyOutputs];
 			return;
 		}
-		let filteredPinnedOutputs: TGenerationFullOutput[] = [];
-		pinnedFullOutputs.forEach((o) => {
-			if (!onlyOutputsIdsMap.has(o.id)) {
-				filteredPinnedOutputs.push(o);
-			}
-		});
-
-		let newOutputs = [...onlyOutputs];
-		filteredPinnedOutputs.forEach((filteredOutput) => {
-			const newerThanIndex = newOutputs.findIndex(
-				(newOutput) =>
-					new Date(filteredOutput.generation.created_at).getTime() >
-					new Date(newOutput.generation.created_at).getTime()
-			);
-			if (newerThanIndex === -1) {
-				newOutputs.unshift(filteredOutput);
-			} else {
-				newOutputs.splice(newerThanIndex, 0, filteredOutput);
-			}
-		});
-		outputs = newOutputs;
+		outputs = removeRepeatingOutputs({ outputsPinned: pinnedFullOutputs, outputs: onlyOutputs });
 	}
 
 	$: items = outputs?.map((output, index) => ({

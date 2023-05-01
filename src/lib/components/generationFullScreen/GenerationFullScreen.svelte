@@ -46,9 +46,20 @@
 	import { browser } from '$app/environment';
 	import GenerationFullScreenImageSet from '$components/generationFullScreen/GenerationFullScreenImageSet.svelte';
 	import UpscaleAnimation from '$components/generate/UpscaleAnimation.svelte';
+	import IconChevronDown from '$components/icons/IconChevronDown.svelte';
+	import ButtonHoverEffect from '$components/buttons/ButtonHoverEffect.svelte';
+	import { isTouchscreen } from '$ts/stores/isTouchscreen';
+	import SideButton from '$components/generationFullScreen/SideButton.svelte';
 
 	export let generation: TGenerationWithSelectedOutput;
 	export let modalType: TGenerationFullScreenModalType;
+	export let onLeftButtonClicked: () => void;
+	export let onRightButtonClicked: () => void;
+
+	let buttonLeft: HTMLButtonElement;
+	let buttonRight: HTMLButtonElement;
+	let buttonLeftMobile: HTMLButtonElement;
+	let buttonRightMobile: HTMLButtonElement;
 
 	$: upscaleFromStore = $upscales.find(
 		(upscale) => upscale.type === 'from_output' && upscale.input === generation.selected_output.id
@@ -74,10 +85,6 @@
 			generation.selected_output.upscaled_image_url = upscaledImageUrlFromStore;
 		}
 	}
-
-	let hadUpscaledImageUrlOnMount =
-		generation.selected_output.upscaled_image_url !== undefined ||
-		upscaledImageUrlFromStore !== undefined;
 
 	$: currentImageUrl = generation.selected_output.upscaled_image_url
 		? generation.selected_output.upscaled_image_url
@@ -262,7 +269,13 @@
 		  }
 		: undefined}
 >
-	<Container {generation} let:imageContainerWidth let:imageContainerHeight let:modalMinHeight>
+	<Container
+		clickoutsideExceptions={[buttonLeft, buttonRight]}
+		{generation}
+		let:imageContainerWidth
+		let:imageContainerHeight
+		let:modalMinHeight
+	>
 		<div class="relative self-stretch flex items-center">
 			{#if generation.selected_output.image_url}
 				{#key generation.selected_output.id}
@@ -334,8 +347,24 @@
 						isProcessing={upscaleBeingProcessed}
 					/>
 				{/if}
+				<SideButton
+					name="Go Left"
+					iconClass="w-6 h-6"
+					class="flex md:hidden absolute left-0 top-1/2 transform -translate-y-1/2 w-8 h-full pointer-events-auto"
+					side="left"
+					bind:element={buttonLeftMobile}
+					onClick={onLeftButtonClicked}
+				/>
+				<SideButton
+					name="Go Right"
+					iconClass="w-6 h-6"
+					class="flex md:hidden absolute right-0 top-1/2 transform -translate-y-1/2 w-8 h-full pointer-events-auto"
+					side="right"
+					bind:element={buttonRightMobile}
+					onClick={onRightButtonClicked}
+				/>
 				{#if modalType === 'history' || modalType === 'generate'}
-					<div class="absolute right-1.5 top-1.5">
+					<div class="absolute right-1.5 top-1.5 pointer-events-auto z-10">
 						<FavoriteButton {generation} {modalType} />
 					</div>
 				{/if}
@@ -450,4 +479,18 @@
 			/>
 		</div>
 	</Container>
+	<SideButton
+		name="Go Left"
+		class="hidden md:flex absolute left-0 top-1/2 transform -translate-y-1/2 w-20 h-48"
+		side="left"
+		bind:element={buttonLeft}
+		onClick={onLeftButtonClicked}
+	/>
+	<SideButton
+		name="Go Right"
+		class="hidden md:flex absolute right-0 top-1/2 transform -translate-y-1/2 w-20 h-48"
+		side="right"
+		bind:element={buttonRight}
+		onClick={onRightButtonClicked}
+	/>
 </ModalWrapper>

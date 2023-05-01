@@ -73,19 +73,21 @@
 			return;
 		}
 		if (key === 'ArrowLeft' || key === 'ArrowRight') {
-			const outputs = $galleryGenerationFullOutputsQuery?.data?.pages.flatMap(
-				(page) => page.outputs
-			);
-			if (!outputs) return;
-			const index = outputs.findIndex((g) => g.id === $activeGeneration?.selected_output.id);
-			if (index === -1) return;
-			const addition = key === 'ArrowLeft' ? -1 : 1;
-			const newIndex = (index + addition + outputs.length) % outputs.length;
-			activeGeneration.set({
-				...outputs[newIndex].generation,
-				selected_output: outputs[newIndex]
-			});
+			goToSide(key === 'ArrowLeft' ? 'left' : 'right');
 		}
+	}
+
+	function goToSide(side: 'left' | 'right') {
+		const outputs = $galleryGenerationFullOutputsQuery?.data?.pages.flatMap((page) => page.outputs);
+		if (!outputs) return;
+		const index = outputs.findIndex((g) => g.id === $activeGeneration?.selected_output.id);
+		if (index === -1) return;
+		const addition = side === 'left' ? -1 : 1;
+		const newIndex = (index + addition + outputs.length) % outputs.length;
+		activeGeneration.set({
+			...outputs[newIndex].generation,
+			selected_output: outputs[newIndex]
+		});
 	}
 
 	onMount(() => {
@@ -173,5 +175,10 @@
 </div>
 
 {#if $activeGeneration && $galleryGenerationFullOutputsQuery?.isInitialLoading === false}
-	<GenerationFullScreen generation={$activeGeneration} modalType="gallery" />
+	<GenerationFullScreen
+		onLeftButtonClicked={() => goToSide('left')}
+		onRightButtonClicked={() => goToSide('right')}
+		generation={$activeGeneration}
+		modalType="gallery"
+	/>
 {/if}
