@@ -349,6 +349,7 @@
 				{/if}
 				<SideButton
 					name="Go Left"
+					hasAnimation={false}
 					iconClass="w-6 h-6"
 					class="flex md:hidden absolute left-0 top-1/2 transform -translate-y-1/2 w-10 h-full pointer-events-auto"
 					side="left"
@@ -357,6 +358,7 @@
 				/>
 				<SideButton
 					name="Go Right"
+					hasAnimation={false}
 					iconClass="w-6 h-6"
 					class="flex md:hidden absolute right-0 top-1/2 transform -translate-y-1/2 w-10 h-full pointer-events-auto"
 					side="right"

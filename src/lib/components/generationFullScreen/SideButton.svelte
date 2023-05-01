@@ -7,11 +7,13 @@
 	export let name: string;
 	export let onClick: () => void;
 	export let side: 'left' | 'right' = 'left';
+	export let iconClass = 'w-7 h-7';
+	export let hasAnimation = true;
 	export { classes as class };
 	let classes = `absolute ${
 		side === 'left' ? 'left-0' : 'right-0'
 	} w-18 flex items-center justify-center top-1/2 transform -translate-y-1/2 h-64`;
-	export let iconClass = 'w-7 h-7';
+
 	let isRecentlyClicked = false;
 	let isRecentlyClickedTimeout: NodeJS.Timeout;
 
@@ -34,7 +36,8 @@
 	<div class="w-full h-full relative flex items-center rounded-xl justify-center">
 		<ButtonHoverEffect hoverFrom={side === 'left' ? 'right' : 'left'} />
 		<IconChevronDown
-			class="{iconClass} text-c-on-bg/50 transition duration-100 transform {isRecentlyClicked
+			class="{iconClass} text-c-on-bg/50 transition duration-100 transform {isRecentlyClicked &&
+			hasAnimation
 				? side === 'left'
 					? '-translate-x-1.5'
 					: 'translate-x-1.5'
