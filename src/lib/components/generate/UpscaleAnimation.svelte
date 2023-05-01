@@ -11,9 +11,7 @@
 		: ''}"
 >
 	<div
-		style="transform: translateX({$animation === 1 && !isProcessing
-			? 0
-			: -100 + $animation * 100}%)"
+		style="transform: translateX({!isProcessing ? 0 : -100 + $animation * 100}%)"
 		class="w-full h-full bg-c-primary/50 filter backdrop-blur-lg 
     absolute left-0 top-0"
 	/>
