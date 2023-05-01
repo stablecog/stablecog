@@ -4,6 +4,7 @@ import {
 } from '$ts/constants/generationModels';
 import { apiUrl } from '$ts/constants/main';
 import type { TAvailableSchedulerId } from '$ts/constants/schedulers';
+import { convertToDBTimeString } from '$ts/helpers/convertToDBTimeString';
 import type { TGalleryGenerationFullOutputPageRes } from '$ts/queries/galleryGenerations';
 import type { TGenerationFullOutput, TGenerationOutput } from '$ts/stores/user/generation';
 import type { ServerLoad } from '@sveltejs/kit';
@@ -45,7 +46,7 @@ export const load: ServerLoad = async ({ url }) => {
 			guidance_scale: hit.guidance_scale,
 			model_id: hit.model_id as TAvailableGenerationModelId,
 			scheduler_id: hit.scheduler_id as TAvailableSchedulerId,
-			created_at: Date.now(),
+			created_at: convertToDBTimeString(Date.now()),
 			prompt: {
 				id: hit.prompt_id,
 				text: hit.prompt_text
