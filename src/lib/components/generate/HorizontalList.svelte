@@ -12,6 +12,8 @@
 	import LL from '$i18n/i18n-svelte';
 	import { isTouchscreen } from '$ts/stores/isTouchscreen';
 	import GenerateHorizontalListPlaceholder from '$components/generate/GenerateHorizontalListPlaceholder.svelte';
+	import IconEyeSlashOutline from '$components/icons/IconEyeSlashOutline.svelte';
+	import IconSadFaceOutline from '$components/icons/IconSadFaceOutline.svelte';
 
 	export let generationsQuery: CreateInfiniteQueryResult<TUserGenerationFullOutputsPage, unknown>;
 	export let pinnedFullOutputs: TGenerationFullOutput[] | undefined = undefined;
@@ -21,12 +23,46 @@
 	let wrapperWidth: number;
 	let containerWidth: number;
 
-	$: outputs = $generationsQuery.data?.pages
-		? [
-				...(pinnedFullOutputs ?? []),
-				...$generationsQuery.data?.pages.flatMap((page) => page.outputs)
-		  ]
-		: undefined;
+	$: onlyOutputs = $generationsQuery.data?.pages.flatMap((page) => page.outputs);
+	$: onlyOutputsIdsMap = onlyOutputs
+		? new Map<string, boolean>(onlyOutputs.map((output) => [output.id, true]))
+		: new Map<string, boolean>([]);
+
+	let outputs: TGenerationFullOutput[] | undefined;
+
+	$: [onlyOutputs, pinnedFullOutputs], setOutputs();
+
+	function setOutputs() {
+		if (!onlyOutputs) {
+			outputs = undefined;
+			return;
+		}
+		if (!pinnedFullOutputs) {
+			outputs = [...onlyOutputs];
+			return;
+		}
+		let filteredPinnedOutputs: TGenerationFullOutput[] = [];
+		pinnedFullOutputs.forEach((o) => {
+			if (!onlyOutputsIdsMap.has(o.id)) {
+				filteredPinnedOutputs.push(o);
+			}
+		});
+
+		let newOutputs = [...onlyOutputs];
+		filteredPinnedOutputs.forEach((filteredOutput) => {
+			const newerThanIndex = newOutputs.findIndex(
+				(newOutput) =>
+					new Date(filteredOutput.generation.created_at).getTime() >
+					new Date(newOutput.generation.created_at).getTime()
+			);
+			if (newerThanIndex === -1) {
+				newOutputs.unshift(filteredOutput);
+			} else {
+				newOutputs.splice(newerThanIndex, 0, filteredOutput);
+			}
+		});
+		outputs = newOutputs;
+	}
 </script>
 
 {#if $generationsQuery.isInitialLoading}
@@ -66,7 +102,9 @@
 						<ImagePlaceholder width={output.generation.width} height={output.generation.height} />
 						<div
 							class="absolute left-0 top-0 w-full h-full bg-c-bg-secondary transition 
-              z-0 rounded-md filter blur-none border overflow-hidden border-c-bg-secondary {!$isTouchscreen
+              z-0 rounded-md filter blur-none border overflow-hidden border-c-bg-secondary {!$isTouchscreen &&
+							status !== 'failed' &&
+							status !== 'failed-nsfw'
 								? 'hover:border-c-primary'
 								: ''}"
 						>
@@ -95,11 +133,11 @@
 										in:fade|local={{ duration: 200, easing: quadOut }}
 										class="w-full h-full flex items-center bg-c-bg-secondary justify-center relative"
 									>
-										<p class="text-sm text-c-on-bg/50 px-5 py-3 text-center leading-relaxed">
-											{status === 'failed-nsfw'
-												? $LL.Error.ImageWasNSFW()
-												: $LL.Error.SomethingWentWrong()}
-										</p>
+										{#if status === 'failed-nsfw'}
+											<IconEyeSlashOutline class="w-4 h-4 text-c-on-bg/50" />
+										{:else}
+											<IconSadFaceOutline class="w-4 h-4 text-c-on-bg/50" />
+										{/if}
 									</div>
 								{/if}
 							{/if}

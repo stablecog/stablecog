@@ -21,6 +21,7 @@ import {
 import { isSuperAdmin } from '$ts/helpers/admin/roles';
 import { userSummary } from '$ts/stores/user/summary';
 import { derived } from 'svelte/store';
+import { convertToDBTimeString } from '$ts/helpers/convertToDBTimeString';
 
 export const generations = writable<TGeneration[]>([]);
 export const activeGeneration = writable<TGenerationWithSelectedOutput | undefined>(undefined);
@@ -78,7 +79,7 @@ export const setGenerationToSucceeded = ({
 				status: 'failed-nsfw' as TGenerationOutputStatus
 			}))
 		];
-		gen.completed_at = Date.now();
+		gen.completed_at = convertToDBTimeString(Date.now());
 		const costCompletionPerMs = getCostCompletionPerMsFromGeneration(gen);
 		if (costCompletionPerMs !== null) {
 			generationCostCompletionPerMs.set(costCompletionPerMs);
@@ -120,7 +121,7 @@ export const setGenerationToServerProcessing = ({ ui_id, id }: { ui_id: string; 
 			gen.outputs.forEach((o) => {
 				o.animation = newGenerationCompleteAnimation(o.animation);
 			});
-			gen.started_at = Date.now();
+			gen.started_at = convertToDBTimeString(Date.now());
 			if (!gen.ui_id) gen.ui_id = ui_id;
 			return $generations;
 		}
@@ -131,7 +132,7 @@ export const setGenerationToServerProcessing = ({ ui_id, id }: { ui_id: string; 
 			gen2.outputs.forEach((o) => {
 				o.animation = newGenerationCompleteAnimation(o.animation);
 			});
-			gen2.started_at = Date.now();
+			gen2.started_at = convertToDBTimeString(Date.now());
 			if (!gen2.id) gen2.id = id;
 			return $generations;
 		}
@@ -144,7 +145,7 @@ export async function queueInitialGenerationRequest(request: TInitialGenerationR
 		const generationToSubmit: TGeneration = {
 			...request,
 			status: 'to-be-submitted',
-			created_at: Date.now(),
+			created_at: convertToDBTimeString(Date.now()),
 			outputs: [...Array(request.num_outputs)].map(() => ({
 				id: generateSSEId(),
 				image_url: '',
@@ -349,9 +350,9 @@ export interface TGeneration extends TGenerationBase {
 	id?: string;
 	ui_id: string;
 	outputs: TGenerationOutput[];
-	started_at?: number;
-	created_at: number;
-	completed_at?: number;
+	started_at?: string;
+	created_at: string;
+	completed_at?: string;
 	submit_to_gallery: boolean;
 	is_placeholder?: boolean;
 }

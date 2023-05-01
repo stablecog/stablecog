@@ -14,6 +14,7 @@ import {
 	PUBLIC_STRIPE_PRODUCT_ID_ULTIMATE_SUBSCRIPTION
 } from '$env/static/public';
 import { isSuperAdmin } from '$ts/helpers/admin/roles';
+import { convertToDBTimeString } from '$ts/helpers/convertToDBTimeString';
 
 export const upscales = writable<TUpscale[]>([]);
 
@@ -62,11 +63,13 @@ export const setUpscaleToSucceeded = async ({
 			console.error(e);
 		}
 	}
-	ups[index].completed_at = Date.now();
+	ups[index].completed_at = convertToDBTimeString(Date.now());
 	const started_at = ups[index].started_at;
 	const completed_at = ups[index].completed_at;
 	if (started_at && completed_at) {
-		estimatedUpscaleDurationMs.set(completed_at - started_at);
+		estimatedUpscaleDurationMs.set(
+			new Date(completed_at).getTime() - new Date(started_at).getTime()
+		);
 	}
 	upscales.set(ups);
 };
@@ -108,7 +111,7 @@ export const setUpscaleToServerProcessing = ({ ui_id, id }: { ui_id: string; id:
 		const ups = $upscales.find((ups) => ups.id === id);
 		if (ups && ups.status !== 'succeeded' && ups.status !== 'failed') {
 			ups.status = 'server-processing';
-			ups.started_at = Date.now();
+			ups.started_at = convertToDBTimeString(Date.now());
 			if (!ups.ui_id) ups.ui_id = ui_id;
 			ups.animation = newUpscaleCompleteAnimation(ups.animation);
 			return $upscales;
@@ -116,7 +119,7 @@ export const setUpscaleToServerProcessing = ({ ui_id, id }: { ui_id: string; id:
 		const ups2 = $upscales.find((ups) => ups.ui_id === ui_id);
 		if (ups2 && ups2.status !== 'succeeded' && ups2.status !== 'failed') {
 			ups2.status = 'server-processing';
-			ups2.started_at = Date.now();
+			ups2.started_at = convertToDBTimeString(Date.now());
 			if (!ups2.id) ups2.id = id;
 			ups2.animation = newUpscaleCompleteAnimation(ups2.animation);
 			return $upscales;
@@ -130,7 +133,7 @@ export async function queueInitialUpscaleRequest(request: TInitialUpscaleRequest
 		const upscalesToSubmit: TUpscale = {
 			...request,
 			outputs: [],
-			created_at: Date.now(),
+			created_at: convertToDBTimeString(Date.now()),
 			status: 'to-be-submitted',
 			animation: newUpscaleStartAnimation()
 		};
@@ -216,9 +219,9 @@ export interface TUpscale extends TUpscaleBase {
 	id?: string;
 	ui_id: string;
 	outputs: TUpscaleOutput[];
-	started_at?: number;
-	created_at: number;
-	completed_at?: number;
+	started_at?: string;
+	created_at: string;
+	completed_at?: string;
 	animation?: Tweened<number>;
 }
 

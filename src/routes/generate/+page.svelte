@@ -48,6 +48,7 @@
 	import { expandCollapse } from '$ts/animation/transitions.js';
 	import { userSummary } from '$ts/stores/user/summary.js';
 	import LowOnCreditsCard from '$components/LowOnCreditsCard.svelte';
+	import { convertToDBTimeString } from '$ts/helpers/convertToDBTimeString.js';
 
 	export let data;
 
@@ -110,9 +111,32 @@
 			: false
 	}`;
 
-	$: pinnedFullOutputs = $generations
+	$: pinnedFullOutputs = [...$generations]
+		.map((g) => ({
+			...g,
+			outputs: [
+				...[
+					...g.outputs.filter((o) => o.status !== 'failed-nsfw' || o.status !== 'failed-nsfw')
+				].reverse(),
+				...g.outputs.filter((o) => o.status === 'failed-nsfw' || o.status === 'failed')
+			]
+		}))
 		.filter((g) => g.status !== 'pre-submit')
 		.flatMap((g) => g.outputs.map((o) => ({ ...o, generation: g })));
+
+	$: userGenerationOutputs = $userGenerationFullOutputsQuery?.data?.pages?.flatMap(
+		(p) => p.outputs
+	);
+
+	$: generateOutputs = [
+		...pinnedFullOutputs,
+		...(userGenerationOutputs ? userGenerationOutputs : [])
+	];
+
+	$: activeGenerationOutputs = $activeGeneration?.outputs.map((o) => ({
+		...o,
+		generation: $activeGeneration!
+	}));
 
 	let mounted = false;
 	let generationPlaceholder: TGeneration | undefined;
@@ -131,7 +155,7 @@
 					id: '1',
 					text: 'placeholder negative prompt'
 				},
-				created_at: Date.now(),
+				created_at: convertToDBTimeString(Date.now()),
 				guidance_scale: $generationGuidanceScale,
 				inference_steps: Number($generationInferenceSteps),
 				model_id: generationModelIdDefault,
@@ -162,13 +186,9 @@
 		if (key === 'ArrowLeft' || key === 'ArrowRight') {
 			let outputs: TGenerationFullOutput[] | undefined;
 			if ($activeGeneration.card_type === 'generate') {
-				const userGenerationOutputs = $userGenerationFullOutputsQuery?.data?.pages.flatMap(
-					(p) => p.outputs
-				);
-				outputs = [...pinnedFullOutputs, ...(userGenerationOutputs ? userGenerationOutputs : [])];
-				console.log(outputs.length);
+				outputs = generateOutputs;
 			} else {
-				outputs = $activeGeneration.outputs.map((o) => ({ ...o, generation: $activeGeneration! }));
+				outputs = activeGenerationOutputs;
 			}
 			if (!outputs) return;
 			outputs = outputs.filter((o) => o.image_url);

@@ -2,6 +2,8 @@
 	import ImagePlaceholder from '$components/ImagePlaceholder.svelte';
 	import GenerationImage from '$components/generationImage/GenerationImage.svelte';
 	import GenerationAnimation from '$components/grids/GenerationAnimation.svelte';
+	import IconEyeSlashOutline from '$components/icons/IconEyeSlashOutline.svelte';
+	import IconSadFaceOutline from '$components/icons/IconSadFaceOutline.svelte';
 	import LL from '$i18n/i18n-svelte';
 	import type { TGenerationWithSelectedOutput } from '$ts/stores/user/generation';
 	import { quadIn, quadOut } from 'svelte/easing';
@@ -37,9 +39,14 @@
 		{:else}
 			<div
 				in:fade|local={{ duration: 200, easing: quadOut }}
-				class="w-full h-full flex items-center bg-c-bg-secondary justify-center relative"
+				class="w-full h-full flex flex-col items-center bg-c-bg-secondary justify-center relative px-5 py-3 gap-2"
 			>
-				<p class="text-sm text-c-on-bg/50 px-5 py-3 text-center leading-relaxed">
+				{#if status === 'failed-nsfw'}
+					<IconEyeSlashOutline class="w-8 h-8 text-c-on-bg/50" />
+				{:else}
+					<IconSadFaceOutline class="w-8 h-8 text-c-on-bg/50" />
+				{/if}
+				<p class="text-sm text-c-on-bg/50 text-center leading-relaxed">
 					{status === 'failed-nsfw' ? $LL.Error.ImageWasNSFW() : $LL.Error.SomethingWentWrong()}
 				</p>
 			</div>
