@@ -46,9 +46,6 @@
 	import { browser } from '$app/environment';
 	import GenerationFullScreenImageSet from '$components/generationFullScreen/GenerationFullScreenImageSet.svelte';
 	import UpscaleAnimation from '$components/generate/UpscaleAnimation.svelte';
-	import IconChevronDown from '$components/icons/IconChevronDown.svelte';
-	import ButtonHoverEffect from '$components/buttons/ButtonHoverEffect.svelte';
-	import { isTouchscreen } from '$ts/stores/isTouchscreen';
 	import SideButton from '$components/generationFullScreen/SideButton.svelte';
 
 	export let generation: TGenerationWithSelectedOutput;
@@ -136,7 +133,10 @@
 		upscaledImageHeight = undefined;
 		buttonObjectsWithState = { ...initialButtonObjectsWithState };
 		const { seed, selected_output, ...rest } = generation;
-		generateSimilarUrl = getGenerationUrlFromParams(rest);
+		generateSimilarUrl = getGenerationUrlFromParams({
+			...rest,
+			should_add_random_number: modalType === 'generate' || modalType === 'stage'
+		});
 		linkUrl = `${$page.url.origin}/gallery?output=${generation.id}`;
 		if (browser && window && !initialGenerationChange) {
 			const searchParams = new URLSearchParams(window.location.search);

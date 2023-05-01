@@ -27,7 +27,6 @@
 	} from '$ts/stores/generationSettings';
 	import { isTouchscreen } from '$ts/stores/isTouchscreen';
 	import {
-		generations,
 		maxOngoingGenerationsCountReached,
 		queueInitialGenerationRequest,
 		type TInitialGenerationRequest
@@ -40,7 +39,6 @@
 	import { mdBreakpoint } from '$components/generationFullScreen/constants';
 	import { onMount } from 'svelte';
 	import { isValue } from '$ts/helpers/isValue';
-	import { isSuperAdmin } from '$ts/helpers/admin/roles';
 	import type { TIsReadyMap } from '$components/generate/types';
 	import type { TCreatePageData } from '$routes/generate/+page.server';
 	import IconWand from '$components/icons/IconWand.svelte';

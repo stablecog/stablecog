@@ -7,7 +7,8 @@ export function getGenerationUrlFromParams({
 	height,
 	guidance_scale,
 	num_inference_steps,
-	seed
+	seed,
+	should_add_random_number
 }: TGenerationUrlFromParamsParams) {
 	const baseUrl = '/generate?';
 	let params: string[] = [];
@@ -20,6 +21,7 @@ export function getGenerationUrlFromParams({
 	if (seed || seed === 0) params.push(`s=${seed}`);
 	if (model_id) params.push(`mi=${model_id}`);
 	if (scheduler_id) params.push(`si=${scheduler_id}`);
+	if (should_add_random_number) params.push(`rn=${Math.round(Math.random() * 1000000000000)}`);
 	return baseUrl + params.join('&');
 }
 
@@ -39,4 +41,5 @@ export interface TGenerationUrlFromParamsParams {
 	seed?: number;
 	num_inference_steps?: number;
 	guidance_scale?: number;
+	should_add_random_number?: boolean;
 }
