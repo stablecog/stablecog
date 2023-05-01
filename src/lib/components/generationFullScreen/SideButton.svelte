@@ -24,7 +24,6 @@
 			isRecentlyClicked = false;
 		}, 100);
 		onClick();
-		element.blur();
 	}
 </script>
 
@@ -32,7 +31,7 @@
 	aria-label={name}
 	bind:this={element}
 	on:click={_onClick}
-	class="z-10 group p-1 rounded-xl max-h-full {classes}"
+	class="z-10 group p-1 rounded-xl touch-manipulation max-h-full {classes}"
 >
 	<div class="w-full h-full relative flex items-center rounded-xl justify-center">
 		<ButtonHoverEffect hoverFrom={side === 'left' ? 'right' : 'left'} />
