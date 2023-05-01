@@ -16,10 +16,22 @@
 	export { classes as class };
 	export let provider: Provider = 'google';
 	let classes = '';
+
+	let width: number;
+	let height: number;
+
+	$: buttonSize = smallestSquareSide(width, height);
+
+	function smallestSquareSide(width: number, height: number): number {
+		const diagonal = Math.sqrt(width * width + height * height);
+		return diagonal;
+	}
 </script>
 
 {#if href}
 	<a
+		bind:clientWidth={width}
+		bind:clientHeight={height}
 		{href}
 		{target}
 		data-sveltekit-preload-data={prefetch && (target === '_self' || target === undefined)
@@ -54,17 +66,18 @@
 			: 'bg-c-primary'} {classes}"
 	>
 		<div
-			class="w-[200%] h-full absolute left-0 top-0 flex items-center justify-center  {$isTouchscreen
+			style="width: {buttonSize}px; height: {buttonSize}px;"
+			class="absolute left-1/2 top-1/2 transform -translate-y-1/2 -translate-x-1/2 flex items-center justify-center {$isTouchscreen
 				? 'hidden'
 				: 'flex'}"
 		>
 			<div
-				class="w-full aspect-square origin-left rounded-full transition transform -translate-x-full 
+				class="absolute w-full h-full rounded-full transition transform left-0 -translate-x-full
 				{provider === 'google'
 					? 'bg-indigo-200'
 					: provider === 'discord'
 					? 'bg-[#4854d7]'
-					: 'bg-c-secondary'} {!$isTouchscreen ? 'group-hover:translate-x-[-45%]' : ''}"
+					: 'bg-c-secondary'} {!$isTouchscreen ? 'group-enabled:group-hover:translate-x-0' : ''}"
 			/>
 		</div>
 		<div class="w-full relative">
@@ -100,6 +113,8 @@
 	</a>
 {:else}
 	<button
+		bind:clientWidth={width}
+		bind:clientHeight={height}
 		on:click={onClick}
 		disabled={disabled || loading}
 		class="touch-manipulation relative flex items-center justify-center text-center
@@ -131,17 +146,18 @@
 			: 'bg-c-primary'} {classes}"
 	>
 		<div
-			class="w-[200%] h-full absolute left-0 top-0 items-center justify-center {$isTouchscreen
+			style="width: {buttonSize}px; height: {buttonSize}px;"
+			class="absolute left-1/2 top-1/2 transform -translate-y-1/2 -translate-x-1/2 flex items-center justify-center {$isTouchscreen
 				? 'hidden'
 				: 'flex'}"
 		>
 			<div
-				class="w-full aspect-square origin-left rounded-full transition transform -translate-x-full 
+				class="absolute w-full h-full rounded-full transition transform left-0 -translate-x-full
 				{provider === 'google'
 					? 'bg-indigo-200'
 					: provider === 'discord'
 					? 'bg-[#4854d7]'
-					: 'bg-c-secondary'} {!$isTouchscreen ? 'group-hover:translate-x-[-45%]' : ''}"
+					: 'bg-c-secondary'} {!$isTouchscreen ? 'group-enabled:group-hover:translate-x-0' : ''}"
 			/>
 		</div>
 		<div class="w-full relative">

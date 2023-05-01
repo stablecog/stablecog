@@ -40,10 +40,22 @@
 			});
 		}
 	}
+
+	let width: number;
+	let height: number;
+
+	$: buttonSize = smallestSquareSide(width, height);
+
+	function smallestSquareSide(width: number, height: number): number {
+		const diagonal = Math.sqrt(width * width + height * height);
+		return diagonal;
+	}
 </script>
 
 {#if href}
 	<a
+		bind:clientWidth={width}
+		bind:clientHeight={height}
 		on:click={_onClick}
 		{href}
 		{target}
@@ -80,19 +92,20 @@
 			: 'bg-c-primary'} {classes} {shouldAnimate ? 'scale-animation' : ''}"
 	>
 		<div
-			class="w-[200%] h-full absolute left-0 top-0 flex items-center justify-center {$isTouchscreen
+			style="width: {buttonSize}px; height: {buttonSize}px;"
+			class="absolute left-1/2 top-1/2 transform -translate-y-1/2 -translate-x-1/2 flex items-center justify-center {$isTouchscreen
 				? 'hidden'
 				: 'flex'}"
 		>
 			<div
-				class="w-full aspect-square origin-left rounded-full transition transform -translate-x-full 
-				{type === 'success'
+				class="absolute w-full h-full rounded-full transition transform left-0 -translate-x-full
+					{type === 'success'
 					? 'bg-c-success-secondary'
 					: type === 'danger'
 					? 'bg-c-danger-secondary'
 					: type === 'no-bg-on-bg'
 					? 'bg-c-on-bg/10'
-					: 'bg-c-secondary'} {!$isTouchscreen ? 'group-hover:translate-x-[-45%]' : ''}"
+					: 'bg-c-secondary'} {!$isTouchscreen ? 'group-enabled:group-hover:translate-x-0' : ''}"
 			/>
 		</div>
 		<div class="relative">
@@ -133,6 +146,8 @@
 	</a>
 {:else}
 	<button
+		bind:clientWidth={width}
+		bind:clientHeight={height}
 		on:click={_onClick}
 		disabled={disabled || loading || uploading}
 		class="touch-manipulation relative flex items-center justify-center text-center font-bold gap-2 
@@ -167,21 +182,20 @@
 			: ''}"
 	>
 		<div
-			class="w-[200%] h-full absolute left-0 top-0 flex items-center justify-center {$isTouchscreen
+			style="width: {buttonSize}px; height: {buttonSize}px;"
+			class="absolute left-1/2 top-1/2 transform -translate-y-1/2 -translate-x-1/2 flex items-center justify-center {$isTouchscreen
 				? 'hidden'
 				: 'flex'}"
 		>
 			<div
-				class="w-full aspect-square origin-left rounded-full transition transform -translate-x-full 
+				class="absolute w-full h-full rounded-full transition transform left-0 -translate-x-full
 					{type === 'success'
 					? 'bg-c-success-secondary'
 					: type === 'danger'
 					? 'bg-c-danger-secondary'
 					: type === 'no-bg-on-bg'
 					? 'bg-c-on-bg/10'
-					: 'bg-c-secondary'} {!$isTouchscreen
-					? 'group-enabled:group-hover:translate-x-[-45%]'
-					: ''}"
+					: 'bg-c-secondary'} {!$isTouchscreen ? 'group-enabled:group-hover:translate-x-0' : ''}"
 			/>
 		</div>
 		<div class="relative">
