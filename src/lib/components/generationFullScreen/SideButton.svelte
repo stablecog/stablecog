@@ -7,7 +7,7 @@
 	export let name: string;
 	export let onClick: () => void;
 	export let side: 'left' | 'right' = 'left';
-	export let iconClass = 'w-7 h-7';
+	export let iconClass = 'w-8 h-8';
 	export let hasAnimation = true;
 	export { classes as class };
 	let classes = `absolute ${
@@ -31,12 +31,13 @@
 	aria-label={name}
 	bind:this={element}
 	on:click={_onClick}
-	class="z-10 group p-1 rounded-xl touch-manipulation max-h-full {classes}"
+	class="z-10 group p-0.5 md:p-1 rounded-xl touch-manipulation max-h-full {classes}"
 >
 	<div class="w-full h-full relative flex items-center rounded-xl justify-center">
 		<ButtonHoverEffect hoverFrom={side === 'left' ? 'right' : 'left'} />
 		<IconChevronDown
-			class="{iconClass} text-c-on-bg/50 transition duration-100 transform {isRecentlyClicked &&
+			strokeWidth={3}
+			class="{iconClass} text-c-on-bg transition duration-100 transform {isRecentlyClicked &&
 			hasAnimation
 				? side === 'left'
 					? '-translate-x-1.5'

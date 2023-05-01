@@ -480,14 +480,14 @@
 	</Container>
 	<SideButton
 		name="Go Left"
-		class="hidden md:flex absolute left-0 top-1/2 transform -translate-y-1/2 w-20 h-48"
+		class="hidden md:flex absolute left-0 top-1/2 transform -translate-y-1/2 w-20 h-64"
 		side="left"
 		bind:element={buttonLeft}
 		onClick={onLeftButtonClicked}
 	/>
 	<SideButton
 		name="Go Right"
-		class="hidden md:flex absolute right-0 top-1/2 transform -translate-y-1/2 w-20 h-48"
+		class="hidden md:flex absolute right-0 top-1/2 transform -translate-y-1/2 w-20 h-64"
 		side="right"
 		bind:element={buttonRight}
 		onClick={onRightButtonClicked}

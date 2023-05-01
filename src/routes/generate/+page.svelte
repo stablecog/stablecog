@@ -22,7 +22,7 @@
 		getUserGenerationFullOutputs,
 		type TUserGenerationFullOutputsPage
 	} from '$ts/queries/userGenerations';
-	import { createPageUserGenerationFullOutputsQueryKey } from '$ts/stores/user/keys';
+	import { userGenerationFullOutputsQueryKey } from '$ts/stores/user/keys';
 	import { windowHeight, windowWidth } from '$ts/stores/window';
 	import Navbar from '$components/navigation/Navbar.svelte';
 	import SidebarWrapper from '$components/generate/SidebarWrapper.svelte';
@@ -74,23 +74,16 @@
 	let isGenerationSettingsSheetOpen = false;
 
 	const userGalleryCurrentView: string = 'all';
-	let userGenerationFullOutputsQuery:
-		| CreateInfiniteQueryResult<TUserGenerationFullOutputsPage, unknown>
-		| undefined;
 
-	$: createPageUserGenerationFullOutputsQueryKey.set([
-		'create_page_user_generation_full_outputs',
-		userGalleryCurrentView
-	]);
+	$: userGenerationFullOutputsQueryKey.set(['user_generation_full_outputs', 'all', '', '']);
 
 	$: userGenerationFullOutputsQuery = $page.data.session?.user.id
 		? createInfiniteQuery({
-				queryKey: $createPageUserGenerationFullOutputsQueryKey,
+				queryKey: $userGenerationFullOutputsQueryKey,
 				queryFn: async (lastPage) => {
 					let outputsPage = await getUserGenerationFullOutputs({
 						access_token: $page.data.session?.access_token || '',
-						cursor: lastPage?.pageParam,
-						is_favorited: userGalleryCurrentView === 'favorites'
+						cursor: lastPage?.pageParam
 					});
 					return outputsPage;
 				},
@@ -101,7 +94,7 @@
 		  })
 		: undefined;
 
-	$: gridRerenderKey = `create_page_user_generation_full_outputs_${userGalleryCurrentView}_${
+	$: gridRerenderKey = `generate_page_user_generation_full_outputs_${userGalleryCurrentView}_${
 		$generations.length
 	}_${$generations.flatMap((g) => g.outputs).length}_${pinnedFullOutputs.length}_${
 		$userGenerationFullOutputsQuery?.isInitialLoading
