@@ -133,10 +133,7 @@
 		upscaledImageHeight = undefined;
 		buttonObjectsWithState = { ...initialButtonObjectsWithState };
 		const { seed, selected_output, ...rest } = generation;
-		generateSimilarUrl = getGenerationUrlFromParams({
-			...rest,
-			should_add_random_number: modalType === 'generate' || modalType === 'stage'
-		});
+		generateSimilarUrl = getGenerationUrlFromParams(rest);
 		linkUrl = `${$page.url.origin}/gallery?output=${generation.id}`;
 		if (browser && window && !initialGenerationChange) {
 			const searchParams = new URLSearchParams(window.location.search);
