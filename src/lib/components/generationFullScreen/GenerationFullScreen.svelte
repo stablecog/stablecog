@@ -350,7 +350,7 @@
 				<SideButton
 					name="Go Left"
 					iconClass="w-6 h-6"
-					class="flex md:hidden absolute left-0 top-1/2 transform -translate-y-1/2 w-8 h-full pointer-events-auto"
+					class="flex md:hidden absolute left-0 top-1/2 transform -translate-y-1/2 w-10 h-full pointer-events-auto"
 					side="left"
 					bind:element={buttonLeftMobile}
 					onClick={onLeftButtonClicked}
@@ -358,7 +358,7 @@
 				<SideButton
 					name="Go Right"
 					iconClass="w-6 h-6"
-					class="flex md:hidden absolute right-0 top-1/2 transform -translate-y-1/2 w-8 h-full pointer-events-auto"
+					class="flex md:hidden absolute right-0 top-1/2 transform -translate-y-1/2 w-10 h-full pointer-events-auto"
 					side="right"
 					bind:element={buttonRightMobile}
 					onClick={onRightButtonClicked}

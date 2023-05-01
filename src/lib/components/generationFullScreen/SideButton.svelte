@@ -34,7 +34,7 @@
 	<div class="w-full h-full relative flex items-center rounded-xl justify-center">
 		<ButtonHoverEffect hoverFrom={side === 'left' ? 'right' : 'left'} />
 		<IconChevronDown
-			class="{iconClass} text-c-on-bg transition duration-100 transform {isRecentlyClicked
+			class="{iconClass} text-c-on-bg/50 transition duration-100 transform {isRecentlyClicked
 				? side === 'left'
 					? '-translate-x-1.5'
 					: 'translate-x-1.5'
