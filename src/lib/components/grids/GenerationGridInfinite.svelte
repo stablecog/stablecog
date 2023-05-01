@@ -175,18 +175,15 @@
 					<div class="w-full relative group">
 						<ImagePlaceholder width={output.generation.width} height={output.generation.height} />
 						<div
-							class="absolute left-0 top-0 w-full h-full bg-c-bg-secondary transition {cardType ===
-							'generate'
+							class="absolute left-0 top-0 w-full h-full bg-c-bg-secondary transition overflow-hidden 
+							z-0 shadow-lg shadow-c-shadow/[var(--o-shadow-normal)] {cardType === 'generate'
 								? output.image_url
 									? 'border-2 rounded-lg hover:border-c-primary'
 									: 'border-2 rounded-lg'
 								: 'border-2 rounded-xl'} {isOutputSelected
 								? 'border-c-primary'
 								: 'border-c-bg-secondary'} {isOutputHoverable ? 'hover:border-c-primary/75' : ''}
-										 z-0 overflow-hidden shadow-lg shadow-c-shadow/[var(--o-shadow-normal)] {cardType !== 'gallery' &&
-							cardType !== 'admin-gallery'
-								? 'filter blur-none'
-								: ''}"
+								 {cardType !== 'gallery' && cardType !== 'admin-gallery' ? 'filter blur-none' : ''}"
 						>
 							{#if output.generation.outputs !== undefined}
 								{#if status !== 'failed' && status !== 'failed-nsfw'}
