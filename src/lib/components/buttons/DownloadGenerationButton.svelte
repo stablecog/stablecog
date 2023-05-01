@@ -58,7 +58,7 @@
 	bind:this={element}
 	on:click={downloadImage}
 	disabled={downloadStatus === 'downloading'}
-	class="transition rounded-lg group/downloadbutton {classes}"
+	class="touch-manipulation transition rounded-lg group/downloadbutton {classes}"
 	aria-label="Download Image"
 >
 	<div class="p-2.5 rounded-full bg-c-bg relative overflow-hidden z-0">

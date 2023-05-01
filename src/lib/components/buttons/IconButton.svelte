@@ -21,7 +21,7 @@
 		data-sveltekit-preload-data={prefetch && (target === '_self' || target === undefined)
 			? 'hover'
 			: 'off'}
-		class="group/iconbutton rounded-xl {classes}"
+		class="touch-manipulation group/iconbutton rounded-xl {classes}"
 		aria-label={name}
 	>
 		<div class="rounded-lg relative">
@@ -45,7 +45,7 @@
 		type="button"
 		{disabled}
 		on:click={onClick}
-		class="group/iconbutton rounded-xl {classes}"
+		class="touch-manipulation group/iconbutton rounded-xl {classes}"
 		aria-label={name}
 	>
 		<div class="rounded-lg relative">

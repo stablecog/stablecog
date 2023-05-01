@@ -17,7 +17,7 @@
 >
 	<button
 		on:click|preventDefault={onClick}
-		class="w-full h-full relative z-0 rounded-r-xl overflow-hidden flex items-center justify-center group/clearbutton
+		class="touch-manipulation w-full h-full relative z-0 rounded-r-xl overflow-hidden flex items-center justify-center group/clearbutton
 			transition {show ? 'focus:translate-x-0 translate-x-0 opacity-100' : 'translate-x-full opacity-0'}"
 		disabled={!show || disabled}
 		type="button"

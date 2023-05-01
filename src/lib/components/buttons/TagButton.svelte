@@ -12,7 +12,7 @@
 
 <button
 	on:click|preventDefault={onClick}
-	class="group bg-c-bg rounded md:rounded-md font-medium p-px"
+	class="touch-manipulation group bg-c-bg rounded md:rounded-md font-medium p-px"
 >
 	<div
 		class="px-2 py-1 gap-1 flex items-center flex-row {color === 'secondary'
