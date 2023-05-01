@@ -50,7 +50,8 @@
 		data-sveltekit-preload-data={prefetch && (target === '_self' || target === undefined)
 			? 'hover'
 			: 'off'}
-		class="{noPadding
+		class="touch-manipulation relative flex items-center justify-center text-center font-bold gap-2 
+			overflow-hidden z-0 group {noPadding
 			? 'p-0'
 			: size === 'xs'
 			? 'px-4.5 py-3'
@@ -60,8 +61,7 @@
 			? 'text-sm rounded-lg2'
 			: size === 'sm'
 			? 'text-sm rounded-lg2'
-			: 'text-base rounded-xl'} relative flex items-center justify-center text-center font-bold gap-2 
-			overflow-hidden z-0 group {type === 'no-bg-on-bg'
+			: 'text-base rounded-xl'} {type === 'no-bg-on-bg'
 			? ''
 			: 'shadow-lg shadow-c-shadow/[var(--o-shadow-strong)]'} {type === 'no-bg-on-bg'
 			? 'text-c-on-bg/60'
@@ -135,7 +135,8 @@
 	<button
 		on:click={_onClick}
 		disabled={disabled || loading || uploading}
-		class="{noPadding
+		class="touch-manipulation relative flex items-center justify-center text-center font-bold gap-2 
+			overflow-hidden z-0 group {noPadding
 			? 'p-0'
 			: size === 'xs'
 			? 'px-4.5 py-3'
@@ -145,8 +146,7 @@
 			? 'text-sm rounded-lg2'
 			: size === 'sm'
 			? 'text-sm rounded-lg2'
-			: 'text-base rounded-xl'} relative flex items-center justify-center text-center font-bold gap-2 
-			overflow-hidden z-0 group {type === 'no-bg-on-bg'
+			: 'text-base rounded-xl'} {type === 'no-bg-on-bg'
 			? ''
 			: 'shadow-lg shadow-c-shadow/[var(--o-shadow-strong)]'} {type === 'no-bg-on-bg'
 			? 'text-c-on-bg/60'
