@@ -24,6 +24,7 @@
 			isRecentlyClicked = false;
 		}, 100);
 		onClick();
+		element.blur();
 	}
 </script>
 
