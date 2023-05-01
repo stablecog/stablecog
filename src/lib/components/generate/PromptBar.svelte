@@ -44,6 +44,7 @@
 	import IconWand from '$components/icons/IconWand.svelte';
 	import Morpher from '$components/Morpher.svelte';
 	import IconChevronDown from '$components/icons/IconChevronDown.svelte';
+	import { afterNavigate } from '$app/navigation';
 
 	export let openSignInModal: () => void;
 	export let serverData: TCreatePageData;
@@ -59,7 +60,7 @@
 	let promptInputElement: HTMLTextAreaElement;
 	let isCheckCompleted = false;
 
-	$: generationPrompt.set(serverData.prompt !== null ? serverData.prompt : undefined);
+	generationPrompt.set(serverData.prompt !== null ? serverData.prompt : undefined);
 
 	$: [$generationPrompt], withCheck(setLocalPrompt);
 
@@ -172,6 +173,12 @@
 		}
 		isCheckCompleted = true;
 		isReadyMap.promptBar = true;
+	});
+
+	afterNavigate(() => {
+		if (serverData.prompt !== null) {
+			generationPrompt.set(serverData.prompt);
+		}
 	});
 </script>
 

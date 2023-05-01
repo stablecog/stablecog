@@ -106,6 +106,7 @@
 	import type { TCreatePageData } from '$routes/generate/+page.server';
 	import SettingsPanelItem from '$components/generate/SettingsPanelItem.svelte';
 	import IconAddImage from '$components/icons/IconAddImage.svelte';
+	import { afterNavigate } from '$app/navigation';
 
 	export let rounding: 'all' | 'top' | 'bottom' = 'all';
 	export let serverData: TCreatePageData;
@@ -117,23 +118,23 @@
 	let containerDropdownPadding = 16;
 	let isCheckCompleted = false;
 
-	$: generationNegativePrompt.set(
+	generationNegativePrompt.set(
 		serverData.negative_prompt !== null ? serverData.negative_prompt : undefined
 	);
-	$: generationWidth.set(
+	generationWidth.set(
 		isValue(serverData.width) && serverData.width !== null ? serverData.width : widthDefault
 	);
-	$: generationHeight.set(
+	generationHeight.set(
 		isValue(serverData.height) && serverData.height !== null && serverData
 			? serverData.height
 			: heightDefault
 	);
-	$: generationModelId.set(
+	generationModelId.set(
 		isValue(serverData.model_id) && serverData.model_id !== null
 			? serverData.model_id
 			: generationModelIdDefault
 	);
-	$: if (!isValue(serverData.width) && !isValue(serverData.height)) {
+	if (!isValue(serverData.width) && !isValue(serverData.height)) {
 		generationAspectRatio.set(
 			isValue(serverData.aspect_ratio) && serverData.aspect_ratio !== null
 				? serverData.aspect_ratio
@@ -146,7 +147,7 @@
 			generationAspectRatio.set(ratio);
 		}
 	}
-	$: generationInferenceSteps.set(
+	generationInferenceSteps.set(
 		isValue(serverData.num_inference_steps) &&
 			serverData.num_inference_steps !== null &&
 			inferenceStepsTabs
@@ -155,25 +156,25 @@
 			? serverData.num_inference_steps
 			: inferenceStepsDefault
 	);
-	$: generationGuidanceScale.set(
+	generationGuidanceScale.set(
 		isValue(serverData.guidance_scale) && serverData.guidance_scale !== null
 			? serverData.guidance_scale
 			: guidanceScaleDefault
 	);
-	$: generationSchedulerId.set(
+	generationSchedulerId.set(
 		isValue(serverData.scheduler_id) && serverData.scheduler_id !== null
 			? serverData.scheduler_id
 			: schedulerIdDefault
 	);
-	$: generationSeed.set(
+	generationSeed.set(
 		isValue(serverData.seed) && serverData.seed !== null ? serverData.seed : undefined
 	);
-	$: generationInitImageStrength.set(
+	generationInitImageStrength.set(
 		isValue(serverData.init_image_strength) && serverData.init_image_strength !== null
 			? serverData.init_image_strength
 			: initImageStrengthDefault
 	);
-	$: generationNumOutputs.set(
+	generationNumOutputs.set(
 		isValue(serverData.num_outputs) && serverData.num_outputs !== null
 			? serverData.num_outputs
 			: numOutputsDefault
@@ -454,6 +455,64 @@
 		setEstimatedGenerationDuration();
 		isCheckCompleted = true;
 		isReadyMap.generationSettings = true;
+	});
+
+	afterNavigate(() => {
+		if (serverData.negative_prompt !== null) {
+			generationNegativePrompt.set(serverData.negative_prompt);
+		}
+		if (serverData.width !== null && isValue(serverData.width)) {
+			generationWidth.set(serverData.width);
+		}
+		if (serverData.height !== null && isValue(serverData.height)) {
+			generationHeight.set(serverData.height);
+		}
+		if (serverData.model_id !== null && isValue(serverData.model_id)) {
+			generationModelId.set(serverData.model_id);
+		}
+		if (
+			!isValue(serverData.width) &&
+			!isValue(serverData.height) &&
+			isValue(serverData.aspect_ratio) &&
+			serverData.aspect_ratio !== null
+		) {
+			generationAspectRatio.set(serverData.aspect_ratio);
+			setWidthAndHeightBasedOnAspectRatio();
+		} else if (isValue(serverData.width) && isValue(serverData.height)) {
+			const ratio = getAspectRatioFromWidthAndHeight(serverData.width, serverData.height);
+			if (ratio) {
+				generationAspectRatio.set(ratio);
+			}
+		}
+		if (
+			isValue(serverData.num_inference_steps) &&
+			serverData.num_inference_steps !== null &&
+			inferenceStepsTabs
+				.map((i) => i.value)
+				.findIndex((i) => i === serverData.num_inference_steps) >= 0
+		) {
+			generationInferenceSteps.set(serverData.num_inference_steps);
+		}
+		if (isValue(serverData.guidance_scale) && serverData.guidance_scale !== null) {
+			generationGuidanceScale.set(serverData.guidance_scale);
+		}
+		if (isValue(serverData.scheduler_id) && serverData.scheduler_id !== null) {
+			generationSchedulerId.set(serverData.scheduler_id);
+		}
+		if (isValue(serverData.seed) && serverData.seed !== null) {
+			generationSeed.set(serverData.seed);
+		}
+		if (isValue(serverData.init_image_strength) && serverData.init_image_strength !== null) {
+			generationInitImageStrength.set(serverData.init_image_strength);
+		}
+		if (isValue(serverData.num_outputs) && serverData.num_outputs !== null) {
+			generationNumOutputs.set(serverData.num_outputs);
+		}
+		if (serverData.advanced_mode === true) {
+			advancedModeApp.set(true);
+		} else if (serverData.advanced_mode === false) {
+			advancedModeApp.set(false);
+		}
 	});
 </script>
 
