@@ -262,7 +262,7 @@
 			</SubtleButton>
 		</div>
 	{/if}
-	<!-- {#if modalType === 'generate' || modalType === 'history'}
+	{#if modalType === 'generate' || modalType === 'history'}
 		{#if $userSummary?.product_id || $userSummary?.has_nonfree_credits === true}
 			{#if submitToGalleryStatus === 'success' || generation.selected_output.gallery_status !== 'not_submitted'}
 				<SubtleButton disabled={true}>
@@ -311,5 +311,5 @@
 				</Morpher>
 			</SubtleButton>
 		</div>
-	{/if} -->
+	{/if}
 </div>

@@ -372,11 +372,11 @@
 					bind:element={buttonRightMobile}
 					onClick={onRightButtonClicked}
 				/>
-				<!-- {#if modalType === 'history' || modalType === 'generate'}
+				{#if modalType === 'history' || modalType === 'generate'}
 					<div class="absolute right-1.5 top-1.5 pointer-events-auto z-10">
 						<FavoriteButton {generation} {modalType} />
 					</div>
-				{/if} -->
+				{/if}
 			</div>
 		</div>
 		<!-- Right side of the panel -->
@@ -398,7 +398,7 @@
 					class="w-full flex flex-col items-start justify-start"
 				>
 					<div class="w-full flex flex-col gap-4 md:gap-5 px-5 py-4 md:px-7 md:py-5">
-						<!-- {#if (modalType === 'generate' || modalType === 'history') && !generation.selected_output.image_url.includes('placeholder')}
+						{#if (modalType === 'generate' || modalType === 'history') && !generation.selected_output.image_url.includes('placeholder')}
 							<div class="w-full pt-1.5">
 								{#if !generation.selected_output.upscaled_image_url || upscaleBeingProcessed}
 									<div class="w-full relative">
@@ -436,7 +436,7 @@
 									/>
 								{/if}
 							</div>
-						{/if} -->
+						{/if}
 						<!-- Prompt and Negative Prompt -->
 						<div class="flex flex-col items-start gap-3">
 							<p class="max-w-full text-sm leading-normal">{generation.prompt.text}</p>
