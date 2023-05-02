@@ -232,7 +232,10 @@
 							<p>{$LL.GenerationFullscreen.DownloadButton()}</p>
 						</div>
 						<div slot="1" class="flex items-center justify-center gap-1.5">
-							<IconAnimatedSpinner class="w-5 h-5" />
+							<IconAnimatedSpinner
+								class="w-5 h-5"
+								loading={buttonObjectsWithState.download.state === 'loading'}
+							/>
 						</div>
 					</Morpher>
 				</div>
