@@ -361,7 +361,7 @@
 						</div>
 						<div
 							bind:clientHeight={promptBarHeight}
-							class="w-full flex pl-2 pt-2 pr-1 md:p-0 pb-[calc(env(safe-area-inset-bottom)+0.75rem)] z-50"
+							class="w-full flex pl-2 pt-2 md:p-0 pb-[calc(env(safe-area-inset-bottom)+0.75rem)] z-50"
 						>
 							<PromptBar
 								{openSignInModal}

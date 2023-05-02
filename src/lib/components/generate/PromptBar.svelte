@@ -45,6 +45,7 @@
 	import Morpher from '$components/Morpher.svelte';
 	import IconChevronDown from '$components/icons/IconChevronDown.svelte';
 	import { afterNavigate } from '$app/navigation';
+	import NoBgButton from '$components/buttons/NoBgButton.svelte';
 
 	export let openSignInModal: () => void;
 	export let serverData: TCreatePageData;
@@ -185,7 +186,7 @@
 <div style={styles} class="w-full flex justify-center {classes}">
 	<form
 		on:submit|preventDefault={onPromptFormSubmitted}
-		class="w-full max-w-7xl flex flex-row gap-1 md:gap-2 items-center"
+		class="w-full max-w-7xl flex flex-row md:gap-2 items-center"
 	>
 		<div class="flex-1 flex relative group">
 			<textarea
@@ -269,12 +270,17 @@
 				/>
 			{/if}
 		</div>
-		<IconButton onClick={toggleSettingsSheet} class="md:hidden" name="Generation Settings">
+		<NoBgButton
+			size="sm"
+			onClick={toggleSettingsSheet}
+			class="h-full px-3 md:hidden"
+			hoverFrom={isGenerationSettingsSheetOpen ? 'top' : 'bottom'}
+		>
 			<Morpher morphed={$windowWidth < mdBreakpoint && isGenerationSettingsSheetOpen}>
 				<div slot="0" class="w-7.5 h-7.5 p-0.5">
 					<IconGenerationSettings
 						class="transition {!$isTouchscreen
-							? 'group-hover/iconbutton:text-c-primary'
+							? 'group-hover:text-c-primary'
 							: ''} w-full h-full {$windowWidth < mdBreakpoint && isGenerationSettingsSheetOpen
 							? 'rotate-180'
 							: 'rotate-0'}"
@@ -283,13 +289,13 @@
 				<div slot="1" class="w-7.5 h-7.5 p-0.5">
 					<IconChevronDown
 						class="transition transform {!$isTouchscreen
-							? 'group-hover/iconbutton:text-c-primary'
+							? 'group-hover:text-c-primary'
 							: ''} w-full h-full {$windowWidth < mdBreakpoint && !isGenerationSettingsSheetOpen
 							? '-rotate-180'
 							: 'rotate-0'}"
 					/>
 				</div>
 			</Morpher>
-		</IconButton>
+		</NoBgButton>
 	</form>
 </div>

@@ -50,11 +50,18 @@
 						{@html featured.logo}
 					</a>
 					<NoBgButton
+						size="sm"
 						class="mt-1 font-semibold text-c-on-bg/60"
 						href={featured.url}
 						target="_blank"
 					>
-						{featured.name}
+						<p
+							class="font-bold transition text-c-on-bg/50 {!$isTouchscreen
+								? 'group-hover:text-c-primary'
+								: ''}"
+						>
+							{featured.name}
+						</p>
 					</NoBgButton>
 				</div>
 			{/each}

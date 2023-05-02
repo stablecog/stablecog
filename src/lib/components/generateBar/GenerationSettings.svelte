@@ -248,6 +248,7 @@
 	</TabLikeDropdown>
 	{#if $advancedModeApp}
 		<TabLikeRangeInput
+			name={$LL.Home.GuidanceScaleSlider.Title()}
 			{disabled}
 			class="w-full md:w-89 max-w-full order-2"
 			bind:value={$generationGuidanceScale}

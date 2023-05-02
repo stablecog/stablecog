@@ -2,7 +2,7 @@
 	import { page } from '$app/stores';
 	import ToC from '$components/blog/ToC.svelte';
 	import Button from '$components/buttons/Button.svelte';
-	import LinkButton from '$components/buttons/NoBgButton.svelte';
+	import NoBgButton from '$components/buttons/NoBgButton.svelte';
 	import IconBack from '$components/icons/IconBack.svelte';
 	import MetaTag from '$components/MetaTag.svelte';
 	import ScBar from '$components/ScBar.svelte';
@@ -75,15 +75,21 @@
 		<div class="max-w-full flex items-center justify-center">
 			<p class="font-bold text-3xl">Thanks for reading!</p>
 		</div>
-		<LinkButton href="/blog" prefetch={true}>
+		<NoBgButton href="/blog" prefetch={true}>
 			<div class="flex items-center justify-center gap-2.5 px-2 py-1">
 				<IconBack
 					class="w-6 h-6 transform transition text-c-on-bg/50 group-hover:-translate-x-1
 					{!$isTouchscreen ? 'group-hover:text-c-primary' : ''}"
 				/>
-				<p class="font-bold">{$LL.Blog.BackToBlogButton()}</p>
+				<p
+					class="font-bold transition text-c-on-bg/50 {!$isTouchscreen
+						? 'group-hover:text-c-primary'
+						: ''}"
+				>
+					{$LL.Blog.BackToBlogButton()}
+				</p>
 			</div>
-		</LinkButton>
+		</NoBgButton>
 	</div>
 	<div class="w-full flex justify-center pt-6 pb-10 lg:px-5">
 		<div class="w-full bg-c-on-bg/5 rounded-full h-2px" />

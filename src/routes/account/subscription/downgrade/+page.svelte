@@ -145,7 +145,13 @@
 							class="w-6 h-6 transform transition text-c-on-bg/50 group-hover:-translate-x-1
 							{!$isTouchscreen ? 'group-hover:text-c-primary' : ''}"
 						/>
-						<p class="font-bold">{$LL.Shared.GoBackButton()}</p>
+						<p
+							class="font-bold transition text-c-on-bg/50 {!$isTouchscreen
+								? 'group-hover:text-c-primary'
+								: ''}"
+						>
+							{$LL.Shared.GoBackButton()}
+						</p>
 					</div>
 				</NoBgButton>
 			</div>

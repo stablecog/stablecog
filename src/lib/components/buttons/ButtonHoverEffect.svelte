@@ -9,7 +9,7 @@
 	export let noRounding = false;
 </script>
 
-<div class="w-full h-full absolute left-0 top-0 {!noPadding ? 'p-0.5' : ''}">
+<div class="w-full h-full absolute left-0 top-0 {!noPadding ? 'p-1' : ''}">
 	<div
 		class="w-full h-full relative z-0 overflow-hidden {noRounding
 			? ''
