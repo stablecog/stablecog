@@ -141,6 +141,7 @@
 			const params = searchParams.toString();
 			window.history.replaceState({}, '', `${window.location.pathname}?${params}`);
 		}
+		resetAllButtonObjectWithState();
 		initialGenerationChange = false;
 	};
 
@@ -180,6 +181,15 @@
 			}
 		}
 		buttonObjectsWithState = { ...buttonObjectsWithState };
+	};
+
+	const resetAllButtonObjectWithState = () => {
+		for (const key in buttonObjectsWithState) {
+			if (buttonObjectsWithState[key].timeout) {
+				clearTimeout(buttonObjectsWithState[key].timeout);
+			}
+			buttonObjectsWithState[key].state = 'idle';
+		}
 	};
 
 	const setSidebarWrapperVars = () => {

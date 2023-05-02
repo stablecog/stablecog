@@ -25,10 +25,10 @@
 		schedulerTooltipAlt,
 		seedTooltipAlt
 	} from '$ts/constants/tooltips';
-	import type { TGeneration } from '$userStores/generation';
+	import type { TGenerationWithSelectedOutput } from '$userStores/generation';
 	import { copy } from 'svelte-copy';
 
-	export let generation: TGeneration;
+	export let generation: TGenerationWithSelectedOutput;
 	export let currentImageWidth: number;
 	export let currentImageHeight: number;
 	export let setButtonObjectWithState: TSetButtonObjectWithState;
@@ -98,25 +98,27 @@
 					</div>
 					<p class="font-semibold">{generation.seed}</p>
 				</div>
-				<div
-					use:copy={String(generation.seed)}
-					on:svelte-copy={() => setButtonObjectWithState('seed', 'success')}
-				>
-					<SubtleButton
-						noPadding
-						class="p-2.5"
-						state={buttonObjectsWithState.seed.state === 'success' ? 'success' : 'idle'}
+				{#key generation.selected_output.id}
+					<div
+						use:copy={String(generation.seed)}
+						on:svelte-copy={() => setButtonObjectWithState('seed', 'success')}
 					>
-						<Morpher morphed={buttonObjectsWithState.seed.state === 'success'}>
-							<div slot="0" class="flex items-center justify-center gap-1.5">
-								<IconCopy class="w-5 h-5" />
-							</div>
-							<div slot="1" class="flex items-center justify-center gap-1.5">
-								<IconTick class="w-8 h-8" />
-							</div>
-						</Morpher>
-					</SubtleButton>
-				</div>
+						<SubtleButton
+							noPadding
+							class="p-2.5"
+							state={buttonObjectsWithState.seed.state === 'success' ? 'success' : 'idle'}
+						>
+							<Morpher morphed={buttonObjectsWithState.seed.state === 'success'}>
+								<div slot="0" class="flex items-center justify-center gap-1.5">
+									<IconCopy class="w-5 h-5" />
+								</div>
+								<div slot="1" class="flex items-center justify-center gap-1.5">
+									<IconTick class="w-8 h-8" />
+								</div>
+							</Morpher>
+						</SubtleButton>
+					</div>
+				{/key}
 			</div>
 		{/if}
 		<div class="min-w-[calc(50%-0.75rem)] flex flex-col items-start gap-1">

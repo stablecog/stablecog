@@ -15,10 +15,6 @@
 	import type { TAvailableGenerationModelId } from '$ts/constants/generationModels';
 	import { canonicalUrl } from '$ts/constants/main';
 	import { logBatchEditActived, logBatchEditDeactivated } from '$ts/helpers/loggers';
-	/* import {
-		doesUserHaveLegacyGenerations,
-		downloadLegacyGenerations
-	} from '$ts/helpers/downloadLegacyGenerations'; */
 	import {
 		getUserGenerationFullOutputs,
 		type TUserGenerationFullOutputsPage
@@ -37,15 +33,9 @@
 	import { activeGeneration } from '$userStores/generation';
 	import { createInfiniteQuery, type CreateInfiniteQueryResult } from '@tanstack/svelte-query';
 	import { onMount } from 'svelte';
-	/* import SubtleButton from '$components/buttons/SubtleButton.svelte';
-	import IconAnimatedSpinner from '$components/icons/IconAnimatedSpinner.svelte';
-	import IconDownload from '$components/icons/IconDownload.svelte';
-	import Morpher from '$components/Morpher.svelte'; */
 
 	let totalOutputs: number;
 	let modelIdFilters: TAvailableGenerationModelId[];
-	/* let hasLegacyGenerations = false;
-	let legacyGenerationsDownloadStatus: 'idle' | 'downloading' = 'idle'; */
 
 	let userGenerationFullOutputsQuery:
 		| CreateInfiniteQueryResult<TUserGenerationFullOutputsPage, unknown>
@@ -60,6 +50,7 @@
 		searchString ? searchString : '',
 		modelIdFilters ? modelIdFilters.join(',') : ''
 	]);
+
 	$: userGenerationFullOutputsQuery = $page.data.session?.user.id
 		? createInfiniteQuery({
 				queryKey: $userGenerationFullOutputsQueryKey,
@@ -165,26 +156,6 @@
 			selected_output: outputs[newIndex]
 		});
 	}
-	/* async function _downloadLegacyGenerations() {
-		if (legacyGenerationsDownloadStatus === 'downloading') return;
-		legacyGenerationsDownloadStatus = 'downloading';
-		try {
-			await downloadLegacyGenerations();
-		} catch (error) {
-			console.log(error);
-		} finally {
-			legacyGenerationsDownloadStatus = 'idle';
-		}
-	} */
-
-	onMount(async () => {
-		/* try {
-			hasLegacyGenerations = await doesUserHaveLegacyGenerations();
-		} catch (error) {
-			console.log(error);
-			hasLegacyGenerations = false;
-		} */
-	});
 </script>
 
 <MetaTag

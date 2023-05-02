@@ -81,14 +81,6 @@
 			  )
 			: undefined;
 
-	$: logProps = {
-		'SC - Output Id': generation.selected_output.id,
-		'SC - User Id': $page.data.session?.user.id,
-		'SC - Stripe Product Id': $userSummary?.product_id,
-		'SC - Advanced Mode': $advancedModeApp,
-		'SC - App Version': $appVersion
-	};
-
 	let imageClickHref: string;
 
 	$: {
@@ -171,10 +163,10 @@
 	/>
 {/if}
 {#if !generation.selected_output.is_deleted && !isGalleryEditActive}
-	<AnchorOrDiv
+	<a
 		href={imageClickHref}
-		anchorPreventDefault={true}
-		onClick={(e) => {
+		data-sveltekit-preload-data="hover"
+		on:click|preventDefault={(e) => {
 			if (!modalShouldOpen) {
 				lastClickedOutputId.set(generation.selected_output.id);
 				return;
@@ -189,7 +181,13 @@
 			e.currentTarget.blur();
 			activeGeneration.set({ ...generation, card_type: cardType });
 			if ($page.url.pathname === '/gallery') {
-				logGalleryGenerationOpened(logProps);
+				logGalleryGenerationOpened({
+					'SC - Output Id': generation.selected_output.id,
+					'SC - User Id': $page.data.session?.user.id,
+					'SC - Stripe Product Id': $userSummary?.product_id,
+					'SC - Advanced Mode': $advancedModeApp,
+					'SC - App Version': $appVersion
+				});
 			}
 			const searchParams = new URLSearchParams(window.location.search);
 			searchParams.set('output', generation.selected_output.id);
@@ -220,7 +218,7 @@
 				</div>
 			</div>
 		{/if}
-	</AnchorOrDiv>
+	</a>
 {/if}
 {#if cardType !== 'generate'}
 	<div
