@@ -260,11 +260,11 @@
 			: 'height: 100vh; height: 100svh;'} background-image: url({$themeApp === 'light'
 			? '/illustrations/grid-on-light.svg'
 			: '/illustrations/grid-on-dark.svg'}); background-size: 24px;"
-		class="w-full flex flex-col overflow-hidden relative z-0 pb-[calc(env(safe-area-inset-bottom))]"
+		class="w-full flex flex-col overflow-hidden relative z-0"
 	>
 		<Navbar />
 		<div class="w-full h-full flex flex-row overflow-hidden pt-2 md:px-4 md:pb-4 gap-4">
-			<div class="h-full hidden lg:flex w-36 xl:w-72">
+			<div class="h-full hidden lg:flex w-36 xl:w-72 lg:pb-[calc(env(safe-area-inset-bottom))]">
 				<SidebarWrapper hasGradient>
 					{#if !$page.data.session?.user.id}
 						<div class="w-full h-full p-2">
@@ -292,7 +292,10 @@
 					{/if}
 				</SidebarWrapper>
 			</div>
-			<div class="w-full md:w-auto flex flex-col items-center flex-1 h-full relative">
+			<div
+				class="w-full md:w-auto flex flex-col items-center flex-1 h-full relative
+				lg:pb-[calc(env(safe-area-inset-bottom))]"
+			>
 				{#if $windowWidth < mdBreakpoint && isGenerationSettingsSheetOpen}
 					<div
 						transition:fade|local={{ duration: 200, easing: quadOut }}
@@ -406,14 +409,16 @@
 							</div>
 						</div>
 					</div>
-					<div class="w-full h-28 hidden md:flex lg:hidden mt-11">
-						<SidebarWrapper>
-							<div class="w-full h-full flex items-center justify-center">Sidebar</div>
-						</SidebarWrapper>
+					<div class="hidden md:flex lg:hidden pt-11 pb-[calc(env(safe-area-inset-bottom))]">
+						<div class="w-full h-28 hidden md:flex lg:hidden">
+							<SidebarWrapper>
+								<div class="w-full h-full flex items-center justify-center">Sidebar</div>
+							</SidebarWrapper>
+						</div>
 					</div>
 				</div>
 			</div>
-			<div class="h-full w-72 hidden md:flex">
+			<div class="h-full w-72 hidden md:flex md:pb-[calc(env(safe-area-inset-bottom))]">
 				<SettingsPanel
 					{openSignInModal}
 					{isCheckCompleted}
