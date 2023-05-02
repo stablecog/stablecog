@@ -6,7 +6,6 @@
 	import IconCancel from '$components/icons/IconCancel.svelte';
 	import IconDropzone from '$components/icons/IconDropzone.svelte';
 	import IconRefresh from '$components/icons/IconRefresh.svelte';
-	import IconTick from '$components/icons/IconTick.svelte';
 	import IconTickOnly from '$components/icons/IconTickOnly.svelte';
 	import IconTrashcan from '$components/icons/IconTrashcan.svelte';
 	import IconWarningOutline from '$components/icons/IconWarningOutline.svelte';
@@ -257,6 +256,7 @@
 							{$LL.Home.InitialImageStrengthTabBar.TitleAlt()}
 						</p>
 						<RangeInputWithNumerator
+							name={$LL.Home.InitialImageStrengthTabBar.Title()}
 							min={initImageStrengthMin}
 							max={initImageStrengthMax}
 							step={initImageStrengthStep}

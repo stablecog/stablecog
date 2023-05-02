@@ -7,6 +7,7 @@
 	import GenerateButton from '$components/buttons/GenerateButton.svelte';
 	import IconButton from '$components/buttons/IconButton.svelte';
 	import UpscaleAnimation from '$components/generate/UpscaleAnimation.svelte';
+	import { onSelectButtonClicked } from '$components/generationImage/helpers';
 	import type { TGenerationImageCardType } from '$components/generationImage/types';
 	import IconCancelCircle from '$components/icons/IconCancelCircle.svelte';
 	import IconGalleryFilled from '$components/icons/IconGalleryFilled.svelte';
@@ -29,10 +30,7 @@
 		userGalleryCurrentView,
 		userGallerySelectedOutputIds
 	} from '$ts/stores/user/gallery';
-	import {
-		addToGalleryActionableItems,
-		toggleGalleryActionableItemsState
-	} from '$ts/stores/user/galleryActionableItems';
+	import { addToGalleryActionableItems } from '$ts/stores/user/galleryActionableItems';
 	import { userSummary } from '$ts/stores/user/summary';
 	import { upscales } from '$ts/stores/user/upscale';
 	import { activeGeneration, type TGenerationWithSelectedOutput } from '$userStores/generation';
@@ -92,20 +90,6 @@
 			params = `output=${generation.selected_output.id}`;
 		}
 		imageClickHref = `${$page.url.pathname}?${params}`;
-	}
-
-	async function onSelectButtonClicked(
-		e: MouseEvent & {
-			currentTarget: EventTarget & HTMLButtonElement;
-		}
-	) {
-		toggleGalleryActionableItemsState({
-			output_id: generation.selected_output.id,
-			generation_id: generation.id || '',
-			cardType,
-			type: isInGallerySelectedIds ? 'remove' : 'add'
-		});
-		e.currentTarget.blur();
 	}
 </script>
 
@@ -311,7 +295,14 @@
 			(cardType === 'history' &&
 				$userGalleryCurrentView === 'favorites' &&
 				!generation.selected_output.is_favorited)}
-		on:click={onSelectButtonClicked}
+		on:click={(e) =>
+			onSelectButtonClicked({
+				e,
+				cardType,
+				generation_id: generation.id,
+				output_id: generation.selected_output.id,
+				isInGallerySelectedIds
+			})}
 		class="w-full h-full absolute left-0 top-0 flex flex-col justify-start items-start z-30"
 	/>
 {/if}

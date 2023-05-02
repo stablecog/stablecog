@@ -17,7 +17,7 @@
 	import { clickoutside } from '$ts/actions/clickoutside';
 	import SignInCard from '$components/SignInCard.svelte';
 	import { page } from '$app/stores';
-	import { createInfiniteQuery, type CreateInfiniteQueryResult } from '@tanstack/svelte-query';
+	import { createInfiniteQuery } from '@tanstack/svelte-query';
 	import {
 		getUserGenerationFullOutputs,
 		type TUserGenerationFullOutputsPage
@@ -50,6 +50,7 @@
 	import LowOnCreditsCard from '$components/LowOnCreditsCard.svelte';
 	import { convertToDBTimeString } from '$ts/helpers/convertToDBTimeString.js';
 	import { removeRepeatingOutputs } from '$ts/helpers/removeRepeatingOutputs.js';
+	import GenerationSettingsProvider from '$components/generate/GenerationSettingsProvider.svelte';
 
 	export let data;
 
@@ -62,18 +63,17 @@
 	let horizontalListPaddingTopRem = 0.5;
 	let horizontalListHeight: number;
 	let propmtBarEstimatedHeightRem = 4.25;
-
 	let gridScrollContainer: HTMLElement;
-
 	let isReadyMap: TIsReadyMap = {
 		promptBar: false,
 		generationStage: false,
 		generationSettings: false
 	};
-
 	let isGenerationSettingsSheetOpen = false;
-
 	const userGalleryCurrentView: string = 'all';
+
+	$: isCheckCompleted =
+		isReadyMap.generationSettings && isReadyMap.generationStage && isReadyMap.promptBar;
 
 	$: userGenerationFullOutputsQueryKey.set(['user_generation_full_outputs', 'all', '', '']);
 
@@ -247,177 +247,199 @@
 
 <svelte:window on:keydown={onKeyDown} />
 
-<div
-	id="tooltip-container"
-	style="{$windowHeight
-		? `height: ${$windowHeight + 'px;'}`
-		: 'height: 100vh; height: 100svh;'} background-image: url({$themeApp === 'light'
-		? '/illustrations/grid-on-light.svg'
-		: '/illustrations/grid-on-dark.svg'}); background-size: 24px;"
-	class="w-full flex flex-col overflow-hidden relative z-0"
+<GenerationSettingsProvider
+	serverData={data}
+	bind:isReadyMap
+	let:isInferenceStepsValid
+	let:supportedSchedulerIdDropdownItems
 >
-	<Navbar />
-	<div class="w-full h-full flex flex-row overflow-hidden pt-2 md:px-4 md:pb-4 gap-4">
-		<div class="h-full hidden lg:flex w-36 xl:w-72">
-			<SidebarWrapper>
-				{#if !$page.data.session?.user.id}
-					<div class="w-full h-full p-2">
-						<GenerateGridPlaceholder text={$LL.Generate.Grid.NotSignedIn.Paragraph()} />
-					</div>
-				{:else if userGenerationFullOutputsQuery}
+	<div
+		id="tooltip-container"
+		style="{$windowHeight
+			? `height: ${$windowHeight + 'px;'}`
+			: 'height: 100vh; height: 100svh;'} background-image: url({$themeApp === 'light'
+			? '/illustrations/grid-on-light.svg'
+			: '/illustrations/grid-on-dark.svg'}); background-size: 24px;"
+		class="w-full flex flex-col overflow-hidden relative z-0"
+	>
+		<Navbar />
+		<div class="w-full h-full flex flex-row overflow-hidden pt-2 md:px-4 md:pb-4 gap-4">
+			<div class="h-full hidden lg:flex w-36 xl:w-72">
+				<SidebarWrapper>
+					{#if !$page.data.session?.user.id}
+						<div class="w-full h-full p-2">
+							<GenerateGridPlaceholder text={$LL.Generate.Grid.NotSignedIn.Paragraph()} />
+						</div>
+					{:else if userGenerationFullOutputsQuery}
+						<div
+							bind:this={gridScrollContainer}
+							class="w-full flex flex-col flex-1 overflow-auto px-2 py-2"
+						>
+							{#if $windowWidth > lgBreakpoint}
+								<GenerationGridInfinite
+									{pinnedFullOutputs}
+									noLoadingSpinnerAlignmentAdjustment
+									hasPlaceholder
+									cardWidthClasses="w-full lg:w-1/2 xl:w-1/3"
+									cardType="generate"
+									generationsQuery={userGenerationFullOutputsQuery}
+									rerenderKey={gridRerenderKey}
+									{gridScrollContainer}
+									bottomElementClass="w-full h-16 flex-shrink-0"
+								/>
+							{/if}
+						</div>
+					{/if}
+				</SidebarWrapper>
+			</div>
+			<div class="w-full md:w-auto flex flex-col items-center flex-1 h-full gap-4 relative">
+				{#if $windowWidth < mdBreakpoint && isGenerationSettingsSheetOpen}
 					<div
-						bind:this={gridScrollContainer}
-						class="w-full flex flex-col flex-1 overflow-auto px-2 py-2"
-					>
-						{#if $windowWidth > lgBreakpoint}
-							<GenerationGridInfinite
-								{pinnedFullOutputs}
-								noLoadingSpinnerAlignmentAdjustment
-								hasPlaceholder
-								cardWidthClasses="w-full lg:w-1/2 xl:w-1/3"
-								cardType="generate"
-								generationsQuery={userGenerationFullOutputsQuery}
-								rerenderKey={gridRerenderKey}
-								{gridScrollContainer}
-								bottomElementClass="w-full h-16 flex-shrink-0"
-							/>
-						{/if}
-					</div>
+						transition:fade|local={{ duration: 200, easing: quadOut }}
+						class="fixed w-full h-full left-0 top-0 bg-c-barrier/70 z-40"
+					/>
 				{/if}
-			</SidebarWrapper>
-		</div>
-		<div class="w-full md:w-auto flex flex-col items-center flex-1 h-full gap-4 relative">
-			{#if $windowWidth < mdBreakpoint && isGenerationSettingsSheetOpen}
-				<div
-					transition:fade|local={{ duration: 200, easing: quadOut }}
-					class="fixed w-full h-full left-0 top-0 bg-c-barrier/70 z-40"
-				/>
-			{/if}
-			<div use:clickoutside={{ callback: closeSettingsSheet }}>
-				{#if !$windowWidth || $windowWidth < mdBreakpoint}
-					<div
-						style="transform: translateY({!$windowWidth || !promptBarHeight
-							? `calc(100% - env(safe-area-inset-bottom) - ${propmtBarEstimatedHeightRem}rem - ${horizontalListPaddingTopRem}rem - ${horizontalListImageHeight}px)`
-							: $windowWidth < mdBreakpoint && isGenerationSettingsSheetOpen
-							? '0%'
-							: `calc(100% - ${promptBarHeight + horizontalListHeight}px)`});"
-						class="w-full max-h-[90%] z-40 gap-1 flex flex-col bg-c-bg rounded-t-2xl ring-2 ring-c-bg-secondary 
+				<div use:clickoutside={{ callback: closeSettingsSheet }}>
+					{#if !$windowWidth || $windowWidth < mdBreakpoint}
+						<div
+							style="transform: translateY({!$windowWidth || !promptBarHeight
+								? `calc(100% - env(safe-area-inset-bottom) - ${propmtBarEstimatedHeightRem}rem - ${horizontalListPaddingTopRem}rem - ${horizontalListImageHeight}px)`
+								: $windowWidth < mdBreakpoint && isGenerationSettingsSheetOpen
+								? '0%'
+								: `calc(100% - ${promptBarHeight + horizontalListHeight}px)`});"
+							class="w-full max-h-[90%] z-40 gap-1 flex flex-col bg-c-bg rounded-t-2xl ring-2 ring-c-bg-secondary 
 						md:ring-0 md:rounded-none shadow-c-shadow/[var(--o-shadow-strongest)] shadow-sheet md:shadow-none 
 						md:bg-transparent absolute left-0 bottom-0 md:hidden transform transition overflow-hidden md:overflow-auto"
-					>
-						<div
-							class="w-full flex-1 overflow-hidden flex flex-col z-50 transition {$windowWidth &&
-							$windowWidth < mdBreakpoint &&
-							isGenerationSettingsSheetOpen
-								? 'opacity-100'
-								: 'opacity-0 pointer-events-none'}"
 						>
-							<SettingsPanel rounding="top" serverData={data} bind:isReadyMap {openSignInModal} />
+							<div
+								class="w-full flex-1 overflow-hidden flex flex-col z-50 transition {$windowWidth &&
+								$windowWidth < mdBreakpoint &&
+								isGenerationSettingsSheetOpen
+									? 'opacity-100'
+									: 'opacity-0 pointer-events-none'}"
+							>
+								<SettingsPanel
+									rounding="top"
+									{openSignInModal}
+									{isCheckCompleted}
+									{isInferenceStepsValid}
+									{supportedSchedulerIdDropdownItems}
+								/>
+							</div>
+							<div
+								class="flex-shrink-0 w-full"
+								style="height: {!$windowWidth || !promptBarHeight
+									? `calc(env(safe-area-inset-bottom) + ${
+											propmtBarEstimatedHeightRem + horizontalListPaddingTopRem
+									  }rem + ${horizontalListImageHeight}px)`
+									: `${promptBarHeight + horizontalListHeight}px`}"
+							/>
+						</div>
+					{/if}
+					<!-- Prompt bar -->
+					<div
+						class="w-full z-50 flex flex-col rounded-2xl overflow-hidden md:overflow-visible md:rounded-none bg-c-bg md:bg-transparent absolute left-0 bottom-0 
+					md:bottom-auto md:top-0 order-2"
+					>
+						<div bind:clientHeight={horizontalListHeight} class="w-full md:hidden">
+							{#if !$page.data.session?.user.id}
+								<GenerateHorizontalListPlaceholder
+									imageHeight={horizontalListImageHeight}
+									text={$LL.Generate.Grid.NotSignedIn.Paragraph()}
+								/>
+							{:else if userGenerationFullOutputsQuery}
+								<HorizontalList
+									imageHeight={horizontalListImageHeight}
+									{pinnedFullOutputs}
+									generationsQuery={userGenerationFullOutputsQuery}
+									cardType="generate"
+								/>
+							{/if}
 						</div>
 						<div
-							class="flex-shrink-0 w-full"
-							style="height: {!$windowWidth || !promptBarHeight
-								? `calc(env(safe-area-inset-bottom) + ${
-										propmtBarEstimatedHeightRem + horizontalListPaddingTopRem
-								  }rem + ${horizontalListImageHeight}px)`
-								: `${promptBarHeight + horizontalListHeight}px`}"
-						/>
-					</div>
-				{/if}
-				<!-- Prompt bar -->
-				<div
-					class="w-full z-50 flex flex-col rounded-2xl overflow-hidden md:overflow-visible md:rounded-none bg-c-bg md:bg-transparent absolute left-0 bottom-0 
-					md:bottom-auto md:top-0 order-2"
-				>
-					<div bind:clientHeight={horizontalListHeight} class="w-full md:hidden">
-						{#if !$page.data.session?.user.id}
-							<GenerateHorizontalListPlaceholder
-								imageHeight={horizontalListImageHeight}
-								text={$LL.Generate.Grid.NotSignedIn.Paragraph()}
+							bind:clientHeight={promptBarHeight}
+							class="w-full flex pl-2 pt-2 pr-1 md:p-0 pb-[calc(env(safe-area-inset-bottom)+0.75rem)] z-50"
+						>
+							<PromptBar
+								{openSignInModal}
+								serverData={data}
+								{onGenerate}
+								{toggleSettingsSheet}
+								bind:isReadyMap
+								bind:isGenerationSettingsSheetOpen
 							/>
-						{:else if userGenerationFullOutputsQuery}
-							<HorizontalList
-								imageHeight={horizontalListImageHeight}
-								{pinnedFullOutputs}
-								generationsQuery={userGenerationFullOutputsQuery}
-								cardType="generate"
-							/>
-						{/if}
-					</div>
-					<div
-						bind:clientHeight={promptBarHeight}
-						class="w-full flex pl-2 pt-2 pr-1 md:p-0 pb-[calc(env(safe-area-inset-bottom)+0.75rem)] z-50"
-					>
-						<PromptBar
-							{openSignInModal}
-							serverData={data}
-							bind:isReadyMap
-							{onGenerate}
-							bind:isGenerationSettingsSheetOpen
-							{toggleSettingsSheet}
-						/>
-					</div>
-				</div>
-			</div>
-			<div
-				class="flex-1 flex flex-col order-first items-center justify-center w-full 
-				overflow-hidden pb-[calc(env(safe-area-inset-bottom)+9.5rem)] md:pt-26 md:pb-8"
-			>
-				{#if $page.data.session?.user.id && $userSummary && $userSummary.total_remaining_credits < lowCreditsThreshold}
-					<div
-						transition:expandCollapse|local={{ duration: 200 }}
-						class="w-full flex flex-col justify-start items-center"
-					>
-						<div class="py-2px px-2 md:px-2px pb-6">
-							<LowOnCreditsCard />
 						</div>
 					</div>
-				{/if}
-				<div class="w-full flex-1 flex flex-col px-2 lg:px-6">
-					<div bind:clientWidth={stageWidth} bind:clientHeight={stageHeight} class="flex-1 w-full">
-						{#if stageWidth && stageHeight}
-							<GenerateStage
-								generation={$generations[0]}
-								{stageWidth}
-								{stageHeight}
-								bind:isReadyMap
-							/>
-						{/if}
+				</div>
+				<div
+					class="flex-1 flex flex-col order-first items-center justify-center w-full 
+				overflow-hidden pb-[calc(env(safe-area-inset-bottom)+9.5rem)] md:pt-26 md:pb-8"
+				>
+					{#if $page.data.session?.user.id && $userSummary && $userSummary.total_remaining_credits < lowCreditsThreshold}
+						<div
+							transition:expandCollapse|local={{ duration: 200 }}
+							class="w-full flex flex-col justify-start items-center"
+						>
+							<div class="py-2px px-2 md:px-2px pb-6">
+								<LowOnCreditsCard />
+							</div>
+						</div>
+					{/if}
+					<div class="w-full flex-1 flex flex-col px-2 lg:px-6">
+						<div
+							bind:clientWidth={stageWidth}
+							bind:clientHeight={stageHeight}
+							class="flex-1 w-full"
+						>
+							{#if stageWidth && stageHeight}
+								<GenerateStage
+									generation={$generations[0]}
+									{stageWidth}
+									{stageHeight}
+									bind:isReadyMap
+								/>
+							{/if}
+						</div>
 					</div>
 				</div>
 			</div>
-		</div>
-		<div class="h-full w-72 hidden md:flex">
-			<SettingsPanel serverData={data} bind:isReadyMap {openSignInModal} />
+			<div class="h-full w-72 hidden md:flex">
+				<SettingsPanel
+					{openSignInModal}
+					{isCheckCompleted}
+					{isInferenceStepsValid}
+					{supportedSchedulerIdDropdownItems}
+				/>
+			</div>
 		</div>
 	</div>
-</div>
 
-{#if $activeGeneration}
-	<GenerationFullScreen
-		onLeftButtonClicked={() => goToSide('left')}
-		onRightButtonClicked={() => goToSide('right')}
-		generation={$activeGeneration}
-		modalType="generate"
-	/>
-{/if}
+	{#if $activeGeneration}
+		<GenerationFullScreen
+			onLeftButtonClicked={() => goToSide('left')}
+			onRightButtonClicked={() => goToSide('right')}
+			generation={$activeGeneration}
+			modalType="generate"
+		/>
+	{/if}
 
-{#if isSignInModalOpen && !$page.data.session?.user.id}
-	<div
-		use:portal={'body'}
-		transition:fade|local={{ duration: 300, easing: quadOut }}
-		class="w-full h-full bg-c-barrier/80 fixed left-0 top-0 px-3 z-[10000]"
-	/>
-	<div
-		use:portal={'body'}
-		transition:fly|local={{ duration: 200, y: 50, easing: quadOut }}
-		class="w-full h-full flex flex-col items-center fixed left-0 top-0 px-3 py-20 z-[10001] overflow-auto"
-	>
+	{#if isSignInModalOpen && !$page.data.session?.user.id}
 		<div
-			use:clickoutside={{ callback: () => (isSignInModalOpen = false) }}
-			class="flex justify-center my-auto"
+			use:portal={'body'}
+			transition:fade|local={{ duration: 300, easing: quadOut }}
+			class="w-full h-full bg-c-barrier/80 fixed left-0 top-0 px-3 z-[10000]"
+		/>
+		<div
+			use:portal={'body'}
+			transition:fly|local={{ duration: 200, y: 50, easing: quadOut }}
+			class="w-full h-full flex flex-col items-center fixed left-0 top-0 px-3 py-20 z-[10001] overflow-auto"
 		>
-			<SignInCard isModal={true} redirectTo="/generate" />
+			<div
+				use:clickoutside={{ callback: () => (isSignInModalOpen = false) }}
+				class="flex justify-center my-auto"
+			>
+				<SignInCard isModal={true} redirectTo="/generate" />
+			</div>
 		</div>
-	</div>
-{/if}
+	{/if}
+</GenerationSettingsProvider>
