@@ -77,6 +77,7 @@
 			/>
 			<IconAnimatedSpinner
 				slot="1"
+				loading={downloadStatus === 'downloading'}
 				class="w-7 h-7 text-c-on-bg relative group-focus/downloadbutton:text-c-on-primary {!$isTouchscreen
 					? 'group-hover/downloadbutton:text-c-on-primary'
 					: ''}"

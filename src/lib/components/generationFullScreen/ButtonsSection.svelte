@@ -280,7 +280,10 @@
 								<p>{$LL.GenerationFullscreen.SubmitToGalleryButton()}</p>
 							</div>
 							<div slot="1" class="flex items-center justify-center gap-1.5 text-c-on-bg">
-								<IconAnimatedSpinner class="w-5 h-5" />
+								<IconAnimatedSpinner
+									loading={submitToGalleryStatus === 'loading'}
+									class="w-5 h-5"
+								/>
 							</div>
 						</Morpher>
 					</div>
@@ -301,7 +304,7 @@
 								<p>{$LL.Shared.DeleteButton()}</p>
 							</div>
 							<div slot="1" class="flex items-center justify-center gap-1.5 text-c-on-primary">
-								<IconAnimatedSpinner class="w-5 h-5" />
+								<IconAnimatedSpinner loading={deleteStatus === 'loading'} class="w-5 h-5" />
 							</div>
 						</Morpher>
 					</div>
