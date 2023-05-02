@@ -33,7 +33,7 @@ const bg: Translation = {
 				Landscape: 'Пейзаж (3:2)',
 				Mobile: 'Телефон (9:16)',
 				Desktop: 'Настолен (16:9)',
-				Anamorphic: 'Anamorphic',
+				Anamorphic: 'Anamorphic (2.4:1)',
 				Squarish: 'Правоъгълник (4:5)'
 			}
 		},

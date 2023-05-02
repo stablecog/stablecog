@@ -33,7 +33,7 @@ const ja: Translation = {
 				Landscape: '横 (3:2)',
 				Mobile: 'モバイル (9:16)',
 				Desktop: 'デスクトップ (16:9)',
-				Anamorphic: 'Anamorphic',
+				Anamorphic: 'Anamorphic (2.4:1)',
 				Squarish: '四方形 (4:5)'
 			}
 		},

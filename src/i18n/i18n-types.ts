@@ -115,7 +115,7 @@ type RootTranslation = {
 				 */
 				Desktop: string
 				/**
-				 * A​n​a​m​o​r​p​h​i​c
+				 * A​n​a​m​o​r​p​h​i​c​ ​(​2​.​4​:​1​)
 				 */
 				Anamorphic: string
 				/**
@@ -2069,7 +2069,7 @@ export type TranslationFunctions = {
 				 */
 				Desktop: () => LocalizedString
 				/**
-				 * Anamorphic
+				 * Anamorphic (2.4:1)
 				 */
 				Anamorphic: () => LocalizedString
 				/**

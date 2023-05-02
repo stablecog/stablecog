@@ -71,7 +71,7 @@
 	>
 		<rect x="4" y="4" width="16" height="16" rx="2" stroke="currentColor" stroke-width="1.5" />
 	</svg>
-{:else if type === '2.39:1'}
+{:else if type === '2.4:1'}
 	<svg
 		class={classes}
 		width="24"

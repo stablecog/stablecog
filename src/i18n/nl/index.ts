@@ -33,7 +33,7 @@ const nl: Translation = {
 				Landscape: 'Liggend (3:2)',
 				Mobile: 'Mobiel (9:16)',
 				Desktop: 'Desktop (16:9)',
-				Anamorphic: 'Anamorphic',
+				Anamorphic: 'Anamorphic (2.4:1)',
 				Squarish: 'Vierkantachtig (4:5)'
 			}
 		},

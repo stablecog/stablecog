@@ -33,7 +33,7 @@ const hi: Translation = {
 				Landscape: 'Landscape (3:2)',
 				Mobile: 'Mobile (9:16)',
 				Desktop: 'Desktop (16:9)',
-				Anamorphic: 'Anamorphic',
+				Anamorphic: 'Anamorphic (2.4:1)',
 				Squarish: 'Squarish (4:5)'
 			}
 		},
