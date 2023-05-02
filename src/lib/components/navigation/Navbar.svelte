@@ -164,7 +164,7 @@
 						</div>
 					</div>
 				{:else if $page.url.pathname !== '/sign-in'}
-					<Button size="xs" onClick={() => (isSignInModalOpen = true)}>
+					<Button class="-mr-1" size="xs" onClick={() => (isSignInModalOpen = true)}>
 						{$LL.SignIn.GetStartedButton()}
 					</Button>
 				{/if}

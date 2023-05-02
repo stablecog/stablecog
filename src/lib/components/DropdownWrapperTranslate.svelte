@@ -11,16 +11,12 @@
 	in:flyAndScale|local={{
 		duration: 200,
 		yRem: -1.5,
-		scaleX: 0.97,
-		scaleY: 0.97,
 		easing: quadOut,
 		transformOrigin: 'right top'
 	}}
 	out:flyAndScale|local={{
 		duration: 150,
 		yRem: -1,
-		scaleX: 0.97,
-		scaleY: 0.97,
 		easing: quadOut,
 		transformOrigin: 'right top'
 	}}
