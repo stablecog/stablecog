@@ -8,10 +8,12 @@
 	import IconSadFace from '$components/icons/IconSadFace.svelte';
 	import IconStarOutlined from '$components/icons/IconStarOutlined.svelte';
 	import MetaTag from '$components/MetaTag.svelte';
+	import ModalWrapper from '$components/ModalWrapper.svelte';
 	import SearchAndFilterBar from '$components/SearchAndFilterBar.svelte';
 	import SignInCard from '$components/SignInCard.svelte';
 	import TabBar from '$components/tabBars/TabBar.svelte';
 	import LL, { locale } from '$i18n/i18n-svelte';
+	import { clickoutside } from '$ts/actions/clickoutside';
 	import type { TAvailableGenerationModelId } from '$ts/constants/generationModels';
 	import { canonicalUrl } from '$ts/constants/main';
 	import { logBatchEditActived, logBatchEditDeactivated } from '$ts/helpers/loggers';
@@ -32,7 +34,6 @@
 	import type { TTab } from '$ts/types/main';
 	import { activeGeneration } from '$userStores/generation';
 	import { createInfiniteQuery, type CreateInfiniteQueryResult } from '@tanstack/svelte-query';
-	import { onMount } from 'svelte';
 
 	let totalOutputs: number;
 	let modelIdFilters: TAvailableGenerationModelId[];
@@ -270,10 +271,35 @@
 </div>
 
 {#if $activeGeneration}
-	<GenerationFullScreen
-		onLeftButtonClicked={() => goToSide('left')}
-		onRightButtonClicked={() => goToSide('right')}
-		generation={$activeGeneration}
-		modalType="history"
-	/>
+	<ModalWrapper
+		hasPadding={false}
+		onClose={() => {
+			if ($activeGeneration !== undefined) {
+				activeGeneration.set(undefined);
+			}
+		}}
+	>
+		<div class="px-2 w-full pb-20">
+			<div
+				use:clickoutside={{
+					callback: () => {
+						if ($activeGeneration !== undefined) {
+							activeGeneration.set(undefined);
+						}
+					}
+				}}
+				class="w-full h-[2500px] flex flex-col items-center justify-start bg-c-bg rounded-xl overflow-hidden"
+			>
+				{#each Array(40).fill(null) as item, index}
+					<div
+						class="w-full h-24 flex items-center justify-center {index % 2 === 0
+							? 'bg-c-on-bg/5'
+							: ''}"
+					>
+						Testing {index}
+					</div>
+				{/each}
+			</div>
+		</div>
+	</ModalWrapper>
 {/if}
