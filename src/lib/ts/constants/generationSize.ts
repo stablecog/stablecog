@@ -3,8 +3,11 @@ import type { TTab } from '$ts/types/main';
 import { derived, type Readable } from 'svelte/store';
 
 export const availableWidths = [
+	'328',
 	'384',
+	'428',
 	'432',
+	'472',
 	'512',
 	'576',
 	'608',
@@ -12,10 +15,12 @@ export const availableWidths = [
 	'672',
 	'760',
 	'768',
+	'784',
 	'800',
 	'840',
 	'912',
-	'1024'
+	'1024',
+	'1128'
 ] as const;
 export type TAvailableWidth = (typeof availableWidths)[number];
 export const widthTabs: TTab<TAvailableWidth>[] = [
@@ -34,6 +39,7 @@ export const widthTabs: TTab<TAvailableWidth>[] = [
 export const widthDefault: TAvailableWidth = '608';
 
 export const availableHeights = [
+	'328',
 	'384',
 	'432',
 	'512',
@@ -43,6 +49,7 @@ export const availableHeights = [
 	'672',
 	'760',
 	'768',
+	'784',
 	'800',
 	'840',
 	'912',
@@ -64,7 +71,15 @@ export const heightTabs: TTab<TAvailableHeight>[] = [
 ];
 export const heightDefault: TAvailableHeight = '912';
 
-export const availableAspectRatios = ['1:1', '4:5', '2:3', '3:2', '9:16', '16:9'] as const;
+export const availableAspectRatios = [
+	'1:1',
+	'4:5',
+	'2:3',
+	'3:2',
+	'9:16',
+	'16:9',
+	'2.39:1'
+] as const;
 export const availableAspectRatioValues = availableAspectRatios.map((ratio) => {
 	const [width, height] = ratio.split(':');
 	return parseInt(width) / parseInt(height);
@@ -77,7 +92,8 @@ export const aspectRatioTabs: TTab<TAvailableAspectRatio>[] = [
 	{ label: '2:3', value: '2:3' },
 	{ label: '3:2', value: '3:2' },
 	{ label: '9:16', value: '9:16' },
-	{ label: '16:9', value: '16:9' }
+	{ label: '16:9', value: '16:9' },
+	{ label: '2.39:1', value: '2.39:1' }
 ];
 export const aspectRatioDropdownItems = derived<
 	[Readable<TranslationFunctions>],
@@ -89,7 +105,8 @@ export const aspectRatioDropdownItems = derived<
 		{ label: $LL.Home.AspectRatioDropdown.Options.Landscape(), value: '3:2' },
 		{ label: $LL.Home.AspectRatioDropdown.Options.Mobile(), value: '9:16' },
 		{ label: $LL.Home.AspectRatioDropdown.Options.Desktop(), value: '16:9' },
-		{ label: $LL.Home.AspectRatioDropdown.Options.Squarish(), value: '4:5' }
+		{ label: $LL.Home.AspectRatioDropdown.Options.Squarish(), value: '4:5' },
+		{ label: $LL.Home.AspectRatioDropdown.Options.Anamorphic(), value: '2.39:1' }
 	];
 	return tabs;
 });
@@ -185,6 +202,20 @@ export const aspectRatioToImageSize: {
 		default: {
 			width: '768',
 			height: '432'
+		}
+	},
+	'2.39:1': {
+		'b6c1372f-31a7-457c-907c-d292a6ffef97': {
+			width: '1128',
+			height: '472'
+		},
+		'22b0857d-7edc-4d00-9cd9-45aa509db093': {
+			width: '1128',
+			height: '472'
+		},
+		default: {
+			width: '784',
+			height: '328'
 		}
 	}
 };

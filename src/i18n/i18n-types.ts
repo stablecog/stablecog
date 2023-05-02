@@ -115,6 +115,10 @@ type RootTranslation = {
 				 */
 				Desktop: string
 				/**
+				 * A​n​a​m​o​r​p​h​i​c
+				 */
+				Anamorphic: string
+				/**
 				 * S​q​u​a​r​i​s​h​ ​(​4​:​5​)
 				 */
 				Squarish: string
@@ -2064,6 +2068,10 @@ export type TranslationFunctions = {
 				 * Desktop (16:9)
 				 */
 				Desktop: () => LocalizedString
+				/**
+				 * Anamorphic
+				 */
+				Anamorphic: () => LocalizedString
 				/**
 				 * Squarish (4:5)
 				 */

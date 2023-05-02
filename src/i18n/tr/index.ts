@@ -33,6 +33,7 @@ const tr: Translation = {
 				Landscape: 'Yatay (3:2)',
 				Mobile: 'Mobil (9:16)',
 				Desktop: 'Masaüstü (16:9)',
+				Anamorphic: 'Anamorphic',
 				Squarish: 'Karemsi (4:5)'
 			}
 		},

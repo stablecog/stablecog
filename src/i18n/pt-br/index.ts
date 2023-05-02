@@ -33,6 +33,7 @@ const ptBr: Translation = {
 				Landscape: 'Landscape (3:2)',
 				Mobile: 'Mobile (9:16)',
 				Desktop: 'Desktop (16:9)',
+				Anamorphic: 'Anamorphic',
 				Squarish: 'Squarish (4:5)'
 			}
 		},

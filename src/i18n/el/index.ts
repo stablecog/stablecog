@@ -33,6 +33,7 @@ const es: Translation = {
 				Landscape: 'Οριζόντια (3:2)',
 				Mobile: 'Κινητό (9:16)',
 				Desktop: 'Υπολογιστής (16:9)',
+				Anamorphic: 'Anamorphic',
 				Squarish: 'Ορθογώνιο (4:5)'
 			}
 		},
