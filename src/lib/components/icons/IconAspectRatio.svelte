@@ -80,6 +80,6 @@
 		fill="none"
 		xmlns="http://www.w3.org/2000/svg"
 	>
-		<rect x="3" y="8" width="18" height="8" rx="2" stroke="#DCDCEA" stroke-width="1.5" />
+		<rect x="3" y="8" width="18" height="8" rx="2" stroke="currentColor" stroke-width="1.5" />
 	</svg>
 {/if}
