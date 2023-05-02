@@ -160,7 +160,7 @@ export async function queueInitialGenerationRequest(request: TInitialGenerationR
 			$generations[0] = { ...generationToSubmit };
 			return $generations;
 		}
-		$generations = [generationToSubmit, ...$generations];
+		$generations.unshift(generationToSubmit);
 		return $generations;
 	});
 }

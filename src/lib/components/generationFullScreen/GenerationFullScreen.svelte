@@ -93,7 +93,9 @@
 	$: generation.selected_output, onGenerationChanged();
 	let initialGenerationChange = true;
 	$: upscaleBeingProcessed = upscaleFromStore
-		? upscaleFromStore.status !== 'succeeded' && upscaleFromStore.status !== 'failed'
+		? upscaleFromStore.status !== 'succeeded' &&
+		  upscaleFromStore.status !== 'failed' &&
+		  !generation.selected_output.upscaled_image_url
 		: false;
 
 	let sidebarWrapper: HTMLDivElement;
@@ -211,7 +213,6 @@
 			ui_id: generateSSEId()
 		};
 		queueInitialUpscaleRequest(initialRequestProps);
-		console.log('Upscale request queued', $upscales);
 	}
 
 	$: upscaledTabValue, setCurrentImageUrl();

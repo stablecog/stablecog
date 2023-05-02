@@ -23,18 +23,18 @@ export const setUpscaleToFailed = ({ id, error }: { id: string; error?: string }
 		if ($upscales === null) {
 			return $upscales;
 		}
-		const index = $upscales.findIndex((ups) => ups.id === id);
-		if (index >= 0) {
-			$upscales[index].status = 'failed';
-			$upscales[index].error = error;
-			$upscales[index].animation = newUpscaleCompleteAnimation($upscales[index].animation);
+		const foundUpscale = $upscales.find((ups) => ups.id === id);
+		if (foundUpscale) {
+			foundUpscale.status = 'failed';
+			foundUpscale.error = error;
+			foundUpscale.animation = newUpscaleCompleteAnimation(foundUpscale.animation);
 			return $upscales;
 		}
-		const ui_index = $upscales.findIndex((ups) => ups.ui_id === id);
-		if (ui_index >= 0) {
-			$upscales[ui_index].status = 'failed';
-			$upscales[ui_index].error = error;
-			$upscales[ui_index].animation = newUpscaleCompleteAnimation($upscales[ui_index].animation);
+		const foundUpscale2 = $upscales.find((ups) => ups.ui_id === id);
+		if (foundUpscale2) {
+			foundUpscale2.status = 'failed';
+			foundUpscale2.error = error;
+			foundUpscale2.animation = newUpscaleCompleteAnimation(foundUpscale2.animation);
 			return $upscales;
 		}
 		return $upscales;
@@ -50,12 +50,12 @@ export const setUpscaleToSucceeded = async ({
 }) => {
 	const ups = get(upscales);
 	if (ups === null) return;
-	const index = ups.findIndex((gen) => gen.id === id);
-	if (index === -1) {
+	const foundUpscale = ups.find((u) => u.id === id);
+	if (!foundUpscale) {
 		return;
 	}
-	ups[index].status = 'succeeded';
-	ups[index].outputs = outputs;
+	foundUpscale.status = 'succeeded';
+	foundUpscale.outputs = outputs;
 	if (outputs && outputs.length > 0 && outputs[0].image_url) {
 		try {
 			await loadImage(outputs[0].image_url);
@@ -63,9 +63,9 @@ export const setUpscaleToSucceeded = async ({
 			console.error(e);
 		}
 	}
-	ups[index].completed_at = convertToDBTimeString(Date.now());
-	const started_at = ups[index].started_at;
-	const completed_at = ups[index].completed_at;
+	foundUpscale.completed_at = convertToDBTimeString(Date.now());
+	const started_at = foundUpscale.started_at;
+	const completed_at = foundUpscale.completed_at;
 	if (started_at && completed_at) {
 		estimatedUpscaleDurationMs.set(
 			new Date(completed_at).getTime() - new Date(started_at).getTime()
@@ -130,7 +130,7 @@ export const setUpscaleToServerProcessing = ({ ui_id, id }: { ui_id: string; id:
 
 export async function queueInitialUpscaleRequest(request: TInitialUpscaleRequest) {
 	upscales.update(($upscales) => {
-		const upscalesToSubmit: TUpscale = {
+		const upscaleToSubmit: TUpscale = {
 			...request,
 			outputs: [],
 			created_at: convertToDBTimeString(Date.now()),
@@ -138,9 +138,9 @@ export async function queueInitialUpscaleRequest(request: TInitialUpscaleRequest
 			animation: newUpscaleStartAnimation()
 		};
 		if ($upscales === null) {
-			return [upscalesToSubmit];
+			return [upscaleToSubmit];
 		}
-		$upscales = [upscalesToSubmit, ...$upscales];
+		$upscales.unshift(upscaleToSubmit);
 		return $upscales;
 	});
 }

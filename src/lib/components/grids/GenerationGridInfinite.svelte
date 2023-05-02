@@ -123,7 +123,7 @@
 			{items}
 			let:visibleItems
 			align="center"
-			threshold={($windowHeight || 1000) * 3}
+			threshold={($windowHeight || 1000) * 5}
 			on:requestAppend={({ detail: e }) => {
 				e.wait();
 				if ($generationsQuery.isFetchingNextPage || !$generationsQuery.hasNextPage) {

@@ -1,7 +1,6 @@
 <script lang="ts">
 	import { browser } from '$app/environment';
 	import { page } from '$app/stores';
-	import AnchorOrDiv from '$components/AnchorOrDiv.svelte';
 	import CopyButton from '$components/buttons/CopyButton.svelte';
 	import DownloadGenerationButton from '$components/buttons/DownloadGenerationButton.svelte';
 	import FavoriteButton from '$components/buttons/FavoriteButton.svelte';
@@ -142,7 +141,9 @@
 {#if upscaleFromStore?.animation}
 	<UpscaleAnimation
 		animation={upscaleFromStore.animation}
-		isProcessing={upscaleFromStore.status !== 'failed' && upscaleFromStore.status !== 'succeeded'}
+		isProcessing={upscaleFromStore.status !== 'failed' &&
+			upscaleFromStore.status !== 'succeeded' &&
+			!generation.selected_output.upscaled_image_url}
 	/>
 {/if}
 <!-- Barriers -->

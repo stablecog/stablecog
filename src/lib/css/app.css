@@ -180,4 +180,41 @@ select:-webkit-autofill:focus {
 	transform: translate3d(0, 0, 0);
 }
 
+.animated-spinner-path {
+	stroke-dasharray: 18 10;
+	stroke-dashoffset: 0%;
+	animation-name: path-animation;
+	animation-duration: 1.5s;
+	animation-iteration-count: infinite;
+}
+
+@keyframes path-animation {
+	0% {
+		stroke-dasharray: 24 12;
+	}
+	50% {
+		stroke-dasharray: 6 12;
+		animation-timing-function: cubic-bezier(0.3, 0, 0.7, 1);
+	}
+	100% {
+		stroke-dasharray: 24 12;
+	}
+}
+
+.animated-spinner-rotation-animation {
+	animation-name: animated-spinner-rotation-animation;
+	animation-duration: 1s;
+	animation-iteration-count: infinite;
+	animation-timing-function: linear;
+}
+
+@keyframes animated-spinner-rotation-animation {
+	0% {
+		transform: rotate(0deg);
+	}
+	100% {
+		transform: rotate(360deg);
+	}
+}
+
 @tailwind utilities;
