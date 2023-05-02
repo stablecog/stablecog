@@ -55,10 +55,10 @@
 					>
 						{post.title}
 					</p>
-					<p class="text-xs text-c-on-bg/60 mt-2 leading-normal">{post.description}</p>
+					<p class="text-sm text-c-on-bg/60 mt-2 leading-normal">{post.description}</p>
 					<div class="flex-1" />
 					<p
-						class="mb-auto text-xs flex font-medium justify-start mt-2 bg-c-on-bg/8 text-c-on-bg/60 px-2 py-0.75 rounded"
+						class="mb-auto text-sm flex font-medium justify-start mt-2 bg-c-on-bg/8 text-c-on-bg/60 px-2 py-0.75 rounded"
 					>
 						{new Date(post.date).toLocaleDateString($locale, {
 							year: 'numeric',

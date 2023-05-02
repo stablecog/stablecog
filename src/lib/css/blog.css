@@ -42,12 +42,37 @@
 }
 .blog p, .blog li{
 	width: 100%;
-	font-size: 1.125rem;
+	font-size: 1rem;
 	line-height: 1.7;
 	margin-top: 1rem;
 	color: rgba(var(--c-on-bg) / 0.75);
 	font-weight: 400;
 }
+
+.blog table {
+	text-align: left;
+	width: 100%;
+	font-weight: 400;
+	margin-top: 1rem;
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-end;
+	font-size: 1rem;
+}
+
+.toc-item-h2 {
+	font-size: 1rem;
+	line-height: 1.5;
+	color: rgba(var(--c-on-bg));
+	font-weight: 500;
+}
+
+@media (min-width: 768px) {
+	.blog p, .blog li, .blog table, .toc-item-h2{
+		font-size: 1.125rem;
+	}
+}
+
 .blog ol {
 	margin-top: 1rem;
 	list-style: decimal;
@@ -127,18 +152,6 @@
 .blog .w-1\/3 {
 	width: 33.3333%;
 }
-
-.blog table {
-	text-align: left;
-	width: 100%;
-	font-weight: 400;
-	margin-top: 1rem;
-	display: flex;
-	flex-direction: column;
-	justify-content: flex-end;
-	font-size: 1.125rem;
-}
-
 .blog table + p {
 	margin-top: 1.5rem;
 }
@@ -298,12 +311,7 @@
 	background-color: rgba(var(--c-primary) / 0.15);
 	color: rgba(var(--c-primary));
 }
-.toc-item-h2 {
-	font-size: 1.125rem;
-	line-height: 1.5;
-	color: rgba(var(--c-on-bg));
-	font-weight: 500;
-}
+
 .toc-item-h2:first-child {
 	margin-top: 0;
 }
