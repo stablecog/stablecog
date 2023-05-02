@@ -260,12 +260,12 @@
 			: 'height: 100vh; height: 100svh;'} background-image: url({$themeApp === 'light'
 			? '/illustrations/grid-on-light.svg'
 			: '/illustrations/grid-on-dark.svg'}); background-size: 24px;"
-		class="w-full flex flex-col overflow-hidden relative z-0"
+		class="w-full flex flex-col overflow-hidden relative z-0 pb-[calc(env(safe-area-inset-bottom))]"
 	>
 		<Navbar />
 		<div class="w-full h-full flex flex-row overflow-hidden pt-2 md:px-4 md:pb-4 gap-4">
 			<div class="h-full hidden lg:flex w-36 xl:w-72">
-				<SidebarWrapper>
+				<SidebarWrapper hasGradient>
 					{#if !$page.data.session?.user.id}
 						<div class="w-full h-full p-2">
 							<GenerateGridPlaceholder text={$LL.Generate.Grid.NotSignedIn.Paragraph()} />
@@ -292,7 +292,7 @@
 					{/if}
 				</SidebarWrapper>
 			</div>
-			<div class="w-full md:w-auto flex flex-col items-center flex-1 h-full gap-4 relative">
+			<div class="w-full md:w-auto flex flex-col items-center flex-1 h-full relative">
 				{#if $windowWidth < mdBreakpoint && isGenerationSettingsSheetOpen}
 					<div
 						transition:fade|local={{ duration: 200, easing: quadOut }}
@@ -308,8 +308,8 @@
 								? '0%'
 								: `calc(100% - ${promptBarHeight + horizontalListHeight}px)`});"
 							class="w-full max-h-[90%] z-40 gap-1 flex flex-col bg-c-bg rounded-t-2xl ring-2 ring-c-bg-secondary 
-						md:ring-0 md:rounded-none shadow-c-shadow/[var(--o-shadow-strongest)] shadow-sheet md:shadow-none 
-						md:bg-transparent absolute left-0 bottom-0 md:hidden transform transition overflow-hidden md:overflow-auto"
+								md:ring-0 md:rounded-none shadow-c-shadow/[var(--o-shadow-strongest)] shadow-sheet md:shadow-none 
+								md:bg-transparent absolute left-0 bottom-0 md:hidden transform transition overflow-hidden md:overflow-auto"
 						>
 							<div
 								class="w-full flex-1 overflow-hidden flex flex-col z-50 transition {$windowWidth &&
@@ -339,7 +339,7 @@
 					<!-- Prompt bar -->
 					<div
 						class="w-full z-50 flex flex-col rounded-2xl overflow-hidden md:overflow-visible md:rounded-none bg-c-bg md:bg-transparent absolute left-0 bottom-0 
-					md:bottom-auto md:top-0 order-2"
+							md:bottom-auto md:top-0 order-2"
 					>
 						<div bind:clientHeight={horizontalListHeight} class="w-full md:hidden">
 							{#if !$page.data.session?.user.id}
@@ -372,34 +372,44 @@
 					</div>
 				</div>
 				<div
-					class="flex-1 flex flex-col order-first items-center justify-center w-full 
-				overflow-hidden pb-[calc(env(safe-area-inset-bottom)+9.5rem)] md:pt-26 md:pb-8"
+					class="w-full flex flex-col order-first flex-1 pb-44 
+					md:pb-0 md:pt-26 lg:pb-8"
 				>
-					{#if $page.data.session?.user.id && $userSummary && $userSummary.total_remaining_credits < lowCreditsThreshold}
-						<div
-							transition:expandCollapse|local={{ duration: 200 }}
-							class="w-full flex flex-col justify-start items-center"
-						>
-							<div class="py-2px px-2 md:px-2px pb-6">
-								<LowOnCreditsCard />
+					<div
+						class="flex-1 flex flex-col items-center justify-center w-full 
+						overflow-hidden"
+					>
+						{#if $page.data.session?.user.id && $userSummary && $userSummary.total_remaining_credits < lowCreditsThreshold}
+							<div
+								transition:expandCollapse|local={{ duration: 200 }}
+								class="w-full flex flex-col justify-start items-center"
+							>
+								<div class="py-2px px-2 md:px-2px pb-6">
+									<LowOnCreditsCard />
+								</div>
+							</div>
+						{/if}
+						<div class="w-full flex-1 flex flex-col px-2 lg:px-6">
+							<div
+								bind:clientWidth={stageWidth}
+								bind:clientHeight={stageHeight}
+								class="flex-1 w-full"
+							>
+								{#if stageWidth && stageHeight}
+									<GenerateStage
+										generation={$generations[0]}
+										{stageWidth}
+										{stageHeight}
+										bind:isReadyMap
+									/>
+								{/if}
 							</div>
 						</div>
-					{/if}
-					<div class="w-full flex-1 flex flex-col px-2 lg:px-6">
-						<div
-							bind:clientWidth={stageWidth}
-							bind:clientHeight={stageHeight}
-							class="flex-1 w-full"
-						>
-							{#if stageWidth && stageHeight}
-								<GenerateStage
-									generation={$generations[0]}
-									{stageWidth}
-									{stageHeight}
-									bind:isReadyMap
-								/>
-							{/if}
-						</div>
+					</div>
+					<div class="w-full h-28 hidden md:flex lg:hidden mt-11">
+						<SidebarWrapper>
+							<div class="w-full h-full flex items-center justify-center">Sidebar</div>
+						</SidebarWrapper>
 					</div>
 				</div>
 			</div>

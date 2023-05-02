@@ -1,6 +1,7 @@
 <script lang="ts">
 	export let rounding: 'all' | 'top' | 'bottom' = 'all';
 	export let noWrapper = false;
+	export let hasGradient = false;
 </script>
 
 <div
@@ -15,8 +16,10 @@
 		: 'ring-2 ring-c-bg-secondary shadow-xl shadow-c-shadow/[var(--o-shadow-stronger)]'} z-0 overflow-hidden relative"
 >
 	<slot />
-	<div
-		class="w-full h-20 absolute z-10 -bottom-1 left-0 pointer-events-none 
-		bg-gradient-to-t from-c-bg to-c-bg/0"
-	/>
+	{#if hasGradient}
+		<div
+			class="w-full h-20 absolute z-10 -bottom-1 left-0 pointer-events-none 
+				bg-gradient-to-t from-c-bg to-c-bg/0"
+		/>
+	{/if}
 </div>
