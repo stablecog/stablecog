@@ -164,7 +164,7 @@
 				<div class="h-[2vh]" />
 			</div>
 		{:else if galleryGenerationFullOutputsQuery !== undefined}
-			<div class="w-full flex-1 flex flex-col">
+			<div class="w-full flex-1 mt-1 md:mt-0.5 flex flex-col">
 				<GenerationGridInfinite
 					rerenderKey={gridRerenderKey}
 					cardType="gallery"

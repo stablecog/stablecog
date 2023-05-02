@@ -2,8 +2,8 @@
 	import { isTouchscreen } from '$ts/stores/isTouchscreen';
 
 	export let hoverFrom: 'top' | 'left' | 'bottom' | 'right' = 'bottom';
-	export let size: 'lg' | 'md' = 'lg';
-	export let color: 'primary' | 'on-bg' | 'bg-secondary' = 'primary';
+	export let size: 'lg' | 'md' | 'sm' | 'xs' = 'lg';
+	export let color: 'primary' | 'on-bg' | 'bg-secondary' | 'secondary' = 'primary';
 	export let hovered = false;
 	export let noPadding = false;
 	export let noRounding = false;
@@ -13,6 +13,10 @@
 	<div
 		class="w-full h-full relative z-0 overflow-hidden {noRounding
 			? ''
+			: size === 'xs'
+			? 'rounded'
+			: size === 'sm'
+			? 'rounded-md'
 			: size === 'md'
 			? 'rounded-lg'
 			: 'rounded-xl'}"
@@ -31,8 +35,14 @@
 				? 'bg-c-on-bg/10'
 				: color === 'bg-secondary'
 				? 'bg-c-bg-secondary'
+				: color === 'secondary'
+				? 'bg-c-secondary/15'
 				: 'bg-c-primary/15'} {noRounding
 				? ''
+				: size === 'xs'
+				? 'rounded'
+				: size === 'sm'
+				? 'rounded-md'
 				: size === 'md'
 				? 'rounded-lg'
 				: 'rounded-xl'} {!$isTouchscreen

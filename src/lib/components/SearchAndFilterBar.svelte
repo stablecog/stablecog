@@ -180,11 +180,12 @@
 		</div>
 	{/if}
 	{#if modelIdFilters && modelIdFilters.length > 0}
-		<div class="w-full flex justify-center px-0.5">
-			<div class="flex flex-wrap justify-start gap-1.5 pt-3">
+		<div class="w-full flex justify-center px-0.5 mt-0.5">
+			<div class="flex flex-wrap justify-start gap-2 pt-3">
 				{#if hasAnyFilter}
 					<TagButton
 						icon={IconTrashcan}
+						hasMaxWidth={false}
 						hasCancelIcon={false}
 						onClick={clearAllFilters}
 						text={$LL.Shared.ClearAllButton()}
