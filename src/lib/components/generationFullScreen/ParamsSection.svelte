@@ -86,7 +86,7 @@
 					$LL.Shared.UnknownTitle()}
 			</p>
 		</div>
-		{#if modalType === 'generate' || modalType === 'history' || modalType === 'admin-gallery'}
+		<!-- {#if modalType === 'generate' || modalType === 'history' || modalType === 'admin-gallery'}
 			<div class="min-w-[calc(50%-0.75rem)] flex flex-wrap items-center gap-3.5">
 				<div class="flex flex-col items-start gap-1">
 					<div
@@ -120,7 +120,7 @@
 					</div>
 				{/key}
 			</div>
-		{/if}
+		{/if} -->
 		<div class="min-w-[calc(50%-0.75rem)] flex flex-col items-start gap-1">
 			<div class="flex items-center gap-1.5 text-c-on-bg/75 text-sm cursor-default">
 				<IconDimensions class="w-4 h-4" />

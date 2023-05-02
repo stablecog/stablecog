@@ -218,7 +218,7 @@
 			</Morpher>
 		</SubtleButton>
 	</div>
-	{#if (modalType === 'generate' || modalType === 'history') && !generation.selected_output.image_url.includes('placeholder')}
+	<!-- {#if (modalType === 'generate' || modalType === 'history') && !generation.selected_output.image_url.includes('placeholder')}
 		<SubtleButton
 			onClick={onDownloadImageClicked}
 			disabled={buttonObjectsWithState.download.state === 'loading'}
@@ -242,7 +242,7 @@
 				</div>
 			</Morpher>
 		</SubtleButton>
-	{/if}
+	{/if} -->
 	{#if modalType === 'gallery'}
 		<div use:copy={linkUrl} on:svelte-copy={() => setButtonObjectWithState('link', 'success')}>
 			<SubtleButton state={buttonObjectsWithState.link.state === 'success' ? 'success' : 'idle'}>
@@ -259,7 +259,7 @@
 			</SubtleButton>
 		</div>
 	{/if}
-	{#if modalType === 'generate' || modalType === 'history'}
+	<!-- {#if modalType === 'generate' || modalType === 'history'}
 		{#if $userSummary?.product_id || $userSummary?.has_nonfree_credits === true}
 			{#if submitToGalleryStatus === 'success' || generation.selected_output.gallery_status !== 'not_submitted'}
 				<SubtleButton disabled={true}>
@@ -308,5 +308,5 @@
 				</Morpher>
 			</SubtleButton>
 		</div>
-	{/if}
+	{/if} -->
 </div>

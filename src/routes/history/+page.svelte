@@ -202,23 +202,6 @@
 							bind:value={$userGalleryCurrentView}
 							class="flex-1 md:max-w-[19rem]"
 						/>
-						<!-- {#if hasLegacyGenerations}
-							<SubtleButton
-								loading={legacyGenerationsDownloadStatus === 'downloading'}
-								onClick={_downloadLegacyGenerations}
-								class="-my-1"
-							>
-								<Morpher morphed={legacyGenerationsDownloadStatus === 'downloading'}>
-									<div slot="0" class="flex items-center justify-center gap-1.5">
-										<IconDownload class="w-5 h-5 -ml-0.5" />
-										<p>{$LL.History.DownloadLegacyGenerationsButton()}</p>
-									</div>
-									<div slot="1" class="flex items-center justify-center gap-1.5">
-										<IconAnimatedSpinner class="w-5 h-5" />
-									</div>
-								</Morpher>
-							</SubtleButton>
-						{/if} -->
 					</div>
 				</div>
 			</div>
@@ -271,35 +254,10 @@
 </div>
 
 {#if $activeGeneration}
-	<ModalWrapper
-		hasPadding={false}
-		onClose={() => {
-			if ($activeGeneration !== undefined) {
-				activeGeneration.set(undefined);
-			}
-		}}
-	>
-		<div class="px-2 w-full pb-20">
-			<div
-				use:clickoutside={{
-					callback: () => {
-						if ($activeGeneration !== undefined) {
-							activeGeneration.set(undefined);
-						}
-					}
-				}}
-				class="w-full h-[2500px] flex flex-col items-center justify-start bg-c-bg rounded-xl overflow-hidden"
-			>
-				{#each Array(40).fill(null) as item, index}
-					<div
-						class="w-full h-24 flex items-center justify-center {index % 2 === 0
-							? 'bg-c-on-bg/5'
-							: ''}"
-					>
-						Testing {index}
-					</div>
-				{/each}
-			</div>
-		</div>
-	</ModalWrapper>
+	<GenerationFullScreen
+		onLeftButtonClicked={() => goToSide('left')}
+		onRightButtonClicked={() => goToSide('right')}
+		generation={$activeGeneration}
+		modalType="history"
+	/>
 {/if}
