@@ -1,10 +1,8 @@
 <script lang="ts">
 	import { page } from '$app/stores';
 	import IconButton from '$components/buttons/IconButton.svelte';
-	import IconSettings from '$components/icons/IconSettings.svelte';
 	import PageLoadProgressBar from '$components/PageLoadProgressBar.svelte';
 	import NavigationTabBar from '$components/navigation/NavigationTabBar.svelte';
-	import SettingsMenu from '$components/settings/SettingsMenu.svelte';
 	import { clickoutside } from '$ts/actions/clickoutside';
 	import { isTouchscreen } from '$ts/stores/isTouchscreen';
 	import { onMount } from 'svelte';
@@ -13,7 +11,7 @@
 	import { lastClosedNotification } from '$ts/stores/lastClosedNotification';
 	import LL, { locale } from '$i18n/i18n-svelte';
 	import Button from '$components/buttons/Button.svelte';
-	import AccountMenu from '$components/AccountMenu.svelte';
+	import AccountMenu from '$components/accountMenu/AccountMenu.svelte';
 	import Avatar from '$components/Avatar.svelte';
 	import { portal } from 'svelte-portal';
 	import { fade, fly } from 'svelte/transition';
@@ -37,13 +35,9 @@
 	export let scrollDirection: 'up' | 'down' = 'down';
 
 	let isSignInModalOpen = false;
-	let isSettingsOpen = false;
 	let isAccountMenuOpen = false;
 
 	const routesWithDrawer = ['/guide'];
-
-	const toggleSettings = () => (isSettingsOpen = !isSettingsOpen);
-	const closeSettings = () => (isSettingsOpen = false);
 
 	const toggleAccountMenu = () => (isAccountMenuOpen = !isAccountMenuOpen);
 	const closeAccountMenu = () => (isAccountMenuOpen = false);
@@ -113,9 +107,24 @@
 			<NavigationTabBar />
 		</div>
 		<div class="flex flex-1 flex-wrap items-center justify-end relative">
-			<div class="flex items-center justify-end px-3">
+			<IconButton class="py-2 hidden md:block" href="/discord" target="_blank" name="Discord">
+				<IconSc
+					type="discord"
+					class="w-8 h-8 relative transition transform {!$isTouchscreen
+						? 'group-hover/iconbutton:text-c-primary'
+						: 'text-c-on-bg'}"
+				/>
+			</IconButton>
+			<IconButton class="py-2 hidden md:block" href="/guide" name="Guide">
+				<IconGuide
+					class="w-8 h-8 relative transition transform {!$isTouchscreen
+						? 'group-hover/iconbutton:text-c-primary'
+						: 'text-c-on-bg'}"
+				/>
+			</IconButton>
+			<div class="flex items-center justify-end pl-2 pr-3.5 md:pl-2.5 md:pr-5">
 				{#if $page.data.session && $userSummary}
-					<div class="flex flex-col items-end px-5.5">
+					<div class="flex flex-col items-end mr-3.5 md:mr-4">
 						<p class="text-xs font-medium text-c-on-bg/60">{$LL.Account.RemainingTitle()}</p>
 						<p class="text-sm font-bold mt-0.5">
 							{$userSummary.total_remaining_credits.toLocaleString($locale)}
@@ -128,7 +137,7 @@
 						use:clickoutside={{ callback: closeAccountMenu }}
 						class="flex flex-col items-end relative"
 					>
-						<div class="px-2.5 py-3.5 -mx-3">
+						<div class="py-3.5">
 							<IconButton
 								class="shadow-lg rounded-full flex items-center justify-center shadow-c-shadow/[var(--o-shadow-strong)]"
 								noPadding
@@ -148,55 +157,17 @@
 								</div>
 							</IconButton>
 						</div>
-						<div class="relative -mr-13 md:-mr-1.5">
+						<div class="relative -mr-1">
 							{#if isAccountMenuOpen}
-								<AccountMenu {closeAccountMenu} />
+								<AccountMenu closeMenu={closeAccountMenu} />
 							{/if}
 						</div>
 					</div>
 				{:else if $page.url.pathname !== '/sign-in'}
-					<Button class="-mx-1" size="xs" onClick={() => (isSignInModalOpen = true)}>
+					<Button size="xs" onClick={() => (isSignInModalOpen = true)}>
 						{$LL.SignIn.GetStartedButton()}
 					</Button>
 				{/if}
-			</div>
-			<IconButton
-				class="px-3 py-2 -mx-3 hidden md:block"
-				href="/discord"
-				target="_blank"
-				name="Discord"
-			>
-				<IconSc
-					type="discord"
-					class="w-8 h-8 relative transition transform {!$isTouchscreen
-						? 'group-hover/iconbutton:text-c-primary'
-						: 'text-c-on-bg'}"
-				/>
-			</IconButton>
-			<IconButton class="px-3 py-2 -mx-3 hidden md:block" href="/guide" name="Guide">
-				<IconGuide
-					class="w-8 h-8 relative transition transform {!$isTouchscreen
-						? 'group-hover/iconbutton:text-c-primary'
-						: 'text-c-on-bg'}"
-				/>
-			</IconButton>
-			<div use:clickoutside={{ callback: closeSettings }} class="flex flex-col items-end -ml-3">
-				<IconButton class="pl-3 pr-1 md:pr-2 py-2" onClick={toggleSettings} name="Settings">
-					<IconSettings
-						class="w-8 h-8 relative transition transform {isSettingsOpen
-							? 'text-c-primary rotate-360'
-							: !$isTouchscreen
-							? 'group-hover/iconbutton:text-c-primary group-hover/iconbutton:rotate-90'
-							: 'text-c-on-bg'}"
-					/>
-				</IconButton>
-				<div class="pr-3">
-					<div class="relative">
-						{#if isSettingsOpen}
-							<SettingsMenu {closeSettings} />
-						{/if}
-					</div>
-				</div>
 			</div>
 		</div>
 	</div>

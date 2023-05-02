@@ -92,7 +92,11 @@
 
 	type TDropdownState = 'main' | 'gift-credits' | 'ban-user' | 'unban-user';
 	let isDropdownOpen: {
-		[id: string]: { isOpen: boolean; state: TDropdownState; buttonElement?: HTMLElement };
+		[id: string]: {
+			isOpen: boolean;
+			state: TDropdownState;
+			buttonElement?: HTMLElement | undefined;
+		};
 	} = {};
 	$: $allUsersQuery, onAllUsersQueryChanged();
 
@@ -427,7 +431,7 @@
 												<div
 													use:clickoutside={{
 														callback: () => toggleUserDropdown(user.id, false),
-														exclude: isDropdownOpen[user.id].buttonElement,
+														exclude: [isDropdownOpen[user.id].buttonElement],
 														capture: false
 													}}
 													class="relative"

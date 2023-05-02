@@ -36,7 +36,7 @@ export function clickoutside(
 	};
 }
 
-function isntInside(node: HTMLElement, event: Event, exclude?: HTMLElement[] | undefined) {
+function isntInside(node: HTMLElement, event: Event, exclude?: (HTMLElement | undefined)[]) {
 	return (
 		node !== event.target &&
 		!node.contains(event.target as Node) &&
@@ -47,6 +47,6 @@ function isntInside(node: HTMLElement, event: Event, exclude?: HTMLElement[] | u
 
 interface TClickoutsideProps {
 	callback: () => void;
-	exclude?: HTMLElement[] | undefined;
+	exclude?: (HTMLElement | undefined)[];
 	capture?: boolean;
 }

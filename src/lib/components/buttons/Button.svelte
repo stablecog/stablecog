@@ -105,7 +105,7 @@
 					? 'bg-c-danger-secondary'
 					: type === 'no-bg-on-bg'
 					? 'bg-c-on-bg/10'
-					: 'bg-c-secondary'} {!$isTouchscreen ? 'group-enabled:group-hover:translate-x-0' : ''}"
+					: 'bg-c-secondary'} {!$isTouchscreen ? 'group-hover:translate-x-0' : ''}"
 			/>
 		</div>
 		<div class="relative">
