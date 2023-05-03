@@ -68,7 +68,7 @@
 	let containerDropdownPadding = 16;
 </script>
 
-<SidebarWrapper {rounding} {noWrapper}>
+<SidebarWrapper {rounding} {noWrapper} hasGradient>
 	<div
 		bind:this={settingsContainer}
 		class="w-full h-full flex flex-col overflow-auto pt-4 md:pt-5 pb-36 gap-7"

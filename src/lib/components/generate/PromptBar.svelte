@@ -274,7 +274,7 @@
 			size="sm"
 			onClick={toggleSettingsSheet}
 			class="h-full px-3 md:hidden"
-			hoverFrom={isGenerationSettingsSheetOpen ? 'top' : 'bottom'}
+			hoverFrom="bottom"
 		>
 			<Morpher morphed={$windowWidth < mdBreakpoint && isGenerationSettingsSheetOpen}>
 				<div slot="0" class="w-7.5 h-7.5 p-0.5">
