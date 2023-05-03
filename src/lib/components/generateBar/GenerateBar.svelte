@@ -1,7 +1,6 @@
 <script lang="ts">
 	import Button from '$components/buttons/Button.svelte';
 	import ClearButton from '$components/buttons/ClearButton.svelte';
-	import type { THomePageData } from '$routes/+page.server';
 	import { autoresize } from '$ts/actions/textarea/autoresize';
 	import { expandCollapse } from '$ts/animation/transitions';
 	import {
@@ -79,8 +78,9 @@
 		type TAvailableHeight,
 		type TAvailableWidth
 	} from '$ts/constants/generationSize';
+	import type { TGeneratePageData } from '$routes/generate/+page.server';
 
-	export let serverData: THomePageData;
+	export let serverData: TGeneratePageData;
 	export let queueGeneration: () => Promise<void>;
 	export { classes as class };
 	let classes = '';

@@ -67,11 +67,11 @@
 	import { advancedMode, advancedModeApp } from '$ts/stores/advancedMode';
 	import type { TIsReadyMap } from '$components/generate/types';
 	import { generations } from '$ts/stores/user/generation';
-	import type { TCreatePageData } from '$routes/generate/+page.server';
 	import { afterNavigate } from '$app/navigation';
 	import type { TTab } from '$ts/types/main';
+	import type { TGeneratePageData } from '$routes/generate/+page.server';
 
-	export let serverData: TCreatePageData;
+	export let serverData: TGeneratePageData;
 	export let isReadyMap: TIsReadyMap;
 
 	generationNegativePrompt.set(
@@ -414,17 +414,11 @@
 	});
 
 	afterNavigate(() => {
-		if (serverData.negative_prompt !== null) {
-			generationNegativePrompt.set(serverData.negative_prompt);
-		}
 		if (serverData.width !== null && isValue(serverData.width)) {
 			generationWidth.set(serverData.width);
 		}
 		if (serverData.height !== null && isValue(serverData.height)) {
 			generationHeight.set(serverData.height);
-		}
-		if (serverData.model_id !== null && isValue(serverData.model_id)) {
-			generationModelId.set(serverData.model_id);
 		}
 		if (
 			!isValue(serverData.width) &&
@@ -439,6 +433,12 @@
 			if (ratio) {
 				generationAspectRatio.set(ratio);
 			}
+		}
+		if (serverData.negative_prompt !== null) {
+			generationNegativePrompt.set(serverData.negative_prompt);
+		}
+		if (serverData.model_id !== null && isValue(serverData.model_id)) {
+			generationModelId.set(serverData.model_id);
 		}
 		if (
 			isValue(serverData.num_inference_steps) &&

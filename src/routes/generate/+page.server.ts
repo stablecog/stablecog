@@ -111,7 +111,7 @@ export const load: ServerLoad = ({ url, locals }) => {
 			? num_outputs_int
 			: null;
 
-	const data: TCreatePageData = {
+	const data: TGeneratePageData = {
 		prompt,
 		negative_prompt,
 		model_id,
@@ -130,7 +130,7 @@ export const load: ServerLoad = ({ url, locals }) => {
 	return data;
 };
 
-export interface TCreatePageData {
+export interface TGeneratePageData {
 	prompt: string | null;
 	negative_prompt: string | null;
 	model_id: TAvailableGenerationModelId | null;
