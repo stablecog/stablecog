@@ -5,7 +5,7 @@
 </script>
 
 <div
-	class="w-full h-full flex flex-col bg-c-bg {noWrapper
+	class="w-full flex flex-col bg-c-bg {noWrapper
 		? ''
 		: rounding === 'top'
 		? 'rounded-t-2xl'

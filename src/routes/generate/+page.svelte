@@ -22,7 +22,7 @@
 		getUserGenerationFullOutputs,
 		type TUserGenerationFullOutputsPage
 	} from '$ts/queries/userGenerations';
-	import { userGenerationFullOutputsQueryKey } from '$ts/stores/user/keys';
+	import { generatePageUserGenerationFullOutputsQueryKey } from '$ts/stores/user/keys';
 	import { windowHeight, windowWidth } from '$ts/stores/window';
 	import Navbar from '$components/navigation/Navbar.svelte';
 	import SidebarWrapper from '$components/generate/SidebarWrapper.svelte';
@@ -59,8 +59,7 @@
 	let promptBarHeight: number;
 	let stageWidth: number;
 	let stageHeight: number;
-	let horizontalListImageHeight = 48;
-	let horizontalListPaddingTopRem = 0.5;
+	let horizontalListHeightEstimatedRem = 3.5;
 	let horizontalListHeight: number;
 	let propmtBarEstimatedHeightRem = 4.25;
 	let gridScrollContainer: HTMLElement;
@@ -75,11 +74,16 @@
 	$: isCheckCompleted =
 		isReadyMap.generationSettings && isReadyMap.generationStage && isReadyMap.promptBar;
 
-	$: userGenerationFullOutputsQueryKey.set(['user_generation_full_outputs', 'all', '', '']);
+	$: generatePageUserGenerationFullOutputsQueryKey.set([
+		'user_generation_full_outputs',
+		'all',
+		'',
+		''
+	]);
 
 	$: userGenerationFullOutputsQuery = $page.data.session?.user.id
 		? createInfiniteQuery({
-				queryKey: $userGenerationFullOutputsQueryKey,
+				queryKey: $generatePageUserGenerationFullOutputsQueryKey,
 				queryFn: async (lastPage) => {
 					let outputsPage = await getUserGenerationFullOutputs({
 						access_token: $page.data.session?.access_token || '',
@@ -257,7 +261,9 @@
 		id="tooltip-container"
 		style="{$windowHeight
 			? `height: ${$windowHeight + 'px;'}`
-			: 'height: 100vh; height: 100svh;'} background-image: url({$themeApp === 'light'
+			: 'height: 100vh; height: 100svh;'} {$windowWidth
+			? `width: ${$windowWidth + 'px;'}`
+			: 'width: 100vw; width: 100svw;'} background-image: url({$themeApp === 'light'
 			? '/illustrations/grid-on-light.svg'
 			: '/illustrations/grid-on-dark.svg'}); background-size: 24px;"
 		class="w-full flex flex-col overflow-hidden relative z-0"
@@ -273,7 +279,7 @@
 					{:else if userGenerationFullOutputsQuery}
 						<div
 							bind:this={gridScrollContainer}
-							class="w-full flex flex-col flex-1 overflow-auto px-2 py-2"
+							class="w-full flex flex-col flex-1 min-w-0 overflow-auto px-2 py-2"
 						>
 							{#if $windowWidth > lgBreakpoint}
 								<GenerationGridInfinite
@@ -293,7 +299,7 @@
 				</SidebarWrapper>
 			</div>
 			<div
-				class="w-full md:w-auto flex flex-col items-center flex-1 h-full relative
+				class="flex flex-col items-center flex-1 min-w-0 h-full relative
 				lg:pb-[calc(env(safe-area-inset-bottom))]"
 			>
 				{#if $windowWidth < mdBreakpoint && isGenerationSettingsSheetOpen}
@@ -306,7 +312,9 @@
 					{#if !$windowWidth || $windowWidth < mdBreakpoint}
 						<div
 							style="transform: translateY({!$windowWidth || !promptBarHeight
-								? `calc(100% - env(safe-area-inset-bottom) - ${propmtBarEstimatedHeightRem}rem - ${horizontalListPaddingTopRem}rem - ${horizontalListImageHeight}px)`
+								? `calc(100% - env(safe-area-inset-bottom) - ${
+										propmtBarEstimatedHeightRem + horizontalListHeightEstimatedRem
+								  }rem)`
 								: $windowWidth < mdBreakpoint && isGenerationSettingsSheetOpen
 								? '0%'
 								: `calc(100% - ${promptBarHeight + horizontalListHeight}px)`});"
@@ -315,7 +323,7 @@
 								md:bg-transparent absolute left-0 bottom-0 md:hidden transform transition overflow-hidden md:overflow-auto"
 						>
 							<div
-								class="w-full flex-1 overflow-hidden flex flex-col z-50 transition {$windowWidth &&
+								class="w-full flex-1 min-w-0 overflow-hidden flex flex-col z-50 transition {$windowWidth &&
 								$windowWidth < mdBreakpoint &&
 								isGenerationSettingsSheetOpen
 									? 'opacity-100'
@@ -333,8 +341,8 @@
 								class="flex-shrink-0 w-full"
 								style="height: {!$windowWidth || !promptBarHeight
 									? `calc(env(safe-area-inset-bottom) + ${
-											propmtBarEstimatedHeightRem + horizontalListPaddingTopRem
-									  }rem + ${horizontalListImageHeight}px)`
+											propmtBarEstimatedHeightRem + horizontalListHeightEstimatedRem
+									  }rem)`
 									: `${promptBarHeight + horizontalListHeight}px`}"
 							/>
 						</div>
@@ -344,15 +352,15 @@
 						class="w-full z-50 flex flex-col rounded-2xl overflow-hidden md:overflow-visible md:rounded-none bg-c-bg md:bg-transparent absolute left-0 bottom-0 
 							md:bottom-auto md:top-0 order-2"
 					>
-						<div bind:clientHeight={horizontalListHeight} class="w-full md:hidden">
+						<div bind:clientHeight={horizontalListHeight} class="w-full h-14 md:hidden">
 							{#if !$page.data.session?.user.id}
 								<GenerateHorizontalListPlaceholder
-									imageHeight={horizontalListImageHeight}
+									containerClasses="px-2 pt-2"
 									text={$LL.Generate.Grid.NotSignedIn.Paragraph()}
 								/>
 							{:else if userGenerationFullOutputsQuery}
 								<HorizontalList
-									imageHeight={horizontalListImageHeight}
+									containerClasses="px-2 pt-2"
 									{pinnedFullOutputs}
 									generationsQuery={userGenerationFullOutputsQuery}
 									cardType="generate"
@@ -375,11 +383,11 @@
 					</div>
 				</div>
 				<div
-					class="w-full flex flex-col order-first flex-1 pb-44 
+					class="w-full flex flex-col order-first flex-1 min-w-0 pb-44 
 					md:pb-0 md:pt-26 lg:pb-8"
 				>
 					<div
-						class="flex-1 flex flex-col items-center justify-center w-full 
+						class="flex-1 min-w-0 flex flex-col items-center justify-center w-full 
 						overflow-hidden"
 					>
 						{#if $page.data.session?.user.id && $userSummary && $userSummary.total_remaining_credits < lowCreditsThreshold}
@@ -392,11 +400,11 @@
 								</div>
 							</div>
 						{/if}
-						<div class="w-full flex-1 flex flex-col px-2 lg:px-6">
+						<div class="w-full flex-1 min-w-0 flex flex-col px-2 lg:px-6">
 							<div
 								bind:clientWidth={stageWidth}
 								bind:clientHeight={stageHeight}
-								class="flex-1 w-full"
+								class="flex-1 min-w-0 w-full"
 							>
 								{#if stageWidth && stageHeight}
 									<GenerateStage
@@ -409,12 +417,22 @@
 							</div>
 						</div>
 					</div>
-					<div class="hidden md:flex lg:hidden pt-11 pb-[calc(env(safe-area-inset-bottom))]">
-						<div class="w-full h-28 hidden md:flex lg:hidden">
-							<SidebarWrapper>
-								<div class="w-full h-full flex items-center justify-center">Sidebar</div>
-							</SidebarWrapper>
-						</div>
+					<div class="w-full hidden md:flex lg:hidden pt-11 pb-[calc(env(safe-area-inset-bottom))]">
+						<SidebarWrapper>
+							<div class="w-full h-20 flex">
+								{#if !$page.data.session?.user.id}
+									<GenerateHorizontalListPlaceholder
+										text={$LL.Generate.Grid.NotSignedIn.Paragraph()}
+									/>
+								{:else if userGenerationFullOutputsQuery}
+									<HorizontalList
+										{pinnedFullOutputs}
+										generationsQuery={userGenerationFullOutputsQuery}
+										cardType="generate"
+									/>
+								{/if}
+							</div>
+						</SidebarWrapper>
 					</div>
 				</div>
 			</div>
