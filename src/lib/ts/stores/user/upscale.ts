@@ -15,6 +15,11 @@ import {
 } from '$env/static/public';
 import { isSuperAdmin } from '$ts/helpers/admin/roles';
 import { convertToDBTimeString } from '$ts/helpers/convertToDBTimeString';
+import {
+	addToRecentlyUpdatedOutputIds,
+	recentlyUpdatedOutputIds
+} from '$ts/stores/user/recentlyUpdatedOutputIds';
+import { activeGeneration } from '$ts/stores/user/generation';
 
 export const upscales = writable<TUpscale[]>([]);
 
@@ -63,6 +68,7 @@ export const setUpscaleToSucceeded = async ({
 			console.error(e);
 		}
 	}
+	addToRecentlyUpdatedOutputIds(foundUpscale.input);
 	foundUpscale.completed_at = convertToDBTimeString(Date.now());
 	const started_at = foundUpscale.started_at;
 	const completed_at = foundUpscale.completed_at;

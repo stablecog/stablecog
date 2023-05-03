@@ -155,7 +155,7 @@
 						<div
 							class="absolute left-0 top-0 w-full h-full bg-c-bg-secondary transition overflow-hidden 
 							z-0 shadow-lg shadow-c-shadow/[var(--o-shadow-normal)] {cardType === 'generate'
-								? output.image_url
+								? output.image_url && !output.is_deleted
 									? 'border-2 rounded-lg hover:border-c-primary'
 									: 'border-2 rounded-lg'
 								: 'border-2 rounded-xl'} {isOutputSelected

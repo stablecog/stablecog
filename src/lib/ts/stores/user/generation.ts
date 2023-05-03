@@ -22,10 +22,7 @@ import { isSuperAdmin } from '$ts/helpers/admin/roles';
 import { userSummary } from '$ts/stores/user/summary';
 import { derived } from 'svelte/store';
 import { convertToDBTimeString } from '$ts/helpers/convertToDBTimeString';
-import {
-	generatePageUserGenerationFullOutputsQueryKey,
-	userGenerationFullOutputsQueryKey
-} from '$ts/stores/user/keys';
+import { addToRecentlyUpdatedOutputIds } from '$ts/stores/user/recentlyUpdatedOutputIds';
 
 export const generations = writable<TGeneration[]>([]);
 export const activeGeneration = writable<TGenerationWithSelectedOutput | undefined>(undefined);
@@ -75,8 +72,12 @@ export const setGenerationToSucceeded = ({
 			return $generations;
 		}
 		gen.status = 'succeeded';
+		const newOutputs = outputs.map((o) => ({
+			...o,
+			status: 'succeeded' as TGenerationOutputStatus
+		}));
 		gen.outputs = [
-			...outputs.map((o) => ({ ...o, status: 'succeeded' as TGenerationOutputStatus })),
+			...newOutputs,
 			...Array.from({ length: gen.num_outputs - outputs.length }).map(() => ({
 				id: generateSSEId(),
 				image_url: '',
@@ -87,6 +88,15 @@ export const setGenerationToSucceeded = ({
 		const costCompletionPerMs = getCostCompletionPerMsFromGeneration(gen);
 		if (costCompletionPerMs !== null) {
 			generationCostCompletionPerMs.set(costCompletionPerMs);
+		}
+		if (newOutputs.length > 0) {
+			const newOutputIds = newOutputs.map((o) => o.id);
+			const statuses = getOutputOnStageStatuses($generations, newOutputIds);
+			statuses.forEach((onStage, i) => {
+				if (!onStage) {
+					addToRecentlyUpdatedOutputIds(newOutputIds[i]);
+				}
+			});
 		}
 		return $generations;
 	});
@@ -251,6 +261,19 @@ export const setGenerationOutputToSubmitted = (output_id: string) => {
 		}
 		return $generations;
 	});
+};
+
+export const getOutputOnStageStatuses = (generations: TGeneration[], output_ids: string[]) => {
+	let statuses = output_ids.map((id) => false);
+	const lastGeneration = generations?.[0];
+	if (!lastGeneration) return statuses;
+	for (let i = 0; i < lastGeneration.outputs.length; i++) {
+		const output = lastGeneration.outputs[i];
+		if (output_ids.includes(output.id)) {
+			statuses[output_ids.indexOf(output.id)] = true;
+		}
+	}
+	return statuses;
 };
 
 export const setGenerationOutputUpscaledImageUrl = ({

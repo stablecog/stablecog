@@ -31,6 +31,7 @@
 		userGallerySelectedOutputIds
 	} from '$ts/stores/user/gallery';
 	import { addToGalleryActionableItems } from '$ts/stores/user/galleryActionableItems';
+	import { recentlyUpdatedOutputIds } from '$ts/stores/user/recentlyUpdatedOutputIds';
 	import { userSummary } from '$ts/stores/user/summary';
 	import { upscales } from '$ts/stores/user/upscale';
 	import { activeGeneration, type TGenerationWithSelectedOutput } from '$userStores/generation';
@@ -69,6 +70,11 @@
 		cardType === 'generate';
 
 	$: overlayShouldShow = $isTouchscreen && $lastClickedOutputId === generation.selected_output.id;
+
+	$: isRecentlyUpdated =
+		cardType === 'gallery' || cardType === 'admin-gallery'
+			? false
+			: $recentlyUpdatedOutputIds.includes(generation.selected_output.id);
 
 	$: upscaleFromStore =
 		cardType !== 'gallery' && cardType !== 'admin-gallery'
@@ -146,6 +152,23 @@
 			? 'group-focus-within:opacity-100 group-hover:opacity-100'
 			: ''} {overlayShouldShow ? 'opacity-100' : 'opacity-0'}"
 	/>
+{/if}
+{#if cardType !== 'gallery' && cardType !== 'admin-gallery' && isRecentlyUpdated}
+	<div class="absolute w-full">
+		<div
+			class="absolute left-0 top-0 w-full h-12 bg-gradient-to-b from-c-barrier/75 to-c-barrier/0"
+		/>
+		<div
+			class="{cardType === 'stage' ? 'w-6 h-6' : 'w-5 h-5'} {cardType === 'generate'
+				? '-left-0.5 -top-0.5'
+				: 'left-0 top-0'} relative "
+		>
+			<div class="absolute w-full h-full rounded-full animate-ping-custom bg-c-primary/50" />
+			<div class="w-full h-full transform scale-40">
+				<div class="w-full h-full rounded-full animate-ping-custom-bg bg-c-primary" />
+			</div>
+		</div>
+	</div>
 {/if}
 {#if !generation.selected_output.is_deleted && !isGalleryEditActive}
 	<a

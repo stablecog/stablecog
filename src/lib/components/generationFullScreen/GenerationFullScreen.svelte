@@ -47,6 +47,7 @@
 	import GenerationFullScreenImageSet from '$components/generationFullScreen/GenerationFullScreenImageSet.svelte';
 	import UpscaleAnimation from '$components/generate/UpscaleAnimation.svelte';
 	import SideButton from '$components/generationFullScreen/SideButton.svelte';
+	import { recentlyUpdatedOutputIds } from '$ts/stores/user/recentlyUpdatedOutputIds';
 
 	export let generation: TGenerationWithSelectedOutput;
 	export let modalType: TGenerationFullScreenModalType;
@@ -127,6 +128,12 @@
 		$userSummary && $userSummary.total_remaining_credits < upscaleCreditCost;
 
 	const onGenerationChanged = () => {
+		const id = $recentlyUpdatedOutputIds.find((id) => id === generation.selected_output.id);
+		console.log('before', $recentlyUpdatedOutputIds);
+		if (id) {
+			recentlyUpdatedOutputIds.set($recentlyUpdatedOutputIds.filter((i) => i !== id));
+			console.log('after', $recentlyUpdatedOutputIds);
+		}
 		setUpscaleFromStore();
 		currentImageUrl =
 			generation.selected_output.upscaled_image_url ?? generation.selected_output.image_url;
