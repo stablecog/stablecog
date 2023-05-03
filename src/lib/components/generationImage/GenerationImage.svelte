@@ -154,7 +154,7 @@
 	/>
 {/if}
 {#if cardType !== 'gallery' && cardType !== 'admin-gallery' && isRecentlyUpdated}
-	<div class="absolute w-full">
+	<div class="absolute w-full pointer-events-none">
 		<div
 			class="absolute left-0 top-0 w-full h-12 bg-gradient-to-b from-c-barrier/75 to-c-barrier/0"
 		/>
