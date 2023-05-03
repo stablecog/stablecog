@@ -1,7 +1,9 @@
 import { activeGeneration } from '$ts/stores/user/generation';
-import { get, writable } from 'svelte/store';
+import { get } from 'svelte/store';
+import { writable as writableLocal } from 'svelte-local-storage-store';
 
-export const recentlyUpdatedOutputIds = writable<string[]>([]);
+const maxItems = 50;
+export const recentlyUpdatedOutputIds = writableLocal<string[]>('recentlyUpdatedOutputIds', []);
 
 export const addToRecentlyUpdatedOutputIds = (output_id: string) => {
 	recentlyUpdatedOutputIds.update(($recentlyUpdatedOutputIds) => {
@@ -14,6 +16,7 @@ export const addToRecentlyUpdatedOutputIds = (output_id: string) => {
 			return $recentlyUpdatedOutputIds;
 		}
 		$recentlyUpdatedOutputIds.unshift(output_id);
-		return $recentlyUpdatedOutputIds;
+		const sliced = $recentlyUpdatedOutputIds.slice(0, maxItems);
+		return sliced;
 	});
 };

@@ -12,7 +12,6 @@
 >
 	<div
 		style="transform: translateX({!isProcessing ? 0 : -100 + $animation * 100}%)"
-		class="w-full h-full bg-c-primary/50 filter backdrop-blur-lg 
-    absolute left-0 top-0"
+		class="w-full h-full bg-c-primary/50 absolute left-0 top-0 filter backdrop-saturate-0"
 	/>
 </div>

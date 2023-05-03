@@ -115,7 +115,7 @@
 							/>
 							<div
 								class="absolute left-0 top-0 w-full h-full bg-c-bg-secondary transition 
-							z-0 rounded-md filter blur-none border overflow-hidden border-c-bg-secondary {!$isTouchscreen &&
+							z-0 rounded-md border overflow-hidden border-c-bg-secondary {!$isTouchscreen &&
 								status !== 'failed' &&
 								status !== 'failed-nsfw'
 									? 'hover:border-c-primary'

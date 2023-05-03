@@ -15,11 +15,7 @@ import {
 } from '$env/static/public';
 import { isSuperAdmin } from '$ts/helpers/admin/roles';
 import { convertToDBTimeString } from '$ts/helpers/convertToDBTimeString';
-import {
-	addToRecentlyUpdatedOutputIds,
-	recentlyUpdatedOutputIds
-} from '$ts/stores/user/recentlyUpdatedOutputIds';
-import { activeGeneration } from '$ts/stores/user/generation';
+import { addToRecentlyUpdatedOutputIds } from '$ts/stores/user/recentlyUpdatedOutputIds';
 
 export const upscales = writable<TUpscale[]>([]);
 

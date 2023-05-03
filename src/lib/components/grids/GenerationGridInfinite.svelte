@@ -160,8 +160,7 @@
 									: 'border-2 rounded-lg'
 								: 'border-2 rounded-xl'} {isOutputSelected
 								? 'border-c-primary'
-								: 'border-c-bg-secondary'} {isOutputHoverable ? 'hover:border-c-primary/75' : ''}
-								 {cardType !== 'gallery' && cardType !== 'admin-gallery' ? 'filter blur-none' : ''}"
+								: 'border-c-bg-secondary'} {isOutputHoverable ? 'hover:border-c-primary/75' : ''}"
 						>
 							{#if output.generation.outputs !== undefined}
 								{#if status !== 'failed' && status !== 'failed-nsfw'}
