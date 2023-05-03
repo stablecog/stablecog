@@ -37,8 +37,12 @@
 	import IconUpload from '$components/icons/IconUpload.svelte';
 	import IconTickOnly from '$components/icons/IconTickOnly.svelte';
 	import IconAnimatedSpinner from '$components/icons/IconAnimatedSpinner.svelte';
-	import { userGenerationFullOutputsQueryKey } from '$ts/stores/user/keys';
+	import {
+		generatePageUserGenerationFullOutputsQueryKey,
+		userGenerationFullOutputsQueryKey
+	} from '$ts/stores/user/keys';
 	import { appVersion } from '$ts/stores/appVersion';
+	import { replaceOutputInUserQueryData } from '$ts/helpers/replaceOutputInUserQueryData';
 
 	export let generation: TGenerationWithSelectedOutput;
 	export let generateSimilarUrl: string;
@@ -111,27 +115,21 @@
 				body: JSON.stringify({ generation_output_ids: [generation.selected_output.id] })
 			});
 			if (!res.ok) throw new Error('Response not ok');
-			console.log('Delete generation output response', res);
 			logGenerationOutputDeleted(logProps);
 			if (modalType === 'history') {
-				queryClient.setQueryData($userGenerationFullOutputsQueryKey, (data: any) => ({
-					...data,
-					pages: data.pages.map((page: TUserGenerationFullOutputsPage) => {
-						return {
-							...page,
-							outputs: page.outputs.map((output) =>
-								output.id === generation.selected_output.id
-									? { ...output, is_deleted: true }
-									: output
-							)
-						};
-					})
-				}));
-			} else if (modalType === 'generate') {
+				replaceOutputInUserQueryData(queryClient, $userGenerationFullOutputsQueryKey, {
+					id: generation.selected_output.id,
+					is_deleted: true
+				});
+			} else if (modalType === 'generate' || modalType === 'stage') {
 				setGenerationOutputToDeleted(generation.selected_output.id);
+				replaceOutputInUserQueryData(queryClient, $generatePageUserGenerationFullOutputsQueryKey, {
+					id: generation.selected_output.id,
+					is_deleted: true
+				});
 			}
-			activeGeneration.set(undefined);
 			deleteStatus = 'success';
+			activeGeneration.set(undefined);
 		} catch (error) {
 			console.log('Error deleting generation output', error);
 			resetDeleteStatus();
@@ -175,6 +173,20 @@
 			console.log('Error submitting generation', error);
 			resetSubmitToGalleryStatus();
 		}
+	}
+
+	function setFavoriteQuery(query: string[], action: 'add' | 'remove') {
+		queryClient.setQueryData($userGenerationFullOutputsQueryKey, (data: any) => ({
+			...data,
+			pages: data.pages.map((page: TUserGenerationFullOutputsPage) => {
+				return {
+					...page,
+					outputs: page.outputs.map((output) =>
+						output.id === generation.selected_output.id ? { ...output, is_deleted: true } : output
+					)
+				};
+			})
+		}));
 	}
 
 	const resetSubmitToGalleryStatus = () => (submitToGalleryStatus = 'idle');

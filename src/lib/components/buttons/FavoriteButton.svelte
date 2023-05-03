@@ -9,6 +9,8 @@
 		logGenerationOutputFavorited,
 		logGenerationOutputUnfavorited
 	} from '$ts/helpers/loggers';
+	import { replaceOutputInUserQueryData } from '$ts/helpers/replaceOutputInUserQueryData';
+	import { favoriteOutputs } from '$ts/queries/favoriteOutput';
 	import type { TUserGenerationFullOutputsPage } from '$ts/queries/userGenerations';
 	import { advancedModeApp } from '$ts/stores/advancedMode';
 	import { appVersion } from '$ts/stores/appVersion';
@@ -17,7 +19,10 @@
 		setGenerationOutputToFavorited,
 		type TGenerationWithSelectedOutput
 	} from '$ts/stores/user/generation';
-	import { userGenerationFullOutputsQueryKey } from '$ts/stores/user/keys';
+	import {
+		generatePageUserGenerationFullOutputsQueryKey,
+		userGenerationFullOutputsQueryKey
+	} from '$ts/stores/user/keys';
 	import { userSummary } from '$ts/stores/user/summary';
 	import { useQueryClient } from '@tanstack/svelte-query';
 
@@ -44,21 +49,16 @@
 			logGenerationOutputUnfavorited(logProps);
 		}
 		if (modalType === 'history') {
-			queryClient.setQueryData($userGenerationFullOutputsQueryKey, (data: any) => ({
-				...data,
-				pages: data.pages.map((page: TUserGenerationFullOutputsPage) => {
-					return {
-						...page,
-						outputs: page.outputs.map((output) =>
-							output.id === generation.selected_output.id
-								? { ...output, is_favorited: action === 'add' }
-								: output
-						)
-					};
-				})
-			}));
-		} else if (modalType === 'generate') {
+			replaceOutputInUserQueryData(queryClient, $userGenerationFullOutputsQueryKey, {
+				id: generation.selected_output.id,
+				is_favorited: action === 'add'
+			});
+		} else if (modalType === 'generate' || modalType === 'stage') {
 			setGenerationOutputToFavorited(generation.selected_output.id);
+			replaceOutputInUserQueryData(queryClient, $generatePageUserGenerationFullOutputsQueryKey, {
+				id: generation.selected_output.id,
+				is_favorited: action === 'add'
+			});
 		}
 		if ($activeGeneration) {
 			activeGeneration.set({
@@ -70,18 +70,11 @@
 			});
 		}
 		try {
-			const res = await fetch(`${apiUrl.origin}/v1/user/outputs/favorite`, {
-				method: 'POST',
-				headers: {
-					'Content-Type': 'application/json',
-					Authorization: `Bearer ${$page.data.session?.access_token}`
-				},
-				body: JSON.stringify({
-					generation_output_ids: [generation.selected_output.id],
-					action
-				})
+			const res = favoriteOutputs({
+				output_ids: [generation.selected_output.id],
+				action,
+				access_token: $page.data.session?.access_token || ''
 			});
-			if (!res.ok) throw new Error('Response not ok');
 		} catch (error) {
 			console.log('Error favoriting generation output', error);
 		}

@@ -131,7 +131,7 @@
 	/>
 {/if}
 <!-- Barriers -->
-{#if cardType !== 'stage' && cardType !== 'generate' && cardType !== 'gallery'}
+{#if cardType !== 'stage' && cardType !== 'generate' && cardType !== 'gallery' && !generation.selected_output.is_deleted}
 	<div
 		class="absolute top-0 left-0 w-full h-24 bg-gradient-to-b from-c-barrier/90 via-c-barrier/60 to-c-barrier/0 
 		flex justify-between transition items-start {!$isTouchscreen
@@ -273,14 +273,22 @@
 {/if}
 <!-- Deleted, approved or rejected -->
 {#if generation.selected_output.is_deleted || (cardType === 'admin-gallery' && showAdminGalleryBarrier) || (cardType === 'history' && $userGalleryCurrentView === 'favorites' && !generation.selected_output.is_favorited)}
+	{@const sizeClasses =
+		generation.height > generation.width
+			? cardType === 'generate'
+				? 'h-full max-h-[2rem] w-auto'
+				: 'h-full max-h-[3rem] w-auto'
+			: cardType === 'generate'
+			? 'w-full max-w-[2rem] h-auto'
+			: 'w-full max-w-[3rem] h-auto'}
 	<div class="w-full h-full absolute left-0 top-0 bg-c-barrier/85 z-10" />
-	<div class="w-full h-full absolute left-0 top-0 flex items-center justify-center p-4 z-20">
+	<div class="w-full h-full absolute left-0 top-0 flex items-center justify-center p-1 z-20">
 		{#if generation.selected_output.is_deleted}
-			<IconTrashcan class="text-c-danger w-12 h-12" />
+			<IconTrashcan class="text-c-danger {sizeClasses}" />
 		{:else if generation.selected_output.gallery_status === 'approved'}
-			<IconTick class="text-c-success w-12 h-12" />
+			<IconTick class="text-c-success {sizeClasses}" />
 		{:else if generation.selected_output.gallery_status === 'rejected'}
-			<IconCancelCircle class="text-c-danger w-12 h-12" />
+			<IconCancelCircle class="text-c-danger {sizeClasses}" />
 		{/if}
 	</div>
 {/if}

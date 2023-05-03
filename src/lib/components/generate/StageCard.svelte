@@ -37,14 +37,18 @@
 				<GenerationImage cardType="stage" useUpscaledImage {generation} />
 			{/if}
 		{:else}
+			{@const sizeClasses =
+				generation.height > generation.width
+					? 'h-full max-h-[3rem] w-auto'
+					: 'w-full max-w-[3rem] h-auto'}
 			<div
 				in:fade|local={{ duration: 200, easing: quadOut }}
 				class="w-full h-full flex flex-col items-center bg-c-bg-secondary justify-center relative px-5 py-3 gap-2"
 			>
 				{#if status === 'failed-nsfw'}
-					<IconEyeSlashOutline class="w-8 h-8 text-c-on-bg/50" />
+					<IconEyeSlashOutline class="{sizeClasses} text-c-on-bg/50" />
 				{:else}
-					<IconSadFaceOutline class="w-8 h-8 text-c-on-bg/50" />
+					<IconSadFaceOutline class="{sizeClasses} text-c-on-bg/50" />
 				{/if}
 				<p class="text-sm text-c-on-bg/50 text-center leading-relaxed">
 					{status === 'failed-nsfw' ? $LL.Error.ImageWasNSFW() : $LL.Error.SomethingWentWrong()}

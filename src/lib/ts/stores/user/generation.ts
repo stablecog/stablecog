@@ -1,7 +1,7 @@
 import { apiUrl } from '$ts/constants/main';
 import type { TAvailableGenerationModelId } from '$ts/constants/generationModels';
 import type { TAvailableSchedulerId } from '$ts/constants/schedulers';
-import { writable } from 'svelte/store';
+import { get, writable } from 'svelte/store';
 import {
 	generationCostCompletionPerMs,
 	getCostCompletionPerMsFromGeneration
@@ -22,6 +22,10 @@ import { isSuperAdmin } from '$ts/helpers/admin/roles';
 import { userSummary } from '$ts/stores/user/summary';
 import { derived } from 'svelte/store';
 import { convertToDBTimeString } from '$ts/helpers/convertToDBTimeString';
+import {
+	generatePageUserGenerationFullOutputsQueryKey,
+	userGenerationFullOutputsQueryKey
+} from '$ts/stores/user/keys';
 
 export const generations = writable<TGeneration[]>([]);
 export const activeGeneration = writable<TGenerationWithSelectedOutput | undefined>(undefined);

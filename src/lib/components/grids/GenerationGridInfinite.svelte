@@ -187,13 +187,17 @@
 								{:else}
 									<div
 										in:fade|local={{ duration: 200, easing: quadOut }}
-										class="w-full h-full flex items-center bg-c-bg-secondary justify-center relative"
+										class="w-full h-full flex items-center bg-c-bg-secondary justify-center relative p-1"
 									>
 										{#if cardType === 'generate'}
+											{@const sizeClasses =
+												output.generation.height > output.generation.width
+													? 'h-full max-h-[2rem] w-auto'
+													: 'w-full max-w-[2rem] h-auto'}
 											{#if status === 'failed-nsfw'}
-												<IconEyeSlashOutline class="w-7 h-7 text-c-on-bg/50" />
+												<IconEyeSlashOutline class="{sizeClasses} text-c-on-bg/50" />
 											{:else}
-												<IconSadFaceOutline class="w-7 h-7 text-c-on-bg/50" />
+												<IconSadFaceOutline class="{sizeClasses} text-c-on-bg/50" />
 											{/if}
 										{:else}
 											<p class="text-sm text-c-on-bg/50 px-5 py-3 text-center leading-relaxed">
