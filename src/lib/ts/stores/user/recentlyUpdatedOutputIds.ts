@@ -20,3 +20,14 @@ export const addToRecentlyUpdatedOutputIds = (output_id: string) => {
 		return sliced;
 	});
 };
+
+export const removeFromRecentlyUpdatedOutputIds = (output_id: string) => {
+	recentlyUpdatedOutputIds.update(($recentlyUpdatedOutputIds) => {
+		const hasId = $recentlyUpdatedOutputIds.includes(output_id);
+		if (!hasId) {
+			return $recentlyUpdatedOutputIds;
+		}
+		const filtered = $recentlyUpdatedOutputIds.filter((id) => id !== output_id);
+		return filtered;
+	});
+};
