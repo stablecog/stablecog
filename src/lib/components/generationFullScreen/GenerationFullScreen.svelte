@@ -348,15 +348,15 @@
 							</p>
 						</div>
 					{/if}
+					{#if upscaleFromStore?.animation}
+						<UpscaleAnimation
+							animation={upscaleFromStore.animation}
+							isProcessing={upscaleBeingProcessed}
+						/>
+					{/if}
 				{/if}
 			</div>
 			<div class="w-full h-full overflow-hidden z-0 absolute left-0 top-0 pointer-events-none">
-				{#if upscaleFromStore?.animation}
-					<UpscaleAnimation
-						animation={upscaleFromStore.animation}
-						isProcessing={upscaleBeingProcessed}
-					/>
-				{/if}
 				<SideButton
 					name="Go Left"
 					hasAnimation={false}
