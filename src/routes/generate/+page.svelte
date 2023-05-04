@@ -9,7 +9,7 @@
 		type TGenerationFullOutput
 	} from '$ts/stores/user/generation';
 
-	import { onDestroy, onMount, tick } from 'svelte';
+	import { onDestroy, onMount } from 'svelte';
 	import PromptBar from '$components/generate/PromptBar.svelte';
 	import { quadOut } from 'svelte/easing';
 	import { fade, fly } from 'svelte/transition';
@@ -227,7 +227,6 @@
 		document.body.style.overflow = 'hidden';
 		document.body.style.height = '100%';
 		mounted = true;
-		await tick();
 	});
 
 	onDestroy(() => {
