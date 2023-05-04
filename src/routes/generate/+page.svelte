@@ -228,9 +228,6 @@
 		document.body.style.height = '100%';
 		mounted = true;
 		await tick();
-		if (generationPlaceholder) {
-			generations.set([generationPlaceholder]);
-		}
 	});
 
 	onDestroy(() => {
