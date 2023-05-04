@@ -1,5 +1,5 @@
 <script lang="ts">
-	import StageCard from '$components/generate/StageCard.svelte';
+	import GenerationStageCard from '$components/generate/GenerationStageCard.svelte';
 	import type { TIsReadyMap } from '$components/generate/types';
 	import type { TGeneration } from '$ts/stores/user/generation';
 	import { onMount } from 'svelte';
@@ -121,7 +121,7 @@
 				"
 				class="absolute"
 			>
-				<StageCard generation={generationWithSelectedOutput} />
+				<GenerationStageCard generation={generationWithSelectedOutput} />
 			</div>
 		{/each}
 	{/if}
