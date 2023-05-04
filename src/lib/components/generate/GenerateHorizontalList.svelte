@@ -16,6 +16,7 @@
 	import IconSadFaceOutline from '$components/icons/IconSadFaceOutline.svelte';
 	import { VariableSizeList as List, styleString as sty } from 'svelte-window';
 	import { browser } from '$app/environment';
+	import { onMount } from 'svelte';
 
 	export let generationsQuery: CreateInfiniteQueryResult<TUserGenerationFullOutputsPage, unknown>;
 	export let pinnedFullOutputs: TGenerationFullOutput[] | undefined = undefined;
@@ -23,6 +24,7 @@
 
 	let scroll = 0;
 	let listElement: HTMLDivElement;
+	let listComponent: List;
 	const listPadding = 6;
 	let wrapperWidth: number;
 	let wrapperHeight: number;
@@ -100,6 +102,22 @@
 		});
 		outputs = newOutputs;
 	}
+
+	let firstOutputId: string | undefined = undefined;
+	$: [outputs], onOutputsChanged();
+
+	function onOutputsChanged() {
+		if (!browser) return;
+		if (!outputs) return;
+		if (firstOutputId === undefined) {
+			firstOutputId = outputs[0].id;
+			return;
+		}
+		if (firstOutputId !== outputs[0].id) {
+			firstOutputId = outputs[0].id;
+			listComponent.instance.resetAfterIndex(0);
+		}
+	}
 </script>
 
 {#if $generationsQuery.isInitialLoading}
@@ -129,95 +147,94 @@
 	>
 		<div bind:clientWidth={wrapperWidth} bind:clientHeight={wrapperHeight} class="w-full h-full">
 			{#if browser && outputs !== undefined && wrapperWidth !== undefined && wrapperHeight !== undefined}
-				{#key outputs[0].id}
-					<List
-						innerRef={listElement}
-						direction="horizontal"
-						width={wrapperWidth}
-						height={wrapperHeight}
-						itemCount={outputs.length}
-						onScroll={(p) => (scroll = p.scrollOffset)}
-						itemSize={(i) => {
-							// @ts-ignore
-							const output = outputs[i];
-							return (wrapperHeight * output.generation.width) / output.generation.height;
-						}}
-						let:items
-						className="hide-scrollbar pr-3"
-					>
-						{#each items as it (it.key)}
-							{@const output = outputs[it.index]}
-							{@const status = output.status}
-							{@const animation = output.animation}
-							<div
-								style={sty({
-									...it.style,
-									left: (it.style.left ?? 0) + listPadding
-								})}
-							>
-								<div class="w-full h-full p-2px">
-									<div class="w-full h-full relative group">
-										<ImagePlaceholder
-											{containerHeight}
-											width={output.generation.width}
-											height={output.generation.height}
-										/>
-										<div
-											class="absolute left-0 top-0 w-full h-full bg-c-bg-secondary transition 
+				<List
+					bind:this={listComponent}
+					innerRef={listElement}
+					direction="horizontal"
+					width={wrapperWidth}
+					height={wrapperHeight}
+					itemCount={outputs.length}
+					onScroll={(p) => (scroll = p.scrollOffset)}
+					itemSize={(i) => {
+						// @ts-ignore
+						const output = outputs[i];
+						return (wrapperHeight * output.generation.width) / output.generation.height;
+					}}
+					let:items
+					className="hide-scrollbar pr-3"
+				>
+					{#each items as it (it.key)}
+						{@const output = outputs[it.index]}
+						{@const status = output.status}
+						{@const animation = output.animation}
+						<div
+							style={sty({
+								...it.style,
+								left: (it.style.left ?? 0) + listPadding
+							})}
+						>
+							<div class="w-full h-full p-2px">
+								<div class="w-full h-full relative group">
+									<ImagePlaceholder
+										{containerHeight}
+										width={output.generation.width}
+										height={output.generation.height}
+									/>
+									<div
+										class="absolute left-0 top-0 w-full h-full bg-c-bg-secondary transition 
 										z-0 rounded-md border overflow-hidden border-c-bg-secondary {!$isTouchscreen &&
-											status !== 'failed' &&
-											status !== 'failed-nsfw'
-												? 'hover:border-c-primary'
-												: ''}"
-										>
-											{#if output.generation.outputs !== undefined}
-												{#if status !== 'failed' && status !== 'failed-nsfw'}
-													{#if status !== undefined && status !== 'succeeded' && animation !== undefined}
-														<div
-															out:fade|local={{ duration: 3000, easing: quadIn }}
-															class="w-full h-full absolute left-0 top-0"
-														>
-															<GenerationAnimation {animation} />
-														</div>
-													{/if}
-													{#if status === undefined || status === 'succeeded'}
-														<GenerationImage
-															{cardType}
-															useUpscaledImage={false}
-															generation={{
-																...output.generation,
-																selected_output: output
-															}}
-														/>
-													{/if}
-												{:else}
-													{@const sizeClasses =
-														output.generation.height > output.generation.width
-															? cardType === 'generate'
-																? 'h-full max-h-[2rem] w-auto'
-																: 'h-full max-h-[3rem] w-auto'
-															: cardType === 'generate'
-															? 'w-full max-w-[2rem] h-auto'
-															: 'w-full max-w-[3rem] h-auto'}
+										status !== 'failed' &&
+										status !== 'failed-nsfw'
+											? 'hover:border-c-primary'
+											: ''}"
+									>
+										{#if output.generation.outputs !== undefined}
+											{#if status !== 'failed' && status !== 'failed-nsfw'}
+												{#if status !== undefined && status !== 'succeeded' && animation !== undefined}
 													<div
-														in:fade|local={{ duration: 200, easing: quadOut }}
-														class="w-full h-full flex items-center bg-c-bg-secondary justify-center relative p-1"
+														out:fade|local={{ duration: 3000, easing: quadIn }}
+														class="w-full h-full absolute left-0 top-0"
 													>
-														{#if status === 'failed-nsfw'}
-															<IconEyeSlashOutline class="{sizeClasses} text-c-on-bg/50" />
-														{:else}
-															<IconSadFaceOutline class="{sizeClasses} text-c-on-bg/50" />
-														{/if}
+														<GenerationAnimation {animation} />
 													</div>
 												{/if}
+												{#if status === undefined || status === 'succeeded'}
+													<GenerationImage
+														{cardType}
+														useUpscaledImage={false}
+														generation={{
+															...output.generation,
+															selected_output: output
+														}}
+													/>
+												{/if}
+											{:else}
+												{@const sizeClasses =
+													output.generation.height > output.generation.width
+														? cardType === 'generate'
+															? 'h-full max-h-[2rem] w-auto'
+															: 'h-full max-h-[3rem] w-auto'
+														: cardType === 'generate'
+														? 'w-full max-w-[2rem] h-auto'
+														: 'w-full max-w-[3rem] h-auto'}
+												<div
+													in:fade|local={{ duration: 200, easing: quadOut }}
+													class="w-full h-full flex items-center bg-c-bg-secondary justify-center relative p-1"
+												>
+													{#if status === 'failed-nsfw'}
+														<IconEyeSlashOutline class="{sizeClasses} text-c-on-bg/50" />
+													{:else}
+														<IconSadFaceOutline class="{sizeClasses} text-c-on-bg/50" />
+													{/if}
+												</div>
 											{/if}
-										</div>
+										{/if}
 									</div>
 								</div>
 							</div>
-						{/each}
-					</List>
-				{/key}
+						</div>
+					{/each}
+				</List>
 			{/if}
 			<!-- <div
 				bind:clientWidth={containerWidth}
