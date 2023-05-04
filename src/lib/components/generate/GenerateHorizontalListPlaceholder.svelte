@@ -5,7 +5,7 @@
 	let containerHeight: number;
 </script>
 
-<div class="w-full h-full relative pt-1.5 md:pb-1.5">
+<div class="w-full h-full relative px-2 md:px-1.5 pt-1.5 md:pb-1.5">
 	<div bind:clientHeight={containerHeight} class="w-full h-full relative">
 		<ImagePlaceholder {containerHeight} width={512} height={512} class="opacity-0" />
 		<div class="w-full h-full absolute left-0 top-0 flex items-center justify-center">

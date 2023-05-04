@@ -1,16 +1,23 @@
 <script lang="ts">
 	export let rounding: 'all' | 'top' | 'bottom' = 'all';
+	export let borderSize: 'none' | 'sm' | 'md' = 'md';
 	export let noWrapper = false;
 	export let hasGradient = false;
 </script>
 
 <div
-	class="w-full flex flex-col bg-c-bg {noWrapper
+	class="w-full flex flex-col bg-c-bg {borderSize === 'none'
 		? ''
 		: rounding === 'top'
-		? 'rounded-t-2xl'
+		? borderSize === 'sm'
+			? 'rounded-t-xl'
+			: 'rounded-t-2xl'
 		: rounding === 'bottom'
-		? 'rounded-b-2xl'
+		? borderSize === 'sm'
+			? 'rounded-b-xl'
+			: 'rounded-b-2xl'
+		: borderSize === 'sm'
+		? 'rounded-xl'
 		: 'rounded-2xl'} {noWrapper
 		? ''
 		: 'ring-2 ring-c-bg-secondary shadow-xl shadow-c-shadow/[var(--o-shadow-stronger)]'} z-0 overflow-hidden relative"

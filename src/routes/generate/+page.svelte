@@ -403,7 +403,7 @@
 						</div>
 					</div>
 					<div class="w-full hidden md:flex lg:hidden pt-11 pb-[calc(env(safe-area-inset-bottom))]">
-						<SidebarWrapper>
+						<SidebarWrapper borderSize="sm">
 							<div class="w-full h-20 flex">
 								{#if !$page.data.session?.user.id}
 									<GenerateHorizontalListPlaceholder
