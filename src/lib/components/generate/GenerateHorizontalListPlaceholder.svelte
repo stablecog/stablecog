@@ -18,7 +18,7 @@
 			</div>
 			<p
 				class="w-full overflow-hidden px-6 whitespace-nowrap text-sm overflow-ellipsis text-center 
-      text-c-on-bg/40 relative z-10"
+      	text-c-on-bg/40 relative z-10"
 			>
 				{text}
 			</p>

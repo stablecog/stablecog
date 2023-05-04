@@ -6,7 +6,7 @@
 </script>
 
 <div
-	class="w-full flex flex-col bg-c-bg {borderSize === 'none'
+	class="w-full flex-1 flex flex-col bg-c-bg {borderSize === 'none'
 		? ''
 		: rounding === 'top'
 		? borderSize === 'sm'

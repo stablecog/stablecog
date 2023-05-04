@@ -29,7 +29,7 @@
 	const animationDuration = 0.15;
 	const animationEasing = 'cubic-bezier(0.45, 0, 0.55, 1)';
 
-	$: [stageWidth, stageHeight, generation], setDimensions();
+	$: [stageWidth, stageHeight, generation, isReadyMap], setDimensions();
 
 	function setDimensions() {
 		let hasNonReady = false;
