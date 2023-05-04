@@ -115,7 +115,7 @@
 							/>
 							<div
 								class="absolute left-0 top-0 w-full h-full bg-c-bg-secondary transition 
-							z-0 rounded-md border overflow-hidden border-c-bg-secondary {!$isTouchscreen &&
+								z-0 rounded-md border overflow-hidden border-c-bg-secondary {!$isTouchscreen &&
 								status !== 'failed' &&
 								status !== 'failed-nsfw'
 									? 'hover:border-c-primary'
@@ -142,14 +142,22 @@
 											/>
 										{/if}
 									{:else}
+										{@const sizeClasses =
+											output.generation.height > output.generation.width
+												? cardType === 'generate'
+													? 'h-full max-h-[2rem] w-auto'
+													: 'h-full max-h-[3rem] w-auto'
+												: cardType === 'generate'
+												? 'w-full max-w-[2rem] h-auto'
+												: 'w-full max-w-[3rem] h-auto'}
 										<div
 											in:fade|local={{ duration: 200, easing: quadOut }}
-											class="w-full h-full flex items-center bg-c-bg-secondary justify-center relative"
+											class="w-full h-full flex items-center bg-c-bg-secondary justify-center relative p-1"
 										>
 											{#if status === 'failed-nsfw'}
-												<IconEyeSlashOutline class="w-4 h-4 text-c-on-bg/50" />
+												<IconEyeSlashOutline class="{sizeClasses} text-c-on-bg/50" />
 											{:else}
-												<IconSadFaceOutline class="w-4 h-4 text-c-on-bg/50" />
+												<IconSadFaceOutline class="{sizeClasses} text-c-on-bg/50" />
 											{/if}
 										</div>
 									{/if}
