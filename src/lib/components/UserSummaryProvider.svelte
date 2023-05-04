@@ -6,7 +6,7 @@
 	import { createQuery } from '@tanstack/svelte-query';
 
 	$: userSummaryQuery = $page.data.session?.user.id
-		? createQuery(['user_summary'], {
+		? createQuery(['user_summary', $page.data.session.user.id], {
 				queryFn: () => getUserSummary($page.data.session?.access_token)
 		  })
 		: undefined;
