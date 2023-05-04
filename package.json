@@ -61,6 +61,7 @@
 		"svelte-portal": "^2.2.0",
 		"svelte-preprocess": "^4.10.6",
 		"svelte-textarea-autoresize": "^1.0.0",
+		"svelte-window": "^1.2.5",
 		"tailwindcss": "^3.2.7",
 		"tslib": "^2.3.1",
 		"typescript": "^4.7.4",

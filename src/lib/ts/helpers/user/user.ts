@@ -4,6 +4,7 @@ import type { TUserSummary } from '$ts/stores/user/summary';
 
 export async function getUserSummary(access_token: string | undefined) {
 	if (!access_token) return undefined;
+	console.log('getting user summary');
 	let userSummary: TUserSummary | undefined = undefined;
 	const userRes = await fetch(`${apiUrl.origin}/v1/user`, {
 		headers: {

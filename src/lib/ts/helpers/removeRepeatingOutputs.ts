@@ -16,6 +16,11 @@ export let removeRepeatingOutputs = ({
 			filteredPinnedOutputs.push(o);
 		}
 	});
+	filteredPinnedOutputs = filteredPinnedOutputs.sort((a, b) =>
+		new Date(b.generation.created_at).getTime() > new Date(a.generation.created_at).getTime()
+			? -1
+			: 1
+	);
 	let newOutputs = [...outputs];
 	filteredPinnedOutputs.forEach((filteredOutput) => {
 		const newerThanIndex = newOutputs.findIndex(

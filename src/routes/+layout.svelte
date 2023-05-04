@@ -39,7 +39,7 @@
 		submitInitialGenerationRequest
 	} from '$userStores/generation';
 	import { generateSSEId } from '$ts/helpers/generateSSEId';
-	import { QueryClient, QueryClientProvider } from '@tanstack/svelte-query';
+	import { QueryClient, QueryClientProvider, createQuery } from '@tanstack/svelte-query';
 	import {
 		setUpscaleToFailed,
 		setUpscaleToServerProcessing,
@@ -68,6 +68,7 @@
 		generationInitImageWidth
 	} from '$ts/stores/generationSettings';
 	import UpdateAvailableCard from '$components/UpdateAvailableCard.svelte';
+	import UserSummaryProvider from '$components/UserSummaryProvider.svelte';
 
 	export let data: LayoutData;
 	setLocale(data.locale);
@@ -397,25 +398,6 @@
 		}
 	}
 
-	$: $page.data.session?.user.id, getAndSetUserSummary();
-
-	async function getAndSetUserSummary() {
-		if ($page.data.session?.user.id && !$userSummary) {
-			try {
-				const summary = await getUserSummary($page.data.session.access_token);
-				if (summary) {
-					userSummary.set(summary);
-				}
-			} catch (error) {
-				console.log('Error getting user summary', error);
-			}
-			return;
-		}
-		if (!$page.data.session?.user.id) {
-			userSummary.set(undefined);
-		}
-	}
-
 	const underDevelopment = false;
 
 	let notAtTheVeryTop = false;
@@ -469,48 +451,50 @@
 <svelte:window bind:innerHeight bind:innerWidth on:scroll={setNavbarState} />
 
 <QueryClientProvider client={queryClient}>
-	{#if rawRoutes.includes($page.url.pathname)}
-		<slot />
-	{:else}
-		<div
-			class="w-full bg-c-bg text-c-on-bg flex flex-col {$themeApp === 'light'
-				? 'theme-light'
-				: 'theme-dark'}"
-			style="min-height: 100vh; min-height: {innerHeight
-				? `${innerHeight}px`
-				: '100svh'}; background-image: url({$themeApp === 'light'
-				? '/illustrations/grid-on-light.svg'
-				: '/illustrations/grid-on-dark.svg'}); background-size: 24px;"
-		>
-			{#if underDevelopment && (!$userSummary || !isSuperAdmin($userSummary.roles)) && !$page.url.pathname.startsWith('/admin') && !$page.url.pathname.startsWith('/api/auth') && !$page.url.pathname.startsWith('/sign-in')}
-				{#if Number($serverVersion) > Number($appVersion)}
-					<div class="w-full flex-1 flex flex-col items-center justify-center my-auto py-4">
-						<UpdateAvailableCard />
-					</div>
+	<UserSummaryProvider>
+		{#if rawRoutes.includes($page.url.pathname)}
+			<slot />
+		{:else}
+			<div
+				class="w-full bg-c-bg text-c-on-bg flex flex-col {$themeApp === 'light'
+					? 'theme-light'
+					: 'theme-dark'}"
+				style="min-height: 100vh; min-height: {innerHeight
+					? `${innerHeight}px`
+					: '100svh'}; background-image: url({$themeApp === 'light'
+					? '/illustrations/grid-on-light.svg'
+					: '/illustrations/grid-on-dark.svg'}); background-size: 24px;"
+			>
+				{#if underDevelopment && (!$userSummary || !isSuperAdmin($userSummary.roles)) && !$page.url.pathname.startsWith('/admin') && !$page.url.pathname.startsWith('/api/auth') && !$page.url.pathname.startsWith('/sign-in')}
+					{#if Number($serverVersion) > Number($appVersion)}
+						<div class="w-full flex-1 flex flex-col items-center justify-center my-auto py-4">
+							<UpdateAvailableCard />
+						</div>
+					{:else}
+						<UnderDevelopment />
+					{/if}
 				{:else}
-					<UnderDevelopment />
-				{/if}
-			{:else}
-				<Navbar {notAtTheVeryTop} {scrollDirection} />
-				{#if $navbarStickyType === undefined || $navbarStickyType !== 'not-sticky'}
+					<Navbar {notAtTheVeryTop} {scrollDirection} />
+					{#if $navbarStickyType === undefined || $navbarStickyType !== 'not-sticky'}
+						<div
+							style={$navbarHeight ? `height: ${$navbarHeight}px` : ``}
+							class="h-16 md:h-18 w-full"
+						/>
+					{/if}
+					<main class="w-full flex-1 flex flex-col relative break-words">
+						<slot />
+					</main>
+					{#if !routesWithHiddenFooter.includes($page.url.pathname)}
+						<Footer />
+					{/if}
+					<NavbarBottom class="md:hidden h-[calc(3.75rem+env(safe-area-inset-bottom))]" />
+					<div class="md:hidden h-[calc(3.75rem+env(safe-area-inset-bottom))]" />
 					<div
-						style={$navbarHeight ? `height: ${$navbarHeight}px` : ``}
-						class="h-16 md:h-18 w-full"
+						id="tooltip-container"
+						class="absolute overflow-x-hidden left-0 top-0 w-full h-full pointer-events-none"
 					/>
 				{/if}
-				<main class="w-full flex-1 flex flex-col relative break-words">
-					<slot />
-				</main>
-				{#if !routesWithHiddenFooter.includes($page.url.pathname)}
-					<Footer />
-				{/if}
-				<NavbarBottom class="md:hidden h-[calc(3.75rem+env(safe-area-inset-bottom))]" />
-				<div class="md:hidden h-[calc(3.75rem+env(safe-area-inset-bottom))]" />
-				<div
-					id="tooltip-container"
-					class="absolute overflow-x-hidden left-0 top-0 w-full h-full pointer-events-none"
-				/>
-			{/if}
-		</div>
-	{/if}
+			</div>
+		{/if}
+	</UserSummaryProvider>
 </QueryClientProvider>

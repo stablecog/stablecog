@@ -345,12 +345,10 @@
 						<div bind:clientHeight={horizontalListHeight} class="w-full h-14 md:hidden">
 							{#if !$page.data.session?.user.id}
 								<GenerateHorizontalListPlaceholder
-									containerClasses="px-2 pt-2"
 									text={$LL.Generate.Grid.NotSignedIn.Paragraph()}
 								/>
 							{:else if userGenerationFullOutputsQuery}
 								<GenerateHorizontalList
-									containerClasses="px-2 pt-2"
 									{pinnedFullOutputs}
 									generationsQuery={userGenerationFullOutputsQuery}
 									cardType="generate"
