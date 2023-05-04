@@ -5,11 +5,12 @@
 	import { userSummary } from '$ts/stores/user/summary';
 	import { createQuery } from '@tanstack/svelte-query';
 
-	$: userSummaryQuery = $page.data.session?.user.id
-		? createQuery(['user_summary', $page.data.session.user.id], {
-				queryFn: () => getUserSummary($page.data.session?.access_token)
-		  })
-		: undefined;
+	$: userSummaryQuery =
+		browser && $page.data.session?.user.id
+			? createQuery(['user_summary', $page.data.session.user.id], {
+					queryFn: () => getUserSummary($page.data.session?.access_token)
+			  })
+			: undefined;
 
 	$: userSummary.set(browser ? $userSummaryQuery?.data : $userSummary);
 </script>

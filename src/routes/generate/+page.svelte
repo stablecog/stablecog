@@ -75,22 +75,23 @@
 		''
 	]);
 
-	$: userGenerationFullOutputsQuery = $page.data.session?.user.id
-		? createInfiniteQuery({
-				queryKey: $generatePageUserGenerationFullOutputsQueryKey,
-				queryFn: async (lastPage) => {
-					let outputsPage = await getUserGenerationFullOutputs({
-						access_token: $page.data.session?.access_token || '',
-						cursor: lastPage?.pageParam
-					});
-					return outputsPage;
-				},
-				getNextPageParam: (lastPage: TUserGenerationFullOutputsPage) => {
-					if (!lastPage.next) return undefined;
-					return lastPage.next;
-				}
-		  })
-		: undefined;
+	$: userGenerationFullOutputsQuery =
+		browser && $page.data.session?.user.id
+			? createInfiniteQuery({
+					queryKey: $generatePageUserGenerationFullOutputsQueryKey,
+					queryFn: async (lastPage) => {
+						let outputsPage = await getUserGenerationFullOutputs({
+							access_token: $page.data.session?.access_token || '',
+							cursor: lastPage?.pageParam
+						});
+						return outputsPage;
+					},
+					getNextPageParam: (lastPage: TUserGenerationFullOutputsPage) => {
+						if (!lastPage.next) return undefined;
+						return lastPage.next;
+					}
+			  })
+			: undefined;
 
 	$: gridRerenderKey = `generate_page_user_generation_full_outputs_${userGalleryCurrentView}_${
 		$generations.length

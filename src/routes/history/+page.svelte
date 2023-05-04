@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { browser } from '$app/environment';
 	import { page } from '$app/stores';
 	import BatchEditBar from '$components/BatchEditBar.svelte';
 	import Button from '$components/buttons/Button.svelte';
@@ -52,27 +53,28 @@
 		modelIdFilters ? modelIdFilters.join(',') : ''
 	]);
 
-	$: userGenerationFullOutputsQuery = $page.data.session?.user.id
-		? createInfiniteQuery({
-				queryKey: $userGenerationFullOutputsQueryKey,
-				queryFn: (lastPage) => {
-					return getUserGenerationFullOutputs({
-						access_token: $page.data.session?.access_token || '',
-						cursor: lastPage?.pageParam,
-						is_favorited: $userGalleryCurrentView === 'favorites',
-						search: searchString,
-						model_ids: modelIdFilters
-					});
-				},
-				getNextPageParam: (lastPage: TUserGenerationFullOutputsPage) => {
-					if (!lastPage.next) return undefined;
-					return lastPage.next;
-				},
-				onSuccess: () => {
-					lastFetchedUserGalleryView.set($userGalleryCurrentView);
-				}
-		  })
-		: undefined;
+	$: userGenerationFullOutputsQuery =
+		browser && $page.data.session?.user.id
+			? createInfiniteQuery({
+					queryKey: $userGenerationFullOutputsQueryKey,
+					queryFn: (lastPage) => {
+						return getUserGenerationFullOutputs({
+							access_token: $page.data.session?.access_token || '',
+							cursor: lastPage?.pageParam,
+							is_favorited: $userGalleryCurrentView === 'favorites',
+							search: searchString,
+							model_ids: modelIdFilters
+						});
+					},
+					getNextPageParam: (lastPage: TUserGenerationFullOutputsPage) => {
+						if (!lastPage.next) return undefined;
+						return lastPage.next;
+					},
+					onSuccess: () => {
+						lastFetchedUserGalleryView.set($userGalleryCurrentView);
+					}
+			  })
+			: undefined;
 
 	$: $userGenerationFullOutputsQuery?.data?.pages, onPagesChanged();
 	$: gridRerenderKey = `user_generation_full_outputs_${$userGalleryCurrentView}_${

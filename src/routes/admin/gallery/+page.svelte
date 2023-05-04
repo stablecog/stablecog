@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { browser } from '$app/environment';
 	import { page } from '$app/stores';
 	import BatchEditBar from '$components/BatchEditBar.svelte';
 	import GenerationFullScreen from '$components/generationFullScreen/GenerationFullScreen.svelte';
@@ -44,31 +45,33 @@
 		searchString ? searchString : '',
 		modelIdFilters ? modelIdFilters.join(',') : ''
 	];
-	$: allUserGenerationFullOutputsQuery = $page.data.session?.user.id
-		? createInfiniteQuery({
-				queryKey: $allUserGenerationFullOutputsQueryKey,
-				queryFn: (lastPage) => {
-					return getAllUserGenerationFullOutputs({
-						access_token: $page.data.session?.access_token || '',
-						cursor: lastPage?.pageParam,
-						gallery_status: $adminGalleryCurrentFilter,
-						order_by:
-							$adminGalleryCurrentFilter === 'approved' || $adminGalleryCurrentFilter === 'rejected'
-								? 'updated_at'
-								: 'created_at',
-						search: searchString,
-						model_ids: modelIdFilters
-					});
-				},
-				onSuccess: () => {
-					lastFetchedAdminGalleryFilter.set($adminGalleryCurrentFilter);
-				},
-				getNextPageParam: (lastPage: TUserGenerationFullOutputsPage) => {
-					if (!lastPage.next) return undefined;
-					return lastPage.next;
-				}
-		  })
-		: undefined;
+	$: allUserGenerationFullOutputsQuery =
+		browser && $page.data.session?.user.id
+			? createInfiniteQuery({
+					queryKey: $allUserGenerationFullOutputsQueryKey,
+					queryFn: (lastPage) => {
+						return getAllUserGenerationFullOutputs({
+							access_token: $page.data.session?.access_token || '',
+							cursor: lastPage?.pageParam,
+							gallery_status: $adminGalleryCurrentFilter,
+							order_by:
+								$adminGalleryCurrentFilter === 'approved' ||
+								$adminGalleryCurrentFilter === 'rejected'
+									? 'updated_at'
+									: 'created_at',
+							search: searchString,
+							model_ids: modelIdFilters
+						});
+					},
+					onSuccess: () => {
+						lastFetchedAdminGalleryFilter.set($adminGalleryCurrentFilter);
+					},
+					getNextPageParam: (lastPage: TUserGenerationFullOutputsPage) => {
+						if (!lastPage.next) return undefined;
+						return lastPage.next;
+					}
+			  })
+			: undefined;
 
 	$: $allUserGenerationFullOutputsQuery?.data?.pages, onPagesChanged();
 	$: gridRerenderKey = `admin_user_generation_full_outputs_${$adminGalleryCurrentFilter}_${
