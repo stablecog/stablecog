@@ -29,27 +29,19 @@
 	import GenerateStage from '$components/generate/GenerationStage.svelte';
 	import { themeApp } from '$ts/stores/theme';
 	import GenerationGridInfinite from '$components/grids/GenerationGridInfinite.svelte';
-	import {
-		generationAspectRatio,
-		generationGuidanceScale,
-		generationHeight,
-		generationInferenceSteps,
-		generationNumOutputs,
-		generationWidth
-	} from '$ts/stores/generationSettings.js';
+	import { generationAspectRatio, generationNumOutputs } from '$ts/stores/generationSettings.js';
 	import { generateSSEId } from '$ts/helpers/generateSSEId.js';
 	import { generationModelIdDefault } from '$ts/constants/generationModels.js';
 	import { schedulerIdDefault } from '$ts/constants/schedulers.js';
 	import type { TIsReadyMap } from '$components/generate/types.js';
 	import { lgBreakpoint, mdBreakpoint } from '$components/generationFullScreen/constants.js';
-	import HorizontalList from '$components/generate/HorizontalList.svelte';
+	import GenerateHorizontalList from '$components/generate/GenerateHorizontalList.svelte';
 	import LL from '$i18n/i18n-svelte.js';
 	import GenerateGridPlaceholder from '$components/generate/GenerateGridPlaceholder.svelte';
 	import GenerateHorizontalListPlaceholder from '$components/generate/GenerateHorizontalListPlaceholder.svelte';
 	import { expandCollapse } from '$ts/animation/transitions.js';
 	import { userSummary } from '$ts/stores/user/summary.js';
 	import LowOnCreditsCard from '$components/LowOnCreditsCard.svelte';
-	import { convertToDBTimeString } from '$ts/helpers/convertToDBTimeString.js';
 	import { removeRepeatingOutputs } from '$ts/helpers/removeRepeatingOutputs.js';
 	import GenerationSettingsProvider from '$components/generate/GenerationSettingsProvider.svelte';
 	import { heightDefault, widthDefault } from '$ts/constants/generationSize.js';
@@ -357,7 +349,7 @@
 									text={$LL.Generate.Grid.NotSignedIn.Paragraph()}
 								/>
 							{:else if userGenerationFullOutputsQuery}
-								<HorizontalList
+								<GenerateHorizontalList
 									containerClasses="px-2 pt-2"
 									{pinnedFullOutputs}
 									generationsQuery={userGenerationFullOutputsQuery}
@@ -423,7 +415,7 @@
 										text={$LL.Generate.Grid.NotSignedIn.Paragraph()}
 									/>
 								{:else if userGenerationFullOutputsQuery}
-									<HorizontalList
+									<GenerateHorizontalList
 										{pinnedFullOutputs}
 										generationsQuery={userGenerationFullOutputsQuery}
 										cardType="generate"
