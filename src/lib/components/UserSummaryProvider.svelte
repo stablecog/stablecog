@@ -12,7 +12,11 @@
 			  })
 			: undefined;
 
-	$: userSummary.set(browser ? $userSummaryQuery?.data : $userSummary);
+	$: userSummary.set(
+		browser && $userSummaryQuery && $userSummaryQuery.isSuccess
+			? $userSummaryQuery.data
+			: $userSummary
+	);
 </script>
 
 <slot />
