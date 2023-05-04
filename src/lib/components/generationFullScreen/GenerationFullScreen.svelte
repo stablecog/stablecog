@@ -47,10 +47,7 @@
 	import GenerationFullScreenImageSet from '$components/generationFullScreen/GenerationFullScreenImageSet.svelte';
 	import UpscaleAnimation from '$components/generate/UpscaleAnimation.svelte';
 	import SideButton from '$components/generationFullScreen/SideButton.svelte';
-	import {
-		recentlyUpdatedOutputIds,
-		removeFromRecentlyUpdatedOutputIds
-	} from '$ts/stores/user/recentlyUpdatedOutputIds';
+	import { removeFromRecentlyUpdatedOutputIds } from '$ts/stores/user/recentlyUpdatedOutputIds';
 
 	export let generation: TGenerationWithSelectedOutput;
 	export let modalType: TGenerationFullScreenModalType;

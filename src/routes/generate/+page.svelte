@@ -30,6 +30,7 @@
 	import { themeApp } from '$ts/stores/theme';
 	import GenerationGridInfinite from '$components/grids/GenerationGridInfinite.svelte';
 	import {
+		generationAspectRatio,
 		generationGuidanceScale,
 		generationHeight,
 		generationInferenceSteps,
@@ -51,6 +52,7 @@
 	import { convertToDBTimeString } from '$ts/helpers/convertToDBTimeString.js';
 	import { removeRepeatingOutputs } from '$ts/helpers/removeRepeatingOutputs.js';
 	import GenerationSettingsProvider from '$components/generate/GenerationSettingsProvider.svelte';
+	import { heightDefault, widthDefault } from '$ts/constants/generationSize.js';
 
 	export let data;
 
@@ -140,39 +142,35 @@
 	}));
 
 	let mounted = false;
-	let generationPlaceholder: TGeneration | undefined;
-	$: generationPlaceholder = mounted
-		? {
-				is_placeholder: true,
-				ui_id: generateSSEId(),
-				submit_to_gallery: false,
-				width: Number($generationWidth),
-				height: Number($generationHeight),
-				prompt: {
-					id: '1',
-					text: 'placeholder prompt'
-				},
-				negative_prompt: {
-					id: '1',
-					text: 'placeholder negative prompt'
-				},
-				created_at: convertToDBTimeString(Date.now()),
-				guidance_scale: $generationGuidanceScale,
-				inference_steps: Number($generationInferenceSteps),
-				model_id: generationModelIdDefault,
-				scheduler_id: schedulerIdDefault,
-				seed: 1,
-				num_outputs: Number($generationNumOutputs),
-				status: 'pre-submit',
-				outputs: Array.from({ length: Number($generationNumOutputs) }).map((i) => ({
-					id: '',
-					image_url: ''
-				}))
-		  }
-		: undefined;
+	let generationPlaceholder: TGeneration = {
+		is_placeholder: true,
+		ui_id: generateSSEId(),
+		submit_to_gallery: false,
+		width: Number(widthDefault),
+		height: Number(heightDefault),
+		prompt: {
+			id: '1',
+			text: 'placeholder prompt'
+		},
+		negative_prompt: {
+			id: '1',
+			text: 'placeholder negative prompt'
+		},
+		created_at: '',
+		guidance_scale: 1,
+		inference_steps: 1,
+		model_id: generationModelIdDefault,
+		scheduler_id: schedulerIdDefault,
+		seed: 1,
+		num_outputs: Number($generationNumOutputs),
+		status: 'pre-submit',
+		outputs: Array.from({ length: Number($generationNumOutputs) }).map((i) => ({
+			id: '',
+			image_url: ''
+		}))
+	};
 
-	$: [mounted, generationPlaceholder, $generationNumOutputs, $generationWidth, $generationHeight],
-		addPlaceholderGenerationToGenerations();
+	$: [mounted, $generationNumOutputs, $generationAspectRatio], addNewGenerationToGenerations();
 
 	function openSignInModal() {
 		isSignInModalOpen = true;
@@ -211,7 +209,7 @@
 		});
 	}
 
-	function addPlaceholderGenerationToGenerations() {
+	function addNewGenerationToGenerations() {
 		if ($generations && $generations[0] && $generations[0].status === 'pre-submit') return;
 		generations.update((gs) => [
 			...(generationPlaceholder !== undefined ? [generationPlaceholder] : []),

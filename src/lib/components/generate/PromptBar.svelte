@@ -34,21 +34,20 @@
 	import { sseId } from '$ts/stores/user/sse';
 	import { userSummary } from '$ts/stores/user/summary';
 	import IconGenerationSettings from '$components/icons/IconGenerationSettings.svelte';
-	import IconButton from '$components/buttons/IconButton.svelte';
 	import { windowWidth } from '$ts/stores/window';
 	import { mdBreakpoint } from '$components/generationFullScreen/constants';
 	import { onMount } from 'svelte';
 	import { isValue } from '$ts/helpers/isValue';
 	import type { TIsReadyMap } from '$components/generate/types';
-	import type { TCreatePageData } from '$routes/generate/+page.server';
 	import IconWand from '$components/icons/IconWand.svelte';
 	import Morpher from '$components/Morpher.svelte';
 	import IconChevronDown from '$components/icons/IconChevronDown.svelte';
 	import { afterNavigate } from '$app/navigation';
 	import NoBgButton from '$components/buttons/NoBgButton.svelte';
+	import type { TGeneratePageData } from '$routes/generate/+page.server';
 
 	export let openSignInModal: () => void;
-	export let serverData: TCreatePageData;
+	export let serverData: TGeneratePageData;
 	export let isReadyMap: TIsReadyMap;
 	export let onGenerate: undefined | (() => void) = undefined;
 	export let toggleSettingsSheet: () => void;

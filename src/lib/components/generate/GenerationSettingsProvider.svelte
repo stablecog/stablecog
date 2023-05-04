@@ -157,7 +157,7 @@
 
 	$: $generationModelId, enforceSupportedSchedulerId();
 
-	$: [$generationWidth, $generationHeight, $generationNumOutputs], setGenerationOnStage();
+	$: [$generationAspectRatio, $generationNumOutputs], updateGenerationOnStage();
 
 	$: isInferenceStepsValid = <T>(s: T) => {
 		return Number(s) * Number($generationHeight) * Number($generationWidth) < maxProPixelSteps;
@@ -187,7 +187,7 @@
 		return value;
 	}
 
-	function setGenerationOnStage() {
+	function updateGenerationOnStage() {
 		if ($generations && $generations[0] && $generations[0].status === 'pre-submit') {
 			generations.update((generations) => {
 				generations[0].width = Number($generationWidth);
