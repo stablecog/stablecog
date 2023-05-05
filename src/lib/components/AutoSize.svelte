@@ -7,14 +7,13 @@
 <div
 	bind:clientWidth
 	bind:clientHeight
-	class="w-full flex-1 flex flex-col overflow-hidden z-0 relative"
+	class="w-full flex-1 flex flex-col overflow-hidden z-0 relative bg-c-primary"
 >
 	<div
-		class="overflow-hidden relative z-0 flex flex-col flex-1"
+		bind:this={element}
+		class="overflow-auto"
 		style="width: {clientWidth}px; height: {clientHeight}px;"
 	>
-		<div bind:this={element} class="w-full flex flex-col flex-1 overflow-auto">
-			<slot />
-		</div>
+		<slot />
 	</div>
 </div>
