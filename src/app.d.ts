@@ -34,6 +34,7 @@ declare namespace svelte.JSX {
 	interface HTMLAttributes<T> {
 		tw?: string;
 		'data-sveltekit-prefetch'?: '' | 'off' | boolean;
+		key?: string | number;
 	}
 }
 
