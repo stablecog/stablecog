@@ -16,7 +16,6 @@
 	import IconSadFaceOutline from '$components/icons/IconSadFaceOutline.svelte';
 	import { VariableSizeList as List, styleString as sty } from 'svelte-window';
 	import { browser } from '$app/environment';
-	import { onMount } from 'svelte';
 
 	export let generationsQuery: CreateInfiniteQueryResult<TUserGenerationFullOutputsPage, unknown>;
 	export let pinnedFullOutputs: TGenerationFullOutput[] | undefined = undefined;
@@ -25,7 +24,7 @@
 	let scroll = 0;
 	let listElement: HTMLDivElement;
 	let listComponent: List;
-	const listPadding = 6;
+	const listPadding = 8;
 	let wrapperWidth: number;
 	let wrapperHeight: number;
 	let containerHeight: number;
@@ -175,7 +174,7 @@
 								left: (it.style.left ?? 0) + listPadding
 							})}
 						>
-							<div class="w-full h-full p-2px">
+							<div class="w-full h-full p-px">
 								<div class="w-full h-full relative group">
 									<ImagePlaceholder
 										{containerHeight}

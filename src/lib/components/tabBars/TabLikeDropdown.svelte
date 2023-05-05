@@ -143,7 +143,9 @@
 					{selectedItem?.label}
 				</p>
 			</div>
-			<div class="flex-shrink-0 w-5 h-5 transition {isDropdownOpen ? 'rotate-180' : 'rotate-0'}">
+			<div
+				class="-mr-2 flex-shrink-0 w-5 h-5 transition {isDropdownOpen ? 'rotate-180' : 'rotate-0'}"
+			>
 				<IconChevronDown
 					class="relative w-full h-full transition text-c-on-bg/50 {!$isTouchscreen
 						? 'group-hover:text-c-primary'
