@@ -17,6 +17,7 @@
 	import { clickoutside } from '$ts/actions/clickoutside';
 	import type { TAvailableGenerationModelId } from '$ts/constants/generationModels';
 	import { canonicalUrl } from '$ts/constants/main';
+	import { setActiveGenerationToOutputIndex } from '$ts/helpers/goToOutputIndex';
 	import { logBatchEditActived, logBatchEditDeactivated } from '$ts/helpers/loggers';
 	import {
 		getUserGenerationFullOutputs,
@@ -33,7 +34,7 @@
 	import { userGenerationFullOutputsQueryKey } from '$ts/stores/user/keys';
 	import { userSummary } from '$ts/stores/user/summary';
 	import type { TTab } from '$ts/types/main';
-	import { activeGeneration } from '$userStores/generation';
+	import { activeGeneration, type TGenerationFullOutput } from '$userStores/generation';
 	import { createInfiniteQuery, type CreateInfiniteQueryResult } from '@tanstack/svelte-query';
 
 	let totalOutputs: number;
@@ -103,6 +104,13 @@
 	let userGalleryEditActivatedOnce = false;
 	$: $isUserGalleryEditActive, onUserGalleryEditActiveChanged();
 
+	$: outputs = $userGenerationFullOutputsQuery?.data?.pages.flatMap((page) => page.outputs);
+	$: outputIndex = outputs
+		? outputs.findIndex((g) => g.id === $activeGeneration?.selected_output.id)
+		: -1;
+	$: leftIndex = outputIndex > 0 ? outputIndex - 1 : -1;
+	$: rightIndex = outputs && outputIndex < outputs?.length - 1 ? outputIndex + 1 : -1;
+
 	function onUserGalleryEditActiveChanged() {
 		if (!userGalleryEditActivatedOnce && !$isUserGalleryEditActive) return;
 		const props = {
@@ -142,22 +150,14 @@
 			activeGeneration.set(undefined);
 			return;
 		}
-		if (key === 'ArrowLeft' || key === 'ArrowRight') {
-			goToSide(key === 'ArrowLeft' ? 'left' : 'right');
+		if (key === 'ArrowLeft' && leftIndex !== -1) {
+			setActiveGenerationToOutputIndex(outputs, leftIndex);
+			return;
 		}
-	}
-
-	function goToSide(side: 'left' | 'right') {
-		const outputs = $userGenerationFullOutputsQuery?.data?.pages.flatMap((page) => page.outputs);
-		if (!outputs) return;
-		const index = outputs.findIndex((g) => g.id === $activeGeneration?.selected_output.id);
-		if (index === -1) return;
-		const addition = side === 'left' ? -1 : 1;
-		const newIndex = (index + addition + outputs.length) % outputs.length;
-		activeGeneration.set({
-			...outputs[newIndex].generation,
-			selected_output: outputs[newIndex]
-		});
+		if (key === 'ArrowRight' && rightIndex !== -1) {
+			setActiveGenerationToOutputIndex(outputs, rightIndex);
+			return;
+		}
 	}
 </script>
 
@@ -257,8 +257,12 @@
 
 {#if $activeGeneration}
 	<GenerationFullScreen
-		onLeftButtonClicked={() => goToSide('left')}
-		onRightButtonClicked={() => goToSide('right')}
+		onLeftButtonClicked={leftIndex !== -1
+			? () => setActiveGenerationToOutputIndex(outputs, leftIndex)
+			: undefined}
+		onRightButtonClicked={rightIndex !== -1
+			? () => setActiveGenerationToOutputIndex(outputs, rightIndex)
+			: undefined}
 		generation={$activeGeneration}
 		modalType="history"
 	/>

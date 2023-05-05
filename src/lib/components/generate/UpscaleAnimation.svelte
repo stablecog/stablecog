@@ -5,7 +5,7 @@
 	export let isProcessing: boolean;
 </script>
 
-<div class="w-full h-full relative z-0 overflow-hidden">
+<div class="w-full h-full z-0 overflow-hidden absolute left-0 top-0">
 	<div
 		class="w-full h-full absolute left-0 top-0 transition transform overflow-hidden z-0 pointer-events-none {!isProcessing
 			? 'translate-x-[calc(100%+4px)]'

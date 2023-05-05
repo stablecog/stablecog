@@ -51,8 +51,8 @@
 
 	export let generation: TGenerationWithSelectedOutput;
 	export let modalType: TGenerationFullScreenModalType;
-	export let onLeftButtonClicked: () => void;
-	export let onRightButtonClicked: () => void;
+	export let onLeftButtonClicked: (() => void) | undefined = undefined;
+	export let onRightButtonClicked: (() => void) | undefined = undefined;
 
 	let buttonLeft: HTMLButtonElement;
 	let buttonRight: HTMLButtonElement;
@@ -357,24 +357,26 @@
 				{/if}
 			</div>
 			<div class="w-full h-full overflow-hidden z-0 absolute left-0 top-0 pointer-events-none">
-				<SideButton
-					name="Go Left"
-					hasAnimation={false}
-					iconClass="w-6 h-6"
-					class="flex md:hidden absolute left-0 top-1/2 transform -translate-y-1/2 w-10 h-full pointer-events-auto"
-					side="left"
-					bind:element={buttonLeftMobile}
-					onClick={onLeftButtonClicked}
-				/>
-				<SideButton
-					name="Go Right"
-					hasAnimation={false}
-					iconClass="w-6 h-6"
-					class="flex md:hidden absolute right-0 top-1/2 transform -translate-y-1/2 w-10 h-full pointer-events-auto"
-					side="right"
-					bind:element={buttonRightMobile}
-					onClick={onRightButtonClicked}
-				/>
+				{#if onLeftButtonClicked || onRightButtonClicked}
+					<SideButton
+						name="Go Left"
+						hasAnimation={false}
+						iconClass="w-6 h-6"
+						class="flex md:hidden absolute left-0 top-1/2 transform -translate-y-1/2 w-10 h-full pointer-events-auto"
+						side="left"
+						bind:element={buttonLeftMobile}
+						onClick={onLeftButtonClicked}
+					/>
+					<SideButton
+						name="Go Right"
+						hasAnimation={false}
+						iconClass="w-6 h-6"
+						class="flex md:hidden absolute right-0 top-1/2 transform -translate-y-1/2 w-10 h-full pointer-events-auto"
+						side="right"
+						bind:element={buttonRightMobile}
+						onClick={onRightButtonClicked}
+					/>
+				{/if}
 				{#if modalType === 'history' || modalType === 'generate'}
 					<div class="absolute right-1.5 top-1.5 pointer-events-auto z-10">
 						<FavoriteButton {generation} {modalType} />
@@ -491,18 +493,20 @@
 			/>
 		</div>
 	</Container>
-	<SideButton
-		name="Go Left"
-		class="hidden md:flex absolute left-0 top-1/2 transform -translate-y-1/2 w-20 h-64"
-		side="left"
-		bind:element={buttonLeft}
-		onClick={onLeftButtonClicked}
-	/>
-	<SideButton
-		name="Go Right"
-		class="hidden md:flex absolute right-0 top-1/2 transform -translate-y-1/2 w-20 h-64"
-		side="right"
-		bind:element={buttonRight}
-		onClick={onRightButtonClicked}
-	/>
+	{#if onLeftButtonClicked || onRightButtonClicked}
+		<SideButton
+			name="Go Left"
+			class="hidden md:flex absolute left-0 top-1/2 transform -translate-y-1/2 w-20 h-64"
+			side="left"
+			bind:element={buttonLeft}
+			onClick={onLeftButtonClicked}
+		/>
+		<SideButton
+			name="Go Right"
+			class="hidden md:flex absolute right-0 top-1/2 transform -translate-y-1/2 w-20 h-64"
+			side="right"
+			bind:element={buttonRight}
+			onClick={onRightButtonClicked}
+		/>
+	{/if}
 </ModalWrapper>

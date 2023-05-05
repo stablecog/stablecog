@@ -24,6 +24,7 @@
 	import SearchAndFilterBar from '$components/SearchAndFilterBar.svelte';
 	import IconSadFace from '$components/icons/IconSadFace.svelte';
 	import type { TAvailableGenerationModelId } from '$ts/constants/generationModels';
+	import { setActiveGenerationToOutputIndex } from '$ts/helpers/goToOutputIndex';
 
 	export let data: PageServerData;
 	const { generationFullOutput: generationFullOutputFromData, searchQuery: searchQueryParam } =
@@ -66,28 +67,27 @@
 			: false
 	}`;
 
+	$: outputs = $galleryGenerationFullOutputsQuery?.data?.pages.flatMap((page) => page.outputs);
+	$: outputIndex = outputs
+		? outputs.findIndex((g) => g.id === $activeGeneration?.selected_output.id)
+		: -1;
+	$: leftIndex = outputIndex > 0 ? outputIndex - 1 : -1;
+	$: rightIndex = outputs && outputIndex < outputs?.length - 1 ? outputIndex + 1 : -1;
+
 	function onKeyDown({ key }: KeyboardEvent) {
 		if (!$activeGeneration) return;
 		if (key === 'Escape') {
 			activeGeneration.set(undefined);
 			return;
 		}
-		if (key === 'ArrowLeft' || key === 'ArrowRight') {
-			goToSide(key === 'ArrowLeft' ? 'left' : 'right');
+		if (key === 'ArrowLeft' && leftIndex !== -1) {
+			setActiveGenerationToOutputIndex(outputs, leftIndex);
+			return;
 		}
-	}
-
-	function goToSide(side: 'left' | 'right') {
-		const outputs = $galleryGenerationFullOutputsQuery?.data?.pages.flatMap((page) => page.outputs);
-		if (!outputs) return;
-		const index = outputs.findIndex((g) => g.id === $activeGeneration?.selected_output.id);
-		if (index === -1) return;
-		const addition = side === 'left' ? -1 : 1;
-		const newIndex = (index + addition + outputs.length) % outputs.length;
-		activeGeneration.set({
-			...outputs[newIndex].generation,
-			selected_output: outputs[newIndex]
-		});
+		if (key === 'ArrowRight' && rightIndex !== -1) {
+			setActiveGenerationToOutputIndex(outputs, rightIndex);
+			return;
+		}
 	}
 
 	onMount(() => {
@@ -177,8 +177,12 @@
 
 {#if $activeGeneration && $galleryGenerationFullOutputsQuery?.isInitialLoading === false}
 	<GenerationFullScreen
-		onLeftButtonClicked={() => goToSide('left')}
-		onRightButtonClicked={() => goToSide('right')}
+		onLeftButtonClicked={leftIndex !== -1
+			? () => setActiveGenerationToOutputIndex(outputs, leftIndex)
+			: undefined}
+		onRightButtonClicked={rightIndex !== -1
+			? () => setActiveGenerationToOutputIndex(outputs, rightIndex)
+			: undefined}
 		generation={$activeGeneration}
 		modalType="gallery"
 	/>

@@ -45,6 +45,7 @@
 	import { removeRepeatingOutputs } from '$ts/helpers/removeRepeatingOutputs.js';
 	import GenerationSettingsProvider from '$components/generate/GenerationSettingsProvider.svelte';
 	import { heightDefault, widthDefault } from '$ts/constants/generationSize.js';
+	import { setActiveGenerationToOutputIndex } from '$ts/helpers/goToOutputIndex.js';
 
 	export let data;
 
@@ -127,7 +128,7 @@
 				outputs: userGenerationOutputs,
 				onlySucceeded: true
 		  })
-		: [];
+		: undefined;
 
 	$: activeGenerationOutputs = $activeGeneration?.outputs.map((o) => ({
 		...o,
@@ -165,6 +166,16 @@
 	$: [$generationNumOutputs, $generationAspectRatio, isCheckCompleted],
 		addNewGenerationToGenerations();
 
+	$: outputs =
+		$activeGeneration?.card_type === 'generate'
+			? generateAllSucceededOutputs
+			: activeGenerationOutputs;
+	$: outputIndex = outputs
+		? outputs.findIndex((g) => g.id === $activeGeneration?.selected_output.id)
+		: -1;
+	$: leftIndex = outputIndex > 0 ? outputIndex - 1 : -1;
+	$: rightIndex = outputs && outputIndex < outputs?.length - 1 ? outputIndex + 1 : -1;
+
 	function openSignInModal() {
 		isSignInModalOpen = true;
 	}
@@ -175,31 +186,14 @@
 			activeGeneration.set(undefined);
 			return;
 		}
-		if (key === 'ArrowLeft' || key === 'ArrowRight') {
-			goToSide(key === 'ArrowLeft' ? 'left' : 'right');
+		if (key === 'ArrowLeft' && leftIndex !== -1) {
+			setActiveGenerationToOutputIndex(outputs, leftIndex);
+			return;
 		}
-	}
-
-	function goToSide(side: 'left' | 'right') {
-		if ($activeGeneration === undefined) return;
-		let outputs: TGenerationFullOutput[] | undefined;
-		if ($activeGeneration.card_type === 'generate') {
-			outputs = generateAllSucceededOutputs;
-		} else {
-			outputs = activeGenerationOutputs;
+		if (key === 'ArrowRight' && rightIndex !== -1) {
+			setActiveGenerationToOutputIndex(outputs, rightIndex);
+			return;
 		}
-		if (!outputs) return;
-		outputs = outputs.filter((o) => o.image_url);
-		const index = outputs.findIndex((g) => g.id === $activeGeneration?.selected_output.id);
-		if (index === -1) return;
-		const addition = side === 'left' ? -1 : 1;
-		const newIndex = (index + addition + outputs.length) % outputs.length;
-		const newOutput = outputs[newIndex];
-		activeGeneration.set({
-			...newOutput.generation,
-			selected_output: newOutput,
-			card_type: $activeGeneration.card_type
-		});
 	}
 
 	function addNewGenerationToGenerations() {
@@ -433,8 +427,12 @@
 
 	{#if $activeGeneration}
 		<GenerationFullScreen
-			onLeftButtonClicked={() => goToSide('left')}
-			onRightButtonClicked={() => goToSide('right')}
+			onLeftButtonClicked={leftIndex !== -1
+				? () => setActiveGenerationToOutputIndex(outputs, leftIndex)
+				: undefined}
+			onRightButtonClicked={rightIndex !== -1
+				? () => setActiveGenerationToOutputIndex(outputs, rightIndex)
+				: undefined}
 			generation={$activeGeneration}
 			modalType="generate"
 		/>

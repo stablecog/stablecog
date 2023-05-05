@@ -5,7 +5,7 @@
 
 	export let element: HTMLButtonElement;
 	export let name: string;
-	export let onClick: () => void;
+	export let onClick: (() => void) | undefined;
 	export let side: 'left' | 'right' = 'left';
 	export let iconClass = 'w-8 h-8';
 	export let hasAnimation = true;
@@ -18,6 +18,7 @@
 	let isRecentlyClickedTimeout: NodeJS.Timeout;
 
 	function _onClick() {
+		if (!onClick) return;
 		isRecentlyClicked = true;
 		clearTimeout(isRecentlyClickedTimeout);
 		isRecentlyClickedTimeout = setTimeout(() => {
@@ -31,10 +32,13 @@
 	aria-label={name}
 	bind:this={element}
 	on:click={_onClick}
+	disabled={onClick === undefined}
 	class="z-10 group p-0.5 md:p-1 rounded-xl touch-manipulation max-h-full {classes}"
 >
 	<div class="w-full h-full relative flex items-center rounded-xl justify-center">
-		<ButtonHoverEffect hoverFrom={side === 'left' ? 'right' : 'left'} />
+		{#if onClick}
+			<ButtonHoverEffect hoverFrom={side === 'left' ? 'right' : 'left'} />
+		{/if}
 		<IconChevronDown
 			strokeWidth={3}
 			class="{iconClass} text-c-on-bg transition duration-100 transform {isRecentlyClicked &&
@@ -42,9 +46,9 @@
 				? side === 'left'
 					? '-translate-x-1.5'
 					: 'translate-x-1.5'
-				: ''} {side === 'left' ? 'rotate-90' : '-rotate-90'} {!$isTouchscreen
+				: ''} {side === 'left' ? 'rotate-90' : '-rotate-90'} {!$isTouchscreen && onClick
 				? 'group-hover:text-c-primary'
-				: ''}"
+				: ''} group-disabled:opacity-15"
 		/>
 	</div>
 </button>
