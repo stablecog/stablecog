@@ -52,26 +52,38 @@
 	$: onlyOutputs = $generationsQuery.data?.pages.flatMap((page) => page.outputs);
 
 	let outputs: TGenerationFullOutput[] | undefined;
+	let items:
+		| {
+				key: number;
+				id: string;
+				groupKey: number;
+		  }[]
+		| undefined;
 
-	$: [onlyOutputs, pinnedFullOutputs], setOutputs();
+	$: [onlyOutputs, pinnedFullOutputs], setOutputsAndItems();
 
-	function setOutputs() {
+	function setOutputsAndItems() {
 		if (!onlyOutputs) {
 			outputs = undefined;
+			items = undefined;
 			return;
 		}
 		if (!pinnedFullOutputs) {
 			outputs = [...onlyOutputs];
+			items = outputs.map((output, index) => ({
+				key: index,
+				id: output.id,
+				groupKey: Math.floor(index / generationsPerPage)
+			}));
 			return;
 		}
 		outputs = removeRepeatingOutputs({ outputsPinned: pinnedFullOutputs, outputs: onlyOutputs });
+		items = outputs.map((output, index) => ({
+			key: index,
+			id: output.id,
+			groupKey: Math.floor(index / generationsPerPage)
+		}));
 	}
-
-	$: items = outputs?.map((output, index) => ({
-		key: index,
-		id: output.id,
-		groupKey: Math.floor(index / generationsPerPage)
-	}));
 
 	$: selectedItems =
 		cardType === 'history' && $isUserGalleryEditActive

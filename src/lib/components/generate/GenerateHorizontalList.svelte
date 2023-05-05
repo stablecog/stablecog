@@ -40,7 +40,8 @@
 
 	$: [onlyOutputs, pinnedFullOutputs], setOutputs();
 
-	const overscanBy = 5;
+	const overscanPagesCount = 5;
+	const overscanColsCount = 10;
 	$: listWidth =
 		wrapperHeight !== undefined
 			? outputs?.reduce((acc, output) => {
@@ -65,7 +66,7 @@
 		if (!hasMore) return;
 		if (currentPage === 0) return;
 		if ($generationsQuery.isFetchingNextPage) return;
-		if (currentPage + overscanBy >= totalPages) {
+		if (currentPage + overscanPagesCount >= totalPages) {
 			console.log('fetching next page');
 			$generationsQuery.fetchNextPage();
 		}
@@ -150,6 +151,7 @@
 				<List
 					bind:this={listComponent}
 					innerRef={listElement}
+					overscanCount={overscanColsCount}
 					direction="horizontal"
 					width={wrapperWidth}
 					height={wrapperHeight}

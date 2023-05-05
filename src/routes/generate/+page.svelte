@@ -134,7 +134,6 @@
 		generation: $activeGeneration!
 	}));
 
-	let mounted = false;
 	let generationPlaceholder: TGeneration = {
 		is_placeholder: true,
 		ui_id: generateSSEId(),
@@ -227,7 +226,6 @@
 		if (!browser) return;
 		document.body.style.overflow = 'hidden';
 		document.body.style.height = '100%';
-		mounted = true;
 	});
 
 	onDestroy(() => {
