@@ -271,7 +271,6 @@
 									generationsQuery={userGenerationFullOutputsQuery}
 									rerenderKey={gridRerenderKey}
 									{gridScrollContainer}
-									bottomElementClass="w-full h-16 flex-shrink-0"
 								/>
 							{/if}
 						</div>

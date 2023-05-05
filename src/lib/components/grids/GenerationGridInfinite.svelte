@@ -1,5 +1,4 @@
 <script lang="ts">
-	import Button from '$components/buttons/Button.svelte';
 	import GenerationImage from '$components/generationImage/GenerationImage.svelte';
 	import type { TGenerationImageCardType } from '$components/generationImage/types';
 	import ImagePlaceholder from '$components/ImagePlaceholder.svelte';
@@ -31,6 +30,8 @@
 	import IconEyeSlashOutline from '$components/icons/IconEyeSlashOutline.svelte';
 	import IconSadFaceOutline from '$components/icons/IconSadFaceOutline.svelte';
 	import { removeRepeatingOutputs } from '$ts/helpers/removeRepeatingOutputs';
+	import { onDestroy } from 'svelte';
+
 	export let generationsQuery: CreateInfiniteQueryResult<TUserGenerationFullOutputsPage, unknown>;
 	export let pinnedFullOutputs: TGenerationFullOutput[] | undefined = undefined;
 	export let rerenderKey: string;
@@ -40,12 +41,6 @@
 	export let gridScrollContainer: HTMLElement | undefined = undefined;
 	export let noLoadingSpinnerAlignmentAdjustment = false;
 	export let hasPlaceholder = false;
-	export let bottomElementClass: string | undefined = undefined;
-
-	let _gridScrollContainer: HTMLElement;
-	let selectedScrollContainer: HTMLElement;
-
-	$: selectedScrollContainer = gridScrollContainer ?? _gridScrollContainer;
 
 	let lastRerenderKey = rerenderKey;
 
@@ -104,7 +99,7 @@
 		(cardType === 'admin-gallery' && $isAdminGalleryEditActive) ||
 		(cardType === 'history' && $isUserGalleryEditActive);
 
-	let ig: MasonryInfiniteGrid;
+	let ig: MasonryInfiniteGrid | undefined = undefined;
 
 	$: rerenderKey, rerenderGrid();
 	function rerenderGrid() {
@@ -127,10 +122,11 @@
 {:else if hasPlaceholder && $generationsQuery.isSuccess && outputs !== undefined && outputs.length === 0}
 	<GenerateGridPlaceholder text={$LL.Generate.Grid.NoGeneration.Paragraph()} />
 {:else if $generationsQuery.isSuccess && $generationsQuery.data.pages.length > 0 && outputs !== undefined && items !== undefined}
-	<div class={gridClasses} bind:this={_gridScrollContainer}>
+	<div class={gridClasses}>
 		<MasonryInfiniteGrid
+			useLoading={true}
 			resizeDebounce={200}
-			scrollContainer={selectedScrollContainer}
+			scrollContainer={gridScrollContainer || window}
 			bind:this={ig}
 			{items}
 			let:visibleItems
@@ -146,99 +142,96 @@
 			}}
 		>
 			{#each visibleItems as item (item.key)}
-				{@const output = outputs[item.key]}
-				{@const isOutputSelected = selectedItems.includes(output.id)}
-				{@const isOutputHoverable =
-					isHoverAllowed &&
-					!isOutputSelected &&
-					!$isTouchscreen &&
-					!(
-						cardType === 'history' &&
-						$isUserGalleryEditActive &&
-						$userGalleryCurrentView === 'favorites' &&
-						!output.is_favorited
-					) &&
-					!output.is_deleted}
-				{@const status = output.status}
-				{@const animation = output.animation}
-				<div style="position: absolute;left: -9999px;top: -9999px;" class="{cardWidthClasses} p-px">
-					<div class="w-full relative group">
-						<ImagePlaceholder width={output.generation.width} height={output.generation.height} />
-						<div
-							class="absolute left-0 top-0 w-full h-full bg-c-bg-secondary transition overflow-hidden 
+				{#if item.type !== 0}
+					<div
+						style="position: absolute;left: -9999px;top: -9999px;"
+						class="{cardWidthClasses} p-px"
+					>
+						<div class="w-full h-[200vh]" />
+					</div>
+				{:else}
+					{@const output = outputs[item.key]}
+					{@const isOutputSelected = selectedItems.includes(output.id)}
+					{@const isOutputHoverable =
+						isHoverAllowed &&
+						!isOutputSelected &&
+						!$isTouchscreen &&
+						!(
+							cardType === 'history' &&
+							$isUserGalleryEditActive &&
+							$userGalleryCurrentView === 'favorites' &&
+							!output.is_favorited
+						) &&
+						!output.is_deleted}
+					{@const status = output.status}
+					{@const animation = output.animation}
+					<div
+						style="position: absolute;left: -9999px;top: -9999px;"
+						class="{cardWidthClasses} p-px"
+					>
+						<div class="w-full relative group">
+							<ImagePlaceholder width={output.generation.width} height={output.generation.height} />
+							<div
+								class="absolute left-0 top-0 w-full h-full bg-c-bg-secondary transition overflow-hidden 
 							z-0 shadow-lg shadow-c-shadow/[var(--o-shadow-normal)] {cardType === 'generate'
-								? output.image_url && !output.is_deleted
-									? 'border-2 rounded-lg hover:border-c-primary'
-									: 'border-2 rounded-lg'
-								: 'border-2 rounded-xl'} {isOutputSelected
-								? 'border-c-primary'
-								: 'border-c-bg-secondary'} {isOutputHoverable ? 'hover:border-c-primary/75' : ''}"
-						>
-							{#if output.generation.outputs !== undefined}
-								{#if status !== 'failed' && status !== 'failed-nsfw'}
-									{#if status !== undefined && status !== 'succeeded' && animation !== undefined}
+									? output.image_url && !output.is_deleted
+										? 'border-2 rounded-lg hover:border-c-primary'
+										: 'border-2 rounded-lg'
+									: 'border-2 rounded-xl'} {isOutputSelected
+									? 'border-c-primary'
+									: 'border-c-bg-secondary'} {isOutputHoverable ? 'hover:border-c-primary/75' : ''}"
+							>
+								{#if output.generation.outputs !== undefined}
+									{#if status !== 'failed' && status !== 'failed-nsfw'}
+										{#if status !== undefined && status !== 'succeeded' && animation !== undefined}
+											<div
+												out:fade|local={{ duration: 3000, easing: quadIn }}
+												class="w-full h-full absolute left-0 top-0"
+											>
+												<GenerationAnimation {animation} />
+											</div>
+										{/if}
+										{#if status === undefined || status === 'succeeded'}
+											<GenerationImage
+												{cardType}
+												{isGalleryEditActive}
+												useUpscaledImage={false}
+												generation={{
+													...output.generation,
+													selected_output: output
+												}}
+											/>
+										{/if}
+									{:else}
 										<div
-											out:fade|local={{ duration: 3000, easing: quadIn }}
-											class="w-full h-full absolute left-0 top-0"
+											in:fade|local={{ duration: 200, easing: quadOut }}
+											class="w-full h-full flex items-center bg-c-bg-secondary justify-center relative p-1"
 										>
-											<GenerationAnimation {animation} />
+											{#if cardType === 'generate'}
+												{@const sizeClasses =
+													output.generation.height > output.generation.width
+														? 'h-full max-h-[2rem] w-auto'
+														: 'w-full max-w-[2rem] h-auto'}
+												{#if status === 'failed-nsfw'}
+													<IconEyeSlashOutline class="{sizeClasses} text-c-on-bg/50" />
+												{:else}
+													<IconSadFaceOutline class="{sizeClasses} text-c-on-bg/50" />
+												{/if}
+											{:else}
+												<p class="text-sm text-c-on-bg/50 px-5 py-3 text-center leading-relaxed">
+													{status === 'failed-nsfw'
+														? $LL.Error.ImageWasNSFW()
+														: $LL.Error.SomethingWentWrong()}
+												</p>
+											{/if}
 										</div>
 									{/if}
-									{#if status === undefined || status === 'succeeded'}
-										<GenerationImage
-											{cardType}
-											{isGalleryEditActive}
-											useUpscaledImage={false}
-											generation={{
-												...output.generation,
-												selected_output: output
-											}}
-										/>
-									{/if}
-								{:else}
-									<div
-										in:fade|local={{ duration: 200, easing: quadOut }}
-										class="w-full h-full flex items-center bg-c-bg-secondary justify-center relative p-1"
-									>
-										{#if cardType === 'generate'}
-											{@const sizeClasses =
-												output.generation.height > output.generation.width
-													? 'h-full max-h-[2rem] w-auto'
-													: 'w-full max-w-[2rem] h-auto'}
-											{#if status === 'failed-nsfw'}
-												<IconEyeSlashOutline class="{sizeClasses} text-c-on-bg/50" />
-											{:else}
-												<IconSadFaceOutline class="{sizeClasses} text-c-on-bg/50" />
-											{/if}
-										{:else}
-											<p class="text-sm text-c-on-bg/50 px-5 py-3 text-center leading-relaxed">
-												{status === 'failed-nsfw'
-													? $LL.Error.ImageWasNSFW()
-													: $LL.Error.SomethingWentWrong()}
-											</p>
-										{/if}
-									</div>
 								{/if}
-							{/if}
+							</div>
 						</div>
 					</div>
-				</div>
+				{/if}
 			{/each}
 		</MasonryInfiniteGrid>
 	</div>
-	{#if $generationsQuery.hasNextPage}
-		<div class="w-full flex flex-row items-center justify-center mt-6">
-			<Button
-				withSpinner
-				size="sm"
-				loading={$generationsQuery.isFetchingNextPage}
-				onClick={() => $generationsQuery.fetchNextPage()}
-			>
-				{$LL.Shared.LoadMoreButton()}
-			</Button>
-		</div>
-	{/if}
-	{#if bottomElementClass}
-		<div class={bottomElementClass} />
-	{/if}
 {/if}
