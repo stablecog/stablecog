@@ -58,7 +58,7 @@
 	$: [outputs, overscanCount], onParamsChanged();
 	$: [$windowWidth, $windowHeight], onWindowSizeChanged();
 
-	$: listAtStart = $listVirtualizer ? $listVirtualizer.scrollOffset === 0 : true;
+	$: listAtStart = $listVirtualizer ? $listVirtualizer.scrollOffset <= 0 : true;
 	$: listAtEnd =
 		$listVirtualizer && listScrollContainer.scrollWidth && listScrollContainer.clientWidth
 			? $listVirtualizer.scrollOffset >=
