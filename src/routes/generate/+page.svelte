@@ -351,7 +351,7 @@
 					</div>
 				</div>
 				<div
-					class="w-full flex flex-col order-first flex-1 min-w-0 pb-42
+					class="w-full flex flex-col order-first flex-1 min-w-0 pb-[calc(env(safe-area-inset-bottom)+10.5rem)]
 					md:pb-0 md:pt-26 lg:pb-8"
 				>
 					<div
