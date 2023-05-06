@@ -459,8 +459,8 @@
 				class="w-full bg-c-bg text-c-on-bg flex flex-col {$themeApp === 'light'
 					? 'theme-light'
 					: 'theme-dark'}"
-				style="min-height: 100vh; min-height: {innerHeight
-					? `${innerHeight}px`
+				style="min-height: 100vh; min-height: {$windowHeight
+					? `${$windowHeight}px`
 					: '100svh'}; background-image: url({$themeApp === 'light'
 					? '/illustrations/grid-on-light.svg'
 					: '/illustrations/grid-on-dark.svg'}); background-size: 24px;"

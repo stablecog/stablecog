@@ -245,7 +245,10 @@
 						<AutoSize bind:element={gridScrollContainer}>
 							{#if $windowWidth > lgBreakpoint && gridScrollContainer}
 								<GenerationGridInfinite2
-									padding={6}
+									paddingLeft={6}
+									paddingRight={6}
+									paddingTop={6}
+									paddingBottom={80}
 									{pinnedFullOutputs}
 									noLoadingSpinnerAlignmentAdjustment
 									hasPlaceholder

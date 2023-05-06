@@ -40,7 +40,12 @@
 	export let noLoadingSpinnerAlignmentAdjustment = false;
 	export let hasPlaceholder = false;
 	export let cols = 6;
-	export let padding: number = 0;
+	export let paddingLeft: number = 0;
+	export let paddingRight: number = 0;
+	export let paddingTop: number = 0;
+	export let paddingBottom: number = 0;
+
+	$: horizontalPadding = paddingLeft + paddingRight;
 
 	let gridVirtualizer:
 		| Readable<SvelteVirtualizer<HTMLDivElement, Element>>
@@ -89,9 +94,10 @@
 	const defaultAspectRatio = 1.5;
 	let estimatedItemWidth: number;
 	const setEstimatedItemWidth = () => {
-		estimatedItemWidth = ((gridScrollContainer?.clientWidth || $windowWidth) - padding * 2) / cols;
+		estimatedItemWidth =
+			((gridScrollContainer?.clientWidth || $windowWidth) - horizontalPadding) / cols;
 	};
-	$: [$windowWidth, padding, cols], setEstimatedItemWidth();
+	$: [$windowWidth, paddingLeft, paddingRight, cols], setEstimatedItemWidth();
 	$: estimatedItemHeight = estimatedItemWidth ? estimatedItemWidth * (1 / defaultAspectRatio) : 400;
 	$: estimatedItemCountInAWindow = estimatedItemWidth
 		? ((gridScrollContainer?.clientHeight || $windowHeight) / estimatedItemHeight) * cols
@@ -156,8 +162,8 @@
 			count: outputs.length,
 			overscan: overscanCount,
 			lanes: cols,
-			paddingStart: padding,
-			paddingEnd: padding
+			paddingStart: paddingTop,
+			paddingEnd: paddingBottom
 		};
 		gridVirtualizer =
 			gridScrollContainer !== undefined && gridScrollContainer.offsetWidth
@@ -165,7 +171,7 @@
 						...params,
 						getScrollElement: () => gridScrollContainer as HTMLDivElement,
 						estimateSize: (i) => {
-							const width = (gridScrollContainer!.offsetWidth - padding * 2) / cols;
+							const width = (gridScrollContainer!.offsetWidth - horizontalPadding) / cols;
 							const height = (width * outputs![i].generation.height) / outputs![i].generation.width;
 							return height;
 						}
@@ -173,7 +179,7 @@
 				: createWindowVirtualizer({
 						...params,
 						estimateSize: (i) => {
-							const width = (window.innerWidth - padding * 2) / cols;
+							const width = (window.innerWidth - horizontalPadding) / cols;
 							const height = (width * outputs![i].generation.height) / outputs![i].generation.width;
 							return height;
 						}
@@ -183,7 +189,7 @@
 
 {#if $generationsQuery.isInitialLoading}
 	<div
-		class="w-full flex-1 flex flex-col text-c-on-bg/60 py-6 px-4 justify-center items-center text-center"
+		class="w-full h-full flex flex-col text-c-on-bg/60 py-6 px-4 justify-center items-center text-center"
 	>
 		<IconAnimatedSpinner class="w-12 h-12" />
 		<p class="mt-2 opacity-0">{$LL.Gallery.SearchingTitle()}</p>
@@ -211,8 +217,9 @@
 				<div
 					key={virtualItem.index}
 					style="
-							width: calc(((100% - {padding * 2}px) / {cols});
-							left: calc({padding}px + ((100% - {padding * 2}px) * {virtualItem.lane / cols}));
+							width: calc(((100% - {horizontalPadding}px) / {cols});
+							left: calc({horizontalPadding / 2}px + ((100% - {horizontalPadding}px) * {virtualItem.lane /
+						cols}));
 							height: {virtualItem.size}px;
 							transform: translateY({virtualItem.start}px);
 							top: 0;

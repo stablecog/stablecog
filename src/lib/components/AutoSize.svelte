@@ -13,7 +13,7 @@
 	<div
 		bind:this={element}
 		style="width: {clientWidth}px; height: {clientHeight}px;"
-		class="overflow-auto flex flex-col {hideScroll ? 'hide-scrollbar' : ''}"
+		class="overflow-auto {hideScroll ? 'hide-scrollbar' : ''}"
 	>
 		<slot />
 	</div>

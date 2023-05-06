@@ -18,7 +18,6 @@
 	import { createVirtualizer, type SvelteVirtualizer } from '@tanstack/svelte-virtual';
 	import { windowHeight, windowWidth } from '$ts/stores/window';
 	import { removeRepeatingOutputs } from '$ts/helpers/removeRepeatingOutputs';
-	import { list } from 'postcss';
 
 	export let generationsQuery: CreateInfiniteQueryResult<TUserGenerationFullOutputsPage, unknown>;
 	export let pinnedFullOutputs: TGenerationFullOutput[] | undefined = undefined;
@@ -29,13 +28,9 @@
 
 	let listVirtualizer: Readable<SvelteVirtualizer<HTMLDivElement, Element>> | undefined;
 	let placeholderInnerContainerHeight: number;
-	let listAtStart = true;
-	let listAtEnd = false;
 
 	$: onlyOutputs = $generationsQuery.data?.pages.flatMap((page) => page.outputs);
-
 	let outputs: TGenerationFullOutput[] | undefined;
-
 	$: [onlyOutputs, pinnedFullOutputs], setOutputs();
 
 	const defaultAspectRatio = 0.66;
@@ -56,6 +51,12 @@
 		setListVirtualizer();
 	$: outputs, onOutputsChanged();
 	$: $listVirtualizer, onListVirtualizerChanged();
+	$: listAtStart = $listVirtualizer ? $listVirtualizer.scrollOffset === 0 : true;
+	$: listAtEnd =
+		$listVirtualizer && listScrollContainer.scrollWidth && listScrollContainer.clientWidth
+			? $listVirtualizer.scrollOffset >=
+			  listScrollContainer.scrollWidth - listScrollContainer.clientWidth
+			: false;
 
 	let shouldMeasureTimeout: NodeJS.Timeout;
 	const shouldMeasureDebounceTime = 100;
@@ -222,12 +223,12 @@
 			{/each}
 		</div>
 	{/if}
-	<!-- 	<div
+	<div
 		class="absolute left-0 top-0 w-16 h-full bg-gradient-to-r from-c-bg to-c-bg/0 transition
       duration-100 pointer-events-none {listAtStart ? 'opacity-0' : 'opacity-100'}"
 	/>
 	<div
 		class="absolute right-0 top-0 w-16 h-full bg-gradient-to-l from-c-bg to-c-bg/0 transition
 			duration-100 pointer-events-none {listAtEnd ? 'opacity-0' : 'opacity-100'}"
-	/> -->
+	/>
 {/if}
