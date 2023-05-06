@@ -49,9 +49,9 @@
 
 	$: onlyOutputs = $generationsQuery.data?.pages.flatMap((page) => page.outputs);
 	let outputs: TGenerationFullOutput[] | undefined = undefined;
-	$: [onlyOutputs, pinnedFullOutputs], setOutputsAndItems();
+	$: [onlyOutputs, pinnedFullOutputs], setOutputs();
 
-	function setOutputsAndItems() {
+	function setOutputs() {
 		if (!onlyOutputs) {
 			outputs = undefined;
 			return;
@@ -87,28 +87,35 @@
 	$: $gridVirtualizer, onGridVirtualizerChanged();
 
 	const defaultAspectRatio = 1.5;
-	$: estimatedItemWidth = ((gridScrollContainer?.clientWidth || $windowWidth) - padding * 2) / cols;
+	let estimatedItemWidth: number;
+	const setEstimatedItemWidth = () => {
+		estimatedItemWidth = ((gridScrollContainer?.clientWidth || $windowWidth) - padding * 2) / cols;
+	};
+	$: [$windowWidth, padding, cols], setEstimatedItemWidth();
 	$: estimatedItemHeight = estimatedItemWidth ? estimatedItemWidth * (1 / defaultAspectRatio) : 400;
 	$: estimatedItemCountInAWindow = estimatedItemWidth
 		? ((gridScrollContainer?.clientHeight || $windowHeight) / estimatedItemHeight) * cols
 		: 50;
 
-	$: overscanCount = Math.round(estimatedItemCountInAWindow * 2);
+	$: overscanCount = Math.round(estimatedItemCountInAWindow * 2) || 25;
 	const overscanMultiplierForNextPage = 0.25;
-	$: [gridScrollContainer, outputs, overscanCount], setGridVirtualizer();
+	$: [$windowWidth, $windowHeight, gridScrollContainer, outputs, overscanCount],
+		setGridVirtualizer();
 	$: cols, onColsChanged();
 
 	let shouldMeasureTimeout: NodeJS.Timeout;
 	const shouldMeasureDebounceTime = 100;
 
-	$: [$windowWidth, $windowHeight], shouldMeasureWithDebounce();
+	$: [$windowWidth, $windowHeight], shouldMeasure();
 
-	function shouldMeasureWithDebounce() {
+	function shouldMeasure() {
 		if (shouldMeasureTimeout) clearTimeout(shouldMeasureTimeout);
 		if (!outputs) return;
 		if (!$windowWidth) return;
 		if (!$windowHeight) return;
 		if (!$gridVirtualizer) return;
+		if (!$gridVirtualizer) return;
+		$gridVirtualizer.measure();
 		shouldMeasureTimeout = setTimeout(() => {
 			if (!$gridVirtualizer) return;
 			$gridVirtualizer.measure();
@@ -124,7 +131,6 @@
 		const isLastItemVisible =
 			lastItemIndex >= outputs.length - 1 - overscanCount * overscanMultiplierForNextPage;
 		if (!isLastItemVisible) return;
-		console.log('fetching next page');
 		$generationsQuery.fetchNextPage();
 	}
 
@@ -145,9 +151,7 @@
 	}
 
 	function setGridVirtualizer() {
-		if ($gridVirtualizer !== undefined) return;
 		if (outputs === undefined) return;
-		if (!overscanCount) return;
 		const params = {
 			count: outputs.length,
 			overscan: overscanCount,
@@ -211,8 +215,9 @@
 							left: calc({padding}px + ((100% - {padding * 2}px) * {virtualItem.lane / cols}));
 							height: {virtualItem.size}px;
 							transform: translateY({virtualItem.start}px);
+							top: 0;
 						"
-					class="w-full group absolute top-0 p-px"
+					class="w-full group absolute p-px"
 				>
 					<div class="w-full h-full relative">
 						<ImagePlaceholder width={output.generation.width} height={output.generation.height} />

@@ -93,13 +93,7 @@
 	themeApp.set($th);
 	if (data.theme !== null) themeApp.set(data.theme);
 
-	let innerHeight: number;
-	let innerWidth: number;
-
 	let mounted = false;
-
-	$: [$themeApp], setBodyClasses();
-	$: [innerWidth, innerHeight], setWindowStores();
 
 	let lastIdentity: string | undefined = undefined;
 	$: [mounted, $page], identifyUser();
@@ -140,11 +134,6 @@
 			logPageview(props);
 		}
 	});
-
-	function setWindowStores() {
-		windowWidth.set(innerWidth);
-		windowHeight.set(innerHeight);
-	}
 
 	function setBodyClasses() {
 		if (browser) {
@@ -447,12 +436,24 @@
 	});
 </script>
 
-<svelte:window bind:innerHeight bind:innerWidth on:scroll={setNavbarState} />
+<svelte:window
+	bind:innerHeight={$windowHeight}
+	bind:innerWidth={$windowWidth}
+	on:scroll={setNavbarState}
+/>
 
 <QueryClientProvider client={queryClient}>
 	<UserSummaryProvider>
 		{#if rawRoutes.includes($page.url.pathname)}
-			<slot />
+			<div
+				style="
+					width: 100vw; width: 100svw;
+					height: 100vh; height: 100svh;
+				"
+				class="overflow-hidden"
+			>
+				<slot />
+			</div>
 		{:else}
 			<div
 				class="w-full bg-c-bg text-c-on-bg flex flex-col {$themeApp === 'light'

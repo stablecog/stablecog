@@ -2,7 +2,7 @@
 	export let text: string;
 </script>
 
-<div class="w-full h-full flex flex-col items-start justify-start overflow-hidden">
+<div class="w-full h-full flex flex-col items-start justify-start overflow-hidden p-1.5">
 	<div class="w-full h-full flex flex-col items-stretch justify-start opacity-50">
 		{#each Array(8) as item}
 			<div class="w-full flex flex-row flex-1">
@@ -19,7 +19,7 @@
 		{/each}
 	</div>
 	<p
-		class="absolute left-0 top-0 w-full h-full flex flex-col text-center py-6 
+		class="absolute left-0 top-0 w-full h-full flex flex-col text-center py-6
     lg:px-5 xl:px-8 items-center justify-center text-c-on-bg/40 text-sm"
 	>
 		{text}

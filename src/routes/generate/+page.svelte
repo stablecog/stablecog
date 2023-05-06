@@ -2,12 +2,7 @@
 	import { browser } from '$app/environment';
 	import GenerationFullScreen from '$components/generationFullScreen/GenerationFullScreen.svelte';
 	import SettingsPanel from '$components/generate/SettingsPanel.svelte';
-	import {
-		activeGeneration,
-		generations,
-		type TGeneration,
-		type TGenerationFullOutput
-	} from '$ts/stores/user/generation';
+	import { activeGeneration, generations, type TGeneration } from '$ts/stores/user/generation';
 
 	import { onDestroy, onMount } from 'svelte';
 	import PromptBar from '$components/generate/PromptBar.svelte';
@@ -28,7 +23,6 @@
 	import SidebarWrapper from '$components/generate/SidebarWrapper.svelte';
 	import GenerateStage from '$components/generate/GenerationStage.svelte';
 	import { themeApp } from '$ts/stores/theme';
-	import GenerationGridInfinite from '$components/grids/GenerationGridInfinite.svelte';
 	import { generationAspectRatio, generationNumOutputs } from '$ts/stores/generationSettings.js';
 	import { generateSSEId } from '$ts/helpers/generateSSEId.js';
 	import { generationModelIdDefault } from '$ts/constants/generationModels.js';
@@ -62,8 +56,10 @@
 	let stageHeight: number;
 	let horizontalListHeightEstimatedRem = 3.5;
 	let horizontalListHeight: number;
-	let propmtBarEstimatedHeightRem = 4.25;
+	let propmtBarEstimatedHeightRem = 3.75;
 	let gridScrollContainer: HTMLDivElement;
+	let listScrollContainer: HTMLDivElement;
+	let listScrollContainerMd: HTMLDivElement;
 	let isReadyMap: TIsReadyMap = {
 		promptBar: false,
 		generationStage: false,
@@ -77,7 +73,7 @@
 
 	$: generatePageUserGenerationFullOutputsQueryKey.set([
 		'user_generation_full_outputs',
-		'all',
+		userGalleryCurrentView,
 		'',
 		''
 	]);
@@ -234,23 +230,17 @@
 >
 	<div
 		id="tooltip-container"
-		style="{$windowHeight
-			? `height: ${$windowHeight + 'px;'}`
-			: 'height: 100vh; height: 100svh;'} {$windowWidth
-			? `width: ${$windowWidth + 'px;'}`
-			: 'width: 100vw; width: 100svw;'} background-image: url({$themeApp === 'light'
+		style="background-image: url({$themeApp === 'light'
 			? '/illustrations/grid-on-light.svg'
 			: '/illustrations/grid-on-dark.svg'}); background-size: 24px;"
-		class="w-full flex flex-col overflow-hidden relative z-0"
+		class="w-full h-full flex flex-col overflow-hidden relative z-0"
 	>
 		<Navbar />
 		<div class="w-full h-full flex flex-row overflow-hidden pt-2 md:px-4 md:pb-4 gap-4">
 			<div class="h-full hidden lg:flex w-36 xl:w-72 lg:pb-[calc(env(safe-area-inset-bottom))]">
 				<SidebarWrapper hasGradient>
 					{#if !$page.data.session?.user.id}
-						<div class="w-full h-full p-2">
-							<GenerateGridPlaceholder text={$LL.Generate.Grid.NotSignedIn.Paragraph()} />
-						</div>
+						<GenerateGridPlaceholder text={$LL.Generate.Grid.NotSignedIn.Paragraph()} />
 					{:else if userGenerationFullOutputsQuery}
 						<AutoSize bind:element={gridScrollContainer}>
 							{#if $windowWidth > lgBreakpoint && gridScrollContainer}
@@ -323,22 +313,32 @@
 						class="w-full z-50 flex flex-col rounded-2xl overflow-hidden md:overflow-visible md:rounded-none bg-c-bg md:bg-transparent absolute left-0 bottom-0
 							md:bottom-auto md:top-0 order-2"
 					>
-						<div bind:clientHeight={horizontalListHeight} class="w-full h-14 md:hidden">
-							{#if !$page.data.session?.user.id}
-								<GenerateHorizontalListPlaceholder
-									text={$LL.Generate.Grid.NotSignedIn.Paragraph()}
-								/>
-							{:else if userGenerationFullOutputsQuery}
-								<GenerateHorizontalList
-									{pinnedFullOutputs}
-									generationsQuery={userGenerationFullOutputsQuery}
-									cardType="generate"
-								/>
-							{/if}
+						<div
+							bind:clientHeight={horizontalListHeight}
+							class="w-full h-14 flex flex-col md:hidden"
+						>
+							<AutoSize bind:element={listScrollContainer} hideScroll>
+								{#if !$page.data.session?.user.id}
+									<GenerateHorizontalListPlaceholder
+										text={$LL.Generate.Grid.NotSignedIn.Paragraph()}
+									/>
+								{:else if userGenerationFullOutputsQuery}
+									{#if $windowWidth < mdBreakpoint && listScrollContainer}
+										<GenerateHorizontalList
+											paddingX={8}
+											paddingY={6}
+											{pinnedFullOutputs}
+											generationsQuery={userGenerationFullOutputsQuery}
+											{listScrollContainer}
+											cardType="generate"
+										/>
+									{/if}
+								{/if}
+							</AutoSize>
 						</div>
 						<div
 							bind:clientHeight={promptBarHeight}
-							class="w-full flex pl-2 pt-2 md:p-0 pb-[calc(env(safe-area-inset-bottom)+0.75rem)] z-50"
+							class="w-full flex pl-2 pb-[calc(env(safe-area-inset-bottom)+0.75rem)] z-50"
 						>
 							<PromptBar
 								{openSignInModal}
@@ -388,17 +388,24 @@
 					</div>
 					<div class="w-full hidden md:flex lg:hidden pt-11 pb-[calc(env(safe-area-inset-bottom))]">
 						<SidebarWrapper borderSize="sm">
-							<div class="w-full h-20 flex">
+							<div class="w-full h-20 flex flex-col">
 								{#if !$page.data.session?.user.id}
 									<GenerateHorizontalListPlaceholder
 										text={$LL.Generate.Grid.NotSignedIn.Paragraph()}
 									/>
 								{:else if userGenerationFullOutputsQuery}
-									<GenerateHorizontalList
-										{pinnedFullOutputs}
-										generationsQuery={userGenerationFullOutputsQuery}
-										cardType="generate"
-									/>
+									<AutoSize bind:element={listScrollContainerMd} hideScroll>
+										{#if listScrollContainerMd && $windowWidth >= mdBreakpoint}
+											<GenerateHorizontalList
+												listScrollContainer={listScrollContainerMd}
+												{pinnedFullOutputs}
+												generationsQuery={userGenerationFullOutputsQuery}
+												cardType="generate"
+												paddingX={6}
+												paddingY={6}
+											/>
+										{/if}
+									</AutoSize>
 								{/if}
 							</div>
 						</SidebarWrapper>
