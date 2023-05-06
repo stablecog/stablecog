@@ -34,7 +34,11 @@
 	import { generationModelIdDefault } from '$ts/constants/generationModels.js';
 	import { schedulerIdDefault } from '$ts/constants/schedulers.js';
 	import type { TIsReadyMap } from '$components/generate/types.js';
-	import { lgBreakpoint, mdBreakpoint } from '$components/generationFullScreen/constants.js';
+	import {
+		lgBreakpoint,
+		mdBreakpoint,
+		xlBreakpoint
+	} from '$components/generationFullScreen/constants.js';
 	import GenerateHorizontalList from '$components/generate/GenerateHorizontalList.svelte';
 	import LL from '$i18n/i18n-svelte.js';
 	import GenerateGridPlaceholder from '$components/generate/GenerateGridPlaceholder.svelte';
@@ -46,6 +50,8 @@
 	import GenerationSettingsProvider from '$components/generate/GenerationSettingsProvider.svelte';
 	import { heightDefault, widthDefault } from '$ts/constants/generationSize.js';
 	import { setActiveGenerationToOutputIndex } from '$ts/helpers/goToOutputIndex.js';
+	import GenerationGridInfinite2 from '$components/grids/GenerationGridInfinite2.svelte';
+	import AutoSize from '$components/AutoSize.svelte';
 
 	export let data;
 
@@ -57,7 +63,7 @@
 	let horizontalListHeightEstimatedRem = 3.5;
 	let horizontalListHeight: number;
 	let propmtBarEstimatedHeightRem = 4.25;
-	let gridScrollContainer: HTMLElement;
+	let gridScrollContainer: HTMLDivElement;
 	let isReadyMap: TIsReadyMap = {
 		promptBar: false,
 		generationStage: false,
@@ -93,17 +99,6 @@
 					}
 			  })
 			: undefined;
-
-	$: gridRerenderKey = `generate_page_user_generation_full_outputs_${userGalleryCurrentView}_${
-		$generations.length
-	}_${$generations.flatMap((g) => g.outputs).length}_${pinnedFullOutputs.length}_${
-		$userGenerationFullOutputsQuery?.isInitialLoading
-	}_${$userGenerationFullOutputsQuery?.isStale}_${
-		$userGenerationFullOutputsQuery?.data?.pages?.[0]?.outputs &&
-		$userGenerationFullOutputsQuery.data.pages[0].outputs.length > 0
-			? $userGenerationFullOutputsQuery.data.pages[0].outputs[0].id
-			: false
-	}`;
 
 	$: pinnedFullOutputs = [...$generations]
 		.map((g) => ({
@@ -257,23 +252,20 @@
 							<GenerateGridPlaceholder text={$LL.Generate.Grid.NotSignedIn.Paragraph()} />
 						</div>
 					{:else if userGenerationFullOutputsQuery}
-						<div
-							bind:this={gridScrollContainer}
-							class="w-full flex flex-col flex-1 min-w-0 overflow-auto px-2 py-2"
-						>
-							{#if $windowWidth > lgBreakpoint}
-								<GenerationGridInfinite
+						<AutoSize bind:element={gridScrollContainer}>
+							{#if $windowWidth > lgBreakpoint && gridScrollContainer}
+								<GenerationGridInfinite2
+									padding={6}
 									{pinnedFullOutputs}
 									noLoadingSpinnerAlignmentAdjustment
 									hasPlaceholder
-									cardWidthClasses="w-full lg:w-1/2 xl:w-1/3"
 									cardType="generate"
 									generationsQuery={userGenerationFullOutputsQuery}
-									rerenderKey={gridRerenderKey}
+									cols={$windowWidth > xlBreakpoint ? 3 : 2}
 									{gridScrollContainer}
 								/>
 							{/if}
-						</div>
+						</AutoSize>
 					{/if}
 				</SidebarWrapper>
 			</div>
@@ -297,8 +289,8 @@
 								: $windowWidth < mdBreakpoint && isGenerationSettingsSheetOpen
 								? '0%'
 								: `calc(100% - ${promptBarHeight + horizontalListHeight}px)`});"
-							class="w-full h-[min(calc(100%-3rem),60rem)] z-40 gap-1 flex flex-col bg-c-bg rounded-t-2xl ring-2 ring-c-bg-secondary 
-								md:ring-0 md:rounded-none shadow-c-shadow/[var(--o-shadow-strongest)] shadow-sheet md:shadow-none 
+							class="w-full h-[min(calc(100%-3rem),60rem)] z-40 gap-1 flex flex-col bg-c-bg rounded-t-2xl ring-2 ring-c-bg-secondary
+								md:ring-0 md:rounded-none shadow-c-shadow/[var(--o-shadow-strongest)] shadow-sheet md:shadow-none
 								md:bg-transparent absolute left-0 bottom-0 md:hidden transform transition overflow-hidden md:overflow-auto"
 						>
 							<div
@@ -328,7 +320,7 @@
 					{/if}
 					<!-- Prompt bar -->
 					<div
-						class="w-full z-50 flex flex-col rounded-2xl overflow-hidden md:overflow-visible md:rounded-none bg-c-bg md:bg-transparent absolute left-0 bottom-0 
+						class="w-full z-50 flex flex-col rounded-2xl overflow-hidden md:overflow-visible md:rounded-none bg-c-bg md:bg-transparent absolute left-0 bottom-0
 							md:bottom-auto md:top-0 order-2"
 					>
 						<div bind:clientHeight={horizontalListHeight} class="w-full h-14 md:hidden">
@@ -360,11 +352,11 @@
 					</div>
 				</div>
 				<div
-					class="w-full flex flex-col order-first flex-1 min-w-0 pb-44 
+					class="w-full flex flex-col order-first flex-1 min-w-0 pb-44
 					md:pb-0 md:pt-26 lg:pb-8"
 				>
 					<div
-						class="flex-1 min-w-0 flex flex-col items-center justify-center w-full 
+						class="flex-1 min-w-0 flex flex-col items-center justify-center w-full
 						overflow-hidden"
 					>
 						{#if $page.data.session?.user.id && $userSummary && $userSummary.total_remaining_credits < lowCreditsThreshold}

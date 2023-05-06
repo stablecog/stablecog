@@ -3,8 +3,15 @@
 	import { page } from '$app/stores';
 	import BatchEditBar from '$components/BatchEditBar.svelte';
 	import Button from '$components/buttons/Button.svelte';
+	import {
+		lgBreakpoint,
+		mdBreakpoint,
+		xlBreakpoint,
+		xxlBreakpoint
+	} from '$components/generationFullScreen/constants';
 	import GenerationFullScreen from '$components/generationFullScreen/GenerationFullScreen.svelte';
 	import GenerationGridInfinite from '$components/grids/GenerationGridInfinite.svelte';
+	import GenerationGridInfinite2 from '$components/grids/GenerationGridInfinite2.svelte';
 	import IconFolderOutlined from '$components/icons/IconFolderOutlined.svelte';
 	import IconSadFace from '$components/icons/IconSadFace.svelte';
 	import IconStarOutlined from '$components/icons/IconStarOutlined.svelte';
@@ -33,6 +40,7 @@
 	} from '$ts/stores/user/gallery';
 	import { userGenerationFullOutputsQueryKey } from '$ts/stores/user/keys';
 	import { userSummary } from '$ts/stores/user/summary';
+	import { windowWidth } from '$ts/stores/window';
 	import type { TTab } from '$ts/types/main';
 	import { activeGeneration, type TGenerationFullOutput } from '$userStores/generation';
 	import { createInfiniteQuery, type CreateInfiniteQueryResult } from '@tanstack/svelte-query';
@@ -78,14 +86,6 @@
 			: undefined;
 
 	$: $userGenerationFullOutputsQuery?.data?.pages, onPagesChanged();
-	$: gridRerenderKey = `user_generation_full_outputs_${$userGalleryCurrentView}_${
-		$userGenerationFullOutputsQuery?.isInitialLoading
-	}_${modelIdFilters ? modelIdFilters.join(',') : ''}_${$userGenerationFullOutputsQuery?.isStale}_${
-		$userGenerationFullOutputsQuery?.data?.pages?.[0]?.outputs &&
-		$userGenerationFullOutputsQuery.data.pages[0].outputs.length > 0
-			? $userGenerationFullOutputsQuery.data.pages[0].outputs[0].id
-			: false
-	}`;
 
 	let userGalleryTabs: TTab<TUserGalleryView>[];
 	$: userGalleryTabs = [
@@ -243,11 +243,19 @@
 							<div class="h-[1vh]" />
 						</div>
 					</div>
-				{:else}
-					<GenerationGridInfinite
-						rerenderKey={gridRerenderKey}
+				{:else if $windowWidth}
+					<GenerationGridInfinite2
 						generationsQuery={userGenerationFullOutputsQuery}
 						cardType="history"
+						cols={$windowWidth > xxlBreakpoint
+							? 6
+							: $windowWidth > xlBreakpoint
+							? 5
+							: $windowWidth > lgBreakpoint
+							? 4
+							: $windowWidth > mdBreakpoint
+							? 3
+							: 2}
 					/>
 				{/if}
 			{/if}

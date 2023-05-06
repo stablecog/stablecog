@@ -25,6 +25,14 @@
 	import IconSadFace from '$components/icons/IconSadFace.svelte';
 	import type { TAvailableGenerationModelId } from '$ts/constants/generationModels';
 	import { setActiveGenerationToOutputIndex } from '$ts/helpers/goToOutputIndex';
+	import GenerationGridInfinite2 from '$components/grids/GenerationGridInfinite2.svelte';
+	import { windowWidth } from '$ts/stores/window';
+	import {
+		lgBreakpoint,
+		mdBreakpoint,
+		xlBreakpoint,
+		xxlBreakpoint
+	} from '$components/generationFullScreen/constants';
 
 	export let data: PageServerData;
 	const { generationFullOutput: generationFullOutputFromData, searchQuery: searchQueryParam } =
@@ -55,17 +63,6 @@
 				}
 		  })
 		: undefined;
-
-	$: gridRerenderKey = `gallery_generation_full_outputs_${searchString ? searchString : ''}_${
-		$galleryGenerationFullOutputsQuery?.isInitialLoading
-	}_${modelIdFilters ? modelIdFilters.join(',') : ''}_${
-		$galleryGenerationFullOutputsQuery?.isStale
-	}_${
-		$galleryGenerationFullOutputsQuery?.data?.pages?.[0]?.outputs &&
-		$galleryGenerationFullOutputsQuery.data.pages[0].outputs.length > 0
-			? $galleryGenerationFullOutputsQuery.data.pages[0].outputs[0].id
-			: false
-	}`;
 
 	$: outputs = $galleryGenerationFullOutputsQuery?.data?.pages.flatMap((page) => page.outputs);
 	$: outputIndex = outputs
@@ -163,12 +160,20 @@
 				</p>
 				<div class="h-[2vh]" />
 			</div>
-		{:else if galleryGenerationFullOutputsQuery !== undefined}
+		{:else if galleryGenerationFullOutputsQuery !== undefined && $windowWidth}
 			<div class="w-full flex-1 mt-1 md:mt-0.5 flex flex-col">
-				<GenerationGridInfinite
-					rerenderKey={gridRerenderKey}
+				<GenerationGridInfinite2
 					cardType="gallery"
 					generationsQuery={galleryGenerationFullOutputsQuery}
+					cols={$windowWidth > xxlBreakpoint
+						? 6
+						: $windowWidth > xlBreakpoint
+						? 5
+						: $windowWidth > lgBreakpoint
+						? 4
+						: $windowWidth > mdBreakpoint
+						? 3
+						: 2}
 				/>
 			</div>
 		{/if}
