@@ -60,11 +60,11 @@
 	let shouldMeasureTimeout: NodeJS.Timeout;
 	const shouldMeasureDebounceTime = 100;
 
-	$: [$windowWidth, $windowHeight], shouldMeasure();
+	$: [$windowWidth, $windowHeight], onWindowSizeChanged();
 
 	$: [listScrollContainer, outputs, overscanCount], initiallySetListVirtualizer();
 
-	function shouldMeasure() {
+	function onWindowSizeChanged() {
 		if (shouldMeasureTimeout) clearTimeout(shouldMeasureTimeout);
 		if (!outputs || !$windowWidth || !$windowHeight || !$listVirtualizer) return;
 		$listVirtualizer.measure();

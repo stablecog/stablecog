@@ -119,11 +119,11 @@
 	let shouldMeasureTimeout: NodeJS.Timeout;
 	const shouldMeasureDebounceTime = 100;
 
-	$: [$windowWidth, $windowHeight], shouldMeasure();
+	$: [$windowWidth, $windowHeight], onWindowSizeChanged();
 
 	$: [gridScrollContainer, outputs, overscanCount], initiallySetGridVirtualizer();
 
-	function shouldMeasure() {
+	function onWindowSizeChanged() {
 		if (shouldMeasureTimeout) clearTimeout(shouldMeasureTimeout);
 		if (!outputs || !$windowWidth || !$windowHeight || !$gridVirtualizer) return;
 		$gridVirtualizer.measure();
