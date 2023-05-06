@@ -48,7 +48,7 @@
 	const overscanMultiplierForNextPage = 0.25;
 
 	$: [$windowWidth, $windowHeight, listScrollContainer, overscanCount],
-		setListVirtualizer({ dontSetIfExist: false });
+		setListVirtualizer({ dontSetIfExists: false });
 	$: [listScrollContainer, outputs, overscanCount], setListVirtualizer();
 	$: outputs, onOutputsChanged();
 	$: $listVirtualizer, onListVirtualizerChanged();
@@ -111,13 +111,13 @@
 	}
 
 	interface TSetListVirtualizerProps {
-		dontSetIfExist: boolean;
+		dontSetIfExists: boolean;
 	}
 	function setListVirtualizer(props?: TSetListVirtualizerProps) {
-		const { dontSetIfExist } = props ?? { dontSetIfExist: true };
+		const { dontSetIfExists } = props ?? { dontSetIfExists: true };
 		if (outputs === undefined) return;
 		if (!overscanCount) return;
-		if (dontSetIfExist ? $listVirtualizer : false) return;
+		if (dontSetIfExists && $listVirtualizer) return;
 		listVirtualizer = createVirtualizer({
 			count: outputs.length,
 			overscan: overscanCount,
