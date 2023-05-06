@@ -87,13 +87,12 @@
 		(cardType === 'admin-gallery' && $isAdminGalleryEditActive) ||
 		(cardType === 'history' && $isUserGalleryEditActive);
 
-	$: [outputs, overscanCount, cols], onParamsChanged();
-
-	$: $gridVirtualizer, onGridVirtualizerChanged();
-
 	const defaultAspectRatio = 1.5;
 	$: estimatedItemWidth =
-		gridScrollContainer !== null
+		gridScrollContainer !== null &&
+		gridScrollContainer.clientWidth > 0 &&
+		$windowWidth &&
+		$windowHeight
 			? (gridScrollContainer.clientWidth - horizontalPadding) / cols
 			: $windowWidth
 			? ($windowWidth - horizontalPadding) / cols
@@ -119,9 +118,10 @@
 	let shouldMeasureTimeout: NodeJS.Timeout;
 	const shouldMeasureDebounceTime = 100;
 
-	$: [$windowWidth, $windowHeight], onWindowSizeChanged();
-
 	$: [gridScrollContainer, outputs, overscanCount], initiallySetGridVirtualizer();
+	$: $gridVirtualizer, onGridVirtualizerChanged();
+	$: [outputs, overscanCount, cols], onParamsChanged();
+	$: [$windowWidth, $windowHeight], onWindowSizeChanged();
 
 	function onWindowSizeChanged() {
 		if (shouldMeasureTimeout) clearTimeout(shouldMeasureTimeout);

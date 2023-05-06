@@ -18,6 +18,7 @@
 	import { createVirtualizer, type SvelteVirtualizer } from '@tanstack/svelte-virtual';
 	import { windowHeight, windowWidth } from '$ts/stores/window';
 	import { removeRepeatingOutputs } from '$ts/helpers/removeRepeatingOutputs';
+	import { onMount } from 'svelte';
 
 	export let generationsQuery: CreateInfiniteQueryResult<TUserGenerationFullOutputsPage, unknown>;
 	export let pinnedFullOutputs: TGenerationFullOutput[] | undefined = undefined;
@@ -34,9 +35,10 @@
 	$: [onlyOutputs, pinnedFullOutputs], setOutputs();
 
 	const defaultAspectRatio = 0.66;
-	$: estimatedItemHeight = listScrollContainer.clientHeight
-		? (listScrollContainer.clientHeight || 0) - paddingY * 2
-		: undefined;
+	$: estimatedItemHeight =
+		listScrollContainer && listScrollContainer.clientHeight > 0 && $windowWidth && $windowHeight
+			? (listScrollContainer.clientHeight || 0) - paddingY * 2
+			: undefined;
 	$: estimatedItemWidth = estimatedItemHeight
 		? estimatedItemHeight * defaultAspectRatio
 		: undefined;
@@ -48,21 +50,20 @@
 		: undefined;
 	const overscanMultiplierForNextPage = 0.25;
 
-	$: [outputs, overscanCount], onParamsChanged();
+	let shouldMeasureTimeout: NodeJS.Timeout;
+	const shouldMeasureDebounceTime = 100;
+
+	$: [listScrollContainer, outputs, overscanCount], initiallySetListVirtualizer();
 	$: $listVirtualizer, onListVirtualizerChanged();
+	$: [outputs, overscanCount], onParamsChanged();
+	$: [$windowWidth, $windowHeight], onWindowSizeChanged();
+
 	$: listAtStart = $listVirtualizer ? $listVirtualizer.scrollOffset === 0 : true;
 	$: listAtEnd =
 		$listVirtualizer && listScrollContainer.scrollWidth && listScrollContainer.clientWidth
 			? $listVirtualizer.scrollOffset >=
 			  listScrollContainer.scrollWidth - listScrollContainer.clientWidth
 			: false;
-
-	let shouldMeasureTimeout: NodeJS.Timeout;
-	const shouldMeasureDebounceTime = 100;
-
-	$: [$windowWidth, $windowHeight], onWindowSizeChanged();
-
-	$: [listScrollContainer, outputs, overscanCount], initiallySetListVirtualizer();
 
 	function onWindowSizeChanged() {
 		if (shouldMeasureTimeout) clearTimeout(shouldMeasureTimeout);
