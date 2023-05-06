@@ -47,8 +47,9 @@
 	$: overscanCount = Math.round(estimatedItemCountInAWindow * 3) || 25;
 	const overscanMultiplierForNextPage = 0.25;
 
-	$: [$windowWidth, $windowHeight, listScrollContainer, outputs, overscanCount],
-		setListVirtualizer();
+	$: [$windowWidth, $windowHeight, listScrollContainer, overscanCount],
+		setListVirtualizer({ dontSetIfExist: false });
+	$: [listScrollContainer, outputs, overscanCount], setListVirtualizer();
 	$: outputs, onOutputsChanged();
 	$: $listVirtualizer, onListVirtualizerChanged();
 	$: listAtStart = $listVirtualizer ? $listVirtualizer.scrollOffset === 0 : true;
@@ -109,9 +110,14 @@
 		$generationsQuery.fetchNextPage();
 	}
 
-	function setListVirtualizer() {
+	interface TSetListVirtualizerProps {
+		dontSetIfExist: boolean;
+	}
+	function setListVirtualizer(props?: TSetListVirtualizerProps) {
+		const { dontSetIfExist } = props ?? { dontSetIfExist: true };
 		if (outputs === undefined) return;
 		if (!overscanCount) return;
+		if (dontSetIfExist ? $listVirtualizer : false) return;
 		listVirtualizer = createVirtualizer({
 			count: outputs.length,
 			overscan: overscanCount,

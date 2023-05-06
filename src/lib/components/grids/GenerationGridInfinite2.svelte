@@ -105,8 +105,9 @@
 
 	$: overscanCount = Math.round(estimatedItemCountInAWindow * 2) || 25;
 	const overscanMultiplierForNextPage = 0.25;
-	$: [$windowWidth, $windowHeight, gridScrollContainer, outputs, overscanCount],
-		setGridVirtualizer();
+	$: [$windowWidth, $windowHeight, gridScrollContainer, overscanCount],
+		setGridVirtualizer({ dontSetIfExist: false });
+	$: [gridScrollContainer, outputs, overscanCount], setGridVirtualizer();
 	$: cols, onColsChanged();
 
 	let shouldMeasureTimeout: NodeJS.Timeout;
@@ -156,8 +157,13 @@
 		});
 	}
 
-	function setGridVirtualizer() {
+	interface TSetGridVirtualizerProps {
+		dontSetIfExist: boolean;
+	}
+	function setGridVirtualizer(props?: TSetGridVirtualizerProps) {
+		const { dontSetIfExist } = props ?? { dontSetIfExist: true };
 		if (outputs === undefined) return;
+		if (dontSetIfExist && $gridVirtualizer) return;
 		const params = {
 			count: outputs.length,
 			overscan: overscanCount,
