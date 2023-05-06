@@ -34,7 +34,7 @@
 	import { windowHeight, windowWidth } from '$ts/stores/window';
 
 	export let generationsQuery: CreateInfiniteQueryResult<TUserGenerationFullOutputsPage, unknown>;
-	export let gridScrollContainer: HTMLDivElement | undefined = undefined;
+	export let gridScrollContainer: HTMLDivElement | null = null;
 	export let pinnedFullOutputs: TGenerationFullOutput[] | undefined = undefined;
 	export let cardType: TGenerationImageCardType;
 	export let noLoadingSpinnerAlignmentAdjustment = false;
@@ -87,39 +87,45 @@
 		(cardType === 'admin-gallery' && $isAdminGalleryEditActive) ||
 		(cardType === 'history' && $isUserGalleryEditActive);
 
-	$: outputs, onOutputsChanged();
+	$: [outputs, overscanCount, cols], onParamsChanged();
 
 	$: $gridVirtualizer, onGridVirtualizerChanged();
 
 	const defaultAspectRatio = 1.5;
-	let estimatedItemWidth: number;
-	const setEstimatedItemWidth = () => {
-		estimatedItemWidth =
-			((gridScrollContainer?.clientWidth || $windowWidth) - horizontalPadding) / cols;
-	};
-	$: [$windowWidth, paddingLeft, paddingRight, cols], setEstimatedItemWidth();
-	$: estimatedItemHeight = estimatedItemWidth ? estimatedItemWidth * (1 / defaultAspectRatio) : 400;
-	$: estimatedItemCountInAWindow = estimatedItemWidth
-		? ((gridScrollContainer?.clientHeight || $windowHeight) / estimatedItemHeight) * cols
-		: 50;
+	$: estimatedItemWidth =
+		gridScrollContainer !== null
+			? (gridScrollContainer.clientWidth - horizontalPadding) / cols
+			: $windowWidth
+			? ($windowWidth - horizontalPadding) / cols
+			: undefined;
+	$: estimatedItemHeight = estimatedItemWidth
+		? estimatedItemWidth * (1 / defaultAspectRatio)
+		: undefined;
+	$: estimatedItemCountInAWindow =
+		estimatedItemWidth && estimatedItemHeight
+			? gridScrollContainer !== null
+				? ((gridScrollContainer.clientHeight || $windowHeight) / estimatedItemHeight) * cols
+				: $windowHeight
+				? ($windowHeight / estimatedItemHeight) * cols
+				: undefined
+			: undefined;
 
-	$: overscanCount = Math.round(estimatedItemCountInAWindow * 2) || 25;
+	$: overscanCount = estimatedItemCountInAWindow
+		? Math.round(estimatedItemCountInAWindow * 2)
+		: undefined;
+
 	const overscanMultiplierForNextPage = 0.25;
-	$: [gridScrollContainer, outputs, overscanCount], initiallySetGridVirtualizer();
-	$: cols, onColsChanged();
 
 	let shouldMeasureTimeout: NodeJS.Timeout;
 	const shouldMeasureDebounceTime = 100;
 
 	$: [$windowWidth, $windowHeight], shouldMeasure();
 
+	$: [gridScrollContainer, outputs, overscanCount], initiallySetGridVirtualizer();
+
 	function shouldMeasure() {
 		if (shouldMeasureTimeout) clearTimeout(shouldMeasureTimeout);
-		if (!outputs) return;
-		if (!$windowWidth) return;
-		if (!$windowHeight) return;
-		if (!$gridVirtualizer) return;
-		if (!$gridVirtualizer) return;
+		if (!outputs || !$windowWidth || !$windowHeight || !$gridVirtualizer) return;
 		$gridVirtualizer.measure();
 		shouldMeasureTimeout = setTimeout(() => {
 			if (!$gridVirtualizer) return;
@@ -128,36 +134,35 @@
 	}
 
 	function onGridVirtualizerChanged() {
-		if (!outputs) return;
-		if (!$gridVirtualizer) return;
-		if (!$generationsQuery.hasNextPage) return;
-		if ($generationsQuery.isFetchingNextPage) return;
-		const lastItemIndex = $gridVirtualizer.getVirtualItems().reverse()[0].index;
+		if (
+			!outputs ||
+			!$gridVirtualizer ||
+			!$generationsQuery.hasNextPage ||
+			$generationsQuery.isFetchingNextPage ||
+			overscanCount === undefined
+		)
+			return;
+		const items = $gridVirtualizer.getVirtualItems();
+		if (!items || items.length < 1) return;
+		const lastItemIndex = items.reverse()[0].index;
 		const isLastItemVisible =
 			lastItemIndex >= outputs.length - 1 - overscanCount * overscanMultiplierForNextPage;
 		if (!isLastItemVisible) return;
 		$generationsQuery.fetchNextPage();
 	}
 
-	function onOutputsChanged() {
-		if (!outputs) return;
-		if ($gridVirtualizer === undefined) return;
+	function onParamsChanged() {
+		if (!$gridVirtualizer || overscanCount === undefined || !cols || !outputs) return;
 		$gridVirtualizer.setOptions({
-			count: outputs?.length ?? 0
+			overscan: overscanCount,
+			lanes: cols,
+			count: outputs?.length
 		});
 		$gridVirtualizer.measure();
 	}
 
-	function onColsChanged() {
-		if ($gridVirtualizer === undefined) return;
-		$gridVirtualizer.setOptions({
-			lanes: cols
-		});
-	}
-
 	function initiallySetGridVirtualizer() {
-		if (outputs === undefined) return;
-		if ($gridVirtualizer) return;
+		if ($gridVirtualizer || outputs === undefined || overscanCount === undefined) return;
 		const params = {
 			count: outputs.length,
 			overscan: overscanCount,
@@ -166,7 +171,7 @@
 			paddingEnd: paddingBottom
 		};
 		gridVirtualizer =
-			gridScrollContainer !== undefined && gridScrollContainer.offsetWidth
+			gridScrollContainer !== null && gridScrollContainer.offsetWidth
 				? createVirtualizer({
 						...params,
 						getScrollElement: () => gridScrollContainer as HTMLDivElement,

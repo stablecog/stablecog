@@ -34,21 +34,21 @@
 	$: [onlyOutputs, pinnedFullOutputs], setOutputs();
 
 	const defaultAspectRatio = 0.66;
-	let estimatedItemHeight: number;
-	const setEstimatedItemHeight = () => {
-		estimatedItemHeight = (listScrollContainer.clientHeight || 0) - paddingY * 2;
-	};
-	$: [$windowWidth, paddingY], setEstimatedItemHeight();
-	$: estimatedItemHeight = (listScrollContainer.clientHeight || 0) - paddingY * 2;
-	$: estimatedItemWidth = estimatedItemHeight ? estimatedItemHeight * defaultAspectRatio : 0;
+	$: estimatedItemHeight = listScrollContainer.clientHeight
+		? (listScrollContainer.clientHeight || 0) - paddingY * 2
+		: undefined;
+	$: estimatedItemWidth = estimatedItemHeight
+		? estimatedItemHeight * defaultAspectRatio
+		: undefined;
 	$: estimatedItemCountInAWindow = estimatedItemWidth
 		? Math.ceil(listScrollContainer.clientWidth / estimatedItemWidth)
-		: 10;
-	$: overscanCount = Math.round(estimatedItemCountInAWindow * 3) || 25;
+		: undefined;
+	$: overscanCount = estimatedItemCountInAWindow
+		? Math.round(estimatedItemCountInAWindow * 3)
+		: undefined;
 	const overscanMultiplierForNextPage = 0.25;
 
-	$: [listScrollContainer, outputs, overscanCount], initiallySetListVirtualizer();
-	$: outputs, onOutputsChanged();
+	$: [outputs, overscanCount], onParamsChanged();
 	$: $listVirtualizer, onListVirtualizerChanged();
 	$: listAtStart = $listVirtualizer ? $listVirtualizer.scrollOffset === 0 : true;
 	$: listAtEnd =
@@ -60,14 +60,13 @@
 	let shouldMeasureTimeout: NodeJS.Timeout;
 	const shouldMeasureDebounceTime = 100;
 
-	$: [$windowWidth, $windowHeight], shouldMeasureWithDebounce();
+	$: [$windowWidth, $windowHeight], shouldMeasure();
 
-	function shouldMeasureWithDebounce() {
+	$: [listScrollContainer, outputs, overscanCount], initiallySetListVirtualizer();
+
+	function shouldMeasure() {
 		if (shouldMeasureTimeout) clearTimeout(shouldMeasureTimeout);
-		if (!outputs) return;
-		if (!$windowWidth) return;
-		if (!$windowHeight) return;
-		if (!$listVirtualizer) return;
+		if (!outputs || !$windowWidth || !$windowHeight || !$listVirtualizer) return;
 		$listVirtualizer.measure();
 		shouldMeasureTimeout = setTimeout(() => {
 			if (!$listVirtualizer) return;
@@ -87,21 +86,27 @@
 		outputs = removeRepeatingOutputs({ outputsPinned: pinnedFullOutputs, outputs: onlyOutputs });
 	}
 
-	function onOutputsChanged() {
-		if (!outputs) return;
-		if ($listVirtualizer === undefined) return;
+	function onParamsChanged() {
+		if ($listVirtualizer === undefined || !outputs || overscanCount) return;
 		$listVirtualizer.setOptions({
-			count: outputs?.length ?? 0
+			count: outputs.length,
+			overscan: overscanCount
 		});
 		$listVirtualizer.measure();
 	}
 
 	function onListVirtualizerChanged() {
-		if (!outputs) return;
-		if (!$listVirtualizer) return;
-		if (!$generationsQuery.hasNextPage) return;
-		if ($generationsQuery.isFetchingNextPage) return;
-		const lastItemIndex = $listVirtualizer.getVirtualItems().reverse()[0].index;
+		if (
+			!outputs ||
+			!$listVirtualizer ||
+			!$generationsQuery.hasNextPage ||
+			$generationsQuery.isFetchingNextPage ||
+			!overscanCount
+		)
+			return;
+		const items = $listVirtualizer.getVirtualItems();
+		if (!items || items.length < 1) return;
+		const lastItemIndex = items.reverse()[0].index;
 		const isLastItemVisible =
 			lastItemIndex >= outputs.length - 1 - overscanCount * overscanMultiplierForNextPage;
 		if (!isLastItemVisible) return;
@@ -109,9 +114,7 @@
 	}
 
 	function initiallySetListVirtualizer() {
-		if (outputs === undefined) return;
-		if (!overscanCount) return;
-		if ($listVirtualizer) return;
+		if ($listVirtualizer || outputs === undefined || !overscanCount) return;
 		listVirtualizer = createVirtualizer({
 			count: outputs.length,
 			overscan: overscanCount,
