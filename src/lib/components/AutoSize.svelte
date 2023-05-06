@@ -12,7 +12,7 @@
 	<div
 		bind:this={element}
 		style="width: {clientWidth}px; height: {clientHeight}px;"
-		class="overflow-auto"
+		class="overflow-auto flex flex-col"
 	>
 		<slot />
 	</div>

@@ -209,7 +209,7 @@
 					style="
 							width: calc(((100% - {padding * 2}px) / {cols});
 							left: calc({padding}px + ((100% - {padding * 2}px) * {virtualItem.lane / cols}));
-							height: {outputs[virtualItem.index]}px;
+							height: {virtualItem.size}px;
 							transform: translateY({virtualItem.start}px);
 						"
 					class="w-full group absolute top-0 p-px"
