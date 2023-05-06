@@ -178,7 +178,8 @@ module.exports = {
 				'settings-page': '0 0 1rem 0',
 				'generation-sidebar': '0 0 1rem 0',
 				'generation-modal': '0 1rem 2rem 0',
-				sheet: '0 0 3rem 0'
+				'sheet-closed': '0 0 1.5rem 0',
+				'sheet-open': '0 0 4rem 0'
 			},
 			backgroundImage: {
 				'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))'

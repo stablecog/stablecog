@@ -54,7 +54,7 @@
 	let promptBarHeight: number;
 	let stageWidth: number;
 	let stageHeight: number;
-	let horizontalListHeightEstimatedRem = 3.5;
+	let horizontalListHeightEstimatedRem = 4;
 	let horizontalListHeight: number;
 	let propmtBarEstimatedHeightRem = 3.75;
 	let gridScrollContainer: HTMLDivElement;
@@ -228,13 +228,7 @@
 	let:isInferenceStepsValid
 	let:supportedSchedulerIdDropdownItems
 >
-	<div
-		id="tooltip-container"
-		style="background-image: url({$themeApp === 'light'
-			? '/illustrations/grid-on-light.svg'
-			: '/illustrations/grid-on-dark.svg'}); background-size: 24px;"
-		class="w-full h-full flex flex-col overflow-hidden relative z-0"
-	>
+	<div id="tooltip-container" class="w-full h-full flex flex-col overflow-hidden relative z-0">
 		<Navbar />
 		<div class="w-full h-full flex flex-row overflow-hidden pt-2 md:px-4 md:pb-4 gap-4">
 			<div class="h-full hidden lg:flex w-36 xl:w-72 lg:pb-[calc(env(safe-area-inset-bottom))]">
@@ -283,7 +277,9 @@
 								? '0%'
 								: `calc(100% - ${promptBarHeight + horizontalListHeight}px)`});"
 							class="w-full h-[min(calc(100%-3rem),60rem)] z-40 gap-1 flex flex-col bg-c-bg rounded-t-2xl ring-2 ring-c-bg-secondary
-								md:ring-0 md:rounded-none shadow-c-shadow/[var(--o-shadow-strongest)] shadow-sheet md:shadow-none
+								md:ring-0 md:rounded-none {isGenerationSettingsSheetOpen
+								? 'shadow-sheet-open shadow-c-shadow/[var(--o-shadow-strongest)]'
+								: 'shadow-sheet-closed shadow-c-shadow/[var(--o-shadow-stronger)]'} md:shadow-none
 								md:bg-transparent absolute left-0 bottom-0 md:hidden transform transition overflow-hidden md:overflow-auto"
 						>
 							<div
@@ -318,7 +314,7 @@
 					>
 						<div
 							bind:clientHeight={horizontalListHeight}
-							class="w-full h-14 flex flex-col md:hidden"
+							class="w-full h-16 flex flex-col md:hidden"
 						>
 							<AutoSize bind:element={listScrollContainer} hideScroll>
 								{#if !$page.data.session?.user.id}
@@ -341,7 +337,7 @@
 						</div>
 						<div
 							bind:clientHeight={promptBarHeight}
-							class="w-full flex pl-2 pb-[calc(env(safe-area-inset-bottom)+0.75rem)] z-50"
+							class="w-full flex pl-2 md:pl-0 pb-[calc(env(safe-area-inset-bottom)+0.75rem)] z-50"
 						>
 							<PromptBar
 								{openSignInModal}
@@ -355,7 +351,7 @@
 					</div>
 				</div>
 				<div
-					class="w-full flex flex-col order-first flex-1 min-w-0 pb-44
+					class="w-full flex flex-col order-first flex-1 min-w-0 pb-42
 					md:pb-0 md:pt-26 lg:pb-8"
 				>
 					<div

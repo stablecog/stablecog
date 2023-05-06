@@ -449,8 +449,11 @@
 				style="
 					width: 100vw; width: 100svw;
 					height: 100vh; height: 100svh;
+					background-image: url({$themeApp === 'light'
+					? '/illustrations/grid-on-light.svg'
+					: '/illustrations/grid-on-dark.svg'}); background-size: 24px;
 				"
-				class="overflow-hidden"
+				class="overflow-hidden bg-c-bg {$themeApp === 'light' ? 'theme-light' : 'theme-dark'}"
 			>
 				<slot />
 			</div>
