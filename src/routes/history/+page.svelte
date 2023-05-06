@@ -244,19 +244,21 @@
 						</div>
 					</div>
 				{:else if $windowWidth}
-					<GenerationGridInfinite2
-						generationsQuery={userGenerationFullOutputsQuery}
-						cardType="history"
-						cols={$windowWidth > xxlBreakpoint
-							? 6
-							: $windowWidth > xlBreakpoint
-							? 5
-							: $windowWidth > lgBreakpoint
-							? 4
-							: $windowWidth > mdBreakpoint
-							? 3
-							: 2}
-					/>
+					<div class="w-full flex-1 flex flex-col">
+						<GenerationGridInfinite2
+							generationsQuery={userGenerationFullOutputsQuery}
+							cardType="history"
+							cols={$windowWidth > xxlBreakpoint
+								? 6
+								: $windowWidth > xlBreakpoint
+								? 5
+								: $windowWidth > lgBreakpoint
+								? 4
+								: $windowWidth > mdBreakpoint
+								? 3
+								: 2}
+						/>
+					</div>
 				{/if}
 			{/if}
 		</div>

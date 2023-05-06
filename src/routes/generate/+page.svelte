@@ -398,7 +398,7 @@
 									/>
 								{:else if userGenerationFullOutputsQuery}
 									<AutoSize bind:element={listScrollContainerMd} hideScroll>
-										{#if listScrollContainerMd && $windowWidth >= mdBreakpoint}
+										{#if listScrollContainerMd && $windowWidth >= mdBreakpoint && $windowWidth < lgBreakpoint}
 											<GenerateHorizontalList
 												listScrollContainer={listScrollContainerMd}
 												{pinnedFullOutputs}

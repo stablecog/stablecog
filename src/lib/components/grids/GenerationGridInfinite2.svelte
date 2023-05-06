@@ -195,7 +195,7 @@
 
 {#if $generationsQuery.isInitialLoading}
 	<div
-		class="w-full h-full flex flex-col text-c-on-bg/60 py-6 px-4 justify-center items-center text-center"
+		class="w-full h-full flex-1 flex flex-col text-c-on-bg/60 py-6 px-4 justify-center items-center text-center"
 	>
 		<IconAnimatedSpinner class="w-12 h-12" />
 		<p class="mt-2 opacity-0">{$LL.Gallery.SearchingTitle()}</p>
