@@ -144,7 +144,7 @@
 			return;
 		const items = $gridVirtualizer.getVirtualItems();
 		if (!items || items.length < 1) return;
-		const lastItemIndex = items.reverse()[0].index;
+		const lastItemIndex = items[items.length - 1].index;
 		const isLastItemVisible =
 			lastItemIndex >= outputs.length - 1 - overscanCount * overscanMultiplierForNextPage;
 		if (!isLastItemVisible) return;
@@ -152,13 +152,21 @@
 	}
 
 	function onParamsChanged() {
-		if (!$gridVirtualizer || overscanCount === undefined || !cols || !outputs) return;
-		$gridVirtualizer.setOptions({
-			overscan: overscanCount,
-			lanes: cols,
-			count: outputs?.length
-		});
-		$gridVirtualizer.measure();
+		if (!$gridVirtualizer) return;
+		let optionsToSet: { [key: string]: string | number } = {};
+		if (outputs) {
+			optionsToSet.count = outputs.length;
+		}
+		if (overscanCount) {
+			optionsToSet.overscan = overscanCount;
+		}
+		if (cols) {
+			optionsToSet.lanes = cols;
+		}
+		if (Object.keys(optionsToSet).length > 0) {
+			$gridVirtualizer.setOptions(optionsToSet);
+			$gridVirtualizer.measure();
+		}
 	}
 
 	function initiallySetGridVirtualizer() {

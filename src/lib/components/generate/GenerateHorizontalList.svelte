@@ -88,12 +88,18 @@
 	}
 
 	function onParamsChanged() {
-		if ($listVirtualizer === undefined || !outputs || overscanCount) return;
-		$listVirtualizer.setOptions({
-			count: outputs.length,
-			overscan: overscanCount
-		});
-		$listVirtualizer.measure();
+		if ($listVirtualizer === undefined) return;
+		let optionsToSet: { [key: string]: string | number } = {};
+		if (outputs) {
+			optionsToSet.count = outputs.length;
+		}
+		if (overscanCount) {
+			optionsToSet.overscan = overscanCount;
+		}
+		if (Object.keys(optionsToSet).length > 0) {
+			$listVirtualizer.setOptions(optionsToSet);
+			$listVirtualizer.measure();
+		}
 	}
 
 	function onListVirtualizerChanged() {
@@ -102,12 +108,12 @@
 			!$listVirtualizer ||
 			!$generationsQuery.hasNextPage ||
 			$generationsQuery.isFetchingNextPage ||
-			!overscanCount
+			overscanCount === undefined
 		)
 			return;
 		const items = $listVirtualizer.getVirtualItems();
 		if (!items || items.length < 1) return;
-		const lastItemIndex = items.reverse()[0].index;
+		const lastItemIndex = items[items.length - 1].index;
 		const isLastItemVisible =
 			lastItemIndex >= outputs.length - 1 - overscanCount * overscanMultiplierForNextPage;
 		if (!isLastItemVisible) return;
