@@ -36,7 +36,9 @@
 	class="w-full flex flex-col items-center flex-1 justify-center"
 >
 	<Navbar />
-	<div class="w-full h-[calc(100svh-2rem)] flex flex-col md:flex-row items-center justify-between">
+	<section
+		class="w-full h-[calc(100svh-2rem)] flex flex-col md:flex-row items-center justify-between"
+	>
 		<div
 			class="px-6 pt-6 pb-4 md:pt-0 md:pb-0 md:pl-[max(calc((100%-1280px)/2+3rem),3rem)] md:pr-0 flex flex-col items-center md:items-start order-2 md:order-1"
 		>
@@ -79,5 +81,6 @@
 				</div>
 			</div>
 		</div>
-	</div>
+	</section>
+	<section class="w-full h-screen" />
 </div>
