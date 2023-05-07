@@ -93,10 +93,10 @@
 							-webkit-mask-position: left bottom;
 						"
 						class="w-full h-full object-cover object-[25%_100%] md:object-[40%_100%] lg:object-left-bottom"
-						src="/landing/hero.jpeg"
+						src="/landing/hero.webp"
 						alt="Hero"
-						width="5120"
-						height="5120"
+						width="2048"
+						height="2048"
 					/>
 				</div>
 				<div
