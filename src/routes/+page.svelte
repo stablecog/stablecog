@@ -40,7 +40,8 @@
 		class="w-full h-[calc(100svh-2rem)] flex flex-col md:flex-row items-center justify-between"
 	>
 		<div
-			class="px-6 pt-6 pb-4 md:pt-0 md:pb-0 md:pl-[max(calc((100%-1280px)/2+3rem),3rem)] md:pr-0 flex flex-col items-center md:items-start order-2 md:order-1"
+			class="px-6 pt-6 pb-4 md:pt-0 md:pb-0 md:pl-[max(calc((100%-1280px)/2+4rem),4rem)]
+			md:pr-0 lg:pr-12 flex flex-col items-center md:items-start order-2 md:order-1"
 		>
 			<h1 class="font-bold text-4xl flex-1 leading-snug max-w-[22rem] text-center md:text-left">
 				Create amazing art in seconds with AI.
@@ -48,7 +49,7 @@
 			<Button class="mt-4 px-18 py-4" noPadding>Get Started</Button>
 		</div>
 		<div
-			class="flex-1 min-h-0 pl-12 md:pl-24 w-full md:h-full flex flex-col justify-end items-end relative order-1 md:order-2"
+			class="flex-1 min-h-0 pl-12 md:pl-0 w-full md:h-full flex flex-col justify-end items-end relative order-1 md:order-2"
 		>
 			<div class="flex-1 flex-col w-full md:h-full overflow-hidden relative">
 				<div class="w-full h-full">
@@ -63,7 +64,7 @@
 							mask-position: left bottom;
 							-webkit-mask-position: left bottom;
 						"
-						class="w-full h-full object-cover object-left-bottom"
+						class="w-full h-full object-cover object-left-bottom md:object-center lg:object-left-bottom"
 						src="/landing/hero.jpeg"
 						alt="Hero"
 						width="5120"
