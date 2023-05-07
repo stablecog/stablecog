@@ -69,6 +69,7 @@
 	import UpdateAvailableCard from '$components/UpdateAvailableCard.svelte';
 	import UserSummaryProvider from '$components/UserSummaryProvider.svelte';
 	import { underDevelopment } from '$ts/stores/underDevelopment';
+	import { setBodyClasses } from '$ts/helpers/setBodyClasses';
 
 	export let data: LayoutData;
 	setLocale(data.locale);
@@ -136,17 +137,7 @@
 		}
 	});
 
-	function setBodyClasses() {
-		if (browser) {
-			if ($themeApp === 'light') {
-				document.body.classList.add('theme-light');
-				document.body.classList.remove('theme-dark');
-			} else {
-				document.body.classList.add('theme-dark');
-				document.body.classList.remove('theme-light');
-			}
-		}
-	}
+	$: $themeApp, setBodyClasses();
 
 	const runIfMounted = (fn: () => void) => {
 		if (mounted) fn();
@@ -456,7 +447,7 @@
 					? '/illustrations/grid-on-light.svg'
 					: '/illustrations/grid-on-dark.svg'}); background-size: 24px;"
 			>
-				{#if underDevelopment && (!$userSummary || !isSuperAdmin($userSummary.roles)) && !$page.url.pathname.startsWith('/admin') && !$page.url.pathname.startsWith('/api/auth') && !$page.url.pathname.startsWith('/sign-in')}
+				{#if $underDevelopment && (!$userSummary || !isSuperAdmin($userSummary.roles)) && !$page.url.pathname.startsWith('/admin') && !$page.url.pathname.startsWith('/api/auth') && !$page.url.pathname.startsWith('/sign-in')}
 					{#if Number($serverVersion) > Number($appVersion)}
 						<div class="w-full flex-1 flex flex-col items-center justify-center my-auto py-4">
 							<UpdateAvailableCard />

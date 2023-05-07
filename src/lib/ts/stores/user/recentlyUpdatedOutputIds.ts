@@ -11,7 +11,7 @@ export const addToRecentlyUpdatedOutputIds = (output_id: string) => {
 		if (hasId) {
 			return $recentlyUpdatedOutputIds;
 		}
-		const isActive = get(activeGeneration)?.selected_output.id ? true : false;
+		const isActive = get(activeGeneration)?.selected_output.id === output_id ? true : false;
 		if (isActive) {
 			return $recentlyUpdatedOutputIds;
 		}

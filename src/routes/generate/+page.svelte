@@ -51,6 +51,7 @@
 	import { appVersion, serverVersion } from '$ts/stores/appVersion.js';
 	import { isSuperAdmin } from '$ts/helpers/admin/roles.js';
 	import { underDevelopment } from '$ts/stores/underDevelopment.js';
+	import { recentlyUpdatedOutputIds } from '$ts/stores/user/recentlyUpdatedOutputIds.js';
 
 	export let data;
 
@@ -303,10 +304,10 @@
 										? '0%'
 										: `calc(100% - ${promptBarHeight + horizontalListHeight}px)`});"
 									class="w-full h-[min(calc(100%-3rem),60rem)] z-40 gap-1 flex flex-col bg-c-bg rounded-t-2xl ring-2 ring-c-bg-secondary
-								md:ring-0 md:rounded-none {isGenerationSettingsSheetOpen
+										md:ring-0 md:rounded-none {isGenerationSettingsSheetOpen
 										? 'shadow-sheet-open shadow-c-shadow/[var(--o-shadow-strongest)]'
 										: 'shadow-sheet-closed shadow-c-shadow/[var(--o-shadow-stronger)]'} md:shadow-none
-								md:bg-transparent absolute left-0 bottom-0 md:hidden transform transition overflow-hidden md:overflow-auto"
+										md:bg-transparent absolute left-0 bottom-0 md:hidden transform transition overflow-hidden md:overflow-auto"
 								>
 									<div
 										class="w-full flex-1 h-full overflow-hidden flex flex-col z-50 transition {$windowWidth &&
@@ -336,7 +337,7 @@
 							<!-- Prompt bar -->
 							<div
 								class="w-full z-50 flex flex-col rounded-2xl overflow-hidden md:overflow-visible md:rounded-none bg-c-bg md:bg-transparent absolute left-0 bottom-0
-							md:bottom-auto md:top-0 order-2"
+								md:bottom-auto md:top-0 order-2"
 							>
 								<div
 									bind:clientHeight={horizontalListHeight}
@@ -378,11 +379,11 @@
 						</div>
 						<div
 							class="w-full flex flex-col order-first flex-1 min-w-0 pb-[calc(env(safe-area-inset-bottom)+10.5rem)]
-					md:pb-0 md:pt-26 lg:pb-8"
+								md:pb-0 md:pt-26 lg:pb-8"
 						>
 							<div
 								class="flex-1 min-w-0 flex flex-col items-center justify-center w-full
-						overflow-hidden"
+									overflow-hidden"
 							>
 								{#if $page.data.session?.user.id && $userSummary && $userSummary.total_remaining_credits < lowCreditsThreshold}
 									<div
