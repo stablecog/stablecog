@@ -339,7 +339,7 @@
 					{#if $upscales && $upscales.length > 0 && upscaleFromStore?.status === 'failed'}
 						<div
 							transition:fly|local={{ duration: 200, easing: quadOut, y: -50 }}
-							class="w-full absolute left-0 top-0 flex items-center justify-center p-3"
+							class="w-full absolute left-0 top-0 flex items-center justify-center p-3 pointer-events-none"
 						>
 							<p
 								class="text-center font-medium text-xs md:text-sm shadow-lg shadow-c-shadow/[var(--o-shadow-stronger)] bg-c-bg-secondary px-4 py-3 rounded-xl"
@@ -389,7 +389,7 @@
 			style={$windowWidth >= lgBreakpoint
 				? `width: ${sidebarWidth}px; height: ${imageContainerHeight}px; min-height: ${modalMinHeight}px;`
 				: ``}
-			class="w-full shadow-generation-sidebar shadow-c-shadow/[var(--o-shadow-stronger)] flex 
+			class="w-full shadow-generation-sidebar shadow-c-shadow/[var(--o-shadow-stronger)] flex
 				flex-col items-start justify-start bg-c-bg-secondary lg:border-l-2 border-c-bg-tertiary relative"
 		>
 			<div
