@@ -91,7 +91,8 @@ export const setGenerationToSucceeded = ({
 		}
 		if (newOutputs.length > 0) {
 			const newOutputIds = newOutputs.map((o) => o.id);
-			const statuses = getOutputOnStageStatuses($generations, newOutputIds);
+			const gen = { ...$generations[0] };
+			const statuses = getOutputOnStageStatuses(gen, newOutputIds);
 			statuses.forEach((onStage, i) => {
 				if (!onStage) {
 					addToRecentlyUpdatedOutputIds(newOutputIds[i]);
@@ -263,12 +264,10 @@ export const setGenerationOutputToSubmitted = (output_id: string) => {
 	});
 };
 
-export const getOutputOnStageStatuses = (generations: TGeneration[], output_ids: string[]) => {
+export const getOutputOnStageStatuses = (gen: TGeneration, output_ids: string[]) => {
 	let statuses = output_ids.map((id) => false);
-	const lastGeneration = generations?.[0];
-	if (!lastGeneration) return statuses;
-	for (let i = 0; i < lastGeneration.outputs.length; i++) {
-		const output = lastGeneration.outputs[i];
+	for (let i = 0; i < gen.outputs.length; i++) {
+		const output = gen.outputs[i];
 		if (output_ids.includes(output.id)) {
 			statuses[output_ids.indexOf(output.id)] = true;
 		}

@@ -68,11 +68,12 @@
 	} from '$ts/stores/generationSettings';
 	import UpdateAvailableCard from '$components/UpdateAvailableCard.svelte';
 	import UserSummaryProvider from '$components/UserSummaryProvider.svelte';
+	import { underDevelopment } from '$ts/stores/underDevelopment';
 
 	export let data: LayoutData;
 	setLocale(data.locale);
 
-	const rawRoutes = ['/generate'];
+	const rawRoutes = ['/generate', '/'];
 
 	const gss = data.globalSeedStore;
 	globalSeed.set($gss);
@@ -386,8 +387,6 @@
 		}
 	}
 
-	const underDevelopment = false;
-
 	let notAtTheVeryTop = false;
 	const notAtTheVeryTopThreshold = 5;
 	let oldScrollY = 0;
@@ -445,18 +444,7 @@
 <QueryClientProvider client={queryClient}>
 	<UserSummaryProvider>
 		{#if rawRoutes.includes($page.url.pathname)}
-			<div
-				style="
-					width: 100vw; width: 100svw;
-					height: 100vh; height: 100svh;
-					background-image: url({$themeApp === 'light'
-					? '/illustrations/grid-on-light.svg'
-					: '/illustrations/grid-on-dark.svg'}); background-size: 24px;
-				"
-				class="overflow-hidden bg-c-bg {$themeApp === 'light' ? 'theme-light' : 'theme-dark'}"
-			>
-				<slot />
-			</div>
+			<slot />
 		{:else}
 			<div
 				class="w-full bg-c-bg text-c-on-bg flex flex-col {$themeApp === 'light'

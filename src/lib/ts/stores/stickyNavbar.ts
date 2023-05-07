@@ -47,7 +47,7 @@ export const navbarRouteDefinitions = derived(
 			},
 			{
 				pathname: '/',
-				stickyType: $windowWidth < mdBreakpoint ? 'auto' : 'sticky',
+				stickyType: 'sticky',
 				noStartsWith: true
 			}
 		];
