@@ -12,8 +12,6 @@
 	import StartCreating from '$components/landing/StartCreating.svelte';
 	import Hero from '$components/landing/Hero.svelte';
 
-	export let data;
-
 	let notAtTheVeryTop = false;
 	const notAtTheVeryTopThreshold = 2;
 	let oldScrollY = 0;
