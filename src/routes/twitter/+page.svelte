@@ -8,5 +8,5 @@
 	url={socialUrls.twitter}
 	redirectingText={$LL.Redirect.RedirectingToTitle({ name: 'Twitter' })}
 	title="Twitter | Stablecog"
-	description="Follow us on Twitter for updates on Stablecog."
+	description="Follow us on Twitter for updates on Stablecog. Free, multilingual and open-source AI image generator using Stable Diffusion and Kandinsky."
 />

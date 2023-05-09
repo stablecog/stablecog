@@ -20,7 +20,7 @@
 />
 
 <div
-	class="w-full flex flex-col items-center flex-1 justify-center px-4 pt-2 
+	class="w-full flex flex-col items-center flex-1 justify-center px-4 pt-2
 		md:pt-8 pb-[calc(3vh+0.5rem)]"
 >
 	<div class="w-full max-w-7xl flex justify-center text-center">

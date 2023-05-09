@@ -243,7 +243,7 @@
 
 <MetaTag
 	title="Live | Stablecog"
-	description="Watch generations happening live on Stablecog (free and multi-lingual AI image generator)."
+	description="Watch generations happening live on Stablecog. Free, multilingual and open-source AI image generator using Stable Diffusion and Kandinsky."
 	imageUrl="{canonicalUrl}/previews{$page.url.pathname}.png"
 	canonical="{canonicalUrl}{$page.url.pathname}"
 />

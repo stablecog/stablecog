@@ -126,8 +126,8 @@
 </script>
 
 <MetaTag
-	title="History | Stablecog"
-	description="See your generation history on Stablecog (free and multi-lingual AI image generator)."
+	title="Gallery | Stablecog"
+	description="Stablecog admin panel. Free, multilingual and open-source AI image generator using Stable Diffusion and Kandinsky."
 	imageUrl="{canonicalUrl}/previews{$page.url.pathname}.png"
 	canonical="{canonicalUrl}{$page.url.pathname}"
 />

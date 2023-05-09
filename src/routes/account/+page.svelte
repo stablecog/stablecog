@@ -57,7 +57,7 @@
 
 <MetaTag
 	title="Account | Stablecog"
-	description="Manage your Stablecog account."
+	description="Manage your Stablecog account. Free, multilingual and open-source AI image generator using Stable Diffusion and Kandinsky."
 	imageUrl="{canonicalUrl}/previews{$page.url.pathname}.png"
 	canonical="{canonicalUrl}{$page.url.pathname}"
 />
@@ -71,13 +71,13 @@
 		<div class="w-full flex flex-col items-center justify-center my-auto">
 			<h1 class="text-4xl font-bold">{$LL.Account.PageTitle()}</h1>
 			<div
-				class="w-full max-w-md md:max-w-xl mt-6 flex flex-col rounded-2xl bg-c-bg relative z-0 
+				class="w-full max-w-md md:max-w-xl mt-6 flex flex-col rounded-2xl bg-c-bg relative z-0
 				shadow-xl shadow-c-shadow/[var(--o-shadow-strong)] ring-2 ring-c-bg-secondary"
 			>
 				<div class="w-full flex items-center justify-start">
 					<div class="flex flex-shrink overflow-hidden items-center gap-4 px-5 py-4 md:p-6">
 						<div
-							class="w-9 h-9 ring-2 ring-c-on-bg/25 overflow-hidden rounded-full transition transform 
+							class="w-9 h-9 ring-2 ring-c-on-bg/25 overflow-hidden rounded-full transition transform
 							relative shadow-lg shadow-c-shadow/[var(--o-shadow-strong)] flex-shrink-0"
 						>
 							<Avatar

@@ -10,7 +10,7 @@
 
 <MetaTag
 	title="Change Plan | Stablecog"
-	description="Change your Stablecog subscription plan."
+	description="Change your Stablecog subscription plan. Free, multilingual and open-source AI image generator using Stable Diffusion and Kandinsky."
 	imageUrl="{canonicalUrl}/previews{$page.url.pathname}.png"
 	canonical="{canonicalUrl}{$page.url.pathname}"
 />

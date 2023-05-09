@@ -21,7 +21,7 @@
 
 <MetaTag
 	title="Sign In | Stablecog"
-	description="Sign in to Stablecog and use it with all features that are available to your account."
+	description="Sign in to Stablecog. Create amazing art in seconds with AI. Free, multilingual and open-source AI image generator using Stable Diffusion and Kandinsky."
 	imageUrl="{canonicalUrl}/previews{$page.url.pathname}.png"
 	canonical="{canonicalUrl}{$page.url.pathname}"
 />

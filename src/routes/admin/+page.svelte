@@ -34,7 +34,7 @@
 
 <MetaTag
 	title="Admin | Stablecog"
-	description="Free, easy to use, multilingual and open-source AI image generator using Stable Diffusion."
+	description="Stablecog admin panel. Free, multilingual and open-source AI image generator using Stable Diffusion and Kandinsky."
 	imageUrl="{canonicalUrl}/previews/home.png"
 	canonical="{canonicalUrl}{$page.url.pathname}"
 />

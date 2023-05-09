@@ -10,7 +10,7 @@
 
 <MetaTag
 	title="Terms of Service | Stablecog"
-	description="Check out the terms of service for our free, multilingual and open-source AI image generator."
+	description="Check out the terms of service for Stablecog. Free, multilingual and open-source AI image generator using Stable Diffusion and Kandinsky."
 	imageUrl="{canonicalUrl}/previews{$page.url.pathname}.png"
 	canonical="{canonicalUrl}{$page.url.pathname}"
 />

@@ -26,7 +26,7 @@
 
 <MetaTag
 	title="Featured On | Stablecog"
-	description="Websites that have featured Stablecog (free and multi-lingual AI image generator)."
+	description="Platform featuring Stablecog. Free, multilingual and open-source AI image generator using Stable Diffusion and Kandinsky."
 	imageUrl="{canonicalUrl}/previews{$page.url.pathname}.png"
 	canonical="{canonicalUrl}{$page.url.pathname}"
 />
@@ -41,7 +41,7 @@
 						href={featured.url}
 						target="_blank"
 						rel="noopener noreferrer"
-						class="relative w-full h-full p-4 flex transition items-center justify-center rounded-xl 
+						class="relative w-full h-full p-4 flex transition items-center justify-center rounded-xl
           		ring-2 ring-c-bg-tertiary bg-c-bg-secondary shadow-lg shadow-c-shadow/[var(--o-shadow-normal)] group
 				  		{!$isTouchscreen
 							? 'hover:text-c-primary hover:ring-4 hover:shadow-xl hover:shadow-c-shadow/[var(--o-shadow-strong)] hover:-translate-y-1.5'

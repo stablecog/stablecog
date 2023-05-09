@@ -82,7 +82,7 @@
 
 <MetaTag
 	title="Change Plan | Stablecog"
-	description="Change your Stablecog subscription plan."
+	description="Change your Stablecog subscription plan. Free, multilingual and open-source AI image generator using Stable Diffusion and Kandinsky."
 	imageUrl="{canonicalUrl}/previews{$page.url.pathname}.png"
 	canonical="{canonicalUrl}{$page.url.pathname}"
 />
@@ -94,7 +94,7 @@
 				{$LL.Account.Subscription.ChangePlanTitle()}
 			</h1>
 			<div
-				class="w-full max-w-sm flex flex-col items-center p-4 rounded-3xl bg-c-bg ring-2 ring-c-bg-secondary mt-6 
+				class="w-full max-w-sm flex flex-col items-center p-4 rounded-3xl bg-c-bg ring-2 ring-c-bg-secondary mt-6
         shadow-xl shadow-c-shadow/[var(--o-shadow-normal)]"
 			>
 				<div class="w-full flex flex-col items-start px-1 md:px-2 gap-5">

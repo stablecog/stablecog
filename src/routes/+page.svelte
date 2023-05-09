@@ -48,8 +48,8 @@
 <svelte:window on:scroll={setNavbarState} />
 
 <MetaTag
-	title="Stablecog"
-	description="Free, easy to use, multilingual and open-source AI image generator using Stable Diffusion."
+	title="Stablecog | AI Image Generator"
+	description="Create amazing art in seconds with AI. Free, multilingual and open-source AI image generator using Stable Diffusion and Kandinsky."
 	imageUrl="{canonicalUrl}/previews/home.png"
 	canonical={canonicalUrl}
 />

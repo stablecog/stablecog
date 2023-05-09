@@ -251,7 +251,7 @@
 
 <MetaTag
 	title="Pricing | Stablecog"
-	description="Choose a plan that works for you and start using Stablecog."
+	description="Choose a plan that works for you and start using Stablecog. Free, multilingual and open-source AI image generator using Stable Diffusion and Kandinsky."
 	imageUrl="{canonicalUrl}/previews{$page.url.pathname}.png"
 	canonical="{canonicalUrl}{$page.url.pathname}"
 />
@@ -282,14 +282,14 @@
 						subscribedAmount > card.amount &&
 						$page.data.session?.user.id !== undefined}
 					<div
-						class="w-full max-w-md md:max-w-[20rem] bg-c-bg shadow-xl shadow-c-shadow/[var(--o-shadow-strong)] 
+						class="w-full max-w-md md:max-w-[20rem] bg-c-bg shadow-xl shadow-c-shadow/[var(--o-shadow-strong)]
 					 	p-4 md:p-5 rounded-2xl md:rounded-3xl ring-2 {isSubscribed
 							? 'ring-c-success'
 							: card.ringClass} relative"
 					>
 						{#if card.badgeText && card.badgeClasses && !isDowngrade}
 							<div
-								class="absolute -right-2.5 -top-3 rounded-full px-3.5 py-1.5 text-xs text-right 
+								class="absolute -right-2.5 -top-3 rounded-full px-3.5 py-1.5 text-xs text-right
 								font-bold {isSubscribed ? 'bg-c-success text-c-on-primary' : card.badgeClasses}"
 							>
 								{card.badgeText}
@@ -299,7 +299,7 @@
 							{card.title}
 						</h3>
 						<h4
-							class="w-[100%+2rem] md:w-[100%+2.5rem] -mx-4 md:-mx-5 text-center bg-c-bg-secondary 
+							class="w-[100%+2rem] md:w-[100%+2.5rem] -mx-4 md:-mx-5 text-center bg-c-bg-secondary
 							text-c-on-bg mt-4 py-3 font-bold flex justify-center items-start"
 						>
 							<span class="text-xl">{card.currencySymbol}</span><span class="text-3xl font-bold">
@@ -366,12 +366,12 @@
 				<div class="w-full max-w-7xl flex flex-wrap justify-center gap-7 mt-8">
 					{#each creditPackCards as card}
 						<div
-							class="w-full max-w-md md:max-w-[20rem] bg-c-bg shadow-xl shadow-c-shadow/[var(--o-shadow-strong)] 
+							class="w-full max-w-md md:max-w-[20rem] bg-c-bg shadow-xl shadow-c-shadow/[var(--o-shadow-strong)]
 							p-4 md:p-5 rounded-2xl md:rounded-3xl ring-2 {card.ringClass} relative"
 						>
 							{#if card.badgeText && card.badgeClasses}
 								<div
-									class="absolute -right-2.5 -top-3 rounded-full px-3.5 py-1.5 text-xs text-right 
+									class="absolute -right-2.5 -top-3 rounded-full px-3.5 py-1.5 text-xs text-right
 									font-bold {card.badgeClasses}"
 								>
 									{card.badgeText}
@@ -381,7 +381,7 @@
 								{card.title}
 							</h3>
 							<h4
-								class="w-[100%+2rem] md:w-[100%+2.5rem] -mx-4 md:-mx-5 text-center bg-c-bg-secondary 
+								class="w-[100%+2rem] md:w-[100%+2.5rem] -mx-4 md:-mx-5 text-center bg-c-bg-secondary
 								text-c-on-bg mt-4 py-3 font-bold flex justify-center items-start"
 							>
 								<span class="text-xl">{card.currencySymbol}</span><span class="text-3xl font-bold">
