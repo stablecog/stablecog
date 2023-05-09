@@ -3,7 +3,7 @@ import type { BaseTranslation } from '../i18n-types';
 const en: BaseTranslation = {
 	Language: 'Language',
 	Landing: {
-		Hero: { Title: 'Create amazing art with AI in seconds' },
+		Hero: { Title: 'Create amazing art in seconds with AI' },
 		Describe: {
 			Title: 'Describe anything',
 			Paragraph:

@@ -3,7 +3,7 @@ import type { Translation } from '../i18n-types';
 const ko: Translation = {
 	Language: '한국어',
 	Landing: {
-		Hero: { Title: 'Create amazing art with AI in seconds' },
+		Hero: { Title: 'Create amazing art in seconds with AI' },
 		Describe: {
 			Title: 'Describe anything',
 			Paragraph:

@@ -3,7 +3,7 @@ import type { Translation } from '../i18n-types';
 const zhHans: Translation = {
 	Language: '语言',
 	Landing: {
-		Hero: { Title: 'Create amazing art with AI in seconds' },
+		Hero: { Title: 'Create amazing art in seconds with AI' },
 		Describe: {
 			Title: 'Describe anything',
 			Paragraph:

@@ -36,7 +36,7 @@ type RootTranslation = {
 	Landing: {
 		Hero: {
 			/**
-			 * C​r​e​a​t​e​ ​a​m​a​z​i​n​g​ ​a​r​t​ ​w​i​t​h​ ​A​I​ ​i​n​ ​s​e​c​o​n​d​s
+			 * C​r​e​a​t​e​ ​a​m​a​z​i​n​g​ ​a​r​t​ ​i​n​ ​s​e​c​o​n​d​s​ ​w​i​t​h​ ​A​I
 			 */
 			Title: string
 		}
@@ -2048,7 +2048,7 @@ export type TranslationFunctions = {
 	Landing: {
 		Hero: {
 			/**
-			 * Create amazing art with AI in seconds
+			 * Create amazing art in seconds with AI
 			 */
 			Title: () => LocalizedString
 		}
