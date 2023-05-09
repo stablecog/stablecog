@@ -44,7 +44,7 @@
 		wasInView = true;
 	}}
 	style={styles}
-	class="{classes} transition ease-in filter {shouldShow ? 'blur-none' : 'blur-2xl'}"
+	class="{classes} transition ease-in filter {shouldShow ? 'blur-none' : 'blur-xl'}"
 	srcset={wasInView ? srcset : undefined}
 	sizes={wasInView ? sizes : undefined}
 	src={wasInView ? src : placeholder}
