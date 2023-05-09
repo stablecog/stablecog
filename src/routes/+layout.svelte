@@ -411,7 +411,6 @@
 	afterNavigate(() => {
 		if (!isHydrated) {
 			setIsHydratedToTrue();
-			console.log(isHydrated);
 			return;
 		} else {
 			const props = {
