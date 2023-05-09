@@ -75,6 +75,7 @@
 	setLocale(data.locale);
 
 	const rawRoutes = ['/generate', '/'];
+	const sseExcludedRoutes = ['/'];
 
 	const gss = data.globalSeedStore;
 	globalSeed.set($gss);
@@ -276,7 +277,11 @@
 		}
 	}
 
-	$: if (browser && (!$sse || $sse.readyState === $sse.CLOSED)) {
+	$: if (
+		browser &&
+		(!$sse || $sse.readyState === $sse.CLOSED) &&
+		!sseExcludedRoutes.includes($page.url.pathname)
+	) {
 		sseId.set(generateSSEId());
 		const sseUrl = `${apiUrl.origin}/v1/sse?id=${$sseId}`;
 		console.log('SSE ID:', $sseId);
