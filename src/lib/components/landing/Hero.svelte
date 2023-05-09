@@ -4,6 +4,7 @@
 </script>
 
 <section
+	id="hero"
 	class="w-full h-[100svh] pb-[calc(env(safe-area-inset-bottom)+2rem)] min-h-[25rem] md:min-h-[30rem] flex flex-col md:flex-row items-center justify-between"
 >
 	<div

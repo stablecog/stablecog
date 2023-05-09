@@ -3,6 +3,7 @@
 </script>
 
 <section
+	id="describe-anything"
 	class="w-full lg:h-[calc(100svh-env(safe-area-inset-bottom)-10rem)] lg:min-h-[40rem]
 		flex flex-col lg:flex-row items-center justify-between"
 >
@@ -15,7 +16,7 @@
 				order-2 lg:order-1"
 		>
 			<div
-				class="h-full relative pr-[8%] -ml-[8%] lg:pr-0 lg:ml-0 overflow-hidden flex justify-end"
+				class="h-full relative pr-[6%] -ml-[6%] md:pr-[6%] md:-ml-[6%] lg:pr-0 lg:ml-0 overflow-hidden flex justify-end"
 			>
 				<div class="aspect-[5/4] h-full relative">
 					<img
@@ -58,7 +59,7 @@
 				class="absolute right-0 bottom-[15%] md:bottom-[20%] lg:bottom-[20%] w-full py-2 px-3 md:pl-8 md:pr-12 lg:pl-4 lg:pr-1 flex justify-end"
 			>
 				<p
-					class="px-4 font-semibold py-3 rounded-xl bg-c-bg-secondary text-xs md:text-base lg:text-lg lg:px-5 ring-2 ring-c-bg-tertiary shadow-xl shadow-c-shadow/[var(--o-shadow-stronger)]"
+					class="px-4 font-semibold py-3 rounded-lg md:rounded-xl bg-c-bg-secondary text-xs md:text-base lg:text-lg lg:px-5 ring-2 ring-c-bg-tertiary shadow-xl shadow-c-shadow/[var(--o-shadow-stronger)]"
 				>
 					majestic cat, psychedelic, violet tones, fantasy landscape
 				</p>
