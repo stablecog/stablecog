@@ -120,23 +120,6 @@
 		lastIdentity = $page.data.session?.user.id;
 	}
 
-	afterNavigate(() => {
-		if (!isHydrated) {
-			setIsHydratedToTrue();
-			return;
-		} else {
-			const props = {
-				'SC - Page': `${$page.url.pathname}${$page.url.search}`,
-				'SC - Locale': $locale,
-				'SC - Advanced Mode': $advancedModeApp,
-				'SC - User Id': $page.data.session?.user.id,
-				'SC - Stripe Product Id': $userSummary?.product_id,
-				'SC - App Version': $appVersion
-			};
-			logPageview(props);
-		}
-	});
-
 	$: $themeApp, setBodyClasses();
 
 	const runIfMounted = (fn: () => void) => {
@@ -423,6 +406,24 @@
 		return () => {
 			subscription.unsubscribe();
 		};
+	});
+
+	afterNavigate(() => {
+		if (!isHydrated) {
+			setIsHydratedToTrue();
+			console.log(isHydrated);
+			return;
+		} else {
+			const props = {
+				'SC - Page': `${$page.url.pathname}${$page.url.search}`,
+				'SC - Locale': $locale,
+				'SC - Advanced Mode': $advancedModeApp,
+				'SC - User Id': $page.data.session?.user.id,
+				'SC - Stripe Product Id': $userSummary?.product_id,
+				'SC - App Version': $appVersion
+			};
+			logPageview(props);
+		}
 	});
 </script>
 

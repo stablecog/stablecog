@@ -20,7 +20,7 @@ const generationRelatedSearchParams = [
 export const load: ServerLoad = async ({ url, parent }) => {
 	const parentData = await parent();
 	const { session, userSummary } = parentData;
-	if (session && userSummary) {
+	if (session && userSummary && !isHydrated) {
 		const params = url.searchParams.toString();
 		throw redirect(302, `/generate${params ? `?${params}` : ''}`);
 	}

@@ -56,7 +56,7 @@
 	<a
 		bind:clientWidth={width}
 		bind:clientHeight={height}
-		on:click|stopPropagation={_onClick}
+		on:click={_onClick}
 		{href}
 		{target}
 		data-sveltekit-preload-data={prefetch && (target === '_self' || target === undefined)
@@ -148,7 +148,7 @@
 	<button
 		bind:clientWidth={width}
 		bind:clientHeight={height}
-		on:click|stopPropagation={_onClick}
+		on:click={_onClick}
 		disabled={disabled || loading || uploading}
 		class="touch-manipulation relative flex items-center justify-center text-center font-bold gap-2
 			overflow-hidden z-0 group {noPadding
