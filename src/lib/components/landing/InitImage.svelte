@@ -6,7 +6,7 @@
 
 <section
 	id="init-image"
-	class="w-full flex flex-col lg:flex-row justify-center overflow-hidden relative z-0 pt-20 pb-16"
+	class="w-full flex flex-col lg:flex-row justify-center overflow-hidden relative z-0 pt-20 pb-4"
 >
 	<div class="flex lg:hidden flex-col items-center px-5">
 		<h2
