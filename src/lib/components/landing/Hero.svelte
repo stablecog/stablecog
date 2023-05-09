@@ -11,7 +11,7 @@
 	class="w-full h-[100svh] pb-[calc(env(safe-area-inset-bottom)+2rem)] min-h-[25rem] md:min-h-[30rem] flex flex-col md:flex-row items-center justify-between"
 >
 	<div
-		class="px-6 pt-8 pb-8 md:py-12 md:pl-[max(calc((100%-1280px)/2+4rem),4rem)]
+		class="px-6 pt-6 pb-8 md:py-12 md:pl-[max(calc((100%-1280px)/2+4rem),4rem)]
 			md:pr-6 xl:pr-16 flex flex-col items-center md:items-start order-2 md:order-1"
 	>
 		<h1

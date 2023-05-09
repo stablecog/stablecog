@@ -6,7 +6,7 @@
 	import { isSignedIn } from '$ts/stores/user/isSignedIn';
 </script>
 
-<section id="start-creating" class="w-full flex justify-center pt-12 lg:pt-8 xl:pt-4 pb-8 md:pb-16">
+<section id="start-creating" class="w-full flex justify-center pt-16 lg:pt-8 xl:pt-4 pb-8 md:pb-16">
 	<div class="w-full max-w-7xl flex flex-col items-center px-3 md:px-8">
 		<div class="flex flex-col items-center px-3 md:px-6">
 			<h2

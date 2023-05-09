@@ -37,16 +37,16 @@
 		<div class="flex-1 lg:flex-none aspect-[2/3] h-full relative -ml-[15%] lg:ml-0">
 			<LazyImageWithOutline
 				style="
-						-webkit-mask-image: url(/landing/dragon/dragon-mask.svg);
-						mask-image: url(/landing/dragon/dragon-mask.svg);
-						-webkit-mask-repeat: no-repeat;
-						mask-repeat: no-repeat;
-						mask-size: cover;
-						-webkit-mask-size: cover;
-						mask-position: right center;
-						-webkit-mask-position: right center;
-					"
-				class="w-full h-full"
+					-webkit-mask-image: url(/landing/dragon/dragon-mask.svg);
+					mask-image: url(/landing/dragon/dragon-mask.svg);
+					-webkit-mask-repeat: no-repeat;
+					mask-repeat: no-repeat;
+					mask-size: cover;
+					-webkit-mask-size: cover;
+					mask-position: right center;
+					-webkit-mask-position: right center;
+				"
+				class="w-full h-full absolute right-0 top-0"
 				src="/landing/dragon/dragon-1920.webp"
 				srcset="
           /landing/dragon/dragon-512.webp 512w,
@@ -123,16 +123,16 @@
 		<div class="flex-1 lg:flex-none aspect-[2/3] h-full relative -mr-[15%] lg:mr-0">
 			<LazyImageWithOutline
 				style="
-						-webkit-mask-image: url(/landing/dragon-alien/dragon-alien-mask.svg);
-						mask-image: url(/landing/dragon-alien/dragon-alien-mask.svg);
-						-webkit-mask-repeat: no-repeat;
-						mask-repeat: no-repeat;
-						mask-size: cover;
-						-webkit-mask-size: cover;
-						mask-position: right center;
-						-webkit-mask-position: right center;
-					"
-				class="w-full h-full"
+					-webkit-mask-image: url(/landing/dragon-alien/dragon-alien-mask.svg);
+					mask-image: url(/landing/dragon-alien/dragon-alien-mask.svg);
+					-webkit-mask-repeat: no-repeat;
+					mask-repeat: no-repeat;
+					mask-size: cover;
+					-webkit-mask-size: cover;
+					mask-position: right center;
+					-webkit-mask-position: right center;
+				"
+				class="w-full h-full absolute right-0 top-0"
 				src="/landing/dragon-alien/dragon-alien-1920.webp"
 				srcset="
           /landing/dragon-alien/dragon-alien-512.webp 512w,

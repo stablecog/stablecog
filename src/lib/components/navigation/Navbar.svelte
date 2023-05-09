@@ -123,7 +123,7 @@
 			<div class="flex items-center justify-end pl-2 pr-3.5 md:pl-2.5 md:pr-5">
 				{#if $page.data.session && $userSummary}
 					<div class="flex flex-col items-end mr-3.5 md:mr-4">
-						<p class="text-xs font-medium text-c-on-bg/60">{$LL.Account.RemainingTitle()}</p>
+						<p class="text-xs font-semibold text-c-on-bg/60">{$LL.Account.RemainingTitle()}</p>
 						<p class="text-sm font-bold mt-0.5">
 							{$userSummary.total_remaining_credits.toLocaleString($locale)}
 						</p>

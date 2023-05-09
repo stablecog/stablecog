@@ -1,7 +1,9 @@
 <script lang="ts">
 	import ImageWithOutlineAndLoaded from '$components/ImageWithOutlineAndLoaded.svelte';
+	import Button from '$components/buttons/Button.svelte';
 	import LL from '$i18n/i18n-svelte';
 	import { themeApp } from '$ts/stores/theme';
+	import { isSignedIn } from '$ts/stores/user/isSignedIn';
 
 	let isImageLoaded = false;
 </script>
@@ -87,6 +89,13 @@
 				>
 					{$LL.Landing.Describe.Paragraph()}
 				</p>
+				<Button
+					href={$isSignedIn ? '/generate' : '/generate?smo=true'}
+					class="mt-6 w-full hidden md:block max-w-[15rem] px-6 md:px-8 py-4"
+					noPadding
+				>
+					{$LL.Landing.TryItNowButton()}
+				</Button>
 			</div>
 		</div>
 	</div>
