@@ -385,7 +385,7 @@
 						</div>
 						<div
 							class="w-full flex flex-col order-first flex-1 min-w-0 pb-[calc(env(safe-area-inset-bottom)+10.5rem)]
-								md:pb-0 md:pt-26 lg:pb-8"
+								md:pb-0 md:pt-26 lg:pb-8 overflow-hidden relative z-0"
 						>
 							<div class="flex-1 min-w-0 flex flex-col items-center justify-center w-full">
 								{#if $page.data.session?.user.id && $userSummary && $userSummary.total_remaining_credits < lowCreditsThreshold}

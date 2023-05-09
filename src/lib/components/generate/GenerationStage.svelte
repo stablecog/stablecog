@@ -2,11 +2,12 @@
 	import GenerationStageCard from '$components/generate/GenerationStageCard.svelte';
 	import type { TIsReadyMap } from '$components/generate/types';
 	import { mdBreakpoint } from '$components/generationFullScreen/constants';
+	import { flyAndScale } from '$ts/animation/transitions';
 	import type { TGeneration } from '$ts/stores/user/generation';
 	import { windowWidth } from '$ts/stores/window';
 	import { onMount } from 'svelte';
 	import { quadOut } from 'svelte/easing';
-	import { fly } from 'svelte/transition';
+	import { fly, scale } from 'svelte/transition';
 
 	export let stageWidth: number;
 	export let stageHeight: number;
@@ -101,9 +102,11 @@
 </script>
 
 <div
-	in:fly|local={{
+	in:flyAndScale|local={{
 		duration: 300,
-		y: $windowWidth > mdBreakpoint ? -135 : 135,
+		yRem: $windowWidth > mdBreakpoint ? -10 : 10,
+		scaleX: 0.75,
+		scaleY: 0.75,
 		easing: quadOut
 	}}
 	style="width: {stageWidth}px; height: {stageHeight}px;"
