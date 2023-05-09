@@ -21,7 +21,7 @@
 	let naturalHeight: number;
 
 	const options: Options = {
-		rootMargin: '100%',
+		rootMargin: '75%',
 		unobserveOnEnter: true
 	};
 
@@ -41,6 +41,7 @@
 	on:load={() => (isLoaded = true)}
 	use:inview={options}
 	on:inview_enter={() => {
+		console.log('inView');
 		wasInView = true;
 	}}
 	style={styles}
