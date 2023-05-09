@@ -21,7 +21,7 @@
 	import { windowHeight, windowWidth } from '$ts/stores/window';
 	import Navbar from '$components/navigation/Navbar.svelte';
 	import SidebarWrapper from '$components/generate/SidebarWrapper.svelte';
-	import GenerateStage from '$components/generate/GenerationStage.svelte';
+	import GenerationStage from '$components/generate/GenerationStage.svelte';
 	import { themeApp } from '$ts/stores/theme';
 	import { generationAspectRatio, generationNumOutputs } from '$ts/stores/generationSettings.js';
 	import { generateSSEId } from '$ts/helpers/generateSSEId.js';
@@ -381,10 +381,7 @@
 							class="w-full flex flex-col order-first flex-1 min-w-0 pb-[calc(env(safe-area-inset-bottom)+10.5rem)]
 								md:pb-0 md:pt-26 lg:pb-8"
 						>
-							<div
-								class="flex-1 min-w-0 flex flex-col items-center justify-center w-full
-									overflow-hidden"
-							>
+							<div class="flex-1 min-w-0 flex flex-col items-center justify-center w-full">
 								{#if $page.data.session?.user.id && $userSummary && $userSummary.total_remaining_credits < lowCreditsThreshold}
 									<div
 										transition:expandCollapse|local={{ duration: 200 }}
@@ -402,7 +399,7 @@
 										class="flex-1 min-w-0 w-full"
 									>
 										{#if stageWidth && stageHeight}
-											<GenerateStage
+											<GenerationStage
 												generation={$generations[0]}
 												{stageWidth}
 												{stageHeight}

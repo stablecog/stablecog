@@ -25,8 +25,8 @@
 	<slot />
 	{#if hasGradient}
 		<div
-			class="w-full h-20 absolute z-10 -bottom-1 left-0 pointer-events-none 
-				bg-gradient-to-t from-c-bg to-c-bg/0"
+			class="w-full h-20 absolute z-10 -bottom-1 left-0 pointer-events-none
+				bg-gradient-to-t from-c-bg to-c-bg/0 translate-3d-0"
 		/>
 	{/if}
 </div>
