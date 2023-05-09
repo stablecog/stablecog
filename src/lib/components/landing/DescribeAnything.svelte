@@ -1,5 +1,8 @@
 <script lang="ts">
+	import ImageWithOutlineAndLoaded from '$components/ImageWithOutlineAndLoaded.svelte';
 	import { themeApp } from '$ts/stores/theme';
+
+	let isImageLoaded = false;
 </script>
 
 <section
@@ -19,7 +22,8 @@
 				class="h-full relative pr-[6%] -ml-[6%] md:pr-[6%] md:-ml-[6%] lg:pr-0 lg:ml-0 overflow-hidden flex justify-end"
 			>
 				<div class="aspect-[5/4] h-full relative">
-					<img
+					<ImageWithOutlineAndLoaded
+						bind:isLoaded={isImageLoaded}
 						style="
               -webkit-mask-image: url(/landing/cat/cat-mask.svg);
               mask-image: url(/landing/cat/cat-mask.svg);
@@ -43,15 +47,13 @@
 						alt="Cat"
 						width="1920"
 						height="1536"
-					/>
-					<img
-						class="w-full h-full absolute right-0 top-0"
-						src={$themeApp === 'light'
+						classOutline="w-full h-full absolute right-0 top-0"
+						srcOutline={$themeApp === 'light'
 							? '/landing/cat/cat-outline-light.svg'
 							: '/landing/cat/cat-outline-dark.svg'}
-						alt="Cat Outline"
-						width="1920"
-						height="1536"
+						altOutline="Cat Outline"
+						classWhenLoaded="opacity-100"
+						classWhenNotLoaded="opacity-0"
 					/>
 				</div>
 			</div>
@@ -59,7 +61,11 @@
 				class="absolute right-0 bottom-[15%] md:bottom-[20%] lg:bottom-[20%] w-full py-2 px-3 md:pl-8 md:pr-12 lg:pl-4 lg:pr-1 flex justify-end"
 			>
 				<p
-					class="px-4 font-semibold py-3 rounded-lg md:rounded-xl bg-c-bg-secondary text-xs md:text-base lg:text-lg lg:px-5 ring-2 ring-c-bg-tertiary shadow-xl shadow-c-shadow/[var(--o-shadow-stronger)]"
+					class="px-4 font-semibold py-3 rounded-lg md:rounded-xl bg-c-bg-secondary text-xs
+					md:text-base lg:text-lg lg:px-5 ring-2 ring-c-bg-tertiary shadow-xl
+					shadow-c-shadow/[var(--o-shadow-stronger)] transition transform delay-200 {isImageLoaded
+						? 'translate-x-0 opacity-100'
+						: '-translate-x-8 opacity-0'}"
 				>
 					majestic cat, psychedelic, violet tones, fantasy landscape
 				</p>
