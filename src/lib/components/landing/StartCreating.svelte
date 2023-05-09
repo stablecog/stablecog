@@ -1,6 +1,7 @@
 <script lang="ts">
 	import LazyImage from '$components/LazyImage.svelte';
 	import Button from '$components/buttons/Button.svelte';
+	import LL from '$i18n/i18n-svelte';
 	import { themeApp } from '$ts/stores/theme';
 </script>
 
@@ -11,14 +12,14 @@
 				class="max-w-[19rem] md:max-w-[22rem] lg:max-w-[32rem] font-bold text-3xl md:text-4xl lg:text-5xl
         flex-1 leading-tight lg:leading-tight text-center"
 			>
-				Start creating now!
+				{$LL.Landing.StartCreating.Title()}
 			</h2>
 			<p
 				class="max-w-[22rem] lg:max-w-[32rem] leading-relaxed md:text-lg lg:text-xl mt-2 text-center text-c-on-bg/75"
 			>
-				It’s free to try :) Give it a go, we think you’ll like it. Thousands of our users do.
+				{$LL.Landing.StartCreating.Paragraph()}
 			</p>
-			<Button class="mt-6 px-18 py-4" noPadding>Get Started</Button>
+			<Button class="mt-6 px-18 py-4" noPadding>{$LL.Landing.StartCreatingButton()}</Button>
 		</div>
 		<div
 			class="w-full rounded-lg md:rounded-xl lg:rounded-2xl ring-2 ring-c-bg-secondary

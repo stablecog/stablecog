@@ -1,6 +1,7 @@
 <script lang="ts">
 	import LazyImageWithOutline from '$components/LazyImageWithOutline.svelte';
 	import Button from '$components/buttons/Button.svelte';
+	import LL from '$i18n/i18n-svelte';
 	import { themeApp } from '$ts/stores/theme';
 </script>
 
@@ -13,14 +14,14 @@
 			class="font-bold text-3xl md:text-4xl
 				lg:text-5xl flex-1 leading-tight lg:leading-tight text-center"
 		>
-			Or start with an image
+			{$LL.Landing.InitImage.Title()}
 		</h2>
 		<p
 			class="max-w-[24rem] md:max-w-[26rem] lg:max-w-[35rem] leading-relaxed md:text-lg lg:text-xl mt-2 text-center text-c-on-bg/75"
 		>
-			Give an input image, generate new art based on it.
+			{$LL.Landing.InitImage.Paragraph()}
 		</p>
-		<Button class="mt-6 px-18 py-4" noPadding>Try It Now</Button>
+		<Button class="mt-6 px-18 py-4" noPadding>{$LL.Landing.TryItNowButton()}</Button>
 	</div>
 	<div
 		class="w-full relative mt-8 max-w-[120rem] gap-4 md:gap-8 lg:gap-0 flex justify-center items-center
@@ -67,14 +68,14 @@
 					class="max-w-[19rem] md:max-w-[22rem] lg:max-w-[35rem] font-bold text-3xl md:text-4xl
 						lg:text-5xl flex-1 leading-tight lg:leading-tight text-center"
 				>
-					Or start with an image
+					{$LL.Landing.InitImage.Title()}
 				</h2>
 				<p
 					class="max-w-[22rem] lg:max-w-[35rem] leading-relaxed md:text-lg lg:text-xl mt-2 text-center text-c-on-bg/75"
 				>
-					Give an input image, generate new art based on it.
+					{$LL.Landing.InitImage.Paragraph()}
 				</p>
-				<Button class="mt-6 px-18 py-4" noPadding>Try It Now</Button>
+				<Button class="mt-6 px-18 py-4" noPadding>{$LL.Landing.TryItNowButton()}</Button>
 			</div>
 			<div class="w-full flex relative items-center justify-center lg:mt-20">
 				<div
@@ -102,7 +103,7 @@
 					class="px-4 py-2 md:px-6 md:py-3 font-semibold rounded-xl bg-c-bg-secondary relative
 						text-lg md:text-2xl lg:text-3xl ring-2 ring-c-bg-tertiary shadow-xl shadow-c-shadow/[var(--o-shadow-stronger)]"
 				>
-					robot alien
+					{$LL.Landing.InitImage.Prompt()}
 				</p>
 			</div>
 		</div>

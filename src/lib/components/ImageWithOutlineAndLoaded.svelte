@@ -35,7 +35,7 @@
 	bind:naturalHeight
 	on:load={() => (isLoaded = true)}
 	style={styles}
-	class="{classes} transition transform {isLoaded ? classWhenLoaded : classWhenNotLoaded}"
+	class="{classes} {isLoaded ? classWhenLoaded : classWhenNotLoaded}"
 	{srcset}
 	{sizes}
 	{src}
@@ -45,7 +45,7 @@
 />
 <slot name="after-image" {isLoaded} />
 <img
-	class="{classOutline} transition transform {isLoaded ? classWhenLoaded : classWhenNotLoaded}"
+	class="{classOutline} {isLoaded ? classWhenLoaded : classWhenNotLoaded}"
 	src={srcOutline}
 	alt={altOutline}
 	{width}
