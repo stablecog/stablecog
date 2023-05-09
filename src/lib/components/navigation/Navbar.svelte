@@ -187,7 +187,10 @@
 			use:clickoutside={{ callback: () => (isSignInModalOpen = false) }}
 			class="max-w-full my-auto"
 		>
-			<SignInCard isModal={true} redirectTo={$page.url.pathname} />
+			<SignInCard
+				isModal={true}
+				redirectTo={$page.url.pathname === '/' ? '/generate' : $page.url.pathname}
+			/>
 		</div>
 	</div>
 {/if}

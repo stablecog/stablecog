@@ -51,12 +51,11 @@
 	import { appVersion, serverVersion } from '$ts/stores/appVersion.js';
 	import { isSuperAdmin } from '$ts/helpers/admin/roles.js';
 	import { underDevelopment } from '$ts/stores/underDevelopment.js';
-	import { recentlyUpdatedOutputIds } from '$ts/stores/user/recentlyUpdatedOutputIds.js';
 
 	export let data;
 
 	const lowCreditsThreshold = 10;
-	let isSignInModalOpen = false;
+	let isSignInModalOpen = data.is_sign_in_modal_open ?? false;
 	let promptBarHeight: number;
 	let stageWidth: number;
 	let stageHeight: number;

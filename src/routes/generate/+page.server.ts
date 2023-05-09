@@ -40,6 +40,7 @@ export const load: ServerLoad = ({ url, locals }) => {
 	const _advanced_mode = url.searchParams.get('adv');
 	const _init_image_strength = url.searchParams.get('iis');
 	const _num_outputs = url.searchParams.get('no');
+	const _is_sign_in_modal_open = url.searchParams.get('smo');
 
 	const prompt = _prompt !== null ? decodeURIComponent(_prompt.slice(0, maxPromptLength)) : null;
 	const negative_prompt =
@@ -110,6 +111,8 @@ export const load: ServerLoad = ({ url, locals }) => {
 		num_outputs_int !== null && num_outputs_int >= numOutputsMin && num_outputs_int <= numOutputsMax
 			? num_outputs_int
 			: null;
+	const is_sign_in_modal_open =
+		_is_sign_in_modal_open !== null ? _is_sign_in_modal_open === 'true' : null;
 
 	const data: TGeneratePageData = {
 		prompt,
@@ -124,7 +127,8 @@ export const load: ServerLoad = ({ url, locals }) => {
 		aspect_ratio,
 		advanced_mode,
 		init_image_strength,
-		num_outputs
+		num_outputs,
+		is_sign_in_modal_open
 	};
 
 	return data;
@@ -144,4 +148,5 @@ export interface TGeneratePageData {
 	advanced_mode: boolean | null;
 	init_image_strength: number | null;
 	num_outputs: number | null;
+	is_sign_in_modal_open: boolean | null;
 }

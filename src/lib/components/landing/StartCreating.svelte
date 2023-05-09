@@ -3,9 +3,10 @@
 	import Button from '$components/buttons/Button.svelte';
 	import LL from '$i18n/i18n-svelte';
 	import { themeApp } from '$ts/stores/theme';
+	import { isSignedIn } from '$ts/stores/user/isSignedIn';
 </script>
 
-<section id="start-creating" class="w-full flex justify-center pt-12 lg:pt-8 xl:pt-4 pb-16">
+<section id="start-creating" class="w-full flex justify-center pt-12 lg:pt-8 xl:pt-4 pb-8 md:pb-16">
 	<div class="w-full max-w-7xl flex flex-col items-center px-3 md:px-8">
 		<div class="flex flex-col items-center px-3 md:px-6">
 			<h2
@@ -19,7 +20,13 @@
 			>
 				{$LL.Landing.StartCreating.Paragraph()}
 			</p>
-			<Button class="mt-6 px-18 py-4" noPadding>{$LL.Landing.StartCreatingButton()}</Button>
+			<Button
+				href={$isSignedIn ? '/generate' : '/generate?smo=true'}
+				class="mt-6 w-full max-w-[15rem] px-6 md:px-8 py-4"
+				noPadding
+			>
+				{$LL.Landing.StartCreatingButton()}
+			</Button>
 		</div>
 		<div
 			class="w-full rounded-lg md:rounded-xl lg:rounded-2xl ring-2 ring-c-bg-secondary

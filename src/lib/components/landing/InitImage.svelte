@@ -3,6 +3,7 @@
 	import Button from '$components/buttons/Button.svelte';
 	import LL from '$i18n/i18n-svelte';
 	import { themeApp } from '$ts/stores/theme';
+	import { isSignedIn } from '$ts/stores/user/isSignedIn';
 </script>
 
 <section
@@ -21,7 +22,13 @@
 		>
 			{$LL.Landing.InitImage.Paragraph()}
 		</p>
-		<Button class="mt-6 px-18 py-4" noPadding>{$LL.Landing.TryItNowButton()}</Button>
+		<Button
+			href={$isSignedIn ? '/generate' : '/generate?smo=true'}
+			class="mt-6 w-full max-w-[15rem] px-6 md:px-8 py-4"
+			noPadding
+		>
+			{$LL.Landing.TryItNowButton()}
+		</Button>
 	</div>
 	<div
 		class="w-full relative mt-8 max-w-[120rem] gap-4 md:gap-8 lg:gap-0 flex justify-center items-center
@@ -75,7 +82,13 @@
 				>
 					{$LL.Landing.InitImage.Paragraph()}
 				</p>
-				<Button class="mt-6 px-18 py-4" noPadding>{$LL.Landing.TryItNowButton()}</Button>
+				<Button
+					href={$isSignedIn ? '/generate' : '/generate?smo=true'}
+					class="mt-6 w-full max-w-[15rem] px-6 md:px-8 py-4"
+					noPadding
+				>
+					{$LL.Landing.TryItNowButton()}
+				</Button>
 			</div>
 			<div class="w-full flex relative items-center justify-center lg:mt-20">
 				<div

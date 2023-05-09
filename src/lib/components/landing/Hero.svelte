@@ -3,6 +3,7 @@
 	import Button from '$components/buttons/Button.svelte';
 	import LL from '$i18n/i18n-svelte';
 	import { themeApp } from '$ts/stores/theme';
+	import { isSignedIn } from '$ts/stores/user/isSignedIn';
 </script>
 
 <section
@@ -19,9 +20,13 @@
 		>
 			{$LL.Landing.Hero.Title()}
 		</h1>
-		<Button href="/generate" class="mt-5 px-18 py-4" noPadding
-			>{$LL.Landing.GetStartedButton()}</Button
+		<Button
+			href={$isSignedIn ? '/generate' : '/generate?smo=true'}
+			class="mt-5 w-full max-w-[15rem] px-6 md:px-8 py-4"
+			noPadding
 		>
+			{$LL.Landing.GetStartedButton()}
+		</Button>
 	</div>
 	<div
 		class="flex-1 min-h-0 pl-12 md:pl-0 w-full md:h-full flex flex-col justify-end items-end relative order-1 md:order-2"
@@ -58,26 +63,9 @@
 					? '/landing/hero/hero-outline-light.svg'
 					: '/landing/hero/hero-outline-dark.svg'}
 				altOutline="Hero Outline"
-				let:isLoaded
 				classWhenLoaded="opacity-100 translate-0"
 				classWhenNotLoaded="opacity-0 translate-x-4 -translate-y-4"
-			>
-				<div
-					slot="after-image"
-					style="
-					-webkit-mask-image: url(/landing/hero/hero-mask.svg);
-					mask-image: url(/landing/hero/hero-mask.svg);
-					-webkit-mask-repeat: no-repeat;
-					mask-repeat: no-repeat;
-					mask-size: cover;
-					-webkit-mask-size: cover;
-					mask-position: left bottom;
-					-webkit-mask-position: left bottom;
-				"
-					class="absolute w-full h-full right-0 top-0 bg-gradient-to-b from-c-barrier/75 via-c-barrier/0 via-[10rem] to-c-barrier/0
-					transition {isLoaded ? 'opacity-100' : 'opacity-0'}"
-				/>
-			</ImageWithOutlineAndLoaded>
+			/>
 		</div>
 	</div>
 </section>

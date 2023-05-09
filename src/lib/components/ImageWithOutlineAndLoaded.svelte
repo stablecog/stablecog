@@ -29,7 +29,6 @@
 	}
 </script>
 
-<slot {isLoaded} />
 <img
 	bind:naturalWidth
 	bind:naturalHeight
@@ -43,7 +42,6 @@
 	{width}
 	{height}
 />
-<slot name="after-image" {isLoaded} />
 <img
 	class="{classOutline} {isLoaded ? classWhenLoaded : classWhenNotLoaded}"
 	src={srcOutline}

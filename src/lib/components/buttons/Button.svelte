@@ -56,13 +56,13 @@
 	<a
 		bind:clientWidth={width}
 		bind:clientHeight={height}
-		on:click={_onClick}
+		on:click|stopPropagation={_onClick}
 		{href}
 		{target}
 		data-sveltekit-preload-data={prefetch && (target === '_self' || target === undefined)
 			? 'hover'
 			: 'off'}
-		class="touch-manipulation relative flex items-center justify-center text-center font-bold gap-2 
+		class="touch-manipulation relative flex items-center justify-center text-center font-bold gap-2
 			overflow-hidden z-0 group {noPadding
 			? 'p-0'
 			: size === 'xs'
@@ -148,9 +148,9 @@
 	<button
 		bind:clientWidth={width}
 		bind:clientHeight={height}
-		on:click={_onClick}
+		on:click|stopPropagation={_onClick}
 		disabled={disabled || loading || uploading}
-		class="touch-manipulation relative flex items-center justify-center text-center font-bold gap-2 
+		class="touch-manipulation relative flex items-center justify-center text-center font-bold gap-2
 			overflow-hidden z-0 group {noPadding
 			? 'p-0'
 			: size === 'xs'
