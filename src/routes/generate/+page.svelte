@@ -56,6 +56,7 @@
 
 	const lowCreditsThreshold = 10;
 	let isSignInModalOpen = data.is_sign_in_modal_open ?? false;
+	let isJustCreatedGenerationForAnim = false;
 	let promptBarHeight: number;
 	let stageWidth: number;
 	let stageHeight: number;
@@ -208,8 +209,13 @@
 		isGenerationSettingsSheetOpen = !isGenerationSettingsSheetOpen;
 	}
 
-	function onGenerate() {
+	function afterGenerate() {
 		closeSettingsSheet();
+		resetPlaceholderUiId();
+	}
+
+	function resetPlaceholderUiId() {
+		generationPlaceholder.ui_id = generateSSEId();
 	}
 
 	onMount(async () => {
@@ -368,10 +374,11 @@
 									<PromptBar
 										{openSignInModal}
 										serverData={data}
-										{onGenerate}
+										{afterGenerate}
 										{toggleSettingsSheet}
 										bind:isReadyMap
 										bind:isGenerationSettingsSheetOpen
+										bind:isJustCreatedGenerationForAnim
 									/>
 								</div>
 							</div>
@@ -398,12 +405,14 @@
 										class="flex-1 min-w-0 w-full"
 									>
 										{#if stageWidth && stageHeight}
-											<GenerationStage
-												generation={$generations[0]}
-												{stageWidth}
-												{stageHeight}
-												bind:isReadyMap
-											/>
+											{#key $generations[0].ui_id}
+												<GenerationStage
+													generation={$generations[0]}
+													{stageWidth}
+													{stageHeight}
+													bind:isReadyMap
+												/>
+											{/key}
 										{/if}
 									</div>
 								</div>

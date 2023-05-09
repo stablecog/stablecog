@@ -27,6 +27,7 @@
 	} from '$ts/stores/generationSettings';
 	import { isTouchscreen } from '$ts/stores/isTouchscreen';
 	import {
+		generations,
 		maxOngoingGenerationsCountReached,
 		queueInitialGenerationRequest,
 		type TInitialGenerationRequest
@@ -49,9 +50,10 @@
 	export let openSignInModal: () => void;
 	export let serverData: TGeneratePageData;
 	export let isReadyMap: TIsReadyMap;
-	export let onGenerate: undefined | (() => void) = undefined;
+	export let afterGenerate: undefined | (() => void) = undefined;
 	export let toggleSettingsSheet: () => void;
 	export let isGenerationSettingsSheetOpen: boolean;
+	export let isJustCreatedGenerationForAnim = false;
 	export { classes as class };
 	let classes = '';
 	export { styles as style };
@@ -72,7 +74,16 @@
 	$: showClearPromptInputButton = $generationPrompt !== undefined && $generationPrompt !== '';
 	$: promptInputPlaceholder = $LL.Home.PromptInput.Placeholder();
 
+	let isJustCreatedGenerationTimeout: NodeJS.Timeout;
+	const isJustCreatedGenerationTimeoutDuration = 300;
+	let isJustCreatedGeneration = false;
+	let isJustCreatedGenerationForAnimTimeout: NodeJS.Timeout;
+	const isJustCreatedGenerationForAnimTimeoutDuration = 150;
+
 	async function onPromptFormSubmitted() {
+		if (isJustCreatedGeneration) {
+			return;
+		}
 		if (doesntHaveEnoughCredits) {
 			return;
 		}
@@ -95,11 +106,21 @@
 		if (!$generationPrompt) {
 			generationPrompt.set(promptInputPlaceholder);
 		}
-		onGenerate?.();
 		queueGeneration();
+		afterGenerate?.();
 		if ($windowWidth < mdBreakpoint) {
 			promptInputElement.blur();
 		}
+		clearTimeout(isJustCreatedGenerationTimeout);
+		isJustCreatedGeneration = true;
+		isJustCreatedGenerationTimeout = setTimeout(() => {
+			isJustCreatedGeneration = false;
+		}, isJustCreatedGenerationTimeoutDuration);
+		clearTimeout(isJustCreatedGenerationForAnimTimeout);
+		isJustCreatedGenerationForAnim = true;
+		isJustCreatedGenerationForAnimTimeout = setTimeout(() => {
+			isJustCreatedGenerationForAnim = false;
+		}, isJustCreatedGenerationForAnimTimeoutDuration);
 	}
 
 	async function queueGeneration() {
@@ -142,7 +163,10 @@
 			output_image_extension: 'jpeg',
 			process_type: 'generate',
 			stream_id: $sseId,
-			ui_id: generateSSEId(),
+			ui_id:
+				$generations && $generations[0] && $generations[0].status === 'pre-submit'
+					? $generations[0].ui_id
+					: generateSSEId(),
 			submit_to_gallery: false
 		};
 		queueInitialGenerationRequest(initialRequestProps);
@@ -185,61 +209,87 @@
 <div style={styles} class="w-full flex justify-center {classes}">
 	<form
 		on:submit|preventDefault={onPromptFormSubmitted}
-		class="w-full max-w-7xl flex flex-row md:gap-2 items-center"
+		class="w-full max-w-7xl flex flex-row items-center"
 	>
-		<div class="flex-1 flex relative group">
-			<textarea
-				use:autoresize={{
-					maxRows: 2,
-					placeholder: promptInputPlaceholder,
-					value: $generationPrompt
-				}}
-				bind:this={promptInputElement}
-				bind:value={$generationPrompt}
-				on:change={() => console.log('changed')}
-				on:keypress={(e) => {
-					if (e.key === 'Enter') {
-						e.preventDefault();
-						onPromptFormSubmitted();
-					}
-				}}
-				on:input={() => {
-					if (
-						$generationPrompt !== undefined &&
-						$generationPrompt !== null &&
-						$generationPrompt.length > maxPromptLength
-					) {
-						generationPrompt.set($generationPrompt.slice(0, maxPromptLength));
-					}
-				}}
-				disabled={!isCheckCompleted}
-				placeholder={promptInputPlaceholder}
-				enterkeyhint="go"
-				rows="1"
-				style="transition: height 0.1s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.2s cubic-bezier(0.4, 0, 0.2, 1), padding 0.2s cubic-bezier(0.4, 0, 0.2, 1)"
-				class="w-full text-base bg-c-bg-secondary shadow-lg pr-20 md:pr-26 lg:pr-17 hide-scrollbar shadow-c-shadow/[var(--o-shadow-normal)]
-						scroll-smooth resize-none transition relative pl-3 md:pl-5 py-3 md:py-4.5 rounded-lg md:rounded-xl
-						focus:ring-2 focus:ring-c-primary/30 ring-0 ring-c-primary/20 placeholder:text-c-on-bg/40 {!$isTouchscreen
-					? 'enabled:hover:ring-2'
-					: ''} text-c-on-bg {!$isTouchscreen ? 'group-hover:ring-2' : ''}"
-			/>
-			<ClearButton
-				class="absolute right-11 md:right-13 top-0 lg:right-0"
-				show={showClearPromptInputButton}
-				onClick={clearPrompt}
-			/>
-			<div class="absolute right-0 top-0 h-full w-11 md:w-13 lg:hidden">
+		<div
+			class="flex-1 flex gap-2 flex-row items-center transition duration-150 transform {isJustCreatedGenerationForAnim
+				? 'scale-97 md:scale-98 xl:scale-98.5'
+				: 'scale-100'}"
+		>
+			<div class="flex-1 flex relative group">
+				<textarea
+					use:autoresize={{
+						maxRows: 2,
+						placeholder: promptInputPlaceholder,
+						value: $generationPrompt
+					}}
+					bind:this={promptInputElement}
+					bind:value={$generationPrompt}
+					on:change={() => console.log('changed')}
+					on:keypress={(e) => {
+						if (e.key === 'Enter') {
+							e.preventDefault();
+							onPromptFormSubmitted();
+						}
+					}}
+					on:input={() => {
+						if (
+							$generationPrompt !== undefined &&
+							$generationPrompt !== null &&
+							$generationPrompt.length > maxPromptLength
+						) {
+							generationPrompt.set($generationPrompt.slice(0, maxPromptLength));
+						}
+					}}
+					disabled={!isCheckCompleted}
+					placeholder={promptInputPlaceholder}
+					enterkeyhint="go"
+					rows="1"
+					style="transition: height 0.1s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.2s cubic-bezier(0.4, 0, 0.2, 1), padding 0.2s cubic-bezier(0.4, 0, 0.2, 1)"
+					class="w-full text-base bg-c-bg-secondary shadow-lg pr-20 md:pr-26 lg:pr-17 hide-scrollbar shadow-c-shadow/[var(--o-shadow-normal)]
+							scroll-smooth resize-none transition relative pl-3 md:pl-5 py-3 md:py-4.5 rounded-lg md:rounded-xl
+							focus:ring-2 focus:ring-c-primary/30 ring-0 ring-c-primary/20 placeholder:text-c-on-bg/40 {!$isTouchscreen
+						? 'enabled:hover:ring-2'
+						: ''} text-c-on-bg {!$isTouchscreen ? 'group-hover:ring-2' : ''}"
+				/>
+				<ClearButton
+					class="absolute right-11 md:right-13 top-0 lg:right-0"
+					show={showClearPromptInputButton}
+					onClick={clearPrompt}
+				/>
+				<div class="absolute right-0 top-0 h-full w-11 md:w-13 lg:hidden">
+					<Button
+						disabled={!isCheckCompleted ||
+							(doesntHaveEnoughCredits && $page.data.session?.user.id !== undefined)}
+						uploading={$generationInitImageFilesState === 'uploading'}
+						loading={$maxOngoingGenerationsCountReached}
+						withSpinner
+						fadeOnDisabled={isCheckCompleted}
+						class="w-full h-full rounded-r-lg md:rounded-r-xl rounded-l-none absolute right-0 top-0"
+						noPadding
+					>
+						<IconWand class="w-7 h- md:w-8 h-8" />
+					</Button>
+					{#if doesntHaveEnoughCredits && $userSummary && $page.data.session?.user.id}
+						<InsufficientCreditsBadge
+							neededCredits={Number($generationNumOutputs)}
+							remainingCredits={$userSummary.total_remaining_credits}
+						/>
+					{/if}
+				</div>
+			</div>
+			<div class="w-auto relative hidden lg:block">
 				<Button
 					disabled={!isCheckCompleted ||
 						(doesntHaveEnoughCredits && $page.data.session?.user.id !== undefined)}
 					uploading={$generationInitImageFilesState === 'uploading'}
 					loading={$maxOngoingGenerationsCountReached}
 					withSpinner
-					fadeOnDisabled={isCheckCompleted}
-					class="w-full h-full rounded-r-lg md:rounded-r-xl rounded-l-none absolute right-0 top-0"
 					noPadding
+					fadeOnDisabled={isCheckCompleted}
+					class="w-full flex flex-col relative py-4.5 px-6 xl:px-8"
 				>
-					<IconWand class="w-7 h- md:w-8 h-8" />
+					{$LL.Home.GenerateButton()}
 				</Button>
 				{#if doesntHaveEnoughCredits && $userSummary && $page.data.session?.user.id}
 					<InsufficientCreditsBadge
@@ -248,26 +298,6 @@
 					/>
 				{/if}
 			</div>
-		</div>
-		<div class="w-full md:w-auto relative hidden lg:block">
-			<Button
-				disabled={!isCheckCompleted ||
-					(doesntHaveEnoughCredits && $page.data.session?.user.id !== undefined)}
-				uploading={$generationInitImageFilesState === 'uploading'}
-				loading={$maxOngoingGenerationsCountReached}
-				withSpinner
-				noPadding
-				fadeOnDisabled={isCheckCompleted}
-				class="w-full flex flex-col relative py-4.5 px-6 xl:px-8"
-			>
-				{$LL.Home.GenerateButton()}
-			</Button>
-			{#if doesntHaveEnoughCredits && $userSummary && $page.data.session?.user.id}
-				<InsufficientCreditsBadge
-					neededCredits={Number($generationNumOutputs)}
-					remainingCredits={$userSummary.total_remaining_credits}
-				/>
-			{/if}
 		</div>
 		<NoBgButton
 			size="sm"

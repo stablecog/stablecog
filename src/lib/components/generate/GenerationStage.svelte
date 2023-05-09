@@ -1,8 +1,12 @@
 <script lang="ts">
 	import GenerationStageCard from '$components/generate/GenerationStageCard.svelte';
 	import type { TIsReadyMap } from '$components/generate/types';
+	import { mdBreakpoint } from '$components/generationFullScreen/constants';
 	import type { TGeneration } from '$ts/stores/user/generation';
+	import { windowWidth } from '$ts/stores/window';
 	import { onMount } from 'svelte';
+	import { quadOut } from 'svelte/easing';
+	import { fly } from 'svelte/transition';
 
 	export let stageWidth: number;
 	export let stageHeight: number;
@@ -96,7 +100,15 @@
 	});
 </script>
 
-<div style="width: {stageWidth}px; height: {stageHeight}px" class="absolute">
+<div
+	in:fly|local={{
+		duration: 300,
+		y: $windowWidth > mdBreakpoint ? -135 : 135,
+		easing: quadOut
+	}}
+	style="width: {stageWidth}px; height: {stageHeight}px;"
+	class="absolute"
+>
 	{#if generation && showStage}
 		{#each generation.outputs as output, index}
 			{@const generationWithSelectedOutput = {
