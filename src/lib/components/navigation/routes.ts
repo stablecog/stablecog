@@ -85,10 +85,13 @@ export const routesDrawer = derived(
 	[regularRoutes, extraRoutes, adminRoutes, userSummary, page],
 	([$regularRoutes, $extraRoutes, $adminRoutes, $userSummary, $page]) => {
 		let routes = [...$regularRoutes, ...$extraRoutes];
-		if ($page.url.pathname.startsWith('/admin')) {
-			routes.unshift(...$adminRoutes);
-		} else {
-			routes.push(...$adminRoutes);
+		const userIsAdmin = isAdmin($userSummary?.roles);
+		if (userIsAdmin) {
+			if ($page.url.pathname.startsWith('/admin')) {
+				routes.unshift(...$adminRoutes);
+			} else {
+				routes.push(...$adminRoutes);
+			}
 		}
 		return routes;
 	}

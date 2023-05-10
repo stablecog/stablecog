@@ -31,7 +31,7 @@
 		>
 			<ButtonHoverEffect size="md" noRounding noPadding hoverFrom="right" />
 			<IconHome class="text-c-on-bg/40 w-5 h-5 transition group-hover:text-c-primary" />
-			<p class="text-c-on-bg/50 font-medium transition text-sm group-hover:text-c-primary">
+			<p class="text-c-on-bg/40 font-semibold transition text-sm group-hover:text-c-primary">
 				{$LL.Shared.GoHomeButton()}
 			</p>
 		</a>
