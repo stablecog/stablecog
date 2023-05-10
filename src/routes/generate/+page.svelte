@@ -60,7 +60,7 @@
 	let promptBarHeight: number;
 	let stageWidth: number;
 	let stageHeight: number;
-	let horizontalListHeightEstimatedRem = 4;
+	let horizontalListHeightEstimatedRem = 4.6;
 	let horizontalListHeight: number;
 	let propmtBarEstimatedHeightRem = 3.75;
 	let gridScrollContainer: HTMLDivElement;
