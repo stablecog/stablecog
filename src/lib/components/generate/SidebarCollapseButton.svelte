@@ -66,7 +66,7 @@
 		>
 			<div class="p-2">
 				<IconChevronDown
-					class="text-c-on-bg/50 w-6 h-6 transform {isClosed
+					class="text-c-on-bg/50 w-6 h-6 transform transition {isClosed
 						? side === 'right'
 							? 'rotate-90'
 							: '-rotate-90'
