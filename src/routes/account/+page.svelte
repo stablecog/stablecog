@@ -33,6 +33,7 @@
 	async function signOut() {
 		try {
 			await supabase.auth.signOut();
+			userSummary.set(undefined);
 			logSignOut({
 				'SC - User Id': $page.data.session?.user.id,
 				'SC - Stripe Product Id': $userSummary?.product_id,

@@ -29,7 +29,7 @@
 <PageWrapper bind:height {currentPage} thisPage="account">
 	<div class="w-full flex gap-3 items-center px-5 py-4">
 		<div
-			class="w-7 h-7 ring-2 ring-c-on-bg/25 rounded-full transition transform 
+			class="w-7 h-7 ring-2 ring-c-on-bg/25 rounded-full transition transform
 			relative shadow-lg shadow-c-shadow/[var(--o-shadow-strong)] items-center justify-center overflow-hidden"
 		>
 			<div class="w-full h-full">
@@ -141,6 +141,7 @@
 				close();
 				try {
 					await supabase.auth.signOut();
+					userSummary.set(undefined);
 					logSignOut({
 						'SC - User Id': $page.data.session?.user.id,
 						'SC - Stripe Product Id': $userSummary?.product_id,
