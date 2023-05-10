@@ -53,6 +53,10 @@
 	import { underDevelopment } from '$ts/stores/underDevelopment.js';
 	import { canonicalUrl } from '$ts/constants/main.js';
 	import MetaTag from '$components/MetaTag.svelte';
+	import IconChevronDown from '$components/icons/IconChevronDown.svelte';
+	import IconButton from '$components/buttons/IconButton.svelte';
+	import SidebarCollapseButton from '$components/generate/SidebarCollapseButton.svelte';
+	import { isLeftSidebarHidden } from '$ts/stores/sidebars.js';
 
 	export let data;
 
@@ -278,30 +282,43 @@
 			<div class="w-full h-full flex flex-col overflow-hidden relative z-0">
 				<Navbar />
 				<div class="w-full h-full flex flex-row overflow-hidden pt-2 md:px-4 md:pb-4 gap-4">
-					<div class="h-full hidden lg:flex w-36 xl:w-72 lg:pb-[calc(env(safe-area-inset-bottom))]">
-						<SidebarWrapper hasGradient>
-							{#if !$page.data.session?.user.id}
-								<GenerateGridPlaceholder text={$LL.Generate.Grid.NotSignedIn.Paragraph()} />
-							{:else if userGenerationFullOutputsQuery}
-								<AutoSize bind:element={gridScrollContainer}>
-									{#if $windowWidth > lgBreakpoint && gridScrollContainer}
-										<GenerationGridInfinite2
-											paddingLeft={6}
-											paddingRight={6}
-											paddingTop={6}
-											paddingBottom={80}
-											{pinnedFullOutputs}
-											noLoadingSpinnerAlignmentAdjustment
-											hasPlaceholder
-											cardType="generate"
-											generationsQuery={userGenerationFullOutputsQuery}
-											cols={$windowWidth > xlBreakpoint ? 3 : 2}
-											{gridScrollContainer}
-										/>
+					<div class="hidden lg:flex min-w-[2rem] flex-col items-start h-full relative">
+						{#if !$isLeftSidebarHidden}
+							<div
+								class="h-full {$isLeftSidebarHidden
+									? 'hidden'
+									: 'flex'} w-36 xl:w-72 lg:pb-[calc(env(safe-area-inset-bottom))] relative z-10"
+							>
+								<SidebarWrapper hasGradient>
+									{#if !$page.data.session?.user.id}
+										<GenerateGridPlaceholder text={$LL.Generate.Grid.NotSignedIn.Paragraph()} />
+									{:else if userGenerationFullOutputsQuery}
+										<AutoSize bind:element={gridScrollContainer}>
+											{#if $windowWidth > lgBreakpoint && gridScrollContainer}
+												<GenerationGridInfinite2
+													paddingLeft={6}
+													paddingRight={6}
+													paddingTop={6}
+													paddingBottom={80}
+													{pinnedFullOutputs}
+													noLoadingSpinnerAlignmentAdjustment
+													hasPlaceholder
+													cardType="generate"
+													generationsQuery={userGenerationFullOutputsQuery}
+													cols={$windowWidth > xlBreakpoint ? 3 : 2}
+													{gridScrollContainer}
+												/>
+											{/if}
+										</AutoSize>
 									{/if}
-								</AutoSize>
-							{/if}
-						</SidebarWrapper>
+								</SidebarWrapper>
+							</div>
+						{/if}
+						<SidebarCollapseButton
+							side="left"
+							isClosed={$isLeftSidebarHidden}
+							onClick={() => isLeftSidebarHidden.set(!$isLeftSidebarHidden)}
+						/>
 					</div>
 					<div
 						class="flex flex-col items-center flex-1 min-w-0 h-full relative
