@@ -47,7 +47,7 @@
 		mounted = true;
 	});
 
-	const lastNotification = 'our-first-big-update';
+	const lastNotification = 'meet-our-new-interface';
 </script>
 
 <nav
@@ -61,14 +61,14 @@
 >
 	{#if mounted && ($lastClosedNotification === null || $lastClosedNotification !== lastNotification)}
 		<Banner
-			href="/blog/our-first-big-update"
+			href="/blog/meet-our-new-interface"
 			onClose={() => {
 				lastClosedNotification.set(lastNotification);
 			}}
 		>
 			<div class="flex items-center justify-center gap-2">
 				<IconBolt class="w-6 h-6 flex-shrink-0" />
-				<p class="flex-shrink min-w-0 overflow-hidden overflow-ellipsis">Our big update is here!</p>
+				<p class="flex-shrink min-w-0 overflow-hidden overflow-ellipsis">Meet Our New Interface!</p>
 			</div>
 		</Banner>
 	{/if}
