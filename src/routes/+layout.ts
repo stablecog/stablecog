@@ -5,6 +5,7 @@ import { writable } from 'svelte/store';
 import type { TAvailableThemes } from '$ts/stores/theme';
 import { apiUrl } from '$ts/constants/main';
 import type { TUserSummary } from '$ts/stores/user/summary';
+import { isHydrated } from '$ts/helpers/isHydrated';
 
 export const load: LayoutLoad = async (event) => {
 	let { session } = await getSupabase(event);
@@ -30,15 +31,12 @@ export const load: LayoutLoad = async (event) => {
 	const locale = event.data.locale;
 	await loadLocaleAsync(locale);
 	const theme = event.data.theme;
-	const advancedMode = event.data.advancedMode;
 	const globalSeed = Math.round(Math.random() * Math.pow(10, 12));
 	return {
 		locale,
 		session,
 		theme,
 		themeStore: writable<TAvailableThemes>('dark'),
-		advancedMode,
-		advancedModeStore: writable(false),
 		userSummary,
 		userSummaryStore: writable<TUserSummary | undefined>(userSummary),
 		globalSeed,

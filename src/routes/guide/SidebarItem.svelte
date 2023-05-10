@@ -40,7 +40,7 @@
 					hovered={isSelected}
 				/>
 				<p
-					class="flex-1 transition-all {isSelected
+					class="flex-1 transition {isSelected
 						? 'text-c-primary font-semibold'
 						: level === 0 || level === 1
 						? 'text-c-on-bg font-medium'

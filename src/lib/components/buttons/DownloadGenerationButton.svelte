@@ -58,7 +58,7 @@
 	bind:this={element}
 	on:click={downloadImage}
 	disabled={downloadStatus === 'downloading'}
-	class="transition rounded-lg group/downloadbutton {classes}"
+	class="touch-manipulation transition rounded-lg group/downloadbutton {classes}"
 	aria-label="Download Image"
 >
 	<div class="p-2.5 rounded-full bg-c-bg relative overflow-hidden z-0">
@@ -77,6 +77,7 @@
 			/>
 			<IconAnimatedSpinner
 				slot="1"
+				loading={downloadStatus === 'downloading'}
 				class="w-7 h-7 text-c-on-bg relative group-focus/downloadbutton:text-c-on-primary {!$isTouchscreen
 					? 'group-hover/downloadbutton:text-c-on-primary'
 					: ''}"

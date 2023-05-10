@@ -1,6 +1,7 @@
 import type { TAvailableGenerationModelId } from '$ts/constants/generationModels';
 import { apiUrl } from '$ts/constants/main';
 import type { TAvailableSchedulerId } from '$ts/constants/schedulers';
+import { convertToDBTimeString } from '$ts/helpers/convertToDBTimeString';
 import type { TGenerationFullOutput, TGenerationOutput } from '$userStores/generation';
 
 const score_threshold = 50;
@@ -59,7 +60,7 @@ export async function getGalleryGenerationFullOutputs({
 				guidance_scale: hit.guidance_scale,
 				model_id: hit.model_id as TAvailableGenerationModelId,
 				scheduler_id: hit.scheduler_id as TAvailableSchedulerId,
-				created_at: Date.now(),
+				created_at: convertToDBTimeString(Date.now()),
 				prompt: {
 					id: hit.prompt_id,
 					text: hit.prompt_text

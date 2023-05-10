@@ -1,16 +1,19 @@
 import getSizingData from './getSizingData';
 import calculateNodeHeight from './calculateNodeHeight';
+import { tick } from 'svelte';
 
 interface TAutoResizeProps {
 	minRows?: number;
 	maxRows?: number;
 	placeholder?: string;
+	value?: string;
 }
 
 export function autoresize(node: HTMLTextAreaElement, props: TAutoResizeProps) {
-	let currentProps = props;
+	let currentProps = { ...props };
 
-	const resize = (props: TAutoResizeProps) => {
+	const resize = async (props: TAutoResizeProps) => {
+		await tick();
 		currentProps = props;
 		const nodeSizingData = getSizingData(node);
 		if (!nodeSizingData) {
@@ -27,11 +30,16 @@ export function autoresize(node: HTMLTextAreaElement, props: TAutoResizeProps) {
 
 	const resizeWithProps = () => resize(currentProps);
 	resizeWithProps();
+	let resizeTimeout: NodeJS.Timeout;
+	const resizeWithTimeout = () => {
+		clearTimeout(resizeTimeout);
+		resizeTimeout = setTimeout(resizeWithProps, 150);
+	};
 
 	node.addEventListener('input', resizeWithProps);
 	node.addEventListener('focus', resizeWithProps);
 	node.addEventListener('blur', resizeWithProps);
-	window.addEventListener('resize', resizeWithProps);
+	window.addEventListener('resize', resizeWithTimeout);
 	setTimeout(() => {
 		resizeWithProps();
 	});

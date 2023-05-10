@@ -21,21 +21,6 @@ export type TIconSc =
 	| 'email'
 	| 'producthunt';
 
-export type TNavbarRouteOption =
-	| 'home'
-	| 'live'
-	| 'blog'
-	| 'history'
-	| 'gallery'
-	| 'servers'
-	| 'users';
-
-export interface TNavbarRoute {
-	name: string;
-	href: string;
-	icon: TNavbarRouteOption;
-}
-
 export interface TBlogPost {
 	slug: string;
 	title: string;

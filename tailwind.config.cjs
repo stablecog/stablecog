@@ -50,11 +50,13 @@ module.exports = {
 				3.25: '0.8125rem',
 				4.5: '1.125rem',
 				5.5: '1.375rem',
+				7.5: '1.875rem',
 				10.5: '2.625rem',
 				6.5: '1.625rem',
 				13: '3.25rem',
 				15: '3.75rem',
 				22: '5.5rem',
+				26: '6.5rem',
 				17: '4.25rem',
 				18: '4.5rem',
 				30: '7.5rem',
@@ -154,11 +156,16 @@ module.exports = {
 			},
 			scale: {
 				25: '0.25',
+				40: '0.4',
 				60: '0.6',
 				65: '0.65',
 				70: '0.7',
 				80: '0.8',
 				85: '0.85',
+				97: '0.97',
+				98: '0.98',
+				98.5: '0.985',
+				99: '0.99',
 				101: '1.01',
 				102: '1.02',
 				103: '1.03',
@@ -175,7 +182,8 @@ module.exports = {
 				'settings-page': '0 0 1rem 0',
 				'generation-sidebar': '0 0 1rem 0',
 				'generation-modal': '0 1rem 2rem 0',
-				sheet: '0 0 2rem 0'
+				'sheet-closed': '0 0 1.5rem 0',
+				'sheet-open': '0 0 4rem 0'
 			},
 			backgroundImage: {
 				'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))'
@@ -187,7 +195,9 @@ module.exports = {
 				'4xl': '2560px'
 			},
 			ringWidth: {
-				3: '3px'
+				3: '3px',
+				5: '5px',
+				6: '6px'
 			},
 			maxWidth: {
 				'2.5xl': '45rem',
@@ -206,7 +216,8 @@ module.exports = {
 			},
 			zIndex: {
 				60: '60',
-				100: '100'
+				100: '100',
+				101: '101'
 			},
 			borderRadius: {
 				lg2: '0.625rem',

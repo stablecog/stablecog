@@ -5,15 +5,14 @@
 	import { onMount } from 'svelte';
 	import { browser } from '$app/environment';
 	import Footer from '$components/navigation/Footer.svelte';
-	import NavbarBottom from '$components/navigation/NavbarBottom.svelte';
 	import { page } from '$app/stores';
 	import { windowHeight, windowWidth } from '$ts/stores/window';
 	import type { LayoutData } from './$types';
-	import { locale, setLocale } from '$i18n/i18n-svelte';
+	import LL, { locale, setLocale } from '$i18n/i18n-svelte';
 	import { localeLS } from '$ts/stores/localeLS';
 	import { loadLocaleAsync } from '$i18n/i18n-util.async';
 	import { isLocale } from '$i18n/i18n-util';
-	import { advancedMode, advancedModeApp } from '$ts/stores/advancedMode';
+	import { advancedModeApp } from '$ts/stores/advancedMode';
 	import { apiUrl, routesWithHiddenFooter } from '$ts/constants/main';
 	import mixpanel from 'mixpanel-browser';
 	import { supabase } from '$ts/constants/supabase';
@@ -39,7 +38,7 @@
 		submitInitialGenerationRequest
 	} from '$userStores/generation';
 	import { generateSSEId } from '$ts/helpers/generateSSEId';
-	import { QueryClient, QueryClientProvider } from '@tanstack/svelte-query';
+	import { QueryClient, QueryClientProvider, createQuery } from '@tanstack/svelte-query';
 	import {
 		setUpscaleToFailed,
 		setUpscaleToServerProcessing,
@@ -52,7 +51,6 @@
 	import { userSummary } from '$ts/stores/user/summary';
 	import posthog from 'posthog-js';
 	import { PUBLIC_MP_URL, PUBLIC_MP_ID, PUBLIC_PH_ID, PUBLIC_PH_URL } from '$env/static/public';
-	import { getUserSummary } from '$ts/helpers/user/user';
 	import UnderDevelopment from '$components/UnderDevelopment.svelte';
 	import { isSuperAdmin } from '$ts/helpers/admin/roles';
 	import { isHydrated, setIsHydratedToTrue } from '$ts/helpers/isHydrated';
@@ -68,11 +66,25 @@
 		generationInitImageWidth
 	} from '$ts/stores/generationSettings';
 	import UpdateAvailableCard from '$components/UpdateAvailableCard.svelte';
+	import UserSummaryProvider from '$components/UserSummaryProvider.svelte';
+	import { underDevelopment } from '$ts/stores/underDevelopment';
+	import { setBodyClasses } from '$ts/helpers/setBodyClasses';
+	import { clickoutside } from '$ts/actions/clickoutside';
+	import { isDrawerOpen } from '$ts/stores/isDrawerOpen';
+	import { portal } from 'svelte-portal';
+	import ButtonHoverEffect from '$components/buttons/ButtonHoverEffect.svelte';
+	import IconCancel from '$components/icons/IconCancel.svelte';
+	import { fade } from 'svelte/transition';
+	import { quadIn } from 'svelte/easing';
+	import Drawer from '$components/navigation/Drawer.svelte';
+	import Logo from '$components/Logo.svelte';
 
 	export let data: LayoutData;
 	setLocale(data.locale);
 
-	const rawRoutes = ['/admin/create'];
+	const rawRoutes = ['/generate', '/'];
+	const routesWithTheirOwnDrawer = ['/guide'];
+	const sseExcludedRoutes = ['/'];
 
 	const gss = data.globalSeedStore;
 	globalSeed.set($gss);
@@ -93,22 +105,14 @@
 	themeApp.set($th);
 	if (data.theme !== null) themeApp.set(data.theme);
 
-	const adv = data.advancedModeStore;
-	advancedModeApp.set($adv);
-	if (data.advancedMode !== null && data.advancedMode !== undefined) {
-		advancedModeApp.set(data.advancedMode);
-	}
-
-	let innerHeight: number;
-	let innerWidth: number;
-
 	let mounted = false;
-
-	$: [$themeApp], setBodyClasses();
-	$: [innerWidth, innerHeight], setWindowStores();
 
 	let lastIdentity: string | undefined = undefined;
 	$: [mounted, $page], identifyUser();
+
+	$: isDrawerRoute =
+		!routesWithTheirOwnDrawer.includes($page.url.pathname) &&
+		!routesWithTheirOwnDrawer.some((r) => $page.url.pathname.startsWith(r));
 
 	function identifyUser() {
 		if (!mounted || !$page.data.session?.user.id || lastIdentity === $page.data.session?.user.id) {
@@ -130,39 +134,7 @@
 		lastIdentity = $page.data.session?.user.id;
 	}
 
-	afterNavigate(() => {
-		if (!isHydrated) {
-			setIsHydratedToTrue();
-			return;
-		} else {
-			const props = {
-				'SC - Page': `${$page.url.pathname}${$page.url.search}`,
-				'SC - Locale': $locale,
-				'SC - Advanced Mode': $advancedModeApp,
-				'SC - User Id': $page.data.session?.user.id,
-				'SC - Stripe Product Id': $userSummary?.product_id,
-				'SC - App Version': $appVersion
-			};
-			logPageview(props);
-		}
-	});
-
-	function setWindowStores() {
-		windowWidth.set(innerWidth);
-		windowHeight.set(innerHeight);
-	}
-
-	function setBodyClasses() {
-		if (browser) {
-			if ($themeApp === 'light') {
-				document.body.classList.add('theme-light');
-				document.body.classList.remove('theme-dark');
-			} else {
-				document.body.classList.add('theme-dark');
-				document.body.classList.remove('theme-light');
-			}
-		}
-	}
+	$: $themeApp, setBodyClasses();
 
 	const runIfMounted = (fn: () => void) => {
 		if (mounted) fn();
@@ -170,7 +142,6 @@
 
 	$: $locale, runIfMounted(() => setCookie(`sc-locale=${$locale}`));
 	$: $themeApp, runIfMounted(() => setCookie(`sc-theme=${$themeApp}`));
-	$: $advancedModeApp, runIfMounted(() => setCookie(`sc-advanced-mode=${$advancedModeApp}`));
 	$: $generations, onGenerationsChanged();
 	$: $upscales, onUpscalesChanged();
 
@@ -319,7 +290,11 @@
 		}
 	}
 
-	$: if (browser && (!$sse || $sse.readyState === $sse.CLOSED)) {
+	$: if (
+		browser &&
+		(!$sse || $sse.readyState === $sse.CLOSED) &&
+		!sseExcludedRoutes.includes($page.url.pathname)
+	) {
 		sseId.set(generateSSEId());
 		const sseUrl = `${apiUrl.origin}/v1/sse?id=${$sseId}`;
 		console.log('SSE ID:', $sseId);
@@ -404,27 +379,6 @@
 		}
 	}
 
-	$: $page.data.session?.user.id, getAndSetUserSummary();
-
-	async function getAndSetUserSummary() {
-		if ($page.data.session?.user.id && !$userSummary) {
-			try {
-				const summary = await getUserSummary($page.data.session.access_token);
-				if (summary) {
-					userSummary.set(summary);
-				}
-			} catch (error) {
-				console.log('Error getting user summary', error);
-			}
-			return;
-		}
-		if (!$page.data.session?.user.id) {
-			userSummary.set(undefined);
-		}
-	}
-
-	const underDevelopment = false;
-
 	let notAtTheVeryTop = false;
 	const notAtTheVeryTopThreshold = 5;
 	let oldScrollY = 0;
@@ -463,9 +417,6 @@
 			await loadLocaleAsync($localeLS);
 			setLocale($localeLS);
 		}
-		if (($advancedMode === true || $advancedMode === false) && $advancedMode !== $advancedModeApp) {
-			advancedModeApp.set($advancedMode);
-		}
 		if ($theme !== null && $theme !== $themeApp) {
 			themeApp.set($theme);
 		}
@@ -474,53 +425,73 @@
 			subscription.unsubscribe();
 		};
 	});
+
+	afterNavigate(() => {
+		if (!isHydrated) {
+			setIsHydratedToTrue();
+			return;
+		} else {
+			const props = {
+				'SC - Page': `${$page.url.pathname}${$page.url.search}`,
+				'SC - Locale': $locale,
+				'SC - Advanced Mode': $advancedModeApp,
+				'SC - User Id': $page.data.session?.user.id,
+				'SC - Stripe Product Id': $userSummary?.product_id,
+				'SC - App Version': $appVersion
+			};
+			logPageview(props);
+		}
+	});
 </script>
 
-<svelte:window bind:innerHeight bind:innerWidth on:scroll={setNavbarState} />
+<svelte:window
+	bind:innerHeight={$windowHeight}
+	bind:innerWidth={$windowWidth}
+	on:scroll={setNavbarState}
+/>
 
 <QueryClientProvider client={queryClient}>
-	{#if rawRoutes.includes($page.url.pathname)}
-		<slot />
-	{:else}
-		<div
-			class="w-full relative bg-c-bg text-c-on-bg flex flex-col {$themeApp === 'light'
-				? 'theme-light'
-				: 'theme-dark'}"
-			style="min-height: 100vh; min-height: {innerHeight
-				? `${innerHeight}px`
-				: '100svh'}; background-image: url({$themeApp === 'light'
-				? '/illustrations/grid-on-light.svg'
-				: '/illustrations/grid-on-dark.svg'}); background-size: 24px;"
-		>
-			{#if underDevelopment && (!$userSummary || !isSuperAdmin($userSummary.roles)) && !$page.url.pathname.startsWith('/admin') && !$page.url.pathname.startsWith('/api/auth') && !$page.url.pathname.startsWith('/sign-in')}
-				{#if Number($serverVersion) > Number($appVersion)}
-					<div class="w-full flex-1 flex flex-col items-center justify-center my-auto py-4">
-						<UpdateAvailableCard />
-					</div>
+	<UserSummaryProvider>
+		{#if rawRoutes.includes($page.url.pathname)}
+			<slot />
+		{:else}
+			<div
+				class="w-full bg-c-bg text-c-on-bg flex flex-col {$themeApp === 'light'
+					? 'theme-light'
+					: 'theme-dark'}"
+				style="min-height: 100vh; min-height: {$windowHeight
+					? `${$windowHeight}px`
+					: '100svh'}; background-image: url({$themeApp === 'light'
+					? '/illustrations/grid-on-light.svg'
+					: '/illustrations/grid-on-dark.svg'}); background-size: 24px;"
+			>
+				{#if $underDevelopment && (!$userSummary || !isSuperAdmin($userSummary.roles)) && !$page.url.pathname.startsWith('/admin') && !$page.url.pathname.startsWith('/api/auth') && !$page.url.pathname.startsWith('/sign-in')}
+					{#if Number($serverVersion) > Number($appVersion)}
+						<div class="w-full flex-1 flex flex-col items-center justify-center my-auto py-4">
+							<UpdateAvailableCard />
+						</div>
+					{:else}
+						<UnderDevelopment />
+					{/if}
 				{:else}
-					<UnderDevelopment />
+					<Navbar {notAtTheVeryTop} {scrollDirection} />
+					{#if $navbarStickyType === undefined || $navbarStickyType !== 'not-sticky'}
+						<div
+							style={$navbarHeight ? `height: ${$navbarHeight}px` : ``}
+							class="h-16 md:h-18 w-full"
+						/>
+					{/if}
+					<main class="w-full flex-1 flex flex-col relative break-words">
+						<slot />
+					</main>
+					{#if !routesWithHiddenFooter.includes($page.url.pathname)}
+						<Footer />
+					{/if}
 				{/if}
-			{:else}
-				<Navbar {notAtTheVeryTop} {scrollDirection} />
-				{#if $navbarStickyType === undefined || $navbarStickyType !== 'not-sticky'}
-					<div
-						style={$navbarHeight ? `height: ${$navbarHeight}px` : ``}
-						class="h-16 md:h-18 w-full"
-					/>
-				{/if}
-				<main class="w-full flex-1 flex flex-col relative break-words">
-					<slot />
-				</main>
-				{#if !routesWithHiddenFooter.includes($page.url.pathname)}
-					<Footer />
-				{/if}
-				<NavbarBottom class="md:hidden h-[calc(3.75rem+env(safe-area-inset-bottom))]" />
-				<div class="md:hidden h-[calc(3.75rem+env(safe-area-inset-bottom))]" />
-				<div
-					id="tooltip-container"
-					class="absolute overflow-x-hidden left-0 top-0 w-full h-full pointer-events-none"
-				/>
-			{/if}
-		</div>
-	{/if}
+			</div>
+		{/if}
+		{#if isDrawerRoute}
+			<Drawer />
+		{/if}
+	</UserSummaryProvider>
 </QueryClientProvider>

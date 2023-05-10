@@ -1,7 +1,7 @@
 import { apiUrl } from '$ts/constants/main';
 import type { TAvailableGenerationModelId } from '$ts/constants/generationModels';
 import type { TAvailableSchedulerId } from '$ts/constants/schedulers';
-import { writable } from 'svelte/store';
+import { get, writable } from 'svelte/store';
 import {
 	generationCostCompletionPerMs,
 	getCostCompletionPerMsFromGeneration
@@ -13,6 +13,16 @@ import {
 } from '$ts/animation/generationAnimation';
 import type { Tweened } from 'svelte/motion';
 import type { TGenerationImageCardType } from '$components/generationImage/types';
+import {
+	PUBLIC_STRIPE_PRODUCT_ID_PRO_SUBSCRIPTION,
+	PUBLIC_STRIPE_PRODUCT_ID_STARTER_SUBSCRIPTION,
+	PUBLIC_STRIPE_PRODUCT_ID_ULTIMATE_SUBSCRIPTION
+} from '$env/static/public';
+import { isSuperAdmin } from '$ts/helpers/admin/roles';
+import { userSummary } from '$ts/stores/user/summary';
+import { derived } from 'svelte/store';
+import { convertToDBTimeString } from '$ts/helpers/convertToDBTimeString';
+import { addToRecentlyUpdatedOutputIds } from '$ts/stores/user/recentlyUpdatedOutputIds';
 
 export const generations = writable<TGeneration[]>([]);
 export const activeGeneration = writable<TGenerationWithSelectedOutput | undefined>(undefined);
@@ -62,18 +72,32 @@ export const setGenerationToSucceeded = ({
 			return $generations;
 		}
 		gen.status = 'succeeded';
+		const newOutputs = outputs.map((o) => ({
+			...o,
+			status: 'succeeded' as TGenerationOutputStatus
+		}));
 		gen.outputs = [
-			...outputs.map((o) => ({ ...o, status: 'succeeded' as TGenerationOutputStatus })),
+			...newOutputs,
 			...Array.from({ length: gen.num_outputs - outputs.length }).map(() => ({
 				id: generateSSEId(),
 				image_url: '',
 				status: 'failed-nsfw' as TGenerationOutputStatus
 			}))
 		];
-		gen.completed_at = Date.now();
+		gen.completed_at = convertToDBTimeString(Date.now());
 		const costCompletionPerMs = getCostCompletionPerMsFromGeneration(gen);
 		if (costCompletionPerMs !== null) {
 			generationCostCompletionPerMs.set(costCompletionPerMs);
+		}
+		if (newOutputs.length > 0) {
+			const newOutputIds = newOutputs.map((o) => o.id);
+			const gen = { ...$generations[0] };
+			const statuses = getOutputOnStageStatuses(gen, newOutputIds);
+			statuses.forEach((onStage, i) => {
+				if (!onStage) {
+					addToRecentlyUpdatedOutputIds(newOutputIds[i]);
+				}
+			});
 		}
 		return $generations;
 	});
@@ -112,7 +136,7 @@ export const setGenerationToServerProcessing = ({ ui_id, id }: { ui_id: string; 
 			gen.outputs.forEach((o) => {
 				o.animation = newGenerationCompleteAnimation(o.animation);
 			});
-			gen.started_at = Date.now();
+			gen.started_at = convertToDBTimeString(Date.now());
 			if (!gen.ui_id) gen.ui_id = ui_id;
 			return $generations;
 		}
@@ -123,7 +147,7 @@ export const setGenerationToServerProcessing = ({ ui_id, id }: { ui_id: string; 
 			gen2.outputs.forEach((o) => {
 				o.animation = newGenerationCompleteAnimation(o.animation);
 			});
-			gen2.started_at = Date.now();
+			gen2.started_at = convertToDBTimeString(Date.now());
 			if (!gen2.id) gen2.id = id;
 			return $generations;
 		}
@@ -136,7 +160,7 @@ export async function queueInitialGenerationRequest(request: TInitialGenerationR
 		const generationToSubmit: TGeneration = {
 			...request,
 			status: 'to-be-submitted',
-			created_at: Date.now(),
+			created_at: convertToDBTimeString(Date.now()),
 			outputs: [...Array(request.num_outputs)].map(() => ({
 				id: generateSSEId(),
 				image_url: '',
@@ -151,7 +175,7 @@ export async function queueInitialGenerationRequest(request: TInitialGenerationR
 			$generations[0] = { ...generationToSubmit };
 			return $generations;
 		}
-		$generations = [generationToSubmit, ...$generations];
+		$generations.unshift(generationToSubmit);
 		return $generations;
 	});
 }
@@ -240,6 +264,17 @@ export const setGenerationOutputToSubmitted = (output_id: string) => {
 	});
 };
 
+export const getOutputOnStageStatuses = (gen: TGeneration, output_ids: string[]) => {
+	let statuses = output_ids.map((id) => false);
+	for (let i = 0; i < gen.outputs.length; i++) {
+		const output = gen.outputs[i];
+		if (output_ids.includes(output.id)) {
+			statuses[output_ids.indexOf(output.id)] = true;
+		}
+	}
+	return statuses;
+};
+
 export const setGenerationOutputUpscaledImageUrl = ({
 	output_id,
 	upscaled_image_url,
@@ -270,6 +305,41 @@ export const setGenerationOutputUpscaledImageUrl = ({
 		return $generations;
 	});
 };
+
+const productIdToMaxOngoingGenerationsCountObject = {
+	[PUBLIC_STRIPE_PRODUCT_ID_STARTER_SUBSCRIPTION]: 2,
+	[PUBLIC_STRIPE_PRODUCT_ID_PRO_SUBSCRIPTION]: 3,
+	[PUBLIC_STRIPE_PRODUCT_ID_ULTIMATE_SUBSCRIPTION]: 4
+};
+
+const baseCount = 1;
+
+const productIdToMaxOngoingGenerationsCount = (productId: string | undefined) => {
+	if (!productId) return baseCount;
+	const count = productIdToMaxOngoingGenerationsCountObject[productId];
+	if (!count) return baseCount;
+	return count;
+};
+
+export const maxOngoingGenerationsCount = derived(userSummary, ($userSummary) => {
+	const active_product_id = $userSummary?.product_id;
+	return productIdToMaxOngoingGenerationsCount(active_product_id);
+});
+
+export const ongoingGenerationsCount = derived(generations, ($generations) => {
+	return $generations.filter(
+		(g) => g.status !== 'succeeded' && g.status !== 'failed' && g.status !== 'pre-submit'
+	).length;
+});
+
+export const maxOngoingGenerationsCountReached = derived(
+	[ongoingGenerationsCount, maxOngoingGenerationsCount, userSummary],
+	([ongoingGenerationsCount, $maxOngoingGenerationsCount, $userSummary]) => {
+		return isSuperAdmin($userSummary?.roles)
+			? false
+			: ongoingGenerationsCount >= $maxOngoingGenerationsCount;
+	}
+);
 
 export interface TInitialGenerationResponse {
 	id?: string;
@@ -306,9 +376,9 @@ export interface TGeneration extends TGenerationBase {
 	id?: string;
 	ui_id: string;
 	outputs: TGenerationOutput[];
-	started_at?: number;
-	created_at: number;
-	completed_at?: number;
+	started_at?: string;
+	created_at: string;
+	completed_at?: string;
 	submit_to_gallery: boolean;
 	is_placeholder?: boolean;
 }

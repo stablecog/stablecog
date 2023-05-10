@@ -11,7 +11,7 @@
 		? 'rounded-t-xl self-stretch shadow-navbar shadow-c-shadow/[var(--o-shadow-stronger)]'
 		: 'rounded-xl shadow-lg shadow-c-shadow/[var(--o-shadow-normal)]'} {dontScale
 		? 'text-sm'
-		: 'text-xs md:text-sm'} {outline === 'primary-strong'
+		: 'text-sm'} {outline === 'primary-strong'
 		? 'ring-c-primary/30'
 		: outline === 'primary'
 		? 'ring-c-primary/15'

@@ -1,7 +1,7 @@
 <script lang="ts">
 	import ScBar from '$components/ScBar.svelte';
 	import LL from '$i18n/i18n-svelte';
-	import LinkButton from '$components/buttons/NoBgButton.svelte';
+	import NoBgButton from '$components/buttons/NoBgButton.svelte';
 	import IconBack from '$components/icons/IconBack.svelte';
 	import { isTouchscreen } from '$ts/stores/isTouchscreen';
 	import { windowHeight } from '$ts/stores/window';
@@ -26,15 +26,21 @@
 		self-stretch"
 	>
 		<div class="w-full flex justify-center mb-1 px-5 mt-5">
-			<LinkButton href="/blog" prefetch={true}>
+			<NoBgButton href="/blog" prefetch={true} hoverFrom="right">
 				<div class="flex items-center justify-center gap-2.5 px-2 py-1">
 					<IconBack
 						class="w-6 h-6 transform transition text-c-on-bg/50 group-hover:-translate-x-1
 						{!$isTouchscreen ? 'group-hover:text-c-primary' : ''}"
 					/>
-					<p class="font-bold">{$LL.Blog.BackToBlogButton()}</p>
+					<p
+						class="font-bold transition text-c-on-bg/50 {!$isTouchscreen
+							? 'group-hover:text-c-primary'
+							: ''}"
+					>
+						{$LL.Blog.BackToBlogButton()}
+					</p>
 				</div>
-			</LinkButton>
+			</NoBgButton>
 		</div>
 		<div class="w-full px-5">
 			<ScBar />

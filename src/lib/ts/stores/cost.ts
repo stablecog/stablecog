@@ -56,15 +56,8 @@ export const getCostCompletionPerMsFromGeneration = (generation: TGeneration) =>
 	if (cost === null) {
 		return null;
 	}
-	const durationMs = generation.completed_at - generation.started_at;
+	const durationMs =
+		new Date(generation.completed_at).getTime() - new Date(generation.started_at).getTime();
 	const costRatePerMs = cost / durationMs;
 	return costRatePerMs;
-};
-
-export const getUpscaleDurationMsFromUpscale = (upscale: TUpscale) => {
-	if (upscale.status !== 'succeeded' || !upscale.completed_at || !upscale.started_at) {
-		return null;
-	}
-	const durationMs = upscale.completed_at - upscale.started_at;
-	return durationMs;
 };

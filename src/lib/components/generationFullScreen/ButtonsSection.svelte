@@ -37,8 +37,12 @@
 	import IconUpload from '$components/icons/IconUpload.svelte';
 	import IconTickOnly from '$components/icons/IconTickOnly.svelte';
 	import IconAnimatedSpinner from '$components/icons/IconAnimatedSpinner.svelte';
-	import { userGenerationFullOutputsQueryKey } from '$ts/stores/user/keys';
+	import {
+		generatePageUserGenerationFullOutputsQueryKey,
+		userGenerationFullOutputsQueryKey
+	} from '$ts/stores/user/keys';
 	import { appVersion } from '$ts/stores/appVersion';
+	import { replaceOutputInUserQueryData } from '$ts/helpers/replaceOutputInUserQueryData';
 
 	export let generation: TGenerationWithSelectedOutput;
 	export let generateSimilarUrl: string;
@@ -111,27 +115,21 @@
 				body: JSON.stringify({ generation_output_ids: [generation.selected_output.id] })
 			});
 			if (!res.ok) throw new Error('Response not ok');
-			console.log('Delete generation output response', res);
 			logGenerationOutputDeleted(logProps);
 			if (modalType === 'history') {
-				queryClient.setQueryData($userGenerationFullOutputsQueryKey, (data: any) => ({
-					...data,
-					pages: data.pages.map((page: TUserGenerationFullOutputsPage) => {
-						return {
-							...page,
-							outputs: page.outputs.map((output) =>
-								output.id === generation.selected_output.id
-									? { ...output, is_deleted: true }
-									: output
-							)
-						};
-					})
-				}));
-			} else if (modalType === 'generate') {
+				replaceOutputInUserQueryData(queryClient, $userGenerationFullOutputsQueryKey, {
+					id: generation.selected_output.id,
+					is_deleted: true
+				});
+			} else if (modalType === 'generate' || modalType === 'stage') {
 				setGenerationOutputToDeleted(generation.selected_output.id);
+				replaceOutputInUserQueryData(queryClient, $generatePageUserGenerationFullOutputsQueryKey, {
+					id: generation.selected_output.id,
+					is_deleted: true
+				});
 			}
-			activeGeneration.set(undefined);
 			deleteStatus = 'success';
+			activeGeneration.set(undefined);
 		} catch (error) {
 			console.log('Error deleting generation output', error);
 			resetDeleteStatus();
@@ -177,59 +175,44 @@
 		}
 	}
 
+	function setFavoriteQuery(query: string[], action: 'add' | 'remove') {
+		queryClient.setQueryData($userGenerationFullOutputsQueryKey, (data: any) => ({
+			...data,
+			pages: data.pages.map((page: TUserGenerationFullOutputsPage) => {
+				return {
+					...page,
+					outputs: page.outputs.map((output) =>
+						output.id === generation.selected_output.id ? { ...output, is_deleted: true } : output
+					)
+				};
+			})
+		}));
+	}
+
 	const resetSubmitToGalleryStatus = () => (submitToGalleryStatus = 'idle');
 </script>
 
 <div class="w-full flex flex-wrap gap-3 pb-1">
-	{#if (modalType === 'generate' || modalType === 'history') && !generation.selected_output.image_url.includes('placeholder')}
-		<SubtleButton
-			onClick={onDownloadImageClicked}
-			disabled={buttonObjectsWithState.download.state === 'loading'}
-			state={buttonObjectsWithState.download.state === 'success' ? 'success' : 'idle'}
-		>
-			<Morpher morphed={buttonObjectsWithState.download.state === 'success'}>
-				<div slot="0" class="flex items-center justify-center gap-1.5">
-					<Morpher morphed={buttonObjectsWithState.download.state === 'loading'}>
-						<div slot="0" class="flex items-center justify-center gap-1.5">
-							<IconDownload class="w-5 h-5 -ml-0.5" />
-							<p>{$LL.GenerationFullscreen.DownloadButton()}</p>
-						</div>
-						<div slot="1" class="flex items-center justify-center gap-1.5">
-							<IconAnimatedSpinner class="w-5 h-5" />
-						</div>
-					</Morpher>
-				</div>
-				<div slot="1" class="flex items-center justify-center gap-1.5">
-					<IconTick class="w-5 h-5 -ml-0.5 transform scale-110 text-c-on-primary" />
-					<p>{$LL.GenerationFullscreen.DoneButtonState()}</p>
-				</div>
-			</Morpher>
-		</SubtleButton>
-	{/if}
-	{#if modalType === 'history' || modalType === 'gallery'}
-		<div class="flex relative">
-			<SubtleButton
-				prefetch={true}
-				href={generateSimilarUrl}
-				onClick={() => {
-					if (modalType === 'gallery') {
-						logGalleryGenerateSimilarClicked({
-							'SC - Advanced Mode': $advancedModeApp,
-							'SC - Output Id': generation.selected_output.id,
-							'SC - User Id': $page.data.session?.user.id,
-							'SC - Stripe Product Id': $userSummary?.product_id,
-							'SC - App Version': $appVersion
-						});
-					}
-				}}
-			>
-				<div class="flex items-center justify-center gap-1.5">
-					<IconWand class="w-5 h-5 -ml-0.5" />
-					<p>{$LL.GenerationFullscreen.GenerateSimilarButton()}</p>
-				</div>
-			</SubtleButton>
+	<SubtleButton
+		prefetch={true}
+		href={generateSimilarUrl}
+		onClick={() => {
+			if (modalType === 'gallery') {
+				logGalleryGenerateSimilarClicked({
+					'SC - Advanced Mode': $advancedModeApp,
+					'SC - Output Id': generation.selected_output.id,
+					'SC - User Id': $page.data.session?.user.id,
+					'SC - Stripe Product Id': $userSummary?.product_id,
+					'SC - App Version': $appVersion
+				});
+			}
+		}}
+	>
+		<div class="flex items-center justify-center gap-1.5">
+			<IconWand class="w-5 h-5 -ml-0.5" />
+			<p>{$LL.GenerationFullscreen.GenerateSimilarButton()}</p>
 		</div>
-	{/if}
+	</SubtleButton>
 	<div
 		use:copy={generation.prompt.text}
 		on:svelte-copy={() => setButtonObjectWithState('prompt', 'success')}
@@ -247,6 +230,34 @@
 			</Morpher>
 		</SubtleButton>
 	</div>
+	{#if (modalType === 'generate' || modalType === 'history') && !generation.selected_output.image_url.includes('placeholder')}
+		<SubtleButton
+			onClick={onDownloadImageClicked}
+			disabled={buttonObjectsWithState.download.state === 'loading'}
+			state={buttonObjectsWithState.download.state === 'success' ? 'success' : 'idle'}
+		>
+			<Morpher morphed={buttonObjectsWithState.download.state === 'success'}>
+				<div slot="0" class="flex items-center justify-center gap-1.5">
+					<Morpher morphed={buttonObjectsWithState.download.state === 'loading'}>
+						<div slot="0" class="flex items-center justify-center gap-1.5">
+							<IconDownload class="w-5 h-5 -ml-0.5" />
+							<p>{$LL.GenerationFullscreen.DownloadButton()}</p>
+						</div>
+						<div slot="1" class="flex items-center justify-center gap-1.5">
+							<IconAnimatedSpinner
+								class="w-5 h-5"
+								loading={buttonObjectsWithState.download.state === 'loading'}
+							/>
+						</div>
+					</Morpher>
+				</div>
+				<div slot="1" class="flex items-center justify-center gap-1.5">
+					<IconTick class="w-5 h-5 -ml-0.5 transform scale-110 text-c-on-primary" />
+					<p>{$LL.GenerationFullscreen.DoneButtonState()}</p>
+				</div>
+			</Morpher>
+		</SubtleButton>
+	{/if}
 	{#if modalType === 'gallery'}
 		<div use:copy={linkUrl} on:svelte-copy={() => setButtonObjectWithState('link', 'success')}>
 			<SubtleButton state={buttonObjectsWithState.link.state === 'success' ? 'success' : 'idle'}>
@@ -281,7 +292,10 @@
 								<p>{$LL.GenerationFullscreen.SubmitToGalleryButton()}</p>
 							</div>
 							<div slot="1" class="flex items-center justify-center gap-1.5 text-c-on-bg">
-								<IconAnimatedSpinner class="w-5 h-5" />
+								<IconAnimatedSpinner
+									loading={submitToGalleryStatus === 'loading'}
+									class="w-5 h-5"
+								/>
 							</div>
 						</Morpher>
 					</div>
@@ -302,7 +316,7 @@
 								<p>{$LL.Shared.DeleteButton()}</p>
 							</div>
 							<div slot="1" class="flex items-center justify-center gap-1.5 text-c-on-primary">
-								<IconAnimatedSpinner class="w-5 h-5" />
+								<IconAnimatedSpinner loading={deleteStatus === 'loading'} class="w-5 h-5" />
 							</div>
 						</Morpher>
 					</div>

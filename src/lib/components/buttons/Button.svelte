@@ -40,28 +40,40 @@
 			});
 		}
 	}
+
+	let width: number;
+	let height: number;
+
+	$: buttonSize = smallestSquareSide(width, height);
+
+	function smallestSquareSide(width: number, height: number): number {
+		const diagonal = Math.sqrt(width * width + height * height);
+		return diagonal;
+	}
 </script>
 
 {#if href}
 	<a
+		bind:clientWidth={width}
+		bind:clientHeight={height}
 		on:click={_onClick}
 		{href}
 		{target}
 		data-sveltekit-preload-data={prefetch && (target === '_self' || target === undefined)
 			? 'hover'
 			: 'off'}
-		class="{noPadding
+		class="touch-manipulation relative flex items-center justify-center text-center font-bold gap-2
+			overflow-hidden z-0 group {noPadding
 			? 'p-0'
 			: size === 'xs'
 			? 'px-4.5 py-3'
 			: size === 'sm'
-			? 'px-4 md:px-6 py-4'
-			: 'px-6 md:px-8 py-5'} {size === 'xs'
+			? 'px-4 md:px-5 py-3.5'
+			: 'px-6 md:px-8 py-4.5'} {size === 'xs'
 			? 'text-sm rounded-lg2'
 			: size === 'sm'
 			? 'text-sm rounded-lg2'
-			: 'text-base rounded-xl'} relative flex items-center justify-center text-center font-bold gap-2 
-			overflow-hidden z-0 group {type === 'no-bg-on-bg'
+			: 'text-base rounded-xl'} {type === 'no-bg-on-bg'
 			? ''
 			: 'shadow-lg shadow-c-shadow/[var(--o-shadow-strong)]'} {type === 'no-bg-on-bg'
 			? 'text-c-on-bg/60'
@@ -80,19 +92,20 @@
 			: 'bg-c-primary'} {classes} {shouldAnimate ? 'scale-animation' : ''}"
 	>
 		<div
-			class="w-[200%] h-full absolute left-0 top-0 flex items-center justify-center {$isTouchscreen
+			style="width: {buttonSize}px; height: {buttonSize}px;"
+			class="absolute left-1/2 top-1/2 transform -translate-y-1/2 -translate-x-1/2 flex items-center justify-center {$isTouchscreen
 				? 'hidden'
 				: 'flex'}"
 		>
 			<div
-				class="w-full aspect-square origin-left rounded-full transition transform -translate-x-full 
-				{type === 'success'
+				class="absolute w-full h-full rounded-full transition transform left-0 -translate-x-full
+					{type === 'success'
 					? 'bg-c-success-secondary'
 					: type === 'danger'
 					? 'bg-c-danger-secondary'
 					: type === 'no-bg-on-bg'
 					? 'bg-c-on-bg/10'
-					: 'bg-c-secondary'} {!$isTouchscreen ? 'group-hover:translate-x-[-45%]' : ''}"
+					: 'bg-c-secondary'} {!$isTouchscreen ? 'group-hover:translate-x-0' : ''}"
 			/>
 		</div>
 		<div class="relative">
@@ -133,20 +146,22 @@
 	</a>
 {:else}
 	<button
+		bind:clientWidth={width}
+		bind:clientHeight={height}
 		on:click={_onClick}
 		disabled={disabled || loading || uploading}
-		class="{noPadding
+		class="touch-manipulation relative flex items-center justify-center text-center font-bold gap-2
+			overflow-hidden z-0 group {noPadding
 			? 'p-0'
 			: size === 'xs'
 			? 'px-4.5 py-3'
 			: size === 'sm'
-			? 'px-6 md:px-8 py-4'
-			: 'px-6 md:px-8 py-5'} {size === 'xs'
+			? 'px-4 md:px-5 py-4'
+			: 'px-6 md:px-8 py-4.5'} {size === 'xs'
 			? 'text-sm rounded-lg2'
 			: size === 'sm'
 			? 'text-sm rounded-lg2'
-			: 'text-base rounded-xl'} relative flex items-center justify-center text-center font-bold gap-2 
-			overflow-hidden z-0 group {type === 'no-bg-on-bg'
+			: 'text-base rounded-xl'} {type === 'no-bg-on-bg'
 			? ''
 			: 'shadow-lg shadow-c-shadow/[var(--o-shadow-strong)]'} {type === 'no-bg-on-bg'
 			? 'text-c-on-bg/60'
@@ -167,21 +182,20 @@
 			: ''}"
 	>
 		<div
-			class="w-[200%] h-full absolute left-0 top-0 flex items-center justify-center {$isTouchscreen
+			style="width: {buttonSize}px; height: {buttonSize}px;"
+			class="absolute left-1/2 top-1/2 transform -translate-y-1/2 -translate-x-1/2 flex items-center justify-center {$isTouchscreen
 				? 'hidden'
 				: 'flex'}"
 		>
 			<div
-				class="w-full aspect-square origin-left rounded-full transition transform -translate-x-full 
+				class="absolute w-full h-full rounded-full transition transform left-0 -translate-x-full
 					{type === 'success'
 					? 'bg-c-success-secondary'
 					: type === 'danger'
 					? 'bg-c-danger-secondary'
 					: type === 'no-bg-on-bg'
 					? 'bg-c-on-bg/10'
-					: 'bg-c-secondary'} {!$isTouchscreen
-					? 'group-enabled:group-hover:translate-x-[-45%]'
-					: ''}"
+					: 'bg-c-secondary'} {!$isTouchscreen ? 'group-enabled:group-hover:translate-x-0' : ''}"
 			/>
 		</div>
 		<div class="relative">
@@ -208,11 +222,12 @@
 					class="w-full h-full absolute left-0 top-0 pointer-events-none flex justify-center items-center"
 				>
 					<div
-						class="{size === 'sm' ? 'w-6 h-6' : 'w-7 h-7'} transition transform {uploading
+						class="{size === 'sm' ? 'w-6 h-6' : 'w-7 h-7'} transition transform {!loading &&
+						uploading
 							? 'scale-100'
 							: 'scale-0'}"
 					>
-						<IconAnimatedUploading class="w-full h-full" loading={uploading} />
+						<IconAnimatedUploading class="w-full h-full" loading={!loading && uploading} />
 					</div>
 				</div>
 			{:else}

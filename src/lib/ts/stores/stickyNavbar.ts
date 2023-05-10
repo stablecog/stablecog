@@ -42,12 +42,12 @@ export const navbarRouteDefinitions = derived(
 				stickyType: $windowWidth < mdBreakpoint ? 'auto' : 'sticky'
 			},
 			{
-				pathname: '/admin/create',
+				pathname: '/generate',
 				stickyType: 'not-sticky'
 			},
 			{
 				pathname: '/',
-				stickyType: $windowWidth < mdBreakpoint ? 'auto' : 'sticky',
+				stickyType: 'sticky',
 				noStartsWith: true
 			}
 		];

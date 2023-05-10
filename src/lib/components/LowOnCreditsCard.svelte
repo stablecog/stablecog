@@ -9,13 +9,13 @@
 </script>
 
 <div
-	class="max-w-full flex flex-col md:flex-row items-center gap-4 md:gap-8 rounded-2xl bg-c-primary/10 ring-2 ring-c-primary/20 p-3 md:p-4 {classes}"
+	class="max-w-full flex flex-col md:flex-row items-center rounded-2xl bg-c-primary/10 ring-2 ring-c-primary/20 {classes}"
 >
-	<div class="flex flex-1 flex-col px-1 max-w-xl">
-		<p class="font-bold text-lg text-c-primary -mt-0.5 md:-mt-1">
+	<div class="flex flex-1 flex-col px-4 py-4 max-w-xl">
+		<p class="font-bold text-base md:text-lg text-c-primary -mt-0.5 md:-mt-1">
 			{$LL.LowOnCreditsCard.Title({ remainingCredits: $userSummary?.total_remaining_credits })}
 		</p>
-		<p class="mt-1 leading-relaxed text-sm">
+		<p class="mt-1 leading-relaxed text-xs md:text-base">
 			{#if !$userSummary?.product_id}
 				{$LL.LowOnCreditsCard.FreeParagraph()}
 			{:else if $userSummary?.product_id === STRIPE_HIGHEST_PRODUCT_ID_SUBSCRIPTIONS}
@@ -25,7 +25,9 @@
 			{/if}
 		</p>
 	</div>
-	<div class="w-full md:w-auto flex justify-start items-center flex-wrap gap-3">
+	<div
+		class="w-full md:w-auto flex justify-start items-center md:flex-col md:items-stretch gap-2 flex-wrap -mt-4 md:mt-0 p-3.5 md:p-3"
+	>
 		{#if !$userSummary?.product_id}
 			<Button size="sm" href="/pricing#plans">{$LL.Pricing.SubscribeButton()}</Button>
 			<Button size="sm" href="/discord">{$LL.Shared.JoinOnDiscord()}</Button>

@@ -36,7 +36,7 @@
 
 <MetaTag
 	title="Change Plan | Stablecog"
-	description="Change your Stablecog subscription plan."
+	description="Change your Stablecog subscription plan. Free, multilingual and open-source AI image generator using Stable Diffusion and Kandinsky."
 	imageUrl="{canonicalUrl}/previews{$page.url.pathname}.png"
 	canonical="{canonicalUrl}{$page.url.pathname}"
 />
@@ -52,7 +52,7 @@
 		</p>
 		{#if currentPlan}
 			<div
-				class="w-full max-w-sm flex flex-col items-start p-4 rounded-2xl bg-c-bg ring-2 ring-c-bg-secondary mt-5 
+				class="w-full max-w-sm flex flex-col items-start p-4 rounded-2xl bg-c-bg ring-2 ring-c-bg-secondary mt-5
 				shadow-xl shadow-c-shadow/[var(--o-shadow-normal)]"
 			>
 				<p class="text-sm text-c-on-bg/60 px-1">{$LL.Account.Subscription.NewPlanTitle()}</p>
@@ -66,6 +66,6 @@
 				</p>
 			</div>
 		{/if}
-		<Button href="/" withSpinner class="mt-6">{$LL.Shared.StartGeneratingButton()}</Button>
+		<Button href="/generate" withSpinner class="mt-6">{$LL.Shared.StartGeneratingButton()}</Button>
 	</div>
 </PageWrapper>

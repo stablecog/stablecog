@@ -6,7 +6,6 @@
 	import IconCancel from '$components/icons/IconCancel.svelte';
 	import IconDropzone from '$components/icons/IconDropzone.svelte';
 	import IconRefresh from '$components/icons/IconRefresh.svelte';
-	import IconTick from '$components/icons/IconTick.svelte';
 	import IconTickOnly from '$components/icons/IconTickOnly.svelte';
 	import IconTrashcan from '$components/icons/IconTrashcan.svelte';
 	import IconWarningOutline from '$components/icons/IconWarningOutline.svelte';
@@ -242,7 +241,7 @@
 				{#if $generationInitImageFilesState === 'error'}
 					<div class="w-full bg-c-bg-secondary h-2px" />
 					<div
-						class="w-full text-center leading-normal py-3 px-4 flex justify-center items-center text-xs text-c-danger 
+						class="w-full text-center leading-normal py-3 px-4 flex justify-center items-center text-sm text-c-danger 
 						relative pointer-events-none"
 					>
 						<p>{$LL.Error.TryAnotherImage()}</p>
@@ -257,6 +256,7 @@
 							{$LL.Home.InitialImageStrengthTabBar.TitleAlt()}
 						</p>
 						<RangeInputWithNumerator
+							name={$LL.Home.InitialImageStrengthTabBar.Title()}
 							min={initImageStrengthMin}
 							max={initImageStrengthMax}
 							step={initImageStrengthStep}
@@ -303,7 +303,7 @@
 				<p
 					class="w-full text-center {isDraggedInside
 						? 'text-c-primary'
-						: 'text-c-on-bg/50'} text-xs font-normal min-w-0 flex-1 leading-normal transition {!$isTouchscreen
+						: 'text-c-on-bg/50'} text-sm font-normal min-w-0 flex-1 leading-normal transition {!$isTouchscreen
 						? 'group-hover:text-c-primary'
 						: ''}"
 				>

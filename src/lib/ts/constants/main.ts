@@ -13,7 +13,7 @@ export const apiUrl = new URL(
 );
 
 export const routesWithHealthCheck = ['/', '/history', '/canvas'];
-export const routesWithHiddenFooter = ['/canvas', '/create'];
+export const routesWithHiddenFooter = ['/canvas'];
 
 export const maxProPixelSteps = 640 * 640 * 50;
 

@@ -1,12 +1,13 @@
 <script lang="ts">
 	import { browser } from '$app/environment';
 	import { page } from '$app/stores';
-	import AnchorOrDiv from '$components/AnchorOrDiv.svelte';
 	import CopyButton from '$components/buttons/CopyButton.svelte';
 	import DownloadGenerationButton from '$components/buttons/DownloadGenerationButton.svelte';
 	import FavoriteButton from '$components/buttons/FavoriteButton.svelte';
 	import GenerateButton from '$components/buttons/GenerateButton.svelte';
 	import IconButton from '$components/buttons/IconButton.svelte';
+	import UpscaleAnimation from '$components/generate/UpscaleAnimation.svelte';
+	import { onSelectButtonClicked } from '$components/generationImage/helpers';
 	import type { TGenerationImageCardType } from '$components/generationImage/types';
 	import IconCancelCircle from '$components/icons/IconCancelCircle.svelte';
 	import IconGalleryFilled from '$components/icons/IconGalleryFilled.svelte';
@@ -29,11 +30,10 @@
 		userGalleryCurrentView,
 		userGallerySelectedOutputIds
 	} from '$ts/stores/user/gallery';
-	import {
-		addToGalleryActionableItems,
-		toggleGalleryActionableItemsState
-	} from '$ts/stores/user/galleryActionableItems';
+	import { addToGalleryActionableItems } from '$ts/stores/user/galleryActionableItems';
+	import { recentlyUpdatedOutputIds } from '$ts/stores/user/recentlyUpdatedOutputIds';
 	import { userSummary } from '$ts/stores/user/summary';
+	import { upscales } from '$ts/stores/user/upscale';
 	import { activeGeneration, type TGenerationWithSelectedOutput } from '$userStores/generation';
 
 	export let generation: TGenerationWithSelectedOutput;
@@ -67,17 +67,22 @@
 	$: modalShouldOpen =
 		!$isTouchscreen ||
 		$lastClickedOutputId === generation.selected_output.id ||
-		cardType === 'create';
+		cardType === 'generate';
 
 	$: overlayShouldShow = $isTouchscreen && $lastClickedOutputId === generation.selected_output.id;
 
-	$: logProps = {
-		'SC - Output Id': generation.selected_output.id,
-		'SC - User Id': $page.data.session?.user.id,
-		'SC - Stripe Product Id': $userSummary?.product_id,
-		'SC - Advanced Mode': $advancedModeApp,
-		'SC - App Version': $appVersion
-	};
+	$: isRecentlyUpdated =
+		cardType === 'gallery' || cardType === 'admin-gallery'
+			? false
+			: $recentlyUpdatedOutputIds.includes(generation.selected_output.id);
+
+	$: upscaleFromStore =
+		cardType !== 'gallery' && cardType !== 'admin-gallery'
+			? $upscales.find(
+					(upscale) =>
+						upscale.type === 'from_output' && upscale.input === generation.selected_output.id
+			  )
+			: undefined;
 
 	let imageClickHref: string;
 
@@ -91,20 +96,6 @@
 			params = `output=${generation.selected_output.id}`;
 		}
 		imageClickHref = `${$page.url.pathname}?${params}`;
-	}
-
-	async function onSelectButtonClicked(
-		e: MouseEvent & {
-			currentTarget: EventTarget & HTMLButtonElement;
-		}
-	) {
-		toggleGalleryActionableItemsState({
-			output_id: generation.selected_output.id,
-			generation_id: generation.id || '',
-			cardType,
-			type: isInGallerySelectedIds ? 'remove' : 'add'
-		});
-		e.currentTarget.blur();
 	}
 </script>
 
@@ -137,16 +128,24 @@
 		height={generation.height}
 	/>
 {/if}
+{#if upscaleFromStore?.animation}
+	<UpscaleAnimation
+		animation={upscaleFromStore.animation}
+		isProcessing={upscaleFromStore.status !== 'failed' &&
+			upscaleFromStore.status !== 'succeeded' &&
+			!generation.selected_output.upscaled_image_url}
+	/>
+{/if}
 <!-- Barriers -->
-{#if cardType !== 'stage' && cardType !== 'create' && cardType !== 'gallery' && cardType !== 'generate'}
+{#if cardType !== 'stage' && cardType !== 'generate' && cardType !== 'gallery' && !generation.selected_output.is_deleted}
 	<div
-		class="absolute top-0 left-0 w-full h-24 bg-gradient-to-b from-c-barrier/90 via-c-barrier/60 to-c-barrier/0 
+		class="absolute top-0 left-0 w-full h-24 bg-gradient-to-b from-c-barrier/90 via-c-barrier/60 to-c-barrier/0
 		flex justify-between transition items-start {!$isTouchscreen
 			? 'group-focus-within:opacity-100 group-hover:opacity-100'
 			: ''} {isGalleryEditActive || overlayShouldShow ? 'opacity-100' : 'opacity-0'}"
 	/>
 {/if}
-{#if cardType !== 'create' && !generation.selected_output.is_deleted && !isGalleryEditActive}
+{#if cardType !== 'generate' && !generation.selected_output.is_deleted && !isGalleryEditActive}
 	<div
 		class="absolute bottom-0 left-0 w-full h-full max-h-[12rem] bg-gradient-to-t transition
 		from-c-barrier/90 via-c-barrier/60 to-c-barrier/0 {!$isTouchscreen
@@ -154,11 +153,28 @@
 			: ''} {overlayShouldShow ? 'opacity-100' : 'opacity-0'}"
 	/>
 {/if}
+{#if cardType !== 'gallery' && cardType !== 'admin-gallery' && isRecentlyUpdated}
+	<div class="absolute w-full pointer-events-none">
+		<div
+			class="absolute left-0 top-0 w-full h-12 bg-gradient-to-b from-c-barrier/75 to-c-barrier/0"
+		/>
+		<div
+			class="{cardType === 'stage' ? 'w-6 h-6' : 'w-5 h-5'} {cardType === 'generate'
+				? '-left-0.5 -top-0.5'
+				: 'left-0 top-0'} relative"
+		>
+			<div class="absolute w-full h-full rounded-full animate-ping-custom bg-c-primary/50" />
+			<div class="w-full h-full transform scale-40">
+				<div class="w-full h-full rounded-full animate-ping-custom-bg bg-c-primary" />
+			</div>
+		</div>
+	</div>
+{/if}
 {#if !generation.selected_output.is_deleted && !isGalleryEditActive}
-	<AnchorOrDiv
+	<a
 		href={imageClickHref}
-		anchorPreventDefault={true}
-		onClick={(e) => {
+		data-sveltekit-preload-data="hover"
+		on:click|preventDefault={(e) => {
 			if (!modalShouldOpen) {
 				lastClickedOutputId.set(generation.selected_output.id);
 				return;
@@ -173,7 +189,13 @@
 			e.currentTarget.blur();
 			activeGeneration.set({ ...generation, card_type: cardType });
 			if ($page.url.pathname === '/gallery') {
-				logGalleryGenerationOpened(logProps);
+				logGalleryGenerationOpened({
+					'SC - Output Id': generation.selected_output.id,
+					'SC - User Id': $page.data.session?.user.id,
+					'SC - Stripe Product Id': $userSummary?.product_id,
+					'SC - Advanced Mode': $advancedModeApp,
+					'SC - App Version': $appVersion
+				});
 			}
 			const searchParams = new URLSearchParams(window.location.search);
 			searchParams.set('output', generation.selected_output.id);
@@ -181,10 +203,10 @@
 		}}
 		class="w-full h-full absolute left-0 top-0 flex flex-col justify-end items-start overflow-hidden gap-4"
 	>
-		{#if cardType !== 'create'}
+		{#if cardType !== 'generate'}
 			<div
-				class="w-full h-full pt-16 flex flex-col justify-end items-start flex-shrink 
-				transition text-xs relative z-0 overflow-hidden
+				class="w-full h-full pt-16 flex flex-col justify-end items-start flex-shrink
+				transition text-sm relative z-0 overflow-hidden
 			 	pointer-events-none {!$isTouchscreen
 					? 'group-focus-within:translate-y-0 group-hover:translate-y-0'
 					: ''} {overlayShouldShow ? 'translate-y-0' : 'translate-y-full'}"
@@ -204,9 +226,9 @@
 				</div>
 			</div>
 		{/if}
-	</AnchorOrDiv>
+	</a>
 {/if}
-{#if cardType !== 'create'}
+{#if cardType !== 'generate'}
 	<div
 		class="w-full h-full absolute left-0 top-0 pointer-events-none flex items-start justify-between"
 	>
@@ -246,7 +268,7 @@
 			{#if !isGalleryEditActive && !generation.selected_output.is_deleted}
 				<div
 					bind:this={rightButtonContainer}
-					class="flex flex-row flex-wrap items-center justify-end transition transform 
+					class="flex flex-row flex-wrap items-center justify-end transition transform
 					pointer-events-auto"
 				>
 					{#if cardType !== 'admin-gallery'}
@@ -257,7 +279,7 @@
 							bind:copiedTimeout={promptCopiedTimeout}
 						/>
 					{/if}
-					{#if cardType === 'generate' || cardType === 'history'}
+					{#if cardType === 'history' || cardType === 'stage'}
 						<DownloadGenerationButton class="p-1.5 -ml-1.5" {generation} />
 					{:else if cardType === 'gallery'}
 						<GenerateButton {generation} class="p-1.5 -ml-1.5" />
@@ -274,14 +296,22 @@
 {/if}
 <!-- Deleted, approved or rejected -->
 {#if generation.selected_output.is_deleted || (cardType === 'admin-gallery' && showAdminGalleryBarrier) || (cardType === 'history' && $userGalleryCurrentView === 'favorites' && !generation.selected_output.is_favorited)}
+	{@const sizeClasses =
+		generation.height > generation.width
+			? cardType === 'generate'
+				? 'h-full max-h-[2rem] w-auto'
+				: 'h-full max-h-[3rem] w-auto'
+			: cardType === 'generate'
+			? 'w-full max-w-[2rem] h-auto'
+			: 'w-full max-w-[3rem] h-auto'}
 	<div class="w-full h-full absolute left-0 top-0 bg-c-barrier/85 z-10" />
-	<div class="w-full h-full absolute left-0 top-0 flex items-center justify-center p-4 z-20">
+	<div class="w-full h-full absolute left-0 top-0 flex items-center justify-center p-1 z-20">
 		{#if generation.selected_output.is_deleted}
-			<IconTrashcan class="text-c-danger w-12 h-12" />
+			<IconTrashcan class="text-c-danger {sizeClasses}" />
 		{:else if generation.selected_output.gallery_status === 'approved'}
-			<IconTick class="text-c-success w-12 h-12" />
+			<IconTick class="text-c-success {sizeClasses}" />
 		{:else if generation.selected_output.gallery_status === 'rejected'}
-			<IconCancelCircle class="text-c-danger w-12 h-12" />
+			<IconCancelCircle class="text-c-danger {sizeClasses}" />
 		{/if}
 	</div>
 {/if}
@@ -296,7 +326,14 @@
 			(cardType === 'history' &&
 				$userGalleryCurrentView === 'favorites' &&
 				!generation.selected_output.is_favorited)}
-		on:click={onSelectButtonClicked}
+		on:click={(e) =>
+			onSelectButtonClicked({
+				e,
+				cardType,
+				generation_id: generation.id,
+				output_id: generation.selected_output.id,
+				isInGallerySelectedIds
+			})}
 		class="w-full h-full absolute left-0 top-0 flex flex-col justify-start items-start z-30"
 	/>
 {/if}

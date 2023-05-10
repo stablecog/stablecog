@@ -211,9 +211,8 @@
 	}
 
 	const tooltipStyleProps: TTooltipProps = {
-		parentContainerId: 'tooltip-container',
-		titleClass: 'font-medium text-c-on-bg/50 text-sm leading-relaxed text-left',
-		descriptionClass: 'font-bold text-sm leading-relaxed text-right',
+		titleClass: 'font-normal text-c-on-bg/50 text-sm leading-relaxed text-left',
+		descriptionClass: 'font-semibold text-sm leading-relaxed text-right',
 		rowClass: 'w-full flex gap-4 justify-between',
 		wrapperClass: 'w-full transition duration-250 transform -mt-0.25',
 		animationTime: 250,
@@ -243,7 +242,7 @@
 
 <MetaTag
 	title="Live | Stablecog"
-	description="Watch generations happening live on Stablecog (free and multi-lingual AI image generator)."
+	description="Watch generations happening live on Stablecog. Free, multilingual and open-source AI image generator using Stable Diffusion and Kandinsky."
 	imageUrl="{canonicalUrl}/previews{$page.url.pathname}.png"
 	canonical="{canonicalUrl}{$page.url.pathname}"
 />
@@ -254,13 +253,13 @@
 			class="w-full px-8 md:px-16 flex flex-wrap items-center justify-center py-2 md:pt-10 gap-10 lg:gap-14"
 		>
 			<div class="w-full lg:w-64 max-w-full flex flex-col gap-1.5 text-center lg:text-right">
-				<h1 class="text-c-on-bg/50 text-sm">{$LL.Live.GenerationsTitle()}</h1>
+				<h1 class="text-c-on-bg/50 font-medium text-base">{$LL.Live.GenerationsTitle()}</h1>
 				<p class="font-bold text-4xl">
 					{Math.floor($generationTotalCount).toLocaleString($locale)}
 				</p>
 			</div>
 			<div class="w-full lg:w-64 max-w-full flex flex-col gap-1.5 text-center lg:text-left">
-				<h1 class="text-c-on-bg/50 text-sm">{$LL.Live.UpscalesTitle()}</h1>
+				<h1 class="text-c-on-bg/50 font-medium text-base">{$LL.Live.UpscalesTitle()}</h1>
 				<p class="font-bold text-4xl">
 					{Math.floor($upscaleTotalCount).toLocaleString($locale)}
 				</p>
@@ -436,7 +435,9 @@
 			>
 				<div class="w-full flex flex-col items-center justify-center py-4">
 					<IconPulsing />
-					<p class="w-full text-c-on-bg/40 text-center mt-1.5">{$LL.Live.WaitingTitle()}</p>
+					<p class="w-full text-c-on-bg/40 font-medium text-center mt-1.5">
+						{$LL.Live.WaitingTitle()}
+					</p>
 				</div>
 			</div>
 		{/if}

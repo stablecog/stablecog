@@ -15,17 +15,10 @@ export const handle: Handle = async ({ event, resolve }) => {
 	let preferredLocale = getPreferredLocale(event);
 	const localeC = event.cookies.get('sc-locale');
 	const themeC = event.cookies.get('sc-theme') as TAvailableThemes | null;
-	const advancedModeC =
-		event.cookies.get('sc-advanced-mode') === 'true'
-			? true
-			: event.cookies.get('sc-advanced-mode') === 'false'
-			? false
-			: null;
 	const locale =
 		localeC && isLocale(localeC) ? localeC : isLocale(preferredLocale) ? preferredLocale : 'en';
 	event.locals.locale = locale;
 	event.locals.theme = themeC === 'light' || themeC === 'dark' ? themeC : null;
-	event.locals.advancedMode = advancedModeC;
 
 	let IP = event.request.headers.get('X-Forwarded-For');
 	if (!IP) IP = event.request.headers.get('CF-Connecting-IP');

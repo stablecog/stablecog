@@ -33,7 +33,7 @@
 		data-sveltekit-preload-data={prefetch && (target === '_self' || target === undefined)
 			? 'hover'
 			: 'off'}
-		class="{state === 'success'
+		class="touch-manipulation {state === 'success'
 			? 'bg-c-success ring-c-success text-c-on-primary'
 			: 'bg-c-bg-secondary ring-c-bg-tertiary text-c-on-bg'} {noPadding
 			? ''
@@ -98,7 +98,7 @@
 		type="button"
 		on:click={onClick}
 		disabled={disabled || loading}
-		class="{state === 'success'
+		class="touch-manipulation {state === 'success'
 			? 'bg-c-success ring-c-success'
 			: state === 'danger'
 			? 'bg-c-danger ring-c-danger'

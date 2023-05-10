@@ -63,3 +63,57 @@ export const [elementsend, elementreceive] = crossfade({
 		};
 	}
 });
+
+export const flyAndScale = (node: Node, options: IFlyAndScaleOptions) => {
+	let {
+		delay = 0,
+		duration,
+		easing = quadOut,
+		yRem,
+		xRem,
+		scaleX,
+		scaleY,
+		opacity,
+		transformOrigin = 'top'
+	} = options;
+	return {
+		delay,
+		duration: duration,
+		easing,
+		css: (t: number) => {
+			let css = 'transform:';
+			if (yRem !== undefined) {
+				css += ` translateY(${(yRem !== undefined ? yRem : 0) * (1 - t)}rem)`;
+			}
+			if (xRem !== undefined) {
+				css += ` translateX(${(xRem !== undefined ? xRem : 0) * (1 - t)}rem);`;
+			}
+			if (scaleX !== undefined) {
+				css += ` scaleX(${scaleX + (1 - scaleX) * t})`;
+			}
+			if (scaleY !== undefined) {
+				css += ` scaleY(${scaleY + (1 - scaleY) * t})`;
+			}
+			css += ';';
+			if (opacity !== undefined) {
+				css += ` opacity: ${opacity + (1 - opacity) * t};`;
+			} else {
+				css += ` opacity: ${t};`;
+			}
+			css += ` transform-origin: ${transformOrigin};`;
+			return css;
+		}
+	};
+};
+
+interface IFlyAndScaleOptions {
+	delay?: number;
+	duration?: number;
+	transformOrigin?: string;
+	easing?: (t: number) => number;
+	yRem?: number;
+	xRem?: number;
+	scaleX?: number;
+	scaleY?: number;
+	opacity?: number;
+}

@@ -2,12 +2,12 @@
 	import { page } from '$app/stores';
 	import IconNavbarRoute from '$components/icons/IconNavbarRoute.svelte';
 	import MetaTag from '$components/MetaTag.svelte';
+	import type { TNavbarRouteOption } from '$components/navigation/routes';
 	import LL from '$i18n/i18n-svelte';
 	import { canonicalUrl } from '$ts/constants/main';
 	import { isSuperAdmin } from '$ts/helpers/admin/roles';
 	import { isTouchscreen } from '$ts/stores/isTouchscreen';
 	import { userSummary } from '$ts/stores/user/summary';
-	import type { TNavbarRouteOption } from '$ts/types/main';
 
 	interface TAdminRoute {
 		title: string;
@@ -34,7 +34,7 @@
 
 <MetaTag
 	title="Admin | Stablecog"
-	description="Free, easy to use, multilingual and open-source AI image generator using Stable Diffusion."
+	description="Stablecog admin panel. Free, multilingual and open-source AI image generator using Stable Diffusion and Kandinsky."
 	imageUrl="{canonicalUrl}/previews/home.png"
 	canonical="{canonicalUrl}{$page.url.pathname}"
 />

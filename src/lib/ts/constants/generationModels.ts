@@ -7,7 +7,6 @@ const sdSharedSchedulerIds: TAvailableSchedulerId[] = [
 	'6fb13b76-9900-4fa4-abf8-8f843e034a7f',
 	'af2679a4-dbbb-4950-8c06-c3bb15416ef6',
 	'9d175114-9a26-4371-861c-729ba9ecb4da',
-	'7e98751f-e135-4206-b855-48b141e7b98f',
 	'55027f8b-f046-4e71-bc51-53d5448661e0'
 ];
 

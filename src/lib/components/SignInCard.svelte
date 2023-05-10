@@ -131,7 +131,7 @@
 	</h1>
 	<div class="w-full flex flex-col items-center justify-start mt-1.5">
 		<p
-			class="px-3 md:px-0 max-w-sm text-sm md:text-base text-c-on-bg/60 text-center leading-relaxed mb-4 {signInStatus ===
+			class="px-3 md:px-0 max-w-sm text-base md:text-base text-c-on-bg/60 text-center leading-relaxed mb-4 {signInStatus ===
 			'sent-otp'
 				? 'mt-1'
 				: ''}"
@@ -224,7 +224,7 @@
 					class="flex items-center gap-4 my-5 md:my-6 -mx-5 md:-mx-10 w-[calc(100%+1.5rem)] md:w-[calc(100%+5rem)]"
 				>
 					<div class="flex-1 h-2px rounded-r-full bg-c-bg-secondary" />
-					<p class="text-sm text-c-on-bg/50 text-center inline-block">
+					<p class="text-base text-c-on-bg/50 text-center inline-block">
 						{$LL.SignIn.OrContinueWithEmailTitle()}
 					</p>
 					<div class="flex-1 h-2px rounded-l-full bg-c-bg-secondary" />

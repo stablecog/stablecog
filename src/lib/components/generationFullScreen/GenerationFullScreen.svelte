@@ -2,29 +2,31 @@
 	import IconChatBubbleCancel from '$components/icons/IconChatBubbleCancel.svelte';
 	import ModalWrapper from '$components/ModalWrapper.svelte';
 	import { windowWidth } from '$ts/stores/window';
-	import IconButton from '$components/buttons/IconButton.svelte';
-	import { isTouchscreen } from '$ts/stores/isTouchscreen';
-	import { onDestroy, onMount, tick } from 'svelte';
+	import { onDestroy, onMount } from 'svelte';
 	import { quadOut } from 'svelte/easing';
 	import { fly } from 'svelte/transition';
 	import { tooltip } from '$ts/actions/tooltip';
 	import { getGenerationUrlFromParams } from '$ts/helpers/getGenerationUrlFromParams';
 	import { page } from '$app/stores';
-	import { lgBreakpoint, sidebarWidth } from '$components/generationFullScreen/constants';
+	import {
+		lgBreakpoint,
+		mdBreakpoint,
+		sidebarWidth
+	} from '$components/generationFullScreen/constants';
 	import ParamsSection from '$components/generationFullScreen/ParamsSection.svelte';
 	import Button from '$components/buttons/Button.svelte';
 	import IconUpscale from '$components/icons/IconUpscale.svelte';
 	import TabBar from '$components/tabBars/TabBar.svelte';
 	import LL from '$i18n/i18n-svelte';
 	import { negativePromptTooltipAlt } from '$ts/constants/tooltips';
-	import IconCancel from '$components/icons/IconCancel.svelte';
 	import Container from '$components/generationFullScreen/Container.svelte';
 	import { activeGeneration, type TGenerationWithSelectedOutput } from '$userStores/generation';
 	import { sseId } from '$userStores/sse';
 	import {
 		queueInitialUpscaleRequest,
 		upscales,
-		type TInitialUpscaleRequest
+		type TInitialUpscaleRequest,
+		maxOngoingUpscalesCountReached
 	} from '$ts/stores/user/upscale';
 	import { upscaleModelIdDefault } from '$ts/constants/upscaleModels';
 	import { generateSSEId } from '$ts/helpers/generateSSEId';
@@ -37,17 +39,25 @@
 	} from '$components/generationFullScreen/types';
 	import Divider from '$components/generationFullScreen/Divider.svelte';
 	import { userSummary } from '$ts/stores/user/summary';
-	import { estimatedUpscaleDurationMs, getUpscaleDurationMsFromUpscale } from '$ts/stores/cost';
 	import InsufficientCreditsBadge from '$components/badges/InsufficientCreditsBadge.svelte';
 	import IconNoImage from '$components/icons/IconNoImage.svelte';
 	import { lastClickedOutputId } from '$ts/stores/lastClickedOutputId';
 	import FavoriteButton from '$components/buttons/FavoriteButton.svelte';
 	import { browser } from '$app/environment';
-	import UpscaleAnimation from '$components/generationFullScreen/UpscaleAnimation.svelte';
 	import GenerationFullScreenImageSet from '$components/generationFullScreen/GenerationFullScreenImageSet.svelte';
+	import UpscaleAnimation from '$components/generate/UpscaleAnimation.svelte';
+	import SideButton from '$components/generationFullScreen/SideButton.svelte';
+	import { removeFromRecentlyUpdatedOutputIds } from '$ts/stores/user/recentlyUpdatedOutputIds';
 
 	export let generation: TGenerationWithSelectedOutput;
 	export let modalType: TGenerationFullScreenModalType;
+	export let onLeftButtonClicked: (() => void) | undefined = undefined;
+	export let onRightButtonClicked: (() => void) | undefined = undefined;
+
+	let buttonLeft: HTMLButtonElement;
+	let buttonRight: HTMLButtonElement;
+	let buttonLeftMobile: HTMLButtonElement;
+	let buttonRightMobile: HTMLButtonElement;
 
 	$: upscaleFromStore = $upscales.find(
 		(upscale) => upscale.type === 'from_output' && upscale.input === generation.selected_output.id
@@ -74,11 +84,6 @@
 		}
 	}
 
-	let hadUpscaledImageUrlOnMount =
-		generation.selected_output.upscaled_image_url !== undefined ||
-		upscaledImageUrlFromStore !== undefined;
-	let isUpscaledImageLoaded = hadUpscaledImageUrlOnMount ? true : false;
-
 	$: currentImageUrl = generation.selected_output.upscaled_image_url
 		? generation.selected_output.upscaled_image_url
 		: generation.selected_output.image_url;
@@ -88,17 +93,11 @@
 
 	$: generation.selected_output, onGenerationChanged();
 	let initialGenerationChange = true;
-	$: upscaleStatus = hadUpscaledImageUrlOnMount
-		? 'succeeded'
-		: upscaleFromStore
-		? upscaleFromStore.status
-		: undefined;
-	$: upscaleBeingProcessed = hadUpscaledImageUrlOnMount
-		? false
-		: upscaleStatus === 'to-be-submitted' ||
-		  upscaleStatus === 'server-received' ||
-		  upscaleStatus === 'server-processing' ||
-		  (upscaleStatus === 'succeeded' && !isUpscaledImageLoaded);
+	$: upscaleBeingProcessed = upscaleFromStore
+		? upscaleFromStore.status !== 'succeeded' &&
+		  upscaleFromStore.status !== 'failed' &&
+		  !generation.selected_output.upscaled_image_url
+		: false;
 
 	let sidebarWrapper: HTMLDivElement;
 	let sidebarWrapperHeight: number;
@@ -129,6 +128,7 @@
 		$userSummary && $userSummary.total_remaining_credits < upscaleCreditCost;
 
 	const onGenerationChanged = () => {
+		removeFromRecentlyUpdatedOutputIds(generation.selected_output.id);
 		setUpscaleFromStore();
 		currentImageUrl =
 			generation.selected_output.upscaled_image_url ?? generation.selected_output.image_url;
@@ -145,6 +145,7 @@
 			const params = searchParams.toString();
 			window.history.replaceState({}, '', `${window.location.pathname}?${params}`);
 		}
+		resetAllButtonObjectWithState();
 		initialGenerationChange = false;
 	};
 
@@ -186,6 +187,15 @@
 		buttonObjectsWithState = { ...buttonObjectsWithState };
 	};
 
+	const resetAllButtonObjectWithState = () => {
+		for (const key in buttonObjectsWithState) {
+			if (buttonObjectsWithState[key].timeout) {
+				clearTimeout(buttonObjectsWithState[key].timeout);
+			}
+			buttonObjectsWithState[key].state = 'idle';
+		}
+	};
+
 	const setSidebarWrapperVars = () => {
 		if (!sidebarWrapper) return;
 		sidebarWrapperScrollTop = sidebarWrapper.scrollTop;
@@ -205,28 +215,6 @@
 			ui_id: generateSSEId()
 		};
 		queueInitialUpscaleRequest(initialRequestProps);
-		console.log('Upscale request queued', $upscales);
-	}
-
-	$: [upscaleStatus, upscaleBeingProcessed], onUpscaleStatusChanged();
-
-	async function onUpscaleStatusChanged() {
-		if (hadUpscaledImageUrlOnMount) {
-			return;
-		}
-		switch (upscaleStatus) {
-			case 'succeeded':
-				if (upscaleBeingProcessed || !upscaleFromStore) break;
-				await tick();
-				const durationMs = getUpscaleDurationMsFromUpscale(upscaleFromStore);
-				if (durationMs !== null && upscaleFromStore.completed_at) {
-					const loadTimeMs = Date.now() - upscaleFromStore.completed_at;
-					estimatedUpscaleDurationMs.set(loadTimeMs + durationMs);
-				}
-				break;
-			default:
-				break;
-		}
 	}
 
 	$: upscaledTabValue, setCurrentImageUrl();
@@ -246,21 +234,14 @@
 		const target = e.target as HTMLImageElement;
 		if (generation.width !== target.naturalWidth && generation.selected_output.upscaled_image_url) {
 			upscaledImageWidth = target.naturalWidth;
-			isUpscaledImageLoaded = true;
 		}
 		if (
 			generation.height !== target.naturalHeight &&
 			generation.selected_output.upscaled_image_url
 		) {
 			upscaledImageHeight = target.naturalHeight;
-			isUpscaledImageLoaded = true;
 		}
 	};
-
-	onMount(() => {
-		setSidebarWrapperVars();
-		lastClickedOutputId.set(undefined);
-	});
 
 	const onPopState: svelte.JSX.EventHandler<PopStateEvent, Window> | null | undefined = (e) => {
 		const searchParams = new URLSearchParams(e.currentTarget.location.search);
@@ -269,6 +250,11 @@
 			activeGeneration.set(undefined);
 		}
 	};
+
+	onMount(() => {
+		setSidebarWrapperVars();
+		lastClickedOutputId.set(undefined);
+	});
 
 	onDestroy(() => {
 		const searchParams = new URLSearchParams(window.location.search);
@@ -282,31 +268,23 @@
 
 <svelte:window on:popstate={onPopState} />
 
-<ModalWrapper hasPadding={false} let:scrollY>
-	<div class="w-full sticky z-20 top-0 flex items-center justify-start md:hidden pt-1 pb-1 px-1">
-		<div
-			class="flex items-center justify-center transition duration-150 rounded-full {scrollY &&
-			scrollY > 5
-				? 'bg-c-bg-secondary/75'
-				: 'bg-c-bg-secondary/0'}"
-		>
-			<IconButton
-				name="Close"
-				onClick={() => {
-					if ($activeGeneration !== undefined) {
-						activeGeneration.set(undefined);
-					}
-				}}
-			>
-				<IconCancel
-					class="w-9 h-9 transition {!$isTouchscreen
-						? 'group-hover/iconbutton:text-c-primary'
-						: ''}"
-				/>
-			</IconButton>
-		</div>
-	</div>
-	<Container {generation} let:imageContainerWidth let:imageContainerHeight let:modalMinHeight>
+<ModalWrapper
+	hasPadding={false}
+	onClose={$windowWidth < mdBreakpoint
+		? () => {
+				if ($activeGeneration !== undefined) {
+					activeGeneration.set(undefined);
+				}
+		  }
+		: undefined}
+>
+	<Container
+		clickoutsideExceptions={[buttonLeft, buttonRight]}
+		{generation}
+		let:imageContainerWidth
+		let:imageContainerHeight
+		let:modalMinHeight
+	>
 		<div class="relative self-stretch flex items-center">
 			{#if generation.selected_output.image_url}
 				{#key generation.selected_output.id}
@@ -343,7 +321,6 @@
 				{:else}
 					{#key generation.selected_output.id}
 						<GenerationFullScreenImageSet
-							{upscaleBeingProcessed}
 							prompt={generation.prompt.text}
 							backgroundImageUrl={generation.selected_output.image_url}
 							backgroundImageWidth={generation.width}
@@ -361,7 +338,7 @@
 					{#if $upscales && $upscales.length > 0 && upscaleFromStore?.status === 'failed'}
 						<div
 							transition:fly|local={{ duration: 200, easing: quadOut, y: -50 }}
-							class="w-full absolute left-0 top-0 flex items-center justify-center p-3"
+							class="w-full absolute left-0 top-0 flex items-center justify-center p-3 pointer-events-none"
 						>
 							<p
 								class="text-center font-medium text-xs md:text-sm shadow-lg shadow-c-shadow/[var(--o-shadow-stronger)] bg-c-bg-secondary px-4 py-3 rounded-xl"
@@ -370,17 +347,37 @@
 							</p>
 						</div>
 					{/if}
+					{#if upscaleFromStore?.animation}
+						<UpscaleAnimation
+							animation={upscaleFromStore.animation}
+							isProcessing={upscaleBeingProcessed}
+						/>
+					{/if}
 				{/if}
 			</div>
 			<div class="w-full h-full overflow-hidden z-0 absolute left-0 top-0 pointer-events-none">
-				{#if upscaleFromStore?.animation}
-					<UpscaleAnimation
-						animation={upscaleFromStore.animation}
-						isProcessing={upscaleBeingProcessed}
+				{#if onLeftButtonClicked || onRightButtonClicked}
+					<SideButton
+						name="Go Left"
+						hasAnimation={false}
+						iconClass="w-6 h-6"
+						class="flex md:hidden absolute left-0 top-1/2 transform -translate-y-1/2 w-10 h-full pointer-events-auto"
+						side="left"
+						bind:element={buttonLeftMobile}
+						onClick={onLeftButtonClicked}
+					/>
+					<SideButton
+						name="Go Right"
+						hasAnimation={false}
+						iconClass="w-6 h-6"
+						class="flex md:hidden absolute right-0 top-1/2 transform -translate-y-1/2 w-10 h-full pointer-events-auto"
+						side="right"
+						bind:element={buttonRightMobile}
+						onClick={onRightButtonClicked}
 					/>
 				{/if}
 				{#if modalType === 'history' || modalType === 'generate'}
-					<div class="absolute right-1.5 top-1.5">
+					<div class="absolute right-1.5 top-1.5 pointer-events-auto z-10">
 						<FavoriteButton {generation} {modalType} />
 					</div>
 				{/if}
@@ -391,7 +388,7 @@
 			style={$windowWidth >= lgBreakpoint
 				? `width: ${sidebarWidth}px; height: ${imageContainerHeight}px; min-height: ${modalMinHeight}px;`
 				: ``}
-			class="w-full shadow-generation-sidebar shadow-c-shadow/[var(--o-shadow-stronger)] flex 
+			class="w-full shadow-generation-sidebar shadow-c-shadow/[var(--o-shadow-stronger)] flex
 				flex-col items-start justify-start bg-c-bg-secondary lg:border-l-2 border-c-bg-tertiary relative"
 		>
 			<div
@@ -411,7 +408,7 @@
 									<div class="w-full relative">
 										<Button
 											onClick={onUpscaleClicked}
-											loading={upscaleBeingProcessed}
+											loading={upscaleBeingProcessed || $maxOngoingUpscalesCountReached}
 											disabled={doesntHaveEnoughCredits &&
 												$page.data.session?.user.id !== undefined}
 											fadeOnDisabled={doesntHaveEnoughCredits}
@@ -426,6 +423,7 @@
 										</Button>
 										{#if doesntHaveEnoughCredits && !upscaleBeingProcessed && $userSummary && $page.data.session?.user.id}
 											<InsufficientCreditsBadge
+												isSmallOnMobile={false}
 												neededCredits={upscaleCreditCost}
 												remainingCredits={$userSummary.total_remaining_credits}
 											/>
@@ -434,6 +432,7 @@
 								{:else}
 									<TabBar
 										bind:value={upscaledTabValue}
+										fontWeight={600}
 										tabs={upscaledOrDefaultTabs}
 										hasTitle={false}
 										dontScale={true}
@@ -493,4 +492,20 @@
 			/>
 		</div>
 	</Container>
+	{#if onLeftButtonClicked || onRightButtonClicked}
+		<SideButton
+			name="Go Left"
+			class="hidden md:flex absolute left-0 top-1/2 transform -translate-y-1/2 w-20 h-64"
+			side="left"
+			bind:element={buttonLeft}
+			onClick={onLeftButtonClicked}
+		/>
+		<SideButton
+			name="Go Right"
+			class="hidden md:flex absolute right-0 top-1/2 transform -translate-y-1/2 w-20 h-64"
+			side="right"
+			bind:element={buttonRight}
+			onClick={onRightButtonClicked}
+		/>
+	{/if}
 </ModalWrapper>

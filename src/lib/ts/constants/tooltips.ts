@@ -185,9 +185,8 @@ export let schedulerTooltipAlt: Readable<TTooltipProps> = derived(LL, ($LL) => (
 }));
 
 const tooltipStyleProps: TTooltipProps = {
-	parentContainerId: 'tooltip-container',
-	titleClass: 'font-bold text-sm leading-relaxed',
-	descriptionClass: 'text-c-on-bg/60 text-xs leading-relaxed',
+	titleClass: 'font-semibold text-sm leading-relaxed',
+	descriptionClass: 'text-c-on-bg/60 text-sm leading-relaxed',
 	wrapperClass: 'w-full transition duration-250 transform -mt-0.25',
 	animationTime: 250,
 	animateFrom: 'opacity-0 translate-y-3',
@@ -204,9 +203,8 @@ const tooltipStylePropsSettingsPanel: TTooltipProps = {
 };
 
 const tooltipStylePropsAlt: TTooltipProps = {
-	parentContainerId: 'tooltip-container',
-	titleClass: 'font-bold text-sm leading-relaxed',
-	descriptionClass: 'text-c-on-bg/60 text-xs leading-relaxed',
+	titleClass: 'font-semibold text-sm leading-relaxed',
+	descriptionClass: 'text-c-on-bg/60 text-sm leading-relaxed',
 	wrapperClass: 'w-full transition duration-250 transform mt-1.5',
 	animationTime: 250,
 	animateFrom: 'opacity-0 translate-y-3',

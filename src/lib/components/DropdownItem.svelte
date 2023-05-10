@@ -18,7 +18,7 @@
 		{target}
 		data-sveltekit-preload-data={prefetch && target === undefined ? 'hover' : 'off'}
 		on:click={onClick}
-		class="flex items-center justify-center font-bold px-5 {padding === 'sm'
+		class="flex items-center justify-center font-semibold px-5 {padding === 'sm'
 			? 'py-3'
 			: padding === 'md'
 			? 'py-4'
@@ -38,7 +38,7 @@
 	<button
 		{disabled}
 		on:click={onClick}
-		class="font-bold px-5 {padding === 'sm'
+		class="font-semibold px-5 {padding === 'sm'
 			? 'py-3'
 			: padding === 'md'
 			? 'py-4'

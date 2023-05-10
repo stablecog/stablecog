@@ -1,3 +1,6 @@
+import { page } from '$app/stores';
+import { get } from 'svelte/store';
+
 export function getGenerationUrlFromParams({
 	prompt,
 	negative_prompt,
@@ -9,7 +12,7 @@ export function getGenerationUrlFromParams({
 	num_inference_steps,
 	seed
 }: TGenerationUrlFromParamsParams) {
-	const baseUrl = '/?';
+	const baseUrl = '/generate?';
 	let params: string[] = [];
 	if (prompt) params.push(`p=${encodeURIComponent(prompt.text)}`);
 	if (negative_prompt) params.push(`np=${encodeURIComponent(negative_prompt.text)}`);
@@ -20,6 +23,8 @@ export function getGenerationUrlFromParams({
 	if (seed || seed === 0) params.push(`s=${seed}`);
 	if (model_id) params.push(`mi=${model_id}`);
 	if (scheduler_id) params.push(`si=${scheduler_id}`);
+	if (get(page).url.pathname === '/generate')
+		params.push(`rn=${Math.round(Math.random() * 1000000000000)}`);
 	return baseUrl + params.join('&');
 }
 

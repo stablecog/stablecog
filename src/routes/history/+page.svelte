@@ -1,24 +1,31 @@
 <script lang="ts">
+	import { browser } from '$app/environment';
 	import { page } from '$app/stores';
 	import BatchEditBar from '$components/BatchEditBar.svelte';
 	import Button from '$components/buttons/Button.svelte';
+	import {
+		lgBreakpoint,
+		mdBreakpoint,
+		xlBreakpoint,
+		xxlBreakpoint
+	} from '$components/generationFullScreen/constants';
 	import GenerationFullScreen from '$components/generationFullScreen/GenerationFullScreen.svelte';
 	import GenerationGridInfinite from '$components/grids/GenerationGridInfinite.svelte';
+	import GenerationGridInfinite2 from '$components/grids/GenerationGridInfinite2.svelte';
 	import IconFolderOutlined from '$components/icons/IconFolderOutlined.svelte';
 	import IconSadFace from '$components/icons/IconSadFace.svelte';
 	import IconStarOutlined from '$components/icons/IconStarOutlined.svelte';
 	import MetaTag from '$components/MetaTag.svelte';
+	import ModalWrapper from '$components/ModalWrapper.svelte';
 	import SearchAndFilterBar from '$components/SearchAndFilterBar.svelte';
 	import SignInCard from '$components/SignInCard.svelte';
 	import TabBar from '$components/tabBars/TabBar.svelte';
 	import LL, { locale } from '$i18n/i18n-svelte';
+	import { clickoutside } from '$ts/actions/clickoutside';
 	import type { TAvailableGenerationModelId } from '$ts/constants/generationModels';
 	import { canonicalUrl } from '$ts/constants/main';
+	import { setActiveGenerationToOutputIndex } from '$ts/helpers/goToOutputIndex';
 	import { logBatchEditActived, logBatchEditDeactivated } from '$ts/helpers/loggers';
-	/* import {
-		doesUserHaveLegacyGenerations,
-		downloadLegacyGenerations
-	} from '$ts/helpers/downloadLegacyGenerations'; */
 	import {
 		getUserGenerationFullOutputs,
 		type TUserGenerationFullOutputsPage
@@ -33,19 +40,13 @@
 	} from '$ts/stores/user/gallery';
 	import { userGenerationFullOutputsQueryKey } from '$ts/stores/user/keys';
 	import { userSummary } from '$ts/stores/user/summary';
+	import { windowWidth } from '$ts/stores/window';
 	import type { TTab } from '$ts/types/main';
-	import { activeGeneration } from '$userStores/generation';
+	import { activeGeneration, type TGenerationFullOutput } from '$userStores/generation';
 	import { createInfiniteQuery, type CreateInfiniteQueryResult } from '@tanstack/svelte-query';
-	import { onMount } from 'svelte';
-	/* import SubtleButton from '$components/buttons/SubtleButton.svelte';
-	import IconAnimatedSpinner from '$components/icons/IconAnimatedSpinner.svelte';
-	import IconDownload from '$components/icons/IconDownload.svelte';
-	import Morpher from '$components/Morpher.svelte'; */
 
 	let totalOutputs: number;
 	let modelIdFilters: TAvailableGenerationModelId[];
-	/* let hasLegacyGenerations = false;
-	let legacyGenerationsDownloadStatus: 'idle' | 'downloading' = 'idle'; */
 
 	let userGenerationFullOutputsQuery:
 		| CreateInfiniteQueryResult<TUserGenerationFullOutputsPage, unknown>
@@ -60,37 +61,31 @@
 		searchString ? searchString : '',
 		modelIdFilters ? modelIdFilters.join(',') : ''
 	]);
-	$: userGenerationFullOutputsQuery = $page.data.session?.user.id
-		? createInfiniteQuery({
-				queryKey: $userGenerationFullOutputsQueryKey,
-				queryFn: (lastPage) => {
-					return getUserGenerationFullOutputs({
-						access_token: $page.data.session?.access_token || '',
-						cursor: lastPage?.pageParam,
-						is_favorited: $userGalleryCurrentView === 'favorites',
-						search: searchString,
-						model_ids: modelIdFilters
-					});
-				},
-				getNextPageParam: (lastPage: TUserGenerationFullOutputsPage) => {
-					if (!lastPage.next) return undefined;
-					return lastPage.next;
-				},
-				onSuccess: () => {
-					lastFetchedUserGalleryView.set($userGalleryCurrentView);
-				}
-		  })
-		: undefined;
+
+	$: userGenerationFullOutputsQuery =
+		browser && $page.data.session?.user.id
+			? createInfiniteQuery({
+					queryKey: $userGenerationFullOutputsQueryKey,
+					queryFn: (lastPage) => {
+						return getUserGenerationFullOutputs({
+							access_token: $page.data.session?.access_token || '',
+							cursor: lastPage?.pageParam,
+							is_favorited: $userGalleryCurrentView === 'favorites',
+							search: searchString,
+							model_ids: modelIdFilters
+						});
+					},
+					getNextPageParam: (lastPage: TUserGenerationFullOutputsPage) => {
+						if (!lastPage.next) return undefined;
+						return lastPage.next;
+					},
+					onSuccess: () => {
+						lastFetchedUserGalleryView.set($userGalleryCurrentView);
+					}
+			  })
+			: undefined;
 
 	$: $userGenerationFullOutputsQuery?.data?.pages, onPagesChanged();
-	$: gridRerenderKey = `user_generation_full_outputs_${$userGalleryCurrentView}_${
-		$userGenerationFullOutputsQuery?.isInitialLoading
-	}_${modelIdFilters ? modelIdFilters.join(',') : ''}_${$userGenerationFullOutputsQuery?.isStale}_${
-		$userGenerationFullOutputsQuery?.data?.pages?.[0]?.outputs &&
-		$userGenerationFullOutputsQuery.data.pages[0].outputs.length > 0
-			? $userGenerationFullOutputsQuery.data.pages[0].outputs[0].id
-			: false
-	}`;
 
 	let userGalleryTabs: TTab<TUserGalleryView>[];
 	$: userGalleryTabs = [
@@ -108,6 +103,13 @@
 
 	let userGalleryEditActivatedOnce = false;
 	$: $isUserGalleryEditActive, onUserGalleryEditActiveChanged();
+
+	$: outputs = $userGenerationFullOutputsQuery?.data?.pages.flatMap((page) => page.outputs);
+	$: outputIndex = outputs
+		? outputs.findIndex((g) => g.id === $activeGeneration?.selected_output.id)
+		: -1;
+	$: leftIndex = outputIndex > 0 ? outputIndex - 1 : -1;
+	$: rightIndex = outputs && outputIndex < outputs?.length - 1 ? outputIndex + 1 : -1;
 
 	function onUserGalleryEditActiveChanged() {
 		if (!userGalleryEditActivatedOnce && !$isUserGalleryEditActive) return;
@@ -148,45 +150,20 @@
 			activeGeneration.set(undefined);
 			return;
 		}
-		if (key === 'ArrowLeft' || key === 'ArrowRight') {
-			const outputs = $userGenerationFullOutputsQuery?.data?.pages.flatMap((page) => page.outputs);
-			if (!outputs) return;
-			const index = outputs.findIndex((g) => g.id === $activeGeneration?.selected_output.id);
-			if (index === -1) return;
-			const addition = key === 'ArrowLeft' ? -1 : 1;
-			const newIndex = (index + addition + outputs.length) % outputs.length;
-			activeGeneration.set({
-				...outputs[newIndex].generation,
-				selected_output: outputs[newIndex]
-			});
+		if (key === 'ArrowLeft' && leftIndex !== -1) {
+			setActiveGenerationToOutputIndex(outputs, leftIndex);
+			return;
+		}
+		if (key === 'ArrowRight' && rightIndex !== -1) {
+			setActiveGenerationToOutputIndex(outputs, rightIndex);
+			return;
 		}
 	}
-
-	/* async function _downloadLegacyGenerations() {
-		if (legacyGenerationsDownloadStatus === 'downloading') return;
-		legacyGenerationsDownloadStatus = 'downloading';
-		try {
-			await downloadLegacyGenerations();
-		} catch (error) {
-			console.log(error);
-		} finally {
-			legacyGenerationsDownloadStatus = 'idle';
-		}
-	} */
-
-	onMount(async () => {
-		/* try {
-			hasLegacyGenerations = await doesUserHaveLegacyGenerations();
-		} catch (error) {
-			console.log(error);
-			hasLegacyGenerations = false;
-		} */
-	});
 </script>
 
 <MetaTag
 	title="History | Stablecog"
-	description="See your generation history on Stablecog, free and multi-lingual AI image generator."
+	description="See your generation history on Stablecog. Free, multilingual and open-source AI image generator using Stable Diffusion and Kandinsky."
 	imageUrl="{canonicalUrl}/previews{$page.url.pathname}.png"
 	canonical="{canonicalUrl}{$page.url.pathname}"
 />
@@ -220,29 +197,13 @@
 					<div class="w-full md:w-auto flex flex-1 items-center justify-end gap-4">
 						<TabBar
 							dontScale
+							fontWeight={600}
 							hasTitle={false}
 							name="Tabs"
 							tabs={userGalleryTabs}
 							bind:value={$userGalleryCurrentView}
 							class="flex-1 md:max-w-[19rem]"
 						/>
-						<!-- {#if hasLegacyGenerations}
-							<SubtleButton
-								loading={legacyGenerationsDownloadStatus === 'downloading'}
-								onClick={_downloadLegacyGenerations}
-								class="-my-1"
-							>
-								<Morpher morphed={legacyGenerationsDownloadStatus === 'downloading'}>
-									<div slot="0" class="flex items-center justify-center gap-1.5">
-										<IconDownload class="w-5 h-5 -ml-0.5" />
-										<p>{$LL.History.DownloadLegacyGenerationsButton()}</p>
-									</div>
-									<div slot="1" class="flex items-center justify-center gap-1.5">
-										<IconAnimatedSpinner class="w-5 h-5" />
-									</div>
-								</Morpher>
-							</SubtleButton>
-						{/if} -->
 					</div>
 				</div>
 			</div>
@@ -250,14 +211,13 @@
 		<div class="w-full flex max-w-5xl mt-3 px-1">
 			<SearchAndFilterBar bind:searchString bind:modelIdFilters bind:searchInputIsFocused />
 		</div>
-		<!-- Edit bar -->
-		<div
-			class="w-full top-1 max-w-5xl px-1 sticky z-30 {$isUserGalleryEditActive ? 'mt-3' : 'mt-0'}"
-		>
-			{#if $isUserGalleryEditActive}
+		{#if $isUserGalleryEditActive}
+			<div
+				class="w-full top-1 max-w-5xl px-1 sticky z-30 {$isUserGalleryEditActive ? 'mt-3' : 'mt-0'}"
+			>
 				<BatchEditBar type="history" />
-			{/if}
-		</div>
+			</div>
+		{/if}
 		<div class="w-full flex-1 flex flex-col mt-5">
 			{#if userGenerationFullOutputsQuery !== undefined}
 				{#if $userGenerationFullOutputsQuery?.isError || ($userGenerationFullOutputsQuery?.data && !$userGenerationFullOutputsQuery?.data?.pages)}
@@ -279,16 +239,26 @@
 					<div class="w-full flex-1 flex flex-col items-center py-8 px-5">
 						<div class="flex flex-col my-auto items-center gap-6">
 							<p class="text-c-on-bg/50 text-center">{$LL.History.NoGenerationsYet()}</p>
-							<Button href="/">{$LL.Shared.StartGeneratingButton()}</Button>
+							<Button href="/generate">{$LL.Shared.StartGeneratingButton()}</Button>
 							<div class="h-[1vh]" />
 						</div>
 					</div>
-				{:else}
-					<GenerationGridInfinite
-						rerenderKey={gridRerenderKey}
-						generationsQuery={userGenerationFullOutputsQuery}
-						cardType="history"
-					/>
+				{:else if $windowWidth}
+					<div class="w-full flex-1 flex flex-col">
+						<GenerationGridInfinite2
+							generationsQuery={userGenerationFullOutputsQuery}
+							cardType="history"
+							cols={$windowWidth > xxlBreakpoint
+								? 6
+								: $windowWidth > xlBreakpoint
+								? 5
+								: $windowWidth > lgBreakpoint
+								? 4
+								: $windowWidth > mdBreakpoint
+								? 3
+								: 2}
+						/>
+					</div>
 				{/if}
 			{/if}
 		</div>
@@ -296,5 +266,14 @@
 </div>
 
 {#if $activeGeneration}
-	<GenerationFullScreen generation={$activeGeneration} modalType="history" />
+	<GenerationFullScreen
+		onLeftButtonClicked={leftIndex !== -1
+			? () => setActiveGenerationToOutputIndex(outputs, leftIndex)
+			: undefined}
+		onRightButtonClicked={rightIndex !== -1
+			? () => setActiveGenerationToOutputIndex(outputs, rightIndex)
+			: undefined}
+		generation={$activeGeneration}
+		modalType="history"
+	/>
 {/if}

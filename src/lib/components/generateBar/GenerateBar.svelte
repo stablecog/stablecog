@@ -1,7 +1,6 @@
 <script lang="ts">
 	import Button from '$components/buttons/Button.svelte';
 	import ClearButton from '$components/buttons/ClearButton.svelte';
-	import type { THomePageData } from '$routes/+page.server';
 	import { autoresize } from '$ts/actions/textarea/autoresize';
 	import { expandCollapse } from '$ts/animation/transitions';
 	import {
@@ -79,8 +78,9 @@
 		type TAvailableHeight,
 		type TAvailableWidth
 	} from '$ts/constants/generationSize';
+	import type { TGeneratePageData } from '$routes/generate/+page.server';
 
-	export let serverData: THomePageData;
+	export let serverData: TGeneratePageData;
 	export let queueGeneration: () => Promise<void>;
 	export { classes as class };
 	let classes = '';
@@ -503,7 +503,7 @@
 				rows="1"
 				style="transition: height 0.1s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.2s cubic-bezier(0.4, 0, 0.2, 1), padding 0.2s cubic-bezier(0.4, 0, 0.2, 1)"
 				class="w-full bg-c-bg-secondary shadow-lg pr-12 md:pr-17 hide-scrollbar shadow-c-shadow/[var(--o-shadow-normal)] 
-					scroll-smooth resize-none transition relative pl-5 md:pl-6 py-5 rounded-xl 
+					scroll-smooth resize-none transition relative pl-5 py-4.5 rounded-xl 
 					focus:ring-2 focus:ring-c-primary/30 ring-0 ring-c-primary/20 placeholder:text-c-on-bg/40 {!$isTouchscreen
 					? 'enabled:hover:ring-2'
 					: ''} {classes} {lastGenerationBeingProcessed

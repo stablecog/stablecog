@@ -17,7 +17,7 @@
 		element.blur();
 	}}
 	data-sveltekit-preload-data="hover"
-	class="transition rounded-lg group/generatebutton {classes}"
+	class="touch-manipulation transition rounded-lg group/generatebutton {classes}"
 	href={getGenerationUrlFromParams({
 		prompt: generation.prompt,
 		negative_prompt: generation.negative_prompt ?? undefined,

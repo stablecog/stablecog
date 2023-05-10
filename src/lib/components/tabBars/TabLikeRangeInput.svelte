@@ -6,6 +6,7 @@
 	export let min: number;
 	export let max: number;
 	export let step = 1;
+	export let name: string;
 	export let disabled: boolean = false;
 	export let hasTitle = true;
 	export let valueSize: 'sm' | 'md' = 'sm';
@@ -22,5 +23,5 @@
 			<div class="w-full h-full bg-c-bg-secondary transition" />
 		</div>
 	{/if}
-	<RangeInputWithNumerator bind:value {valueSize} {step} {max} {min} {disabled} />
+	<RangeInputWithNumerator bind:value {valueSize} {step} {name} {max} {min} {disabled} />
 </TabBarWrapper>

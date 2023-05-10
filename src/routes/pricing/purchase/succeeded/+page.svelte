@@ -17,7 +17,7 @@
 
 <MetaTag
 	title="Succeeded | Stablecog"
-	description="Choose a plan that works for you and start using Stablecog."
+	description="See your generation history on Stablecog. Free, multilingual and open-source AI image generator using Stable Diffusion and Kandinsky."
 	imageUrl="{canonicalUrl}/previews{$page.url.pathname}.png"
 	canonical="{canonicalUrl}{$page.url.pathname}"
 />
@@ -34,7 +34,7 @@
 				`<a class="text-c-primary font-bold hover:underline" href="/discord" target="_blank">Discord</a>`
 			)}
 		</p>
-		<Button href="/" withSpinner class="mt-6">{$LL.Shared.StartGeneratingButton()}</Button>
+		<Button href="/generate" withSpinner class="mt-6">{$LL.Shared.StartGeneratingButton()}</Button>
 	</div>
 </PageWrapper>
 

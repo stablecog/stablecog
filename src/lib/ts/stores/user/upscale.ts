@@ -4,8 +4,18 @@ import {
 } from '$ts/animation/generationAnimation';
 import { apiUrl } from '$ts/constants/main';
 import type { TAvailableUpscaleModelId } from '$ts/constants/upscaleModels';
+import { estimatedUpscaleDurationMs } from '$ts/stores/cost';
+import { userSummary } from '$ts/stores/user/summary';
 import type { Tweened } from 'svelte/motion';
-import { writable } from 'svelte/store';
+import { derived, get, writable } from 'svelte/store';
+import {
+	PUBLIC_STRIPE_PRODUCT_ID_PRO_SUBSCRIPTION,
+	PUBLIC_STRIPE_PRODUCT_ID_STARTER_SUBSCRIPTION,
+	PUBLIC_STRIPE_PRODUCT_ID_ULTIMATE_SUBSCRIPTION
+} from '$env/static/public';
+import { isSuperAdmin } from '$ts/helpers/admin/roles';
+import { convertToDBTimeString } from '$ts/helpers/convertToDBTimeString';
+import { addToRecentlyUpdatedOutputIds } from '$ts/stores/user/recentlyUpdatedOutputIds';
 
 export const upscales = writable<TUpscale[]>([]);
 
@@ -14,45 +24,66 @@ export const setUpscaleToFailed = ({ id, error }: { id: string; error?: string }
 		if ($upscales === null) {
 			return $upscales;
 		}
-		const index = $upscales.findIndex((ups) => ups.id === id);
-		if (index >= 0) {
-			$upscales[index].status = 'failed';
-			$upscales[index].error = error;
-			$upscales[index].animation = newUpscaleCompleteAnimation($upscales[index].animation);
+		const foundUpscale = $upscales.find((ups) => ups.id === id);
+		if (foundUpscale) {
+			foundUpscale.status = 'failed';
+			foundUpscale.error = error;
+			foundUpscale.animation = newUpscaleCompleteAnimation(foundUpscale.animation);
 			return $upscales;
 		}
-		const ui_index = $upscales.findIndex((ups) => ups.ui_id === id);
-		if (ui_index >= 0) {
-			$upscales[ui_index].status = 'failed';
-			$upscales[ui_index].error = error;
-			$upscales[index].animation = newUpscaleCompleteAnimation($upscales[index].animation);
+		const foundUpscale2 = $upscales.find((ups) => ups.ui_id === id);
+		if (foundUpscale2) {
+			foundUpscale2.status = 'failed';
+			foundUpscale2.error = error;
+			foundUpscale2.animation = newUpscaleCompleteAnimation(foundUpscale2.animation);
 			return $upscales;
 		}
 		return $upscales;
 	});
 };
 
-export const setUpscaleToSucceeded = ({
+export const setUpscaleToSucceeded = async ({
 	id,
 	outputs
 }: {
 	id: string;
 	outputs: TUpscaleOutput[];
 }) => {
-	upscales.update(($upscales) => {
-		if ($upscales === null) {
-			return $upscales;
+	const ups = get(upscales);
+	if (ups === null) return;
+	const foundUpscale = ups.find((u) => u.id === id);
+	if (!foundUpscale) {
+		return;
+	}
+	foundUpscale.status = 'succeeded';
+	foundUpscale.outputs = outputs;
+	if (outputs && outputs.length > 0 && outputs[0].image_url) {
+		try {
+			await loadImage(outputs[0].image_url);
+		} catch (e) {
+			console.error(e);
 		}
-		const index = $upscales.findIndex((gen) => gen.id === id);
-		if (index === -1) {
-			return $upscales;
-		}
-		$upscales[index].status = 'succeeded';
-		$upscales[index].outputs = outputs;
-		$upscales[index].completed_at = Date.now();
-		return $upscales;
-	});
+	}
+	addToRecentlyUpdatedOutputIds(foundUpscale.input);
+	foundUpscale.completed_at = convertToDBTimeString(Date.now());
+	const started_at = foundUpscale.started_at;
+	const completed_at = foundUpscale.completed_at;
+	if (started_at && completed_at) {
+		estimatedUpscaleDurationMs.set(
+			new Date(completed_at).getTime() - new Date(started_at).getTime()
+		);
+	}
+	upscales.set(ups);
 };
+
+async function loadImage(url: string) {
+	return new Promise<HTMLImageElement>((resolve, reject) => {
+		const img = new Image();
+		img.onload = () => resolve(img);
+		img.onerror = () => reject(img);
+		img.src = url;
+	});
+}
 
 export const setUpscaleToServerReceived = ({ ui_id, id }: { ui_id: string; id: string }) => {
 	upscales.update(($upscales) => {
@@ -82,7 +113,7 @@ export const setUpscaleToServerProcessing = ({ ui_id, id }: { ui_id: string; id:
 		const ups = $upscales.find((ups) => ups.id === id);
 		if (ups && ups.status !== 'succeeded' && ups.status !== 'failed') {
 			ups.status = 'server-processing';
-			ups.started_at = Date.now();
+			ups.started_at = convertToDBTimeString(Date.now());
 			if (!ups.ui_id) ups.ui_id = ui_id;
 			ups.animation = newUpscaleCompleteAnimation(ups.animation);
 			return $upscales;
@@ -90,7 +121,7 @@ export const setUpscaleToServerProcessing = ({ ui_id, id }: { ui_id: string; id:
 		const ups2 = $upscales.find((ups) => ups.ui_id === ui_id);
 		if (ups2 && ups2.status !== 'succeeded' && ups2.status !== 'failed') {
 			ups2.status = 'server-processing';
-			ups2.started_at = Date.now();
+			ups2.started_at = convertToDBTimeString(Date.now());
 			if (!ups2.id) ups2.id = id;
 			ups2.animation = newUpscaleCompleteAnimation(ups2.animation);
 			return $upscales;
@@ -101,17 +132,17 @@ export const setUpscaleToServerProcessing = ({ ui_id, id }: { ui_id: string; id:
 
 export async function queueInitialUpscaleRequest(request: TInitialUpscaleRequest) {
 	upscales.update(($upscales) => {
-		const upscalesToSubmit: TUpscale = {
+		const upscaleToSubmit: TUpscale = {
 			...request,
 			outputs: [],
-			created_at: Date.now(),
+			created_at: convertToDBTimeString(Date.now()),
 			status: 'to-be-submitted',
 			animation: newUpscaleStartAnimation()
 		};
 		if ($upscales === null) {
-			return [upscalesToSubmit];
+			return [upscaleToSubmit];
 		}
-		$upscales = [upscalesToSubmit, ...$upscales];
+		$upscales.unshift(upscaleToSubmit);
 		return $upscales;
 	});
 }
@@ -139,6 +170,39 @@ export async function submitInitialUpscaleRequest({
 	return { ...resJSON, ui_id: request.ui_id };
 }
 
+const productIdToMaxOngoingUpscalesCountObject = {
+	[PUBLIC_STRIPE_PRODUCT_ID_STARTER_SUBSCRIPTION]: 2,
+	[PUBLIC_STRIPE_PRODUCT_ID_PRO_SUBSCRIPTION]: 3,
+	[PUBLIC_STRIPE_PRODUCT_ID_ULTIMATE_SUBSCRIPTION]: 4
+};
+
+const baseCount = 1;
+
+const productIdToMaxOngoingUpscalesCount = (productId: string | undefined) => {
+	if (!productId) return baseCount;
+	const count = productIdToMaxOngoingUpscalesCountObject[productId];
+	if (!count) return baseCount;
+	return count;
+};
+
+export const maxOngoingUpscalesCount = derived(userSummary, ($userSummary) => {
+	const active_product_id = $userSummary?.product_id;
+	return productIdToMaxOngoingUpscalesCount(active_product_id);
+});
+
+export const ongoingUpscalesCount = derived(upscales, ($upscales) => {
+	return $upscales.filter((g) => g.status !== 'succeeded' && g.status !== 'failed').length;
+});
+
+export const maxOngoingUpscalesCountReached = derived(
+	[ongoingUpscalesCount, maxOngoingUpscalesCount, userSummary],
+	([ongoingUpscalesCount, $maxOngoingUpscalesCount, $userSummary]) => {
+		return isSuperAdmin($userSummary?.roles)
+			? false
+			: ongoingUpscalesCount >= $maxOngoingUpscalesCount;
+	}
+);
+
 export interface TInitialUpscaleResponse {
 	id?: string;
 	error?: string;
@@ -157,9 +221,9 @@ export interface TUpscale extends TUpscaleBase {
 	id?: string;
 	ui_id: string;
 	outputs: TUpscaleOutput[];
-	started_at?: number;
-	created_at: number;
-	completed_at?: number;
+	started_at?: string;
+	created_at: string;
+	completed_at?: string;
 	animation?: Tweened<number>;
 }
 

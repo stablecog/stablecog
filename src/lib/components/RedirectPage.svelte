@@ -26,7 +26,7 @@
 	<div class="w-full flex flex-col items-center justify-center max-w-lg">
 		<div class="w-full flex flex-col items-center justify-start py-4">
 			<IconPulsing />
-			<p class="w-full text-c-on-bg/40 text-center mt-1.5">{redirectingText}</p>
+			<p class="w-full text-c-on-bg/75 font-medium text-lg text-center mt-1.5">{redirectingText}</p>
 		</div>
 	</div>
 </div>

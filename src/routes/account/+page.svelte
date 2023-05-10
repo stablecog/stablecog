@@ -33,6 +33,7 @@
 	async function signOut() {
 		try {
 			await supabase.auth.signOut();
+			userSummary.set(undefined);
 			logSignOut({
 				'SC - User Id': $page.data.session?.user.id,
 				'SC - Stripe Product Id': $userSummary?.product_id,
@@ -57,7 +58,7 @@
 
 <MetaTag
 	title="Account | Stablecog"
-	description="Manage your Stablecog account."
+	description="Manage your Stablecog account. Free, multilingual and open-source AI image generator using Stable Diffusion and Kandinsky."
 	imageUrl="{canonicalUrl}/previews{$page.url.pathname}.png"
 	canonical="{canonicalUrl}{$page.url.pathname}"
 />
@@ -71,13 +72,13 @@
 		<div class="w-full flex flex-col items-center justify-center my-auto">
 			<h1 class="text-4xl font-bold">{$LL.Account.PageTitle()}</h1>
 			<div
-				class="w-full max-w-md md:max-w-xl mt-6 flex flex-col rounded-2xl bg-c-bg relative z-0 
+				class="w-full max-w-md md:max-w-xl mt-6 flex flex-col rounded-2xl bg-c-bg relative z-0
 				shadow-xl shadow-c-shadow/[var(--o-shadow-strong)] ring-2 ring-c-bg-secondary"
 			>
 				<div class="w-full flex items-center justify-start">
 					<div class="flex flex-shrink overflow-hidden items-center gap-4 px-5 py-4 md:p-6">
 						<div
-							class="w-9 h-9 ring-2 ring-c-on-bg/25 overflow-hidden rounded-full transition transform 
+							class="w-9 h-9 ring-2 ring-c-on-bg/25 overflow-hidden rounded-full transition transform
 							relative shadow-lg shadow-c-shadow/[var(--o-shadow-strong)] flex-shrink-0"
 						>
 							<Avatar
@@ -126,7 +127,7 @@
 					class="w-full flex flex-wrap items-center justify-between px-4 py-5 md:p-5 gap-5 md:gap-8"
 				>
 					<div class="flex flex-col items-start px-0.5 -mt-2">
-						<p class="text-c-on-bg/60 font-semibold px-1">
+						<p class="text-c-on-bg/60 font-medium px-1">
 							{$LL.Account.SubscriptionPlanTitle()}
 						</p>
 						<ProductIdBadge
@@ -159,7 +160,7 @@
 				<div class="w-full h-2px bg-c-bg-secondary" />
 				<div class="w-full flex flex-col">
 					<div class="w-full flex items-center flex-wrap justify-between py-5 gap-2">
-						<p class="font-semibold text-c-on-bg/60 px-5 md:px-6">Remaining Images</p>
+						<p class="font-medium text-c-on-bg/60 px-5 md:px-6">{$LL.Account.RemainingTitle()}</p>
 						<p class="font-bold text-right text-xl px-5 md:px-6">
 							{($userSummary?.total_remaining_credits || 0).toLocaleString($locale)}
 						</p>
@@ -167,7 +168,7 @@
 				</div>
 				<div class="w-full h-2px bg-c-bg-secondary" />
 				<div class="w-full flex flex-wrap items-stretch">
-					<DropdownItem href="/" class="w-full md:w-auto md:flex-1">
+					<DropdownItem href="/generate" class="w-full md:w-auto md:flex-1">
 						<div
 							class="flex transition justify-center items-center gap-2 text-c-on-bg {!$isTouchscreen
 								? 'group-hover:text-c-primary'

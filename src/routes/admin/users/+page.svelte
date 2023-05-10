@@ -92,7 +92,11 @@
 
 	type TDropdownState = 'main' | 'gift-credits' | 'ban-user' | 'unban-user';
 	let isDropdownOpen: {
-		[id: string]: { isOpen: boolean; state: TDropdownState; buttonElement?: HTMLElement };
+		[id: string]: {
+			isOpen: boolean;
+			state: TDropdownState;
+			buttonElement?: HTMLElement | undefined;
+		};
 	} = {};
 	$: $allUsersQuery, onAllUsersQueryChanged();
 
@@ -229,7 +233,7 @@
 
 <MetaTag
 	title="Users | Admin"
-	description="Free, easy to use, multilingual and open-source AI image generator using Stable Diffusion."
+	description="Stablecog admin panel. Free, multilingual and open-source AI image generator using Stable Diffusion and Kandinsky."
 	imageUrl="{canonicalUrl}/previews/home.png"
 	canonical="{canonicalUrl}{$page.url.pathname}"
 />
@@ -255,7 +259,7 @@
 <PageWrapper noPadding class="z-10">
 	<div class="w-full flex justify-center py-2.5 relative">
 		<div
-			class="max-w-[calc(100%+1.75rem)] -mx-3.5 flex flex-col bg-c-bg ring-2 ring-c-bg-secondary rounded-2xl shadow-lg 
+			class="max-w-[calc(100%+1.75rem)] -mx-3.5 flex flex-col bg-c-bg ring-2 ring-c-bg-secondary rounded-2xl shadow-lg
 			shadow-c-shadow/[var(--o-shadow-normal)]"
 		>
 			<div class="flex flex-wrap gap-3 md:gap-8 p-3">
@@ -269,7 +273,7 @@
 							size="md"
 						/>
 						<p
-							class="font-bold text-xl pr-4  {item.product_id !== undefined &&
+							class="font-bold text-xl pr-4 {item.product_id !== undefined &&
 							item.product_id !== 'free'
 								? 'text-c-primary'
 								: 'text-c-on-bg'}"
@@ -363,7 +367,7 @@
 						{@const isUserDropdownOpen = isDropdownOpen?.[user.id].isOpen}
 						{@const userDropdownState = isDropdownOpen?.[user.id].state || 'main'}
 						<div
-							class="w-full max-w-2xl flex flex-col 
+							class="w-full max-w-2xl flex flex-col
 							bg-c-bg-secondary rounded-xl shadow-lg shadow-c-shadow/[var(--o-shadow-normal)] p-3 md:p-4"
 						>
 							{#if user.banned_at}
@@ -427,7 +431,7 @@
 												<div
 													use:clickoutside={{
 														callback: () => toggleUserDropdown(user.id, false),
-														exclude: isDropdownOpen[user.id].buttonElement,
+														exclude: [isDropdownOpen[user.id].buttonElement],
 														capture: false
 													}}
 													class="relative"
