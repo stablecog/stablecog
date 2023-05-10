@@ -10,7 +10,7 @@ We've been working on a new interface and it's finally here. We think you'll lik
 
 ## A Better Tool
 
-We like simple things. Our old interface was extremely simple, too simple. It was getting in the way of adding new features because the layout was too restrictive. With the new interface we are taking a different approach and making the interface more inline with different design tools people are familiar with like Photoshop, Illustrator or Figma. Two sidebars on each side. One shows your history, one shows your settings. The center part is the "stage" where you can see your current generation.
+We like simple things. Our old interface was extremely simple, too simple. It was getting in the way of adding new features because the layout was too restrictive. With the new interface we are taking a different approach and making the interface more inline with different design tools people are familiar with like Photoshop, Illustrator or Figma. A sidebar on each side. One shows your history, one shows your settings. The center part is the "stage" where you can see your current generation.
 
 ![Stablecog's New Interface](https://ba.stablecog.com/blog/app-dark-1920.webp)<!--rehype:width=1920&height=1200-->
 
