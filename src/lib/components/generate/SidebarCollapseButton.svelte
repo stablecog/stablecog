@@ -14,6 +14,11 @@
 	let hasBeenInsideForMsIntervalDelay = 100;
 	let enoughTimeThreshold = 250;
 
+	let isFirstChange = true;
+	let isNewlyOpenedTimeout: NodeJS.Timeout;
+	let isNewlyOpened = false;
+	const isNewlyOpenedTimeoutDuration = 500;
+
 	const onMouseEnter = () => {
 		isInside = true;
 	};
@@ -28,6 +33,24 @@
 		shouldShowButton = true;
 	} else {
 		shouldShowButton = false;
+	}
+
+	$: isClosed, onIsClosedChange();
+
+	function onIsClosedChange() {
+		if (isFirstChange) {
+			isFirstChange = false;
+			return;
+		}
+		if (isClosed) {
+			isNewlyOpened = false;
+			clearTimeout(isNewlyOpenedTimeout);
+		} else {
+			isNewlyOpened = true;
+			isNewlyOpenedTimeout = setTimeout(() => {
+				isNewlyOpened = false;
+			}, isNewlyOpenedTimeoutDuration);
+		}
 	}
 
 	function onIsInsideChange() {
@@ -54,7 +77,8 @@
 	<div
 		class="rounded-full bg-c-bg ring-2 ring-c-bg-secondary flex items-center justify-center
     shadow-xl shadow-c-shadow/[var(--o-shadow-strongest)] transform transition {shouldShowButton ||
-		isClosed
+		isClosed ||
+		isNewlyOpened
 			? 'opacity-100 -translate-x-2.5'
 			: 'opacity-0 translate-x-0'}"
 	>
