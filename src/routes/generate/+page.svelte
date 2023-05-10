@@ -4,7 +4,7 @@
 	import SettingsPanel from '$components/generate/SettingsPanel.svelte';
 	import { activeGeneration, generations, type TGeneration } from '$ts/stores/user/generation';
 
-	import { onDestroy, onMount } from 'svelte';
+	import { onDestroy, onMount, tick } from 'svelte';
 	import PromptBar from '$components/generate/PromptBar.svelte';
 	import { quadOut } from 'svelte/easing';
 	import { fade, fly } from 'svelte/transition';
@@ -55,7 +55,7 @@
 	export let data;
 
 	const lowCreditsThreshold = 10;
-	let isSignInModalOpen = data.is_sign_in_modal_open ?? false;
+	let isSignInModalOpen = false;
 	let isJustCreatedGenerationForAnim = false;
 	let promptBarHeight: number;
 	let stageWidth: number;
@@ -222,6 +222,12 @@
 		if (!browser) return;
 		document.body.style.overflow = 'hidden';
 		document.body.style.height = '100%';
+		if (data.is_sign_in_modal_open) {
+			await tick();
+			setTimeout(() => {
+				isSignInModalOpen = true;
+			});
+		}
 	});
 
 	onDestroy(() => {
