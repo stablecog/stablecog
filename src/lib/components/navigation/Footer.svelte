@@ -7,7 +7,7 @@
 	export let withBlog = true;
 	export let withEmail = true;
 	export let withGuide = true;
-	let classes = 'px-6 py-5';
+	let classes = 'px-6 pt-5 pb-[calc(env(safe-area-inset-bottom)+1.25rem)]';
 </script>
 
 <div class="w-full flex flex-wrap justify-center items-center gap-1.5 md:gap-2.5 {classes}">
