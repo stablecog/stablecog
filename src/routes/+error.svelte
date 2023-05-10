@@ -19,6 +19,6 @@
 					: $LL.Error.SomethingWentWrong()}
 			</p>
 		</div>
-		<Button class="w-56 max-w-full" href="/">{$LL.Shared.GoHomeButton()}</Button>
+		<Button class="w-56 max-w-full" href="/generate">{$LL.Shared.GoHomeButton()}</Button>
 	</div>
 </div>

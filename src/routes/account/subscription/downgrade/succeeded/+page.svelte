@@ -66,6 +66,6 @@
 				</p>
 			</div>
 		{/if}
-		<Button href="/" withSpinner class="mt-6">{$LL.Shared.StartGeneratingButton()}</Button>
+		<Button href="/generate" withSpinner class="mt-6">{$LL.Shared.StartGeneratingButton()}</Button>
 	</div>
 </PageWrapper>

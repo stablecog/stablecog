@@ -37,7 +37,7 @@
 />
 
 <div
-	class="w-full flex-1 flex flex-col transition relative items-center 
+	class="w-full flex-1 flex flex-col transition relative items-center
 	px-5 md:px-12 lg:px-0 pb-8"
 >
 	<div class="w-full flex flex-row justify-between items-start">
@@ -107,7 +107,7 @@
 			</div>
 		</div>
 		<div class="w-full flex flex-col items-center gap-5">
-			<Button href="/">{$LL.Shared.StartGeneratingButton()}</Button>
+			<Button href="/generate">{$LL.Shared.StartGeneratingButton()}</Button>
 		</div>
 	</div>
 </div>

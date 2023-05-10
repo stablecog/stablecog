@@ -167,7 +167,7 @@
 				</div>
 				<div class="w-full h-2px bg-c-bg-secondary" />
 				<div class="w-full flex flex-wrap items-stretch">
-					<DropdownItem href="/" class="w-full md:w-auto md:flex-1">
+					<DropdownItem href="/generate" class="w-full md:w-auto md:flex-1">
 						<div
 							class="flex transition justify-center items-center gap-2 text-c-on-bg {!$isTouchscreen
 								? 'group-hover:text-c-primary'

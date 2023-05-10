@@ -239,7 +239,7 @@
 					<div class="w-full flex-1 flex flex-col items-center py-8 px-5">
 						<div class="flex flex-col my-auto items-center gap-6">
 							<p class="text-c-on-bg/50 text-center">{$LL.History.NoGenerationsYet()}</p>
-							<Button href="/">{$LL.Shared.StartGeneratingButton()}</Button>
+							<Button href="/generate">{$LL.Shared.StartGeneratingButton()}</Button>
 							<div class="h-[1vh]" />
 						</div>
 					</div>

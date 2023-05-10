@@ -34,7 +34,7 @@
 				`<a class="text-c-primary font-bold hover:underline" href="/discord" target="_blank">Discord</a>`
 			)}
 		</p>
-		<Button href="/" withSpinner class="mt-6">{$LL.Shared.StartGeneratingButton()}</Button>
+		<Button href="/generate" withSpinner class="mt-6">{$LL.Shared.StartGeneratingButton()}</Button>
 	</div>
 </PageWrapper>
 
