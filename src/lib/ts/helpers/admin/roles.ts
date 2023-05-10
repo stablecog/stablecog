@@ -24,3 +24,7 @@ export const isGalleryAdmin = (roles: string | string[] | undefined) => {
 	}
 	return false;
 };
+
+export const isAdmin = (roles: string | string[] | undefined) => {
+	return isSuperAdmin(roles) || isGalleryAdmin(roles);
+};

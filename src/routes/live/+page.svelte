@@ -211,7 +211,6 @@
 	}
 
 	const tooltipStyleProps: TTooltipProps = {
-		parentContainerId: 'tooltip-container',
 		titleClass: 'font-normal text-c-on-bg/50 text-sm leading-relaxed text-left',
 		descriptionClass: 'font-semibold text-sm leading-relaxed text-right',
 		rowClass: 'w-full flex gap-4 justify-between',

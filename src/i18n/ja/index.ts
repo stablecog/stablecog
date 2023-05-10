@@ -162,8 +162,10 @@ const ja: Translation = {
 	},
 	Navbar: {
 		HomeTab: 'ホーム',
+		GenerateTab: 'Generate',
 		HistoryTab: '履歴',
 		GalleryTab: 'ギャラリー',
+		AdminGalleryTab: 'Admin Gallery',
 		LiveTab: 'ライブ'
 	},
 	Settings: {

@@ -158,8 +158,10 @@ const hi: Translation = {
 	},
 	Navbar: {
 		HomeTab: 'होम',
+		GenerateTab: 'Generate',
 		HistoryTab: 'इतिहास',
 		GalleryTab: 'गैलरी',
+		AdminGalleryTab: 'Admin Gallery',
 		LiveTab: 'लाइव'
 	},
 	Settings: {

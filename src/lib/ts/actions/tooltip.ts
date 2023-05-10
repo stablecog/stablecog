@@ -1,7 +1,6 @@
 export function tooltip(
 	node: HTMLElement,
 	{
-		parentContainerId,
 		wrapperClass,
 		containerClass,
 		containerAlign,
@@ -126,8 +125,8 @@ export function tooltip(
 
 	const onMouseEnter = async () => {
 		clearTimeout(mouseLeaveTimeout);
-		if (!document.getElementById(`${parentContainerId}`)?.contains(tooltipWrapper)) {
-			document.getElementById(`${parentContainerId}`)?.appendChild(tooltipWrapper);
+		if (!document.body?.contains(tooltipWrapper)) {
+			document.body?.appendChild(tooltipWrapper);
 			addStyles();
 			setTimeout(() => {
 				addClasses(tooltipWrapper, animateTo);
@@ -146,8 +145,8 @@ export function tooltip(
 		}
 		clearTimeout(mouseLeaveTimeout);
 		mouseLeaveTimeout = setTimeout(async () => {
-			if (document.getElementById(`${parentContainerId}`)?.contains(tooltipWrapper)) {
-				document.getElementById(`${parentContainerId}`)?.removeChild(tooltipWrapper);
+			if (document.body?.contains(tooltipWrapper)) {
+				document.body?.removeChild(tooltipWrapper);
 				removeStyles();
 			}
 		}, animationTime);
@@ -228,7 +227,6 @@ function removeClasses(element: HTMLElement, classes?: string) {
 }
 
 export interface TTooltipProps {
-	parentContainerId: string;
 	wrapperClass?: string;
 	containerClass?: string;
 	containerAlign?: 'left' | 'center' | 'right';

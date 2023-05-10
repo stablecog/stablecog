@@ -37,7 +37,7 @@
 	let isSignInModalOpen = false;
 	let isAccountMenuOpen = false;
 
-	const routesWithDrawer = ['/guide'];
+	const routesWithoutDrawer = ['/'];
 
 	const toggleAccountMenu = () => (isAccountMenuOpen = !isAccountMenuOpen);
 	const closeAccountMenu = () => (isAccountMenuOpen = false);
@@ -82,7 +82,9 @@
 				: ''}"
 		/>
 		<div class="flex xl:flex-1 self-stretch">
-			{#if routesWithDrawer.includes($page.url.pathname) || routesWithDrawer.some( (route) => $page.url.pathname.startsWith(route) )}
+			{#if routesWithoutDrawer.includes($page.url.pathname)}
+				<LogoButton />
+			{:else}
 				<button
 					on:click={() => isDrawerOpen.set(!$isDrawerOpen)}
 					class="relative self-stretch p-0.5 group overflow-hidden md:hidden"
@@ -97,8 +99,6 @@
 					</div>
 				</button>
 				<LogoButton class="hidden md:flex" />
-			{:else}
-				<LogoButton />
 			{/if}
 		</div>
 		<div class="hidden md:flex md:w-full md:max-w-[19rem] lg:max-w-[36rem] md:ml-2 xl:ml-0">

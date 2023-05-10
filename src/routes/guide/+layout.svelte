@@ -1,16 +1,12 @@
 <script lang="ts">
 	import ButtonHoverEffect from '$components/buttons/ButtonHoverEffect.svelte';
-	import { mdBreakpoint } from '$components/generationFullScreen/constants';
-	import IconCancel from '$components/icons/IconCancel.svelte';
+	import NoBgButton from '$components/buttons/NoBgButton.svelte';
+	import IconHome from '$components/icons/IconHome.svelte';
+	import Drawer from '$components/navigation/Drawer.svelte';
 	import LL from '$i18n/i18n-svelte';
 	import Sidebar from '$routes/guide/Sidebar.svelte';
 	import { guideSidebar } from '$routes/guide/constants';
-	import { clickoutside } from '$ts/actions/clickoutside';
 	import { isDrawerOpen } from '$ts/stores/isDrawerOpen';
-	import { windowHeight, windowWidth } from '$ts/stores/window';
-	import { portal } from 'svelte-portal';
-	import { quadIn } from 'svelte/easing';
-	import { fade } from 'svelte/transition';
 </script>
 
 <div style="min-height: 100vh; min-height: 100svh" class="w-full flex items-stretch relative">
@@ -21,41 +17,24 @@
 	<div class="w-64 lg:w-72 hidden xl:block" />
 </div>
 
-{#if $isDrawerOpen && $windowWidth < mdBreakpoint}
+<Drawer hasCustomContent>
 	<div
-		transition:fade|local={{ duration: 200, easing: quadIn }}
-		use:portal={'body'}
-		style="height: 100vh; height: 100svh"
-		class="w-full md:hidden md:pointer-events-none fixed left-0 top-0 bg-c-barrier/80 z-100"
-	/>
-{/if}
-<div
-	use:clickoutside={{
-		callback: () => {
-			isDrawerOpen.set(false);
-		}
-	}}
-	style={$windowHeight ? `height: ${$windowHeight}px` : 'height: 100vh; height: 100svh'}
-	use:portal={'body'}
-	class="fixed md:hidden md:pointer-events-none w-[85%] bg-c-bg rounded-r-3xl border-2 border-c-bg-secondary left-0 top-0 z-[101] 
-	shadow-drawer shadow-c-shadow/[var(--o-shadow-stronger)] transition {$isDrawerOpen
-		? '-translate-x-2px'
-		: 'pointer-events-none -translate-x-[calc(100%+2px)]'} overflow-hidden"
->
-	<div class="w-full flex flex-row justify-between gap-5 items-stretch">
-		<p
-			class="flex-1 min-w-0 overflow-hidden overflow-ellipsis px-5 font-bold text-2xl py-4 bg-c-bg relative z-10"
-		>
+		class="w-full flex justify-between items-stretch border-b-2 border-c-bg-secondary sticky top-0 bg-c-bg gap-2"
+	>
+		<h3 class="flex-1 px-4.5 text-2xl font-bold py-3 z-10">
 			{$LL.Guide.PageTitle()}
-		</p>
-		<button
-			on:click={() => isDrawerOpen.set(false)}
-			class="w-14 flex items-center justify-center group overflow-hidden relative z-0"
+		</h3>
+		<a
+			href="/generate"
+			data-sveltekit-preload-data="hover"
+			class="flex-shrink-0 px-5 py-4 flex items-center justify-center group overflow-hidden relative z-0 gap-2"
 		>
 			<ButtonHoverEffect size="md" noRounding noPadding hoverFrom="right" />
-			<IconCancel class="text-c-on-bg/40 w-7 h-7 transition group-hover:text-c-primary" />
-		</button>
+			<IconHome class="text-c-on-bg/40 w-5 h-5 transition group-hover:text-c-primary" />
+			<p class="text-c-on-bg/50 font-medium transition text-sm group-hover:text-c-primary">
+				{$LL.Shared.GoHomeButton()}
+			</p>
+		</a>
 	</div>
-	<div class="w-full h-2px bg-c-bg-secondary" />
-	<Sidebar class="w-full h-full -mt-2" style="" sidebar={guideSidebar} />
-</div>
+	<Sidebar noBottomPadding class="w-full -mt-2" style="" sidebar={guideSidebar} />
+</Drawer>

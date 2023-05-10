@@ -162,8 +162,10 @@ const tr: Translation = {
 	},
 	Navbar: {
 		HomeTab: 'Ev',
+		GenerateTab: 'Generate',
 		HistoryTab: 'Tarihçe',
 		GalleryTab: 'Galeri',
+		AdminGalleryTab: 'Admin Gallery',
 		LiveTab: 'Canlı'
 	},
 	Settings: {

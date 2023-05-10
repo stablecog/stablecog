@@ -158,8 +158,10 @@ const ptPt: Translation = {
 	},
 	Navbar: {
 		HomeTab: 'Início',
+		GenerateTab: 'Generate',
 		HistoryTab: 'História',
 		GalleryTab: 'Galeria',
+		AdminGalleryTab: 'Admin Gallery',
 		LiveTab: 'Em Direto'
 	},
 	Settings: {

@@ -161,8 +161,10 @@ const bg: Translation = {
 	},
 	Navbar: {
 		HomeTab: 'Начало',
+		GenerateTab: 'Generate',
 		HistoryTab: 'История',
 		GalleryTab: 'Галерия',
+		AdminGalleryTab: 'Admin Gallery',
 		LiveTab: 'На живо'
 	},
 	Settings: {

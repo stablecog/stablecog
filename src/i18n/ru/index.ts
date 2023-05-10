@@ -159,8 +159,10 @@ const ru: Translation = {
 	},
 	Navbar: {
 		HomeTab: 'Домой',
+		GenerateTab: 'Generate',
 		HistoryTab: 'История',
 		GalleryTab: 'Галерея',
+		AdminGalleryTab: 'Admin Gallery',
 		LiveTab: 'Онлайн'
 	},
 	Settings: {

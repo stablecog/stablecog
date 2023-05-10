@@ -260,7 +260,7 @@
 			"
 			class="overflow-hidden bg-c-bg {$themeApp === 'light' ? 'theme-light' : 'theme-dark'}"
 		>
-			<div id="tooltip-container" class="w-full h-full flex flex-col overflow-hidden relative z-0">
+			<div class="w-full h-full flex flex-col overflow-hidden relative z-0">
 				<Navbar />
 				<div class="w-full h-full flex flex-row overflow-hidden pt-2 md:px-4 md:pb-4 gap-4">
 					<div class="h-full hidden lg:flex w-36 xl:w-72 lg:pb-[calc(env(safe-area-inset-bottom))]">

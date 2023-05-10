@@ -159,8 +159,10 @@ const en: BaseTranslation = {
 	},
 	Navbar: {
 		HomeTab: 'Home',
+		GenerateTab: 'Generate',
 		HistoryTab: 'History',
 		GalleryTab: 'Gallery',
+		AdminGalleryTab: 'Admin Gallery',
 		LiveTab: 'Live'
 	},
 	Settings: {
@@ -392,11 +394,11 @@ const en: BaseTranslation = {
 		StopEditButton: 'Stop Editing',
 		NoGenerationsToReview: 'No generations to review.',
 		ServersButton: 'Servers',
-		AdminGalleryButton: 'Gallery',
+		AdminGalleryButton: 'Admin Gallery',
 		UsersButton: 'Users',
 		AdminTab: 'Admin',
 		ServersTab: 'Servers',
-		AdminGalleryTab: 'Gallery',
+		AdminGalleryTab: 'Admin Gallery',
 		UsersTab: 'Users',
 		Users: {
 			ConfirmAction: {

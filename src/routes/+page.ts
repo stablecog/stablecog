@@ -1,4 +1,3 @@
-import { browser } from '$app/environment';
 import { isHydrated } from '$ts/helpers/isHydrated';
 import { redirect, type ServerLoad } from '@sveltejs/kit';
 

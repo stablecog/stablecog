@@ -5,11 +5,10 @@
 	import { onMount } from 'svelte';
 	import { browser } from '$app/environment';
 	import Footer from '$components/navigation/Footer.svelte';
-	import NavbarBottom from '$components/navigation/NavbarBottom.svelte';
 	import { page } from '$app/stores';
 	import { windowHeight, windowWidth } from '$ts/stores/window';
 	import type { LayoutData } from './$types';
-	import { locale, setLocale } from '$i18n/i18n-svelte';
+	import LL, { locale, setLocale } from '$i18n/i18n-svelte';
 	import { localeLS } from '$ts/stores/localeLS';
 	import { loadLocaleAsync } from '$i18n/i18n-util.async';
 	import { isLocale } from '$i18n/i18n-util';
@@ -70,11 +69,21 @@
 	import UserSummaryProvider from '$components/UserSummaryProvider.svelte';
 	import { underDevelopment } from '$ts/stores/underDevelopment';
 	import { setBodyClasses } from '$ts/helpers/setBodyClasses';
+	import { clickoutside } from '$ts/actions/clickoutside';
+	import { isDrawerOpen } from '$ts/stores/isDrawerOpen';
+	import { portal } from 'svelte-portal';
+	import ButtonHoverEffect from '$components/buttons/ButtonHoverEffect.svelte';
+	import IconCancel from '$components/icons/IconCancel.svelte';
+	import { fade } from 'svelte/transition';
+	import { quadIn } from 'svelte/easing';
+	import Drawer from '$components/navigation/Drawer.svelte';
+	import Logo from '$components/Logo.svelte';
 
 	export let data: LayoutData;
 	setLocale(data.locale);
 
 	const rawRoutes = ['/generate', '/'];
+	const routesWithTheirOwnDrawer = ['/guide'];
 	const sseExcludedRoutes = ['/'];
 
 	const gss = data.globalSeedStore;
@@ -100,6 +109,10 @@
 
 	let lastIdentity: string | undefined = undefined;
 	$: [mounted, $page], identifyUser();
+
+	$: isDrawerRoute =
+		!routesWithTheirOwnDrawer.includes($page.url.pathname) &&
+		!routesWithTheirOwnDrawer.some((r) => $page.url.pathname.startsWith(r));
 
 	function identifyUser() {
 		if (!mounted || !$page.data.session?.user.id || lastIdentity === $page.data.session?.user.id) {
@@ -474,14 +487,11 @@
 					{#if !routesWithHiddenFooter.includes($page.url.pathname)}
 						<Footer />
 					{/if}
-					<NavbarBottom class="md:hidden h-[calc(3.75rem+env(safe-area-inset-bottom))]" />
-					<div class="md:hidden h-[calc(3.75rem+env(safe-area-inset-bottom))]" />
-					<div
-						id="tooltip-container"
-						class="absolute overflow-x-hidden left-0 top-0 w-full h-full pointer-events-none"
-					/>
 				{/if}
 			</div>
+		{/if}
+		{#if isDrawerRoute}
+			<Drawer />
 		{/if}
 	</UserSummaryProvider>
 </QueryClientProvider>

@@ -162,8 +162,10 @@ const es: Translation = {
 	},
 	Navbar: {
 		HomeTab: 'Αρχική σελίδα',
+		GenerateTab: 'Generate',
 		HistoryTab: 'Ιστορικό',
 		GalleryTab: 'Συλλογή',
+		AdminGalleryTab: 'Admin Gallery',
 		LiveTab: 'Ζωντανά'
 	},
 	Settings: {

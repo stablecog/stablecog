@@ -1,6 +1,6 @@
 export function clickoutside(
 	node: HTMLElement,
-	{ callback, exclude, capture = false }: TClickoutsideProps
+	{ callback, exclude, capture = true }: TClickoutsideProps
 ) {
 	let startedFromOutside = false;
 	function onMouseDown(event: Event) {

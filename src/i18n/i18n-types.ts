@@ -456,6 +456,10 @@ type RootTranslation = {
 		 */
 		HomeTab: string
 		/**
+		 * G​e​n​e​r​a​t​e
+		 */
+		GenerateTab: string
+		/**
 		 * H​i​s​t​o​r​y
 		 */
 		HistoryTab: string
@@ -463,6 +467,10 @@ type RootTranslation = {
 		 * G​a​l​l​e​r​y
 		 */
 		GalleryTab: string
+		/**
+		 * A​d​m​i​n​ ​G​a​l​l​e​r​y
+		 */
+		AdminGalleryTab: string
 		/**
 		 * L​i​v​e
 		 */
@@ -1145,7 +1153,7 @@ type RootTranslation = {
 		 */
 		ServersButton: string
 		/**
-		 * G​a​l​l​e​r​y
+		 * A​d​m​i​n​ ​G​a​l​l​e​r​y
 		 */
 		AdminGalleryButton: string
 		/**
@@ -1161,7 +1169,7 @@ type RootTranslation = {
 		 */
 		ServersTab: string
 		/**
-		 * G​a​l​l​e​r​y
+		 * A​d​m​i​n​ ​G​a​l​l​e​r​y
 		 */
 		AdminGalleryTab: string
 		/**
@@ -2467,6 +2475,10 @@ export type TranslationFunctions = {
 		 */
 		HomeTab: () => LocalizedString
 		/**
+		 * Generate
+		 */
+		GenerateTab: () => LocalizedString
+		/**
 		 * History
 		 */
 		HistoryTab: () => LocalizedString
@@ -2474,6 +2486,10 @@ export type TranslationFunctions = {
 		 * Gallery
 		 */
 		GalleryTab: () => LocalizedString
+		/**
+		 * Admin Gallery
+		 */
+		AdminGalleryTab: () => LocalizedString
 		/**
 		 * Live
 		 */
@@ -3137,7 +3153,7 @@ export type TranslationFunctions = {
 		 */
 		ServersButton: () => LocalizedString
 		/**
-		 * Gallery
+		 * Admin Gallery
 		 */
 		AdminGalleryButton: () => LocalizedString
 		/**
@@ -3153,7 +3169,7 @@ export type TranslationFunctions = {
 		 */
 		ServersTab: () => LocalizedString
 		/**
-		 * Gallery
+		 * Admin Gallery
 		 */
 		AdminGalleryTab: () => LocalizedString
 		/**

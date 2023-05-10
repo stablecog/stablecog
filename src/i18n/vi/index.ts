@@ -159,8 +159,10 @@ const vi: Translation = {
 	},
 	Navbar: {
 		HomeTab: 'Trang chủ',
+		GenerateTab: 'Generate',
 		HistoryTab: 'Lịch sử',
 		GalleryTab: 'Thư viện',
+		AdminGalleryTab: 'Admin Gallery',
 		LiveTab: 'Trực tiếp'
 	},
 	Settings: {

@@ -7,6 +7,7 @@
 	export let sidebar: TSidebarItem;
 	export { classes as class };
 	export { styles as style };
+	export let noBottomPadding = false;
 	let classes = 'w-full';
 	let styles: string;
 	$: _styles = `${
@@ -21,7 +22,9 @@
 	class="{classes} sticky items-stretch overflow-hidden"
 >
 	<div class="flex-1 flex h-full overflow-hidden">
-		<div class="w-full pt-4 pb-48 px-2 md:px-3 flex flex-col overflow-auto">
+		<div
+			class="w-full pt-4 {noBottomPadding ? '' : 'pb-48'} px-2 md:px-3 flex flex-col overflow-auto"
+		>
 			<SidebarItem sidebarItem={sidebar} />
 		</div>
 	</div>

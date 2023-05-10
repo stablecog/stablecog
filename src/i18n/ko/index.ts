@@ -159,8 +159,10 @@ const ko: Translation = {
 	},
 	Navbar: {
 		HomeTab: '홈 화면',
+		GenerateTab: 'Generate',
 		HistoryTab: '생성 기록',
 		GalleryTab: '갤러리',
+		AdminGalleryTab: 'Admin Gallery',
 		LiveTab: '실시간 통계'
 	},
 	Settings: {

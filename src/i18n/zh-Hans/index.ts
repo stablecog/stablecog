@@ -156,8 +156,10 @@ const zhHans: Translation = {
 	},
 	Navbar: {
 		HomeTab: '首页',
+		GenerateTab: 'Generate',
 		HistoryTab: '历史记录',
 		GalleryTab: '图库',
+		AdminGalleryTab: 'Admin Gallery',
 		LiveTab: '实时统计'
 	},
 	Settings: {

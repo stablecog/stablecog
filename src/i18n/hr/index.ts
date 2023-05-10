@@ -158,8 +158,10 @@ const hr: Translation = {
 	},
 	Navbar: {
 		HomeTab: 'Početna',
+		GenerateTab: 'Generate',
 		HistoryTab: 'Povijest',
 		GalleryTab: 'Galerija',
+		AdminGalleryTab: 'Admin Gallery',
 		LiveTab: 'Uživo'
 	},
 	Settings: {

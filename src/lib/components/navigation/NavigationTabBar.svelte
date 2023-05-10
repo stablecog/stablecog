@@ -2,72 +2,22 @@
 	import { page } from '$app/stores';
 	import IconNavbarRoute from '$components/icons/IconNavbarRoute.svelte';
 	import { isTouchscreen } from '$ts/stores/isTouchscreen';
-	import type { TNavbarRoute, TTabBarPlacement } from '$ts/types/main';
+	import type { TTabBarPlacement } from '$ts/types/main';
 	import TabBarWrapper from '$components/tabBars/TabBarWrapper.svelte';
-	import LL from '$i18n/i18n-svelte';
-	import { isSuperAdmin } from '$ts/helpers/admin/roles';
-	import { userSummary } from '$ts/stores/user/summary';
+	import { routes, type TNavbarRoute } from '$components/navigation/routes';
 
 	export let type: TTabBarPlacement = 'normal';
 
-	const isSelected = (href: string, currentPath: string) => {
-		if (href.startsWith('/admin')) {
-			return $page.url.pathname === href;
+	const isSelected = (route: TNavbarRoute, currentPath: string) => {
+		if (route.strictMatch) {
+			return $page.url.pathname === route.href;
 		}
-		return $page.url.pathname === href || currentPath.startsWith(href + '/');
+		return currentPath.startsWith(route.href);
 	};
 
 	const routeIndexOf = (currentPath: string) => {
-		return routes.findIndex((route) => isSelected(route.href, currentPath));
+		return $routes.findIndex((route) => isSelected(route, currentPath));
 	};
-
-	$: routes = $page.url.pathname.startsWith('/admin') ? adminRoutes : regularRoutes;
-
-	let regularRoutes: TNavbarRoute[];
-	$: regularRoutes = [
-		{
-			name: $LL.Navbar.HomeTab(),
-			href: '/generate',
-			icon: 'home'
-		},
-		{
-			name: $LL.Navbar.HistoryTab(),
-			href: '/history',
-			icon: 'history'
-		},
-		{
-			name: $LL.Navbar.GalleryTab(),
-			href: '/gallery',
-			icon: 'gallery'
-		},
-		{
-			name: $LL.Navbar.LiveTab(),
-			href: '/live',
-			icon: 'live'
-		}
-	];
-	let adminRoutes: TNavbarRoute[];
-	const superAdminRoutes: TNavbarRoute[] = [
-		{
-			name: $LL.Admin.UsersTab(),
-			href: '/admin/users',
-			icon: 'users'
-		}
-	];
-
-	$: adminRoutes = [
-		{
-			name: $LL.Admin.AdminTab(),
-			href: '/admin',
-			icon: 'home'
-		},
-		{
-			name: $LL.Navbar.GalleryTab(),
-			href: '/admin/gallery',
-			icon: 'gallery'
-		},
-		...(isSuperAdmin($userSummary?.roles || []) ? superAdminRoutes : [])
-	];
 </script>
 
 <TabBarWrapper class="w-full" {type}>
@@ -77,7 +27,7 @@
 				class="w-full h-full absolute left-0 top-0 overflow-hidden rounded-r-xl z-0 pointer-events-none"
 			>
 				<div
-					style="width: {(1 / routes.length) * 100}%; transform: translateX({routeIndexOf(
+					style="width: {(1 / $routes.length) * 100}%; transform: translateX({routeIndexOf(
 						$page.url.pathname
 					) * 100}%)"
 					class="h-full absolute left-0 top-0 transition {type === 'bottom'
@@ -85,20 +35,20 @@
 						: 'p-1'}"
 				>
 					<div
-						class="w-full h-full bg-c-bg-secondary rounded-lg shadow-md shadow-c-shadow/[var(--o-shadow-strong)] "
+						class="w-full h-full bg-c-bg-secondary rounded-lg shadow-md shadow-c-shadow/[var(--o-shadow-strong)]"
 					/>
 				</div>
 			</div>
-			{#each routes as route}
+			{#each $routes as route}
 				<a
 					aria-label="Go to {route.name}"
 					data-sveltekit-preload-data="hover"
-					class="flex-1 rounded-lg whitespace-nowrap overflow-hidden group self-stretch flex 
+					class="flex-1 rounded-lg whitespace-nowrap overflow-hidden group self-stretch flex
 					items-center justify-center px-4 transition-all relative font-semibold {type === 'bottom'
 						? 'pt-4 pb-4.5'
-						: 'py-4'} {isSelected(route.href, $page.url.pathname)
+						: 'py-4'} {isSelected(route, $page.url.pathname)
 						? 'text-c-on-bg'
-						: 'text-c-on-bg/50'} {isSelected(route.href, $page.url.pathname) && !$isTouchscreen
+						: 'text-c-on-bg/50'} {isSelected(route, $page.url.pathname) && !$isTouchscreen
 						? 'hover:text-c-primary'
 						: 'text-c-on-bg'}"
 					href={route.href}
@@ -110,8 +60,8 @@
 					>
 						<div class="w-full h-full overflow-hidden relative z-0 rounded-lg">
 							<div
-								class="w-full h-full origin-left rounded-lg transition transform translate-y-full 
-									bg-c-bg-secondary {isSelected(route.href, $page.url.pathname)
+								class="w-full h-full origin-left rounded-lg transition transform translate-y-full
+									bg-c-bg-secondary {isSelected(route, $page.url.pathname)
 									? 'group-focus-within:translate-y-0'
 									: ''} {!$isTouchscreen ? 'group-hover:translate-y-0' : ''}"
 							/>

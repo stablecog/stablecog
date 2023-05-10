@@ -159,8 +159,10 @@ const fr: Translation = {
 	},
 	Navbar: {
 		HomeTab: 'Accueil',
+		GenerateTab: 'Generate',
 		HistoryTab: 'Historique',
 		GalleryTab: 'Galerie',
+		AdminGalleryTab: 'Admin Gallery',
 		LiveTab: 'Live'
 	},
 	Settings: {

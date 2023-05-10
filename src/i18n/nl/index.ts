@@ -162,8 +162,10 @@ const nl: Translation = {
 	},
 	Navbar: {
 		HomeTab: 'Home',
+		GenerateTab: 'Generate',
 		HistoryTab: 'Historie',
 		GalleryTab: 'Galerij',
+		AdminGalleryTab: 'Admin Gallery',
 		LiveTab: 'Live'
 	},
 	Settings: {
