@@ -47,7 +47,7 @@
 	on:focus|preventDefault={() => null}
 	on:mouseleave|preventDefault={onMouseLeave}
 	on:blur|preventDefault={() => null}
-	class="h-full w-8 absolute -right-4 transition {isClosed
+	class="h-full w-5 absolute -right-2.5 transition {isClosed
 		? '-translate-x-3'
 		: ''} top-0 flex items-center justify-center transform z-20"
 >
@@ -56,7 +56,7 @@
     shadow-xl shadow-c-shadow/[var(--o-shadow-strongest)] transform transition {shouldShowButton ||
 		isClosed
 			? 'opacity-100 translate-x-0'
-			: 'opacity-0 translate-x-2'}"
+			: 'opacity-0 translate-x-2'} pointer-events-auto"
 	>
 		<IconButton
 			{onClick}
