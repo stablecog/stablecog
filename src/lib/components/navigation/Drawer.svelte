@@ -14,7 +14,8 @@
 	import ScrollAreaWithChevron from '$components/ScrollAreaWithChevron.svelte';
 	import LogoButton from '$components/buttons/LogoButton.svelte';
 	import { browser } from '$app/environment';
-
+	import ScBar from '$components/ScBar.svelte';
+	import { isTouchscreen } from '$ts/stores/isTouchscreen';
 	export let hasCustomContent = false;
 
 	$: $isDrawerOpen, onIsDrawerOpenChanged();
@@ -57,12 +58,16 @@
 			class="w-14 py-4 flex items-center justify-center group overflow-hidden relative z-0"
 		>
 			<ButtonHoverEffect size="md" noRounding noPadding hoverFrom="right" />
-			<IconCancel class="text-c-on-bg/40 w-7 h-7 transition group-hover:text-c-primary" />
+			<IconCancel
+				class="text-c-on-bg/40 w-7 h-7 transition {!$isTouchscreen
+					? 'group-hover:text-c-primary'
+					: ''}"
+			/>
 		</button>
 	</div>
 	<div class="w-full h-2px bg-c-bg-secondary" />
 	<div class="w-full flex flex-col flex-1 overflow-hidden">
-		<ScrollAreaWithChevron class="pb-[calc(env(safe-area-inset-bottom)+5rem)]">
+		<ScrollAreaWithChevron class="pb-20">
 			{#if hasCustomContent}
 				<slot />
 			{:else}
@@ -83,10 +88,14 @@
 						>
 							<IconNavbarRoute
 								type={route.icon}
-								class="group-hover:text-c-primary transition flex-shrink-0"
+								class="{!$isTouchscreen
+									? 'group-hover:text-c-primary'
+									: ''} transition flex-shrink-0"
 							/>
 							<p
-								class="flex-1 break-words flex flex-col overflow-hidden group-hover:text-c-primary transition flex-shrink"
+								class="flex-1 break-words flex flex-col overflow-hidden {!$isTouchscreen
+									? 'group-hover:text-c-primary'
+									: ''} transition flex-shrink"
 							>
 								{route.name}
 							</p>
@@ -95,5 +104,10 @@
 				{/each}
 			{/if}
 		</ScrollAreaWithChevron>
+	</div>
+	<div
+		class="w-full px-4 pt-2 pb-[calc(env(safe-area-inset-bottom)+0.6rem)] border-t-2 border-c-bg-secondary"
+	>
+		<ScBar withEmail />
 	</div>
 </div>

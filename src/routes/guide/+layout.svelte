@@ -19,9 +19,10 @@
 
 <Drawer hasCustomContent>
 	<div
-		class="w-full flex justify-between items-stretch border-b-2 border-c-bg-secondary sticky top-0 bg-c-bg gap-2"
+		class="w-full flex justify-between items-stretch border-b-2 border-c-bg-secondary
+		sticky transform -translate-y-2px top-0 bg-c-bg gap-2 z-10"
 	>
-		<h3 class="flex-1 px-4.5 text-2xl font-bold py-3 z-10">
+		<h3 class="flex-1 px-4.5 text-2xl font-bold pt-[calc(0.75rem+2px)] pb-3 z-10">
 			{$LL.Guide.PageTitle()}
 		</h3>
 		<a

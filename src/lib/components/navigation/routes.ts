@@ -74,8 +74,12 @@ export const extraRoutes = derived([LL], ([$LL]) => {
 		{
 			name: $LL.Guide.PageTitle(),
 			href: '/guide',
-			icon: 'guide',
-			strictMatch: true
+			icon: 'guide'
+		},
+		{
+			name: $LL.Blog.TitleAlt(),
+			href: '/blog',
+			icon: 'blog'
 		}
 	];
 	return routes;
