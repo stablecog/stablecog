@@ -7,24 +7,19 @@
 
 	export let hasPadding = true;
 	export let onClose: (() => void) | undefined = undefined;
-	export let setOverflowHidden = true;
 	let scrollY: number;
 
 	onMount(() => {
-		if (setOverflowHidden) {
-			document.body.style.overflow = 'hidden';
-		}
+		document.body.classList.add('overflow-hidden-for-modal');
 	});
 	onDestroy(() => {
-		if (setOverflowHidden) {
-			document.body.style.overflow = 'auto';
-		}
+		document.body.classList.remove('overflow-hidden-for-modal');
 	});
 </script>
 
 <div
 	style="width: {$windowWidth}px; height: {$windowHeight}px;"
-	class="flex flex-col items-center fixed left-0 
+	class="flex flex-col items-center fixed left-0
     top-0 bg-c-barrier/90 z-[100] overflow-hidden"
 />
 <div

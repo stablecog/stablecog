@@ -270,7 +270,6 @@
 
 <ModalWrapper
 	hasPadding={false}
-	setOverflowHidden={modalType !== 'generate' && modalType !== 'stage'}
 	onClose={$windowWidth < mdBreakpoint
 		? () => {
 				if ($activeGeneration !== undefined) {

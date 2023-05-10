@@ -217,4 +217,8 @@ select:-webkit-autofill:focus {
 	}
 }
 
+.overflow-hidden-for-modal {
+	overflow: hidden!important;
+}
+
 @tailwind utilities;

@@ -13,8 +13,20 @@
 	import { page } from '$app/stores';
 	import ScrollAreaWithChevron from '$components/ScrollAreaWithChevron.svelte';
 	import LogoButton from '$components/buttons/LogoButton.svelte';
+	import { browser } from '$app/environment';
 
 	export let hasCustomContent = false;
+
+	$: $isDrawerOpen, onIsDrawerOpenChanged();
+
+	function onIsDrawerOpenChanged() {
+		if (!browser) return;
+		if ($isDrawerOpen) {
+			document.body.classList.add('overflow-hidden-for-modal');
+		} else {
+			document.body.classList.remove('overflow-hidden-for-modal');
+		}
+	}
 </script>
 
 {#if $isDrawerOpen}
