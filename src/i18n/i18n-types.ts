@@ -36,13 +36,13 @@ type RootTranslation = {
 	Landing: {
 		Hero: {
 			/**
-			 * C​r​e​a​t​e​ ​a​m​a​z​i​n​g​ ​a​r​t​ ​i​n​ ​s​e​c​o​n​d​s​ ​w​i​t​h​ ​A​I
+			 * C​r​e​a​t​e​ ​a​m​a​z​i​n​g​ ​a​r​t​ ​i​n​ ​s​e​c​o​n​d​s​ ​w​i​t​h​ ​A​I​.
 			 */
 			Title: string
 		}
 		Describe: {
 			/**
-			 * D​e​s​c​r​i​b​e​ ​a​n​y​t​h​i​n​g
+			 * D​e​s​c​r​i​b​e​ ​a​n​y​t​h​i​n​g​.
 			 */
 			Title: string
 			/**
@@ -56,7 +56,7 @@ type RootTranslation = {
 		}
 		InitImage: {
 			/**
-			 * O​r​ ​s​t​a​r​t​ ​w​i​t​h​ ​a​n​ ​i​m​a​g​e
+			 * O​r​ ​s​t​a​r​t​ ​w​i​t​h​ ​a​n​ ​i​m​a​g​e​.
 			 */
 			Title: string
 			/**
@@ -2056,13 +2056,13 @@ export type TranslationFunctions = {
 	Landing: {
 		Hero: {
 			/**
-			 * Create amazing art in seconds with AI
+			 * Create amazing art in seconds with AI.
 			 */
 			Title: () => LocalizedString
 		}
 		Describe: {
 			/**
-			 * Describe anything
+			 * Describe anything.
 			 */
 			Title: () => LocalizedString
 			/**
@@ -2076,7 +2076,7 @@ export type TranslationFunctions = {
 		}
 		InitImage: {
 			/**
-			 * Or start with an image
+			 * Or start with an image.
 			 */
 			Title: () => LocalizedString
 			/**
