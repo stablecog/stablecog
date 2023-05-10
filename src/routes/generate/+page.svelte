@@ -283,35 +283,40 @@
 				<Navbar />
 				<div class="w-full h-full flex flex-row overflow-hidden pt-2 md:px-4 md:pb-4 gap-4">
 					<div class="hidden lg:flex min-w-[2rem] flex-col items-start h-full relative">
-						<div
-							class="h-full flex {$isLeftSidebarHidden
-								? 'w-0 opacity-0'
-								: 'w-36 xl:w-72'} transition-all lg:pb-[calc(env(safe-area-inset-bottom))] relative z-10"
-						>
-							<SidebarWrapper hasGradient>
-								{#if !$page.data.session?.user.id}
-									<GenerateGridPlaceholder text={$LL.Generate.Grid.NotSignedIn.Paragraph()} />
-								{:else if userGenerationFullOutputsQuery}
-									<AutoSize bind:element={gridScrollContainer}>
-										{#if $windowWidth > lgBreakpoint && gridScrollContainer}
-											<GenerationGridInfinite2
-												paddingLeft={6}
-												paddingRight={6}
-												paddingTop={6}
-												paddingBottom={80}
-												{pinnedFullOutputs}
-												noLoadingSpinnerAlignmentAdjustment
-												hasPlaceholder
-												cardType="generate"
-												generationsQuery={userGenerationFullOutputsQuery}
-												cols={$windowWidth > xlBreakpoint ? 3 : 2}
-												{gridScrollContainer}
-											/>
-										{/if}
-									</AutoSize>
-								{/if}
-							</SidebarWrapper>
-						</div>
+						{#if !$isLeftSidebarHidden}
+							<div
+								transition:fly|local={{
+									duration: 200,
+									x: $windowWidth > xlBreakpoint ? -250 : -150,
+									easing: quadOut
+								}}
+								class="h-full flex w-36 xl:w-72 lg:pb-[calc(env(safe-area-inset-bottom))] relative z-10"
+							>
+								<SidebarWrapper hasGradient>
+									{#if !$page.data.session?.user.id}
+										<GenerateGridPlaceholder text={$LL.Generate.Grid.NotSignedIn.Paragraph()} />
+									{:else if userGenerationFullOutputsQuery}
+										<AutoSize bind:element={gridScrollContainer}>
+											{#if $windowWidth > lgBreakpoint && gridScrollContainer}
+												<GenerationGridInfinite2
+													paddingLeft={6}
+													paddingRight={6}
+													paddingTop={6}
+													paddingBottom={80}
+													{pinnedFullOutputs}
+													noLoadingSpinnerAlignmentAdjustment
+													hasPlaceholder
+													cardType="generate"
+													generationsQuery={userGenerationFullOutputsQuery}
+													cols={$windowWidth > xlBreakpoint ? 3 : 2}
+													{gridScrollContainer}
+												/>
+											{/if}
+										</AutoSize>
+									{/if}
+								</SidebarWrapper>
+							</div>
+						{/if}
 						<SidebarCollapseButton
 							side="left"
 							isClosed={$isLeftSidebarHidden}

@@ -18,7 +18,6 @@
 	import { createVirtualizer, type SvelteVirtualizer } from '@tanstack/svelte-virtual';
 	import { windowHeight, windowWidth } from '$ts/stores/window';
 	import { removeRepeatingOutputs } from '$ts/helpers/removeRepeatingOutputs';
-	import { onMount } from 'svelte';
 
 	export let generationsQuery: CreateInfiniteQueryResult<TUserGenerationFullOutputsPage, unknown>;
 	export let pinnedFullOutputs: TGenerationFullOutput[] | undefined = undefined;
@@ -56,7 +55,6 @@
 	$: [listScrollContainer, outputs, overscanCount], initiallySetListVirtualizer();
 	$: $listVirtualizer, onListVirtualizerChanged();
 	$: [outputs, overscanCount], onParamsChanged();
-	$: [$windowWidth, $windowHeight], onWindowSizeChanged();
 
 	$: listAtStart = $listVirtualizer ? $listVirtualizer.scrollOffset <= 0 : true;
 	$: listAtEnd =
@@ -64,16 +62,6 @@
 			? $listVirtualizer.scrollOffset >=
 			  listScrollContainer.scrollWidth - listScrollContainer.clientWidth
 			: false;
-
-	function onWindowSizeChanged() {
-		if (shouldMeasureTimeout) clearTimeout(shouldMeasureTimeout);
-		if (!outputs || !$windowWidth || !$windowHeight || !$listVirtualizer) return;
-		$listVirtualizer.measure();
-		shouldMeasureTimeout = setTimeout(() => {
-			if (!$listVirtualizer) return;
-			$listVirtualizer.measure();
-		}, shouldMeasureDebounceTime);
-	}
 
 	function setOutputs() {
 		if (!onlyOutputs) {
@@ -98,7 +86,6 @@
 		}
 		if (Object.keys(optionsToSet).length > 0) {
 			$listVirtualizer.setOptions(optionsToSet);
-			$listVirtualizer.measure();
 		}
 	}
 

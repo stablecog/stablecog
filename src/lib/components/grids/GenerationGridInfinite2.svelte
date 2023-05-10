@@ -32,6 +32,7 @@
 	import type { TUserGenerationFullOutputsPage } from '$ts/queries/userGenerations';
 	import type { Readable } from 'svelte/store';
 	import { windowHeight, windowWidth } from '$ts/stores/window';
+	import { onMount } from 'svelte';
 
 	export let generationsQuery: CreateInfiniteQueryResult<TUserGenerationFullOutputsPage, unknown>;
 	export let gridScrollContainer: HTMLDivElement | null = null;
@@ -116,22 +117,11 @@
 	const overscanMultiplierForNextPage = 0.25;
 
 	let shouldMeasureTimeout: NodeJS.Timeout;
-	const shouldMeasureDebounceTime = 100;
+	const shouldMeasureDebounceTime = 300;
 
 	$: [gridScrollContainer, outputs, overscanCount], initiallySetGridVirtualizer();
 	$: $gridVirtualizer, onGridVirtualizerChanged();
 	$: [outputs, overscanCount, cols], onParamsChanged();
-	$: [$windowWidth, $windowHeight], onWindowSizeChanged();
-
-	function onWindowSizeChanged() {
-		if (shouldMeasureTimeout) clearTimeout(shouldMeasureTimeout);
-		if (!outputs || !$windowWidth || !$windowHeight || !$gridVirtualizer) return;
-		$gridVirtualizer.measure();
-		shouldMeasureTimeout = setTimeout(() => {
-			if (!$gridVirtualizer) return;
-			$gridVirtualizer.measure();
-		}, shouldMeasureDebounceTime);
-	}
 
 	function onGridVirtualizerChanged() {
 		if (
@@ -165,7 +155,6 @@
 		}
 		if (Object.keys(optionsToSet).length > 0) {
 			$gridVirtualizer.setOptions(optionsToSet);
-			$gridVirtualizer.measure();
 		}
 	}
 
@@ -198,6 +187,14 @@
 						}
 				  });
 	}
+
+	onMount(() => {
+		setInterval(() => {
+			if ($gridVirtualizer) {
+				$gridVirtualizer.measure();
+			}
+		}, 1000);
+	});
 </script>
 
 {#if $generationsQuery.isInitialLoading}
