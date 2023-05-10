@@ -47,16 +47,16 @@
 	on:focus|preventDefault={() => null}
 	on:mouseleave|preventDefault={onMouseLeave}
 	on:blur|preventDefault={() => null}
-	class="h-full w-5 absolute -right-2.5 transition {isClosed
-		? '-translate-x-3'
+	class="h-full w-8 absolute -right-7 transition {isClosed
+		? '-translate-x-3.5'
 		: ''} top-0 flex items-center justify-center transform z-20"
 >
 	<div
 		class="rounded-full bg-c-bg ring-2 ring-c-bg-secondary flex items-center justify-center
     shadow-xl shadow-c-shadow/[var(--o-shadow-strongest)] transform transition {shouldShowButton ||
 		isClosed
-			? 'opacity-100 translate-x-0'
-			: 'opacity-0 translate-x-2'} pointer-events-auto"
+			? 'opacity-100 -translate-x-2.5'
+			: 'opacity-0 translate-x-0'}"
 	>
 		<IconButton
 			{onClick}
