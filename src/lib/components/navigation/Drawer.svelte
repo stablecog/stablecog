@@ -54,6 +54,7 @@
 	<div class="w-full flex flex-row justify-between gap-5 items-stretch">
 		<LogoButton />
 		<button
+			aria-label="Close Drawer"
 			on:click={() => isDrawerOpen.set(false)}
 			class="w-14 py-4 flex items-center justify-center group overflow-hidden relative z-0"
 		>
