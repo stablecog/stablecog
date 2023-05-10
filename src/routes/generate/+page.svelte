@@ -51,6 +51,8 @@
 	import { appVersion, serverVersion } from '$ts/stores/appVersion.js';
 	import { isSuperAdmin } from '$ts/helpers/admin/roles.js';
 	import { underDevelopment } from '$ts/stores/underDevelopment.js';
+	import { canonicalUrl } from '$ts/constants/main.js';
+	import MetaTag from '$components/MetaTag.svelte';
 
 	export let data;
 
@@ -236,6 +238,13 @@
 		document.body.style.height = 'auto';
 	});
 </script>
+
+<MetaTag
+	title="Stablecog | Generate"
+	description="Create amazing art in seconds with AI. Free, multilingual and open-source AI image generator using Stable Diffusion and Kandinsky."
+	imageUrl="{canonicalUrl}/previews/home.png"
+	canonical={canonicalUrl}
+/>
 
 <svelte:window on:keydown={onKeyDown} />
 
