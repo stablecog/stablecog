@@ -675,7 +675,8 @@ const ru: Translation = {
 		Questions: {
 			CommercialUse: {
 				Question: 'Can I use the images commercially?',
-				Answer: ''
+				Answer:
+					'If you create an image while you are subscribed to a plan (Starter, Pro or Ultimate), you can use that image commercially even if you cancel your plan afterwards at some point. If you are on the free plan, the images you create are for personal use only.'
 			},
 			MoreCredits: {
 				Question: 'Can I buy more credits?',
@@ -692,10 +693,15 @@ const ru: Translation = {
 				Answer:
 					"Yes, you can upgrade or downgrade your plan anytime. If you upgrade your plan, you'll keep the remaining credits from your previous plan too until they expire. The upgraded plan will be charged immediately, and fully."
 			},
+			PlanCancellation: {
+				Question: 'Can I cancel my plan anytime?',
+				Answer:
+					'Yes, you can cancel your plan anytime and billing will stop at the end of that billing cycle. You will also keep your credits until the billing cycle ends.'
+			},
 			MoreQuestions: {
 				Question: 'Where can I ask more questions?',
 				Answer:
-					'You can join our {Discord community} and ask us anything. You can also reach us by {email} or {Twitter}.',
+					'You can join our {Discord} to ask us anything. We are happy to help. You can also reach out via {Twitter} or {email}.',
 				Parts: {
 					Discord: 'Discord community',
 					Email: 'email',

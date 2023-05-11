@@ -33,6 +33,7 @@
 	} from '$ts/constants/stripePublic';
 	import { userSummary } from '$ts/stores/user/summary';
 	import { previewImageVersion } from '$ts/constants/previewImageVersion';
+	import { socialAppUrls } from '$ts/constants/social';
 
 	export let data: PageData;
 
@@ -219,9 +220,58 @@
 		}
 	];
 
+	interface FAQItem {
+		question: string;
+		answer: string;
+		isHTML?: boolean;
+	}
+	let faqItems: FAQItem[];
+	$: faqItems = [
+		{
+			question: $LL.FAQ.Questions.PlanCancellation.Question(),
+			answer: $LL.FAQ.Questions.PlanCancellation.Answer()
+		},
+		{
+			question: $LL.FAQ.Questions.PlanUpgradeOrDowngrade.Question(),
+			answer: $LL.FAQ.Questions.PlanUpgradeOrDowngrade.Answer()
+		},
+		{
+			question: $LL.FAQ.Questions.MoreCredits.Question(),
+			answer: $LL.FAQ.Questions.MoreCredits.Answer()
+		},
+		{
+			question: $LL.FAQ.Questions.CreditRollOver.Question(),
+			answer: $LL.FAQ.Questions.CreditRollOver.Answer()
+		},
+		{
+			question: $LL.FAQ.Questions.CommercialUse.Question(),
+			answer: $LL.FAQ.Questions.CommercialUse.Answer()
+		},
+		{
+			question: $LL.FAQ.Questions.MoreQuestions.Question(),
+			answer: $LL.FAQ.Questions.MoreQuestions.Answer({
+				Discord: getAnchorLinkHTML(
+					$LL.FAQ.Questions.MoreQuestions.Parts.Discord(),
+					socialAppUrls.discord
+				),
+				Twitter: getAnchorLinkHTML(
+					$LL.FAQ.Questions.MoreQuestions.Parts.Twitter(),
+					socialAppUrls.twitter
+				),
+				email: getAnchorLinkHTML($LL.FAQ.Questions.MoreQuestions.Parts.Email(), socialAppUrls.email)
+			}),
+			isHTML: true
+		}
+	];
+
 	let checkoutCreationStatus: 'idle' | 'loading' | 'success' | 'error' = 'idle';
 	let isSignInModalOpen = false;
 	let selectedPriceId: string | undefined = undefined;
+
+	interface TCheckoutSessionRes {
+		checkout_url?: string;
+		error?: string;
+	}
 
 	async function createCheckoutSessionAndRedirect({
 		priceId,
@@ -262,9 +312,8 @@
 		}
 	}
 
-	interface TCheckoutSessionRes {
-		checkout_url?: string;
-		error?: string;
+	function getAnchorLinkHTML(text: string, href: string) {
+		return `<a href="${href}" target="_blank" class="hover:text-c-primary transition underline">${text}</a>`;
 	}
 </script>
 
@@ -277,7 +326,7 @@
 
 <PageWrapper>
 	<div class="w-full flex flex-col items-center justify-start my-auto">
-		<section id="plans" class="w-full flex flex-col items-center justify-start">
+		<section id="plans" class="w-full flex flex-col items-center justify-start md:pt-4">
 			<h1 class="text-center font-bold text-4xl">{$LL.Pricing.PlansTitle()}</h1>
 			<p class="max-w-xl mt-3 text-center leading-relaxed text-c-on-bg/75">
 				{$LL.Pricing.PlansParagraph()}
@@ -377,7 +426,7 @@
 			<div class="w-full h-[1vh]" />
 		</section>
 		{#if $userSummary?.product_id && $page.data.session?.user.id !== undefined}
-			<section id="credit-packs" class="w-full flex flex-col items-center justify-start mt-12">
+			<section id="credit-packs" class="w-full flex flex-col items-center justify-start pt-16">
 				<h2 class="text-center font-bold text-4xl">{$LL.Pricing.CreditPacksTitle()}</h2>
 				<p class="max-w-xl mt-3 text-center leading-relaxed text-c-on-bg/75">
 					{$LL.Pricing.CreditPacksParagraph()}
@@ -440,6 +489,23 @@
 				<div class="w-full h-[1vh]" />
 			</section>
 		{/if}
+		<div class="w-full flex justify-center mt-10 md:mt-12 md:mb-4">
+			<div class="w-full max-w-5xl rounded-full h-2px bg-c-bg-secondary" />
+		</div>
+		<section id="faq" class="w-full flex flex-col items-center pt-6">
+			<div class="max-w-5xl flex flex-wrap items-start justify-start">
+				{#each faqItems as item}
+					<div class="w-full md:w-1/2 px-0 md:px-5 py-4">
+						<h5 class="font-semibold">{item.question}</h5>
+						{#if item.isHTML}
+							<p class="mt-1 text-c-on-bg/75">{@html item.answer}</p>
+						{:else}
+							<p class="mt-1 text-c-on-bg/75">{item.answer}</p>
+						{/if}
+					</div>
+				{/each}
+			</div>
+		</section>
 	</div>
 </PageWrapper>
 

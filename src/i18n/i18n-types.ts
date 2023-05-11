@@ -1983,6 +1983,9 @@ type RootTranslation = {
 				 * C​a​n​ ​I​ ​u​s​e​ ​t​h​e​ ​i​m​a​g​e​s​ ​c​o​m​m​e​r​c​i​a​l​l​y​?
 				 */
 				Question: string
+				/**
+				 * I​f​ ​y​o​u​ ​c​r​e​a​t​e​ ​a​n​ ​i​m​a​g​e​ ​w​h​i​l​e​ ​y​o​u​ ​a​r​e​ ​s​u​b​s​c​r​i​b​e​d​ ​t​o​ ​a​ ​p​l​a​n​ ​(​S​t​a​r​t​e​r​,​ ​P​r​o​ ​o​r​ ​U​l​t​i​m​a​t​e​)​,​ ​y​o​u​ ​c​a​n​ ​u​s​e​ ​t​h​a​t​ ​i​m​a​g​e​ ​c​o​m​m​e​r​c​i​a​l​l​y​ ​e​v​e​n​ ​i​f​ ​y​o​u​ ​c​a​n​c​e​l​ ​y​o​u​r​ ​p​l​a​n​ ​a​f​t​e​r​w​a​r​d​s​ ​a​t​ ​s​o​m​e​ ​p​o​i​n​t​.​ ​I​f​ ​y​o​u​ ​a​r​e​ ​o​n​ ​t​h​e​ ​f​r​e​e​ ​p​l​a​n​,​ ​t​h​e​ ​i​m​a​g​e​s​ ​y​o​u​ ​c​r​e​a​t​e​ ​a​r​e​ ​f​o​r​ ​p​e​r​s​o​n​a​l​ ​u​s​e​ ​o​n​l​y​.
+				 */
 				Answer: string
 			}
 			MoreCredits: {
@@ -2015,13 +2018,23 @@ type RootTranslation = {
 				 */
 				Answer: string
 			}
+			PlanCancellation: {
+				/**
+				 * C​a​n​ ​I​ ​c​a​n​c​e​l​ ​m​y​ ​p​l​a​n​ ​a​n​y​t​i​m​e​?
+				 */
+				Question: string
+				/**
+				 * Y​e​s​,​ ​y​o​u​ ​c​a​n​ ​c​a​n​c​e​l​ ​y​o​u​r​ ​p​l​a​n​ ​a​n​y​t​i​m​e​ ​a​n​d​ ​b​i​l​l​i​n​g​ ​w​i​l​l​ ​s​t​o​p​ ​a​t​ ​t​h​e​ ​e​n​d​ ​o​f​ ​t​h​a​t​ ​b​i​l​l​i​n​g​ ​c​y​c​l​e​.​ ​Y​o​u​ ​w​i​l​l​ ​a​l​s​o​ ​k​e​e​p​ ​y​o​u​r​ ​c​r​e​d​i​t​s​ ​u​n​t​i​l​ ​t​h​e​ ​b​i​l​l​i​n​g​ ​c​y​c​l​e​ ​e​n​d​s​.
+				 */
+				Answer: string
+			}
 			MoreQuestions: {
 				/**
 				 * W​h​e​r​e​ ​c​a​n​ ​I​ ​a​s​k​ ​m​o​r​e​ ​q​u​e​s​t​i​o​n​s​?
 				 */
 				Question: string
 				/**
-				 * Y​o​u​ ​c​a​n​ ​j​o​i​n​ ​o​u​r​ ​{​D​i​s​c​o​r​d​}​ ​a​n​d​ ​a​s​k​ ​u​s​ ​a​n​y​t​h​i​n​g​.​ ​Y​o​u​ ​c​a​n​ ​a​l​s​o​ ​r​e​a​c​h​ ​u​s​ ​b​y​ ​{​e​m​a​i​l​}​ ​o​r​ ​{​T​w​i​t​t​e​r​}​.
+				 * Y​o​u​ ​c​a​n​ ​j​o​i​n​ ​o​u​r​ ​{​D​i​s​c​o​r​d​}​ ​t​o​ ​a​s​k​ ​u​s​ ​a​n​y​t​h​i​n​g​.​ ​W​e​ ​a​r​e​ ​h​a​p​p​y​ ​t​o​ ​h​e​l​p​.​ ​Y​o​u​ ​c​a​n​ ​a​l​s​o​ ​r​e​a​c​h​ ​o​u​t​ ​v​i​a​ ​{​T​w​i​t​t​e​r​}​ ​o​r​ ​{​e​m​a​i​l​}​.
 				 * @param {unknown} Discord
 				 * @param {unknown} email
 				 * @param {unknown} Twitter
@@ -4053,6 +4066,9 @@ export type TranslationFunctions = {
 				 * Can I use the images commercially?
 				 */
 				Question: () => LocalizedString
+				/**
+				 * If you create an image while you are subscribed to a plan (Starter, Pro or Ultimate), you can use that image commercially even if you cancel your plan afterwards at some point. If you are on the free plan, the images you create are for personal use only.
+				 */
 				Answer: () => LocalizedString
 			}
 			MoreCredits: {
@@ -4085,13 +4101,23 @@ export type TranslationFunctions = {
 				 */
 				Answer: () => LocalizedString
 			}
+			PlanCancellation: {
+				/**
+				 * Can I cancel my plan anytime?
+				 */
+				Question: () => LocalizedString
+				/**
+				 * Yes, you can cancel your plan anytime and billing will stop at the end of that billing cycle. You will also keep your credits until the billing cycle ends.
+				 */
+				Answer: () => LocalizedString
+			}
 			MoreQuestions: {
 				/**
 				 * Where can I ask more questions?
 				 */
 				Question: () => LocalizedString
 				/**
-				 * You can join our {Discord} and ask us anything. You can also reach us by {email} or {Twitter}.
+				 * You can join our {Discord} to ask us anything. We are happy to help. You can also reach out via {Twitter} or {email}.
 				 */
 				Answer: (arg: { Discord: unknown, email: unknown, Twitter: unknown }) => LocalizedString
 				Parts: {
