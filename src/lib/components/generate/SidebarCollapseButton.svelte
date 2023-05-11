@@ -11,8 +11,8 @@
 	let isInside = false;
 	let hasBeenInsideForMs = 0;
 	let hasBeenInsideForMsInterval: NodeJS.Timeout;
-	let hasBeenInsideForMsIntervalDelay = 100;
-	let enoughTimeThreshold = 200;
+	let hasBeenInsideForMsIntervalDelay = 50;
+	let enoughTimeThreshold = 100;
 
 	let isFirstChange = true;
 	let isNewlyOpenedTimeout: NodeJS.Timeout;
@@ -56,7 +56,7 @@
 	function onIsInsideChange() {
 		clearInterval(hasBeenInsideForMsInterval);
 		hasBeenInsideForMs = 0;
-		if (!isInside) return;
+		if (!isInside || isClosed) return;
 		const startTime = Date.now();
 		hasBeenInsideForMsInterval = setInterval(() => {
 			hasBeenInsideForMs = Date.now() - startTime;
