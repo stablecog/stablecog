@@ -1,4 +1,3 @@
-import { isAllowedRedirectRoute } from '$ts/constants/main';
 import { getServerSession } from '@supabase/auth-helpers-sveltekit';
 import { redirect } from '@sveltejs/kit';
 import type { PageServerLoad } from './$types';

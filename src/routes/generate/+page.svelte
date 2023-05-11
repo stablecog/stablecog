@@ -56,6 +56,7 @@
 	import SidebarCollapseButton from '$components/generate/SidebarCollapseButton.svelte';
 	import { isLeftSidebarHidden, isLeftSidebarHiddenApp } from '$ts/stores/sidebars.js';
 	import { previewImageVersion } from '$ts/constants/previewImageVersion.js';
+	import { goto } from '$app/navigation';
 
 	export let data;
 
@@ -223,7 +224,13 @@
 		generationPlaceholder.ui_id = generateSSEId();
 	}
 
+	const confirmOtherEmailHash =
+		'#message=Confirmation+link+accepted.+Please+proceed+to+confirm+link+sent+to+the+other+email';
+
 	onMount(async () => {
+		if ($page.url.hash === confirmOtherEmailHash) {
+			await goto('/account/change-email?confirm_other_email=true');
+		}
 		if (data.is_sign_in_modal_open) {
 			await tick();
 			setTimeout(() => {

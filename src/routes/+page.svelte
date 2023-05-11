@@ -4,35 +4,11 @@
 	import { goto } from '$app/navigation';
 	import { canonicalUrl } from '$ts/constants/main.js';
 	import { onMount } from 'svelte';
-	import { themeApp } from '$ts/stores/theme.js';
-	import Navbar from '$components/navigation/Navbar.svelte';
-	import Footer from '$components/navigation/Footer.svelte';
 	import DescribeAnything from '$components/landing/DescribeAnything.svelte';
 	import InitImage from '$components/landing/InitImage.svelte';
 	import StartCreating from '$components/landing/StartCreating.svelte';
 	import Hero from '$components/landing/Hero.svelte';
 	import { previewImageVersion } from '$ts/constants/previewImageVersion';
-
-	let notAtTheVeryTop = false;
-	const notAtTheVeryTopThreshold = 2;
-	let oldScrollY = 0;
-	const minScrollThreshold = 40;
-	let scrollDirection: 'up' | 'down' = 'down';
-
-	const setNavbarState = () => {
-		const scrollY = window.scrollY;
-		const _notAtTheVeryTop = scrollY > notAtTheVeryTopThreshold;
-		if (_notAtTheVeryTop !== notAtTheVeryTop) {
-			notAtTheVeryTop = _notAtTheVeryTop;
-		}
-		if (Math.abs(window.scrollY - oldScrollY) < minScrollThreshold) return;
-		if (window.scrollY > oldScrollY) {
-			scrollDirection = 'down';
-		} else {
-			scrollDirection = 'up';
-		}
-		oldScrollY = scrollY;
-	};
 
 	const confirmOtherEmailHash =
 		'#message=Confirmation+link+accepted.+Please+proceed+to+confirm+link+sent+to+the+other+email';
@@ -43,8 +19,6 @@
 		}
 	});
 </script>
-
-<svelte:window on:scroll={setNavbarState} />
 
 <MetaTag
 	title="Stablecog | AI Image Generator"
