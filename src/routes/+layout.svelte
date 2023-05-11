@@ -403,6 +403,7 @@
 	onMount(async () => {
 		setBodyClasses();
 		setNavbarState();
+		setBodyOverflowHiddenClass();
 		mixpanel.init(PUBLIC_MP_ID, { api_host: PUBLIC_MP_URL });
 		posthog.init(PUBLIC_PH_ID, {
 			api_host: PUBLIC_PH_URL
@@ -430,6 +431,7 @@
 	});
 
 	afterNavigate(() => {
+		setBodyOverflowHiddenClass();
 		if (!isHydrated) {
 			setIsHydratedToTrue();
 			return;
@@ -445,6 +447,15 @@
 			logPageview(props);
 		}
 	});
+
+	function setBodyOverflowHiddenClass() {
+		if (appRoutes.includes($page.url.pathname)) {
+			console.log('app route');
+			document.body.classList.add('overflow-hidden-for-app-routes');
+		} else {
+			document.body.classList.remove('overflow-hidden-for-app-routes');
+		}
+	}
 </script>
 
 <svelte:window
