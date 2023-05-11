@@ -16,7 +16,7 @@
 	import { apiUrl, routesWithHiddenFooter } from '$ts/constants/main';
 	import mixpanel from 'mixpanel-browser';
 	import { supabase } from '$ts/constants/supabase';
-	import { afterNavigate, invalidateAll } from '$app/navigation';
+	import { afterNavigate, goto, invalidateAll } from '$app/navigation';
 	import { logInitImageAdded, logPageview } from '$ts/helpers/loggers';
 	import { setCookie } from '$ts/helpers/setCookie';
 	import { appVersion, serverVersion } from '$ts/stores/appVersion';
@@ -400,6 +400,9 @@
 		oldScrollY = scrollY;
 	};
 
+	const confirmOtherEmailHash =
+		'#message=Confirmation+link+accepted.+Please+proceed+to+confirm+link+sent+to+the+other+email';
+
 	onMount(async () => {
 		setBodyClasses();
 		setNavbarState();
@@ -409,6 +412,9 @@
 			api_host: PUBLIC_PH_URL
 		});
 		appVersion.set(document.body.getAttribute('app-version') ?? 'unknown');
+		if ($page.url.hash === confirmOtherEmailHash) {
+			await goto('/account/change-email?confirm_other_email=true');
+		}
 		const {
 			data: { subscription }
 		} = supabase.auth.onAuthStateChange(() => {

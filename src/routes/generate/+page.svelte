@@ -4,7 +4,7 @@
 	import SettingsPanel from '$components/generate/SettingsPanel.svelte';
 	import { activeGeneration, generations, type TGeneration } from '$ts/stores/user/generation';
 
-	import { onDestroy, onMount, tick } from 'svelte';
+	import { onMount, tick } from 'svelte';
 	import PromptBar from '$components/generate/PromptBar.svelte';
 	import { quadOut } from 'svelte/easing';
 	import { fade, fly } from 'svelte/transition';
@@ -19,10 +19,8 @@
 	} from '$ts/queries/userGenerations';
 	import { generatePageUserGenerationFullOutputsQueryKey } from '$ts/stores/user/keys';
 	import { windowWidth } from '$ts/stores/window';
-	import Navbar from '$components/navigation/Navbar.svelte';
 	import SidebarWrapper from '$components/generate/SidebarWrapper.svelte';
 	import GenerationStage from '$components/generate/GenerationStage.svelte';
-	import { themeApp } from '$ts/stores/theme';
 	import { generationAspectRatio, generationNumOutputs } from '$ts/stores/generationSettings.js';
 	import { generateSSEId } from '$ts/helpers/generateSSEId.js';
 	import { generationModelIdDefault } from '$ts/constants/generationModels.js';
@@ -46,11 +44,6 @@
 	import { setActiveGenerationToOutputIndex } from '$ts/helpers/goToOutputIndex.js';
 	import GenerationGridInfinite2 from '$components/grids/GenerationGridInfinite2.svelte';
 	import AutoSize from '$components/AutoSize.svelte';
-	import UpdateAvailableCard from '$components/UpdateAvailableCard.svelte';
-	import UnderDevelopment from '$components/UnderDevelopment.svelte';
-	import { appVersion, serverVersion } from '$ts/stores/appVersion.js';
-	import { isSuperAdmin } from '$ts/helpers/admin/roles.js';
-	import { underDevelopment } from '$ts/stores/underDevelopment.js';
 	import { canonicalUrl } from '$ts/constants/main.js';
 	import MetaTag from '$components/MetaTag.svelte';
 	import SidebarCollapseButton from '$components/generate/SidebarCollapseButton.svelte';
