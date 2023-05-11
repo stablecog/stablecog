@@ -267,264 +267,252 @@
 		let:isInferenceStepsValid
 		let:supportedSchedulerIdDropdownItems
 	>
-		<div
-			style="
-				width: 100vw; width: 100svw;
-				height: 100vh; height: 100svh;
-				background-image: url({$themeApp === 'light'
-				? '/illustrations/grid-on-light.svg'
-				: '/illustrations/grid-on-dark.svg'}); background-size: 24px;
-			"
-			class="overflow-hidden bg-c-bg {$themeApp === 'light' ? 'theme-light' : 'theme-dark'}"
-		>
-			<div class="w-full h-full flex flex-col overflow-hidden relative z-0">
-				<Navbar />
-				<div class="w-full h-full flex flex-row overflow-hidden pt-2 md:px-4 md:pb-4 gap-4">
-					<div class="hidden lg:flex min-w-[2rem] flex-col items-start h-full relative">
-						{#if !$isLeftSidebarHiddenApp}
-							<div
-								transition:fly|local={{
-									duration: 200,
-									x: $windowWidth > xlBreakpoint ? -250 : -150,
-									easing: quadOut
-								}}
-								class="h-full flex w-36 xl:w-72 lg:pb-[calc(env(safe-area-inset-bottom))] relative z-10"
-							>
-								<SidebarWrapper hasGradient>
-									{#if !$page.data.session?.user.id}
-										<GenerateGridPlaceholder text={$LL.Generate.Grid.NotSignedIn.Paragraph()} />
-									{:else if userGenerationFullOutputsQuery}
-										<AutoSize bind:element={gridScrollContainer}>
-											{#if $windowWidth > lgBreakpoint && gridScrollContainer}
-												<GenerationGridInfinite2
-													paddingLeft={6}
-													paddingRight={6}
-													paddingTop={6}
-													paddingBottom={80}
-													{pinnedFullOutputs}
-													noLoadingSpinnerAlignmentAdjustment
-													hasPlaceholder
-													cardType="generate"
-													generationsQuery={userGenerationFullOutputsQuery}
-													cols={$windowWidth > xlBreakpoint ? 3 : 2}
-													{gridScrollContainer}
-												/>
-											{/if}
-										</AutoSize>
-									{/if}
-								</SidebarWrapper>
-							</div>
-						{/if}
-						<SidebarCollapseButton
-							side="left"
-							isClosed={$isLeftSidebarHiddenApp}
-							onClick={() => {
-								const val = !$isLeftSidebarHiddenApp;
-								isLeftSidebarHiddenApp.set(val);
-								isLeftSidebarHidden.set(val);
+		<div class="w-full h-full flex flex-col overflow-hidden relative z-0">
+			<div class="w-full h-full flex flex-row overflow-hidden pt-2 md:px-4 md:pb-4 gap-4">
+				<div class="hidden lg:flex min-w-[2rem] flex-col items-start h-full relative">
+					{#if !$isLeftSidebarHiddenApp}
+						<div
+							transition:fly|local={{
+								duration: 200,
+								x: $windowWidth > xlBreakpoint ? -250 : -150,
+								easing: quadOut
 							}}
-						/>
-					</div>
-					<div
-						class="flex flex-col items-center flex-1 min-w-0 h-full relative
-						lg:pb-[calc(env(safe-area-inset-bottom))]"
-					>
-						{#if $windowWidth < mdBreakpoint && isGenerationSettingsSheetOpen}
-							<div
-								transition:fade|local={{ duration: 200, easing: quadOut }}
-								class="fixed w-full h-full left-0 top-0 bg-c-barrier/70 z-40"
-							/>
-						{/if}
-						<div use:clickoutside={{ callback: closeSettingsSheet }}>
-							{#if !$windowWidth || $windowWidth < mdBreakpoint}
-								<div
-									style="transform: translateY({!$windowWidth || !promptBarHeight
-										? `calc(100% - env(safe-area-inset-bottom) - ${
-												propmtBarEstimatedHeightRem + horizontalListHeightEstimatedRem
-										  }rem)`
-										: $windowWidth < mdBreakpoint && isGenerationSettingsSheetOpen
-										? '0%'
-										: `calc(100% - ${promptBarHeight + horizontalListHeight}px)`});"
-									class="w-full h-[min(calc(100%-3rem),60rem)] z-40 gap-1 flex flex-col bg-c-bg rounded-t-2xl ring-2 ring-c-bg-secondary
-										md:ring-0 md:rounded-none {isGenerationSettingsSheetOpen
-										? 'shadow-sheet-open shadow-c-shadow/[var(--o-shadow-strongest)]'
-										: 'shadow-sheet-closed shadow-c-shadow/[var(--o-shadow-stronger)]'} md:shadow-none
-										md:bg-transparent absolute left-0 bottom-0 md:hidden transform transition overflow-hidden md:overflow-auto"
-								>
-									<div
-										class="w-full flex-1 h-full overflow-hidden flex flex-col z-50 transition {$windowWidth &&
-										$windowWidth < mdBreakpoint &&
-										isGenerationSettingsSheetOpen
-											? 'opacity-100'
-											: 'opacity-0 pointer-events-none'}"
-									>
-										<SettingsPanel
-											rounding="top"
-											{openSignInModal}
-											{isCheckCompleted}
-											{isInferenceStepsValid}
-											{supportedSchedulerIdDropdownItems}
-										/>
-									</div>
-									<div
-										class="flex-shrink-0 w-full"
-										style="height: {!$windowWidth || !promptBarHeight
-											? `calc(env(safe-area-inset-bottom) + ${
-													propmtBarEstimatedHeightRem + horizontalListHeightEstimatedRem
-											  }rem)`
-											: `${promptBarHeight + horizontalListHeight}px`}"
-									/>
-								</div>
-							{/if}
-							<!-- Prompt bar -->
-							<div
-								class="w-full z-50 flex flex-col rounded-2xl overflow-hidden md:overflow-visible md:rounded-none bg-c-bg md:bg-transparent absolute left-0 bottom-0
-								md:bottom-auto md:top-0 order-2"
-							>
-								<div
-									bind:clientHeight={horizontalListHeight}
-									class="w-full h-16 flex flex-col md:hidden"
-								>
-									<AutoSize bind:element={listScrollContainer} hideScroll>
-										{#if !$page.data.session?.user.id}
-											<GenerateHorizontalListPlaceholder
-												text={$LL.Generate.Grid.NotSignedIn.Paragraph()}
+							class="h-full flex w-36 xl:w-72 lg:pb-[calc(env(safe-area-inset-bottom))] relative z-10"
+						>
+							<SidebarWrapper hasGradient>
+								{#if !$page.data.session?.user.id}
+									<GenerateGridPlaceholder text={$LL.Generate.Grid.NotSignedIn.Paragraph()} />
+								{:else if userGenerationFullOutputsQuery}
+									<AutoSize bind:element={gridScrollContainer}>
+										{#if $windowWidth > lgBreakpoint && gridScrollContainer}
+											<GenerationGridInfinite2
+												paddingLeft={6}
+												paddingRight={6}
+												paddingTop={6}
+												paddingBottom={80}
+												{pinnedFullOutputs}
+												noLoadingSpinnerAlignmentAdjustment
+												hasPlaceholder
+												cardType="generate"
+												generationsQuery={userGenerationFullOutputsQuery}
+												cols={$windowWidth > xlBreakpoint ? 3 : 2}
+												{gridScrollContainer}
 											/>
-										{:else if userGenerationFullOutputsQuery}
-											{#if $windowWidth < mdBreakpoint && listScrollContainer}
-												<GenerateHorizontalList
-													paddingX={8}
-													paddingY={6}
-													{pinnedFullOutputs}
-													generationsQuery={userGenerationFullOutputsQuery}
-													{listScrollContainer}
-													cardType="generate"
-												/>
-											{/if}
 										{/if}
 									</AutoSize>
+								{/if}
+							</SidebarWrapper>
+						</div>
+					{/if}
+					<SidebarCollapseButton
+						side="left"
+						isClosed={$isLeftSidebarHiddenApp}
+						onClick={() => {
+							const val = !$isLeftSidebarHiddenApp;
+							isLeftSidebarHiddenApp.set(val);
+							isLeftSidebarHidden.set(val);
+						}}
+					/>
+				</div>
+				<div
+					class="flex flex-col items-center flex-1 min-w-0 h-full relative
+						lg:pb-[calc(env(safe-area-inset-bottom))]"
+				>
+					{#if $windowWidth < mdBreakpoint && isGenerationSettingsSheetOpen}
+						<div
+							transition:fade|local={{ duration: 200, easing: quadOut }}
+							class="fixed w-full h-full left-0 top-0 bg-c-barrier/70 z-40"
+						/>
+					{/if}
+					<div use:clickoutside={{ callback: closeSettingsSheet }}>
+						{#if !$windowWidth || $windowWidth < mdBreakpoint}
+							<div
+								style="transform: translateY({!$windowWidth || !promptBarHeight
+									? `calc(100% - env(safe-area-inset-bottom) - ${
+											propmtBarEstimatedHeightRem + horizontalListHeightEstimatedRem
+									  }rem)`
+									: $windowWidth < mdBreakpoint && isGenerationSettingsSheetOpen
+									? '0%'
+									: `calc(100% - ${promptBarHeight + horizontalListHeight}px)`});"
+								class="w-full h-[min(calc(100%-3rem),60rem)] z-40 gap-1 flex flex-col bg-c-bg rounded-t-2xl ring-2 ring-c-bg-secondary
+										md:ring-0 md:rounded-none {isGenerationSettingsSheetOpen
+									? 'shadow-sheet-open shadow-c-shadow/[var(--o-shadow-strongest)]'
+									: 'shadow-sheet-closed shadow-c-shadow/[var(--o-shadow-stronger)]'} md:shadow-none
+										md:bg-transparent absolute left-0 bottom-0 md:hidden transform transition overflow-hidden md:overflow-auto"
+							>
+								<div
+									class="w-full flex-1 h-full overflow-hidden flex flex-col z-50 transition {$windowWidth &&
+									$windowWidth < mdBreakpoint &&
+									isGenerationSettingsSheetOpen
+										? 'opacity-100'
+										: 'opacity-0 pointer-events-none'}"
+								>
+									<SettingsPanel
+										rounding="top"
+										{openSignInModal}
+										{isCheckCompleted}
+										{isInferenceStepsValid}
+										{supportedSchedulerIdDropdownItems}
+									/>
 								</div>
 								<div
-									bind:clientHeight={promptBarHeight}
-									class="w-full flex pl-2 md:pl-0 pb-[calc(env(safe-area-inset-bottom)+0.75rem)] z-50"
+									class="flex-shrink-0 w-full"
+									style="height: {!$windowWidth || !promptBarHeight
+										? `calc(env(safe-area-inset-bottom) + ${
+												propmtBarEstimatedHeightRem + horizontalListHeightEstimatedRem
+										  }rem)`
+										: `${promptBarHeight + horizontalListHeight}px`}"
+								/>
+							</div>
+						{/if}
+						<!-- Prompt bar -->
+						<div
+							class="w-full z-50 flex flex-col rounded-2xl overflow-hidden md:overflow-visible md:rounded-none bg-c-bg md:bg-transparent absolute left-0 bottom-0
+								md:bottom-auto md:top-0 order-2"
+						>
+							<div
+								bind:clientHeight={horizontalListHeight}
+								class="w-full h-16 flex flex-col md:hidden"
+							>
+								<AutoSize bind:element={listScrollContainer} hideScroll>
+									{#if !$page.data.session?.user.id}
+										<GenerateHorizontalListPlaceholder
+											text={$LL.Generate.Grid.NotSignedIn.Paragraph()}
+										/>
+									{:else if userGenerationFullOutputsQuery}
+										{#if $windowWidth < mdBreakpoint && listScrollContainer}
+											<GenerateHorizontalList
+												paddingX={8}
+												paddingY={6}
+												{pinnedFullOutputs}
+												generationsQuery={userGenerationFullOutputsQuery}
+												{listScrollContainer}
+												cardType="generate"
+											/>
+										{/if}
+									{/if}
+								</AutoSize>
+							</div>
+							<div
+								bind:clientHeight={promptBarHeight}
+								class="w-full flex pl-2 md:pl-0 pb-[calc(env(safe-area-inset-bottom)+0.75rem)] z-50"
+							>
+								<PromptBar
+									{openSignInModal}
+									serverData={data}
+									{afterGenerate}
+									{toggleSettingsSheet}
+									bind:isReadyMap
+									bind:isGenerationSettingsSheetOpen
+									bind:isJustCreatedGenerationForAnim
+								/>
+							</div>
+						</div>
+					</div>
+					<div
+						class="w-full flex flex-col order-first flex-1 min-w-0 pb-[calc(env(safe-area-inset-bottom)+10.5rem)]
+								md:pb-0 md:pt-26 lg:pb-8 relative z-0"
+					>
+						<div class="flex-1 min-w-0 flex flex-col items-center justify-center w-full">
+							{#if $page.data.session?.user.id && $userSummary && $userSummary.total_remaining_credits < lowCreditsThreshold}
+								<div
+									transition:expandCollapse|local={{ duration: 200 }}
+									class="w-full flex flex-col justify-start items-center"
 								>
-									<PromptBar
-										{openSignInModal}
-										serverData={data}
-										{afterGenerate}
-										{toggleSettingsSheet}
-										bind:isReadyMap
-										bind:isGenerationSettingsSheetOpen
-										bind:isJustCreatedGenerationForAnim
-									/>
+									<div class="py-2px px-2 md:px-2px pb-6">
+										<LowOnCreditsCard />
+									</div>
+								</div>
+							{/if}
+							<div class="w-full flex-1 min-w-0 flex flex-col px-2 lg:px-6">
+								<div
+									bind:clientWidth={stageWidth}
+									bind:clientHeight={stageHeight}
+									class="flex-1 min-w-0 w-full"
+								>
+									{#if stageWidth && stageHeight}
+										{#key $generations[0].ui_id}
+											<GenerationStage
+												generation={$generations[0]}
+												{stageWidth}
+												{stageHeight}
+												bind:isReadyMap
+											/>
+										{/key}
+									{/if}
 								</div>
 							</div>
 						</div>
 						<div
-							class="w-full flex flex-col order-first flex-1 min-w-0 pb-[calc(env(safe-area-inset-bottom)+10.5rem)]
-								md:pb-0 md:pt-26 lg:pb-8 relative z-0"
+							class="w-full hidden md:flex lg:hidden pt-11 pb-[calc(env(safe-area-inset-bottom))]"
 						>
-							<div class="flex-1 min-w-0 flex flex-col items-center justify-center w-full">
-								{#if $page.data.session?.user.id && $userSummary && $userSummary.total_remaining_credits < lowCreditsThreshold}
-									<div
-										transition:expandCollapse|local={{ duration: 200 }}
-										class="w-full flex flex-col justify-start items-center"
-									>
-										<div class="py-2px px-2 md:px-2px pb-6">
-											<LowOnCreditsCard />
-										</div>
-									</div>
-								{/if}
-								<div class="w-full flex-1 min-w-0 flex flex-col px-2 lg:px-6">
-									<div
-										bind:clientWidth={stageWidth}
-										bind:clientHeight={stageHeight}
-										class="flex-1 min-w-0 w-full"
-									>
-										{#if stageWidth && stageHeight}
-											{#key $generations[0].ui_id}
-												<GenerationStage
-													generation={$generations[0]}
-													{stageWidth}
-													{stageHeight}
-													bind:isReadyMap
+							<SidebarWrapper borderSize="sm">
+								<div class="w-full h-20 flex flex-col">
+									{#if !$page.data.session?.user.id}
+										<GenerateHorizontalListPlaceholder
+											text={$LL.Generate.Grid.NotSignedIn.Paragraph()}
+										/>
+									{:else if userGenerationFullOutputsQuery}
+										<AutoSize bind:element={listScrollContainerMd} hideScroll>
+											{#if listScrollContainerMd && $windowWidth >= mdBreakpoint && $windowWidth < lgBreakpoint}
+												<GenerateHorizontalList
+													listScrollContainer={listScrollContainerMd}
+													{pinnedFullOutputs}
+													generationsQuery={userGenerationFullOutputsQuery}
+													cardType="generate"
+													paddingX={6}
+													paddingY={6}
 												/>
-											{/key}
-										{/if}
-									</div>
+											{/if}
+										</AutoSize>
+									{/if}
 								</div>
-							</div>
-							<div
-								class="w-full hidden md:flex lg:hidden pt-11 pb-[calc(env(safe-area-inset-bottom))]"
-							>
-								<SidebarWrapper borderSize="sm">
-									<div class="w-full h-20 flex flex-col">
-										{#if !$page.data.session?.user.id}
-											<GenerateHorizontalListPlaceholder
-												text={$LL.Generate.Grid.NotSignedIn.Paragraph()}
-											/>
-										{:else if userGenerationFullOutputsQuery}
-											<AutoSize bind:element={listScrollContainerMd} hideScroll>
-												{#if listScrollContainerMd && $windowWidth >= mdBreakpoint && $windowWidth < lgBreakpoint}
-													<GenerateHorizontalList
-														listScrollContainer={listScrollContainerMd}
-														{pinnedFullOutputs}
-														generationsQuery={userGenerationFullOutputsQuery}
-														cardType="generate"
-														paddingX={6}
-														paddingY={6}
-													/>
-												{/if}
-											</AutoSize>
-										{/if}
-									</div>
-								</SidebarWrapper>
-							</div>
+							</SidebarWrapper>
 						</div>
 					</div>
-					<div class="h-full w-72 hidden md:flex md:pb-[calc(env(safe-area-inset-bottom))]">
-						<SettingsPanel
-							{openSignInModal}
-							{isCheckCompleted}
-							{isInferenceStepsValid}
-							{supportedSchedulerIdDropdownItems}
-						/>
-					</div>
+				</div>
+				<div class="h-full w-72 hidden md:flex md:pb-[calc(env(safe-area-inset-bottom))]">
+					<SettingsPanel
+						{openSignInModal}
+						{isCheckCompleted}
+						{isInferenceStepsValid}
+						{supportedSchedulerIdDropdownItems}
+					/>
 				</div>
 			</div>
-
-			{#if $activeGeneration}
-				<GenerationFullScreen
-					onLeftButtonClicked={leftIndex !== -1
-						? () => setActiveGenerationToOutputIndex(outputs, leftIndex)
-						: undefined}
-					onRightButtonClicked={rightIndex !== -1
-						? () => setActiveGenerationToOutputIndex(outputs, rightIndex)
-						: undefined}
-					generation={$activeGeneration}
-					modalType="generate"
-				/>
-			{/if}
-
-			{#if isSignInModalOpen && !$page.data.session?.user.id}
-				<div
-					use:portal={'body'}
-					transition:fade|local={{ duration: 300, easing: quadOut }}
-					class="w-full h-full bg-c-barrier/80 fixed left-0 top-0 px-3 z-[10000]"
-				/>
-				<div
-					use:portal={'body'}
-					transition:fly|local={{ duration: 200, y: 50, easing: quadOut }}
-					class="w-full h-full flex flex-col items-center fixed left-0 top-0 px-3 py-20 z-[10001] overflow-auto"
-				>
-					<div
-						use:clickoutside={{ callback: () => (isSignInModalOpen = false) }}
-						class="flex justify-center my-auto"
-					>
-						<SignInCard isModal={true} redirectTo="/generate" />
-					</div>
-				</div>
-			{/if}
 		</div>
+
+		{#if $activeGeneration}
+			<GenerationFullScreen
+				onLeftButtonClicked={leftIndex !== -1
+					? () => setActiveGenerationToOutputIndex(outputs, leftIndex)
+					: undefined}
+				onRightButtonClicked={rightIndex !== -1
+					? () => setActiveGenerationToOutputIndex(outputs, rightIndex)
+					: undefined}
+				generation={$activeGeneration}
+				modalType="generate"
+			/>
+		{/if}
+
+		{#if isSignInModalOpen && !$page.data.session?.user.id}
+			<div
+				use:portal={'body'}
+				transition:fade|local={{ duration: 300, easing: quadOut }}
+				class="w-full h-full bg-c-barrier/80 fixed left-0 top-0 px-3 z-[10000]"
+			/>
+			<div
+				use:portal={'body'}
+				transition:fly|local={{ duration: 200, y: 50, easing: quadOut }}
+				class="w-full h-full flex flex-col items-center fixed left-0 top-0 px-3 py-20 z-[10001] overflow-auto"
+			>
+				<div
+					use:clickoutside={{ callback: () => (isSignInModalOpen = false) }}
+					class="flex justify-center my-auto"
+				>
+					<SignInCard isModal={true} redirectTo="/generate" />
+				</div>
+			</div>
+		{/if}
 	</GenerationSettingsProvider>
 {/if}

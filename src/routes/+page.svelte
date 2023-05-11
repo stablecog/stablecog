@@ -52,21 +52,7 @@
 	canonical={canonicalUrl}
 />
 
-<div
-	style="
-		background-image: url({$themeApp === 'light'
-		? '/illustrations/grid-on-light.svg'
-		: '/illustrations/grid-on-dark.svg'}); background-size: 24px;
-	"
-	class="w-full flex flex-col items-center flex-1 justify-center bg-c-bg text-c-on-bg {$themeApp ===
-	'light'
-		? 'theme-light'
-		: 'theme-dark'}"
->
-	<Navbar {notAtTheVeryTop} {scrollDirection} />
-	<Hero />
-	<DescribeAnything />
-	<InitImage />
-	<StartCreating />
-	<Footer />
-</div>
+<Hero />
+<DescribeAnything />
+<InitImage />
+<StartCreating />

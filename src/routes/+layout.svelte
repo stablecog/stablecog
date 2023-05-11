@@ -71,11 +71,13 @@
 	import { setBodyClasses } from '$ts/helpers/setBodyClasses';
 	import Drawer from '$components/navigation/Drawer.svelte';
 	import { isLeftSidebarHidden, isLeftSidebarHiddenApp } from '$ts/stores/sidebars';
+	import LayoutWrapper from '$components/LayoutWrapper.svelte';
 
 	export let data: LayoutData;
 	setLocale(data.locale);
 
-	const rawRoutes = ['/generate', '/'];
+	const rawRoutes = ['/'];
+	const appRoutes = ['/generate'];
 	const routesWithTheirOwnDrawer = ['/guide'];
 	const sseExcludedRoutes = ['/'];
 
@@ -453,30 +455,21 @@
 
 <QueryClientProvider client={queryClient}>
 	<UserSummaryProvider>
-		{#if rawRoutes.includes($page.url.pathname)}
-			<slot />
-		{:else}
-			<div
-				class="w-full bg-c-bg text-c-on-bg flex flex-col {$themeApp === 'light'
-					? 'theme-light'
-					: 'theme-dark'}"
-				style="min-height: 100vh; min-height: {$windowHeight
-					? `${$windowHeight}px`
-					: '100svh'}; background-image: url({$themeApp === 'light'
-					? '/illustrations/grid-on-light.svg'
-					: '/illustrations/grid-on-dark.svg'}); background-size: 24px;"
-			>
-				{#if $underDevelopment && (!$userSummary || !isSuperAdmin($userSummary.roles)) && !$page.url.pathname.startsWith('/admin') && !$page.url.pathname.startsWith('/api/auth') && !$page.url.pathname.startsWith('/sign-in')}
-					{#if Number($serverVersion) > Number($appVersion)}
-						<div class="w-full flex-1 flex flex-col items-center justify-center my-auto py-4">
-							<UpdateAvailableCard />
-						</div>
-					{:else}
-						<UnderDevelopment />
-					{/if}
+		<LayoutWrapper isAppRoute={appRoutes.includes($page.url.pathname)}>
+			{#if !rawRoutes.includes($page.url.pathname) && $underDevelopment && (!$userSummary || !isSuperAdmin($userSummary.roles)) && !$page.url.pathname.startsWith('/admin') && !$page.url.pathname.startsWith('/api/auth') && !$page.url.pathname.startsWith('/sign-in')}
+				{#if Number($serverVersion) > Number($appVersion)}
+					<div class="w-full flex-1 flex flex-col items-center justify-center my-auto py-4">
+						<UpdateAvailableCard />
+					</div>
 				{:else}
-					<Navbar {notAtTheVeryTop} {scrollDirection} />
-					{#if $navbarStickyType === undefined || $navbarStickyType !== 'not-sticky'}
+					<UnderDevelopment />
+				{/if}
+			{:else}
+				<Navbar {notAtTheVeryTop} {scrollDirection} />
+				{#if appRoutes.includes($page.url.pathname)}
+					<slot />
+				{:else}
+					{#if !rawRoutes.includes($page.url.pathname) && ($navbarStickyType === undefined || $navbarStickyType !== 'not-sticky')}
 						<div
 							style={$navbarHeight ? `height: ${$navbarHeight}px` : ``}
 							class="h-16 md:h-18 w-full"
@@ -489,9 +482,9 @@
 						<Footer />
 					{/if}
 				{/if}
-			</div>
-		{/if}
-		{#if isDrawerRoute}
+			{/if}
+		</LayoutWrapper>
+		{#if !rawRoutes.includes($page.url.pathname) && isDrawerRoute}
 			<Drawer />
 		{/if}
 	</UserSummaryProvider>
