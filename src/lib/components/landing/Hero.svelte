@@ -46,14 +46,14 @@
 				class="w-full h-full object-cover object-[25%_100%] md:object-[40%_100%] lg:object-left-bottom transform
 					[transition:opacity_0.2s_ease-out,transform_0.4s_ease-out]"
 				srcset="
-					/landing/hero/hero-512.webp 512w,
-					/landing/hero/hero-768.webp 768w,
-					/landing/hero/hero-1024.webp 1024w,
-					/landing/hero/hero-1440.webp 1440w,
-					/landing/hero/hero-1920.webp 1920w,
+					/landing/hero/hero-v2-512.webp 512w,
+					/landing/hero/hero-v2-768.webp 768w,
+					/landing/hero/hero-v2-1024.webp 1024w,
+					/landing/hero/hero-v2-1440.webp 1440w,
+					/landing/hero/hero-v2-1920.webp 1920w,
 				"
 				sizes="(min-width: 768px) 50vw, 100vw"
-				src="/landing/hero/hero-1920.webp"
+				src="/landing/hero/hero-v2-1920.webp"
 				alt="Hero"
 				width="1920"
 				height="1920"

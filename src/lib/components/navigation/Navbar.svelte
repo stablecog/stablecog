@@ -30,6 +30,7 @@
 	import ButtonHoverEffect from '$components/buttons/ButtonHoverEffect.svelte';
 	import LogoButton from '$components/buttons/LogoButton.svelte';
 	import IconGuide from '$components/icons/IconGuide.svelte';
+	import { themeApp } from '$ts/stores/theme';
 
 	export let notAtTheVeryTop = false;
 	export let scrollDirection: 'up' | 'down' = 'down';
@@ -108,22 +109,40 @@
 			<IconButton class="py-2 hidden md:block" href="/discord" target="_blank" name="Discord">
 				<IconSc
 					type="discord"
-					class="w-8 h-8 relative transition transform {!$isTouchscreen
-						? 'group-hover/iconbutton:text-c-primary'
-						: 'text-c-on-bg'}"
+					class="w-8 h-8 relative transition transform {$page.url.pathname === '/' &&
+					$themeApp === 'light' &&
+					!notAtTheVeryTop
+						? 'text-c-bg'
+						: 'text-c-on-bg'} {!$isTouchscreen ? 'group-hover/iconbutton:text-c-primary' : ''}"
 				/>
 			</IconButton>
 			<IconButton class="py-2 hidden md:block" href="/guide" name="Guide">
 				<IconGuide
-					class="w-8 h-8 relative transition transform {!$isTouchscreen
-						? 'group-hover/iconbutton:text-c-primary'
-						: 'text-c-on-bg'}"
+					class="w-8 h-8 relative transition transform {$page.url.pathname === '/' &&
+					$themeApp === 'light' &&
+					!notAtTheVeryTop
+						? 'text-c-bg'
+						: 'text-c-on-bg'} {!$isTouchscreen ? 'group-hover/iconbutton:text-c-primary' : ''}"
 				/>
 			</IconButton>
 			<div class="flex items-center justify-end pl-2 pr-3.5 md:pl-2.5 md:pr-5">
 				{#if $page.data.session && $userSummary}
-					<div class="flex flex-col items-end mr-3.5 md:mr-4">
-						<p class="text-xs font-semibold text-c-on-bg/60">{$LL.Account.RemainingTitle()}</p>
+					<div
+						class="flex flex-col items-end mr-3.5 md:mr-4 {$page.url.pathname === '/' &&
+						$themeApp === 'light' &&
+						!notAtTheVeryTop
+							? 'text-c-bg'
+							: 'text-c-on-bg'}"
+					>
+						<p
+							class="text-xs font-semibold {$page.url.pathname === '/' &&
+							$themeApp === 'light' &&
+							!notAtTheVeryTop
+								? 'text-c-bg/60'
+								: 'text-c-on-bg/60'}"
+						>
+							{$LL.Account.RemainingTitle()}
+						</p>
 						<p class="text-sm font-bold mt-0.5">
 							{$userSummary.total_remaining_credits.toLocaleString($locale)}
 						</p>
@@ -143,8 +162,14 @@
 								onClick={toggleAccountMenu}
 							>
 								<div
-									class="w-9 h-9 ring-2 ring-c-on-bg/25 overflow-hidden rounded-full transition transform relative {!$isTouchscreen
-										? 'group-hover/iconbutton:ring-c-on-bg'
+									class="w-9 h-9 ring-2 {$page.url.pathname === '/' &&
+									$themeApp === 'light' &&
+									!notAtTheVeryTop
+										? 'ring-c-bg/25'
+										: 'ring-c-on-bg/25'} overflow-hidden rounded-full transition transform relative {!$isTouchscreen
+										? $page.url.pathname === '/' && $themeApp === 'light' && !notAtTheVeryTop
+											? 'group-hover/iconbutton:ring-c-bg'
+											: 'group-hover/iconbutton:ring-c-on-bg'
 										: ''} {!$isTouchscreen && isAccountMenuOpen
 										? 'rotate-360'
 										: !$isTouchscreen && !isAccountMenuOpen
