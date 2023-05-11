@@ -692,7 +692,7 @@ const es: Translation = {
 			MoreCredits: {
 				Question: 'Can I buy more credits?',
 				Answer:
-					'Yes, you can buy more credits anytime as long as you have an active subscription. You can visit the account page to buy more credits.'
+					'Yes, you can buy more credits anytime as long as you have an active subscription. You can visit the account or the pricing page to buy more credits.'
 			},
 			CreditRollOver: {
 				Question: 'Do credits roll over to the next month?',

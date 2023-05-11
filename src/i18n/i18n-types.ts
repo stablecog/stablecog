@@ -1991,7 +1991,7 @@ type RootTranslation = {
 				 */
 				Question: string
 				/**
-				 * Y​e​s​,​ ​y​o​u​ ​c​a​n​ ​b​u​y​ ​m​o​r​e​ ​c​r​e​d​i​t​s​ ​a​n​y​t​i​m​e​ ​a​s​ ​l​o​n​g​ ​a​s​ ​y​o​u​ ​h​a​v​e​ ​a​n​ ​a​c​t​i​v​e​ ​s​u​b​s​c​r​i​p​t​i​o​n​.​ ​Y​o​u​ ​c​a​n​ ​v​i​s​i​t​ ​t​h​e​ ​a​c​c​o​u​n​t​ ​p​a​g​e​ ​t​o​ ​b​u​y​ ​m​o​r​e​ ​c​r​e​d​i​t​s​.
+				 * Y​e​s​,​ ​y​o​u​ ​c​a​n​ ​b​u​y​ ​m​o​r​e​ ​c​r​e​d​i​t​s​ ​a​n​y​t​i​m​e​ ​a​s​ ​l​o​n​g​ ​a​s​ ​y​o​u​ ​h​a​v​e​ ​a​n​ ​a​c​t​i​v​e​ ​s​u​b​s​c​r​i​p​t​i​o​n​.​ ​Y​o​u​ ​c​a​n​ ​v​i​s​i​t​ ​t​h​e​ ​a​c​c​o​u​n​t​ ​o​r​ ​t​h​e​ ​p​r​i​c​i​n​g​ ​p​a​g​e​ ​t​o​ ​b​u​y​ ​m​o​r​e​ ​c​r​e​d​i​t​s​.
 				 */
 				Answer: string
 			}
@@ -4061,7 +4061,7 @@ export type TranslationFunctions = {
 				 */
 				Question: () => LocalizedString
 				/**
-				 * Yes, you can buy more credits anytime as long as you have an active subscription. You can visit the account page to buy more credits.
+				 * Yes, you can buy more credits anytime as long as you have an active subscription. You can visit the account or the pricing page to buy more credits.
 				 */
 				Answer: () => LocalizedString
 			}
