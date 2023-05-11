@@ -43,7 +43,7 @@
 		</div>
 	</div>
 	{#if $userSummary}
-		<div class="w-full flex justify-stretch px-5 py-1 -mt-1">
+		<div class="w-full flex flex-col px-5 py-1 -mt-1">
 			{#if $userSummary.product_id}
 				<ProductIdBadge
 					href="/pricing#plans"
@@ -53,6 +53,11 @@
 			{:else}
 				<Button class="w-full mt-0.25" href="/pricing" size="sm">
 					{$LL.Pricing.SubscribeButton()}
+				</Button>
+			{/if}
+			{#if $userSummary.product_id}
+				<Button class="w-full mt-3" href="/pricing#credit-packs" size="sm">
+					{$LL.Pricing.BuyCreditsButton()}
 				</Button>
 			{/if}
 		</div>

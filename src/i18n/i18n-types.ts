@@ -1968,6 +1968,82 @@ type RootTranslation = {
 			}
 		}
 	}
+	FAQ: {
+		/**
+		 * F​A​Q
+		 */
+		Title: string
+		/**
+		 * F​r​e​q​u​e​n​t​l​y​ ​A​s​k​e​d​ ​Q​u​e​s​t​i​o​n​s
+		 */
+		TitleAlt: string
+		Questions: {
+			CommercialUse: {
+				/**
+				 * C​a​n​ ​I​ ​u​s​e​ ​t​h​e​ ​i​m​a​g​e​s​ ​c​o​m​m​e​r​c​i​a​l​l​y​?
+				 */
+				Question: string
+				Answer: string
+			}
+			MoreCredits: {
+				/**
+				 * C​a​n​ ​I​ ​b​u​y​ ​m​o​r​e​ ​c​r​e​d​i​t​s​?
+				 */
+				Question: string
+				/**
+				 * Y​e​s​,​ ​y​o​u​ ​c​a​n​ ​b​u​y​ ​m​o​r​e​ ​c​r​e​d​i​t​s​ ​a​n​y​t​i​m​e​ ​a​s​ ​l​o​n​g​ ​a​s​ ​y​o​u​ ​h​a​v​e​ ​a​n​ ​a​c​t​i​v​e​ ​s​u​b​s​c​r​i​p​t​i​o​n​.​ ​Y​o​u​ ​c​a​n​ ​v​i​s​i​t​ ​t​h​e​ ​a​c​c​o​u​n​t​ ​p​a​g​e​ ​t​o​ ​b​u​y​ ​m​o​r​e​ ​c​r​e​d​i​t​s​.
+				 */
+				Answer: string
+			}
+			CreditRollOver: {
+				/**
+				 * D​o​ ​c​r​e​d​i​t​s​ ​r​o​l​l​ ​o​v​e​r​ ​t​o​ ​t​h​e​ ​n​e​x​t​ ​m​o​n​t​h​?
+				 */
+				Question: string
+				/**
+				 * N​o​,​ ​c​r​e​d​i​t​s​ ​d​o​ ​n​o​t​ ​r​o​l​l​ ​o​v​e​r​ ​t​o​ ​t​h​e​ ​n​e​x​t​ ​m​o​n​t​h​.​ ​Y​o​u​r​ ​c​r​e​d​i​t​s​ ​w​i​l​l​ ​r​e​s​e​t​ ​e​v​e​r​y​ ​m​o​n​t​h​ ​o​n​ ​y​o​u​r​ ​b​i​l​l​i​n​g​ ​d​a​t​e​.
+				 */
+				Answer: string
+			}
+			PlanUpgradeOrDowngrade: {
+				/**
+				 * C​a​n​ ​I​ ​u​p​g​r​a​d​e​ ​o​r​ ​d​o​w​n​g​r​a​d​e​ ​m​y​ ​p​l​a​n​?
+				 */
+				Question: string
+				/**
+				 * Y​e​s​,​ ​y​o​u​ ​c​a​n​ ​u​p​g​r​a​d​e​ ​o​r​ ​d​o​w​n​g​r​a​d​e​ ​y​o​u​r​ ​p​l​a​n​ ​a​n​y​t​i​m​e​.​ ​I​f​ ​y​o​u​ ​u​p​g​r​a​d​e​ ​y​o​u​r​ ​p​l​a​n​,​ ​y​o​u​'​l​l​ ​k​e​e​p​ ​t​h​e​ ​r​e​m​a​i​n​i​n​g​ ​c​r​e​d​i​t​s​ ​f​r​o​m​ ​y​o​u​r​ ​p​r​e​v​i​o​u​s​ ​p​l​a​n​ ​t​o​o​ ​u​n​t​i​l​ ​t​h​e​y​ ​e​x​p​i​r​e​.​ ​T​h​e​ ​u​p​g​r​a​d​e​d​ ​p​l​a​n​ ​w​i​l​l​ ​b​e​ ​c​h​a​r​g​e​d​ ​i​m​m​e​d​i​a​t​e​l​y​,​ ​a​n​d​ ​f​u​l​l​y​.
+				 */
+				Answer: string
+			}
+			MoreQuestions: {
+				/**
+				 * W​h​e​r​e​ ​c​a​n​ ​I​ ​a​s​k​ ​m​o​r​e​ ​q​u​e​s​t​i​o​n​s​?
+				 */
+				Question: string
+				/**
+				 * Y​o​u​ ​c​a​n​ ​j​o​i​n​ ​o​u​r​ ​{​D​i​s​c​o​r​d​}​ ​a​n​d​ ​a​s​k​ ​u​s​ ​a​n​y​t​h​i​n​g​.​ ​Y​o​u​ ​c​a​n​ ​a​l​s​o​ ​r​e​a​c​h​ ​u​s​ ​b​y​ ​{​e​m​a​i​l​}​ ​o​r​ ​{​T​w​i​t​t​e​r​}​.
+				 * @param {unknown} Discord
+				 * @param {unknown} email
+				 * @param {unknown} Twitter
+				 */
+				Answer: RequiredParams<'Discord' | 'email' | 'Twitter'>
+				Parts: {
+					/**
+					 * D​i​s​c​o​r​d
+					 */
+					Discord: string
+					/**
+					 * e​m​a​i​l
+					 */
+					Email: string
+					/**
+					 * T​w​i​t​t​e​r
+					 */
+					Twitter: string
+				}
+			}
+		}
+	}
 	LowOnCreditsCard: {
 		/**
 		 * Y​o​u​'​r​e​ ​l​o​w​ ​o​n​ ​c​r​e​d​i​t​s​ ​(​{​r​e​m​a​i​n​i​n​g​C​r​e​d​i​t​s​}​)
@@ -3959,6 +4035,79 @@ export type TranslationFunctions = {
 				 * You have cancelled the purchase process. If it was a mistake, you can try again.
 				 */
 				PageParagraph: () => LocalizedString
+			}
+		}
+	}
+	FAQ: {
+		/**
+		 * FAQ
+		 */
+		Title: () => LocalizedString
+		/**
+		 * Frequently Asked Questions
+		 */
+		TitleAlt: () => LocalizedString
+		Questions: {
+			CommercialUse: {
+				/**
+				 * Can I use the images commercially?
+				 */
+				Question: () => LocalizedString
+				Answer: () => LocalizedString
+			}
+			MoreCredits: {
+				/**
+				 * Can I buy more credits?
+				 */
+				Question: () => LocalizedString
+				/**
+				 * Yes, you can buy more credits anytime as long as you have an active subscription. You can visit the account page to buy more credits.
+				 */
+				Answer: () => LocalizedString
+			}
+			CreditRollOver: {
+				/**
+				 * Do credits roll over to the next month?
+				 */
+				Question: () => LocalizedString
+				/**
+				 * No, credits do not roll over to the next month. Your credits will reset every month on your billing date.
+				 */
+				Answer: () => LocalizedString
+			}
+			PlanUpgradeOrDowngrade: {
+				/**
+				 * Can I upgrade or downgrade my plan?
+				 */
+				Question: () => LocalizedString
+				/**
+				 * Yes, you can upgrade or downgrade your plan anytime. If you upgrade your plan, you'll keep the remaining credits from your previous plan too until they expire. The upgraded plan will be charged immediately, and fully.
+				 */
+				Answer: () => LocalizedString
+			}
+			MoreQuestions: {
+				/**
+				 * Where can I ask more questions?
+				 */
+				Question: () => LocalizedString
+				/**
+				 * You can join our {Discord} and ask us anything. You can also reach us by {email} or {Twitter}.
+				 */
+				Answer: (arg: { Discord: unknown, email: unknown, Twitter: unknown }) => LocalizedString
+				Parts: {
+					/**
+					 * Discord
+					 */
+					Discord: () => LocalizedString
+					/**
+					 * email
+					 */
+					Email: () => LocalizedString
+					/**
+					 * Twitter
+					 */
+					Twitter: () => LocalizedString
+				}
 			}
 		}
 	}

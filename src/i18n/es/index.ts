@@ -669,6 +669,41 @@ const es: Translation = {
 			}
 		}
 	},
+	FAQ: {
+		Title: 'FAQ',
+		TitleAlt: 'Frequently Asked Questions',
+		Questions: {
+			CommercialUse: {
+				Question: 'Can I use the images commercially?',
+				Answer: ''
+			},
+			MoreCredits: {
+				Question: 'Can I buy more credits?',
+				Answer:
+					'Yes, you can buy more credits anytime as long as you have an active subscription. You can visit the account page to buy more credits.'
+			},
+			CreditRollOver: {
+				Question: 'Do credits roll over to the next month?',
+				Answer:
+					'No, credits do not roll over to the next month. Your credits will reset every month on your billing date.'
+			},
+			PlanUpgradeOrDowngrade: {
+				Question: 'Can I upgrade or downgrade my plan?',
+				Answer:
+					"Yes, you can upgrade or downgrade your plan anytime. If you upgrade your plan, you'll keep the remaining credits from your previous plan too until they expire. The upgraded plan will be charged immediately, and fully."
+			},
+			MoreQuestions: {
+				Question: 'Where can I ask more questions?',
+				Answer:
+					'You can join our {Discord community} and ask us anything. You can also reach us by {email} or {Twitter}.',
+				Parts: {
+					Discord: 'Discord community',
+					Email: 'email',
+					Twitter: 'Twitter'
+				}
+			}
+		}
+	},
 	LowOnCreditsCard: {
 		Title: "You're low on credits ({remainingCredits})",
 		FreeParagraph:
