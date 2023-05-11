@@ -3,6 +3,7 @@
 	import IconPulsing from '$components/icons/IconPulsing.svelte';
 	import MetaTag from '$components/MetaTag.svelte';
 	import { canonicalUrl } from '$ts/constants/main';
+	import { previewImageVersion } from '$ts/constants/previewImageVersion';
 	import { onMount } from 'svelte';
 
 	export let url: string;
@@ -18,7 +19,7 @@
 <MetaTag
 	{title}
 	{description}
-	imageUrl="{canonicalUrl}/previews{$page.url.pathname}.png"
+	imageUrl="{canonicalUrl}/previews{$page.url.pathname}-{previewImageVersion}.png"
 	canonical="{canonicalUrl}{$page.url.pathname}"
 />
 

@@ -15,6 +15,7 @@
 	import { getTitleFromProductId } from '$ts/helpers/stripe/plan';
 	import { getAspectRatioFromWidthAndHeight } from '$ts/constants/generationSize';
 	import IconRobot from '$components/icons/IconRobot.svelte';
+	import { previewImageVersion } from '$ts/constants/previewImageVersion';
 
 	let sse: EventSource | undefined = undefined;
 	$: if (browser && (!sse || sse.readyState === sse.CLOSED)) {
@@ -243,7 +244,7 @@
 <MetaTag
 	title="Live | Stablecog"
 	description="Watch generations happening live on Stablecog. Free, multilingual and open-source AI image generator using Stable Diffusion and Kandinsky."
-	imageUrl="{canonicalUrl}/previews{$page.url.pathname}.png"
+	imageUrl="{canonicalUrl}/previews{$page.url.pathname}-{previewImageVersion}.png"
 	canonical="{canonicalUrl}{$page.url.pathname}"
 />
 

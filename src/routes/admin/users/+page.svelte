@@ -34,6 +34,7 @@
 	import ScrollAreaWithChevron from '$components/ScrollAreaWithChevron.svelte';
 	import { giftCreditsToUser } from '$ts/queries/giftCreditsToUser';
 	import IconWarning from '$components/icons/IconWarning.svelte';
+	import { previewImageVersion } from '$ts/constants/previewImageVersion';
 
 	let searchString: string;
 	let searchStringDebounced: string | undefined = undefined;
@@ -234,7 +235,7 @@
 <MetaTag
 	title="Users | Admin"
 	description="Stablecog admin panel. Free, multilingual and open-source AI image generator using Stable Diffusion and Kandinsky."
-	imageUrl="{canonicalUrl}/previews/home.png"
+	imageUrl="{canonicalUrl}/previews/home-{previewImageVersion}.png"
 	canonical="{canonicalUrl}{$page.url.pathname}"
 />
 

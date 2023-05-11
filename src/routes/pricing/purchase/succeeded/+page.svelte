@@ -8,6 +8,7 @@
 	import { page } from '$app/stores';
 	import ConfettiFullScreen from '$components/ConfettiFullScreen.svelte';
 	import PageWrapper from '$components/PageWrapper.svelte';
+	import { previewImageVersion } from '$ts/constants/previewImageVersion';
 
 	let mounted = false;
 	onMount(() => {
@@ -18,7 +19,7 @@
 <MetaTag
 	title="Succeeded | Stablecog"
 	description="See your generation history on Stablecog. Free, multilingual and open-source AI image generator using Stable Diffusion and Kandinsky."
-	imageUrl="{canonicalUrl}/previews{$page.url.pathname}.png"
+	imageUrl="{canonicalUrl}/previews{$page.url.pathname}-{previewImageVersion}.png"
 	canonical="{canonicalUrl}{$page.url.pathname}"
 />
 

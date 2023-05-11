@@ -5,12 +5,13 @@
 	import { canonicalUrl } from '$ts/constants/main';
 	import PageWrapper from '$components/PageWrapper.svelte';
 	import ScBar from '$components/ScBar.svelte';
+	import { previewImageVersion } from '$ts/constants/previewImageVersion';
 </script>
 
 <MetaTag
 	title="Support | Stablecog"
 	description="Reach out to us and we'll answer any questions you have. Create amazing art in seconds with AI. Free, multilingual and open-source AI image generator using Stable Diffusion and Kandinsky."
-	imageUrl="{canonicalUrl}/previews{$page.url.pathname}.png"
+	imageUrl="{canonicalUrl}/previews{$page.url.pathname}-{previewImageVersion}.png"
 	canonical="{canonicalUrl}{$page.url.pathname}"
 />
 

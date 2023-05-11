@@ -24,6 +24,7 @@
 	import { clickoutside } from '$ts/actions/clickoutside';
 	import type { TAvailableGenerationModelId } from '$ts/constants/generationModels';
 	import { canonicalUrl } from '$ts/constants/main';
+	import { previewImageVersion } from '$ts/constants/previewImageVersion';
 	import { setActiveGenerationToOutputIndex } from '$ts/helpers/goToOutputIndex';
 	import { logBatchEditActived, logBatchEditDeactivated } from '$ts/helpers/loggers';
 	import {
@@ -164,7 +165,7 @@
 <MetaTag
 	title="History | Stablecog"
 	description="See your generation history on Stablecog. Free, multilingual and open-source AI image generator using Stable Diffusion and Kandinsky."
-	imageUrl="{canonicalUrl}/previews{$page.url.pathname}.png"
+	imageUrl="{canonicalUrl}/previews{$page.url.pathname}-{previewImageVersion}.png"
 	canonical="{canonicalUrl}{$page.url.pathname}"
 />
 

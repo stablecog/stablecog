@@ -6,6 +6,7 @@
 	import PageWrapper from '$components/PageWrapper.svelte';
 	import SignInCard from '$components/SignInCard.svelte';
 	import { canonicalUrl } from '$ts/constants/main';
+	import { previewImageVersion } from '$ts/constants/previewImageVersion';
 	import type { PageServerData } from './$types';
 
 	export let data: PageServerData;
@@ -22,7 +23,7 @@
 <MetaTag
 	title="Sign In | Stablecog"
 	description="Sign in to Stablecog. Create amazing art in seconds with AI. Free, multilingual and open-source AI image generator using Stable Diffusion and Kandinsky."
-	imageUrl="{canonicalUrl}/previews{$page.url.pathname}.png"
+	imageUrl="{canonicalUrl}/previews{$page.url.pathname}-{previewImageVersion}.png"
 	canonical="{canonicalUrl}{$page.url.pathname}"
 />
 

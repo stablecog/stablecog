@@ -15,6 +15,7 @@
 	import { isTouchscreen } from '$ts/stores/isTouchscreen';
 	import { quadOut } from 'svelte/easing';
 	import type { PageServerData } from './$types';
+	import { previewImageVersion } from '$ts/constants/previewImageVersion';
 
 	export let data: PageServerData;
 
@@ -70,7 +71,7 @@
 <MetaTag
 	title="Change Email | Stablecog"
 	description="Change your account's email address on Stablecog. Free, multilingual and open-source AI image generator using Stable Diffusion and Kandinsky."
-	imageUrl="{canonicalUrl}/previews{$page.url.pathname}.png"
+	imageUrl="{canonicalUrl}/previews{$page.url.pathname}-{previewImageVersion}.png"
 	canonical="{canonicalUrl}{$page.url.pathname}"
 />
 

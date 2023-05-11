@@ -4,6 +4,7 @@
 	import MetaTag from '$components/MetaTag.svelte';
 	import { canonicalUrl } from '$ts/constants/main';
 	import { page } from '$app/stores';
+	import { previewImageVersion } from '$ts/constants/previewImageVersion';
 
 	export let data: PageServerData;
 </script>
@@ -11,7 +12,7 @@
 <MetaTag
 	title="Terms of Service | Stablecog"
 	description="Check out the terms of service for Stablecog. Free, multilingual and open-source AI image generator using Stable Diffusion and Kandinsky."
-	imageUrl="{canonicalUrl}/previews{$page.url.pathname}.png"
+	imageUrl="{canonicalUrl}/previews{$page.url.pathname}-{previewImageVersion}.png"
 	canonical="{canonicalUrl}{$page.url.pathname}"
 />
 

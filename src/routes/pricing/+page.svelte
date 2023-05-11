@@ -32,6 +32,7 @@
 		STRIPE_PRODUCT_ID_OBJECTS_CREDIT_PACKS
 	} from '$ts/constants/stripePublic';
 	import { userSummary } from '$ts/stores/user/summary';
+	import { previewImageVersion } from '$ts/constants/previewImageVersion';
 
 	export let data: PageData;
 
@@ -252,7 +253,7 @@
 <MetaTag
 	title="Pricing | Stablecog"
 	description="Choose a plan that works for you and start using Stablecog. Free, multilingual and open-source AI image generator using Stable Diffusion and Kandinsky."
-	imageUrl="{canonicalUrl}/previews{$page.url.pathname}.png"
+	imageUrl="{canonicalUrl}/previews{$page.url.pathname}-{previewImageVersion}.png"
 	canonical="{canonicalUrl}{$page.url.pathname}"
 />
 

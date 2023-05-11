@@ -5,6 +5,7 @@
 	import type { TNavbarRouteOption } from '$components/navigation/routes';
 	import LL from '$i18n/i18n-svelte';
 	import { canonicalUrl } from '$ts/constants/main';
+	import { previewImageVersion } from '$ts/constants/previewImageVersion';
 	import { isSuperAdmin } from '$ts/helpers/admin/roles';
 	import { isTouchscreen } from '$ts/stores/isTouchscreen';
 	import { userSummary } from '$ts/stores/user/summary';
@@ -35,7 +36,7 @@
 <MetaTag
 	title="Admin | Stablecog"
 	description="Stablecog admin panel. Free, multilingual and open-source AI image generator using Stable Diffusion and Kandinsky."
-	imageUrl="{canonicalUrl}/previews/home.png"
+	imageUrl="{canonicalUrl}/previews/home-{previewImageVersion}.png"
 	canonical="{canonicalUrl}{$page.url.pathname}"
 />
 

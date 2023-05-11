@@ -4,6 +4,7 @@
 	import { PUBLIC_BUCKET_AUX_URL } from '$env/static/public';
 	import LL, { locale } from '$i18n/i18n-svelte';
 	import { canonicalUrl } from '$ts/constants/main';
+	import { previewImageVersion } from '$ts/constants/previewImageVersion';
 	import { isTouchscreen } from '$ts/stores/isTouchscreen';
 	import type { PageServerData } from './$types';
 
@@ -15,7 +16,7 @@
 <MetaTag
 	title="Blog | Stablecog"
 	description="Articles about Stable Diffusion tips and tricks, Stable Diffusion experiments, other AI related topics and the latest Stablecog news."
-	imageUrl="{canonicalUrl}/previews{$page.url.pathname}.png"
+	imageUrl="{canonicalUrl}/previews{$page.url.pathname}-{previewImageVersion}.png"
 	canonical="{canonicalUrl}{$page.url.pathname}"
 />
 

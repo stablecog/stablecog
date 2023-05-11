@@ -5,6 +5,7 @@
 	import PageWrapper from '$components/PageWrapper.svelte';
 	import LL from '$i18n/i18n-svelte';
 	import { canonicalUrl } from '$ts/constants/main';
+	import { previewImageVersion } from '$ts/constants/previewImageVersion';
 	import { isTouchscreen } from '$ts/stores/isTouchscreen';
 
 	const featuredOn: TFeaturedOn[] = [
@@ -27,7 +28,7 @@
 <MetaTag
 	title="Featured On | Stablecog"
 	description="Platform featuring Stablecog. Free, multilingual and open-source AI image generator using Stable Diffusion and Kandinsky."
-	imageUrl="{canonicalUrl}/previews{$page.url.pathname}.png"
+	imageUrl="{canonicalUrl}/previews{$page.url.pathname}-{previewImageVersion}.png"
 	canonical="{canonicalUrl}{$page.url.pathname}"
 />
 

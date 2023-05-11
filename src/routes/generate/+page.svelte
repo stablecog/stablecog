@@ -55,6 +55,7 @@
 	import MetaTag from '$components/MetaTag.svelte';
 	import SidebarCollapseButton from '$components/generate/SidebarCollapseButton.svelte';
 	import { isLeftSidebarHidden, isLeftSidebarHiddenApp } from '$ts/stores/sidebars.js';
+	import { previewImageVersion } from '$ts/constants/previewImageVersion.js';
 
 	export let data;
 
@@ -244,7 +245,7 @@
 <MetaTag
 	title="Stablecog | Generate"
 	description="Create amazing art in seconds with AI. Free, multilingual and open-source AI image generator using Stable Diffusion and Kandinsky."
-	imageUrl="{canonicalUrl}/previews/home.png"
+	imageUrl="{canonicalUrl}/previews/home-{previewImageVersion}.png"
 	canonical={canonicalUrl}
 />
 

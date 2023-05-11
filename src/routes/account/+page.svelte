@@ -23,6 +23,7 @@
 	import { clickoutside } from '$ts/actions/clickoutside';
 	import IconAnimatedSpinner from '$components/icons/IconAnimatedSpinner.svelte';
 	import { appVersion } from '$ts/stores/appVersion';
+	import { previewImageVersion } from '$ts/constants/previewImageVersion';
 
 	export let data: PageServerData;
 
@@ -59,7 +60,7 @@
 <MetaTag
 	title="Account | Stablecog"
 	description="Manage your Stablecog account. Free, multilingual and open-source AI image generator using Stable Diffusion and Kandinsky."
-	imageUrl="{canonicalUrl}/previews{$page.url.pathname}.png"
+	imageUrl="{canonicalUrl}/previews{$page.url.pathname}-{previewImageVersion}.png"
 	canonical="{canonicalUrl}{$page.url.pathname}"
 />
 

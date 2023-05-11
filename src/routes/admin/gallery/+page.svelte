@@ -15,6 +15,7 @@
 	import LL from '$i18n/i18n-svelte';
 	import type { TAvailableGenerationModelId } from '$ts/constants/generationModels';
 	import { canonicalUrl } from '$ts/constants/main';
+	import { previewImageVersion } from '$ts/constants/previewImageVersion';
 	import { isSuperAdmin } from '$ts/helpers/admin/roles';
 	import {
 		getAllUserGenerationFullOutputs,
@@ -128,7 +129,7 @@
 <MetaTag
 	title="Gallery | Stablecog"
 	description="Stablecog admin panel. Free, multilingual and open-source AI image generator using Stable Diffusion and Kandinsky."
-	imageUrl="{canonicalUrl}/previews{$page.url.pathname}.png"
+	imageUrl="{canonicalUrl}/previews{$page.url.pathname}-{previewImageVersion}.png"
 	canonical="{canonicalUrl}{$page.url.pathname}"
 />
 
