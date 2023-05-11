@@ -1,8 +1,5 @@
 <script lang="ts">
-	import ImagePlaceholder from '$components/ImagePlaceholder.svelte';
 	export let text: string;
-
-	let containerHeight: number;
 </script>
 
 <div class="w-full h-full relative px-2 py-1.5">
