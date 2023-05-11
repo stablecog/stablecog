@@ -653,6 +653,7 @@ const nl: Translation = {
 			MonthlyCredits: '{count} credits per maand.',
 			MonthlyImages: '{count} afbeeldingen per maand.',
 			MonthlyGenerations: '{count} creaties per maand.',
+			ParallelGenerations: '{count} parallel generations.',
 			Images: '{count} afbeeldingen.',
 			Generations: '{count} creaties.',
 			NeverExpires: 'Verloopt nooit.',

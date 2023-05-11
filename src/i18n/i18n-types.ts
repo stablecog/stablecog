@@ -1899,6 +1899,11 @@ type RootTranslation = {
 			 */
 			MonthlyGenerations: RequiredParams<'count'>
 			/**
+			 * {​c​o​u​n​t​}​ ​p​a​r​a​l​l​e​l​ ​g​e​n​e​r​a​t​i​o​n​s​.
+			 * @param {unknown} count
+			 */
+			ParallelGenerations: RequiredParams<'count'>
+			/**
 			 * {​c​o​u​n​t​}​ ​i​m​a​g​e​s​.
 			 * @param {unknown} count
 			 */
@@ -3891,6 +3896,10 @@ export type TranslationFunctions = {
 			 * {count} generations per month.
 			 */
 			MonthlyGenerations: (arg: { count: unknown }) => LocalizedString
+			/**
+			 * {count} parallel generations.
+			 */
+			ParallelGenerations: (arg: { count: unknown }) => LocalizedString
 			/**
 			 * {count} images.
 			 */

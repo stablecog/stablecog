@@ -655,6 +655,7 @@ const es: Translation = {
 			MonthlyCredits: '{count} μονάδες το μήνα.',
 			MonthlyImages: '{count} μονάδες το μήνα.',
 			MonthlyGenerations: '{count} δημιουργίες το μήνα.',
+			ParallelGenerations: '{count} parallel generations.',
 			Images: '{count} εικόνες.',
 			Generations: '{count} δημιουργίες.',
 			NeverExpires: 'Χωρίς Λήξη.',

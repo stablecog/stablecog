@@ -650,6 +650,7 @@ const ja: Translation = {
 			MonthlyCredits: '月毎 {count} クレジット。',
 			MonthlyImages: '月毎 {count} 枚の画像。',
 			MonthlyGenerations: '月毎 {count} 枚の生成。',
+			ParallelGenerations: '{count} parallel generations.',
 			Images: '{count} 枚の画像。',
 			Generations: '{count} 回の生成。',
 			NeverExpires: '無期限。',

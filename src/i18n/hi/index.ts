@@ -641,6 +641,7 @@ const hi: Translation = {
 			MonthlyCredits: '{count} credits per month.',
 			MonthlyImages: '{count} images per month.',
 			MonthlyGenerations: '{count} generations per month.',
+			ParallelGenerations: '{count} parallel generations.',
 			Images: '{count} images.',
 			Generations: '{count} generations.',
 			NeverExpires: 'Never expires.',

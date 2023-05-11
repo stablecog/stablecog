@@ -23,6 +23,7 @@ import { userSummary } from '$ts/stores/user/summary';
 import { derived } from 'svelte/store';
 import { convertToDBTimeString } from '$ts/helpers/convertToDBTimeString';
 import { addToRecentlyUpdatedOutputIds } from '$ts/stores/user/recentlyUpdatedOutputIds';
+import { STRIPE_PRODUCT_ID_OBJECTS_SUBSCRIPTIONS_MO } from '$ts/constants/stripePublic';
 
 export const generations = writable<TGeneration[]>([]);
 export const activeGeneration = writable<TGenerationWithSelectedOutput | undefined>(undefined);
@@ -306,17 +307,11 @@ export const setGenerationOutputUpscaledImageUrl = ({
 	});
 };
 
-const productIdToMaxOngoingGenerationsCountObject = {
-	[PUBLIC_STRIPE_PRODUCT_ID_STARTER_SUBSCRIPTION]: 2,
-	[PUBLIC_STRIPE_PRODUCT_ID_PRO_SUBSCRIPTION]: 3,
-	[PUBLIC_STRIPE_PRODUCT_ID_ULTIMATE_SUBSCRIPTION]: 4
-};
-
 const baseCount = 1;
 
 const productIdToMaxOngoingGenerationsCount = (productId: string | undefined) => {
 	if (!productId) return baseCount;
-	const count = productIdToMaxOngoingGenerationsCountObject[productId];
+	const count = STRIPE_PRODUCT_ID_OBJECTS_SUBSCRIPTIONS_MO[productId].parallel_generations;
 	if (!count) return baseCount;
 	return count;
 };

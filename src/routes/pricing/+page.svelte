@@ -52,12 +52,18 @@
 							PUBLIC_STRIPE_PRODUCT_ID_STARTER_SUBSCRIPTION
 					  ].prices[PUBLIC_STRIPE_PRICE_ID_STARTER_SUBSCRIPTION_MO].currencies.usd.amount,
 			features: [
-				`${$LL.Pricing.Features.MonthlyImages({
+				$LL.Pricing.Features.MonthlyImages({
 					count:
 						STRIPE_PRODUCT_ID_OBJECTS_SUBSCRIPTIONS_MO[
 							PUBLIC_STRIPE_PRODUCT_ID_STARTER_SUBSCRIPTION
 						].monthly_images.toLocaleString($locale)
-				})}`,
+				}),
+				$LL.Pricing.Features.ParallelGenerations({
+					count:
+						STRIPE_PRODUCT_ID_OBJECTS_SUBSCRIPTIONS_MO[
+							PUBLIC_STRIPE_PRODUCT_ID_STARTER_SUBSCRIPTION
+						].parallel_generations.toLocaleString($locale)
+				}),
 				$LL.Pricing.Features.CommercialUse(),
 				$LL.Pricing.Features.ImagesArePublic()
 			],
@@ -76,12 +82,18 @@
 					: STRIPE_PRODUCT_ID_OBJECTS_SUBSCRIPTIONS_MO[PUBLIC_STRIPE_PRODUCT_ID_PRO_SUBSCRIPTION]
 							.prices[PUBLIC_STRIPE_PRICE_ID_PRO_SUBSCRIPTION_MO].currencies.usd.amount,
 			features: [
-				`${$LL.Pricing.Features.MonthlyImages({
+				$LL.Pricing.Features.MonthlyImages({
 					count:
 						STRIPE_PRODUCT_ID_OBJECTS_SUBSCRIPTIONS_MO[
 							PUBLIC_STRIPE_PRODUCT_ID_PRO_SUBSCRIPTION
 						].monthly_images.toLocaleString($locale)
-				})}`,
+				}),
+				$LL.Pricing.Features.ParallelGenerations({
+					count:
+						STRIPE_PRODUCT_ID_OBJECTS_SUBSCRIPTIONS_MO[
+							PUBLIC_STRIPE_PRODUCT_ID_PRO_SUBSCRIPTION
+						].parallel_generations.toLocaleString($locale)
+				}),
 				$LL.Pricing.Features.CommercialUse(),
 				$LL.Pricing.Features.ImagesArePrivate()
 			],
@@ -104,12 +116,18 @@
 							PUBLIC_STRIPE_PRODUCT_ID_ULTIMATE_SUBSCRIPTION
 					  ].prices[PUBLIC_STRIPE_PRICE_ID_ULTIMATE_SUBSCRIPTION_MO].currencies.usd.amount,
 			features: [
-				`${$LL.Pricing.Features.MonthlyImages({
+				$LL.Pricing.Features.MonthlyImages({
 					count:
 						STRIPE_PRODUCT_ID_OBJECTS_SUBSCRIPTIONS_MO[
 							PUBLIC_STRIPE_PRODUCT_ID_ULTIMATE_SUBSCRIPTION
 						].monthly_images.toLocaleString($locale)
-				})}`,
+				}),
+				$LL.Pricing.Features.ParallelGenerations({
+					count:
+						STRIPE_PRODUCT_ID_OBJECTS_SUBSCRIPTIONS_MO[
+							PUBLIC_STRIPE_PRODUCT_ID_ULTIMATE_SUBSCRIPTION
+						].parallel_generations.toLocaleString($locale)
+				}),
 				$LL.Pricing.Features.CommercialUse(),
 				$LL.Pricing.Features.ImagesArePrivate()
 			],

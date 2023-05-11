@@ -644,6 +644,7 @@ const tr: Translation = {
 			MonthlyCredits: '{count} kredi/ay.',
 			MonthlyImages: 'Ayda {count} fotoğraf.',
 			MonthlyGenerations: 'Ayda {count} üretim.',
+			ParallelGenerations: '{count} parallel generations.',
 			Images: '{count} fotoğraf.',
 			Generations: '{count} üretim.',
 			NeverExpires: 'Tarihi geçmez.',

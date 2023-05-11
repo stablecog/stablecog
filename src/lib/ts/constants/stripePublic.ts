@@ -61,6 +61,7 @@ export const STRIPE_PRODUCT_ID_OBJECTS_SUBSCRIPTIONS_MO: {
 	[prodcutId in TStripeSupportedProductIdSubscriptions]: {
 		product_id: TStripeSupportedProductIdSubscriptions;
 		monthly_images: number;
+		parallel_generations: number;
 		prices: {
 			[priceId in TStripeSupportedPriceIdSubscriptionsMo]: {
 				currencies: {
@@ -75,6 +76,7 @@ export const STRIPE_PRODUCT_ID_OBJECTS_SUBSCRIPTIONS_MO: {
 	[PUBLIC_STRIPE_PRODUCT_ID_STARTER_SUBSCRIPTION]: {
 		product_id: PUBLIC_STRIPE_PRODUCT_ID_STARTER_SUBSCRIPTION,
 		monthly_images: 1750,
+		parallel_generations: 2,
 		prices: {
 			[PUBLIC_STRIPE_PRICE_ID_STARTER_SUBSCRIPTION_MO]: {
 				currencies: {
@@ -91,6 +93,7 @@ export const STRIPE_PRODUCT_ID_OBJECTS_SUBSCRIPTIONS_MO: {
 	[PUBLIC_STRIPE_PRODUCT_ID_PRO_SUBSCRIPTION]: {
 		product_id: PUBLIC_STRIPE_PRODUCT_ID_PRO_SUBSCRIPTION,
 		monthly_images: 4500,
+		parallel_generations: 3,
 		prices: {
 			[PUBLIC_STRIPE_PRICE_ID_PRO_SUBSCRIPTION_MO]: {
 				currencies: {
@@ -107,6 +110,7 @@ export const STRIPE_PRODUCT_ID_OBJECTS_SUBSCRIPTIONS_MO: {
 	[PUBLIC_STRIPE_PRODUCT_ID_ULTIMATE_SUBSCRIPTION]: {
 		product_id: PUBLIC_STRIPE_PRODUCT_ID_ULTIMATE_SUBSCRIPTION,
 		monthly_images: 10000,
+		parallel_generations: 4,
 		prices: {
 			[PUBLIC_STRIPE_PRICE_ID_ULTIMATE_SUBSCRIPTION_MO]: {
 				currencies: {

@@ -644,6 +644,7 @@ const bg: Translation = {
 			MonthlyCredits: '{count} кредит на месец.',
 			MonthlyImages: '{count} изображения на месец.',
 			MonthlyGenerations: '{count} изработки на месец.',
+			ParallelGenerations: '{count} parallel generations.',
 			Images: '{count} изображения.',
 			Generations: '{count} изработки.',
 			NeverExpires: 'Постоянен.',

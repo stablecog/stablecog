@@ -646,6 +646,7 @@ const de: Translation = {
 			MonthlyCredits: '{count} credits per month.',
 			MonthlyImages: '{count} Bilder pro Monat.',
 			MonthlyGenerations: '{count} Generierungen pro Monat.',
+			ParallelGenerations: '{count} parallel generations.',
 			Images: '%{count} Bilder.',
 			Generations: '{count} Generierungen.',
 			NeverExpires: 'Läuft nie ab.',
