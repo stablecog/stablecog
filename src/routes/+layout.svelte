@@ -450,7 +450,6 @@
 
 	function setBodyOverflowHiddenClass() {
 		if (appRoutes.includes($page.url.pathname)) {
-			console.log('app route');
 			document.body.classList.add('overflow-hidden-for-app-routes');
 		} else {
 			document.body.classList.remove('overflow-hidden-for-app-routes');
