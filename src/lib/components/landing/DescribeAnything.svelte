@@ -18,7 +18,7 @@
 			lg:items-center lg:justify-center justify-start items-center relative"
 	>
 		<div
-			class="w-full h-auto lg:flex-1 lg:h-full relative overflow-hidden flex justify-end lg:pr-0
+			class="min-w-0 w-full h-auto lg:flex-1 lg:h-full relative flex justify-end lg:pr-0
 				order-2 lg:order-1"
 		>
 			<div
