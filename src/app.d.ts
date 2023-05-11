@@ -13,6 +13,7 @@ declare namespace App {
 		IP: string | null;
 		countryCode: string | null;
 		theme: TAvailableThemes | null;
+		isLeftSidebarHidden: boolean;
 		advancedMode: boolean | null;
 		clipApiToken: string | undefined;
 	}

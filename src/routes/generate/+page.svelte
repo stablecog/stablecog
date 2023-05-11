@@ -18,7 +18,7 @@
 		type TUserGenerationFullOutputsPage
 	} from '$ts/queries/userGenerations';
 	import { generatePageUserGenerationFullOutputsQueryKey } from '$ts/stores/user/keys';
-	import { windowHeight, windowWidth } from '$ts/stores/window';
+	import { windowWidth } from '$ts/stores/window';
 	import Navbar from '$components/navigation/Navbar.svelte';
 	import SidebarWrapper from '$components/generate/SidebarWrapper.svelte';
 	import GenerationStage from '$components/generate/GenerationStage.svelte';
@@ -53,10 +53,8 @@
 	import { underDevelopment } from '$ts/stores/underDevelopment.js';
 	import { canonicalUrl } from '$ts/constants/main.js';
 	import MetaTag from '$components/MetaTag.svelte';
-	import IconChevronDown from '$components/icons/IconChevronDown.svelte';
-	import IconButton from '$components/buttons/IconButton.svelte';
 	import SidebarCollapseButton from '$components/generate/SidebarCollapseButton.svelte';
-	import { isLeftSidebarHidden } from '$ts/stores/sidebars.js';
+	import { isLeftSidebarHidden, isLeftSidebarHiddenApp } from '$ts/stores/sidebars.js';
 
 	export let data;
 
@@ -283,7 +281,7 @@
 				<Navbar />
 				<div class="w-full h-full flex flex-row overflow-hidden pt-2 md:px-4 md:pb-4 gap-4">
 					<div class="hidden lg:flex min-w-[2rem] flex-col items-start h-full relative">
-						{#if !$isLeftSidebarHidden}
+						{#if !$isLeftSidebarHiddenApp}
 							<div
 								transition:fly|local={{
 									duration: 200,
@@ -319,8 +317,12 @@
 						{/if}
 						<SidebarCollapseButton
 							side="left"
-							isClosed={$isLeftSidebarHidden}
-							onClick={() => isLeftSidebarHidden.set(!$isLeftSidebarHidden)}
+							isClosed={$isLeftSidebarHiddenApp}
+							onClick={() => {
+								const val = !$isLeftSidebarHiddenApp;
+								isLeftSidebarHiddenApp.set(val);
+								isLeftSidebarHidden.set(val);
+							}}
 						/>
 					</div>
 					<div

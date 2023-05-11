@@ -21,11 +21,13 @@ export const load: LayoutServerLoad = async (event) => {
 	}
 	const locale = event.locals.locale;
 	const theme = event.locals.theme;
+	const isLeftSidebarHidden = event.locals.isLeftSidebarHidden;
 	await loadLocaleAsync(locale);
 	return {
 		locale,
 		session,
 		theme,
-		userSummary
+		userSummary,
+		isLeftSidebarHidden
 	};
 };

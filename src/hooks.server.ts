@@ -17,8 +17,10 @@ export const handle: Handle = async ({ event, resolve }) => {
 	const themeC = event.cookies.get('sc-theme') as TAvailableThemes | null;
 	const locale =
 		localeC && isLocale(localeC) ? localeC : isLocale(preferredLocale) ? preferredLocale : 'en';
+	const isLeftSidebarHiddenC = event.cookies.get('sc-l-sidebar-h') as string | null;
 	event.locals.locale = locale;
 	event.locals.theme = themeC === 'light' || themeC === 'dark' ? themeC : null;
+	event.locals.isLeftSidebarHidden = isLeftSidebarHiddenC === 'true' ? true : false;
 
 	let IP = event.request.headers.get('X-Forwarded-For');
 	if (!IP) IP = event.request.headers.get('CF-Connecting-IP');

@@ -32,6 +32,7 @@ export const load: LayoutLoad = async (event) => {
 	await loadLocaleAsync(locale);
 	const theme = event.data.theme;
 	const globalSeed = Math.round(Math.random() * Math.pow(10, 12));
+	const isLeftSidebarHidden = event.data.isLeftSidebarHidden;
 	return {
 		locale,
 		session,
@@ -40,6 +41,8 @@ export const load: LayoutLoad = async (event) => {
 		userSummary,
 		userSummaryStore: writable<TUserSummary | undefined>(userSummary),
 		globalSeed,
-		globalSeedStore: writable<number>(globalSeed)
+		globalSeedStore: writable<number>(globalSeed),
+		isLeftSidebarHidden,
+		isLeftSidebarHiddenStore: writable<boolean>(isLeftSidebarHidden)
 	};
 };

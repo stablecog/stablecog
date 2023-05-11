@@ -70,6 +70,7 @@
 	import { underDevelopment } from '$ts/stores/underDevelopment';
 	import { setBodyClasses } from '$ts/helpers/setBodyClasses';
 	import Drawer from '$components/navigation/Drawer.svelte';
+	import { isLeftSidebarHidden, isLeftSidebarHiddenApp } from '$ts/stores/sidebars';
 
 	export let data: LayoutData;
 	setLocale(data.locale);
@@ -96,6 +97,10 @@
 	const th = data.themeStore;
 	themeApp.set($th);
 	if (data.theme !== null) themeApp.set(data.theme);
+
+	const lsbh = data.isLeftSidebarHiddenStore;
+	isLeftSidebarHiddenApp.set($lsbh);
+	if (data.isLeftSidebarHidden !== null) isLeftSidebarHiddenApp.set(data.isLeftSidebarHidden);
 
 	let mounted = false;
 
@@ -133,6 +138,8 @@
 
 	$: $locale, runIfMounted(() => setCookie(`sc-locale=${$locale}`));
 	$: $themeApp, runIfMounted(() => setCookie(`sc-theme=${$themeApp}`));
+	$: $isLeftSidebarHiddenApp,
+		runIfMounted(() => setCookie(`sc-l-sidebar-h=${$isLeftSidebarHiddenApp}`));
 	$: $generations, onGenerationsChanged();
 	$: $upscales, onUpscalesChanged();
 
@@ -410,6 +417,9 @@
 		}
 		if ($theme !== null && $theme !== $themeApp) {
 			themeApp.set($theme);
+		}
+		if ($isLeftSidebarHidden && $isLeftSidebarHidden !== $isLeftSidebarHiddenApp) {
+			isLeftSidebarHiddenApp.set($isLeftSidebarHidden);
 		}
 		mounted = true;
 		return () => {

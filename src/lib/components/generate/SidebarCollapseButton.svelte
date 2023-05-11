@@ -12,7 +12,7 @@
 	let hasBeenInsideForMs = 0;
 	let hasBeenInsideForMsInterval: NodeJS.Timeout;
 	let hasBeenInsideForMsIntervalDelay = 100;
-	let enoughTimeThreshold = 250;
+	let enoughTimeThreshold = 200;
 
 	let isFirstChange = true;
 	let isNewlyOpenedTimeout: NodeJS.Timeout;
