@@ -17,7 +17,7 @@
 	let isFirstChange = true;
 	let isNewlyOpenedTimeout: NodeJS.Timeout;
 	let isNewlyOpened = false;
-	const isNewlyOpenedTimeoutDuration = 500;
+	const isNewlyOpenedTimeoutDuration = 600;
 
 	const onMouseEnter = () => {
 		isInside = true;
