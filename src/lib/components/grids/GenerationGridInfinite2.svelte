@@ -210,7 +210,7 @@
 {:else if $generationsQuery.isSuccess && $generationsQuery.data.pages.length > 0 && outputs !== undefined}
 	{#if $gridVirtualizer}
 		<div style="height: {$gridVirtualizer.getTotalSize()}px" class="w-full relative">
-			{#each $gridVirtualizer.getVirtualItems() as virtualItem (virtualItem.index)}
+			{#each $gridVirtualizer.getVirtualItems() as virtualItem (virtualItem.index + outputs[virtualItem.index].id)}
 				{@const output = outputs[virtualItem.index]}
 				{@const isOutputSelected = selectedItems.includes(output.id)}
 				{@const isOutputHoverable =
