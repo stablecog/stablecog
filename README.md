@@ -1,6 +1,6 @@
 # [Stablecog](https://stablecog.com) - Create amazing art in seconds with AI.
 
-This is a app for creating AI generated images using [Stable Diffusion](https://github.com/CompVis/stable-diffusion) and [Kandinsky](https://github.com/ai-forever/Kandinsky-2). It's multilingual (generation, search and the UI). It's made with [SvelteKit](https://kit.svelte.dev). It uses [Supabase](https://supabase.com) for user data and auth. The app is hosted at [stablecog.com](https://stablecog.com). The app needs [our worker](https://github.com/stablecog/sc-worker) and [GO server](https://github.com/stablecog/sc-go) to be fully functional.
+This is a app for creating AI generated images using various fine-tuned [Stable Diffusion](https://github.com/CompVis/stable-diffusion) models and [Kandinsky](https://github.com/ai-forever/Kandinsky-2). It's multilingual (generation, search and the UI). It's made with [SvelteKit](https://kit.svelte.dev). It uses [Supabase](https://supabase.com) for user data and auth. The app is hosted at [stablecog.com](https://stablecog.com). The app needs [our worker](https://github.com/stablecog/sc-worker) and [GO server](https://github.com/stablecog/sc-go) to be fully functional.
 
 | ![Stablecog Home (Dark Mode)](https://ba.stablecog.com/mockups/home-dark-window-2560.webp) |
 | :----------------------------------------------------------------------------------------: |
