@@ -20,7 +20,7 @@
 		{max}
 		{step}
 		{numeratorFormatter}
-		bind:value
+		{value}
 		class="{valueSize === 'md' ? 'text-base px-0.5' : 'text-sm'} text-c-on-bg"
 	/>
 	<RangeInput {disabled} class="flex-1 h-full" bind:value {name} {min} {max} {step} />
