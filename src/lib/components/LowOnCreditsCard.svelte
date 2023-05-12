@@ -1,11 +1,50 @@
 <script lang="ts">
+	import { page } from '$app/stores';
 	import Button from '$components/buttons/Button.svelte';
-	import LL from '$i18n/i18n-svelte';
+	import LL, { locale } from '$i18n/i18n-svelte';
 	import { STRIPE_HIGHEST_PRODUCT_ID_SUBSCRIPTIONS } from '$ts/constants/stripePublic';
+	import {
+		logLowCreditsCardSeen,
+		logLowCreditsCardBuyCredits,
+		logLowCreditsCardDiscord,
+		logLowCreditsCardSubscribe,
+		logLowCreditsCardUpgradeClicked
+	} from '$ts/helpers/loggers';
+	import { appVersion } from '$ts/stores/appVersion';
 	import { userSummary } from '$ts/stores/user/summary';
+	import { onMount } from 'svelte';
 
 	export { classes as class };
 	let classes = '';
+
+	$: logProps = {
+		'SC - Locale': $locale,
+		'SC - Page': `${$page.url.pathname}${$page.url.search}`,
+		'SC - User Id': $page.data.session?.user.id,
+		'SC - Stripe Product Id': $userSummary?.product_id,
+		'SC - App Version': $appVersion
+	};
+
+	function logEvent(type: 'subscribe' | 'discord' | 'upgrade' | 'buy-credits') {
+		switch (type) {
+			case 'subscribe':
+				logLowCreditsCardSubscribe(logProps);
+				break;
+			case 'discord':
+				logLowCreditsCardDiscord(logProps);
+				break;
+			case 'upgrade':
+				logLowCreditsCardUpgradeClicked(logProps);
+				break;
+			case 'buy-credits':
+				logLowCreditsCardBuyCredits(logProps);
+				break;
+		}
+	}
+
+	onMount(() => {
+		logLowCreditsCardSeen(logProps);
+	});
 </script>
 
 <div
@@ -29,13 +68,21 @@
 		class="w-full md:w-auto flex justify-start items-center md:flex-col md:items-stretch gap-2 flex-wrap -mt-4 md:mt-0 p-3.5 md:p-3"
 	>
 		{#if !$userSummary?.product_id}
-			<Button size="sm" href="/pricing#plans">{$LL.Pricing.SubscribeButton()}</Button>
-			<Button size="sm" href="/discord">{$LL.Shared.JoinOnDiscord()}</Button>
+			<Button onClick={() => logEvent('subscribe')} size="sm" href="/pricing#plans"
+				>{$LL.Pricing.SubscribeButton()}</Button
+			>
+			<Button onClick={() => logEvent('discord')} size="sm" href="/discord"
+				>{$LL.Shared.JoinOnDiscord()}</Button
+			>
 		{:else}
 			{#if $userSummary?.product_id !== STRIPE_HIGHEST_PRODUCT_ID_SUBSCRIPTIONS}
-				<Button size="sm" href="/pricing#plans">{$LL.Pricing.UpgradeButton()}</Button>
+				<Button onClick={() => logEvent('upgrade')} size="sm" href="/pricing#plans"
+					>{$LL.Pricing.UpgradeButton()}</Button
+				>
 			{/if}
-			<Button size="sm" href="/pricing#credit-packs">{$LL.Pricing.BuyCreditsButton()}</Button>
+			<Button onClick={() => logEvent('buy-credits')} size="sm" href="/pricing#credit-packs"
+				>{$LL.Pricing.BuyCreditsButton()}</Button
+			>
 		{/if}
 	</div>
 </div>

@@ -108,6 +108,28 @@ export function logBatchEditDeactivated(props: IBatchEditActivedProps) {
 	posthog.capture('Batch Edit | Deactivated', { ...props });
 }
 
+export function logLowCreditsCardSeen(props: ILowCreditsCardProps) {
+	mixpanel.track('Low Credits Card | Seen', { ...props });
+	posthog.capture('Low Credits Card | Seen', { ...props });
+}
+
+export function logLowCreditsCardDiscord(props: ILowCreditsCardProps) {
+	mixpanel.track('Low Credits Card | Discord Clicked', { ...props });
+	posthog.capture('Low Credits Card | Discord Clicked', { ...props });
+}
+export function logLowCreditsCardSubscribe(props: ILowCreditsCardProps) {
+	mixpanel.track('Low Credits Card | Subscribe Clicked', { ...props });
+	posthog.capture('Low Credits Card | Subscribe Clicked', { ...props });
+}
+export function logLowCreditsCardBuyCredits(props: ILowCreditsCardProps) {
+	mixpanel.track('Low Credits Card | Buy Credits Clicked', { ...props });
+	posthog.capture('Low Credits Card | Buy Credits Clicked', { ...props });
+}
+export function logLowCreditsCardUpgradeClicked(props: ILowCreditsCardProps) {
+	mixpanel.track('Low Credits Card | Upgrade Clicked', { ...props });
+	posthog.capture('Low Credits Card | Upgrade Clicked', { ...props });
+}
+
 export function logGenerationFailed({
 	generation,
 	error,
@@ -348,6 +370,14 @@ interface IInitImageActionProps {
 interface IBatchEditActivedProps {
 	'SC - Locale': string;
 	'SC - Advanced Mode': boolean;
+	'SC - Page': string;
+	'SC - User Id': string | undefined;
+	'SC - Stripe Product Id': string | undefined;
+	'SC - App Version': string;
+}
+
+interface ILowCreditsCardProps {
+	'SC - Locale': string;
 	'SC - Page': string;
 	'SC - User Id': string | undefined;
 	'SC - Stripe Product Id': string | undefined;

@@ -53,7 +53,7 @@
 
 	export let data;
 
-	const lowCreditsThreshold = 10;
+	const lowOnCreditsThreshold = 10;
 	let isSignInModalOpen = false;
 	let isJustCreatedGenerationForAnim = false;
 	let promptBarHeight: number;
@@ -395,7 +395,7 @@
 								md:pb-0 md:pt-26 lg:pb-8 relative z-0"
 				>
 					<div class="flex-1 min-w-0 flex flex-col items-center justify-center w-full">
-						{#if $page.data.session?.user.id && $userSummary && $userSummary.total_remaining_credits < lowCreditsThreshold}
+						{#if $page.data.session?.user.id && $userSummary && $userSummary.total_remaining_credits < lowOnCreditsThreshold}
 							<div
 								transition:expandCollapse|local={{ duration: 200 }}
 								class="w-full flex flex-col justify-start items-center"
