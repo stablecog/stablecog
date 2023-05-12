@@ -76,7 +76,7 @@ body {
 body {
 	color: rgb(var(--c-on-bg));
 	background: rgb(var(--c-bg));
-	font-family: avenir-next;
+	font-family: avenir-next, sans-serif;
 }
 
 input,
