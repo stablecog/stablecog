@@ -41,7 +41,6 @@
 	on:load={() => (isLoaded = true)}
 	use:inview={options}
 	on:inview_enter={() => {
-		console.log('inView');
 		wasInView = true;
 	}}
 	style={styles}

@@ -16,6 +16,7 @@
 	import { browser } from '$app/environment';
 	import ScBar from '$components/ScBar.svelte';
 	import { isTouchscreen } from '$ts/stores/isTouchscreen';
+	import { onDestroy } from 'svelte';
 	export let hasCustomContent = false;
 
 	$: $isDrawerOpen, onIsDrawerOpenChanged();
@@ -28,6 +29,10 @@
 			document.body.classList.remove('overflow-hidden-for-modal');
 		}
 	}
+
+	onDestroy(() => {
+		document.body.classList.remove('overflow-hidden-for-modal');
+	});
 </script>
 
 {#if $isDrawerOpen}
