@@ -241,17 +241,17 @@
 				{#if $generationInitImageFilesState === 'error'}
 					<div class="w-full bg-c-bg-secondary h-2px" />
 					<div
-						class="w-full text-center leading-normal py-3 px-4 flex justify-center items-center text-sm text-c-danger 
+						class="w-full text-center leading-normal py-3 px-4 flex justify-center items-center text-sm text-c-danger
 						relative pointer-events-none"
 					>
 						<p>{$LL.Error.TryAnotherImage()}</p>
 					</div>
 				{:else}
 					<div class="w-full bg-c-bg-secondary h-2px" />
-					<div class="w-full flex flex-col mt-3">
+					<div class="w-full flex flex-col items-start mt-3">
 						<p
 							use:tooltip={$initImageStrengthTabBarTooltipSettingsPanel}
-							class="px-4 text-c-on-bg/75 font-medium text-sm"
+							class="max-w-full px-4 text-c-on-bg/75 font-medium text-sm"
 						>
 							{$LL.Home.InitialImageStrengthTabBar.TitleAlt()}
 						</p>
