@@ -1,4 +1,4 @@
-# [Stablecog](https://stablecog.com) - Simple, free & open source AI image generator
+# [Stablecog](https://stablecog.com) - Create amazing art in seconds with AI.
 
 This is an app for creating AI generated images using [Stable Diffusion](https://github.com/CompVis/stable-diffusion) and [Kandinsky](https://github.com/ai-forever/Kandinsky-2). It's made with [SvelteKit](https://kit.svelte.dev). It uses [Supabase](https://supabase.com) for recording user data and auth. The app is hosted at [stablecog.com](https://stablecog.com). The app needs [our worker](https://github.com/stablecog.com/sc-worker) and [GO server](https://github.com/stablecog/sc-go) to be fully functional.
 
