@@ -9,9 +9,8 @@
 	import { tooltip } from '$ts/actions/tooltip';
 	import { tooltipLivePageStyleProps } from '$ts/constants/tooltips';
 	import { getTitleFromProductId } from '$ts/helpers/stripe/plan';
-	import { createTooltip } from '@grail-ui/svelte/tooltip';
 	import { quadOut } from 'svelte/easing';
-	import { fly, scale } from 'svelte/transition';
+	import { scale } from 'svelte/transition';
 
 	export let generationOrUpscale: TGenerationRealtimePayloadExt | TUpscaleRealtimePayloadExt;
 	export let planBasedColor: (
