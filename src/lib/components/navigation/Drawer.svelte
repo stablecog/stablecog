@@ -24,14 +24,15 @@
 	function onIsDrawerOpenChanged() {
 		if (!browser) return;
 		if ($isDrawerOpen) {
-			document.body.classList.add('overflow-hidden-for-modal');
+			document.body.classList.add('overflow-hidden-for-drawer');
 		} else {
-			document.body.classList.remove('overflow-hidden-for-modal');
+			document.body.classList.remove('overflow-hidden-for-drawer');
 		}
 	}
 
 	onDestroy(() => {
-		document.body.classList.remove('overflow-hidden-for-modal');
+		if (!browser) return;
+		document.body.classList.remove('overflow-hidden-for-drawer');
 	});
 </script>
 

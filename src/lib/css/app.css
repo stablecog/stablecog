@@ -221,6 +221,10 @@ select:-webkit-autofill:focus {
 	overflow: hidden!important;
 }
 
+.overflow-hidden-for-drawer {
+	overflow: hidden!important;
+}
+
 .overflow-hidden-for-app-routes {
 	overflow: hidden!important;
 }
