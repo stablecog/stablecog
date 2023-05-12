@@ -17,6 +17,15 @@ export function tooltip(
 		rows
 	}: TTooltipProps
 ) {
+	const tooltipPortal = document.createElement('div');
+	tooltipPortal.style.zIndex = '9999';
+	tooltipPortal.style.position = 'absolute';
+	tooltipPortal.style.left = '0';
+	tooltipPortal.style.top = '0';
+	tooltipPortal.style.pointerEvents = 'none';
+	tooltipPortal.style.width = '100vw';
+	tooltipPortal.style.minHeight = '100vh';
+	tooltipPortal.style.overflow = 'hidden';
 	const tooltipWrapper = document.createElement('div');
 	const indicator = document.createElement('div');
 	const tooltipContainer = document.createElement('div');
@@ -28,6 +37,8 @@ export function tooltip(
 
 	addClasses(tooltipWrapper, animateFrom);
 	addClasses(tooltipWrapper, wrapperClass);
+
+	tooltipPortal.appendChild(tooltipWrapper);
 
 	if (indicatorClass) {
 		indicator.style.position = 'absolute';
@@ -125,8 +136,8 @@ export function tooltip(
 
 	const onMouseEnter = async () => {
 		clearTimeout(mouseLeaveTimeout);
-		if (!document.body?.contains(tooltipWrapper)) {
-			document.body?.appendChild(tooltipWrapper);
+		if (!document.body?.contains(tooltipPortal)) {
+			document.body?.appendChild(tooltipPortal);
 			addStyles();
 			setTimeout(() => {
 				addClasses(tooltipWrapper, animateTo);
@@ -145,8 +156,8 @@ export function tooltip(
 		}
 		clearTimeout(mouseLeaveTimeout);
 		mouseLeaveTimeout = setTimeout(async () => {
-			if (document.body?.contains(tooltipWrapper)) {
-				document.body?.removeChild(tooltipWrapper);
+			if (document.body?.contains(tooltipPortal)) {
+				document.body?.removeChild(tooltipPortal);
 				removeStyles();
 			}
 		}, animationTime);
