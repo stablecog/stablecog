@@ -113,19 +113,19 @@
 .blog a:focus-visible {
 	color: rgba(var(--c-on-primary));
 	border-radius: 4px;
-	box-shadow: 0 -2.1rem 0 0 rgba(var(--c-primary)) inset;
+	box-shadow: 0 -1.3rem 0 0 rgba(var(--c-primary)) inset;
 }
 .blog h2 a:hover,
 .blog h2 a:focus-visible {
 	color: rgba(var(--c-on-primary));
 	border-radius: 5px;
-	box-shadow: 0 -2.9rem 0 0 rgba(var(--c-primary)) inset;
+	box-shadow: 0 -1.7rem 0 0 rgba(var(--c-primary)) inset;
 }
 .blog h3 a:hover,
 .blog h3 a:focus-visible {
 	color: rgba(var(--c-on-primary));
 	border-radius: 5px;
-	box-shadow: 0 -2.2rem 0 0 rgba(var(--c-primary)) inset;
+	box-shadow: 0 -1.4rem 0 0 rgba(var(--c-primary)) inset;
 }
 
 .blog img[class] {
@@ -282,7 +282,7 @@
 .blog-link:focus-visible {
 	color: rgba(var(--c-on-primary));
 	border-radius: 4px;
-	box-shadow: 0 -2.1rem 0 0 rgba(var(--c-primary)) inset;
+	box-shadow: 0 -1.3rem 0 0 rgba(var(--c-primary)) inset;
 }
 
 .blog .flex {
