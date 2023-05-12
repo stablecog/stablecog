@@ -12,7 +12,7 @@
 >
 	<div class="flex lg:hidden flex-col items-center px-5">
 		<h2
-			class="font-bold text-3xl md:text-4xl
+			class="font-semibold text-3xl md:text-4xl
 				lg:text-5xl flex-1 leading-tight lg:leading-tight text-center"
 		>
 			{$LL.Landing.InitImage.Title()}
@@ -72,7 +72,7 @@
 		>
 			<div class="hidden lg:flex flex-col items-center">
 				<h2
-					class="max-w-[19rem] md:max-w-[22rem] lg:max-w-[35rem] font-bold text-3xl md:text-4xl
+					class="max-w-[19rem] md:max-w-[22rem] lg:max-w-[35rem] font-semibold text-3xl md:text-4xl
 						lg:text-5xl flex-1 leading-tight lg:leading-tight text-center"
 				>
 					{$LL.Landing.InitImage.Title()}
@@ -113,7 +113,7 @@
 					/>
 				</div>
 				<p
-					class="px-4 py-2 md:px-6 md:py-3 font-semibold rounded-xl bg-c-bg-secondary relative
+					class="px-4 py-2 md:px-6 md:py-3 font-medium rounded-xl bg-c-bg-secondary relative
 						text-lg md:text-2xl lg:text-3xl ring-2 ring-c-bg-tertiary shadow-xl shadow-c-shadow/[var(--o-shadow-stronger)]"
 				>
 					{$LL.Landing.InitImage.Prompt()}

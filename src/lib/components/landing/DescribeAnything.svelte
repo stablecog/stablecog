@@ -64,7 +64,7 @@
 				class="absolute right-0 bottom-[15%] md:bottom-[20%] lg:bottom-[20%] w-full py-2 px-3 md:pl-8 md:pr-12 lg:pl-4 lg:pr-1 flex justify-end"
 			>
 				<p
-					class="px-4 font-semibold py-3 rounded-lg md:rounded-xl bg-c-bg-secondary text-xs
+					class="px-4 font-medium py-3 rounded-lg md:rounded-xl bg-c-bg-secondary text-xs
 					md:text-base lg:text-lg lg:px-5 ring-2 ring-c-bg-tertiary shadow-xl
 					shadow-c-shadow/[var(--o-shadow-stronger)] transition delay-200
 					transform {isImageLoaded ? 'translate-x-0 opacity-100' : '-translate-x-4 opacity-0'}"
@@ -79,13 +79,14 @@
 		>
 			<div class="flex flex-col items-center lg:items-start">
 				<h2
-					class="max-w-[19rem] md:max-w-[22rem] lg:max-w-[28rem] font-bold text-3xl md:text-4xl
+					class="max-w-[19rem] md:max-w-[22rem] lg:max-w-[28rem] font-semibold text-3xl md:text-4xl
 						lg:text-5xl flex-1 leading-tight lg:leading-tight text-center lg:text-left"
 				>
 					{$LL.Landing.Describe.Title()}
 				</h2>
 				<p
-					class="max-w-[22rem] lg:max-w-[28rem] leading-relaxed md:text-lg lg:text-xl mt-2 text-center lg:text-left text-c-on-bg/75"
+					class="max-w-[22rem] lg:max-w-[28rem] leading-relaxed md:text-lg lg:text-xl mt-2
+					text-center lg:text-left text-c-on-bg/75"
 				>
 					{$LL.Landing.Describe.Paragraph()}
 				</p>

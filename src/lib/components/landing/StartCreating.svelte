@@ -10,7 +10,7 @@
 	<div class="w-full max-w-7xl flex flex-col items-center px-3 md:px-8">
 		<div class="flex flex-col items-center px-3 md:px-6">
 			<h2
-				class="max-w-[19rem] md:max-w-[22rem] lg:max-w-[32rem] font-bold text-3xl md:text-4xl lg:text-5xl
+				class="max-w-[19rem] md:max-w-[22rem] lg:max-w-[32rem] font-semibold text-3xl md:text-4xl lg:text-5xl
         flex-1 leading-tight lg:leading-tight text-center"
 			>
 				{$LL.Landing.StartCreating.Title()}

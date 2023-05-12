@@ -31,6 +31,7 @@
 	import LogoButton from '$components/buttons/LogoButton.svelte';
 	import IconGuide from '$components/icons/IconGuide.svelte';
 	import { themeApp } from '$ts/stores/theme';
+	import IconBlog from '$components/icons/IconBlog.svelte';
 
 	export let notAtTheVeryTop = false;
 	export let scrollDirection: 'up' | 'down' = 'down';
@@ -125,6 +126,15 @@
 						: 'text-c-on-bg'} {!$isTouchscreen ? 'group-hover/iconbutton:text-c-primary' : ''}"
 				/>
 			</IconButton>
+			<IconButton class="py-2 hidden md:block" href="/blog" name="Blog">
+				<IconBlog
+					class="w-8 h-8 relative transition transform {$page.url.pathname === '/' &&
+					$themeApp === 'light' &&
+					!notAtTheVeryTop
+						? 'text-c-bg'
+						: 'text-c-on-bg'} {!$isTouchscreen ? 'group-hover/iconbutton:text-c-primary' : ''}"
+				/>
+			</IconButton>
 			<div class="flex items-center justify-end pl-2 pr-3.5 md:pl-2.5 md:pr-5">
 				{#if $page.data.session && $userSummary}
 					<div
@@ -135,7 +145,7 @@
 							: 'text-c-on-bg'}"
 					>
 						<p
-							class="text-xs font-semibold {$page.url.pathname === '/' &&
+							class="text-xs font-medium {$page.url.pathname === '/' &&
 							$themeApp === 'light' &&
 							!notAtTheVeryTop
 								? 'text-c-bg/60'
