@@ -76,7 +76,7 @@ body {
 body {
 	color: rgb(var(--c-on-bg));
 	background: rgb(var(--c-bg));
-	font-family: Avenir, 'Avenir Next LT Pro', Inter, Arial, system-ui, sans-serif;
+	font-family: Avenir, 'Avenir Next LT Pro', Inter, Product Sans, Google Sans, Noto Sans, Roboto, Ubuntu, Cantarell, Arial, system-ui, sans-serif;
 	overflow-y: scroll;
 }
 
