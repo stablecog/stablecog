@@ -71,6 +71,8 @@ export const flyAndScale = (node: Node, options: IFlyAndScaleOptions) => {
 		easing = quadOut,
 		yRem,
 		xRem,
+		yPercent,
+		xPercent,
 		scaleX,
 		scaleY,
 		opacity,
@@ -82,17 +84,21 @@ export const flyAndScale = (node: Node, options: IFlyAndScaleOptions) => {
 		easing,
 		css: (t: number) => {
 			let css = 'transform:';
-			if (yRem !== undefined) {
+			if (yPercent !== undefined) {
+				css += ` translateY(${(yPercent !== undefined ? yPercent : 0) * (1 - t)}%)`;
+			} else if (yRem !== undefined) {
 				css += ` translateY(${(yRem !== undefined ? yRem : 0) * (1 - t)}rem)`;
 			}
-			if (xRem !== undefined) {
-				css += ` translateX(${(xRem !== undefined ? xRem : 0) * (1 - t)}rem);`;
+			if (xPercent !== undefined) {
+				css += ` translateX(${(xPercent !== undefined ? xPercent : 0) * (1 - t)}%)`;
+			} else if (xRem !== undefined) {
+				css += ` translateX(${(xRem !== undefined ? xRem : 0) * (1 - t)}rem)`;
 			}
 			if (scaleX !== undefined) {
 				css += ` scaleX(${scaleX + (1 - scaleX) * t})`;
 			}
 			if (scaleY !== undefined) {
-				css += ` scaleY(${scaleY + (1 - scaleY) * t})`;
+				css += ` scaleY(${scaleY + (1 - scaleY) * t});`;
 			}
 			css += ';';
 			if (opacity !== undefined) {
@@ -113,6 +119,8 @@ interface IFlyAndScaleOptions {
 	easing?: (t: number) => number;
 	yRem?: number;
 	xRem?: number;
+	yPercent?: number;
+	xPercent?: number;
 	scaleX?: number;
 	scaleY?: number;
 	opacity?: number;
