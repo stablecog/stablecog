@@ -326,8 +326,6 @@
 
 	$: $generationInitImageFiles, onFilesChanged();
 
-	$: $generationInitImageFiles, onFilesChanged();
-
 	async function onFilesChanged() {
 		if (!$generationInitImageFiles) return;
 		const file = $generationInitImageFiles?.[0];
