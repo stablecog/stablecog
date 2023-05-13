@@ -9,7 +9,6 @@
 	import DropdownItem from '$components/DropdownItem.svelte';
 	import IconWrench from '$components/icons/IconWrench.svelte';
 	import IconUser from '$components/icons/IconUser.svelte';
-	import IconGuide from '$components/icons/IconGuide.svelte';
 	import { logSignOut } from '$ts/helpers/loggers';
 	import { supabase } from '$ts/constants/supabase';
 	import IconSignOut from '$components/icons/IconSignOut.svelte';
@@ -122,22 +121,6 @@
 						: ''}"
 				>
 					{$LL.Account.ManageAccountButton()}
-				</p>
-			</div>
-		</DropdownItem>
-		<DropdownItem href="/guide" onClick={closeMenu}>
-			<div class="flex-1 min-w-0 flex items-center justify-start gap-2.5">
-				<IconGuide
-					class="transition w-6 h-6 text-c-text {!$isTouchscreen
-						? 'group-hover:text-c-primary'
-						: ''}"
-				/>
-				<p
-					class="flex-1 min-w-0 overflow-hidden overflow-ellipsis text-left transition text-c-on-bg {!$isTouchscreen
-						? 'group-hover:text-c-primary'
-						: ''}"
-				>
-					{$LL.Guide.GuideButton()}
 				</p>
 			</div>
 		</DropdownItem>
