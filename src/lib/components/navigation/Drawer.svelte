@@ -66,7 +66,7 @@
 		>
 			<ButtonHoverEffect size="md" noRounding noPadding hoverFrom="right" />
 			<IconCancel
-				class="text-c-on-bg/40 w-7 h-7 transition {!$isTouchscreen
+				class="text-c-on-bg/25 w-7 h-7 transition {!$isTouchscreen
 					? 'group-hover:text-c-primary'
 					: ''}"
 			/>
