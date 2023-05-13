@@ -35,7 +35,6 @@
               -webkit-mask-position: right center;
             "
 						class="w-full h-full [transition:opacity_0.2s_ease-out,transform_0.4s_ease-out]"
-						classPlaceholder="w-full h-full [transition:opacity_0.2s_ease-out,transform_0.4s_ease-out] filter blur-2xl"
 						srcset="
               /landing/cat/cat-512.webp 512w,
               /landing/cat/cat-768.webp 768w,

@@ -46,8 +46,6 @@
 				"
 				class="w-full h-full object-cover object-[25%_100%] md:object-[40%_100%] lg:object-left-bottom transform
 					[transition:opacity_0.2s_ease-out,transform_0.4s_ease-out]"
-				classPlaceholder="w-full h-full object-cover object-[25%_100%] md:object-[40%_100%] lg:object-left-bottom transform
-				[transition:opacity_0.2s_ease-out,transform_0.4s_ease-out] filter blur-2xl"
 				srcset="
 					/landing/hero/hero-v2-512.webp 512w,
 					/landing/hero/hero-v2-768.webp 768w,

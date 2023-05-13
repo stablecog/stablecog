@@ -9,7 +9,6 @@
 	export let srcOutline: string;
 	export let altOutline: string;
 	export let srcPlaceholder: string;
-	export let classPlaceholder: string;
 
 	export { classes as class };
 	export { styles as style };
@@ -19,7 +18,7 @@
 
 <img
 	style={styles}
-	class="{classPlaceholder} absolute right-0 top-0"
+	class="{classes} absolute right-0 top-0 filter blur-2xl"
 	src={srcPlaceholder}
 	{alt}
 	{width}
