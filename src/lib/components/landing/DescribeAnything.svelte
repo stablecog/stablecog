@@ -34,7 +34,7 @@
               mask-position: right center;
               -webkit-mask-position: right center;
             "
-						class="w-full h-full [transition:opacity_0.2s_ease-out,transform_0.4s_ease-out]"
+						class="w-full h-full"
 						srcset="
               /landing/cat/cat-512.webp 512w,
               /landing/cat/cat-768.webp 768w,
@@ -48,7 +48,7 @@
 						alt="Cat"
 						width="1920"
 						height="1536"
-						classOutline="w-full h-full absolute right-0 top-0 [transition:opacity_0.2s_ease-out,transform_0.4s_ease-out]"
+						classOutline="w-full h-full absolute right-0 top-0"
 						srcOutline={$themeApp === 'light'
 							? '/landing/cat/cat-outline-light.svg'
 							: '/landing/cat/cat-outline-dark.svg'}

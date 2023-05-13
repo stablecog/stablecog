@@ -1,5 +1,4 @@
 <script lang="ts">
-	import ImageWithOutlineAndLoaded from '$components/ImageWithOutlineAndLoaded.svelte';
 	import ImageWithOutlineAndPlaceholder from '$components/ImageWithOutlineAndPlaceholder.svelte';
 	import Button from '$components/buttons/Button.svelte';
 	import LL from '$i18n/i18n-svelte';
@@ -44,8 +43,7 @@
 					mask-position: left bottom;
 					-webkit-mask-position: left bottom;
 				"
-				class="w-full h-full object-cover object-[25%_100%] md:object-[40%_100%] lg:object-left-bottom transform
-					[transition:opacity_0.2s_ease-out,transform_0.4s_ease-out]"
+				class="w-full h-full object-cover object-[25%_100%] md:object-[40%_100%] lg:object-left-bottom"
 				srcset="
 					/landing/hero/hero-v2-512.webp 512w,
 					/landing/hero/hero-v2-768.webp 768w,
@@ -59,8 +57,7 @@
 				alt="Hero"
 				width="1920"
 				height="1920"
-				classOutline="w-full h-full absolute right-0 top-0 object-cover object-left-bottom transform
-					[transition:opacity_0.2s_ease-out,transform_0.4s_ease-out]"
+				classOutline="w-full h-full absolute right-0 top-0 object-cover object-left-bottom"
 				srcOutline={$themeApp === 'light'
 					? '/landing/hero/hero-outline-light.svg'
 					: '/landing/hero/hero-outline-dark.svg'}
