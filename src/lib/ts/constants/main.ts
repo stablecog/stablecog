@@ -36,7 +36,7 @@ export const allowedRedirectRoutes = [
 export const isAllowedRedirectRoute = (route: string) => {
 	let allowed = false;
 	for (const r of allowedRedirectRoutes) {
-		if (route === r || (r !== '/' && route.startsWith(`${r}`))) {
+		if (route === r || (r !== '/' && route.startsWith(r))) {
 			allowed = true;
 			break;
 		}
