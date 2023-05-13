@@ -237,16 +237,16 @@
 			answer: $LL.FAQ.Questions.PlanUpgradeOrDowngrade.Answer()
 		},
 		{
+			question: $LL.FAQ.Questions.CommercialUse.Question(),
+			answer: $LL.FAQ.Questions.CommercialUse.Answer()
+		},
+		{
 			question: $LL.FAQ.Questions.MoreCredits.Question(),
 			answer: $LL.FAQ.Questions.MoreCredits.Answer()
 		},
 		{
 			question: $LL.FAQ.Questions.CreditRollOver.Question(),
 			answer: $LL.FAQ.Questions.CreditRollOver.Answer()
-		},
-		{
-			question: $LL.FAQ.Questions.CommercialUse.Question(),
-			answer: $LL.FAQ.Questions.CommercialUse.Answer()
 		},
 		{
 			question: $LL.FAQ.Questions.MoreQuestions.Question(),
