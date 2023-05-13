@@ -332,7 +332,7 @@
 			<p class="max-w-xl mt-3 text-center leading-relaxed text-c-on-bg/75">
 				{$LL.Pricing.PlansParagraph()}
 			</p>
-			<div class="w-full max-w-7xl flex flex-wrap justify-center gap-7 mt-9">
+			<div class="w-full max-w-7xl flex flex-wrap justify-center items-stretch gap-7 mt-9">
 				{#each subscriptionCards as card}
 					{@const subscribedProductId = subscriptionCards.find(
 						(c) => c.productId === $userSummary?.product_id
@@ -351,7 +351,7 @@
 						subscribedAmount > card.amount &&
 						$page.data.session?.user.id !== undefined}
 					<div
-						class="w-full max-w-md md:max-w-[20rem] bg-c-bg shadow-xl shadow-c-shadow/[var(--o-shadow-strong)]
+						class="w-full flex flex-col max-w-md md:max-w-[20rem] bg-c-bg shadow-xl shadow-c-shadow/[var(--o-shadow-strong)]
 					 	p-4 md:p-5 rounded-2xl md:rounded-3xl ring-2 {isSubscribed
 							? 'ring-c-success'
 							: card.ringClass} relative"
@@ -378,7 +378,7 @@
 								>{$LL.Pricing.SlashMonth()}</span
 							>
 						</h4>
-						<ul class="w-full mt-6 flex flex-col gap-3 px-1">
+						<ul class="w-full flex-1 mt-6 flex flex-col gap-3 px-1">
 							{#each card.features as feature}
 								<li class="flex items-center gap-3">
 									<span class="text-c-on-bg/60">-</span>
@@ -404,7 +404,7 @@
 												currency: card.currency
 										  })
 										: null}
-								class="w-full mt-8"
+								class="w-full mt-7"
 							>
 								{#if isSubscribed}
 									{$LL.Pricing.SubscribedButton()}
