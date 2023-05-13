@@ -162,6 +162,8 @@ const hi: Translation = {
 		HistoryTab: 'इतिहास',
 		GalleryTab: 'गैलरी',
 		AdminGalleryTab: 'Admin Gallery',
+		PricingTab: 'Pricing',
+		AccountTab: 'Account',
 		LiveTab: 'लाइव'
 	},
 	Settings: {

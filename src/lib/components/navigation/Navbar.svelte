@@ -33,6 +33,7 @@
 	import { themeApp } from '$ts/stores/theme';
 	import IconBlog from '$components/icons/IconBlog.svelte';
 	import { searchParamsString } from '$ts/stores/searchParamsString';
+	import IconLive from '$components/icons/IconLive.svelte';
 
 	export let notAtTheVeryTop = false;
 	export let scrollDirection: 'up' | 'down' = 'down';
@@ -111,7 +112,7 @@
 			<IconButton class="py-2 hidden md:block" href="/discord" target="_blank" name="Discord">
 				<IconSc
 					type="discord"
-					class="w-8 h-8 relative transition transform {$page.url.pathname === '/' &&
+					class="w-7.5 h-7.5 relative transition transform {$page.url.pathname === '/' &&
 					$themeApp === 'light' &&
 					!notAtTheVeryTop
 						? 'text-c-bg'
@@ -120,7 +121,7 @@
 			</IconButton>
 			<IconButton class="py-2 hidden md:block" href="/guide" name="Guide">
 				<IconGuide
-					class="w-8 h-8 relative transition transform {$page.url.pathname === '/' &&
+					class="w-7.5 h-7.5 relative transition transform {$page.url.pathname === '/' &&
 					$themeApp === 'light' &&
 					!notAtTheVeryTop
 						? 'text-c-bg'
@@ -129,7 +130,16 @@
 			</IconButton>
 			<IconButton class="py-2 hidden md:block" href="/blog" name="Blog">
 				<IconBlog
-					class="w-8 h-8 relative transition transform {$page.url.pathname === '/' &&
+					class="w-7.5 h-7.5 relative transition transform {$page.url.pathname === '/' &&
+					$themeApp === 'light' &&
+					!notAtTheVeryTop
+						? 'text-c-bg'
+						: 'text-c-on-bg'} {!$isTouchscreen ? 'group-hover/iconbutton:text-c-primary' : ''}"
+				/>
+			</IconButton>
+			<IconButton class="py-2 hidden md:block" href="/live" name="/live">
+				<IconLive
+					class="w-7.5 h-7.5 relative transition transform {$page.url.pathname === '/' &&
 					$themeApp === 'light' &&
 					!notAtTheVeryTop
 						? 'text-c-bg'

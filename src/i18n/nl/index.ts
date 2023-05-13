@@ -166,6 +166,8 @@ const nl: Translation = {
 		HistoryTab: 'Historie',
 		GalleryTab: 'Galerij',
 		AdminGalleryTab: 'Admin Gallery',
+		PricingTab: 'Pricing',
+		AccountTab: 'Account',
 		LiveTab: 'Live'
 	},
 	Settings: {

@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { page } from '$app/stores';
 	import MetaTag from '$components/MetaTag.svelte';
+	import PageWrapper from '$components/PageWrapper.svelte';
 	import { PUBLIC_BUCKET_AUX_URL } from '$env/static/public';
 	import LL, { locale } from '$i18n/i18n-svelte';
 	import { canonicalUrl } from '$ts/constants/main';
@@ -20,10 +21,7 @@
 	canonical="{canonicalUrl}{$page.url.pathname}"
 />
 
-<div
-	class="w-full flex flex-col items-center flex-1 justify-center px-4 pt-2
-		md:pt-8 pb-[calc(3vh+0.5rem)]"
->
+<PageWrapper>
 	<div class="w-full max-w-7xl flex justify-center text-center">
 		<h1 class="font-bold text-4xl">{$LL.Blog.Title()}</h1>
 	</div>
@@ -71,4 +69,4 @@
 			</a>
 		{/each}
 	</div>
-</div>
+</PageWrapper>

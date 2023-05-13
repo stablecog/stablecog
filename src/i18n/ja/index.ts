@@ -166,6 +166,8 @@ const ja: Translation = {
 		HistoryTab: '履歴',
 		GalleryTab: 'ギャラリー',
 		AdminGalleryTab: 'Admin Gallery',
+		PricingTab: 'Pricing',
+		AccountTab: 'Account',
 		LiveTab: 'ライブ'
 	},
 	Settings: {

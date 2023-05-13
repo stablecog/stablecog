@@ -162,6 +162,8 @@ const hr: Translation = {
 		HistoryTab: 'Povijest',
 		GalleryTab: 'Galerija',
 		AdminGalleryTab: 'Admin Gallery',
+		PricingTab: 'Pricing',
+		AccountTab: 'Account',
 		LiveTab: 'Uživo'
 	},
 	Settings: {

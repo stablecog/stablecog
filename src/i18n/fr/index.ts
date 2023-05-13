@@ -163,6 +163,8 @@ const fr: Translation = {
 		HistoryTab: 'Historique',
 		GalleryTab: 'Galerie',
 		AdminGalleryTab: 'Admin Gallery',
+		PricingTab: 'Pricing',
+		AccountTab: 'Account',
 		LiveTab: 'Live'
 	},
 	Settings: {

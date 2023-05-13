@@ -163,6 +163,8 @@ const ko: Translation = {
 		HistoryTab: '생성 기록',
 		GalleryTab: '갤러리',
 		AdminGalleryTab: 'Admin Gallery',
+		PricingTab: 'Pricing',
+		AccountTab: 'Account',
 		LiveTab: '실시간 통계'
 	},
 	Settings: {

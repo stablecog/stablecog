@@ -163,6 +163,8 @@ const ru: Translation = {
 		HistoryTab: 'История',
 		GalleryTab: 'Галерея',
 		AdminGalleryTab: 'Admin Gallery',
+		PricingTab: 'Pricing',
+		AccountTab: 'Account',
 		LiveTab: 'Онлайн'
 	},
 	Settings: {

@@ -472,6 +472,14 @@ type RootTranslation = {
 		 */
 		AdminGalleryTab: string
 		/**
+		 * P​r​i​c​i​n​g
+		 */
+		PricingTab: string
+		/**
+		 * A​c​c​o​u​n​t
+		 */
+		AccountTab: string
+		/**
 		 * L​i​v​e
 		 */
 		LiveTab: string
@@ -2584,6 +2592,14 @@ export type TranslationFunctions = {
 		 * Admin Gallery
 		 */
 		AdminGalleryTab: () => LocalizedString
+		/**
+		 * Pricing
+		 */
+		PricingTab: () => LocalizedString
+		/**
+		 * Account
+		 */
+		AccountTab: () => LocalizedString
 		/**
 		 * Live
 		 */

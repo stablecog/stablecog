@@ -327,7 +327,7 @@
 
 <PageWrapper>
 	<div class="w-full flex flex-col items-center justify-start my-auto">
-		<section id="plans" class="w-full flex flex-col items-center justify-start md:pt-4">
+		<section id="plans" class="w-full flex flex-col items-center justify-start">
 			<h1 class="text-center font-bold text-4xl">{$LL.Pricing.PlansTitle()}</h1>
 			<p class="max-w-xl mt-3 text-center leading-relaxed text-c-on-bg/75">
 				{$LL.Pricing.PlansParagraph()}
@@ -490,7 +490,7 @@
 				<div class="w-full h-[1vh]" />
 			</section>
 		{/if}
-		<div class="w-full flex justify-center mt-10 md:mt-12 md:mb-4">
+		<div class="w-full flex justify-center mt-10 md:mt-12 mb-1 md:mb-3">
 			<div class="w-full max-w-5xl rounded-full h-2px bg-c-bg-secondary" />
 		</div>
 		<section id="faq" class="w-full flex flex-col items-center pt-6">
@@ -507,6 +507,9 @@
 				{/each}
 			</div>
 		</section>
+		<div class="w-full flex justify-center mt-7 md:mt-10">
+			<div class="w-full max-w-5xl rounded-full h-2px bg-c-bg-secondary" />
+		</div>
 	</div>
 </PageWrapper>
 

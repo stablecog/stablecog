@@ -1,10 +1,10 @@
 import { page } from '$app/stores';
 import LL from '$i18n/i18n-svelte';
-import { isAdmin, isGalleryAdmin, isSuperAdmin } from '$ts/helpers/admin/roles';
+import { isAdmin, isSuperAdmin } from '$ts/helpers/admin/roles';
 import { userSummary } from '$ts/stores/user/summary';
 import { derived } from 'svelte/store';
 
-export const regularRoutes = derived([LL], ([$LL]) => {
+export const regularRoutes = derived([LL, userSummary], ([$LL, $userSummary]) => {
 	const routes: TNavbarRoute[] = [
 		{
 			name: $LL.Navbar.GenerateTab(),
@@ -21,11 +21,17 @@ export const regularRoutes = derived([LL], ([$LL]) => {
 			href: '/gallery',
 			icon: 'gallery'
 		},
-		{
-			name: $LL.Navbar.LiveTab(),
-			href: '/live',
-			icon: 'live'
-		}
+		$userSummary?.product_id
+			? {
+					name: $LL.Navbar.AccountTab(),
+					href: '/account',
+					icon: 'account'
+			  }
+			: {
+					name: $LL.Navbar.PricingTab(),
+					href: '/pricing',
+					icon: 'pricing'
+			  }
 	];
 	return routes;
 });
@@ -80,6 +86,11 @@ export const extraRoutes = derived([LL], ([$LL]) => {
 			name: $LL.Blog.TitleAlt(),
 			href: '/blog',
 			icon: 'blog'
+		},
+		{
+			name: $LL.Navbar.LiveTab(),
+			href: '/live',
+			icon: 'live'
 		}
 	];
 	return routes;
@@ -104,6 +115,8 @@ export const routesDrawer = derived(
 export type TNavbarRouteOption =
 	| 'home'
 	| 'generate'
+	| 'pricing'
+	| 'account'
 	| 'live'
 	| 'blog'
 	| 'history'

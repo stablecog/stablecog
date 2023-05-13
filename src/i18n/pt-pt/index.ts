@@ -162,6 +162,8 @@ const ptPt: Translation = {
 		HistoryTab: 'História',
 		GalleryTab: 'Galeria',
 		AdminGalleryTab: 'Admin Gallery',
+		PricingTab: 'Pricing',
+		AccountTab: 'Account',
 		LiveTab: 'Em Direto'
 	},
 	Settings: {

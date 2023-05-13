@@ -163,6 +163,8 @@ const en: BaseTranslation = {
 		HistoryTab: 'History',
 		GalleryTab: 'Gallery',
 		AdminGalleryTab: 'Admin Gallery',
+		PricingTab: 'Pricing',
+		AccountTab: 'Account',
 		LiveTab: 'Live'
 	},
 	Settings: {

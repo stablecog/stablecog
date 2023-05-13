@@ -163,6 +163,8 @@ const vi: Translation = {
 		HistoryTab: 'Lịch sử',
 		GalleryTab: 'Thư viện',
 		AdminGalleryTab: 'Admin Gallery',
+		PricingTab: 'Pricing',
+		AccountTab: 'Account',
 		LiveTab: 'Trực tiếp'
 	},
 	Settings: {

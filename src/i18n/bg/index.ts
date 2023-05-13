@@ -165,6 +165,8 @@ const bg: Translation = {
 		HistoryTab: 'История',
 		GalleryTab: 'Галерия',
 		AdminGalleryTab: 'Admin Gallery',
+		PricingTab: 'Pricing',
+		AccountTab: 'Account',
 		LiveTab: 'На живо'
 	},
 	Settings: {

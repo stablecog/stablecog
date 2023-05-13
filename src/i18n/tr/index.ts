@@ -166,6 +166,8 @@ const tr: Translation = {
 		HistoryTab: 'Tarihçe',
 		GalleryTab: 'Galeri',
 		AdminGalleryTab: 'Admin Gallery',
+		PricingTab: 'Pricing',
+		AccountTab: 'Account',
 		LiveTab: 'Canlı'
 	},
 	Settings: {

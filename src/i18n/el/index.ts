@@ -166,6 +166,8 @@ const es: Translation = {
 		HistoryTab: 'Ιστορικό',
 		GalleryTab: 'Συλλογή',
 		AdminGalleryTab: 'Admin Gallery',
+		PricingTab: 'Pricing',
+		AccountTab: 'Account',
 		LiveTab: 'Ζωντανά'
 	},
 	Settings: {

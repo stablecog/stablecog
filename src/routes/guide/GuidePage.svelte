@@ -11,7 +11,7 @@
 </script>
 
 <div class="w-full flex flex-col items-center pb-12">
-	<article class="w-full flex flex-wrap max-w-3xl px-5 md:px-12 pt-4 md:pt-6 pb-8 blog">
+	<article class="w-full flex flex-wrap max-w-3xl px-5 md:px-12 pt-4 md:pt-8 pb-8 blog">
 		{@html content}
 	</article>
 	{#if sidebarItem?.children}

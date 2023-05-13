@@ -160,6 +160,8 @@ const zhHans: Translation = {
 		HistoryTab: '历史记录',
 		GalleryTab: '图库',
 		AdminGalleryTab: 'Admin Gallery',
+		PricingTab: 'Pricing',
+		AccountTab: 'Account',
 		LiveTab: '实时统计'
 	},
 	Settings: {
