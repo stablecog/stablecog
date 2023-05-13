@@ -91,7 +91,9 @@
 					{$LL.Landing.Describe.Paragraph()}
 				</p>
 				<Button
-					href={$isSignedIn ? '/generate' : '/generate?smo=true'}
+					href={$isSignedIn
+						? `/generate?p=${encodeURIComponent($LL.Landing.Describe.Prompt())}`
+						: `/generate?p=${encodeURIComponent($LL.Landing.Describe.Prompt())}&smo=true`}
 					class="mt-6 w-full hidden md:block max-w-[15rem] px-6 md:px-8 py-4"
 					noPadding
 				>
