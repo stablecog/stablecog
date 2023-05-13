@@ -1,6 +1,5 @@
 <script lang="ts">
 	import { Slider } from 'radix-svelte';
-	import { tick } from 'svelte';
 
 	export let value: number;
 	export let min: number;
@@ -10,33 +9,13 @@
 	export let name: string;
 	export { classes as class };
 	let classes = '';
-
-	let valueInternal = [value];
-
-	$: value, onValueChanged();
-	$: valueInternal, onValueInternalChanged();
-
-	async function onValueChanged() {
-		await tick();
-		if (!valueInternal) return;
-		if (valueInternal[0] === value) return;
-		valueInternal = [value];
-	}
-
-	async function onValueInternalChanged() {
-		await tick();
-		if (disabled) return;
-		if (!valueInternal) return;
-		if (valueInternal[0] === value) return;
-		value = valueInternal[0];
-	}
 </script>
 
 <form class={classes}>
 	<Slider.Root
 		class="flex-1 h-full touch-none select-none cursor-pointer relative flex 
 			items-center group"
-		bind:value={valueInternal}
+		bind:value
 		{min}
 		{max}
 		{step}
