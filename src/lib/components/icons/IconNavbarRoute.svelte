@@ -60,16 +60,16 @@
 		class={classes}
 		width="24"
 		height="24"
-		xmlns="http://www.w3.org/2000/svg"
-		fill="none"
 		viewBox="0 0 24 24"
-		stroke-width="1.5"
-		stroke="currentColor"
+		fill="none"
+		xmlns="http://www.w3.org/2000/svg"
 	>
 		<path
+			d="M2.25 18.75c5.34 0 10.65.7 15.8 2.1.72.2 1.45-.34 1.45-1.1v-1M18 10.5h.5m-13 0H6M2.25 5.62c0-.62.5-1.12 1.13-1.12h17.25c.62 0 1.12.5 1.12 1.13v9.75c0 .62-.5 1.12-1.13 1.12H3.38c-.6 0-1.12-.51-1.12-1.13V5.63ZM15 10.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"
+			stroke="currentColor"
+			stroke-width="1.5"
 			stroke-linecap="round"
 			stroke-linejoin="round"
-			d="M12 6v12m-3-2.818l.879.659c1.171.879 3.07.879 4.242 0 1.172-.879 1.172-2.303 0-3.182C13.536 12.219 12.768 12 12 12c-.725 0-1.45-.22-2.003-.659-1.106-.879-1.106-2.303 0-3.182s2.9-.879 4.006 0l.415.33M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
 		/>
 	</svg>
 {:else if type === 'account'}
