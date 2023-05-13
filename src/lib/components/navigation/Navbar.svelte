@@ -32,6 +32,7 @@
 	import IconGuide from '$components/icons/IconGuide.svelte';
 	import { themeApp } from '$ts/stores/theme';
 	import IconBlog from '$components/icons/IconBlog.svelte';
+	import { searchParamsString } from '$ts/stores/searchParamsString';
 
 	export let notAtTheVeryTop = false;
 	export let scrollDirection: 'up' | 'down' = 'down';
@@ -224,7 +225,8 @@
 		>
 			<SignInCard
 				isModal={true}
-				redirectTo={$page.url.pathname === '/' ? '/generate' : $page.url.pathname}
+				redirectTo={($page.url.pathname === '/' ? '/generate' : $page.url.pathname) +
+					$searchParamsString}
 			/>
 		</div>
 	</div>

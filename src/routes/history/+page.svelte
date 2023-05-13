@@ -33,6 +33,7 @@
 	} from '$ts/queries/userGenerations';
 	import { advancedModeApp } from '$ts/stores/advancedMode';
 	import { appVersion } from '$ts/stores/appVersion';
+	import { searchParamsString } from '$ts/stores/searchParamsString';
 	import {
 		isUserGalleryEditActive,
 		lastFetchedUserGalleryView,
@@ -175,7 +176,7 @@
 	{#if !$page.data.session?.user.id}
 		<div class="w-full flex-1 max-w-7xl flex justify-center px-2 py-4 md:py-2 md:px-8">
 			<div class="my-auto flex flex-col">
-				<SignInCard redirectTo="/history" />
+				<SignInCard redirectTo={'/history' + $searchParamsString} />
 				<div class="w-full h-[1vh]" />
 			</div>
 		</div>

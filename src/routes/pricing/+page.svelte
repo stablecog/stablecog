@@ -34,6 +34,7 @@
 	import { userSummary } from '$ts/stores/user/summary';
 	import { previewImageVersion } from '$ts/constants/previewImageVersion';
 	import { socialAppUrls } from '$ts/constants/social';
+	import { searchParamsString } from '$ts/stores/searchParamsString';
 
 	export let data: PageData;
 
@@ -524,7 +525,7 @@
 			use:clickoutside={{ callback: () => (isSignInModalOpen = false) }}
 			class="max-w-full my-auto"
 		>
-			<SignInCard isModal={true} redirectTo={$page.url.pathname} />
+			<SignInCard isModal={true} redirectTo={$page.url.pathname + $searchParamsString} />
 		</div>
 	</div>
 {/if}

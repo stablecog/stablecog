@@ -50,6 +50,7 @@
 	import { isLeftSidebarHidden, isLeftSidebarHiddenApp } from '$ts/stores/sidebars.js';
 	import { previewImageVersion } from '$ts/constants/previewImageVersion.js';
 	import { goto } from '$app/navigation';
+	import { searchParamsString } from '$ts/stores/searchParamsString.js';
 
 	export let data;
 
@@ -489,7 +490,7 @@
 				use:clickoutside={{ callback: () => (isSignInModalOpen = false) }}
 				class="flex justify-center my-auto"
 			>
-				<SignInCard isModal={true} redirectTo="/generate" />
+				<SignInCard isModal={true} redirectTo={'/generate' + $searchParamsString} />
 			</div>
 		</div>
 	{/if}
