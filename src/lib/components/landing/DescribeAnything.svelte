@@ -1,11 +1,9 @@
 <script lang="ts">
-	import ImageWithOutlineAndLoaded from '$components/ImageWithOutlineAndLoaded.svelte';
+	import ImageWithOutlineAndPlaceholder from '$components/ImageWithOutlineAndPlaceholder.svelte';
 	import Button from '$components/buttons/Button.svelte';
 	import LL from '$i18n/i18n-svelte';
 	import { themeApp } from '$ts/stores/theme';
 	import { isSignedIn } from '$ts/stores/user/isSignedIn';
-
-	let isImageLoaded = false;
 </script>
 
 <section
@@ -25,8 +23,7 @@
 				class="h-full relative pr-[6%] -ml-[6%] md:pr-[6%] md:-ml-[6%] lg:pr-0 lg:ml-0 overflow-hidden flex justify-end"
 			>
 				<div class="aspect-[5/4] h-full relative">
-					<ImageWithOutlineAndLoaded
-						bind:isLoaded={isImageLoaded}
+					<ImageWithOutlineAndPlaceholder
 						style="
               -webkit-mask-image: url(/landing/cat/cat-mask.svg);
               mask-image: url(/landing/cat/cat-mask.svg);
@@ -38,6 +35,7 @@
               -webkit-mask-position: right center;
             "
 						class="w-full h-full [transition:opacity_0.2s_ease-out,transform_0.4s_ease-out]"
+						classPlaceholder="w-full h-full [transition:opacity_0.2s_ease-out,transform_0.4s_ease-out] filter blur-2xl"
 						srcset="
               /landing/cat/cat-512.webp 512w,
               /landing/cat/cat-768.webp 768w,
@@ -47,6 +45,7 @@
             "
 						sizes="(min-width: 1024px) 50vw, 100vw"
 						src="/landing/cat/cat-1920.webp"
+						srcPlaceholder="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAQCAIAAACZeshMAAADXklEQVR4ARVRNYDjRhT9f0ayJa3Zy8wYZmZmTqpU19cpk768LsxUh5l5mXnNjAJLGo0md/3jh7c9vaGidk+TsUJ776SViEqMm3uVLIBFEQzRQAjIKPmCcXAB0IQ6AYhCXxNK0qW3L5KGG0BhLVdH1Z5uJmRAdAaahhVTKOOWB7brAILkaq7jNZH5JZGyQO+FMXqd/8SsoDMPJ6Zm5FH0Y/EgTcCVSz0RojFC5m6bGhkbHuoZUMLqMuTtttstwuPBSwnIhtDpKN70ygvXjQVMHpGuvwJiWvDl174tGelzz1wxMheNLga+3MvrSqfl1M9au0Hb6SeXheXoUmTed33q1m+o0JHpWSWJ3smR+9aHJ79s//FDaU8ikcfuml1fcT797ptaPp2qsHrr12RX9ZHZcwQ4Ml8RSboUeOGX7bWVYkji2i9fVz7/+Q8B+TiQ709KvD1iqbXl0y+uv/L6aqNeMAzOxu6bnLO8wz8zh+DL9DLxgCxS3MSynkwXy7rTAk+RQJIgceP10y26US4N1PT2evrdLgy4QlFMLVOvZVmLYZ7eJ16KwXCrc1RqVFU5Fo8NRHgi5Gpj4Znnn5teP7CXN8r1yoov8v6F8ySVsm7V7gMQlOhSlWxW/dwwGe91J3XdLtY3GMMYTl136ZBXls/+StU6n0YkuVe6WvjcxXAbM9N0jPte58LaAQhnIHVz9MYn5q7pibZdwwNOmlxWA4mRHiWzcUgYeoARGkfP7PB907cH5csGhdsUKTpGbpBFkgmjbtpROraQHOhXei6N9iiulFzU2o0yrcVlkAvesgElDqgDIahO42za36Xz4rFLybVVXv3V/lk0412gOh27brm1Gk/OxwCc1FlWJ01TOIgCEW3IFP1yVL5JBaRX4IsNOOmHhSAktmDNtKVbr7gxqCmiFRwfH2rVC2e5tIu+g7YBeSY4QNQBk9PYCJmQ8rjqCFMWPZNkYgEuB/CFUgwHxJHjVC1JJLUymAZmKddHYaECnRrUJShn3e/jcg+dENf66HSwkRGnV/aOSZHa+c3zW9nUuvgx4+cvv+yJ4m62wQ4JSAooNchV4TQO4WmY0tEhGvYHxWBDlAywbnii//b7lsJwvcKHPFBYplcDOjAcIxdp5WPYa0FTBeUGuCcMYYuv/A+DT8sYIgQ3TwAAAABJRU5ErkJggg=="
 						alt="Cat"
 						width="1920"
 						height="1536"
@@ -55,8 +54,6 @@
 							? '/landing/cat/cat-outline-light.svg'
 							: '/landing/cat/cat-outline-dark.svg'}
 						altOutline="Cat Outline"
-						classWhenLoaded="opacity-100 translate-x-0"
-						classWhenNotLoaded="opacity-0 -translate-x-4"
 					/>
 				</div>
 			</div>
@@ -66,8 +63,7 @@
 				<p
 					class="px-4 font-medium py-3 rounded-lg md:rounded-xl bg-c-bg-secondary text-xs
 					md:text-base lg:text-lg lg:px-5 ring-2 ring-c-bg-tertiary shadow-xl
-					shadow-c-shadow/[var(--o-shadow-stronger)] transition delay-200
-					transform {isImageLoaded ? 'translate-x-0 opacity-100' : '-translate-x-4 opacity-0'}"
+					shadow-c-shadow/[var(--o-shadow-stronger)]"
 				>
 					{$LL.Landing.Describe.Prompt()}
 				</p>
