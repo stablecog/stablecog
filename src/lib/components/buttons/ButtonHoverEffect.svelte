@@ -3,7 +3,8 @@
 
 	export let hoverFrom: 'top' | 'left' | 'bottom' | 'right' = 'bottom';
 	export let size: 'lg' | 'md' | 'sm' | 'xs' = 'lg';
-	export let color: 'primary' | 'on-bg' | 'bg-secondary' | 'secondary' = 'primary';
+	export let color: 'primary' | 'on-bg' | 'bg-secondary' | 'secondary' | 'primary-strong' =
+		'primary';
 	export let hovered = false;
 	export let noPadding = false;
 	export let noRounding = false;
@@ -37,6 +38,8 @@
 				? 'bg-c-bg-secondary'
 				: color === 'secondary'
 				? 'bg-c-secondary/15'
+				: color === 'primary-strong'
+				? 'bg-c-primary/25'
 				: 'bg-c-primary/15'} {noRounding
 				? ''
 				: size === 'xs'

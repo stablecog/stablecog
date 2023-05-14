@@ -94,7 +94,7 @@
 					class="relative self-stretch p-0.5 group overflow-hidden md:hidden"
 				>
 					<div class="h-full flex items-center justify-center px-2.5 py-3 relative overflow-hidden">
-						<ButtonHoverEffect hoverFrom="left" size="md" />
+						<ButtonHoverEffect hoverFrom="left" size="md" color="primary-strong" />
 						<IconSidebar
 							class="w-8 h-8 transition text-c-on-bg {!$isTouchscreen
 								? 'group-hover:text-c-primary'
@@ -207,10 +207,12 @@
 							{/if}
 						</div>
 					</div>
-				{:else if $page.url.pathname !== '/sign-in'}
-					<Button class="-mr-1" size="xs" onClick={() => (isSignInModalOpen = true)}>
-						{$LL.SignIn.GetStartedButton()}
-					</Button>
+				{:else}
+					<div class="py-2.5">
+						<Button class="-mr-1" size="xs" onClick={() => (isSignInModalOpen = true)}>
+							{$LL.SignIn.GetStartedButton()}
+						</Button>
+					</div>
 				{/if}
 			</div>
 		</div>
