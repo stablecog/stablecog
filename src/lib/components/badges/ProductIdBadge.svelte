@@ -53,8 +53,10 @@
 				: 'flex'}"
 		>
 			<div
-				class="w-full aspect-square origin-left rounded-full transition transform -translate-x-full 
-					bg-c-primary/15 {!$isTouchscreen ? 'group-hover:translate-x-[-45%]' : ''}"
+				class="w-full aspect-square origin-left rounded-full transition transform -translate-x-full
+				{productId !== undefined && productId !== 'free'
+					? 'bg-c-primary/15'
+					: 'bg-c-on-bg/10'} {!$isTouchscreen ? 'group-hover:translate-x-[-45%]' : ''}"
 			/>
 		</div>
 		<div
