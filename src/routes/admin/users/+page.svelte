@@ -326,7 +326,9 @@
 			</div>
 		</div>
 	</div>
-	<div class="flex flex-col items-center my-auto gap-8 z-0 mt-2 -mx-3.5 pb-2">
+	<div
+		class="w-[calc(100%+1.75rem)] -mx-3.5 flex flex-col items-center my-auto gap-8 z-0 mt-2 pb-2"
+	>
 		<div class="w-full md:max-w-4xl flex flex-col items-center justify-center gap-2">
 			{#if !$allUsersQuery || $allUsersQuery.isInitialLoading}
 				<div
