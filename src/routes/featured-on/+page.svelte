@@ -57,7 +57,7 @@
 						target="_blank"
 					>
 						<p
-							class="font-bold transition text-c-on-bg/50 {!$isTouchscreen
+							class="font-semibold transition text-c-on-bg/50 {!$isTouchscreen
 								? 'group-hover:text-c-primary'
 								: ''}"
 						>

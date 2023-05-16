@@ -1,7 +1,6 @@
 <script lang="ts">
 	import ButtonHoverEffect from '$components/buttons/ButtonHoverEffect.svelte';
 	import IconCancel from '$components/icons/IconCancel.svelte';
-	import { isTouchscreen } from '$ts/stores/isTouchscreen';
 
 	export let onClick: () => void;
 	export let text: string;

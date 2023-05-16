@@ -21,7 +21,7 @@
 </script>
 
 <TabBarWrapper class="w-full" {type}>
-	<div class="w-full flex pb-[env(safe-area-inset-bottom)] md:pb-0">
+	<div class="w-full flex md:pb-0 {type === 'bottom' ? 'pb-[env(safe-area-inset-bottom)]' : ''}">
 		<div class="w-full flex relative">
 			<div
 				class="w-full h-full absolute left-0 top-0 overflow-hidden rounded-r-xl z-0 pointer-events-none"

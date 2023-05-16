@@ -1,5 +1,7 @@
 <script lang="ts">
 	import { isTouchscreen } from '$ts/stores/isTouchscreen';
+	import { quadOut } from 'svelte/easing';
+	import { fade } from 'svelte/transition';
 
 	export let hoverFrom: 'top' | 'left' | 'bottom' | 'right' = 'bottom';
 	export let size: 'lg' | 'md' | 'sm' | 'xs' = 'lg';
@@ -8,9 +10,17 @@
 	export let hovered = false;
 	export let noPadding = false;
 	export let noRounding = false;
+	export let paddingClass: string | undefined = undefined;
 </script>
 
-<div class="w-full h-full absolute left-0 top-0 {!noPadding ? 'p-1' : ''}">
+<div
+	transition:fade|local={{ duration: 200, easing: quadOut }}
+	class="w-full h-full absolute left-0 top-0 {paddingClass
+		? paddingClass
+		: !noPadding
+		? 'p-1'
+		: ''}"
+>
 	<div
 		class="w-full h-full relative z-0 overflow-hidden {noRounding
 			? ''

@@ -90,6 +90,7 @@
 				<LogoButton />
 			{:else}
 				<button
+					aria-label="Toggle Drawer"
 					on:click={() => isDrawerOpen.set(!$isDrawerOpen)}
 					class="relative self-stretch p-0.5 group overflow-hidden md:hidden"
 				>

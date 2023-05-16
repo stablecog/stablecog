@@ -4,6 +4,7 @@
 	import { isTouchscreen } from '$ts/stores/isTouchscreen';
 	import { windowHeight, windowWidth } from '$ts/stores/window';
 	import { onDestroy, onMount } from 'svelte';
+	import { portal } from 'svelte-portal';
 
 	export let hasPadding = true;
 	export let onClose: (() => void) | undefined = undefined;
@@ -18,13 +19,15 @@
 </script>
 
 <div
+	use:portal={'body'}
 	style="width: {$windowWidth}px; height: {$windowHeight}px;"
 	class="flex flex-col items-center fixed left-0
-    top-0 bg-c-barrier/90 z-[100] overflow-hidden"
+    top-0 bg-c-barrier/90 z-[1000] overflow-hidden"
 />
 <div
+	use:portal={'body'}
 	style="width: {$windowWidth}px; height: {$windowHeight}px;"
-	class="fixed left-0 top-0 overflow-hidden flex flex-col z-[101]"
+	class="fixed left-0 top-0 overflow-hidden flex flex-col z-[1001]"
 >
 	<div
 		on:scroll={(e) => {

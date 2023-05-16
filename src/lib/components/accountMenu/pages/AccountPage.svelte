@@ -1,6 +1,5 @@
 <script lang="ts">
 	import { page } from '$app/stores';
-	import Avatar from '$components/Avatar.svelte';
 	import ProductIdBadge from '$components/badges/ProductIdBadge.svelte';
 	import LL, { locale } from '$i18n/i18n-svelte';
 	import { userSummary } from '$ts/stores/user/summary';
@@ -26,41 +25,20 @@
 </script>
 
 <PageWrapper bind:height {currentPage} thisPage="account">
-	<div class="w-full flex gap-3 items-center px-5 py-4">
-		<div
-			class="w-7 h-7 ring-2 ring-c-on-bg/25 rounded-full transition transform
-			relative shadow-lg shadow-c-shadow/[var(--o-shadow-strong)] items-center justify-center overflow-hidden"
-		>
-			<div class="w-full h-full">
-				<Avatar str={$page.data.session?.user.email || ''} class="w-9 h-9 relative" />
-			</div>
-		</div>
-		<div class="min-w-0 flex-1 flex flex-col">
-			<p class="flex-1 min-w-0 overflow-hidden overflow-ellipsis font-bold">
-				{$page.data.session?.user.email}
-			</p>
-		</div>
-	</div>
 	{#if $userSummary}
-		<div class="w-full flex flex-col px-5 py-1 -mt-1">
-			{#if $userSummary.product_id}
-				<ProductIdBadge
-					href="/pricing#plans"
-					class="w-full mt-0.25"
-					productId={$userSummary.product_id}
-				/>
-			{:else}
-				<Button class="w-full mt-0.25" href="/pricing" size="sm">
+		<div class="w-full flex flex-col px-4.5 pt-4 pb-5">
+			<ProductIdBadge href="/pricing" class="w-full mt-0.25" productId={$userSummary.product_id} />
+			{#if !$userSummary.product_id}
+				<Button class="w-full mt-2" href="/pricing" size="sm">
 					{$LL.Pricing.SubscribeButton()}
 				</Button>
-			{/if}
-			{#if $userSummary.product_id}
-				<Button class="w-full mt-3" href="/pricing#credit-packs" size="sm">
+			{:else}
+				<Button class="w-full mt-2" href="/pricing#credit-packs" size="sm">
 					{$LL.Pricing.BuyCreditsButton()}
 				</Button>
 			{/if}
 		</div>
-		<div class="w-full relative z-20 mt-4">
+		<div class="w-full relative z-20">
 			<div class="w-full h-2px rounded-full bg-c-bg-tertiary" />
 		</div>
 		<div class="w-full flex flex-col items-start px-5 py-3">
@@ -104,7 +82,7 @@
 						? 'group-hover:text-c-primary'
 						: ''}"
 				>
-					{$LL.Account.ManageAccountButton()}
+					{$LL.Account.AccountButton()}
 				</p>
 			</div>
 		</DropdownItem>

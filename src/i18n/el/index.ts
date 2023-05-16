@@ -234,6 +234,8 @@ const es: Translation = {
 		YesButton: 'Ναι',
 		NoButton: 'Όχι',
 		EnableButton: 'Ενεργοποίηση',
+		DoneButton: 'Done',
+		CancelButton: 'Cancel',
 		ClearAllButton: 'Clear All',
 		DisableButton: 'Απενεργοποίηση',
 		AddButton: 'Προσθήκη',
@@ -548,6 +550,7 @@ const es: Translation = {
 		ManageSubscriptionButton: 'Διαχείριση συνδρομής',
 		ComparePlansButton: 'Σύγκριση Πλάνων',
 		ManageAccountButton: 'Διαχείριση λογαριασμού',
+		AccountButton: 'Account',
 		MyAccountButton: 'Ο Λογαριασμός μου',
 		SubscriptionPlanTitle: 'Πλάνο',
 		RemainingImagesTitle: 'Υπόλοιπες Εικόνες',
@@ -575,6 +578,7 @@ const es: Translation = {
 				PageParagraph: 'Το πλάνο σας έχει αλλάξει με επιτυχία.'
 			}
 		},
+		Tabs: { Account: 'Account', Usage: 'Usage', APIKeys: 'API Keys' },
 		Meta: {
 			AccountCreationTitle: 'Creation',
 			LastSignInTitle: 'Last Sign-in',
@@ -593,6 +597,74 @@ const es: Translation = {
 			PageTitleConfirmOtherEmail: 'Επιβεβαίωση άλλης διεύθυνσης ηλεκτρονικού ταχυδρομείου',
 			PageParagraphConfirmOtherEmail:
 				'Έχουμε επίσης στείλει ένα σύνδεσμο στην άλλη διεύθυνση ηλεκτρονικού ταχυδρομείου σας. Επιβεβαιώστε και αυτό, για να ολοκληρώσετε τη διαδικασία.'
+		},
+		Usage: {
+			PageTitle: 'Usage',
+			PageParagraph: 'You can see your recent usage below.',
+			RecentUsageTitle: 'Recent Usage',
+			UsageTable: {
+				ID: 'ID',
+				Type: 'Type',
+				Duration: 'Duration',
+				Source: 'Source',
+				RunTime: 'Run Time',
+				Cost: 'Cost',
+				Operation: 'Operation',
+				Process: 'Process',
+				Platform: 'Platform'
+			},
+			UsageType: {
+				Generate: 'Generate',
+				Generation: 'Generation',
+				Upscale: 'Upscale'
+			},
+			SourceType: {
+				Web: 'Web',
+				API: 'API'
+			},
+			NoUsageYet: "You don't have any usage yet."
+		},
+		APIKeys: {
+			PageTitle: 'API Keys',
+			PageParagraph:
+				'Your secret API keys are listed below. They are only shown once when you first generate them. Make sure to save them somewhere safe.',
+			NoKeysYet: "You don't have any API keys yet.",
+			CreateNewKeyButton: 'Create New Key',
+			DeleteKeyButton: 'Delete Key',
+			KeyTable: {
+				NameTitle: 'Name',
+				KeyTitle: 'Key',
+				CreatedAtTitle: 'Created',
+				UsageTitle: 'Usage',
+				LastUsedTitle: 'Last Used',
+				LastUsedNeverDescription: 'Never'
+			},
+			KeyModal: {
+				Create: {
+					Title: 'Create New Key',
+					Paragraph:
+						'You can optionally give this key a name. This name can be used for identifying the key.',
+					Input: {
+						Title: 'Name',
+						TitleAlt: 'Name (optional)'
+					},
+					CreateKeyButton: 'Create Key'
+				},
+				Created: {
+					Title: 'New Key',
+					Paragraph:
+						"Please save this secret key somewhere safe. For security reasons, you won't be able to view it again.",
+					Input: {
+						Title: 'Secret Key'
+					}
+				},
+				Delete: {
+					Title: 'Revoke Key',
+					Paragraph:
+						"This key will disabled immediately. Requests made using this key will be rejected. Once revoked, you won't be able to view this key again.",
+					RevokeKeyButton: 'Revoke Key'
+				}
+			}
 		}
 	},
 	ForgotPassword: {

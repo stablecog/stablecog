@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { page } from '$app/stores';
+	import ModalWrapper from '$components/ModalWrapper.svelte';
 	import Button from '$components/buttons/Button.svelte';
 	import SubtleButton from '$components/buttons/SubtleButton.svelte';
 	import IconCancel from '$components/icons/IconCancel.svelte';
@@ -329,7 +330,7 @@
 </script>
 
 <div
-	class="w-full flex flex-row flex-wrap justify-between items-center bg-c-bg rounded-xl 
+	class="w-full flex flex-row flex-wrap justify-between items-center bg-c-bg rounded-xl
 	shadow-lg shadow-c-shadow/[var(--o-shadow-strong)] ring-2 ring-c-bg-secondary"
 >
 	<div class="flex flex-wrap items-center gap-2.5 p-2">
@@ -420,17 +421,7 @@
 </div>
 
 {#if isDeleteModalOpen || isFavoriteModalOpen || isDeselectModalOpen || isUnfavoriteModalOpen}
-	<div
-		use:portal={'body'}
-		transition:fade|local={modalBgTransitionProps}
-		class="w-full h-full bg-c-barrier/80 fixed left-0 top-0 px-3 z-[10000]"
-	/>
-	<div
-		use:portal={'body'}
-		in:fly|local={modalInTransitionProps}
-		out:fly|local={modalOutTransitionProps}
-		class="w-full h-full flex flex-col items-center fixed left-0 top-0 px-3 py-20 z-[10001] overflow-auto"
-	>
+	<ModalWrapper>
 		<div
 			use:clickoutside={{
 				callback: () => {
@@ -513,5 +504,5 @@
 				</div>
 			</div>
 		</div>
-	</div>
+	</ModalWrapper>
 {/if}

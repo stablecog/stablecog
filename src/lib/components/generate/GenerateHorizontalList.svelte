@@ -49,9 +49,6 @@
 		: undefined;
 	const overscanMultiplierForNextPage = 0.25;
 
-	let shouldMeasureTimeout: NodeJS.Timeout;
-	const shouldMeasureDebounceTime = 100;
-
 	$: [listScrollContainer, outputs, overscanCount], initiallySetListVirtualizer();
 	$: $listVirtualizer, onListVirtualizerChanged();
 	$: [outputs, overscanCount], onParamsChanged();

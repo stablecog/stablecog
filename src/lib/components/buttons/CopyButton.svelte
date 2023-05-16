@@ -32,6 +32,7 @@
 	use:copy={stringToCopy}
 	on:svelte-copy={onCopy}
 	{disabled}
+	type="button"
 	class="touch-manipulation transition rounded-lg group/copybutton {classes}"
 	aria-label="Copy to Clipboard"
 >

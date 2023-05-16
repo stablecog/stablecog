@@ -14,6 +14,8 @@
 	export let shadow: 'normal' | 'strong' | 'strongest' = 'normal';
 	export let onClearButtonClicked: (() => void) | undefined = undefined;
 	export let noAutocomplete = false;
+	export let onInput: (() => void) | undefined = undefined;
+	export let maxLength: number | undefined = undefined;
 	export let onKeyPress:
 		| ((
 				e: KeyboardEvent & {
@@ -32,9 +34,13 @@
 		| 'search'
 		| 'send'
 		| undefined = undefined;
+	export let readonly: boolean | null | undefined = undefined;
 	let classes = '';
 
 	$: showClearButton = value !== undefined && value !== '' && value !== null;
+	$: if (onInput && value) {
+		onInput();
+	}
 </script>
 
 <div class="flex-1 flex flex-row relative {classes}">
@@ -45,6 +51,8 @@
 			on:keypress={onKeyPress}
 			on:focus={onFocus}
 			on:blur={onBlur}
+			maxlength={maxLength}
+			{readonly}
 			autocomplete={noAutocomplete ? 'off' : 'on'}
 			{enterkeyhint}
 			{disabled}
@@ -56,7 +64,7 @@
 				? 'bg-c-bg-secondary'
 				: 'bg-c-bg-tertiary'} relative {hasIcon ? 'pl-12' : 'pl-5'} {hasClearButton
 				? 'pr-10 md:pr-16'
-				: 'pr-5'} pt-6.5 pb-2.5 rounded-xl transition 
+				: 'pr-5'} pt-6.5 pb-2.5 rounded-xl transition
       shadow-lg {shadow === 'strongest'
 				? 'shadow-c-shadow/[var(--o-shadow-strongest)]'
 				: shadow === 'strong'
@@ -66,7 +74,7 @@
 				: 'ring-c-primary/20 focus:ring-c-primary/35'}  
       placeholder:text-c-on-bg/40 {!$isTouchscreen ? 'enabled:hover:ring-2' : ''} {!$isTouchscreen
 				? 'enabled:group-hover:ring-2'
-				: ''} "
+				: ''}"
 		/>
 	{:else if type === 'password'}
 		<input
@@ -75,6 +83,8 @@
 			on:keypress={onKeyPress}
 			on:focus={onFocus}
 			on:blur={onBlur}
+			maxlength={maxLength}
+			{readonly}
 			autocomplete={noAutocomplete ? 'off' : 'on'}
 			{enterkeyhint}
 			{disabled}
@@ -86,7 +96,7 @@
 				? 'bg-c-bg-secondary'
 				: 'bg-c-bg-tertiary'} relative {hasIcon ? 'pl-12' : 'pl-5'} {hasClearButton
 				? 'pr-10 md:pr-16'
-				: 'pr-5'} pt-6.5 pb-2.5 rounded-xl transition 
+				: 'pr-5'} pt-6.5 pb-2.5 rounded-xl transition
       shadow-lg {shadow === 'strongest'
 				? 'shadow-c-shadow/[var(--o-shadow-strongest)]'
 				: shadow === 'strong'
@@ -105,6 +115,8 @@
 			on:keypress={onKeyPress}
 			on:focus={onFocus}
 			on:blur={onBlur}
+			maxlength={maxLength}
+			{readonly}
 			autocomplete={noAutocomplete ? 'off' : 'on'}
 			{enterkeyhint}
 			{disabled}
@@ -116,7 +128,7 @@
 				? 'bg-c-bg-secondary'
 				: 'bg-c-bg-tertiary'} relative {hasIcon ? 'pl-12' : 'pl-5'} {hasClearButton
 				? 'pr-10 md:pr-16'
-				: 'pr-5'} pt-6.5 pb-2.5 rounded-xl transition 
+				: 'pr-5'} pt-6.5 pb-2.5 rounded-xl transition
       shadow-lg {shadow === 'strongest'
 				? 'shadow-c-shadow/[var(--o-shadow-strongest)]'
 				: shadow === 'strong'
@@ -135,6 +147,8 @@
 			on:keypress={onKeyPress}
 			on:focus={onFocus}
 			on:blur={onBlur}
+			maxlength={maxLength}
+			{readonly}
 			autocomplete={noAutocomplete ? 'off' : 'on'}
 			{enterkeyhint}
 			{disabled}
@@ -146,7 +160,7 @@
 				? 'bg-c-bg-secondary'
 				: 'bg-c-bg-tertiary'} relative {hasIcon ? 'pl-12' : 'pl-5'} {hasClearButton
 				? 'pr-10 md:pr-16'
-				: 'pr-5'} pt-6.5 pb-2.5 rounded-xl transition 
+				: 'pr-5'} pt-6.5 pb-2.5 rounded-xl transition
       shadow-lg {shadow === 'strongest'
 				? 'shadow-c-shadow/[var(--o-shadow-strongest)]'
 				: shadow === 'strong'

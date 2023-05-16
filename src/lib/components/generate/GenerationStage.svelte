@@ -104,7 +104,7 @@
 <div
 	in:flyAndScale|local={{
 		duration: 300,
-		yPercent: $windowWidth > mdBreakpoint ? -20 : 50,
+		yPercent: $windowWidth > mdBreakpoint ? -15 : 50,
 		scaleX: 0.75,
 		scaleY: 0.75,
 		easing: quadOut

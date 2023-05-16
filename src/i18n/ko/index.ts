@@ -231,6 +231,8 @@ const ko: Translation = {
 		YesButton: '좋아요',
 		NoButton: '괜찮아요',
 		EnableButton: '활성화',
+		DoneButton: 'Done',
+		CancelButton: 'Cancel',
 		ClearAllButton: 'Clear All',
 		DisableButton: '비활성화',
 		AddButton: '추가하기',
@@ -537,6 +539,7 @@ const ko: Translation = {
 		ManageSubscriptionButton: '구독 설정',
 		ComparePlansButton: 'Compare Plans',
 		ManageAccountButton: '계정 설정',
+		AccountButton: 'Account',
 		MyAccountButton: '로그인 계정',
 		SubscriptionPlanTitle: '가입 요금제',
 		RemainingImagesTitle: 'Remaining Images',
@@ -564,6 +567,7 @@ const ko: Translation = {
 				PageParagraph: 'Your plan has been changed successfully.'
 			}
 		},
+		Tabs: { Account: 'Account', Usage: 'Usage', APIKeys: 'API Keys' },
 		Meta: {
 			AccountCreationTitle: 'Creation',
 			LastSignInTitle: 'Last Sign-in',
@@ -582,6 +586,74 @@ const ko: Translation = {
 			PageTitleConfirmOtherEmail: 'Confirm Other Email',
 			PageParagraphConfirmOtherEmail:
 				"We've also sent a link to your other email address. Confirm that one as well to complete the process."
+		},
+		Usage: {
+			PageTitle: 'Usage',
+			PageParagraph: 'You can see your recent usage below.',
+			RecentUsageTitle: 'Recent Usage',
+			UsageTable: {
+				ID: 'ID',
+				Type: 'Type',
+				Duration: 'Duration',
+				Source: 'Source',
+				RunTime: 'Run Time',
+				Cost: 'Cost',
+				Operation: 'Operation',
+				Process: 'Process',
+				Platform: 'Platform'
+			},
+			UsageType: {
+				Generate: 'Generate',
+				Generation: 'Generation',
+				Upscale: 'Upscale'
+			},
+			SourceType: {
+				Web: 'Web',
+				API: 'API'
+			},
+			NoUsageYet: "You don't have any usage yet."
+		},
+		APIKeys: {
+			PageTitle: 'API Keys',
+			PageParagraph:
+				'Your secret API keys are listed below. They are only shown once when you first generate them. Make sure to save them somewhere safe.',
+			NoKeysYet: "You don't have any API keys yet.",
+			CreateNewKeyButton: 'Create New Key',
+			DeleteKeyButton: 'Delete Key',
+			KeyTable: {
+				NameTitle: 'Name',
+				KeyTitle: 'Key',
+				CreatedAtTitle: 'Created',
+				UsageTitle: 'Usage',
+				LastUsedTitle: 'Last Used',
+				LastUsedNeverDescription: 'Never'
+			},
+			KeyModal: {
+				Create: {
+					Title: 'Create New Key',
+					Paragraph:
+						'You can optionally give this key a name. This name can be used for identifying the key.',
+					Input: {
+						Title: 'Name',
+						TitleAlt: 'Name (optional)'
+					},
+					CreateKeyButton: 'Create Key'
+				},
+				Created: {
+					Title: 'New Key',
+					Paragraph:
+						"Please save this secret key somewhere safe. For security reasons, you won't be able to view it again.",
+					Input: {
+						Title: 'Secret Key'
+					}
+				},
+				Delete: {
+					Title: 'Revoke Key',
+					Paragraph:
+						"This key will disabled immediately. Requests made using this key will be rejected. Once revoked, you won't be able to view this key again.",
+					RevokeKeyButton: 'Revoke Key'
+				}
+			}
 		}
 	},
 	ForgotPassword: {

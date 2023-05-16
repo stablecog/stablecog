@@ -693,6 +693,14 @@ type RootTranslation = {
 		 */
 		EnableButton: string
 		/**
+		 * D​o​n​e
+		 */
+		DoneButton: string
+		/**
+		 * C​a​n​c​e​l
+		 */
+		CancelButton: string
+		/**
 		 * C​l​e​a​r​ ​A​l​l
 		 */
 		ClearAllButton: string
@@ -1587,6 +1595,10 @@ type RootTranslation = {
 		 */
 		ManageAccountButton: string
 		/**
+		 * A​c​c​o​u​n​t
+		 */
+		AccountButton: string
+		/**
 		 * M​y​ ​A​c​c​o​u​n​t
 		 */
 		MyAccountButton: string
@@ -1664,6 +1676,20 @@ type RootTranslation = {
 				PageParagraph: string
 			}
 		}
+		Tabs: {
+			/**
+			 * A​c​c​o​u​n​t
+			 */
+			Account: string
+			/**
+			 * U​s​a​g​e
+			 */
+			Usage: string
+			/**
+			 * A​P​I​ ​K​e​y​s
+			 */
+			APIKeys: string
+		}
 		Meta: {
 			/**
 			 * C​r​e​a​t​i​o​n
@@ -1713,6 +1739,190 @@ type RootTranslation = {
 			 * W​e​'​v​e​ ​a​l​s​o​ ​s​e​n​t​ ​a​ ​l​i​n​k​ ​t​o​ ​y​o​u​r​ ​o​t​h​e​r​ ​e​m​a​i​l​ ​a​d​d​r​e​s​s​.​ ​C​o​n​f​i​r​m​ ​t​h​a​t​ ​o​n​e​ ​a​s​ ​w​e​l​l​ ​t​o​ ​c​o​m​p​l​e​t​e​ ​t​h​e​ ​p​r​o​c​e​s​s​.
 			 */
 			PageParagraphConfirmOtherEmail: string
+		}
+		Usage: {
+			/**
+			 * U​s​a​g​e
+			 */
+			PageTitle: string
+			/**
+			 * Y​o​u​ ​c​a​n​ ​s​e​e​ ​y​o​u​r​ ​r​e​c​e​n​t​ ​u​s​a​g​e​ ​b​e​l​o​w​.
+			 */
+			PageParagraph: string
+			/**
+			 * R​e​c​e​n​t​ ​U​s​a​g​e
+			 */
+			RecentUsageTitle: string
+			UsageTable: {
+				/**
+				 * I​D
+				 */
+				ID: string
+				/**
+				 * T​y​p​e
+				 */
+				Type: string
+				/**
+				 * D​u​r​a​t​i​o​n
+				 */
+				Duration: string
+				/**
+				 * S​o​u​r​c​e
+				 */
+				Source: string
+				/**
+				 * R​u​n​ ​T​i​m​e
+				 */
+				RunTime: string
+				/**
+				 * C​o​s​t
+				 */
+				Cost: string
+				/**
+				 * O​p​e​r​a​t​i​o​n
+				 */
+				Operation: string
+				/**
+				 * P​r​o​c​e​s​s
+				 */
+				Process: string
+				/**
+				 * P​l​a​t​f​o​r​m
+				 */
+				Platform: string
+			}
+			UsageType: {
+				/**
+				 * G​e​n​e​r​a​t​e
+				 */
+				Generate: string
+				/**
+				 * G​e​n​e​r​a​t​i​o​n
+				 */
+				Generation: string
+				/**
+				 * U​p​s​c​a​l​e
+				 */
+				Upscale: string
+			}
+			SourceType: {
+				/**
+				 * W​e​b
+				 */
+				Web: string
+				/**
+				 * A​P​I
+				 */
+				API: string
+			}
+			/**
+			 * Y​o​u​ ​d​o​n​'​t​ ​h​a​v​e​ ​a​n​y​ ​u​s​a​g​e​ ​y​e​t​.
+			 */
+			NoUsageYet: string
+		}
+		APIKeys: {
+			/**
+			 * A​P​I​ ​K​e​y​s
+			 */
+			PageTitle: string
+			/**
+			 * Y​o​u​r​ ​s​e​c​r​e​t​ ​A​P​I​ ​k​e​y​s​ ​a​r​e​ ​l​i​s​t​e​d​ ​b​e​l​o​w​.​ ​T​h​e​y​ ​a​r​e​ ​o​n​l​y​ ​s​h​o​w​n​ ​o​n​c​e​ ​w​h​e​n​ ​y​o​u​ ​f​i​r​s​t​ ​g​e​n​e​r​a​t​e​ ​t​h​e​m​.​ ​M​a​k​e​ ​s​u​r​e​ ​t​o​ ​s​a​v​e​ ​t​h​e​m​ ​s​o​m​e​w​h​e​r​e​ ​s​a​f​e​.
+			 */
+			PageParagraph: string
+			/**
+			 * Y​o​u​ ​d​o​n​'​t​ ​h​a​v​e​ ​a​n​y​ ​A​P​I​ ​k​e​y​s​ ​y​e​t​.
+			 */
+			NoKeysYet: string
+			/**
+			 * C​r​e​a​t​e​ ​N​e​w​ ​K​e​y
+			 */
+			CreateNewKeyButton: string
+			/**
+			 * D​e​l​e​t​e​ ​K​e​y
+			 */
+			DeleteKeyButton: string
+			KeyTable: {
+				/**
+				 * N​a​m​e
+				 */
+				NameTitle: string
+				/**
+				 * K​e​y
+				 */
+				KeyTitle: string
+				/**
+				 * C​r​e​a​t​e​d
+				 */
+				CreatedAtTitle: string
+				/**
+				 * U​s​a​g​e
+				 */
+				UsageTitle: string
+				/**
+				 * L​a​s​t​ ​U​s​e​d
+				 */
+				LastUsedTitle: string
+				/**
+				 * N​e​v​e​r
+				 */
+				LastUsedNeverDescription: string
+			}
+			KeyModal: {
+				Create: {
+					/**
+					 * C​r​e​a​t​e​ ​N​e​w​ ​K​e​y
+					 */
+					Title: string
+					/**
+					 * Y​o​u​ ​c​a​n​ ​o​p​t​i​o​n​a​l​l​y​ ​g​i​v​e​ ​t​h​i​s​ ​k​e​y​ ​a​ ​n​a​m​e​.​ ​T​h​i​s​ ​n​a​m​e​ ​c​a​n​ ​b​e​ ​u​s​e​d​ ​f​o​r​ ​i​d​e​n​t​i​f​y​i​n​g​ ​t​h​e​ ​k​e​y​.
+					 */
+					Paragraph: string
+					Input: {
+						/**
+						 * N​a​m​e
+						 */
+						Title: string
+						/**
+						 * N​a​m​e​ ​(​o​p​t​i​o​n​a​l​)
+						 */
+						TitleAlt: string
+					}
+					/**
+					 * C​r​e​a​t​e​ ​K​e​y
+					 */
+					CreateKeyButton: string
+				}
+				Created: {
+					/**
+					 * N​e​w​ ​K​e​y
+					 */
+					Title: string
+					/**
+					 * P​l​e​a​s​e​ ​s​a​v​e​ ​t​h​i​s​ ​s​e​c​r​e​t​ ​k​e​y​ ​s​o​m​e​w​h​e​r​e​ ​s​a​f​e​.​ ​F​o​r​ ​s​e​c​u​r​i​t​y​ ​r​e​a​s​o​n​s​,​ ​y​o​u​ ​w​o​n​'​t​ ​b​e​ ​a​b​l​e​ ​t​o​ ​v​i​e​w​ ​i​t​ ​a​g​a​i​n​.
+					 */
+					Paragraph: string
+					Input: {
+						/**
+						 * S​e​c​r​e​t​ ​K​e​y
+						 */
+						Title: string
+					}
+				}
+				Delete: {
+					/**
+					 * R​e​v​o​k​e​ ​K​e​y
+					 */
+					Title: string
+					/**
+					 * T​h​i​s​ ​k​e​y​ ​w​i​l​l​ ​d​i​s​a​b​l​e​d​ ​i​m​m​e​d​i​a​t​e​l​y​.​ ​R​e​q​u​e​s​t​s​ ​m​a​d​e​ ​u​s​i​n​g​ ​t​h​i​s​ ​k​e​y​ ​w​i​l​l​ ​b​e​ ​r​e​j​e​c​t​e​d​.​ ​O​n​c​e​ ​r​e​v​o​k​e​d​,​ ​y​o​u​ ​w​o​n​'​t​ ​b​e​ ​a​b​l​e​ ​t​o​ ​v​i​e​w​ ​t​h​i​s​ ​k​e​y​ ​a​g​a​i​n​.
+					 */
+					Paragraph: string
+					/**
+					 * R​e​v​o​k​e​ ​K​e​y
+					 */
+					RevokeKeyButton: string
+				}
+			}
 		}
 	}
 	ForgotPassword: {
@@ -2811,6 +3021,14 @@ export type TranslationFunctions = {
 		 */
 		EnableButton: () => LocalizedString
 		/**
+		 * Done
+		 */
+		DoneButton: () => LocalizedString
+		/**
+		 * Cancel
+		 */
+		CancelButton: () => LocalizedString
+		/**
 		 * Clear All
 		 */
 		ClearAllButton: () => LocalizedString
@@ -3685,6 +3903,10 @@ export type TranslationFunctions = {
 		 */
 		ManageAccountButton: () => LocalizedString
 		/**
+		 * Account
+		 */
+		AccountButton: () => LocalizedString
+		/**
 		 * My Account
 		 */
 		MyAccountButton: () => LocalizedString
@@ -3762,6 +3984,20 @@ export type TranslationFunctions = {
 				PageParagraph: () => LocalizedString
 			}
 		}
+		Tabs: {
+			/**
+			 * Account
+			 */
+			Account: () => LocalizedString
+			/**
+			 * Usage
+			 */
+			Usage: () => LocalizedString
+			/**
+			 * API Keys
+			 */
+			APIKeys: () => LocalizedString
+		}
 		Meta: {
 			/**
 			 * Creation
@@ -3811,6 +4047,190 @@ export type TranslationFunctions = {
 			 * We've also sent a link to your other email address. Confirm that one as well to complete the process.
 			 */
 			PageParagraphConfirmOtherEmail: () => LocalizedString
+		}
+		Usage: {
+			/**
+			 * Usage
+			 */
+			PageTitle: () => LocalizedString
+			/**
+			 * You can see your recent usage below.
+			 */
+			PageParagraph: () => LocalizedString
+			/**
+			 * Recent Usage
+			 */
+			RecentUsageTitle: () => LocalizedString
+			UsageTable: {
+				/**
+				 * ID
+				 */
+				ID: () => LocalizedString
+				/**
+				 * Type
+				 */
+				Type: () => LocalizedString
+				/**
+				 * Duration
+				 */
+				Duration: () => LocalizedString
+				/**
+				 * Source
+				 */
+				Source: () => LocalizedString
+				/**
+				 * Run Time
+				 */
+				RunTime: () => LocalizedString
+				/**
+				 * Cost
+				 */
+				Cost: () => LocalizedString
+				/**
+				 * Operation
+				 */
+				Operation: () => LocalizedString
+				/**
+				 * Process
+				 */
+				Process: () => LocalizedString
+				/**
+				 * Platform
+				 */
+				Platform: () => LocalizedString
+			}
+			UsageType: {
+				/**
+				 * Generate
+				 */
+				Generate: () => LocalizedString
+				/**
+				 * Generation
+				 */
+				Generation: () => LocalizedString
+				/**
+				 * Upscale
+				 */
+				Upscale: () => LocalizedString
+			}
+			SourceType: {
+				/**
+				 * Web
+				 */
+				Web: () => LocalizedString
+				/**
+				 * API
+				 */
+				API: () => LocalizedString
+			}
+			/**
+			 * You don't have any usage yet.
+			 */
+			NoUsageYet: () => LocalizedString
+		}
+		APIKeys: {
+			/**
+			 * API Keys
+			 */
+			PageTitle: () => LocalizedString
+			/**
+			 * Your secret API keys are listed below. They are only shown once when you first generate them. Make sure to save them somewhere safe.
+			 */
+			PageParagraph: () => LocalizedString
+			/**
+			 * You don't have any API keys yet.
+			 */
+			NoKeysYet: () => LocalizedString
+			/**
+			 * Create New Key
+			 */
+			CreateNewKeyButton: () => LocalizedString
+			/**
+			 * Delete Key
+			 */
+			DeleteKeyButton: () => LocalizedString
+			KeyTable: {
+				/**
+				 * Name
+				 */
+				NameTitle: () => LocalizedString
+				/**
+				 * Key
+				 */
+				KeyTitle: () => LocalizedString
+				/**
+				 * Created
+				 */
+				CreatedAtTitle: () => LocalizedString
+				/**
+				 * Usage
+				 */
+				UsageTitle: () => LocalizedString
+				/**
+				 * Last Used
+				 */
+				LastUsedTitle: () => LocalizedString
+				/**
+				 * Never
+				 */
+				LastUsedNeverDescription: () => LocalizedString
+			}
+			KeyModal: {
+				Create: {
+					/**
+					 * Create New Key
+					 */
+					Title: () => LocalizedString
+					/**
+					 * You can optionally give this key a name. This name can be used for identifying the key.
+					 */
+					Paragraph: () => LocalizedString
+					Input: {
+						/**
+						 * Name
+						 */
+						Title: () => LocalizedString
+						/**
+						 * Name (optional)
+						 */
+						TitleAlt: () => LocalizedString
+					}
+					/**
+					 * Create Key
+					 */
+					CreateKeyButton: () => LocalizedString
+				}
+				Created: {
+					/**
+					 * New Key
+					 */
+					Title: () => LocalizedString
+					/**
+					 * Please save this secret key somewhere safe. For security reasons, you won't be able to view it again.
+					 */
+					Paragraph: () => LocalizedString
+					Input: {
+						/**
+						 * Secret Key
+						 */
+						Title: () => LocalizedString
+					}
+				}
+				Delete: {
+					/**
+					 * Revoke Key
+					 */
+					Title: () => LocalizedString
+					/**
+					 * This key will disabled immediately. Requests made using this key will be rejected. Once revoked, you won't be able to view this key again.
+					 */
+					Paragraph: () => LocalizedString
+					/**
+					 * Revoke Key
+					 */
+					RevokeKeyButton: () => LocalizedString
+				}
+			}
 		}
 	}
 	ForgotPassword: {

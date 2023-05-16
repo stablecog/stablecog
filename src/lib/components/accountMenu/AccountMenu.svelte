@@ -6,28 +6,38 @@
 	import Header from '$components/accountMenu/Header.svelte';
 	import LL from '$i18n/i18n-svelte';
 	import DropdownWrapperTranslate from '$components/DropdownWrapperTranslate.svelte';
+	import AccountPageHeader from '$components/accountMenu/AccountPageHeader.svelte';
 
 	export let closeMenu: () => void;
 	let currentPage: TAccountDropdownPage = 'account';
 
-	let heights: Record<TAccountDropdownPage, number> = {
-		account: 0,
-		settings: 0,
-		language: 0
-	};
-
-	let titles: Record<TAccountDropdownPage, string>;
-
-	$: titles = {
-		account: $LL.Account.PageTitle(),
-		settings: $LL.Settings.Title(),
-		language: $LL.Language()
-	};
-
-	const onBackButtonClickedMap: Record<TAccountDropdownPage, (() => void) | undefined> = {
-		account: undefined,
-		settings: () => setAccountMenuDropdownPage('account'),
-		language: () => setAccountMenuDropdownPage('settings')
+	let menuPages: Record<
+		TAccountDropdownPage,
+		{
+			title: string;
+			onBackButtonClicked: (() => void) | undefined;
+			height: number;
+			headerComponent?: ConstructorOfATypedSvelteComponent;
+			href?: string;
+		}
+	> = {
+		account: {
+			title: $LL.Account.PageTitle(),
+			onBackButtonClicked: undefined,
+			height: 0,
+			headerComponent: AccountPageHeader,
+			href: '/account'
+		},
+		settings: {
+			title: $LL.Settings.Title(),
+			onBackButtonClicked: () => setAccountMenuDropdownPage('account'),
+			height: 0
+		},
+		language: {
+			title: $LL.Language(),
+			onBackButtonClicked: () => setAccountMenuDropdownPage('settings'),
+			height: 0
+		}
 	};
 
 	async function setAccountMenuDropdownPage(page: TAccountDropdownPage) {
@@ -36,18 +46,27 @@
 </script>
 
 <DropdownWrapperTranslate class="w-72 max-w-[calc(100vw-1.25rem)]">
-	<Header title={titles[currentPage]} onBackButtonClicked={onBackButtonClickedMap[currentPage]} />
+	<Header
+		title={menuPages[currentPage].title}
+		href={menuPages[currentPage].href}
+		onBackButtonClicked={menuPages[currentPage].onBackButtonClicked}
+		content={menuPages[currentPage].headerComponent || undefined}
+	/>
 	<div
-		style="height: {heights[currentPage] ? `${heights[currentPage]}px` : 'auto'}"
+		style="height: {menuPages[currentPage].height ? `${menuPages[currentPage].height}px` : 'auto'}"
 		class="w-full flex flex-col relative transition-all duration-150"
 	>
 		<AccountPage
-			bind:height={heights['account']}
+			bind:height={menuPages['account'].height}
 			{closeMenu}
 			{setAccountMenuDropdownPage}
 			{currentPage}
 		/>
-		<SettingsPage bind:height={heights['settings']} {setAccountMenuDropdownPage} {currentPage} />
-		<LanguagePage bind:height={heights['language']} {closeMenu} {currentPage} />
+		<SettingsPage
+			bind:height={menuPages['settings'].height}
+			{setAccountMenuDropdownPage}
+			{currentPage}
+		/>
+		<LanguagePage bind:height={menuPages['language'].height} {closeMenu} {currentPage} />
 	</div>
 </DropdownWrapperTranslate>

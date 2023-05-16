@@ -18,6 +18,7 @@
 	export let type: 'primary' | 'success' | 'danger' | 'no-bg-on-bg' = 'primary';
 	export let fadeOnDisabled = false;
 	export let animateOnClick = false;
+	export let buttonType: 'submit' | 'button' | 'reset' | null | undefined = undefined;
 	let classes = '';
 
 	function _onClick() {
@@ -150,6 +151,7 @@
 		bind:clientHeight={height}
 		on:click={_onClick}
 		disabled={disabled || loading || uploading}
+		type={buttonType}
 		class="touch-manipulation relative flex items-center justify-center text-center font-bold gap-2
 			overflow-hidden z-0 group {noPadding
 			? 'p-0'
