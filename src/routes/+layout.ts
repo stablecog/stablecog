@@ -5,7 +5,6 @@ import { writable } from 'svelte/store';
 import type { TAvailableThemes } from '$ts/stores/theme';
 import { apiUrl } from '$ts/constants/main';
 import type { TUserSummary } from '$ts/stores/user/summary';
-import { isHydrated } from '$ts/helpers/isHydrated';
 
 export const load: LayoutLoad = async (event) => {
 	let { session } = await getSupabase(event);
