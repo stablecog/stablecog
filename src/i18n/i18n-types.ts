@@ -1811,6 +1811,10 @@ type RootTranslation = {
 				 */
 				Web: string
 				/**
+				 * W​e​b​ ​A​p​p
+				 */
+				WebApp: string
+				/**
 				 * A​P​I
 				 */
 				API: string
@@ -4118,6 +4122,10 @@ export type TranslationFunctions = {
 				 * Web
 				 */
 				Web: () => LocalizedString
+				/**
+				 * Web App
+				 */
+				WebApp: () => LocalizedString
 				/**
 				 * API
 				 */

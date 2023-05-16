@@ -610,6 +610,7 @@ const ptPt: Translation = {
 			},
 			SourceType: {
 				Web: 'Web',
+				WebApp: 'Web App',
 				API: 'API'
 			},
 			NoUsageYet: "You don't have any usage yet."

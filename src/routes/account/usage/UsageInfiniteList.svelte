@@ -96,7 +96,7 @@
 			case 'api':
 				return $LL.Account.Usage.SourceType.API();
 			default:
-				return $LL.Account.Usage.SourceType.Web();
+				return $LL.Account.Usage.SourceType.WebApp();
 		}
 	}
 </script>
