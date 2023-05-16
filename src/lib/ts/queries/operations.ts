@@ -23,9 +23,9 @@ export async function getUserOperations({
 	});
 	const data: TUserOperationsPage = await res.json();
 	const extendedOperations: TUserOperationExtended[] = data.operations.map((operation) => {
-		const startedAt = new Date(operation.started_at ?? operation.created_at);
-		const completedAt = new Date(operation.completed_at ?? operation.created_at);
-		const duration_sec = (completedAt.getTime() - startedAt.getTime()) / 1000;
+		const createdAt = new Date(operation.created_at);
+		const completedAt = new Date(operation.completed_at);
+		const duration_sec = (completedAt.getTime() - createdAt.getTime()) / 1000;
 		return {
 			...operation,
 			duration_sec
@@ -51,8 +51,8 @@ export interface TUserOperation {
 	id: string;
 	operation_type: TOperationType;
 	created_at: string;
-	started_at?: string;
-	completed_at?: string;
+	started_at: string;
+	completed_at: string;
 	num_outputs: number;
 	source: TOperationSource;
 }
