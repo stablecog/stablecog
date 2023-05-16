@@ -44,6 +44,7 @@ export async function getUserGenerationFullOutputs({
 		}
 	});
 	const data: TUserGenerationFullOutputsPage = await res.json();
+	console.log('userOutputs', data);
 	return data;
 }
 
