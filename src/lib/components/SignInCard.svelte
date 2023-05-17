@@ -12,7 +12,7 @@
 	import { isTouchscreen } from '$ts/stores/isTouchscreen';
 	import type { Provider } from '@supabase/supabase-js';
 	import { quadOut } from 'svelte/easing';
-	/* import IconPassword from '$components/icons/IconPassword.svelte'; */
+	import IconPassword from '$components/icons/IconPassword.svelte';
 
 	export let redirectTo: string | null = null;
 	export let isModal = false;
@@ -21,9 +21,9 @@
 	let signInStatus: 'idle' | 'loading' | 'error' | 'sent-otp' = 'idle';
 	let provider: Provider | null | 'email' = null;
 	let errorText: string | null = null;
-	/* let codeSignInStatus: 'idle' | 'entering' | 'loading' | 'error' | 'success' = 'idle';
+	let codeSignInStatus: 'idle' | 'entering' | 'loading' | 'error' | 'success' = 'idle';
 	let codeValue: string;
-	let codeSignInErrorText: string | null = null; */
+	let codeSignInErrorText: string | null = null;
 
 	async function signIn() {
 		if (!$page.data.supabase) return;
@@ -94,10 +94,11 @@
 		console.log(sData);
 	}
 
-	/* async function signInWithCode() {
+	async function signInWithCode() {
+		if (!$page.data.supabase) return;
 		codeSignInStatus = 'loading';
 		try {
-			const { data: sData, error: sError } = await supabase.auth.verifyOtp({
+			const { data: sData, error: sError } = await $page.data.supabase.auth.verifyOtp({
 				email,
 				token: codeValue.toString(),
 				type: 'magiclink'
@@ -111,7 +112,7 @@
 			codeSignInStatus = 'error';
 			codeSignInErrorText = $LL.Error.SomethingWentWrong();
 		}
-	} */
+	}
 </script>
 
 <div
@@ -146,13 +147,19 @@
 				class="mt-4 md:mt-6 -mx-5 md:-mx-10 -mb-4 md:-mb-7 border-t-2 border-c-bg-secondary w-[calc(100%+1.5rem)] md:w-[calc(100%+5rem)]
 				flex flex-col items-center justify-start relative z-0"
 			>
-				<!-- {#if codeSignInStatus === 'idle'}
+				{#if codeSignInStatus === 'idle'}
 					<DropdownItem onClick={() => (codeSignInStatus = 'entering')}>
 						<div class="w-full flex items-center justify-center gap-2.5">
 							<IconPassword
-								class="text-c-on-bg/60 w-6 h-6 transition {!$isTouchscreen ? 'group-hover:text-c-primary' : ''}"
+								class="text-c-on-bg/60 w-6 h-6 transition {!$isTouchscreen
+									? 'group-hover:text-c-primary'
+									: ''}"
 							/>
-							<p class="text-c-on-bg/60 transition {!$isTouchscreen ? 'group-hover:text-c-primary' : ''}">
+							<p
+								class="text-c-on-bg/60 transition {!$isTouchscreen
+									? 'group-hover:text-c-primary'
+									: ''}"
+							>
 								Enter code manually
 							</p>
 						</div>
@@ -174,7 +181,7 @@
 						</div>
 					</form>
 				{/if}
-				<div class="w-full h-2px bg-c-bg-secondary" /> -->
+				<div class="w-full h-2px bg-c-bg-secondary" />
 				<DropdownItem onClick={() => (signInStatus = 'idle')}>
 					<div class="w-full flex items-center justify-center gap-2.5">
 						<IconBack
