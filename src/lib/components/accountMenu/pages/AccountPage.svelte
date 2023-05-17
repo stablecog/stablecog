@@ -116,6 +116,7 @@
 						'SC - Page': `${$page.url.pathname}${$page.url.search}`,
 						'SC - App Version': $appVersion
 					});
+					closeMenu();
 				} catch (error) {
 					console.log(error);
 				}
