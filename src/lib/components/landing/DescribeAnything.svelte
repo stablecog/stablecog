@@ -1,9 +1,10 @@
 <script lang="ts">
+	import { page } from '$app/stores';
 	import ImageWithOutlineAndPlaceholder from '$components/ImageWithOutlineAndPlaceholder.svelte';
 	import Button from '$components/buttons/Button.svelte';
 	import LL from '$i18n/i18n-svelte';
 	import { themeApp } from '$ts/stores/theme';
-	import { isSignedIn } from '$ts/stores/user/isSignedIn';
+	import { userSummary } from '$ts/stores/user/summary';
 
 	const placeholder =
 		'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAQCAIAAACZeshMAAADXklEQVR4ARVRNYDjRhT9f0ayJa3Zy8wYZmZmTqpU19cpk768LsxUh5l5mXnNjAJLGo0md/3jh7c9vaGidk+TsUJ776SViEqMm3uVLIBFEQzRQAjIKPmCcXAB0IQ6AYhCXxNK0qW3L5KGG0BhLVdH1Z5uJmRAdAaahhVTKOOWB7brAILkaq7jNZH5JZGyQO+FMXqd/8SsoDMPJ6Zm5FH0Y/EgTcCVSz0RojFC5m6bGhkbHuoZUMLqMuTtttstwuPBSwnIhtDpKN70ygvXjQVMHpGuvwJiWvDl174tGelzz1wxMheNLga+3MvrSqfl1M9au0Hb6SeXheXoUmTed33q1m+o0JHpWSWJ3smR+9aHJ79s//FDaU8ikcfuml1fcT797ptaPp2qsHrr12RX9ZHZcwQ4Ml8RSboUeOGX7bWVYkji2i9fVz7/+Q8B+TiQ709KvD1iqbXl0y+uv/L6aqNeMAzOxu6bnLO8wz8zh+DL9DLxgCxS3MSynkwXy7rTAk+RQJIgceP10y26US4N1PT2evrdLgy4QlFMLVOvZVmLYZ7eJ16KwXCrc1RqVFU5Fo8NRHgi5Gpj4Znnn5teP7CXN8r1yoov8v6F8ySVsm7V7gMQlOhSlWxW/dwwGe91J3XdLtY3GMMYTl136ZBXls/+StU6n0YkuVe6WvjcxXAbM9N0jPte58LaAQhnIHVz9MYn5q7pibZdwwNOmlxWA4mRHiWzcUgYeoARGkfP7PB907cH5csGhdsUKTpGbpBFkgmjbtpROraQHOhXei6N9iiulFzU2o0yrcVlkAvesgElDqgDIahO42za36Xz4rFLybVVXv3V/lk0412gOh27brm1Gk/OxwCc1FlWJ01TOIgCEW3IFP1yVL5JBaRX4IsNOOmHhSAktmDNtKVbr7gxqCmiFRwfH2rVC2e5tIu+g7YBeSY4QNQBk9PYCJmQ8rjqCFMWPZNkYgEuB/CFUgwHxJHjVC1JJLUymAZmKddHYaECnRrUJShn3e/jcg+dENf66HSwkRGnV/aOSZHa+c3zW9nUuvgx4+cvv+yJ4m62wQ4JSAooNchV4TQO4WmY0tEhGvYHxWBDlAywbnii//b7lsJwvcKHPFBYplcDOjAcIxdp5WPYa0FTBeUGuCcMYYuv/A+DT8sYIgQ3TwAAAABJRU5ErkJggg==';
@@ -93,7 +94,7 @@
 					{$LL.Landing.Describe.Paragraph()}
 				</p>
 				<Button
-					href={$isSignedIn
+					href={$page.data.session?.user.id && $userSummary
 						? `/generate?p=${encodeURIComponent($LL.Landing.Describe.Prompt())}`
 						: `/generate?p=${encodeURIComponent($LL.Landing.Describe.Prompt())}&smo=true`}
 					class="mt-6 w-full hidden md:block max-w-[15rem] px-6 md:px-8 py-4"

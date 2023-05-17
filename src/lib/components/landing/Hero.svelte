@@ -1,9 +1,10 @@
 <script lang="ts">
+	import { page } from '$app/stores';
 	import ImageWithOutlineAndPlaceholder from '$components/ImageWithOutlineAndPlaceholder.svelte';
 	import Button from '$components/buttons/Button.svelte';
 	import LL from '$i18n/i18n-svelte';
 	import { themeApp } from '$ts/stores/theme';
-	import { isSignedIn } from '$ts/stores/user/isSignedIn';
+	import { userSummary } from '$ts/stores/user/summary';
 
 	const placeholder =
 		'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAIAAACQkWg2AAACwElEQVR4AQXBQ4M8RxwA0Kr6VVtjrnq9G9t2cotxzDW3XPNlglNs2/ba9s60VV39fw/X8SVPdJ/93//7wHd1quzE2wZqabjEMFFp5Zwt7PHvRaRdYT++71HOMFWotO3uCpkFLB81L26INhA1E8Q+87KUd+WbtXwyZJtd8ypRImF4DoCxyI22PCbKahCRrjlqtuy9aGNUL8tmkytQbU9b5amIkE59jOTrNMrTkqrWxM6wJa35PWSZ2/G/i0cf2/Vnrpic2IYewxIouqwIl9Zqf0Y5pRh0anhxrkhwa/uSX/s/bm1/ryF17mSupNZuvnKGCFm5bKiWfNsVQ1/++i/lBT7PTi6vWAD0s72Xvjn+ooOunZSvTnm0fryr/KXcdov94N0NYqDFv7bCPqciqixFv5f73fMQr7LtKfSQCHI/7jfloYbVVEt6lhLChLnfz59/4bV/0QodgKtkGi/HfxA2PEvu71qDhqGFvC+KtFFqNyvK2FDzzXfWvvniAAunSXYCBtEN0tRAx0Xe54HDTutaaWpgxtQMQRYkST8+DV//5Ltj5+BE+u+EbYGIlXX2N0JIFfGQZiHOT/oxJapulfv93s7R5vf//mnkLaz0/gjfzFCGNVQnWK7KFsoFwOgy5WrKhkSlbmmDjh96zmnC93vCxilbhMIsii4oaJDiVMKGbY6kiK2Hm266a4jJDVMTMrBF989l/vlBuoC5pZGOV2zCbepzAhTrybwpaSrAWVBc3L75sqkrN3tzn+y88p//Q85BwjrGRZ9v62QaSsQcli6VsLzu/x9F8s3GI5cP3jg1bL//15u/O19SZNWgaZJqhtgYvTspXOjnTpI7OlFZTifEm2u4zpNIUIVbL72pBZNFgL3sLOFZHeyzYvmY/wNNsNMiYUwqkSlAEuZcywUeMz/gclqvZENCVmKI7+dzfnEsYe0CMh9IzfPOP54AAAAASUVORK5CYII=';
@@ -30,7 +31,7 @@
 			{$LL.Landing.Hero.Title()}
 		</h1>
 		<Button
-			href={$isSignedIn ? '/generate' : '/generate?smo=true'}
+			href={$page.data.session?.user.id && $userSummary ? '/generate' : '/generate?smo=true'}
 			class="mt-5 w-full max-w-[15rem] px-6 md:px-8 py-4"
 			noPadding
 		>

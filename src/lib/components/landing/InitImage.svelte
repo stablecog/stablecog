@@ -1,9 +1,10 @@
 <script lang="ts">
+	import { page } from '$app/stores';
 	import LazyImageWithOutline from '$components/LazyImageWithOutline.svelte';
 	import Button from '$components/buttons/Button.svelte';
 	import LL from '$i18n/i18n-svelte';
 	import { themeApp } from '$ts/stores/theme';
-	import { isSignedIn } from '$ts/stores/user/isSignedIn';
+	import { userSummary } from '$ts/stores/user/summary';
 </script>
 
 <section
@@ -23,7 +24,7 @@
 			{$LL.Landing.InitImage.Paragraph()}
 		</p>
 		<Button
-			href={$isSignedIn ? '/generate' : '/generate?smo=true'}
+			href={$page.data.session?.user.id && $userSummary ? '/generate' : '/generate?smo=true'}
 			class="mt-6 w-full max-w-[15rem] px-6 md:px-8 py-4"
 			noPadding
 		>
@@ -83,7 +84,7 @@
 					{$LL.Landing.InitImage.Paragraph()}
 				</p>
 				<Button
-					href={$isSignedIn ? '/generate' : '/generate?smo=true'}
+					href={$page.data.session?.user.id && $userSummary ? '/generate' : '/generate?smo=true'}
 					class="mt-6 w-full max-w-[15rem] px-6 md:px-8 py-4"
 					noPadding
 				>
