@@ -24,7 +24,7 @@ declare namespace App {
 	// interface Error {}
 	// interface Platform {}
 	interface PageData {
-		session: Session | null;
+		session?: Session | null;
 		supabase?: SupabaseClient;
 	}
 }
