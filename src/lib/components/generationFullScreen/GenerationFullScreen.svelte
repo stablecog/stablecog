@@ -361,7 +361,8 @@
 						name="Go Left"
 						hasAnimation={false}
 						iconClass="w-6 h-6"
-						class="flex md:hidden absolute left-0 top-1/2 transform -translate-y-1/2 w-10 h-full pointer-events-auto"
+						class="flex md:hidden absolute w-1/6 left-0 top-1/2 transform -translate-y-1/2 h-full pointer-events-auto"
+						wrapperClass="w-full h-full relative flex items-center rounded-xl justify-start pl-1.5"
 						side="left"
 						bind:element={buttonLeftMobile}
 						onClick={onLeftButtonClicked}
@@ -370,7 +371,8 @@
 						name="Go Right"
 						hasAnimation={false}
 						iconClass="w-6 h-6"
-						class="flex md:hidden absolute right-0 top-1/2 transform -translate-y-1/2 w-10 h-full pointer-events-auto"
+						class="flex md:hidden absolute w-1/6 right-0 top-1/2 transform -translate-y-1/2 h-full pointer-events-auto"
+						wrapperClass="w-full h-full relative flex items-center rounded-xl justify-end pr-1.5"
 						side="right"
 						bind:element={buttonRightMobile}
 						onClick={onRightButtonClicked}

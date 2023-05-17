@@ -8,6 +8,7 @@
 	export let onClick: (() => void) | undefined;
 	export let side: 'left' | 'right' = 'left';
 	export let iconClass = 'w-8 h-8';
+	export let wrapperClass = 'w-full h-full relative flex items-center rounded-xl justify-center';
 	export let hasAnimation = true;
 	export { classes as class };
 	let classes = `absolute ${
@@ -35,7 +36,7 @@
 	disabled={onClick === undefined}
 	class="z-10 group p-0.5 md:p-1 rounded-xl touch-manipulation max-h-full {classes}"
 >
-	<div class="w-full h-full relative flex items-center rounded-xl justify-center">
+	<div class={wrapperClass}>
 		{#if onClick}
 			<ButtonHoverEffect hoverFrom={side === 'left' ? 'right' : 'left'} />
 		{/if}
