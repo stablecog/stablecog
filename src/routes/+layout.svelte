@@ -7,7 +7,6 @@
 	import Footer from '$components/navigation/Footer.svelte';
 	import { page } from '$app/stores';
 	import { windowHeight, windowWidth } from '$ts/stores/window';
-	import type { LayoutData } from './$types';
 	import { locale, setLocale } from '$i18n/i18n-svelte';
 	import { localeLS } from '$ts/stores/localeLS';
 	import { loadLocaleAsync } from '$i18n/i18n-util.async';
