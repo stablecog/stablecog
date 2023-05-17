@@ -1,8 +1,8 @@
 import type { RequestHandler } from '@sveltejs/kit';
 import Mixpanel from 'mixpanel';
-import { PUBLIC_MIXPANEL_ID } from '$env/static/public';
+import { PUBLIC_MP_ID } from '$env/static/public';
 import { supabaseAdmin } from '$ts/constants/supabaseAdmin';
-const mixpanel = Mixpanel.init(PUBLIC_MIXPANEL_ID);
+const mixpanel = Mixpanel.init(PUBLIC_MP_ID);
 
 export const POST: RequestHandler = async ({ request }) => {
 	const body: IBody = await request.json();

@@ -10,7 +10,6 @@
 	import ProductIdBadge from '$components/badges/ProductIdBadge.svelte';
 	import LL, { locale } from '$i18n/i18n-svelte';
 	import { canonicalUrl } from '$ts/constants/main';
-	import { supabase } from '$ts/constants/supabase';
 	import { logSignOut } from '$ts/helpers/loggers';
 	import { advancedModeApp } from '$ts/stores/advancedMode';
 	import { isTouchscreen } from '$ts/stores/isTouchscreen';
@@ -29,7 +28,7 @@
 
 	async function signOut() {
 		try {
-			await supabase.auth.signOut();
+			await $page.data.supabase.auth.signOut();
 			userSummary.set(undefined);
 			logSignOut({
 				'SC - User Id': $page.data.session?.user.id,

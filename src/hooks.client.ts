@@ -1,1 +1,0 @@
-import '$ts/constants/supabase';

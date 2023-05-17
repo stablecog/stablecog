@@ -9,7 +9,6 @@
 	import Input from '$components/Input.svelte';
 	import LL from '$i18n/i18n-svelte';
 	import { expandCollapse } from '$ts/animation/transitions';
-	import { supabase } from '$ts/constants/supabase';
 	import { isTouchscreen } from '$ts/stores/isTouchscreen';
 	import type { Provider } from '@supabase/supabase-js';
 	import { quadOut } from 'svelte/easing';
@@ -34,7 +33,7 @@
 		signInStatus = 'loading';
 		provider = 'email';
 		const domain = email.split('@')[1];
-		const { data: dData, error: dError } = await supabase
+		const { data: dData, error: dError } = await $page.data.supabase
 			.from('disposable_emails')
 			.select('domain')
 			.eq('domain', domain);
@@ -49,7 +48,7 @@
 			signInStatus = 'error';
 			return;
 		}
-		const { data: sData, error: sError } = await supabase.auth.signInWithOtp({
+		const { data: sData, error: sError } = await $page.data.supabase.auth.signInWithOtp({
 			email,
 			options: {
 				emailRedirectTo: `${$page.url.origin}/api/auth/callback?redirect_to=${
@@ -76,7 +75,7 @@
 	async function signInWithOAuth(prov: Provider) {
 		signInStatus = 'loading';
 		provider = prov;
-		const { data: sData, error: sError } = await supabase.auth.signInWithOAuth({
+		const { data: sData, error: sError } = await $page.data.supabase.auth.signInWithOAuth({
 			provider: prov,
 			options: {
 				redirectTo: `${$page.url.origin}/api/auth/callback?redirect_to=${
@@ -114,7 +113,7 @@
 </script>
 
 <div
-	class="max-w-full flex flex-col items-center justify-center bg-c-bg ring-c-bg-secondary ring-2 px-3 py-4 
+	class="max-w-full flex flex-col items-center justify-center bg-c-bg ring-c-bg-secondary ring-2 px-3 py-4
 	md:px-10 md:py-7 rounded-3xl relative z-10 overflow-hidden {isModal
 		? 'shadow-2xl shadow-c-shadow/[var(--o-shadow-strong)]'
 		: 'shadow-xl shadow-c-shadow/[var(--o-shadow-normal)]'}"
@@ -142,7 +141,7 @@
 		</p>
 		{#if signInStatus === 'sent-otp'}
 			<div
-				class="mt-4 md:mt-6 -mx-5 md:-mx-10 -mb-4 md:-mb-7 border-t-2 border-c-bg-secondary w-[calc(100%+1.5rem)] md:w-[calc(100%+5rem)] 
+				class="mt-4 md:mt-6 -mx-5 md:-mx-10 -mb-4 md:-mb-7 border-t-2 border-c-bg-secondary w-[calc(100%+1.5rem)] md:w-[calc(100%+5rem)]
 				flex flex-col items-center justify-start relative z-0"
 			>
 				<!-- {#if codeSignInStatus === 'idle'}

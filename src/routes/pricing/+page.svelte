@@ -378,7 +378,7 @@
 								>{$LL.Pricing.SlashMonth()}</span
 							>
 						</h4>
-						<ul class="w-full flex-1 mt-6 flex flex-col gap-3 px-1">
+						<ul class="w-full mt-6 flex flex-col gap-3 px-1 flex-1">
 							{#each card.features as feature}
 								<li class="flex items-center gap-3">
 									<span class="text-c-on-bg/60">-</span>
@@ -417,7 +417,7 @@
 								{/if}
 							</Button>
 						{:else}
-							<Button onClick={() => (isSignInModalOpen = true)} class="w-full mt-8">
+							<Button onClick={() => (isSignInModalOpen = true)} class="w-full mt-7">
 								{$LL.Pricing.SubscribeButton()}
 							</Button>
 						{/if}
@@ -457,7 +457,7 @@
 									{card.amount.toLocaleString($locale)}
 								</span>
 							</h4>
-							<ul class="w-full mt-6 flex flex-col gap-3 px-1">
+							<ul class="w-full mt-6 flex flex-col gap-3 px-1 flex-1">
 								{#each card.features as feature}
 									<li class="flex items-center gap-3">
 										<span class="text-c-on-bg/60">-</span>

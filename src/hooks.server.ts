@@ -1,9 +1,9 @@
-import { getSupabase } from '@supabase/auth-helpers-sveltekit';
+import { PUBLIC_SUPABASE_URL, PUBLIC_SUPABASE_ANON_KEY } from '$env/static/public';
+import { createSupabaseServerClient } from '@supabase/auth-helpers-sveltekit';
+import type { Handle, RequestEvent } from '@sveltejs/kit';
 import { initAcceptLanguageHeaderDetector } from 'typesafe-i18n/detectors';
 import { detectLocale, isLocale } from '$i18n/i18n-util';
 import { loadAllLocales } from '$i18n/i18n-util.sync';
-import type { Handle, RequestEvent } from '@sveltejs/kit';
-import '$ts/constants/supabase';
 import type { TAvailableThemes } from '$ts/stores/theme';
 import { apiUrl } from '$ts/constants/main';
 import { galleryAdminAllowedRoutes, isGalleryAdmin, isSuperAdmin } from '$ts/helpers/admin/roles';
@@ -12,6 +12,19 @@ import { CLIPAPI_AUTH_TOKEN } from '$env/static/private';
 loadAllLocales();
 
 export const handle: Handle = async ({ event, resolve }) => {
+	event.locals.supabase = createSupabaseServerClient({
+		supabaseUrl: PUBLIC_SUPABASE_URL,
+		supabaseKey: PUBLIC_SUPABASE_ANON_KEY,
+		event
+	});
+
+	event.locals.getSession = async () => {
+		const {
+			data: { session }
+		} = await event.locals.supabase.auth.getSession();
+		return session;
+	};
+
 	let preferredLocale = getPreferredLocale(event);
 	const localeC = event.cookies.get('sc-locale');
 	const themeC = event.cookies.get('sc-theme') as TAvailableThemes | null;
@@ -36,7 +49,7 @@ export const handle: Handle = async ({ event, resolve }) => {
 		)}`;
 		const notAuthorizedRedirectRoute = `/`;
 		try {
-			const { session } = await getSupabase(event);
+			const session = await event.locals.getSession();
 			const userId = session?.user?.id;
 			if (!userId) {
 				return notSignedInResponse(notSignedInRedirectRoute);
@@ -66,7 +79,11 @@ export const handle: Handle = async ({ event, resolve }) => {
 			return notAuthorizedResponse(notAuthorizedRedirectRoute);
 		}
 	}
-	return resolve(event);
+	return resolve(event, {
+		filterSerializedResponseHeaders(name) {
+			return name === 'content-range';
+		}
+	});
 };
 
 const getPreferredLocale = ({ request }: RequestEvent) => {

@@ -1,13 +1,24 @@
 import type { LayoutLoad } from './$types';
 import { loadLocaleAsync } from '$i18n/i18n-util.async';
-import { getSupabase } from '@supabase/auth-helpers-sveltekit';
 import { writable } from 'svelte/store';
 import type { TAvailableThemes } from '$ts/stores/theme';
 import { apiUrl } from '$ts/constants/main';
 import type { TUserSummary } from '$ts/stores/user/summary';
+import { createSupabaseLoadClient } from '@supabase/auth-helpers-sveltekit';
+import { PUBLIC_SUPABASE_ANON_KEY, PUBLIC_SUPABASE_URL } from '$env/static/public';
 
 export const load: LayoutLoad = async (event) => {
-	let { session } = await getSupabase(event);
+	event.depends('supabase:auth');
+	const supabase = createSupabaseLoadClient({
+		supabaseUrl: PUBLIC_SUPABASE_URL,
+		supabaseKey: PUBLIC_SUPABASE_ANON_KEY,
+		event: { fetch },
+		serverSession: event.data.session
+	});
+	let {
+		data: { session }
+	} = await supabase.auth.getSession();
+
 	let userSummary: TUserSummary | undefined = undefined;
 	if (session?.access_token) {
 		try {
@@ -32,9 +43,11 @@ export const load: LayoutLoad = async (event) => {
 	const theme = event.data.theme;
 	const globalSeed = Math.round(Math.random() * Math.pow(10, 12));
 	const isLeftSidebarHidden = event.data.isLeftSidebarHidden;
+
 	return {
 		locale,
 		session,
+		supabase,
 		theme,
 		themeStore: writable<TAvailableThemes>('dark'),
 		userSummary,

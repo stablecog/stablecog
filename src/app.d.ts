@@ -5,7 +5,8 @@
 type Locales = import('$i18n/i18n-types').Locales;
 type TranslationFunctions = import('$i18n/i18n-types').TranslationFunctions;
 type Themes = import('$ts/stores/theme').TAvailableThemes;
-
+type SupabaseClient = import('@supabase/supabase-js').SupabaseClient;
+type Session = import('@supabase/supabase-js').Session;
 declare namespace App {
 	interface Locals {
 		locale: Locales;
@@ -16,6 +17,8 @@ declare namespace App {
 		isLeftSidebarHidden: boolean;
 		advancedMode: boolean | null;
 		clipApiToken: string | undefined;
+		supabase: SupabaseClient;
+		getSession(): Promise<Session | null>;
 	}
 
 	// interface Error {}

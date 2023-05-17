@@ -74,8 +74,8 @@
 	"dependencies": {
 		"@egjs/svelte-infinitegrid": "^4.9.0",
 		"@resvg/resvg-wasm": "^2.1.0",
-		"@supabase/auth-helpers-sveltekit": "^0.8.3",
-		"@supabase/supabase-js": "^2.0.0",
+		"@supabase/auth-helpers-sveltekit": "^0.9.4",
+		"@supabase/supabase-js": "^2.22.0",
 		"@tanstack/svelte-query": "^4.24.6",
 		"@tanstack/svelte-virtual": "^3.0.0-beta.54",
 		"aws-sdk": "^2.1243.0",

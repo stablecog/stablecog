@@ -9,7 +9,6 @@
 	import IconWrench from '$components/icons/IconWrench.svelte';
 	import IconUser from '$components/icons/IconUser.svelte';
 	import { logSignOut } from '$ts/helpers/loggers';
-	import { supabase } from '$ts/constants/supabase';
 	import IconSignOut from '$components/icons/IconSignOut.svelte';
 	import { advancedModeApp } from '$ts/stores/advancedMode';
 	import { appVersion } from '$ts/stores/appVersion';
@@ -106,7 +105,7 @@
 			onClick={async () => {
 				close();
 				try {
-					await supabase.auth.signOut();
+					await $page.data.supabase.auth.signOut();
 					userSummary.set(undefined);
 					logSignOut({
 						'SC - User Id': $page.data.session?.user.id,

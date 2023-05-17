@@ -11,7 +11,6 @@
 	import LL from '$i18n/i18n-svelte';
 	import { expandCollapse } from '$ts/animation/transitions';
 	import { canonicalUrl } from '$ts/constants/main';
-	import { supabase } from '$ts/constants/supabase';
 	import { isTouchscreen } from '$ts/stores/isTouchscreen';
 	import { quadOut } from 'svelte/easing';
 	import type { PageServerData } from './$types';
@@ -31,7 +30,7 @@
 		}
 		changeEmailStatus = 'loading';
 		const domain = email.split('@')[1];
-		const { data: dData, error: dError } = await supabase
+		const { data: dData, error: dError } = await $page.data.supabase
 			.from('disposable_emails')
 			.select('domain')
 			.eq('domain', domain);
@@ -46,7 +45,7 @@
 			changeEmailStatus = 'error';
 			return;
 		}
-		const { data: sData, error: sError } = await supabase.auth.updateUser({
+		const { data: sData, error: sError } = await $page.data.supabase.auth.updateUser({
 			email
 		});
 		if (sError) {

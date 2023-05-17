@@ -15,8 +15,7 @@
 	import { advancedModeApp } from '$ts/stores/advancedMode';
 	import { apiUrl, routesWithHiddenFooter } from '$ts/constants/main';
 	import mixpanel from 'mixpanel-browser';
-	import { supabase } from '$ts/constants/supabase';
-	import { afterNavigate, goto, invalidateAll } from '$app/navigation';
+	import { afterNavigate, goto, invalidate } from '$app/navigation';
 	import { logInitImageAdded, logPageview } from '$ts/helpers/loggers';
 	import { setCookie } from '$ts/helpers/setCookie';
 	import { appVersion, serverVersion } from '$ts/stores/appVersion';
@@ -73,7 +72,12 @@
 	import { isLeftSidebarHidden, isLeftSidebarHiddenApp } from '$ts/stores/sidebars';
 	import LayoutWrapper from '$components/LayoutWrapper.svelte';
 
-	export let data: LayoutData;
+	export let data;
+
+	let supabase: SupabaseClient;
+	let session: Session | null;
+	$: ({ supabase, session } = data);
+
 	setLocale(data.locale);
 
 	const rawRoutes = ['/'];
@@ -405,6 +409,13 @@
 		setBodyClasses();
 		setNavbarState();
 		setBodyOverflowHiddenClass();
+		const {
+			data: { subscription }
+		} = supabase.auth.onAuthStateChange((event, _session) => {
+			if (_session?.expires_at !== session?.expires_at) {
+				invalidate('supabase:auth');
+			}
+		});
 		mixpanel.init(PUBLIC_MP_ID, { api_host: PUBLIC_MP_URL });
 		posthog.init(PUBLIC_PH_ID, {
 			api_host: PUBLIC_PH_URL
@@ -413,11 +424,6 @@
 		if ($page.url.hash === confirmOtherEmailHash) {
 			await goto('/account/change-email?confirm_other_email=true');
 		}
-		const {
-			data: { subscription }
-		} = supabase.auth.onAuthStateChange(() => {
-			invalidateAll();
-		});
 		if ($localeLS && isLocale($localeLS) && $localeLS !== $locale) {
 			await loadLocaleAsync($localeLS);
 			setLocale($localeLS);

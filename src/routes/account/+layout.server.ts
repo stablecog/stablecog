@@ -1,9 +1,8 @@
 import { apiUrl } from '$ts/constants/main';
-import { getServerSession } from '@supabase/auth-helpers-sveltekit';
 import { redirect, type ServerLoad } from '@sveltejs/kit';
 
 export const load: ServerLoad = async (event) => {
-	const session = await getServerSession(event);
+	const session = await event.locals.getSession();
 	if (!session?.user?.id) {
 		throw redirect(307, `/sign-in?redirect_to=${encodeURIComponent(event.url.pathname)}`);
 	}

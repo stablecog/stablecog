@@ -16,7 +16,6 @@ export async function getUserSummary(access_token: string | undefined) {
 		const userResJson: TUserSummary = await userRes.json();
 		userSummary = userResJson;
 	}
-	console.log('userSummary', userSummary);
 	return userSummary;
 }
 
