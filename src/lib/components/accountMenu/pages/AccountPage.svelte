@@ -21,6 +21,8 @@
 	export let closeMenu: () => void;
 	export let height: number;
 	export let currentPage: TAccountDropdownPage;
+
+	let isSigningOut = false;
 </script>
 
 <PageWrapper bind:height {currentPage} thisPage="account">
@@ -102,10 +104,13 @@
 			</div>
 		</DropdownItem>
 		<DropdownItem
+			withSpinner
+			loading={isSigningOut}
 			onClick={async () => {
 				if (!$page.data.supabase) return;
 				close();
 				try {
+					isSigningOut = true;
 					await $page.data.supabase.auth.signOut();
 					userSummary.set(undefined);
 					logSignOut({
@@ -117,8 +122,10 @@
 						'SC - App Version': $appVersion
 					});
 					closeMenu();
+					isSigningOut = false;
 				} catch (error) {
 					console.log(error);
+					isSigningOut = false;
 				}
 			}}
 		>
