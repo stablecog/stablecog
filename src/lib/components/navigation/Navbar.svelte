@@ -86,25 +86,27 @@
 				: ''}"
 		/>
 		<div class="flex xl:flex-1 self-stretch">
-			{#if routesWithoutDrawer.includes($page.url.pathname)}
-				<LogoButton />
-			{:else}
-				<button
-					aria-label="Toggle Drawer"
-					on:click={() => isDrawerOpen.set(!$isDrawerOpen)}
-					class="relative self-stretch p-0.5 group overflow-hidden md:hidden"
-				>
-					<div class="h-full flex items-center justify-center px-2.5 py-3 relative overflow-hidden">
-						<ButtonHoverEffect hoverFrom="left" size="md" color="primary-strong" />
-						<IconSidebar
-							class="w-8 h-8 transition text-c-on-bg {!$isTouchscreen
-								? 'group-hover:text-c-primary'
-								: ''} transform {$isDrawerOpen ? 'rotate-90' : ''}"
-						/>
-					</div>
-				</button>
-				<LogoButton class="hidden md:flex" />
-			{/if}
+			<button
+				aria-label="Toggle Drawer"
+				on:click={() => isDrawerOpen.set(!$isDrawerOpen)}
+				class="relative self-stretch p-0.5 group overflow-hidden md:hidden {routesWithoutDrawer.includes(
+					$page.url.pathname
+				)
+					? 'hidden'
+					: ''}"
+			>
+				<div class="h-full flex items-center justify-center px-2.5 py-3 relative overflow-hidden">
+					<ButtonHoverEffect hoverFrom="left" size="md" color="primary-strong" />
+					<IconSidebar
+						class="w-8 h-8 transition text-c-on-bg {!$isTouchscreen
+							? 'group-hover:text-c-primary'
+							: ''} transform {$isDrawerOpen ? 'rotate-90' : ''}"
+					/>
+				</div>
+			</button>
+			<LogoButton
+				class="{routesWithoutDrawer.includes($page.url.pathname) ? 'flex' : 'hidden'} md:flex"
+			/>
 		</div>
 		<div class="hidden md:flex md:w-full md:max-w-[19rem] lg:max-w-[36rem] md:ml-2 xl:ml-0">
 			<NavigationTabBar />
