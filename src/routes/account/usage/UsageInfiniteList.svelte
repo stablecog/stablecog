@@ -5,15 +5,14 @@
 	import IconSadFaceOutline from '$components/icons/IconSadFaceOutline.svelte';
 	import type { Readable } from 'svelte/store';
 	import { createWindowVirtualizer, type SvelteVirtualizer } from '@tanstack/svelte-virtual';
-	import type {
-		TOperationSource,
-		TOperationType,
-		TUserOperationExtended,
-		TUserOperationsPageExtended
-	} from '$ts/queries/operations';
+	import type { TUserOperationExtended, TUserOperationsPageExtended } from '$ts/queries/operations';
 	import { browser } from '$app/environment';
 	import IconGraph from '$components/icons/IconGraph.svelte';
 	import { getRelativeDate } from '$ts/helpers/getRelativeDate';
+	import {
+		operationSourceToLocaleString,
+		operationTypeToLocaleString
+	} from '$ts/helpers/user/operations';
 
 	export let operationsQuery:
 		| CreateInfiniteQueryResult<TUserOperationsPageExtended, unknown>
@@ -81,24 +80,6 @@
 		style: 'decimal',
 		maximumFractionDigits: 1
 	});
-
-	function operationTypeToLocaleString(type: TOperationType, $LL: TranslationFunctions) {
-		switch (type) {
-			case 'upscale':
-				return $LL.Account.Usage.UsageType.Upscale();
-			default:
-				return $LL.Account.Usage.UsageType.Generate();
-		}
-	}
-
-	function operationSourceToLocaleString(source: TOperationSource, $LL: TranslationFunctions) {
-		switch (source) {
-			case 'api':
-				return $LL.Account.Usage.SourceType.API();
-			default:
-				return $LL.Account.Usage.SourceType.WebApp();
-		}
-	}
 </script>
 
 {#if $operationsQuery?.isError}

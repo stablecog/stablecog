@@ -32,8 +32,6 @@ export const load: LayoutLoad = async (event) => {
 			if (userRes.ok) {
 				const userResJson: TUserSummary = await userRes.json();
 				userSummary = userResJson;
-			} else {
-				session = null;
 			}
 		} catch (error) {
 			console.log(error);

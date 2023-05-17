@@ -1,3 +1,5 @@
+import type { TOperationSource } from '$ts/helpers/user/operations';
+
 export type TProcessType = 'upscale' | 'generate';
 export type TStatus = 'queued' | 'succeeded' | 'failed' | 'processing';
 
@@ -15,6 +17,7 @@ export interface TBaseRealtimePayload {
 	actual_num_outputs?: number;
 	product_id?: string;
 	system_generated?: boolean;
+	source: TOperationSource;
 }
 export interface TGenerationRealtimePayloadExt extends TBaseRealtimePayload {
 	aspect_ratio?: string;

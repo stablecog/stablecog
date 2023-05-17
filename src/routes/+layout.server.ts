@@ -12,8 +12,6 @@ export const load: LayoutServerLoad = async (event) => {
 			const summary = await getUserSummary(session.access_token);
 			if (summary) {
 				userSummary = summary;
-			} else {
-				session = null;
 			}
 		} catch (error) {
 			console.log('/v1/user error', error);

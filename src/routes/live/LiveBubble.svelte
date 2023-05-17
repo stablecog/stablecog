@@ -1,5 +1,11 @@
 <script lang="ts">
+	import IconChip from '$components/icons/IconChip.svelte';
+	import IconCloud from '$components/icons/IconCloud.svelte';
+	import IconCloudFilled from '$components/icons/IconCloudFilled.svelte';
+	import IconCodeBracket from '$components/icons/IconCodeBracket.svelte';
+	import IconCommandLine from '$components/icons/IconCommandLine.svelte';
 	import IconRobot from '$components/icons/IconRobot.svelte';
+	import IconServer from '$components/icons/IconServer.svelte';
 	import LL, { locale } from '$i18n/i18n-svelte';
 	import type {
 		TGenerationRealtimePayloadExt,
@@ -9,6 +15,7 @@
 	import { tooltip } from '$ts/actions/tooltip';
 	import { tooltipLivePageStyleProps } from '$ts/constants/tooltips';
 	import { getTitleFromProductId } from '$ts/helpers/stripe/plan';
+	import { operationSourceToLocaleString } from '$ts/helpers/user/operations';
 	import { quadOut } from 'svelte/easing';
 	import { scale } from 'svelte/transition';
 
@@ -80,6 +87,10 @@
 			  ]
 			: []),
 		{
+			key: $LL.Account.Usage.UsageTable.Source() + ':',
+			value: operationSourceToLocaleString(generationOrUpscale.source, $LL)
+		},
+		{
 			key: $LL.Live.GenerationTooltip.Status.Title() + ':',
 			value:
 				generationOrUpscale.status === 'queued' || generationOrUpscale.status === 'processing'
@@ -132,7 +143,7 @@
 				: 'bg-c-primary'}"
 		>
 			<div
-				class="w-full h-full flex items-center justify-center"
+				class="w-full h-full flex flex-col items-center justify-center"
 				style="
 					background-color: transparent;
 					background-image:  linear-gradient(135deg, {planBasedColor(
@@ -152,6 +163,9 @@
 				{#if generationOrUpscale.system_generated === true}
 					<IconRobot class="text-c-on-primary/75 w-6 h-6 -mt-1" />
 				{:else if generationOrUpscale.country_code}
+					{#if generationOrUpscale.source === 'api'}
+						<IconServer class="text-c-on-primary/75 w-4 h-4 -mb-0.5 -mt-0.5" />
+					{/if}
 					<p class="text-center text-xs font-bold text-c-on-primary/75 cursor-default relative">
 						{generationOrUpscale.country_code}
 					</p>

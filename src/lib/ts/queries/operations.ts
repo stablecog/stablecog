@@ -1,4 +1,5 @@
 import { apiUrl } from '$ts/constants/main';
+import type { TOperationSource, TOperationType } from '$ts/helpers/user/operations';
 
 const operationsPerPage = 50;
 
@@ -60,6 +61,3 @@ export interface TUserOperation {
 export interface TUserOperationExtended extends TUserOperation {
 	duration_sec: number;
 }
-
-export type TOperationType = 'generate' | 'upscale';
-export type TOperationSource = 'api' | 'web-ui';
