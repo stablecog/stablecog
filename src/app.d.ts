@@ -24,7 +24,8 @@ declare namespace App {
 	// interface Error {}
 	// interface Platform {}
 	interface PageData {
-		session: import('@supabase/supabase-js').Session | null;
+		session: Session | null;
+		supabase?: SupabaseClient;
 	}
 }
 

@@ -27,6 +27,7 @@
 	}
 
 	async function signOut() {
+		if (!$page.data.supabase) return;
 		try {
 			await $page.data.supabase.auth.signOut();
 			userSummary.set(undefined);

@@ -26,6 +26,7 @@
 	let codeSignInErrorText: string | null = null; */
 
 	async function signIn() {
+		if (!$page.data.supabase) return;
 		if (!email.includes('@')) {
 			errorText = $LL.Error.InvalidEmail();
 			return;
@@ -73,6 +74,7 @@
 	}
 
 	async function signInWithOAuth(prov: Provider) {
+		if (!$page.data.supabase) return;
 		signInStatus = 'loading';
 		provider = prov;
 		const { data: sData, error: sError } = await $page.data.supabase.auth.signInWithOAuth({

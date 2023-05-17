@@ -24,6 +24,7 @@
 	let errorText: string | null = null;
 
 	async function changeEmail() {
+		if (!$page.data.supabase) return;
 		if (!email.includes('@')) {
 			errorText = $LL.Error.InvalidEmail();
 			return;

@@ -103,6 +103,7 @@
 		</DropdownItem>
 		<DropdownItem
 			onClick={async () => {
+				if (!$page.data.supabase) return;
 				close();
 				try {
 					await $page.data.supabase.auth.signOut();
