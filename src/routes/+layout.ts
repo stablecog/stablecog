@@ -6,6 +6,7 @@ import { apiUrl } from '$ts/constants/main';
 import type { TUserSummary } from '$ts/stores/user/summary';
 import { createSupabaseLoadClient } from '@supabase/auth-helpers-sveltekit';
 import { PUBLIC_SUPABASE_ANON_KEY, PUBLIC_SUPABASE_URL } from '$env/static/public';
+import type { SupabaseClient } from '@supabase/supabase-js';
 
 export const load: LayoutLoad = async (event) => {
 	event.depends('supabase:auth');
@@ -46,8 +47,8 @@ export const load: LayoutLoad = async (event) => {
 
 	return {
 		locale,
-		session,
-		supabase,
+		session: session as Session | null,
+		supabase: supabase as SupabaseClient,
 		theme,
 		themeStore: writable<TAvailableThemes>('dark'),
 		userSummary,

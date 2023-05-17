@@ -2,6 +2,7 @@ import type { LayoutServerLoad } from './$types';
 import { loadLocaleAsync } from '$i18n/i18n-util.async';
 import type { TUserSummary } from '$ts/stores/user/summary';
 import { getUserSummary } from '$ts/helpers/user/user';
+import type { Session } from '@supabase/supabase-js';
 
 export const load: LayoutServerLoad = async (event) => {
 	let session = await event.locals.getSession();
@@ -24,7 +25,7 @@ export const load: LayoutServerLoad = async (event) => {
 	await loadLocaleAsync(locale);
 	return {
 		locale,
-		session,
+		session: session as Session | null,
 		theme,
 		userSummary,
 		isLeftSidebarHidden

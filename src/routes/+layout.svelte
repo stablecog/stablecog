@@ -74,8 +74,6 @@
 
 	export let data;
 
-	let supabase: SupabaseClient;
-	let session: Session | null;
 	$: ({ supabase, session } = data);
 
 	setLocale(data.locale);
