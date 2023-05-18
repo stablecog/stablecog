@@ -1,7 +1,6 @@
 <script lang="ts">
 	import { page } from '$app/stores';
 	import { flatTrySidebarShallow } from '$routes/try/constants';
-	import '$css/blog.css';
 	import MetaTag from '$components/MetaTag.svelte';
 	import { canonicalUrl } from '$ts/constants/main';
 	import TryPage from '$routes/try/TryPage.svelte';

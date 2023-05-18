@@ -86,6 +86,7 @@
 		"mixpanel": "^0.17.0",
 		"posthog-js": "^1.46.2",
 		"radix-svelte": "^0.5.0",
+		"rehype-highlight": "^6.0.0",
 		"satori": "^0.0.44",
 		"satori-html": "^0.3.0",
 		"svelte-inview": "^4.0.0",

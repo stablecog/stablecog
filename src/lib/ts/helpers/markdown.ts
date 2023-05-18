@@ -9,6 +9,7 @@ import rehypeToC from '@jsdevtools/rehype-toc';
 import rehypeSlug from 'rehype-slug';
 import rehypeAttrs from 'rehype-attr';
 import remarkImages from 'remark-images';
+import rehypeHighlight from 'rehype-highlight';
 import rehypeRaw from 'rehype-raw';
 import rehypeAttributes from 'rehype-attributes';
 import yaml from 'yaml';
@@ -23,6 +24,7 @@ const r = unified()
 	.use(remarkToRehype, { allowDangerousHtml: true })
 	.use(rehypeRaw)
 	.use(rehypeAttrs, { properties: 'attr' })
+	.use(rehypeHighlight)
 	.use(rehypeAttributes, {
 		img: function (node) {
 			// @ts-ignore

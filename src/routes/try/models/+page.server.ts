@@ -1,8 +1,8 @@
 import { trySidebar } from '$routes/try/constants';
 import { getTryEntryFromPathname } from '$ts/helpers/markdown';
-import type { PageLoad } from './$types';
+import type { PageServerLoad } from './$types';
 
-export const load: PageLoad = async ({ url }) => {
+export const load: PageServerLoad = async ({ url }) => {
 	const { content, metadata } = await getTryEntryFromPathname(url.pathname);
 	return {
 		content,

@@ -1,8 +1,8 @@
 import { guideSidebar } from '$routes/guide/constants';
 import { getGuideEntryFromPathname } from '$ts/helpers/markdown';
-import type { PageLoad } from './$types';
+import type { PageServerLoad } from './$types';
 
-export const load: PageLoad = async ({ url }) => {
+export const load: PageServerLoad = async ({ url }) => {
 	const { content, metadata } = await getGuideEntryFromPathname(url.pathname);
 	return {
 		content,

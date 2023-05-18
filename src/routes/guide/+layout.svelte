@@ -1,12 +1,11 @@
 <script lang="ts">
+	import '$css/blog.css';
 	import ButtonHoverEffect from '$components/buttons/ButtonHoverEffect.svelte';
-	import NoBgButton from '$components/buttons/NoBgButton.svelte';
 	import IconHome from '$components/icons/IconHome.svelte';
 	import Drawer from '$components/navigation/Drawer.svelte';
 	import LL from '$i18n/i18n-svelte';
 	import Sidebar from '$routes/guide/Sidebar.svelte';
 	import { guideSidebar } from '$routes/guide/constants';
-	import { isDrawerOpen } from '$ts/stores/isDrawerOpen';
 </script>
 
 <div style="min-height: 100vh; min-height: 100svh" class="w-full flex items-stretch relative">
