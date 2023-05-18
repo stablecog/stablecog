@@ -1,7 +1,7 @@
 pre code.hljs {
   display: block;
   overflow-x: auto;
-  padding: 0.5rem 1rem;
+  padding: 0.5rem 0.8rem;
   border-radius: 0.75rem;
   margin-top: 1rem;
 }
@@ -15,11 +15,12 @@ code.hljs {
   background: rgb(var(--c-bg-secondary));
   border: solid 2px rgba(var(--c-bg-tertiary));
   width: 100%;
+  font-size: 0.9rem;
 }
 
 @media (min-width: 768px) {
   pre code.hljs {
-    padding: 0.75rem 1.25rem;
+    padding: 0.7rem 1.1rem;
   }
 }
 
@@ -39,7 +40,7 @@ code.hljs {
 
 /* base03 - #626483 -  Comments, Invisibles, Line Highlighting */
 .hljs-comment {
-  color: #626483;
+  color: rgba(var(--c-on-bg)/0.5);
 }
 
 /* base04 - #62d6e8 -  Dark Foreground (Used for status bars) */
@@ -51,7 +52,7 @@ code.hljs {
 .hljs-subst,
 .hljs-punctuation,
 .hljs-operator {
-  color: #e9e9f4;
+  color: rgb(var(--c-on-bg));
 }
 
 .hljs-operator {
