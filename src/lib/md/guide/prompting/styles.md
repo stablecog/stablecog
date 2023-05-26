@@ -4,8 +4,12 @@ description: Learn how to use art styles when prompting fine-tuned Stable Diffus
 author: M. Yekta Güngör
 author_url: https://twitter.com/ngyekta
 date: 2023-04-18T15:00:00.000Z
-preview_image_url: https://ba.stablecog.com/guide/previews/styles.jpg
 ---
+
+<script>
+  import Cards from '$components/docs/Cards.svelte';
+  import Card from '$components/docs/Card.svelte';
+</script>
 
 # Styles
 
@@ -17,56 +21,14 @@ Some fine-tuned Stable Diffusion models are made specifically for certain styles
 
 The examples below are made with [Kandinsky v2.1](/guide/models/kandinsky).
 
-| Watercolor                                                                                                        |
-| ----------------------------------------------------------------------------------------------------------------- |
-| ![Watercolor](https://ba.stablecog.com/guide/prompting/styles_watercolor.jpg)<!--rehype:width=1024&height=1024--> |
-
-<!--rehype:class=w-full md:w-1/2 lg:w-1/3-->
-
-| Anime                                                                                                   |
-| ------------------------------------------------------------------------------------------------------- |
-| ![Anime](https://ba.stablecog.com/guide/prompting/styles_anime.jpg)<!--rehype:width=1024&height=1024--> |
-
-<!--rehype:class=w-full md:w-1/2 lg:w-1/3-->
-
-| Papercut                                                                                                      |
-| ------------------------------------------------------------------------------------------------------------- |
-| ![Papercut](https://ba.stablecog.com/guide/prompting/styles_papercut.jpg)<!--rehype:width=1024&height=1024--> |
-
-<!--rehype:class=w-full md:w-1/2 lg:w-1/3-->
-
-| Graffiti                                                                                                      |
-| ------------------------------------------------------------------------------------------------------------- |
-| ![Graffiti](https://ba.stablecog.com/guide/prompting/styles_graffiti.jpg)<!--rehype:width=1024&height=1024--> |
-
-<!--rehype:class=w-full md:w-1/2 lg:w-1/3-->
-
-| Pop Art                                                                                                     |
-| ----------------------------------------------------------------------------------------------------------- |
-| ![Pop Art](https://ba.stablecog.com/guide/prompting/styles_pop_art.jpg)<!--rehype:width=1024&height=1024--> |
-
-<!--rehype:class=w-full md:w-1/2 lg:w-1/3-->
-
-| Folk Art                                                                                                      |
-| ------------------------------------------------------------------------------------------------------------- |
-| ![Folk Art](https://ba.stablecog.com/guide/prompting/styles_folk_art.jpg)<!--rehype:width=1024&height=1024--> |
-
-<!--rehype:class=w-full md:w-1/2 lg:w-1/3-->
-
-| Pencil Sketch                                                                                                           |
-| ----------------------------------------------------------------------------------------------------------------------- |
-| ![Pencil Sketch](https://ba.stablecog.com/guide/prompting/styles_pencil_sketch.jpg)<!--rehype:width=1024&height=1024--> |
-
-<!--rehype:class=w-full md:w-1/2 lg:w-1/3-->
-
-| Cartoon                                                                                                     |
-| ----------------------------------------------------------------------------------------------------------- |
-| ![Cartoon](https://ba.stablecog.com/guide/prompting/styles_cartoon.jpg)<!--rehype:width=1024&height=1024--> |
-
-<!--rehype:class=w-full md:w-1/2 lg:w-1/3-->
-
-| Block Print                                                                                                   |
-| ------------------------------------------------------------------------------------------------------------- |
-| ![Anime](https://ba.stablecog.com/guide/prompting/styles_block_print.jpg)<!--rehype:width=1024&height=1024--> |
-
-<!--rehype:class=w-full md:w-1/2 lg:w-1/3-->
+<Cards>
+  <Card title="Watercolor" src="https://ba.stablecog.com/guide/prompting/styles_watercolor.jpg" width="1024" height="1024"/>
+  <Card title="Anime" src="https://ba.stablecog.com/guide/prompting/styles_anime.jpg" width="1024" height="1024"/>
+  <Card title="Papercut" src="https://ba.stablecog.com/guide/prompting/styles_papercut.jpg" width="1024" height="1024"/>
+  <Card title="Graffiti" src="https://ba.stablecog.com/guide/prompting/styles_graffiti.jpg" width="1024" height="1024"/>
+  <Card title="Pop Art" src="https://ba.stablecog.com/guide/prompting/styles_pop_art.jpg" width="1024" height="1024"/>
+  <Card title="Folk Art" src="https://ba.stablecog.com/guide/prompting/styles_folk_art.jpg" width="1024" height="1024"/>
+  <Card title="Pencil Sketch" src="https://ba.stablecog.com/guide/prompting/styles_pencil_sketch.jpg" width="1024" height="1024"/>
+  <Card title="Cartoon" src="https://ba.stablecog.com/guide/prompting/styles_cartoon.jpg" width="1024" height="1024"/>
+  <Card title="Block Print" src="https://ba.stablecog.com/guide/prompting/styles_block_print.jpg" width="1024" height="1024"/>
+</Cards>

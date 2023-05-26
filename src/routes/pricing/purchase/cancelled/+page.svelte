@@ -12,8 +12,7 @@
 <MetaTag
 	title="Cancelled | Stablecog"
 	description="Choose a plan that works for you and start using Stablecog. Free, multilingual and open-source AI image generator using Stable Diffusion and Kandinsky."
-	imageUrl="{canonicalUrl}/previews{$page.url.pathname}-{previewImageVersion}.png"
-	canonical="{canonicalUrl}{$page.url.pathname}"
+	image_url="{canonicalUrl}/previews{$page.url.pathname}-{previewImageVersion}.png"
 />
 
 <PageWrapper>

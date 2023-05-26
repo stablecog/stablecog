@@ -2,7 +2,6 @@
 	import IconButton from '$components/buttons/IconButton.svelte';
 	import { lgBreakpoint } from '$components/generationFullScreen/constants';
 	import IconChevronDown from '$components/icons/IconChevronDown.svelte';
-	import { isTouchscreen } from '$ts/stores/isTouchscreen';
 	import { windowWidth } from '$ts/stores/window';
 	import { quadOut } from 'svelte/easing';
 	import { fly } from 'svelte/transition';
@@ -40,9 +39,7 @@
 		>
 			<div class="p-0.5">
 				<IconChevronDown
-					class="w-7 h-7 text-c-on-bg/40 transition {!$isTouchscreen
-						? 'group-hover/iconbutton:text-c-primary'
-						: ''}"
+					class="w-7 h-7 text-c-on-bg/40 transition not-touch:group-hover/iconbutton:text-c-primary"
 				/>
 			</div>
 		</IconButton>

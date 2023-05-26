@@ -1,0 +1,10 @@
+{
+	"model_id": "22b0857d-7edc-4d00-9cd9-45aa509db093",
+	"scheduler_id": "b7224e56-1440-43b9-ac86-66d66f9e8c91",
+	"width": 768,
+	"height": 768,
+	"num_outputs": 4,
+	"guidance_scale": 7,
+	"inference_steps": 30,
+	"prompt_strength": 0.6
+}

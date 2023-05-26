@@ -15,7 +15,6 @@
 	import LogoButton from '$components/buttons/LogoButton.svelte';
 	import { browser } from '$app/environment';
 	import ScBar from '$components/ScBar.svelte';
-	import { isTouchscreen } from '$ts/stores/isTouchscreen';
 	import { onDestroy } from 'svelte';
 	export let hasCustomContent = false;
 
@@ -65,11 +64,7 @@
 			class="w-14 py-4 flex items-center justify-center group overflow-hidden relative z-0"
 		>
 			<ButtonHoverEffect size="md" noRounding noPadding hoverFrom="right" />
-			<IconCancel
-				class="text-c-on-bg/25 w-7 h-7 transition {!$isTouchscreen
-					? 'group-hover:text-c-primary'
-					: ''}"
-			/>
+			<IconCancel class="text-c-on-bg/25 w-7 h-7 transition not-touch:group-hover:text-c-primary" />
 		</button>
 	</div>
 	<div class="w-full h-2px bg-c-bg-secondary" />
@@ -95,14 +90,11 @@
 						>
 							<IconNavbarRoute
 								type={route.icon}
-								class="{!$isTouchscreen
-									? 'group-hover:text-c-primary'
-									: ''} transition flex-shrink-0"
+								class="not-touch:group-hover:text-c-primary transition flex-shrink-0"
 							/>
 							<p
-								class="flex-1 break-words flex flex-col overflow-hidden {!$isTouchscreen
-									? 'group-hover:text-c-primary'
-									: ''} transition flex-shrink"
+								class="flex-1 break-words flex flex-col overflow-hidden
+								not-touch:group-hover:text-c-primary transition flex-shrink"
 							>
 								{route.name}
 							</p>

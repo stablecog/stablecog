@@ -6,6 +6,11 @@ author_url: https://twitter.com/ngyekta
 date: 2023-03-10T13:00:00.000Z
 ---
 
+<script>
+  import Button from '$components/buttons/Button.svelte'
+  import DocImage from '$components/docs/DocImage.svelte'
+</script>
+
 We've been working on a big update to our systems to make Stablecog faster, more robust, and sustainable. It's finally here! Here's what's new.
 
 ## A Better System
@@ -26,9 +31,9 @@ Turns out, offering tens of thousands of generations to everyone for free wasn't
 
 Going forward, we are switching to an image based pricing model which align our incentives better. We are still offering free generations to everyone, but in a sustainable way. You can also [participate in our events](https://stablecog.com/discord) to get more free generations.
 
-[Check Out Plans](https://stablecog.com/pricing)<!--rehype:button=true-->
+<Button class="mt-5" href='https://stablecog.com/pricing' target="_blank">Check Out Plans</Button>
 
-![New Plans](https://ba.stablecog.com/blog/plans.jpg)<!--rehype:width=2560   &height= 1200-->
+<DocImage src="https://ba.stablecog.com/blog/plans.jpg" width="2560" height="1200" alt="New Plans" />
 
 If you are a pro user and aren't happy with the new plans, please email us at [hello@stablecog.com](mailto:hello@stablecog.com) and we'll work something out.
 
@@ -36,7 +41,7 @@ If you are a pro user and aren't happy with the new plans, please email us at [h
 
 Our new default model is Luna Diffusion, created by [@proximasan](https://twitter.com/proximasan). It's a more stylized model that is good at a variety of styles while not requiring long prompts. Using longer prompts, you can tweak the model to a style of your choice.
 
-![Luna Diffusion](https://ba.stablecog.com/blog/luna-diffusion.jpg)<!--rehype:width=2560   &height= 1440-->
+<DocImage src="https://ba.stablecog.com/blog/luna-diffusion.jpg" width="2560" height="1440" alt="Luna Diffusion" />
 
 ## New Schedulers
 

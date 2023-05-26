@@ -807,6 +807,7 @@ const nl: Translation = {
 		PageParagraph:
 			'Als je vragen hebt, neem dan contact met ons op via onderstaande links en we zullen ze zo snel mogelijk beantwoorden.'
 	},
+	Documentation: { PageTitle: 'Documentation' },
 	Guide: {
 		PageTitle: 'Handleiding',
 		GuideButton: 'Handleiding',

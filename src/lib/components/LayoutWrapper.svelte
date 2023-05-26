@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { isTouchscreen } from '$ts/stores/isTouchscreen';
 	import { themeApp } from '$ts/stores/theme';
 	import { windowHeight } from '$ts/stores/window';
 
@@ -17,7 +18,7 @@
 	"
 	class="w-full bg-c-bg text-c-on-bg flex flex-col {$themeApp === 'light'
 		? 'theme-light'
-		: 'theme-dark'} {isAppRoute ? 'overflow-hidden' : ''}"
+		: 'theme-dark'} {isAppRoute ? 'overflow-hidden' : ''} {!$isTouchscreen ? 'not-touch' : ''}"
 >
 	<slot />
 </div>

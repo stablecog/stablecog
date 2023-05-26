@@ -1,6 +1,5 @@
 <script lang="ts">
 	import ClearButton from '$components/buttons/ClearButton.svelte';
-	import { isTouchscreen } from '$ts/stores/isTouchscreen';
 
 	export let type: 'text' | 'email' | 'password' | 'number' = 'text';
 	export let value: string;
@@ -72,9 +71,7 @@
 				: 'shadow-c-shadow/[var(--o-shadow-normal)]'} focus:ring-2 ring-0 {bg === 'bg-secondary'
 				? 'ring-c-primary/20 focus:ring-c-primary/30'
 				: 'ring-c-primary/20 focus:ring-c-primary/35'}  
-      placeholder:text-c-on-bg/40 {!$isTouchscreen ? 'enabled:hover:ring-2' : ''} {!$isTouchscreen
-				? 'enabled:group-hover:ring-2'
-				: ''}"
+      placeholder:text-c-on-bg/40 not-touch:enabled:hover:ring-2 not-touch:enabled:group-hover:ring-2"
 		/>
 	{:else if type === 'password'}
 		<input
@@ -104,9 +101,7 @@
 				: 'shadow-c-shadow/[var(--o-shadow-normal)]'} focus:ring-2 ring-0 {bg === 'bg-secondary'
 				? 'ring-c-primary/20 focus:ring-c-primary/30'
 				: 'ring-c-primary/20 focus:ring-c-primary/35'} 
-      placeholder:text-c-on-bg/40 {!$isTouchscreen ? 'enabled:hover:ring-2' : ''} {!$isTouchscreen
-				? 'enabled:group-hover:ring-2'
-				: ''}"
+      placeholder:text-c-on-bg/40 not-touch:enabled:hover:ring-2 not-touch:enabled:group-hover:ring-2"
 		/>
 	{:else if type === 'number'}
 		<input
@@ -136,9 +131,7 @@
 				: 'shadow-c-shadow/[var(--o-shadow-normal)]'} focus:ring-2 ring-0 {bg === 'bg-secondary'
 				? 'ring-c-primary/20 focus:ring-c-primary/30'
 				: 'ring-c-primary/20 focus:ring-c-primary/35'}  
-      placeholder:text-c-on-bg/40 {!$isTouchscreen ? 'enabled:hover:ring-2' : ''} {!$isTouchscreen
-				? 'enabled:group-hover:ring-2'
-				: ''}"
+      placeholder:text-c-on-bg/40 not-touch:enabled:hover:ring-2 not-touch:enabled:group-hover:ring-2"
 		/>
 	{:else}
 		<input
@@ -168,9 +161,7 @@
 				: 'shadow-c-shadow/[var(--o-shadow-normal)]'} focus:ring-2 ring-0 {bg === 'bg-secondary'
 				? 'ring-c-primary/20 focus:ring-c-primary/30'
 				: 'ring-c-primary/20 focus:ring-c-primary/35'}  
-      placeholder:text-c-on-bg/40 {!$isTouchscreen ? 'enabled:hover:ring-2' : ''} {!$isTouchscreen
-				? 'enabled:group-hover:ring-2'
-				: ''}"
+      placeholder:text-c-on-bg/40 not-touch:enabled:hover:ring-2 not-touch:enabled:group-hover:ring-2"
 		/>
 	{/if}
 	<label

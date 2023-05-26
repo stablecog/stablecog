@@ -1,7 +1,6 @@
 <script lang="ts">
 	import TabBarWrapper from '$components/tabBars/TabBarWrapper.svelte';
 	import ToggleIndicator from '$components/ToggleIndicator.svelte';
-	import { isTouchscreen } from '$ts/stores/isTouchscreen';
 
 	export let isToggled: boolean;
 	export let onClick: () => void;
@@ -26,8 +25,8 @@
 		<div class="w-full h-full absolute left-0 top-0 rounded-r-lg">
 			<div class="w-full h-full overflow-hidden relative z-0 rounded-r-lg">
 				<div
-					class="w-full h-full origin-left rounded-r-lg transition transform translate-y-full 
-					bg-c-bg-secondary {!$isTouchscreen ? 'group-hover:translate-y-0' : ''}"
+					class="w-full h-full origin-left rounded-r-lg transition transform translate-y-full
+					bg-c-bg-secondary not-touch:group-hover:translate-y-0"
 				/>
 			</div>
 		</div>

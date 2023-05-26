@@ -4,8 +4,12 @@ author: M. Yekta Güngör
 description: Negative prompt is used for excluding certain things from the generated image. Learn more about it in our guide.
 author_url: https://twitter.com/ngyekta
 date: 2023-04-18T15:00:00.000Z
-preview_image_url: https://ba.stablecog.com/guide/previews/negative-prompt.jpg
 ---
+
+<script>
+  import Cards from '$components/docs/Cards.svelte';
+  import Card from '$components/docs/Card.svelte';
+</script>
 
 # Negative Prompt
 
@@ -17,28 +21,9 @@ For example, Stable Diffusion and various other fine-tuned models aren't best wh
 
 Two generations below have the exact same settings except for the negative prompt. The left one doesn't have any negative prompts. Right one has "green tones" as the negative prompt. Notice how the model tries to steer away from green tones in the right one.
 
-| No negative prompt                                                                                                                     |
-| -------------------------------------------------------------------------------------------------------------------------------------- |
-| ![No negative prompt](https://ba.stablecog.com/guide/generation-settings/negative_prompt_none.jpg)<!--rehype:width=1024&height=1536--> |
-
-<!--rehype:class=w-full md:w-1/2-->
-
-| Negative prompt: Green tones                                                                                                                            |
-| ------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| ![Negative prompt: green tones](https://ba.stablecog.com/guide/generation-settings/negative_prompt_green_tones.jpg)<!--rehype:width=1024&height=1536--> |
-
-<!--rehype:class=w-full md:w-1/2-->
-
-Here is another example. Again, both generations have the same settings except for the negative prompt. Left one has no negative prompt, right one has "angry" as the negative prompt. Notice how the model tries to steer away from an angry face in the right one.
-
-| No negative prompt                                                                                                                       |
-| ---------------------------------------------------------------------------------------------------------------------------------------- |
-| ![No negative prompt](https://ba.stablecog.com/guide/generation-settings/negative_prompt_2_none.jpg)<!--rehype:width=1024&height=1536--> |
-
-<!--rehype:class=w-full md:w-1/2-->
-
-| Negative prompt: Angry                                                                                                                        |
-| --------------------------------------------------------------------------------------------------------------------------------------------- |
-| ![Negative prompt: angry](https://ba.stablecog.com/guide/generation-settings/negative_prompt_2_angry.jpg)<!--rehype:width=1024&height=1536--> |
-
-<!--rehype:class=w-full md:w-1/2-->
+<Cards>
+  <Card size='wider' title="No negative prompt" src="https://ba.stablecog.com/guide/generation-settings/negative_prompt_none.jpg" width="1024" height="1536"/>
+  <Card size='wider' title="Negative prompt: Green tones" src="https://ba.stablecog.com/guide/generation-settings/negative_prompt_green_tones.jpg" width="1024" height="1536"/>
+  <Card size='wider' title="No negative prompt" src="https://ba.stablecog.com/guide/generation-settings/negative_prompt_2_none.jpg" width="1024" height="1536"/>
+  <Card size='wider' title="Negative prompt: Angry" src="https://ba.stablecog.com/guide/generation-settings/negative_prompt_2_angry.jpg" width="1024" height="1536"/>
+</Cards>

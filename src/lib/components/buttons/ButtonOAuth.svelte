@@ -1,7 +1,6 @@
 <script lang="ts">
 	import IconAnimatedSpinner from '$components/icons/IconAnimatedSpinner.svelte';
 	import IconOAuthProvider from '$components/icons/IconOAuthProvider.svelte';
-	import { isTouchscreen } from '$ts/stores/isTouchscreen';
 	import type { THrefTarget } from '$ts/types/main';
 	import type { Provider } from '@supabase/supabase-js';
 	export let disabled = false;
@@ -38,7 +37,7 @@
 			? 'hover'
 			: 'off'}
 		class="touch-manipulation relative flex items-center justify-center text-center
-			shadow-lg shadow-c-shadow/[var(--o-shadow-strong)] font-bold gap-2 
+			shadow-lg shadow-c-shadow/[var(--o-shadow-strong)] font-bold gap-2
 			overflow-hidden z-0 group {noPadding
 			? 'p-0'
 			: size === 'xs'
@@ -67,9 +66,8 @@
 	>
 		<div
 			style="width: {buttonSize}px; height: {buttonSize}px;"
-			class="absolute left-1/2 top-1/2 transform -translate-y-1/2 -translate-x-1/2 flex items-center justify-center {$isTouchscreen
-				? 'hidden'
-				: 'flex'}"
+			class="absolute left-1/2 top-1/2 transform -translate-y-1/2 -translate-x-1/2 items-center justify-center
+			hidden not-touch:flex"
 		>
 			<div
 				class="absolute w-full h-full rounded-full transition transform left-0 -translate-x-full
@@ -77,7 +75,7 @@
 					? 'bg-indigo-200'
 					: provider === 'discord'
 					? 'bg-[#4854d7]'
-					: 'bg-c-secondary'} {!$isTouchscreen ? 'group-enabled:group-hover:translate-x-0' : ''}"
+					: 'bg-c-secondary'} not-touch:group-enabled:group-hover:translate-x-0"
 			/>
 		</div>
 		<div class="w-full relative">
@@ -118,7 +116,7 @@
 		on:click={onClick}
 		disabled={disabled || loading}
 		class="touch-manipulation relative flex items-center justify-center text-center
-			shadow-lg shadow-c-shadow/[var(--o-shadow-strong)] font-bold gap-2 
+			shadow-lg shadow-c-shadow/[var(--o-shadow-strong)] font-bold gap-2
 			overflow-hidden z-0 group {noPadding
 			? 'p-0'
 			: size === 'xs'
@@ -147,9 +145,8 @@
 	>
 		<div
 			style="width: {buttonSize}px; height: {buttonSize}px;"
-			class="absolute left-1/2 top-1/2 transform -translate-y-1/2 -translate-x-1/2 flex items-center justify-center {$isTouchscreen
-				? 'hidden'
-				: 'flex'}"
+			class="absolute left-1/2 top-1/2 transform -translate-y-1/2 -translate-x-1/2 items-center justify-center
+			hidden not-touch:flex"
 		>
 			<div
 				class="absolute w-full h-full rounded-full transition transform left-0 -translate-x-full
@@ -157,7 +154,7 @@
 					? 'bg-indigo-200'
 					: provider === 'discord'
 					? 'bg-[#4854d7]'
-					: 'bg-c-secondary'} {!$isTouchscreen ? 'group-enabled:group-hover:translate-x-0' : ''}"
+					: 'bg-c-secondary'} not-touch:group-enabled:group-hover:translate-x-0"
 			/>
 		</div>
 		<div class="w-full relative">

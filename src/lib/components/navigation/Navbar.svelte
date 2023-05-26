@@ -4,7 +4,6 @@
 	import PageLoadProgressBar from '$components/PageLoadProgressBar.svelte';
 	import NavigationTabBar from '$components/navigation/NavigationTabBar.svelte';
 	import { clickoutside } from '$ts/actions/clickoutside';
-	import { isTouchscreen } from '$ts/stores/isTouchscreen';
 	import { onMount } from 'svelte';
 	import Banner from '$components/Banner.svelte';
 	import IconSc from '$components/icons/IconSc.svelte';
@@ -98,9 +97,8 @@
 				<div class="h-full flex items-center justify-center px-2.5 py-3 relative overflow-hidden">
 					<ButtonHoverEffect hoverFrom="left" size="md" color="primary-strong" />
 					<IconSidebar
-						class="w-8 h-8 transition text-c-on-bg {!$isTouchscreen
-							? 'group-hover:text-c-primary'
-							: ''} transform {$isDrawerOpen ? 'rotate-90' : ''}"
+						class="w-8 h-8 transition text-c-on-bg not-touch:group-hover:text-c-primary 
+						transform {$isDrawerOpen ? 'rotate-90' : ''}"
 					/>
 				</div>
 			</button>
@@ -119,7 +117,7 @@
 					$themeApp === 'light' &&
 					!notAtTheVeryTop
 						? 'text-c-bg'
-						: 'text-c-on-bg'} {!$isTouchscreen ? 'group-hover/iconbutton:text-c-primary' : ''}"
+						: 'text-c-on-bg'} not-touch:group-hover/iconbutton:text-c-primary"
 				/>
 			</IconButton>
 			<IconButton class="py-2 hidden md:block" href="/guide" name="Guide">
@@ -128,7 +126,7 @@
 					$themeApp === 'light' &&
 					!notAtTheVeryTop
 						? 'text-c-bg'
-						: 'text-c-on-bg'} {!$isTouchscreen ? 'group-hover/iconbutton:text-c-primary' : ''}"
+						: 'text-c-on-bg'} not-touch:group-hover/iconbutton:text-c-primary"
 				/>
 			</IconButton>
 			<IconButton class="py-2 hidden md:block" href="/blog" name="Blog">
@@ -137,7 +135,7 @@
 					$themeApp === 'light' &&
 					!notAtTheVeryTop
 						? 'text-c-bg'
-						: 'text-c-on-bg'} {!$isTouchscreen ? 'group-hover/iconbutton:text-c-primary' : ''}"
+						: 'text-c-on-bg'} not-touch:group-hover/iconbutton:text-c-primary"
 				/>
 			</IconButton>
 			<IconButton class="py-2 hidden md:block" href="/live" name="/live">
@@ -146,7 +144,7 @@
 					$themeApp === 'light' &&
 					!notAtTheVeryTop
 						? 'text-c-bg'
-						: 'text-c-on-bg'} {!$isTouchscreen ? 'group-hover/iconbutton:text-c-primary' : ''}"
+						: 'text-c-on-bg'} not-touch:group-hover/iconbutton:text-c-primary"
 				/>
 			</IconButton>
 			<div class="flex items-center justify-end pl-2 pr-3.5 md:pl-2.5 md:pr-5">
@@ -190,14 +188,13 @@
 									$themeApp === 'light' &&
 									!notAtTheVeryTop
 										? 'ring-c-bg/25'
-										: 'ring-c-on-bg/25'} overflow-hidden rounded-full transition transform relative {!$isTouchscreen
-										? $page.url.pathname === '/' && $themeApp === 'light' && !notAtTheVeryTop
-											? 'group-hover/iconbutton:ring-c-bg'
-											: 'group-hover/iconbutton:ring-c-on-bg'
-										: ''} {!$isTouchscreen && isAccountMenuOpen
+										: 'ring-c-on-bg/25'} overflow-hidden rounded-full transition transform relative
+										{$page.url.pathname === '/' && $themeApp === 'light' && !notAtTheVeryTop
+										? 'not-touch:group-hover/iconbutton:ring-c-bg'
+										: 'not-touch:group-hover/iconbutton:ring-c-on-bg'} {isAccountMenuOpen
 										? 'rotate-360'
-										: !$isTouchscreen && !isAccountMenuOpen
-										? ' group-hover/iconbutton:rotate-90'
+										: !isAccountMenuOpen
+										? 'not-touch:group-hover/iconbutton:rotate-90'
 										: ''}"
 								>
 									<Avatar str={$page.data.session.user.email} class="w-full h-full relative" />

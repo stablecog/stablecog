@@ -143,14 +143,14 @@
 					<IconAdjustmentsVertical
 						class="w-full h-full text-c-on-bg transition transform {isFiltersOpen
 							? 'rotate-90'
-							: 'rotate-0'} {!$isTouchscreen ? 'group-hover/iconbutton:text-c-primary' : ''}"
+							: 'rotate-0'} not-touch:group-hover/iconbutton:text-c-primary"
 					/>
 				</div>
 				<div slot="1" class="w-7 h-7">
 					<IconChevronDown
 						class="w-full h-full text-c-on-bg transition transform {isFiltersOpen
 							? 'rotate-180'
-							: 'rotate-90'} {!$isTouchscreen ? 'group-hover/iconbutton:text-c-primary' : ''}"
+							: 'rotate-90'} not-touch:group-hover/iconbutton:text-c-primary"
 					/>
 				</div>
 			</Morpher>

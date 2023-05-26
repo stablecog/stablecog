@@ -17,7 +17,7 @@
 	} from '$ts/stores/user/gallery';
 	import { isTouchscreen } from '$ts/stores/isTouchscreen';
 	import type { TGenerationFullOutput } from '$ts/stores/user/generation';
-	import GenerationAnimation from '$components/grids/GenerationAnimation.svelte';
+	import GenerationAnimation from '$components/generate/GenerationAnimation.svelte';
 	import { fade } from 'svelte/transition';
 	import { quadIn, quadOut } from 'svelte/easing';
 	import GenerateGridPlaceholder from '$components/generate/GenerateGridPlaceholder.svelte';
@@ -33,6 +33,7 @@
 	import type { Readable } from 'svelte/store';
 	import { windowHeight, windowWidth } from '$ts/stores/window';
 	import { onMount } from 'svelte';
+	import { loadedImages } from '$ts/stores/loadedImages';
 
 	export let generationsQuery: CreateInfiniteQueryResult<TUserGenerationFullOutputsPage, unknown>;
 	export let gridScrollContainer: HTMLDivElement | null = null;
@@ -115,9 +116,6 @@
 		: undefined;
 
 	const overscanMultiplierForNextPage = 0.25;
-
-	let shouldMeasureTimeout: NodeJS.Timeout;
-	const shouldMeasureDebounceTime = 300;
 
 	$: [gridScrollContainer, outputs, overscanCount], initiallySetGridVirtualizer();
 	$: $gridVirtualizer, onGridVirtualizerChanged();
@@ -261,8 +259,8 @@
 									{#if output.status === undefined || output.status === 'succeeded'}
 										<GenerationImage
 											{cardType}
+											didLoadBefore={loadedImages[output.image_url + cardType] === true}
 											{isGalleryEditActive}
-											useUpscaledImage={false}
 											generation={{
 												...output.generation,
 												selected_output: output

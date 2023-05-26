@@ -1,6 +1,5 @@
 <script lang="ts">
 	import IconCancel from '$components/icons/IconCancel.svelte';
-	import { isTouchscreen } from '$ts/stores/isTouchscreen';
 
 	export let show = false;
 	export let onClick: () => void;
@@ -31,18 +30,16 @@
 			<div class="w-full h-full rounded-lg relative z-0 overflow-hidden">
 				<div
 					class="w-full h-full origin-left rounded-lg transition transform -translate-x-full
-						bg-c-primary/25 group-focus/clearbutton:translate-x-0 {!$isTouchscreen
-						? 'group-hover/clearbutton:translate-x-0'
-						: 'group-active/clearbutton:translate-x-0'}"
+						bg-c-primary/25 group-focus/clearbutton:translate-x-0
+						group-active/clearbutton:translate-x-0 not-touch:group-hover/clearbutton:translate-x-0"
 				/>
 			</div>
 		</div>
 		<IconCancel
 			class="{type === 'sm'
 				? 'w-6 h-6'
-				: 'w-6 h-6 md:w-7 md:h-7'} transition text-c-on-bg/25 group-focus/clearbutton:text-c-primary {!$isTouchscreen
-				? 'group-hover/clearbutton:text-c-primary'
-				: 'group-active/clearbutton:text-c-primary'}"
+				: 'w-6 h-6 md:w-7 md:h-7'} transition text-c-on-bg/25 group-focus/clearbutton:text-c-primary
+				group-active/clearbutton:text-c-primary not-touch:group-hover/clearbutton:text-c-primary"
 		/>
 	</button>
 </div>

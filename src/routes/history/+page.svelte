@@ -10,18 +10,15 @@
 		xxlBreakpoint
 	} from '$components/generationFullScreen/constants';
 	import GenerationFullScreen from '$components/generationFullScreen/GenerationFullScreen.svelte';
-	import GenerationGridInfinite from '$components/grids/GenerationGridInfinite.svelte';
 	import GenerationGridInfinite2 from '$components/grids/GenerationGridInfinite2.svelte';
 	import IconFolderOutlined from '$components/icons/IconFolderOutlined.svelte';
 	import IconSadFace from '$components/icons/IconSadFace.svelte';
 	import IconStarOutlined from '$components/icons/IconStarOutlined.svelte';
 	import MetaTag from '$components/MetaTag.svelte';
-	import ModalWrapper from '$components/ModalWrapper.svelte';
 	import SearchAndFilterBar from '$components/SearchAndFilterBar.svelte';
 	import SignInCard from '$components/SignInCard.svelte';
 	import TabBar from '$components/tabBars/TabBar.svelte';
 	import LL, { locale } from '$i18n/i18n-svelte';
-	import { clickoutside } from '$ts/actions/clickoutside';
 	import type { TAvailableGenerationModelId } from '$ts/constants/generationModels';
 	import { canonicalUrl } from '$ts/constants/main';
 	import { previewImageVersion } from '$ts/constants/previewImageVersion';
@@ -44,7 +41,7 @@
 	import { userSummary } from '$ts/stores/user/summary';
 	import { windowWidth } from '$ts/stores/window';
 	import type { TTab } from '$ts/types/main';
-	import { activeGeneration, type TGenerationFullOutput } from '$userStores/generation';
+	import { activeGeneration } from '$userStores/generation';
 	import { createInfiniteQuery, type CreateInfiniteQueryResult } from '@tanstack/svelte-query';
 
 	let totalOutputs: number;
@@ -166,13 +163,12 @@
 <MetaTag
 	title="History | Stablecog"
 	description="See your generation history on Stablecog. Free, multilingual and open-source AI image generator using Stable Diffusion and Kandinsky."
-	imageUrl="{canonicalUrl}/previews{$page.url.pathname}-{previewImageVersion}.png"
-	canonical="{canonicalUrl}{$page.url.pathname}"
+	image_url="{canonicalUrl}/previews{$page.url.pathname}-{previewImageVersion}.png"
 />
 
 <svelte:window on:keydown={onKeyDown} />
 
-<div class="w-full flex-1 flex flex-col items-center px-1 md:py-6">
+<div class="w-full flex-1 flex flex-col items-center px-1 md:pt-3 md:pb-6">
 	{#if !$page.data.session?.user.id}
 		<div class="w-full flex-1 max-w-7xl flex justify-center px-2 py-4 md:py-2 md:px-8">
 			<div class="my-auto flex flex-col">

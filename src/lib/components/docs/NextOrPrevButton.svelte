@@ -11,7 +11,7 @@
 <a
 	data-sveltekit-preload-data="hover"
 	href={item.pathname}
-	class="w-full md:w-auto md:flex-1 max-w-full overflow-hidden gap-4 px-4 py-3 flex group justify-between items-center 
+	class="w-full md:w-auto md:flex-1 max-w-full overflow-hidden gap-4 px-4 py-3 flex group justify-between items-center
   rounded-xl ring-2 ring-c-bg-secondary group relative bg-c-bg shadow-lg shadow-c-shadow/[var(--o-shadow-normal)] {type ===
 	'next'
 		? 'text-left'
@@ -33,7 +33,7 @@
 			: 'items-end'}"
 	>
 		<p
-			class="max-w-full font-normal overflow-hidden overflow-ellipsis whitespace-nowrap text-sm text-c-on-bg/50"
+			class="max-w-full font-normal overflow-hidden overflow-ellipsis whitespace-nowrap text-sm text-c-on-bg/60"
 		>
 			{type === 'next' ? $LL.Guide.NextTitle() : $LL.Guide.PreviousTitle()}
 		</p>

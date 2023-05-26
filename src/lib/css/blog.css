@@ -4,7 +4,7 @@
 	--e-default: cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.blog h1 {
+.blog > h1 {
 	font-weight: 700;
 	font-size: 2rem;
 	text-align: center;
@@ -13,7 +13,7 @@
 	width: 100%;
 }
 
-.blog h2 {
+.blog > h2 {
 	font-weight: 700;
 	font-size: 1.6rem;
 	margin-top: 2rem;
@@ -21,26 +21,29 @@
 	line-height: 1.35;
 	width: 100%;
 }
-.blog h3 {
+.blog > h3 {
 	font-weight: 600;
 	font-size: 1.25rem;
 	margin-top: 2.5rem;
 	line-height: 1.5;
 	width: 100%;
 }
-.blog h1 + p {
+.blog > p + h3 {
+	margin-top: 1.5rem;
+}
+.blog > h1 + p {
 	margin-top: 0.25rem;
 }
-.blog h2 + p {
+.blog > h2 + p {
 	margin-top: 0.5rem;
 }
-.blog h3 + p {
+.blog > h3 + p {
 	margin-top: 0.5rem;
 }
-.blog h2 + h3 {
+.blog > h2 + h3 {
 	margin-top: 1rem;
 }
-.blog p, .blog li{
+.blog > p, .blog li{
 	width: 100%;
 	font-size: 1rem;
 	line-height: 1.7;
@@ -68,7 +71,7 @@
 }
 
 @media (min-width: 768px) {
-	.blog p, .blog li, .blog table, .toc-item-h2{
+	.blog > p, .blog > li, .blog > table, .toc-item-h2{
 		font-size: 1.125rem;
 	}
 }
@@ -82,6 +85,10 @@
 	margin-top: 1rem;
 	list-style: disc;
 	margin-left: 2.5rem;
+}
+
+.blog h2 + ul, .blog h3 + ul {
+	margin-top: 0rem;
 }
 .blog ol li, .blog ul li {
 	margin-top: 0.5rem;
@@ -100,7 +107,7 @@
 .blog p:first-child {
 	margin-top: 0rem;
 }
-.blog a {
+.blog p a, .blog h1 a, .blog h2 a, .blog h3 a, .blog h4 a, .blog h5 a, .blog h6 a {
 	transition: all 0.2s var(--e-default);
 	position: relative;
 	padding: 0px 2px;
@@ -109,8 +116,8 @@
 	box-shadow: 0 -2px 0 0 rgba(var(--c-primary) / 0.5) inset;
 	z-index: 0;
 }
-.blog a:hover,
-.blog a:focus-visible {
+.blog p a:hover,
+.blog p a:focus-visible {
 	color: rgba(var(--c-on-primary));
 	border-radius: 4px;
 	box-shadow: 0 -1.3rem 0 0 rgba(var(--c-primary)) inset;
@@ -127,15 +134,6 @@
 	border-radius: 5px;
 	box-shadow: 0 -1.4rem 0 0 rgba(var(--c-primary)) inset;
 }
-
-.blog img[class] {
-	transition: box-shadow 0.2s var(--e-default);
-	background: rgba(var(--c-bg-tertiary));
-	border-radius: 0;
-	margin: 0;
-	box-shadow: none
-}
-
 
 .blog .inline {
 	display: inline-block;
@@ -189,85 +187,6 @@
   }
 }
 
-.blog img {
-	transition: box-shadow 0.2s var(--e-default);
-	background: rgba(var(--c-bg-tertiary));
-	border-radius: 0.5rem;
-	margin-top: 1rem;
-	margin-bottom: 1.25rem;
-	box-shadow: 0 0 0 2px rgba(var(--c-bg-tertiary)),
-		0 0.5rem 1rem rgba(var(--c-shadow) / var(--o-shadow-strong));
-}
-
-.blog a:hover > img,
-.blog a:focus-visible > img {
-	box-shadow: 0 0 0 3px rgba(var(--c-primary) / 0.5),
-		0 0.5rem 1rem rgba(var(--c-shadow) / var(--o-shadow-strong));
-}
-.blog a[button]::after {
-	content: '';
-	width: calc(100% + 2rem);
-	height: 100%;
-	left: -1rem;
-	top: 0;
-	transform: translateX(calc(-100% + 1rem));
-	background: rgba(var(--c-secondary));
-	border-radius: 9999px;
-	position: absolute;
-}
-.blog a[button] {
-	display: inline-block;
-	position: relative;
-	overflow: hidden;
-	transition: all 0.2s var(--e-default);
-	padding: 1rem 1.5rem;
-	margin: 0;
-	text-align: center;
-	background-color: rgba(var(--c-primary));
-	border-radius: 0.75rem;
-	font-weight: 700;
-	color: rgba(var(--c-on-primary));
-	z-index: 0;
-	--tw-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
-	--tw-shadow-colored: 0 10px 15px -3px var(--tw-shadow-color),
-		0 4px 6px -4px var(--tw-shadow-color);
-	box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000),
-		var(--tw-shadow);
-	--tw-shadow-color: rgb(var(--c-shadow) / var(--o-shadow-strong));
-	--tw-shadow: var(--tw-shadow-colored);
-}
-
-.blog a[button]:hover {
-	background-color: rgba(var(--c-secondary));
-}
-
-.blog a[button]:focus-visible {
-	outline: none;
-	box-shadow: 0 0 0 4px rgb(var(--c-bg)), 0 0 0 6px rgb(var(--c-primary));
-	z-index: 10;
-}
-
-.blog a[width-full] {
-	width: 100%;
-}
-
-.blog a[hasimage] {
-	transition: all 0.2s var(--e-default);
-	padding: 0;
-	margin: 0 0;
-	border-radius: 0;
-	box-shadow: none;
-	z-index: 0;
-}
-
-.blog a[hasimage]:hover,
-.blog a[hasimage]:focus-visible {
-	padding: 0;
-	margin: 0;
-	border-radius: 0;
-	box-shadow: none;
-}
-
 .blog-link {
 	transition: all 0.2s var(--e-default);
 	position: relative;
@@ -285,14 +204,6 @@
 	box-shadow: 0 -1.3rem 0 0 rgba(var(--c-primary)) inset;
 }
 
-.blog .flex {
-	display: flex;
-	flex-direction: row;
-}
-
-.blog .justify-center {
-	justify-content: center;
-}
 
 .toc li {
 	margin-left: 0;

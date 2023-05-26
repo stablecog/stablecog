@@ -1,153 +1,138 @@
-pre code.hljs {
-  display: block;
-  overflow-x: auto;
-  padding: 0.5rem 0.8rem;
-  border-radius: 0.75rem;
+ code[class*="language-"],
+ pre[class*="language-"] {
+   color: rgb(var(--c-on-bg));
+   background: none;
+   font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+   text-align: left;
+   white-space: pre;
+   word-spacing: normal;
+   word-break: normal;
+   word-wrap: normal;
+   line-height: 1.5;
+   -moz-tab-size: 4;
+   -o-tab-size: 4;
+   tab-size: 4;
+   -webkit-hyphens: none;
+   -moz-hyphens: none;
+   -ms-hyphens: none;
+   hyphens: none;
+ }
+ 
+ /* Code blocks */
+ pre[class*="language-"] {
+    padding: 0.5rem 0.75rem;
+   margin-top: 1rem;
+   overflow: auto;
+   border-radius: 0.6rem;
+   box-shadow: 0 0 0 2px rgb(var(--c-bg-tertiary));
+ }
+
+ @media (min-width: 768px) {
+  pre[class*="language-"] {
+    padding: 0.75rem 1.25rem;
+  }
+ }
+
+ h3 + pre[class*="language-"] {
   margin-top: 1rem;
 }
-
-code.hljs {
-  padding: 3px 5px;
+ h1 + pre[class*="language-"] {
+  margin-top: 0.75rem;
 }
 
-.hljs {
-  color: rgb(var(--c-on-bg));
-  background: rgb(var(--c-bg-secondary));
-  border: solid 2px rgba(var(--c-bg-tertiary));
-  width: 100%;
-  font-size: 0.9rem;
+  h2 + pre[class*="language-"] {
+    margin-top: 0.75rem;
 }
 
-@media (min-width: 768px) {
-  pre code.hljs {
-    padding: 0.7rem 1.1rem;
-  }
+ .tabs pre[class*="language-"] {
+  margin-top: 0rem;
+  border-start-start-radius: 0;
+  border-start-end-radius: 0;
 }
-
-
-.hljs::selection,
-.hljs ::selection {
-  background-color: rgba(var(--c-primary)/0.5);
-  color: rgb(var(--c-on-bg));
-}
-
-
-/* purposely do not highlight these things */
-/* .hljs-formula,
-.hljs-params,
-.hljs-property
-{} */
-
-/* base03 - #626483 -  Comments, Invisibles, Line Highlighting */
-.hljs-comment {
+ 
+ :not(pre) > code[class*="language-"],
+ pre[class*="language-"] {
+   background: rgb(var(--c-bg-secondary));
+ }
+ 
+ /* Inline code */
+ :not(pre) > code[class*="language-"] {
+   padding: .1rem;
+   border-radius: 0.6rem;
+   white-space: normal;
+ }
+ 
+ .token.comment,
+ .token.prolog,
+ .token.doctype,
+ .token.cdata {
   color: rgba(var(--c-on-bg)/0.5);
-}
-
-/* base04 - #62d6e8 -  Dark Foreground (Used for status bars) */
-.hljs-tag {
-  color: #62d6e8;
-}
-
-/* base05 - #e9e9f4 -  Default Foreground, Caret, Delimiters, Operators */
-.hljs-subst,
-.hljs-punctuation,
-.hljs-operator {
+ }
+ 
+ .token.punctuation {
+   color: rgb(var(--c-on-bg));
+ }
+ 
+ .namespace {
+   opacity: .7;
+ }
+ 
+ .token.property,
+ .token.tag,
+ .token.constant,
+ .token.symbol,
+ .token.deleted {
+   color: rgb(var(--c-tertiary));;
+ }
+ 
+ .token.boolean,
+ .token.number {
+   color: rgb(var(--c-primary));
+ }
+ 
+ .token.selector,
+ .token.attr-name,
+ .token.string,
+ .token.char,
+ .token.builtin,
+ .token.inserted {
+   color: rgb(var(--c-success));
+ }
+ 
+ .token.operator,
+ .token.entity,
+ .token.url,
+ .language-css .token.string,
+ .style .token.string,
+ .token.variable {
   color: rgb(var(--c-on-bg));
-}
-
-.hljs-operator {
-  opacity: 0.7;
-}
-
-/* base08 - Variables, XML Tags, Markup Link Text, Markup Lists, Diff Deleted */
-.hljs-bullet,
-.hljs-variable,
-.hljs-template-variable,
-.hljs-selector-tag,
-.hljs-name,
-.hljs-deletion {
-  color: #ea51b2;
-}
-
-/* base09 - Integers, Boolean, Constants, XML Attributes, Markup Link Url */
-.hljs-symbol,
-.hljs-number,
-.hljs-link,
-.hljs-attr,
-.hljs-variable.constant_,
-.hljs-literal {
-  color: rgb(var(--c-tertiary));
-}
-
-/* base0A - Classes, Markup Bold, Search Text Background */
-.hljs-title,
-.hljs-class .hljs-title,
-.hljs-title.class_
-{
-  color: rgb(var(--c-secondary));
-}
-
-.hljs-strong {
-  font-weight:bold;
-  color: rgb(var(--c-secondary));
-}
-
-/* base0B - Strings, Inherited Class, Markup Code, Diff Inserted */
-.hljs-code,
-.hljs-addition,
-.hljs-title.class_.inherited__,
-.hljs-string {
-  color: rgb(var(--c-success));
-}
-
-/* base0C - Support, Regular Expressions, Escape Characters, Markup Quotes */
-.hljs-built_in,
-.hljs-doctag, /* guessing */
-.hljs-quote,
-.hljs-keyword.hljs-atrule,
-.hljs-regexp {
-  color: rgb(var(--c-secondary));
-}
-
-/* base0D - Functions, Methods, Attribute IDs, Headings */
-.hljs-function .hljs-title,
-.hljs-attribute,
-.ruby .hljs-property,
-.hljs-title.function_,
-.hljs-section {
-  color: #62d6e8;
-}
-
-/* base0E - Keywords, Storage, Selector, Markup Italic, Diff Changed */
-.hljs-type,
-/* .hljs-selector-id, */
-/* .hljs-selector-class, */
-/* .hljs-selector-attr, */
-/* .hljs-selector-pseudo, */
-.hljs-template-tag,
-.diff .hljs-meta,
-.hljs-keyword {
-  color: rgb(var(--c-primary));
-}
-.hljs-emphasis {
-  color: #b45bcf;
-  font-style: italic;
-}
-
-/* base0F - Deprecated, Opening/Closing Embedded Language Tags, e.g. <?php ?> */
-.hljs-meta,
-/*
-  prevent top level .keyword and .string scopes
-  from leaking into meta by accident
-*/
-.hljs-meta .hljs-keyword,
-.hljs-meta .hljs-string
-{
-  color: rgb(var(--c-secondary));
-}
-
-.hljs-meta .hljs-keyword,
-/* for v10 compatible themes */
-.hljs-meta-keyword {
-  font-weight: bold;
-}
+ }
+ 
+ .token.atrule,
+ .token.attr-value,
+ .token.function,
+ .token.class-name {
+   color: rgb(var(--c-secondary));
+ }
+ 
+ .token.keyword {
+   color: rgb(var(--c-primary));
+ }
+ 
+ .token.regex,
+ .token.important {
+   color: #ffb86c;
+ }
+ 
+ .token.important,
+ .token.bold {
+   font-weight: bold;
+ }
+ 
+ .token.italic {
+   font-style: italic;
+ }
+ 
+ .token.entity {
+   cursor: help;
+ }

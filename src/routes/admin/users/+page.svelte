@@ -5,7 +5,6 @@
 	import { canonicalUrl } from '$ts/constants/main';
 	import PageWrapper from '$components/PageWrapper.svelte';
 	import { getRelativeDate } from '$ts/helpers/getRelativeDate';
-	import { isTouchscreen } from '$ts/stores/isTouchscreen';
 	import { navbarHeight } from '$ts/stores/navbarHeight';
 	import Input from '$components/Input.svelte';
 	import IconSearch from '$components/icons/IconSearch.svelte';
@@ -235,8 +234,7 @@
 <MetaTag
 	title="Users | Admin"
 	description="Stablecog admin panel. Free, multilingual and open-source AI image generator using Stable Diffusion and Kandinsky."
-	imageUrl="{canonicalUrl}/previews/home-{previewImageVersion}.png"
-	canonical="{canonicalUrl}{$page.url.pathname}"
+	image_url="{canonicalUrl}/previews/home-{previewImageVersion}.png"
 />
 
 <svelte:window
@@ -418,9 +416,8 @@
 									<div class="max-w-full flex flex-col items-start">
 										<button
 											bind:this={isDropdownOpen[user.id].buttonElement}
-											class="max-w-full flex flex-col items-start justify-start transition rounded {!$isTouchscreen
-												? 'hover:bg-c-primary/15 hover:text-c-primary'
-												: ''}"
+											class="max-w-full flex flex-col items-start justify-start transition rounded
+											not-touch:hover:bg-c-primary/15 not-touch:hover:text-c-primary"
 											on:click|stopPropagation|capture={() => toggleUserDropdown(user.id)}
 										>
 											<p
@@ -506,25 +503,22 @@
 																			<div class="w-full flex justify-between items-center gap-5">
 																				{#if creditToAdd && creditToAdd.user_id === user.id && creditToAdd.credit_type_id === creditOption.id}
 																					<p
-																						class="w-full text-c-on-bg transition text-sm text-center font-bold {!$isTouchscreen
-																							? 'group-hover:text-c-primary'
-																							: ''}"
+																						class="w-full text-c-on-bg transition text-sm text-center font-bold
+																						not-touch:group-hover:text-c-primary"
 																					>
 																						{$LL.Shared.ConfirmQuestionMarkButton()}
 																					</p>
 																				{:else}
 																					<p
 																						class="flex-shrink min-w-0
-																					 text-c-on-bg transition text-sm text-left font-medium text-c-on-bg/60 {!$isTouchscreen
-																							? 'group-hover:text-c-primary'
-																							: ''}"
+																					 text-c-on-bg transition text-sm text-left font-medium text-c-on-bg/60
+																					 not-touch:group-hover:text-c-primary"
 																					>
 																						{creditOption.name}
 																					</p>
 																					<p
-																						class="text-c-on-bg transition text-sm text-right font-bold {!$isTouchscreen
-																							? 'group-hover:text-c-primary'
-																							: ''}"
+																						class="text-c-on-bg transition text-sm text-right font-bold
+																						not-touch:group-hover:text-c-primary"
 																					>
 																						{creditOption.amount.toLocaleString($locale)}
 																					</p>
@@ -540,9 +534,7 @@
 																	onClick={() => changeUserDropdownState(user.id, 'gift-credits')}
 																>
 																	<p
-																		class="text-left text-c-on-bg transition {!$isTouchscreen
-																			? 'group-hover:text-c-primary'
-																			: ''}"
+																		class="text-left text-c-on-bg transition not-touch:group-hover:text-c-primary"
 																	>
 																		{$LL.Admin.Users.GiftCreditsButton()}
 																	</p>
@@ -555,14 +547,11 @@
 																>
 																	<div class="max-w-full flex items-center gap-2">
 																		<IconWarning
-																			class="w-5 h-5 text-c-danger flex-shrink-0 {!$isTouchscreen
-																				? 'group-hover:text-c-primary'
-																				: ''}"
+																			class="w-5 h-5 text-c-danger flex-shrink-0 not-touch:group-hover:text-c-primary"
 																		/>
 																		<p
-																			class="flex-1 min-w-0 overflow-hidden overflow-ellipsis text-left text-c-danger transition {!$isTouchscreen
-																				? 'group-hover:text-c-primary'
-																				: ''}"
+																			class="flex-1 min-w-0 overflow-hidden overflow-ellipsis text-left text-c-danger
+																			transition not-touch:group-hover:text-c-primary"
 																		>
 																			{user.banned_at
 																				? $LL.Admin.Users.UnbanUserButton()
@@ -607,9 +596,9 @@
 										rel="noreferrer"
 										href="https://dashboard.stripe.com/customers/{user.stripe_customer_id}"
 										target="_blank"
-										class="max-w-full text-xs text-c-on-bg/50 bg-c-on-bg/5 rounded-lg px-2.5 py-1.5 mt-2.5 transition ring-0 ring-c-primary/20 {!$isTouchscreen
-											? 'hover:text-c-primary hover:bg-c-primary/10 hover:ring-2'
-											: ''}"
+										class="max-w-full text-xs text-c-on-bg/50 bg-c-on-bg/5 rounded-lg px-2.5
+										py-1.5 mt-2.5 transition ring-0 ring-c-primary/20
+										not-touch:hover:text-c-primary not-touch:hover:bg-c-primary/10 not-touch:hover:ring-2"
 									>
 										{user.stripe_customer_id}
 									</a>

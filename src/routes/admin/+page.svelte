@@ -1,5 +1,4 @@
 <script lang="ts">
-	import { page } from '$app/stores';
 	import IconNavbarRoute from '$components/icons/IconNavbarRoute.svelte';
 	import MetaTag from '$components/MetaTag.svelte';
 	import type { TNavbarRouteOption } from '$components/navigation/routes';
@@ -7,7 +6,6 @@
 	import { canonicalUrl } from '$ts/constants/main';
 	import { previewImageVersion } from '$ts/constants/previewImageVersion';
 	import { isSuperAdmin } from '$ts/helpers/admin/roles';
-	import { isTouchscreen } from '$ts/stores/isTouchscreen';
 	import { userSummary } from '$ts/stores/user/summary';
 
 	interface TAdminRoute {
@@ -36,8 +34,7 @@
 <MetaTag
 	title="Admin | Stablecog"
 	description="Stablecog admin panel. Free, multilingual and open-source AI image generator using Stable Diffusion and Kandinsky."
-	imageUrl="{canonicalUrl}/previews/home-{previewImageVersion}.png"
-	canonical="{canonicalUrl}{$page.url.pathname}"
+	image_url="{canonicalUrl}/previews/home-{previewImageVersion}.png"
 />
 
 <div class="w-full flex-1 flex justify-center px-5 py-6 md:py-8 pb-[calc(3vh)]">
@@ -48,18 +45,16 @@
 				data-sveltekit-preload-data="hover"
 				class="w-full max-w-md md:max-w-xs p-5 md:p-6 gap-2 self-stretch bg-c-bg-secondary ring-2 ring-c-bg-tertiary relative z-0 overflow-hidden
 					rounded-xl flex flex-col items-center shadow-lg shadow-c-shadow/[var(--o-shadow-normal)] transition group
-					{!$isTouchscreen
-					? 'hover:ring-4 hover:shadow-xl hover:shadow-c-shadow/[var(--o-shadow-strong)] hover:-translate-y-1.5'
-					: ''}"
+					not-touch:hover:ring-4 not-touch:hover:shadow-xl
+					not-touch:hover:shadow-c-shadow/[var(--o-shadow-strong)] not-touch:hover:-translate-y-1.5"
 			>
 				<IconNavbarRoute
-					class="w-14 h-14 -mt-0.5 transition {!$isTouchscreen ? 'group-hover:text-c-primary' : ''}"
+					class="w-14 h-14 -mt-0.5 transition not-touch:group-hover:text-c-primary"
 					type={route.icon}
 				/>
 				<p
-					class="max-w-full text-center font-bold text-lg leading-snug text-c-on-bg transition {!$isTouchscreen
-						? 'group-hover:text-c-primary'
-						: ''}"
+					class="max-w-full text-center font-bold text-lg leading-snug text-c-on-bg transition
+					not-touch:group-hover:text-c-primary"
 				>
 					{route.title}
 				</p>

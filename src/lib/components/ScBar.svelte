@@ -2,7 +2,6 @@
 	import IconBlog from '$components/icons/IconBlog.svelte';
 	import IconGuide from '$components/icons/IconGuide.svelte';
 	import { socialAppUrls, socialAppUrlsAbsolute } from '$ts/constants/social';
-	import { isTouchscreen } from '$ts/stores/isTouchscreen';
 	import IconButton from './buttons/IconButton.svelte';
 	import IconSc from './icons/IconSc.svelte';
 
@@ -28,7 +27,7 @@
 					? 'w-12 h-12'
 					: 'w-10 h-10'} transition {color === 'normal'
 					? 'text-c-on-bg'
-					: 'text-c-on-bg/50'} {!$isTouchscreen ? 'group-hover/iconbutton:text-c-primary' : ''}"
+					: 'text-c-on-bg/50'} not-touch:group-hover/iconbutton:text-c-primary"
 			/>
 		</IconButton>
 	{/if}
@@ -41,7 +40,7 @@
 					? 'w-12 h-12'
 					: 'w-10 h-10'} transition {color === 'normal'
 					? 'text-c-on-bg'
-					: 'text-c-on-bg/50'} {!$isTouchscreen ? 'group-hover/iconbutton:text-c-primary' : ''}"
+					: 'text-c-on-bg/50'} not-touch:group-hover/iconbutton:text-c-primary"
 			/>
 		</IconButton>
 	{/if}
@@ -58,7 +57,7 @@
 				? 'w-12 h-12'
 				: 'w-10 h-10'} transition {color === 'normal'
 				? 'text-c-on-bg'
-				: 'text-c-on-bg/50'} {!$isTouchscreen ? 'group-hover/iconbutton:text-c-primary' : ''}"
+				: 'text-c-on-bg/50'} not-touch:group-hover/iconbutton:text-c-primary"
 		/>
 	</IconButton>
 	<IconButton
@@ -74,7 +73,7 @@
 				? 'w-12 h-12'
 				: 'w-10 h-10'} transition {color === 'normal'
 				? 'text-c-on-bg'
-				: 'text-c-on-bg/50'} {!$isTouchscreen ? 'group-hover/iconbutton:text-c-primary' : ''}"
+				: 'text-c-on-bg/50'} not-touch:group-hover/iconbutton:text-c-primary"
 		/>
 	</IconButton>
 	<IconButton
@@ -90,7 +89,7 @@
 				? 'w-12 h-12'
 				: 'w-10 h-10'} transition {color === 'normal'
 				? 'text-c-on-bg'
-				: 'text-c-on-bg/50'} {!$isTouchscreen ? 'group-hover/iconbutton:text-c-primary' : ''}"
+				: 'text-c-on-bg/50'} not-touch:group-hover/iconbutton:text-c-primary"
 		/>
 	</IconButton>
 	<IconButton
@@ -106,7 +105,7 @@
 				? 'w-12 h-12'
 				: 'w-10 h-10'} transition {color === 'normal'
 				? 'text-c-on-bg'
-				: 'text-c-on-bg/50'} {!$isTouchscreen ? 'group-hover/iconbutton:text-c-primary' : ''}"
+				: 'text-c-on-bg/50'} not-touch:group-hover/iconbutton:text-c-primary"
 		/>
 	</IconButton>
 	{#if withEmail}
@@ -124,7 +123,7 @@
 					? 'w-12 h-12'
 					: 'w-10 h-10'} transition {color === 'normal'
 					? 'text-c-on-bg'
-					: 'text-c-on-bg/50'} {!$isTouchscreen ? 'group-hover/iconbutton:text-c-primary' : ''}"
+					: 'text-c-on-bg/50'} not-touch:group-hover/iconbutton:text-c-primary"
 			/>
 		</IconButton>
 	{/if}

@@ -11,7 +11,6 @@
 	import LL from '$i18n/i18n-svelte';
 	import { expandCollapse } from '$ts/animation/transitions';
 	import { canonicalUrl } from '$ts/constants/main';
-	import { isTouchscreen } from '$ts/stores/isTouchscreen';
 	import { quadOut } from 'svelte/easing';
 	import type { PageServerData } from './$types';
 	import { previewImageVersion } from '$ts/constants/previewImageVersion';
@@ -71,8 +70,7 @@
 <MetaTag
 	title="Change Email | Stablecog"
 	description="Change your account's email address on Stablecog. Free, multilingual and open-source AI image generator using Stable Diffusion and Kandinsky."
-	imageUrl="{canonicalUrl}/previews{$page.url.pathname}-{previewImageVersion}.png"
-	canonical="{canonicalUrl}{$page.url.pathname}"
+	image_url="{canonicalUrl}/previews{$page.url.pathname}-{previewImageVersion}.png"
 />
 
 <PageWrapper>
@@ -114,15 +112,9 @@
 						<DropdownItem onClick={() => (changeEmailStatus = 'idle')}>
 							<div class="w-full flex items-center justify-center gap-2.5">
 								<IconBack
-									class="text-c-on-bg/60 w-6 h-6 transition {!$isTouchscreen
-										? 'group-hover:text-c-primary'
-										: ''}"
+									class="text-c-on-bg/60 w-6 h-6 transition not-touch:group-hover:text-c-primary"
 								/>
-								<p
-									class="text-c-on-bg/60 transition {!$isTouchscreen
-										? 'group-hover:text-c-primary'
-										: ''}"
-								>
+								<p class="text-c-on-bg/60 transition not-touch:group-hover:text-c-primary">
 									{$LL.Shared.GoBackButton()}
 								</p>
 							</div>

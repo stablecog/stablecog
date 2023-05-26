@@ -1,15 +1,19 @@
 <script lang="ts">
+	import { page } from '$app/stores';
+	import { canonicalUrl } from '$ts/constants/main';
 	import { MetaTags } from 'svelte-meta-tags';
 
 	export let title: string;
 	export let description: string;
-	export let canonical: string;
-	export let imageUrl: string | undefined = undefined;
-	export let imageWidth = 1200;
-	export let imageHeight = 630;
+	export let canonical: string | undefined = undefined;
+	export let image_url: string | undefined = undefined;
+	export let image_width = 1200;
+	export let image_height = 630;
 	export let article_published_time: string | undefined = undefined;
 	export let article_author: string | undefined = undefined;
 	export let article_publisher: string | undefined = undefined;
+
+	$: canonicalFallback = canonicalUrl + ($page.url.pathname !== '/' ? $page.url.pathname : '');
 </script>
 
 <svelte:head>
@@ -26,28 +30,28 @@
 <MetaTags
 	{title}
 	{description}
-	{canonical}
+	canonical={canonical || canonicalFallback}
 	openGraph={{
 		type: 'website',
 		url: canonical,
 		title: title,
 		description: description,
-		images: imageUrl
+		images: image_url
 			? [
 					{
-						url: imageUrl,
-						width: imageWidth,
-						height: imageHeight
+						url: image_url,
+						width: image_width,
+						height: image_height
 					}
 			  ]
 			: undefined
 	}}
-	twitter={imageUrl
+	twitter={image_url
 		? {
 				cardType: 'summary_large_image',
 				title: title,
 				description: description,
-				image: imageUrl
+				image: image_url
 		  }
 		: undefined}
 />

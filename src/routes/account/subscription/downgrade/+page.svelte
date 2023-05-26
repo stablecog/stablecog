@@ -16,7 +16,6 @@
 	} from '$ts/constants/stripePublic';
 	import { getTitleFromProductId } from '$ts/helpers/stripe/plan';
 	import { getUserSummary } from '$ts/helpers/user/user';
-	import { isTouchscreen } from '$ts/stores/isTouchscreen';
 	import { userSummary } from '$ts/stores/user/summary';
 	import type { PageServerData } from './$types';
 
@@ -84,8 +83,7 @@
 <MetaTag
 	title="Change Plan | Stablecog"
 	description="Change your Stablecog subscription plan. Free, multilingual and open-source AI image generator using Stable Diffusion and Kandinsky."
-	imageUrl="{canonicalUrl}/previews{$page.url.pathname}-{previewImageVersion}.png"
-	canonical="{canonicalUrl}{$page.url.pathname}"
+	image_url="{canonicalUrl}/previews{$page.url.pathname}-{previewImageVersion}.png"
 />
 
 <PageWrapper>
@@ -144,13 +142,9 @@
 					<div class="flex items-center justify-center gap-2.5 px-2 py-1">
 						<IconBack
 							class="w-6 h-6 transform transition text-c-on-bg/50 group-hover:-translate-x-1
-							{!$isTouchscreen ? 'group-hover:text-c-primary' : ''}"
+							not-touch:group-hover:text-c-primary"
 						/>
-						<p
-							class="font-bold transition text-c-on-bg/50 {!$isTouchscreen
-								? 'group-hover:text-c-primary'
-								: ''}"
-						>
+						<p class="font-bold transition text-c-on-bg/50 not-touch:group-hover:text-c-primary">
 							{$LL.Shared.GoBackButton()}
 						</p>
 					</div>

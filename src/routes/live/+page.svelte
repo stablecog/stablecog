@@ -208,8 +208,7 @@
 <MetaTag
 	title="Live | Stablecog"
 	description="Watch generations happening live on Stablecog. Free, multilingual and open-source AI image generator using Stable Diffusion and Kandinsky."
-	imageUrl="{canonicalUrl}/previews{$page.url.pathname}-{previewImageVersion}.png"
-	canonical="{canonicalUrl}{$page.url.pathname}"
+	image_url="{canonicalUrl}/previews{$page.url.pathname}-{previewImageVersion}.png"
 />
 
 <div class="w-full flex-1 flex justify-center pb-[calc(2vh)]">

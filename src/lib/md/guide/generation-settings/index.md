@@ -4,7 +4,6 @@ description: Learn about each generation setting used for generating images on S
 author: M. Yekta Güngör
 author_url: https://twitter.com/ngyekta
 date: 2023-04-18T15:00:00.000Z
-preview_image_url: https://ba.stablecog.com/guide/previews/generation-settings.jpg
 ---
 
 # Generation Settings

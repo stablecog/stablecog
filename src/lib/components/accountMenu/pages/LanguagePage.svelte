@@ -8,7 +8,6 @@
 	import { loadLocaleAsync } from '$i18n/i18n-util.async';
 	import { modalCloseDelay } from '$ts/constants/main';
 	import { languageName } from '$ts/helpers/language';
-	import { isTouchscreen } from '$ts/stores/isTouchscreen';
 	import { localeLS } from '$ts/stores/localeLS';
 
 	export let closeMenu: () => void;
@@ -42,7 +41,7 @@
 					</div>
 					<p
 						class="flex-1 min-w-0 overflow-hidden overflow-ellipsis whitespace-nowrap text-left
-							 transition text-c-on-bg {!$isTouchscreen ? 'group-hover:text-c-primary' : ''}"
+							 transition text-c-on-bg not-touch:group-hover:text-c-primary"
 					>
 						{languageName(locale).of(locale)}
 					</p>

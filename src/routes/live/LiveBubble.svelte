@@ -1,9 +1,4 @@
 <script lang="ts">
-	import IconChip from '$components/icons/IconChip.svelte';
-	import IconCloud from '$components/icons/IconCloud.svelte';
-	import IconCloudFilled from '$components/icons/IconCloudFilled.svelte';
-	import IconCodeBracket from '$components/icons/IconCodeBracket.svelte';
-	import IconCommandLine from '$components/icons/IconCommandLine.svelte';
 	import IconRobot from '$components/icons/IconRobot.svelte';
 	import IconServer from '$components/icons/IconServer.svelte';
 	import LL, { locale } from '$i18n/i18n-svelte';
@@ -164,7 +159,7 @@
 					<IconRobot class="text-c-on-primary/75 w-6 h-6 -mt-1" />
 				{:else if generationOrUpscale.country_code}
 					{#if generationOrUpscale.source === 'api'}
-						<IconServer class="text-c-on-primary/75 w-4 h-4 -mb-0.5 -mt-0.5" />
+						<IconServer class="text-c-on-primary/75 w-4 h-4 -mb-0.25 -mt-0.5" />
 					{/if}
 					<p class="text-center text-xs font-bold text-c-on-primary/75 cursor-default relative">
 						{generationOrUpscale.country_code}

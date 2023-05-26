@@ -1,7 +1,6 @@
 <script lang="ts">
 	import { page } from '$app/stores';
 	import Avatar from '$components/Avatar.svelte';
-	import { isTouchscreen } from '$ts/stores/isTouchscreen';
 </script>
 
 <div class="w-full flex items-center gap-3.5 px-4.5 py-4">
@@ -15,9 +14,8 @@
 	</div>
 	<div class="min-w-0 flex-1 flex flex-col">
 		<p
-			class="flex-1 min-w-0 overflow-hidden overflow-ellipsis font-bold transition {!$isTouchscreen
-				? 'group-hover:text-c-primary'
-				: ''}"
+			class="flex-1 min-w-0 overflow-hidden overflow-ellipsis font-bold transition
+			not-touch:group-hover:text-c-primary"
 		>
 			{$page.data.session?.user.email}
 		</p>

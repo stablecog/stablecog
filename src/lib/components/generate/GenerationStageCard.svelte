@@ -1,13 +1,14 @@
 <script lang="ts">
 	import ImagePlaceholder from '$components/ImagePlaceholder.svelte';
 	import GenerationImage from '$components/generationImage/GenerationImage.svelte';
-	import GenerationAnimation from '$components/grids/GenerationAnimation.svelte';
+	import GenerationAnimation from '$components/generate/GenerationAnimation.svelte';
 	import IconEyeSlashOutline from '$components/icons/IconEyeSlashOutline.svelte';
 	import IconSadFaceOutline from '$components/icons/IconSadFaceOutline.svelte';
 	import LL from '$i18n/i18n-svelte';
 	import type { TGenerationWithSelectedOutput } from '$ts/stores/user/generation';
 	import { quadIn, quadOut } from 'svelte/easing';
-	import { fade, fly } from 'svelte/transition';
+	import { fade, fly, scale } from 'svelte/transition';
+	import IconImage from '$components/icons/IconImage.svelte';
 
 	export let generation: TGenerationWithSelectedOutput;
 
@@ -24,7 +25,12 @@
 	>
 		<div class="w-full h-full relative rounded-xl z-0 overflow-hidden">
 			{#if generation.is_placeholder}
-				<!-- content here -->
+				<div
+					out:scale|local={{ duration: 200, easing: quadOut, opacity: 0 }}
+					class="w-full h-full absolute left-0 top-0 flex flex-col gap-3 items-center justify-center"
+				>
+					<IconImage class="w-1/6 max-w-[2.5rem] h-auto text-c-on-bg/20" />
+				</div>
 			{:else if status !== 'failed' && status !== 'failed-nsfw'}
 				{#if status !== undefined && status !== 'succeeded' && animation !== undefined}
 					<div
@@ -35,7 +41,7 @@
 					</div>
 				{/if}
 				{#if status === undefined || status === 'succeeded'}
-					<GenerationImage cardType="stage" useUpscaledImage {generation} />
+					<GenerationImage cardType="stage" {generation} />
 				{/if}
 			{:else}
 				{@const sizeClasses =

@@ -1,20 +1,21 @@
 <script lang="ts">
-	import { isTouchscreen } from '$ts/stores/isTouchscreen';
-	import { quadOut } from 'svelte/easing';
-	import { fade } from 'svelte/transition';
-
 	export let hoverFrom: 'top' | 'left' | 'bottom' | 'right' = 'bottom';
 	export let size: 'lg' | 'md' | 'sm' | 'xs' = 'lg';
-	export let color: 'primary' | 'on-bg' | 'bg-secondary' | 'secondary' | 'primary-strong' =
-		'primary';
+	export let color:
+		| 'primary'
+		| 'on-bg'
+		| 'bg-secondary'
+		| 'bg-tertiary'
+		| 'secondary'
+		| 'primary-strong' = 'primary';
 	export let hovered = false;
 	export let noPadding = false;
 	export let noRounding = false;
 	export let paddingClass: string | undefined = undefined;
+	export let hasShadow = false;
 </script>
 
 <div
-	transition:fade|local={{ duration: 200, easing: quadOut }}
 	class="w-full h-full absolute left-0 top-0 {paddingClass
 		? paddingClass
 		: !noPadding
@@ -22,7 +23,13 @@
 		: ''}"
 >
 	<div
-		class="w-full h-full relative z-0 overflow-hidden {noRounding
+		class="w-full h-full relative z-0 overflow-hidden transition {hasShadow
+			? 'shadow-md'
+			: ''} {hasShadow
+			? hovered
+				? 'shadow-c-shadow/[var(--o-shadow-strong)]'
+				: 'shadow-c-shadow/0'
+			: ''} {noRounding
 			? ''
 			: size === 'xs'
 			? 'rounded'
@@ -46,6 +53,8 @@
 				? 'bg-c-on-bg/10'
 				: color === 'bg-secondary'
 				? 'bg-c-bg-secondary'
+				: color === 'bg-tertiary'
+				? 'bg-c-bg-tertiary'
 				: color === 'secondary'
 				? 'bg-c-secondary/15'
 				: color === 'primary-strong'
@@ -58,9 +67,8 @@
 				? 'rounded-md'
 				: size === 'md'
 				? 'rounded-lg'
-				: 'rounded-xl'} {!$isTouchscreen
-				? 'group-hover:translate-x-0 group-hover:translate-y-0 group-hover:opacity-100'
-				: ''}"
+				: 'rounded-xl'} not-touch:group-hover:translate-x-0
+				not-touch:group-hover:translate-y-0 not-touch:group-hover:opacity-100"
 		/>
 	</div>
 </div>

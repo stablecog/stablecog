@@ -237,8 +237,7 @@
 <MetaTag
 	title="Stablecog | Generate"
 	description="Create amazing art in seconds with AI. Free, multilingual and open-source AI image generator using Stable Diffusion and Kandinsky."
-	imageUrl="{canonicalUrl}/previews/home-{previewImageVersion}.png"
-	canonical={canonicalUrl}
+	image_url="{canonicalUrl}/previews/home-{previewImageVersion}.png"
 />
 
 <svelte:window on:keydown={onKeyDown} />

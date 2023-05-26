@@ -1,7 +1,6 @@
 <script lang="ts">
 	import ButtonHoverEffect from '$components/buttons/ButtonHoverEffect.svelte';
 	import IconChevronDown from '$components/icons/IconChevronDown.svelte';
-	import { isTouchscreen } from '$ts/stores/isTouchscreen';
 
 	export let element: HTMLButtonElement;
 	export let name: string;
@@ -47,8 +46,8 @@
 				? side === 'left'
 					? '-translate-x-1.5'
 					: 'translate-x-1.5'
-				: ''} {side === 'left' ? 'rotate-90' : '-rotate-90'} {!$isTouchscreen && onClick
-				? 'group-hover:text-c-primary'
+				: ''} {side === 'left' ? 'rotate-90' : '-rotate-90'} {onClick
+				? 'not-touch:group-hover:text-c-primary'
 				: ''} group-disabled:opacity-15"
 		/>
 	</div>

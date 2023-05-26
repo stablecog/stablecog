@@ -1,0 +1,31 @@
+{
+	"outputs": [
+		{
+			"id": "0077dfca-1ef8-4cb2-9bcf-0bb468c0ae13",
+			"url": "https://b.stablecog.com/f5c7b65f-aa6d-42b4-93c6-cb0c593509ed.jpeg"
+		},
+		{
+			"id": "daa383dc-42f7-4137-92b6-4087af7b4aab",
+			"url": "https://b.stablecog.com/5c2bdf90-7ec9-4e48-b95d-dcd4b40716c6.jpeg"
+		},
+		{
+			"id": "bd253ac6-64b1-4073-867b-e8587f7020df",
+			"url": "https://b.stablecog.com/39d89fe6-17df-4255-a790-3645d111d891.jpeg"
+		},
+		{
+			"id": "730789df-f1b1-4731-a5ab-dacf8f5c4e7b",
+			"url": "https://b.stablecog.com/3dcbfcc2-13d0-4a5c-8490-04d648496a8d.jpeg"
+		}
+	],
+	"remaining_credits": 1392,
+	"settings": {
+		"model_id": "22b0857d-7edc-4d00-9cd9-45aa509db093",
+		"scheduler_id": "b7224e56-1440-43b9-ac86-66d66f9e8c91",
+		"width": 768,
+		"height": 768,
+		"num_outputs": 4,
+		"guidance_scale": 7,
+		"inference_steps": 30,
+		"seed": 1874745162
+	}
+}

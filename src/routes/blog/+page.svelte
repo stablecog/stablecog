@@ -2,71 +2,29 @@
 	import { page } from '$app/stores';
 	import MetaTag from '$components/MetaTag.svelte';
 	import PageWrapper from '$components/PageWrapper.svelte';
-	import { PUBLIC_BUCKET_AUX_URL } from '$env/static/public';
-	import LL, { locale } from '$i18n/i18n-svelte';
+	import BlogPostCard from '$components/docs/BlogPostCard.svelte';
+	import LL from '$i18n/i18n-svelte';
 	import { canonicalUrl } from '$ts/constants/main';
 	import { previewImageVersion } from '$ts/constants/previewImageVersion';
-	import { isTouchscreen } from '$ts/stores/isTouchscreen';
-	import type { PageServerData } from './$types';
 
-	export let data: PageServerData;
-
-	const posts = data.posts;
+	export let data;
 </script>
 
 <MetaTag
 	title="Blog | Stablecog"
 	description="Articles about Stable Diffusion tips and tricks, Stable Diffusion experiments, other AI related topics and the latest Stablecog news."
-	imageUrl="{canonicalUrl}/previews{$page.url.pathname}-{previewImageVersion}.png"
-	canonical="{canonicalUrl}{$page.url.pathname}"
+	image_url="{canonicalUrl}/previews{$page.url.pathname}-{previewImageVersion}.png"
 />
 
 <PageWrapper>
 	<div class="w-full max-w-7xl flex justify-center text-center">
 		<h1 class="font-bold text-4xl">{$LL.Blog.Title()}</h1>
 	</div>
-	<div class="w-full max-w-7xl md:px-8 flex flex-wrap gap-5 items-start justify-center mt-8">
-		{#each posts as post}
-			<a
-				href="/blog/{post.slug}"
-				data-sveltekit-preload-data="hover"
-				class="w-full self-stretch max-w-md md:max-w-sm bg-c-bg-secondary ring-2 ring-c-bg-tertiary relative z-0 overflow-hidden
-				rounded-xl flex flex-col shadow-lg shadow-c-shadow/[var(--o-shadow-normal)] transition group
-				{!$isTouchscreen
-					? 'hover:ring-4 hover:shadow-xl hover:shadow-c-shadow/[var(--o-shadow-strong)] hover:-translate-y-1.5'
-					: ''}"
-			>
-				<div class="w-full h-auto relative z-0 overflow-hidden">
-					<svg class="w-full h-auto relative" viewBox="0 0 1200 630" />
-					<img
-						src="{PUBLIC_BUCKET_AUX_URL}/blog/previews/{post.slug}.jpg"
-						class="bg-c-tertiary w-full h-auto absolute left-0 top-0 origin-top transition transform"
-						alt={post.title}
-						width="1200"
-						height="630"
-					/>
-				</div>
-				<div class="w-full flex flex-col items-start px-5 pt-4 pb-4 relative flex-1">
-					<p
-						class="font-semibold text-lg leading-snug text-c-on-bg transition {!$isTouchscreen
-							? 'group-hover:text-c-primary'
-							: ''}"
-					>
-						{post.title}
-					</p>
-					<p class="text-sm text-c-on-bg/60 mt-2 leading-normal">{post.description}</p>
-					<div class="flex-1" />
-					<p
-						class="mb-auto text-sm flex justify-start mt-2.5 bg-c-on-bg/8 text-c-on-bg/60 px-2 py-0.75 rounded"
-					>
-						{new Date(post.date).toLocaleDateString($locale, {
-							year: 'numeric',
-							month: 'short',
-							day: 'numeric'
-						})}
-					</p>
-				</div>
-			</a>
+	<div class="w-[100%+2.5rem] -mx-5 max-w-7xl flex flex-wrap items-start justify-center mt-6">
+		{#each data.posts as post}
+			<div class="w-full self-stretch flex max-w-md md:w-1/2 lg:w-1/3 xl:w-auto xl:max-w-sm p-2">
+				<BlogPostCard {post} />
+			</div>
 		{/each}
 	</div>
 </PageWrapper>

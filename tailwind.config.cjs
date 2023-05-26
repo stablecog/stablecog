@@ -1,3 +1,5 @@
+import plugin from 'tailwindcss/plugin';
+
 function withOpacityValue(variable) {
 	return ({ opacityValue }) => {
 		if (opacityValue === undefined) {
@@ -9,6 +11,11 @@ function withOpacityValue(variable) {
 
 /** @type {import('tailwindcss').Config} */
 module.exports = {
+	plugins: [
+		plugin(function ({ addVariant }) {
+			addVariant('not-touch', '.not-touch &'); // here
+		})
+	],
 	content: ['./src/**/*.{html,js,svelte,ts}'],
 	theme: {
 		extend: {
@@ -20,6 +27,7 @@ module.exports = {
 				'c-on-bg-secondary': withOpacityValue('--c-on-bg-secondary'),
 				'c-primary': withOpacityValue('--c-primary'),
 				'c-primary-secondary': withOpacityValue('--c-primary-secondary'),
+				'c-tertiary': withOpacityValue('--c-tertiary'),
 				'c-on-primary': withOpacityValue('--c-on-primary'),
 				'c-secondary': withOpacityValue('--c-secondary'),
 				'c-danger': withOpacityValue('--c-danger'),

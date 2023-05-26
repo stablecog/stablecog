@@ -4,8 +4,12 @@ description: Openjourney is a fine-tuned Stable Diffusion model trained on 100K+
 author: M. Yekta Güngör
 author_url: https://twitter.com/ngyekta
 date: 2023-04-18T15:00:00.000Z
-preview_image_url: https://ba.stablecog.com/guide/previews/openjourney.jpg
 ---
+
+<script>
+  import Button from '$components/buttons/Button.svelte'
+  import DocImage from '$components/docs/DocImage.svelte'
+</script>
 
 # Openjourney
 
@@ -17,16 +21,20 @@ The model does a good job of mimicking the style of Midjourney images in some ca
 
 Here are some images created with Openjourney on Stablecog.
 
-![Openjourney Examples](https://ba.stablecog.com/guide/models/openjourney.jpg)<!--rehype:width=2560&height=3840-->
+<DocImage src="https://ba.stablecog.com/guide/models/openjourney.jpg" alt="Openjourney Examples" width="2560" height="3840"/>
 
 ## Try Openjourney
 
 You can try Openjourney on Stablecog for free. Just click the button below.
 
-[Try Openjourney](https://stablecog.com/?mi=8acfe4c8-751d-4aa6-8c3c-844e3ef478e0&adv=true)<!--rehype:button=true-->
+<Button class="mt-4" href="https://stablecog.com/generate/?mi=8acfe4c8-751d-4aa6-8c3c-844e3ef478e0&adv=true" target="_blank">
+Try Openjourney
+</Button>
 
 ## Openjourney on Stablecog Gallery
 
 You can also see more examples of images created with Openjourney in our gallery by clicking the button below.
 
-[Expore on Gallery](https://stablecog.com/gallery?mi=8acfe4c8-751d-4aa6-8c3c-844e3ef478e0)<!--rehype:button=true-->
+<Button class="mt-4" href="https://stablecog.com/gallery?mi=8acfe4c8-751d-4aa6-8c3c-844e3ef478e0" target="_blank">
+  Explore on Gallery
+</Button>

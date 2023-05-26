@@ -1,7 +1,6 @@
 <script lang="ts">
 	import { page } from '$app/stores';
 	import IconNavbarRoute from '$components/icons/IconNavbarRoute.svelte';
-	import { isTouchscreen } from '$ts/stores/isTouchscreen';
 	import type { TTabBarPlacement } from '$ts/types/main';
 	import TabBarWrapper from '$components/tabBars/TabBarWrapper.svelte';
 	import { routes, type TNavbarRoute } from '$components/navigation/routes';
@@ -47,10 +46,8 @@
 					items-center justify-center px-4 transition-all relative font-semibold {type === 'bottom'
 						? 'pt-4 pb-4.5'
 						: 'py-4'} {isSelected(route, $page.url.pathname)
-						? 'text-c-on-bg'
-						: 'text-c-on-bg/50'} {isSelected(route, $page.url.pathname) && !$isTouchscreen
-						? 'hover:text-c-primary'
-						: 'text-c-on-bg'}"
+						? 'text-c-on-bg not-touch:hover:text-c-primary'
+						: 'text-c-on-bg/50'}"
 					href={route.href}
 				>
 					<div
@@ -63,7 +60,7 @@
 								class="w-full h-full origin-left rounded-lg transition transform translate-y-full
 									bg-c-bg-secondary {isSelected(route, $page.url.pathname)
 									? 'group-focus-within:translate-y-0'
-									: ''} {!$isTouchscreen ? 'group-hover:translate-y-0' : ''}"
+									: ''} not-touch:group-hover:translate-y-0"
 							/>
 						</div>
 					</div>

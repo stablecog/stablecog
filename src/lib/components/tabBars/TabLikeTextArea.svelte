@@ -2,7 +2,6 @@
 	import ClearButton from '$components/buttons/ClearButton.svelte';
 	import TabBarWrapper from '$components/tabBars/TabBarWrapper.svelte';
 	import { autoresize } from '$ts/actions/textarea/autoresize';
-	import { isTouchscreen } from '$ts/stores/isTouchscreen';
 
 	export let value: string | undefined;
 	export let placeholder: string | undefined = undefined;
@@ -76,12 +75,11 @@
 				}
 			}}
 			{placeholder}
-			class="hide-scrollbar resize-none text-base w-full text-c-on-bg self-stretch overflow-ellipsis ring-0 transition ring-c-primary/15 focus:ring-c-primary/25 focus:ring-2 
-						pl-4 py-3.5 {hasTitle
-				? 'rounded-r-xl'
-				: 'rounded-xl'} bg-transparent placeholder:text-c-on-bg/40 {!$isTouchscreen
-				? 'hover:ring-2 group-hover:ring-2'
-				: ''} {showClearInputButton ? 'pr-10 md:pr-12' : 'pr-4'}"
+			class="hide-scrollbar resize-none text-base w-full text-c-on-bg self-stretch overflow-ellipsis ring-0 transition ring-c-primary/15 focus:ring-c-primary/25 focus:ring-2
+						pl-4 py-3.5 {hasTitle ? 'rounded-r-xl' : 'rounded-xl'} bg-transparent placeholder:text-c-on-bg/40
+				not-touch:hover:ring-2 not-touch:group-hover:ring-2 {showClearInputButton
+				? 'pr-10 md:pr-12'
+				: 'pr-4'}"
 		/>
 		<ClearButton {disabled} show={showClearInputButton} onClick={clearInput} type="sm" />
 	</div>

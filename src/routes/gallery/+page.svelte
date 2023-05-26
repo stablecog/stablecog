@@ -2,10 +2,9 @@
 	import { browser } from '$app/environment';
 	import { page } from '$app/stores';
 	import GenerationFullScreen from '$components/generationFullScreen/GenerationFullScreen.svelte';
-	import GenerationGridInfinite from '$components/grids/GenerationGridInfinite.svelte';
 	import IconSearch from '$components/icons/IconSearch.svelte';
 	import MetaTag from '$components/MetaTag.svelte';
-	import LL, { locale } from '$i18n/i18n-svelte';
+	import LL from '$i18n/i18n-svelte';
 	import { canonicalUrl } from '$ts/constants/main';
 	import { getGalleryMetaTagDescriptionFromPromptText } from '$ts/helpers/metaTag';
 	import { getPreviewImageUrlFromOutputId } from '$ts/helpers/getPreviewImageUrl';
@@ -104,7 +103,7 @@
 				generationFullOutputFromData.generation.prompt.text
 		  )
 		: 'A gallery full of images created with Stable Diffusion and Kandinsky. Check out the images and their metadata including their prompt, negative prompt, inference steps, guidance scale and seed. Generate similar images directly from the gallery or submit your own.'}
-	imageUrl={generationFullOutputFromData
+	image_url={generationFullOutputFromData
 		? getPreviewImageUrlFromOutputId(generationFullOutputFromData.id)
 		: `${canonicalUrl}/previews${$page.url.pathname}.png`}
 	canonical={generationFullOutputFromData
@@ -165,13 +164,13 @@
 				<GenerationGridInfinite2
 					cardType="gallery"
 					generationsQuery={galleryGenerationFullOutputsQuery}
-					cols={$windowWidth > xxlBreakpoint
+					cols={$windowWidth >= xxlBreakpoint
 						? 6
-						: $windowWidth > xlBreakpoint
+						: $windowWidth >= xlBreakpoint
 						? 5
-						: $windowWidth > lgBreakpoint
+						: $windowWidth >= lgBreakpoint
 						? 4
-						: $windowWidth > mdBreakpoint
+						: $windowWidth >= mdBreakpoint
 						? 3
 						: 2}
 				/>

@@ -48,6 +48,7 @@
 	import UpscaleAnimation from '$components/generate/UpscaleAnimation.svelte';
 	import SideButton from '$components/generationFullScreen/SideButton.svelte';
 	import { removeFromRecentlyUpdatedOutputIds } from '$ts/stores/user/recentlyUpdatedOutputIds';
+	import SrcsetProvider from '$components/generationImage/SrcsetProvider.svelte';
 
 	export let generation: TGenerationWithSelectedOutput;
 	export let modalType: TGenerationFullScreenModalType;
@@ -219,6 +220,11 @@
 
 	$: upscaledTabValue, setCurrentImageUrl();
 
+	$: backgroundImageUrl =
+		modalType !== 'stage' && generation.selected_output.upscaled_image_url
+			? generation.selected_output.upscaled_image_url
+			: generation.selected_output.image_url;
+
 	function setCurrentImageUrl() {
 		if (
 			upscaledTabValue === 'upscaled' &&
@@ -288,13 +294,17 @@
 		<div class="relative self-stretch flex items-center">
 			{#if generation.selected_output.image_url}
 				{#key generation.selected_output.id}
-					<img
-						class="w-full h-full absolute left-0 top-0 transform scale-125 blur-xl translate-3d-0"
-						src={generation.selected_output.image_url}
-						alt="Blurred background for: {generation.prompt.text}"
-						width={generation.width}
-						height={generation.height}
-					/>
+					<SrcsetProvider src={backgroundImageUrl} cardType={modalType} let:sizes let:srcset>
+						<img
+							class="w-full h-full absolute left-0 top-0 transform scale-125 blur-xl translate-3d-0"
+							{sizes}
+							src={generation.selected_output.image_url}
+							{srcset}
+							alt="Blurred background for: {generation.prompt.text}"
+							width={generation.width}
+							height={generation.height}
+						/>
+					</SrcsetProvider>
 				{/key}
 			{/if}
 			<div class="w-full h-full absolute left-0 top-0 bg-c-bg/50" />
@@ -322,7 +332,7 @@
 					{#key generation.selected_output.id}
 						<GenerationFullScreenImageSet
 							prompt={generation.prompt.text}
-							backgroundImageUrl={generation.selected_output.image_url}
+							{backgroundImageUrl}
 							backgroundImageWidth={generation.width}
 							backgroundImageHeight={generation.height}
 							imageUrl={currentImageUrl}
@@ -333,6 +343,7 @@
 								? upscaledImageHeight
 								: generation.height}
 							{onImageLoad}
+							cardType={modalType}
 						/>
 					{/key}
 					{#if $upscales && $upscales.length > 0 && upscaleFromStore?.status === 'failed'}

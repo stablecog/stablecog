@@ -6,7 +6,6 @@
 	import LL from '$i18n/i18n-svelte';
 	import { canonicalUrl } from '$ts/constants/main';
 	import { previewImageVersion } from '$ts/constants/previewImageVersion';
-	import { isTouchscreen } from '$ts/stores/isTouchscreen';
 
 	const featuredOn: TFeaturedOn[] = [
 		{
@@ -28,8 +27,7 @@
 <MetaTag
 	title="Featured On | Stablecog"
 	description="Platform featuring Stablecog. Free, multilingual and open-source AI image generator using Stable Diffusion and Kandinsky."
-	imageUrl="{canonicalUrl}/previews{$page.url.pathname}-{previewImageVersion}.png"
-	canonical="{canonicalUrl}{$page.url.pathname}"
+	image_url="{canonicalUrl}/previews{$page.url.pathname}-{previewImageVersion}.png"
 />
 
 <PageWrapper>
@@ -44,9 +42,8 @@
 						rel="noopener noreferrer"
 						class="relative w-full h-full p-4 flex transition items-center justify-center rounded-xl
           		ring-2 ring-c-bg-tertiary bg-c-bg-secondary shadow-lg shadow-c-shadow/[var(--o-shadow-normal)] group
-				  		{!$isTouchscreen
-							? 'hover:text-c-primary hover:ring-4 hover:shadow-xl hover:shadow-c-shadow/[var(--o-shadow-strong)] hover:-translate-y-1.5'
-							: 'text-c-on-bg'}"
+				  		text-c-on-bg not-touch:hover:text-c-primary not-touch:hover:ring-4 not-touch:hover:shadow-xl
+							not-touch:hover:shadow-c-shadow/[var(--o-shadow-strong)] not-touch:hover:-translate-y-1.5"
 					>
 						{@html featured.logo}
 					</a>
@@ -57,9 +54,7 @@
 						target="_blank"
 					>
 						<p
-							class="font-semibold transition text-c-on-bg/50 {!$isTouchscreen
-								? 'group-hover:text-c-primary'
-								: ''}"
+							class="font-semibold transition text-c-on-bg/50 not-touch:group-hover:text-c-primary"
 						>
 							{featured.name}
 						</p>

@@ -70,6 +70,7 @@
 	import Drawer from '$components/navigation/Drawer.svelte';
 	import { isLeftSidebarHidden, isLeftSidebarHiddenApp } from '$ts/stores/sidebars';
 	import LayoutWrapper from '$components/LayoutWrapper.svelte';
+	import { isTouchscreen } from '$ts/stores/isTouchscreen.js';
 
 	export let data;
 
@@ -79,7 +80,7 @@
 
 	const rawRoutes = ['/'];
 	const appRoutes = ['/generate'];
-	const routesWithTheirOwnDrawer = ['/guide'];
+	const routesWithTheirOwnDrawer = ['/guide', '/docs'];
 	const sseExcludedRoutes = ['/'];
 
 	const gss = data.globalSeedStore;
@@ -134,7 +135,7 @@
 		if (mounted) fn();
 	};
 
-	$: $themeApp, setBodyClasses();
+	$: [$themeApp, $isTouchscreen], setBodyClasses();
 	$: isDrawerRoute =
 		!routesWithTheirOwnDrawer.includes($page.url.pathname) &&
 		!routesWithTheirOwnDrawer.some((r) => $page.url.pathname.startsWith(r));

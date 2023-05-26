@@ -12,7 +12,6 @@
 	import IconSignOut from '$components/icons/IconSignOut.svelte';
 	import { advancedModeApp } from '$ts/stores/advancedMode';
 	import { appVersion } from '$ts/stores/appVersion';
-	import { isTouchscreen } from '$ts/stores/isTouchscreen';
 	import IconSettings from '$components/icons/IconSettings.svelte';
 	import type { TAccountDropdownPage } from '$components/accountMenu/types';
 	import PageWrapper from '$components/accountMenu/PageWrapper.svelte';
@@ -56,15 +55,9 @@
 		{#if isSuperAdmin($userSummary?.roles || []) || isGalleryAdmin($userSummary?.roles || [])}
 			<DropdownItem href="/admin" onClick={closeMenu}>
 				<div class="flex-1 min-w-0 flex items-center justify-start gap-2.5">
-					<IconWrench
-						class="transition w-6 h-6 text-c-text {!$isTouchscreen
-							? 'group-hover:text-c-primary'
-							: ''}"
-					/>
+					<IconWrench class="transition w-6 h-6 text-c-text not-touch:group-hover:text-c-primary" />
 					<p
-						class="flex-1 min-w-0 overflow-hidden overflow-ellipsis text-left transition text-c-on-bg {!$isTouchscreen
-							? 'group-hover:text-c-primary'
-							: ''}"
+						class="flex-1 min-w-0 overflow-hidden overflow-ellipsis text-left transition text-c-on-bg not-touch:group-hover:text-c-primary"
 					>
 						{$LL.Admin.AdminTab()}
 					</p>
@@ -73,15 +66,10 @@
 		{/if}
 		<DropdownItem href="/account" onClick={closeMenu}>
 			<div class="flex-1 min-w-0 flex items-center justify-start gap-2.5">
-				<IconUser
-					class="transition w-6 h-6 text-c-text {!$isTouchscreen
-						? 'group-hover:text-c-primary'
-						: ''}"
-				/>
+				<IconUser class="transition w-6 h-6 text-c-text not-touch:group-hover:text-c-primary" />
 				<p
-					class="flex-1 min-w-0 overflow-hidden overflow-ellipsis text-left transition text-c-on-bg {!$isTouchscreen
-						? 'group-hover:text-c-primary'
-						: ''}"
+					class="flex-1 min-w-0 overflow-hidden overflow-ellipsis text-left transition
+					text-c-on-bg not-touch:group-hover:text-c-primary"
 				>
 					{$LL.Account.AccountButton()}
 				</p>
@@ -89,15 +77,10 @@
 		</DropdownItem>
 		<DropdownItem onClick={() => setAccountMenuDropdownPage('settings')}>
 			<div class="flex-1 min-w-0 flex items-center justify-start gap-2.5">
-				<IconSettings
-					class="transition w-6 h-6 text-c-text {!$isTouchscreen
-						? 'group-hover:text-c-primary'
-						: ''}"
-				/>
+				<IconSettings class="transition w-6 h-6 text-c-text not-touch:group-hover:text-c-primary" />
 				<p
-					class="flex-1 min-w-0 overflow-hidden overflow-ellipsis text-left transition text-c-on-bg {!$isTouchscreen
-						? 'group-hover:text-c-primary'
-						: ''}"
+					class="flex-1 min-w-0 overflow-hidden overflow-ellipsis text-left transition
+					text-c-on-bg not-touch:group-hover:text-c-primary"
 				>
 					{$LL.Settings.Title()}
 				</p>
@@ -130,15 +113,9 @@
 			}}
 		>
 			<div class="flex-1 min-w-0 flex items-center justify-start gap-2.5">
-				<IconSignOut
-					class="transition w-6 h-6 text-c-text {!$isTouchscreen
-						? 'group-hover:text-c-primary'
-						: ''}"
-				/>
+				<IconSignOut class="transition w-6 h-6 text-c-text not-touch:group-hover:text-c-primary" />
 				<p
-					class="flex-1 min-w-0 overflow-hidden overflow-ellipsis text-left transition text-c-on-bg {!$isTouchscreen
-						? 'group-hover:text-c-primary'
-						: ''}"
+					class="flex-1 min-w-0 overflow-hidden overflow-ellipsis text-left transition text-c-on-bg not-touch:group-hover:text-c-primary"
 				>
 					{$LL.SignIn.SignOutButton()}
 				</p>

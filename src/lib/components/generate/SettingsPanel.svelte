@@ -49,7 +49,6 @@
 	import IconChevronDown from '$components/icons/IconChevronDown.svelte';
 	import { expandCollapse } from '$ts/animation/transitions';
 	import { quadOut } from 'svelte/easing';
-	import { isTouchscreen } from '$ts/stores/isTouchscreen';
 	import IconSeed from '$components/icons/IconSeed.svelte';
 	import TabLikeInput from '$components/tabBars/TabLikeInput.svelte';
 	import TabLikeInitImageUploader2 from '$components/tabBars/TabLikeInitImageUploader2.svelte';
@@ -154,7 +153,7 @@
 					<div class="w-[200%] h-full absolute left-0 top-0 flex items-center justify-center">
 						<div
 							class="w-full aspect-square origin-left rounded-full transition transform -translate-x-full opacity-0
-							bg-c-primary/10 {!$isTouchscreen ? 'group-hover:translate-x-[-45%] group-hover:opacity-100' : ''}"
+							bg-c-primary/10 not-touch:group-hover:translate-x-[-45%] not-touch:group-hover:opacity-100"
 						/>
 					</div>
 				</div>
@@ -162,14 +161,12 @@
 					class="flex-1 max-w-full min-w-0 flex items-center justify-start gap-3 overflow-hidden"
 				>
 					<IconChevronDown
-						class="w-5 h-5 transform transition flex-shrink-0 text-c-on-bg/75 {!$isTouchscreen
-							? 'group-hover:text-c-primary'
-							: ''} {$advancedModeApp ? 'rotate-180' : ''}"
+						class="w-5 h-5 transform transition flex-shrink-0 text-c-on-bg/75
+						not-touch:group-hover:text-c-primary {$advancedModeApp ? 'rotate-180' : ''}"
 					/>
 					<p
-						class="flex-1 break-words min-w-0 overflow-hidden overflow-ellipsis text-left text-c-on-bg/75 {!$isTouchscreen
-							? 'group-hover:text-c-primary'
-							: ''}"
+						class="flex-1 break-words min-w-0 overflow-hidden overflow-ellipsis text-left text-c-on-bg/75
+						not-touch:group-hover:text-c-primary"
 					>
 						{$LL.Shared.AdvancedSettingsButton()}
 					</p>
@@ -183,9 +180,8 @@
 							: 'scale-50 opacity-0'}"
 					>
 						<IconSeed
-							class="flex-shrink-0 w-4 h-4 text-c-on-bg/50 transition {!$isTouchscreen
-								? 'group-hover:text-c-primary'
-								: ''}"
+							class="flex-shrink-0 w-4 h-4 text-c-on-bg/50 transition 
+							not-touch:group-hover:text-c-primary"
 						/>
 					</div>
 				</div>

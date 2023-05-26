@@ -7,6 +7,7 @@
 	import GenerateButton from '$components/buttons/GenerateButton.svelte';
 	import IconButton from '$components/buttons/IconButton.svelte';
 	import UpscaleAnimation from '$components/generate/UpscaleAnimation.svelte';
+	import SrcsetProvider from '$components/generationImage/SrcsetProvider.svelte';
 	import { onSelectButtonClicked } from '$components/generationImage/helpers';
 	import type { TGenerationImageCardType } from '$components/generationImage/types';
 	import IconCancelCircle from '$components/icons/IconCancelCircle.svelte';
@@ -15,6 +16,7 @@
 	import IconTick from '$components/icons/IconTick.svelte';
 	import IconTrashcan from '$components/icons/IconTrashcan.svelte';
 	import { doesContainTarget } from '$ts/helpers/doesContainTarget';
+	import { getImgProxySrcSet } from '$ts/helpers/imgproxy';
 	import { logGalleryGenerationOpened } from '$ts/helpers/loggers';
 	import {
 		adminGalleryCurrentFilter,
@@ -25,6 +27,7 @@
 	import { appVersion } from '$ts/stores/appVersion';
 	import { isTouchscreen } from '$ts/stores/isTouchscreen';
 	import { lastClickedOutputId } from '$ts/stores/lastClickedOutputId';
+	import { loadedImages } from '$ts/stores/loadedImages';
 	import {
 		isUserGalleryEditActive,
 		userGalleryCurrentView,
@@ -37,10 +40,15 @@
 	import { activeGeneration, type TGenerationWithSelectedOutput } from '$userStores/generation';
 
 	export let generation: TGenerationWithSelectedOutput;
-	export let useUpscaledImage = true;
 	export let scrollPrompt = false;
 	export let cardType: TGenerationImageCardType;
 	export let isGalleryEditActive: boolean = false;
+	export let didLoadBefore: boolean = false;
+
+	$: srcHighest =
+		generation.selected_output.upscaled_image_url ?? generation.selected_output.image_url;
+	$: srcLowest = generation.selected_output.image_url;
+	$: srcPicked = cardType === 'stage' ? srcHighest : srcLowest;
 
 	let promptCopied = false;
 	let promptCopiedTimeout: NodeJS.Timeout;
@@ -48,7 +56,12 @@
 	let leftButtonContainer: HTMLDivElement;
 
 	let isImageLoaded = false;
-	const onImageLoaded = () => (isImageLoaded = true);
+	const onImageLoaded = () => {
+		isImageLoaded = true;
+		setTimeout(() => {
+			loadedImages[generation.selected_output.image_url + cardType] = true;
+		}, 500);
+	};
 
 	$: isInGallerySelectedIds =
 		$isUserGalleryEditActive && cardType === 'history'
@@ -114,19 +127,24 @@
 		<IconNoImage class="w-12 h-12 text-c-on-bg/40" />
 	</div>
 {:else}
-	<img
-		on:load={onImageLoaded}
-		loading="lazy"
-		class="w-full h-full absolute left-0 top-0 duration-300 transition transform {isImageLoaded
-			? 'opacity-100'
-			: 'opacity-0'} {isInGallerySelectedIds ? 'scale-110' : 'scale-100'}"
-		src={useUpscaledImage && generation.selected_output.upscaled_image_url
-			? generation.selected_output.upscaled_image_url
-			: generation.selected_output.image_url}
-		alt={generation.prompt.text}
-		width={generation.width}
-		height={generation.height}
-	/>
+	<SrcsetProvider src={srcHighest} {cardType} let:sizes let:srcset>
+		<img
+			on:load={onImageLoaded}
+			loading="lazy"
+			class="w-full h-full absolute left-0 top-0 {didLoadBefore
+				? 'transition-[transform] ease-[ease-out] duration-[0.2s]'
+				: 'transition-[transform,opacity] ease-[ease-out,ease-in] duration-[0.2s,0.2s]'} 
+				transform {isImageLoaded ? 'opacity-100' : 'opacity-0'} {isInGallerySelectedIds
+				? 'scale-110'
+				: 'scale-100'}"
+			{sizes}
+			src={srcPicked}
+			{srcset}
+			alt={generation.prompt.text}
+			width={generation.width}
+			height={generation.height}
+		/>
+	</SrcsetProvider>
 {/if}
 {#if upscaleFromStore?.animation}
 	<UpscaleAnimation
@@ -139,18 +157,19 @@
 <!-- Barriers -->
 {#if cardType !== 'stage' && cardType !== 'generate' && cardType !== 'gallery' && !generation.selected_output.is_deleted}
 	<div
-		class="absolute top-0 left-0 w-full h-24 bg-gradient-to-b from-c-barrier/90 via-c-barrier/60 to-c-barrier/0
-		flex justify-between transition items-start {!$isTouchscreen
-			? 'group-focus-within:opacity-100 group-hover:opacity-100'
-			: ''} {isGalleryEditActive || overlayShouldShow ? 'opacity-100' : 'opacity-0'}"
+		class="absolute top-0 left-0 w-full h-24 bg-gradient-to-b
+		from-c-barrier/90 via-c-barrier/60 to-c-barrier/0
+		flex justify-between transition items-start
+		not-touch:group-focus-within:opacity-100 not-touch:group-hover:opacity-100
+			{isGalleryEditActive || overlayShouldShow ? 'opacity-100' : 'opacity-0'}"
 	/>
 {/if}
 {#if cardType !== 'generate' && !generation.selected_output.is_deleted && !isGalleryEditActive}
 	<div
-		class="absolute bottom-0 left-0 w-full h-full max-h-[12rem] bg-gradient-to-t transition
-		from-c-barrier/90 via-c-barrier/60 to-c-barrier/0 {!$isTouchscreen
-			? 'group-focus-within:opacity-100 group-hover:opacity-100'
-			: ''} {overlayShouldShow ? 'opacity-100' : 'opacity-0'}"
+		class="absolute bottom-0 left-0 w-full h-full max-h-[12rem] bg-gradient-to-t
+		transition from-c-barrier/90 via-c-barrier/60 to-c-barrier/0
+		not-touch:group-focus-within:opacity-100 not-touch:group-hover:opacity-100
+			{overlayShouldShow ? 'opacity-100' : 'opacity-0'}"
 	/>
 {/if}
 {#if cardType !== 'gallery' && cardType !== 'admin-gallery' && isRecentlyUpdated}
@@ -206,10 +225,9 @@
 		{#if cardType !== 'generate'}
 			<div
 				class="w-full h-full pt-16 flex flex-col justify-end items-start flex-shrink
-				transition text-sm relative z-0 overflow-hidden
-			 	pointer-events-none {!$isTouchscreen
-					? 'group-focus-within:translate-y-0 group-hover:translate-y-0'
-					: ''} {overlayShouldShow ? 'translate-y-0' : 'translate-y-full'}"
+				transition text-sm relative z-0 overflow-hidden pointer-events-none
+				not-touch:group-focus-within:translate-y-0 not-touch:group-hover:translate-y-0
+					{overlayShouldShow ? 'translate-y-0' : 'translate-y-full'}"
 			>
 				<div
 					class="w-full flex flex-col justify-end items-start min-h-0 max-h-[max(4rem,min(35%,5.3rem))]"
@@ -233,9 +251,9 @@
 		class="w-full h-full absolute left-0 top-0 pointer-events-none flex items-start justify-between"
 	>
 		<div
-			class="w-full flex justify-between transition items-start {!$isTouchscreen
-				? 'group-focus-within:translate-y-0 group-hover:translate-y-0'
-				: ''} {isGalleryEditActive || overlayShouldShow ? 'translate-y-0' : '-translate-y-full'}"
+			class="w-full flex justify-between transition items-start
+			not-touch:group-focus-within:translate-y-0 not-touch:group-hover:translate-y-0
+			{isGalleryEditActive || overlayShouldShow ? 'translate-y-0' : '-translate-y-full'}"
 		>
 			<div bind:this={leftButtonContainer} class="pointer-events-none relative">
 				{#if (cardType === 'admin-gallery' || cardType === 'history') && !(cardType === 'history' && generation.selected_output.is_deleted) && !(cardType === 'history' && $userGalleryCurrentView === 'favorites' && !generation.selected_output.is_favorited)}

@@ -1,6 +1,5 @@
 <script lang="ts">
 	import IconAnimatedSpinner from '$components/icons/IconAnimatedSpinner.svelte';
-	import { isTouchscreen } from '$ts/stores/isTouchscreen';
 	import type { THrefTarget } from '$ts/types/main';
 
 	export let onClick: () => void = () => null;
@@ -32,7 +31,7 @@
 		<div class="w-[200%] h-full absolute left-0 top-0 flex items-center justify-center">
 			<div
 				class="w-full aspect-square origin-left rounded-full transition transform -translate-x-full opacity-0
-				bg-c-primary/10 {!$isTouchscreen ? 'group-hover:translate-x-[-45%] group-hover:opacity-100' : ''}"
+				bg-c-primary/10 not-touch:group-hover:translate-x-[-45%] not-touch:group-hover:opacity-100"
 			/>
 		</div>
 		<slot />
@@ -53,7 +52,7 @@
 			<div class="w-[200%] h-full absolute left-0 top-0 flex items-center justify-center">
 				<div
 					class="w-full aspect-square origin-left rounded-full transition transform -translate-x-full opacity-0
-					bg-c-primary/10 {!$isTouchscreen ? 'group-hover:translate-x-[-45%] group-hover:opacity-100' : ''}"
+					bg-c-primary/10 not-touch:group-hover:translate-x-[-45%] not-touch:group-hover:opacity-100"
 				/>
 			</div>
 		{/if}

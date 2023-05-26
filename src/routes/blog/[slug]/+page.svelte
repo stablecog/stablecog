@@ -1,39 +1,60 @@
 <script lang="ts">
-	import { page } from '$app/stores';
-	import ToC from '$components/blog/ToC.svelte';
 	import Button from '$components/buttons/Button.svelte';
 	import NoBgButton from '$components/buttons/NoBgButton.svelte';
+	import ToC from '$components/docs/ToC.svelte';
 	import IconBack from '$components/icons/IconBack.svelte';
 	import MetaTag from '$components/MetaTag.svelte';
 	import ScBar from '$components/ScBar.svelte';
 	import '$css/blog.css';
-	import { PUBLIC_BUCKET_AUX_URL } from '$env/static/public';
 	import LL from '$i18n/i18n-svelte';
 	import { canonicalUrl } from '$ts/constants/main';
-	import { isTouchscreen } from '$ts/stores/isTouchscreen';
-	import type { PageServerData } from './$types';
+	import { onMount, onDestroy } from 'svelte';
 
-	export let data: PageServerData;
+	export let data;
 
-	const content = data.content;
-	const toc = data.toc;
-	const frontmatter = data.frontmatter;
-	const { title, description, reading_time, author, author_url } = frontmatter;
-	const formattedDate = new Date(frontmatter.date).toLocaleDateString('en-US', {
+	let observer: IntersectionObserver;
+	let headings: NodeListOf<HTMLElement>;
+	let activeId: string;
+
+	$: formattedDate = new Date(data.metadata.date).toLocaleDateString('en-US', {
 		year: 'numeric',
 		month: 'short',
 		day: 'numeric'
 	});
+
+	onMount(() => {
+		headings = document.querySelectorAll('h1, h2, h3, h4, h5, h6');
+		observer = new IntersectionObserver(
+			(entries) => {
+				entries.forEach((entry) => {
+					if (entry.isIntersecting) {
+						activeId = entry.target.id;
+					}
+				});
+			},
+			{ rootMargin: '0% 0% -80% 0%' }
+		);
+		headings.forEach((heading) => {
+			observer.observe(heading);
+		});
+	});
+
+	onDestroy(() => {
+		if (headings) {
+			headings.forEach((heading) => {
+				observer.unobserve(heading);
+			});
+		}
+	});
 </script>
 
 <MetaTag
-	title="{title} | Blog"
-	{description}
-	imageUrl="{PUBLIC_BUCKET_AUX_URL}/blog/previews/{frontmatter.slug}.jpg"
-	canonical="{canonicalUrl}{$page.url.pathname}"
-	article_author={author}
+	title="{data.metadata.title} | Blog"
+	description={data.metadata.description}
+	article_author={data.metadata.author}
 	article_publisher={canonicalUrl}
-	article_published_time={frontmatter.date}
+	article_published_time={data.metadata.date}
+	image_url={data.metadata.preview_image_url}
 />
 
 <div
@@ -41,35 +62,41 @@
 	px-5 md:px-12 lg:px-0 pb-8"
 >
 	<div class="w-full flex flex-row justify-between items-start">
-		<ToC {toc} />
+		<ToC toc={data.metadata.toc} {activeId} />
 		<article class="flex-1 flex flex-col justify-start items-center lg:px-16 pt-8">
 			<h1 class="w-full max-w-2.5xl px-3 md:px-5 font-bold text-center text-[2rem] leading-[1.35]">
-				{title}
+				{data.metadata.title}
 			</h1>
 			<time
-				datetime={frontmatter.date}
+				datetime={data.metadata.date}
 				class="w-full max-w-2.5xl px-3 md:px-5 mt-3 text-c-on-bg/40 font-medium text-center leading-relaxed"
 			>
-				{formattedDate} • {reading_time} min read
+				{formattedDate} • {data.metadata.reading_time} min read
 			</time>
-			{#if author}
+			{#if data.metadata.author}
 				<p
 					class="w-full max-w-2.5xl px-3 md:px-5 mt-0.75 text-c-on-bg/40 font-medium text-center leading-relaxed"
 				>
-					{#if author_url}
-						<a rel="noreferrer" class="blog-link" href={author_url} target="_blank">{author}</a>
+					{#if data.metadata.author_url}
+						<a rel="noreferrer" class="blog-link" href={data.metadata.author_url} target="_blank"
+							>{data.metadata.author}</a
+						>
 					{:else}
-						<span>{author}</span>
+						<span>{data.metadata.author}</span>
 					{/if}
 				</p>
 			{/if}
 			<section
 				class="blog max-w-2.5xl w-full flex flex-col justify-start items-start relative mt-8"
 			>
-				{@html content}
+				<svelte:component this={data.Content} />
 			</section>
 		</article>
-		<ToC {toc} class="hidden 1.5xl:flex opacity-0 pointer-events-none" />
+		<ToC
+			toc={data.metadata.toc}
+			{activeId}
+			class="hidden 1.5xl:flex opacity-0 pointer-events-none"
+		/>
 	</div>
 	<div class="w-full flex flex-col items-center mt-16 gap-5">
 		<div class="max-w-full flex items-center justify-center">
@@ -79,13 +106,9 @@
 			<div class="flex items-center justify-center gap-2.5 px-2 py-1">
 				<IconBack
 					class="w-6 h-6 transform transition text-c-on-bg/50 group-hover:-translate-x-1
-					{!$isTouchscreen ? 'group-hover:text-c-primary' : ''}"
+					not-touch:group-hover:text-c-primary"
 				/>
-				<p
-					class="font-bold transition text-c-on-bg/50 {!$isTouchscreen
-						? 'group-hover:text-c-primary'
-						: ''}"
-				>
+				<p class="font-bold transition text-c-on-bg/50 not-touch:group-hover:text-c-primary">
 					{$LL.Blog.BackToBlogButton()}
 				</p>
 			</div>

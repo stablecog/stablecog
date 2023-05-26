@@ -1,14 +1,10 @@
-import type { TSidebarItem } from '$routes/guide/types';
+import type { TSidebarItem, TSidebarItemBase } from '$routes/guide/types';
+import { addImageUrlToSidebarItem } from '$components/docs/helpers';
 
-const previewBaseUrl = 'https://ba.stablecog.com/try/previews';
+export const previewBaseUrl = 'https://ba.stablecog.com/try/previews';
+export const entries = import.meta.glob(`/src/lib/md/try/**/*.md`);
 
-function getPreviewUrlFromTryPathname(pathname: string) {
-	const parts = pathname.split('/');
-	const lastPart = parts[parts.length - 1];
-	return `${previewBaseUrl}/${lastPart}.jpg`;
-}
-
-const _sidebar: TSidebarItem = {
+const _sidebar: TSidebarItemBase = {
 	title: 'All Models',
 	pathname: '/try/models',
 	children: [
@@ -55,23 +51,12 @@ const _sidebar: TSidebarItem = {
 	]
 };
 
-export const trySidebar = addImageUrlToSidebarItem(_sidebar);
+export const guideSidebar = addImageUrlToSidebarItem({ sidebarItem: _sidebar, previewBaseUrl });
 
-export const flatTrySidebarShallow = trySidebar.children!.reduce((acc, item) => {
-	acc.push({ title: item.title, pathname: item.pathname });
+export const flatTrySidebarShallow = guideSidebar.children!.reduce((acc, item) => {
+	acc.push(item);
 	if (item.children) {
 		acc.push(...item.children);
 	}
 	return acc;
 }, [] as TSidebarItem[]);
-
-function addImageUrlToSidebarItem(item: TSidebarItem): TSidebarItem {
-	let obj = { ...item, preview_image_url: getPreviewUrlFromTryPathname(item.pathname) };
-	if (item.children) {
-		obj = {
-			...obj,
-			children: item.children.map((child) => addImageUrlToSidebarItem(child))
-		};
-	}
-	return obj;
-}

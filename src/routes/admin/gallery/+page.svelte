@@ -3,7 +3,7 @@
 	import { page } from '$app/stores';
 	import BatchEditBar from '$components/BatchEditBar.svelte';
 	import GenerationFullScreen from '$components/generationFullScreen/GenerationFullScreen.svelte';
-	import GenerationGridInfinite from '$components/grids/GenerationGridInfinite.svelte';
+	import GenerationGridInfinite2 from '$components/grids/GenerationGridInfinite2.svelte';
 	import IconAnimatedSpinner from '$components/icons/IconAnimatedSpinner.svelte';
 	import IconFunnel from '$components/icons/IconFunnel.svelte';
 	import IconSadFace from '$components/icons/IconSadFace.svelte';
@@ -129,8 +129,7 @@
 <MetaTag
 	title="Gallery | Stablecog"
 	description="Stablecog admin panel. Free, multilingual and open-source AI image generator using Stable Diffusion and Kandinsky."
-	imageUrl="{canonicalUrl}/previews{$page.url.pathname}-{previewImageVersion}.png"
-	canonical="{canonicalUrl}{$page.url.pathname}"
+	image_url="{canonicalUrl}/previews{$page.url.pathname}-{previewImageVersion}.png"
 />
 
 <svelte:window on:keydown={onKeyDown} />
@@ -218,9 +217,8 @@
 					</div>
 				</div>
 			{:else}
-				<GenerationGridInfinite
+				<GenerationGridInfinite2
 					generationsQuery={allUserGenerationFullOutputsQuery}
-					rerenderKey={gridRerenderKey}
 					cardType="admin-gallery"
 				/>
 			{/if}

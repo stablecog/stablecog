@@ -12,7 +12,6 @@
 	import { canonicalUrl } from '$ts/constants/main';
 	import { logSignOut } from '$ts/helpers/loggers';
 	import { advancedModeApp } from '$ts/stores/advancedMode';
-	import { isTouchscreen } from '$ts/stores/isTouchscreen';
 	import { userSummary } from '$ts/stores/user/summary';
 	import IconButton from '$components/buttons/IconButton.svelte';
 	import IconThreeDots from '$components/icons/IconThreeDots.svelte';
@@ -56,8 +55,7 @@
 <MetaTag
 	title="Account | Stablecog"
 	description="Manage your Stablecog account. Free, multilingual and open-source AI image generator using Stable Diffusion and Kandinsky."
-	imageUrl="{canonicalUrl}/previews{$page.url.pathname}-{previewImageVersion}.png"
-	canonical="{canonicalUrl}{$page.url.pathname}"
+	image_url="{canonicalUrl}/previews{$page.url.pathname}-{previewImageVersion}.png"
 />
 
 {#if !$page.data.session?.user.email}
@@ -92,9 +90,10 @@
 					<div class="flex flex-col items-end justify-start">
 						<IconButton name="Extra Settings" onClick={toggleExtraAccountSettings}>
 							<IconThreeDots
-								class="w-8 h-8 transform transition text-c-on-bg/60 {!$isTouchscreen
-									? 'group-hover/iconbutton:text-c-primary'
-									: ''} {isExtraAccountSettingsOpen ? 'rotate-90 text-c-primary' : 'rotate-0'}"
+								class="w-8 h-8 transform transition text-c-on-bg/60 
+								not-touch:group-hover/iconbutton:text-c-primary {isExtraAccountSettingsOpen
+									? 'rotate-90 text-c-primary'
+									: 'rotate-0'}"
 							/>
 						</IconButton>
 						<div class="relative">
@@ -102,11 +101,7 @@
 								<DropdownWrapper class="w-52 mt-1.5">
 									<div class="flex flex-col items-end">
 										<DropdownItem href="/account/change-email">
-											<p
-												class="text-c-on-bg transition {!$isTouchscreen
-													? 'group-hover:text-c-primary'
-													: ''}"
-											>
+											<p class="text-c-on-bg transition not-touch:group-hover:text-c-primary">
 												{$LL.Account.ChangeEmail.ChangeEmailButton()}
 											</p>
 										</DropdownItem>
@@ -165,9 +160,8 @@
 			<div class="w-full flex flex-wrap items-stretch">
 				<DropdownItem href="/generate" class="w-full md:w-auto md:flex-1">
 					<div
-						class="flex transition justify-center items-center gap-2 text-c-on-bg {!$isTouchscreen
-							? 'group-hover:text-c-primary'
-							: ''}"
+						class="flex transition justify-center items-center gap-2 text-c-on-bg
+						not-touch:group-hover:text-c-primary"
 					>
 						<IconHome class="w-6 h-6" />
 						<p>{$LL.Shared.GoHomeButton()}</p>
@@ -176,9 +170,8 @@
 				<div class="w-full h-2px md:h-auto md:w-2px bg-c-bg-secondary" />
 				<DropdownItem onClick={signOut} class="w-full md:w-auto md:flex-1">
 					<div
-						class="flex transition justify-center items-center gap-2 text-c-on-bg {!$isTouchscreen
-							? 'group-hover:text-c-primary'
-							: ''}"
+						class="flex transition justify-center items-center gap-2 text-c-on-bg
+						not-touch:group-hover:text-c-primary"
 					>
 						<IconSignOut class="w-6 h-6" />
 						<p>{$LL.SignIn.SignOutButton()}</p>

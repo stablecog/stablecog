@@ -6,17 +6,22 @@ author_url: https://twitter.com/ngyekta
 date: 2023-04-05T13:00:00.000Z
 ---
 
+<script>
+  import Button from '$components/buttons/Button.svelte'
+  import DocImage from '$components/docs/DocImage.svelte'
+</script>
+
 You've probably heard of [OpenAI's GPT-4](https://openai.com/product/gpt-4) already. It's a large multimodal AI model that people are using to do all sorts of awesome things. It's currently available for [ChatGPT Plus](https://chat.openai.com/chat) users or you can get on the [waitlist for the API](https://openai.com/waitlist/gpt-4-api).
 
 Auto-GPT is autopilot for GPT-4.
 
-[![Auto-GPT Repo](https://ba.stablecog.com/blog/auto-gpt-repo.jpg)<!--rehype:width=2560&height=1540-->](https://github.com/Torantulino/Auto-GPT)
+<DocImage href="https://github.com/Torantulino/Auto-GPT" src="https://ba.stablecog.com/blog/auto-gpt-repo.jpg" width="2560" height="1540" alt="Auto-GPT Repo" />
 
 ## Autopilot for GPT-4
 
 [Auto-GPT](https://github.com/Torantulino/Auto-GPT) is an open-source project built on top of GPT-4 to automate the task of automating tasks :) It's created by [Torantulino](https://github.com/Torantulino). The GitHub repo is at [Torantulino/Auto-GPT](https://github.com/Torantulino/Auto-GPT) and has been getting extremely popular in these last couple of days. Although it is mainly intended to be used with GPT-4 which isn't available to everyone yet, you can also use it with GPT-3.5 which is readily available without a waitlist.
 
-[![Auto-GPT Process](https://ba.stablecog.com/blog/auto-gpt-process.jpg)<!--rehype:width=2560&height=1341-->](https://github.com/Torantulino/Auto-GPT)
+<DocImage href="https://github.com/Torantulino/Auto-GPT" src="https://ba.stablecog.com/blog/auto-gpt-process.jpg" width="2560" height="1341" alt="Auto-GPT Process" />
 
 Here is how it works:
 

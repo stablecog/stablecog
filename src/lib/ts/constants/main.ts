@@ -12,6 +12,8 @@ export const apiUrl = new URL(
 		: env.PUBLIC_GO_SERVER_URL_PROD
 );
 
+export const navbarEstimatedHeight = 72;
+
 export const routesWithHealthCheck = ['/', '/history', '/canvas'];
 export const routesWithHiddenFooter = ['/canvas'];
 

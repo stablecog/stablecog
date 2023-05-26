@@ -1,6 +1,5 @@
 <script lang="ts">
 	import IconAnimatedSpinner from '$components/icons/IconAnimatedSpinner.svelte';
-	import { isTouchscreen } from '$ts/stores/isTouchscreen';
 	import type { THrefTarget } from '$ts/types/main';
 
 	export let onClick: (() => void) | undefined = undefined;
@@ -34,9 +33,8 @@
 						class="w-full h-full ease-out transition transform {type === 'on-primary'
 							? 'bg-c-on-primary/15'
 							: 'bg-c-primary/25'} 
-        		absolute left-0 top-0 rounded-xl -translate-x-full {!$isTouchscreen
-							? 'group-hover/iconbutton:translate-x-0'
-							: ''}"
+        		absolute left-0 top-0 rounded-xl -translate-x-full
+						not-touch:group-hover/iconbutton:translate-x-0"
 					/>
 				</div>
 			{/if}
@@ -75,9 +73,8 @@
 							: type === 'on-primary'
 							? 'bg-c-on-primary/25'
 							: 'bg-c-primary/25'} 
-          	absolute left-0 top-0 rounded-xl -translate-x-full {!$isTouchscreen
-							? 'group-hover/iconbutton:translate-x-0'
-							: ''}"
+          	absolute left-0 top-0 rounded-xl -translate-x-full
+						not-touch:group-hover/iconbutton:translate-x-0"
 					/>
 				</div>
 			{/if}

@@ -1,7 +1,6 @@
 <script lang="ts">
 	import IconAnimatedSpinner from '$components/icons/IconAnimatedSpinner.svelte';
 	import Morpher from '$components/Morpher.svelte';
-	import { isTouchscreen } from '$ts/stores/isTouchscreen';
 	import type { THrefTarget } from '$ts/types/main';
 
 	export let onClick: (() => void) | undefined = undefined;
@@ -48,9 +47,8 @@
 			<div
 				class="{state === 'success'
 					? 'bg-c-success translate-x-[-43%]'
-					: 'bg-c-bg-tertiary'} w-full aspect-square origin-left rounded-full transition transform -translate-x-full {!$isTouchscreen
-					? 'group-hover:translate-x-[-43%]'
-					: ''} {loading ? 'translate-x-[-43%]' : ''}"
+					: 'bg-c-bg-tertiary'} w-full aspect-square origin-left rounded-full transition transform -translate-x-full
+					not-touch:group-hover:translate-x-[-43%] {loading ? 'translate-x-[-43%]' : ''}"
 			/>
 		</div>
 		<div
@@ -117,9 +115,8 @@
 					? 'bg-c-success translate-x-[-43%]'
 					: state === 'danger'
 					? 'bg-c-danger translate-x-[-43%]'
-					: 'bg-c-bg-tertiary'} w-full aspect-square origin-left rounded-full transition transform -translate-x-full {!$isTouchscreen
-					? 'group-enabled:group-hover:translate-x-[-43%]'
-					: ''} {loading ? 'translate-x-[-43%]' : ''}"
+					: 'bg-c-bg-tertiary'} w-full aspect-square origin-left rounded-full transition transform -translate-x-full
+					not-touch:group-enabled:group-hover:translate-x-[-43%] {loading ? 'translate-x-[-43%]' : ''}"
 			/>
 		</div>
 		<div

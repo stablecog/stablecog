@@ -2,7 +2,6 @@
 	import IconButton from '$components/buttons/IconButton.svelte';
 	import IconCancel from '$components/icons/IconCancel.svelte';
 	import { expandCollapse } from '$ts/animation/transitions';
-	import { isTouchscreen } from '$ts/stores/isTouchscreen';
 	import { quadOut } from 'svelte/easing';
 
 	export let onClick: (() => void) | undefined = undefined;
@@ -22,9 +21,8 @@
 			{target}
 			{href}
 			data-sveltekit-preload-data={prefetch && target === '_self' ? 'hover' : 'off'}
-			class="w-full flex flex-row justify-center items-center px-10 py-2.5 z-10 relative bg-c-primary transition {!$isTouchscreen
-				? 'hover:bg-c-secondary'
-				: ''}"
+			class="w-full flex flex-row justify-center items-center px-10 py-2.5 z-10 relative
+			bg-c-primary transition not-touch:hover:bg-c-secondary"
 		>
 			<slot />
 		</a>
@@ -34,9 +32,8 @@
 				if (onClick) onClick();
 				onClose();
 			}}
-			class="w-full flex flex-row justify-center items-center px-10 py-2.5 z-10 relative bg-c-primary transition {!$isTouchscreen
-				? 'hover:bg-c-secondary'
-				: ''}"
+			class="w-full flex flex-row justify-center items-center px-10 py-2.5 z-10 relative
+			bg-c-primary transition not-touch:hover:bg-c-secondary"
 		>
 			<slot />
 		</button>

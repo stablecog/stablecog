@@ -7,7 +7,6 @@
 	import { downloadGenerationImage } from '$ts/helpers/downloadGenerationImage';
 	import { advancedModeApp } from '$ts/stores/advancedMode';
 	import { appVersion } from '$ts/stores/appVersion';
-	import { isTouchscreen } from '$ts/stores/isTouchscreen';
 	import type { TGenerationWithSelectedOutput } from '$ts/stores/user/generation';
 	import { userSummary } from '$ts/stores/user/summary';
 
@@ -63,24 +62,21 @@
 >
 	<div class="p-2.5 rounded-full bg-c-bg relative overflow-hidden z-0">
 		<div
-			class="w-full h-full rounded-full transition transform -translate-x-full 
-			bg-c-primary absolute left-0 top-0 group-focus/downloadbutton:translate-x-0 {!$isTouchscreen
-				? 'group-hover/downloadbutton:translate-x-0'
-				: ''}"
+			class="w-full h-full rounded-full transition transform -translate-x-full
+			bg-c-primary absolute left-0 top-0 group-focus/downloadbutton:translate-x-0
+			not-touch:group-hover/downloadbutton:translate-x-0"
 		/>
 		<Morpher morphed={downloadStatus === 'downloading'} class="w-7 h-7">
 			<IconDownload
 				slot="0"
-				class="w-7 h-7 transition text-c-on-bg relative group-focus/downloadbutton:text-c-on-primary {!$isTouchscreen
-					? 'group-hover/downloadbutton:text-c-on-primary'
-					: ''}"
+				class="w-7 h-7 transition text-c-on-bg relative group-focus/downloadbutton:text-c-on-primary
+				not-touch:group-hover/downloadbutton:text-c-on-primary"
 			/>
 			<IconAnimatedSpinner
 				slot="1"
 				loading={downloadStatus === 'downloading'}
-				class="w-7 h-7 text-c-on-bg relative group-focus/downloadbutton:text-c-on-primary {!$isTouchscreen
-					? 'group-hover/downloadbutton:text-c-on-primary'
-					: ''}"
+				class="w-7 h-7 text-c-on-bg relative group-focus/downloadbutton:text-c-on-primary
+				not-touch:group-hover/downloadbutton:text-c-on-primary"
 			/>
 		</Morpher>
 	</div>

@@ -5,14 +5,30 @@ import type { TAvailableThemes } from '$ts/stores/theme';
 import { apiUrl } from '$ts/constants/main';
 import type { TUserSummary } from '$ts/stores/user/summary';
 import { createSupabaseLoadClient } from '@supabase/auth-helpers-sveltekit';
-import { PUBLIC_SUPABASE_ANON_KEY, PUBLIC_SUPABASE_URL } from '$env/static/public';
+import {
+	PUBLIC_APP_MODE,
+	PUBLIC_SUPABASE_ANON_KEY,
+	PUBLIC_SUPABASE_ANON_KEY_QA,
+	PUBLIC_SUPABASE_URL,
+	PUBLIC_SUPABASE_URL_QA
+} from '$env/static/public';
 import type { SupabaseClient } from '@supabase/supabase-js';
 
 export const load: LayoutLoad = async (event) => {
 	event.depends('supabase:auth');
 	const supabase = createSupabaseLoadClient({
-		supabaseUrl: PUBLIC_SUPABASE_URL,
-		supabaseKey: PUBLIC_SUPABASE_ANON_KEY,
+		supabaseUrl:
+			PUBLIC_APP_MODE === 'qa'
+				? PUBLIC_SUPABASE_URL_QA
+				: PUBLIC_APP_MODE === 'dev'
+				? PUBLIC_SUPABASE_URL
+				: PUBLIC_SUPABASE_URL,
+		supabaseKey:
+			PUBLIC_APP_MODE === 'qa'
+				? PUBLIC_SUPABASE_ANON_KEY_QA
+				: PUBLIC_APP_MODE === 'dev'
+				? PUBLIC_SUPABASE_ANON_KEY
+				: PUBLIC_SUPABASE_ANON_KEY,
 		event: { fetch },
 		serverSession: event.data.session
 	});

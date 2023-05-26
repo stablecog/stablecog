@@ -795,6 +795,7 @@ const tr: Translation = {
 		PageTitle: 'Destek',
 		PageParagraph: 'Herhangi bir soru sormak istersen aşağıdaki linklerden bize ulaşabilirsin.'
 	},
+	Documentation: { PageTitle: 'Documentation' },
 	Guide: {
 		PageTitle: 'Guide',
 		GuideButton: 'Guide',

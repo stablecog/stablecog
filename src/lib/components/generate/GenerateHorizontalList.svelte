@@ -5,12 +5,11 @@
 	import type { CreateInfiniteQueryResult } from '@tanstack/svelte-query';
 	import IconAnimatedSpinner from '$components/icons/IconAnimatedSpinner.svelte';
 	import type { TGenerationFullOutput } from '$ts/stores/user/generation';
-	import GenerationAnimation from '$components/grids/GenerationAnimation.svelte';
+	import GenerationAnimation from '$components/generate/GenerationAnimation.svelte';
 	import { fade } from 'svelte/transition';
 	import { quadIn, quadOut } from 'svelte/easing';
 	import type { TUserGenerationFullOutputsPage } from '$ts/queries/userGenerations';
 	import LL from '$i18n/i18n-svelte';
-	import { isTouchscreen } from '$ts/stores/isTouchscreen';
 	import GenerateHorizontalListPlaceholder from '$components/generate/GenerateHorizontalListPlaceholder.svelte';
 	import IconEyeSlashOutline from '$components/icons/IconEyeSlashOutline.svelte';
 	import IconSadFaceOutline from '$components/icons/IconSadFaceOutline.svelte';
@@ -163,10 +162,9 @@
 							<ImagePlaceholder width={output.generation.width} height={output.generation.height} />
 							<div
 								class="absolute left-0 top-0 w-full h-full bg-c-bg-secondary transition
-										z-0 rounded-md border overflow-hidden border-c-bg-secondary {!$isTouchscreen &&
-								output.status !== 'failed' &&
+										z-0 rounded-md border overflow-hidden border-c-bg-secondary {output.status !== 'failed' &&
 								output.status !== 'failed-nsfw'
-									? 'hover:border-c-primary'
+									? 'not-touch:hover:border-c-primary'
 									: ''}"
 							>
 								{#if output.generation.outputs !== undefined}
@@ -182,7 +180,6 @@
 										{#if output.status === undefined || output.status === 'succeeded'}
 											<GenerationImage
 												{cardType}
-												useUpscaledImage={false}
 												generation={{
 													...output.generation,
 													selected_output: output

@@ -25,7 +25,6 @@
 		prompt,
 		generationPrompt
 	} from '$ts/stores/generationSettings';
-	import { isTouchscreen } from '$ts/stores/isTouchscreen';
 	import {
 		generations,
 		maxOngoingGenerationsCountReached,
@@ -75,10 +74,10 @@
 	$: promptInputPlaceholder = $LL.Home.PromptInput.Placeholder();
 
 	let isJustCreatedGenerationTimeout: NodeJS.Timeout;
-	const isJustCreatedGenerationTimeoutDuration = 300;
+	const isJustCreatedGenerationTimeoutDuration = 350;
 	let isJustCreatedGeneration = false;
 	let isJustCreatedGenerationForAnimTimeout: NodeJS.Timeout;
-	const isJustCreatedGenerationForAnimTimeoutDuration = 150;
+	const isJustCreatedGenerationForAnimTimeoutDuration = 175;
 
 	async function onPromptFormSubmitted() {
 		if (isJustCreatedGeneration) {
@@ -248,9 +247,8 @@
 					style="transition: height 0.1s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.2s cubic-bezier(0.4, 0, 0.2, 1), padding 0.2s cubic-bezier(0.4, 0, 0.2, 1)"
 					class="w-full text-base bg-c-bg-secondary shadow-lg pr-20 md:pr-26 lg:pr-17 hide-scrollbar shadow-c-shadow/[var(--o-shadow-normal)]
 							scroll-smooth resize-none transition relative pl-3 md:pl-5 py-3 md:py-4.5 rounded-lg md:rounded-xl
-							focus:ring-2 focus:ring-c-primary/30 ring-0 ring-c-primary/20 placeholder:text-c-on-bg/40 {!$isTouchscreen
-						? 'enabled:hover:ring-2'
-						: ''} text-c-on-bg {!$isTouchscreen ? 'group-hover:ring-2' : ''}"
+							focus:ring-2 focus:ring-c-primary/30 ring-0 ring-c-primary/20 placeholder:text-c-on-bg/40
+							not-touch:enabled:hover:ring-2 text-c-on-bg not-touch:group-hover:ring-2"
 				/>
 				<ClearButton
 					class="absolute right-11 md:right-13 top-0 lg:right-0"
@@ -308,18 +306,16 @@
 			<Morpher morphed={$windowWidth < mdBreakpoint && isGenerationSettingsSheetOpen}>
 				<div slot="0" class="w-7.5 h-7.5 p-0.5">
 					<IconGenerationSettings
-						class="transition {!$isTouchscreen
-							? 'group-hover:text-c-primary'
-							: ''} w-full h-full {$windowWidth < mdBreakpoint && isGenerationSettingsSheetOpen
+						class="transition not-touch:group-hover:text-c-primary
+						w-full h-full {$windowWidth < mdBreakpoint && isGenerationSettingsSheetOpen
 							? 'rotate-180'
 							: 'rotate-0'}"
 					/>
 				</div>
 				<div slot="1" class="w-7.5 h-7.5 p-0.5">
 					<IconChevronDown
-						class="transition transform {!$isTouchscreen
-							? 'group-hover:text-c-primary'
-							: ''} w-full h-full {$windowWidth < mdBreakpoint && !isGenerationSettingsSheetOpen
+						class="transition transform not-touch:group-hover:text-c-primary
+						w-full h-full {$windowWidth < mdBreakpoint && !isGenerationSettingsSheetOpen
 							? '-rotate-180'
 							: 'rotate-0'}"
 					/>

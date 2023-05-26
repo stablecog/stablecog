@@ -6,13 +6,17 @@ author_url: https://twitter.com/ngyekta
 date: 2023-05-10T15:00:00.000Z
 ---
 
+<script>
+  import DocImage from '$components/docs/DocImage.svelte'
+</script>
+
 We've been working on a new interface and it's finally here. We think you'll like it :)
 
 ## A Better Tool
 
 We like simple things. Our old interface was extremely simple, too simple. It was getting in the way of adding new features because the layout was too restrictive. With the new interface we are taking a different approach and making the interface more inline with different design tools people are familiar with like Photoshop, Illustrator or Figma. A sidebar on each side. One shows your history, one shows your settings. The center part is the "stage" where you can see your current generation.
 
-![Stablecog's New Interface](https://ba.stablecog.com/blog/app-dark-1920.webp)<!--rehype:width=1920&height=1200-->
+<DocImage src="https://ba.stablecog.com/blog/app-dark-1920.webp" width="1920" height="1200" alt="Stablecog's New Interface" />
 
 ## Parallel Generations & Upscales
 
@@ -27,7 +31,7 @@ You can now do parallel generations and upscales, without leaving the generate p
 
 We didn't have a landing page before. The app took you straight to the generation interface. This has been confusing some users, as they don't have a way to get information on what our tool does. Now we have one. Admittedly, it's not the most information packed landing page out there but it's a start. We'll be improving it over time.
 
-![Stablecog's Landing Page](https://ba.stablecog.com/blog/landing-page-1920.webp)<!--rehype:width=1920&height=1200-->
+<DocImage src="https://ba.stablecog.com/blog/landing-page-1920.webp" width="1920" height="1200" alt="Stablecog's Landing Page" />
 
 ## Other Changes
 

@@ -31,8 +31,7 @@
 <MetaTag
 	title="Usage | Account"
 	description="Manage your Stablecog account. Free, multilingual and open-source AI image generator using Stable Diffusion and Kandinsky."
-	imageUrl="{canonicalUrl}/previews/account-{previewImageVersion}.png"
-	canonical="{canonicalUrl}{$page.url.pathname}"
+	image_url="{canonicalUrl}/previews/account-{previewImageVersion}.png"
 />
 
 <div class="w-full flex justify-center pt-4 md:pt-6 pb-8">

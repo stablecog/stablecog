@@ -28,7 +28,6 @@
 		generationInitImageWidth
 	} from '$ts/stores/generationSettings';
 	import { isInitImageModalOpen } from '$ts/stores/isInitImageModalOpen';
-	import { isTouchscreen } from '$ts/stores/isTouchscreen';
 	import { userSummary } from '$ts/stores/user/summary';
 	import { windowHeight } from '$ts/stores/window';
 	import { portal } from 'svelte-portal';
@@ -98,7 +97,7 @@
 				<div class="w-[200%] h-full absolute left-0 top-0 flex items-center justify-center">
 					<div
 						class="w-full aspect-square origin-left rounded-full transition transform -translate-x-full opacity-0
-							bg-c-primary/10 {!$isTouchscreen ? 'group-hover:translate-x-[-45%] group-hover:opacity-100' : ''}"
+							bg-c-primary/10 not-touch:group-hover:translate-x-[-45%] not-touch:group-hover:opacity-100"
 					/>
 				</div>
 			</div>
@@ -110,10 +109,9 @@
 						on:click|stopPropagation={openImageModal}
 						on:keydown={() => null}
 						style="background-image: url({$generationInitImageSrc});"
-						class="bg-c-bg-secondary ml-px w-10.5 h-10.5 bg-cover bg-center rounded transition ring-2 ring-c-bg-secondary 
-						shadow-md shadow-c-shadow/[var(--o-shadow-strongest)] hover:cursor-pointer {!$isTouchscreen
-							? 'hover:ring-c-primary/75'
-							: ''}"
+						class="bg-c-bg-secondary ml-px w-10.5 h-10.5 bg-cover bg-center rounded transition ring-2 ring-c-bg-secondary
+						shadow-md shadow-c-shadow/[var(--o-shadow-strongest)] hover:cursor-pointer
+						not-touch:hover:ring-c-primary/75"
 					/>
 				</div>
 				{#if $generationInitImageFilesState === 'error'}
@@ -129,6 +127,7 @@
 					</div>
 				{:else}
 					<RangeInputWithNumerator
+						name={$LL.Home.InitialImageStrengthTabBar.Title()}
 						min={initImageStrengthMin}
 						max={initImageStrengthMax}
 						step={initImageStrengthStep}
@@ -159,9 +158,8 @@
 				class="w-0 h-0 opacity-0"
 			/>
 			<div
-				class="max-w-full flex items-center justify-start pl-3.5 pr-4 py-3.25 md:py-3.5 gap-2 transition {!$isTouchscreen
-					? 'group-hover:text-c-primary'
-					: ''}"
+				class="max-w-full flex items-center justify-start pl-3.5 pr-4 py-3.25 md:py-3.5 gap-2 transition
+				not-touch:group-hover:text-c-primary"
 			>
 				<IconDropzone class="w-5 h-5 shrink-0" />
 				<p
@@ -207,9 +205,7 @@
 					>
 						<IconButton name="Close" onClick={closeImageModal}>
 							<IconCancel
-								class="w-9 h-9 transition {!$isTouchscreen
-									? 'group-hover/iconbutton:text-c-primary'
-									: ''}"
+								class="w-9 h-9 transition not-touch:group-hover/iconbutton:text-c-primary"
 							/>
 						</IconButton>
 					</div>

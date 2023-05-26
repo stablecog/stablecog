@@ -4,8 +4,12 @@ description: Inference steps controls how many steps will be taken during the ge
 author: M. Yekta Güngör
 author_url: https://twitter.com/ngyekta
 date: 2023-04-18T15:00:00.000Z
-preview_image_url: https://ba.stablecog.com/guide/previews/inference-steps.jpg
 ---
+
+<script>
+  import Cards from '$components/docs/Cards.svelte';
+  import Card from '$components/docs/Card.svelte';
+</script>
 
 # Inference Steps
 
@@ -17,40 +21,13 @@ Although it is sometimes seen as a "quality slider" it's not necessarily that. B
 
 Here is the same generation created at 5, 10, 20, 30, 40 and 50 inference steps.
 
-| Inference Steps: 5                                                                                                                  |
-| ----------------------------------------------------------------------------------------------------------------------------------- |
-| ![Inference Steps: 5](https://ba.stablecog.com/guide/generation-settings/inference_steps_5.jpg)<!--rehype:width=1024&height=1536--> |
-
-<!--rehype:class=w-full md:w-1/2 lg:w-1/3-->
-
-| Inference Steps: 10                                                                                                                   |
-| ------------------------------------------------------------------------------------------------------------------------------------- |
-| ![Inference Steps: 10](https://ba.stablecog.com/guide/generation-settings/inference_steps_10.jpg)<!--rehype:width=1024&height=1536--> |
-
-<!--rehype:class=w-full md:w-1/2 lg:w-1/3-->
-
-| Inference Steps: 20                                                                                                                   |
-| ------------------------------------------------------------------------------------------------------------------------------------- |
-| ![Inference Steps: 20](https://ba.stablecog.com/guide/generation-settings/inference_steps_20.jpg)<!--rehype:width=1024&height=1536--> |
-
-<!--rehype:class=w-full md:w-1/2 lg:w-1/3-->
-
-| Inference Steps: 30                                                                                                                   |
-| ------------------------------------------------------------------------------------------------------------------------------------- |
-| ![Inference Steps: 30](https://ba.stablecog.com/guide/generation-settings/inference_steps_30.jpg)<!--rehype:width=1024&height=1536--> |
-
-<!--rehype:class=w-full md:w-1/2 lg:w-1/3-->
-
-| Inference Steps: 40                                                                                                                   |
-| ------------------------------------------------------------------------------------------------------------------------------------- |
-| ![Inference Steps: 40](https://ba.stablecog.com/guide/generation-settings/inference_steps_40.jpg)<!--rehype:width=1024&height=1536--> |
-
-<!--rehype:class=w-full md:w-1/2 lg:w-1/3-->
-
-| Inference Steps: 50                                                                                                                   |
-| ------------------------------------------------------------------------------------------------------------------------------------- |
-| ![Inference Steps: 50](https://ba.stablecog.com/guide/generation-settings/inference_steps_50.jpg)<!--rehype:width=1024&height=1536--> |
-
-<!--rehype:class=w-full md:w-1/2 lg:w-1/3-->
+<Cards>
+  <Card title="Inference Steps 5" src="https://ba.stablecog.com/guide/generation-settings/inference_steps_5.jpg" width="1024" height="1536"/>
+  <Card title="Inference Steps 10" src="https://ba.stablecog.com/guide/generation-settings/inference_steps_10.jpg" width="1024" height="1536"/>
+  <Card title="Inference Steps 20" src="https://ba.stablecog.com/guide/generation-settings/inference_steps_20.jpg" width="1024" height="1536"/>
+  <Card title="Inference Steps 30" src="https://ba.stablecog.com/guide/generation-settings/inference_steps_30.jpg" width="1024" height="1536"/>
+  <Card title="Inference Steps 40" src="https://ba.stablecog.com/guide/generation-settings/inference_steps_40.jpg" width="1024" height="1536"/>
+  <Card title="Inference Steps 50" src="https://ba.stablecog.com/guide/generation-settings/inference_steps_50.jpg" width="1024" height="1536"/>
+</Cards>
 
 As you can see the image lacks detail at 5 and 10 steps but around 30 steps, detail is good. Although it can change from example to example and from scheduler to scheduler, we prefer 40 steps in this example because the extra detailed added at 50 steps made the image less pleasing to our eyes (it also took more time). This is why inference steps is not necessarily a "quality" slider.

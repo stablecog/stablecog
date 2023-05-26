@@ -1,7 +1,6 @@
 <script lang="ts">
 	import IconButton from '$components/buttons/IconButton.svelte';
 	import IconChevronDown from '$components/icons/IconChevronDown.svelte';
-	import { isTouchscreen } from '$ts/stores/isTouchscreen';
 
 	export let onClick: () => void;
 	export let isClosed: boolean;
@@ -96,7 +95,7 @@
 							: '-rotate-90'
 						: side === 'right'
 						? '-rotate-90'
-						: 'rotate-90'} {!$isTouchscreen ? 'group-hover/iconbutton:text-c-primary' : ''}"
+						: 'rotate-90'} not-touch:group-hover/iconbutton:text-c-primary"
 				/>
 			</div>
 		</IconButton>

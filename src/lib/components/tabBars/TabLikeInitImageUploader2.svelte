@@ -36,7 +36,6 @@
 		generationWidth
 	} from '$ts/stores/generationSettings';
 	import { isInitImageModalOpen } from '$ts/stores/isInitImageModalOpen';
-	import { isTouchscreen } from '$ts/stores/isTouchscreen';
 	import { userSummary } from '$ts/stores/user/summary';
 	import { windowHeight } from '$ts/stores/window';
 	import { portal } from 'svelte-portal';
@@ -160,9 +159,8 @@
 				<div class="w-[200%] h-full absolute left-0 top-0 flex items-center justify-center">
 					<div
 						class="w-full aspect-square origin-left rounded-full transition transform -translate-x-full opacity-0
-							bg-c-primary/10 {isDraggedInside ? 'opacity-100 translate-x-[-45%]' : ''} {!$isTouchscreen
-							? 'group-hover:translate-x-[-45%] group-hover:opacity-100'
-							: ''}"
+							bg-c-primary/10 {isDraggedInside ? 'opacity-100 translate-x-[-45%]' : ''} 
+							not-touch:group-hover:translate-x-[-45%] not-touch:group-hover:opacity-100"
 					/>
 				</div>
 			</div>
@@ -176,11 +174,9 @@
 						on:keydown={() => null}
 						bind:clientWidth={uploadImageContainerWidth}
 						bind:clientHeight={uploadImageContainerHeight}
-						class="bg-c-bg w-full h-22 bg-center transition hover:cursor-pointer flex items-center justify-center {!$isTouchscreen
-							? 'hover:ring-c-primary/30'
-							: ''} relative overflow-hidden rounded-t-xl z-0 transition ring-2 ring-c-bg-secondary {!$isTouchscreen
-							? 'hover:ring-c-primary/25'
-							: ''} relative"
+						class="bg-c-bg w-full h-22 bg-center transition hover:cursor-pointer flex items-center justify-center
+						relative overflow-hidden rounded-t-xl z-0 ring-2 ring-c-bg-secondary
+						not-touch:hover:ring-c-primary/25"
 					>
 						{#if uploadImageContainerWidth && uploadImageContainerHeight}
 							<div
@@ -230,9 +226,7 @@
 						<div class="bg-c-bg/75 flex items-center justify-center rounded-tr-xl rounded-bl-xl">
 							<IconButton name="Reset Upload State" class="p-0.5" onClick={resetUploadState}>
 								<IconTrashcan
-									class="w-5 h-5 transition {!$isTouchscreen
-										? 'group-hover/iconbutton:text-c-primary'
-										: ''}"
+									class="w-5 h-5 transition not-touch:group-hover/iconbutton:text-c-primary"
 								/>
 							</IconButton>
 						</div>
@@ -298,14 +292,13 @@
 				<IconDropzone
 					class="w-6 h-6 shrink-0 transition transform {isDraggedInside
 						? 'text-c-primary scale-125'
-						: 'text-c-on-bg/50'} {!$isTouchscreen ? 'group-hover:text-c-primary' : ''}"
+						: 'text-c-on-bg/50'} not-touch:group-hover:text-c-primary"
 				/>
 				<p
 					class="w-full text-center {isDraggedInside
 						? 'text-c-primary'
-						: 'text-c-on-bg/50'} text-sm font-normal min-w-0 flex-1 leading-normal transition {!$isTouchscreen
-						? 'group-hover:text-c-primary'
-						: ''}"
+						: 'text-c-on-bg/50'} text-sm font-normal min-w-0 flex-1 leading-normal transition
+						not-touch:group-hover:text-c-primary"
 				>
 					{$LL.Home.ImageInput.Paragraph()}
 				</p>
@@ -356,9 +349,7 @@
 					>
 						<IconButton name="Close" onClick={closeImageModal}>
 							<IconCancel
-								class="w-9 h-9 transition {!$isTouchscreen
-									? 'group-hover/iconbutton:text-c-primary'
-									: ''}"
+								class="w-9 h-9 transition not-touch:group-hover/iconbutton:text-c-primary"
 							/>
 						</IconButton>
 					</div>

@@ -4,8 +4,12 @@ description: The scheduler controls the entire denoising process in which the mo
 author: M. Yekta Güngör
 author_url: https://twitter.com/ngyekta
 date: 2023-04-18T15:00:00.000Z
-preview_image_url: https://ba.stablecog.com/guide/previews/scheduler.jpg
 ---
+
+<script>
+  import Cards from '$components/docs/Cards.svelte';
+  import Card from '$components/docs/Card.svelte';
+</script>
 
 # Scheduler
 
@@ -17,26 +21,9 @@ So, it is hard to name the "best" scheduler. It simply depends on what you are t
 
 Below are 4 generations that have the exact same settings except for their schedulers. Some of them produces similar results while some are different.
 
-| Euler                                                                                                                |
-| -------------------------------------------------------------------------------------------------------------------- |
-| ![Euler](https://ba.stablecog.com/guide/generation-settings/scheduler_euler.jpg)<!--rehype:width=1024&height=1536--> |
-
-<!--rehype:class=w-full md:w-1/2-->
-
-| Euler A.                                                                                                                  |
-| ------------------------------------------------------------------------------------------------------------------------- |
-| ![Euler A.](https://ba.stablecog.com/guide/generation-settings/scheduler_euler_a.jpg)<!--rehype:width=1024&height=1536--> |
-
-<!--rehype:class=w-full md:w-1/2-->
-
-| DPM Multistep                                                                                                                        |
-| ------------------------------------------------------------------------------------------------------------------------------------ |
-| ![DPM Multistep](https://ba.stablecog.com/guide/generation-settings/scheduler_dpm_multistep.jpg)<!--rehype:width=1024&height=1536--> |
-
-<!--rehype:class=w-full md:w-1/2-->
-
-| LMS                                                                                                              |
-| ---------------------------------------------------------------------------------------------------------------- |
-| ![LMS](https://ba.stablecog.com/guide/generation-settings/scheduler_lms.jpg)<!--rehype:width=1024&height=1536--> |
-
-<!--rehype:class=w-full md:w-1/2-->
+<Cards>
+  <Card size='wider' title="Euler" src="https://ba.stablecog.com/guide/generation-settings/scheduler_euler.jpg" width="1024" height="1536"/>
+  <Card size='wider' title="Eulear A." src="https://ba.stablecog.com/guide/generation-settings/scheduler_euler_a.jpg" width="1024" height="1536"/>
+  <Card size='wider' title="DPM Multistep" src="https://ba.stablecog.com/guide/generation-settings/scheduler_dpm_multistep.jpg" width="1024" height="1536"/>
+  <Card size='wider' title="LMS" src="https://ba.stablecog.com/guide/generation-settings/scheduler_lms.jpg" width="1024" height="1536"/>
+</Cards>

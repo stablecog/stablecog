@@ -1,7 +1,6 @@
 <script lang="ts">
 	import IconAnimatedSpinner from '$components/icons/IconAnimatedSpinner.svelte';
 	import IconAnimatedUploading from '$components/icons/IconAnimatedUploading.svelte';
-	import { isTouchscreen } from '$ts/stores/isTouchscreen';
 	import type { THrefTarget } from '$ts/types/main';
 	import { tick } from 'svelte';
 	export let disabled = false;
@@ -94,9 +93,8 @@
 	>
 		<div
 			style="width: {buttonSize}px; height: {buttonSize}px;"
-			class="absolute left-1/2 top-1/2 transform -translate-y-1/2 -translate-x-1/2 flex items-center justify-center {$isTouchscreen
-				? 'hidden'
-				: 'flex'}"
+			class="absolute left-1/2 top-1/2 transform -translate-y-1/2 -translate-x-1/2 items-center justify-center
+			hidden not-touch:flex"
 		>
 			<div
 				class="absolute w-full h-full rounded-full transition transform left-0 -translate-x-full
@@ -106,7 +104,7 @@
 					? 'bg-c-danger-secondary'
 					: type === 'no-bg-on-bg'
 					? 'bg-c-on-bg/10'
-					: 'bg-c-secondary'} {!$isTouchscreen ? 'group-hover:translate-x-0' : ''}"
+					: 'bg-c-secondary'} not-touch:group-hover:translate-x-0"
 			/>
 		</div>
 		<div class="relative">
@@ -185,9 +183,8 @@
 	>
 		<div
 			style="width: {buttonSize}px; height: {buttonSize}px;"
-			class="absolute left-1/2 top-1/2 transform -translate-y-1/2 -translate-x-1/2 flex items-center justify-center {$isTouchscreen
-				? 'hidden'
-				: 'flex'}"
+			class="absolute left-1/2 top-1/2 transform -translate-y-1/2 -translate-x-1/2 items-center justify-center
+			hidden not-touch:flex"
 		>
 			<div
 				class="absolute w-full h-full rounded-full transition transform left-0 -translate-x-full
@@ -197,7 +194,7 @@
 					? 'bg-c-danger-secondary'
 					: type === 'no-bg-on-bg'
 					? 'bg-c-on-bg/10'
-					: 'bg-c-secondary'} {!$isTouchscreen ? 'group-enabled:group-hover:translate-x-0' : ''}"
+					: 'bg-c-secondary'} not-touch:group-enabled:group-hover:translate-x-0"
 			/>
 		</div>
 		<div class="relative">

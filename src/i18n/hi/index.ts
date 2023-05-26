@@ -795,6 +795,7 @@ const hi: Translation = {
 		PageParagraph:
 			"If you have any questions, please reach out to us using the links below and we'll answer them as soon as possible."
 	},
+	Documentation: { PageTitle: 'Documentation' },
 	Guide: {
 		PageTitle: 'Guide',
 		GuideButton: 'Guide',

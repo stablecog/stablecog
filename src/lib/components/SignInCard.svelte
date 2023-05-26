@@ -9,7 +9,6 @@
 	import Input from '$components/Input.svelte';
 	import LL from '$i18n/i18n-svelte';
 	import { expandCollapse } from '$ts/animation/transitions';
-	import { isTouchscreen } from '$ts/stores/isTouchscreen';
 	import type { Provider } from '@supabase/supabase-js';
 	import { quadOut } from 'svelte/easing';
 	import IconPassword from '$components/icons/IconPassword.svelte';
@@ -151,15 +150,9 @@
 					<DropdownItem onClick={() => (codeSignInStatus = 'entering')}>
 						<div class="w-full flex items-center justify-center gap-2.5">
 							<IconPassword
-								class="text-c-on-bg/60 w-6 h-6 transition {!$isTouchscreen
-									? 'group-hover:text-c-primary'
-									: ''}"
+								class="text-c-on-bg/60 w-6 h-6 transition not-touch:group-hover:text-c-primary"
 							/>
-							<p
-								class="text-c-on-bg/60 transition {!$isTouchscreen
-									? 'group-hover:text-c-primary'
-									: ''}"
-							>
+							<p class="text-c-on-bg/60 transition not-touch:group-hover:text-c-primary">
 								Enter code manually
 							</p>
 						</div>
@@ -185,15 +178,9 @@
 				<DropdownItem onClick={() => (signInStatus = 'idle')}>
 					<div class="w-full flex items-center justify-center gap-2.5">
 						<IconBack
-							class="text-c-on-bg/60 w-6 h-6 transition {!$isTouchscreen
-								? 'group-hover:text-c-primary'
-								: ''}"
+							class="text-c-on-bg/60 w-6 h-6 transition not-touch:group-hover:text-c-primary"
 						/>
-						<p
-							class="text-c-on-bg/60 transition {!$isTouchscreen
-								? 'group-hover:text-c-primary'
-								: ''}"
-						>
+						<p class="text-c-on-bg/60 transition not-touch:group-hover:text-c-primary">
 							{$LL.Shared.GoBackButton()}
 						</p>
 					</div>

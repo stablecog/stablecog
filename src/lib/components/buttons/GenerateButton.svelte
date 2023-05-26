@@ -1,7 +1,6 @@
 <script lang="ts">
 	import IconWand from '$components/icons/IconWand.svelte';
 	import { getGenerationUrlFromParams } from '$ts/helpers/getGenerationUrlFromParams';
-	import { isTouchscreen } from '$ts/stores/isTouchscreen';
 	import type { TGenerationWithSelectedOutput } from '$ts/stores/user/generation';
 
 	export let generation: TGenerationWithSelectedOutput;
@@ -31,15 +30,13 @@
 >
 	<div class="p-2.5 rounded-full bg-c-bg relative overflow-hidden z-0">
 		<div
-			class="w-full h-full rounded-full transition transform -translate-x-full 
-			bg-c-primary absolute left-0 top-0 group-focus/generatebutton:translate-x-0 {!$isTouchscreen
-				? 'group-hover/generatebutton:translate-x-0'
-				: ''}"
+			class="w-full h-full rounded-full transition transform -translate-x-full
+			bg-c-primary absolute left-0 top-0 group-focus/generatebutton:translate-x-0
+			not-touch:group-hover/generatebutton:translate-x-0"
 		/>
 		<IconWand
-			class="w-7 h-7 transition text-c-on-bg relative group-focus/generatebutton:text-c-on-primary {!$isTouchscreen
-				? 'group-hover/generatebutton:text-c-on-primary'
-				: ''}"
+			class="w-7 h-7 transition text-c-on-bg relative group-focus/generatebutton:text-c-on-primary
+			not-touch:group-hover/generatebutton:text-c-on-primary"
 		/>
 		<p class="hidden">Generate</p>
 	</div>

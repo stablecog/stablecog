@@ -321,8 +321,7 @@
 <MetaTag
 	title="Pricing | Stablecog"
 	description="Choose a plan that works for you and start using Stablecog. Free, multilingual and open-source AI image generator using Stable Diffusion and Kandinsky."
-	imageUrl="{canonicalUrl}/previews{$page.url.pathname}-{previewImageVersion}.png"
-	canonical="{canonicalUrl}{$page.url.pathname}"
+	image_url="{canonicalUrl}/previews{$page.url.pathname}-{previewImageVersion}.png"
 />
 
 <PageWrapper>
@@ -426,7 +425,7 @@
 			</div>
 			<div class="w-full h-[1vh]" />
 		</section>
-		{#if $userSummary?.product_id && $page.data.session?.user.id !== undefined}
+		{#if true || ($userSummary?.product_id && $page.data.session?.user.id !== undefined)}
 			<section id="credit-packs" class="w-full flex flex-col items-center justify-start pt-16">
 				<h2 class="text-center font-bold text-4xl">{$LL.Pricing.CreditPacksTitle()}</h2>
 				<p class="max-w-xl mt-3 text-center leading-relaxed text-c-on-bg/75">

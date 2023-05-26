@@ -4,8 +4,12 @@ description: Seed is a way of initializing the random number generator that is u
 author: M. Yekta Güngör
 author_url: https://twitter.com/ngyekta
 date: 2023-04-18T15:00:00.000Z
-preview_image_url: https://ba.stablecog.com/guide/previews/seed.jpg
 ---
+
+<script>
+  import Cards from '$components/docs/Cards.svelte';
+  import Card from '$components/docs/Card.svelte';
+</script>
 
 # Seed
 
@@ -17,28 +21,9 @@ Although it is not a very common use case, it can come in handy with comparing v
 
 Two generations below have the exact same settings except for the seed. Left one has the seed of 415798970 and the right one has the seed of 1000097042. Notice how changing the seed results in a completely different image. These seeds can later be used to reproduce the same images.
 
-| Seed: 415798970                                                                                                      |
-| -------------------------------------------------------------------------------------------------------------------- |
-| ![Seed: ](https://ba.stablecog.com/guide/generation-settings/seed_415798970.jpg)<!--rehype:width=1024&height=1536--> |
-
-<!--rehype:class=w-full md:w-1/2-->
-
-| Seed: 1000097042                                                                                                      |
-| --------------------------------------------------------------------------------------------------------------------- |
-| ![Seed: ](https://ba.stablecog.com/guide/generation-settings/seed_1000097042.jpg)<!--rehype:width=1024&height=1536--> |
-
-<!--rehype:class=w-full md:w-1/2-->
-
-Here is another example. The generations have the exact same settings except for the seed again. Left one has the seed of 1602969464 and the right one has the seed of 1720804046. Notice how changing the seed results in a completely different image.
-
-| Seed: 1602969464                                                                                                        |
-| ----------------------------------------------------------------------------------------------------------------------- |
-| ![Seed: ](https://ba.stablecog.com/guide/generation-settings/seed_2_1602969464.jpg)<!--rehype:width=1024&height=1536--> |
-
-<!--rehype:class=w-full md:w-1/2-->
-
-| Seed: 1720804046                                                                                                        |
-| ----------------------------------------------------------------------------------------------------------------------- |
-| ![Seed: ](https://ba.stablecog.com/guide/generation-settings/seed_2_1720804046.jpg)<!--rehype:width=1024&height=1536--> |
-
-<!--rehype:class=w-full md:w-1/2-->
+<Cards>
+  <Card size='wider' title="415798970" src="https://ba.stablecog.com/guide/generation-settings/seed_415798970.jpg" width="1024" height="1536"/>
+  <Card size='wider' title="1000097042" src="https://ba.stablecog.com/guide/generation-settings/seed_1000097042.jpg" width="1024" height="1536"/>
+  <Card size='wider' title="1602969464" src="https://ba.stablecog.com/guide/generation-settings/seed_2_1602969464.jpg" width="1024" height="1536"/>
+  <Card size='wider' title="1720804046" src="https://ba.stablecog.com/guide/generation-settings/seed_2_1720804046.jpg" width="1024" height="1536"/>
+</Cards>

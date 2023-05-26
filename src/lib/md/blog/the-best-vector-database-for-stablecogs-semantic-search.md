@@ -6,11 +6,15 @@ author_url: https://twitter.com/bbedward_real
 date: 2023-04-12T13:00:00.000Z
 ---
 
+<script>
+  import DocImage from '$components/docs/DocImage.svelte'
+</script>
+
 Vector databases such as [Weaviate](https://weaviate.io/), [Milvus](https://milvus.io/), [Qdrant](https://qdrant.tech/), [Vespa](https://vespa.ai/), and [Pinecone](https://www.pinecone.io/) are a very hot topic in the software industry right now. They essentially allow you to store a representation of any object as a vector (text, images, audio, video, etc. - more on that below). This is a very important tool in AI & Machine Learning applications as it is the base for how prompts are transformed into images, chatbots determine what you're asking, and much more - including our recent enhancement, semantically searchable images.
 
 ## What is a vector embedding?
 
-![Vector](https://ba.stablecog.com/blog/vector-embedding.jpg)<!--rehype:width=2400   &height=1260-->
+<DocImage src="https://ba.stablecog.com/blog/vector-embedding.jpg" width="2400" height="1260" alt="Vector" />
 
 A vector is, essentially, just a list of numbers. The amount of numbers, referred to as dimensions, directly correlates to how much data a vector can represent. In our case the vectors we are interested in storing is a representation of the contextual meaning behind each and every image generated using Stablecog.
 
@@ -20,7 +24,7 @@ There's multiple ways to get a vector representation of an image such as [Cohere
 
 ## OpenCLIP and Why We Chose It
 
-[![OpenCLIP](https://ba.stablecog.com/blog/open_clip_github_repo.jpg)<!--rehype:width=2560&height=2178-->](https://github.com/mlfoundations/open_clip)
+<DocImage src="https://ba.stablecog.com/blog/open_clip_github_repo.jpg" href="https://github.com/mlfoundations/open_clip" width="2560" height="2178" alt="OpenCLIP" />
 
 We believe strongly in open source software, all of the models on Stablecog and [all of the source code for Stablecog](https://github.com/stablecog) is completely open source. Modern AI technologies are transforming the way human's work, how research is conducted, and overall these technologies will change our lives for many generations to come. In our opinion, progress will happen much faster if these technologies are kept open and available for others to continuously study, iterate, and improve. So naturally OpenCLIP was on our radar from the beginning when it came time to choose a model to create vector embeddings with Stablecog images and prompts.
 
@@ -32,7 +36,7 @@ By themselves, these vectors we create aren't particularly useful. We need a way
 
 ## Vector Databases
 
-![Vector Databases](https://ba.stablecog.com/blog/vector-dbs.jpg)<!--rehype:width=2400   &height=1260-->
+<DocImage src="https://ba.stablecog.com/blog/vector-dbs.jpg" width="2400" height="1260" alt="Vector Databases" />
 
 Search index databases are not new. There are many options used by some of the largest companies in the world - including but not limited to [ElasticSearch](https://www.elastic.co/), [Typesense](https://typesense.org/), and [Algolia](https://www.algolia.com/).
 
@@ -132,16 +136,16 @@ With our traditional search engine, the search query "a creature with 8 legs" wo
 
 ### English - [A creature with 8 legs](https://stablecog.com/gallery?q=A+creature+with+8+legs)
 
-[![Stablecog Gallery Search: A creature with 8 legs](https://ba.stablecog.com/blog/stablecog-gallery-search-a-creature-with-8-legs.jpg)<!--rehype:width=2560   &height=1800-->](https://stablecog.com/gallery?q=A+creature+with+8+legs)
+<DocImage src="https://ba.stablecog.com/blog/stablecog-gallery-search-a-creature-with-8-legs.jpg" width="2560" height="1800" href="https://stablecog.com/gallery?q=A+creature+with+8+legs" alt="Stablecog Gallery Search: A creature with 8 legs" />
 
 ### Turkish - [Sarı veya yeşil saçlı bir kadın](https://stablecog.com/gallery?q=Sarı+veya+yeşil+saçlı+bir+kadın)
 
 Translation: A woman with yellow or green hair
 
-[![Stablecog Gallery Search: A woman with yellow or green hair](https://ba.stablecog.com/blog/stablecog-gallery-search-a-woman-with-yellow-or-green-hair.jpg)<!--rehype:width=2560   &height=1800-->](https://stablecog.com/gallery?q=Sarı+veya+yeşil+saçlı+bir+kadın)
+<DocImage src="https://ba.stablecog.com/blog/stablecog-gallery-search-a-woman-with-yellow-or-green-hair.jpg" width="2560" height="1800" href="https://stablecog.com/gallery?q=Sarı+veya+yeşil+saçlı+bir+kadın" alt="Stablecog Gallery Search: A woman with yellow or green hair" />
 
 ### Japanese - [抽象芸術](https://stablecog.com/gallery?q=抽象芸術)
 
 Translation: Abstract art
 
-[![Stablecog Gallery Search: Abstract art](https://ba.stablecog.com/blog/stablecog-gallery-search-abstract-art.jpg)<!--rehype:width=2560   &height=1800-->](https://stablecog.com/gallery?q=抽象芸術)
+<DocImage src="https://ba.stablecog.com/blog/stablecog-gallery-search-abstract-art.jpg" width="2560" height="1800" href="https://stablecog.com/gallery?q=抽象芸術" alt="Stablecog Gallery Search: Abstract art" />

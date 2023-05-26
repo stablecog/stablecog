@@ -3,7 +3,6 @@
 	import ScrollAreaWithChevron from '$components/ScrollAreaWithChevron.svelte';
 	import TabBarWrapper from '$components/tabBars/TabBarWrapper.svelte';
 	import { clickoutside } from '$ts/actions/clickoutside';
-	import { isTouchscreen } from '$ts/stores/isTouchscreen';
 	import { windowHeight, windowWidth } from '$ts/stores/window';
 	import type { TTab } from '$ts/types/main';
 	import { onMount } from 'svelte';
@@ -101,7 +100,7 @@
 			}}
 			class="flex-1 ring-2 text-left flex items-center justify-between min-w-0 {hasTitle
 				? 'px-4'
-				: 'px-5'} py-3.5 relative 
+				: 'px-5'} py-3.5 relative
 				group transition-all duration-150 z-30 gap-2 {isDropdownOpen
 				? dropdownPlacement === 'top'
 					? `rounded-br-xl ${!hasTitle ? 'rounded-bl-xl' : ''} bg-c-bg-secondary ring-c-bg-tertiary`
@@ -120,14 +119,14 @@
 				<div class="w-[200%] h-full absolute left-0 top-0 flex items-center justify-center">
 					<div
 						class="w-full aspect-square origin-left rounded-full transition transform -translate-x-full opacity-0
-							bg-c-primary/10 {!$isTouchscreen ? 'group-hover:translate-x-[-45%] group-hover:opacity-100' : ''}"
+							bg-c-primary/10 not-touch:group-hover:translate-x-[-45%] not-touch:group-hover:opacity-100"
 					/>
 				</div>
 			</div>
 			<div class="flex-shrink min-w-0 flex items-center">
 				<p
 					class="flex-shrink whitespace-nowrap overflow-hidden overflow-ellipsis text-base font-medium relative transition
-					max-w-full z-0 text-c-on-bg {!$isTouchscreen ? 'group-hover:text-c-primary' : ''}"
+					max-w-full z-0 text-c-on-bg not-touch:group-hover:text-c-primary"
 				>
 					{name}
 				</p>
@@ -136,9 +135,7 @@
 				class="-mr-1 flex-shrink-0 w-5 h-5 transition {isDropdownOpen ? 'rotate-180' : 'rotate-0'}"
 			>
 				<IconChevronDown
-					class="relative w-full h-full transition text-c-on-bg/50 {!$isTouchscreen
-						? 'group-hover:text-c-primary'
-						: ''}"
+					class="relative w-full h-full transition text-c-on-bg/50 not-touch:group-hover:text-c-primary"
 				/>
 			</div>
 		</button>
@@ -153,7 +150,7 @@
 		>
 			<div
 				style="height: {isDropdownOpen ? dropdownHeight : '0'}px"
-				class="w-full flex flex-col overflow-hidden bg-c-bg-secondary shadow-sheet transition-all 
+				class="w-full flex flex-col overflow-hidden bg-c-bg-secondary shadow-sheet transition-all
 					shadow-c-shadow/[var(--o-shadow-stronger)] ring-2 ring-c-bg-tertiary {dropdownPlacement === 'top'
 					? 'rounded-t-xl origin-bottom justify-end'
 					: 'rounded-b-xl origin-top justify-start'} {isDropdownOpen
@@ -190,7 +187,7 @@
 										>
 											<div
 												class="w-full aspect-square origin-left rounded-full transition transform -translate-x-full opacity-0
-													bg-c-primary/10 {!$isTouchscreen ? 'group-hover:translate-x-[-45%] group-hover:opacity-100' : ''}"
+													bg-c-primary/10 not-touch:group-hover:translate-x-[-45%] not-touch:group-hover:opacity-100"
 											/>
 										</div>
 									</div>
@@ -205,7 +202,7 @@
 										</div>
 										<p
 											class="flex-shrink whitespace-nowrap overflow-hidden overflow-ellipsis text-base font-medium relative transition
-												max-w-full z-0 text-c-on-bg {!$isTouchscreen ? 'group-hover:text-c-primary' : ''}"
+												max-w-full z-0 text-c-on-bg not-touch:group-hover:text-c-primary"
 										>
 											{item.label}
 										</p>

@@ -2308,6 +2308,12 @@ type RootTranslation = {
 		 */
 		PageParagraph: string
 	}
+	Documentation: {
+		/**
+		 * D​o​c​u​m​e​n​t​a​t​i​o​n
+		 */
+		PageTitle: string
+	}
 	Guide: {
 		/**
 		 * G​u​i​d​e
@@ -4608,6 +4614,12 @@ export type TranslationFunctions = {
 		 * If you have any questions, please reach out to us using the links below and we'll answer them as soon as possible.
 		 */
 		PageParagraph: () => LocalizedString
+	}
+	Documentation: {
+		/**
+		 * Documentation
+		 */
+		PageTitle: () => LocalizedString
 	}
 	Guide: {
 		/**

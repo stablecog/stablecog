@@ -1,7 +1,6 @@
 <script lang="ts">
 	import Morpher from '$components/Morpher.svelte';
 	import TabBarWrapper from '$components/tabBars/TabBarWrapper.svelte';
-	import { isTouchscreen } from '$ts/stores/isTouchscreen';
 	import type { TTab } from '$ts/types/main';
 
 	type T = $$Generic;
@@ -65,10 +64,10 @@
 				<div class="w-full h-full absolute left-0 top-0 rounded-lg p-1">
 					<div class="w-full h-full overflow-hidden relative z-0 rounded-lg">
 						<div
-							class="w-full h-full origin-left rounded-lg transition transform translate-y-full 
+							class="w-full h-full origin-left rounded-lg transition transform translate-y-full
 									bg-c-bg-secondary {value !== tab.value
 								? 'group-enabled:group-focus-visible:translate-y-0'
-								: ''} {!$isTouchscreen ? 'group-enabled:group-hover:translate-y-0' : ''}"
+								: ''} not-touch:group-enabled:group-hover:translate-y-0"
 						/>
 					</div>
 				</div>
@@ -79,8 +78,8 @@
 							? 'flex-col gap-0.5'
 							: 'gap-1.5'} justify-center items-center {value === tab.value && !hideSelected
 							? 'text-c-on-bg'
-							: 'text-c-on-bg/50'} {value === tab.value && !hideSelected && !$isTouchscreen
-							? 'group-hover:text-c-primary'
+							: 'text-c-on-bg/50'} {value === tab.value && !hideSelected
+							? 'not-touch:group-hover:text-c-primary'
 							: ''}"
 					>
 						{#if tab.icon}
@@ -108,8 +107,8 @@
 							: 'font-medium'} relative transition max-w-full z-0 {value === tab.value &&
 						!hideSelected
 							? 'text-c-on-bg'
-							: 'text-c-on-bg/50'} {value === tab.value && !hideSelected && !$isTouchscreen
-							? 'group-hover:text-c-primary'
+							: 'text-c-on-bg/50'} {value === tab.value && !hideSelected
+							? 'not-touch:group-hover:text-c-primary'
 							: ''}"
 					>
 						•

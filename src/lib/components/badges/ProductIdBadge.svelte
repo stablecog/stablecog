@@ -6,7 +6,6 @@
 	} from '$env/static/public';
 	import LL from '$i18n/i18n-svelte';
 	import type { TStripeSupportedProductIdSubscriptions } from '$ts/constants/stripePublic';
-	import { isTouchscreen } from '$ts/stores/isTouchscreen';
 
 	export let productId: TStripeSupportedProductIdSubscriptions | undefined;
 	export let size: 'sm' | 'md' | 'lg' = 'md';
@@ -48,15 +47,13 @@
 			: 'rounded-lg2'} {classes}"
 	>
 		<div
-			class="w-[200%] h-full absolute left-0 top-0 flex items-center justify-center {$isTouchscreen
-				? 'hidden'
-				: 'flex'}"
+			class="w-[200%] h-full absolute left-0 top-0 items-center justify-center hidden not-touch:flex"
 		>
 			<div
 				class="w-full aspect-square origin-left rounded-full transition transform -translate-x-full
 				{productId !== undefined && productId !== 'free'
 					? 'bg-c-primary/15'
-					: 'bg-c-on-bg/10'} {!$isTouchscreen ? 'group-hover:translate-x-[-45%]' : ''}"
+					: 'bg-c-on-bg/10'} not-touch:group-hover:translate-x-[-45%]"
 			/>
 		</div>
 		<div

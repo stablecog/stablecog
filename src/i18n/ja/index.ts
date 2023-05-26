@@ -804,6 +804,7 @@ const ja: Translation = {
 		PageParagraph:
 			'ご不明な点がございましたら、下記のリンクからお問い合わせください。できるだけ早く回答いたします。'
 	},
+	Documentation: { PageTitle: 'Documentation' },
 	Guide: {
 		PageTitle: 'Guide',
 		GuideButton: 'Guide',

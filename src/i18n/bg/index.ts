@@ -797,6 +797,7 @@ const bg: Translation = {
 		PageParagraph:
 			'В случай на въпроси, свържете се чрез връзките по-долу и ще ви отговорим възможно най-скоро.'
 	},
+	Documentation: { PageTitle: 'Documentation' },
 	Guide: {
 		PageTitle: 'Ръководство',
 		GuideButton: 'Упътване',

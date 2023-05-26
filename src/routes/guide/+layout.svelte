@@ -4,7 +4,7 @@
 	import IconHome from '$components/icons/IconHome.svelte';
 	import Drawer from '$components/navigation/Drawer.svelte';
 	import LL from '$i18n/i18n-svelte';
-	import Sidebar from '$routes/guide/Sidebar.svelte';
+	import Sidebar from '$components/docs/Sidebar.svelte';
 	import { guideSidebar } from '$routes/guide/constants';
 </script>
 
@@ -36,5 +36,5 @@
 			</p>
 		</a>
 	</div>
-	<Sidebar noBottomPadding class="w-full -mt-2" style="" sidebar={guideSidebar} />
+	<Sidebar noBottomPadding class="w-full -mt-2" sidebar={guideSidebar} />
 </Drawer>

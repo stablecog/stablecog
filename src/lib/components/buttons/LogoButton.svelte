@@ -1,6 +1,5 @@
 <script lang="ts">
 	import Logo from '$components/Logo.svelte';
-	import { isTouchscreen } from '$ts/stores/isTouchscreen';
 
 	export { classes as class };
 	let classes = '';
@@ -16,7 +15,7 @@
 		<div class="w-full h-full rounded-lg md:rounded-xl relative z-0 overflow-hidden">
 			<div
 				class="w-full h-full origin-left rounded-lg md:rounded-xl transition transform -translate-x-full
-    		bg-c-primary/25 {!$isTouchscreen ? 'group-hover:translate-x-0' : ''}"
+    		bg-c-primary/25 not-touch:group-hover:translate-x-0"
 			/>
 		</div>
 	</div>
