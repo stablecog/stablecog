@@ -95,6 +95,12 @@ Below is the simplest example of generating an image. You just send a prompt and
 <Property name="seed" type="int">
 	To get repeatable results. Same seed combined with same settings will generate the same image.
 </Property>
+<Property name="init_image_url" type="string">
+	An image URL to base the generation on.
+</Property>
+<Property name="prompt_strength" type="float">
+	How the model should prioritize init_image_url and prompt, between 0.0 and 1.0, higher will follow the prompt more closely.
+</Property>
 
 <Spacer/>
 

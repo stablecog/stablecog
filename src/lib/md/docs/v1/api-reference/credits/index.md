@@ -59,7 +59,7 @@ This endpoint is for listing your credits.
 
 ## Response Body
 
-<Property name="total_remaining_credits" type="float">
+<Property name="total_remaining_credits" type="int">
   Your total remaining credits.
 </Property>
 <Property name="credits" type="TCredit" typeModifier="array">
@@ -68,7 +68,7 @@ This endpoint is for listing your credits.
 		<Property name="id" type="string">
       The ID of this particular credit object.
     </Property>
-    <Property name="remaining_amount" type="float">
+    <Property name="remaining_amount" type="int">
       The remaining amount of this particular credit object.
     </Property>
     <Property name="expires_at" type="string">
@@ -83,7 +83,7 @@ This endpoint is for listing your credits.
         <Property name="name" type="string">
           The name of this credit type.
         </Property>
-        <Property name="amount" type="float">
+        <Property name="amount" type="int">
           The amount that this credit type comes by default.
         </Property>
         <Property name="description" type="string">
