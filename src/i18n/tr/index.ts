@@ -545,7 +545,7 @@ const tr: Translation = {
 	Account: {
 		PageTitle: 'Üyelik',
 		ManageSubscriptionButton: 'Aboneliği Yönet',
-		ComparePlansButton: 'Paketleri Kıyasla',
+		ComparePlansButton: 'Planları Kıyasla',
 		ManageAccountButton: 'Üyeliği Yönet',
 		AccountButton: 'Üyelik',
 		MyAccountButton: 'Üyeliğim',
@@ -701,8 +701,8 @@ const tr: Translation = {
 		NoMatchingGenerationTitle: 'Benzer bir üretim bulunamadı'
 	},
 	Pricing: {
-		PlansTitle: 'Paketler',
-		PlansParagraph: 'Sana uyan paketi seç.',
+		PlansTitle: 'Planlar',
+		PlansParagraph: 'Sana uyan planı seç.',
 		CreditPacksTitle: 'Kredi Paketleri',
 		CreditPacksParagraph: 'Daha fazla mı lazım? İstediğin zaman ekstra kredi alabilirsin.',
 		SubscribeButton: 'Satın Al',
