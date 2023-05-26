@@ -26,7 +26,7 @@
 	>
 		<h1
 			class="font-semibold text-3xl md:text-4xl lg:text-5xl flex-1 leading-tight md:leading-tight lg:leading-tight
-				max-w-[18rem] md:max-w-[22rem] lg:max-w-[30rem] text-center md:text-left"
+				max-w-[18rem] md:max-w-[22rem] lg:max-w-[30.25rem] text-center md:text-left"
 		>
 			{$LL.Landing.Hero.Title()}
 		</h1>

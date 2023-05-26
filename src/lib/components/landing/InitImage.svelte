@@ -73,13 +73,13 @@
 		>
 			<div class="hidden lg:flex flex-col items-center">
 				<h2
-					class="max-w-[19rem] md:max-w-[22rem] lg:max-w-[35rem] font-semibold text-3xl md:text-4xl
+					class="max-w-[19rem] md:max-w-[22rem] lg:max-w-[36rem] font-semibold text-3xl md:text-4xl
 						lg:text-5xl flex-1 leading-tight lg:leading-tight text-center"
 				>
 					{$LL.Landing.InitImage.Title()}
 				</h2>
 				<p
-					class="max-w-[22rem] lg:max-w-[35rem] leading-relaxed md:text-lg lg:text-xl mt-2 text-center text-c-on-bg/75"
+					class="max-w-[22rem] lg:max-w-[36rem] leading-relaxed md:text-lg lg:text-xl mt-2 text-center text-c-on-bg/75"
 				>
 					{$LL.Landing.InitImage.Paragraph()}
 				</p>

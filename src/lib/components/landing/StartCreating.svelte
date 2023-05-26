@@ -11,19 +11,19 @@
 	<div class="w-full max-w-7xl flex flex-col items-center px-3 md:px-8">
 		<div class="flex flex-col items-center px-3 md:px-6">
 			<h2
-				class="max-w-[19rem] md:max-w-[22rem] lg:max-w-[32rem] font-semibold text-3xl md:text-4xl lg:text-5xl
+				class="max-w-[19rem] md:max-w-[22rem] lg:max-w-[36rem] font-semibold text-3xl md:text-4xl lg:text-5xl
         flex-1 leading-tight lg:leading-tight text-center"
 			>
 				{$LL.Landing.StartCreating.Title()}
 			</h2>
 			<p
-				class="max-w-[22rem] lg:max-w-[32rem] leading-relaxed md:text-lg lg:text-xl mt-2 text-center text-c-on-bg/75"
+				class="max-w-[22rem] lg:max-w-[36rem] leading-relaxed md:text-lg lg:text-xl mt-2 text-center text-c-on-bg/75"
 			>
 				{$LL.Landing.StartCreating.Paragraph()}
 			</p>
 			<Button
 				href={$page.data.session?.user.id && $userSummary ? '/generate' : '/generate?smo=true'}
-				class="mt-6 w-full max-w-[15rem] px-6 md:px-8 py-4"
+				class="mt-6 w-full max-w-[16rem] px-6 md:px-8 py-4"
 				noPadding
 			>
 				{$LL.Landing.StartCreatingButton()}
