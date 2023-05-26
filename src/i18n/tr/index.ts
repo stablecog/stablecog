@@ -788,7 +788,7 @@ const tr: Translation = {
 					'{Discord} komünitemize katılıp istediğin soruyu sorabilirsin. Ayrıca bize {Twitter} veya {email} ile de ulaşabilirsin.',
 				Parts: {
 					Discord: 'Discord',
-					Email: 'eposta',
+					Email: 'e-posta',
 					Twitter: 'Twitter'
 				}
 			}
