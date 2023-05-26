@@ -8,15 +8,20 @@ import { getEntryFromPathname, getSidebarItemFromPathname } from '$components/do
 import type { ServerLoad } from '@sveltejs/kit';
 
 export const load: ServerLoad = async ({ url }) => {
+	const sidebarItem = getSidebarItemFromPathname({
+		sidebarItem: docsSidebar,
+		pathname: url.pathname
+	});
 	const entry = await getEntryFromPathname({
 		flatSidebarShallow: flatDocsSidebarShallow,
 		rawEntries: entries,
 		previewBaseUrl: previewBaseUrl,
-		pathname: url.pathname
+		pathname: url.pathname,
+		previewImageUrl: sidebarItem?.preview_image_url
 	});
 	return {
 		metadata: entry.metadata,
 		content: entry.default,
-		sidebarItem: getSidebarItemFromPathname({ sidebarItem: docsSidebar, pathname: url.pathname })
+		sidebarItem
 	};
 };

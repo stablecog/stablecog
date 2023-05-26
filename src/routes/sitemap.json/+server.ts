@@ -1,6 +1,7 @@
+import type { TPost, TPostMetadata } from '$routes/blog/types';
+import { flatDocsSidebarShallow } from '$routes/docs/v1/constants';
 import { flatGuideSidebarShallow } from '$routes/guide/constants';
 import { flatTrySidebarShallow } from '$routes/try/constants';
-import { getBlogPosts } from '$ts/queries/blog/getBlogPosts';
 import type { RequestHandler } from '@sveltejs/kit';
 
 const today = new Date();
@@ -37,7 +38,12 @@ const definedRoutes: IRoute[] = [
 ];
 
 export const GET: RequestHandler = async () => {
-	const blogPosts = await getBlogPosts();
+	const blogPostsImport = import.meta.glob('/src/lib/md/blog/*.md');
+	let blogPosts: TPostMetadata[] = [];
+	for (const key of Object.keys(blogPostsImport)) {
+		const post = (await blogPostsImport[key]()) as TPost;
+		blogPosts.push(post.metadata);
+	}
 	const blogPostRoutes = blogPosts.map((post) => ({
 		loc: `/blog/${post.slug}`,
 		lastmod: getDateStringFromDate(new Date(post.date)),
@@ -53,7 +59,18 @@ export const GET: RequestHandler = async () => {
 		lastmod: todayString,
 		changefreq: 'weekly'
 	}));
-	const allRoutes = [...definedRoutes, ...blogPostRoutes, ...guideRoutes, ...tryRoutes];
+	const docsRoutes: IRoute[] = flatDocsSidebarShallow.map((item) => ({
+		loc: `${item.pathname}`,
+		lastmod: todayString,
+		changefreq: 'weekly'
+	}));
+	const allRoutes = [
+		...definedRoutes,
+		...blogPostRoutes,
+		...guideRoutes,
+		...tryRoutes,
+		...docsRoutes
+	];
 	const headers = {
 		'Cache-Control': `public, max-age=${3600}, s-max-age=${3600}`,
 		'Content-Type': 'application/json'

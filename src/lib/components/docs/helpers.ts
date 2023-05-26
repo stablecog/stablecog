@@ -64,12 +64,14 @@ export async function getEntryFromPathname({
 	pathname,
 	rawEntries,
 	flatSidebarShallow,
-	previewBaseUrl
+	previewBaseUrl,
+	previewImageUrl
 }: {
 	pathname: string;
 	rawEntries: Record<string, () => Promise<unknown>>;
 	flatSidebarShallow: TSidebarItem[];
 	previewBaseUrl: string;
+	previewImageUrl?: string;
 }) {
 	const entries = getEntries(rawEntries);
 	const key = getEntryImportKey(pathname);
@@ -81,7 +83,10 @@ export async function getEntryFromPathname({
 		...entry,
 		metadata: {
 			...entry.metadata,
-			preview_image_url: getPreviewUrlFromEntryPathname({ previewBaseUrl, pathname }),
+			preview_image_url:
+				previewImageUrl !== undefined
+					? previewImageUrl
+					: getPreviewUrlFromEntryPathname({ previewBaseUrl, pathname }),
 			prev,
 			next
 		}
