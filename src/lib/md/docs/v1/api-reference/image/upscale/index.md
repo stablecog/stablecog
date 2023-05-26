@@ -66,6 +66,9 @@ Below is an example for an upscale. You can just send an output ID that belongs 
 </Property>
 <Property name="model_id" type="TUpscaleModelID" typeModifier="enum">
 	The ID of the upscale model.
+	<Expandible title="TUpscaleModelID" yPadding>
+		You can get the list of available upscale model IDs from the <Code href='/docs/v1/api-reference/image/models/upscale'>/v1/image/models/upscale</Code> endpoint.
+	</Expandible>
 </Property>
 
 <Spacer/>
@@ -91,6 +94,9 @@ Below is an example for an upscale. You can just send an output ID that belongs 
 	<Expandible title="TUpscaleSettings">
 		<Property name="model_id" type="TUpscaleModelID" typeModifier="enum">
 			The model ID for the upscaler that was used.
+			<Expandible title="TUpscaleModelID" yPadding>
+				You can get the list of available upscale model IDs from the <Code href='/docs/v1/api-reference/image/models/upscale'>/v1/image/models/upscale</Code> endpoint.
+			</Expandible>
 		</Property>
 		<Property name="input" type="string">
 			The input that was used for the upscale.

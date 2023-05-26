@@ -54,4 +54,7 @@ Below is an example for retrieving the defaults for the upscale operation.
 
 <Property name="model_id" type="TUpscaleModelID" typeModifier="enum">
   The ID of the upscale model.
+	<Expandible title="TUpscaleModelID" yPadding>
+		You can get the list of available upscale model IDs from the <Code href='/docs/v1/api-reference/image/models/upscale'>/v1/image/models/upscale</Code> endpoint.
+	</Expandible>
 </Property>

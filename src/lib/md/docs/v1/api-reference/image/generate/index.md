@@ -119,9 +119,15 @@ Below is the simplest example of generating an image. You just send a prompt and
 	<Expandible title="TGenerationSettings" >
 		<Property name="model_id" type="TGenerationModelID" typeModifier="enum">
 			The ID of the model.
+			<Expandible title="TGenerationModelID" yPadding>
+				You can get the list of available models from the <Code href='/docs/v1/api-reference/image/models/generate'>/v1/image/models/generate</Code> endpoint.
+			</Expandible>
 		</Property>
 		<Property name="scheduler_id" type="TGenerationSchedulerID" typeModifier="enum">
 			The ID of the scheduler.
+			<Expandible title="TGenerationSchedulerID" yPadding>
+				You can get the list of available scheduler IDs for a given model from the <Code href='/docs/v1/api-reference/image/models/generate'>/v1/image/models/generate</Code> endpoint.
+			</Expandible>
 		</Property>
 		<Property name="width" type="int">
 			The width of the image.
