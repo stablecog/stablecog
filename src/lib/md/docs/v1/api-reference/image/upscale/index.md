@@ -62,7 +62,12 @@ Below is an example for an upscale. You can just send an output ID that belongs 
 ## Request Body
 
 <Property name="input" type="string" required>
-	Input of the upscale. Can be an output ID that belongs to your account or any image URL.
+	The input for the upscale. An output ID belonging to your account or any image URL.<br>
+	Here are the constraints for the input image:<br>
+	<ul>
+		<li>Maximum width: <Code>1024</Code>.</li>
+		<li>Maximum height: <Code>1024</Code>.</li>
+		<li>Formats: <Code>JPG</Code>, <Code>PNG</Code>, <Code>WebP</Code>.</li>
 </Property>
 <Property name="model_id" type="TUpscaleModelID" typeModifier="enum">
 	The ID of the upscale model.

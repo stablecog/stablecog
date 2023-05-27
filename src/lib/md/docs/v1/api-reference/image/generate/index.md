@@ -79,6 +79,9 @@ Below is the simplest example of generating an image. You just send a prompt and
 	The height of the image. The value should be a multiple of <Code>8</Code> and follow this formula:
   <br><Code>{"height * width * inference steps < 640 * 640 * 50"}</Code>.
 </Property>
+<Property name="negative_prompt" type="string">
+	Tell the model what to avoid or exclude when generating the image. The opposite of the <Code>prompt</Code>.
+</Property>
 <Property name="num_outputs" type="int" min={1} max={4}>
 	The number of images to generate.
 </Property>
@@ -99,10 +102,10 @@ Below is the simplest example of generating an image. You just send a prompt and
 	To get repeatable results. Same seed combined with same settings will generate the same image.
 </Property>
 <Property name="init_image_url" type="string">
-	An image URL to base the generation on.
+	An image URL to base the generation on. The generations using this parameter are often called <Code>img2img</Code> or <Code>image to image</Code> generations.
 </Property>
 <Property name="prompt_strength" type="float" min={0} max={1}>
-	How the model should prioritize init_image_url and prompt. Higher value will follow the prompt more closely, lower value will follow the init_image_url more closely.
+	How the model should prioritize <Code>init_image_url</Code> and <Code>prompt</Code>. Higher value will follow the <Code>prompt</Code> more closely, lower value will follow the <Code>init_image_url</Code> more closely.
 </Property>
 
 <Spacer/>
