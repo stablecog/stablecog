@@ -4,10 +4,7 @@
 	import PageLoadProgressBar from '$components/PageLoadProgressBar.svelte';
 	import NavigationTabBar from '$components/navigation/NavigationTabBar.svelte';
 	import { clickoutside } from '$ts/actions/clickoutside';
-	import { onMount } from 'svelte';
-	import Banner from '$components/Banner.svelte';
 	import IconSc from '$components/icons/IconSc.svelte';
-	import { lastClosedNotification } from '$ts/stores/lastClosedNotification';
 	import LL, { locale } from '$i18n/i18n-svelte';
 	import Button from '$components/buttons/Button.svelte';
 	import AccountMenu from '$components/accountMenu/AccountMenu.svelte';
@@ -21,7 +18,6 @@
 		modalInTransitionProps,
 		modalOutTransitionProps
 	} from '$ts/animation/constants';
-	import IconBolt from '$components/icons/IconBolt.svelte';
 	import { userSummary } from '$ts/stores/user/summary';
 	import { navbarStickyType } from '$ts/stores/stickyNavbar';
 	import { isDrawerOpen } from '$ts/stores/isDrawerOpen';
@@ -33,6 +29,7 @@
 	import IconBlog from '$components/icons/IconBlog.svelte';
 	import { searchParamsString } from '$ts/stores/searchParamsString';
 	import IconLive from '$components/icons/IconLive.svelte';
+	/* import BannerWrapper from '$components/BannerWrapper.svelte'; */
 
 	export let notAtTheVeryTop = false;
 	export let scrollDirection: 'up' | 'down' = 'down';
@@ -44,13 +41,6 @@
 
 	const toggleAccountMenu = () => (isAccountMenuOpen = !isAccountMenuOpen);
 	const closeAccountMenu = () => (isAccountMenuOpen = false);
-
-	let mounted = false;
-	onMount(() => {
-		mounted = true;
-	});
-
-	const lastNotification = 'meet-our-new-interface';
 </script>
 
 <nav
@@ -62,19 +52,7 @@
 		? '-translate-y-[calc(100%+2px)]'
 		: ''}"
 >
-	{#if mounted && ($lastClosedNotification === null || $lastClosedNotification !== lastNotification)}
-		<Banner
-			href="/blog/meet-our-new-interface"
-			onClose={() => {
-				lastClosedNotification.set(lastNotification);
-			}}
-		>
-			<div class="flex items-center justify-center gap-2">
-				<IconBolt class="w-6 h-6 flex-shrink-0" />
-				<p class="flex-shrink min-w-0 overflow-hidden overflow-ellipsis">Meet Our New Interface!</p>
-			</div>
-		</Banner>
-	{/if}
+	<!-- <BannerWrapper /> -->
 	<div class="w-full flex flex-row items-center justify-between relative z-0">
 		<PageLoadProgressBar />
 		<div
