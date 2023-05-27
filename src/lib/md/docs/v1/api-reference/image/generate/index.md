@@ -72,10 +72,12 @@ Below is the simplest example of generating an image. You just send a prompt and
 	</Expandible>
 </Property>
 <Property name="width" type="int" min={256} max={1024}>
-	The width of the image.
+	The width of the image. The value should be a multiple of <Code>8</Code> and follow this formula:
+  <br><Code>{"width * height * inference steps < 640 * 640 * 50"}</Code>.
 </Property>
 <Property name="height" type="int" min={256} max={1024}>
-	The height of the image.
+	The height of the image. The value should be a multiple of <Code>8</Code> and follow this formula:
+  <br><Code>{"height * width * inference steps < 640 * 640 * 50"}</Code>.
 </Property>
 <Property name="num_outputs" type="int" min={1} max={4}>
 	The number of images to generate.
@@ -83,14 +85,15 @@ Below is the simplest example of generating an image. You just send a prompt and
 <Property name="guidance_scale" type="float" min={1} max={20}>
 	How similar the image will be to your prompt. Higher values make the image closer to your prompt and provides less creative freedom to the model.
 </Property>
+<Property name="inference_steps" type="int" min={10} max={50}>
+	How many steps will be taken to generate the image. Higher values usually provide more details (which isn't always a good thing) but take longer to generate. The value should follow this formula:
+	<br><Code>{"inference steps * width * height < 50 * 640 * 640"}</Code>.
+</Property>
 <Property name="scheduler_id" type="TGenerationSchedulerID" typeModifier="enum">
 	Schedulers define the entire denoising process during diffusion.
 	<Expandible title="TGenerationSchedulerID" yPadding>
 		You can get the list of available scheduler IDs for a given model from the <Code href='/docs/v1/api-reference/image/models/generate'>/v1/image/models/generate</Code> endpoint.
 	</Expandible>
-</Property>
-<Property name="inference_steps" type="int" min={10} max={50}>
-	How many steps will be taken to generate the image. Higher values usually provide more details (which isn't always a good thing) but take longer to generate.
 </Property>
 <Property name="seed" type="int">
 	To get repeatable results. Same seed combined with same settings will generate the same image.
@@ -129,12 +132,6 @@ Below is the simplest example of generating an image. You just send a prompt and
 				You can get the list of available models from the <Code href='/docs/v1/api-reference/image/models/generate'>/v1/image/models/generate</Code> endpoint.
 			</Expandible>
 		</Property>
-		<Property name="scheduler_id" type="TGenerationSchedulerID" typeModifier="enum">
-			The ID of the scheduler.
-			<Expandible title="TGenerationSchedulerID" yPadding>
-				You can get the list of available scheduler IDs for a given model from the <Code href='/docs/v1/api-reference/image/models/generate'>/v1/image/models/generate</Code> endpoint.
-			</Expandible>
-		</Property>
 		<Property name="width" type="int" min={256} max={1024}>
 			The width of the image.
 		</Property>
@@ -149,6 +146,12 @@ Below is the simplest example of generating an image. You just send a prompt and
 		</Property>
 		<Property name="inference_steps" type="int" min={10} max={50}>
 			The number of inference steps for the generation.
+		</Property>
+		<Property name="scheduler_id" type="TGenerationSchedulerID" typeModifier="enum">
+			The ID of the scheduler.
+			<Expandible title="TGenerationSchedulerID" yPadding>
+				You can get the list of available scheduler IDs for a given model from the <Code href='/docs/v1/api-reference/image/models/generate'>/v1/image/models/generate</Code> endpoint.
+			</Expandible>
 		</Property>
 		<Property name="seed" type="int">
 			The seed for the generation.
