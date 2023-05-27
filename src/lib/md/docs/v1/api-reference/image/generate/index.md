@@ -39,7 +39,7 @@ Below is the simplest example of generating an image. You just send a prompt and
 	<Tab value="cURL">
 		<CurlRequest />
 	</Tab>
-	<Tab value="Typescript">
+	<Tab value="TypeScript">
 		<TypescriptRequest />
 	</Tab>
 	<Tab value="Python">

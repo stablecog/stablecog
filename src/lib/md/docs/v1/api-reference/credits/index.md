@@ -36,7 +36,7 @@ This endpoint is for listing your credits.
 	<Tab value="cURL">
 		<CurlRequestSimple />
 	</Tab>
-	<Tab value="Typescript">
+	<Tab value="TypeScript">
 		<TypescriptRequestSimple />
 	</Tab>
 	<Tab value="Python">

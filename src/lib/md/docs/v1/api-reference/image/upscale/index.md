@@ -38,7 +38,7 @@ Below is an example for an upscale. You can just send an output ID that belongs 
 	<Tab value="cURL">
 		<CurlRequest />
 	</Tab>
-	<Tab value="Typescript">
+	<Tab value="TypeScript">
 		<TypescriptRequest />
 	</Tab>
 	<Tab value="Python">

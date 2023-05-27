@@ -38,7 +38,7 @@ Below is an example for retrieving the defaults for the generation operation.
 	<Tab value="cURL">
 		<CurlRequest />
 	</Tab>
-	<Tab value="Typescript">
+	<Tab value="TypeScript">
 		<TypescriptRequest />
 	</Tab>
 	<Tab value="Python">

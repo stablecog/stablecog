@@ -38,7 +38,7 @@ Below is an example for retrieving our generation models.
 	<Tab value="cURL">
 		<CurlRequest />
 	</Tab>
-	<Tab value="Typescript">
+	<Tab value="TypeScript">
 		<TypescriptRequest />
 	</Tab>
 	<Tab value="Python">

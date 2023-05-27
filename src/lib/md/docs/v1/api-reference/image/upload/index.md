@@ -39,7 +39,7 @@ Below is the simplest example of uploading an image. It takes a multipart/form-d
 	<Tab value="cURL">
 		<CurlRequest />
 	</Tab>
-	<Tab value="Typescript">
+	<Tab value="TypeScript">
 		<TypescriptRequest />
 	</Tab>
 	<Tab value="Python">
