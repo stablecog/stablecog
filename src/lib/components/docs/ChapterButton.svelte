@@ -35,13 +35,15 @@
 					{$LL.Guide.ChapterTitle()}
 				</p>
 				<h3
-					class="max-w-full text-lg font-semibold overflow-hidden overflow-ellipsis whitespace-nowrap text-c-on-bg transition group-hover:text-c-primary"
+					class="max-w-full text-lg font-semibold overflow-hidden overflow-ellipsis whitespace-nowrap
+					text-c-on-bg transition not-touch:group-hover:text-c-primary"
 				>
 					{item.title}
 				</h3>
 			</div>
 			<IconArrowRight
-				class="w-5 h-5 text-c-on-bg/50 transition group-hover:translate-x-1.5 group-hover:text-c-primary"
+				class="w-5 h-5 text-c-on-bg/50 transition not-touch:group-hover:translate-x-1.5 
+				not-touch:group-hover:text-c-primary"
 			/>
 		</div>
 		{#if src && srcset && sizes}

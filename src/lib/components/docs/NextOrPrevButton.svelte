@@ -24,7 +24,8 @@
 	/>
 	{#if type === 'prev'}
 		<IconArrowRight
-			class="transform rotate-180 w-5 h-5 text-c-on-bg/50 transition group-hover:-translate-x-1.5 group-hover:text-c-primary"
+			class="transform rotate-180 w-5 h-5 text-c-on-bg/50 transition not-touch:group-hover:-translate-x-1.5
+			not-touch:group-hover:text-c-primary"
 		/>
 	{/if}
 	<div
@@ -38,14 +39,16 @@
 			{type === 'next' ? $LL.Guide.NextTitle() : $LL.Guide.PreviousTitle()}
 		</p>
 		<p
-			class="max-w-full font-semibold overflow-hidden overflow-ellipsis whitespace-nowrap mt-0.5 text-c-on-bg transition group-hover:text-c-primary"
+			class="max-w-full font-semibold overflow-hidden overflow-ellipsis whitespace-nowrap mt-0.5
+			text-c-on-bg transition not-touch:group-hover:text-c-primary"
 		>
 			{item.title}
 		</p>
 	</div>
 	{#if type === 'next'}
 		<IconArrowRight
-			class="w-5 h-5 text-c-on-bg/50 transition group-hover:translate-x-1.5 group-hover:text-c-primary"
+			class="w-5 h-5 text-c-on-bg/50 transition not-touch:group-hover:translate-x-1.5 
+			not-touch:group-hover:text-c-primary"
 		/>
 	{/if}
 </a>
