@@ -4,7 +4,7 @@ description: Learn how to use the Stablecog API. Generate or upscale images, ret
 author: M. Yekta Güngör
 author_url: https://twitter.com/ngyekta
 date: 2023-04-18T15:00:00.000Z
-preview_image_url: https://ba.stablecog.com/docs/previews/v1.jpg
+preview_image_url: https://ba.stablecog.com/docs/previews/docs-v1.jpg
 ---
 
 <script>

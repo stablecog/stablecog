@@ -7,10 +7,12 @@ export const entries = import.meta.glob(`/src/lib/md/docs/**/*.md`);
 const _sidebar: TSidebarItemBase = {
 	title: 'Documentation',
 	pathname: '/docs/v1',
+	preview_image_url: `${previewBaseUrl}/docs-v1.jpg`,
 	children: [
 		{
 			title: 'Overview',
-			pathname: '/docs/v1'
+			pathname: '/docs/v1',
+			preview_image_url: `${previewBaseUrl}/docs-v1.jpg`
 		},
 		{
 			title: 'Get Started',
