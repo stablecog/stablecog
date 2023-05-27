@@ -95,7 +95,7 @@
 				{title}
 			</p>
 		</div>
-		<CopyButton {onCopied} bind:isCopied textToCopy={JSON.stringify(json)} />
+		<CopyButton {onCopied} bind:isCopied textToCopy={JSON.stringify(json, null, 2)} />
 	</div>
 	<div
 		class="w-full flex justify-start bg-c-bg-secondary rounded-b-[0.6rem] ring-2 ring-c-bg-tertiary"
