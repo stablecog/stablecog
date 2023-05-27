@@ -35,7 +35,8 @@ const definedRoutes: IRoute[] = [
 		lastmod: todayString,
 		changefreq: 'daily'
 	},
-	{ loc: '/blog', lastmod: todayString, changefreq: 'daily' }
+	{ loc: '/blog', lastmod: todayString, changefreq: 'daily' },
+	{ loc: '/docs', lastmod: todayString, changefreq: 'daily' }
 ];
 
 export const GET: RequestHandler = async () => {
