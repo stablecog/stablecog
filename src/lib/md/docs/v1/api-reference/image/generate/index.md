@@ -71,16 +71,16 @@ Below is the simplest example of generating an image. You just send a prompt and
 		You can get the list of available models from the <Code href='/docs/v1/api-reference/image/models/generate'>/v1/image/models/generate</Code> endpoint.
 	</Expandible>
 </Property>
-<Property name="width" type="int">
+<Property name="width" type="int" min={256} max={1024}>
 	The width of the image.
 </Property>
-<Property name="height" type="int">
+<Property name="height" type="int" min={256} max={1024}>
 	The height of the image.
 </Property>
-<Property name="num_outputs" type="int">
+<Property name="num_outputs" type="int" min={1} max={4}>
 	The number of images to generate.
 </Property>
-<Property name="guidance_scale" type="float">
+<Property name="guidance_scale" type="float" min={1} max={20}>
 	How similar the image will be to your prompt. Higher values make the image closer to your prompt and provides less creative freedom to the model.
 </Property>
 <Property name="scheduler_id" type="TGenerationSchedulerID" typeModifier="enum">
@@ -89,7 +89,7 @@ Below is the simplest example of generating an image. You just send a prompt and
 		You can get the list of available scheduler IDs for a given model from the <Code href='/docs/v1/api-reference/image/models/generate'>/v1/image/models/generate</Code> endpoint.
 	</Expandible>
 </Property>
-<Property name="inference_steps" type="int">
+<Property name="inference_steps" type="int" min={10} max={50}>
 	How many steps will be taken to generate the image. Higher values usually provide more details (which isn't always a good thing) but take longer to generate.
 </Property>
 <Property name="seed" type="int">
@@ -98,8 +98,8 @@ Below is the simplest example of generating an image. You just send a prompt and
 <Property name="init_image_url" type="string">
 	An image URL to base the generation on.
 </Property>
-<Property name="prompt_strength" type="float">
-	How the model should prioritize init_image_url and prompt, between 0.0 and 1.0, higher will follow the prompt more closely.
+<Property name="prompt_strength" type="float" min={0} max={1}>
+	How the model should prioritize init_image_url and prompt. Higher value will follow the prompt more closely, lower value will follow the init_image_url more closely.
 </Property>
 
 <Spacer/>
@@ -135,19 +135,19 @@ Below is the simplest example of generating an image. You just send a prompt and
 				You can get the list of available scheduler IDs for a given model from the <Code href='/docs/v1/api-reference/image/models/generate'>/v1/image/models/generate</Code> endpoint.
 			</Expandible>
 		</Property>
-		<Property name="width" type="int">
+		<Property name="width" type="int" min={256} max={1024}>
 			The width of the image.
 		</Property>
-		<Property name="height" type="int">
+		<Property name="height" type="int" min={256} max={1024}>
 			The height of the image.
 		</Property>
-		<Property name="num_outputs" type="int">
+		<Property name="num_outputs" type="int" min={1} max={4}>
 			The number of images.
 		</Property>
-		<Property name="guidance_scale" type="float">
+		<Property name="guidance_scale" type="float" min={1} max={20}>
 			The guidance scale for the generation.
 		</Property>
-		<Property name="inference_steps" type="int">
+		<Property name="inference_steps" type="int" min={10} max={50}>
 			The number of inference steps for the generation.
 		</Property>
 		<Property name="seed" type="int">

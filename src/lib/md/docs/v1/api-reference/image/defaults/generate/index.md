@@ -64,21 +64,21 @@ Below is an example for retrieving the defaults for the generation operation.
 		You can get the list of available scheduler IDs for a given model from the <Code href='/docs/v1/api-reference/image/models/generate'>/v1/image/models/generate</Code> endpoint.
 	</Expandible>
 </Property>
-<Property name="width" type="int">
+<Property name="width" type="int" min={256} max={1024}>
 	The default width for the generation operation.
 </Property>
-<Property name="height" type="int">
+<Property name="height" type="int" min={256} max={1024}>
 	The default height for the generation operation.
 </Property>
-<Property name="num_outputs" type="int">
+<Property name="num_outputs" type="int" min={1} max={4}>
 	The default number of output images for the generation operation.
 </Property>
-<Property name="guidance_scale" type="float">
+<Property name="guidance_scale" type="float" min={1} max={20}>
 	The default number of output images for the generation operation.
 </Property>
-<Property name="inference_steps" type="int">
+<Property name="inference_steps" type="int" min={10} max={50}>
 	The default number of inference steps for the generation operation.
 </Property>
-<Property name="prompt_strength" type="float">
+<Property name="prompt_strength" type="float" min={0} max={1}>
 	The default prompt strength for the generation operation.
 </Property>
