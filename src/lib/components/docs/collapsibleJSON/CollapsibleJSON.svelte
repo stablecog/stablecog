@@ -1,6 +1,8 @@
 <script lang="ts">
+	import CopyButton from '$components/docs/CopyButton.svelte';
 	import CollapsibleJsonInner from '$components/docs/collapsibleJSON/CollapsibleJSONInner.svelte';
 	import type { TKeyObject } from '$components/docs/collapsibleJSON/types';
+	import { onMount } from 'svelte';
 	export let json: any;
 	export let title: string;
 
@@ -70,17 +72,30 @@
 			isParentObject
 		};
 	}
+
+	let isCopied = false;
+	let isCopiedTimeout: NodeJS.Timeout;
+	let isCopiedTimeoutDuration = 2000;
+
+	function onCopied() {
+		isCopied = true;
+		clearTimeout(isCopiedTimeout);
+		isCopiedTimeout = setTimeout(() => {
+			isCopied = false;
+		}, isCopiedTimeoutDuration);
+	}
 </script>
 
 <div class="w-full flex flex-col font-mono {classes}">
 	<div
-		class="w-full flex justify-start items-center bg-c-bg rounded-t-[0.6rem] ring-2 ring-c-bg-tertiary"
+		class="w-full flex justify-start items-center bg-c-bg rounded-t-[0.6rem] ring-2 ring-c-bg-tertiary relative z-10"
 	>
-		<div class="flex flex-row overflow-auto px-3 pt-3 pb-4">
+		<div class="flex-1 min-w-0 flex-row overflow-auto px-3 py-3">
 			<p class="whitespace-nowrap">
 				{title}
 			</p>
 		</div>
+		<CopyButton {onCopied} bind:isCopied textToCopy={JSON.stringify(json)} />
 	</div>
 	<div
 		class="w-full flex justify-start bg-c-bg-secondary rounded-b-[0.6rem] ring-2 ring-c-bg-tertiary"

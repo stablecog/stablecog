@@ -8,14 +8,9 @@
 <script lang="ts">
 	import ButtonHoverEffect from '$components/buttons/ButtonHoverEffect.svelte';
 	import { Tabs } from 'radix-svelte';
-	import { getContext, setContext, text } from 'svelte/internal';
+	import { getContext, setContext } from 'svelte/internal';
 	import { onMount } from 'svelte';
-	import { copy } from 'svelte-copy';
-	import NoBgButton from '$components/buttons/NoBgButton.svelte';
-	import Morpher from '$components/Morpher.svelte';
-	import IconCopy from '$components/icons/IconCopy.svelte';
-	import IconTick from '$components/icons/IconTick.svelte';
-	import IconTickOnly from '$components/icons/IconTickOnly.svelte';
+	import CopyButton from '$components/docs/CopyButton.svelte';
 
 	export let defaultValue: string | undefined = undefined;
 	export { classes as class };
@@ -116,35 +111,7 @@
 					{/each}
 				</div>
 			</div>
-			<button
-				class="flex items-stretch justify-center p-1 self-stretch group relative"
-				use:copy={textToCopy || ''}
-				on:svelte-copy={onCopied}
-				on:svelte-copy:error={(e) => console.log(e)}
-			>
-				<ButtonHoverEffect color="success" hoverFrom="bottom" size="sm" hovered={isCopied} />
-				<div
-					class="flex justify-center items-center self-stretch px-3 py-2 rounded-lg text-sm transition {isCopied
-						? 'bg-c-success'
-						: 'bg-c-bg'}"
-				>
-					<Morpher morphed={isCopied}>
-						<div slot="0" class="flex items-center justify-center gap-1">
-							<IconCopy
-								class="w-4 h-4 text-c-on-bg not-touch:group-hover:text-c-success flex-shrink-0"
-							/>
-							<p class="text-c-on-bg not-touch:group-hover:text-c-success">Copy</p>
-						</div>
-						<div
-							slot="1"
-							class="flex items-center justify-center gap-1 text-c-on-primary font-semibold"
-						>
-							<IconTickOnly class="w-4 h-4 flex-shrink-0" />
-							<p>Done</p>
-						</div>
-					</Morpher>
-				</div>
-			</button>
+			<CopyButton textToCopy={textToCopy || ''} {onCopied} bind:isCopied />
 		</Tabs.List>
 	</div>
 </Tabs.Root>
