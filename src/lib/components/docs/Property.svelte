@@ -10,7 +10,7 @@
 	const typeColor = baseTypeNames.includes(type) ? 'text-c-secondary' : 'text-c-tertiary';
 </script>
 
-<div id="property-{name}" class="w-full flex flex-col border-b-2 border-c-bg-secondary py-5">
+<div id="property-{name}" class="w-full flex flex-col border-b-2 border-c-bg-secondary pt-5 pb-5.5">
 	<div class="w-full flex flex-col">
 		<div class="w-full flex flex-wrap items-start justify-between gap-2 font-mono mb-3">
 			<p class="text-c-primary font-medium pr-6">
