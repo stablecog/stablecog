@@ -28,8 +28,9 @@
 							<span class="text-xs mr-[0.5ch]">min</span><span class="text-c-on-bg/75">{min}</span
 							>{/if}{#if min !== undefined && max !== undefined}<span class="text-xxs"
 								>&nbsp&nbsp</span
-							>{/if}{#if max !== undefined}
-							<span class="text-xs mr-[0.5ch]">max</span><span class="text-c-on-bg/75">{max}</span>
+							>{/if}{#if max !== undefined}<span class="text-xs mr-[0.5ch]">max</span><span
+								class="text-c-on-bg/75">{max}</span
+							>
 						{/if}<span class="text-c-on-bg/25">{' | '}</span>
 					</span>
 				{/if}
