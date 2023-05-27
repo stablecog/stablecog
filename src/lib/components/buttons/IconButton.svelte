@@ -5,7 +5,6 @@
 	export let onClick: (() => void) | undefined = undefined;
 	export let href: string | undefined = undefined;
 	export let name: string;
-	export { classes as class };
 	export let prefetch: boolean = true;
 	export let target: THrefTarget = undefined;
 	export let noPadding = false;
@@ -13,6 +12,8 @@
 	export let type: 'on-primary' | 'primary' | 'secondary' = 'primary';
 	export let withSpinner = false;
 	export let loading = false;
+	export let hoverFrom: 'left' | 'right' = 'left';
+	export { classes as class };
 	let classes = '';
 </script>
 
@@ -33,7 +34,9 @@
 						class="w-full h-full ease-out transition transform {type === 'on-primary'
 							? 'bg-c-on-primary/15'
 							: 'bg-c-primary/25'} 
-        		absolute left-0 top-0 rounded-xl -translate-x-full
+        		absolute left-0 top-0 rounded-xl {hoverFrom === 'left'
+							? '-translate-x-full'
+							: 'translate-x-full'}
 						not-touch:group-hover/iconbutton:translate-x-0"
 					/>
 				</div>
@@ -73,7 +76,9 @@
 							: type === 'on-primary'
 							? 'bg-c-on-primary/25'
 							: 'bg-c-primary/25'} 
-          	absolute left-0 top-0 rounded-xl -translate-x-full
+          	absolute left-0 top-0 rounded-xl {hoverFrom === 'left'
+							? '-translate-x-full'
+							: 'translate-x-full'}
 						not-touch:group-hover/iconbutton:translate-x-0"
 					/>
 				</div>

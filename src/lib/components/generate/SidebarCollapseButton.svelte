@@ -86,6 +86,7 @@
 			disabled={!shouldShowButton && !isClosed}
 			noPadding
 			name="Hide Left Sidebar"
+			hoverFrom={isClosed ? 'left' : 'right'}
 		>
 			<div class="p-2">
 				<IconChevronDown
