@@ -8,9 +8,6 @@
 
 	const baseTypeNames = ['string', 'number', 'boolean', 'int', 'float'];
 	const typeColor = baseTypeNames.includes(type) ? 'text-c-secondary' : 'text-c-tertiary';
-	const typeColorMuted = baseTypeNames.includes(type)
-		? 'text-c-secondary/75'
-		: 'text-c-tertiary/75';
 </script>
 
 <div id="property-{name}" class="w-full flex flex-col border-b-2 border-c-bg-secondary py-5">
@@ -27,11 +24,13 @@
 			<p class="{typeColor} text-sm">
 				{#if min !== undefined || max !== undefined}
 					<span class="text-c-on-bg/50">
-						{min !== undefined ? 'min=' + min : ''}{min !== undefined && max !== undefined
-							? ','
-							: ''}
-						{max !== undefined ? 'max=' + max : ''}
-						{' | '}
+						{#if min !== undefined}
+							<span class="text-xs mr-[0.5ch]">min</span><span class="text-c-on-bg/75">{min}</span
+							>{/if}{#if min !== undefined && max !== undefined}<span class="text-xxs"
+								>&nbsp&nbsp</span
+							>{/if}{#if max !== undefined}
+							<span class="text-xs mr-[0.5ch]">max</span><span class="text-c-on-bg/75">{max}</span>
+						{/if}<span class="text-c-on-bg/25">{' | '}</span>
 					</span>
 				{/if}
 				{#if typeModifier}

@@ -100,7 +100,7 @@
 	<div
 		class="w-full flex justify-start bg-c-bg-secondary rounded-b-[0.6rem] ring-2 ring-c-bg-tertiary"
 	>
-		<div class="flex flex-col items-start overflow-auto pl-2 pr-5 py-3">
+		<div class="flex flex-col items-start overflow-auto pl-1 md:pl-2 pr-4 md:pr-5 py-1.5 md:py-3">
 			<CollapsibleJsonInner {keyObject} />
 		</div>
 	</div>
