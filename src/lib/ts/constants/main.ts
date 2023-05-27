@@ -29,12 +29,8 @@ export const allowedRedirectRoutes = [
 	'/live',
 	'/blog',
 	'/account',
-	'/account/usage',
-	'/account/api-keys',
 	'/admin',
-	'/admin/servers',
-	'/admin/users',
-	'/admin/gallery'
+	'/docs'
 ];
 
 export const isAllowedRedirectRoute = (route: string) => {

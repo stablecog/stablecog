@@ -102,6 +102,7 @@
 					<div
 						use:copy={String(generation.seed)}
 						on:svelte-copy={() => setButtonObjectWithState('seed', 'success')}
+						on:svelte-copy:error={(e) => console.log(e)}
 					>
 						<SubtleButton
 							noPadding

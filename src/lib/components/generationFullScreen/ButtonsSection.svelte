@@ -216,6 +216,7 @@
 	<div
 		use:copy={generation.prompt.text}
 		on:svelte-copy={() => setButtonObjectWithState('prompt', 'success')}
+		on:svelte-copy:error={(e) => console.log(e)}
 	>
 		<SubtleButton state={buttonObjectsWithState.prompt.state === 'success' ? 'success' : 'idle'}>
 			<Morpher morphed={buttonObjectsWithState.prompt.state === 'success'}>
@@ -259,7 +260,11 @@
 		</SubtleButton>
 	{/if}
 	{#if modalType === 'gallery'}
-		<div use:copy={linkUrl} on:svelte-copy={() => setButtonObjectWithState('link', 'success')}>
+		<div
+			use:copy={linkUrl}
+			on:svelte-copy={() => setButtonObjectWithState('link', 'success')}
+			on:svelte-copy:error={(e) => console.log(e)}
+		>
 			<SubtleButton state={buttonObjectsWithState.link.state === 'success' ? 'success' : 'idle'}>
 				<Morpher morphed={buttonObjectsWithState.link.state === 'success'}>
 					<div slot="0" class="flex items-center justify-center gap-1.5">

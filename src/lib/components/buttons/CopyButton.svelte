@@ -30,6 +30,7 @@
 	bind:this={element}
 	use:copy={stringToCopy}
 	on:svelte-copy={onCopy}
+	on:svelte-copy:error={(e) => console.log(e)}
 	{disabled}
 	type="button"
 	class="touch-manipulation transition rounded-lg group/copybutton {classes}"
