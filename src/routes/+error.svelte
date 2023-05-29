@@ -38,7 +38,7 @@
 	});
 </script>
 
-<svelte:window on:scroll={setNavbarState} />
+<svelte:window on:scroll|passive={setNavbarState} />
 
 <LayoutWrapper>
 	<Navbar {notAtTheVeryTop} {scrollDirection} />

@@ -238,7 +238,7 @@
 />
 
 <svelte:window
-	on:scroll={() => {
+	on:scroll|passive={() => {
 		if (Math.abs(window.scrollY) < atTheTopThreshold) {
 			atTheTop = true;
 			return;

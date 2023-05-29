@@ -102,7 +102,7 @@
 								<p
 									class="relative transition {val === value
 										? 'text-c-primary'
-										: 'text-c-on-bg/50'} group-data-[state=active]:text-c-primary"
+										: 'text-c-on-bg/60'} group-data-[state=active]:text-c-primary"
 								>
 									{val}
 								</p>

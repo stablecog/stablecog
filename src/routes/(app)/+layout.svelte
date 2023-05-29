@@ -328,7 +328,7 @@
 	});
 </script>
 
-<svelte:window on:scroll={setNavbarState} />
+<svelte:window on:scroll|passive={setNavbarState} />
 
 <QueryClientProvider client={data.queryClient}>
 	<UserSummaryProvider>
