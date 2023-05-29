@@ -3,7 +3,7 @@
 	import { docContainerSize } from '$components/docs/constants';
 	import IconArrowRight from '$components/icons/IconArrowRight.svelte';
 	import LL from '$i18n/i18n-svelte';
-	import type { TSidebarItem } from '$routes/guide/types';
+	import type { TSidebarItem } from '$docroutes/guide/types';
 	import { getImgProxySrcDefault, getImgProxySrcSet } from '$ts/helpers/imgproxy';
 
 	export let item: TSidebarItem;

@@ -66,7 +66,7 @@
 		"file-saver": "^2.0.5",
 		"mixpanel": "^0.17.0",
 		"posthog-js": "^1.46.2",
-		"radix-svelte": "^0.5.0",
+		"radix-svelte": "^0.7.0",
 		"rehype-highlight": "^6.0.0",
 		"remark-reading-time": "^2.0.1",
 		"svelte-inview": "^4.0.0",

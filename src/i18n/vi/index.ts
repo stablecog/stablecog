@@ -245,6 +245,8 @@ const vi: Translation = {
 		InsufficientCreditsTitle: 'Insufficient credits ({remainingCredits}/{neededCredits})',
 		AllTitle: 'All',
 		ConfirmButton: 'Confirm',
+		ResourcesTitle: 'Resources',
+		ResourcesButton: 'Resources',
 		ConfirmQuestionMarkButton: 'Confirm?',
 		Credits: {
 			CreditsTable: {
@@ -622,6 +624,7 @@ const vi: Translation = {
 			PageParagraph:
 				'Your secret API keys are listed below. They are only shown once when you first generate them. Make sure to save them somewhere safe.',
 			NoKeysYet: "You don't have any API keys yet.",
+			CreateAPIKeyButton: 'Create API Key',
 			CreateNewKeyButton: 'Create New Key',
 			DeleteKeyButton: 'Delete Key',
 			KeyTable: {
@@ -799,7 +802,7 @@ const vi: Translation = {
 		PageParagraph:
 			"If you have any questions, please reach out to us using the links below and we'll answer them as soon as possible."
 	},
-	Documentation: { PageTitle: 'Documentation' },
+
 	Guide: {
 		PageTitle: 'Guide',
 		GuideButton: 'Guide',
@@ -813,6 +816,25 @@ const vi: Translation = {
 		PrivacyPolicyTitle: 'Privacy Policy',
 		RefundPolicyTitle: 'Refund Policy',
 		ContentPolicyTitle: 'Content Policy'
+	},
+	Documentation: {
+		PageTitle: 'Documentation',
+		PageTitleAlt: 'API Reference',
+		APIReferenceButton: 'API Reference',
+		DocumentationButton: 'Documentation',
+		ForDevelopersTitle: 'For Developers'
+	},
+	Scl: {
+		Discord: 'Discord',
+		Email: 'Email',
+		Twitter: 'Twitter',
+		Instagram: 'Instagram',
+		YouTube: 'YouTube',
+		LinkedIn: 'LinkedIn',
+		Reddit: 'Reddit',
+		GitHub: 'GitHub',
+		Telegram: 'Telegram',
+		ProductHunt: 'Product Hunt'
 	},
 	UnderDevelopment: {
 		PageTitle: "We'll be back soon!",

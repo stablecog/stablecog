@@ -88,6 +88,11 @@ export const extraRoutes = derived([LL], ([$LL]) => {
 			icon: 'blog'
 		},
 		{
+			name: $LL.Documentation.PageTitle(),
+			href: '/docs/v1',
+			icon: 'documentation'
+		},
+		{
 			name: $LL.Navbar.LiveTab(),
 			href: '/live',
 			icon: 'live'
@@ -124,7 +129,8 @@ export type TNavbarRouteOption =
 	| 'servers'
 	| 'users'
 	| 'guide'
-	| 'admin';
+	| 'admin'
+	| 'documentation';
 
 export interface TNavbarRoute {
 	name: string;

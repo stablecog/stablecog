@@ -10,12 +10,14 @@ export async function getGalleryGenerationFullOutputs({
 	cursor,
 	search,
 	seed,
-	model_ids
+	model_ids,
+	custom_fetch
 }: {
 	cursor?: string;
 	search?: string;
 	seed: number;
 	model_ids?: TAvailableGenerationModelId[];
+	custom_fetch?: typeof fetch;
 }): Promise<TGalleryGenerationFullOutputsPage> {
 	console.log('getGalleryOutputs');
 	const query = new URLSearchParams();
@@ -35,7 +37,8 @@ export async function getGalleryGenerationFullOutputs({
 	let queryString = query.toString();
 	if (queryString) queryString = `?${queryString}`;
 	const url = `${apiUrl.origin}/v1/gallery${queryString}`;
-	const res = await fetch(url, {
+	const f = custom_fetch || fetch;
+	const res = await f(url, {
 		headers: {
 			'Content-Type': 'application/json'
 		}

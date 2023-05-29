@@ -23,6 +23,8 @@ const config = {
 			'$css/*': './src/lib/css',
 			'$md/*': './src/lib/md',
 			'$routes/*': './src/routes',
+			'$docroutes/*': './src/routes/(doc)',
+			'$approutes/*': './src/routes/(app)',
 			'$i18n/*': './src/i18n',
 			'$userStores/*': './src/lib/ts/stores/user'
 		},

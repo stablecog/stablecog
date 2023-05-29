@@ -27,10 +27,11 @@ export const allowedRedirectRoutes = [
 	'/history',
 	'/gallery',
 	'/live',
-	'/blog',
 	'/account',
 	'/admin',
-	'/docs'
+	'/blog',
+	'/docs',
+	'/guide'
 ];
 
 export const isAllowedRedirectRoute = (route: string) => {

@@ -44,7 +44,7 @@
 	import IconChevronDown from '$components/icons/IconChevronDown.svelte';
 	import { afterNavigate } from '$app/navigation';
 	import NoBgButton from '$components/buttons/NoBgButton.svelte';
-	import type { TGeneratePageData } from '$routes/generate/+page.server';
+	import type { TGeneratePageData } from '$approutes/generate/+page.server';
 
 	export let openSignInModal: () => void;
 	export let serverData: TGeneratePageData;

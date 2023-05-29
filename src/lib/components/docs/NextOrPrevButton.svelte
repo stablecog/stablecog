@@ -2,7 +2,7 @@
 	import ButtonHoverEffect from '$components/buttons/ButtonHoverEffect.svelte';
 	import IconArrowRight from '$components/icons/IconArrowRight.svelte';
 	import LL from '$i18n/i18n-svelte';
-	import type { TSidebarItem } from '$routes/guide/types';
+	import type { TSidebarItem } from '$docroutes/guide/types';
 
 	export let item: TSidebarItem;
 	export let type: 'next' | 'prev';

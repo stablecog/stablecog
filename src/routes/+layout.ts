@@ -13,10 +13,10 @@ export const load: LayoutLoad = async (event) => {
 	const supabase = createSupabaseLoadClient({
 		supabaseUrl:
 			envPublic.PUBLIC_APP_MODE === 'qa'
-				? envPublic.PUBLIC_SUPABASE_URL_QA
+				? envPublic.PUBLIC_SUPABASE_URL_QA || ''
 				: envPublic.PUBLIC_APP_MODE === 'dev'
-				? envPublic.PUBLIC_SUPABASE_URL
-				: envPublic.PUBLIC_SUPABASE_URL,
+				? envPublic.PUBLIC_SUPABASE_URL || ''
+				: envPublic.PUBLIC_SUPABASE_URL || '',
 		supabaseKey:
 			envPublic.PUBLIC_APP_MODE === 'qa'
 				? envPublic.PUBLIC_SUPABASE_ANON_KEY_QA
@@ -52,7 +52,6 @@ export const load: LayoutLoad = async (event) => {
 	const theme = event.data.theme;
 	const globalSeed = Math.round(Math.random() * Math.pow(10, 12));
 	const isLeftSidebarHidden = event.data.isLeftSidebarHidden;
-
 	return {
 		locale,
 		session: session as Session | null,

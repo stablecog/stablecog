@@ -248,6 +248,8 @@ const es: Translation = {
 		InsufficientCreditsTitle: 'Ανεπαρκείς μονάδες ({remainingCredits}/{neededCredits})',
 		AllTitle: 'Όλα',
 		ConfirmButton: 'Επιβεβαίωση',
+		ResourcesTitle: 'Resources',
+		ResourcesButton: 'Resources',
 		ConfirmQuestionMarkButton: 'Επιβεβαίωση;',
 		Credits: {
 			CreditsTable: {
@@ -630,6 +632,7 @@ const es: Translation = {
 			PageParagraph:
 				'Your secret API keys are listed below. They are only shown once when you first generate them. Make sure to save them somewhere safe.',
 			NoKeysYet: "You don't have any API keys yet.",
+			CreateAPIKeyButton: 'Create API Key',
 			CreateNewKeyButton: 'Create New Key',
 			DeleteKeyButton: 'Delete Key',
 			KeyTable: {
@@ -810,7 +813,7 @@ const es: Translation = {
 		PageParagraph:
 			'Αν έχετε οποιεσδήποτε ερωτήσεις, παρακαλούμε επικοινωνήστε μαζί μας χρησιμοποιώντας τους παρακάτω συνδέσμους και θα απαντήσουμε το συντομότερο δυνατό.'
 	},
-	Documentation: { PageTitle: 'Documentation' },
+
 	Guide: {
 		PageTitle: 'Guide',
 		GuideButton: 'Guide',
@@ -824,6 +827,25 @@ const es: Translation = {
 		PrivacyPolicyTitle: 'Πολιτική Απορρήτου',
 		RefundPolicyTitle: 'Πολιτικές επιστροφής χρημάτων',
 		ContentPolicyTitle: 'Πολιτική Περιεχομένου'
+	},
+	Documentation: {
+		PageTitle: 'Documentation',
+		PageTitleAlt: 'API Reference',
+		APIReferenceButton: 'API Reference',
+		DocumentationButton: 'Documentation',
+		ForDevelopersTitle: 'For Developers'
+	},
+	Scl: {
+		Discord: 'Discord',
+		Email: 'Email',
+		Twitter: 'Twitter',
+		Instagram: 'Instagram',
+		YouTube: 'YouTube',
+		LinkedIn: 'LinkedIn',
+		Reddit: 'Reddit',
+		GitHub: 'GitHub',
+		Telegram: 'Telegram',
+		ProductHunt: 'Product Hunt'
 	},
 	UnderDevelopment: {
 		PageTitle: 'Θα επιστρέψουμε σύντομα!',

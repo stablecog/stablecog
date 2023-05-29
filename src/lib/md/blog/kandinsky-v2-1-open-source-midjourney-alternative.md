@@ -28,7 +28,7 @@ It's not based on Stable Diffusion, it's created from scratch. It's very good at
 
 It can create images from text and supports inpainting. More interesting, it lets you fuse multiple images and prompts together. Again, a bit like Midjourney but with more freedom.
 
-<DocImage src="https://ba.stablecog.com/blog/kandinsky-image-fuse-code.jpg" width="2560" height="1122" alt="Kandinsky Image Fuse" />
+<DocImage href="https://github.com/ai-forever/Kandinsky-2" src="https://ba.stablecog.com/blog/kandinsky-image-fuse-code.jpg" width="2560" height="1122" alt="Kandinsky Image Fuse" />
 
 It's also multilingual by design, and trained on a large multilingual set according to the authors. They also note that it was trained LAION HighRes dataset and the internal dataset of the research team.
 

@@ -3,7 +3,7 @@ import type {
 	TGuideEntryExtended,
 	TSidebarItem,
 	TSidebarItemBase
-} from '$routes/guide/types';
+} from '$docroutes/guide/types';
 
 export function getEntryImportKey(pathname: string | undefined) {
 	return `/src/lib/md${pathname}.md`;

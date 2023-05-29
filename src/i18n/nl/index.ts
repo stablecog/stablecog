@@ -248,6 +248,8 @@ const nl: Translation = {
 		InsufficientCreditsTitle: 'Onvoldoende credits ({remainingCredits}/{neededCredits})',
 		AllTitle: 'Alles',
 		ConfirmButton: 'Bevestigen',
+		ResourcesTitle: 'Resources',
+		ResourcesButton: 'Resources',
 		ConfirmQuestionMarkButton: 'Bevestigen?',
 		Credits: {
 			CreditsTable: {
@@ -629,6 +631,7 @@ const nl: Translation = {
 			PageParagraph:
 				'Your secret API keys are listed below. They are only shown once when you first generate them. Make sure to save them somewhere safe.',
 			NoKeysYet: "You don't have any API keys yet.",
+			CreateAPIKeyButton: 'Create API Key',
 			CreateNewKeyButton: 'Create New Key',
 			DeleteKeyButton: 'Delete Key',
 			KeyTable: {
@@ -807,7 +810,7 @@ const nl: Translation = {
 		PageParagraph:
 			'Als je vragen hebt, neem dan contact met ons op via onderstaande links en we zullen ze zo snel mogelijk beantwoorden.'
 	},
-	Documentation: { PageTitle: 'Documentation' },
+
 	Guide: {
 		PageTitle: 'Handleiding',
 		GuideButton: 'Handleiding',
@@ -821,6 +824,25 @@ const nl: Translation = {
 		PrivacyPolicyTitle: 'Privacybeleid',
 		RefundPolicyTitle: 'Restitutiebeleid',
 		ContentPolicyTitle: 'Inhoudsbeleid'
+	},
+	Documentation: {
+		PageTitle: 'Documentation',
+		PageTitleAlt: 'API Reference',
+		APIReferenceButton: 'API Reference',
+		DocumentationButton: 'Documentation',
+		ForDevelopersTitle: 'For Developers'
+	},
+	Scl: {
+		Discord: 'Discord',
+		Email: 'Email',
+		Twitter: 'Twitter',
+		Instagram: 'Instagram',
+		YouTube: 'YouTube',
+		LinkedIn: 'LinkedIn',
+		Reddit: 'Reddit',
+		GitHub: 'GitHub',
+		Telegram: 'Telegram',
+		ProductHunt: 'Product Hunt'
 	},
 	UnderDevelopment: {
 		PageTitle: 'We zijn snel weer terug!',

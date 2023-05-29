@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { blogContainerSize } from '$components/docs/constants';
 	import { locale } from '$i18n/i18n-svelte';
-	import type { TPostMetadata } from '$routes/blog/types';
+	import type { TPostMetadata } from '$docroutes/blog/types';
 	import { getImgProxySrcDefault, getImgProxySrcSet } from '$ts/helpers/imgproxy';
 
 	export let post: TPostMetadata;

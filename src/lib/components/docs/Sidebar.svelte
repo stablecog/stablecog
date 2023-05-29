@@ -1,6 +1,6 @@
 <script lang="ts">
 	import SidebarItem from '$components/docs/SidebarItem.svelte';
-	import type { TSidebarItem } from '$routes/guide/types';
+	import type { TSidebarItem } from '$docroutes/guide/types';
 	import { navbarEstimatedHeight } from '$ts/constants/main';
 	import { navbarHeight } from '$ts/stores/navbarHeight';
 	import { windowHeight } from '$ts/stores/window';
@@ -20,11 +20,13 @@
 
 <nav
 	style={styles !== undefined ? styles : _styles}
-	class="{classes} sticky items-stretch overflow-hidden"
+	class="{classes} md:sticky md:top-0 items-stretch overflow-hidden"
 >
 	<div class="flex-1 flex h-full overflow-hidden">
 		<div
-			class="w-full pt-4 {noBottomPadding ? '' : 'pb-48'} px-2 md:px-3 flex flex-col overflow-auto"
+			class="w-full pt-1 md:pt-4 {noBottomPadding
+				? ''
+				: 'pb-36'} px-2 md:px-3 flex flex-col overflow-auto"
 		>
 			<SidebarItem sidebarItem={sidebar} />
 		</div>

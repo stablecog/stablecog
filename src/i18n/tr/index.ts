@@ -252,6 +252,8 @@ const tr: Translation = {
 		InsufficientCreditsTitle: 'Yetersiz kredi ({remainingCredits}/{neededCredits})',
 		AllTitle: 'Hepsi',
 		ConfirmButton: 'Onayla',
+		ResourcesTitle: 'Resources',
+		ResourcesButton: 'Resources',
 		ConfirmQuestionMarkButton: 'Onayla?',
 		Credits: {
 			CreditsTable: {
@@ -631,6 +633,7 @@ const tr: Translation = {
 			PageParagraph:
 				'Gizli API anahtarların aşağıda. Bu anahtarları sadece ilk ürettiğin anda görebilirsin. Anahtaları güvenli bir yere kaydettiğinden emin ol.',
 			NoKeysYet: 'Henüz bir API anatharın yok.',
+			CreateAPIKeyButton: 'Create API Key',
 			CreateNewKeyButton: 'Yeni Anahtar Üret',
 			DeleteKeyButton: 'Anatarı Sil',
 			KeyTable: {
@@ -805,9 +808,6 @@ const tr: Translation = {
 		PageTitle: 'Destek',
 		PageParagraph: 'Herhangi bir soru sormak istersen aşağıdaki linklerden bize ulaşabilirsin.'
 	},
-	Documentation: {
-		PageTitle: 'Dökümantasyon'
-	},
 	Guide: {
 		PageTitle: 'Klavuz',
 		GuideButton: 'Klavuz',
@@ -821,6 +821,25 @@ const tr: Translation = {
 		PrivacyPolicyTitle: 'Gizlilik Politikası',
 		RefundPolicyTitle: 'İade Politikası',
 		ContentPolicyTitle: 'İçerik Politikası'
+	},
+	Documentation: {
+		PageTitle: 'Documentation',
+		PageTitleAlt: 'API Reference',
+		APIReferenceButton: 'API Reference',
+		DocumentationButton: 'Documentation',
+		ForDevelopersTitle: 'For Developers'
+	},
+	Scl: {
+		Discord: 'Discord',
+		Email: 'Email',
+		Twitter: 'Twitter',
+		Instagram: 'Instagram',
+		YouTube: 'YouTube',
+		LinkedIn: 'LinkedIn',
+		Reddit: 'Reddit',
+		GitHub: 'GitHub',
+		Telegram: 'Telegram',
+		ProductHunt: 'Product Hunt'
 	},
 	UnderDevelopment: {
 		PageTitle: 'Geri döneceğiz!',

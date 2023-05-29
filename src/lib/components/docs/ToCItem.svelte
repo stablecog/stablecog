@@ -1,6 +1,6 @@
 <script lang="ts">
 	import ButtonHoverEffect from '$components/buttons/ButtonHoverEffect.svelte';
-	import type { TPostToCItem } from '$routes/blog/types';
+	import type { TPostToCItem } from '$docroutes/blog/types';
 
 	export let item: TPostToCItem;
 	export let activeId: string;

@@ -221,7 +221,8 @@ module.exports = {
 				'pulse-custom': 'pulse-custom 1s cubic-bezier(0.5, 0, 0.5, 1) infinite',
 				'pulse-scale': 'pulse-scale 0.75s cubic-bezier(0.5, 0, 0.5, 1) infinite',
 				'spin-faster': 'spin-faster 0.75s linear infinite',
-				'pulse-faster': 'pulse 1s cubic-bezier(0.4, 0, 0.6, 1) infinite;'
+				'pulse-faster': 'pulse 1s cubic-bezier(0.4, 0, 0.6, 1) infinite;',
+				'slide-up-and-fade': 'slide-up-and-fade 0.2s cubic-bezier(0.4, 0, 0.2, 1)'
 			},
 			ringWidth: {
 				1.5: '1.5px'
@@ -285,6 +286,16 @@ module.exports = {
 					},
 					'100%': {
 						transform: 'rotate(360deg)'
+					}
+				},
+				'slide-up-and-fade': {
+					'0%': {
+						opacity: '0',
+						transform: 'translateY(0.5rem)'
+					},
+					'100%': {
+						opacity: '1',
+						transform: 'translateY(0)'
 					}
 				}
 			}

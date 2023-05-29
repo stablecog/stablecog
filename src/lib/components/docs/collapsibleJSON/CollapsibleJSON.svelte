@@ -75,7 +75,7 @@
 
 	let isCopied = false;
 	let isCopiedTimeout: NodeJS.Timeout;
-	let isCopiedTimeoutDuration = 2000;
+	let isCopiedTimeoutDuration = 1500;
 
 	function onCopied() {
 		isCopied = true;

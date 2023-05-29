@@ -751,6 +751,14 @@ type RootTranslation = {
 		 */
 		ConfirmButton: string
 		/**
+		 * R​e​s​o​u​r​c​e​s
+		 */
+		ResourcesTitle: string
+		/**
+		 * R​e​s​o​u​r​c​e​s
+		 */
+		ResourcesButton: string
+		/**
 		 * C​o​n​f​i​r​m​?
 		 */
 		ConfirmQuestionMarkButton: string
@@ -1838,6 +1846,10 @@ type RootTranslation = {
 			 */
 			NoKeysYet: string
 			/**
+			 * C​r​e​a​t​e​ ​A​P​I​ ​K​e​y
+			 */
+			CreateAPIKeyButton: string
+			/**
 			 * C​r​e​a​t​e​ ​N​e​w​ ​K​e​y
 			 */
 			CreateNewKeyButton: string
@@ -2308,12 +2320,6 @@ type RootTranslation = {
 		 */
 		PageParagraph: string
 	}
-	Documentation: {
-		/**
-		 * D​o​c​u​m​e​n​t​a​t​i​o​n
-		 */
-		PageTitle: string
-	}
 	Guide: {
 		/**
 		 * G​u​i​d​e
@@ -2357,6 +2363,70 @@ type RootTranslation = {
 		 * C​o​n​t​e​n​t​ ​P​o​l​i​c​y
 		 */
 		ContentPolicyTitle: string
+	}
+	Documentation: {
+		/**
+		 * D​o​c​u​m​e​n​t​a​t​i​o​n
+		 */
+		PageTitle: string
+		/**
+		 * A​P​I​ ​R​e​f​e​r​e​n​c​e
+		 */
+		PageTitleAlt: string
+		/**
+		 * A​P​I​ ​R​e​f​e​r​e​n​c​e
+		 */
+		APIReferenceButton: string
+		/**
+		 * D​o​c​u​m​e​n​t​a​t​i​o​n
+		 */
+		DocumentationButton: string
+		/**
+		 * F​o​r​ ​D​e​v​e​l​o​p​e​r​s
+		 */
+		ForDevelopersTitle: string
+	}
+	Scl: {
+		/**
+		 * D​i​s​c​o​r​d
+		 */
+		Discord: string
+		/**
+		 * E​m​a​i​l
+		 */
+		Email: string
+		/**
+		 * T​w​i​t​t​e​r
+		 */
+		Twitter: string
+		/**
+		 * I​n​s​t​a​g​r​a​m
+		 */
+		Instagram: string
+		/**
+		 * Y​o​u​T​u​b​e
+		 */
+		YouTube: string
+		/**
+		 * L​i​n​k​e​d​I​n
+		 */
+		LinkedIn: string
+		/**
+		 * R​e​d​d​i​t
+		 */
+		Reddit: string
+		/**
+		 * G​i​t​H​u​b
+		 */
+		GitHub: string
+		/**
+		 * T​e​l​e​g​r​a​m
+		 */
+		Telegram: string
+		/**
+		 * P​r​o​d​u​c​t​ ​H​u​n​t
+		 */
+		ProductHunt: string
 	}
 	UnderDevelopment: {
 		/**
@@ -3086,6 +3156,14 @@ export type TranslationFunctions = {
 		 * Confirm
 		 */
 		ConfirmButton: () => LocalizedString
+		/**
+		 * Resources
+		 */
+		ResourcesTitle: () => LocalizedString
+		/**
+		 * Resources
+		 */
+		ResourcesButton: () => LocalizedString
 		/**
 		 * Confirm?
 		 */
@@ -4156,6 +4234,10 @@ export type TranslationFunctions = {
 			 */
 			NoKeysYet: () => LocalizedString
 			/**
+			 * Create API Key
+			 */
+			CreateAPIKeyButton: () => LocalizedString
+			/**
 			 * Create New Key
 			 */
 			CreateNewKeyButton: () => LocalizedString
@@ -4615,12 +4697,6 @@ export type TranslationFunctions = {
 		 */
 		PageParagraph: () => LocalizedString
 	}
-	Documentation: {
-		/**
-		 * Documentation
-		 */
-		PageTitle: () => LocalizedString
-	}
 	Guide: {
 		/**
 		 * Guide
@@ -4664,6 +4740,70 @@ export type TranslationFunctions = {
 		 * Content Policy
 		 */
 		ContentPolicyTitle: () => LocalizedString
+	}
+	Documentation: {
+		/**
+		 * Documentation
+		 */
+		PageTitle: () => LocalizedString
+		/**
+		 * API Reference
+		 */
+		PageTitleAlt: () => LocalizedString
+		/**
+		 * API Reference
+		 */
+		APIReferenceButton: () => LocalizedString
+		/**
+		 * Documentation
+		 */
+		DocumentationButton: () => LocalizedString
+		/**
+		 * For Developers
+		 */
+		ForDevelopersTitle: () => LocalizedString
+	}
+	Scl: {
+		/**
+		 * Discord
+		 */
+		Discord: () => LocalizedString
+		/**
+		 * Email
+		 */
+		Email: () => LocalizedString
+		/**
+		 * Twitter
+		 */
+		Twitter: () => LocalizedString
+		/**
+		 * Instagram
+		 */
+		Instagram: () => LocalizedString
+		/**
+		 * YouTube
+		 */
+		YouTube: () => LocalizedString
+		/**
+		 * LinkedIn
+		 */
+		LinkedIn: () => LocalizedString
+		/**
+		 * Reddit
+		 */
+		Reddit: () => LocalizedString
+		/**
+		 * GitHub
+		 */
+		GitHub: () => LocalizedString
+		/**
+		 * Telegram
+		 */
+		Telegram: () => LocalizedString
+		/**
+		 * Product Hunt
+		 */
+		ProductHunt: () => LocalizedString
 	}
 	UnderDevelopment: {
 		/**

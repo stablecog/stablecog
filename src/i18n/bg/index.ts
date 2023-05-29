@@ -247,6 +247,8 @@ const bg: Translation = {
 		InsufficientCreditsTitle: 'Липса на кредит ({remainingCredits}/{neededCredits})',
 		AllTitle: 'Всички',
 		ConfirmButton: 'Потвърди',
+		ResourcesTitle: 'Resources',
+		ResourcesButton: 'Resources',
 		ConfirmQuestionMarkButton: 'Потвърди?',
 		Credits: {
 			CreditsTable: {
@@ -622,6 +624,7 @@ const bg: Translation = {
 			PageParagraph:
 				'Your secret API keys are listed below. They are only shown once when you first generate them. Make sure to save them somewhere safe.',
 			NoKeysYet: "You don't have any API keys yet.",
+			CreateAPIKeyButton: 'Create API Key',
 			CreateNewKeyButton: 'Create New Key',
 			DeleteKeyButton: 'Delete Key',
 			KeyTable: {
@@ -797,7 +800,7 @@ const bg: Translation = {
 		PageParagraph:
 			'В случай на въпроси, свържете се чрез връзките по-долу и ще ви отговорим възможно най-скоро.'
 	},
-	Documentation: { PageTitle: 'Documentation' },
+
 	Guide: {
 		PageTitle: 'Ръководство',
 		GuideButton: 'Упътване',
@@ -811,6 +814,25 @@ const bg: Translation = {
 		PrivacyPolicyTitle: 'Поверителност',
 		RefundPolicyTitle: 'Връщане на плащания',
 		ContentPolicyTitle: 'Съдържателни норми'
+	},
+	Documentation: {
+		PageTitle: 'Documentation',
+		PageTitleAlt: 'API Reference',
+		APIReferenceButton: 'API Reference',
+		DocumentationButton: 'Documentation',
+		ForDevelopersTitle: 'For Developers'
+	},
+	Scl: {
+		Discord: 'Discord',
+		Email: 'Email',
+		Twitter: 'Twitter',
+		Instagram: 'Instagram',
+		YouTube: 'YouTube',
+		LinkedIn: 'LinkedIn',
+		Reddit: 'Reddit',
+		GitHub: 'GitHub',
+		Telegram: 'Telegram',
+		ProductHunt: 'Product Hunt'
 	},
 	UnderDevelopment: {
 		PageTitle: 'Скоро ще се върнем!',

@@ -19,7 +19,7 @@
 
 <div class="{!isInline ? 'w-full' : ''} flex flex-wrap justify-center {classes}">
 	{#if withGuide}
-		<IconButton name="Blog" href={'/guide'}>
+		<IconButton name="Blog" href={'/guide'} target="_blank">
 			<IconGuide
 				class="{size === 'sm'
 					? 'w-8 h-8'
@@ -32,7 +32,7 @@
 		</IconButton>
 	{/if}
 	{#if withBlog}
-		<IconButton name="Blog" href={'/blog'}>
+		<IconButton name="Blog" href={'/blog'} target="_blank">
 			<IconBlog
 				class="{size === 'sm'
 					? 'w-8 h-8'

@@ -44,7 +44,7 @@
 	let textToCopy: string | null | undefined;
 	let isCopied = false;
 	let isCopiedTimeout: NodeJS.Timeout;
-	let isCopiedTimeoutDuration = 2000;
+	let isCopiedTimeoutDuration = 1500;
 
 	function setTextToCopy() {
 		if (value === undefined || !innerElement) return;

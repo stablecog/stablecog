@@ -1,0 +1,21 @@
+<script lang="ts">
+	export { classes as class };
+	let classes = 'w-6 h-6';
+</script>
+
+<svg
+	width="24"
+	height="24"
+	xmlns="http://www.w3.org/2000/svg"
+	fill="none"
+	viewBox="0 0 24 24"
+	stroke-width="1.5"
+	stroke="currentColor"
+	class={classes}
+>
+	<path
+		stroke-linecap="round"
+		stroke-linejoin="round"
+		d="M6.75 7.5l3 2.25-3 2.25m4.5 0h3m-9 8.25h13.5A2.25 2.25 0 0021 18V6a2.25 2.25 0 00-2.25-2.25H5.25A2.25 2.25 0 003 6v12a2.25 2.25 0 002.25 2.25z"
+	/>
+</svg>

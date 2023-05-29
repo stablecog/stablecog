@@ -3,7 +3,6 @@
 	import ButtonHoverEffect from '$components/buttons/ButtonHoverEffect.svelte';
 	import IconCopy from '$components/icons/IconCopy.svelte';
 	import IconTick from '$components/icons/IconTick.svelte';
-	import IconTickOnly from '$components/icons/IconTickOnly.svelte';
 	import LL from '$i18n/i18n-svelte';
 	import { copy } from 'svelte-copy';
 

@@ -25,7 +25,7 @@ preview_image_url: https://ba.stablecog.com/docs/previews/upscale-defaults.jpg
 # Upscale Defaults
 
 <RequestLine method='GET'>
-	/v1/image/defualts/upscale
+	/v1/image/defaults/upscale
 </RequestLine>
 
 This endpoint is for retrieving the defaults for the upscale operation.

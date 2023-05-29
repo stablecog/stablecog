@@ -1,9 +1,9 @@
-import { flatGuideSidebarShallow } from '$routes/guide/constants';
-import { flatTrySidebarShallow } from '$routes/try/constants';
-import { flatDocsSidebarShallow } from '$routes/docs/v1/constants';
+import { flatGuideSidebarShallow } from '$docroutes/guide/constants';
+import { flatTrySidebarShallow } from '$docroutes/try/constants';
+import { flatDocsSidebarShallow } from '$docroutes/docs/v1/constants';
 import { canonicalUrl } from '$ts/constants/main';
 import type { RequestHandler } from '@sveltejs/kit';
-import type { TPost, TPostMetadata } from '$routes/blog/types';
+import type { TPost, TPostMetadata } from '$routes/(doc)/blog/types';
 
 const today = new Date();
 const getDateStringFromDate = (date: Date) => {

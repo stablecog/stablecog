@@ -69,7 +69,7 @@
 	import { generations } from '$ts/stores/user/generation';
 	import { afterNavigate } from '$app/navigation';
 	import type { TTab } from '$ts/types/main';
-	import type { TGeneratePageData } from '$routes/generate/+page.server';
+	import type { TGeneratePageData } from '$approutes/generate/+page.server';
 
 	export let serverData: TGeneratePageData;
 	export let isReadyMap: TIsReadyMap;

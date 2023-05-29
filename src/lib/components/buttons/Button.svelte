@@ -14,10 +14,12 @@
 	export let noPadding = false;
 	export let target: THrefTarget = undefined;
 	export { classes as class };
-	export let type: 'primary' | 'success' | 'danger' | 'no-bg-on-bg' = 'primary';
+	export let type: 'primary' | 'success' | 'danger' | 'no-bg-on-bg' | 'bg-secondary' = 'primary';
 	export let fadeOnDisabled = false;
 	export let animateOnClick = false;
 	export let buttonType: 'submit' | 'button' | 'reset' | null | undefined = undefined;
+	export let icon: ConstructorOfATypedSvelteComponent | undefined = undefined;
+	export let iconAlignment: 'left' | 'right' = 'left';
 	let classes = '';
 
 	function _onClick() {
@@ -77,6 +79,8 @@
 			? ''
 			: 'shadow-lg shadow-c-shadow/[var(--o-shadow-strong)]'} {type === 'no-bg-on-bg'
 			? 'text-c-on-bg/60'
+			: type === 'bg-secondary'
+			? 'text-c-on-bg'
 			: 'text-c-on-primary'} {loading
 			? type === 'success'
 				? 'bg-c-success-secondary'
@@ -87,9 +91,13 @@
 			? 'bg-c-success'
 			: type === 'danger'
 			? 'bg-c-danger'
+			: type === 'bg-secondary'
+			? 'bg-c-bg-secondary'
 			: type === 'no-bg-on-bg'
 			? 'bg-c-primary/0'
-			: 'bg-c-primary'} {classes} {shouldAnimate ? 'scale-animation' : ''}"
+			: 'bg-c-primary'} {type === 'bg-secondary'
+			? 'border-2 border-c-bg-tertiary'
+			: ''} {classes} {shouldAnimate ? 'scale-animation' : ''}"
 	>
 		<div
 			style="width: {buttonSize}px; height: {buttonSize}px;"
@@ -102,12 +110,17 @@
 					? 'bg-c-success-secondary'
 					: type === 'danger'
 					? 'bg-c-danger-secondary'
+					: type === 'bg-secondary'
+					? 'bg-c-bg-tertiary'
 					: type === 'no-bg-on-bg'
 					? 'bg-c-on-bg/10'
 					: 'bg-c-secondary'} not-touch:group-hover:translate-x-0"
 			/>
 		</div>
-		<div class="relative">
+		<div class="flex items-center justify-center relative gap-3">
+			{#if icon && iconAlignment === 'left'}
+				<svelte:component this={icon} class="w-6 h-6 -m-1 flex-shrink-0" />
+			{/if}
 			{#if withSpinner}
 				<div
 					class="transform relative transition {loading
@@ -141,6 +154,9 @@
 			{:else}
 				<slot />
 			{/if}
+			{#if icon && iconAlignment === 'right'}
+				<svelte:component this={icon} class="w-6 h-6 -m-1 flex-shrink-0" />
+			{/if}
 		</div>
 	</a>
 {:else}
@@ -165,6 +181,8 @@
 			? ''
 			: 'shadow-lg shadow-c-shadow/[var(--o-shadow-strong)]'} {type === 'no-bg-on-bg'
 			? 'text-c-on-bg/60'
+			: type === 'bg-secondary'
+			? 'text-c-on-bg'
 			: 'text-c-on-primary'} {loading
 			? type === 'success'
 				? 'bg-c-success-secondary'
@@ -175,9 +193,13 @@
 			? 'bg-c-success'
 			: type === 'danger'
 			? 'bg-c-danger'
+			: type === 'bg-secondary'
+			? 'bg-c-bg-secondary'
 			: type === 'no-bg-on-bg'
 			? 'bg-c-primary/0'
-			: 'bg-c-primary'} {fadeOnDisabled && disabled ? 'opacity-75' : ''} {classes} {shouldAnimate
+			: 'bg-c-primary'} {type === 'bg-secondary'
+			? 'border-2 border-c-bg-tertiary'
+			: ''} {fadeOnDisabled && disabled ? 'opacity-75' : ''} {classes} {shouldAnimate
 			? 'scale-animation'
 			: ''}"
 	>
@@ -192,12 +214,17 @@
 					? 'bg-c-success-secondary'
 					: type === 'danger'
 					? 'bg-c-danger-secondary'
+					: type === 'bg-secondary'
+					? 'bg-c-bg-tertiary'
 					: type === 'no-bg-on-bg'
 					? 'bg-c-on-bg/10'
 					: 'bg-c-secondary'} not-touch:group-enabled:group-hover:translate-x-0"
 			/>
 		</div>
-		<div class="relative">
+		<div class="flex items-center justify-center relative gap-3">
+			{#if icon && iconAlignment === 'left'}
+				<svelte:component this={icon} class="w-6 h-6 -m-1 flex-shrink-0" />
+			{/if}
 			{#if withSpinner}
 				<div
 					class="transform relative transition {loading || uploading
@@ -231,6 +258,9 @@
 				</div>
 			{:else}
 				<slot />
+			{/if}
+			{#if icon && iconAlignment === 'right'}
+				<svelte:component this={icon} class="w-6 h-6 -m-1 flex-shrink-0" />
 			{/if}
 		</div>
 	</button>

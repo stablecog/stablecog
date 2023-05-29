@@ -252,6 +252,8 @@ const ja: Translation = {
 		InsufficientCreditsTitle: 'クレジットが不足しています({remainingCredits}/{neededCredits})',
 		AllTitle: '全て',
 		ConfirmButton: '確定',
+		ResourcesTitle: 'Resources',
+		ResourcesButton: 'Resources',
 		ConfirmQuestionMarkButton: '確定しますか？',
 		Credits: {
 			CreditsTable: {
@@ -637,6 +639,7 @@ const ja: Translation = {
 			PageParagraph:
 				'Your secret API keys are listed below. They are only shown once when you first generate them. Make sure to save them somewhere safe.',
 			NoKeysYet: "You don't have any API keys yet.",
+			CreateAPIKeyButton: 'Create API Key',
 			CreateNewKeyButton: 'Create New Key',
 			DeleteKeyButton: 'Delete Key',
 			KeyTable: {
@@ -814,9 +817,6 @@ const ja: Translation = {
 		PageParagraph:
 			'ご不明な点がございましたら、下記のリンクからお問い合わせください。できるだけ早く回答いたします。'
 	},
-	Documentation: {
-		PageTitle: 'Documentation'
-	},
 	Guide: {
 		PageTitle: 'ガイド',
 		GuideButton: 'ガイド',
@@ -830,6 +830,25 @@ const ja: Translation = {
 		PrivacyPolicyTitle: 'プライバシーポリシー',
 		RefundPolicyTitle: '返金ポリシー',
 		ContentPolicyTitle: 'コンテンツポリシー'
+	},
+	Documentation: {
+		PageTitle: 'Documentation',
+		PageTitleAlt: 'API Reference',
+		APIReferenceButton: 'API Reference',
+		DocumentationButton: 'Documentation',
+		ForDevelopersTitle: 'For Developers'
+	},
+	Scl: {
+		Discord: 'Discord',
+		Email: 'Email',
+		Twitter: 'Twitter',
+		Instagram: 'Instagram',
+		YouTube: 'YouTube',
+		LinkedIn: 'LinkedIn',
+		Reddit: 'Reddit',
+		GitHub: 'GitHub',
+		Telegram: 'Telegram',
+		ProductHunt: 'Product Hunt'
 	},
 	UnderDevelopment: {
 		PageTitle: 'しばらくお待ちください',

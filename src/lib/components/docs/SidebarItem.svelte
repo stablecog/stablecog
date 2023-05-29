@@ -2,7 +2,7 @@
 	import { page } from '$app/stores';
 	import ButtonHoverEffect from '$components/buttons/ButtonHoverEffect.svelte';
 	import IconChevronDown from '$components/icons/IconChevronDown.svelte';
-	import type { TSidebarItem } from '$routes/guide/types';
+	import type { TSidebarItem } from '$docroutes/guide/types';
 	import { expandCollapse } from '$ts/animation/transitions';
 
 	export let sidebarItem: TSidebarItem;

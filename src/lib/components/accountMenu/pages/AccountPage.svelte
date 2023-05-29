@@ -15,6 +15,7 @@
 	import IconSettings from '$components/icons/IconSettings.svelte';
 	import type { TAccountDropdownPage } from '$components/accountMenu/types';
 	import PageWrapper from '$components/accountMenu/PageWrapper.svelte';
+	import IconCommandLine from '$components/icons/IconCommandLine.svelte';
 
 	export let setAccountMenuDropdownPage: (p: TAccountDropdownPage) => void;
 	export let closeMenu: () => void;
@@ -72,6 +73,19 @@
 					text-c-on-bg not-touch:group-hover:text-c-primary"
 				>
 					{$LL.Account.AccountButton()}
+				</p>
+			</div>
+		</DropdownItem>
+		<DropdownItem href="/docs/v1" target="_blank" onClick={closeMenu}>
+			<div class="flex-1 min-w-0 flex items-center justify-start gap-2.5">
+				<IconCommandLine
+					class="transition w-6 h-6 text-c-text not-touch:group-hover:text-c-primary"
+				/>
+				<p
+					class="flex-1 min-w-0 overflow-hidden overflow-ellipsis text-left transition
+					text-c-on-bg not-touch:group-hover:text-c-primary"
+				>
+					{$LL.Documentation.DocumentationButton()}
 				</p>
 			</div>
 		</DropdownItem>

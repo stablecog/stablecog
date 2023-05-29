@@ -5,7 +5,7 @@
 	import IconBack from '$components/icons/IconBack.svelte';
 	import { windowHeight } from '$ts/stores/window';
 	import { navbarHeight } from '$ts/stores/navbarHeight';
-	import type { TPostToCItem } from '$routes/blog/types';
+	import type { TPostToCItem } from '$docroutes/blog/types';
 	import ToCItem from '$components/docs/ToCItem.svelte';
 	import { navbarEstimatedHeight } from '$ts/constants/main';
 
