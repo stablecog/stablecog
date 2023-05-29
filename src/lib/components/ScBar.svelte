@@ -27,7 +27,7 @@
 					? 'w-12 h-12'
 					: 'w-10 h-10'} transition {color === 'normal'
 					? 'text-c-on-bg'
-					: 'text-c-on-bg/50'} not-touch:group-hover/iconbutton:text-c-primary"
+					: 'text-c-on-bg/60'} not-touch:group-hover/iconbutton:text-c-primary"
 			/>
 		</IconButton>
 	{/if}
@@ -40,7 +40,7 @@
 					? 'w-12 h-12'
 					: 'w-10 h-10'} transition {color === 'normal'
 					? 'text-c-on-bg'
-					: 'text-c-on-bg/50'} not-touch:group-hover/iconbutton:text-c-primary"
+					: 'text-c-on-bg/60'} not-touch:group-hover/iconbutton:text-c-primary"
 			/>
 		</IconButton>
 	{/if}
@@ -57,7 +57,7 @@
 				? 'w-12 h-12'
 				: 'w-10 h-10'} transition {color === 'normal'
 				? 'text-c-on-bg'
-				: 'text-c-on-bg/50'} not-touch:group-hover/iconbutton:text-c-primary"
+				: 'text-c-on-bg/60'} not-touch:group-hover/iconbutton:text-c-primary"
 		/>
 	</IconButton>
 	<IconButton
@@ -73,7 +73,7 @@
 				? 'w-12 h-12'
 				: 'w-10 h-10'} transition {color === 'normal'
 				? 'text-c-on-bg'
-				: 'text-c-on-bg/50'} not-touch:group-hover/iconbutton:text-c-primary"
+				: 'text-c-on-bg/60'} not-touch:group-hover/iconbutton:text-c-primary"
 		/>
 	</IconButton>
 	<IconButton
@@ -89,7 +89,7 @@
 				? 'w-12 h-12'
 				: 'w-10 h-10'} transition {color === 'normal'
 				? 'text-c-on-bg'
-				: 'text-c-on-bg/50'} not-touch:group-hover/iconbutton:text-c-primary"
+				: 'text-c-on-bg/60'} not-touch:group-hover/iconbutton:text-c-primary"
 		/>
 	</IconButton>
 	<IconButton
@@ -105,7 +105,7 @@
 				? 'w-12 h-12'
 				: 'w-10 h-10'} transition {color === 'normal'
 				? 'text-c-on-bg'
-				: 'text-c-on-bg/50'} not-touch:group-hover/iconbutton:text-c-primary"
+				: 'text-c-on-bg/60'} not-touch:group-hover/iconbutton:text-c-primary"
 		/>
 	</IconButton>
 	{#if withEmail}
@@ -123,7 +123,7 @@
 					? 'w-12 h-12'
 					: 'w-10 h-10'} transition {color === 'normal'
 					? 'text-c-on-bg'
-					: 'text-c-on-bg/50'} not-touch:group-hover/iconbutton:text-c-primary"
+					: 'text-c-on-bg/60'} not-touch:group-hover/iconbutton:text-c-primary"
 			/>
 		</IconButton>
 	{/if}

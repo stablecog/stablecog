@@ -17,20 +17,20 @@
 			<a
 				href="/terms"
 				data-sveltekit-preload-data="hover"
-				class="text-center hover:underline hover:text-c-primary leading-relaxed text-xs text-c-on-bg/50
+				class="text-center hover:underline hover:text-c-primary leading-relaxed text-xs text-c-on-bg/60
 				font-medium md:my-auto rounded-lg">{$LL.Legal.TermsOfServiceTitle()}</a
 			>
 			<span class="text-c-on-bg/25">•</span>
 			<a
 				href="/privacy"
 				data-sveltekit-preload-data="hover"
-				class="text-center hover:underline hover:text-c-primary transition leading-relaxed text-xs text-c-on-bg/50
+				class="text-center hover:underline hover:text-c-primary transition leading-relaxed text-xs text-c-on-bg/60
 				font-medium md:my-auto rounded-lg">{$LL.Legal.PrivacyPolicyTitle()}</a
 			>
 		</div>
 		<div class="w-full md:w-auto flex justify-center items-center mt-0.5 md:mt-0">
 			<p
-				class="text-center leading-relaxed text-xs text-c-on-bg/50
+				class="text-center leading-relaxed text-xs text-c-on-bg/60
 				font-medium rounded-lg"
 			>
 				{companyInfo}

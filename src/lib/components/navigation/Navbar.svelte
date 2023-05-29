@@ -45,8 +45,6 @@
 	const closeAccountMenu = () => (isAccountMenuOpen = false);
 
 	let navbarElement: HTMLElement;
-
-	let tooltipLeftPercent = 0;
 </script>
 
 <TooltipProvider>
@@ -98,7 +96,6 @@
 			<div class="flex flex-1 flex-wrap items-center justify-end relative">
 				<Tooltip label={$LL.Scl.Discord()} text={$LL.Scl.Discord()} portalContainer={navbarElement}>
 					<IconButton
-						onPointerEnter={() => (tooltipLeftPercent = 0)}
 						class="py-2 hidden md:block"
 						href="/discord"
 						target="_blank"
@@ -120,7 +117,6 @@
 					portalContainer={navbarElement}
 				>
 					<IconButton
-						onPointerEnter={() => (tooltipLeftPercent = 25)}
 						class="py-2 hidden md:block"
 						href="/guide"
 						target="_blank"
@@ -141,7 +137,6 @@
 					portalContainer={navbarElement}
 				>
 					<IconButton
-						onPointerEnter={() => (tooltipLeftPercent = 50)}
 						class="py-2 hidden md:block"
 						href="/blog"
 						target="_blank"
@@ -161,12 +156,7 @@
 					text={$LL.Navbar.LiveTab()}
 					portalContainer={navbarElement}
 				>
-					<IconButton
-						onPointerEnter={() => (tooltipLeftPercent = 75)}
-						class="py-2 hidden md:block"
-						href="/live"
-						name={$LL.Navbar.LiveTab()}
-					>
+					<IconButton class="py-2 hidden md:block" href="/live" name={$LL.Navbar.LiveTab()}>
 						<IconLive
 							class="w-7.5 h-7.5 relative transition transform {$page.url.pathname === '/' &&
 							$themeApp === 'light' &&

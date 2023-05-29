@@ -47,7 +47,7 @@
 						? 'pt-4 pb-4.5'
 						: 'py-4'} {isSelected(route, $page.url.pathname)
 						? 'text-c-on-bg not-touch:hover:text-c-primary'
-						: 'text-c-on-bg/50'}"
+						: 'text-c-on-bg/60'}"
 					href={route.href}
 				>
 					<div

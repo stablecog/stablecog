@@ -13,7 +13,6 @@
 	export let withSpinner = false;
 	export let loading = false;
 	export let hoverFrom: 'left' | 'right' = 'left';
-	export let onPointerEnter: (() => void) | undefined = undefined;
 	export { classes as class };
 	let classes = '';
 </script>
@@ -27,7 +26,6 @@
 			: 'off'}
 		class="touch-manipulation group/iconbutton rounded-xl {classes}"
 		aria-label={name}
-		on:pointerenter={onPointerEnter}
 	>
 		<div class="rounded-lg relative">
 			{#if !(withSpinner && loading)}
@@ -68,7 +66,6 @@
 		on:click={onClick}
 		class="touch-manipulation group/iconbutton rounded-xl {classes}"
 		aria-label={name}
-		on:pointerenter={onPointerEnter}
 	>
 		<div class="rounded-lg relative">
 			{#if !(withSpinner && loading)}
