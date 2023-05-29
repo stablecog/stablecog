@@ -9,7 +9,6 @@ export const adminGalleryActionableItems = writableLocal<TAdminGalleryActionable
 	[]
 );
 export const adminGalleryCurrentFilter = writable<TGalleryStatus>('submitted');
-export const lastFetchedAdminGalleryFilter = writable<TGalleryStatus>('submitted');
 export const allUserGenerationFullOutputsQueryKey = writable<string[]>(undefined);
 
 export const adminGallerySelectedOutputObjects = derived(

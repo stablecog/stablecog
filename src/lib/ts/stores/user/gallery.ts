@@ -6,7 +6,6 @@ export const userGalleryActionableItems = writableLocal<TUserGalleryActionableIt
 	[]
 );
 
-export const lastFetchedUserGalleryView = writable<TUserGalleryView>('all');
 export const userGalleryCurrentView = writableLocal<TUserGalleryView>(
 	'userGalleryCurrentView',
 	'all'

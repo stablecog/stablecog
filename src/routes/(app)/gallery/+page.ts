@@ -9,21 +9,25 @@ import {
 import { apiUrl } from '$ts/constants/main';
 import type { TAvailableSchedulerId } from '$ts/constants/schedulers';
 import { convertToDBTimeString } from '$ts/helpers/convertToDBTimeString';
-import { isHydrated } from '$ts/helpers/isHydrated';
 import type { TGalleryGenerationFullOutputPageRes } from '$ts/queries/galleryGenerations';
 import type { TGenerationFullOutput, TGenerationOutput } from '$ts/stores/user/generation';
-import type { ServerLoad } from '@sveltejs/kit';
 import type { QueryClient } from '@tanstack/svelte-query';
+import type { PageLoad } from './$types';
 
 interface TParent {
 	queryClient: QueryClient;
 	globalSeed: number;
 }
 
-export const load: ServerLoad = async ({ url, parent, fetch }) => {
+export const load: PageLoad = async ({ url, parent, fetch }) => {
 	const { queryClient, globalSeed } = (await parent()) as TParent;
-	if (queryClient.getQueryData(getGalleryInfiniteQueryKey({})) === undefined) {
-		await queryClient.prefetchInfiniteQuery(getGalleryInfiniteQueryProps({ seed: globalSeed }));
+	const hasInitialData = queryClient.getQueryData(getGalleryInfiniteQueryKey({})) !== undefined;
+	if (!hasInitialData) {
+		try {
+			await queryClient.prefetchInfiniteQuery(getGalleryInfiniteQueryProps({ seed: globalSeed }));
+		} catch (error) {
+			console.log(error);
+		}
 	}
 	const outputId = url.searchParams.get('output');
 	const searchQuery = url.searchParams.get('q');

@@ -19,21 +19,18 @@
 	import SignInCard from '$components/SignInCard.svelte';
 	import TabBar from '$components/tabBars/TabBar.svelte';
 	import LL, { locale } from '$i18n/i18n-svelte';
+	import { getHistoryInfiniteQueryProps } from '$routes/(app)/history/constants';
 	import type { TAvailableGenerationModelId } from '$ts/constants/generationModels';
 	import { canonicalUrl } from '$ts/constants/main';
 	import { previewImageVersion } from '$ts/constants/previewImageVersion';
 	import { setActiveGenerationToOutputIndex } from '$ts/helpers/goToOutputIndex';
 	import { logBatchEditActived, logBatchEditDeactivated } from '$ts/helpers/loggers';
-	import {
-		getUserGenerationFullOutputs,
-		type TUserGenerationFullOutputsPage
-	} from '$ts/queries/userGenerations';
+	import type { TUserGenerationFullOutputsPage } from '$ts/queries/userGenerations';
 	import { advancedModeApp } from '$ts/stores/advancedMode';
 	import { appVersion } from '$ts/stores/appVersion';
 	import { searchParamsString } from '$ts/stores/searchParamsString';
 	import {
 		isUserGalleryEditActive,
-		lastFetchedUserGalleryView,
 		userGalleryCurrentView,
 		type TUserGalleryView
 	} from '$ts/stores/user/gallery';
@@ -63,25 +60,14 @@
 
 	$: userGenerationFullOutputsQuery =
 		browser && $page.data.session?.user.id
-			? createInfiniteQuery({
-					queryKey: $userGenerationFullOutputsQueryKey,
-					queryFn: (lastPage) => {
-						return getUserGenerationFullOutputs({
-							access_token: $page.data.session?.access_token || '',
-							cursor: lastPage?.pageParam,
-							is_favorited: $userGalleryCurrentView === 'favorites',
-							search: searchString,
-							model_ids: modelIdFilters
-						});
-					},
-					getNextPageParam: (lastPage: TUserGenerationFullOutputsPage) => {
-						if (!lastPage.next) return undefined;
-						return lastPage.next;
-					},
-					onSuccess: () => {
-						lastFetchedUserGalleryView.set($userGalleryCurrentView);
-					}
-			  })
+			? createInfiniteQuery(
+					getHistoryInfiniteQueryProps({
+						userGalleryCurrentView: $userGalleryCurrentView,
+						searchString,
+						modelIdFilters,
+						session: $page.data.session
+					})
+			  )
 			: undefined;
 
 	$: $userGenerationFullOutputsQuery?.data?.pages, onPagesChanged();
@@ -243,19 +229,21 @@
 					</div>
 				{:else if $windowWidth}
 					<div class="w-full flex-1 flex flex-col">
-						<GenerationGridInfinite2
-							generationsQuery={userGenerationFullOutputsQuery}
-							cardType="history"
-							cols={$windowWidth > xxlBreakpoint
-								? 6
-								: $windowWidth > xlBreakpoint
-								? 5
-								: $windowWidth > lgBreakpoint
-								? 4
-								: $windowWidth > mdBreakpoint
-								? 3
-								: 2}
-						/>
+						{#key $userGalleryCurrentView}
+							<GenerationGridInfinite2
+								generationsQuery={userGenerationFullOutputsQuery}
+								cardType="history"
+								cols={$windowWidth > xxlBreakpoint
+									? 6
+									: $windowWidth > xlBreakpoint
+									? 5
+									: $windowWidth > lgBreakpoint
+									? 4
+									: $windowWidth > mdBreakpoint
+									? 3
+									: 2}
+							/>
+						{/key}
 					</div>
 				{/if}
 			{/if}

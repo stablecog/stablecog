@@ -24,8 +24,7 @@
 	import {
 		adminGalleryCurrentFilter,
 		allUserGenerationFullOutputsQueryKey,
-		isAdminGalleryEditActive,
-		lastFetchedAdminGalleryFilter
+		isAdminGalleryEditActive
 	} from '$ts/stores/admin/gallery';
 	import { userSummary } from '$ts/stores/user/summary';
 	import { activeGeneration } from '$userStores/generation';
@@ -63,9 +62,6 @@
 							search: searchString,
 							model_ids: modelIdFilters
 						});
-					},
-					onSuccess: () => {
-						lastFetchedAdminGalleryFilter.set($adminGalleryCurrentFilter);
 					},
 					getNextPageParam: (lastPage: TUserGenerationFullOutputsPage) => {
 						if (!lastPage.next) return undefined;
