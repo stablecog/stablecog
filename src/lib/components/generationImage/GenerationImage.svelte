@@ -97,6 +97,8 @@
 			  )
 			: undefined;
 
+	$: shortPrompt = generation.prompt.text.slice(0, 50);
+
 	let imageClickHref: string;
 
 	$: {
@@ -191,7 +193,7 @@
 {/if}
 {#if !generation.selected_output.is_deleted && !isGalleryEditActive}
 	<a
-		aria-label="View generation with the prompt: {generation.prompt.text.slice(60)}..."
+		aria-label="View generation: {shortPrompt}..."
 		href={imageClickHref}
 		data-sveltekit-preload-data="hover"
 		on:click|preventDefault={(e) => {
@@ -301,7 +303,11 @@
 					{#if cardType === 'history' || cardType === 'stage'}
 						<DownloadGenerationButton class="p-1.5 -ml-1.5" {generation} />
 					{:else if cardType === 'gallery'}
-						<GenerateButton {generation} class="p-1.5 -ml-1.5" />
+						<GenerateButton
+							{generation}
+							class="p-1.5 -ml-1.5"
+							label="Generate similar to: {shortPrompt}..."
+						/>
 					{/if}
 				</div>
 			{:else if cardType === 'history' && $userGalleryCurrentView !== 'favorites' && generation.selected_output.is_favorited && !generation.selected_output.is_deleted}

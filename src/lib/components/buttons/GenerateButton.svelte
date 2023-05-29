@@ -4,6 +4,7 @@
 	import type { TGenerationWithSelectedOutput } from '$ts/stores/user/generation';
 
 	export let generation: TGenerationWithSelectedOutput;
+	export let label: string;
 	export { classes as class };
 	let classes = '';
 
@@ -27,6 +28,7 @@
 		width: generation.width,
 		height: generation.height
 	})}
+	aria-label={label}
 >
 	<div class="p-2.5 rounded-full bg-c-bg relative overflow-hidden z-0">
 		<div
