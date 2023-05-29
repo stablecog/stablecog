@@ -137,7 +137,12 @@
 				<IconSearch slot="icon" class="w-full h-full" />
 			</Input>
 		</form>
-		<SubtleButton shadow={inputShadow} hasRing={false} onClick={toggleFiltersPanel}>
+		<SubtleButton
+			label={isFiltersOpen ? 'Collapse Filters' : 'Expand Filters'}
+			shadow={inputShadow}
+			hasRing={false}
+			onClick={toggleFiltersPanel}
+		>
 			<Morpher morphed={isFiltersOpen}>
 				<div slot="0" class="w-7 h-7">
 					<IconAdjustmentsVertical

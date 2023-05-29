@@ -19,6 +19,7 @@
 	export let icon: ConstructorOfATypedSvelteComponent | undefined = undefined;
 	export let hasRing = true;
 	export let shadow: 'normal' | 'strongest' = 'normal';
+	export let label: string | undefined = undefined;
 
 	let classes = '';
 </script>
@@ -42,6 +43,7 @@
     	rounded-lg font-bold transition {size === 'md' ? 'text-sm' : 'text-xs'} {!hasRing
 			? ''
 			: 'ring-2'} relative overflow-hidden z-0 group {classes}"
+		aria-label={label}
 	>
 		<div class="w-[200%] h-full absolute left-0 top-0 flex items-center justify-center">
 			<div
@@ -108,6 +110,7 @@
     	rounded-lg font-bold transition {size === 'md' ? 'text-sm' : 'text-xs'} {!hasRing
 			? ''
 			: 'ring-2'} relative overflow-hidden z-0 group {classes}"
+		aria-label={label}
 	>
 		<div class="w-[200%] h-full absolute left-0 top-0 flex items-center justify-center">
 			<div

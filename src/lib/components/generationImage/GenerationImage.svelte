@@ -191,6 +191,7 @@
 {/if}
 {#if !generation.selected_output.is_deleted && !isGalleryEditActive}
 	<a
+		aria-label="View generation with the prompt: {generation.prompt.text.slice(60)}..."
 		href={imageClickHref}
 		data-sveltekit-preload-data="hover"
 		on:click|preventDefault={(e) => {
