@@ -68,7 +68,7 @@
 			</a>
 			{#if sidebarItem.children}
 				<button
-					name="Dropdown"
+					aria-label="{isOpen ? 'Collapse ' : 'Expand '} + {sidebarItem.title}"
 					on:click={() => (isOpen = !isOpen)}
 					class="w-11 md:w-10 h-full absolute right-0 top-0 z-10 group"
 				>
