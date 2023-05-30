@@ -446,6 +446,10 @@ const hi: Translation = {
 		ConfirmButton: 'Confirm',
 		AlreadyHaveAnAccountTitle: 'Already have an account?',
 		LoginInsteadButton: 'Login instead',
+		WantsEmailCheckbox: {
+			Paragraph: 'Let me know about product updates, deals or events.',
+			NoSpamParagraph: 'No spam, we promise.'
+		},
 		SixDigitCodeInput: {
 			Placeholder: '6-Digit Code'
 		}
@@ -469,6 +473,7 @@ const hi: Translation = {
 		DontHaveAnAccountTitle: "Don't have an account?",
 		SignUpInsteadButton: 'Sign up instead',
 		SignInButton: 'Sign In',
+		EnterCodeManuallyButton: 'Enter code manually',
 		SignOutButton: 'Sign Out'
 	},
 	Pro: {

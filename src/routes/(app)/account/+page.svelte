@@ -20,6 +20,9 @@
 	import IconAnimatedSpinner from '$components/icons/IconAnimatedSpinner.svelte';
 	import { appVersion } from '$ts/stores/appVersion';
 	import { previewImageVersion } from '$ts/constants/previewImageVersion';
+	import WantEmailCard from '$components/WantsEmailCard.svelte';
+	import { onMount } from 'svelte';
+	import { wantsEmail } from '$ts/stores/user/wantsEmail.js';
 
 	$: if (!$page.data.session?.user.id) {
 		goto(`/sign-in?redirect_to=${encodeURIComponent($page.url.pathname)}`);
@@ -50,6 +53,31 @@
 	const closeExtraAccountSettings = () => {
 		isExtraAccountSettingsOpen = false;
 	};
+
+	let mounted = false;
+	let wantsEmailChecked = $userSummary?.wants_email === true ? true : false;
+
+	$: [wantsEmailChecked], onWantsEmailCheckedChanged();
+	$: [$wantsEmail], onWantsEmailChanged();
+
+	function onWantsEmailCheckedChanged() {
+		if (mounted) {
+			wantsEmail.set(wantsEmailChecked);
+		}
+	}
+
+	function onWantsEmailChanged() {
+		if (mounted && $wantsEmail !== null && $wantsEmail !== wantsEmailChecked) {
+			wantsEmailChecked = $wantsEmail;
+		}
+	}
+
+	onMount(() => {
+		if ($wantsEmail !== null) {
+			wantsEmailChecked = $wantsEmail;
+		}
+		mounted = true;
+	});
 </script>
 
 <MetaTag
@@ -65,7 +93,7 @@
 {:else}
 	<div class="w-full flex flex-col items-center justify-center pt-6 px-3">
 		<div
-			class="w-full md:max-w-4xl flex flex-col rounded-2xl bg-c-bg relative z-0
+			class="w-full md:max-w-4xl flex flex-col rounded-2xl bg-c-bg relative z-0 overflow-hidden
 				shadow-xl shadow-c-shadow/[var(--o-shadow-strong)] ring-2 ring-c-bg-secondary"
 		>
 			<div class="w-full flex items-center justify-start">
@@ -155,6 +183,15 @@
 						{($userSummary?.total_remaining_credits || 0).toLocaleString($locale)}
 					</p>
 				</div>
+			</div>
+			<div class="w-full h-2px bg-c-bg-secondary" />
+			<div class="w-full flex justify-start items-center">
+				<WantEmailCard
+					bg="primary"
+					bind:checked={wantsEmailChecked}
+					oneLine
+					padding="p-5 md:px-6"
+				/>
 			</div>
 			<div class="w-full h-2px bg-c-bg-secondary" />
 			<div class="w-full flex flex-wrap items-stretch">

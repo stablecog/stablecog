@@ -447,6 +447,10 @@ const ko: Translation = {
 		ConfirmButton: '이메일 인증하기',
 		AlreadyHaveAnAccountTitle: '이미 계정이 있으신가요?',
 		LoginInsteadButton: '다음으로 로그인하기',
+		WantsEmailCheckbox: {
+			Paragraph: 'Let me know about product updates, deals or events.',
+			NoSpamParagraph: 'No spam, we promise.'
+		},
 		SixDigitCodeInput: {
 			Placeholder: '인증번호 6자리'
 		}
@@ -470,6 +474,7 @@ const ko: Translation = {
 		DontHaveAnAccountTitle: '아직 계정이 없으신가요?',
 		SignUpInsteadButton: '가입하기',
 		SignInButton: '로그인하기',
+		EnterCodeManuallyButton: 'Enter code manually',
 		SignOutButton: '로그아웃하기'
 	},
 	Pro: {

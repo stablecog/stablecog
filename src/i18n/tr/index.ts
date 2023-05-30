@@ -455,6 +455,10 @@ const tr: Translation = {
 		ConfirmButton: 'Onayla',
 		AlreadyHaveAnAccountTitle: 'Zaten üye misin?',
 		LoginInsteadButton: 'Giriş yap',
+		WantsEmailCheckbox: {
+			Paragraph: 'Let me know about product updates, deals or events.',
+			NoSpamParagraph: 'No spam, we promise.'
+		},
 		SixDigitCodeInput: {
 			Placeholder: '6 Haneli Kod'
 		}
@@ -478,6 +482,7 @@ const tr: Translation = {
 		DontHaveAnAccountTitle: 'Üyeliğin yok mu?',
 		SignUpInsteadButton: 'Üye ol',
 		SignInButton: 'Giriş Yap',
+		EnterCodeManuallyButton: 'Enter code manually',
 		SignOutButton: 'Çıkış Yap'
 	},
 	Pro: {

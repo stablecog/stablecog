@@ -7,11 +7,17 @@
 	import IconBack from '$components/icons/IconBack.svelte';
 	import IconEmail from '$components/icons/IconEmail.svelte';
 	import Input from '$components/Input.svelte';
-	import LL from '$i18n/i18n-svelte';
+	import LL, { locale } from '$i18n/i18n-svelte';
 	import { expandCollapse } from '$ts/animation/transitions';
 	import type { Provider } from '@supabase/supabase-js';
 	import { quadOut } from 'svelte/easing';
 	import IconPassword from '$components/icons/IconPassword.svelte';
+	import { wantsEmail } from '$ts/stores/user/wantsEmail';
+	import { onMount } from 'svelte';
+	import { userSummary } from '$ts/stores/user/summary';
+	import { appVersion } from '$ts/stores/appVersion';
+	import { logWantsEmail } from '$ts/helpers/loggers';
+	import WantsEmailCard from '$components/WantsEmailCard.svelte';
 
 	export let redirectTo: string | null = null;
 	export let isModal = false;
@@ -24,11 +30,27 @@
 	let codeValue: string;
 	let codeSignInErrorText: string | null = null;
 
+	let wantsEmailChecked = false;
+	let wantsEmailOnMount = false;
+
+	$: logProps = {
+		'SC - Locale': $locale,
+		'SC - User Id': $page.data.session?.user.id,
+		'SC - Stripe Product Id': $userSummary?.product_id,
+		'SC - Page': `${$page.url.pathname}${$page.url.search}`,
+		'SC - Email': $page.data.session?.user.email,
+		'SC - App Version': $appVersion
+	};
+
 	async function signIn() {
 		if (!$page.data.supabase) return;
 		if (!email.includes('@')) {
 			errorText = $LL.Error.InvalidEmail();
 			return;
+		}
+		if (wantsEmailChecked) {
+			wantsEmail.set(true);
+			logWantsEmail({ ...logProps, wantsEmail: true });
 		}
 		signInStatus = 'loading';
 		provider = 'email';
@@ -74,6 +96,10 @@
 
 	async function signInWithOAuth(prov: Provider) {
 		if (!$page.data.supabase) return;
+		if (wantsEmailChecked) {
+			wantsEmail.set(true);
+			logWantsEmail({ ...logProps, wantsEmail: true });
+		}
 		signInStatus = 'loading';
 		provider = prov;
 		const { data: sData, error: sError } = await $page.data.supabase.auth.signInWithOAuth({
@@ -112,6 +138,12 @@
 			codeSignInErrorText = $LL.Error.SomethingWentWrong();
 		}
 	}
+
+	onMount(() => {
+		if ($wantsEmail === true) {
+			wantsEmailOnMount = true;
+		}
+	});
 </script>
 
 <div
@@ -132,7 +164,7 @@
 	</h1>
 	<div class="w-full flex flex-col items-center justify-start mt-1.5">
 		<p
-			class="px-3 md:px-0 max-w-sm text-base md:text-base text-c-on-bg/60 text-center leading-relaxed mb-4 {signInStatus ===
+			class="px-3 md:px-0 max-w-sm text-base md:text-base text-c-on-bg/75 text-center leading-relaxed mb-4 {signInStatus ===
 			'sent-otp'
 				? 'mt-1'
 				: ''}"
@@ -141,6 +173,9 @@
 				? $LL.SignIn.PageParagraphSentLink()
 				: $LL.SignIn.PageParagraphV2()}
 		</p>
+		{#if !wantsEmailOnMount && signInStatus !== 'sent-otp'}
+			<WantsEmailCard bind:checked={wantsEmailChecked} class="mb-3.5" />
+		{/if}
 		{#if signInStatus === 'sent-otp'}
 			<div
 				class="mt-4 md:mt-6 -mx-5 md:-mx-10 -mb-4 md:-mb-7 border-t-2 border-c-bg-secondary w-[calc(100%+1.5rem)] md:w-[calc(100%+5rem)]
@@ -150,10 +185,10 @@
 					<DropdownItem onClick={() => (codeSignInStatus = 'entering')}>
 						<div class="w-full flex items-center justify-center gap-2.5">
 							<IconPassword
-								class="text-c-on-bg/60 w-6 h-6 transition not-touch:group-hover:text-c-primary"
+								class="text-c-on-bg/75 w-6 h-6 transition not-touch:group-hover:text-c-primary"
 							/>
-							<p class="text-c-on-bg/60 transition not-touch:group-hover:text-c-primary">
-								Enter code manually
+							<p class="text-c-on-bg/75 transition not-touch:group-hover:text-c-primary">
+								{$LL.SignIn.EnterCodeManuallyButton()}
 							</p>
 						</div>
 					</DropdownItem>
@@ -178,9 +213,9 @@
 				<DropdownItem onClick={() => (signInStatus = 'idle')}>
 					<div class="w-full flex items-center justify-center gap-2.5">
 						<IconBack
-							class="text-c-on-bg/60 w-6 h-6 transition not-touch:group-hover:text-c-primary"
+							class="text-c-on-bg/75 w-6 h-6 transition not-touch:group-hover:text-c-primary"
 						/>
-						<p class="text-c-on-bg/60 transition not-touch:group-hover:text-c-primary">
+						<p class="text-c-on-bg/75 transition not-touch:group-hover:text-c-primary">
 							{$LL.Shared.GoBackButton()}
 						</p>
 					</div>

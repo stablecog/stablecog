@@ -449,6 +449,10 @@ const vi: Translation = {
 		ConfirmButton: 'Xác nhận',
 		AlreadyHaveAnAccountTitle: 'Đã có một tài khoản?',
 		LoginInsteadButton: 'Đăng Nhập',
+		WantsEmailCheckbox: {
+			Paragraph: 'Let me know about product updates, deals or events.',
+			NoSpamParagraph: 'No spam, we promise.'
+		},
 		SixDigitCodeInput: {
 			Placeholder: 'Mã 6 chữ số'
 		}
@@ -473,6 +477,7 @@ const vi: Translation = {
 		DontHaveAnAccountTitle: 'Bạn không có tài khoản?',
 		SignUpInsteadButton: 'Đăng ký mới',
 		SignInButton: 'Đăng nhập',
+		EnterCodeManuallyButton: 'Enter code manually',
 		SignOutButton: 'Đăng xuất'
 	},
 	Pro: {

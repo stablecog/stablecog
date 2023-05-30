@@ -18,7 +18,7 @@
 	} from '$ts/constants/routes';
 	import { isSuperAdmin } from '$ts/helpers/admin/roles';
 	import { generateSSEId } from '$ts/helpers/generateSSEId';
-	import { logInitImageAdded } from '$ts/helpers/loggers';
+	import { logInitImageAdded, logWantsEmail } from '$ts/helpers/loggers';
 	import { advancedModeApp } from '$ts/stores/advancedMode';
 	import { appVersion, serverVersion } from '$ts/stores/appVersion';
 	import {
@@ -59,8 +59,11 @@
 		submitInitialUpscaleRequest,
 		upscales
 	} from '$ts/stores/user/upscale';
-	import { QueryClientProvider } from '@tanstack/svelte-query';
+	import { QueryClientProvider, createMutation } from '@tanstack/svelte-query';
 	import { onMount } from 'svelte';
+	import { setWantsEmail } from '$ts/queries/wantsEmail.js';
+	import { getUserSummaryQueryKey } from '$components/userSummary/helpers.js';
+	import { wantsEmail } from '$ts/stores/user/wantsEmail.js';
 
 	export let data;
 
@@ -331,7 +334,7 @@
 <svelte:window on:scroll|passive={setNavbarState} />
 
 <QueryClientProvider client={data.queryClient}>
-	<UserSummaryProvider>
+	<UserSummaryProvider queryClient={data.queryClient}>
 		<LayoutWrapper isAppRoute={appRoutes.includes($page.url.pathname)}>
 			{#if !rawRoutes.includes($page.url.pathname) && $underDevelopment && (!$userSummary || !isSuperAdmin($userSummary.roles)) && !$page.url.pathname.startsWith('/admin') && !$page.url.pathname.startsWith('/api/auth') && !$page.url.pathname.startsWith('/sign-in')}
 				{#if Number($serverVersion) > Number($appVersion)}

@@ -48,6 +48,11 @@ export function logSignIn(props: ISignInProps) {
 	posthog.capture('Sign In', { ...props });
 }
 
+export function logWantsEmail(props: IWantsEmailProps) {
+	mixpanel.track(`Wants Email | ${props.wantsEmail ? 'True' : 'False'}`, { ...props });
+	posthog.capture(`Wants Email | ${props.wantsEmail ? 'True' : 'False'}`, { ...props });
+}
+
 export function logSignOut(props: ISignOutProps) {
 	mixpanel.track('Sign Out', { ...props });
 	posthog.capture('Sign Out', { ...props });
@@ -320,6 +325,16 @@ interface ISignInProps {
 	'SC - Page': string;
 	'SC - Email': string;
 	'SC - App Version': string;
+}
+
+interface IWantsEmailProps {
+	'SC - Locale': string;
+	'SC - User Id': string | undefined;
+	'SC - Stripe Product Id': string | undefined;
+	'SC - Page': string;
+	'SC - Email': string | undefined;
+	'SC - App Version': string;
+	wantsEmail: boolean;
 }
 
 interface ISignOutProps {

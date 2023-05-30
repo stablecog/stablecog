@@ -445,6 +445,10 @@ const hr: Translation = {
 		ConfirmButton: 'Potvrdi',
 		AlreadyHaveAnAccountTitle: 'Već imaš račun?',
 		LoginInsteadButton: 'Ulogiraj se',
+		WantsEmailCheckbox: {
+			Paragraph: 'Let me know about product updates, deals or events.',
+			NoSpamParagraph: 'No spam, we promise.'
+		},
 		SixDigitCodeInput: {
 			Placeholder: '6-znamenkasti kod'
 		}
@@ -468,6 +472,7 @@ const hr: Translation = {
 		DontHaveAnAccountTitle: 'Nemaš račun?',
 		SignUpInsteadButton: 'Umjesto toga, registriraj se',
 		SignInButton: 'Prijavi se',
+		EnterCodeManuallyButton: 'Enter code manually',
 		SignOutButton: 'Odjavi se'
 	},
 	Pro: {

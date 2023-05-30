@@ -459,6 +459,10 @@ const ja: Translation = {
 		ConfirmButton: '確認',
 		AlreadyHaveAnAccountTitle: '既にアカウントをお持ちですか？',
 		LoginInsteadButton: '代わりにログインする',
+		WantsEmailCheckbox: {
+			Paragraph: 'Let me know about product updates, deals or events.',
+			NoSpamParagraph: 'No spam, we promise.'
+		},
 		SixDigitCodeInput: {
 			Placeholder: '6 桁のコード'
 		}
@@ -483,6 +487,7 @@ const ja: Translation = {
 		DontHaveAnAccountTitle: 'アカウントをお持ちでないですか？',
 		SignUpInsteadButton: '代わりにサインアップする',
 		SignInButton: 'サインイン',
+		EnterCodeManuallyButton: 'Enter code manually',
 		SignOutButton: 'サインアウト'
 	},
 	Pro: {

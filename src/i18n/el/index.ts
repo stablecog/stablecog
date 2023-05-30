@@ -454,6 +454,10 @@ const es: Translation = {
 		ConfirmButton: 'Επιβεβαίωση',
 		AlreadyHaveAnAccountTitle: 'Έχετε ήδη λογαριασμό;',
 		LoginInsteadButton: 'Αλλιώς, συνδεθείτε',
+		WantsEmailCheckbox: {
+			Paragraph: 'Let me know about product updates, deals or events.',
+			NoSpamParagraph: 'No spam, we promise.'
+		},
 		SixDigitCodeInput: {
 			Placeholder: '6ψήφιος κωδικός'
 		}
@@ -479,6 +483,7 @@ const es: Translation = {
 		DontHaveAnAccountTitle: 'Δεν έχετε λογαριασμό;',
 		SignUpInsteadButton: 'Ή εγγραφείτε',
 		SignInButton: 'Είσοδος',
+		EnterCodeManuallyButton: 'Enter code manually',
 		SignOutButton: 'Αποσύνδεση'
 	},
 	Pro: {

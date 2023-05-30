@@ -453,6 +453,10 @@ const nl: Translation = {
 		ConfirmButton: 'Bevestigen',
 		AlreadyHaveAnAccountTitle: 'Heb je al een account?',
 		LoginInsteadButton: 'Log dan in',
+		WantsEmailCheckbox: {
+			Paragraph: 'Let me know about product updates, deals or events.',
+			NoSpamParagraph: 'No spam, we promise.'
+		},
 		SixDigitCodeInput: {
 			Placeholder: '6-Cijferige Code'
 		}
@@ -477,6 +481,7 @@ const nl: Translation = {
 		DontHaveAnAccountTitle: 'Heb je nog geen account?',
 		SignUpInsteadButton: 'Meld je dan aan',
 		SignInButton: 'Inloggen',
+		EnterCodeManuallyButton: 'Enter code manually',
 		SignOutButton: 'Uitloggen'
 	},
 	Pro: {

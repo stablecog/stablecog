@@ -450,6 +450,10 @@ const bg: Translation = {
 		ConfirmButton: 'Потвърди',
 		AlreadyHaveAnAccountTitle: 'Вече имате профил?',
 		LoginInsteadButton: 'Вместо това Влизане',
+		WantsEmailCheckbox: {
+			Paragraph: 'Let me know about product updates, deals or events.',
+			NoSpamParagraph: 'No spam, we promise.'
+		},
 		SixDigitCodeInput: {
 			Placeholder: '6-цифрен код'
 		}
@@ -473,6 +477,7 @@ const bg: Translation = {
 		DontHaveAnAccountTitle: 'Нямате профил?',
 		SignUpInsteadButton: 'Вместо това Регистрация',
 		SignInButton: 'Вход',
+		EnterCodeManuallyButton: 'Enter code manually',
 		SignOutButton: 'Излез'
 	},
 	Pro: {

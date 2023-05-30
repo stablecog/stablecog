@@ -449,6 +449,10 @@ const fr: Translation = {
 		ConfirmButton: 'Confirmer',
 		AlreadyHaveAnAccountTitle: 'Vous avez déjà un compte ?',
 		LoginInsteadButton: 'Se connecter',
+		WantsEmailCheckbox: {
+			Paragraph: 'Let me know about product updates, deals or events.',
+			NoSpamParagraph: 'No spam, we promise.'
+		},
 		SixDigitCodeInput: {
 			Placeholder: 'Code à 6 chiffres'
 		}
@@ -473,6 +477,7 @@ const fr: Translation = {
 		DontHaveAnAccountTitle: "Vous n'avez pas de compte ?",
 		SignUpInsteadButton: 'Créer un compte',
 		SignInButton: 'Se connecter',
+		EnterCodeManuallyButton: 'Enter code manually',
 		SignOutButton: 'Se déconnecter'
 	},
 	Pro: {

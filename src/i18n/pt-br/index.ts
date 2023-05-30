@@ -448,6 +448,10 @@ const ptBr: Translation = {
 		ConfirmButton: 'Confirmar',
 		AlreadyHaveAnAccountTitle: 'Já possui uma conta?',
 		LoginInsteadButton: 'Efetuar Login',
+		WantsEmailCheckbox: {
+			Paragraph: 'Let me know about product updates, deals or events.',
+			NoSpamParagraph: 'No spam, we promise.'
+		},
 		SixDigitCodeInput: {
 			Placeholder: 'Código de 6 dígitos'
 		}
@@ -471,6 +475,7 @@ const ptBr: Translation = {
 		DontHaveAnAccountTitle: 'Não possui uma conta?',
 		SignUpInsteadButton: 'Cadastre-se',
 		SignInButton: 'Iniciar sessão',
+		EnterCodeManuallyButton: 'Enter code manually',
 		SignOutButton: 'Encerrar Sessão'
 	},
 	Pro: {

@@ -1345,6 +1345,16 @@ type RootTranslation = {
 		 * L​o​g​i​n​ ​i​n​s​t​e​a​d
 		 */
 		LoginInsteadButton: string
+		WantsEmailCheckbox: {
+			/**
+			 * L​e​t​ ​m​e​ ​k​n​o​w​ ​a​b​o​u​t​ ​p​r​o​d​u​c​t​ ​u​p​d​a​t​e​s​,​ ​d​e​a​l​s​ ​o​r​ ​e​v​e​n​t​s​.
+			 */
+			Paragraph: string
+			/**
+			 * N​o​ ​s​p​a​m​,​ ​w​e​ ​p​r​o​m​i​s​e​.
+			 */
+			NoSpamParagraph: string
+		}
 		SixDigitCodeInput: {
 			/**
 			 * 6​-​D​i​g​i​t​ ​C​o​d​e
@@ -1419,6 +1429,10 @@ type RootTranslation = {
 		 * S​i​g​n​ ​I​n
 		 */
 		SignInButton: string
+		/**
+		 * E​n​t​e​r​ ​c​o​d​e​ ​m​a​n​u​a​l​l​y
+		 */
+		EnterCodeManuallyButton: string
 		/**
 		 * S​i​g​n​ ​O​u​t
 		 */
@@ -3748,6 +3762,16 @@ export type TranslationFunctions = {
 		 * Login instead
 		 */
 		LoginInsteadButton: () => LocalizedString
+		WantsEmailCheckbox: {
+			/**
+			 * Let me know about product updates, deals or events.
+			 */
+			Paragraph: () => LocalizedString
+			/**
+			 * No spam, we promise.
+			 */
+			NoSpamParagraph: () => LocalizedString
+		}
 		SixDigitCodeInput: {
 			/**
 			 * 6-Digit Code
@@ -3820,6 +3844,10 @@ export type TranslationFunctions = {
 		 * Sign In
 		 */
 		SignInButton: () => LocalizedString
+		/**
+		 * Enter code manually
+		 */
+		EnterCodeManuallyButton: () => LocalizedString
 		/**
 		 * Sign Out
 		 */
