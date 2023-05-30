@@ -28,14 +28,9 @@
 		xxlBreakpoint
 	} from '$components/generationFullScreen/constants';
 	import { getGalleryInfiniteQueryProps } from '$routes/(app)/gallery/constants';
-	import {
-		getGalleryGenerationFullOutputs,
-		type TGalleryGenerationFullOutputsPage
-	} from '$ts/queries/galleryGenerations.js';
 
 	export let data;
-	const { generationFullOutput: generationFullOutputFromData, searchQuery: searchQueryParam } =
-		data;
+	const { searchQuery: searchQueryParam } = data;
 
 	let searchString = searchQueryParam ?? '';
 
@@ -69,30 +64,13 @@
 			return;
 		}
 	}
-
-	onMount(() => {
-		if (generationFullOutputFromData) {
-			activeGeneration.set({
-				...generationFullOutputFromData.generation,
-				selected_output: generationFullOutputFromData
-			});
-		}
-	});
 </script>
 
 <MetaTag
 	title="Gallery | Stablecog"
-	description={generationFullOutputFromData
-		? getGalleryMetaTagDescriptionFromPromptText(
-				generationFullOutputFromData.generation.prompt.text
-		  )
-		: 'A gallery full of images created with Stable Diffusion and Kandinsky. Check out the images and their metadata including their prompt, negative prompt, inference steps, guidance scale and seed. Generate similar images directly from the gallery or submit your own.'}
-	image_url={generationFullOutputFromData
-		? getPreviewImageUrlFromOutputId(generationFullOutputFromData.id)
-		: `${canonicalUrl}/previews${$page.url.pathname}.png`}
-	canonical={generationFullOutputFromData
-		? `${canonicalUrl}${$page.url.pathname}?output=${generationFullOutputFromData.id}`
-		: `${canonicalUrl}${$page.url.pathname}`}
+	description="A gallery full of images created with Stable Diffusion and Kandinsky. Check out the images and their metadata including their prompt, negative prompt, inference steps, guidance scale and seed. Generate similar images directly from the gallery or submit your own."
+	image_url="{canonicalUrl}/previews{$page.url.pathname}.png"
+	canonical="{canonicalUrl}{$page.url.pathname}"
 />
 
 <svelte:window on:keydown={onKeyDown} />

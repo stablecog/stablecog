@@ -98,6 +98,10 @@ type RootTranslation = {
 		GenerateButton: string
 		PromptInput: {
 			/**
+			 * P​r​o​m​p​t
+			 */
+			Title: string
+			/**
 			 * P​o​r​t​r​a​i​t​ ​o​f​ ​a​ ​c​a​t​ ​b​y​ ​V​a​n​ ​G​o​g​h
 			 */
 			Placeholder: string
@@ -1040,6 +1044,10 @@ type RootTranslation = {
 		 * L​o​a​d​ ​M​o​r​e
 		 */
 		LoadMoreButton: string
+		/**
+		 * B​a​c​k​ ​t​o​ ​G​a​l​l​e​r​y
+		 */
+		BackToGalleryButton: string
 		/**
 		 * S​e​a​r​c​h​i​n​g
 		 */
@@ -2023,6 +2031,10 @@ type RootTranslation = {
 			Title: string
 		}
 		/**
+		 * B​a​c​k​ ​t​o​ ​G​a​l​l​e​r​y
+		 */
+		BackToGalleryButton: string
+		/**
 		 * S​e​a​r​c​h​i​n​g
 		 */
 		SearchingTitle: string
@@ -2509,6 +2521,10 @@ export type TranslationFunctions = {
 		 */
 		GenerateButton: () => LocalizedString
 		PromptInput: {
+			/**
+			 * Prompt
+			 */
+			Title: () => LocalizedString
 			/**
 			 * Portrait of a cat by Van Gogh
 			 */
@@ -3432,6 +3448,10 @@ export type TranslationFunctions = {
 		 * Load More
 		 */
 		LoadMoreButton: () => LocalizedString
+		/**
+		 * Back to Gallery
+		 */
+		BackToGalleryButton: () => LocalizedString
 		/**
 		 * Searching
 		 */
@@ -4410,6 +4430,10 @@ export type TranslationFunctions = {
 			 */
 			Title: () => LocalizedString
 		}
+		/**
+		 * Back to Gallery
+		 */
+		BackToGalleryButton: () => LocalizedString
 		/**
 		 * Searching
 		 */

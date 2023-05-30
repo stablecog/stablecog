@@ -26,9 +26,7 @@ const bg: Translation = {
 	},
 	Home: {
 		GenerateButton: 'Създай',
-		PromptInput: {
-			Placeholder: 'Портрет на котка от Ван Гог'
-		},
+		PromptInput: { Title: 'Prompt', Placeholder: 'Портрет на котка от Ван Гог' },
 		WidthTabBar: {
 			Title: 'Ширина',
 			Paragraph: 'Ширина на изображението.'
@@ -361,6 +359,7 @@ const bg: Translation = {
 		TryAgainButton: 'Опитайте отново',
 		RefreshButton: 'Опресни',
 		LoadMoreButton: 'Зареди повече',
+		BackToGalleryButton: 'Back to Gallery',
 		SearchingTitle: 'Търсене',
 		NoResultsFoundTitle: 'Не бяха открити резултати'
 	},
@@ -690,6 +689,7 @@ const bg: Translation = {
 		SearchInput: {
 			Title: 'Потърси'
 		},
+		BackToGalleryButton: 'Back to Gallery',
 		SearchingTitle: 'Търсене',
 		NoMatchingGenerationTitle: 'Няма съответствия'
 	},

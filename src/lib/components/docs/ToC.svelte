@@ -35,7 +35,7 @@
 						class="w-6 h-6 transform transition text-c-on-bg/50 group-hover:-translate-x-1
 						not-touch:group-hover:text-c-primary"
 					/>
-					<p class="font-bold transition text-c-on-bg/50 not-touch:group-hover:text-c-primary">
+					<p class="transition text-c-on-bg/50 not-touch:group-hover:text-c-primary">
 						{$LL.Blog.BackToBlogButton()}
 					</p>
 				</div>

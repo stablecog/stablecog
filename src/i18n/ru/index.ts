@@ -26,9 +26,7 @@ const ru: Translation = {
 	},
 	Home: {
 		GenerateButton: 'Сгенерировать',
-		PromptInput: {
-			Placeholder: 'Портрет кота, стиль ван гога'
-		},
+		PromptInput: { Title: 'Prompt', Placeholder: 'Портрет кота, стиль ван гога' },
 		WidthTabBar: {
 			Title: 'Ширина',
 			Paragraph: 'Ширина изображения.'
@@ -359,6 +357,7 @@ const ru: Translation = {
 		TryAgainButton: 'Try Again',
 		RefreshButton: 'Refresh',
 		LoadMoreButton: 'Load More',
+		BackToGalleryButton: 'Back to Gallery',
 		SearchingTitle: 'Searching',
 		NoResultsFoundTitle: 'No results found'
 	},
@@ -689,6 +688,7 @@ const ru: Translation = {
 		SearchInput: {
 			Title: 'Search'
 		},
+		BackToGalleryButton: 'Back to Gallery',
 		SearchingTitle: 'Searching',
 		NoMatchingGenerationTitle: 'No matching generation'
 	},

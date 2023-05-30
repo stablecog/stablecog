@@ -26,9 +26,7 @@ const fr: Translation = {
 	},
 	Home: {
 		GenerateButton: 'Générer',
-		PromptInput: {
-			Placeholder: "Portrait d'un chat par Van Gogh"
-		},
+		PromptInput: { Title: 'Prompt', Placeholder: "Portrait d'un chat par Van Gogh" },
 		WidthTabBar: {
 			Title: 'Largeur',
 			Paragraph: "La largeur de l'image."
@@ -359,6 +357,7 @@ const fr: Translation = {
 		TryAgainButton: 'Réessayer',
 		RefreshButton: 'Refresh',
 		LoadMoreButton: 'Load More',
+		BackToGalleryButton: 'Back to Gallery',
 		SearchingTitle: 'Searching',
 		NoResultsFoundTitle: 'No results found'
 	},
@@ -694,6 +693,7 @@ const fr: Translation = {
 		SearchInput: {
 			Title: 'Search'
 		},
+		BackToGalleryButton: 'Back to Gallery',
 		SearchingTitle: 'Searching',
 		NoMatchingGenerationTitle: 'No matching generation'
 	},

@@ -26,9 +26,7 @@ const ptBr: Translation = {
 	},
 	Home: {
 		GenerateButton: 'Gerar',
-		PromptInput: {
-			Placeholder: 'Retrato de um gato por Van Gogh'
-		},
+		PromptInput: { Title: 'Prompt', Placeholder: 'Retrato de um gato por Van Gogh' },
 		WidthTabBar: {
 			Title: 'Largura',
 			Paragraph: 'A largura da imagem.'
@@ -358,6 +356,7 @@ const ptBr: Translation = {
 		TryAgainButton: 'Tente Novamente',
 		RefreshButton: 'Refresh',
 		LoadMoreButton: 'Load More',
+		BackToGalleryButton: 'Back to Gallery',
 		SearchingTitle: 'Searching',
 		NoResultsFoundTitle: 'No results found'
 	},
@@ -692,6 +691,7 @@ const ptBr: Translation = {
 		SearchInput: {
 			Title: 'Search'
 		},
+		BackToGalleryButton: 'Back to Gallery',
 		SearchingTitle: 'Searching',
 		NoMatchingGenerationTitle: 'No matching generation'
 	},

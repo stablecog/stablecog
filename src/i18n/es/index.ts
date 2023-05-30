@@ -26,9 +26,7 @@ const es: Translation = {
 	},
 	Home: {
 		GenerateButton: 'Generar',
-		PromptInput: {
-			Placeholder: 'Retrato de un gato por Van Gogh'
-		},
+		PromptInput: { Title: 'Prompt', Placeholder: 'Retrato de un gato por Van Gogh' },
 		WidthTabBar: {
 			Title: 'Ancho',
 			Paragraph: 'El ancho de la imagen.'
@@ -359,6 +357,7 @@ const es: Translation = {
 		TryAgainButton: 'Try Again',
 		RefreshButton: 'Refresh',
 		LoadMoreButton: 'Load More',
+		BackToGalleryButton: 'Back to Gallery',
 		SearchingTitle: 'Searching',
 		NoResultsFoundTitle: 'No results found'
 	},
@@ -689,6 +688,7 @@ const es: Translation = {
 		SearchInput: {
 			Title: 'Search'
 		},
+		BackToGalleryButton: 'Back to Gallery',
 		SearchingTitle: 'Searching',
 		NoMatchingGenerationTitle: 'No matching generation'
 	},

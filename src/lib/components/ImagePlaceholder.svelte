@@ -3,7 +3,7 @@
 	export let height: number;
 	export { classes as class };
 	export let containerHeight: number | undefined = undefined;
-	let classes = '';
+	let classes = 'w-full h-auto';
 </script>
 
 {#if containerHeight}
@@ -14,10 +14,7 @@
 	/>
 {:else}
 	<svg
-		style={containerHeight
-			? `height: ${containerHeight}px; width: ${containerHeight * (height / width)}`
-			: ''}
-		class="{containerHeight ? '' : 'w-full h-auto'} {classes}"
+		class={classes}
 		{width}
 		{height}
 		viewBox="0 0 {width} {height}"

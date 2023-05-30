@@ -139,7 +139,7 @@
 		buttonObjectsWithState = { ...initialButtonObjectsWithState };
 		const { seed, selected_output, ...rest } = generation;
 		generateSimilarUrl = getGenerationUrlFromParams(rest);
-		linkUrl = `${$page.url.origin}/gallery?output=${generation.id}`;
+		linkUrl = `${$page.url.origin}/gallery/o/${generation.id}`;
 		if (browser && window && !initialGenerationChange) {
 			const searchParams = new URLSearchParams(window.location.search);
 			searchParams.set('output', generation.selected_output.id);
@@ -456,13 +456,13 @@
 						{/if}
 						<!-- Prompt and Negative Prompt -->
 						<div class="flex flex-col items-start gap-3">
-							<p class="max-w-full text-sm leading-normal">{generation.prompt.text}</p>
+							<p class="max-w-full leading-normal">{generation.prompt.text}</p>
 							{#if generation.negative_prompt}
 								<div class="max-w-full flex items-start text-c-danger gap-2">
 									<div use:tooltip={$negativePromptTooltipAlt}>
 										<IconChatBubbleCancel class="w-5 h-5" />
 									</div>
-									<p class="flex-shrink min-w-0 text-sm leading-normal -mt-0.75">
+									<p class="flex-shrink min-w-0 leading-normal -mt-0.75">
 										{generation.negative_prompt.text}
 									</p>
 								</div>
@@ -508,14 +508,14 @@
 	{#if onLeftButtonClicked || onRightButtonClicked}
 		<SideButton
 			name="Go Left"
-			class="hidden md:flex absolute left-0 top-1/2 transform -translate-y-1/2 w-20 h-64"
+			class="hidden md:flex absolute left-0 top-1/2 transform -translate-y-1/2 w-20 h-56"
 			side="left"
 			bind:element={buttonLeft}
 			onClick={onLeftButtonClicked}
 		/>
 		<SideButton
 			name="Go Right"
-			class="hidden md:flex absolute right-0 top-1/2 transform -translate-y-1/2 w-20 h-64"
+			class="hidden md:flex absolute right-0 top-1/2 transform -translate-y-1/2 w-20 h-56"
 			side="right"
 			bind:element={buttonRight}
 			onClick={onRightButtonClicked}

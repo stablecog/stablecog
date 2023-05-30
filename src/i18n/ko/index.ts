@@ -26,9 +26,7 @@ const ko: Translation = {
 	},
 	Home: {
 		GenerateButton: '생성하기',
-		PromptInput: {
-			Placeholder: '반 고흐가 그린 고양이 초상화'
-		},
+		PromptInput: { Title: 'Prompt', Placeholder: '반 고흐가 그린 고양이 초상화' },
 		WidthTabBar: {
 			Title: '너비',
 			Paragraph: '이미지의 너비를 의미합니다.'
@@ -359,6 +357,7 @@ const ko: Translation = {
 		TryAgainButton: '다시 시도하기',
 		RefreshButton: 'Refresh',
 		LoadMoreButton: 'Load More',
+		BackToGalleryButton: 'Back to Gallery',
 		SearchingTitle: 'Searching',
 		NoResultsFoundTitle: 'No results found'
 	},
@@ -688,6 +687,7 @@ const ko: Translation = {
 		SearchInput: {
 			Title: 'Search'
 		},
+		BackToGalleryButton: 'Back to Gallery',
 		SearchingTitle: 'Searching',
 		NoMatchingGenerationTitle: 'No matching generation'
 	},

@@ -26,9 +26,7 @@ const hi: Translation = {
 	},
 	Home: {
 		GenerateButton: 'बनाए',
-		PromptInput: {
-			Placeholder: 'वैन गो द्वारा एक बिल्ली का चित्र'
-		},
+		PromptInput: { Title: 'Prompt', Placeholder: 'वैन गो द्वारा एक बिल्ली का चित्र' },
 		WidthTabBar: {
 			Title: 'चौड़ाई',
 			Paragraph: 'चित्र की चौड़ाई।'
@@ -358,6 +356,7 @@ const hi: Translation = {
 		TryAgainButton: 'Try Again',
 		RefreshButton: 'Refresh',
 		LoadMoreButton: 'Load More',
+		BackToGalleryButton: 'Back to Gallery',
 		SearchingTitle: 'Searching',
 		NoResultsFoundTitle: 'No results found'
 	},
@@ -687,6 +686,7 @@ const hi: Translation = {
 		SearchInput: {
 			Title: 'Search'
 		},
+		BackToGalleryButton: 'Back to Gallery',
 		SearchingTitle: 'Searching',
 		NoMatchingGenerationTitle: 'No matching generation'
 	},

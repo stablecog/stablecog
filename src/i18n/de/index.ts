@@ -26,9 +26,7 @@ const de: Translation = {
 	},
 	Home: {
 		GenerateButton: 'Generieren',
-		PromptInput: {
-			Placeholder: 'Porträt einer Katze von Van Gogh'
-		},
+		PromptInput: { Title: 'Prompt', Placeholder: 'Porträt einer Katze von Van Gogh' },
 		WidthTabBar: {
 			Title: 'Breite',
 			Paragraph: 'Die Breite des Bildes.'
@@ -358,6 +356,7 @@ const de: Translation = {
 		TryAgainButton: 'Nochmals versuchen',
 		RefreshButton: 'Aktualisieren',
 		LoadMoreButton: 'Weitere laden',
+		BackToGalleryButton: 'Back to Gallery',
 		SearchingTitle: 'Suche…',
 		NoResultsFoundTitle: 'Keine Ergebnisse gefunden'
 	},
@@ -692,6 +691,7 @@ const de: Translation = {
 		SearchInput: {
 			Title: 'Suche'
 		},
+		BackToGalleryButton: 'Back to Gallery',
 		SearchingTitle: 'Suchen...',
 		NoMatchingGenerationTitle: 'Nichts Passendes gefunden'
 	},

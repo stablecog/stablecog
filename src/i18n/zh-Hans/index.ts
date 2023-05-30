@@ -26,9 +26,7 @@ const zhHans: Translation = {
 	},
 	Home: {
 		GenerateButton: '生成',
-		PromptInput: {
-			Placeholder: '猫的肖像，梵高的风格'
-		},
+		PromptInput: { Title: 'Prompt', Placeholder: '猫的肖像，梵高的风格' },
 		WidthTabBar: {
 			Title: '宽度',
 			Paragraph: '图像的宽度'
@@ -356,6 +354,7 @@ const zhHans: Translation = {
 		TryAgainButton: 'Try Again',
 		RefreshButton: 'Refresh',
 		LoadMoreButton: 'Load More',
+		BackToGalleryButton: 'Back to Gallery',
 		SearchingTitle: 'Searching',
 		NoResultsFoundTitle: 'No results found'
 	},
@@ -684,6 +683,7 @@ const zhHans: Translation = {
 		SearchInput: {
 			Title: 'Search'
 		},
+		BackToGalleryButton: 'Back to Gallery',
 		SearchingTitle: 'Searching',
 		NoMatchingGenerationTitle: 'No matching generation'
 	},

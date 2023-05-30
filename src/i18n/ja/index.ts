@@ -28,9 +28,7 @@ const ja: Translation = {
 	},
 	Home: {
 		GenerateButton: '生成',
-		PromptInput: {
-			Placeholder: 'ヴァン・ゴッホ風の猫の肖像画'
-		},
+		PromptInput: { Title: 'Prompt', Placeholder: 'ヴァン・ゴッホ風の猫の肖像画' },
 		WidthTabBar: {
 			Title: '幅',
 			Paragraph: '画像の幅。'
@@ -368,6 +366,7 @@ const ja: Translation = {
 		TryAgainButton: '再試行',
 		RefreshButton: '更新',
 		LoadMoreButton: 'さらに読み込む',
+		BackToGalleryButton: 'Back to Gallery',
 		SearchingTitle: '検索中',
 		NoResultsFoundTitle: '検索結果なし'
 	},
@@ -706,6 +705,7 @@ const ja: Translation = {
 		SearchInput: {
 			Title: '検索'
 		},
+		BackToGalleryButton: 'Back to Gallery',
 		SearchingTitle: '検索中...',
 		NoMatchingGenerationTitle: '一致する生成がありません'
 	},

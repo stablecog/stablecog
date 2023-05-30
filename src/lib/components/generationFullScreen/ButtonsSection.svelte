@@ -51,6 +51,8 @@
 	export let buttonObjectsWithState: TButtonObjectsWithState;
 	export let currentImageUrl: string;
 	export let modalType: TGenerationFullScreenModalType;
+	export { classes as class };
+	let classes = '';
 
 	const queryClient = useQueryClient();
 	const onDownloadImageClicked = async () => {
@@ -175,24 +177,10 @@
 		}
 	}
 
-	function setFavoriteQuery(query: string[], action: 'add' | 'remove') {
-		queryClient.setQueryData($userGenerationFullOutputsQueryKey, (data: any) => ({
-			...data,
-			pages: data.pages.map((page: TUserGenerationFullOutputsPage) => {
-				return {
-					...page,
-					outputs: page.outputs.map((output) =>
-						output.id === generation.selected_output.id ? { ...output, is_deleted: true } : output
-					)
-				};
-			})
-		}));
-	}
-
 	const resetSubmitToGalleryStatus = () => (submitToGalleryStatus = 'idle');
 </script>
 
-<div class="w-full flex flex-wrap gap-3 pb-1">
+<div class="w-full flex flex-wrap gap-3 pb-1 {classes}">
 	<SubtleButton
 		prefetch={true}
 		href={generateSimilarUrl}

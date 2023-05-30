@@ -26,9 +26,7 @@ const nl: Translation = {
 	},
 	Home: {
 		GenerateButton: 'Genereren',
-		PromptInput: {
-			Placeholder: 'Portret van een kat door Van Gogh'
-		},
+		PromptInput: { Title: 'Prompt', Placeholder: 'Portret van een kat door Van Gogh' },
 		WidthTabBar: {
 			Title: 'Breedte',
 			Paragraph: 'De breedte van de afbeelding.'
@@ -363,6 +361,7 @@ const nl: Translation = {
 		TryAgainButton: 'Opnieuw proberen',
 		RefreshButton: 'Vernieuwen',
 		LoadMoreButton: 'Laad meer',
+		BackToGalleryButton: 'Back to Gallery',
 		SearchingTitle: 'Bezig met zoeken',
 		NoResultsFoundTitle: 'Geen resultaten gevonden'
 	},
@@ -699,6 +698,7 @@ const nl: Translation = {
 		SearchInput: {
 			Title: 'Zoeken'
 		},
+		BackToGalleryButton: 'Back to Gallery',
 		SearchingTitle: 'Bezig met zoeken',
 		NoMatchingGenerationTitle: 'Geen overeenkomstige creatie gevonden'
 	},

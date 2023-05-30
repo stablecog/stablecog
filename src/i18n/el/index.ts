@@ -26,9 +26,7 @@ const es: Translation = {
 	},
 	Home: {
 		GenerateButton: 'Δημιουργία',
-		PromptInput: {
-			Placeholder: 'Πορτρέτο μιας γάτας από τον Βαν Γκονγκ'
-		},
+		PromptInput: { Title: 'Prompt', Placeholder: 'Πορτρέτο μιας γάτας από τον Βαν Γκονγκ' },
 		WidthTabBar: {
 			Title: 'Πλάτος',
 			Paragraph: 'Το πλάτος της εικόνας.'
@@ -364,6 +362,7 @@ const es: Translation = {
 		TryAgainButton: 'Προσπαθήστε ξανά',
 		RefreshButton: 'Ανανέωση',
 		LoadMoreButton: 'Εμφάνιση περισσότερων',
+		BackToGalleryButton: 'Back to Gallery',
 		SearchingTitle: 'Αναζήτηση',
 		NoResultsFoundTitle: 'Δεν βρέθηκαν αποτελέσματα'
 	},
@@ -700,6 +699,7 @@ const es: Translation = {
 		SearchInput: {
 			Title: 'Αναζήτηση'
 		},
+		BackToGalleryButton: 'Back to Gallery',
 		SearchingTitle: 'Αναζήτηση',
 		NoMatchingGenerationTitle: 'Δεν υπάρχει αντίστοιχο παράγωγο'
 	},

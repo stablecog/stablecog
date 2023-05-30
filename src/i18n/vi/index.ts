@@ -26,9 +26,7 @@ const vi: Translation = {
 	},
 	Home: {
 		GenerateButton: 'Khởi tạo',
-		PromptInput: {
-			Placeholder: 'Tranh chân dung một con mèo vẽ bởi Van Gogh'
-		},
+		PromptInput: { Title: 'Prompt', Placeholder: 'Tranh chân dung một con mèo vẽ bởi Van Gogh' },
 		WidthTabBar: {
 			Title: 'Chiều rộng',
 			Paragraph: 'Chiều rộng của hình ảnh.'
@@ -359,6 +357,7 @@ const vi: Translation = {
 		TryAgainButton: 'Thử lại',
 		RefreshButton: 'Refresh',
 		LoadMoreButton: 'Load More',
+		BackToGalleryButton: 'Back to Gallery',
 		SearchingTitle: 'Searching',
 		NoResultsFoundTitle: 'No results found'
 	},
@@ -691,6 +690,7 @@ const vi: Translation = {
 		SearchInput: {
 			Title: 'Search'
 		},
+		BackToGalleryButton: 'Back to Gallery',
 		SearchingTitle: 'Searching',
 		NoMatchingGenerationTitle: 'No matching generation'
 	},

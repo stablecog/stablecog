@@ -26,9 +26,7 @@ const hr: Translation = {
 	},
 	Home: {
 		GenerateButton: 'Generiraj',
-		PromptInput: {
-			Placeholder: 'Portret mačke Van Gogh-a'
-		},
+		PromptInput: { Title: 'Prompt', Placeholder: 'Portret mačke Van Gogh-a' },
 		WidthTabBar: {
 			Title: 'Širina',
 			Paragraph: 'Širina slike.'
@@ -358,6 +356,7 @@ const hr: Translation = {
 		TryAgainButton: 'Pokušaj ponovno',
 		RefreshButton: 'Refresh',
 		LoadMoreButton: 'Load More',
+		BackToGalleryButton: 'Back to Gallery',
 		SearchingTitle: 'Searching',
 		NoResultsFoundTitle: 'No results found'
 	},
@@ -685,6 +684,7 @@ const hr: Translation = {
 		SearchInput: {
 			Title: 'Pretraži'
 		},
+		BackToGalleryButton: 'Back to Gallery',
 		SearchingTitle: 'Pretraživanje',
 		NoMatchingGenerationTitle: 'Nema tražene generacije'
 	},

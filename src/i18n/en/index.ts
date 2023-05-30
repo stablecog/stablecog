@@ -26,9 +26,7 @@ const en: BaseTranslation = {
 	},
 	Home: {
 		GenerateButton: 'Generate',
-		PromptInput: {
-			Placeholder: 'Portrait of a cat by Van Gogh'
-		},
+		PromptInput: { Title: 'Prompt', Placeholder: 'Portrait of a cat by Van Gogh' },
 		WidthTabBar: {
 			Title: 'Width',
 			Paragraph: 'The width of the image.'
@@ -359,6 +357,7 @@ const en: BaseTranslation = {
 		TryAgainButton: 'Try Again',
 		RefreshButton: 'Refresh',
 		LoadMoreButton: 'Load More',
+		BackToGalleryButton: 'Back to Gallery',
 		SearchingTitle: 'Searching',
 		NoResultsFoundTitle: 'No results found'
 	},
@@ -688,6 +687,7 @@ const en: BaseTranslation = {
 		SearchInput: {
 			Title: 'Search'
 		},
+		BackToGalleryButton: 'Back to Gallery',
 		SearchingTitle: 'Searching',
 		NoMatchingGenerationTitle: 'No matching generation'
 	},

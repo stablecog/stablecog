@@ -28,9 +28,7 @@ const tr: Translation = {
 	},
 	Home: {
 		GenerateButton: 'Üret',
-		PromptInput: {
-			Placeholder: 'Kedi portesi, Van Gogh tarzında'
-		},
+		PromptInput: { Title: 'Prompt', Placeholder: 'Kedi portesi, Van Gogh tarzında' },
 		WidthTabBar: {
 			Title: 'Genişlik',
 			Paragraph: 'Fotoğrafın genişliği.'
@@ -366,6 +364,7 @@ const tr: Translation = {
 		TryAgainButton: 'Yeniden Dene',
 		RefreshButton: 'Yenile',
 		LoadMoreButton: 'Daha Fazla',
+		BackToGalleryButton: 'Back to Gallery',
 		SearchingTitle: 'Aranıyor',
 		NoResultsFoundTitle: 'Sonuç bulunamadı'
 	},
@@ -700,6 +699,7 @@ const tr: Translation = {
 		SearchInput: {
 			Title: 'Ara'
 		},
+		BackToGalleryButton: 'Back to Gallery',
 		SearchingTitle: 'Arıyor',
 		NoMatchingGenerationTitle: 'Benzer bir üretim bulunamadı'
 	},
