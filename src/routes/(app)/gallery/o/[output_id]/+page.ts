@@ -7,7 +7,7 @@ import type { TGenerationFullOutput, TGenerationOutput } from '$ts/stores/user/g
 import { error } from '@sveltejs/kit';
 import type { PageLoad } from './$types';
 
-export const load: PageLoad = async ({ params }) => {
+export const load: PageLoad = async ({ url, params }) => {
 	const outputId = params.output_id;
 	let generationFullOutput: TGenerationFullOutput | undefined = undefined;
 	const res = await fetch(`${apiUrl.origin}/v1/gallery?output_id=${outputId}`);

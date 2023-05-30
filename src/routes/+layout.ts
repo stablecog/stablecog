@@ -31,7 +31,9 @@ export const load: LayoutLoad = async (event) => {
 	} = await supabase.auth.getSession();
 
 	let userSummary: TUserSummary | undefined = undefined;
-	if (session?.access_token) {
+	if (event.data.userSummary) {
+		userSummary = event.data.userSummary;
+	} else if (session?.access_token) {
 		try {
 			const userRes = await fetch(`${apiUrl.origin}/v1/user`, {
 				headers: {

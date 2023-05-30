@@ -22,6 +22,11 @@ interface TParent {
 }
 
 export const load: PageLoad = async ({ url, parent }) => {
+	const outputId = url.searchParams.get('output');
+	if (outputId) throw redirect(302, `/gallery/o/${outputId}`);
+	const outputIdShort = url.searchParams.get('o');
+	if (outputIdShort) throw redirect(302, `/gallery/o/${outputIdShort}`);
+
 	const { queryClient, globalSeed } = (await parent()) as TParent;
 	const hasInitialData = queryClient.getQueryData(getGalleryInfiniteQueryKey({})) !== undefined;
 	if (!hasInitialData) {
@@ -37,10 +42,7 @@ export const load: PageLoad = async ({ url, parent }) => {
 	const filteredModelIds = modelIds.filter((modelId) =>
 		availableGenerationModelIds.includes(modelId as TAvailableGenerationModelId)
 	);
-	const outputId = url.searchParams.get('output');
-	if (outputId) {
-		throw redirect(302, `/gallery/o/${outputId}`);
-	}
+
 	return {
 		searchQuery,
 		modelIds: filteredModelIds

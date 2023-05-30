@@ -142,7 +142,7 @@
 		linkUrl = `${$page.url.origin}/gallery/o/${generation.id}`;
 		if (browser && window && !initialGenerationChange) {
 			const searchParams = new URLSearchParams(window.location.search);
-			searchParams.set('output', generation.selected_output.id);
+			searchParams.set('o', generation.selected_output.id);
 			const params = searchParams.toString();
 			window.history.replaceState({}, '', `${window.location.pathname}?${params}`);
 		}
@@ -251,7 +251,7 @@
 
 	const onPopState: svelte.JSX.EventHandler<PopStateEvent, Window> | null | undefined = (e) => {
 		const searchParams = new URLSearchParams(e.currentTarget.location.search);
-		const hasOutputParam = searchParams.has('output');
+		const hasOutputParam = searchParams.has('o');
 		if (!hasOutputParam) {
 			activeGeneration.set(undefined);
 		}
@@ -264,8 +264,8 @@
 
 	onDestroy(() => {
 		const searchParams = new URLSearchParams(window.location.search);
-		if (searchParams.has('output')) {
-			searchParams.delete('output');
+		if (searchParams.has('o')) {
+			searchParams.delete('o');
 			const newSearch = searchParams.toString();
 			window.history.pushState({}, '', `${$page.url.pathname}${newSearch ? `?${newSearch}` : ''}`);
 		}

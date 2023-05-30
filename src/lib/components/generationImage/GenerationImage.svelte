@@ -105,10 +105,10 @@
 		let params: string;
 		if (browser && window && window.location.search !== $page.url.search) {
 			const searchParams = new URLSearchParams(window.location.search);
-			searchParams.set('output', generation.selected_output.id);
+			searchParams.set('o', generation.selected_output.id);
 			params = searchParams.toString();
 		} else {
-			params = `output=${generation.selected_output.id}`;
+			params = `o=${generation.selected_output.id}`;
 		}
 		imageClickHref = `${$page.url.pathname}?${params}`;
 	}
@@ -220,7 +220,7 @@
 				});
 			}
 			const searchParams = new URLSearchParams(window.location.search);
-			searchParams.set('output', generation.selected_output.id);
+			searchParams.set('o', generation.selected_output.id);
 			window.history.pushState({}, '', `${$page.url.pathname}?${searchParams.toString()}`);
 		}}
 		class="w-full h-full absolute left-0 top-0 flex flex-col justify-end items-start overflow-hidden gap-4"
