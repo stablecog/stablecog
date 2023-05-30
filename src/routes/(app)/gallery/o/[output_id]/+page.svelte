@@ -81,7 +81,7 @@
 	const src = getImgProxySrcDefault(currentImageUrl);
 	const sizes = '(min-width: 1024px) calc(100vw - 500px), 100vw';
 
-	const titleLength = 80;
+	const titleLength = 50;
 	const shortPromptTitle = capitalize(
 		output.generation.prompt.text.slice(0, titleLength) +
 			(output.generation.prompt.text.length > titleLength ? '...' : '')
