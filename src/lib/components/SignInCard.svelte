@@ -7,16 +7,13 @@
 	import IconBack from '$components/icons/IconBack.svelte';
 	import IconEmail from '$components/icons/IconEmail.svelte';
 	import Input from '$components/Input.svelte';
-	import LL, { locale } from '$i18n/i18n-svelte';
+	import LL from '$i18n/i18n-svelte';
 	import { expandCollapse } from '$ts/animation/transitions';
 	import type { Provider } from '@supabase/supabase-js';
 	import { quadOut } from 'svelte/easing';
 	import IconPassword from '$components/icons/IconPassword.svelte';
 	import { wantsEmail } from '$ts/stores/user/wantsEmail';
 	import { onMount } from 'svelte';
-	import { userSummary } from '$ts/stores/user/summary';
-	import { appVersion } from '$ts/stores/appVersion';
-	import { logWantsEmail } from '$ts/helpers/loggers';
 	import WantsEmailCard from '$components/WantsEmailCard.svelte';
 
 	export let redirectTo: string | null = null;
@@ -33,15 +30,6 @@
 	let wantsEmailChecked = false;
 	let wantsEmailOnMount = false;
 
-	$: logProps = {
-		'SC - Locale': $locale,
-		'SC - User Id': $page.data.session?.user.id,
-		'SC - Stripe Product Id': $userSummary?.product_id,
-		'SC - Page': `${$page.url.pathname}${$page.url.search}`,
-		'SC - Email': $page.data.session?.user.email,
-		'SC - App Version': $appVersion
-	};
-
 	async function signIn() {
 		if (!$page.data.supabase) return;
 		if (!email.includes('@')) {
@@ -50,7 +38,6 @@
 		}
 		if (wantsEmailChecked) {
 			wantsEmail.set(true);
-			logWantsEmail({ ...logProps, wantsEmail: true });
 		}
 		signInStatus = 'loading';
 		provider = 'email';
@@ -98,7 +85,6 @@
 		if (!$page.data.supabase) return;
 		if (wantsEmailChecked) {
 			wantsEmail.set(true);
-			logWantsEmail({ ...logProps, wantsEmail: true });
 		}
 		signInStatus = 'loading';
 		provider = prov;
