@@ -43,6 +43,7 @@
 	} from '$ts/stores/user/keys';
 	import { appVersion } from '$ts/stores/appVersion';
 	import { replaceOutputInUserQueryData } from '$ts/helpers/replaceOutputInUserQueryData';
+	import { getPreviewImageUrlFromOutputId } from '$ts/helpers/getPreviewImageUrl';
 
 	export let generation: TGenerationWithSelectedOutput;
 	export let generateSimilarUrl: string;
@@ -250,7 +251,10 @@
 	{#if modalType === 'gallery'}
 		<div
 			use:copy={linkUrl}
-			on:svelte-copy={() => setButtonObjectWithState('link', 'success')}
+			on:svelte-copy={() => {
+				setButtonObjectWithState('link', 'success');
+				fetch(getPreviewImageUrlFromOutputId(generation.selected_output.id));
+			}}
 			on:svelte-copy:error={(e) => console.log(e)}
 		>
 			<SubtleButton state={buttonObjectsWithState.link.state === 'success' ? 'success' : 'idle'}>
