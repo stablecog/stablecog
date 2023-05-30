@@ -28,6 +28,7 @@
 		xxlBreakpoint
 	} from '$components/generationFullScreen/constants';
 	import { getGalleryInfiniteQueryProps } from '$routes/(app)/gallery/constants';
+	import { previewImageVersion } from '$ts/constants/previewImageVersion.js';
 
 	export let data;
 	const { searchQuery: searchQueryParam } = data;
@@ -69,7 +70,7 @@
 <MetaTag
 	title="Gallery | Stablecog"
 	description="A gallery full of images created with Stable Diffusion and Kandinsky. Check out the images and their metadata including their prompt, negative prompt, inference steps, guidance scale and seed. Generate similar images directly from the gallery or submit your own."
-	image_url="{canonicalUrl}/previews{$page.url.pathname}.png"
+	image_url="{canonicalUrl}/previews{$page.url.pathname}-{previewImageVersion}.png"
 	canonical="{canonicalUrl}{$page.url.pathname}"
 />
 
