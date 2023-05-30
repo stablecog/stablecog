@@ -1,13 +1,14 @@
 <script lang="ts">
 	import { browser } from '$app/environment';
 	import { page } from '$app/stores';
+	import { getUserSummaryQueryKey } from '$components/userSummary/helpers';
 	import { getUserSummary } from '$ts/helpers/user/user';
 	import { userSummary } from '$ts/stores/user/summary';
 	import { createQuery } from '@tanstack/svelte-query';
 
 	$: userSummaryQuery =
 		browser && $page.data.session?.user.id
-			? createQuery(['user_summary', $page.data.session.user.id], {
+			? createQuery(getUserSummaryQueryKey($page.data.session?.user.id), {
 					queryFn: () => getUserSummary($page.data.session?.access_token)
 			  })
 			: undefined;

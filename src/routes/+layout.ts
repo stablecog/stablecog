@@ -2,11 +2,11 @@ import type { LayoutLoad } from './$types';
 import { loadLocaleAsync } from '$i18n/i18n-util.async';
 import { writable } from 'svelte/store';
 import type { TAvailableThemes } from '$ts/stores/theme';
-import { apiUrl } from '$ts/constants/main';
 import type { TUserSummary } from '$ts/stores/user/summary';
 import { createSupabaseLoadClient } from '@supabase/auth-helpers-sveltekit';
 import { env as envPublic } from '$env/dynamic/public';
 import type { SupabaseClient } from '@supabase/supabase-js';
+import { getUserSummary } from '$ts/helpers/user/user';
 
 export const load: LayoutLoad = async (event) => {
 	event.depends('supabase:auth');
@@ -35,18 +35,12 @@ export const load: LayoutLoad = async (event) => {
 		userSummary = event.data.userSummary;
 	} else if (session?.access_token) {
 		try {
-			const userRes = await fetch(`${apiUrl.origin}/v1/user`, {
-				headers: {
-					'Content-Type': 'application/json',
-					Authorization: `Bearer ${session?.access_token}`
-				}
-			});
-			if (userRes.ok) {
-				const userResJson: TUserSummary = await userRes.json();
-				userSummary = userResJson;
+			const summary = await getUserSummary(session.access_token);
+			if (summary) {
+				userSummary = summary;
 			}
 		} catch (error) {
-			console.log(error);
+			console.log('/v1/user error', error);
 		}
 	}
 	const locale = event.data.locale;

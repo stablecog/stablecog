@@ -4,7 +4,7 @@
 	import LayoutWrapper from '$components/LayoutWrapper.svelte';
 	import UnderDevelopment from '$components/UnderDevelopment.svelte';
 	import UpdateAvailableCard from '$components/UpdateAvailableCard.svelte';
-	import UserSummaryProvider from '$components/UserSummaryProvider.svelte';
+	import UserSummaryProvider from '$components/userSummary/UserSummaryProvider.svelte';
 	import Drawer from '$components/navigation/Drawer.svelte';
 	import Footer from '$components/navigation/Footer.svelte';
 	import Navbar from '$components/navigation/Navbar.svelte';
