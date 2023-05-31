@@ -71,7 +71,7 @@
 				datetime={data.metadata.date}
 				class="w-full max-w-2.5xl px-3 md:px-5 mt-3 text-c-on-bg/40 font-medium text-center leading-relaxed"
 			>
-				{formattedDate} • {data.metadata.reading_time} min read
+				{formattedDate}<span class="mx-2">•</span>{data.metadata.reading_time} min read
 			</time>
 			{#if data.metadata.author}
 				<p

@@ -190,7 +190,10 @@ module.exports = {
 				200: '2'
 			},
 			boxShadow: {
-				navbar: '0 0 1.5rem 0',
+				navbar:
+					'0px 2px 0px 0px rgb(var(--c-bg-secondary)), 0rem 1.5rem 1.5rem -1.5rem rgba(var(--c-shadow)/var(--o-shadow-strongest))',
+				'navbar-0':
+					'0px 0px 0px 0px rgb(var(--c-bg-secondary)), 0rem 0rem 0rem 0rem rgba(var(--c-shadow)/var(--o-shadow-strongest))',
 				drawer: '0 0 2rem 0',
 				'settings-page': '0 0 1rem 0',
 				'generation-sidebar': '0 0 1rem 0',

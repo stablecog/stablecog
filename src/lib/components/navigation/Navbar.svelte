@@ -52,22 +52,17 @@
 		bind:this={navbarElement}
 		bind:clientHeight={$navbarHeight}
 		style={$navbarStickyType === 'not-sticky' ? '' : 'position: fixed; top: 0; left: 0;'}
-		class="w-full flex flex-col z-60 transform transition duration-200 {notAtTheVeryTop &&
+		class="w-full flex flex-col z-60 transform transition duration-200 rounded-b-xl {notAtTheVeryTop &&
 		$navbarStickyType === 'auto' &&
 		scrollDirection === 'down'
 			? '-translate-y-[calc(100%+2px)]'
-			: ''}"
+			: ''} {$navbarStickyType === 'not-sticky' || !notAtTheVeryTop
+			? 'bg-c-bg/0 shadow-navbar-0'
+			: 'bg-c-bg shadow-navbar'}"
 	>
 		<!-- <BannerWrapper /> -->
 		<div class="w-full flex flex-row items-center justify-between relative z-0">
 			<PageLoadProgressBar />
-			<div
-				class="pointer-events-none w-full h-full rounded-b-xl absolute left-0 top-0 transform transition duration-200 bg-c-bg
-			shadow-navbar shadow-c-shadow/[var(--o-shadow-stronger)] ring-2 ring-c-bg-secondary {$navbarStickyType ===
-					'not-sticky' || !notAtTheVeryTop
-					? '-translate-y-full opacity-0'
-					: ''}"
-			/>
 			<div class="flex xl:flex-1 self-stretch">
 				<button
 					aria-label="Toggle Drawer"

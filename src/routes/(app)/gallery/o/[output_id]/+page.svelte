@@ -118,20 +118,20 @@
 		class="w-full flex flex-col lg:flex-row
     justify-center items-center lg:items-start gap-4 relative"
 	>
-		<div
-			style="top: {$navbarHeight ? $navbarHeight + 24 : 96}px"
-			class="flex-shrink min-w-0 flex justify-start items-start px-2 lg:sticky"
-		>
+		{#key output.id}
 			<div
-				class="flex rounded-lg ring-2 ring-c-bg-secondary md:rounded-xl shadow-2xl
-				shadow-c-shadow/[var(--o-shadow-strong)] relative overflow-hidden bg-c-bg-secondary"
+				style="top: {$navbarHeight ? $navbarHeight + 24 : 96}px"
+				class="flex-shrink min-w-0 flex justify-start items-start px-2 lg:sticky"
 			>
-				<ImagePlaceholder
-					width={currentImageWidth}
-					height={currentImageHeight}
-					class="max-h-[calc(100vh-110px)] md:max-h-[calc(100vh-150px)] max-w-full w-auto h-auto"
-				/>
-				{#key output.id}
+				<div
+					class="flex rounded-lg ring-2 ring-c-bg-secondary md:rounded-xl shadow-2xl
+				shadow-c-shadow/[var(--o-shadow-strong)] relative overflow-hidden bg-c-bg-secondary"
+				>
+					<ImagePlaceholder
+						width={currentImageWidth}
+						height={currentImageHeight}
+						class="max-h-[calc(100vh-110px)] md:max-h-[calc(100vh-150px)] max-w-full w-auto h-auto"
+					/>
 					<img
 						class="absolute left-0 top-0 w-full h-full"
 						{sizes}
@@ -141,9 +141,9 @@
 						height={currentImageHeight}
 						alt={output.generation.prompt.text}
 					/>
-				{/key}
+				</div>
 			</div>
-		</div>
+		{/key}
 		<div class="w-full flex flex-shrink-0 flex-col gap-4 max-w-xl lg:max-w-md items-start px-5">
 			<div class="w-full flex justify-center lg:justify-start lg:-ml-6 lg:-mt-2">
 				<NoBgButton href="/gallery" prefetch={true} hoverFrom="right">

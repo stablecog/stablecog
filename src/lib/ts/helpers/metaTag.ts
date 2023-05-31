@@ -1,5 +1,5 @@
 export const getGalleryMetaTagDescriptionFromPromptText = (promptText: string) => {
-	return `Check out this generation on the gallery: "${capitalize(promptText.slice(0, 200))}${
+	return `Check out this generation on our gallery: "${capitalize(promptText.slice(0, 200))}${
 		promptText.length > 200 ? '...' : ''
 	}".`;
 };
