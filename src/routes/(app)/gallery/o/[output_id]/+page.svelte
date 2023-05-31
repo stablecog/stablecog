@@ -39,7 +39,7 @@
 		selected_output: output
 	};
 	$: generateSimilarUrl = getGenerationUrlFromParams({ ...output.generation });
-	$: exploreStyleUrl = `/gallery?q=${generation.selected_output.id}`;
+	$: exploreSimilarUrl = `/gallery?q=${generation.selected_output.id}`;
 	$: linkUrl = `${$page.url.origin}/gallery/o/${output.generation.id}`;
 	$: currentImageUrl = output.upscaled_image_url ?? output.image_url;
 	$: currentImageWidth = output.generation.width * (output.upscaled_image_url ? 4 : 1);
@@ -178,7 +178,7 @@
 				class="mt-1"
 				{generation}
 				{generateSimilarUrl}
-				{exploreStyleUrl}
+				{exploreSimilarUrl}
 				{linkUrl}
 				{currentImageUrl}
 				{modalType}

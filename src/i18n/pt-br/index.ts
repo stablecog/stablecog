@@ -182,6 +182,7 @@ const ptBr: Translation = {
 		CopyNegativePromptButton: 'Copiar Prompt Negativo',
 		CopiedButtonState: 'Copiado!',
 		GenerateSimilarButton: 'Generate Similar',
+		ExploreSimilarButton: 'Explore Similar',
 		ExploreStyleButton: 'Explore Style',
 		RerollButton: 'Rolar de novo',
 		RegenerateButton: 'Regenerar',

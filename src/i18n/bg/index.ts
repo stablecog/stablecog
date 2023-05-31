@@ -185,6 +185,7 @@ const bg: Translation = {
 		CopyNegativePromptButton: 'Копирай отрицателното задание',
 		CopiedButtonState: 'Копирано!',
 		GenerateSimilarButton: 'Създай подобни',
+		ExploreSimilarButton: 'Explore Similar',
 		ExploreStyleButton: 'Explore Style',
 		RerollButton: 'Превърти',
 		RegenerateButton: 'Пресъздай',

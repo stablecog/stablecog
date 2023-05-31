@@ -110,7 +110,7 @@
 	let generateSimilarUrl: string;
 	let linkUrl: string;
 
-	$: exploreStyleUrl = `/gallery?q=${generation.selected_output.id}`;
+	$: exploreSimilarUrl = `/gallery?q=${generation.selected_output.id}`;
 
 	let upscaledTabValue: TUpscaleTabValue = 'upscaled';
 	type TUpscaleTabValue = 'original' | 'upscaled';
@@ -475,7 +475,7 @@
 							<ButtonsSection
 								{generation}
 								{generateSimilarUrl}
-								{exploreStyleUrl}
+								{exploreSimilarUrl}
 								{linkUrl}
 								{currentImageUrl}
 								{setSearchQuery}

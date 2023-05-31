@@ -190,6 +190,7 @@ const ja: Translation = {
 		CopyNegativePromptButton: '負のプロンプトをコピー',
 		CopiedButtonState: 'コピー済',
 		GenerateSimilarButton: '類似画像を生成',
+		ExploreSimilarButton: 'Explore Similar',
 		ExploreStyleButton: 'Explore Style',
 		RerollButton: 'リロール',
 		RegenerateButton: '再生成',

@@ -552,6 +552,10 @@ type RootTranslation = {
 		 */
 		GenerateSimilarButton: string
 		/**
+		 * E​x​p​l​o​r​e​ ​S​i​m​i​l​a​r
+		 */
+		ExploreSimilarButton: string
+		/**
 		 * E​x​p​l​o​r​e​ ​S​t​y​l​e
 		 */
 		ExploreStyleButton: string
@@ -3001,6 +3005,10 @@ export type TranslationFunctions = {
 		 * Generate Similar
 		 */
 		GenerateSimilarButton: () => LocalizedString
+		/**
+		 * Explore Similar
+		 */
+		ExploreSimilarButton: () => LocalizedString
 		/**
 		 * Explore Style
 		 */

@@ -183,6 +183,7 @@ const en: BaseTranslation = {
 		CopyNegativePromptButton: 'Copy Negative Prompt',
 		CopiedButtonState: 'Copied!',
 		GenerateSimilarButton: 'Generate Similar',
+		ExploreSimilarButton: 'Explore Similar',
 		ExploreStyleButton: 'Explore Style',
 		RerollButton: 'Reroll',
 		RegenerateButton: 'Regenerate',

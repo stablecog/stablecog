@@ -28,7 +28,7 @@
 	import { useQueryClient } from '@tanstack/svelte-query';
 	import type { TUserGenerationFullOutputsPage } from '$ts/queries/userGenerations';
 	import {
-		logGalleryExploreStyleClicked,
+		logGalleryExploreSimilarClicked,
 		logGalleryGenerateSimilarClicked,
 		logGenerationOutputDeleted,
 		logGenerationOutputSubmittedToGallery
@@ -45,12 +45,11 @@
 	import { appVersion } from '$ts/stores/appVersion';
 	import { replaceOutputInUserQueryData } from '$ts/helpers/replaceOutputInUserQueryData';
 	import { getPreviewImageUrlFromOutputId } from '$ts/helpers/getPreviewImageUrl';
-	import IconSearch from '$components/icons/IconSearch.svelte';
 	import IconImageSearch from '$components/icons/IconImageSearch.svelte';
 
 	export let generation: TGenerationWithSelectedOutput;
 	export let generateSimilarUrl: string;
-	export let exploreStyleUrl: string;
+	export let exploreSimilarUrl: string;
 	export let linkUrl: string;
 	export let setButtonObjectWithState: TSetButtonObjectWithState;
 	export let buttonObjectsWithState: TButtonObjectsWithState;
@@ -210,13 +209,13 @@
 	{#if modalType === 'gallery'}
 		<SubtleButton
 			prefetch={true}
-			href={exploreStyleUrl}
+			href={exploreSimilarUrl}
 			onClick={() => {
 				if (modalType === 'gallery') {
 					if (setSearchQuery) {
 						setSearchQuery(generation.selected_output.id);
 					}
-					logGalleryExploreStyleClicked({
+					logGalleryExploreSimilarClicked({
 						'SC - Output Id': generation.selected_output.id,
 						'SC - User Id': $page.data.session?.user.id,
 						'SC - Stripe Product Id': $userSummary?.product_id,
@@ -230,7 +229,7 @@
 		>
 			<div class="flex items-center justify-center gap-1.5">
 				<IconImageSearch class="w-5 h-5 -ml-0.5" />
-				<p>{$LL.GenerationFullscreen.ExploreStyleButton()}</p>
+				<p>{$LL.GenerationFullscreen.ExploreSimilarButton()}</p>
 			</div>
 		</SubtleButton>
 	{/if}

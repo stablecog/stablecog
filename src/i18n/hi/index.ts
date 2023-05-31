@@ -182,6 +182,7 @@ const hi: Translation = {
 		CopyNegativePromptButton: 'नकारात्मक संकेत कॉपी करें',
 		CopiedButtonState: 'कॉपी हो गया!',
 		GenerateSimilarButton: 'Generate Similar',
+		ExploreSimilarButton: 'Explore Similar',
 		ExploreStyleButton: 'Explore Style',
 		RerollButton: 'नया बनाए',
 		RegenerateButton: 'दोबारा बनाए',

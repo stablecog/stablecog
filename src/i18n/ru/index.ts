@@ -183,6 +183,7 @@ const ru: Translation = {
 		CopyNegativePromptButton: 'Скопировать исключения',
 		CopiedButtonState: 'Скопировано!',
 		GenerateSimilarButton: 'Generate Similar',
+		ExploreSimilarButton: 'Explore Similar',
 		ExploreStyleButton: 'Explore Style',
 		RerollButton: 'Пересоздать',
 		RegenerateButton: 'Улучшить',

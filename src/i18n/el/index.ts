@@ -186,6 +186,7 @@ const es: Translation = {
 		CopyNegativePromptButton: 'Αντιγραφή Αρνητικής Περιγραφής',
 		CopiedButtonState: 'Αντιγράφηκε!',
 		GenerateSimilarButton: 'Δημιουργία Παρόμοιου',
+		ExploreSimilarButton: 'Explore Similar',
 		ExploreStyleButton: 'Explore Style',
 		RerollButton: 'Αναδημιουργία',
 		RegenerateButton: 'Αναπαραγωγή',

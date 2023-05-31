@@ -186,6 +186,7 @@ const nl: Translation = {
 		CopyNegativePromptButton: 'Negatieve prompt kopiëren',
 		CopiedButtonState: 'Gekopieerd!',
 		GenerateSimilarButton: 'Vergelijkbaar genereren',
+		ExploreSimilarButton: 'Explore Similar',
 		ExploreStyleButton: 'Explore Style',
 		RerollButton: 'Nieuwe seed',
 		RegenerateButton: 'Opnieuw genereren',

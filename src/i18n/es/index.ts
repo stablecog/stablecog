@@ -183,6 +183,7 @@ const es: Translation = {
 		CopyNegativePromptButton: 'Copiar Indicación Negativa',
 		CopiedButtonState: '¡Copiado!',
 		GenerateSimilarButton: 'Generate Similar',
+		ExploreSimilarButton: 'Explore Similar',
 		ExploreStyleButton: 'Explore Style',
 		RerollButton: 'Generar Aleatorio',
 		RegenerateButton: 'Regenerar',
