@@ -76,6 +76,10 @@
 
 	function resetSearchString() {
 		searchString = '';
+		removeSearchParam();
+	}
+
+	function removeSearchParam() {
 		const params = $page.url.searchParams;
 		params.delete('q');
 		const paramsString = params.toString();
@@ -171,7 +175,10 @@
 					icon={IconImageSearch}
 					hasMaxWidth={false}
 					hasCancelIcon={true}
-					onClick={() => (searchString = '')}
+					onClick={() => {
+						searchString = '';
+						removeSearchParam();
+					}}
 					text={$LL.Shared.SimilarToTitle({ item: searchString.slice(0, 6) })}
 					color="primary"
 				/>
