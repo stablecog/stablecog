@@ -120,19 +120,19 @@
 .blog p a:focus-visible {
 	color: rgba(var(--c-on-primary));
 	border-radius: 4px;
-	box-shadow: 0 -1.3rem 0 0 rgba(var(--c-primary)) inset;
+	box-shadow: 0 -1.5rem 0 0 rgba(var(--c-primary)) inset;
 }
 .blog h2 a:hover,
 .blog h2 a:focus-visible {
 	color: rgba(var(--c-on-primary));
 	border-radius: 5px;
-	box-shadow: 0 -1.7rem 0 0 rgba(var(--c-primary)) inset;
+	box-shadow: 0 -1.9rem 0 0 rgba(var(--c-primary)) inset;
 }
 .blog h3 a:hover,
 .blog h3 a:focus-visible {
 	color: rgba(var(--c-on-primary));
 	border-radius: 5px;
-	box-shadow: 0 -1.4rem 0 0 rgba(var(--c-primary)) inset;
+	box-shadow: 0 -1.6rem 0 0 rgba(var(--c-primary)) inset;
 }
 
 .blog .inline {
@@ -201,7 +201,7 @@
 .blog-link:focus-visible {
 	color: rgba(var(--c-on-primary));
 	border-radius: 4px;
-	box-shadow: 0 -1.3rem 0 0 rgba(var(--c-primary)) inset;
+	box-shadow: 0 -1.5rem 0 0 rgba(var(--c-primary)) inset;
 }
 
 
