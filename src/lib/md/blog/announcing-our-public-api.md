@@ -29,7 +29,7 @@ The first step is to create an API token (you may create up to 10), this can eas
 
 <DocImage src="https://ba.stablecog.com/blog/account-api-keys.png" href="https://stablecog.com/account/api-keys" width="2880" height="1600" alt="Stablecog API Keys" />
 
-[We have extensive documentation on how to use these APIs](https://link), as well as an [OpenAPI specification](https://github.com/stablecog/sc-go/blob/master/server/openapi_token.yaml) that allows developers to generate clients in their programming language of choice - or import the collection to a tool like [Postman](https://www.postman.com/) to experiment with the APIs.
+[We have extensive documentation on how to use these APIs](https://stablecog.com/docs), as well as an [OpenAPI specification](https://github.com/stablecog/sc-go/blob/master/server/openapi_token.yaml) that allows developers to generate clients in their programming language of choice - or import the collection to a tool like [Postman](https://www.postman.com/) to experiment with the APIs.
 
 ## Pricing
 
