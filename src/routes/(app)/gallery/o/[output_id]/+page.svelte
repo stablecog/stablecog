@@ -25,7 +25,6 @@
 	import { canonicalUrl } from '$ts/constants/main.js';
 	import NoBgButton from '$components/buttons/NoBgButton.svelte';
 	import IconBack from '$components/icons/IconBack.svelte';
-	import { similarCount } from '$routes/(app)/gallery/o/[output_id]/constants.js';
 	import { navbarHeight } from '$ts/stores/navbarHeight.js';
 	import { onMount } from 'svelte';
 	import SimpleGrid from '$components/grids/SimpleGrid.svelte';
@@ -200,11 +199,7 @@
 					{$LL.GenerationFullscreen.SimilarTitle()}
 				</h3>
 				<div class="w-[calc(100%+6px)] flex flex-row justify-start items-start -mx-3px mt-3">
-					<SimpleGrid
-						cols={simpleGridCols}
-						items={similarOutputs.slice(0, similarCount)}
-						let:item={output}
-					>
+					<SimpleGrid cols={simpleGridCols} items={similarOutputs} let:item={output}>
 						<a
 							href="/gallery/o/{output.id}"
 							data-sveltekit-preload-data="hover"
