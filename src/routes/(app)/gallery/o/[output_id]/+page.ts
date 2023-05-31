@@ -19,7 +19,7 @@ export const load: PageLoad = async ({ params }) => {
 		fetch(`${apiUrl.origin}/v1/gallery?output_id=${outputId}`),
 		getGalleryGenerationFullOutputs({
 			search: outputId,
-			per_page: 8
+			per_page: similarCount + 1
 		})
 	]);
 	if (!generationFullOutputRes.ok) {
