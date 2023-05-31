@@ -124,8 +124,8 @@
 				class="flex-shrink min-w-0 flex justify-start items-start px-2 lg:sticky"
 			>
 				<div
-					class="flex rounded-lg ring-2 ring-c-bg-secondary md:rounded-xl shadow-2xl
-				shadow-c-shadow/[var(--o-shadow-strong)] relative overflow-hidden bg-c-bg-secondary"
+					class="flex ring-2 ring-c-bg-secondary rounded-2xl shadow-xl
+					shadow-c-shadow/[var(--o-shadow-stronger)] relative overflow-hidden bg-c-bg-secondary"
 				>
 					<ImagePlaceholder
 						width={currentImageWidth}
@@ -194,22 +194,22 @@
 				bind:buttonObjectsWithState
 				{modalType}
 			/>
-			<div class="w-full flex flex-col mt-4">
+			<div class="w-full flex flex-col mt-5">
 				<h3 class="max-w-full font-semibold text-3xl">
 					{$LL.GenerationFullscreen.SimilarTitle()}
 				</h3>
-				<div class="w-[calc(100%+6px)] flex flex-row justify-start items-start -mx-3px mt-3">
+				<div class="w-[calc(100%+6px)] flex flex-row justify-start items-start -m-3px mt-3.5">
 					<SimpleGrid cols={simpleGridCols} items={similarOutputs} let:item={output}>
 						<a
 							href="/gallery/o/{output.id}"
 							data-sveltekit-preload-data="hover"
 							class="w-full group"
 						>
-							<div class="w-full p-2px">
+							<div class="w-full p-px">
 								{#key output.id}
 									<img
-										class="w-full h-auto rounded-lg overflow-hidden border-2 border-c-bg-secondary
-										shadow-lg shadow-c-shadow/[var(--o-shadow-strong)] transition bg-c-bg-secondary not-touch:group-hover:border-c-primary"
+										class="w-full h-auto rounded-xl overflow-hidden border-2 border-c-bg-secondary
+										shadow-lg shadow-c-shadow/[var(--o-shadow-stronger)] transition bg-c-bg-secondary not-touch:group-hover:border-c-primary"
 										sizes={`(min-width: 1024px) calc(28rem / ${simpleGridCols}), calc(min(36rem, 100vw) / ${simpleGridCols})`}
 										src={getImgProxySrc({
 											src: output.upscaled_image_url ?? output.image_url,
