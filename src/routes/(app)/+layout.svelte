@@ -18,7 +18,7 @@
 	} from '$ts/constants/routes';
 	import { isSuperAdmin } from '$ts/helpers/admin/roles';
 	import { generateSSEId } from '$ts/helpers/generateSSEId';
-	import { logInitImageAdded, logWantsEmail } from '$ts/helpers/loggers';
+	import { logInitImageAdded } from '$ts/helpers/loggers';
 	import { advancedModeApp } from '$ts/stores/advancedMode';
 	import { appVersion, serverVersion } from '$ts/stores/appVersion';
 	import {

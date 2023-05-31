@@ -57,7 +57,7 @@
 				}
 		  )
 		: undefined;
-	$: [$userSummary, $wantsEmail], setWantsEmailIfNeeded();
+	$: [$userSummary, $wantsEmail, $page], setWantsEmailIfNeeded();
 
 	function setWantsEmailIfNeeded() {
 		if (!mounted) return;
@@ -65,6 +65,7 @@
 		if (!$wantsEmailMutation) return;
 		if ($wantsEmail === null) return;
 		if ($wantsEmail === $userSummary.wants_email) return;
+		if ($page.url.pathname.startsWith('/api')) return;
 		$wantsEmailMutation.mutate({ wantsEmail: $wantsEmail });
 		logWantsEmail({ ...logProps, wantsEmail: $wantsEmail });
 	}
