@@ -6,15 +6,18 @@ import type { FetchInfiniteQueryOptions } from '@tanstack/svelte-query';
 
 export const getGalleryInfiniteQueryKey = ({
 	searchString,
-	modelIdFilters
+	modelIdFilters,
+	seed
 }: {
-	searchString?: string;
-	modelIdFilters?: string[];
+	searchString?: string | null;
+	modelIdFilters?: string[] | null;
+	seed: number;
 }) => {
 	return [
 		'gallery_generation_full_outputs',
 		searchString ? searchString : '',
-		modelIdFilters ? modelIdFilters.join(',') : ''
+		modelIdFilters ? modelIdFilters.join(',') : '',
+		typeof seed === 'number' ? seed : ''
 	];
 };
 
@@ -23,7 +26,7 @@ export function getGalleryInfiniteQueryProps({
 	modelIdFilters,
 	seed
 }: {
-	searchString?: string;
+	searchString?: string | null;
 	modelIdFilters?: string[];
 	seed: number;
 }): FetchInfiniteQueryOptions<
@@ -33,7 +36,7 @@ export function getGalleryInfiniteQueryProps({
 	any
 > {
 	return {
-		queryKey: getGalleryInfiniteQueryKey({ searchString, modelIdFilters }),
+		queryKey: getGalleryInfiniteQueryKey({ searchString, modelIdFilters, seed }),
 		queryFn: async (lastPage) => {
 			return getGalleryGenerationFullOutputs({
 				cursor: lastPage?.pageParam,

@@ -28,20 +28,34 @@ export const load: PageLoad = async ({ url, parent }) => {
 	if (outputIdShort) throw redirect(302, `/gallery/o/${outputIdShort}`);
 
 	const { queryClient, globalSeed } = (await parent()) as TParent;
-	const hasInitialData = queryClient.getQueryData(getGalleryInfiniteQueryKey({})) !== undefined;
-	if (!hasInitialData) {
-		try {
-			await queryClient.prefetchInfiniteQuery(getGalleryInfiniteQueryProps({ seed: globalSeed }));
-		} catch (error) {
-			console.log(error);
-		}
-	}
 	const searchQuery = url.searchParams.get('q');
 	const modelIdQuery = url.searchParams.get('mi');
 	const modelIds = modelIdQuery ? modelIdQuery.split(',') : [];
 	const filteredModelIds = modelIds.filter((modelId) =>
 		availableGenerationModelIds.includes(modelId as TAvailableGenerationModelId)
 	);
+
+	const hasInitialData =
+		queryClient.getQueryData(
+			getGalleryInfiniteQueryKey({
+				searchString: searchQuery,
+				modelIdFilters: filteredModelIds,
+				seed: globalSeed
+			})
+		) !== undefined;
+	if (!hasInitialData) {
+		try {
+			await queryClient.prefetchInfiniteQuery(
+				getGalleryInfiniteQueryProps({
+					searchString: searchQuery,
+					modelIdFilters: filteredModelIds,
+					seed: globalSeed
+				})
+			);
+		} catch (error) {
+			console.log(error);
+		}
+	}
 
 	return {
 		searchQuery,

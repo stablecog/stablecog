@@ -14,7 +14,7 @@ export async function getGalleryGenerationFullOutputs({
 	custom_fetch
 }: {
 	cursor?: string;
-	search?: string;
+	search?: string | null;
 	seed: number;
 	model_ids?: TAvailableGenerationModelId[];
 	custom_fetch?: typeof fetch;
