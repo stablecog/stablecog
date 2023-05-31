@@ -183,6 +183,7 @@ const ko: Translation = {
 		CopyNegativePromptButton: '미포함 문구 복사하기',
 		CopiedButtonState: '복사 완료!',
 		GenerateSimilarButton: 'Generate Similar',
+		ExploreStyleButton: 'Explore Style',
 		RerollButton: '다시하기',
 		RegenerateButton: '다시 생성하기',
 		GenerateButton: '나도 생성해보기',
@@ -243,6 +244,7 @@ const ko: Translation = {
 		InsufficientCreditsTitle: 'Insufficient credits ({remainingCredits}/{neededCredits})',
 		AllTitle: 'All',
 		ConfirmButton: 'Confirm',
+		SimilarToTitle: 'Similar to: {item}',
 		ResourcesTitle: 'Resources',
 		ResourcesButton: 'Resources',
 		ConfirmQuestionMarkButton: 'Confirm?',
@@ -448,7 +450,7 @@ const ko: Translation = {
 		AlreadyHaveAnAccountTitle: '이미 계정이 있으신가요?',
 		LoginInsteadButton: '다음으로 로그인하기',
 		WantsEmailCheckbox: {
-			Paragraph: 'Let me know about product updates, deals or events.',
+			Paragraph: 'Get product updates, deals or news.',
 			NoSpamParagraph: 'No spam, we promise.'
 		},
 		SixDigitCodeInput: {

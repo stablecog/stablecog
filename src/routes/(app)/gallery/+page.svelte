@@ -6,14 +6,11 @@
 	import MetaTag from '$components/MetaTag.svelte';
 	import LL from '$i18n/i18n-svelte';
 	import { canonicalUrl } from '$ts/constants/main';
-	import { getGalleryMetaTagDescriptionFromPromptText } from '$ts/helpers/metaTag';
-	import { getPreviewImageUrlFromOutputId } from '$ts/helpers/getPreviewImageUrl';
 	import { globalSeed } from '$ts/stores/globalSeed';
 	import { activeGeneration } from '$ts/stores/user/generation';
 	import { createInfiniteQuery } from '@tanstack/svelte-query';
 	import { quadOut } from 'svelte/easing';
 	import { scale } from 'svelte/transition';
-	import { onMount } from 'svelte';
 	import IconAnimatedSpinner from '$components/icons/IconAnimatedSpinner.svelte';
 	import SearchAndFilterBar from '$components/SearchAndFilterBar.svelte';
 	import IconSadFace from '$components/icons/IconSadFace.svelte';
@@ -49,6 +46,10 @@
 		: -1;
 	$: leftIndex = outputIndex > 0 ? outputIndex - 1 : -1;
 	$: rightIndex = outputs && outputIndex < outputs?.length - 1 ? outputIndex + 1 : -1;
+
+	function setSearchQuery(query: string) {
+		searchString = query;
+	}
 
 	function onKeyDown({ key }: KeyboardEvent) {
 		if (!$activeGeneration) return;
@@ -151,6 +152,7 @@
 			? () => setActiveGenerationToOutputIndex(outputs, rightIndex)
 			: undefined}
 		generation={$activeGeneration}
+		{setSearchQuery}
 		modalType="gallery"
 	/>
 {/if}

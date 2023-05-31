@@ -182,6 +182,7 @@ const hr: Translation = {
 		CopyNegativePromptButton: 'Kopiraj negativni opis',
 		CopiedButtonState: 'Kopirano!',
 		GenerateSimilarButton: 'Generate Similar',
+		ExploreStyleButton: 'Explore Style',
 		RerollButton: 'Obnovi',
 		RegenerateButton: 'Regeneriraj',
 		GenerateButton: 'Generiraj',
@@ -242,6 +243,7 @@ const hr: Translation = {
 		InsufficientCreditsTitle: 'Insufficient credits ({remainingCredits}/{neededCredits})',
 		AllTitle: 'All',
 		ConfirmButton: 'Confirm',
+		SimilarToTitle: 'Similar to: {item}',
 		ResourcesTitle: 'Resources',
 		ResourcesButton: 'Resources',
 		ConfirmQuestionMarkButton: 'Confirm?',
@@ -446,7 +448,7 @@ const hr: Translation = {
 		AlreadyHaveAnAccountTitle: 'Već imaš račun?',
 		LoginInsteadButton: 'Ulogiraj se',
 		WantsEmailCheckbox: {
-			Paragraph: 'Let me know about product updates, deals or events.',
+			Paragraph: 'Get product updates, deals or news.',
 			NoSpamParagraph: 'No spam, we promise.'
 		},
 		SixDigitCodeInput: {

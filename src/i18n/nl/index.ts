@@ -186,6 +186,7 @@ const nl: Translation = {
 		CopyNegativePromptButton: 'Negatieve prompt kopiëren',
 		CopiedButtonState: 'Gekopieerd!',
 		GenerateSimilarButton: 'Vergelijkbaar genereren',
+		ExploreStyleButton: 'Explore Style',
 		RerollButton: 'Nieuwe seed',
 		RegenerateButton: 'Opnieuw genereren',
 		GenerateButton: 'Genereren',
@@ -246,6 +247,7 @@ const nl: Translation = {
 		InsufficientCreditsTitle: 'Onvoldoende credits ({remainingCredits}/{neededCredits})',
 		AllTitle: 'Alles',
 		ConfirmButton: 'Bevestigen',
+		SimilarToTitle: 'Similar to: {item}',
 		ResourcesTitle: 'Resources',
 		ResourcesButton: 'Resources',
 		ConfirmQuestionMarkButton: 'Bevestigen?',
@@ -454,7 +456,7 @@ const nl: Translation = {
 		AlreadyHaveAnAccountTitle: 'Heb je al een account?',
 		LoginInsteadButton: 'Log dan in',
 		WantsEmailCheckbox: {
-			Paragraph: 'Let me know about product updates, deals or events.',
+			Paragraph: 'Get product updates, deals or news.',
 			NoSpamParagraph: 'No spam, we promise.'
 		},
 		SixDigitCodeInput: {

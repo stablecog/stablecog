@@ -190,6 +190,7 @@ const ja: Translation = {
 		CopyNegativePromptButton: '負のプロンプトをコピー',
 		CopiedButtonState: 'コピー済',
 		GenerateSimilarButton: '類似画像を生成',
+		ExploreStyleButton: 'Explore Style',
 		RerollButton: 'リロール',
 		RegenerateButton: '再生成',
 		GenerateButton: '生成',
@@ -250,6 +251,7 @@ const ja: Translation = {
 		InsufficientCreditsTitle: 'クレジットが不足しています({remainingCredits}/{neededCredits})',
 		AllTitle: '全て',
 		ConfirmButton: '確定',
+		SimilarToTitle: 'Similar to: {item}',
 		ResourcesTitle: 'Resources',
 		ResourcesButton: 'Resources',
 		ConfirmQuestionMarkButton: '確定しますか？',
@@ -460,7 +462,7 @@ const ja: Translation = {
 		AlreadyHaveAnAccountTitle: '既にアカウントをお持ちですか？',
 		LoginInsteadButton: '代わりにログインする',
 		WantsEmailCheckbox: {
-			Paragraph: 'Let me know about product updates, deals or events.',
+			Paragraph: 'Get product updates, deals or news.',
 			NoSpamParagraph: 'No spam, we promise.'
 		},
 		SixDigitCodeInput: {

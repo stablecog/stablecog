@@ -190,6 +190,7 @@ const tr: Translation = {
 		CopyNegativePromptButton: 'Negatif Komutu Kopyala',
 		CopiedButtonState: 'Kopyalandı!',
 		GenerateSimilarButton: 'Benzerini Üret',
+		ExploreStyleButton: 'Explore Style',
 		RerollButton: 'Rastgele Üret',
 		RegenerateButton: 'Tekrar Üret',
 		GenerateButton: 'Üret',
@@ -250,6 +251,7 @@ const tr: Translation = {
 		InsufficientCreditsTitle: 'Yetersiz kredi ({remainingCredits}/{neededCredits})',
 		AllTitle: 'Hepsi',
 		ConfirmButton: 'Onayla',
+		SimilarToTitle: 'Similar to: {item}',
 		ResourcesTitle: 'Resources',
 		ResourcesButton: 'Resources',
 		ConfirmQuestionMarkButton: 'Onayla?',
@@ -456,7 +458,7 @@ const tr: Translation = {
 		AlreadyHaveAnAccountTitle: 'Zaten üye misin?',
 		LoginInsteadButton: 'Giriş yap',
 		WantsEmailCheckbox: {
-			Paragraph: 'Let me know about product updates, deals or events.',
+			Paragraph: 'Get product updates, deals or news.',
 			NoSpamParagraph: 'No spam, we promise.'
 		},
 		SixDigitCodeInput: {

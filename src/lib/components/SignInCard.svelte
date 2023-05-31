@@ -160,7 +160,7 @@
 				: $LL.SignIn.PageParagraphV2()}
 		</p>
 		{#if !wantsEmailOnMount && signInStatus !== 'sent-otp'}
-			<WantsEmailCard bind:checked={wantsEmailChecked} class="mb-3.5" />
+			<WantsEmailCard bind:checked={wantsEmailChecked} class="mb-3.5 max-w-[20.5rem]" />
 		{/if}
 		{#if signInStatus === 'sent-otp'}
 			<div

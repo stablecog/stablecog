@@ -183,6 +183,7 @@ const ru: Translation = {
 		CopyNegativePromptButton: 'Скопировать исключения',
 		CopiedButtonState: 'Скопировано!',
 		GenerateSimilarButton: 'Generate Similar',
+		ExploreStyleButton: 'Explore Style',
 		RerollButton: 'Пересоздать',
 		RegenerateButton: 'Улучшить',
 		GenerateButton: 'Сгенерировать',
@@ -243,6 +244,7 @@ const ru: Translation = {
 		InsufficientCreditsTitle: 'Insufficient credits ({remainingCredits}/{neededCredits})',
 		AllTitle: 'All',
 		ConfirmButton: 'Confirm',
+		SimilarToTitle: 'Similar to: {item}',
 		ResourcesTitle: 'Resources',
 		ResourcesButton: 'Resources',
 		ConfirmQuestionMarkButton: 'Confirm?',
@@ -449,7 +451,7 @@ const ru: Translation = {
 		AlreadyHaveAnAccountTitle: 'Already have an account?',
 		LoginInsteadButton: 'Login instead',
 		WantsEmailCheckbox: {
-			Paragraph: 'Let me know about product updates, deals or events.',
+			Paragraph: 'Get product updates, deals or news.',
 			NoSpamParagraph: 'No spam, we promise.'
 		},
 		SixDigitCodeInput: {

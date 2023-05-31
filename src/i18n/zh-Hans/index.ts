@@ -180,6 +180,7 @@ const zhHans: Translation = {
 		CopyNegativePromptButton: '复制否定提示',
 		CopiedButtonState: '已复制！',
 		GenerateSimilarButton: 'Generate Similar',
+		ExploreStyleButton: 'Explore Style',
 		RerollButton: '随机种子',
 		RegenerateButton: '再生成',
 		GenerateButton: '生成',
@@ -240,6 +241,7 @@ const zhHans: Translation = {
 		InsufficientCreditsTitle: 'Insufficient credits ({remainingCredits}/{neededCredits})',
 		AllTitle: 'All',
 		ConfirmButton: 'Confirm',
+		SimilarToTitle: 'Similar to: {item}',
 		ResourcesTitle: 'Resources',
 		ResourcesButton: 'Resources',
 		ConfirmQuestionMarkButton: 'Confirm?',
@@ -444,7 +446,7 @@ const zhHans: Translation = {
 		AlreadyHaveAnAccountTitle: 'Already have an account?',
 		LoginInsteadButton: 'Login instead',
 		WantsEmailCheckbox: {
-			Paragraph: 'Let me know about product updates, deals or events.',
+			Paragraph: 'Get product updates, deals or news.',
 			NoSpamParagraph: 'No spam, we promise.'
 		},
 		SixDigitCodeInput: {

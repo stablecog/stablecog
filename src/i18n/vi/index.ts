@@ -183,6 +183,7 @@ const vi: Translation = {
 		CopyNegativePromptButton: 'Sao chép mô tả nghịch đảo',
 		CopiedButtonState: 'Đã sao chép!',
 		GenerateSimilarButton: 'Generate Similar',
+		ExploreStyleButton: 'Explore Style',
 		RerollButton: 'Tái tạo ngẫu nhiên',
 		RegenerateButton: 'Tái tạo',
 		GenerateButton: 'Khởi tạo',
@@ -243,6 +244,7 @@ const vi: Translation = {
 		InsufficientCreditsTitle: 'Insufficient credits ({remainingCredits}/{neededCredits})',
 		AllTitle: 'All',
 		ConfirmButton: 'Confirm',
+		SimilarToTitle: 'Similar to: {item}',
 		ResourcesTitle: 'Resources',
 		ResourcesButton: 'Resources',
 		ConfirmQuestionMarkButton: 'Confirm?',
@@ -450,7 +452,7 @@ const vi: Translation = {
 		AlreadyHaveAnAccountTitle: 'Đã có một tài khoản?',
 		LoginInsteadButton: 'Đăng Nhập',
 		WantsEmailCheckbox: {
-			Paragraph: 'Let me know about product updates, deals or events.',
+			Paragraph: 'Get product updates, deals or news.',
 			NoSpamParagraph: 'No spam, we promise.'
 		},
 		SixDigitCodeInput: {

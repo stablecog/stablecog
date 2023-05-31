@@ -183,6 +183,7 @@ const fr: Translation = {
 		CopyNegativePromptButton: 'Copier la description négative',
 		CopiedButtonState: 'Copié !',
 		GenerateSimilarButton: 'Generate Similar',
+		ExploreStyleButton: 'Explore Style',
 		RerollButton: 'Relancer',
 		RegenerateButton: 'Regénérer',
 		GenerateButton: 'Générer',
@@ -243,6 +244,7 @@ const fr: Translation = {
 		InsufficientCreditsTitle: 'Insufficient credits ({remainingCredits}/{neededCredits})',
 		AllTitle: 'All',
 		ConfirmButton: 'Confirm',
+		SimilarToTitle: 'Similar to: {item}',
 		ResourcesTitle: 'Resources',
 		ResourcesButton: 'Resources',
 		ConfirmQuestionMarkButton: 'Confirm?',
@@ -450,7 +452,7 @@ const fr: Translation = {
 		AlreadyHaveAnAccountTitle: 'Vous avez déjà un compte ?',
 		LoginInsteadButton: 'Se connecter',
 		WantsEmailCheckbox: {
-			Paragraph: 'Let me know about product updates, deals or events.',
+			Paragraph: 'Get product updates, deals or news.',
 			NoSpamParagraph: 'No spam, we promise.'
 		},
 		SixDigitCodeInput: {

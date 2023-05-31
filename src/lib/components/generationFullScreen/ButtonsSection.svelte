@@ -28,6 +28,7 @@
 	import { useQueryClient } from '@tanstack/svelte-query';
 	import type { TUserGenerationFullOutputsPage } from '$ts/queries/userGenerations';
 	import {
+		logGalleryExploreStyleClicked,
 		logGalleryGenerateSimilarClicked,
 		logGenerationOutputDeleted,
 		logGenerationOutputSubmittedToGallery
@@ -44,14 +45,18 @@
 	import { appVersion } from '$ts/stores/appVersion';
 	import { replaceOutputInUserQueryData } from '$ts/helpers/replaceOutputInUserQueryData';
 	import { getPreviewImageUrlFromOutputId } from '$ts/helpers/getPreviewImageUrl';
+	import IconSearch from '$components/icons/IconSearch.svelte';
+	import IconImageSearch from '$components/icons/IconImageSearch.svelte';
 
 	export let generation: TGenerationWithSelectedOutput;
 	export let generateSimilarUrl: string;
+	export let exploreStyleUrl: string;
 	export let linkUrl: string;
 	export let setButtonObjectWithState: TSetButtonObjectWithState;
 	export let buttonObjectsWithState: TButtonObjectsWithState;
 	export let currentImageUrl: string;
 	export let modalType: TGenerationFullScreenModalType;
+	export let setSearchQuery: ((query: string) => void) | undefined = undefined;
 	export { classes as class };
 	let classes = '';
 
@@ -202,6 +207,33 @@
 			<p>{$LL.GenerationFullscreen.GenerateSimilarButton()}</p>
 		</div>
 	</SubtleButton>
+	{#if modalType === 'gallery'}
+		<SubtleButton
+			prefetch={true}
+			href={exploreStyleUrl}
+			onClick={() => {
+				if (modalType === 'gallery') {
+					if (setSearchQuery) {
+						setSearchQuery(generation.selected_output.id);
+					}
+					logGalleryExploreStyleClicked({
+						'SC - Output Id': generation.selected_output.id,
+						'SC - User Id': $page.data.session?.user.id,
+						'SC - Stripe Product Id': $userSummary?.product_id,
+						'SC - App Version': $appVersion
+					});
+					if ($activeGeneration) {
+						activeGeneration.set(undefined);
+					}
+				}
+			}}
+		>
+			<div class="flex items-center justify-center gap-1.5">
+				<IconImageSearch class="w-5 h-5 -ml-0.5" />
+				<p>{$LL.GenerationFullscreen.ExploreStyleButton()}</p>
+			</div>
+		</SubtleButton>
+	{/if}
 	<div
 		use:copy={generation.prompt.text}
 		on:svelte-copy={() => setButtonObjectWithState('prompt', 'success')}

@@ -26,6 +26,8 @@
 	import IconBrain from '$components/icons/IconBrain.svelte';
 	import { modelTooltip } from '$ts/constants/tooltips';
 	import { browser } from '$app/environment';
+	import { isUUID } from '$ts/helpers/uuid';
+	import IconImageSearch from '$components/icons/IconImageSearch.svelte';
 
 	export let disabled = false;
 	export let searchString: string;
@@ -33,7 +35,7 @@
 	export let modelIdFilters: TAvailableGenerationModelId[];
 	export let searchInputIsFocused = false;
 
-	let searchStringLocal = searchString ?? '';
+	let searchStringLocal = isUUID(searchString) ? '' : searchString ?? '';
 	let inputElement: HTMLInputElement;
 	let isFiltersOpen = false;
 
@@ -67,6 +69,7 @@
 	}
 
 	function onSearchStringLocalChanged() {
+		if (isUUID(searchString)) return;
 		if (!browser || searchStringLocal) return;
 		resetSearchString();
 	}
@@ -161,6 +164,20 @@
 			</Morpher>
 		</SubtleButton>
 	</div>
+	{#if isUUID(searchString)}
+		<div class="w-full flex flex-col">
+			<div class="w-full flex items-center justify-center pt-3">
+				<TagButton
+					icon={IconImageSearch}
+					hasMaxWidth={false}
+					hasCancelIcon={true}
+					onClick={() => (searchString = '')}
+					text={$LL.Shared.SimilarToTitle({ item: searchString.slice(0, 6) })}
+					color="primary"
+				/>
+			</div>
+		</div>
+	{/if}
 	{#if isFiltersOpen}
 		<div
 			transition:expandCollapse|local={{ duration: 200, easing: quadOut }}

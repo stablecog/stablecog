@@ -182,6 +182,7 @@ const hi: Translation = {
 		CopyNegativePromptButton: 'नकारात्मक संकेत कॉपी करें',
 		CopiedButtonState: 'कॉपी हो गया!',
 		GenerateSimilarButton: 'Generate Similar',
+		ExploreStyleButton: 'Explore Style',
 		RerollButton: 'नया बनाए',
 		RegenerateButton: 'दोबारा बनाए',
 		GenerateButton: 'बनाए',
@@ -242,6 +243,7 @@ const hi: Translation = {
 		InsufficientCreditsTitle: 'Insufficient credits ({remainingCredits}/{neededCredits})',
 		AllTitle: 'All',
 		ConfirmButton: 'Confirm',
+		SimilarToTitle: 'Similar to: {item}',
 		ResourcesTitle: 'Resources',
 		ResourcesButton: 'Resources',
 		ConfirmQuestionMarkButton: 'Confirm?',
@@ -447,7 +449,7 @@ const hi: Translation = {
 		AlreadyHaveAnAccountTitle: 'Already have an account?',
 		LoginInsteadButton: 'Login instead',
 		WantsEmailCheckbox: {
-			Paragraph: 'Let me know about product updates, deals or events.',
+			Paragraph: 'Get product updates, deals or news.',
 			NoSpamParagraph: 'No spam, we promise.'
 		},
 		SixDigitCodeInput: {

@@ -182,6 +182,7 @@ const ptBr: Translation = {
 		CopyNegativePromptButton: 'Copiar Prompt Negativo',
 		CopiedButtonState: 'Copiado!',
 		GenerateSimilarButton: 'Generate Similar',
+		ExploreStyleButton: 'Explore Style',
 		RerollButton: 'Rolar de novo',
 		RegenerateButton: 'Regenerar',
 		GenerateButton: 'Gerar',
@@ -242,6 +243,7 @@ const ptBr: Translation = {
 		InsufficientCreditsTitle: 'Insufficient credits ({remainingCredits}/{neededCredits})',
 		AllTitle: 'All',
 		ConfirmButton: 'Confirm',
+		SimilarToTitle: 'Similar to: {item}',
 		ResourcesTitle: 'Resources',
 		ResourcesButton: 'Resources',
 		ConfirmQuestionMarkButton: 'Confirm?',
@@ -449,7 +451,7 @@ const ptBr: Translation = {
 		AlreadyHaveAnAccountTitle: 'Já possui uma conta?',
 		LoginInsteadButton: 'Efetuar Login',
 		WantsEmailCheckbox: {
-			Paragraph: 'Let me know about product updates, deals or events.',
+			Paragraph: 'Get product updates, deals or news.',
 			NoSpamParagraph: 'No spam, we promise.'
 		},
 		SixDigitCodeInput: {

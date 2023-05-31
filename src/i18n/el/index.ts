@@ -186,6 +186,7 @@ const es: Translation = {
 		CopyNegativePromptButton: 'Αντιγραφή Αρνητικής Περιγραφής',
 		CopiedButtonState: 'Αντιγράφηκε!',
 		GenerateSimilarButton: 'Δημιουργία Παρόμοιου',
+		ExploreStyleButton: 'Explore Style',
 		RerollButton: 'Αναδημιουργία',
 		RegenerateButton: 'Αναπαραγωγή',
 		GenerateButton: 'Δημιουργία',
@@ -246,6 +247,7 @@ const es: Translation = {
 		InsufficientCreditsTitle: 'Ανεπαρκείς μονάδες ({remainingCredits}/{neededCredits})',
 		AllTitle: 'Όλα',
 		ConfirmButton: 'Επιβεβαίωση',
+		SimilarToTitle: 'Similar to: {item}',
 		ResourcesTitle: 'Resources',
 		ResourcesButton: 'Resources',
 		ConfirmQuestionMarkButton: 'Επιβεβαίωση;',
@@ -455,7 +457,7 @@ const es: Translation = {
 		AlreadyHaveAnAccountTitle: 'Έχετε ήδη λογαριασμό;',
 		LoginInsteadButton: 'Αλλιώς, συνδεθείτε',
 		WantsEmailCheckbox: {
-			Paragraph: 'Let me know about product updates, deals or events.',
+			Paragraph: 'Get product updates, deals or news.',
 			NoSpamParagraph: 'No spam, we promise.'
 		},
 		SixDigitCodeInput: {

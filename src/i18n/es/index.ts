@@ -183,6 +183,7 @@ const es: Translation = {
 		CopyNegativePromptButton: 'Copiar Indicación Negativa',
 		CopiedButtonState: '¡Copiado!',
 		GenerateSimilarButton: 'Generate Similar',
+		ExploreStyleButton: 'Explore Style',
 		RerollButton: 'Generar Aleatorio',
 		RegenerateButton: 'Regenerar',
 		GenerateButton: 'Generar',
@@ -243,6 +244,7 @@ const es: Translation = {
 		InsufficientCreditsTitle: 'Insufficient credits ({remainingCredits}/{neededCredits})',
 		AllTitle: 'All',
 		ConfirmButton: 'Confirm',
+		SimilarToTitle: 'Similar to: {item}',
 		ResourcesTitle: 'Resources',
 		ResourcesButton: 'Resources',
 		ConfirmQuestionMarkButton: 'Confirm?',
@@ -449,7 +451,7 @@ const es: Translation = {
 		AlreadyHaveAnAccountTitle: 'Already have an account?',
 		LoginInsteadButton: 'Login instead',
 		WantsEmailCheckbox: {
-			Paragraph: 'Let me know about product updates, deals or events.',
+			Paragraph: 'Get product updates, deals or news.',
 			NoSpamParagraph: 'No spam, we promise.'
 		},
 		SixDigitCodeInput: {

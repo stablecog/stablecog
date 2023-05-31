@@ -182,6 +182,7 @@ const de: Translation = {
 		CopyNegativePromptButton: 'Ausgeschlossene Wörter kopieren',
 		CopiedButtonState: 'Kopiert!',
 		GenerateSimilarButton: 'Ähnliches generieren',
+		ExploreStyleButton: 'Explore Style',
 		RerollButton: 'Seed durchmischen',
 		RegenerateButton: 'Erneut generieren',
 		GenerateButton: 'Generieren',
@@ -242,6 +243,7 @@ const de: Translation = {
 		InsufficientCreditsTitle: 'Unzureichendes Guthaben ({remainingCredits}/{neededCredits})',
 		AllTitle: 'Alle',
 		ConfirmButton: 'Bestätigen',
+		SimilarToTitle: 'Similar to: {item}',
 		ResourcesTitle: 'Resources',
 		ResourcesButton: 'Resources',
 		ConfirmQuestionMarkButton: 'Confirm?',
@@ -448,7 +450,7 @@ const de: Translation = {
 		AlreadyHaveAnAccountTitle: 'Hast Du bereits ein Konto?',
 		LoginInsteadButton: 'Stattdessen anmelden',
 		WantsEmailCheckbox: {
-			Paragraph: 'Let me know about product updates, deals or events.',
+			Paragraph: 'Get product updates, deals or news.',
 			NoSpamParagraph: 'No spam, we promise.'
 		},
 		SixDigitCodeInput: {

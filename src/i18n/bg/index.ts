@@ -185,6 +185,7 @@ const bg: Translation = {
 		CopyNegativePromptButton: 'Копирай отрицателното задание',
 		CopiedButtonState: 'Копирано!',
 		GenerateSimilarButton: 'Създай подобни',
+		ExploreStyleButton: 'Explore Style',
 		RerollButton: 'Превърти',
 		RegenerateButton: 'Пресъздай',
 		GenerateButton: 'Създай',
@@ -245,6 +246,7 @@ const bg: Translation = {
 		InsufficientCreditsTitle: 'Липса на кредит ({remainingCredits}/{neededCredits})',
 		AllTitle: 'Всички',
 		ConfirmButton: 'Потвърди',
+		SimilarToTitle: 'Similar to: {item}',
 		ResourcesTitle: 'Resources',
 		ResourcesButton: 'Resources',
 		ConfirmQuestionMarkButton: 'Потвърди?',
@@ -451,7 +453,7 @@ const bg: Translation = {
 		AlreadyHaveAnAccountTitle: 'Вече имате профил?',
 		LoginInsteadButton: 'Вместо това Влизане',
 		WantsEmailCheckbox: {
-			Paragraph: 'Let me know about product updates, deals or events.',
+			Paragraph: 'Get product updates, deals or news.',
 			NoSpamParagraph: 'No spam, we promise.'
 		},
 		SixDigitCodeInput: {

@@ -32,6 +32,10 @@ export function logGalleryGenerateSimilarClicked(props: IGalleryGenerateClickedP
 	mixpanel.track('Gallery | Generate Clicked', { ...props });
 	posthog.capture('Gallery | Generate Clicked', { ...props });
 }
+export function logGalleryExploreStyleClicked(props: IGalleryExploreStyleClickedProps) {
+	mixpanel.track('Gallery | Explore Style Clicked', { ...props });
+	posthog.capture('Gallery | Explore Style Clicked', { ...props });
+}
 
 export function logAdvancedMode(status: IOnOff, props: IAdvancedModeToggledProps) {
 	mixpanel.track(`Advanced Mode | ${status}`, { ...props });
@@ -268,6 +272,13 @@ interface IGalleryGenerateClickedProps {
 	'SC - User Id': string | undefined;
 	'SC - Stripe Product Id': string | undefined;
 	'SC - Advanced Mode': boolean;
+	'SC - App Version': string;
+}
+
+interface IGalleryExploreStyleClickedProps {
+	'SC - Output Id': string;
+	'SC - User Id': string | undefined;
+	'SC - Stripe Product Id': string | undefined;
 	'SC - App Version': string;
 }
 

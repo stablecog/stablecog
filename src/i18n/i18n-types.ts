@@ -552,6 +552,10 @@ type RootTranslation = {
 		 */
 		GenerateSimilarButton: string
 		/**
+		 * E​x​p​l​o​r​e​ ​S​t​y​l​e
+		 */
+		ExploreStyleButton: string
+		/**
 		 * R​e​r​o​l​l
 		 */
 		RerollButton: string
@@ -754,6 +758,11 @@ type RootTranslation = {
 		 * C​o​n​f​i​r​m
 		 */
 		ConfirmButton: string
+		/**
+		 * S​i​m​i​l​a​r​ ​t​o​:​ ​{​i​t​e​m​}
+		 * @param {unknown} item
+		 */
+		SimilarToTitle: RequiredParams<'item'>
 		/**
 		 * R​e​s​o​u​r​c​e​s
 		 */
@@ -1347,7 +1356,7 @@ type RootTranslation = {
 		LoginInsteadButton: string
 		WantsEmailCheckbox: {
 			/**
-			 * L​e​t​ ​m​e​ ​k​n​o​w​ ​a​b​o​u​t​ ​p​r​o​d​u​c​t​ ​u​p​d​a​t​e​s​,​ ​d​e​a​l​s​ ​o​r​ ​e​v​e​n​t​s​.
+			 * G​e​t​ ​p​r​o​d​u​c​t​ ​u​p​d​a​t​e​s​,​ ​d​e​a​l​s​ ​o​r​ ​n​e​w​s​.
 			 */
 			Paragraph: string
 			/**
@@ -2989,6 +2998,10 @@ export type TranslationFunctions = {
 		 */
 		GenerateSimilarButton: () => LocalizedString
 		/**
+		 * Explore Style
+		 */
+		ExploreStyleButton: () => LocalizedString
+		/**
 		 * Reroll
 		 */
 		RerollButton: () => LocalizedString
@@ -3186,6 +3199,10 @@ export type TranslationFunctions = {
 		 * Confirm
 		 */
 		ConfirmButton: () => LocalizedString
+		/**
+		 * Similar to: {item}
+		 */
+		SimilarToTitle: (arg: { item: unknown }) => LocalizedString
 		/**
 		 * Resources
 		 */
@@ -3764,7 +3781,7 @@ export type TranslationFunctions = {
 		LoginInsteadButton: () => LocalizedString
 		WantsEmailCheckbox: {
 			/**
-			 * Let me know about product updates, deals or events.
+			 * Get product updates, deals or news.
 			 */
 			Paragraph: () => LocalizedString
 			/**

@@ -30,6 +30,7 @@
 		selected_output: output
 	};
 	const generateSimilarUrl = getGenerationUrlFromParams({ ...output.generation });
+	const exploreStyleUrl = `/gallery?q=${generation.selected_output.id}`;
 	const linkUrl = `${$page.url.origin}/gallery/o/${output.generation.id}`;
 	const currentImageUrl = output.upscaled_image_url ?? output.image_url;
 	const currentImageWidth = output.generation.width * (output.upscaled_image_url ? 4 : 1);
@@ -144,6 +145,7 @@
 				class="mt-1"
 				{generation}
 				{generateSimilarUrl}
+				{exploreStyleUrl}
 				{linkUrl}
 				{currentImageUrl}
 				{modalType}

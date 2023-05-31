@@ -19,7 +19,7 @@
 >
 	<div class="w-full h-full absolute bg-c-bg" />
 	<div
-		class="px-2 py-1 gap-1 flex items-center flex-row {color === 'secondary'
+		class="px-2 py-1 gap-1.5 flex items-center flex-row {color === 'secondary'
 			? 'text-c-secondary bg-c-secondary/10'
 			: 'text-c-primary bg-c-primary/10'} text-sm transition relative"
 	>
@@ -28,8 +28,8 @@
 			<svelte:component
 				this={icon}
 				class="w-4 h-4 flex-shrink-0 md:-ml-0.5 {color === 'secondary'
-					? 'text-c-secondary/75'
-					: 'text-c-primary/75'}"
+					? 'text-c-secondary'
+					: 'text-c-primary'}"
 			/>
 		{/if}
 		<p
@@ -42,8 +42,8 @@
 		{#if hasCancelIcon}
 			<IconCancel
 				class="w-4 h-4 flex-shrink-0 -mr-1 {color === 'secondary'
-					? 'text-c-secondary/75'
-					: 'text-c-primary/75'}"
+					? 'text-c-secondary'
+					: 'text-c-primary'}"
 			/>
 		{/if}
 	</div>

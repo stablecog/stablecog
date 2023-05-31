@@ -6,12 +6,12 @@
 </script>
 
 <Checkbox.Root
-	class="flex h-6 w-6 appearance-none ring-1.5 ring-c-primary rounded-md relative overflow-hidden z-0"
+	class="flex h-6 w-6 appearance-none ring-1.5 ring-c-primary rounded-md relative"
 	bind:checked
 	{name}
 	id={name}
 >
-	<Checkbox.Indicator class="bg-c-primary w-full h-full p-0.75">
+	<Checkbox.Indicator class="bg-c-primary ring-1 rounded ring-c-primary w-full h-full p-0.75">
 		<IconTickOnly class="w-full h-full text-c-on-primary" />
 	</Checkbox.Indicator>
 </Checkbox.Root>

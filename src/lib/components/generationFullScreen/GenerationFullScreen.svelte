@@ -54,6 +54,7 @@
 	export let modalType: TGenerationFullScreenModalType;
 	export let onLeftButtonClicked: (() => void) | undefined = undefined;
 	export let onRightButtonClicked: (() => void) | undefined = undefined;
+	export let setSearchQuery: ((query: string) => void) | undefined = undefined;
 
 	let buttonLeft: HTMLButtonElement;
 	let buttonRight: HTMLButtonElement;
@@ -108,6 +109,8 @@
 
 	let generateSimilarUrl: string;
 	let linkUrl: string;
+
+	$: exploreStyleUrl = `/gallery?q=${generation.selected_output.id}`;
 
 	let upscaledTabValue: TUpscaleTabValue = 'upscaled';
 	type TUpscaleTabValue = 'original' | 'upscaled';
@@ -472,8 +475,10 @@
 							<ButtonsSection
 								{generation}
 								{generateSimilarUrl}
+								{exploreStyleUrl}
 								{linkUrl}
 								{currentImageUrl}
+								{setSearchQuery}
 								{modalType}
 								{setButtonObjectWithState}
 								bind:buttonObjectsWithState
