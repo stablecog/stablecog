@@ -187,6 +187,7 @@ const ptPt: Translation = {
 		RegenerateButton: 'Regenerar',
 		GenerateButton: 'Gerar',
 		UpscaleButton: 'Interpolação',
+		SimilarTitle: 'Similar',
 		SubmitToGalleryButton: 'Submit to Gallery',
 		SubmittedTitle: 'Submitted',
 		UpscaleTabBar: {

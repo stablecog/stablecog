@@ -195,6 +195,7 @@ const tr: Translation = {
 		RegenerateButton: 'Tekrar Üret',
 		GenerateButton: 'Üret',
 		UpscaleButton: 'Büyüt',
+		SimilarTitle: 'Similar',
 		SubmitToGalleryButton: 'Galeriye Gönder',
 		SubmittedTitle: 'Gönderildi',
 		UpscaleTabBar: {

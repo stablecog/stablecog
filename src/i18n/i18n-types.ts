@@ -572,6 +572,10 @@ type RootTranslation = {
 		 */
 		UpscaleButton: string
 		/**
+		 * S​i​m​i​l​a​r
+		 */
+		SimilarTitle: string
+		/**
 		 * S​u​b​m​i​t​ ​t​o​ ​G​a​l​l​e​r​y
 		 */
 		SubmitToGalleryButton: string
@@ -3017,6 +3021,10 @@ export type TranslationFunctions = {
 		 * Upscale
 		 */
 		UpscaleButton: () => LocalizedString
+		/**
+		 * Similar
+		 */
+		SimilarTitle: () => LocalizedString
 		/**
 		 * Submit to Gallery
 		 */

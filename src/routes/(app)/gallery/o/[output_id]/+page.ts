@@ -2,19 +2,30 @@ import type { TAvailableGenerationModelId } from '$ts/constants/generationModels
 import { apiUrl } from '$ts/constants/main';
 import type { TAvailableSchedulerId } from '$ts/constants/schedulers';
 import { convertToDBTimeString } from '$ts/helpers/convertToDBTimeString';
-import type { TGalleryGenerationFullOutputPageRes } from '$ts/queries/galleryGenerations';
+import {
+	getGalleryGenerationFullOutputs,
+	type TGalleryGenerationFullOutputPageRes
+} from '$ts/queries/galleryGenerations';
 import type { TGenerationFullOutput, TGenerationOutput } from '$ts/stores/user/generation';
 import { error } from '@sveltejs/kit';
 import type { PageLoad } from './$types';
+import { similarCount } from '$routes/(app)/gallery/o/[output_id]/constants';
 
-export const load: PageLoad = async ({ url, params }) => {
+export const load: PageLoad = async ({ params }) => {
 	const outputId = params.output_id;
 	let generationFullOutput: TGenerationFullOutput | undefined = undefined;
-	const res = await fetch(`${apiUrl.origin}/v1/gallery?output_id=${outputId}`);
-	if (!res.ok) {
-		throw error(404, 'No output found');
+	let similarGenerationFullOutputs: TGenerationFullOutput[] | undefined = undefined;
+	const [generationFullOutputRes, similarGenerationFullOutputsRes] = await Promise.all([
+		fetch(`${apiUrl.origin}/v1/gallery?output_id=${outputId}`),
+		getGalleryGenerationFullOutputs({
+			search: outputId,
+			per_page: 8
+		})
+	]);
+	if (!generationFullOutputRes.ok) {
+		throw error(404, 'Response for generation not ok');
 	}
-	const data: TGalleryGenerationFullOutputPageRes = await res.json();
+	const data: TGalleryGenerationFullOutputPageRes = await generationFullOutputRes.json();
 	if (!data.hits || !data.hits[0]) {
 		throw error(404, 'No output found');
 	}
@@ -56,7 +67,11 @@ export const load: PageLoad = async ({ url, params }) => {
 		},
 		...output
 	};
+	similarGenerationFullOutputs = similarGenerationFullOutputsRes.outputs
+		.filter((o) => o.id !== generationFullOutput?.id)
+		.slice(0, similarCount);
 	return {
-		generationFullOutput
+		generationFullOutput,
+		similarGenerationFullOutputs
 	};
 };

@@ -4,20 +4,25 @@ import type { TAvailableSchedulerId } from '$ts/constants/schedulers';
 import { convertToDBTimeString } from '$ts/helpers/convertToDBTimeString';
 import type { TGenerationFullOutput, TGenerationOutput } from '$userStores/generation';
 
-const score_threshold = 50;
+const score_threshold_default = 50;
+const per_page_default = 50;
 
 export async function getGalleryGenerationFullOutputs({
 	cursor,
 	search,
 	seed,
 	model_ids,
-	custom_fetch
+	custom_fetch,
+	per_page = per_page_default,
+	score_threshold = score_threshold_default
 }: {
 	cursor?: string;
 	search?: string | null;
-	seed: number;
+	seed?: number;
 	model_ids?: TAvailableGenerationModelId[];
 	custom_fetch?: typeof fetch;
+	per_page?: number;
+	score_threshold?: number;
 }): Promise<TGalleryGenerationFullOutputsPage> {
 	console.log('getGalleryOutputs');
 	const query = new URLSearchParams();
@@ -33,7 +38,10 @@ export async function getGalleryGenerationFullOutputs({
 	if (model_ids && model_ids.length > 0) {
 		query.append('model_ids', model_ids.join(','));
 	}
-	query.append('seed', seed.toString());
+	query.append('per_page', per_page.toString());
+	if (typeof seed === 'number') {
+		query.append('seed', seed.toString());
+	}
 	let queryString = query.toString();
 	if (queryString) queryString = `?${queryString}`;
 	const url = `${apiUrl.origin}/v1/gallery${queryString}`;
@@ -43,6 +51,7 @@ export async function getGalleryGenerationFullOutputs({
 			'Content-Type': 'application/json'
 		}
 	});
+	if (!res.ok) throw new Error(`Failed to fetch gallery outputs: ${res.status}, ${res.statusText}`);
 	const data: TGalleryGenerationFullOutputPageRes = await res.json();
 	const { hits, next } = data;
 	const outputs: TGenerationFullOutput[] = hits.map((hit) => {

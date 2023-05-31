@@ -187,6 +187,7 @@ const hr: Translation = {
 		RegenerateButton: 'Regeneriraj',
 		GenerateButton: 'Generiraj',
 		UpscaleButton: 'Uvećaj',
+		SimilarTitle: 'Similar',
 		SubmitToGalleryButton: 'Submit to Gallery',
 		SubmittedTitle: 'Submitted',
 		UpscaleTabBar: {

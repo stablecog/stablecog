@@ -11,7 +11,7 @@ export const getGalleryInfiniteQueryKey = ({
 }: {
 	searchString?: string | null;
 	modelIdFilters?: string[] | null;
-	seed: number;
+	seed?: number;
 }) => {
 	return [
 		'gallery_generation_full_outputs',
@@ -28,7 +28,7 @@ export function getGalleryInfiniteQueryProps({
 }: {
 	searchString?: string | null;
 	modelIdFilters?: string[];
-	seed: number;
+	seed?: number;
 }): FetchInfiniteQueryOptions<
 	TGalleryGenerationFullOutputsPage,
 	unknown,

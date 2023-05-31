@@ -191,6 +191,7 @@ const nl: Translation = {
 		RegenerateButton: 'Opnieuw genereren',
 		GenerateButton: 'Genereren',
 		UpscaleButton: 'Opschalen',
+		SimilarTitle: 'Similar',
 		SubmitToGalleryButton: 'Naar galerij versturen',
 		SubmittedTitle: 'Verstuurd',
 		UpscaleTabBar: {

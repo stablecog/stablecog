@@ -191,6 +191,7 @@ const es: Translation = {
 		RegenerateButton: 'Αναπαραγωγή',
 		GenerateButton: 'Δημιουργία',
 		UpscaleButton: 'Αύξηση ανάλυσης',
+		SimilarTitle: 'Similar',
 		SubmitToGalleryButton: 'Αποθήκευση στη Συλλογή',
 		SubmittedTitle: 'Υποβλήθηκε',
 		UpscaleTabBar: {

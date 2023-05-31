@@ -188,6 +188,7 @@ const vi: Translation = {
 		RegenerateButton: 'Tái tạo',
 		GenerateButton: 'Khởi tạo',
 		UpscaleButton: 'Phóng to',
+		SimilarTitle: 'Similar',
 		SubmitToGalleryButton: 'Submit to Gallery',
 		SubmittedTitle: 'Submitted',
 		UpscaleTabBar: {

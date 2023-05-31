@@ -188,6 +188,7 @@ const fr: Translation = {
 		RegenerateButton: 'Regénérer',
 		GenerateButton: 'Générer',
 		UpscaleButton: 'Upscaler',
+		SimilarTitle: 'Similar',
 		SubmitToGalleryButton: 'Submit to Gallery',
 		SubmittedTitle: 'Submitted',
 		UpscaleTabBar: {

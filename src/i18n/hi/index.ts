@@ -187,6 +187,7 @@ const hi: Translation = {
 		RegenerateButton: 'दोबारा बनाए',
 		GenerateButton: 'बनाए',
 		UpscaleButton: 'निखारे',
+		SimilarTitle: 'Similar',
 		SubmitToGalleryButton: 'Submit to Gallery',
 		SubmittedTitle: 'Submitted',
 		UpscaleTabBar: {

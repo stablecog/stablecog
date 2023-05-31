@@ -27,7 +27,7 @@ const srcsetEntries: TImgProxyPreset[] = [
 const srcDefault: TImgProxyPreset = '1920w';
 const extentionDefault: TExtention = 'webp';
 
-function getImgProxySrc({
+export function getImgProxySrc({
 	src,
 	preset,
 	extention = extentionDefault
