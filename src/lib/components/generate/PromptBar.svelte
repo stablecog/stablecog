@@ -265,6 +265,7 @@
 						fadeOnDisabled={isCheckCompleted}
 						class="w-full h-full rounded-r-lg md:rounded-r-xl rounded-l-none absolute right-0 top-0"
 						noPadding
+						label={$LL.Home.GenerateButton()}
 					>
 						<IconWand class="w-7 h- md:w-8 h-8" />
 					</Button>
@@ -302,6 +303,9 @@
 			onClick={toggleSettingsSheet}
 			class="h-full px-3 md:hidden"
 			hoverFrom="bottom"
+			name={isGenerationSettingsSheetOpen
+				? $LL.Generate.HideSettingsButton()
+				: $LL.Generate.ShowSettingsButton()}
 		>
 			<Morpher morphed={$windowWidth < mdBreakpoint && isGenerationSettingsSheetOpen}>
 				<div slot="0" class="w-7.5 h-7.5 p-0.5">

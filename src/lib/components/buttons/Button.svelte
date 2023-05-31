@@ -20,6 +20,7 @@
 	export let buttonType: 'submit' | 'button' | 'reset' | null | undefined = undefined;
 	export let icon: ConstructorOfATypedSvelteComponent | undefined = undefined;
 	export let iconAlignment: 'left' | 'right' = 'left';
+	export let label: string | undefined = undefined;
 	let classes = '';
 
 	function _onClick() {
@@ -59,6 +60,7 @@
 		bind:clientWidth={width}
 		bind:clientHeight={height}
 		on:click={_onClick}
+		aria-label={label}
 		{href}
 		{target}
 		data-sveltekit-preload-data={prefetch && (target === '_self' || target === undefined)
@@ -164,6 +166,7 @@
 		bind:clientWidth={width}
 		bind:clientHeight={height}
 		on:click={_onClick}
+		aria-label={label}
 		disabled={disabled || loading || uploading}
 		type={buttonType}
 		class="touch-manipulation relative flex items-center justify-center text-center font-bold gap-2

@@ -104,6 +104,8 @@ const en: BaseTranslation = {
 		}
 	},
 	Generate: {
+		ShowSettingsButton: 'Show Settings',
+		HideSettingsButton: 'Hide Settings',
 		Grid: {
 			NotSignedIn: { Paragraph: 'Sign in to see your generations.' },
 			NoGeneration: {

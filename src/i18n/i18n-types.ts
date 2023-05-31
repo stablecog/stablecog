@@ -304,6 +304,14 @@ type RootTranslation = {
 		}
 	}
 	Generate: {
+		/**
+		 * S​h​o​w​ ​S​e​t​t​i​n​g​s
+		 */
+		ShowSettingsButton: string
+		/**
+		 * H​i​d​e​ ​S​e​t​t​i​n​g​s
+		 */
+		HideSettingsButton: string
 		Grid: {
 			NotSignedIn: {
 				/**
@@ -2759,6 +2767,14 @@ export type TranslationFunctions = {
 		}
 	}
 	Generate: {
+		/**
+		 * Show Settings
+		 */
+		ShowSettingsButton: () => LocalizedString
+		/**
+		 * Hide Settings
+		 */
+		HideSettingsButton: () => LocalizedString
 		Grid: {
 			NotSignedIn: {
 				/**

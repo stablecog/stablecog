@@ -109,6 +109,8 @@ const ja: Translation = {
 		}
 	},
 	Generate: {
+		ShowSettingsButton: 'Show Settings',
+		HideSettingsButton: 'Hide Settings',
 		Grid: {
 			NotSignedIn: {
 				Paragraph: '生成画像を参照するにはサインインしてください。'

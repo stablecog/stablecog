@@ -109,6 +109,8 @@ const tr: Translation = {
 		}
 	},
 	Generate: {
+		ShowSettingsButton: 'Show Settings',
+		HideSettingsButton: 'Hide Settings',
 		Grid: {
 			NotSignedIn: {
 				Paragraph: 'Üretimlerini görmek için giriş yap.'
