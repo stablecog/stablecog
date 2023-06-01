@@ -28,7 +28,10 @@ const tr: Translation = {
 	},
 	Home: {
 		GenerateButton: 'Üret',
-		PromptInput: { Title: 'Prompt', Placeholder: 'Kedi portesi, Van Gogh tarzında' },
+		PromptInput: {
+			Title: 'Komut',
+			Placeholder: 'Kedi portesi, Van Gogh tarzında'
+		},
 		WidthTabBar: {
 			Title: 'Genişlik',
 			Paragraph: 'Fotoğrafın genişliği.'
@@ -109,8 +112,8 @@ const tr: Translation = {
 		}
 	},
 	Generate: {
-		ShowSettingsButton: 'Show Settings',
-		HideSettingsButton: 'Hide Settings',
+		ShowSettingsButton: 'Ayarları Göster',
+		HideSettingsButton: 'Ayarları Gizle',
 		Grid: {
 			NotSignedIn: {
 				Paragraph: 'Üretimlerini görmek için giriş yap.'
@@ -192,13 +195,13 @@ const tr: Translation = {
 		CopyNegativePromptButton: 'Negatif Komutu Kopyala',
 		CopiedButtonState: 'Kopyalandı!',
 		GenerateSimilarButton: 'Benzerini Üret',
-		ExploreSimilarButton: 'Explore Similar',
-		ExploreStyleButton: 'Explore Style',
+		ExploreSimilarButton: 'Benzerlerini Ara',
+		ExploreStyleButton: 'Tarzı Ara',
 		RerollButton: 'Rastgele Üret',
 		RegenerateButton: 'Tekrar Üret',
 		GenerateButton: 'Üret',
 		UpscaleButton: 'Büyüt',
-		SimilarTitle: 'Similar',
+		SimilarTitle: 'Benzer',
 		SubmitToGalleryButton: 'Galeriye Gönder',
 		SubmittedTitle: 'Gönderildi',
 		UpscaleTabBar: {
@@ -255,9 +258,9 @@ const tr: Translation = {
 		InsufficientCreditsTitle: 'Yetersiz kredi ({remainingCredits}/{neededCredits})',
 		AllTitle: 'Hepsi',
 		ConfirmButton: 'Onayla',
-		SimilarToTitle: 'Similar to: {item}',
-		ResourcesTitle: 'Resources',
-		ResourcesButton: 'Resources',
+		SimilarToTitle: 'Şuna benzer: {item}',
+		ResourcesTitle: 'Kaynaklar',
+		ResourcesButton: 'Kaynaklar',
 		ConfirmQuestionMarkButton: 'Onayla?',
 		Credits: {
 			CreditsTable: {
@@ -370,7 +373,7 @@ const tr: Translation = {
 		TryAgainButton: 'Yeniden Dene',
 		RefreshButton: 'Yenile',
 		LoadMoreButton: 'Daha Fazla',
-		BackToGalleryButton: 'Back to Gallery',
+		BackToGalleryButton: 'Galeriye Dön',
 		SearchingTitle: 'Aranıyor',
 		NoResultsFoundTitle: 'Sonuç bulunamadı'
 	},
@@ -462,8 +465,8 @@ const tr: Translation = {
 		AlreadyHaveAnAccountTitle: 'Zaten üye misin?',
 		LoginInsteadButton: 'Giriş yap',
 		WantsEmailCheckbox: {
-			Paragraph: 'Get product updates, deals or news.',
-			NoSpamParagraph: 'No spam, we promise.'
+			Paragraph: 'Güncellemeler ve fırsatlar hakkında bilgi al.',
+			NoSpamParagraph: 'Kesinlikle spam yapmıyoruz.'
 		},
 		SixDigitCodeInput: {
 			Placeholder: '6 Haneli Kod'
@@ -488,7 +491,7 @@ const tr: Translation = {
 		DontHaveAnAccountTitle: 'Üyeliğin yok mu?',
 		SignUpInsteadButton: 'Üye ol',
 		SignInButton: 'Giriş Yap',
-		EnterCodeManuallyButton: 'Enter code manually',
+		EnterCodeManuallyButton: 'Kod gir',
 		SignOutButton: 'Çıkış Yap'
 	},
 	Pro: {
@@ -643,7 +646,7 @@ const tr: Translation = {
 			PageParagraph:
 				'Gizli API anahtarların aşağıda. Bu anahtarları sadece ilk ürettiğin anda görebilirsin. Anahtaları güvenli bir yere kaydettiğinden emin ol.',
 			NoKeysYet: 'Henüz bir API anatharın yok.',
-			CreateAPIKeyButton: 'Create API Key',
+			CreateAPIKeyButton: 'API Anahtarı Yarat',
 			CreateNewKeyButton: 'Yeni Anahtar Üret',
 			DeleteKeyButton: 'Anatarı Sil',
 			KeyTable: {
@@ -710,7 +713,7 @@ const tr: Translation = {
 		SearchInput: {
 			Title: 'Ara'
 		},
-		BackToGalleryButton: 'Back to Gallery',
+		BackToGalleryButton: 'Galeriye Gön',
 		SearchingTitle: 'Arıyor',
 		NoMatchingGenerationTitle: 'Benzer bir üretim bulunamadı'
 	},
@@ -834,15 +837,15 @@ const tr: Translation = {
 		ContentPolicyTitle: 'İçerik Politikası'
 	},
 	Documentation: {
-		PageTitle: 'Documentation',
-		PageTitleAlt: 'API Reference',
-		APIReferenceButton: 'API Reference',
-		DocumentationButton: 'Documentation',
-		ForDevelopersTitle: 'For Developers'
+		PageTitle: 'Dökümantasyon',
+		PageTitleAlt: 'API Dökümantasyonu',
+		APIReferenceButton: 'API Dökümantasyonu',
+		DocumentationButton: 'Dökümantasyon',
+		ForDevelopersTitle: 'Geliştiriciler İçin'
 	},
 	Scl: {
 		Discord: 'Discord',
-		Email: 'Email',
+		Email: 'E-posta',
 		Twitter: 'Twitter',
 		Instagram: 'Instagram',
 		YouTube: 'YouTube',

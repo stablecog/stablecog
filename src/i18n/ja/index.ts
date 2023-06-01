@@ -28,7 +28,10 @@ const ja: Translation = {
 	},
 	Home: {
 		GenerateButton: '生成',
-		PromptInput: { Title: 'Prompt', Placeholder: 'ヴァン・ゴッホ風の猫の肖像画' },
+		PromptInput: {
+			Title: 'Prompt',
+			Placeholder: 'ヴァン・ゴッホ風の猫の肖像画'
+		},
 		WidthTabBar: {
 			Title: '幅',
 			Paragraph: '画像の幅。'
@@ -170,8 +173,8 @@ const ja: Translation = {
 		HistoryTab: '履歴',
 		GalleryTab: 'ギャラリー',
 		AdminGalleryTab: '管理用ギャラリー',
-		PricingTab: 'Pricing',
-		AccountTab: 'Account',
+		PricingTab: '価格',
+		AccountTab: 'アカウント',
 		LiveTab: 'ライブ'
 	},
 	Settings: {
@@ -241,8 +244,8 @@ const ja: Translation = {
 		YesButton: 'はい',
 		NoButton: 'いいえ',
 		EnableButton: '有効にする',
-		DoneButton: 'Done',
-		CancelButton: 'Cancel',
+		DoneButton: '完了',
+		CancelButton: 'キャンセル',
 		ClearAllButton: '全てクリア',
 		DisableButton: '無効にする',
 		AddButton: '追加',
@@ -499,7 +502,7 @@ const ja: Translation = {
 	Pro: {
 		PageTitle: 'Pro版に登録',
 		PageParagraph:
-			'Stablecogの全ての機能のアンロックする事が、プロジェクトの援助となります。引き続きStablecogを完全にオープンソースとして無料の生成を提供することが可能なのは、プロメンバーの皆様のおかげであると感謝しております。',
+			'Stablecogプロジェクトの援助し、全ての機能のアンロックすることができます。Stablecogを完全オープンソースとして無料生成を引き続き提供できるのは、プロメンバーの皆様のおかげであります。',
 		PageTitleAlreadyPro: '既にPro版に登録済です!',
 		PageParagraphAlreadyPro:
 			'あなたはすでにPro版のメンバーです。当プロジェクトをサポートしていただき誠に有難うございます！是非Stablecogを楽しんで、友達と共有してください。',
@@ -565,12 +568,12 @@ const ja: Translation = {
 		ManageSubscriptionButton: 'サブスクリプションを管理',
 		ComparePlansButton: 'プランを比較',
 		ManageAccountButton: 'アカウントを管理',
-		AccountButton: 'Account',
+		AccountButton: 'アカウント',
 		MyAccountButton: 'アカウント',
 		SubscriptionPlanTitle: 'プラン',
 		RemainingImagesTitle: '残りの画像数',
 		RemainingCreditsTitle: 'クレジット残高',
-		RemainingTitle: '残り',
+		RemainingTitle: 'クレジット残り',
 		Subscription: {
 			UpdateSubscriptionTitle: 'サブスクリプションを更新',
 			ChangePlanTitle: 'プランを変更',
@@ -594,9 +597,9 @@ const ja: Translation = {
 			}
 		},
 		Tabs: {
-			Account: 'Account',
-			Usage: 'Usage',
-			APIKeys: 'API Keys'
+			Account: 'アカウント',
+			Usage: '利用状況',
+			APIKeys: 'APIキー'
 		},
 		Meta: {
 			AccountCreationTitle: '作成',
@@ -618,72 +621,71 @@ const ja: Translation = {
 				'別のメールアドレスへもリンクを送信しました。プロセスを完了するために確認してください。'
 		},
 		Usage: {
-			PageTitle: 'Usage',
-			PageParagraph: 'You can see your recent usage below.',
-			RecentUsageTitle: 'Recent Usage',
+			PageTitle: '利用状況',
+			PageParagraph: '最近の利用状況は以下で確認できます。',
+			RecentUsageTitle: '最近の利用状況',
 			UsageTable: {
 				ID: 'ID',
-				Type: 'Type',
-				Duration: 'Duration',
-				Source: 'Source',
-				RunTime: 'Run Time',
-				Cost: 'Cost',
-				Operation: 'Operation',
-				Process: 'Process',
-				Platform: 'Platform'
+				Type: '種別',
+				Duration: '所用時間',
+				Source: '操作元',
+				RunTime: '実行時間',
+				Cost: '費用（クレジット）',
+				Operation: '操作',
+				Process: 'プロセス',
+				Platform: 'プラットフォーム'
 			},
 			UsageType: {
-				Generate: 'Generate',
-				Generation: 'Generation',
-				Upscale: 'Upscale'
+				Generate: '生成',
+				Generation: '生成',
+				Upscale: 'アップスケール'
 			},
 			SourceType: {
-				Web: 'Web',
-				WebApp: 'Web App',
+				Web: 'ウェブ',
+				WebApp: 'ウェブアプリ',
 				API: 'API'
 			},
-			NoUsageYet: "You don't have any usage yet."
+			NoUsageYet: 'まだ使用されていません。'
 		},
 		APIKeys: {
-			PageTitle: 'API Keys',
+			PageTitle: 'APIキー',
 			PageParagraph:
-				'Your secret API keys are listed below. They are only shown once when you first generate them. Make sure to save them somewhere safe.',
-			NoKeysYet: "You don't have any API keys yet.",
+				'シークレット API キーは以下に表示されます。最初に生成事のみ一度だけ表示されますので、安全な場所に保存しておいてください。',
+			NoKeysYet: 'まだAPIキーがありません。',
 			CreateAPIKeyButton: 'Create API Key',
-			CreateNewKeyButton: 'Create New Key',
-			DeleteKeyButton: 'Delete Key',
+			CreateNewKeyButton: '新しいキーの作成',
+			DeleteKeyButton: 'キーの削除',
 			KeyTable: {
-				NameTitle: 'Name',
-				KeyTitle: 'Key',
-				CreatedAtTitle: 'Created',
-				UsageTitle: 'Usage',
-				LastUsedTitle: 'Last Used',
-				LastUsedNeverDescription: 'Never'
+				NameTitle: '名前',
+				KeyTitle: 'キー',
+				CreatedAtTitle: '作成日時',
+				UsageTitle: '利用状況',
+				LastUsedTitle: '最終使用',
+				LastUsedNeverDescription: '未使用'
 			},
 			KeyModal: {
 				Create: {
-					Title: 'Create New Key',
-					Paragraph:
-						'You can optionally give this key a name. This name can be used for identifying the key.',
+					Title: '新しいキーの作成',
+					Paragraph: 'このキーを識別するために、任意の名前を付けることができます。',
 					Input: {
-						Title: 'Name',
-						TitleAlt: 'Name (optional)'
+						Title: '名前',
+						TitleAlt: '名前（オプション）'
 					},
-					CreateKeyButton: 'Create Key'
+					CreateKeyButton: 'キーの作成'
 				},
 				Created: {
-					Title: 'New Key',
+					Title: '新しいキー',
 					Paragraph:
-						"Please save this secret key somewhere safe. For security reasons, you won't be able to view it again.",
+						'このシークレットキーを安全な場所に保存してください。セキュリティ上の理由により、再度表示されません。',
 					Input: {
-						Title: 'Secret Key'
+						Title: 'シークレットキー'
 					}
 				},
 				Delete: {
-					Title: 'Revoke Key',
+					Title: 'キーを失効',
 					Paragraph:
-						"This key will disabled immediately. Requests made using this key will be rejected. Once revoked, you won't be able to view this key again.",
-					RevokeKeyButton: 'Revoke Key'
+						'このキーはすぐに無効になります。今後このキーを使用したリクエストは拒否されます。無効になると、このキーは再度表示されません。',
+					RevokeKeyButton: 'キーを失効'
 				}
 			}
 		}
@@ -725,8 +727,8 @@ const ja: Translation = {
 		PlansParagraph: 'あなたに最適なプランをお選びください。',
 		CreditPacksTitle: 'クレジットパック',
 		CreditPacksParagraph: '追加クレジットはいつでも購入できます。',
-		SubscribeButton: '購読',
-		SubscribedButton: '購読済み',
+		SubscribeButton: '登録',
+		SubscribedButton: '登録済み',
 		UpgradeButton: 'アップグレード',
 		DowngradeButton: 'ダウングレード',
 		PurchaseButton: '購入',
@@ -747,15 +749,15 @@ const ja: Translation = {
 		},
 		Features: {
 			MonthlyCredits: '月毎 {count} クレジット。',
-			MonthlyImages: '月毎 {count} 枚の画像。',
-			MonthlyGenerations: '月毎 {count} 枚の生成。',
-			ParallelGenerations: '{count}個の並列生成。',
+			MonthlyImages: '月毎{count}個まで生成',
+			MonthlyGenerations: '月毎 {count} 枚の生成',
+			ParallelGenerations: '{count}個の画像を並列生成。',
 			Images: '{count} 枚の画像。',
 			Generations: '{count} 回の生成。',
 			NeverExpires: '無期限。',
-			CommercialUse: '商業利用。',
-			ImagesArePublic: '画像は公開されます。',
-			ImagesArePrivate: '画像は非公開です。'
+			CommercialUse: '商業利用可能。',
+			ImagesArePublic: '生成画像は公開',
+			ImagesArePrivate: '生成画像は非公開'
 		},
 		Badges: {
 			Recommended: 'おすすめ',
@@ -843,7 +845,7 @@ const ja: Translation = {
 		ContentPolicyTitle: 'コンテンツポリシー'
 	},
 	Documentation: {
-		PageTitle: 'Documentation',
+		PageTitle: 'ドキュメンテーション',
 		PageTitleAlt: 'API Reference',
 		APIReferenceButton: 'API Reference',
 		DocumentationButton: 'Documentation',
