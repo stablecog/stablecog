@@ -16,7 +16,6 @@
 	import IconTick from '$components/icons/IconTick.svelte';
 	import IconTrashcan from '$components/icons/IconTrashcan.svelte';
 	import { doesContainTarget } from '$ts/helpers/doesContainTarget';
-	import { getImgProxySrcSet } from '$ts/helpers/imgproxy';
 	import { logGalleryGenerationOpened } from '$ts/helpers/loggers';
 	import {
 		adminGalleryCurrentFilter,
@@ -40,7 +39,6 @@
 	import { activeGeneration, type TGenerationWithSelectedOutput } from '$userStores/generation';
 
 	export let generation: TGenerationWithSelectedOutput;
-	export let scrollPrompt = false;
 	export let cardType: TGenerationImageCardType;
 	export let isGalleryEditActive: boolean = false;
 	export let didLoadBefore: boolean = false;
@@ -110,7 +108,10 @@
 		} else {
 			params = `o=${generation.selected_output.id}`;
 		}
-		imageClickHref = `${$page.url.pathname}?${params}`;
+		imageClickHref =
+			cardType === 'gallery'
+				? `${$page.url.pathname}/o/${generation.selected_output.id}`
+				: `${$page.url.pathname}?${params}`;
 	}
 </script>
 
@@ -221,31 +222,23 @@
 			}
 			const searchParams = new URLSearchParams(window.location.search);
 			searchParams.set('o', generation.selected_output.id);
-			window.history.pushState({}, '', `${$page.url.pathname}?${searchParams.toString()}`);
+			const urlToPush =
+				cardType === 'gallery'
+					? `${$page.url.pathname}/o/${generation.selected_output.id}`
+					: `${$page.url.pathname}?${searchParams.toString()}`;
+			window.history.pushState({}, '', urlToPush);
 		}}
-		class="w-full h-full absolute left-0 top-0 flex flex-col justify-end items-start overflow-hidden gap-4"
+		class="w-full h-full absolute left-0 top-0 flex flex-col justify-end items-end overflow-hidden pt-16"
 	>
 		{#if cardType !== 'generate'}
-			<div
-				class="w-full h-full pt-16 flex flex-col justify-end items-start flex-shrink
-				transition text-sm relative z-0 overflow-hidden pointer-events-none
-				not-touch:group-focus-within:translate-y-0 not-touch:group-hover:translate-y-0
+			<p
+				class="w-full text-sm min-h-0 max-h-[max(4rem,min(35%,5.3rem))] list-fade px-2 md:px-3 py-2 md:py-2.5
+				font-medium leading-normal transition text-c-on-bg transform pointer-events-none
+					not-touch:group-focus-within:translate-y-0 not-touch:group-hover:translate-y-0
 					{overlayShouldShow ? 'translate-y-0' : 'translate-y-full'}"
 			>
-				<div
-					class="w-full flex flex-col justify-end items-start min-h-0 max-h-[max(4rem,min(35%,5.3rem))]"
-				>
-					<div
-						class="{scrollPrompt
-							? 'overflow-auto'
-							: 'overflow-hidden'} w-full max-h-full list-fade px-2 md:px-3 py-2 md:py-2.5 flex flex-col gap-1 cursor-default"
-					>
-						<p class="w-full font-medium leading-normal transition text-c-on-bg transform">
-							{generation.prompt.text}
-						</p>
-					</div>
-				</div>
-			</div>
+				{generation.prompt.text}
+			</p>
 		{/if}
 	</a>
 {/if}

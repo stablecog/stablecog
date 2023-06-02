@@ -267,7 +267,9 @@
 
 	onDestroy(() => {
 		const searchParams = new URLSearchParams(window.location.search);
-		if (searchParams.has('o')) {
+		if (modalType === 'gallery') {
+			window.history.pushState({}, '', `/gallery`);
+		} else if (searchParams.has('o')) {
 			searchParams.delete('o');
 			const newSearch = searchParams.toString();
 			window.history.pushState({}, '', `${$page.url.pathname}${newSearch ? `?${newSearch}` : ''}`);
