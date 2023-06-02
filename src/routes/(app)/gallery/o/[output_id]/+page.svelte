@@ -26,7 +26,6 @@
 	import NoBgButton from '$components/buttons/NoBgButton.svelte';
 	import IconBack from '$components/icons/IconBack.svelte';
 	import { navbarHeight } from '$ts/stores/navbarHeight.js';
-	import { onMount } from 'svelte';
 	import SimpleGrid from '$components/grids/SimpleGrid.svelte';
 
 	export let data;

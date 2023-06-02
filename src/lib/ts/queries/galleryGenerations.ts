@@ -14,7 +14,8 @@ export async function getGalleryGenerationFullOutputs({
 	model_ids,
 	custom_fetch,
 	per_page = per_page_default,
-	score_threshold = score_threshold_default
+	score_threshold = score_threshold_default,
+	prompt_id
 }: {
 	cursor?: string;
 	search?: string | null;
@@ -23,6 +24,7 @@ export async function getGalleryGenerationFullOutputs({
 	custom_fetch?: typeof fetch;
 	per_page?: number;
 	score_threshold?: number;
+	prompt_id?: string;
 }): Promise<TGalleryGenerationFullOutputsPage> {
 	console.log('getGalleryOutputs');
 	const query = new URLSearchParams();
@@ -41,6 +43,9 @@ export async function getGalleryGenerationFullOutputs({
 	query.append('per_page', per_page.toString());
 	if (typeof seed === 'number') {
 		query.append('seed', seed.toString());
+	}
+	if (prompt_id) {
+		query.append('prompt_id', prompt_id);
 	}
 	let queryString = query.toString();
 	if (queryString) queryString = `?${queryString}`;
