@@ -2,6 +2,7 @@ import { PUBLIC_IMGPROXY_URL } from '$env/static/public';
 import { Base64 } from 'js-base64';
 
 type TImgProxyPreset =
+	| '32w'
 	| '64w'
 	| '128w'
 	| '256w'
@@ -16,7 +17,6 @@ type TImgProxyPreset =
 type TExtention = 'jpeg' | 'webp' | 'png';
 
 const srcsetEntries: TImgProxyPreset[] = [
-	'64w',
 	'128w',
 	'256w',
 	'512w',

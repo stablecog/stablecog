@@ -138,7 +138,7 @@
 						class="max-h-[calc(100vh-110px)] md:max-h-[calc(100vh-150px)] max-w-full w-auto h-auto"
 					/>
 					<img
-						class="absolute left-0 top-0 w-full h-full filter blur-2xl"
+						class="absolute left-0 top-0 w-full h-full filter blur-xl"
 						src={getImgProxySrc({
 							src: currentImageUrl,
 							preset: '64w'
