@@ -227,6 +227,7 @@
 							<div class="w-full p-px">
 								{#key output.id}
 									<img
+										loading="lazy"
 										class="w-full h-auto rounded-xl overflow-hidden border-2 border-c-bg-secondary
 										shadow-lg shadow-c-shadow/[var(--o-shadow-stronger)] transition bg-c-bg-secondary not-touch:group-hover:border-c-primary"
 										sizes={`(min-width: 1024px) calc(28rem / ${simpleGridCols}), calc(min(36rem, 100vw) / ${simpleGridCols})`}

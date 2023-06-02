@@ -1,1 +1,1 @@
-export const similarCount = 9;
+export const similarCount = 12;
