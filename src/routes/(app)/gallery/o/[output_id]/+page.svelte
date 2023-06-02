@@ -99,11 +99,17 @@
 			(output.generation.prompt.text.length > titleLength ? '...' : '')
 	);
 
-	let mounted = false;
+	let imageNaturalWidth: number | undefined = undefined;
 
-	onMount(() => {
-		mounted = true;
-	});
+	$: output.id, resetImageNaturalWidth();
+	let isInitial = true;
+	function resetImageNaturalWidth() {
+		if (isInitial) {
+			isInitial = false;
+			return;
+		}
+		imageNaturalWidth = undefined;
+	}
 </script>
 
 <MetaTag
@@ -133,7 +139,20 @@
 						class="max-h-[calc(100vh-110px)] md:max-h-[calc(100vh-150px)] max-w-full w-auto h-auto"
 					/>
 					<img
-						class="absolute left-0 top-0 w-full h-full"
+						class="absolute left-0 top-0 w-full h-full filter blur-2xl"
+						src={getImgProxySrc({
+							src: currentImageUrl,
+							preset: '64w'
+						})}
+						width={currentImageWidth}
+						height={currentImageHeight}
+						alt="Placeholder: {output.generation.prompt.text}"
+					/>
+					<img
+						bind:naturalWidth={imageNaturalWidth}
+						class="absolute left-0 top-0 w-full h-full transition ease-out duration-300 filter {imageNaturalWidth
+							? 'blur-0 opacity-100'
+							: 'blur-lg opacity-0'}"
 						{sizes}
 						{src}
 						{srcset}
