@@ -6,7 +6,7 @@ import { windowWidth } from '$ts/stores/window';
 import type { Page } from '@sveltejs/kit';
 import { derived, type Readable } from 'svelte/store';
 
-type TNavbarStickyType = 'auto' | 'sticky' | 'not-sticky';
+type TNavbarStickyType = 'auto-hiding' | 'fixed' | 'relative';
 
 interface TNavbarRouteDefinition {
 	pathname: string;
@@ -21,33 +21,34 @@ export const navbarRouteDefinitions = derived(
 			{
 				pathname: '/history',
 				stickyType: $isUserGalleryEditActive
-					? 'not-sticky'
+					? 'relative'
 					: $windowWidth < mdBreakpoint
-					? 'auto'
-					: 'sticky'
+					? 'auto-hiding'
+					: 'fixed'
 			},
-			{ pathname: '/gallery', stickyType: $windowWidth < mdBreakpoint ? 'auto' : 'sticky' },
-			{ pathname: '/blog', stickyType: $windowWidth < mdBreakpoint ? 'auto' : 'sticky' },
-			{ pathname: '/guide', stickyType: $windowWidth < mdBreakpoint ? 'auto' : 'sticky' },
+			{ pathname: '/gallery', stickyType: $windowWidth < mdBreakpoint ? 'auto-hiding' : 'fixed' },
+			{ pathname: '/blog', stickyType: $windowWidth < mdBreakpoint ? 'auto-hiding' : 'fixed' },
+			{ pathname: '/guide', stickyType: $windowWidth < mdBreakpoint ? 'auto-hiding' : 'fixed' },
+			{ pathname: '/docs', stickyType: $windowWidth < mdBreakpoint ? 'auto-hiding' : 'fixed' },
 			{
 				pathname: '/admin/gallery',
 				stickyType: $isAdminGalleryEditActive
-					? 'not-sticky'
+					? 'relative'
 					: $windowWidth < mdBreakpoint
-					? 'auto'
-					: 'sticky'
+					? 'auto-hiding'
+					: 'fixed'
 			},
 			{
 				pathname: '/admin/users',
-				stickyType: $windowWidth < mdBreakpoint ? 'auto' : 'sticky'
+				stickyType: $windowWidth < mdBreakpoint ? 'auto-hiding' : 'fixed'
 			},
 			{
 				pathname: '/generate',
-				stickyType: 'not-sticky'
+				stickyType: 'relative'
 			},
 			{
 				pathname: '/',
-				stickyType: 'sticky',
+				stickyType: 'fixed',
 				noStartsWith: true
 			}
 		];
@@ -65,7 +66,7 @@ export const navbarStickyType = derived<
 			(!r.noStartsWith && $page.url.pathname.startsWith(r.pathname))
 	);
 	if (!route) {
-		return 'sticky';
+		return 'fixed';
 	}
 	return route.stickyType;
 });

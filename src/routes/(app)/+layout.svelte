@@ -349,7 +349,7 @@
 				{#if appRoutes.includes($page.url.pathname)}
 					<slot />
 				{:else}
-					{#if !rawRoutes.includes($page.url.pathname) && ($navbarStickyType === undefined || $navbarStickyType !== 'not-sticky')}
+					{#if !rawRoutes.includes($page.url.pathname) && ($navbarStickyType === undefined || $navbarStickyType !== 'relative')}
 						<div
 							style={$navbarHeight ? `height: ${$navbarHeight}px` : ``}
 							class="h-16 md:h-18 w-full"

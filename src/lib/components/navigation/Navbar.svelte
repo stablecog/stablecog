@@ -51,12 +51,14 @@
 	<nav
 		bind:this={navbarElement}
 		bind:clientHeight={$navbarHeight}
-		style={$navbarStickyType === 'not-sticky' ? '' : 'position: fixed; top: 0; left: 0;'}
-		class="w-full flex flex-col z-60 transform transition duration-200 rounded-b-xl {notAtTheVeryTop &&
-		$navbarStickyType === 'auto' &&
+		style={$navbarStickyType === 'relative' || $navbarStickyType === undefined
+			? ''
+			: 'position: fixed; top: 0; left: 0;'}
+		class="w-full flex flex-col z-60 transform transition rounded-b-xl {notAtTheVeryTop &&
+		$navbarStickyType === 'auto-hiding' &&
 		scrollDirection === 'down'
 			? '-translate-y-[calc(100%+2px)]'
-			: ''} {$navbarStickyType === 'not-sticky' || !notAtTheVeryTop
+			: ''} {$navbarStickyType === 'relative' || !notAtTheVeryTop
 			? 'bg-c-bg/0 shadow-navbar-0'
 			: 'bg-c-bg shadow-navbar'}"
 	>

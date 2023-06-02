@@ -40,7 +40,7 @@
 
 <LayoutWrapper isAppRoute={false}>
 	<Navbar {notAtTheVeryTop} {scrollDirection} />
-	{#if !rawRoutes.includes($page.url.pathname) && ($navbarStickyType === undefined || $navbarStickyType !== 'not-sticky')}
+	{#if !rawRoutes.includes($page.url.pathname) && ($navbarStickyType === undefined || $navbarStickyType !== 'relative')}
 		<div style={$navbarHeight ? `height: ${$navbarHeight}px` : ``} class="h-16 md:h-18 w-full" />
 	{/if}
 	<main class="w-full flex-1 flex flex-col relative break-words">
