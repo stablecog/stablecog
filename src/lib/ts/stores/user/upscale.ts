@@ -16,6 +16,10 @@ import {
 import { isSuperAdmin } from '$ts/helpers/admin/roles';
 import { convertToDBTimeString } from '$ts/helpers/convertToDBTimeString';
 import { addToRecentlyUpdatedOutputIds } from '$ts/stores/user/recentlyUpdatedOutputIds';
+import {
+	STRIPE_PRODUCT_ID_OBJECTS_SUBSCRIPTIONS_MO,
+	roleToProductId
+} from '$ts/constants/stripePublic';
 
 export const upscales = writable<TUpscale[]>([]);
 
@@ -170,24 +174,34 @@ export async function submitInitialUpscaleRequest({
 	return { ...resJSON, ui_id: request.ui_id };
 }
 
-const productIdToMaxOngoingUpscalesCountObject = {
-	[PUBLIC_STRIPE_PRODUCT_ID_STARTER_SUBSCRIPTION]: 2,
-	[PUBLIC_STRIPE_PRODUCT_ID_PRO_SUBSCRIPTION]: 3,
-	[PUBLIC_STRIPE_PRODUCT_ID_ULTIMATE_SUBSCRIPTION]: 4
-};
-
 const baseCount = 1;
 
-const productIdToMaxOngoingUpscalesCount = (productId: string | undefined) => {
-	if (!productId) return baseCount;
-	const count = productIdToMaxOngoingUpscalesCountObject[productId];
+const productIdToMaxOngoingUpscalesCount = ({
+	productId,
+	roles
+}: {
+	productId: string | undefined;
+	roles: string[] | undefined;
+}) => {
+	if (!productId) {
+		if (!roles) return baseCount;
+		for (let i = 0; i < roles.length; i++) {
+			const pId = roleToProductId[roles[i]];
+			if (!pId) continue;
+			const count = STRIPE_PRODUCT_ID_OBJECTS_SUBSCRIPTIONS_MO[pId]?.parallel_upscales;
+			if (count) return count;
+		}
+		return baseCount;
+	}
+	const count = STRIPE_PRODUCT_ID_OBJECTS_SUBSCRIPTIONS_MO[productId]?.parallel_upscales;
 	if (!count) return baseCount;
 	return count;
 };
 
 export const maxOngoingUpscalesCount = derived(userSummary, ($userSummary) => {
 	const active_product_id = $userSummary?.product_id;
-	return productIdToMaxOngoingUpscalesCount(active_product_id);
+	const roles = $userSummary?.roles;
+	return productIdToMaxOngoingUpscalesCount({ productId: active_product_id, roles });
 });
 
 export const ongoingUpscalesCount = derived(upscales, ($upscales) => {

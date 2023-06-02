@@ -45,9 +45,6 @@
 	import { userGenerationFullOutputsQueryKey } from '$ts/stores/user/keys';
 	import { userSummary } from '$ts/stores/user/summary';
 	import { useQueryClient } from '@tanstack/svelte-query';
-	import { portal } from 'svelte-portal';
-	import { quadOut } from 'svelte/easing';
-	import { fade, fly } from 'svelte/transition';
 
 	export let type: 'history' | 'admin-gallery';
 

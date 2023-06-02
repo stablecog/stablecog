@@ -1,7 +1,7 @@
 import { apiUrl } from '$ts/constants/main';
 import type { TAvailableGenerationModelId } from '$ts/constants/generationModels';
 import type { TAvailableSchedulerId } from '$ts/constants/schedulers';
-import { get, writable } from 'svelte/store';
+import { writable } from 'svelte/store';
 import {
 	generationCostCompletionPerMs,
 	getCostCompletionPerMsFromGeneration
@@ -13,17 +13,15 @@ import {
 } from '$ts/animation/generationAnimation';
 import type { Tweened } from 'svelte/motion';
 import type { TGenerationImageCardType } from '$components/generationImage/types';
-import {
-	PUBLIC_STRIPE_PRODUCT_ID_PRO_SUBSCRIPTION,
-	PUBLIC_STRIPE_PRODUCT_ID_STARTER_SUBSCRIPTION,
-	PUBLIC_STRIPE_PRODUCT_ID_ULTIMATE_SUBSCRIPTION
-} from '$env/static/public';
 import { isSuperAdmin } from '$ts/helpers/admin/roles';
 import { userSummary } from '$ts/stores/user/summary';
 import { derived } from 'svelte/store';
 import { convertToDBTimeString } from '$ts/helpers/convertToDBTimeString';
 import { addToRecentlyUpdatedOutputIds } from '$ts/stores/user/recentlyUpdatedOutputIds';
-import { STRIPE_PRODUCT_ID_OBJECTS_SUBSCRIPTIONS_MO } from '$ts/constants/stripePublic';
+import {
+	STRIPE_PRODUCT_ID_OBJECTS_SUBSCRIPTIONS_MO,
+	roleToProductId
+} from '$ts/constants/stripePublic';
 
 export const generations = writable<TGeneration[]>([]);
 export const activeGeneration = writable<TGenerationWithSelectedOutput | undefined>(undefined);
@@ -309,16 +307,35 @@ export const setGenerationOutputUpscaledImageUrl = ({
 
 const baseCount = 1;
 
-const productIdToMaxOngoingGenerationsCount = (productId: string | undefined) => {
-	if (!productId) return baseCount;
-	const count = STRIPE_PRODUCT_ID_OBJECTS_SUBSCRIPTIONS_MO[productId].parallel_generations;
+const productIdToMaxOngoingGenerationsCount = ({
+	productId,
+	roles
+}: {
+	productId: string | undefined;
+	roles: string[] | undefined;
+}) => {
+	if (!productId) {
+		if (!roles) return baseCount;
+		for (let i = 0; i < roles.length; i++) {
+			const pId = roleToProductId[roles[i]];
+			if (!pId) continue;
+			const count = STRIPE_PRODUCT_ID_OBJECTS_SUBSCRIPTIONS_MO[pId]?.parallel_generations;
+			if (count) return count;
+		}
+		return baseCount;
+	}
+	const count = STRIPE_PRODUCT_ID_OBJECTS_SUBSCRIPTIONS_MO[productId]?.parallel_generations;
 	if (!count) return baseCount;
 	return count;
 };
 
 export const maxOngoingGenerationsCount = derived(userSummary, ($userSummary) => {
 	const active_product_id = $userSummary?.product_id;
-	return productIdToMaxOngoingGenerationsCount(active_product_id);
+	const roles = $userSummary?.roles;
+	return productIdToMaxOngoingGenerationsCount({
+		productId: active_product_id,
+		roles: roles
+	});
 });
 
 export const ongoingGenerationsCount = derived(generations, ($generations) => {

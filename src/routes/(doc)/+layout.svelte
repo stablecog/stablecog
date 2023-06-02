@@ -8,7 +8,6 @@
 	import { navbarHeight } from '$ts/stores/navbarHeight';
 	import { navbarStickyType } from '$ts/stores/stickyNavbar';
 	import { onMount } from 'svelte';
-	import Drawer from '$components/navigation/Drawer.svelte';
 
 	let notAtTheVeryTop = false;
 	const notAtTheVeryTopThreshold = 5;

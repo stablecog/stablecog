@@ -57,11 +57,18 @@ export type TStripeSupportedCurrency = (typeof STRIPE_CURRENCIES)[number];
 export type TStripeSupportedPriceIdCreditPacks = (typeof STRIPE_PRICE_IDS_CREDIT_PACKS)[number];
 export type TStripeSupportedProductIdCreditPacks = (typeof STRIPE_PRODUCT_IDS_CREDIT_PACKS)[number];
 
+export const roleToProductId: Record<string, string> = {
+	STARTER: PUBLIC_STRIPE_PRODUCT_ID_STARTER_SUBSCRIPTION,
+	PRO: PUBLIC_STRIPE_PRODUCT_ID_PRO_SUBSCRIPTION,
+	ULTIMATE: PUBLIC_STRIPE_PRODUCT_ID_ULTIMATE_SUBSCRIPTION
+};
+
 export const STRIPE_PRODUCT_ID_OBJECTS_SUBSCRIPTIONS_MO: {
 	[prodcutId in TStripeSupportedProductIdSubscriptions]: {
 		product_id: TStripeSupportedProductIdSubscriptions;
 		monthly_images: number;
 		parallel_generations: number;
+		parallel_upscales: number;
 		prices: {
 			[priceId in TStripeSupportedPriceIdSubscriptionsMo]: {
 				currencies: {
@@ -77,6 +84,7 @@ export const STRIPE_PRODUCT_ID_OBJECTS_SUBSCRIPTIONS_MO: {
 		product_id: PUBLIC_STRIPE_PRODUCT_ID_STARTER_SUBSCRIPTION,
 		monthly_images: 1750,
 		parallel_generations: 2,
+		parallel_upscales: 2,
 		prices: {
 			[PUBLIC_STRIPE_PRICE_ID_STARTER_SUBSCRIPTION_MO]: {
 				currencies: {
@@ -94,6 +102,7 @@ export const STRIPE_PRODUCT_ID_OBJECTS_SUBSCRIPTIONS_MO: {
 		product_id: PUBLIC_STRIPE_PRODUCT_ID_PRO_SUBSCRIPTION,
 		monthly_images: 4500,
 		parallel_generations: 3,
+		parallel_upscales: 3,
 		prices: {
 			[PUBLIC_STRIPE_PRICE_ID_PRO_SUBSCRIPTION_MO]: {
 				currencies: {
@@ -111,6 +120,7 @@ export const STRIPE_PRODUCT_ID_OBJECTS_SUBSCRIPTIONS_MO: {
 		product_id: PUBLIC_STRIPE_PRODUCT_ID_ULTIMATE_SUBSCRIPTION,
 		monthly_images: 10000,
 		parallel_generations: 4,
+		parallel_upscales: 4,
 		prices: {
 			[PUBLIC_STRIPE_PRICE_ID_ULTIMATE_SUBSCRIPTION_MO]: {
 				currencies: {
