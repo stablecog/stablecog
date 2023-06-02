@@ -152,7 +152,7 @@
 						bind:naturalWidth={imageNaturalWidth}
 						class="absolute left-0 top-0 w-full h-full transition ease-out duration-300 filter {imageNaturalWidth
 							? 'blur-0 opacity-100'
-							: 'blur-lg opacity-0'}"
+							: 'blur-md opacity-0'}"
 						{sizes}
 						{src}
 						{srcset}
