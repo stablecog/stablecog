@@ -202,11 +202,10 @@
 				lastClickedOutputId.set(generation.selected_output.id);
 				return;
 			}
-			if (
-				rightButtonContainer &&
-				leftButtonContainer &&
-				doesContainTarget(e.target, [rightButtonContainer, leftButtonContainer])
-			) {
+			if (rightButtonContainer && doesContainTarget(e.target, [rightButtonContainer])) {
+				return;
+			}
+			if (leftButtonContainer && doesContainTarget(e.target, [leftButtonContainer])) {
 				return;
 			}
 			e.currentTarget.blur();
@@ -243,73 +242,78 @@
 	</a>
 {/if}
 {#if cardType !== 'generate'}
+	{@const showLeftContainer =
+		(cardType === 'admin-gallery' || cardType === 'history') &&
+		!(cardType === 'history' && generation.selected_output.is_deleted) &&
+		!(
+			cardType === 'history' &&
+			$userGalleryCurrentView === 'favorites' &&
+			!generation.selected_output.is_favorited
+		)}
 	<div
-		class="w-full h-full absolute left-0 top-0 pointer-events-none flex items-start justify-between"
-	>
-		<div
-			class="w-full flex justify-between transition items-start
+		class="w-full h-16 absolute left-0 top-0 pointer-events-none flex items-start {showLeftContainer
+			? 'justify-between'
+			: 'justify-end'} transition
 			not-touch:group-focus-within:translate-y-0 not-touch:group-hover:translate-y-0
 			{isGalleryEditActive || overlayShouldShow ? 'translate-y-0' : '-translate-y-full'}"
-		>
+	>
+		{#if showLeftContainer}
 			<div bind:this={leftButtonContainer} class="pointer-events-none relative">
-				{#if (cardType === 'admin-gallery' || cardType === 'history') && !(cardType === 'history' && generation.selected_output.is_deleted) && !(cardType === 'history' && $userGalleryCurrentView === 'favorites' && !generation.selected_output.is_favorited)}
-					<IconButton
-						class="p-2px pointer-events-auto"
-						name="Select"
-						onClick={() => {
-							if (cardType === 'admin-gallery' && !$isAdminGalleryEditActive) {
-								isAdminGalleryEditActive.set(true);
-							} else if (cardType === 'history' && !$isUserGalleryEditActive) {
-								isUserGalleryEditActive.set(true);
-							}
-							addToGalleryActionableItems({
-								output_id: generation.selected_output.id,
-								generation_id: generation.id || '',
-								cardType
-							});
-						}}
-					>
-						<div class="rounded-full border-3 border-c-primary w-6 h-6 transition p-0.75">
-							<div
-								class="w-full h-full rounded-full bg-c-primary transform transition {isInGallerySelectedIds
-									? 'scale-100 opacity-100'
-									: 'scale-0 opacity-0'}"
-							/>
-						</div>
-					</IconButton>
+				<IconButton
+					class="p-2px pointer-events-auto"
+					name="Select"
+					onClick={() => {
+						if (cardType === 'admin-gallery' && !$isAdminGalleryEditActive) {
+							isAdminGalleryEditActive.set(true);
+						} else if (cardType === 'history' && !$isUserGalleryEditActive) {
+							isUserGalleryEditActive.set(true);
+						}
+						addToGalleryActionableItems({
+							output_id: generation.selected_output.id,
+							generation_id: generation.id || '',
+							cardType
+						});
+					}}
+				>
+					<div class="rounded-full border-3 border-c-primary w-6 h-6 transition p-0.75">
+						<div
+							class="w-full h-full rounded-full bg-c-primary transform transition {isInGallerySelectedIds
+								? 'scale-100 opacity-100'
+								: 'scale-0 opacity-0'}"
+						/>
+					</div>
+				</IconButton>
+			</div>
+		{/if}
+		{#if !isGalleryEditActive && !generation.selected_output.is_deleted}
+			<div
+				bind:this={rightButtonContainer}
+				class="flex flex-row flex-wrap items-center justify-end transition transform
+					pointer-events-auto"
+			>
+				{#if cardType !== 'admin-gallery'}
+					<CopyButton
+						class="p-1.5"
+						stringToCopy={generation.prompt.text}
+						bind:copied={promptCopied}
+						bind:copiedTimeout={promptCopiedTimeout}
+					/>
+				{/if}
+				{#if cardType === 'history' || cardType === 'stage'}
+					<DownloadGenerationButton class="p-1.5 -ml-1.5" {generation} />
+				{:else if cardType === 'gallery'}
+					<GenerateButton
+						{generation}
+						class="p-1.5 -ml-1.5"
+						label="Generate similar to: {shortPrompt}..."
+					/>
 				{/if}
 			</div>
-			{#if !isGalleryEditActive && !generation.selected_output.is_deleted}
-				<div
-					bind:this={rightButtonContainer}
-					class="flex flex-row flex-wrap items-center justify-end transition transform
-					pointer-events-auto"
-				>
-					{#if cardType !== 'admin-gallery'}
-						<CopyButton
-							class="p-1.5"
-							stringToCopy={generation.prompt.text}
-							bind:copied={promptCopied}
-							bind:copiedTimeout={promptCopiedTimeout}
-						/>
-					{/if}
-					{#if cardType === 'history' || cardType === 'stage'}
-						<DownloadGenerationButton class="p-1.5 -ml-1.5" {generation} />
-					{:else if cardType === 'gallery'}
-						<GenerateButton
-							{generation}
-							class="p-1.5 -ml-1.5"
-							label="Generate similar to: {shortPrompt}..."
-						/>
-					{/if}
-				</div>
-			{:else if cardType === 'history' && $userGalleryCurrentView !== 'favorites' && generation.selected_output.is_favorited && !generation.selected_output.is_deleted}
-				<div class="p-1">
-					<FavoriteButton {generation} modalType="history" />
-				</div>
-			{/if}
-		</div>
-		<div />
+		{:else if cardType === 'history' && $userGalleryCurrentView !== 'favorites' && generation.selected_output.is_favorited && !generation.selected_output.is_deleted}
+			<div class="p-1">
+				<FavoriteButton {generation} modalType="history" />
+			</div>
+		{/if}
 	</div>
 {/if}
 <!-- Deleted, approved or rejected -->
