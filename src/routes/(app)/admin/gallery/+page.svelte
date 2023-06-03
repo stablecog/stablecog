@@ -2,6 +2,12 @@
 	import { browser } from '$app/environment';
 	import { page } from '$app/stores';
 	import BatchEditBar from '$components/BatchEditBar.svelte';
+	import {
+		lgBreakpoint,
+		mdBreakpoint,
+		xlBreakpoint,
+		xxlBreakpoint
+	} from '$components/generationFullScreen/constants';
 	import GenerationFullScreen from '$components/generationFullScreen/GenerationFullScreen.svelte';
 	import GenerationGridInfinite2 from '$components/grids/GenerationGridInfinite2.svelte';
 	import IconAnimatedSpinner from '$components/icons/IconAnimatedSpinner.svelte';
@@ -27,6 +33,7 @@
 		isAdminGalleryEditActive
 	} from '$ts/stores/admin/gallery';
 	import { userSummary } from '$ts/stores/user/summary';
+	import { windowWidth } from '$ts/stores/window';
 	import { activeGeneration } from '$userStores/generation';
 	import { createInfiniteQuery, type CreateInfiniteQueryResult } from '@tanstack/svelte-query';
 
@@ -71,16 +78,6 @@
 			: undefined;
 
 	$: $allUserGenerationFullOutputsQuery?.data?.pages, onPagesChanged();
-	$: gridRerenderKey = `admin_user_generation_full_outputs_${$adminGalleryCurrentFilter}_${
-		$allUserGenerationFullOutputsQuery?.isInitialLoading
-	}_${searchString ? searchString : ''}_${modelIdFilters ? modelIdFilters.join(',') : ''}_${
-		$allUserGenerationFullOutputsQuery?.isStale
-	}_${
-		$allUserGenerationFullOutputsQuery?.data?.pages?.[0]?.outputs &&
-		$allUserGenerationFullOutputsQuery.data.pages[0].outputs.length > 0
-			? $allUserGenerationFullOutputsQuery.data.pages[0].outputs[0].id
-			: false
-	}`;
 
 	const onPagesChanged = () => {
 		if (!$page.data.session?.user.id || !$allUserGenerationFullOutputsQuery) return;
@@ -216,6 +213,15 @@
 				<GenerationGridInfinite2
 					generationsQuery={allUserGenerationFullOutputsQuery}
 					cardType="admin-gallery"
+					cols={$windowWidth > xxlBreakpoint
+						? 6
+						: $windowWidth > xlBreakpoint
+						? 5
+						: $windowWidth > lgBreakpoint
+						? 4
+						: $windowWidth > mdBreakpoint
+						? 3
+						: 2}
 				/>
 			{/if}
 		</div>
