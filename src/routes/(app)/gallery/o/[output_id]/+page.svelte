@@ -138,7 +138,7 @@
 						class="max-h-[calc(100vh-110px)] md:max-h-[calc(100vh-150px)] max-w-full w-auto h-auto"
 					/>
 					<img
-						class="absolute left-0 top-0 w-full h-full filter blur-xl"
+						class="absolute left-0 top-0 w-full h-full filter blur-xl transform scale-102"
 						src={getImgProxySrc({
 							src: currentImageUrl,
 							preset: '64w'
@@ -149,9 +149,9 @@
 					/>
 					<img
 						bind:naturalWidth={imageNaturalWidth}
-						class="absolute left-0 top-0 w-full h-full transition ease-out duration-300 filter {imageNaturalWidth
-							? 'blur-0 opacity-100'
-							: 'blur-md opacity-0'}"
+						class="absolute left-0 top-0 w-full h-full transition ease-in {imageNaturalWidth
+							? 'opacity-100'
+							: 'opacity-0'}"
 						{sizes}
 						{src}
 						{srcset}
