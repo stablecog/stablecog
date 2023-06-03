@@ -72,7 +72,7 @@
 				}}
 				{placeholder}
 				type="text"
-				class="text-base w-full text-c-on-bg self-stretch overflow-ellipsis ring-0 transition ring-c-primary/20 focus:ring-c-primary/30 focus:ring-2
+				class="touch-manipulation text-base w-full text-c-on-bg self-stretch overflow-ellipsis ring-0 transition ring-c-primary/20 focus:ring-c-primary/30 focus:ring-2
 						pl-4 py-3.5 {hasTitle ? 'rounded-r-xl' : 'rounded-xl'} bg-transparent placeholder:text-c-on-bg/40
 					not-touch:hover:ring-2 not-touch:group-hover:ring-2
 					{showClearInputButton ? 'pr-10 md:pr-12' : 'pr-4'}"
@@ -108,7 +108,7 @@
 				type="number"
 				inputmode="numeric"
 				pattern="[0-9]*"
-				class="text-base w-full text-c-on-bg self-stretch overflow-ellipsis ring-0 transition ring-c-primary/15 focus:ring-c-primary/25 focus:ring-2
+				class="touch-manipulation text-base w-full text-c-on-bg self-stretch overflow-ellipsis ring-0 transition ring-c-primary/15 focus:ring-c-primary/25 focus:ring-2
 					pl-4 py-3.5 {hasTitle ? 'rounded-r-xl' : 'rounded-xl'} bg-transparent placeholder:text-c-on-bg/40
 					not-touch:hover:ring-2 not-touch:group-hover:ring-2
 					{showClearInputButton ? 'pr-10 md:pr-12' : 'pr-4'}"

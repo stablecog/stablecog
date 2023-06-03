@@ -270,7 +270,7 @@
 			on:dragover|preventDefault|stopPropagation={() => (isDraggedInside = true)}
 			on:drop|preventDefault|stopPropagation={(e) => setFilesIfValid(e)}
 			for="file-input"
-			class="flex items-center hover:cursor-pointer relative {$generationInitImageSrc &&
+			class="touch-manipulation flex items-center hover:cursor-pointer relative {$generationInitImageSrc &&
 			$generationInitImageWidth &&
 			$generationInitImageHeight
 				? 'opacity-0 w-0 h-0 overflow-hidden pointer-events-none'

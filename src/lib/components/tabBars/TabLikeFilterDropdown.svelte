@@ -98,7 +98,7 @@
 				setDropdownWrapperPosition();
 				toggleDropdown();
 			}}
-			class="flex-1 ring-2 text-left flex items-center justify-between min-w-0 {hasTitle
+			class="touch-manipulation flex-1 ring-2 text-left flex items-center justify-between min-w-0 {hasTitle
 				? 'px-4'
 				: 'px-5'} py-3.5 relative
 				group transition-all duration-150 z-30 gap-2 {isDropdownOpen
@@ -170,7 +170,7 @@
 							{#each items as item, index (item.value)}
 								<label
 									for={item.label}
-									class="w-full text-left flex items-center justify-start min-w-0 {hasTitle
+									class="touch-manipulation w-full text-left flex items-center justify-start min-w-0 {hasTitle
 										? 'px-4'
 										: 'px-5'} py-3.5 relative z-0 group
 											{index === items.length - 1 ? 'rounded-b-lg' : ''} cursor-pointer"

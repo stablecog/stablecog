@@ -75,7 +75,7 @@
 				}
 			}}
 			{placeholder}
-			class="hide-scrollbar resize-none text-base w-full text-c-on-bg self-stretch overflow-ellipsis ring-0 transition ring-c-primary/15 focus:ring-c-primary/25 focus:ring-2
+			class="touch-manipulation hide-scrollbar resize-none text-base w-full text-c-on-bg self-stretch overflow-ellipsis ring-0 transition ring-c-primary/15 focus:ring-c-primary/25 focus:ring-2
 						pl-4 py-3.5 {hasTitle ? 'rounded-r-xl' : 'rounded-xl'} bg-transparent placeholder:text-c-on-bg/40
 				not-touch:hover:ring-2 not-touch:group-hover:ring-2 {showClearInputButton
 				? 'pr-10 md:pr-12'

@@ -17,7 +17,7 @@
 		<div class="w-full h-full bg-c-bg-secondary" />
 	</div>
 	<button
-		class="self-stretch p-3.5 relative group rounded-r-xl"
+		class="touch-manipulation self-stretch p-3.5 relative group rounded-r-xl"
 		type="button"
 		on:click={onClick}
 		{disabled}
