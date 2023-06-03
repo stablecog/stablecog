@@ -1,5 +1,5 @@
-import type { RequestHandler } from '@sveltejs/kit';
+import { json, type RequestHandler } from '@sveltejs/kit';
 
 export const POST: RequestHandler = async ({ request }) => {
-	return new Response('OK', { status: 200 });
+	return json({ message: 'Hello from the server!' });
 };
