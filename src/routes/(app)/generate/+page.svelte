@@ -235,7 +235,7 @@
 </script>
 
 <MetaTag
-	title="Stablecog | Generate"
+	title="Generate | Stablecog"
 	description="Create amazing art in seconds with AI. Free, multilingual and open-source AI image generator using Stable Diffusion and Kandinsky."
 	image_url="{canonicalUrl}/previews/home-{previewImageVersion}.png"
 />
