@@ -818,6 +818,7 @@ const en: BaseTranslation = {
 		ChaptersTitle: 'Chapters',
 		ChapterTitle: 'Chapter'
 	},
+	Try: { PageTitle: 'Try' },
 	Legal: {
 		TermsOfServiceTitle: 'Terms of Service',
 		PrivacyPolicyTitle: 'Privacy Policy',

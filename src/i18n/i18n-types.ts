@@ -2397,6 +2397,12 @@ type RootTranslation = {
 		 */
 		ChapterTitle: string
 	}
+	Try: {
+		/**
+		 * T​r​y
+		 */
+		PageTitle: string
+	}
 	Legal: {
 		/**
 		 * T​e​r​m​s​ ​o​f​ ​S​e​r​v​i​c​e
@@ -4823,6 +4829,12 @@ export type TranslationFunctions = {
 		 * Chapter
 		 */
 		ChapterTitle: () => LocalizedString
+	}
+	Try: {
+		/**
+		 * Try
+		 */
+		PageTitle: () => LocalizedString
 	}
 	Legal: {
 		/**

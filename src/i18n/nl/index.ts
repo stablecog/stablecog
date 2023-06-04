@@ -830,6 +830,7 @@ const nl: Translation = {
 		ChaptersTitle: 'Hoofdstukken',
 		ChapterTitle: 'Hoofdstuk'
 	},
+	Try: { PageTitle: 'Try' },
 	Legal: {
 		TermsOfServiceTitle: 'Gebruiksvoorwaarden',
 		PrivacyPolicyTitle: 'Privacybeleid',

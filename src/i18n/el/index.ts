@@ -833,6 +833,7 @@ const es: Translation = {
 		ChaptersTitle: 'Chapters',
 		ChapterTitle: 'Chapter'
 	},
+	Try: { PageTitle: 'Try' },
 	Legal: {
 		TermsOfServiceTitle: 'Όροι χρήσης',
 		PrivacyPolicyTitle: 'Πολιτική Απορρήτου',

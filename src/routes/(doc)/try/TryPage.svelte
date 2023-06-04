@@ -18,10 +18,12 @@
 	export let parentItem: TSidebarItem | null = null;
 	export let dirTree: Writable<TDirTreeItem[]>;
 
-	const rootPathnames = ['/try', '/try/models'];
+	const rootPathnames = ['/try'];
 
 	$: dirTree?.set([
-		...(parentItem?.title ? [{ title: parentItem?.title, href: parentItem.pathname }] : []),
+		...(parentItem?.title && !rootPathnames.includes(parentItem.pathname)
+			? [{ title: parentItem?.title, href: parentItem.pathname }]
+			: []),
 		{ title: sidebarItem?.title || '', href: sidebarItem?.pathname || '' }
 	]);
 

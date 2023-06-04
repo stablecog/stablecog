@@ -838,6 +838,7 @@ const ja: Translation = {
 		ChaptersTitle: 'チャプター',
 		ChapterTitle: 'チャプター'
 	},
+	Try: { PageTitle: 'Try' },
 	Legal: {
 		TermsOfServiceTitle: '利用規約',
 		PrivacyPolicyTitle: 'プライバシーポリシー',

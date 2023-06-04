@@ -820,6 +820,7 @@ const bg: Translation = {
 		ChaptersTitle: 'Съдържание',
 		ChapterTitle: 'Глава'
 	},
+	Try: { PageTitle: 'Try' },
 	Legal: {
 		TermsOfServiceTitle: 'Условия на ползване',
 		PrivacyPolicyTitle: 'Поверителност',

@@ -1,7 +1,7 @@
 import {
 	entries,
 	flatTrySidebarShallow,
-	guideSidebar,
+	trySidebar,
 	previewBaseUrl
 } from '$docroutes/try/constants';
 import { getEntryFromPathname, getSidebarItemFromPathname } from '$components/docs/helpers';
@@ -15,7 +15,7 @@ export const load: ServerLoad = async ({ url }) => {
 		pathname: url.pathname
 	});
 	const { sidebarItem, parentItem } = getSidebarItemFromPathname({
-		sidebarItem: guideSidebar,
+		sidebarItem: trySidebar,
 		pathname: url.pathname
 	});
 	return {

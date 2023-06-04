@@ -830,6 +830,7 @@ const tr: Translation = {
 		ChaptersTitle: 'Bölümler',
 		ChapterTitle: 'Bölüm'
 	},
+	Try: { PageTitle: 'Try' },
 	Legal: {
 		TermsOfServiceTitle: 'Kullanım Şartları',
 		PrivacyPolicyTitle: 'Gizlilik Politikası',
