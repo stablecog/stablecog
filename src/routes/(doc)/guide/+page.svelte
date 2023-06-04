@@ -2,6 +2,13 @@
 	import GuidePage from '$docroutes/guide/GuidePage.svelte';
 
 	export let data;
+
+	$: data.dirTree?.set([
+		...(data.parentItem?.title
+			? [{ title: data.parentItem?.title, href: data.parentItem.pathname }]
+			: []),
+		{ title: data.sidebarItem?.title || '', href: data.sidebarItem?.pathname || '' }
+	]);
 </script>
 
 <GuidePage

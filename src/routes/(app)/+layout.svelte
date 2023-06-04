@@ -31,7 +31,7 @@
 		generationInitImageWidth
 	} from '$ts/stores/generationSettings';
 	import { navbarHeight } from '$ts/stores/navbarHeight';
-	import { navbarStickyType } from '$ts/stores/stickyNavbar';
+	import { navbarStickyType } from '$ts/stores/navbar.js';
 	import { underDevelopment } from '$ts/stores/underDevelopment';
 	import {
 		activeGeneration,

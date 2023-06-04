@@ -19,7 +19,7 @@
 		modalOutTransitionProps
 	} from '$ts/animation/constants';
 	import { userSummary } from '$ts/stores/user/summary';
-	import { navbarStickyType } from '$ts/stores/stickyNavbar';
+	import { isNoCreditsInfoRoute, navbarStickyType } from '$ts/stores/navbar';
 	import { isDrawerOpen } from '$ts/stores/isDrawerOpen';
 	import IconSidebar from '$components/icons/IconSidebar.svelte';
 	import ButtonHoverEffect from '$components/buttons/ButtonHoverEffect.svelte';
@@ -31,10 +31,14 @@
 	import IconLive from '$components/icons/IconLive.svelte';
 	import Tooltip from '$components/tooltips/Tooltip.svelte';
 	import TooltipProvider from '$components/tooltips/TooltipProvider.svelte';
+	import type { Writable } from 'svelte/store';
+	import type { DirTreeItem } from '../../../routes/proxy+layout';
+	import IconChevronDown from '$components/icons/IconChevronDown.svelte';
 	/* import BannerWrapper from '$components/BannerWrapper.svelte'; */
 
 	export let notAtTheVeryTop = false;
 	export let scrollDirection: 'up' | 'down' = 'down';
+	export let dirTree: Writable<DirTreeItem[]>;
 
 	let isSignInModalOpen = false;
 	let isAccountMenuOpen = false;
@@ -65,11 +69,11 @@
 		<!-- <BannerWrapper /> -->
 		<div class="w-full flex flex-row items-center justify-between relative z-0">
 			<PageLoadProgressBar />
-			<div class="flex xl:flex-1 self-stretch">
+			<div class="flex flex-1 md:flex-none xl:flex-1 self-stretch min-w-0">
 				<button
 					aria-label="Toggle Drawer"
 					on:click={() => isDrawerOpen.set(!$isDrawerOpen)}
-					class="relative self-stretch p-0.5 group overflow-hidden md:hidden {routesWithoutDrawer.includes(
+					class="flex-shrink-0 relative self-stretch p-0.5 group overflow-hidden md:hidden {routesWithoutDrawer.includes(
 						$page.url.pathname
 					)
 						? 'hidden'
@@ -86,11 +90,35 @@
 				<LogoButton
 					class="{routesWithoutDrawer.includes($page.url.pathname) ? 'flex' : 'hidden'} md:flex"
 				/>
+				{#if $dirTree && $dirTree.length > 0}
+					<div class="pr-2 h-full flex-shrink min-w-0">
+						<div
+							class="w-full h-full overflow-x-auto items-center md:hidden text-sm font-medium text-c-on-bg/75 pr-2"
+						>
+							<div class="flex items-center justify-start h-full">
+								{#each $dirTree as treeItem, index}
+									<a
+										class="px-2 h-full flex items-center whitespace-nowrap relative group"
+										href={treeItem.href}
+									>
+										<ButtonHoverEffect size="sm" />
+										<p class="not-touch:group-hover:text-c-primary transition">{treeItem.title}</p>
+									</a>
+									{#if index !== $dirTree.length - 1}
+										<IconChevronDown
+											class="w-4 h-4 flex-shrink-0 transform -rotate-90 text-c-on-bg/50"
+										/>
+									{/if}
+								{/each}
+							</div>
+						</div>
+					</div>
+				{/if}
 			</div>
 			<div class="hidden md:flex md:w-full md:max-w-[19rem] lg:max-w-[36rem] md:ml-2 xl:ml-0">
 				<NavigationTabBar />
 			</div>
-			<div class="flex flex-1 flex-wrap items-center justify-end relative">
+			<div class="flex md:flex-1 flex-wrap items-center justify-end relative">
 				<Tooltip label={$LL.Scl.Discord()} text={$LL.Scl.Discord()} portalContainer={navbarElement}>
 					<IconButton
 						class="py-2 hidden md:block"
@@ -116,7 +144,7 @@
 					<IconButton
 						class="py-2 hidden md:block"
 						href="/guide"
-						target="_blank"
+						target={$page.url.pathname.startsWith('/guide') ? undefined : '_blank'}
 						name={$LL.Guide.PageTitle()}
 					>
 						<IconGuide
@@ -136,7 +164,7 @@
 					<IconButton
 						class="py-2 hidden md:block"
 						href="/blog"
-						target="_blank"
+						target={$page.url.pathname.startsWith('/blog') ? undefined : '_blank'}
 						name={$LL.Blog.TitleAlt()}
 					>
 						<IconBlog
@@ -166,9 +194,9 @@
 				<div class="flex items-center justify-end pl-2 pr-3.5 md:pl-2.5 md:pr-5">
 					{#if $page.data.session && $userSummary}
 						<div
-							class="flex flex-col items-end mr-3.5 md:mr-4 {$page.url.pathname === '/' &&
-							$themeApp === 'light' &&
-							!notAtTheVeryTop
+							class="flex-col items-end mr-3.5 md:mr-4 {$isNoCreditsInfoRoute
+								? 'hidden md:flex'
+								: 'flex'} {$page.url.pathname === '/' && $themeApp === 'light' && !notAtTheVeryTop
 								? 'text-c-bg'
 								: 'text-c-on-bg'}"
 						>

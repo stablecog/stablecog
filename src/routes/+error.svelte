@@ -9,7 +9,7 @@
 	import Navbar from '$components/navigation/Navbar.svelte';
 	import Footer from '$components/navigation/Footer.svelte';
 	import { appRoutes, rawRoutes } from '$ts/constants/routes';
-	import { navbarStickyType } from '$ts/stores/stickyNavbar';
+	import { navbarStickyType } from '$ts/stores/navbar';
 	import { navbarHeight } from '$ts/stores/navbarHeight';
 
 	let notAtTheVeryTop = false;

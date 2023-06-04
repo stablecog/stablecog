@@ -8,7 +8,7 @@ import { getEntryFromPathname, getSidebarItemFromPathname } from '$components/do
 import type { ServerLoad } from '@sveltejs/kit';
 
 export const load: ServerLoad = async ({ url }) => {
-	const sidebarItem = getSidebarItemFromPathname({
+	const { sidebarItem, parentItem } = getSidebarItemFromPathname({
 		sidebarItem: docsSidebar,
 		pathname: url.pathname
 	});
@@ -22,6 +22,7 @@ export const load: ServerLoad = async ({ url }) => {
 	return {
 		metadata: entry.metadata,
 		content: entry.default,
-		sidebarItem
+		sidebarItem,
+		parentItem
 	};
 };

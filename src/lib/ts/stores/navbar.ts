@@ -70,3 +70,12 @@ export const navbarStickyType = derived<
 	}
 	return route.stickyType;
 });
+
+export const noCreditInfoRoutes = ['/guide', '/docs'];
+
+export const isNoCreditsInfoRoute = derived<
+	[Readable<Page<Record<string, string>, string | null>>],
+	boolean
+>([page], ([$page]) => {
+	return noCreditInfoRoutes.some((r) => $page.url.pathname.startsWith(r));
+});

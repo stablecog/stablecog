@@ -96,21 +96,30 @@ export async function getEntryFromPathname({
 
 export function getSidebarItemFromPathname({
 	sidebarItem,
-	pathname
+	pathname,
+	parentItem
 }: {
 	sidebarItem: TSidebarItem;
 	pathname: string;
-}): TSidebarItem | null {
+	parentItem?: TSidebarItem;
+}): { sidebarItem: TSidebarItem | undefined; parentItem: TSidebarItem | undefined } {
 	if (sidebarItem.pathname === pathname) {
-		return sidebarItem;
+		return {
+			sidebarItem,
+			parentItem
+		};
 	}
 	if (sidebarItem.children) {
 		for (const child of sidebarItem.children) {
-			const result = getSidebarItemFromPathname({ sidebarItem: child, pathname });
-			if (result) {
+			const result = getSidebarItemFromPathname({
+				sidebarItem: child,
+				pathname,
+				parentItem: sidebarItem
+			});
+			if (result.sidebarItem) {
 				return result;
 			}
 		}
 	}
-	return null;
+	return { sidebarItem: undefined, parentItem: undefined };
 }

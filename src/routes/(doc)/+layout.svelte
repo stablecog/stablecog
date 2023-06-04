@@ -6,8 +6,10 @@
 	import Navbar from '$components/navigation/Navbar.svelte';
 	import { rawRoutes } from '$ts/constants/routes';
 	import { navbarHeight } from '$ts/stores/navbarHeight';
-	import { navbarStickyType } from '$ts/stores/stickyNavbar';
+	import { navbarStickyType } from '$ts/stores/navbar';
 	import { onMount } from 'svelte';
+
+	export let data;
 
 	let notAtTheVeryTop = false;
 	const notAtTheVeryTopThreshold = 5;
@@ -38,7 +40,7 @@
 <svelte:window on:scroll|passive={setNavbarState} />
 
 <LayoutWrapper isAppRoute={false}>
-	<Navbar {notAtTheVeryTop} {scrollDirection} />
+	<Navbar {notAtTheVeryTop} {scrollDirection} dirTree={data.dirTree} />
 	{#if !rawRoutes.includes($page.url.pathname) && ($navbarStickyType === undefined || $navbarStickyType !== 'relative')}
 		<div style={$navbarHeight ? `height: ${$navbarHeight}px` : ``} class="h-16 md:h-18 w-full" />
 	{/if}

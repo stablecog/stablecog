@@ -59,6 +59,12 @@ export const load: LayoutLoad = async (event) => {
 		globalSeed,
 		globalSeedStore: writable<number>(globalSeed),
 		isLeftSidebarHidden,
-		isLeftSidebarHiddenStore: writable<boolean>(isLeftSidebarHidden)
+		isLeftSidebarHiddenStore: writable<boolean>(isLeftSidebarHidden),
+		dirTree: writable<DirTreeItem[]>([])
 	};
 };
+
+export interface DirTreeItem {
+	title: string;
+	href: string;
+}
