@@ -10,4 +10,6 @@
 	sidebarItem={data.sidebarItem}
 	prev={data.metadata.prev}
 	next={data.metadata.next}
+	parentItem={data.parentItem}
+	dirTree={data.dirTree}
 />
