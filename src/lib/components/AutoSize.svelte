@@ -11,6 +11,6 @@
 		style="width: {clientWidth}px; height: {clientHeight}px;"
 		class="overflow-auto {hideScroll ? 'hide-scrollbar' : ''}"
 	>
-		<slot />
+		<slot {clientWidth} {clientHeight} />
 	</div>
 </div>

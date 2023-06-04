@@ -18,14 +18,12 @@
 		{name}
 	>
 		<Slider.Track class="relative h-6px grow rounded-full bg-c-bg-tertiary">
-			<Slider.Range
-				class="absolute h-6px rounded-full transition bg-c-on-bg group-active:bg-c-primary"
-			/>
+			<Slider.Range class="absolute h-6px rounded-full transition bg-c-on-bg" />
 		</Slider.Track>
 		<Slider.Thumb
-			class="block ring-0 ring-c-on-bg/25 group-hover:ring-[5px] group-active:ring-c-primary/50 
+			class="block ring-0 ring-c-on-bg/25 group-hover:ring-[5px] 
       transition shadow-lg shadow-c-shadow/[var(--o-shadow-strongest)] h-4.5 w-4.5 rounded-full bg-c-on-bg
-      group-active:bg-c-primary group-active:ring-[2.5px] outline-none transform opacity-0 scale-75 group-hover:scale-100
+			group-active:ring-[2.5px] outline-none transform opacity-0 scale-75 group-hover:scale-100
       group-hover:opacity-100"
 		/>
 	</Slider.Root>
