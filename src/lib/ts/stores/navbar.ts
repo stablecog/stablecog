@@ -71,7 +71,7 @@ export const navbarStickyType = derived<
 	return route.stickyType;
 });
 
-export const noCreditInfoRoutes = ['/guide', '/docs'];
+export const noCreditInfoRoutes = ['/guide', '/docs', '/try'];
 
 export const isNoCreditsInfoRoute = derived<
 	[Readable<Page<Record<string, string>, string | null>>],

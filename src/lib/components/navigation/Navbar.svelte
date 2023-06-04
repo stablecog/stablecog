@@ -32,13 +32,13 @@
 	import Tooltip from '$components/tooltips/Tooltip.svelte';
 	import TooltipProvider from '$components/tooltips/TooltipProvider.svelte';
 	import type { Writable } from 'svelte/store';
-	import type { DirTreeItem } from '../../../routes/proxy+layout';
+	import type { TDirTreeItem } from '$routes/+layout';
 	import IconChevronDown from '$components/icons/IconChevronDown.svelte';
 	/* import BannerWrapper from '$components/BannerWrapper.svelte'; */
 
 	export let notAtTheVeryTop = false;
 	export let scrollDirection: 'up' | 'down' = 'down';
-	export let dirTree: Writable<DirTreeItem[]>;
+	export let dirTree: Writable<TDirTreeItem[]>;
 
 	let isSignInModalOpen = false;
 	let isAccountMenuOpen = false;
