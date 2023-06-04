@@ -30,6 +30,39 @@ function normalizeData(data: number[]) {
 	return data.map((n) => n * multiplier);
 }
 
+export function convertSecondsToTimestamp(seconds: number): string {
+	const hours = Math.floor(seconds / 3600);
+	const minutes = Math.floor((seconds % 3600) / 60);
+	const remainingSeconds = Math.round(seconds % 60);
+
+	const formattedMinutes = String(hours > 0 ? hours * 60 + minutes : minutes).padStart(2, '0');
+	const formattedSeconds = String(remainingSeconds).padStart(2, '0');
+
+	return hours > 0
+		? `${String(hours).padStart(2, '0')}:${formattedMinutes}:${formattedSeconds}`
+		: `${formattedMinutes}:${formattedSeconds}`;
+}
+
+export function togglePlay(audioFile: HTMLAudioElement) {
+	if (audioFile.paused) {
+		audioFile.play();
+	} else {
+		audioFile.pause();
+	}
+}
+
+export function toggleMute(audioFile: HTMLAudioElement) {
+	if (audioFile.muted) {
+		audioFile.muted = false;
+	} else {
+		audioFile.muted = true;
+	}
+}
+
+export function areValuesCloseEnough(a: number, b: number) {
+	return Math.abs(a - b) < 0.1;
+}
+
 export function drawCurve({
 	values,
 	element,

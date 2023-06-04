@@ -1,6 +1,13 @@
 <script lang="ts">
+	import MuteButton from '$components/audioPlayer/MuteButton.svelte';
 	import PlayPauseButton from '$components/audioPlayer/PlayPauseButton.svelte';
 	import Slider from '$components/audioPlayer/Slider.svelte';
+	import {
+		areValuesCloseEnough,
+		convertSecondsToTimestamp,
+		toggleMute,
+		togglePlay
+	} from '$components/audioPlayer/helpers';
 
 	export let src: string;
 	export let title: string | undefined = undefined;
@@ -11,8 +18,11 @@
 	let sliderValue = 0;
 	let audioFile: HTMLAudioElement;
 	let isPlaying = false;
+	let isMuted = false;
 
-	$: progressPercentage = (currentTime / duration) * 100;
+	$: progress =
+		(duration === 0 || duration) && (currentTime === 0 || currentTime) ? currentTime / duration : 0;
+	$: progressPercentage = progress * 100;
 	$: currentTimestamp = currentTime ? convertSecondsToTimestamp(currentTime) : undefined;
 	$: totalTimestamp = duration ? convertSecondsToTimestamp(duration) : undefined;
 
@@ -28,31 +38,6 @@
 		if (!areValuesCloseEnough(toBeTime, currentTime)) {
 			currentTime = toBeTime;
 		}
-	}
-
-	function areValuesCloseEnough(a: number, b: number) {
-		return Math.abs(a - b) < 0.1;
-	}
-
-	function togglePlay() {
-		if (audioFile.paused) {
-			audioFile.play();
-		} else {
-			audioFile.pause();
-		}
-	}
-
-	function convertSecondsToTimestamp(seconds: number): string {
-		const hours = Math.floor(seconds / 3600);
-		const minutes = Math.floor((seconds % 3600) / 60);
-		const remainingSeconds = Math.round(seconds % 60);
-
-		const formattedMinutes = String(hours > 0 ? hours * 60 + minutes : minutes).padStart(2, '0');
-		const formattedSeconds = String(remainingSeconds).padStart(2, '0');
-
-		return hours > 0
-			? `${String(hours).padStart(2, '0')}:${formattedMinutes}:${formattedSeconds}`
-			: `${formattedMinutes}:${formattedSeconds}`;
 	}
 </script>
 
@@ -74,13 +59,15 @@
 			bind:currentTime
 			bind:duration
 			bind:this={audioFile}
+			bind:muted={isMuted}
 			on:playing={() => (isPlaying = true)}
 			on:pause={() => (isPlaying = false)}
 		/>
-		<PlayPauseButton onClick={togglePlay} {isPlaying} />
+		<PlayPauseButton onClick={() => togglePlay(audioFile)} {isPlaying} />
+		<MuteButton onClick={() => toggleMute(audioFile)} {isMuted} />
 		<div class="flex-1 self-stretch pl-2 pr-4">
 			<div class="w-full h-full flex items-center relative">
-				<Slider min={0} max={100} name="Audio Player" bind:value={sliderValue} step={1} />
+				<Slider min={0} max={100} name="Audio Player" bind:value={sliderValue} step={0.001} />
 			</div>
 		</div>
 		<p class="text-sm text-c-on-bg/75">

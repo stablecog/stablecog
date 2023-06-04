@@ -1,9 +1,17 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
-	import { audioToArray, drawWaveform } from '$components/audioPlayer/helpers';
+	import {
+		audioToArray,
+		convertSecondsToTimestamp,
+		drawWaveform,
+		toggleMute,
+		togglePlay
+	} from '$components/audioPlayer/helpers';
 	import SliderForWaveform from '$components/audioPlayer/SliderForWaveform.svelte';
 	import PlayPauseButton from '$components/audioPlayer/PlayPauseButton.svelte';
 	import AutoSize from '$components/AutoSize.svelte';
+	import MuteButton from '$components/audioPlayer/MuteButton.svelte';
+	import { windowHeight, windowWidth } from '$ts/stores/window';
 
 	export let src: string;
 	export let title: string | undefined = undefined;
@@ -17,6 +25,7 @@
 	let audioFile: HTMLAudioElement;
 	let isPlaying = false;
 	let audioArray: number[] | undefined = undefined;
+	let isMuted = false;
 
 	let waveformContainer: HTMLDivElement;
 	let waveformContainerWidth: number;
@@ -25,7 +34,6 @@
 	let sliderContainer: HTMLDivElement;
 
 	const pointCount = 50;
-
 	$: progress =
 		(duration === 0 || duration) && (currentTime === 0 || currentTime) ? currentTime / duration : 0;
 	$: progressPercentage = progress * 100;
@@ -38,7 +46,8 @@
 	$: [currentTime], onCurrentTimeChanged();
 	$: [sliderValue], onSliderValueChanged();
 
-	$: [progress, audioArray], drawWaveformWithCheck();
+	$: [progress, audioArray, waveformContainerWidth, waveformContainerHeight],
+		drawWaveformWithCheck();
 
 	function onCurrentTimeChanged() {
 		sliderValue = progressPercentage;
@@ -46,37 +55,11 @@
 
 	function onSliderValueChanged() {
 		const toBeTime = (sliderValue / 100) * duration;
-		if (!areValuesCloseEnough(toBeTime, currentTime)) {
-			currentTime = toBeTime;
-		}
-	}
-
-	function areValuesCloseEnough(a: number, b: number) {
-		return Math.abs(a - b) < 0.1;
-	}
-
-	function togglePlay() {
-		if (audioFile.paused) {
-			audioFile.play();
-		} else {
-			audioFile.pause();
-		}
-	}
-
-	function convertSecondsToTimestamp(seconds: number): string {
-		const hours = Math.floor(seconds / 3600);
-		const minutes = Math.floor((seconds % 3600) / 60);
-		const remainingSeconds = Math.round(seconds % 60);
-
-		const formattedMinutes = String(hours > 0 ? hours * 60 + minutes : minutes).padStart(2, '0');
-		const formattedSeconds = String(remainingSeconds).padStart(2, '0');
-
-		return hours > 0
-			? `${String(hours).padStart(2, '0')}:${formattedMinutes}:${formattedSeconds}`
-			: `${formattedMinutes}:${formattedSeconds}`;
+		currentTime = toBeTime;
 	}
 
 	function drawWaveformWithCheck() {
+		console.log('drawCalled');
 		if (!audioArray) return;
 		if (progress !== 0 && !progress) return;
 		drawWaveform({
@@ -135,8 +118,10 @@
 				bind:this={audioFile}
 				on:playing={() => (isPlaying = true)}
 				on:pause={() => (isPlaying = false)}
+				bind:muted={isMuted}
 			/>
-			<PlayPauseButton onClick={togglePlay} {isPlaying} size="lg" />
+			<PlayPauseButton onClick={() => togglePlay(audioFile)} {isPlaying} size="lg" />
+			<MuteButton onClick={() => toggleMute(audioFile)} {isMuted} size="lg" />
 			<div class="flex-1" />
 			<p class="text-c-on-bg/75 px-2">
 				{currentTime ? currentTimestamp : '00:00'} <span class="text-c-on-bg/25">/</span>
@@ -146,14 +131,15 @@
 	</div>
 	<div class="w-full flex-1 flex relative overflow-hidden">
 		<div
-			class="w-full h-full"
-			bind:this={waveformContainer}
 			bind:clientWidth={waveformContainerWidth}
 			bind:clientHeight={waveformContainerHeight}
-		/>
+			class="w-full h-full"
+		>
+			<div class="w-full h-full" bind:this={waveformContainer} />
+		</div>
 		<div class="w-full h-full flex items-center z-10 absolute left-0 top-0">
 			<div bind:this={sliderContainer} class="w-full h-full flex flex-col">
-				<AutoSize element={sliderContainer} let:clientHeight let:clientWidth>
+				<AutoSize element={sliderContainer} let:clientHeight>
 					<SliderForWaveform
 						min={0}
 						max={100}
