@@ -6,9 +6,11 @@
 	export let onClick: () => void;
 	export let isPlaying: boolean;
 	export let size: 'md' | 'lg' = 'md';
+	export let element: HTMLButtonElement;
 </script>
 
 <button
+	bind:this={element}
 	on:click={onClick}
 	class="relative rounded-lg group {size === 'lg' ? 'w-12 h-12' : 'w-10 h-10'}"
 >

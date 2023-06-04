@@ -13,7 +13,7 @@
 
 <form class={classes}>
 	<Slider.Root
-		class="flex-1 h-full touch-none select-none cursor-pointer relative flex 
+		class="flex-1 h-full touch-none select-none cursor-grab active:cursor-grabbing relative flex 
 			items-center group"
 		bind:value
 		{min}

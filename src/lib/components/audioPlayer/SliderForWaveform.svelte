@@ -10,22 +10,25 @@
 
 <form class="w-full h-full">
 	<Slider.Root
-		class="h-full touch-none select-none cursor-pointer relative flex 
-      items-end group overflow-hidden pt-4"
+		class="h-full touch-none select-none cursor-grab active:cursor-grabbing relative flex 
+      items-end group overflow-hidden"
 		bind:value
 		{min}
 		{max}
 		{step}
 		{name}
 	>
-		<Slider.Track class="relative h-full grow">
-			<Slider.Range class="absolute h-full transition" />
+		<Slider.Track class="relative h-full grow flex flex-col justify-end">
+			<Slider.Range
+				class="absolute h-4px bg-c-primary/50 origin-right 
+				group-hover:scale-x-0 group-active:scale-x-0 transition rounded-r-full"
+			/>
 		</Slider.Track>
 		<Slider.Thumb
 			style="height: {height - 4}px"
-			class="transition shadow-lg shadow-c-shadow/[var(--o-shadow-strongest)] w-4px bg-c-primary/0
-				outline-none transform rounded-t-full group-hover:scale-x-100 group-hover:bg-c-primary/50 
-				scale-x-0 group-active:scale-x-100 group-active:bg-c-primary"
+			class="transition w-4px bg-c-primary/50
+				outline-none rounded-t-full origin-bottom transform group-active:bg-c-primary
+				scale-y-0 group-hover:scale-y-100 group-active:scale-y-100"
 		/>
 	</Slider.Root>
 </form>

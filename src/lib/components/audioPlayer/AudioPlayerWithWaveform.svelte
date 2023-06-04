@@ -11,7 +11,6 @@
 	import PlayPauseButton from '$components/audioPlayer/PlayPauseButton.svelte';
 	import AutoSize from '$components/AutoSize.svelte';
 	import MuteButton from '$components/audioPlayer/MuteButton.svelte';
-	import { windowHeight, windowWidth } from '$ts/stores/window';
 
 	export let src: string;
 	export let title: string | undefined = undefined;
@@ -31,9 +30,14 @@
 	let waveformContainerWidth: number;
 	let waveformContainerHeight: number;
 
-	let sliderContainer: HTMLDivElement;
+	let playButton: HTMLButtonElement;
+	let muteButton: HTMLButtonElement;
 
-	const pointCount = 50;
+	let sliderContainer: HTMLDivElement;
+	let sliderContainerWidth: number;
+	let sliderContainerHeight: number;
+
+	const pointCount = 100;
 	$: progress =
 		(duration === 0 || duration) && (currentTime === 0 || currentTime) ? currentTime / duration : 0;
 	$: progressPercentage = progress * 100;
@@ -59,7 +63,6 @@
 	}
 
 	function drawWaveformWithCheck() {
-		console.log('drawCalled');
 		if (!audioArray) return;
 		if (progress !== 0 && !progress) return;
 		drawWaveform({
@@ -98,13 +101,19 @@
 </script>
 
 <div
+	on:keydown={(e) => {
+		if (e.target === playButton || e.target === muteButton) return;
+		if (e.key === ' ') {
+			togglePlay(audioFile);
+		}
+	}}
 	class="w-full bg-c-bg-secondary flex flex-col rounded-xl overflow-hidden relative z-0
-	shadow-lg shadow-c-shadow/[var(--o-shadow-strong)] {classes}"
+	shadow-lg shadow-c-shadow/[var(--o-shadow-normal)] {classes}"
 >
-	<div class="w-full flex flex-col pl-2 pr-4 py-2">
+	<div class="w-full flex flex-col px-5">
 		{#if title}
 			<p
-				class="pl-2 text-c-on-bg/75 py-1 max-w-full whitespace-nowrap overflow-hidden overflow-ellipsis"
+				class="text-c-on-bg/75 pt-4 pb-2 max-w-full whitespace-nowrap overflow-hidden overflow-ellipsis"
 			>
 				{title}
 			</p>
@@ -120,10 +129,22 @@
 				on:pause={() => (isPlaying = false)}
 				bind:muted={isMuted}
 			/>
-			<PlayPauseButton onClick={() => togglePlay(audioFile)} {isPlaying} size="lg" />
-			<MuteButton onClick={() => toggleMute(audioFile)} {isMuted} size="lg" />
+			<div class="flex items-center -ml-3">
+				<PlayPauseButton
+					bind:element={playButton}
+					onClick={() => togglePlay(audioFile)}
+					{isPlaying}
+					size="lg"
+				/>
+				<MuteButton
+					bind:element={muteButton}
+					onClick={() => toggleMute(audioFile)}
+					{isMuted}
+					size="lg"
+				/>
+			</div>
 			<div class="flex-1" />
-			<p class="text-c-on-bg/75 px-2">
+			<p class="text-c-on-bg/75">
 				{currentTime ? currentTimestamp : '00:00'} <span class="text-c-on-bg/25">/</span>
 				{duration ? totalTimestamp : '00:00'}
 			</p>
@@ -138,17 +159,22 @@
 			<div class="w-full h-full" bind:this={waveformContainer} />
 		</div>
 		<div class="w-full h-full flex items-center z-10 absolute left-0 top-0">
-			<div bind:this={sliderContainer} class="w-full h-full flex flex-col">
-				<AutoSize element={sliderContainer} let:clientHeight>
+			<div
+				bind:clientWidth={sliderContainerWidth}
+				bind:clientHeight={sliderContainerHeight}
+				bind:this={sliderContainer}
+				class="w-full h-full flex flex-col overflow-hidden"
+			>
+				{#if sliderContainerWidth && sliderContainerHeight}
 					<SliderForWaveform
 						min={0}
 						max={100}
 						name="Audio Player"
 						bind:value={sliderValue}
 						step={0.001}
-						height={clientHeight}
+						height={sliderContainerHeight}
 					/>
-				</AutoSize>
+				{/if}
 			</div>
 		</div>
 	</div>
