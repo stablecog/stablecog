@@ -60,11 +60,11 @@ export const load: LayoutLoad = async (event) => {
 		globalSeedStore: writable<number>(globalSeed),
 		isLeftSidebarHidden,
 		isLeftSidebarHiddenStore: writable<boolean>(isLeftSidebarHidden),
-		dirTree: writable<DirTreeItem[]>([])
+		dirTree: writable<TDirTreeItem[]>([])
 	};
 };
 
-export interface DirTreeItem {
+export interface TDirTreeItem {
 	title: string;
 	href: string;
 }

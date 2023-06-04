@@ -6,14 +6,28 @@
 	import LL from '$i18n/i18n-svelte';
 	import type { TGuideEntryMetadataExtended, TSidebarItem } from '$docroutes/guide/types';
 	import { canonicalUrl } from '$ts/constants/main';
+	import type { TDirTreeItem } from '$routes/+layout';
+	import type { Writable } from 'svelte/store';
+	import { onDestroy } from 'svelte';
 
 	export let content: ConstructorOfATypedSvelteComponent;
 	export let metadata: TGuideEntryMetadataExtended;
 	export let sidebarItem: TSidebarItem | null = null;
 	export let prev: TSidebarItem | null = null;
 	export let next: TSidebarItem | null = null;
+	export let parentItem: TSidebarItem | null = null;
+	export let dirTree: Writable<TDirTreeItem[]>;
+
+	$: dirTree?.set([
+		...(parentItem?.title ? [{ title: parentItem?.title, href: parentItem.pathname }] : []),
+		{ title: sidebarItem?.title || '', href: sidebarItem?.pathname || '' }
+	]);
 
 	const rootPathnames = ['/guide'];
+
+	onDestroy(() => {
+		dirTree.set([]);
+	});
 </script>
 
 <MetaTag
