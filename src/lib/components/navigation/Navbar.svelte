@@ -34,7 +34,7 @@
 	import type { Writable } from 'svelte/store';
 	import type { TDirTreeItem } from '$routes/+layout';
 	import IconChevronDown from '$components/icons/IconChevronDown.svelte';
-	/* import BannerWrapper from '$components/BannerWrapper.svelte'; */
+	import BannerWrapper from '$components/BannerWrapper.svelte';
 
 	export let notAtTheVeryTop = false;
 	export let scrollDirection: 'up' | 'down' = 'down';
@@ -66,7 +66,7 @@
 			? 'bg-c-bg/0 shadow-navbar-0'
 			: 'bg-c-bg shadow-navbar'}"
 	>
-		<!-- <BannerWrapper /> -->
+		<BannerWrapper />
 		<div class="w-full flex flex-row items-center justify-between relative z-0">
 			<PageLoadProgressBar />
 			<div class="flex flex-1 md:flex-none xl:flex-1 self-stretch min-w-0">
