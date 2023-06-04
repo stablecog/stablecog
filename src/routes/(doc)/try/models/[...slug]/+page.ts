@@ -14,9 +14,13 @@ export const load: ServerLoad = async ({ url }) => {
 		previewBaseUrl: previewBaseUrl,
 		pathname: url.pathname
 	});
+	const { sidebarItem } = getSidebarItemFromPathname({
+		sidebarItem: guideSidebar,
+		pathname: url.pathname
+	});
 	return {
 		metadata: entry.metadata,
 		content: entry.default,
-		sidebarItem: getSidebarItemFromPathname({ sidebarItem: guideSidebar, pathname: url.pathname })
+		sidebarItem
 	};
 };
