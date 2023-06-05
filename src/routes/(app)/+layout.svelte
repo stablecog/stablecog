@@ -59,11 +59,8 @@
 		submitInitialUpscaleRequest,
 		upscales
 	} from '$ts/stores/user/upscale';
-	import { QueryClientProvider, createMutation } from '@tanstack/svelte-query';
+	import { QueryClientProvider } from '@tanstack/svelte-query';
 	import { onMount } from 'svelte';
-	import { setWantsEmail } from '$ts/queries/wantsEmail.js';
-	import { getUserSummaryQueryKey } from '$components/userSummary/helpers.js';
-	import { wantsEmail } from '$ts/stores/user/wantsEmail.js';
 
 	export let data;
 

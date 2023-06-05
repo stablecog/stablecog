@@ -1,4 +1,6 @@
+import { allAudioPlayers } from '$ts/stores/allPlayers';
 import * as d3 from 'd3';
+import { get } from 'svelte/store';
 
 export async function audioToArray(url: string, samples: number = 100) {
 	const res = await fetch(url);
@@ -43,19 +45,27 @@ export function convertSecondsToTimestamp(seconds: number): string {
 		: `${formattedMinutes}:${formattedSeconds}`;
 }
 
-export function togglePlay(audioFile: HTMLAudioElement) {
-	if (audioFile.paused) {
-		audioFile.play();
+export function stopAllPlayers(exceptionElement?: HTMLAudioElement) {
+	const allPlayers = get(allAudioPlayers);
+	allPlayers.forEach((player) => {
+		if (exceptionElement && player === exceptionElement) return;
+		player.pause();
+	});
+}
+export function togglePlay(playerElement: HTMLAudioElement) {
+	stopAllPlayers(playerElement);
+	if (playerElement.paused) {
+		playerElement.play();
 	} else {
-		audioFile.pause();
+		playerElement.pause();
 	}
 }
 
-export function toggleMute(audioFile: HTMLAudioElement) {
-	if (audioFile.muted) {
-		audioFile.muted = false;
+export function toggleMute(playerElement: HTMLAudioElement) {
+	if (playerElement.muted) {
+		playerElement.muted = false;
 	} else {
-		audioFile.muted = true;
+		playerElement.muted = true;
 	}
 }
 

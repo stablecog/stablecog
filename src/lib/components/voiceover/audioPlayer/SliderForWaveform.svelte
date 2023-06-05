@@ -27,7 +27,7 @@
 		<Slider.Thumb
 			style="height: {height - 4}px"
 			class="transition w-4px bg-c-primary/50
-				outline-none rounded-t-full origin-bottom transform group-active:bg-c-primary
+				outline-none rounded-full origin-bottom transform group-active:bg-c-primary
 				scale-y-0 group-hover:scale-y-100 group-active:scale-y-100"
 		/>
 	</Slider.Root>

@@ -38,7 +38,7 @@
 
 	export let notAtTheVeryTop = false;
 	export let scrollDirection: 'up' | 'down' = 'down';
-	export let dirTree: Writable<TDirTreeItem[]>;
+	export let dirTree: Writable<TDirTreeItem[]> | undefined = undefined;
 
 	let isSignInModalOpen = false;
 	let isAccountMenuOpen = false;

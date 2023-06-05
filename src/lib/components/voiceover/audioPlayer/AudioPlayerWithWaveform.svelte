@@ -1,16 +1,16 @@
 <script lang="ts">
-	import { onMount } from 'svelte';
+	import { onDestroy, onMount } from 'svelte';
 	import {
 		audioToArray,
 		convertSecondsToTimestamp,
 		drawWaveform,
 		toggleMute,
 		togglePlay
-	} from '$components/audioPlayer/helpers';
-	import SliderForWaveform from '$components/audioPlayer/SliderForWaveform.svelte';
-	import PlayPauseButton from '$components/audioPlayer/PlayPauseButton.svelte';
-	import AutoSize from '$components/AutoSize.svelte';
-	import MuteButton from '$components/audioPlayer/MuteButton.svelte';
+	} from '$components/voiceover/audioPlayer/helpers';
+	import SliderForWaveform from '$components/voiceover/audioPlayer/SliderForWaveform.svelte';
+	import PlayPauseButton from '$components/voiceover/audioPlayer/PlayPauseButton.svelte';
+	import MuteButton from '$components/voiceover/audioPlayer/MuteButton.svelte';
+	import { allAudioPlayers } from '$ts/stores/allPlayers';
 
 	export let src: string;
 	export let title: string | undefined = undefined;
@@ -21,7 +21,7 @@
 	let currentTime = 0;
 	let duration: number;
 	let sliderValue = 0;
-	let audioFile: HTMLAudioElement;
+	let audioElement: HTMLAudioElement;
 	let isPlaying = false;
 	let audioArray: number[] | undefined = undefined;
 	let isMuted = false;
@@ -33,11 +33,10 @@
 	let playButton: HTMLButtonElement;
 	let muteButton: HTMLButtonElement;
 
-	let sliderContainer: HTMLDivElement;
 	let sliderContainerWidth: number;
 	let sliderContainerHeight: number;
 
-	const pointCount = 100;
+	const pointCount = 50;
 	$: progress =
 		(duration === 0 || duration) && (currentTime === 0 || currentTime) ? currentTime / duration : 0;
 	$: progressPercentage = progress * 100;
@@ -97,6 +96,11 @@
 
 	onMount(async () => {
 		audioArray = await audioToArray(src, pointCount);
+		$allAudioPlayers.add(audioElement);
+	});
+
+	onDestroy(() => {
+		$allAudioPlayers.delete(audioElement);
 	});
 </script>
 
@@ -104,10 +108,10 @@
 	on:keydown={(e) => {
 		if (e.target === playButton || e.target === muteButton) return;
 		if (e.key === ' ') {
-			togglePlay(audioFile);
+			togglePlay(audioElement);
 		}
 	}}
-	class="w-full bg-c-bg-secondary flex flex-col rounded-xl overflow-hidden relative z-0
+	class="w-full h-full bg-c-bg-secondary flex flex-col rounded-xl overflow-hidden relative z-0
 	shadow-lg shadow-c-shadow/[var(--o-shadow-normal)] {classes}"
 >
 	<div class="w-full flex flex-col px-5">
@@ -124,7 +128,7 @@
 				aria-label={label}
 				bind:currentTime
 				bind:duration
-				bind:this={audioFile}
+				bind:this={audioElement}
 				on:playing={() => (isPlaying = true)}
 				on:pause={() => (isPlaying = false)}
 				bind:muted={isMuted}
@@ -132,13 +136,13 @@
 			<div class="flex items-center -ml-3">
 				<PlayPauseButton
 					bind:element={playButton}
-					onClick={() => togglePlay(audioFile)}
+					onClick={() => togglePlay(audioElement)}
 					{isPlaying}
 					size="lg"
 				/>
 				<MuteButton
 					bind:element={muteButton}
-					onClick={() => toggleMute(audioFile)}
+					onClick={() => toggleMute(audioElement)}
 					{isMuted}
 					size="lg"
 				/>
@@ -156,13 +160,14 @@
 			bind:clientHeight={waveformContainerHeight}
 			class="w-full h-full"
 		>
-			<div class="w-full h-full" bind:this={waveformContainer} />
+			{#if waveformContainerWidth && waveformContainerHeight}
+				<div class="w-full h-0" bind:this={waveformContainer} />
+			{/if}
 		</div>
-		<div class="w-full h-full flex items-center z-10 absolute left-0 top-0">
+		<div class="w-full h-full flex items-center z-10 absolute left-0 bottom-0">
 			<div
 				bind:clientWidth={sliderContainerWidth}
 				bind:clientHeight={sliderContainerHeight}
-				bind:this={sliderContainer}
 				class="w-full h-full flex flex-col overflow-hidden"
 			>
 				{#if sliderContainerWidth && sliderContainerHeight}
@@ -171,7 +176,7 @@
 						max={100}
 						name="Audio Player"
 						bind:value={sliderValue}
-						step={0.001}
+						step={0.00001}
 						height={sliderContainerHeight}
 					/>
 				{/if}
