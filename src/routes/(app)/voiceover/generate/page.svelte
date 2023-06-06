@@ -212,8 +212,12 @@
 												PUBLIC_BUCKET_VOICEOVER_URL
 										  )
 										: '/audio/example.mp3'}
-									label={examplePrompt}
-									title={examplePrompt}
+									label={$voiceovers?.[0]?.status === 'succeeded'
+										? $voiceovers[0].prompt.text
+										: examplePrompt}
+									title={$voiceovers?.[0]?.status === 'succeeded'
+										? $voiceovers[0].prompt.text
+										: examplePrompt}
 								/>
 							</div>
 						</div>

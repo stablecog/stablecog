@@ -1,10 +1,10 @@
 <script lang="ts">
-	export let locale: Locales;
+	export let type: Locales;
 	export { classes as class };
 	let classes = 'w-6 h-6';
 </script>
 
-{#if locale === 'en'}
+{#if type === 'en'}
 	<svg
 		class={classes}
 		width="512"
@@ -24,7 +24,7 @@
 		<path fill="#FFF" d="M176 0v512h160V0H176zM0 176v160h512V176H0z" />
 		<path fill="#C8102E" d="M0 208v96h512v-96H0zM208 0v512h96V0h-96z" />
 	</svg>
-{:else if locale === 'tr'}
+{:else if type === 'tr'}
 	<svg
 		class={classes}
 		width="512"
@@ -48,7 +48,7 @@
 			/>
 		</g>
 	</svg>
-{:else if locale === 'de'}
+{:else if type === 'de'}
 	<svg
 		class={classes}
 		width="512"
@@ -61,7 +61,7 @@
 		<path d="M0 0h512v170.7H0z" />
 		<path fill="#d00" d="M0 170.7h512v170.6H0z" />
 	</svg>
-{:else if locale === 'ru'}
+{:else if type === 'ru'}
 	<svg
 		class={classes}
 		width="512"
@@ -76,7 +76,7 @@
 			<path fill="#d52b1e" d="M0 341.3h512V512H0z" />
 		</g>
 	</svg>
-{:else if locale === 'es'}
+{:else if type === 'es'}
 	<svg
 		class={classes}
 		width="512"
@@ -88,7 +88,7 @@
 		<path d="M0 0H512V512H0V0Z" fill="#AA151B" />
 		<path d="M0 128H512V384H0V128Z" fill="#F1BF00" />
 	</svg>
-{:else if locale === 'hi'}
+{:else if type === 'hi'}
 	<svg
 		class={classes}
 		width="512"
@@ -122,7 +122,7 @@
 			<use xlink:href="#d" width="100%" height="100%" transform="rotate(-120)" />
 		</g>
 	</svg>
-{:else if locale === 'fr'}
+{:else if type === 'fr'}
 	<svg
 		class={classes}
 		width="512"
@@ -135,7 +135,7 @@
 		<rect x="342" width="170" height="512" fill="#CE1126" />
 		<rect x="170" width="172" height="512" fill="white" />
 	</svg>
-{:else if locale === 'zh-Hans'}
+{:else if type === 'zh-Hans'}
 	<svg
 		class={classes}
 		width="512"
@@ -152,7 +152,7 @@
 			fill="#FF0"
 		/>
 	</svg>
-{:else if locale === 'ko'}
+{:else if type === 'ko'}
 	<svg
 		class={classes}
 		width="512"
@@ -177,7 +177,7 @@
 			fill="#000"
 		/>
 	</svg>
-{:else if locale === 'pt-br'}
+{:else if type === 'pt-br'}
 	<svg
 		class={classes}
 		width="512"
@@ -200,7 +200,7 @@
 			fill="#2B49A3"
 		/>
 	</svg>
-{:else if locale === 'pt-pt'}
+{:else if type === 'pt-pt'}
 	<svg
 		class={classes}
 		width="512"
@@ -237,7 +237,7 @@
 			stroke-width=".6"
 		/>
 	</svg>
-{:else if locale === 'vi'}
+{:else if type === 'vi'}
 	<svg
 		class={classes}
 		xmlns="http://www.w3.org/2000/svg"
@@ -252,7 +252,7 @@
 			d="m349.566 381.114-89.589-66.903-89.083 67.553 33.163-109.819-89.011-67.769 110.107-.939 34.102-109.458 34.896 109.241 110.108.144-88.505 68.42 33.812 109.53Z"
 		/>
 	</svg>
-{:else if locale === 'hr'}
+{:else if type === 'hr'}
 	<svg
 		class={classes}
 		width="512"
@@ -289,7 +289,7 @@
 		<path d="m328 101-20-23-27 15-5 55a235 235 0 0 1 39 6l13-53z" fill="#171796" />
 		<path d="m351 167 23-50-17-26-29 10-13 53a234 234 0 0 1 36 13z" fill="#0093DD" />
 	</svg>
-{:else if locale === 'ja'}
+{:else if type === 'ja'}
 	<svg
 		class={classes}
 		width="512"
@@ -301,7 +301,7 @@
 		<path d="M0 0h512v512H0V0Z" fill="#fff" />
 		<path d="M256 415a159 159 0 1 0 0-318 159 159 0 0 0 0 318Z" fill="#BC002D" />
 	</svg>
-{:else if locale === 'el'}
+{:else if type === 'el'}
 	<svg
 		class={classes}
 		xmlns="http://www.w3.org/2000/svg"
@@ -325,7 +325,7 @@
 		</g>
 		<path fill="#0d5eaf" fill-rule="evenodd" d="M0 455h512v57H0z" />
 	</svg>
-{:else if locale === 'bg'}
+{:else if type === 'bg'}
 	<svg
 		class={classes}
 		width="512"
@@ -338,7 +338,7 @@
 		<path fill-rule="evenodd" clip-rule="evenodd" d="M0 0H512V170.7H0V0Z" fill="white" />
 		<path fill-rule="evenodd" clip-rule="evenodd" d="M0 170.7H512V341.3H0V170.7Z" fill="#00966E" />
 	</svg>
-{:else if locale === 'nl'}
+{:else if type === 'nl'}
 	<svg
 		class={classes}
 		width="512"
@@ -350,5 +350,85 @@
 		<path d="M0 0H512V512H0V0Z" fill="#21468B" />
 		<path d="M0 0H512V341.3H0V0Z" fill="white" />
 		<path d="M0 0H512V170.7H0V0Z" fill="#AE1C28" />
+	</svg>
+{:else if type === 'it'}
+	<svg
+		class={classes}
+		width="512"
+		height="512"
+		xmlns="http://www.w3.org/2000/svg"
+		viewBox="0 0 512 512"
+	>
+		<g fill-rule="evenodd" stroke-width="1pt">
+			<path fill="#fff" d="M0 0h512v512H0z" />
+			<path fill="#009246" d="M0 0h170.7v512H0z" />
+			<path fill="#ce2b37" d="M341.3 0H512v512H341.3z" />
+		</g>
+	</svg>
+{:else if type === 'zh'}
+	<svg
+		class={classes}
+		width="512"
+		height="512"
+		viewBox="0 0 512 512"
+		fill="none"
+		xmlns="http://www.w3.org/2000/svg"
+	>
+		<path d="M0 0h512v512H0V0Z" fill="#EE1C25" />
+		<path
+			fill-rule="evenodd"
+			clip-rule="evenodd"
+			d="m236.58 33.05 17.25 8.45 12.14-14.17-1.2 19.53 18.33 8.97-19.08 3.28-1.1 17.8-9.58-15.96-18.94 3.25 12.28-14.34-10.1-16.81Zm-31.78 71.91-48.43 31.34 17.71 53.14-48.4-33.28-51.44 33.28 21.06-54.16-44.1-30.32h55.9L128 51.2l17.92 53.76h58.88Zm103.69-12.24-12.62-14.51 2.76 19.43-16.9 8.44 18.73 4.37 2.62 18.45 7.94-15.98 18.86 4.4-13.4-15.4 8.71-17.54-16.7 8.34Zm-1.92 59.81 5.6 18.4 18.66-.78-15.12 12.45 5.94 19.55-15.42-11.73-13.78 11.35 5.14-17.92-15.31-11.64 18.88-.8 5.41-18.88Zm-42.5 72.22 1.94-19.12-12.27 15.31-17.7-6.54 9.61 16.64-11.64 14.53 17.07-5.15 9.7 16.76 2.06-20.3 18.74-5.66-17.51-6.47Z"
+			fill="#FF0"
+		/>
+	</svg>
+{:else if type === 'pl'}
+	<svg
+		class={classes}
+		width="512"
+		height="512"
+		xmlns="http://www.w3.org/2000/svg"
+		id="flag-icons-pl"
+		viewBox="0 0 512 512"
+	>
+		<path fill="#fff" d="M512 512H0V0h512z" />
+		<path fill="#dc143c" d="M512 512H0V256h512z" />
+	</svg>
+{:else if type === 'pt'}
+	<svg
+		class={classes}
+		width="512"
+		height="512"
+		viewBox="0 0 512 512"
+		fill="none"
+		xmlns="http://www.w3.org/2000/svg"
+	>
+		<path d="M205 0h307v512H205V0Z" fill="red" />
+		<path d="M0 0h205v512H0V0Z" fill="#060" />
+		<path
+			fill-rule="evenodd"
+			clip-rule="evenodd"
+			d="M208 142h3v2c35 2 66 20 86 48 3 1 4 3 6 6 0 0 0 0 0 0l-1 1 2 3 4 5-2 1c6 12 10 27 11 41 2 2 2 3 2 5l-2 2h0v3c2 2 2 3 2 5l-2 1c-1 14-5 28-11 41v4c-1 1-1 3-3 3l-7 10c1 2 0 3-1 4h-1l-3 1a113 113 0 0 1-80 40v3h-3v-2h-7v2h-2v-3c-36-2-67-20-87-48l-2-1c-1-1-2-2-1-3l-3-5c-2 0-2-1-3-2l1-2c-7-13-11-27-12-43h-1c0-2-1-4 1-5v-5c-2 0-1-2-1-3h0l1-2c1-12 4-24 8-35v-3c0-2 1-3 2-3l6-10c-1-3 0-4 1-6l4-1c19-27 50-45 86-47v-2h2v1h7v-1Zm-50 66-25-11c22-5 44-6 66-6v19l-41-2Zm101 58-39-25a256 256 0 0 1 86 16c-16 5-32 7-47 9Zm38 30-24-20c11-1 21-3 32-6l-8 26ZM139 179c17-14 38-22 60-24v24c-22 0-45 1-66 6l6-6Zm-34 63 4-17 16 12-20 5Zm-1 13v2a251 251 0 0 0 69 11l-34-22a292 292 0 0 0-35 9Zm11 46c-5-10-8-20-10-32a424 424 0 0 0 90 12l4 2v5a285 285 0 0 0-84 13Zm7 12c25 6 51 9 77 10v-23c-24 0-48 3-69 9-3 0-10 1-8 4Zm11 14c17 4 40 8 66 8v22c-23-1-51-13-66-30Zm143 0c-18 17-41 28-65 30v-21c22-1 44-3 65-9Zm19-116c5 9 7 20 9 32-29-11-62-14-93-14v-7a416 416 0 0 0 84-11Zm-6-11s0 0 0 0c-26-7-52-9-78-9v19a408 408 0 0 0 78-10Zm-13-15c-19-19-43-28-65-30v24c22 0 44 1 65 6Zm-65 115v23c17 0 35-2 52-5l-34-17-18-1Z"
+			fill="#FF0"
+			stroke="#000"
+			stroke-width=".7"
+			stroke-linecap="round"
+			stroke-linejoin="round"
+		/>
+		<path
+			d="M137 268a67 67 0 0 0 20 48 67 67 0 0 0 115-47v-91H137v90Z"
+			fill="#fff"
+			stroke="#000"
+			stroke-width=".8"
+		/>
+		<path
+			d="M140 269a64 64 0 0 0 19 45 65 65 0 0 0 105-21c4-7 5-16 5-24v-88H140v88m103-62v62a38 38 0 0 1-11 27c-7 7-17 12-27 12-11 0-20-5-28-12-7-7-11-17-11-27v-62h77Z"
+			fill="red"
+		/>
+		<path
+			d="M140 269a64 64 0 0 0 19 45 65 65 0 0 0 105-21c4-7 5-16 5-24v-88H140v88m103-62v62a38 38 0 0 1-11 27c-7 7-17 12-27 12-11 0-20-5-28-12-7-7-11-17-11-27v-62h77Z"
+			stroke="#000"
+			stroke-width=".6"
+		/>
 	</svg>
 {/if}

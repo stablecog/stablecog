@@ -2,7 +2,9 @@
 	import SettingsPanelItem from '$components/generate/SettingsPanelItem.svelte';
 	import SidebarWrapper from '$components/generate/SidebarWrapper.svelte';
 	import IconLanguage from '$components/icons/IconLanguage.svelte';
+	import IconLocale from '$components/icons/IconLocale.svelte';
 	import IconMicrophone from '$components/icons/IconMicrophone.svelte';
+	import IconSpeaker from '$components/icons/IconSpeaker.svelte';
 	import IconWave from '$components/icons/IconWave.svelte';
 	import TabLikeDropdown from '$components/tabBars/TabLikeDropdown.svelte';
 	import TabLikeRangeInput from '$components/tabBars/TabLikeRangeInput.svelte';
@@ -33,6 +35,8 @@
 		>
 			<TabLikeDropdown
 				class="w-full"
+				iconSet={IconSpeaker}
+				iconSetClass="w-8 h-8 -m-2 mr-3 rounded-md"
 				container={settingsContainer}
 				containerTopMinDistance={containerDropdownPadding}
 				containerBottomMinDistance={containerDropdownPadding}
@@ -49,6 +53,8 @@
 		>
 			<TabLikeDropdown
 				class="w-full"
+				iconSet={IconLocale}
+				iconSetClass="w-8 h-8 -m-2 mr-3 rounded"
 				container={settingsContainer}
 				containerTopMinDistance={containerDropdownPadding}
 				containerBottomMinDistance={containerDropdownPadding}

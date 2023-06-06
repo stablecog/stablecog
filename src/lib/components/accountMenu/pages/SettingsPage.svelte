@@ -47,7 +47,7 @@
 					/>
 					<div class="flex-1 min-w-0 flex items-center overflow-hidden gap-2.5">
 						<div class="w-5 h-5 rounded-sm overflow-hidden flex-shrink-0">
-							<IconLocale locale={$locale} class="w-full h-full" />
+							<IconLocale type={$locale} class="w-full h-full" />
 						</div>
 						<p
 							class="flex-shrink min-w-0 overflow-hidden overflow-ellipsis whitespace-nowrap

@@ -21,6 +21,8 @@
 	export let containerBottomMinDistance = 0;
 	export let iconSet: ConstructorOfATypedSvelteComponent | undefined = undefined;
 	export { classes as class };
+	export let iconSetClass =
+		'w-6 h-6 flex-shrink-0 -ml-1 mr-2 text-c-on-bg not-touch:group-hover:text-c-primary';
 	let classes = '';
 
 	let minDropdownHeight = 200;
@@ -127,11 +129,7 @@
 			</div>
 			<div class="flex-shrink min-w-0 flex items-center">
 				{#if iconSet}
-					<svelte:component
-						this={iconSet}
-						type={selectedItem?.value}
-						class="flex-shrink-0 -ml-1 mr-2 text-c-on-bg not-touch:group-hover:text-c-primary"
-					/>
+					<svelte:component this={iconSet} type={selectedItem?.value} class={iconSetClass} />
 				{/if}
 				<p
 					class="flex-shrink whitespace-nowrap overflow-hidden overflow-ellipsis text-base font-medium relative transition
@@ -209,11 +207,7 @@
 									</div>
 									<div class="w-full flex items-center">
 										{#if iconSet}
-											<svelte:component
-												this={iconSet}
-												type={item.value}
-												class="flex-shrink-0 -ml-1 mr-2 text-c-on-bg not-touch:group-hover:text-c-primary"
-											/>
+											<svelte:component this={iconSet} type={item.value} class={iconSetClass} />
 										{/if}
 										<p
 											class="flex-shrink whitespace-nowrap overflow-hidden overflow-ellipsis text-base font-medium relative transition

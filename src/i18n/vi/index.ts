@@ -852,9 +852,12 @@ const vi: Translation = {
 		ModelOptions: { '0f442a3e-cf53-490b-b4a9-b0dda63e9523': { Name: 'Bark' } },
 		SpeakerOptions: {
 			'82bc1e69-2aa3-4317-9bc9-d9ed2afad0ff': {
-				Name: 'Jack'
+				Name: 'Paul'
 			},
-			'573c37c7-f741-4d36-80dc-f126131c6343': { Name: 'Rachel' },
+			'39f7fc5d-9031-4932-a4d5-b196bb06e203': {
+				Name: 'Jony'
+			},
+			'4a19f17c-eedc-4cf8-a45d-1f9d69547125': { Name: 'Rachel' },
 			'5bd0610f-f073-487e-a74c-2a89105ce282': { Name: 'Gamze' },
 			'7c3f8e30-9957-4d5e-a70e-c8269ff5f550': { Name: 'Mert' }
 		}

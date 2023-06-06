@@ -15,7 +15,12 @@ export const voiceoverSpeakers: { [id: string]: TSpeaker } = {
 		model_id: '0f442a3e-cf53-490b-b4a9-b0dda63e9523',
 		locale: 'en'
 	},
-	'573c37c7-f741-4d36-80dc-f126131c6343': {
+	'39f7fc5d-9031-4932-a4d5-b196bb06e203': {
+		name_in_worker: 'v2/en_speaker_3',
+		model_id: '0f442a3e-cf53-490b-b4a9-b0dda63e9523',
+		locale: 'en'
+	},
+	'4a19f17c-eedc-4cf8-a45d-1f9d69547125': {
 		name_in_worker: 'v2/en_speaker_9',
 		model_id: '0f442a3e-cf53-490b-b4a9-b0dda63e9523',
 		locale: 'en'
@@ -96,8 +101,12 @@ export const voiceoverSpeakerDropdownItems = derived(
 				value: '82bc1e69-2aa3-4317-9bc9-d9ed2afad0ff'
 			},
 			{
-				label: $voiceoverSpeakerIdToDisplayName['573c37c7-f741-4d36-80dc-f126131c6343'],
-				value: '573c37c7-f741-4d36-80dc-f126131c6343'
+				label: $voiceoverSpeakerIdToDisplayName['4a19f17c-eedc-4cf8-a45d-1f9d69547125'],
+				value: '4a19f17c-eedc-4cf8-a45d-1f9d69547125'
+			},
+			{
+				label: $voiceoverSpeakerIdToDisplayName['39f7fc5d-9031-4932-a4d5-b196bb06e203'],
+				value: '39f7fc5d-9031-4932-a4d5-b196bb06e203'
 			},
 			{
 				label: $voiceoverSpeakerIdToDisplayName['5bd0610f-f073-487e-a74c-2a89105ce282'],

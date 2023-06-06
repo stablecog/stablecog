@@ -37,7 +37,7 @@
 			>
 				<div class="flex-1 min-w-0 flex items-center overflow-hidden gap-3">
 					<div class="w-5 h-5 rounded-sm overflow-hidden">
-						<IconLocale {locale} class="w-full h-full" />
+						<IconLocale type={locale} class="w-full h-full" />
 					</div>
 					<p
 						class="flex-1 min-w-0 overflow-hidden overflow-ellipsis whitespace-nowrap text-left

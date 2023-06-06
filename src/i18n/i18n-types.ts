@@ -2497,11 +2497,17 @@ type RootTranslation = {
 		SpeakerOptions: {
 			'82bc1e69-2aa3-4317-9bc9-d9ed2afad0ff': {
 				/**
-				 * J​a​c​k
+				 * P​a​u​l
 				 */
 				Name: string
 			}
-			'573c37c7-f741-4d36-80dc-f126131c6343': {
+			'39f7fc5d-9031-4932-a4d5-b196bb06e203': {
+				/**
+				 * J​o​n​y
+				 */
+				Name: string
+			}
+			'4a19f17c-eedc-4cf8-a45d-1f9d69547125': {
 				/**
 				 * R​a​c​h​e​l
 				 */
@@ -4966,11 +4972,17 @@ export type TranslationFunctions = {
 		SpeakerOptions: {
 			'82bc1e69-2aa3-4317-9bc9-d9ed2afad0ff': {
 				/**
-				 * Jack
+				 * Paul
 				 */
 				Name: () => LocalizedString
 			}
-			'573c37c7-f741-4d36-80dc-f126131c6343': {
+			'39f7fc5d-9031-4932-a4d5-b196bb06e203': {
+				/**
+				 * Jony
+				 */
+				Name: () => LocalizedString
+			}
+			'4a19f17c-eedc-4cf8-a45d-1f9d69547125': {
 				/**
 				 * Rachel
 				 */

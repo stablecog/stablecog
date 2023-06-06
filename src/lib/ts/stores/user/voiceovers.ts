@@ -174,7 +174,7 @@ export async function submitInitialVoiceoverRequest(
 		...rest,
 		prompt: promptText
 	};
-	const response = await fetch(`${apiUrl.origin}/v1/user/voiceover`, {
+	const response = await fetch(`${apiUrl.origin}/v1/user/audio/voiceover/create`, {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json',

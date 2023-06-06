@@ -19,7 +19,7 @@
 	export { classes as class };
 	let classes = '';
 
-	const barWidth = 40;
+	const barWidth = 20;
 	let currentTime = 0;
 	let duration: number;
 	let sliderValue = 0;

@@ -5,7 +5,10 @@
 	import { voiceoverModelId } from '$ts/constants/voiceover/models';
 	import { generateSSEId } from '$ts/helpers/generateSSEId';
 	import { sseId } from '$ts/stores/user/sse';
-	import { queueInitialVoiceoverRequest } from '$ts/stores/user/voiceovers';
+	import {
+		maxOngoingVoiceoversCountReached,
+		queueInitialVoiceoverRequest
+	} from '$ts/stores/user/voiceovers';
 	import {
 		voiceoverPrompt,
 		voiceoverPromptLocal,
@@ -22,6 +25,7 @@
 		});
 
 	function onSubmit() {
+		if ($maxOngoingVoiceoversCountReached) return;
 		if (!$sseId) return;
 		if (!$voiceoverPrompt) return;
 		queueInitialVoiceoverRequest({
@@ -64,6 +68,8 @@
 		class="absolute rounded-b-xl pointer-events-none w-full bottom-0 right-0 pt-24
     flex justify-end pr-3 pb-4 bg-gradient-to-t from-c-bg-secondary via-c-bg-secondary to-c-bg-secondary/0"
 	>
-		<Button class="pointer-events-auto">{$LL.Home.GenerateButton()}</Button>
+		<Button withSpinner loading={$maxOngoingVoiceoversCountReached} class="pointer-events-auto"
+			>{$LL.Home.GenerateButton()}</Button
+		>
 	</div>
 </form>
