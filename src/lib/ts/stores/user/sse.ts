@@ -7,8 +7,10 @@ export interface TSSECreationProcessMessage {
 	id: string;
 	ui_id?: string;
 	status?: TSSECreationProcessStatus;
-	outputs?: TSSECreationProcessGenerationOutput[] | TSSECreationProcessUpscaleOutput[];
-	audio_outputs?: TSSECreationProcessVoiceoverOutput[];
+	outputs?:
+		| TSSECreationProcessGenerationOutput[]
+		| TSSECreationProcessUpscaleOutput[]
+		| TSSECreationProcessVoiceoverOutput[];
 	process_type: TProcessType;
 	stream_id: string;
 	error?: string;

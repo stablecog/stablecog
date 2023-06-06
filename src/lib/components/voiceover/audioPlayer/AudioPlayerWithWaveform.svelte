@@ -4,6 +4,7 @@
 		audioToArray,
 		convertSecondsToTimestamp,
 		drawWaveform,
+		drawWaveformBars,
 		toggleMute,
 		togglePlay
 	} from '$components/voiceover/audioPlayer/helpers';
@@ -17,9 +18,9 @@
 	export let title: string | undefined = undefined;
 	export let label: string;
 	export { classes as class };
-	export let pointCount = 50;
 	let classes = '';
 
+	const barWidth = 40;
 	let currentTime = 0;
 	let duration: number;
 	let sliderValue = 0;
@@ -29,8 +30,8 @@
 	let isMuted = false;
 
 	let waveformContainer: HTMLDivElement;
-	let waveformContainerWidth: number;
-	let waveformContainerHeight: number;
+	let waveformContainerWidth: number | undefined;
+	let waveformContainerHeight: number | undefined;
 
 	let playButton: HTMLButtonElement;
 	let muteButton: HTMLButtonElement;
@@ -50,9 +51,10 @@
 	$: [currentTime], onCurrentTimeChanged();
 	$: [sliderValue], onSliderValueChanged();
 
-	$: [src], setAudioArray();
+	$: [src, pointCount], setAudioArray();
 	$: [progress, audioArray, waveformContainerWidth, waveformContainerHeight],
 		drawWaveformWithCheck();
+	$: pointCount = waveformContainerWidth ? waveformContainerWidth / barWidth : undefined;
 
 	function onCurrentTimeChanged() {
 		sliderValue = progressPercentage;
@@ -66,7 +68,10 @@
 	function drawWaveformWithCheck() {
 		if (!audioArray) return;
 		if (progress !== 0 && !progress) return;
-		drawWaveform({
+		if (!waveformContainerWidth) return;
+		if (!waveformContainerHeight) return;
+		if (!pointCount) return;
+		drawWaveformBars({
 			element: waveformContainer,
 			progress,
 			width: waveformContainerWidth,
@@ -91,13 +96,16 @@
 					offset: '100%'
 				}
 			],
-			margin: { top: 4, left: 0, bottom: 0, right: 0 },
+			margin: { top: 0, left: 0, bottom: 0, right: 0 },
+			barGap: 10,
+			barRadius: 12,
 			values: audioArray
 		});
 	}
 
 	async function setAudioArray() {
 		if (!browser) return;
+		if (!pointCount) return;
 		audioArray = await audioToArray(src, pointCount);
 	}
 
@@ -121,6 +129,7 @@
 	class="w-full h-full bg-c-bg-secondary flex flex-col rounded-xl overflow-hidden relative z-0
 	shadow-lg shadow-c-shadow/[var(--o-shadow-normal)] {classes}"
 >
+	{waveformContainerWidth}, {barWidth}, {audioArray?.length}
 	<div class="w-full flex flex-col px-5">
 		{#if title}
 			<p

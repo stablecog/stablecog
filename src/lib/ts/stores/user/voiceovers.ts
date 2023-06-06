@@ -29,7 +29,7 @@ export const setVoiceoverToFailed = ({ id, error }: { id: string; error?: string
 		const voiceoverById = $voiceovers.find((g) => g.id === id);
 		if (voiceoverById) {
 			voiceoverById.status = 'failed';
-			voiceoverById.audio_outputs = voiceoverById.audio_outputs.map((o) => ({
+			voiceoverById.outputs = voiceoverById.outputs.map((o) => ({
 				...o,
 				status: 'failed'
 			}));
@@ -39,7 +39,7 @@ export const setVoiceoverToFailed = ({ id, error }: { id: string; error?: string
 		const voiceoverByUiId = $voiceovers.find((g) => g.ui_id === id);
 		if (voiceoverByUiId) {
 			voiceoverByUiId.status = 'failed';
-			voiceoverByUiId.audio_outputs = voiceoverByUiId.audio_outputs.map((o) => ({
+			voiceoverByUiId.outputs = voiceoverByUiId.outputs.map((o) => ({
 				...o,
 				status: 'failed'
 			}));
@@ -52,10 +52,10 @@ export const setVoiceoverToFailed = ({ id, error }: { id: string; error?: string
 
 export const setVoiceoverToSucceeded = ({
 	id,
-	audio_outputs
+	outputs
 }: {
 	id: string;
-	audio_outputs: TVoiceoverOutput[];
+	outputs: TVoiceoverOutput[];
 }) => {
 	voiceovers.update(($voiceovers) => {
 		if ($voiceovers === null || $voiceovers.length === 0) {
@@ -66,7 +66,7 @@ export const setVoiceoverToSucceeded = ({
 			return $voiceovers;
 		}
 		voi.status = 'succeeded';
-		voi.audio_outputs = audio_outputs.map((o) => ({
+		voi.outputs = outputs.map((o) => ({
 			...o,
 			status: 'succeeded' as TVoiceoverOutputStatus
 		}));
@@ -105,7 +105,7 @@ export const setVoiceoverToServerReceived = ({ ui_id, id }: { ui_id: string; id:
 		}
 		voi.id = id;
 		voi.status = 'server-received';
-		voi.audio_outputs = voi.audio_outputs.map((o) => ({ ...o, status: 'server-received' }));
+		voi.outputs = voi.outputs.map((o) => ({ ...o, status: 'server-received' }));
 		return $voiceovers;
 	});
 };
@@ -118,8 +118,8 @@ export const setVoiceoverToServerProcessing = ({ ui_id, id }: { ui_id: string; i
 		const voi = $voiceovers.find((g) => g.id === id);
 		if (voi && voi.status !== 'succeeded' && voi.status !== 'failed') {
 			voi.status = 'server-processing';
-			voi.audio_outputs = voi.audio_outputs.map((o) => ({ ...o, status: 'server-processing' }));
-			voi.audio_outputs.forEach((o) => {
+			voi.outputs = voi.outputs.map((o) => ({ ...o, status: 'server-processing' }));
+			voi.outputs.forEach((o) => {
 				o.animation = newGenerationCompleteAnimation(o.animation);
 			});
 			voi.started_at = convertToDBTimeString(Date.now());
@@ -129,8 +129,8 @@ export const setVoiceoverToServerProcessing = ({ ui_id, id }: { ui_id: string; i
 		const voi2 = $voiceovers.find((g) => g.ui_id === ui_id);
 		if (voi2 && voi2.status !== 'succeeded' && voi2.status !== 'failed') {
 			voi2.status = 'server-processing';
-			voi2.audio_outputs = voi2.audio_outputs.map((o) => ({ ...o, status: 'server-processing' }));
-			voi2.audio_outputs.forEach((o) => {
+			voi2.outputs = voi2.outputs.map((o) => ({ ...o, status: 'server-processing' }));
+			voi2.outputs.forEach((o) => {
 				o.animation = newGenerationCompleteAnimation(o.animation);
 			});
 			voi2.started_at = convertToDBTimeString(Date.now());
@@ -147,7 +147,7 @@ export async function queueInitialVoiceoverRequest(request: TInitialVoiceoverReq
 			...request,
 			status: 'to-be-submitted',
 			created_at: convertToDBTimeString(Date.now()),
-			audio_outputs: [...Array(request.num_outputs)].map(() => ({
+			outputs: [...Array(request.num_outputs)].map(() => ({
 				id: generateSSEId(),
 				audio_file_url: '',
 				status: 'to-be-submitted',
@@ -198,10 +198,10 @@ export const setVoiceoverOutputToDeleted = (output_id: string) => {
 		}
 		for (let i = 0; i < $voiceovers.length; i++) {
 			const voi = $voiceovers[i];
-			for (let j = 0; j < voi.audio_outputs.length; j++) {
-				const output = voi.audio_outputs[j];
+			for (let j = 0; j < voi.outputs.length; j++) {
+				const output = voi.outputs[j];
 				if (output.id === output_id) {
-					voi.audio_outputs[j].is_deleted = true;
+					voi.outputs[j].is_deleted = true;
 					return $voiceovers;
 				}
 			}
@@ -217,10 +217,10 @@ export const setVoiceoverOutputToFavorited = (output_id: string) => {
 		}
 		for (let i = 0; i < $voiceovers.length; i++) {
 			const voi = $voiceovers[i];
-			for (let j = 0; j < voi.audio_outputs.length; j++) {
-				const output = voi.audio_outputs[j];
+			for (let j = 0; j < voi.outputs.length; j++) {
+				const output = voi.outputs[j];
 				if (output.id === output_id) {
-					voi.audio_outputs[j].is_favorited = true;
+					voi.outputs[j].is_favorited = true;
 					return $voiceovers;
 				}
 			}
@@ -236,10 +236,10 @@ export const setVoiceoverOutputToSubmitted = (output_id: string) => {
 		}
 		for (let i = 0; i < $voiceovers.length; i++) {
 			const voi = $voiceovers[i];
-			for (let j = 0; j < voi.audio_outputs.length; j++) {
-				const output = voi.audio_outputs[j];
+			for (let j = 0; j < voi.outputs.length; j++) {
+				const output = voi.outputs[j];
 				if (output.id === output_id) {
-					voi.audio_outputs[j].gallery_status = 'submitted';
+					voi.outputs[j].gallery_status = 'submitted';
 					return $voiceovers;
 				}
 			}
@@ -250,8 +250,8 @@ export const setVoiceoverOutputToSubmitted = (output_id: string) => {
 
 export const getOutputOnStageStatuses = (voi: TVoiceover, output_ids: string[]) => {
 	let statuses = output_ids.map((id) => false);
-	for (let i = 0; i < voi.audio_outputs.length; i++) {
-		const output = voi.audio_outputs[i];
+	for (let i = 0; i < voi.outputs.length; i++) {
+		const output = voi.outputs[i];
 		if (output_ids.includes(output.id)) {
 			statuses[output_ids.indexOf(output.id)] = true;
 		}
@@ -330,7 +330,7 @@ export interface TVoiceover extends TVoiceoverBase {
 	error?: string;
 	id?: string;
 	ui_id: string;
-	audio_outputs: TVoiceoverOutput[];
+	outputs: TVoiceoverOutput[];
 	started_at?: string;
 	created_at: string;
 	completed_at?: string;

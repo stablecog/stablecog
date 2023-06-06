@@ -17,6 +17,12 @@
 	import PromptBar from '$components/voiceover/generate/PromptBar.svelte';
 	import { voiceovers } from '$ts/stores/user/voiceovers.js';
 	import { PUBLIC_BUCKET_URL, PUBLIC_BUCKET_VOICEOVER_URL } from '$env/static/public';
+	import { browser } from '$app/environment';
+	import { createInfiniteQuery } from '@tanstack/svelte-query';
+	import {
+		getUserVoiceoverFullOutputs,
+		type TUserVoiceoverFullOutputsPage
+	} from '$ts/queries/userVoiceovers';
 
 	export let data;
 
@@ -49,6 +55,39 @@
 	function toggleSettingsSheet() {
 		isGenerationSettingsSheetOpen = !isGenerationSettingsSheetOpen;
 	}
+
+	$: userVoiceoverFullOutputsQueryKey = ['user_voiceover_full_outputs'];
+
+	$: userVoiceoverFullOutputsQuery =
+		browser && $page.data.session?.user.id && $userSummary
+			? createInfiniteQuery({
+					queryKey: userVoiceoverFullOutputsQueryKey,
+					queryFn: async (lastPage) => {
+						let outputsPage = await getUserVoiceoverFullOutputs({
+							access_token: $page.data.session?.access_token || '',
+							cursor: lastPage?.pageParam
+						});
+						return outputsPage;
+					},
+					getNextPageParam: (lastPage: TUserVoiceoverFullOutputsPage) => {
+						if (!lastPage.next) return undefined;
+						return lastPage.next;
+					}
+			  })
+			: undefined;
+
+	$: pinnedFullOutputs = [...$voiceovers]
+		.map((g) => ({
+			...g,
+			outputs: [
+				...[...g.outputs.filter((o) => o.status !== 'failed')].reverse(),
+				...g.outputs.filter((o) => o.status === 'failed')
+			]
+		}))
+		.filter((g) => g.status !== 'pre-submit')
+		.flatMap((g) => g.outputs.map((o) => ({ ...o, generation: g })));
+
+	$: userVoiceoverOutputs = $userVoiceoverFullOutputsQuery?.data?.pages?.flatMap((p) => p.outputs);
 </script>
 
 <div class="w-full h-full flex flex-col overflow-hidden relative z-0">
@@ -160,7 +199,7 @@
 						<div class="flex-1 min-h-0 w-full flex flex-col overflow-hidden">
 							<AudioPlayerWithWaveform
 								src={$voiceovers?.[0]?.status === 'succeeded'
-									? $voiceovers[0].audio_outputs[0].audio_file_url.replace(
+									? $voiceovers[0].outputs[0].audio_file_url.replace(
 											PUBLIC_BUCKET_URL,
 											PUBLIC_BUCKET_VOICEOVER_URL
 									  )

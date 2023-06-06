@@ -37,11 +37,11 @@ export function setCreationProcessStatus(data: TSSECreationProcessMessage) {
 			data.id &&
 			data.ui_id &&
 			data.status === 'succeeded' &&
-			data.audio_outputs &&
-			data.audio_outputs.length > 0
+			data.outputs &&
+			data.outputs.length > 0
 		) {
-			const audio_outputs = data.audio_outputs as TSSECreationProcessVoiceoverOutput[];
-			setVoiceoverToSucceeded({ id: data.id, audio_outputs });
+			const outputs = data.outputs as TSSECreationProcessVoiceoverOutput[];
+			setVoiceoverToSucceeded({ id: data.id, outputs });
 		} else if (data.id && data.status === 'failed') {
 			setVoiceoverToFailed({ id: data.id, error: data.error });
 		}

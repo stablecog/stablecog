@@ -216,7 +216,6 @@
 
 	let isSubmittingVoiceovers = false;
 	async function onVoiceoversChanged() {
-		console.log('voiceovers', $voiceovers);
 		if (isSubmittingVoiceovers) return;
 		if (!$voiceovers || $voiceovers.length === 0) {
 			return;

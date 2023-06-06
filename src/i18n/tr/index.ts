@@ -9,7 +9,7 @@ const tr: Translation = {
 		Describe: {
 			Title: 'İsteğini betimle.',
 			Paragraph:
-				'Herhangi bir konuda, binlerce farklı tarzda. AI istedediğini saniyeler içinde üretecek.',
+				'Herhangi bir konuda, binlerce farklı tarzda. AI istediğini saniyeler içinde üretecek.',
 			Prompt: 'majestik kedi, psikedelik, mor tonlar, fantazi manzara'
 		},
 		InitImage: {
@@ -823,14 +823,16 @@ const tr: Translation = {
 		PageParagraph: 'Herhangi bir soru sormak istersen aşağıdaki linklerden bize ulaşabilirsin.'
 	},
 	Guide: {
-		PageTitle: 'Klavuz',
-		GuideButton: 'Klavuz',
+		PageTitle: 'Kılavuz',
+		GuideButton: 'Kılavuz',
 		PreviousTitle: 'Önceki',
 		NextTitle: 'Sonraki',
 		ChaptersTitle: 'Bölümler',
 		ChapterTitle: 'Bölüm'
 	},
-	Try: { PageTitle: 'Try' },
+	Try: {
+		PageTitle: 'Dene'
+	},
 	Legal: {
 		TermsOfServiceTitle: 'Kullanım Şartları',
 		PrivacyPolicyTitle: 'Gizlilik Politikası',

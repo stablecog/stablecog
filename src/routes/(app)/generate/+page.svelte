@@ -107,7 +107,7 @@
 			...g,
 			outputs: [
 				...[
-					...g.outputs.filter((o) => o.status !== 'failed-nsfw' || o.status !== 'failed-nsfw')
+					...g.outputs.filter((o) => o.status !== 'failed-nsfw' && o.status !== 'failed')
 				].reverse(),
 				...g.outputs.filter((o) => o.status === 'failed-nsfw' || o.status === 'failed')
 			]
