@@ -14,7 +14,6 @@
 	import { windowWidth } from '$ts/stores/window.js';
 	import { quadOut } from 'svelte/easing';
 	import { fade, fly } from 'svelte/transition';
-	import PromptBar from '$components/voiceover/generate/VoiceoverPromptBar.svelte';
 	import { voiceovers } from '$ts/stores/user/voiceovers.js';
 	import { PUBLIC_BUCKET_URL, PUBLIC_BUCKET_VOICEOVER_URL } from '$env/static/public';
 	import { browser } from '$app/environment';
@@ -25,6 +24,7 @@
 	} from '$ts/queries/userVoiceovers';
 	import VoiceoverSettingsPanel from '$components/voiceover/generate/VoiceoverSettingsPanel.svelte';
 	import VoiceoverSettingsProvider from '$components/voiceover/generate/VoiceoverSettingsProvider.svelte';
+	import VoiceoverPromptBar from '$components/voiceover/generate/VoiceoverPromptBar.svelte';
 
 	export let data;
 
@@ -185,7 +185,7 @@
 							</AutoSize>
 						</div>
 						<div bind:clientHeight={promptBarHeight} class="w-full flex px-2 md:px-0 z-50 relative">
-							<PromptBar />
+							<VoiceoverPromptBar />
 						</div>
 					</div>
 				</div>
