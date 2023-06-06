@@ -67,7 +67,8 @@
 
 	$: doesntHaveEnoughCredits =
 		isCheckCompleted &&
-		$userSummary &&
+		$userSummary !== undefined &&
+		$userSummary !== null &&
 		$userSummary.total_remaining_credits < Number($generationNumOutputs);
 
 	$: showClearPromptInputButton = $generationPrompt !== undefined && $generationPrompt !== '';

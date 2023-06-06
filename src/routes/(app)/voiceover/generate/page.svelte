@@ -11,15 +11,12 @@
 	import { expandCollapse } from '$ts/animation/transitions.js';
 	import { isLeftSidebarHidden, isLeftSidebarHiddenApp } from '$ts/stores/sidebars.js';
 	import { userSummary } from '$ts/stores/user/summary.js';
-	import { windowHeight, windowWidth } from '$ts/stores/window.js';
+	import { windowWidth } from '$ts/stores/window.js';
 	import { quadOut } from 'svelte/easing';
 	import { fade, fly } from 'svelte/transition';
 	import PromptBar from '$components/voiceover/generate/PromptBar.svelte';
-	import { apiUrl } from '$ts/constants/main.js';
-	import { appVersion } from '$ts/stores/appVersion.js';
-	import { generateSSEId } from '$ts/helpers/generateSSEId.js';
-	import { sseId } from '$ts/stores/user/sse.js';
 	import { voiceovers } from '$ts/stores/user/voiceovers.js';
+	import { PUBLIC_BUCKET_URL, PUBLIC_BUCKET_VOICEOVER_URL } from '$env/static/public';
 
 	export let data;
 
@@ -162,7 +159,12 @@
 					<div class="w-full flex-1 min-h-0 flex flex-col justify-start overflow-hidden">
 						<div class="flex-1 min-h-0 w-full flex flex-col overflow-hidden">
 							<AudioPlayerWithWaveform
-								src={$voiceovers[0]?.outputs?.[0]?.audio_file_url ?? '/audio/example.mp3'}
+								src={$voiceovers?.[0]?.status === 'succeeded'
+									? $voiceovers[0].audio_outputs[0].audio_file_url.replace(
+											PUBLIC_BUCKET_URL,
+											PUBLIC_BUCKET_VOICEOVER_URL
+									  )
+									: '/audio/example.mp3'}
 								label={examplePrompt}
 								title={examplePrompt}
 							/>

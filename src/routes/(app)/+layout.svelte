@@ -55,11 +55,18 @@
 		isCreationProcessData,
 		setCreationProcessStatus
 	} from '$ts/helpers/user/creationProcess.js';
+	import {
+		setVoiceoverToFailed,
+		setVoiceoverToServerReceived,
+		submitInitialVoiceoverRequest,
+		voiceovers
+	} from '$ts/stores/user/voiceovers.js';
 
 	export let data;
 
 	$: $generations, onGenerationsChanged();
 	$: $upscales, onUpscalesChanged();
+	$: $voiceovers, onVoiceoversChanged();
 	$: isDrawerRoute =
 		!routesWithTheirOwnDrawer.includes($page.url.pathname) &&
 		!routesWithTheirOwnDrawer.some((r) => $page.url.pathname.startsWith(r));
@@ -203,6 +210,56 @@
 				} finally {
 					isSubmittingUpscales = false;
 				}
+			}
+		}
+	}
+
+	let isSubmittingVoiceovers = false;
+	async function onVoiceoversChanged() {
+		console.log('voiceovers', $voiceovers);
+		if (isSubmittingVoiceovers) return;
+		if (!$voiceovers || $voiceovers.length === 0) {
+			return;
+		}
+		if (!$page.data.session?.access_token) {
+			console.log('No access token, not submitting initial voiceover request');
+			return;
+		}
+		if ($sseId === null) {
+			console.log('Stream id is null, not submitting initial voiceover request');
+			return;
+		}
+		for (let i = 0; i < $voiceovers.length; i++) {
+			const voiceover = $voiceovers[i];
+			if (voiceover.status !== 'to-be-submitted') continue;
+			if (voiceover.is_placeholder) continue;
+			isSubmittingVoiceovers = true;
+			try {
+				console.log('Submitting initial voiceover request', voiceover);
+				const res = await submitInitialVoiceoverRequest(
+					{
+						...voiceover,
+						stream_id: $sseId
+					},
+					$page.data.session.access_token,
+					$appVersion
+				);
+				const { id, error, total_remaining_credits, ui_id } = res;
+				if (total_remaining_credits !== undefined && $userSummary) {
+					userSummary.set({ ...$userSummary, total_remaining_credits });
+				}
+				if (error || !id || !ui_id) {
+					console.log('Voiceover failed:', error);
+					setVoiceoverToFailed({ id: voiceover.id || voiceover.ui_id, error: error });
+				} else {
+					setVoiceoverToServerReceived({ ui_id: ui_id, id: id });
+				}
+			} catch (error) {
+				const err = error as Error;
+				console.log('Initial voiceover submisssion error', error);
+				setVoiceoverToFailed({ id: voiceover.id || voiceover.ui_id, error: err.message });
+			} finally {
+				isSubmittingVoiceovers = false;
 			}
 		}
 	}

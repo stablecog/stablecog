@@ -6,13 +6,19 @@ import {
 import type {
 	TSSECreationProcessGenerationOutput,
 	TSSECreationProcessMessage,
-	TSSECreationProcessUpscaleOutput
+	TSSECreationProcessUpscaleOutput,
+	TSSECreationProcessVoiceoverOutput
 } from '$ts/stores/user/sse';
 import {
 	setUpscaleToFailed,
 	setUpscaleToServerProcessing,
 	setUpscaleToSucceeded
 } from '$ts/stores/user/upscale';
+import {
+	setVoiceoverToFailed,
+	setVoiceoverToServerProcessing,
+	setVoiceoverToSucceeded
+} from '$ts/stores/user/voiceovers';
 
 export function isCreationProcessData(data: any) {
 	return (
@@ -25,6 +31,20 @@ export function isCreationProcessData(data: any) {
 
 export function setCreationProcessStatus(data: TSSECreationProcessMessage) {
 	if (data.process_type === 'voiceover') {
+		if (data.id && data.ui_id && data.status === 'processing') {
+			setVoiceoverToServerProcessing({ ui_id: data.ui_id, id: data.id });
+		} else if (
+			data.id &&
+			data.ui_id &&
+			data.status === 'succeeded' &&
+			data.audio_outputs &&
+			data.audio_outputs.length > 0
+		) {
+			const audio_outputs = data.audio_outputs as TSSECreationProcessVoiceoverOutput[];
+			setVoiceoverToSucceeded({ id: data.id, audio_outputs });
+		} else if (data.id && data.status === 'failed') {
+			setVoiceoverToFailed({ id: data.id, error: data.error });
+		}
 	} else if (data.process_type === 'generate' || data.process_type === 'generate_and_upscale') {
 		if (data.id && data.ui_id && data.status === 'processing') {
 			setGenerationToServerProcessing({ ui_id: data.ui_id, id: data.id });
