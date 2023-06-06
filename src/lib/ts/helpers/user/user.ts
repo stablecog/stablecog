@@ -2,10 +2,12 @@ import { apiUrl } from '$ts/constants/main';
 import type { TStripeSupportedPriceIdSubscriptionsMo } from '$ts/constants/stripePublic';
 import type { TUserSummary } from '$ts/stores/user/summary';
 
-export async function getUserSummary(access_token: string | undefined) {
-	if (!access_token) return undefined;
+export async function getUserSummary(
+	access_token: string | undefined
+): Promise<TUserSummary | null> {
+	if (!access_token) return null;
 	console.log('getting user summary');
-	let userSummary: TUserSummary | undefined = undefined;
+	let userSummary: TUserSummary | null = null;
 	const userRes = await fetch(`${apiUrl.origin}/v1/user`, {
 		headers: {
 			'Content-Type': 'application/json',

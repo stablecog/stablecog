@@ -4,7 +4,7 @@ import type {
 } from '$ts/constants/stripePublic';
 import { writable } from 'svelte/store';
 
-export const userSummary = writable<TUserSummary | undefined>(undefined);
+export const userSummary = writable<TUserSummary | null>(null);
 
 export interface TUserSummary {
 	total_remaining_credits: number;

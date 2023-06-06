@@ -26,7 +26,7 @@
 	$: [$userSummaryQuery], setUserSummary();
 
 	function setUserSummary() {
-		if (browser && $userSummaryQuery && $userSummaryQuery.isSuccess) {
+		if (browser && $userSummaryQuery && $userSummaryQuery.isSuccess && $userSummaryQuery.data) {
 			userSummary.set($userSummaryQuery.data);
 		}
 	}

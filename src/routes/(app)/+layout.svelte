@@ -38,29 +38,23 @@
 		generations,
 		setGenerationOutputUpscaledImageUrl,
 		setGenerationToFailed,
-		setGenerationToServerProcessing,
 		setGenerationToServerReceived,
-		setGenerationToSucceeded,
 		submitInitialGenerationRequest
 	} from '$ts/stores/user/generation';
-	import {
-		sse,
-		sseId,
-		type TSSEGenerationMessageOutput,
-		type TSSEGenerationOrUpscaleMessage,
-		type TSSEUpscaleMessageOutput
-	} from '$ts/stores/user/sse';
+	import { sse, sseId, type TSSECreationProcessMessage } from '$ts/stores/user/sse';
 	import { userSummary } from '$ts/stores/user/summary';
 	import {
 		setUpscaleToFailed,
-		setUpscaleToServerProcessing,
 		setUpscaleToServerReceived,
-		setUpscaleToSucceeded,
 		submitInitialUpscaleRequest,
 		upscales
 	} from '$ts/stores/user/upscale';
 	import { QueryClientProvider } from '@tanstack/svelte-query';
 	import { onMount } from 'svelte';
+	import {
+		isCreationProcessData,
+		setCreationProcessStatus
+	} from '$ts/helpers/user/creationProcess.js';
 
 	export let data;
 
@@ -96,7 +90,9 @@
 				if (data.version) {
 					serverVersion.set(data.version);
 				}
-				setGenerationOrUpscaleStatus(data);
+				if (isCreationProcessData(data)) {
+					setCreationProcessStatus(data as TSSECreationProcessMessage);
+				}
 			};
 			$sse.onerror = (event) => {
 				console.log('Error from SSE', event);
@@ -207,46 +203,6 @@
 				} finally {
 					isSubmittingUpscales = false;
 				}
-			}
-		}
-	}
-
-	function setGenerationOrUpscaleStatus(data: TSSEGenerationOrUpscaleMessage) {
-		if (
-			data.process_type !== 'upscale' &&
-			data.process_type !== 'generate' &&
-			data.process_type !== 'generate_and_upscale'
-		) {
-			return;
-		}
-		if (data.process_type === 'generate' || data.process_type === 'generate_and_upscale') {
-			if (data.id && data.ui_id && data.status === 'processing') {
-				setGenerationToServerProcessing({ ui_id: data.ui_id, id: data.id });
-			} else if (
-				data.id &&
-				data.ui_id &&
-				data.status === 'succeeded' &&
-				data.outputs &&
-				data.outputs.length > 0
-			) {
-				const outputs = data.outputs as TSSEGenerationMessageOutput[];
-				setGenerationToSucceeded({ id: data.id, outputs: outputs });
-			} else if (data.id && data.status === 'failed') {
-				setGenerationToFailed({ id: data.id, error: data.error });
-			}
-		} else if (data.process_type === 'upscale') {
-			if (data.id && data.ui_id && data.status === 'processing') {
-				setUpscaleToServerProcessing({ ui_id: data.ui_id, id: data.id });
-			} else if (
-				data.id &&
-				data.status === 'succeeded' &&
-				data.outputs &&
-				data.outputs.length > 0
-			) {
-				const outputs = data.outputs as TSSEUpscaleMessageOutput[];
-				setUpscaleToSucceeded({ id: data.id, outputs: outputs });
-			} else if (data.id && data.status === 'failed') {
-				setUpscaleToFailed({ id: data.id, error: data.error });
 			}
 		}
 	}

@@ -8,11 +8,6 @@ import { estimatedUpscaleDurationMs } from '$ts/stores/cost';
 import { userSummary } from '$ts/stores/user/summary';
 import type { Tweened } from 'svelte/motion';
 import { derived, get, writable } from 'svelte/store';
-import {
-	PUBLIC_STRIPE_PRODUCT_ID_PRO_SUBSCRIPTION,
-	PUBLIC_STRIPE_PRODUCT_ID_STARTER_SUBSCRIPTION,
-	PUBLIC_STRIPE_PRODUCT_ID_ULTIMATE_SUBSCRIPTION
-} from '$env/static/public';
 import { isSuperAdmin } from '$ts/helpers/admin/roles';
 import { convertToDBTimeString } from '$ts/helpers/convertToDBTimeString';
 import { addToRecentlyUpdatedOutputIds } from '$ts/stores/user/recentlyUpdatedOutputIds';

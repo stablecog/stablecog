@@ -3,31 +3,39 @@ import { writable } from 'svelte/store';
 export let sse = writable<EventSource | null>(null);
 export let sseId = writable<string | null>(null);
 
-export interface TSSEGenerationOrUpscaleMessage {
+export interface TSSECreationProcessMessage {
 	id: string;
 	ui_id?: string;
-	status?: TSSEGenerationOrUpscaleMessageStatus;
-	outputs?: TSSEGenerationMessageOutput[] | TSSEUpscaleMessageOutput[];
+	status?: TSSECreationProcessStatus;
+	outputs?:
+		| TSSECreationProcessGenerationOutput[]
+		| TSSECreationProcessUpscaleOutput[]
+		| TSSECreationProcessVoiceoverOutput[];
 	process_type: TProcessType;
 	stream_id: string;
 	error?: string;
 }
 
-export type TSSEGenerationOrUpscaleMessageStatus = 'processing' | 'succeeded' | 'failed';
+export type TSSECreationProcessStatus = 'processing' | 'succeeded' | 'failed';
 
-export interface TSSEGenerationMessageOutput {
+export interface TSSECreationProcessGenerationOutput {
 	id: string;
 	gallery_status: TGalleryStatus;
 	image_url: string;
 }
 
-export interface TSSEUpscaleMessageOutput {
+export interface TSSECreationProcessUpscaleOutput {
 	id: string;
 	image_url: string;
 	input_image_url: string;
 	output_id?: string;
 }
 
+export interface TSSECreationProcessVoiceoverOutput {
+	id: string;
+	audio_file_url: string;
+}
+
 type TGalleryStatus = 'submitted';
 
-type TProcessType = 'generate' | 'upscale' | 'generate_and_upscale';
+type TProcessType = 'generate' | 'upscale' | 'generate_and_upscale' | 'voiceover';

@@ -11,6 +11,7 @@
 	import PlayPauseButton from '$components/voiceover/audioPlayer/PlayPauseButton.svelte';
 	import MuteButton from '$components/voiceover/audioPlayer/MuteButton.svelte';
 	import { allAudioPlayers } from '$ts/stores/allPlayers';
+	import { browser } from '$app/environment';
 
 	export let src: string;
 	export let title: string | undefined = undefined;
@@ -49,6 +50,7 @@
 	$: [currentTime], onCurrentTimeChanged();
 	$: [sliderValue], onSliderValueChanged();
 
+	$: [src], setAudioArray();
 	$: [progress, audioArray, waveformContainerWidth, waveformContainerHeight],
 		drawWaveformWithCheck();
 
@@ -75,7 +77,7 @@
 					offset: '0%'
 				},
 				{
-					color: 'rgba(var(--c-primary) /0)',
+					color: 'rgba(var(--c-primary) / 0)',
 					offset: '100%'
 				}
 			],
@@ -85,7 +87,7 @@
 					offset: '0%'
 				},
 				{
-					color: 'rgba(var(--c-on-bg) /0)',
+					color: 'rgba(var(--c-on-bg) / 0)',
 					offset: '100%'
 				}
 			],
@@ -94,8 +96,13 @@
 		});
 	}
 
-	onMount(async () => {
+	async function setAudioArray() {
+		if (!browser) return;
 		audioArray = await audioToArray(src, pointCount);
+	}
+
+	onMount(async () => {
+		await setAudioArray();
 		$allAudioPlayers.add(audioElement);
 	});
 

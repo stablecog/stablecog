@@ -69,6 +69,7 @@ export const STRIPE_PRODUCT_ID_OBJECTS_SUBSCRIPTIONS_MO: {
 		monthly_images: number;
 		parallel_generations: number;
 		parallel_upscales: number;
+		parallel_voiceovers: number;
 		prices: {
 			[priceId in TStripeSupportedPriceIdSubscriptionsMo]: {
 				currencies: {
@@ -85,6 +86,7 @@ export const STRIPE_PRODUCT_ID_OBJECTS_SUBSCRIPTIONS_MO: {
 		monthly_images: 1750,
 		parallel_generations: 2,
 		parallel_upscales: 2,
+		parallel_voiceovers: 1,
 		prices: {
 			[PUBLIC_STRIPE_PRICE_ID_STARTER_SUBSCRIPTION_MO]: {
 				currencies: {
@@ -103,6 +105,7 @@ export const STRIPE_PRODUCT_ID_OBJECTS_SUBSCRIPTIONS_MO: {
 		monthly_images: 4500,
 		parallel_generations: 3,
 		parallel_upscales: 3,
+		parallel_voiceovers: 1,
 		prices: {
 			[PUBLIC_STRIPE_PRICE_ID_PRO_SUBSCRIPTION_MO]: {
 				currencies: {
@@ -121,6 +124,7 @@ export const STRIPE_PRODUCT_ID_OBJECTS_SUBSCRIPTIONS_MO: {
 		monthly_images: 10000,
 		parallel_generations: 4,
 		parallel_upscales: 4,
+		parallel_voiceovers: 1,
 		prices: {
 			[PUBLIC_STRIPE_PRICE_ID_ULTIMATE_SUBSCRIPTION_MO]: {
 				currencies: {

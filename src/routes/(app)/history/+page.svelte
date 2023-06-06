@@ -59,7 +59,7 @@
 	]);
 
 	$: userGenerationFullOutputsQuery =
-		browser && $page.data.session?.user.id
+		browser && $page.data.session?.user.id && $userSummary
 			? createInfiniteQuery(
 					getHistoryInfiniteQueryProps({
 						userGalleryCurrentView: $userGalleryCurrentView,
@@ -155,7 +155,7 @@
 <svelte:window on:keydown={onKeyDown} />
 
 <div class="w-full flex-1 flex flex-col items-center px-1 md:pt-3 md:pb-6">
-	{#if !$page.data.session?.user.id}
+	{#if !$page.data.session?.user.id || !$userSummary}
 		<div class="w-full flex-1 max-w-7xl flex justify-center px-2 py-4 md:py-2 md:px-8">
 			<div class="my-auto flex flex-col">
 				<SignInCard redirectTo={'/history' + $searchParamsString} />

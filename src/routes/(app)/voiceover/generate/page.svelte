@@ -15,8 +15,15 @@
 	import { quadOut } from 'svelte/easing';
 	import { fade, fly } from 'svelte/transition';
 	import PromptBar from '$components/voiceover/generate/PromptBar.svelte';
+	import { apiUrl } from '$ts/constants/main.js';
+	import { appVersion } from '$ts/stores/appVersion.js';
+	import { generateSSEId } from '$ts/helpers/generateSSEId.js';
+	import { sseId } from '$ts/stores/user/sse.js';
+	import { voiceovers } from '$ts/stores/user/voiceovers.js';
 
 	export let data;
+
+	let prompt: string;
 
 	const examplePrompt =
 		'Create amazing art in seconds with AI. Free, multilingual and open-source AI image generator using Stable Diffusion and Kandinsky.';
@@ -134,7 +141,7 @@
 						</AutoSize>
 					</div>
 					<div bind:clientHeight={promptBarHeight} class="w-full flex px-2 md:px-0 z-50 relative">
-						<PromptBar />
+						<PromptBar bind:value={prompt} />
 					</div>
 				</div>
 			</div>
@@ -155,7 +162,7 @@
 					<div class="w-full flex-1 min-h-0 flex flex-col justify-start overflow-hidden">
 						<div class="flex-1 min-h-0 w-full flex flex-col overflow-hidden">
 							<AudioPlayerWithWaveform
-								src="/audio/example.mp3"
+								src={$voiceovers[0]?.outputs?.[0]?.audio_file_url ?? '/audio/example.mp3'}
 								label={examplePrompt}
 								title={examplePrompt}
 							/>

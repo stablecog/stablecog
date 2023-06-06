@@ -85,7 +85,7 @@
 	]);
 
 	$: userGenerationFullOutputsQuery =
-		browser && $page.data.session?.user.id
+		browser && $page.data.session?.user.id && $userSummary
 			? createInfiniteQuery({
 					queryKey: $generatePageUserGenerationFullOutputsQueryKey,
 					queryFn: async (lastPage) => {
@@ -261,7 +261,7 @@
 						class="h-full flex w-36 xl:w-72 lg:pb-[calc(env(safe-area-inset-bottom))] relative z-10"
 					>
 						<SidebarWrapper hasGradient>
-							{#if !$page.data.session?.user.id}
+							{#if !$page.data.session?.user.id || !$userSummary}
 								<GenerateGridPlaceholder text={$LL.Generate.Grid.NotSignedIn.Paragraph()} />
 							{:else if userGenerationFullOutputsQuery}
 								<AutoSize bind:element={gridScrollContainer}>
@@ -356,7 +356,7 @@
 							class="w-full h-16 flex flex-col md:hidden"
 						>
 							<AutoSize bind:element={listScrollContainer} hideScroll>
-								{#if !$page.data.session?.user.id}
+								{#if !$page.data.session?.user.id || !$userSummary}
 									<GenerateHorizontalListPlaceholder
 										text={$LL.Generate.Grid.NotSignedIn.Paragraph()}
 									/>
@@ -427,7 +427,7 @@
 					<div class="w-full hidden md:flex lg:hidden pt-11 pb-[calc(env(safe-area-inset-bottom))]">
 						<SidebarWrapper borderSize="sm">
 							<div class="w-full h-20 flex flex-col">
-								{#if !$page.data.session?.user.id}
+								{#if !$page.data.session?.user.id || !$userSummary}
 									<GenerateHorizontalListPlaceholder
 										text={$LL.Generate.Grid.NotSignedIn.Paragraph()}
 									/>
