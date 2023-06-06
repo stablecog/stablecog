@@ -10,6 +10,7 @@
 	export let disabled: boolean = false;
 	export let hasTitle = true;
 	export let valueSize: 'sm' | 'md' = 'sm';
+	export let numeratorFormatter: (value: number) => string = (value) => value.toString();
 	export { classes as class };
 	let classes = '';
 </script>
@@ -23,5 +24,14 @@
 			<div class="w-full h-full bg-c-bg-secondary transition" />
 		</div>
 	{/if}
-	<RangeInputWithNumerator bind:value {valueSize} {step} {name} {max} {min} {disabled} />
+	<RangeInputWithNumerator
+		bind:value
+		{valueSize}
+		{step}
+		{name}
+		{max}
+		{min}
+		{disabled}
+		{numeratorFormatter}
+	/>
 </TabBarWrapper>

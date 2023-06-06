@@ -4,7 +4,6 @@
 		audioToArray,
 		convertSecondsToTimestamp,
 		drawWaveform,
-		drawWaveformBars,
 		toggleMute,
 		togglePlay
 	} from '$components/voiceover/audioPlayer/helpers';
@@ -169,8 +168,8 @@
 			</p>
 		</div>
 	</div>
-	<div class="w-full flex-1 flex relative overflow-hidden py-2">
-		<div class="w-full h-full">
+	<div class="w-full flex-1 flex relative overflow-hidden pt-2">
+		<div class="w-full h-full relative">
 			<div
 				bind:clientWidth={waveformContainerWidth}
 				bind:clientHeight={waveformContainerHeight}

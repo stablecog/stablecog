@@ -14,10 +14,7 @@ import {
 	STRIPE_PRODUCT_ID_OBJECTS_SUBSCRIPTIONS_MO,
 	roleToProductId
 } from '$ts/constants/stripePublic';
-import type {
-	TAvailableSpeakerForVoiceoverModel,
-	TAvailableVoiceoverModelId
-} from '$ts/constants/voiceoverModels';
+import type { TVoiceoverSpeakerId, TVoiceoverModelId } from '$ts/constants/voiceover/models';
 
 export const voiceovers = writable<TVoiceover[]>([]);
 
@@ -318,8 +315,8 @@ export interface TVoiceoverBase {
 		id: string;
 		text: string;
 	};
-	model_id: TAvailableVoiceoverModelId;
-	speaker_id: TAvailableSpeakerForVoiceoverModel;
+	model_id: TVoiceoverModelId;
+	speaker_id: TVoiceoverSpeakerId;
 	temperature: number;
 	seed: number;
 	num_outputs: number;

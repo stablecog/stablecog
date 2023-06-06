@@ -2485,6 +2485,42 @@ type RootTranslation = {
 		 */
 		ProductHunt: string
 	}
+	Voiceover: {
+		ModelOptions: {
+			'0f442a3e-cf53-490b-b4a9-b0dda63e9523': {
+				/**
+				 * B​a​r​k
+				 */
+				Name: string
+			}
+		}
+		SpeakerOptions: {
+			'82bc1e69-2aa3-4317-9bc9-d9ed2afad0ff': {
+				/**
+				 * J​a​c​k
+				 */
+				Name: string
+			}
+			'573c37c7-f741-4d36-80dc-f126131c6343': {
+				/**
+				 * R​a​c​h​e​l
+				 */
+				Name: string
+			}
+			'5bd0610f-f073-487e-a74c-2a89105ce282': {
+				/**
+				 * G​a​m​z​e
+				 */
+				Name: string
+			}
+			'7c3f8e30-9957-4d5e-a70e-c8269ff5f550': {
+				/**
+				 * M​e​r​t
+				 */
+				Name: string
+			}
+		}
+	}
 	UnderDevelopment: {
 		/**
 		 * W​e​'​l​l​ ​b​e​ ​b​a​c​k​ ​s​o​o​n​!
@@ -4917,6 +4953,42 @@ export type TranslationFunctions = {
 		 * Product Hunt
 		 */
 		ProductHunt: () => LocalizedString
+	}
+	Voiceover: {
+		ModelOptions: {
+			'0f442a3e-cf53-490b-b4a9-b0dda63e9523': {
+				/**
+				 * Bark
+				 */
+				Name: () => LocalizedString
+			}
+		}
+		SpeakerOptions: {
+			'82bc1e69-2aa3-4317-9bc9-d9ed2afad0ff': {
+				/**
+				 * Jack
+				 */
+				Name: () => LocalizedString
+			}
+			'573c37c7-f741-4d36-80dc-f126131c6343': {
+				/**
+				 * Rachel
+				 */
+				Name: () => LocalizedString
+			}
+			'5bd0610f-f073-487e-a74c-2a89105ce282': {
+				/**
+				 * Gamze
+				 */
+				Name: () => LocalizedString
+			}
+			'7c3f8e30-9957-4d5e-a70e-c8269ff5f550': {
+				/**
+				 * Mert
+				 */
+				Name: () => LocalizedString
+			}
+		}
 	}
 	UnderDevelopment: {
 		/**

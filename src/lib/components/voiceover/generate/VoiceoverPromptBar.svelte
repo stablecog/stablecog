@@ -1,39 +1,60 @@
 <script lang="ts">
-	import { page } from '$app/stores';
 	import Button from '$components/buttons/Button.svelte';
 	import LL from '$i18n/i18n-svelte';
-	import { apiUrl } from '$ts/constants/main';
+	import { maxSeed } from '$ts/constants/main';
+	import { voiceoverModelId } from '$ts/constants/voiceover/models';
 	import { generateSSEId } from '$ts/helpers/generateSSEId';
-	import { appVersion } from '$ts/stores/appVersion';
 	import { sseId } from '$ts/stores/user/sse';
 	import { queueInitialVoiceoverRequest } from '$ts/stores/user/voiceovers';
+	import {
+		voiceoverPrompt,
+		voiceoverPromptLocal,
+		voiceoverSeed,
+		voiceoverSpeakerId,
+		voiceoverStability
+	} from '$ts/stores/voiceover/voiceoverSettings';
+	import { onMount } from 'svelte';
 
-	export let value: string;
-
-	const barkModelId = '0f442a3e-cf53-490b-b4a9-b0dda63e9523';
-	const speakerId = '4a19f17c-eedc-4cf8-a45d-1f9d69547125';
-	const temperature = 0.7;
-	const seed = 12345;
+	$: [$voiceoverPrompt],
+		withCheck(() => {
+			if (!voiceoverPrompt) return;
+			voiceoverPromptLocal.set($voiceoverPrompt);
+		});
 
 	function onSubmit() {
 		if (!$sseId) return;
+		if (!$voiceoverPrompt) return;
 		queueInitialVoiceoverRequest({
-			model_id: barkModelId,
-			speaker_id: speakerId,
-			prompt: { id: 'prompt', text: value },
-			temperature: temperature,
+			model_id: $voiceoverModelId,
+			speaker_id: $voiceoverSpeakerId,
+			prompt: { id: 'prompt', text: $voiceoverPrompt },
+			temperature: $voiceoverStability / 100,
 			num_outputs: 1,
-			seed: seed,
+			seed: $voiceoverSeed || Math.round(Math.random() * maxSeed),
 			stream_id: $sseId,
 			submit_to_gallery: false,
 			ui_id: generateSSEId()
 		});
 	}
+
+	function withCheck(fn: () => void) {
+		if (!mounted) return;
+		fn();
+	}
+
+	let mounted = false;
+
+	onMount(() => {
+		if ($voiceoverPromptLocal) {
+			voiceoverPrompt.set($voiceoverPromptLocal);
+		}
+		mounted = true;
+	});
 </script>
 
 <form on:submit={onSubmit} class="w-full rounded-xl overflow-hidden relative">
 	<textarea
-		bind:value
+		bind:value={$voiceoverPrompt}
 		placeholder="I like to eat apples and bananas."
 		class="w-full h-full bg-c-bg-secondary rounded-xl resize-none px-5 py-4 text-lg pb-24 placeholder:text-c-on-bg/40"
 		rows="8"
