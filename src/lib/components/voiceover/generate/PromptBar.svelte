@@ -15,29 +15,6 @@
 	const temperature = 0.7;
 	const seed = 12345;
 
-	async function submitInitialGenerationRequest() {
-		const finalRequest = {
-			prompt: value,
-			model_id: barkModelId,
-			speaker_id: speakerId,
-			temp: 0.7,
-			stream_id: $sseId,
-			seed: 5,
-			ui_id: generateSSEId()
-		};
-		const response = await fetch(`${apiUrl.origin}/v1/user/voiceover`, {
-			method: 'POST',
-			headers: {
-				'Content-Type': 'application/json',
-				'X-App-Version': $appVersion,
-				Authorization: `Bearer ${$page.data.session?.access_token}`
-			},
-			body: JSON.stringify(finalRequest)
-		});
-		const resJSON = await response.json();
-		console.log('Voiceover:', resJSON);
-	}
-
 	function onSubmit() {
 		if (!$sseId) return;
 		queueInitialVoiceoverRequest({

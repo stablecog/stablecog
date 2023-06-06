@@ -17,6 +17,7 @@
 	export let title: string | undefined = undefined;
 	export let label: string;
 	export { classes as class };
+	export let pointCount = 50;
 	let classes = '';
 
 	let currentTime = 0;
@@ -37,7 +38,6 @@
 	let sliderContainerWidth: number;
 	let sliderContainerHeight: number;
 
-	const pointCount = 50;
 	$: progress =
 		(duration === 0 || duration) && (currentTime === 0 || currentTime) ? currentTime / duration : 0;
 	$: progressPercentage = progress * 100;
@@ -161,32 +161,34 @@
 			</p>
 		</div>
 	</div>
-	<div class="w-full flex-1 flex relative overflow-hidden">
-		<div
-			bind:clientWidth={waveformContainerWidth}
-			bind:clientHeight={waveformContainerHeight}
-			class="w-full h-full"
-		>
-			{#if waveformContainerWidth && waveformContainerHeight}
-				<div class="w-full h-0" bind:this={waveformContainer} />
-			{/if}
-		</div>
-		<div class="w-full h-full flex items-center z-10 absolute left-0 bottom-0">
+	<div class="w-full flex-1 flex relative overflow-hidden py-2">
+		<div class="w-full h-full">
 			<div
-				bind:clientWidth={sliderContainerWidth}
-				bind:clientHeight={sliderContainerHeight}
-				class="w-full h-full flex flex-col overflow-hidden"
+				bind:clientWidth={waveformContainerWidth}
+				bind:clientHeight={waveformContainerHeight}
+				class="w-full h-full"
 			>
-				{#if sliderContainerWidth && sliderContainerHeight}
-					<SliderForWaveform
-						min={0}
-						max={100}
-						name="Audio Player"
-						bind:value={sliderValue}
-						step={0.00001}
-						height={sliderContainerHeight}
-					/>
+				{#if waveformContainerWidth && waveformContainerHeight}
+					<div class="w-full h-0" bind:this={waveformContainer} />
 				{/if}
+			</div>
+			<div class="w-full h-full flex items-center z-10 absolute left-0 bottom-0">
+				<div
+					bind:clientWidth={sliderContainerWidth}
+					bind:clientHeight={sliderContainerHeight}
+					class="w-full h-full flex flex-col overflow-hidden"
+				>
+					{#if sliderContainerWidth && sliderContainerHeight}
+						<SliderForWaveform
+							min={0}
+							max={100}
+							name="Audio Player"
+							bind:value={sliderValue}
+							step={0.00001}
+							height={sliderContainerHeight}
+						/>
+					{/if}
+				</div>
 			</div>
 		</div>
 	</div>
