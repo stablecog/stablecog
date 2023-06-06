@@ -54,7 +54,9 @@
 	$: [src, pointCount], setAudioArray();
 	$: [progress, audioArray, waveformContainerWidth, waveformContainerHeight],
 		drawWaveformWithCheck();
-	$: pointCount = waveformContainerWidth ? waveformContainerWidth / barWidth : undefined;
+	$: pointCount = waveformContainerWidth
+		? Math.round(waveformContainerWidth / barWidth)
+		: undefined;
 
 	function onCurrentTimeChanged() {
 		sliderValue = progressPercentage;
@@ -71,7 +73,7 @@
 		if (!waveformContainerWidth) return;
 		if (!waveformContainerHeight) return;
 		if (!pointCount) return;
-		drawWaveformBars({
+		drawWaveform({
 			element: waveformContainer,
 			progress,
 			width: waveformContainerWidth,
@@ -97,8 +99,6 @@
 				}
 			],
 			margin: { top: 0, left: 0, bottom: 0, right: 0 },
-			barGap: 10,
-			barRadius: 12,
 			values: audioArray
 		});
 	}
@@ -129,7 +129,6 @@
 	class="w-full h-full bg-c-bg-secondary flex flex-col rounded-xl overflow-hidden relative z-0
 	shadow-lg shadow-c-shadow/[var(--o-shadow-normal)] {classes}"
 >
-	{waveformContainerWidth}, {barWidth}, {audioArray?.length}
 	<div class="w-full flex flex-col px-5">
 		{#if title}
 			<p
