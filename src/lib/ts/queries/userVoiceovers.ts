@@ -23,7 +23,7 @@ export async function getUserVoiceoverFullOutputs({
 	if (is_favorited !== undefined) {
 		query.append('is_favorited', is_favorited.toString());
 	}
-	const url = `${apiUrl.origin}/v1/user/outputs?${query.toString()}`;
+	const url = `${apiUrl.origin}/v1/user/audio/voiceover/outputs?${query.toString()}`;
 	const res = await fetch(url, {
 		headers: {
 			'Content-Type': 'application/json',

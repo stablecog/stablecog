@@ -30,6 +30,7 @@
 		voiceoverSpeakerIdToDisplayName,
 		voiceoverSpeakers
 	} from '$ts/constants/voiceover/models.js';
+	import { onMount } from 'svelte';
 
 	export let data;
 
