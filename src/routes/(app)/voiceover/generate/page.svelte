@@ -25,6 +25,11 @@
 	import VoiceoverSettingsPanel from '$components/voiceover/generate/VoiceoverSettingsPanel.svelte';
 	import VoiceoverSettingsProvider from '$components/voiceover/generate/VoiceoverSettingsProvider.svelte';
 	import VoiceoverPromptBar from '$components/voiceover/generate/VoiceoverPromptBar.svelte';
+	import { voiceoverSpeakerId } from '$ts/stores/voiceover/voiceoverSettings.js';
+	import {
+		voiceoverSpeakerIdToDisplayName,
+		voiceoverSpeakers
+	} from '$ts/constants/voiceover/models.js';
 
 	export let data;
 
@@ -204,7 +209,7 @@
 							</div>
 						{/if}
 						<div class="w-full flex-1 min-h-0 flex flex-col justify-start overflow-hidden">
-							<div class="flex-1 min-h-0 w-full flex flex-col overflow-hidden">
+							<div class="flex-1 min-h-0 w-full flex flex-col overflow-hidden relative">
 								<AudioPlayerWithWaveform
 									src={$voiceovers?.[0]?.status === 'succeeded'
 										? $voiceovers[0].outputs[0].audio_file_url.replace(
@@ -218,6 +223,7 @@
 									title={$voiceovers?.[0]?.status === 'succeeded'
 										? $voiceovers[0].prompt.text
 										: examplePrompt}
+									status={$voiceovers?.[0]?.status === 'succeeded' ? 'succeeded' : 'idle'}
 								/>
 							</div>
 						</div>

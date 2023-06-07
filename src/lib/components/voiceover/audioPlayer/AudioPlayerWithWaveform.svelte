@@ -12,10 +12,16 @@
 	import MuteButton from '$components/voiceover/audioPlayer/MuteButton.svelte';
 	import { allAudioPlayers } from '$ts/stores/allPlayers';
 	import { browser } from '$app/environment';
+	import { voiceoverSpeakerId } from '$ts/stores/voiceover/voiceoverSettings';
+	import { voiceoverLocale, voiceoverSpeakerIdToDisplayName } from '$ts/constants/voiceover/models';
+	import IconSpeaker from '$components/icons/IconSpeaker.svelte';
+	import { languageName } from '$ts/helpers/language';
+	import { locale } from '$i18n/i18n-svelte';
 
 	export let src: string;
 	export let title: string | undefined = undefined;
 	export let label: string;
+	export let status: 'succeeded' | 'idle' = 'idle';
 	export { classes as class };
 	let classes = '';
 
@@ -128,7 +134,11 @@
 	class="w-full h-full bg-c-bg-secondary flex flex-col rounded-xl overflow-hidden relative z-0
 	shadow-lg shadow-c-shadow/[var(--o-shadow-normal)] {classes}"
 >
-	<div class="w-full flex flex-col px-5">
+	<div
+		class="w-full flex flex-col px-5 {status === 'idle'
+			? 'opacity-0 pointer-events-none'
+			: 'opacity-100'}"
+	>
 		{#if title}
 			<p
 				class="text-c-on-bg/75 pt-4 pb-2 max-w-full whitespace-nowrap overflow-hidden overflow-ellipsis"
@@ -183,7 +193,9 @@
 				<div
 					bind:clientWidth={sliderContainerWidth}
 					bind:clientHeight={sliderContainerHeight}
-					class="w-full h-full flex flex-col overflow-hidden"
+					class="w-full h-full flex flex-col overflow-hidden relative {status === 'idle'
+						? 'opacity-0 pointer-events-none'
+						: 'opacity-100'}"
 				>
 					{#if sliderContainerWidth && sliderContainerHeight}
 						<SliderForWaveform
@@ -197,6 +209,29 @@
 					{/if}
 				</div>
 			</div>
+		</div>
+	</div>
+	<!-- Speaker -->
+	<div
+		class="w-full h-full absolute left-0 top-0 flex flex-col justify-start items-start p-3 {status ===
+		'idle'
+			? 'opacity-100'
+			: 'opacity-0 pointer-events-none'}"
+	>
+		<div class="flex items-center gap-4 bg-c-bg-secondary p-2 rounded-xl">
+			<IconSpeaker
+				sizes="64px"
+				class="w-16 h-16 rounded-lg shadow-lg shadow-c-shadow/[var(--o-shadow-strong)] ring-2 ring-c-bg-tertiary"
+				type={$voiceoverSpeakerId}
+			/>
+			<p class="text-c-on-bg/50 font-base pr-4">
+				<span class="text-c-on-bg/75 font-medium"
+					>{$voiceoverSpeakerIdToDisplayName[$voiceoverSpeakerId]}</span
+				>
+				will be speaking in
+				<span class="text-c-on-bg/75 font-medium">{languageName($locale).of($voiceoverLocale)}</span
+				>.<br />The voiceover will appear here.
+			</p>
 		</div>
 	</div>
 </div>

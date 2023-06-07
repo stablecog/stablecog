@@ -54,7 +54,7 @@
 			<TabLikeDropdown
 				class="w-full"
 				iconSet={IconLocale}
-				iconSetClass="w-8 h-8 -m-2 mr-3 rounded"
+				iconSetClass="w-8 h-8 -m-2 mr-3 rounded-md"
 				container={settingsContainer}
 				containerTopMinDistance={containerDropdownPadding}
 				containerBottomMinDistance={containerDropdownPadding}
