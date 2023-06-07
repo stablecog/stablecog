@@ -10,6 +10,11 @@ export const voiceoverModels = {
 };
 
 export const voiceoverSpeakers: { [id: string]: TSpeaker } = {
+	'0140c5dc-af12-4643-bfec-650d3cd03c56': {
+		name_in_worker: 'v2/en_speaker_0',
+		model_id: '0f442a3e-cf53-490b-b4a9-b0dda63e9523',
+		locale: 'en'
+	},
 	'82bc1e69-2aa3-4317-9bc9-d9ed2afad0ff': {
 		name_in_worker: 'v2/en_speaker_6',
 		model_id: '0f442a3e-cf53-490b-b4a9-b0dda63e9523',
@@ -103,6 +108,10 @@ export const voiceoverSpeakerDropdownItems = derived(
 			{
 				label: $voiceoverSpeakerIdToDisplayName['4a19f17c-eedc-4cf8-a45d-1f9d69547125'],
 				value: '4a19f17c-eedc-4cf8-a45d-1f9d69547125'
+			},
+			{
+				label: $voiceoverSpeakerIdToDisplayName['0140c5dc-af12-4643-bfec-650d3cd03c56'],
+				value: '0140c5dc-af12-4643-bfec-650d3cd03c56'
 			},
 			{
 				label: $voiceoverSpeakerIdToDisplayName['39f7fc5d-9031-4932-a4d5-b196bb06e203'],

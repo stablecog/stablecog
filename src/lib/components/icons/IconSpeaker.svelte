@@ -17,8 +17,8 @@
 	<img
 		class="{classes} bg-c-bg-secondary"
 		alt={type}
-		width="3072"
-		height="3072"
+		width="2560"
+		height="2560"
 		{sizes}
 		{srcset}
 		{src}

@@ -2507,6 +2507,12 @@ type RootTranslation = {
 				 */
 				Name: string
 			}
+			'0140c5dc-af12-4643-bfec-650d3cd03c56': {
+				/**
+				 * B​r​y​a​n
+				 */
+				Name: string
+			}
 			'4a19f17c-eedc-4cf8-a45d-1f9d69547125': {
 				/**
 				 * R​a​c​h​e​l
@@ -4979,6 +4985,12 @@ export type TranslationFunctions = {
 			'39f7fc5d-9031-4932-a4d5-b196bb06e203': {
 				/**
 				 * Jony
+				 */
+				Name: () => LocalizedString
+			}
+			'0140c5dc-af12-4643-bfec-650d3cd03c56': {
+				/**
+				 * Bryan
 				 */
 				Name: () => LocalizedString
 			}
