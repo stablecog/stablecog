@@ -60,7 +60,7 @@
 	$: [progress, audioArray, waveformContainerWidth, waveformContainerHeight],
 		drawWaveformWithCheck();
 	$: pointCount = waveformContainerWidth
-		? Math.round(waveformContainerWidth / barWidth)
+		? Math.floor(waveformContainerWidth / barWidth)
 		: undefined;
 
 	function onCurrentTimeChanged() {
