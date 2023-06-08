@@ -21,7 +21,9 @@
 	export let generationsQuery: CreateInfiniteQueryResult<TUserGenerationFullOutputsPage, unknown>;
 	export let pinnedFullOutputs: TGenerationFullOutput[] | undefined = undefined;
 	export let cardType: TGenerationImageCardType;
-	export let listScrollContainer: HTMLDivElement;
+	export let listScrollContainer: HTMLDivElement | undefined;
+	export let listScrollContainerHeight: number | undefined;
+	export let listScrollContainerWidth: number | undefined;
 	export let paddingX = 0;
 	export let paddingY = 0;
 
@@ -34,15 +36,16 @@
 
 	const defaultAspectRatio = 0.66;
 	$: estimatedItemHeight =
-		listScrollContainer && listScrollContainer.clientHeight > 0 && $windowWidth && $windowHeight
-			? (listScrollContainer.clientHeight || 0) - paddingY * 2
+		listScrollContainer && listScrollContainerHeight && $windowWidth && $windowHeight
+			? listScrollContainerHeight - paddingY * 2
 			: undefined;
 	$: estimatedItemWidth = estimatedItemHeight
 		? estimatedItemHeight * defaultAspectRatio
 		: undefined;
-	$: estimatedItemCountInAWindow = estimatedItemWidth
-		? Math.ceil(listScrollContainer.clientWidth / estimatedItemWidth)
-		: undefined;
+	$: estimatedItemCountInAWindow =
+		estimatedItemWidth && listScrollContainerWidth
+			? Math.ceil(listScrollContainerWidth / estimatedItemWidth)
+			: undefined;
 	$: overscanCount = estimatedItemCountInAWindow
 		? Math.round(estimatedItemCountInAWindow * 3)
 		: undefined;
@@ -54,9 +57,8 @@
 
 	$: listAtStart = $listVirtualizer ? $listVirtualizer.scrollOffset <= 0 : true;
 	$: listAtEnd =
-		$listVirtualizer && listScrollContainer.scrollWidth && listScrollContainer.clientWidth
-			? $listVirtualizer.scrollOffset >=
-			  listScrollContainer.scrollWidth - listScrollContainer.clientWidth
+		$listVirtualizer && listScrollContainerWidth
+			? $listVirtualizer.scrollOffset >= $listVirtualizer.getTotalSize() - listScrollContainerWidth
 			: false;
 
 	function setOutputs() {
@@ -105,15 +107,17 @@
 
 	function initiallySetListVirtualizer() {
 		if ($listVirtualizer || outputs === undefined || !overscanCount) return;
+		if (listScrollContainer === undefined) return;
+		if (listScrollContainerHeight === undefined) return;
 		listVirtualizer = createVirtualizer({
 			count: outputs.length,
 			overscan: overscanCount,
 			paddingStart: paddingX,
 			paddingEnd: paddingX,
 			horizontal: true,
-			getScrollElement: () => listScrollContainer,
+			getScrollElement: () => listScrollContainer as HTMLDivElement,
 			estimateSize: (i) => {
-				const height = listScrollContainer.clientHeight - paddingY * 2;
+				const height = (listScrollContainerHeight as number) - paddingY * 2;
 				return (height * outputs![i].generation.width) / outputs![i].generation.height;
 			}
 		});

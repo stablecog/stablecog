@@ -32,11 +32,14 @@
 	import type { TUserGenerationFullOutputsPage } from '$ts/queries/userGenerations';
 	import type { Readable } from 'svelte/store';
 	import { windowHeight, windowWidth } from '$ts/stores/window';
-	import { onMount } from 'svelte';
+	import { tick } from 'svelte';
 	import { loadedImages } from '$ts/stores/loadedImages';
 
 	export let generationsQuery: CreateInfiniteQueryResult<TUserGenerationFullOutputsPage, unknown>;
-	export let gridScrollContainer: HTMLDivElement | null = null;
+	export let hasGridScrollContainer = false;
+	export let gridScrollContainer: HTMLDivElement | undefined = undefined;
+	export let gridScrollContainerHeight: number | undefined = undefined;
+	export let gridScrollContainerWidth: number | undefined = undefined;
 	export let pinnedFullOutputs: TGenerationFullOutput[] | undefined = undefined;
 	export let cardType: TGenerationImageCardType;
 	export let noLoadingSpinnerAlignmentAdjustment = false;
@@ -90,22 +93,22 @@
 		(cardType === 'history' && $isUserGalleryEditActive);
 
 	const defaultAspectRatio = 1.5;
-	$: estimatedItemWidth =
-		gridScrollContainer !== null &&
-		gridScrollContainer.clientWidth > 0 &&
-		$windowWidth &&
-		$windowHeight
-			? (gridScrollContainer.clientWidth - horizontalPadding) / cols
-			: $windowWidth
-			? ($windowWidth - horizontalPadding) / cols
-			: undefined;
+	$: estimatedItemWidth = hasGridScrollContainer
+		? gridScrollContainer && gridScrollContainerWidth
+			? (gridScrollContainerWidth - horizontalPadding) / cols
+			: undefined
+		: $windowWidth
+		? ($windowWidth - horizontalPadding) / cols
+		: undefined;
 	$: estimatedItemHeight = estimatedItemWidth
 		? estimatedItemWidth * (1 / defaultAspectRatio)
 		: undefined;
 	$: estimatedItemCountInAWindow =
 		estimatedItemWidth && estimatedItemHeight
-			? gridScrollContainer !== null
-				? ((gridScrollContainer.clientHeight || $windowHeight) / estimatedItemHeight) * cols
+			? hasGridScrollContainer
+				? gridScrollContainer && gridScrollContainerHeight
+					? ((gridScrollContainerHeight || $windowHeight) / estimatedItemHeight) * cols
+					: undefined
 				: $windowHeight
 				? ($windowHeight / estimatedItemHeight) * cols
 				: undefined
@@ -117,7 +120,16 @@
 
 	const overscanMultiplierForNextPage = 0.25;
 
-	$: [gridScrollContainer, outputs, overscanCount], initiallySetGridVirtualizer();
+	$: [
+		gridScrollContainer,
+		gridScrollContainerWidth,
+		gridScrollContainerHeight,
+		outputs,
+		overscanCount,
+		$windowWidth,
+		$windowHeight
+	],
+		initiallySetGridVirtualizer();
 	$: $gridVirtualizer, onGridVirtualizerChanged();
 	$: [outputs, overscanCount, cols], onParamsChanged();
 
@@ -139,6 +151,9 @@
 		$generationsQuery.fetchNextPage();
 	}
 
+	let measureTimeout: NodeJS.Timeout | undefined = undefined;
+	let measureTimeoutDelay = 10;
+
 	function onParamsChanged() {
 		if (!$gridVirtualizer) return;
 		let optionsToSet: { [key: string]: string | number } = {};
@@ -153,11 +168,18 @@
 		}
 		if (Object.keys(optionsToSet).length > 0) {
 			$gridVirtualizer.setOptions(optionsToSet);
+			if (measureTimeout) clearTimeout(measureTimeout);
+			measureTimeout = setTimeout(async () => {
+				await tick();
+				$gridVirtualizer?.measure();
+			}, measureTimeoutDelay);
 		}
 	}
 
 	function initiallySetGridVirtualizer() {
 		if ($gridVirtualizer || outputs === undefined || overscanCount === undefined) return;
+		if (hasGridScrollContainer && !gridScrollContainer) return;
+		if (hasGridScrollContainer && !gridScrollContainerWidth) return;
 		const params = {
 			count: outputs.length,
 			overscan: overscanCount,
@@ -165,34 +187,25 @@
 			paddingStart: paddingTop,
 			paddingEnd: paddingBottom
 		};
-		gridVirtualizer =
-			gridScrollContainer !== null && gridScrollContainer.offsetWidth
-				? createVirtualizer({
-						...params,
-						getScrollElement: () => gridScrollContainer as HTMLDivElement,
-						estimateSize: (i) => {
-							const width = (gridScrollContainer!.offsetWidth - horizontalPadding) / cols;
-							const height = (width * outputs![i].generation.height) / outputs![i].generation.width;
-							return height;
-						}
-				  })
-				: createWindowVirtualizer({
-						...params,
-						estimateSize: (i) => {
-							const width = (window.innerWidth - horizontalPadding) / cols;
-							const height = (width * outputs![i].generation.height) / outputs![i].generation.width;
-							return height;
-						}
-				  });
+		gridVirtualizer = hasGridScrollContainer
+			? createVirtualizer({
+					...params,
+					getScrollElement: () => gridScrollContainer as HTMLDivElement,
+					estimateSize: (i) => {
+						const width = ((gridScrollContainerWidth as number) - horizontalPadding) / cols;
+						const height = (width * outputs![i].generation.height) / outputs![i].generation.width;
+						return height;
+					}
+			  })
+			: createWindowVirtualizer({
+					...params,
+					estimateSize: (i) => {
+						const width = (window.innerWidth - horizontalPadding) / cols;
+						const height = (width * outputs![i].generation.height) / outputs![i].generation.width;
+						return height;
+					}
+			  });
 	}
-
-	onMount(() => {
-		setInterval(() => {
-			if ($gridVirtualizer) {
-				$gridVirtualizer.measure();
-			}
-		}, 1000);
-	});
 </script>
 
 {#if $generationsQuery.isInitialLoading}

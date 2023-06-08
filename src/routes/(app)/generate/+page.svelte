@@ -264,7 +264,7 @@
 							{#if !$page.data.session?.user.id || !$userSummary}
 								<GenerateGridPlaceholder text={$LL.Generate.Grid.NotSignedIn.Paragraph()} />
 							{:else if userGenerationFullOutputsQuery}
-								<AutoSize bind:element={gridScrollContainer}>
+								<AutoSize bind:element={gridScrollContainer} let:clientWidth let:clientHeight>
 									{#if $windowWidth > lgBreakpoint && gridScrollContainer}
 										<GenerationGridInfinite2
 											paddingLeft={6}
@@ -278,6 +278,9 @@
 											generationsQuery={userGenerationFullOutputsQuery}
 											cols={$windowWidth > xlBreakpoint ? 3 : 2}
 											{gridScrollContainer}
+											gridScrollContainerWidth={clientWidth}
+											gridScrollContainerHeight={clientHeight}
+											hasGridScrollContainer
 										/>
 									{/if}
 								</AutoSize>
@@ -355,7 +358,12 @@
 							bind:clientHeight={horizontalListHeight}
 							class="w-full h-16 flex flex-col md:hidden"
 						>
-							<AutoSize bind:element={listScrollContainer} hideScroll>
+							<AutoSize
+								bind:element={listScrollContainer}
+								hideScroll
+								let:clientWidth
+								let:clientHeight
+							>
 								{#if !$page.data.session?.user.id || !$userSummary}
 									<GenerateHorizontalListPlaceholder
 										text={$LL.Generate.Grid.NotSignedIn.Paragraph()}
@@ -363,11 +371,13 @@
 								{:else if userGenerationFullOutputsQuery}
 									{#if $windowWidth < mdBreakpoint && listScrollContainer}
 										<GenerateHorizontalList
+											{listScrollContainer}
+											listScrollContainerWidth={clientWidth}
+											listScrollContainerHeight={clientHeight}
 											paddingX={8}
 											paddingY={6}
 											{pinnedFullOutputs}
 											generationsQuery={userGenerationFullOutputsQuery}
-											{listScrollContainer}
 											cardType="generate"
 										/>
 									{/if}
@@ -432,10 +442,17 @@
 										text={$LL.Generate.Grid.NotSignedIn.Paragraph()}
 									/>
 								{:else if userGenerationFullOutputsQuery}
-									<AutoSize bind:element={listScrollContainerMd} hideScroll>
+									<AutoSize
+										bind:element={listScrollContainerMd}
+										hideScroll
+										let:clientWidth
+										let:clientHeight
+									>
 										{#if listScrollContainerMd && $windowWidth >= mdBreakpoint && $windowWidth < lgBreakpoint}
 											<GenerateHorizontalList
 												listScrollContainer={listScrollContainerMd}
+												listScrollContainerWidth={clientWidth}
+												listScrollContainerHeight={clientHeight}
 												{pinnedFullOutputs}
 												generationsQuery={userGenerationFullOutputsQuery}
 												cardType="generate"
