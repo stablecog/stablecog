@@ -2,7 +2,6 @@
 	import { page } from '$app/stores';
 	import AutoSize from '$components/AutoSize.svelte';
 	import LowOnCreditsCard from '$components/LowOnCreditsCard.svelte';
-	import AudioPlayer from '$components/voiceover/audioPlayer/AudioPlayer.svelte';
 	import AudioPlayerWithWaveform from '$components/voiceover/audioPlayer/AudioPlayerWithWaveform.svelte';
 	import SidebarCollapseButton from '$components/generate/SidebarCollapseButton.svelte';
 	import SidebarWrapper from '$components/generate/SidebarWrapper.svelte';
@@ -31,6 +30,7 @@
 		voiceoverSpeakers
 	} from '$ts/constants/voiceover/models.js';
 	import { onMount } from 'svelte';
+	import VoiceoverVerticalListInfinite from '$components/voiceover/VoiceoverVerticalListInfinite.svelte';
 
 	export let data;
 
@@ -48,9 +48,9 @@
 	let horizontalListHeightEstimatedRem = 4.6;
 	let horizontalListHeight: number;
 
-	let gridScrollContainer: HTMLDivElement;
 	let listScrollContainer: HTMLDivElement;
 	let listScrollContainerMd: HTMLDivElement;
+	let listScrollContainerLg: HTMLDivElement;
 
 	let isGenerationSettingsSheetOpen = false;
 
@@ -110,15 +110,21 @@
 						class="h-full flex w-36 xl:w-72 lg:pb-[calc(env(safe-area-inset-bottom))] relative z-10"
 					>
 						<SidebarWrapper hasGradient>
-							<div class="w-full flex flex-col overflow-auto gap-2 px-2 py-2">
-								{#each Array.from({ length: 20 }) as item}
-									<AudioPlayer
-										src="/audio/example.mp3"
-										label={examplePrompt}
-										title={examplePrompt}
-									/>
-								{/each}
-							</div>
+							{#if userVoiceoverFullOutputsQuery}
+								<AutoSize bind:element={listScrollContainerLg} let:clientHeight>
+									{#if listScrollContainerLg && clientHeight}
+										<VoiceoverVerticalListInfinite
+											paddingLeft={6}
+											paddingRight={6}
+											paddingTop={6}
+											paddingBottom={80}
+											listScrollContainerHeight={clientHeight}
+											listScrollContainer={listScrollContainerLg}
+											query={userVoiceoverFullOutputsQuery}
+										/>
+									{/if}
+								</AutoSize>
+							{/if}
 						</SidebarWrapper>
 					</div>
 				{/if}

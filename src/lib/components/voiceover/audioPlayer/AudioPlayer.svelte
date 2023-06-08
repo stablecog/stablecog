@@ -80,6 +80,7 @@
 			bind:duration
 			bind:this={audioElement}
 			bind:muted={isMuted}
+			preload="metadata"
 			on:playing={() => (isPlaying = true)}
 			on:pause={() => (isPlaying = false)}
 		/>

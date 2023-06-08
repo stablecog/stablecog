@@ -45,10 +45,10 @@
 	export let noLoadingSpinnerAlignmentAdjustment = false;
 	export let hasPlaceholder = false;
 	export let cols = 6;
-	export let paddingLeft: number = 0;
-	export let paddingRight: number = 0;
-	export let paddingTop: number = 0;
-	export let paddingBottom: number = 0;
+	export let paddingLeft = 0;
+	export let paddingRight = 0;
+	export let paddingTop = 0;
+	export let paddingBottom = 0;
 
 	$: horizontalPadding = paddingLeft + paddingRight;
 
