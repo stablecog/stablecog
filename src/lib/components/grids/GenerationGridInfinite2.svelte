@@ -152,7 +152,7 @@
 	}
 
 	let measureTimeout: NodeJS.Timeout | undefined = undefined;
-	let measureTimeoutDelay = 10;
+	let measureTimeoutDelay = 20;
 
 	function onParamsChanged() {
 		if (!$gridVirtualizer) return;
