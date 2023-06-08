@@ -13,7 +13,11 @@
 	import { allAudioPlayers } from '$ts/stores/allPlayers';
 	import { browser } from '$app/environment';
 	import { voiceoverSpeakerId } from '$ts/stores/voiceover/voiceoverSettings';
-	import { voiceoverLocale, voiceoverSpeakerIdToDisplayName } from '$ts/constants/voiceover/models';
+	import {
+		voiceoverLocale,
+		voiceoverSpeakerIdToDisplayName,
+		type TVoiceoverSpeakerId
+	} from '$ts/constants/voiceover/models';
 	import IconSpeaker from '$components/icons/IconSpeaker.svelte';
 	import { languageName } from '$ts/helpers/language';
 	import { locale } from '$i18n/i18n-svelte';
@@ -22,6 +26,7 @@
 	export let title: string | undefined = undefined;
 	export let label: string;
 	export let status: 'succeeded' | 'idle' = 'idle';
+	export let speakerId: TVoiceoverSpeakerId | undefined = undefined;
 	export { classes as class };
 	let classes = '';
 
@@ -170,6 +175,26 @@
 					{isMuted}
 					size="lg"
 				/>
+				{#if speakerId}
+					<div class="px-3">
+						<div
+							class="rounded-md ring-2 ring-c-bg-tertiary bg-c-bg-tertiary overflow-hidden
+							flex items-center justify-start relative z-0"
+						>
+							<div
+								class="w-9 h-9 flex-shrink-0 ring-2 ring-c-bg-tertiary shadow-lg
+								shadow-c-shadow/[var(--o-shadow-strong)] overflow-hidden relative z-0"
+							>
+								<IconSpeaker class="w-full h-full" type={speakerId} sizes="36px" />
+							</div>
+							<p
+								class="flex-shrink min-w-0 overflow-hidden overflow-ellipsis font-medium px-3.5 py-1 h-full"
+							>
+								{$voiceoverSpeakerIdToDisplayName[speakerId]}
+							</p>
+						</div>
+					</div>
+				{/if}
 			</div>
 			<div class="flex-1" />
 			<p class="text-c-on-bg/75">

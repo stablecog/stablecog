@@ -1,6 +1,6 @@
 <script lang="ts">
 	import IconAnimatedSpinner from '$components/icons/IconAnimatedSpinner.svelte';
-	import VoiceoverVerticalListPlaceholder from '$components/voiceover/VoiceoverVerticalListPlaceholder.svelte';
+	import VoiceoverVerticalListPlaceholder from '$components/voiceover/lists/VoiceoverVerticalListPlaceholder.svelte';
 	import AudioPlayerListItem from '$components/voiceover/audioPlayer/AudioPlayerListItem.svelte';
 	import { PUBLIC_BUCKET_URL, PUBLIC_BUCKET_VOICEOVER_URL } from '$env/static/public';
 	import LL from '$i18n/i18n-svelte';
@@ -9,6 +9,7 @@
 	import type { CreateInfiniteQueryResult } from '@tanstack/svelte-query';
 	import { createVirtualizer, type SvelteVirtualizer } from '@tanstack/svelte-virtual';
 	import type { Readable } from 'svelte/store';
+	import { listItemHeight } from '$components/voiceover/lists/constants';
 
 	export let query: CreateInfiniteQueryResult<TUserVoiceoverFullOutputsPage, unknown>;
 	export let listScrollContainer: HTMLElement | undefined = undefined;
@@ -17,6 +18,8 @@
 	export let paddingRight = 0;
 	export let paddingTop = 0;
 	export let paddingBottom = 0;
+	export let itemHeight = listItemHeight;
+	export let gap = 0;
 
 	let listVirtualizer: Readable<SvelteVirtualizer<HTMLDivElement, Element>> | undefined;
 
@@ -24,7 +27,7 @@
 
 	$: outputs = $query?.data?.pages?.flatMap((p) => p.outputs);
 
-	$: estimatedItemHeight = 90;
+	$: estimatedItemHeight = itemHeight + gap;
 	$: estimatedItemCountInAWindow =
 		estimatedItemHeight && listScrollContainerHeight
 			? listScrollContainerHeight / estimatedItemHeight
@@ -126,6 +129,8 @@
 				>
 					<div class="w-full h-full">
 						<AudioPlayerListItem
+							duration={output.audio_duration}
+							speakerId={output.voiceover.speaker_id}
 							label={output.voiceover.prompt.text}
 							title={output.voiceover.prompt.text}
 							src={output.audio_file_url.replace(PUBLIC_BUCKET_URL, PUBLIC_BUCKET_VOICEOVER_URL)}

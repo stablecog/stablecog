@@ -1,11 +1,16 @@
 <script lang="ts">
+	import { listItemGap, listItemHeight, listPadding } from '$components/voiceover/lists/constants';
+
 	export let text: string;
 </script>
 
 <div class="w-full h-full flex flex-col overflow-hidden">
-	<div class="w-full flex flex-col opacity-50 gap-6px p-6px">
-		{#each Array.from({ length: 20 }) as item}
-			<div class="w-full h-[84px] bg-c-bg-secondary rounded-xl" />
+	<div
+		style="gap: {listItemGap}px; padding: {listPadding}px"
+		class="w-full flex flex-col opacity-50"
+	>
+		{#each Array.from({ length: 20 }) as _}
+			<div style="height: {listItemHeight}px" class="w-full bg-c-bg-secondary rounded-xl" />
 		{/each}
 	</div>
 	<div

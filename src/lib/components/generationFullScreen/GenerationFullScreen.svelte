@@ -129,7 +129,9 @@
 
 	const upscaleCreditCost = 1;
 	$: doesntHaveEnoughCredits =
-		$userSummary && $userSummary.total_remaining_credits < upscaleCreditCost;
+		$userSummary && $page.data.session?.user.id
+			? $userSummary.total_remaining_credits < upscaleCreditCost
+			: false;
 
 	const onGenerationChanged = () => {
 		removeFromRecentlyUpdatedOutputIds(generation.selected_output.id);
@@ -427,8 +429,7 @@
 										<Button
 											onClick={onUpscaleClicked}
 											loading={upscaleBeingProcessed || $maxOngoingUpscalesCountReached}
-											disabled={doesntHaveEnoughCredits &&
-												$page.data.session?.user.id !== undefined}
+											disabled={doesntHaveEnoughCredits}
 											fadeOnDisabled={doesntHaveEnoughCredits}
 											withSpinner
 											class="w-full"

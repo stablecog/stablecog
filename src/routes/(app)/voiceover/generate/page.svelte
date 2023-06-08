@@ -24,9 +24,14 @@
 	import VoiceoverSettingsPanel from '$components/voiceover/generate/VoiceoverSettingsPanel.svelte';
 	import VoiceoverSettingsProvider from '$components/voiceover/generate/VoiceoverSettingsProvider.svelte';
 	import VoiceoverPromptBar from '$components/voiceover/generate/VoiceoverPromptBar.svelte';
-	import VoiceoverVerticalListInfinite from '$components/voiceover/VoiceoverVerticalListInfinite.svelte';
-	import VoiceoverVerticalListPlaceholder from '$components/voiceover/VoiceoverVerticalListPlaceholder.svelte';
+	import VoiceoverVerticalListInfinite from '$components/voiceover/lists/VoiceoverVerticalListInfinite.svelte';
+	import VoiceoverVerticalListPlaceholder from '$components/voiceover/lists/VoiceoverVerticalListPlaceholder.svelte';
 	import LL from '$i18n/i18n-svelte.js';
+	import {
+		listItemGap,
+		listItemHeight,
+		listPadding
+	} from '$components/voiceover/lists/constants.js';
 
 	export let data;
 
@@ -90,6 +95,7 @@
 		.flatMap((g) => g.outputs.map((o) => ({ ...o, generation: g })));
 
 	$: userVoiceoverOutputs = $userVoiceoverFullOutputsQuery?.data?.pages?.flatMap((p) => p.outputs);
+	$: console.log(userVoiceoverOutputs);
 </script>
 
 <VoiceoverSettingsProvider>
@@ -114,9 +120,11 @@
 								{:else if userVoiceoverFullOutputsQuery}
 									{#if listScrollContainerLg && clientHeight}
 										<VoiceoverVerticalListInfinite
-											paddingLeft={6}
-											paddingRight={6}
-											paddingTop={6}
+											paddingLeft={listPadding}
+											paddingRight={listPadding}
+											paddingTop={listPadding}
+											gap={listItemGap}
+											itemHeight={listItemHeight}
 											paddingBottom={80}
 											listScrollContainerHeight={clientHeight}
 											listScrollContainer={listScrollContainerLg}
@@ -227,6 +235,9 @@
 									label={$voiceovers?.[0]?.status === 'succeeded'
 										? $voiceovers[0].prompt.text
 										: examplePrompt}
+									speakerId={$voiceovers?.[0]?.status === 'succeeded'
+										? $voiceovers[0].speaker_id
+										: undefined}
 									title={$voiceovers?.[0]?.status === 'succeeded'
 										? $voiceovers[0].prompt.text
 										: examplePrompt}

@@ -147,6 +147,7 @@ export async function queueInitialVoiceoverRequest(request: TInitialVoiceoverReq
 			outputs: [...Array(request.num_outputs)].map(() => ({
 				id: generateSSEId(),
 				audio_file_url: '',
+				audio_duration: 0,
 				status: 'to-be-submitted',
 				animation: newGenerationStartAnimation()
 			}))
@@ -338,6 +339,7 @@ export interface TVoiceover extends TVoiceoverBase {
 export interface TVoiceoverOutput {
 	id: string;
 	audio_file_url: string;
+	audio_duration: number;
 	created_at?: string;
 	updated_at?: string;
 	is_deleted?: boolean;

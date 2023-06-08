@@ -1,4 +1,5 @@
 <script lang="ts">
+	import IconSpeaker from '$components/icons/IconSpeaker.svelte';
 	import MuteButton from '$components/voiceover/audioPlayer/MuteButton.svelte';
 	import PlayPauseButton from '$components/voiceover/audioPlayer/PlayPauseButton.svelte';
 	import Slider from '$components/voiceover/audioPlayer/Slider.svelte';
@@ -8,6 +9,7 @@
 		toggleMute,
 		togglePlay
 	} from '$components/voiceover/audioPlayer/helpers';
+	import { voiceoverSpeakerIdToDisplayName } from '$ts/constants/voiceover/models';
 	import { allAudioPlayers } from '$ts/stores/allPlayers';
 	import { onDestroy, onMount } from 'svelte';
 
@@ -15,12 +17,14 @@
 	export let title: string | undefined = undefined;
 	export let label: string;
 	export let hasMute = false;
+	export let speakerId: string | undefined = undefined;
+	export let duration: number | undefined = undefined;
 
 	let playButton: HTMLButtonElement;
 	let muteButton: HTMLButtonElement;
 
 	let currentTime = 0;
-	let duration: number;
+	let durationLocal: number;
 	let sliderValue = 0;
 	let audioElement: HTMLAudioElement;
 	let isPlaying = false;
@@ -28,9 +32,15 @@
 	let buffered: TimeRanges;
 
 	$: progress =
-		(duration === 0 || duration) && (currentTime === 0 || currentTime) ? currentTime / duration : 0;
+		(durationLocal === 0 || durationLocal) && (currentTime === 0 || currentTime)
+			? currentTime / durationLocal
+			: 0;
 	$: progressPercentage = progress * 100;
-	$: totalTimestamp = duration ? convertSecondsToTimestamp(duration) : undefined;
+	$: totalTimestamp = durationLocal
+		? convertSecondsToTimestamp(durationLocal)
+		: duration
+		? convertSecondsToTimestamp(duration)
+		: undefined;
 	$: currentTimestamp = currentTime ? convertSecondsToTimestamp(currentTime) : undefined;
 
 	$: [currentTime], onCurrentTimeChanged();
@@ -41,7 +51,7 @@
 	}
 
 	function onSliderValueChanged() {
-		const toBeTime = (sliderValue / 100) * duration;
+		const toBeTime = (sliderValue / 100) * durationLocal;
 		if (!areValuesCloseEnough(toBeTime, currentTime)) {
 			currentTime = toBeTime;
 		}
@@ -63,9 +73,29 @@
 			togglePlay(audioElement);
 		}
 	}}
-	class="w-full bg-c-bg-secondary px-4 py-2 flex flex-col rounded-xl
+	class="w-full bg-c-bg-secondary px-3.5 py-1.5 flex flex-col items-start rounded-xl
 	shadow-lg shadow-c-shadow/[var(--o-shadow-normal)]"
 >
+	{#if speakerId}
+		<div class="pt-1.5 pb-2.25 w-full flex justify-start items-center">
+			<div
+				class="rounded-md ring-2 ring-c-bg-tertiary bg-c-bg-tertiary overflow-hidden
+				flex items-center justify-start relative z-0"
+			>
+				<div
+					class="w-7 h-7 flex-shrink-0 ring-2 ring-c-bg-tertiary shadow-lg
+					shadow-c-shadow/[var(--o-shadow-strong)] overflow-hidden relative z-0"
+				>
+					<IconSpeaker class="w-full h-full" type={speakerId} sizes="28px" />
+				</div>
+				<p
+					class="flex-shrink min-w-0 overflow-hidden overflow-ellipsis text-sm font-medium px-3 py-1 h-full"
+				>
+					{$voiceoverSpeakerIdToDisplayName[speakerId]}
+				</p>
+			</div>
+		</div>
+	{/if}
 	{#if title}
 		<p
 			class="text-sm text-c-on-bg/75 py-1 max-w-full whitespace-nowrap overflow-hidden overflow-ellipsis"
@@ -78,7 +108,7 @@
 			{src}
 			aria-label={label}
 			bind:currentTime
-			bind:duration
+			bind:duration={durationLocal}
 			bind:this={audioElement}
 			bind:muted={isMuted}
 			bind:buffered
@@ -100,7 +130,7 @@
 			<div class="w-full h-full flex items-center relative">
 				<Slider
 					{buffered}
-					{duration}
+					duration={durationLocal}
 					min={0}
 					max={100}
 					name="Audio Player"
@@ -112,7 +142,7 @@
 		<p class="pl-2 text-xs text-c-on-bg/75 lg:hidden xl:block">
 			{currentTime && currentTimestamp ? currentTimestamp : '00:00'}
 			<span class="text-c-on-bg/25">/</span>
-			{duration && totalTimestamp ? totalTimestamp : '00:00'}
+			{(durationLocal || duration) && totalTimestamp ? totalTimestamp : '00:00'}
 		</p>
 	</div>
 </div>
