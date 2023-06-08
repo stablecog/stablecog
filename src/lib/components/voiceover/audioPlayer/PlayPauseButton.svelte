@@ -12,17 +12,22 @@
 <button
 	bind:this={element}
 	on:click={onClick}
-	class="relative rounded-lg group {size === 'lg' ? 'w-12 h-12' : 'w-10 h-10'}"
+	class="relative rounded-lg group/play-button {size === 'lg' ? 'w-12 h-12' : 'w-10 h-10'}"
 >
-	<ButtonHoverEffect size="sm" noPadding color="primary" />
+	<ButtonHoverEffect
+		groupClass="not-touch:group-hover/play-button:translate-x-0 not-touch:group-hover/play-button:translate-y-0 not-touch:group-hover/play-button:opacity-100"
+		size="sm"
+		noPadding
+		color="primary"
+	/>
 	<div class="p-2">
 		{#if isPlaying}
 			<IconPause
-				class="w-full h-full transition text-c-on-bg not-touch:group-hover:text-c-primary"
+				class="w-full h-full transition text-c-on-bg not-touch:group-hover/play-button:text-c-primary"
 			/>
 		{:else}
 			<IconPlay
-				class="w-full h-full transition text-c-on-bg not-touch:group-hover:text-c-primary"
+				class="w-full h-full transition text-c-on-bg not-touch:group-hover/play-button:text-c-primary"
 			/>
 		{/if}
 	</div>

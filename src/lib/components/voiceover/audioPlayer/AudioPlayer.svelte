@@ -25,12 +25,13 @@
 	let audioElement: HTMLAudioElement;
 	let isPlaying = false;
 	let isMuted = false;
+	let buffered: TimeRanges;
 
 	$: progress =
 		(duration === 0 || duration) && (currentTime === 0 || currentTime) ? currentTime / duration : 0;
 	$: progressPercentage = progress * 100;
-	$: currentTimestamp = currentTime ? convertSecondsToTimestamp(currentTime) : undefined;
 	$: totalTimestamp = duration ? convertSecondsToTimestamp(duration) : undefined;
+	$: currentTimestamp = currentTime ? convertSecondsToTimestamp(currentTime) : undefined;
 
 	$: [currentTime], onCurrentTimeChanged();
 	$: [sliderValue], onSliderValueChanged();
@@ -80,7 +81,8 @@
 			bind:duration
 			bind:this={audioElement}
 			bind:muted={isMuted}
-			preload="metadata"
+			bind:buffered
+			preload="none"
 			on:playing={() => (isPlaying = true)}
 			on:pause={() => (isPlaying = false)}
 		/>
@@ -96,12 +98,21 @@
 		</div>
 		<div class="flex-1 self-stretch pl-2 pr-4">
 			<div class="w-full h-full flex items-center relative">
-				<Slider min={0} max={100} name="Audio Player" bind:value={sliderValue} step={0.001} />
+				<Slider
+					{buffered}
+					{duration}
+					min={0}
+					max={100}
+					name="Audio Player"
+					bind:value={sliderValue}
+					step={0.001}
+				/>
 			</div>
 		</div>
 		<p class="text-xs text-c-on-bg/75">
-			{currentTime ? currentTimestamp : '00:00'} <span class="text-c-on-bg/25">/</span>
-			{duration ? totalTimestamp : '00:00'}
+			{currentTime && currentTimestamp ? currentTimestamp : '00:00'}
+			<span class="text-c-on-bg/25">/</span>
+			{duration && totalTimestamp ? totalTimestamp : '00:00'}
 		</p>
 	</div>
 </div>

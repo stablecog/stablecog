@@ -14,6 +14,8 @@
 	export let noRounding = false;
 	export let paddingClass: string | undefined = undefined;
 	export let hasShadow = false;
+	export let groupClass =
+		'not-touch:group-hover:translate-x-0 not-touch:group-hover:translate-y-0 not-touch:group-hover:opacity-100';
 </script>
 
 <div
@@ -70,8 +72,7 @@
 				? 'rounded-md'
 				: size === 'md'
 				? 'rounded-lg'
-				: 'rounded-xl'} not-touch:group-hover:translate-x-0
-				not-touch:group-hover:translate-y-0 not-touch:group-hover:opacity-100"
+				: 'rounded-xl'} {groupClass}"
 		/>
 	</div>
 </div>
