@@ -2532,6 +2532,20 @@ type RootTranslation = {
 				Name: string
 			}
 		}
+		List: {
+			NotSignedIn: {
+				/**
+				 * S​i​g​n​ ​i​n​ ​t​o​ ​s​e​e​ ​y​o​u​r​ ​v​o​i​c​e​o​v​e​r​s​.
+				 */
+				Paragraph: string
+			}
+			NoVoiceovers: {
+				/**
+				 * Y​o​u​r​ ​v​o​i​c​e​o​v​e​r​s​ ​w​i​l​l​ ​a​p​p​e​a​r​ ​h​e​r​e​.
+				 */
+				Paragraph: string
+			}
+		}
 	}
 	UnderDevelopment: {
 		/**
@@ -5011,6 +5025,20 @@ export type TranslationFunctions = {
 				 * Mert
 				 */
 				Name: () => LocalizedString
+			}
+		}
+		List: {
+			NotSignedIn: {
+				/**
+				 * Sign in to see your voiceovers.
+				 */
+				Paragraph: () => LocalizedString
+			}
+			NoVoiceovers: {
+				/**
+				 * Your voiceovers will appear here.
+				 */
+				Paragraph: () => LocalizedString
 			}
 		}
 	}

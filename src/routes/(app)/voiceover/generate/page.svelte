@@ -24,13 +24,9 @@
 	import VoiceoverSettingsPanel from '$components/voiceover/generate/VoiceoverSettingsPanel.svelte';
 	import VoiceoverSettingsProvider from '$components/voiceover/generate/VoiceoverSettingsProvider.svelte';
 	import VoiceoverPromptBar from '$components/voiceover/generate/VoiceoverPromptBar.svelte';
-	import { voiceoverSpeakerId } from '$ts/stores/voiceover/voiceoverSettings.js';
-	import {
-		voiceoverSpeakerIdToDisplayName,
-		voiceoverSpeakers
-	} from '$ts/constants/voiceover/models.js';
-	import { onMount } from 'svelte';
 	import VoiceoverVerticalListInfinite from '$components/voiceover/VoiceoverVerticalListInfinite.svelte';
+	import VoiceoverVerticalListPlaceholder from '$components/voiceover/VoiceoverVerticalListPlaceholder.svelte';
+	import LL from '$i18n/i18n-svelte.js';
 
 	export let data;
 
@@ -110,8 +106,12 @@
 						class="h-full flex w-36 xl:w-72 lg:pb-[calc(env(safe-area-inset-bottom))] relative z-10"
 					>
 						<SidebarWrapper hasGradient>
-							{#if userVoiceoverFullOutputsQuery}
-								<AutoSize bind:element={listScrollContainerLg} let:clientHeight>
+							<AutoSize bind:element={listScrollContainerLg} let:clientHeight>
+								{#if !$page.data.session?.user.id || !$userSummary}
+									<VoiceoverVerticalListPlaceholder
+										text={$LL.Voiceover.List.NotSignedIn.Paragraph()}
+									/>
+								{:else if userVoiceoverFullOutputsQuery}
 									{#if listScrollContainerLg && clientHeight}
 										<VoiceoverVerticalListInfinite
 											paddingLeft={6}
@@ -123,8 +123,8 @@
 											query={userVoiceoverFullOutputsQuery}
 										/>
 									{/if}
-								</AutoSize>
-							{/if}
+								{/if}
+							</AutoSize>
 						</SidebarWrapper>
 					</div>
 				{/if}

@@ -1,6 +1,7 @@
 <script lang="ts">
 	import IconAnimatedSpinner from '$components/icons/IconAnimatedSpinner.svelte';
-	import AudioPlayer from '$components/voiceover/audioPlayer/AudioPlayer.svelte';
+	import VoiceoverVerticalListPlaceholder from '$components/voiceover/VoiceoverVerticalListPlaceholder.svelte';
+	import AudioPlayerListItem from '$components/voiceover/audioPlayer/AudioPlayerListItem.svelte';
 	import { PUBLIC_BUCKET_URL, PUBLIC_BUCKET_VOICEOVER_URL } from '$env/static/public';
 	import LL from '$i18n/i18n-svelte';
 	import type { TUserVoiceoverFullOutputsPage } from '$ts/queries/userVoiceovers';
@@ -106,7 +107,7 @@
 		<p class="mt-2 opacity-0">{$LL.Gallery.SearchingTitle()}</p>
 	</div>
 {:else if $query.isSuccess && outputs !== undefined && outputs.length === 0}
-	<div>No outputs</div>
+	<VoiceoverVerticalListPlaceholder text={$LL.Voiceover.List.NoVoiceovers.Paragraph()} />
 {:else if $query.isSuccess && $query.data.pages.length > 0 && outputs !== undefined}
 	{#if $listVirtualizer}
 		<div style="height: {$listVirtualizer.getTotalSize()}px" class="w-full relative">
@@ -124,7 +125,7 @@
 					class="w-full group absolute"
 				>
 					<div class="w-full h-full">
-						<AudioPlayer
+						<AudioPlayerListItem
 							label={output.voiceover.prompt.text}
 							title={output.voiceover.prompt.text}
 							src={output.audio_file_url.replace(PUBLIC_BUCKET_URL, PUBLIC_BUCKET_VOICEOVER_URL)}

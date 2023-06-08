@@ -858,6 +858,10 @@ const ptPt: Translation = {
 			'4a19f17c-eedc-4cf8-a45d-1f9d69547125': { Name: 'Rachel' },
 			'5bd0610f-f073-487e-a74c-2a89105ce282': { Name: 'Gamze' },
 			'7c3f8e30-9957-4d5e-a70e-c8269ff5f550': { Name: 'Mert' }
+		},
+		List: {
+			NotSignedIn: { Paragraph: 'Sign in to see your voiceovers.' },
+			NoVoiceovers: { Paragraph: 'Your voiceovers will appear here.' }
 		}
 	},
 	UnderDevelopment: {

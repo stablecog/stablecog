@@ -96,7 +96,7 @@
 				<MuteButton bind:element={muteButton} onClick={() => toggleMute(audioElement)} {isMuted} />
 			{/if}
 		</div>
-		<div class="flex-1 self-stretch pl-2 pr-4">
+		<div class="flex-1 self-stretch px-1">
 			<div class="w-full h-full flex items-center relative">
 				<Slider
 					{buffered}
@@ -109,7 +109,7 @@
 				/>
 			</div>
 		</div>
-		<p class="text-xs text-c-on-bg/75">
+		<p class="pl-2 text-xs text-c-on-bg/75 lg:hidden xl:block">
 			{currentTime && currentTimestamp ? currentTimestamp : '00:00'}
 			<span class="text-c-on-bg/25">/</span>
 			{duration && totalTimestamp ? totalTimestamp : '00:00'}
