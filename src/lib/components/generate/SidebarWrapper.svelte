@@ -3,6 +3,7 @@
 	export let borderSize: 'none' | 'sm' | 'md' = 'md';
 	export let noWrapper = false;
 	export let hasGradient = false;
+	export let horizontal = false;
 </script>
 
 <div
@@ -20,7 +21,8 @@
 		? 'rounded-xl'
 		: 'rounded-2xl'} {noWrapper
 		? ''
-		: 'ring-2 ring-c-bg-secondary shadow-xl shadow-c-shadow/[var(--o-shadow-stronger)]'} z-0 overflow-hidden relative"
+		: 'ring-2 ring-c-bg-secondary shadow-xl shadow-c-shadow/[var(--o-shadow-stronger)]'} 
+		{horizontal ? 'items-center' : ''} z-0 overflow-hidden relative"
 >
 	<slot />
 	{#if hasGradient}

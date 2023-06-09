@@ -24,12 +24,13 @@
 	import VoiceoverSettingsPanel from '$components/voiceover/generate/VoiceoverSettingsPanel.svelte';
 	import VoiceoverSettingsProvider from '$components/voiceover/generate/VoiceoverSettingsProvider.svelte';
 	import VoiceoverPromptBar from '$components/voiceover/generate/VoiceoverPromptBar.svelte';
-	import VoiceoverVerticalListInfinite from '$components/voiceover/lists/VoiceoverVerticalListInfinite.svelte';
-	import VoiceoverVerticalListPlaceholder from '$components/voiceover/lists/VoiceoverVerticalListPlaceholder.svelte';
+	import VoiceoverListInfinite from '$components/voiceover/lists/VoiceoverListInfinite.svelte';
+	import VoiceoverListPlaceholder from '$components/voiceover/lists/VoiceoverListPlaceholder.svelte';
 	import LL from '$i18n/i18n-svelte.js';
 	import {
 		listItemGap,
 		listItemHeight,
+		listItemWidth,
 		listPadding
 	} from '$components/voiceover/lists/constants.js';
 
@@ -95,7 +96,6 @@
 		.flatMap((g) => g.outputs.map((o) => ({ ...o, generation: g })));
 
 	$: userVoiceoverOutputs = $userVoiceoverFullOutputsQuery?.data?.pages?.flatMap((p) => p.outputs);
-	$: console.log(userVoiceoverOutputs);
 </script>
 
 <VoiceoverSettingsProvider>
@@ -114,12 +114,10 @@
 						<SidebarWrapper hasGradient>
 							<AutoSize bind:element={listScrollContainerLg} let:clientHeight>
 								{#if !$page.data.session?.user.id || !$userSummary}
-									<VoiceoverVerticalListPlaceholder
-										text={$LL.Voiceover.List.NotSignedIn.Paragraph()}
-									/>
+									<VoiceoverListPlaceholder text={$LL.Voiceover.List.NotSignedIn.Paragraph()} />
 								{:else if userVoiceoverFullOutputsQuery}
 									{#if listScrollContainerLg && clientHeight}
-										<VoiceoverVerticalListInfinite
+										<VoiceoverListInfinite
 											paddingLeft={listPadding}
 											paddingRight={listPadding}
 											paddingTop={listPadding}
@@ -247,9 +245,30 @@
 						</div>
 					</div>
 					<div class="w-full hidden md:block lg:hidden pt-4">
-						<div class="h-24 flex flex-col">
-							<SidebarWrapper borderSize="sm">
-								<div class="w-full flex flex-col h-20" />
+						<div class="h-30 flex flex-col">
+							<SidebarWrapper>
+								<AutoSize hideScroll={true} bind:element={listScrollContainerMd} let:clientWidth>
+									{#if !$page.data.session?.user.id || !$userSummary}
+										<VoiceoverListPlaceholder
+											horizontal={true}
+											text={$LL.Voiceover.List.NotSignedIn.Paragraph()}
+										/>
+									{:else if userVoiceoverFullOutputsQuery}
+										{#if listScrollContainerMd && clientWidth}
+											<VoiceoverListInfinite
+												horizontal={true}
+												paddingLeft={listPadding}
+												paddingTop={listPadding}
+												paddingBottom={listPadding}
+												gap={listItemGap}
+												itemWidth={listItemWidth}
+												listScrollContainerWidth={clientWidth}
+												listScrollContainer={listScrollContainerMd}
+												query={userVoiceoverFullOutputsQuery}
+											/>
+										{/if}
+									{/if}
+								</AutoSize>
 							</SidebarWrapper>
 						</div>
 					</div>

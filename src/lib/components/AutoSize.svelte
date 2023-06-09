@@ -1,6 +1,4 @@
 <script lang="ts">
-	import { windowHeight, windowWidth } from '$ts/stores/window';
-
 	export let element: HTMLDivElement;
 	export let hideScroll = false;
 	let clientWidth: number;

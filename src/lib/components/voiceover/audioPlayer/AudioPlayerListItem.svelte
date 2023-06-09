@@ -1,5 +1,6 @@
 <script lang="ts">
 	import IconSpeaker from '$components/icons/IconSpeaker.svelte';
+	import IconThreeDots from '$components/icons/IconThreeDots.svelte';
 	import MuteButton from '$components/voiceover/audioPlayer/MuteButton.svelte';
 	import PlayPauseButton from '$components/voiceover/audioPlayer/PlayPauseButton.svelte';
 	import Slider from '$components/voiceover/audioPlayer/Slider.svelte';
@@ -17,8 +18,9 @@
 	export let title: string | undefined = undefined;
 	export let label: string;
 	export let hasMute = false;
-	export let speakerId: string | undefined = undefined;
+	export let speakerId: string;
 	export let duration: number | undefined = undefined;
+	export let inHorizontal = false;
 
 	let playButton: HTMLButtonElement;
 	let muteButton: HTMLButtonElement;
@@ -62,6 +64,7 @@
 	});
 
 	onDestroy(() => {
+		audioElement?.pause();
 		$allAudioPlayers.delete(audioElement);
 	});
 </script>
@@ -73,19 +76,18 @@
 			togglePlay(audioElement);
 		}
 	}}
-	class="w-full bg-c-bg-secondary px-3.5 py-1.5 flex flex-col items-start rounded-xl
-	shadow-lg shadow-c-shadow/[var(--o-shadow-normal)]"
+	class="{inHorizontal
+		? 'h-full'
+		: ''} w-full bg-c-bg-secondary px-3.5 py-1.5 flex flex-col items-start rounded-xl
+	shadow-lg shadow-c-shadow/[var(--o-shadow-normal)] overflow-hidden relative z-0"
 >
-	{#if speakerId}
-		<div class="pt-1.5 pb-2.25 w-full flex justify-start items-center">
+	<div class="w-full flex justify-between items-center pt-0.5 pb-2 gap-2">
+		<div class="-ml-1 flex-shrink min-w-0 w-full flex justify-start items-center">
 			<div
-				class="rounded-md ring-2 ring-c-bg-tertiary bg-c-bg-tertiary overflow-hidden
-				flex items-center justify-start relative z-0"
+				class="rounded-md bg-c-bg-tertiary overflow-hidden
+					flex items-center justify-start relative z-0 ring-2 ring-c-bg-tertiary"
 			>
-				<div
-					class="w-7 h-7 flex-shrink-0 ring-2 ring-c-bg-tertiary shadow-lg
-					shadow-c-shadow/[var(--o-shadow-strong)] overflow-hidden relative z-0"
-				>
+				<div class="w-7 h-7 flex-shrink-0 shadow-lg overflow-hidden relative z-0">
 					<IconSpeaker class="w-full h-full" type={speakerId} sizes="28px" />
 				</div>
 				<p
@@ -95,15 +97,11 @@
 				</p>
 			</div>
 		</div>
-	{/if}
-	{#if title}
-		<p
-			class="text-sm text-c-on-bg/75 py-1 max-w-full whitespace-nowrap overflow-hidden overflow-ellipsis"
-		>
-			{title}
-		</p>
-	{/if}
-	<div class="w-full flex items-center justify-center">
+		<div class="h-full -mr-1">
+			<IconThreeDots class="text-c-on-bg/50 w-6 h-6" />
+		</div>
+	</div>
+	<div class="{inHorizontal ? 'h-full' : ''} w-full flex items-center justify-center">
 		<audio
 			{src}
 			aria-label={label}
@@ -126,23 +124,34 @@
 				<MuteButton bind:element={muteButton} onClick={() => toggleMute(audioElement)} {isMuted} />
 			{/if}
 		</div>
-		<div class="flex-1 self-stretch px-1">
-			<div class="w-full h-full flex items-center relative">
-				<Slider
-					{buffered}
-					duration={durationLocal}
-					min={0}
-					max={100}
-					name="Audio Player"
-					bind:value={sliderValue}
-					step={0.001}
-				/>
+		<div class="flex-1 min-w-0 flex flex-col pl-2">
+			{#if title}
+				<p
+					class="text-sm text-c-on-bg/75 py-1 max-w-full whitespace-nowrap overflow-hidden overflow-ellipsis"
+				>
+					{title}
+				</p>
+			{/if}
+			<div class="w-full flex items-center -mt-1">
+				<div class="flex-1 self-stretch h-8">
+					<div class="w-full h-full flex items-center relative">
+						<Slider
+							{buffered}
+							duration={durationLocal}
+							min={0}
+							max={100}
+							name="Audio Player"
+							bind:value={sliderValue}
+							step={0.001}
+						/>
+					</div>
+				</div>
+				<p class="pl-3 text-xs text-c-on-bg/75 lg:hidden xl:block">
+					{currentTime && currentTimestamp ? currentTimestamp : '00:00'}
+					<span class="text-c-on-bg/25">/</span>
+					{(durationLocal || duration) && totalTimestamp ? totalTimestamp : '00:00'}
+				</p>
 			</div>
 		</div>
-		<p class="pl-2 text-xs text-c-on-bg/75 lg:hidden xl:block">
-			{currentTime && currentTimestamp ? currentTimestamp : '00:00'}
-			<span class="text-c-on-bg/25">/</span>
-			{(durationLocal || duration) && totalTimestamp ? totalTimestamp : '00:00'}
-		</p>
 	</div>
 </div>
