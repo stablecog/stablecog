@@ -157,6 +157,7 @@
 	function onParamsChanged() {
 		if (!$gridVirtualizer) return;
 		let optionsToSet: { [key: string]: string | number } = {};
+		const prevOverscan = $gridVirtualizer.options.overscan;
 		if (outputs) {
 			optionsToSet.count = outputs.length;
 		}
@@ -168,6 +169,8 @@
 		}
 		if (Object.keys(optionsToSet).length > 0) {
 			$gridVirtualizer.setOptions(optionsToSet);
+		}
+		if (prevOverscan !== overscanCount) {
 			if (measureTimeout) clearTimeout(measureTimeout);
 			measureTimeout = setTimeout(async () => {
 				await tick();

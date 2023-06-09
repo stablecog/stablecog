@@ -57,36 +57,42 @@
 	});
 </script>
 
-<form on:submit={onSubmit} class="w-full rounded-xl overflow-hidden relative">
-	<textarea
-		bind:value={$voiceoverPrompt}
-		placeholder="I like to eat apples and bananas."
-		class="w-full h-full bg-c-bg-secondary rounded-xl resize-none px-5 py-4 text-lg pb-26 placeholder:text-c-on-bg/40"
-		rows="8"
-		maxlength={maxVoiceoverCharacterCount}
-	/>
-	<div class="absolute w-full flex flex-col bottom-0 left-0">
-		<div class="w-full h-6 bg-gradient-to-t from-c-bg-secondary to-c-bg-secondary/0" />
+<form
+	on:submit={onSubmit}
+	class="w-full flex flex-col rounded-xl overflow-hidden relative bg-c-bg-secondary"
+>
+	<div class="w-full flex flex-col relative">
+		<textarea
+			bind:value={$voiceoverPrompt}
+			placeholder="I like to eat apples and bananas."
+			class="w-full h-full bg-c-bg-secondary rounded-t-xl resize-none px-5 py-4
+			relative text-lg pb-6 placeholder:text-c-on-bg/40"
+			rows="7"
+			maxlength={maxVoiceoverCharacterCount}
+		/>
 		<div
-			class="w-full rounded-b-xl rounded-tl-xl pointer-events-none
-   	 	flex justify-end items-center px-3 pt-3 pb-4 bg-c-bg-secondary gap-4"
-		>
-			<div class="flex flex-col items-end justify-center font-medium">
-				<p>
-					{($voiceoverPrompt || '').length}
-					<span class="text-c-on-bg/50">/ {maxVoiceoverCharacterCount}</span>
-				</p>
-				<p>
-					{getVoiceoverCreditCost(($voiceoverPrompt || '').length)}
-					<span class="text-c-on-bg/50">credit(s)</span>
-				</p>
-			</div>
-			<Button
-				withSpinner
-				noPadding
-				loading={$maxOngoingVoiceoversCountReached}
-				class="pointer-events-auto px-8 py-4">{$LL.Home.GenerateButton()}</Button
-			>
+			class="w-full absolute left-0 bottom-0 h-4 bg-gradient-to-t from-c-bg-secondary to-c-bg-secondary/0"
+		/>
+	</div>
+	<div
+		class="w-full rounded-b-xl pointer-events-none
+   	 	flex justify-end items-center px-3 pt-2 pb-4 bg-c-bg-secondary gap-4"
+	>
+		<div class="flex flex-col items-end justify-center font-medium text-sm pointer-events-auto">
+			<p>
+				{($voiceoverPrompt || '').length}
+				<span class="text-c-on-bg/50">/ {maxVoiceoverCharacterCount}</span>
+			</p>
+			<p class="mt-0.5">
+				{getVoiceoverCreditCost(($voiceoverPrompt || '').length)}
+				<span class="text-c-on-bg/50">credit(s)</span>
+			</p>
 		</div>
+		<Button
+			withSpinner
+			noPadding
+			loading={$maxOngoingVoiceoversCountReached}
+			class="pointer-events-auto px-8 py-3.5">{$LL.Home.GenerateButton()}</Button
+		>
 	</div>
 </form>

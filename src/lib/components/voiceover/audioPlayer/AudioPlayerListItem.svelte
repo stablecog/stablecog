@@ -15,7 +15,7 @@
 	import { onDestroy, onMount } from 'svelte';
 
 	export let src: string;
-	export let title: string | undefined = undefined;
+	export let title: string;
 	export let label: string;
 	export let hasMute = false;
 	export let speakerId: string;
@@ -79,10 +79,10 @@
 	class="{inHorizontal
 		? 'h-full'
 		: ''} w-full bg-c-bg-secondary px-3.5 py-1.5 flex flex-col items-start rounded-xl
-	shadow-lg shadow-c-shadow/[var(--o-shadow-normal)] overflow-hidden relative z-0"
+	shadow-lg shadow-c-shadow/[var(--o-shadow-normal)] overflow-hidden relative z-0 group/audio-player-list-item"
 >
-	<div class="w-full flex justify-between items-center pt-0.5 pb-2 gap-2">
-		<div class="-ml-1 flex-shrink min-w-0 w-full flex justify-start items-center">
+	<div class="w-full flex justify-between items-center pb-2.25 gap-2">
+		<div class="-ml-1.5 flex-shrink min-w-0 w-full flex justify-start items-center">
 			<div
 				class="rounded-md bg-c-bg-tertiary overflow-hidden
 					flex items-center justify-start relative z-0 ring-2 ring-c-bg-tertiary"
@@ -91,16 +91,22 @@
 					<IconSpeaker class="w-full h-full" type={speakerId} sizes="28px" />
 				</div>
 				<p
-					class="flex-shrink min-w-0 overflow-hidden overflow-ellipsis text-sm font-medium px-3 py-1 h-full"
+					class="flex-shrink min-w-0 whitespace-nowrap overflow-hidden overflow-ellipsis text-sm font-medium
+					px-2.5 py-1 h-full"
 				>
 					{$voiceoverSpeakerIdToDisplayName[speakerId]}
 				</p>
 			</div>
 		</div>
-		<div class="h-full -mr-1">
+		<div class="h-full -mr-1.5 md:hidden xl:block">
 			<IconThreeDots class="text-c-on-bg/50 w-6 h-6" />
 		</div>
 	</div>
+	<p
+		class="md:hidden lg:block xl:hidden text-sm text-c-on-bg/75 py-1 max-w-full whitespace-nowrap overflow-hidden overflow-ellipsis"
+	>
+		{title}
+	</p>
 	<div class="{inHorizontal ? 'h-full' : ''} w-full flex items-center justify-center">
 		<audio
 			{src}
@@ -125,13 +131,11 @@
 			{/if}
 		</div>
 		<div class="flex-1 min-w-0 flex flex-col pl-2">
-			{#if title}
-				<p
-					class="text-sm text-c-on-bg/75 py-1 max-w-full whitespace-nowrap overflow-hidden overflow-ellipsis"
-				>
-					{title}
-				</p>
-			{/if}
+			<p
+				class="block lg:hidden xl:block text-sm text-c-on-bg/75 py-1 max-w-full whitespace-nowrap overflow-hidden overflow-ellipsis"
+			>
+				{title}
+			</p>
 			<div class="w-full flex items-center -mt-1">
 				<div class="flex-1 self-stretch h-8">
 					<div class="w-full h-full flex items-center relative">

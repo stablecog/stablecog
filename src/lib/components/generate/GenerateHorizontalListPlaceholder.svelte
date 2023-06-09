@@ -3,23 +3,20 @@
 </script>
 
 <div class="w-full h-full relative px-2 py-1.5">
-	<div class="w-full h-full relative">
-		<div class="w-full h-full absolute left-0 top-0 flex items-center justify-center">
-			<div
-				class="w-full h-full opacity-60 flex flex-row items-center justify-center absolute left-0 top-0 gap-1 z-0"
-			>
-				{#each Array(10) as item}
-					<div class="flex-1 h-full bg-c-bg-secondary rounded-md" />
-				{/each}
-			</div>
-			<div class="w-full h-full flex items-center justify-center overflow-hidden px-4">
-				<p
-					class="w-full whitespace-nowrap overflow-hidden
-					text-sm overflow-ellipsis text-center text-c-on-bg/40 relative z-10"
-				>
-					{text}
-				</p>
-			</div>
-		</div>
+	<div class="w-full h-full flex items-center justify-center gap-1">
+		{#each Array(10) as item}
+			<div class="flex-1 h-full bg-c-bg-secondary rounded-md" />
+		{/each}
+	</div>
+	<div
+		class="absolute left-0 top-0 w-full h-full flex flex-col text-center
+    items-center justify-center text-c-on-bg/50 text-sm"
+	>
+		<p
+			class="w-full whitespace-nowrap overflow-hidden overflow-ellipsis relative
+			py-2 px-8 md:lg:px-4 xl:px-8"
+		>
+			{text}
+		</p>
 	</div>
 </div>

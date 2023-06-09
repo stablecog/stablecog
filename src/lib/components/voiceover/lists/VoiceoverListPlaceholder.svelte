@@ -15,7 +15,7 @@
 		style="gap: {listItemGap}px; padding: {listPadding}px"
 		class="flex {horizontal ? 'h-full justify-start' : 'w-full flex-col'} opacity-50"
 	>
-		{#each Array.from({ length: 20 }) as _}
+		{#each Array.from({ length: 15 }) as _}
 			<div
 				style={horizontal ? `width: ${listItemWidth}px` : `height: ${listItemHeight}px`}
 				class="{horizontal ? 'h-full' : 'w-full'} bg-c-bg-secondary rounded-xl"
@@ -27,9 +27,8 @@
     items-center justify-center text-c-on-bg/50 text-sm"
 	>
 		<p
-			class="w-full relative py-5 lg:px-4 xl:px-8 {horizontal
-				? ''
-				: 'ring-2 bg-c-bg ring-c-bg-secondary shadow-xl shadow-c-shadow/[var(--o-shadow-normal)]'}"
+			class="w-full relative {horizontal ? 'py-3.5' : 'py-4'} px-8 md:lg:px-4 xl:px-8 ring-2 bg-c-bg
+			ring-c-bg-secondary shadow-xl shadow-c-shadow/[var(--o-shadow-normal)]"
 		>
 			{text}
 		</p>

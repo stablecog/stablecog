@@ -18,10 +18,15 @@
 			</div>
 		{/each}
 	</div>
-	<p
-		class="absolute left-0 top-0 w-full h-full flex flex-col text-center py-5
-    lg:px-4 xl:px-8 items-center justify-center text-c-on-bg/50 text-sm"
+	<div
+		class="absolute left-0 top-0 w-full h-full flex flex-col text-center
+    items-center justify-center text-c-on-bg/50 text-sm"
 	>
-		{text}
-	</p>
+		<p
+			class="w-full relative py-4 px-8 md:lg:px-4 xl:px-8 ring-2 bg-c-bg
+			ring-c-bg-secondary shadow-xl shadow-c-shadow/[var(--o-shadow-normal)]"
+		>
+			{text}
+		</p>
+	</div>
 </div>

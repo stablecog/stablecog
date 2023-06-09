@@ -9,7 +9,11 @@
 	import type { CreateInfiniteQueryResult } from '@tanstack/svelte-query';
 	import { createVirtualizer, type SvelteVirtualizer } from '@tanstack/svelte-virtual';
 	import type { Readable } from 'svelte/store';
-	import { listItemHeight, listItemWidth } from '$components/voiceover/lists/constants';
+	import {
+		listItemHeight,
+		listItemHeightLg,
+		listItemWidth
+	} from '$components/voiceover/lists/constants';
 
 	export let query: CreateInfiniteQueryResult<TUserVoiceoverFullOutputsPage, unknown>;
 	export let horizontal = false;
@@ -32,7 +36,12 @@
 	$: paddingY = paddingTop + paddingBottom;
 	$: listScrollContainerSize = horizontal ? listScrollContainerWidth : listScrollContainerHeight;
 
-	$: estimatedItemSize = (horizontal ? itemWidth : itemHeight) + gap;
+	$: estimatedItemSize =
+		(horizontal
+			? itemWidth
+			: $windowWidth >= 1024 && $windowWidth < 1280
+			? listItemHeightLg
+			: itemHeight) + gap;
 	$: estimatedItemCountInAWindow =
 		estimatedItemSize && listScrollContainerSize
 			? listScrollContainerSize / estimatedItemSize
@@ -104,6 +113,7 @@
 
 	function onParamsChanged() {
 		if (!$listVirtualizer) return;
+		const prevOverscan = $listVirtualizer.options.overscan;
 		let optionsToSet: { [key: string]: string | number } = {};
 		if (outputs) {
 			optionsToSet.count = outputs.length;
@@ -113,6 +123,9 @@
 		}
 		if (Object.keys(optionsToSet).length > 0) {
 			$listVirtualizer.setOptions(optionsToSet);
+		}
+		if (prevOverscan !== overscanCount) {
+			$listVirtualizer.measure();
 		}
 	}
 </script>

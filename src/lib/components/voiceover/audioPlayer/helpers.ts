@@ -232,19 +232,6 @@ interface GradientStop {
 	color: string; // e.g., "rgba(255, 0, 0, 1)"
 }
 
-interface DrawWaveformBarsOptions {
-	values: number[];
-	progress: number;
-	element: HTMLDivElement;
-	margin: Margin;
-	width: number;
-	height: number;
-	gradientStops1: GradientStop[];
-	gradientStops2: GradientStop[];
-	barGap: number;
-	barRadius: number;
-}
-
 interface DrawWaveformOptions {
 	values: number[];
 	progress: number;
