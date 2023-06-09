@@ -33,6 +33,7 @@
 		listItemWidth,
 		listPadding
 	} from '$components/voiceover/lists/constants.js';
+	import { voiceoverSpeakerId } from '$ts/stores/voiceover/voiceoverSettings.js';
 
 	export let data;
 
@@ -235,12 +236,10 @@
 									label={$voiceovers?.[0]?.status === 'succeeded'
 										? $voiceovers[0].prompt.text
 										: examplePrompt}
-									speakerId={$voiceovers?.[0]?.status === 'succeeded'
+									speakerId={$voiceovers?.[0]?.status
 										? $voiceovers[0].speaker_id
-										: undefined}
-									title={$voiceovers?.[0]?.status === 'succeeded'
-										? $voiceovers[0].prompt.text
-										: examplePrompt}
+										: $voiceoverSpeakerId}
+									title={$voiceovers[0]?.prompt.text}
 									status={$voiceovers?.[0]?.status}
 								/>
 							</div>

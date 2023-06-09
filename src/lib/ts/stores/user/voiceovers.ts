@@ -1,5 +1,5 @@
 import { apiUrl } from '$ts/constants/main';
-import { writable } from 'svelte/store';
+import { get, writable } from 'svelte/store';
 import { generateSSEId } from '$ts/helpers/generateSSEId';
 import {
 	newGenerationCompleteAnimation,
@@ -15,6 +15,7 @@ import {
 	roleToProductId
 } from '$ts/constants/stripePublic';
 import type { TVoiceoverSpeakerId, TVoiceoverModelId } from '$ts/constants/voiceover/models';
+import { PUBLIC_BUCKET_URL, PUBLIC_BUCKET_VOICEOVER_URL } from '$env/static/public';
 
 export const voiceovers = writable<TVoiceover[]>([]);
 
@@ -47,43 +48,32 @@ export const setVoiceoverToFailed = ({ id, error }: { id: string; error?: string
 	});
 };
 
-export const setVoiceoverToSucceeded = ({
+export const setVoiceoverToSucceeded = async ({
 	id,
 	outputs
 }: {
 	id: string;
 	outputs: TVoiceoverOutput[];
 }) => {
-	voiceovers.update(($voiceovers) => {
-		if ($voiceovers === null || $voiceovers.length === 0) {
-			return $voiceovers;
-		}
-		const voi = $voiceovers.find((g) => g.id === id);
-		if (!voi) {
-			return $voiceovers;
-		}
-		voi.status = 'succeeded';
-		voi.outputs = outputs.map((o) => ({
-			...o,
-			status: 'succeeded' as TVoiceoverOutputStatus
-		}));
-		voi.completed_at = convertToDBTimeString(Date.now());
-		/* const costCompletionPerMs = getCostCompletionPerMsFromGeneration(gen);
-		if (costCompletionPerMs !== null) {
-			generationCostCompletionPerMs.set(costCompletionPerMs);
-		} */
-		/* if (newOutputs.length > 0) {
-			const newOutputIds = newOutputs.map((o) => o.id);
-			const voiceover = { ...$voiceovers[0] };
-			const statuses = getOutputOnStageStatuses(voiceover, newOutputIds);
-			statuses.forEach((onStage, i) => {
-				if (!onStage) {
-					addToRecentlyUpdatedOutputIds(newOutputIds[i]);
-				}
-			});
-		} */
-		return $voiceovers;
-	});
+	const vois = get(voiceovers);
+	if (vois === null || vois.length === 0) {
+		return vois;
+	}
+	const voi = vois.find((g) => g.id === id);
+	if (!voi) {
+		return vois;
+	}
+	for (let i = 0; i < outputs.length; i++) {
+		const output = outputs[i];
+		await fetch(output.audio_file_url.replace(PUBLIC_BUCKET_URL, PUBLIC_BUCKET_VOICEOVER_URL));
+	}
+	voi.status = 'succeeded';
+	voi.outputs = outputs.map((o) => ({
+		...o,
+		status: 'succeeded' as TVoiceoverOutputStatus
+	}));
+	voi.completed_at = convertToDBTimeString(Date.now());
+	voiceovers.set(vois);
 };
 
 export const setVoiceoverToServerReceived = ({ ui_id, id }: { ui_id: string; id: string }) => {

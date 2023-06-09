@@ -158,69 +158,11 @@ export function drawWaveform(options: DrawWaveformOptions): void {
 		.attr('d', area);
 }
 
-interface Margin {
-	top: number;
-	right: number;
-	bottom: number;
-	left: number;
-}
+export function drawWaveformPlaceholder(options: DrawWaveformPlaceholderOptions): void {
+	const { element, margin, width, pointCount, height, gradientStop, minHeight } = options;
 
-interface GradientStop {
-	offset: string;
-	color: string;
-}
+	const valueCount = pointCount;
 
-interface DrawWaveformOptions {
-	values: number[];
-	progress: number;
-	element: HTMLDivElement;
-	margin: Margin;
-	width: number;
-	height: number;
-	gradientStops1: GradientStop[];
-	gradientStops2: GradientStop[];
-}
-
-interface MarginAnimation {
-	top: number;
-	right: number;
-	bottom: number;
-	left: number;
-}
-
-interface GradientStopAnimation {
-	offset: string;
-	color: string;
-}
-
-interface DrawWaveformAnimationOptions {
-	element: HTMLDivElement;
-	margin: MarginAnimation;
-	width: number;
-	barWidth: number;
-	height: number;
-	gradientStop: GradientStopAnimation[];
-	duration: number;
-	maxHeightChange: number; // Adjusted to accept a value between 0 and 1
-	minHeight: number;
-}
-
-export function drawWaveformAnimation(options: DrawWaveformAnimationOptions): void {
-	const {
-		element,
-		margin,
-		width,
-		barWidth,
-		height,
-		gradientStop,
-		duration,
-		maxHeightChange,
-		minHeight
-	} = options;
-
-	const valueCount = Math.ceil(width / barWidth);
-
-	// Generate initial random values between minHeight and 1
 	let values: number[] = Array.from(
 		{ length: valueCount },
 		() => minHeight + Math.random() * (1 - minHeight)
@@ -274,168 +216,38 @@ export function drawWaveformAnimation(options: DrawWaveformAnimationOptions): vo
 	y.domain([0, 1]);
 
 	// Add the path with the gradient
-	const path = svg.append('path').datum(values).attr('fill', 'url(#gradient)').attr('d', area);
-
-	// Function to generate new random values and redraw the path
-	const animateWaveform = () => {
-		// Create new random values for the next state
-		const nextValues = values.map((value) => {
-			const maxDiff = maxHeightChange;
-			const newValue = Math.min(Math.max(minHeight, value + (Math.random() * 2 - 1) * maxDiff), 1);
-			return newValue;
-		});
-		values = nextValues;
-
-		y.domain([0, 1]);
-
-		// Transition to the next state
-		path
-			.datum(nextValues)
-			.transition()
-			.duration(duration)
-			.ease(d3.easeSinInOut)
-			.attr('d', area)
-			.on('end', animateWaveform);
-	};
-
-	// Start the animation
-	animateWaveform();
+	svg.append('path').datum(values).attr('fill', 'url(#gradient)').attr('d', area);
 }
 
-interface DrawWaveformAnimationOptions {
+interface Margin {
+	top: number;
+	right: number;
+	bottom: number;
+	left: number;
+}
+
+interface GradientStop {
+	offset: string;
+	color: string;
+}
+
+interface DrawWaveformOptions {
+	values: number[];
+	progress: number;
 	element: HTMLDivElement;
-	margin: MarginAnimation;
+	margin: Margin;
 	width: number;
-	barWidth: number;
 	height: number;
-	gradientStop: GradientStopAnimation[];
-	duration: number;
-	maxHeightChange: number; // Adjusted to accept a value between 0 and 1
-	minHeight: number;
-	hasInfiniteAnimation: boolean;
-	values?: number[];
+	gradientStops1: GradientStop[];
+	gradientStops2: GradientStop[];
 }
 
-export function drawWaveformAnimation2(options: DrawWaveformAnimationOptions): void {
-	const {
-		element,
-		margin,
-		width,
-		barWidth,
-		height,
-		gradientStop,
-		duration,
-		maxHeightChange,
-		minHeight,
-		hasInfiniteAnimation,
-		values: inputValues
-	} = options;
-
-	const valueCount = Math.ceil(width / barWidth);
-
-	let values: number[];
-
-	// check if a values array is passed, if not create one randomly
-	if (inputValues) {
-		// if values array is passed, interpolate or slice to fit it to valueCount
-		const d3Interpolator = d3.interpolateArray(inputValues, Array(valueCount).fill(0));
-		values = Array.from({ length: valueCount }, (_, i) => d3Interpolator(i / valueCount));
-	} else if (element.dataset.lastValues) {
-		// if no values array is passed, check if there is a previous state to restore
-		values = JSON.parse(element.dataset.lastValues);
-	} else {
-		// if no values array and no previous state, create a random values array
-		values = Array.from({ length: valueCount }, () => minHeight + Math.random() * (1 - minHeight));
-	}
-
-	// Remove previous chart if it exists
-	d3.select(element).selectAll('*').remove();
-
-	const svg = d3
-		.select(element)
-		.append('svg')
-		.attr('width', width + margin.left + margin.right)
-		.attr('height', height + margin.top + margin.bottom)
-		.append('g')
-		.attr('transform', `translate(${margin.left},${margin.top})`);
-
-	// Define gradient
-	const createGradient = (id: string, stops: GradientStop[]) => {
-		const gradient = svg
-			.append('defs')
-			.append('linearGradient')
-			.attr('id', id)
-			.attr('x1', '0%')
-			.attr('y1', '0%')
-			.attr('x2', '0%')
-			.attr('y2', '100%');
-
-		stops.forEach((stop) => {
-			gradient.append('stop').attr('offset', stop.offset).attr('stop-color', stop.color);
-		});
-
-		return gradient;
-	};
-
-	createGradient('gradient', gradientStop);
-
-	// Set the ranges
-	const x = d3.scaleLinear().range([0, width]);
-	const y = d3.scaleLinear().range([height, 0]);
-
-	// Define the area
-	const area = d3
-		.area<number>()
-		.x((d, i) => x(i / (valueCount - 1))) // Adjust here
-		.y0(height)
-		.y1((d) => y(d))
-		.curve(d3.curveBasis);
-
-	// Scale the range of the data
-	x.domain([0, 1]);
-	y.domain([0, 1]);
-
-	// Add the path with the gradient
-	const path = svg.append('path').datum(values).attr('fill', 'url(#gradient)').attr('d', area);
-
-	// Function to generate new random values and redraw the path
-	const animateWaveform = () => {
-		let nextValues: number[];
-
-		// only animate infinitely if hasInfiniteAnimation is true
-		if (hasInfiniteAnimation) {
-			// create new random values for the next state
-			nextValues = values.map((value) => {
-				const maxDiff = maxHeightChange;
-				const newValue = Math.min(
-					Math.max(minHeight, value + (Math.random() * 2 - 1) * maxDiff),
-					1
-				);
-				return newValue;
-			});
-		} else {
-			// if not infinitely animating, just use current values for the next state
-			nextValues = values;
-		}
-		values = nextValues;
-
-		// transition to the next state
-		path
-			.datum(nextValues)
-			.transition()
-			.duration(duration)
-			.ease(d3.easeLinear)
-			.attr('d', area)
-			.on('end', () => {
-				if (hasInfiniteAnimation) {
-					animateWaveform();
-				}
-			});
-	};
-
-	// Start the animation
-	animateWaveform();
-
-	// Store the last state of values on the element
-	element.dataset.lastValues = JSON.stringify(values);
+interface DrawWaveformPlaceholderOptions {
+	element: HTMLDivElement;
+	margin: Margin;
+	width: number;
+	pointCount: number;
+	height: number;
+	gradientStop: GradientStop[];
+	minHeight: number;
 }

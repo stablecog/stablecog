@@ -4,8 +4,6 @@
 		audioToArray,
 		convertSecondsToTimestamp,
 		drawWaveform,
-		drawWaveformAnimation,
-		drawWaveformAnimation2,
 		toggleMute,
 		togglePlay
 	} from '$components/voiceover/audioPlayer/helpers';
@@ -14,22 +12,22 @@
 	import MuteButton from '$components/voiceover/audioPlayer/MuteButton.svelte';
 	import { allAudioPlayers } from '$ts/stores/allPlayers';
 	import { browser } from '$app/environment';
-	import { voiceoverSpeakerId } from '$ts/stores/voiceover/voiceoverSettings';
 	import {
-		voiceoverLocale,
 		voiceoverSpeakerIdToDisplayName,
 		type TVoiceoverSpeakerId
 	} from '$ts/constants/voiceover/models';
 	import IconSpeaker from '$components/icons/IconSpeaker.svelte';
-	import { languageName } from '$ts/helpers/language';
-	import { locale } from '$i18n/i18n-svelte';
 	import type { TVoiceoverStatus } from '$ts/stores/user/voiceovers';
+	import AudioPlayerWithWaveformPlaceholder from '$components/voiceover/audioPlayer/AudioPlayerWithWaveformPlaceholder.svelte';
+	import { tick } from 'svelte';
+	import { cubicOut } from 'svelte/easing';
+	import { scale } from 'svelte/transition';
 
 	export let src: string | undefined;
 	export let title: string | undefined = undefined;
 	export let label: string;
 	export let status: TVoiceoverStatus | undefined = undefined;
-	export let speakerId: TVoiceoverSpeakerId | undefined = undefined;
+	export let speakerId: TVoiceoverSpeakerId;
 	export { classes as class };
 	let classes = '';
 
@@ -71,9 +69,11 @@
 		waveformContainer,
 		waveformContainerWidth,
 		waveformContainerHeight,
-		status
+		status,
+		showPlaceholder
 	],
 		drawWaveformWithCheck();
+
 	$: pointCount = waveformContainerWidth
 		? Math.floor(waveformContainerWidth / barWidth)
 		: undefined;
@@ -95,24 +95,32 @@
 			? 'created'
 			: 'idle';
 
-	function drawWaveformWithCheck() {
+	$: showPlaceholder = audioStatus !== 'created';
+
+	async function drawWaveformWithCheck() {
 		if (progress !== 0 && !progress) return;
 		if (!waveformContainer) return;
 		if (!waveformContainerWidth) return;
 		if (!waveformContainerHeight) return;
 		if (!pointCount) return;
-		drawWaveformAnimation2({
+		if (!audioArray) return;
+		drawWaveform({
 			element: waveformContainer,
 			width: waveformContainerWidth,
-			barWidth: barWidth,
-			duration: 500,
-			maxHeightChange: 0.5,
-			minHeight: 0.5,
 			height: waveformContainerHeight,
-			hasInfiniteAnimation: audioStatus === 'being-created' ? true : false,
-			values: audioArray,
 			margin: { top: 0, left: 0, bottom: 0, right: 0 },
-			gradientStop: [
+			progress,
+			gradientStops1: [
+				{
+					color: 'rgba(var(--c-primary) / 1)',
+					offset: '0%'
+				},
+				{
+					color: 'rgba(var(--c-primary) / 0)',
+					offset: '100%'
+				}
+			],
+			gradientStops2: [
 				{
 					color: 'rgba(var(--c-on-bg) / 0.2)',
 					offset: '0%'
@@ -121,7 +129,8 @@
 					color: 'rgba(var(--c-on-bg) / 0)',
 					offset: '100%'
 				}
-			]
+			],
+			values: audioArray
 		});
 	}
 
@@ -141,6 +150,16 @@
 	});
 </script>
 
+<audio
+	{src}
+	aria-label={label}
+	bind:currentTime
+	bind:duration
+	bind:this={audioElement}
+	on:playing={() => (isPlaying = true)}
+	on:pause={() => (isPlaying = false)}
+	bind:muted={isMuted}
+/>
 <div
 	on:keydown={(e) => {
 		if (e.target === playButton || e.target === muteButton) return;
@@ -149,127 +168,101 @@
 		}
 	}}
 	class="w-full h-full bg-c-bg-secondary flex flex-col rounded-xl overflow-hidden relative z-0
-	shadow-lg shadow-c-shadow/[var(--o-shadow-normal)] {classes}"
+		shadow-lg shadow-c-shadow/[var(--o-shadow-normal)] {classes}"
 >
-	<div
-		class="w-full flex flex-col px-5 {audioStatus === 'idle' || audioStatus === 'being-created'
-			? 'opacity-0 pointer-events-none'
-			: 'opacity-100'}"
-	>
-		{#if title}
-			<p
-				class="text-c-on-bg pt-4 pb-2 max-w-full whitespace-nowrap overflow-hidden overflow-ellipsis"
+	{#if showPlaceholder}
+		<div
+			transition:scale={{ duration: 300, easing: cubicOut, start: 0.9 }}
+			class="w-full h-full absolute left-0 top-0 bg-c-bg-secondary"
+		>
+			<AudioPlayerWithWaveformPlaceholder {speakerId} />
+		</div>
+	{:else}
+		<div
+			transition:scale={{ duration: 300, easing: cubicOut, start: 1.1 }}
+			class="w-full h-full flex flex-col bg-c-bg-secondary z-10"
+		>
+			<div
+				class="w-full flex flex-col px-5 {showPlaceholder
+					? 'opacity-0 pointer-events-none'
+					: 'opacity-100'}"
 			>
-				{title}
-			</p>
-		{/if}
-		<div class="w-full flex items-center justify-center">
-			<audio
-				{src}
-				aria-label={label}
-				bind:currentTime
-				bind:duration
-				bind:this={audioElement}
-				on:playing={() => (isPlaying = true)}
-				on:pause={() => (isPlaying = false)}
-				bind:muted={isMuted}
-			/>
-			<div class="flex items-center -ml-3">
-				<PlayPauseButton
-					bind:element={playButton}
-					onClick={() => togglePlay(audioElement)}
-					{isPlaying}
-					size="lg"
-				/>
-				<MuteButton
-					bind:element={muteButton}
-					onClick={() => toggleMute(audioElement)}
-					{isMuted}
-					size="lg"
-				/>
-				{#if speakerId}
-					<div class="px-3">
-						<div
-							class="rounded-md ring-2 ring-c-bg-tertiary bg-c-bg-tertiary overflow-hidden
-							flex items-center justify-start relative z-0"
-						>
+				<p
+					class="text-c-on-bg pt-4 pb-2 max-w-full whitespace-nowrap overflow-hidden overflow-ellipsis"
+				>
+					{title}
+				</p>
+				<div class="w-full flex items-center justify-center">
+					<div class="flex items-center -ml-3">
+						<PlayPauseButton
+							bind:element={playButton}
+							onClick={() => togglePlay(audioElement)}
+							{isPlaying}
+							size="lg"
+						/>
+						<MuteButton
+							bind:element={muteButton}
+							onClick={() => toggleMute(audioElement)}
+							{isMuted}
+							size="lg"
+						/>
+						<div class="px-3">
 							<div
-								class="w-9 h-9 flex-shrink-0 ring-2 ring-c-bg-tertiary shadow-lg
+								class="rounded-md ring-2 ring-c-bg-tertiary bg-c-bg-tertiary overflow-hidden
+								flex items-center justify-start relative z-0"
+							>
+								<div
+									class="w-9 h-9 flex-shrink-0 ring-2 ring-c-bg-tertiary shadow-lg
 								shadow-c-shadow/[var(--o-shadow-strong)] overflow-hidden relative z-0"
-							>
-								<IconSpeaker class="w-full h-full" type={speakerId} sizes="36px" />
+								>
+									<IconSpeaker class="w-full h-full" type={speakerId} sizes="36px" />
+								</div>
+								<p
+									class="flex-shrink min-w-0 overflow-hidden overflow-ellipsis font-medium px-3.5 py-1 h-full"
+								>
+									{$voiceoverSpeakerIdToDisplayName[speakerId]}
+								</p>
 							</div>
-							<p
-								class="flex-shrink min-w-0 overflow-hidden overflow-ellipsis font-medium px-3.5 py-1 h-full"
-							>
-								{$voiceoverSpeakerIdToDisplayName[speakerId]}
-							</p>
 						</div>
 					</div>
-				{/if}
+					<div class="flex-1" />
+					<p class="text-c-on-bg/75">
+						{currentTime ? currentTimestamp : '00:00'} <span class="text-c-on-bg/35">/</span>
+						{duration ? totalTimestamp : '00:00'}
+					</p>
+				</div>
 			</div>
-			<div class="flex-1" />
-			<p class="text-c-on-bg/75">
-				{currentTime ? currentTimestamp : '00:00'} <span class="text-c-on-bg/35">/</span>
-				{duration ? totalTimestamp : '00:00'}
-			</p>
-		</div>
-	</div>
-	<div class="w-full flex-1 flex relative overflow-hidden pt-2">
-		<div class="w-full h-full relative">
-			<div
-				bind:clientWidth={waveformContainerWidth}
-				bind:clientHeight={waveformContainerHeight}
-				class="w-full h-full"
-			>
-				{#if waveformContainerWidth && waveformContainerHeight}
-					<div class="w-full h-0" bind:this={waveformContainer} />
-				{/if}
-			</div>
-			<div class="w-full h-full flex items-center z-10 absolute left-0 bottom-0">
-				<div
-					bind:clientWidth={sliderContainerWidth}
-					bind:clientHeight={sliderContainerHeight}
-					class="w-full h-full flex flex-col overflow-hidden relative {audioStatus === 'idle' ||
-					audioStatus === 'being-created'
-						? 'opacity-0 pointer-events-none'
-						: 'opacity-100'}"
-				>
-					{#if sliderContainerWidth && sliderContainerHeight}
-						<SliderForWaveform
-							min={0}
-							max={100}
-							name="Audio Player"
-							bind:value={sliderValue}
-							step={0.00001}
-							height={sliderContainerHeight}
-						/>
-					{/if}
+			<div class="w-full flex-1 flex relative overflow-hidden pt-2">
+				<div class="w-full h-full relative">
+					<div
+						bind:clientWidth={waveformContainerWidth}
+						bind:clientHeight={waveformContainerHeight}
+						class="w-full h-full"
+					>
+						{#if waveformContainerWidth && waveformContainerHeight}
+							<div class="w-full h-0" bind:this={waveformContainer} />
+						{/if}
+					</div>
+					<div class="w-full h-full flex items-center z-10 absolute left-0 bottom-0">
+						<div
+							bind:clientWidth={sliderContainerWidth}
+							bind:clientHeight={sliderContainerHeight}
+							class="w-full h-full flex flex-col overflow-hidden relative opacity-100"
+						>
+							{#if sliderContainerWidth && sliderContainerHeight}
+								<SliderForWaveform
+									min={0}
+									max={100}
+									name="Audio Player"
+									bind:value={sliderValue}
+									step={0.00001}
+									height={sliderContainerHeight}
+								/>
+							{/if}
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>
-	</div>
-	<!-- Speaker -->
-	<div
-		class="w-full h-full absolute left-0 top-0 flex flex-col justify-start items-start p-3 {audioStatus ===
-			'idle' || audioStatus === 'being-created'
-			? 'opacity-100'
-			: 'opacity-0 pointer-events-none'}"
-	>
-		<div class="flex items-center gap-4 bg-c-bg-secondary p-2 rounded-xl">
-			<IconSpeaker
-				sizes="64px"
-				class="w-16 h-16 rounded-lg shadow-lg shadow-c-shadow/[var(--o-shadow-strong)] ring-2 ring-c-bg-tertiary"
-				type={$voiceoverSpeakerId}
-			/>
-			<p class="text-c-on-bg/50 font-base pr-4">
-				<span class="text-c-on-bg/75 font-medium"
-					>{$voiceoverSpeakerIdToDisplayName[$voiceoverSpeakerId]}</span
-				>
-				will be speaking in
-				<span class="text-c-on-bg/75 font-medium">{languageName($locale).of($voiceoverLocale)}</span
-				>.<br />The voiceover will appear here.
-			</p>
-		</div>
-	</div>
+	{/if}
 </div>
