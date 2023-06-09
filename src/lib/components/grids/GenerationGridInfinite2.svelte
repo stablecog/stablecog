@@ -154,6 +154,8 @@
 	let measureTimeout: NodeJS.Timeout | undefined = undefined;
 	let measureTimeoutDelay = 20;
 
+	let lastMeasuredFirstItemId: string | undefined = undefined;
+
 	function onParamsChanged() {
 		if (!$gridVirtualizer) return;
 		let optionsToSet: { [key: string]: string | number } = {};
@@ -172,18 +174,16 @@
 		}
 		if (
 			prevOverscan !== overscanCount ||
-			(outputs && outputs.length > 0 && outputs[0].id !== lastMeasuredId)
+			(outputs && outputs.length > 0 && outputs[0].id !== lastMeasuredFirstItemId)
 		) {
 			if (measureTimeout) clearTimeout(measureTimeout);
 			measureTimeout = setTimeout(async () => {
 				await tick();
 				$gridVirtualizer?.measure();
-				if (outputs && outputs.length > 0) lastMeasuredId = outputs[0].id;
+				if (outputs && outputs.length > 0) lastMeasuredFirstItemId = outputs[0].id;
 			}, measureTimeoutDelay);
 		}
 	}
-
-	let lastMeasuredId: string | undefined;
 
 	function initiallySetGridVirtualizer() {
 		if ($gridVirtualizer || outputs === undefined || overscanCount === undefined) return;

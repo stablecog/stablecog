@@ -111,6 +111,8 @@
 		$query.fetchNextPage();
 	}
 
+	let lastMeasuredFirstItemId: string | undefined = undefined;
+
 	function onParamsChanged() {
 		if (!$listVirtualizer) return;
 		const prevOverscan = $listVirtualizer.options.overscan;
@@ -124,8 +126,12 @@
 		if (Object.keys(optionsToSet).length > 0) {
 			$listVirtualizer.setOptions(optionsToSet);
 		}
-		if (prevOverscan !== overscanCount) {
+		if (
+			prevOverscan !== overscanCount ||
+			(outputs && outputs.length > 0 && lastMeasuredFirstItemId !== outputs[0].id)
+		) {
 			$listVirtualizer.measure();
+			if (outputs && outputs.length > 0) lastMeasuredFirstItemId = outputs[0].id;
 		}
 	}
 </script>
