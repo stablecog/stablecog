@@ -241,7 +241,7 @@
 									title={$voiceovers?.[0]?.status === 'succeeded'
 										? $voiceovers[0].prompt.text
 										: examplePrompt}
-									status={$voiceovers?.[0]?.status === 'succeeded' ? 'succeeded' : 'idle'}
+									status={$voiceovers?.[0]?.status}
 								/>
 							</div>
 						</div>

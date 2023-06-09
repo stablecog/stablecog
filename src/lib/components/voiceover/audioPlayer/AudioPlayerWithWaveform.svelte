@@ -4,6 +4,7 @@
 		audioToArray,
 		convertSecondsToTimestamp,
 		drawWaveform,
+		drawWaveformAnimation,
 		toggleMute,
 		togglePlay
 	} from '$components/voiceover/audioPlayer/helpers';
@@ -21,11 +22,12 @@
 	import IconSpeaker from '$components/icons/IconSpeaker.svelte';
 	import { languageName } from '$ts/helpers/language';
 	import { locale } from '$i18n/i18n-svelte';
+	import type { TVoiceoverStatus } from '$ts/stores/user/voiceovers';
 
 	export let src: string;
 	export let title: string | undefined = undefined;
 	export let label: string;
-	export let status: 'succeeded' | 'idle' = 'idle';
+	export let status: TVoiceoverStatus | undefined = undefined;
 	export let speakerId: TVoiceoverSpeakerId | undefined = undefined;
 	export { classes as class };
 	let classes = '';
@@ -62,7 +64,7 @@
 	$: [sliderValue], onSliderValueChanged();
 
 	$: [src, pointCount], setAudioArray();
-	$: [progress, audioArray, waveformContainerWidth, waveformContainerHeight],
+	$: [progress, audioArray, waveformContainerWidth, waveformContainerHeight, status],
 		drawWaveformWithCheck();
 	$: pointCount = waveformContainerWidth
 		? Math.floor(waveformContainerWidth / barWidth)
@@ -77,40 +79,71 @@
 		currentTime = toBeTime;
 	}
 
+	let audioStatus: 'being-created' | 'created' | 'idle';
+	$: audioStatus =
+		status === 'server-received' || status === 'server-processing'
+			? 'being-created'
+			: status === 'succeeded'
+			? 'created'
+			: 'idle';
+
 	function drawWaveformWithCheck() {
 		if (!audioArray) return;
 		if (progress !== 0 && !progress) return;
 		if (!waveformContainerWidth) return;
 		if (!waveformContainerHeight) return;
 		if (!pointCount) return;
-		drawWaveform({
-			element: waveformContainer,
-			progress,
-			width: waveformContainerWidth,
-			height: waveformContainerHeight,
-			gradientStops1: [
-				{
-					color: 'rgba(var(--c-primary) / 1)',
-					offset: '0%'
-				},
-				{
-					color: 'rgba(var(--c-primary) / 0)',
-					offset: '100%'
-				}
-			],
-			gradientStops2: [
-				{
-					color: 'rgba(var(--c-on-bg) / 0.2)',
-					offset: '0%'
-				},
-				{
-					color: 'rgba(var(--c-on-bg) / 0)',
-					offset: '100%'
-				}
-			],
-			margin: { top: 0, left: 0, bottom: 0, right: 0 },
-			values: audioArray
-		});
+		if (audioStatus === 'being-created') {
+			drawWaveformAnimation({
+				element: waveformContainer,
+				width: waveformContainerWidth,
+				barWidth: barWidth,
+				duration: 1000,
+				maxHeightChange: 0.5,
+				minHeight: 0.5,
+				height: waveformContainerHeight,
+				margin: { top: 0, left: 0, bottom: 0, right: 0 },
+				gradientStop: [
+					{
+						color: 'rgba(var(--c-on-bg) / 0.2)',
+						offset: '0%'
+					},
+					{
+						color: 'rgba(var(--c-on-bg) / 0)',
+						offset: '100%'
+					}
+				]
+			});
+		} else {
+			drawWaveform({
+				element: waveformContainer,
+				progress,
+				width: waveformContainerWidth,
+				height: waveformContainerHeight,
+				gradientStops1: [
+					{
+						color: 'rgba(var(--c-primary) / 1)',
+						offset: '0%'
+					},
+					{
+						color: 'rgba(var(--c-primary) / 0)',
+						offset: '100%'
+					}
+				],
+				gradientStops2: [
+					{
+						color: 'rgba(var(--c-on-bg) / 0.2)',
+						offset: '0%'
+					},
+					{
+						color: 'rgba(var(--c-on-bg) / 0)',
+						offset: '100%'
+					}
+				],
+				margin: { top: 0, left: 0, bottom: 0, right: 0 },
+				values: audioArray
+			});
+		}
 	}
 
 	async function setAudioArray() {
@@ -140,13 +173,13 @@
 	shadow-lg shadow-c-shadow/[var(--o-shadow-normal)] {classes}"
 >
 	<div
-		class="w-full flex flex-col px-5 {status === 'idle'
+		class="w-full flex flex-col px-5 {audioStatus === 'idle' || audioStatus === 'being-created'
 			? 'opacity-0 pointer-events-none'
 			: 'opacity-100'}"
 	>
 		{#if title}
 			<p
-				class="text-c-on-bg/75 pt-4 pb-2 max-w-full whitespace-nowrap overflow-hidden overflow-ellipsis"
+				class="text-c-on-bg pt-4 pb-2 max-w-full whitespace-nowrap overflow-hidden overflow-ellipsis"
 			>
 				{title}
 			</p>
@@ -198,7 +231,7 @@
 			</div>
 			<div class="flex-1" />
 			<p class="text-c-on-bg/75">
-				{currentTime ? currentTimestamp : '00:00'} <span class="text-c-on-bg/25">/</span>
+				{currentTime ? currentTimestamp : '00:00'} <span class="text-c-on-bg/35">/</span>
 				{duration ? totalTimestamp : '00:00'}
 			</p>
 		</div>
@@ -218,7 +251,8 @@
 				<div
 					bind:clientWidth={sliderContainerWidth}
 					bind:clientHeight={sliderContainerHeight}
-					class="w-full h-full flex flex-col overflow-hidden relative {status === 'idle'
+					class="w-full h-full flex flex-col overflow-hidden relative {audioStatus === 'idle' ||
+					audioStatus === 'being-created'
 						? 'opacity-0 pointer-events-none'
 						: 'opacity-100'}"
 				>
@@ -238,8 +272,8 @@
 	</div>
 	<!-- Speaker -->
 	<div
-		class="w-full h-full absolute left-0 top-0 flex flex-col justify-start items-start p-3 {status ===
-		'idle'
+		class="w-full h-full absolute left-0 top-0 flex flex-col justify-start items-start p-3 {audioStatus ===
+			'idle' || audioStatus === 'being-created'
 			? 'opacity-100'
 			: 'opacity-0 pointer-events-none'}"
 	>

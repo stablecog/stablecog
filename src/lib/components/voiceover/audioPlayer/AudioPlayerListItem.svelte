@@ -78,11 +78,11 @@
 	}}
 	class="{inHorizontal
 		? 'h-full'
-		: ''} w-full bg-c-bg-secondary px-3.5 py-1.5 flex flex-col items-start rounded-xl
+		: ''} w-full bg-c-bg-secondary px-3 pt-1.5 pb-1 flex flex-col items-start rounded-xl
 	shadow-lg shadow-c-shadow/[var(--o-shadow-normal)] overflow-hidden relative z-0 group/audio-player-list-item"
 >
-	<div class="w-full flex justify-between items-center pb-2.25 gap-2">
-		<div class="-ml-1.5 flex-shrink min-w-0 w-full flex justify-start items-center">
+	<div class="w-full flex justify-between items-center pt-1.5 pb-2.25 gap-2">
+		<div class="flex-shrink min-w-0 w-full flex justify-start items-center">
 			<div
 				class="rounded-md bg-c-bg-tertiary overflow-hidden
 					flex items-center justify-start relative z-0 ring-2 ring-c-bg-tertiary"
@@ -91,14 +91,14 @@
 					<IconSpeaker class="w-full h-full" type={speakerId} sizes="28px" />
 				</div>
 				<p
-					class="flex-shrink min-w-0 whitespace-nowrap overflow-hidden overflow-ellipsis text-sm font-medium
+					class="text-c-on-bg/75 flex-shrink min-w-0 whitespace-nowrap overflow-hidden overflow-ellipsis text-sm font-medium
 					px-2.5 py-1 h-full"
 				>
 					{$voiceoverSpeakerIdToDisplayName[speakerId]}
 				</p>
 			</div>
 		</div>
-		<div class="h-full -mr-1.5 md:hidden xl:block">
+		<div class="h-full md:hidden xl:block">
 			<IconThreeDots class="text-c-on-bg/50 w-6 h-6" />
 		</div>
 	</div>
@@ -130,7 +130,7 @@
 				<MuteButton bind:element={muteButton} onClick={() => toggleMute(audioElement)} {isMuted} />
 			{/if}
 		</div>
-		<div class="flex-1 min-w-0 flex flex-col pl-2">
+		<div class="flex-1 min-w-0 flex flex-col pl-2 pr-0.5">
 			<p
 				class="block lg:hidden xl:block text-sm text-c-on-bg/75 py-1 max-w-full whitespace-nowrap overflow-hidden overflow-ellipsis"
 			>
@@ -150,7 +150,7 @@
 						/>
 					</div>
 				</div>
-				<p class="pl-3 text-xs text-c-on-bg/75 lg:hidden xl:block">
+				<p class="pl-3 text-xs text-c-on-bg/50 lg:hidden xl:block">
 					{currentTime && currentTimestamp ? currentTimestamp : '00:00'}
 					<span class="text-c-on-bg/25">/</span>
 					{(durationLocal || duration) && totalTimestamp ? totalTimestamp : '00:00'}

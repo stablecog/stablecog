@@ -73,68 +73,6 @@ export function areValuesCloseEnough(a: number, b: number) {
 	return Math.abs(a - b) < 0.1;
 }
 
-export function drawCurve({
-	values,
-	element,
-	margin,
-	width,
-	height,
-	gradientStops
-}: {
-	values: number[];
-	element: HTMLDivElement;
-	margin: Margin;
-	width: number;
-	height: number;
-	gradientStops: GradientStop[];
-}): void {
-	const svg = d3
-		.select(element)
-		.append('svg')
-		.attr('width', width + margin.left + margin.right)
-		.attr('height', height + margin.top + margin.bottom)
-		.append('g')
-		.attr('transform', `translate(${margin.left},${margin.top})`);
-
-	// Define gradient
-	const gradient = svg
-		.append('defs')
-		.append('linearGradient')
-		.attr('id', 'gradient')
-		.attr('x1', '0%')
-		.attr('y1', '0%')
-		.attr('x2', '0%')
-		.attr('y2', '100%');
-
-	gradientStops.forEach((stop) => {
-		gradient.append('stop').attr('offset', stop.offset).attr('stop-color', stop.color);
-	});
-
-	// Set the ranges
-	const x = d3.scaleLinear().range([0, width]);
-	const y = d3.scaleLinear().range([height, 0]);
-
-	// Define the area
-	const area = d3
-		.area<number>()
-		.x((d, i) => x(i))
-		.y0(height)
-		.y1((d) => y(d))
-		.curve(d3.curveBasis); // Using curveBasis for smoother curve
-
-	// Scale the range of the data
-	x.domain(d3.extent(values, (d, i) => i) as [number, number]);
-	y.domain([0, d3.max(values, (d) => d) as number]);
-
-	// Add the area path.
-	svg
-		.append('path')
-		.data([values])
-		.attr('class', 'area')
-		.attr('d', area)
-		.style('fill', 'url(#gradient)'); // Set gradient fill color
-}
-
 export function drawWaveform(options: DrawWaveformOptions): void {
 	const { values, progress, element, margin, width, height, gradientStops1, gradientStops2 } =
 		options;
@@ -178,7 +116,7 @@ export function drawWaveform(options: DrawWaveformOptions): void {
 	// Define the area
 	const area = d3
 		.area<number>()
-		.x((d, i) => x(i / values.length))
+		.x((d, i) => x(i / (values.length - 1))) // Adjust here
 		.y0(height)
 		.y1((d) => y(d))
 		.curve(d3.curveBasis);
@@ -228,8 +166,8 @@ interface Margin {
 }
 
 interface GradientStop {
-	offset: string; // e.g., "0%"
-	color: string; // e.g., "rgba(255, 0, 0, 1)"
+	offset: string;
+	color: string;
 }
 
 interface DrawWaveformOptions {
@@ -241,4 +179,125 @@ interface DrawWaveformOptions {
 	height: number;
 	gradientStops1: GradientStop[];
 	gradientStops2: GradientStop[];
+}
+
+interface MarginAnimation {
+	top: number;
+	right: number;
+	bottom: number;
+	left: number;
+}
+
+interface GradientStopAnimation {
+	offset: string;
+	color: string;
+}
+
+interface DrawWaveformAnimationOptions {
+	element: HTMLDivElement;
+	margin: MarginAnimation;
+	width: number;
+	barWidth: number;
+	height: number;
+	gradientStop: GradientStopAnimation[];
+	duration: number;
+	maxHeightChange: number; // Adjusted to accept a value between 0 and 1
+	minHeight: number;
+}
+
+export function drawWaveformAnimation(options: DrawWaveformAnimationOptions): void {
+	const {
+		element,
+		margin,
+		width,
+		barWidth,
+		height,
+		gradientStop,
+		duration,
+		maxHeightChange,
+		minHeight
+	} = options;
+
+	const valueCount = Math.ceil(width / barWidth);
+
+	// Generate initial random values between minHeight and 1
+	let values: number[] = Array.from(
+		{ length: valueCount },
+		() => minHeight + Math.random() * (1 - minHeight)
+	);
+
+	// Remove previous chart if it exists
+	d3.select(element).selectAll('*').remove();
+
+	const svg = d3
+		.select(element)
+		.append('svg')
+		.attr('width', width + margin.left + margin.right)
+		.attr('height', height + margin.top + margin.bottom)
+		.append('g')
+		.attr('transform', `translate(${margin.left},${margin.top})`);
+
+	// Define gradient
+	const createGradient = (id: string, stops: GradientStop[]) => {
+		const gradient = svg
+			.append('defs')
+			.append('linearGradient')
+			.attr('id', id)
+			.attr('x1', '0%')
+			.attr('y1', '0%')
+			.attr('x2', '0%')
+			.attr('y2', '100%');
+
+		stops.forEach((stop) => {
+			gradient.append('stop').attr('offset', stop.offset).attr('stop-color', stop.color);
+		});
+
+		return gradient;
+	};
+
+	createGradient('gradient', gradientStop);
+
+	// Set the ranges
+	const x = d3.scaleLinear().range([0, width]);
+	const y = d3.scaleLinear().range([height, 0]);
+
+	// Define the area
+	const area = d3
+		.area<number>()
+		.x((d, i) => x(i / (valueCount - 1))) // Adjust here
+		.y0(height)
+		.y1((d) => y(d))
+		.curve(d3.curveBasis);
+
+	// Scale the range of the data
+	x.domain([0, 1]);
+	y.domain([0, 1]);
+
+	// Add the path with the gradient
+	const path = svg.append('path').datum(values).attr('fill', 'url(#gradient)').attr('d', area);
+
+	// Function to generate new random values and redraw the path
+	const animateWaveform = () => {
+		// Create new random values for the next state
+		const nextValues = values.map((value) => {
+			const maxDiff = maxHeightChange;
+			const newValue = Math.min(Math.max(minHeight, value + (Math.random() * 2 - 1) * maxDiff), 1);
+			return newValue;
+		});
+		values = nextValues;
+
+		y.domain([0, 1]);
+
+		// Transition to the next state
+		path
+			.datum(nextValues)
+			.transition()
+			.duration(duration)
+			.ease(d3.easeSinInOut)
+			.attr('d', area)
+			.on('end', animateWaveform);
+	};
+
+	// Start the animation
+	animateWaveform();
 }
