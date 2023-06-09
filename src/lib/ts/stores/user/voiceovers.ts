@@ -16,6 +16,7 @@ import {
 } from '$ts/constants/stripePublic';
 import type { TVoiceoverSpeakerId, TVoiceoverModelId } from '$ts/constants/voiceover/models';
 import { PUBLIC_BUCKET_URL, PUBLIC_BUCKET_VOICEOVER_URL } from '$env/static/public';
+import type { TVoiceoverLocale } from '$ts/constants/voiceover/locales';
 
 export const voiceovers = writable<TVoiceover[]>([]);
 
@@ -307,7 +308,10 @@ export interface TVoiceoverBase {
 		text: string;
 	};
 	model_id: TVoiceoverModelId;
-	speaker_id: TVoiceoverSpeakerId;
+	speaker: {
+		id: TVoiceoverSpeakerId;
+		locale: TVoiceoverLocale;
+	};
 	temperature: number;
 	seed: number;
 	num_outputs: number;

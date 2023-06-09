@@ -227,6 +227,8 @@ module.exports = {
 			animation: {
 				'ping-custom': 'ping-custom 1s ease-out infinite -0.9s',
 				'ping-custom-bg': 'ping-custom-bg 1s ease infinite',
+				'ping-speaker': 'ping-speaker 1.5s cubic-bezier(.2,0,.15,1) infinite -0.15s',
+				'ping-speaker-bg': 'ping-speaker-bg 1.5s ease infinite',
 				'pulse-custom': 'pulse-custom 1s cubic-bezier(0.5, 0, 0.5, 1) infinite',
 				'pulse-scale': 'pulse-scale 0.75s cubic-bezier(0.5, 0, 0.5, 1) infinite',
 				'spin-faster': 'spin-faster 0.75s linear infinite',
@@ -287,6 +289,30 @@ module.exports = {
 					},
 					'100%': {
 						transform: 'scale(1)'
+					}
+				},
+				'ping-speaker': {
+					'0%': {
+						transform: 'scale(1)'
+					},
+					'50%': {
+						transform: 'scale(1.1)'
+					},
+					'100%': {
+						transform: 'scale(1)'
+					}
+				},
+				'ping-speaker-bg': {
+					'0%': {
+						opacity: '1',
+						transform: 'scale(0)'
+					},
+					'60%': {
+						opacity: '1'
+					},
+					'100%': {
+						opacity: '0',
+						transform: 'scale(1.75)'
 					}
 				},
 				'spin-faster': {

@@ -2546,6 +2546,18 @@ type RootTranslation = {
 				Paragraph: string
 			}
 		}
+		Generate: {
+			/**
+			 * {​s​p​e​a​k​e​r​N​a​m​e​}​ ​w​i​l​l​ ​b​e​ ​s​p​e​a​k​i​n​g​ ​i​n​ ​{​l​a​n​g​u​a​g​e​N​a​m​e​}​.
+			 * @param {unknown} languageName
+			 * @param {unknown} speakerName
+			 */
+			SpeakerParagraph: RequiredParams<'languageName' | 'speakerName'>
+			/**
+			 * Y​o​u​r​ ​v​o​i​c​e​o​v​e​r​ ​w​i​l​l​ ​a​p​p​e​a​r​ ​h​e​r​e​.
+			 */
+			VoiceoverParagraph: string
+		}
 	}
 	UnderDevelopment: {
 		/**
@@ -5040,6 +5052,16 @@ export type TranslationFunctions = {
 				 */
 				Paragraph: () => LocalizedString
 			}
+		}
+		Generate: {
+			/**
+			 * {speakerName} will be speaking in {languageName}.
+			 */
+			SpeakerParagraph: (arg: { languageName: unknown, speakerName: unknown }) => LocalizedString
+			/**
+			 * Your voiceover will appear here.
+			 */
+			VoiceoverParagraph: () => LocalizedString
 		}
 	}
 	UnderDevelopment: {

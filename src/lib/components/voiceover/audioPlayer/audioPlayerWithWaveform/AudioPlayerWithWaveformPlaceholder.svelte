@@ -1,17 +1,18 @@
 <script lang="ts">
 	import { drawWaveformPlaceholder } from '$components/voiceover/audioPlayer/helpers';
+
+	import IconSpeaker from '$components/icons/IconSpeaker.svelte';
+	import LL, { locale } from '$i18n/i18n-svelte';
 	import {
-		voiceoverLocale,
 		voiceoverSpeakerIdToDisplayName,
 		type TVoiceoverSpeakerId
 	} from '$ts/constants/voiceover/models';
-	import IconSpeaker from '$components/icons/IconSpeaker.svelte';
 	import { languageName } from '$ts/helpers/language';
-	import { locale } from '$i18n/i18n-svelte';
 
 	export let speakerId: TVoiceoverSpeakerId;
-
-	const barWidth = 20;
+	export let shouldAnimate = false;
+	export let barWidth: number;
+	export let voiceoverLocale: string;
 
 	let waveformContainer: HTMLDivElement;
 	let waveformContainerWidth: number | undefined;
@@ -48,20 +49,33 @@
 			]
 		});
 	}
+
+	function getHighlightedSpan(s: string) {
+		return `<span class="text-c-on-bg/75 font-medium">${s}</span>`;
+	}
 </script>
 
 <div class="w-full h-full bg-c-bg-secondary flex flex-col relative">
 	<div class="flex items-center gap-4 bg-c-bg-secondary p-4 rounded-xl">
-		<IconSpeaker
-			sizes="64px"
-			class="w-16 h-16 rounded-lg shadow-lg shadow-c-shadow/[var(--o-shadow-strong)] ring-2 ring-c-bg-tertiary"
-			type={speakerId}
-		/>
+		<div class="relative">
+			<div
+				class="absolute left-0 top-0 w-full h-full bg-c-on-bg/15 rounded-xl {shouldAnimate
+					? 'animate-ping-speaker-bg'
+					: ''}"
+			/>
+			<div class={shouldAnimate ? 'animate-ping-speaker' : ''}>
+				<IconSpeaker
+					sizes="64px"
+					class="w-16 h-16 rounded-lg shadow-lg relative shadow-c-shadow/[var(--o-shadow-strong)] ring-2 ring-c-bg-tertiary"
+					type={speakerId}
+				/>
+			</div>
+		</div>
 		<p class="text-c-on-bg/50 font-base pr-4">
-			<span class="text-c-on-bg/75 font-medium">{$voiceoverSpeakerIdToDisplayName[speakerId]}</span>
-			will be speaking in
-			<span class="text-c-on-bg/75 font-medium">{languageName($locale).of($voiceoverLocale)}</span
-			>.<br />The voiceover will appear here.
+			{@html $LL.Voiceover.Generate.SpeakerParagraph({
+				speakerName: getHighlightedSpan($voiceoverSpeakerIdToDisplayName[speakerId]),
+				languageName: getHighlightedSpan(languageName($locale).of(voiceoverLocale) || '')
+			})}<br />{$LL.Voiceover.Generate.VoiceoverParagraph()}
 		</p>
 	</div>
 	<div class="w-full flex-1 flex relative overflow-hidden pt-2">

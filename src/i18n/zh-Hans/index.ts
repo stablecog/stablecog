@@ -858,6 +858,10 @@ const zhHans: Translation = {
 		List: {
 			NotSignedIn: { Paragraph: 'Sign in to see your voiceovers.' },
 			NoVoiceovers: { Paragraph: 'Your voiceovers will appear here.' }
+		},
+		Generate: {
+			SpeakerParagraph: '{speakerName} will be speaking in {languageName}.',
+			VoiceoverParagraph: 'Your voiceover will appear here.'
 		}
 	},
 	UnderDevelopment: {

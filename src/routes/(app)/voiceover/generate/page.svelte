@@ -2,7 +2,7 @@
 	import { page } from '$app/stores';
 	import AutoSize from '$components/AutoSize.svelte';
 	import LowOnCreditsCard from '$components/LowOnCreditsCard.svelte';
-	import AudioPlayerWithWaveform from '$components/voiceover/audioPlayer/AudioPlayerWithWaveform.svelte';
+	import AudioPlayerWithWaveform from '$components/voiceover/audioPlayer/audioPlayerWithWaveform/AudioPlayerWithWaveform.svelte';
 	import SidebarCollapseButton from '$components/generate/SidebarCollapseButton.svelte';
 	import SidebarWrapper from '$components/generate/SidebarWrapper.svelte';
 	import { mdBreakpoint, xlBreakpoint } from '$components/generationFullScreen/constants.js';
@@ -34,6 +34,7 @@
 		listPadding
 	} from '$components/voiceover/lists/constants.js';
 	import { voiceoverSpeakerId } from '$ts/stores/voiceover/voiceoverSettings.js';
+	import { voiceoverLocale } from '$ts/constants/voiceover/models.js';
 
 	export let data;
 
@@ -237,8 +238,11 @@
 										? $voiceovers[0].prompt.text
 										: examplePrompt}
 									speakerId={$voiceovers?.[0]?.status
-										? $voiceovers[0].speaker_id
+										? $voiceovers[0].speaker.id
 										: $voiceoverSpeakerId}
+									voiceoverLocale={$voiceovers?.[0]?.status
+										? $voiceovers[0].speaker.locale
+										: $voiceoverLocale}
 									title={$voiceovers[0]?.prompt.text}
 									status={$voiceovers?.[0]?.status}
 								/>

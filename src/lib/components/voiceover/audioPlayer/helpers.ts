@@ -70,7 +70,7 @@ export function toggleMute(playerElement: HTMLAudioElement) {
 }
 
 export function areValuesCloseEnough(a: number, b: number) {
-	return Math.abs(a - b) < 0.1;
+	return Math.abs(a - b) < 0.01;
 }
 
 export function drawWaveform(options: DrawWaveformOptions): void {
@@ -156,6 +156,10 @@ export function drawWaveform(options: DrawWaveformOptions): void {
 		.attr('clip-path', 'url(#clip-remaining)')
 		.attr('fill', 'url(#gradient2)')
 		.attr('d', area);
+}
+
+export function clearDiv(element: HTMLElement) {
+	d3.select(element).selectAll('*').remove();
 }
 
 export function drawWaveformPlaceholder(options: DrawWaveformPlaceholderOptions): void {

@@ -172,7 +172,7 @@
 						<AudioPlayerListItem
 							inHorizontal={horizontal}
 							duration={output.audio_duration}
-							speakerId={output.voiceover.speaker_id}
+							speakerId={output.voiceover.speaker.id}
 							label={output.voiceover.prompt.text}
 							title={output.voiceover.prompt.text}
 							src={output.audio_file_url.replace(PUBLIC_BUCKET_URL, PUBLIC_BUCKET_VOICEOVER_URL)}

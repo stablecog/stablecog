@@ -2,7 +2,7 @@
 	import Button from '$components/buttons/Button.svelte';
 	import LL from '$i18n/i18n-svelte';
 	import { maxSeed } from '$ts/constants/main';
-	import { voiceoverModelId } from '$ts/constants/voiceover/models';
+	import { voiceoverLocale, voiceoverModelId } from '$ts/constants/voiceover/models';
 	import { getVoiceoverCreditCost, maxVoiceoverCharacterCount } from '$ts/constants/voiceover/rest';
 	import { generateSSEId } from '$ts/helpers/generateSSEId';
 	import { sseId } from '$ts/stores/user/sse';
@@ -31,7 +31,10 @@
 		if (!$voiceoverPrompt) return;
 		queueInitialVoiceoverRequest({
 			model_id: $voiceoverModelId,
-			speaker_id: $voiceoverSpeakerId,
+			speaker: {
+				id: $voiceoverSpeakerId,
+				locale: $voiceoverLocale
+			},
 			prompt: { id: 'prompt', text: $voiceoverPrompt },
 			temperature: $voiceoverStability / 100,
 			num_outputs: 1,
