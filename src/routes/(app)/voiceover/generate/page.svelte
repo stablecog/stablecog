@@ -231,7 +231,7 @@
 												PUBLIC_BUCKET_URL,
 												PUBLIC_BUCKET_VOICEOVER_URL
 										  )
-										: '/audio/example.mp3'}
+										: undefined}
 									label={$voiceovers?.[0]?.status === 'succeeded'
 										? $voiceovers[0].prompt.text
 										: examplePrompt}

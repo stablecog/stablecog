@@ -5,6 +5,7 @@
 		convertSecondsToTimestamp,
 		drawWaveform,
 		drawWaveformAnimation,
+		drawWaveformAnimation2,
 		toggleMute,
 		togglePlay
 	} from '$components/voiceover/audioPlayer/helpers';
@@ -24,7 +25,7 @@
 	import { locale } from '$i18n/i18n-svelte';
 	import type { TVoiceoverStatus } from '$ts/stores/user/voiceovers';
 
-	export let src: string;
+	export let src: string | undefined;
 	export let title: string | undefined = undefined;
 	export let label: string;
 	export let status: TVoiceoverStatus | undefined = undefined;
@@ -64,7 +65,14 @@
 	$: [sliderValue], onSliderValueChanged();
 
 	$: [src, pointCount], setAudioArray();
-	$: [progress, audioArray, waveformContainerWidth, waveformContainerHeight, status],
+	$: [
+		progress,
+		audioArray,
+		waveformContainer,
+		waveformContainerWidth,
+		waveformContainerHeight,
+		status
+	],
 		drawWaveformWithCheck();
 	$: pointCount = waveformContainerWidth
 		? Math.floor(waveformContainerWidth / barWidth)
@@ -81,79 +89,50 @@
 
 	let audioStatus: 'being-created' | 'created' | 'idle';
 	$: audioStatus =
-		status === 'server-received' || status === 'server-processing'
+		status === 'to-be-submitted' || status === 'server-received' || status === 'server-processing'
 			? 'being-created'
 			: status === 'succeeded'
 			? 'created'
 			: 'idle';
 
 	function drawWaveformWithCheck() {
-		if (!audioArray) return;
 		if (progress !== 0 && !progress) return;
+		if (!waveformContainer) return;
 		if (!waveformContainerWidth) return;
 		if (!waveformContainerHeight) return;
 		if (!pointCount) return;
-		if (audioStatus === 'being-created') {
-			drawWaveformAnimation({
-				element: waveformContainer,
-				width: waveformContainerWidth,
-				barWidth: barWidth,
-				duration: 1000,
-				maxHeightChange: 0.5,
-				minHeight: 0.5,
-				height: waveformContainerHeight,
-				margin: { top: 0, left: 0, bottom: 0, right: 0 },
-				gradientStop: [
-					{
-						color: 'rgba(var(--c-on-bg) / 0.2)',
-						offset: '0%'
-					},
-					{
-						color: 'rgba(var(--c-on-bg) / 0)',
-						offset: '100%'
-					}
-				]
-			});
-		} else {
-			drawWaveform({
-				element: waveformContainer,
-				progress,
-				width: waveformContainerWidth,
-				height: waveformContainerHeight,
-				gradientStops1: [
-					{
-						color: 'rgba(var(--c-primary) / 1)',
-						offset: '0%'
-					},
-					{
-						color: 'rgba(var(--c-primary) / 0)',
-						offset: '100%'
-					}
-				],
-				gradientStops2: [
-					{
-						color: 'rgba(var(--c-on-bg) / 0.2)',
-						offset: '0%'
-					},
-					{
-						color: 'rgba(var(--c-on-bg) / 0)',
-						offset: '100%'
-					}
-				],
-				margin: { top: 0, left: 0, bottom: 0, right: 0 },
-				values: audioArray
-			});
-		}
+		drawWaveformAnimation2({
+			element: waveformContainer,
+			width: waveformContainerWidth,
+			barWidth: barWidth,
+			duration: 500,
+			maxHeightChange: 0.5,
+			minHeight: 0.5,
+			height: waveformContainerHeight,
+			hasInfiniteAnimation: audioStatus === 'being-created' ? true : false,
+			values: audioArray,
+			margin: { top: 0, left: 0, bottom: 0, right: 0 },
+			gradientStop: [
+				{
+					color: 'rgba(var(--c-on-bg) / 0.2)',
+					offset: '0%'
+				},
+				{
+					color: 'rgba(var(--c-on-bg) / 0)',
+					offset: '100%'
+				}
+			]
+		});
 	}
 
 	async function setAudioArray() {
 		if (!browser) return;
 		if (!pointCount) return;
+		if (!src) return;
 		audioArray = await audioToArray(src, pointCount);
 	}
 
 	onMount(async () => {
-		await setAudioArray();
 		$allAudioPlayers.add(audioElement);
 	});
 
