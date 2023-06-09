@@ -61,26 +61,32 @@
 	<textarea
 		bind:value={$voiceoverPrompt}
 		placeholder="I like to eat apples and bananas."
-		class="w-full h-full bg-c-bg-secondary rounded-xl resize-none px-5 py-4 text-lg pb-24 placeholder:text-c-on-bg/40"
+		class="w-full h-full bg-c-bg-secondary rounded-xl resize-none px-5 py-4 text-lg pb-26 placeholder:text-c-on-bg/40"
 		rows="8"
 		maxlength={maxVoiceoverCharacterCount}
 	/>
-	<div
-		class="absolute rounded-b-xl rounded-tl-xl pointer-events-none bottom-0 right-0
-    flex justify-end items-center px-3 pt-4 pb-4 bg-c-bg-secondary gap-4"
-	>
-		<div class="flex flex-col items-end justify-center font-medium">
-			<p>
-				{($voiceoverPrompt || '').length}
-				<span class="text-c-on-bg/50">/ {maxVoiceoverCharacterCount}</span>
-			</p>
-			<p>
-				{getVoiceoverCreditCost(($voiceoverPrompt || '').length)}
-				<span class="text-c-on-bg/50">credit(s)</span>
-			</p>
-		</div>
-		<Button withSpinner loading={$maxOngoingVoiceoversCountReached} class="pointer-events-auto"
-			>{$LL.Home.GenerateButton()}</Button
+	<div class="absolute w-full flex flex-col bottom-0 left-0">
+		<div class="w-full h-6 bg-gradient-to-t from-c-bg-secondary to-c-bg-secondary/0" />
+		<div
+			class="w-full rounded-b-xl rounded-tl-xl pointer-events-none
+   	 	flex justify-end items-center px-3 pt-3 pb-4 bg-c-bg-secondary gap-4"
 		>
+			<div class="flex flex-col items-end justify-center font-medium">
+				<p>
+					{($voiceoverPrompt || '').length}
+					<span class="text-c-on-bg/50">/ {maxVoiceoverCharacterCount}</span>
+				</p>
+				<p>
+					{getVoiceoverCreditCost(($voiceoverPrompt || '').length)}
+					<span class="text-c-on-bg/50">credit(s)</span>
+				</p>
+			</div>
+			<Button
+				withSpinner
+				noPadding
+				loading={$maxOngoingVoiceoversCountReached}
+				class="pointer-events-auto px-8 py-4">{$LL.Home.GenerateButton()}</Button
+			>
+		</div>
 	</div>
 </form>

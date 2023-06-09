@@ -196,7 +196,7 @@
 					>
 						<div
 							bind:clientHeight={horizontalListHeight}
-							class="w-full h-16 flex flex-col md:hidden"
+							class="w-full h-24 flex flex-col md:hidden"
 						>
 							<AutoSize bind:element={listScrollContainer} hideScroll>
 								<div class="w-full h-full" />
@@ -208,7 +208,7 @@
 					</div>
 				</div>
 				<div
-					class="w-full flex flex-col flex-1 min-w-0 pb-[env(safe-area-inset-bottom)] relative z-0"
+					class="w-full flex flex-col flex-1 min-w-0 pb-[env(safe-area-inset-bottom)] relative z-0 order-first md:order-last"
 				>
 					<div class="flex-1 min-w-0 flex flex-col items-center justify-center w-full">
 						{#if $page.data.session?.user.id && $userSummary && $userSummary.total_remaining_credits < lowOnCreditsThreshold}
@@ -221,7 +221,9 @@
 								</div>
 							</div>
 						{/if}
-						<div class="w-full flex-1 min-h-0 flex flex-col justify-start overflow-hidden">
+						<div
+							class="w-full flex-1 min-h-0 flex flex-col justify-start overflow-hidden p-3 md:p-0"
+						>
 							<div class="flex-1 min-h-0 w-full flex flex-col overflow-hidden relative">
 								<AudioPlayerWithWaveform
 									src={$voiceovers?.[0]?.status === 'succeeded'
