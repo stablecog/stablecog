@@ -170,14 +170,20 @@
 		if (Object.keys(optionsToSet).length > 0) {
 			$gridVirtualizer.setOptions(optionsToSet);
 		}
-		if (prevOverscan !== overscanCount) {
+		if (
+			prevOverscan !== overscanCount ||
+			(outputs && outputs.length > 0 && outputs[0].id !== lastMeasuredId)
+		) {
 			if (measureTimeout) clearTimeout(measureTimeout);
 			measureTimeout = setTimeout(async () => {
 				await tick();
 				$gridVirtualizer?.measure();
+				if (outputs && outputs.length > 0) lastMeasuredId = outputs[0].id;
 			}, measureTimeoutDelay);
 		}
 	}
+
+	let lastMeasuredId: string | undefined;
 
 	function initiallySetGridVirtualizer() {
 		if ($gridVirtualizer || outputs === undefined || overscanCount === undefined) return;
