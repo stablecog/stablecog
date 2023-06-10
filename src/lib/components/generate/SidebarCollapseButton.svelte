@@ -5,6 +5,7 @@
 	export let onClick: () => void;
 	export let isClosed: boolean;
 	export let side: 'left' | 'right';
+	export let isClosedClass = '-translate-x-3.5';
 
 	let shouldShowButton = false;
 	let isInside = false;
@@ -70,7 +71,7 @@
 	on:mouseleave|preventDefault={onMouseLeave}
 	on:blur|preventDefault={() => null}
 	class="h-full w-8 absolute -right-7 transition {isClosed
-		? '-translate-x-3.5'
+		? isClosedClass
 		: ''} top-0 flex items-center justify-center transform z-20"
 >
 	<div

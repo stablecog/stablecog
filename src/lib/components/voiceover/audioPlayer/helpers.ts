@@ -1,5 +1,5 @@
 import { allAudioPlayers } from '$ts/stores/allPlayers';
-import { area, scaleLinear, timer, select, curveBasis, max, type Selection } from 'd3';
+import { area, scaleLinear, timer, select, curveBasis, max, type Selection, type Timer } from 'd3';
 import { get } from 'svelte/store';
 
 export async function getAudioBufferFromUrl(url: string) {
@@ -214,6 +214,8 @@ interface DataPoint {
 	y: number;
 }
 
+let animateTimer: Timer;
+
 export function animateWave(options: WaveOptions): void {
 	const {
 		element,
@@ -298,8 +300,9 @@ export function animateWave(options: WaveOptions): void {
 	}
 
 	if (shouldAnimate) {
-		timer(animate);
+		animateTimer = timer(animate);
 	} else {
+		if (animateTimer) animateTimer.stop();
 		const data = generateWave();
 		path.datum(data).attr('d', waveArea);
 	}

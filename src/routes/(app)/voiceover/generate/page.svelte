@@ -103,12 +103,12 @@
 <VoiceoverSettingsProvider>
 	<div class="w-full h-full flex flex-col overflow-hidden relative z-0">
 		<div class="w-full h-full flex flex-row overflow-hidden pt-2 md:px-4 md:pb-4 gap-4">
-			<div class="hidden lg:flex min-w-[2rem] flex-col items-start h-full relative">
+			<div class="hidden lg:flex min-w-[2.75rem] flex-col items-start h-full relative">
 				{#if !$isLeftSidebarHiddenApp}
 					<div
 						transition:fly|local={{
-							duration: 200,
-							x: $windowWidth > xlBreakpoint ? -250 : -150,
+							duration: 250,
+							x: $windowWidth > xlBreakpoint ? -200 : -100,
 							easing: quadOut
 						}}
 						class="h-full flex w-36 xl:w-72 lg:pb-[calc(env(safe-area-inset-bottom))] relative z-10"
@@ -139,6 +139,7 @@
 				<SidebarCollapseButton
 					side="left"
 					isClosed={$isLeftSidebarHiddenApp}
+					isClosedClass="-translate-x-6.5"
 					onClick={() => {
 						const val = !$isLeftSidebarHiddenApp;
 						isLeftSidebarHiddenApp.set(val);

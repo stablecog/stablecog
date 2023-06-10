@@ -254,8 +254,8 @@
 				{#if !$isLeftSidebarHiddenApp}
 					<div
 						transition:fly|local={{
-							duration: 200,
-							x: $windowWidth > xlBreakpoint ? -250 : -150,
+							duration: 250,
+							x: $windowWidth > xlBreakpoint ? -200 : -100,
 							easing: quadOut
 						}}
 						class="h-full flex w-36 xl:w-72 lg:pb-[calc(env(safe-area-inset-bottom))] relative z-10"

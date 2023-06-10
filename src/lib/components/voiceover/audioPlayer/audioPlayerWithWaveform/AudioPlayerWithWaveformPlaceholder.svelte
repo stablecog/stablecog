@@ -86,7 +86,7 @@
 </script>
 
 <div class="w-full h-full bg-c-bg-secondary flex flex-col relative">
-	<div class="flex items-center gap-4 bg-c-bg-secondary p-4 rounded-xl">
+	<div class="flex items-center bg-c-bg-secondary p-4 rounded-xl">
 		<div class="relative">
 			<div
 				class="absolute left-0 top-0 w-full h-full bg-c-on-bg/15 rounded-2xl {shouldAnimate
@@ -96,19 +96,19 @@
 			<div class={shouldAnimate ? 'animate-ping-speaker' : ''}>
 				<IconSpeaker
 					sizes="64px"
-					class="w-16 h-16 rounded-lg shadow-lg relative shadow-c-shadow/[var(--o-shadow-strong)] ring-2 ring-c-bg-tertiary"
+					class="w-16 h-16 rounded-lg2 shadow-lg relative shadow-c-shadow/[var(--o-shadow-strong)] ring-2 ring-c-bg-tertiary"
 					type={speakerId}
 				/>
 			</div>
 		</div>
-		<p class="text-c-on-bg/50 font-base pr-4">
+		<p class="text-c-on-bg/50 font-base px-4">
 			{@html $LL.Voiceover.Generate.SpeakerParagraph({
 				speakerName: getHighlightedSpan($voiceoverSpeakerIdToDisplayName[speakerId]),
 				languageName: getHighlightedSpan(languageName($locale).of(voiceoverLocale) || '')
 			})}<br />{$LL.Voiceover.Generate.VoiceoverParagraph()}
 		</p>
 	</div>
-	<div class="w-full flex-1 flex relative overflow-hidden pt-2">
+	<div class="w-full flex-1 flex relative overflow-hidden pt-4">
 		<div
 			bind:clientWidth={waveformContainerWidth}
 			bind:clientHeight={waveformContainerHeight}
