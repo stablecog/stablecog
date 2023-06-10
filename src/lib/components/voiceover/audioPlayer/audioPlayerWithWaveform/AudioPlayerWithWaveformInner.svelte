@@ -2,6 +2,7 @@
 	import PlayPauseButton from '../PlayPauseButton.svelte';
 	import {
 		areValuesCloseEnough,
+		audioBufferToArray,
 		audioToArray,
 		convertSecondsToTimestamp,
 		drawWaveform,
@@ -12,10 +13,12 @@
 	import IconSpeaker from '$components/icons/IconSpeaker.svelte';
 	import { voiceoverSpeakerIdToDisplayName } from '$ts/constants/voiceover/models';
 	import SliderForWaveform from '$components/voiceover/audioPlayer/SliderForWaveform.svelte';
-	import type { TVoiceoverStatus } from '$ts/stores/user/voiceovers';
+	import type { TVoiceoverOutput, TVoiceoverStatus } from '$ts/stores/user/voiceovers';
 	import { browser } from '$app/environment';
 	import type { TAudioStatus } from '$components/voiceover/audioPlayer/audioPlayerWithWaveform/types';
 	import { onDestroy } from 'svelte';
+	import { fade } from 'svelte/transition';
+	import { quadIn, quadInOut } from 'svelte/easing';
 
 	export let title: string | undefined;
 	export let audioElement: HTMLAudioElement;
@@ -29,7 +32,9 @@
 	export let barWidth: number;
 	export let status: TVoiceoverStatus | undefined;
 	export let src: string | undefined;
+	export let output: TVoiceoverOutput | undefined = undefined;
 	export let audioStatus: TAudioStatus;
+	export let audioArray: number[] | undefined = undefined;
 
 	let sliderValue = 0;
 	let sliderContainerWidth: number;
@@ -37,7 +42,6 @@
 	let waveformContainer: HTMLDivElement;
 	let waveformContainerWidth: number | undefined = undefined;
 	let waveformContainerHeight: number | undefined = undefined;
-	let audioArray: number[] | undefined = undefined;
 	let currentTimestamp: string | undefined = undefined;
 	let totalTimestamp: string | undefined = undefined;
 
@@ -73,7 +77,11 @@
 		if (!browser) return;
 		if (!pointCount) return;
 		if (!src) return;
-		audioArray = await audioToArray(src, pointCount);
+		if (output?.audio_buffer) {
+			audioArray = await audioBufferToArray(output.audio_buffer, pointCount);
+		} else {
+			audioArray = await audioToArray(src, pointCount);
+		}
 	}
 
 	function onCurrentTimeChanged() {
@@ -183,7 +191,11 @@
 			class="w-full h-full"
 		>
 			{#if waveformContainerWidth && waveformContainerHeight}
-				<div class="w-full h-0" bind:this={waveformContainer} />
+				<div
+					transition:fade|local={{ duration: 500, easing: quadIn }}
+					class="w-full h-0"
+					bind:this={waveformContainer}
+				/>
 			{/if}
 		</div>
 		<div class="w-full h-full flex items-center z-10 absolute left-0 bottom-0">

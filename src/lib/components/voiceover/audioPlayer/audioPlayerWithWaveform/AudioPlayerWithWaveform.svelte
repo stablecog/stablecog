@@ -70,7 +70,7 @@
 >
 	{#if audioStatus !== 'created'}
 		<div
-			transition:scale={{ duration: 300, easing: cubicOut, start: 0.9 }}
+			transition:scale|local={{ duration: 300, easing: cubicOut, start: 0.9 }}
 			class="w-full h-full absolute left-0 top-0 bg-c-bg-secondary"
 		>
 			<AudioPlayerWithWaveformPlaceholder
@@ -82,7 +82,7 @@
 		</div>
 	{:else}
 		<div
-			transition:scale={{ duration: 300, easing: cubicOut, start: 1.1 }}
+			transition:scale|local={{ duration: 300, easing: cubicOut, start: 1.1 }}
 			class="w-full h-full flex flex-col bg-c-bg-secondary z-10"
 		>
 			<AudioPlayerWithWaveformInner

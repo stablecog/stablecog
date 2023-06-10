@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { drawWaveformPlaceholder } from '$components/voiceover/audioPlayer/helpers';
+	import { animateWave, clearDiv } from '$components/voiceover/audioPlayer/helpers';
 
 	import IconSpeaker from '$components/icons/IconSpeaker.svelte';
 	import LL, { locale } from '$i18n/i18n-svelte';
@@ -8,6 +8,7 @@
 		type TVoiceoverSpeakerId
 	} from '$ts/constants/voiceover/models';
 	import { languageName } from '$ts/helpers/language';
+	import { onDestroy } from 'svelte';
 
 	export let speakerId: TVoiceoverSpeakerId;
 	export let shouldAnimate = false;
@@ -22,44 +23,73 @@
 		? Math.floor(waveformContainerWidth / barWidth)
 		: undefined;
 
-	$: [waveformContainer, waveformContainerWidth, waveformContainerHeight, pointCount],
+	$: [
+		waveformContainer,
+		waveformContainerWidth,
+		waveformContainerHeight,
+		pointCount,
+		shouldAnimate
+	],
 		drawWaveformPlaceholderWithCheck();
+
+	let lastDrawnContainer: { width: number; height: number } | undefined;
 
 	function drawWaveformPlaceholderWithCheck() {
 		if (!waveformContainer) return;
 		if (!waveformContainerWidth) return;
 		if (!waveformContainerHeight) return;
 		if (!pointCount) return;
-		drawWaveformPlaceholder({
+		if (
+			lastDrawnContainer &&
+			(lastDrawnContainer.width !== waveformContainerWidth ||
+				lastDrawnContainer.height !== waveformContainerHeight)
+		) {
+			clearDiv(waveformContainer);
+		}
+		animateWave({
 			element: waveformContainer,
 			width: waveformContainerWidth,
-			pointCount,
 			height: waveformContainerHeight,
 			margin: { top: 0, left: 0, bottom: 0, right: 0 },
-			minHeight: 0.5,
-			gradientStop: [
+			minAmplitude: 0,
+			maxAmplitude: 1,
+			minY: 0.5,
+			maxY: 1,
+			initialWavelength: 25,
+			speed: 1.5,
+			shouldAnimate,
+			modulationFrequency: 100,
+			gradientStops: [
 				{
-					color: 'rgba(var(--c-on-bg) / 0.2)',
+					color: 'rgba(var(--c-on-bg)/0.2)',
 					offset: '0%'
 				},
 				{
-					color: 'rgba(var(--c-on-bg) / 0)',
+					color: 'rgba(var(--c-on-bg)/0)',
 					offset: '100%'
 				}
 			]
 		});
+		lastDrawnContainer = {
+			width: waveformContainerWidth,
+			height: waveformContainerHeight
+		};
 	}
 
 	function getHighlightedSpan(s: string) {
 		return `<span class="text-c-on-bg/75 font-medium">${s}</span>`;
 	}
+
+	onDestroy(() => {
+		clearDiv(waveformContainer);
+	});
 </script>
 
 <div class="w-full h-full bg-c-bg-secondary flex flex-col relative">
 	<div class="flex items-center gap-4 bg-c-bg-secondary p-4 rounded-xl">
 		<div class="relative">
 			<div
-				class="absolute left-0 top-0 w-full h-full bg-c-on-bg/15 rounded-xl {shouldAnimate
+				class="absolute left-0 top-0 w-full h-full bg-c-on-bg/15 rounded-1.5xl {shouldAnimate
 					? 'animate-ping-speaker-bg'
 					: ''}"
 			/>

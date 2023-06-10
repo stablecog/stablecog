@@ -17,6 +17,7 @@ import {
 import type { TVoiceoverSpeakerId, TVoiceoverModelId } from '$ts/constants/voiceover/models';
 import { PUBLIC_BUCKET_URL, PUBLIC_BUCKET_VOICEOVER_URL } from '$env/static/public';
 import type { TVoiceoverLocale } from '$ts/constants/voiceover/locales';
+import { getAudioBufferFromUrl } from '$components/voiceover/audioPlayer/helpers';
 
 export const voiceovers = writable<TVoiceover[]>([]);
 
@@ -66,7 +67,10 @@ export const setVoiceoverToSucceeded = async ({
 	}
 	for (let i = 0; i < outputs.length; i++) {
 		const output = outputs[i];
-		await fetch(output.audio_file_url.replace(PUBLIC_BUCKET_URL, PUBLIC_BUCKET_VOICEOVER_URL));
+		const audio_buffer = await getAudioBufferFromUrl(
+			output.audio_file_url.replace(PUBLIC_BUCKET_URL, PUBLIC_BUCKET_VOICEOVER_URL)
+		);
+		output.audio_buffer = audio_buffer;
 	}
 	voi.status = 'succeeded';
 	voi.outputs = outputs.map((o) => ({
@@ -161,10 +165,11 @@ export async function submitInitialVoiceoverRequest(
 	app_version: string
 ) {
 	const promptText = request.prompt.text;
-	const { prompt, ...rest } = request;
+	const { prompt, speaker, ...rest } = request;
 	const finalRequest = {
 		...rest,
-		prompt: promptText
+		prompt: promptText,
+		speaker_id: speaker.id
 	};
 	const response = await fetch(`${apiUrl.origin}/v1/user/audio/voiceover/create`, {
 		method: 'POST',
@@ -334,6 +339,7 @@ export interface TVoiceoverOutput {
 	id: string;
 	audio_file_url: string;
 	audio_duration: number;
+	audio_buffer?: AudioBuffer;
 	created_at?: string;
 	updated_at?: string;
 	is_deleted?: boolean;

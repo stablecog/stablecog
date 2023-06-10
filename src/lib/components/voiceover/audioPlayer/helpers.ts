@@ -1,12 +1,23 @@
 import { allAudioPlayers } from '$ts/stores/allPlayers';
-import * as d3 from 'd3';
+import { area, scaleLinear, timer, select, curveBasis, max, type Selection } from 'd3';
 import { get } from 'svelte/store';
 
-export async function audioToArray(url: string, samples: number = 100) {
+export async function getAudioBufferFromUrl(url: string) {
 	const res = await fetch(url);
 	const buf = await res.arrayBuffer();
 	const audioContext = new AudioContext();
 	const audioBuf = await audioContext.decodeAudioData(buf);
+	return audioBuf;
+}
+
+export async function audioBufferToArray(buf: AudioBuffer, samples: number = 100) {
+	const filteredData = getFilteredData(buf, samples);
+	const normalizedData = normalizeData(filteredData);
+	return normalizedData;
+}
+
+export async function audioToArray(url: string, samples: number = 100) {
+	const audioBuf = await getAudioBufferFromUrl(url);
 	const filteredData = getFilteredData(audioBuf, samples);
 	const normalizedData = normalizeData(filteredData);
 	return normalizedData;
@@ -78,10 +89,9 @@ export function drawWaveform(options: DrawWaveformOptions): void {
 		options;
 
 	// Remove previous chart if it exists
-	d3.select(element).selectAll('*').remove();
+	select(element).selectAll('*').remove();
 
-	const svg = d3
-		.select(element)
+	const svg = select(element)
 		.append('svg')
 		.attr('width', width + margin.left + margin.right)
 		.attr('height', height + margin.top + margin.bottom)
@@ -110,20 +120,19 @@ export function drawWaveform(options: DrawWaveformOptions): void {
 	createGradient('gradient2', gradientStops2);
 
 	// Set the ranges
-	const x = d3.scaleLinear().range([0, width]);
-	const y = d3.scaleLinear().range([height, 0]);
+	const x = scaleLinear().range([0, width]);
+	const y = scaleLinear().range([height, 0]);
 
 	// Define the area
-	const area = d3
-		.area<number>()
+	const svgArea = area<number>()
 		.x((d, i) => x(i / (values.length - 1))) // Adjust here
 		.y0(height)
 		.y1((d) => y(d))
-		.curve(d3.curveBasis);
+		.curve(curveBasis);
 
 	// Scale the range of the data
 	x.domain([0, 1]);
-	y.domain([0, d3.max(values) as number]);
+	y.domain([0, max(values) as number]);
 
 	// Define clipping paths
 	svg
@@ -147,7 +156,7 @@ export function drawWaveform(options: DrawWaveformOptions): void {
 		.datum(values)
 		.attr('clip-path', 'url(#clip-completed)')
 		.attr('fill', 'url(#gradient1)')
-		.attr('d', area);
+		.attr('d', svgArea);
 
 	// Add the remaining path with the second gradient
 	svg
@@ -155,84 +164,11 @@ export function drawWaveform(options: DrawWaveformOptions): void {
 		.datum(values)
 		.attr('clip-path', 'url(#clip-remaining)')
 		.attr('fill', 'url(#gradient2)')
-		.attr('d', area);
+		.attr('d', svgArea);
 }
 
 export function clearDiv(element: HTMLElement) {
-	d3.select(element).selectAll('*').remove();
-}
-
-export function drawWaveformPlaceholder(options: DrawWaveformPlaceholderOptions): void {
-	const { element, margin, width, pointCount, height, gradientStop, minHeight } = options;
-
-	const valueCount = pointCount;
-
-	let values: number[] = Array.from(
-		{ length: valueCount },
-		() => minHeight + Math.random() * (1 - minHeight)
-	);
-
-	// Remove previous chart if it exists
-	d3.select(element).selectAll('*').remove();
-
-	const svg = d3
-		.select(element)
-		.append('svg')
-		.attr('width', width + margin.left + margin.right)
-		.attr('height', height + margin.top + margin.bottom)
-		.append('g')
-		.attr('transform', `translate(${margin.left},${margin.top})`);
-
-	// Define gradient
-	const createGradient = (id: string, stops: GradientStop[]) => {
-		const gradient = svg
-			.append('defs')
-			.append('linearGradient')
-			.attr('id', id)
-			.attr('x1', '0%')
-			.attr('y1', '0%')
-			.attr('x2', '0%')
-			.attr('y2', '100%');
-
-		stops.forEach((stop) => {
-			gradient.append('stop').attr('offset', stop.offset).attr('stop-color', stop.color);
-		});
-
-		return gradient;
-	};
-
-	createGradient('gradient', gradientStop);
-
-	// Set the ranges
-	const x = d3.scaleLinear().range([0, width]);
-	const y = d3.scaleLinear().range([height, 0]);
-
-	// Define the area
-	const area = d3
-		.area<number>()
-		.x((d, i) => x(i / (valueCount - 1))) // Adjust here
-		.y0(height)
-		.y1((d) => y(d))
-		.curve(d3.curveBasis);
-
-	// Scale the range of the data
-	x.domain([0, 1]);
-	y.domain([0, 1]);
-
-	// Add the path with the gradient
-	svg.append('path').datum(values).attr('fill', 'url(#gradient)').attr('d', area);
-}
-
-interface Margin {
-	top: number;
-	right: number;
-	bottom: number;
-	left: number;
-}
-
-interface GradientStop {
-	offset: string;
-	color: string;
+	select(element).selectAll('*').remove();
 }
 
 interface DrawWaveformOptions {
@@ -246,12 +182,125 @@ interface DrawWaveformOptions {
 	gradientStops2: GradientStop[];
 }
 
-interface DrawWaveformPlaceholderOptions {
+interface Margin {
+	top: number;
+	right: number;
+	bottom: number;
+	left: number;
+}
+interface GradientStop {
+	offset: string;
+	color: string;
+}
+
+interface WaveOptions {
 	element: HTMLDivElement;
-	margin: Margin;
 	width: number;
-	pointCount: number;
 	height: number;
-	gradientStop: GradientStop[];
-	minHeight: number;
+	margin: Margin;
+	initialWavelength: number;
+	speed: number;
+	modulationFrequency: number; // Frequency of amplitude modulation
+	gradientStops: GradientStop[];
+	minAmplitude: number; // Minimum amplitude, between 0 and 1
+	maxAmplitude: number; // Maximum amplitude, between 0 and 1
+	shouldAnimate: boolean;
+	minY: number;
+	maxY: number;
+}
+
+interface DataPoint {
+	x: number;
+	y: number;
+}
+
+export function animateWave(options: WaveOptions): void {
+	const {
+		element,
+		width,
+		height,
+		margin,
+		initialWavelength,
+		speed,
+		modulationFrequency,
+		gradientStops,
+		minAmplitude,
+		maxAmplitude,
+		shouldAnimate,
+		minY,
+		maxY
+	} = options;
+
+	// Check if SVG exists
+	let svgSelection = select(element).select<SVGSVGElement>('svg');
+
+	let svgEl: Selection<SVGGElement, unknown, null, undefined>;
+	let path: Selection<SVGPathElement, unknown, null, undefined>;
+
+	if (svgSelection.empty()) {
+		svgEl = select(element)
+			.append('svg')
+			.attr('width', width + margin.left + margin.right)
+			.attr('height', height + margin.top + margin.bottom)
+			.append('g')
+			.attr('transform', `translate(${margin.left}, ${margin.top})`);
+
+		const gradient = svgEl
+			.append('defs')
+			.append('linearGradient')
+			.attr('id', 'gradient')
+			.attr('x1', '0%')
+			.attr('y1', '0%')
+			.attr('x2', '0%')
+			.attr('y2', '100%');
+
+		gradientStops.forEach((stop) => {
+			gradient.append('stop').attr('offset', stop.offset).attr('stop-color', stop.color);
+		});
+
+		path = svgEl.append('path').attr('fill', 'url(#gradient)');
+	} else {
+		svgEl = svgSelection.select<SVGGElement>('g');
+		path = svgEl.select('path');
+	}
+
+	const x = scaleLinear().domain([0, width]).range([0, width]);
+	const y = scaleLinear()
+		.domain([-1, 1])
+		.range([height * (1 - maxY), height * (1 - minY)]);
+
+	let wavelength = initialWavelength;
+	let phase = 0;
+
+	const waveArea = area<DataPoint>()
+		.x((d) => x(d.x))
+		.y0(height)
+		.y1((d) => y(d.y))
+		.curve(curveBasis);
+
+	function generateWave(): DataPoint[] {
+		let data: DataPoint[] = Array.from({ length: width }, (_, i) => {
+			let amplitude =
+				minAmplitude +
+				((Math.sin(i / modulationFrequency) + 1) / 2) * (maxAmplitude - minAmplitude);
+			return {
+				x: i,
+				y: amplitude * Math.sin((i + phase) / wavelength)
+			};
+		});
+		return data;
+	}
+
+	function animate(): void {
+		phase += speed;
+		const data = generateWave();
+		path.datum(data).attr('d', waveArea);
+	}
+
+	if (shouldAnimate) {
+		timer(animate);
+	} else {
+		const data = generateWave();
+		path.datum(data).attr('d', waveArea);
+	}
 }
