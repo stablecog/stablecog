@@ -89,14 +89,14 @@
 	<div class="flex items-center gap-4 bg-c-bg-secondary p-4 rounded-xl">
 		<div class="relative">
 			<div
-				class="absolute left-0 top-0 w-full h-full bg-c-on-bg/15 rounded-1.5xl {shouldAnimate
+				class="absolute left-0 top-0 w-full h-full bg-c-on-bg/15 rounded-full {shouldAnimate
 					? 'animate-ping-speaker-bg'
 					: ''}"
 			/>
 			<div class={shouldAnimate ? 'animate-ping-speaker' : ''}>
 				<IconSpeaker
 					sizes="64px"
-					class="w-16 h-16 rounded-lg shadow-lg relative shadow-c-shadow/[var(--o-shadow-strong)] ring-2 ring-c-bg-tertiary"
+					class="w-16 h-16 rounded-full shadow-lg relative shadow-c-shadow/[var(--o-shadow-strong)] ring-2 ring-c-bg-tertiary"
 					type={speakerId}
 				/>
 			</div>
