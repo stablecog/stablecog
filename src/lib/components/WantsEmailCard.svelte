@@ -25,7 +25,7 @@
 	<Checkbox bind:checked name="want-email-checkbox" />
 	<p class="w-full text-sm select-none relative">
 		{$LL.SignUp.WantsEmailCheckbox.Paragraph()}{#if !oneLine}
-			<br />
+			<br class="hidden md:block" />
 		{/if}
 		<span class="font-semibold"> {$LL.SignUp.WantsEmailCheckbox.NoSpamParagraph()}</span>
 	</p>

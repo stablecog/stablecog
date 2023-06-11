@@ -2626,7 +2626,7 @@ type RootTranslation = {
 			 */
 			SpeakerParagraph: RequiredParams<'languageName' | 'speakerName'>
 			/**
-			 * Y​o​u​r​ ​v​o​i​c​e​o​v​e​r​ ​w​i​l​l​ ​a​p​p​e​a​r​ ​h​e​r​e​.
+			 * T​h​e​ ​v​o​i​c​e​o​v​e​r​ ​w​i​l​l​ ​a​p​p​e​a​r​ ​h​e​r​e​.
 			 */
 			VoiceoverParagraph: string
 		}
@@ -5203,7 +5203,7 @@ export type TranslationFunctions = {
 			 */
 			SpeakerParagraph: (arg: { languageName: unknown, speakerName: unknown }) => LocalizedString
 			/**
-			 * Your voiceover will appear here.
+			 * The voiceover will appear here.
 			 */
 			VoiceoverParagraph: () => LocalizedString
 		}

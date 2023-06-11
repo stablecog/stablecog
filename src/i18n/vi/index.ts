@@ -880,7 +880,7 @@ const vi: Translation = {
 		},
 		Generate: {
 			SpeakerParagraph: '{speakerName} will be speaking in {languageName}.',
-			VoiceoverParagraph: 'Your voiceover will appear here.'
+			VoiceoverParagraph: 'The voiceover will appear here.'
 		}
 	},
 	UnderDevelopment: {
