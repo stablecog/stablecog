@@ -168,7 +168,7 @@
 					<div class="flex items-center justify-center gap-2.5 px-2 py-1">
 						<IconBack
 							class="w-6 h-6 transform transition text-c-on-bg/50 group-hover:-translate-x-1
-						not-touch:group-hover:text-c-primary"
+							not-touch:group-hover:text-c-primary"
 						/>
 						<p class="transition text-c-on-bg/50 not-touch:group-hover:text-c-primary">
 							{$LL.Shared.BackToGalleryButton()}
@@ -176,10 +176,10 @@
 					</div>
 				</NoBgButton>
 			</div>
-			<div class="flex flex-col items-start gap-3 -mt-4 lg:-mt-2">
-				<div class="max-w-full flex flex-col gap-2">
-					<h1 class="max-w-full font-semibold text-3xl">{$LL.Home.PromptInput.Title()}</h1>
-					<h2 class="max-w-full leading-normal">{output.generation.prompt.text}</h2>
+			<div class="w-full flex flex-col items-start gap-3 -mt-4 lg:-mt-2">
+				<div class="w-full flex flex-col gap-2">
+					<h1 class="w-full font-semibold text-3xl">{$LL.Home.PromptInput.Title()}</h1>
+					<h2 class="w-full leading-normal">{output.generation.prompt.text}</h2>
 				</div>
 				{#if output.generation.negative_prompt}
 					<div class="max-w-full flex items-start text-c-danger gap-2">

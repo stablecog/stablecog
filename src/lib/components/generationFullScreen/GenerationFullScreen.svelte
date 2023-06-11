@@ -461,10 +461,10 @@
 							</div>
 						{/if}
 						<!-- Prompt and Negative Prompt -->
-						<div class="flex flex-col items-start gap-3">
-							<p class="max-w-full leading-normal">{generation.prompt.text}</p>
+						<div class="w-full break-words flex flex-col items-start gap-3">
+							<p class="w-full leading-normal">{generation.prompt.text}</p>
 							{#if generation.negative_prompt}
-								<div class="max-w-full flex items-start text-c-danger gap-2">
+								<div class="w-full flex items-start text-c-danger gap-2">
 									<div use:tooltip={$negativePromptTooltipAlt}>
 										<IconChatBubbleCancel class="w-5 h-5" />
 									</div>
