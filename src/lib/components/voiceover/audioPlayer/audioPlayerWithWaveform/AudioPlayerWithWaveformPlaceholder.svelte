@@ -1,6 +1,5 @@
 <script lang="ts">
 	import { animateWave, clearDiv } from '$components/voiceover/audioPlayer/helpers';
-
 	import IconSpeaker from '$components/icons/IconSpeaker.svelte';
 	import LL, { locale } from '$i18n/i18n-svelte';
 	import {
@@ -9,11 +8,16 @@
 	} from '$ts/constants/voiceover/models';
 	import { languageName } from '$ts/helpers/language';
 	import { onDestroy } from 'svelte';
+	import { scale } from 'svelte/transition';
+	import { quadOut } from 'svelte/easing';
+	import { easingBounceOut } from '$ts/animation/easing';
+	import ErrorChip from '$components/error/ErrorChip.svelte';
 
 	export let speakerId: TVoiceoverSpeakerId;
 	export let shouldAnimate = false;
 	export let barWidth: number;
 	export let voiceoverLocale: string;
+	export let error: string | undefined = undefined;
 
 	let waveformContainer: HTMLDivElement;
 	let waveformContainerWidth: number | undefined;
@@ -87,13 +91,13 @@
 
 <div class="w-full h-full bg-c-bg-secondary flex flex-col relative">
 	<div class="flex items-center bg-c-bg-secondary p-4 rounded-xl">
-		<div class="relative">
+		<div class="relative flex items-center justify-start">
 			<div
 				class="absolute left-0 top-0 w-full h-full bg-c-on-bg/20 rounded-2xl {shouldAnimate
 					? 'animate-ping-speaker-bg'
 					: ''}"
 			/>
-			<div class={shouldAnimate ? 'animate-ping-speaker' : ''}>
+			<div class="{shouldAnimate ? 'animate-ping-speaker' : ''} flex-shrink-0">
 				<IconSpeaker
 					sizes="64px"
 					class="w-16 h-16 rounded-lg2 shadow-lg relative shadow-c-shadow/[var(--o-shadow-strong)] ring-2 ring-c-bg-tertiary"
@@ -107,7 +111,17 @@
 				languageName: getHighlightedSpan(languageName($locale).of(voiceoverLocale) || '')
 			})}<br />{$LL.Voiceover.Generate.VoiceoverParagraph()}
 		</p>
+		{#if error}
+			<div
+				in:scale|local={{ duration: 200, easing: easingBounceOut, start: 0.5 }}
+				out:scale|local={{ duration: 200, easing: quadOut, start: 0.5 }}
+				class="max-w-full p-3 absolute right-0 top-0"
+			>
+				<ErrorChip {error} hasIcon />
+			</div>
+		{/if}
 	</div>
+
 	<div class="w-full flex-1 flex relative overflow-hidden pt-4">
 		<div
 			bind:clientWidth={waveformContainerWidth}

@@ -168,8 +168,14 @@ export function drawWaveform(options: DrawWaveformOptions): void {
 		.attr('d', svgArea);
 }
 
+let animateTimer: CustomTimer | undefined;
+
 export function clearDiv(element: HTMLElement) {
 	select(element).selectAll('*').remove();
+	if (animateTimer) {
+		animateTimer.stop();
+		animateTimer = undefined;
+	}
 }
 
 interface DrawWaveformOptions {
@@ -214,8 +220,6 @@ interface DataPoint {
 	x: number;
 	y: number;
 }
-
-let animateTimer: Timer;
 
 export function animateWave(options: WaveOptions): void {
 	const {
@@ -301,10 +305,47 @@ export function animateWave(options: WaveOptions): void {
 	}
 
 	if (shouldAnimate) {
-		animateTimer = timer(animate);
+		if (!animateTimer) animateTimer = new CustomTimer(animate);
+		animateTimer.start();
 	} else {
-		if (animateTimer) animateTimer.stop();
-		const data = generateWave();
-		path.datum(data).attr('d', waveArea);
+		if (animateTimer) {
+			animateTimer.stop();
+		} else {
+			const data = generateWave();
+			path.datum(data).attr('d', waveArea);
+		}
+	}
+}
+
+class CustomTimer {
+	private customTimer?: Timer;
+	private elapsedTime: number;
+	private callback: (elapsed: number) => void;
+
+	constructor(callback: (elapsed: number) => void) {
+		this.elapsedTime = 0;
+		this.callback = callback;
+	}
+
+	start() {
+		if (this.customTimer) {
+			// Timer exists, so resume it.
+			this.customTimer.restart(this.tick.bind(this), this.elapsedTime);
+		} else {
+			// Timer does not exist, so start a new one.
+			this.customTimer = timer(this.tick.bind(this));
+		}
+	}
+
+	stop() {
+		if (this.customTimer) {
+			// Stop the timer, but don't reset it.
+			this.customTimer.stop();
+		}
+	}
+
+	private tick(elapsed: number) {
+		this.elapsedTime = elapsed;
+		this.callback(this.elapsedTime);
 	}
 }

@@ -2,7 +2,7 @@
 	import { page } from '$app/stores';
 	import Button from '$components/buttons/Button.svelte';
 	import DropdownItem from '$components/DropdownItem.svelte';
-	import ErrorLine from '$components/ErrorLine.svelte';
+	import ErrorLine from '$components/error/ErrorLine.svelte';
 	import IconBack from '$components/icons/IconBack.svelte';
 	import IconEmail from '$components/icons/IconEmail.svelte';
 	import Input from '$components/Input.svelte';

@@ -7,8 +7,9 @@
 	import LL from '$i18n/i18n-svelte';
 	import type { TGenerationWithSelectedOutput } from '$ts/stores/user/generation';
 	import { quadIn, quadOut } from 'svelte/easing';
-	import { fade, fly, scale } from 'svelte/transition';
+	import { fade, scale } from 'svelte/transition';
 	import IconImage from '$components/icons/IconImage.svelte';
+	import ErrorChip from '$components/error/ErrorChip.svelte';
 
 	export let generation: TGenerationWithSelectedOutput;
 
@@ -60,6 +61,9 @@
 					<p class="text-sm text-c-on-bg/50 text-center leading-relaxed">
 						{status === 'failed-nsfw' ? $LL.Error.ImageWasNSFW() : $LL.Error.SomethingWentWrong()}
 					</p>
+					{#if status !== 'failed-nsfw' && generation.error !== undefined}
+						<ErrorChip class="mt-2.5" error={generation.error} />
+					{/if}
 				</div>
 			{/if}
 		</div>

@@ -18,6 +18,7 @@
 	export let status: TVoiceoverStatus | undefined = undefined;
 	export let speakerId: TVoiceoverSpeakerId;
 	export let voiceoverLocale: TVoiceoverLocale;
+	export let error: string | undefined = undefined;
 	export { classes as class };
 	let classes = '';
 
@@ -77,6 +78,7 @@
 		>
 			<AudioPlayerWithWaveformPlaceholder
 				{speakerId}
+				{error}
 				{voiceoverLocale}
 				{barWidth}
 				shouldAnimate={audioStatus === 'being-created'}

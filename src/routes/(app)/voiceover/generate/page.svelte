@@ -253,6 +253,7 @@
 										? $voiceovers[0].speaker.locale
 										: $voiceoverLocale}
 									title={$voiceovers[0]?.prompt.text}
+									error={$voiceovers ? $voiceovers[0]?.error : undefined}
 									status={$voiceovers?.[0]?.status}
 								/>
 							</div>
