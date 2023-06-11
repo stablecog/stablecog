@@ -39,6 +39,10 @@
 			? 'created'
 			: 'idle';
 
+	function toggleIsPlaying() {
+		isPlaying = !isPlaying;
+	}
+
 	onMount(async () => {
 		$allAudioPlayers.add(audioElement);
 	});
@@ -54,15 +58,13 @@
 	bind:currentTime
 	bind:duration
 	bind:this={audioElement}
-	on:playing={() => (isPlaying = true)}
-	on:pause={() => (isPlaying = false)}
 	bind:muted={isMuted}
 />
 <div
 	on:keydown={(e) => {
 		if (e.target === playButton || e.target === muteButton) return;
 		if (e.key === ' ') {
-			togglePlay(audioElement);
+			togglePlay(audioElement, toggleIsPlaying);
 		}
 	}}
 	class="w-full h-full bg-c-bg-secondary flex flex-col rounded-xl overflow-hidden relative z-0
@@ -89,6 +91,7 @@
 				bind:currentTime
 				{isMuted}
 				{isPlaying}
+				{toggleIsPlaying}
 				{audioElement}
 				{duration}
 				{muteButton}

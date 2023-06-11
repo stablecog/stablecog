@@ -51,9 +51,9 @@
 			width: waveformContainerWidth,
 			height: waveformContainerHeight,
 			margin: { top: 0, left: 0, bottom: 0, right: 0 },
-			minAmplitude: 0,
+			minAmplitude: -0.5,
 			maxAmplitude: 1,
-			minY: 0.5,
+			minY: 0.4,
 			maxY: 1,
 			initialWavelength: 25,
 			speed: 1.5,
@@ -89,7 +89,7 @@
 	<div class="flex items-center bg-c-bg-secondary p-4 rounded-xl">
 		<div class="relative">
 			<div
-				class="absolute left-0 top-0 w-full h-full bg-c-on-bg/15 rounded-2xl {shouldAnimate
+				class="absolute left-0 top-0 w-full h-full bg-c-on-bg/20 rounded-2xl {shouldAnimate
 					? 'animate-ping-speaker-bg'
 					: ''}"
 			/>

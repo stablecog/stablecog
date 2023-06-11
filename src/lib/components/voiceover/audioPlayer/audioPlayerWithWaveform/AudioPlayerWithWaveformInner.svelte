@@ -35,6 +35,7 @@
 	export let output: TVoiceoverOutput | undefined = undefined;
 	export let audioStatus: TAudioStatus;
 	export let audioArray: number[] | undefined = undefined;
+	export let toggleIsPlaying: () => void;
 
 	let sliderValue = 0;
 	let sliderContainerWidth: number;
@@ -147,7 +148,7 @@
 		<div class="flex items-center -ml-3">
 			<PlayPauseButton
 				bind:element={playButton}
-				onClick={() => togglePlay(audioElement)}
+				onClick={() => togglePlay(audioElement, toggleIsPlaying)}
 				{isPlaying}
 				size="lg"
 			/>

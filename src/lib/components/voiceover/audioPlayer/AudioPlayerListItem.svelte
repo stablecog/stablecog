@@ -59,6 +59,10 @@
 		}
 	}
 
+	function toggleIsPlaying() {
+		isPlaying = !isPlaying;
+	}
+
 	onMount(() => {
 		$allAudioPlayers.add(audioElement);
 	});
@@ -73,7 +77,7 @@
 	on:keydown={(e) => {
 		if (e.target === playButton || e.target === muteButton) return;
 		if (e.key === ' ') {
-			togglePlay(audioElement);
+			togglePlay(audioElement, toggleIsPlaying);
 		}
 	}}
 	class="{inHorizontal
@@ -123,7 +127,9 @@
 		<div class="flex items-center -ml-2">
 			<PlayPauseButton
 				bind:element={playButton}
-				onClick={() => togglePlay(audioElement)}
+				onClick={() => {
+					togglePlay(audioElement, toggleIsPlaying);
+				}}
 				{isPlaying}
 			/>
 			{#if hasMute}

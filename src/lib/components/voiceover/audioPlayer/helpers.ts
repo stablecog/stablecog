@@ -63,13 +63,14 @@ export function stopAllPlayers(exceptionElement?: HTMLAudioElement) {
 		player.pause();
 	});
 }
-export function togglePlay(playerElement: HTMLAudioElement) {
+export function togglePlay(playerElement: HTMLAudioElement, callback: () => void) {
 	stopAllPlayers(playerElement);
 	if (playerElement.paused) {
 		playerElement.play();
 	} else {
 		playerElement.pause();
 	}
+	callback();
 }
 
 export function toggleMute(playerElement: HTMLAudioElement) {

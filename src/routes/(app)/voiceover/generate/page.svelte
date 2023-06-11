@@ -35,6 +35,8 @@
 	} from '$components/voiceover/lists/constants.js';
 	import { voiceoverSpeakerId } from '$ts/stores/voiceover/voiceoverSettings.js';
 	import { voiceoverLocale } from '$ts/constants/voiceover/models.js';
+	import MetaTag from '$components/MetaTag.svelte';
+	import { canonicalUrl } from '$ts/constants/main.js';
 
 	export let data;
 
@@ -99,6 +101,12 @@
 
 	$: userVoiceoverOutputs = $userVoiceoverFullOutputsQuery?.data?.pages?.flatMap((p) => p.outputs);
 </script>
+
+<MetaTag
+	title="Voiceover | Stablecog"
+	description="Create voiceovers with AI on Stablecog: Free, multilingual and open-source AI image generator using Stable Diffusion and Kandinsky."
+	image_url="{canonicalUrl}/previews/voiceover-v2.png"
+/>
 
 <VoiceoverSettingsProvider>
 	<div class="w-full h-full flex flex-col overflow-hidden relative z-0">
