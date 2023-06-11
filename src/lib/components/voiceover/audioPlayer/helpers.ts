@@ -170,7 +170,7 @@ export function drawWaveform(options: DrawWaveformOptions): void {
 
 let animateTimer: CustomTimer | undefined;
 
-export function clearDiv(element: HTMLElement) {
+export function resetWave(element: HTMLElement) {
 	select(element).selectAll('*').remove();
 	if (animateTimer) {
 		animateTimer.stop();
@@ -305,7 +305,9 @@ export function animateWave(options: WaveOptions): void {
 	}
 
 	if (shouldAnimate) {
-		if (!animateTimer) animateTimer = new CustomTimer(animate);
+		if (!animateTimer) {
+			animateTimer = new CustomTimer(animate);
+		}
 		animateTimer.start();
 	} else {
 		if (animateTimer) {

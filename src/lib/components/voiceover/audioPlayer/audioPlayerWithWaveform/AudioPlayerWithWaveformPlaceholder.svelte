@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { animateWave, clearDiv } from '$components/voiceover/audioPlayer/helpers';
+	import { animateWave, resetWave } from '$components/voiceover/audioPlayer/helpers';
 	import IconSpeaker from '$components/icons/IconSpeaker.svelte';
 	import LL, { locale } from '$i18n/i18n-svelte';
 	import {
@@ -48,7 +48,7 @@
 			(lastDrawnContainer.width !== waveformContainerWidth ||
 				lastDrawnContainer.height !== waveformContainerHeight)
 		) {
-			clearDiv(waveformContainer);
+			resetWave(waveformContainer);
 		}
 		animateWave({
 			element: waveformContainer,
@@ -85,7 +85,7 @@
 	}
 
 	onDestroy(() => {
-		clearDiv(waveformContainer);
+		resetWave(waveformContainer);
 	});
 </script>
 

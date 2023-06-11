@@ -18,7 +18,7 @@
 	import type { TAudioStatus } from '$components/voiceover/audioPlayer/audioPlayerWithWaveform/types';
 	import { onDestroy } from 'svelte';
 	import { fade } from 'svelte/transition';
-	import { quadIn, quadInOut } from 'svelte/easing';
+	import { quadIn } from 'svelte/easing';
 
 	export let title: string | undefined;
 	export let audioElement: HTMLAudioElement;
@@ -35,7 +35,7 @@
 	export let output: TVoiceoverOutput | undefined = undefined;
 	export let audioStatus: TAudioStatus;
 	export let audioArray: number[] | undefined = undefined;
-	export let toggleIsPlaying: () => void;
+	export let toggleIsPlaying: (s?: boolean) => void;
 
 	let sliderValue = 0;
 	let sliderContainerWidth: number;
@@ -136,6 +136,7 @@
 	onDestroy(() => {
 		audioArray = undefined;
 		audioElement?.pause();
+		toggleIsPlaying(false);
 		currentTime = 0;
 	});
 </script>

@@ -40,7 +40,11 @@
 			? 'created'
 			: 'idle';
 
-	function toggleIsPlaying() {
+	function toggleIsPlaying(state?: boolean) {
+		if (state !== undefined) {
+			isPlaying = state;
+			return;
+		}
 		isPlaying = !isPlaying;
 	}
 
