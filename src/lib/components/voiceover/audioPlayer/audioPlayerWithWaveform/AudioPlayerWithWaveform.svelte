@@ -71,7 +71,7 @@
 	on:keydown={(e) => {
 		if (e.target === playButton || e.target === muteButton) return;
 		if (e.key === ' ') {
-			togglePlay(audioElement, toggleIsPlaying);
+			togglePlay({ audioElement, callback: toggleIsPlaying });
 		}
 	}}
 	class="w-full h-full bg-c-bg-secondary flex flex-col rounded-xl overflow-hidden relative z-0

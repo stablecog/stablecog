@@ -8,7 +8,7 @@
 	export let sizes = '32px';
 	let classes = 'w-6 h-6';
 
-	$: _src = `${PUBLIC_BUCKET_AUX_URL}/speakers/${type}.jpeg`;
+	$: _src = `${PUBLIC_BUCKET_AUX_URL}/voiceover/speakers/${type}.jpeg`;
 	$: src = getImgProxySrc({ src: _src, preset: '64w' });
 	$: srcset = getImgProxySrcSet({ src: _src });
 </script>

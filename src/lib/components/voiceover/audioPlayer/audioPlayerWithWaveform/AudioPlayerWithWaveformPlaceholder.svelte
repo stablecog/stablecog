@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { animateWave, resetWave } from '$components/voiceover/audioPlayer/helpers';
-	import IconSpeaker from '$components/icons/IconSpeaker.svelte';
+	import IconSpeaker from '$components/icons/IconVoiceoverSpeaker.svelte';
 	import LL, { locale } from '$i18n/i18n-svelte';
 	import {
 		voiceoverSpeakerIdToDisplayName,
@@ -117,7 +117,7 @@
 				out:scale|local={{ duration: 200, easing: quadOut, start: 0.5 }}
 				class="max-w-full p-3 absolute right-0 top-0"
 			>
-				<ErrorChip {error} hasIcon />
+				<ErrorChip {error} />
 			</div>
 		{/if}
 	</div>

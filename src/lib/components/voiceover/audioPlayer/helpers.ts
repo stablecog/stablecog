@@ -63,21 +63,34 @@ export function stopAllPlayers(exceptionElement?: HTMLAudioElement) {
 		player.pause();
 	});
 }
-export function togglePlay(playerElement: HTMLAudioElement, callback: () => void) {
-	stopAllPlayers(playerElement);
-	if (playerElement.paused) {
-		playerElement.play();
+export function togglePlay({
+	audioElement,
+	state,
+	callback
+}: {
+	audioElement: HTMLAudioElement;
+	state?: 'play' | 'pause';
+	callback: () => void;
+}) {
+	if (state === 'play') {
+		stopAllPlayers(audioElement);
+		audioElement.play();
+	} else if (state === 'pause') {
+		audioElement.pause();
+	} else if (audioElement.paused) {
+		stopAllPlayers(audioElement);
+		audioElement.play();
 	} else {
-		playerElement.pause();
+		audioElement.pause();
 	}
 	callback();
 }
 
-export function toggleMute(playerElement: HTMLAudioElement) {
-	if (playerElement.muted) {
-		playerElement.muted = false;
+export function toggleMute(audioElement: HTMLAudioElement) {
+	if (audioElement.muted) {
+		audioElement.muted = false;
 	} else {
-		playerElement.muted = true;
+		audioElement.muted = true;
 	}
 }
 

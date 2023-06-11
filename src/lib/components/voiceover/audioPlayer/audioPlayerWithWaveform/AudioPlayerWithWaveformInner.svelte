@@ -10,7 +10,7 @@
 		togglePlay
 	} from '$components/voiceover/audioPlayer/helpers';
 	import MuteButton from '$components/voiceover/audioPlayer/MuteButton.svelte';
-	import IconSpeaker from '$components/icons/IconSpeaker.svelte';
+	import IconSpeaker from '$components/icons/IconVoiceoverSpeaker.svelte';
 	import { voiceoverSpeakerIdToDisplayName } from '$ts/constants/voiceover/models';
 	import SliderForWaveform from '$components/voiceover/audioPlayer/SliderForWaveform.svelte';
 	import type { TVoiceoverOutput, TVoiceoverStatus } from '$ts/stores/user/voiceovers';
@@ -135,8 +135,9 @@
 
 	onDestroy(() => {
 		audioArray = undefined;
-		audioElement?.pause();
-		toggleIsPlaying(false);
+		if (audioElement) {
+			togglePlay({ audioElement, state: 'pause', callback: () => toggleIsPlaying(false) });
+		}
 		currentTime = 0;
 	});
 </script>
@@ -149,7 +150,7 @@
 		<div class="flex items-center -ml-3">
 			<PlayPauseButton
 				bind:element={playButton}
-				onClick={() => togglePlay(audioElement, toggleIsPlaying)}
+				onClick={() => togglePlay({ audioElement, callback: toggleIsPlaying })}
 				{isPlaying}
 				size="lg"
 			/>

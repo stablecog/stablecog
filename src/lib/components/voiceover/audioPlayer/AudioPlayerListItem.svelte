@@ -1,5 +1,5 @@
 <script lang="ts">
-	import IconSpeaker from '$components/icons/IconSpeaker.svelte';
+	import IconSpeaker from '$components/icons/IconVoiceoverSpeaker.svelte';
 	import IconThreeDots from '$components/icons/IconThreeDots.svelte';
 	import MuteButton from '$components/voiceover/audioPlayer/MuteButton.svelte';
 	import PlayPauseButton from '$components/voiceover/audioPlayer/PlayPauseButton.svelte';
@@ -77,7 +77,7 @@
 	on:keydown={(e) => {
 		if (e.target === playButton || e.target === muteButton) return;
 		if (e.key === ' ') {
-			togglePlay(audioElement, toggleIsPlaying);
+			togglePlay({ audioElement, callback: toggleIsPlaying });
 		}
 	}}
 	class="{inHorizontal
@@ -128,7 +128,7 @@
 			<PlayPauseButton
 				bind:element={playButton}
 				onClick={() => {
-					togglePlay(audioElement, toggleIsPlaying);
+					togglePlay({ audioElement, callback: toggleIsPlaying });
 				}}
 				{isPlaying}
 			/>

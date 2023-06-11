@@ -2519,6 +2519,24 @@ type RootTranslation = {
 				 */
 				Name: string
 			}
+			'aad61bf9-0710-40f6-8050-8c412852f717': {
+				/**
+				 * H​e​n​r​y
+				 */
+				Name: string
+			}
+			'37c069ec-f124-4be8-9d4c-e74157738877': {
+				/**
+				 * L​i​a​m
+				 */
+				Name: string
+			}
+			'38f9bd69-fa4c-4e53-b398-9a0f5865e927': {
+				/**
+				 * D​a​n
+				 */
+				Name: string
+			}
 			'5bd0610f-f073-487e-a74c-2a89105ce282': {
 				/**
 				 * G​a​m​z​e
@@ -2528,6 +2546,24 @@ type RootTranslation = {
 			'7c3f8e30-9957-4d5e-a70e-c8269ff5f550': {
 				/**
 				 * M​e​r​t
+				 */
+				Name: string
+			}
+			'0188871e-c4d1-4ad9-ab3d-ec958c443822': {
+				/**
+				 * H​a​l​i​t
+				 */
+				Name: string
+			}
+			'4802af70-6d40-429d-8b9d-8df591e30743': {
+				/**
+				 * L​e​y​l​a
+				 */
+				Name: string
+			}
+			'e10d4dac-7c39-4e96-9622-6d4e46fc384b': {
+				/**
+				 * M​u​r​a​t
 				 */
 				Name: string
 			}
@@ -5062,6 +5098,24 @@ export type TranslationFunctions = {
 				 */
 				Name: () => LocalizedString
 			}
+			'aad61bf9-0710-40f6-8050-8c412852f717': {
+				/**
+				 * Henry
+				 */
+				Name: () => LocalizedString
+			}
+			'37c069ec-f124-4be8-9d4c-e74157738877': {
+				/**
+				 * Liam
+				 */
+				Name: () => LocalizedString
+			}
+			'38f9bd69-fa4c-4e53-b398-9a0f5865e927': {
+				/**
+				 * Dan
+				 */
+				Name: () => LocalizedString
+			}
 			'5bd0610f-f073-487e-a74c-2a89105ce282': {
 				/**
 				 * Gamze
@@ -5071,6 +5125,24 @@ export type TranslationFunctions = {
 			'7c3f8e30-9957-4d5e-a70e-c8269ff5f550': {
 				/**
 				 * Mert
+				 */
+				Name: () => LocalizedString
+			}
+			'0188871e-c4d1-4ad9-ab3d-ec958c443822': {
+				/**
+				 * Halit
+				 */
+				Name: () => LocalizedString
+			}
+			'4802af70-6d40-429d-8b9d-8df591e30743': {
+				/**
+				 * Leyla
+				 */
+				Name: () => LocalizedString
+			}
+			'e10d4dac-7c39-4e96-9622-6d4e46fc384b': {
+				/**
+				 * Murat
 				 */
 				Name: () => LocalizedString
 			}

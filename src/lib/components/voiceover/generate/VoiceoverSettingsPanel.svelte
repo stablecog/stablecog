@@ -4,7 +4,7 @@
 	import IconLanguage from '$components/icons/IconLanguage.svelte';
 	import IconLocale from '$components/icons/IconLocale.svelte';
 	import IconMicrophone from '$components/icons/IconMicrophone.svelte';
-	import IconSpeaker from '$components/icons/IconSpeaker.svelte';
+	import IconSpeaker from '$components/icons/IconVoiceoverSpeaker.svelte';
 	import IconWave from '$components/icons/IconWave.svelte';
 	import TabLikeDropdown from '$components/tabBars/TabLikeDropdown.svelte';
 	import TabLikeRangeInput from '$components/tabBars/TabLikeRangeInput.svelte';
