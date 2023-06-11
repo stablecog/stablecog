@@ -2531,6 +2531,42 @@ type RootTranslation = {
 				 */
 				Name: string
 			}
+			'9354180b-9735-412c-947f-9d15af6edfe0': {
+				/**
+				 * M​i​a
+				 */
+				Name: string
+			}
+			'bcb7ac57-fd61-4630-82f0-ae3f836bb7c2': {
+				/**
+				 * E​i​z​o
+				 */
+				Name: string
+			}
+			'b7542bad-e5fc-4c02-89ce-0ec22f6deceb': {
+				/**
+				 * A​i
+				 */
+				Name: string
+			}
+			'2cdb9e2c-42c1-49d0-959b-43d4bfc1828f': {
+				/**
+				 * S​h​i​n​y​a
+				 */
+				Name: string
+			}
+			'37bb1326-d83e-425a-b21a-1a03ffea4d05': {
+				/**
+				 * E​m​i
+				 */
+				Name: string
+			}
+			'1eca6e55-53fb-4d70-995f-7e4da9266574': {
+				/**
+				 * E​m​i​k​a
+				 */
+				Name: string
+			}
 		}
 		List: {
 			NotSignedIn: {
@@ -5035,6 +5071,42 @@ export type TranslationFunctions = {
 			'7c3f8e30-9957-4d5e-a70e-c8269ff5f550': {
 				/**
 				 * Mert
+				 */
+				Name: () => LocalizedString
+			}
+			'9354180b-9735-412c-947f-9d15af6edfe0': {
+				/**
+				 * Mia
+				 */
+				Name: () => LocalizedString
+			}
+			'bcb7ac57-fd61-4630-82f0-ae3f836bb7c2': {
+				/**
+				 * Eizo
+				 */
+				Name: () => LocalizedString
+			}
+			'b7542bad-e5fc-4c02-89ce-0ec22f6deceb': {
+				/**
+				 * Ai
+				 */
+				Name: () => LocalizedString
+			}
+			'2cdb9e2c-42c1-49d0-959b-43d4bfc1828f': {
+				/**
+				 * Shinya
+				 */
+				Name: () => LocalizedString
+			}
+			'37bb1326-d83e-425a-b21a-1a03ffea4d05': {
+				/**
+				 * Emi
+				 */
+				Name: () => LocalizedString
+			}
+			'1eca6e55-53fb-4d70-995f-7e4da9266574': {
+				/**
+				 * Emika
 				 */
 				Name: () => LocalizedString
 			}

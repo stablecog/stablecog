@@ -15,6 +15,7 @@
 
 {#key src}
 	<img
+		loading="lazy"
 		class="{classes} bg-c-bg-secondary"
 		alt={type}
 		width="2560"

@@ -64,6 +64,8 @@
 	bind:duration
 	bind:this={audioElement}
 	bind:muted={isMuted}
+	on:playing={() => (isPlaying = true)}
+	on:pause={() => (isPlaying = false)}
 />
 <div
 	on:keydown={(e) => {

@@ -853,7 +853,13 @@ const zhHans: Translation = {
 			'0140c5dc-af12-4643-bfec-650d3cd03c56': { Name: 'Bryan' },
 			'4a19f17c-eedc-4cf8-a45d-1f9d69547125': { Name: 'Rachel' },
 			'5bd0610f-f073-487e-a74c-2a89105ce282': { Name: 'Gamze' },
-			'7c3f8e30-9957-4d5e-a70e-c8269ff5f550': { Name: 'Mert' }
+			'7c3f8e30-9957-4d5e-a70e-c8269ff5f550': { Name: 'Mert' },
+			'9354180b-9735-412c-947f-9d15af6edfe0': { Name: 'Mia' },
+			'bcb7ac57-fd61-4630-82f0-ae3f836bb7c2': { Name: 'Eizo' },
+			'b7542bad-e5fc-4c02-89ce-0ec22f6deceb': { Name: 'Ai' },
+			'2cdb9e2c-42c1-49d0-959b-43d4bfc1828f': { Name: 'Shinya' },
+			'37bb1326-d83e-425a-b21a-1a03ffea4d05': { Name: 'Emi' },
+			'1eca6e55-53fb-4d70-995f-7e4da9266574': { Name: 'Emika' }
 		},
 		List: {
 			NotSignedIn: { Paragraph: 'Sign in to see your voiceovers.' },
