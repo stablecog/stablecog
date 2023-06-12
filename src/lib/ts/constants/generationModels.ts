@@ -11,8 +11,8 @@ const sdSharedSchedulerIds: TAvailableSchedulerId[] = [
 ];
 
 const kandinskySchedulerIds: TAvailableSchedulerId[] = [
-	'b7224e56-1440-43b9-ac86-66d66f9e8c91',
-	'82cf78dd-6afb-48cc-aca6-14224cca6950'
+	'82cf78dd-6afb-48cc-aca6-14224cca6950',
+	'b7224e56-1440-43b9-ac86-66d66f9e8c91'
 ];
 
 export const generationModels: {
