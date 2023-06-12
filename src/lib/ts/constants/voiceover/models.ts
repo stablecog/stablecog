@@ -213,16 +213,16 @@ export const voiceoverSpeakerDropdownItems = derived(
 			},
 			// tr
 			{
-				label: $voiceoverSpeakerIdToDisplayName['0188871e-c4d1-4ad9-ab3d-ec958c443822'],
-				value: '0188871e-c4d1-4ad9-ab3d-ec958c443822'
+				label: $voiceoverSpeakerIdToDisplayName['7c3f8e30-9957-4d5e-a70e-c8269ff5f550'],
+				value: '7c3f8e30-9957-4d5e-a70e-c8269ff5f550'
 			},
 			{
 				label: $voiceoverSpeakerIdToDisplayName['5bd0610f-f073-487e-a74c-2a89105ce282'],
 				value: '5bd0610f-f073-487e-a74c-2a89105ce282'
 			},
 			{
-				label: $voiceoverSpeakerIdToDisplayName['7c3f8e30-9957-4d5e-a70e-c8269ff5f550'],
-				value: '7c3f8e30-9957-4d5e-a70e-c8269ff5f550'
+				label: $voiceoverSpeakerIdToDisplayName['0188871e-c4d1-4ad9-ab3d-ec958c443822'],
+				value: '0188871e-c4d1-4ad9-ab3d-ec958c443822'
 			},
 			{
 				label: $voiceoverSpeakerIdToDisplayName['4802af70-6d40-429d-8b9d-8df591e30743'],
