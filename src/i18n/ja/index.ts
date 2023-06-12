@@ -29,7 +29,7 @@ const ja: Translation = {
 	Home: {
 		GenerateButton: '生成',
 		PromptInput: {
-			Title: 'Prompt',
+			Title: 'プロンプト',
 			Placeholder: 'ヴァン・ゴッホ風の猫の肖像画'
 		},
 		WidthTabBar: {
@@ -112,8 +112,8 @@ const ja: Translation = {
 		}
 	},
 	Generate: {
-		ShowSettingsButton: 'Show Settings',
-		HideSettingsButton: 'Hide Settings',
+		ShowSettingsButton: '設定を表示',
+		HideSettingsButton: '設定を非表示',
 		Grid: {
 			NotSignedIn: {
 				Paragraph: '生成画像を参照するにはサインインしてください。'
@@ -195,13 +195,13 @@ const ja: Translation = {
 		CopyNegativePromptButton: '負のプロンプトをコピー',
 		CopiedButtonState: 'コピー済',
 		GenerateSimilarButton: '類似画像を生成',
-		ExploreSimilarButton: 'Explore Similar',
-		ExploreStyleButton: 'Explore Style',
+		ExploreSimilarButton: '類似を探索',
+		ExploreStyleButton: 'スタイルを探索',
 		RerollButton: 'リロール',
 		RegenerateButton: '再生成',
 		GenerateButton: '生成',
 		UpscaleButton: 'アップスケール',
-		SimilarTitle: 'Similar',
+		SimilarTitle: '類似画像',
 		SubmitToGalleryButton: 'ギャラリーに提出',
 		SubmittedTitle: '提出済み',
 		UpscaleTabBar: {
@@ -258,9 +258,9 @@ const ja: Translation = {
 		InsufficientCreditsTitle: 'クレジットが不足しています({remainingCredits}/{neededCredits})',
 		AllTitle: '全て',
 		ConfirmButton: '確定',
-		SimilarToTitle: 'Similar to: {item}',
-		ResourcesTitle: 'Resources',
-		ResourcesButton: 'Resources',
+		SimilarToTitle: '類似画像: {item}',
+		ResourcesTitle: 'リソース',
+		ResourcesButton: 'リソース',
 		ConfirmQuestionMarkButton: '確定しますか？',
 		Credits: {
 			CreditsTable: {
@@ -375,7 +375,7 @@ const ja: Translation = {
 		TryAgainButton: '再試行',
 		RefreshButton: '更新',
 		LoadMoreButton: 'さらに読み込む',
-		BackToGalleryButton: 'Back to Gallery',
+		BackToGalleryButton: 'ギャラリーに戻る',
 		SearchingTitle: '検索中',
 		NoResultsFoundTitle: '検索結果なし'
 	},
@@ -469,8 +469,8 @@ const ja: Translation = {
 		AlreadyHaveAnAccountTitle: '既にアカウントをお持ちですか？',
 		LoginInsteadButton: '代わりにログインする',
 		WantsEmailCheckbox: {
-			Paragraph: 'Get product updates, deals or news.',
-			NoSpamParagraph: 'No spam, we promise.'
+			Paragraph: '製品の更新、お得な情報、ニュース等の購読に同意',
+			NoSpamParagraph: '迷惑メールは発信しませんのでご安心ください。'
 		},
 		SixDigitCodeInput: {
 			Placeholder: '6 桁のコード'
@@ -496,7 +496,7 @@ const ja: Translation = {
 		DontHaveAnAccountTitle: 'アカウントをお持ちでないですか？',
 		SignUpInsteadButton: '代わりにサインアップする',
 		SignInButton: 'サインイン',
-		EnterCodeManuallyButton: 'Enter code manually',
+		EnterCodeManuallyButton: 'コードを手動で入力',
 		SignOutButton: 'サインアウト'
 	},
 	Pro: {
@@ -652,7 +652,7 @@ const ja: Translation = {
 			PageParagraph:
 				'シークレット API キーは以下に表示されます。最初に生成事のみ一度だけ表示されますので、安全な場所に保存しておいてください。',
 			NoKeysYet: 'まだAPIキーがありません。',
-			CreateAPIKeyButton: 'Create API Key',
+			CreateAPIKeyButton: 'API キーを作成',
 			CreateNewKeyButton: '新しいキーの作成',
 			DeleteKeyButton: 'キーの削除',
 			KeyTable: {
@@ -718,7 +718,7 @@ const ja: Translation = {
 		SearchInput: {
 			Title: '検索'
 		},
-		BackToGalleryButton: 'Back to Gallery',
+		BackToGalleryButton: 'ギャラリーに戻る',
 		SearchingTitle: '検索中...',
 		NoMatchingGenerationTitle: '一致する生成がありません'
 	},
@@ -838,7 +838,9 @@ const ja: Translation = {
 		ChaptersTitle: 'チャプター',
 		ChapterTitle: 'チャプター'
 	},
-	Try: { PageTitle: 'Try' },
+	Try: {
+		PageTitle: '試してみる'
+	},
 	Legal: {
 		TermsOfServiceTitle: '利用規約',
 		PrivacyPolicyTitle: 'プライバシーポリシー',
@@ -847,14 +849,14 @@ const ja: Translation = {
 	},
 	Documentation: {
 		PageTitle: 'ドキュメンテーション',
-		PageTitleAlt: 'API Reference',
-		APIReferenceButton: 'API Reference',
-		DocumentationButton: 'Documentation',
-		ForDevelopersTitle: 'For Developers'
+		PageTitleAlt: 'APIリファレンス',
+		APIReferenceButton: 'APIリファレンス',
+		DocumentationButton: 'ドキュメンテーション',
+		ForDevelopersTitle: '開発者向け'
 	},
 	Scl: {
 		Discord: 'Discord',
-		Email: 'Email',
+		Email: 'メール',
 		Twitter: 'Twitter',
 		Instagram: 'Instagram',
 		YouTube: 'YouTube',
@@ -865,7 +867,11 @@ const ja: Translation = {
 		ProductHunt: 'Product Hunt'
 	},
 	Voiceover: {
-		ModelOptions: { '0f442a3e-cf53-490b-b4a9-b0dda63e9523': { Name: 'Bark' } },
+		ModelOptions: {
+			'0f442a3e-cf53-490b-b4a9-b0dda63e9523': {
+				Name: 'Bark'
+			}
+		},
 		SpeakerOptions: {
 			'82bc1e69-2aa3-4317-9bc9-d9ed2afad0ff': {
 				Name: 'Paul'
@@ -873,31 +879,77 @@ const ja: Translation = {
 			'39f7fc5d-9031-4932-a4d5-b196bb06e203': {
 				Name: 'Jony'
 			},
-			'0140c5dc-af12-4643-bfec-650d3cd03c56': { Name: 'Bryan' },
-			'4a19f17c-eedc-4cf8-a45d-1f9d69547125': { Name: 'Rachel' },
-			'aad61bf9-0710-40f6-8050-8c412852f717': { Name: 'Henry' },
-			'37c069ec-f124-4be8-9d4c-e74157738877': { Name: 'Liam' },
-			'38f9bd69-fa4c-4e53-b398-9a0f5865e927': { Name: 'Dan' },
-			'5bd0610f-f073-487e-a74c-2a89105ce282': { Name: 'Gamze' },
-			'7c3f8e30-9957-4d5e-a70e-c8269ff5f550': { Name: 'Mert' },
-			'0188871e-c4d1-4ad9-ab3d-ec958c443822': { Name: 'Halit' },
-			'4802af70-6d40-429d-8b9d-8df591e30743': { Name: 'Leyla' },
-			'e10d4dac-7c39-4e96-9622-6d4e46fc384b': { Name: 'Murat' },
-			'9354180b-9735-412c-947f-9d15af6edfe0': { Name: 'Mia' },
-			'bcb7ac57-fd61-4630-82f0-ae3f836bb7c2': { Name: 'Eizo' },
-			'b7542bad-e5fc-4c02-89ce-0ec22f6deceb': { Name: 'Ai' },
-			'2cdb9e2c-42c1-49d0-959b-43d4bfc1828f': { Name: 'Shinya' },
-			'37bb1326-d83e-425a-b21a-1a03ffea4d05': { Name: 'Emi' },
-			'1eca6e55-53fb-4d70-995f-7e4da9266574': { Name: 'Emika' },
-			'4f5c8c3e-0a17-4a68-8be7-1a126fda9a0f': { Name: 'Adriana' },
-			'9206e75b-2b28-47f0-899e-76ab476e1c3f': { Name: 'Jorge' },
-			'573c37c7-f741-4d36-80dc-f126131c6343': { Name: 'Carmen' },
-			'b06d6333-1e35-45a6-b18b-3187d34cc387': { Name: 'Pedro' },
-			'90ba9324-476b-48ae-b88e-aed1975a51fd': { Name: 'David' }
+			'0140c5dc-af12-4643-bfec-650d3cd03c56': {
+				Name: 'Bryan'
+			},
+			'4a19f17c-eedc-4cf8-a45d-1f9d69547125': {
+				Name: 'Rachel'
+			},
+			'aad61bf9-0710-40f6-8050-8c412852f717': {
+				Name: 'Henry'
+			},
+			'37c069ec-f124-4be8-9d4c-e74157738877': {
+				Name: 'Liam'
+			},
+			'38f9bd69-fa4c-4e53-b398-9a0f5865e927': {
+				Name: 'Dan'
+			},
+			'5bd0610f-f073-487e-a74c-2a89105ce282': {
+				Name: 'Gamze'
+			},
+			'7c3f8e30-9957-4d5e-a70e-c8269ff5f550': {
+				Name: 'Mert'
+			},
+			'0188871e-c4d1-4ad9-ab3d-ec958c443822': {
+				Name: 'Halit'
+			},
+			'4802af70-6d40-429d-8b9d-8df591e30743': {
+				Name: 'Leyla'
+			},
+			'e10d4dac-7c39-4e96-9622-6d4e46fc384b': {
+				Name: 'Murat'
+			},
+			'9354180b-9735-412c-947f-9d15af6edfe0': {
+				Name: 'Mia'
+			},
+			'bcb7ac57-fd61-4630-82f0-ae3f836bb7c2': {
+				Name: 'Eizo'
+			},
+			'b7542bad-e5fc-4c02-89ce-0ec22f6deceb': {
+				Name: 'Ai'
+			},
+			'2cdb9e2c-42c1-49d0-959b-43d4bfc1828f': {
+				Name: 'Shinya'
+			},
+			'37bb1326-d83e-425a-b21a-1a03ffea4d05': {
+				Name: 'Emi'
+			},
+			'1eca6e55-53fb-4d70-995f-7e4da9266574': {
+				Name: 'Emika'
+			},
+			'4f5c8c3e-0a17-4a68-8be7-1a126fda9a0f': {
+				Name: 'Adriana'
+			},
+			'9206e75b-2b28-47f0-899e-76ab476e1c3f': {
+				Name: 'Jorge'
+			},
+			'573c37c7-f741-4d36-80dc-f126131c6343': {
+				Name: 'Carmen'
+			},
+			'b06d6333-1e35-45a6-b18b-3187d34cc387': {
+				Name: 'Pedro'
+			},
+			'90ba9324-476b-48ae-b88e-aed1975a51fd': {
+				Name: 'David'
+			}
 		},
 		List: {
-			NotSignedIn: { Paragraph: 'Sign in to see your voiceovers.' },
-			NoVoiceovers: { Paragraph: 'Your voiceovers will appear here.' }
+			NotSignedIn: {
+				Paragraph: 'Sign in to see your voiceovers.'
+			},
+			NoVoiceovers: {
+				Paragraph: 'Your voiceovers will appear here.'
+			}
 		},
 		Generate: {
 			SpeakerParagraph: '{speakerName} will be speaking in {languageName}.',
