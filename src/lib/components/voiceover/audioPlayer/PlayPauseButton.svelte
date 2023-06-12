@@ -1,12 +1,28 @@
 <script lang="ts">
+	import Morpher from '$components/Morpher.svelte';
 	import ButtonHoverEffect from '$components/buttons/ButtonHoverEffect.svelte';
+	import IconAnimatedSpinner from '$components/icons/IconAnimatedSpinner.svelte';
 	import IconPause from '$components/icons/IconPause.svelte';
 	import IconPlay from '$components/icons/IconPlay.svelte';
 
 	export let onClick: () => void;
 	export let isPaused: boolean;
+	export let isPlaying: boolean;
 	export let size: 'md' | 'lg' = 'md';
 	export let element: HTMLButtonElement;
+
+	let hasBeenLoadingForAWhileTimeout: NodeJS.Timeout | undefined = undefined;
+	let hasBeenLoadingForAWhile = false;
+
+	$: if (!isPaused && !isPlaying) {
+		clearTimeout(hasBeenLoadingForAWhileTimeout);
+		hasBeenLoadingForAWhileTimeout = setTimeout(() => {
+			hasBeenLoadingForAWhile = true;
+		}, 500);
+	} else {
+		clearTimeout(hasBeenLoadingForAWhileTimeout);
+		hasBeenLoadingForAWhile = false;
+	}
 </script>
 
 <button
@@ -26,9 +42,19 @@
 				class="w-full h-full transition text-c-on-bg not-touch:group-hover/play-button:text-c-primary"
 			/>
 		{:else}
-			<IconPause
-				class="w-full h-full transition text-c-on-bg not-touch:group-hover/play-button:text-c-primary"
-			/>
+			<Morpher class="w-full h-full" morphed={!isPaused && !isPlaying && hasBeenLoadingForAWhile}>
+				<div slot="0">
+					<IconPause
+						class="w-full h-full transition text-c-on-bg not-touch:group-hover/play-button:text-c-primary"
+					/>
+				</div>
+				<div class="w-full h-full" slot="1">
+					<IconAnimatedSpinner
+						class="w-full h-full not-touch:group-hover/play-button:text-c-primary"
+						loading={true}
+					/>
+				</div>
+			</Morpher>
 		{/if}
 	</div>
 </button>

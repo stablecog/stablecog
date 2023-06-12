@@ -26,7 +26,8 @@
 	let currentTime = 0;
 	let duration: number;
 	let audioElement: HTMLAudioElement;
-	let isPaused = false;
+	let isPaused = true;
+	let isPlaying = false;
 	let isMuted = false;
 
 	let playButton: HTMLButtonElement;
@@ -56,8 +57,14 @@
 	bind:duration
 	bind:this={audioElement}
 	bind:muted={isMuted}
+	on:playing={() => {
+		isPlaying = true;
+	}}
 	on:play={() => (isPaused = false)}
-	on:pause={() => (isPaused = true)}
+	on:pause={() => {
+		isPaused = true;
+		isPlaying = false;
+	}}
 />
 <div
 	on:keydown={(e) => {
@@ -91,6 +98,7 @@
 				bind:currentTime
 				{isMuted}
 				{isPaused}
+				{isPlaying}
 				{audioElement}
 				{duration}
 				{muteButton}

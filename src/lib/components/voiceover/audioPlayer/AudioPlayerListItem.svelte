@@ -30,6 +30,7 @@
 	let sliderValue = 0;
 	let audioElement: HTMLAudioElement;
 	let isPaused = true;
+	let isPlaying = false;
 	let isMuted = false;
 	let buffered: TimeRanges;
 
@@ -116,8 +117,14 @@
 			bind:muted={isMuted}
 			bind:buffered
 			preload="none"
+			on:playing={() => {
+				isPlaying = true;
+			}}
 			on:play={() => (isPaused = false)}
-			on:pause={() => (isPaused = true)}
+			on:pause={() => {
+				isPaused = true;
+				isPlaying = false;
+			}}
 		/>
 		<div class="flex items-center -ml-2">
 			<PlayPauseButton
@@ -126,6 +133,7 @@
 					togglePlay({ audioElement });
 				}}
 				{isPaused}
+				{isPlaying}
 			/>
 			{#if hasMute}
 				<MuteButton bind:element={muteButton} onClick={() => toggleMute(audioElement)} {isMuted} />

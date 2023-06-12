@@ -24,6 +24,7 @@
 	export let audioElement: HTMLAudioElement;
 	export let isMuted: boolean;
 	export let isPaused: boolean;
+	export let isPlaying: boolean;
 	export let playButton: HTMLButtonElement;
 	export let muteButton: HTMLButtonElement;
 	export let currentTime: number;
@@ -149,6 +150,7 @@
 				bind:element={playButton}
 				onClick={() => togglePlay({ audioElement })}
 				{isPaused}
+				{isPlaying}
 				size="lg"
 			/>
 			<MuteButton
