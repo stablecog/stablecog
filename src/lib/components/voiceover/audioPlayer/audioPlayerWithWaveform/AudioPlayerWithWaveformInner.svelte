@@ -23,7 +23,7 @@
 	export let title: string | undefined;
 	export let audioElement: HTMLAudioElement;
 	export let isMuted: boolean;
-	export let isPlaying: boolean;
+	export let isPaused: boolean;
 	export let playButton: HTMLButtonElement;
 	export let muteButton: HTMLButtonElement;
 	export let currentTime: number;
@@ -35,7 +35,6 @@
 	export let output: TVoiceoverOutput | undefined = undefined;
 	export let audioStatus: TAudioStatus;
 	export let audioArray: number[] | undefined = undefined;
-	export let toggleIsPlaying: (s?: boolean) => void;
 
 	let sliderValue = 0;
 	let sliderContainerWidth: number;
@@ -134,10 +133,8 @@
 	}
 
 	onDestroy(() => {
+		audioElement?.pause();
 		audioArray = undefined;
-		if (audioElement) {
-			togglePlay({ audioElement, state: 'pause', callback: () => toggleIsPlaying(false) });
-		}
 		currentTime = 0;
 	});
 </script>
@@ -150,8 +147,8 @@
 		<div class="flex items-center -ml-3">
 			<PlayPauseButton
 				bind:element={playButton}
-				onClick={() => togglePlay({ audioElement, callback: toggleIsPlaying })}
-				{isPlaying}
+				onClick={() => togglePlay({ audioElement })}
+				{isPaused}
 				size="lg"
 			/>
 			<MuteButton

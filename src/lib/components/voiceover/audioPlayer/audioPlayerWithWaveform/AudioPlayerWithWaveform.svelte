@@ -26,7 +26,7 @@
 	let currentTime = 0;
 	let duration: number;
 	let audioElement: HTMLAudioElement;
-	let isPlaying = false;
+	let isPaused = false;
 	let isMuted = false;
 
 	let playButton: HTMLButtonElement;
@@ -39,14 +39,6 @@
 			: status === 'succeeded'
 			? 'created'
 			: 'idle';
-
-	function toggleIsPlaying(state?: boolean) {
-		if (state !== undefined) {
-			isPlaying = state;
-			return;
-		}
-		isPlaying = !isPlaying;
-	}
 
 	onMount(async () => {
 		$allAudioPlayers.add(audioElement);
@@ -64,14 +56,14 @@
 	bind:duration
 	bind:this={audioElement}
 	bind:muted={isMuted}
-	on:playing={() => (isPlaying = true)}
-	on:pause={() => (isPlaying = false)}
+	on:play={() => (isPaused = false)}
+	on:pause={() => (isPaused = true)}
 />
 <div
 	on:keydown={(e) => {
 		if (e.target === playButton || e.target === muteButton) return;
 		if (e.key === ' ') {
-			togglePlay({ audioElement, callback: toggleIsPlaying });
+			togglePlay({ audioElement });
 		}
 	}}
 	class="w-full h-full bg-c-bg-secondary flex flex-col rounded-2xl overflow-hidden relative z-0
@@ -98,8 +90,7 @@
 			<AudioPlayerWithWaveformInner
 				bind:currentTime
 				{isMuted}
-				{isPlaying}
-				{toggleIsPlaying}
+				{isPaused}
 				{audioElement}
 				{duration}
 				{muteButton}

@@ -70,7 +70,7 @@ export function togglePlay({
 }: {
 	audioElement: HTMLAudioElement;
 	state?: 'play' | 'pause';
-	callback: () => void;
+	callback?: () => void;
 }) {
 	if (state === 'play') {
 		stopAllPlayers(audioElement);
@@ -83,7 +83,7 @@ export function togglePlay({
 	} else {
 		audioElement.pause();
 	}
-	callback();
+	if (callback) callback();
 }
 
 export function toggleMute(audioElement: HTMLAudioElement) {

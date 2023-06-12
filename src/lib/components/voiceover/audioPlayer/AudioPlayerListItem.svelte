@@ -29,7 +29,7 @@
 	let durationLocal: number;
 	let sliderValue = 0;
 	let audioElement: HTMLAudioElement;
-	let isPlaying = false;
+	let isPaused = true;
 	let isMuted = false;
 	let buffered: TimeRanges;
 
@@ -58,11 +58,6 @@
 			currentTime = toBeTime;
 		}
 	}
-
-	function toggleIsPlaying() {
-		isPlaying = !isPlaying;
-	}
-
 	onMount(() => {
 		$allAudioPlayers.add(audioElement);
 	});
@@ -77,7 +72,7 @@
 	on:keydown={(e) => {
 		if (e.target === playButton || e.target === muteButton) return;
 		if (e.key === ' ') {
-			togglePlay({ audioElement, callback: toggleIsPlaying });
+			togglePlay({ audioElement });
 		}
 	}}
 	class="{inHorizontal
@@ -121,16 +116,16 @@
 			bind:muted={isMuted}
 			bind:buffered
 			preload="none"
-			on:playing={() => (isPlaying = true)}
-			on:pause={() => (isPlaying = false)}
+			on:play={() => (isPaused = false)}
+			on:pause={() => (isPaused = true)}
 		/>
 		<div class="flex items-center -ml-2">
 			<PlayPauseButton
 				bind:element={playButton}
 				onClick={() => {
-					togglePlay({ audioElement, callback: toggleIsPlaying });
+					togglePlay({ audioElement });
 				}}
-				{isPlaying}
+				{isPaused}
 			/>
 			{#if hasMute}
 				<MuteButton bind:element={muteButton} onClick={() => toggleMute(audioElement)} {isMuted} />

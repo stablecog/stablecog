@@ -4,7 +4,7 @@
 	import IconPlay from '$components/icons/IconPlay.svelte';
 
 	export let onClick: () => void;
-	export let isPlaying: boolean;
+	export let isPaused: boolean;
 	export let size: 'md' | 'lg' = 'md';
 	export let element: HTMLButtonElement;
 </script>
@@ -21,12 +21,12 @@
 		color="primary"
 	/>
 	<div class="p-2">
-		{#if isPlaying}
-			<IconPause
+		{#if isPaused}
+			<IconPlay
 				class="w-full h-full transition text-c-on-bg not-touch:group-hover/play-button:text-c-primary"
 			/>
 		{:else}
-			<IconPlay
+			<IconPause
 				class="w-full h-full transition text-c-on-bg not-touch:group-hover/play-button:text-c-primary"
 			/>
 		{/if}
