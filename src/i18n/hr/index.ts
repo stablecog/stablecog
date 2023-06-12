@@ -866,7 +866,12 @@ const hr: Translation = {
 			'b7542bad-e5fc-4c02-89ce-0ec22f6deceb': { Name: 'Ai' },
 			'2cdb9e2c-42c1-49d0-959b-43d4bfc1828f': { Name: 'Shinya' },
 			'37bb1326-d83e-425a-b21a-1a03ffea4d05': { Name: 'Emi' },
-			'1eca6e55-53fb-4d70-995f-7e4da9266574': { Name: 'Emika' }
+			'1eca6e55-53fb-4d70-995f-7e4da9266574': { Name: 'Emika' },
+			'4f5c8c3e-0a17-4a68-8be7-1a126fda9a0f': { Name: 'Adriana' },
+			'9206e75b-2b28-47f0-899e-76ab476e1c3f': { Name: 'Jorge' },
+			'573c37c7-f741-4d36-80dc-f126131c6343': { Name: 'Carmen' },
+			'b06d6333-1e35-45a6-b18b-3187d34cc387': { Name: 'Pedro' },
+			'90ba9324-476b-48ae-b88e-aed1975a51fd': { Name: 'David' }
 		},
 		List: {
 			NotSignedIn: { Paragraph: 'Sign in to see your voiceovers.' },

@@ -90,7 +90,7 @@
 </script>
 
 <div class="w-full h-full bg-c-bg-secondary flex flex-col relative">
-	<div class="flex items-center bg-c-bg-secondary p-4 rounded-xl">
+	<div class="w-full flex justify-start items-center p-4">
 		<div class="relative flex items-center justify-start">
 			<div
 				class="absolute left-0 top-0 w-full h-full bg-c-on-bg/20 rounded-2xl {shouldAnimate
@@ -111,15 +111,6 @@
 				languageName: getHighlightedSpan(languageName($locale).of(voiceoverLocale) || '')
 			})}<br />{$LL.Voiceover.Generate.VoiceoverParagraph()}
 		</p>
-		{#if error}
-			<div
-				in:scale|local={{ duration: 200, easing: easingBounceOut, start: 0.5 }}
-				out:scale|local={{ duration: 200, easing: quadOut, start: 0.5 }}
-				class="max-w-full p-3 absolute right-0 top-0"
-			>
-				<ErrorChip {error} />
-			</div>
-		{/if}
 	</div>
 
 	<div class="w-full flex-1 flex relative overflow-hidden pt-4">
@@ -133,4 +124,14 @@
 			{/if}
 		</div>
 	</div>
+
+	{#if error}
+		<div
+			in:scale|local={{ duration: 200, easing: easingBounceOut, start: 0.5 }}
+			out:scale|local={{ duration: 200, easing: quadOut, start: 0.5 }}
+			class="w-full bottom-0 absolute left-0 p-4 flex items-center justify-center"
+		>
+			<ErrorChip class="max-h-[6rem] overflow-auto" {error} />
+		</div>
+	{/if}
 </div>

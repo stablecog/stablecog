@@ -2603,6 +2603,36 @@ type RootTranslation = {
 				 */
 				Name: string
 			}
+			'4f5c8c3e-0a17-4a68-8be7-1a126fda9a0f': {
+				/**
+				 * A​d​r​i​a​n​a
+				 */
+				Name: string
+			}
+			'9206e75b-2b28-47f0-899e-76ab476e1c3f': {
+				/**
+				 * J​o​r​g​e
+				 */
+				Name: string
+			}
+			'573c37c7-f741-4d36-80dc-f126131c6343': {
+				/**
+				 * C​a​r​m​e​n
+				 */
+				Name: string
+			}
+			'b06d6333-1e35-45a6-b18b-3187d34cc387': {
+				/**
+				 * P​e​d​r​o
+				 */
+				Name: string
+			}
+			'90ba9324-476b-48ae-b88e-aed1975a51fd': {
+				/**
+				 * D​a​v​i​d
+				 */
+				Name: string
+			}
 		}
 		List: {
 			NotSignedIn: {
@@ -5179,6 +5209,36 @@ export type TranslationFunctions = {
 			'1eca6e55-53fb-4d70-995f-7e4da9266574': {
 				/**
 				 * Emika
+				 */
+				Name: () => LocalizedString
+			}
+			'4f5c8c3e-0a17-4a68-8be7-1a126fda9a0f': {
+				/**
+				 * Adriana
+				 */
+				Name: () => LocalizedString
+			}
+			'9206e75b-2b28-47f0-899e-76ab476e1c3f': {
+				/**
+				 * Jorge
+				 */
+				Name: () => LocalizedString
+			}
+			'573c37c7-f741-4d36-80dc-f126131c6343': {
+				/**
+				 * Carmen
+				 */
+				Name: () => LocalizedString
+			}
+			'b06d6333-1e35-45a6-b18b-3187d34cc387': {
+				/**
+				 * Pedro
+				 */
+				Name: () => LocalizedString
+			}
+			'90ba9324-476b-48ae-b88e-aed1975a51fd': {
+				/**
+				 * David
 				 */
 				Name: () => LocalizedString
 			}
