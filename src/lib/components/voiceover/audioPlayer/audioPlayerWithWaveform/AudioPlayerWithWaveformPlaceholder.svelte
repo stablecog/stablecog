@@ -91,7 +91,7 @@
 
 <div class="w-full h-full bg-c-bg-secondary flex flex-col relative">
 	<div class="w-full flex justify-start items-center p-4">
-		<div class="relative flex items-center justify-start">
+		<div class="flex-shrink-0 relative flex items-center justify-start">
 			<div
 				class="absolute left-0 top-0 w-full h-full bg-c-on-bg/20 rounded-2xl {shouldAnimate
 					? 'animate-ping-speaker-bg'
@@ -100,12 +100,12 @@
 			<div class="{shouldAnimate ? 'animate-ping-speaker' : ''} flex-shrink-0">
 				<IconSpeaker
 					sizes="64px"
-					class="w-16 h-16 rounded-lg2 shadow-lg relative shadow-c-shadow/[var(--o-shadow-strong)] ring-2 ring-c-bg-tertiary"
+					class="w-15 h-15 rounded-lg2 shadow-lg relative shadow-c-shadow/[var(--o-shadow-strong)] ring-2 ring-c-bg-tertiary"
 					type={speakerId}
 				/>
 			</div>
 		</div>
-		<p class="text-c-on-bg/50 font-base px-4">
+		<p class="flex-shrink min-w-0 text-c-on-bg/50 font-base px-4">
 			{@html $LL.Voiceover.Generate.SpeakerParagraph({
 				speakerName: getHighlightedSpan($voiceoverSpeakerIdToDisplayName[speakerId]),
 				languageName: getHighlightedSpan(languageName($locale).of(voiceoverLocale) || '')
@@ -129,9 +129,9 @@
 		<div
 			in:scale|local={{ duration: 200, easing: easingBounceOut, start: 0.5 }}
 			out:scale|local={{ duration: 200, easing: quadOut, start: 0.5 }}
-			class="w-full bottom-0 absolute left-0 p-4 flex items-center justify-center"
+			class="w-full bottom-0 absolute left-0 p-5 flex items-center justify-center"
 		>
-			<ErrorChip class="max-h-[6rem] overflow-auto" {error} />
+			<ErrorChip size="md" class="max-h-[6rem] overflow-auto" {error} />
 		</div>
 	{/if}
 </div>

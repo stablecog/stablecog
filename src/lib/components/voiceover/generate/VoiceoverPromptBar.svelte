@@ -62,13 +62,13 @@
 
 <form
 	on:submit={onSubmit}
-	class="w-full flex flex-col rounded-xl overflow-hidden relative bg-c-bg-secondary"
+	class="w-full flex flex-col rounded-2xl overflow-hidden relative bg-c-bg-secondary"
 >
 	<div class="w-full flex flex-col relative">
 		<textarea
 			bind:value={$voiceoverPrompt}
 			placeholder="I like to eat apples and bananas."
-			class="w-full h-full bg-c-bg-secondary rounded-t-xl resize-none px-5 py-4
+			class="w-full h-full bg-c-bg-secondary rounded-t-2xl resize-none px-5 py-4
 			relative text-lg pb-6 placeholder:text-c-on-bg/40"
 			rows="7"
 			maxlength={maxVoiceoverCharacterCount}
@@ -81,7 +81,9 @@
 		class="w-full rounded-b-xl pointer-events-none
    	 	flex justify-end items-center px-3 pt-2 pb-4 bg-c-bg-secondary gap-4"
 	>
-		<div class="flex flex-col items-end justify-center font-medium text-sm pointer-events-auto">
+		<div
+			class="flex flex-col items-end justify-center font-medium text-right text-sm pointer-events-auto"
+		>
 			<p>
 				{($voiceoverPrompt || '').length}
 				<span class="text-c-on-bg/50">/ {maxVoiceoverCharacterCount}</span>
