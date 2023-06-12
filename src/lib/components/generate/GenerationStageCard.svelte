@@ -62,7 +62,7 @@
 						{status === 'failed-nsfw' ? $LL.Error.ImageWasNSFW() : $LL.Error.SomethingWentWrong()}
 					</p>
 					{#if status !== 'failed-nsfw' && generation.error !== undefined}
-						<ErrorChip class="mt-2.5" error={generation.error} />
+						<ErrorChip class="mt-2" error={generation.error} />
 					{/if}
 				</div>
 			{/if}
