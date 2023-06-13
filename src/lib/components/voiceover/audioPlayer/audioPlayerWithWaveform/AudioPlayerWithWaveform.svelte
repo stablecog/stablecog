@@ -3,7 +3,7 @@
 	import { togglePlay } from '$components/voiceover/audioPlayer/helpers';
 
 	import { allAudioPlayers } from '$ts/stores/allPlayers';
-	import type { TVoiceoverStatus } from '$ts/stores/user/voiceovers';
+	import type { TVoiceoverFullOutput, TVoiceoverStatus } from '$ts/stores/user/voiceovers';
 	import AudioPlayerWithWaveformPlaceholder from '$components/voiceover/audioPlayer/audioPlayerWithWaveform/AudioPlayerWithWaveformPlaceholder.svelte';
 	import { cubicOut } from 'svelte/easing';
 	import { scale } from 'svelte/transition';
@@ -19,6 +19,7 @@
 	export let speakerId: TVoiceoverSpeakerId;
 	export let voiceoverLocale: TVoiceoverLocale;
 	export let error: string | undefined = undefined;
+	export let output: TVoiceoverFullOutput | undefined = undefined;
 	export { classes as class };
 	let classes = '';
 
@@ -96,6 +97,7 @@
 		>
 			<AudioPlayerWithWaveformInner
 				bind:currentTime
+				{output}
 				{isMuted}
 				{isPaused}
 				{isPlaying}

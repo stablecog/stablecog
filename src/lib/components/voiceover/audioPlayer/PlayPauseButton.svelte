@@ -32,7 +32,7 @@
 >
 	<ButtonHoverEffect
 		groupClass="not-touch:group-hover/play-button:translate-x-0 not-touch:group-hover/play-button:translate-y-0 not-touch:group-hover/play-button:opacity-100"
-		size="sm"
+		size={size === 'lg' ? 'md' : 'sm'}
 		noPadding
 		color="primary"
 	/>
@@ -51,7 +51,7 @@
 				<div class="w-full h-full" slot="1">
 					<IconAnimatedSpinner
 						class="w-full h-full not-touch:group-hover/play-button:text-c-primary"
-						loading={true}
+						loading={!isPaused && !isPlaying && hasBeenLoadingForAWhile}
 					/>
 				</div>
 			</Morpher>

@@ -16,7 +16,7 @@
 >
 	<ButtonHoverEffect
 		groupClass="not-touch:group-hover/mute-button:translate-x-0 not-touch:group-hover/mute-button:translate-y-0 not-touch:group-hover/mute-button:opacity-100"
-		size="sm"
+		size={size === 'lg' ? 'md' : 'sm'}
 		noPadding
 		color="primary"
 	/>

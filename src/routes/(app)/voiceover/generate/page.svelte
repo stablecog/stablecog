@@ -252,6 +252,9 @@
 									voiceoverLocale={$voiceovers?.[0]?.status
 										? $voiceovers[0].speaker.locale
 										: $voiceoverLocale}
+									output={$voiceovers?.[0]?.status
+										? { ...$voiceovers[0].outputs[0], voiceover: $voiceovers[0] }
+										: undefined}
 									title={$voiceovers[0]?.prompt.text}
 									error={$voiceovers ? $voiceovers[0]?.error : undefined}
 									status={$voiceovers?.[0]?.status}

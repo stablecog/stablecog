@@ -13,14 +13,14 @@
 	import { voiceoverSpeakerIdToDisplayName } from '$ts/constants/voiceover/models';
 	import { allAudioPlayers } from '$ts/stores/allPlayers';
 	import { onDestroy, onMount } from 'svelte';
+	import ThreeDotDropdown from '$components/voiceover/audioPlayer/ThreeDotDropdown.svelte';
+	import type { TVoiceoverFullOutput } from '$ts/stores/user/voiceovers';
+	import { PUBLIC_BUCKET_URL, PUBLIC_BUCKET_VOICEOVER_URL } from '$env/static/public';
 
-	export let src: string;
-	export let title: string;
-	export let label: string;
+	export let output: TVoiceoverFullOutput;
 	export let hasMute = false;
-	export let speakerId: string;
-	export let duration: number | undefined = undefined;
 	export let inHorizontal = false;
+	export let container: HTMLElement | undefined = undefined;
 
 	let playButton: HTMLButtonElement;
 	let muteButton: HTMLButtonElement;
@@ -41,8 +41,8 @@
 	$: progressPercentage = progress * 100;
 	$: totalTimestamp = durationLocal
 		? convertSecondsToTimestamp(durationLocal)
-		: duration
-		? convertSecondsToTimestamp(duration)
+		: output.audio_duration
+		? convertSecondsToTimestamp(output.audio_duration)
 		: undefined;
 	$: currentTimestamp = currentTime ? convertSecondsToTimestamp(currentTime) : undefined;
 
@@ -81,36 +81,36 @@
 		: ''} w-full bg-c-bg-secondary px-3 pt-1.5 pb-1 flex flex-col items-start rounded-xl
 	shadow-lg shadow-c-shadow/[var(--o-shadow-normal)] overflow-hidden relative z-0 group/audio-player-list-item"
 >
-	<div class="w-full flex justify-between items-center pt-1.5 pb-2.25 gap-2">
+	<div class="w-full flex justify-between items-center gap-2 pb-1">
 		<div class="flex-shrink min-w-0 w-full flex justify-start items-center">
 			<div
 				class="rounded-md bg-c-bg-tertiary overflow-hidden
 					flex items-center justify-start relative z-0 ring-2 ring-c-bg-tertiary"
 			>
 				<div class="w-7 h-7 flex-shrink-0 shadow-lg overflow-hidden relative z-0">
-					<IconSpeaker class="w-full h-full" type={speakerId} sizes="28px" />
+					<IconSpeaker class="w-full h-full" type={output.voiceover.speaker.id} sizes="28px" />
 				</div>
 				<p
 					class="text-c-on-bg/75 flex-shrink min-w-0 whitespace-nowrap overflow-hidden overflow-ellipsis text-sm font-medium
 					px-2.5 py-1 h-full"
 				>
-					{$voiceoverSpeakerIdToDisplayName[speakerId]}
+					{$voiceoverSpeakerIdToDisplayName[output.voiceover.speaker.id]}
 				</p>
 			</div>
 		</div>
-		<div class="h-full md:hidden xl:block">
-			<IconThreeDots class="text-c-on-bg/50 w-6 h-6" />
+		<div class="-mr-1.5">
+			<ThreeDotDropdown {output} {container} />
 		</div>
 	</div>
 	<p
 		class="md:hidden lg:block xl:hidden text-sm text-c-on-bg/75 py-1 max-w-full whitespace-nowrap overflow-hidden overflow-ellipsis"
 	>
-		{title}
+		{output.voiceover.prompt.text}
 	</p>
 	<div class="{inHorizontal ? 'h-full' : ''} w-full flex items-center justify-center">
 		<audio
-			{src}
-			aria-label={label}
+			src={output.audio_file_url.replace(PUBLIC_BUCKET_URL, PUBLIC_BUCKET_VOICEOVER_URL)}
+			aria-label={output.voiceover.prompt.text}
 			bind:currentTime
 			bind:duration={durationLocal}
 			bind:this={audioElement}
@@ -143,7 +143,7 @@
 			<p
 				class="block lg:hidden xl:block text-sm text-c-on-bg/75 py-1 max-w-full whitespace-nowrap overflow-hidden overflow-ellipsis"
 			>
-				{title}
+				{output.voiceover.prompt.text}
 			</p>
 			<div class="w-full flex items-center -mt-1">
 				<div class="flex-1 self-stretch h-8">
@@ -162,7 +162,7 @@
 				<p class="pl-3 text-xs text-c-on-bg/50 lg:hidden xl:block">
 					{currentTime && currentTimestamp ? currentTimestamp : '00:00'}
 					<span class="text-c-on-bg/25">/</span>
-					{(durationLocal || duration) && totalTimestamp ? totalTimestamp : '00:00'}
+					{(durationLocal || output.audio_duration) && totalTimestamp ? totalTimestamp : '00:00'}
 				</p>
 			</div>
 		</div>
