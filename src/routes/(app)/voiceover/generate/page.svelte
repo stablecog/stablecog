@@ -13,7 +13,11 @@
 	import { windowWidth } from '$ts/stores/window.js';
 	import { quadOut } from 'svelte/easing';
 	import { fade, fly } from 'svelte/transition';
-	import { voiceovers } from '$ts/stores/user/voiceovers.js';
+	import {
+		voiceovers,
+		type TVoiceoverFullOutput,
+		type TVoiceoverOutput
+	} from '$ts/stores/user/voiceovers.js';
 	import { PUBLIC_BUCKET_URL, PUBLIC_BUCKET_VOICEOVER_URL } from '$env/static/public';
 	import { browser } from '$app/environment';
 	import { createInfiniteQuery } from '@tanstack/svelte-query';
@@ -33,15 +37,15 @@
 		listItemWidth,
 		listPadding
 	} from '$components/voiceover/lists/constants.js';
-	import { voiceoverSpeakerId } from '$ts/stores/voiceover/voiceoverSettings.js';
-	import { voiceoverLocale } from '$ts/constants/voiceover/models.js';
+	import {
+		voiceoverSpeakerId,
+		voiceoverStability
+	} from '$ts/stores/voiceover/voiceoverSettings.js';
+	import { voiceoverLocale, voiceoverModelId } from '$ts/constants/voiceover/models.js';
 	import MetaTag from '$components/MetaTag.svelte';
 	import { canonicalUrl } from '$ts/constants/main.js';
 
 	export let data;
-
-	const examplePrompt =
-		'Create amazing art in seconds with AI. Free, multilingual and open-source AI image generator using Stable Diffusion and Kandinsky.';
 
 	const lowOnCreditsThreshold = 10;
 
@@ -100,6 +104,51 @@
 		.flatMap((g) => g.outputs.map((o) => ({ ...o, generation: g })));
 
 	$: userVoiceoverOutputs = $userVoiceoverFullOutputsQuery?.data?.pages?.flatMap((p) => p.outputs);
+
+	let placeholderOutput: TVoiceoverOutput = {
+		audio_duration: 0,
+		audio_file_url: '',
+		id: ''
+	};
+
+	let placeholderFullOutput: TVoiceoverFullOutput;
+	$: placeholderFullOutput = {
+		...placeholderOutput,
+		voiceover: {
+			ui_id: 'placeholder',
+			id: 'placeholder',
+			created_at: '',
+			prompt: {
+				id: '1',
+				text: 'Create amazing art in seconds with AI.'
+			},
+			seed: 1,
+			speaker: {
+				id: $voiceoverSpeakerId,
+				locale: $voiceoverLocale
+			},
+			status: 'pre-submit',
+			temperature: Math.round($voiceoverStability) / 100,
+			submit_to_gallery: false,
+			model_id: $voiceoverModelId,
+			num_outputs: 1,
+			outputs: [placeholderOutput]
+		}
+	};
+
+	let lastOutput: TVoiceoverFullOutput;
+	$: lastOutput =
+		$voiceovers?.[0] &&
+		($voiceovers[0].status === 'pre-submit' ||
+			$voiceovers[0].status === 'to-be-submitted' ||
+			$voiceovers[0].status === 'server-received' ||
+			$voiceovers[0].status === 'server-processing' ||
+			$voiceovers[0].status === 'succeeded')
+			? {
+					...$voiceovers[0].outputs[0],
+					voiceover: $voiceovers[0]
+			  }
+			: placeholderFullOutput;
 </script>
 
 <MetaTag
@@ -236,29 +285,7 @@
 							class="w-full flex-1 min-h-0 flex flex-col justify-start overflow-hidden p-3 md:p-0"
 						>
 							<div class="flex-1 min-h-0 w-full flex flex-col overflow-hidden relative">
-								<AudioPlayerWithWaveform
-									src={$voiceovers?.[0]?.status === 'succeeded'
-										? $voiceovers[0].outputs[0].audio_file_url.replace(
-												PUBLIC_BUCKET_URL,
-												PUBLIC_BUCKET_VOICEOVER_URL
-										  )
-										: undefined}
-									label={$voiceovers?.[0]?.status === 'succeeded'
-										? $voiceovers[0].prompt.text
-										: examplePrompt}
-									speakerId={$voiceovers?.[0]?.status
-										? $voiceovers[0].speaker.id
-										: $voiceoverSpeakerId}
-									voiceoverLocale={$voiceovers?.[0]?.status
-										? $voiceovers[0].speaker.locale
-										: $voiceoverLocale}
-									output={$voiceovers?.[0]?.status
-										? { ...$voiceovers[0].outputs[0], voiceover: $voiceovers[0] }
-										: undefined}
-									title={$voiceovers[0]?.prompt.text}
-									error={$voiceovers ? $voiceovers[0]?.error : undefined}
-									status={$voiceovers?.[0]?.status}
-								/>
+								<AudioPlayerWithWaveform output={lastOutput} />
 							</div>
 						</div>
 					</div>

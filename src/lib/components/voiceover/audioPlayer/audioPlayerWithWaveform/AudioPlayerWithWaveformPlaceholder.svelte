@@ -2,27 +2,26 @@
 	import { animateWave, resetWave } from '$components/voiceover/audioPlayer/helpers';
 	import IconSpeaker from '$components/icons/IconVoiceoverSpeaker.svelte';
 	import LL, { locale } from '$i18n/i18n-svelte';
-	import {
-		voiceoverSpeakerIdToDisplayName,
-		type TVoiceoverSpeakerId
-	} from '$ts/constants/voiceover/models';
+	import { voiceoverSpeakerIdToDisplayName } from '$ts/constants/voiceover/models';
 	import { languageName } from '$ts/helpers/language';
 	import { onDestroy } from 'svelte';
 	import { scale } from 'svelte/transition';
 	import { quadOut } from 'svelte/easing';
 	import { easingBounceOut } from '$ts/animation/easing';
 	import ErrorChip from '$components/error/ErrorChip.svelte';
+	import type { TVoiceoverFullOutput } from '$ts/stores/user/voiceovers';
 
-	export let speakerId: TVoiceoverSpeakerId;
-	export let shouldAnimate = false;
 	export let barWidth: number;
-	export let voiceoverLocale: string;
-	export let error: string | undefined = undefined;
+	export let output: TVoiceoverFullOutput;
 
 	let waveformContainer: HTMLDivElement;
 	let waveformContainerWidth: number | undefined;
 	let waveformContainerHeight: number | undefined;
 
+	$: shouldAnimate =
+		output.status === 'to-be-submitted' ||
+		output.status === 'server-received' ||
+		output.status === 'server-processing';
 	$: pointCount = waveformContainerWidth
 		? Math.floor(waveformContainerWidth / barWidth)
 		: undefined;
@@ -101,14 +100,18 @@
 				<IconSpeaker
 					sizes="64px"
 					class="w-15 h-15 rounded-lg2 shadow-lg relative shadow-c-shadow/[var(--o-shadow-strong)] ring-2 ring-c-bg-tertiary"
-					type={speakerId}
+					type={output.voiceover.speaker.id}
 				/>
 			</div>
 		</div>
 		<p class="flex-shrink min-w-0 text-c-on-bg/50 font-base px-4">
 			{@html $LL.Voiceover.Generate.SpeakerParagraph({
-				speakerName: getHighlightedSpan($voiceoverSpeakerIdToDisplayName[speakerId]),
-				languageName: getHighlightedSpan(languageName($locale).of(voiceoverLocale) || '')
+				speakerName: getHighlightedSpan(
+					$voiceoverSpeakerIdToDisplayName[output.voiceover.speaker.id]
+				),
+				languageName: getHighlightedSpan(
+					languageName($locale).of(output.voiceover.speaker.locale) || ''
+				)
 			})}<br />{$LL.Voiceover.Generate.VoiceoverParagraph()}
 		</p>
 	</div>
@@ -125,13 +128,13 @@
 		</div>
 	</div>
 
-	{#if error}
+	{#if output.voiceover.error}
 		<div
 			in:scale|local={{ duration: 200, easing: easingBounceOut, start: 0.5 }}
 			out:scale|local={{ duration: 200, easing: quadOut, start: 0.5 }}
 			class="w-full bottom-0 absolute left-0 p-5 flex items-center justify-center"
 		>
-			<ErrorChip size="md" class="max-h-[6rem] overflow-auto" {error} />
+			<ErrorChip size="md" class="max-h-[6rem] overflow-auto" error={output.voiceover.error} />
 		</div>
 	{/if}
 </div>

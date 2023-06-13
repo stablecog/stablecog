@@ -3,23 +3,15 @@
 	import { togglePlay } from '$components/voiceover/audioPlayer/helpers';
 
 	import { allAudioPlayers } from '$ts/stores/allPlayers';
-	import type { TVoiceoverFullOutput, TVoiceoverStatus } from '$ts/stores/user/voiceovers';
+	import type { TVoiceoverFullOutput } from '$ts/stores/user/voiceovers';
 	import AudioPlayerWithWaveformPlaceholder from '$components/voiceover/audioPlayer/audioPlayerWithWaveform/AudioPlayerWithWaveformPlaceholder.svelte';
 	import { cubicOut } from 'svelte/easing';
 	import { scale } from 'svelte/transition';
-	import type { TVoiceoverSpeakerId } from '$ts/constants/voiceover/models';
 	import AudioPlayerWithWaveformInner from '$components/voiceover/audioPlayer/audioPlayerWithWaveform/AudioPlayerWithWaveformInner.svelte';
 	import type { TAudioStatus } from '$components/voiceover/audioPlayer/audioPlayerWithWaveform/types';
-	import type { TVoiceoverLocale } from '$ts/constants/voiceover/locales';
+	import { PUBLIC_BUCKET_URL, PUBLIC_BUCKET_VOICEOVER_URL } from '$env/static/public';
 
-	export let src: string | undefined;
-	export let title: string | undefined = undefined;
-	export let label: string;
-	export let status: TVoiceoverStatus | undefined = undefined;
-	export let speakerId: TVoiceoverSpeakerId;
-	export let voiceoverLocale: TVoiceoverLocale;
-	export let error: string | undefined = undefined;
-	export let output: TVoiceoverFullOutput | undefined = undefined;
+	export let output: TVoiceoverFullOutput;
 	export { classes as class };
 	let classes = '';
 
@@ -36,9 +28,11 @@
 
 	let audioStatus: TAudioStatus;
 	$: audioStatus =
-		status === 'to-be-submitted' || status === 'server-received' || status === 'server-processing'
+		output?.status === 'to-be-submitted' ||
+		output?.status === 'server-received' ||
+		output?.status === 'server-processing'
 			? 'being-created'
-			: status === 'succeeded'
+			: output?.status === 'succeeded'
 			? 'created'
 			: 'idle';
 
@@ -52,8 +46,8 @@
 </script>
 
 <audio
-	{src}
-	aria-label={label}
+	src={output?.audio_file_url.replace(PUBLIC_BUCKET_URL, PUBLIC_BUCKET_VOICEOVER_URL)}
+	aria-label={output?.voiceover.prompt.text || 'Voiceover'}
 	bind:currentTime
 	bind:duration
 	bind:this={audioElement}
@@ -82,13 +76,7 @@
 			transition:scale|local={{ duration: 300, easing: cubicOut, start: 0.9 }}
 			class="w-full h-full absolute left-0 top-0 bg-c-bg-secondary"
 		>
-			<AudioPlayerWithWaveformPlaceholder
-				{speakerId}
-				{error}
-				{voiceoverLocale}
-				{barWidth}
-				shouldAnimate={audioStatus === 'being-created'}
-			/>
+			<AudioPlayerWithWaveformPlaceholder {output} {barWidth} />
 		</div>
 	{:else}
 		<div
@@ -97,20 +85,15 @@
 		>
 			<AudioPlayerWithWaveformInner
 				bind:currentTime
+				bind:muteButton
+				bind:playButton
 				{output}
 				{isMuted}
 				{isPaused}
 				{isPlaying}
 				{audioElement}
 				{duration}
-				{muteButton}
-				{playButton}
-				{speakerId}
-				{title}
 				{barWidth}
-				{audioStatus}
-				{src}
-				{status}
 			/>
 		</div>
 	{/if}

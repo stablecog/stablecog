@@ -5,19 +5,20 @@
 	export { classes as class };
 	export let alignment = 'right-0 top-0';
 	export let rounding = 'rounded-xl';
+	export let translate: 'sm' | 'md' = 'md';
 	let classes = '';
 </script>
 
 <div
 	in:flyAndScale|local={{
 		duration: 200,
-		yRem: -1.5,
+		yRem: translate === 'sm' ? -0.75 : -1.5,
 		easing: quadOut,
 		transformOrigin: 'right top'
 	}}
 	out:flyAndScale|local={{
 		duration: 150,
-		yRem: -1,
+		yRem: translate === 'sm' ? -0.4 : -1,
 		easing: quadOut,
 		transformOrigin: 'right top'
 	}}

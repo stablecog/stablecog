@@ -59,7 +59,7 @@
 		? $listVirtualizer.scrollOffset >= $listVirtualizer.getTotalSize() - listScrollContainerHeight
 		: false;
 
-	const overscanMultiplierForNextPage = 0.25;
+	const overscanMultiplierForNextPage = 0.5;
 
 	$: [
 		listScrollContainer,

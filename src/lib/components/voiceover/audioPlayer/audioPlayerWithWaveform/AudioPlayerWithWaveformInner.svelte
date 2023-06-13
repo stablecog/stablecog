@@ -13,19 +13,15 @@
 	import IconSpeaker from '$components/icons/IconVoiceoverSpeaker.svelte';
 	import { voiceoverSpeakerIdToDisplayName } from '$ts/constants/voiceover/models';
 	import SliderForWaveform from '$components/voiceover/audioPlayer/SliderForWaveform.svelte';
-	import type {
-		TVoiceoverFullOutput,
-		TVoiceoverOutput,
-		TVoiceoverStatus
-	} from '$ts/stores/user/voiceovers';
+	import type { TVoiceoverFullOutput } from '$ts/stores/user/voiceovers';
 	import { browser } from '$app/environment';
-	import type { TAudioStatus } from '$components/voiceover/audioPlayer/audioPlayerWithWaveform/types';
 	import { onDestroy } from 'svelte';
 	import { fade } from 'svelte/transition';
 	import { quadIn } from 'svelte/easing';
 	import DownloadButton from '$components/voiceover/audioPlayer/DownloadButton.svelte';
+	import { PUBLIC_BUCKET_URL, PUBLIC_BUCKET_VOICEOVER_URL } from '$env/static/public';
 
-	export let title: string | undefined;
+	export let output: TVoiceoverFullOutput;
 	export let audioElement: HTMLAudioElement;
 	export let isMuted: boolean;
 	export let isPaused: boolean;
@@ -34,12 +30,7 @@
 	export let muteButton: HTMLButtonElement;
 	export let currentTime: number;
 	export let duration: number;
-	export let speakerId: string;
 	export let barWidth: number;
-	export let status: TVoiceoverStatus | undefined;
-	export let src: string | undefined;
-	export let output: TVoiceoverFullOutput | undefined = undefined;
-	export let audioStatus: TAudioStatus;
 	export let audioArray: number[] | undefined = undefined;
 
 	let sliderValue = 0;
@@ -51,6 +42,16 @@
 	let currentTimestamp: string | undefined = undefined;
 	let totalTimestamp: string | undefined = undefined;
 
+	$: status = output.status;
+	$: src = output.audio_file_url.replace(PUBLIC_BUCKET_URL, PUBLIC_BUCKET_VOICEOVER_URL);
+	$: audioStatus =
+		output.status === 'to-be-submitted' ||
+		output.status === 'server-received' ||
+		output.status === 'server-processing'
+			? 'being-created'
+			: output.status === 'succeeded'
+			? 'created'
+			: 'idle';
 	$: pointCount = waveformContainerWidth
 		? Math.floor(waveformContainerWidth / barWidth)
 		: undefined;
@@ -67,7 +68,7 @@
 	$: [currentTime], onCurrentTimeChanged();
 	$: [sliderValue], onSliderValueChanged();
 
-	$: [src, pointCount], setAudioArray();
+	$: [output, pointCount], setAudioArray();
 	$: [
 		progress,
 		audioArray,
@@ -155,18 +156,18 @@
 				class="w-9 h-9 flex-shrink-0 ring-2 ring-c-bg-tertiary shadow-lg
 				shadow-c-shadow/[var(--o-shadow-strong)] overflow-hidden relative z-0"
 			>
-				<IconSpeaker class="w-full h-full" type={speakerId} sizes="36px" />
+				<IconSpeaker class="w-full h-full" type={output.voiceover.speaker.id} sizes="36px" />
 			</div>
 			<p
 				class="flex-shrink min-w-0 overflow-hidden overflow-ellipsis font-medium px-3.5 py-1 h-full"
 			>
-				{$voiceoverSpeakerIdToDisplayName[speakerId]}
+				{$voiceoverSpeakerIdToDisplayName[output.voiceover.speaker.id]}
 			</p>
 		</div>
 		<p
 			class="flex-shrink min-w-0 text-c-on-bg max-w-full whitespace-nowrap overflow-hidden overflow-ellipsis"
 		>
-			{title}
+			{output.voiceover.prompt.text}
 		</p>
 	</div>
 	<div class="w-full flex items-center justify-center">

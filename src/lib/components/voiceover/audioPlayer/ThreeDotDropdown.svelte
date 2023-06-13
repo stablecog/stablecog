@@ -6,10 +6,8 @@
 	import IconAnimatedSpinner from '$components/icons/IconAnimatedSpinner.svelte';
 	import IconDownload from '$components/icons/IconDownload.svelte';
 	import IconThreeDots from '$components/icons/IconThreeDots.svelte';
-	import { PUBLIC_BUCKET_URL, PUBLIC_BUCKET_VOICEOVER_URL } from '$env/static/public';
 	import { clickoutside } from '$ts/actions/clickoutside';
 	import { downloadVoicoverOutput } from '$ts/helpers/downloadVoiceoverOutput';
-	import { getAudioFileNameFromVoiceover } from '$ts/helpers/getAudioFileNameFromVoiceover';
 	import type { TVoiceoverFullOutput } from '$ts/stores/user/voiceovers';
 
 	export let container: HTMLElement | undefined = undefined;
@@ -37,9 +35,10 @@
 		/>
 	</IconButton>
 	{#if isDropdownOpen}
-		<DropdownWrapperTranslate rounding="rounded-lg">
+		<DropdownWrapperTranslate rounding="rounded-lg" translate="sm">
 			{#each options as item}
 				<button
+					disabled={item.isLoading}
 					on:click={async () => {
 						if (item.isAsync) {
 							try {
