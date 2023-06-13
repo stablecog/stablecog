@@ -115,7 +115,7 @@
 	title="{shortPromptTitle} | Gallery"
 	description={getGalleryMetaTagDescriptionFromPromptText(output.generation.prompt.text)}
 	image_url={getPreviewImageUrlFromOutputId(output.id)}
-	canonical="{canonicalUrl}{$page.url.pathname}/o/{output.id}"
+	canonical="{canonicalUrl}{$page.url.pathname}"
 />
 
 <div class="w-full flex justify-center pt-5 md:pt-8 pb-8 md:px-5 lg:px-8 xl:px-12 2xl:px-16">
