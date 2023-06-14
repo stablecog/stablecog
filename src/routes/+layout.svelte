@@ -34,7 +34,7 @@
 	globalSeed.set($gss);
 
 	const us = data.userSummaryStore;
-	userSummary.set($us);
+	userSummary.set($us ?? null);
 
 	const th = data.themeStore;
 	themeApp.set($th);

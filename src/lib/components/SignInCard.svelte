@@ -15,6 +15,8 @@
 	import { wantsEmail } from '$ts/stores/user/wantsEmail';
 	import { onMount } from 'svelte';
 	import WantsEmailCard from '$components/WantsEmailCard.svelte';
+	import { userSummary } from '$ts/stores/user/summary';
+	import { getUserSummary } from '$ts/helpers/user/user';
 
 	export let redirectTo: string | null = null;
 	export let isModal = false;
@@ -105,6 +107,24 @@
 		console.log(sData);
 	}
 
+	const docRoutes = [
+		{
+			route: '/',
+			strictMatch: true
+		},
+		{
+			route: '/docs'
+		},
+		{
+			route: '/blog'
+		},
+		{
+			route: '/try'
+		},
+		{
+			route: '/guide'
+		}
+	];
 	async function signInWithCode() {
 		if (!$page.data.supabase) return;
 		codeSignInStatus = 'loading';
@@ -118,6 +138,17 @@
 				throw new Error(sError.message);
 			}
 			console.log(sData);
+			if (
+				sData.session?.access_token &&
+				docRoutes.some((r) =>
+					r.strictMatch === true
+						? $page.url.pathname === r.route
+						: $page.url.pathname.startsWith(r.route)
+				)
+			) {
+				const us = await getUserSummary(sData.session?.access_token);
+				userSummary.set(us);
+			}
 		} catch (error) {
 			console.log(error);
 			codeSignInStatus = 'error';
