@@ -165,6 +165,7 @@ const vi: Translation = {
 		AdminGalleryTab: 'Admin Gallery',
 		PricingTab: 'Pricing',
 		AccountTab: 'Account',
+		VoiceoverTab: 'Voiceover',
 		LiveTab: 'Trực tiếp'
 	},
 	Settings: {
@@ -251,6 +252,7 @@ const vi: Translation = {
 		SimilarToTitle: 'Similar to: {item}',
 		ResourcesTitle: 'Resources',
 		ResourcesButton: 'Resources',
+		BetaTitle: 'Beta',
 		ConfirmQuestionMarkButton: 'Confirm?',
 		Credits: {
 			CreditsTable: {

@@ -167,6 +167,7 @@ const bg: Translation = {
 		AdminGalleryTab: 'Admin Gallery',
 		PricingTab: 'Pricing',
 		AccountTab: 'Account',
+		VoiceoverTab: 'Voiceover',
 		LiveTab: 'На живо'
 	},
 	Settings: {
@@ -253,6 +254,7 @@ const bg: Translation = {
 		SimilarToTitle: 'Similar to: {item}',
 		ResourcesTitle: 'Resources',
 		ResourcesButton: 'Resources',
+		BetaTitle: 'Beta',
 		ConfirmQuestionMarkButton: 'Потвърди?',
 		Credits: {
 			CreditsTable: {

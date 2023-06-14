@@ -168,6 +168,7 @@ const nl: Translation = {
 		AdminGalleryTab: 'Admin Gallery',
 		PricingTab: 'Pricing',
 		AccountTab: 'Account',
+		VoiceoverTab: 'Voiceover',
 		LiveTab: 'Live'
 	},
 	Settings: {
@@ -254,6 +255,7 @@ const nl: Translation = {
 		SimilarToTitle: 'Similar to: {item}',
 		ResourcesTitle: 'Resources',
 		ResourcesButton: 'Resources',
+		BetaTitle: 'Beta',
 		ConfirmQuestionMarkButton: 'Bevestigen?',
 		Credits: {
 			CreditsTable: {

@@ -175,6 +175,7 @@ const tr: Translation = {
 		AdminGalleryTab: 'Admin Galerisi',
 		PricingTab: 'Fiyatlar',
 		AccountTab: 'Üyelik',
+		VoiceoverTab: 'Voiceover',
 		LiveTab: 'Canlı'
 	},
 	Settings: {
@@ -261,6 +262,7 @@ const tr: Translation = {
 		SimilarToTitle: 'Şuna benzer: {item}',
 		ResourcesTitle: 'Kaynaklar',
 		ResourcesButton: 'Kaynaklar',
+		BetaTitle: 'Beta',
 		ConfirmQuestionMarkButton: 'Onayla?',
 		Credits: {
 			CreditsTable: {

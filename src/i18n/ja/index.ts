@@ -175,6 +175,7 @@ const ja: Translation = {
 		AdminGalleryTab: '管理用ギャラリー',
 		PricingTab: '価格',
 		AccountTab: 'アカウント',
+		VoiceoverTab: 'Voiceover',
 		LiveTab: 'ライブ'
 	},
 	Settings: {
@@ -261,6 +262,7 @@ const ja: Translation = {
 		SimilarToTitle: '類似画像: {item}',
 		ResourcesTitle: 'リソース',
 		ResourcesButton: 'リソース',
+		BetaTitle: 'Beta',
 		ConfirmQuestionMarkButton: '確定しますか？',
 		Credits: {
 			CreditsTable: {

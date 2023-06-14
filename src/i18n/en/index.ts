@@ -165,6 +165,7 @@ const en: BaseTranslation = {
 		AdminGalleryTab: 'Admin Gallery',
 		PricingTab: 'Pricing',
 		AccountTab: 'Account',
+		VoiceoverTab: 'Voiceover',
 		LiveTab: 'Live'
 	},
 	Settings: {
@@ -251,6 +252,7 @@ const en: BaseTranslation = {
 		SimilarToTitle: 'Similar to: {item}',
 		ResourcesTitle: 'Resources',
 		ResourcesButton: 'Resources',
+		BetaTitle: 'Beta',
 		ConfirmQuestionMarkButton: 'Confirm?',
 		Credits: {
 			CreditsTable: {

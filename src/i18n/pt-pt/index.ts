@@ -164,6 +164,7 @@ const ptPt: Translation = {
 		AdminGalleryTab: 'Admin Gallery',
 		PricingTab: 'Pricing',
 		AccountTab: 'Account',
+		VoiceoverTab: 'Voiceover',
 		LiveTab: 'Em Direto'
 	},
 	Settings: {
@@ -250,6 +251,7 @@ const ptPt: Translation = {
 		SimilarToTitle: 'Similar to: {item}',
 		ResourcesTitle: 'Resources',
 		ResourcesButton: 'Resources',
+		BetaTitle: 'Beta',
 		ConfirmQuestionMarkButton: 'Confirm?',
 		Credits: {
 			CreditsTable: {

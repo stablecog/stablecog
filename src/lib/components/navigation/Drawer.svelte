@@ -16,6 +16,7 @@
 	import { browser } from '$app/environment';
 	import ScBar from '$components/ScBar.svelte';
 	import { onDestroy } from 'svelte';
+	import IconNew from '$components/icons/IconNew.svelte';
 	export let hasCustomContent = false;
 
 	$: $isDrawerOpen, onIsDrawerOpenChanged();
@@ -93,11 +94,14 @@
 								class="not-touch:group-hover:text-c-primary transition flex-shrink-0"
 							/>
 							<p
-								class="flex-1 break-words flex flex-col overflow-hidden
+								class="break-words flex flex-col overflow-hidden
 								not-touch:group-hover:text-c-primary transition flex-shrink"
 							>
 								{route.name}
 							</p>
+							{#if route.href === '/voiceover/generate'}
+								<IconNew class="w-6 h-6 flex-shrink-0 transform scale-100 text-c-primary -ml-1.5" />
+							{/if}
 						</div>
 					</a>
 				{/each}

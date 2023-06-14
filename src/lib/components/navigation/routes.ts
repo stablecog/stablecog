@@ -32,6 +32,12 @@ export const regularRoutes = derived([LL, userSummary], ([$LL, $userSummary]) =>
 					href: '/pricing',
 					icon: 'pricing'
 			  }
+		/* {
+			name: $LL.Navbar.VoiceoverTab(),
+			href: '/voiceover/generate',
+			icon: 'voiceover',
+			iconOnly: true
+		} */
 	];
 	return routes;
 });
@@ -130,11 +136,13 @@ export type TNavbarRouteOption =
 	| 'users'
 	| 'guide'
 	| 'admin'
-	| 'documentation';
+	| 'documentation'
+	| 'voiceover';
 
 export interface TNavbarRoute {
 	name: string;
 	href: string;
 	icon: TNavbarRouteOption;
 	strictMatch?: boolean;
+	iconOnly?: boolean;
 }

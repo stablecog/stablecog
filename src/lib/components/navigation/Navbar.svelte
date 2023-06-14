@@ -115,7 +115,9 @@
 					</div>
 				{/if}
 			</div>
-			<div class="hidden md:flex md:w-full md:max-w-[19rem] lg:max-w-[36rem] md:ml-2 xl:ml-0">
+			<div
+				class="hidden md:flex md:max-w-[19rem] lg:max-w-[36rem] xl:max-w-[40rem] md:ml-2 xl:ml-0"
+			>
 				<NavigationTabBar />
 			</div>
 			<div class="flex md:flex-1 flex-wrap items-center justify-end relative">

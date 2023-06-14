@@ -4,6 +4,8 @@
 	import type { TTabBarPlacement } from '$ts/types/main';
 	import TabBarWrapper from '$components/tabBars/TabBarWrapper.svelte';
 	import { routes, type TNavbarRoute } from '$components/navigation/routes';
+	import LL from '$i18n/i18n-svelte';
+	import IconNew from '$components/icons/IconNew.svelte';
 
 	export let type: TTabBarPlacement = 'normal';
 
@@ -17,18 +19,27 @@
 	const routeIndexOf = (currentPath: string) => {
 		return $routes.findIndex((route) => isSelected(route, currentPath));
 	};
+
+	let elements: Record<string, HTMLAnchorElement> = {};
+	$: widths = Object.keys(elements)
+		.sort((a, b) => Number(a) - Number(b))
+		.map((i) => elements[i].getBoundingClientRect().width);
+
+	$: selectedRouteIndex = routeIndexOf($page.url.pathname);
+	$: selectedRouteWidth = widths[selectedRouteIndex];
+	$: selectedRouteLeft = widths.slice(0, selectedRouteIndex).reduce((acc, cur) => acc + cur, 0);
 </script>
 
-<TabBarWrapper class="w-full" {type}>
-	<div class="w-full flex md:pb-0 {type === 'bottom' ? 'pb-[env(safe-area-inset-bottom)]' : ''}">
+<TabBarWrapper class="max-w-full" {type}>
+	<div
+		class="max-w-full flex md:pb-0 {type === 'bottom' ? 'pb-[env(safe-area-inset-bottom)]' : ''}"
+	>
 		<div class="w-full flex relative">
 			<div
 				class="w-full h-full absolute left-0 top-0 overflow-hidden rounded-r-xl z-0 pointer-events-none"
 			>
 				<div
-					style="width: {(1 / $routes.length) * 100}%; transform: translateX({routeIndexOf(
-						$page.url.pathname
-					) * 100}%)"
+					style="width: {selectedRouteWidth}px; transform: translateX({selectedRouteLeft}px);"
 					class="h-full absolute left-0 top-0 transition {type === 'bottom'
 						? 'px-1.5 pt-1.5 pb-2'
 						: 'p-1'}"
@@ -38,12 +49,15 @@
 					/>
 				</div>
 			</div>
-			{#each $routes as route}
+			{#each $routes as route, index}
 				<a
+					bind:clientWidth={widths[index]}
+					bind:this={elements[index]}
 					aria-label="Go to {route.name}"
 					data-sveltekit-preload-data="hover"
-					class="flex-1 rounded-lg whitespace-nowrap overflow-hidden group self-stretch flex
-					items-center justify-center px-4 transition-all relative font-semibold {type === 'bottom'
+					class="max-w-full rounded-lg whitespace-nowrap overflow-hidden group self-stretch flex
+					items-center justify-center px-5 xl:px-6 2xl:px-7 transition-all relative font-semibold {type ===
+					'bottom'
 						? 'pt-4 pb-4.5'
 						: 'py-4'} {isSelected(route, $page.url.pathname)
 						? 'text-c-on-bg not-touch:hover:text-c-primary'
@@ -64,14 +78,24 @@
 							/>
 						</div>
 					</div>
-					<div class="w-full flex justify-center items-center gap-1.5 relative lg:-ml-1">
-						<IconNavbarRoute class="w-6 h-6 md:w-5 md:h-5" type={route.icon} />
+					<div class="flex-shrink min-w-0 flex justify-center items-center gap-1.5 relative">
+						<IconNavbarRoute
+							class="w-6 h-6 md:w-5 md:h-5 flex-shrink-0 lg:-ml-0.5 transform scale-100"
+							type={route.icon}
+						/>
 						<p
-							class="hidden lg:block flex-shrink min-w-0 text-center overflow-hidden overflow-ellipsis"
+							class="hidden {route.iconOnly
+								? ''
+								: 'lg:block'} flex-shrink min-w-0 text-center overflow-hidden overflow-ellipsis"
 						>
 							{route.name}
 						</p>
 					</div>
+					{#if route.href === '/voiceover/generate'}
+						<div class="absolute right-1.5 top-1.5 2xl:right-2 2xl:top-2">
+							<IconNew class="w-5 h-5 transform scale-100 text-c-primary" />
+						</div>
+					{/if}
 				</a>
 			{/each}
 		</div>

@@ -15,7 +15,7 @@
 		? 'ring-c-primary/30'
 		: outline === 'primary'
 		? 'ring-c-primary/15'
-		: 'ring-c-bg-secondary'} ring-2 flex items-stretch  bg-c-bg transition relative {classes}"
+		: 'ring-c-bg-secondary'} ring-2 flex items-stretch bg-c-bg transition relative {classes}"
 >
 	<slot />
 </div>

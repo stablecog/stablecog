@@ -492,6 +492,10 @@ type RootTranslation = {
 		 */
 		AccountTab: string
 		/**
+		 * V​o​i​c​e​o​v​e​r
+		 */
+		VoiceoverTab: string
+		/**
 		 * L​i​v​e
 		 */
 		LiveTab: string
@@ -787,6 +791,10 @@ type RootTranslation = {
 		 * R​e​s​o​u​r​c​e​s
 		 */
 		ResourcesButton: string
+		/**
+		 * B​e​t​a
+		 */
+		BetaTitle: string
 		/**
 		 * C​o​n​f​i​r​m​?
 		 */
@@ -3190,6 +3198,10 @@ export type TranslationFunctions = {
 		 */
 		AccountTab: () => LocalizedString
 		/**
+		 * Voiceover
+		 */
+		VoiceoverTab: () => LocalizedString
+		/**
 		 * Live
 		 */
 		LiveTab: () => LocalizedString
@@ -3479,6 +3491,10 @@ export type TranslationFunctions = {
 		 * Resources
 		 */
 		ResourcesButton: () => LocalizedString
+		/**
+		 * Beta
+		 */
+		BetaTitle: () => LocalizedString
 		/**
 		 * Confirm?
 		 */
