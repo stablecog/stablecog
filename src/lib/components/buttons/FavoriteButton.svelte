@@ -92,7 +92,7 @@
 		bind:this={buttonElement}
 		on:click={() => favoriteOutput(generation.selected_output.is_favorited ? 'remove' : 'add')}
 		class="touch-manipulation transition rounded-lg group/favoritebutton {classes}"
-		aria-label="Favorite Image"
+		aria-label="Favorite Output"
 	>
 		<div class="p-2.5 rounded-full bg-c-bg relative overflow-hidden z-0">
 			<div

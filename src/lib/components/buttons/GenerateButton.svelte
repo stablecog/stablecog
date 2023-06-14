@@ -37,9 +37,8 @@
 			not-touch:group-hover/generatebutton:translate-x-0"
 		/>
 		<IconWand
-			class="w-7 h-7 transition text-c-on-bg relative group-focus/generatebutton:text-c-on-primary
+			class="w-7 h-7 transform scale-100 transition text-c-on-bg relative group-focus/generatebutton:text-c-on-primary
 			not-touch:group-hover/generatebutton:text-c-on-primary"
 		/>
-		<p class="hidden">Generate</p>
 	</div>
 </a>
