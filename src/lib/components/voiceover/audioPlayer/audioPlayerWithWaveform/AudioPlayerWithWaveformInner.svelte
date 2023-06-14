@@ -19,7 +19,6 @@
 	import { fade } from 'svelte/transition';
 	import { quadIn } from 'svelte/easing';
 	import DownloadButton from '$components/voiceover/audioPlayer/DownloadButton.svelte';
-	import { PUBLIC_BUCKET_URL, PUBLIC_BUCKET_VOICEOVER_URL } from '$env/static/public';
 
 	export let output: TVoiceoverFullOutput;
 	export let audioElement: HTMLAudioElement;
@@ -43,7 +42,7 @@
 	let totalTimestamp: string | undefined = undefined;
 
 	$: status = output.status;
-	$: src = output.audio_file_url.replace(PUBLIC_BUCKET_URL, PUBLIC_BUCKET_VOICEOVER_URL);
+	$: src = output.audio_file_url;
 	$: audioStatus =
 		output.status === 'to-be-submitted' ||
 		output.status === 'server-received' ||

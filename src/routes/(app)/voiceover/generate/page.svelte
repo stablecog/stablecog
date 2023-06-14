@@ -18,7 +18,6 @@
 		type TVoiceoverFullOutput,
 		type TVoiceoverOutput
 	} from '$ts/stores/user/voiceovers.js';
-	import { PUBLIC_BUCKET_URL, PUBLIC_BUCKET_VOICEOVER_URL } from '$env/static/public';
 	import { browser } from '$app/environment';
 	import { createInfiniteQuery } from '@tanstack/svelte-query';
 	import {

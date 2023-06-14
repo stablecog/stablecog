@@ -2,7 +2,6 @@
 	import IconAnimatedSpinner from '$components/icons/IconAnimatedSpinner.svelte';
 	import VoiceoverListPlaceholder from '$components/voiceover/lists/VoiceoverListPlaceholder.svelte';
 	import AudioPlayerListItem from '$components/voiceover/audioPlayer/AudioPlayerListItem.svelte';
-	import { PUBLIC_BUCKET_URL, PUBLIC_BUCKET_VOICEOVER_URL } from '$env/static/public';
 	import LL from '$i18n/i18n-svelte';
 	import type { TUserVoiceoverFullOutputsPage } from '$ts/queries/userVoiceovers';
 	import { windowHeight, windowWidth } from '$ts/stores/window';

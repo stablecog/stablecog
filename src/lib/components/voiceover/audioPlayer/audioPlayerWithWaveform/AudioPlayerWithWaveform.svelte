@@ -9,7 +9,6 @@
 	import { scale } from 'svelte/transition';
 	import AudioPlayerWithWaveformInner from '$components/voiceover/audioPlayer/audioPlayerWithWaveform/AudioPlayerWithWaveformInner.svelte';
 	import type { TAudioStatus } from '$components/voiceover/audioPlayer/audioPlayerWithWaveform/types';
-	import { PUBLIC_BUCKET_URL, PUBLIC_BUCKET_VOICEOVER_URL } from '$env/static/public';
 
 	export let output: TVoiceoverFullOutput;
 	export { classes as class };
@@ -46,7 +45,7 @@
 </script>
 
 <audio
-	src={output?.audio_file_url.replace(PUBLIC_BUCKET_URL, PUBLIC_BUCKET_VOICEOVER_URL)}
+	src={output?.audio_file_url}
 	aria-label={output?.voiceover.prompt.text || 'Voiceover'}
 	bind:currentTime
 	bind:duration

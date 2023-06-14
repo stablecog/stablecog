@@ -1,9 +1,8 @@
-import { PUBLIC_BUCKET_URL, PUBLIC_BUCKET_VOICEOVER_URL } from '$env/static/public';
 import { getAudioFileNameFromVoiceover } from '$ts/helpers/getAudioFileNameFromVoiceover';
 import type { TVoiceoverFullOutput } from '$ts/stores/user/voiceovers';
 
 export async function downloadVoicoverOutput(output: TVoiceoverFullOutput) {
-	const url = `${output.audio_file_url.replace(PUBLIC_BUCKET_URL, PUBLIC_BUCKET_VOICEOVER_URL)}`;
+	const url = output.audio_file_url;
 	const res = await fetch(`${url}?download=true`);
 	const blob = await res.blob();
 	const fileName = getAudioFileNameFromVoiceover({

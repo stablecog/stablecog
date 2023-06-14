@@ -15,7 +15,6 @@ import {
 	roleToProductId
 } from '$ts/constants/stripePublic';
 import type { TVoiceoverSpeakerId, TVoiceoverModelId } from '$ts/constants/voiceover/models';
-import { PUBLIC_BUCKET_URL, PUBLIC_BUCKET_VOICEOVER_URL } from '$env/static/public';
 import type { TVoiceoverLocale } from '$ts/constants/voiceover/locales';
 import { getAudioBufferFromUrl } from '$components/voiceover/audioPlayer/helpers';
 
@@ -67,9 +66,7 @@ export const setVoiceoverToSucceeded = async ({
 	}
 	for (let i = 0; i < outputs.length; i++) {
 		const output = outputs[i];
-		const audio_buffer = await getAudioBufferFromUrl(
-			output.audio_file_url.replace(PUBLIC_BUCKET_URL, PUBLIC_BUCKET_VOICEOVER_URL)
-		);
+		const audio_buffer = await getAudioBufferFromUrl(output.audio_file_url);
 		output.audio_buffer = audio_buffer;
 	}
 	voi.status = 'succeeded';

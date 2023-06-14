@@ -15,7 +15,6 @@
 	import { onDestroy, onMount } from 'svelte';
 	import ThreeDotDropdown from '$components/voiceover/audioPlayer/ThreeDotDropdown.svelte';
 	import type { TVoiceoverFullOutput } from '$ts/stores/user/voiceovers';
-	import { PUBLIC_BUCKET_URL, PUBLIC_BUCKET_VOICEOVER_URL } from '$env/static/public';
 
 	export let output: TVoiceoverFullOutput;
 	export let hasMute = false;
@@ -109,7 +108,7 @@
 	</p>
 	<div class="{inHorizontal ? 'h-full' : ''} w-full flex items-center justify-center">
 		<audio
-			src={output.audio_file_url.replace(PUBLIC_BUCKET_URL, PUBLIC_BUCKET_VOICEOVER_URL)}
+			src={output.audio_file_url}
 			aria-label={output.voiceover.prompt.text}
 			bind:currentTime
 			bind:duration={durationLocal}
