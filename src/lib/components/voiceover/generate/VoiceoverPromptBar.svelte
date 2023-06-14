@@ -3,7 +3,11 @@
 	import LL from '$i18n/i18n-svelte';
 	import { maxSeed } from '$ts/constants/main';
 	import { voiceoverLocale, voiceoverModelId } from '$ts/constants/voiceover/models';
-	import { getVoiceoverCreditCost, maxVoiceoverCharacterCount } from '$ts/constants/voiceover/rest';
+	import {
+		getVoiceoverCreditCost,
+		maxVoiceoverCharacterCount,
+		voiceoverStabilityHardMin
+	} from '$ts/constants/voiceover/rest';
 	import { generateSSEId } from '$ts/helpers/generateSSEId';
 	import { sseId } from '$ts/stores/user/sse';
 	import {
@@ -36,7 +40,7 @@
 				locale: $voiceoverLocale
 			},
 			prompt: { id: 'prompt', text: $voiceoverPrompt },
-			temperature: $voiceoverStability / 100,
+			temperature: Math.max(voiceoverStabilityHardMin, $voiceoverStability) / 100,
 			num_outputs: 1,
 			seed: $voiceoverSeed || Math.round(Math.random() * maxSeed),
 			stream_id: $sseId,

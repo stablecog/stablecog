@@ -1,5 +1,6 @@
 export const voiceoverStabilityDefault = 70;
 export const voiceoverStabilityMin = 0;
+export const voiceoverStabilityHardMin = 1;
 export const voiceoverStabilityMax = 100;
 
 export const maxVoiceoverCharacterCount = 500;
