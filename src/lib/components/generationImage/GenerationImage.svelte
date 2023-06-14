@@ -177,6 +177,7 @@
 	/>
 {/if}
 {#if cardType !== 'gallery' && cardType !== 'admin-gallery' && isRecentlyUpdated}
+	<!-- Ping animation for newly created -->
 	<div class="absolute w-full pointer-events-none">
 		<div
 			class="absolute left-0 top-0 w-full h-12 bg-gradient-to-b from-c-barrier/75 to-c-barrier/0"
@@ -320,8 +321,8 @@
 		{/if}
 	</div>
 {/if}
-<!-- Deleted, approved or rejected -->
 {#if generation.selected_output.is_deleted || (cardType === 'admin-gallery' && showAdminGalleryBarrier) || (cardType === 'history' && $userGalleryCurrentView === 'favorites' && !generation.selected_output.is_favorited)}
+	<!-- Deleted, approved or rejected -->
 	{@const sizeClasses =
 		generation.height > generation.width
 			? cardType === 'generate'
@@ -342,11 +343,13 @@
 	</div>
 {/if}
 {#if cardType === 'admin-gallery' && generation.init_image_url}
+	<!-- Admin gallery init image indicator -->
 	<div class="absolute -top-px -right-px pr-1 pt-1 pl-2 pb-2 rounded-bl-lg bg-c-bg-secondary">
 		<IconGalleryFilled class="text-c-danger" />
 	</div>
 {/if}
 {#if (cardType === 'admin-gallery' && $isAdminGalleryEditActive) || (cardType === 'history' && $isUserGalleryEditActive)}
+	<!-- Select button -->
 	<button
 		disabled={(cardType === 'history' && generation.selected_output.is_deleted) ||
 			(cardType === 'history' &&
