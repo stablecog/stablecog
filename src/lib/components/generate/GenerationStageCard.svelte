@@ -12,6 +12,7 @@
 	import ErrorChip from '$components/error/ErrorChip.svelte';
 
 	export let generation: TGenerationWithSelectedOutput;
+	export let cardWidth: number;
 
 	$: output = generation.selected_output;
 	$: status = output.status;
@@ -42,7 +43,7 @@
 					</div>
 				{/if}
 				{#if status === undefined || status === 'succeeded'}
-					<GenerationImage cardType="stage" {generation} />
+					<GenerationImage cardType="stage" {generation} {cardWidth} />
 				{/if}
 			{:else}
 				{@const sizeClasses =

@@ -34,6 +34,7 @@
 	import { windowHeight, windowWidth } from '$ts/stores/window';
 	import { tick } from 'svelte';
 	import { loadedImages } from '$ts/stores/loadedImages';
+	import { browser } from '$app/environment';
 
 	export let generationsQuery: CreateInfiniteQueryResult<TUserGenerationFullOutputsPage, unknown>;
 	export let hasGridScrollContainer = false;
@@ -132,6 +133,7 @@
 		initiallySetGridVirtualizer();
 	$: $gridVirtualizer, onGridVirtualizerChanged();
 	$: [outputs, overscanCount, cols], onParamsChanged();
+	$: cardWidth = browser ? ($windowWidth - horizontalPadding) / cols : undefined;
 
 	function onGridVirtualizerChanged() {
 		if (
@@ -281,6 +283,7 @@
 									{#if output.status === undefined || output.status === 'succeeded'}
 										<GenerationImage
 											{cardType}
+											{cardWidth}
 											didLoadBefore={loadedImages[output.image_url + cardType] === true}
 											{isGalleryEditActive}
 											generation={{

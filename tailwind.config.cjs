@@ -1,4 +1,5 @@
 import plugin from 'tailwindcss/plugin';
+import containerQueries from '@tailwindcss/container-queries';
 
 function withOpacityValue(variable) {
 	return ({ opacityValue }) => {
@@ -14,7 +15,8 @@ module.exports = {
 	plugins: [
 		plugin(function ({ addVariant }) {
 			addVariant('not-touch', '.not-touch &'); // here
-		})
+		}),
+		containerQueries
 	],
 	content: ['./src/**/*.{html,js,svelte,ts}'],
 	theme: {

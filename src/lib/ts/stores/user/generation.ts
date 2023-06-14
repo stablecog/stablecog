@@ -225,7 +225,7 @@ export const setGenerationOutputToDeleted = (output_id: string) => {
 	});
 };
 
-export const setGenerationOutputToFavorited = (output_id: string) => {
+export const setGenerationOutputFavoritedStatus = (output_id: string, is_favorited: boolean) => {
 	generations.update(($generations) => {
 		if ($generations === null || $generations.length === 0) {
 			return $generations;
@@ -235,7 +235,7 @@ export const setGenerationOutputToFavorited = (output_id: string) => {
 			for (let j = 0; j < generation.outputs.length; j++) {
 				const output = generation.outputs[j];
 				if (output.id === output_id) {
-					generation.outputs[j].is_favorited = true;
+					generation.outputs[j].is_favorited = is_favorited;
 					return $generations;
 				}
 			}

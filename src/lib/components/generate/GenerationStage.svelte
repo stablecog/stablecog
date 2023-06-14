@@ -136,7 +136,7 @@
 				"
 				class="absolute"
 			>
-				<GenerationStageCard generation={generationWithSelectedOutput} />
+				<GenerationStageCard generation={generationWithSelectedOutput} {cardWidth} />
 			</div>
 		{/each}
 	{/if}

@@ -42,6 +42,7 @@
 	export let cardType: TGenerationImageCardType;
 	export let isGalleryEditActive: boolean = false;
 	export let didLoadBefore: boolean = false;
+	export let cardWidth: number | undefined = undefined;
 
 	$: srcHighest =
 		generation.selected_output.upscaled_image_url ?? generation.selected_output.image_url;
@@ -251,7 +252,7 @@
 			!generation.selected_output.is_favorited
 		)}
 	<div
-		class="w-full h-16 absolute left-0 top-0 pointer-events-none flex items-start {showLeftContainer
+		class="w-full absolute left-0 top-0 pointer-events-none flex items-start {showLeftContainer
 			? 'justify-between'
 			: 'justify-end'} transition
 			not-touch:group-focus-within:translate-y-0 not-touch:group-hover:translate-y-0
@@ -288,8 +289,8 @@
 		{#if !isGalleryEditActive && !generation.selected_output.is_deleted}
 			<div
 				bind:this={rightButtonContainer}
-				class="flex flex-row flex-wrap items-center justify-end transition transform
-					pointer-events-auto"
+				class="flex flex-row flex-wrap items-center
+					justify-end transition transform pointer-events-auto"
 			>
 				{#if cardType !== 'admin-gallery'}
 					<CopyButton
@@ -307,6 +308,9 @@
 						class="p-1.5 -ml-1.5"
 						label="Generate similar to: {shortPrompt}..."
 					/>
+				{/if}
+				{#if (cardType === 'stage' || (cardType === 'history' && $userGalleryCurrentView !== 'favorites')) && cardWidth !== undefined && ((cardType === 'history' && cardWidth > 225) || (cardType === 'stage' && cardWidth > 180))}
+					<FavoriteButton {generation} modalType={cardType} type="on-image" class="p-1.5 -ml-1.5" />
 				{/if}
 			</div>
 		{:else if cardType === 'history' && $userGalleryCurrentView !== 'favorites' && generation.selected_output.is_favorited && !generation.selected_output.is_deleted}

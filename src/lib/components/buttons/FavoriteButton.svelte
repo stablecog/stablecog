@@ -4,19 +4,17 @@
 	import type { TGenerationFullScreenModalType } from '$components/generationFullScreen/types';
 	import IconFavorite from '$components/icons/IconFavorite.svelte';
 	import { locale } from '$i18n/i18n-svelte';
-	import { apiUrl } from '$ts/constants/main';
 	import {
 		logGenerationOutputFavorited,
 		logGenerationOutputUnfavorited
 	} from '$ts/helpers/loggers';
 	import { replaceOutputInUserQueryData } from '$ts/helpers/replaceOutputInUserQueryData';
 	import { favoriteOutputs } from '$ts/queries/favoriteOutput';
-	import type { TUserGenerationFullOutputsPage } from '$ts/queries/userGenerations';
 	import { advancedModeApp } from '$ts/stores/advancedMode';
 	import { appVersion } from '$ts/stores/appVersion';
 	import {
 		activeGeneration,
-		setGenerationOutputToFavorited,
+		setGenerationOutputFavoritedStatus,
 		type TGenerationWithSelectedOutput
 	} from '$ts/stores/user/generation';
 	import {
@@ -28,6 +26,11 @@
 
 	export let generation: TGenerationWithSelectedOutput;
 	export let modalType: TGenerationFullScreenModalType;
+	export let type: 'on-image' | 'normal' = 'normal';
+	export { classes as class };
+	let classes = '';
+
+	let buttonElement: HTMLButtonElement | undefined = undefined;
 
 	const queryClient = useQueryClient();
 
@@ -54,7 +57,7 @@
 				is_favorited: action === 'add'
 			});
 		} else if (modalType === 'generate' || modalType === 'stage') {
-			setGenerationOutputToFavorited(generation.selected_output.id);
+			setGenerationOutputFavoritedStatus(generation.selected_output.id, action === 'add');
 			replaceOutputInUserQueryData(queryClient, $generatePageUserGenerationFullOutputsQueryKey, {
 				id: generation.selected_output.id,
 				is_favorited: action === 'add'
@@ -78,16 +81,37 @@
 		} catch (error) {
 			console.log('Error favoriting generation output', error);
 		}
+		if (buttonElement) {
+			buttonElement.blur();
+		}
 	}
 </script>
 
-<div class="flex bg-c-bg/75 rounded-full">
-	<IconButton
-		type="secondary"
-		name="Favorite"
-		class="pointer-events-auto"
-		onClick={() => favoriteOutput(generation.selected_output.is_favorited ? 'remove' : 'add')}
+{#if type === 'on-image'}
+	<button
+		bind:this={buttonElement}
+		on:click={() => favoriteOutput(generation.selected_output.is_favorited ? 'remove' : 'add')}
+		class="touch-manipulation transition rounded-lg group/favoritebutton {classes}"
+		aria-label="Favorite Image"
 	>
-		<IconFavorite favorited={generation.selected_output.is_favorited} />
-	</IconButton>
-</div>
+		<div class="p-2.5 rounded-full bg-c-bg relative overflow-hidden z-0">
+			<div
+				class="w-full h-full rounded-full transition transform -translate-x-full
+				bg-c-secondary/25 absolute left-0 top-0 group-focus/favoritebutton:translate-x-0
+				not-touch:group-hover/favoritebutton:translate-x-0"
+			/>
+			<IconFavorite favorited={generation.selected_output.is_favorited} />
+		</div>
+	</button>
+{:else}
+	<div class="flex bg-c-bg/75 rounded-full {classes}">
+		<IconButton
+			type="secondary"
+			name="Favorite"
+			class="pointer-events-auto"
+			onClick={() => favoriteOutput(generation.selected_output.is_favorited ? 'remove' : 'add')}
+		>
+			<IconFavorite favorited={generation.selected_output.is_favorited} />
+		</IconButton>
+	</div>
+{/if}
