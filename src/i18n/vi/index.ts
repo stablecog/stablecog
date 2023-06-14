@@ -877,7 +877,12 @@ const vi: Translation = {
 			'9206e75b-2b28-47f0-899e-76ab476e1c3f': { Name: 'Jorge' },
 			'573c37c7-f741-4d36-80dc-f126131c6343': { Name: 'Carmen' },
 			'b06d6333-1e35-45a6-b18b-3187d34cc387': { Name: 'Pedro' },
-			'90ba9324-476b-48ae-b88e-aed1975a51fd': { Name: 'David' }
+			'90ba9324-476b-48ae-b88e-aed1975a51fd': { Name: 'David' },
+			'babbbc15-5040-4e97-a89f-8309b13d7785': { Name: 'Annika' },
+			'cafafcaa-45bf-45e0-901c-8ca63575ad2a': { Name: 'Leonie' },
+			'31d7c264-b674-422b-9b8f-13195c3289b6': { Name: 'Fritz' },
+			'b349543b-c727-4934-9f4f-249aa2a6b184': { Name: 'Wilhelm' },
+			'c4796108-0e8a-4a7a-9a8a-bb66ff21e215': { Name: 'Hans' }
 		},
 		List: {
 			NotSignedIn: { Paragraph: 'Sign in to see your voiceovers.' },

@@ -124,6 +124,31 @@ export const voiceoverSpeakers: { [id: string]: TSpeaker } = {
 		name_in_worker: 'v2/es_speaker_4',
 		model_id: '0f442a3e-cf53-490b-b4a9-b0dda63e9523',
 		locale: 'es'
+	},
+	'babbbc15-5040-4e97-a89f-8309b13d7785': {
+		name_in_worker: 'v2/es_speaker_8',
+		model_id: '0f442a3e-cf53-490b-b4a9-b0dda63e9523',
+		locale: 'de'
+	},
+	'cafafcaa-45bf-45e0-901c-8ca63575ad2a': {
+		name_in_worker: 'v2/es_speaker_3',
+		model_id: '0f442a3e-cf53-490b-b4a9-b0dda63e9523',
+		locale: 'de'
+	},
+	'31d7c264-b674-422b-9b8f-13195c3289b6': {
+		name_in_worker: 'v2/es_speaker_0',
+		model_id: '0f442a3e-cf53-490b-b4a9-b0dda63e9523',
+		locale: 'de'
+	},
+	'b349543b-c727-4934-9f4f-249aa2a6b184': {
+		name_in_worker: 'v2/es_speaker_2',
+		model_id: '0f442a3e-cf53-490b-b4a9-b0dda63e9523',
+		locale: 'de'
+	},
+	'c4796108-0e8a-4a7a-9a8a-bb66ff21e215': {
+		name_in_worker: 'v2/es_speaker_6',
+		model_id: '0f442a3e-cf53-490b-b4a9-b0dda63e9523',
+		locale: 'de'
 	}
 };
 
@@ -277,6 +302,27 @@ export const voiceoverSpeakerDropdownItems = derived(
 			{
 				label: $voiceoverSpeakerIdToDisplayName['90ba9324-476b-48ae-b88e-aed1975a51fd'],
 				value: '90ba9324-476b-48ae-b88e-aed1975a51fd'
+			},
+			// de
+			{
+				label: $voiceoverSpeakerIdToDisplayName['babbbc15-5040-4e97-a89f-8309b13d7785'],
+				value: 'babbbc15-5040-4e97-a89f-8309b13d7785'
+			},
+			{
+				label: $voiceoverSpeakerIdToDisplayName['31d7c264-b674-422b-9b8f-13195c3289b6'],
+				value: '31d7c264-b674-422b-9b8f-13195c3289b6'
+			},
+			{
+				label: $voiceoverSpeakerIdToDisplayName['cafafcaa-45bf-45e0-901c-8ca63575ad2a'],
+				value: 'cafafcaa-45bf-45e0-901c-8ca63575ad2a'
+			},
+			{
+				label: $voiceoverSpeakerIdToDisplayName['b349543b-c727-4934-9f4f-249aa2a6b184'],
+				value: 'b349543b-c727-4934-9f4f-249aa2a6b184'
+			},
+			{
+				label: $voiceoverSpeakerIdToDisplayName['c4796108-0e8a-4a7a-9a8a-bb66ff21e215'],
+				value: 'c4796108-0e8a-4a7a-9a8a-bb66ff21e215'
 			}
 		];
 		return items.filter(

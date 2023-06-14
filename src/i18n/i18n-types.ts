@@ -2633,6 +2633,36 @@ type RootTranslation = {
 				 */
 				Name: string
 			}
+			'babbbc15-5040-4e97-a89f-8309b13d7785': {
+				/**
+				 * A​n​n​i​k​a
+				 */
+				Name: string
+			}
+			'cafafcaa-45bf-45e0-901c-8ca63575ad2a': {
+				/**
+				 * L​e​o​n​i​e
+				 */
+				Name: string
+			}
+			'31d7c264-b674-422b-9b8f-13195c3289b6': {
+				/**
+				 * F​r​i​t​z
+				 */
+				Name: string
+			}
+			'b349543b-c727-4934-9f4f-249aa2a6b184': {
+				/**
+				 * W​i​l​h​e​l​m
+				 */
+				Name: string
+			}
+			'c4796108-0e8a-4a7a-9a8a-bb66ff21e215': {
+				/**
+				 * H​a​n​s
+				 */
+				Name: string
+			}
 		}
 		List: {
 			NotSignedIn: {
@@ -5239,6 +5269,36 @@ export type TranslationFunctions = {
 			'90ba9324-476b-48ae-b88e-aed1975a51fd': {
 				/**
 				 * David
+				 */
+				Name: () => LocalizedString
+			}
+			'babbbc15-5040-4e97-a89f-8309b13d7785': {
+				/**
+				 * Annika
+				 */
+				Name: () => LocalizedString
+			}
+			'cafafcaa-45bf-45e0-901c-8ca63575ad2a': {
+				/**
+				 * Leonie
+				 */
+				Name: () => LocalizedString
+			}
+			'31d7c264-b674-422b-9b8f-13195c3289b6': {
+				/**
+				 * Fritz
+				 */
+				Name: () => LocalizedString
+			}
+			'b349543b-c727-4934-9f4f-249aa2a6b184': {
+				/**
+				 * Wilhelm
+				 */
+				Name: () => LocalizedString
+			}
+			'c4796108-0e8a-4a7a-9a8a-bb66ff21e215': {
+				/**
+				 * Hans
 				 */
 				Name: () => LocalizedString
 			}

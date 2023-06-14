@@ -141,6 +141,8 @@
 
 	onDestroy(() => {
 		audioElement?.pause();
+		isPlaying = false;
+		isPaused = true;
 		audioArray = undefined;
 		currentTime = 0;
 	});

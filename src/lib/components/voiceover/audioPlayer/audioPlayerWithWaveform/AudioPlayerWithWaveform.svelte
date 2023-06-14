@@ -89,8 +89,8 @@
 				bind:playButton
 				{output}
 				{isMuted}
-				{isPaused}
-				{isPlaying}
+				bind:isPaused
+				bind:isPlaying
 				{audioElement}
 				{duration}
 				{barWidth}
