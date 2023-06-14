@@ -1,5 +1,4 @@
 ```python
-import os
 import requests
 import json
 
@@ -11,8 +10,7 @@ API_URL = f"{API_HOST}{API_ENDPOINT}"
 files = {'file': open('my_init_image.jpg', 'rb')}
 
 headers = {
-    "Authorization": f"Bearer {API_KEY}",
-    "Content-Type": "application/json"
+    "Authorization": f"Bearer {API_KEY}"
 }
 
 res = requests.post(API_URL, files=files, headers=headers)
