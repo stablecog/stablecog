@@ -2663,6 +2663,30 @@ type RootTranslation = {
 				 */
 				Name: string
 			}
+			'83c0ee48-c8ef-4a4c-bca8-9dae843d25da': {
+				/**
+				 * B​o​r​i​s
+				 */
+				Name: string
+			}
+			'947786c1-810d-44ce-808f-cdcf732d97fd': {
+				/**
+				 * A​l​i​s​a
+				 */
+				Name: string
+			}
+			'2885a060-badc-4896-a4fa-f3656a58bb82': {
+				/**
+				 * I​v​a​n
+				 */
+				Name: string
+			}
+			'92929922-0608-4b62-8a0d-f9d87a4ca2f5': {
+				/**
+				 * O​l​e​g
+				 */
+				Name: string
+			}
 		}
 		List: {
 			NotSignedIn: {
@@ -5299,6 +5323,30 @@ export type TranslationFunctions = {
 			'c4796108-0e8a-4a7a-9a8a-bb66ff21e215': {
 				/**
 				 * Hans
+				 */
+				Name: () => LocalizedString
+			}
+			'83c0ee48-c8ef-4a4c-bca8-9dae843d25da': {
+				/**
+				 * Boris
+				 */
+				Name: () => LocalizedString
+			}
+			'947786c1-810d-44ce-808f-cdcf732d97fd': {
+				/**
+				 * Alisa
+				 */
+				Name: () => LocalizedString
+			}
+			'2885a060-badc-4896-a4fa-f3656a58bb82': {
+				/**
+				 * Ivan
+				 */
+				Name: () => LocalizedString
+			}
+			'92929922-0608-4b62-8a0d-f9d87a4ca2f5': {
+				/**
+				 * Oleg
 				 */
 				Name: () => LocalizedString
 			}

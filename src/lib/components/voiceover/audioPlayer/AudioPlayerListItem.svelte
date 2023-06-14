@@ -62,7 +62,7 @@
 		$allAudioPlayers.add(audioElement);
 	});
 
-	onDestroy(() => {
+	onDestroy(async () => {
 		audioElement?.pause();
 		$allAudioPlayers.delete(audioElement);
 	});

@@ -2,6 +2,7 @@
 	import {
 		voiceoverLocale,
 		voiceoverModelId,
+		voiceoverSpeakerDropdownItems,
 		voiceoverSpeakers,
 		voiceoverSpeakersArray
 	} from '$ts/constants/voiceover/models';
@@ -36,9 +37,7 @@
 	$: [$voiceoverLocale],
 		withCheck(() => {
 			if (voiceoverSpeakers[$voiceoverSpeakerId].locale !== $voiceoverLocale) {
-				voiceoverSpeakerId.set(
-					voiceoverSpeakersArray.find((speaker) => speaker.locale === $voiceoverLocale)?.id || ''
-				);
+				voiceoverSpeakerId.set($voiceoverSpeakerDropdownItems[0].value);
 			}
 			voiceoverLocaleLocal.set($voiceoverLocale);
 		});

@@ -149,6 +149,26 @@ export const voiceoverSpeakers: { [id: string]: TSpeaker } = {
 		name_in_worker: 'v2/es_speaker_6',
 		model_id: '0f442a3e-cf53-490b-b4a9-b0dda63e9523',
 		locale: 'de'
+	},
+	'83c0ee48-c8ef-4a4c-bca8-9dae843d25da': {
+		name_in_worker: 'v2/ru_speaker_3',
+		model_id: '0f442a3e-cf53-490b-b4a9-b0dda63e9523',
+		locale: 'ru'
+	},
+	'947786c1-810d-44ce-808f-cdcf732d97fd': {
+		name_in_worker: 'v2/ru_speaker_6',
+		model_id: '0f442a3e-cf53-490b-b4a9-b0dda63e9523',
+		locale: 'ru'
+	},
+	'2885a060-badc-4896-a4fa-f3656a58bb82': {
+		name_in_worker: 'v2/ru_speaker_2',
+		model_id: '0f442a3e-cf53-490b-b4a9-b0dda63e9523',
+		locale: 'ru'
+	},
+	'92929922-0608-4b62-8a0d-f9d87a4ca2f5': {
+		name_in_worker: 'v2/ru_speaker_0',
+		model_id: '0f442a3e-cf53-490b-b4a9-b0dda63e9523',
+		locale: 'ru'
 	}
 };
 
@@ -323,6 +343,23 @@ export const voiceoverSpeakerDropdownItems = derived(
 			{
 				label: $voiceoverSpeakerIdToDisplayName['c4796108-0e8a-4a7a-9a8a-bb66ff21e215'],
 				value: 'c4796108-0e8a-4a7a-9a8a-bb66ff21e215'
+			},
+			// ru
+			{
+				label: $voiceoverSpeakerIdToDisplayName['2885a060-badc-4896-a4fa-f3656a58bb82'],
+				value: '2885a060-badc-4896-a4fa-f3656a58bb82'
+			},
+			{
+				label: $voiceoverSpeakerIdToDisplayName['947786c1-810d-44ce-808f-cdcf732d97fd'],
+				value: '947786c1-810d-44ce-808f-cdcf732d97fd'
+			},
+			{
+				label: $voiceoverSpeakerIdToDisplayName['92929922-0608-4b62-8a0d-f9d87a4ca2f5'],
+				value: '92929922-0608-4b62-8a0d-f9d87a4ca2f5'
+			},
+			{
+				label: $voiceoverSpeakerIdToDisplayName['83c0ee48-c8ef-4a4c-bca8-9dae843d25da'],
+				value: '83c0ee48-c8ef-4a4c-bca8-9dae843d25da'
 			}
 		];
 		return items.filter(

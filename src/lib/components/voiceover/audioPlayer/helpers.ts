@@ -63,7 +63,7 @@ export function stopAllPlayers(exceptionElement?: HTMLAudioElement) {
 		player.pause();
 	});
 }
-export function togglePlay({
+export async function togglePlay({
 	audioElement,
 	state,
 	callback
@@ -74,12 +74,16 @@ export function togglePlay({
 }) {
 	if (state === 'play') {
 		stopAllPlayers(audioElement);
-		audioElement.play();
+		try {
+			await audioElement.play();
+		} catch (error) {}
 	} else if (state === 'pause') {
 		audioElement.pause();
 	} else if (audioElement.paused) {
 		stopAllPlayers(audioElement);
-		audioElement.play();
+		try {
+			await audioElement.play();
+		} catch (error) {}
 	} else {
 		audioElement.pause();
 	}
