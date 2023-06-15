@@ -80,7 +80,7 @@
 					</div>
 					<div class="flex-shrink min-w-0 flex justify-center items-center gap-1.5 relative">
 						<IconNavbarRoute
-							class="w-6 h-6 md:w-5 md:h-5 flex-shrink-0 lg:-ml-0.5 transform scale-100"
+							class="w-6 h-6 md:w-5 md:h-5 flex-shrink-0 lg:-ml-0.25 transform scale-100"
 							type={route.icon}
 						/>
 						<p
