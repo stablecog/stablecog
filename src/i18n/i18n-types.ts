@@ -1004,6 +1004,12 @@ type RootTranslation = {
 				 */
 				realName: string
 			}
+			'a3636543-91cc-4290-b1a4-9d506457b9be': {
+				/**
+				 * F​r​e​e​d​o​m
+				 */
+				realName: string
+			}
 		}
 		SchedulerOptions: {
 			'55027f8b-f046-4e71-bc51-53d5448661e0': {
@@ -3687,6 +3693,12 @@ export type TranslationFunctions = {
 			'22b0857d-7edc-4d00-9cd9-45aa509db093': {
 				/**
 				 * Kandinsky
+				 */
+				realName: () => LocalizedString
+			}
+			'a3636543-91cc-4290-b1a4-9d506457b9be': {
+				/**
+				 * Freedom
 				 */
 				realName: () => LocalizedString
 			}

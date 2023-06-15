@@ -345,6 +345,9 @@ const ja: Translation = {
 			},
 			'22b0857d-7edc-4d00-9cd9-45aa509db093': {
 				realName: 'Kandinsky'
+			},
+			'a3636543-91cc-4290-b1a4-9d506457b9be': {
+				realName: 'Freedom'
 			}
 		},
 		SchedulerOptions: {
@@ -881,69 +884,36 @@ const ja: Translation = {
 			'39f7fc5d-9031-4932-a4d5-b196bb06e203': {
 				Name: 'Jony'
 			},
-			'0140c5dc-af12-4643-bfec-650d3cd03c56': {
-				Name: 'Bryan'
-			},
-			'4a19f17c-eedc-4cf8-a45d-1f9d69547125': {
-				Name: 'Rachel'
-			},
-			'aad61bf9-0710-40f6-8050-8c412852f717': {
-				Name: 'Henry'
-			},
-			'37c069ec-f124-4be8-9d4c-e74157738877': {
-				Name: 'Liam'
-			},
-			'38f9bd69-fa4c-4e53-b398-9a0f5865e927': {
-				Name: 'Dan'
-			},
-			'5bd0610f-f073-487e-a74c-2a89105ce282': {
-				Name: 'Gamze'
-			},
-			'7c3f8e30-9957-4d5e-a70e-c8269ff5f550': {
-				Name: 'Mert'
-			},
-			'0188871e-c4d1-4ad9-ab3d-ec958c443822': {
-				Name: 'Halit'
-			},
-			'4802af70-6d40-429d-8b9d-8df591e30743': {
-				Name: 'Leyla'
-			},
-			'e10d4dac-7c39-4e96-9622-6d4e46fc384b': {
-				Name: 'Murat'
-			},
-			'9354180b-9735-412c-947f-9d15af6edfe0': {
-				Name: 'Mia'
-			},
-			'bcb7ac57-fd61-4630-82f0-ae3f836bb7c2': {
-				Name: 'Eizo'
-			},
-			'b7542bad-e5fc-4c02-89ce-0ec22f6deceb': {
-				Name: 'Ai'
-			},
-			'2cdb9e2c-42c1-49d0-959b-43d4bfc1828f': {
-				Name: 'Shinya'
-			},
-			'37bb1326-d83e-425a-b21a-1a03ffea4d05': {
-				Name: 'Emi'
-			},
-			'1eca6e55-53fb-4d70-995f-7e4da9266574': {
-				Name: 'Emika'
-			},
-			'4f5c8c3e-0a17-4a68-8be7-1a126fda9a0f': {
-				Name: 'Adriana'
-			},
-			'9206e75b-2b28-47f0-899e-76ab476e1c3f': {
-				Name: 'Jorge'
-			},
-			'573c37c7-f741-4d36-80dc-f126131c6343': {
-				Name: 'Carmen'
-			},
-			'b06d6333-1e35-45a6-b18b-3187d34cc387': {
-				Name: 'Pedro'
-			},
-			'90ba9324-476b-48ae-b88e-aed1975a51fd': {
-				Name: 'David'
-			}
+			'0140c5dc-af12-4643-bfec-650d3cd03c56': { Name: 'Bryan' },
+			'4a19f17c-eedc-4cf8-a45d-1f9d69547125': { Name: 'Rachel' },
+			'aad61bf9-0710-40f6-8050-8c412852f717': { Name: 'Henry' },
+			'37c069ec-f124-4be8-9d4c-e74157738877': { Name: 'Liam' },
+			'38f9bd69-fa4c-4e53-b398-9a0f5865e927': { Name: 'Dan' },
+			'5bd0610f-f073-487e-a74c-2a89105ce282': { Name: 'Gamze' },
+			'7c3f8e30-9957-4d5e-a70e-c8269ff5f550': { Name: 'Mert' },
+			'0188871e-c4d1-4ad9-ab3d-ec958c443822': { Name: 'Halit' },
+			'4802af70-6d40-429d-8b9d-8df591e30743': { Name: 'Leyla' },
+			'e10d4dac-7c39-4e96-9622-6d4e46fc384b': { Name: 'Murat' },
+			'9354180b-9735-412c-947f-9d15af6edfe0': { Name: 'Mia' },
+			'bcb7ac57-fd61-4630-82f0-ae3f836bb7c2': { Name: 'Eizo' },
+			'b7542bad-e5fc-4c02-89ce-0ec22f6deceb': { Name: 'Ai' },
+			'2cdb9e2c-42c1-49d0-959b-43d4bfc1828f': { Name: 'Shinya' },
+			'37bb1326-d83e-425a-b21a-1a03ffea4d05': { Name: 'Emi' },
+			'1eca6e55-53fb-4d70-995f-7e4da9266574': { Name: 'Emika' },
+			'4f5c8c3e-0a17-4a68-8be7-1a126fda9a0f': { Name: 'Adriana' },
+			'9206e75b-2b28-47f0-899e-76ab476e1c3f': { Name: 'Jorge' },
+			'573c37c7-f741-4d36-80dc-f126131c6343': { Name: 'Carmen' },
+			'b06d6333-1e35-45a6-b18b-3187d34cc387': { Name: 'Pedro' },
+			'90ba9324-476b-48ae-b88e-aed1975a51fd': { Name: 'David' },
+			'babbbc15-5040-4e97-a89f-8309b13d7785': { Name: 'Annika' },
+			'cafafcaa-45bf-45e0-901c-8ca63575ad2a': { Name: 'Leonie' },
+			'31d7c264-b674-422b-9b8f-13195c3289b6': { Name: 'Fritz' },
+			'b349543b-c727-4934-9f4f-249aa2a6b184': { Name: 'Wilhelm' },
+			'c4796108-0e8a-4a7a-9a8a-bb66ff21e215': { Name: 'Hans' },
+			'83c0ee48-c8ef-4a4c-bca8-9dae843d25da': { Name: 'Boris' },
+			'947786c1-810d-44ce-808f-cdcf732d97fd': { Name: 'Alisa' },
+			'2885a060-badc-4896-a4fa-f3656a58bb82': { Name: 'Ivan' },
+			'92929922-0608-4b62-8a0d-f9d87a4ca2f5': { Name: 'Oleg' }
 		},
 		List: {
 			NotSignedIn: {
