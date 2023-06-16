@@ -41,7 +41,7 @@
 		</p>
 		{#if hasCancelIcon}
 			<IconCancel
-				class="w-4 h-4 flex-shrink-0 -mr-1 {color === 'secondary'
+				class="w-4 h-4 flex-shrink-0 -ml-0.5 -mr-1 {color === 'secondary'
 					? 'text-c-secondary'
 					: 'text-c-primary'}"
 			/>
