@@ -62,7 +62,7 @@
 	let stageHeight: number;
 	let horizontalListHeightEstimatedRem = 4.6;
 	let horizontalListHeight: number;
-	let propmtBarEstimatedHeightRem = 3.75;
+	let propmtBarEstimatedHeightRem = 3.275;
 	let gridScrollContainer: HTMLDivElement;
 	let listScrollContainer: HTMLDivElement;
 	let listScrollContainerMd: HTMLDivElement;
@@ -386,7 +386,7 @@
 						</div>
 						<div
 							bind:clientHeight={promptBarHeight}
-							class="w-full flex pl-2 md:pl-0 pb-[calc(env(safe-area-inset-bottom)+0.75rem)] z-50"
+							class="w-full flex pt-0.5 md:pt-0 pl-2 md:pl-0 pb-[calc(env(safe-area-inset-bottom)+0.75rem)] z-50"
 						>
 							<PromptBar
 								{openSignInModal}
