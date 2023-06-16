@@ -15,6 +15,8 @@
 	} from '$components/voiceover/lists/constants';
 	import type { TVoiceoverFullOutput } from '$ts/stores/user/voiceovers';
 	import { removeRepeatingOutputsForVoiceover } from '$ts/helpers/removeRepeatingOutputs';
+	import { fly } from 'svelte/transition';
+	import { quadOut } from 'svelte/easing';
 
 	export let query: CreateInfiniteQueryResult<TUserVoiceoverFullOutputsPage, unknown>;
 	export let pinnedFullOutputs: TVoiceoverFullOutput[] | undefined;

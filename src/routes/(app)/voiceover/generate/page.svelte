@@ -16,7 +16,8 @@
 	import {
 		voiceovers,
 		type TVoiceoverFullOutput,
-		type TVoiceoverOutput
+		type TVoiceoverOutput,
+		type TVoiceover
 	} from '$ts/stores/user/voiceovers.js';
 	import { browser } from '$app/environment';
 	import { createInfiniteQuery } from '@tanstack/svelte-query';
@@ -108,44 +109,53 @@
 		id: ''
 	};
 
-	let placeholderFullOutput: TVoiceoverFullOutput;
-	$: placeholderFullOutput = {
+	let voiceoverPlaceholder: TVoiceover;
+	$: voiceoverPlaceholder = {
 		...placeholderOutput,
-		voiceover: {
-			ui_id: 'placeholder',
-			id: 'placeholder',
-			created_at: '',
-			prompt: {
-				id: '1',
-				text: 'Create amazing art in seconds with AI.'
-			},
-			seed: 1,
-			speaker: {
-				id: $voiceoverSpeakerId,
-				locale: $voiceoverLocale
-			},
-			status: 'pre-submit',
-			temperature: Math.round($voiceoverStability) / 100,
-			submit_to_gallery: false,
-			model_id: $voiceoverModelId,
-			num_outputs: 1,
-			outputs: [placeholderOutput]
-		}
+		ui_id: 'placeholder',
+		id: 'placeholder',
+		created_at: '',
+		prompt: {
+			id: '1',
+			text: 'Create amazing art in seconds with AI.'
+		},
+		seed: 1,
+		speaker: {
+			id: $voiceoverSpeakerId,
+			locale: $voiceoverLocale
+		},
+		status: 'pre-submit',
+		temperature: Math.round($voiceoverStability) / 100,
+		submit_to_gallery: false,
+		model_id: $voiceoverModelId,
+		num_outputs: 1,
+		outputs: [placeholderOutput]
 	};
 
-	let lastOutput: TVoiceoverFullOutput;
-	$: lastOutput =
-		$voiceovers?.[0] &&
-		($voiceovers[0].status === 'pre-submit' ||
+	$: [$voiceoverModelId, $voiceoverSpeakerId, $voiceoverLocale, $voiceoverStability],
+		addOrUpdatPlaceholderVoiceover();
+
+	function addOrUpdatPlaceholderVoiceover() {
+		if (voiceoverPlaceholder === undefined) return;
+		if ($voiceovers.length < 1) {
+			voiceovers.update((voi) => [voiceoverPlaceholder, ...voi]);
+			return;
+		}
+		if (
 			$voiceovers[0].status === 'to-be-submitted' ||
 			$voiceovers[0].status === 'server-received' ||
-			$voiceovers[0].status === 'server-processing' ||
-			$voiceovers[0].status === 'succeeded')
-			? {
-					...$voiceovers[0].outputs[0],
-					voiceover: $voiceovers[0]
-			  }
-			: placeholderFullOutput;
+			$voiceovers[0].status === 'server-processing'
+		)
+			return;
+		if ($voiceovers[0].status === 'pre-submit') {
+			voiceovers.update((voi) => [voiceoverPlaceholder, ...voi.slice(1)]);
+			return;
+		}
+		if ($voiceovers[0].status === 'succeeded' || $voiceovers[0].status === 'failed') {
+			voiceovers.update((voi) => [voiceoverPlaceholder, ...voi]);
+			return;
+		}
+	}
 </script>
 
 <MetaTag
@@ -283,7 +293,7 @@
 							class="w-full flex-1 min-h-0 flex flex-col justify-start overflow-hidden p-3 md:p-0"
 						>
 							<div class="flex-1 min-h-0 w-full flex flex-col overflow-hidden relative">
-								<AudioPlayerWithWaveform output={lastOutput} />
+								<AudioPlayerWithWaveform voiceover={$voiceovers[0]} />
 							</div>
 						</div>
 					</div>

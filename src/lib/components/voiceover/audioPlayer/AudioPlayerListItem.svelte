@@ -90,7 +90,7 @@
 	shadow-lg shadow-c-shadow/[var(--o-shadow-normal)] overflow-hidden relative z-0 group/audio-player-list-item"
 >
 	<div class="w-full flex justify-between items-center gap-2 pb-1">
-		<div class="flex-shrink min-w-0 w-full flex justify-start items-center">
+		<div class="flex-shrink min-w-0 w-full flex justify-start items-center py-1.5">
 			<div
 				class="rounded-md bg-c-bg-tertiary overflow-hidden
 					flex items-center justify-start relative z-0 ring-2 ring-c-bg-tertiary"
@@ -99,14 +99,14 @@
 					<IconSpeaker class="w-full h-full" type={output.voiceover.speaker.id} sizes="28px" />
 				</div>
 				<p
-					class="block lg:hidden xl:block text-c-on-bg/75 flex-shrink min-w-0 whitespace-nowrap overflow-hidden overflow-ellipsis text-sm font-medium
+					class="text-c-on-bg/75 flex-shrink min-w-0 whitespace-nowrap overflow-hidden overflow-ellipsis text-sm font-medium
 					px-2.5 py-1 h-full"
 				>
 					{$voiceoverSpeakerIdToDisplayName[output.voiceover.speaker.id]}
 				</p>
 			</div>
 		</div>
-		<div class="-mr-2 flex items-center">
+		<div class="-mr-2 flex items-center lg:hidden xl:flex">
 			<DownloadButton {output} faded disabled={isOutputLoadingOrFailed} />
 		</div>
 	</div>
@@ -159,7 +159,7 @@
 			>
 				{output.voiceover.prompt.text}
 			</p>
-			<div class="w-full flex items-center -mt-1">
+			<div class="w-full flex items-center -mt-1 lg:mt-0 xl:-mt-1">
 				<div class="flex-1 self-stretch h-8">
 					<div class="w-full h-full flex items-center relative">
 						<Slider
@@ -180,6 +180,19 @@
 					{(durationLocal || output.audio_duration) && totalTimestamp ? totalTimestamp : '00:00'}
 				</p>
 			</div>
+		</div>
+	</div>
+	<div class="w-full hidden lg:flex items-center justify-between xl:hidden pb-0.5">
+		<div class="-ml-2 flex items-center">
+			<DownloadButton {output} faded disabled={isOutputLoadingOrFailed} />
+		</div>
+		<div class="flex-shrink min-w-0 pl-3 text-xs text-c-on-bg/50 text-right">
+			<p class="px-0.25 flex-shrink min-w-0 overflow-hidden overflow-ellipsis">
+				{currentTime && currentTimestamp ? currentTimestamp : '00:00'}
+			</p>
+			<p class="px-0.25 flex-shrink min-w-0 overflow-hidden overflow-ellipsis">
+				{(durationLocal || output.audio_duration) && totalTimestamp ? totalTimestamp : '00:00'}
+			</p>
 		</div>
 	</div>
 	<!-- If loading or failed -->

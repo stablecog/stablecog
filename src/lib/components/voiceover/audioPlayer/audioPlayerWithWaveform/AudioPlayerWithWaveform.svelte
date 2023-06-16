@@ -3,14 +3,14 @@
 	import { togglePlay } from '$components/voiceover/audioPlayer/helpers';
 
 	import { allAudioPlayers } from '$ts/stores/allPlayers';
-	import type { TVoiceoverFullOutput } from '$ts/stores/user/voiceovers';
+	import type { TVoiceover, TVoiceoverOutput } from '$ts/stores/user/voiceovers';
 	import AudioPlayerWithWaveformPlaceholder from '$components/voiceover/audioPlayer/audioPlayerWithWaveform/AudioPlayerWithWaveformPlaceholder.svelte';
 	import { cubicOut } from 'svelte/easing';
 	import { scale } from 'svelte/transition';
 	import AudioPlayerWithWaveformInner from '$components/voiceover/audioPlayer/audioPlayerWithWaveform/AudioPlayerWithWaveformInner.svelte';
 	import type { TAudioStatus } from '$components/voiceover/audioPlayer/audioPlayerWithWaveform/types';
 
-	export let output: TVoiceoverFullOutput;
+	export let voiceover: TVoiceover;
 	export { classes as class };
 	let classes = '';
 
@@ -26,6 +26,9 @@
 	let muteButton: HTMLButtonElement;
 
 	let audioStatus: TAudioStatus;
+
+	let output: TVoiceoverOutput;
+	$: output = voiceover.outputs[0];
 	$: audioStatus =
 		output?.status === 'to-be-submitted' ||
 		output?.status === 'server-received' ||
@@ -46,7 +49,7 @@
 
 <audio
 	src={output?.audio_file_url}
-	aria-label={output?.voiceover.prompt.text || 'Voiceover'}
+	aria-label={voiceover.prompt.text || 'Voiceover'}
 	bind:currentTime
 	bind:duration
 	bind:this={audioElement}
@@ -75,7 +78,7 @@
 			transition:scale|local={{ duration: 300, easing: cubicOut, start: 0.9 }}
 			class="w-full h-full absolute left-0 top-0 bg-c-bg-secondary"
 		>
-			<AudioPlayerWithWaveformPlaceholder {output} {barWidth} />
+			<AudioPlayerWithWaveformPlaceholder output={{ ...output, voiceover }} {barWidth} />
 		</div>
 	{:else}
 		<div
@@ -86,7 +89,7 @@
 				bind:currentTime
 				bind:muteButton
 				bind:playButton
-				{output}
+				output={{ ...output, voiceover }}
 				{isMuted}
 				bind:isPaused
 				bind:isPlaying
