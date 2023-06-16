@@ -13,6 +13,8 @@
 	export let hoverFrom: 'bottom' | 'top' | 'left' | 'right' = 'bottom';
 	export let name: string | undefined = undefined;
 	export let noPadding = false;
+	export let paddingClassForHoverEffect: string | undefined = undefined;
+	export let noPaddingForHover = false;
 	export let withSpinner = false;
 	export let loading = false;
 </script>
@@ -35,7 +37,12 @@
 			: 'rounded-xl'} {size === 'sm' ? 'text-sm' : 'text-base'} {classes}"
 	>
 		{#if !loading}
-			<ButtonHoverEffect {hoverFrom} {size} />
+			<ButtonHoverEffect
+				noPadding={noPaddingForHover}
+				paddingClass={paddingClassForHoverEffect}
+				{hoverFrom}
+				{size}
+			/>
 		{/if}
 		{#if withSpinner}
 			<div
@@ -76,7 +83,7 @@
 			: 'rounded-xl'} {size === 'sm' ? 'text-sm' : 'text-base'} {classes}"
 	>
 		{#if !loading}
-			<ButtonHoverEffect {hoverFrom} {size} />
+			<ButtonHoverEffect paddingClass={paddingClassForHoverEffect} {noPadding} {hoverFrom} {size} />
 		{/if}
 		{#if withSpinner}
 			<div

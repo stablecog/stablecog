@@ -301,15 +301,17 @@
 		</div>
 		<NoBgButton
 			size="sm"
+			noPadding
+			paddingClassForHoverEffect="px-1"
 			onClick={toggleSettingsSheet}
-			class="h-full px-3 md:hidden"
+			class="h-full md:hidden px-3.5 py-2"
 			hoverFrom="bottom"
 			name={isGenerationSettingsSheetOpen
 				? $LL.Generate.HideSettingsButton()
 				: $LL.Generate.ShowSettingsButton()}
 		>
 			<Morpher morphed={$windowWidth < mdBreakpoint && isGenerationSettingsSheetOpen}>
-				<div slot="0" class="w-7.5 h-7.5">
+				<div slot="0" class="w-8 h-8">
 					<IconSettings
 						class="transition not-touch:group-hover:text-c-primary
 						w-full h-full {$windowWidth < mdBreakpoint && isGenerationSettingsSheetOpen
@@ -317,7 +319,7 @@
 							: 'rotate-0'}"
 					/>
 				</div>
-				<div slot="1" class="w-7.5 h-7.5">
+				<div slot="1" class="w-8 h-8">
 					<IconChevronDown
 						class="transition transform not-touch:group-hover:text-c-primary
 						w-full h-full {$windowWidth < mdBreakpoint && !isGenerationSettingsSheetOpen
