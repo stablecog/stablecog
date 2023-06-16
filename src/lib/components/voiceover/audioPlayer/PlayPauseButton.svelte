@@ -10,6 +10,7 @@
 	export let isPlaying: boolean;
 	export let size: 'md' | 'lg' = 'md';
 	export let element: HTMLButtonElement;
+	export let disabled = false;
 
 	let hasBeenLoadingForAWhileTimeout: NodeJS.Timeout | undefined = undefined;
 	let hasBeenLoadingForAWhile = false;
@@ -28,6 +29,7 @@
 <button
 	bind:this={element}
 	on:click={onClick}
+	{disabled}
 	class="relative rounded-lg group/play-button {size === 'lg' ? 'w-12 h-12' : 'w-10 h-10'}"
 >
 	<ButtonHoverEffect

@@ -14,10 +14,7 @@
 		listItemWidth
 	} from '$components/voiceover/lists/constants';
 	import type { TVoiceoverFullOutput } from '$ts/stores/user/voiceovers';
-	import {
-		removeRepeatingOutputs,
-		removeRepeatingOutputsForVoiceover
-	} from '$ts/helpers/removeRepeatingOutputs';
+	import { removeRepeatingOutputsForVoiceover } from '$ts/helpers/removeRepeatingOutputs';
 
 	export let query: CreateInfiniteQueryResult<TUserVoiceoverFullOutputsPage, unknown>;
 	export let pinnedFullOutputs: TVoiceoverFullOutput[] | undefined;
@@ -197,11 +194,7 @@
 						class={horizontal ? 'h-full' : 'w-full'}
 						style={horizontal ? `width: ${listItemWidth}px` : ''}
 					>
-						<AudioPlayerListItem
-							{output}
-							container={listScrollContainer}
-							inHorizontal={horizontal}
-						/>
+						<AudioPlayerListItem {output} inHorizontal={horizontal} />
 					</div>
 				</div>
 			{/each}

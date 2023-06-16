@@ -102,8 +102,6 @@
 		.filter((g) => g.status !== 'pre-submit')
 		.flatMap((g) => g.outputs.map((o) => ({ ...o, voiceover: g })));
 
-	$: userVoiceoverOutputs = $userVoiceoverFullOutputsQuery?.data?.pages?.flatMap((p) => p.outputs);
-
 	let placeholderOutput: TVoiceoverOutput = {
 		audio_duration: 0,
 		audio_file_url: '',

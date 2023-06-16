@@ -13,14 +13,16 @@
 	import { voiceoverSpeakerIdToDisplayName } from '$ts/constants/voiceover/models';
 	import { allAudioPlayers } from '$ts/stores/allPlayers';
 	import { onDestroy, onMount } from 'svelte';
-	import ThreeDotDropdown from '$components/voiceover/audioPlayer/ThreeDotDropdown.svelte';
 	import type { TVoiceoverFullOutput } from '$ts/stores/user/voiceovers';
 	import DownloadButton from '$components/voiceover/audioPlayer/DownloadButton.svelte';
+	import IconAnimatedSpinner from '$components/icons/IconAnimatedSpinner.svelte';
+	import IconSadFaceOutline from '$components/icons/IconSadFaceOutline.svelte';
+	import { quadOut } from 'svelte/easing';
+	import { fade } from 'svelte/transition';
 
 	export let output: TVoiceoverFullOutput;
 	export let hasMute = false;
 	export let inHorizontal = false;
-	export let container: HTMLElement | undefined = undefined;
 
 	let playButton: HTMLButtonElement;
 	let muteButton: HTMLButtonElement;
@@ -48,6 +50,12 @@
 
 	$: [currentTime], onCurrentTimeChanged();
 	$: [sliderValue], onSliderValueChanged();
+
+	$: isOutputLoadingOrFailed =
+		output.voiceover.status === 'failed' ||
+		output.voiceover.status === 'to-be-submitted' ||
+		output.voiceover.status === 'server-received' ||
+		output.voiceover.status === 'server-processing';
 
 	function onCurrentTimeChanged() {
 		sliderValue = progressPercentage;
@@ -99,7 +107,7 @@
 			</div>
 		</div>
 		<div class="-mr-2 flex items-center">
-			<DownloadButton {output} faded />
+			<DownloadButton {output} faded disabled={isOutputLoadingOrFailed} />
 		</div>
 	</div>
 	<p
@@ -134,9 +142,15 @@
 				}}
 				{isPaused}
 				{isPlaying}
+				disabled={isOutputLoadingOrFailed}
 			/>
 			{#if hasMute}
-				<MuteButton bind:element={muteButton} onClick={() => toggleMute(audioElement)} {isMuted} />
+				<MuteButton
+					bind:element={muteButton}
+					onClick={() => toggleMute(audioElement)}
+					{isMuted}
+					disabled={isOutputLoadingOrFailed}
+				/>
 			{/if}
 		</div>
 		<div class="flex-1 min-w-0 flex flex-col pl-2 pr-0.5">
@@ -150,6 +164,7 @@
 					<div class="w-full h-full flex items-center relative">
 						<Slider
 							{buffered}
+							disabled={isOutputLoadingOrFailed}
 							duration={durationLocal}
 							min={0}
 							max={100}
@@ -167,4 +182,20 @@
 			</div>
 		</div>
 	</div>
+	<!-- If loading or failed -->
+	{#if isOutputLoadingOrFailed}
+		<div
+			transition:fade|local={{ duration: 1000, easing: quadOut }}
+			class="w-full h-full absolute left-0 top-0 flex items-center justify-center {output.voiceover
+				.status === 'failed'
+				? 'bg-c-bg-secondary'
+				: 'bg-c-bg-secondary/90'}"
+		>
+			{#if output.voiceover.status === 'failed'}
+				<IconSadFaceOutline class="w-8 h-8 text-c-on-bg/50" />
+			{:else}
+				<IconAnimatedSpinner class="w-8 h-8 text-c-on-bg/50" loading={true} />
+			{/if}
+		</div>
+	{/if}
 </div>

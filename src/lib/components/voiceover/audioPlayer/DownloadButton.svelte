@@ -9,6 +9,7 @@
 	export let output: TVoiceoverFullOutput;
 	export let size: 'md' | 'lg' | 'sm' = 'md';
 	export let faded = false;
+	export let disabled = false;
 
 	let isDownloading = false;
 
@@ -27,7 +28,7 @@
 
 <button
 	on:click={download}
-	disabled={isDownloading}
+	disabled={disabled || isDownloading}
 	class="relative rounded-lg group/download-button {size === 'lg' ? 'w-12 h-12' : 'w-10 h-10'}"
 >
 	<ButtonHoverEffect

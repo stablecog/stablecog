@@ -5,6 +5,7 @@
 	export let max: number;
 	export let step: number;
 	export let name: string;
+	export let disabled = false;
 
 	export let buffered: TimeRanges | undefined;
 	export let duration: number | undefined;
@@ -25,6 +26,7 @@
 		{/each}
 	{/if}
 	<Slider.Root
+		{disabled}
 		class="flex-1 h-full touch-none select-none cursor-grab active:cursor-grabbing relative flex 
       items-center group/audio-player-slider"
 		bind:value

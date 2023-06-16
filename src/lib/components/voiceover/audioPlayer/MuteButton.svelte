@@ -7,11 +7,13 @@
 	export let isMuted: boolean;
 	export let size: 'md' | 'lg' = 'md';
 	export let element: HTMLButtonElement;
+	export let disabled = false;
 </script>
 
 <button
 	bind:this={element}
 	on:click={onClick}
+	{disabled}
 	class="relative rounded-lg group/mute-button {size === 'lg' ? 'w-12 h-12' : 'w-10 h-10'}"
 >
 	<ButtonHoverEffect
