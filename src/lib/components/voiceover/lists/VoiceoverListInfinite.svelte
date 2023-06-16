@@ -13,8 +13,14 @@
 		listItemHeightLg,
 		listItemWidth
 	} from '$components/voiceover/lists/constants';
+	import type { TVoiceoverFullOutput } from '$ts/stores/user/voiceovers';
+	import {
+		removeRepeatingOutputs,
+		removeRepeatingOutputsForVoiceover
+	} from '$ts/helpers/removeRepeatingOutputs';
 
 	export let query: CreateInfiniteQueryResult<TUserVoiceoverFullOutputsPage, unknown>;
+	export let pinnedFullOutputs: TVoiceoverFullOutput[] | undefined;
 	export let horizontal = false;
 	export let listScrollContainer: HTMLElement | undefined = undefined;
 	export let listScrollContainerWidth: number | undefined = undefined;
@@ -29,7 +35,24 @@
 
 	let listVirtualizer: Readable<SvelteVirtualizer<HTMLDivElement, Element>> | undefined;
 
-	$: outputs = $query?.data?.pages?.flatMap((p) => p.outputs);
+	$: onlyOutputs = $query.data?.pages.flatMap((page) => page.outputs);
+	let outputs: TVoiceoverFullOutput[] | undefined = undefined;
+	$: [onlyOutputs, pinnedFullOutputs], setOutputs();
+
+	function setOutputs() {
+		if (!onlyOutputs) {
+			outputs = undefined;
+			return;
+		}
+		if (!pinnedFullOutputs) {
+			outputs = [...onlyOutputs];
+			return;
+		}
+		outputs = removeRepeatingOutputsForVoiceover({
+			outputsPinned: pinnedFullOutputs,
+			outputs: onlyOutputs
+		});
+	}
 
 	$: paddingX = paddingLeft + paddingRight;
 	$: paddingY = paddingTop + paddingBottom;

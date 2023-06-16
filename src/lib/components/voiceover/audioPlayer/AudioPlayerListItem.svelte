@@ -15,6 +15,7 @@
 	import { onDestroy, onMount } from 'svelte';
 	import ThreeDotDropdown from '$components/voiceover/audioPlayer/ThreeDotDropdown.svelte';
 	import type { TVoiceoverFullOutput } from '$ts/stores/user/voiceovers';
+	import DownloadButton from '$components/voiceover/audioPlayer/DownloadButton.svelte';
 
 	export let output: TVoiceoverFullOutput;
 	export let hasMute = false;
@@ -90,15 +91,15 @@
 					<IconSpeaker class="w-full h-full" type={output.voiceover.speaker.id} sizes="28px" />
 				</div>
 				<p
-					class="text-c-on-bg/75 flex-shrink min-w-0 whitespace-nowrap overflow-hidden overflow-ellipsis text-sm font-medium
+					class="block lg:hidden xl:block text-c-on-bg/75 flex-shrink min-w-0 whitespace-nowrap overflow-hidden overflow-ellipsis text-sm font-medium
 					px-2.5 py-1 h-full"
 				>
 					{$voiceoverSpeakerIdToDisplayName[output.voiceover.speaker.id]}
 				</p>
 			</div>
 		</div>
-		<div class="-mr-1.5">
-			<ThreeDotDropdown {output} {container} />
+		<div class="-mr-2 flex items-center">
+			<DownloadButton {output} faded />
 		</div>
 	</div>
 	<p

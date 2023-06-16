@@ -100,7 +100,7 @@
 			]
 		}))
 		.filter((g) => g.status !== 'pre-submit')
-		.flatMap((g) => g.outputs.map((o) => ({ ...o, generation: g })));
+		.flatMap((g) => g.outputs.map((o) => ({ ...o, voiceover: g })));
 
 	$: userVoiceoverOutputs = $userVoiceoverFullOutputsQuery?.data?.pages?.flatMap((p) => p.outputs);
 
@@ -176,6 +176,7 @@
 								{:else if userVoiceoverFullOutputsQuery}
 									{#if listScrollContainerLg && clientHeight}
 										<VoiceoverListInfinite
+											{pinnedFullOutputs}
 											paddingLeft={listPadding}
 											paddingRight={listPadding}
 											paddingTop={listPadding}
@@ -301,6 +302,7 @@
 										{#if listScrollContainerMd && clientWidth}
 											<VoiceoverListInfinite
 												horizontal={true}
+												{pinnedFullOutputs}
 												paddingLeft={listPadding}
 												paddingTop={listPadding}
 												paddingBottom={listPadding}

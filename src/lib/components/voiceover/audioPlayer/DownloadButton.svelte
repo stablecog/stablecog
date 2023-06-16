@@ -7,7 +7,8 @@
 	import type { TVoiceoverFullOutput } from '$ts/stores/user/voiceovers';
 
 	export let output: TVoiceoverFullOutput;
-	export let size: 'md' | 'lg' = 'md';
+	export let size: 'md' | 'lg' | 'sm' = 'md';
+	export let faded = false;
 
 	let isDownloading = false;
 
@@ -39,12 +40,16 @@
 		<Morpher class="w-full h-full" morphed={isDownloading}>
 			<div slot="0">
 				<IconDownload
-					class="w-full h-full transition text-c-on-bg not-touch:group-hover/download-button:text-c-primary"
+					class="w-full h-full transition {faded
+						? 'text-c-on-bg/50'
+						: 'text-c-on-bg'} not-touch:group-hover/download-button:text-c-primary"
 				/>
 			</div>
 			<div class="w-full h-full" slot="1">
 				<IconAnimatedSpinner
-					class="w-full h-full not-touch:group-hover/download-button:text-c-primary"
+					class="w-full h-full {faded
+						? 'text-c-on-bg/50'
+						: 'text-c-on-bg'} not-touch:group-hover/download-button:text-c-primary"
 					loading={isDownloading}
 				/>
 			</div>
