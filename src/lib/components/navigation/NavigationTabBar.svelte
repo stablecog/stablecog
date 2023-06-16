@@ -21,9 +21,12 @@
 	};
 
 	let elements: Record<string, HTMLAnchorElement> = {};
-	$: widths = Object.keys(elements)
-		.sort((a, b) => Number(a) - Number(b))
-		.map((i) => elements[i].getBoundingClientRect().width);
+	$: widths =
+		Object.keys(elements).length > 0
+			? Object.keys(elements)
+					.sort((a, b) => Number(a) - Number(b))
+					.map((i) => (elements[i] ? elements[i].getBoundingClientRect().width : 0))
+			: $routes.map(() => 0);
 
 	$: selectedRouteIndex = routeIndexOf($page.url.pathname);
 	$: selectedRouteWidth = widths[selectedRouteIndex];
