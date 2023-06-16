@@ -33,7 +33,6 @@
 	} from '$ts/stores/user/generation';
 	import { sseId } from '$ts/stores/user/sse';
 	import { userSummary } from '$ts/stores/user/summary';
-	import IconGenerationSettings from '$components/icons/IconGenerationSettings.svelte';
 	import { windowWidth } from '$ts/stores/window';
 	import { mdBreakpoint } from '$components/generationFullScreen/constants';
 	import { onMount } from 'svelte';
@@ -45,6 +44,7 @@
 	import { afterNavigate } from '$app/navigation';
 	import NoBgButton from '$components/buttons/NoBgButton.svelte';
 	import type { TGeneratePageData } from '$approutes/generate/+page.server';
+	import IconSettings from '$components/icons/IconSettings.svelte';
 
 	export let openSignInModal: () => void;
 	export let serverData: TGeneratePageData;
@@ -309,8 +309,8 @@
 				: $LL.Generate.ShowSettingsButton()}
 		>
 			<Morpher morphed={$windowWidth < mdBreakpoint && isGenerationSettingsSheetOpen}>
-				<div slot="0" class="w-7.5 h-7.5 p-0.5">
-					<IconGenerationSettings
+				<div slot="0" class="w-7.5 h-7.5">
+					<IconSettings
 						class="transition not-touch:group-hover:text-c-primary
 						w-full h-full {$windowWidth < mdBreakpoint && isGenerationSettingsSheetOpen
 							? 'rotate-180'

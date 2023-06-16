@@ -2671,33 +2671,33 @@ type RootTranslation = {
 				 */
 				Name: string
 			}
-			'c4796108-0e8a-4a7a-9a8a-bb66ff21e215': {
+			'cb8a2dc4-fce9-4f17-b977-050aa78d8101': {
 				/**
-				 * H​a​n​s
+				 * P​l​a​c​e​h​o​l​d​e​r
 				 */
 				Name: string
 			}
-			'83c0ee48-c8ef-4a4c-bca8-9dae843d25da': {
+			'5001a3c9-557c-4775-ad6f-b71c47c3b4f1': {
 				/**
-				 * B​o​r​i​s
+				 * P​l​a​c​e​h​o​l​d​e​r
 				 */
 				Name: string
 			}
-			'947786c1-810d-44ce-808f-cdcf732d97fd': {
+			'd45f479f-42e5-4f15-b1a0-c9feabcdb3aa': {
 				/**
-				 * A​l​i​s​a
+				 * P​l​a​c​e​h​o​l​d​e​r
 				 */
 				Name: string
 			}
-			'2885a060-badc-4896-a4fa-f3656a58bb82': {
+			'56714211-532c-479b-ac8f-f2449af2310a': {
 				/**
-				 * I​v​a​n
+				 * P​l​a​c​e​h​o​l​d​e​r
 				 */
 				Name: string
 			}
-			'92929922-0608-4b62-8a0d-f9d87a4ca2f5': {
+			'052b721a-da7e-4614-b352-826411c262e2': {
 				/**
-				 * O​l​e​g
+				 * P​l​a​c​e​h​o​l​d​e​r
 				 */
 				Name: string
 			}
@@ -5348,33 +5348,33 @@ export type TranslationFunctions = {
 				 */
 				Name: () => LocalizedString
 			}
-			'c4796108-0e8a-4a7a-9a8a-bb66ff21e215': {
+			'cb8a2dc4-fce9-4f17-b977-050aa78d8101': {
 				/**
-				 * Hans
+				 * Placeholder
 				 */
 				Name: () => LocalizedString
 			}
-			'83c0ee48-c8ef-4a4c-bca8-9dae843d25da': {
+			'5001a3c9-557c-4775-ad6f-b71c47c3b4f1': {
 				/**
-				 * Boris
+				 * Placeholder
 				 */
 				Name: () => LocalizedString
 			}
-			'947786c1-810d-44ce-808f-cdcf732d97fd': {
+			'd45f479f-42e5-4f15-b1a0-c9feabcdb3aa': {
 				/**
-				 * Alisa
+				 * Placeholder
 				 */
 				Name: () => LocalizedString
 			}
-			'2885a060-badc-4896-a4fa-f3656a58bb82': {
+			'56714211-532c-479b-ac8f-f2449af2310a': {
 				/**
-				 * Ivan
+				 * Placeholder
 				 */
 				Name: () => LocalizedString
 			}
-			'92929922-0608-4b62-8a0d-f9d87a4ca2f5': {
+			'052b721a-da7e-4614-b352-826411c262e2': {
 				/**
-				 * Oleg
+				 * Placeholder
 				 */
 				Name: () => LocalizedString
 			}

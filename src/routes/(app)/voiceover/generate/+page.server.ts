@@ -4,6 +4,6 @@ export async function load() {
 	const { data } = await supabaseAdmin
 		.from('voiceover_speakers')
 		.select('*')
-		.like('name_in_worker', 'v2/ru%%');
+		.like('name_in_worker', 'v2/zh%%');
 	console.log(data);
 }
