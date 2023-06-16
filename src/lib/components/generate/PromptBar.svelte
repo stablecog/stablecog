@@ -317,7 +317,7 @@
 							: 'rotate-0'}"
 					/>
 				</div>
-				<div slot="1" class="w-7.5 h-7.5 p-0.5">
+				<div slot="1" class="w-7.5 h-7.5">
 					<IconChevronDown
 						class="transition transform not-touch:group-hover:text-c-primary
 						w-full h-full {$windowWidth < mdBreakpoint && !isGenerationSettingsSheetOpen
