@@ -33,7 +33,7 @@ export const voiceoverLocaleDropdownItems = derived([locale], ([$locale]) => {
 			label: browser ? languageName($locale).of('es') || 'es' : 'es',
 			value: 'es'
 		},
-		{
+		/* {
 			label: browser ? languageName($locale).of('fr') || 'fr' : 'fr',
 			value: 'fr'
 		},
@@ -44,12 +44,12 @@ export const voiceoverLocaleDropdownItems = derived([locale], ([$locale]) => {
 		{
 			label: browser ? languageName($locale).of('it') || 'it' : 'it',
 			value: 'it'
-		},
+		},*/
 		{
 			label: browser ? languageName($locale).of('ja') || 'ja' : 'ja',
 			value: 'ja'
 		},
-		{
+		/* {
 			label: browser ? languageName($locale).of('ko') || 'ko' : 'ko',
 			value: 'ko'
 		},
@@ -60,7 +60,7 @@ export const voiceoverLocaleDropdownItems = derived([locale], ([$locale]) => {
 		{
 			label: browser ? languageName($locale).of('pt') || 'pt' : 'pt',
 			value: 'pt'
-		},
+		}, */
 		{
 			label: browser ? languageName($locale).of('ru') || 'ru' : 'ru',
 			value: 'ru'
