@@ -304,7 +304,7 @@
 			noPadding
 			paddingClassForHoverEffect="px-1"
 			onClick={toggleSettingsSheet}
-			class="h-full md:hidden px-3.5 py-2"
+			class="h-full md:hidden px-3 py-2"
 			hoverFrom="bottom"
 			name={isGenerationSettingsSheetOpen
 				? $LL.Generate.HideSettingsButton()
