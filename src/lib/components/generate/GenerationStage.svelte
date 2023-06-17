@@ -7,7 +7,6 @@
 	import { windowWidth } from '$ts/stores/window';
 	import { onMount } from 'svelte';
 	import { quadOut } from 'svelte/easing';
-	import { fly, scale } from 'svelte/transition';
 
 	export let stageWidth: number;
 	export let stageHeight: number;
