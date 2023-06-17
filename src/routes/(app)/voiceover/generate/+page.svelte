@@ -203,6 +203,7 @@
 				{/if}
 				<SidebarCollapseButton
 					side="left"
+					size="sm"
 					isClosed={$isLeftSidebarHiddenApp}
 					isClosedClass="-translate-x-6.5"
 					onClick={() => {

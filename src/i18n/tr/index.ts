@@ -262,6 +262,8 @@ const tr: Translation = {
 		SimilarToTitle: 'Şuna benzer: {item}',
 		ResourcesTitle: 'Kaynaklar',
 		ResourcesButton: 'Kaynaklar',
+		On: 'On',
+		Off: 'Off',
 		BetaTitle: 'Beta',
 		ConfirmQuestionMarkButton: 'Onayla?',
 		Credits: {
@@ -915,6 +917,39 @@ const tr: Translation = {
 		Generate: {
 			SpeakerParagraph: '{speakerName} will be speaking in {languageName}.',
 			VoiceoverParagraph: 'The voiceover will appear here.'
+		},
+		PromptBar: {
+			GenerateButton: 'Generate',
+			CreditCost: '{creditCost} credit(s)',
+			PromptInputPlaceholder:
+				'Technology, in its finest form, is the bridge between imagination and reality.'
+		},
+		Settings: {
+			Speaker: {
+				Title: 'Speaker',
+				Paragraph: 'The speaker for your voiceover.'
+			},
+			Language: {
+				Title: 'Language',
+				Paragraph: 'The language for your voiceover.'
+			},
+			VoiceStability: {
+				Title: 'Voice Stability',
+				Paragraph:
+					'The stability of the voice. Higher values make the voice more stable, lower values make it more variable.',
+				Slider: {
+					MoreStable: 'More stable',
+					MoreVariable: 'More variable'
+				}
+			},
+			DenoiseAudio: {
+				Title: 'Denoise Audio',
+				Paragraph: 'Remove background noise from the audio.'
+			},
+			RemoveSilence: {
+				Title: 'Remove Silence',
+				Paragraph: 'Remove silent parts from the audio.'
+			}
 		}
 	},
 	UnderDevelopment: {

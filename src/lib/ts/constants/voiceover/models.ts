@@ -258,17 +258,18 @@ export const voiceoverSpeakerDropdownItems = derived(
 		const items: TTab<TVoiceoverSpeakerId>[] = [
 			// en
 			{
-				label: $voiceoverSpeakerIdToDisplayName['82bc1e69-2aa3-4317-9bc9-d9ed2afad0ff'],
-				value: '82bc1e69-2aa3-4317-9bc9-d9ed2afad0ff'
+				label: $voiceoverSpeakerIdToDisplayName['39f7fc5d-9031-4932-a4d5-b196bb06e203'],
+				value: '39f7fc5d-9031-4932-a4d5-b196bb06e203'
 			},
 			{
 				label: $voiceoverSpeakerIdToDisplayName['4a19f17c-eedc-4cf8-a45d-1f9d69547125'],
 				value: '4a19f17c-eedc-4cf8-a45d-1f9d69547125'
 			},
 			{
-				label: $voiceoverSpeakerIdToDisplayName['39f7fc5d-9031-4932-a4d5-b196bb06e203'],
-				value: '39f7fc5d-9031-4932-a4d5-b196bb06e203'
+				label: $voiceoverSpeakerIdToDisplayName['82bc1e69-2aa3-4317-9bc9-d9ed2afad0ff'],
+				value: '82bc1e69-2aa3-4317-9bc9-d9ed2afad0ff'
 			},
+
 			{
 				label: $voiceoverSpeakerIdToDisplayName['0140c5dc-af12-4643-bfec-650d3cd03c56'],
 				value: '0140c5dc-af12-4643-bfec-650d3cd03c56'

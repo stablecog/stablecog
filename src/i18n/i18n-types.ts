@@ -792,6 +792,14 @@ type RootTranslation = {
 		 */
 		ResourcesButton: string
 		/**
+		 * O​n
+		 */
+		On: string
+		/**
+		 * O​f​f
+		 */
+		Off: string
+		/**
 		 * B​e​t​a
 		 */
 		BetaTitle: string
@@ -2758,6 +2766,83 @@ type RootTranslation = {
 			 */
 			VoiceoverParagraph: string
 		}
+		PromptBar: {
+			/**
+			 * G​e​n​e​r​a​t​e
+			 */
+			GenerateButton: string
+			/**
+			 * {​c​r​e​d​i​t​C​o​s​t​}​ ​c​r​e​d​i​t​(​s​)
+			 * @param {unknown} creditCost
+			 */
+			CreditCost: RequiredParams<'creditCost'>
+			/**
+			 * T​e​c​h​n​o​l​o​g​y​,​ ​i​n​ ​i​t​s​ ​f​i​n​e​s​t​ ​f​o​r​m​,​ ​i​s​ ​t​h​e​ ​b​r​i​d​g​e​ ​b​e​t​w​e​e​n​ ​i​m​a​g​i​n​a​t​i​o​n​ ​a​n​d​ ​r​e​a​l​i​t​y​.
+			 */
+			PromptInputPlaceholder: string
+		}
+		Settings: {
+			Speaker: {
+				/**
+				 * S​p​e​a​k​e​r
+				 */
+				Title: string
+				/**
+				 * T​h​e​ ​s​p​e​a​k​e​r​ ​f​o​r​ ​y​o​u​r​ ​v​o​i​c​e​o​v​e​r​.
+				 */
+				Paragraph: string
+			}
+			Language: {
+				/**
+				 * L​a​n​g​u​a​g​e
+				 */
+				Title: string
+				/**
+				 * T​h​e​ ​l​a​n​g​u​a​g​e​ ​f​o​r​ ​y​o​u​r​ ​v​o​i​c​e​o​v​e​r​.
+				 */
+				Paragraph: string
+			}
+			VoiceStability: {
+				/**
+				 * V​o​i​c​e​ ​S​t​a​b​i​l​i​t​y
+				 */
+				Title: string
+				/**
+				 * T​h​e​ ​s​t​a​b​i​l​i​t​y​ ​o​f​ ​t​h​e​ ​v​o​i​c​e​.​ ​H​i​g​h​e​r​ ​v​a​l​u​e​s​ ​m​a​k​e​ ​t​h​e​ ​v​o​i​c​e​ ​m​o​r​e​ ​s​t​a​b​l​e​,​ ​l​o​w​e​r​ ​v​a​l​u​e​s​ ​m​a​k​e​ ​i​t​ ​m​o​r​e​ ​v​a​r​i​a​b​l​e​.
+				 */
+				Paragraph: string
+				Slider: {
+					/**
+					 * M​o​r​e​ ​s​t​a​b​l​e
+					 */
+					MoreStable: string
+					/**
+					 * M​o​r​e​ ​v​a​r​i​a​b​l​e
+					 */
+					MoreVariable: string
+				}
+			}
+			DenoiseAudio: {
+				/**
+				 * D​e​n​o​i​s​e​ ​A​u​d​i​o
+				 */
+				Title: string
+				/**
+				 * R​e​m​o​v​e​ ​b​a​c​k​g​r​o​u​n​d​ ​n​o​i​s​e​ ​f​r​o​m​ ​t​h​e​ ​a​u​d​i​o​.
+				 */
+				Paragraph: string
+			}
+			RemoveSilence: {
+				/**
+				 * R​e​m​o​v​e​ ​S​i​l​e​n​c​e
+				 */
+				Title: string
+				/**
+				 * R​e​m​o​v​e​ ​s​i​l​e​n​t​ ​p​a​r​t​s​ ​f​r​o​m​ ​t​h​e​ ​a​u​d​i​o​.
+				 */
+				Paragraph: string
+			}
+		}
 	}
 	UnderDevelopment: {
 		/**
@@ -3527,6 +3612,14 @@ export type TranslationFunctions = {
 		 * Resources
 		 */
 		ResourcesButton: () => LocalizedString
+		/**
+		 * On
+		 */
+		On: () => LocalizedString
+		/**
+		 * Off
+		 */
+		Off: () => LocalizedString
 		/**
 		 * Beta
 		 */
@@ -5462,6 +5555,82 @@ export type TranslationFunctions = {
 			 * The voiceover will appear here.
 			 */
 			VoiceoverParagraph: () => LocalizedString
+		}
+		PromptBar: {
+			/**
+			 * Generate
+			 */
+			GenerateButton: () => LocalizedString
+			/**
+			 * {creditCost} credit(s)
+			 */
+			CreditCost: (arg: { creditCost: unknown }) => LocalizedString
+			/**
+			 * Technology, in its finest form, is the bridge between imagination and reality.
+			 */
+			PromptInputPlaceholder: () => LocalizedString
+		}
+		Settings: {
+			Speaker: {
+				/**
+				 * Speaker
+				 */
+				Title: () => LocalizedString
+				/**
+				 * The speaker for your voiceover.
+				 */
+				Paragraph: () => LocalizedString
+			}
+			Language: {
+				/**
+				 * Language
+				 */
+				Title: () => LocalizedString
+				/**
+				 * The language for your voiceover.
+				 */
+				Paragraph: () => LocalizedString
+			}
+			VoiceStability: {
+				/**
+				 * Voice Stability
+				 */
+				Title: () => LocalizedString
+				/**
+				 * The stability of the voice. Higher values make the voice more stable, lower values make it more variable.
+				 */
+				Paragraph: () => LocalizedString
+				Slider: {
+					/**
+					 * More stable
+					 */
+					MoreStable: () => LocalizedString
+					/**
+					 * More variable
+					 */
+					MoreVariable: () => LocalizedString
+				}
+			}
+			DenoiseAudio: {
+				/**
+				 * Denoise Audio
+				 */
+				Title: () => LocalizedString
+				/**
+				 * Remove background noise from the audio.
+				 */
+				Paragraph: () => LocalizedString
+			}
+			RemoveSilence: {
+				/**
+				 * Remove Silence
+				 */
+				Title: () => LocalizedString
+				/**
+				 * Remove silent parts from the audio.
+				 */
+				Paragraph: () => LocalizedString
+			}
 		}
 	}
 	UnderDevelopment: {

@@ -262,6 +262,8 @@ const ja: Translation = {
 		SimilarToTitle: '類似画像: {item}',
 		ResourcesTitle: 'リソース',
 		ResourcesButton: 'リソース',
+		On: 'On',
+		Off: 'Off',
 		BetaTitle: 'Beta',
 		ConfirmQuestionMarkButton: '確定しますか？',
 		Credits: {

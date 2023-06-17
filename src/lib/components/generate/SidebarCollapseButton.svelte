@@ -6,13 +6,14 @@
 	export let isClosed: boolean;
 	export let side: 'left' | 'right';
 	export let isClosedClass = '-translate-x-3.5';
+	export let size: 'sm' | 'md' = 'md';
 
 	let shouldShowButton = false;
 	let isInside = false;
 	let hasBeenInsideForMs = 0;
 	let hasBeenInsideForMsInterval: NodeJS.Timeout;
 	let hasBeenInsideForMsIntervalDelay = 50;
-	let enoughTimeThreshold = 100;
+	let enoughTimeThreshold = 150;
 
 	let isFirstChange = true;
 	let isNewlyOpenedTimeout: NodeJS.Timeout;
@@ -70,7 +71,7 @@
 	on:focus|preventDefault={() => null}
 	on:mouseleave|preventDefault={onMouseLeave}
 	on:blur|preventDefault={() => null}
-	class="h-full w-8 absolute -right-7 transition {isClosed
+	class="h-full {size === 'sm' ? 'w-5 -right-4.5' : 'w-8 -right-7'} absolute transition {isClosed
 		? isClosedClass
 		: ''} top-0 flex items-center justify-center transform z-20"
 >
@@ -79,7 +80,9 @@
     shadow-xl shadow-c-shadow/[var(--o-shadow-strongest)] transform transition {shouldShowButton ||
 		isClosed ||
 		isNewlyOpened
-			? 'opacity-100 -translate-x-2.5'
+			? size === 'sm'
+				? 'opacity-100 -translate-x-1.5'
+				: 'opacity-100 -translate-x-2.5'
 			: 'opacity-0 translate-x-0'}"
 	>
 		<IconButton
