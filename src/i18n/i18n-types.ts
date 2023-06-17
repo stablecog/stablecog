@@ -2776,10 +2776,12 @@ type RootTranslation = {
 			 * @param {unknown} creditCost
 			 */
 			CreditCost: RequiredParams<'creditCost'>
-			/**
-			 * T​e​c​h​n​o​l​o​g​y​,​ ​i​n​ ​i​t​s​ ​f​i​n​e​s​t​ ​f​o​r​m​,​ ​i​s​ ​t​h​e​ ​b​r​i​d​g​e​ ​b​e​t​w​e​e​n​ ​i​m​a​g​i​n​a​t​i​o​n​ ​a​n​d​ ​r​e​a​l​i​t​y​.
-			 */
-			PromptInputPlaceholder: string
+			PromptInput: {
+				/**
+				 * T​e​c​h​n​o​l​o​g​y​,​ ​i​n​ ​i​t​s​ ​f​i​n​e​s​t​ ​f​o​r​m​,​ ​i​s​ ​t​h​e​ ​b​r​i​d​g​e​ ​b​e​t​w​e​e​n​ ​i​m​a​g​i​n​a​t​i​o​n​ ​a​n​d​ ​r​e​a​l​i​t​y​.
+				 */
+				Placeholder: string
+			}
 		}
 		Settings: {
 			Speaker: {
@@ -2788,7 +2790,7 @@ type RootTranslation = {
 				 */
 				Title: string
 				/**
-				 * T​h​e​ ​s​p​e​a​k​e​r​ ​f​o​r​ ​y​o​u​r​ ​v​o​i​c​e​o​v​e​r​.
+				 * T​h​e​ ​s​p​e​a​k​e​r​ ​f​o​r​ ​t​h​e​ ​v​o​i​c​e​o​v​e​r​.
 				 */
 				Paragraph: string
 			}
@@ -2798,7 +2800,7 @@ type RootTranslation = {
 				 */
 				Title: string
 				/**
-				 * T​h​e​ ​l​a​n​g​u​a​g​e​ ​f​o​r​ ​y​o​u​r​ ​v​o​i​c​e​o​v​e​r​.
+				 * T​h​e​ ​l​a​n​g​u​a​g​e​ ​f​o​r​ ​t​h​e​ ​v​o​i​c​e​o​v​e​r​.
 				 */
 				Paragraph: string
 			}
@@ -2808,7 +2810,7 @@ type RootTranslation = {
 				 */
 				Title: string
 				/**
-				 * T​h​e​ ​s​t​a​b​i​l​i​t​y​ ​o​f​ ​t​h​e​ ​v​o​i​c​e​.​ ​H​i​g​h​e​r​ ​v​a​l​u​e​s​ ​m​a​k​e​ ​t​h​e​ ​v​o​i​c​e​ ​m​o​r​e​ ​s​t​a​b​l​e​,​ ​l​o​w​e​r​ ​v​a​l​u​e​s​ ​m​a​k​e​ ​i​t​ ​m​o​r​e​ ​v​a​r​i​a​b​l​e​.
+				 * T​h​e​ ​s​t​a​b​i​l​i​t​y​ ​l​e​v​e​l​ ​o​f​ ​t​h​e​ ​v​o​i​c​e​.​ ​H​i​g​h​e​r​ ​v​a​l​u​e​s​ ​m​a​k​e​ ​t​h​e​ ​v​o​i​c​e​ ​m​o​r​e​ ​s​t​a​b​l​e​,​ ​l​o​w​e​r​ ​v​a​l​u​e​s​ ​m​a​k​e​ ​i​t​ ​m​o​r​e​ ​v​a​r​i​a​b​l​e​.
 				 */
 				Paragraph: string
 				Slider: {
@@ -5565,10 +5567,12 @@ export type TranslationFunctions = {
 			 * {creditCost} credit(s)
 			 */
 			CreditCost: (arg: { creditCost: unknown }) => LocalizedString
-			/**
-			 * Technology, in its finest form, is the bridge between imagination and reality.
-			 */
-			PromptInputPlaceholder: () => LocalizedString
+			PromptInput: {
+				/**
+				 * Technology, in its finest form, is the bridge between imagination and reality.
+				 */
+				Placeholder: () => LocalizedString
+			}
 		}
 		Settings: {
 			Speaker: {
@@ -5577,7 +5581,7 @@ export type TranslationFunctions = {
 				 */
 				Title: () => LocalizedString
 				/**
-				 * The speaker for your voiceover.
+				 * The speaker for the voiceover.
 				 */
 				Paragraph: () => LocalizedString
 			}
@@ -5587,7 +5591,7 @@ export type TranslationFunctions = {
 				 */
 				Title: () => LocalizedString
 				/**
-				 * The language for your voiceover.
+				 * The language for the voiceover.
 				 */
 				Paragraph: () => LocalizedString
 			}
@@ -5597,7 +5601,7 @@ export type TranslationFunctions = {
 				 */
 				Title: () => LocalizedString
 				/**
-				 * The stability of the voice. Higher values make the voice more stable, lower values make it more variable.
+				 * The stability level of the voice. Higher values make the voice more stable, lower values make it more variable.
 				 */
 				Paragraph: () => LocalizedString
 				Slider: {

@@ -8,7 +8,7 @@
 		TUpscaleRealtimePayloadExt
 	} from '$approutes/live/types';
 	import { tooltip } from '$ts/actions/tooltip';
-	import { tooltipLivePageStyleProps } from '$ts/constants/tooltips';
+	import { tooltipLivePageStyleProps } from '$ts/constants/tooltips/shared';
 	import { getTitleFromProductId } from '$ts/helpers/stripe/plan';
 	import { operationSourceToLocaleString } from '$ts/helpers/user/operations';
 	import { quadOut } from 'svelte/easing';

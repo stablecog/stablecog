@@ -24,7 +24,7 @@
 	import IconTrashcan from '$components/icons/IconTrashcan.svelte';
 	import { tooltip } from '$ts/actions/tooltip';
 	import IconBrain from '$components/icons/IconBrain.svelte';
-	import { modelTooltip } from '$ts/constants/tooltips';
+	import { modelTooltip } from '$ts/constants/tooltips/image';
 	import { browser } from '$app/environment';
 	import { isUUID } from '$ts/helpers/uuid';
 	import IconImageSearch from '$components/icons/IconImageSearch.svelte';

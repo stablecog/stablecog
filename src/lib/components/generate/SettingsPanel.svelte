@@ -29,7 +29,7 @@
 		numOutputsTooltipSettingsPanel,
 		schedulerTooltipSettingsPanel,
 		seedTooltipSettingsPanel
-	} from '$ts/constants/tooltips';
+	} from '$ts/constants/tooltips/image';
 	import {
 		generationAspectRatio,
 		generationGuidanceScale,

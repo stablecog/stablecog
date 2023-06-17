@@ -20,7 +20,7 @@
 		initImageStrengthMin,
 		initImageStrengthStep
 	} from '$ts/constants/main';
-	import { initImageStrengthTabBarTooltipSettingsPanel } from '$ts/constants/tooltips';
+	import { initImageStrengthTabBarTooltipSettingsPanel } from '$ts/constants/tooltips/image';
 	import { logInitImageRemoved } from '$ts/helpers/loggers';
 	import { advancedModeApp } from '$ts/stores/advancedMode';
 	import { appVersion } from '$ts/stores/appVersion';

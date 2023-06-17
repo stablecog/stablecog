@@ -9,7 +9,7 @@
 	} from '$components/generationFullScreen/types.js';
 	import IconChatBubbleCancel from '$components/icons/IconChatBubbleCancel.svelte';
 	import { tooltip } from '$ts/actions/tooltip';
-	import { negativePromptTooltipAlt } from '$ts/constants/tooltips';
+	import { negativePromptTooltipAlt } from '$ts/constants/tooltips/image.js';
 	import { getGenerationUrlFromParams } from '$ts/helpers/getGenerationUrlFromParams.js';
 	import type { TGenerationWithSelectedOutput } from '$ts/stores/user/generation.js';
 	import {

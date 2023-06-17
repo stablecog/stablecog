@@ -8,7 +8,11 @@
 	import IconWave from '$components/icons/IconWave.svelte';
 	import TabLikeDropdown from '$components/tabBars/TabLikeDropdown.svelte';
 	import TabLikeRangeInput from '$components/tabBars/TabLikeRangeInput.svelte';
-	import { aspectRatioTooltipSettingsPanel } from '$ts/constants/tooltips';
+	import {
+		voiceoverLanguageTooltipSettingsPanel,
+		voiceoverSpeakerTooltipSettingsPanel,
+		voiceStabilityTooltipSettingsPanel
+	} from '$ts/constants/tooltips/voiceover';
 	import { voiceoverLocaleDropdownItems } from '$ts/constants/voiceover/locales';
 	import { voiceoverLocale, voiceoverSpeakerDropdownItems } from '$ts/constants/voiceover/models';
 	import { voiceoverStabilityMax, voiceoverStabilityMin } from '$ts/constants/voiceover/rest';
@@ -31,7 +35,7 @@
 		<SettingsPanelItem
 			title={'Speaker'}
 			icon={IconMicrophone}
-			tooltipObj={$aspectRatioTooltipSettingsPanel}
+			tooltipObj={$voiceoverSpeakerTooltipSettingsPanel}
 		>
 			<TabLikeDropdown
 				class="w-full"
@@ -49,7 +53,7 @@
 		<SettingsPanelItem
 			title={'Language'}
 			icon={IconLanguage}
-			tooltipObj={$aspectRatioTooltipSettingsPanel}
+			tooltipObj={$voiceoverLanguageTooltipSettingsPanel}
 		>
 			<TabLikeDropdown
 				class="w-full"
@@ -67,7 +71,7 @@
 		<SettingsPanelItem
 			title={'Voice Stability'}
 			icon={IconWave}
-			tooltipObj={$aspectRatioTooltipSettingsPanel}
+			tooltipObj={$voiceStabilityTooltipSettingsPanel}
 		>
 			<TabLikeRangeInput
 				name={'Voice Stability'}

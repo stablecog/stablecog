@@ -1,6 +1,6 @@
 <script lang="ts">
 	import Button from '$components/buttons/Button.svelte';
-	import LL from '$i18n/i18n-svelte';
+	import LL, { locale } from '$i18n/i18n-svelte';
 	import { maxSeed } from '$ts/constants/main';
 	import { voiceoverLocale, voiceoverModelId } from '$ts/constants/voiceover/models';
 	import {
@@ -56,6 +56,10 @@
 
 	let mounted = false;
 
+	function getNotFadedSpan(text: string) {
+		return `<span class="text-c-on-bg">${text}</span>`;
+	}
+
 	onMount(() => {
 		if ($voiceoverPromptLocal) {
 			voiceoverPrompt.set($voiceoverPromptLocal);
@@ -71,7 +75,7 @@
 	<div class="w-full flex flex-col relative">
 		<textarea
 			bind:value={$voiceoverPrompt}
-			placeholder="I like to eat apples and bananas."
+			placeholder={$LL.Voiceover.PromptBar.PromptInput.Placeholder()}
 			class="w-full h-full bg-c-bg-secondary rounded-t-2xl resize-none px-5 py-4
 			relative text-lg pb-6 placeholder:text-c-on-bg/40"
 			rows="7"
@@ -89,12 +93,16 @@
 			class="flex flex-col items-end justify-center font-medium text-right text-sm pointer-events-auto"
 		>
 			<p>
-				{($voiceoverPrompt || '').length}
-				<span class="text-c-on-bg/50">/ {maxVoiceoverCharacterCount}</span>
+				{($voiceoverPrompt || '').length.toLocaleString($locale)}<span class="text-c-on-bg/50"
+					>/{maxVoiceoverCharacterCount.toLocaleString($locale)}</span
+				>
 			</p>
-			<p class="mt-0.5">
-				{getVoiceoverCreditCost(($voiceoverPrompt || '').length)}
-				<span class="text-c-on-bg/50">credit(s)</span>
+			<p class="mt-0.5 text-c-on-bg/50">
+				{@html $LL.Voiceover.PromptBar.CreditCost({
+					creditCost: getNotFadedSpan(
+						getVoiceoverCreditCost(($voiceoverPrompt || '').length).toLocaleString($locale)
+					)
+				})}
 			</p>
 		</div>
 		<Button

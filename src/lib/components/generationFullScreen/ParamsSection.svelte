@@ -24,7 +24,7 @@
 		modelTooltipAlt,
 		schedulerTooltipAlt,
 		seedTooltipAlt
-	} from '$ts/constants/tooltips';
+	} from '$ts/constants/tooltips/image';
 	import type { TGenerationWithSelectedOutput } from '$userStores/generation';
 	import { copy } from 'svelte-copy';
 

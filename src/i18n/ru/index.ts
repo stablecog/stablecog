@@ -909,22 +909,24 @@ const ru: Translation = {
 		PromptBar: {
 			GenerateButton: 'Generate',
 			CreditCost: '{creditCost} credit(s)',
-			PromptInputPlaceholder:
-				'Technology, in its finest form, is the bridge between imagination and reality.'
+			PromptInput: {
+				Placeholder:
+					'Technology, in its finest form, is the bridge between imagination and reality.'
+			}
 		},
 		Settings: {
 			Speaker: {
 				Title: 'Speaker',
-				Paragraph: 'The speaker for your voiceover.'
+				Paragraph: 'The speaker for the voiceover.'
 			},
 			Language: {
 				Title: 'Language',
-				Paragraph: 'The language for your voiceover.'
+				Paragraph: 'The language for the voiceover.'
 			},
 			VoiceStability: {
 				Title: 'Voice Stability',
 				Paragraph:
-					'The stability of the voice. Higher values make the voice more stable, lower values make it more variable.',
+					'The stability level of the voice. Higher values make the voice more stable, lower values make it more variable.',
 				Slider: {
 					MoreStable: 'More stable',
 					MoreVariable: 'More variable'
