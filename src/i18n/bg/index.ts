@@ -890,11 +890,11 @@ const bg: Translation = {
 			'947786c1-810d-44ce-808f-cdcf732d97fd': { Name: 'Alisa' },
 			'2885a060-badc-4896-a4fa-f3656a58bb82': { Name: 'Ivan' },
 			'92929922-0608-4b62-8a0d-f9d87a4ca2f5': { Name: 'Oleg' },
-			'cb8a2dc4-fce9-4f17-b977-050aa78d8101': { Name: 'Placeholder' },
-			'5001a3c9-557c-4775-ad6f-b71c47c3b4f1': { Name: 'Placeholder' },
-			'd45f479f-42e5-4f15-b1a0-c9feabcdb3aa': { Name: 'Placeholder' },
-			'56714211-532c-479b-ac8f-f2449af2310a': { Name: 'Placeholder' },
-			'052b721a-da7e-4614-b352-826411c262e2': { Name: 'Placeholder' }
+			'cb8a2dc4-fce9-4f17-b977-050aa78d8101': { Name: 'Xin' },
+			'5001a3c9-557c-4775-ad6f-b71c47c3b4f1': { Name: 'Ming' },
+			'd45f479f-42e5-4f15-b1a0-c9feabcdb3aa': { Name: 'Hu' },
+			'56714211-532c-479b-ac8f-f2449af2310a': { Name: 'Shuang' },
+			'052b721a-da7e-4614-b352-826411c262e2': { Name: 'Wan' }
 		},
 		List: {
 			NotSignedIn: { Paragraph: 'Sign in to see your voiceovers.' },

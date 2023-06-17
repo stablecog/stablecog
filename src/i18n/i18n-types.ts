@@ -2703,31 +2703,31 @@ type RootTranslation = {
 			}
 			'cb8a2dc4-fce9-4f17-b977-050aa78d8101': {
 				/**
-				 * P​l​a​c​e​h​o​l​d​e​r
+				 * X​i​n
 				 */
 				Name: string
 			}
 			'5001a3c9-557c-4775-ad6f-b71c47c3b4f1': {
 				/**
-				 * P​l​a​c​e​h​o​l​d​e​r
+				 * M​i​n​g
 				 */
 				Name: string
 			}
 			'd45f479f-42e5-4f15-b1a0-c9feabcdb3aa': {
 				/**
-				 * P​l​a​c​e​h​o​l​d​e​r
+				 * H​u
 				 */
 				Name: string
 			}
 			'56714211-532c-479b-ac8f-f2449af2310a': {
 				/**
-				 * P​l​a​c​e​h​o​l​d​e​r
+				 * S​h​u​a​n​g
 				 */
 				Name: string
 			}
 			'052b721a-da7e-4614-b352-826411c262e2': {
 				/**
-				 * P​l​a​c​e​h​o​l​d​e​r
+				 * W​a​n
 				 */
 				Name: string
 			}
@@ -5410,31 +5410,31 @@ export type TranslationFunctions = {
 			}
 			'cb8a2dc4-fce9-4f17-b977-050aa78d8101': {
 				/**
-				 * Placeholder
+				 * Xin
 				 */
 				Name: () => LocalizedString
 			}
 			'5001a3c9-557c-4775-ad6f-b71c47c3b4f1': {
 				/**
-				 * Placeholder
+				 * Ming
 				 */
 				Name: () => LocalizedString
 			}
 			'd45f479f-42e5-4f15-b1a0-c9feabcdb3aa': {
 				/**
-				 * Placeholder
+				 * Hu
 				 */
 				Name: () => LocalizedString
 			}
 			'56714211-532c-479b-ac8f-f2449af2310a': {
 				/**
-				 * Placeholder
+				 * Shuang
 				 */
 				Name: () => LocalizedString
 			}
 			'052b721a-da7e-4614-b352-826411c262e2': {
 				/**
-				 * Placeholder
+				 * Wan
 				 */
 				Name: () => LocalizedString
 			}
