@@ -61,6 +61,7 @@
 	},
 	"type": "module",
 	"dependencies": {
+		"@melt-ui/svelte": "^0.10.3",
 		"@supabase/auth-helpers-sveltekit": "^0.9.4",
 		"@supabase/supabase-js": "^2.22.0",
 		"@tanstack/svelte-query": "^4.24.6",

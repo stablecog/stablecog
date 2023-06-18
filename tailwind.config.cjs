@@ -45,6 +45,11 @@ module.exports = {
 				350: '350ms',
 				400: '400ms'
 			},
+			ringWidth: {
+				3: '3px',
+				5: '5px',
+				6: '6px'
+			},
 			transitionTimingFunction: {
 				'image-generation': 'cubic-bezier(.4,0,.3,1)',
 				'bounce-out': 'cubic-bezier(.3,2,.5,.8)'
@@ -216,11 +221,6 @@ module.exports = {
 				'2.5xl': '1728px',
 				'3xl': '1920px',
 				'4xl': '2560px'
-			},
-			ringWidth: {
-				3: '3px',
-				5: '5px',
-				6: '6px'
 			},
 			maxWidth: {
 				'2.5xl': '45rem',
