@@ -357,13 +357,15 @@
 					<!-- Prompt bar -->
 					<div
 						class="w-full z-50 flex flex-col rounded-2xl overflow-hidden md:overflow-visible md:rounded-none bg-transparent md:bg-transparent absolute left-0 bottom-0
-								md:bottom-auto md:top-0 order-2"
+								md:bottom-auto md:top-0 order-2 {isGenerationSettingsSheetOpen && $windowWidth < mdBreakpoint
+							? 'pointer-events-none'
+							: 'pointer-events-auto'}"
 					>
 						<div
 							bind:clientHeight={horizontalListHeight}
 							class="w-full h-16 flex flex-col md:hidden transform transition {isGenerationSettingsSheetOpen
 								? 'translate-y-full pointer-events-none opacity-0'
-								: ''}"
+								: 'pointer-events-auto'}"
 						>
 							<AutoSize
 								bind:element={listScrollContainer}
@@ -393,7 +395,8 @@
 						</div>
 						<div
 							bind:clientHeight={promptBarHeight}
-							class="w-full flex pt-0.5 md:pt-0 pl-2 bg-c-bg md:bg-transparent md:pl-0 pb-[calc(env(safe-area-inset-bottom)+0.75rem)] z-50"
+							class="w-full flex pt-0.5 md:pt-0 pl-2 bg-c-bg md:bg-transparent md:pl-0
+							pb-[calc(env(safe-area-inset-bottom)+0.75rem)] z-50 pointer-events-auto"
 						>
 							<PromptBar
 								{openSignInModal}
