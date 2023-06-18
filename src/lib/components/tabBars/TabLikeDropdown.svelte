@@ -17,8 +17,8 @@
 	export let calculateDistance = true;
 	export let dropdownClass = '';
 	export let container: HTMLDivElement | undefined = undefined;
-	export let containerTopMinDistance = 0;
-	export let containerBottomMinDistance = 0;
+	export let containerTopMinDistance = 8;
+	export let containerBottomMinDistance = 8;
 	export let iconSet: ConstructorOfATypedSvelteComponent | undefined = undefined;
 	export { classes as class };
 	export let iconSetClass =
@@ -51,13 +51,13 @@
 				containerHeight - buttonDistanceToTop - buttonHeight - containerBottomMinDistance;
 			if (buttonDistanceToBottom >= dropdownHeight || buttonDistanceToBottom >= minDropdownHeight) {
 				dropdownPlacement = 'bottom';
-				dropdownMaxHeight = buttonDistanceToBottom;
+				dropdownMaxHeight = buttonDistanceToBottom - containerBottomMinDistance;
 			} else if (buttonDistanceToTop > buttonDistanceToBottom) {
 				dropdownPlacement = 'top';
-				dropdownMaxHeight = buttonDistanceToTop;
+				dropdownMaxHeight = buttonDistanceToTop - containerTopMinDistance;
 			} else {
 				dropdownPlacement = 'bottom';
-				dropdownMaxHeight = buttonDistanceToBottom;
+				dropdownMaxHeight = buttonDistanceToBottom - containerBottomMinDistance;
 			}
 		} else {
 			const { top, height: buttonHeight } = buttonElement.getBoundingClientRect();
