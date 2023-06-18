@@ -24,21 +24,9 @@
 		disabled
 	});
 
-	$: value, setLocalValue();
-	$: $valueLocal, setValue();
-	$: [min, max, step, disabled], setOptions();
-
-	function setLocalValue() {
-		valueLocal.set([value]);
-	}
-
-	function setValue() {
-		value = $valueLocal[0];
-	}
-
-	function setOptions() {
-		options.set({ ...$options, min, max, step, disabled });
-	}
+	$: options.set({ ...$options, disabled, min, max, step });
+	$: valueLocal.set([value]);
+	$: value = $valueLocal[0];
 </script>
 
 <div
