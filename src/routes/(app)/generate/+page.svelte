@@ -362,7 +362,7 @@
 						<div
 							bind:clientHeight={horizontalListHeight}
 							class="w-full h-16 flex flex-col md:hidden transform transition {isGenerationSettingsSheetOpen
-								? 'translate-y-full opacity-0 md:translate-y-0 md:opacity-100'
+								? 'translate-y-full pointer-events-none opacity-0'
 								: ''}"
 						>
 							<AutoSize
