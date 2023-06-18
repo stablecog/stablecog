@@ -345,18 +345,25 @@
 									? `calc(env(safe-area-inset-bottom) + ${
 											propmtBarEstimatedHeightRem + horizontalListHeightEstimatedRem
 									  }rem)`
-									: `${promptBarHeight + horizontalListHeight}px`}"
+									: `${
+											promptBarHeight +
+											(isGenerationSettingsSheetOpen && $windowWidth < mdBreakpoint
+												? 4
+												: horizontalListHeight)
+									  }px`}"
 							/>
 						</div>
 					{/if}
 					<!-- Prompt bar -->
 					<div
-						class="w-full z-50 flex flex-col rounded-2xl overflow-hidden md:overflow-visible md:rounded-none bg-c-bg md:bg-transparent absolute left-0 bottom-0
+						class="w-full z-50 flex flex-col rounded-2xl overflow-hidden md:overflow-visible md:rounded-none bg-transparent md:bg-transparent absolute left-0 bottom-0
 								md:bottom-auto md:top-0 order-2"
 					>
 						<div
 							bind:clientHeight={horizontalListHeight}
-							class="w-full h-16 flex flex-col md:hidden"
+							class="w-full h-16 flex flex-col md:hidden transform transition {isGenerationSettingsSheetOpen
+								? 'translate-y-full opacity-0 md:translate-y-0 md:opacity-100'
+								: ''}"
 						>
 							<AutoSize
 								bind:element={listScrollContainer}
@@ -386,7 +393,7 @@
 						</div>
 						<div
 							bind:clientHeight={promptBarHeight}
-							class="w-full flex pt-0.5 md:pt-0 pl-2 md:pl-0 pb-[calc(env(safe-area-inset-bottom)+0.75rem)] z-50"
+							class="w-full flex pt-0.5 md:pt-0 pl-2 bg-c-bg md:bg-transparent md:pl-0 pb-[calc(env(safe-area-inset-bottom)+0.75rem)] z-50"
 						>
 							<PromptBar
 								{openSignInModal}
@@ -402,7 +409,7 @@
 				</div>
 				<div
 					class="w-full flex flex-col order-first flex-1 min-w-0 pb-[calc(env(safe-area-inset-bottom)+10.5rem)]
-								md:pb-0 md:pt-26 lg:pb-8 relative z-0"
+					md:pb-0 md:pt-26 lg:pb-8 relative z-0"
 				>
 					<div class="flex-1 min-w-0 flex flex-col items-center justify-center w-full">
 						{#if $page.data.session?.user.id && $userSummary && $userSummary.total_remaining_credits < lowOnCreditsThreshold}
