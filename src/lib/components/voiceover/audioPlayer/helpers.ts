@@ -339,17 +339,19 @@ export function animateWave(options: WaveOptions): void {
 class CustomTimer {
 	private customTimer?: Timer;
 	private elapsedTime: number;
+	private pausedTime: number;
 	private callback: (elapsed: number) => void;
 
 	constructor(callback: (elapsed: number) => void) {
 		this.elapsedTime = 0;
+		this.pausedTime = 0;
 		this.callback = callback;
 	}
 
 	start() {
 		if (this.customTimer) {
 			// Timer exists, so resume it.
-			this.customTimer.restart(this.tick.bind(this), this.elapsedTime);
+			this.customTimer.restart(this.tick.bind(this), 0);
 		} else {
 			// Timer does not exist, so start a new one.
 			this.customTimer = timer(this.tick.bind(this));
@@ -359,12 +361,14 @@ class CustomTimer {
 	stop() {
 		if (this.customTimer) {
 			// Stop the timer, but don't reset it.
+			this.pausedTime = performance.now();
 			this.customTimer.stop();
 		}
 	}
 
 	private tick(elapsed: number) {
-		this.elapsedTime = elapsed;
+		// Adjust the elapsed time by the time the timer was paused.
+		this.elapsedTime = elapsed - this.pausedTime;
 		this.callback(this.elapsedTime);
 	}
 }

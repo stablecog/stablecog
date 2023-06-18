@@ -15,8 +15,10 @@
 		queueInitialVoiceoverRequest
 	} from '$ts/stores/user/voiceovers';
 	import {
+		voiceoverDenoiseAudio,
 		voiceoverPrompt,
 		voiceoverPromptLocal,
+		voiceoverRemoveSilence,
 		voiceoverSeed,
 		voiceoverSpeakerId,
 		voiceoverStability
@@ -45,7 +47,9 @@
 			seed: $voiceoverSeed || Math.round(Math.random() * maxSeed),
 			stream_id: $sseId,
 			submit_to_gallery: false,
-			ui_id: generateSSEId()
+			ui_id: generateSSEId(),
+			denoise_audio: $voiceoverDenoiseAudio,
+			remove_silence: $voiceoverRemoveSilence
 		});
 	}
 
@@ -57,7 +61,7 @@
 	let mounted = false;
 
 	function getNotFadedSpan(text: string) {
-		return `<span class="text-c-on-bg">${text}</span>`;
+		return `<span class="text-c-on-bg/75">${text}</span>`;
 	}
 
 	onMount(() => {
@@ -92,7 +96,7 @@
 		<div
 			class="flex flex-col items-end justify-center font-medium text-right text-sm pointer-events-auto"
 		>
-			<p>
+			<p class="text-c-on-bg/75">
 				{($voiceoverPrompt || '').length.toLocaleString($locale)}<span class="text-c-on-bg/50"
 					>/{maxVoiceoverCharacterCount.toLocaleString($locale)}</span
 				>

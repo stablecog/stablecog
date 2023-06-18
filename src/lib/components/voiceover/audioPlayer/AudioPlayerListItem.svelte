@@ -99,7 +99,7 @@
 					<IconSpeaker class="w-full h-full" type={output.voiceover.speaker.id} sizes="28px" />
 				</div>
 				<p
-					class="text-c-on-bg/75 flex-shrink min-w-0 whitespace-nowrap overflow-hidden overflow-ellipsis text-sm font-medium
+					class="text-c-on-bg flex-shrink min-w-0 whitespace-nowrap overflow-hidden overflow-ellipsis text-sm font-medium
 					px-2.5 py-1 h-full"
 				>
 					{$voiceoverSpeakerIdToDisplayName[output.voiceover.speaker.id]}
@@ -111,7 +111,7 @@
 		</div>
 	</div>
 	<p
-		class="md:hidden lg:block xl:hidden text-sm text-c-on-bg/75 py-1 max-w-full whitespace-nowrap overflow-hidden overflow-ellipsis"
+		class="md:hidden lg:block xl:hidden text-sm text-c-on-bg py-1 max-w-full whitespace-nowrap overflow-hidden overflow-ellipsis"
 	>
 		{output.voiceover.prompt.text}
 	</p>
@@ -155,7 +155,7 @@
 		</div>
 		<div class="flex-1 min-w-0 flex flex-col pl-2 pr-0.5">
 			<p
-				class="block lg:hidden xl:block text-sm text-c-on-bg/75 py-1 max-w-full whitespace-nowrap overflow-hidden overflow-ellipsis"
+				class="block lg:hidden xl:block text-sm text-c-on-bg py-1 max-w-full whitespace-nowrap overflow-hidden overflow-ellipsis"
 			>
 				{output.voiceover.prompt.text}
 			</p>
@@ -205,9 +205,9 @@
 				: 'bg-c-bg-secondary/90'}"
 		>
 			{#if output.voiceover.status === 'failed'}
-				<IconSadFaceOutline class="w-8 h-8 text-c-on-bg/50" />
+				<IconSadFaceOutline class="w-9 h-9 text-c-on-bg/50" />
 			{:else}
-				<IconAnimatedSpinner class="w-8 h-8 text-c-on-bg/50" loading={true} />
+				<IconAnimatedSpinner class="w-9 h-9 text-c-on-bg/50" loading={true} />
 			{/if}
 		</div>
 	{/if}

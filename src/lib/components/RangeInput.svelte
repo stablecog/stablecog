@@ -23,14 +23,14 @@
 		{disabled}
 		minStepsBetweenThumbs={step}
 	>
-		<Slider.Track class="relative h-2 grow rounded-full bg-c-bg-tertiary">
+		<Slider.Track class="relative h-2 grow rounded-full bg-c-on-bg/20">
 			<Slider.Range
-				class="absolute h-2 rounded-full transition bg-c-on-bg-secondary group-active:bg-c-primary"
+				class="absolute h-2 rounded-full transition bg-c-on-bg group-active:bg-c-primary"
 			/>
 		</Slider.Track>
 		<Slider.Thumb
-			class="block ring-0 ring-c-on-bg-secondary/50 group-hover:ring-8 group-active:ring-c-primary/50 
-			transition shadow-lg shadow-c-shadow/[var(--o-shadow-strongest)] h-6 w-6 rounded-full bg-c-on-bg-secondary
+			class="block ring-0 ring-c-on-bg/25 group-hover:ring-8 group-active:ring-c-primary/50 
+			transition shadow-lg shadow-c-shadow/[var(--o-shadow-strongest)] h-6 w-6 rounded-full bg-c-on-bg
 			group-active:bg-c-primary group-active:ring-4 outline-none"
 		/>
 	</Slider.Root>

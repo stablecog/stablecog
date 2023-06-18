@@ -9,19 +9,19 @@
 	import { quadOut } from 'svelte/easing';
 	import { easingBounceOut } from '$ts/animation/easing';
 	import ErrorChip from '$components/error/ErrorChip.svelte';
-	import type { TVoiceoverFullOutput } from '$ts/stores/user/voiceovers';
+	import type { TVoiceover, TVoiceoverFullOutput } from '$ts/stores/user/voiceovers';
 
 	export let barWidth: number;
-	export let output: TVoiceoverFullOutput;
+	export let voiceover: TVoiceover;
 
 	let waveformContainer: HTMLDivElement;
 	let waveformContainerWidth: number | undefined;
 	let waveformContainerHeight: number | undefined;
 
 	$: shouldAnimate =
-		output.status === 'to-be-submitted' ||
-		output.status === 'server-received' ||
-		output.status === 'server-processing';
+		voiceover.status === 'to-be-submitted' ||
+		voiceover.status === 'server-received' ||
+		voiceover.status === 'server-processing';
 	$: pointCount = waveformContainerWidth
 		? Math.floor(waveformContainerWidth / barWidth)
 		: undefined;
@@ -100,18 +100,14 @@
 				<IconSpeaker
 					sizes="64px"
 					class="w-15 h-15 rounded-lg2 shadow-lg relative shadow-c-shadow/[var(--o-shadow-strong)] ring-2 ring-c-bg-tertiary"
-					type={output.voiceover.speaker.id}
+					type={voiceover.speaker.id}
 				/>
 			</div>
 		</div>
 		<p class="flex-shrink min-w-0 text-c-on-bg/50 font-base px-4">
 			{@html $LL.Voiceover.Generate.SpeakerParagraph({
-				speakerName: getHighlightedSpan(
-					$voiceoverSpeakerIdToDisplayName[output.voiceover.speaker.id]
-				),
-				languageName: getHighlightedSpan(
-					languageName($locale).of(output.voiceover.speaker.locale) || ''
-				)
+				speakerName: getHighlightedSpan($voiceoverSpeakerIdToDisplayName[voiceover.speaker.id]),
+				languageName: getHighlightedSpan(languageName($locale).of(voiceover.speaker.locale) || '')
 			})}<br />{$LL.Voiceover.Generate.VoiceoverParagraph()}
 		</p>
 	</div>
@@ -128,13 +124,13 @@
 		</div>
 	</div>
 
-	{#if output.voiceover.error}
+	{#if voiceover.error}
 		<div
 			in:scale|local={{ duration: 200, easing: easingBounceOut, start: 0.5 }}
 			out:scale|local={{ duration: 200, easing: quadOut, start: 0.5 }}
 			class="w-full bottom-0 absolute left-0 p-5 flex items-center justify-center"
 		>
-			<ErrorChip size="md" class="max-h-[6rem] overflow-auto" error={output.voiceover.error} />
+			<ErrorChip size="md" class="max-h-[6rem] overflow-auto" error={voiceover.error} />
 		</div>
 	{/if}
 </div>

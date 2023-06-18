@@ -78,7 +78,7 @@
 			transition:scale|local={{ duration: 300, easing: cubicOut, start: 0.9 }}
 			class="w-full h-full absolute left-0 top-0 bg-c-bg-secondary"
 		>
-			<AudioPlayerWithWaveformPlaceholder output={{ ...output, voiceover }} {barWidth} />
+			<AudioPlayerWithWaveformPlaceholder {voiceover} {barWidth} />
 		</div>
 	{:else}
 		<div

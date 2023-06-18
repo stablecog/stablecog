@@ -4,15 +4,15 @@
 </script>
 
 <div
-	class="w-12 h-6 flex items-center rounded-full transition {color == 'on-bg'
+	class="w-12 flex-shrink-0 h-6 flex items-center rounded-full transition {color == 'on-bg'
 		? isToggled
-			? 'bg-c-on-bg/50'
-			: 'bg-c-on-bg/25'
+			? 'bg-c-on-bg'
+			: 'bg-c-on-bg/20'
 		: isToggled
 		? 'bg-c-primary'
 		: 'bg-c-on-bg/25'} relative z-0 overflow-hidden"
 >
 	<div class="w-6 h-6 transition {isToggled ? 'translate-x-full' : ''} rounded-full p-0.5">
-		<div class="w-full h-full rounded-full bg-c-bg-secondary" />
+		<div class="w-full h-full rounded-full {color === 'on-bg' ? 'bg-c-bg' : 'bg-c-bg-secondary'}" />
 	</div>
 </div>

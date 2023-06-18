@@ -2826,7 +2826,7 @@ type RootTranslation = {
 			}
 			DenoiseAudio: {
 				/**
-				 * D​e​n​o​i​s​e​ ​A​u​d​i​o
+				 * D​e​n​o​i​s​e
 				 */
 				Title: string
 				/**
@@ -5617,7 +5617,7 @@ export type TranslationFunctions = {
 			}
 			DenoiseAudio: {
 				/**
-				 * Denoise Audio
+				 * Denoise
 				 */
 				Title: () => LocalizedString
 				/**

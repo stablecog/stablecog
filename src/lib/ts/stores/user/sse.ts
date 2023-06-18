@@ -34,6 +34,7 @@ export interface TSSECreationProcessUpscaleOutput {
 export interface TSSECreationProcessVoiceoverOutput {
 	id: string;
 	audio_file_url: string;
+	audio_duration: number;
 }
 
 type TGalleryStatus = 'submitted';

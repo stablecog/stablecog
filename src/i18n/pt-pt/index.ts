@@ -932,7 +932,7 @@ const ptPt: Translation = {
 				}
 			},
 			DenoiseAudio: {
-				Title: 'Denoise Audio',
+				Title: 'Denoise',
 				Paragraph: 'Remove background noise from the audio.'
 			},
 			RemoveSilence: {

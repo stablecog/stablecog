@@ -38,6 +38,8 @@
 		listPadding
 	} from '$components/voiceover/lists/constants.js';
 	import {
+		voiceoverDenoiseAudio,
+		voiceoverRemoveSilence,
 		voiceoverSpeakerId,
 		voiceoverStability
 	} from '$ts/stores/voiceover/voiceoverSettings.js';
@@ -129,7 +131,9 @@
 		submit_to_gallery: false,
 		model_id: $voiceoverModelId,
 		num_outputs: 1,
-		outputs: [placeholderOutput]
+		outputs: [placeholderOutput],
+		denoise_audio: $voiceoverDenoiseAudio,
+		remove_silence: $voiceoverRemoveSilence
 	};
 
 	$: [$voiceoverModelId, $voiceoverSpeakerId, $voiceoverLocale, $voiceoverStability],
@@ -271,7 +275,7 @@
 								<div class="w-full h-full" />
 							</AutoSize>
 						</div>
-						<div bind:clientHeight={promptBarHeight} class="w-full flex px-2 md:px-0 z-50 relative">
+						<div bind:clientHeight={promptBarHeight} class="w-full flex px-2 md:px-0 z-10 relative">
 							<VoiceoverPromptBar />
 						</div>
 					</div>

@@ -21,7 +21,7 @@
 			{@const widthPercent = ((item.end - item.start) / duration) * 100}
 			<div
 				style="width: {widthPercent}%; left: {leftPercent}%"
-				class="h-6px bg-c-on-bg/15 absolute top-1/2 transform -translate-y-1/2 rounded-full pointer-events-none"
+				class="h-6px bg-c-on-bg/20 absolute top-1/2 transform -translate-y-1/2 rounded-full pointer-events-none"
 			/>
 		{/each}
 	{/if}
@@ -35,7 +35,7 @@
 		{step}
 		{name}
 	>
-		<Slider.Track class="relative h-6px grow rounded-full bg-c-on-bg/15">
+		<Slider.Track class="relative h-6px grow rounded-full bg-c-on-bg/20">
 			<Slider.Range
 				class="absolute h-6px rounded-full transition bg-c-on-bg group-active/audio-player-slider:bg-c-primary"
 			/>

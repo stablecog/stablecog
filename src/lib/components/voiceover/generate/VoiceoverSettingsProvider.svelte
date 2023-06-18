@@ -7,8 +7,12 @@
 		voiceoverSpeakersArray
 	} from '$ts/constants/voiceover/models';
 	import {
+		voiceoverDenoiseAudio,
+		voiceoverDenoiseAudioLocal,
 		voiceoverLocaleLocal,
 		voiceoverModelIdLocal,
+		voiceoverRemoveSilence,
+		voiceoverRemoveSilenceLocal,
 		voiceoverSeed,
 		voiceoverSeedLocal,
 		voiceoverSpeakerId,
@@ -41,6 +45,10 @@
 			}
 			voiceoverLocaleLocal.set($voiceoverLocale);
 		});
+	$: [$voiceoverDenoiseAudio],
+		withCheck(() => voiceoverDenoiseAudioLocal.set($voiceoverDenoiseAudio));
+	$: [$voiceoverRemoveSilence],
+		withCheck(() => voiceoverRemoveSilenceLocal.set($voiceoverRemoveSilence));
 
 	function withCheck(fn: () => void) {
 		if (!mounted) return;
@@ -49,20 +57,26 @@
 
 	let mounted = false;
 	onMount(() => {
-		if ($voiceoverModelIdLocal !== null) {
+		if ($voiceoverModelIdLocal !== null && $voiceoverModelIdLocal !== undefined) {
 			voiceoverModelId.set($voiceoverModelIdLocal);
 		}
-		if ($voiceoverSpeakerIdLocal !== null) {
+		if ($voiceoverSpeakerIdLocal !== null && $voiceoverSpeakerIdLocal !== undefined) {
 			voiceoverSpeakerId.set($voiceoverSpeakerIdLocal);
 		}
-		if ($voiceoverStabilityLocal !== null) {
+		if ($voiceoverStabilityLocal !== null && $voiceoverStabilityLocal !== undefined) {
 			voiceoverStability.set($voiceoverStabilityLocal);
 		}
-		if ($voiceoverSeedLocal !== null) {
+		if ($voiceoverSeedLocal !== null && $voiceoverSeedLocal !== undefined) {
 			voiceoverSeed.set($voiceoverSeedLocal);
 		}
-		if ($voiceoverLocaleLocal !== null) {
+		if ($voiceoverLocaleLocal !== null && $voiceoverLocaleLocal !== undefined) {
 			voiceoverLocale.set($voiceoverLocaleLocal);
+		}
+		if ($voiceoverDenoiseAudioLocal !== null && $voiceoverDenoiseAudioLocal !== undefined) {
+			voiceoverDenoiseAudio.set($voiceoverDenoiseAudioLocal);
+		}
+		if ($voiceoverRemoveSilenceLocal !== null && $voiceoverRemoveSilenceLocal !== undefined) {
+			voiceoverRemoveSilence.set($voiceoverRemoveSilenceLocal);
 		}
 		mounted = true;
 	});

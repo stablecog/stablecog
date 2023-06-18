@@ -317,6 +317,8 @@ export interface TVoiceoverBase {
 	temperature: number;
 	seed: number;
 	num_outputs: number;
+	denoise_audio?: boolean;
+	remove_silence?: boolean;
 }
 
 export interface TVoiceover extends TVoiceoverBase {
