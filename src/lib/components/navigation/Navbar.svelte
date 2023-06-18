@@ -35,6 +35,7 @@
 	import type { TDirTreeItem } from '$routes/+layout';
 	import IconChevronDown from '$components/icons/IconChevronDown.svelte';
 	import BannerWrapper from '$components/BannerWrapper.svelte';
+	import IconToken from '$components/icons/IconToken.svelte';
 
 	export let notAtTheVeryTop = false;
 	export let scrollDirection: 'up' | 'down' = 'down';
@@ -211,9 +212,12 @@
 							>
 								{$LL.Account.RemainingTitle()}
 							</p>
-							<p class="text-sm font-bold mt-0.5">
-								{$userSummary.total_remaining_credits.toLocaleString($locale)}
-							</p>
+							<div class="flex gap-1 items-center">
+								<IconToken class="w-4 h-4 -ml-0.25 flex-shrink-0" />
+								<p class="text-sm font-bold mt-0.5">
+									{$userSummary.total_remaining_credits.toLocaleString($locale)}
+								</p>
+							</div>
 						</div>
 					{/if}
 					<!-- Account -->

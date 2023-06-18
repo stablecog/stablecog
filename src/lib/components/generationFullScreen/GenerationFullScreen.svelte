@@ -442,7 +442,6 @@
 										</Button>
 										{#if doesntHaveEnoughCredits && !upscaleBeingProcessed && $userSummary && $page.data.session?.user.id}
 											<InsufficientCreditsBadge
-												isSmallOnMobile={false}
 												neededCredits={upscaleCreditCost}
 												remainingCredits={$userSummary.total_remaining_credits}
 											/>

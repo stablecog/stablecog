@@ -8,6 +8,7 @@ export const voiceoverRemoveSilenceDefault = true;
 export const maxVoiceoverCharacterCount = 500;
 
 export const voiceoverCreditCostPerCharacter = 0.0175;
-export const getVoiceoverCreditCost = (characterCount: number) => {
+export const getVoiceoverCreditCost = (s: string) => {
+	const characterCount = s.length;
 	return Math.ceil(characterCount * voiceoverCreditCostPerCharacter);
 };

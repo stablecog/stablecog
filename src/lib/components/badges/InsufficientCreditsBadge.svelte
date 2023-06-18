@@ -1,39 +1,22 @@
 <script lang="ts">
-	import LL from '$i18n/i18n-svelte';
+	import IconToken from '$components/icons/IconToken.svelte';
 
 	export let neededCredits: number;
 	export let remainingCredits: number;
-	export let isSmallOnMobile = true;
 </script>
 
-<p class="text-xs font-medium h-0 opacity-0 px-2 md:px-3">
-	<span class={isSmallOnMobile ? 'hidden lg:block' : ''}>
-		{$LL.Shared.InsufficientCreditsTitle({
-			remainingCredits,
-			neededCredits
-		})}
-	</span>
-	{#if isSmallOnMobile}
-		<span class="lg:hidden">
-			{remainingCredits}/{neededCredits}
-		</span>
-	{/if}
-</p>
 <div class="w-full flex justify-end absolute -top-1 -right-1 md:-top-1.5 md:-right-1.5">
-	<div class="z-10 bg-c-bg shadow-lg shadow-c-shadow/[var(--o-shadow-strong)] rounded-lg">
-		<div class="w-full border-2 bg-c-secondary/10 border-c-secondary/20 rounded-lg">
-			<p class="text-xs font-medium text-c-secondary px-1.25 py-0.75 md:px-1.5 md:py-1">
-				<span class={isSmallOnMobile ? 'hidden lg:block' : ''}>
-					{$LL.Shared.InsufficientCreditsTitle({
-						remainingCredits,
-						neededCredits
-					})}
-				</span>
-				{#if isSmallOnMobile}
-					<span class="lg:hidden">
-						{remainingCredits}/{neededCredits}
-					</span>
-				{/if}
+	<div
+		class="max-w-full z-10 bg-c-bg shadow-lg shadow-c-shadow/[var(--o-shadow-strong)] rounded-lg"
+	>
+		<div
+			class="w-full px-1.25 md:px-1.5 border-2 bg-c-secondary/10 border-c-secondary/20 rounded-lg gap-1 flex items-center"
+		>
+			<IconToken class="w-4 h-4 -ml-0.25 flex-shrink-0 text-c-secondary" />
+			<p
+				class="flex-shrink min-w-0 overflow-hidden overflow-ellipsis text-xs font-medium text-c-secondary py-0.75 md:py-1"
+			>
+				{remainingCredits}/{neededCredits}
 			</p>
 		</div>
 	</div>

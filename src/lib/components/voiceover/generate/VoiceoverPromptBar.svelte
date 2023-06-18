@@ -1,4 +1,6 @@
 <script lang="ts">
+	import { page } from '$app/stores';
+	import InsufficientCreditsBadge from '$components/badges/InsufficientCreditsBadge.svelte';
 	import Button from '$components/buttons/Button.svelte';
 	import LL, { locale } from '$i18n/i18n-svelte';
 	import { maxSeed } from '$ts/constants/main';
@@ -10,6 +12,7 @@
 	} from '$ts/constants/voiceover/rest';
 	import { generateSSEId } from '$ts/helpers/generateSSEId';
 	import { sseId } from '$ts/stores/user/sse';
+	import { userSummary } from '$ts/stores/user/summary';
 	import {
 		maxOngoingVoiceoversCountReached,
 		queueInitialVoiceoverRequest
@@ -25,6 +28,12 @@
 	} from '$ts/stores/voiceover/voiceoverSettings';
 	import { onMount } from 'svelte';
 
+	$: creditCost = getVoiceoverCreditCost($voiceoverPrompt || '');
+	$: doesntHaveEnoughCredits =
+		$userSummary !== undefined &&
+		$userSummary !== null &&
+		$userSummary.total_remaining_credits < creditCost;
+
 	$: [$voiceoverPrompt],
 		withCheck(() => {
 			if (!voiceoverPrompt) return;
@@ -35,6 +44,7 @@
 		if ($maxOngoingVoiceoversCountReached) return;
 		if (!$sseId) return;
 		if (!$voiceoverPrompt) return;
+		if (doesntHaveEnoughCredits) return;
 		queueInitialVoiceoverRequest({
 			model_id: $voiceoverModelId,
 			speaker: {
@@ -103,17 +113,25 @@
 			</p>
 			<p class="mt-0.5 text-c-on-bg/50">
 				{@html $LL.Voiceover.PromptBar.CreditCost({
-					creditCost: getNotFadedSpan(
-						getVoiceoverCreditCost(($voiceoverPrompt || '').length).toLocaleString($locale)
-					)
+					creditCost: getNotFadedSpan(creditCost.toLocaleString($locale))
 				})}
 			</p>
 		</div>
-		<Button
-			withSpinner
-			noPadding
-			loading={$maxOngoingVoiceoversCountReached}
-			class="pointer-events-auto px-8 py-3.5">{$LL.Home.GenerateButton()}</Button
-		>
+		<div class="relative flex justify-end">
+			<Button
+				withSpinner
+				noPadding
+				fadeOnDisabled={doesntHaveEnoughCredits}
+				loading={$maxOngoingVoiceoversCountReached}
+				disabled={doesntHaveEnoughCredits}
+				class="pointer-events-auto px-8 py-3.5">{$LL.Home.GenerateButton()}</Button
+			>
+			{#if doesntHaveEnoughCredits && $userSummary && $page.data.session?.user.id}
+				<InsufficientCreditsBadge
+					neededCredits={creditCost}
+					remainingCredits={$userSummary.total_remaining_credits}
+				/>
+			{/if}
+		</div>
 	</div>
 </form>
