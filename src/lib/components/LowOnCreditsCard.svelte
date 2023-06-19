@@ -48,7 +48,7 @@
 </script>
 
 <div
-	class="max-w-full flex flex-col md:flex-row items-center rounded-2xl bg-c-primary/10 ring-2 ring-c-primary/20 {classes}"
+	class="max-w-full flex flex-col md:flex-row justify-between md:items-center items-start rounded-xl md:rounded-2xl bg-c-primary/10 ring-2 ring-c-primary/20 {classes}"
 >
 	<div class="flex flex-1 flex-col px-4 py-4 max-w-xl">
 		<p class="font-bold text-base md:text-lg text-c-primary -mt-0.5 md:-mt-1">

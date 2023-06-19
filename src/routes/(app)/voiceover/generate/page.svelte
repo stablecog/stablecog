@@ -46,10 +46,9 @@
 	import { voiceoverLocale, voiceoverModelId } from '$ts/constants/voiceover/models.js';
 	import MetaTag from '$components/MetaTag.svelte';
 	import { canonicalUrl } from '$ts/constants/main.js';
+	import { lowOnCreditsThreshold } from '$ts/constants/credits.js';
 
 	export let data;
-
-	const lowOnCreditsThreshold = 10;
 
 	let stageWidth: number;
 	let stageHeight: number;
@@ -221,12 +220,6 @@
 				class="flex flex-col items-center flex-1 min-w-0 h-full relative
 				lg:pb-[calc(env(safe-area-inset-bottom))]"
 			>
-				{#if $windowWidth < mdBreakpoint && isGenerationSettingsSheetOpen}
-					<div
-						transition:fade|local={{ duration: 200, easing: quadOut }}
-						class="fixed w-full h-full left-0 top-0 bg-c-barrier/70 z-40"
-					/>
-				{/if}
 				<div use:clickoutside={{ callback: closeSettingsSheet }} class="w-full">
 					<div
 						class="w-full z-50 flex flex-col rounded-2xl overflow-hidden md:overflow-visible md:rounded-none
@@ -234,12 +227,22 @@
 					>
 						<div
 							bind:clientHeight={promptBarHeight}
-							class="w-full flex px-2 md:px-0 z-10 relative max-h-[25vh] lg:max-h-[40vh] min-h-[10rem]"
+							class="w-full flex px-2 md:px-0 z-10 relative max-h-[25vh] lg:max-h-[30vh] min-h-[10rem]"
 						>
 							<VoiceoverPromptBar />
 						</div>
 					</div>
 				</div>
+				{#if $page.data.session?.user.id && $userSummary && $userSummary.total_remaining_credits < lowOnCreditsThreshold}
+					<div
+						transition:expandCollapse|local={{ duration: 200 }}
+						class="w-full flex flex-col justify-start items-center order-first md:order-last"
+					>
+						<div class="w-full px-2.5 md:px-2px pb-2.5 md:pb-4">
+							<LowOnCreditsCard />
+						</div>
+					</div>
+				{/if}
 				<div
 					class="w-full flex flex-col flex-1 min-w-0 pb-[env(safe-area-inset-bottom)] relative z-0 order-first md:order-last"
 				>

@@ -51,10 +51,10 @@
 	import { previewImageVersion } from '$ts/constants/previewImageVersion.js';
 	import { goto } from '$app/navigation';
 	import { searchParamsString } from '$ts/stores/searchParamsString.js';
+	import { lowOnCreditsThreshold } from '$ts/constants/credits.js';
 
 	export let data;
 
-	const lowOnCreditsThreshold = 10;
 	let isSignInModalOpen = false;
 	let isJustCreatedGenerationForAnim = false;
 	let promptBarHeight: number;
@@ -420,7 +420,7 @@
 								transition:expandCollapse|local={{ duration: 200 }}
 								class="w-full flex flex-col justify-start items-center"
 							>
-								<div class="py-2px px-2 md:px-2px pb-6">
+								<div class="py-2px px-2.5 md:px-2px pb-6">
 									<LowOnCreditsCard />
 								</div>
 							</div>
