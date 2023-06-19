@@ -3,7 +3,6 @@
 	import Morpher from '$components/Morpher.svelte';
 	import InsufficientCreditsBadge from '$components/badges/InsufficientCreditsBadge.svelte';
 	import Button from '$components/buttons/Button.svelte';
-	import IconButton from '$components/buttons/IconButton.svelte';
 	import NoBgButton from '$components/buttons/NoBgButton.svelte';
 	import { mdBreakpoint } from '$components/generationFullScreen/constants';
 	import IconChevronDown from '$components/icons/IconChevronDown.svelte';
@@ -102,21 +101,29 @@
 		<textarea
 			bind:value={$voiceoverPrompt}
 			placeholder={$LL.Voiceover.PromptBar.PromptInput.Placeholder()}
-			class="w-full h-full bg-c-bg-secondary rounded-t-xl md:rounded-t-2xl resize-none px-3 md:px-5 py-2.5 md:py-4
+			class="md:hidden w-full h-full bg-c-bg-secondary rounded-t-xl md:rounded-t-2xl resize-none px-3 md:px-5 py-2.5 md:py-4
+			relative text-base md:text-lg placeholder:text-c-on-bg/40"
+			rows="3"
+			maxlength={maxVoiceoverCharacterCount}
+		/>
+		<textarea
+			bind:value={$voiceoverPrompt}
+			placeholder={$LL.Voiceover.PromptBar.PromptInput.Placeholder()}
+			class="hidden md:block w-full h-full bg-c-bg-secondary rounded-t-xl md:rounded-t-2xl resize-none px-3 md:px-5 py-2.5 md:py-4
 			relative text-base md:text-lg pb-6 placeholder:text-c-on-bg/40"
 			rows="7"
 			maxlength={maxVoiceoverCharacterCount}
 		/>
 		<div
-			class="w-full absolute left-0 bottom-0 h-4 bg-gradient-to-t from-c-bg-secondary to-c-bg-secondary/0"
+			class="w-full absolute left-0 bottom-0 h-4 bg-gradient-to-t from-c-bg-secondary to-c-bg-secondary/0 pointer-events-none"
 		/>
 	</div>
 	<div
 		class="w-full rounded-b-xl md:rounded-b-2xl pointer-events-none
-   	 	flex justify-end items-center px-2 pb-2.5 md:px-3 md:pt-2 md:pb-4 bg-c-bg-secondary gap-4"
+   	 	flex justify-end items-stretch md:items-center px-2 pt-2 pb-2.5 md:px-3 md:pt-2 md:pb-4 bg-c-bg-secondary gap-4"
 	>
 		<div
-			class="flex flex-col items-end justify-center font-medium text-right text-sm pointer-events-auto"
+			class="flex flex-col items-end justify-center font-medium text-right text-xs md:text-sm pointer-events-auto"
 		>
 			<p class="text-c-on-bg/75">
 				{($voiceoverPrompt || '').length.toLocaleString($locale)}<span class="text-c-on-bg/50"
@@ -134,7 +141,7 @@
 			noPadding
 			paddingClassForHoverEffect="px-1"
 			onClick={toggleSettingsSheet}
-			class="h-full md:hidden px-3 py-2 -ml-2 -mr-3"
+			class="self-stretch md:hidden px-3 py-2 -ml-3 -mr-3"
 			hoverFrom="bottom"
 			name={isSettingsSheetOpen
 				? $LL.Generate.HideSettingsButton()
@@ -155,7 +162,7 @@
 				</div>
 			</Morpher>
 		</NoBgButton>
-		<div class="relative flex justify-end">
+		<div class="relative flex justify-end w-12 h-12 md:w-auto md:h-auto">
 			<Button
 				withSpinner
 				noPadding
@@ -163,10 +170,10 @@
 				fadeOnDisabled={doesntHaveEnoughCredits}
 				loading={$maxOngoingVoiceoversCountReached}
 				disabled={doesntHaveEnoughCredits}
-				class="pointer-events-auto px-4 md:px-8 py-3.5 md:py-3.5 rounded-lg md:rounded-xl"
+				class="pointer-events-auto w-full h-full md:w-auto md:h-auto md:px-8 md:py-3.5 rounded-lg md:rounded-xl"
 			>
 				<span class="hidden md:block">{$LL.Voiceover.PromptBar.GenerateButton()}</span>
-				<IconWand class="w-7 h-7 -m-1 md:hidden" />
+				<IconWand class="w-7 h-7 md:hidden" />
 			</Button>
 			{#if doesntHaveEnoughCredits && $userSummary && $page.data.session?.user.id}
 				<InsufficientCreditsBadge

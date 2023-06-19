@@ -239,22 +239,52 @@
 						class="w-full z-50 flex flex-col rounded-2xl md:overflow-visible md:rounded-none
 						bg-c-bg md:bg-transparent relative"
 					>
-						<div bind:clientHeight={promptBarHeight} class="w-full flex z-10">
-							{#if !$windowWidth || $windowWidth < mdBreakpoint}
-								<VoiceoverSettingsSheet
-									{promptBarEstimatedHeightRem}
-									horizontalListHeightEstimatedRem={64}
-									{promptBarHeight}
-									horizontalListHeight={64}
-									{openSignInModal}
-									{isCheckCompleted}
-									isOpen={isSettingsSheetOpen}
-								/>
-							{/if}
+						{#if !$windowWidth || $windowWidth < mdBreakpoint}
+							<VoiceoverSettingsSheet
+								{promptBarEstimatedHeightRem}
+								{horizontalListHeightEstimatedRem}
+								{promptBarHeight}
+								{horizontalListHeight}
+								{openSignInModal}
+								{isCheckCompleted}
+								isOpen={isSettingsSheetOpen}
+							/>
+						{/if}
+						<div
+							bind:clientHeight={horizontalListHeight}
+							class="w-full h-17 flex flex-col overflow-hidden relative z-40 md:hidden rounded-t-2xl
+							bg-c-bg transform transition duration-250 {isSettingsSheetOpen
+								? 'translate-y-full pointer-events-none opacity-0'
+								: 'pointer-events-auto'}"
+						>
+							<AutoSize hideScroll={true} bind:element={listScrollContainer} let:clientWidth>
+								{#if !$page.data.session?.user.id || !$userSummary}
+									<VoiceoverListPlaceholder
+										horizontal={true}
+										text={$LL.Voiceover.List.NotSignedIn.Paragraph()}
+									/>
+								{:else if userVoiceoverFullOutputsQuery}
+									{#if listScrollContainer && clientWidth}
+										<VoiceoverListInfinite
+											horizontal={true}
+											{pinnedFullOutputs}
+											paddingLeft={8}
+											paddingTop={8}
+											paddingBottom={8}
+											gap={listItemGap}
+											itemWidth={listItemWidth}
+											listScrollContainerWidth={clientWidth}
+											{listScrollContainer}
+											query={userVoiceoverFullOutputsQuery}
+										/>
+									{/if}
+								{/if}
+							</AutoSize>
+						</div>
+						<div bind:clientHeight={promptBarHeight} class="w-full md:pb-7 z-40">
 							<div
-								bind:clientHeight={promptBarHeight}
-								class="w-full max-h-[10rem] md:max-h-[30vh] md:min-h-[12rem] pb-[calc(env(safe-area-inset-bottom)+0.75rem)]
-								bg-c-bg md:bg-transparent md:pb-4 z-40 px-2 md:px-0"
+								class="w-full md:max-h-[30vh] md:min-h-[12rem] pb-[calc(env(safe-area-inset-bottom)+0.75rem)] md:pb-0
+								bg-c-bg md:bg-transparent px-2 md:px-0"
 							>
 								<VoiceoverPromptBar {toggleSettingsSheet} {isSettingsSheetOpen} />
 							</div>
@@ -275,7 +305,7 @@
 					class="w-full flex flex-col flex-1 min-w-0 pb-[env(safe-area-inset-bottom)] relative z-0 order-first md:order-last"
 				>
 					<div
-						class="w-full flex-1 min-h-0 flex flex-col justify-start overflow-hidden px-2 pb-2 md:p-0"
+						class="w-full flex-1 min-h-0 flex flex-col justify-start overflow-hidden px-2 pb-4 md:p-0"
 					>
 						<div class="flex-1 min-h-0 w-full flex flex-col overflow-hidden relative">
 							<AudioPlayerWithWaveform voiceover={$voiceovers[0]} />

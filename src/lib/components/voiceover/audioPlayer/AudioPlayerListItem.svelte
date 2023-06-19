@@ -86,36 +86,47 @@
 	}}
 	class="{inHorizontal
 		? 'h-full'
-		: ''} w-full bg-c-bg-secondary px-3 pt-1.5 pb-1 flex flex-col items-start rounded-xl
-	shadow-lg shadow-c-shadow/[var(--o-shadow-normal)] overflow-hidden relative z-0 group/audio-player-list-item"
+		: ''} w-full bg-c-bg-secondary px-1 py-1 md:px-3 md:pt-1.5 md:pb-1 flex flex-row
+		md:flex-col items-center md:items-start
+		rounded-lg md:rounded-xl shadow-lg shadow-c-shadow/[var(--o-shadow-normal)]
+		overflow-hidden relative z-0 group/audio-player-list-item"
 >
-	<div class="w-full flex justify-between items-center gap-2 pb-1">
+	<div
+		class="flex md:w-full justify-between items-center gap-2 pl-0.5 md:pl-0 pr-1 md:pr-0 md:pb-1"
+	>
 		<div class="flex-shrink min-w-0 w-full flex justify-start items-center py-1.5">
 			<div
 				class="rounded-md bg-c-bg-tertiary overflow-hidden
 					flex items-center justify-start relative z-0 ring-2 ring-c-bg-tertiary"
 			>
-				<div class="w-7 h-7 flex-shrink-0 shadow-lg overflow-hidden relative z-0">
-					<IconSpeaker class="w-full h-full" type={output.voiceover.speaker.id} sizes="28px" />
+				<div class="w-10 h-10 md:w-7 md:h-7 flex-shrink-0 shadow-lg overflow-hidden relative z-0">
+					<IconSpeaker
+						class="w-full h-full"
+						type={output.voiceover.speaker.id}
+						sizes="(min-width: 768px) 28px, 40px"
+					/>
 				</div>
 				<p
-					class="text-c-on-bg flex-shrink min-w-0 whitespace-nowrap overflow-hidden overflow-ellipsis text-sm font-medium
+					class="hidden md:block text-c-on-bg flex-shrink min-w-0
+					whitespace-nowrap overflow-hidden overflow-ellipsis text-sm font-medium
 					px-2.5 py-1 h-full"
 				>
 					{$voiceoverSpeakerIdToDisplayName[output.voiceover.speaker.id]}
 				</p>
 			</div>
 		</div>
-		<div class="-mr-2 flex items-center lg:hidden xl:flex">
+		<div class="hidden md:flex -mr-2 items-center lg:hidden xl:flex">
 			<DownloadButton {output} faded disabled={isOutputLoadingOrFailed} />
 		</div>
 	</div>
 	<p
-		class="md:hidden lg:block xl:hidden text-sm text-c-on-bg py-1 max-w-full whitespace-nowrap overflow-hidden overflow-ellipsis"
+		class="hidden lg:block xl:hidden text-sm text-c-on-bg py-1 max-w-full whitespace-nowrap overflow-hidden overflow-ellipsis"
 	>
 		{output.voiceover.prompt.text}
 	</p>
-	<div class="{inHorizontal ? 'h-full' : ''} w-full flex items-center justify-center">
+	<div
+		class="{inHorizontal ? 'h-full' : ''} md:w-full flex-1 min-w-0 flex items-center justify-center"
+	>
 		<audio
 			src={output.audio_file_url}
 			aria-label={output.voiceover.prompt.text}
@@ -134,7 +145,7 @@
 				isPlaying = false;
 			}}
 		/>
-		<div class="flex items-center -ml-2">
+		<div class="flex items-center md:-ml-2">
 			<PlayPauseButton
 				bind:element={playButton}
 				onClick={() => {
@@ -153,13 +164,13 @@
 				/>
 			{/if}
 		</div>
-		<div class="flex-1 min-w-0 flex flex-col pl-2 pr-0.5">
+		<div class="flex-1 min-w-0 flex flex-col -mb-2.5 md:mb-0 pl-1 md:pl-2 pr-0.5">
 			<p
-				class="block lg:hidden xl:block text-sm text-c-on-bg py-1 max-w-full whitespace-nowrap overflow-hidden overflow-ellipsis"
+				class="lg:hidden xl:block text-xs md:text-sm text-c-on-bg md:py-1 max-w-full whitespace-nowrap overflow-hidden overflow-ellipsis"
 			>
 				{output.voiceover.prompt.text}
 			</p>
-			<div class="w-full flex items-center -mt-1 lg:mt-0 xl:-mt-1">
+			<div class="w-full flex items-center -mt-1.5 md:-mt-1 lg:mt-0 xl:-mt-1">
 				<div class="flex-1 self-stretch h-8">
 					<div class="w-full h-full flex items-center relative">
 						<Slider
@@ -174,7 +185,7 @@
 						/>
 					</div>
 				</div>
-				<p class="pl-3 text-xs text-c-on-bg/50 lg:hidden xl:block">
+				<p class="pl-3 text-xs text-c-on-bg/50 hidden md:block lg:hidden xl:block">
 					{currentTime && currentTimestamp ? currentTimestamp : '00:00'}
 					<span class="text-c-on-bg/25">/</span>
 					{(durationLocal || output.audio_duration) && totalTimestamp ? totalTimestamp : '00:00'}
@@ -182,11 +193,15 @@
 			</div>
 		</div>
 	</div>
-	<div class="w-full hidden lg:flex items-center justify-between xl:hidden pb-0.5">
-		<div class="-ml-2 flex items-center">
+	<div
+		class="w-auto md:w-full flex md:hidden lg:flex items-center justify-between xl:hidden lg:pb-0.5"
+	>
+		<div class="-mr-0.5 lg:mr-0 lg:-ml-2 flex items-center">
 			<DownloadButton {output} faded disabled={isOutputLoadingOrFailed} />
 		</div>
-		<div class="flex-shrink min-w-0 pl-3 text-xs text-c-on-bg/50 text-right">
+		<div
+			class="order-first lg:order-last flex-shrink min-w-0 pl-2 lg:pl-3 text-xs text-c-on-bg/50 text-right"
+		>
 			<p class="px-0.25 flex-shrink min-w-0 overflow-hidden overflow-ellipsis">
 				{currentTime && currentTimestamp ? currentTimestamp : '00:00'}
 			</p>
@@ -205,9 +220,9 @@
 				: 'bg-c-bg-secondary/90'}"
 		>
 			{#if output.voiceover.status === 'failed'}
-				<IconSadFaceOutline class="w-9 h-9 text-c-on-bg/50" />
+				<IconSadFaceOutline class="w-7 h-7 md:w-9 md:h-9 text-c-on-bg/50" />
 			{:else}
-				<IconAnimatedSpinner class="w-9 h-9 text-c-on-bg/50" loading={true} />
+				<IconAnimatedSpinner class="w-7 h-7 md:w-9 md:h-9 text-c-on-bg/50" loading={true} />
 			{/if}
 		</div>
 	{/if}
