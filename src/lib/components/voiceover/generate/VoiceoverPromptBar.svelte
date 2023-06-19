@@ -7,6 +7,7 @@
 	import { mdBreakpoint } from '$components/generationFullScreen/constants';
 	import IconChevronDown from '$components/icons/IconChevronDown.svelte';
 	import IconSettings from '$components/icons/IconSettings.svelte';
+	import IconToken from '$components/icons/IconToken.svelte';
 	import IconWand from '$components/icons/IconWand.svelte';
 	import LL, { locale } from '$i18n/i18n-svelte';
 	import { maxSeed } from '$ts/constants/main';
@@ -94,7 +95,7 @@
 
 <form
 	on:submit={onSubmit}
-	class="w-full max-h-full flex flex-col rounded-xl md:rounded-2xl
+	class="w-full max-h-full flex flex-row md:flex-col rounded-xl md:rounded-2xl
 	overflow-hidden relative bg-c-bg-secondary"
 >
 	<div class="w-full flex-1 min-h-0 flex flex-col relative">
@@ -115,33 +116,37 @@
 			maxlength={maxVoiceoverCharacterCount}
 		/>
 		<div
-			class="w-full absolute left-0 bottom-0 h-4 bg-gradient-to-t from-c-bg-secondary to-c-bg-secondary/0 pointer-events-none"
+			class="w-full hidden md:block absolute left-0 bottom-0 h-4 bg-gradient-to-t from-c-bg-secondary to-c-bg-secondary/0 pointer-events-none"
 		/>
 	</div>
 	<div
-		class="w-full rounded-b-xl md:rounded-b-2xl pointer-events-none
-   	 	flex justify-end items-stretch md:items-center px-2 pt-2 pb-2.5 md:px-3 md:pt-2 md:pb-4 bg-c-bg-secondary gap-4"
+		class="w-auto md:w-full rounded-r-xl md:rounded-tr-none md:rounded-b-2xl pointer-events-none
+   	 	flex flex-col items-center md:flex-row justify-end md:items-center pl-0 pr-2 pt-2 pb-2 md:px-3 md:pt-2 md:pb-4
+			bg-c-bg-secondary gap-1 md:gap-4"
 	>
 		<div
-			class="flex flex-col items-end justify-center font-medium text-right text-xs md:text-sm pointer-events-auto"
+			class="hidden md:flex flex-col items-end justify-center font-medium text-right text-xs md:text-sm pointer-events-auto"
 		>
 			<p class="text-c-on-bg/75">
 				{($voiceoverPrompt || '').length.toLocaleString($locale)}<span class="text-c-on-bg/50"
-					>/{maxVoiceoverCharacterCount.toLocaleString($locale)}</span
+					><span class="px-[0.25ch]">/</span>{maxVoiceoverCharacterCount.toLocaleString(
+						$locale
+					)}</span
 				>
 			</p>
-			<p class="mt-0.5 text-c-on-bg/50">
-				{@html $LL.Voiceover.PromptBar.CreditCost({
-					creditCost: getNotFadedSpan(creditCost.toLocaleString($locale))
-				})}
-			</p>
+			<div class="flex flex-row justify-end items-center text-c-on-bg/75 gap-1">
+				<IconToken class="w-4 h-4" />
+				<p class="mt-0.5">
+					{creditCost.toLocaleString($locale)}
+				</p>
+			</div>
 		</div>
 		<NoBgButton
 			size="sm"
 			noPadding
-			paddingClassForHoverEffect="px-1"
+			paddingClassForHoverEffect="p-0"
 			onClick={toggleSettingsSheet}
-			class="self-stretch md:hidden px-3 py-2 -ml-3 -mr-3"
+			class="md:hidden w-full flex items-center justify-center px-2 py-2"
 			hoverFrom="bottom"
 			name={isSettingsSheetOpen
 				? $LL.Generate.HideSettingsButton()

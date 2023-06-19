@@ -283,11 +283,12 @@
 								{/if}
 							</AutoSize>
 						</div>
-						<div bind:clientHeight={promptBarHeight} class="w-full md:pb-7 z-40">
-							<div
-								class="w-full md:max-h-[30vh] md:min-h-[12rem] pb-[calc(env(safe-area-inset-bottom)+0.75rem)] md:pb-0
-								bg-c-bg md:bg-transparent px-2 md:px-0"
-							>
+						<div
+							bind:clientHeight={promptBarHeight}
+							class="w-full bg-c-bg md:bg-transparent overflow-hidden
+							pb-[calc(env(safe-area-inset-bottom)+0.75rem)] md:pb-4 z-40"
+						>
+							<div class="w-full flex flex-col md:max-h-[30vh] md:min-h-[12rem] px-2 md:px-0">
 								<VoiceoverPromptBar {toggleSettingsSheet} {isSettingsSheetOpen} />
 							</div>
 						</div>
@@ -304,7 +305,7 @@
 					</div>
 				{/if}
 				<div
-					class="w-full flex flex-col flex-1 min-w-0 pb-[env(safe-area-inset-bottom)] relative z-0 order-first md:order-last"
+					class="w-full flex flex-col justify-start flex-1 min-h-0 pb-[env(safe-area-inset-bottom)] relative z-0 order-first md:order-last"
 				>
 					<div
 						class="w-full flex-1 min-h-0 flex flex-col justify-start overflow-hidden px-2 pb-4 md:p-0"
