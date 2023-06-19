@@ -52,6 +52,7 @@
 	import { goto } from '$app/navigation';
 	import { searchParamsString } from '$ts/stores/searchParamsString.js';
 	import { lowOnCreditsThreshold } from '$ts/constants/credits.js';
+	import SettingsSheet from '$components/generate/SettingsSheet.svelte';
 
 	export let data;
 
@@ -62,7 +63,7 @@
 	let stageHeight: number;
 	let horizontalListHeightEstimatedRem = 4.6;
 	let horizontalListHeight: number;
-	let propmtBarEstimatedHeightRem = 3.275;
+	let promptBarEstimatedHeightRem = 3.275;
 	let gridScrollContainer: HTMLDivElement;
 	let listScrollContainer: HTMLDivElement;
 	let listScrollContainerMd: HTMLDivElement;
@@ -310,49 +311,17 @@
 				{/if}
 				<div use:clickoutside={{ callback: closeSettingsSheet }}>
 					{#if !$windowWidth || $windowWidth < mdBreakpoint}
-						<div
-							style="transform: translateY({!$windowWidth || !promptBarHeight
-								? `calc(100% - env(safe-area-inset-bottom) - ${
-										propmtBarEstimatedHeightRem + horizontalListHeightEstimatedRem
-								  }rem)`
-								: $windowWidth < mdBreakpoint && isGenerationSettingsSheetOpen
-								? '0%'
-								: `calc(100% - ${promptBarHeight + horizontalListHeight}px)`});"
-							class="w-full h-[min(calc(100%-3rem),60rem)] z-40 gap-1 flex flex-col bg-c-bg rounded-t-2xl ring-2 ring-c-bg-secondary
-										md:ring-0 md:rounded-none {isGenerationSettingsSheetOpen
-								? 'shadow-sheet-open shadow-c-shadow/[var(--o-shadow-strongest)]'
-								: 'shadow-sheet-closed shadow-c-shadow/[var(--o-shadow-stronger)]'} md:shadow-none
-										md:bg-transparent absolute left-0 bottom-0 md:hidden transform transition duration-250 overflow-hidden md:overflow-auto"
-						>
-							<div
-								class="w-full flex-1 h-full overflow-hidden flex flex-col z-50 transition {$windowWidth &&
-								$windowWidth < mdBreakpoint &&
-								isGenerationSettingsSheetOpen
-									? 'opacity-100'
-									: 'opacity-0 pointer-events-none'}"
-							>
-								<SettingsPanel
-									rounding="top"
-									{openSignInModal}
-									{isCheckCompleted}
-									{isInferenceStepsValid}
-									{supportedSchedulerIdDropdownItems}
-								/>
-							</div>
-							<div
-								class="flex-shrink-0 w-full"
-								style="height: {!$windowWidth || !promptBarHeight
-									? `calc(env(safe-area-inset-bottom) + ${
-											propmtBarEstimatedHeightRem + horizontalListHeightEstimatedRem
-									  }rem)`
-									: `${
-											promptBarHeight +
-											(isGenerationSettingsSheetOpen && $windowWidth < mdBreakpoint
-												? 4
-												: horizontalListHeight)
-									  }px`}"
-							/>
-						</div>
+						<SettingsSheet
+							{promptBarEstimatedHeightRem}
+							{horizontalListHeightEstimatedRem}
+							{promptBarHeight}
+							{horizontalListHeight}
+							{isInferenceStepsValid}
+							{openSignInModal}
+							{isCheckCompleted}
+							isOpen={isGenerationSettingsSheetOpen}
+							{supportedSchedulerIdDropdownItems}
+						/>
 					{/if}
 					<!-- Prompt bar -->
 					<div

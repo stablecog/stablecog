@@ -1,7 +1,14 @@
 <script lang="ts">
 	import { page } from '$app/stores';
+	import Morpher from '$components/Morpher.svelte';
 	import InsufficientCreditsBadge from '$components/badges/InsufficientCreditsBadge.svelte';
 	import Button from '$components/buttons/Button.svelte';
+	import IconButton from '$components/buttons/IconButton.svelte';
+	import NoBgButton from '$components/buttons/NoBgButton.svelte';
+	import { mdBreakpoint } from '$components/generationFullScreen/constants';
+	import IconChevronDown from '$components/icons/IconChevronDown.svelte';
+	import IconSettings from '$components/icons/IconSettings.svelte';
+	import IconWand from '$components/icons/IconWand.svelte';
 	import LL, { locale } from '$i18n/i18n-svelte';
 	import { maxSeed } from '$ts/constants/main';
 	import { voiceoverLocale, voiceoverModelId } from '$ts/constants/voiceover/models';
@@ -26,7 +33,11 @@
 		voiceoverSpeakerId,
 		voiceoverStability
 	} from '$ts/stores/voiceover/voiceoverSettings';
+	import { windowWidth } from '$ts/stores/window';
 	import { onMount } from 'svelte';
+
+	export let toggleSettingsSheet: () => void;
+	export let isSettingsSheetOpen: boolean;
 
 	$: creditCost = getVoiceoverCreditCost($voiceoverPrompt || '');
 	$: doesntHaveEnoughCredits =
@@ -84,7 +95,8 @@
 
 <form
 	on:submit={onSubmit}
-	class="w-full max-h-full flex flex-col rounded-xl md:rounded-2xl overflow-hidden relative bg-c-bg-secondary"
+	class="w-full max-h-full flex flex-col rounded-xl md:rounded-2xl
+	overflow-hidden relative bg-c-bg-secondary"
 >
 	<div class="w-full flex-1 min-h-0 flex flex-col relative">
 		<textarea
@@ -117,15 +129,45 @@
 				})}
 			</p>
 		</div>
+		<NoBgButton
+			size="sm"
+			noPadding
+			paddingClassForHoverEffect="px-1"
+			onClick={toggleSettingsSheet}
+			class="h-full md:hidden px-3 py-2 -ml-2 -mr-3"
+			hoverFrom="bottom"
+			name={isSettingsSheetOpen
+				? $LL.Generate.HideSettingsButton()
+				: $LL.Generate.ShowSettingsButton()}
+		>
+			<Morpher morphed={$windowWidth < mdBreakpoint && isSettingsSheetOpen}>
+				<div slot="0" class="w-8 h-8">
+					<IconSettings
+						class="transition not-touch:group-hover:text-c-primary
+						w-full h-full {$windowWidth < mdBreakpoint && isSettingsSheetOpen ? 'rotate-180' : 'rotate-0'}"
+					/>
+				</div>
+				<div slot="1" class="w-8 h-8">
+					<IconChevronDown
+						class="transition transform not-touch:group-hover:text-c-primary
+						w-full h-full {$windowWidth < mdBreakpoint && !isSettingsSheetOpen ? '-rotate-180' : 'rotate-0'}"
+					/>
+				</div>
+			</Morpher>
+		</NoBgButton>
 		<div class="relative flex justify-end">
 			<Button
 				withSpinner
 				noPadding
+				noRounding
 				fadeOnDisabled={doesntHaveEnoughCredits}
 				loading={$maxOngoingVoiceoversCountReached}
 				disabled={doesntHaveEnoughCredits}
-				class="pointer-events-auto px-8 py-3.5">{$LL.Voiceover.PromptBar.GenerateButton()}</Button
+				class="pointer-events-auto px-4 md:px-8 py-3.5 md:py-3.5 rounded-lg md:rounded-xl"
 			>
+				<span class="hidden md:block">{$LL.Voiceover.PromptBar.GenerateButton()}</span>
+				<IconWand class="w-7 h-7 -m-1 md:hidden" />
+			</Button>
 			{#if doesntHaveEnoughCredits && $userSummary && $page.data.session?.user.id}
 				<InsufficientCreditsBadge
 					neededCredits={creditCost}

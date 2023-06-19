@@ -53,7 +53,9 @@
 	style={$windowHeight ? `height: ${$windowHeight}px` : 'height: 100vh; height: 100svh'}
 	use:portal={'body'}
 	class="fixed md:hidden md:pointer-events-none w-[85%] bg-c-bg rounded-r-3xl border-2 border-c-bg-secondary left-0 top-0 z-[101]
-				shadow-drawer shadow-c-shadow/[var(--o-shadow-stronger)] transition duration-250 {$isDrawerOpen
+			shadow-drawer {$isDrawerOpen
+		? 'shadow-c-shadow/[var(--o-shadow-stronger)]'
+		: 'shadow-c-shadow/0'} transition duration-250 {$isDrawerOpen
 		? '-translate-x-2px'
 		: 'pointer-events-none -translate-x-[calc(100%+2px)]'} flex flex-col justify-start overflow-hidden"
 >

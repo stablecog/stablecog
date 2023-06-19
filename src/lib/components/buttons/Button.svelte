@@ -21,6 +21,7 @@
 	export let icon: ConstructorOfATypedSvelteComponent | undefined = undefined;
 	export let iconAlignment: 'left' | 'right' = 'left';
 	export let label: string | undefined = undefined;
+	export let noRounding = false;
 	let classes = '';
 
 	function _onClick() {
@@ -74,10 +75,16 @@
 			: size === 'sm'
 			? 'px-4 md:px-5 py-3.5'
 			: 'px-6 md:px-8 py-4.5'} {size === 'xs'
-			? 'text-sm rounded-lg2'
+			? 'text-sm'
 			: size === 'sm'
-			? 'text-sm rounded-lg2'
-			: 'text-base rounded-xl'} {type === 'no-bg-on-bg'
+			? 'text-sm'
+			: 'text-base'} {noRounding
+			? ''
+			: size === 'xs'
+			? 'rounded-lg2'
+			: size === 'sm'
+			? 'rounded-lg2'
+			: 'rounded-xl'} {type === 'no-bg-on-bg'
 			? ''
 			: 'shadow-lg shadow-c-shadow/[var(--o-shadow-strong)]'} {type === 'no-bg-on-bg'
 			? 'text-c-on-bg/60'
@@ -177,10 +184,16 @@
 			: size === 'sm'
 			? 'px-4 md:px-5 py-4'
 			: 'px-6 md:px-8 py-4.5'} {size === 'xs'
-			? 'text-sm rounded-lg2'
+			? 'text-sm'
 			: size === 'sm'
-			? 'text-sm rounded-lg2'
-			: 'text-base rounded-xl'} {type === 'no-bg-on-bg'
+			? 'text-sm'
+			: 'text-base'} {noRounding
+			? ''
+			: size === 'xs'
+			? 'rounded-lg2'
+			: size === 'sm'
+			? 'rounded-lg2'
+			: 'rounded-xl'} {type === 'no-bg-on-bg'
 			? ''
 			: 'shadow-lg shadow-c-shadow/[var(--o-shadow-strong)]'} {type === 'no-bg-on-bg'
 			? 'text-c-on-bg/60'

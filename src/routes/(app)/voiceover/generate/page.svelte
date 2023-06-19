@@ -47,14 +47,17 @@
 	import MetaTag from '$components/MetaTag.svelte';
 	import { canonicalUrl } from '$ts/constants/main.js';
 	import { lowOnCreditsThreshold } from '$ts/constants/credits.js';
+	import VoiceoverSettingsSheet from '$components/voiceover/generate/VoiceoverSettingsSheet.svelte';
 
 	export let data;
 
 	let stageWidth: number;
 	let stageHeight: number;
 
+	let isCheckCompleted = true;
+
 	let promptBarHeight: number;
-	let propmtBarEstimatedHeightRem = 3.75;
+	let promptBarEstimatedHeightRem = 10;
 
 	let horizontalListHeightEstimatedRem = 4.6;
 	let horizontalListHeight: number;
@@ -63,14 +66,14 @@
 	let listScrollContainerMd: HTMLDivElement;
 	let listScrollContainerLg: HTMLDivElement;
 
-	let isGenerationSettingsSheetOpen = false;
+	let isSettingsSheetOpen = false;
 
 	function closeSettingsSheet() {
-		isGenerationSettingsSheetOpen = false;
+		isSettingsSheetOpen = false;
 	}
 
 	function toggleSettingsSheet() {
-		isGenerationSettingsSheetOpen = !isGenerationSettingsSheetOpen;
+		isSettingsSheetOpen = !isSettingsSheetOpen;
 	}
 
 	$: userVoiceoverFullOutputsQueryKey = ['user_voiceover_full_outputs'];
@@ -159,6 +162,11 @@
 			return;
 		}
 	}
+
+	let isSignInModalOpen = false;
+	function openSignInModal() {
+		isSignInModalOpen = true;
+	}
 </script>
 
 <MetaTag
@@ -170,7 +178,7 @@
 <VoiceoverSettingsProvider>
 	<div class="w-full h-full flex flex-col overflow-hidden relative z-0">
 		<div class="w-full h-full flex flex-row overflow-hidden pt-2 md:px-4 md:pb-4 gap-4">
-			<div class="hidden lg:flex min-w-[2.75rem] flex-col items-start h-full relative">
+			<div class="hidden lg:flex min-w-[2.75rem] flex-col items-start h-full">
 				{#if !$isLeftSidebarHiddenApp}
 					<div
 						transition:fly|local={{
@@ -217,19 +225,39 @@
 				/>
 			</div>
 			<div
-				class="flex flex-col items-center flex-1 min-w-0 h-full relative
+				class="flex flex-col items-center flex-1 min-w-0 h-full
 				lg:pb-[calc(env(safe-area-inset-bottom))]"
 			>
+				{#if $windowWidth < mdBreakpoint && isSettingsSheetOpen}
+					<div
+						transition:fade|local={{ duration: 200, easing: quadOut }}
+						class="fixed w-full h-full left-0 top-0 bg-c-barrier/70 z-40"
+					/>
+				{/if}
 				<div use:clickoutside={{ callback: closeSettingsSheet }} class="w-full">
 					<div
-						class="w-full z-50 flex flex-col rounded-2xl overflow-hidden md:overflow-visible md:rounded-none
-						bg-c-bg md:bg-transparent pb-[calc(env(safe-area-inset-bottom)+0.75rem)] md:pb-4"
+						class="w-full z-50 flex flex-col rounded-2xl md:overflow-visible md:rounded-none
+						bg-c-bg md:bg-transparent relative"
 					>
-						<div
-							bind:clientHeight={promptBarHeight}
-							class="w-full flex px-2 md:px-0 z-10 relative max-h-[25vh] lg:max-h-[30vh] min-h-[10rem]"
-						>
-							<VoiceoverPromptBar />
+						<div bind:clientHeight={promptBarHeight} class="w-full flex z-10">
+							{#if !$windowWidth || $windowWidth < mdBreakpoint}
+								<VoiceoverSettingsSheet
+									{promptBarEstimatedHeightRem}
+									horizontalListHeightEstimatedRem={64}
+									{promptBarHeight}
+									horizontalListHeight={64}
+									{openSignInModal}
+									{isCheckCompleted}
+									isOpen={isSettingsSheetOpen}
+								/>
+							{/if}
+							<div
+								bind:clientHeight={promptBarHeight}
+								class="w-full max-h-[10rem] md:max-h-[30vh] md:min-h-[12rem] pb-[calc(env(safe-area-inset-bottom)+0.75rem)]
+								bg-c-bg md:bg-transparent md:pb-4 z-40 px-2 md:px-0"
+							>
+								<VoiceoverPromptBar {toggleSettingsSheet} {isSettingsSheetOpen} />
+							</div>
 						</div>
 					</div>
 				</div>
@@ -285,7 +313,7 @@
 				</div>
 			</div>
 			<div class="h-full w-72 hidden md:flex md:pb-[calc(env(safe-area-inset-bottom))]">
-				<VoiceoverSettingsPanel openSignInModal={() => null} isCheckCompleted={true} />
+				<VoiceoverSettingsPanel openSignInModal={() => null} {isCheckCompleted} />
 			</div>
 		</div>
 	</div>
