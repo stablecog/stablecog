@@ -261,6 +261,8 @@
 								{#if !$page.data.session?.user.id || !$userSummary}
 									<VoiceoverListPlaceholder
 										horizontal={true}
+										padding={8}
+										gap={listItemGap}
 										text={$LL.Voiceover.List.NotSignedIn.Paragraph()}
 									/>
 								{:else if userVoiceoverFullOutputsQuery}
