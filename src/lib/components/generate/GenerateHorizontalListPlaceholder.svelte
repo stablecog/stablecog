@@ -13,8 +13,8 @@
     items-center justify-center text-c-on-bg/50 text-sm"
 	>
 		<p
-			class="w-full whitespace-nowrap overflow-hidden overflow-ellipsis relative
-			py-2 px-8 md:lg:px-4 xl:px-8"
+			class="w-full relative break-words
+			py-2 px-6 md:lg:px-4 xl:px-8"
 		>
 			{text}
 		</p>

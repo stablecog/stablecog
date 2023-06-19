@@ -57,9 +57,9 @@
 	let isCheckCompleted = true;
 
 	let promptBarHeight: number;
-	let promptBarEstimatedHeightRem = 10;
+	let promptBarEstimatedHeightRem = 8;
 
-	let horizontalListHeightEstimatedRem = 4.6;
+	let horizontalListHeightEstimatedRem = 4.25;
 	let horizontalListHeight: number;
 
 	let listScrollContainer: HTMLDivElement;

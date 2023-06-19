@@ -332,39 +332,41 @@
 					>
 						<div
 							bind:clientHeight={horizontalListHeight}
-							class="w-full h-16 flex flex-col md:hidden bg-c-bg transform transition duration-250 {isGenerationSettingsSheetOpen
+							class="w-full md:hidden pb-0.5 bg-c-bg transform transition duration-250 {isGenerationSettingsSheetOpen
 								? 'translate-y-full pointer-events-none opacity-0'
 								: 'pointer-events-auto'}"
 						>
-							<AutoSize
-								bind:element={listScrollContainer}
-								hideScroll
-								let:clientWidth
-								let:clientHeight
-							>
-								{#if !$page.data.session?.user.id || !$userSummary}
-									<GenerateHorizontalListPlaceholder
-										text={$LL.Generate.Grid.NotSignedIn.Paragraph()}
-									/>
-								{:else if userGenerationFullOutputsQuery}
-									{#if $windowWidth < mdBreakpoint && listScrollContainer}
-										<GenerateHorizontalList
-											{listScrollContainer}
-											listScrollContainerWidth={clientWidth}
-											listScrollContainerHeight={clientHeight}
-											paddingX={8}
-											paddingY={6}
-											{pinnedFullOutputs}
-											generationsQuery={userGenerationFullOutputsQuery}
-											cardType="generate"
+							<div class="w-full h-16 flex flex-col">
+								<AutoSize
+									bind:element={listScrollContainer}
+									hideScroll
+									let:clientWidth
+									let:clientHeight
+								>
+									{#if !$page.data.session?.user.id || !$userSummary}
+										<GenerateHorizontalListPlaceholder
+											text={$LL.Generate.Grid.NotSignedIn.Paragraph()}
 										/>
+									{:else if userGenerationFullOutputsQuery}
+										{#if $windowWidth < mdBreakpoint && listScrollContainer}
+											<GenerateHorizontalList
+												{listScrollContainer}
+												listScrollContainerWidth={clientWidth}
+												listScrollContainerHeight={clientHeight}
+												paddingX={8}
+												paddingY={6}
+												{pinnedFullOutputs}
+												generationsQuery={userGenerationFullOutputsQuery}
+												cardType="generate"
+											/>
+										{/if}
 									{/if}
-								{/if}
-							</AutoSize>
+								</AutoSize>
+							</div>
 						</div>
 						<div
 							bind:clientHeight={promptBarHeight}
-							class="w-full flex pt-0.5 md:pt-0 pl-2 bg-c-bg md:bg-transparent md:pl-0
+							class="w-full flex pl-2 bg-c-bg md:bg-transparent md:pl-0
 							pb-[calc(env(safe-area-inset-bottom)+0.75rem)] z-50 pointer-events-auto"
 						>
 							<PromptBar

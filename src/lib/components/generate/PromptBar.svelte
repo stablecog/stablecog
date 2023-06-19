@@ -151,7 +151,7 @@
 			init_image_file: $generationInitImageFiles,
 			prompt_strength:
 				$generationInitImageUrl && $generationInitImageStrength !== undefined
-					? Number((1 - (Number($generationInitImageStrength) + Number.EPSILON) / 100).toFixed(1))
+					? Number((1 - Number($generationInitImageStrength) / 100).toFixed(1))
 					: undefined,
 			guidance_scale: Number($generationGuidanceScale),
 			inference_steps: Number($generationInferenceSteps),

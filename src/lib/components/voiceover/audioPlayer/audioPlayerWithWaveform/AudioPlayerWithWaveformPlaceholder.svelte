@@ -89,22 +89,22 @@
 </script>
 
 <div class="w-full h-full bg-c-bg-secondary flex flex-col relative">
-	<div class="w-full flex justify-start items-center p-4">
+	<div class="w-full flex justify-start items-center p-3 md:p-4">
 		<div class="flex-shrink-0 relative flex items-center justify-start">
 			<div
-				class="absolute left-0 top-0 w-full h-full bg-c-on-bg/20 rounded-2xl {shouldAnimate
+				class="absolute left-0 top-0 w-full h-full bg-c-on-bg/20 rounded-lg md:rounded-2xl {shouldAnimate
 					? 'animate-ping-speaker-bg'
 					: ''}"
 			/>
 			<div class="{shouldAnimate ? 'animate-ping-speaker' : ''} flex-shrink-0">
 				<IconSpeaker
-					sizes="64px"
-					class="w-15 h-15 rounded-lg2 shadow-lg relative shadow-c-shadow/[var(--o-shadow-strong)] ring-2 ring-c-bg-tertiary"
+					sizes="(min-width: 768px) 60px, 40px"
+					class="w-12 h-12 md:w-15 md:h-15 rounded-md md:rounded-lg2 shadow-lg relative shadow-c-shadow/[var(--o-shadow-strong)] ring-2 ring-c-bg-tertiary"
 					type={voiceover.speaker.id}
 				/>
 			</div>
 		</div>
-		<p class="flex-shrink min-w-0 text-c-on-bg/50 font-base px-4">
+		<p class="flex-shrink min-w-0 text-c-on-bg/50 font-base px-3 md:px-4">
 			{@html $LL.Voiceover.Generate.SpeakerParagraph({
 				speakerName: getHighlightedSpan($voiceoverSpeakerIdToDisplayName[voiceover.speaker.id]),
 				languageName: getHighlightedSpan(languageName($locale).of(voiceover.speaker.locale) || '')
@@ -112,7 +112,7 @@
 		</p>
 	</div>
 
-	<div class="w-full flex-1 flex relative overflow-hidden pt-4">
+	<div class="w-full flex-1 flex relative overflow-hidden pt-2">
 		<div
 			bind:clientWidth={waveformContainerWidth}
 			bind:clientHeight={waveformContainerHeight}

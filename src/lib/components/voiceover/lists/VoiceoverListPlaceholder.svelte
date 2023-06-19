@@ -31,7 +31,7 @@
 		<p
 			class="w-full relative {horizontal
 				? 'py-2 md:py-3.5'
-				: 'py-4'} px-8 md:lg:px-4 xl:px-8 md:ring-2 md:bg-c-bg
+				: 'py-4'} break-words px-6 md:lg:px-4 xl:px-8 md:ring-2 md:bg-c-bg
 			md:ring-c-bg-secondary md:shadow-xl md:shadow-c-shadow/[var(--o-shadow-normal)]"
 		>
 			{text}

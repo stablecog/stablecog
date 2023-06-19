@@ -147,8 +147,8 @@
 	});
 </script>
 
-<div class="w-full flex flex-col px-5">
-	<div class="w-full -ml-1 pt-4 pb-3 flex items-center gap-4">
+<div class="w-full flex flex-col px-4 md:px-5">
+	<div class="w-full -ml-1 pt-3 md:pt-4 pb-1.5 md:pb-3 flex items-center gap-3 md:gap-4">
 		<div
 			class="flex-shrink-0 rounded-md ring-2 ring-c-bg-tertiary bg-c-bg-tertiary overflow-hidden
 			flex items-center justify-start relative z-0"
@@ -192,8 +192,8 @@
 		</div>
 		<div class="flex-1" />
 		<p class="text-c-on-bg/75">
-			{currentTime ? currentTimestamp : '00:00'} <span class="text-c-on-bg/35">/</span>
-			{duration ? totalTimestamp : '00:00'}
+			{currentTime ? currentTimestamp : '00:00'}<span class="text-c-on-bg/35 px-[0.5ch]">/</span
+			>{duration ? totalTimestamp : '00:00'}
 		</p>
 	</div>
 </div>
