@@ -254,7 +254,7 @@
 							min={initImageStrengthMin}
 							max={initImageStrengthMax}
 							step={initImageStrengthStep}
-							numeratorFormatter={(value) => `${value * 100}%`}
+							numeratorFormatter={(value) => `${value}%`}
 							disabled={false}
 							class="w-full px-4 gap-3"
 							bind:value={$generationInitImageStrength}
