@@ -6,7 +6,7 @@
 	import { isDrawerOpen } from '$ts/stores/isDrawerOpen';
 	import { windowHeight } from '$ts/stores/window';
 	import { portal } from 'svelte-portal';
-	import { quadIn } from 'svelte/easing';
+	import { quadOut } from 'svelte/easing';
 	import { fade } from 'svelte/transition';
 	import { routesDrawer } from './routes';
 	import IconNavbarRoute from '$components/icons/IconNavbarRoute.svelte';
@@ -38,7 +38,7 @@
 
 {#if $isDrawerOpen}
 	<div
-		transition:fade|local={{ duration: 200, easing: quadIn }}
+		transition:fade|local={{ duration: 250, easing: quadOut }}
 		use:portal={'body'}
 		style="height: 100vh; height: 100svh"
 		class="w-full md:hidden md:pointer-events-none fixed left-0 top-0 bg-c-barrier/80 z-100"
@@ -53,7 +53,7 @@
 	style={$windowHeight ? `height: ${$windowHeight}px` : 'height: 100vh; height: 100svh'}
 	use:portal={'body'}
 	class="fixed md:hidden md:pointer-events-none w-[85%] bg-c-bg rounded-r-3xl border-2 border-c-bg-secondary left-0 top-0 z-[101]
-				shadow-drawer shadow-c-shadow/[var(--o-shadow-stronger)] transition {$isDrawerOpen
+				shadow-drawer shadow-c-shadow/[var(--o-shadow-stronger)] transition duration-250 {$isDrawerOpen
 		? '-translate-x-2px'
 		: 'pointer-events-none -translate-x-[calc(100%+2px)]'} flex flex-col justify-start overflow-hidden"
 >

@@ -322,7 +322,7 @@
 										md:ring-0 md:rounded-none {isGenerationSettingsSheetOpen
 								? 'shadow-sheet-open shadow-c-shadow/[var(--o-shadow-strongest)]'
 								: 'shadow-sheet-closed shadow-c-shadow/[var(--o-shadow-stronger)]'} md:shadow-none
-										md:bg-transparent absolute left-0 bottom-0 md:hidden transform transition overflow-hidden md:overflow-auto"
+										md:bg-transparent absolute left-0 bottom-0 md:hidden transform transition duration-250 overflow-hidden md:overflow-auto"
 						>
 							<div
 								class="w-full flex-1 h-full overflow-hidden flex flex-col z-50 transition {$windowWidth &&
@@ -363,7 +363,7 @@
 					>
 						<div
 							bind:clientHeight={horizontalListHeight}
-							class="w-full h-16 flex flex-col md:hidden transform transition {isGenerationSettingsSheetOpen
+							class="w-full h-16 flex flex-col md:hidden bg-c-bg transform transition duration-250 {isGenerationSettingsSheetOpen
 								? 'translate-y-full pointer-events-none opacity-0'
 								: 'pointer-events-auto'}"
 						>
