@@ -70,7 +70,7 @@
 			togglePlay({ audioElement });
 		}
 	}}
-	class="w-full h-full bg-c-bg-secondary flex flex-col rounded-2xl overflow-hidden relative z-0
+	class="w-full h-full bg-c-bg-secondary flex flex-col rounded-xl md:rounded-2xl overflow-hidden relative z-0
 		shadow-lg shadow-c-shadow/[var(--o-shadow-normal)] {classes}"
 >
 	{#if audioStatus !== 'created'}

@@ -228,54 +228,14 @@
 					/>
 				{/if}
 				<div use:clickoutside={{ callback: closeSettingsSheet }} class="w-full">
-					{#if !$windowWidth || $windowWidth < mdBreakpoint}
-						<div
-							style="transform: translateY({!$windowWidth || !promptBarHeight
-								? `calc(100% - env(safe-area-inset-bottom) - ${
-										propmtBarEstimatedHeightRem + horizontalListHeightEstimatedRem
-								  }rem)`
-								: $windowWidth < mdBreakpoint && isGenerationSettingsSheetOpen
-								? '0%'
-								: `calc(100% - ${promptBarHeight + horizontalListHeight}px)`});"
-							class="w-full h-[min(calc(100%-3rem),60rem)] z-40 gap-1 flex flex-col bg-c-bg rounded-t-2xl ring-2 ring-c-bg-secondary
-											md:ring-0 md:rounded-none {isGenerationSettingsSheetOpen
-								? 'shadow-sheet-open shadow-c-shadow/[var(--o-shadow-strongest)]'
-								: 'shadow-sheet-closed shadow-c-shadow/[var(--o-shadow-stronger)]'} md:shadow-none
-											md:bg-transparent absolute left-0 bottom-0 md:hidden transform transition overflow-hidden md:overflow-auto"
-						>
-							<div
-								class="w-full flex-1 h-full overflow-hidden flex flex-col z-50 transition {$windowWidth &&
-								$windowWidth < mdBreakpoint &&
-								isGenerationSettingsSheetOpen
-									? 'opacity-100'
-									: 'opacity-0 pointer-events-none'}"
-							>
-								<!-- Settings Panel -->
-							</div>
-							<div
-								class="flex-shrink-0 w-full"
-								style="height: {!$windowWidth || !promptBarHeight
-									? `calc(env(safe-area-inset-bottom) + ${
-											propmtBarEstimatedHeightRem + horizontalListHeightEstimatedRem
-									  }rem)`
-									: `${promptBarHeight + horizontalListHeight}px`}"
-							/>
-						</div>
-					{/if}
-					<!-- Prompt bar -->
 					<div
 						class="w-full z-50 flex flex-col rounded-2xl overflow-hidden md:overflow-visible md:rounded-none
-						bg-c-bg md:bg-transparent pb-4"
+						bg-c-bg md:bg-transparent pb-[calc(env(safe-area-inset-bottom)+0.75rem)] md:pb-4"
 					>
 						<div
-							bind:clientHeight={horizontalListHeight}
-							class="w-full h-24 flex flex-col md:hidden"
+							bind:clientHeight={promptBarHeight}
+							class="w-full flex px-2 md:px-0 z-10 relative max-h-[25vh] lg:max-h-[40vh] min-h-[10rem]"
 						>
-							<AutoSize bind:element={listScrollContainer} hideScroll>
-								<div class="w-full h-full" />
-							</AutoSize>
-						</div>
-						<div bind:clientHeight={promptBarHeight} class="w-full flex px-2 md:px-0 z-10 relative">
 							<VoiceoverPromptBar />
 						</div>
 					</div>
@@ -283,23 +243,11 @@
 				<div
 					class="w-full flex flex-col flex-1 min-w-0 pb-[env(safe-area-inset-bottom)] relative z-0 order-first md:order-last"
 				>
-					<div class="flex-1 min-w-0 flex flex-col items-center justify-center w-full">
-						{#if $page.data.session?.user.id && $userSummary && $userSummary.total_remaining_credits < lowOnCreditsThreshold}
-							<div
-								transition:expandCollapse|local={{ duration: 200 }}
-								class="w-full flex flex-col justify-start items-center"
-							>
-								<div class="py-2px px-2 md:px-2px pb-6">
-									<LowOnCreditsCard />
-								</div>
-							</div>
-						{/if}
-						<div
-							class="w-full flex-1 min-h-0 flex flex-col justify-start overflow-hidden p-3 md:p-0"
-						>
-							<div class="flex-1 min-h-0 w-full flex flex-col overflow-hidden relative">
-								<AudioPlayerWithWaveform voiceover={$voiceovers[0]} />
-							</div>
+					<div
+						class="w-full flex-1 min-h-0 flex flex-col justify-start overflow-hidden px-2 pb-2 md:p-0"
+					>
+						<div class="flex-1 min-h-0 w-full flex flex-col overflow-hidden relative">
+							<AudioPlayerWithWaveform voiceover={$voiceovers[0]} />
 						</div>
 					</div>
 					<div class="w-full hidden md:block lg:hidden pt-4">

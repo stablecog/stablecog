@@ -84,14 +84,14 @@
 
 <form
 	on:submit={onSubmit}
-	class="w-full flex flex-col rounded-2xl overflow-hidden relative bg-c-bg-secondary"
+	class="w-full max-h-full flex flex-col rounded-xl md:rounded-2xl overflow-hidden relative bg-c-bg-secondary"
 >
-	<div class="w-full flex flex-col relative">
+	<div class="w-full flex-1 min-h-0 flex flex-col relative">
 		<textarea
 			bind:value={$voiceoverPrompt}
 			placeholder={$LL.Voiceover.PromptBar.PromptInput.Placeholder()}
-			class="w-full h-full bg-c-bg-secondary rounded-t-2xl resize-none px-5 py-4
-			relative text-lg pb-6 placeholder:text-c-on-bg/40"
+			class="w-full h-full bg-c-bg-secondary rounded-t-xl md:rounded-t-2xl resize-none px-3 md:px-5 py-2.5 md:py-4
+			relative text-base md:text-lg pb-6 placeholder:text-c-on-bg/40"
 			rows="7"
 			maxlength={maxVoiceoverCharacterCount}
 		/>
@@ -100,8 +100,8 @@
 		/>
 	</div>
 	<div
-		class="w-full rounded-b-xl pointer-events-none
-   	 	flex justify-end items-center px-3 pt-2 pb-4 bg-c-bg-secondary gap-4"
+		class="w-full rounded-b-xl md:rounded-b-2xl pointer-events-none
+   	 	flex justify-end items-center px-2 pb-2.5 md:px-3 md:pt-2 md:pb-4 bg-c-bg-secondary gap-4"
 	>
 		<div
 			class="flex flex-col items-end justify-center font-medium text-right text-sm pointer-events-auto"
@@ -124,7 +124,7 @@
 				fadeOnDisabled={doesntHaveEnoughCredits}
 				loading={$maxOngoingVoiceoversCountReached}
 				disabled={doesntHaveEnoughCredits}
-				class="pointer-events-auto px-8 py-3.5">{$LL.Home.GenerateButton()}</Button
+				class="pointer-events-auto px-8 py-3.5">{$LL.Voiceover.PromptBar.GenerateButton()}</Button
 			>
 			{#if doesntHaveEnoughCredits && $userSummary && $page.data.session?.user.id}
 				<InsufficientCreditsBadge
