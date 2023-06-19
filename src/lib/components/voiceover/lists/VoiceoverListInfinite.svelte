@@ -201,11 +201,11 @@
 		</div>
 		{#if horizontal}
 			<div
-				class="absolute left-0 top-0 w-16 h-full bg-gradient-to-r from-c-bg to-c-bg/0 transition
+				class="absolute left-0 top-0 w-12 h-full bg-gradient-to-r from-c-bg to-c-bg/0 transition
 				duration-100 pointer-events-none {listAtStart ? 'opacity-0' : 'opacity-100'}"
 			/>
 			<div
-				class="absolute right-0 top-0 w-16 h-full bg-gradient-to-l from-c-bg to-c-bg/0 transition
+				class="absolute right-0 top-0 w-12 h-full bg-gradient-to-l from-c-bg to-c-bg/0 transition
 				duration-100 pointer-events-none {listAtEnd ? 'opacity-0' : 'opacity-100'}"
 			/>
 		{/if}
