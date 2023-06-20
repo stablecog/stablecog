@@ -115,7 +115,7 @@
 				bind:value={$voiceoverPrompt}
 				placeholder={$LL.Voiceover.PromptBar.PromptInput.Placeholder()}
 				maxlength={maxVoiceoverCharacterCount}
-				enterkeyhint="done"
+				enterkeyhint="enter"
 				rows="3"
 				style="transition: height 0.1s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.2s cubic-bezier(0.4, 0, 0.2, 1), padding 0.2s cubic-bezier(0.4, 0, 0.2, 1)"
 				class="w-full text-base bg-c-bg-secondary shadow-lg pr-20 md:pr-26 lg:pr-17 hide-scrollbar shadow-c-shadow/[var(--o-shadow-normal)]
