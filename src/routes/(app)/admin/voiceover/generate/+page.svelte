@@ -171,7 +171,7 @@
 
 <VoiceoverSettingsProvider>
 	<div class="w-full h-full flex flex-col overflow-hidden relative z-0">
-		<div class="w-full h-full flex flex-row overflow-hidden pt-2 md:px-4 md:pb-4 gap-4">
+		<div class="w-full h-full flex flex-row overflow-hidden md:pt-2 md:px-4 md:pb-4 gap-4">
 			<div class="hidden lg:flex min-w-[2.75rem] flex-col items-start h-full">
 				{#if !$isLeftSidebarHiddenApp}
 					<div

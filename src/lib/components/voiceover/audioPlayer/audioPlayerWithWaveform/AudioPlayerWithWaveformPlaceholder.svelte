@@ -89,7 +89,7 @@
 </script>
 
 <div class="w-full h-full bg-c-bg-secondary flex flex-col relative">
-	<div class="w-full flex justify-start items-center p-3 md:p-4">
+	<div class="w-full flex justify-start items-center p-2.5 md:p-4">
 		<div class="flex-shrink-0 relative flex items-center justify-start">
 			<div
 				class="absolute left-0 top-0 w-full h-full bg-c-on-bg/20 rounded-lg md:rounded-2xl {shouldAnimate
@@ -98,8 +98,8 @@
 			/>
 			<div class="{shouldAnimate ? 'animate-ping-speaker' : ''} flex-shrink-0">
 				<IconSpeaker
-					sizes="(min-width: 768px) 60px, 40px"
-					class="w-12 h-12 md:w-15 md:h-15 rounded-md md:rounded-lg2 shadow-lg relative shadow-c-shadow/[var(--o-shadow-strong)] ring-2 ring-c-bg-tertiary"
+					sizes="(min-width: 768px) 60px, 44px"
+					class="w-11 h-11 md:w-15 md:h-15 rounded-md md:rounded-lg2 shadow-lg relative shadow-c-shadow/[var(--o-shadow-strong)] ring-2 ring-c-bg-tertiary"
 					type={voiceover.speaker.id}
 				/>
 			</div>
