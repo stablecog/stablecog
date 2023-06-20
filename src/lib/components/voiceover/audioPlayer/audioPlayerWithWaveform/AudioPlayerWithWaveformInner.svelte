@@ -33,8 +33,6 @@
 	export let audioArray: number[] | undefined = undefined;
 
 	let sliderValue = 0;
-	let sliderContainerWidth: number;
-	let sliderContainerHeight: number;
 	let waveformContainer: HTMLDivElement;
 	let waveformContainerWidth: number | undefined = undefined;
 	let waveformContainerHeight: number | undefined = undefined;
@@ -213,21 +211,14 @@
 			{/if}
 		</div>
 		<div class="w-full h-full flex items-center z-10 absolute left-0 bottom-0">
-			<div
-				bind:clientWidth={sliderContainerWidth}
-				bind:clientHeight={sliderContainerHeight}
-				class="w-full h-full flex flex-col overflow-hidden relative opacity-100"
-			>
-				{#if sliderContainerWidth && sliderContainerHeight}
-					<SliderForWaveform
-						min={0}
-						max={100}
-						name="Audio Player"
-						bind:value={sliderValue}
-						step={0.00001}
-						height={sliderContainerHeight}
-					/>
-				{/if}
+			<div class="w-full h-full flex flex-col overflow-hidden relative opacity-100">
+				<SliderForWaveform
+					min={0}
+					max={100}
+					name="Audio Player"
+					bind:value={sliderValue}
+					step={0.00001}
+				/>
 			</div>
 		</div>
 	</div>

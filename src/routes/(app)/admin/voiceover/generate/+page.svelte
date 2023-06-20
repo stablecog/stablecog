@@ -15,7 +15,6 @@
 	import { fade, fly } from 'svelte/transition';
 	import {
 		voiceovers,
-		type TVoiceoverFullOutput,
 		type TVoiceoverOutput,
 		type TVoiceover
 	} from '$ts/stores/user/voiceovers.js';
@@ -49,15 +48,10 @@
 	import { lowOnCreditsThreshold } from '$ts/constants/credits.js';
 	import VoiceoverSettingsSheet from '$components/voiceover/generate/VoiceoverSettingsSheet.svelte';
 
-	export let data;
-
-	let stageWidth: number;
-	let stageHeight: number;
-
 	let isCheckCompleted = true;
 
 	let promptBarHeight: number;
-	let promptBarEstimatedHeightRem = 8;
+	let promptBarEstimatedHeightRem = 6.5;
 
 	let horizontalListHeightEstimatedRem = 4.25;
 	let horizontalListHeight: number;
@@ -285,7 +279,7 @@
 						</div>
 						<div
 							bind:clientHeight={promptBarHeight}
-							class="w-full bg-c-bg md:bg-transparent overflow-hidden
+							class="w-full bg-c-bg md:bg-transparent
 							pb-[calc(env(safe-area-inset-bottom)+0.75rem)] md:pb-4 z-40"
 						>
 							<div class="w-full flex flex-col md:max-h-[30vh] md:min-h-[12rem] px-2 md:px-0">

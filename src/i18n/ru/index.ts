@@ -910,8 +910,7 @@ const ru: Translation = {
 			GenerateButton: 'Generate',
 			CreditCost: '{creditCost} credit(s)',
 			PromptInput: {
-				Placeholder:
-					'Technology, in its finest form, is the bridge between imagination and reality.'
+				Placeholder: 'Technology is a bridge between imagination and reality.'
 			}
 		},
 		Settings: {

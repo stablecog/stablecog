@@ -2778,7 +2778,7 @@ type RootTranslation = {
 			CreditCost: RequiredParams<'creditCost'>
 			PromptInput: {
 				/**
-				 * T​e​c​h​n​o​l​o​g​y​,​ ​i​n​ ​i​t​s​ ​f​i​n​e​s​t​ ​f​o​r​m​,​ ​i​s​ ​t​h​e​ ​b​r​i​d​g​e​ ​b​e​t​w​e​e​n​ ​i​m​a​g​i​n​a​t​i​o​n​ ​a​n​d​ ​r​e​a​l​i​t​y​.
+				 * T​e​c​h​n​o​l​o​g​y​ ​i​s​ ​a​ ​b​r​i​d​g​e​ ​b​e​t​w​e​e​n​ ​i​m​a​g​i​n​a​t​i​o​n​ ​a​n​d​ ​r​e​a​l​i​t​y​.
 				 */
 				Placeholder: string
 			}
@@ -5569,7 +5569,7 @@ export type TranslationFunctions = {
 			CreditCost: (arg: { creditCost: unknown }) => LocalizedString
 			PromptInput: {
 				/**
-				 * Technology, in its finest form, is the bridge between imagination and reality.
+				 * Technology is a bridge between imagination and reality.
 				 */
 				Placeholder: () => LocalizedString
 			}

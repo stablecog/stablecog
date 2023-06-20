@@ -3,6 +3,7 @@
 	import Morpher from '$components/Morpher.svelte';
 	import InsufficientCreditsBadge from '$components/badges/InsufficientCreditsBadge.svelte';
 	import Button from '$components/buttons/Button.svelte';
+	import ClearButton from '$components/buttons/ClearButton.svelte';
 	import NoBgButton from '$components/buttons/NoBgButton.svelte';
 	import { mdBreakpoint } from '$components/generationFullScreen/constants';
 	import IconChevronDown from '$components/icons/IconChevronDown.svelte';
@@ -10,6 +11,7 @@
 	import IconToken from '$components/icons/IconToken.svelte';
 	import IconWand from '$components/icons/IconWand.svelte';
 	import LL, { locale } from '$i18n/i18n-svelte';
+	import { autoresize } from '$ts/actions/textarea/autoresize';
 	import { maxSeed } from '$ts/constants/main';
 	import { voiceoverLocale, voiceoverModelId } from '$ts/constants/voiceover/models';
 	import {
@@ -79,11 +81,17 @@
 		fn();
 	}
 
-	let mounted = false;
-
-	function getNotFadedSpan(text: string) {
-		return `<span class="text-c-on-bg/75">${text}</span>`;
+	$: showClearPromptInputButton =
+		$voiceoverPrompt !== null && $voiceoverPrompt !== undefined && $voiceoverPrompt !== '';
+	let promptInputElement: HTMLTextAreaElement;
+	function clearPrompt() {
+		voiceoverPrompt.set('');
+		promptInputElement.value = '';
+		promptInputElement.blur();
+		promptInputElement.focus();
 	}
+
+	let mounted = false;
 
 	onMount(() => {
 		if ($voiceoverPromptLocal) {
@@ -93,20 +101,103 @@
 	});
 </script>
 
+<form on:submit|preventDefault={onSubmit} class="md:hidden w-full flex flex-row items-stretch">
+	<div class="flex-1 flex gap-2 flex-row items-center transition duration-150 transform">
+		<div class="flex-1 flex relative group">
+			<textarea
+				bind:this={promptInputElement}
+				use:autoresize={{
+					minRows: 3,
+					maxRows: 3,
+					placeholder: $LL.Voiceover.PromptBar.PromptInput.Placeholder(),
+					value: $voiceoverPrompt || ''
+				}}
+				bind:value={$voiceoverPrompt}
+				placeholder={$LL.Voiceover.PromptBar.PromptInput.Placeholder()}
+				maxlength={maxVoiceoverCharacterCount}
+				enterkeyhint="done"
+				rows="3"
+				style="transition: height 0.1s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.2s cubic-bezier(0.4, 0, 0.2, 1), padding 0.2s cubic-bezier(0.4, 0, 0.2, 1)"
+				class="w-full text-base bg-c-bg-secondary shadow-lg pr-20 md:pr-26 lg:pr-17 hide-scrollbar shadow-c-shadow/[var(--o-shadow-normal)]
+							scroll-smooth resize-none transition relative pl-3 md:pl-5 py-2.5 md:py-4.5 rounded-lg md:rounded-xl
+							focus:ring-2 focus:ring-c-primary/30 ring-0 ring-c-primary/20 placeholder:text-c-on-bg/40
+							not-touch:enabled:hover:ring-2 text-c-on-bg not-touch:group-hover:ring-2"
+			/>
+			<div class="flex h-full flex-col absolute right-11 top-0">
+				<ClearButton class="" show={showClearPromptInputButton} onClick={clearPrompt} />
+				<div class="flex font-medium flex-col items-end text-xs z-50 pr-2 pb-1">
+					<p class="text-c-on-bg/75">
+						{($voiceoverPrompt || '').length.toLocaleString($locale)}
+					</p>
+					<p class="text-c-on-bg/50">
+						{maxVoiceoverCharacterCount.toLocaleString($locale)}
+					</p>
+				</div>
+			</div>
+			<div class="absolute right-0 top-0 h-full w-11 md:w-13 lg:hidden">
+				<Button
+					fadeOnDisabled={doesntHaveEnoughCredits}
+					loading={$maxOngoingVoiceoversCountReached}
+					disabled={doesntHaveEnoughCredits}
+					withSpinner
+					class="w-full h-full rounded-r-lg md:rounded-r-xl rounded-l-none absolute right-0 top-0"
+					noPadding
+					label={$LL.Home.GenerateButton()}
+				>
+					<IconWand class="w-7 h-7 md:w-8 md:h-8" />
+				</Button>
+				{#if doesntHaveEnoughCredits && $userSummary && $page.data.session?.user.id}
+					<InsufficientCreditsBadge
+						neededCredits={creditCost}
+						remainingCredits={$userSummary.total_remaining_credits}
+					/>
+				{/if}
+			</div>
+		</div>
+	</div>
+	<div class="flex flex-col -mr-2">
+		<div
+			class="text-sm w-full flex flex-row justify-center pt-1 items-center text-c-on-bg/75 gap-1"
+		>
+			<IconToken class="w-4 h-4" />
+			<p class="mt-0.5">
+				{creditCost.toLocaleString($locale)}
+			</p>
+		</div>
+		<NoBgButton
+			size="sm"
+			noPadding
+			paddingClassForHoverEffect="px-1"
+			onClick={toggleSettingsSheet}
+			class="flex-1 px-3 py-2"
+			hoverFrom="bottom"
+			name={isSettingsSheetOpen
+				? $LL.Generate.HideSettingsButton()
+				: $LL.Generate.ShowSettingsButton()}
+		>
+			<Morpher morphed={$windowWidth < mdBreakpoint && isSettingsSheetOpen}>
+				<div slot="0" class="w-8 h-8">
+					<IconSettings
+						class="transition not-touch:group-hover:text-c-primary
+						w-full h-full {$windowWidth < mdBreakpoint && isSettingsSheetOpen ? 'rotate-180' : 'rotate-0'}"
+					/>
+				</div>
+				<div slot="1" class="w-8 h-8">
+					<IconChevronDown
+						class="transition transform not-touch:group-hover:text-c-primary
+						w-full h-full {$windowWidth < mdBreakpoint && !isSettingsSheetOpen ? '-rotate-180' : 'rotate-0'}"
+					/>
+				</div>
+			</Morpher>
+		</NoBgButton>
+	</div>
+</form>
 <form
 	on:submit={onSubmit}
-	class="w-full max-h-full flex flex-row md:flex-col rounded-lg md:rounded-2xl
+	class="hidden md:flex w-full max-h-full flex-row md:flex-col rounded-lg md:rounded-2xl
 	overflow-hidden relative bg-c-bg-secondary"
 >
 	<div class="w-full flex-1 min-h-0 flex flex-col relative">
-		<textarea
-			bind:value={$voiceoverPrompt}
-			placeholder={$LL.Voiceover.PromptBar.PromptInput.Placeholder()}
-			class="md:hidden w-full h-full bg-c-bg-secondary rounded-t-lg md:rounded-t-2xl resize-none px-3 md:px-5 py-2.5 md:py-4
-			relative text-base md:text-lg placeholder:text-c-on-bg/40"
-			rows="3"
-			maxlength={maxVoiceoverCharacterCount}
-		/>
 		<textarea
 			bind:value={$voiceoverPrompt}
 			placeholder={$LL.Voiceover.PromptBar.PromptInput.Placeholder()}

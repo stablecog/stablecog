@@ -104,7 +104,7 @@
 				/>
 			</div>
 		</div>
-		<p class="flex-shrink min-w-0 text-c-on-bg/50 font-base px-3 md:px-4">
+		<p class="flex-shrink min-w-0 text-c-on-bg/50 text-sm md:text-base px-3 md:px-4">
 			{@html $LL.Voiceover.Generate.SpeakerParagraph({
 				speakerName: getHighlightedSpan($voiceoverSpeakerIdToDisplayName[voiceover.speaker.id]),
 				languageName: getHighlightedSpan(languageName($locale).of(voiceover.speaker.locale) || '')
