@@ -68,7 +68,11 @@
 		isSettingsSheetOpen = false;
 	}
 
-	function toggleSettingsSheet() {
+	function toggleSettingsSheet(state?: boolean) {
+		if (state !== undefined) {
+			isSettingsSheetOpen = state;
+			return;
+		}
 		isSettingsSheetOpen = !isSettingsSheetOpen;
 	}
 
