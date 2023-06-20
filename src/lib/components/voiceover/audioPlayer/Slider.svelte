@@ -1,6 +1,5 @@
 <script lang="ts">
 	import { createSlider } from '@melt-ui/svelte';
-	import { Slider } from 'radix-svelte';
 	export let value: number;
 	export let min: number;
 	export let max: number;
