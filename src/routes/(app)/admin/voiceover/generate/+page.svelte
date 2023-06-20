@@ -51,7 +51,7 @@
 	let isCheckCompleted = true;
 
 	let promptBarHeight: number;
-	let promptBarEstimatedHeightRem = 6.5;
+	let promptBarEstimatedHeightRem = 6.25;
 
 	let horizontalListHeightEstimatedRem = 4.25;
 	let horizontalListHeight: number;
@@ -302,7 +302,7 @@
 					class="w-full flex flex-col justify-start flex-1 min-h-0 pb-[env(safe-area-inset-bottom)] relative z-0 order-first md:order-last"
 				>
 					<div
-						class="w-full flex-1 min-h-0 flex flex-col justify-start overflow-hidden px-2 pb-4 md:p-0"
+						class="w-full flex-1 min-h-0 flex flex-col justify-start overflow-hidden pt-1 px-2 pb-4 md:p-0"
 					>
 						<div class="flex-1 min-h-0 w-full flex flex-col overflow-hidden relative">
 							<AudioPlayerWithWaveform voiceover={$voiceovers[0]} />
