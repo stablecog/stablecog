@@ -25,7 +25,7 @@
 		min,
 		max,
 		step,
-		disabled: true
+		disabled
 	});
 
 	$: options.set({ ...$options, disabled, min, max, step });
