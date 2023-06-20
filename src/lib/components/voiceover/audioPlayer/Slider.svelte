@@ -25,7 +25,7 @@
 		min,
 		max,
 		step,
-		disabled
+		disabled: true
 	});
 
 	$: options.set({ ...$options, disabled, min, max, step });
@@ -33,7 +33,7 @@
 	$: value = $valueLocal[0];
 </script>
 
-<div aria-label={name} class="w-full h-full relative">
+<div aria-label={name} class="w-full h-6px md:h-full relative">
 	{#if duration && bufferedArray}
 		{#each bufferedArray as item}
 			{@const leftPercent = (item.start / duration) * 100}
@@ -59,9 +59,9 @@
 			<span
 				{...$thumb()}
 				class="block ring-0 ring-c-on-bg/25 group-hover/audio-player-slider:ring-[6px]
-      transition shadow-lg shadow-c-shadow/[var(--o-shadow-strongest)] h-4.5 w-4.5 rounded-full bg-c-on-bg
-			group-active/audio-player-slider:ring-[3px] outline-none transform opacity-0 scale-75 group-hover/audio-player-slider:scale-100
-      group-hover/audio-player-slider:opacity-100 group-active/audio-player-slider:bg-c-primary group-active/audio-player-slider:ring-c-primary/50"
+      	transition shadow-lg shadow-c-shadow/[var(--o-shadow-strongest)] h-4.5 w-4.5 rounded-full bg-c-on-bg
+				group-active/audio-player-slider:ring-[3px] outline-none transform opacity-0 scale-75 group-hover/audio-player-slider:scale-100
+      	group-hover/audio-player-slider:opacity-100 group-active/audio-player-slider:bg-c-primary group-active/audio-player-slider:ring-c-primary/50"
 			/>
 		{/each}
 	</span>
