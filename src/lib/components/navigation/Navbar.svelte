@@ -9,15 +9,7 @@
 	import Button from '$components/buttons/Button.svelte';
 	import AccountMenu from '$components/accountMenu/AccountMenu.svelte';
 	import Avatar from '$components/Avatar.svelte';
-	import { portal } from 'svelte-portal';
-	import { fade, fly } from 'svelte/transition';
-	import SignInCard from '$components/SignInCard.svelte';
 	import { navbarHeight } from '$ts/stores/navbarHeight';
-	import {
-		modalBgTransitionProps,
-		modalInTransitionProps,
-		modalOutTransitionProps
-	} from '$ts/animation/constants';
 	import { userSummary } from '$ts/stores/user/summary';
 	import { isNoCreditsInfoRoute, navbarStickyType } from '$ts/stores/navbar';
 	import { isDrawerOpen } from '$ts/stores/isDrawerOpen';
@@ -213,7 +205,7 @@
 							>
 								{$LL.Account.RemainingTitle()}
 							</p>
-							<div class="flex gap-1 items-center">
+							<div class="flex gap-0.25 items-center">
 								<IconToken class="w-4 h-4 -ml-0.25 flex-shrink-0" />
 								<p class="text-sm font-bold mt-0.5">
 									{$userSummary.total_remaining_credits.toLocaleString($locale)}

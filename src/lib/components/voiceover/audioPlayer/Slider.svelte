@@ -32,7 +32,7 @@
 	$: value = $valueLocal[0];
 </script>
 
-<div aria-label={name} class="w-full h-6px md:h-full relative">
+<div aria-label={name} class="w-full h-full relative">
 	{#if duration && bufferedArray}
 		{#each bufferedArray as item}
 			{@const leftPercent = (item.start / duration) * 100}

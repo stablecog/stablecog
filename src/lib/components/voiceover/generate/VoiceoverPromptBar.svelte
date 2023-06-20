@@ -112,12 +112,6 @@
 		<div class="flex-1 flex relative group">
 			<textarea
 				bind:this={promptInputElement}
-				use:autoresize={{
-					minRows: 3,
-					maxRows: 3,
-					placeholder: $LL.Voiceover.PromptBar.PromptInput.Placeholder(),
-					value: $voiceoverPrompt || ''
-				}}
 				on:keypress={(e) => {
 					if (e.key === 'Enter' && e.shiftKey) {
 						e.preventDefault();
@@ -158,6 +152,16 @@
 				>
 					<IconWand class="w-7 h-7 md:w-8 md:h-8" />
 				</Button>
+				<div
+					class="absolute ring-1 ring-c-bg/15 rounded-bl bg-c-bg/10 pointer-events-none top-0
+					right-0 text-xs flex flex-row justify-end px-1.25 py-0.25
+					items-center font-semibold text-c-bg"
+				>
+					<IconToken class="w-3.5 h-3.5 -ml-1" />
+					<p class="text-right">
+						{creditCost.toLocaleString($locale)}
+					</p>
+				</div>
 				{#if doesntHaveEnoughCredits && $userSummary && $page.data.session?.user.id}
 					<InsufficientCreditsBadge
 						neededCredits={creditCost}
@@ -167,47 +171,38 @@
 			</div>
 		</div>
 	</div>
-	<div class="flex flex-col -mr-2">
-		<div
-			class="text-sm w-full flex flex-row justify-center pt-2.5 items-center font-medium text-c-on-bg/75 gap-1"
-		>
-			<IconToken class="w-4 h-4" />
-			<p>
-				{creditCost.toLocaleString($locale)}
-			</p>
-		</div>
-		<NoBgButton
-			size="sm"
-			noPadding
-			paddingClassForHoverEffect="px-1"
-			onClick={toggleSettingsSheet}
-			class="flex-1 px-3 py-2"
-			hoverFrom="bottom"
-			name={isSettingsSheetOpen
-				? $LL.Generate.HideSettingsButton()
-				: $LL.Generate.ShowSettingsButton()}
-		>
-			<Morpher morphed={$windowWidth < mdBreakpoint && isSettingsSheetOpen}>
-				<div slot="0" class="w-8 h-8">
-					<IconSettings
-						class="transition not-touch:group-hover:text-c-primary
+	<NoBgButton
+		size="sm"
+		noPadding
+		paddingClassForHoverEffect="px-1"
+		onClick={toggleSettingsSheet}
+		class="px-3 py-2 -mr-2"
+		hoverFrom="bottom"
+		name={isSettingsSheetOpen
+			? $LL.Generate.HideSettingsButton()
+			: $LL.Generate.ShowSettingsButton()}
+	>
+		<Morpher morphed={$windowWidth < mdBreakpoint && isSettingsSheetOpen}>
+			<div slot="0" class="w-8 h-8">
+				<IconSettings
+					class="transition not-touch:group-hover:text-c-primary
 						w-full h-full {$windowWidth < mdBreakpoint && isSettingsSheetOpen ? 'rotate-180' : 'rotate-0'}"
-					/>
-				</div>
-				<div slot="1" class="w-8 h-8">
-					<IconChevronDown
-						class="transition transform not-touch:group-hover:text-c-primary
+				/>
+			</div>
+			<div slot="1" class="w-8 h-8">
+				<IconChevronDown
+					class="transition transform not-touch:group-hover:text-c-primary
 						w-full h-full {$windowWidth < mdBreakpoint && !isSettingsSheetOpen ? '-rotate-180' : 'rotate-0'}"
-					/>
-				</div>
-			</Morpher>
-		</NoBgButton>
-	</div>
+				/>
+			</div>
+		</Morpher>
+	</NoBgButton>
 </form>
 <form
 	on:submit|preventDefault={onSubmit}
 	class="hidden md:flex w-full max-h-full flex-row md:flex-col rounded-lg md:rounded-2xl
-	overflow-hidden relative bg-c-bg-secondary"
+	overflow-hidden relative bg-c-bg-secondary transition focus-within:ring-2 focus-within:ring-c-primary/30
+	ring-0 ring-c-primary/20 not-touch:enabled:hover:ring-2 text-c-on-bg not-touch:hover:ring-2"
 >
 	<div class="w-full flex-1 min-h-0 flex flex-col relative">
 		<textarea
@@ -243,8 +238,8 @@
 					)}</span
 				>
 			</p>
-			<div class="flex flex-row justify-end items-center text-c-on-bg/75 gap-1">
-				<IconToken class="w-4 h-4" />
+			<div class="flex flex-row justify-end items-center text-c-on-bg/75 gap-0.25">
+				<IconToken class="w-4 h-4 -ml-0.25 flex-shrink-0" />
 				<p class="mt-0.5">
 					{creditCost.toLocaleString($locale)}
 				</p>
