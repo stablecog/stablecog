@@ -132,8 +132,7 @@
 		remove_silence: $voiceoverRemoveSilence
 	};
 
-	$: [$voiceoverModelId, $voiceoverSpeakerId, $voiceoverLocale, $voiceoverStability],
-		addOrUpdatPlaceholderVoiceover();
+	$: [$voiceoverModelId, $voiceoverSpeakerId, $voiceoverLocale], addOrUpdatPlaceholderVoiceover();
 
 	function addOrUpdatPlaceholderVoiceover() {
 		if (voiceoverPlaceholder === undefined) return;
