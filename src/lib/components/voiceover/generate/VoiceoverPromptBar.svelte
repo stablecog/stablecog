@@ -266,7 +266,7 @@
 				fadeOnDisabled={doesntHaveEnoughCredits}
 				loading={$maxOngoingVoiceoversCountReached}
 				disabled={doesntHaveEnoughCredits}
-				class="pointer-events-auto w-full h-full md:w-auto md:h-auto md:px-8 md:py-3.5 rounded-lg md:rounded-lg"
+				class="pointer-events-auto w-full h-full md:w-auto md:h-auto md:px-8 md:py-3.5 rounded-xl"
 			>
 				<span class="hidden md:block">{$LL.Voiceover.PromptBar.GenerateButton()}</span>
 				<IconWand class="w-7 h-7 md:hidden" />
