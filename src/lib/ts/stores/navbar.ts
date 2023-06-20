@@ -47,7 +47,7 @@ export const navbarRouteDefinitions = derived(
 				stickyType: 'relative'
 			},
 			{
-				pathname: '/voiceover/generate',
+				pathname: '/admin/voiceover/generate',
 				stickyType: 'relative'
 			},
 			{
