@@ -160,7 +160,7 @@
 			class="text-sm w-full flex flex-row justify-center pt-1 items-center font-medium text-c-on-bg/75 gap-1"
 		>
 			<IconToken class="w-4 h-4" />
-			<p class="mt-0.5">
+			<p>
 				{creditCost.toLocaleString($locale)}
 			</p>
 		</div>
