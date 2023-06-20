@@ -6,11 +6,6 @@
 	import LL, { locale } from '$i18n/i18n-svelte';
 	import { apiUrl, canonicalUrl } from '$ts/constants/main';
 	import PageWrapper from '$components/PageWrapper.svelte';
-	import SignInCard from '$components/SignInCard.svelte';
-	import { clickoutside } from '$ts/actions/clickoutside';
-	import { fade, fly } from 'svelte/transition';
-	import { quadOut } from 'svelte/easing';
-	import { portal } from 'svelte-portal';
 	import {
 		PUBLIC_STRIPE_PRICE_ID_STARTER_SUBSCRIPTION_MO,
 		PUBLIC_STRIPE_PRICE_ID_PRO_SUBSCRIPTION_MO,
@@ -34,6 +29,7 @@
 	import { previewImageVersion } from '$ts/constants/previewImageVersion';
 	import { socialAppUrls } from '$ts/constants/social';
 	import { searchParamsString } from '$ts/stores/searchParamsString';
+	import SignInModal from '$components/SignInModal.svelte';
 
 	export let data;
 
@@ -512,21 +508,8 @@
 </PageWrapper>
 
 {#if isSignInModalOpen && !$page.data.session?.user.id}
-	<div
-		use:portal={'body'}
-		transition:fade|local={{ duration: 300, easing: quadOut }}
-		class="w-full h-full bg-c-barrier/80 fixed left-0 top-0 px-3 z-[10000]"
+	<SignInModal
+		redirectTo={$page.url.pathname + $searchParamsString}
+		onClickoutside={() => (isSignInModalOpen = false)}
 	/>
-	<div
-		use:portal={'body'}
-		transition:fly|local={{ duration: 200, y: 50, easing: quadOut }}
-		class="w-full h-full flex flex-col items-center fixed left-0 top-0 px-3 py-20 z-[10001] overflow-auto"
-	>
-		<div
-			use:clickoutside={{ callback: () => (isSignInModalOpen = false) }}
-			class="max-w-full my-auto"
-		>
-			<SignInCard isModal={true} redirectTo={$page.url.pathname + $searchParamsString} />
-		</div>
-	</div>
 {/if}

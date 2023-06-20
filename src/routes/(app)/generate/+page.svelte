@@ -8,9 +8,7 @@
 	import PromptBar from '$components/generate/PromptBar.svelte';
 	import { quadOut } from 'svelte/easing';
 	import { fade, fly } from 'svelte/transition';
-	import { portal } from 'svelte-portal';
 	import { clickoutside } from '$ts/actions/clickoutside';
-	import SignInCard from '$components/SignInCard.svelte';
 	import { page } from '$app/stores';
 	import { createInfiniteQuery } from '@tanstack/svelte-query';
 	import {
@@ -53,6 +51,7 @@
 	import { searchParamsString } from '$ts/stores/searchParamsString.js';
 	import { lowOnCreditsThreshold } from '$ts/constants/credits.js';
 	import SettingsSheet from '$components/generate/SettingsSheet.svelte';
+	import SignInModal from '$components/SignInModal.svelte';
 
 	export let data;
 
@@ -206,7 +205,11 @@
 		isGenerationSettingsSheetOpen = false;
 	}
 
-	function toggleSettingsSheet() {
+	function toggleSettingsSheet(state?: boolean) {
+		if (state !== undefined) {
+			isGenerationSettingsSheetOpen = state;
+			return;
+		}
 		isGenerationSettingsSheetOpen = !isGenerationSettingsSheetOpen;
 	}
 
@@ -472,23 +475,10 @@
 		/>
 	{/if}
 
-	{#if isSignInModalOpen && !$page.data.session?.user.id}
-		<div
-			use:portal={'body'}
-			transition:fade|local={{ duration: 300, easing: quadOut }}
-			class="w-full h-full bg-c-barrier/80 fixed left-0 top-0 px-3 z-[10000]"
+	{#if isSignInModalOpen && (!$page.data.session?.user.id || !$userSummary)}
+		<SignInModal
+			redirectTo={'/generate' + $searchParamsString}
+			onClickoutside={() => (isSignInModalOpen = false)}
 		/>
-		<div
-			use:portal={'body'}
-			transition:fly|local={{ duration: 200, y: 50, easing: quadOut }}
-			class="w-full h-full flex flex-col items-center fixed left-0 top-0 px-3 py-20 z-[10001] overflow-auto"
-		>
-			<div
-				use:clickoutside={{ callback: () => (isSignInModalOpen = false) }}
-				class="flex justify-center my-auto"
-			>
-				<SignInCard isModal={true} redirectTo={'/generate' + $searchParamsString} />
-			</div>
-		</div>
 	{/if}
 </GenerationSettingsProvider>

@@ -36,6 +36,7 @@
 	import IconChevronDown from '$components/icons/IconChevronDown.svelte';
 	import BannerWrapper from '$components/BannerWrapper.svelte';
 	import IconToken from '$components/icons/IconToken.svelte';
+	import SignInModal from '$components/SignInModal.svelte';
 
 	export let notAtTheVeryTop = false;
 	export let scrollDirection: 'up' | 'down' = 'down';
@@ -271,26 +272,9 @@
 </TooltipProvider>
 
 {#if isSignInModalOpen && (!$page.data.session?.user.id || !$userSummary)}
-	<div
-		use:portal={'body'}
-		transition:fade|local={modalBgTransitionProps}
-		class="w-full h-full bg-c-barrier/80 fixed left-0 top-0 px-3 z-[10000]"
+	<SignInModal
+		redirectTo={($page.url.pathname === '/' ? '/generate' : $page.url.pathname) +
+			$searchParamsString}
+		onClickoutside={() => (isSignInModalOpen = false)}
 	/>
-	<div
-		use:portal={'body'}
-		in:fly|local={modalInTransitionProps}
-		out:fly|local={modalOutTransitionProps}
-		class="w-full h-full flex flex-col items-center fixed left-0 top-0 px-3 py-20 z-[10001] overflow-auto"
-	>
-		<div
-			use:clickoutside={{ callback: () => (isSignInModalOpen = false) }}
-			class="max-w-full my-auto"
-		>
-			<SignInCard
-				isModal={true}
-				redirectTo={($page.url.pathname === '/' ? '/generate' : $page.url.pathname) +
-					$searchParamsString}
-			/>
-		</div>
-	</div>
 {/if}

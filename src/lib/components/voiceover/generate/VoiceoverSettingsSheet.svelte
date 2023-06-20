@@ -9,7 +9,6 @@
 	export let horizontalListHeight: number | undefined;
 	export let promptBarEstimatedHeightRem: number;
 	export let horizontalListHeightEstimatedRem: number;
-	export let openSignInModal: () => void;
 </script>
 
 <div
@@ -33,7 +32,7 @@
 			? 'opacity-100'
 			: 'opacity-0 pointer-events-none'}"
 	>
-		<VoiceoverSettingsPanel rounding="top" {openSignInModal} {isCheckCompleted} />
+		<VoiceoverSettingsPanel rounding="top" {isCheckCompleted} />
 	</div>
 	<div
 		class="flex-shrink-0 w-full"

@@ -47,6 +47,8 @@
 	import { canonicalUrl } from '$ts/constants/main.js';
 	import { lowOnCreditsThreshold } from '$ts/constants/credits.js';
 	import VoiceoverSettingsSheet from '$components/voiceover/generate/VoiceoverSettingsSheet.svelte';
+	import SignInModal from '$components/SignInModal.svelte';
+	import { searchParamsString } from '$ts/stores/searchParamsString';
 
 	let isCheckCompleted = true;
 
@@ -170,7 +172,7 @@
 
 <VoiceoverSettingsProvider>
 	<div class="w-full h-full flex flex-col overflow-hidden relative z-0">
-		<div class="w-full h-full flex flex-row overflow-hidden md:pt-2 md:px-4 md:pb-4 gap-4">
+		<div class="w-full h-full flex flex-row overflow-hidden pt-1 md:pt-2 md:px-4 md:pb-4 gap-4">
 			<div class="hidden lg:flex min-w-[2.75rem] flex-col items-start h-full">
 				{#if !$isLeftSidebarHiddenApp}
 					<div
@@ -238,7 +240,6 @@
 								{horizontalListHeightEstimatedRem}
 								{promptBarHeight}
 								{horizontalListHeight}
-								{openSignInModal}
 								{isCheckCompleted}
 								isOpen={isSettingsSheetOpen}
 							/>
@@ -282,7 +283,7 @@
 							pb-[calc(env(safe-area-inset-bottom)+0.75rem)] md:pb-4 z-40"
 						>
 							<div class="w-full flex flex-col md:max-h-[30vh] md:min-h-[12rem] px-2 md:px-0">
-								<VoiceoverPromptBar {toggleSettingsSheet} {isSettingsSheetOpen} />
+								<VoiceoverPromptBar {openSignInModal} {toggleSettingsSheet} {isSettingsSheetOpen} />
 							</div>
 						</div>
 					</div>
@@ -301,7 +302,7 @@
 					class="w-full flex flex-col justify-start flex-1 min-h-0 pb-[env(safe-area-inset-bottom)] relative z-0 order-first md:order-last"
 				>
 					<div
-						class="w-full flex-1 min-h-0 flex flex-col justify-start overflow-hidden pt-1 px-2 pb-4 md:p-0"
+						class="w-full flex-1 min-h-0 flex flex-col justify-start overflow-hidden px-2 pb-4 md:p-0"
 					>
 						<div class="flex-1 min-h-0 w-full flex flex-col overflow-hidden relative">
 							<AudioPlayerWithWaveform voiceover={$voiceovers[0]} />
@@ -339,8 +340,14 @@
 				</div>
 			</div>
 			<div class="h-full w-72 hidden md:flex md:pb-[calc(env(safe-area-inset-bottom))]">
-				<VoiceoverSettingsPanel openSignInModal={() => null} {isCheckCompleted} />
+				<VoiceoverSettingsPanel {isCheckCompleted} />
 			</div>
 		</div>
 	</div>
+	{#if isSignInModalOpen && (!$page.data.session?.user.id || !$userSummary)}
+		<SignInModal
+			redirectTo={$page.url.pathname + $searchParamsString}
+			onClickoutside={() => (isSignInModalOpen = false)}
+		/>
+	{/if}
 </VoiceoverSettingsProvider>

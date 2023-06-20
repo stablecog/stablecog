@@ -6,7 +6,6 @@
 	import IconLocale from '$components/icons/IconLocale.svelte';
 	import IconMicrophone from '$components/icons/IconMicrophone.svelte';
 	import IconRemoveSilence from '$components/icons/IconRemoveSilence.svelte';
-	import IconUpscale from '$components/icons/IconUpscale.svelte';
 	import IconSpeaker from '$components/icons/IconVoiceoverSpeaker.svelte';
 	import IconWave from '$components/icons/IconWave.svelte';
 	import TabLikeDropdown from '$components/tabBars/TabLikeDropdown.svelte';
@@ -31,7 +30,6 @@
 	} from '$ts/stores/voiceover/voiceoverSettings';
 
 	export let rounding: 'all' | 'top' | 'bottom' = 'all';
-	export let openSignInModal: () => void;
 	export let noWrapper = false;
 	export let isCheckCompleted: boolean;
 

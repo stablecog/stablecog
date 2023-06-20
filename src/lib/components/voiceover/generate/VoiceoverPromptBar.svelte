@@ -38,7 +38,8 @@
 	import { windowWidth } from '$ts/stores/window';
 	import { onMount } from 'svelte';
 
-	export let toggleSettingsSheet: () => void;
+	export let toggleSettingsSheet: (s?: boolean) => void;
+	export let openSignInModal: () => void;
 	export let isSettingsSheetOpen: boolean;
 
 	$: creditCost = getVoiceoverCreditCost($voiceoverPrompt || '');
@@ -54,10 +55,15 @@
 		});
 
 	function onSubmit() {
+		if (!$page.data.session?.user.id || !$userSummary) {
+			openSignInModal();
+			return;
+		}
 		if ($maxOngoingVoiceoversCountReached) return;
 		if (!$sseId) return;
 		if (!$voiceoverPrompt) return;
 		if (doesntHaveEnoughCredits) return;
+		toggleSettingsSheet(false);
 		queueInitialVoiceoverRequest({
 			model_id: $voiceoverModelId,
 			speaker: {
@@ -111,6 +117,12 @@
 					maxRows: 3,
 					placeholder: $LL.Voiceover.PromptBar.PromptInput.Placeholder(),
 					value: $voiceoverPrompt || ''
+				}}
+				on:keypress={(e) => {
+					if (e.key === 'Enter' && e.shiftKey) {
+						e.preventDefault();
+						onSubmit();
+					}
 				}}
 				bind:value={$voiceoverPrompt}
 				placeholder={$LL.Voiceover.PromptBar.PromptInput.Placeholder()}
@@ -193,7 +205,7 @@
 	</div>
 </form>
 <form
-	on:submit={onSubmit}
+	on:submit|preventDefault={onSubmit}
 	class="hidden md:flex w-full max-h-full flex-row md:flex-col rounded-lg md:rounded-2xl
 	overflow-hidden relative bg-c-bg-secondary"
 >
@@ -201,6 +213,12 @@
 		<textarea
 			bind:value={$voiceoverPrompt}
 			placeholder={$LL.Voiceover.PromptBar.PromptInput.Placeholder()}
+			on:keypress={(e) => {
+				if (e.key === 'Enter' && e.shiftKey) {
+					e.preventDefault();
+					onSubmit();
+				}
+			}}
 			class="hidden md:block w-full h-full bg-c-bg-secondary rounded-t-lg md:rounded-t-2xl resize-none px-3 md:px-5 py-2.5 md:py-4
 			relative text-base md:text-lg pb-6 placeholder:text-c-on-bg/40"
 			rows="7"
