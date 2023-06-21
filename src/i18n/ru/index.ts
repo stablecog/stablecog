@@ -239,6 +239,7 @@ const ru: Translation = {
 		CancelButton: 'Cancel',
 		ClearAllButton: 'Clear All',
 		DisableButton: 'Выключить',
+		DownloadButton: 'Download',
 		AddButton: 'Добавить',
 		CopyLinkButton: 'Копировать ссылку',
 		CopyButton: 'Копировать',
@@ -939,7 +940,11 @@ const ru: Translation = {
 				Title: 'Remove Silence',
 				Paragraph: 'Remove silent parts from the audio.'
 			}
-		}
+		},
+		PlayButton: 'Play',
+		PauseButton: 'Pause',
+		MuteButton: 'Mute',
+		UnmuteButton: 'Unmute'
 	},
 	UnderDevelopment: {
 		PageTitle: "We'll be back soon!",

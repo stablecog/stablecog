@@ -238,6 +238,7 @@ const ptPt: Translation = {
 		CancelButton: 'Cancel',
 		ClearAllButton: 'Clear All',
 		DisableButton: 'Desativar',
+		DownloadButton: 'Download',
 		AddButton: 'Adicionar',
 		CopyLinkButton: 'Copiar Ligação',
 		CopyButton: 'Copiar',
@@ -938,7 +939,11 @@ const ptPt: Translation = {
 				Title: 'Remove Silence',
 				Paragraph: 'Remove silent parts from the audio.'
 			}
-		}
+		},
+		PlayButton: 'Play',
+		PauseButton: 'Pause',
+		MuteButton: 'Mute',
+		UnmuteButton: 'Unmute'
 	},
 	UnderDevelopment: {
 		PageTitle: "We'll be back soon!",

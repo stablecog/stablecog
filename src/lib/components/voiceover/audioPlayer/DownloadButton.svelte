@@ -3,6 +3,7 @@
 	import ButtonHoverEffect from '$components/buttons/ButtonHoverEffect.svelte';
 	import IconAnimatedSpinner from '$components/icons/IconAnimatedSpinner.svelte';
 	import IconDownload from '$components/icons/IconDownload.svelte';
+	import LL from '$i18n/i18n-svelte';
 	import { downloadVoicoverOutput } from '$ts/helpers/downloadVoiceoverOutput';
 	import type { TVoiceoverFullOutput } from '$ts/stores/user/voiceovers';
 
@@ -30,6 +31,7 @@
 	on:click={download}
 	disabled={disabled || isDownloading}
 	class="relative rounded-lg group/download-button {size === 'lg' ? 'w-12 h-12' : 'w-10 h-10'}"
+	aria-label={$LL.Shared.DownloadButton()}
 >
 	<ButtonHoverEffect
 		groupClass="not-touch:group-hover/download-button:translate-x-0 not-touch:group-hover/download-button:translate-y-0 not-touch:group-hover/download-button:opacity-100"

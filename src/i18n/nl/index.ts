@@ -242,6 +242,7 @@ const nl: Translation = {
 		CancelButton: 'Cancel',
 		ClearAllButton: 'Alles wissen',
 		DisableButton: 'Uitschakelen',
+		DownloadButton: 'Download',
 		AddButton: 'Voeg toe',
 		CopyLinkButton: 'Link kopiëren',
 		CopyButton: 'Kopiëren',
@@ -949,7 +950,11 @@ const nl: Translation = {
 				Title: 'Remove Silence',
 				Paragraph: 'Remove silent parts from the audio.'
 			}
-		}
+		},
+		PlayButton: 'Play',
+		PauseButton: 'Pause',
+		MuteButton: 'Mute',
+		UnmuteButton: 'Unmute'
 	},
 	UnderDevelopment: {
 		PageTitle: 'We zijn snel weer terug!',

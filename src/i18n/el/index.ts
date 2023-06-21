@@ -242,6 +242,7 @@ const es: Translation = {
 		CancelButton: 'Cancel',
 		ClearAllButton: 'Clear All',
 		DisableButton: 'Απενεργοποίηση',
+		DownloadButton: 'Download',
 		AddButton: 'Προσθήκη',
 		CopyLinkButton: 'Αντιγραφή Συνδέσμου',
 		CopyButton: 'Αντιγραφή',
@@ -952,7 +953,11 @@ const es: Translation = {
 				Title: 'Remove Silence',
 				Paragraph: 'Remove silent parts from the audio.'
 			}
-		}
+		},
+		PlayButton: 'Play',
+		PauseButton: 'Pause',
+		MuteButton: 'Mute',
+		UnmuteButton: 'Unmute'
 	},
 	UnderDevelopment: {
 		PageTitle: 'Θα επιστρέψουμε σύντομα!',

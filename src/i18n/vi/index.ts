@@ -239,6 +239,7 @@ const vi: Translation = {
 		CancelButton: 'Cancel',
 		ClearAllButton: 'Clear All',
 		DisableButton: 'Vô hiệu hóa',
+		DownloadButton: 'Download',
 		AddButton: 'Thêm',
 		CopyLinkButton: 'Sao chép liên kết',
 		CopyButton: 'Sao chép',
@@ -941,7 +942,11 @@ const vi: Translation = {
 				Title: 'Remove Silence',
 				Paragraph: 'Remove silent parts from the audio.'
 			}
-		}
+		},
+		PlayButton: 'Play',
+		PauseButton: 'Pause',
+		MuteButton: 'Mute',
+		UnmuteButton: 'Unmute'
 	},
 	UnderDevelopment: {
 		PageTitle: "We'll be back soon!",

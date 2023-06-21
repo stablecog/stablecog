@@ -238,6 +238,7 @@ const hr: Translation = {
 		CancelButton: 'Cancel',
 		ClearAllButton: 'Clear All',
 		DisableButton: 'Onemogući',
+		DownloadButton: 'Download',
 		AddButton: 'Dodaj',
 		CopyLinkButton: 'Kopiraj Link',
 		CopyButton: 'Kopiraj',
@@ -935,7 +936,11 @@ const hr: Translation = {
 				Title: 'Remove Silence',
 				Paragraph: 'Remove silent parts from the audio.'
 			}
-		}
+		},
+		PlayButton: 'Play',
+		PauseButton: 'Pause',
+		MuteButton: 'Mute',
+		UnmuteButton: 'Unmute'
 	},
 	UnderDevelopment: {
 		PageTitle: "We'll be back soon!",

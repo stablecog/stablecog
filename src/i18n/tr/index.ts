@@ -249,6 +249,7 @@ const tr: Translation = {
 		CancelButton: 'Vazgeç',
 		ClearAllButton: 'Hepsini Temizle',
 		DisableButton: 'Durdur',
+		DownloadButton: 'Download',
 		AddButton: 'Ekle',
 		CopyLinkButton: 'Linki Kopyala',
 		CopyButton: 'Kopyala',
@@ -951,7 +952,11 @@ const tr: Translation = {
 				Title: 'Remove Silence',
 				Paragraph: 'Remove silent parts from the audio.'
 			}
-		}
+		},
+		PlayButton: 'Play',
+		PauseButton: 'Pause',
+		MuteButton: 'Mute',
+		UnmuteButton: 'Unmute'
 	},
 	UnderDevelopment: {
 		PageTitle: 'Geri döneceğiz!',

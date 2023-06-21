@@ -4,6 +4,7 @@
 	import IconAnimatedSpinner from '$components/icons/IconAnimatedSpinner.svelte';
 	import IconPause from '$components/icons/IconPause.svelte';
 	import IconPlay from '$components/icons/IconPlay.svelte';
+	import LL from '$i18n/i18n-svelte';
 
 	export let onClick: () => void;
 	export let isPaused: boolean;
@@ -30,6 +31,7 @@
 	bind:this={element}
 	on:click={onClick}
 	{disabled}
+	aria-label={isPaused ? $LL.Voiceover.PlayButton() : $LL.Voiceover.PauseButton()}
 	class="relative rounded-lg group/play-button {size === 'lg' ? 'w-12 h-12' : 'w-10 h-10'}"
 >
 	<ButtonHoverEffect

@@ -737,6 +737,10 @@ type RootTranslation = {
 		 */
 		DisableButton: string
 		/**
+		 * D​o​w​n​l​o​a​d
+		 */
+		DownloadButton: string
+		/**
 		 * A​d​d
 		 */
 		AddButton: string
@@ -2845,6 +2849,22 @@ type RootTranslation = {
 				Paragraph: string
 			}
 		}
+		/**
+		 * P​l​a​y
+		 */
+		PlayButton: string
+		/**
+		 * P​a​u​s​e
+		 */
+		PauseButton: string
+		/**
+		 * M​u​t​e
+		 */
+		MuteButton: string
+		/**
+		 * U​n​m​u​t​e
+		 */
+		UnmuteButton: string
 	}
 	UnderDevelopment: {
 		/**
@@ -3562,6 +3582,10 @@ export type TranslationFunctions = {
 		 * Disable
 		 */
 		DisableButton: () => LocalizedString
+		/**
+		 * Download
+		 */
+		DownloadButton: () => LocalizedString
 		/**
 		 * Add
 		 */
@@ -5636,6 +5660,22 @@ export type TranslationFunctions = {
 				Paragraph: () => LocalizedString
 			}
 		}
+		/**
+		 * Play
+		 */
+		PlayButton: () => LocalizedString
+		/**
+		 * Pause
+		 */
+		PauseButton: () => LocalizedString
+		/**
+		 * Mute
+		 */
+		MuteButton: () => LocalizedString
+		/**
+		 * Unmute
+		 */
+		UnmuteButton: () => LocalizedString
 	}
 	UnderDevelopment: {
 		/**

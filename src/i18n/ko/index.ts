@@ -239,6 +239,7 @@ const ko: Translation = {
 		CancelButton: 'Cancel',
 		ClearAllButton: 'Clear All',
 		DisableButton: '비활성화',
+		DownloadButton: 'Download',
 		AddButton: '추가하기',
 		CopyLinkButton: '링크 복사하기',
 		CopyButton: '복사하기',
@@ -938,7 +939,11 @@ const ko: Translation = {
 				Title: 'Remove Silence',
 				Paragraph: 'Remove silent parts from the audio.'
 			}
-		}
+		},
+		PlayButton: 'Play',
+		PauseButton: 'Pause',
+		MuteButton: 'Mute',
+		UnmuteButton: 'Unmute'
 	},
 	UnderDevelopment: {
 		PageTitle: "We'll be back soon!",

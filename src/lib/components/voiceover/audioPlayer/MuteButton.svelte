@@ -2,6 +2,7 @@
 	import ButtonHoverEffect from '$components/buttons/ButtonHoverEffect.svelte';
 	import IconSoundOff from '$components/icons/IconSoundOff.svelte';
 	import IconSoundOn from '$components/icons/IconSoundOn.svelte';
+	import LL from '$i18n/i18n-svelte';
 
 	export let onClick: () => void;
 	export let isMuted: boolean;
@@ -14,6 +15,7 @@
 	bind:this={element}
 	on:click={onClick}
 	{disabled}
+	aria-label={isMuted ? $LL.Voiceover.UnmuteButton() : $LL.Voiceover.MuteButton()}
 	class="relative rounded-lg group/mute-button {size === 'lg' ? 'w-12 h-12' : 'w-10 h-10'}"
 >
 	<ButtonHoverEffect

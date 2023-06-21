@@ -249,6 +249,7 @@ const ja: Translation = {
 		CancelButton: 'キャンセル',
 		ClearAllButton: '全てクリア',
 		DisableButton: '無効にする',
+		DownloadButton: 'Download',
 		AddButton: '追加',
 		CopyLinkButton: 'リンクをコピー',
 		CopyButton: 'コピー',

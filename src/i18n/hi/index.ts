@@ -238,6 +238,7 @@ const hi: Translation = {
 		CancelButton: 'Cancel',
 		ClearAllButton: 'Clear All',
 		DisableButton: 'बंद करे',
+		DownloadButton: 'Download',
 		AddButton: 'जोड़े',
 		CopyLinkButton: 'लिंक कॉपी करे',
 		CopyButton: 'कॉपी',
@@ -937,7 +938,11 @@ const hi: Translation = {
 				Title: 'Remove Silence',
 				Paragraph: 'Remove silent parts from the audio.'
 			}
-		}
+		},
+		PlayButton: 'Play',
+		PauseButton: 'Pause',
+		MuteButton: 'Mute',
+		UnmuteButton: 'Unmute'
 	},
 	UnderDevelopment: {
 		PageTitle: "We'll be back soon!",

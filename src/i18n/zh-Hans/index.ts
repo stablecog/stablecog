@@ -236,6 +236,7 @@ const zhHans: Translation = {
 		CancelButton: 'Cancel',
 		ClearAllButton: 'Clear All',
 		DisableButton: '禁用',
+		DownloadButton: 'Download',
 		AddButton: '添加',
 		CopyLinkButton: '复制链接',
 		CopyButton: '复制',
@@ -934,7 +935,11 @@ const zhHans: Translation = {
 				Title: 'Remove Silence',
 				Paragraph: 'Remove silent parts from the audio.'
 			}
-		}
+		},
+		PlayButton: 'Play',
+		PauseButton: 'Pause',
+		MuteButton: 'Mute',
+		UnmuteButton: 'Unmute'
 	},
 	UnderDevelopment: {
 		PageTitle: "We'll be back soon!",
