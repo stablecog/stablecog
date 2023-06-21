@@ -87,9 +87,12 @@
 		fn();
 	}
 
+	let promptInputElementMd: HTMLTextAreaElement;
+	let promptInputElement: HTMLTextAreaElement;
+	let buttonContainer: HTMLDivElement;
+
 	$: showClearPromptInputButton =
 		$voiceoverPrompt !== null && $voiceoverPrompt !== undefined && $voiceoverPrompt !== '';
-	let promptInputElement: HTMLTextAreaElement;
 	function clearPrompt() {
 		voiceoverPrompt.set('');
 		promptInputElement.value = '';
@@ -97,8 +100,16 @@
 		promptInputElement.focus();
 	}
 
-	let mounted = false;
+	function onInfoContainerClicked(e: MouseEvent) {
+		if (buttonContainer && buttonContainer.contains(e.target as Node)) {
+			return;
+		}
+		if (promptInputElementMd) {
+			promptInputElementMd.focus();
+		}
+	}
 
+	let mounted = false;
 	onMount(() => {
 		if ($voiceoverPromptLocal) {
 			voiceoverPrompt.set($voiceoverPromptLocal);
@@ -207,6 +218,7 @@
 	<div class="w-full flex-1 min-h-0 flex flex-col relative">
 		<textarea
 			bind:value={$voiceoverPrompt}
+			bind:this={promptInputElementMd}
 			placeholder={$LL.Voiceover.PromptBar.PromptInput.Placeholder()}
 			on:keypress={(e) => {
 				if (e.key === 'Enter' && e.shiftKey) {
@@ -220,76 +232,54 @@
 			maxlength={maxVoiceoverCharacterCount}
 		/>
 		<div
-			class="w-full hidden md:block absolute left-0 bottom-0 h-4 bg-gradient-to-t from-c-bg-secondary to-c-bg-secondary/0 pointer-events-none"
+			class="w-full block absolute left-0 bottom-0 h-4 bg-gradient-to-t from-c-bg-secondary to-c-bg-secondary/0 pointer-events-none"
 		/>
 	</div>
 	<div
-		class="w-auto md:w-full rounded-r-lg md:rounded-tr-none md:rounded-b-2xl pointer-events-none
-   	 	flex flex-col items-center md:flex-row justify-end md:items-center pl-0 pr-2 pt-2 pb-2 md:px-3 md:pt-2 md:pb-4
-			bg-c-bg-secondary gap-1 md:gap-4"
+		on:click={onInfoContainerClicked}
+		on:keydown={() => null}
+		class="w-full rounded-tr-none rounded-b-2xl flex flex-row
+		justify-end items-center px-3 pt-2 pb-4 bg-c-bg-secondary cursor-text"
 	>
 		<div
-			class="hidden md:flex flex-col items-end justify-center font-medium text-right text-xs md:text-sm pointer-events-auto"
+			bind:this={buttonContainer}
+			class="flex flex-row justify-end items-center gap-4 cursor-auto"
 		>
-			<p class="text-c-on-bg/75">
-				{($voiceoverPrompt || '').length.toLocaleString($locale)}<span class="text-c-on-bg/50"
-					><span class="px-[0.25ch]">/</span>{maxVoiceoverCharacterCount.toLocaleString(
-						$locale
-					)}</span
-				>
-			</p>
-			<div class="flex flex-row justify-end items-center text-c-on-bg/75 gap-0.25">
-				<IconToken class="w-4 h-4 -ml-0.25 flex-shrink-0" />
-				<p class="mt-0.5">
-					{creditCost.toLocaleString($locale)}
+			<div class="flex flex-col items-end justify-center font-medium text-right text-sm">
+				<p class="text-c-on-bg/75">
+					{($voiceoverPrompt || '').length.toLocaleString($locale)}<span class="text-c-on-bg/50"
+						><span class="px-[0.25ch]">/</span>{maxVoiceoverCharacterCount.toLocaleString(
+							$locale
+						)}</span
+					>
 				</p>
+				<div class="flex flex-row justify-end items-center text-c-on-bg/75 gap-0.25">
+					<IconToken class="w-4 h-4 -ml-0.25 flex-shrink-0" />
+					<p class="mt-0.5">
+						{creditCost.toLocaleString($locale)}
+					</p>
+				</div>
 			</div>
-		</div>
-		<NoBgButton
-			size="sm"
-			noPadding
-			paddingClassForHoverEffect="p-0"
-			onClick={() => toggleSettingsSheet()}
-			class="md:hidden w-full flex items-center justify-center px-2 py-2"
-			hoverFrom="bottom"
-			name={isSettingsSheetOpen
-				? $LL.Generate.HideSettingsButton()
-				: $LL.Generate.ShowSettingsButton()}
-		>
-			<Morpher morphed={$windowWidth < mdBreakpoint && isSettingsSheetOpen}>
-				<div slot="0" class="w-8 h-8">
-					<IconSettings
-						class="transition not-touch:group-hover:text-c-primary
-						w-full h-full {$windowWidth < mdBreakpoint && isSettingsSheetOpen ? 'rotate-180' : 'rotate-0'}"
+			<div class="relative flex justify-end">
+				<Button
+					withSpinner
+					noPadding
+					noRounding
+					fadeOnDisabled={doesntHaveEnoughCredits}
+					loading={$maxOngoingVoiceoversCountReached}
+					disabled={doesntHaveEnoughCredits}
+					class="pointer-events-auto md:px-8 md:py-3.5 rounded-xl"
+				>
+					<span class="hidden md:block">{$LL.Voiceover.PromptBar.GenerateButton()}</span>
+					<IconWand class="w-7 h-7 md:hidden" />
+				</Button>
+				{#if doesntHaveEnoughCredits && $userSummary && $page.data.session?.user.id}
+					<InsufficientCreditsBadge
+						neededCredits={creditCost}
+						remainingCredits={$userSummary.total_remaining_credits}
 					/>
-				</div>
-				<div slot="1" class="w-8 h-8">
-					<IconChevronDown
-						class="transition transform not-touch:group-hover:text-c-primary
-						w-full h-full {$windowWidth < mdBreakpoint && !isSettingsSheetOpen ? '-rotate-180' : 'rotate-0'}"
-					/>
-				</div>
-			</Morpher>
-		</NoBgButton>
-		<div class="relative flex justify-end w-12 h-12 md:w-auto md:h-auto">
-			<Button
-				withSpinner
-				noPadding
-				noRounding
-				fadeOnDisabled={doesntHaveEnoughCredits}
-				loading={$maxOngoingVoiceoversCountReached}
-				disabled={doesntHaveEnoughCredits}
-				class="pointer-events-auto w-full h-full md:w-auto md:h-auto md:px-8 md:py-3.5 rounded-xl"
-			>
-				<span class="hidden md:block">{$LL.Voiceover.PromptBar.GenerateButton()}</span>
-				<IconWand class="w-7 h-7 md:hidden" />
-			</Button>
-			{#if doesntHaveEnoughCredits && $userSummary && $page.data.session?.user.id}
-				<InsufficientCreditsBadge
-					neededCredits={creditCost}
-					remainingCredits={$userSummary.total_remaining_credits}
-				/>
-			{/if}
+				{/if}
+			</div>
 		</div>
 	</div>
 </form>
