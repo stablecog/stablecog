@@ -1,0 +1,27 @@
+{
+	"total_remaining_credits": 1391,
+	"credits": [
+		{
+			"id": "0ea24c34-4d0b-4e67-8495-d16fa4d19ba6",
+			"remaining_amount": 0,
+			"expires_at": "2100-01-01T05:00:00Z",
+			"type": {
+				"id": "3b12b23e-478b-4c18-8e34-70b3f0af1ee6",
+				"name": "Free",
+				"amount": 100,
+				"description": "Base free credits for user."
+			}
+		},
+		{
+			"id": "dca9aee0-0571-4d0a-9f66-5c9ef675bf16",
+			"remaining_amount": 1391,
+			"expires_at": "2100-01-01T05:00:00Z",
+			"type": {
+				"id": "65c30ce5-1c9f-4db7-b459-917058bd318a",
+				"name": "Gift XLarge",
+				"amount": 1500,
+				"description": "XLarge gift pack."
+			}
+		}
+	]
+}

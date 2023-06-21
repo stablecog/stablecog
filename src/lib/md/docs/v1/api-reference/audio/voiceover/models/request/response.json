@@ -1,0 +1,19 @@
+{
+  "models": [
+    {
+      "id": "0f442a3e-cf53-490b-b4a9-b0dda63e9523",
+      "name": "bark",
+      "is_default": true,
+      "available_speakers": [
+        {
+          "id": "31d7c264-b674-422b-9b8f-13195c3289b6",
+          "name": "v2/de_speaker_0"
+        },
+        {
+          "id": "0140c5dc-af12-4643-bfec-650d3cd03c56",
+          "name": "v2/en_speaker_0"
+        }
+      ]
+    }
+  ]
+}
