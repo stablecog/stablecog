@@ -60,6 +60,9 @@
 	function onSliderValueChanged() {
 		const toBeTime = sliderValue / 1000;
 		if (areValuesTooClose(toBeTime, currentTime)) return;
+		if (!audioElement.paused) {
+			audioElement.pause();
+		}
 		currentTime = toBeTime;
 	}
 	onMount(() => {

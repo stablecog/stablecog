@@ -95,11 +95,11 @@
 	function onSliderValueChanged() {
 		const toBeTime = sliderValue / 1000;
 		if (areValuesTooClose(toBeTime, currentTime)) return;
-		currentTime = toBeTime;
-		progress = currentTime / duration;
 		if (!audioElement.paused) {
 			audioElement.pause();
 		}
+		currentTime = toBeTime;
+		progress = currentTime / duration;
 	}
 
 	async function drawWaveformWithCheck() {
