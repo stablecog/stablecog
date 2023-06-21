@@ -144,12 +144,16 @@
 		buttonObjectsWithState = { ...initialButtonObjectsWithState };
 		const { seed, selected_output, ...rest } = generation;
 		generateSimilarUrl = getGenerationUrlFromParams(rest);
-		linkUrl = `${$page.url.origin}/gallery/o/${generation.id}`;
+		linkUrl = `${$page.url.origin}/gallery/o/${generation.selected_output.id}`;
 		if (browser && window && !initialGenerationChange) {
-			const searchParams = new URLSearchParams(window.location.search);
-			searchParams.set('o', generation.selected_output.id);
-			const params = searchParams.toString();
-			window.history.replaceState({}, '', `${window.location.pathname}?${params}`);
+			if (modalType !== 'gallery') {
+				const searchParams = new URLSearchParams(window.location.search);
+				searchParams.set('o', generation.selected_output.id);
+				const params = searchParams.toString();
+				window.history.replaceState({}, '', `${window.location.pathname}?${params}`);
+			} else {
+				window.history.replaceState({}, '', `/gallery/o/${generation.selected_output.id}`);
+			}
 		}
 		resetAllButtonObjectWithState();
 		initialGenerationChange = false;
