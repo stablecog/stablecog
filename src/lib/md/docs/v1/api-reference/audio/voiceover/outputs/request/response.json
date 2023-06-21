@@ -1,27 +1,55 @@
 {
-	"total_remaining_credits": 1391,
-	"credits": [
-		{
-			"id": "0ea24c34-4d0b-4e67-8495-d16fa4d19ba6",
-			"remaining_amount": 0,
-			"expires_at": "2100-01-01T05:00:00Z",
-			"type": {
-				"id": "3b12b23e-478b-4c18-8e34-70b3f0af1ee6",
-				"name": "Free",
-				"amount": 100,
-				"description": "Base free credits for user."
-			}
-		},
-		{
-			"id": "dca9aee0-0571-4d0a-9f66-5c9ef675bf16",
-			"remaining_amount": 1391,
-			"expires_at": "2100-01-01T05:00:00Z",
-			"type": {
-				"id": "65c30ce5-1c9f-4db7-b459-917058bd318a",
-				"name": "Gift XLarge",
-				"amount": 1500,
-				"description": "XLarge gift pack."
-			}
-		}
-	]
+  "total_count": 2,
+  "outputs": [
+    {
+      "id": "852d5c6b-fee5-418d-837d-57275aa08d11",
+      "audio_file_url": "https://bvoi.stablecog.com/c4acc69c-b78b-4d2f-a0b7-e6f37f3f9f1f.mp3",
+      "audio_duration": 2.6816876,
+      "is_favorited": false,
+      "was_auto_submitted": false,
+      "denoise_audio": true,
+      "remove_silence": true,
+      "voiceover": {
+        "id": "9dc613c0-2556-4d8c-99c9-0f4030ddef22",
+        "seed": 907352260,
+        "temperature": 0.7,
+        "status": "succeeded",
+        "model_id": "0f442a3e-cf53-490b-b4a9-b0dda63e9523",
+        "prompt_id": "584c3b00-358c-4916-87b4-05a9b8d32c85",
+        "created_at": "2023-06-21T18:09:50.09935Z",
+        "updated_at": "2023-06-21T18:09:54.809227Z",
+        "started_at": "2023-06-21T18:09:50.261172Z",
+        "completed_at": "2023-06-21T18:09:55.68949Z",
+        "is_favorited": false,
+        "outputs": [
+          {
+            "id": "852d5c6b-fee5-418d-837d-57275aa08d11",
+            "audio_file_url": "https://bvoi.stablecog.com/c4acc69c-b78b-4d2f-a0b7-e6f37f3f9f1f.mp3",
+            "audio_duration": 2.6816876,
+            "is_favorited": false,
+            "was_auto_submitted": false,
+            "denoise_audio": true,
+            "remove_silence": true
+          }
+        ],
+        "prompt": {
+          "id": "584c3b00-358c-4916-87b4-05a9b8d32c85",
+          "text": "Stablecog is my favorite AI tool!"
+        },
+        "was_auto_submitted": false,
+        "denoise_audio": true,
+        "remove_silence": true,
+        "audio_duration": 2.6816876,
+        "speaker": {
+          "id": "0140c5dc-af12-4643-bfec-650d3cd03c56",
+          "name": "v2/en_speaker_0",
+          "locale": "en"
+        },
+        "SpeakerID": "00000000-0000-0000-0000-000000000000",
+        "NameInWorker": "",
+        "Locale": ""
+      }
+    }
+  ],
+  "next": "2023-06-21T18:09:50.09935Z"
 }
