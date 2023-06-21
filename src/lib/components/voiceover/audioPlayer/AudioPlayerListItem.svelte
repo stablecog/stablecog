@@ -19,6 +19,7 @@
 	import IconSadFaceOutline from '$components/icons/IconSadFaceOutline.svelte';
 	import { quadOut } from 'svelte/easing';
 	import { fade } from 'svelte/transition';
+	import { timestampPlaceholder } from '$components/voiceover/audioPlayer/constants';
 
 	export let output: TVoiceoverFullOutput;
 	export let hasMute = false;
@@ -186,9 +187,11 @@
 					</div>
 				</div>
 				<p class="pl-3 text-xs text-c-on-bg/50 hidden md:block lg:hidden xl:block">
-					{currentTime && currentTimestamp ? currentTimestamp : '00:00'}
+					{currentTime && currentTimestamp ? currentTimestamp : timestampPlaceholder}
 					<span class="text-c-on-bg/25">/</span>
-					{(durationLocal || output.audio_duration) && totalTimestamp ? totalTimestamp : '00:00'}
+					{(durationLocal || output.audio_duration) && totalTimestamp
+						? totalTimestamp
+						: timestampPlaceholder}
 				</p>
 			</div>
 		</div>
@@ -203,10 +206,12 @@
 			class="order-first lg:order-last flex-shrink min-w-0 pl-2 lg:pl-3 text-xs text-c-on-bg/50 text-right"
 		>
 			<p class="px-0.25 flex-shrink min-w-0 overflow-hidden overflow-ellipsis">
-				{currentTime && currentTimestamp ? currentTimestamp : '00:00'}
+				{currentTime && currentTimestamp ? currentTimestamp : timestampPlaceholder}
 			</p>
 			<p class="px-0.25 flex-shrink min-w-0 overflow-hidden overflow-ellipsis">
-				{(durationLocal || output.audio_duration) && totalTimestamp ? totalTimestamp : '00:00'}
+				{(durationLocal || output.audio_duration) && totalTimestamp
+					? totalTimestamp
+					: timestampPlaceholder}
 			</p>
 		</div>
 	</div>

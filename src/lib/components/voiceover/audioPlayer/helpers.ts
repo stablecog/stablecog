@@ -48,11 +48,11 @@ export function convertSecondsToTimestamp(seconds: number): string {
 	const minutes = Math.floor((seconds % 3600) / 60);
 	const remainingSeconds = Math.round(seconds % 60);
 
-	const formattedMinutes = String(hours > 0 ? hours * 60 + minutes : minutes).padStart(2, '0');
+	const formattedMinutes = String(hours > 0 ? hours * 60 + minutes : minutes);
 	const formattedSeconds = String(remainingSeconds).padStart(2, '0');
 
 	return hours > 0
-		? `${String(hours).padStart(2, '0')}:${formattedMinutes}:${formattedSeconds}`
+		? `${String(hours)}:${formattedMinutes}:${formattedSeconds}`
 		: `${formattedMinutes}:${formattedSeconds}`;
 }
 

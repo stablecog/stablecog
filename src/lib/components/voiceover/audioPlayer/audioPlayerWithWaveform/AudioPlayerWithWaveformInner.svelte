@@ -19,6 +19,7 @@
 	import { fade } from 'svelte/transition';
 	import { quadIn } from 'svelte/easing';
 	import DownloadButton from '$components/voiceover/audioPlayer/DownloadButton.svelte';
+	import { timestampPlaceholder } from '$components/voiceover/audioPlayer/constants';
 
 	export let output: TVoiceoverFullOutput;
 	export let audioElement: HTMLAudioElement;
@@ -190,8 +191,9 @@
 		</div>
 		<div class="flex-1" />
 		<p class="text-c-on-bg/75">
-			{currentTime ? currentTimestamp : '00:00'}<span class="text-c-on-bg/35 px-[0.5ch]">/</span
-			>{duration ? totalTimestamp : '00:00'}
+			{currentTime ? currentTimestamp : timestampPlaceholder}<span
+				class="text-c-on-bg/35 px-[0.5ch]">/</span
+			>{duration ? totalTimestamp : timestampPlaceholder}
 		</p>
 	</div>
 </div>
