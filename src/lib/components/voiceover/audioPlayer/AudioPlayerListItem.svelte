@@ -5,7 +5,7 @@
 	import PlayPauseButton from '$components/voiceover/audioPlayer/PlayPauseButton.svelte';
 	import Slider from '$components/voiceover/audioPlayer/Slider.svelte';
 	import {
-		areValuesCloseEnough,
+		areValuesTooClose,
 		convertSecondsToTimestamp,
 		toggleMute,
 		togglePlay
@@ -29,7 +29,7 @@
 	let muteButton: HTMLButtonElement;
 
 	let currentTime = 0;
-	let durationLocal: number;
+	let duration: number;
 	let sliderValue = 0;
 	let audioElement: HTMLAudioElement;
 	let isPaused = true;
@@ -37,13 +37,8 @@
 	let isMuted = false;
 	let buffered: TimeRanges;
 
-	$: progress =
-		(durationLocal === 0 || durationLocal) && (currentTime === 0 || currentTime)
-			? currentTime / durationLocal
-			: 0;
-	$: progressPercentage = progress * 100;
-	$: totalTimestamp = durationLocal
-		? convertSecondsToTimestamp(durationLocal)
+	$: totalTimestamp = duration
+		? convertSecondsToTimestamp(duration)
 		: output.audio_duration
 		? convertSecondsToTimestamp(output.audio_duration)
 		: undefined;
@@ -59,14 +54,13 @@
 		output.voiceover.status === 'server-processing';
 
 	function onCurrentTimeChanged() {
-		sliderValue = progressPercentage;
+		sliderValue = Math.floor(currentTime * 1000);
 	}
 
 	function onSliderValueChanged() {
-		const toBeTime = (sliderValue / 100) * durationLocal;
-		if (!areValuesCloseEnough(toBeTime, currentTime)) {
-			currentTime = toBeTime;
-		}
+		const toBeTime = sliderValue / 1000;
+		if (areValuesTooClose(toBeTime, currentTime)) return;
+		currentTime = toBeTime;
 	}
 	onMount(() => {
 		$allAudioPlayers.add(audioElement);
@@ -132,7 +126,7 @@
 			src={output.audio_file_url}
 			aria-label={output.voiceover.prompt.text}
 			bind:currentTime
-			bind:duration={durationLocal}
+			bind:duration
 			bind:this={audioElement}
 			bind:muted={isMuted}
 			bind:buffered
@@ -177,19 +171,19 @@
 						<Slider
 							{buffered}
 							disabled={isOutputLoadingOrFailed}
-							duration={durationLocal}
+							{duration}
 							min={0}
-							max={100}
+							max={Math.floor(duration * 1000)}
 							name="Audio Player"
 							bind:value={sliderValue}
-							step={0.001}
+							step={1}
 						/>
 					</div>
 				</div>
 				<p class="pl-3 text-xs text-c-on-bg/50 hidden md:block lg:hidden xl:block">
 					{currentTime && currentTimestamp ? currentTimestamp : timestampPlaceholder}
 					<span class="text-c-on-bg/25">/</span>
-					{(durationLocal || output.audio_duration) && totalTimestamp
+					{(duration || output.audio_duration) && totalTimestamp
 						? totalTimestamp
 						: timestampPlaceholder}
 				</p>
@@ -209,7 +203,7 @@
 				{currentTime && currentTimestamp ? currentTimestamp : timestampPlaceholder}
 			</p>
 			<p class="px-0.25 flex-shrink min-w-0 overflow-hidden overflow-ellipsis">
-				{(durationLocal || output.audio_duration) && totalTimestamp
+				{(duration || output.audio_duration) && totalTimestamp
 					? totalTimestamp
 					: timestampPlaceholder}
 			</p>

@@ -1,7 +1,7 @@
 <script lang="ts">
 	import PlayPauseButton from '../PlayPauseButton.svelte';
 	import {
-		areValuesCloseEnough,
+		areValuesTooClose,
 		audioBufferToArray,
 		audioToArray,
 		convertSecondsToTimestamp,
@@ -56,7 +56,6 @@
 
 	$: progress =
 		(duration === 0 || duration) && (currentTime === 0 || currentTime) ? currentTime / duration : 0;
-	$: progressPercentage = progress * 100;
 	$: currentTimestamp =
 		currentTime !== undefined
 			? convertSecondsToTimestamp(currentTime)
@@ -90,13 +89,16 @@
 	}
 
 	function onCurrentTimeChanged() {
-		sliderValue = progressPercentage;
+		sliderValue = Math.floor(currentTime * 1000);
 	}
 
 	function onSliderValueChanged() {
-		const toBeTime = (sliderValue / 100) * duration;
-		if (!areValuesCloseEnough(toBeTime, currentTime)) {
-			currentTime = toBeTime;
+		const toBeTime = sliderValue / 1000;
+		if (areValuesTooClose(toBeTime, currentTime)) return;
+		currentTime = toBeTime;
+		progress = currentTime / duration;
+		if (!audioElement.paused) {
+			audioElement.pause();
 		}
 	}
 
@@ -216,10 +218,10 @@
 			<div class="w-full h-full flex flex-col overflow-hidden relative opacity-100">
 				<SliderForWaveform
 					min={0}
-					max={100}
+					max={Math.floor(duration * 1000)}
 					name="Audio Player"
 					bind:value={sliderValue}
-					step={0.00001}
+					step={1}
 				/>
 			</div>
 		</div>

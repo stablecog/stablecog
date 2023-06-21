@@ -98,7 +98,7 @@ export function toggleMute(audioElement: HTMLAudioElement) {
 	}
 }
 
-export function areValuesCloseEnough(a: number, b: number) {
+export function areValuesTooClose(a: number, b: number) {
 	return Math.abs(a - b) < 0.01;
 }
 
