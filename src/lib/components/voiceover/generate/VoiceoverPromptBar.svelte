@@ -19,6 +19,7 @@
 		maxVoiceoverCharacterCount,
 		voiceoverStabilityHardMin
 	} from '$ts/constants/voiceover/rest';
+	import { formatVoiceoverPrompt } from '$ts/helpers/formatPrompt';
 	import { generateSSEId } from '$ts/helpers/generateSSEId';
 	import { sseId } from '$ts/stores/user/sse';
 	import { userSummary } from '$ts/stores/user/summary';
@@ -48,22 +49,40 @@
 		$userSummary !== null &&
 		$userSummary.total_remaining_credits < creditCost;
 
+	$: isSM = $windowWidth < mdBreakpoint;
+
 	$: [$voiceoverPrompt],
 		withCheck(() => {
 			if (!voiceoverPrompt) return;
 			voiceoverPromptLocal.set($voiceoverPrompt);
 		});
 
+	let isJustCreatedVoiceoverTimeout: NodeJS.Timeout;
+	let isJustCreatedVoiceoverForAnim = false;
+	const isJustCreatedVoiceoverTimeoutDuration = 350;
+	let isJustCreatedVoiceover = false;
+	let isJustCreatedVoiceoverForAnimTimeout: NodeJS.Timeout;
+	const isJustCreatedVoiceoverForAnimTimeoutDuration = 175;
+
 	function onSubmit() {
 		if (!$page.data.session?.user.id || !$userSummary) {
 			openSignInModal();
 			return;
 		}
+		if (isJustCreatedVoiceover) return;
 		if ($maxOngoingVoiceoversCountReached) return;
 		if (!$sseId) return;
-		if (!$voiceoverPrompt) return;
 		if (doesntHaveEnoughCredits) return;
+		if (!$voiceoverPrompt) {
+			if (isSM) {
+				promptInputElement.focus();
+			} else {
+				promptInputElementMd.focus();
+			}
+			return;
+		}
 		toggleSettingsSheet(false);
+		voiceoverPrompt.set(formatVoiceoverPrompt($voiceoverPrompt));
 		queueInitialVoiceoverRequest({
 			model_id: $voiceoverModelId,
 			speaker: {
@@ -80,6 +99,16 @@
 			denoise_audio: $voiceoverDenoiseAudio,
 			remove_silence: $voiceoverRemoveSilence
 		});
+		clearTimeout(isJustCreatedVoiceoverTimeout);
+		isJustCreatedVoiceover = true;
+		isJustCreatedVoiceoverTimeout = setTimeout(() => {
+			isJustCreatedVoiceover = false;
+		}, isJustCreatedVoiceoverTimeoutDuration);
+		clearTimeout(isJustCreatedVoiceoverForAnimTimeout);
+		isJustCreatedVoiceoverForAnim = true;
+		isJustCreatedVoiceoverForAnimTimeout = setTimeout(() => {
+			isJustCreatedVoiceoverForAnim = false;
+		}, isJustCreatedVoiceoverForAnimTimeoutDuration);
 	}
 
 	function withCheck(fn: () => void) {
@@ -93,11 +122,19 @@
 
 	$: showClearPromptInputButton =
 		$voiceoverPrompt !== null && $voiceoverPrompt !== undefined && $voiceoverPrompt !== '';
+
 	function clearPrompt() {
 		voiceoverPrompt.set('');
 		promptInputElement.value = '';
 		promptInputElement.blur();
 		promptInputElement.focus();
+	}
+
+	function clearPromptMd() {
+		voiceoverPrompt.set('');
+		promptInputElementMd.value = '';
+		promptInputElementMd.blur();
+		promptInputElementMd.focus();
 	}
 
 	function onInfoContainerClicked(e: MouseEvent) {
@@ -119,7 +156,11 @@
 </script>
 
 <form on:submit|preventDefault={onSubmit} class="md:hidden w-full flex flex-row items-stretch">
-	<div class="flex-1 flex gap-2 flex-row items-center transition duration-150 transform">
+	<div
+		class="flex-1 flex gap-2 flex-row items-center transition duration-150 transform {isJustCreatedVoiceoverForAnim
+			? 'scale-97'
+			: 'scale-100'}"
+	>
 		<div class="flex-1 flex relative group">
 			<textarea
 				bind:this={promptInputElement}
@@ -226,7 +267,7 @@
 					onSubmit();
 				}
 			}}
-			class="hidden md:block w-full h-full bg-c-bg-secondary rounded-t-lg md:rounded-t-2xl resize-none px-3 md:px-5 py-2.5 md:py-4
+			class="hidden md:block w-full h-full bg-c-bg-secondary rounded-t-lg md:rounded-t-2xl resize-none pl-5 pr-13 py-4
 			relative text-base md:text-lg pb-6 placeholder:text-c-on-bg/40"
 			rows="7"
 			maxlength={maxVoiceoverCharacterCount}
@@ -234,6 +275,14 @@
 		<div
 			class="w-full block absolute left-0 bottom-0 h-4 bg-gradient-to-t from-c-bg-secondary to-c-bg-secondary/0 pointer-events-none"
 		/>
+		<div class="absolute right-0 top-0 h-15">
+			<ClearButton
+				roundingClass="rounded-xl"
+				class=""
+				show={showClearPromptInputButton}
+				onClick={clearPromptMd}
+			/>
+		</div>
 	</div>
 	<div
 		on:click={onInfoContainerClicked}
@@ -260,7 +309,11 @@
 					</p>
 				</div>
 			</div>
-			<div class="relative flex justify-end">
+			<div
+				class="relative flex justify-end transition duration-150 transform {isJustCreatedVoiceoverForAnim
+					? 'scale-93'
+					: 'scale-100'}"
+			>
 				<Button
 					withSpinner
 					noPadding

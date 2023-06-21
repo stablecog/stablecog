@@ -20,3 +20,7 @@ export const formatPrompt = (text: string): string => {
 		removeSuffixSpaces(removeLineBreaks(text.slice(0, maxPromptLength)))
 	);
 };
+
+export const formatVoiceoverPrompt = (text: string): string => {
+	return text.replace(/[\s\n]+$/g, '');
+};

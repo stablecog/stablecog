@@ -5,6 +5,7 @@
 	export let onClick: () => void;
 	export let type: 'sm' | 'md' = 'md';
 	export let disabled = false;
+	export let roundingClass = 'rounded-lg';
 	export { classes as class };
 	let classes = 'absolute right-0 top-0 rounded-r-xl';
 </script>
@@ -27,9 +28,9 @@
 				? 'p-1'
 				: 'p-0.75 md:p-1'}"
 		>
-			<div class="w-full h-full rounded-lg relative z-0 overflow-hidden">
+			<div class="w-full h-full {roundingClass} relative z-0 overflow-hidden">
 				<div
-					class="w-full h-full origin-left rounded-lg transition transform -translate-x-full
+					class="w-full h-full origin-left {roundingClass} transition transform -translate-x-full
 						bg-c-primary/25 group-focus/clearbutton:translate-x-0
 						group-active/clearbutton:translate-x-0 not-touch:group-hover/clearbutton:translate-x-0"
 				/>
