@@ -1,6 +1,5 @@
 <script lang="ts">
 	import IconSpeaker from '$components/icons/IconVoiceoverSpeaker.svelte';
-	import IconThreeDots from '$components/icons/IconThreeDots.svelte';
 	import MuteButton from '$components/voiceover/audioPlayer/MuteButton.svelte';
 	import PlayPauseButton from '$components/voiceover/audioPlayer/PlayPauseButton.svelte';
 	import Slider from '$components/voiceover/audioPlayer/Slider.svelte';
@@ -24,6 +23,9 @@
 	export let output: TVoiceoverFullOutput;
 	export let hasMute = false;
 	export let inHorizontal = false;
+	export { classes as class };
+	export let noLayoutChange = false;
+	let classes = '';
 
 	let playButton: HTMLButtonElement;
 	let muteButton: HTMLButtonElement;
@@ -82,30 +84,35 @@
 			togglePlay({ audioElement });
 		}
 	}}
-	class="{inHorizontal
-		? 'h-full'
-		: ''} w-full bg-c-bg-secondary px-1 py-1 md:px-3 md:pt-1.5 md:pb-1 flex flex-row
-		md:flex-col items-center md:items-start
-		rounded-lg md:rounded-xl shadow-lg shadow-c-shadow/[var(--o-shadow-normal)]
-		overflow-hidden relative z-0 group/audio-player-list-item"
+	class="{inHorizontal ? 'h-full' : ''} w-full bg-c-bg-secondary {noLayoutChange
+		? 'flex flex-col items-start px-3 pt-1.5 pb-1 rounded-xl'
+		: 'flex flex-row md:flex-col items-center md:items-start px-1 py-1 md:px-3 md:pt-1.5 md:pb-1 rounded-lg md:rounded-xl'}
+		shadow-lg shadow-c-shadow/[var(--o-shadow-normal)]
+		overflow-hidden relative z-0 group/audio-player-list-item {classes}"
 >
 	<div
-		class="flex md:w-full justify-between items-center gap-2 pl-0.5 md:pl-0 pr-1 md:pr-0 md:pb-1"
+		class="{noLayoutChange
+			? 'w-full pb-1'
+			: 'md:w-full pl-0.5 md:pl-0 pr-1 md:pr-0 md:pb-1'} flex justify-between items-center gap-2"
 	>
-		<div class="flex-shrink min-w-0 w-full flex justify-start items-center py-1.5">
+		<div class="flex-shrink min-w-0 w-full flex justify-start items-center py-0.5">
 			<div
 				class="rounded-md bg-c-bg-tertiary overflow-hidden
 					flex items-center justify-start relative z-0 ring-2 ring-c-bg-tertiary"
 			>
-				<div class="w-10 h-10 md:w-7 md:h-7 flex-shrink-0 shadow-lg overflow-hidden relative z-0">
+				<div
+					class="{noLayoutChange
+						? 'w-7 h-7'
+						: 'w-10 h-10 md:w-7 md:h-7'} flex-shrink-0 shadow-lg overflow-hidden relative z-0"
+				>
 					<IconSpeaker
 						class="w-full h-full"
 						type={output.voiceover.speaker.id}
-						sizes="(min-width: 768px) 28px, 40px"
+						sizes={noLayoutChange ? '28px' : '(min-width: 768px) 28px, 40px'}
 					/>
 				</div>
 				<p
-					class="hidden md:block text-c-on-bg flex-shrink min-w-0
+					class="{noLayoutChange ? 'block' : 'hidden md:block'} text-c-on-bg flex-shrink min-w-0
 					whitespace-nowrap overflow-hidden overflow-ellipsis text-sm font-medium
 					px-2.5 py-1 h-full"
 				>
@@ -113,17 +120,21 @@
 				</p>
 			</div>
 		</div>
-		<div class="hidden md:flex -mr-2 items-center lg:hidden xl:flex">
+		<div class="{noLayoutChange ? 'flex' : 'hidden md:flex lg:hidden xl:flex'} -mr-2 items-center">
 			<DownloadButton {output} faded disabled={isOutputLoadingOrFailed} />
 		</div>
 	</div>
-	<p
-		class="hidden lg:block xl:hidden text-sm text-c-on-bg py-1 max-w-full whitespace-nowrap overflow-hidden overflow-ellipsis"
-	>
-		{output.voiceover.prompt.text}
-	</p>
+	{#if !noLayoutChange}
+		<p
+			class="hidden lg:block xl:hidden text-sm text-c-on-bg py-1 max-w-full whitespace-nowrap overflow-hidden overflow-ellipsis"
+		>
+			{output.voiceover.prompt.text}
+		</p>
+	{/if}
 	<div
-		class="{inHorizontal ? 'h-full' : ''} md:w-full flex-1 min-w-0 flex items-center justify-center"
+		class="{inHorizontal ? 'h-full' : ''} {noLayoutChange
+			? 'w-full'
+			: 'md:w-full'} flex-1 min-w-0 flex items-center justify-center"
 	>
 		<audio
 			src={output.audio_file_url}
@@ -143,7 +154,7 @@
 				isPlaying = false;
 			}}
 		/>
-		<div class="flex items-center md:-ml-2">
+		<div class="flex items-center {noLayoutChange ? '-ml-2' : 'md:-ml-2'}">
 			<PlayPauseButton
 				bind:element={playButton}
 				onClick={() => {
@@ -162,13 +173,24 @@
 				/>
 			{/if}
 		</div>
-		<div class="flex-1 min-w-0 flex flex-col -mb-2.5 md:mb-0 pl-1 md:pl-2 pr-0.5">
+		<div
+			class="flex-1 min-w-0 flex flex-col {noLayoutChange
+				? 'pl-2 pr-0.5'
+				: '-mb-2.5 md:mb-0 pl-1 md:pl-2 pr-0.5'}"
+		>
 			<p
-				class="lg:hidden xl:block text-xs md:text-sm text-c-on-bg md:py-1 max-w-full whitespace-nowrap overflow-hidden overflow-ellipsis"
+				class="{noLayoutChange
+					? 'block py-1'
+					: 'lg:hidden xl:block md:py-1'} text-xs md:text-sm text-c-on-bg max-w-full
+				whitespace-nowrap overflow-hidden overflow-ellipsis"
 			>
 				{output.voiceover.prompt.text}
 			</p>
-			<div class="w-full flex items-center -mt-1.5 md:-mt-1 lg:mt-0 xl:-mt-1">
+			<div
+				class="w-full flex items-center {noLayoutChange
+					? '-mt-1'
+					: '-mt-1.5 md:-mt-1 lg:mt-0 xl:-mt-1'}"
+			>
 				<div class="flex-1 self-stretch h-8">
 					<div class="w-full h-full flex items-center relative">
 						<Slider
@@ -183,7 +205,11 @@
 						/>
 					</div>
 				</div>
-				<p class="pl-3 text-xs text-c-on-bg/50 hidden md:block lg:hidden xl:block">
+				<p
+					class="{noLayoutChange
+						? 'block'
+						: 'hidden md:block lg:hidden xl:block'} pl-3 text-xs text-c-on-bg/50"
+				>
 					{currentTime && currentTimestamp ? currentTimestamp : timestampPlaceholder}
 					<span class="text-c-on-bg/25">/</span>
 					{(duration || output.audio_duration) && totalTimestamp
@@ -193,25 +219,27 @@
 			</div>
 		</div>
 	</div>
-	<div
-		class="w-auto md:w-full flex md:hidden lg:flex items-center justify-between xl:hidden lg:pb-0.5"
-	>
-		<div class="-mr-0.5 lg:mr-0 lg:-ml-2 flex items-center">
-			<DownloadButton {output} faded disabled={isOutputLoadingOrFailed} />
-		</div>
+	{#if !noLayoutChange}
 		<div
-			class="order-first lg:order-last flex-shrink min-w-0 pl-2 lg:pl-3 text-xs text-c-on-bg/50 text-right"
+			class="w-auto md:w-full flex md:hidden lg:flex items-center justify-between xl:hidden lg:pb-0.5"
 		>
-			<p class="px-0.25 flex-shrink min-w-0 overflow-hidden overflow-ellipsis">
-				{currentTime && currentTimestamp ? currentTimestamp : timestampPlaceholder}
-			</p>
-			<p class="px-0.25 flex-shrink min-w-0 overflow-hidden overflow-ellipsis">
-				{(duration || output.audio_duration) && totalTimestamp
-					? totalTimestamp
-					: timestampPlaceholder}
-			</p>
+			<div class="-mr-0.5 lg:mr-0 lg:-ml-2 flex items-center">
+				<DownloadButton {output} faded disabled={isOutputLoadingOrFailed} />
+			</div>
+			<div
+				class="order-first lg:order-last flex-shrink min-w-0 pl-2 lg:pl-3 text-xs text-c-on-bg/50 text-right"
+			>
+				<p class="px-0.25 flex-shrink min-w-0 overflow-hidden overflow-ellipsis">
+					{currentTime && currentTimestamp ? currentTimestamp : timestampPlaceholder}
+				</p>
+				<p class="px-0.25 flex-shrink min-w-0 overflow-hidden overflow-ellipsis">
+					{(duration || output.audio_duration) && totalTimestamp
+						? totalTimestamp
+						: timestampPlaceholder}
+				</p>
+			</div>
 		</div>
-	</div>
+	{/if}
 	<!-- If loading or failed -->
 	{#if isOutputLoadingOrFailed}
 		<div
