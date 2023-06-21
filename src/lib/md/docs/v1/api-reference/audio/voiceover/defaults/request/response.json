@@ -1,0 +1,7 @@
+{
+	"model_id": "0f442a3e-cf53-490b-b4a9-b0dda63e9523",
+	"speaker_id": "0140c5dc-af12-4643-bfec-650d3cd03c56",
+	"temperature": 0.7,
+	"denoise_audio": true,
+	"remove_silence": true
+}

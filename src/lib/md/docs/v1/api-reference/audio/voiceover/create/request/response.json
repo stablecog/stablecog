@@ -1,0 +1,18 @@
+{
+	"outputs": [
+		{
+				"id": "852d5c6b-fee5-418d-837d-57275aa08d11",
+				"url": "https://bvoi.stablecog.com/c4acc69c-b78b-4d2f-a0b7-e6f37f3f9f1f.mp3",
+				"audio_duration": 2.6816876
+		}
+	],
+	"remaining_credits": 11117,
+	"settings": {
+			"model_id": "0f442a3e-cf53-490b-b4a9-b0dda63e9523",
+			"speaker_id": "0140c5dc-af12-4643-bfec-650d3cd03c56",
+			"temperature": 0.7,
+			"seed": 1627265839,
+			"denoise_audio": true,
+			"remove_silence": true
+	}
+}
