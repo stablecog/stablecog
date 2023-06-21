@@ -318,13 +318,13 @@
 					withSpinner
 					noPadding
 					noRounding
+					blurOnClick
 					fadeOnDisabled={doesntHaveEnoughCredits}
 					loading={$maxOngoingVoiceoversCountReached}
 					disabled={doesntHaveEnoughCredits}
-					class="pointer-events-auto md:px-8 md:py-3.5 rounded-xl"
+					class="pointer-events-auto px-8 py-3.5 rounded-xl"
 				>
-					<span class="hidden md:block">{$LL.Voiceover.PromptBar.GenerateButton()}</span>
-					<IconWand class="w-7 h-7 md:hidden" />
+					{$LL.Voiceover.PromptBar.GenerateButton()}
 				</Button>
 				{#if doesntHaveEnoughCredits && $userSummary && $page.data.session?.user.id}
 					<InsufficientCreditsBadge

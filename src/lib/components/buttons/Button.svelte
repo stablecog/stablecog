@@ -22,11 +22,17 @@
 	export let iconAlignment: 'left' | 'right' = 'left';
 	export let label: string | undefined = undefined;
 	export let noRounding = false;
+	export let blurOnClick = false;
 	let classes = '';
+
+	let element: HTMLElement;
 
 	function _onClick() {
 		if (animateOnClick) onClicked();
 		onClick?.();
+		if (blurOnClick) {
+			element.blur();
+		}
 	}
 
 	let shouldAnimate = false;
@@ -60,6 +66,7 @@
 	<a
 		bind:clientWidth={width}
 		bind:clientHeight={height}
+		bind:this={element}
 		on:click={_onClick}
 		aria-label={label}
 		{href}
@@ -173,6 +180,7 @@
 		bind:clientWidth={width}
 		bind:clientHeight={height}
 		on:click={_onClick}
+		bind:this={element}
 		aria-label={label}
 		disabled={disabled || loading || uploading}
 		type={buttonType}
