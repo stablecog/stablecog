@@ -50,7 +50,7 @@
 	export let serverData: TGeneratePageData;
 	export let isReadyMap: TIsReadyMap;
 	export let afterGenerate: undefined | (() => void) = undefined;
-	export let toggleSettingsSheet: () => void;
+	export let toggleSettingsSheet: (s?: boolean) => void;
 	export let isGenerationSettingsSheetOpen: boolean;
 	export let isJustCreatedGenerationForAnim = false;
 	export { classes as class };
@@ -303,7 +303,7 @@
 			size="sm"
 			noPadding
 			paddingClassForHoverEffect="px-1"
-			onClick={toggleSettingsSheet}
+			onClick={() => toggleSettingsSheet()}
 			class="h-full md:hidden px-3 py-2"
 			hoverFrom="bottom"
 			name={isGenerationSettingsSheetOpen

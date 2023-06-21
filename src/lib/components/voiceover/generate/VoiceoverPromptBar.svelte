@@ -175,7 +175,7 @@
 		size="sm"
 		noPadding
 		paddingClassForHoverEffect="px-1"
-		onClick={toggleSettingsSheet}
+		onClick={() => toggleSettingsSheet()}
 		class="px-3 py-2 -mr-2"
 		hoverFrom="bottom"
 		name={isSettingsSheetOpen
@@ -249,7 +249,7 @@
 			size="sm"
 			noPadding
 			paddingClassForHoverEffect="p-0"
-			onClick={toggleSettingsSheet}
+			onClick={() => toggleSettingsSheet()}
 			class="md:hidden w-full flex items-center justify-center px-2 py-2"
 			hoverFrom="bottom"
 			name={isSettingsSheetOpen
