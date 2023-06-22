@@ -1,10 +1,10 @@
 ---
-title: Generation Defaults
+title: Voiceover Defaults
 description: Learn how to retrive the defaults for the voiceover operation using Stablecog API.
 author: Brandon Berhent
 author_url: https://twitter.com/bbedward_real
 date: 2023-06-21T15:00:00.000Z
-preview_image_url: https://ba.stablecog.com/docs/previews/generation-defaults.jpg
+preview_image_url: https://ba.stablecog.com/docs/previews/defaults.jpg
 ---
 
 <script>

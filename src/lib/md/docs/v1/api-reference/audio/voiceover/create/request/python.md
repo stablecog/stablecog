@@ -9,7 +9,7 @@ API_ENDPOINT = "/v1/audio/voiceover/create"
 API_URL = f"{API_HOST}{API_ENDPOINT}"
 
 req = {
-	"prompt": "Stablecog is my favorite AI tool!"
+	"prompt": "Technology is a bridge between imagination and reality."
 }
 
 headers = {

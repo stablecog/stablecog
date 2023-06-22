@@ -1,7 +1,7 @@
-export const voiceoverStabilityDefault = 70;
+export const voiceoverStabilityDefault = 30;
 export const voiceoverStabilityMin = 0;
-export const voiceoverStabilityHardMin = 1;
 export const voiceoverStabilityMax = 100;
+export const voiceoverStabilityHardMax = 99;
 export const voiceoverDenoiseAudioDefault = true;
 export const voiceoverRemoveSilenceDefault = true;
 

@@ -1,26 +1,238 @@
 {
-	"total_remaining_credits": 1391,
-	"credits": [
+	"total_count": 15,
+	"outputs": [
 		{
-			"id": "0ea24c34-4d0b-4e67-8495-d16fa4d19ba6",
-			"remaining_amount": 0,
-			"expires_at": "2100-01-01T05:00:00Z",
-			"type": {
-				"id": "3b12b23e-478b-4c18-8e34-70b3f0af1ee6",
-				"name": "Free",
-				"amount": 100,
-				"description": "Base free credits for user."
+			"id": "a5c9a98f-cfea-4776-ba01-7e73cfa631f2",
+			"audio_file_url": "https://bvoi.stablecog.com/7cb1af03-3740-4fb2-9248-d527051a93b6.mp3",
+			"audio_duration": 2.7446876,
+			"is_favorited": false,
+			"was_auto_submitted": false,
+			"voiceover": {
+				"id": "33f69999-d267-42ca-b563-2e630a6779df",
+				"seed": 939612954,
+				"temperature": 0.7,
+				"status": "succeeded",
+				"model_id": "0f442a3e-cf53-490b-b4a9-b0dda63e9523",
+				"created_at": "2023-06-22T16:56:41.300381Z",
+				"updated_at": "2023-06-22T16:56:45.199179Z",
+				"started_at": "2023-06-22T16:56:41.451395Z",
+				"completed_at": "2023-06-22T16:56:45.981093Z",
+				"is_favorited": false,
+				"outputs": [
+					{
+						"id": "a5c9a98f-cfea-4776-ba01-7e73cfa631f2",
+						"audio_file_url": "https://bvoi.stablecog.com/7cb1af03-3740-4fb2-9248-d527051a93b6.mp3",
+						"is_favorited": false,
+						"was_auto_submitted": false
+					}
+				],
+				"prompt": {
+					"id": "df26508c-3b67-4aba-af9a-8d6d25fd9836",
+					"text": "I wouldn't say so [laughs]."
+				},
+				"was_auto_submitted": false,
+				"denoise_audio": true,
+				"remove_silence": true,
+				"speaker": {
+					"id": "82bc1e69-2aa3-4317-9bc9-d9ed2afad0ff",
+					"name": "v2/en_speaker_6",
+					"locale": "en"
+				}
 			}
 		},
 		{
-			"id": "dca9aee0-0571-4d0a-9f66-5c9ef675bf16",
-			"remaining_amount": 1391,
-			"expires_at": "2100-01-01T05:00:00Z",
-			"type": {
-				"id": "65c30ce5-1c9f-4db7-b459-917058bd318a",
-				"name": "Gift XLarge",
-				"amount": 1500,
-				"description": "XLarge gift pack."
+			"id": "0c7ac67c-c180-46b9-aab2-21518334dd5b",
+			"audio_file_url": "https://bvoi.stablecog.com/3659d9a9-532d-4a44-a8f8-f9643a613478.mp3",
+			"audio_duration": 2.9926875,
+			"is_favorited": false,
+			"was_auto_submitted": false,
+			"voiceover": {
+				"id": "7e10987f-50cb-40e6-9404-db4aee4eadda",
+				"seed": 1427951218,
+				"temperature": 0.5,
+				"status": "succeeded",
+				"model_id": "0f442a3e-cf53-490b-b4a9-b0dda63e9523",
+				"created_at": "2023-06-22T16:56:15.604197Z",
+				"updated_at": "2023-06-22T16:56:31.418014Z",
+				"started_at": "2023-06-22T16:56:15.771443Z",
+				"completed_at": "2023-06-22T16:56:32.133366Z",
+				"is_favorited": false,
+				"outputs": [
+					{
+						"id": "0c7ac67c-c180-46b9-aab2-21518334dd5b",
+						"audio_file_url": "https://bvoi.stablecog.com/3659d9a9-532d-4a44-a8f8-f9643a613478.mp3",
+						"is_favorited": false,
+						"was_auto_submitted": false
+					}
+				],
+				"prompt": {
+					"id": "df26508c-3b67-4aba-af9a-8d6d25fd9836",
+					"text": "I wouldn't say so [laughs]."
+				},
+				"was_auto_submitted": false,
+				"denoise_audio": true,
+				"remove_silence": true,
+				"speaker": {
+					"id": "82bc1e69-2aa3-4317-9bc9-d9ed2afad0ff",
+					"name": "v2/en_speaker_6",
+					"locale": "en"
+				}
+			}
+		},
+		{
+			"id": "e92c6a32-6287-41aa-92be-d6e7fb923207",
+			"audio_file_url": "https://bvoi.stablecog.com/2a785228-442e-4414-9ec8-0ce926ab92e3.mp3",
+			"audio_duration": 3.1736875,
+			"is_favorited": false,
+			"was_auto_submitted": false,
+			"voiceover": {
+				"id": "78b35933-6352-4762-945d-29f00cca265e",
+				"seed": 247846475,
+				"temperature": 0.01,
+				"status": "succeeded",
+				"model_id": "0f442a3e-cf53-490b-b4a9-b0dda63e9523",
+				"created_at": "2023-06-22T16:55:50.109136Z",
+				"updated_at": "2023-06-22T16:56:07.255586Z",
+				"started_at": "2023-06-22T16:55:50.272283Z",
+				"completed_at": "2023-06-22T16:56:07.980785Z",
+				"is_favorited": false,
+				"outputs": [
+					{
+						"id": "e92c6a32-6287-41aa-92be-d6e7fb923207",
+						"audio_file_url": "https://bvoi.stablecog.com/2a785228-442e-4414-9ec8-0ce926ab92e3.mp3",
+						"is_favorited": false,
+						"was_auto_submitted": false
+					}
+				],
+				"prompt": {
+					"id": "df26508c-3b67-4aba-af9a-8d6d25fd9836",
+					"text": "I wouldn't say so [laughs]."
+				},
+				"was_auto_submitted": false,
+				"denoise_audio": true,
+				"remove_silence": true,
+				"speaker": {
+					"id": "82bc1e69-2aa3-4317-9bc9-d9ed2afad0ff",
+					"name": "v2/en_speaker_6",
+					"locale": "en"
+				}
+			}
+		},
+		{
+			"id": "3202bf6f-eedf-4736-9c52-ae45221fcc8b",
+			"audio_file_url": "https://bvoi.stablecog.com/ffa079b7-d419-45a3-97eb-8f5b94e0bd46.mp3",
+			"audio_duration": 3.0666876,
+			"is_favorited": false,
+			"was_auto_submitted": false,
+			"voiceover": {
+				"id": "9bad0792-de22-4658-8c43-039df25b8f24",
+				"seed": 234147116,
+				"temperature": 1,
+				"status": "succeeded",
+				"model_id": "0f442a3e-cf53-490b-b4a9-b0dda63e9523",
+				"created_at": "2023-06-22T16:55:34.035821Z",
+				"updated_at": "2023-06-22T16:55:38.627433Z",
+				"started_at": "2023-06-22T16:55:34.234253Z",
+				"completed_at": "2023-06-22T16:55:40.052887Z",
+				"is_favorited": false,
+				"outputs": [
+					{
+						"id": "3202bf6f-eedf-4736-9c52-ae45221fcc8b",
+						"audio_file_url": "https://bvoi.stablecog.com/ffa079b7-d419-45a3-97eb-8f5b94e0bd46.mp3",
+						"is_favorited": false,
+						"was_auto_submitted": false
+					}
+				],
+				"prompt": {
+					"id": "df26508c-3b67-4aba-af9a-8d6d25fd9836",
+					"text": "I wouldn't say so [laughs]."
+				},
+				"was_auto_submitted": false,
+				"denoise_audio": true,
+				"remove_silence": true,
+				"speaker": {
+					"id": "82bc1e69-2aa3-4317-9bc9-d9ed2afad0ff",
+					"name": "v2/en_speaker_6",
+					"locale": "en"
+				}
+			}
+		},
+		{
+			"id": "598da5fd-969d-432c-8a88-adb1ec7edc3c",
+			"audio_file_url": "https://bvoi.stablecog.com/1cef1155-7d42-45d6-a03c-c8a160ae4a15.mp3",
+			"audio_duration": 3.3626876,
+			"is_favorited": false,
+			"was_auto_submitted": false,
+			"voiceover": {
+				"id": "093bf825-2c73-412d-a993-2886adb91a4c",
+				"seed": 1156511586,
+				"temperature": 0.7,
+				"status": "succeeded",
+				"model_id": "0f442a3e-cf53-490b-b4a9-b0dda63e9523",
+				"created_at": "2023-06-22T16:50:39.251044Z",
+				"updated_at": "2023-06-22T16:50:45.219404Z",
+				"started_at": "2023-06-22T16:50:39.422281Z",
+				"completed_at": "2023-06-22T16:50:46.050903Z",
+				"is_favorited": false,
+				"outputs": [
+					{
+						"id": "598da5fd-969d-432c-8a88-adb1ec7edc3c",
+						"audio_file_url": "https://bvoi.stablecog.com/1cef1155-7d42-45d6-a03c-c8a160ae4a15.mp3",
+						"is_favorited": false,
+						"was_auto_submitted": false
+					}
+				],
+				"prompt": {
+					"id": "df26508c-3b67-4aba-af9a-8d6d25fd9836",
+					"text": "I wouldn't say so [laughs]."
+				},
+				"was_auto_submitted": false,
+				"denoise_audio": true,
+				"remove_silence": true,
+				"speaker": {
+					"id": "82bc1e69-2aa3-4317-9bc9-d9ed2afad0ff",
+					"name": "v2/en_speaker_6",
+					"locale": "en"
+				}
+			}
+		},
+		{
+			"id": "eef370fa-e094-49c9-98e2-4a5d1f9edc5f",
+			"audio_file_url": "https://bvoi.stablecog.com/b68861b9-5552-4111-8d9c-9e7c426a987b.mp3",
+			"audio_duration": 1.5286875,
+			"is_favorited": false,
+			"was_auto_submitted": false,
+			"voiceover": {
+				"id": "f5886ef1-c190-4096-8ff9-abf30361a8c4",
+				"seed": 356752893,
+				"temperature": 0.7,
+				"status": "succeeded",
+				"model_id": "0f442a3e-cf53-490b-b4a9-b0dda63e9523",
+				"created_at": "2023-06-22T16:37:32.347662Z",
+				"updated_at": "2023-06-22T16:37:35.703883Z",
+				"started_at": "2023-06-22T16:37:32.517824Z",
+				"completed_at": "2023-06-22T16:37:36.699485Z",
+				"is_favorited": false,
+				"outputs": [
+					{
+						"id": "eef370fa-e094-49c9-98e2-4a5d1f9edc5f",
+						"audio_file_url": "https://bvoi.stablecog.com/b68861b9-5552-4111-8d9c-9e7c426a987b.mp3",
+						"is_favorited": false,
+						"was_auto_submitted": false
+					}
+				],
+				"prompt": {
+					"id": "d7ec7be5-b1da-43a8-a362-8e737eb56a0f",
+					"text": "How are you doing today"
+				},
+				"was_auto_submitted": false,
+				"denoise_audio": true,
+				"remove_silence": true,
+				"speaker": {
+					"id": "39f7fc5d-9031-4932-a4d5-b196bb06e203",
+					"name": "v2/en_speaker_3",
+					"locale": "en"
+				}
 			}
 		}
 	]

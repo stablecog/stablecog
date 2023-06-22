@@ -138,13 +138,15 @@ const ja: Translation = {
 		GenerationsTitle: '生成数',
 		TotalDurationTitle: '合計所用時間',
 		UpscalesTitle: 'アップスケール数',
+		VoiceoversTitle: 'Voiceovers',
 		GenerationTooltip: {
 			AspectRatioTitle: '縦横比',
 			CountryTitle: '国',
 			Type: {
 				Title: '種類',
 				Generation: '生成画像',
-				Upscale: 'アップスケール'
+				Upscale: 'アップスケール',
+				Voiceover: 'Voiceover'
 			},
 			DimensionsTitle: '寸法',
 			StepsTitle: 'ステップ',

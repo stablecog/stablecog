@@ -128,13 +128,15 @@ const ru: Translation = {
 		GenerationsTitle: 'Сгенерированные изображения',
 		TotalDurationTitle: 'Общая длительность',
 		UpscalesTitle: 'Масштабирования',
+		VoiceoversTitle: 'Voiceovers',
 		GenerationTooltip: {
 			AspectRatioTitle: 'Aspect Ratio',
 			CountryTitle: 'Страна',
 			Type: {
 				Title: 'Тип',
 				Generation: 'Генерация',
-				Upscale: 'Масштабирование'
+				Upscale: 'Масштабирование',
+				Voiceover: 'Voiceover'
 			},
 			DimensionsTitle: 'Размеры',
 			StepsTitle: 'Итераций',

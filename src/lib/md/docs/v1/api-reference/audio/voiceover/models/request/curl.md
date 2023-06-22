@@ -1,3 +1,3 @@
 ```python
-curl -X GET 'https://api.stablecog.com/v1/image/models/upscale'
+curl -X GET 'https://api.stablecog.com/v1/audio/voiceover/models'
 ```

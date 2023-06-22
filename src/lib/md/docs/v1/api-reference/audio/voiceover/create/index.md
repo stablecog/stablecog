@@ -1,17 +1,17 @@
 ---
-title: Generate
-description: Learn how to generate voiceovers using the Stablecog API.
+title: Create Voiceover
+description: Learn how to create voiceovers using the Stablecog API.
 author: Brandon Berhent
 author_url: https://twitter.com/bbedward_real
 date: 2023-05-26T15:00:00.000Z
-preview_image_url: https://ba.stablecog.com/docs/previews/generate.jpg
+preview_image_url: https://ba.stablecog.com/docs/previews/create.jpg
 ---
 
 <script>
 	import TypescriptRequest from './request/typescript.md';
 	import PythonRequest from './request/python.md';
 	import CurlRequest from './request/curl.md';
-	import Response from './request/response.md';
+	import response from './request/response.json';
 	import Tabs from '$components/docs/tabs/Tabs.svelte';
 	import Tab from '$components/docs/tabs/Tab.svelte';
 	import RequestLine from '$components/docs/RequestLine.svelte';
@@ -20,10 +20,9 @@ preview_image_url: https://ba.stablecog.com/docs/previews/generate.jpg
 	import Expandible from '$components/docs/Expandible.svelte';
 	import Code from '$components/docs/Code.svelte';
 	import CollapsibleJSON from '$components/docs/collapsibleJSON/CollapsibleJSON.svelte';
-	import response from '$md/docs/v1/api-reference/image/generate/request/response.json';
 </script>
 
-# Voiceover
+# Create Voiceover
 
 <RequestLine method='POST'>
 	/v1/audio/voiceover/create
@@ -78,13 +77,13 @@ Below is the simplest example of creating a voiceover. You just send a prompt an
 	</Expandible>
 </Property>
 <Property name="temperature" type="float" min={0} max={1}>
-	How diverse the voiceover will be, higher values are more diverse while lower are more conservative.
+	How diverse the voiceover will be. Higher values are make the voice more variable while lower make it more stable.
 </Property>
 <Property name="denoise_audio" type="boolean">
-	Whether or not to remove background noise from the resulting voiceover.
+	Remove background noise from the generated voiceover.
 </Property>
 <Property name="remove_silence" type="boolean">
-	Whether or remove periods of silence in the generated speech.
+	Remove the silent sections from the generated voiceover.
 </Property>
 
 <Spacer/>
@@ -92,8 +91,8 @@ Below is the simplest example of creating a voiceover. You just send a prompt an
 ## Response Body
 
 <Property name="outputs" type="TOutput" typeModifier="array">
-	Generated voiceovers.
-	<Expandible title="TOutput" >
+	Generated voiceover outputs.
+	<Expandible title="TOutput">
 		<Property name="id" type="string">
 			The ID of the output.
 		</Property>

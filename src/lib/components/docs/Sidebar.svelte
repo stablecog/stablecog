@@ -20,9 +20,9 @@
 
 <nav
 	style={styles !== undefined ? styles : _styles}
-	class="{classes} md:sticky md:top-0 items-stretch overflow-hidden"
+	class="{classes} flex justify-start md:sticky md:top-0 items-stretch overflow-hidden"
 >
-	<div class="flex-1 flex h-full overflow-hidden">
+	<div class="flex-1 min-w-0 flex h-full overflow-hidden">
 		<div
 			class="w-full pt-1 md:pt-4 {noBottomPadding
 				? ''

@@ -127,13 +127,15 @@ const hr: Translation = {
 		GenerationsTitle: 'Generacije',
 		TotalDurationTitle: 'Ukupno trajanje',
 		UpscalesTitle: 'Uvećavanja',
+		VoiceoversTitle: 'Voiceovers',
 		GenerationTooltip: {
 			AspectRatioTitle: 'Aspect Ratio',
 			CountryTitle: 'Država',
 			Type: {
 				Title: 'Tip',
 				Generation: 'Generiranje',
-				Upscale: 'Uvećavanje'
+				Upscale: 'Uvećavanje',
+				Voiceover: 'Voiceover'
 			},
 			DimensionsTitle: 'Dimenzije',
 			StepsTitle: 'Koraci',

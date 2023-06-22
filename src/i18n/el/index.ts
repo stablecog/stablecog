@@ -131,13 +131,15 @@ const es: Translation = {
 		GenerationsTitle: 'Παράγωγα',
 		TotalDurationTitle: 'Συνολική Διάρκεια',
 		UpscalesTitle: 'Αναβαθμίσεις',
+		VoiceoversTitle: 'Voiceovers',
 		GenerationTooltip: {
 			AspectRatioTitle: 'Αναλογία διαστάσεων',
 			CountryTitle: 'Χώρα',
 			Type: {
 				Title: 'Τύπος',
 				Generation: 'Παράγωγη εικόνα',
-				Upscale: 'Αναβάθμιση'
+				Upscale: 'Αναβάθμιση',
+				Voiceover: 'Voiceover'
 			},
 			DimensionsTitle: 'Διαστάσεις',
 			StepsTitle: 'Βήματα',

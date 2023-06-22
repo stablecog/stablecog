@@ -125,13 +125,15 @@ const zhHans: Translation = {
 		GenerationsTitle: '生成的图像',
 		TotalDurationTitle: '总时长',
 		UpscalesTitle: '图像被分辨率提高的总次数',
+		VoiceoversTitle: 'Voiceovers',
 		GenerationTooltip: {
 			AspectRatioTitle: 'Aspect Ratio',
 			CountryTitle: '国家/地区',
 			Type: {
 				Title: '类型',
 				Generation: '生成的',
-				Upscale: '被提高过分辨率的图像'
+				Upscale: '被提高过分辨率的图像',
+				Voiceover: 'Voiceover'
 			},
 			DimensionsTitle: '维度',
 			StepsTitle: '步骤',

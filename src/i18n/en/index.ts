@@ -128,13 +128,15 @@ const en: BaseTranslation = {
 		GenerationsTitle: 'Generations',
 		TotalDurationTitle: 'Total Duration',
 		UpscalesTitle: 'Upscales',
+		VoiceoversTitle: 'Voiceovers',
 		GenerationTooltip: {
 			AspectRatioTitle: 'Aspect Ratio',
 			CountryTitle: 'Country',
 			Type: {
 				Title: 'Type',
 				Generation: 'Generation',
-				Upscale: 'Upscale'
+				Upscale: 'Upscale',
+				Voiceover: 'Voiceover'
 			},
 			DimensionsTitle: 'Dimensions',
 			StepsTitle: 'Steps',

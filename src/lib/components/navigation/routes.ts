@@ -31,13 +31,13 @@ export const regularRoutes = derived([LL, userSummary], ([$LL, $userSummary]) =>
 					name: $LL.Navbar.PricingTab(),
 					href: '/pricing',
 					icon: 'pricing'
-			  }
-		/* {
+			  },
+		{
 			name: $LL.Navbar.VoiceoverTab(),
 			href: '/voiceover/generate',
 			icon: 'voiceover',
 			iconOnly: true
-		} */
+		}
 	];
 	return routes;
 });

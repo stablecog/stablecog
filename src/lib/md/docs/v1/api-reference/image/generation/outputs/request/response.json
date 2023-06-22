@@ -1,0 +1,449 @@
+{
+	"total_count": 215,
+	"outputs": [
+		{
+			"id": "bde18c17-8343-440a-bb56-2834f7042a5e",
+			"image_url": "https://b.stablecog.com/d9ade365-832d-4059-ad3e-9f40485f8bd2.jpeg",
+			"gallery_status": "not_submitted",
+			"is_favorited": false,
+			"was_auto_submitted": false,
+			"generation": {
+				"id": "033ec473-e982-484b-8515-71693f5aa762",
+				"height": 768,
+				"width": 768,
+				"inference_steps": 30,
+				"seed": 1232393484,
+				"status": "succeeded",
+				"guidance_scale": 7,
+				"scheduler_id": "b7224e56-1440-43b9-ac86-66d66f9e8c91",
+				"model_id": "22b0857d-7edc-4d00-9cd9-45aa509db093",
+				"created_at": "2023-05-27T01:30:57.979493Z",
+				"updated_at": "2023-05-27T01:31:00.243599Z",
+				"started_at": "2023-05-27T01:30:58.054299Z",
+				"completed_at": "2023-05-27T01:31:00.668478Z",
+				"is_favorited": false,
+				"outputs": [
+					{
+						"id": "bde18c17-8343-440a-bb56-2834f7042a5e",
+						"image_url": "https://b.stablecog.com/d9ade365-832d-4059-ad3e-9f40485f8bd2.jpeg",
+						"gallery_status": "not_submitted",
+						"is_favorited": false,
+						"was_auto_submitted": false
+					}
+				],
+				"prompt": {
+					"id": "b0106b9a-f210-4e9d-b391-4de3a2d51a00",
+					"text": "red cat wearing a purple hat"
+				},
+				"was_auto_submitted": false
+			}
+		},
+		{
+			"id": "563b8beb-c158-4665-b629-6daf7f12088d",
+			"image_url": "https://b.stablecog.com/f321ad86-f17e-4588-b426-43fcfe6f0128.jpeg",
+			"gallery_status": "not_submitted",
+			"is_favorited": false,
+			"was_auto_submitted": false,
+			"generation": {
+				"id": "9ef99e16-b906-4754-9f76-f24f939ee83e",
+				"height": 768,
+				"width": 768,
+				"inference_steps": 30,
+				"seed": 267064719,
+				"status": "succeeded",
+				"guidance_scale": 7,
+				"scheduler_id": "b7224e56-1440-43b9-ac86-66d66f9e8c91",
+				"model_id": "22b0857d-7edc-4d00-9cd9-45aa509db093",
+				"created_at": "2023-05-27T01:30:40.7934Z",
+				"updated_at": "2023-05-27T01:30:46.746645Z",
+				"started_at": "2023-05-27T01:30:40.880073Z",
+				"completed_at": "2023-05-27T01:30:47.170866Z",
+				"is_favorited": false,
+				"outputs": [
+					{
+						"id": "563b8beb-c158-4665-b629-6daf7f12088d",
+						"image_url": "https://b.stablecog.com/f321ad86-f17e-4588-b426-43fcfe6f0128.jpeg",
+						"gallery_status": "not_submitted",
+						"is_favorited": false,
+						"was_auto_submitted": false
+					},
+					{
+						"id": "963e704f-93ee-4a37-9d53-478bd49b7fed",
+						"image_url": "https://b.stablecog.com/988cde6b-9518-424b-b279-ba6c523b428b.jpeg",
+						"gallery_status": "not_submitted",
+						"is_favorited": false,
+						"was_auto_submitted": false
+					},
+					{
+						"id": "c49c41a9-7e44-47d3-b37e-e5ccb3303788",
+						"image_url": "https://b.stablecog.com/6220b392-9b38-4027-ab46-47a62dc59c33.jpeg",
+						"gallery_status": "not_submitted",
+						"is_favorited": false,
+						"was_auto_submitted": false
+					},
+					{
+						"id": "1cff009c-ce69-489f-b1e4-3e16c5a0726f",
+						"image_url": "https://b.stablecog.com/7a0edd53-8b3f-43c0-aeb6-4c60185b8766.jpeg",
+						"gallery_status": "not_submitted",
+						"is_favorited": false,
+						"was_auto_submitted": false
+					}
+				],
+				"prompt": {
+					"id": "b0106b9a-f210-4e9d-b391-4de3a2d51a00",
+					"text": "red cat wearing a purple hat"
+				},
+				"was_auto_submitted": false
+			}
+		},
+		{
+			"id": "963e704f-93ee-4a37-9d53-478bd49b7fed",
+			"image_url": "https://b.stablecog.com/988cde6b-9518-424b-b279-ba6c523b428b.jpeg",
+			"gallery_status": "not_submitted",
+			"is_favorited": false,
+			"was_auto_submitted": false,
+			"generation": {
+				"id": "9ef99e16-b906-4754-9f76-f24f939ee83e",
+				"height": 768,
+				"width": 768,
+				"inference_steps": 30,
+				"seed": 267064719,
+				"status": "succeeded",
+				"guidance_scale": 7,
+				"scheduler_id": "b7224e56-1440-43b9-ac86-66d66f9e8c91",
+				"model_id": "22b0857d-7edc-4d00-9cd9-45aa509db093",
+				"created_at": "2023-05-27T01:30:40.7934Z",
+				"updated_at": "2023-05-27T01:30:46.746645Z",
+				"started_at": "2023-05-27T01:30:40.880073Z",
+				"completed_at": "2023-05-27T01:30:47.170866Z",
+				"is_favorited": false,
+				"outputs": [
+					{
+						"id": "563b8beb-c158-4665-b629-6daf7f12088d",
+						"image_url": "https://b.stablecog.com/f321ad86-f17e-4588-b426-43fcfe6f0128.jpeg",
+						"gallery_status": "not_submitted",
+						"is_favorited": false,
+						"was_auto_submitted": false
+					},
+					{
+						"id": "963e704f-93ee-4a37-9d53-478bd49b7fed",
+						"image_url": "https://b.stablecog.com/988cde6b-9518-424b-b279-ba6c523b428b.jpeg",
+						"gallery_status": "not_submitted",
+						"is_favorited": false,
+						"was_auto_submitted": false
+					},
+					{
+						"id": "c49c41a9-7e44-47d3-b37e-e5ccb3303788",
+						"image_url": "https://b.stablecog.com/6220b392-9b38-4027-ab46-47a62dc59c33.jpeg",
+						"gallery_status": "not_submitted",
+						"is_favorited": false,
+						"was_auto_submitted": false
+					},
+					{
+						"id": "1cff009c-ce69-489f-b1e4-3e16c5a0726f",
+						"image_url": "https://b.stablecog.com/7a0edd53-8b3f-43c0-aeb6-4c60185b8766.jpeg",
+						"gallery_status": "not_submitted",
+						"is_favorited": false,
+						"was_auto_submitted": false
+					}
+				],
+				"prompt": {
+					"id": "b0106b9a-f210-4e9d-b391-4de3a2d51a00",
+					"text": "red cat wearing a purple hat"
+				},
+				"was_auto_submitted": false
+			}
+		},
+		{
+			"id": "c49c41a9-7e44-47d3-b37e-e5ccb3303788",
+			"image_url": "https://b.stablecog.com/6220b392-9b38-4027-ab46-47a62dc59c33.jpeg",
+			"gallery_status": "not_submitted",
+			"is_favorited": false,
+			"was_auto_submitted": false,
+			"generation": {
+				"id": "9ef99e16-b906-4754-9f76-f24f939ee83e",
+				"height": 768,
+				"width": 768,
+				"inference_steps": 30,
+				"seed": 267064719,
+				"status": "succeeded",
+				"guidance_scale": 7,
+				"scheduler_id": "b7224e56-1440-43b9-ac86-66d66f9e8c91",
+				"model_id": "22b0857d-7edc-4d00-9cd9-45aa509db093",
+				"created_at": "2023-05-27T01:30:40.7934Z",
+				"updated_at": "2023-05-27T01:30:46.746645Z",
+				"started_at": "2023-05-27T01:30:40.880073Z",
+				"completed_at": "2023-05-27T01:30:47.170866Z",
+				"is_favorited": false,
+				"outputs": [
+					{
+						"id": "563b8beb-c158-4665-b629-6daf7f12088d",
+						"image_url": "https://b.stablecog.com/f321ad86-f17e-4588-b426-43fcfe6f0128.jpeg",
+						"gallery_status": "not_submitted",
+						"is_favorited": false,
+						"was_auto_submitted": false
+					},
+					{
+						"id": "963e704f-93ee-4a37-9d53-478bd49b7fed",
+						"image_url": "https://b.stablecog.com/988cde6b-9518-424b-b279-ba6c523b428b.jpeg",
+						"gallery_status": "not_submitted",
+						"is_favorited": false,
+						"was_auto_submitted": false
+					},
+					{
+						"id": "c49c41a9-7e44-47d3-b37e-e5ccb3303788",
+						"image_url": "https://b.stablecog.com/6220b392-9b38-4027-ab46-47a62dc59c33.jpeg",
+						"gallery_status": "not_submitted",
+						"is_favorited": false,
+						"was_auto_submitted": false
+					},
+					{
+						"id": "1cff009c-ce69-489f-b1e4-3e16c5a0726f",
+						"image_url": "https://b.stablecog.com/7a0edd53-8b3f-43c0-aeb6-4c60185b8766.jpeg",
+						"gallery_status": "not_submitted",
+						"is_favorited": false,
+						"was_auto_submitted": false
+					}
+				],
+				"prompt": {
+					"id": "b0106b9a-f210-4e9d-b391-4de3a2d51a00",
+					"text": "red cat wearing a purple hat"
+				},
+				"was_auto_submitted": false
+			}
+		},
+		{
+			"id": "1cff009c-ce69-489f-b1e4-3e16c5a0726f",
+			"image_url": "https://b.stablecog.com/7a0edd53-8b3f-43c0-aeb6-4c60185b8766.jpeg",
+			"gallery_status": "not_submitted",
+			"is_favorited": false,
+			"was_auto_submitted": false,
+			"generation": {
+				"id": "9ef99e16-b906-4754-9f76-f24f939ee83e",
+				"height": 768,
+				"width": 768,
+				"inference_steps": 30,
+				"seed": 267064719,
+				"status": "succeeded",
+				"guidance_scale": 7,
+				"scheduler_id": "b7224e56-1440-43b9-ac86-66d66f9e8c91",
+				"model_id": "22b0857d-7edc-4d00-9cd9-45aa509db093",
+				"created_at": "2023-05-27T01:30:40.7934Z",
+				"updated_at": "2023-05-27T01:30:46.746645Z",
+				"started_at": "2023-05-27T01:30:40.880073Z",
+				"completed_at": "2023-05-27T01:30:47.170866Z",
+				"is_favorited": false,
+				"outputs": [
+					{
+						"id": "563b8beb-c158-4665-b629-6daf7f12088d",
+						"image_url": "https://b.stablecog.com/f321ad86-f17e-4588-b426-43fcfe6f0128.jpeg",
+						"gallery_status": "not_submitted",
+						"is_favorited": false,
+						"was_auto_submitted": false
+					},
+					{
+						"id": "963e704f-93ee-4a37-9d53-478bd49b7fed",
+						"image_url": "https://b.stablecog.com/988cde6b-9518-424b-b279-ba6c523b428b.jpeg",
+						"gallery_status": "not_submitted",
+						"is_favorited": false,
+						"was_auto_submitted": false
+					},
+					{
+						"id": "c49c41a9-7e44-47d3-b37e-e5ccb3303788",
+						"image_url": "https://b.stablecog.com/6220b392-9b38-4027-ab46-47a62dc59c33.jpeg",
+						"gallery_status": "not_submitted",
+						"is_favorited": false,
+						"was_auto_submitted": false
+					},
+					{
+						"id": "1cff009c-ce69-489f-b1e4-3e16c5a0726f",
+						"image_url": "https://b.stablecog.com/7a0edd53-8b3f-43c0-aeb6-4c60185b8766.jpeg",
+						"gallery_status": "not_submitted",
+						"is_favorited": false,
+						"was_auto_submitted": false
+					}
+				],
+				"prompt": {
+					"id": "b0106b9a-f210-4e9d-b391-4de3a2d51a00",
+					"text": "red cat wearing a purple hat"
+				},
+				"was_auto_submitted": false
+			}
+		},
+		{
+			"id": "4e066a5d-5b51-47b6-acae-560781000c26",
+			"image_url": "https://b.stablecog.com/512f4716-987c-4582-af54-6bbe1a756f48.jpeg",
+			"gallery_status": "not_submitted",
+			"is_favorited": false,
+			"was_auto_submitted": false,
+			"generation": {
+				"id": "95d37fa1-ac06-4389-a4d0-be55f37122d1",
+				"height": 768,
+				"width": 768,
+				"inference_steps": 30,
+				"seed": 862051400,
+				"status": "succeeded",
+				"guidance_scale": 7,
+				"scheduler_id": "b7224e56-1440-43b9-ac86-66d66f9e8c91",
+				"model_id": "22b0857d-7edc-4d00-9cd9-45aa509db093",
+				"created_at": "2023-05-27T01:30:28.259448Z",
+				"updated_at": "2023-05-27T01:30:34.13463Z",
+				"started_at": "2023-05-27T01:30:28.340796Z",
+				"completed_at": "2023-05-27T01:30:34.556715Z",
+				"is_favorited": false,
+				"outputs": [
+					{
+						"id": "4e066a5d-5b51-47b6-acae-560781000c26",
+						"image_url": "https://b.stablecog.com/512f4716-987c-4582-af54-6bbe1a756f48.jpeg",
+						"gallery_status": "not_submitted",
+						"is_favorited": false,
+						"was_auto_submitted": false
+					},
+					{
+						"id": "3996daec-d345-4705-bf56-0ebde51f0a49",
+						"image_url": "https://b.stablecog.com/7b9a02f2-b9b6-4c0d-ab6c-9d8cd9084358.jpeg",
+						"gallery_status": "not_submitted",
+						"is_favorited": false,
+						"was_auto_submitted": false
+					},
+					{
+						"id": "6e116dd5-6a59-468b-b614-ac3d03e82dd9",
+						"image_url": "https://b.stablecog.com/99d901d4-c390-48ef-9576-81a6dc5b6660.jpeg",
+						"gallery_status": "not_submitted",
+						"is_favorited": false,
+						"was_auto_submitted": false
+					},
+					{
+						"id": "5dfe930a-1104-4306-8e58-bff1b1236c50",
+						"image_url": "https://b.stablecog.com/b42f7674-1a5e-4647-9628-1325381ba134.jpeg",
+						"gallery_status": "not_submitted",
+						"is_favorited": false,
+						"was_auto_submitted": false
+					}
+				],
+				"prompt": {
+					"id": "b0106b9a-f210-4e9d-b391-4de3a2d51a00",
+					"text": "red cat wearing a purple hat"
+				},
+				"was_auto_submitted": false
+			}
+		},
+		{
+			"id": "3996daec-d345-4705-bf56-0ebde51f0a49",
+			"image_url": "https://b.stablecog.com/7b9a02f2-b9b6-4c0d-ab6c-9d8cd9084358.jpeg",
+			"gallery_status": "not_submitted",
+			"is_favorited": false,
+			"was_auto_submitted": false,
+			"generation": {
+				"id": "95d37fa1-ac06-4389-a4d0-be55f37122d1",
+				"height": 768,
+				"width": 768,
+				"inference_steps": 30,
+				"seed": 862051400,
+				"status": "succeeded",
+				"guidance_scale": 7,
+				"scheduler_id": "b7224e56-1440-43b9-ac86-66d66f9e8c91",
+				"model_id": "22b0857d-7edc-4d00-9cd9-45aa509db093",
+				"created_at": "2023-05-27T01:30:28.259448Z",
+				"updated_at": "2023-05-27T01:30:34.13463Z",
+				"started_at": "2023-05-27T01:30:28.340796Z",
+				"completed_at": "2023-05-27T01:30:34.556715Z",
+				"is_favorited": false,
+				"outputs": [
+					{
+						"id": "4e066a5d-5b51-47b6-acae-560781000c26",
+						"image_url": "https://b.stablecog.com/512f4716-987c-4582-af54-6bbe1a756f48.jpeg",
+						"gallery_status": "not_submitted",
+						"is_favorited": false,
+						"was_auto_submitted": false
+					},
+					{
+						"id": "3996daec-d345-4705-bf56-0ebde51f0a49",
+						"image_url": "https://b.stablecog.com/7b9a02f2-b9b6-4c0d-ab6c-9d8cd9084358.jpeg",
+						"gallery_status": "not_submitted",
+						"is_favorited": false,
+						"was_auto_submitted": false
+					},
+					{
+						"id": "6e116dd5-6a59-468b-b614-ac3d03e82dd9",
+						"image_url": "https://b.stablecog.com/99d901d4-c390-48ef-9576-81a6dc5b6660.jpeg",
+						"gallery_status": "not_submitted",
+						"is_favorited": false,
+						"was_auto_submitted": false
+					},
+					{
+						"id": "5dfe930a-1104-4306-8e58-bff1b1236c50",
+						"image_url": "https://b.stablecog.com/b42f7674-1a5e-4647-9628-1325381ba134.jpeg",
+						"gallery_status": "not_submitted",
+						"is_favorited": false,
+						"was_auto_submitted": false
+					}
+				],
+				"prompt": {
+					"id": "b0106b9a-f210-4e9d-b391-4de3a2d51a00",
+					"text": "red cat wearing a purple hat"
+				},
+				"was_auto_submitted": false
+			}
+		},
+		{
+			"id": "6e116dd5-6a59-468b-b614-ac3d03e82dd9",
+			"image_url": "https://b.stablecog.com/99d901d4-c390-48ef-9576-81a6dc5b6660.jpeg",
+			"gallery_status": "not_submitted",
+			"is_favorited": false,
+			"was_auto_submitted": false,
+			"generation": {
+				"id": "95d37fa1-ac06-4389-a4d0-be55f37122d1",
+				"height": 768,
+				"width": 768,
+				"inference_steps": 30,
+				"seed": 862051400,
+				"status": "succeeded",
+				"guidance_scale": 7,
+				"scheduler_id": "b7224e56-1440-43b9-ac86-66d66f9e8c91",
+				"model_id": "22b0857d-7edc-4d00-9cd9-45aa509db093",
+				"created_at": "2023-05-27T01:30:28.259448Z",
+				"updated_at": "2023-05-27T01:30:34.13463Z",
+				"started_at": "2023-05-27T01:30:28.340796Z",
+				"completed_at": "2023-05-27T01:30:34.556715Z",
+				"is_favorited": false,
+				"outputs": [
+					{
+						"id": "4e066a5d-5b51-47b6-acae-560781000c26",
+						"image_url": "https://b.stablecog.com/512f4716-987c-4582-af54-6bbe1a756f48.jpeg",
+						"gallery_status": "not_submitted",
+						"is_favorited": false,
+						"was_auto_submitted": false
+					},
+					{
+						"id": "3996daec-d345-4705-bf56-0ebde51f0a49",
+						"image_url": "https://b.stablecog.com/7b9a02f2-b9b6-4c0d-ab6c-9d8cd9084358.jpeg",
+						"gallery_status": "not_submitted",
+						"is_favorited": false,
+						"was_auto_submitted": false
+					},
+					{
+						"id": "6e116dd5-6a59-468b-b614-ac3d03e82dd9",
+						"image_url": "https://b.stablecog.com/99d901d4-c390-48ef-9576-81a6dc5b6660.jpeg",
+						"gallery_status": "not_submitted",
+						"is_favorited": false,
+						"was_auto_submitted": false
+					},
+					{
+						"id": "5dfe930a-1104-4306-8e58-bff1b1236c50",
+						"image_url": "https://b.stablecog.com/b42f7674-1a5e-4647-9628-1325381ba134.jpeg",
+						"gallery_status": "not_submitted",
+						"is_favorited": false,
+						"was_auto_submitted": false
+					}
+				],
+				"prompt": {
+					"id": "b0106b9a-f210-4e9d-b391-4de3a2d51a00",
+					"text": "red cat wearing a purple hat"
+				},
+				"was_auto_submitted": false
+			}
+		}
+	],
+	"next": "2023-05-26T14:14:49.457057Z"
+}

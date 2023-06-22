@@ -12,9 +12,11 @@
 	import { getAspectRatioFromWidthAndHeight } from '$ts/constants/generationSize';
 	import { previewImageVersion } from '$ts/constants/previewImageVersion';
 	import type {
+		TAnyRealtimePayloadExt,
 		TBaseRealtimePayload,
 		TGenerationRealtimePayloadExt,
-		TUpscaleRealtimePayloadExt
+		TUpscaleRealtimePayloadExt,
+		TVoiceoverRealtimePayloadExt
 	} from '$approutes/live/types';
 	import LiveBubble from '$approutes/live/LiveBubble.svelte';
 	import { flip } from 'svelte/animate';
@@ -29,7 +31,7 @@
 		sse.onmessage = (event) => {
 			const data = JSON.parse(event.data);
 			if (data.process_type === 'generate') {
-				const generation = data as TBaseRealtimePayload;
+				const generation = data as TGenerationRealtimePayloadExt;
 				// check if generation is already in the array
 				const generationAlreadyInArray = generations.find((g) => g.id === generation.id);
 				if (!generationAlreadyInArray) {
@@ -76,6 +78,30 @@
 						upscaleTotalCount.set(newCount);
 					}
 				}
+			} else if (data.process_type === 'voiceover') {
+				const voiceover = data as TVoiceoverRealtimePayloadExt;
+				// check if voiceover is already in the array
+				const voiceoverAlreadyInArray = voiceovers.find((v) => v.id === voiceover.id);
+				if (!voiceoverAlreadyInArray) {
+					voiceovers = [voiceover, ...voiceovers];
+				} else {
+					// update the voiceover in the array
+					voiceovers = voiceovers.map((v) => {
+						if (v.id === voiceover.id) {
+							return voiceover;
+						} else {
+							return v;
+						}
+					});
+					if (voiceover.status === 'succeeded' && voiceover.actual_num_outputs) {
+						const newCount = $voiceoverTotalCount + voiceover.actual_num_outputs;
+						voiceoverTotalCount = tweened($voiceoverTotalCount, {
+							duration: calculateAnimationDuration($voiceoverTotalCount, newCount),
+							easing: quadOut
+						});
+						voiceoverTotalCount.set(newCount);
+					}
+				}
 			}
 			console.log('Message from SSE', data);
 		};
@@ -86,11 +112,12 @@
 
 	let generations: TGenerationRealtimePayloadExt[] = [];
 	let upscales: TUpscaleRealtimePayloadExt[] = [];
-	let generationsAndUpscales: (TGenerationRealtimePayloadExt | TUpscaleRealtimePayloadExt)[] = [];
+	let voiceovers: TVoiceoverRealtimePayloadExt[] = [];
+	let allProcesses: TAnyRealtimePayloadExt[] = [];
 
-	$: [generations, upscales], setGenerationsAndUpscales();
+	$: [generations, upscales, voiceovers], setAllProcesses();
 
-	const maxLengthGenerationsAndUpscales = 50;
+	const maxLengthAllProcesses = 50;
 	const msForEachDifference = 50;
 	const maxDuration = 500;
 	let generationTotalCount = tweened(0, {
@@ -101,20 +128,24 @@
 		duration: 500,
 		easing: quadOut
 	});
+	let voiceoverTotalCount = tweened(0, {
+		duration: 500,
+		easing: quadOut
+	});
 
 	const calculateAnimationDuration = (curr: number, next: number) => {
 		return Math.min((next - curr) * msForEachDifference, maxDuration);
 	};
 
-	function setGenerationsAndUpscales() {
-		const all = [...generations, ...upscales];
+	function setAllProcesses() {
+		const all = [...generations, ...upscales, ...voiceovers];
 		const allSorted = all
 			.sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime())
-			.slice(0, maxLengthGenerationsAndUpscales);
-		generationsAndUpscales = [...allSorted];
+			.slice(0, maxLengthAllProcesses);
+		allProcesses = [...allSorted];
 	}
 
-	function withAspectRatio(payload: TBaseRealtimePayload) {
+	function withAspectRatio(payload: TGenerationRealtimePayloadExt | TUpscaleRealtimePayloadExt) {
 		const aspect_ratio = getAspectRatioFromWidthAndHeight(payload.width, payload.height);
 		return {
 			...payload,
@@ -132,17 +163,15 @@
 		}
 	}
 
-	function getDurationSec(
-		generationOrUpscale: TGenerationRealtimePayloadExt | TUpscaleRealtimePayloadExt
-	) {
-		const createdAt = new Date(generationOrUpscale.created_at).getTime();
-		const completedAt = generationOrUpscale.completed_at
-			? new Date(generationOrUpscale.completed_at).getTime()
+	function getDurationSec(processObject: TAnyRealtimePayloadExt) {
+		const createdAt = new Date(processObject.created_at).getTime();
+		const completedAt = processObject.completed_at
+			? new Date(processObject.completed_at).getTime()
 			: Date.now();
 		return (completedAt - createdAt) / 1000;
 	}
 
-	function planBasedColor(entry: TGenerationRealtimePayloadExt | TUpscaleRealtimePayloadExt) {
+	function planBasedColor(entry: TAnyRealtimePayloadExt) {
 		return entry.product_id
 			? entry.status === 'succeeded'
 				? 'rgb(var(--c-success-secondary))'
@@ -154,13 +183,13 @@
 
 	function getOptionalInfo(
 		$LL: TranslationFunctions,
-		generationOrUpscale: TGenerationRealtimePayloadExt | TUpscaleRealtimePayloadExt
+		processObject: TAnyRealtimePayloadExt
 	): TRow[] {
-		const asGeneration = generationOrUpscale as TGenerationRealtimePayloadExt;
-		const asUpscale = generationOrUpscale as TUpscaleRealtimePayloadExt;
-		if (generationOrUpscale.process_type === 'upscale') {
+		const asGeneration = processObject as TGenerationRealtimePayloadExt;
+		const asUpscale = processObject as TUpscaleRealtimePayloadExt;
+		if (processObject.process_type === 'upscale') {
 			return [];
-		} else if (generationOrUpscale.process_type === 'generate') {
+		} else if (processObject.process_type === 'generate') {
 			return [];
 		}
 		return [];
@@ -182,7 +211,11 @@
 	async function getAndSetTotals() {
 		const res = await fetch(`${apiUrl.origin}/v1/stats`);
 		const resJson: IStatsRes = await res.json();
-		const { generation_output_count: gCount, upscale_output_count: uCount } = resJson;
+		const {
+			generation_output_count: gCount,
+			upscale_output_count: uCount,
+			voiceover_output_count: vCount
+		} = resJson;
 		if (gCount > $generationTotalCount) {
 			generationTotalCount = tweened($generationTotalCount, {
 				duration: calculateAnimationDuration($generationTotalCount, gCount),
@@ -197,11 +230,19 @@
 			});
 			upscaleTotalCount.set(uCount);
 		}
+		if (vCount > $voiceoverTotalCount) {
+			voiceoverTotalCount = tweened($voiceoverTotalCount, {
+				duration: calculateAnimationDuration($voiceoverTotalCount, vCount),
+				easing: quadOut
+			});
+			voiceoverTotalCount.set(vCount);
+		}
 	}
 
 	interface IStatsRes {
 		generation_output_count: number;
 		upscale_output_count: number;
+		voiceover_output_count: number;
 	}
 </script>
 
@@ -214,39 +255,42 @@
 <div class="w-full flex-1 flex justify-center pb-[calc(2vh)]">
 	<div class="w-full flex flex-col items-center justify-center max-w-5xl">
 		<div
-			class="w-full px-8 md:px-16 flex flex-wrap items-center justify-center py-2 md:pt-10 gap-10 lg:gap-14"
+			class="w-full px-8 md:px-16 flex flex-wrap items-center justify-center py-2 md:pt-10 gap-10"
 		>
 			<div class="w-full lg:w-64 max-w-full flex flex-col gap-1.5 text-center lg:text-right">
-				<h1 class="text-c-on-bg/50 font-medium text-base">{$LL.Live.GenerationsTitle()}</h1>
+				<h2 class="text-c-on-bg/50 font-medium text-base">{$LL.Live.GenerationsTitle()}</h2>
 				<p class="font-bold text-4xl">
 					{Math.floor($generationTotalCount).toLocaleString($locale)}
 				</p>
 			</div>
-			<div class="w-full lg:w-64 max-w-full flex flex-col gap-1.5 text-center lg:text-left">
-				<h1 class="text-c-on-bg/50 font-medium text-base">{$LL.Live.UpscalesTitle()}</h1>
+			<div class="w-full lg:w-64 max-w-full flex flex-col gap-1.5 text-center">
+				<h2 class="text-c-on-bg/50 font-medium text-base">{$LL.Live.UpscalesTitle()}</h2>
 				<p class="font-bold text-4xl">
 					{Math.floor($upscaleTotalCount).toLocaleString($locale)}
 				</p>
 			</div>
+			<div class="w-full lg:w-64 max-w-full flex flex-col gap-1.5 text-center lg:text-left">
+				<h2 class="text-c-on-bg/50 font-medium text-base">{$LL.Live.VoiceoversTitle()}</h2>
+				<p class="font-bold text-4xl">
+					{Math.floor($voiceoverTotalCount).toLocaleString($locale)}
+				</p>
+			</div>
 		</div>
-		{#if generationsAndUpscales.length > 0}
+		{#if allProcesses.length > 0}
 			<div
 				transition:expandCollapse|local={{ duration: 300 }}
 				class="w-full px-8 md:px-24 z-0 relative"
 			>
 				<div class="w-full flex flex-wrap items-center justify-center py-4">
-					{#each generationsAndUpscales as generationOrUpscale (generationOrUpscale.id)}
+					{#each allProcesses as processObject (processObject.id)}
 						<div
-							in:elementreceive|local={{ key: generationOrUpscale.id }}
-							out:elementsend|local={{ key: generationOrUpscale.id }}
+							in:elementreceive|local={{ key: processObject.id }}
+							out:elementsend|local={{ key: processObject.id }}
 							animate:flip={{ duration: 300, easing: quadOut }}
-							class="flex items-center justify-center relative overflow-hidden z-0 {generationOrUpscale.process_type ===
-							'generate'
-								? 'rounded-full'
-								: 'rounded-xl'} -m-3"
+							class="flex items-center justify-center relative z-0 -m-3"
 						>
 							<LiveBubble
-								{generationOrUpscale}
+								{processObject}
 								{getDurationSec}
 								{getCountryName}
 								{getOptionalInfo}

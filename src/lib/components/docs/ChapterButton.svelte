@@ -5,6 +5,7 @@
 	import LL from '$i18n/i18n-svelte';
 	import type { TSidebarItem } from '$docroutes/guide/types';
 	import { getImgProxySrcDefault, getImgProxySrcSet } from '$ts/helpers/imgproxy';
+	import MethodBadge from '$components/docs/MethodBadge.svelte';
 
 	export let item: TSidebarItem;
 	export { classes as class };
@@ -34,12 +35,17 @@
 				>
 					{$LL.Guide.ChapterTitle()}
 				</p>
-				<h3
-					class="max-w-full text-lg font-semibold overflow-hidden overflow-ellipsis whitespace-nowrap
-					text-c-on-bg transition not-touch:group-hover:text-c-primary"
-				>
-					{item.title}
-				</h3>
+				<div class="flex items-center gap-2.5 pr-1">
+					<h3
+						class="inline flex-shrink min-w-0 text-lg font-semibold
+						text-c-on-bg transition not-touch:group-hover:text-c-primary"
+					>
+						{item.title}
+					</h3>
+					{#if item.http_method}
+						<MethodBadge size="sm" method={item.http_method} />
+					{/if}
+				</div>
 			</div>
 			<IconArrowRight
 				class="w-5 h-5 text-c-on-bg/50 transition not-touch:group-hover:translate-x-1.5 

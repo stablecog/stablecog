@@ -38,9 +38,8 @@ export function addImageUrlToSidebarItem({
 	previewBaseUrl: string;
 }): TSidebarItem {
 	let obj: TSidebarItem = {
-		pathname: sidebarItem.pathname,
-		title: sidebarItem.title,
-		preview_image_url: !sidebarItem.noPreview
+		...sidebarItem,
+		preview_image_url: !sidebarItem.no_preview
 			? sidebarItem.preview_image_url !== undefined
 				? sidebarItem.preview_image_url
 				: getPreviewUrlFromEntryPathname({

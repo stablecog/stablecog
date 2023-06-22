@@ -127,13 +127,15 @@ const ptPt: Translation = {
 		GenerationsTitle: 'Gerações',
 		TotalDurationTitle: 'Duração total',
 		UpscalesTitle: 'Interpolação',
+		VoiceoversTitle: 'Voiceovers',
 		GenerationTooltip: {
 			AspectRatioTitle: 'Aspect Ratio',
 			CountryTitle: 'País',
 			Type: {
 				Title: 'Tipo',
 				Generation: 'Gerações',
-				Upscale: 'Interpolação'
+				Upscale: 'Interpolação',
+				Voiceover: 'Voiceover'
 			},
 			DimensionsTitle: 'Dimensões',
 			StepsTitle: 'Passos',

@@ -1,18 +1,18 @@
 {
 	"outputs": [
 		{
-				"id": "852d5c6b-fee5-418d-837d-57275aa08d11",
-				"url": "https://bvoi.stablecog.com/c4acc69c-b78b-4d2f-a0b7-e6f37f3f9f1f.mp3",
-				"audio_duration": 2.6816876
+			"id": "bc54cad2-1e40-49c1-a890-b3c06a9240ac",
+			"url": "https://bvoi.stablecog.com/acfc6546-a1b5-417a-b58c-3f063a0a2799.mp3",
+			"audio_duration": 5.3976874
 		}
 	],
-	"remaining_credits": 11117,
+	"remaining_credits": 1485,
 	"settings": {
-			"model_id": "0f442a3e-cf53-490b-b4a9-b0dda63e9523",
-			"speaker_id": "0140c5dc-af12-4643-bfec-650d3cd03c56",
-			"temperature": 0.7,
-			"seed": 1627265839,
-			"denoise_audio": true,
-			"remove_silence": true
+		"model_id": "0f442a3e-cf53-490b-b4a9-b0dda63e9523",
+		"speaker_id": "39f7fc5d-9031-4932-a4d5-b196bb06e203",
+		"temperature": 0.7,
+		"seed": 12447287,
+		"denoise_audio": true,
+		"remove_silence": true
 	}
 }

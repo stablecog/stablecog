@@ -128,13 +128,15 @@ const vi: Translation = {
 		GenerationsTitle: 'Số lượng hình ảnh',
 		TotalDurationTitle: 'Tổng thời gian',
 		UpscalesTitle: 'Số lệnh phóng to',
+		VoiceoversTitle: 'Voiceovers',
 		GenerationTooltip: {
 			AspectRatioTitle: 'Aspect Ratio',
 			CountryTitle: 'Quốc gia',
 			Type: {
 				Title: 'Kiểu',
 				Generation: 'Tạo ảnh',
-				Upscale: 'Phóng to'
+				Upscale: 'Phóng to',
+				Voiceover: 'Voiceover'
 			},
 			DimensionsTitle: 'Kích thước',
 			StepsTitle: 'Số bước',

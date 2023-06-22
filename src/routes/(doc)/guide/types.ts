@@ -1,9 +1,10 @@
 export interface TSidebarItemBase {
 	title: string;
 	pathname: string;
-	noPreview?: boolean;
+	no_preview?: boolean;
 	children?: TSidebarItemBase[];
 	preview_image_url?: string;
+	http_method?: 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE';
 }
 
 export interface TSidebarItem extends TSidebarItemBase {

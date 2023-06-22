@@ -127,13 +127,15 @@ const hi: Translation = {
 		GenerationsTitle: 'बनावटे',
 		TotalDurationTitle: 'कुल अवधि',
 		UpscalesTitle: 'निखार',
+		VoiceoversTitle: 'Voiceovers',
 		GenerationTooltip: {
 			AspectRatioTitle: 'Aspect Ratio',
 			CountryTitle: 'देश',
 			Type: {
 				Title: 'प्रकार',
 				Generation: 'बनावत',
-				Upscale: 'निखार'
+				Upscale: 'निखार',
+				Voiceover: 'Voiceover'
 			},
 			DimensionsTitle: 'माप',
 			StepsTitle: 'कदम',

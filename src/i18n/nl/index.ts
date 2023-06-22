@@ -131,13 +131,15 @@ const nl: Translation = {
 		GenerationsTitle: 'Creaties',
 		TotalDurationTitle: 'Totale Tijdsduur',
 		UpscalesTitle: 'Opschalingen',
+		VoiceoversTitle: 'Voiceovers',
 		GenerationTooltip: {
 			AspectRatioTitle: 'Beeldverhouding',
 			CountryTitle: 'Land',
 			Type: {
 				Title: 'Type',
 				Generation: 'Genereren',
-				Upscale: 'Opschaling'
+				Upscale: 'Opschaling',
+				Voiceover: 'Voiceover'
 			},
 			DimensionsTitle: 'Afmetingen',
 			StepsTitle: 'Stappen',

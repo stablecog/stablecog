@@ -128,13 +128,15 @@ const fr: Translation = {
 		GenerationsTitle: 'Images générées',
 		TotalDurationTitle: 'Durée totale',
 		UpscalesTitle: 'Images upscalées',
+		VoiceoversTitle: 'Voiceovers',
 		GenerationTooltip: {
 			AspectRatioTitle: 'Aspect Ratio',
 			CountryTitle: 'Pays',
 			Type: {
 				Title: 'Type',
 				Generation: 'Image générée',
-				Upscale: 'Image upscalée'
+				Upscale: 'Image upscalée',
+				Voiceover: 'Voiceover'
 			},
 			DimensionsTitle: 'Dimensions',
 			StepsTitle: 'Itérations',

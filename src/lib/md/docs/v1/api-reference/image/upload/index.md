@@ -29,7 +29,7 @@ preview_image_url: https://ba.stablecog.com/docs/previews/generate.jpg
 	/v1/image/upload
 </RequestLine>
 
-This endpoint is for uploading images. The result is intended to be used as init_image_url for the <Code href='/docs/v1/api-reference/image/generate'>/v1/image/generate</Code> endpoint.
+This endpoint is for uploading images. The result is intended to be used as init_image_url for the <Code href='/docs/v1/api-reference/image/generate'>/v1/image/generation/create</Code> endpoint.
 
 ## Request Example
 
@@ -71,5 +71,5 @@ Below is the simplest example of uploading an image. It takes a multipart/form-d
 ## Response Body
 
 <Property name="object" type="string">
-	A URL that can be passed as init_image_url to the <Code href='/docs/v1/api-reference/image/generate'>/v1/image/generate</Code> endpoint.
+	A URL that can be passed as init_image_url to the <Code href='/docs/v1/api-reference/image/generate'>/v1/image/generation/create</Code> endpoint.
 </Property>

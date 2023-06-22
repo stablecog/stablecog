@@ -11,13 +11,12 @@
 	import IconToken from '$components/icons/IconToken.svelte';
 	import IconWand from '$components/icons/IconWand.svelte';
 	import LL, { locale } from '$i18n/i18n-svelte';
-	import { autoresize } from '$ts/actions/textarea/autoresize';
 	import { maxSeed } from '$ts/constants/main';
 	import { voiceoverLocale, voiceoverModelId } from '$ts/constants/voiceover/models';
 	import {
 		getVoiceoverCreditCost,
 		maxVoiceoverCharacterCount,
-		voiceoverStabilityHardMin
+		voiceoverStabilityHardMax
 	} from '$ts/constants/voiceover/rest';
 	import { formatVoiceoverPrompt } from '$ts/helpers/formatPrompt';
 	import { generateSSEId } from '$ts/helpers/generateSSEId';
@@ -83,6 +82,11 @@
 		}
 		toggleSettingsSheet(false);
 		voiceoverPrompt.set(formatVoiceoverPrompt($voiceoverPrompt));
+		const temperature = Number(
+			(
+				Math.round((1 - Math.min(voiceoverStabilityHardMax, $voiceoverStability) / 100) * 100) / 100
+			).toFixed(2)
+		);
 		queueInitialVoiceoverRequest({
 			model_id: $voiceoverModelId,
 			speaker: {
@@ -90,7 +94,7 @@
 				locale: $voiceoverLocale
 			},
 			prompt: { id: 'prompt', text: $voiceoverPrompt },
-			temperature: Math.max(voiceoverStabilityHardMin, $voiceoverStability) / 100,
+			temperature,
 			num_outputs: 1,
 			seed: $voiceoverSeed || Math.round(Math.random() * maxSeed),
 			stream_id: $sseId,

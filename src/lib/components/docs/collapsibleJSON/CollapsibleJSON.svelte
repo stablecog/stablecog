@@ -2,7 +2,6 @@
 	import CopyButton from '$components/docs/CopyButton.svelte';
 	import CollapsibleJsonInner from '$components/docs/collapsibleJSON/CollapsibleJSONInner.svelte';
 	import type { TKeyObject } from '$components/docs/collapsibleJSON/types';
-	import { onMount } from 'svelte';
 	export let json: any;
 	export let title: string;
 

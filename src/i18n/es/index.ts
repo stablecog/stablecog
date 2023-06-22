@@ -128,13 +128,15 @@ const es: Translation = {
 		GenerationsTitle: 'Generaciones',
 		TotalDurationTitle: 'Duración Total',
 		UpscalesTitle: 'Mejoras',
+		VoiceoversTitle: 'Voiceovers',
 		GenerationTooltip: {
 			AspectRatioTitle: 'Aspect Ratio',
 			CountryTitle: 'País',
 			Type: {
 				Title: 'Tipo',
 				Generation: 'Generación',
-				Upscale: 'Mejora'
+				Upscale: 'Mejora',
+				Voiceover: 'Voiceover'
 			},
 			DimensionsTitle: 'Dimensiones',
 			StepsTitle: 'Pasos',

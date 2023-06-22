@@ -128,13 +128,15 @@ const ko: Translation = {
 		GenerationsTitle: '생성된 이미지',
 		TotalDurationTitle: '총 생성 시간',
 		UpscalesTitle: '화질 개선 횟수',
+		VoiceoversTitle: 'Voiceovers',
 		GenerationTooltip: {
 			AspectRatioTitle: 'Aspect Ratio',
 			CountryTitle: '국가',
 			Type: {
 				Title: '타입',
 				Generation: '이미지 생성',
-				Upscale: '화질 개선'
+				Upscale: '화질 개선',
+				Voiceover: 'Voiceover'
 			},
 			DimensionsTitle: '해상도',
 			StepsTitle: '생성 스텝 수',

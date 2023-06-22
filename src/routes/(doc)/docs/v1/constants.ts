@@ -27,44 +27,81 @@ const _sidebar: TSidebarItemBase = {
 					pathname: '/docs/v1/api-reference/image',
 					children: [
 						{
-							title: 'Generate',
-							pathname: '/docs/v1/api-reference/image/generate'
-						},
-						{
-							title: 'Upscale',
-							pathname: '/docs/v1/api-reference/image/upscale'
-						},
-						{
-							title: 'Models',
-							pathname: '/docs/v1/api-reference/image/models',
-							preview_image_url: `${previewBaseUrl}/image-models.jpg`,
+							title: 'Generation',
+							pathname: '/docs/v1/api-reference/image/generation',
 							children: [
 								{
-									title: 'Generation Models',
-									pathname: '/docs/v1/api-reference/image/models/generate',
-									preview_image_url: `${previewBaseUrl}/generation-models.jpg`
+									title: 'Create',
+									pathname: '/docs/v1/api-reference/image/generation/create',
+									http_method: 'POST'
 								},
 								{
-									title: 'Upscale Models',
-									pathname: '/docs/v1/api-reference/image/models/upscale',
-									preview_image_url: `${previewBaseUrl}/upscale-models.jpg`
+									title: 'Outputs',
+									pathname: '/docs/v1/api-reference/image/generation/outputs',
+									http_method: 'GET'
+								},
+								{
+									title: 'Models',
+									pathname: '/docs/v1/api-reference/image/generation/models',
+									http_method: 'GET'
+								},
+								{
+									title: 'Defaults',
+									pathname: '/docs/v1/api-reference/image/generation/defaults',
+									http_method: 'GET'
 								}
 							]
 						},
 						{
-							title: 'Defaults',
-							pathname: '/docs/v1/api-reference/image/defaults',
-							preview_image_url: `${previewBaseUrl}/image-defaults.jpg`,
+							title: 'Upscale',
+							pathname: '/docs/v1/api-reference/image/upscale',
 							children: [
 								{
-									title: 'Generation Defaults',
-									pathname: '/docs/v1/api-reference/image/defaults/generate',
-									preview_image_url: `${previewBaseUrl}/generation-defaults.jpg`
+									title: 'Create',
+									pathname: '/docs/v1/api-reference/image/upscale/create',
+									http_method: 'POST'
 								},
 								{
-									title: 'Upscale Defaults',
-									pathname: '/docs/v1/api-reference/image/defaults/upscale',
-									preview_image_url: `${previewBaseUrl}/upscale-defaults.jpg`
+									title: 'Models',
+									pathname: '/docs/v1/api-reference/image/upscale/models',
+									http_method: 'GET'
+								},
+								{
+									title: 'Defaults',
+									pathname: '/docs/v1/api-reference/image/upscale/defaults',
+									http_method: 'GET'
+								}
+							]
+						}
+					]
+				},
+				{
+					title: 'Audio',
+					pathname: '/docs/v1/api-reference/audio',
+					children: [
+						{
+							title: 'Voiceover',
+							pathname: '/docs/v1/api-reference/audio/voiceover',
+							children: [
+								{
+									title: 'Create',
+									pathname: '/docs/v1/api-reference/audio/voiceover/create',
+									http_method: 'POST'
+								},
+								{
+									title: 'Outputs',
+									pathname: '/docs/v1/api-reference/audio/voiceover/outputs',
+									http_method: 'GET'
+								},
+								{
+									title: 'Models',
+									pathname: '/docs/v1/api-reference/audio/voiceover/models',
+									http_method: 'GET'
+								},
+								{
+									title: 'Defaults',
+									pathname: '/docs/v1/api-reference/audio/voiceover/defaults',
+									http_method: 'GET'
 								}
 							]
 						}

@@ -14,19 +14,19 @@
 		} else {
 			keyObject.isOpen = true;
 			if (isInitialClick) {
-				openAll(keyObject);
+				openAll(keyObject, level);
 			}
 		}
 		isInitialClick = false;
 	}
 
-	function openAll(obj: TKeyObject) {
+	function openAll(obj: TKeyObject, level: number) {
 		obj.isOpen = true;
-		if (obj.children) {
+		if (obj.children && level < 2) {
 			obj.children.forEach((child) => {
 				child.isOpen = true;
 				if (child.children) {
-					openAll(child);
+					openAll(child, level + 1);
 				}
 			});
 		}

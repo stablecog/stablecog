@@ -130,13 +130,15 @@ const bg: Translation = {
 		GenerationsTitle: 'Изработки',
 		TotalDurationTitle: 'Общо време',
 		UpscalesTitle: 'Уголемявания',
+		VoiceoversTitle: 'Voiceovers',
 		GenerationTooltip: {
 			AspectRatioTitle: 'Съотношение',
 			CountryTitle: 'Държава',
 			Type: {
 				Title: 'Тип',
 				Generation: 'Изработка',
-				Upscale: 'Уголемяване'
+				Upscale: 'Уголемяване',
+				Voiceover: 'Voiceover'
 			},
 			DimensionsTitle: 'Размери',
 			StepsTitle: 'Стъпки',

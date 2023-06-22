@@ -9,4 +9,4 @@ preview_image_url: https://ba.stablecog.com/docs/previews/image.jpg
 
 # Image
 
-These are image related endpoints such as generating or upscaling an image.
+These are image related endpoints such as generating an image, retrieving your generations or upscaling an image.

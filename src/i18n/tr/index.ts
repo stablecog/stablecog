@@ -138,13 +138,15 @@ const tr: Translation = {
 		GenerationsTitle: 'Üretimler',
 		TotalDurationTitle: 'Toplam Süre',
 		UpscalesTitle: 'Büyütmeler',
+		VoiceoversTitle: 'Voiceovers',
 		GenerationTooltip: {
 			AspectRatioTitle: 'Oran',
 			CountryTitle: 'Ülke',
 			Type: {
 				Title: 'Tip',
 				Generation: 'Üretim',
-				Upscale: 'Büyütme'
+				Upscale: 'Büyütme',
+				Voiceover: 'Voiceover'
 			},
 			DimensionsTitle: 'Ölçüler',
 			StepsTitle: 'Adım Sayısı',

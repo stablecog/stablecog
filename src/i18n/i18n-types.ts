@@ -373,6 +373,10 @@ type RootTranslation = {
 		 * U​p​s​c​a​l​e​s
 		 */
 		UpscalesTitle: string
+		/**
+		 * V​o​i​c​e​o​v​e​r​s
+		 */
+		VoiceoversTitle: string
 		GenerationTooltip: {
 			/**
 			 * A​s​p​e​c​t​ ​R​a​t​i​o
@@ -395,6 +399,10 @@ type RootTranslation = {
 				 * U​p​s​c​a​l​e
 				 */
 				Upscale: string
+				/**
+				 * V​o​i​c​e​o​v​e​r
+				 */
+				Voiceover: string
 			}
 			/**
 			 * D​i​m​e​n​s​i​o​n​s
@@ -3222,6 +3230,10 @@ export type TranslationFunctions = {
 		 * Upscales
 		 */
 		UpscalesTitle: () => LocalizedString
+		/**
+		 * Voiceovers
+		 */
+		VoiceoversTitle: () => LocalizedString
 		GenerationTooltip: {
 			/**
 			 * Aspect Ratio
@@ -3244,6 +3256,10 @@ export type TranslationFunctions = {
 				 * Upscale
 				 */
 				Upscale: () => LocalizedString
+				/**
+				 * Voiceover
+				 */
+				Voiceover: () => LocalizedString
 			}
 			/**
 			 * Dimensions

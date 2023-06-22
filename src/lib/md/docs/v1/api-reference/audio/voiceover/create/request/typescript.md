@@ -5,7 +5,7 @@ const API_ENDPOINT = '/v1/audio/voiceover/create';
 const API_URL = `${API_HOST}${ENDPOINT}`;
 
 const req = {
-	prompt: 'Stablecog is my favorite AI tool!'
+	prompt: 'Technology is a bridge between imagination and reality.'
 };
 
 const res = await fetch(API_URL, {

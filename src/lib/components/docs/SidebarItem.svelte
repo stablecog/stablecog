@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { page } from '$app/stores';
 	import ButtonHoverEffect from '$components/buttons/ButtonHoverEffect.svelte';
+	import MethodBadge from '$components/docs/MethodBadge.svelte';
 	import IconChevronDown from '$components/icons/IconChevronDown.svelte';
 	import type { TSidebarItem } from '$docroutes/guide/types';
 	import { expandCollapse } from '$ts/animation/transitions';
@@ -31,11 +32,11 @@
 	}
 </script>
 
-<div class="flex flex-col justify-start {classes}">
+<div class="w-full flex flex-col justify-start {classes}">
 	{#if !isRoot}
-		<div class="flex relative">
+		<div class="w-full flex relative">
 			<a
-				class="w-full text-lg md:text-base flex items-center gap-2 px-3 py-3 md:py-2.5 group relative rounded-lg overflow-hidden z-0"
+				class="w-full text-lg md:text-base flex items-center gap-4 px-3 py-3 md:py-2.5 group relative rounded-lg overflow-hidden z-0"
 				href={sidebarItem.pathname}
 				on:click={toggle}
 				data-sveltekit-preload-data="hover"
@@ -47,24 +48,29 @@
 					hovered={isSelected}
 				/>
 				<p
-					class="flex-1 transition-all {isSelected
+					class="flex-1 min-w-0 w-0 relative break-words transition-all overflow-hidden {isSelected
 						? 'text-c-primary font-semibold'
 						: level === 0 || level === 1
 						? 'text-c-on-bg font-medium'
-						: 'text-c-on-bg/75 font-normal'}"
+						: 'text-c-on-bg/75 font-normal'} relative"
 				>
 					{sidebarItem.title}
 				</p>
-				{#if sidebarItem.children}
-					<IconChevronDown
-						class="w-5 h-5 md:w-4 md:h-4 transform transition {$page.url.pathname ===
-						sidebarItem.pathname
-							? 'text-c-primary'
-							: level > 1
-							? 'text-c-on-bg/75'
-							: 'text-c-on-bg'} {isOpen ? 'rotate-0' : '-rotate-90 group-hover:translate-x-1'}"
-					/>
-				{/if}
+				<div class="flex flex-shrink-0 items-center justify-end relative gap-3">
+					{#if sidebarItem.http_method}
+						<MethodBadge size="sm" method={sidebarItem.http_method} />
+					{/if}
+					{#if sidebarItem.children}
+						<IconChevronDown
+							class="w-5 h-5 md:w-4 md:h-4 transform transition {$page.url.pathname ===
+							sidebarItem.pathname
+								? 'text-c-primary'
+								: level > 1
+								? 'text-c-on-bg/75'
+								: 'text-c-on-bg'} {isOpen ? 'rotate-0' : '-rotate-90 group-hover:translate-x-1'}"
+						/>
+					{/if}
+				</div>
 			</a>
 			{#if sidebarItem.children}
 				<button
