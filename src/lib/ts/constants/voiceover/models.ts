@@ -204,7 +204,7 @@ export const voiceoverSpeakersArray = Object.keys(voiceoverSpeakers).map((k) => 
 
 export const voiceoverModelIdDefault: TVoiceoverModelId = '0f442a3e-cf53-490b-b4a9-b0dda63e9523';
 export const voiceoverSpeakerIdDefault: TVoiceoverSpeakerId =
-	'82bc1e69-2aa3-4317-9bc9-d9ed2afad0ff';
+	'39f7fc5d-9031-4932-a4d5-b196bb06e203';
 export const voiceoverLocaleDefault: TVoiceoverLocale = 'en';
 
 export const voiceoverLocale = writable<TVoiceoverLocale>(voiceoverLocaleDefault);
