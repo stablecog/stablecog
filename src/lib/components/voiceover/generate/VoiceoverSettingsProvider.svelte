@@ -1,4 +1,5 @@
 <script lang="ts">
+	import type { TVoiceoverLocale } from '$ts/constants/voiceover/locales';
 	import {
 		voiceoverLocale,
 		voiceoverModelId,
@@ -21,6 +22,18 @@
 		voiceoverStabilityLocal
 	} from '$ts/stores/voiceover/voiceoverSettings';
 	import { onMount } from 'svelte';
+
+	export let serverData: {
+		voiceover_locale: TVoiceoverLocale | undefined;
+	};
+
+	if (
+		serverData.voiceover_locale &&
+		voiceoverSpeakersArray.some((s) => s.locale === serverData.voiceover_locale)
+	) {
+		voiceoverLocale.set(serverData.voiceover_locale);
+		voiceoverSpeakerId.set($voiceoverSpeakerDropdownItems[0].value);
+	}
 
 	$: [$voiceoverModelId],
 		withCheck(() => {

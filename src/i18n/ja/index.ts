@@ -537,7 +537,7 @@ const ja: Translation = {
 				'Stablecogが提供するすべての機能にアクセスできます。ご質問があれば、 {platform} までお問い合わせください。'
 		},
 		Cancel: {
-			PageTitle: 'キャンセルされました',
+			PageTitle: 'プランを解約されました',
 			PageParagraph:
 				'サブスクリプションの処理がキャンセルされました。間違いであった場合は、もう一度やり直してください。'
 		},
@@ -583,7 +583,7 @@ const ja: Translation = {
 		SubscriptionPlanTitle: 'プラン',
 		RemainingImagesTitle: '残りの画像数',
 		RemainingCreditsTitle: 'クレジット残高',
-		RemainingTitle: 'クレジット残り',
+		RemainingTitle: 'クレジット残高',
 		Subscription: {
 			UpdateSubscriptionTitle: 'サブスクリプションを更新',
 			ChangePlanTitle: 'プランを変更',
@@ -660,7 +660,7 @@ const ja: Translation = {
 		APIKeys: {
 			PageTitle: 'APIキー',
 			PageParagraph:
-				'シークレット API キーは以下に表示されます。最初に生成事のみ一度だけ表示されますので、安全な場所に保存しておいてください。',
+				'シークレット API キーは以下に表示されます。最初に生成時のみ一度だけ表示されますので、安全な場所に保管しておいてください。',
 			NoKeysYet: 'まだAPIキーがありません。',
 			CreateAPIKeyButton: 'API キーを作成',
 			CreateNewKeyButton: '新しいキーの作成',
@@ -761,11 +761,11 @@ const ja: Translation = {
 			MonthlyCredits: '月毎 {count} クレジット。',
 			MonthlyImages: '月毎{count}個まで生成',
 			MonthlyGenerations: '月毎 {count} 枚の生成',
-			ParallelGenerations: '{count}個の画像を並列生成。',
+			ParallelGenerations: '{count}個の画像を並列生成',
 			Images: '{count} 枚の画像。',
 			Generations: '{count} 回の生成。',
 			NeverExpires: '無期限。',
-			CommercialUse: '商業利用可能。',
+			CommercialUse: '商業利用可能',
 			ImagesArePublic: '生成画像は公開',
 			ImagesArePrivate: '生成画像は非公開'
 		},
@@ -799,7 +799,7 @@ const ja: Translation = {
 			MoreCredits: {
 				Question: 'さらにクレジットを購入できますか?',
 				Answer:
-					'お持ちのサブスクリプションが有効である限り、随時クレジットを追加購入できます。 追加クレジットを購入は、アカウントまたはプラン情報ページにて行ってください。'
+					'お持ちのサブスクリプションが有効である限り、随時クレジットを追加購入できます。 追加クレジットを購入するには、アカウントまたはプラン情報ページにて行ってください。'
 			},
 			CreditRollOver: {
 				Question: 'クレジットは翌月に繰り越しできますか?',
@@ -814,7 +814,7 @@ const ja: Translation = {
 			PlanCancellation: {
 				Question: 'プランはいつでも解約できますか？',
 				Answer:
-					'いつでもプランをキャンセルすることができ、その時点での請求期間最終日に請求が停止します。 またお持ちのクレジットは、その請求期間が終了するまで利用できます。'
+					'プランはいつでも解約することができ、その時点での請求期間最終日に請求が停止します。 またお持ちのクレジットは、その請求期間が終了するまで利用できます。'
 			},
 			MoreQuestions: {
 				Question: '他の質問はどちらに問い合わせしたらよろしいでしょうか？',
@@ -879,64 +879,172 @@ const ja: Translation = {
 	Voiceover: {
 		ModelOptions: {
 			'0f442a3e-cf53-490b-b4a9-b0dda63e9523': {
-				Name: 'Bark'
+				Name: 'バーク'
 			}
 		},
 		SpeakerOptions: {
 			'82bc1e69-2aa3-4317-9bc9-d9ed2afad0ff': {
-				Name: 'Paul'
+				Name: 'ポール'
 			},
 			'39f7fc5d-9031-4932-a4d5-b196bb06e203': {
-				Name: 'Jony'
+				Name: 'ジョニー'
 			},
-			'0140c5dc-af12-4643-bfec-650d3cd03c56': { Name: 'Bryan' },
-			'4a19f17c-eedc-4cf8-a45d-1f9d69547125': { Name: 'Rachel' },
-			'aad61bf9-0710-40f6-8050-8c412852f717': { Name: 'Henry' },
-			'37c069ec-f124-4be8-9d4c-e74157738877': { Name: 'Liam' },
-			'38f9bd69-fa4c-4e53-b398-9a0f5865e927': { Name: 'Dan' },
-			'5bd0610f-f073-487e-a74c-2a89105ce282': { Name: 'Gamze' },
-			'7c3f8e30-9957-4d5e-a70e-c8269ff5f550': { Name: 'Mert' },
-			'0188871e-c4d1-4ad9-ab3d-ec958c443822': { Name: 'Halit' },
-			'4802af70-6d40-429d-8b9d-8df591e30743': { Name: 'Leyla' },
-			'e10d4dac-7c39-4e96-9622-6d4e46fc384b': { Name: 'Murat' },
-			'9354180b-9735-412c-947f-9d15af6edfe0': { Name: 'Mia' },
-			'bcb7ac57-fd61-4630-82f0-ae3f836bb7c2': { Name: 'Eizo' },
-			'b7542bad-e5fc-4c02-89ce-0ec22f6deceb': { Name: 'Ai' },
-			'2cdb9e2c-42c1-49d0-959b-43d4bfc1828f': { Name: 'Shinya' },
-			'37bb1326-d83e-425a-b21a-1a03ffea4d05': { Name: 'Emi' },
-			'1eca6e55-53fb-4d70-995f-7e4da9266574': { Name: 'Emika' },
-			'4f5c8c3e-0a17-4a68-8be7-1a126fda9a0f': { Name: 'Adriana' },
-			'9206e75b-2b28-47f0-899e-76ab476e1c3f': { Name: 'Jorge' },
-			'573c37c7-f741-4d36-80dc-f126131c6343': { Name: 'Carmen' },
-			'b06d6333-1e35-45a6-b18b-3187d34cc387': { Name: 'Pedro' },
-			'90ba9324-476b-48ae-b88e-aed1975a51fd': { Name: 'David' },
-			'babbbc15-5040-4e97-a89f-8309b13d7785': { Name: 'Annika' },
-			'cafafcaa-45bf-45e0-901c-8ca63575ad2a': { Name: 'Leonie' },
-			'31d7c264-b674-422b-9b8f-13195c3289b6': { Name: 'Fritz' },
-			'b349543b-c727-4934-9f4f-249aa2a6b184': { Name: 'Wilhelm' },
-			'c4796108-0e8a-4a7a-9a8a-bb66ff21e215': { Name: 'Hans' },
-			'83c0ee48-c8ef-4a4c-bca8-9dae843d25da': { Name: 'Boris' },
-			'947786c1-810d-44ce-808f-cdcf732d97fd': { Name: 'Alisa' },
-			'2885a060-badc-4896-a4fa-f3656a58bb82': { Name: 'Ivan' },
-			'92929922-0608-4b62-8a0d-f9d87a4ca2f5': { Name: 'Oleg' },
-			'cb8a2dc4-fce9-4f17-b977-050aa78d8101': { Name: 'Xin' },
-			'5001a3c9-557c-4775-ad6f-b71c47c3b4f1': { Name: 'Ming' },
-			'd45f479f-42e5-4f15-b1a0-c9feabcdb3aa': { Name: 'Hu' },
-			'56714211-532c-479b-ac8f-f2449af2310a': { Name: 'Shuang' },
-			'052b721a-da7e-4614-b352-826411c262e2': { Name: 'Wan' }
+			'0140c5dc-af12-4643-bfec-650d3cd03c56': {
+				Name: 'ブライアン'
+			},
+			'4a19f17c-eedc-4cf8-a45d-1f9d69547125': {
+				Name: 'レイチェル'
+			},
+			'aad61bf9-0710-40f6-8050-8c412852f717': {
+				Name: 'ヘンリー'
+			},
+			'37c069ec-f124-4be8-9d4c-e74157738877': {
+				Name: 'リアム'
+			},
+			'38f9bd69-fa4c-4e53-b398-9a0f5865e927': {
+				Name: 'ダン'
+			},
+			'5bd0610f-f073-487e-a74c-2a89105ce282': {
+				Name: 'ガムゼ'
+			},
+			'7c3f8e30-9957-4d5e-a70e-c8269ff5f550': {
+				Name: 'メルト'
+			},
+			'0188871e-c4d1-4ad9-ab3d-ec958c443822': {
+				Name: 'ハリット'
+			},
+			'4802af70-6d40-429d-8b9d-8df591e30743': {
+				Name: 'レイラ'
+			},
+			'e10d4dac-7c39-4e96-9622-6d4e46fc384b': {
+				Name: 'ムラット'
+			},
+			'9354180b-9735-412c-947f-9d15af6edfe0': {
+				Name: 'ミア'
+			},
+			'bcb7ac57-fd61-4630-82f0-ae3f836bb7c2': {
+				Name: '映造'
+			},
+			'b7542bad-e5fc-4c02-89ce-0ec22f6deceb': {
+				Name: '愛'
+			},
+			'2cdb9e2c-42c1-49d0-959b-43d4bfc1828f': {
+				Name: '進也'
+			},
+			'37bb1326-d83e-425a-b21a-1a03ffea4d05': {
+				Name: '絵見'
+			},
+			'1eca6e55-53fb-4d70-995f-7e4da9266574': {
+				Name: '絵見華'
+			},
+			'4f5c8c3e-0a17-4a68-8be7-1a126fda9a0f': {
+				Name: 'アドリアーナ'
+			},
+			'9206e75b-2b28-47f0-899e-76ab476e1c3f': {
+				Name: 'ホルヘ'
+			},
+			'573c37c7-f741-4d36-80dc-f126131c6343': {
+				Name: 'カルメン'
+			},
+			'b06d6333-1e35-45a6-b18b-3187d34cc387': {
+				Name: 'ペドロ'
+			},
+			'90ba9324-476b-48ae-b88e-aed1975a51fd': {
+				Name: 'デビッド'
+			},
+			'babbbc15-5040-4e97-a89f-8309b13d7785': {
+				Name: 'Annika'
+			},
+			'cafafcaa-45bf-45e0-901c-8ca63575ad2a': {
+				Name: 'Leonie'
+			},
+			'31d7c264-b674-422b-9b8f-13195c3289b6': {
+				Name: 'Fritz'
+			},
+			'b349543b-c727-4934-9f4f-249aa2a6b184': {
+				Name: 'Wilhelm'
+			},
+			'c4796108-0e8a-4a7a-9a8a-bb66ff21e215': {
+				Name: 'Hans'
+			},
+			'83c0ee48-c8ef-4a4c-bca8-9dae843d25da': {
+				Name: 'Boris'
+			},
+			'947786c1-810d-44ce-808f-cdcf732d97fd': {
+				Name: 'Alisa'
+			},
+			'2885a060-badc-4896-a4fa-f3656a58bb82': {
+				Name: 'Ivan'
+			},
+			'92929922-0608-4b62-8a0d-f9d87a4ca2f5': {
+				Name: 'Oleg'
+			},
+			'cb8a2dc4-fce9-4f17-b977-050aa78d8101': {
+				Name: 'Xin'
+			},
+			'5001a3c9-557c-4775-ad6f-b71c47c3b4f1': {
+				Name: 'Ming'
+			},
+			'd45f479f-42e5-4f15-b1a0-c9feabcdb3aa': {
+				Name: 'Hu'
+			},
+			'56714211-532c-479b-ac8f-f2449af2310a': {
+				Name: 'Shuang'
+			},
+			'052b721a-da7e-4614-b352-826411c262e2': {
+				Name: 'Wan'
+			}
 		},
 		List: {
 			NotSignedIn: {
-				Paragraph: 'Sign in to see your voiceovers.'
+				Paragraph: 'ボイスオーバーを確認するにはサインインしてください。'
 			},
 			NoVoiceovers: {
-				Paragraph: 'Your voiceovers will appear here.'
+				Paragraph: 'ボイスオーバーがここに表示されます。'
 			}
 		},
 		Generate: {
-			SpeakerParagraph: '{speakerName} will be speaking in {languageName}.',
-			VoiceoverParagraph: 'The voiceover will appear here.'
-		}
+			SpeakerParagraph: '{speakerName}は{languageName}で話します。',
+			VoiceoverParagraph: 'ボイスオーバーがここに表示されます。'
+		},
+		PromptBar: {
+			GenerateButton: 'Generate',
+			CreditCost: '{creditCost} credit(s)',
+			PromptInput: {
+				Placeholder: 'Technology is a bridge between imagination and reality.'
+			}
+		},
+		Settings: {
+			Speaker: {
+				Title: 'Speaker',
+				Paragraph: 'The speaker for the voiceover.'
+			},
+			Language: {
+				Title: 'Language',
+				Paragraph: 'The language for the voiceover.'
+			},
+			VoiceStability: {
+				Title: 'Voice Stability',
+				Paragraph:
+					'The stability level of the voice. Higher values make the voice more stable, lower values make it more variable.',
+				Slider: {
+					MoreStable: 'More stable',
+					MoreVariable: 'More variable'
+				}
+			},
+			DenoiseAudio: {
+				Title: 'Denoise',
+				Paragraph: 'Remove background noise from the audio.'
+			},
+			RemoveSilence: {
+				Title: 'Remove Silence',
+				Paragraph: 'Remove silent parts from the audio.'
+			}
+		},
+		PlayButton: 'Play',
+		PauseButton: 'Pause',
+		MuteButton: 'Mute',
+		UnmuteButton: 'Unmute'
 	},
 	UnderDevelopment: {
 		PageTitle: 'しばらくお待ちください',

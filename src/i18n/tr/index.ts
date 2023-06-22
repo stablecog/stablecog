@@ -138,7 +138,7 @@ const tr: Translation = {
 		GenerationsTitle: 'Üretimler',
 		TotalDurationTitle: 'Toplam Süre',
 		UpscalesTitle: 'Büyütmeler',
-		VoiceoversTitle: 'Voiceovers',
+		VoiceoversTitle: 'Seslendirmeler',
 		GenerationTooltip: {
 			AspectRatioTitle: 'Oran',
 			CountryTitle: 'Ülke',
@@ -146,7 +146,7 @@ const tr: Translation = {
 				Title: 'Tip',
 				Generation: 'Üretim',
 				Upscale: 'Büyütme',
-				Voiceover: 'Voiceover'
+				Voiceover: 'Seslendirme'
 			},
 			DimensionsTitle: 'Ölçüler',
 			StepsTitle: 'Adım Sayısı',
@@ -177,7 +177,7 @@ const tr: Translation = {
 		AdminGalleryTab: 'Admin Galerisi',
 		PricingTab: 'Fiyatlar',
 		AccountTab: 'Üyelik',
-		VoiceoverTab: 'Voiceover',
+		VoiceoverTab: 'Seslendirme',
 		LiveTab: 'Canlı'
 	},
 	Settings: {
@@ -251,7 +251,7 @@ const tr: Translation = {
 		CancelButton: 'Vazgeç',
 		ClearAllButton: 'Hepsini Temizle',
 		DisableButton: 'Durdur',
-		DownloadButton: 'Download',
+		DownloadButton: 'İndir',
 		AddButton: 'Ekle',
 		CopyLinkButton: 'Linki Kopyala',
 		CopyButton: 'Kopyala',
@@ -265,8 +265,8 @@ const tr: Translation = {
 		SimilarToTitle: 'Şuna benzer: {item}',
 		ResourcesTitle: 'Kaynaklar',
 		ResourcesButton: 'Kaynaklar',
-		On: 'On',
-		Off: 'Off',
+		On: 'Açık',
+		Off: 'Kapalı',
 		BetaTitle: 'Beta',
 		ConfirmQuestionMarkButton: 'Onayla?',
 		Credits: {
@@ -869,7 +869,11 @@ const tr: Translation = {
 		ProductHunt: 'Product Hunt'
 	},
 	Voiceover: {
-		ModelOptions: { '0f442a3e-cf53-490b-b4a9-b0dda63e9523': { Name: 'Bark' } },
+		ModelOptions: {
+			'0f442a3e-cf53-490b-b4a9-b0dda63e9523': {
+				Name: 'Bark'
+			}
+		},
 		SpeakerOptions: {
 			'82bc1e69-2aa3-4317-9bc9-d9ed2afad0ff': {
 				Name: 'Paul'
@@ -877,88 +881,162 @@ const tr: Translation = {
 			'39f7fc5d-9031-4932-a4d5-b196bb06e203': {
 				Name: 'Jony'
 			},
-			'0140c5dc-af12-4643-bfec-650d3cd03c56': { Name: 'Bryan' },
-			'4a19f17c-eedc-4cf8-a45d-1f9d69547125': { Name: 'Rachel' },
-			'aad61bf9-0710-40f6-8050-8c412852f717': { Name: 'Henry' },
-			'37c069ec-f124-4be8-9d4c-e74157738877': { Name: 'Liam' },
-			'38f9bd69-fa4c-4e53-b398-9a0f5865e927': { Name: 'Dan' },
-			'5bd0610f-f073-487e-a74c-2a89105ce282': { Name: 'Gamze' },
-			'7c3f8e30-9957-4d5e-a70e-c8269ff5f550': { Name: 'Mert' },
-			'0188871e-c4d1-4ad9-ab3d-ec958c443822': { Name: 'Halit' },
-			'4802af70-6d40-429d-8b9d-8df591e30743': { Name: 'Leyla' },
-			'e10d4dac-7c39-4e96-9622-6d4e46fc384b': { Name: 'Murat' },
-			'9354180b-9735-412c-947f-9d15af6edfe0': { Name: 'Mia' },
-			'bcb7ac57-fd61-4630-82f0-ae3f836bb7c2': { Name: 'Eizo' },
-			'b7542bad-e5fc-4c02-89ce-0ec22f6deceb': { Name: 'Ai' },
-			'2cdb9e2c-42c1-49d0-959b-43d4bfc1828f': { Name: 'Shinya' },
-			'37bb1326-d83e-425a-b21a-1a03ffea4d05': { Name: 'Emi' },
-			'1eca6e55-53fb-4d70-995f-7e4da9266574': { Name: 'Emika' },
-			'4f5c8c3e-0a17-4a68-8be7-1a126fda9a0f': { Name: 'Adriana' },
-			'9206e75b-2b28-47f0-899e-76ab476e1c3f': { Name: 'Jorge' },
-			'573c37c7-f741-4d36-80dc-f126131c6343': { Name: 'Carmen' },
-			'b06d6333-1e35-45a6-b18b-3187d34cc387': { Name: 'Pedro' },
-			'90ba9324-476b-48ae-b88e-aed1975a51fd': { Name: 'David' },
-			'babbbc15-5040-4e97-a89f-8309b13d7785': { Name: 'Annika' },
-			'cafafcaa-45bf-45e0-901c-8ca63575ad2a': { Name: 'Leonie' },
-			'31d7c264-b674-422b-9b8f-13195c3289b6': { Name: 'Fritz' },
-			'b349543b-c727-4934-9f4f-249aa2a6b184': { Name: 'Wilhelm' },
-			'c4796108-0e8a-4a7a-9a8a-bb66ff21e215': { Name: 'Hans' },
-			'83c0ee48-c8ef-4a4c-bca8-9dae843d25da': { Name: 'Boris' },
-			'947786c1-810d-44ce-808f-cdcf732d97fd': { Name: 'Alisa' },
-			'2885a060-badc-4896-a4fa-f3656a58bb82': { Name: 'Ivan' },
-			'92929922-0608-4b62-8a0d-f9d87a4ca2f5': { Name: 'Oleg' },
-			'cb8a2dc4-fce9-4f17-b977-050aa78d8101': { Name: 'Xin' },
-			'5001a3c9-557c-4775-ad6f-b71c47c3b4f1': { Name: 'Ming' },
-			'd45f479f-42e5-4f15-b1a0-c9feabcdb3aa': { Name: 'Hu' },
-			'56714211-532c-479b-ac8f-f2449af2310a': { Name: 'Shuang' },
-			'052b721a-da7e-4614-b352-826411c262e2': { Name: 'Wan' }
+			'0140c5dc-af12-4643-bfec-650d3cd03c56': {
+				Name: 'Bryan'
+			},
+			'4a19f17c-eedc-4cf8-a45d-1f9d69547125': {
+				Name: 'Rachel'
+			},
+			'aad61bf9-0710-40f6-8050-8c412852f717': {
+				Name: 'Henry'
+			},
+			'37c069ec-f124-4be8-9d4c-e74157738877': {
+				Name: 'Liam'
+			},
+			'38f9bd69-fa4c-4e53-b398-9a0f5865e927': {
+				Name: 'Dan'
+			},
+			'5bd0610f-f073-487e-a74c-2a89105ce282': {
+				Name: 'Gamze'
+			},
+			'7c3f8e30-9957-4d5e-a70e-c8269ff5f550': {
+				Name: 'Mert'
+			},
+			'0188871e-c4d1-4ad9-ab3d-ec958c443822': {
+				Name: 'Halit'
+			},
+			'4802af70-6d40-429d-8b9d-8df591e30743': {
+				Name: 'Leyla'
+			},
+			'e10d4dac-7c39-4e96-9622-6d4e46fc384b': {
+				Name: 'Murat'
+			},
+			'9354180b-9735-412c-947f-9d15af6edfe0': {
+				Name: 'Mia'
+			},
+			'bcb7ac57-fd61-4630-82f0-ae3f836bb7c2': {
+				Name: 'Eizo'
+			},
+			'b7542bad-e5fc-4c02-89ce-0ec22f6deceb': {
+				Name: 'Ai'
+			},
+			'2cdb9e2c-42c1-49d0-959b-43d4bfc1828f': {
+				Name: 'Shinya'
+			},
+			'37bb1326-d83e-425a-b21a-1a03ffea4d05': {
+				Name: 'Emi'
+			},
+			'1eca6e55-53fb-4d70-995f-7e4da9266574': {
+				Name: 'Emika'
+			},
+			'4f5c8c3e-0a17-4a68-8be7-1a126fda9a0f': {
+				Name: 'Adriana'
+			},
+			'9206e75b-2b28-47f0-899e-76ab476e1c3f': {
+				Name: 'Jorge'
+			},
+			'573c37c7-f741-4d36-80dc-f126131c6343': {
+				Name: 'Carmen'
+			},
+			'b06d6333-1e35-45a6-b18b-3187d34cc387': {
+				Name: 'Pedro'
+			},
+			'90ba9324-476b-48ae-b88e-aed1975a51fd': {
+				Name: 'David'
+			},
+			'babbbc15-5040-4e97-a89f-8309b13d7785': {
+				Name: 'Annika'
+			},
+			'cafafcaa-45bf-45e0-901c-8ca63575ad2a': {
+				Name: 'Leonie'
+			},
+			'31d7c264-b674-422b-9b8f-13195c3289b6': {
+				Name: 'Fritz'
+			},
+			'b349543b-c727-4934-9f4f-249aa2a6b184': {
+				Name: 'Wilhelm'
+			},
+			'c4796108-0e8a-4a7a-9a8a-bb66ff21e215': {
+				Name: 'Hans'
+			},
+			'83c0ee48-c8ef-4a4c-bca8-9dae843d25da': {
+				Name: 'Boris'
+			},
+			'947786c1-810d-44ce-808f-cdcf732d97fd': {
+				Name: 'Alisa'
+			},
+			'2885a060-badc-4896-a4fa-f3656a58bb82': {
+				Name: 'Ivan'
+			},
+			'92929922-0608-4b62-8a0d-f9d87a4ca2f5': {
+				Name: 'Oleg'
+			},
+			'cb8a2dc4-fce9-4f17-b977-050aa78d8101': {
+				Name: 'Xin'
+			},
+			'5001a3c9-557c-4775-ad6f-b71c47c3b4f1': {
+				Name: 'Ming'
+			},
+			'd45f479f-42e5-4f15-b1a0-c9feabcdb3aa': {
+				Name: 'Hu'
+			},
+			'56714211-532c-479b-ac8f-f2449af2310a': {
+				Name: 'Shuang'
+			},
+			'052b721a-da7e-4614-b352-826411c262e2': {
+				Name: 'Wan'
+			}
 		},
 		List: {
-			NotSignedIn: { Paragraph: 'Sign in to see your voiceovers.' },
-			NoVoiceovers: { Paragraph: 'Your voiceovers will appear here.' }
+			NotSignedIn: {
+				Paragraph: 'Seslendirmeleri görmek için giriş yap.'
+			},
+			NoVoiceovers: {
+				Paragraph: 'Seslendirmeler burada belirecek.'
+			}
 		},
 		Generate: {
-			SpeakerParagraph: '{speakerName} will be speaking in {languageName}.',
-			VoiceoverParagraph: 'The voiceover will appear here.'
+			SpeakerParagraph: '{speakerName}, şu dilde konuşacak: {languageName}.',
+			VoiceoverParagraph: 'Seslendirme burada belirecek.'
 		},
 		PromptBar: {
-			GenerateButton: 'Generate',
-			CreditCost: '{creditCost} credit(s)',
+			GenerateButton: 'Üret',
+			CreditCost: '{creditCost} kredi',
 			PromptInput: {
-				Placeholder: 'Technology is a bridge between imagination and reality.'
+				Placeholder: 'Teknoloji, hayal ile gerçek arasındaki köprüdür.'
 			}
 		},
 		Settings: {
 			Speaker: {
-				Title: 'Speaker',
-				Paragraph: 'The speaker for the voiceover.'
+				Title: 'Konuşmacı',
+				Paragraph: 'Seslendirmeyi yapacak konuşmacı.'
 			},
 			Language: {
-				Title: 'Language',
-				Paragraph: 'The language for the voiceover.'
+				Title: 'Dil',
+				Paragraph: 'Seslendirmenin dili.'
 			},
 			VoiceStability: {
-				Title: 'Voice Stability',
+				Title: 'Ses Stabilitesi',
 				Paragraph:
-					'The stability level of the voice. Higher values make the voice more stable, lower values make it more variable.',
+					'Sesin stabilite derecesi. Yüksek sayılar sesi daha stabil, düşük sayılar sesi daha değişken yapar.',
 				Slider: {
-					MoreStable: 'More stable',
-					MoreVariable: 'More variable'
+					MoreStable: 'Daha stabil',
+					MoreVariable: 'Daha değişken'
 				}
 			},
 			DenoiseAudio: {
-				Title: 'Denoise',
-				Paragraph: 'Remove background noise from the audio.'
+				Title: 'Gürültü Temizleme',
+				Paragraph: 'Sesteki arkaplan gürültüsünü temizler.'
 			},
 			RemoveSilence: {
-				Title: 'Remove Silence',
-				Paragraph: 'Remove silent parts from the audio.'
+				Title: 'Sessizliği Temizle',
+				Paragraph: 'Sesteki sessiz bölümleri ortadan kaldırır.'
 			}
 		},
-		PlayButton: 'Play',
-		PauseButton: 'Pause',
-		MuteButton: 'Mute',
-		UnmuteButton: 'Unmute'
+		PlayButton: 'Oynat',
+		PauseButton: 'Durdur',
+		MuteButton: 'Sesi Kapa',
+		UnmuteButton: 'Sesi Aç'
 	},
 	UnderDevelopment: {
 		PageTitle: 'Geri döneceğiz!',

@@ -26,24 +26,21 @@ export const voiceoverStabilityLocal = writableLocal<number | null>(
 	'voiceoverStability',
 	voiceoverStabilityDefault
 );
-export const voiceoverModelIdLocal = writableLocal<TVoiceoverModelId>(
+export const voiceoverModelIdLocal = writableLocal<TVoiceoverModelId | null>(
 	'voiceoverModelId',
-	voiceoverModelIdDefault
+	null
 );
-export const voiceoverSpeakerIdLocal = writableLocal<TVoiceoverSpeakerId>(
+export const voiceoverSpeakerIdLocal = writableLocal<TVoiceoverSpeakerId | null>(
 	'voiceoverSpeakerId',
-	voiceoverSpeakerIdDefault
+	null
 );
 export const voiceoverSeedLocal = writableLocal<number | null>('voiceoverSeed', null);
-export const voiceoverLocaleLocal = writableLocal<TVoiceoverLocale>(
-	'voiceoverLocale',
-	voiceoverLocaleDefault
-);
-export const voiceoverDenoiseAudioLocal = writableLocal<boolean>(
+export const voiceoverLocaleLocal = writableLocal<TVoiceoverLocale | null>('voiceoverLocale', null);
+export const voiceoverDenoiseAudioLocal = writableLocal<boolean | null>(
 	'voiceoverDenoiseAudio',
-	voiceoverDenoiseAudioDefault
+	null
 );
-export const voiceoverRemoveSilenceLocal = writableLocal<boolean>(
+export const voiceoverRemoveSilenceLocal = writableLocal<boolean | null>(
 	'voiceoverRemoveSilence',
-	voiceoverRemoveSilenceDefault
+	null
 );

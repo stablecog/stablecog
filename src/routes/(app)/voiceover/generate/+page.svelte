@@ -50,6 +50,8 @@
 	import SignInModal from '$components/SignInModal.svelte';
 	import { searchParamsString } from '$ts/stores/searchParamsString';
 
+	export let data;
+
 	let isCheckCompleted = true;
 
 	let promptBarHeight: number;
@@ -174,7 +176,7 @@
 	image_url="{canonicalUrl}/previews/voiceover-v2.png"
 />
 
-<VoiceoverSettingsProvider>
+<VoiceoverSettingsProvider serverData={data}>
 	<div class="w-full h-full flex flex-col overflow-hidden relative z-0">
 		<div class="w-full h-full flex flex-row overflow-hidden pt-1 md:pt-2 md:px-4 md:pb-4 gap-4">
 			<div class="hidden lg:flex min-w-[2.75rem] flex-col items-start h-full">
