@@ -32,7 +32,7 @@
 		if (!$page.data.supabase) return;
 		try {
 			await $page.data.supabase.auth.signOut();
-			userSummary.set(undefined);
+			userSummary.set(null);
 			logSignOut({
 				'SC - User Id': $page.data.session?.user.id,
 				'SC - Stripe Product Id': $userSummary?.product_id,
