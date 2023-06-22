@@ -12,7 +12,7 @@ date: 2023-06-22T15:00:00.000Z
   import AudioPlayerListItem from "$lib/components/voiceover/audioPlayer/AudioPlayerListItem.svelte";
 </script>
 
-We finally have a text-to-audio model available on Stablecog and a new interface for voiceover models! This text-to-audio model is called Bark, made by [Suno](https://github.com/suno-ai/bark). We have 7 languages and 36 speakers available in beta.
+We finally have a text-to-audio model available on Stablecog and a new interface for voiceover models! This text-to-audio model is called Bark, made by [Suno](https://github.com/suno-ai/bark). We have 7 languages and 36 speakers [available in beta](https://stablecog.com/voiceover/generate).
 
 ## Create Voiceovers with AI
 
