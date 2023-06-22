@@ -17,7 +17,6 @@
 				"updated_at": "2023-06-22T16:56:45.199179Z",
 				"started_at": "2023-06-22T16:56:41.451395Z",
 				"completed_at": "2023-06-22T16:56:45.981093Z",
-				"is_favorited": false,
 				"outputs": [
 					{
 						"id": "a5c9a98f-cfea-4776-ba01-7e73cfa631f2",
@@ -56,7 +55,6 @@
 				"updated_at": "2023-06-22T16:56:31.418014Z",
 				"started_at": "2023-06-22T16:56:15.771443Z",
 				"completed_at": "2023-06-22T16:56:32.133366Z",
-				"is_favorited": false,
 				"outputs": [
 					{
 						"id": "0c7ac67c-c180-46b9-aab2-21518334dd5b",
@@ -95,7 +93,6 @@
 				"updated_at": "2023-06-22T16:56:07.255586Z",
 				"started_at": "2023-06-22T16:55:50.272283Z",
 				"completed_at": "2023-06-22T16:56:07.980785Z",
-				"is_favorited": false,
 				"outputs": [
 					{
 						"id": "e92c6a32-6287-41aa-92be-d6e7fb923207",
@@ -134,7 +131,6 @@
 				"updated_at": "2023-06-22T16:55:38.627433Z",
 				"started_at": "2023-06-22T16:55:34.234253Z",
 				"completed_at": "2023-06-22T16:55:40.052887Z",
-				"is_favorited": false,
 				"outputs": [
 					{
 						"id": "3202bf6f-eedf-4736-9c52-ae45221fcc8b",
@@ -173,7 +169,6 @@
 				"updated_at": "2023-06-22T16:50:45.219404Z",
 				"started_at": "2023-06-22T16:50:39.422281Z",
 				"completed_at": "2023-06-22T16:50:46.050903Z",
-				"is_favorited": false,
 				"outputs": [
 					{
 						"id": "598da5fd-969d-432c-8a88-adb1ec7edc3c",
@@ -212,7 +207,6 @@
 				"updated_at": "2023-06-22T16:37:35.703883Z",
 				"started_at": "2023-06-22T16:37:32.517824Z",
 				"completed_at": "2023-06-22T16:37:36.699485Z",
-				"is_favorited": false,
 				"outputs": [
 					{
 						"id": "eef370fa-e094-49c9-98e2-4a5d1f9edc5f",
