@@ -54,9 +54,14 @@
 		class="flex-1 h-full cursor-grab active:cursor-grabbing relative flex
       items-center group/audio-player-slider"
 	>
-		<span class="block w-full h-6px rounded-full bg-c-on-bg/20">
+		<span class="block w-full h-6px rounded-full bg-c-on-bg/20 relative">
 			<span
-				style={$isTouchscreen ? `width: ${((value - min) / (max - min)) * 100}%` : ''}
+				style={$isTouchscreen
+					? `width: ${Math.min(
+							100,
+							Math.max(0, ((value - min) / (max - min)) * 100)
+					  )}%; position: absolute; left:0;`
+					: ''}
 				{...rangeConditional}
 				class="block h-6px rounded-full transition bg-c-on-bg not-touch:group-active/audio-player-slider:bg-c-primary"
 			/>
