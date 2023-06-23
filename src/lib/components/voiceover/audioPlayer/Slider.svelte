@@ -33,9 +33,9 @@
 	$: valueLocal.set([value]);
 	$: value = $valueLocal[0];
 
-	$: sliderFinal = $isTouchscreen ? {} : $slider;
-	$: rangeFinal = $isTouchscreen ? {} : $range;
-	$: thumbFinal = $isTouchscreen ? {} : $thumb();
+	$: sliderConditional = $isTouchscreen ? {} : $slider;
+	$: rangeConditional = $isTouchscreen ? {} : $range;
+	$: thumbConditional = $isTouchscreen ? {} : $thumb();
 </script>
 
 <div on:pointerup={onPointerUp} aria-label={name} class="w-full h-full relative">
@@ -50,20 +50,20 @@
 		{/each}
 	{/if}
 	<span
-		{...sliderFinal}
+		{...sliderConditional}
 		class="flex-1 h-full cursor-grab active:cursor-grabbing relative flex
       items-center group/audio-player-slider"
 	>
 		<span class="block w-full h-6px rounded-full bg-c-on-bg/20">
 			<span
 				style={$isTouchscreen ? `width: ${((value - min) / (max - min)) * 100}%` : ''}
-				{...rangeFinal}
+				{...rangeConditional}
 				class="block h-6px rounded-full transition bg-c-on-bg not-touch:group-active/audio-player-slider:bg-c-primary"
 			/>
 		</span>
 		{#each [...Array($valueLocal.length).keys()] as _}
 			<span
-				{...thumbFinal}
+				{...thumbConditional}
 				class="{$isTouchscreen
 					? 'hidden'
 					: 'block'} ring-0 ring-c-on-bg/25 group-hover/audio-player-slider:ring-[6px]
