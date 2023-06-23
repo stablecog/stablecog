@@ -73,13 +73,9 @@
 		if (!$sseId) return;
 		if (doesntHaveEnoughCredits) return;
 		if (!$voiceoverPrompt) {
-			if (isSM) {
-				promptInputElement.focus();
-			} else {
-				promptInputElementMd.focus();
-			}
-			return;
+			voiceoverPrompt.set($LL.Voiceover.PromptBar.PromptInput.Placeholder());
 		}
+		if (!$voiceoverPrompt) return;
 		toggleSettingsSheet(false);
 		voiceoverPrompt.set(formatVoiceoverPrompt($voiceoverPrompt));
 		const temperature = Number(

@@ -996,7 +996,7 @@ const tr: Translation = {
 			}
 		},
 		Generate: {
-			SpeakerParagraph: '{speakerName}, şu dilde konuşacak: {languageName}.',
+			SpeakerParagraph: '{speakerName} şu dilde konuşacak: {languageName}.',
 			VoiceoverParagraph: 'Seslendirme burada belirecek.'
 		},
 		PromptBar: {
