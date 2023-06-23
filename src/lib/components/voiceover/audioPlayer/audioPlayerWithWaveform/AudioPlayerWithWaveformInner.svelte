@@ -2,8 +2,6 @@
 	import PlayPauseButton from '../PlayPauseButton.svelte';
 	import {
 		areValuesTooClose,
-		audioBufferToArray,
-		audioToArray,
 		convertSecondsToTimestamp,
 		drawWaveform,
 		toggleMute,
@@ -14,12 +12,12 @@
 	import { voiceoverSpeakerIdToDisplayName } from '$ts/constants/voiceover/models';
 	import SliderForWaveform from '$components/voiceover/audioPlayer/SliderForWaveform.svelte';
 	import type { TVoiceoverFullOutput } from '$ts/stores/user/voiceovers';
-	import { browser } from '$app/environment';
 	import { onDestroy } from 'svelte';
-	import { fade } from 'svelte/transition';
-	import { quadIn } from 'svelte/easing';
+	import { fade, fly } from 'svelte/transition';
+	import { quadIn, quadOut } from 'svelte/easing';
 	import DownloadButton from '$components/voiceover/audioPlayer/DownloadButton.svelte';
 	import { timestampPlaceholder } from '$components/voiceover/audioPlayer/constants';
+	import { flyAndScale } from '$ts/animation/transitions';
 
 	export let output: TVoiceoverFullOutput;
 	export let audioElement: HTMLAudioElement;
@@ -30,8 +28,8 @@
 	export let muteButton: HTMLButtonElement;
 	export let currentTime: number;
 	export let duration: number;
-	export let barWidth: number;
-	export let audioArray: number[] | undefined = undefined;
+	export let pointCount: number | undefined;
+	export let audioArray: number[] | undefined;
 
 	let sliderValue = 0;
 	let waveformContainer: HTMLDivElement;
@@ -41,7 +39,6 @@
 	let totalTimestamp: string | undefined = undefined;
 
 	$: status = output.status;
-	$: src = output.audio_file_url;
 	$: audioStatus =
 		output.status === 'to-be-submitted' ||
 		output.status === 'server-received' ||
@@ -50,9 +47,6 @@
 			: output.status === 'succeeded'
 			? 'created'
 			: 'idle';
-	$: pointCount = waveformContainerWidth
-		? Math.floor(waveformContainerWidth / barWidth)
-		: undefined;
 
 	$: progress =
 		(duration === 0 || duration) && (currentTime === 0 || currentTime) ? currentTime / duration : 0;
@@ -65,7 +59,6 @@
 	$: [currentTime], onCurrentTimeChanged();
 	$: [sliderValue], onSliderValueChanged();
 
-	$: [output, pointCount], setAudioArray();
 	$: [
 		progress,
 		audioArray,
@@ -76,17 +69,6 @@
 		audioStatus !== 'created'
 	],
 		drawWaveformWithCheck();
-
-	async function setAudioArray() {
-		if (!browser) return;
-		if (!pointCount) return;
-		if (!src) return;
-		if (output?.audio_buffer) {
-			audioArray = await audioBufferToArray(output.audio_buffer, pointCount);
-		} else {
-			audioArray = await audioToArray(src, pointCount);
-		}
-	}
 
 	function onCurrentTimeChanged() {
 		sliderValue = Math.floor(currentTime * 1000);
@@ -216,11 +198,7 @@
 			class="w-full h-full"
 		>
 			{#if waveformContainerWidth && waveformContainerHeight}
-				<div
-					transition:fade|local={{ duration: 500, easing: quadIn }}
-					class="w-full h-0"
-					bind:this={waveformContainer}
-				/>
+				<div class="w-full h-0" bind:this={waveformContainer} />
 			{/if}
 		</div>
 		<div class="w-full h-full flex items-center z-10 absolute left-0 bottom-0">

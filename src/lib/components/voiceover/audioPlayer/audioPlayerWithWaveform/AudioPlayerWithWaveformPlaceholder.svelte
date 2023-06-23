@@ -9,19 +9,18 @@
 	import { quadOut } from 'svelte/easing';
 	import { easingBounceOut } from '$ts/animation/easing';
 	import ErrorChip from '$components/error/ErrorChip.svelte';
-	import type { TVoiceover, TVoiceoverFullOutput } from '$ts/stores/user/voiceovers';
+	import type { TVoiceover } from '$ts/stores/user/voiceovers';
+	import type { TAudioStatus } from '$components/voiceover/audioPlayer/audioPlayerWithWaveform/types';
 
 	export let barWidth: number;
 	export let voiceover: TVoiceover;
+	export let audioStatus: TAudioStatus;
 
 	let waveformContainer: HTMLDivElement;
 	let waveformContainerWidth: number | undefined;
 	let waveformContainerHeight: number | undefined;
 
-	$: shouldAnimate =
-		voiceover.status === 'to-be-submitted' ||
-		voiceover.status === 'server-received' ||
-		voiceover.status === 'server-processing';
+	$: shouldAnimate = audioStatus === 'being-created';
 	$: pointCount = waveformContainerWidth
 		? Math.floor(waveformContainerWidth / barWidth)
 		: undefined;

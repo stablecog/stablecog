@@ -49,7 +49,7 @@ export const setVoiceoverToFailed = ({ id, error }: { id: string; error?: string
 	});
 };
 
-export const setVoiceoverToSucceeded = async ({
+export const setVoiceoverToSucceeded = ({
 	id,
 	outputs
 }: {
@@ -63,11 +63,6 @@ export const setVoiceoverToSucceeded = async ({
 	const voi = vois.find((g) => g.id === id);
 	if (!voi) {
 		return vois;
-	}
-	for (let i = 0; i < outputs.length; i++) {
-		const output = outputs[i];
-		const audio_buffer = await getAudioBufferFromUrl(output.audio_file_url);
-		output.audio_buffer = audio_buffer;
 	}
 	voi.status = 'succeeded';
 	voi.outputs = outputs.map((o) => ({

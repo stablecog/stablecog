@@ -1,14 +1,19 @@
 <script lang="ts">
 	import { onDestroy, onMount } from 'svelte';
-	import { togglePlay } from '$components/voiceover/audioPlayer/helpers';
+	import {
+		audioBufferToArray,
+		audioToArray,
+		togglePlay
+	} from '$components/voiceover/audioPlayer/helpers';
 
 	import { allAudioPlayers } from '$ts/stores/allPlayers';
 	import type { TVoiceover, TVoiceoverOutput } from '$ts/stores/user/voiceovers';
 	import AudioPlayerWithWaveformPlaceholder from '$components/voiceover/audioPlayer/audioPlayerWithWaveform/AudioPlayerWithWaveformPlaceholder.svelte';
-	import { cubicOut } from 'svelte/easing';
+	import { cubicOut, quadOut } from 'svelte/easing';
 	import { scale } from 'svelte/transition';
 	import AudioPlayerWithWaveformInner from '$components/voiceover/audioPlayer/audioPlayerWithWaveform/AudioPlayerWithWaveformInner.svelte';
 	import type { TAudioStatus } from '$components/voiceover/audioPlayer/audioPlayerWithWaveform/types';
+	import { flyAndScale } from '$ts/animation/transitions';
 
 	export let voiceover: TVoiceover;
 	export { classes as class };
@@ -22,6 +27,8 @@
 	let isPlaying = false;
 	let isMuted = false;
 
+	let containerWidth: number;
+
 	let playButton: HTMLButtonElement;
 	let muteButton: HTMLButtonElement;
 
@@ -29,14 +36,40 @@
 
 	let output: TVoiceoverOutput;
 	$: output = voiceover.outputs[0];
+	$: outputId = output.id;
+	$: [outputId], onOutputIdChanged();
+	$: pointCount = containerWidth ? Math.floor(containerWidth / barWidth) : undefined;
+	$: status = output?.status;
+	$: [status, pointCount], onStatusChanged();
 	$: audioStatus =
-		output?.status === 'to-be-submitted' ||
-		output?.status === 'server-received' ||
-		output?.status === 'server-processing'
+		status === 'to-be-submitted' ||
+		status === 'server-received' ||
+		status === 'server-processing' ||
+		(status === 'succeeded' && audioArray === undefined)
 			? 'being-created'
-			: output?.status === 'succeeded'
+			: status === 'succeeded' && audioArray !== undefined
 			? 'created'
 			: 'idle';
+	let audioArray: number[] | undefined;
+
+	function onOutputIdChanged() {
+		audioArray = undefined;
+	}
+
+	async function onStatusChanged() {
+		if (!pointCount) return;
+		if (status === 'succeeded' && !output.audio_buffer) {
+			try {
+				if (output?.audio_buffer) {
+					audioArray = await audioBufferToArray(output.audio_buffer, pointCount);
+				} else {
+					audioArray = await audioToArray(output.audio_file_url, pointCount);
+				}
+			} catch (error) {
+				console.log('Audio to array error:', error);
+			}
+		}
+	}
 
 	onMount(async () => {
 		$allAudioPlayers.add(audioElement);
@@ -70,19 +103,22 @@
 			togglePlay({ audioElement });
 		}
 	}}
+	bind:clientWidth={containerWidth}
 	class="w-full h-full bg-c-bg-secondary flex flex-col rounded-xl md:rounded-2xl overflow-hidden relative z-0
 		shadow-lg shadow-c-shadow/[var(--o-shadow-normal)] {classes}"
 >
 	{#if audioStatus !== 'created'}
 		<div
-			transition:scale|local={{ duration: 300, easing: cubicOut, start: 0.9 }}
+			in:scale|local={{ duration: 300, easing: quadOut, start: 0.85 }}
+			out:scale|local={{ duration: 200, easing: quadOut, start: 0.85 }}
 			class="w-full h-full absolute left-0 top-0 bg-c-bg-secondary"
 		>
-			<AudioPlayerWithWaveformPlaceholder {voiceover} {barWidth} />
+			<AudioPlayerWithWaveformPlaceholder {audioStatus} {voiceover} {barWidth} />
 		</div>
 	{:else}
 		<div
-			transition:scale|local={{ duration: 300, easing: cubicOut, start: 1.1 }}
+			in:scale|local={{ duration: 300, easing: quadOut, start: 1.15 }}
+			out:scale|local={{ duration: 200, easing: quadOut, start: 1.15 }}
 			class="w-full h-full flex flex-col bg-c-bg-secondary z-10"
 		>
 			<AudioPlayerWithWaveformInner
@@ -94,8 +130,9 @@
 				bind:isPaused
 				bind:isPlaying
 				{audioElement}
+				{audioArray}
+				{pointCount}
 				{duration}
-				{barWidth}
 			/>
 		</div>
 	{/if}
