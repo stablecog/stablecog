@@ -836,6 +836,8 @@ const tr: Translation = {
 		PageTitle: 'Kılavuz',
 		GuideButton: 'Kılavuz',
 		PreviousTitle: 'Önceki',
+		EndpointsTitle: 'Endpoints',
+		EndpointTitle: 'Endpoint',
 		NextTitle: 'Sonraki',
 		ChaptersTitle: 'Bölümler',
 		ChapterTitle: 'Bölüm'

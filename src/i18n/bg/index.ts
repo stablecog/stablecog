@@ -826,6 +826,8 @@ const bg: Translation = {
 		PageTitle: 'Ръководство',
 		GuideButton: 'Упътване',
 		PreviousTitle: 'Назад',
+		EndpointsTitle: 'Endpoints',
+		EndpointTitle: 'Endpoint',
 		NextTitle: 'Напред',
 		ChaptersTitle: 'Съдържание',
 		ChapterTitle: 'Глава'

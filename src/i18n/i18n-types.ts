@@ -2419,6 +2419,14 @@ type RootTranslation = {
 		 */
 		PreviousTitle: string
 		/**
+		 * E​n​d​p​o​i​n​t​s
+		 */
+		EndpointsTitle: string
+		/**
+		 * E​n​d​p​o​i​n​t
+		 */
+		EndpointTitle: string
+		/**
 		 * N​e​x​t
 		 */
 		NextTitle: string
@@ -5240,6 +5248,14 @@ export type TranslationFunctions = {
 		 * Previous
 		 */
 		PreviousTitle: () => LocalizedString
+		/**
+		 * Endpoints
+		 */
+		EndpointsTitle: () => LocalizedString
+		/**
+		 * Endpoint
+		 */
+		EndpointTitle: () => LocalizedString
 		/**
 		 * Next
 		 */

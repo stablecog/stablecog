@@ -830,6 +830,8 @@ const de: Translation = {
 		PageTitle: 'Guide',
 		GuideButton: 'Guide',
 		PreviousTitle: 'Previous',
+		EndpointsTitle: 'Endpoints',
+		EndpointTitle: 'Endpoint',
 		NextTitle: 'Next',
 		ChaptersTitle: 'Chapters',
 		ChapterTitle: 'Chapter'

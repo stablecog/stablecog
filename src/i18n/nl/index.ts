@@ -836,6 +836,8 @@ const nl: Translation = {
 		PageTitle: 'Handleiding',
 		GuideButton: 'Handleiding',
 		PreviousTitle: 'Terug',
+		EndpointsTitle: 'Endpoints',
+		EndpointTitle: 'Endpoint',
 		NextTitle: 'Verder',
 		ChaptersTitle: 'Hoofdstukken',
 		ChapterTitle: 'Hoofdstuk'

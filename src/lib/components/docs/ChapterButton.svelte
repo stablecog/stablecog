@@ -33,7 +33,7 @@
 				<p
 					class="max-w-full font-normal overflow-hidden overflow-ellipsis whitespace-nowrap text-sm text-c-on-bg/60"
 				>
-					{$LL.Guide.ChapterTitle()}
+					{item.http_method ? $LL.Guide.EndpointTitle() : $LL.Guide.ChapterTitle()}
 				</p>
 				<div class="flex items-center gap-2.5 pr-1">
 					<h3
@@ -53,16 +53,18 @@
 			/>
 		</div>
 		{#if src && srcset && sizes}
-			<img
-				loading="lazy"
-				width="1200"
-				height="630"
-				class="w-full h-auto rounded-lg mt-3 bg-c-bg-secondary border-2 border-c-bg-secondary shadow-lg shadow-c-shadow/[var(--o-shadow-normal)]"
-				{sizes}
-				{src}
-				{srcset}
-				alt={item.title}
-			/>
+			{#key src}
+				<img
+					loading="lazy"
+					width="1200"
+					height="630"
+					class="w-full h-auto rounded-lg mt-3 bg-c-bg-secondary border-2 border-c-bg-secondary shadow-lg shadow-c-shadow/[var(--o-shadow-normal)]"
+					{sizes}
+					{src}
+					{srcset}
+					alt={item.title}
+				/>
+			{/key}
 		{/if}
 	</div>
 </a>

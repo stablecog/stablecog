@@ -844,6 +844,8 @@ const ja: Translation = {
 		PageTitle: 'ガイド',
 		GuideButton: 'ガイド',
 		PreviousTitle: '戻る',
+		EndpointsTitle: 'Endpoints',
+		EndpointTitle: 'Endpoint',
 		NextTitle: '次へ',
 		ChaptersTitle: 'チャプター',
 		ChapterTitle: 'チャプター'

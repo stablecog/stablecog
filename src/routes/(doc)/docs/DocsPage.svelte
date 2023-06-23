@@ -25,6 +25,11 @@
 		{ title: sidebarItem?.title || '', href: sidebarItem?.pathname || '' }
 	]);
 
+	$: allChildrenAreEndpoints =
+		sidebarItem?.children !== undefined
+			? sidebarItem?.children?.every((child) => child.http_method)
+			: false;
+
 	onDestroy(() => {
 		dirTree.set([]);
 	});
@@ -45,7 +50,9 @@
 	</article>
 	{#if sidebarItem?.children}
 		<div class="w-full max-w-3xl px-5 md:px-12 pb-8 overflow-hidden">
-			<h2 class="font-bold text-[1.6rem] leading-[1.35]">{$LL.Guide.ChaptersTitle()}</h2>
+			<h2 class="font-bold text-[1.6rem] leading-[1.35]">
+				{allChildrenAreEndpoints ? $LL.Guide.EndpointsTitle() : $LL.Guide.ChaptersTitle()}
+			</h2>
 			<ul class="w-[calc(100%+1rem)] -mx-2 -mb-1 flex flex-row flex-wrap mt-3">
 				{#each sidebarItem.children.filter((c) => !rootPathnames.includes(c.pathname)) as child}
 					<li class="w-full md:w-1/2 p-2">
