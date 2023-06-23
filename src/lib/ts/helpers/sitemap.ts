@@ -20,6 +20,16 @@ const definedRoutes: IRoute[] = [
 		changefreq: 'daily'
 	},
 	{
+		loc: '/generate',
+		lastmod: todayString,
+		changefreq: 'daily'
+	},
+	{
+		loc: '/voiceover/generate',
+		lastmod: todayString,
+		changefreq: 'daily'
+	},
+	{
 		loc: '/history',
 		lastmod: todayString,
 		changefreq: 'daily'
