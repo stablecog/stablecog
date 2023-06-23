@@ -30,7 +30,9 @@
 
 	$: selectedRouteIndex = routeIndexOf($page.url.pathname);
 	$: selectedRouteWidth = widths[selectedRouteIndex];
-	$: selectedRouteLeft = widths.slice(0, selectedRouteIndex).reduce((acc, cur) => acc + cur, 0);
+	$: selectedRouteLeft = widths
+		.slice(0, selectedRouteIndex < 0 ? widths.length : selectedRouteIndex)
+		.reduce((acc, cur) => acc + cur, 0);
 </script>
 
 <TabBarWrapper class="max-w-full" {type}>
@@ -39,7 +41,7 @@
 	>
 		<div class="w-full flex relative">
 			<div
-				class="w-full h-full absolute left-0 top-0 overflow-hidden rounded-r-xl z-0 pointer-events-none"
+				class="w-full h-full absolute left-0 top-0 overflow-hidden rounded-xl z-0 pointer-events-none"
 			>
 				<div
 					style="width: {selectedRouteWidth}px; transform: translateX({selectedRouteLeft}px);"
