@@ -42,13 +42,13 @@
 	export let openSignInModal: () => void;
 	export let isSettingsSheetOpen: boolean;
 
-	$: creditCost = getVoiceoverCreditCost($voiceoverPrompt || '');
+	$: creditCost = getVoiceoverCreditCost(
+		$voiceoverPrompt || $LL.Voiceover.PromptBar.PromptInput.Placeholder()
+	);
 	$: doesntHaveEnoughCredits =
 		$userSummary !== undefined &&
 		$userSummary !== null &&
 		$userSummary.total_remaining_credits < creditCost;
-
-	$: isSM = $windowWidth < mdBreakpoint;
 
 	$: [$voiceoverPrompt],
 		withCheck(() => {
