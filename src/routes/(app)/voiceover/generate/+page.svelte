@@ -187,7 +187,7 @@
 							x: $windowWidth > xlBreakpoint ? -200 : -100,
 							easing: quadOut
 						}}
-						class="h-full flex w-36 xl:w-72 lg:pb-[calc(env(safe-area-inset-bottom))] relative z-10"
+						class="h-full flex w-36 xl:w-72 lg:pb-[env(safe-area-inset-bottom)] relative z-10"
 					>
 						<SidebarWrapper hasGradient>
 							<AutoSize bind:element={listScrollContainerLg} let:clientHeight>
@@ -225,10 +225,7 @@
 					}}
 				/>
 			</div>
-			<div
-				class="flex flex-col items-center flex-1 min-w-0 h-full
-				lg:pb-[calc(env(safe-area-inset-bottom))]"
-			>
+			<div class="flex flex-col items-center flex-1 min-w-0 h-full">
 				{#if $windowWidth < mdBreakpoint && isSettingsSheetOpen}
 					<div
 						transition:fade|local={{ duration: 200, easing: quadOut }}
@@ -305,7 +302,7 @@
 					</div>
 				{/if}
 				<div
-					class="w-full flex flex-col justify-start flex-1 min-h-0 pb-[env(safe-area-inset-bottom)] relative z-0 order-first md:order-last"
+					class="w-full flex flex-col justify-start flex-1 min-h-0 md:pb-[env(safe-area-inset-bottom)] relative z-0 order-first md:order-last"
 				>
 					<div
 						class="w-full flex-1 min-h-0 flex flex-col justify-start overflow-hidden px-2 pb-4 md:p-0"
@@ -345,7 +342,7 @@
 					</div>
 				</div>
 			</div>
-			<div class="h-full w-72 hidden md:flex md:pb-[calc(env(safe-area-inset-bottom))]">
+			<div class="h-full w-72 hidden md:flex md:pb-[env(safe-area-inset-bottom)]">
 				<VoiceoverSettingsPanel {isCheckCompleted} />
 			</div>
 		</div>
