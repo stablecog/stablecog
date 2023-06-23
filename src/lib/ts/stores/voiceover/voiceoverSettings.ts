@@ -22,10 +22,7 @@ export const voiceoverDenoiseAudio = writable<boolean>(voiceoverDenoiseAudioDefa
 export const voiceoverRemoveSilence = writable<boolean>(voiceoverRemoveSilenceDefault);
 
 export const voiceoverPromptLocal = writableLocal<string | null>('voiceoverPrompt', null);
-export const voiceoverStabilityLocal = writableLocal<number | null>(
-	'voiceoverStability',
-	voiceoverStabilityDefault
-);
+export const voiceoverStabilityLocal = writableLocal<number | null>('voiceoverStability', null);
 export const voiceoverModelIdLocal = writableLocal<TVoiceoverModelId | null>(
 	'voiceoverModelId',
 	null
