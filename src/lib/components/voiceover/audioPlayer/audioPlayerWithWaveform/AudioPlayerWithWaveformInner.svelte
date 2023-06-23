@@ -92,14 +92,23 @@
 		sliderValue = Math.floor(currentTime * 1000);
 	}
 
+	let sliderStoppedAudio = false;
 	function onSliderValueChanged() {
 		const toBeTime = sliderValue / 1000;
 		if (areValuesTooClose(toBeTime, currentTime)) return;
 		if (!audioElement.paused) {
 			audioElement.pause();
+			sliderStoppedAudio = true;
 		}
 		currentTime = toBeTime;
 		progress = currentTime / duration;
+	}
+
+	function sliderOnPointerUp() {
+		if (sliderStoppedAudio && audioElement.paused) {
+			audioElement.play();
+		}
+		sliderStoppedAudio = false;
 	}
 
 	async function drawWaveformWithCheck() {
@@ -222,6 +231,7 @@
 					name="Audio Player"
 					bind:value={sliderValue}
 					step={1}
+					onPointerUp={sliderOnPointerUp}
 				/>
 			</div>
 		</div>

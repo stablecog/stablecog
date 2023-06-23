@@ -1,11 +1,11 @@
 <script lang="ts">
 	import { createSlider } from '@melt-ui/svelte';
-	import { Slider } from 'radix-svelte';
 	export let value: number;
 	export let min: number;
 	export let max: number;
 	export let step: number;
 	export let name: string;
+	export let onPointerUp: () => void;
 
 	const {
 		options,
@@ -25,10 +25,10 @@
 	$: value = $valueLocal[0];
 </script>
 
-<span aria-label={name} class="w-full h-full">
+<span on:pointerup={onPointerUp} aria-label={name} class="w-full h-full">
 	<span
 		{...$slider}
-		class="h-full touch-none select-none cursor-grab active:cursor-grabbing relative flex
+		class="h-full cursor-grab active:cursor-grabbing relative flex
       items-end group overflow-hidden"
 	>
 		<span class="w-full h-full relative flex flex-col justify-end">

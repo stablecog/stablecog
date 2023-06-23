@@ -59,14 +59,24 @@
 		sliderValue = Math.floor(currentTime * 1000);
 	}
 
+	let sliderStoppedAudio = false;
 	function onSliderValueChanged() {
 		const toBeTime = sliderValue / 1000;
 		if (areValuesTooClose(toBeTime, currentTime)) return;
 		if (!audioElement.paused) {
 			audioElement.pause();
+			sliderStoppedAudio = true;
 		}
 		currentTime = toBeTime;
 	}
+
+	function sliderOnPointerUp() {
+		if (sliderStoppedAudio && audioElement.paused) {
+			audioElement.play();
+		}
+		sliderStoppedAudio = false;
+	}
+
 	onMount(() => {
 		$allAudioPlayers.add(audioElement);
 	});
@@ -198,10 +208,11 @@
 							disabled={isOutputLoadingOrFailed}
 							{duration}
 							min={0}
-							max={Math.floor(duration * 1000)}
+							max={Math.floor((duration || output.audio_duration) * 1000)}
 							name="Audio Player"
 							bind:value={sliderValue}
 							step={1}
+							onPointerUp={sliderOnPointerUp}
 						/>
 					</div>
 				</div>
