@@ -4,7 +4,7 @@
 	import LL, { locale } from '$i18n/i18n-svelte';
 	import { voiceoverSpeakerIdToDisplayName } from '$ts/constants/voiceover/models';
 	import { languageName } from '$ts/helpers/language';
-	import { onDestroy } from 'svelte';
+	import { onDestroy, onMount } from 'svelte';
 	import { fly, scale } from 'svelte/transition';
 	import { quadOut } from 'svelte/easing';
 	import { easingBounceOut } from '$ts/animation/easing';
@@ -42,13 +42,19 @@
 	let now = Date.now();
 	let estimatedDuration = 0;
 	let elapsedSeconds = 0;
+	let elapsedSecondsSinceCreation = 0;
 	let remainingSeconds = 0;
+	let canShowTimerTimeout: NodeJS.Timeout;
+	let canShowTimer = false;
 
 	$: voiceoverStatus = voiceover.status;
 	$: [voiceoverStatus], setNowInterval();
 	$: estimatedDuration = getEstimatedVoiceoverDurationInSeconds(voiceover.prompt.text);
 	$: elapsedSeconds = voiceover.started_at
 		? (now - new Date(voiceover.started_at).getTime()) / 1000
+		: 0;
+	$: elapsedSecondsSinceCreation = voiceover.created_at
+		? (now - new Date(voiceover.created_at).getTime()) / 1000
 		: 0;
 	$: remainingSeconds = estimatedDuration - elapsedSeconds;
 
@@ -115,9 +121,16 @@
 		return `<span class="text-c-on-bg/75 font-medium">${s}</span>`;
 	}
 
+	onMount(() => {
+		canShowTimerTimeout = setTimeout(() => {
+			canShowTimer = true;
+		}, 500);
+	});
+
 	onDestroy(() => {
 		resetWave(waveformContainer);
 		clearInterval(nowInterval);
+		clearTimeout(canShowTimerTimeout);
 	});
 </script>
 
@@ -143,7 +156,7 @@
 				languageName: getHighlightedSpan(languageName($locale).of(voiceover.speaker.locale) || '')
 			})}<br />{$LL.Voiceover.Generate.VoiceoverParagraph()}
 		</p>
-		{#if audioStatus === 'being-created' && now - new Date(voiceover.created_at).getTime() > 500}
+		{#if canShowTimer && elapsedSecondsSinceCreation > 0.5 && audioStatus === 'being-created'}
 			<div class="absolute right-0 top-0 flex items-center justify-end">
 				{#if remainingSeconds !== estimatedDuration}
 					<div
