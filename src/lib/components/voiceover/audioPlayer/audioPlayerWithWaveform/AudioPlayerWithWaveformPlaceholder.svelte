@@ -13,8 +13,7 @@
 	import type { TAudioStatus } from '$components/voiceover/audioPlayer/audioPlayerWithWaveform/types';
 	import { getEstimatedVoiceoverDurationInSeconds } from '$ts/helpers/voiceover/getEstimatedDuration';
 	import IconHourglass from '$components/icons/IconHourglass.svelte';
-	import Morpher from '$components/Morpher.svelte';
-	import IconTimer from '$components/icons/IconTimer.svelte';
+	import IconTimerAnimated from '$components/icons/IconTimerAnimated.svelte';
 
 	export let barWidth: number;
 	export let voiceover: TVoiceover;
@@ -151,7 +150,7 @@
 						transition:fly={{ duration: 150, easing: quadOut, y: -20 }}
 						class="flex items-center justify-end absolute right-3 top-2 md:right-4 md:top-3 gap-0.75"
 					>
-						<IconTimer class="text-c-on-bg/50 w-4.5 h-4.5" />
+						<IconTimerAnimated class="text-c-on-bg/50 w-4.5 h-4.5" />
 						<p class="text-c-on-bg/50 mt-0.5 font-medium">
 							{Math.max(0, remainingSeconds).toLocaleString($locale, {
 								maximumFractionDigits: 0
