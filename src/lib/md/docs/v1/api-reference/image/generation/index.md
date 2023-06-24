@@ -9,4 +9,4 @@ preview_image_url: https://ba.stablecog.com/docs/previews/generation.jpg
 
 # Generation
 
-These are the image generation related endpoints. You can generate images, retrieve your generations, check the available models or default settings.
+These are the image generation related endpoints. You can generate images, retrieve your generations, check the available models or the default settings.
