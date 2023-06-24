@@ -7,13 +7,13 @@
 	function getColorClasses(method: string) {
 		switch (method) {
 			case 'GET':
-				return 'text-c-success ring-c-success/40';
+				return 'text-c-success ring-c-success/50';
 			case 'POST':
-				return 'text-c-primary ring-c-primary/40';
+				return 'text-c-secondary ring-c-secondary/50';
 			case 'DELETE':
-				return 'text-c-danger ring-c-danger/40';
+				return 'text-c-danger ring-c-danger/50';
 			default:
-				return 'text-c-primary ring-c-primary/40';
+				return 'text-c-secondary ring-c-secondary/50';
 		}
 	}
 </script>
