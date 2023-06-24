@@ -9,11 +9,10 @@
 	import { allAudioPlayers } from '$ts/stores/allPlayers';
 	import type { TVoiceover, TVoiceoverOutput } from '$ts/stores/user/voiceovers';
 	import AudioPlayerWithWaveformPlaceholder from '$components/voiceover/audioPlayer/audioPlayerWithWaveform/AudioPlayerWithWaveformPlaceholder.svelte';
-	import { cubicOut, quadOut } from 'svelte/easing';
+	import { quadOut } from 'svelte/easing';
 	import { scale } from 'svelte/transition';
 	import AudioPlayerWithWaveformInner from '$components/voiceover/audioPlayer/audioPlayerWithWaveform/AudioPlayerWithWaveformInner.svelte';
 	import type { TAudioStatus } from '$components/voiceover/audioPlayer/audioPlayerWithWaveform/types';
-	import { flyAndScale } from '$ts/animation/transitions';
 
 	export let voiceover: TVoiceover;
 	export { classes as class };
@@ -49,6 +48,8 @@
 			? 'being-created'
 			: status === 'succeeded' && audioArray !== undefined
 			? 'created'
+			: status === 'failed'
+			? 'failed'
 			: 'idle';
 	let audioArray: number[] | undefined;
 

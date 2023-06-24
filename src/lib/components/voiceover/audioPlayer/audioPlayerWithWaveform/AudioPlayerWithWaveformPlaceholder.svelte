@@ -5,12 +5,16 @@
 	import { voiceoverSpeakerIdToDisplayName } from '$ts/constants/voiceover/models';
 	import { languageName } from '$ts/helpers/language';
 	import { onDestroy } from 'svelte';
-	import { scale } from 'svelte/transition';
+	import { fly, scale } from 'svelte/transition';
 	import { quadOut } from 'svelte/easing';
 	import { easingBounceOut } from '$ts/animation/easing';
 	import ErrorChip from '$components/error/ErrorChip.svelte';
 	import type { TVoiceover } from '$ts/stores/user/voiceovers';
 	import type { TAudioStatus } from '$components/voiceover/audioPlayer/audioPlayerWithWaveform/types';
+	import { getEstimatedVoiceoverDurationInSeconds } from '$ts/helpers/voiceover/getEstimatedDuration';
+	import IconHourglass from '$components/icons/IconHourglass.svelte';
+	import Morpher from '$components/Morpher.svelte';
+	import IconTimer from '$components/icons/IconTimer.svelte';
 
 	export let barWidth: number;
 	export let voiceover: TVoiceover;
@@ -34,7 +38,37 @@
 	],
 		drawWaveformPlaceholderWithCheck();
 
+	let nowInterval: NodeJS.Timeout;
+	const nowUpdateInterval = 500;
+	let now = Date.now();
+	let estimatedDuration = 0;
+	let elapsedSeconds = 0;
+	let remainingSeconds = 0;
+
+	$: voiceoverStatus = voiceover.status;
+	$: [voiceoverStatus], setNowInterval();
+	$: estimatedDuration = getEstimatedVoiceoverDurationInSeconds(voiceover.prompt.text);
+	$: elapsedSeconds = voiceover.started_at
+		? (now - new Date(voiceover.started_at).getTime()) / 1000
+		: 0;
+	$: remainingSeconds = estimatedDuration - elapsedSeconds;
+
 	let lastDrawnContainer: { width: number; height: number } | undefined;
+
+	function setNowInterval() {
+		if (audioStatus === 'created' || audioStatus === 'failed') {
+			clearInterval(nowInterval);
+		} else if (
+			voiceoverStatus === 'to-be-submitted' ||
+			voiceoverStatus === 'server-received' ||
+			voiceoverStatus === 'server-processing'
+		) {
+			clearInterval(nowInterval);
+			nowInterval = setInterval(() => {
+				now = Date.now();
+			}, nowUpdateInterval);
+		}
+	}
 
 	function drawWaveformPlaceholderWithCheck() {
 		if (!waveformContainer) return;
@@ -84,6 +118,7 @@
 
 	onDestroy(() => {
 		resetWave(waveformContainer);
+		clearInterval(nowInterval);
 	});
 </script>
 
@@ -103,12 +138,38 @@
 				/>
 			</div>
 		</div>
-		<p class="flex-shrink min-w-0 text-c-on-bg/50 text-sm md:text-base px-3 md:px-4">
+		<p class="flex-1 min-w-0 break-words text-c-on-bg/50 text-sm md:text-base pl-3 md:pl-4 pr-10">
 			{@html $LL.Voiceover.Generate.SpeakerParagraph({
 				speakerName: getHighlightedSpan($voiceoverSpeakerIdToDisplayName[voiceover.speaker.id]),
 				languageName: getHighlightedSpan(languageName($locale).of(voiceover.speaker.locale) || '')
 			})}<br />{$LL.Voiceover.Generate.VoiceoverParagraph()}
 		</p>
+		{#if audioStatus === 'being-created' && now - new Date(voiceover.created_at).getTime() > 500}
+			<div class="absolute right-0 top-0 flex items-center justify-end">
+				{#if remainingSeconds !== estimatedDuration}
+					<div
+						transition:fly={{ duration: 150, easing: quadOut, y: -20 }}
+						class="flex items-center justify-end absolute right-3 top-2 md:right-4 md:top-3 gap-0.75"
+					>
+						<IconTimer class="text-c-on-bg/50 w-4.5 h-4.5" />
+						<p class="text-c-on-bg/50 mt-0.5 font-medium">
+							{Math.max(0, remainingSeconds).toLocaleString($locale, {
+								maximumFractionDigits: 0
+							})}
+						</p>
+					</div>
+				{:else}
+					<div
+						transition:fly={{ duration: 150, easing: quadOut, y: -20 }}
+						class="flex items-center justify-end absolute right-2 top-3 md:right-3 md:top-4"
+					>
+						<div class="flex items-center justify-center animate-hourglass">
+							<IconHourglass class="text-c-on-bg/50 w-4.5 h-4.5" />
+						</div>
+					</div>
+				{/if}
+			</div>
+		{/if}
 	</div>
 
 	<div class="w-full flex-1 flex relative overflow-hidden pt-2">

@@ -236,7 +236,8 @@ module.exports = {
 				'pulse-scale': 'pulse-scale 0.75s cubic-bezier(0.5, 0, 0.5, 1) infinite',
 				'spin-faster': 'spin-faster 0.75s linear infinite',
 				'pulse-faster': 'pulse 1s cubic-bezier(0.4, 0, 0.6, 1) infinite;',
-				'slide-up-and-fade': 'slide-up-and-fade 0.2s cubic-bezier(0.4, 0, 0.2, 1)'
+				'slide-up-and-fade': 'slide-up-and-fade 0.2s cubic-bezier(0.4, 0, 0.2, 1)',
+				hourglass: 'hourglass 3s cubic-bezier(0.4, 0, 0.2, 1) infinite'
 			},
 			ringWidth: {
 				1.5: '1.5px'
@@ -335,6 +336,23 @@ module.exports = {
 					'100%': {
 						opacity: '1',
 						transform: 'translateY(0)'
+					}
+				},
+				hourglass: {
+					'0%': {
+						transform: 'rotate(0deg)'
+					},
+					'20%': {
+						transform: 'rotate(180deg)'
+					},
+					'50%': {
+						transform: 'rotate(180deg)'
+					},
+					'70%': {
+						transform: 'rotate(360deg)'
+					},
+					'100%': {
+						transform: 'rotate(360deg)'
 					}
 				}
 			}

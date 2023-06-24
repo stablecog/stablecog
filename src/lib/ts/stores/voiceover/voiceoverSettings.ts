@@ -1,9 +1,7 @@
 import {
-	voiceoverModelIdDefault,
 	type TVoiceoverModelId,
 	type TVoiceoverSpeakerId,
-	voiceoverSpeakerIdDefault,
-	voiceoverLocaleDefault
+	voiceoverSpeakerIdDefault
 } from '$ts/constants/voiceover/models';
 import {
 	voiceoverDenoiseAudioDefault,
