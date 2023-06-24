@@ -897,6 +897,11 @@ const ja: Translation = {
 			'4a19f17c-eedc-4cf8-a45d-1f9d69547125': {
 				Name: 'レイチェル'
 			},
+			'2e4e9572-2ea6-48a3-b134-381c68c9d516': { Name: 'Ella' },
+			'2364bfb5-cdce-4a30-b979-a12f9f49cd39': { Name: 'Alice' },
+			'91bf1331-a234-4478-a2a5-4dba4ac647fc': { Name: 'Olivia' },
+			'3aebf12b-a7b8-41cf-9411-5808a231138e': { Name: 'Daniel' },
+			'b8e5e45b-4fe3-4a0f-9fa6-5893c67287c0': { Name: 'Thomas' },
 			'aad61bf9-0710-40f6-8050-8c412852f717': {
 				Name: 'ヘンリー'
 			},
