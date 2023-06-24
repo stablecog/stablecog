@@ -9,4 +9,4 @@ preview_image_url: https://ba.stablecog.com/docs/previews/upscale.jpg
 
 # Upscale
 
-These are the image upscale related endpoints. You can upscale images, list, check the available upscale models or default settings.
+These are the image upscale related endpoints. You can upscale images, check the available upscale models or the default settings.
