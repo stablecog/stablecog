@@ -6,6 +6,7 @@
 	--c-bg-secondary: 28 28 35;
 	--c-bg-tertiary: 38 38 45;
 	--c-on-bg: 220 220 234;
+	--c-on-bg-faded: 124 124 134;
 	--c-on-bg-secondary: 100 100 114;
 	--c-primary: 181 140 255;
 	--c-primary-secondary: 199 158 250;
@@ -30,6 +31,7 @@
 	--c-bg-tertiary: 38 38 45;
 	--c-tertiary: 93 209 202;
 	--c-on-bg: 220 220 234;
+	--c-on-bg-faded: 124 124 134;
 	--c-on-bg-secondary: 100 100 114;
 	--c-primary: 181 140 255;
 	--c-primary-secondary: 199 158 250;
@@ -52,6 +54,7 @@
 	--c-bg-secondary: 236 230 245;
 	--c-bg-tertiary: 240 238 255;
 	--c-on-bg: 20 18 22;
+	--c-on-bg-faded: 117 124 133;
 	--c-on-bg-secondary: 185 183 194;
 	--c-primary: 96 42 204;
 	--c-primary-secondary: 71 17 179;

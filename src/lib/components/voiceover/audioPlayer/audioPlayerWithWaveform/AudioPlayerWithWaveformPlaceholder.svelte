@@ -12,8 +12,8 @@
 	import type { TVoiceover } from '$ts/stores/user/voiceovers';
 	import type { TAudioStatus } from '$components/voiceover/audioPlayer/audioPlayerWithWaveform/types';
 	import { getEstimatedVoiceoverDurationInSeconds } from '$ts/helpers/voiceover/getEstimatedDuration';
-	import IconHourglass from '$components/icons/IconHourglass.svelte';
 	import IconTimerAnimated from '$components/icons/IconTimerAnimated.svelte';
+	import IconHourglassAnimated from '$components/icons/IconHourglassAnimated.svelte';
 
 	export let barWidth: number;
 	export let voiceover: TVoiceover;
@@ -173,10 +173,10 @@
 				{:else}
 					<div
 						transition:fly={{ duration: 150, easing: quadOut, y: -20 }}
-						class="flex items-center justify-end absolute right-2 top-3 md:right-3 md:top-4"
+						class="flex items-center justify-end absolute right-2 top-2 md:right-3 md:top-3"
 					>
-						<div class="flex items-center justify-center animate-hourglass">
-							<IconHourglass class="text-c-on-bg/50 w-4.5 h-4.5" />
+						<div class="flex items-center justify-center">
+							<IconHourglassAnimated class="text-c-on-bg-faded w-6 h-6" />
 						</div>
 					</div>
 				{/if}

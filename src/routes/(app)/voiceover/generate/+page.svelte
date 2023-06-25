@@ -49,6 +49,7 @@
 	import VoiceoverSettingsSheet from '$components/voiceover/generate/VoiceoverSettingsSheet.svelte';
 	import SignInModal from '$components/SignInModal.svelte';
 	import { searchParamsString } from '$ts/stores/searchParamsString';
+	import IconHourglassAnimated from '$components/icons/IconHourglassAnimated.svelte';
 
 	export let data;
 
