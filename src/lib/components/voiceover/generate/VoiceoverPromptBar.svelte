@@ -206,11 +206,11 @@
 				</Button>
 				<div
 					class="absolute ring-1 ring-c-bg/15 rounded-bl bg-c-bg/10 pointer-events-none top-0
-					right-0 text-xs flex flex-row justify-end px-1.25 py-0.25
+					right-0 text-xs flex flex-row justify-end px-1.25
 					items-center font-semibold text-c-bg"
 				>
 					<IconToken class="w-3.5 h-3.5 -ml-1" />
-					<p class="text-right">
+					<p class="text-right mt-0.25">
 						{creditCost.toLocaleString($locale)}
 					</p>
 				</div>
