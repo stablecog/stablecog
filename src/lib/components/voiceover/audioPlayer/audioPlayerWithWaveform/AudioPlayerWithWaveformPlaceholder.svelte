@@ -160,7 +160,7 @@
 			<div class="absolute right-0 top-0 flex items-center justify-end">
 				{#if remainingSeconds !== estimatedDuration}
 					<div
-						transition:fly={{ duration: 150, easing: quadOut, y: -20 }}
+						transition:fly|local={{ duration: 150, easing: quadOut, y: -20 }}
 						class="flex items-center justify-end absolute right-3 top-2 md:right-4 md:top-3 gap-0.75"
 					>
 						<IconTimerAnimated class="text-c-on-bg/50 w-4.5 h-4.5" />
@@ -172,7 +172,7 @@
 					</div>
 				{:else}
 					<div
-						transition:fly={{ duration: 150, easing: quadOut, y: -20 }}
+						transition:fly|local={{ duration: 150, easing: quadOut, y: -20 }}
 						class="flex items-center justify-end absolute right-2 top-2 md:right-3 md:top-3"
 					>
 						<div class="flex items-center justify-center">

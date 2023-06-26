@@ -13,11 +13,8 @@
 	import SliderForWaveform from '$components/voiceover/audioPlayer/SliderForWaveform.svelte';
 	import type { TVoiceoverFullOutput } from '$ts/stores/user/voiceovers';
 	import { onDestroy } from 'svelte';
-	import { fade, fly } from 'svelte/transition';
-	import { quadIn, quadOut } from 'svelte/easing';
 	import DownloadButton from '$components/voiceover/audioPlayer/DownloadButton.svelte';
 	import { timestampPlaceholder } from '$components/voiceover/audioPlayer/constants';
-	import { flyAndScale } from '$ts/animation/transitions';
 
 	export let output: TVoiceoverFullOutput;
 	export let audioElement: HTMLAudioElement;
