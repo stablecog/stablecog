@@ -156,30 +156,26 @@
 				languageName: getHighlightedSpan(languageName($locale).of(voiceover.speaker.locale) || '')
 			})}<br />{$LL.Voiceover.Generate.VoiceoverParagraph()}
 		</p>
-		{#if canShowTimer && elapsedSecondsSinceCreation > 0.5 && audioStatus === 'being-created'}
-			<div class="absolute right-0 top-0 flex items-center justify-end">
-				{#if remainingSeconds !== estimatedDuration}
-					<div
-						transition:fly|local={{ duration: 150, easing: quadOut, y: -20 }}
-						class="flex items-center justify-end absolute right-3 top-2 md:right-4 md:top-3 gap-0.75"
-					>
-						<IconTimerAnimated class="text-c-on-bg/50 w-4.5 h-4.5" />
-						<p class="text-c-on-bg/50 mt-0.5 font-medium">
-							{Math.max(0, remainingSeconds).toLocaleString($locale, {
-								maximumFractionDigits: 0
-							})}
-						</p>
-					</div>
-				{:else}
-					<div
-						transition:fly|local={{ duration: 150, easing: quadOut, y: -20 }}
-						class="flex items-center justify-end absolute right-2 top-2 md:right-3 md:top-3"
-					>
-						<div class="flex items-center justify-center">
-							<IconHourglassAnimated class="text-c-on-bg-faded w-6 h-6" />
-						</div>
-					</div>
-				{/if}
+		{#if canShowTimer && elapsedSecondsSinceCreation > 0.5 && audioStatus === 'being-created' && remainingSeconds !== estimatedDuration}
+			<div
+				transition:fly|local={{ duration: 150, easing: quadOut, y: -20 }}
+				class="flex items-center justify-end absolute right-3 top-2 md:right-4 md:top-3 gap-0.75"
+			>
+				<IconTimerAnimated class="text-c-on-bg/50 w-4.5 h-4.5" />
+				<p class="text-c-on-bg/50 mt-0.5 font-medium">
+					{Math.max(0, remainingSeconds).toLocaleString($locale, {
+						maximumFractionDigits: 0
+					})}
+				</p>
+			</div>
+		{:else if canShowTimer && elapsedSecondsSinceCreation > 0.5 && audioStatus === 'being-created' && remainingSeconds === estimatedDuration}
+			<div
+				transition:fly|local={{ duration: 150, easing: quadOut, y: -20 }}
+				class="flex items-center justify-end absolute right-2 top-2 md:right-3 md:top-3"
+			>
+				<div class="flex items-center justify-center">
+					<IconHourglassAnimated class="text-c-on-bg-faded w-6 h-6" />
+				</div>
 			</div>
 		{/if}
 	</div>
