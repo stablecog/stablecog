@@ -9,6 +9,7 @@
 	export { classes as class };
 	export { styles as style };
 	export let noBottomPadding = false;
+	export let noDivider = false;
 	let classes = 'w-full';
 	let styles: string | undefined = undefined;
 	$: _styles = `${
@@ -26,12 +27,14 @@
 		<div
 			class="w-full pt-1 md:pt-4 {noBottomPadding
 				? ''
-				: 'pb-36'} px-2 md:px-3 flex flex-col overflow-auto"
+				: 'pb-20 md:pb-36'} px-2 md:px-3 flex flex-col overflow-auto"
 		>
 			<SidebarItem sidebarItem={sidebar} />
 		</div>
 	</div>
-	<div class="h-full flex py-4 flex-col">
-		<div class="w-2px h-full rounded-full bg-c-bg-secondary" />
-	</div>
+	{#if !noDivider}
+		<div class="h-full flex py-4 flex-col">
+			<div class="w-2px h-full rounded-full bg-c-bg-secondary" />
+		</div>
+	{/if}
 </nav>

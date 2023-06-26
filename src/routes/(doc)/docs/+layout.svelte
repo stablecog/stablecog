@@ -19,8 +19,8 @@
 
 <Drawer hasCustomContent>
 	<div
-		class="w-full flex justify-between items-stretch border-b-2 border-c-bg-secondary
-		sticky transform -translate-y-2px top-0 bg-c-bg gap-2 z-10"
+		slot="header"
+		class="w-full flex justify-between items-stretch border-b-2 border-c-bg-secondary gap-2 z-10"
 	>
 		<h3
 			class="flex-1 min-w-0 overflow-hidden overflow-ellipsis px-4.5 text-2xl font-bold pt-[calc(0.75rem+2px)] pb-3 z-10"
@@ -39,5 +39,5 @@
 			</p>
 		</a>
 	</div>
-	<Sidebar noBottomPadding class="w-full" sidebar={docsSidebar} />
+	<Sidebar class="w-full" sidebar={docsSidebar} noDivider />
 </Drawer>

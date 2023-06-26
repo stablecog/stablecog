@@ -71,11 +71,12 @@
 		</button>
 	</div>
 	<div class="w-full h-2px bg-c-bg-secondary" />
+	<slot name="header" />
 	<div class="w-full flex flex-col flex-1 overflow-hidden">
-		<ScrollAreaWithChevron class="pb-20">
-			{#if hasCustomContent}
-				<slot />
-			{:else}
+		{#if hasCustomContent}
+			<slot />
+		{:else}
+			<ScrollAreaWithChevron class="pb-20">
 				{#each $routesDrawer as route}
 					{@const isSelected = route.strictMatch
 						? $page.url.pathname === route.href
@@ -107,8 +108,8 @@
 						</div>
 					</a>
 				{/each}
-			{/if}
-		</ScrollAreaWithChevron>
+			</ScrollAreaWithChevron>
+		{/if}
 	</div>
 	<div
 		class="w-full px-4 pt-2 pb-[calc(env(safe-area-inset-bottom)+0.6rem)] border-t-2 border-c-bg-secondary"
