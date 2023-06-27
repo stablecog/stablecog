@@ -217,6 +217,7 @@
 	];
 
 	interface FAQItem {
+		id: string;
 		question: string;
 		answer: string;
 		isHTML?: boolean;
@@ -224,26 +225,32 @@
 	let faqItems: FAQItem[];
 	$: faqItems = [
 		{
+			id: 'plan-cancellation',
 			question: $LL.FAQ.Questions.PlanCancellation.Question(),
 			answer: $LL.FAQ.Questions.PlanCancellation.Answer()
 		},
 		{
+			id: 'plan-upgrade-or-downgrade',
 			question: $LL.FAQ.Questions.PlanUpgradeOrDowngrade.Question(),
 			answer: $LL.FAQ.Questions.PlanUpgradeOrDowngrade.Answer()
 		},
 		{
+			id: 'commercial-use',
 			question: $LL.FAQ.Questions.CommercialUse.Question(),
 			answer: $LL.FAQ.Questions.CommercialUse.Answer()
 		},
 		{
+			id: 'more-credits',
 			question: $LL.FAQ.Questions.MoreCredits.Question(),
 			answer: $LL.FAQ.Questions.MoreCredits.Answer()
 		},
 		{
+			id: 'credit-roll-over',
 			question: $LL.FAQ.Questions.CreditRollOver.Question(),
 			answer: $LL.FAQ.Questions.CreditRollOver.Answer()
 		},
 		{
+			id: 'more-questions',
 			question: $LL.FAQ.Questions.MoreQuestions.Question(),
 			answer: $LL.FAQ.Questions.MoreQuestions.Answer({
 				Discord: getAnchorLinkHTML(
