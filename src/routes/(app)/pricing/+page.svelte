@@ -35,6 +35,7 @@
 
 	$: subscriptionCards = [
 		{
+			id: 'starter',
 			title: $LL.Pricing.Plans.StarterTitle(),
 			priceIdMo: PUBLIC_STRIPE_PRICE_ID_STARTER_SUBSCRIPTION_MO,
 			productId: PUBLIC_STRIPE_PRODUCT_ID_STARTER_SUBSCRIPTION,
@@ -67,6 +68,7 @@
 			ringClass: 'ring-c-bg-secondary'
 		},
 		{
+			id: 'pro',
 			title: $LL.Pricing.Plans.ProTitle(),
 			priceIdMo: PUBLIC_STRIPE_PRICE_ID_PRO_SUBSCRIPTION_MO,
 			productId: PUBLIC_STRIPE_PRODUCT_ID_PRO_SUBSCRIPTION,
@@ -99,6 +101,7 @@
 			badgeClasses: 'bg-c-primary text-c-on-primary'
 		},
 		{
+			id: 'ultimate',
 			title: $LL.Pricing.Plans.UltimateTitle(),
 			priceIdMo: PUBLIC_STRIPE_PRICE_ID_ULTIMATE_SUBSCRIPTION_MO,
 			productId: PUBLIC_STRIPE_PRODUCT_ID_ULTIMATE_SUBSCRIPTION,
@@ -134,6 +137,7 @@
 
 	$: creditPackCards = [
 		{
+			id: 'medium-pack',
 			title: $LL.Pricing.CreditPacks.MediumTitle(),
 			priceId: PUBLIC_STRIPE_PRICE_ID_MEDIUM_PACK,
 			productId: PUBLIC_STRIPE_PRICE_ID_MEDIUM_PACK,
@@ -161,6 +165,7 @@
 			badgeClasses: undefined
 		},
 		{
+			id: 'large-pack',
 			title: $LL.Pricing.CreditPacks.LargeTitle(),
 			priceId: PUBLIC_STRIPE_PRICE_ID_LARGE_PACK,
 			productId: PUBLIC_STRIPE_PRICE_ID_LARGE_PACK,
@@ -188,6 +193,7 @@
 			badgeClasses: 'bg-c-primary text-c-on-primary'
 		},
 		{
+			id: 'mega-pack',
 			title: $LL.Pricing.CreditPacks.MegaTitle(),
 			priceId: PUBLIC_STRIPE_PRICE_ID_MEGA_PACK,
 			productId: PUBLIC_STRIPE_PRICE_ID_MEGA_PACK,
@@ -352,6 +358,7 @@
 						subscribedAmount > card.amount &&
 						$page.data.session?.user.id !== undefined}
 					<div
+						id={card.id}
 						class="w-full flex flex-col max-w-md md:max-w-[20rem] bg-c-bg shadow-xl shadow-c-shadow/[var(--o-shadow-strong)]
 					 	p-4 md:p-5 rounded-2xl md:rounded-3xl ring-2 {isSubscribed
 							? 'ring-c-success'
@@ -436,6 +443,7 @@
 				<div class="w-full max-w-7xl flex flex-wrap justify-center gap-7 mt-8">
 					{#each creditPackCards as card}
 						<div
+							id={card.id}
 							class="w-full max-w-md md:max-w-[20rem] bg-c-bg shadow-xl shadow-c-shadow/[var(--o-shadow-strong)]
 							p-4 md:p-5 rounded-2xl md:rounded-3xl ring-2 {card.ringClass} relative"
 						>
@@ -497,7 +505,7 @@
 		<section id="faq" class="w-full flex flex-col items-center pt-5">
 			<div class="max-w-5xl flex flex-wrap items-start justify-start">
 				{#each faqItems as item}
-					<div class="w-full md:w-1/2 px-0 md:px-5 py-4">
+					<div id={item.id} class="w-full md:w-1/2 px-0 md:px-5 py-4">
 						<h5 class="font-semibold">{item.question}</h5>
 						{#if item.isHTML}
 							<p class="mt-1 text-c-on-bg/75">{@html item.answer}</p>
