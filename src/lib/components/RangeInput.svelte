@@ -36,17 +36,20 @@
 	<span
 		{...$slider}
 		class="flex-1 h-full touch-none select-none cursor-grab active:cursor-grabbing relative flex
-			items-center group"
+			items-center group/rangeinput"
 	>
 		<span class="block w-full h-2 rounded-full bg-c-on-bg/20">
-			<span {...$range} class="h-2 rounded-full transition bg-c-on-bg group-active:bg-c-primary" />
+			<span
+				{...$range}
+				class="h-2 rounded-full transition bg-c-on-bg group-active/rangeinput:bg-c-primary"
+			/>
 		</span>
 		{#each [...Array($valueLocal.length).keys()] as _}
 			<span
 				{...$thumb()}
-				class="block ring-0 ring-c-on-bg/25 group-hover:ring-[7px] group-active:ring-c-primary/50
+				class="block ring-0 ring-c-on-bg/25 group-hover/rangeinput:ring-[7px] group-active/rangeinput:ring-c-primary/50
 					transition shadow-lg shadow-c-shadow/[var(--o-shadow-strongest)] h-5 w-5 rounded-full bg-c-on-bg
-					group-active:bg-c-primary group-active:ring-4 outline-none"
+					group-active/rangeinput:bg-c-primary group-active:ring-4 outline-none"
 			/>
 		{/each}
 	</span>
