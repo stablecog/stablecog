@@ -35,7 +35,7 @@
 
 	$: subscriptionCards = [
 		{
-			id: 'starter',
+			id: 'plan-starter',
 			title: $LL.Pricing.Plans.StarterTitle(),
 			priceIdMo: PUBLIC_STRIPE_PRICE_ID_STARTER_SUBSCRIPTION_MO,
 			productId: PUBLIC_STRIPE_PRODUCT_ID_STARTER_SUBSCRIPTION,
@@ -68,7 +68,7 @@
 			ringClass: 'ring-c-bg-secondary'
 		},
 		{
-			id: 'pro',
+			id: 'plan-pro',
 			title: $LL.Pricing.Plans.ProTitle(),
 			priceIdMo: PUBLIC_STRIPE_PRICE_ID_PRO_SUBSCRIPTION_MO,
 			productId: PUBLIC_STRIPE_PRODUCT_ID_PRO_SUBSCRIPTION,
@@ -101,7 +101,7 @@
 			badgeClasses: 'bg-c-primary text-c-on-primary'
 		},
 		{
-			id: 'ultimate',
+			id: 'plan-ultimate',
 			title: $LL.Pricing.Plans.UltimateTitle(),
 			priceIdMo: PUBLIC_STRIPE_PRICE_ID_ULTIMATE_SUBSCRIPTION_MO,
 			productId: PUBLIC_STRIPE_PRODUCT_ID_ULTIMATE_SUBSCRIPTION,
@@ -137,7 +137,7 @@
 
 	$: creditPackCards = [
 		{
-			id: 'medium-pack',
+			id: 'credit-pack-medium',
 			title: $LL.Pricing.CreditPacks.MediumTitle(),
 			priceId: PUBLIC_STRIPE_PRICE_ID_MEDIUM_PACK,
 			productId: PUBLIC_STRIPE_PRICE_ID_MEDIUM_PACK,
@@ -165,7 +165,7 @@
 			badgeClasses: undefined
 		},
 		{
-			id: 'large-pack',
+			id: 'credit-pack-large',
 			title: $LL.Pricing.CreditPacks.LargeTitle(),
 			priceId: PUBLIC_STRIPE_PRICE_ID_LARGE_PACK,
 			productId: PUBLIC_STRIPE_PRICE_ID_LARGE_PACK,
@@ -193,7 +193,7 @@
 			badgeClasses: 'bg-c-primary text-c-on-primary'
 		},
 		{
-			id: 'mega-pack',
+			id: 'credit-pack-mega',
 			title: $LL.Pricing.CreditPacks.MegaTitle(),
 			priceId: PUBLIC_STRIPE_PRICE_ID_MEGA_PACK,
 			productId: PUBLIC_STRIPE_PRICE_ID_MEGA_PACK,
