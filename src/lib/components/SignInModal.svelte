@@ -1,12 +1,17 @@
 <script lang="ts">
 	import SignInCard from '$components/SignInCard.svelte';
 	import { clickoutside } from '$ts/actions/clickoutside';
+	import { onDestroy } from 'svelte';
 	import { portal } from 'svelte-portal';
 	import { quadOut } from 'svelte/easing';
 	import { fade, fly } from 'svelte/transition';
 
 	export let redirectTo: string;
 	export let onClickoutside: () => void;
+
+	onDestroy(() => {
+		onClickoutside();
+	});
 </script>
 
 <svelte:body
