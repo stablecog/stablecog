@@ -13,19 +13,18 @@
 	import { quadOut } from 'svelte/easing';
 	import IconPassword from '$components/icons/IconPassword.svelte';
 	import { wantsEmail } from '$ts/stores/user/wantsEmail';
-	import { onMount } from 'svelte';
+	import { onDestroy, onMount } from 'svelte';
 	import WantsEmailCard from '$components/WantsEmailCard.svelte';
 	import { userSummary } from '$ts/stores/user/summary';
 	import { getUserSummary } from '$ts/helpers/user/user';
+	import { signInCardCodeSignInStatus, signInCardStatus } from '$ts/stores/signInCardState';
 
 	export let redirectTo: string | null = null;
 	export let isModal = false;
 
 	let email: string;
-	let signInStatus: 'idle' | 'loading' | 'error' | 'sent-otp' = 'idle';
 	let provider: Provider | null | 'email' = null;
 	let errorText: string | null = null;
-	let codeSignInStatus: 'idle' | 'entering' | 'loading' | 'error' | 'success' = 'idle';
 	let codeValue: string;
 	let codeSignInErrorText: string | null = null;
 
@@ -41,7 +40,7 @@
 		if (wantsEmailChecked) {
 			wantsEmail.set(true);
 		}
-		signInStatus = 'loading';
+		signInCardStatus.set('loading');
 		provider = 'email';
 		const domain = email.split('@')[1];
 		const { data: dData, error: dError } = await $page.data.supabase
@@ -51,12 +50,12 @@
 		if (dError) {
 			console.log(dError);
 			errorText = $LL.Error.SomethingWentWrong();
-			signInStatus = 'error';
+			signInCardStatus.set('error');
 			return;
 		}
 		if (dData.length > 0) {
 			errorText = $LL.Error.EmailProviderNotAllowed();
-			signInStatus = 'error';
+			signInCardStatus.set('error');
 			return;
 		}
 		const { data: sData, error: sError } = await $page.data.supabase.auth.signInWithOtp({
@@ -69,7 +68,7 @@
 		});
 		if (sError) {
 			console.log(sError);
-			signInStatus = 'error';
+			signInCardStatus.set('error');
 			if (
 				sError.message === 'For security purposes, you can only request this once every 60 seconds'
 			) {
@@ -80,7 +79,7 @@
 			return;
 		}
 		console.log(sData);
-		signInStatus = 'sent-otp';
+		signInCardStatus.set('sent-otp');
 	}
 
 	async function signInWithOAuth(prov: Provider) {
@@ -88,7 +87,7 @@
 		if (wantsEmailChecked) {
 			wantsEmail.set(true);
 		}
-		signInStatus = 'loading';
+		signInCardStatus.set('loading');
 		provider = prov;
 		const { data: sData, error: sError } = await $page.data.supabase.auth.signInWithOAuth({
 			provider: prov,
@@ -100,7 +99,7 @@
 		});
 		if (sError) {
 			console.log(sError);
-			signInStatus = 'error';
+			signInCardStatus.set('error');
 			errorText = $LL.Error.InvalidCode();
 			return;
 		}
@@ -127,12 +126,12 @@
 	];
 	async function signInWithCode() {
 		if (!$page.data.supabase) return;
-		codeSignInStatus = 'loading';
+		signInCardCodeSignInStatus.set('loading');
 		try {
 			const { data: sData, error: sError } = await $page.data.supabase.auth.verifyOtp({
 				email,
 				token: codeValue.toString(),
-				type: 'magiclink'
+				type: 'email'
 			});
 			if (sError) {
 				throw new Error(sError.message);
@@ -151,7 +150,7 @@
 			}
 		} catch (error) {
 			console.log(error);
-			codeSignInStatus = 'error';
+			signInCardCodeSignInStatus.set('error');
 			codeSignInErrorText = $LL.Error.SomethingWentWrong();
 		}
 	}
@@ -159,6 +158,13 @@
 	onMount(() => {
 		if ($wantsEmail === true) {
 			wantsEmailOnMount = true;
+		}
+	});
+
+	onDestroy(() => {
+		if ($page.data.session?.user.id && $userSummary) {
+			signInCardStatus.set('idle');
+			signInCardCodeSignInStatus.set('idle');
 		}
 	});
 </script>
@@ -169,37 +175,37 @@
 		? 'shadow-2xl shadow-c-shadow/[var(--o-shadow-strong)]'
 		: 'shadow-xl shadow-c-shadow/[var(--o-shadow-normal)]'}"
 >
-	{#if signInStatus === 'sent-otp'}
+	{#if $signInCardStatus === 'sent-otp'}
 		<div class="mb-2">
 			<IconEmail class="w-20 h-20 text-c-on-bg" />
 		</div>
 	{/if}
 	<h1 class="max-w-sm text-center font-bold leading-normal mt-1 md:-mt-1 text-2xl px-8">
-		{signInStatus === 'sent-otp'
+		{$signInCardStatus === 'sent-otp'
 			? $LL.SignIn.PageTitleSentLink()
 			: $LL.SignIn.PageTitleGetStarted()}
 	</h1>
 	<div class="w-full flex flex-col items-center justify-start mt-1.5">
 		<p
-			class="px-3 md:px-0 max-w-sm text-base md:text-base text-c-on-bg/75 text-center leading-relaxed mb-4 {signInStatus ===
+			class="px-3 md:px-0 max-w-sm text-base md:text-base text-c-on-bg/75 text-center leading-relaxed mb-4 {$signInCardStatus ===
 			'sent-otp'
 				? 'mt-1'
 				: ''}"
 		>
-			{signInStatus === 'sent-otp'
+			{$signInCardStatus === 'sent-otp'
 				? $LL.SignIn.PageParagraphSentLink()
 				: $LL.SignIn.PageParagraphV2()}
 		</p>
-		{#if !wantsEmailOnMount && signInStatus !== 'sent-otp'}
+		{#if !wantsEmailOnMount && $signInCardStatus !== 'sent-otp'}
 			<WantsEmailCard bind:checked={wantsEmailChecked} class="mb-3.5 max-w-[20.5rem]" />
 		{/if}
-		{#if signInStatus === 'sent-otp'}
+		{#if $signInCardStatus === 'sent-otp'}
 			<div
 				class="mt-4 md:mt-6 -mx-5 md:-mx-10 -mb-4 md:-mb-7 border-t-2 border-c-bg-secondary w-[calc(100%+1.5rem)] md:w-[calc(100%+5rem)]
 				flex flex-col items-center justify-start relative z-0"
 			>
-				{#if codeSignInStatus === 'idle'}
-					<DropdownItem onClick={() => (codeSignInStatus = 'entering')}>
+				{#if $signInCardCodeSignInStatus === 'idle'}
+					<DropdownItem onClick={() => ($signInCardCodeSignInStatus = 'entering')}>
 						<div class="w-full flex items-center justify-center gap-2.5">
 							<IconPassword
 								class="text-c-on-bg/75 w-6 h-6 transition not-touch:group-hover:text-c-primary"
@@ -217,7 +223,7 @@
 					>
 						<div class="w-full flex flex-col p-4">
 							<Input type="number" bind:value={codeValue} title="Code" />
-							<Button withSpinner loading={codeSignInStatus === 'loading'} class="mt-3"
+							<Button withSpinner loading={$signInCardCodeSignInStatus === 'loading'} class="mt-3"
 								>{$LL.SignIn.ContinueButton()}</Button
 							>
 							{#if codeSignInErrorText}
@@ -227,7 +233,12 @@
 					</form>
 				{/if}
 				<div class="w-full h-2px bg-c-bg-secondary" />
-				<DropdownItem onClick={() => (signInStatus = 'idle')}>
+				<DropdownItem
+					onClick={() => {
+						signInCardStatus.set('idle');
+						signInCardCodeSignInStatus.set('idle');
+					}}
+				>
 					<div class="w-full flex items-center justify-center gap-2.5">
 						<IconBack
 							class="text-c-on-bg/75 w-6 h-6 transition not-touch:group-hover:text-c-primary"
@@ -247,8 +258,8 @@
 					<div class="w-full flex flex-col items-center justify-start gap-3">
 						<ButtonOAuth
 							withSpinner
-							disabled={signInStatus === 'loading'}
-							loading={signInStatus === 'loading' && provider === 'google'}
+							disabled={$signInCardStatus === 'loading'}
+							loading={$signInCardStatus === 'loading' && provider === 'google'}
 							class="w-full"
 							onClick={() => signInWithOAuth('google')}
 							provider="google"
@@ -257,8 +268,8 @@
 						</ButtonOAuth>
 						<ButtonOAuth
 							withSpinner
-							disabled={signInStatus === 'loading'}
-							loading={signInStatus === 'loading' && provider === 'discord'}
+							disabled={$signInCardStatus === 'loading'}
+							loading={$signInCardStatus === 'loading' && provider === 'discord'}
 							class="w-full"
 							onClick={() => signInWithOAuth('discord')}
 							provider="discord"
@@ -282,7 +293,7 @@
 					class="w-full flex flex-col p-1 md:pb-2 max-w-[21rem]"
 				>
 					<Input
-						disabled={signInStatus === 'loading'}
+						disabled={$signInCardStatus === 'loading'}
 						type="email"
 						title={$LL.Shared.EmailInput.Placeholder()}
 						bind:value={email}
@@ -295,8 +306,8 @@
 					{/if}
 					<Button
 						class="mt-3"
-						disabled={signInStatus === 'loading'}
-						loading={signInStatus === 'loading' && provider == 'email'}
+						disabled={$signInCardStatus === 'loading'}
+						loading={$signInCardStatus === 'loading' && provider == 'email'}
 						withSpinner
 					>
 						{$LL.SignIn.ContinueButton()}

@@ -23,7 +23,6 @@
 	import { isLeftSidebarHidden, isLeftSidebarHiddenApp } from '$ts/stores/sidebars';
 	import { isTouchscreen } from '$ts/stores/isTouchscreen.js';
 	import { appRoutes } from '$ts/constants/routes.js';
-
 	export let data;
 
 	$: ({ supabase, session } = data);

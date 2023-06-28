@@ -11,7 +11,6 @@
 
 <svelte:body
 	on:keydown={(e) => {
-		console.log('keypress', e.key);
 		if (e.key === 'Escape') {
 			onClickoutside();
 		}

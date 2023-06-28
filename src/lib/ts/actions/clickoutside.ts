@@ -15,20 +15,12 @@ export function clickoutside(
 		}
 	}
 
-	function onFocus(event: Event) {
-		if (isntInside(node, event, exclude)) {
-			callback();
-		}
-	}
-
 	document.addEventListener('click', onClick, capture);
 	document.addEventListener('mousedown', onMouseDown, capture);
-	document.addEventListener('focus', onFocus, capture);
 	return {
 		destroy() {
 			document.removeEventListener('click', onClick, capture);
 			document.removeEventListener('mousedown', onMouseDown, capture);
-			document.removeEventListener('focus', onFocus, capture);
 		},
 		update(newProps: TClickoutsideProps) {
 			exclude = newProps.exclude;
