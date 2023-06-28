@@ -199,6 +199,7 @@
 					'SC - App Version': $appVersion
 				});
 			}
+			activeGeneration.set(undefined);
 		}}
 	>
 		<div class="flex items-center justify-center gap-1.5">
