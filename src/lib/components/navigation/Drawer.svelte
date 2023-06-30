@@ -3,7 +3,7 @@
 	import IconCancel from '$components/icons/IconCancel.svelte';
 
 	import { clickoutside } from '$ts/actions/clickoutside';
-	import { isDrawerOpen } from '$ts/stores/isDrawerOpen';
+	import { closeDrawer, isDrawerOpen } from '$ts/stores/isDrawerOpen';
 	import { windowHeight } from '$ts/stores/window';
 	import { portal } from 'svelte-portal';
 	import { quadOut } from 'svelte/easing';
@@ -46,9 +46,7 @@
 {/if}
 <div
 	use:clickoutside={{
-		callback: () => {
-			isDrawerOpen.set(false);
-		}
+		callback: closeDrawer
 	}}
 	style={$windowHeight ? `height: ${$windowHeight}px` : 'height: 100vh; height: 100svh'}
 	use:portal={'body'}
@@ -60,7 +58,7 @@
 		: 'pointer-events-none -translate-x-[calc(100%+2px)]'} flex flex-col justify-start overflow-hidden"
 >
 	<div class="w-full flex flex-row justify-between gap-5 items-stretch">
-		<LogoButton />
+		<LogoButton onClick={closeDrawer} />
 		<button
 			aria-label="Close Drawer"
 			on:click={() => isDrawerOpen.set(false)}
@@ -83,6 +81,7 @@
 						: $page.url.pathname.startsWith(route.href)}
 					<a
 						href={route.href}
+						on:click={closeDrawer}
 						data-sveltekit-preload-data="hover"
 						class="w-full flex items-center justify-start text-lg p-1 relative group font-semibold"
 					>

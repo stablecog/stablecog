@@ -5,6 +5,7 @@
 	import IconChevronDown from '$components/icons/IconChevronDown.svelte';
 	import type { TSidebarItem } from '$docroutes/guide/types';
 	import { expandCollapse } from '$ts/animation/transitions';
+	import { closeDrawer } from '$ts/stores/isDrawerOpen';
 
 	export let sidebarItem: TSidebarItem;
 	export let isRoot = true;
@@ -38,7 +39,10 @@
 			<a
 				class="w-full text-lg md:text-base flex items-center gap-4 px-3 py-3 md:py-2.5 group relative rounded-lg overflow-hidden z-0"
 				href={sidebarItem.pathname}
-				on:click={toggle}
+				on:click={() => {
+					toggle();
+					closeDrawer();
+				}}
 				data-sveltekit-preload-data="hover"
 			>
 				<ButtonHoverEffect

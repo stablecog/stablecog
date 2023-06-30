@@ -5,6 +5,7 @@
 	import Drawer from '$components/navigation/Drawer.svelte';
 	import LL from '$i18n/i18n-svelte';
 	import { trySidebar } from '$routes/(doc)/try/constants';
+	import { closeDrawer } from '$ts/stores/isDrawerOpen';
 </script>
 
 <div style="min-height: 100vh; min-height: 100svh" class="w-full flex items-stretch relative">
@@ -27,6 +28,7 @@
 		</h3>
 		<a
 			href="/generate"
+			on:click={closeDrawer}
 			data-sveltekit-preload-data="hover"
 			class="flex-shrink-0 px-5 py-4 flex items-center justify-center group overflow-hidden relative z-0 gap-2"
 		>
