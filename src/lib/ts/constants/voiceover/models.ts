@@ -36,12 +36,12 @@ export const voiceoverSpeakers: { [id: string]: TSpeaker } = {
 		locale: 'en'
 	},
 	'37c069ec-f124-4be8-9d4c-e74157738877': {
-		name_in_worker: 'v2/en_speaker_7',
+		name_in_worker: 'v2/en_speaker_4',
 		model_id: '0f442a3e-cf53-490b-b4a9-b0dda63e9523',
 		locale: 'en'
 	},
 	'38f9bd69-fa4c-4e53-b398-9a0f5865e927': {
-		name_in_worker: 'v2/en_speaker_9',
+		name_in_worker: 'v2/en_speaker_1',
 		model_id: '0f442a3e-cf53-490b-b4a9-b0dda63e9523',
 		locale: 'en'
 	},
