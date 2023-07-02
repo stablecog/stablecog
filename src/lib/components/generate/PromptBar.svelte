@@ -169,6 +169,7 @@
 					: generateSSEId(),
 			submit_to_gallery: false
 		};
+		promptInputElement?.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
 		queueInitialGenerationRequest(initialRequestProps);
 	}
 

@@ -83,6 +83,8 @@
 				Math.round((1 - Math.min(voiceoverStabilityHardMax, $voiceoverStability) / 100) * 100) / 100
 			).toFixed(2)
 		);
+		promptInputElement?.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
+		promptInputElementMd?.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
 		queueInitialVoiceoverRequest({
 			model_id: $voiceoverModelId,
 			speaker: {
