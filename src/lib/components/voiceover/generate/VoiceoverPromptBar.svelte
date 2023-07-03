@@ -172,7 +172,7 @@
 				on:focus={() => (isPromptBarFocused = true)}
 				on:blur={() => (isPromptBarFocused = false)}
 				use:autoresize={{
-					maxRows: shouldPromptBarExpand ? 6 : 3,
+					maxRows: shouldPromptBarExpand ? 5 : 3,
 					minRows: 3
 				}}
 				bind:this={promptInputElement}

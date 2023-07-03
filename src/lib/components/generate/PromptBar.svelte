@@ -191,6 +191,15 @@
 		fn();
 	}
 
+	let isPromptBarFocused = false;
+	$: shouldPromptBarExpand =
+		isPromptBarFocused &&
+		!isGenerationSettingsSheetOpen &&
+		$windowWidth &&
+		$windowWidth < mdBreakpoint
+			? true
+			: false;
+
 	onMount(() => {
 		isCheckCompleted = false;
 		if (!isValue(serverData.prompt) && isValue($prompt) && $prompt !== null) {
@@ -219,8 +228,10 @@
 		>
 			<div class="flex-1 flex relative group">
 				<textarea
+					on:focus={() => (isPromptBarFocused = true)}
+					on:blur={() => (isPromptBarFocused = false)}
 					use:autoresize={{
-						maxRows: 2,
+						maxRows: shouldPromptBarExpand ? 5 : 2,
 						placeholder: promptInputPlaceholder,
 						value: $generationPrompt
 					}}
