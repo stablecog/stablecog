@@ -337,6 +337,11 @@
 				generationInferenceSteps.set(inferenceStepsTabs[inferenceStepsIndex].value);
 			}
 		}
+		if (!isInferenceStepsValid($generationInferenceSteps)) {
+			generationInferenceSteps.set(
+				getValidValue($generationInferenceSteps, inferenceStepsTabs, isInferenceStepsValid)
+			);
+		}
 		if (
 			!isValue(serverData.guidance_scale) &&
 			$guidanceScale >= guidanceScaleMin &&
