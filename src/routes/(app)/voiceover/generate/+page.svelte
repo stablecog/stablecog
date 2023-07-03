@@ -55,7 +55,7 @@
 	let isCheckCompleted = true;
 
 	let promptBarHeight: number;
-	let promptBarEstimatedHeightRem = 6.25;
+	let promptBarEstimatedHeightRem = 6.125;
 
 	let horizontalListHeightEstimatedRem = 4.25;
 	let horizontalListHeight: number;

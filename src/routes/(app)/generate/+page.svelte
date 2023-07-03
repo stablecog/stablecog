@@ -253,7 +253,9 @@
 	let:supportedSchedulerIdDropdownItems
 >
 	<div class="w-full h-full flex flex-col overflow-hidden relative z-0">
-		<div class="w-full h-full flex flex-row overflow-hidden pt-2 md:px-4 md:pb-4 gap-4">
+		<div
+			class="w-full h-full flex flex-row overflow-hidden md:pb-[calc(env(safe-area-inset-bottom)+1rem)] pt-2 md:px-4 gap-4"
+		>
 			<div class="hidden lg:flex min-w-[2rem] flex-col items-start h-full relative">
 				{#if !$isLeftSidebarHiddenApp}
 					<div
@@ -262,7 +264,7 @@
 							x: $windowWidth > xlBreakpoint ? -200 : -100,
 							easing: quadOut
 						}}
-						class="h-full flex w-36 xl:w-72 lg:pb-[calc(env(safe-area-inset-bottom))] relative z-10"
+						class="h-full flex w-36 xl:w-72 relative z-10"
 					>
 						<SidebarWrapper hasGradient>
 							{#if !$page.data.session?.user.id || !$userSummary}
@@ -302,10 +304,7 @@
 					}}
 				/>
 			</div>
-			<div
-				class="flex flex-col items-center flex-1 min-w-0 h-full relative
-						lg:pb-[calc(env(safe-area-inset-bottom))]"
-			>
+			<div class="flex flex-col items-center flex-1 min-w-0 h-full relative">
 				{#if $windowWidth < mdBreakpoint && isGenerationSettingsSheetOpen}
 					<div
 						transition:fade|local={{ duration: 200, easing: quadOut }}
@@ -385,7 +384,7 @@
 					</div>
 				</div>
 				<div
-					class="w-full flex flex-col order-first flex-1 min-w-0 pb-[calc(env(safe-area-inset-bottom)+10.5rem)]
+					class="w-full flex flex-col order-first flex-1 min-w-0 pb-42
 					md:pb-0 md:pt-26 lg:pb-8 relative z-0"
 				>
 					<div class="flex-1 min-w-0 flex flex-col items-center justify-center w-full">
@@ -418,7 +417,7 @@
 							</div>
 						</div>
 					</div>
-					<div class="w-full hidden md:flex lg:hidden pt-11 pb-[calc(env(safe-area-inset-bottom))]">
+					<div class="w-full hidden md:flex lg:hidden pt-11">
 						<SidebarWrapper borderSize="sm">
 							<div class="w-full h-20 flex flex-col">
 								{#if !$page.data.session?.user.id || !$userSummary}
@@ -451,7 +450,7 @@
 					</div>
 				</div>
 			</div>
-			<div class="h-full w-72 hidden md:flex md:pb-[calc(env(safe-area-inset-bottom))]">
+			<div class="h-full w-72 hidden md:flex">
 				<SettingsPanel
 					{openSignInModal}
 					{isCheckCompleted}
