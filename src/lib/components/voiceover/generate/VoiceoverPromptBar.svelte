@@ -11,6 +11,7 @@
 	import IconToken from '$components/icons/IconToken.svelte';
 	import IconWand from '$components/icons/IconWand.svelte';
 	import LL, { locale } from '$i18n/i18n-svelte';
+	import { autoresize } from '$ts/actions/textarea/autoresize';
 	import { maxSeed } from '$ts/constants/main';
 	import { voiceoverLocale, voiceoverModelId } from '$ts/constants/voiceover/models';
 	import {
@@ -148,6 +149,9 @@
 		}
 	}
 
+	let isPromptBarFocused = false;
+	$: shouldPromptBarExpand = isPromptBarFocused && !isSettingsSheetOpen ? true : false;
+
 	let mounted = false;
 	onMount(() => {
 		if ($voiceoverPromptLocal) {
@@ -165,6 +169,12 @@
 	>
 		<div class="flex-1 flex relative group">
 			<textarea
+				on:focus={() => (isPromptBarFocused = true)}
+				on:blur={() => (isPromptBarFocused = false)}
+				use:autoresize={{
+					maxRows: shouldPromptBarExpand ? 6 : 3,
+					minRows: 3
+				}}
 				bind:this={promptInputElement}
 				on:keypress={(e) => {
 					if (e.key === 'Enter' && e.shiftKey) {
@@ -178,7 +188,7 @@
 				enterkeyhint="enter"
 				rows="3"
 				style="transition: height 0.1s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.2s cubic-bezier(0.4, 0, 0.2, 1), padding 0.2s cubic-bezier(0.4, 0, 0.2, 1)"
-				class="w-full text-base bg-c-bg-secondary shadow-lg pr-20 md:pr-26 lg:pr-17 hide-scrollbar shadow-c-shadow/[var(--o-shadow-normal)]
+				class="w-full text-base bg-c-bg-secondary shadow-lg shadow-c-shadow/[var(--o-shadow-normal)] pr-20 md:pr-26 lg:pr-17 hide-scrollbar
 							scroll-smooth resize-none transition relative pl-2.5 md:pl-5 py-2 md:py-4.5 rounded-lg md:rounded-xl
 							focus:ring-2 focus:ring-c-primary/30 ring-0 ring-c-primary/20 placeholder:text-c-on-bg/40
 							not-touch:enabled:hover:ring-2 text-c-on-bg not-touch:group-hover:ring-2"
@@ -255,7 +265,7 @@
 <form
 	on:submit|preventDefault={onSubmit}
 	class="hidden md:flex w-full max-h-full flex-row md:flex-col rounded-lg md:rounded-2xl
-	overflow-hidden relative bg-c-bg-secondary transition focus-within:ring-2 focus-within:ring-c-primary/30
+	overflow-hidden relative md:shadow-lg md:shadow-c-shadow/[var(--o-shadow-strong)] bg-c-bg-secondary transition focus-within:ring-2 focus-within:ring-c-primary/30
 	ring-0 ring-c-primary/20 not-touch:enabled:hover:ring-2 text-c-on-bg not-touch:hover:ring-2"
 >
 	<div class="w-full flex-1 min-h-0 flex flex-col relative">
