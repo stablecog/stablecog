@@ -143,13 +143,17 @@
 			flex items-center justify-start relative z-0"
 		>
 			<div
-				class="w-9 h-9 flex-shrink-0 ring-2 ring-c-bg-tertiary shadow-lg
+				class="w-8 h-8 md:w-9 md:h-9 flex-shrink-0 ring-2 ring-c-bg-tertiary shadow-lg
 				shadow-c-shadow/[var(--o-shadow-strong)] overflow-hidden relative z-0"
 			>
-				<IconSpeaker class="w-full h-full" type={output.voiceover.speaker.id} sizes="36px" />
+				<IconSpeaker
+					class="w-full h-full"
+					type={output.voiceover.speaker.id}
+					sizes="(min-width: 768px) 36px, 32px"
+				/>
 			</div>
 			<p
-				class="flex-shrink min-w-0 overflow-hidden overflow-ellipsis font-medium px-3.5 py-1 h-full"
+				class="flex-shrink min-w-0 overflow-hidden overflow-ellipsis font-medium px-2.5 md:px-3.5 py-0.5 md:py-1 h-full"
 			>
 				{$voiceoverSpeakerIdToDisplayName[output.voiceover.speaker.id]}
 			</p>
