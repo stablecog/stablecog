@@ -378,6 +378,7 @@ const hr: Translation = {
 	},
 	Error: {
 		SomethingWentWrong: 'Dogodila se greška :(',
+		PromptWasNSFW: 'This prompt might produce sensitive content :(',
 		ImageWasNSFW: 'This image was NSFW :(',
 		NSFW: 'Otkriven NSFW sadržaj, pokušaj sa drugim opisom :(',
 		ServerSeemsOffline:

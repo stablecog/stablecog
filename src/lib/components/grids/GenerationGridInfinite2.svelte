@@ -35,6 +35,7 @@
 	import { tick } from 'svelte';
 	import { loadedImages } from '$ts/stores/loadedImages';
 	import { browser } from '$app/environment';
+	import IconNsfwPrompt from '$components/icons/IconNSFWPrompt.svelte';
 
 	export let generationsQuery: CreateInfiniteQueryResult<TUserGenerationFullOutputsPage, unknown>;
 	export let hasGridScrollContainer = false;
@@ -245,7 +246,10 @@
 						$userGalleryCurrentView === 'favorites' &&
 						!output.is_favorited
 					) &&
-					!output.is_deleted}
+					!output.is_deleted &&
+					output.status !== 'failed' &&
+					output.status !== 'failed-nsfw' &&
+					output.status !== 'failed-nsfw-prompt'}
 				<div
 					key={virtualItem.index}
 					style="
@@ -263,7 +267,11 @@
 						<div
 							class="absolute left-0 top-0 w-full h-full bg-c-bg-secondary transition overflow-hidden
 								z-0 {cardType === 'generate'
-								? output.image_url && !output.is_deleted
+								? output.image_url &&
+								  !output.is_deleted &&
+								  output.status !== 'failed' &&
+								  output.status !== 'failed-nsfw' &&
+								  output.status !== 'failed-nsfw-prompt'
 									? 'border-2 rounded-lg hover:border-c-primary'
 									: 'border-2 rounded-lg'
 								: 'border-2 rounded-xl'} {isOutputSelected
@@ -271,7 +279,7 @@
 								: 'border-c-bg-secondary'} {isOutputHoverable ? 'hover:border-c-primary/75' : ''}"
 						>
 							{#if output.generation.outputs !== undefined}
-								{#if output.status !== 'failed' && output.status !== 'failed-nsfw'}
+								{#if output.status !== 'failed' && output.status !== 'failed-nsfw' && output.status !== 'failed-nsfw-prompt'}
 									{#if output.status !== undefined && output.status !== 'succeeded' && output.animation !== undefined}
 										<div
 											out:fade|local={{ duration: 3000, easing: quadIn }}
@@ -304,6 +312,8 @@
 													: 'w-full max-w-[2rem] h-auto'}
 											{#if output.status === 'failed-nsfw'}
 												<IconEyeSlashOutline class="{sizeClasses} text-c-on-bg/50" />
+											{:else if output.status === 'failed-nsfw-prompt'}
+												<IconNsfwPrompt class="{sizeClasses} text-c-on-bg/50" />
 											{:else}
 												<IconSadFaceOutline class="{sizeClasses} text-c-on-bg/50" />
 											{/if}
@@ -311,6 +321,8 @@
 											<p class="text-sm text-c-on-bg/50 px-5 py-3 text-center leading-relaxed">
 												{output.status === 'failed-nsfw'
 													? $LL.Error.ImageWasNSFW()
+													: output.status === 'failed-nsfw-prompt'
+													? $LL.Error.PromptWasNSFW()
 													: $LL.Error.SomethingWentWrong()}
 											</p>
 										{/if}

@@ -389,6 +389,7 @@ const tr: Translation = {
 	},
 	Error: {
 		SomethingWentWrong: 'Bir şeyler ters gitti :(',
+		PromptWasNSFW: 'This prompt might produce sensitive content :(',
 		ImageWasNSFW: 'Bu fotoğraf müstehcendi :(',
 		NSFW: 'Müstehcen içerik, başka bir komut dene :(',
 		ServerSeemsOffline:

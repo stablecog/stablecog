@@ -384,6 +384,7 @@ const es: Translation = {
 	},
 	Error: {
 		SomethingWentWrong: 'Παρουσιάστηκε κάποιο πρόβλημα :(',
+		PromptWasNSFW: 'This prompt might produce sensitive content :(',
 		ImageWasNSFW: 'Αυτή η εικόνα ήταν ακατάλληλη :(',
 		NSFW: 'Ανιχνεύθηκε ένδειξη ακατάλληλου περιεχομένου, δοκιμάστε μια άλλη περιγραφή :(',
 		ServerSeemsOffline:

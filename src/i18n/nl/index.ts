@@ -383,6 +383,7 @@ const nl: Translation = {
 	},
 	Error: {
 		SomethingWentWrong: 'Er is iets mis gegaan :(',
+		PromptWasNSFW: 'This prompt might produce sensitive content :(',
 		ImageWasNSFW: 'Deze afbeelding was NSFW :(',
 		NSFW: 'NSFW inhoud gedetecteerd, probeer een andere prompt :(',
 		ServerSeemsOffline:

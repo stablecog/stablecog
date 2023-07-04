@@ -169,7 +169,14 @@ export function logGenerationFailed({
 		userId,
 		stripeProductId
 	});
-	logGeneration(error === 'NSFW' ? 'Failed-NSFW' : 'Failed', props);
+	logGeneration(
+		error === 'NSFW' || error === 'nsfw'
+			? 'Failed-NSFW'
+			: error === 'nsfw_prompt'
+			? 'Failed-NSFW-Prompt'
+			: 'Failed',
+		props
+	);
 }
 
 export function logGenerationPropsFromGeneration({
@@ -311,7 +318,7 @@ interface IUpscaleMinimal {
 	'SC - App Version': string;
 }
 
-type IGenerationStatus = 'Started' | 'Succeeded' | 'Failed' | 'Failed-NSFW';
+type IGenerationStatus = 'Started' | 'Succeeded' | 'Failed' | 'Failed-NSFW' | 'Failed-NSFW-Prompt';
 
 type IUpscaleStatus = 'Started' | 'Succeeded' | 'Failed';
 

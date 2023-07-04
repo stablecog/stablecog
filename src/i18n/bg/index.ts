@@ -381,6 +381,7 @@ const bg: Translation = {
 	},
 	Error: {
 		SomethingWentWrong: 'Нещо се обърка :(',
+		PromptWasNSFW: 'This prompt might produce sensitive content :(',
 		ImageWasNSFW: 'Неподходящо изображение :(',
 		NSFW: 'Съдържа неподходящи елементи, опитайте отново :(',
 		ServerSeemsOffline:

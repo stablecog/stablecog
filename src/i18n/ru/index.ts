@@ -379,6 +379,7 @@ const ru: Translation = {
 	},
 	Error: {
 		SomethingWentWrong: 'Что-то пошло не так :(',
+		PromptWasNSFW: 'This prompt might produce sensitive content :(',
 		ImageWasNSFW: 'This image was NSFW :(',
 		NSFW: 'Обнаружен NSFW-контент, попробуйте другую подсказку :(',
 		ServerSeemsOffline:

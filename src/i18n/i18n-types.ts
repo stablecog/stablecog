@@ -1122,6 +1122,10 @@ type RootTranslation = {
 		 */
 		SomethingWentWrong: string
 		/**
+		 * T​h​i​s​ ​p​r​o​m​p​t​ ​m​i​g​h​t​ ​p​r​o​d​u​c​e​ ​s​e​n​s​i​t​i​v​e​ ​c​o​n​t​e​n​t​ ​:​(
+		 */
+		PromptWasNSFW: string
+		/**
 		 * T​h​i​s​ ​i​m​a​g​e​ ​w​a​s​ ​N​S​F​W​ ​:​(
 		 */
 		ImageWasNSFW: string
@@ -3996,6 +4000,10 @@ export type TranslationFunctions = {
 		 * Something went wrong :(
 		 */
 		SomethingWentWrong: () => LocalizedString
+		/**
+		 * This prompt might produce sensitive content :(
+		 */
+		PromptWasNSFW: () => LocalizedString
 		/**
 		 * This image was NSFW :(
 		 */

@@ -17,6 +17,7 @@
 	import { createVirtualizer, type SvelteVirtualizer } from '@tanstack/svelte-virtual';
 	import { windowHeight, windowWidth } from '$ts/stores/window';
 	import { removeRepeatingOutputs } from '$ts/helpers/removeRepeatingOutputs';
+	import IconNsfwPrompt from '$components/icons/IconNSFWPrompt.svelte';
 
 	export let generationsQuery: CreateInfiniteQueryResult<TUserGenerationFullOutputsPage, unknown>;
 	export let pinnedFullOutputs: TGenerationFullOutput[] | undefined = undefined;
@@ -167,12 +168,13 @@
 							<div
 								class="absolute left-0 top-0 w-full h-full bg-c-bg-secondary transition
 										z-0 rounded-md border overflow-hidden border-c-bg-secondary {output.status !== 'failed' &&
-								output.status !== 'failed-nsfw'
+								output.status !== 'failed-nsfw' &&
+								output.status !== 'failed-nsfw-prompt'
 									? 'not-touch:hover:border-c-primary'
 									: ''}"
 							>
 								{#if output.generation.outputs !== undefined}
-									{#if output.status !== 'failed' && output.status !== 'failed-nsfw'}
+									{#if output.status !== 'failed' && output.status !== 'failed-nsfw' && output.status !== 'failed-nsfw-prompt'}
 										{#if output.status !== undefined && output.status !== 'succeeded' && output.animation !== undefined}
 											<div
 												out:fade|local={{ duration: 3000, easing: quadIn }}
@@ -205,6 +207,8 @@
 										>
 											{#if output.status === 'failed-nsfw'}
 												<IconEyeSlashOutline class="{sizeClasses} text-c-on-bg/50" />
+											{:else if output.status === 'failed-nsfw-prompt'}
+												<IconNsfwPrompt class="{sizeClasses} text-c-on-bg/50" />
 											{:else}
 												<IconSadFaceOutline class="{sizeClasses} text-c-on-bg/50" />
 											{/if}

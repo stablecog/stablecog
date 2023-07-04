@@ -378,6 +378,7 @@ const hi: Translation = {
 	},
 	Error: {
 		SomethingWentWrong: 'कुछ गलत हो गया :(',
+		PromptWasNSFW: 'This prompt might produce sensitive content :(',
 		ImageWasNSFW: 'This image was NSFW :(',
 		NSFW: 'अश्लील सामग्री पता चला, कोई और संकेत का प्रयास करें :(',
 		ServerSeemsOffline:

@@ -378,6 +378,7 @@ const ptPt: Translation = {
 	},
 	Error: {
 		SomethingWentWrong: 'Ocorreu algo de errado :(',
+		PromptWasNSFW: 'This prompt might produce sensitive content :(',
 		ImageWasNSFW: 'This image was NSFW :(',
 		NSFW: 'Conteúdo NSFW detectado, tente outro prompt :(',
 		ServerSeemsOffline:

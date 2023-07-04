@@ -10,6 +10,7 @@
 	import { fade, scale } from 'svelte/transition';
 	import IconImage from '$components/icons/IconImage.svelte';
 	import ErrorChip from '$components/error/ErrorChip.svelte';
+	import IconNsfwPrompt from '$components/icons/IconNSFWPrompt.svelte';
 
 	export let generation: TGenerationWithSelectedOutput;
 	export let cardWidth: number;
@@ -33,7 +34,7 @@
 				>
 					<IconImage class="w-1/6 max-w-[2.5rem] h-auto text-c-on-bg/20" />
 				</div>
-			{:else if status !== 'failed' && status !== 'failed-nsfw'}
+			{:else if status !== 'failed' && status !== 'failed-nsfw' && status !== 'failed-nsfw-prompt'}
 				{#if status !== undefined && status !== 'succeeded' && animation !== undefined}
 					<div
 						out:fade|local={{ duration: 3000, easing: quadIn }}
@@ -56,13 +57,19 @@
 				>
 					{#if status === 'failed-nsfw'}
 						<IconEyeSlashOutline class="{sizeClasses} text-c-on-bg/50" />
+					{:else if status === 'failed-nsfw-prompt'}
+						<IconNsfwPrompt class="{sizeClasses} text-c-on-bg/50" />
 					{:else}
 						<IconSadFaceOutline class="{sizeClasses} text-c-on-bg/50" />
 					{/if}
 					<p class="text-sm text-c-on-bg/50 text-center leading-relaxed">
-						{status === 'failed-nsfw' ? $LL.Error.ImageWasNSFW() : $LL.Error.SomethingWentWrong()}
+						{status === 'failed-nsfw'
+							? $LL.Error.ImageWasNSFW()
+							: status === 'failed-nsfw-prompt'
+							? $LL.Error.PromptWasNSFW()
+							: $LL.Error.SomethingWentWrong()}
 					</p>
-					{#if status !== 'failed-nsfw' && generation.error !== undefined}
+					{#if status !== 'failed-nsfw' && status !== 'failed-nsfw-prompt' && generation.error !== undefined}
 						<ErrorChip class="mt-2" error={generation.error} />
 					{/if}
 				</div>

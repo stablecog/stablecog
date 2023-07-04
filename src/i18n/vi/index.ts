@@ -379,6 +379,7 @@ const vi: Translation = {
 	},
 	Error: {
 		SomethingWentWrong: 'Đã xảy ra lỗi :(',
+		PromptWasNSFW: 'This prompt might produce sensitive content :(',
 		ImageWasNSFW: 'This image was NSFW :(',
 		NSFW: 'Phát hiện nội dung không lành mạnh, hãy viết lời mô tả khác :(',
 		ServerSeemsOffline:

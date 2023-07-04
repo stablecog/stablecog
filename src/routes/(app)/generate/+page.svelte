@@ -107,9 +107,17 @@
 			...g,
 			outputs: [
 				...[
-					...g.outputs.filter((o) => o.status !== 'failed-nsfw' && o.status !== 'failed')
+					...g.outputs.filter(
+						(o) =>
+							o.status !== 'failed-nsfw' &&
+							o.status !== 'failed-nsfw-prompt' &&
+							o.status !== 'failed'
+					)
 				].reverse(),
-				...g.outputs.filter((o) => o.status === 'failed-nsfw' || o.status === 'failed')
+				...g.outputs.filter(
+					(o) =>
+						o.status === 'failed-nsfw' || o.status === 'failed' || o.status === 'failed-nsfw-prompt'
+				)
 			]
 		}))
 		.filter((g) => g.status !== 'pre-submit')

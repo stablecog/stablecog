@@ -379,6 +379,7 @@ const es: Translation = {
 	},
 	Error: {
 		SomethingWentWrong: 'Algo salió mal :(',
+		PromptWasNSFW: 'This prompt might produce sensitive content :(',
 		ImageWasNSFW: 'This image was NSFW :(',
 		NSFW: 'Contenido inapropiado detectado, intente con otra indicación :(',
 		ServerSeemsOffline:

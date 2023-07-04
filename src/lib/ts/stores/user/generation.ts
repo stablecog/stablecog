@@ -36,7 +36,12 @@ export const setGenerationToFailed = ({ id, error }: { id: string; error?: strin
 			genById.status = 'failed';
 			genById.outputs = genById.outputs.map((o) => ({
 				...o,
-				status: error === 'NSFW' ? 'failed-nsfw' : 'failed'
+				status:
+					error === 'NSFW' || error === 'nsfw'
+						? 'failed-nsfw'
+						: error === 'nsfw_prompt'
+						? 'failed-nsfw-prompt'
+						: 'failed'
 			}));
 			genById.error = error;
 			return $generations;
@@ -46,7 +51,12 @@ export const setGenerationToFailed = ({ id, error }: { id: string; error?: strin
 			genByUiId.status = 'failed';
 			genByUiId.outputs = genByUiId.outputs.map((o) => ({
 				...o,
-				status: error === 'NSFW' ? 'failed-nsfw' : 'failed'
+				status:
+					error === 'NSFW' || error === 'nsfw'
+						? 'failed-nsfw'
+						: error === 'nsfw_prompt'
+						? 'failed-nsfw-prompt'
+						: 'failed'
 			}));
 			genByUiId.error = error;
 			return $generations;
@@ -421,7 +431,8 @@ export type TGenerationOutputStatus =
 	| 'server-processing'
 	| 'succeeded'
 	| 'failed'
-	| 'failed-nsfw';
+	| 'failed-nsfw'
+	| 'failed-nsfw-prompt';
 
 export interface TGenerationFullOutput extends TGenerationOutput {
 	generation: TGeneration;

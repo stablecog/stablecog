@@ -391,6 +391,7 @@ const ja: Translation = {
 	},
 	Error: {
 		SomethingWentWrong: '不具合が発生しました。',
+		PromptWasNSFW: 'This prompt might produce sensitive content :(',
 		ImageWasNSFW: 'この画像は18禁でした (X_X)',
 		NSFW: 'NSFW (閲覧注意) コンテンツが検出されました。別のプロンプトを試してください ☹️',
 		ServerSeemsOffline:
