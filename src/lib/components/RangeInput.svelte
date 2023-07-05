@@ -49,7 +49,7 @@
 				{...$thumb()}
 				class="block ring-0 ring-c-on-bg/25 group-hover/rangeinput:ring-[7px] group-active/rangeinput:ring-c-primary/50
 					transition shadow-lg shadow-c-shadow/[var(--o-shadow-strongest)] h-5 w-5 rounded-full bg-c-on-bg
-					group-active/rangeinput:bg-c-primary group-active:ring-4 outline-none"
+					group-active/rangeinput:bg-c-primary group-active/rangeinput:ring-4 outline-none"
 			/>
 		{/each}
 	</span>
