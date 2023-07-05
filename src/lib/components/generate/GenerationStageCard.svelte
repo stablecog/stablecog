@@ -28,11 +28,15 @@
 	>
 		<div class="w-full h-full relative rounded-xl z-0 overflow-hidden">
 			{#if generation.is_placeholder}
+				{@const sizeClasses =
+					generation.height > generation.width
+						? 'h-full max-h-[2rem] md:max-h-[2.5rem] w-auto'
+						: 'w-full max-w-[2rem] md:max-w-[2.5rem] h-auto'}
 				<div
 					out:scale|local={{ duration: 200, easing: quadOut, opacity: 0 }}
 					class="w-full h-full absolute left-0 top-0 flex flex-col gap-3 items-center justify-center"
 				>
-					<IconImage class="w-1/6 max-w-[2.5rem] h-auto text-c-on-bg/20" />
+					<IconImage class="{sizeClasses} text-c-on-bg/20" />
 				</div>
 			{:else if status !== 'failed' && status !== 'failed-nsfw' && status !== 'failed-nsfw-prompt'}
 				{#if status !== undefined && status !== 'succeeded' && animation !== undefined}
@@ -49,8 +53,8 @@
 			{:else}
 				{@const sizeClasses =
 					generation.height > generation.width
-						? 'h-full max-h-[3rem] w-auto'
-						: 'w-full max-w-[3rem] h-auto'}
+						? 'h-full max-h-[2rem] md:max-h-[2.5rem] w-auto'
+						: 'w-full max-w-[2rem] md:max-w-[2.5rem] h-auto'}
 				<div
 					in:fade|local={{ duration: 200, easing: quadOut }}
 					class="w-full h-full flex flex-col items-center bg-c-bg-secondary justify-center relative px-5 py-3 gap-2"
