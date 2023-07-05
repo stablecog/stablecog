@@ -8,7 +8,9 @@
 <div bind:clientWidth bind:clientHeight class="w-full flex-1 overflow-hidden z-0 relative">
 	<div
 		bind:this={element}
-		style="width: {clientWidth}px; height: {clientHeight}px;"
+		style="width: {clientWidth ? `${clientWidth}px` : '100%'}; height: {clientHeight
+			? `${clientHeight}px`
+			: '100%'}"
 		class="overflow-auto {hideScroll ? 'hide-scrollbar' : ''}"
 	>
 		<slot {clientWidth} {clientHeight} />
