@@ -31,8 +31,8 @@
 		generationInitImageWidth
 	} from '$ts/stores/generationSettings';
 	import { navbarHeight } from '$ts/stores/navbarHeight';
-	import { navbarStickyType } from '$ts/stores/navbar.js';
-	import { underDevelopment } from '$ts/stores/underDevelopment';
+	import { navbarStickyType } from '$ts/stores/navbar';
+	import { underDevelopment } from '$ts/constants/underDevelopment';
 	import {
 		activeGeneration,
 		generations,
@@ -335,6 +335,22 @@
 		oldScrollY = scrollY;
 	}
 
+	$: showUpdateAvailableCard =
+		Number($serverVersion) > Number($appVersion) &&
+		!rawRoutes.includes($page.url.pathname) &&
+		(!$userSummary || !isSuperAdmin($userSummary.roles)) &&
+		!$page.url.pathname.startsWith('/admin') &&
+		!$page.url.pathname.startsWith('/api/auth') &&
+		!$page.url.pathname.startsWith('/sign-in');
+
+	$: showUnderDevelopmentCard =
+		underDevelopment &&
+		!rawRoutes.includes($page.url.pathname) &&
+		(!$userSummary || !isSuperAdmin($userSummary.roles)) &&
+		!$page.url.pathname.startsWith('/admin') &&
+		!$page.url.pathname.startsWith('/api/auth') &&
+		!$page.url.pathname.startsWith('/sign-in');
+
 	onMount(() => {
 		setNavbarState();
 	});
@@ -345,14 +361,12 @@
 <QueryClientProvider client={data.queryClient}>
 	<UserSummaryProvider queryClient={data.queryClient}>
 		<LayoutWrapper isAppRoute={appRoutes.includes($page.url.pathname)}>
-			{#if !rawRoutes.includes($page.url.pathname) && $underDevelopment && (!$userSummary || !isSuperAdmin($userSummary.roles)) && !$page.url.pathname.startsWith('/admin') && !$page.url.pathname.startsWith('/api/auth') && !$page.url.pathname.startsWith('/sign-in')}
-				{#if Number($serverVersion) > Number($appVersion)}
-					<div class="w-full flex-1 flex flex-col items-center justify-center my-auto py-4">
-						<UpdateAvailableCard />
-					</div>
-				{:else}
-					<UnderDevelopment />
-				{/if}
+			{#if showUpdateAvailableCard}
+				<div class="w-full flex-1 flex flex-col items-center justify-center my-auto py-4">
+					<UpdateAvailableCard />
+				</div>
+			{:else if showUnderDevelopmentCard}
+				<UnderDevelopment />
 			{:else}
 				<Navbar {notAtTheVeryTop} {scrollDirection} />
 				{#if appRoutes.includes($page.url.pathname)}
