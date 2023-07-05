@@ -303,13 +303,13 @@
 								{:else}
 									<div
 										in:fade|local={{ duration: 200, easing: quadOut }}
-										class="w-full h-full flex items-center bg-c-bg-secondary justify-center relative p-1"
+										class="w-full h-full flex items-center bg-c-bg-secondary justify-center relative p-2"
 									>
 										{#if cardType === 'generate'}
 											{@const sizeClasses =
 												output.generation.height > output.generation.width
-													? 'h-full max-h-[2rem] w-auto'
-													: 'w-full max-w-[2rem] h-auto'}
+													? 'h-full max-h-[1.75rem] xl:max-h-[2rem] w-auto'
+													: 'w-full max-w-[1.75rem] xl:max-w-[2rem] h-auto'}
 											{#if output.status === 'failed-nsfw'}
 												<IconEyeSlashOutline class="{sizeClasses} text-c-on-bg/50" />
 											{:else if output.status === 'failed-nsfw-prompt'}

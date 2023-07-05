@@ -196,11 +196,11 @@
 										{@const sizeClasses =
 											output.generation.height > output.generation.width
 												? cardType === 'generate'
-													? 'h-full max-h-[2rem] w-auto'
-													: 'h-full max-h-[3rem] w-auto'
+													? 'h-full max-h-[1.75rem] xl:max-h-[2rem] w-auto'
+													: 'h-full max-h-[2rem] xl:max-h-[2.5rem] w-auto'
 												: cardType === 'generate'
-												? 'w-full max-w-[2rem] h-auto'
-												: 'w-full max-w-[3rem] h-auto'}
+												? 'w-full max-w-[1.75rem] xl:max-w-[2rem] h-auto'
+												: 'w-full max-w-[2rem] xl:max-w-[2.5rem] h-auto'}
 										<div
 											in:fade|local={{ duration: 200, easing: quadOut }}
 											class="w-full h-full flex items-center bg-c-bg-secondary justify-center relative p-1"
