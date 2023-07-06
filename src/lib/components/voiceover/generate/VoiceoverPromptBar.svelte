@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { page } from '$app/stores';
+	import CreditCostBadge from '$components/CreditCostBadge.svelte';
 	import Morpher from '$components/Morpher.svelte';
 	import InsufficientCreditsBadge from '$components/badges/InsufficientCreditsBadge.svelte';
 	import Button from '$components/buttons/Button.svelte';
@@ -216,16 +217,7 @@
 				>
 					<IconWand class="w-7 h-7 md:w-8 md:h-8" />
 				</Button>
-				<div
-					class="absolute ring-1 ring-c-bg/15 rounded-bl bg-c-bg/10 pointer-events-none top-0
-					right-0 text-xs flex flex-row justify-end px-1.25
-					items-center font-semibold text-c-bg"
-				>
-					<IconToken class="w-3.5 h-3.5 -ml-1" />
-					<p class="text-right mt-0.25">
-						{creditCost.toLocaleString($locale)}
-					</p>
-				</div>
+				<CreditCostBadge {creditCost} />
 				{#if doesntHaveEnoughCredits && $userSummary && $page.data.session?.user.id}
 					<InsufficientCreditsBadge
 						neededCredits={creditCost}
