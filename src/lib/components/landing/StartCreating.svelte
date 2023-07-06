@@ -34,7 +34,7 @@
 			shadow-2xl shadow-c-shadow/[var(--o-shadow-strong)] overflow-hidden z-0 relative mt-8 md:mt-10"
 		>
 			<LazyImage
-				class="w-full h-auto"
+				class="w-full h-auto transform scale-100.2"
 				src={$themeApp === 'light' ? '/landing/app-light-1920.webp' : '/landing/app-dark-1920.webp'}
 				srcset="
         {$themeApp === 'light'
