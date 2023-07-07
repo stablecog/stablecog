@@ -262,7 +262,7 @@
 >
 	<div class="w-full h-full flex flex-col overflow-hidden relative z-0">
 		<div
-			class="w-full h-full flex flex-row overflow-hidden md:pb-[calc(env(safe-area-inset-bottom)+1rem)] pt-2 md:px-4 gap-4"
+			class="w-full h-full flex flex-row overflow-hidden md:pb-[calc(env(safe-area-inset-bottom)+1rem)] pt-1 md:pt-2 md:px-4 gap-4"
 		>
 			<div class="hidden lg:flex min-w-[2rem] flex-col items-start h-full relative">
 				{#if !$isLeftSidebarHiddenApp}

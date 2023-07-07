@@ -179,7 +179,7 @@
 <VoiceoverSettingsProvider serverData={data}>
 	<div class="w-full h-full flex flex-col overflow-hidden relative z-0">
 		<div
-			class="w-full h-full flex flex-row overflow-hidden pt-1 md:pt-2 md:px-4 pb-[calc(env(safe-area-inset-bottom)+10.75rem)] md:pb-[calc(env(safe-area-inset-bottom)+1rem)] gap-4"
+			class="w-full h-full flex flex-row overflow-hidden pt-1 md:pt-2 md:px-4 pb-[calc(env(safe-area-inset-bottom)+10.5rem)] md:pb-[calc(env(safe-area-inset-bottom)+1rem)] gap-4"
 		>
 			<div class="hidden lg:flex min-w-[2.75rem] flex-col items-start h-full relative">
 				{#if !$isLeftSidebarHiddenApp}
