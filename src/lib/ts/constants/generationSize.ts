@@ -50,8 +50,7 @@ export const widthTabs: TTab<TAvailableWidth>[] = [
 	{ label: '912', value: '912' },
 	{ label: '1024', value: '1024' },
 	{ label: '1128', value: '1128' },
-	{ label: '1152', value: '1152' },
-	{ label: '1536', value: '1536' }
+	{ label: '1152', value: '1152' }
 ];
 export const widthDefault: TAvailableWidth = '608';
 
