@@ -239,7 +239,7 @@ export const voiceoverSpeakersArray = Object.keys(voiceoverSpeakers).map((k) => 
 
 export const voiceoverModelIdDefault: TVoiceoverModelId = '0f442a3e-cf53-490b-b4a9-b0dda63e9523';
 export const voiceoverSpeakerIdDefault: TVoiceoverSpeakerId =
-	'39f7fc5d-9031-4932-a4d5-b196bb06e203';
+	'3aebf12b-a7b8-41cf-9411-5808a231138e';
 export const voiceoverLocaleDefault: TVoiceoverLocale = 'en';
 
 export const voiceoverLocale = writable<TVoiceoverLocale>(voiceoverLocaleDefault);
@@ -293,16 +293,16 @@ export const voiceoverSpeakerDropdownItems = derived(
 		const items: TTab<TVoiceoverSpeakerId>[] = [
 			// en
 			{
-				label: $voiceoverSpeakerIdToDisplayName['39f7fc5d-9031-4932-a4d5-b196bb06e203'],
-				value: '39f7fc5d-9031-4932-a4d5-b196bb06e203'
+				label: $voiceoverSpeakerIdToDisplayName['3aebf12b-a7b8-41cf-9411-5808a231138e'],
+				value: '3aebf12b-a7b8-41cf-9411-5808a231138e'
 			},
 			{
 				label: $voiceoverSpeakerIdToDisplayName['4a19f17c-eedc-4cf8-a45d-1f9d69547125'],
 				value: '4a19f17c-eedc-4cf8-a45d-1f9d69547125'
 			},
 			{
-				label: $voiceoverSpeakerIdToDisplayName['3aebf12b-a7b8-41cf-9411-5808a231138e'],
-				value: '3aebf12b-a7b8-41cf-9411-5808a231138e'
+				label: $voiceoverSpeakerIdToDisplayName['39f7fc5d-9031-4932-a4d5-b196bb06e203'],
+				value: '39f7fc5d-9031-4932-a4d5-b196bb06e203'
 			},
 			{
 				label: $voiceoverSpeakerIdToDisplayName['2e4e9572-2ea6-48a3-b134-381c68c9d516'],
