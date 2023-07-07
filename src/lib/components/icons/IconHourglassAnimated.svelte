@@ -5,7 +5,7 @@
 
 <svg
 	class={classes}
-	id="eZnxbvMdEOH1"
+	id="end69mBNOzR1"
 	xmlns="http://www.w3.org/2000/svg"
 	xmlns:xlink="http://www.w3.org/1999/xlink"
 	width="24"
@@ -14,7 +14,7 @@
 	shape-rendering="geometricPrecision"
 	text-rendering="geometricPrecision"
 >
-	<g id="eZnxbvMdEOH2_tr" transform="translate(12,12) rotate(0)"
+	<g id="end69mBNOzR2_tr" transform="translate(12,12) rotate(0)"
 		><g transform="translate(-12,-12)"
 			><path
 				d="M5.072946,2.787987h14"
@@ -40,7 +40,7 @@
 				stroke-width="2"
 				stroke-linecap="round"
 				stroke-linejoin="round"
-			/><g id="eZnxbvMdEOH6_ts" transform="translate(11.605393,12) scale(1,1)"
+			/><g id="end69mBNOzR6_ts" transform="translate(11.605393,12) scale(1,1)"
 				><path
 					d="M16.744241,3c0,0-.125635,4.455706-1,6s-2.5,3-4,3-3.125636-1.455706-4-3-1-6-1-6h10Z"
 					transform="translate(-11.349634,-12)"
@@ -56,7 +56,7 @@
 				stroke-width="2"
 				stroke-linecap="round"
 				stroke-linejoin="round"
-			/><g id="eZnxbvMdEOH8_ts" transform="translate(12,21) scale(1,0)"
+			/><g id="end69mBNOzR8_ts" transform="translate(12,21) scale(1,0)"
 				><path
 					d="M7,21c0,0,.125307-4.455658.999673-6s2.500288-3.000029,4.000327-3s3.125636,1.455706,4,3s1,6,1,6h-10Z"
 					transform="translate(-12,-21)"
@@ -65,7 +65,7 @@
 					stroke-linecap="round"
 					stroke-linejoin="round"
 				/></g
-			><g id="eZnxbvMdEOH9_to" transform="translate(12,7.5)"
+			><g id="end69mBNOzR9_to" transform="translate(12,10)"
 				><path
 					d="M12,3v9"
 					transform="translate(-12,-7.5)"
@@ -81,67 +81,70 @@
 >
 
 <style>
-	#eZnxbvMdEOH2_tr {
-		animation: eZnxbvMdEOH2_tr__tr 2500ms linear infinite normal forwards;
+	#end69mBNOzR2_tr {
+		animation: end69mBNOzR2_tr__tr 2100ms linear infinite normal forwards;
 	}
-	@keyframes eZnxbvMdEOH2_tr__tr {
+	@keyframes end69mBNOzR2_tr__tr {
 		0% {
 			transform: translate(12px, 12px) rotate(0deg);
 		}
-		76% {
+		66.666667% {
 			transform: translate(12px, 12px) rotate(0deg);
-			animation-timing-function: cubic-bezier(0.6, -0.005, 0.395, 1.005);
+			animation-timing-function: cubic-bezier(0.6, 0, 0.395, 1);
 		}
 		100% {
 			transform: translate(12px, 12px) rotate(180deg);
 		}
 	}
-	#eZnxbvMdEOH6_ts {
-		animation: eZnxbvMdEOH6_ts__ts 2500ms linear infinite normal forwards;
+	#end69mBNOzR6_ts {
+		animation: end69mBNOzR6_ts__ts 2100ms linear infinite normal forwards;
 	}
-	@keyframes eZnxbvMdEOH6_ts__ts {
+	@keyframes end69mBNOzR6_ts__ts {
 		0% {
 			transform: translate(11.605393px, 12px) scale(1, 1);
 		}
-		20% {
+		23.809524% {
 			transform: translate(11.605393px, 12px) scale(1, 0.5);
 		}
-		40% {
+		42.857143% {
 			transform: translate(11.605393px, 12px) scale(0, 0);
 		}
 		100% {
 			transform: translate(11.605393px, 12px) scale(0, 0);
 		}
 	}
-	#eZnxbvMdEOH8_ts {
-		animation: eZnxbvMdEOH8_ts__ts 2500ms linear infinite normal forwards;
+	#end69mBNOzR8_ts {
+		animation: end69mBNOzR8_ts__ts 2100ms linear infinite normal forwards;
 	}
-	@keyframes eZnxbvMdEOH8_ts__ts {
+	@keyframes end69mBNOzR8_ts__ts {
 		0% {
 			transform: translate(12px, 21px) scale(1, 0);
 		}
-		8% {
+		9.52381% {
 			transform: translate(12px, 21px) scale(1, 0);
 		}
-		40% {
+		47.619048% {
 			transform: translate(12px, 21px) scale(1, 1);
 		}
 		100% {
 			transform: translate(12px, 21px) scale(1, 1);
 		}
 	}
-	#eZnxbvMdEOH9_to {
-		animation: eZnxbvMdEOH9_to__to 2500ms linear infinite normal forwards;
+	#end69mBNOzR9_to {
+		animation: end69mBNOzR9_to__to 2100ms linear infinite normal forwards;
 	}
-	@keyframes eZnxbvMdEOH9_to__to {
+	@keyframes end69mBNOzR9_to__to {
 		0% {
-			transform: translate(12px, 7.5px);
+			transform: translate(12px, 10px);
 		}
-		12% {
+		14.285714% {
+			transform: translate(12px, 16.5px);
+		}
+		90.47619% {
 			transform: translate(12px, 16.5px);
 		}
 		100% {
-			transform: translate(12px, 16.5px);
+			transform: translate(12px, 14px);
 		}
 	}
 </style>
