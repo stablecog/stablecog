@@ -44,13 +44,20 @@ export const widthTabs: TTab<TAvailableWidth>[] = [
 	{ label: '608', value: '608' },
 	{ label: '640', value: '640' },
 	{ label: '672', value: '672' },
+	{ label: '720', value: '720' },
 	{ label: '768', value: '768' },
 	{ label: '800', value: '800' },
+	{ label: '832', value: '832' },
 	{ label: '840', value: '840' },
+	{ label: '896', value: '896' },
 	{ label: '912', value: '912' },
 	{ label: '1024', value: '1024' },
+	{ label: '1120', value: '1120' },
 	{ label: '1128', value: '1128' },
 	{ label: '1152', value: '1152' }
+	/* { label: '1248', value: '1248' },
+	{ label: '1280', value: '1280' },
+	{ label: '1536', value: '1536' } */
 ];
 export const widthDefault: TAvailableWidth = '608';
 
@@ -94,13 +101,20 @@ export const heightTabs: TTab<TAvailableHeight>[] = [
 	{ label: '608', value: '608' },
 	{ label: '640', value: '640' },
 	{ label: '672', value: '672' },
+	{ label: '720', value: '720' },
 	{ label: '768', value: '768' },
 	{ label: '800', value: '800' },
+	{ label: '832', value: '832' },
 	{ label: '840', value: '840' },
+	{ label: '896', value: '896' },
 	{ label: '912', value: '912' },
 	{ label: '1024', value: '1024' },
+	{ label: '1120', value: '1120' },
 	{ label: '1128', value: '1128' },
 	{ label: '1152', value: '1152' }
+	/* { label: '1248', value: '1248' },
+	{ label: '1280', value: '1280' },
+	{ label: '1536', value: '1536' } */
 ];
 export const heightDefault: TAvailableHeight = '912';
 
