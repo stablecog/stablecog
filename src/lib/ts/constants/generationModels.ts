@@ -53,6 +53,10 @@ export const generationModels: {
 		name: 'Ghibli Diffusion',
 		supportedSchedulerIds: sdSharedSchedulerIds
 	},
+	'8002bc51-7260-468f-8840-cf1e6dbe3f8a': {
+		name: 'SDXL',
+		supportedSchedulerIds: sdSharedSchedulerIds
+	},
 	'22b0857d-7edc-4d00-9cd9-45aa509db093': {
 		name: 'Kandinsky',
 		supportedSchedulerIds: kandinskySchedulerIds
@@ -86,6 +90,10 @@ export const availableModelIdDropdownItems = derived(
 				label: $modelIdToDisplayName['22b0857d-7edc-4d00-9cd9-45aa509db093'],
 				value: '22b0857d-7edc-4d00-9cd9-45aa509db093'
 			},
+			/* {
+				label: $modelIdToDisplayName['8002bc51-7260-468f-8840-cf1e6dbe3f8a'],
+				value: '8002bc51-7260-468f-8840-cf1e6dbe3f8a'
+			}, */
 			{
 				label: $modelIdToDisplayName['b6c1372f-31a7-457c-907c-d292a6ffef97'],
 				value: 'b6c1372f-31a7-457c-907c-d292a6ffef97'

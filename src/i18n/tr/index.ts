@@ -349,6 +349,7 @@ const tr: Translation = {
 			'22b0857d-7edc-4d00-9cd9-45aa509db093': {
 				realName: 'Kandinsky'
 			},
+			'8002bc51-7260-468f-8840-cf1e6dbe3f8a': { realName: 'SDXL' },
 			'a3636543-91cc-4290-b1a4-9d506457b9be': {
 				realName: 'Freedom'
 			}

@@ -17,15 +17,22 @@ export const availableWidths = [
 	'608',
 	'640',
 	'672',
+	'720',
 	'760',
 	'768',
 	'784',
 	'800',
+	'832',
 	'840',
+	'896',
 	'912',
 	'1024',
+	'1120',
 	'1128',
-	'1152'
+	'1152',
+	'1248',
+	'1280',
+	'1536'
 ] as const;
 export type TAvailableWidth = (typeof availableWidths)[number];
 export const widthTabs: TTab<TAvailableWidth>[] = [
@@ -43,7 +50,8 @@ export const widthTabs: TTab<TAvailableWidth>[] = [
 	{ label: '912', value: '912' },
 	{ label: '1024', value: '1024' },
 	{ label: '1128', value: '1128' },
-	{ label: '1152', value: '1152' }
+	{ label: '1152', value: '1152' },
+	{ label: '1536', value: '1536' }
 ];
 export const widthDefault: TAvailableWidth = '608';
 
@@ -53,22 +61,29 @@ export const availableHeights = [
 	'384',
 	'428',
 	'432',
-	'480',
 	'472',
+	'480',
 	'512',
 	'576',
 	'608',
 	'640',
 	'672',
+	'720',
 	'760',
 	'768',
 	'784',
 	'800',
+	'832',
 	'840',
+	'896',
 	'912',
 	'1024',
+	'1120',
 	'1128',
-	'1152'
+	'1152',
+	'1248',
+	'1280',
+	'1536'
 ] as const;
 export type TAvailableHeight = (typeof availableWidths)[number];
 export const heightTabs: TTab<TAvailableHeight>[] = [
@@ -140,6 +155,10 @@ export const aspectRatioToImageSize: {
 			width: '768',
 			height: '768'
 		},
+		'8002bc51-7260-468f-8840-cf1e6dbe3f8a': {
+			width: '1024',
+			height: '1024'
+		},
 		default: {
 			width: '512',
 			height: '512'
@@ -153,6 +172,10 @@ export const aspectRatioToImageSize: {
 		'22b0857d-7edc-4d00-9cd9-45aa509db093': {
 			width: '672',
 			height: '840'
+		},
+		'8002bc51-7260-468f-8840-cf1e6dbe3f8a': {
+			width: '896',
+			height: '1120'
 		},
 		default: {
 			width: '512',
@@ -168,6 +191,10 @@ export const aspectRatioToImageSize: {
 			width: '608',
 			height: '912'
 		},
+		'8002bc51-7260-468f-8840-cf1e6dbe3f8a': {
+			width: '832',
+			height: '1248'
+		},
 		default: {
 			width: '512',
 			height: '768'
@@ -181,6 +208,10 @@ export const aspectRatioToImageSize: {
 		'22b0857d-7edc-4d00-9cd9-45aa509db093': {
 			width: '912',
 			height: '608'
+		},
+		'8002bc51-7260-468f-8840-cf1e6dbe3f8a': {
+			width: '1248',
+			height: '832'
 		},
 		default: {
 			width: '768',
@@ -196,6 +227,10 @@ export const aspectRatioToImageSize: {
 			width: '576',
 			height: '1024'
 		},
+		'8002bc51-7260-468f-8840-cf1e6dbe3f8a': {
+			width: '720',
+			height: '1280'
+		},
 		default: {
 			width: '432',
 			height: '768'
@@ -210,6 +245,10 @@ export const aspectRatioToImageSize: {
 			width: '1024',
 			height: '576'
 		},
+		'8002bc51-7260-468f-8840-cf1e6dbe3f8a': {
+			width: '1280',
+			height: '720'
+		},
 		default: {
 			width: '768',
 			height: '432'
@@ -223,6 +262,10 @@ export const aspectRatioToImageSize: {
 		'22b0857d-7edc-4d00-9cd9-45aa509db093': {
 			width: '1152',
 			height: '480'
+		},
+		'8002bc51-7260-468f-8840-cf1e6dbe3f8a': {
+			width: '1536',
+			height: '640'
 		},
 		default: {
 			width: '768',
