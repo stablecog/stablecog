@@ -32,7 +32,8 @@ export const allowedRedirectRoutes = [
 	'/blog',
 	'/docs',
 	'/guide',
-	'/voiceover'
+	'/voiceover',
+	'/connect'
 ];
 
 export const isAllowedRedirectRoute = (route: string) => {

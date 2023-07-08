@@ -19,7 +19,8 @@ export type TIconSc =
 	| 'medium'
 	| 'youtube'
 	| 'email'
-	| 'producthunt';
+	| 'producthunt'
+	| 'stablecog';
 
 export interface TBlogPost {
 	slug: string;
