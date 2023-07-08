@@ -10,7 +10,7 @@ date: 2023-07-08T15:00:00.000Z
   import DocImage from '$components/docs/DocImage.svelte'
 </script>
 
-> This article has been written by a guest writer: [Matthew Duffin](https://rareconnections.io). If you would like to get your article featured on Stablecog's blog, please [contact us](https://stablecog.com/contact).
+> This article has been written by a guest writer: [Matthew Duffin](https://rareconnections.io). If you would like to get your article featured on our blog, please [contact us](https://stablecog.com/contact).
 
 If you’ve ever used ChatGPT you’ll know that while it’s a powerful conversational tool, when it comes to interacting with the online environment, [it’s not much use](https://www.digitaltrends.com/computing/chatgpts-bing-browsing-feature-disabled-over-paywall-flaw/).
 
