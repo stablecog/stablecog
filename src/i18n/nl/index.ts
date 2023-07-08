@@ -831,7 +831,7 @@ const nl: Translation = {
 	Contact: {
 		PageTitle: 'Contact',
 		PageParagraph:
-			"If you have any inquiries or a questions, don't hesitate to reach out to us using the links below. We'll answer them as soon as possible."
+			"If you have any inquiries or a questions, don't hesitate to reach out to us using the links below. We'll answer as soon as possible."
 	},
 	Support: {
 		PageTitle: 'Ondersteuning',
