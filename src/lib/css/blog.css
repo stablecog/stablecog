@@ -18,6 +18,8 @@
 	color: rgba(var(--c-on-bg) / 0.75);
 	padding: 0.6rem 0.75rem;
 	border-left: 4px solid rgba(var(--c-bg-tertiary) / 1);
+	margin-left: -4px;
+	width: calc(100% + 8px);
 	border-radius: 0.4rem;
 	font-size: 0.875rem;
 	line-height: 1.6;
