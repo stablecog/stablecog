@@ -138,6 +138,7 @@ module.exports = {
 				'4px': '4px'
 			},
 			rotate: {
+				30: '30deg',
 				90: '90deg',
 				15: '15deg',
 				360: '360deg',
@@ -246,7 +247,8 @@ module.exports = {
 				hourglass: 'hourglass 3s cubic-bezier(0.4, 0, 0.2, 1) infinite'
 			},
 			ringWidth: {
-				1.5: '1.5px'
+				1.5: '1.5px',
+				3: '3px'
 			},
 			zIndex: {
 				60: '60',
