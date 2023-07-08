@@ -16,12 +16,11 @@
 .blog > blockquote {
 	background: rgba(var(--c-bg-secondary) / 1);
 	color: rgba(var(--c-on-bg) / 0.75);
-	padding: 0.75rem 0.75rem;
-	border-radius: 0.5rem;
-	border-left: 4px solid rgba(var(--c-on-bg) / 0.08);
+	padding: 0.6rem 0.75rem;
+	border-left: 4px solid rgba(var(--c-bg-tertiary) / 1);
+	border-radius: 0.4rem;
 	font-size: 0.875rem;
 	line-height: 1.6;
-
 }
 
 .blog > h2 {
@@ -87,8 +86,8 @@
 	}
 	.blog > blockquote{
 		font-size: 1rem;
-		padding: 0.75rem 1rem;
-		border-radius: 0.75rem;
+		line-height: 1.7;
+		padding: 0.8rem 1rem;
 	}
 }
 
