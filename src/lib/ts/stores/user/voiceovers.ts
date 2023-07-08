@@ -16,7 +16,6 @@ import {
 } from '$ts/constants/stripePublic';
 import type { TVoiceoverSpeakerId, TVoiceoverModelId } from '$ts/constants/voiceover/models';
 import type { TVoiceoverLocale } from '$ts/constants/voiceover/locales';
-import { getAudioBufferFromUrl } from '$components/voiceover/audioPlayer/helpers';
 
 export const voiceovers = writable<TVoiceover[]>([]);
 
@@ -65,9 +64,10 @@ export const setVoiceoverToSucceeded = ({
 		return vois;
 	}
 	voi.status = 'succeeded';
-	voi.outputs = outputs.map((o) => ({
+	voi.outputs = outputs.map((o, i) => ({
 		...o,
-		status: 'succeeded' as TVoiceoverOutputStatus
+		status: 'succeeded' as TVoiceoverOutputStatus,
+		ui_id: voi.outputs?.[i]?.ui_id || generateSSEId()
 	}));
 	voi.completed_at = convertToDBTimeString(Date.now());
 	voiceovers.set(vois);
@@ -89,7 +89,11 @@ export const setVoiceoverToServerReceived = ({ ui_id, id }: { ui_id: string; id:
 		}
 		voi.id = id;
 		voi.status = 'server-received';
-		voi.outputs = voi.outputs.map((o) => ({ ...o, status: 'server-received' }));
+		voi.outputs = voi.outputs.map((o) => ({
+			...o,
+			status: 'server-received',
+			ui_id: o.ui_id || generateSSEId()
+		}));
 		return $voiceovers;
 	});
 };
@@ -102,7 +106,11 @@ export const setVoiceoverToServerProcessing = ({ ui_id, id }: { ui_id: string; i
 		const voi = $voiceovers.find((g) => g.id === id);
 		if (voi && voi.status !== 'succeeded' && voi.status !== 'failed') {
 			voi.status = 'server-processing';
-			voi.outputs = voi.outputs.map((o) => ({ ...o, status: 'server-processing' }));
+			voi.outputs = voi.outputs.map((o) => ({
+				...o,
+				status: 'server-processing',
+				ui_id: o.ui_id || generateSSEId()
+			}));
 			voi.outputs.forEach((o) => {
 				o.animation = newGenerationCompleteAnimation(o.animation);
 			});
@@ -116,6 +124,7 @@ export const setVoiceoverToServerProcessing = ({ ui_id, id }: { ui_id: string; i
 			voi2.outputs = voi2.outputs.map((o) => ({ ...o, status: 'server-processing' }));
 			voi2.outputs.forEach((o) => {
 				o.animation = newGenerationCompleteAnimation(o.animation);
+				o.ui_id = o.ui_id || generateSSEId();
 			});
 			voi2.started_at = convertToDBTimeString(Date.now());
 			if (!voi2.id) voi2.id = id;
@@ -133,6 +142,7 @@ export async function queueInitialVoiceoverRequest(request: TInitialVoiceoverReq
 			created_at: convertToDBTimeString(Date.now()),
 			outputs: [...Array(request.num_outputs)].map(() => ({
 				id: generateSSEId(),
+				ui_id: generateSSEId(),
 				audio_file_url: '',
 				audio_duration: 0,
 				status: 'to-be-submitted',
@@ -331,6 +341,7 @@ export interface TVoiceover extends TVoiceoverBase {
 
 export interface TVoiceoverOutput {
 	id: string;
+	ui_id?: string;
 	audio_file_url: string;
 	audio_duration: number;
 	audio_buffer?: AudioBuffer;

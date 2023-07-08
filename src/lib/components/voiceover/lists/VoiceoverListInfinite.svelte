@@ -170,7 +170,7 @@
 			style="{horizontal ? 'width' : 'height'}: {$listVirtualizer.getTotalSize()}px"
 			class="{horizontal ? 'h-full' : 'w-full'} relative"
 		>
-			{#each $listVirtualizer.getVirtualItems() as virtualItem (virtualItem.index + outputs[virtualItem.index].id)}
+			{#each $listVirtualizer.getVirtualItems() as virtualItem (virtualItem.index + (outputs[virtualItem.index].ui_id || outputs[virtualItem.index].id))}
 				{@const output = outputs[virtualItem.index]}
 				<div
 					key={virtualItem.index}

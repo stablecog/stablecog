@@ -17,8 +17,13 @@
 	import IconAnimatedSpinner from '$components/icons/IconAnimatedSpinner.svelte';
 	import IconSadFaceOutline from '$components/icons/IconSadFaceOutline.svelte';
 	import { quadOut } from 'svelte/easing';
-	import { fade } from 'svelte/transition';
+	import { fade, fly } from 'svelte/transition';
 	import { timestampPlaceholder } from '$components/voiceover/audioPlayer/constants';
+	import IconHourglassAnimated from '$components/icons/IconHourglassAnimated.svelte';
+	import Morpher from '$components/Morpher.svelte';
+	import { flyAndScale } from '$ts/animation/transitions';
+	import { lgBreakpoint, mdBreakpoint } from '$components/generationFullScreen/constants';
+	import { windowWidth } from '$ts/stores/window';
 
 	export let output: TVoiceoverFullOutput;
 	export let hasMute = false;
@@ -88,6 +93,15 @@
 </script>
 
 <div
+	in:flyAndScale|local={{
+		duration:
+			output.voiceover.created_at &&
+			Date.now() - new Date(output.voiceover.created_at).getTime() < 1000
+				? 300
+				: 0,
+		yPercent: $windowWidth < lgBreakpoint ? 0 : -100,
+		xPercent: $windowWidth < lgBreakpoint ? -100 : 0
+	}}
 	on:keydown={(e) => {
 		if (e.target === playButton || e.target === muteButton) return;
 		if (e.key === ' ') {
@@ -254,16 +268,25 @@
 	<!-- If loading or failed -->
 	{#if isOutputLoadingOrFailed}
 		<div
-			transition:fade|local={{ duration: 1000, easing: quadOut }}
+			transition:fade|local={{ duration: 200, easing: quadOut }}
 			class="w-full h-full absolute left-0 top-0 flex items-center justify-center {output.voiceover
 				.status === 'failed'
 				? 'bg-c-bg-secondary'
 				: 'bg-c-bg-secondary/90'}"
 		>
 			{#if output.voiceover.status === 'failed'}
-				<IconSadFaceOutline class="w-7 h-7 md:w-9 md:h-9 text-c-on-bg/50" />
+				<IconSadFaceOutline class="w-7 h-7 md:w-8 md:h-8 text-c-on-bg-faded" />
 			{:else}
-				<IconAnimatedSpinner class="w-7 h-7 md:w-9 md:h-9 text-c-on-bg/50" loading={true} />
+				<Morpher
+					morphed={output.status === 'to-be-submitted' || output.status === 'server-received'}
+				>
+					<IconAnimatedSpinner
+						slot="0"
+						class="w-7 h-7 md:w-8 md:h-8 text-c-on-bg-faded"
+						loading={true}
+					/>
+					<IconHourglassAnimated slot="1" class="w-7 h-7 md:w-8 md:h-8 text-c-on-bg-faded" />
+				</Morpher>
 			{/if}
 		</div>
 	{/if}
