@@ -831,6 +831,11 @@ const es: Translation = {
 		OtherPlansParagraph:
 			'Μπορείτε να αναβαθμίσετε σε ένα υψηλότερο πλάνο ή να αγοράσετε ένα πακέτο μονάδων.'
 	},
+	Contact: {
+		PageTitle: 'Contact',
+		PageParagraph:
+			"If you have any inquiries or a questions, don't hesitate to reach out to us using the links below. We'll answer them as soon as possible."
+	},
 	Support: {
 		PageTitle: 'Υποστήριξη',
 		PageParagraph:

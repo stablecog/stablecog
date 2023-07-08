@@ -2405,6 +2405,16 @@ type RootTranslation = {
 		 */
 		OtherPlansParagraph: string
 	}
+	Contact: {
+		/**
+		 * C​o​n​t​a​c​t
+		 */
+		PageTitle: string
+		/**
+		 * I​f​ ​y​o​u​ ​h​a​v​e​ ​a​n​y​ ​i​n​q​u​i​r​i​e​s​ ​o​r​ ​a​ ​q​u​e​s​t​i​o​n​s​,​ ​d​o​n​'​t​ ​h​e​s​i​t​a​t​e​ ​t​o​ ​r​e​a​c​h​ ​o​u​t​ ​t​o​ ​u​s​ ​u​s​i​n​g​ ​t​h​e​ ​l​i​n​k​s​ ​b​e​l​o​w​.​ ​W​e​'​l​l​ ​a​n​s​w​e​r​ ​t​h​e​m​ ​a​s​ ​s​o​o​n​ ​a​s​ ​p​o​s​s​i​b​l​e​.
+		 */
+		PageParagraph: string
+	}
 	Support: {
 		/**
 		 * S​u​p​p​o​r​t
@@ -5274,6 +5284,16 @@ export type TranslationFunctions = {
 		 * You can upgrade to a higher plan or buy a credit pack.
 		 */
 		OtherPlansParagraph: () => LocalizedString
+	}
+	Contact: {
+		/**
+		 * Contact
+		 */
+		PageTitle: () => LocalizedString
+		/**
+		 * If you have any inquiries or a questions, don't hesitate to reach out to us using the links below. We'll answer them as soon as possible.
+		 */
+		PageParagraph: () => LocalizedString
 	}
 	Support: {
 		/**

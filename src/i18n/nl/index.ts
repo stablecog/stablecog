@@ -828,6 +828,11 @@ const nl: Translation = {
 		HighestPlanParagraph: 'Je kunt een creditbundel kopen.',
 		OtherPlansParagraph: 'Je kunt upgraden naar een hoger abonnement of een creditbundel kopen.'
 	},
+	Contact: {
+		PageTitle: 'Contact',
+		PageParagraph:
+			"If you have any inquiries or a questions, don't hesitate to reach out to us using the links below. We'll answer them as soon as possible."
+	},
 	Support: {
 		PageTitle: 'Ondersteuning',
 		PageParagraph:

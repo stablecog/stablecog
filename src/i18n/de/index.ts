@@ -822,6 +822,11 @@ const de: Translation = {
 		OtherPlansParagraph:
 			'Du kannst auf ein höheres Abonnement upgraden oder ein Guthaben-Paket kaufen.'
 	},
+	Contact: {
+		PageTitle: 'Contact',
+		PageParagraph:
+			"If you have any inquiries or a questions, don't hesitate to reach out to us using the links below. We'll answer them as soon as possible."
+	},
 	Support: {
 		PageTitle: 'Support',
 		PageParagraph:

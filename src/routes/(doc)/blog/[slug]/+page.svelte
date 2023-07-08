@@ -78,7 +78,7 @@
 					class="w-full max-w-2.5xl px-3 md:px-5 mt-0.75 text-c-on-bg/40 font-medium text-center leading-relaxed"
 				>
 					{#if data.metadata.author_url}
-						<a rel="noreferrer" class="blog-link" href={data.metadata.author_url} target="_blank"
+						<a class="blog-link" href={data.metadata.author_url} target="_blank"
 							>{data.metadata.author}</a
 						>
 					{:else}
@@ -100,7 +100,7 @@
 	</div>
 	<div class="w-full flex flex-col items-center mt-16 gap-5">
 		<div class="max-w-full flex items-center justify-center">
-			<p class="font-bold text-3xl">Thanks for reading!</p>
+			<p class="font-bold text-3xl text-center">Thanks for reading!</p>
 		</div>
 		<NoBgButton href="/blog" prefetch={true}>
 			<div class="flex items-center justify-center gap-2.5 px-2 py-1">
@@ -130,6 +130,7 @@
 			</div>
 		</div>
 		<div class="w-full flex flex-col items-center gap-5">
+			<p class="text-2xl font-bold text-center">{$LL.Landing.Hero.Title()}</p>
 			<Button href="/generate">{$LL.Shared.StartGeneratingButton()}</Button>
 		</div>
 	</div>

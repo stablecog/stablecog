@@ -818,6 +818,11 @@ const bg: Translation = {
 		HighestPlanParagraph: 'Може да закупите кредит пакет.',
 		OtherPlansParagraph: 'Повишете вашия план или закупете кредит пакет.'
 	},
+	Contact: {
+		PageTitle: 'Contact',
+		PageParagraph:
+			"If you have any inquiries or a questions, don't hesitate to reach out to us using the links below. We'll answer them as soon as possible."
+	},
 	Support: {
 		PageTitle: 'Поддръжка',
 		PageParagraph:
