@@ -662,6 +662,10 @@ type RootTranslation = {
 		 */
 		TitleAlt: string
 		/**
+		 * T​h​a​n​k​s​ ​f​o​r​ ​r​e​a​d​i​n​g​!
+		 */
+		ThanksForReading: string
+		/**
 		 * B​a​c​k​ ​t​o​ ​B​l​o​g
 		 */
 		BackToBlogButton: string
@@ -3576,6 +3580,10 @@ export type TranslationFunctions = {
 		 * Blog
 		 */
 		TitleAlt: () => LocalizedString
+		/**
+		 * Thanks for reading!
+		 */
+		ThanksForReading: () => LocalizedString
 		/**
 		 * Back to Blog
 		 */

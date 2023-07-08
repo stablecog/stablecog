@@ -218,6 +218,7 @@ const fr: Translation = {
 	Blog: {
 		Title: 'Publications du blog',
 		TitleAlt: 'Blog',
+		ThanksForReading: 'Thanks for reading!',
 		BackToBlogButton: 'Retour au blog'
 	},
 	Redirect: {

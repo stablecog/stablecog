@@ -218,6 +218,7 @@ const vi: Translation = {
 	Blog: {
 		Title: 'Bài đăng trên blog',
 		TitleAlt: 'Nhật ký',
+		ThanksForReading: 'Thanks for reading!',
 		BackToBlogButton: 'Quay lại nhật ký'
 	},
 	Redirect: {

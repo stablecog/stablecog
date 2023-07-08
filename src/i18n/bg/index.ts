@@ -220,6 +220,7 @@ const bg: Translation = {
 	Blog: {
 		Title: 'Публикации',
 		TitleAlt: 'Блог',
+		ThanksForReading: 'Thanks for reading!',
 		BackToBlogButton: 'Обратно към блога'
 	},
 	Redirect: {

@@ -228,6 +228,7 @@ const tr: Translation = {
 	Blog: {
 		Title: 'Blog Yazıları',
 		TitleAlt: 'Blog',
+		ThanksForReading: 'Thanks for reading!',
 		BackToBlogButton: 'Bloğa Dön'
 	},
 	Redirect: {

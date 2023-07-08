@@ -218,6 +218,7 @@ const ru: Translation = {
 	Blog: {
 		Title: 'Записи блога',
 		TitleAlt: 'Блог',
+		ThanksForReading: 'Thanks for reading!',
 		BackToBlogButton: 'Назад к блогу'
 	},
 	Redirect: {

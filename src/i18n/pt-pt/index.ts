@@ -217,6 +217,7 @@ const ptPt: Translation = {
 	Blog: {
 		Title: "Publicações do 'Blog'",
 		TitleAlt: 'Blog',
+		ThanksForReading: 'Thanks for reading!',
 		BackToBlogButton: 'Voltar para o blog'
 	},
 	Redirect: {

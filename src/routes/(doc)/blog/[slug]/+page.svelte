@@ -69,13 +69,13 @@
 			</h1>
 			<time
 				datetime={data.metadata.date}
-				class="w-full max-w-2.5xl px-3 md:px-5 mt-3 text-c-on-bg/40 font-medium text-center leading-relaxed"
+				class="w-full max-w-2.5xl px-3 md:px-5 mt-3 text-c-on-bg/60 font-medium text-center leading-relaxed"
 			>
 				{formattedDate}<span class="mx-2">•</span>{data.metadata.reading_time} min read
 			</time>
 			{#if data.metadata.author}
 				<p
-					class="w-full max-w-2.5xl px-3 md:px-5 mt-0.75 text-c-on-bg/40 font-medium text-center leading-relaxed"
+					class="w-full max-w-2.5xl px-3 md:px-5 mt-0.75 text-c-on-bg/60 font-medium text-center leading-relaxed"
 				>
 					{#if data.metadata.author_url}
 						<a class="blog-link" href={data.metadata.author_url} target="_blank"
@@ -100,7 +100,7 @@
 	</div>
 	<div class="w-full flex flex-col items-center mt-16 gap-5">
 		<div class="max-w-full flex items-center justify-center">
-			<p class="font-bold text-3xl text-center">Thanks for reading!</p>
+			<p class="font-bold text-3xl text-center">{$LL.Blog.ThanksForReading()}</p>
 		</div>
 		<NoBgButton href="/blog" prefetch={true}>
 			<div class="flex items-center justify-center gap-2.5 px-2 py-1">

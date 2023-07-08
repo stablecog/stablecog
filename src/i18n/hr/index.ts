@@ -217,6 +217,7 @@ const hr: Translation = {
 	Blog: {
 		Title: 'Blog objave',
 		TitleAlt: 'Blog',
+		ThanksForReading: 'Thanks for reading!',
 		BackToBlogButton: 'Povratak na blog'
 	},
 	Redirect: {

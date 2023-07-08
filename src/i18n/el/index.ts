@@ -221,6 +221,7 @@ const es: Translation = {
 	Blog: {
 		Title: 'Δημοσιεύσεις Ιστολογίου',
 		TitleAlt: 'Ιστολόγιο',
+		ThanksForReading: 'Thanks for reading!',
 		BackToBlogButton: 'Επιστροφή στο Ιστολόγιο'
 	},
 	Redirect: {

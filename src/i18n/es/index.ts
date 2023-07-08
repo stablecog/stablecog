@@ -218,6 +218,7 @@ const es: Translation = {
 	Blog: {
 		Title: 'Entradas del Blog',
 		TitleAlt: 'Blog',
+		ThanksForReading: 'Thanks for reading!',
 		BackToBlogButton: 'Volver al Blog'
 	},
 	Redirect: {

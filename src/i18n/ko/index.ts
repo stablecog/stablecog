@@ -218,6 +218,7 @@ const ko: Translation = {
 	Blog: {
 		Title: '블로그',
 		TitleAlt: '블로그',
+		ThanksForReading: 'Thanks for reading!',
 		BackToBlogButton: '되돌아가기'
 	},
 	Redirect: {

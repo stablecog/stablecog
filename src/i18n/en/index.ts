@@ -218,6 +218,7 @@ const en: BaseTranslation = {
 	Blog: {
 		Title: 'Blog Posts',
 		TitleAlt: 'Blog',
+		ThanksForReading: 'Thanks for reading!',
 		BackToBlogButton: 'Back to Blog'
 	},
 	Redirect: {

@@ -221,6 +221,7 @@ const nl: Translation = {
 	Blog: {
 		Title: 'Blogberichten',
 		TitleAlt: 'Blog',
+		ThanksForReading: 'Thanks for reading!',
 		BackToBlogButton: 'Terug naar Blog'
 	},
 	Redirect: {

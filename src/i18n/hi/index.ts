@@ -217,6 +217,7 @@ const hi: Translation = {
 	Blog: {
 		Title: 'ब्लॉग पोस्ट',
 		TitleAlt: 'ब्लॉग',
+		ThanksForReading: 'Thanks for reading!',
 		BackToBlogButton: 'ब्लॉग पर वापिस'
 	},
 	Redirect: {

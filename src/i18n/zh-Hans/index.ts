@@ -215,6 +215,7 @@ const zhHans: Translation = {
 	Blog: {
 		Title: '博客帖子',
 		TitleAlt: '博客',
+		ThanksForReading: 'Thanks for reading!',
 		BackToBlogButton: '返回博客'
 	},
 	Redirect: {

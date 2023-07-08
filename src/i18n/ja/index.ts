@@ -228,6 +228,7 @@ const ja: Translation = {
 	Blog: {
 		Title: 'ブログの投稿',
 		TitleAlt: 'ブログ',
+		ThanksForReading: 'Thanks for reading!',
 		BackToBlogButton: 'ブログに戻る'
 	},
 	Redirect: {
