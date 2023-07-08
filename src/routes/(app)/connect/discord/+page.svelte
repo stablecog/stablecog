@@ -17,6 +17,7 @@
 	import IconWarningOutline from '$components/icons/IconWarningOutline.svelte';
 	import { socialAppUrlsAbsolute } from '$ts/constants/social.js';
 	import { expandCollapse } from '$ts/animation/transitions.js';
+	import IconSadFaceOutline from '$components/icons/IconSadFaceOutline.svelte';
 
 	export let data;
 
@@ -50,13 +51,13 @@
 					<SignInCard redirectTo={`${$page.url.pathname}?${$page.url.searchParams}`} />
 				</div>
 			{:else if !data.discord_id}
-				<IconWarningOutline class="w-20 h-20 text-c-danger" />
+				<IconSadFaceOutline class="w-20 h-20 text-c-danger" />
 				<h1 class="mt-1 w-full max-w-sm text-center font-bold text-4xl text-c-danger">Connect</h1>
 				<p class="w-full max-w-md mt-2 text-xl text-c-on-bg/75 text-center">
 					This link doesn't contain a Discord ID. Please request another one.
 				</p>
 			{:else if !data.discord_token}
-				<IconWarningOutline class="w-20 h-20 text-c-danger" />
+				<IconSadFaceOutline class="w-20 h-20 text-c-danger" />
 				<h1 class="mt-1 w-full max-w-sm text-center font-bold text-4xl text-c-danger">Connect</h1>
 				<p class="w-full max-w-md mt-2 text-xl text-c-on-bg/75 text-center">
 					This link doesn't contain a Discord token. Please request another one.
@@ -74,6 +75,21 @@
 						? 'You can return back to Discord.'
 						: 'Click the button below to connect your Discord account to your Stablecog account.'}
 				</p>
+				{#if status !== 'success'}
+					<div
+						out:expandCollapse|local={{ duration: 300 }}
+						class="w-full flex flex-col justify-start items-center"
+					>
+						<Button
+							onClick={connectAccount}
+							withSpinner
+							loading={status === 'confirming'}
+							class="mt-5 w-56 max-w-full"
+						>
+							Connect
+						</Button>
+					</div>
+				{/if}
 				<div class="max-w-full flex flex-col md:flex-row items-center justify-center mt-8 gap-4">
 					<!-- Platform Info -->
 					<div
@@ -160,21 +176,6 @@
 						</p>
 					</div>
 				</div>
-				{#if status !== 'success'}
-					<div
-						out:expandCollapse|local={{ duration: 400 }}
-						class="w-full flex flex-col justify-start items-center"
-					>
-						<Button
-							onClick={connectAccount}
-							withSpinner
-							loading={status === 'confirming'}
-							class="mt-8 w-56 max-w-full"
-						>
-							Connect
-						</Button>
-					</div>
-				{/if}
 			{/if}
 		</section>
 	</div>
