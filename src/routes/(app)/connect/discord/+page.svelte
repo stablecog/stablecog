@@ -121,15 +121,15 @@
 							</p>
 						</div>
 						<div
-							class="mt-4 w-12 h-12 md:w-18 md:h-18 flex items-center justify-center ring-2 ring-c-on-bg/25 overflow-hidden rounded-full transition duration-300 transform relative"
+							class="mt-4 w-12 h-12 md:w-14 md:h-14 flex items-center justify-center ring-2 ring-c-on-bg/25 overflow-hidden rounded-full transition duration-300 transform relative"
 						>
 							<Avatar
 								str={$page.data.session.user.email}
-								class="w-9 h-9 transform scale-200 relative"
+								class="w-9 h-9 transform scale-[134%] md:scale-[156%] relative"
 							/>
 						</div>
 						<p
-							class="w-full font-semibold mt-1 px-6 pb-4 whitespace-nowrap overflow-hidden overflow-ellipsis"
+							class="w-full font-semibold mt-1 px-5 md:px-6 pb-5 whitespace-nowrap overflow-hidden overflow-ellipsis"
 						>
 							@yekta
 						</p>
@@ -137,7 +137,7 @@
 					<!-- Connection div -->
 					<div class="relative flex flex-col md:flex-row justify-center items-center gap-2">
 						<div
-							class="w-2px h-6 md:w-8 md:h-2px rounded-full transition duration-300 {status ===
+							class="w-2px h-6 md:w-6 md:h-2px rounded-full transition duration-300 {status ===
 							'success'
 								? 'bg-c-success'
 								: 'bg-c-on-bg/20'}"
@@ -148,13 +148,13 @@
 								: ''}"
 						>
 							<IconLink
-								class="w-6 h-6 md:w-8 md:h-8 transition duration-300 {status === 'success'
+								class="w-8 h-8 transition duration-300 {status === 'success'
 									? 'text-c-success'
 									: 'text-c-on-bg/30'}"
 							/>
 						</div>
 						<div
-							class="w-2px h-6 md:w-8 md:h-2px rounded-full transition duration-300 {status ===
+							class="w-2px h-6 md:w-6 md:h-2px rounded-full transition duration-300 {status ===
 							'success'
 								? 'bg-c-success'
 								: 'bg-c-on-bg/20'}"
@@ -176,15 +176,15 @@
 							</p>
 						</div>
 						<div
-							class="mt-4 w-12 h-12 md:w-18 md:h-18 flex items-center justify-center ring-2 ring-c-on-bg/25 overflow-hidden rounded-full transition duration-300 transform relative"
+							class="mt-4 w-12 h-12 md:w-14 md:h-14 flex items-center justify-center ring-2 ring-c-on-bg/25 overflow-hidden rounded-full transition duration-300 transform relative"
 						>
 							<Avatar
 								str={$page.data.session.user.email}
-								class="w-9 h-9 transform scale-200 relative"
+								class="w-9 h-9 transform scale-[134%] md:scale-[156%] relative"
 							/>
 						</div>
 						<p
-							class="w-full font-semibold mt-1 px-6 pb-4 whitespace-nowrap overflow-hidden overflow-ellipsis"
+							class="w-full font-semibold mt-1 px-5 md:px-6 pb-5 whitespace-nowrap overflow-hidden overflow-ellipsis"
 						>
 							{$page.data.session.user.email}
 						</p>
