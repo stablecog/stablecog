@@ -29,7 +29,7 @@
 	bind:offsetHeight={height}
 >
 	<ScrollAreaWithChevron
-		class="w-full flex flex-col justify-start max-h-[50vh] transition-all duration-100 hide-scrollbar
+		class="w-full flex flex-col justify-start max-h-[calc(70vh-4rem)] transition-all duration-100 hide-scrollbar
     shadow-settings-page bg-c-bg-secondary shadow-c-shadow/[var(--o-shadow-stronger)] rounded-b-xl"
 	>
 		<slot />

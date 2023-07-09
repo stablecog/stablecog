@@ -85,7 +85,7 @@
 					class="flex-1 min-w-0 overflow-hidden overflow-ellipsis text-left transition
 					text-c-on-bg not-touch:group-hover:text-c-primary"
 				>
-					{$LL.Documentation.DocumentationButton()}
+					{$LL.Documentation.ForDevelopersTitle()}
 				</p>
 			</div>
 		</DropdownItem>

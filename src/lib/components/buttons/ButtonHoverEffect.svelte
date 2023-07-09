@@ -55,11 +55,11 @@
 				: color === 'bg-tertiary'
 				? 'bg-c-bg-tertiary'
 				: color === 'secondary'
-				? 'bg-c-secondary/15'
+				? 'bg-c-secondary/12'
 				: color === 'primary-strong'
 				? 'bg-c-primary/25'
 				: color === 'success'
-				? 'bg-c-success/15'
+				? 'bg-c-success/12'
 				: 'bg-c-primary/15'} {noRounding
 				? ''
 				: size === 'xs'

@@ -46,14 +46,26 @@
 				data-sveltekit-preload-data="hover"
 			>
 				<ButtonHoverEffect
-					color={isSelected ? 'primary' : 'on-bg'}
+					color={isSelected
+						? sidebarItem.http_method === 'POST'
+							? 'secondary'
+							: sidebarItem.http_method === 'GET'
+							? 'success'
+							: 'primary'
+						: 'on-bg'}
 					hoverFrom="left"
 					size="md"
 					hovered={isSelected}
 				/>
 				<p
 					class="flex-1 min-w-0 w-0 relative break-words transition-all overflow-hidden {isSelected
-						? 'text-c-primary font-semibold'
+						? sidebarItem.http_method === 'POST'
+							? 'text-c-secondary'
+							: sidebarItem.http_method === 'GET'
+							? 'text-c-success'
+							: 'text-c-primary'
+						: ''} {isSelected
+						? 'font-semibold'
 						: level === 0 || level === 1
 						? 'text-c-on-bg font-medium'
 						: 'text-c-on-bg/75 font-normal'} relative"
