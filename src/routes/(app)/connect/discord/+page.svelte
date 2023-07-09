@@ -56,18 +56,18 @@
 				</div>
 			{:else if !data.discord_id}
 				<IconSadFaceOutline class="w-20 h-20 text-c-danger" />
-				<h1 class="mt-1 w-full max-w-sm text-center font-bold text-4xl text-c-danger">
-					{$LL.Connect.PageTitle()}
+				<h1 class="mt-3 w-full max-w-sm text-center font-bold text-4xl text-c-danger">
+					{$LL.Connect.ConnectToTitle({ platform: $LL.Connect.Platform.Discord() })}
 				</h1>
-				<p class="w-full max-w-md mt-2 text-xl text-c-on-bg/75 text-center">
+				<p class="w-full max-w-md mt-4 text-xl text-c-on-bg/75 text-center">
 					{$LL.Connect.NoDiscordIDParagraph()}
 				</p>
 			{:else if !data.discord_token}
 				<IconSadFaceOutline class="w-20 h-20 text-c-danger" />
-				<h1 class="mt-1 w-full max-w-sm text-center font-bold text-4xl text-c-danger">
-					{$LL.Connect.PageTitle()}
+				<h1 class="mt-3 w-full max-w-sm text-center font-bold text-4xl text-c-danger">
+					{$LL.Connect.ConnectToTitle({ platform: $LL.Connect.Platform.Discord() })}
 				</h1>
-				<p class="w-full max-w-md mt-2 text-xl text-c-on-bg/75 text-center">
+				<p class="w-full max-w-md mt-4 text-xl text-c-on-bg/75 text-center">
 					{$LL.Connect.NoDiscordTokenParagraph()}
 				</p>
 			{:else}
@@ -76,9 +76,11 @@
 						? 'text-c-success'
 						: 'text-c-on-bg'}"
 				>
-					{status === 'success' ? $LL.Connect.PageSuccessTitle() : $LL.Connect.PageTitle()}
+					{status === 'success'
+						? $LL.Connect.PageSuccessTitle()
+						: $LL.Connect.ConnectToTitle({ platform: $LL.Connect.Platform.Discord() })}
 				</h1>
-				<p class="w-full max-w-md mt-2 text-xl text-c-on-bg/75 text-center">
+				<p class="w-full max-w-md mt-4 text-xl text-c-on-bg/75 text-center">
 					{status === 'success'
 						? $LL.Connect.ReturnBackToParagraph({ platform: $LL.Connect.Platform.Discord() })
 						: $LL.Connect.PageParagraph({ platform: $LL.Connect.Platform.Discord() })}
@@ -88,17 +90,21 @@
 						out:expandCollapse|local={{ duration: 300 }}
 						class="w-full flex flex-col justify-start items-center"
 					>
-						<Button
-							onClick={connectAccount}
-							withSpinner
-							loading={status === 'confirming'}
-							class="mt-5 w-56 max-w-full"
-						>
-							{$LL.Connect.ConnectButton()}
-						</Button>
+						<div class="w-full flex flex-col justify-start items-center pt-6 pb-2 md:pb-0">
+							<Button
+								onClick={connectAccount}
+								withSpinner
+								loading={status === 'confirming'}
+								class="w-56 max-w-full"
+							>
+								{$LL.Connect.ConnectButton()}
+							</Button>
+						</div>
 					</div>
 				{/if}
-				<div class="max-w-full flex flex-col md:flex-row items-center justify-center mt-8 gap-4">
+				<div
+					class="max-w-full flex flex-col md:flex-row items-center justify-center mt-5 md:mt-8 gap-4"
+				>
 					<!-- Platform Info -->
 					<div
 						class="w-64 max-w-full transition duration-300 transform {status === 'success'
