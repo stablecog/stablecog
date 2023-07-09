@@ -90,7 +90,7 @@
 						out:expandCollapse|local={{ duration: 300 }}
 						class="w-full flex flex-col justify-start items-center"
 					>
-						<div class="w-full flex flex-col justify-start items-center pt-6 pb-2 md:pb-0">
+						<div class="w-full flex flex-col justify-start items-center pt-6 pb-4 md:pb-0">
 							<Button
 								onClick={connectAccount}
 								withSpinner
@@ -103,7 +103,7 @@
 					</div>
 				{/if}
 				<div
-					class="max-w-full flex flex-col md:flex-row items-center justify-center mt-5 md:mt-8 gap-4"
+					class="max-w-full flex flex-col md:flex-row items-center justify-center mt-5 md:mt-9 gap-4"
 				>
 					<!-- Platform Info -->
 					<div
@@ -112,7 +112,7 @@
 							: 'ring-c-bg-tertiary ring-2'} bg-c-bg-secondary rounded-xl shadow-xl shadow-c-shadow/[var(--o-shadow-normal)]
 						flex flex-col items-center justify-center gap-2 text-center overflow-hidden z-0 relative"
 					>
-						<div class="w-full flex items-center justify-center bg-c-bg-tertiary py-2 px-4 gap-2">
+						<div class="w-full flex items-center justify-center bg-c-bg-tertiary py-2.5 px-4 gap-2">
 							<IconSc type="discord" class="w-8 h-8 flex-shrink-0" />
 							<p
 								class="font-bold text-xl flex-shrink overflow-hidden overflow-ellipsis whitespace-nowrap"
@@ -167,7 +167,7 @@
 							: 'ring-c-bg-tertiary ring-2'} bg-c-bg-secondary rounded-xl shadow-xl shadow-c-shadow/[var(--o-shadow-normal)]
 						flex flex-col items-center justify-center gap-2 text-center overflow-hidden z-0 relative"
 					>
-						<div class="w-full flex items-center justify-center bg-c-bg-tertiary py-2 px-4 gap-1">
+						<div class="w-full flex items-center justify-center bg-c-bg-tertiary py-2.5 px-4 gap-1">
 							<IconSc type="stablecog" class="w-8 h-8 flex-shrink-0 transition duration-300" />
 							<p
 								class="font-bold text-xl flex-shrink overflow-hidden overflow-ellipsis whitespace-nowrap"
