@@ -2977,6 +2977,16 @@ type RootTranslation = {
 			 */
 			Stablecog: string
 		}
+		/**
+		 * C​o​n​n​e​c​t​ ​t​o​ ​{​p​l​a​t​f​o​r​m​}
+		 * @param {unknown} platform
+		 */
+		ConnectToTitle: RequiredParams<'platform'>
+		/**
+		 * C​r​e​a​t​e​ ​a​n​ ​a​c​c​o​u​n​t​ ​o​r​ ​s​i​g​n​ ​i​n​ ​t​o​ ​c​o​n​n​e​c​t​ ​y​o​u​r​ ​{​p​l​a​t​f​o​r​m​}​ ​a​c​c​o​u​n​t​ ​t​o​ ​y​o​u​r​ ​S​t​a​b​l​e​c​o​g​ ​a​c​c​o​u​n​t​.
+		 * @param {unknown} platform
+		 */
+		ConnectToParagraph: RequiredParams<'platform'>
 	}
 	UnderDevelopment: {
 		/**
@@ -5898,6 +5908,14 @@ export type TranslationFunctions = {
 			 */
 			Stablecog: () => LocalizedString
 		}
+		/**
+		 * Connect to {platform}
+		 */
+		ConnectToTitle: (arg: { platform: unknown }) => LocalizedString
+		/**
+		 * Create an account or sign in to connect your {platform} account to your Stablecog account.
+		 */
+		ConnectToParagraph: (arg: { platform: unknown }) => LocalizedString
 	}
 	UnderDevelopment: {
 		/**

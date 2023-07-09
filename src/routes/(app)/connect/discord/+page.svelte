@@ -48,7 +48,11 @@
 		<section id="connect" class="w-full flex flex-col items-center justify-start">
 			{#if !$page.data.session?.access_token || !$page.data.session.user.email || !$userSummary}
 				<div class="flex items-center justify-center mt-6">
-					<SignInCard redirectTo={`${$page.url.pathname}?${$page.url.searchParams}`} />
+					<SignInCard
+						redirectTo={`${$page.url.pathname}?${$page.url.searchParams}`}
+						title={$LL.Connect.ConnectToTitle({ platform: $LL.Connect.Platform.Discord() })}
+						paragraph={$LL.Connect.ConnectToParagraph({ platform: $LL.Connect.Platform.Discord() })}
+					/>
 				</div>
 			{:else if !data.discord_id}
 				<IconSadFaceOutline class="w-20 h-20 text-c-danger" />

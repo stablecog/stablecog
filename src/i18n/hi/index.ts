@@ -974,7 +974,10 @@ const hi: Translation = {
 		Platform: {
 			Discord: 'Discord',
 			Stablecog: 'Stablecog'
-		}
+		},
+		ConnectToTitle: 'Connect to {platform}',
+		ConnectToParagraph:
+			'Create an account or sign in to connect your {platform} account to your Stablecog account.'
 	},
 	UnderDevelopment: {
 		PageTitle: "We'll be back soon!",

@@ -21,6 +21,8 @@
 
 	export let redirectTo: string | null = null;
 	export let isModal = false;
+	export let title: string | undefined = undefined;
+	export let paragraph: string | undefined = undefined;
 
 	let email: string;
 	let provider: Provider | null | 'email' = null;
@@ -183,6 +185,8 @@
 	<h1 class="max-w-sm text-center font-bold leading-normal mt-1 md:-mt-1 text-2xl px-8">
 		{$signInCardStatus === 'sent-otp'
 			? $LL.SignIn.PageTitleSentLink()
+			: title
+			? title
 			: $LL.SignIn.PageTitleGetStarted()}
 	</h1>
 	<div class="w-full flex flex-col items-center justify-start mt-1.5">
@@ -194,6 +198,8 @@
 		>
 			{$signInCardStatus === 'sent-otp'
 				? $LL.SignIn.PageParagraphSentLink()
+				: paragraph
+				? paragraph
 				: $LL.SignIn.PageParagraphV2()}
 		</p>
 		{#if !wantsEmailOnMount && $signInCardStatus !== 'sent-otp'}
