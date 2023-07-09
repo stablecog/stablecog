@@ -52,15 +52,19 @@
 				</div>
 			{:else if !data.discord_id}
 				<IconSadFaceOutline class="w-20 h-20 text-c-danger" />
-				<h1 class="mt-1 w-full max-w-sm text-center font-bold text-4xl text-c-danger">Connect</h1>
+				<h1 class="mt-1 w-full max-w-sm text-center font-bold text-4xl text-c-danger">
+					{$LL.Connect.PageTitle()}
+				</h1>
 				<p class="w-full max-w-md mt-2 text-xl text-c-on-bg/75 text-center">
-					This link doesn't contain a Discord ID. Please request another one.
+					{$LL.Connect.NoDiscordIDParagraph()}
 				</p>
 			{:else if !data.discord_token}
 				<IconSadFaceOutline class="w-20 h-20 text-c-danger" />
-				<h1 class="mt-1 w-full max-w-sm text-center font-bold text-4xl text-c-danger">Connect</h1>
+				<h1 class="mt-1 w-full max-w-sm text-center font-bold text-4xl text-c-danger">
+					{$LL.Connect.PageTitle()}
+				</h1>
 				<p class="w-full max-w-md mt-2 text-xl text-c-on-bg/75 text-center">
-					This link doesn't contain a Discord token. Please request another one.
+					{$LL.Connect.NoDiscordTokenParagraph()}
 				</p>
 			{:else}
 				<h1
@@ -68,12 +72,12 @@
 						? 'text-c-success'
 						: 'text-c-on-bg'}"
 				>
-					{status === 'success' ? 'Connected!' : 'Connect'}
+					{status === 'success' ? $LL.Connect.PageSuccessTitle() : $LL.Connect.PageTitle()}
 				</h1>
 				<p class="w-full max-w-md mt-2 text-xl text-c-on-bg/75 text-center">
 					{status === 'success'
-						? 'You can return back to Discord.'
-						: 'Click the button below to connect your Discord account to your Stablecog account.'}
+						? $LL.Connect.ReturnBackToParagraph({ platform: $LL.Connect.Platform.Discord() })
+						: $LL.Connect.PageParagraph({ platform: $LL.Connect.Platform.Discord() })}
 				</p>
 				{#if status !== 'success'}
 					<div
@@ -86,7 +90,7 @@
 							loading={status === 'confirming'}
 							class="mt-5 w-56 max-w-full"
 						>
-							Connect
+							{$LL.Connect.ConnectButton()}
 						</Button>
 					</div>
 				{/if}
@@ -103,7 +107,7 @@
 							<p
 								class="font-bold text-xl flex-shrink overflow-hidden overflow-ellipsis whitespace-nowrap"
 							>
-								Discord
+								{$LL.Connect.Platform.Discord()}
 							</p>
 						</div>
 						<div
@@ -158,7 +162,7 @@
 							<p
 								class="font-bold text-xl flex-shrink overflow-hidden overflow-ellipsis whitespace-nowrap"
 							>
-								Stablecog
+								{$LL.Connect.Platform.Stablecog()}
 							</p>
 						</div>
 						<div

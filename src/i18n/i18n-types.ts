@@ -2936,6 +2936,48 @@ type RootTranslation = {
 		 */
 		UnmuteButton: string
 	}
+	Connect: {
+		/**
+		 * C​o​n​n​e​c​t
+		 */
+		PageTitle: string
+		/**
+		 * C​l​i​c​k​ ​t​h​e​ ​b​u​t​t​o​n​ ​b​e​l​o​w​ ​t​o​ ​c​o​n​n​e​c​t​ ​y​o​u​r​ ​{​p​l​a​t​f​o​r​m​}​ ​a​c​c​o​u​n​t​ ​t​o​ ​y​o​u​r​ ​S​t​a​b​l​e​c​o​g​ ​a​c​c​o​u​n​t​.
+		 * @param {unknown} platform
+		 */
+		PageParagraph: RequiredParams<'platform'>
+		/**
+		 * C​o​n​n​e​c​t​e​d​!
+		 */
+		PageSuccessTitle: string
+		/**
+		 * C​o​n​n​e​c​t
+		 */
+		ConnectButton: string
+		/**
+		 * Y​o​u​ ​c​a​n​ ​r​e​t​u​r​n​ ​b​a​c​k​ ​t​o​ ​{​p​l​a​t​f​o​r​m​}​ ​n​o​w​.
+		 * @param {unknown} platform
+		 */
+		ReturnBackToParagraph: RequiredParams<'platform'>
+		/**
+		 * T​h​i​s​ ​l​i​n​k​ ​d​o​e​s​n​'​t​ ​c​o​n​t​a​i​n​ ​a​ ​D​i​s​c​o​r​d​ ​t​o​k​e​n​.​ ​P​l​e​a​s​e​ ​r​e​q​u​e​s​t​ ​a​ ​n​e​w​ ​l​i​n​k​.
+		 */
+		NoDiscordTokenParagraph: string
+		/**
+		 * T​h​i​s​ ​l​i​n​k​ ​d​o​e​s​n​'​t​ ​c​o​n​t​a​i​n​ ​a​ ​D​i​s​c​o​r​d​ ​I​D​.​ ​P​l​e​a​s​e​ ​r​e​q​u​e​s​t​ ​a​ ​n​e​w​ ​l​i​n​k​.
+		 */
+		NoDiscordIDParagraph: string
+		Platform: {
+			/**
+			 * D​i​s​c​o​r​d
+			 */
+			Discord: string
+			/**
+			 * S​t​a​b​l​e​c​o​g
+			 */
+			Stablecog: string
+		}
+	}
 	UnderDevelopment: {
 		/**
 		 * W​e​'​l​l​ ​b​e​ ​b​a​c​k​ ​s​o​o​n​!
@@ -5816,6 +5858,46 @@ export type TranslationFunctions = {
 		 * Unmute
 		 */
 		UnmuteButton: () => LocalizedString
+	}
+	Connect: {
+		/**
+		 * Connect
+		 */
+		PageTitle: () => LocalizedString
+		/**
+		 * Click the button below to connect your {platform} account to your Stablecog account.
+		 */
+		PageParagraph: (arg: { platform: unknown }) => LocalizedString
+		/**
+		 * Connected!
+		 */
+		PageSuccessTitle: () => LocalizedString
+		/**
+		 * Connect
+		 */
+		ConnectButton: () => LocalizedString
+		/**
+		 * You can return back to {platform} now.
+		 */
+		ReturnBackToParagraph: (arg: { platform: unknown }) => LocalizedString
+		/**
+		 * This link doesn't contain a Discord token. Please request a new link.
+		 */
+		NoDiscordTokenParagraph: () => LocalizedString
+		/**
+		 * This link doesn't contain a Discord ID. Please request a new link.
+		 */
+		NoDiscordIDParagraph: () => LocalizedString
+		Platform: {
+			/**
+			 * Discord
+			 */
+			Discord: () => LocalizedString
+			/**
+			 * Stablecog
+			 */
+			Stablecog: () => LocalizedString
+		}
 	}
 	UnderDevelopment: {
 		/**

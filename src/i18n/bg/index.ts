@@ -963,6 +963,21 @@ const bg: Translation = {
 		MuteButton: 'Mute',
 		UnmuteButton: 'Unmute'
 	},
+	Connect: {
+		PageTitle: 'Connect',
+		PageParagraph:
+			'Click the button below to connect your {platform} account to your Stablecog account.',
+		PageSuccessTitle: 'Connected!',
+		ConnectButton: 'Connect',
+		ReturnBackToParagraph: 'You can return back to {platform} now.',
+		NoDiscordTokenParagraph:
+			"This link doesn't contain a Discord token. Please request a new link.",
+		NoDiscordIDParagraph: "This link doesn't contain a Discord ID. Please request a new link.",
+		Platform: {
+			Discord: 'Discord',
+			Stablecog: 'Stablecog'
+		}
+	},
 	UnderDevelopment: {
 		PageTitle: 'Скоро ще се върнем!',
 		PageParagraph: 'Обновяваме системите си. Ще се върнем след няколко часа.'
