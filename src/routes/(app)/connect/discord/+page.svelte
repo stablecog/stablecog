@@ -4,28 +4,23 @@
 	import LL from '$i18n/i18n-svelte';
 	import { canonicalUrl } from '$ts/constants/main';
 	import PageWrapper from '$components/PageWrapper.svelte';
-	import ScBar from '$components/ScBar.svelte';
 	import { previewImageVersion } from '$ts/constants/previewImageVersion';
-	import Logo from '$components/Logo.svelte';
 	import Avatar from '$components/Avatar.svelte';
 	import Button from '$components/buttons/Button.svelte';
 	import IconSc from '$components/icons/IconSc.svelte';
 	import IconLink from '$components/icons/IconLink.svelte';
 	import { userSummary } from '$ts/stores/user/summary.js';
 	import SignInCard from '$components/SignInCard.svelte';
-	import IconWarning from '$components/icons/IconWarning.svelte';
-	import IconWarningOutline from '$components/icons/IconWarningOutline.svelte';
-	import { socialAppUrlsAbsolute } from '$ts/constants/social.js';
 	import { expandCollapse } from '$ts/animation/transitions.js';
 	import IconSadFaceOutline from '$components/icons/IconSadFaceOutline.svelte';
 	import { connectAccountToDiscord } from '$ts/helpers/user/user.js';
 	import ErrorChip from '$components/error/ErrorChip.svelte';
+	import type { TConnectionStatus } from '$routes/(app)/connect/types.js';
+	import ConnectCard from '$routes/(app)/connect/ConnectCard.svelte';
 
 	export let data;
 
-	type TStatus = 'idle' | 'confirming' | 'error' | 'success';
-
-	let status: TStatus = 'idle';
+	let status: TConnectionStatus = 'idle';
 	let statusError: string | undefined = undefined;
 
 	async function _connectToDiscord() {
@@ -126,6 +121,7 @@
 								>
 									<div class="w-full flex flex-col justify-start items-center pt-5">
 										<ErrorChip
+											size="sm"
 											error={statusError === 'already_linked'
 												? $LL.Connect.Error.AlreadyLinked({
 														platform: $LL.Connect.Platform.Discord()
@@ -143,39 +139,16 @@
 					</div>
 				{/if}
 				<div
-					class="max-w-full flex flex-col md:flex-row items-center justify-center mt-4 md:mt-8 gap-4"
+					class="max-w-full flex flex-col md:flex-row items-center justify-center mt-3 md:mt-7 gap-4"
 				>
 					<!-- Platform Info -->
-					<div
-						class="w-64 max-w-full transition duration-300 transform {status === 'success'
-							? 'ring-c-success ring-3 translate-y-4 md:translate-y-0 md:translate-x-4'
-							: 'ring-c-bg-tertiary ring-2'} bg-c-bg-secondary rounded-xl shadow-xl shadow-c-shadow/[var(--o-shadow-normal)]
-						flex flex-col items-center justify-center gap-2 text-center overflow-hidden z-0 relative"
-					>
-						<div
-							class="w-full flex items-center justify-center bg-c-bg-tertiary py-2 md:py-2.5 px-4 gap-2"
-						>
-							<IconSc type="discord" class="w-6 h-6 md:w-8 md:h-8 flex-shrink-0" />
-							<p
-								class="font-bold text-lg md:text-xl flex-shrink overflow-hidden overflow-ellipsis whitespace-nowrap"
-							>
-								{$LL.Connect.Platform.Discord()}
-							</p>
-						</div>
-						<div
-							class="mt-2.5 md:mt-4 w-9 h-9 md:w-14 md:h-14 flex items-center justify-center ring-2 ring-c-on-bg/25 overflow-hidden rounded-full transition duration-300 transform relative"
-						>
-							<Avatar
-								str={$page.data.session.user.email}
-								class="w-9 h-9 transform scale-[100%] md:scale-[156%] relative"
-							/>
-						</div>
-						<p
-							class="w-full font-semibold mt-1 px-5 md:px-6 pb-3 md:pb-5 whitespace-nowrap overflow-hidden overflow-ellipsis"
-						>
-							@yekta
-						</p>
-					</div>
+					<ConnectCard
+						icon="discord"
+						side="start"
+						platform={$LL.Connect.Platform.Discord()}
+						{status}
+						username={'@yekta'}
+					/>
 					<!-- Connection div -->
 					<div class="relative flex flex-col md:flex-row justify-center items-center gap-2">
 						<div
@@ -203,39 +176,13 @@
 						/>
 					</div>
 					<!-- Stablecog Info -->
-					<div
-						class="w-64 max-w-full transition duration-300 transform {status === 'success'
-							? 'ring-c-success ring-3 -translate-y-4 md:translate-y-0 md:-translate-x-4'
-							: 'ring-c-bg-tertiary ring-2'} bg-c-bg-secondary rounded-xl shadow-xl shadow-c-shadow/[var(--o-shadow-normal)]
-						flex flex-col items-center justify-center gap-2 text-center overflow-hidden z-0 relative"
-					>
-						<div
-							class="w-full flex items-center justify-center bg-c-bg-tertiary py-2 md:py-2.5 px-4 gap-1"
-						>
-							<IconSc
-								type="stablecog"
-								class="w-6 h-6 md:w-8 md:h-8 flex-shrink-0 transition duration-300"
-							/>
-							<p
-								class="font-bold text-lg md:text-xl flex-shrink overflow-hidden overflow-ellipsis whitespace-nowrap"
-							>
-								{$LL.Connect.Platform.Stablecog()}
-							</p>
-						</div>
-						<div
-							class="mt-2.5 md:mt-4 w-9 h-9 md:w-14 md:h-14 flex items-center justify-center ring-2 ring-c-on-bg/25 overflow-hidden rounded-full transition duration-300 transform relative"
-						>
-							<Avatar
-								str={$page.data.session.user.email}
-								class="w-9 h-9 transform scale-[100%] md:scale-[156%] relative"
-							/>
-						</div>
-						<p
-							class="w-full font-semibold mt-1 px-5 md:px-6 pb-3 md:pb-5 whitespace-nowrap overflow-hidden overflow-ellipsis"
-						>
-							{$page.data.session.user.email}
-						</p>
-					</div>
+					<ConnectCard
+						icon="stablecog"
+						side="end"
+						platform={$LL.Connect.Platform.Stablecog()}
+						{status}
+						username={$page.data.session.user.email}
+					/>
 				</div>
 			{/if}
 		</section>
