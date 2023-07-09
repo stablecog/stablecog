@@ -102,7 +102,7 @@
 							: 'ring-c-bg-tertiary ring-2'} bg-c-bg-secondary rounded-xl shadow-xl shadow-c-shadow/[var(--o-shadow-normal)]
 						flex flex-col items-center justify-center gap-2 text-center overflow-hidden z-0 relative"
 					>
-						<div class="w-full flex items-center justify-center gap-2 bg-c-bg-tertiary py-2 px-4">
+						<div class="w-full flex items-center justify-center bg-c-bg-tertiary py-2 px-4 gap-2">
 							<IconSc type="discord" class="w-8 h-8 flex-shrink-0" />
 							<p
 								class="font-bold text-xl flex-shrink overflow-hidden overflow-ellipsis whitespace-nowrap"
@@ -157,7 +157,7 @@
 							: 'ring-c-bg-tertiary ring-2'} bg-c-bg-secondary rounded-xl shadow-xl shadow-c-shadow/[var(--o-shadow-normal)]
 						flex flex-col items-center justify-center gap-2 text-center overflow-hidden z-0 relative"
 					>
-						<div class="w-full flex items-center justify-center bg-c-bg-tertiary py-2 px-4">
+						<div class="w-full flex items-center justify-center bg-c-bg-tertiary py-2 px-4 gap-1">
 							<IconSc type="stablecog" class="w-8 h-8 flex-shrink-0 transition duration-300" />
 							<p
 								class="font-bold text-xl flex-shrink overflow-hidden overflow-ellipsis whitespace-nowrap"
