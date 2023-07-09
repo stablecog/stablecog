@@ -89,6 +89,7 @@ export async function banOrUnbanUsers({
 
 export interface TAllUsersPage {
 	users: TUserForAdmin[];
+	total_counts?: TCount[] | undefined;
 	total_count?: number;
 	total_count_by_product_id?: {
 		[productId: string]: number;
