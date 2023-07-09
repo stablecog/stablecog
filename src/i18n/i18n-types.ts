@@ -2987,6 +2987,18 @@ type RootTranslation = {
 		 * @param {unknown} platform
 		 */
 		ConnectToParagraph: RequiredParams<'platform'>
+		Error: {
+			/**
+			 * T​h​e​ ​t​o​k​e​n​ ​i​s​ ​i​n​v​a​l​i​d​.​ ​P​l​e​a​s​e​ ​r​e​q​u​e​s​t​ ​a​ ​n​e​w​ ​l​i​n​k​ ​v​i​a​ ​{​p​l​a​t​f​o​r​m​}​.
+			 * @param {unknown} platform
+			 */
+			InvalidToken: RequiredParams<'platform'>
+			/**
+			 * Y​o​u​r​ ​a​c​c​o​u​n​t​ ​a​l​r​e​a​d​y​ ​h​a​s​ ​a​ ​{​p​l​a​t​f​o​r​m​}​ ​a​c​c​o​u​n​t​ ​a​s​s​o​c​i​a​t​e​d​ ​w​i​t​h​ ​i​t​.
+			 * @param {unknown} platform
+			 */
+			AlreadyLinked: RequiredParams<'platform'>
+		}
 	}
 	UnderDevelopment: {
 		/**
@@ -5916,6 +5928,16 @@ export type TranslationFunctions = {
 		 * Create an account or sign in to connect your {platform} account to your Stablecog account.
 		 */
 		ConnectToParagraph: (arg: { platform: unknown }) => LocalizedString
+		Error: {
+			/**
+			 * The token is invalid. Please request a new link via {platform}.
+			 */
+			InvalidToken: (arg: { platform: unknown }) => LocalizedString
+			/**
+			 * Your account already has a {platform} account associated with it.
+			 */
+			AlreadyLinked: (arg: { platform: unknown }) => LocalizedString
+		}
 	}
 	UnderDevelopment: {
 		/**

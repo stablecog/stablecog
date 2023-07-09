@@ -977,7 +977,11 @@ const hi: Translation = {
 		},
 		ConnectToTitle: 'Connect to {platform}',
 		ConnectToParagraph:
-			'Create an account or sign in to connect your {platform} account to your Stablecog account.'
+			'Create an account or sign in to connect your {platform} account to your Stablecog account.',
+		Error: {
+			InvalidToken: 'The token is invalid. Please request a new link via {platform}.',
+			AlreadyLinked: 'Your account already has a {platform} account associated with it.'
+		}
 	},
 	UnderDevelopment: {
 		PageTitle: "We'll be back soon!",

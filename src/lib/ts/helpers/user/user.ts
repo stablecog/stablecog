@@ -38,3 +38,34 @@ export async function downgradeSubscription(
 	const resJson = await res.json();
 	console.log(resJson);
 }
+
+interface TConnectAccountResponse {
+	test?: '';
+	description?: string;
+	error?: string;
+}
+
+export async function connectAccountToDiscord({
+	access_token,
+	discord_id,
+	discord_token
+}: {
+	access_token: string;
+	discord_id: string;
+	discord_token: string;
+}): Promise<TConnectAccountResponse> {
+	console.log('connecting account to Discord');
+	const res = await fetch(`${apiUrl.origin}/v1/user/discordverify`, {
+		method: 'POST',
+		headers: {
+			'Content-Type': 'application/json',
+			Authorization: `Bearer ${access_token}`
+		},
+		body: JSON.stringify({
+			discord_id,
+			discord_token
+		})
+	});
+	const resJson: TConnectAccountResponse = await res.json();
+	return resJson;
+}
