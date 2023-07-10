@@ -173,7 +173,7 @@
 							? 'border-b-2'
 							: ''} border-c-bg-secondary flex-1 px-4 py-3.5 min-w-[7rem] w-1/6 whitespace-nowrap overflow-hidden overflow-ellipsis"
 					>
-						{costFormatter.format(operation.num_outputs)}
+						{costFormatter.format(operation.cost)}
 					</p>
 					<p
 						class="{virtualItem.index !== operations.length - 1

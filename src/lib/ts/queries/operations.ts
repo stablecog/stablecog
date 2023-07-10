@@ -56,6 +56,7 @@ export interface TUserOperation {
 	completed_at: string;
 	num_outputs: number;
 	source: TOperationSource;
+	cost: number;
 }
 
 export interface TUserOperationExtended extends TUserOperation {

@@ -1896,6 +1896,10 @@ type RootTranslation = {
 			}
 			UsageType: {
 				/**
+				 * V​o​i​c​e​o​v​e​r
+				 */
+				Voiceover: string
+				/**
 				 * G​e​n​e​r​a​t​e
 				 */
 				Generate: string
@@ -1917,6 +1921,10 @@ type RootTranslation = {
 				 * W​e​b​ ​A​p​p
 				 */
 				WebApp: string
+				/**
+				 * D​i​s​c​o​r​d​ ​B​o​t
+				 */
+				DiscordBot: string
 				/**
 				 * A​P​I
 				 */
@@ -4862,6 +4870,10 @@ export type TranslationFunctions = {
 			}
 			UsageType: {
 				/**
+				 * Voiceover
+				 */
+				Voiceover: () => LocalizedString
+				/**
 				 * Generate
 				 */
 				Generate: () => LocalizedString
@@ -4883,6 +4895,10 @@ export type TranslationFunctions = {
 				 * Web App
 				 */
 				WebApp: () => LocalizedString
+				/**
+				 * Discord Bot
+				 */
+				DiscordBot: () => LocalizedString
 				/**
 				 * API
 				 */

@@ -643,6 +643,7 @@ const tr: Translation = {
 				Platform: 'Platform'
 			},
 			UsageType: {
+				Voiceover: 'Voiceover',
 				Generate: 'Üret',
 				Generation: 'Üretim',
 				Upscale: 'Büyütme'
@@ -650,6 +651,7 @@ const tr: Translation = {
 			SourceType: {
 				Web: 'Web',
 				WebApp: 'Web Uygulaması',
+				DiscordBot: 'Discord Bot',
 				API: 'API'
 			},
 			NoUsageYet: 'Henüz bir kullanım yapmadın.'

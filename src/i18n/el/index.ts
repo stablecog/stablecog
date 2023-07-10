@@ -639,6 +639,7 @@ const es: Translation = {
 				Platform: 'Platform'
 			},
 			UsageType: {
+				Voiceover: 'Voiceover',
 				Generate: 'Generate',
 				Generation: 'Generation',
 				Upscale: 'Upscale'
@@ -646,6 +647,7 @@ const es: Translation = {
 			SourceType: {
 				Web: 'Web',
 				WebApp: 'Web App',
+				DiscordBot: 'Discord Bot',
 				API: 'API'
 			},
 			NoUsageYet: "You don't have any usage yet."

@@ -9,6 +9,7 @@
 	import { operationSourceToLocaleString } from '$ts/helpers/user/operations';
 	import { quadOut } from 'svelte/easing';
 	import { scale } from 'svelte/transition';
+	import IconSc from '$components/icons/IconSc.svelte';
 
 	export let processObject: TAnyRealtimePayloadExt;
 	export let planBasedColor: (processObject: TAnyRealtimePayloadExt) => string;
@@ -173,6 +174,8 @@
 				{:else if processObject.country_code}
 					{#if processObject.source === 'api'}
 						<IconServer class="text-c-on-primary/75 w-4 h-4 -mb-0.25 -mt-0.5" />
+					{:else if processObject.source === 'discord'}
+						<IconSc type="discord" class="text-c-on-primary/75 w-5 h-5 -mb-0.5 -mt-0.5" />
 					{/if}
 					<p class="text-center text-xs font-bold text-c-on-primary/75 cursor-default relative">
 						{processObject.country_code}

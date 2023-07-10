@@ -649,6 +649,7 @@ const ja: Translation = {
 				Platform: 'プラットフォーム'
 			},
 			UsageType: {
+				Voiceover: 'Voiceover',
 				Generate: '生成',
 				Generation: '生成',
 				Upscale: 'アップスケール'
@@ -656,6 +657,7 @@ const ja: Translation = {
 			SourceType: {
 				Web: 'ウェブ',
 				WebApp: 'ウェブアプリ',
+				DiscordBot: 'Discord Bot',
 				API: 'API'
 			},
 			NoUsageYet: 'まだ使用されていません。'
