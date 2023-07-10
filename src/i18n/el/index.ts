@@ -857,6 +857,8 @@ const es: Translation = {
 	},
 	Try: { PageTitle: 'Try' },
 	Legal: {
+		PageTitle: 'Legal',
+		PageParagraph: 'Our terms and policies are listed below.',
 		TermsOfServiceTitle: 'Όροι χρήσης',
 		PrivacyPolicyTitle: 'Πολιτική Απορρήτου',
 		RefundPolicyTitle: 'Πολιτικές επιστροφής χρημάτων',

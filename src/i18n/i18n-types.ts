@@ -2479,6 +2479,14 @@ type RootTranslation = {
 	}
 	Legal: {
 		/**
+		 * L​e​g​a​l
+		 */
+		PageTitle: string
+		/**
+		 * O​u​r​ ​t​e​r​m​s​ ​a​n​d​ ​p​o​l​i​c​i​e​s​ ​a​r​e​ ​l​i​s​t​e​d​ ​b​e​l​o​w​.
+		 */
+		PageParagraph: string
+		/**
 		 * T​e​r​m​s​ ​o​f​ ​S​e​r​v​i​c​e
 		 */
 		TermsOfServiceTitle: string
@@ -5441,6 +5449,14 @@ export type TranslationFunctions = {
 		PageTitle: () => LocalizedString
 	}
 	Legal: {
+		/**
+		 * Legal
+		 */
+		PageTitle: () => LocalizedString
+		/**
+		 * Our terms and policies are listed below.
+		 */
+		PageParagraph: () => LocalizedString
 		/**
 		 * Terms of Service
 		 */

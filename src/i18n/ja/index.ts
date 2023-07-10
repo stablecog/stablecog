@@ -864,6 +864,8 @@ const ja: Translation = {
 		PageTitle: '試してみる'
 	},
 	Legal: {
+		PageTitle: 'Legal',
+		PageParagraph: 'Our terms and policies are listed below.',
 		TermsOfServiceTitle: '利用規約',
 		PrivacyPolicyTitle: 'プライバシーポリシー',
 		RefundPolicyTitle: '返金ポリシー',

@@ -849,6 +849,8 @@ const fr: Translation = {
 	},
 	Try: { PageTitle: 'Try' },
 	Legal: {
+		PageTitle: 'Legal',
+		PageParagraph: 'Our terms and policies are listed below.',
 		TermsOfServiceTitle: 'Terms of Service',
 		PrivacyPolicyTitle: 'Privacy Policy',
 		RefundPolicyTitle: 'Refund Policy',

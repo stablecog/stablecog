@@ -854,6 +854,8 @@ const nl: Translation = {
 	},
 	Try: { PageTitle: 'Try' },
 	Legal: {
+		PageTitle: 'Legal',
+		PageParagraph: 'Our terms and policies are listed below.',
 		TermsOfServiceTitle: 'Gebruiksvoorwaarden',
 		PrivacyPolicyTitle: 'Privacybeleid',
 		RefundPolicyTitle: 'Restitutiebeleid',

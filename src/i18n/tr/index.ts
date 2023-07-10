@@ -856,6 +856,8 @@ const tr: Translation = {
 		PageTitle: 'Dene'
 	},
 	Legal: {
+		PageTitle: 'Legal',
+		PageParagraph: 'Our terms and policies are listed below.',
 		TermsOfServiceTitle: 'Kullanım Şartları',
 		PrivacyPolicyTitle: 'Gizlilik Politikası',
 		RefundPolicyTitle: 'İade Politikası',

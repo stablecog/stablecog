@@ -844,6 +844,8 @@ const bg: Translation = {
 	},
 	Try: { PageTitle: 'Try' },
 	Legal: {
+		PageTitle: 'Legal',
+		PageParagraph: 'Our terms and policies are listed below.',
 		TermsOfServiceTitle: 'Условия на ползване',
 		PrivacyPolicyTitle: 'Поверителност',
 		RefundPolicyTitle: 'Връщане на плащания',
