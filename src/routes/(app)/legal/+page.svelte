@@ -34,8 +34,8 @@
 	<div class="w-full flex flex-col items-center justify-start my-auto">
 		<section id="legal" class="w-full flex flex-col items-center justify-start text-center">
 			<Logo class="w-16" />
-			<h1 class="text-3xl font-bold max-w-sm mt-5">{$LL.Legal.PageTitle()}</h1>
-			<p class="mt-2 max-w-sm text-lg">{$LL.Legal.PageParagraph()}</p>
+			<h1 class="text-4xl font-bold max-w-sm mt-5">{$LL.Legal.PageTitle()}</h1>
+			<p class="mt-4 max-w-sm text-c-on-bg/75">{$LL.Legal.PageParagraph()}</p>
 			<div
 				class="w-full max-w-7xl items-start justify-center flex flex-row flex-wrap gap-4 md:gap-5 mt-8"
 			>
