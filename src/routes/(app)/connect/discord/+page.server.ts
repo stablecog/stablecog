@@ -1,9 +1,13 @@
 export const load = async (event) => {
 	const params = event.url.searchParams;
-	const discord_id = params.get('discord_id');
-	const discord_token = params.get('discord_token');
+	const platform_user_id = params.get('platform_user_id');
+	const platform_username = params.get('platform_username');
+	const platform_token = params.get('platform_token');
+	const platform_avatar_url = params.get('platform_avatar_url');
 	return {
-		discord_id,
-		discord_token
+		platform_user_id,
+		platform_username,
+		platform_token,
+		platform_avatar_url
 	};
 };

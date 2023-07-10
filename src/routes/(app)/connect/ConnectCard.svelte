@@ -8,7 +8,7 @@
 	export let platform: string;
 	export let username: string;
 	export let status: TConnectionStatus;
-	export let src: string | undefined = undefined;
+	export let src: string | undefined | null = undefined;
 	export let srcWidth: number | undefined = undefined;
 	export let srcHeight: number | undefined = undefined;
 	export let srcAlt: string | undefined = undefined;
@@ -42,8 +42,12 @@
 		class="mt-2.5 md:mt-4 w-9 h-9 md:w-14 md:h-14 flex items-center justify-center ring-2 ring-c-on-bg/25
     overflow-hidden rounded-full transition duration-300 transform relative"
 	>
-		{#if src && srcWidth && srcHeight && srcAlt}
-			<img {src} width={srcWidth} height={srcHeight} alt={srcAlt} />
+		{#if srcWidth && srcHeight && srcAlt}
+			{#if !src}
+				<div class="w-full h-full bg-c-bg-secondary" />
+			{:else}
+				<img class="w-full h-full" {src} width={srcWidth} height={srcHeight} alt={srcAlt} />
+			{/if}
 		{:else}
 			<Avatar str={username} class="w-9 h-9 transform scale-[100%] md:scale-[156%] relative" />
 		{/if}

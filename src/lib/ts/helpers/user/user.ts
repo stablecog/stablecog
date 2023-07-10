@@ -47,23 +47,23 @@ interface TConnectAccountResponse {
 
 export async function connectAccountToDiscord({
 	access_token,
-	discord_id,
-	discord_token
+	platform_user_id,
+	platform_token
 }: {
 	access_token: string;
-	discord_id: string;
-	discord_token: string;
+	platform_user_id: string;
+	platform_token: string;
 }): Promise<TConnectAccountResponse> {
 	console.log('connecting account to Discord');
-	const res = await fetch(`${apiUrl.origin}/v1/user/discordverify`, {
+	const res = await fetch(`${apiUrl.origin}/v1/user/connect/discord`, {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json',
 			Authorization: `Bearer ${access_token}`
 		},
 		body: JSON.stringify({
-			discord_id,
-			discord_token
+			platform_user_id,
+			platform_token
 		})
 	});
 	const resJson: TConnectAccountResponse = await res.json();

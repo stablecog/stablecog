@@ -5,9 +5,7 @@
 	import { canonicalUrl } from '$ts/constants/main';
 	import PageWrapper from '$components/PageWrapper.svelte';
 	import { previewImageVersion } from '$ts/constants/previewImageVersion';
-	import Avatar from '$components/Avatar.svelte';
 	import Button from '$components/buttons/Button.svelte';
-	import IconSc from '$components/icons/IconSc.svelte';
 	import IconLink from '$components/icons/IconLink.svelte';
 	import { userSummary } from '$ts/stores/user/summary.js';
 	import SignInCard from '$components/SignInCard.svelte';
@@ -25,14 +23,14 @@
 
 	async function _connectToDiscord() {
 		if (!$page.data.session?.access_token) return;
-		if (!data.discord_id || !data.discord_token) return;
+		if (!data.platform_user_id || !data.platform_token) return;
 		status = 'confirming';
 		statusError = undefined;
 		try {
 			const res = await connectAccountToDiscord({
 				access_token: $page.data.session.access_token,
-				discord_id: data.discord_id,
-				discord_token: data.discord_token
+				platform_user_id: data.platform_user_id,
+				platform_token: data.platform_token
 			});
 			if (res.error) {
 				statusError = res.error;
@@ -63,7 +61,7 @@
 						paragraph={$LL.Connect.ConnectToParagraph({ platform: $LL.Connect.Platform.Discord() })}
 					/>
 				</div>
-			{:else if !data.discord_id}
+			{:else if !data.platform_user_id || !data.platform_token || !data.platform_username}
 				<IconSadFaceOutline class="w-20 h-20 text-c-danger" />
 				<h1 class="mt-3 w-full max-w-sm text-center font-bold text-3xl md:text-4xl text-c-danger">
 					{$LL.Connect.ConnectToTitle({ platform: $LL.Connect.Platform.Discord() })}
@@ -71,17 +69,13 @@
 				<p
 					class="w-full max-w-sm md:max-w-md mt-2 md:mt-3 text-base md:text-lg text-c-on-bg/75 text-center"
 				>
-					{$LL.Connect.NoDiscordIDParagraph()}
-				</p>
-			{:else if !data.discord_token}
-				<IconSadFaceOutline class="w-20 h-20 text-c-danger" />
-				<h1 class="mt-3 w-full max-w-sm text-center font-bold text-3xl md:text-4xl text-c-danger">
-					{$LL.Connect.ConnectToTitle({ platform: $LL.Connect.Platform.Discord() })}
-				</h1>
-				<p
-					class="w-full max-w-sm md:max-w-md mt-2 md:mt-3 text-base md:text-lg text-c-on-bg/75 text-center"
-				>
-					{$LL.Connect.NoDiscordTokenParagraph()}
+					{!data.platform_user_id
+						? $LL.Connect.NoPlatformIDParagraph({ platform: $LL.Connect.Platform.Discord() })
+						: !data.platform_token
+						? $LL.Connect.NoPlatformTokenParagraph({ platform: $LL.Connect.Platform.Discord() })
+						: !data.platform_username
+						? $LL.Connect.NoPlatformUsernameParagraph({ platform: $LL.Connect.Platform.Discord() })
+						: $LL.Connect.NoPlatformIDParagraph({ platform: $LL.Connect.Platform.Discord() })}
 				</p>
 			{:else}
 				<h1
@@ -147,7 +141,11 @@
 						side="start"
 						platform={$LL.Connect.Platform.Discord()}
 						{status}
-						username={'@yekta'}
+						src={data.platform_avatar_url}
+						srcWidth={128}
+						srcHeight={128}
+						srcAlt="Discord Avatar"
+						username={data.platform_username}
 					/>
 					<!-- Connection div -->
 					<div class="relative flex flex-col md:flex-row justify-center items-center gap-2">

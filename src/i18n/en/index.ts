@@ -968,9 +968,11 @@ const en: BaseTranslation = {
 		PageSuccessTitle: 'Connected!',
 		ConnectButton: 'Connect',
 		ReturnBackToParagraph: 'You can return back to {platform} now.',
-		NoDiscordTokenParagraph:
-			"This link doesn't contain a Discord token. Please request a new link.",
-		NoDiscordIDParagraph: "This link doesn't contain a Discord ID. Please request a new link.",
+		NoPlatformTokenParagraph:
+			"This link doesn't contain a {platform} token. Please request a new link.",
+		NoPlatformIDParagraph: "This link doesn't contain a {platform} ID. Please request a new link.",
+		NoPlatformUsernameParagraph:
+			"This link doesn't contain a {platform} username. Please request a new link.",
 		Platform: {
 			Discord: 'Discord',
 			Stablecog: 'Stablecog'

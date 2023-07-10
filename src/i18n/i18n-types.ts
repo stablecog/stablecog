@@ -2960,13 +2960,20 @@ type RootTranslation = {
 		 */
 		ReturnBackToParagraph: RequiredParams<'platform'>
 		/**
-		 * T​h​i​s​ ​l​i​n​k​ ​d​o​e​s​n​'​t​ ​c​o​n​t​a​i​n​ ​a​ ​D​i​s​c​o​r​d​ ​t​o​k​e​n​.​ ​P​l​e​a​s​e​ ​r​e​q​u​e​s​t​ ​a​ ​n​e​w​ ​l​i​n​k​.
+		 * T​h​i​s​ ​l​i​n​k​ ​d​o​e​s​n​'​t​ ​c​o​n​t​a​i​n​ ​a​ ​{​p​l​a​t​f​o​r​m​}​ ​t​o​k​e​n​.​ ​P​l​e​a​s​e​ ​r​e​q​u​e​s​t​ ​a​ ​n​e​w​ ​l​i​n​k​.
+		 * @param {unknown} platform
 		 */
-		NoDiscordTokenParagraph: string
+		NoPlatformTokenParagraph: RequiredParams<'platform'>
 		/**
-		 * T​h​i​s​ ​l​i​n​k​ ​d​o​e​s​n​'​t​ ​c​o​n​t​a​i​n​ ​a​ ​D​i​s​c​o​r​d​ ​I​D​.​ ​P​l​e​a​s​e​ ​r​e​q​u​e​s​t​ ​a​ ​n​e​w​ ​l​i​n​k​.
+		 * T​h​i​s​ ​l​i​n​k​ ​d​o​e​s​n​'​t​ ​c​o​n​t​a​i​n​ ​a​ ​{​p​l​a​t​f​o​r​m​}​ ​I​D​.​ ​P​l​e​a​s​e​ ​r​e​q​u​e​s​t​ ​a​ ​n​e​w​ ​l​i​n​k​.
+		 * @param {unknown} platform
 		 */
-		NoDiscordIDParagraph: string
+		NoPlatformIDParagraph: RequiredParams<'platform'>
+		/**
+		 * T​h​i​s​ ​l​i​n​k​ ​d​o​e​s​n​'​t​ ​c​o​n​t​a​i​n​ ​a​ ​{​p​l​a​t​f​o​r​m​}​ ​u​s​e​r​n​a​m​e​.​ ​P​l​e​a​s​e​ ​r​e​q​u​e​s​t​ ​a​ ​n​e​w​ ​l​i​n​k​.
+		 * @param {unknown} platform
+		 */
+		NoPlatformUsernameParagraph: RequiredParams<'platform'>
 		Platform: {
 			/**
 			 * D​i​s​c​o​r​d
@@ -5903,13 +5910,17 @@ export type TranslationFunctions = {
 		 */
 		ReturnBackToParagraph: (arg: { platform: unknown }) => LocalizedString
 		/**
-		 * This link doesn't contain a Discord token. Please request a new link.
+		 * This link doesn't contain a {platform} token. Please request a new link.
 		 */
-		NoDiscordTokenParagraph: () => LocalizedString
+		NoPlatformTokenParagraph: (arg: { platform: unknown }) => LocalizedString
 		/**
-		 * This link doesn't contain a Discord ID. Please request a new link.
+		 * This link doesn't contain a {platform} ID. Please request a new link.
 		 */
-		NoDiscordIDParagraph: () => LocalizedString
+		NoPlatformIDParagraph: (arg: { platform: unknown }) => LocalizedString
+		/**
+		 * This link doesn't contain a {platform} username. Please request a new link.
+		 */
+		NoPlatformUsernameParagraph: (arg: { platform: unknown }) => LocalizedString
 		Platform: {
 			/**
 			 * Discord
