@@ -26,7 +26,7 @@
 
 <MetaTag
 	title="Legal | Stablecog"
-	description="Check out our terms of service and privacy policy. Create amazing art in seconds with AI. Free, multilingual and open-source AI image generator using Stable Diffusion and Kandinsky."
+	description="Check out our terms and policies. Create amazing art in seconds with AI. Free, multilingual and open-source AI image generator using Stable Diffusion and Kandinsky."
 	image_url="{canonicalUrl}/previews{$page.url.pathname}-{previewImageVersion}.png"
 />
 
