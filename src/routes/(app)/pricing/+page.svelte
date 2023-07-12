@@ -63,7 +63,7 @@
 						].parallel_generations.toLocaleString($locale)
 				}),
 				$LL.Pricing.Features.CommercialUse(),
-				$LL.Pricing.Features.ImagesArePublic()
+				$LL.Pricing.Features.ImagesArePrivate()
 			],
 			ringClass: 'ring-c-bg-secondary'
 		},
