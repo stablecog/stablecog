@@ -17,7 +17,7 @@ export const navbarEstimatedHeight = 72;
 export const routesWithHealthCheck = ['/', '/history', '/canvas'];
 export const routesWithHiddenFooter = ['/canvas'];
 
-export const maxProPixelSteps = 640 * 640 * 50;
+export const maxProPixelSteps = 1024 * 1024 * 30;
 
 export const allowedRedirectRoutes = [
 	'/',

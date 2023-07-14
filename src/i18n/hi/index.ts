@@ -308,6 +308,17 @@ const hi: Translation = {
 		PasswordInput: {
 			Placeholder: 'पासवर्ड'
 		},
+		ModelTags: {
+			GoodAtTitle: 'Good at',
+			Tags: {
+				Realism: 'Realism',
+				Anime: 'Anime',
+				Render: 'Render',
+				Drawing: 'Drawing',
+				ThreeDArt: '3D',
+				Abstract: 'Abstract'
+			}
+		},
 		ModelOptions: {
 			'048b4aa3-5586-47ed-900f-f4341c96bdb2': {
 				realName: 'Stable Diffusion 1.5'
@@ -339,6 +350,7 @@ const hi: Translation = {
 			'22b0857d-7edc-4d00-9cd9-45aa509db093': {
 				realName: 'Kandinsky'
 			},
+			'9fa49c00-109d-430f-9ddd-449f02e2c71a': { realName: 'Kandinsky 2.2' },
 			'8002bc51-7260-468f-8840-cf1e6dbe3f8a': { realName: 'SDXL' },
 			'a3636543-91cc-4290-b1a4-9d506457b9be': {
 				realName: 'Freedom'
@@ -363,6 +375,8 @@ const hi: Translation = {
 			'82cf78dd-6afb-48cc-aca6-14224cca6950': {
 				realName: 'DDIM'
 			},
+			'01e94c28-501d-4c6d-8f00-079f3230bf58': { realName: 'UniPC' },
+			'cc1b8dbf-0aec-4e52-8110-8082506fb7ba': { realName: 'DDPM' },
 			'b7224e56-1440-43b9-ac86-66d66f9e8c91': {
 				realName: 'P Sampler'
 			}

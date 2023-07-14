@@ -967,6 +967,38 @@ type RootTranslation = {
 			 */
 			Placeholder: string
 		}
+		ModelTags: {
+			/**
+			 * G​o​o​d​ ​a​t
+			 */
+			GoodAtTitle: string
+			Tags: {
+				/**
+				 * R​e​a​l​i​s​m
+				 */
+				Realism: string
+				/**
+				 * A​n​i​m​e
+				 */
+				Anime: string
+				/**
+				 * R​e​n​d​e​r
+				 */
+				Render: string
+				/**
+				 * D​r​a​w​i​n​g
+				 */
+				Drawing: string
+				/**
+				 * 3​D
+				 */
+				ThreeDArt: string
+				/**
+				 * A​b​s​t​r​a​c​t
+				 */
+				Abstract: string
+			}
+		}
 		ModelOptions: {
 			'048b4aa3-5586-47ed-900f-f4341c96bdb2': {
 				/**
@@ -1028,6 +1060,12 @@ type RootTranslation = {
 				 */
 				realName: string
 			}
+			'9fa49c00-109d-430f-9ddd-449f02e2c71a': {
+				/**
+				 * K​a​n​d​i​n​s​k​y​ ​2​.​2
+				 */
+				realName: string
+			}
 			'8002bc51-7260-468f-8840-cf1e6dbe3f8a': {
 				/**
 				 * S​D​X​L
@@ -1075,6 +1113,18 @@ type RootTranslation = {
 			'82cf78dd-6afb-48cc-aca6-14224cca6950': {
 				/**
 				 * D​D​I​M
+				 */
+				realName: string
+			}
+			'01e94c28-501d-4c6d-8f00-079f3230bf58': {
+				/**
+				 * U​n​i​P​C
+				 */
+				realName: string
+			}
+			'cc1b8dbf-0aec-4e52-8110-8082506fb7ba': {
+				/**
+				 * D​D​P​M
 				 */
 				realName: string
 			}
@@ -3953,6 +4003,38 @@ export type TranslationFunctions = {
 			 */
 			Placeholder: () => LocalizedString
 		}
+		ModelTags: {
+			/**
+			 * Good at
+			 */
+			GoodAtTitle: () => LocalizedString
+			Tags: {
+				/**
+				 * Realism
+				 */
+				Realism: () => LocalizedString
+				/**
+				 * Anime
+				 */
+				Anime: () => LocalizedString
+				/**
+				 * Render
+				 */
+				Render: () => LocalizedString
+				/**
+				 * Drawing
+				 */
+				Drawing: () => LocalizedString
+				/**
+				 * 3D
+				 */
+				ThreeDArt: () => LocalizedString
+				/**
+				 * Abstract
+				 */
+				Abstract: () => LocalizedString
+			}
+		}
 		ModelOptions: {
 			'048b4aa3-5586-47ed-900f-f4341c96bdb2': {
 				/**
@@ -4014,6 +4096,12 @@ export type TranslationFunctions = {
 				 */
 				realName: () => LocalizedString
 			}
+			'9fa49c00-109d-430f-9ddd-449f02e2c71a': {
+				/**
+				 * Kandinsky 2.2
+				 */
+				realName: () => LocalizedString
+			}
 			'8002bc51-7260-468f-8840-cf1e6dbe3f8a': {
 				/**
 				 * SDXL
@@ -4061,6 +4149,18 @@ export type TranslationFunctions = {
 			'82cf78dd-6afb-48cc-aca6-14224cca6950': {
 				/**
 				 * DDIM
+				 */
+				realName: () => LocalizedString
+			}
+			'01e94c28-501d-4c6d-8f00-079f3230bf58': {
+				/**
+				 * UniPC
+				 */
+				realName: () => LocalizedString
+			}
+			'cc1b8dbf-0aec-4e52-8110-8082506fb7ba': {
+				/**
+				 * DDPM
 				 */
 				realName: () => LocalizedString
 			}

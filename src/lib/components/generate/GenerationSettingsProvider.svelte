@@ -160,7 +160,7 @@
 	$: [$generationAspectRatio, $generationNumOutputs], updateGenerationOnStage();
 
 	$: isInferenceStepsValid = <T>(s: T) => {
-		return Number(s) * Number($generationHeight) * Number($generationWidth) < maxProPixelSteps;
+		return Number(s) * Number($generationHeight) * Number($generationWidth) <= maxProPixelSteps;
 	};
 
 	$: [$generationHeight, $generationWidth], adjustInferenceSteps();

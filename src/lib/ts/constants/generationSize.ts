@@ -54,10 +54,10 @@ export const widthTabs: TTab<TAvailableWidth>[] = [
 	{ label: '1024', value: '1024' },
 	{ label: '1120', value: '1120' },
 	{ label: '1128', value: '1128' },
-	{ label: '1152', value: '1152' }
-	/* { label: '1248', value: '1248' },
+	{ label: '1152', value: '1152' },
+	{ label: '1248', value: '1248' },
 	{ label: '1280', value: '1280' },
-	{ label: '1536', value: '1536' } */
+	{ label: '1536', value: '1536' }
 ];
 export const widthDefault: TAvailableWidth = '608';
 
@@ -111,10 +111,10 @@ export const heightTabs: TTab<TAvailableHeight>[] = [
 	{ label: '1024', value: '1024' },
 	{ label: '1120', value: '1120' },
 	{ label: '1128', value: '1128' },
-	{ label: '1152', value: '1152' }
-	/* { label: '1248', value: '1248' },
+	{ label: '1152', value: '1152' },
+	{ label: '1248', value: '1248' },
 	{ label: '1280', value: '1280' },
-	{ label: '1536', value: '1536' } */
+	{ label: '1536', value: '1536' }
 ];
 export const heightDefault: TAvailableHeight = '912';
 
@@ -172,6 +172,10 @@ export const aspectRatioToImageSize: {
 			width: '1024',
 			height: '1024'
 		},
+		'9fa49c00-109d-430f-9ddd-449f02e2c71a': {
+			width: '1024',
+			height: '1024'
+		},
 		default: {
 			width: '512',
 			height: '512'
@@ -187,6 +191,10 @@ export const aspectRatioToImageSize: {
 			height: '840'
 		},
 		'8002bc51-7260-468f-8840-cf1e6dbe3f8a': {
+			width: '896',
+			height: '1120'
+		},
+		'9fa49c00-109d-430f-9ddd-449f02e2c71a': {
 			width: '896',
 			height: '1120'
 		},
@@ -208,6 +216,10 @@ export const aspectRatioToImageSize: {
 			width: '832',
 			height: '1248'
 		},
+		'9fa49c00-109d-430f-9ddd-449f02e2c71a': {
+			width: '832',
+			height: '1248'
+		},
 		default: {
 			width: '512',
 			height: '768'
@@ -223,6 +235,10 @@ export const aspectRatioToImageSize: {
 			height: '608'
 		},
 		'8002bc51-7260-468f-8840-cf1e6dbe3f8a': {
+			width: '1248',
+			height: '832'
+		},
+		'9fa49c00-109d-430f-9ddd-449f02e2c71a': {
 			width: '1248',
 			height: '832'
 		},
@@ -244,6 +260,10 @@ export const aspectRatioToImageSize: {
 			width: '720',
 			height: '1280'
 		},
+		'9fa49c00-109d-430f-9ddd-449f02e2c71a': {
+			width: '720',
+			height: '1280'
+		},
 		default: {
 			width: '432',
 			height: '768'
@@ -262,6 +282,10 @@ export const aspectRatioToImageSize: {
 			width: '1280',
 			height: '720'
 		},
+		'9fa49c00-109d-430f-9ddd-449f02e2c71a': {
+			width: '1280',
+			height: '720'
+		},
 		default: {
 			width: '768',
 			height: '432'
@@ -277,6 +301,10 @@ export const aspectRatioToImageSize: {
 			height: '480'
 		},
 		'8002bc51-7260-468f-8840-cf1e6dbe3f8a': {
+			width: '1536',
+			height: '640'
+		},
+		'9fa49c00-109d-430f-9ddd-449f02e2c71a': {
 			width: '1536',
 			height: '640'
 		},
