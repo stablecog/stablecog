@@ -11,7 +11,7 @@ date: 2023-07-14T15:00:00.000Z
   import DocImage from '$lib/components/docs/DocImage.svelte';
 </script>
 
-The [team](https://github.com/ai-forever/Kandinsky-2#authors) behind Kandinsky released their latest model 2 days ago: Kandinsky 2.2. Kandinsky is known for its creativity and artistic results but with the new update, it seems to be going more towards realism by default. It offers a higher base resolution (1024x1024), supports [ControlNet](https://github.com/lllyasviel/ControlNet), produces wider scenes, and more detail in general. All while being released under a permissive, open-source license. Let's take a look at what it offers.
+The [team](https://github.com/ai-forever/Kandinsky-2#authors) behind Kandinsky released their latest model 2 days ago: [Kandinsky 2.2](https://github.com/ai-forever/Kandinsky-2). Kandinsky is known for its creativity and artistic results but with the new update, it seems to be going more towards realism by default. It offers a higher base resolution (1024x1024), supports [ControlNet](https://github.com/lllyasviel/ControlNet), produces wider scenes, and more detail in general. All while being released under a permissive, open-source license. Let's take a look at what it offers.
 
 ## More Realistic
 
