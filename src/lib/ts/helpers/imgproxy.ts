@@ -12,6 +12,7 @@ type TImgProxyPreset =
 	| '1536w'
 	| '1920w'
 	| '2560w'
+	| '3840w'
 	| 'full';
 
 type TExtention = 'jpeg' | 'webp' | 'png';
@@ -24,7 +25,8 @@ const srcsetEntries: TImgProxyPreset[] = [
 	'1024w',
 	'1536w',
 	'1920w',
-	'2560w'
+	'2560w',
+	'3840w'
 ];
 const srcDefault: TImgProxyPreset = '1920w';
 const extentionDefault: TExtention = 'webp';

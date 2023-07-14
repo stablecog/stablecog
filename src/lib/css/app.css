@@ -234,4 +234,8 @@ select:-webkit-autofill:focus {
 	overflow: hidden!important;
 }
 
+.overflow-hidden-for-doc-image{
+	overflow: hidden!important;
+}
+
 @tailwind utilities;
