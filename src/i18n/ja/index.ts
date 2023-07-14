@@ -324,6 +324,7 @@ const ja: Translation = {
 		ModelTags: {
 			GoodAtTitle: 'Good at',
 			Tags: {
+				General: 'General',
 				Realism: 'Realism',
 				Anime: 'Anime',
 				Render: 'Render',

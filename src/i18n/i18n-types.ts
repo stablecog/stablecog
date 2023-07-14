@@ -974,6 +974,10 @@ type RootTranslation = {
 			GoodAtTitle: string
 			Tags: {
 				/**
+				 * G​e​n​e​r​a​l
+				 */
+				General: string
+				/**
 				 * R​e​a​l​i​s​m
 				 */
 				Realism: string
@@ -4009,6 +4013,10 @@ export type TranslationFunctions = {
 			 */
 			GoodAtTitle: () => LocalizedString
 			Tags: {
+				/**
+				 * General
+				 */
+				General: () => LocalizedString
 				/**
 				 * Realism
 				 */
