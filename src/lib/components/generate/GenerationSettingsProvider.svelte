@@ -415,6 +415,22 @@
 			generationNumOutputs.set($numOutputs);
 		}
 		setEstimatedGenerationDuration();
+		if (
+			aspectRatioToImageSize[$generationAspectRatio][$generationModelId].width !==
+				$generationWidth ||
+			aspectRatioToImageSize[$generationAspectRatio][$generationModelId].height !==
+				$generationHeight
+		) {
+			generationWidth.set(aspectRatioToImageSize[$generationAspectRatio][$generationModelId].width);
+			generationHeight.set(
+				aspectRatioToImageSize[$generationAspectRatio][$generationModelId].height
+			);
+			imageSize.set({
+				width: $generationWidth,
+				height: $generationHeight,
+				aspectRatio: $generationAspectRatio
+			});
+		}
 		isReadyMap.generationSettings = true;
 	});
 
