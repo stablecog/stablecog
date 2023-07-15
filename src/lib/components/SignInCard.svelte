@@ -215,9 +215,9 @@
 				transition:expandCollapse|local={{ duration: 200, easing: quadOut, opacity: 0 }}
 				class="w-[calc(100%+1.5rem)] md:w-[calc(100%+5rem)] -mx-5 md:-mx-10 pt-4 md:pt-6 -mb-4 md:-mb-7 flex flex-col justify-start"
 			>
-				<div class="w-full flex flex-col justify-start">
+				<div class="w-full flex flex-col justify-start items-center">
 					<div
-						class="w-full border-t-2 border-c-bg-secondary flex flex-col items-start justify-start relative z-0"
+						class="w-full border-t-2 border-c-bg-secondary flex flex-col justify-start items-center relative z-0"
 					>
 						{#if $signInCardCodeSignInStatus === 'idle'}
 							<DropdownItem onClick={() => ($signInCardCodeSignInStatus = 'entering')}>
@@ -234,17 +234,17 @@
 							<form
 								transition:expandCollapse|local={{ duration: 200, easing: quadOut, opacity: 0 }}
 								on:submit|preventDefault={signInWithCode}
-								class="w-full flex flex-col max-w-xs"
+								class="w-full flex flex-col justify-start items-center max-w-xs"
 							>
-								<div class="w-full flex flex-col p-4">
-									<Input type="number" bind:value={codeValue} title="Code" />
+								<div class="w-full flex flex-col justify-start items-center p-4">
+									<Input class="w-full" type="number" bind:value={codeValue} title="Code" />
 									<Button
 										withSpinner
 										loading={$signInCardCodeSignInStatus === 'loading'}
-										class="mt-3">{$LL.SignIn.ContinueButton()}</Button
+										class="mt-3 w-full">{$LL.SignIn.ContinueButton()}</Button
 									>
 									{#if codeSignInErrorText}
-										<ErrorLine text={codeSignInErrorText} class="text-xs" />
+										<ErrorLine text={codeSignInErrorText} class="text-xs w-full" />
 									{/if}
 								</div>
 							</form>
