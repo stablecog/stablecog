@@ -59,7 +59,7 @@ export const widthTabs: TTab<TAvailableWidth>[] = [
 	{ label: '1280', value: '1280' },
 	{ label: '1536', value: '1536' }
 ];
-export const widthDefault: TAvailableWidth = '608';
+export const widthDefault: TAvailableWidth = '832';
 
 export const availableHeights = [
 	'320',
@@ -116,7 +116,7 @@ export const heightTabs: TTab<TAvailableHeight>[] = [
 	{ label: '1280', value: '1280' },
 	{ label: '1536', value: '1536' }
 ];
-export const heightDefault: TAvailableHeight = '912';
+export const heightDefault: TAvailableHeight = '1248';
 
 export const availableAspectRatios = ['1:1', '4:5', '2:3', '3:2', '9:16', '16:9', '2.4:1'] as const;
 export const availableAspectRatioValues = availableAspectRatios.map((ratio) => {
