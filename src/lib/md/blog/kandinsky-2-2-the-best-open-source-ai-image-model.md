@@ -41,7 +41,7 @@ Kandinsky 2.2 on the other hand, is optimized to produce [1024x1024 pixel images
 
 New version supports a wide range of aspect ratios without any doubling problems just like the old one which means you can go far wider or taller than 1024 pixels on one side.
 
-### Examples
+### Examples #1
 
 <DocImage src="https://ba.stablecog.com/blog/kandinsky-2-2-higher-resolution-v3.jpg" width="4096  " height="7428" alt="Kandinsky 2.2 High Resolution Examples" />
 
@@ -49,7 +49,7 @@ New version supports a wide range of aspect ratios without any doubling problems
 
 Kandinsky 2.2 is significantly better at fine details compared to 2.1 and seems to be favoring wider scenes in general. Kandinsky 2.1 is able to produce fine details on some scenes, especially close-ups, but it struggles when the shot gets wider or there is a need for too many fine details.
 
-### Examples
+### Examples #2
 
 <DocImage src="https://ba.stablecog.com/blog/kandinsky-2-2-wider-and-detailed-v3.jpg" width="4096  " height="5120" alt="Kandinsky 2.2 Wide & Detailed Examples" />
 

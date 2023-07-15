@@ -6,10 +6,10 @@
 	export let activeId: string;
 
 	function titleToId(title: string) {
-		return `${title
+		return title
 			.toLowerCase()
-			.replace(/ /g, '-')
-			.replace(/[\“\”\"\:\$&,’./\?]/g, '')}`;
+			.replace(/[# ]+/g, '-')
+			.replace(/[\“\”\"\:\$&,’./\?]+/g, '');
 	}
 
 	$: id = titleToId(item.title);

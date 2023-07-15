@@ -2,6 +2,7 @@
 	import { browser } from '$app/environment';
 	import { docContainerSize } from '$components/docs/constants';
 	import { getImgProxySrc, getImgProxySrcDefault, getImgProxySrcSet } from '$ts/helpers/imgproxy';
+	import { windowHeight, windowWidth } from '$ts/stores/window';
 	import { onDestroy } from 'svelte';
 	import { portal } from 'svelte-portal';
 
@@ -18,6 +19,13 @@
 	$: srcset = getImgProxySrcSet({ src });
 	const sizes = `min(100vw, ${docContainerSize}px)`;
 	const highestSrc = getImgProxySrc({ src, preset: 'full' });
+
+	const paddingPx = 16;
+	$: boundByHeight =
+		$windowWidth && $windowHeight
+			? ($windowWidth - paddingPx * 2) / ($windowHeight - paddingPx * 2) >
+			  Number(width) / Number(height)
+			: false;
 
 	let isFullscreen = false;
 
@@ -92,11 +100,11 @@
 		on:click={() => toggleFullscreen()}
 		on:keydown={() => null}
 		use:portal={'body'}
-		class="fixed left-0 top-0 w-full h-full bg-c-barrier/90 flex items-center justify-center z-[9999] px-2 py-24 md:p-6
+		class="fixed left-0 top-0 w-full h-full bg-c-barrier/90 flex items-center justify-center z-[9999] px-2 py-16 md:p-4
 		overflow-auto md:overflow-hidden not-touch:hover:cursor-zoom-out"
 	>
 		<img
-			class="w-full h-auto md:max-w-full md:max-h-full md:w-auto md:h-auto
+			class="w-full h-auto {boundByHeight ? 'md:h-full md:w-auto' : 'md:w-full md:h-auto'}
 			bg-c-bg-tertiary rounded-lg ring-2 ring-c-bg-tertiary
       shadow-xl shadow-c-shadow/[var(--o-shadow-strong) my-auto"
 			src={highestSrc}
