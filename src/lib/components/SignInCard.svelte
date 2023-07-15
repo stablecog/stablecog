@@ -178,8 +178,13 @@
 		: 'shadow-xl shadow-c-shadow/[var(--o-shadow-normal)]'}"
 >
 	{#if $signInCardStatus === 'sent-otp'}
-		<div class="mb-2">
-			<IconEmail class="w-20 h-20 text-c-on-bg" />
+		<div
+			transition:expandCollapse|local={{ duration: 200, easing: quadOut, opacity: 0 }}
+			class="flex flex-col justify-start"
+		>
+			<div class="pb-2">
+				<IconEmail class="w-20 h-20 text-c-on-bg" />
+			</div>
 		</div>
 	{/if}
 	<h1 class="max-w-sm text-center font-bold leading-normal mt-1 md:-mt-1 text-2xl px-8">
@@ -207,53 +212,61 @@
 		{/if}
 		{#if $signInCardStatus === 'sent-otp'}
 			<div
-				class="mt-4 md:mt-6 -mx-5 md:-mx-10 -mb-4 md:-mb-7 border-t-2 border-c-bg-secondary w-[calc(100%+1.5rem)] md:w-[calc(100%+5rem)]
-				flex flex-col items-center justify-start relative z-0"
+				transition:expandCollapse|local={{ duration: 200, easing: quadOut, opacity: 0 }}
+				class="w-[calc(100%+1.5rem)] md:w-[calc(100%+5rem)] -mx-5 md:-mx-10 pt-4 md:pt-6 -mb-4 md:-mb-7 flex flex-col justify-start"
 			>
-				{#if $signInCardCodeSignInStatus === 'idle'}
-					<DropdownItem onClick={() => ($signInCardCodeSignInStatus = 'entering')}>
-						<div class="w-full flex items-center justify-center gap-2.5">
-							<IconPassword
-								class="text-c-on-bg/75 w-6 h-6 transition not-touch:group-hover:text-c-primary"
-							/>
-							<p class="text-c-on-bg/75 transition not-touch:group-hover:text-c-primary">
-								{$LL.SignIn.EnterCodeManuallyButton()}
-							</p>
-						</div>
-					</DropdownItem>
-				{:else}
-					<form
-						transition:expandCollapse|local={{ duration: 200, easing: quadOut, opacity: 0 }}
-						on:submit|preventDefault={signInWithCode}
-						class="w-full flex flex-col max-w-xs"
+				<div class="w-full flex flex-col justify-start">
+					<div
+						class="w-full border-t-2 border-c-bg-secondary flex flex-col items-start justify-start relative z-0"
 					>
-						<div class="w-full flex flex-col p-4">
-							<Input type="number" bind:value={codeValue} title="Code" />
-							<Button withSpinner loading={$signInCardCodeSignInStatus === 'loading'} class="mt-3"
-								>{$LL.SignIn.ContinueButton()}</Button
+						{#if $signInCardCodeSignInStatus === 'idle'}
+							<DropdownItem onClick={() => ($signInCardCodeSignInStatus = 'entering')}>
+								<div class="w-full flex items-center justify-center gap-2.5">
+									<IconPassword
+										class="text-c-on-bg/75 w-6 h-6 transition not-touch:group-hover:text-c-primary"
+									/>
+									<p class="text-c-on-bg/75 transition not-touch:group-hover:text-c-primary">
+										{$LL.SignIn.EnterCodeManuallyButton()}
+									</p>
+								</div>
+							</DropdownItem>
+						{:else}
+							<form
+								transition:expandCollapse|local={{ duration: 200, easing: quadOut, opacity: 0 }}
+								on:submit|preventDefault={signInWithCode}
+								class="w-full flex flex-col max-w-xs"
 							>
-							{#if codeSignInErrorText}
-								<ErrorLine text={codeSignInErrorText} class="text-xs" />
-							{/if}
-						</div>
-					</form>
-				{/if}
-				<div class="w-full h-2px bg-c-bg-secondary" />
-				<DropdownItem
-					onClick={() => {
-						signInCardStatus.set('idle');
-						signInCardCodeSignInStatus.set('idle');
-					}}
-				>
-					<div class="w-full flex items-center justify-center gap-2.5">
-						<IconBack
-							class="text-c-on-bg/75 w-6 h-6 transition not-touch:group-hover:text-c-primary"
-						/>
-						<p class="text-c-on-bg/75 transition not-touch:group-hover:text-c-primary">
-							{$LL.Shared.GoBackButton()}
-						</p>
+								<div class="w-full flex flex-col p-4">
+									<Input type="number" bind:value={codeValue} title="Code" />
+									<Button
+										withSpinner
+										loading={$signInCardCodeSignInStatus === 'loading'}
+										class="mt-3">{$LL.SignIn.ContinueButton()}</Button
+									>
+									{#if codeSignInErrorText}
+										<ErrorLine text={codeSignInErrorText} class="text-xs" />
+									{/if}
+								</div>
+							</form>
+						{/if}
+						<div class="w-full h-2px bg-c-bg-secondary" />
+						<DropdownItem
+							onClick={() => {
+								signInCardStatus.set('idle');
+								signInCardCodeSignInStatus.set('idle');
+							}}
+						>
+							<div class="w-full flex items-center justify-center gap-2.5">
+								<IconBack
+									class="text-c-on-bg/75 w-6 h-6 transition not-touch:group-hover:text-c-primary"
+								/>
+								<p class="text-c-on-bg/75 transition not-touch:group-hover:text-c-primary">
+									{$LL.Shared.GoBackButton()}
+								</p>
+							</div>
+						</DropdownItem>
 					</div>
-				</DropdownItem>
+				</div>
 			</div>
 		{:else}
 			<div
