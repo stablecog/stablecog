@@ -228,7 +228,7 @@ const tr: Translation = {
 	Blog: {
 		Title: 'Blog Yazıları',
 		TitleAlt: 'Blog',
-		ThanksForReading: 'Thanks for reading!',
+		ThanksForReading: 'Okuduğun için teşekkürler!',
 		BackToBlogButton: 'Bloğa Dön'
 	},
 	Redirect: {
@@ -320,15 +320,15 @@ const tr: Translation = {
 			Placeholder: 'Şifre'
 		},
 		ModelTags: {
-			GoodAtTitle: 'Good at',
+			GoodAtTitle: 'Şunlarda iyi',
 			Tags: {
-				General: 'General',
-				Realism: 'Realism',
+				General: 'Genel',
+				Realism: 'Realizm',
 				Anime: 'Anime',
 				Render: 'Render',
-				Drawing: 'Drawing',
-				ThreeDArt: '3D',
-				Abstract: 'Abstract'
+				Drawing: 'Çizim',
+				ThreeDArt: '3B',
+				Abstract: 'Soyut'
 			}
 		},
 		ModelOptions: {
@@ -362,8 +362,12 @@ const tr: Translation = {
 			'22b0857d-7edc-4d00-9cd9-45aa509db093': {
 				realName: 'Kandinsky'
 			},
-			'9fa49c00-109d-430f-9ddd-449f02e2c71a': { realName: 'Kandinsky 2.2' },
-			'8002bc51-7260-468f-8840-cf1e6dbe3f8a': { realName: 'SDXL' },
+			'9fa49c00-109d-430f-9ddd-449f02e2c71a': {
+				realName: 'Kandinsky 2.2'
+			},
+			'8002bc51-7260-468f-8840-cf1e6dbe3f8a': {
+				realName: 'SDXL'
+			},
 			'a3636543-91cc-4290-b1a4-9d506457b9be': {
 				realName: 'Freedom'
 			}
@@ -387,8 +391,12 @@ const tr: Translation = {
 			'82cf78dd-6afb-48cc-aca6-14224cca6950': {
 				realName: 'DDIM'
 			},
-			'01e94c28-501d-4c6d-8f00-079f3230bf58': { realName: 'UniPC' },
-			'cc1b8dbf-0aec-4e52-8110-8082506fb7ba': { realName: 'DDPM' },
+			'01e94c28-501d-4c6d-8f00-079f3230bf58': {
+				realName: 'UniPC'
+			},
+			'cc1b8dbf-0aec-4e52-8110-8082506fb7ba': {
+				realName: 'DDPM'
+			},
 			'b7224e56-1440-43b9-ac86-66d66f9e8c91': {
 				realName: 'P Sampler'
 			}
@@ -406,7 +414,7 @@ const tr: Translation = {
 	},
 	Error: {
 		SomethingWentWrong: 'Bir şeyler ters gitti :(',
-		PromptWasNSFW: 'This prompt might produce sensitive content :(',
+		PromptWasNSFW: 'Bu komut problemli içerik üretebilir :(',
 		ImageWasNSFW: 'Bu fotoğraf müstehcendi :(',
 		NSFW: 'Müstehcen içerik, başka bir komut dene :(',
 		ServerSeemsOffline:
@@ -658,7 +666,7 @@ const tr: Translation = {
 				Platform: 'Platform'
 			},
 			UsageType: {
-				Voiceover: 'Voiceover',
+				Voiceover: 'Seslendirme',
 				Generate: 'Üret',
 				Generation: 'Üretim',
 				Upscale: 'Büyütme'
@@ -666,7 +674,7 @@ const tr: Translation = {
 			SourceType: {
 				Web: 'Web',
 				WebApp: 'Web Uygulaması',
-				DiscordBot: 'Discord Bot',
+				DiscordBot: 'Discord Botu',
 				API: 'API'
 			},
 			NoUsageYet: 'Henüz bir kullanım yapmadın.'
@@ -849,9 +857,9 @@ const tr: Translation = {
 		OtherPlansParagraph: 'Paketini yükseltebilir veya kredi paketi satın alabilirsin.'
 	},
 	Contact: {
-		PageTitle: 'Contact',
+		PageTitle: 'Bize Ulaş',
 		PageParagraph:
-			"If you have any inquiries or a questions, don't hesitate to reach out to us using the links below. We'll answer as soon as possible."
+			'Bir sorun, önerin veya isteğin varsa aşağıdaki linkleri kullanarak bize ulaşabilirsin. Elimizden geldiğince hızlı cevaplayacağız.'
 	},
 	Support: {
 		PageTitle: 'Destek',
@@ -861,8 +869,8 @@ const tr: Translation = {
 		PageTitle: 'Kılavuz',
 		GuideButton: 'Kılavuz',
 		PreviousTitle: 'Önceki',
-		EndpointsTitle: 'Endpoints',
-		EndpointTitle: 'Endpoint',
+		EndpointsTitle: 'Sorgu Adresleri',
+		EndpointTitle: 'Sorgu Adresi',
 		NextTitle: 'Sonraki',
 		ChaptersTitle: 'Bölümler',
 		ChapterTitle: 'Bölüm'
@@ -871,8 +879,8 @@ const tr: Translation = {
 		PageTitle: 'Dene'
 	},
 	Legal: {
-		PageTitle: 'Legal',
-		PageParagraph: 'Our terms and policies are listed below.',
+		PageTitle: 'Hukuki Dökümanlar',
+		PageParagraph: 'Şartlarımız ve politikalarımız aşağıda.',
 		TermsOfServiceTitle: 'Kullanım Şartları',
 		PrivacyPolicyTitle: 'Gizlilik Politikası',
 		RefundPolicyTitle: 'İade Politikası',
@@ -916,11 +924,21 @@ const tr: Translation = {
 			'4a19f17c-eedc-4cf8-a45d-1f9d69547125': {
 				Name: 'Rachel'
 			},
-			'2e4e9572-2ea6-48a3-b134-381c68c9d516': { Name: 'Ella' },
-			'2364bfb5-cdce-4a30-b979-a12f9f49cd39': { Name: 'Alice' },
-			'91bf1331-a234-4478-a2a5-4dba4ac647fc': { Name: 'Olivia' },
-			'3aebf12b-a7b8-41cf-9411-5808a231138e': { Name: 'Daniel' },
-			'b8e5e45b-4fe3-4a0f-9fa6-5893c67287c0': { Name: 'Thomas' },
+			'2e4e9572-2ea6-48a3-b134-381c68c9d516': {
+				Name: 'Ella'
+			},
+			'2364bfb5-cdce-4a30-b979-a12f9f49cd39': {
+				Name: 'Alice'
+			},
+			'91bf1331-a234-4478-a2a5-4dba4ac647fc': {
+				Name: 'Olivia'
+			},
+			'3aebf12b-a7b8-41cf-9411-5808a231138e': {
+				Name: 'Daniel'
+			},
+			'b8e5e45b-4fe3-4a0f-9fa6-5893c67287c0': {
+				Name: 'Thomas'
+			},
 			'aad61bf9-0710-40f6-8050-8c412852f717': {
 				Name: 'Henry'
 			},
@@ -1073,27 +1091,25 @@ const tr: Translation = {
 		UnmuteButton: 'Sesi Aç'
 	},
 	Connect: {
-		PageTitle: 'Connect',
-		PageParagraph:
-			'Click the button below to connect your {platform} account to your Stablecog account.',
-		PageSuccessTitle: 'Connected!',
-		ConnectButton: 'Connect',
-		ReturnBackToParagraph: 'You can return back to {platform} now.',
-		NoPlatformTokenParagraph:
-			"This link doesn't contain a {platform} token. Please request a new link.",
-		NoPlatformIDParagraph: "This link doesn't contain a {platform} ID. Please request a new link.",
+		PageTitle: 'Bağlan',
+		PageParagraph: '{platform} üyeliğini Stablecog üyeliğine bağlamak için aşağıdaki butona tıkla.',
+		PageSuccessTitle: 'Bağlandı!',
+		ConnectButton: 'Bağla',
+		ReturnBackToParagraph: '{platform} uygulamasına geri dönebilirsin.',
+		NoPlatformTokenParagraph: 'Bu link bir {platform} tokeni içermiyor. Yeni bir link iste.',
+		NoPlatformIDParagraph: 'Bu link bir {platform} kimliği içermiyor. Yeni bir link iste.',
 		NoPlatformUsernameParagraph:
-			"This link doesn't contain a {platform} username. Please request a new link.",
+			'Bu link bir {platform} kullanıcı adı içermiyor. Yeni bir link iste.',
 		Platform: {
 			Discord: 'Discord',
 			Stablecog: 'Stablecog'
 		},
-		ConnectToTitle: 'Connect to {platform}',
+		ConnectToTitle: 'Şuraya Bağlan: {platform}',
 		ConnectToParagraph:
-			'Create an account or sign in to connect your {platform} account to your Stablecog account.',
+			'{platform} hesabını Stablecog hesabına bağlamak için yeni bir hesap oluştur veya giriş yap.',
 		Error: {
-			InvalidToken: 'The token is invalid. Please request a new link via {platform}.',
-			AlreadyLinked: 'Your account already has a {platform} account associated with it.'
+			InvalidToken: 'Bu token geçersiz. {platform} uygulamasından yeni bir link iste.',
+			AlreadyLinked: 'Hesabına bağlanmış bir {platform} hesabı zaten mevcut.'
 		}
 	},
 	UnderDevelopment: {
