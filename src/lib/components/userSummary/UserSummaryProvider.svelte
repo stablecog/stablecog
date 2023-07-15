@@ -17,6 +17,7 @@
 	let mounted = false;
 
 	$: userId = $page.data.session?.user.id;
+	$: userEmail = $page.data.session?.user.email;
 	$: accessToken = $page.data.session?.access_token;
 
 	$: userSummaryQuery =
@@ -35,27 +36,27 @@
 	}
 
 	$: logProps = {
-		'SC - User Id': $page.data.session?.user.id,
+		'SC - User Id': userId,
 		'SC - Stripe Product Id': $userSummary?.product_id,
 		'SC - Locale': $locale,
 		'SC - Page': `${$page.url.pathname}${$page.url.search}`,
 		'SC - App Version': $appVersion,
-		'SC - Email': $page.data.session?.user.email
+		'SC - Email': userEmail
 	};
-	$: wantsEmailQueryKey = ['set_wants_email', $page.data.session?.user.id];
+	$: wantsEmailQueryKey = ['set_wants_email', userId];
 	$: wantsEmailMutation = browser
 		? createMutation(
 				wantsEmailQueryKey,
 				({ wantsEmail }: { wantsEmail: boolean }) => {
 					queryClient.cancelQueries(wantsEmailQueryKey);
 					return setWantsEmail({
-						access_token: $page.data.session?.access_token || '',
+						access_token: accessToken || '',
 						wants_email: wantsEmail
 					});
 				},
 				{
 					onSuccess: () => {
-						queryClient.invalidateQueries(getUserSummaryQueryKey($page.data.session?.user.id));
+						queryClient.invalidateQueries(getUserSummaryQueryKey(userId));
 					}
 				}
 		  )
