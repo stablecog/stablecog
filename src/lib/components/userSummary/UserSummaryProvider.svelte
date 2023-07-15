@@ -16,10 +16,13 @@
 
 	let mounted = false;
 
+	$: userId = $page.data.session?.user.id;
+	$: accessToken = $page.data.session?.access_token;
+
 	$: userSummaryQuery =
-		browser && $page.data.session?.user.id
-			? createQuery(getUserSummaryQueryKey($page.data.session?.user.id), {
-					queryFn: () => getUserSummary($page.data.session?.access_token)
+		browser && userId
+			? createQuery(getUserSummaryQueryKey(userId), {
+					queryFn: () => getUserSummary(accessToken)
 			  })
 			: undefined;
 
