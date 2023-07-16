@@ -48,7 +48,7 @@
 	value={loading}
 	defaultValue={false}
 	delay={500}
-	minStay={500}
+	minStay={600}
 	let:delayedValue={loadingWithDelay}
 	dependencies={[imageUrl]}
 >
