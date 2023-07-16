@@ -415,22 +415,28 @@
 			generationNumOutputs.set($numOutputs);
 		}
 		setEstimatedGenerationDuration();
+		const shouldBeWidth =
+			aspectRatioToImageSize?.[$generationAspectRatio]?.[$generationModelId]?.width !== undefined
+				? aspectRatioToImageSize[$generationAspectRatio][$generationModelId].width
+				: aspectRatioToImageSize[$generationAspectRatio].default.width;
+		const shouldBeHeight =
+			aspectRatioToImageSize?.[$generationAspectRatio]?.[$generationModelId]?.height !== undefined
+				? aspectRatioToImageSize[$generationAspectRatio][$generationModelId].height
+				: aspectRatioToImageSize[$generationAspectRatio].default.height;
+		if (shouldBeWidth !== $generationWidth) {
+			generationWidth.set(shouldBeWidth);
+		}
+		if (shouldBeHeight !== $generationHeight) {
+			generationHeight.set(shouldBeHeight);
+		}
 		if (
-			aspectRatioToImageSize?.[$generationAspectRatio]?.[$generationModelId]?.width !== undefined &&
-			aspectRatioToImageSize?.[$generationAspectRatio]?.[$generationModelId]?.height !==
-				undefined &&
-			(aspectRatioToImageSize[$generationAspectRatio][$generationModelId].width !==
-				$generationWidth ||
-				aspectRatioToImageSize[$generationAspectRatio][$generationModelId].height !==
-					$generationHeight)
+			shouldBeWidth !== $imageSize.width ||
+			shouldBeHeight !== $imageSize.height ||
+			$generationAspectRatio !== $imageSize.aspectRatio
 		) {
-			generationWidth.set(aspectRatioToImageSize[$generationAspectRatio][$generationModelId].width);
-			generationHeight.set(
-				aspectRatioToImageSize[$generationAspectRatio][$generationModelId].height
-			);
 			imageSize.set({
-				width: $generationWidth,
-				height: $generationHeight,
+				width: shouldBeWidth,
+				height: shouldBeHeight,
 				aspectRatio: $generationAspectRatio
 			});
 		}
