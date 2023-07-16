@@ -416,9 +416,9 @@
 		}
 		setEstimatedGenerationDuration();
 		if (
-			aspectRatioToImageSize[$generationAspectRatio][$generationModelId].width !==
+			aspectRatioToImageSize[$generationAspectRatio]?.[$generationModelId]?.width !==
 				$generationWidth ||
-			aspectRatioToImageSize[$generationAspectRatio][$generationModelId].height !==
+			aspectRatioToImageSize[$generationAspectRatio]?.[$generationModelId]?.height !==
 				$generationHeight
 		) {
 			generationWidth.set(aspectRatioToImageSize[$generationAspectRatio][$generationModelId].width);
