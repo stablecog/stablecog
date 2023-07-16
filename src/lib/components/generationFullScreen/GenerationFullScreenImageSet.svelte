@@ -54,7 +54,7 @@
 >
 	{#if loadingWithDelay}
 		<div
-			transition:scale={{ start: 0, opacity: 0, duration: 250, easing: quadOut }}
+			transition:scale|local={{ start: 0, opacity: 0, duration: 250, easing: quadOut }}
 			class="w-7 h-7 p-1.5 bg-c-barrier/60 rounded-full absolute left-1 top-1 pointer-events-none"
 		>
 			<IconAnimatedSpinner class="w-4 h-4 text-c-on-bg" loading={loadingWithDelay} />
