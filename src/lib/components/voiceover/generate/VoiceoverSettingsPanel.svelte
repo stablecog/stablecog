@@ -3,10 +3,8 @@
 	import SidebarWrapper from '$components/generate/SidebarWrapper.svelte';
 	import IconDenoise from '$components/icons/IconDenoise.svelte';
 	import IconLanguage from '$components/icons/IconLanguage.svelte';
-	import IconLocale from '$components/icons/IconLocale.svelte';
 	import IconMicrophone from '$components/icons/IconMicrophone.svelte';
 	import IconRemoveSilence from '$components/icons/IconRemoveSilence.svelte';
-	import IconSpeaker from '$components/icons/IconVoiceoverSpeaker.svelte';
 	import IconWave from '$components/icons/IconWave.svelte';
 	import TabLikeDropdown from '$components/tabBars/TabLikeDropdown.svelte';
 	import TabLikeRangeInput from '$components/tabBars/TabLikeRangeInput.svelte';
@@ -50,7 +48,6 @@
 			<TabLikeDropdown
 				name={$LL.Voiceover.Settings.Speaker.Title()}
 				class="w-full"
-				iconSet={IconSpeaker}
 				iconSetClass="w-8 h-8 -m-2 mr-3 rounded-md"
 				container={settingsContainer}
 				containerTopMinDistance={containerDropdownPadding}
@@ -68,7 +65,6 @@
 			<TabLikeDropdown
 				name={$LL.Voiceover.Settings.Language.Title()}
 				class="w-full"
-				iconSet={IconLocale}
 				iconSetClass="w-8 h-8 -m-2 mr-3 rounded-md"
 				container={settingsContainer}
 				containerTopMinDistance={containerDropdownPadding}
