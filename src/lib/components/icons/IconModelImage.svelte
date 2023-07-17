@@ -8,9 +8,9 @@
 	export let sizes = '32px';
 	let classes = 'w-6 h-6';
 	const imageVersion = 'v4/square';
-	const imageUrl = imageUrlFromModelId(type);
-	const src = getImgProxySrc({ src: imageUrl, preset: '64w' });
-	const srcset = getImgProxySrcSetSmall({ src: imageUrl });
+	$: imageUrl = imageUrlFromModelId(type);
+	$: src = getImgProxySrc({ src: imageUrl, preset: '64w' });
+	$: srcset = getImgProxySrcSetSmall({ src: imageUrl });
 	const width = '64';
 	const height = '64';
 
