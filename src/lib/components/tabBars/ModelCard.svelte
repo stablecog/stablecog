@@ -9,11 +9,13 @@
 	export let modelId: TAvailableGenerationModelId;
 	export let onClick: () => void;
 
-	const imageVersion = 'v2';
+	const imageVersion = 'v3';
 	const imageUrl = imageUrlFromModelId(modelId);
 	const src = getImgProxySrcDefault(imageUrl);
 	const srcset = getImgProxySrcSet({ src: imageUrl });
 	const sizes = `(min-width: 768px) 240px, 100vw`;
+	const width = '1920';
+	const height = '960';
 
 	// @ts-ignore
 	$: modelName = $LL.Shared.ModelOptions[modelId].realName();
@@ -23,10 +25,7 @@
 	}
 </script>
 
-<button
-	on:click={onClick}
-	class="w-full flex px-2 py-[calc(0.5rem-2px)] first:pt-3 last:pb-3 group"
->
+<button on:click={onClick} class="w-full flex px-[calc(0.5rem+1px)] py-[calc(0.5rem-2px)] group">
 	<div
 		class="w-full flex flex-col text-left items-start justify-start transition
     rounded-lg bg-c-bg-tertiary overflow-hidden z-0 relative ring-2 ring-c-bg-tertiary not-touch:group-hover:ring-c-primary"
@@ -38,20 +37,20 @@
 			{srcset}
 			{sizes}
 			alt={modelName}
-			width="1920"
-			height="960"
+			{width}
+			{height}
 		/>
 		<div
-			class="absolute left-0 bottom-0 bg-c-barrier/7 rounded-b-lg w-full flex items-end justify-between py-1.5 px-1.25 gap-2"
+			class="absolute left-0 bottom-0 bg-c-barrier/7 rounded-b-lg w-full flex items-end justify-between p-1 gap-3"
 		>
 			<p
 				class="bg-c-barrier/75 text-sm flex-shrink min-w-0 whitespace-nowrap overflow-hidden overflow-ellipsis
-        font-medium px-1.5 py-0.5 rounded"
+        font-medium px-1.5 py-0.5 rounded-md"
 			>
 				{modelName}
 			</p>
 			<p
-				class="text-xs px-1 pt-1.25 pb-1 rounded leading-none bg-c-barrier/75 text-c-on-bg font-medium"
+				class="text-xs px-1.25 pt-1.25 pb-1 rounded-md leading-none bg-c-barrier/75 text-c-on-bg font-medium"
 			>
 				{aspectRatioToImageSize[$generationAspectRatio][modelId]?.width ??
 					aspectRatioToImageSize[$generationAspectRatio].default.width} ×
