@@ -9,7 +9,7 @@
 	export let modelId: TAvailableGenerationModelId;
 	export let onClick: () => void;
 
-	const imageVerison = 'v1';
+	const imageVersion = 'v1';
 	const imageUrl = imageUrlFromModelId(modelId);
 	const src = getImgProxySrcDefault(imageUrl);
 	const srcset = getImgProxySrcSet({ src: imageUrl });
@@ -19,7 +19,7 @@
 	$: modelName = $LL.Shared.ModelOptions[modelId].realName();
 
 	function imageUrlFromModelId(modelId: TAvailableGenerationModelId) {
-		return `${canonicalUrl}/images/models/${imageVerison}/${modelId}.jpeg`;
+		return `${canonicalUrl}/images/models/${imageVersion}/${modelId}.jpeg`;
 	}
 </script>
 
