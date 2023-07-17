@@ -55,6 +55,7 @@
 	import SettingsPanelItem from '$components/generate/SettingsPanelItem.svelte';
 	import IconAddImage from '$components/icons/IconAddImage.svelte';
 	import type { TAvailableSchedulerId } from '$ts/constants/schedulers';
+	import ModelCard from '$components/tabBars/ModelCard.svelte';
 
 	export let rounding: 'all' | 'top' | 'bottom' = 'all';
 	export let openSignInModal: () => void;
@@ -103,7 +104,13 @@
 				hasTitle={false}
 				bind:value={$generationModelId}
 				name="Model"
-			/>
+				withSlot
+				withFadedChevron
+				let:item
+				let:onClick
+			>
+				<ModelCard modelId={item.value} {onClick} />
+			</TabLikeDropdown>
 		</SettingsPanelItem>
 		<SettingsPanelItem
 			title={$LL.Home.ImageInput.Title()}

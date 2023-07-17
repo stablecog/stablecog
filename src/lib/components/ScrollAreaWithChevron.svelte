@@ -5,6 +5,7 @@
 
 	export { classes as class };
 	export let clientHeight: number | undefined = undefined;
+	export let withFade = false;
 	let classes = 'w-full relative';
 	let container: HTMLDivElement;
 	const showChevronPadding = 12;
@@ -47,10 +48,12 @@
 	{#if showChevron}
 		<div
 			transition:fly|local={{ duration: 200, easing: quadOut, y: 40, opacity: 0 }}
-			class="absolute left-1/2 transform -translate-x-1/2 bottom-0 flex justify-center items-end p-2 z-50
+			class=" {withFade
+				? 'w-full bg-gradient-to-t from-c-bg-secondary to-c-bg-secondary/0 pt-6'
+				: ''} absolute left-1/2 transform -translate-x-1/2 bottom-0 flex justify-center items-end p-2 z-50
       	pointer-events-none"
 		>
-			<IconChevronDown class="w-6 h-6 text-c-on-bg/40 transition" />
+			<IconChevronDown class="w-6 h-6 text-c-on-bg/60 transition" />
 		</div>
 	{/if}
 </div>
