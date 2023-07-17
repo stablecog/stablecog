@@ -81,8 +81,7 @@
 		>
 			<TabLikeDropdown
 				class="w-full"
-				iconSetForSelected={IconAspectRatio}
-				iconSetForList={IconAspectRatio}
+				iconSet={IconAspectRatio}
 				container={settingsContainer}
 				containerTopMinDistance={containerDropdownPadding}
 				containerBottomMinDistance={containerDropdownPadding}
@@ -105,8 +104,7 @@
 				items={$availableModelIdDropdownItems}
 				hasTitle={false}
 				name="Model"
-				iconSetForSelected={IconModelImage}
-				iconSetForList={IconModelImage}
+				iconSet={IconModelImage}
 				iconSetClass="w-8 h-8 -m-2 mr-3 rounded-md"
 				listClass="pt-[calc(0.375rem+2px)] pb-1.5"
 				bind:value={$generationModelId}

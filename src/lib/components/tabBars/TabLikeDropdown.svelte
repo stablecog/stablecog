@@ -23,8 +23,7 @@
 	export let container: HTMLDivElement | undefined = undefined;
 	export let containerTopMinDistance = 8;
 	export let containerBottomMinDistance = 8;
-	export let iconSetForSelected: ConstructorOfATypedSvelteComponent | undefined = undefined;
-	export let iconSetForList: ConstructorOfATypedSvelteComponent | undefined = undefined;
+	export let iconSet: ConstructorOfATypedSvelteComponent | undefined = undefined;
 	export { classes as class };
 	export let withSlot = false;
 	export let withFadedChevron = false;
@@ -137,13 +136,9 @@
 				</div>
 			</div>
 			<div class="flex-shrink min-w-0 flex items-center">
-				<!-- {#if iconSetForSelected}
-					<svelte:component
-						this={iconSetForSelected}
-						type={selectedItem?.value}
-						class={iconSetClass}
-					/>
-				{/if} -->
+				{#if iconSet}
+					<svelte:component this={iconSet} type={selectedItem?.value} class={iconSetClass} />
+				{/if}
 				<p
 					class="flex-shrink whitespace-nowrap overflow-hidden overflow-ellipsis text-base font-medium relative transition
 					max-w-full z-0 text-c-on-bg not-touch:group-hover:text-c-primary"
@@ -236,12 +231,8 @@
 										</div>
 									</div>
 									<div class="w-full flex items-center">
-										{#if iconSetForList}
-											<svelte:component
-												this={iconSetForList}
-												type={item.value}
-												class="{iconSetClass} {isSelected ? 'text-c-primary' : ''}"
-											/>
+										{#if iconSet}
+											<svelte:component this={iconSet} type={item.value} class={iconSetClass} />
 										{/if}
 										<div class="flex-shrink min-w-0 flex items-center gap-2">
 											<p
