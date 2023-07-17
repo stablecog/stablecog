@@ -231,9 +231,13 @@
 										</div>
 									</div>
 									<div class="w-full flex items-center">
-										{#if iconSet}
-											<svelte:component this={iconSet} type={item.value} class={iconSetClass} />
-										{/if}
+										<!-- {#if iconSet}
+											<svelte:component
+												this={iconSet}
+												type={item.value}
+												class="{iconSetClass} {isSelected ? 'text-c-primary' : ''}"
+											/>
+										{/if} -->
 										<div class="flex-shrink min-w-0 flex items-center gap-2">
 											<p
 												class="flex-shrink whitespace-nowrap overflow-hidden overflow-ellipsis text-base font-medium relative transition
