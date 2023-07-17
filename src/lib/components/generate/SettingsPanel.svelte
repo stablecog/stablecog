@@ -103,14 +103,15 @@
 				items={$availableModelIdDropdownItems}
 				hasTitle={false}
 				name="Model"
-				listClass="pt-1.5 pb-1"
+				listClass="pt-[calc(0.375rem+2px)] pb-1.5"
 				bind:value={$generationModelId}
 				withSlot
 				withFadedChevron
 				let:item
 				let:onClick
+				let:isSelected
 			>
-				<ModelCard modelId={item.value} {onClick} />
+				<ModelCard modelId={item.value} {onClick} {isSelected} />
 			</TabLikeDropdown>
 		</SettingsPanelItem>
 		<SettingsPanelItem

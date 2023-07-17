@@ -5,9 +5,12 @@
 	import { canonicalUrl } from '$ts/constants/main';
 	import { getImgProxySrcDefault, getImgProxySrcSet } from '$ts/helpers/imgproxy';
 	import { generationAspectRatio } from '$ts/stores/generationSettings';
+	import { quadOut } from 'svelte/easing';
+	import { scale } from 'svelte/transition';
 
 	export let modelId: TAvailableGenerationModelId;
 	export let onClick: () => void;
+	export let isSelected: boolean;
 
 	const imageVersion = 'v3';
 	const imageUrl = imageUrlFromModelId(modelId);
@@ -25,38 +28,52 @@
 	}
 </script>
 
-<button on:click={onClick} class="w-full flex px-[calc(0.5rem+1px)] py-[calc(0.5rem-2px)] group">
+<button on:click={onClick} class="w-full flex px-[calc(0.5rem+1px)] py-[calc(0.5rem-4px)] group">
 	<div
-		class="w-full flex flex-col text-left items-start justify-start transition
-    rounded-lg bg-c-bg-tertiary overflow-hidden z-0 relative ring-2 ring-c-bg-tertiary not-touch:group-hover:ring-c-primary"
+		class="w-full transition rounded-lg {isSelected
+			? 'ring-2'
+			: 'ring-0'} ring-c-primary not-touch:group-hover:ring-2"
 	>
-		<img
-			loading="lazy"
-			class="w-full h-auto"
-			{src}
-			{srcset}
-			{sizes}
-			alt={modelName}
-			{width}
-			{height}
-		/>
 		<div
-			class="absolute left-0 bottom-0 bg-c-barrier/7 rounded-b-lg w-full flex items-end justify-between p-1 gap-3"
+			class="w-full flex flex-col text-left items-start justify-start transition
+    	rounded-lg bg-c-bg-tertiary overflow-hidden z-0 relative border-3 border-c-bg-tertiary"
 		>
-			<p
-				class="bg-c-barrier/75 text-sm flex-shrink min-w-0 whitespace-nowrap overflow-hidden overflow-ellipsis
+			<img
+				loading="lazy"
+				class="w-full h-auto"
+				{src}
+				{srcset}
+				{sizes}
+				alt={modelName}
+				{width}
+				{height}
+			/>
+			<div
+				class="absolute left-0 bottom-0 bg-c-barrier/7 rounded-b-lg w-full flex items-end justify-between p-1 gap-3"
+			>
+				<p
+					class="bg-c-barrier/75 text-sm flex-shrink min-w-0 whitespace-nowrap overflow-hidden overflow-ellipsis
         font-medium px-1.5 py-0.5 rounded-md"
-			>
-				{modelName}
-			</p>
-			<p
-				class="text-xs px-1.25 pt-1.25 pb-1 rounded-md leading-none bg-c-barrier/75 text-c-on-bg font-medium"
-			>
-				{aspectRatioToImageSize[$generationAspectRatio][modelId]?.width ??
-					aspectRatioToImageSize[$generationAspectRatio].default.width} ×
-				{aspectRatioToImageSize[$generationAspectRatio][modelId]?.height ??
-					aspectRatioToImageSize[$generationAspectRatio].default.height}
-			</p>
+				>
+					{modelName}
+				</p>
+				<p
+					class="text-xs px-1.25 pt-1.25 pb-1 rounded-md leading-none bg-c-barrier/75 text-c-on-bg font-medium"
+				>
+					{aspectRatioToImageSize[$generationAspectRatio][modelId]?.width ??
+						aspectRatioToImageSize[$generationAspectRatio].default.width} ×
+					{aspectRatioToImageSize[$generationAspectRatio][modelId]?.height ??
+						aspectRatioToImageSize[$generationAspectRatio].default.height}
+				</p>
+			</div>
+			{#if isSelected}
+				<div
+					transition:scale={{ duration: 200, easing: quadOut, start: 0 }}
+					class="p-3px bg-c-barrier/75 absolute left-1 top-1 flex-shrink-0 rounded-full"
+				>
+					<div class="w-2 h-2 rounded-full bg-c-primary" />
+				</div>
+			{/if}
 		</div>
 	</div>
 </button>

@@ -1,4 +1,8 @@
 <script lang="ts">
+	import { scale } from 'svelte/transition';
+
+	import { quadOut } from 'svelte/easing';
+
 	import IconChevronDown from '$components/icons/IconChevronDown.svelte';
 	import ScrollAreaWithChevron from '$components/ScrollAreaWithChevron.svelte';
 	import TabBarWrapper from '$components/tabBars/TabBarWrapper.svelte';
@@ -23,6 +27,7 @@
 	export { classes as class };
 	export let withSlot = false;
 	export let withFadedChevron = false;
+	export let filterSelected = false;
 	export let listClass = '';
 	export let iconSetClass =
 		'w-6 h-6 flex-shrink-0 -ml-1 mr-2 text-c-on-bg not-touch:group-hover:text-c-primary';
@@ -180,9 +185,11 @@
 							withFade={withFadedChevron}
 							class="w-full flex flex-col {listClass}"
 						>
-							{#each items.filter((i) => i.value !== value) as item, index (item.value)}
+							{#each filterSelected ? items.filter((i) => i.value !== value) : items as item, index (item.value)}
+								{@const isSelected = item.value === value}
 								<slot
 									class={!withSlot ? 'hidden' : ''}
+									{isSelected}
 									{item}
 									onClick={() => {
 										isDropdownOpen = false;
@@ -225,14 +232,28 @@
 									</div>
 									<div class="w-full flex items-center">
 										{#if iconSet}
-											<svelte:component this={iconSet} type={item.value} class={iconSetClass} />
+											<svelte:component
+												this={iconSet}
+												type={item.value}
+												class="{iconSetClass} {isSelected ? 'text-c-primary' : ''}"
+											/>
 										{/if}
-										<p
-											class="flex-shrink whitespace-nowrap overflow-hidden overflow-ellipsis text-base font-medium relative transition
-												max-w-full z-0 text-c-on-bg not-touch:group-hover:text-c-primary"
-										>
-											{item.label}
-										</p>
+										<div class="flex-shrink min-w-0 flex items-center gap-2">
+											<p
+												class="flex-shrink whitespace-nowrap overflow-hidden overflow-ellipsis text-base font-medium relative transition
+												max-w-full z-0 {isSelected
+													? 'text-c-primary'
+													: 'text-c-on-bg'} not-touch:group-hover:text-c-primary"
+											>
+												{item.label}
+											</p>
+											{#if isSelected}
+												<div
+													transition:scale={{ duration: 200, easing: quadOut, start: 0 }}
+													class="w-2 h-2 flex-shrink-0 rounded-full bg-c-primary"
+												/>
+											{/if}
+										</div>
 									</div>
 								</button>
 							{/each}
