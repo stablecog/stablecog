@@ -37,12 +37,12 @@
 		>
 			<p
 				class="bg-c-barrier/75 text-sm flex-shrink min-w-0 whitespace-nowrap overflow-hidden overflow-ellipsis
-        font-medium px-1.5 py-0.5 rounded-md"
+        font-medium px-1.5 py-0.5 rounded"
 			>
 				{modelName}
 			</p>
 			<p
-				class="flex-shrink-0 text-xs px-1.25 pt-1.25 pb-1 rounded-md leading-none bg-c-barrier/75 text-c-on-bg font-medium"
+				class="text-xs px-1 pt-1.25 pb-1 rounded leading-none bg-c-barrier/75 text-c-on-bg font-medium"
 			>
 				{aspectRatioToImageSize[$generationAspectRatio][modelId]?.width ??
 					aspectRatioToImageSize[$generationAspectRatio].default.width} ×
