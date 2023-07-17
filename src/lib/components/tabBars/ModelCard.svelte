@@ -33,13 +33,13 @@
 	class="touch-manipulation w-full flex px-[calc(0.5rem+1px)] py-[calc(0.5rem-4px)] group"
 >
 	<div
-		class="w-full transition rounded-xl {isSelected
+		class="w-full transition rounded-lg {isSelected
 			? 'ring-2'
 			: 'ring-0'} ring-c-primary not-touch:group-hover:ring-2"
 	>
 		<div
 			class="w-full flex flex-col text-left items-start justify-start transition
-    	rounded-xl bg-c-bg-tertiary overflow-hidden z-0 relative border-3 border-c-bg-tertiary"
+    	rounded-lg bg-c-bg-tertiary overflow-hidden z-0 relative border-3 border-c-bg-tertiary"
 		>
 			<img
 				loading="lazy"
@@ -54,12 +54,12 @@
 			<div class="absolute left-0 bottom-0 w-full flex items-end justify-between p-1 gap-3">
 				<p
 					class="bg-c-bg-tertiary/80 text-sm flex-shrink min-w-0 whitespace-nowrap overflow-hidden overflow-ellipsis
-        	font-medium px-1.5 py-0.5 rounded-md"
+        	font-medium px-1.5 py-0.5 rounded"
 				>
 					{modelName}
 				</p>
 				<p
-					class="text-xs px-1.25 pt-1.25 pb-1 rounded-md leading-none bg-c-bg-tertiary/80 text-c-on-bg font-medium"
+					class="text-xs px-1.25 pt-1.25 pb-1 rounded leading-none bg-c-bg-tertiary/80 text-c-on-bg font-medium"
 				>
 					{aspectRatioToImageSize[$generationAspectRatio][modelId]?.width ??
 						aspectRatioToImageSize[$generationAspectRatio].default.width} ×
