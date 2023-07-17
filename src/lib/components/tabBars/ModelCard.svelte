@@ -28,7 +28,10 @@
 	}
 </script>
 
-<button on:click={onClick} class="w-full flex px-[calc(0.5rem+1px)] py-[calc(0.5rem-4px)] group">
+<button
+	on:click={onClick}
+	class="touch-manipulation w-full flex px-[calc(0.5rem+1px)] py-[calc(0.5rem-4px)] group"
+>
 	<div
 		class="w-full transition rounded-xl {isSelected
 			? 'ring-2'
