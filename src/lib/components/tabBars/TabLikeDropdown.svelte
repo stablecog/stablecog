@@ -137,13 +137,13 @@
 				</div>
 			</div>
 			<div class="flex-shrink min-w-0 flex items-center">
-				{#if iconSetForSelected}
+				<!-- {#if iconSetForSelected}
 					<svelte:component
 						this={iconSetForSelected}
 						type={selectedItem?.value}
 						class={iconSetClass}
 					/>
-				{/if}
+				{/if} -->
 				<p
 					class="flex-shrink whitespace-nowrap overflow-hidden overflow-ellipsis text-base font-medium relative transition
 					max-w-full z-0 text-c-on-bg not-touch:group-hover:text-c-primary"
