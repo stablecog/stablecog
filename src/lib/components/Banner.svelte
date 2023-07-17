@@ -12,7 +12,7 @@
 </script>
 
 <div
-	transition:expandCollapse|local={{ duration: 200, easing: quadOut }}
+	transition:expandCollapse={{ duration: 200, easing: quadOut }}
 	class="w-full relative text-c-on-primary font-bold"
 >
 	{#if href}

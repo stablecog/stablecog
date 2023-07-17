@@ -195,7 +195,7 @@
 			</button>
 			{#if $advancedModeApp}
 				<div
-					transition:expandCollapse|local={{ duration: 200, easing: quadOut }}
+					transition:expandCollapse={{ duration: 200, easing: quadOut }}
 					class="w-full flex flex-col"
 				>
 					<div class="w-full pt-4 pb-6 flex flex-col gap-7">

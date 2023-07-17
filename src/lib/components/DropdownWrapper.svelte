@@ -7,7 +7,7 @@
 </script>
 
 <div
-	transition:expandCollapse|local={{ duration: 200 }}
+	transition:expandCollapse={{ duration: 200 }}
 	class="transition-all ring-2 ring-c-bg-tertiary bg-c-bg-secondary 
 	rounded-xl flex flex-col justify-start shadow-lg shadow-c-shadow/[var(--o-shadow-strong)]
 	absolute {alignment} overflow-hidden z-50 {classes}"

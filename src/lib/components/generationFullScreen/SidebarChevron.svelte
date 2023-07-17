@@ -23,7 +23,7 @@
 
 {#if showSidebarChevron}
 	<div
-		transition:fly|local={{ duration: 200, easing: quadOut, y: 50, opacity: 0 }}
+		transition:fly={{ duration: 200, easing: quadOut, y: 50, opacity: 0 }}
 		class="absolute left-1/2 transform -translate-x-1/2 bottom-0 flex justify-center items-end p-1 z-50"
 	>
 		<IconButton

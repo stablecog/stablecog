@@ -6,7 +6,7 @@
 </script>
 
 <div
-	transition:expandCollapse|local={{ duration: 200 }}
+	transition:expandCollapse={{ duration: 200 }}
 	class="max-w-full flex flex-col items-center justify-start"
 >
 	<div class="w-full flex justify-center items-start max-w-md py-4 px-4">

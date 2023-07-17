@@ -282,7 +282,7 @@
 								{#if output.status !== 'failed' && output.status !== 'failed-nsfw' && output.status !== 'failed-nsfw-prompt'}
 									{#if output.status !== undefined && output.status !== 'succeeded' && output.animation !== undefined}
 										<div
-											out:fade|local={{ duration: 3000, easing: quadIn }}
+											out:fade={{ duration: 3000, easing: quadIn }}
 											class="w-full h-full absolute left-0 top-0"
 										>
 											<GenerationAnimation animation={output.animation} />
@@ -302,7 +302,7 @@
 									{/if}
 								{:else}
 									<div
-										in:fade|local={{ duration: 200, easing: quadOut }}
+										in:fade={{ duration: 200, easing: quadOut }}
 										class="w-full h-full flex items-center bg-c-bg-secondary justify-center relative p-2"
 									>
 										{#if cardType === 'generate'}

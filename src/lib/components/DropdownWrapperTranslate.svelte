@@ -10,13 +10,13 @@
 </script>
 
 <div
-	in:flyAndScale|local={{
+	in:flyAndScale={{
 		duration: 200,
 		yRem: translate === 'sm' ? -0.75 : -1.5,
 		easing: quadOut,
 		transformOrigin: 'right top'
 	}}
-	out:flyAndScale|local={{
+	out:flyAndScale={{
 		duration: 150,
 		yRem: translate === 'sm' ? -0.4 : -1,
 		easing: quadOut,

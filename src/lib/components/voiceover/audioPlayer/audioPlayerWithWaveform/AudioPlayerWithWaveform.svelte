@@ -110,16 +110,16 @@
 >
 	{#if audioStatus !== 'created'}
 		<div
-			in:scale|local={{ duration: 300, easing: quadOut, start: 0.85 }}
-			out:scale|local={{ duration: 200, easing: quadOut, start: 0.85 }}
+			in:scale={{ duration: 300, easing: quadOut, start: 0.85 }}
+			out:scale={{ duration: 200, easing: quadOut, start: 0.85 }}
 			class="w-full h-full absolute left-0 top-0 bg-c-bg-secondary"
 		>
 			<AudioPlayerWithWaveformPlaceholder {audioStatus} {voiceover} {barWidth} />
 		</div>
 	{:else}
 		<div
-			in:scale|local={{ duration: 300, easing: quadOut, start: 1.15 }}
-			out:scale|local={{ duration: 200, easing: quadOut, start: 1.15 }}
+			in:scale={{ duration: 300, easing: quadOut, start: 1.15 }}
+			out:scale={{ duration: 200, easing: quadOut, start: 1.15 }}
 			class="w-full h-full flex flex-col bg-c-bg-secondary z-10"
 		>
 			<AudioPlayerWithWaveformInner

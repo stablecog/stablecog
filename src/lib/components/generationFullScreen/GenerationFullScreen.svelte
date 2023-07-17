@@ -359,7 +359,7 @@
 					{/key}
 					{#if $upscales && $upscales.length > 0 && upscaleFromStore?.status === 'failed'}
 						<div
-							transition:fly|local={{ duration: 200, easing: quadOut, y: -50 }}
+							transition:fly={{ duration: 200, easing: quadOut, y: -50 }}
 							class="w-full absolute left-0 top-0 flex items-center justify-center p-3 pointer-events-none"
 						>
 							<p

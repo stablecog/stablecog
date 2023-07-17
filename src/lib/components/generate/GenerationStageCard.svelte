@@ -33,7 +33,7 @@
 						? 'h-full max-h-[2rem] md:max-h-[2.5rem] w-auto'
 						: 'w-full max-w-[2rem] md:max-w-[2.5rem] h-auto'}
 				<div
-					out:scale|local={{ duration: 200, easing: quadOut, opacity: 0 }}
+					out:scale={{ duration: 200, easing: quadOut, opacity: 0 }}
 					class="w-full h-full absolute left-0 top-0 flex flex-col gap-3 items-center justify-center"
 				>
 					<IconImage class="{sizeClasses} text-c-on-bg/20" />
@@ -41,7 +41,7 @@
 			{:else if status !== 'failed' && status !== 'failed-nsfw' && status !== 'failed-nsfw-prompt'}
 				{#if status !== undefined && status !== 'succeeded' && animation !== undefined}
 					<div
-						out:fade|local={{ duration: 3000, easing: quadIn }}
+						out:fade={{ duration: 3000, easing: quadIn }}
 						class="w-full h-full absolute left-0 top-0"
 					>
 						<GenerationAnimation {animation} />
@@ -56,7 +56,7 @@
 						? 'h-full max-h-[2rem] md:max-h-[2.5rem] w-auto'
 						: 'w-full max-w-[2rem] md:max-w-[2.5rem] h-auto'}
 				<div
-					in:fade|local={{ duration: 200, easing: quadOut }}
+					in:fade={{ duration: 200, easing: quadOut }}
 					class="w-full h-full flex flex-col items-center bg-c-bg-secondary justify-center relative px-3 md:px-5 py-3 gap-2"
 				>
 					{#if status === 'failed-nsfw'}

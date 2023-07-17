@@ -93,7 +93,7 @@
 </script>
 
 <div
-	in:flyAndScale|local={{
+	in:flyAndScale={{
 		duration:
 			output.voiceover.created_at &&
 			Date.now() - new Date(output.voiceover.created_at).getTime() < 1000
@@ -268,7 +268,7 @@
 	<!-- If loading or failed -->
 	{#if isOutputLoadingOrFailed}
 		<div
-			transition:fade|local={{ duration: 200, easing: quadOut }}
+			transition:fade={{ duration: 200, easing: quadOut }}
 			class="w-full h-full absolute left-0 top-0 flex items-center justify-center {output.voiceover
 				.status === 'failed'
 				? 'bg-c-bg-secondary'

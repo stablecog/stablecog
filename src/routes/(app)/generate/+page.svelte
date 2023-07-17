@@ -267,7 +267,7 @@
 			<div class="hidden lg:flex min-w-[2rem] flex-col items-start h-full relative">
 				{#if !$isLeftSidebarHiddenApp}
 					<div
-						transition:fly|local={{
+						transition:fly={{
 							duration: 250,
 							x: $windowWidth > xlBreakpoint ? -200 : -100,
 							easing: quadOut
@@ -315,7 +315,7 @@
 			<div class="flex flex-col items-center flex-1 min-w-0 h-full relative">
 				{#if $windowWidth < mdBreakpoint && isGenerationSettingsSheetOpen}
 					<div
-						transition:fade|local={{ duration: 200, easing: quadOut }}
+						transition:fade={{ duration: 200, easing: quadOut }}
 						class="fixed w-full h-full left-0 top-0 bg-c-barrier/70 z-40"
 					/>
 				{/if}
@@ -398,7 +398,7 @@
 					<div class="flex-1 min-w-0 flex flex-col items-center justify-center w-full">
 						{#if $page.data.session?.user.id && $userSummary && $userSummary.total_remaining_credits < lowOnCreditsThreshold}
 							<div
-								transition:expandCollapse|local={{ duration: 200 }}
+								transition:expandCollapse={{ duration: 200 }}
 								class="w-full flex flex-col justify-start items-center"
 							>
 								<div class="py-2px px-2.5 md:px-2px pb-6">

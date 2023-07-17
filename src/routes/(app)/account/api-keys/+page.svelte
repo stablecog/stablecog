@@ -188,7 +188,7 @@
 						</div>
 						{#each $tokensQuery.data as token, index (token.id)}
 							<div
-								transition:expandCollapse|local={{ duration: 200, easing: quadOut }}
+								transition:expandCollapse={{ duration: 200, easing: quadOut }}
 								class="w-full flex flex-col justify-start items-start overflow-hidden"
 							>
 								<div

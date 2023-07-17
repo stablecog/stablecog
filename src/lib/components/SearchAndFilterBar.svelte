@@ -187,7 +187,7 @@
 	{/if}
 	{#if isFiltersOpen}
 		<div
-			transition:expandCollapse|local={{ duration: 200, easing: quadOut }}
+			transition:expandCollapse={{ duration: 200, easing: quadOut }}
 			class="w-full flex flex-col"
 		>
 			<div class="w-full flex flex-row justify-center flex-wrap pt-3 px-0.5">

@@ -158,7 +158,7 @@
 		</p>
 		{#if canShowTimer && elapsedSecondsSinceCreation > 0.5 && audioStatus === 'being-created' && remainingSeconds !== estimatedDuration}
 			<div
-				transition:fly|local={{ duration: 150, easing: quadOut, y: -20 }}
+				transition:fly={{ duration: 150, easing: quadOut, y: -20 }}
 				class="flex items-center justify-end absolute right-3 top-2 md:right-4 md:top-3 gap-0.75"
 			>
 				<IconTimerAnimated class="text-c-on-bg/50 w-4.5 h-4.5" />
@@ -170,7 +170,7 @@
 			</div>
 		{:else if canShowTimer && elapsedSecondsSinceCreation > 0.5 && audioStatus === 'being-created' && remainingSeconds === estimatedDuration}
 			<div
-				transition:fly|local={{ duration: 150, easing: quadOut, y: -20 }}
+				transition:fly={{ duration: 150, easing: quadOut, y: -20 }}
 				class="flex items-center justify-end absolute right-2 top-2 md:right-3 md:top-3"
 			>
 				<div class="flex items-center justify-center">
@@ -194,8 +194,8 @@
 
 	{#if voiceover.error}
 		<div
-			in:scale|local={{ duration: 200, easing: easingBounceOut, start: 0.5 }}
-			out:scale|local={{ duration: 200, easing: quadOut, start: 0.5 }}
+			in:scale={{ duration: 200, easing: easingBounceOut, start: 0.5 }}
+			out:scale={{ duration: 200, easing: quadOut, start: 0.5 }}
 			class="w-full bottom-0 absolute left-0 p-5 flex items-center justify-center"
 		>
 			<ErrorChip size="md" class="max-h-[6rem] overflow-auto" error={voiceover.error} />

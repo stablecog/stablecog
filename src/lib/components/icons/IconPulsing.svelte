@@ -11,7 +11,7 @@
 <div class="{size === 'xs' ? 'p-3' : 'p-8'} relative overflow-hidden z-0 rounded-full {classes}">
 	{#if status === 'loading'}
 		<div
-			transition:scale|local={{ duration: 300, easing: quadOut }}
+			transition:scale={{ duration: 300, easing: quadOut }}
 			class="absolute w-full h-full left-0 top-0 origin-center"
 		>
 			<div class="w-full h-full">
@@ -24,7 +24,7 @@
 	<div class="{size === 'xs' ? 'w-2.5 h-2.5' : 'w-10 h-10'} relative">
 		{#if status === 'loading'}
 			<div
-				transition:scale|local={{ duration: 300, easing: quadOut }}
+				transition:scale={{ duration: 300, easing: quadOut }}
 				class="w-full h-full absolute left-0 top-0 rounded-full bg-c-primary animate-ping-custom-bg"
 			/>
 		{/if}

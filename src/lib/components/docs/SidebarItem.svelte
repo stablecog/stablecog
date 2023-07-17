@@ -101,7 +101,7 @@
 	{/if}
 	{#if (isRoot || isOpen) && sidebarItem.children}
 		<div
-			transition:expandCollapse|local={{ duration: 200 }}
+			transition:expandCollapse={{ duration: 200 }}
 			class="w-full flex flex-row {!isRoot ? 'pl-3' : ''}"
 		>
 			{#if !isRoot}

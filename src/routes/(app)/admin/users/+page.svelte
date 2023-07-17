@@ -333,7 +333,7 @@
 					class="w-full flex flex-col text-c-on-bg/50 flex-1 py-6 px-4 justify-center items-center text-center"
 				>
 					<div
-						in:scale|local={{
+						in:scale={{
 							duration: 200,
 							easing: quadOut,
 							opacity: 0,

@@ -100,7 +100,7 @@
 >
 	{#if processObject.status === 'queued' || processObject.status === 'processing'}
 		<div
-			transition:scale|local={{ duration: 300, easing: quadOut }}
+			transition:scale={{ duration: 300, easing: quadOut }}
 			class="absolute w-full h-full left-0 top-0 origin-center"
 		>
 			<div
@@ -120,7 +120,7 @@
 	<div class="w-10 h-10 relative">
 		{#if processObject.status === 'queued' || processObject.status === 'processing'}
 			<div
-				transition:scale|local={{ duration: 300, easing: quadOut }}
+				transition:scale={{ duration: 300, easing: quadOut }}
 				class="w-full h-full absolute left-0 top-0 transform {processObject.process_type ===
 				'voiceover'
 					? 'rotate-45'

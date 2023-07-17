@@ -6,7 +6,7 @@
 	let classes = 'text-sm';
 </script>
 
-<div transition:expandCollapse|local={{ duration: 150 }} class={classes}>
+<div transition:expandCollapse={{ duration: 150 }} class={classes}>
 	<div class="pt-3.5">
 		<p class="py-3 px-4 bg-c-danger/8 rounded-lg text-c-danger">
 			{text}

@@ -38,7 +38,7 @@
 
 {#if $isDrawerOpen}
 	<div
-		transition:fade|local={{ duration: 250, easing: quadOut }}
+		transition:fade={{ duration: 250, easing: quadOut }}
 		use:portal={'body'}
 		style="height: 100vh; height: 100svh"
 		class="w-full md:hidden md:pointer-events-none fixed left-0 top-0 bg-c-barrier/80 z-100"

@@ -31,7 +31,16 @@
 		class="w-full flex flex-col text-left items-start justify-start transition
     rounded-lg bg-c-bg-tertiary overflow-hidden z-0 relative ring-2 ring-c-bg-tertiary not-touch:group-hover:ring-c-primary"
 	>
-		<img class="w-full h-auto" {src} {srcset} {sizes} alt={modelName} width="1920" height="960" />
+		<img
+			loading="lazy"
+			class="w-full h-auto"
+			{src}
+			{srcset}
+			{sizes}
+			alt={modelName}
+			width="1920"
+			height="960"
+		/>
 		<div
 			class="absolute left-0 bottom-0 bg-c-barrier/7 rounded-b-lg w-full flex items-end justify-between py-1.5 px-1.25 gap-2"
 		>

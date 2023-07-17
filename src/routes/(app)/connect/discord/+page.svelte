@@ -96,7 +96,7 @@
 				</p>
 				{#if status !== 'success'}
 					<div
-						out:expandCollapse|local={{ duration: 300 }}
+						out:expandCollapse={{ duration: 300 }}
 						class="w-full max-w-lg flex flex-col justify-start items-center"
 					>
 						<div class="w-full flex flex-col justify-start items-center pt-5 pb-4 md:pb-0">
@@ -110,7 +110,7 @@
 							</Button>
 							{#if status === 'error'}
 								<div
-									transition:expandCollapse|local={{ duration: 200 }}
+									transition:expandCollapse={{ duration: 200 }}
 									class="w-full flex flex-col justify-start items-center"
 								>
 									<div class="w-full flex flex-col justify-start items-center pt-5">

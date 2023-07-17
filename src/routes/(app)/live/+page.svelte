@@ -278,14 +278,14 @@
 		</div>
 		{#if allProcesses.length > 0}
 			<div
-				transition:expandCollapse|local={{ duration: 300 }}
+				transition:expandCollapse={{ duration: 300 }}
 				class="w-full px-8 md:px-24 z-0 relative"
 			>
 				<div class="w-full flex flex-wrap items-center justify-center py-4">
 					{#each allProcesses as processObject (processObject.id)}
 						<div
-							in:elementreceive|local={{ key: processObject.id }}
-							out:elementsend|local={{ key: processObject.id }}
+							in:elementreceive={{ key: processObject.id }}
+							out:elementsend={{ key: processObject.id }}
 							animate:flip={{ duration: 300, easing: quadOut }}
 							class="flex items-center justify-center relative z-0 -m-3"
 						>
@@ -302,7 +302,7 @@
 			</div>
 		{:else}
 			<div
-				transition:expandCollapse|local={{ duration: 300 }}
+				transition:expandCollapse={{ duration: 300 }}
 				class="w-full px-8 lg:px-16 relative max-w-lg"
 			>
 				<div class="w-full flex flex-col items-center justify-center py-4">

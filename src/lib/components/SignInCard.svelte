@@ -179,7 +179,7 @@
 >
 	{#if $signInCardStatus === 'sent-otp'}
 		<div
-			transition:expandCollapse|local={{ duration: 200, easing: quadOut, opacity: 0 }}
+			transition:expandCollapse={{ duration: 200, easing: quadOut, opacity: 0 }}
 			class="flex flex-col justify-start"
 		>
 			<div class="pb-2">
@@ -212,7 +212,7 @@
 		{/if}
 		{#if $signInCardStatus === 'sent-otp'}
 			<div
-				transition:expandCollapse|local={{ duration: 200, easing: quadOut, opacity: 0 }}
+				transition:expandCollapse={{ duration: 200, easing: quadOut, opacity: 0 }}
 				class="w-[calc(100%+1.5rem)] md:w-[calc(100%+5rem)] -mx-5 md:-mx-10 pt-4 md:pt-6 -mb-4 md:-mb-7 flex flex-col justify-start"
 			>
 				<div class="w-full flex flex-col justify-start items-center">
@@ -232,7 +232,7 @@
 							</DropdownItem>
 						{:else}
 							<form
-								transition:expandCollapse|local={{ duration: 200, easing: quadOut, opacity: 0 }}
+								transition:expandCollapse={{ duration: 200, easing: quadOut, opacity: 0 }}
 								on:submit|preventDefault={signInWithCode}
 								class="w-full flex flex-col justify-start items-center max-w-xs"
 							>
@@ -270,7 +270,7 @@
 			</div>
 		{:else}
 			<div
-				transition:expandCollapse|local={{ duration: 200, easing: quadOut, opacity: 0 }}
+				transition:expandCollapse={{ duration: 200, easing: quadOut, opacity: 0 }}
 				class="relative z-0 flex flex-col justify-start items-center w-full"
 			>
 				<div class="w-full flex flex-col items-center justify-start p-1 mt-1 md:mt-2 max-w-[21rem]">

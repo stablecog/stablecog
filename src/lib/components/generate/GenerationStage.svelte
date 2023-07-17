@@ -101,7 +101,7 @@
 </script>
 
 <div
-	in:flyAndScale|local={{
+	in:flyAndScale={{
 		duration: 300,
 		yPercent: $windowWidth > mdBreakpoint ? -15 : 50,
 		scaleX: 0.75,

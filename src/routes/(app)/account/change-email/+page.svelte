@@ -121,7 +121,7 @@
 					</div>
 				{:else}
 					<div
-						transition:expandCollapse|local={{ duration: 200, easing: quadOut, opacity: 0 }}
+						transition:expandCollapse={{ duration: 200, easing: quadOut, opacity: 0 }}
 						class="relative z-0 flex flex-col justify-start items-center w-full"
 					>
 						<form
