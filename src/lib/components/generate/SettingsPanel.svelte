@@ -108,9 +108,8 @@
 				withFadedChevron
 				let:item
 				let:onClick
-				let:isSelected
 			>
-				<ModelCard modelId={item.value} {onClick} {isSelected} />
+				<ModelCard modelId={item.value} {onClick} />
 			</TabLikeDropdown>
 		</SettingsPanelItem>
 		<SettingsPanelItem

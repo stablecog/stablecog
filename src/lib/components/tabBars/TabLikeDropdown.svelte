@@ -181,11 +181,10 @@
 						class="w-full flex flex-col justify-start relative z-20 overflow-hidden {dropdownClass}"
 					>
 						<ScrollAreaWithChevron withFade={withFadedChevron} class="w-full flex flex-col">
-							{#each items as item, index (item.value)}
+							{#each items.filter((i) => i.value !== value) as item, index (item.value)}
 								{#if withSlot}
 									<slot
 										{item}
-										isSelected={item.value === value}
 										onClick={() => {
 											isDropdownOpen = false;
 											setTimeout(() => {
@@ -226,7 +225,11 @@
 										</div>
 										<div class="w-full flex items-center">
 											{#if iconSet}
-												<svelte:component this={iconSet} type={item.value} class={iconSetClass} />
+												<svelte:component
+													this={iconSet}
+													type={item.value}
+													class="{iconSetClass} {item.value === value ? 'text-c-primary' : ''}"
+												/>
 											{/if}
 											<div class="flex-shrink min-w-0 flex items-center gap-2">
 												<p
@@ -245,7 +248,6 @@
 										<slot
 											class="hidden"
 											{item}
-											isSelected={item.value === value}
 											onClick={() => {
 												isDropdownOpen = false;
 												setTimeout(() => {

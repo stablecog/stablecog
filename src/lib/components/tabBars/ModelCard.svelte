@@ -7,7 +7,6 @@
 	import { generationAspectRatio } from '$ts/stores/generationSettings';
 
 	export let modelId: TAvailableGenerationModelId;
-	export let isSelected: boolean;
 	export let onClick: () => void;
 
 	const imageVersion = 'v2';
@@ -30,9 +29,7 @@
 >
 	<div
 		class="w-full flex flex-col text-left items-start justify-start transition
-    rounded-lg bg-c-bg-tertiary overflow-hidden z-0 relative ring-2 {isSelected
-			? 'ring-c-primary'
-			: 'ring-c-bg-tertiary'} not-touch:group-hover:ring-c-primary"
+    rounded-lg bg-c-bg-tertiary overflow-hidden z-0 relative ring-2 ring-c-bg-tertiary not-touch:group-hover:ring-c-primary"
 	>
 		<img class="w-full h-auto" {src} {srcset} {sizes} alt={modelName} width="1920" height="960" />
 		<div
