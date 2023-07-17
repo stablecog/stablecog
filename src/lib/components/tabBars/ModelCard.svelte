@@ -9,11 +9,13 @@
 	export let modelId: TAvailableGenerationModelId;
 	export let onClick: () => void;
 
-	const imageVersion = 'v1';
+	const imageVersion = 'v2';
 	const imageUrl = imageUrlFromModelId(modelId);
 	const src = getImgProxySrcDefault(imageUrl);
 	const srcset = getImgProxySrcSet({ src: imageUrl });
 	const sizes = `(min-width: 768px) 240px, 100vw`;
+	const width = '1920';
+	const height = '960';
 
 	// @ts-ignore
 	$: modelName = $LL.Shared.ModelOptions[modelId].realName();
@@ -31,12 +33,12 @@
 		class="w-full flex flex-col text-left items-start justify-start transition
     rounded-lg bg-c-bg-tertiary overflow-hidden z-0 relative ring-2 ring-c-bg-tertiary not-touch:group-hover:ring-c-primary"
 	>
-		<img class="w-full h-auto" {src} {srcset} {sizes} alt={modelName} width="1920" height="1080" />
+		<img class="w-full h-auto" {src} {srcset} {sizes} alt={modelName} {width} {height} />
 		<div
 			class="absolute left-0 bottom-0 bg-c-barrier/7 rounded-b-lg w-full flex items-end justify-between py-1.5 px-1.25 gap-2"
 		>
 			<p
-				class="bg-c-barrier/75 text-sm flex-shrink min-w-0 whitespace-nowrap overflow-hidden overflow-ellipsis
+				class="bg-c-barrier/75 text-base flex-shrink min-w-0 whitespace-nowrap overflow-hidden overflow-ellipsis
         font-medium px-1.5 py-0.5 rounded"
 			>
 				{modelName}
