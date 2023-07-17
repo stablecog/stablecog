@@ -9,7 +9,7 @@
 	export let modelId: TAvailableGenerationModelId;
 	export let onClick: () => void;
 
-	const imageVersion = 'v2';
+	const imageVersion = 'v3';
 	const imageUrl = imageUrlFromModelId(modelId);
 	const src = getImgProxySrcDefault(imageUrl);
 	const srcset = getImgProxySrcSet({ src: imageUrl });
