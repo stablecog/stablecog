@@ -12,7 +12,7 @@
 	export let onClick: () => void;
 	export let isSelected: boolean;
 
-	const imageVersion = 'v3/wide';
+	const imageVersion = 'v4/wide';
 	const imageUrl = imageUrlFromModelId(modelId);
 	const src = getImgProxySrcDefault(imageUrl);
 	const srcset = getImgProxySrcSet({ src: imageUrl });
