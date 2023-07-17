@@ -459,12 +459,12 @@
 				</div>
 			</div>
 			<div class="h-full w-72 hidden md:flex">
-				<!-- <SettingsPanel
+				<SettingsPanel
 					{openSignInModal}
 					{isCheckCompleted}
 					{isInferenceStepsValid}
 					{supportedSchedulerIdDropdownItems}
-				/> -->
+				/>
 			</div>
 		</div>
 	</div>
