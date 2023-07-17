@@ -250,6 +250,17 @@
 												{/if}
 											</div>
 										</div>
+										<slot
+											class="hidden"
+											{item}
+											isSelected={item.value === value}
+											onClick={() => {
+												isDropdownOpen = false;
+												setTimeout(() => {
+													value = item.value;
+												}, 100);
+											}}
+										/>
 									</button>
 								{/if}
 							{/each}
