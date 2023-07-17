@@ -321,7 +321,7 @@
 				{/if}
 				<div use:clickoutside={{ callback: closeSettingsSheet }}>
 					{#if !$windowWidth || $windowWidth < mdBreakpoint}
-						<SettingsSheet
+						<!-- <SettingsSheet
 							{promptBarEstimatedHeightRem}
 							{horizontalListHeightEstimatedRem}
 							{promptBarHeight}
@@ -331,7 +331,7 @@
 							{isCheckCompleted}
 							isOpen={isGenerationSettingsSheetOpen}
 							{supportedSchedulerIdDropdownItems}
-						/>
+						/> -->
 					{/if}
 					<!-- Prompt bar -->
 					<div
@@ -459,12 +459,12 @@
 				</div>
 			</div>
 			<div class="h-full w-72 hidden md:flex">
-				<SettingsPanel
+				<!-- <SettingsPanel
 					{openSignInModal}
 					{isCheckCompleted}
 					{isInferenceStepsValid}
 					{supportedSchedulerIdDropdownItems}
-				/>
+				/> -->
 			</div>
 		</div>
 	</div>
