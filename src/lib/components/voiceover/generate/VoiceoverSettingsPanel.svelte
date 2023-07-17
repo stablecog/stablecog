@@ -50,7 +50,8 @@
 			<TabLikeDropdown
 				name={$LL.Voiceover.Settings.Speaker.Title()}
 				class="w-full"
-				iconSet={IconSpeaker}
+				iconSetForList={IconSpeaker}
+				iconSetForSelected={IconSpeaker}
 				iconSetClass="w-8 h-8 -m-2 mr-3 rounded-md"
 				container={settingsContainer}
 				containerTopMinDistance={containerDropdownPadding}
@@ -68,7 +69,8 @@
 			<TabLikeDropdown
 				name={$LL.Voiceover.Settings.Language.Title()}
 				class="w-full"
-				iconSet={IconLocale}
+				iconSetForList={IconLocale}
+				iconSetForSelected={IconLocale}
 				iconSetClass="w-8 h-8 -m-2 mr-3 rounded-md"
 				container={settingsContainer}
 				containerTopMinDistance={containerDropdownPadding}

@@ -23,7 +23,8 @@
 	export let container: HTMLDivElement | undefined = undefined;
 	export let containerTopMinDistance = 8;
 	export let containerBottomMinDistance = 8;
-	export let iconSet: ConstructorOfATypedSvelteComponent | undefined = undefined;
+	export let iconSetForSelected: ConstructorOfATypedSvelteComponent | undefined = undefined;
+	export let iconSetForList: ConstructorOfATypedSvelteComponent | undefined = undefined;
 	export { classes as class };
 	export let withSlot = false;
 	export let withFadedChevron = false;
@@ -136,8 +137,12 @@
 				</div>
 			</div>
 			<div class="flex-shrink min-w-0 flex items-center">
-				{#if iconSet}
-					<svelte:component this={iconSet} type={selectedItem?.value} class={iconSetClass} />
+				{#if iconSetForSelected}
+					<svelte:component
+						this={iconSetForSelected}
+						type={selectedItem?.value}
+						class={iconSetClass}
+					/>
 				{/if}
 				<p
 					class="flex-shrink whitespace-nowrap overflow-hidden overflow-ellipsis text-base font-medium relative transition
@@ -231,13 +236,13 @@
 										</div>
 									</div>
 									<div class="w-full flex items-center">
-										<!-- {#if iconSet}
+										{#if iconSetForList}
 											<svelte:component
-												this={iconSet}
+												this={iconSetForList}
 												type={item.value}
 												class="{iconSetClass} {isSelected ? 'text-c-primary' : ''}"
 											/>
-										{/if} -->
+										{/if}
 										<div class="flex-shrink min-w-0 flex items-center gap-2">
 											<p
 												class="flex-shrink whitespace-nowrap overflow-hidden overflow-ellipsis text-base font-medium relative transition
