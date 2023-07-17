@@ -23,6 +23,7 @@
 	export { classes as class };
 	export let withSlot = false;
 	export let withFadedChevron = false;
+	export let listClass = '';
 	export let iconSetClass =
 		'w-6 h-6 flex-shrink-0 -ml-1 mr-2 text-c-on-bg not-touch:group-hover:text-c-primary';
 	let classes = '';
@@ -175,19 +176,21 @@
 						bind:clientHeight={dropdownHeight}
 						class="w-full flex flex-col justify-start relative z-20 overflow-hidden {dropdownClass}"
 					>
-						<ScrollAreaWithChevron withFade={withFadedChevron} class="w-full flex flex-col">
+						<ScrollAreaWithChevron
+							withFade={withFadedChevron}
+							class="w-full flex flex-col {listClass}"
+						>
 							{#each items.filter((i) => i.value !== value) as item, index (item.value)}
-								<div class="w-full {!withSlot ? 'hidden' : ''}">
-									<slot
-										{item}
-										onClick={() => {
-											isDropdownOpen = false;
-											setTimeout(() => {
-												value = item.value;
-											}, 100);
-										}}
-									/>
-								</div>
+								<slot
+									class={!withSlot ? 'hidden' : ''}
+									{item}
+									onClick={() => {
+										isDropdownOpen = false;
+										setTimeout(() => {
+											value = item.value;
+										}, 100);
+									}}
+								/>
 								<button
 									disabled={disabled || !isDropdownOpen}
 									on:click={() => {

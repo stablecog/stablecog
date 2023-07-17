@@ -102,8 +102,9 @@
 				containerBottomMinDistance={containerDropdownPadding}
 				items={$availableModelIdDropdownItems}
 				hasTitle={false}
-				bind:value={$generationModelId}
 				name="Model"
+				listClass="pt-1.5 pb-1"
+				bind:value={$generationModelId}
 				withSlot
 				withFadedChevron
 				let:item
