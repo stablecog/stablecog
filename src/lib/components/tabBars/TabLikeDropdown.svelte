@@ -30,7 +30,6 @@
 	export let withFadedChevron = false;
 	export let iconSetClass =
 		'w-6 h-6 flex-shrink-0 -ml-1 mr-2 text-c-on-bg not-touch:group-hover:text-c-primary';
-	export let filterSelected = false;
 	let classes = '';
 
 	let minDropdownHeight = 200;
@@ -182,7 +181,7 @@
 						class="w-full flex flex-col justify-start relative z-20 overflow-hidden {dropdownClass}"
 					>
 						<ScrollAreaWithChevron withFade={withFadedChevron} class="w-full flex flex-col">
-							{#each filterSelected ? items.filter((i) => i.value !== value) : items as item, index (item.value)}
+							{#each items as item, index (item.value)}
 								{#if withSlot}
 									<slot
 										{item}
@@ -227,11 +226,7 @@
 										</div>
 										<div class="w-full flex items-center">
 											{#if iconSet}
-												<svelte:component
-													this={iconSet}
-													type={item.value}
-													class="{iconSetClass} {item.value === value ? 'text-c-primary' : ''}"
-												/>
+												<svelte:component this={iconSet} type={item.value} class={iconSetClass} />
 											{/if}
 											<div class="flex-shrink min-w-0 flex items-center gap-2">
 												<p
@@ -243,10 +238,7 @@
 													{item.label}
 												</p>
 												{#if item.value === value}
-													<div
-														transition:scale|local={{ duration: 200, start: 0, easing: quadOut }}
-														class="w-2 h-2 rounded-full bg-c-primary"
-													/>
+													<div class="w-2 h-2 rounded-full bg-c-primary" />
 												{/if}
 											</div>
 										</div>

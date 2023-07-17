@@ -15,8 +15,6 @@
 	const src = getImgProxySrcDefault(imageUrl);
 	const srcset = getImgProxySrcSet({ src: imageUrl });
 	const sizes = `(min-width: 768px) 240px, 100vw`;
-	const width = '1920';
-	const height = '960';
 
 	// @ts-ignore
 	$: modelName = $LL.Shared.ModelOptions[modelId].realName();
@@ -36,7 +34,7 @@
 			? 'ring-c-primary'
 			: 'ring-c-bg-tertiary'} not-touch:group-hover:ring-c-primary"
 	>
-		<img class="w-full h-auto" {src} {srcset} {sizes} alt={modelName} {width} {height} />
+		<img class="w-full h-auto" {src} {srcset} {sizes} alt={modelName} width="1920" height="960" />
 		<div
 			class="absolute left-0 bottom-0 bg-c-barrier/7 rounded-b-lg w-full flex items-end justify-between py-1.5 px-1.25 gap-2"
 		>
