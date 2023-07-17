@@ -177,7 +177,7 @@
 					>
 						<ScrollAreaWithChevron withFade={withFadedChevron} class="w-full flex flex-col">
 							{#each items.filter((i) => i.value !== value) as item, index (item.value)}
-								{#if withSlot}
+								<div class="w-full {!withSlot ? 'hidden' : ''}">
 									<slot
 										{item}
 										onClick={() => {
@@ -187,50 +187,51 @@
 											}, 100);
 										}}
 									/>
-								{:else}
-									<button
-										disabled={disabled || !isDropdownOpen}
-										on:click={() => {
-											isDropdownOpen = false;
-											setTimeout(() => {
-												value = item.value;
-											}, 100);
-										}}
-										class="touch-manipulation w-full text-left flex items-center justify-start min-w-0 {hasTitle
-											? 'px-4'
-											: 'px-5'} py-3.5 relative z-0 group
+								</div>
+								<button
+									disabled={disabled || !isDropdownOpen}
+									on:click={() => {
+										isDropdownOpen = false;
+										setTimeout(() => {
+											value = item.value;
+										}, 100);
+									}}
+									class="{withSlot
+										? 'hidden'
+										: ''} touch-manipulation w-full text-left flex items-center justify-start min-w-0 {hasTitle
+										? 'px-4'
+										: 'px-5'} py-3.5 relative z-0 group
 											{index === items.filter((i) => i.value !== value).length - 1 ? 'rounded-b-lg' : ''}"
-										type="button"
-										aria-label={item.label}
+									type="button"
+									aria-label={item.label}
+								>
+									<div
+										class="w-full h-full absolute left-0 top-0 overflow-hidden z-0 {index ===
+										items.filter((i) => i.value !== value).length - 1
+											? 'rounded-b-lg'
+											: ''}"
 									>
 										<div
-											class="w-full h-full absolute left-0 top-0 overflow-hidden z-0 {index ===
-											items.filter((i) => i.value !== value).length - 1
-												? 'rounded-b-lg'
-												: ''}"
+											class="w-[200%] h-full absolute left-0 top-0 flex items-center justify-center"
 										>
 											<div
-												class="w-[200%] h-full absolute left-0 top-0 flex items-center justify-center"
-											>
-												<div
-													class="w-full aspect-square origin-left rounded-full transition transform -translate-x-full opacity-0
+												class="w-full aspect-square origin-left rounded-full transition transform -translate-x-full opacity-0
 													bg-c-primary/10 not-touch:group-hover:translate-x-[-45%] not-touch:group-hover:opacity-100"
-												/>
-											</div>
+											/>
 										</div>
-										<div class="w-full flex items-center">
-											{#if iconSet}
-												<svelte:component this={iconSet} type={item.value} class={iconSetClass} />
-											{/if}
-											<p
-												class="flex-shrink whitespace-nowrap overflow-hidden overflow-ellipsis text-base font-medium relative transition
+									</div>
+									<div class="w-full flex items-center">
+										{#if iconSet}
+											<svelte:component this={iconSet} type={item.value} class={iconSetClass} />
+										{/if}
+										<p
+											class="flex-shrink whitespace-nowrap overflow-hidden overflow-ellipsis text-base font-medium relative transition
 												max-w-full z-0 text-c-on-bg not-touch:group-hover:text-c-primary"
-											>
-												{item.label}
-											</p>
-										</div>
-									</button>
-								{/if}
+										>
+											{item.label}
+										</p>
+									</div>
+								</button>
 							{/each}
 						</ScrollAreaWithChevron>
 					</div>
