@@ -1,4 +1,8 @@
 <script lang="ts">
+	import { quadOut } from 'svelte/easing';
+
+	import { scale } from 'svelte/transition';
+
 	import IconChevronDown from '$components/icons/IconChevronDown.svelte';
 	import ScrollAreaWithChevron from '$components/ScrollAreaWithChevron.svelte';
 	import TabBarWrapper from '$components/tabBars/TabBarWrapper.svelte';
@@ -6,6 +10,7 @@
 	import { windowHeight, windowWidth } from '$ts/stores/window';
 	import type { TTab } from '$ts/types/main';
 	import { onMount } from 'svelte';
+	import IconTickOnly from '$components/icons/IconTickOnly.svelte';
 
 	type T = $$Generic;
 	export let value: T;
@@ -25,6 +30,7 @@
 	export let withFadedChevron = false;
 	export let iconSetClass =
 		'w-6 h-6 flex-shrink-0 -ml-1 mr-2 text-c-on-bg not-touch:group-hover:text-c-primary';
+	export let filterSelected = false;
 	let classes = '';
 
 	let minDropdownHeight = 200;
@@ -176,10 +182,11 @@
 						class="w-full flex flex-col justify-start relative z-20 overflow-hidden {dropdownClass}"
 					>
 						<ScrollAreaWithChevron withFade={withFadedChevron} class="w-full flex flex-col">
-							{#each items.filter((i) => i.value !== value) as item, index (item.value)}
+							{#each filterSelected ? items.filter((i) => i.value !== value) : items as item, index (item.value)}
 								{#if withSlot}
 									<slot
 										{item}
+										isSelected={item.value === value}
 										onClick={() => {
 											isDropdownOpen = false;
 											setTimeout(() => {
@@ -220,14 +227,28 @@
 										</div>
 										<div class="w-full flex items-center">
 											{#if iconSet}
-												<svelte:component this={iconSet} type={item.value} class={iconSetClass} />
+												<svelte:component
+													this={iconSet}
+													type={item.value}
+													class="{iconSetClass} {item.value === value ? 'text-c-primary' : ''}"
+												/>
 											{/if}
-											<p
-												class="flex-shrink whitespace-nowrap overflow-hidden overflow-ellipsis text-base font-medium relative transition
-												max-w-full z-0 text-c-on-bg not-touch:group-hover:text-c-primary"
-											>
-												{item.label}
-											</p>
+											<div class="flex-shrink min-w-0 flex items-center gap-2">
+												<p
+													class="flex-shrink whitespace-nowrap overflow-hidden overflow-ellipsis text-base font-medium relative transition
+													max-w-full z-0 {item.value === value
+														? 'text-c-primary'
+														: 'text-c-on-bg'} not-touch:group-hover:text-c-primary"
+												>
+													{item.label}
+												</p>
+												{#if item.value === value}
+													<div
+														transition:scale|local={{ duration: 200, start: 0, easing: quadOut }}
+														class="w-2 h-2 rounded-full bg-c-primary"
+													/>
+												{/if}
+											</div>
 										</div>
 									</button>
 								{/if}

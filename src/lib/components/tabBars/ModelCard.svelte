@@ -7,6 +7,7 @@
 	import { generationAspectRatio } from '$ts/stores/generationSettings';
 
 	export let modelId: TAvailableGenerationModelId;
+	export let isSelected: boolean;
 	export let onClick: () => void;
 
 	const imageVersion = 'v2';
@@ -31,20 +32,22 @@
 >
 	<div
 		class="w-full flex flex-col text-left items-start justify-start transition
-    rounded-lg bg-c-bg-tertiary overflow-hidden z-0 relative ring-2 ring-c-bg-tertiary not-touch:group-hover:ring-c-primary"
+    rounded-lg bg-c-bg-tertiary overflow-hidden z-0 relative ring-2 {isSelected
+			? 'ring-c-primary'
+			: 'ring-c-bg-tertiary'} not-touch:group-hover:ring-c-primary"
 	>
 		<img class="w-full h-auto" {src} {srcset} {sizes} alt={modelName} {width} {height} />
 		<div
 			class="absolute left-0 bottom-0 bg-c-barrier/7 rounded-b-lg w-full flex items-end justify-between py-1.5 px-1.25 gap-2"
 		>
 			<p
-				class="bg-c-barrier/75 text-base flex-shrink min-w-0 whitespace-nowrap overflow-hidden overflow-ellipsis
-        font-medium px-1.5 py-0.5 rounded"
+				class="bg-c-barrier/75 text-sm flex-shrink min-w-0 whitespace-nowrap overflow-hidden overflow-ellipsis
+        font-medium px-1.5 py-0.5 rounded-md"
 			>
 				{modelName}
 			</p>
 			<p
-				class="text-xs px-1 pt-1.25 pb-1 rounded leading-none bg-c-barrier/75 text-c-on-bg font-medium"
+				class="flex-shrink-0 text-xs px-1.25 pt-1.25 pb-1 rounded-md leading-none bg-c-barrier/75 text-c-on-bg font-medium"
 			>
 				{aspectRatioToImageSize[$generationAspectRatio][modelId]?.width ??
 					aspectRatioToImageSize[$generationAspectRatio].default.width} ×
