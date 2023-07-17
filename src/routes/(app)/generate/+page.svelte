@@ -321,7 +321,7 @@
 				{/if}
 				<div use:clickoutside={{ callback: closeSettingsSheet }}>
 					{#if !$windowWidth || $windowWidth < mdBreakpoint}
-						<!-- <SettingsSheet
+						<SettingsSheet
 							{promptBarEstimatedHeightRem}
 							{horizontalListHeightEstimatedRem}
 							{promptBarHeight}
@@ -331,7 +331,7 @@
 							{isCheckCompleted}
 							isOpen={isGenerationSettingsSheetOpen}
 							{supportedSchedulerIdDropdownItems}
-						/> -->
+						/>
 					{/if}
 					<!-- Prompt bar -->
 					<div
