@@ -56,6 +56,7 @@
 	import IconAddImage from '$components/icons/IconAddImage.svelte';
 	import type { TAvailableSchedulerId } from '$ts/constants/schedulers';
 	import ModelCard from '$components/tabBars/ModelCard.svelte';
+	import IconModelImage from '$components/icons/IconModelImage.svelte';
 
 	export let rounding: 'all' | 'top' | 'bottom' = 'all';
 	export let openSignInModal: () => void;
@@ -103,6 +104,8 @@
 				items={$availableModelIdDropdownItems}
 				hasTitle={false}
 				name="Model"
+				iconSet={IconModelImage}
+				iconSetClass="w-8 h-8 -m-2 mr-3 rounded-md"
 				listClass="pt-[calc(0.375rem+2px)] pb-1.5"
 				bind:value={$generationModelId}
 				withSlot

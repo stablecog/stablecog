@@ -17,6 +17,7 @@ type TImgProxyPreset =
 
 type TExtention = 'jpeg' | 'webp' | 'png';
 
+const srcsetEntriesSmall: TImgProxyPreset[] = ['32w', '64w', '128w', '256w'];
 const srcsetEntries: TImgProxyPreset[] = [
 	'128w',
 	'256w',
@@ -62,6 +63,22 @@ export function getImgProxySrcSet({
 }) {
 	let srcset = '';
 	for (let i = 0; i < srcsetEntries.length; i++) {
+		srcset += `${getImgProxySrc({ src, preset: srcsetEntries[i], extention })} ${
+			srcsetEntries[i]
+		},`;
+	}
+	return srcset.slice(0, -1);
+}
+
+export function getImgProxySrcSetSmall({
+	src,
+	extention = extentionDefault
+}: {
+	src: string;
+	extention?: TExtention;
+}) {
+	let srcset = '';
+	for (let i = 0; i < srcsetEntriesSmall.length; i++) {
 		srcset += `${getImgProxySrc({ src, preset: srcsetEntries[i], extention })} ${
 			srcsetEntries[i]
 		},`;

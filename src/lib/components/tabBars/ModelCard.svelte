@@ -12,7 +12,7 @@
 	export let onClick: () => void;
 	export let isSelected: boolean;
 
-	const imageVersion = 'v3';
+	const imageVersion = 'v3/wide';
 	const imageUrl = imageUrlFromModelId(modelId);
 	const src = getImgProxySrcDefault(imageUrl);
 	const srcset = getImgProxySrcSet({ src: imageUrl });
@@ -30,13 +30,13 @@
 
 <button on:click={onClick} class="w-full flex px-[calc(0.5rem+1px)] py-[calc(0.5rem-4px)] group">
 	<div
-		class="w-full transition rounded-lg {isSelected
+		class="w-full transition rounded-xl {isSelected
 			? 'ring-2'
 			: 'ring-0'} ring-c-primary not-touch:group-hover:ring-2"
 	>
 		<div
 			class="w-full flex flex-col text-left items-start justify-start transition
-    	rounded-lg bg-c-bg-tertiary overflow-hidden z-0 relative border-3 border-c-bg-tertiary"
+    	rounded-xl bg-c-bg-tertiary overflow-hidden z-0 relative border-3 border-c-bg-tertiary"
 		>
 			<img
 				loading="lazy"
@@ -48,17 +48,15 @@
 				{width}
 				{height}
 			/>
-			<div
-				class="absolute left-0 bottom-0 bg-c-barrier/7 rounded-b-lg w-full flex items-end justify-between p-1 gap-3"
-			>
+			<div class="absolute left-0 bottom-0 w-full flex items-end justify-between p-1 gap-3">
 				<p
-					class="bg-c-barrier/75 text-sm flex-shrink min-w-0 whitespace-nowrap overflow-hidden overflow-ellipsis
-        font-medium px-1.5 py-0.5 rounded-md"
+					class="bg-c-bg-tertiary/80 text-sm flex-shrink min-w-0 whitespace-nowrap overflow-hidden overflow-ellipsis
+        	font-medium px-1.5 py-0.5 rounded-md"
 				>
 					{modelName}
 				</p>
 				<p
-					class="text-xs px-1.25 pt-1.25 pb-1 rounded-md leading-none bg-c-barrier/75 text-c-on-bg font-medium"
+					class="text-xs px-1.25 pt-1.25 pb-1 rounded-md leading-none bg-c-bg-tertiary/80 text-c-on-bg font-medium"
 				>
 					{aspectRatioToImageSize[$generationAspectRatio][modelId]?.width ??
 						aspectRatioToImageSize[$generationAspectRatio].default.width} ×
@@ -69,7 +67,7 @@
 			{#if isSelected}
 				<div
 					transition:scale={{ duration: 200, easing: quadOut, start: 0 }}
-					class="p-3px bg-c-barrier/75 absolute left-1 top-1 flex-shrink-0 rounded-full"
+					class="p-3px bg-c-bg-tertiary/80 absolute left-1 top-1 flex-shrink-0 rounded-full"
 				>
 					<div class="w-2 h-2 rounded-full bg-c-primary" />
 				</div>
