@@ -25,7 +25,7 @@
 	export { classes as class };
 	export let withFadedChevron = false;
 	export let filterSelected = false;
-	export let listClass = '';
+	export let listClass = 'flex flex-col';
 	export let iconSetClass =
 		'w-6 h-6 flex-shrink-0 -ml-1 mr-2 text-c-on-bg not-touch:group-hover:text-c-primary';
 	let classes = '';
@@ -171,10 +171,7 @@
 						bind:clientHeight={dropdownHeight}
 						class="w-full flex flex-col justify-start relative z-20 overflow-hidden {dropdownClass}"
 					>
-						<ScrollAreaWithChevron
-							withFade={withFadedChevron}
-							class="w-full flex flex-col {listClass}"
-						>
+						<ScrollAreaWithChevron withFade={withFadedChevron} class="w-full {listClass}">
 							{#each filterSelected ? items.filter((i) => i.value !== value) : items as item, index (item.value)}
 								{@const isSelected = item.value === value}
 								{@const onClick = () => {
