@@ -106,7 +106,7 @@
 				name={$LL.Home.ModelDropdown.Title()}
 				iconSet={IconModelImage}
 				iconSetClass="w-11 h-11 -mx-4 -my-5 mr-3 rounded-lg bg-c-bg-tertiary"
-				listClass="w-full flex flex-wrap px-1 md:px-0 pt-[calc(0.375rem+2px)] pb-1.25"
+				listClass="w-full flex flex-wrap px-1 md:px-0 pt-[calc(0.375rem+1px)] pb-1.25"
 				bind:value={$generationModelId}
 				withFadedChevron
 				let:item
