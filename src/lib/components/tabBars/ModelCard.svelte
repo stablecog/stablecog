@@ -12,19 +12,31 @@
 	export let onClick: () => void;
 	export let isSelected: boolean;
 
-	const imageVersion = 'v4/wide';
-	const imageUrl = imageUrlFromModelId(modelId);
+	const imageVersion = 'v4';
+	const imageFolder = '2x1';
+	const imageFolderMd = '3x2';
+	const imageUrl = imageUrlFromModelId({ modelId, folder: imageFolder });
 	const src = getImgProxySrcDefault(imageUrl);
 	const srcset = getImgProxySrcSet({ src: imageUrl });
+	const imageUrlMd = imageUrlFromModelId({ modelId, folder: imageFolderMd });
+	const srcMd = getImgProxySrcDefault(imageUrlMd);
+	const srcsetMd = getImgProxySrcSet({ src: imageUrlMd });
 	const sizes = `(min-width: 768px) 240px, 100vw`;
 	const width = '1920';
+	const widthMd = '1440';
 	const height = '960';
 
 	// @ts-ignore
 	$: modelName = $LL.Shared.ModelOptions[modelId].realName();
 
-	function imageUrlFromModelId(modelId: TAvailableGenerationModelId) {
-		return `${canonicalUrl}/images/models/${imageVersion}/${modelId}.jpeg`;
+	function imageUrlFromModelId({
+		modelId,
+		folder
+	}: {
+		modelId: TAvailableGenerationModelId;
+		folder: string;
+	}) {
+		return `${canonicalUrl}/images/models/${imageVersion}/${folder}/${modelId}.jpeg`;
 	}
 </script>
 
@@ -43,12 +55,22 @@
 		>
 			<img
 				loading="lazy"
-				class="w-full h-auto"
+				class="w-full h-auto md:hidden bg-c-bg-tertiary"
 				{src}
 				{srcset}
 				{sizes}
 				alt={modelName}
 				{width}
+				{height}
+			/>
+			<img
+				loading="lazy"
+				class="w-full h-auto hidden md:block bg-c-bg-tertiary"
+				src={srcMd}
+				srcset={srcsetMd}
+				{sizes}
+				alt={modelName}
+				width={widthMd}
 				{height}
 			/>
 			<div class="absolute left-0 bottom-0 w-full flex items-end justify-between gap-2">
