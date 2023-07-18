@@ -239,7 +239,7 @@
 						class="w-full z-50 md:z-40 flex flex-col rounded-2xl md:overflow-visible md:rounded-none
 						bg-c-bg absolute bottom-0 left-0 md:bg-transparent md:relative"
 					>
-						{#if !$windowWidth || $windowWidth < mdBreakpoint}
+						{#if $windowWidth && $windowWidth < mdBreakpoint}
 							<VoiceoverSettingsSheet
 								{promptBarEstimatedHeightRem}
 								{horizontalListHeightEstimatedRem}
