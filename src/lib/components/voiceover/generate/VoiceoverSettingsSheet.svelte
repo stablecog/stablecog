@@ -32,7 +32,7 @@
 			? 'opacity-100'
 			: 'opacity-0 pointer-events-none'}"
 	>
-		<!-- <VoiceoverSettingsPanel rounding="top" {isCheckCompleted} /> -->
+		<VoiceoverSettingsPanel rounding="top" {isCheckCompleted} />
 	</div>
 	<div
 		class="flex-shrink-0 w-full"
