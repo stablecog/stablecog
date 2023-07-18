@@ -42,7 +42,7 @@
 		bind:this={settingsContainer}
 		class="w-full h-full flex flex-col overflow-auto pt-4 md:pt-5 pb-36 gap-7"
 	>
-		<!-- <SettingsPanelItem
+		<SettingsPanelItem
 			title={$LL.Voiceover.Settings.Speaker.Title()}
 			icon={IconMicrophone}
 			tooltipObj={$voiceoverSpeakerTooltipSettingsPanel}
@@ -59,8 +59,8 @@
 				hasTitle={false}
 				bind:value={$voiceoverSpeakerId}
 			/>
-		</SettingsPanelItem> -->
-		<SettingsPanelItem
+		</SettingsPanelItem>
+		<!-- <SettingsPanelItem
 			title={$LL.Voiceover.Settings.Language.Title()}
 			icon={IconLanguage}
 			tooltipObj={$voiceoverLanguageTooltipSettingsPanel}
@@ -77,7 +77,7 @@
 				hasTitle={false}
 				bind:value={$voiceoverLocale}
 			/>
-		</SettingsPanelItem>
+		</SettingsPanelItem> -->
 		<SettingsPanelItem
 			title={$LL.Voiceover.Settings.VoiceStability.Title()}
 			icon={IconWave}
