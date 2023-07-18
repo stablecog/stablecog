@@ -60,7 +60,7 @@
 				bind:value={$voiceoverSpeakerId}
 			/>
 		</SettingsPanelItem>
-		<SettingsPanelItem
+	  <SettingsPanelItem
 			title={$LL.Voiceover.Settings.Language.Title()}
 			icon={IconLanguage}
 			tooltipObj={$voiceoverLanguageTooltipSettingsPanel}
