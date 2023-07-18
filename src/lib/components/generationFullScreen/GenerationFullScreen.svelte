@@ -258,7 +258,7 @@
 		}
 	};
 
-	const onPopState: svelte.JSX.EventHandler<PopStateEvent, Window> | null | undefined = (e) => {
+	const onPopState: any = (e: any) => {
 		const searchParams = new URLSearchParams(e.currentTarget.location.search);
 		const hasOutputParam = searchParams.has('o');
 		if (!hasOutputParam) {

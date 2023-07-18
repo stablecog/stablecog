@@ -8,7 +8,8 @@
 	export let withFade = false;
 	let classes = 'w-full relative';
 	let container: HTMLDivElement;
-	const showChevronPadding = 12;
+	const hideChevronTopDistancePercent = 25;
+	const hideChevronBottomPadding = 12;
 	let showChevron = false;
 
 	$: containerScrollTop = container?.scrollTop;
@@ -28,7 +29,11 @@
 			containerScrollTop !== undefined &&
 			clientHeight !== undefined
 		) {
-			showChevron = containerScrollHeight - containerScrollTop - clientHeight > showChevronPadding;
+			const progressPercent = (containerScrollTop / (containerScrollHeight - clientHeight)) * 100;
+			const distanceToBottom = containerScrollHeight - containerScrollTop - clientHeight;
+			showChevron =
+				progressPercent < hideChevronTopDistancePercent &&
+				distanceToBottom > hideChevronBottomPadding;
 		}
 	};
 </script>
@@ -49,8 +54,8 @@
 		<div
 			transition:fly|local={{ duration: 200, easing: quadOut, y: 40, opacity: 0 }}
 			class=" {withFade
-				? 'w-full bg-gradient-to-t from-c-bg-secondary via-c-bg-secondary/70 to-c-bg-secondary/0 pt-6'
-				: ''} absolute left-1/2 transform -translate-x-1/2 bottom-0 flex justify-center items-end p-2 z-50
+				? 'w-full bg-gradient-to-t from-c-bg-secondary to-c-bg-secondary/0'
+				: ''} absolute left-1/2 transform -translate-x-1/2 bottom-0 flex justify-center items-end px-2 pb-1 pt-6 z-50
       	pointer-events-none"
 		>
 			<IconChevronDown class="w-6 h-6 text-c-on-bg/75 transition" />

@@ -12,19 +12,35 @@
 	export let sidebarWrapperHeight: number;
 	export let sidebarWrapper: HTMLDivElement;
 
-	$: showSidebarChevron =
+	const hideChevronTopDistancePercent = 25;
+	const hideChevronBottomPadding = 12;
+
+	$: progressPercent =
 		sidebarInnerContainerHeight !== undefined &&
 		sidebarWrapperScrollTop !== undefined &&
 		sidebarWrapperScrollHeight !== undefined &&
-		sidebarWrapperHeight !== undefined &&
-		sidebarWrapperScrollTop + 16 < sidebarWrapperScrollHeight - sidebarWrapperHeight &&
-		$windowWidth >= lgBreakpoint;
+		sidebarWrapperHeight !== undefined
+			? (sidebarWrapperScrollTop / (sidebarWrapperScrollHeight - sidebarWrapperHeight)) * 100
+			: undefined;
+	$: distanceToBottom =
+		sidebarInnerContainerHeight !== undefined &&
+		sidebarWrapperScrollHeight !== undefined &&
+		sidebarWrapperScrollTop !== undefined &&
+		sidebarWrapperHeight !== undefined
+			? sidebarWrapperScrollHeight - sidebarWrapperScrollTop - sidebarWrapperHeight
+			: undefined;
+
+	$: showSidebarChevron =
+		$windowWidth >= lgBreakpoint && progressPercent !== undefined && distanceToBottom !== undefined
+			? progressPercent < hideChevronTopDistancePercent &&
+			  distanceToBottom > hideChevronBottomPadding
+			: false;
 </script>
 
 {#if showSidebarChevron}
 	<div
 		transition:fly={{ duration: 200, easing: quadOut, y: 50, opacity: 0 }}
-		class="absolute left-1/2 transform -translate-x-1/2 bottom-0 flex justify-center items-end p-1 z-50"
+		class="absolute left-1/2 transform -translate-x-1/2 bottom-0 flex justify-center items-end z-50"
 	>
 		<IconButton
 			name="Scroll to Sidebar Bottom"
@@ -37,11 +53,9 @@
 				}
 			}}
 		>
-			<div class="p-0.5">
-				<IconChevronDown
-					class="w-7 h-7 text-c-on-bg/40 transition not-touch:group-hover/iconbutton:text-c-primary"
-				/>
-			</div>
+			<IconChevronDown
+				class="w-7 h-7 text-c-on-bg/50 transition not-touch:group-hover/iconbutton:text-c-primary"
+			/>
 		</IconButton>
 	</div>
 {/if}
