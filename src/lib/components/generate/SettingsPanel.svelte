@@ -57,6 +57,7 @@
 	import type { TAvailableSchedulerId } from '$ts/constants/schedulers';
 	import ModelCard from '$components/tabBars/ModelCard.svelte';
 	import IconModelImage from '$components/icons/IconModelImage.svelte';
+	import TabLikeDropdownWithSlot from '$components/tabBars/TabLikeDropdownWithSlot.svelte';
 
 	export let rounding: 'all' | 'top' | 'bottom' = 'all';
 	export let openSignInModal: () => void;
@@ -96,7 +97,7 @@
 			icon={IconBrain}
 			tooltipObj={$modelTooltipSettingsPanel}
 		>
-			<TabLikeDropdown
+			<TabLikeDropdownWithSlot
 				class="w-full"
 				container={settingsContainer}
 				containerTopMinDistance={containerDropdownPadding}
@@ -114,7 +115,7 @@
 				let:isSelected
 			>
 				<ModelCard modelId={item.value} {onClick} {isSelected} />
-			</TabLikeDropdown>
+			</TabLikeDropdownWithSlot>
 		</SettingsPanelItem>
 		<SettingsPanelItem
 			title={$LL.Home.ImageInput.Title()}
