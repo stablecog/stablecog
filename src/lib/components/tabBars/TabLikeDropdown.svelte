@@ -136,9 +136,7 @@
 				</div>
 			</div>
 			<div class="flex-shrink min-w-0 flex items-center">
-				{#if iconSet}
-					<svelte:component this={iconSet} type={selectedItem?.value} class={iconSetClass} />
-				{/if}
+				<svelte:component this={iconSet} type={selectedItem?.value} class={iconSetClass} />
 				<p
 					class="flex-shrink whitespace-nowrap overflow-hidden overflow-ellipsis text-base font-medium relative transition
 					max-w-full z-0 text-c-on-bg not-touch:group-hover:text-c-primary"
