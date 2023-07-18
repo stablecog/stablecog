@@ -320,19 +320,17 @@
 					/>
 				{/if}
 				<div use:clickoutside={{ callback: closeSettingsSheet }}>
-					{#if $windowWidth && $windowWidth < mdBreakpoint}
-						<SettingsSheet
-							{promptBarEstimatedHeightRem}
-							{horizontalListHeightEstimatedRem}
-							{promptBarHeight}
-							{horizontalListHeight}
-							{isInferenceStepsValid}
-							{openSignInModal}
-							{isCheckCompleted}
-							isOpen={isGenerationSettingsSheetOpen}
-							{supportedSchedulerIdDropdownItems}
-						/>
-					{/if}
+					<SettingsSheet
+						{promptBarEstimatedHeightRem}
+						{horizontalListHeightEstimatedRem}
+						{promptBarHeight}
+						{horizontalListHeight}
+						{isInferenceStepsValid}
+						{openSignInModal}
+						{isCheckCompleted}
+						isOpen={isGenerationSettingsSheetOpen}
+						{supportedSchedulerIdDropdownItems}
+					/>
 					<!-- Prompt bar -->
 					<div
 						class="w-full z-50 flex flex-col rounded-2xl overflow-hidden md:overflow-visible md:rounded-none bg-transparent md:bg-transparent absolute left-0 bottom-0

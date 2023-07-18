@@ -32,7 +32,9 @@
 			? 'opacity-100'
 			: 'opacity-0 pointer-events-none'}"
 	>
-		<VoiceoverSettingsPanel rounding="top" {isCheckCompleted} />
+		{#if $windowWidth && $windowWidth < mdBreakpoint}
+			<VoiceoverSettingsPanel rounding="top" {isCheckCompleted} />
+		{/if}
 	</div>
 	<div
 		class="flex-shrink-0 w-full"

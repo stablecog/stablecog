@@ -37,13 +37,15 @@
 			? 'opacity-100'
 			: 'opacity-0 pointer-events-none'}"
 	>
-		<SettingsPanel
-			rounding="top"
-			{openSignInModal}
-			{isCheckCompleted}
-			{isInferenceStepsValid}
-			{supportedSchedulerIdDropdownItems}
-		/>
+		{#if $windowWidth && $windowWidth < mdBreakpoint}
+			<SettingsPanel
+				rounding="top"
+				{openSignInModal}
+				{isCheckCompleted}
+				{isInferenceStepsValid}
+				{supportedSchedulerIdDropdownItems}
+			/>
+		{/if}
 	</div>
 	<div
 		class="flex-shrink-0 w-full"
