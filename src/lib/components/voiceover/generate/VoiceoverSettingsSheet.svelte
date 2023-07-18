@@ -2,7 +2,6 @@
 	import { mdBreakpoint } from '$components/generationFullScreen/constants';
 	import VoiceoverSettingsPanel from '$components/voiceover/generate/VoiceoverSettingsPanel.svelte';
 	import { windowWidth } from '$ts/stores/window';
-	import { onMount } from 'svelte';
 
 	export let isOpen: boolean;
 	export let isCheckCompleted: boolean;
