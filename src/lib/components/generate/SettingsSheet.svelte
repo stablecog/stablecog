@@ -37,13 +37,13 @@
 			? 'opacity-100'
 			: 'opacity-0 pointer-events-none'}"
 	>
-		<SettingsPanel
+		<!-- <SettingsPanel
 			rounding="top"
 			{openSignInModal}
 			{isCheckCompleted}
 			{isInferenceStepsValid}
 			{supportedSchedulerIdDropdownItems}
-		/>
+		/> -->
 	</div>
 	<div
 		class="flex-shrink-0 w-full"
