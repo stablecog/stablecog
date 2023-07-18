@@ -105,10 +105,9 @@
 				hasTitle={false}
 				name="Model"
 				iconSet={IconModelImage}
-				iconSetClass="w-11 h-11 -mx-4 -my-5 mr-3 rounded-lg"
+				iconSetClass="w-11 h-11 -mx-4 -my-5 mr-3 rounded-lg bg-c-bg-tertiary"
 				listClass="pt-[calc(0.375rem+2px)] pb-1.5"
 				bind:value={$generationModelId}
-				withSlot
 				withFadedChevron
 				let:item
 				let:onClick
