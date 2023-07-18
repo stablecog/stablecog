@@ -7,7 +7,8 @@
 	export { classes as class };
 	export let sizes = '44px';
 	let classes = 'w-6 h-6';
-	const imageVersion = 'v4/square';
+	const imageVersion = 'v5';
+	const imageFolder = '1x1';
 	$: imageUrl = imageUrlFromModelId(type);
 	$: src = getImgProxySrc({ src: imageUrl, preset: '64w' });
 	$: srcset = getImgProxySrcSetSmall({ src: imageUrl });
@@ -15,7 +16,7 @@
 	const height = '64';
 
 	function imageUrlFromModelId(type: TAvailableGenerationModelId) {
-		return `${canonicalUrl}/images/models/${imageVersion}/${type}.jpeg`;
+		return `${canonicalUrl}/images/models/${imageVersion}/${imageFolder}/${type}.jpeg`;
 	}
 </script>
 
