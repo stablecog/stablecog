@@ -93,7 +93,7 @@
 			{#if isSelected}
 				<div
 					transition:scale={{ duration: 150, easing: quadOut, start: 0 }}
-					class="p-3px bg-c-bg-tertiary/80 absolute left-1 top-1 flex-shrink-0 rounded-full"
+					class="p-3px bg-c-bg-tertiary absolute left-1 top-1 flex-shrink-0 rounded-full"
 				>
 					<div class="w-2 h-2 rounded-full bg-c-primary" />
 				</div>
