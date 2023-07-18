@@ -16,7 +16,7 @@
 	export let openSignInModal: () => void;
 	export let supportedSchedulerIdDropdownItems: TTab<TAvailableSchedulerId>[];
 
-	let mounted = true;
+	let mounted = false;
 	onMount(() => {
 		mounted = true;
 	});

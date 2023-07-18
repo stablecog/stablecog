@@ -2,6 +2,7 @@
 	import { mdBreakpoint } from '$components/generationFullScreen/constants';
 	import VoiceoverSettingsPanel from '$components/voiceover/generate/VoiceoverSettingsPanel.svelte';
 	import { windowWidth } from '$ts/stores/window';
+	import { onMount } from 'svelte';
 
 	export let isOpen: boolean;
 	export let isCheckCompleted: boolean;
@@ -9,6 +10,11 @@
 	export let horizontalListHeight: number | undefined;
 	export let promptBarEstimatedHeightRem: number;
 	export let horizontalListHeightEstimatedRem: number;
+
+	let mounted = false;
+	onMount(() => {
+		mounted = true;
+	});
 </script>
 
 <div
@@ -32,7 +38,9 @@
 			? 'opacity-100'
 			: 'opacity-0 pointer-events-none'}"
 	>
-		<!-- <VoiceoverSettingsPanel rounding="top" {isCheckCompleted} /> -->
+		{#if mounted}
+			<VoiceoverSettingsPanel rounding="top" {isCheckCompleted} />
+		{/if}
 	</div>
 	<div
 		class="flex-shrink-0 w-full"
