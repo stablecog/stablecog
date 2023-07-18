@@ -4,7 +4,6 @@
 	import type { TAvailableSchedulerId } from '$ts/constants/schedulers';
 	import { windowWidth } from '$ts/stores/window';
 	import type { TTab } from '$ts/types/main';
-	import { onMount } from 'svelte';
 
 	export let isOpen: boolean;
 	export let isCheckCompleted: boolean;
