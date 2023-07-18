@@ -1,8 +1,6 @@
 <script lang="ts">
 	import { scale } from 'svelte/transition';
-
 	import { quadOut } from 'svelte/easing';
-
 	import IconChevronDown from '$components/icons/IconChevronDown.svelte';
 	import ScrollAreaWithChevron from '$components/ScrollAreaWithChevron.svelte';
 	import TabBarWrapper from '$components/tabBars/TabBarWrapper.svelte';
