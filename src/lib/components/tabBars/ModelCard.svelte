@@ -12,7 +12,7 @@
 	export let onClick: () => void;
 	export let isSelected: boolean;
 
-	const imageVersion = 'v5';
+	const imageVersion = 'v6';
 	const imageFolder = '2x1';
 	const imageFolderMd = '3x2';
 	const imageUrl = imageUrlFromModelId({ modelId, folder: imageFolder });
