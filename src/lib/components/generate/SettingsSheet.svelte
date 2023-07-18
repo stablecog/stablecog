@@ -4,6 +4,7 @@
 	import type { TAvailableSchedulerId } from '$ts/constants/schedulers';
 	import { windowWidth } from '$ts/stores/window';
 	import type { TTab } from '$ts/types/main';
+	import { onMount } from 'svelte';
 
 	export let isOpen: boolean;
 	export let isCheckCompleted: boolean;
@@ -14,6 +15,11 @@
 	export let isInferenceStepsValid: <T>(s: T) => boolean;
 	export let openSignInModal: () => void;
 	export let supportedSchedulerIdDropdownItems: TTab<TAvailableSchedulerId>[];
+
+	let mounted = true;
+	onMount(() => {
+		mounted = true;
+	});
 </script>
 
 <div
@@ -37,13 +43,15 @@
 			? 'opacity-100'
 			: 'opacity-0 pointer-events-none'}"
 	>
-		<!-- <SettingsPanel
-			rounding="top"
-			{openSignInModal}
-			{isCheckCompleted}
-			{isInferenceStepsValid}
-			{supportedSchedulerIdDropdownItems}
-		/> -->
+		{#if mounted}
+			<SettingsPanel
+				rounding="top"
+				{openSignInModal}
+				{isCheckCompleted}
+				{isInferenceStepsValid}
+				{supportedSchedulerIdDropdownItems}
+			/>
+		{/if}
 	</div>
 	<div
 		class="flex-shrink-0 w-full"
