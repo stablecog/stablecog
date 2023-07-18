@@ -42,7 +42,7 @@
 		bind:this={settingsContainer}
 		class="w-full h-full flex flex-col overflow-auto pt-4 md:pt-5 pb-36 gap-7"
 	>
-		<!-- <SettingsPanelItem
+		<SettingsPanelItem
 			title={$LL.Voiceover.Settings.Speaker.Title()}
 			icon={IconMicrophone}
 			tooltipObj={$voiceoverSpeakerTooltipSettingsPanel}
@@ -58,24 +58,6 @@
 				items={$voiceoverSpeakerDropdownItems}
 				hasTitle={false}
 				bind:value={$voiceoverSpeakerId}
-			/>
-		</SettingsPanelItem> -->
-		<SettingsPanelItem
-			title={$LL.Voiceover.Settings.Language.Title()}
-			icon={IconLanguage}
-			tooltipObj={$voiceoverLanguageTooltipSettingsPanel}
-		>
-			<TabLikeDropdown
-				name={$LL.Voiceover.Settings.Language.Title()}
-				class="w-full"
-				iconSet={IconLocale}
-				iconSetClass="w-8 h-8 -m-2 mr-3 rounded-md"
-				container={settingsContainer}
-				containerTopMinDistance={containerDropdownPadding}
-				containerBottomMinDistance={containerDropdownPadding}
-				items={$voiceoverLocaleDropdownItems}
-				hasTitle={false}
-				bind:value={$voiceoverLocale}
 			/>
 		</SettingsPanelItem>
 		<SettingsPanelItem
