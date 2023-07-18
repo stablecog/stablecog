@@ -63,7 +63,7 @@
 		/>
 		<p
 			class="absolute left-0.75 bottom-0.75 text-xxs leading-none
-			text-c-on-bg font-medium bg-c-bg-tertiary px-1.25 pt-1.25 pb-0.75 rounded"
+			text-c-on-bg font-medium bg-c-bg-tertiary px-1.25 pt-1 pb-0.75 rounded"
 		>
 			{aspectRatioToImageSize[$generationAspectRatio][modelId]?.width ??
 				aspectRatioToImageSize[$generationAspectRatio].default.width} ×
