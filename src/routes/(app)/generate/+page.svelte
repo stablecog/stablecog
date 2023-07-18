@@ -320,7 +320,7 @@
 					/>
 				{/if}
 				<div use:clickoutside={{ callback: closeSettingsSheet }}>
-					{#if !$windowWidth || $windowWidth < mdBreakpoint}
+					{#if $windowWidth && $windowWidth < mdBreakpoint}
 						<SettingsSheet
 							{promptBarEstimatedHeightRem}
 							{horizontalListHeightEstimatedRem}
