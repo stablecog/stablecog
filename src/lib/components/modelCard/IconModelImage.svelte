@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { modelImageVersion } from '$components/modelCard/constants';
 	import type { TAvailableGenerationModelId } from '$ts/constants/generationModels';
 	import { canonicalUrl } from '$ts/constants/main';
 	import { getImgProxySrc, getImgProxySrcSetSmall } from '$ts/helpers/imgproxy';
@@ -7,7 +8,6 @@
 	export { classes as class };
 	export let sizes = '44px';
 	let classes = 'w-6 h-6';
-	const imageVersion = 'v7';
 	const imageFolder = '1x1';
 	$: imageUrl = imageUrlFromModelId(type);
 	$: src = getImgProxySrc({ src: imageUrl, preset: '64w' });
@@ -16,7 +16,7 @@
 	const height = '64';
 
 	function imageUrlFromModelId(type: TAvailableGenerationModelId) {
-		return `${canonicalUrl}/images/models/${imageVersion}/${imageFolder}/${type}.jpeg`;
+		return `${canonicalUrl}/images/models/${modelImageVersion}/${imageFolder}/${type}.jpeg`;
 	}
 </script>
 

@@ -55,8 +55,8 @@
 	import SettingsPanelItem from '$components/generate/SettingsPanelItem.svelte';
 	import IconAddImage from '$components/icons/IconAddImage.svelte';
 	import type { TAvailableSchedulerId } from '$ts/constants/schedulers';
-	import ModelCard from '$components/tabBars/ModelCard.svelte';
-	import IconModelImage from '$components/icons/IconModelImage.svelte';
+	import ModelCard from '$components/modelCard/ModelCard.svelte';
+	import IconModelImage from '$components/modelCard/IconModelImage.svelte';
 
 	export let rounding: 'all' | 'top' | 'bottom' = 'all';
 	export let openSignInModal: () => void;
@@ -106,7 +106,7 @@
 				name={$LL.Home.ModelDropdown.Title()}
 				iconSet={IconModelImage}
 				iconSetClass="w-11 h-11 -mx-4 -my-5 mr-3 rounded-lg bg-c-bg-tertiary"
-				listClass="w-full flex flex-wrap px-1 md:px-0 pt-[calc(0.375rem+2px)] pb-1.5"
+				listClass="w-full flex flex-wrap px-1 md:px-0 pt-[calc(0.375rem+2px)] pb-1.25"
 				bind:value={$generationModelId}
 				withFadedChevron
 				let:item

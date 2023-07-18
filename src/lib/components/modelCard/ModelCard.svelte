@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { modelImageVersion } from '$components/modelCard/constants';
 	import LL from '$i18n/i18n-svelte';
 	import type { TAvailableGenerationModelId } from '$ts/constants/generationModels';
 	import { aspectRatioToImageSize } from '$ts/constants/generationSize';
@@ -10,7 +11,6 @@
 	export let onClick: () => void;
 	export let isSelected: boolean;
 
-	const imageVersion = 'v7';
 	const imageFolder = '16x9';
 	const imageUrl = imageUrlFromModelId({ modelId, folder: imageFolder });
 	const src = getImgProxySrcDefault(imageUrl);
@@ -29,7 +29,7 @@
 		modelId: TAvailableGenerationModelId;
 		folder: string;
 	}) {
-		return `${canonicalUrl}/images/models/${imageVersion}/${folder}/${modelId}.jpeg`;
+		return `${canonicalUrl}/images/models/${modelImageVersion}/${folder}/${modelId}.jpeg`;
 	}
 </script>
 
@@ -63,7 +63,7 @@
 		/>
 		<p
 			class="absolute left-0.75 bottom-0.75 text-xxs leading-none
-			text-c-on-bg font-medium bg-c-bg-tertiary px-1.25 pt-1 pb-0.5 rounded"
+			text-c-on-bg font-medium bg-c-bg-tertiary px-1.25 pt-1.25 pb-0.75 rounded"
 		>
 			{aspectRatioToImageSize[$generationAspectRatio][modelId]?.width ??
 				aspectRatioToImageSize[$generationAspectRatio].default.width} ×
