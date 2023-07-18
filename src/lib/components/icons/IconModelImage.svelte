@@ -5,7 +5,7 @@
 
 	export let type: TAvailableGenerationModelId;
 	export { classes as class };
-	export let sizes = '32px';
+	export let sizes = '44px';
 	let classes = 'w-6 h-6';
 	const imageVersion = 'v4/square';
 	$: imageUrl = imageUrlFromModelId(type);

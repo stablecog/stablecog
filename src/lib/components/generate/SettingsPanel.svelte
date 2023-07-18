@@ -105,7 +105,7 @@
 				hasTitle={false}
 				name="Model"
 				iconSet={IconModelImage}
-				iconSetClass="w-8 h-8 -m-2 mr-3 rounded-md"
+				iconSetClass="w-11 h-11 -mx-4 -my-5 mr-3 rounded-lg"
 				listClass="pt-[calc(0.375rem+2px)] pb-1.5"
 				bind:value={$generationModelId}
 				withSlot
