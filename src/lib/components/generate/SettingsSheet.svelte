@@ -25,10 +25,10 @@
 		? '0%'
 		: `calc(100% - ${promptBarHeight + horizontalListHeight}px)`});"
 	class="w-full h-[min(calc(100%-3rem),60rem)] z-40 gap-1 flex flex-col bg-c-bg rounded-t-2xl ring-2 ring-c-bg-secondary
-										md:ring-0 md:rounded-none {isOpen
+		md:ring-0 md:rounded-none {isOpen
 		? 'shadow-sheet-open shadow-c-shadow/[var(--o-shadow-strongest)]'
 		: 'shadow-sheet-closed shadow-c-shadow/[var(--o-shadow-stronger)]'} md:shadow-none
-										md:bg-transparent absolute left-0 bottom-0 md:hidden transform transition duration-250 overflow-hidden md:overflow-auto"
+		md:bg-transparent absolute left-0 bottom-0 md:hidden transform transition duration-250 overflow-hidden md:overflow-auto"
 >
 	<div
 		class="w-full flex-1 h-full overflow-hidden flex flex-col z-50 transition {$windowWidth &&
@@ -37,13 +37,15 @@
 			? 'opacity-100'
 			: 'opacity-0 pointer-events-none'}"
 	>
-		<SettingsPanel
-			rounding="top"
-			{openSignInModal}
-			{isCheckCompleted}
-			{isInferenceStepsValid}
-			{supportedSchedulerIdDropdownItems}
-		/>
+		{#if $windowWidth && $windowWidth < mdBreakpoint}
+			<SettingsPanel
+				rounding="top"
+				{openSignInModal}
+				{isCheckCompleted}
+				{isInferenceStepsValid}
+				{supportedSchedulerIdDropdownItems}
+			/>
+		{/if}
 	</div>
 	<div
 		class="flex-shrink-0 w-full"

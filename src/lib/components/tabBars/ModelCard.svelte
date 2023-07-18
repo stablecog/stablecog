@@ -51,15 +51,16 @@
 				{width}
 				{height}
 			/>
-			<div class="absolute left-0 bottom-0 w-full flex items-end justify-between p-1 gap-3">
+			<div class="absolute left-0 bottom-0 w-full flex items-end justify-between gap-2">
 				<p
-					class="bg-c-bg-tertiary/80 text-sm flex-shrink min-w-0 whitespace-nowrap overflow-hidden overflow-ellipsis
-        	font-medium px-1.5 py-0.5 rounded"
+					class="bg-c-bg-tertiary text-base flex-shrink min-w-0 whitespace-nowrap overflow-hidden overflow-ellipsis
+        	font-medium pl-1.5 pr-1.75 pt-0.5 pb-0.25 rounded-tr-lg"
 				>
 					{modelName}
 				</p>
 				<p
-					class="text-xs px-1.25 pt-1.25 pb-1 rounded leading-none bg-c-bg-tertiary/80 text-c-on-bg font-medium"
+					class="flex-shrink-0 text-xxs px-1.25 pt-1.25 pb-0.75 rounded-tl-md leading-none bg-c-bg-tertiary
+					text-c-on-bg font-medium"
 				>
 					{aspectRatioToImageSize[$generationAspectRatio][modelId]?.width ??
 						aspectRatioToImageSize[$generationAspectRatio].default.width} ×
@@ -69,7 +70,7 @@
 			</div>
 			{#if isSelected}
 				<div
-					transition:scale={{ duration: 200, easing: quadOut, start: 0 }}
+					transition:scale={{ duration: 150, easing: quadOut, start: 0 }}
 					class="p-3px bg-c-bg-tertiary/80 absolute left-1 top-1 flex-shrink-0 rounded-full"
 				>
 					<div class="w-2 h-2 rounded-full bg-c-primary" />

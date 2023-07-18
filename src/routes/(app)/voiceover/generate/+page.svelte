@@ -239,16 +239,14 @@
 						class="w-full z-50 md:z-40 flex flex-col rounded-2xl md:overflow-visible md:rounded-none
 						bg-c-bg absolute bottom-0 left-0 md:bg-transparent md:relative"
 					>
-						{#if !$windowWidth || $windowWidth < mdBreakpoint}
-							<VoiceoverSettingsSheet
-								{promptBarEstimatedHeightRem}
-								{horizontalListHeightEstimatedRem}
-								{promptBarHeight}
-								{horizontalListHeight}
-								{isCheckCompleted}
-								isOpen={isSettingsSheetOpen}
-							/>
-						{/if}
+						<VoiceoverSettingsSheet
+							{promptBarEstimatedHeightRem}
+							{horizontalListHeightEstimatedRem}
+							{promptBarHeight}
+							{horizontalListHeight}
+							{isCheckCompleted}
+							isOpen={isSettingsSheetOpen}
+						/>
 						<div
 							bind:clientHeight={horizontalListHeight}
 							class="w-full h-17 flex flex-col overflow-hidden relative z-40 md:hidden rounded-t-2xl

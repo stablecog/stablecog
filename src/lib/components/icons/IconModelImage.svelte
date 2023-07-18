@@ -19,4 +19,6 @@
 	}
 </script>
 
-<img loading="lazy" class={classes} {src} {srcset} {sizes} alt={type} {width} {height} />
+{#key src}
+	<img loading="lazy" class={classes} {src} {srcset} {sizes} alt={type} {width} {height} />
+{/key}
