@@ -92,7 +92,7 @@
 				name={$LL.Home.AspectRatioDropdown.Title()}
 			/>
 		</SettingsPanelItem>
-		<SettingsPanelItem
+		<!-- <SettingsPanelItem
 			title={$LL.Home.ModelDropdown.Title()}
 			icon={IconBrain}
 			tooltipObj={$modelTooltipSettingsPanel}
@@ -116,7 +116,7 @@
 			>
 				<ModelCard modelId={item.value} {onClick} {isSelected} />
 			</TabLikeDropdownWithSlot>
-		</SettingsPanelItem>
+		</SettingsPanelItem> -->
 		<SettingsPanelItem
 			title={$LL.Home.ImageInput.Title()}
 			icon={IconAddImage}
