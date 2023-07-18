@@ -10,7 +10,7 @@
 	export let onClick: () => void;
 	export let isSelected: boolean;
 
-	const imageVersion = 'v6';
+	const imageVersion = 'v7';
 	const imageFolder = '16x9';
 	const imageUrl = imageUrlFromModelId({ modelId, folder: imageFolder });
 	const src = getImgProxySrcDefault(imageUrl);
@@ -35,7 +35,7 @@
 
 <button
 	on:click={onClick}
-	class="touch-manipulation w-1/2 md:w-full flex flex-col p-1 md:px-[calc(0.5rem+1px)] md:py-[calc(0.5rem-2px)] group"
+	class="touch-manipulation w-1/2 md:w-full flex flex-col p-1 md:px-[calc(0.5rem+1px)] md:py-[calc(0.5rem-3px)] group"
 >
 	<div
 		class="w-full flex flex-col text-left items-start justify-start transition

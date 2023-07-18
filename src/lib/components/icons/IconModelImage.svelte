@@ -7,7 +7,7 @@
 	export { classes as class };
 	export let sizes = '44px';
 	let classes = 'w-6 h-6';
-	const imageVersion = 'v6';
+	const imageVersion = 'v7';
 	const imageFolder = '1x1';
 	$: imageUrl = imageUrlFromModelId(type);
 	$: src = getImgProxySrc({ src: imageUrl, preset: '64w' });
