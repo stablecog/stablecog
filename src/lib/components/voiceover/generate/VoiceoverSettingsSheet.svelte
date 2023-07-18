@@ -10,11 +10,6 @@
 	export let horizontalListHeight: number | undefined;
 	export let promptBarEstimatedHeightRem: number;
 	export let horizontalListHeightEstimatedRem: number;
-
-	let mounted = false;
-	onMount(() => {
-		mounted = true;
-	});
 </script>
 
 <div
@@ -38,9 +33,7 @@
 			? 'opacity-100'
 			: 'opacity-0 pointer-events-none'}"
 	>
-		{#if mounted}
-			<VoiceoverSettingsPanel rounding="top" {isCheckCompleted} />
-		{/if}
+		<!-- <VoiceoverSettingsPanel rounding="top" {isCheckCompleted} /> -->
 	</div>
 	<div
 		class="flex-shrink-0 w-full"

@@ -15,11 +15,6 @@
 	export let isInferenceStepsValid: <T>(s: T) => boolean;
 	export let openSignInModal: () => void;
 	export let supportedSchedulerIdDropdownItems: TTab<TAvailableSchedulerId>[];
-
-	let mounted = false;
-	onMount(() => {
-		mounted = true;
-	});
 </script>
 
 <div
@@ -43,15 +38,13 @@
 			? 'opacity-100'
 			: 'opacity-0 pointer-events-none'}"
 	>
-		{#if mounted}
-			<SettingsPanel
-				rounding="top"
-				{openSignInModal}
-				{isCheckCompleted}
-				{isInferenceStepsValid}
-				{supportedSchedulerIdDropdownItems}
-			/>
-		{/if}
+		<SettingsPanel
+			rounding="top"
+			{openSignInModal}
+			{isCheckCompleted}
+			{isInferenceStepsValid}
+			{supportedSchedulerIdDropdownItems}
+		/>
 	</div>
 	<div
 		class="flex-shrink-0 w-full"
