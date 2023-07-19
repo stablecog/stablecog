@@ -72,11 +72,11 @@ Below is the simplest example of generating an image. You just send a prompt and
 </Property>
 <Property name="width" type="int" min={256} max={1024}>
 	The width of the image. The value should be a multiple of <Code>8</Code> and follow this formula:
-  <br><Code>{"width * height * inference steps < 640 * 640 * 50"}</Code>.
+  <br><Code>{"width * height * inference steps <= 1024 * 1024 * 30"}</Code>.
 </Property>
 <Property name="height" type="int" min={256} max={1024}>
 	The height of the image. The value should be a multiple of <Code>8</Code> and follow this formula:
-  <br><Code>{"height * width * inference steps < 640 * 640 * 50"}</Code>.
+  <br><Code>{"height * width * inference steps <= 1024 * 1024 * 30"}</Code>.
 </Property>
 <Property name="negative_prompt" type="string">
 	Tell the model what to avoid or exclude when generating the image. The opposite of the <Code>prompt</Code>.
