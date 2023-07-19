@@ -88,6 +88,11 @@
 </script>
 
 <TabBarWrapper {dontScale} class="{classes} {isDropdownOpen ? 'z-20' : 'z-10'} relative">
+	{#if hasTitle}
+		<div class="self-stretch flex text-c-on-bg/50">
+			<slot name="title" />
+		</div>
+	{/if}
 	<div
 		use:clickoutside={{ callback: () => (isDropdownOpen = false) }}
 		class="{hasTitle ? 'ml-px' : ''} flex-1 min-w-0 flex flex-col relative rounded-r-xl {!hasTitle
