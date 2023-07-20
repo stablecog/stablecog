@@ -15,7 +15,7 @@
 >
 	<style>
 		.edmjkJtrbqn2_tr {
-			animation: edmjkJtrbqn2_tr__tr 3000ms linear infinite normal forwards;
+			animation: edmjkJtrbqn2_tr__tr 3000ms linear infinite;
 		}
 		@keyframes edmjkJtrbqn2_tr__tr {
 			0% {
@@ -26,40 +26,36 @@
 			}
 		}
 		.edmjkJtrbqn2_tr #edmjkJtrbqn3_tr {
-			animation: edmjkJtrbqn3_tr__tr 3000ms linear infinite normal forwards;
+			animation: edmjkJtrbqn3_tr__tr 3000ms cubic-bezier(0.695, 0.095, 0.3, 0.9) infinite;
 		}
 		@keyframes edmjkJtrbqn3_tr__tr {
 			0% {
 				transform: translate(12px, 12px) rotate(0deg);
-				animation-timing-function: cubic-bezier(0.695, 0.095, 0.3, 0.9);
 			}
 			100% {
 				transform: translate(12px, 12px) rotate(360deg);
 			}
 		}
 		.edmjkJtrbqn2_tr #edmjkJtrbqn4_tr {
-			animation: edmjkJtrbqn4_tr__tr 3000ms linear infinite normal forwards;
+			animation: edmjkJtrbqn4_tr__tr 3000ms cubic-bezier(0.42, 0, 0.58, 1) infinite;
 		}
 		@keyframes edmjkJtrbqn4_tr__tr {
 			0% {
 				transform: translate(12px, 12px) rotate(0deg);
-				animation-timing-function: cubic-bezier(0.42, 0, 0.58, 1);
 			}
 			50% {
 				transform: translate(12px, 12px) rotate(30deg);
-				animation-timing-function: cubic-bezier(0.42, 0, 0.58, 1);
 			}
 			100% {
 				transform: translate(12px, 12px) rotate(0deg);
 			}
 		}
 		.edmjkJtrbqn2_tr #edmjkJtrbqn5_tr {
-			animation: edmjkJtrbqn5_tr__tr 3000ms linear infinite normal forwards;
+			animation: edmjkJtrbqn5_tr__tr 3000ms cubic-bezier(0.695, 0.095, 0.3, 0.9) infinite;
 		}
 		@keyframes edmjkJtrbqn5_tr__tr {
 			0% {
 				transform: translate(12px, 12px) rotate(0deg);
-				animation-timing-function: cubic-bezier(0.695, 0.095, 0.3, 0.9);
 			}
 			100% {
 				transform: translate(12px, 12px) rotate(360deg);
