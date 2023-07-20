@@ -94,6 +94,7 @@
 	let upscaledImageHeight: number | undefined;
 
 	$: generation.selected_output, onGenerationChanged();
+	$: selectedOutputId = generation.selected_output.id;
 	let initialGenerationChange = true;
 	$: upscaleBeingProcessed = upscaleFromStore
 		? upscaleFromStore.status !== 'succeeded' &&
@@ -340,7 +341,7 @@
 						<IconNoImage class="w-16 h-16 text-c-on-bg/40" />
 					</div>
 				{:else}
-					{#key generation.selected_output.id}
+					{#key selectedOutputId}
 						<GenerationFullScreenImageSet
 							prompt={generation.prompt.text}
 							{backgroundImageUrl}

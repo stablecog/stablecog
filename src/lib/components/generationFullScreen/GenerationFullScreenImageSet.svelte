@@ -55,9 +55,9 @@
 	{#if loadingWithDelay}
 		<div
 			transition:scale={{ start: 0, opacity: 0, duration: 250, easing: quadOut }}
-			class="w-7 h-7 p-1.5 bg-c-barrier/60 rounded-full absolute left-1 top-1 pointer-events-none"
+			class="p-1 bg-c-barrier/75 rounded-full absolute left-1 top-1 pointer-events-none"
 		>
-			<IconAnimatedSpinner class="w-4 h-4 text-c-on-bg" loading={loadingWithDelay} />
+			<IconAnimatedSpinner class="w-4 h-4 text-c-on-bg" loading={true} />
 		</div>
 	{/if}
 </DelayedValueProvider>

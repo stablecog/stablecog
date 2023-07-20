@@ -13,55 +13,6 @@
 	shape-rendering="geometricPrecision"
 	text-rendering="geometricPrecision"
 >
-	<style>
-		.edmjkJtrbqn2_tr {
-			animation: edmjkJtrbqn2_tr__tr 3000ms linear infinite;
-		}
-		@keyframes edmjkJtrbqn2_tr__tr {
-			0% {
-				transform: translate(12px, 12px) rotate(0deg);
-			}
-			100% {
-				transform: translate(12px, 12px) rotate(1080deg);
-			}
-		}
-		.edmjkJtrbqn2_tr #edmjkJtrbqn3_tr {
-			animation: edmjkJtrbqn3_tr__tr 3000ms cubic-bezier(0.695, 0.095, 0.3, 0.9) infinite;
-		}
-		@keyframes edmjkJtrbqn3_tr__tr {
-			0% {
-				transform: translate(12px, 12px) rotate(0deg);
-			}
-			100% {
-				transform: translate(12px, 12px) rotate(360deg);
-			}
-		}
-		.edmjkJtrbqn2_tr #edmjkJtrbqn4_tr {
-			animation: edmjkJtrbqn4_tr__tr 3000ms cubic-bezier(0.42, 0, 0.58, 1) infinite;
-		}
-		@keyframes edmjkJtrbqn4_tr__tr {
-			0% {
-				transform: translate(12px, 12px) rotate(0deg);
-			}
-			50% {
-				transform: translate(12px, 12px) rotate(30deg);
-			}
-			100% {
-				transform: translate(12px, 12px) rotate(0deg);
-			}
-		}
-		.edmjkJtrbqn2_tr #edmjkJtrbqn5_tr {
-			animation: edmjkJtrbqn5_tr__tr 3000ms cubic-bezier(0.695, 0.095, 0.3, 0.9) infinite;
-		}
-		@keyframes edmjkJtrbqn5_tr__tr {
-			0% {
-				transform: translate(12px, 12px) rotate(0deg);
-			}
-			100% {
-				transform: translate(12px, 12px) rotate(360deg);
-			}
-		}
-	</style>
 	<g
 		class={loading ? 'edmjkJtrbqn2_tr' : ''}
 		id="edmjkJtrbqn2_tr"
@@ -69,9 +20,8 @@
 		><g transform="translate(-12,-12)"
 			><g id="edmjkJtrbqn3_tr" transform="translate(12,12) rotate(0)"
 				><ellipse
-					rx="9.004367"
-					ry="9.004367"
-					transform="scale(0.999515,0.999515) translate(0.004367,0.004367)"
+					rx="9"
+					ry="9"
 					fill="none"
 					stroke="currentColor"
 					stroke-width="3.5"
@@ -83,15 +33,14 @@
 				><g transform="translate(-12,-12)"
 					><g id="edmjkJtrbqn5_tr" transform="translate(12,12) rotate(0)"
 						><ellipse
-							rx="9.004367"
-							ry="9.004367"
-							transform="scale(0.999515,0.999515) translate(0.004367,0.004367)"
+							rx="9"
+							ry="9"
 							fill="none"
 							stroke="currentColor"
 							stroke-width="3.5"
 							stroke-linecap="round"
 							stroke-linejoin="round"
-							stroke-dasharray="7,11.8495"
+							stroke-dasharray="7,11.85"
 						/></g
 					></g
 				></g
@@ -99,3 +48,53 @@
 		></g
 	></svg
 >
+
+<style>
+	.edmjkJtrbqn2_tr {
+		animation: edmjkJtrbqn2_tr__tr 3000ms linear infinite;
+	}
+	@keyframes edmjkJtrbqn2_tr__tr {
+		0% {
+			transform: translate(12px, 12px) rotate(0deg);
+		}
+		100% {
+			transform: translate(12px, 12px) rotate(1080deg);
+		}
+	}
+	.edmjkJtrbqn2_tr #edmjkJtrbqn3_tr {
+		animation: edmjkJtrbqn3_tr__tr 3000ms cubic-bezier(0.695, 0.095, 0.3, 0.9) infinite;
+	}
+	@keyframes edmjkJtrbqn3_tr__tr {
+		0% {
+			transform: translate(12px, 12px) rotate(0deg);
+		}
+		100% {
+			transform: translate(12px, 12px) rotate(360deg);
+		}
+	}
+	.edmjkJtrbqn2_tr #edmjkJtrbqn4_tr {
+		animation: edmjkJtrbqn4_tr__tr 3000ms cubic-bezier(0.42, 0, 0.58, 1) infinite;
+	}
+	@keyframes edmjkJtrbqn4_tr__tr {
+		0% {
+			transform: translate(12px, 12px) rotate(0deg);
+		}
+		50% {
+			transform: translate(12px, 12px) rotate(30deg);
+		}
+		100% {
+			transform: translate(12px, 12px) rotate(0deg);
+		}
+	}
+	.edmjkJtrbqn2_tr #edmjkJtrbqn5_tr {
+		animation: edmjkJtrbqn5_tr__tr 3000ms cubic-bezier(0.695, 0.095, 0.3, 0.9) infinite;
+	}
+	@keyframes edmjkJtrbqn5_tr__tr {
+		0% {
+			transform: translate(12px, 12px) rotate(0deg);
+		}
+		100% {
+			transform: translate(12px, 12px) rotate(360deg);
+		}
+	}
+</style>
