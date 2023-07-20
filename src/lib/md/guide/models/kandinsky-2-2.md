@@ -13,7 +13,7 @@ date: 2023-04-18T15:00:00.000Z
 
 # Kandinsky v2.2
 
-[Kandinsky v2.2](https://github.com/ai-forever/Kandinsky-2) is an open-source and multilingual latent diffusion model. An upgrade to [Kandinsky v2.1](https://stablecog.com/guide/models/kandinsky). It is created by a [group of researchers](https://github.com/ai-forever/Kandinsky-2#authors) from Russia. It's not based on Stable Diffusion, it's an original model. It has a base resolution of 1024x1024 pixels. It's significantly better than [Kandinsky v2.1](https://stablecog.com/guide/models/kandinsky) on realistic images, images with small detail and images that depict wider scenes. It can handle different aspect ratios and resolutions.
+[Kandinsky v2.2](https://github.com/ai-forever/Kandinsky-2) is an open-source and multilingual latent diffusion model. An upgrade to [Kandinsky v2.1](https://stablecog.com/guide/models/kandinsky). It is created by a [group of researchers](https://github.com/ai-forever/Kandinsky-2#authors) from Russia. It's not based on Stable Diffusion, it's an original model. It has a base resolution of 1024x1024 pixels. It's significantly better than [Kandinsky v2.1](https://stablecog.com/guide/models/kandinsky) on realistic images, images with small detail and images that depict wider scenes. It can handle different aspect ratios and resolutions very well without repeating patterns.
 
 [Kandinsky v2.2](https://github.com/ai-forever/Kandinsky-2) can be considered an open-source [Midjourney](https://midjourney.com) alternative, just like the previous version. However 2.2 is more inline with Midjourney v5 because of the improved realism.
 
