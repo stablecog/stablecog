@@ -18,6 +18,7 @@
 	import { userSummary } from '$ts/stores/user/summary';
 	import { getUserSummary } from '$ts/helpers/user/user';
 	import { signInCardCodeSignInStatus, signInCardStatus } from '$ts/stores/signInCardState';
+	import { PUBLIC_APP_MODE } from '$env/static/public';
 
 	export let redirectTo: string | null = null;
 	export let isModal = false;
@@ -133,7 +134,7 @@
 			const { data: sData, error: sError } = await $page.data.supabase.auth.verifyOtp({
 				email,
 				token: codeValue.toString(),
-				type: 'email'
+				type: PUBLIC_APP_MODE === 'qa' ? 'magiclink' : 'email'
 			});
 			if (sError) {
 				throw new Error(sError.message);
