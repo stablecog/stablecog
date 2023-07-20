@@ -62,7 +62,7 @@
 		}
 	}
 	.edmjkJtrbqn2_tr #edmjkJtrbqn3_tr {
-		animation: edmjkJtrbqn3_tr__tr 3000ms cubic-bezier(0.695, 0.095, 0.3, 0.9) infinite;
+		animation: edmjkJtrbqn3_tr__tr 3000ms cubic-bezier(0.7, 0.1, 0.3, 0.9) infinite;
 	}
 	@keyframes edmjkJtrbqn3_tr__tr {
 		0% {
@@ -87,7 +87,7 @@
 		}
 	}
 	.edmjkJtrbqn2_tr #edmjkJtrbqn5_tr {
-		animation: edmjkJtrbqn5_tr__tr 3000ms cubic-bezier(0.695, 0.095, 0.3, 0.9) infinite;
+		animation: edmjkJtrbqn5_tr__tr 3000ms cubic-bezier(0.7, 0.1, 0.3, 0.9) infinite;
 	}
 	@keyframes edmjkJtrbqn5_tr__tr {
 		0% {
