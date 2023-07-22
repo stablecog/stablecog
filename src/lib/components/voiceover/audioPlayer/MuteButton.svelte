@@ -16,7 +16,9 @@
 	on:click={onClick}
 	{disabled}
 	aria-label={isMuted ? $LL.Voiceover.UnmuteButton() : $LL.Voiceover.MuteButton()}
-	class="relative rounded-lg group/mute-button {size === 'lg' ? 'w-12 h-12' : 'w-10 h-10'}"
+	class="touch-manipulation relative rounded-lg group/mute-button {size === 'lg'
+		? 'w-12 h-12'
+		: 'w-10 h-10'}"
 >
 	<ButtonHoverEffect
 		groupClass="not-touch:group-hover/mute-button:translate-x-0 not-touch:group-hover/mute-button:translate-y-0 not-touch:group-hover/mute-button:opacity-100"

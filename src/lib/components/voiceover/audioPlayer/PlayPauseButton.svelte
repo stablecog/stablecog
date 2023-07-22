@@ -32,7 +32,9 @@
 	on:click={onClick}
 	{disabled}
 	aria-label={isPaused ? $LL.Voiceover.PlayButton() : $LL.Voiceover.PauseButton()}
-	class="relative rounded-lg group/play-button {size === 'lg' ? 'w-12 h-12' : 'w-10 h-10'}"
+	class="touch-manipulation relative rounded-lg group/play-button {size === 'lg'
+		? 'w-12 h-12'
+		: 'w-10 h-10'}"
 >
 	<ButtonHoverEffect
 		groupClass="not-touch:group-hover/play-button:translate-x-0 not-touch:group-hover/play-button:translate-y-0 not-touch:group-hover/play-button:opacity-100"

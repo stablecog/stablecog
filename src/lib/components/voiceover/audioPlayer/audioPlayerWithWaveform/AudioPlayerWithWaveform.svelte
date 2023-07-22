@@ -72,6 +72,13 @@
 		}
 	}
 
+	function onKeyDown(e: any) {
+		if (e.target === playButton || e.target === muteButton) return;
+		if (e.key === ' ') {
+			togglePlay({ audioElement });
+		}
+	}
+
 	onMount(async () => {
 		$allAudioPlayers.add(audioElement);
 	});
@@ -98,13 +105,11 @@
 	}}
 />
 <div
-	on:keydown={(e) => {
-		if (e.target === playButton || e.target === muteButton) return;
-		if (e.key === ' ') {
-			togglePlay({ audioElement });
-		}
-	}}
+	on:keydown={onKeyDown}
 	bind:clientWidth={containerWidth}
+	role="slider"
+	tabindex="0"
+	aria-valuenow={currentTime}
 	class="w-full h-full bg-c-bg-secondary flex flex-col rounded-xl md:rounded-2xl overflow-hidden relative z-0
 	shadow-lg shadow-c-shadow/[var(--o-shadow-strong)] hide-scroll {classes}"
 >

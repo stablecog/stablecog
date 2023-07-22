@@ -30,7 +30,9 @@
 <button
 	on:click={download}
 	disabled={disabled || isDownloading}
-	class="relative rounded-lg group/download-button {size === 'lg' ? 'w-12 h-12' : 'w-10 h-10'}"
+	class="touch-manipulation relative rounded-lg group/download-button {size === 'lg'
+		? 'w-12 h-12'
+		: 'w-10 h-10'}"
 	aria-label={$LL.Shared.DownloadButton()}
 >
 	<ButtonHoverEffect
