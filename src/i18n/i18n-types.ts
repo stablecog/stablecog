@@ -1076,6 +1076,12 @@ type RootTranslation = {
 				 */
 				realName: string
 			}
+			'3fb1f6d9-c0d3-4ae4-adf4-77f8da78a6f7': {
+				/**
+				 * W​a​i​f​u​ ​D​i​f​f​u​s​i​o​n​ ​X​L
+				 */
+				realName: string
+			}
 			'a3636543-91cc-4290-b1a4-9d506457b9be': {
 				/**
 				 * F​r​e​e​d​o​m
@@ -4113,6 +4119,12 @@ export type TranslationFunctions = {
 			'8002bc51-7260-468f-8840-cf1e6dbe3f8a': {
 				/**
 				 * SDXL
+				 */
+				realName: () => LocalizedString
+			}
+			'3fb1f6d9-c0d3-4ae4-adf4-77f8da78a6f7': {
+				/**
+				 * Waifu Diffusion XL
 				 */
 				realName: () => LocalizedString
 			}

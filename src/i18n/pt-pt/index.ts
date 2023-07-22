@@ -353,6 +353,7 @@ const ptPt: Translation = {
 			},
 			'9fa49c00-109d-430f-9ddd-449f02e2c71a': { realName: 'Kandinsky 2.2' },
 			'8002bc51-7260-468f-8840-cf1e6dbe3f8a': { realName: 'SDXL' },
+			'3fb1f6d9-c0d3-4ae4-adf4-77f8da78a6f7': { realName: 'Waifu Diffusion XL' },
 			'a3636543-91cc-4290-b1a4-9d506457b9be': {
 				realName: 'Freedom'
 			}

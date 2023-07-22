@@ -70,6 +70,10 @@ export const generationModels: {
 	'9fa49c00-109d-430f-9ddd-449f02e2c71a': {
 		name: 'Kandinsky 2.2',
 		supportedSchedulerIds: kandinsky22SchedulerIds
+	},
+	'3fb1f6d9-c0d3-4ae4-adf4-77f8da78a6f7': {
+		name: 'Waifu Diffusion XL',
+		supportedSchedulerIds: sdSharedSchedulerIds
 	}
 } as const;
 
@@ -107,6 +111,10 @@ export const availableModelIdDropdownItems = derived(
 			/* {
 				label: $modelIdToDisplayName['8002bc51-7260-468f-8840-cf1e6dbe3f8a'],
 				value: '8002bc51-7260-468f-8840-cf1e6dbe3f8a'
+			}, */
+			/* {
+				label: $modelIdToDisplayName['3fb1f6d9-c0d3-4ae4-adf4-77f8da78a6f7'],
+				value: '3fb1f6d9-c0d3-4ae4-adf4-77f8da78a6f7'
 			}, */
 			{
 				label: $modelIdToDisplayName['b6c1372f-31a7-457c-907c-d292a6ffef97'],

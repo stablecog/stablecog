@@ -177,6 +177,10 @@ export const aspectRatioToImageSize: {
 			width: '1024',
 			height: '1024'
 		},
+		'3fb1f6d9-c0d3-4ae4-adf4-77f8da78a6f7': {
+			width: '1024',
+			height: '1024'
+		},
 		default: {
 			width: '512',
 			height: '512'
@@ -196,6 +200,10 @@ export const aspectRatioToImageSize: {
 			height: '1120'
 		},
 		'9fa49c00-109d-430f-9ddd-449f02e2c71a': {
+			width: '896',
+			height: '1120'
+		},
+		'3fb1f6d9-c0d3-4ae4-adf4-77f8da78a6f7': {
 			width: '896',
 			height: '1120'
 		},
@@ -221,6 +229,10 @@ export const aspectRatioToImageSize: {
 			width: '832',
 			height: '1248'
 		},
+		'3fb1f6d9-c0d3-4ae4-adf4-77f8da78a6f7': {
+			width: '832',
+			height: '1248'
+		},
 		default: {
 			width: '512',
 			height: '768'
@@ -240,6 +252,10 @@ export const aspectRatioToImageSize: {
 			height: '832'
 		},
 		'9fa49c00-109d-430f-9ddd-449f02e2c71a': {
+			width: '1248',
+			height: '832'
+		},
+		'3fb1f6d9-c0d3-4ae4-adf4-77f8da78a6f7': {
 			width: '1248',
 			height: '832'
 		},
@@ -265,6 +281,10 @@ export const aspectRatioToImageSize: {
 			width: '720',
 			height: '1280'
 		},
+		'3fb1f6d9-c0d3-4ae4-adf4-77f8da78a6f7': {
+			width: '720',
+			height: '1280'
+		},
 		default: {
 			width: '432',
 			height: '768'
@@ -287,6 +307,10 @@ export const aspectRatioToImageSize: {
 			width: '1280',
 			height: '720'
 		},
+		'3fb1f6d9-c0d3-4ae4-adf4-77f8da78a6f7': {
+			width: '1280',
+			height: '720'
+		},
 		default: {
 			width: '768',
 			height: '432'
@@ -306,6 +330,10 @@ export const aspectRatioToImageSize: {
 			height: '640'
 		},
 		'9fa49c00-109d-430f-9ddd-449f02e2c71a': {
+			width: '1536',
+			height: '640'
+		},
+		'3fb1f6d9-c0d3-4ae4-adf4-77f8da78a6f7': {
 			width: '1536',
 			height: '640'
 		},

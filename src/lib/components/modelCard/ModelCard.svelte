@@ -43,7 +43,7 @@
 			? 'ring-2'
 			: 'ring-0'} ring-c-primary not-touch:group-hover:ring-2"
 	>
-		<div class="w-full flex flex-col items-start justify-start px-1.75 pt-0.75 pb-2">
+		<div class="w-full flex flex-col items-start justify-start px-2 pt-1 pb-2.25">
 			<p
 				class="max-w-full bg-c-bg-tertiary text-base flex-shrink min-w-0 whitespace-nowrap overflow-hidden overflow-ellipsis
 				font-medium rounded-tr-lg"
