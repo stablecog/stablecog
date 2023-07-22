@@ -8,7 +8,7 @@
 	export let withFade = false;
 	let classes = 'w-full relative';
 	let container: HTMLDivElement;
-	const hideChevronTopDistancePercent = 25;
+	const hideChevronTopDistancePercent = 20;
 	const hideChevronBottomPadding = 12;
 	let showChevron = false;
 

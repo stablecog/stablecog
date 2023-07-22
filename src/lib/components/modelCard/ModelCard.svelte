@@ -43,17 +43,25 @@
 			? 'ring-2'
 			: 'ring-0'} ring-c-primary not-touch:group-hover:ring-2"
 	>
-		<div class="w-full flex flex-row items-center justify-start px-2 pt-0.75 pb-1.25">
+		<div class="w-full flex flex-col items-start justify-start px-1.75 pt-0.75 pb-2">
 			<p
-				class="bg-c-bg-tertiary text-base flex-shrink min-w-0 whitespace-nowrap overflow-hidden overflow-ellipsis
+				class="max-w-full bg-c-bg-tertiary text-base flex-shrink min-w-0 whitespace-nowrap overflow-hidden overflow-ellipsis
 				font-medium rounded-tr-lg"
 			>
 				{modelName}
 			</p>
+			<p
+				class="max-w-full text-xs leading-none text-c-on-bg/60 font-medium mt-0.5 flex-shrink min-w-0 whitespace-nowrap overflow-hidden overflow-ellipsis"
+			>
+				{aspectRatioToImageSize[$generationAspectRatio][modelId]?.width ??
+					aspectRatioToImageSize[$generationAspectRatio].default.width} ×
+				{aspectRatioToImageSize[$generationAspectRatio][modelId]?.height ??
+					aspectRatioToImageSize[$generationAspectRatio].default.height}
+			</p>
 		</div>
 		<img
 			loading="lazy"
-			class="w-full h-auto bg-c-bg-tertiary rounded-t-md"
+			class="w-full h-auto bg-c-bg-tertiary rounded-md"
 			{src}
 			{srcset}
 			{sizes}
@@ -61,14 +69,5 @@
 			{width}
 			{height}
 		/>
-		<p
-			class="absolute left-0.75 bottom-0.75 text-xs leading-none
-			text-c-on-bg font-medium bg-c-bg-tertiary px-1.25 pt-1 pb-0.75 rounded"
-		>
-			{aspectRatioToImageSize[$generationAspectRatio][modelId]?.width ??
-				aspectRatioToImageSize[$generationAspectRatio].default.width} ×
-			{aspectRatioToImageSize[$generationAspectRatio][modelId]?.height ??
-				aspectRatioToImageSize[$generationAspectRatio].default.height}
-		</p>
 	</div>
 </button>
