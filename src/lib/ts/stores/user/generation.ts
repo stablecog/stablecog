@@ -392,6 +392,9 @@ export interface TGenerationBase {
 	prompt_strength?: number;
 }
 
+export interface TUser {
+	email: string;
+}
 export interface TGeneration extends TGenerationBase {
 	status: TGenerationStatus;
 	error?: string;
@@ -403,6 +406,7 @@ export interface TGeneration extends TGenerationBase {
 	completed_at?: string;
 	submit_to_gallery: boolean;
 	is_placeholder?: boolean;
+	user?: TUser;
 }
 
 export interface TGenerationOutput {

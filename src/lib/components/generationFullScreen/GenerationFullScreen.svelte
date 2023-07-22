@@ -49,6 +49,8 @@
 	import SideButton from '$components/generationFullScreen/SideButton.svelte';
 	import { removeFromRecentlyUpdatedOutputIds } from '$ts/stores/user/recentlyUpdatedOutputIds';
 	import SrcsetProvider from '$components/generationImage/SrcsetProvider.svelte';
+	import Avatar from '$components/Avatar.svelte';
+	import { isGalleryAdmin, isSuperAdmin } from '$ts/helpers/admin/roles';
 
 	export let generation: TGenerationWithSelectedOutput;
 	export let modalType: TGenerationFullScreenModalType;
@@ -427,6 +429,24 @@
 					class="w-full flex flex-col items-start justify-start"
 				>
 					<div class="w-full flex flex-col gap-4 md:gap-5 px-5 py-4 md:px-7 md:py-5">
+						{#if generation.user && (isSuperAdmin($userSummary?.roles) || isGalleryAdmin($userSummary?.roles))}
+							<div class="w-full flex justify-start items-center">
+								<div
+									class="max-w-full flex justify-start items-center gap-2.5 bg-c-bg-secondary
+									rounded-full pl-1.5 py-1.5 pr-3.5 -ml-1 ring-2 ring-c-bg-tertiary shadow-lg
+									shadow-c-shadow/[var(--o-shadow-strong)]"
+								>
+									<Avatar
+										str={generation.user.email}
+										class="w-6 h-6 relative ring-2 ring-c-on-bg/25 rounded-full flex-shrink-0
+										shadow-lg shadow-c-shadow/[var(--o-shadow-strong)] items-center"
+									/>
+									<p class="font-medium flex-shrink min-w-0 overflow-hidden overflow-ellipsis">
+										{generation.user.email}
+									</p>
+								</div>
+							</div>
+						{/if}
 						{#if (modalType === 'generate' || modalType === 'history') && !generation.selected_output.image_url.includes('placeholder')}
 							<div class="w-full pt-1.5">
 								{#if !generation.selected_output.upscaled_image_url || upscaleBeingProcessed}
