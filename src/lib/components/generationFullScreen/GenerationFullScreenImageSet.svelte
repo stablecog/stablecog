@@ -19,7 +19,7 @@
 	let naturalWidth: number;
 	let naturalHeight: number;
 
-	$: loading = naturalWidth !== imageWidth || naturalHeight !== imageHeight;
+	$: loading = !naturalWidth || !naturalHeight;
 </script>
 
 <SrcsetProvider src={backgroundImageUrl} {cardType} let:sizes let:srcset>
