@@ -430,7 +430,7 @@
 				>
 					<div class="w-full flex flex-col gap-4 md:gap-5 px-5 py-4 md:px-7 md:py-5">
 						{#if generation.user && (isSuperAdmin($userSummary?.roles) || isGalleryAdmin($userSummary?.roles))}
-							<div class="w-full flex justify-start items-center">
+							<div class="w-full flex justify-start items-center mt-1">
 								<div
 									class="max-w-full flex justify-start items-center gap-2.5 bg-c-bg-secondary
 									rounded-full pl-1.5 py-1.5 pr-3.5 -ml-1 ring-2 ring-c-bg-tertiary shadow-lg
