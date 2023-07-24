@@ -32,6 +32,8 @@
 
 	let minDropdownHeight = 200;
 
+	$: itemsOptionallyFiltered = filterSelected ? items.filter((i) => i.value !== value) : items;
+
 	let isDropdownOpen = false;
 	$: selectedItem = items.find((item) => item.value === value);
 	const toggleDropdown = () => (isDropdownOpen = !isDropdownOpen);
@@ -177,7 +179,7 @@
 						class="w-full flex flex-col justify-start relative z-20 overflow-hidden {dropdownClass}"
 					>
 						<ScrollAreaWithChevron withFade={withFadedChevron} class="w-full {listClass}">
-							{#each filterSelected ? items.filter((i) => i.value !== value) : items as item, index (item.value)}
+							{#each itemsOptionallyFiltered as item, index (item.value)}
 								{@const isSelected = item.value === value}
 								{@const onClick = () => {
 									value = item.value;
@@ -194,13 +196,13 @@
 										class="touch-manipulation w-full text-left flex items-center justify-start min-w-0 {hasTitle
 											? 'px-4'
 											: 'px-5'} py-3.5 relative z-0 group
-									{index === items.filter((i) => i.value !== value).length - 1 ? 'rounded-b-lg' : ''}"
+									{index === itemsOptionallyFiltered.length - 1 ? 'rounded-b-lg' : ''}"
 										type="button"
 										aria-label={item.label}
 									>
 										<div
 											class="w-full h-full absolute left-0 top-0 overflow-hidden z-0 {index ===
-											items.filter((i) => i.value !== value).length - 1
+											itemsOptionallyFiltered.length - 1
 												? 'rounded-b-lg'
 												: ''}"
 										>

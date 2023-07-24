@@ -14,7 +14,8 @@ export function tooltip(
 		animationTime = 200,
 		animateFrom,
 		animateTo,
-		rows
+		rows,
+		delay = 300
 	}: TTooltipProps
 ) {
 	const tooltipPortal = document.createElement('div');
@@ -134,7 +135,11 @@ export function tooltip(
 		indicator.style.zIndex = '';
 	};
 
-	const onMouseEnter = async () => {
+	let hasWaitedEnough = false;
+	let hasWaitedEnoughTimeout: NodeJS.Timeout | undefined;
+	let onMouseEnterTimeout: NodeJS.Timeout;
+
+	const onMouseEnter = () => {
 		clearTimeout(mouseLeaveTimeout);
 		if (!document.body?.contains(tooltipPortal)) {
 			document.body?.appendChild(tooltipPortal);
@@ -149,7 +154,27 @@ export function tooltip(
 		}
 	};
 
-	const onMouseLeave = async () => {
+	const onMouseEnterWithTimeout = () => {
+		if (!hasWaitedEnoughTimeout) {
+			hasWaitedEnoughTimeout = setTimeout(() => {
+				hasWaitedEnough = true;
+			}, delay);
+		}
+		if (!hasWaitedEnough) {
+			clearTimeout(onMouseEnterTimeout);
+			onMouseEnterTimeout = setTimeout(() => {
+				onMouseEnterWithTimeout();
+			}, 50);
+			return;
+		}
+		onMouseEnter();
+	};
+
+	const onMouseLeave = () => {
+		clearTimeout(hasWaitedEnoughTimeout);
+		clearTimeout(onMouseEnterTimeout);
+		hasWaitedEnoughTimeout = undefined;
+		hasWaitedEnough = false;
 		if (tooltipWrapper) {
 			addClasses(tooltipWrapper, animateFrom);
 			removeClasses(tooltipWrapper, animateTo);
@@ -163,7 +188,7 @@ export function tooltip(
 		}, animationTime);
 	};
 
-	node.addEventListener('mouseenter', onMouseEnter, false);
+	node.addEventListener('mouseenter', onMouseEnterWithTimeout, false);
 	node.addEventListener('mouseleave', onMouseLeave, false);
 	node.addEventListener('click', onMouseEnter, false);
 	window.addEventListener('resize', onMouseLeave, false);
@@ -172,7 +197,7 @@ export function tooltip(
 	return {
 		destroy() {
 			onMouseLeave();
-			node.removeEventListener('mouseenter', onMouseEnter, false);
+			node.removeEventListener('mouseenter', onMouseEnterWithTimeout, false);
 			node.removeEventListener('mouseleave', onMouseLeave, false);
 			node.removeEventListener('click', onMouseEnter, false);
 			window.removeEventListener('resize', onMouseLeave, false);
@@ -252,6 +277,7 @@ export interface TTooltipProps {
 	animateFrom?: string;
 	animateTo?: string;
 	rows?: TRow[];
+	delay?: number;
 }
 
 export interface TRow {

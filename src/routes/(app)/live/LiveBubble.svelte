@@ -136,7 +136,7 @@
 			</div>
 		{/if}
 		<div
-			use:tooltip={{ rows, ...tooltipLivePageStyleProps }}
+			use:tooltip={{ rows, ...tooltipLivePageStyleProps, delay: 0 }}
 			class="w-full h-full {processObject.process_type === 'upscale'
 				? 'rounded-xl'
 				: processObject.process_type === 'voiceover'
