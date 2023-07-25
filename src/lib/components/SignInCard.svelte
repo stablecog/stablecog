@@ -56,7 +56,6 @@
 			})
 		});
 		const resJSON: { allowed: boolean } = await res.json();
-		console.log(resJSON);
 		if (!resJSON.allowed) {
 			signInCardStatus.set('error');
 			errorText = $LL.Error.EmailNotAllowed();
