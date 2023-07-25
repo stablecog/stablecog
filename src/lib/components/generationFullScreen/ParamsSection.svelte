@@ -42,6 +42,7 @@
 				color="bg-tertiary"
 			>
 				<div
+					tabindex="-1"
 					use:trigger
 					{...triggerStoreValue}
 					class="flex items-center gap-1.5 text-c-on-bg/75 text-sm cursor-default"
@@ -65,6 +66,7 @@
 				color="bg-tertiary"
 			>
 				<div
+					tabindex="-1"
 					use:trigger
 					{...triggerStoreValue}
 					class="flex items-center gap-1.5 text-c-on-bg/75 text-sm cursor-default"
@@ -84,6 +86,7 @@
 				color="bg-tertiary"
 			>
 				<div
+					tabindex="-1"
 					use:trigger
 					{...triggerStoreValue}
 					class="flex items-center gap-1.5 text-c-on-bg/75 text-sm cursor-default"
@@ -103,6 +106,7 @@
 				color="bg-tertiary"
 			>
 				<div
+					tabindex="-1"
 					use:trigger
 					{...triggerStoreValue}
 					class="flex items-center gap-1.5 text-c-on-bg/75 text-sm cursor-default"
@@ -127,6 +131,7 @@
 						color="bg-tertiary"
 					>
 						<div
+							tabindex="-1"
 							use:trigger
 							{...triggerStoreValue}
 							class="flex items-center gap-1.5 text-c-on-bg/75 text-sm cursor-default"

@@ -188,7 +188,7 @@
 							let:trigger
 							let:triggerStoreValue
 						>
-							<div use:trigger {...triggerStoreValue} class="cursor-default">
+							<div tabindex="-1" use:trigger {...triggerStoreValue} class="cursor-default">
 								<IconChatBubbleCancel class="w-5 h-5" />
 							</div>
 						</WithTooltip>

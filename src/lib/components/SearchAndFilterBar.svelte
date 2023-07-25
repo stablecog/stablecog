@@ -204,6 +204,7 @@
 							paragraph={$LL.Home.ModelDropdown.Paragraph()}
 						>
 							<div
+								tabindex="-1"
 								use:trigger
 								{...triggerStoreValue}
 								class="p-3.5 flex items-center justify-center cursor-default"

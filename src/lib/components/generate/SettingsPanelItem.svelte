@@ -10,6 +10,7 @@
 <div class="w-full flex flex-col items-start gap-3 px-3 md:px-4">
 	<WithTooltip let:trigger let:triggerStoreValue title={tooltipTitle} paragraph={tooltipParagraph}>
 		<div
+			tabindex="-1"
 			use:trigger
 			{...triggerStoreValue}
 			class="max-w-full px-2 flex items-center text-c-on-bg/75 gap-2 cursor-default"

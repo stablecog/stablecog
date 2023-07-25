@@ -259,6 +259,7 @@
 							paragraph={$LL.Home.InitialImageStrengthTabBar.Paragraph()}
 						>
 							<p
+								tabindex="-1"
 								use:trigger
 								{...triggerStoreValue}
 								class="max-w-full px-4 text-c-on-bg/75 font-medium text-sm cursor-default"
