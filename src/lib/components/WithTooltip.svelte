@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { isTouchscreen } from '$ts/stores/isTouchscreen';
-	import { createPopover, createTooltip } from '@melt-ui/svelte';
+	import { createTooltip } from '@melt-ui/svelte';
 	import { quadOut } from 'svelte/easing';
 	import { fly } from 'svelte/transition';
 
@@ -15,12 +15,7 @@
 	export let isActive = true;
 	export let hasPointerEvents = false;
 
-	const {
-		trigger: tooltipTrigger,
-		content: tooltipContent,
-		open: tooltipOpen,
-		arrow: tooltipArrow
-	} = createTooltip({
+	const { trigger, content, open, arrow, options } = createTooltip({
 		positioning: {
 			placement: 'bottom',
 			gutter: gutter,
@@ -31,38 +26,17 @@
 			}
 		},
 		openDelay: delay,
-		closeDelay: closeDelay
+		closeDelay: closeDelay,
+		closeOnPointerDown: false
 	});
 
-	const {
-		trigger: popoverTrigger,
-		content: popoverContent,
-		open: popoverOpen,
-		arrow: popoverArrow
-	} = createPopover({
-		positioning: {
-			placement: 'bottom',
-			gutter: gutter,
-			overlap: true,
-			offset: {
-				mainAxis: 4,
-				crossAxis: 4
-			}
-		}
-	});
+	$: [$isTouchscreen], setOptions();
 
-	let trigger: typeof tooltipTrigger | typeof popoverTrigger = tooltipTrigger;
-	let content: typeof tooltipContent | typeof popoverContent = tooltipContent;
-	let open: typeof tooltipOpen | typeof popoverOpen = tooltipOpen;
-	let arrow: typeof tooltipArrow | typeof popoverArrow = tooltipArrow;
-
-	$: [$isTouchscreen], setTooltip();
-
-	function setTooltip() {
-		trigger = $isTouchscreen ? popoverTrigger : tooltipTrigger;
-		content = $isTouchscreen ? popoverContent : tooltipContent;
-		open = $isTouchscreen ? popoverOpen : tooltipOpen;
-		arrow = $isTouchscreen ? popoverArrow : tooltipArrow;
+	function setOptions() {
+		options.set({
+			...$options,
+			openDelay: $isTouchscreen ? 0 : delay
+		});
 	}
 </script>
 

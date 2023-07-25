@@ -117,7 +117,12 @@
 		</div>
 	{/if}
 	<WithTooltip let:triggerStoreValue let:trigger delay={0} color="bg-secondary">
-		<div class="w-10 h-10 relative cursor-default rounded-lg" use:trigger {...triggerStoreValue}>
+		<button
+			type="button"
+			class="w-10 h-10 relative cursor-default rounded-xl"
+			use:trigger
+			{...triggerStoreValue}
+		>
 			{#if processObject.status === 'queued' || processObject.status === 'processing'}
 				<div
 					transition:scale={{ duration: 300, easing: quadOut }}
@@ -182,7 +187,7 @@
 					{/if}
 				</div>
 			</div>
-		</div>
+		</button>
 		<div class="flex flex-col gap-1.5" slot="tooltip">
 			{#each rows as row}
 				<div class="w-full flex flex-row items-center justify-between text-sm gap-4">
