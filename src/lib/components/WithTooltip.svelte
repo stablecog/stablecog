@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { isTouchscreen } from '$ts/stores/isTouchscreen';
 	import { createTooltip } from '@melt-ui/svelte';
 	import { quadOut } from 'svelte/easing';
 	import { fly } from 'svelte/transition';
@@ -12,7 +13,7 @@
 	export let size: 'sm' | 'md' = 'md';
 	export let gutter = -1;
 
-	const { trigger, content, open, arrow } = createTooltip({
+	const { trigger, content, open, arrow, options } = createTooltip({
 		positioning: {
 			placement: 'bottom',
 			gutter: gutter,
@@ -25,6 +26,15 @@
 		openDelay: delay,
 		closeDelay: closeDelay
 	});
+
+	$: [$isTouchscreen], setDelay();
+
+	function setDelay() {
+		options.set({
+			...$options,
+			openDelay: $isTouchscreen ? 0 : delay
+		});
+	}
 </script>
 
 <slot triggerStoreValue={$trigger} {trigger} />
