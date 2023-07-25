@@ -117,7 +117,12 @@
 		</div>
 	{/if}
 	<WithTooltip let:triggerStoreValue let:trigger delay={0} color="bg-secondary">
-		<button class="w-10 h-10 relative cursor-default rounded-lg" use:trigger {...triggerStoreValue}>
+		<button
+			type="button"
+			class="w-10 h-10 relative cursor-default rounded-lg"
+			use:trigger
+			{...triggerStoreValue}
+		>
 			{#if processObject.status === 'queued' || processObject.status === 'processing'}
 				<div
 					transition:scale={{ duration: 300, easing: quadOut }}

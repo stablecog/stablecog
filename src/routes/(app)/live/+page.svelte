@@ -13,7 +13,6 @@
 	import { previewImageVersion } from '$ts/constants/previewImageVersion';
 	import type {
 		TAnyRealtimePayloadExt,
-		TBaseRealtimePayload,
 		TGenerationRealtimePayloadExt,
 		TUpscaleRealtimePayloadExt,
 		TVoiceoverRealtimePayloadExt
@@ -277,10 +276,7 @@
 			</div>
 		</div>
 		{#if allProcesses.length > 0}
-			<div
-				transition:expandCollapse={{ duration: 300 }}
-				class="w-full px-8 md:px-24 z-0 relative"
-			>
+			<div transition:expandCollapse={{ duration: 300 }} class="w-full px-8 md:px-24 z-0 relative">
 				<div class="w-full flex flex-wrap items-center justify-center py-4">
 					{#each allProcesses as processObject (processObject.id)}
 						<div
