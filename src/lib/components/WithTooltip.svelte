@@ -77,7 +77,7 @@
 			? 'bg-c-bg-secondary'
 			: 'bg-c-bg-tertiary'} {size === 'sm' ? 'text-xs' : 'text-sm'} {hasPointerEvents
 			? ''
-			: 'pointer-events-none'}"
+			: 'pointer-events-none'} outline-none"
 		{...$content}
 		use:content
 	>
