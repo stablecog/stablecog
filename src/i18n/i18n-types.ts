@@ -1272,6 +1272,10 @@ type RootTranslation = {
 		 */
 		EmailProviderNotAllowed: string
 		/**
+		 * T​h​i​s​ ​e​m​a​i​l​ ​i​s​n​'​t​ ​a​l​l​o​w​e​d​.
+		 */
+		EmailNotAllowed: string
+		/**
 		 * T​h​i​s​ ​e​m​a​i​l​ ​i​s​ ​a​l​r​e​a​d​y​ ​i​n​ ​u​s​e​.
 		 */
 		EmailAlreadyInUse: string
@@ -4317,6 +4321,10 @@ export type TranslationFunctions = {
 		 * This email provider isn't allowed.
 		 */
 		EmailProviderNotAllowed: () => LocalizedString
+		/**
+		 * This email isn't allowed.
+		 */
+		EmailNotAllowed: () => LocalizedString
 		/**
 		 * This email is already in use.
 		 */

@@ -439,6 +439,7 @@ const tr: Translation = {
 			Paragraph: 'Güncelleme mevcut! Sayfayı yenile.'
 		},
 		EmailProviderNotAllowed: 'Bu e-posta sağlayıcısı desteklenmiyor.',
+		EmailNotAllowed: "This email isn't allowed.",
 		EmailAlreadyInUse: 'Bu e-posta adresi biri tarafından kullanılıyor.'
 	},
 	Admin: {

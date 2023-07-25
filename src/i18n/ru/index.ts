@@ -422,6 +422,7 @@ const ru: Translation = {
 			Paragraph: 'There is an update! Refresh the page to get it.'
 		},
 		EmailProviderNotAllowed: "This email provider isn't allowed.",
+		EmailNotAllowed: "This email isn't allowed.",
 		EmailAlreadyInUse: 'This email is already in use.'
 	},
 	Admin: {

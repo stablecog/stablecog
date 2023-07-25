@@ -19,6 +19,7 @@
 	import { getUserSummary } from '$ts/helpers/user/user';
 	import { signInCardCodeSignInStatus, signInCardStatus } from '$ts/stores/signInCardState';
 	import { PUBLIC_APP_MODE } from '$env/static/public';
+	import { apiUrl } from '$ts/constants/main';
 
 	export let redirectTo: string | null = null;
 	export let isModal = false;
@@ -45,20 +46,19 @@
 		}
 		signInCardStatus.set('loading');
 		provider = 'email';
-		const domain = email.split('@')[1];
-		const { data: dData, error: dError } = await $page.data.supabase
-			.from('disposable_emails')
-			.select('domain')
-			.eq('domain', domain);
-		if (dError) {
-			console.log(dError);
-			errorText = $LL.Error.SomethingWentWrong();
+		const res = await fetch(`${apiUrl.origin}/v1/email/check`, {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json'
+			},
+			body: JSON.stringify({
+				email
+			})
+		});
+		const resJSON: { allowed: boolean } = await res.json();
+		if (!resJSON.allowed) {
 			signInCardStatus.set('error');
-			return;
-		}
-		if (dData.length > 0) {
-			errorText = $LL.Error.EmailProviderNotAllowed();
-			signInCardStatus.set('error');
+			errorText = $LL.Error.EmailNotAllowed();
 			return;
 		}
 		const { data: sData, error: sError } = await $page.data.supabase.auth.signInWithOtp({

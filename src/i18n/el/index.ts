@@ -442,6 +442,7 @@ const es: Translation = {
 			Paragraph: 'Υπάρχει μια ενημέρωση! Ανανεώστε τη σελίδα για να τη λάβετε.'
 		},
 		EmailProviderNotAllowed: 'Αυτός ο πάροχος ηλεκτρονικού ταχυδρομείου δεν επιτρέπεται.',
+		EmailNotAllowed: "This email isn't allowed.",
 		EmailAlreadyInUse: 'Αυτός ο λογαριασμός ηλεκτρονικού ταχυδρομείου χρησιμοποιείται ήδη.'
 	},
 	Admin: {

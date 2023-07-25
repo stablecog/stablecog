@@ -426,6 +426,7 @@ const nl: Translation = {
 			Paragraph: 'Er is een update! Vernieuw de pagina om deze te krijgen.'
 		},
 		EmailProviderNotAllowed: 'Deze e-mailprovider is niet toegestaan.',
+		EmailNotAllowed: "This email isn't allowed.",
 		EmailAlreadyInUse: 'Dit e-mailadres is al in gebruik.'
 	},
 	Admin: {

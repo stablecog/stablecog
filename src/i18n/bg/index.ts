@@ -424,6 +424,7 @@ const bg: Translation = {
 			Paragraph: 'Обновление! Опреснете странницата.'
 		},
 		EmailProviderNotAllowed: 'Този имейл доставчик е забранен.',
+		EmailNotAllowed: "This email isn't allowed.",
 		EmailAlreadyInUse: 'Имейлът вече се използва.'
 	},
 	Admin: {

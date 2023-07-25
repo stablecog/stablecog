@@ -420,6 +420,7 @@ const de: Translation = {
 			Paragraph: 'Es gibt ein Update! Aktualisiere die Seite, um es zu erhalten.'
 		},
 		EmailProviderNotAllowed: 'Dieser E-Mail-Anbieter ist nicht zulässig.',
+		EmailNotAllowed: "This email isn't allowed.",
 		EmailAlreadyInUse: 'Diese E-Mail-Adresse wird bereits verwendet.'
 	},
 	Admin: {

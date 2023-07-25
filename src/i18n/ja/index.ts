@@ -434,6 +434,7 @@ const ja: Translation = {
 			Paragraph: 'アップデートがあります！ページを更新して取得してください。'
 		},
 		EmailProviderNotAllowed: 'このメールプロバイダは許可されていません。',
+		EmailNotAllowed: "This email isn't allowed.",
 		EmailAlreadyInUse: 'このメールアドレスは既に使用されています。'
 	},
 	Admin: {
