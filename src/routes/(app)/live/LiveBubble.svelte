@@ -116,28 +116,26 @@
 			</div>
 		</div>
 	{/if}
-	<div class="w-10 h-10 relative">
-		{#if processObject.status === 'queued' || processObject.status === 'processing'}
-			<div
-				transition:scale={{ duration: 300, easing: quadOut }}
-				class="w-full h-full absolute left-0 top-0 transform {processObject.process_type ===
-				'voiceover'
-					? 'rotate-45'
-					: ''}"
-			>
+	<WithTooltip let:triggerStoreValue let:trigger delay={0} color="bg-secondary">
+		<button class="w-10 h-10 relative cursor-default rounded-lg" use:trigger {...triggerStoreValue}>
+			{#if processObject.status === 'queued' || processObject.status === 'processing'}
 				<div
-					class="w-full h-full {processObject.process_type === 'upscale'
-						? 'rounded-xl'
-						: processObject.process_type === 'voiceover'
-						? 'rounded-xl'
-						: 'rounded-full'} bg-c-primary animate-ping-custom-bg"
-				/>
-			</div>
-		{/if}
-		<WithTooltip let:triggerStoreValue let:trigger delay={0} color="bg-secondary">
+					transition:scale={{ duration: 300, easing: quadOut }}
+					class="w-full h-full absolute left-0 top-0 transform {processObject.process_type ===
+					'voiceover'
+						? 'rotate-45'
+						: ''}"
+				>
+					<div
+						class="w-full h-full {processObject.process_type === 'upscale'
+							? 'rounded-xl'
+							: processObject.process_type === 'voiceover'
+							? 'rounded-xl'
+							: 'rounded-full'} bg-c-primary animate-ping-custom-bg"
+					/>
+				</div>
+			{/if}
 			<div
-				use:trigger
-				{...triggerStoreValue}
 				class="w-full h-full {processObject.process_type === 'upscale'
 					? 'rounded-xl'
 					: processObject.process_type === 'voiceover'
@@ -184,14 +182,14 @@
 					{/if}
 				</div>
 			</div>
-			<div class="flex flex-col gap-1.5" slot="tooltip">
-				{#each rows as row}
-					<div class="w-full flex flex-row items-center justify-between text-sm gap-4">
-						<p class="text-c-on-bg/60">{row.key}</p>
-						<p class="font-medium text-c-on-bg">{row.value}</p>
-					</div>
-				{/each}
-			</div>
-		</WithTooltip>
-	</div>
+		</button>
+		<div class="flex flex-col gap-1.5" slot="tooltip">
+			{#each rows as row}
+				<div class="w-full flex flex-row items-center justify-between text-sm gap-4">
+					<p class="text-c-on-bg/60">{row.key}</p>
+					<p class="font-medium text-c-on-bg">{row.value}</p>
+				</div>
+			{/each}
+		</div>
+	</WithTooltip>
 </div>

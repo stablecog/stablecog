@@ -12,6 +12,8 @@
 	export let noArrow = false;
 	export let size: 'sm' | 'md' = 'md';
 	export let gutter = -1;
+	export let isActive = true;
+	export let hasPointerEvents = false;
 
 	const { trigger, content, open, arrow, options } = createTooltip({
 		positioning: {
@@ -39,14 +41,16 @@
 
 <slot triggerStoreValue={$trigger} {trigger} />
 
-{#if $open}
+{#if isActive && $open}
 	<div
 		transition:fly={{ duration: 200, easing: quadOut, opacity: 0, y: size === 'sm' ? 8 : 16 }}
 		class="max-w-[17rem] shadow-lg shadow-c-shadow/[var(--o-shadow-strong)] z-[9999] {size === 'sm'
 			? 'px-2.5 py-1.25 rounded-md'
 			: 'px-4 py-3 rounded-xl'} {color == 'bg-secondary'
 			? 'bg-c-bg-secondary'
-			: 'bg-c-bg-tertiary'} {size === 'sm' ? 'text-xs' : 'text-sm'}"
+			: 'bg-c-bg-tertiary'} {size === 'sm' ? 'text-xs' : 'text-sm'} {hasPointerEvents
+			? ''
+			: 'pointer-events-none'}"
 		{...$content}
 		use:content
 	>

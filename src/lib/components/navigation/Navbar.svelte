@@ -27,7 +27,6 @@
 	import BannerWrapper from '$components/BannerWrapper.svelte';
 	import IconToken from '$components/icons/IconToken.svelte';
 	import SignInModal from '$components/SignInModal.svelte';
-	import WithTooltip from '$components/WithTooltip.svelte';
 
 	export let notAtTheVeryTop = false;
 	export let scrollDirection: 'up' | 'down' = 'down';
@@ -108,106 +107,66 @@
 			<NavigationTabBar />
 		</div>
 		<div class="flex md:flex-1 flex-wrap items-center justify-end relative">
-			<WithTooltip
-				title={$LL.Scl.Discord()}
-				let:trigger
-				let:triggerStoreValue
-				noArrow
-				delay={100}
-				size="sm"
-				gutter={-4}
+			<IconButton
+				class="py-2 hidden md:block"
+				href="/discord"
+				target="_blank"
+				name={$LL.Scl.Discord()}
+				hasTooltip={true}
 			>
-				<div use:trigger {...triggerStoreValue}>
-					<IconButton
-						class="py-2 hidden md:block"
-						href="/discord"
-						target="_blank"
-						name={$LL.Scl.Discord()}
-					>
-						<IconSc
-							type="discord"
-							class="w-7.5 h-7.5 relative transition transform {$page.url.pathname === '/' &&
-							$themeApp === 'light' &&
-							!notAtTheVeryTop
-								? 'text-c-bg'
-								: 'text-c-on-bg'} not-touch:group-hover/iconbutton:text-c-primary"
-						/>
-					</IconButton>
-				</div>
-			</WithTooltip>
-			<WithTooltip
-				title={$LL.Guide.PageTitle()}
-				let:trigger
-				let:triggerStoreValue
-				noArrow
-				delay={100}
-				size="sm"
-				gutter={-4}
+				<IconSc
+					type="discord"
+					class="w-7.5 h-7.5 relative transition transform {$page.url.pathname === '/' &&
+					$themeApp === 'light' &&
+					!notAtTheVeryTop
+						? 'text-c-bg'
+						: 'text-c-on-bg'} not-touch:group-hover/iconbutton:text-c-primary"
+				/>
+			</IconButton>
+			<IconButton
+				class="py-2 hidden md:block"
+				href="/guide"
+				target={$page.url.pathname.startsWith('/guide') ? undefined : '_blank'}
+				name={$LL.Guide.PageTitle()}
+				hasTooltip={true}
 			>
-				<div use:trigger {...triggerStoreValue}>
-					<IconButton
-						class="py-2 hidden md:block"
-						href="/guide"
-						target={$page.url.pathname.startsWith('/guide') ? undefined : '_blank'}
-						name={$LL.Guide.PageTitle()}
-					>
-						<IconGuide
-							class="w-7.5 h-7.5 relative transition transform {$page.url.pathname === '/' &&
-							$themeApp === 'light' &&
-							!notAtTheVeryTop
-								? 'text-c-bg'
-								: 'text-c-on-bg'} not-touch:group-hover/iconbutton:text-c-primary"
-						/>
-					</IconButton>
-				</div>
-			</WithTooltip>
-			<WithTooltip
-				title={$LL.Blog.TitleAlt()}
-				let:trigger
-				let:triggerStoreValue
-				noArrow
-				delay={100}
-				size="sm"
-				gutter={-4}
+				<IconGuide
+					class="w-7.5 h-7.5 relative transition transform {$page.url.pathname === '/' &&
+					$themeApp === 'light' &&
+					!notAtTheVeryTop
+						? 'text-c-bg'
+						: 'text-c-on-bg'} not-touch:group-hover/iconbutton:text-c-primary"
+				/>
+			</IconButton>
+			<IconButton
+				class="py-2 hidden md:block"
+				href="/blog"
+				target={$page.url.pathname.startsWith('/blog') ? undefined : '_blank'}
+				name={$LL.Blog.TitleAlt()}
+				hasTooltip={true}
 			>
-				<div use:trigger {...triggerStoreValue}>
-					<IconButton
-						class="py-2 hidden md:block"
-						href="/blog"
-						target={$page.url.pathname.startsWith('/blog') ? undefined : '_blank'}
-						name={$LL.Blog.TitleAlt()}
-					>
-						<IconBlog
-							class="w-7.5 h-7.5 relative transition transform {$page.url.pathname === '/' &&
-							$themeApp === 'light' &&
-							!notAtTheVeryTop
-								? 'text-c-bg'
-								: 'text-c-on-bg'} not-touch:group-hover/iconbutton:text-c-primary"
-						/>
-					</IconButton>
-				</div>
-			</WithTooltip>
-			<WithTooltip
-				title={$LL.Navbar.LiveTab()}
-				let:trigger
-				let:triggerStoreValue
-				noArrow
-				delay={100}
-				size="sm"
-				gutter={-4}
+				<IconBlog
+					class="w-7.5 h-7.5 relative transition transform {$page.url.pathname === '/' &&
+					$themeApp === 'light' &&
+					!notAtTheVeryTop
+						? 'text-c-bg'
+						: 'text-c-on-bg'} not-touch:group-hover/iconbutton:text-c-primary"
+				/>
+			</IconButton>
+			<IconButton
+				class="py-2 hidden md:block"
+				href="/live"
+				name={$LL.Navbar.LiveTab()}
+				hasTooltip={true}
 			>
-				<div use:trigger {...triggerStoreValue}>
-					<IconButton class="py-2 hidden md:block" href="/live" name={$LL.Navbar.LiveTab()}>
-						<IconLive
-							class="w-7.5 h-7.5 relative transition transform {$page.url.pathname === '/' &&
-							$themeApp === 'light' &&
-							!notAtTheVeryTop
-								? 'text-c-bg'
-								: 'text-c-on-bg'} not-touch:group-hover/iconbutton:text-c-primary"
-						/>
-					</IconButton>
-				</div>
-			</WithTooltip>
+				<IconLive
+					class="w-7.5 h-7.5 relative transition transform {$page.url.pathname === '/' &&
+					$themeApp === 'light' &&
+					!notAtTheVeryTop
+						? 'text-c-bg'
+						: 'text-c-on-bg'} not-touch:group-hover/iconbutton:text-c-primary"
+				/>
+			</IconButton>
 			<div class="flex items-center justify-end pl-2 pr-3.5 md:pl-2.5 md:pr-5">
 				{#if $page.data.session && $userSummary}
 					<div
