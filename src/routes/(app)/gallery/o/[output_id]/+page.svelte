@@ -8,8 +8,6 @@
 		TSetButtonObjectWithState
 	} from '$components/generationFullScreen/types.js';
 	import IconChatBubbleCancel from '$components/icons/IconChatBubbleCancel.svelte';
-	import { tooltip } from '$ts/actions/tooltip';
-	import { negativePromptTooltipAlt } from '$ts/constants/tooltips/image.js';
 	import { getGenerationUrlFromParams } from '$ts/helpers/getGenerationUrlFromParams.js';
 	import type { TGenerationWithSelectedOutput } from '$ts/stores/user/generation.js';
 	import {
@@ -27,6 +25,7 @@
 	import IconBack from '$components/icons/IconBack.svelte';
 	import { navbarHeight } from '$ts/stores/navbarHeight.js';
 	import SimpleGrid from '$components/grids/SimpleGrid.svelte';
+	import WithTooltip from '$components/WithTooltip.svelte';
 
 	export let data;
 
@@ -183,9 +182,16 @@
 				</div>
 				{#if output.generation.negative_prompt}
 					<div class="max-w-full flex items-start text-c-danger gap-2">
-						<div use:tooltip={$negativePromptTooltipAlt}>
-							<IconChatBubbleCancel class="w-5 h-5" />
-						</div>
+						<WithTooltip
+							title={$LL.Home.NegativePromptInput.Title()}
+							paragraph={$LL.Home.NegativePromptInput.Paragraph()}
+							let:trigger
+							let:triggerStoreValue
+						>
+							<div use:trigger {...triggerStoreValue} class="cursor-default">
+								<IconChatBubbleCancel class="w-5 h-5" />
+							</div>
+						</WithTooltip>
 						<h3 class="flex-shrink min-w-0 leading-normal -mt-0.75">
 							{output.generation.negative_prompt.text}
 						</h3>

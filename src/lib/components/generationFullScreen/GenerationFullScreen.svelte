@@ -5,7 +5,6 @@
 	import { onDestroy, onMount } from 'svelte';
 	import { quadOut } from 'svelte/easing';
 	import { fly } from 'svelte/transition';
-	import { tooltip } from '$ts/actions/tooltip';
 	import { getGenerationUrlFromParams } from '$ts/helpers/getGenerationUrlFromParams';
 	import { page } from '$app/stores';
 	import {
@@ -18,7 +17,6 @@
 	import IconUpscale from '$components/icons/IconUpscale.svelte';
 	import TabBar from '$components/tabBars/TabBar.svelte';
 	import LL from '$i18n/i18n-svelte';
-	import { negativePromptTooltipAlt } from '$ts/constants/tooltips/image';
 	import Container from '$components/generationFullScreen/Container.svelte';
 	import { activeGeneration, type TGenerationWithSelectedOutput } from '$userStores/generation';
 	import { sseId } from '$userStores/sse';
@@ -51,6 +49,7 @@
 	import SrcsetProvider from '$components/generationImage/SrcsetProvider.svelte';
 	import Avatar from '$components/Avatar.svelte';
 	import { isGalleryAdmin, isSuperAdmin } from '$ts/helpers/admin/roles';
+	import WithTooltip from '$components/WithTooltip.svelte';
 
 	export let generation: TGenerationWithSelectedOutput;
 	export let modalType: TGenerationFullScreenModalType;
@@ -489,9 +488,17 @@
 							<p class="w-full leading-normal">{generation.prompt.text}</p>
 							{#if generation.negative_prompt}
 								<div class="w-full flex items-start text-c-danger gap-2">
-									<div use:tooltip={$negativePromptTooltipAlt}>
-										<IconChatBubbleCancel class="w-5 h-5" />
-									</div>
+									<WithTooltip
+										title={$LL.Home.NegativePromptInput.Title()}
+										paragraph={$LL.Home.NegativePromptInput.Paragraph()}
+										let:trigger
+										let:triggerStoreValue
+										color="bg-tertiary"
+									>
+										<div use:trigger {...triggerStoreValue} class="cursor-default">
+											<IconChatBubbleCancel class="w-5 h-5" />
+										</div>
+									</WithTooltip>
 									<p class="flex-shrink min-w-0 leading-normal -mt-0.75">
 										{generation.negative_prompt.text}
 									</p>

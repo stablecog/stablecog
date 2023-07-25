@@ -22,12 +22,11 @@
 	import IconChevronDown from '$components/icons/IconChevronDown.svelte';
 	import TagButton from '$components/buttons/TagButton.svelte';
 	import IconTrashcan from '$components/icons/IconTrashcan.svelte';
-	import { tooltip } from '$ts/actions/tooltip';
 	import IconBrain from '$components/icons/IconBrain.svelte';
-	import { modelTooltip } from '$ts/constants/tooltips/image';
 	import { browser } from '$app/environment';
 	import { isUUID } from '$ts/helpers/uuid';
 	import IconImageSearch from '$components/icons/IconImageSearch.svelte';
+	import WithTooltip from '$components/WithTooltip.svelte';
 
 	export let disabled = false;
 	export let searchString: string;
@@ -197,12 +196,21 @@
 					bind:values={modelIdFilters}
 					items={$availableModelIdDropdownItems}
 				>
-					<div
-						slot="title"
-						use:tooltip={$modelTooltip}
-						class="p-3.5 flex items-center justify-center"
-					>
-						<IconBrain class="w-6 h-6 text-c-on-bg/35" />
+					<div slot="title">
+						<WithTooltip
+							let:trigger
+							let:triggerStoreValue
+							title={$LL.Home.ModelDropdown.Title()}
+							paragraph={$LL.Home.ModelDropdown.Paragraph()}
+						>
+							<div
+								use:trigger
+								{...triggerStoreValue}
+								class="p-3.5 flex items-center justify-center cursor-default"
+							>
+								<IconBrain class="w-6 h-6 text-c-on-bg/35" />
+							</div>
+						</WithTooltip>
 					</div>
 				</TabLikeFilterDropdown>
 			</div>

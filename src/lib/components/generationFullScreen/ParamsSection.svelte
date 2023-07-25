@@ -14,17 +14,10 @@
 	import IconSteps from '$components/icons/IconSteps.svelte';
 	import IconTick from '$components/icons/IconTick.svelte';
 	import Morpher from '$components/Morpher.svelte';
+	import WithTooltip from '$components/WithTooltip.svelte';
 	import LL from '$i18n/i18n-svelte';
-	import { tooltip } from '$ts/actions/tooltip';
 	import { generationModelIdDefault, modelIdToDisplayName } from '$ts/constants/generationModels';
 	import { schedulerIdDefault, schedulerIdToDisplayName } from '$ts/constants/schedulers';
-	import {
-		guidanceScaleTooltipAlt,
-		inferenceStepsTooltipAlt,
-		modelTooltipAlt,
-		schedulerTooltipAlt,
-		seedTooltipAlt
-	} from '$ts/constants/tooltips/image';
 	import type { TGenerationWithSelectedOutput } from '$userStores/generation';
 	import { copy } from 'svelte-copy';
 
@@ -41,46 +34,83 @@
 <div class={classes}>
 	<div class="flex flex-wrap gap-6">
 		<div class="min-w-[calc(50%-0.75rem)] flex flex-col items-start gap-1">
-			<div
-				use:tooltip={$modelTooltipAlt}
-				class="flex items-center gap-1.5 text-c-on-bg/75 text-sm cursor-default"
+			<WithTooltip
+				title={$LL.Home.ModelDropdown.Title()}
+				paragraph={$LL.Home.ModelDropdown.Paragraph()}
+				let:trigger
+				let:triggerStoreValue
+				color="bg-tertiary"
 			>
-				<IconBrain class="w-4 h-4" />
-				<p class="font-medium">{$LL.Home.ModelDropdown.Title()}</p>
-			</div>
+				<div
+					use:trigger
+					{...triggerStoreValue}
+					class="flex items-center gap-1.5 text-c-on-bg/75 text-sm cursor-default"
+				>
+					<IconBrain class="w-4 h-4" />
+					<p class="font-medium">{$LL.Home.ModelDropdown.Title()}</p>
+				</div>
+			</WithTooltip>
+
 			<p class="font-semibold">
 				{$modelIdToDisplayName[generation.model_id ?? generationModelIdDefault] ??
 					$LL.Shared.UnknownTitle()}
 			</p>
 		</div>
 		<div class="min-w-[calc(50%-0.75rem)] flex flex-col items-start gap-1">
-			<div
-				use:tooltip={$guidanceScaleTooltipAlt}
-				class="flex items-center gap-1.5 text-c-on-bg/75 text-sm cursor-default"
+			<WithTooltip
+				title={$LL.Home.GuidanceScaleSlider.Title()}
+				paragraph={$LL.Home.GuidanceScaleSlider.Paragraph()}
+				let:trigger
+				let:triggerStoreValue
+				color="bg-tertiary"
 			>
-				<IconScale class="w-4 h-4" />
-				<p class="font-medium">{$LL.Home.GuidanceScaleSlider.Title()}</p>
-			</div>
-			<p class="font-semibold">{generation.guidance_scale}</p>
+				<div
+					use:trigger
+					{...triggerStoreValue}
+					class="flex items-center gap-1.5 text-c-on-bg/75 text-sm cursor-default"
+				>
+					<IconScale class="w-4 h-4" />
+					<p class="font-medium">{$LL.Home.GuidanceScaleSlider.Title()}</p>
+				</div>
+				<p class="font-semibold">{generation.guidance_scale}</p>
+			</WithTooltip>
 		</div>
 		<div class="min-w-[calc(50%-0.75rem)] flex flex-col items-start gap-1">
-			<div
-				use:tooltip={$inferenceStepsTooltipAlt}
-				class="flex items-center gap-1.5 text-c-on-bg/75 text-sm cursor-default"
+			<WithTooltip
+				title={$LL.Home.InferenceStepsTabBar.Title()}
+				paragraph={$LL.Home.InferenceStepsTabBar.Paragraph()}
+				let:trigger
+				let:triggerStoreValue
+				color="bg-tertiary"
 			>
-				<IconSteps class="w-4 h-4" />
-				<p class="font-medium">{$LL.Home.InferenceStepsTabBar.Title()}</p>
-			</div>
+				<div
+					use:trigger
+					{...triggerStoreValue}
+					class="flex items-center gap-1.5 text-c-on-bg/75 text-sm cursor-default"
+				>
+					<IconSteps class="w-4 h-4" />
+					<p class="font-medium">{$LL.Home.InferenceStepsTabBar.Title()}</p>
+				</div>
+			</WithTooltip>
 			<p class="font-semibold">{generation.inference_steps}</p>
 		</div>
 		<div class="min-w-[calc(50%-0.75rem)] flex flex-col items-start gap-1">
-			<div
-				use:tooltip={$schedulerTooltipAlt}
-				class="flex items-center gap-1.5 text-c-on-bg/75 text-sm cursor-default"
+			<WithTooltip
+				title={$LL.Home.SchedulerDropdown.Title()}
+				paragraph={$LL.Home.SchedulerDropdown.Paragraph()}
+				let:trigger
+				let:triggerStoreValue
+				color="bg-tertiary"
 			>
-				<IconBubbles class="w-4 h-4" />
-				<p class="font-medium">{$LL.Home.SchedulerDropdown.Title()}</p>
-			</div>
+				<div
+					use:trigger
+					{...triggerStoreValue}
+					class="flex items-center gap-1.5 text-c-on-bg/75 text-sm cursor-default"
+				>
+					<IconBubbles class="w-4 h-4" />
+					<p class="font-medium">{$LL.Home.SchedulerDropdown.Title()}</p>
+				</div>
+			</WithTooltip>
 			<p class="font-semibold">
 				{$schedulerIdToDisplayName[generation.scheduler_id ?? schedulerIdDefault] ??
 					$LL.Shared.UnknownTitle()}
@@ -89,13 +119,22 @@
 		{#if modalType === 'generate' || modalType === 'history' || modalType === 'admin-gallery'}
 			<div class="min-w-[calc(50%-0.75rem)] flex flex-wrap items-center gap-3.5">
 				<div class="flex flex-col items-start gap-1">
-					<div
-						use:tooltip={$seedTooltipAlt}
-						class="flex items-center gap-1.5 text-c-on-bg/75 text-sm cursor-default"
+					<WithTooltip
+						title={$LL.Home.SeedInput.Title()}
+						paragraph={$LL.Home.SeedInput.Paragraph()}
+						let:trigger
+						let:triggerStoreValue
+						color="bg-tertiary"
 					>
-						<IconSeed class="w-4 h-4" />
-						<p class="font-medium">{$LL.Home.SeedInput.Title()}</p>
-					</div>
+						<div
+							use:trigger
+							{...triggerStoreValue}
+							class="flex items-center gap-1.5 text-c-on-bg/75 text-sm cursor-default"
+						>
+							<IconSeed class="w-4 h-4" />
+							<p class="font-medium">{$LL.Home.SeedInput.Title()}</p>
+						</div>
+					</WithTooltip>
 					<p class="font-semibold">{generation.seed}</p>
 				</div>
 				{#key generation.selected_output.id}

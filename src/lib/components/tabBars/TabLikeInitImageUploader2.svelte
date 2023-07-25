@@ -12,15 +12,14 @@
 	import Morpher from '$components/Morpher.svelte';
 	import RangeInputWithNumerator from '$components/RangeInputWithNumerator.svelte';
 	import TabBarWrapper from '$components/tabBars/TabBarWrapper.svelte';
+	import WithTooltip from '$components/WithTooltip.svelte';
 	import LL, { locale } from '$i18n/i18n-svelte';
 	import { clickoutside } from '$ts/actions/clickoutside';
-	import { tooltip } from '$ts/actions/tooltip';
 	import {
 		initImageStrengthMax,
 		initImageStrengthMin,
 		initImageStrengthStep
 	} from '$ts/constants/main';
-	import { initImageStrengthTabBarTooltipSettingsPanel } from '$ts/constants/tooltips/image';
 	import { logInitImageRemoved } from '$ts/helpers/loggers';
 	import { advancedModeApp } from '$ts/stores/advancedMode';
 	import { appVersion } from '$ts/stores/appVersion';
@@ -148,6 +147,14 @@
 		generationInitImageFiles.set(files);
 		isDraggedInside = false;
 	}
+
+	function onDrop(e: any) {
+		setFilesIfValid(e);
+	}
+
+	function onScroll(e: any) {
+		scrollY = e.currentTarget.scrollTop;
+	}
 </script>
 
 <svelte:window on:keydown={onKeyDown} />
@@ -177,6 +184,8 @@
 						class="bg-c-bg w-full h-22 bg-center transition hover:cursor-pointer flex items-center justify-center
 						relative overflow-hidden rounded-t-xl z-0 ring-2 ring-c-bg-secondary
 						not-touch:hover:ring-c-primary/25"
+						role="button"
+						tabindex="0"
 					>
 						{#if uploadImageContainerWidth && uploadImageContainerHeight}
 							<div
@@ -243,12 +252,20 @@
 				{:else}
 					<div class="w-full bg-c-bg-secondary h-2px" />
 					<div class="w-full flex flex-col items-start mt-3">
-						<p
-							use:tooltip={$initImageStrengthTabBarTooltipSettingsPanel}
-							class="max-w-full px-4 text-c-on-bg/75 font-medium text-sm"
+						<WithTooltip
+							let:trigger
+							let:triggerStoreValue
+							title={$LL.Home.InitialImageStrengthTabBar.TitleAlt()}
+							paragraph={$LL.Home.InitialImageStrengthTabBar.Paragraph()}
 						>
-							{$LL.Home.InitialImageStrengthTabBar.TitleAlt()}
-						</p>
+							<p
+								use:trigger
+								{...triggerStoreValue}
+								class="max-w-full px-4 text-c-on-bg/75 font-medium text-sm cursor-default"
+							>
+								{$LL.Home.InitialImageStrengthTabBar.TitleAlt()}
+							</p>
+						</WithTooltip>
 						<RangeInputWithNumerator
 							name={$LL.Home.InitialImageStrengthTabBar.Title()}
 							min={initImageStrengthMin}
@@ -268,7 +285,7 @@
 			on:dragleave|preventDefault|stopPropagation={() => (isDraggedInside = false)}
 			on:dragend|preventDefault|stopPropagation={() => (isDraggedInside = false)}
 			on:dragover|preventDefault|stopPropagation={() => (isDraggedInside = true)}
-			on:drop|preventDefault|stopPropagation={(e) => setFilesIfValid(e)}
+			on:drop|preventDefault|stopPropagation={onDrop}
 			for="file-input"
 			class="touch-manipulation flex items-center hover:cursor-pointer relative {$generationInitImageSrc &&
 			$generationInitImageWidth &&
@@ -330,9 +347,7 @@
 	/>
 	<div
 		use:portal={'body'}
-		on:scroll={(e) => {
-			scrollY = e.currentTarget.scrollTop;
-		}}
+		on:scroll={onScroll}
 		style="max-height: 100vh; max-height: {$windowHeight ? `${$windowHeight}px` : '100svh'};"
 		class="w-full h-full flex flex-col items-center fixed left-0 top-0 pb-20 md:p-16 z-[10002] overflow-auto"
 	>

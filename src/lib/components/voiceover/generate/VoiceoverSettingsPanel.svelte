@@ -12,13 +12,6 @@
 	import TabLikeRangeInput from '$components/tabBars/TabLikeRangeInput.svelte';
 	import TabLikeToggle from '$components/tabBars/TabLikeToggle.svelte';
 	import LL from '$i18n/i18n-svelte';
-	import {
-		denoiseAudioTooltipSettingsPanel,
-		removeSilenceTooltipSettingsPanel,
-		voiceoverLanguageTooltipSettingsPanel,
-		voiceoverSpeakerTooltipSettingsPanel,
-		voiceStabilityTooltipSettingsPanel
-	} from '$ts/constants/tooltips/voiceover';
 	import { voiceoverLocaleDropdownItems } from '$ts/constants/voiceover/locales';
 	import { voiceoverLocale, voiceoverSpeakerDropdownItems } from '$ts/constants/voiceover/models';
 	import { voiceoverStabilityMax, voiceoverStabilityMin } from '$ts/constants/voiceover/rest';
@@ -45,7 +38,8 @@
 		<SettingsPanelItem
 			title={$LL.Voiceover.Settings.Speaker.Title()}
 			icon={IconMicrophone}
-			tooltipObj={$voiceoverSpeakerTooltipSettingsPanel}
+			tooltipTitle={$LL.Voiceover.Settings.Speaker.Title()}
+			tooltipParagraph={$LL.Voiceover.Settings.Speaker.Paragraph()}
 		>
 			<TabLikeDropdown
 				name={$LL.Voiceover.Settings.Speaker.Title()}
@@ -60,10 +54,11 @@
 				bind:value={$voiceoverSpeakerId}
 			/>
 		</SettingsPanelItem>
-	  <SettingsPanelItem
+		<SettingsPanelItem
 			title={$LL.Voiceover.Settings.Language.Title()}
 			icon={IconLanguage}
-			tooltipObj={$voiceoverLanguageTooltipSettingsPanel}
+			tooltipTitle={$LL.Voiceover.Settings.Language.Title()}
+			tooltipParagraph={$LL.Voiceover.Settings.Language.Paragraph()}
 		>
 			<TabLikeDropdown
 				name={$LL.Voiceover.Settings.Language.Title()}
@@ -81,7 +76,8 @@
 		<SettingsPanelItem
 			title={$LL.Voiceover.Settings.VoiceStability.Title()}
 			icon={IconWave}
-			tooltipObj={$voiceStabilityTooltipSettingsPanel}
+			tooltipTitle={$LL.Voiceover.Settings.VoiceStability.Title()}
+			tooltipParagraph={$LL.Voiceover.Settings.VoiceStability.Paragraph()}
 		>
 			<TabLikeRangeInput
 				name={$LL.Voiceover.Settings.VoiceStability.Title()}
@@ -99,7 +95,8 @@
 		<SettingsPanelItem
 			title={$LL.Voiceover.Settings.RemoveSilence.Title()}
 			icon={IconRemoveSilence}
-			tooltipObj={$removeSilenceTooltipSettingsPanel}
+			tooltipTitle={$LL.Voiceover.Settings.RemoveSilence.Title()}
+			tooltipParagraph={$LL.Voiceover.Settings.RemoveSilence.Paragraph()}
 		>
 			<TabLikeToggle
 				class="w-full"
@@ -113,7 +110,8 @@
 		<SettingsPanelItem
 			title={$LL.Voiceover.Settings.DenoiseAudio.Title()}
 			icon={IconDenoise}
-			tooltipObj={$denoiseAudioTooltipSettingsPanel}
+			tooltipTitle={$LL.Voiceover.Settings.DenoiseAudio.Title()}
+			tooltipParagraph={$LL.Voiceover.Settings.DenoiseAudio.Paragraph()}
 		>
 			<TabLikeToggle
 				class="w-full"

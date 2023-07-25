@@ -20,17 +20,6 @@
 		numOutputsMin
 	} from '$ts/constants/main';
 	import {
-		aspectRatioTooltipSettingsPanel,
-		guidanceScaleTooltipSettingsPanel,
-		inferenceStepsTooltipSettingsPanel,
-		initImageTooltipSettingsPanel,
-		modelTooltipSettingsPanel,
-		negativePromptTooltipSettingsPanel,
-		numOutputsTooltipSettingsPanel,
-		schedulerTooltipSettingsPanel,
-		seedTooltipSettingsPanel
-	} from '$ts/constants/tooltips/image';
-	import {
 		generationAspectRatio,
 		generationGuidanceScale,
 		generationInferenceSteps,
@@ -77,7 +66,8 @@
 		<SettingsPanelItem
 			title={$LL.Home.AspectRatioDropdown.Title()}
 			icon={IconDimensions}
-			tooltipObj={$aspectRatioTooltipSettingsPanel}
+			tooltipTitle={$LL.Home.AspectRatioTabBar.Title()}
+			tooltipParagraph={$LL.Home.AspectRatioTabBar.Paragraph()}
 		>
 			<TabLikeDropdown
 				class="w-full"
@@ -94,7 +84,8 @@
 		<SettingsPanelItem
 			title={$LL.Home.ModelDropdown.Title()}
 			icon={IconBrain}
-			tooltipObj={$modelTooltipSettingsPanel}
+			tooltipTitle={$LL.Home.ModelDropdown.Title()}
+			tooltipParagraph={$LL.Home.ModelDropdown.Paragraph()}
 		>
 			<TabLikeDropdown
 				class="w-full"
@@ -119,14 +110,16 @@
 		<SettingsPanelItem
 			title={$LL.Home.ImageInput.Title()}
 			icon={IconAddImage}
-			tooltipObj={$initImageTooltipSettingsPanel}
+			tooltipTitle={$LL.Home.ImageInput.Title()}
+			tooltipParagraph={$LL.Home.InitialImageTabBar.Paragraph()}
 		>
 			<TabLikeInitImageUploader2 disabled={!isCheckCompleted} class="w-full" {openSignInModal} />
 		</SettingsPanelItem>
 		<SettingsPanelItem
 			title={$LL.Home.NegativePromptInput.Title()}
 			icon={IconChatBubbleCancel}
-			tooltipObj={$negativePromptTooltipSettingsPanel}
+			tooltipTitle={$LL.Home.NegativePromptInput.Title()}
+			tooltipParagraph={$LL.Home.NegativePromptInput.Paragraph()}
 		>
 			<TabLikeTextArea
 				max={maxPromptLength}
@@ -139,7 +132,8 @@
 		<SettingsPanelItem
 			title={$LL.Home.NumOutputsSlider.Title()}
 			icon={IconImage}
-			tooltipObj={$numOutputsTooltipSettingsPanel}
+			tooltipTitle={$LL.Home.NumOutputsSlider.Title()}
+			tooltipParagraph={$LL.Home.NumOutputsSlider.Paragraph()}
 		>
 			<TabLikeRangeInput
 				name={$LL.Home.NumOutputsSlider.Title()}
@@ -206,7 +200,8 @@
 						<SettingsPanelItem
 							title={$LL.Home.GuidanceScaleSlider.Title()}
 							icon={IconScale}
-							tooltipObj={$guidanceScaleTooltipSettingsPanel}
+							tooltipTitle={$LL.Home.GuidanceScaleSlider.Title()}
+							tooltipParagraph={$LL.Home.GuidanceScaleSlider.Paragraph()}
 						>
 							<TabLikeRangeInput
 								name={$LL.Home.GuidanceScaleSlider.Title()}
@@ -221,7 +216,8 @@
 						<SettingsPanelItem
 							title={$LL.Home.SchedulerDropdown.Title()}
 							icon={IconBubbles}
-							tooltipObj={$schedulerTooltipSettingsPanel}
+							tooltipTitle={$LL.Home.SchedulerDropdown.Title()}
+							tooltipParagraph={$LL.Home.SchedulerDropdown.Paragraph()}
 						>
 							<TabLikeDropdown
 								class="w-full"
@@ -237,7 +233,8 @@
 						<SettingsPanelItem
 							title={$LL.Home.InferenceStepsTabBar.Title()}
 							icon={IconSteps}
-							tooltipObj={$inferenceStepsTooltipSettingsPanel}
+							tooltipTitle={$LL.Home.InferenceStepsTabBar.Title()}
+							tooltipParagraph={$LL.Home.InferenceStepsTabBar.Paragraph()}
 						>
 							<TabBar
 								class="w-full"
@@ -251,7 +248,8 @@
 						<SettingsPanelItem
 							title={$LL.Home.SeedInput.Title()}
 							icon={IconSeed}
-							tooltipObj={$seedTooltipSettingsPanel}
+							tooltipTitle={$LL.Home.SeedInput.Title()}
+							tooltipParagraph={$LL.Home.SeedInput.Paragraph()}
 						>
 							<TabLikeInput
 								class="w-full"
