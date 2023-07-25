@@ -5,7 +5,7 @@
 	import { fly } from 'svelte/transition';
 
 	export let delay = 250;
-	export let closeDelay = 50;
+	export let closeDelay = 0;
 	export let color: 'bg-secondary' | 'bg-tertiary' = 'bg-secondary';
 	export let title: string | undefined = undefined;
 	export let paragraph: string | undefined = undefined;
