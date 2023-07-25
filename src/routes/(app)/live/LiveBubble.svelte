@@ -135,7 +135,7 @@
 			</div>
 		{/if}
 		<WithTooltip let:triggerStoreValue let:trigger delay={0} color="bg-secondary">
-			<div
+			<button
 				use:trigger
 				{...triggerStoreValue}
 				class="w-full h-full {processObject.process_type === 'upscale'
@@ -183,7 +183,7 @@
 						</p>
 					{/if}
 				</div>
-			</div>
+			</button>
 			<div class="flex flex-col gap-1.5" slot="tooltip">
 				{#each rows as row}
 					<div class="w-full flex flex-row items-center justify-between text-sm gap-4">
