@@ -13,7 +13,6 @@
 	export let size: 'sm' | 'md' = 'md';
 	export let gutter = -1;
 	export let isActive = true;
-	export let hasPointerEvents = false;
 
 	const { trigger, content, open, arrow, options } = createTooltip({
 		positioning: {
@@ -25,6 +24,7 @@
 				crossAxis: 4
 			}
 		},
+		arrowSize: 16,
 		openDelay: delay,
 		closeDelay: closeDelay,
 		closeOnPointerDown: false
@@ -49,9 +49,7 @@
 			? 'px-2.5 py-1.25 rounded-md'
 			: 'px-4 py-3 rounded-xl'} {color == 'bg-secondary'
 			? 'bg-c-bg-secondary'
-			: 'bg-c-bg-tertiary'} {size === 'sm' ? 'text-xs' : 'text-sm'} {hasPointerEvents
-			? ''
-			: 'pointer-events-none'} outline-none"
+			: 'bg-c-bg-tertiary'} {size === 'sm' ? 'text-xs' : 'text-sm'}"
 		{...$content}
 		use:content
 	>
