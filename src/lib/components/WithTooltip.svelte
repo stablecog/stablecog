@@ -46,7 +46,7 @@
 			? 'px-2.5 py-1.25 rounded-md'
 			: 'px-4 py-3 rounded-xl'} {color == 'bg-secondary'
 			? 'bg-c-bg-secondary'
-			: 'bg-c-bg-tertiary'} {size === 'sm' ? 'text-xs' : 'text-sm'} pointer-events-none"
+			: 'bg-c-bg-tertiary'} {size === 'sm' ? 'text-xs' : 'text-sm'}"
 		{...$content}
 		use:content
 	>
