@@ -177,8 +177,8 @@
 			</div>
 			<div class="w-full flex flex-col items-start gap-3 -mt-4 lg:-mt-2">
 				<div class="w-full flex flex-col gap-2">
-					<h1 class="w-full font-semibold text-3xl">{$LL.Home.PromptInput.Title()}</h1>
-					<h2 class="w-full leading-normal">{output.generation.prompt.text}</h2>
+					<p class="w-full font-semibold text-3xl">{$LL.Home.PromptInput.Title()}</p>
+					<h1 class="w-full leading-normal">{output.generation.prompt.text}</h1>
 				</div>
 				{#if output.generation.negative_prompt}
 					<div class="max-w-full flex items-start text-c-danger gap-2">
