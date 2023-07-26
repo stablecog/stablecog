@@ -117,7 +117,7 @@
 	canonical="{canonicalUrl}{$page.url.pathname}"
 />
 
-<div class="w-full flex justify-center pt-5 md:pt-8 pb-8 md:px-5 lg:px-8 xl:px-12 2xl:px-16">
+<div class="w-full flex justify-center pt-2 md:pt-6 pb-8 md:px-5 lg:px-8 xl:px-12 2xl:px-16">
 	<div
 		class="w-full flex flex-col lg:flex-row
     justify-center items-center lg:items-start gap-4 relative"
@@ -134,7 +134,7 @@
 					<ImagePlaceholder
 						width={currentImageWidth}
 						height={currentImageHeight}
-						class="max-h-[calc(100vh-110px)] md:max-h-[calc(100vh-150px)] max-w-full w-auto h-auto"
+						class="max-h-[calc(100vh-100px)] md:max-h-[calc(100vh-130px)] max-w-full w-auto h-auto"
 					/>
 					<img
 						class="absolute left-0 top-0 w-full h-full filter blur-xl transform scale-102"
