@@ -192,9 +192,9 @@
 								<IconChatBubbleCancel class="w-5 h-5" />
 							</div>
 						</WithTooltip>
-						<h3 class="flex-shrink min-w-0 leading-normal -mt-0.75">
+						<h2 class="flex-shrink min-w-0 leading-normal -mt-0.75">
 							{output.generation.negative_prompt.text}
-						</h3>
+						</h2>
 					</div>
 				{/if}
 			</div>
@@ -219,9 +219,9 @@
 				{modalType}
 			/>
 			<div class="w-full flex flex-col mt-5">
-				<h3 class="max-w-full font-semibold text-3xl">
+				<p class="max-w-full font-semibold text-3xl">
 					{$LL.GenerationFullscreen.SimilarTitle()}
-				</h3>
+				</p>
 				<div class="w-[calc(100%+6px)] flex flex-row justify-start items-start -m-3px mt-3.5">
 					<SimpleGrid cols={simpleGridCols} items={similarOutputs} let:item={output}>
 						<a
