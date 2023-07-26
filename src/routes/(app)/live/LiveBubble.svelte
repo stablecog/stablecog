@@ -191,8 +191,8 @@
 		<div class="flex flex-col gap-1.5" slot="tooltip">
 			{#each rows as row}
 				<div class="w-full flex flex-row items-center justify-between text-sm gap-4">
-					<p class="text-c-on-bg/60">{row.key}</p>
-					<p class="font-medium text-c-on-bg">{row.value}</p>
+					<p class="text-c-on-bg/60 text-left">{row.key}</p>
+					<p class="font-medium text-c-on-bg text-right">{row.value}</p>
 				</div>
 			{/each}
 		</div>

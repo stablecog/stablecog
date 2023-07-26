@@ -11,7 +11,7 @@
 	export let paragraph: string | undefined = undefined;
 	export let noArrow = false;
 	export let size: 'sm' | 'md' = 'md';
-	export let gutter = -1;
+	export let gutter = -4;
 	export let isActive = true;
 
 	const { trigger, content, open, arrow, options } = createTooltip({
@@ -24,7 +24,7 @@
 				crossAxis: 4
 			}
 		},
-		arrowSize: 16,
+		arrowSize: 20,
 		openDelay: delay,
 		closeDelay: closeDelay,
 		closeOnPointerDown: false
@@ -54,7 +54,7 @@
 		use:content
 	>
 		{#if !noArrow}
-			<div {...$arrow} use:arrow />
+			<div class="rounded -my-0.75" {...$arrow} use:arrow />
 		{/if}
 		{#if title || paragraph}
 			<div class="w-full flex flex-col gap-1">
