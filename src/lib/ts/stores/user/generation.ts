@@ -202,15 +202,32 @@ export async function submitInitialGenerationRequest(
 		prompt: promptText,
 		negative_prompt: negativePromptText
 	};
-	const response = await fetch(`${apiUrl.origin}/v1/user/generation`, {
-		method: 'POST',
-		headers: {
-			'Content-Type': 'application/json',
-			'X-App-Version': app_version,
-			Authorization: `Bearer ${access_token}`
-		},
-		body: JSON.stringify(finalRequest)
-	});
+	let response: Response;
+	if (request.zoom_out_from_output_id) {
+		response = await fetch(`${apiUrl.origin}/v1/user/image/generation/zoom-out`, {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+				'X-App-Version': app_version,
+				Authorization: `Bearer ${access_token}`
+			},
+			body: JSON.stringify({
+				output_id: request.zoom_out_from_output_id,
+				stream_id: request.stream_id,
+				ui_id: request.ui_id
+			})
+		});
+	} else {
+		response = await fetch(`${apiUrl.origin}/v1/user/generation`, {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+				'X-App-Version': app_version,
+				Authorization: `Bearer ${access_token}`
+			},
+			body: JSON.stringify(finalRequest)
+		});
+	}
 	const resJSON: TInitialGenerationResponse = await response.json();
 	console.log('Generation request response:', resJSON);
 	return { ...resJSON, ui_id: request.ui_id };
@@ -454,6 +471,7 @@ export interface TInitialGenerationRequest extends TGenerationBase {
 	process_type: TProcessType;
 	submit_to_gallery: boolean;
 	init_image_file?: FileList;
+	zoom_out_from_output_id?: string;
 }
 
 export type TGenerationStatus =

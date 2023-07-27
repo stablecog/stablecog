@@ -204,6 +204,7 @@ const ja: Translation = {
 		RegenerateButton: '再生成',
 		GenerateButton: '生成',
 		UpscaleButton: 'アップスケール',
+		ZoomOutButton: 'Zoom Out',
 		SimilarTitle: '類似画像',
 		SubmitToGalleryButton: 'ギャラリーに提出',
 		SubmittedTitle: '提出済み',

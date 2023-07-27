@@ -193,6 +193,7 @@ const de: Translation = {
 		RegenerateButton: 'Erneut generieren',
 		GenerateButton: 'Generieren',
 		UpscaleButton: 'Hochskalieren',
+		ZoomOutButton: 'Zoom Out',
 		SimilarTitle: 'Similar',
 		SubmitToGalleryButton: 'Für die Galerie einreichen',
 		SubmittedTitle: 'Eingereicht',

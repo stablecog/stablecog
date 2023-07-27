@@ -134,7 +134,7 @@
 					{
 						...generation,
 						stream_id: $sseId,
-						output_image_extension: 'jpeg',
+						output_image_extension: 'png',
 						process_type: 'generate'
 					},
 					$page.data.session.access_token,

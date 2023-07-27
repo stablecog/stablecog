@@ -194,6 +194,7 @@ const es: Translation = {
 		RegenerateButton: 'Regenerar',
 		GenerateButton: 'Generar',
 		UpscaleButton: 'Mejorar',
+		ZoomOutButton: 'Zoom Out',
 		SimilarTitle: 'Similar',
 		SubmitToGalleryButton: 'Submit to Gallery',
 		SubmittedTitle: 'Submitted',

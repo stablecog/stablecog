@@ -18,7 +18,11 @@
 	import TabBar from '$components/tabBars/TabBar.svelte';
 	import LL from '$i18n/i18n-svelte';
 	import Container from '$components/generationFullScreen/Container.svelte';
-	import { activeGeneration, type TGenerationWithSelectedOutput } from '$userStores/generation';
+	import {
+		activeGeneration,
+		queueInitialGenerationRequest,
+		type TGenerationWithSelectedOutput
+	} from '$userStores/generation';
 	import { sseId } from '$userStores/sse';
 	import {
 		queueInitialUpscaleRequest,
@@ -50,6 +54,9 @@
 	import Avatar from '$components/Avatar.svelte';
 	import { isGalleryAdmin, isSuperAdmin } from '$ts/helpers/admin/roles';
 	import WithTooltip from '$components/WithTooltip.svelte';
+	import IconZoomOut from '$components/icons/IconZoomOut.svelte';
+	import { appVersion } from '$ts/stores/appVersion';
+	import { apiUrl } from '$ts/constants/main';
 
 	export let generation: TGenerationWithSelectedOutput;
 	export let modalType: TGenerationFullScreenModalType;
@@ -227,6 +234,40 @@
 			ui_id: generateSSEId()
 		};
 		queueInitialUpscaleRequest(initialRequestProps);
+	}
+
+	async function onZoomOutClicked() {
+		if (!$sseId) {
+			console.log('No SSE ID, cannot zoom out');
+			return;
+		}
+		queueInitialGenerationRequest({
+			guidance_scale: generation.guidance_scale,
+			height: generation.height,
+			inference_steps: generation.inference_steps,
+			model_id: generation.model_id,
+			num_outputs: 1,
+			output_image_extension: 'png',
+			process_type: 'generate',
+			prompt: {
+				id: 'prompt',
+				text: generation.prompt.text
+			},
+			scheduler_id: generation.scheduler_id,
+			seed: generation.seed,
+			stream_id: $sseId,
+			ui_id: generateSSEId(),
+			width: generation.width,
+			negative_prompt: generation.negative_prompt
+				? {
+						id: 'negative_prompt',
+						text: generation.negative_prompt.text
+				  }
+				: undefined,
+			submit_to_gallery: false,
+			zoom_out_from_output_id: generation.selected_output.id
+		});
+		activeGeneration.set(undefined);
 	}
 
 	$: upscaledTabValue, setCurrentImageUrl();
@@ -447,7 +488,8 @@
 							</div>
 						{/if}
 						{#if (modalType === 'generate' || modalType === 'history') && !generation.selected_output.image_url.includes('placeholder')}
-							<div class="w-full pt-1.5">
+							<div class="w-full flex flex-col pt-1.5 gap-3">
+								<!-- Upscale -->
 								{#if !generation.selected_output.upscaled_image_url || upscaleBeingProcessed}
 									<div class="w-full relative">
 										<Button
@@ -481,6 +523,30 @@
 										name="Upscaled or Default Image"
 									/>
 								{/if}
+								<!-- Zoom Out -->
+								<div class="w-full relative">
+									<Button
+										onClick={onZoomOutClicked}
+										loading={upscaleBeingProcessed || $maxOngoingUpscalesCountReached}
+										disabled={doesntHaveEnoughCredits}
+										fadeOnDisabled={doesntHaveEnoughCredits}
+										withSpinner
+										class="w-full"
+										size="sm"
+										type="primary-outline"
+									>
+										<div class="flex items-center gap-2">
+											<IconZoomOut class="w-5 h-5" />
+											<p>{$LL.GenerationFullscreen.ZoomOutButton()}</p>
+										</div>
+									</Button>
+									{#if doesntHaveEnoughCredits && !upscaleBeingProcessed && $userSummary && $page.data.session?.user.id}
+										<InsufficientCreditsBadge
+											neededCredits={upscaleCreditCost}
+											remainingCredits={$userSummary.total_remaining_credits}
+										/>
+									{/if}
+								</div>
 							</div>
 						{/if}
 						<!-- Prompt and Negative Prompt -->

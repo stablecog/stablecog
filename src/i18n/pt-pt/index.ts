@@ -193,6 +193,7 @@ const ptPt: Translation = {
 		RegenerateButton: 'Regenerar',
 		GenerateButton: 'Gerar',
 		UpscaleButton: 'Interpolação',
+		ZoomOutButton: 'Zoom Out',
 		SimilarTitle: 'Similar',
 		SubmitToGalleryButton: 'Submit to Gallery',
 		SubmittedTitle: 'Submitted',

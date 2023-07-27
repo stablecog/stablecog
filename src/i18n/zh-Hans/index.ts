@@ -191,6 +191,7 @@ const zhHans: Translation = {
 		RegenerateButton: '再生成',
 		GenerateButton: '生成',
 		UpscaleButton: '提高分辨率',
+		ZoomOutButton: 'Zoom Out',
 		SimilarTitle: 'Similar',
 		SubmitToGalleryButton: 'Submit to Gallery',
 		SubmittedTitle: 'Submitted',

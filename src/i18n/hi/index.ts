@@ -193,6 +193,7 @@ const hi: Translation = {
 		RegenerateButton: 'दोबारा बनाए',
 		GenerateButton: 'बनाए',
 		UpscaleButton: 'निखारे',
+		ZoomOutButton: 'Zoom Out',
 		SimilarTitle: 'Similar',
 		SubmitToGalleryButton: 'Submit to Gallery',
 		SubmittedTitle: 'Submitted',

@@ -204,6 +204,7 @@ const tr: Translation = {
 		RegenerateButton: 'Tekrar Üret',
 		GenerateButton: 'Üret',
 		UpscaleButton: 'Büyüt',
+		ZoomOutButton: 'Zoom Out',
 		SimilarTitle: 'Benzer',
 		SubmitToGalleryButton: 'Galeriye Gönder',
 		SubmittedTitle: 'Gönderildi',

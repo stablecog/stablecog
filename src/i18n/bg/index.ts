@@ -196,6 +196,7 @@ const bg: Translation = {
 		RegenerateButton: 'Пресъздай',
 		GenerateButton: 'Създай',
 		UpscaleButton: 'Уголеми',
+		ZoomOutButton: 'Zoom Out',
 		SimilarTitle: 'Similar',
 		SubmitToGalleryButton: 'Качи в галерията',
 		SubmittedTitle: 'Качено',

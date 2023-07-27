@@ -194,6 +194,7 @@ const en: BaseTranslation = {
 		RegenerateButton: 'Regenerate',
 		GenerateButton: 'Generate',
 		UpscaleButton: 'Upscale',
+		ZoomOutButton: 'Zoom Out',
 		SimilarTitle: 'Similar',
 		SubmitToGalleryButton: 'Submit to Gallery',
 		SubmittedTitle: 'Submitted',

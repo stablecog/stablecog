@@ -596,6 +596,10 @@ type RootTranslation = {
 		 */
 		UpscaleButton: string
 		/**
+		 * Z​o​o​m​ ​O​u​t
+		 */
+		ZoomOutButton: string
+		/**
 		 * S​i​m​i​l​a​r
 		 */
 		SimilarTitle: string
@@ -3665,6 +3669,10 @@ export type TranslationFunctions = {
 		 * Upscale
 		 */
 		UpscaleButton: () => LocalizedString
+		/**
+		 * Zoom Out
+		 */
+		ZoomOutButton: () => LocalizedString
 		/**
 		 * Similar
 		 */

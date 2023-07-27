@@ -194,6 +194,7 @@ const vi: Translation = {
 		RegenerateButton: 'Tái tạo',
 		GenerateButton: 'Khởi tạo',
 		UpscaleButton: 'Phóng to',
+		ZoomOutButton: 'Zoom Out',
 		SimilarTitle: 'Similar',
 		SubmitToGalleryButton: 'Submit to Gallery',
 		SubmittedTitle: 'Submitted',

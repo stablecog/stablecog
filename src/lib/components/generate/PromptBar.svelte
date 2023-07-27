@@ -160,7 +160,7 @@
 					? Number($generationSeed)
 					: Math.round(Math.random() * maxSeed),
 			num_outputs: Number($generationNumOutputs),
-			output_image_extension: 'jpeg',
+			output_image_extension: 'png',
 			process_type: 'generate',
 			stream_id: $sseId,
 			ui_id:
@@ -189,6 +189,13 @@
 	function withCheck(fn: () => void) {
 		if (!isCheckCompleted) return;
 		fn();
+	}
+
+	function onKeyPress(e: any) {
+		if (e.key === 'Enter') {
+			e.preventDefault();
+			onPromptFormSubmitted();
+		}
 	}
 
 	let isPromptBarFocused = false;
@@ -238,12 +245,7 @@
 					bind:this={promptInputElement}
 					bind:value={$generationPrompt}
 					on:change={() => console.log('changed')}
-					on:keypress={(e) => {
-						if (e.key === 'Enter') {
-							e.preventDefault();
-							onPromptFormSubmitted();
-						}
-					}}
+					on:keypress={onKeyPress}
 					on:input={() => {
 						if (
 							$generationPrompt !== undefined &&

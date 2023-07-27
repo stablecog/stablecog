@@ -194,6 +194,7 @@ const fr: Translation = {
 		RegenerateButton: 'Regénérer',
 		GenerateButton: 'Générer',
 		UpscaleButton: 'Upscaler',
+		ZoomOutButton: 'Zoom Out',
 		SimilarTitle: 'Similar',
 		SubmitToGalleryButton: 'Submit to Gallery',
 		SubmittedTitle: 'Submitted',

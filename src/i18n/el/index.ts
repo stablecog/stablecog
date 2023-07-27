@@ -204,6 +204,7 @@ const es: Translation = {
 		RegenerateButton: 'Αναπαραγωγή',
 		GenerateButton: 'Δημιουργία',
 		UpscaleButton: 'Αύξηση ανάλυσης',
+		ZoomOutButton: 'Zoom Out',
 		SimilarTitle: 'Παρόμοια',
 		SubmitToGalleryButton: 'Αποθήκευση στη Συλλογή',
 		SubmittedTitle: 'Υποβλήθηκε',
