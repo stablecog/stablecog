@@ -55,10 +55,10 @@ export const generationModels: {
 		name: 'Arcane Diffusion',
 		supportedSchedulerIds: sdSharedSchedulerIds
 	},
-	'48a7031d-43b6-4a23-9f8c-8020eb6862e4': {
+	/* '48a7031d-43b6-4a23-9f8c-8020eb6862e4': {
 		name: 'Ghibli Diffusion',
 		supportedSchedulerIds: sdSharedSchedulerIds
-	},
+	}, */
 	'8002bc51-7260-468f-8840-cf1e6dbe3f8a': {
 		name: 'SDXL',
 		supportedSchedulerIds: sdSharedSchedulerIds
@@ -100,6 +100,10 @@ export const availableModelIdDropdownItems = derived(
 	modelIdToDisplayName,
 	($modelIdToDisplayName) => {
 		const items: TTab<TAvailableGenerationModelId>[] = [
+			/* {
+				label: $modelIdToDisplayName['8002bc51-7260-468f-8840-cf1e6dbe3f8a'],
+				value: '8002bc51-7260-468f-8840-cf1e6dbe3f8a'
+			}, */
 			{
 				label: $modelIdToDisplayName['9fa49c00-109d-430f-9ddd-449f02e2c71a'],
 				value: '9fa49c00-109d-430f-9ddd-449f02e2c71a'
@@ -108,10 +112,6 @@ export const availableModelIdDropdownItems = derived(
 				label: $modelIdToDisplayName['22b0857d-7edc-4d00-9cd9-45aa509db093'],
 				value: '22b0857d-7edc-4d00-9cd9-45aa509db093'
 			},
-			/* {
-				label: $modelIdToDisplayName['8002bc51-7260-468f-8840-cf1e6dbe3f8a'],
-				value: '8002bc51-7260-468f-8840-cf1e6dbe3f8a'
-			}, */
 			/* {
 				label: $modelIdToDisplayName['3fb1f6d9-c0d3-4ae4-adf4-77f8da78a6f7'],
 				value: '3fb1f6d9-c0d3-4ae4-adf4-77f8da78a6f7'
@@ -143,11 +143,11 @@ export const availableModelIdDropdownItems = derived(
 			{
 				label: $modelIdToDisplayName['36d9d835-646f-4fc7-b9fe-98654464bf8e'],
 				value: '36d9d835-646f-4fc7-b9fe-98654464bf8e'
-			},
-			{
+			}
+			/* {
 				label: $modelIdToDisplayName['48a7031d-43b6-4a23-9f8c-8020eb6862e4'],
 				value: '48a7031d-43b6-4a23-9f8c-8020eb6862e4'
-			}
+			} */
 		];
 		return items;
 	}
