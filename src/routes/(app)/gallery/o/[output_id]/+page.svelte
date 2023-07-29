@@ -26,6 +26,9 @@
 	import { navbarHeight } from '$ts/stores/navbarHeight.js';
 	import SimpleGrid from '$components/grids/SimpleGrid.svelte';
 	import WithTooltip from '$components/WithTooltip.svelte';
+	import { logOutputPageSimilarClicked } from '$ts/helpers/loggers.js';
+	import { appVersion } from '$ts/stores/appVersion.js';
+	import { userSummary } from '$ts/stores/user/summary';
 
 	export let data;
 
@@ -222,30 +225,38 @@
 				<p class="max-w-full font-semibold text-3xl">
 					{$LL.GenerationFullscreen.SimilarTitle()}
 				</p>
-				<div class="w-[calc(100%+6px)] flex flex-row justify-start items-start -m-3px mt-3.5">
-					<SimpleGrid cols={simpleGridCols} items={similarOutputs} let:item={output}>
+				<div class="w-[calc(100%+8px)] flex flex-row justify-start items-start -m-4px mt-3.5">
+					<SimpleGrid cols={simpleGridCols} items={similarOutputs} let:item={similarOutput}>
 						<a
-							href="/gallery/o/{output.id}"
+							on:click={() => {
+								logOutputPageSimilarClicked({
+									'SC - App Version': $appVersion,
+									'SC - Output Id': output.id,
+									'SC - Stripe Product Id': $userSummary?.product_id,
+									'SC - User Id': $page.data.session?.user.id
+								});
+							}}
+							href="/gallery/o/{similarOutput.id}"
 							data-sveltekit-preload-data="hover"
 							class="w-full group"
 						>
-							<div class="w-full p-px">
-								{#key output.id}
+							<div class="w-full p-2px">
+								{#key similarOutput.id}
 									<img
 										loading="lazy"
 										class="w-full h-auto rounded-xl overflow-hidden border-2 border-c-bg-secondary
 										shadow-lg shadow-c-shadow/[var(--o-shadow-stronger)] transition bg-c-bg-secondary not-touch:group-hover:border-c-primary"
 										sizes={`(min-width: 1024px) calc(28rem / ${simpleGridCols}), calc(min(36rem, 100vw) / ${simpleGridCols})`}
 										src={getImgProxySrc({
-											src: output.upscaled_image_url ?? output.image_url,
+											src: similarOutput.upscaled_image_url ?? similarOutput.image_url,
 											preset: '256w'
 										})}
 										srcset={getImgProxySrcSet({
-											src: output.upscaled_image_url ?? output.image_url
+											src: similarOutput.upscaled_image_url ?? similarOutput.image_url
 										})}
-										width={output.generation.width}
-										height={output.generation.height}
-										alt={output.generation.prompt.text}
+										width={similarOutput.generation.width}
+										height={similarOutput.generation.height}
+										alt={similarOutput.generation.prompt.text}
 									/>
 								{/key}
 							</div>

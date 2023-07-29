@@ -54,7 +54,7 @@
 			}}
 		>
 			<IconChevronDown
-				class="w-7 h-7 text-c-on-bg/50 transition not-touch:group-hover/iconbutton:text-c-primary"
+				class="w-7 h-7 text-c-on-bg/75 transition not-touch:group-hover/iconbutton:text-c-primary"
 			/>
 		</IconButton>
 	</div>

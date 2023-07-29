@@ -18,7 +18,11 @@
 	import TabBar from '$components/tabBars/TabBar.svelte';
 	import LL from '$i18n/i18n-svelte';
 	import Container from '$components/generationFullScreen/Container.svelte';
-	import { activeGeneration, type TGenerationWithSelectedOutput } from '$userStores/generation';
+	import {
+		activeGeneration,
+		type TGenerationFullOutput,
+		type TGenerationWithSelectedOutput
+	} from '$userStores/generation';
 	import { sseId } from '$userStores/sse';
 	import {
 		queueInitialUpscaleRequest,
@@ -50,6 +54,11 @@
 	import Avatar from '$components/Avatar.svelte';
 	import { isGalleryAdmin, isSuperAdmin } from '$ts/helpers/admin/roles';
 	import WithTooltip from '$components/WithTooltip.svelte';
+	import SimpleGrid from '$components/grids/SimpleGrid.svelte';
+	import { getImgProxySrc, getImgProxySrcSet } from '$ts/helpers/imgproxy';
+	import { createQuery } from '@tanstack/svelte-query';
+	import { getGalleryGenerationFullOutputs } from '$ts/queries/galleryGenerations';
+	import SimilarOutputsSection from '$components/generationFullScreen/SimilarOutputsSection.svelte';
 
 	export let generation: TGenerationWithSelectedOutput;
 	export let modalType: TGenerationFullScreenModalType;
@@ -533,6 +542,18 @@
 						bind:buttonObjectsWithState
 						{modalType}
 					/>
+					{#if modalType === 'gallery'}
+						<Divider class="lg:-mt-2" />
+						<SimilarOutputsSection
+							outputId={generation.selected_output.id}
+							afterClick={() =>
+								sidebarWrapper.scrollTo({
+									left: 0,
+									top: 0,
+									behavior: 'smooth'
+								})}
+						/>
+					{/if}
 				</div>
 			</div>
 			<SidebarChevron

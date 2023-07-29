@@ -42,6 +42,16 @@ export function logGalleryExploreSimilarClicked(props: IGalleryExploreSimilarCli
 	posthog.capture('Gallery | Explore Similar Clicked', { ...props });
 }
 
+export function logGalleryModalSimilarClicked(props: IGalleryExploreSimilarClickedProps) {
+	mixpanel.track('Gallery | Modal Similar Clicked', { ...props });
+	posthog.capture('Gallery | Modal Similar Clicked', { ...props });
+}
+
+export function logOutputPageSimilarClicked(props: IGalleryExploreSimilarClickedProps) {
+	mixpanel.track('Output Page | Similar Clicked', { ...props });
+	posthog.capture('Output Page | Similar Clicked', { ...props });
+}
+
 export function logAdvancedMode(status: IOnOff, props: IAdvancedModeToggledProps) {
 	mixpanel.track(`Advanced Mode | ${status}`, { ...props });
 	posthog.capture(`Advanced Mode | ${status}`, { ...props });

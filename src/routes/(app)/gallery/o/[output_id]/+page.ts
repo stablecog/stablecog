@@ -9,8 +9,9 @@ import {
 import type { TGenerationFullOutput, TGenerationOutput } from '$ts/stores/user/generation';
 import { error } from '@sveltejs/kit';
 import { similarCount } from '$routes/(app)/gallery/o/[output_id]/constants';
+import type { PageLoad } from './$types';
 
-export const load = async ({ params }) => {
+export const load: PageLoad = async ({ params }) => {
 	const outputId = params.output_id;
 	let generationFullOutput: TGenerationFullOutput | undefined = undefined;
 	let similarGenerationFullOutputs: TGenerationFullOutput[] | undefined = undefined;
