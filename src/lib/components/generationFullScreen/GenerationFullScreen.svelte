@@ -121,6 +121,8 @@
 	let generateSimilarUrl: string;
 	let linkUrl: string;
 
+	let modalScrollContainer: HTMLDivElement;
+
 	$: exploreSimilarUrl = `/gallery?q=${generation.selected_output.id}`;
 
 	let upscaledTabValue: TUpscaleTabValue = 'upscaled';
@@ -297,6 +299,7 @@
 <svelte:window on:popstate={onPopState} />
 
 <ModalWrapper
+	bind:scrollContainer={modalScrollContainer}
 	hasPadding={false}
 	onClose={$windowWidth < mdBreakpoint
 		? () => {
@@ -546,12 +549,18 @@
 						<Divider class="lg:-mt-3" />
 						<SimilarOutputsSection
 							outputId={generation.selected_output.id}
-							afterClick={() =>
+							afterClick={() => {
 								sidebarWrapper.scrollTo({
 									left: 0,
 									top: 0,
 									behavior: 'smooth'
-								})}
+								});
+								modalScrollContainer.scrollTo({
+									left: 0,
+									top: 0,
+									behavior: 'smooth'
+								});
+							}}
 						/>
 					{/if}
 				</div>

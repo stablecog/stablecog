@@ -7,7 +7,12 @@
 
 	export let hasPadding = true;
 	export let onClose: (() => void) | undefined = undefined;
+	export let scrollContainer: HTMLDivElement;
 	let scrollY: number;
+
+	function onScroll(e: any) {
+		scrollY = e.currentTarget.scrollTop;
+	}
 
 	onMount(() => {
 		document.body.classList.add('overflow-hidden-for-modal');
@@ -29,9 +34,8 @@
 	class="fixed left-0 top-0 overflow-hidden flex flex-col z-[1001]"
 >
 	<div
-		on:scroll={(e) => {
-			scrollY = e.currentTarget.scrollTop;
-		}}
+		bind:this={scrollContainer}
+		on:scroll={onScroll}
 		class="w-full min-h-full my-auto flex flex-col items-center overflow-auto {onClose
 			? 'pt-15'
 			: ''} {hasPadding ? 'px-4 py-16' : ''}"
