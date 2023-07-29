@@ -28,13 +28,18 @@
 <PageWrapper bind:height {currentPage} thisPage="account">
 	{#if $userSummary}
 		<div class="w-full flex flex-col px-4.5 pt-4 pb-5">
-			<ProductIdBadge href="/pricing" class="w-full mt-0.25" productId={$userSummary.product_id} />
+			<ProductIdBadge
+				onClick={closeMenu}
+				href="/pricing"
+				class="w-full mt-0.25"
+				productId={$userSummary.product_id}
+			/>
 			{#if !$userSummary.product_id}
-				<Button class="w-full mt-2" href="/pricing" size="sm">
+				<Button onClick={closeMenu} class="w-full mt-2" href="/pricing" size="sm">
 					{$LL.Pricing.SubscribeButton()}
 				</Button>
 			{:else}
-				<Button class="w-full mt-2" href="/pricing#credit-packs" size="sm">
+				<Button onClick={closeMenu} class="w-full mt-2" href="/pricing#credit-packs" size="sm">
 					{$LL.Pricing.BuyCreditsButton()}
 				</Button>
 			{/if}
@@ -105,7 +110,6 @@
 			loading={isSigningOut}
 			onClick={async () => {
 				if (!$page.data.supabase) return;
-				close();
 				try {
 					isSigningOut = true;
 					await $page.data.supabase.auth.signOut();
@@ -118,8 +122,8 @@
 						'SC - Page': `${$page.url.pathname}${$page.url.search}`,
 						'SC - App Version': $appVersion
 					});
-					closeMenu();
 					isSigningOut = false;
+					closeMenu();
 				} catch (error) {
 					console.log(error);
 					isSigningOut = false;

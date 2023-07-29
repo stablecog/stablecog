@@ -51,6 +51,7 @@
 		href={menuPages[currentPage].href}
 		onBackButtonClicked={menuPages[currentPage].onBackButtonClicked}
 		content={menuPages[currentPage].headerComponent || undefined}
+		{closeMenu}
 	/>
 	<div
 		style="height: {menuPages[currentPage].height ? `${menuPages[currentPage].height}px` : 'auto'}"

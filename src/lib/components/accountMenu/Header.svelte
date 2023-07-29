@@ -5,12 +5,14 @@
 	export let title: string;
 	export let content: ConstructorOfATypedSvelteComponent | undefined = undefined;
 	export let href: string | undefined = undefined;
+	export let closeMenu: () => void;
 </script>
 
 <div class="w-full flex z-10 border-b-2 border-c-bg-tertiary">
 	{#if href}
 		<a
 			{href}
+			on:click={closeMenu}
 			data-sveltekit-preload-data="hover"
 			class="w-full relative bg-c-bg-secondary z-20 text-left h-full flex items-center transition-all self-stretch group"
 		>

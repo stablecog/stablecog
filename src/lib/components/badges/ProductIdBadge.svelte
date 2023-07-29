@@ -12,6 +12,7 @@
 	export { classes as class };
 	export let planText: string | undefined = undefined;
 	export let href: string | undefined = undefined;
+	export let onClick: (() => void) | undefined = undefined;
 	let classes = '';
 
 	let _planText: string;
@@ -35,6 +36,7 @@
 {#if href}
 	<a
 		{href}
+		on:click={onClick}
 		data-sveltekit-preload-data="hover"
 		class="bg-c-bg border-2 overflow-hidden z-10 shadow-lg flex-shrink-0
   	shadow-c-shadow/[var(--o-shadow-normal)] group relative {productId !== undefined &&
