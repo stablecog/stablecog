@@ -168,8 +168,10 @@
 				<div
 					class="w-full flex flex-col md:flex-row gap-4 md:gap-5 items-start md:items-center justify-start md:justify-between"
 				>
-					<div class="flex gap-2 items-center px-3 md:px-3">
-						<p class="font-bold text-1.5xl md:text-2xl">
+					<div class="flex flex-shrink min-w-0 gap-2 items-center px-3 md:px-3">
+						<p
+							class="font-bold text-1.5xl md:text-2xl flex-shrink min-w-0 whitespace-nowrap overflow-hidden overflow-ellipsis"
+						>
 							{$userGalleryCurrentView === 'favorites'
 								? $LL.History.Views.FavoritesTitle()
 								: $LL.History.GenerationsTitle()}
