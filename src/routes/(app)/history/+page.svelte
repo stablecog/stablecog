@@ -164,48 +164,48 @@
 		</div>
 	{:else}
 		<div class="w-full px-1 flex flex-col items-center justify-start pt-2">
-			<div class="w-full max-w-3xl flex justify-center">
-				<div class="w-full flex flex-wrap gap-4 items-center justify-between rounded-xl">
-					<div
-						class="w-full flex flex-col md:flex-row gap-4 md:gap-5 items-start md:items-center justify-start md:justify-between"
-					>
-						<div class="flex flex-shrink min-w-0 gap-2 items-center px-3 md:px-3 py-2.5">
-							<p
-								class="font-bold text-1.5xl md:text-2xl flex-shrink min-w-0
+			<div class="w-full max-w-3xl flex flex-col items-center justify-start">
+				<div class="w-full flex justify-center">
+					<div class="w-full flex flex-wrap gap-4 items-center justify-between rounded-xl">
+						<div
+							class="w-full flex flex-col md:flex-row gap-4 md:gap-5 items-start md:items-center justify-start md:justify-between"
+						>
+							<div class="flex flex-shrink min-w-0 gap-2 items-center px-3 md:px-3 md:py-2.5">
+								<p
+									class="font-bold text-1.5xl md:text-2xl flex-shrink min-w-0
 								whitespace-nowrap overflow-hidden overflow-ellipsis"
-							>
-								{$userGalleryCurrentView === 'favorites'
-									? $LL.History.Views.FavoritesTitle()
-									: $LL.History.GenerationsTitle()}
-							</p>
-							<p class="text-sm md:text-base text-c-on-bg/50 font-semibold">
-								({totalOutputs !== undefined ? totalOutputs.toLocaleString($locale) : '...'})
-							</p>
-						</div>
-						<div class="w-full md:w-auto flex flex-1 items-center justify-end gap-4">
-							<TabBar
-								dontScale
-								fontWeight={600}
-								hasTitle={false}
-								name="Tabs"
-								tabs={userGalleryTabs}
-								bind:value={$userGalleryCurrentView}
-								class="flex-1 md:max-w-[19rem]"
-							/>
+								>
+									{$userGalleryCurrentView === 'favorites'
+										? $LL.History.Views.FavoritesTitle()
+										: $LL.History.GenerationsTitle()}
+								</p>
+								<p class="text-sm md:text-base text-c-on-bg/50 font-semibold">
+									({totalOutputs !== undefined ? totalOutputs.toLocaleString($locale) : '...'})
+								</p>
+							</div>
+							<div class="w-full md:w-auto flex flex-1 items-center justify-end gap-4">
+								<TabBar
+									dontScale
+									fontWeight={600}
+									hasTitle={false}
+									name="Tabs"
+									tabs={userGalleryTabs}
+									bind:value={$userGalleryCurrentView}
+									class="flex-1 md:max-w-[19rem]"
+								/>
+							</div>
 						</div>
 					</div>
 				</div>
-			</div>
-			<div class="w-full flex max-w-3xl mt-3">
-				<SearchAndFilterBar bind:searchString bind:modelIdFilters bind:searchInputIsFocused />
-			</div>
-			{#if $isUserGalleryEditActive}
-				<div
-					class="w-full top-1 max-w-3xl sticky z-30 {$isUserGalleryEditActive ? 'mt-3' : 'mt-0'}"
-				>
-					<BatchEditBar type="history" />
+				<div class="w-full flex mt-3">
+					<SearchAndFilterBar bind:searchString bind:modelIdFilters bind:searchInputIsFocused />
 				</div>
-			{/if}
+				{#if $isUserGalleryEditActive}
+					<div class="w-full top-1 sticky z-30 {$isUserGalleryEditActive ? 'mt-3' : 'mt-0'}">
+						<BatchEditBar type="history" />
+					</div>
+				{/if}
+			</div>
 		</div>
 		<div class="w-full flex-1 flex flex-col mt-5">
 			{#if userGenerationFullOutputsQuery !== undefined}
