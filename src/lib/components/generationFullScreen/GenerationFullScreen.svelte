@@ -543,7 +543,7 @@
 						{modalType}
 					/>
 					{#if modalType === 'gallery'}
-						<Divider class="lg:-mt-2" />
+						<Divider class="lg:-mt-3" />
 						<SimilarOutputsSection
 							outputId={generation.selected_output.id}
 							afterClick={() =>
