@@ -163,7 +163,7 @@
 			</div>
 		</div>
 	{:else}
-		<div class="w-full max-w-5xl flex justify-center px-1 pt-2">
+		<div class="w-full max-w-3xl flex justify-center px-1 pt-2">
 			<div class="w-full flex flex-wrap gap-4 items-center justify-between rounded-xl">
 				<div
 					class="w-full flex flex-col md:flex-row gap-4 md:gap-5 items-start md:items-center justify-start md:justify-between"
@@ -192,12 +192,12 @@
 				</div>
 			</div>
 		</div>
-		<div class="w-full flex max-w-5xl mt-3 px-1">
+		<div class="w-full flex max-w-3xl mt-3 px-1">
 			<SearchAndFilterBar bind:searchString bind:modelIdFilters bind:searchInputIsFocused />
 		</div>
 		{#if $isUserGalleryEditActive}
 			<div
-				class="w-full top-1 max-w-5xl px-1 sticky z-30 {$isUserGalleryEditActive ? 'mt-3' : 'mt-0'}"
+				class="w-full top-1 max-w-3xl px-1 sticky z-30 {$isUserGalleryEditActive ? 'mt-3' : 'mt-0'}"
 			>
 				<BatchEditBar type="history" />
 			</div>
