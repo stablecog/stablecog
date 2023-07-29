@@ -178,9 +178,7 @@
 				</div>
 				<div class="flex-shrink-0">
 					<div
-						class="transform transition {$generationSeed !== null &&
-						$generationSeed !== undefined &&
-						!$advancedModeApp
+						class="transform transition {$generationSeed !== null && $generationSeed !== undefined
 							? 'scale-100 opacity-100'
 							: 'scale-50 opacity-0'}"
 					>
