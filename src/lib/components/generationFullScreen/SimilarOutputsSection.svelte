@@ -38,7 +38,7 @@
 				cols={simpleGridCols}
 				items={Array.from({ length: similarOutputsCount }).map((i) => 1)}
 			>
-				<div class="w-full pb-[100%] relative">
+				<div class="w-full pb-[150%] relative">
 					<div class="absolute left-0 top-0 w-full h-full p-2px">
 						<div
 							class="w-full h-full rounded-xl bg-c-bg-tertiary shadow-lg shadow-c-shadow/[var(--o-shadow-strong)]"

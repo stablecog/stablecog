@@ -552,13 +552,11 @@
 							afterClick={() => {
 								sidebarWrapper.scrollTo({
 									left: 0,
-									top: 0,
-									behavior: 'smooth'
+									top: 0
 								});
 								modalScrollContainer.scrollTo({
 									left: 0,
-									top: 0,
-									behavior: 'smooth'
+									top: 0
 								});
 							}}
 						/>
