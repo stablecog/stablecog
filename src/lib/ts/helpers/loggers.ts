@@ -42,12 +42,12 @@ export function logGalleryExploreSimilarClicked(props: IGalleryExploreSimilarCli
 	posthog.capture('Gallery | Explore Similar Clicked', { ...props });
 }
 
-export function logGalleryModalSimilarClicked(props: IGalleryExploreSimilarClickedProps) {
+export function logGalleryModalSimilarClicked(props: ISimilarClickedProps) {
 	mixpanel.track('Gallery | Modal Similar Clicked', { ...props });
 	posthog.capture('Gallery | Modal Similar Clicked', { ...props });
 }
 
-export function logOutputPageSimilarClicked(props: IGalleryExploreSimilarClickedProps) {
+export function logOutputPageSimilarClicked(props: ISimilarClickedProps) {
 	mixpanel.track('Output Page | Similar Clicked', { ...props });
 	posthog.capture('Output Page | Similar Clicked', { ...props });
 }
@@ -306,6 +306,14 @@ interface IGalleryExploreStyleClickedProps {
 
 interface IGalleryExploreSimilarClickedProps {
 	'SC - Output Id': string;
+	'SC - User Id': string | undefined;
+	'SC - Stripe Product Id': string | undefined;
+	'SC - App Version': string;
+}
+
+interface ISimilarClickedProps {
+	'SC - Similar to Output Id': string;
+	'SC - Clicked Output Id': string;
 	'SC - User Id': string | undefined;
 	'SC - Stripe Product Id': string | undefined;
 	'SC - App Version': string;

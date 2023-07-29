@@ -52,7 +52,8 @@
 					on:click={() => {
 						logGalleryModalSimilarClicked({
 							'SC - App Version': $appVersion,
-							'SC - Output Id': outputId,
+							'SC - Similar to Output Id': outputId,
+							'SC - Clicked Output Id': similarOutput.id,
 							'SC - Stripe Product Id': $userSummary?.product_id,
 							'SC - User Id': $page.data.session?.user.id
 						});
