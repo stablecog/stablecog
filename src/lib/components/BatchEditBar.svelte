@@ -11,12 +11,6 @@
 	import IconTrashcan from '$components/icons/IconTrashcan.svelte';
 	import LL, { locale } from '$i18n/i18n-svelte';
 	import { clickoutside } from '$ts/actions/clickoutside';
-	import {
-		modalBgTransitionProps,
-		modalInTransitionProps,
-		modalOutTransitionProps
-	} from '$ts/animation/constants';
-	import { expandCollapse } from '$ts/animation/transitions';
 	import { apiUrl } from '$ts/constants/main';
 	import {
 		logGenerationOutputDeleted,
@@ -62,6 +56,7 @@
 	let isFavoriteModalOpen = false;
 	let isUnfavoriteModalOpen = false;
 	let isDeselectModalOpen = false;
+	let modalScrollContainer: HTMLDivElement;
 
 	let actionStatus: TActionStatus = 'idle';
 	let actionType:
@@ -418,7 +413,7 @@
 </div>
 
 {#if isDeleteModalOpen || isFavoriteModalOpen || isDeselectModalOpen || isUnfavoriteModalOpen}
-	<ModalWrapper>
+	<ModalWrapper bind:scrollContainer={modalScrollContainer}>
 		<div
 			use:clickoutside={{
 				callback: () => {
