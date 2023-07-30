@@ -136,55 +136,61 @@
 			</div>
 		</div>
 	{:else}
-		<div class="w-full px-1 flex flex-col items-center justify-start">
-			<div class="w-full max-w-3xl flex flex-col items-center justify-start">
-				<div class="w-full flex flex-col md:flex-row md:justify-between md:items-center px-1">
-					<div class="flex flex-wrap gap-2 items-center px-2">
-						<p class="font-bold text-1.5xl md:text-2xl">
-							{$LL.History.GenerationsTitle()}
-						</p>
-						<p class="text-sm md:text-base text-c-on-bg/50 font-semibold mt-0.5 md:mt-1">
-							({totalOutputs !== undefined ? totalOutputs : '...'})
-						</p>
-					</div>
-					<div class="w-full md:w-64 flex z-50 mt-4 md:mt-0">
-						<TabLikeDropdown
-							class="w-full"
-							name="Filter"
-							items={[
-								{ label: $LL.Admin.Gallery.StatusDropdown.Submitted(), value: 'submitted' },
-								{
-									label: $LL.Admin.Gallery.StatusDropdown.ManuallySubmitted(),
-									value: 'manually_submitted'
-								},
-								{ label: $LL.Admin.Gallery.StatusDropdown.Approved(), value: 'approved' },
-								{ label: $LL.Admin.Gallery.StatusDropdown.Rejected(), value: 'rejected' },
-								...(isSuperAdmin($userSummary?.roles || [])
-									? [
-											{
-												label: $LL.Admin.Gallery.StatusDropdown.Private(),
-												value: 'not_submitted'
-											}
-									  ]
-									: [])
-							]}
-							bind:value={$adminGalleryCurrentFilter}
-						>
-							<div slot="title" class="p-3.5 flex items-center justify-center">
-								<IconFunnel class="w-6 h-6 text-c-on-bg/35" />
-							</div>
-						</TabLikeDropdown>
-					</div>
+		<div class="w-full flex flex-col items-center justify-start px-1">
+			<div class="w-full max-w-3xl flex flex-col md:flex-row md:justify-between md:items-center">
+				<div class="flex flex-wrap gap-2 items-center px-3">
+					<p class="font-bold text-1.5xl md:text-2xl">
+						{$LL.History.GenerationsTitle()}
+					</p>
+					<p class="text-sm md:text-base text-c-on-bg/50 font-semibold mt-0.5 md:mt-1">
+						({totalOutputs !== undefined ? totalOutputs : '...'})
+					</p>
 				</div>
-				<div class="w-full mt-3 flex flex-row justify-center">
-					<SearchAndFilterBar bind:searchString bind:modelIdFilters bind:searchInputIsFocused />
+				<div class="w-full md:w-64 flex z-50 mt-4 md:mt-0">
+					<TabLikeDropdown
+						class="w-full"
+						name="Filter"
+						items={[
+							{ label: $LL.Admin.Gallery.StatusDropdown.Submitted(), value: 'submitted' },
+							{
+								label: $LL.Admin.Gallery.StatusDropdown.ManuallySubmitted(),
+								value: 'manually_submitted'
+							},
+							{ label: $LL.Admin.Gallery.StatusDropdown.Approved(), value: 'approved' },
+							{ label: $LL.Admin.Gallery.StatusDropdown.Rejected(), value: 'rejected' },
+							...(isSuperAdmin($userSummary?.roles || [])
+								? [
+										{
+											label: $LL.Admin.Gallery.StatusDropdown.Private(),
+											value: 'not_submitted'
+										}
+								  ]
+								: [])
+						]}
+						bind:value={$adminGalleryCurrentFilter}
+					>
+						<div slot="title" class="p-3.5 flex items-center justify-center">
+							<IconFunnel class="w-6 h-6 text-c-on-bg/35" />
+						</div>
+					</TabLikeDropdown>
 				</div>
-				<!-- Edit bar -->
-				<div class="w-full top-1 sticky z-30 {$isAdminGalleryEditActive ? 'mt-3' : 'mt-0'}">
-					{#if $isAdminGalleryEditActive}
-						<BatchEditBar type="admin-gallery" />
-					{/if}
-				</div>
+			</div>
+		</div>
+		<div class="w-full flex flex-col items-center justify-start px-1">
+			<div class="w-full max-w-3xl mt-3 flex flex-row justify-center">
+				<SearchAndFilterBar bind:searchString bind:modelIdFilters bind:searchInputIsFocused />
+			</div>
+		</div>
+		<!-- Edit bar -->
+		<div
+			class="w-full flex flex-col items-center justify-start px-1 sticky top-1 z-30 {$isAdminGalleryEditActive
+				? 'mt-3'
+				: 'mt-0'}"
+		>
+			<div class="w-full max-w-3xl">
+				{#if $isAdminGalleryEditActive}
+					<BatchEditBar type="admin-gallery" />
+				{/if}
 			</div>
 		</div>
 		<div class="w-full flex-1 flex flex-col mt-5">
