@@ -1,5 +1,5 @@
 <script lang="ts">
-	import Avatar from '$components/Avatar.svelte';
+	import Avatar from '$components/avatar/Avatar.svelte';
 	import IconSc from '$components/icons/IconSc.svelte';
 	import type { TConnectionStatus } from '$routes/(app)/connect/types';
 	import type { TIconSc } from '$ts/types/main';
@@ -49,7 +49,7 @@
 				<img class="w-full h-full" {src} width={srcWidth} height={srcHeight} alt={srcAlt} />
 			{/if}
 		{:else}
-			<Avatar str={username} class="w-9 h-9 transform scale-[100%] md:scale-[156%] relative" />
+			<Avatar text={username} class="w-full h-full relative" />
 		{/if}
 	</div>
 	<p

@@ -8,7 +8,7 @@
 	import LL, { locale } from '$i18n/i18n-svelte';
 	import Button from '$components/buttons/Button.svelte';
 	import AccountMenu from '$components/accountMenu/AccountMenu.svelte';
-	import Avatar from '$components/Avatar.svelte';
+	import Avatar from '$components/avatar/Avatar.svelte';
 	import { navbarHeight } from '$ts/stores/navbarHeight';
 	import { userSummary } from '$ts/stores/user/summary';
 	import { isNoCreditsInfoRoute, navbarStickyType } from '$ts/stores/navbar';
@@ -206,22 +206,21 @@
 								name="Account"
 								onClick={toggleAccountMenu}
 							>
-								<div
+								<Avatar
+									text={$page.data.session.user.email}
 									class="w-9 h-9 ring-2 {$page.url.pathname === '/' &&
 									$themeApp === 'light' &&
 									!notAtTheVeryTop
 										? 'ring-c-bg/25'
 										: 'ring-c-on-bg/25'} overflow-hidden rounded-full transition transform relative
-										{$page.url.pathname === '/' && $themeApp === 'light' && !notAtTheVeryTop
+									{$page.url.pathname === '/' && $themeApp === 'light' && !notAtTheVeryTop
 										? 'not-touch:group-hover/iconbutton:ring-c-bg'
 										: 'not-touch:group-hover/iconbutton:ring-c-on-bg'} {isAccountMenuOpen
 										? 'rotate-360'
 										: !isAccountMenuOpen
 										? 'not-touch:group-hover/iconbutton:rotate-90'
 										: ''}"
-								>
-									<Avatar str={$page.data.session.user.email} class="w-full h-full relative" />
-								</div>
+								/>
 							</IconButton>
 						</div>
 						<div class="relative -mr-1">

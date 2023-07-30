@@ -51,7 +51,7 @@
 	import SideButton from '$components/generationFullScreen/SideButton.svelte';
 	import { removeFromRecentlyUpdatedOutputIds } from '$ts/stores/user/recentlyUpdatedOutputIds';
 	import SrcsetProvider from '$components/generationImage/SrcsetProvider.svelte';
-	import Avatar from '$components/Avatar.svelte';
+	import Avatar from '$components/avatar/Avatar.svelte';
 	import { isGalleryAdmin, isSuperAdmin } from '$ts/helpers/admin/roles';
 	import WithTooltip from '$components/WithTooltip.svelte';
 	import SimpleGrid from '$components/grids/SimpleGrid.svelte';
@@ -443,13 +443,13 @@
 						{#if generation.user && generation.user.email && (isSuperAdmin($userSummary?.roles) || isGalleryAdmin($userSummary?.roles))}
 							<div class="w-full flex justify-start items-center mt-1">
 								<div
-									class="max-w-full flex justify-start items-center gap-2.5 bg-c-bg-secondary
-									rounded-full pl-1.5 py-1.5 pr-3.5 -ml-1 ring-2 ring-c-bg-tertiary shadow-lg
+									class="max-w-full flex justify-start items-center gap-3 bg-c-bg-secondary
+									rounded-full pl-1.5 py-1.5 pr-4 -ml-1 ring-2 ring-c-bg-tertiary shadow-lg
 									shadow-c-shadow/[var(--o-shadow-strong)]"
 								>
 									<Avatar
-										str={generation.user.email}
-										class="w-6 h-6 relative ring-2 ring-c-on-bg/25 rounded-full flex-shrink-0
+										text={generation.user.email}
+										class="w-7 h-7 relative ring-2 ring-c-on-bg/25 rounded-full flex-shrink-0
 										shadow-lg shadow-c-shadow/[var(--o-shadow-strong)] items-center"
 									/>
 									<p class="font-medium flex-shrink min-w-0 overflow-hidden overflow-ellipsis">

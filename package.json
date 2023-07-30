@@ -73,6 +73,7 @@
 		"radix-svelte": "^0.7.0",
 		"rehype-highlight": "^6.0.0",
 		"remark-reading-time": "^2.0.1",
+		"svelte-boring-avatars": "^1.2.4",
 		"svelte-inview": "^4.0.0",
 		"svelte-meta-tags": "^2.6.3",
 		"typesafe-i18n": "^5.16.3",

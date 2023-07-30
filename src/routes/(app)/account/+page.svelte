@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
 	import { page } from '$app/stores';
-	import Avatar from '$components/Avatar.svelte';
+	import Avatar from '$components/avatar/Avatar.svelte';
 	import Button from '$components/buttons/Button.svelte';
 	import DropdownItem from '$components/DropdownItem.svelte';
 	import IconHome from '$components/icons/IconHome.svelte';
@@ -98,15 +98,11 @@
 		>
 			<div class="w-full flex items-center justify-start">
 				<div class="flex flex-shrink overflow-hidden items-center gap-4 px-5 py-4 md:px-6">
-					<div
+					<Avatar
+						text={$page.data.session?.user.email || ''}
 						class="w-9 h-9 ring-2 ring-c-on-bg/25 overflow-hidden rounded-full transition transform
 							relative shadow-lg shadow-c-shadow/[var(--o-shadow-strong)] flex-shrink-0"
-					>
-						<Avatar
-							str={$page.data.session?.user.email || ''}
-							class="w-full h-full relative flex-shrink-0"
-						/>
-					</div>
+					/>
 					<p class="overflow-hidden font-semibold flex-shrink overflow-ellipsis">
 						{$page.data.session.user.email}
 					</p>
