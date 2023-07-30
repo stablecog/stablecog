@@ -27,6 +27,7 @@
 	import { isUUID } from '$ts/helpers/uuid';
 	import IconImageSearch from '$components/icons/IconImageSearch.svelte';
 	import WithTooltip from '$components/WithTooltip.svelte';
+	import Button from '$components/buttons/Button.svelte';
 
 	export let disabled = false;
 	export let searchString: string;
@@ -122,8 +123,8 @@
 </script>
 
 <div class="w-full flex flex-col z-40">
-	<div class="w-full flex gap-1.5">
-		<form on:submit|preventDefault={search} class="flex-1 min-w-0 flex gap-2">
+	<form on:submit|preventDefault={search} class="w-full flex gap-1.5">
+		<div class="flex-1 min-w-0 flex">
 			<Input
 				onFocus={() => (searchInputIsFocused = true)}
 				onBlur={() => (searchInputIsFocused = false)}
@@ -139,25 +140,28 @@
 				bg="bg-secondary"
 				shadow={inputShadow}
 				onClearButtonClicked={resetSearchString}
+				iconForButton={IconSearch}
 			>
 				<IconSearch slot="icon" class="w-full h-full" />
 			</Input>
-		</form>
+		</div>
 		<SubtleButton
+			class="p-2 md:p-3"
+			noPadding
 			label={isFiltersOpen ? 'Collapse Filters' : 'Expand Filters'}
 			shadow={inputShadow}
 			hasRing={false}
 			onClick={toggleFiltersPanel}
 		>
 			<Morpher morphed={isFiltersOpen}>
-				<div slot="0" class="w-7 h-7">
+				<div slot="0" class="w-6 h-6 md:w-7 md:h-7">
 					<IconAdjustmentsVertical
 						class="w-full h-full text-c-on-bg transition transform {isFiltersOpen
 							? 'rotate-90'
 							: 'rotate-0'} not-touch:group-hover/iconbutton:text-c-primary"
 					/>
 				</div>
-				<div slot="1" class="w-7 h-7">
+				<div slot="1" class="w-6 h-6 md:w-7 md:h-7">
 					<IconChevronDown
 						class="w-full h-full text-c-on-bg transition transform {isFiltersOpen
 							? 'rotate-180'
@@ -166,7 +170,7 @@
 				</div>
 			</Morpher>
 		</SubtleButton>
-	</div>
+	</form>
 	{#if isUUID(searchString)}
 		<div class="w-full flex flex-col">
 			<div class="w-full flex items-center justify-center pt-3">

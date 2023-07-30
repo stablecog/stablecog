@@ -20,6 +20,7 @@
 	export let hasRing = true;
 	export let shadow: 'normal' | 'strongest' = 'normal';
 	export let label: string | undefined = undefined;
+	export let rounding: string | undefined = undefined;
 
 	let classes = '';
 </script>
@@ -40,9 +41,9 @@
 			: 'px-3 py-2.5'} shadow-lg {shadow === 'strongest'
 			? 'shadow-c-shadow/[var(--o-shadow-strongest)]'
 			: 'shadow-c-shadow/[var(--o-shadow-strong)]'}
-    	rounded-lg font-bold transition {size === 'md' ? 'text-sm' : 'text-xs'} {!hasRing
-			? ''
-			: 'ring-2'} relative overflow-hidden z-0 group {classes}"
+    	{rounding ? rounding : 'rounded-lg'} font-bold transition {size === 'md'
+			? 'text-sm'
+			: 'text-xs'} {!hasRing ? '' : 'ring-2'} relative overflow-hidden z-0 group {classes}"
 		aria-label={label}
 	>
 		<div class="w-[200%] h-full absolute left-0 top-0 flex items-center justify-center">
@@ -107,9 +108,9 @@
 			: 'px-3 py-2.5'} shadow-lg {shadow === 'strongest'
 			? 'shadow-c-shadow/[var(--o-shadow-strongest)]'
 			: 'shadow-c-shadow/[var(--o-shadow-strong)]'}
-    	rounded-lg font-bold transition {size === 'md' ? 'text-sm' : 'text-xs'} {!hasRing
-			? ''
-			: 'ring-2'} relative overflow-hidden z-0 group {classes}"
+    	{rounding ? rounding : 'rounded-lg'} font-bold transition {size === 'md'
+			? 'text-sm'
+			: 'text-xs'} {!hasRing ? '' : 'ring-2'} relative overflow-hidden z-0 group {classes}"
 		aria-label={label}
 	>
 		<div class="w-[200%] h-full absolute left-0 top-0 flex items-center justify-center">

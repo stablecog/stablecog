@@ -1,5 +1,8 @@
 <script lang="ts">
+	import Button from '$components/buttons/Button.svelte';
 	import ClearButton from '$components/buttons/ClearButton.svelte';
+	import IconSearch from '$components/icons/IconSearch.svelte';
+	import type { SvelteComponent } from 'svelte';
 
 	export let type: 'text' | 'email' | 'password' | 'number' = 'text';
 	export let value: string;
@@ -34,6 +37,8 @@
 		| 'send'
 		| undefined = undefined;
 	export let readonly: boolean | null | undefined = undefined;
+	export let rounding: string | undefined = undefined;
+	export let iconForButton: ConstructorOfATypedSvelteComponent | undefined = undefined;
 	let classes = '';
 
 	$: showClearButton = value !== undefined && value !== '' && value !== null;
@@ -61,9 +66,11 @@
 			placeholder=" "
 			class="peer flex-1 overflow-hidden overflow-ellipsis {bg === 'bg-secondary'
 				? 'bg-c-bg-secondary'
-				: 'bg-c-bg-tertiary'} relative {hasIcon ? 'pl-12' : 'pl-5'} {hasClearButton
+				: 'bg-c-bg-tertiary'} relative {hasIcon ? 'pl-12' : 'pl-5'} {hasClearButton && iconForButton
+				? 'pr-20 md:pr-27'
+				: hasClearButton || iconForButton
 				? 'pr-10 md:pr-16'
-				: 'pr-5'} pt-6.5 pb-2.5 rounded-xl transition
+				: 'pr-5'} pt-6.5 pb-2.5 {rounding ? rounding : 'rounded-xl'} transition
       shadow-lg {shadow === 'strongest'
 				? 'shadow-c-shadow/[var(--o-shadow-strongest)]'
 				: shadow === 'strong'
@@ -91,9 +98,11 @@
 			placeholder=" "
 			class="peer flex-1 overflow-hidden overflow-ellipsis {bg === 'bg-secondary'
 				? 'bg-c-bg-secondary'
-				: 'bg-c-bg-tertiary'} relative {hasIcon ? 'pl-12' : 'pl-5'} {hasClearButton
+				: 'bg-c-bg-tertiary'} relative {hasIcon ? 'pl-12' : 'pl-5'} {hasClearButton && iconForButton
+				? 'pr-20 md:pr-27'
+				: hasClearButton || iconForButton
 				? 'pr-10 md:pr-16'
-				: 'pr-5'} pt-6.5 pb-2.5 rounded-xl transition
+				: 'pr-5'} pt-6.5 pb-2.5 {rounding ? rounding : 'rounded-xl'} transition
       shadow-lg {shadow === 'strongest'
 				? 'shadow-c-shadow/[var(--o-shadow-strongest)]'
 				: shadow === 'strong'
@@ -121,9 +130,11 @@
 			placeholder=" "
 			class="peer flex-1 overflow-hidden overflow-ellipsis {bg === 'bg-secondary'
 				? 'bg-c-bg-secondary'
-				: 'bg-c-bg-tertiary'} relative {hasIcon ? 'pl-12' : 'pl-5'} {hasClearButton
+				: 'bg-c-bg-tertiary'} relative {hasIcon ? 'pl-12' : 'pl-5'} {hasClearButton && iconForButton
+				? 'pr-20 md:pr-27'
+				: hasClearButton || iconForButton
 				? 'pr-10 md:pr-16'
-				: 'pr-5'} pt-6.5 pb-2.5 rounded-xl transition
+				: 'pr-5'} pt-6.5 pb-2.5 {rounding ? rounding : 'rounded-xl'} transition
       shadow-lg {shadow === 'strongest'
 				? 'shadow-c-shadow/[var(--o-shadow-strongest)]'
 				: shadow === 'strong'
@@ -151,9 +162,11 @@
 			placeholder=" "
 			class="peer flex-1 overflow-hidden overflow-ellipsis {bg === 'bg-secondary'
 				? 'bg-c-bg-secondary'
-				: 'bg-c-bg-tertiary'} relative {hasIcon ? 'pl-12' : 'pl-5'} {hasClearButton
+				: 'bg-c-bg-tertiary'} relative {hasIcon ? 'pl-12' : 'pl-5'} {hasClearButton && iconForButton
+				? 'pr-20 md:pr-27'
+				: hasClearButton || iconForButton
 				? 'pr-10 md:pr-16'
-				: 'pr-5'} pt-6.5 pb-2.5 rounded-xl transition
+				: 'pr-5'} pt-6.5 pb-2.5 {rounding ? rounding : 'rounded-xl'} transition
       shadow-lg {shadow === 'strongest'
 				? 'shadow-c-shadow/[var(--o-shadow-strongest)]'
 				: shadow === 'strong'
@@ -179,18 +192,26 @@
 	>
 		<slot name="icon" />
 	</div>
-	{#if hasClearButton}
-		<ClearButton
-			{disabled}
-			show={showClearButton}
-			onClick={() => {
-				value = '';
-				inputElement?.focus();
-				if (onClearButtonClicked) {
-					onClearButtonClicked();
-				}
-			}}
-			type="md"
-		/>
+	{#if hasClearButton || iconForButton}
+		<div class="h-full absolute right-0 top-0 flex items-stretch">
+			<ClearButton
+				class="rounded-xl"
+				{disabled}
+				show={showClearButton}
+				onClick={() => {
+					value = '';
+					inputElement?.focus();
+					if (onClearButtonClicked) {
+						onClearButtonClicked();
+					}
+				}}
+				type="md"
+			/>
+			{#if iconForButton}
+				<Button noRounding noPadding class="p-2 md:p-3 rounded-r-xl" size="sm">
+					<svelte:component this={iconForButton} strokeWidth={2} class="w-6 h-6 md:w-7 md:h-7" />
+				</Button>
+			{/if}
+		</div>
 	{/if}
 </div>
