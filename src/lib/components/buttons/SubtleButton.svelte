@@ -46,7 +46,7 @@
 			: 'text-xs'} {!hasRing ? '' : 'ring-2'} relative overflow-hidden z-0 group {classes}"
 		aria-label={label}
 	>
-		<div class="w-[200%] h-full absolute left-0 top-0 flex items-center justify-center">
+		<div class="w-[210%] h-full absolute left-0 top-0 flex items-center justify-center">
 			<div
 				class="{state === 'success'
 					? 'bg-c-success translate-x-[-43%]'
@@ -113,7 +113,7 @@
 			: 'text-xs'} {!hasRing ? '' : 'ring-2'} relative overflow-hidden z-0 group {classes}"
 		aria-label={label}
 	>
-		<div class="w-[200%] h-full absolute left-0 top-0 flex items-center justify-center">
+		<div class="w-[210%] h-full absolute left-0 top-0 flex items-center justify-center">
 			<div
 				class="{state === 'success'
 					? 'bg-c-success translate-x-[-43%]'

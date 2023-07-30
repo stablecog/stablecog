@@ -146,7 +146,7 @@
 			</Input>
 		</div>
 		<SubtleButton
-			class="p-2 md:p-3"
+			class="py-2 px-2.5 md:p-3"
 			noPadding
 			label={isFiltersOpen ? 'Collapse Filters' : 'Expand Filters'}
 			shadow={inputShadow}

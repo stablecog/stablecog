@@ -208,7 +208,7 @@
 				type="md"
 			/>
 			{#if iconForButton}
-				<Button noRounding noPadding class="p-2 md:p-3 rounded-r-xl" size="sm">
+				<Button noRounding noPadding class="py-2 px-2.5 md:p-3 rounded-r-xl" size="sm">
 					<svelte:component this={iconForButton} strokeWidth={2} class="w-6 h-6 md:w-7 md:h-7" />
 				</Button>
 			{/if}
