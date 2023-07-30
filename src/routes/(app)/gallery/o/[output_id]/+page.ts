@@ -4,14 +4,21 @@ import type { TAvailableSchedulerId } from '$ts/constants/schedulers';
 import { convertToDBTimeString } from '$ts/helpers/convertToDBTimeString';
 import {
 	getGalleryGenerationFullOutputs,
-	type TGalleryGenerationFullOutputPageRes
+	type TGalleryGenerationFullOutputPageRes,
+	type TGalleryGenerationFullOutputsPage
 } from '$ts/queries/galleryGenerations';
 import type { TGenerationFullOutput, TGenerationOutput } from '$ts/stores/user/generation';
 import { error } from '@sveltejs/kit';
 import { similarCount } from '$routes/(app)/gallery/o/[output_id]/constants';
 import type { PageLoad } from './$types';
+import type { QueryClient } from '@tanstack/svelte-query';
 
-export const load: PageLoad = async ({ params }) => {
+interface TParent {
+	queryClient: QueryClient;
+	globalSeed: number;
+}
+
+export const load: PageLoad = async ({ params, parent }) => {
 	const outputId = params.output_id;
 	let generationFullOutput: TGenerationFullOutput | undefined = undefined;
 	let similarGenerationFullOutputs: TGenerationFullOutput[] | undefined = undefined;
@@ -67,9 +74,19 @@ export const load: PageLoad = async ({ params }) => {
 		},
 		...output
 	};
+
 	similarGenerationFullOutputs = similarGenerationFullOutputsRes.outputs
 		.filter((o) => o.id !== generationFullOutput?.id)
 		.slice(0, similarCount);
+
+	const page: TGalleryGenerationFullOutputsPage = {
+		outputs: similarGenerationFullOutputs,
+		next: undefined
+	};
+
+	const { queryClient } = (await parent()) as TParent;
+	queryClient.setQueryData(['gallery_similar_outputs_short', outputId], page);
+
 	return {
 		generationFullOutput,
 		similarGenerationFullOutputs
