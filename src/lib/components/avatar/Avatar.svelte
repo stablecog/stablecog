@@ -8,5 +8,18 @@
 <AvatarBeam
 	class={classes}
 	name={text}
-	colors={['#B58CFF', '#F5A46A', '#5DD1CA', '#8BD174', '#EBE78D', '#89A3FF', '#FF99DC']}
+	colors={[
+		'#B58CFF',
+		'#F5A46A',
+		'#5DD1CA',
+		'#8BD174',
+		'#EBE78D',
+		'#89A3FF',
+		'#FF99DC',
+		'#624B8B',
+		'#587E4C',
+		'#843D6C',
+		'#404968',
+		'#3C6B68'
+	]}
 />

@@ -212,7 +212,7 @@
 									$themeApp === 'light' &&
 									!notAtTheVeryTop
 										? 'ring-c-bg/25'
-										: 'ring-c-on-bg/25'} overflow-hidden rounded-full transition transform relative
+										: 'ring-c-on-bg/25'} overflow-hidden rounded-full transition duration-250 transform relative
 									{$page.url.pathname === '/' && $themeApp === 'light' && !notAtTheVeryTop
 										? 'not-touch:group-hover/iconbutton:ring-c-bg'
 										: 'not-touch:group-hover/iconbutton:ring-c-on-bg'} {isAccountMenuOpen
