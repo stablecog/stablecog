@@ -137,6 +137,7 @@
 						: $windowWidth >= mdBreakpoint
 						? 3
 						: 2}
+					{setSearchQuery}
 				/>
 			</div>
 		{/if}

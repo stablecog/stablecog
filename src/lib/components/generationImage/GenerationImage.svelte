@@ -3,6 +3,7 @@
 	import { page } from '$app/stores';
 	import CopyButton from '$components/buttons/CopyButton.svelte';
 	import DownloadGenerationButton from '$components/buttons/DownloadGenerationButton.svelte';
+	import ExploreSimilarButton from '$components/buttons/ExploreSimilarButton.svelte';
 	import FavoriteButton from '$components/buttons/FavoriteButton.svelte';
 	import GenerateButton from '$components/buttons/GenerateButton.svelte';
 	import IconButton from '$components/buttons/IconButton.svelte';
@@ -43,6 +44,7 @@
 	export let isGalleryEditActive: boolean = false;
 	export let didLoadBefore: boolean = false;
 	export let cardWidth: number | undefined = undefined;
+	export let setSearchQuery: ((query: string) => void) | undefined = undefined;
 
 	$: srcHighest =
 		generation.selected_output.upscaled_image_url ?? generation.selected_output.image_url;
@@ -113,6 +115,47 @@
 			cardType === 'gallery'
 				? `${$page.url.pathname}/o/${generation.selected_output.id}`
 				: `${$page.url.pathname}?${params}`;
+	}
+
+	function onImageClick(e: any) {
+		if (!modalShouldOpen) {
+			lastClickedOutputId.set(generation.selected_output.id);
+			return;
+		}
+		if (rightButtonContainer && doesContainTarget(e.target, [rightButtonContainer])) {
+			return;
+		}
+		if (leftButtonContainer && doesContainTarget(e.target, [leftButtonContainer])) {
+			return;
+		}
+		e.currentTarget.blur();
+		activeGeneration.set({ ...generation, card_type: cardType });
+		if ($page.url.pathname === '/gallery') {
+			logGalleryGenerationOpened({
+				'SC - Output Id': generation.selected_output.id,
+				'SC - User Id': $page.data.session?.user.id,
+				'SC - Stripe Product Id': $userSummary?.product_id,
+				'SC - Advanced Mode': $advancedModeApp,
+				'SC - App Version': $appVersion
+			});
+		}
+		const searchParams = new URLSearchParams(window.location.search);
+		searchParams.set('o', generation.selected_output.id);
+		const urlToPush =
+			cardType === 'gallery'
+				? `${$page.url.pathname}/o/${generation.selected_output.id}`
+				: `${$page.url.pathname}?${searchParams.toString()}`;
+		window.history.pushState({}, '', urlToPush);
+	}
+
+	function _onSelectButtonClicked(e: any) {
+		onSelectButtonClicked({
+			e,
+			cardType,
+			generation_id: generation.id,
+			output_id: generation.selected_output.id,
+			isInGallerySelectedIds
+		});
 	}
 </script>
 
@@ -199,36 +242,7 @@
 		aria-label="View generation: {shortPrompt}..."
 		href={imageClickHref}
 		data-sveltekit-preload-data="hover"
-		on:click|preventDefault={(e) => {
-			if (!modalShouldOpen) {
-				lastClickedOutputId.set(generation.selected_output.id);
-				return;
-			}
-			if (rightButtonContainer && doesContainTarget(e.target, [rightButtonContainer])) {
-				return;
-			}
-			if (leftButtonContainer && doesContainTarget(e.target, [leftButtonContainer])) {
-				return;
-			}
-			e.currentTarget.blur();
-			activeGeneration.set({ ...generation, card_type: cardType });
-			if ($page.url.pathname === '/gallery') {
-				logGalleryGenerationOpened({
-					'SC - Output Id': generation.selected_output.id,
-					'SC - User Id': $page.data.session?.user.id,
-					'SC - Stripe Product Id': $userSummary?.product_id,
-					'SC - Advanced Mode': $advancedModeApp,
-					'SC - App Version': $appVersion
-				});
-			}
-			const searchParams = new URLSearchParams(window.location.search);
-			searchParams.set('o', generation.selected_output.id);
-			const urlToPush =
-				cardType === 'gallery'
-					? `${$page.url.pathname}/o/${generation.selected_output.id}`
-					: `${$page.url.pathname}?${searchParams.toString()}`;
-			window.history.pushState({}, '', urlToPush);
-		}}
+		on:click|preventDefault={onImageClick}
 		class="w-full h-full absolute left-0 top-0 flex flex-col justify-end items-end overflow-hidden pt-16"
 	>
 		{#if cardType !== 'generate'}
@@ -313,6 +327,9 @@
 				{#if (cardType === 'stage' || (cardType === 'history' && $userGalleryCurrentView !== 'favorites')) && cardWidth !== undefined && ((cardType === 'history' && cardWidth > 225) || (cardType === 'stage' && cardWidth > 180))}
 					<FavoriteButton {generation} modalType={cardType} type="on-image" class="p-1.5 -ml-1.5" />
 				{/if}
+				{#if cardType === 'gallery' && setSearchQuery}
+					<ExploreSimilarButton {setSearchQuery} {generation} class="p-1.5 -ml-1.5" />
+				{/if}
 			</div>
 		{:else if cardType === 'history' && $userGalleryCurrentView !== 'favorites' && generation.selected_output.is_favorited && !generation.selected_output.is_deleted}
 			<div class="p-1">
@@ -355,14 +372,7 @@
 			(cardType === 'history' &&
 				$userGalleryCurrentView === 'favorites' &&
 				!generation.selected_output.is_favorited)}
-		on:click={(e) =>
-			onSelectButtonClicked({
-				e,
-				cardType,
-				generation_id: generation.id,
-				output_id: generation.selected_output.id,
-				isInGallerySelectedIds
-			})}
+		on:click={_onSelectButtonClicked}
 		class="w-full h-full absolute left-0 top-0 flex flex-col justify-start items-start z-30"
 	/>
 {/if}

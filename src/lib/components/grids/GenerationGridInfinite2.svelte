@@ -51,6 +51,7 @@
 	export let paddingRight = 0;
 	export let paddingTop = 0;
 	export let paddingBottom = 0;
+	export let setSearchQuery: ((query: string) => void) | undefined = undefined;
 
 	$: horizontalPadding = paddingLeft + paddingRight;
 
@@ -298,6 +299,7 @@
 												...output.generation,
 												selected_output: output
 											}}
+											{setSearchQuery}
 										/>
 									{/if}
 								{:else}
