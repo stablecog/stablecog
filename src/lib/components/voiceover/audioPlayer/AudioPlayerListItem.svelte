@@ -24,6 +24,7 @@
 	import { flyAndScale } from '$ts/animation/transitions';
 	import { lgBreakpoint, mdBreakpoint } from '$components/generationFullScreen/constants';
 	import { windowWidth } from '$ts/stores/window';
+	import ThreeDotDropdown from '$components/voiceover/audioPlayer/ThreeDotDropdown.svelte';
 
 	export let output: TVoiceoverFullOutput;
 	export let hasMute = false;
@@ -82,6 +83,13 @@
 		sliderStoppedAudio = false;
 	}
 
+	function onKeyDown(e: any) {
+		if (e.target === playButton || e.target === muteButton) return;
+		if (e.key === ' ') {
+			togglePlay({ audioElement });
+		}
+	}
+
 	onMount(() => {
 		$allAudioPlayers.add(audioElement);
 	});
@@ -102,17 +110,14 @@
 		yPercent: $windowWidth < lgBreakpoint ? 0 : -100,
 		xPercent: $windowWidth < lgBreakpoint ? -100 : 0
 	}}
-	on:keydown={(e) => {
-		if (e.target === playButton || e.target === muteButton) return;
-		if (e.key === ' ') {
-			togglePlay({ audioElement });
-		}
-	}}
+	on:keydown={onKeyDown}
+	tabindex="0"
+	role="button"
 	class="{inHorizontal ? 'h-full' : ''} w-full bg-c-bg-secondary {noLayoutChange
 		? 'flex flex-col items-start px-3 pt-1.5 pb-1 rounded-xl'
 		: 'flex flex-row md:flex-col items-center md:items-start px-1 py-1 md:px-3 md:pt-1.5 md:pb-1 rounded-lg md:rounded-xl'}
 		shadow-lg shadow-c-shadow/[var(--o-shadow-normal)]
-		overflow-hidden relative z-0 group/audio-player-list-item {classes}"
+		overflow-hidden relative z-0 group/audio-player-list-item cursor-default {classes}"
 >
 	<div
 		class="{noLayoutChange
@@ -145,7 +150,7 @@
 			</div>
 		</div>
 		<div class="{noLayoutChange ? 'flex' : 'hidden md:flex lg:hidden xl:flex'} -mr-2 items-center">
-			<DownloadButton {output} faded disabled={isOutputLoadingOrFailed} />
+			<ThreeDotDropdown {output} />
 		</div>
 	</div>
 	{#if !noLayoutChange}
@@ -249,7 +254,7 @@
 			class="w-auto md:w-full flex md:hidden lg:flex items-center justify-between xl:hidden lg:pb-0.5"
 		>
 			<div class="-mr-0.5 lg:mr-0 lg:-ml-2 flex items-center">
-				<DownloadButton {output} faded disabled={isOutputLoadingOrFailed} />
+				<ThreeDotDropdown {output} />
 			</div>
 			<div
 				class="order-first lg:order-last flex-shrink min-w-0 pl-2 lg:pl-3 text-xs text-c-on-bg/50 text-right"

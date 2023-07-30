@@ -1,80 +1,55 @@
 <script lang="ts">
-	import DropdownWrapperTranslate from '$components/DropdownWrapperTranslate.svelte';
 	import Morpher from '$components/Morpher.svelte';
-	import ButtonHoverEffect from '$components/buttons/ButtonHoverEffect.svelte';
-	import IconButton from '$components/buttons/IconButton.svelte';
-	import IconAnimatedSpinner from '$components/icons/IconAnimatedSpinner.svelte';
-	import IconDownload from '$components/icons/IconDownload.svelte';
+	import IconCancel from '$components/icons/IconCancel.svelte';
 	import IconThreeDots from '$components/icons/IconThreeDots.svelte';
-	import { clickoutside } from '$ts/actions/clickoutside';
-	import { downloadVoicoverOutput } from '$ts/helpers/downloadVoiceoverOutput';
+	import CopyLinkButton from '$components/voiceover/audioPlayer/CopyLinkButton.svelte';
+	import DeleteButton from '$components/voiceover/audioPlayer/DeleteButton.svelte';
+	import DownloadButton from '$components/voiceover/audioPlayer/DownloadButton.svelte';
 	import type { TVoiceoverFullOutput } from '$ts/stores/user/voiceovers';
+	import { createPopover } from '@melt-ui/svelte';
+	import { quadOut } from 'svelte/easing';
+	import { fly } from 'svelte/transition';
 
-	export let container: HTMLElement | undefined = undefined;
 	export let output: TVoiceoverFullOutput;
+	export let size: 'md' | 'lg' | 'sm' = 'md';
 
-	$: options = [
-		{
-			title: 'Download',
-			icon: IconDownload,
-			isAsync: true,
-			onClick: async () => downloadVoicoverOutput(output),
-			isLoading: false
+	const { trigger, content, open, arrow, close } = createPopover({
+		positioning: {
+			placement: 'left'
 		}
-	];
-
-	let isDropdownOpen = false;
+	});
 </script>
 
-<div use:clickoutside={{ callback: () => (isDropdownOpen = false) }} class="relative flex">
-	<IconButton name="Toggle Dropdown" onClick={() => (isDropdownOpen = !isDropdownOpen)}>
+<button
+	{...$trigger}
+	use:trigger
+	aria-label="More Options"
+	class="{size === 'lg' ? 'w-12 h-12' : 'w-10 h-10'} flex items-center justify-center"
+>
+	<Morpher morphed={$open}>
 		<IconThreeDots
-			class="w-6 h-6 text-c-on-bg/50 not-touch:group-hover/iconbutton:text-c-primary transition transform {isDropdownOpen
+			slot="0"
+			class="w-6 h-6 text-c-on-bg/50 not-touch:group-hover/iconbutton:text-c-primary transition transform {$open
 				? 'rotate-90'
 				: ''}"
 		/>
-	</IconButton>
-	{#if isDropdownOpen}
-		<DropdownWrapperTranslate rounding="rounded-lg" translate="sm">
-			{#each options as item}
-				<button
-					disabled={item.isLoading}
-					on:click={async () => {
-						if (item.isAsync) {
-							try {
-								if (item.isLoading) return;
-								item.isLoading = true;
-								await item.onClick();
-							} catch (error) {
-								console.error(error);
-							} finally {
-								item.isLoading = false;
-							}
-						} else {
-							item.onClick();
-						}
-						isDropdownOpen = false;
-					}}
-					class="text-sm px-3.5 py-2.5 font-medium relative group flex items-center gap-1.5"
-				>
-					<ButtonHoverEffect noPadding noRounding hoverFrom="left" />
-					<Morpher class="-ml-1.5 w-5 h-5" morphed={item.isLoading}>
-						<div slot="0">
-							<svelte:component
-								this={item.icon}
-								class="w-full h-full text-c-on-bg not-touch:group-hover:text-c-primary transition"
-							/>
-						</div>
-						<div slot="1">
-							<IconAnimatedSpinner
-								loading={item.isLoading}
-								class="w-full h-full text-c-on-bg not-touch:group-hover:text-c-primary transition"
-							/>
-						</div>
-					</Morpher>
-					<p class="text-c-on-bg not-touch:group-hover:text-c-primary transition">{item.title}</p>
-				</button>
-			{/each}
-		</DropdownWrapperTranslate>
-	{/if}
-</div>
+		<IconCancel
+			slot="1"
+			class="w-6 h-6 text-c-on-bg/50 not-touch:group-hover/iconbutton:text-c-primary transition transform {$open
+				? 'rotate-90'
+				: ''}"
+		/>
+	</Morpher>
+</button>
+{#if $open}
+	<div
+		transition:fly={{ x: 10, opacity: 0, duration: 200, easing: quadOut }}
+		class="bg-c-bg-secondary shadow-xl shadow-c-bg-secondary rounded-lg flex"
+		{...$content}
+		use:content
+	>
+		<CopyLinkButton {output} />
+		<DownloadButton {output} />
+		<DeleteButton {output} />
+	</div>
+{/if}

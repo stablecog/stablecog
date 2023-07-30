@@ -8,7 +8,8 @@
 		| 'bg-tertiary'
 		| 'secondary'
 		| 'primary-strong'
-		| 'success' = 'primary';
+		| 'success'
+		| 'danger' = 'primary';
 	export let hovered = false;
 	export let noPadding = false;
 	export let noRounding = false;
@@ -60,6 +61,8 @@
 				? 'bg-c-primary/25'
 				: color === 'success'
 				? 'bg-c-success/12'
+				: color === 'danger'
+				? 'bg-c-danger/15'
 				: 'bg-c-primary/15'} {noRounding
 				? ''
 				: size === 'xs'

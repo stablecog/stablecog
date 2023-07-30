@@ -343,6 +343,7 @@ export interface TVoiceoverOutput {
 	id: string;
 	ui_id?: string;
 	audio_file_url: string;
+	video_file_url?: string;
 	audio_duration: number;
 	audio_buffer?: AudioBuffer;
 	created_at?: string;
