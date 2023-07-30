@@ -54,10 +54,6 @@
 	import Avatar from '$components/Avatar.svelte';
 	import { isGalleryAdmin, isSuperAdmin } from '$ts/helpers/admin/roles';
 	import WithTooltip from '$components/WithTooltip.svelte';
-	import SimpleGrid from '$components/grids/SimpleGrid.svelte';
-	import { getImgProxySrc, getImgProxySrcSet } from '$ts/helpers/imgproxy';
-	import { createQuery } from '@tanstack/svelte-query';
-	import { getGalleryGenerationFullOutputs } from '$ts/queries/galleryGenerations';
 	import SimilarOutputsSection from '$components/generationFullScreen/SimilarOutputsSection.svelte';
 
 	export let generation: TGenerationWithSelectedOutput;
@@ -159,13 +155,19 @@
 		generateSimilarUrl = getGenerationUrlFromParams(rest);
 		linkUrl = `${$page.url.origin}/gallery/o/${generation.selected_output.id}`;
 		if (browser && window && !initialGenerationChange) {
-			if (modalType !== 'gallery') {
+			if (modalType === 'gallery') {
+				window.history.replaceState({}, '', `/gallery/o/${generation.selected_output.id}`);
+			} else if (modalType === 'other-user') {
+				window.history.replaceState(
+					{},
+					'',
+					`/user/${generation.user.username}/o/${generation.selected_output.id}`
+				);
+			} else {
 				const searchParams = new URLSearchParams(window.location.search);
 				searchParams.set('o', generation.selected_output.id);
 				const params = searchParams.toString();
 				window.history.replaceState({}, '', `${window.location.pathname}?${params}`);
-			} else {
-				window.history.replaceState({}, '', `/gallery/o/${generation.selected_output.id}`);
 			}
 		}
 		resetAllButtonObjectWithState();
@@ -288,6 +290,8 @@
 		const searchParams = new URLSearchParams(window.location.search);
 		if (modalType === 'gallery') {
 			window.history.pushState({}, '', `/gallery`);
+		} else if (modalType === 'other-user') {
+			window.history.pushState({}, '', `/user/${generation.user.username}`);
 		} else if (searchParams.has('o')) {
 			searchParams.delete('o');
 			const newSearch = searchParams.toString();
@@ -433,7 +437,7 @@
 				on:scroll={setSidebarWrapperVars}
 				bind:this={sidebarWrapper}
 				bind:clientHeight={sidebarWrapperHeight}
-				class="w-full overflow-auto lg-list-fade relative"
+				class="w-full overflow-auto lg-list-fade relative pb-8"
 			>
 				<div
 					bind:clientHeight={sidebarInnerContainerHeight}
@@ -448,7 +452,7 @@
 									shadow-c-shadow/[var(--o-shadow-strong)]"
 								>
 									<Avatar
-										str={generation.user.email}
+										str={generation.user.email || generation.user.username}
 										class="w-6 h-6 relative ring-2 ring-c-on-bg/25 rounded-full flex-shrink-0
 										shadow-lg shadow-c-shadow/[var(--o-shadow-strong)] items-center"
 									/>
@@ -545,8 +549,8 @@
 						bind:buttonObjectsWithState
 						{modalType}
 					/>
-					{#if modalType === 'gallery'}
-						<Divider class="lg:-mt-3" />
+					{#if modalType === 'gallery' || modalType === 'other-user'}
+						<Divider class="lg:-mt-2.5" />
 						<SimilarOutputsSection
 							outputId={generation.selected_output.id}
 							afterClick={() => {

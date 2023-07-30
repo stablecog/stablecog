@@ -175,7 +175,10 @@ export async function queueInitialGenerationRequest(request: TInitialGenerationR
 				image_url: '',
 				status: 'to-be-submitted',
 				animation: newGenerationStartAnimation()
-			}))
+			})),
+			user: {
+				username: ''
+			}
 		};
 		if ($generations === null || $generations.length === 0) {
 			return [generationToSubmit];
@@ -393,7 +396,8 @@ export interface TGenerationBase {
 }
 
 export interface TUser {
-	email: string;
+	email?: string;
+	username: string;
 }
 export interface TGeneration extends TGenerationBase {
 	status: TGenerationStatus;
@@ -406,7 +410,7 @@ export interface TGeneration extends TGenerationBase {
 	completed_at?: string;
 	submit_to_gallery: boolean;
 	is_placeholder?: boolean;
-	user?: TUser;
+	user: TUser;
 }
 
 export interface TGenerationOutput {

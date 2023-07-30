@@ -173,7 +173,7 @@
 							not-touch:group-hover:text-c-primary"
 						/>
 						<p class="transition text-c-on-bg/50 not-touch:group-hover:text-c-primary">
-							{$LL.Shared.BackToGalleryButton()}
+							{$LL.Shared.GoBackButton()}
 						</p>
 					</div>
 				</NoBgButton>

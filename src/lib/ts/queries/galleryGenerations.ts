@@ -2,7 +2,7 @@ import type { TAvailableGenerationModelId } from '$ts/constants/generationModels
 import { apiUrl } from '$ts/constants/main';
 import type { TAvailableSchedulerId } from '$ts/constants/schedulers';
 import { convertToDBTimeString } from '$ts/helpers/convertToDBTimeString';
-import type { TGenerationFullOutput, TGenerationOutput } from '$userStores/generation';
+import type { TGenerationFullOutput, TGenerationOutput, TUser } from '$userStores/generation';
 
 const score_threshold_default = 50;
 const per_page_default = 50;
@@ -70,6 +70,7 @@ export async function getGalleryGenerationFullOutputs({
 		return {
 			generation: {
 				id: hit.generation_id || hit.id,
+				user: hit.user,
 				ui_id: hit.generation_id || hit.id,
 				width: hit.width,
 				height: hit.height,
@@ -127,6 +128,7 @@ export interface TGalleryGenerationHit {
 	prompt_id: string;
 	negative_prompt_text?: string;
 	negative_prompt_id?: string;
+	user: TUser;
 }
 
 export interface TGalleryGenerationFullOutputsPage {
