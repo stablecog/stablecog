@@ -12,11 +12,11 @@
 	import { voiceoverSpeakerIdToDisplayName } from '$ts/constants/voiceover/models';
 	import { allAudioPlayers } from '$ts/stores/allPlayers';
 	import { onDestroy, onMount } from 'svelte';
-	import type { TVoiceoverFullOutput } from '$ts/stores/user/voiceovers';
+	import { voiceovers, type TVoiceoverFullOutput } from '$ts/stores/user/voiceovers';
 	import IconAnimatedSpinner from '$components/icons/IconAnimatedSpinner.svelte';
 	import IconSadFaceOutline from '$components/icons/IconSadFaceOutline.svelte';
 	import { quadOut } from 'svelte/easing';
-	import { fade } from 'svelte/transition';
+	import { fade, scale } from 'svelte/transition';
 	import { timestampPlaceholder } from '$components/voiceover/audioPlayer/constants';
 	import IconHourglassAnimated from '$components/icons/IconHourglassAnimated.svelte';
 	import Morpher from '$components/Morpher.svelte';
@@ -24,6 +24,18 @@
 	import { lgBreakpoint } from '$components/generationFullScreen/constants';
 	import { windowWidth } from '$ts/stores/window';
 	import ThreeDotDropdown from '$components/voiceover/audioPlayer/ThreeDotDropdown.svelte';
+	import ModalWrapper from '$components/ModalWrapper.svelte';
+	import { clickoutside } from '$ts/actions/clickoutside';
+	import LL, { locale } from '$i18n/i18n-svelte';
+	import Button from '$components/buttons/Button.svelte';
+	import { apiUrl } from '$ts/constants/main';
+	import { page } from '$app/stores';
+	import { logVoiceoverOutputDeleted } from '$ts/helpers/loggers';
+	import { appVersion } from '$ts/stores/appVersion';
+	import { userSummary } from '$ts/stores/user/summary';
+	import type { TUserVoiceoverFullOutputsPage } from '$ts/queries/userVoiceovers';
+	import { useQueryClient } from '@tanstack/svelte-query';
+	import IconTrashcan from '$components/icons/IconTrashcan.svelte';
 
 	export let output: TVoiceoverFullOutput;
 	export let hasDeleteButton = false;
@@ -31,10 +43,12 @@
 	export let inHorizontal = false;
 	export { classes as class };
 	export let noLayoutChange = false;
+
 	let classes = '';
 
 	let playButton: HTMLButtonElement;
 	let muteButton: HTMLButtonElement;
+	const queryClient = hasDeleteButton ? useQueryClient() : undefined;
 
 	let currentTime = 0;
 	let duration: number;
@@ -88,6 +102,72 @@
 		if (e.key === ' ') {
 			togglePlay({ audioElement });
 		}
+	}
+
+	let isDeleteModalOpen = false;
+	const itemsToBeDeletedCount = 1;
+	let actionStatus: 'idle' | 'loading' | 'success' | 'error' = 'idle';
+	let modalScrollContainer: HTMLDivElement;
+
+	const openDeleteModal = () => (isDeleteModalOpen = true);
+	const closeDeleteModal = () => (isDeleteModalOpen = false);
+
+	function onDeleteModalConfirmButtonClicked() {
+		if (!output.voiceover.id) return;
+		togglePlay({ audioElement, state: 'pause' });
+		deleteVoiceoverOutputs([{ output_id: output.id, voiceover_id: output.voiceover.id }]);
+	}
+
+	async function deleteVoiceoverOutputs(idObjects: { output_id: string; voiceover_id: string }[]) {
+		actionStatus = 'loading';
+		try {
+			const res = await fetch(`${apiUrl.origin}/v1/user/audio/voiceover`, {
+				method: 'DELETE',
+				headers: {
+					'Content-Type': 'application/json',
+					Authorization: `Bearer ${$page.data.session?.access_token}`
+				},
+				body: JSON.stringify({ output_ids: idObjects.map((o) => o.output_id) })
+			});
+			if (!res.ok) throw new Error('Response not ok');
+			console.log('Delete voiceover output response', res);
+			queryClient?.setQueryData(['user_voiceover_full_outputs'], (data: any) => ({
+				...data,
+				pages: data.pages.map((page: TUserVoiceoverFullOutputsPage) => {
+					return {
+						...page,
+						outputs: page.outputs.map((output) =>
+							idObjects.map((i) => i.output_id).includes(output.id)
+								? { ...output, is_deleted: true }
+								: output
+						)
+					};
+				})
+			}));
+			if ($voiceovers.flatMap((v) => v.outputs).some((o) => o.id === output.id)) {
+				$voiceovers = $voiceovers.map((v) => ({
+					...v,
+					outputs: v.outputs.map((o) => (o.id === output.id ? { ...o, is_deleted: true } : o))
+				}));
+			}
+			for (let i = 0; i < idObjects.length; i++) {
+				let idObject = idObjects[i];
+				const logProps = {
+					'SC - Voiceover Id': idObject.voiceover_id,
+					'SC - Output Id': idObject.output_id,
+					'SC - Locale': $locale,
+					'SC - Page': `${$page.url.pathname}${$page.url.search}`,
+					'SC - User Id': $page.data.session?.user.id,
+					'SC - Stripe Product Id': $userSummary?.product_id,
+					'SC - App Version': $appVersion
+				};
+				logVoiceoverOutputDeleted(logProps);
+			}
+		} catch (error) {
+			console.log('Error deleting generation output', error);
+		}
+		closeDeleteModal();
+		actionStatus = 'idle';
 	}
 
 	onMount(() => {
@@ -150,7 +230,7 @@
 			</div>
 		</div>
 		<div class="{noLayoutChange ? 'flex' : 'hidden md:flex lg:hidden xl:flex'} -mr-2 items-center">
-			<ThreeDotDropdown {output} {hasDeleteButton} />
+			<ThreeDotDropdown {output} {hasDeleteButton} onDeleteClicked={openDeleteModal} />
 		</div>
 	</div>
 	{#if !noLayoutChange}
@@ -254,7 +334,7 @@
 			class="w-auto md:w-full flex md:hidden lg:flex items-center justify-between xl:hidden lg:pb-0.5"
 		>
 			<div class="-mr-0.5 lg:mr-0 lg:-ml-2 flex items-center">
-				<ThreeDotDropdown {output} {hasDeleteButton} />
+				<ThreeDotDropdown {output} {hasDeleteButton} onDeleteClicked={openDeleteModal} />
 			</div>
 			<div
 				class="order-first lg:order-last flex-shrink min-w-0 pl-2 lg:pl-3 text-xs text-c-on-bg/50 text-right"
@@ -295,4 +375,65 @@
 			{/if}
 		</div>
 	{/if}
+	{#if output.is_deleted}
+		<div
+			transition:fade={{ duration: 200, easing: quadOut }}
+			class="w-full h-full absolute left-0 top-0 bg-c-bg-secondary/90 flex items-center justify-center"
+		>
+			<div transition:scale={{ duration: 200, opacity: 0, start: 0, easing: quadOut }}>
+				<IconTrashcan class="w-6 h-6 md:w-8 md:h-8 text-c-danger" />
+			</div>
+		</div>
+	{/if}
 </div>
+
+{#if isDeleteModalOpen}
+	<ModalWrapper bind:scrollContainer={modalScrollContainer}>
+		<div
+			use:clickoutside={{
+				callback: () => {
+					if (actionStatus === 'loading') {
+						return;
+					}
+					isDeleteModalOpen = false;
+				}
+			}}
+			class="max-w-full my-auto"
+		>
+			<div
+				class="w-full flex flex-col max-w-md bg-c-bg ring-2 ring-c-bg-secondary rounded-xl p-5 md:p-6 shadow-2xl shadow-c-shadow/[var(--o-shadow-stronger)]"
+			>
+				<h1 class="font-bold text-xl -mt-1">
+					{$LL.Shared.BatchEditBar.ConfirmationModal.Delete.Title({
+						selectedCount: itemsToBeDeletedCount
+					})}
+				</h1>
+				<p class="mt-3 text-c-on-bg/75 leading-relaxed">
+					{$LL.Shared.BatchEditBar.ConfirmationModal.Delete.Paragraph({
+						selectedCount: itemsToBeDeletedCount
+					})}
+				</p>
+				<div class="w-full flex flex-wrap justify-end items-stretch mt-6 gap-2">
+					<div class="w-full justify-end flex flex-wrap items-stretch -mr-2 -mb-1.5">
+						<Button
+							disabled={actionStatus === 'loading'}
+							onClick={closeDeleteModal}
+							size="sm"
+							type="no-bg-on-bg"
+						>
+							{$LL.Shared.BatchEditBar.ConfirmationModal.CancelButton()}</Button
+						>
+						<Button
+							withSpinner
+							loading={actionStatus === 'loading'}
+							size="sm"
+							onClick={onDeleteModalConfirmButtonClicked}
+						>
+							{$LL.Shared.BatchEditBar.ConfirmationModal.Delete.ConfirmButton()}
+						</Button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</ModalWrapper>
+{/if}

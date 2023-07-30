@@ -1,11 +1,7 @@
 <script lang="ts">
 	import Morpher from '$components/Morpher.svelte';
 	import ButtonHoverEffect from '$components/buttons/ButtonHoverEffect.svelte';
-	import {
-		lgBreakpoint,
-		mdBreakpoint,
-		xlBreakpoint
-	} from '$components/generationFullScreen/constants';
+	import { lgBreakpoint, xlBreakpoint } from '$components/generationFullScreen/constants';
 	import IconCancel from '$components/icons/IconCancel.svelte';
 	import IconThreeDots from '$components/icons/IconThreeDots.svelte';
 	import CopyLinkButton from '$components/voiceover/audioPlayer/CopyLinkButton.svelte';
@@ -20,8 +16,9 @@
 	export let output: TVoiceoverFullOutput;
 	export let size: 'md' | 'lg' | 'sm' = 'md';
 	export let hasDeleteButton = false;
+	export let onDeleteClicked: (() => void) | undefined;
 
-	const { trigger, content, open, arrow, close } = createPopover({
+	const { trigger, content, open } = createPopover({
 		positioning: {
 			placement: 'left',
 			gutter: 4
@@ -61,9 +58,9 @@
 {#if $open}
 	<div
 		transition:fly={{
-			x: $windowWidth >= lgBreakpoint && $windowWidth < xlBreakpoint ? -48 : 48,
+			x: $windowWidth >= lgBreakpoint && $windowWidth < xlBreakpoint ? -16 : 16,
 			opacity: 0,
-			duration: 200,
+			duration: 150,
 			easing: quadOut
 		}}
 		class="bg-c-bg-secondary ring-2 ring-c-bg-tertiary shadow-xl shadow-c-shadow/[var(--o-shadow-strong)] rounded-md flex"
@@ -72,8 +69,13 @@
 	>
 		<CopyLinkButton {output} />
 		<DownloadButton {output} afterDownload={() => open.set(false)} />
-		{#if hasDeleteButton}
-			<DeleteButton {output} />
+		{#if hasDeleteButton && onDeleteClicked}
+			<DeleteButton
+				onDeleteClicked={() => {
+					open.set(false);
+					if (onDeleteClicked) onDeleteClicked();
+				}}
+			/>
 		{/if}
 	</div>
 {/if}

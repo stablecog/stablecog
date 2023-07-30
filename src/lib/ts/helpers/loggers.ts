@@ -92,6 +92,11 @@ export function logGenerationOutputDeleted(props: IGenerationOutputActionProps) 
 	posthog.capture('Generation Output | Deleted', { ...props });
 }
 
+export function logVoiceoverOutputDeleted(props: IVoiceoverOutputActionProps) {
+	mixpanel.track('Voiceover Output | Deleted', { ...props });
+	posthog.capture('Voiceover Output | Deleted', { ...props });
+}
+
 export function logGenerationOutputFavorited(props: IGenerationOutputActionProps) {
 	mixpanel.track('Generation Output | Favorited', { ...props });
 	posthog.capture('Generation Output | Favorited', { ...props });
@@ -415,6 +420,16 @@ export interface IGenerationOutputActionProps {
 	'SC - Output Id': string;
 	'SC - Locale': string;
 	'SC - Advanced Mode': boolean;
+	'SC - User Id': string | undefined;
+	'SC - Stripe Product Id': string | undefined;
+	'SC - Page': string;
+	'SC - App Version': string;
+}
+
+export interface IVoiceoverOutputActionProps {
+	'SC - Voiceover Id'?: string;
+	'SC - Output Id': string;
+	'SC - Locale': string;
 	'SC - User Id': string | undefined;
 	'SC - Stripe Product Id': string | undefined;
 	'SC - Page': string;
