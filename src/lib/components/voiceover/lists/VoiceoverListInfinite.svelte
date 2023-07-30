@@ -194,7 +194,7 @@
 						class={horizontal ? 'h-full' : 'w-full'}
 						style={horizontal ? `width: ${listItemWidth}px` : ''}
 					>
-						<AudioPlayerListItem {output} inHorizontal={horizontal} />
+						<AudioPlayerListItem {output} inHorizontal={horizontal} hasDeleteButton />
 					</div>
 				</div>
 			{/each}

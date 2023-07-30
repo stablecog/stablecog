@@ -13,20 +13,20 @@
 	import { allAudioPlayers } from '$ts/stores/allPlayers';
 	import { onDestroy, onMount } from 'svelte';
 	import type { TVoiceoverFullOutput } from '$ts/stores/user/voiceovers';
-	import DownloadButton from '$components/voiceover/audioPlayer/DownloadButton.svelte';
 	import IconAnimatedSpinner from '$components/icons/IconAnimatedSpinner.svelte';
 	import IconSadFaceOutline from '$components/icons/IconSadFaceOutline.svelte';
 	import { quadOut } from 'svelte/easing';
-	import { fade, fly } from 'svelte/transition';
+	import { fade } from 'svelte/transition';
 	import { timestampPlaceholder } from '$components/voiceover/audioPlayer/constants';
 	import IconHourglassAnimated from '$components/icons/IconHourglassAnimated.svelte';
 	import Morpher from '$components/Morpher.svelte';
 	import { flyAndScale } from '$ts/animation/transitions';
-	import { lgBreakpoint, mdBreakpoint } from '$components/generationFullScreen/constants';
+	import { lgBreakpoint } from '$components/generationFullScreen/constants';
 	import { windowWidth } from '$ts/stores/window';
 	import ThreeDotDropdown from '$components/voiceover/audioPlayer/ThreeDotDropdown.svelte';
 
 	export let output: TVoiceoverFullOutput;
+	export let hasDeleteButton = false;
 	export let hasMute = false;
 	export let inHorizontal = false;
 	export { classes as class };
@@ -150,7 +150,7 @@
 			</div>
 		</div>
 		<div class="{noLayoutChange ? 'flex' : 'hidden md:flex lg:hidden xl:flex'} -mr-2 items-center">
-			<ThreeDotDropdown {output} />
+			<ThreeDotDropdown {output} {hasDeleteButton} />
 		</div>
 	</div>
 	{#if !noLayoutChange}
@@ -254,7 +254,7 @@
 			class="w-auto md:w-full flex md:hidden lg:flex items-center justify-between xl:hidden lg:pb-0.5"
 		>
 			<div class="-mr-0.5 lg:mr-0 lg:-ml-2 flex items-center">
-				<ThreeDotDropdown {output} />
+				<ThreeDotDropdown {output} {hasDeleteButton} />
 			</div>
 			<div
 				class="order-first lg:order-last flex-shrink min-w-0 pl-2 lg:pl-3 text-xs text-c-on-bg/50 text-right"

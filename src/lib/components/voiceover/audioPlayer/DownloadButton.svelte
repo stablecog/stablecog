@@ -11,6 +11,7 @@
 	export let size: 'md' | 'lg' | 'sm' = 'md';
 	export let faded = false;
 	export let disabled = false;
+	export let afterDownload: (() => void) | undefined = undefined;
 
 	let isDownloading = false;
 
@@ -19,6 +20,7 @@
 		isDownloading = true;
 		try {
 			await downloadVoicoverOutput(output);
+			if (afterDownload) afterDownload();
 		} catch (error) {
 			console.log(error);
 		} finally {
