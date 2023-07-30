@@ -218,7 +218,7 @@
 										: 'not-touch:group-hover/iconbutton:ring-c-on-bg'} {isAccountMenuOpen
 										? 'rotate-360'
 										: !isAccountMenuOpen
-										? 'not-touch:group-hover/iconbutton:rotate-90'
+										? 'not-touch:group-hover/iconbutton:rotate-45'
 										: ''}"
 								/>
 							</IconButton>
