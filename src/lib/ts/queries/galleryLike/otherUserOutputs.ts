@@ -2,12 +2,16 @@ import type { TAvailableGenerationModelId } from '$ts/constants/generationModels
 import { apiUrl } from '$ts/constants/main';
 import type { TAvailableSchedulerId } from '$ts/constants/schedulers';
 import { convertToDBTimeString } from '$ts/helpers/convertToDBTimeString';
+import type {
+	TGalleryGenerationFullOutputPageRes,
+	TGalleryGenerationFullOutputsPage
+} from '$ts/queries/galleryLike/types';
 import type { TGenerationFullOutput, TGenerationOutput } from '$userStores/generation';
 
 const score_threshold_default = 50;
 const per_page_default = 50;
 
-export async function getGalleryGenerationFullOutputs({
+export async function getOtherUserGenerationFullOutputs({
 	cursor,
 	search,
 	seed,
@@ -15,7 +19,8 @@ export async function getGalleryGenerationFullOutputs({
 	custom_fetch,
 	per_page = per_page_default,
 	score_threshold = score_threshold_default,
-	prompt_id
+	prompt_id,
+	username
 }: {
 	cursor?: string;
 	search?: string | null;
@@ -25,8 +30,9 @@ export async function getGalleryGenerationFullOutputs({
 	per_page?: number;
 	score_threshold?: number;
 	prompt_id?: string;
+	username: string;
 }): Promise<TGalleryGenerationFullOutputsPage> {
-	console.log('getGalleryOutputs');
+	console.log('getOtherUserGenerationFullOutputs');
 	const query = new URLSearchParams();
 	if (cursor) {
 		if ((search && typeof cursor === 'number') || (!search && typeof cursor === 'string')) {
@@ -49,14 +55,17 @@ export async function getGalleryGenerationFullOutputs({
 	}
 	let queryString = query.toString();
 	if (queryString) queryString = `?${queryString}`;
-	const url = `${apiUrl.origin}/v1/gallery${queryString}`;
+	const url = `${apiUrl.origin}/v1/profile/${username}/outputs${queryString}`;
 	const f = custom_fetch || fetch;
 	const res = await f(url, {
 		headers: {
 			'Content-Type': 'application/json'
 		}
 	});
-	if (!res.ok) throw new Error(`Failed to fetch gallery outputs: ${res.status}, ${res.statusText}`);
+	if (!res.ok)
+		throw new Error(
+			`Failed to user user generation full outputs: ${res.status}, ${res.statusText}`
+		);
 	const data: TGalleryGenerationFullOutputPageRes = await res.json();
 	const { hits, next } = data;
 	const outputs: TGenerationFullOutput[] = hits.map((hit) => {
@@ -93,7 +102,10 @@ export async function getGalleryGenerationFullOutputs({
 				status: 'succeeded',
 				seed: 1,
 				num_outputs: 1,
-				submit_to_gallery: true
+				submit_to_gallery: true,
+				user: {
+					username
+				}
 			},
 			...output
 		};
@@ -103,33 +115,4 @@ export async function getGalleryGenerationFullOutputs({
 		next
 	};
 	return page;
-}
-
-export interface TGalleryGenerationFullOutputPageRes {
-	hits: TGalleryGenerationHit[];
-	next?: string;
-}
-
-export interface TGalleryGenerationHit {
-	id: string;
-	generation_id: string;
-	image_url: string;
-	upscaled_image_url?: string;
-	created_at: string;
-	updated_at: string;
-	width: number;
-	height: number;
-	inference_steps: number;
-	guidance_scale: number;
-	model_id: string;
-	scheduler_id: string;
-	prompt_text: string;
-	prompt_id: string;
-	negative_prompt_text?: string;
-	negative_prompt_id?: string;
-}
-
-export interface TGalleryGenerationFullOutputsPage {
-	outputs: TGenerationFullOutput[];
-	next?: string | number;
 }

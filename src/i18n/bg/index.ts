@@ -393,6 +393,7 @@ const bg: Translation = {
 		TryAgainButton: 'Опитайте отново',
 		RefreshButton: 'Опресни',
 		LoadMoreButton: 'Зареди повече',
+		BackToProfile: 'Back to Profile',
 		BackToGalleryButton: 'Back to Gallery',
 		SearchingTitle: 'Търсене',
 		NoResultsFoundTitle: 'Не бяха открити резултати'
@@ -732,6 +733,7 @@ const bg: Translation = {
 		SearchInput: {
 			Title: 'Потърси'
 		},
+		BackToProfile: 'Back to Profile',
 		BackToGalleryButton: 'Back to Gallery',
 		SearchingTitle: 'Търсене',
 		NoMatchingGenerationTitle: 'Няма съответствия'

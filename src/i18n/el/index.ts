@@ -411,6 +411,7 @@ const es: Translation = {
 		TryAgainButton: 'Προσπαθήστε ξανά',
 		RefreshButton: 'Ανανέωση',
 		LoadMoreButton: 'Εμφάνιση περισσότερων',
+		BackToProfile: 'Back to Profile',
 		BackToGalleryButton: 'Πίσω στη Συλλογή',
 		SearchingTitle: 'Αναζήτηση',
 		NoResultsFoundTitle: 'Δεν βρέθηκαν αποτελέσματα'
@@ -763,6 +764,7 @@ const es: Translation = {
 		SearchInput: {
 			Title: 'Αναζήτηση'
 		},
+		BackToProfile: 'Back to Profile',
 		BackToGalleryButton: 'Πίσω στη Συλλογή',
 		SearchingTitle: 'Αναζήτηση',
 		NoMatchingGenerationTitle: 'Δεν υπάρχει αντίστοιχο παράγωγο'

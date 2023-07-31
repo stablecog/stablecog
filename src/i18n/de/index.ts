@@ -390,6 +390,7 @@ const de: Translation = {
 		TryAgainButton: 'Nochmals versuchen',
 		RefreshButton: 'Aktualisieren',
 		LoadMoreButton: 'Weitere laden',
+		BackToProfile: 'Back to Profile',
 		BackToGalleryButton: 'Back to Gallery',
 		SearchingTitle: 'Suche…',
 		NoResultsFoundTitle: 'Keine Ergebnisse gefunden'
@@ -734,6 +735,7 @@ const de: Translation = {
 		SearchInput: {
 			Title: 'Suche'
 		},
+		BackToProfile: 'Back to Profile',
 		BackToGalleryButton: 'Back to Gallery',
 		SearchingTitle: 'Suchen...',
 		NoMatchingGenerationTitle: 'Nichts Passendes gefunden'

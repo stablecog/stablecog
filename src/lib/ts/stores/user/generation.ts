@@ -1,7 +1,7 @@
 import { apiUrl } from '$ts/constants/main';
 import type { TAvailableGenerationModelId } from '$ts/constants/generationModels';
 import type { TAvailableSchedulerId } from '$ts/constants/schedulers';
-import { writable } from 'svelte/store';
+import { get, writable } from 'svelte/store';
 import {
 	generationCostCompletionPerMs,
 	getCostCompletionPerMsFromGeneration
@@ -166,6 +166,7 @@ export const setGenerationToServerProcessing = ({ ui_id, id }: { ui_id: string; 
 
 export async function queueInitialGenerationRequest(request: TInitialGenerationRequest) {
 	generations.update(($generations) => {
+		const username = get(userSummary)?.username;
 		const generationToSubmit: TGeneration = {
 			...request,
 			status: 'to-be-submitted',
@@ -175,7 +176,10 @@ export async function queueInitialGenerationRequest(request: TInitialGenerationR
 				image_url: '',
 				status: 'to-be-submitted',
 				animation: newGenerationStartAnimation()
-			}))
+			})),
+			user: {
+				username: username || ''
+			}
 		};
 		if ($generations === null || $generations.length === 0) {
 			return [generationToSubmit];
@@ -393,7 +397,8 @@ export interface TGenerationBase {
 }
 
 export interface TUser {
-	email: string;
+	email?: string;
+	username: string;
 }
 export interface TGeneration extends TGenerationBase {
 	status: TGenerationStatus;
@@ -406,7 +411,7 @@ export interface TGeneration extends TGenerationBase {
 	completed_at?: string;
 	submit_to_gallery: boolean;
 	is_placeholder?: boolean;
-	user?: TUser;
+	user: TUser;
 }
 
 export interface TGenerationOutput {

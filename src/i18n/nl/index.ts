@@ -395,6 +395,7 @@ const nl: Translation = {
 		TryAgainButton: 'Opnieuw proberen',
 		RefreshButton: 'Vernieuwen',
 		LoadMoreButton: 'Laad meer',
+		BackToProfile: 'Back to Profile',
 		BackToGalleryButton: 'Back to Gallery',
 		SearchingTitle: 'Bezig met zoeken',
 		NoResultsFoundTitle: 'Geen resultaten gevonden'
@@ -741,6 +742,7 @@ const nl: Translation = {
 		SearchInput: {
 			Title: 'Zoeken'
 		},
+		BackToProfile: 'Back to Profile',
 		BackToGalleryButton: 'Back to Gallery',
 		SearchingTitle: 'Bezig met zoeken',
 		NoMatchingGenerationTitle: 'Geen overeenkomstige creatie gevonden'

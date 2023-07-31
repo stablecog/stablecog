@@ -1,32 +1,37 @@
-import { getGalleryGenerationFullOutputs } from '$ts/queries/galleryLike/galleryGenerations';
+import { getOtherUserGenerationFullOutputs } from '$ts/queries/galleryLike/otherUserOutputs';
 import type { TGalleryGenerationFullOutputsPage } from '$ts/queries/galleryLike/types';
 import type { FetchInfiniteQueryOptions } from '@tanstack/svelte-query';
 
-export const getGalleryInfiniteQueryKey = ({
+export const getOtherUserProfileInfiniteQueryKey = ({
 	searchString,
 	modelIdFilters,
-	seed
+	seed,
+	username
 }: {
 	searchString?: string | null;
 	modelIdFilters?: string[] | null;
 	seed?: number;
+	username: string;
 }) => {
 	return [
-		'gallery_generation_full_outputs',
+		'other_user_generation_full_outputs',
+		username,
 		searchString ? searchString : '',
 		modelIdFilters ? modelIdFilters.join(',') : '',
 		typeof seed === 'number' ? seed : ''
 	];
 };
 
-export function getGalleryInfiniteQueryProps({
+export function getOtherUserProfileInfiniteQueryProps({
 	searchString,
 	modelIdFilters,
-	seed
+	seed,
+	username
 }: {
 	searchString?: string | null;
 	modelIdFilters?: string[];
 	seed?: number;
+	username: string;
 }): FetchInfiniteQueryOptions<
 	TGalleryGenerationFullOutputsPage,
 	unknown,
@@ -34,13 +39,14 @@ export function getGalleryInfiniteQueryProps({
 	any
 > {
 	return {
-		queryKey: getGalleryInfiniteQueryKey({ searchString, modelIdFilters, seed }),
+		queryKey: getOtherUserProfileInfiniteQueryKey({ searchString, modelIdFilters, seed, username }),
 		queryFn: async (lastPage) => {
-			return getGalleryGenerationFullOutputs({
+			return getOtherUserGenerationFullOutputs({
 				cursor: lastPage?.pageParam,
 				seed,
 				search: searchString,
-				model_ids: modelIdFilters
+				model_ids: modelIdFilters,
+				username
 			});
 		},
 		getNextPageParam: (lastPage: TGalleryGenerationFullOutputsPage) => {

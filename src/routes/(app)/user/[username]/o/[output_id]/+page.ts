@@ -12,6 +12,7 @@ import type {
 	TGalleryGenerationFullOutputPageRes,
 	TGalleryGenerationFullOutputsPage
 } from '$ts/queries/galleryLike/types';
+import { getOtherUserGenerationFullOutputs } from '$ts/queries/galleryLike/otherUserOutputs';
 
 interface TParent {
 	queryClient: QueryClient;
@@ -20,13 +21,15 @@ interface TParent {
 
 export const load: PageLoad = async ({ params, parent }) => {
 	const outputId = params.output_id;
+	const username = params.username;
 	let generationFullOutput: TGenerationFullOutput | undefined = undefined;
 	let similarGenerationFullOutputs: TGenerationFullOutput[] | undefined = undefined;
 	const [generationFullOutputRes, similarGenerationFullOutputsRes] = await Promise.all([
-		fetch(`${apiUrl.origin}/v1/gallery?output_id=${outputId}`),
-		getGalleryGenerationFullOutputs({
+		fetch(`${apiUrl.origin}/v1/profile/${username}/outputs?output_id=${outputId}`),
+		getOtherUserGenerationFullOutputs({
 			search: outputId,
-			per_page: similarCount + 1
+			per_page: similarCount + 1,
+			username
 		})
 	]);
 	if (!generationFullOutputRes.ok) {
@@ -72,7 +75,7 @@ export const load: PageLoad = async ({ params, parent }) => {
 			num_outputs: 1,
 			submit_to_gallery: true,
 			user: {
-				username: hit.user.username
+				username
 			}
 		},
 		...output
@@ -88,10 +91,11 @@ export const load: PageLoad = async ({ params, parent }) => {
 	};
 
 	const { queryClient } = (await parent()) as TParent;
-	queryClient.setQueryData(['gallery_similar_outputs_short', outputId], page);
+	queryClient.setQueryData(['other_user_similar_outputs_short', outputId], page);
 
 	return {
 		generationFullOutput,
-		similarGenerationFullOutputs
+		similarGenerationFullOutputs,
+		username
 	};
 };

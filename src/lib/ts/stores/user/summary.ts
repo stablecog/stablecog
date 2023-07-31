@@ -17,4 +17,5 @@ export interface TUserSummary {
 	free_credit_amount?: number;
 	has_nonfree_credits?: boolean;
 	wants_email?: boolean;
+	username: string;
 }

@@ -167,19 +167,19 @@
 		{/key}
 		<div class="w-full flex flex-shrink-0 flex-col gap-4 max-w-xl lg:max-w-md items-start px-5">
 			<div class="w-full flex justify-center lg:justify-start lg:-ml-6 lg:-mt-2">
-				<NoBgButton href="/gallery" prefetch={true} hoverFrom="right">
+				<NoBgButton href="/user/{data.username}" prefetch={true} hoverFrom="right">
 					<div class="flex items-center justify-center gap-2.5 px-2 py-1">
 						<IconBack
 							class="w-6 h-6 transform transition text-c-on-bg/50 group-hover:-translate-x-1
 							not-touch:group-hover:text-c-primary"
 						/>
 						<p class="transition text-c-on-bg/50 not-touch:group-hover:text-c-primary">
-							{$LL.Shared.BackToGalleryButton()}
+							{$LL.Shared.BackToProfile()}
 						</p>
 					</div>
 				</NoBgButton>
 			</div>
-			<UsernameButton username={output.generation.user.username} class="-mt-3" />
+			<UsernameButton username={data.username} class="-mt-3" />
 			<div class="w-full flex flex-col items-start gap-3 mt-1">
 				<div class="w-full flex flex-col gap-2">
 					<p class="w-full font-semibold text-3xl">{$LL.Home.PromptInput.Title()}</p>
@@ -240,7 +240,7 @@
 										'SC - User Id': $page.data.session?.user.id
 									});
 								}}
-								href="/gallery/o/{similarOutput.id}"
+								href="/user/{data.username}/o/{similarOutput.id}"
 								data-sveltekit-preload-data="hover"
 								class="w-full group"
 							>
@@ -249,7 +249,7 @@
 										<img
 											loading="lazy"
 											class="w-full h-auto rounded-xl overflow-hidden border-2 border-c-bg-secondary
-										shadow-lg shadow-c-shadow/[var(--o-shadow-stronger)] transition bg-c-bg-secondary not-touch:group-hover:border-c-primary"
+											shadow-lg shadow-c-shadow/[var(--o-shadow-stronger)] transition bg-c-bg-secondary not-touch:group-hover:border-c-primary"
 											sizes={`(min-width: 1024px) calc(28rem / ${simpleGridCols}), calc(min(36rem, 100vw) / ${simpleGridCols})`}
 											src={getImgProxySrc({
 												src: similarOutput.upscaled_image_url ?? similarOutput.image_url,

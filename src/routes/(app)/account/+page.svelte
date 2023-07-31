@@ -99,12 +99,12 @@
 			<div class="w-full flex items-center justify-start">
 				<div class="flex flex-shrink overflow-hidden items-center gap-4 px-5 py-4 md:px-6">
 					<Avatar
-						text={$page.data.session?.user.email || ''}
+						text={$userSummary?.username || ''}
 						class="w-9 h-9 ring-2 ring-c-on-bg/25 overflow-hidden rounded-full transition transform
 							relative shadow-lg shadow-c-shadow/[var(--o-shadow-strong)] flex-shrink-0"
 					/>
 					<p class="overflow-hidden font-semibold flex-shrink overflow-ellipsis">
-						{$page.data.session.user.email}
+						<span class="text-c-on-bg/50 font-normal">@</span>{$userSummary?.username}
 					</p>
 				</div>
 				<div

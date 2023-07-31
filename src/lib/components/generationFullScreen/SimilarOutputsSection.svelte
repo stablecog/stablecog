@@ -5,7 +5,7 @@
 	import LL from '$i18n/i18n-svelte';
 	import { getImgProxySrc, getImgProxySrcSet } from '$ts/helpers/imgproxy';
 	import { logGalleryModalSimilarClicked } from '$ts/helpers/loggers';
-	import { getGalleryGenerationFullOutputs } from '$ts/queries/galleryGenerations';
+	import { getGalleryGenerationFullOutputs } from '$ts/queries/galleryLike/galleryGenerations';
 	import { appVersion } from '$ts/stores/appVersion';
 	import { activeGeneration, type TGenerationFullOutput } from '$ts/stores/user/generation';
 	import { userSummary } from '$ts/stores/user/summary';

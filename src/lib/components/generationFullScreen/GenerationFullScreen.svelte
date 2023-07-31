@@ -33,7 +33,6 @@
 	import { upscaleModelIdDefault } from '$ts/constants/upscaleModels';
 	import { generateSSEId } from '$ts/helpers/generateSSEId';
 	import ButtonsSection from '$components/generationFullScreen/ButtonsSection.svelte';
-	import SidebarChevron from '$components/generationFullScreen/SidebarChevron.svelte';
 	import type {
 		TButtonObjectsWithState,
 		TGenerationFullScreenModalType,
@@ -56,6 +55,8 @@
 	import WithTooltip from '$components/WithTooltip.svelte';
 	import SimilarOutputsSection from '$components/generationFullScreen/SimilarOutputsSection.svelte';
 	import ScrollAreaWithChevron from '$components/ScrollAreaWithChevron.svelte';
+	import ButtonHoverEffect from '$components/buttons/ButtonHoverEffect.svelte';
+	import UsernameButton from '$components/buttons/UsernameButton.svelte';
 
 	export let generation: TGenerationWithSelectedOutput;
 	export let modalType: TGenerationFullScreenModalType;
@@ -152,13 +153,19 @@
 		generateSimilarUrl = getGenerationUrlFromParams(rest);
 		linkUrl = `${$page.url.origin}/gallery/o/${generation.selected_output.id}`;
 		if (browser && window && !initialGenerationChange) {
-			if (modalType !== 'gallery') {
+			if (modalType === 'gallery') {
+				window.history.replaceState({}, '', `/gallery/o/${generation.selected_output.id}`);
+			} else if (modalType === 'other-user-profile') {
+				window.history.replaceState(
+					{},
+					'',
+					`/user/${generation.user.username}/o/${generation.selected_output.id}`
+				);
+			} else {
 				const searchParams = new URLSearchParams(window.location.search);
 				searchParams.set('o', generation.selected_output.id);
 				const params = searchParams.toString();
 				window.history.replaceState({}, '', `${window.location.pathname}?${params}`);
-			} else {
-				window.history.replaceState({}, '', `/gallery/o/${generation.selected_output.id}`);
 			}
 		}
 		resetAllButtonObjectWithState();
@@ -274,6 +281,8 @@
 		const searchParams = new URLSearchParams(window.location.search);
 		if (modalType === 'gallery') {
 			window.history.pushState({}, '', `/gallery`);
+		} else if (modalType === 'other-user-profile') {
+			window.history.pushState({}, '', `/user/${generation.user.username}`);
 		} else if (searchParams.has('o')) {
 			searchParams.delete('o');
 			const newSearch = searchParams.toString();
@@ -418,24 +427,9 @@
 			<ScrollAreaWithChevron bind:scrollContainer={sidebarScrollContainer}>
 				<div class="w-full flex flex-col items-start justify-start">
 					<div class="w-full flex flex-col gap-4 md:gap-5 px-5 py-4 md:px-7 md:py-5">
-						{#if generation.user && generation.user.email && (isSuperAdmin($userSummary?.roles) || isGalleryAdmin($userSummary?.roles))}
-							<div class="w-full flex justify-start items-center mt-1">
-								<div
-									class="max-w-full flex justify-start items-center gap-3 bg-c-bg-secondary
-									rounded-full pl-1.5 py-1.5 pr-4 -ml-1 ring-2 ring-c-bg-tertiary shadow-lg
-									shadow-c-shadow/[var(--o-shadow-strong)]"
-								>
-									<Avatar
-										text={generation.user.email}
-										class="w-7 h-7 relative ring-2 ring-c-on-bg/25 rounded-full flex-shrink-0
-										shadow-lg shadow-c-shadow/[var(--o-shadow-strong)] items-center"
-									/>
-									<p class="font-medium flex-shrink min-w-0 overflow-hidden overflow-ellipsis">
-										{generation.user.email}
-									</p>
-								</div>
-							</div>
-						{/if}
+						<div class="w-full flex justify-start items-center mt-1">
+							<UsernameButton username={generation.user.username} email={generation.user.email} />
+						</div>
 						{#if (modalType === 'generate' || modalType === 'history') && !generation.selected_output.image_url.includes('placeholder')}
 							<div class="w-full pt-1.5">
 								{#if !generation.selected_output.upscaled_image_url || upscaleBeingProcessed}

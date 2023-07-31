@@ -409,6 +409,7 @@ const tr: Translation = {
 		TryAgainButton: 'Yeniden Dene',
 		RefreshButton: 'Yenile',
 		LoadMoreButton: 'Daha Fazla',
+		BackToProfile: 'Back to Profile',
 		BackToGalleryButton: 'Galeriye Dön',
 		SearchingTitle: 'Aranıyor',
 		NoResultsFoundTitle: 'Sonuç bulunamadı'
@@ -753,6 +754,7 @@ const tr: Translation = {
 		SearchInput: {
 			Title: 'Ara'
 		},
+		BackToProfile: 'Back to Profile',
 		BackToGalleryButton: 'Galeriye Gön',
 		SearchingTitle: 'Arıyor',
 		NoMatchingGenerationTitle: 'Benzer bir üretim bulunamadı'

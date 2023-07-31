@@ -1174,6 +1174,10 @@ type RootTranslation = {
 		 */
 		LoadMoreButton: string
 		/**
+		 * B​a​c​k​ ​t​o​ ​P​r​o​f​i​l​e
+		 */
+		BackToProfile: string
+		/**
 		 * B​a​c​k​ ​t​o​ ​G​a​l​l​e​r​y
 		 */
 		BackToGalleryButton: string
@@ -2189,6 +2193,10 @@ type RootTranslation = {
 			 */
 			Title: string
 		}
+		/**
+		 * B​a​c​k​ ​t​o​ ​P​r​o​f​i​l​e
+		 */
+		BackToProfile: string
 		/**
 		 * B​a​c​k​ ​t​o​ ​G​a​l​l​e​r​y
 		 */
@@ -4224,6 +4232,10 @@ export type TranslationFunctions = {
 		 */
 		LoadMoreButton: () => LocalizedString
 		/**
+		 * Back to Profile
+		 */
+		BackToProfile: () => LocalizedString
+		/**
 		 * Back to Gallery
 		 */
 		BackToGalleryButton: () => LocalizedString
@@ -5235,6 +5247,10 @@ export type TranslationFunctions = {
 			 */
 			Title: () => LocalizedString
 		}
+		/**
+		 * Back to Profile
+		 */
+		BackToProfile: () => LocalizedString
 		/**
 		 * Back to Gallery
 		 */

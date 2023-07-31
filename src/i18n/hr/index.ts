@@ -390,6 +390,7 @@ const hr: Translation = {
 		TryAgainButton: 'Pokušaj ponovno',
 		RefreshButton: 'Refresh',
 		LoadMoreButton: 'Load More',
+		BackToProfile: 'Back to Profile',
 		BackToGalleryButton: 'Back to Gallery',
 		SearchingTitle: 'Searching',
 		NoResultsFoundTitle: 'No results found'
@@ -727,6 +728,7 @@ const hr: Translation = {
 		SearchInput: {
 			Title: 'Pretraži'
 		},
+		BackToProfile: 'Back to Profile',
 		BackToGalleryButton: 'Back to Gallery',
 		SearchingTitle: 'Pretraživanje',
 		NoMatchingGenerationTitle: 'Nema tražene generacije'

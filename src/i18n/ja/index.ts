@@ -403,6 +403,7 @@ const ja: Translation = {
 		TryAgainButton: '再試行',
 		RefreshButton: '更新',
 		LoadMoreButton: 'さらに読み込む',
+		BackToProfile: 'Back to Profile',
 		BackToGalleryButton: 'ギャラリーに戻る',
 		SearchingTitle: '検索中',
 		NoResultsFoundTitle: '検索結果なし'
@@ -750,6 +751,7 @@ const ja: Translation = {
 		SearchInput: {
 			Title: '検索'
 		},
+		BackToProfile: 'Back to Profile',
 		BackToGalleryButton: 'ギャラリーに戻る',
 		SearchingTitle: '検索中...',
 		NoMatchingGenerationTitle: '一致する生成がありません'
