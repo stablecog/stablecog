@@ -1,4 +1,6 @@
 <script lang="ts">
+	import IconHeart from '$components/icons/IconHeart.svelte';
+	import IconStar from '$components/icons/IconStar.svelte';
 	import {
 		PUBLIC_STRIPE_PRODUCT_ID_STARTER_SUBSCRIPTION,
 		PUBLIC_STRIPE_PRODUCT_ID_PRO_SUBSCRIPTION,
@@ -39,10 +41,7 @@
 		on:click={onClick}
 		data-sveltekit-preload-data="hover"
 		class="bg-c-bg border-2 overflow-hidden z-10 shadow-lg flex-shrink-0
-  	shadow-c-shadow/[var(--o-shadow-normal)] group relative {productId !== undefined &&
-		productId !== 'free'
-			? 'border-c-primary/30'
-			: 'border-c-on-bg/25'} {size === 'sm'
+  	shadow-c-shadow/[var(--o-shadow-normal)] group relative border-c-primary/30 {size === 'sm'
 			? 'rounded-lg'
 			: size === 'md'
 			? 'rounded-lg2'
@@ -53,27 +52,36 @@
 		>
 			<div
 				class="w-full aspect-square origin-left rounded-full transition transform -translate-x-full
-				{productId !== undefined && productId !== 'free'
-					? 'bg-c-primary/15'
-					: 'bg-c-on-bg/10'} not-touch:group-hover:translate-x-[-45%]"
+				bg-c-primary/15 not-touch:group-hover:translate-x-[-45%]"
 			/>
 		</div>
 		<div
-			class="flex items-center justify-center z-10 {productId !== undefined && productId !== 'free'
-				? 'text-c-primary bg-c-primary/15'
-				: 'text-c-on-bg bg-c-on-bg/15'}
+			class="flex items-center justify-center z-10 text-c-primary bg-c-primary/15
     	{size === 'sm'
 				? 'gap-1.5 px-2.5 py-1'
 				: size === 'md'
 				? 'gap-1.5 px-3 py-1.25'
-				: 'gap-1.5 px-4 py-1.5'}"
+				: 'gap-1.5 px-4 py-1.25'}"
 		>
+			{#if productId}
+				<IconStar
+					class="{size === 'sm'
+						? 'w-5 h-5 -ml-0.75'
+						: 'w-6 h-6 -ml-1'} flex-shrink-0 text-c-primary"
+				/>
+			{:else}
+				<IconHeart
+					class="{size === 'sm'
+						? 'w-5 h-5 -ml-0.75'
+						: 'w-6 h-6 -ml-1'} flex-shrink-0 text-c-primary"
+				/>
+			{/if}
 			<p
-				class={size === 'sm'
+				class="{size === 'sm'
 					? 'text-sm font-semibold'
 					: size === 'md'
 					? 'text-base font-semibold'
-					: 'text-lg font-semibold'}
+					: 'text-lg font-semibold'} flex-shrink min-w-0 overflow-hidden overflow-ellipsis whitespace-nowrap"
 			>
 				{_planText}
 			</p>
@@ -82,30 +90,39 @@
 {:else}
 	<div
 		class="bg-c-bg border-2 overflow-hidden z-10 shadow-lg flex-shrink-0
-  	shadow-c-shadow/[var(--o-shadow-normal)] {productId !== undefined && productId !== 'free'
-			? 'border-c-primary/30'
-			: 'border-c-on-bg/25'} {size === 'sm'
+  	shadow-c-shadow/[var(--o-shadow-normal)] border-c-primary/30 {size === 'sm'
 			? 'rounded-lg'
 			: size === 'md'
 			? 'rounded-lg2'
 			: 'rounded-lg2'} {classes}"
 	>
 		<div
-			class="flex items-center justify-center z-10 {productId !== undefined && productId !== 'free'
-				? 'text-c-primary bg-c-primary/15'
-				: 'text-c-on-bg bg-c-on-bg/15'}
-    {size === 'sm'
+			class="flex items-center justify-center z-10 text-c-primary bg-c-primary/15
+    	{size === 'sm'
 				? 'gap-1.5 px-2.5 py-1'
 				: size === 'md'
 				? 'gap-1.5 px-3 py-1.25'
-				: 'gap-1.5 px-4 py-1.5'}"
+				: 'gap-1.5 px-4 py-1.25'}"
 		>
+			{#if productId}
+				<IconStar
+					class="{size === 'sm'
+						? 'w-5 h-5 -ml-0.75'
+						: 'w-6 h-6 -ml-1'} flex-shrink-0 text-c-primary"
+				/>
+			{:else}
+				<IconHeart
+					class="{size === 'sm'
+						? 'w-5 h-5 -ml-0.75'
+						: 'w-6 h-6 -ml-1'} flex-shrink-0 text-c-primary"
+				/>
+			{/if}
 			<p
-				class={size === 'sm'
+				class="{size === 'sm'
 					? 'text-sm font-semibold'
 					: size === 'md'
 					? 'text-base font-semibold'
-					: 'text-lg font-semibold'}
+					: 'text-lg font-semibold'} flex-shrink min-w-0 overflow-hidden overflow-ellipsis whitespace-nowrap"
 			>
 				{_planText}
 			</p>

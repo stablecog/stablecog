@@ -1,12 +1,10 @@
 <script lang="ts">
-	import { goto } from '$app/navigation';
 	import { page } from '$app/stores';
 	import Input from '$components/Input.svelte';
 	import Button from '$components/buttons/Button.svelte';
 	import ButtonHoverEffect from '$components/buttons/ButtonHoverEffect.svelte';
 	import ErrorLine from '$components/error/ErrorLine.svelte';
 	import IconCancel from '$components/icons/IconCancel.svelte';
-	import IconEdit from '$components/icons/IconEdit.svelte';
 	import { apiUrl } from '$ts/constants/main';
 	import { getUserSummary } from '$ts/helpers/user/user';
 	import { userSummary } from '$ts/stores/user/summary';
@@ -77,9 +75,7 @@
 	}
 </script>
 
-<Button noPadding class="p-1.5 rounded-lg" {trigger} noRounding>
-	<IconEdit class="w-5 h-5 text-c-on-primary relative" />
-</Button>
+<slot {trigger} />
 
 <div use:portal>
 	{#if $open}
@@ -89,7 +85,7 @@
 			use:content
 			class="max-w-[calc(100%-2rem)] max-h-[calc(100%-2rem)] fixed w-80 left-1/2 top-1/2 transform z-[10000] -translate-x-1/2
       -translate-y-1/2 bg-c-bg-secondary p-5 ring-2 ring-c-bg-tertiary
-      rounded-2xl shadow-generation-modal shadow-c-shadow/[var(--o-shadow-strong)] overflow-auto"
+      rounded-2xl shadow-generation-modal shadow-c-shadow/[var(--o-shadow-strongest)] overflow-auto"
 		>
 			<h2 class="text-xl font-bold -mt-1 pl-1 pr-12" {...$title} use:title>Change Username</h2>
 			<form on:submit|preventDefault={onSubmit} class="flex flex-col gap-2 mt-1">
@@ -100,9 +96,9 @@
 					type="text"
 					class="mt-4 w-full"
 				/>
-				<Button withSpinner loading={usernameChangeStatus === 'loading'} class="w-full">
-					Confirm
-				</Button>
+				<Button withSpinner loading={usernameChangeStatus === 'loading'} class="w-full"
+					>Confirm</Button
+				>
 			</form>
 			{#if usernameChangeError}
 				<ErrorLine text={usernameChangeError} />
@@ -112,7 +108,7 @@
 				{...$close}
 				use:close
 			>
-				<ButtonHoverEffect color="primary" hoverFrom="left" />
+				<ButtonHoverEffect color="primary" hoverFrom="bottom" />
 				<IconCancel
 					class="text-c-on-bg/25 w-6 h-6 not-touch:group-hover:text-c-primary transition"
 				/>

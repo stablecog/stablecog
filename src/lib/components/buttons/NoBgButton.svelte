@@ -17,6 +17,7 @@
 	export let noPaddingForHover = false;
 	export let withSpinner = false;
 	export let loading = false;
+	export let trigger: any | undefined = undefined;
 </script>
 
 {#if href}
@@ -70,6 +71,8 @@
 {:else}
 	<button
 		type="button"
+		use:trigger
+		{...$trigger}
 		on:click={onClick}
 		aria-label={name}
 		disabled={disabled || loading}

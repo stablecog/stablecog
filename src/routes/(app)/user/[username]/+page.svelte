@@ -31,9 +31,12 @@
 	import IconStar from '$components/icons/IconStar.svelte';
 	import { getTitleFromProductId } from '$ts/helpers/stripe/plan.js';
 	import IconHeart from '$components/icons/IconHeart.svelte';
-	import ChangeUsernameButtonWithModal from '$components/buttons/ChangeUsernameButtonWithModal.svelte';
+	import ChangeUsernameButtonWithModal from '$components/WithChangeUsernameModal.svelte';
 	import { userSummary } from '$ts/stores/user/summary.js';
 	import { goto } from '$app/navigation';
+	import IconPen from '$components/icons/IconPen.svelte';
+	import WithChangeUsernameModal from '$components/WithChangeUsernameModal.svelte';
+	import NoBgButton from '$components/buttons/NoBgButton.svelte';
 
 	export let data;
 	const { searchQuery: searchQueryParam } = data;
@@ -97,46 +100,65 @@
 <svelte:window on:keydown={onKeyDown} />
 
 <div class="w-full px-1 flex-1 flex flex-col items-center md:pt-4.5">
-	<div class="w-full max-w-3xl flex flex-col">
+	<div class="w-full max-w-3xl flex flex-col items-center">
 		<div
-			class="w-full flex-shrink min-w-0 flex flex-col items-center gap-4 px-4 md:px-3 py-2 md:py-3"
+			class="w-full flex-shrink min-w-0 flex flex-col items-center gap-2 px-4 md:px-3 py-2 md:py-3"
 		>
 			<Avatar
 				class="w-16 h-16 ring-2 ring-c-on-bg/25 rounded-full transition transform flex-shrink-0
 					relative shadow-lg shadow-c-shadow/[var(--o-shadow-strong)] items-center justify-center overflow-hidden"
 				text={data.username}
 			/>
-			<div class="w-full flex justify-center items-center gap-3">
-				<p
-					class="max-w-full font-bold text-1.5xl md:text-2xl flex-shrink min-w-0
-					whitespace-nowrap overflow-hidden overflow-ellipsis"
-				>
-					<span class="text-c-on-bg/50 font-semibold">@</span>{data.username}
-				</p>
+			<div class="w-full flex justify-center items-center">
 				{#if data.username === $userSummary?.username}
-					<ChangeUsernameButtonWithModal
+					<WithChangeUsernameModal
 						afterUsernameChanged={(username) => goto(`/user/${username}`)}
-					/>
+						let:trigger
+					>
+						<NoBgButton {trigger} class="mt-0">
+							<div class="flex items-center justify-center gap-2.5 -mx-0.5 -my-0.5">
+								<p
+									class="max-w-full text-c-on-bg font-bold text-2xl md:text-3xl flex-shrink min-w-0 transition
+								whitespace-nowrap overflow-hidden overflow-ellipsis not-touch:group-hover:text-c-primary"
+								>
+									<span
+										class="text-c-on-bg/50 not-touch:group-hover:text-c-primary/50 transition font-semibold"
+										>@</span
+									>{data.username}
+								</p>
+								<IconPen
+									class="w-5 h-5 text-c-on-bg/50 not-touch:group-hover:text-c-primary/50 transition relative"
+								/>
+							</div>
+						</NoBgButton>
+					</WithChangeUsernameModal>
+				{:else}
+					<div class="flex items-center justify-center gap-3 py-3">
+						<p
+							class="max-w-full text-c-on-bg font-bold text-2xl md:text-3xl flex-shrink min-w-0 transition
+							whitespace-nowrap overflow-hidden overflow-ellipsis not-touch:group-hover:text-c-primary"
+						>
+							<span
+								class="text-c-on-bg/50 not-touch:group-hover:text-c-primary/50 transition font-semibold"
+								>@</span
+							>{data.username}
+						</p>
+					</div>
 				{/if}
 			</div>
 		</div>
-		<div class="w-full flex flex-wrap items-center justify-center mt-1 gap-3 px-2">
+		<div class="w-full flex flex-wrap items-center justify-center gap-3 px-2">
 			<div
 				class="flex items-center justify-center gap-1.5 ring-2
-				px-3 py-1 rounded-lg {data.userMetadata.active_product_id
-					? 'bg-c-primary/15 ring-c-primary/30'
-					: 'bg-c-on-bg/10 ring-c-on-bg/20'}"
+				px-3 py-1 rounded-lg bg-c-primary/15 ring-c-primary/30"
 			>
 				{#if data.userMetadata.active_product_id}
 					<IconStar class="w-5 h-5 -ml-1 flex-shrink-0 text-c-primary" />
 				{:else}
-					<IconHeart class="w-5 h-5 -ml-1 flex-shrink-0 text-c-on-bg" />
+					<IconHeart class="w-5 h-5 -ml-1 flex-shrink-0 text-c-primary" />
 				{/if}
 				<p
-					class="font-medium flex flex-shrink min-w-0 overflow-ellipsis overflow-hidden {data
-						.userMetadata.active_product_id
-						? 'text-c-primary'
-						: 'text-c-on-bg'}"
+					class="font-medium flex flex-shrink min-w-0 overflow-ellipsis overflow-hidden text-c-primary"
 				>
 					{getTitleFromProductId($LL, data.userMetadata.active_product_id)}
 				</p>

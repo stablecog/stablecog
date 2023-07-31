@@ -97,13 +97,13 @@
 				shadow-xl shadow-c-shadow/[var(--o-shadow-strong)] ring-2 ring-c-bg-secondary"
 		>
 			<div class="w-full flex items-center justify-start">
-				<div class="flex flex-shrink overflow-hidden items-center gap-4 px-5 py-4 md:px-6">
+				<div class="flex flex-shrink overflow-hidden items-center gap-3 px-5 py-4 md:px-6">
 					<Avatar
 						text={$userSummary?.username || ''}
-						class="w-9 h-9 ring-2 ring-c-on-bg/25 overflow-hidden rounded-full transition transform
+						class="w-8 h-8 ring-2 ring-c-on-bg/25 overflow-hidden rounded-full transition transform
 							relative shadow-lg shadow-c-shadow/[var(--o-shadow-strong)] flex-shrink-0"
 					/>
-					<p class="overflow-hidden font-semibold flex-shrink overflow-ellipsis">
+					<p class="text-lg overflow-hidden font-semibold flex-shrink overflow-ellipsis">
 						<span class="text-c-on-bg/50 font-normal">@</span>{$userSummary?.username}
 					</p>
 				</div>
