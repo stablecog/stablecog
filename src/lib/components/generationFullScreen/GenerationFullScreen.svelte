@@ -54,11 +54,8 @@
 	import Avatar from '$components/avatar/Avatar.svelte';
 	import { isGalleryAdmin, isSuperAdmin } from '$ts/helpers/admin/roles';
 	import WithTooltip from '$components/WithTooltip.svelte';
-	import SimpleGrid from '$components/grids/SimpleGrid.svelte';
-	import { getImgProxySrc, getImgProxySrcSet } from '$ts/helpers/imgproxy';
-	import { createQuery } from '@tanstack/svelte-query';
-	import { getGalleryGenerationFullOutputs } from '$ts/queries/galleryGenerations';
 	import SimilarOutputsSection from '$components/generationFullScreen/SimilarOutputsSection.svelte';
+	import ScrollAreaWithChevron from '$components/ScrollAreaWithChevron.svelte';
 
 	export let generation: TGenerationWithSelectedOutput;
 	export let modalType: TGenerationFullScreenModalType;
@@ -112,16 +109,12 @@
 		  !generation.selected_output.upscaled_image_url
 		: false;
 
-	let sidebarWrapper: HTMLDivElement;
-	let sidebarWrapperHeight: number;
-	let sidebarWrapperScrollHeight: number;
-	let sidebarWrapperScrollTop: number;
-	let sidebarInnerContainerHeight: number;
+	let sidebarScrollContainer: HTMLDivElement | undefined;
 
 	let generateSimilarUrl: string;
 	let linkUrl: string;
 
-	let modalScrollContainer: HTMLDivElement;
+	let modalScrollContainer: HTMLDivElement | undefined;
 
 	$: exploreSimilarUrl = `/gallery?q=${generation.selected_output.id}`;
 
@@ -219,12 +212,6 @@
 		}
 	};
 
-	const setSidebarWrapperVars = () => {
-		if (!sidebarWrapper) return;
-		sidebarWrapperScrollTop = sidebarWrapper.scrollTop;
-		sidebarWrapperScrollHeight = sidebarWrapper.scrollHeight;
-	};
-
 	async function onUpscaleClicked() {
 		if (!$sseId) {
 			console.log('No SSE ID, cannot upscale');
@@ -280,7 +267,6 @@
 	};
 
 	onMount(() => {
-		setSidebarWrapperVars();
 		lastClickedOutputId.set(undefined);
 	});
 
@@ -429,16 +415,8 @@
 			class="w-full shadow-generation-sidebar shadow-c-shadow/[var(--o-shadow-stronger)] flex
 				flex-col items-start justify-start bg-c-bg-secondary lg:border-l-2 border-c-bg-tertiary relative"
 		>
-			<div
-				on:scroll={setSidebarWrapperVars}
-				bind:this={sidebarWrapper}
-				bind:clientHeight={sidebarWrapperHeight}
-				class="w-full overflow-auto lg-list-fade relative"
-			>
-				<div
-					bind:clientHeight={sidebarInnerContainerHeight}
-					class="w-full flex flex-col items-start justify-start"
-				>
+			<ScrollAreaWithChevron bind:scrollContainer={sidebarScrollContainer}>
+				<div class="w-full flex flex-col items-start justify-start">
 					<div class="w-full flex flex-col gap-4 md:gap-5 px-5 py-4 md:px-7 md:py-5">
 						{#if generation.user && generation.user.email && (isSuperAdmin($userSummary?.roles) || isGalleryAdmin($userSummary?.roles))}
 							<div class="w-full flex justify-start items-center mt-1">
@@ -550,11 +528,11 @@
 						<SimilarOutputsSection
 							outputId={generation.selected_output.id}
 							afterClick={() => {
-								sidebarWrapper.scrollTo({
+								sidebarScrollContainer?.scrollTo({
 									left: 0,
 									top: 0
 								});
-								modalScrollContainer.scrollTo({
+								modalScrollContainer?.scrollTo({
 									left: 0,
 									top: 0
 								});
@@ -562,14 +540,7 @@
 						/>
 					{/if}
 				</div>
-			</div>
-			<SidebarChevron
-				bind:sidebarInnerContainerHeight
-				bind:sidebarWrapper
-				bind:sidebarWrapperHeight
-				bind:sidebarWrapperScrollHeight
-				bind:sidebarWrapperScrollTop
-			/>
+			</ScrollAreaWithChevron>
 		</div>
 	</Container>
 	{#if onLeftButtonClicked || onRightButtonClicked}

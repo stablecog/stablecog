@@ -7,7 +7,7 @@
 
 	export let hasPadding = true;
 	export let onClose: (() => void) | undefined = undefined;
-	export let scrollContainer: HTMLDivElement;
+	export let scrollContainer: HTMLDivElement | undefined = undefined;
 	let scrollY: number;
 
 	function onScroll(e: any) {

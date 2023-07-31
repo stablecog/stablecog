@@ -32,7 +32,7 @@
 		.slice(0, similarOutputsCount);
 </script>
 
-<div class="w-full flex flex-col px-2.5 md:px-3.5 lg:px-4 pt-5 pb-8">
+<div class="w-full flex flex-col px-2.5 md:px-3.5 lg:px-4 py-5">
 	<p class="font-bold text-2xl px-3">{$LL.GenerationFullscreen.SimilarTitle()}</p>
 	<div class="w-full flex flex-col mt-3">
 		{#if !similarOutputs}

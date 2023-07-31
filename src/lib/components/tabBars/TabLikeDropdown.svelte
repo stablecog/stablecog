@@ -23,7 +23,6 @@
 	export let containerBottomMinDistance = 8;
 	export let iconSet: ConstructorOfATypedSvelteComponent | undefined = undefined;
 	export { classes as class };
-	export let withFadedChevron = false;
 	export let filterSelected = false;
 	export let listClass = 'flex flex-col';
 	export let iconSetClass =
@@ -178,7 +177,7 @@
 						bind:clientHeight={dropdownHeight}
 						class="w-full flex flex-col justify-start relative z-20 overflow-hidden {dropdownClass}"
 					>
-						<ScrollAreaWithChevron withFade={withFadedChevron} class="w-full {listClass}">
+						<ScrollAreaWithChevron class="w-full {listClass}">
 							{#each itemsOptionallyFiltered as item, index (item.value)}
 								{@const isSelected = item.value === value}
 								{@const onClick = () => {

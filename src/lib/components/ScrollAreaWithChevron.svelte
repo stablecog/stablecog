@@ -5,22 +5,24 @@
 
 	export { classes as class };
 	export let clientHeight: number | undefined = undefined;
-	export let withFade = false;
+	export let fadeColor: 'bg' | 'bg-secondary' = 'bg-secondary';
+	export let onScroll: (() => void) | undefined = undefined;
+	export let scrollContainer: HTMLDivElement | undefined = undefined;
+
 	let classes = 'w-full relative';
-	let container: HTMLDivElement;
 	const hideChevronTopDistancePercent = 20;
 	const hideChevronBottomPadding = 12;
 	let showChevron = false;
 
-	$: containerScrollTop = container?.scrollTop;
-	$: containerScrollHeight = container?.scrollHeight;
+	$: containerScrollTop = scrollContainer?.scrollTop;
+	$: containerScrollHeight = scrollContainer?.scrollHeight;
 	$: [clientHeight], setContainerValues();
 	$: [containerScrollTop, containerScrollHeight, clientHeight], setShowChevron();
 
 	const setContainerValues = () => {
-		if (container) {
-			containerScrollTop = container.scrollTop;
-			containerScrollHeight = container.scrollHeight;
+		if (scrollContainer) {
+			containerScrollTop = scrollContainer.scrollTop;
+			containerScrollHeight = scrollContainer.scrollHeight;
 		}
 	};
 	const setShowChevron = () => {
@@ -42,23 +44,26 @@
 	<div
 		bind:clientHeight
 		on:scroll={() => {
-			containerScrollTop = container?.scrollTop;
-			containerScrollHeight = container?.scrollHeight;
+			containerScrollTop = scrollContainer?.scrollTop;
+			containerScrollHeight = scrollContainer?.scrollHeight;
+			if (onScroll) onScroll();
 		}}
-		bind:this={container}
+		bind:this={scrollContainer}
 		class="{classes} overflow-auto flex-1 min-h-0"
 	>
 		<slot />
 	</div>
 	{#if showChevron}
 		<div
-			transition:fly|local={{ duration: 200, easing: quadOut, y: 40, opacity: 0 }}
-			class=" {withFade
+			transition:fly|local={{ duration: 200, easing: quadOut, y: 32, opacity: 0 }}
+			class="{fadeColor === 'bg-secondary'
 				? 'w-full bg-gradient-to-t from-c-bg-secondary to-c-bg-secondary/0'
+				: fadeColor === 'bg'
+				? 'w-full bg-gradient-to-t from-c-bg to-c-bg/0'
 				: ''} absolute left-1/2 transform -translate-x-1/2 bottom-0 flex justify-center items-end px-2 pb-1 pt-6 z-50
       	pointer-events-none"
 		>
-			<IconChevronDown class="w-6 h-6 text-c-on-bg/75 transition" />
+			<IconChevronDown strokeWidth={2} class="w-6 h-6 text-c-on-bg/75 transition" />
 		</div>
 	{/if}
 </div>

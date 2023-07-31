@@ -74,7 +74,7 @@
 		{#if hasCustomContent}
 			<slot />
 		{:else}
-			<ScrollAreaWithChevron class="pb-20">
+			<ScrollAreaWithChevron fadeColor="bg" class="pb-20">
 				{#each $routesDrawer as route}
 					{@const isSelected = route.strictMatch
 						? $page.url.pathname === route.href
