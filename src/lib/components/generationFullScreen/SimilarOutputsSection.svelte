@@ -52,8 +52,10 @@
 			</SimpleGrid>
 		{:else}
 			<SimpleGrid cols={simpleGridCols} items={similarOutputs} let:item={similarOutput}>
-				<button
-					on:click={() => {
+				<a
+					data-sveltekit-preload-data="hover"
+					href={`/gallery/o/${similarOutput.id}`}
+					on:click|preventDefault={() => {
 						logGalleryModalSimilarClicked({
 							'SC - App Version': $appVersion,
 							'SC - Similar to Output Id': outputId,
@@ -89,7 +91,7 @@
 							/>
 						{/key}
 					</div>
-				</button>
+				</a>
 			</SimpleGrid>
 		{/if}
 	</div>
