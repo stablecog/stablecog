@@ -20,12 +20,12 @@
 	>
 		<ButtonHoverEffect noPadding size="md" hoverFrom="left" />
 		<label
-			class="text-lg font-semibold flex gap-2 justify-start items-center
+			class="font-semibold flex gap-2 justify-start items-center
       flex-1 min-w-0 relative cursor-pointer pointer-events-none
       transition text-c-on-bg not-touch:group-hover:text-c-primary"
 			for="checkbox"
 		>
-			<IconShare class="flex-shrink-0 w-6 h-6" />
+			<IconShare class="flex-shrink-0 w-5 h-5" />
 			<p class="flex-1 whitespace-nowrap overflow-hidden overflow-ellipsis text-left">
 				{$LL.GenerationFullscreen.ShowOnProfileButton()}
 			</p>
