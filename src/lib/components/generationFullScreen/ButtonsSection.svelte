@@ -320,7 +320,7 @@
 		</SubtleButton>
 	{/if}
 	{#if modalType === 'generate' || modalType === 'history'}
-		{#if $userSummary?.product_id || $userSummary?.has_nonfree_credits === true}
+		<!-- {#if $userSummary?.product_id || $userSummary?.has_nonfree_credits === true}
 			{#if submitToGalleryStatus === 'success' || generation.selected_output.gallery_status !== 'not_submitted'}
 				<SubtleButton disabled={true}>
 					<div class="flex items-center justify-center gap-1.5 text-c-success">
@@ -346,7 +346,7 @@
 					</div>
 				</SubtleButton>
 			{/if}
-		{/if}
+		{/if} -->
 		<div use:clickoutside={{ callback: resetDeleteStatus }}>
 			<SubtleButton
 				disabled={deleteStatus === 'loading'}

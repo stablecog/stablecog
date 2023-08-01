@@ -54,6 +54,7 @@
 	import SimilarOutputsSection from '$components/generationFullScreen/SimilarOutputsSection.svelte';
 	import ScrollAreaWithChevron from '$components/ScrollAreaWithChevron.svelte';
 	import UsernameButton from '$components/buttons/UsernameButton.svelte';
+	import VisibilityToggleSection from '$components/generationFullScreen/VisibilityToggleSection.svelte';
 
 	export let generation: TGenerationWithSelectedOutput;
 	export let modalType: TGenerationFullScreenModalType;
@@ -505,6 +506,10 @@
 							/>
 						{/key}
 					</div>
+					{#if modalType === 'generate' || modalType === 'history' || modalType === 'stage' || (modalType === 'other-user-profile' && $userSummary?.username === generation.user.username)}
+						<Divider />
+						<VisibilityToggleSection />
+					{/if}
 					<Divider />
 					<ParamsSection
 						class="flex flex-col px-5 py-4 md:px-7 md:py-5 lg:pb-8 gap-6"

@@ -10,7 +10,7 @@
 			: 'bg-c-on-bg/20'
 		: isToggled
 		? 'bg-c-primary'
-		: 'bg-c-on-bg/25'} relative z-0 overflow-hidden"
+		: 'bg-c-on-bg/25'} relative z-0 overflow-hidden pointer-events-none"
 >
 	<div class="w-6 h-6 transition {isToggled ? 'translate-x-full' : ''} rounded-full p-0.5">
 		<div class="w-full h-full rounded-full {color === 'on-bg' ? 'bg-c-bg' : 'bg-c-bg-secondary'}" />

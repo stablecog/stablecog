@@ -14,7 +14,7 @@
 	export let disabled = false;
 	export let isValid: (v: T) => boolean = () => true;
 	export let outline: 'primary' | 'bg-secondary' = 'bg-secondary';
-	export let size: 'sm' | 'md' = 'md';
+	export let size: 'xs' | 'sm' | 'md' = 'md';
 	export let vertical: boolean = false;
 	export let iconSet: ConstructorOfATypedSvelteComponent | undefined = undefined;
 	export let fontWeight: 500 | 600 = 500;
@@ -55,6 +55,8 @@
 				}}
 				class="flex-1 min-w-0 px-1 {vertical
 					? 'py-1.5'
+					: size === 'xs'
+					? 'py-3'
 					: size === 'sm'
 					? 'py-3.5'
 					: 'py-4'} relative text-center rounded-lg group transition"
