@@ -15,7 +15,7 @@
 		{...$root}
 		use:root
 		class="w-full flex items-center justify-between rounded-lg pl-4.5 md:pl-6 pr-3
-    md:pr-4 py-2 relative cursor-pointer group"
+    md:pr-4 py-2.5 relative cursor-pointer group"
 		id="checkbox"
 	>
 		<ButtonHoverEffect noPadding size="md" hoverFrom="left" />
