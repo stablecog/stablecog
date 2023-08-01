@@ -115,7 +115,7 @@
 </script>
 
 <MetaTag
-	title="{shortPromptTitle} | Gallery"
+	title="{shortPromptTitle} | @{data.username}"
 	description={getGalleryMetaTagDescriptionFromPromptText(output.generation.prompt.text)}
 	image_url={getPreviewImageUrlFromOutputId(output.id)}
 	canonical="{canonicalUrl}{$page.url.pathname}"

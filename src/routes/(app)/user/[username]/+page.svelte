@@ -24,19 +24,18 @@
 		xlBreakpoint,
 		xxlBreakpoint
 	} from '$components/generationFullScreen/constants';
-	import { previewImageVersion } from '$ts/constants/previewImageVersion.js';
 	import { getOtherUserProfileInfiniteQueryProps } from '$routes/(app)/user/[username]/constants.js';
 	import Avatar from '$components/avatar/Avatar.svelte';
 	import IconBirthday from '$components/icons/IconBirthday.svelte';
 	import IconStar from '$components/icons/IconStar.svelte';
 	import { getTitleFromProductId } from '$ts/helpers/stripe/plan.js';
 	import IconHeart from '$components/icons/IconHeart.svelte';
-	import ChangeUsernameButtonWithModal from '$components/WithChangeUsernameModal.svelte';
 	import { userSummary } from '$ts/stores/user/summary.js';
 	import { goto } from '$app/navigation';
 	import IconPen from '$components/icons/IconPen.svelte';
 	import WithChangeUsernameModal from '$components/WithChangeUsernameModal.svelte';
 	import NoBgButton from '$components/buttons/NoBgButton.svelte';
+	import { getPreviewImageUrlForUserProfile } from '$ts/helpers/getPreviewImageUrl.js';
 
 	export let data;
 	const { searchQuery: searchQueryParam } = data;
@@ -91,9 +90,9 @@
 </script>
 
 <MetaTag
-	title="Gallery | Stablecog"
-	description="A gallery full of images created with Stable Diffusion and Kandinsky. Check out the images and their metadata including their prompt, negative prompt, inference steps, guidance scale and seed. Generate similar images directly from the gallery or submit your own."
-	image_url="{canonicalUrl}/previews{$page.url.pathname}-{previewImageVersion}.png"
+	title="@{data.username} | Stablecog"
+	description="Check out the profile of @{data.username} on Stablecog: Free, multilingual and open-source AI image generator using Stable Diffusion and Kandinsky."
+	image_url={getPreviewImageUrlForUserProfile(data.username)}
 	canonical="{canonicalUrl}{$page.url.pathname}"
 />
 
