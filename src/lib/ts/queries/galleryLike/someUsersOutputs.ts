@@ -11,7 +11,7 @@ import type { TGenerationFullOutput, TGenerationOutput } from '$userStores/gener
 const score_threshold_default = 50;
 const per_page_default = 50;
 
-export async function getOtherUserGenerationFullOutputs({
+export async function getSomeUsersGenerationFullOutputs({
 	cursor,
 	search,
 	seed,
@@ -32,7 +32,7 @@ export async function getOtherUserGenerationFullOutputs({
 	prompt_id?: string;
 	username: string;
 }): Promise<TGalleryGenerationFullOutputsPage> {
-	console.log('getOtherUserGenerationFullOutputs');
+	console.log('getSomeUsersGenerationFullOutputs');
 	const query = new URLSearchParams();
 	if (cursor) {
 		if ((search && typeof cursor === 'number') || (!search && typeof cursor === 'string')) {

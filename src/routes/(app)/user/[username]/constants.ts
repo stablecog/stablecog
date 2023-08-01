@@ -1,8 +1,8 @@
-import { getOtherUserGenerationFullOutputs } from '$ts/queries/galleryLike/otherUserOutputs';
+import { getSomeUsersGenerationFullOutputs } from '$ts/queries/galleryLike/someUsersOutputs';
 import type { TGalleryGenerationFullOutputsPage } from '$ts/queries/galleryLike/types';
 import type { FetchInfiniteQueryOptions } from '@tanstack/svelte-query';
 
-export const getOtherUserProfileInfiniteQueryKey = ({
+export const getSomeUserProfileInfiniteQueryKey = ({
 	searchString,
 	modelIdFilters,
 	seed,
@@ -22,7 +22,7 @@ export const getOtherUserProfileInfiniteQueryKey = ({
 	];
 };
 
-export function getOtherUserProfileInfiniteQueryProps({
+export function getSomeUserProfileInfiniteQueryProps({
 	searchString,
 	modelIdFilters,
 	seed,
@@ -39,9 +39,9 @@ export function getOtherUserProfileInfiniteQueryProps({
 	any
 > {
 	return {
-		queryKey: getOtherUserProfileInfiniteQueryKey({ searchString, modelIdFilters, seed, username }),
+		queryKey: getSomeUserProfileInfiniteQueryKey({ searchString, modelIdFilters, seed, username }),
 		queryFn: async (lastPage) => {
-			return getOtherUserGenerationFullOutputs({
+			return getSomeUsersGenerationFullOutputs({
 				cursor: lastPage?.pageParam,
 				seed,
 				search: searchString,

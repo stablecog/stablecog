@@ -10,7 +10,7 @@
 		logUserProfileModalSimilarClicked
 	} from '$ts/helpers/loggers';
 	import { getGalleryGenerationFullOutputs } from '$ts/queries/galleryLike/galleryGenerations';
-	import { getOtherUserGenerationFullOutputs } from '$ts/queries/galleryLike/otherUserOutputs';
+	import { getSomeUsersGenerationFullOutputs } from '$ts/queries/galleryLike/someUsersOutputs';
 	import { appVersion } from '$ts/stores/appVersion';
 	import {
 		activeGeneration,
@@ -30,9 +30,9 @@
 	const similarOutputsCount = 12;
 
 	$: similarOutputsQuery = browser
-		? modalType === 'other-user-profile'
+		? modalType === 'user-profile'
 			? createQuery(['other_user_similar_outputs_short', outputId], () => {
-					return getOtherUserGenerationFullOutputs({
+					return getSomeUsersGenerationFullOutputs({
 						search: outputId,
 						per_page: similarOutputsCount + 1,
 						username: generation.user.username
@@ -74,7 +74,7 @@
 				<a
 					data-sveltekit-preload-data="hover"
 					href={`${
-						modalType === 'other-user-profile' ? `/user/${generation.user.username}` : '/gallery'
+						modalType === 'user-profile' ? `/user/${generation.user.username}` : '/gallery'
 					}/o/${similarOutput.id}`}
 					on:click|preventDefault={() => {
 						const logParams = {
@@ -84,7 +84,7 @@
 							'SC - Stripe Product Id': $userSummary?.product_id,
 							'SC - User Id': $page.data.session?.user.id
 						};
-						if (modalType === 'other-user-profile') {
+						if (modalType === 'user-profile') {
 							logUserProfileModalSimilarClicked(logParams);
 						} else {
 							logGalleryModalSimilarClicked(logParams);

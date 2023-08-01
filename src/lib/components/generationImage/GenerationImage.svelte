@@ -12,6 +12,7 @@
 	import { onSelectButtonClicked } from '$components/generationImage/helpers';
 	import type { TGenerationImageCardType } from '$components/generationImage/types';
 	import IconCancelCircle from '$components/icons/IconCancelCircle.svelte';
+	import IconEyeSlashOutline from '$components/icons/IconEyeSlashOutline.svelte';
 	import IconGalleryFilled from '$components/icons/IconGalleryFilled.svelte';
 	import IconNoImage from '$components/icons/IconNoImage.svelte';
 	import IconTick from '$components/icons/IconTick.svelte';
@@ -112,7 +113,7 @@
 			params = `o=${generation.selected_output.id}`;
 		}
 		imageClickHref =
-			cardType === 'gallery' || cardType === 'other-user-profile'
+			cardType === 'gallery' || cardType === 'user-profile'
 				? `${$page.url.pathname}/o/${generation.selected_output.id}`
 				: `${$page.url.pathname}?${params}`;
 	}
@@ -142,7 +143,7 @@
 		const searchParams = new URLSearchParams(window.location.search);
 		searchParams.set('o', generation.selected_output.id);
 		const urlToPush =
-			cardType === 'gallery' || cardType === 'other-user-profile'
+			cardType === 'gallery' || cardType === 'user-profile'
 				? `${$page.url.pathname}/o/${generation.selected_output.id}`
 				: `${$page.url.pathname}?${searchParams.toString()}`;
 		window.history.pushState({}, '', urlToPush);
@@ -317,7 +318,7 @@
 				{/if}
 				{#if cardType === 'history' || cardType === 'stage'}
 					<DownloadGenerationButton class="p-1.5 -ml-1.5" {generation} />
-				{:else if cardType === 'gallery' || cardType === 'other-user-profile'}
+				{:else if cardType === 'gallery' || cardType === 'user-profile'}
 					<GenerateButton
 						{generation}
 						class="p-1.5 -ml-1.5"
@@ -327,7 +328,7 @@
 				{#if (cardType === 'stage' || (cardType === 'history' && $userGalleryCurrentView !== 'favorites')) && cardWidth !== undefined && ((cardType === 'history' && cardWidth > 225) || (cardType === 'stage' && cardWidth > 180))}
 					<FavoriteButton {generation} modalType={cardType} type="on-image" class="p-1.5 -ml-1.5" />
 				{/if}
-				{#if (cardType === 'gallery' || cardType === 'other-user-profile') && setSearchQuery}
+				{#if (cardType === 'gallery' || cardType === 'user-profile') && setSearchQuery}
 					<ExploreSimilarButton {setSearchQuery} {generation} {cardType} class="p-1.5 -ml-1.5" />
 				{/if}
 			</div>
@@ -338,8 +339,8 @@
 		{/if}
 	</div>
 {/if}
-{#if generation.selected_output.is_deleted || (cardType === 'admin-gallery' && showAdminGalleryBarrier) || (cardType === 'history' && $userGalleryCurrentView === 'favorites' && !generation.selected_output.is_favorited)}
-	<!-- Deleted, approved or rejected -->
+{#if (cardType === 'user-profile' && generation.selected_output.is_public === false) || generation.selected_output.is_deleted || (cardType === 'admin-gallery' && showAdminGalleryBarrier) || (cardType === 'history' && $userGalleryCurrentView === 'favorites' && !generation.selected_output.is_favorited)}
+	<!-- Deleted, approved, rejected or just hidden -->
 	{@const sizeClasses =
 		generation.height > generation.width
 			? cardType === 'generate'
@@ -348,9 +349,21 @@
 			: cardType === 'generate'
 			? 'w-full max-w-[2rem] h-auto'
 			: 'w-full max-w-[3rem] h-auto'}
-	<div class="w-full h-full absolute left-0 top-0 bg-c-barrier/85 z-10" />
-	<div class="w-full h-full absolute left-0 top-0 flex items-center justify-center p-1 z-20">
-		{#if generation.selected_output.is_deleted}
+	{@const isUserProfileAndImageHidden =
+		cardType === 'user-profile' && generation.selected_output.is_public === false}
+	<div
+		class="w-full h-full absolute left-0 top-0 bg-c-barrier/85 z-10 {isUserProfileAndImageHidden
+			? 'pointer-events-none'
+			: ''}"
+	/>
+	<div
+		class="w-full h-full absolute left-0 top-0 flex items-center justify-center p-1 z-20 {isUserProfileAndImageHidden
+			? 'pointer-events-none'
+			: ''}"
+	>
+		{#if isUserProfileAndImageHidden}
+			<IconEyeSlashOutline class="text-c-danger {sizeClasses}" />
+		{:else if generation.selected_output.is_deleted}
 			<IconTrashcan class="text-c-danger {sizeClasses}" />
 		{:else if generation.selected_output.gallery_status === 'approved'}
 			<IconTick class="text-c-success {sizeClasses}" />

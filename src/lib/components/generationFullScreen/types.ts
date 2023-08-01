@@ -4,7 +4,7 @@ export type TGenerationFullScreenModalType =
 	| 'gallery'
 	| 'admin-gallery'
 	| 'stage'
-	| 'other-user-profile';
+	| 'user-profile';
 export interface TButtonObjectsWithState {
 	[key: string]: TButtonObjectWithState;
 }

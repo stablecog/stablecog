@@ -6,8 +6,8 @@ import type { QueryClient } from '@tanstack/svelte-query';
 import type { PageLoad } from './$types';
 import { redirect } from '@sveltejs/kit';
 import {
-	getOtherUserProfileInfiniteQueryKey,
-	getOtherUserProfileInfiniteQueryProps
+	getSomeUserProfileInfiniteQueryKey,
+	getSomeUserProfileInfiniteQueryProps
 } from '$routes/(app)/user/[username]/constants';
 import { getOtherUserMetadata, type TOtherUserMetadata } from '$ts/queries/otherUserMetadata';
 
@@ -34,7 +34,7 @@ export const load: PageLoad = async ({ url, parent, params }) => {
 
 	const hasInitialData =
 		queryClient.getQueryData(
-			getOtherUserProfileInfiniteQueryKey({
+			getSomeUserProfileInfiniteQueryKey({
 				searchString: searchQuery,
 				modelIdFilters: filteredModelIds,
 				seed: globalSeed,
@@ -45,7 +45,7 @@ export const load: PageLoad = async ({ url, parent, params }) => {
 	if (!hasInitialData) {
 		const [_, userRes] = await Promise.all([
 			queryClient.prefetchInfiniteQuery(
-				getOtherUserProfileInfiniteQueryProps({
+				getSomeUserProfileInfiniteQueryProps({
 					searchString: searchQuery,
 					modelIdFilters: filteredModelIds,
 					seed: globalSeed,

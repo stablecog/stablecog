@@ -1,10 +1,13 @@
 <script lang="ts">
 	export let isToggled: boolean = false;
 	export let color: 'primary' | 'on-bg' = 'primary';
+	export let disabled: boolean = false;
 </script>
 
 <div
-	class="w-12 flex-shrink-0 h-6 flex items-center rounded-full transition {color == 'on-bg'
+	class="{disabled
+		? 'opacity-50'
+		: ''} w-12 flex-shrink-0 h-6 flex items-center rounded-full transition {color == 'on-bg'
 		? isToggled
 			? 'bg-c-on-bg'
 			: 'bg-c-on-bg/20'

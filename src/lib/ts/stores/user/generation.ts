@@ -277,6 +277,28 @@ export const setGenerationOutputToSubmitted = (output_id: string) => {
 	});
 };
 
+export const setGenerationOutputVisibility = (
+	output_id: string,
+	visibility: 'public' | 'private'
+) => {
+	generations.update(($generations) => {
+		if ($generations === null || $generations.length === 0) {
+			return $generations;
+		}
+		for (let i = 0; i < $generations.length; i++) {
+			const generation = $generations[i];
+			for (let j = 0; j < generation.outputs.length; j++) {
+				const output = generation.outputs[j];
+				if (output.id === output_id) {
+					generation.outputs[j].is_public = visibility === 'public';
+					return $generations;
+				}
+			}
+		}
+		return $generations;
+	});
+};
+
 export const getOutputOnStageStatuses = (gen: TGeneration, output_ids: string[]) => {
 	let statuses = output_ids.map((id) => false);
 	for (let i = 0; i < gen.outputs.length; i++) {
@@ -423,6 +445,7 @@ export interface TGenerationOutput {
 	is_deleted?: boolean;
 	is_favorited?: boolean;
 	gallery_status?: TGalleryStatus;
+	is_public?: boolean;
 	status?: TGenerationOutputStatus;
 	animation?: Tweened<number>;
 }

@@ -18,7 +18,7 @@
 	let classes = '';
 
 	$: exploreSimilarUrl = `${
-		cardType === 'other-user-profile' ? `/user/${generation.user.username}` : '/gallery'
+		cardType === 'user-profile' ? `/user/${generation.user.username}` : '/gallery'
 	}?q=${generation.selected_output.id}`;
 
 	function onClick() {
@@ -29,7 +29,7 @@
 			'SC - Stripe Product Id': $userSummary?.product_id,
 			'SC - App Version': $appVersion
 		};
-		if (cardType === 'other-user-profile') {
+		if (cardType === 'user-profile') {
 			logUserProfileExploreSimilarClicked(logParams);
 		} else {
 			logGalleryExploreSimilarClicked(logParams);

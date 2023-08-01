@@ -24,7 +24,7 @@
 		xlBreakpoint,
 		xxlBreakpoint
 	} from '$components/generationFullScreen/constants';
-	import { getOtherUserProfileInfiniteQueryProps } from '$routes/(app)/user/[username]/constants.js';
+	import { getSomeUserProfileInfiniteQueryProps } from '$routes/(app)/user/[username]/constants.js';
 	import Avatar from '$components/avatar/Avatar.svelte';
 	import IconBirthday from '$components/icons/IconBirthday.svelte';
 	import IconStar from '$components/icons/IconStar.svelte';
@@ -46,7 +46,7 @@
 
 	$: galleryGenerationFullOutputsQuery = browser
 		? createInfiniteQuery(
-				getOtherUserProfileInfiniteQueryProps({
+				getSomeUserProfileInfiniteQueryProps({
 					searchString,
 					modelIdFilters,
 					seed: $globalSeed,
@@ -223,7 +223,7 @@
 		{:else if galleryGenerationFullOutputsQuery !== undefined && $windowWidth}
 			<div class="w-full flex-1 mt-1 md:mt-0.5 flex flex-col">
 				<GenerationGridInfinite2
-					cardType="other-user-profile"
+					cardType="user-profile"
 					generationsQuery={galleryGenerationFullOutputsQuery}
 					cols={$windowWidth >= xxlBreakpoint
 						? 6
@@ -251,6 +251,6 @@
 			: undefined}
 		generation={$activeGeneration}
 		{setSearchQuery}
-		modalType="other-user-profile"
+		modalType="user-profile"
 	/>
 {/if}

@@ -116,7 +116,7 @@
 	let modalScrollContainer: HTMLDivElement | undefined;
 
 	$: exploreSimilarUrl = `${
-		modalType === 'other-user-profile' ? `/user/${generation.user.username}` : '/gallery'
+		modalType === 'user-profile' ? `/user/${generation.user.username}` : '/gallery'
 	}?q=${generation.selected_output.id}`;
 
 	let upscaledTabValue: TUpscaleTabValue = 'upscaled';
@@ -152,13 +152,13 @@
 		const { seed, selected_output, ...rest } = generation;
 		generateSimilarUrl = getGenerationUrlFromParams(rest);
 		linkUrl =
-			modalType === 'other-user-profile'
+			modalType === 'user-profile'
 				? `${$page.url.origin}/user/${generation.user.username}/o/${generation.selected_output.id}`
 				: `${$page.url.origin}/gallery/o/${generation.selected_output.id}`;
 		if (browser && window && !initialGenerationChange) {
 			if (modalType === 'gallery') {
 				window.history.replaceState({}, '', `/gallery/o/${generation.selected_output.id}`);
-			} else if (modalType === 'other-user-profile') {
+			} else if (modalType === 'user-profile') {
 				window.history.replaceState(
 					{},
 					'',
@@ -284,7 +284,7 @@
 		const searchParams = new URLSearchParams(window.location.search);
 		if (modalType === 'gallery') {
 			window.history.pushState({}, '', `/gallery`);
-		} else if (modalType === 'other-user-profile') {
+		} else if (modalType === 'user-profile') {
 			window.history.pushState({}, '', `/user/${generation.user.username}`);
 		} else if (searchParams.has('o')) {
 			searchParams.delete('o');
@@ -506,9 +506,9 @@
 							/>
 						{/key}
 					</div>
-					{#if modalType === 'generate' || modalType === 'history' || modalType === 'stage' || (modalType === 'other-user-profile' && $userSummary?.username === generation.user.username)}
+					{#if modalType === 'generate' || modalType === 'history' || modalType === 'stage' || (modalType === 'user-profile' && $userSummary?.username === generation.user.username)}
 						<Divider />
-						<VisibilityToggleSection />
+						<VisibilityToggleSection {generation} {modalType} />
 					{/if}
 					<Divider />
 					<ParamsSection
@@ -524,7 +524,7 @@
 						bind:buttonObjectsWithState
 						{modalType}
 					/>
-					{#if modalType === 'gallery' || modalType === 'other-user-profile'}
+					{#if modalType === 'gallery' || modalType === 'user-profile'}
 						<Divider class="lg:-mt-3" />
 						<SimilarOutputsSection
 							{modalType}

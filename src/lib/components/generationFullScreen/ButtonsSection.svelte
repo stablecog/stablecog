@@ -211,12 +211,12 @@
 			<p>{$LL.GenerationFullscreen.GenerateSimilarButton()}</p>
 		</div>
 	</SubtleButton>
-	{#if modalType === 'gallery' || modalType === 'other-user-profile'}
+	{#if modalType === 'gallery' || modalType === 'user-profile'}
 		<SubtleButton
 			prefetch={true}
 			href={exploreSimilarUrl}
 			onClick={() => {
-				if (modalType === 'gallery' || modalType === 'other-user-profile') {
+				if (modalType === 'gallery' || modalType === 'user-profile') {
 					if (setSearchQuery) {
 						setSearchQuery(generation.selected_output.id);
 					}
@@ -226,7 +226,7 @@
 						'SC - Stripe Product Id': $userSummary?.product_id,
 						'SC - App Version': $appVersion
 					};
-					if (modalType === 'other-user-profile') {
+					if (modalType === 'user-profile') {
 						logUserProfileExploreSimilarClicked(logParams);
 					} else {
 						logGalleryExploreSimilarClicked(logParams);
@@ -261,13 +261,13 @@
 			</Morpher>
 		</SubtleButton>
 	</div>
-	{#if modalType === 'gallery' || modalType === 'other-user-profile'}
+	{#if modalType === 'gallery' || modalType === 'user-profile'}
 		<div
 			use:copy={linkUrl}
 			on:svelte-copy={() => {
 				setButtonObjectWithState('link', 'success');
 				fetch(
-					modalType === 'other-user-profile'
+					modalType === 'user-profile'
 						? getUserProfilePreviewImageUrlFromOutputId(
 								generation.selected_output.id,
 								generation.user.username
@@ -291,7 +291,7 @@
 			</SubtleButton>
 		</div>
 	{/if}
-	{#if (modalType === 'generate' || modalType === 'history' || (modalType === 'other-user-profile' && generation.user.username === $userSummary?.username)) && !generation.selected_output.image_url.includes('placeholder')}
+	{#if (modalType === 'generate' || modalType === 'history' || (modalType === 'user-profile' && generation.user.username === $userSummary?.username)) && !generation.selected_output.image_url.includes('placeholder')}
 		<SubtleButton
 			onClick={onDownloadImageClicked}
 			disabled={buttonObjectsWithState.download.state === 'loading'}

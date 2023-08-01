@@ -12,7 +12,7 @@ import type {
 	TGalleryGenerationFullOutputPageRes,
 	TGalleryGenerationFullOutputsPage
 } from '$ts/queries/galleryLike/types';
-import { getOtherUserGenerationFullOutputs } from '$ts/queries/galleryLike/otherUserOutputs';
+import { getSomeUsersGenerationFullOutputs } from '$ts/queries/galleryLike/someUsersOutputs';
 
 interface TParent {
 	queryClient: QueryClient;
@@ -26,7 +26,7 @@ export const load: PageLoad = async ({ params, parent }) => {
 	let similarGenerationFullOutputs: TGenerationFullOutput[] | undefined = undefined;
 	const [generationFullOutputRes, similarGenerationFullOutputsRes] = await Promise.all([
 		fetch(`${apiUrl.origin}/v1/profile/${username}/outputs?output_id=${outputId}`),
-		getOtherUserGenerationFullOutputs({
+		getSomeUsersGenerationFullOutputs({
 			search: outputId,
 			per_page: similarCount + 1,
 			username
