@@ -198,6 +198,7 @@ const nl: Translation = {
 		GenerateButton: 'Genereren',
 		UpscaleButton: 'Opschalen',
 		SimilarTitle: 'Similar',
+		ShowOnProfileButton: 'Show on Profile',
 		SubmitToGalleryButton: 'Naar galerij versturen',
 		SubmittedTitle: 'Verstuurd',
 		UpscaleTabBar: {

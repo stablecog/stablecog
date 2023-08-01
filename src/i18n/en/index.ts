@@ -195,6 +195,7 @@ const en: BaseTranslation = {
 		GenerateButton: 'Generate',
 		UpscaleButton: 'Upscale',
 		SimilarTitle: 'Similar',
+		ShowOnProfileButton: 'Show on Profile',
 		SubmitToGalleryButton: 'Submit to Gallery',
 		SubmittedTitle: 'Submitted',
 		UpscaleTabBar: {

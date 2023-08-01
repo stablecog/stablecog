@@ -195,6 +195,7 @@ const ko: Translation = {
 		GenerateButton: '나도 생성해보기',
 		UpscaleButton: '고화질 이미지로 만들기',
 		SimilarTitle: 'Similar',
+		ShowOnProfileButton: 'Show on Profile',
 		SubmitToGalleryButton: 'Submit to Gallery',
 		SubmittedTitle: 'Submitted',
 		UpscaleTabBar: {

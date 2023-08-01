@@ -194,6 +194,7 @@ const hi: Translation = {
 		GenerateButton: 'बनाए',
 		UpscaleButton: 'निखारे',
 		SimilarTitle: 'Similar',
+		ShowOnProfileButton: 'Show on Profile',
 		SubmitToGalleryButton: 'Submit to Gallery',
 		SubmittedTitle: 'Submitted',
 		UpscaleTabBar: {

@@ -194,6 +194,7 @@ const de: Translation = {
 		GenerateButton: 'Generieren',
 		UpscaleButton: 'Hochskalieren',
 		SimilarTitle: 'Similar',
+		ShowOnProfileButton: 'Show on Profile',
 		SubmitToGalleryButton: 'Für die Galerie einreichen',
 		SubmittedTitle: 'Eingereicht',
 		UpscaleTabBar: {

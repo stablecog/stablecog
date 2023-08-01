@@ -195,6 +195,7 @@ const ru: Translation = {
 		GenerateButton: 'Сгенерировать',
 		UpscaleButton: 'Масштабировать',
 		SimilarTitle: 'Similar',
+		ShowOnProfileButton: 'Show on Profile',
 		SubmitToGalleryButton: 'Submit to Gallery',
 		SubmittedTitle: 'Submitted',
 		UpscaleTabBar: {

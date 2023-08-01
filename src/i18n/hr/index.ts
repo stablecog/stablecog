@@ -194,6 +194,7 @@ const hr: Translation = {
 		GenerateButton: 'Generiraj',
 		UpscaleButton: 'Uvećaj',
 		SimilarTitle: 'Similar',
+		ShowOnProfileButton: 'Show on Profile',
 		SubmitToGalleryButton: 'Submit to Gallery',
 		SubmittedTitle: 'Submitted',
 		UpscaleTabBar: {

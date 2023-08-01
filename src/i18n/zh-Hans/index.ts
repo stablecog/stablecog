@@ -192,6 +192,7 @@ const zhHans: Translation = {
 		GenerateButton: '生成',
 		UpscaleButton: '提高分辨率',
 		SimilarTitle: 'Similar',
+		ShowOnProfileButton: 'Show on Profile',
 		SubmitToGalleryButton: 'Submit to Gallery',
 		SubmittedTitle: 'Submitted',
 		UpscaleTabBar: {

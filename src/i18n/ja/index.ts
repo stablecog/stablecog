@@ -205,6 +205,7 @@ const ja: Translation = {
 		GenerateButton: '生成',
 		UpscaleButton: 'アップスケール',
 		SimilarTitle: '類似画像',
+		ShowOnProfileButton: 'Show on Profile',
 		SubmitToGalleryButton: 'ギャラリーに提出',
 		SubmittedTitle: '提出済み',
 		UpscaleTabBar: {

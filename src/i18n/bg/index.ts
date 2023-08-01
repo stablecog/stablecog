@@ -197,6 +197,7 @@ const bg: Translation = {
 		GenerateButton: 'Създай',
 		UpscaleButton: 'Уголеми',
 		SimilarTitle: 'Similar',
+		ShowOnProfileButton: 'Show on Profile',
 		SubmitToGalleryButton: 'Качи в галерията',
 		SubmittedTitle: 'Качено',
 		UpscaleTabBar: {

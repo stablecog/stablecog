@@ -205,6 +205,7 @@ const es: Translation = {
 		GenerateButton: 'Δημιουργία',
 		UpscaleButton: 'Αύξηση ανάλυσης',
 		SimilarTitle: 'Παρόμοια',
+		ShowOnProfileButton: 'Show on Profile',
 		SubmitToGalleryButton: 'Αποθήκευση στη Συλλογή',
 		SubmittedTitle: 'Υποβλήθηκε',
 		UpscaleTabBar: {

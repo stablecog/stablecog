@@ -600,6 +600,10 @@ type RootTranslation = {
 		 */
 		SimilarTitle: string
 		/**
+		 * S​h​o​w​ ​o​n​ ​P​r​o​f​i​l​e
+		 */
+		ShowOnProfileButton: string
+		/**
 		 * S​u​b​m​i​t​ ​t​o​ ​G​a​l​l​e​r​y
 		 */
 		SubmitToGalleryButton: string
@@ -3713,6 +3717,10 @@ export type TranslationFunctions = {
 		 * Similar
 		 */
 		SimilarTitle: () => LocalizedString
+		/**
+		 * Show on Profile
+		 */
+		ShowOnProfileButton: () => LocalizedString
 		/**
 		 * Submit to Gallery
 		 */

@@ -4,6 +4,7 @@
 	import IconEyeOutline from '$components/icons/IconEyeOutline.svelte';
 	import IconHeart from '$components/icons/IconHeart.svelte';
 	import IconShare from '$components/icons/IconShare.svelte';
+	import LL from '$i18n/i18n-svelte';
 	import { createCheckbox } from '@melt-ui/svelte';
 
 	const { checked, input, root } = createCheckbox();
@@ -26,7 +27,7 @@
 		>
 			<IconShare class="flex-shrink-0 w-6 h-6" />
 			<p class="flex-1 whitespace-nowrap overflow-hidden overflow-ellipsis text-left">
-				Show on Profile
+				{$LL.GenerationFullscreen.ShowOnProfileButton()}
 			</p>
 		</label>
 		<input {...$input} use:input />
