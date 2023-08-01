@@ -18,7 +18,6 @@
 	const { trigger, portal, overlay, content, title, close, open, options } = createDialog();
 
 	let usernameInputValue = $userSummary?.username || '';
-	let usernameChangeStatus: 'idle' | 'loading' | 'success' | 'error' = 'idle';
 
 	$: schema = z.object({
 		username: z
@@ -41,8 +40,18 @@
 	});
 	$: usernameForm = usernameFormObj.form;
 	$: usernameFormErrors = usernameFormObj.errors;
+	$: isSubmittingUsernameForm = usernameFormObj.isSubmitting;
 
 	$: $open, onOpenChanged();
+	$: $isSubmittingUsernameForm, enableOrDisableEasyClose();
+
+	function enableOrDisableEasyClose() {
+		if ($isSubmittingUsernameForm) {
+			disableEasyClose();
+		} else {
+			enableEasyClose();
+		}
+	}
 
 	function disableEasyClose() {
 		options.set({
@@ -66,34 +75,24 @@
 			open.set(false);
 			return;
 		}
-		usernameChangeStatus = 'loading';
-		disableEasyClose();
-		try {
-			const res = await fetch(`${apiUrl.origin}/v1/user/username/change`, {
-				method: 'POST',
-				headers: {
-					'Content-Type': 'application/json',
-					Authorization: `Bearer ${$page.data.session.access_token}`
-				},
-				body: JSON.stringify({ username: newUsername })
-			});
-			if (!res.ok) {
-				usernameChangeStatus = 'error';
-				throw new Error('Something went wrong with username change');
-			} else {
-				const resJson: { username: string } = await res.json();
-				const { username: usernameFromServer } = resJson;
-				const us = await getUserSummary($page.data.session.access_token);
-				if (us) {
-					await afterUsernameChanged(usernameFromServer);
-					userSummary.set(us);
-				}
-			}
-		} catch (error) {
-			usernameChangeStatus = 'error';
+		const res = await fetch(`${apiUrl.origin}/v1/user/username/change`, {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+				Authorization: `Bearer ${$page.data.session.access_token}`
+			},
+			body: JSON.stringify({ username: newUsername })
+		});
+		if (!res.ok) {
 			throw new Error('Something went wrong with username change');
-		} finally {
-			enableEasyClose();
+		} else {
+			const resJson: { username: string } = await res.json();
+			const { username: usernameFromServer } = resJson;
+			const us = await getUserSummary($page.data.session.access_token);
+			if (us) {
+				await afterUsernameChanged(usernameFromServer);
+				userSummary.set(us);
+			}
 		}
 	}
 
@@ -129,7 +128,7 @@
 							type="text"
 							class="mt-4 w-full"
 						/>
-						<Button withSpinner loading={usernameChangeStatus === 'loading'} class="w-full">
+						<Button withSpinner loading={$isSubmittingUsernameForm} class="w-full">
 							{$LL.Shared.ConfirmButton()}
 						</Button>
 					</form>
