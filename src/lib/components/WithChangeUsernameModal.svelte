@@ -122,7 +122,7 @@
 					<form use:usernameForm class="flex flex-col gap-2.5 mt-1">
 						<Input
 							noAutocomplete
-							title="Username"
+							title={$LL.ChangeUsername.UsernameInput.Title()}
 							name="username"
 							bind:value={usernameInputValue}
 							type="text"

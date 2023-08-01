@@ -150,7 +150,10 @@
 		buttonObjectsWithState = { ...initialButtonObjectsWithState };
 		const { seed, selected_output, ...rest } = generation;
 		generateSimilarUrl = getGenerationUrlFromParams(rest);
-		linkUrl = `${$page.url.origin}/gallery/o/${generation.selected_output.id}`;
+		linkUrl =
+			modalType === 'other-user-profile'
+				? `${$page.url.origin}/user/${generation.user.username}/o/${generation.selected_output.id}`
+				: `${$page.url.origin}/gallery/o/${generation.selected_output.id}`;
 		if (browser && window && !initialGenerationChange) {
 			if (modalType === 'gallery') {
 				window.history.replaceState({}, '', `/gallery/o/${generation.selected_output.id}`);

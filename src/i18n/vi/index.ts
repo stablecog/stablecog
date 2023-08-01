@@ -520,6 +520,7 @@ const vi: Translation = {
 	ChangeUsername: {
 		ChangeUsernameTitle: 'Change Username',
 		ChangeUsernameButton: 'Change Username',
+		UsernameInput: { Title: 'Username' },
 		Error: {
 			MinimumCharacters: 'Must be at least {count} characters.',
 			MaximumCharacters: 'Must be at most {count} characters.',

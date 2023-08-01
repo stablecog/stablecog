@@ -45,7 +45,10 @@
 	} from '$ts/stores/user/keys';
 	import { appVersion } from '$ts/stores/appVersion';
 	import { replaceOutputInUserQueryData } from '$ts/helpers/replaceOutputInUserQueryData';
-	import { getPreviewImageUrlFromOutputId } from '$ts/helpers/getPreviewImageUrl';
+	import {
+		getPreviewImageUrlFromOutputId,
+		getUserProfilePreviewImageUrlFromOutputId
+	} from '$ts/helpers/getPreviewImageUrl';
 	import IconImageSearch from '$components/icons/IconImageSearch.svelte';
 
 	export let generation: TGenerationWithSelectedOutput;
@@ -258,7 +261,37 @@
 			</Morpher>
 		</SubtleButton>
 	</div>
-	{#if (modalType === 'generate' || modalType === 'history') && !generation.selected_output.image_url.includes('placeholder')}
+	{#if modalType === 'gallery' || modalType === 'other-user-profile'}
+		<div
+			use:copy={linkUrl}
+			on:svelte-copy={() => {
+				setButtonObjectWithState('link', 'success');
+				fetch(
+					modalType === 'other-user-profile'
+						? getUserProfilePreviewImageUrlFromOutputId(
+								generation.selected_output.id,
+								generation.user.username
+						  )
+						: getPreviewImageUrlFromOutputId(generation.selected_output.id)
+				);
+			}}
+			on:svelte-copy:error={(e) => console.log(e)}
+		>
+			<SubtleButton state={buttonObjectsWithState.link.state === 'success' ? 'success' : 'idle'}>
+				<Morpher morphed={buttonObjectsWithState.link.state === 'success'}>
+					<div slot="0" class="flex items-center justify-center gap-1.5">
+						<IconLink class="w-5 h-5 -ml-0.5" />
+						<p>{$LL.Shared.CopyLinkButton()}</p>
+					</div>
+					<div slot="1" class="flex items-center justify-center gap-1.5">
+						<IconTick class="w-5 h-5 -ml-0.5 scale-110" />
+						<p>{$LL.GenerationFullscreen.CopiedButtonState()}</p>
+					</div>
+				</Morpher>
+			</SubtleButton>
+		</div>
+	{/if}
+	{#if (modalType === 'generate' || modalType === 'history' || (modalType === 'other-user-profile' && generation.user.username === $userSummary?.username)) && !generation.selected_output.image_url.includes('placeholder')}
 		<SubtleButton
 			onClick={onDownloadImageClicked}
 			disabled={buttonObjectsWithState.download.state === 'loading'}
@@ -285,29 +318,6 @@
 				</div>
 			</Morpher>
 		</SubtleButton>
-	{/if}
-	{#if modalType === 'gallery'}
-		<div
-			use:copy={linkUrl}
-			on:svelte-copy={() => {
-				setButtonObjectWithState('link', 'success');
-				fetch(getPreviewImageUrlFromOutputId(generation.selected_output.id));
-			}}
-			on:svelte-copy:error={(e) => console.log(e)}
-		>
-			<SubtleButton state={buttonObjectsWithState.link.state === 'success' ? 'success' : 'idle'}>
-				<Morpher morphed={buttonObjectsWithState.link.state === 'success'}>
-					<div slot="0" class="flex items-center justify-center gap-1.5">
-						<IconLink class="w-5 h-5 -ml-0.5" />
-						<p>{$LL.Shared.CopyLinkButton()}</p>
-					</div>
-					<div slot="1" class="flex items-center justify-center gap-1.5">
-						<IconTick class="w-5 h-5 -ml-0.5 scale-110" />
-						<p>{$LL.GenerationFullscreen.CopiedButtonState()}</p>
-					</div>
-				</Morpher>
-			</SubtleButton>
-		</div>
 	{/if}
 	{#if modalType === 'generate' || modalType === 'history'}
 		{#if $userSummary?.product_id || $userSummary?.has_nonfree_credits === true}

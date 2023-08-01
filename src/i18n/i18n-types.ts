@@ -1588,6 +1588,12 @@ type RootTranslation = {
 		 * C​h​a​n​g​e​ ​U​s​e​r​n​a​m​e
 		 */
 		ChangeUsernameButton: string
+		UsernameInput: {
+			/**
+			 * U​s​e​r​n​a​m​e
+			 */
+			Title: string
+		}
 		Error: {
 			/**
 			 * M​u​s​t​ ​b​e​ ​a​t​ ​l​e​a​s​t​ ​{​c​o​u​n​t​}​ ​c​h​a​r​a​c​t​e​r​s​.
@@ -4673,6 +4679,12 @@ export type TranslationFunctions = {
 		 * Change Username
 		 */
 		ChangeUsernameButton: () => LocalizedString
+		UsernameInput: {
+			/**
+			 * Username
+			 */
+			Title: () => LocalizedString
+		}
 		Error: {
 			/**
 			 * Must be at least {count} characters.
