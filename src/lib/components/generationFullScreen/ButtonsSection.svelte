@@ -31,7 +31,8 @@
 		logGalleryExploreSimilarClicked,
 		logGalleryGenerateSimilarClicked,
 		logGenerationOutputDeleted,
-		logGenerationOutputSubmittedToGallery
+		logGenerationOutputSubmittedToGallery,
+		logUserProfileExploreSimilarClicked
 	} from '$ts/helpers/loggers';
 	import { advancedModeApp } from '$ts/stores/advancedMode';
 	import { userSummary } from '$ts/stores/user/summary';
@@ -207,21 +208,26 @@
 			<p>{$LL.GenerationFullscreen.GenerateSimilarButton()}</p>
 		</div>
 	</SubtleButton>
-	{#if modalType === 'gallery'}
+	{#if modalType === 'gallery' || modalType === 'other-user-profile'}
 		<SubtleButton
 			prefetch={true}
 			href={exploreSimilarUrl}
 			onClick={() => {
-				if (modalType === 'gallery') {
+				if (modalType === 'gallery' || modalType === 'other-user-profile') {
 					if (setSearchQuery) {
 						setSearchQuery(generation.selected_output.id);
 					}
-					logGalleryExploreSimilarClicked({
+					const logParams = {
 						'SC - Output Id': generation.selected_output.id,
 						'SC - User Id': $page.data.session?.user.id,
 						'SC - Stripe Product Id': $userSummary?.product_id,
 						'SC - App Version': $appVersion
-					});
+					};
+					if (modalType === 'other-user-profile') {
+						logUserProfileExploreSimilarClicked(logParams);
+					} else {
+						logGalleryExploreSimilarClicked(logParams);
+					}
 					if ($activeGeneration) {
 						activeGeneration.set(undefined);
 					}

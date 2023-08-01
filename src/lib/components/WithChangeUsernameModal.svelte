@@ -119,7 +119,7 @@
 					{$LL.ChangeUsername.ChangeUsernameTitle()}
 				</h2>
 				<div class="w-full flex flex-col">
-					<form use:usernameForm class="flex flex-col gap-2 mt-1">
+					<form use:usernameForm class="flex flex-col gap-2.5 mt-1">
 						<Input
 							noAutocomplete
 							title="Username"
@@ -137,7 +137,7 @@
 					{/if}
 				</div>
 				<button
-					class="absolute right-0 top-0 p-3 rounded-full overflow-hidden z-0 group"
+					class="absolute right-0 top-0 p-3 rounded-xl overflow-hidden z-0 group"
 					{...$close}
 					use:close
 				>

@@ -112,7 +112,7 @@
 			params = `o=${generation.selected_output.id}`;
 		}
 		imageClickHref =
-			cardType === 'gallery'
+			cardType === 'gallery' || cardType === 'other-user-profile'
 				? `${$page.url.pathname}/o/${generation.selected_output.id}`
 				: `${$page.url.pathname}?${params}`;
 	}
@@ -142,7 +142,7 @@
 		const searchParams = new URLSearchParams(window.location.search);
 		searchParams.set('o', generation.selected_output.id);
 		const urlToPush =
-			cardType === 'gallery'
+			cardType === 'gallery' || cardType === 'other-user-profile'
 				? `${$page.url.pathname}/o/${generation.selected_output.id}`
 				: `${$page.url.pathname}?${searchParams.toString()}`;
 		window.history.pushState({}, '', urlToPush);
@@ -317,7 +317,7 @@
 				{/if}
 				{#if cardType === 'history' || cardType === 'stage'}
 					<DownloadGenerationButton class="p-1.5 -ml-1.5" {generation} />
-				{:else if cardType === 'gallery'}
+				{:else if cardType === 'gallery' || cardType === 'other-user-profile'}
 					<GenerateButton
 						{generation}
 						class="p-1.5 -ml-1.5"
@@ -327,8 +327,8 @@
 				{#if (cardType === 'stage' || (cardType === 'history' && $userGalleryCurrentView !== 'favorites')) && cardWidth !== undefined && ((cardType === 'history' && cardWidth > 225) || (cardType === 'stage' && cardWidth > 180))}
 					<FavoriteButton {generation} modalType={cardType} type="on-image" class="p-1.5 -ml-1.5" />
 				{/if}
-				{#if cardType === 'gallery' && setSearchQuery}
-					<ExploreSimilarButton {setSearchQuery} {generation} class="p-1.5 -ml-1.5" />
+				{#if (cardType === 'gallery' || cardType === 'other-user-profile') && setSearchQuery}
+					<ExploreSimilarButton {setSearchQuery} {generation} {cardType} class="p-1.5 -ml-1.5" />
 				{/if}
 			</div>
 		{:else if cardType === 'history' && $userGalleryCurrentView !== 'favorites' && generation.selected_output.is_favorited && !generation.selected_output.is_deleted}

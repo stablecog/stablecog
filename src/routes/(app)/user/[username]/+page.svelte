@@ -224,7 +224,7 @@
 		{:else if galleryGenerationFullOutputsQuery !== undefined && $windowWidth}
 			<div class="w-full flex-1 mt-1 md:mt-0.5 flex flex-col">
 				<GenerationGridInfinite2
-					cardType="gallery"
+					cardType="other-user-profile"
 					generationsQuery={galleryGenerationFullOutputsQuery}
 					cols={$windowWidth >= xxlBreakpoint
 						? 6

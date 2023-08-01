@@ -50,12 +50,9 @@
 	import SideButton from '$components/generationFullScreen/SideButton.svelte';
 	import { removeFromRecentlyUpdatedOutputIds } from '$ts/stores/user/recentlyUpdatedOutputIds';
 	import SrcsetProvider from '$components/generationImage/SrcsetProvider.svelte';
-	import Avatar from '$components/avatar/Avatar.svelte';
-	import { isGalleryAdmin, isSuperAdmin } from '$ts/helpers/admin/roles';
 	import WithTooltip from '$components/WithTooltip.svelte';
 	import SimilarOutputsSection from '$components/generationFullScreen/SimilarOutputsSection.svelte';
 	import ScrollAreaWithChevron from '$components/ScrollAreaWithChevron.svelte';
-	import ButtonHoverEffect from '$components/buttons/ButtonHoverEffect.svelte';
 	import UsernameButton from '$components/buttons/UsernameButton.svelte';
 
 	export let generation: TGenerationWithSelectedOutput;
@@ -117,7 +114,9 @@
 
 	let modalScrollContainer: HTMLDivElement | undefined;
 
-	$: exploreSimilarUrl = `/gallery?q=${generation.selected_output.id}`;
+	$: exploreSimilarUrl = `${
+		modalType === 'other-user-profile' ? `/user/${generation.user.username}` : '/gallery'
+	}?q=${generation.selected_output.id}`;
 
 	let upscaledTabValue: TUpscaleTabValue = 'upscaled';
 	type TUpscaleTabValue = 'original' | 'upscaled';
@@ -517,10 +516,11 @@
 						bind:buttonObjectsWithState
 						{modalType}
 					/>
-					{#if modalType === 'gallery'}
+					{#if modalType === 'gallery' || modalType === 'other-user-profile'}
 						<Divider class="lg:-mt-3" />
 						<SimilarOutputsSection
-							outputId={generation.selected_output.id}
+							{modalType}
+							{generation}
 							afterClick={() => {
 								sidebarScrollContainer?.scrollTo({
 									left: 0,

@@ -42,9 +42,19 @@ export function logGalleryExploreSimilarClicked(props: IGalleryExploreSimilarCli
 	posthog.capture('Gallery | Explore Similar Clicked', { ...props });
 }
 
+export function logUserProfileExploreSimilarClicked(props: IGalleryExploreSimilarClickedProps) {
+	mixpanel.track('User Profile | Explore Similar Clicked', { ...props });
+	posthog.capture('User Profile | Explore Similar Clicked', { ...props });
+}
+
 export function logGalleryModalSimilarClicked(props: ISimilarClickedProps) {
 	mixpanel.track('Gallery | Modal Similar Clicked', { ...props });
 	posthog.capture('Gallery | Modal Similar Clicked', { ...props });
+}
+
+export function logUserProfileModalSimilarClicked(props: ISimilarClickedProps) {
+	mixpanel.track('User Profile | Modal Similar Clicked', { ...props });
+	posthog.capture('User Profile | Modal Similar Clicked', { ...props });
 }
 
 export function logOutputPageSimilarClicked(props: ISimilarClickedProps) {
