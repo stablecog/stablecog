@@ -5,17 +5,42 @@
 	import ButtonHoverEffect from '$components/buttons/ButtonHoverEffect.svelte';
 	import ErrorLine from '$components/error/ErrorLine.svelte';
 	import IconCancel from '$components/icons/IconCancel.svelte';
+	import LL from '$i18n/i18n-svelte';
 	import { apiUrl } from '$ts/constants/main';
 	import { getUserSummary } from '$ts/helpers/user/user';
 	import { userSummary } from '$ts/stores/user/summary';
 	import { createDialog } from '@melt-ui/svelte';
+	import { z } from 'zod';
+	import { createForm } from 'felte';
+	import { validator } from '@felte/validator-zod';
 
 	export let afterUsernameChanged: (username: string) => Promise<void>;
 	const { trigger, portal, overlay, content, title, close, open, options } = createDialog();
 
 	let usernameInputValue = $userSummary?.username || '';
 	let usernameChangeStatus: 'idle' | 'loading' | 'success' | 'error' = 'idle';
-	let usernameChangeError: string | undefined = undefined;
+
+	$: schema = z.object({
+		username: z
+			.string()
+			.min(3, $LL.ChangeUsername.Error.MinimumCharacters({ count: 3 }))
+			.max(25, $LL.ChangeUsername.Error.MaximumCharacters({ count: 25 }))
+			.refine((value) => {
+				return /^[a-zA-Z0-9-]+$/.test(value);
+			}, $LL.ChangeUsername.Error.InvalidCharacters())
+	});
+
+	$: usernameFormObj = createForm<z.infer<typeof schema>>({
+		onSubmit: async (values) => {
+			await onSubmit(values.username);
+		},
+		onError: () => {
+			return { username: [$LL.ChangeUsername.Error.NotAvailable()] };
+		},
+		extend: [validator({ schema }), validator({ schema, level: 'warning' })]
+	});
+	$: usernameForm = usernameFormObj.form;
+	$: usernameFormErrors = usernameFormObj.errors;
 
 	$: $open, onOpenChanged();
 
@@ -35,10 +60,12 @@
 		});
 	}
 
-	async function onSubmit() {
-		const newUsername = usernameInputValue;
+	async function onSubmit(newUsername: string) {
 		if (!$page.data.session?.access_token) return;
-		if ($userSummary?.username === newUsername) return;
+		if ($userSummary?.username === newUsername) {
+			open.set(false);
+			return;
+		}
 		usernameChangeStatus = 'loading';
 		disableEasyClose();
 		try {
@@ -52,7 +79,7 @@
 			});
 			if (!res.ok) {
 				usernameChangeStatus = 'error';
-				usernameChangeError = "This username isn't available.";
+				throw new Error('Something went wrong with username change');
 			} else {
 				const resJson: { username: string } = await res.json();
 				const { username: usernameFromServer } = resJson;
@@ -64,7 +91,7 @@
 			}
 		} catch (error) {
 			usernameChangeStatus = 'error';
-			usernameChangeError = "This username isn't available.";
+			throw new Error('Something went wrong with username change');
 		} finally {
 			enableEasyClose();
 		}
@@ -81,38 +108,46 @@
 	{#if $open}
 		<div {...$overlay} use:overlay class="fixed inset-0 z-[9999] w-full h-full bg-c-barrier/80" />
 		<div
-			{...$content}
-			use:content
-			class="max-w-[calc(100%-2rem)] max-h-[calc(100%-2rem)] fixed w-80 left-1/2 top-1/2 transform z-[10000] -translate-x-1/2
-      -translate-y-1/2 bg-c-bg-secondary p-5 ring-2 ring-c-bg-tertiary
-      rounded-2xl shadow-generation-modal shadow-c-shadow/[var(--o-shadow-strongest)] overflow-auto"
+			class="w-full h-full fixed inset-0 z-[10000] flex justify-center px-3 pt-8 pb-12 overflow-auto"
 		>
-			<h2 class="text-xl font-bold -mt-1 pl-1 pr-12" {...$title} use:title>Change Username</h2>
-			<form on:submit|preventDefault={onSubmit} class="flex flex-col gap-2 mt-1">
-				<Input
-					noAutocomplete
-					title="Username"
-					bind:value={usernameInputValue}
-					type="text"
-					class="mt-4 w-full"
-				/>
-				<Button withSpinner loading={usernameChangeStatus === 'loading'} class="w-full"
-					>Confirm</Button
-				>
-			</form>
-			{#if usernameChangeError}
-				<ErrorLine text={usernameChangeError} />
-			{/if}
-			<button
-				class="absolute right-0 top-0 p-3 rounded-full overflow-hidden z-0 group"
-				{...$close}
-				use:close
+			<div
+				{...$content}
+				use:content
+				class="w-80 max-w-full my-auto bg-c-bg-secondary p-5 ring-2 ring-c-bg-tertiary relative
+      	rounded-2xl shadow-generation-modal shadow-c-shadow/[var(--o-shadow-strongest)]"
 			>
-				<ButtonHoverEffect color="primary" hoverFrom="bottom" />
-				<IconCancel
-					class="text-c-on-bg/25 w-6 h-6 not-touch:group-hover:text-c-primary transition"
-				/>
-			</button>
+				<h2 class="text-xl font-bold -mt-1 pl-1 pr-12" {...$title} use:title>
+					{$LL.ChangeUsername.ChangeUsernameTitle()}
+				</h2>
+				<div class="w-full flex flex-col">
+					<form use:usernameForm class="flex flex-col gap-2 mt-1">
+						<Input
+							noAutocomplete
+							title="Username"
+							name="username"
+							bind:value={usernameInputValue}
+							type="text"
+							class="mt-4 w-full"
+						/>
+						<Button withSpinner loading={usernameChangeStatus === 'loading'} class="w-full">
+							{$LL.Shared.ConfirmButton()}
+						</Button>
+					</form>
+					{#if $usernameFormErrors.username}
+						<ErrorLine size="sm" text={$usernameFormErrors.username[0]} />
+					{/if}
+				</div>
+				<button
+					class="absolute right-0 top-0 p-3 rounded-full overflow-hidden z-0 group"
+					{...$close}
+					use:close
+				>
+					<ButtonHoverEffect color="primary" hoverFrom="bottom" />
+					<IconCancel
+						class="text-c-on-bg/25 w-6 h-6 not-touch:group-hover:text-c-primary transition"
+					/>
+				</button>
+			</div>
 		</div>
 	{/if}
 </div>

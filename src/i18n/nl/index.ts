@@ -521,6 +521,16 @@ const nl: Translation = {
 		EnterCodeManuallyButton: 'Enter code manually',
 		SignOutButton: 'Uitloggen'
 	},
+	ChangeUsername: {
+		ChangeUsernameTitle: 'Change Username',
+		ChangeUsernameButton: 'Change Username',
+		Error: {
+			MinimumCharacters: 'Must be at least {count} characters.',
+			MaximumCharacters: 'Must be at most {count} characters.',
+			InvalidCharacters: 'Can only contain letters, numbers, and dashes.',
+			NotAvailable: "This username isn't available."
+		}
+	},
 	Pro: {
 		PageTitle: 'Word een Pro',
 		PageParagraph:

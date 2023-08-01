@@ -514,6 +514,16 @@ const ko: Translation = {
 		EnterCodeManuallyButton: 'Enter code manually',
 		SignOutButton: '로그아웃하기'
 	},
+	ChangeUsername: {
+		ChangeUsernameTitle: 'Change Username',
+		ChangeUsernameButton: 'Change Username',
+		Error: {
+			MinimumCharacters: 'Must be at least {count} characters.',
+			MaximumCharacters: 'Must be at most {count} characters.',
+			InvalidCharacters: 'Can only contain letters, numbers, and dashes.',
+			NotAvailable: "This username isn't available."
+		}
+	},
 	Pro: {
 		PageTitle: '더 많은 기능을 사용해보세요!',
 		PageParagraph:

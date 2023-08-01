@@ -1579,6 +1579,36 @@ type RootTranslation = {
 		 */
 		SignOutButton: string
 	}
+	ChangeUsername: {
+		/**
+		 * C​h​a​n​g​e​ ​U​s​e​r​n​a​m​e
+		 */
+		ChangeUsernameTitle: string
+		/**
+		 * C​h​a​n​g​e​ ​U​s​e​r​n​a​m​e
+		 */
+		ChangeUsernameButton: string
+		Error: {
+			/**
+			 * M​u​s​t​ ​b​e​ ​a​t​ ​l​e​a​s​t​ ​{​c​o​u​n​t​}​ ​c​h​a​r​a​c​t​e​r​s​.
+			 * @param {unknown} count
+			 */
+			MinimumCharacters: RequiredParams<'count'>
+			/**
+			 * M​u​s​t​ ​b​e​ ​a​t​ ​m​o​s​t​ ​{​c​o​u​n​t​}​ ​c​h​a​r​a​c​t​e​r​s​.
+			 * @param {unknown} count
+			 */
+			MaximumCharacters: RequiredParams<'count'>
+			/**
+			 * C​a​n​ ​o​n​l​y​ ​c​o​n​t​a​i​n​ ​l​e​t​t​e​r​s​,​ ​n​u​m​b​e​r​s​,​ ​a​n​d​ ​d​a​s​h​e​s​.
+			 */
+			InvalidCharacters: string
+			/**
+			 * T​h​i​s​ ​u​s​e​r​n​a​m​e​ ​i​s​n​'​t​ ​a​v​a​i​l​a​b​l​e​.
+			 */
+			NotAvailable: string
+		}
+	}
 	Pro: {
 		/**
 		 * B​e​c​o​m​e​ ​a​ ​P​r​o
@@ -4633,6 +4663,34 @@ export type TranslationFunctions = {
 		 * Sign Out
 		 */
 		SignOutButton: () => LocalizedString
+	}
+	ChangeUsername: {
+		/**
+		 * Change Username
+		 */
+		ChangeUsernameTitle: () => LocalizedString
+		/**
+		 * Change Username
+		 */
+		ChangeUsernameButton: () => LocalizedString
+		Error: {
+			/**
+			 * Must be at least {count} characters.
+			 */
+			MinimumCharacters: (arg: { count: unknown }) => LocalizedString
+			/**
+			 * Must be at most {count} characters.
+			 */
+			MaximumCharacters: (arg: { count: unknown }) => LocalizedString
+			/**
+			 * Can only contain letters, numbers, and dashes.
+			 */
+			InvalidCharacters: () => LocalizedString
+			/**
+			 * This username isn't available.
+			 */
+			NotAvailable: () => LocalizedString
+		}
 	}
 	Pro: {
 		/**

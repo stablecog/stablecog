@@ -514,6 +514,16 @@ const en: BaseTranslation = {
 		EnterCodeManuallyButton: 'Enter code manually',
 		SignOutButton: 'Sign Out'
 	},
+	ChangeUsername: {
+		ChangeUsernameTitle: 'Change Username',
+		ChangeUsernameButton: 'Change Username',
+		Error: {
+			MinimumCharacters: 'Must be at least {count} characters.',
+			MaximumCharacters: 'Must be at most {count} characters.',
+			InvalidCharacters: 'Can only contain letters, numbers, and dashes.',
+			NotAvailable: "This username isn't available."
+		}
+	},
 	Pro: {
 		PageTitle: 'Become a Pro',
 		PageParagraph:
