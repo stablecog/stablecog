@@ -68,11 +68,52 @@
 			<slot />
 		{/if}
 	</a>
-{:else}
+{:else if trigger}
 	<button
 		type="button"
 		use:trigger
 		{...$trigger}
+		on:click={onClick}
+		aria-label={name}
+		disabled={disabled || loading}
+		class="touch-manipulation max-w-full relative overflow-hidden z-0 {noPadding
+			? ''
+			: 'px-4 py-3.5'} font-semibold transition pointer-events-auto
+flex items-center gap-1.5 group {size === 'sm'
+			? 'rounded-md'
+			: size === 'md'
+			? 'rounded-lg'
+			: 'rounded-xl'} {size === 'sm' ? 'text-sm' : 'text-base'} {classes}"
+	>
+		{#if !loading}
+			<ButtonHoverEffect paddingClass={paddingClassForHoverEffect} {noPadding} {hoverFrom} {size} />
+		{/if}
+		{#if withSpinner}
+			<div
+				class="transform relative transition {loading
+					? 'scale-0 opacity-0'
+					: 'scale-100 opacity-100'}"
+			>
+				<slot />
+			</div>
+			<div
+				class="w-full h-full absolute left-0 top-0 pointer-events-none flex justify-center items-center"
+			>
+				<div
+					class="{size === 'sm' ? 'w-6 h-6' : 'w-7 h-7'} transition transform {loading
+						? 'scale-100'
+						: 'scale-0'}"
+				>
+					<IconAnimatedSpinner class="w-full h-full" {loading} />
+				</div>
+			</div>
+		{:else}
+			<slot />
+		{/if}
+	</button>
+{:else}
+	<button
+		type="button"
 		on:click={onClick}
 		aria-label={name}
 		disabled={disabled || loading}

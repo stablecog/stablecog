@@ -153,6 +153,13 @@
 	let isPromptBarFocused = false;
 	$: shouldPromptBarExpand = isPromptBarFocused && !isSettingsSheetOpen ? true : false;
 
+	function onKeyPress(e: any) {
+		if (e.key === 'Enter' && e.shiftKey) {
+			e.preventDefault();
+			onSubmit();
+		}
+	}
+
 	let mounted = false;
 	onMount(() => {
 		if ($voiceoverPromptLocal) {
@@ -177,12 +184,7 @@
 					minRows: 3
 				}}
 				bind:this={promptInputElement}
-				on:keypress={(e) => {
-					if (e.key === 'Enter' && e.shiftKey) {
-						e.preventDefault();
-						onSubmit();
-					}
-				}}
+				on:keypress={onKeyPress}
 				bind:value={$voiceoverPrompt}
 				placeholder={$LL.Voiceover.PromptBar.PromptInput.Placeholder()}
 				maxlength={maxVoiceoverCharacterCount}
@@ -265,12 +267,7 @@
 			bind:value={$voiceoverPrompt}
 			bind:this={promptInputElementMd}
 			placeholder={$LL.Voiceover.PromptBar.PromptInput.Placeholder()}
-			on:keypress={(e) => {
-				if (e.key === 'Enter' && e.shiftKey) {
-					e.preventDefault();
-					onSubmit();
-				}
-			}}
+			on:keypress={onKeyPress}
 			class="hidden md:block w-full h-full bg-c-bg-secondary rounded-t-lg md:rounded-t-2xl resize-none pl-5 pr-13 py-4
 			relative text-base md:text-lg pb-6 placeholder:text-c-on-bg/40"
 			rows="7"
@@ -291,6 +288,8 @@
 	<div
 		on:click={onInfoContainerClicked}
 		on:keydown={() => null}
+		role="button"
+		tabindex="0"
 		class="w-full rounded-tr-none rounded-b-2xl flex flex-row
 		justify-end items-center px-3 pt-2 pb-4 bg-c-bg-secondary cursor-text"
 	>
