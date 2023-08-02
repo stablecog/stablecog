@@ -5,7 +5,7 @@
 	import ButtonHoverEffect from '$components/buttons/ButtonHoverEffect.svelte';
 	import ErrorLine from '$components/error/ErrorLine.svelte';
 	import IconCancel from '$components/icons/IconCancel.svelte';
-	import LL from '$i18n/i18n-svelte';
+	import LL, { locale } from '$i18n/i18n-svelte';
 	import { apiUrl } from '$ts/constants/main';
 	import { getUserSummary } from '$ts/helpers/user/user';
 	import { userSummary } from '$ts/stores/user/summary';
@@ -13,6 +13,8 @@
 	import { z } from 'zod';
 	import { createForm } from 'felte';
 	import { validator } from '@felte/validator-zod';
+	import { logUsernameChanged } from '$ts/helpers/loggers';
+	import { appVersion } from '$ts/stores/appVersion';
 
 	export let afterUsernameChanged: ((username: string) => Promise<void>) | undefined = undefined;
 	export let closeOnSuccess = false;
@@ -77,6 +79,7 @@
 			open.set(false);
 			return;
 		}
+		const oldUsername = $userSummary?.username || '';
 		const res = await fetch(`${apiUrl.origin}/v1/user/username/change`, {
 			method: 'POST',
 			headers: {
@@ -90,6 +93,14 @@
 		} else {
 			const resJson: { username: string } = await res.json();
 			const { username: usernameFromServer } = resJson;
+			logUsernameChanged({
+				'SC - App Version': $appVersion,
+				'SC - Locale': $locale,
+				'SC - New Username': usernameFromServer,
+				'SC - Old Username': oldUsername,
+				'SC - Stripe Product Id': $userSummary?.product_id,
+				'SC - User Id': $page.data.session.user.id
+			});
 			const us = await getUserSummary($page.data.session.access_token);
 			if (us) {
 				userSummary.set(us);

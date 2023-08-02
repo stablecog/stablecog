@@ -117,6 +117,11 @@ export function logGenerationOutputMadePublic(props: IGenerationOutputActionProp
 	posthog.capture('Generation Output | Made Public', { ...props });
 }
 
+export function logUsernameChanged(props: IUsernameChangedProps) {
+	mixpanel.track('Username Changed', { ...props });
+	posthog.capture('Username Changed', { ...props });
+}
+
 export function logGenerationOutputMadePrivate(props: IGenerationOutputActionProps) {
 	mixpanel.track('Generation Output | Made Private', { ...props });
 	posthog.capture('Generation Output | Made Private', { ...props });
@@ -334,6 +339,15 @@ interface IGalleryExploreSimilarClickedProps {
 	'SC - User Id': string | undefined;
 	'SC - Stripe Product Id': string | undefined;
 	'SC - App Version': string;
+}
+
+interface IUsernameChangedProps {
+	'SC - User Id': string | undefined;
+	'SC - Stripe Product Id': string | undefined;
+	'SC - App Version': string;
+	'SC - Old Username': string;
+	'SC - New Username': string;
+	'SC - Locale': string;
 }
 
 interface ISimilarClickedProps {
