@@ -97,8 +97,6 @@
 
 	let deleteStatus: 'idle' | 'should-confirm' | 'loading' | 'success' = 'idle';
 
-	let submitToGalleryStatus: 'idle' | 'loading' | 'success' = 'idle';
-
 	$: logProps = {
 		'SC - Generation Id': generation.id,
 		'SC - Output Id': generation.selected_output.id,
@@ -147,46 +145,6 @@
 		}
 	}
 	const resetDeleteStatus = () => (deleteStatus = 'idle');
-
-	async function submitToGallery() {
-		submitToGalleryStatus = 'loading';
-		try {
-			const res = await fetch(`${apiUrl.origin}/v1/user/gallery`, {
-				method: 'PUT',
-				headers: {
-					'Content-Type': 'application/json',
-					Authorization: `Bearer ${$page.data.session?.access_token}`
-				},
-				body: JSON.stringify({ generation_output_ids: [generation.selected_output.id] })
-			});
-			if (!res.ok) throw new Error('Response not ok');
-			console.log('Submit to gallery response', res);
-			logGenerationOutputSubmittedToGallery(logProps);
-			if (modalType === 'history') {
-				queryClient.setQueryData($userGenerationFullOutputsQueryKey, (data: any) => ({
-					...data,
-					pages: data.pages.map((page: TUserGenerationFullOutputsPage) => {
-						return {
-							...page,
-							outputs: page.outputs.map((output) =>
-								output.id === generation.selected_output.id
-									? { ...output, gallery_status: 'submitted' }
-									: output
-							)
-						};
-					})
-				}));
-			} else if (modalType === 'generate') {
-				setGenerationOutputToSubmitted(generation.selected_output.id);
-			}
-			submitToGalleryStatus = 'success';
-		} catch (error) {
-			console.log('Error submitting generation', error);
-			resetSubmitToGalleryStatus();
-		}
-	}
-
-	const resetSubmitToGalleryStatus = () => (submitToGalleryStatus = 'idle');
 </script>
 
 <div class="w-full flex flex-wrap gap-3 pb-1 {classes}">
@@ -261,13 +219,16 @@
 			</Morpher>
 		</SubtleButton>
 	</div>
-	{#if modalType === 'gallery' || modalType === 'user-profile'}
+	{#if modalType === 'gallery' || modalType === 'user-profile' || modalType === 'history' || modalType === 'stage' || modalType === 'generate'}
 		<div
 			use:copy={linkUrl}
 			on:svelte-copy={() => {
 				setButtonObjectWithState('link', 'success');
 				fetch(
-					modalType === 'user-profile'
+					modalType === 'user-profile' ||
+						modalType === 'history' ||
+						modalType === 'stage' ||
+						modalType === 'generate'
 						? getUserProfilePreviewImageUrlFromOutputId(
 								generation.selected_output.id,
 								generation.user.username

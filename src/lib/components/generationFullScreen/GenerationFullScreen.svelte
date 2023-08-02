@@ -152,7 +152,10 @@
 		const { seed, selected_output, ...rest } = generation;
 		generateSimilarUrl = getGenerationUrlFromParams(rest);
 		linkUrl =
-			modalType === 'user-profile'
+			modalType === 'user-profile' ||
+			modalType === 'history' ||
+			modalType === 'generate' ||
+			modalType === 'stage'
 				? `${$page.url.origin}/user/${generation.user.username}/o/${generation.selected_output.id}`
 				: `${$page.url.origin}/gallery/o/${generation.selected_output.id}`;
 		if (browser && window && !initialGenerationChange) {

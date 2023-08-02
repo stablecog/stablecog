@@ -42,7 +42,9 @@ export const load: PageLoad = async ({ params, parent }) => {
 		image_url: hit.image_url,
 		upscaled_image_url: hit.upscaled_image_url,
 		created_at: hit.created_at,
-		updated_at: hit.updated_at
+		updated_at: hit.updated_at,
+		was_auto_submitted: hit.was_auto_submitted,
+		is_public: hit.is_public
 	};
 	generationFullOutput = {
 		generation: {
