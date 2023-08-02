@@ -25,6 +25,7 @@ export const generationModels: {
 	[key: string]: {
 		name: string;
 		supportedSchedulerIds: TAvailableSchedulerId[];
+		active?: boolean;
 	};
 } = {
 	'b6c1372f-31a7-457c-907c-d292a6ffef97': {
@@ -73,15 +74,16 @@ export const generationModels: {
 	},
 	'48a7031d-43b6-4a23-9f8c-8020eb6862e4': {
 		name: 'Ghibli Diffusion',
-		supportedSchedulerIds: sdSharedSchedulerIds
+		supportedSchedulerIds: sdSharedSchedulerIds,
+		active: false
 	}
 } as const;
 
 export const generationModelIdDefault: TAvailableGenerationModelId =
 	'9fa49c00-109d-430f-9ddd-449f02e2c71a';
 
-export const availableGenerationModelIds = Object.keys(
-	generationModels
+export const availableGenerationModelIds = Object.keys(generationModels).filter(
+	(k) => generationModels[k].active !== false
 ) as TAvailableGenerationModelId[];
 
 export const modelIdToDisplayName = derived<
