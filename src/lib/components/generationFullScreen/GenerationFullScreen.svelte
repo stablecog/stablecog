@@ -433,9 +433,6 @@
 			<ScrollAreaWithChevron bind:scrollContainer={sidebarScrollContainer}>
 				<div class="w-full flex flex-col items-start justify-start">
 					<div class="w-full flex flex-col gap-4 md:gap-5 px-5 py-4 md:px-7 md:py-5">
-						<div class="w-full flex justify-start items-center mt-1">
-							<UsernameButton username={generation.user.username} email={generation.user.email} />
-						</div>
 						{#if (modalType === 'generate' || modalType === 'history') && !generation.selected_output.image_url.includes('placeholder')}
 							<div class="w-full pt-1.5">
 								{#if !generation.selected_output.upscaled_image_url || upscaleBeingProcessed}
@@ -473,6 +470,9 @@
 								{/if}
 							</div>
 						{/if}
+						<div class="w-full flex justify-start items-center mt-1">
+							<UsernameButton username={generation.user.username} email={generation.user.email} />
+						</div>
 						<!-- Prompt and Negative Prompt -->
 						<div class="w-full break-words flex flex-col items-start gap-3">
 							<p class="w-full leading-normal">{generation.prompt.text}</p>
