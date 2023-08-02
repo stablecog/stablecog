@@ -111,7 +111,7 @@
 					relative shadow-lg shadow-c-shadow/[var(--o-shadow-strong)] flex-shrink-0"
 				/>
 				<WithChangeUsernameModal let:trigger closeOnSuccess>
-					<NoBgButton class="mt-0 -ml-2" noPadding {trigger}>
+					<NoBgButton class="mt-0 -ml-2" noPadding {trigger} hoverFrom="left">
 						<div class="flex-shrink min-w-0 flex items-center gap-2 px-2 py-2">
 							<p
 								class="not-touch:group-hover:text-c-primary text-c-on-bg text-xl transition
@@ -132,7 +132,12 @@
 			<div class="w-full h-2px bg-c-bg-secondary" />
 			<div class="w-full flex items-center justify-between px-5 md:px-6 py-1 gap-4">
 				<p class="font-medium text-c-on-bg/60">{$LL.Shared.EmailInput.Placeholder()}</p>
-				<NoBgButton noPadding class="mt-0 -mr-4 md:-mr-5" href="/account/change-email">
+				<NoBgButton
+					noPadding
+					class="mt-0 -mr-4 md:-mr-5"
+					href="/account/change-email"
+					hoverFrom="left"
+				>
 					<div class="flex-shrink min-w-0 flex items-center gap-2 px-4 py-4">
 						<p
 							class="not-touch:group-hover:text-c-primary text-c-on-bg transition

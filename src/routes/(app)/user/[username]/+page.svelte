@@ -114,7 +114,7 @@
 						afterUsernameChanged={(username) => goto(`/user/${username}`)}
 						let:trigger
 					>
-						<NoBgButton {trigger} class="mt-0">
+						<NoBgButton {trigger} class="mt-0" hoverFrom="left">
 							<div class="flex items-center justify-center gap-2.5 -mx-0.5 -my-0.5">
 								<p
 									class="max-w-full text-c-on-bg font-bold text-2xl md:text-3xl flex-shrink min-w-0 transition
