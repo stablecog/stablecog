@@ -14,6 +14,7 @@
 	export let hovered = false;
 	export let noPadding = false;
 	export let noRounding = false;
+	export let fullRounding = false;
 	export let paddingClass: string | undefined = undefined;
 	export let hasShadow = false;
 	export let groupClass =
@@ -33,6 +34,8 @@
 				: 'shadow-c-shadow/0'
 			: ''} {noRounding
 			? ''
+			: fullRounding
+			? 'rounded-full'
 			: size === 'xs'
 			? 'rounded'
 			: size === 'sm'

@@ -24,6 +24,14 @@
 	import { onMount } from 'svelte';
 	import { wantsEmail } from '$ts/stores/user/wantsEmail.js';
 	import { createPopover } from '@melt-ui/svelte';
+	import { fly } from 'svelte/transition';
+	import ButtonHoverEffect from '$components/buttons/ButtonHoverEffect.svelte';
+	import IconEdit from '$components/icons/IconEdit.svelte';
+	import IconPen from '$components/icons/IconPen.svelte';
+	import WithChangeUsernameModal from '$components/WithChangeUsernameModal.svelte';
+	import UsernameButton from '$components/buttons/UsernameButton.svelte';
+	import UsernameChangeButton from '$routes/(app)/account/UsernameChangeButton.svelte';
+	import NoBgButton from '$components/buttons/NoBgButton.svelte';
 
 	$: if (!$page.data.session?.user.id) {
 		goto(`/sign-in?redirect_to=${encodeURIComponent($page.url.pathname)}`);
@@ -31,8 +39,8 @@
 
 	const { trigger, content, open } = createPopover({
 		positioning: {
-			placement: 'bottom',
-			gutter: 4
+			placement: 'bottom-end',
+			gutter: 2
 		}
 	});
 
@@ -53,14 +61,6 @@
 			console.log(error);
 		}
 	}
-
-	let isExtraAccountSettingsOpen = false;
-	const toggleExtraAccountSettings = () => {
-		isExtraAccountSettingsOpen = !isExtraAccountSettingsOpen;
-	};
-	const closeExtraAccountSettings = () => {
-		isExtraAccountSettingsOpen = false;
-	};
 
 	let mounted = false;
 	let wantsEmailChecked = $userSummary?.wants_email === true ? true : false;
@@ -104,45 +104,47 @@
 			class="w-full md:max-w-4xl flex flex-col rounded-2xl bg-c-bg relative z-0 overflow-hidden
 				shadow-xl shadow-c-shadow/[var(--o-shadow-strong)] ring-2 ring-c-bg-secondary"
 		>
-			<div class="w-full flex items-center justify-start">
-				<div class="flex flex-shrink overflow-hidden items-center gap-3 px-5 py-4 md:px-6">
-					<Avatar
-						text={$userSummary?.username || ''}
-						class="w-8 h-8 ring-2 ring-c-on-bg/25 overflow-hidden rounded-full transition transform
-							relative shadow-lg shadow-c-shadow/[var(--o-shadow-strong)] flex-shrink-0"
-					/>
-					<p class="text-lg font-semibold flex-shrink min-w-0 overflow-hidden overflow-ellipsis">
-						<span class="text-c-on-bg/50 font-normal">@</span>{$userSummary?.username}
-					</p>
-				</div>
-				<!-- <div
-					use:clickoutside={{ callback: closeExtraAccountSettings }}
-					class="flex items-end justify-start -m-2 px-5 py-3 md:p-6 -ml-8 md:-ml-10"
-				>
-					<div class="flex flex-col items-end justify-start">
-						<IconButton name="Extra Settings" onClick={toggleExtraAccountSettings}>
-							<IconThreeDots
-								class="w-8 h-8 transform transition text-c-on-bg/60 
-								not-touch:group-hover/iconbutton:text-c-primary {isExtraAccountSettingsOpen
-									? 'rotate-90 text-c-primary'
-									: 'rotate-0'}"
+			<div class="w-full flex items-center gap-3 px-5 py-3 md:px-6">
+				<Avatar
+					text={$userSummary?.username || ''}
+					class="w-8 h-8 ring-2 ring-c-on-bg/25 overflow-hidden rounded-full transition transform
+					relative shadow-lg shadow-c-shadow/[var(--o-shadow-strong)] flex-shrink-0"
+				/>
+				<WithChangeUsernameModal let:trigger closeOnSuccess>
+					<NoBgButton class="mt-0 -ml-2" noPadding {trigger}>
+						<div class="flex-shrink min-w-0 flex items-center gap-2 px-2 py-2">
+							<p
+								class="not-touch:group-hover:text-c-primary text-c-on-bg text-xl transition
+							font-semibold flex-shrink min-w-0 overflow-hidden overflow-ellipsis"
+							>
+								<span
+									class="text-c-on-bg/50 transition not-touch:group-hover:text-c-primary/50 font-normal"
+									>@</span
+								>{$userSummary?.username}
+							</p>
+							<IconPen
+								class="w-3.5 h-3.5 text-c-on-bg/50 transition not-touch:group-hover:text-c-primary/50 flex-shrink-0"
 							/>
-						</IconButton>
-						<div class="relative">
-							{#if isExtraAccountSettingsOpen}
-								<DropdownWrapper class="w-52 mt-1.5">
-									<div class="flex flex-col items-end">
-										<DropdownItem href="/account/change-email">
-											<p class="text-c-on-bg transition not-touch:group-hover:text-c-primary">
-												{$LL.Account.ChangeEmail.ChangeEmailButton()}
-											</p>
-										</DropdownItem>
-									</div>
-								</DropdownWrapper>
-							{/if}
 						</div>
+					</NoBgButton>
+				</WithChangeUsernameModal>
+			</div>
+			<div class="w-full h-2px bg-c-bg-secondary" />
+			<div class="w-full flex items-center justify-between px-5 md:px-6 py-1 gap-4">
+				<p class="font-medium text-c-on-bg/60">{$LL.Shared.EmailInput.Placeholder()}</p>
+				<NoBgButton noPadding class="mt-0 -mr-4 md:-mr-5" href="/account/change-email">
+					<div class="flex-shrink min-w-0 flex items-center gap-2 px-4 py-4">
+						<p
+							class="not-touch:group-hover:text-c-primary text-c-on-bg transition
+							font-semibold flex-shrink min-w-0 overflow-hidden overflow-ellipsis text-right"
+						>
+							{$page.data.session.user.email}
+						</p>
+						<IconPen
+							class="w-3.5 h-3.5 text-c-on-bg/50 transition not-touch:group-hover:text-c-primary/50 flex-shrink-0"
+						/>
 					</div>
-				</div> -->
+				</NoBgButton>
 			</div>
 			<div class="w-full h-2px bg-c-bg-secondary" />
 			<div
@@ -154,7 +156,7 @@
 					</p>
 					<ProductIdBadge
 						href="/pricing#plans"
-						class="mt-1"
+						class="mt-1.5"
 						productId={$userSummary?.product_id}
 						size="lg"
 					/>

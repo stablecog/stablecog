@@ -79,7 +79,7 @@
 		class="touch-manipulation max-w-full relative overflow-hidden z-0 {noPadding
 			? ''
 			: 'px-4 py-3.5'} font-semibold transition pointer-events-auto
-flex items-center gap-1.5 group {size === 'sm'
+			flex items-center gap-1.5 group {size === 'sm'
 			? 'rounded-md'
 			: size === 'md'
 			? 'rounded-lg'

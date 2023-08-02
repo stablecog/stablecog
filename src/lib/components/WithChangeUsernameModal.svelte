@@ -14,7 +14,8 @@
 	import { createForm } from 'felte';
 	import { validator } from '@felte/validator-zod';
 
-	export let afterUsernameChanged: (username: string) => Promise<void>;
+	export let afterUsernameChanged: ((username: string) => Promise<void>) | undefined = undefined;
+	export let closeOnSuccess = false;
 	const { trigger, portal, overlay, content, title, close, open, options } = createDialog();
 
 	let usernameInputValue = $userSummary?.username || '';
@@ -90,8 +91,9 @@
 			const { username: usernameFromServer } = resJson;
 			const us = await getUserSummary($page.data.session.access_token);
 			if (us) {
-				await afterUsernameChanged(usernameFromServer);
 				userSummary.set(us);
+				if (afterUsernameChanged) await afterUsernameChanged(usernameFromServer);
+				if (closeOnSuccess) open.set(false);
 			}
 		}
 	}
@@ -101,7 +103,7 @@
 	}
 </script>
 
-<slot {trigger} />
+<slot {trigger} {close} />
 
 <div use:portal>
 	{#if $open}
