@@ -13,24 +13,14 @@
 	import { logSignOut } from '$ts/helpers/loggers';
 	import { advancedModeApp } from '$ts/stores/advancedMode';
 	import { userSummary } from '$ts/stores/user/summary';
-	import IconButton from '$components/buttons/IconButton.svelte';
-	import IconThreeDots from '$components/icons/IconThreeDots.svelte';
-	import DropdownWrapper from '$components/DropdownWrapper.svelte';
-	import { clickoutside } from '$ts/actions/clickoutside';
 	import IconAnimatedSpinner from '$components/icons/IconAnimatedSpinner.svelte';
 	import { appVersion } from '$ts/stores/appVersion';
 	import { previewImageVersion } from '$ts/constants/previewImageVersion';
 	import WantEmailCard from '$components/WantsEmailCard.svelte';
 	import { onMount } from 'svelte';
 	import { wantsEmail } from '$ts/stores/user/wantsEmail.js';
-	import { createPopover } from '@melt-ui/svelte';
-	import { fly } from 'svelte/transition';
-	import ButtonHoverEffect from '$components/buttons/ButtonHoverEffect.svelte';
-	import IconEdit from '$components/icons/IconEdit.svelte';
 	import IconPen from '$components/icons/IconPen.svelte';
 	import WithChangeUsernameModal from '$components/WithChangeUsernameModal.svelte';
-	import UsernameButton from '$components/buttons/UsernameButton.svelte';
-	import UsernameChangeButton from '$routes/(app)/account/UsernameChangeButton.svelte';
 	import NoBgButton from '$components/buttons/NoBgButton.svelte';
 	import SubtleButton from '$components/buttons/SubtleButton.svelte';
 	import IconExternalLink from '$components/icons/IconExternalLink.svelte';
@@ -38,13 +28,6 @@
 	$: if (!$page.data.session?.user.id) {
 		goto(`/sign-in?redirect_to=${encodeURIComponent($page.url.pathname)}`);
 	}
-
-	const { trigger, content, open } = createPopover({
-		positioning: {
-			placement: 'bottom-end',
-			gutter: 2
-		}
-	});
 
 	async function signOut() {
 		if (!$page.data.supabase) return;
