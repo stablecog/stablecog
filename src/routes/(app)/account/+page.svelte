@@ -114,7 +114,7 @@
 						relative shadow-lg shadow-c-shadow/[var(--o-shadow-strong)] flex-shrink-0"
 					/>
 					<WithChangeUsernameModal let:trigger closeOnSuccess>
-						<NoBgButton class="mt-0 -ml-2" noPadding {trigger} hoverFrom="left">
+						<NoBgButton class="mt-0" noPadding {trigger} hoverFrom="left">
 							<div class="flex-shrink min-w-0 flex items-center gap-2 px-2 py-2">
 								<p
 									class="not-touch:group-hover:text-c-primary text-c-on-bg text-xl transition
