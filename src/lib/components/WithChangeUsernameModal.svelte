@@ -31,6 +31,7 @@
 	});
 
 	$: usernameFormObj = createForm<z.infer<typeof schema>>({
+		initialValues: { username: $userSummary?.username },
 		onSubmit: async (values) => {
 			await onSubmit(values.username);
 		},
