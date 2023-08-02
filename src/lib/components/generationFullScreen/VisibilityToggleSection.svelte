@@ -9,6 +9,7 @@
 	import LL, { locale } from '$i18n/i18n-svelte';
 	import { getSomeUserProfileInfiniteQueryKey } from '$routes/(app)/user/[username]/constants';
 	import { apiUrl } from '$ts/constants/main';
+	import { isGalleryAdmin, isSuperAdmin } from '$ts/helpers/admin/roles';
 	import {
 		logGenerationOutputMadePrivate,
 		logGenerationOutputMadePublic
@@ -34,7 +35,10 @@
 
 	$: was_initially_public = generation.selected_output.is_public ? true : false;
 	$: canToggleVisibility =
-		generation.selected_output.was_auto_submitted === false || $userSummary?.product_id;
+		generation.selected_output.was_auto_submitted === false ||
+		$userSummary?.product_id ||
+		isSuperAdmin($userSummary?.roles) ||
+		isGalleryAdmin($userSummary?.roles);
 	$: checkbox = createCheckbox({
 		checked: was_initially_public,
 		disabled: !canToggleVisibility
