@@ -1,30 +1,49 @@
 <script lang="ts">
 	import { browser } from '$app/environment';
 	import { page } from '$app/stores';
+	import type { TGenerationFullScreenModalType } from '$components/generationFullScreen/types';
 	import SimpleGrid from '$components/grids/SimpleGrid.svelte';
 	import LL from '$i18n/i18n-svelte';
 	import { getImgProxySrc, getImgProxySrcSet } from '$ts/helpers/imgproxy';
-	import { logGalleryModalSimilarClicked } from '$ts/helpers/loggers';
-	import { getGalleryGenerationFullOutputs } from '$ts/queries/galleryGenerations';
+	import {
+		logGalleryModalSimilarClicked,
+		logUserProfileModalSimilarClicked
+	} from '$ts/helpers/loggers';
+	import { getGalleryGenerationFullOutputs } from '$ts/queries/galleryLike/galleryGenerations';
+	import { getSomeUsersGenerationFullOutputs } from '$ts/queries/galleryLike/someUsersOutputs';
 	import { appVersion } from '$ts/stores/appVersion';
-	import { activeGeneration, type TGenerationFullOutput } from '$ts/stores/user/generation';
+	import {
+		activeGeneration,
+		type TGenerationFullOutput,
+		type TGenerationWithSelectedOutput
+	} from '$ts/stores/user/generation';
 	import { userSummary } from '$ts/stores/user/summary';
 	import { createQuery } from '@tanstack/svelte-query';
 
-	export let outputId: string;
+	export let generation: TGenerationWithSelectedOutput;
+	export let modalType: TGenerationFullScreenModalType;
 	export let afterClick: () => void;
 
+	$: outputId = generation.selected_output.id;
 	let similarOutputs: TGenerationFullOutput[] | undefined;
 	const simpleGridCols = 3;
 	const similarOutputsCount = 12;
 
 	$: similarOutputsQuery = browser
-		? createQuery(['gallery_similar_outputs_short', outputId], () => {
-				return getGalleryGenerationFullOutputs({
-					search: outputId,
-					per_page: similarOutputsCount + 1
-				});
-		  })
+		? modalType === 'user-profile'
+			? createQuery(['other_user_similar_outputs_short', outputId], () => {
+					return getSomeUsersGenerationFullOutputs({
+						search: outputId,
+						per_page: similarOutputsCount + 1,
+						username: generation.user.username
+					});
+			  })
+			: createQuery(['gallery_similar_outputs_short', outputId], () => {
+					return getGalleryGenerationFullOutputs({
+						search: outputId,
+						per_page: similarOutputsCount + 1
+					});
+			  })
 		: undefined;
 
 	$: similarOutputs = $similarOutputsQuery?.data?.outputs
@@ -54,15 +73,22 @@
 			<SimpleGrid cols={simpleGridCols} items={similarOutputs} let:item={similarOutput}>
 				<a
 					data-sveltekit-preload-data="hover"
-					href={`/gallery/o/${similarOutput.id}`}
+					href={`${
+						modalType === 'user-profile' ? `/user/${generation.user.username}` : '/gallery'
+					}/o/${similarOutput.id}`}
 					on:click|preventDefault={() => {
-						logGalleryModalSimilarClicked({
+						const logParams = {
 							'SC - App Version': $appVersion,
 							'SC - Similar to Output Id': outputId,
 							'SC - Clicked Output Id': similarOutput.id,
 							'SC - Stripe Product Id': $userSummary?.product_id,
 							'SC - User Id': $page.data.session?.user.id
-						});
+						};
+						if (modalType === 'user-profile') {
+							logUserProfileModalSimilarClicked(logParams);
+						} else {
+							logGalleryModalSimilarClicked(logParams);
+						}
 						afterClick();
 						activeGeneration.set({
 							...similarOutput.generation,

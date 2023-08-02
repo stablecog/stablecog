@@ -197,6 +197,7 @@ const bg: Translation = {
 		GenerateButton: 'Създай',
 		UpscaleButton: 'Уголеми',
 		SimilarTitle: 'Similar',
+		ShowOnProfileButton: 'Show on Profile',
 		SubmitToGalleryButton: 'Качи в галерията',
 		SubmittedTitle: 'Качено',
 		UpscaleTabBar: {
@@ -251,6 +252,9 @@ const bg: Translation = {
 		DeleteButton: 'Изтрий',
 		LoadingTitle: 'Зареждане',
 		ContinueButton: 'Продължи',
+		ProfileButton: 'Profile',
+		VisitProfileButton: 'Visit Profile',
+		YourProfileButton: 'Your Profile',
 		LoadingParagraph: 'Зареждане...',
 		InsufficientCreditsTitle: 'Липса на кредит ({remainingCredits}/{neededCredits})',
 		AllTitle: 'Всички',
@@ -310,6 +314,11 @@ const bg: Translation = {
 		},
 		PasswordInput: {
 			Placeholder: 'Парола'
+		},
+		ProFeatures: {
+			SubscribeTitle: 'Subscribe!',
+			ChangeVisibilityFeatureParagraph:
+				'Changing the visibility of this generation requires a subscription.'
 		},
 		ModelTags: {
 			GoodAtTitle: 'Good at',
@@ -393,6 +402,7 @@ const bg: Translation = {
 		TryAgainButton: 'Опитайте отново',
 		RefreshButton: 'Опресни',
 		LoadMoreButton: 'Зареди повече',
+		BackToProfile: 'Back to Profile',
 		BackToGalleryButton: 'Back to Gallery',
 		SearchingTitle: 'Търсене',
 		NoResultsFoundTitle: 'Не бяха открити резултати'
@@ -515,6 +525,17 @@ const bg: Translation = {
 		SignInButton: 'Вход',
 		EnterCodeManuallyButton: 'Enter code manually',
 		SignOutButton: 'Излез'
+	},
+	ChangeUsername: {
+		ChangeUsernameTitle: 'Change Username',
+		ChangeUsernameButton: 'Change Username',
+		UsernameInput: { Title: 'Username' },
+		Error: {
+			MinimumCharacters: 'Must be at least {count} characters.',
+			MaximumCharacters: 'Must be at most {count} characters.',
+			InvalidCharacters: 'Can only contain letters, numbers, and dashes.',
+			NotAvailable: "This username isn't available."
+		}
 	},
 	Pro: {
 		PageTitle: 'Станете платен потребител',
@@ -732,6 +753,7 @@ const bg: Translation = {
 		SearchInput: {
 			Title: 'Потърси'
 		},
+		BackToProfile: 'Back to Profile',
 		BackToGalleryButton: 'Back to Gallery',
 		SearchingTitle: 'Търсене',
 		NoMatchingGenerationTitle: 'Няма съответствия'

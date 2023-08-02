@@ -96,7 +96,7 @@
 	>
 		<div class="p-2.5 rounded-full bg-c-bg relative overflow-hidden z-0">
 			<div
-				class="w-full h-full rounded-full transition transform -translate-x-full
+				class="w-full h-full rounded-full transition transform -translate-x-[calc(100%+8px)]
 				bg-c-secondary/25 absolute left-0 top-0 group-focus/favoritebutton:translate-x-0
 				not-touch:group-hover/favoritebutton:translate-x-0"
 			/>

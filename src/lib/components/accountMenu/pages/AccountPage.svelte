@@ -16,6 +16,8 @@
 	import type { TAccountDropdownPage } from '$components/accountMenu/types';
 	import PageWrapper from '$components/accountMenu/PageWrapper.svelte';
 	import IconCommandLine from '$components/icons/IconCommandLine.svelte';
+	import IconGalleryFilled from '$components/icons/IconGalleryFilled.svelte';
+	import IconProfile from '$components/icons/IconProfile.svelte';
 
 	export let setAccountMenuDropdownPage: (p: TAccountDropdownPage) => void;
 	export let closeMenu: () => void;
@@ -70,6 +72,17 @@
 				</div>
 			</DropdownItem>
 		{/if}
+		<DropdownItem href="/user/{$userSummary?.username}" onClick={closeMenu}>
+			<div class="flex-1 min-w-0 flex items-center justify-start gap-2.5">
+				<IconProfile class="transition w-6 h-6 text-c-text not-touch:group-hover:text-c-primary" />
+				<p
+					class="flex-1 min-w-0 overflow-hidden overflow-ellipsis text-left transition
+					text-c-on-bg not-touch:group-hover:text-c-primary"
+				>
+					{$LL.Shared.ProfileButton()}
+				</p>
+			</div>
+		</DropdownItem>
 		<DropdownItem href="/account" onClick={closeMenu}>
 			<div class="flex-1 min-w-0 flex items-center justify-start gap-2.5">
 				<IconUser class="transition w-6 h-6 text-c-text not-touch:group-hover:text-c-primary" />

@@ -7,16 +7,19 @@
 		| 'bg-secondary'
 		| 'bg-tertiary'
 		| 'secondary'
+		| 'secondary-full'
 		| 'primary-strong'
 		| 'success'
 		| 'danger' = 'primary';
 	export let hovered = false;
 	export let noPadding = false;
 	export let noRounding = false;
+	export let fullRounding = false;
 	export let paddingClass: string | undefined = undefined;
 	export let hasShadow = false;
 	export let groupClass =
 		'not-touch:group-hover:translate-x-0 not-touch:group-hover:translate-y-0 not-touch:group-hover:opacity-100';
+	export let noFade = false;
 </script>
 
 <div
@@ -31,6 +34,8 @@
 				: 'shadow-c-shadow/0'
 			: ''} {noRounding
 			? ''
+			: fullRounding
+			? 'rounded-full'
 			: size === 'xs'
 			? 'rounded'
 			: size === 'sm'
@@ -45,9 +50,13 @@
 				: hoverFrom === 'top'
 				? '-translate-y-full'
 				: hoverFrom === 'right'
-				? 'translate-x-1/2 opacity-0'
+				? noFade
+					? '-translate-x-full'
+					: 'translate-x-1/2 opacity-0'
 				: hoverFrom === 'left'
-				? '-translate-x-1/2 opacity-0'
+				? noFade
+					? '-translate-x-full'
+					: '-translate-x-1/2 opacity-0'
 				: 'translate-y-full'}
       {color === 'on-bg'
 				? 'bg-c-on-bg/10'
@@ -57,6 +66,8 @@
 				? 'bg-c-bg-tertiary'
 				: color === 'secondary'
 				? 'bg-c-secondary/12'
+				: color === 'secondary-full'
+				? 'bg-c-secondary'
 				: color === 'primary-strong'
 				? 'bg-c-primary/25'
 				: color === 'success'

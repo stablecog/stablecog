@@ -194,6 +194,7 @@ const ptPt: Translation = {
 		GenerateButton: 'Gerar',
 		UpscaleButton: 'Interpolação',
 		SimilarTitle: 'Similar',
+		ShowOnProfileButton: 'Show on Profile',
 		SubmitToGalleryButton: 'Submit to Gallery',
 		SubmittedTitle: 'Submitted',
 		UpscaleTabBar: {
@@ -248,6 +249,9 @@ const ptPt: Translation = {
 		DeleteButton: 'Eliminar',
 		LoadingTitle: 'A Carregar',
 		ContinueButton: 'Continue',
+		ProfileButton: 'Profile',
+		VisitProfileButton: 'Visit Profile',
+		YourProfileButton: 'Your Profile',
 		LoadingParagraph: 'A Carregar...',
 		InsufficientCreditsTitle: 'Insufficient credits ({remainingCredits}/{neededCredits})',
 		AllTitle: 'All',
@@ -307,6 +311,11 @@ const ptPt: Translation = {
 		},
 		PasswordInput: {
 			Placeholder: 'Palavra-chave'
+		},
+		ProFeatures: {
+			SubscribeTitle: 'Subscribe!',
+			ChangeVisibilityFeatureParagraph:
+				'Changing the visibility of this generation requires a subscription.'
 		},
 		ModelTags: {
 			GoodAtTitle: 'Good at',
@@ -390,6 +399,7 @@ const ptPt: Translation = {
 		TryAgainButton: 'Try Again',
 		RefreshButton: 'Refresh',
 		LoadMoreButton: 'Load More',
+		BackToProfile: 'Back to Profile',
 		BackToGalleryButton: 'Back to Gallery',
 		SearchingTitle: 'Searching',
 		NoResultsFoundTitle: 'No results found'
@@ -512,6 +522,17 @@ const ptPt: Translation = {
 		SignInButton: 'Sign In',
 		EnterCodeManuallyButton: 'Enter code manually',
 		SignOutButton: 'Sign Out'
+	},
+	ChangeUsername: {
+		ChangeUsernameTitle: 'Change Username',
+		ChangeUsernameButton: 'Change Username',
+		UsernameInput: { Title: 'Username' },
+		Error: {
+			MinimumCharacters: 'Must be at least {count} characters.',
+			MaximumCharacters: 'Must be at most {count} characters.',
+			InvalidCharacters: 'Can only contain letters, numbers, and dashes.',
+			NotAvailable: "This username isn't available."
+		}
 	},
 	Pro: {
 		PageTitle: 'Become a Pro',
@@ -730,6 +751,7 @@ const ptPt: Translation = {
 		SearchInput: {
 			Title: 'Search'
 		},
+		BackToProfile: 'Back to Profile',
 		BackToGalleryButton: 'Back to Gallery',
 		SearchingTitle: 'Searching',
 		NoMatchingGenerationTitle: 'No matching generation'

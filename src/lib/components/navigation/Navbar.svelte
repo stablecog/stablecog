@@ -207,7 +207,7 @@
 								onClick={toggleAccountMenu}
 							>
 								<Avatar
-									text={$page.data.session.user.email}
+									text={$userSummary.username}
 									class="w-9 h-9 ring-2 {$page.url.pathname === '/' &&
 									$themeApp === 'light' &&
 									!notAtTheVeryTop

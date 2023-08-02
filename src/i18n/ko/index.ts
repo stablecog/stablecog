@@ -195,6 +195,7 @@ const ko: Translation = {
 		GenerateButton: '나도 생성해보기',
 		UpscaleButton: '고화질 이미지로 만들기',
 		SimilarTitle: 'Similar',
+		ShowOnProfileButton: 'Show on Profile',
 		SubmitToGalleryButton: 'Submit to Gallery',
 		SubmittedTitle: 'Submitted',
 		UpscaleTabBar: {
@@ -249,6 +250,9 @@ const ko: Translation = {
 		DeleteButton: '삭제하기',
 		LoadingTitle: '로딩 중',
 		ContinueButton: 'Continue',
+		ProfileButton: 'Profile',
+		VisitProfileButton: 'Visit Profile',
+		YourProfileButton: 'Your Profile',
 		LoadingParagraph: '조금만 기다려주세요...',
 		InsufficientCreditsTitle: 'Insufficient credits ({remainingCredits}/{neededCredits})',
 		AllTitle: 'All',
@@ -308,6 +312,11 @@ const ko: Translation = {
 		},
 		PasswordInput: {
 			Placeholder: '비밀번호'
+		},
+		ProFeatures: {
+			SubscribeTitle: 'Subscribe!',
+			ChangeVisibilityFeatureParagraph:
+				'Changing the visibility of this generation requires a subscription.'
 		},
 		ModelTags: {
 			GoodAtTitle: 'Good at',
@@ -391,6 +400,7 @@ const ko: Translation = {
 		TryAgainButton: '다시 시도하기',
 		RefreshButton: 'Refresh',
 		LoadMoreButton: 'Load More',
+		BackToProfile: 'Back to Profile',
 		BackToGalleryButton: 'Back to Gallery',
 		SearchingTitle: 'Searching',
 		NoResultsFoundTitle: 'No results found'
@@ -512,6 +522,17 @@ const ko: Translation = {
 		SignInButton: '로그인하기',
 		EnterCodeManuallyButton: 'Enter code manually',
 		SignOutButton: '로그아웃하기'
+	},
+	ChangeUsername: {
+		ChangeUsernameTitle: 'Change Username',
+		ChangeUsernameButton: 'Change Username',
+		UsernameInput: { Title: 'Username' },
+		Error: {
+			MinimumCharacters: 'Must be at least {count} characters.',
+			MaximumCharacters: 'Must be at most {count} characters.',
+			InvalidCharacters: 'Can only contain letters, numbers, and dashes.',
+			NotAvailable: "This username isn't available."
+		}
 	},
 	Pro: {
 		PageTitle: '더 많은 기능을 사용해보세요!',
@@ -730,6 +751,7 @@ const ko: Translation = {
 		SearchInput: {
 			Title: 'Search'
 		},
+		BackToProfile: 'Back to Profile',
 		BackToGalleryButton: 'Back to Gallery',
 		SearchingTitle: 'Searching',
 		NoMatchingGenerationTitle: 'No matching generation'

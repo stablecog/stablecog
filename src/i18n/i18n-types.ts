@@ -600,6 +600,10 @@ type RootTranslation = {
 		 */
 		SimilarTitle: string
 		/**
+		 * S​h​o​w​ ​o​n​ ​P​r​o​f​i​l​e
+		 */
+		ShowOnProfileButton: string
+		/**
 		 * S​u​b​m​i​t​ ​t​o​ ​G​a​l​l​e​r​y
 		 */
 		SubmitToGalleryButton: string
@@ -776,6 +780,18 @@ type RootTranslation = {
 		 * C​o​n​t​i​n​u​e
 		 */
 		ContinueButton: string
+		/**
+		 * P​r​o​f​i​l​e
+		 */
+		ProfileButton: string
+		/**
+		 * V​i​s​i​t​ ​P​r​o​f​i​l​e
+		 */
+		VisitProfileButton: string
+		/**
+		 * Y​o​u​r​ ​P​r​o​f​i​l​e
+		 */
+		YourProfileButton: string
 		/**
 		 * L​o​a​d​i​n​g​.​.​.
 		 */
@@ -966,6 +982,16 @@ type RootTranslation = {
 			 * P​a​s​s​w​o​r​d
 			 */
 			Placeholder: string
+		}
+		ProFeatures: {
+			/**
+			 * S​u​b​s​c​r​i​b​e​!
+			 */
+			SubscribeTitle: string
+			/**
+			 * C​h​a​n​g​i​n​g​ ​t​h​e​ ​v​i​s​i​b​i​l​i​t​y​ ​o​f​ ​t​h​i​s​ ​g​e​n​e​r​a​t​i​o​n​ ​r​e​q​u​i​r​e​s​ ​a​ ​s​u​b​s​c​r​i​p​t​i​o​n​.
+			 */
+			ChangeVisibilityFeatureParagraph: string
 		}
 		ModelTags: {
 			/**
@@ -1173,6 +1199,10 @@ type RootTranslation = {
 		 * L​o​a​d​ ​M​o​r​e
 		 */
 		LoadMoreButton: string
+		/**
+		 * B​a​c​k​ ​t​o​ ​P​r​o​f​i​l​e
+		 */
+		BackToProfile: string
 		/**
 		 * B​a​c​k​ ​t​o​ ​G​a​l​l​e​r​y
 		 */
@@ -1574,6 +1604,42 @@ type RootTranslation = {
 		 * S​i​g​n​ ​O​u​t
 		 */
 		SignOutButton: string
+	}
+	ChangeUsername: {
+		/**
+		 * C​h​a​n​g​e​ ​U​s​e​r​n​a​m​e
+		 */
+		ChangeUsernameTitle: string
+		/**
+		 * C​h​a​n​g​e​ ​U​s​e​r​n​a​m​e
+		 */
+		ChangeUsernameButton: string
+		UsernameInput: {
+			/**
+			 * U​s​e​r​n​a​m​e
+			 */
+			Title: string
+		}
+		Error: {
+			/**
+			 * M​u​s​t​ ​b​e​ ​a​t​ ​l​e​a​s​t​ ​{​c​o​u​n​t​}​ ​c​h​a​r​a​c​t​e​r​s​.
+			 * @param {unknown} count
+			 */
+			MinimumCharacters: RequiredParams<'count'>
+			/**
+			 * M​u​s​t​ ​b​e​ ​a​t​ ​m​o​s​t​ ​{​c​o​u​n​t​}​ ​c​h​a​r​a​c​t​e​r​s​.
+			 * @param {unknown} count
+			 */
+			MaximumCharacters: RequiredParams<'count'>
+			/**
+			 * C​a​n​ ​o​n​l​y​ ​c​o​n​t​a​i​n​ ​l​e​t​t​e​r​s​,​ ​n​u​m​b​e​r​s​,​ ​a​n​d​ ​d​a​s​h​e​s​.
+			 */
+			InvalidCharacters: string
+			/**
+			 * T​h​i​s​ ​u​s​e​r​n​a​m​e​ ​i​s​n​'​t​ ​a​v​a​i​l​a​b​l​e​.
+			 */
+			NotAvailable: string
+		}
 	}
 	Pro: {
 		/**
@@ -2189,6 +2255,10 @@ type RootTranslation = {
 			 */
 			Title: string
 		}
+		/**
+		 * B​a​c​k​ ​t​o​ ​P​r​o​f​i​l​e
+		 */
+		BackToProfile: string
 		/**
 		 * B​a​c​k​ ​t​o​ ​G​a​l​l​e​r​y
 		 */
@@ -3670,6 +3740,10 @@ export type TranslationFunctions = {
 		 */
 		SimilarTitle: () => LocalizedString
 		/**
+		 * Show on Profile
+		 */
+		ShowOnProfileButton: () => LocalizedString
+		/**
 		 * Submit to Gallery
 		 */
 		SubmitToGalleryButton: () => LocalizedString
@@ -3844,6 +3918,18 @@ export type TranslationFunctions = {
 		 */
 		ContinueButton: () => LocalizedString
 		/**
+		 * Profile
+		 */
+		ProfileButton: () => LocalizedString
+		/**
+		 * Visit Profile
+		 */
+		VisitProfileButton: () => LocalizedString
+		/**
+		 * Your Profile
+		 */
+		YourProfileButton: () => LocalizedString
+		/**
 		 * Loading...
 		 */
 		LoadingParagraph: () => LocalizedString
@@ -4016,6 +4102,16 @@ export type TranslationFunctions = {
 			 * Password
 			 */
 			Placeholder: () => LocalizedString
+		}
+		ProFeatures: {
+			/**
+			 * Subscribe!
+			 */
+			SubscribeTitle: () => LocalizedString
+			/**
+			 * Changing the visibility of this generation requires a subscription.
+			 */
+			ChangeVisibilityFeatureParagraph: () => LocalizedString
 		}
 		ModelTags: {
 			/**
@@ -4223,6 +4319,10 @@ export type TranslationFunctions = {
 		 * Load More
 		 */
 		LoadMoreButton: () => LocalizedString
+		/**
+		 * Back to Profile
+		 */
+		BackToProfile: () => LocalizedString
 		/**
 		 * Back to Gallery
 		 */
@@ -4621,6 +4721,40 @@ export type TranslationFunctions = {
 		 * Sign Out
 		 */
 		SignOutButton: () => LocalizedString
+	}
+	ChangeUsername: {
+		/**
+		 * Change Username
+		 */
+		ChangeUsernameTitle: () => LocalizedString
+		/**
+		 * Change Username
+		 */
+		ChangeUsernameButton: () => LocalizedString
+		UsernameInput: {
+			/**
+			 * Username
+			 */
+			Title: () => LocalizedString
+		}
+		Error: {
+			/**
+			 * Must be at least {count} characters.
+			 */
+			MinimumCharacters: (arg: { count: unknown }) => LocalizedString
+			/**
+			 * Must be at most {count} characters.
+			 */
+			MaximumCharacters: (arg: { count: unknown }) => LocalizedString
+			/**
+			 * Can only contain letters, numbers, and dashes.
+			 */
+			InvalidCharacters: () => LocalizedString
+			/**
+			 * This username isn't available.
+			 */
+			NotAvailable: () => LocalizedString
+		}
 	}
 	Pro: {
 		/**
@@ -5235,6 +5369,10 @@ export type TranslationFunctions = {
 			 */
 			Title: () => LocalizedString
 		}
+		/**
+		 * Back to Profile
+		 */
+		BackToProfile: () => LocalizedString
 		/**
 		 * Back to Gallery
 		 */

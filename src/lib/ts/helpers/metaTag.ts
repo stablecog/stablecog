@@ -4,4 +4,13 @@ export const getGalleryMetaTagDescriptionFromPromptText = (promptText: string) =
 	}".`;
 };
 
+export const getOutputOnProfileMetaTagDescriptionFromPromptText = (
+	promptText: string,
+	username: string
+) => {
+	return `Check out this generation from @${username}: "${capitalize(promptText.slice(0, 200))}${
+		promptText.length > 200 ? '...' : ''
+	}".`;
+};
+
 export const capitalize = (s: string) => s.charAt(0).toUpperCase() + s.slice(1);

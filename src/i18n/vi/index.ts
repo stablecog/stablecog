@@ -195,6 +195,7 @@ const vi: Translation = {
 		GenerateButton: 'Khởi tạo',
 		UpscaleButton: 'Phóng to',
 		SimilarTitle: 'Similar',
+		ShowOnProfileButton: 'Show on Profile',
 		SubmitToGalleryButton: 'Submit to Gallery',
 		SubmittedTitle: 'Submitted',
 		UpscaleTabBar: {
@@ -249,6 +250,9 @@ const vi: Translation = {
 		DeleteButton: 'Xóa',
 		LoadingTitle: 'Đang tải',
 		ContinueButton: 'Continue',
+		ProfileButton: 'Profile',
+		VisitProfileButton: 'Visit Profile',
+		YourProfileButton: 'Your Profile',
 		LoadingParagraph: 'Đang tải...',
 		InsufficientCreditsTitle: 'Insufficient credits ({remainingCredits}/{neededCredits})',
 		AllTitle: 'All',
@@ -308,6 +312,11 @@ const vi: Translation = {
 		},
 		PasswordInput: {
 			Placeholder: 'Mật khẩu'
+		},
+		ProFeatures: {
+			SubscribeTitle: 'Subscribe!',
+			ChangeVisibilityFeatureParagraph:
+				'Changing the visibility of this generation requires a subscription.'
 		},
 		ModelTags: {
 			GoodAtTitle: 'Good at',
@@ -391,6 +400,7 @@ const vi: Translation = {
 		TryAgainButton: 'Thử lại',
 		RefreshButton: 'Refresh',
 		LoadMoreButton: 'Load More',
+		BackToProfile: 'Back to Profile',
 		BackToGalleryButton: 'Back to Gallery',
 		SearchingTitle: 'Searching',
 		NoResultsFoundTitle: 'No results found'
@@ -515,6 +525,17 @@ const vi: Translation = {
 		SignInButton: 'Đăng nhập',
 		EnterCodeManuallyButton: 'Enter code manually',
 		SignOutButton: 'Đăng xuất'
+	},
+	ChangeUsername: {
+		ChangeUsernameTitle: 'Change Username',
+		ChangeUsernameButton: 'Change Username',
+		UsernameInput: { Title: 'Username' },
+		Error: {
+			MinimumCharacters: 'Must be at least {count} characters.',
+			MaximumCharacters: 'Must be at most {count} characters.',
+			InvalidCharacters: 'Can only contain letters, numbers, and dashes.',
+			NotAvailable: "This username isn't available."
+		}
 	},
 	Pro: {
 		PageTitle: 'Trở thành người dùng trả phí',
@@ -733,6 +754,7 @@ const vi: Translation = {
 		SearchInput: {
 			Title: 'Search'
 		},
+		BackToProfile: 'Back to Profile',
 		BackToGalleryButton: 'Back to Gallery',
 		SearchingTitle: 'Searching',
 		NoMatchingGenerationTitle: 'No matching generation'

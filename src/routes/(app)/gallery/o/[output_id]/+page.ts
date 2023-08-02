@@ -2,16 +2,16 @@ import type { TAvailableGenerationModelId } from '$ts/constants/generationModels
 import { apiUrl } from '$ts/constants/main';
 import type { TAvailableSchedulerId } from '$ts/constants/schedulers';
 import { convertToDBTimeString } from '$ts/helpers/convertToDBTimeString';
-import {
-	getGalleryGenerationFullOutputs,
-	type TGalleryGenerationFullOutputPageRes,
-	type TGalleryGenerationFullOutputsPage
-} from '$ts/queries/galleryGenerations';
+import { getGalleryGenerationFullOutputs } from '$ts/queries/galleryLike/galleryGenerations';
 import type { TGenerationFullOutput, TGenerationOutput } from '$ts/stores/user/generation';
 import { error } from '@sveltejs/kit';
 import { similarCount } from '$routes/(app)/gallery/o/[output_id]/constants';
 import type { PageLoad } from './$types';
 import type { QueryClient } from '@tanstack/svelte-query';
+import type {
+	TGalleryGenerationFullOutputPageRes,
+	TGalleryGenerationFullOutputsPage
+} from '$ts/queries/galleryLike/types';
 
 interface TParent {
 	queryClient: QueryClient;
@@ -42,7 +42,9 @@ export const load: PageLoad = async ({ params, parent }) => {
 		image_url: hit.image_url,
 		upscaled_image_url: hit.upscaled_image_url,
 		created_at: hit.created_at,
-		updated_at: hit.updated_at
+		updated_at: hit.updated_at,
+		was_auto_submitted: hit.was_auto_submitted,
+		is_public: hit.is_public
 	};
 	generationFullOutput = {
 		generation: {
@@ -70,7 +72,10 @@ export const load: PageLoad = async ({ params, parent }) => {
 			status: 'succeeded',
 			seed: 1,
 			num_outputs: 1,
-			submit_to_gallery: true
+			submit_to_gallery: true,
+			user: {
+				username: hit.user.username
+			}
 		},
 		...output
 	};

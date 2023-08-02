@@ -1,10 +1,9 @@
 <script lang="ts">
 	import Button from '$components/buttons/Button.svelte';
 	import ClearButton from '$components/buttons/ClearButton.svelte';
-	import IconSearch from '$components/icons/IconSearch.svelte';
-	import type { SvelteComponent } from 'svelte';
 
 	export let type: 'text' | 'email' | 'password' | 'number' = 'text';
+	export let name: string | undefined = undefined;
 	export let value: string;
 	export let title: string;
 	export let disabled = false;
@@ -61,7 +60,7 @@
 			{enterkeyhint}
 			{disabled}
 			type="email"
-			name={title}
+			name={name || title}
 			id={title}
 			placeholder=" "
 			class="peer flex-1 overflow-hidden overflow-ellipsis {bg === 'bg-secondary'
@@ -93,7 +92,7 @@
 			{enterkeyhint}
 			{disabled}
 			type="password"
-			name={title}
+			name={name || title}
 			id={title}
 			placeholder=" "
 			class="peer flex-1 overflow-hidden overflow-ellipsis {bg === 'bg-secondary'
@@ -125,7 +124,7 @@
 			{enterkeyhint}
 			{disabled}
 			type="number"
-			name={title}
+			name={name || title}
 			id={title}
 			placeholder=" "
 			class="peer flex-1 overflow-hidden overflow-ellipsis {bg === 'bg-secondary'
@@ -157,7 +156,7 @@
 			{enterkeyhint}
 			{disabled}
 			type="text"
-			name={title}
+			name={name || title}
 			id={title}
 			placeholder=" "
 			class="peer flex-1 overflow-hidden overflow-ellipsis {bg === 'bg-secondary'

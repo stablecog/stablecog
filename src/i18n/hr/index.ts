@@ -194,6 +194,7 @@ const hr: Translation = {
 		GenerateButton: 'Generiraj',
 		UpscaleButton: 'Uvećaj',
 		SimilarTitle: 'Similar',
+		ShowOnProfileButton: 'Show on Profile',
 		SubmitToGalleryButton: 'Submit to Gallery',
 		SubmittedTitle: 'Submitted',
 		UpscaleTabBar: {
@@ -248,6 +249,9 @@ const hr: Translation = {
 		DeleteButton: 'Obriši',
 		LoadingTitle: 'Učitavanje',
 		ContinueButton: 'Continue',
+		ProfileButton: 'Profile',
+		VisitProfileButton: 'Visit Profile',
+		YourProfileButton: 'Your Profile',
 		LoadingParagraph: 'Učitavanje...',
 		InsufficientCreditsTitle: 'Insufficient credits ({remainingCredits}/{neededCredits})',
 		AllTitle: 'All',
@@ -307,6 +311,11 @@ const hr: Translation = {
 		},
 		PasswordInput: {
 			Placeholder: 'Lozinka'
+		},
+		ProFeatures: {
+			SubscribeTitle: 'Subscribe!',
+			ChangeVisibilityFeatureParagraph:
+				'Changing the visibility of this generation requires a subscription.'
 		},
 		ModelTags: {
 			GoodAtTitle: 'Good at',
@@ -390,6 +399,7 @@ const hr: Translation = {
 		TryAgainButton: 'Pokušaj ponovno',
 		RefreshButton: 'Refresh',
 		LoadMoreButton: 'Load More',
+		BackToProfile: 'Back to Profile',
 		BackToGalleryButton: 'Back to Gallery',
 		SearchingTitle: 'Searching',
 		NoResultsFoundTitle: 'No results found'
@@ -510,6 +520,17 @@ const hr: Translation = {
 		SignInButton: 'Prijavi se',
 		EnterCodeManuallyButton: 'Enter code manually',
 		SignOutButton: 'Odjavi se'
+	},
+	ChangeUsername: {
+		ChangeUsernameTitle: 'Change Username',
+		ChangeUsernameButton: 'Change Username',
+		UsernameInput: { Title: 'Username' },
+		Error: {
+			MinimumCharacters: 'Must be at least {count} characters.',
+			MaximumCharacters: 'Must be at most {count} characters.',
+			InvalidCharacters: 'Can only contain letters, numbers, and dashes.',
+			NotAvailable: "This username isn't available."
+		}
 	},
 	Pro: {
 		PageTitle: 'Postani Pro',
@@ -727,6 +748,7 @@ const hr: Translation = {
 		SearchInput: {
 			Title: 'Pretraži'
 		},
+		BackToProfile: 'Back to Profile',
 		BackToGalleryButton: 'Back to Gallery',
 		SearchingTitle: 'Pretraživanje',
 		NoMatchingGenerationTitle: 'Nema tražene generacije'

@@ -165,7 +165,10 @@
 		outputs: Array.from({ length: Number($generationNumOutputs) }).map((i) => ({
 			id: '',
 			image_url: ''
-		}))
+		})),
+		user: {
+			username: $userSummary?.username || ''
+		}
 	};
 
 	$: [$generationNumOutputs, $generationAspectRatio, isCheckCompleted],

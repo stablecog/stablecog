@@ -3,4 +3,5 @@ export type TGenerationImageCardType =
 	| 'history'
 	| 'gallery'
 	| 'admin-gallery'
-	| 'stage';
+	| 'stage'
+	| 'user-profile';

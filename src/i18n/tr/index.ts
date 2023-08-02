@@ -205,6 +205,7 @@ const tr: Translation = {
 		GenerateButton: 'Üret',
 		UpscaleButton: 'Büyüt',
 		SimilarTitle: 'Benzer',
+		ShowOnProfileButton: 'Show on Profile',
 		SubmitToGalleryButton: 'Galeriye Gönder',
 		SubmittedTitle: 'Gönderildi',
 		UpscaleTabBar: {
@@ -259,6 +260,9 @@ const tr: Translation = {
 		DeleteButton: 'Sil',
 		LoadingTitle: 'Yükleniyor',
 		ContinueButton: 'Devam Et',
+		ProfileButton: 'Profile',
+		VisitProfileButton: 'Visit Profile',
+		YourProfileButton: 'Your Profile',
 		LoadingParagraph: 'Yükleniyor...',
 		InsufficientCreditsTitle: 'Yetersiz kredi ({remainingCredits}/{neededCredits})',
 		AllTitle: 'Hepsi',
@@ -318,6 +322,11 @@ const tr: Translation = {
 		},
 		PasswordInput: {
 			Placeholder: 'Şifre'
+		},
+		ProFeatures: {
+			SubscribeTitle: 'Subscribe!',
+			ChangeVisibilityFeatureParagraph:
+				'Changing the visibility of this generation requires a subscription.'
 		},
 		ModelTags: {
 			GoodAtTitle: 'Şunlarda iyi',
@@ -409,6 +418,7 @@ const tr: Translation = {
 		TryAgainButton: 'Yeniden Dene',
 		RefreshButton: 'Yenile',
 		LoadMoreButton: 'Daha Fazla',
+		BackToProfile: 'Back to Profile',
 		BackToGalleryButton: 'Galeriye Dön',
 		SearchingTitle: 'Aranıyor',
 		NoResultsFoundTitle: 'Sonuç bulunamadı'
@@ -531,6 +541,17 @@ const tr: Translation = {
 		SignInButton: 'Giriş Yap',
 		EnterCodeManuallyButton: 'Kod gir',
 		SignOutButton: 'Çıkış Yap'
+	},
+	ChangeUsername: {
+		ChangeUsernameTitle: 'Change Username',
+		ChangeUsernameButton: 'Change Username',
+		UsernameInput: { Title: 'Username' },
+		Error: {
+			MinimumCharacters: 'Must be at least {count} characters.',
+			MaximumCharacters: 'Must be at most {count} characters.',
+			InvalidCharacters: 'Can only contain letters, numbers, and dashes.',
+			NotAvailable: "This username isn't available."
+		}
 	},
 	Pro: {
 		PageTitle: 'Pro Ol',
@@ -753,6 +774,7 @@ const tr: Translation = {
 		SearchInput: {
 			Title: 'Ara'
 		},
+		BackToProfile: 'Back to Profile',
 		BackToGalleryButton: 'Galeriye Gön',
 		SearchingTitle: 'Arıyor',
 		NoMatchingGenerationTitle: 'Benzer bir üretim bulunamadı'

@@ -205,6 +205,7 @@ const ja: Translation = {
 		GenerateButton: '生成',
 		UpscaleButton: 'アップスケール',
 		SimilarTitle: '類似画像',
+		ShowOnProfileButton: 'Show on Profile',
 		SubmitToGalleryButton: 'ギャラリーに提出',
 		SubmittedTitle: '提出済み',
 		UpscaleTabBar: {
@@ -259,6 +260,9 @@ const ja: Translation = {
 		DeleteButton: '削除',
 		LoadingTitle: '読み込み中',
 		ContinueButton: '続行',
+		ProfileButton: 'Profile',
+		VisitProfileButton: 'Visit Profile',
+		YourProfileButton: 'Your Profile',
 		LoadingParagraph: '読み込み中...',
 		InsufficientCreditsTitle: 'クレジットが不足しています({remainingCredits}/{neededCredits})',
 		AllTitle: '全て',
@@ -320,6 +324,11 @@ const ja: Translation = {
 		},
 		PasswordInput: {
 			Placeholder: 'パスワード'
+		},
+		ProFeatures: {
+			SubscribeTitle: 'Subscribe!',
+			ChangeVisibilityFeatureParagraph:
+				'Changing the visibility of this generation requires a subscription.'
 		},
 		ModelTags: {
 			GoodAtTitle: 'Good at',
@@ -403,6 +412,7 @@ const ja: Translation = {
 		TryAgainButton: '再試行',
 		RefreshButton: '更新',
 		LoadMoreButton: 'さらに読み込む',
+		BackToProfile: 'Back to Profile',
 		BackToGalleryButton: 'ギャラリーに戻る',
 		SearchingTitle: '検索中',
 		NoResultsFoundTitle: '検索結果なし'
@@ -528,6 +538,17 @@ const ja: Translation = {
 		SignInButton: 'サインイン',
 		EnterCodeManuallyButton: 'コードを手動で入力',
 		SignOutButton: 'サインアウト'
+	},
+	ChangeUsername: {
+		ChangeUsernameTitle: 'Change Username',
+		ChangeUsernameButton: 'Change Username',
+		UsernameInput: { Title: 'Username' },
+		Error: {
+			MinimumCharacters: 'Must be at least {count} characters.',
+			MaximumCharacters: 'Must be at most {count} characters.',
+			InvalidCharacters: 'Can only contain letters, numbers, and dashes.',
+			NotAvailable: "This username isn't available."
+		}
 	},
 	Pro: {
 		PageTitle: 'Pro版に登録',
@@ -750,6 +771,7 @@ const ja: Translation = {
 		SearchInput: {
 			Title: '検索'
 		},
+		BackToProfile: 'Back to Profile',
 		BackToGalleryButton: 'ギャラリーに戻る',
 		SearchingTitle: '検索中...',
 		NoMatchingGenerationTitle: '一致する生成がありません'

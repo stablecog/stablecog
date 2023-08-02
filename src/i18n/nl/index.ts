@@ -198,6 +198,7 @@ const nl: Translation = {
 		GenerateButton: 'Genereren',
 		UpscaleButton: 'Opschalen',
 		SimilarTitle: 'Similar',
+		ShowOnProfileButton: 'Show on Profile',
 		SubmitToGalleryButton: 'Naar galerij versturen',
 		SubmittedTitle: 'Verstuurd',
 		UpscaleTabBar: {
@@ -252,6 +253,9 @@ const nl: Translation = {
 		DeleteButton: 'Verwijderen',
 		LoadingTitle: 'Laden',
 		ContinueButton: 'Verder',
+		ProfileButton: 'Profile',
+		VisitProfileButton: 'Visit Profile',
+		YourProfileButton: 'Your Profile',
 		LoadingParagraph: 'Laden...',
 		InsufficientCreditsTitle: 'Onvoldoende credits ({remainingCredits}/{neededCredits})',
 		AllTitle: 'Alles',
@@ -312,6 +316,11 @@ const nl: Translation = {
 		},
 		PasswordInput: {
 			Placeholder: 'Wachtwoord'
+		},
+		ProFeatures: {
+			SubscribeTitle: 'Subscribe!',
+			ChangeVisibilityFeatureParagraph:
+				'Changing the visibility of this generation requires a subscription.'
 		},
 		ModelTags: {
 			GoodAtTitle: 'Good at',
@@ -395,6 +404,7 @@ const nl: Translation = {
 		TryAgainButton: 'Opnieuw proberen',
 		RefreshButton: 'Vernieuwen',
 		LoadMoreButton: 'Laad meer',
+		BackToProfile: 'Back to Profile',
 		BackToGalleryButton: 'Back to Gallery',
 		SearchingTitle: 'Bezig met zoeken',
 		NoResultsFoundTitle: 'Geen resultaten gevonden'
@@ -519,6 +529,17 @@ const nl: Translation = {
 		SignInButton: 'Inloggen',
 		EnterCodeManuallyButton: 'Enter code manually',
 		SignOutButton: 'Uitloggen'
+	},
+	ChangeUsername: {
+		ChangeUsernameTitle: 'Change Username',
+		ChangeUsernameButton: 'Change Username',
+		UsernameInput: { Title: 'Username' },
+		Error: {
+			MinimumCharacters: 'Must be at least {count} characters.',
+			MaximumCharacters: 'Must be at most {count} characters.',
+			InvalidCharacters: 'Can only contain letters, numbers, and dashes.',
+			NotAvailable: "This username isn't available."
+		}
 	},
 	Pro: {
 		PageTitle: 'Word een Pro',
@@ -741,6 +762,7 @@ const nl: Translation = {
 		SearchInput: {
 			Title: 'Zoeken'
 		},
+		BackToProfile: 'Back to Profile',
 		BackToGalleryButton: 'Back to Gallery',
 		SearchingTitle: 'Bezig met zoeken',
 		NoMatchingGenerationTitle: 'Geen overeenkomstige creatie gevonden'

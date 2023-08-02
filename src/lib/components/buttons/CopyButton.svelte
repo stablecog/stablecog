@@ -38,7 +38,7 @@
 >
 	<div class="rounded-full bg-c-bg relative overflow-hidden z-0 p-2.5">
 		<div
-			class="w-full h-full rounded-full transition transform -translate-x-full absolute left-0 top-0 {copied
+			class="w-full h-full rounded-full transition transform -translate-x-[calc(100%+8px)] absolute left-0 top-0 {copied
 				? 'bg-c-bg'
 				: 'bg-c-primary'} not-touch:group-hover/copybutton:translate-x-0"
 		/>

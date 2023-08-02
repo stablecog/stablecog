@@ -31,7 +31,8 @@
 		logGalleryExploreSimilarClicked,
 		logGalleryGenerateSimilarClicked,
 		logGenerationOutputDeleted,
-		logGenerationOutputSubmittedToGallery
+		logGenerationOutputSubmittedToGallery,
+		logUserProfileExploreSimilarClicked
 	} from '$ts/helpers/loggers';
 	import { advancedModeApp } from '$ts/stores/advancedMode';
 	import { userSummary } from '$ts/stores/user/summary';
@@ -44,7 +45,10 @@
 	} from '$ts/stores/user/keys';
 	import { appVersion } from '$ts/stores/appVersion';
 	import { replaceOutputInUserQueryData } from '$ts/helpers/replaceOutputInUserQueryData';
-	import { getPreviewImageUrlFromOutputId } from '$ts/helpers/getPreviewImageUrl';
+	import {
+		getPreviewImageUrlFromOutputId,
+		getUserProfilePreviewImageUrlFromOutputId
+	} from '$ts/helpers/getPreviewImageUrl';
 	import IconImageSearch from '$components/icons/IconImageSearch.svelte';
 
 	export let generation: TGenerationWithSelectedOutput;
@@ -92,8 +96,6 @@
 	};
 
 	let deleteStatus: 'idle' | 'should-confirm' | 'loading' | 'success' = 'idle';
-
-	let submitToGalleryStatus: 'idle' | 'loading' | 'success' = 'idle';
 
 	$: logProps = {
 		'SC - Generation Id': generation.id,
@@ -143,46 +145,6 @@
 		}
 	}
 	const resetDeleteStatus = () => (deleteStatus = 'idle');
-
-	async function submitToGallery() {
-		submitToGalleryStatus = 'loading';
-		try {
-			const res = await fetch(`${apiUrl.origin}/v1/user/gallery`, {
-				method: 'PUT',
-				headers: {
-					'Content-Type': 'application/json',
-					Authorization: `Bearer ${$page.data.session?.access_token}`
-				},
-				body: JSON.stringify({ generation_output_ids: [generation.selected_output.id] })
-			});
-			if (!res.ok) throw new Error('Response not ok');
-			console.log('Submit to gallery response', res);
-			logGenerationOutputSubmittedToGallery(logProps);
-			if (modalType === 'history') {
-				queryClient.setQueryData($userGenerationFullOutputsQueryKey, (data: any) => ({
-					...data,
-					pages: data.pages.map((page: TUserGenerationFullOutputsPage) => {
-						return {
-							...page,
-							outputs: page.outputs.map((output) =>
-								output.id === generation.selected_output.id
-									? { ...output, gallery_status: 'submitted' }
-									: output
-							)
-						};
-					})
-				}));
-			} else if (modalType === 'generate') {
-				setGenerationOutputToSubmitted(generation.selected_output.id);
-			}
-			submitToGalleryStatus = 'success';
-		} catch (error) {
-			console.log('Error submitting generation', error);
-			resetSubmitToGalleryStatus();
-		}
-	}
-
-	const resetSubmitToGalleryStatus = () => (submitToGalleryStatus = 'idle');
 </script>
 
 <div class="w-full flex flex-wrap gap-3 pb-1 {classes}">
@@ -207,21 +169,26 @@
 			<p>{$LL.GenerationFullscreen.GenerateSimilarButton()}</p>
 		</div>
 	</SubtleButton>
-	{#if modalType === 'gallery'}
+	{#if modalType === 'gallery' || modalType === 'user-profile'}
 		<SubtleButton
 			prefetch={true}
 			href={exploreSimilarUrl}
 			onClick={() => {
-				if (modalType === 'gallery') {
+				if (modalType === 'gallery' || modalType === 'user-profile') {
 					if (setSearchQuery) {
 						setSearchQuery(generation.selected_output.id);
 					}
-					logGalleryExploreSimilarClicked({
+					const logParams = {
 						'SC - Output Id': generation.selected_output.id,
 						'SC - User Id': $page.data.session?.user.id,
 						'SC - Stripe Product Id': $userSummary?.product_id,
 						'SC - App Version': $appVersion
-					});
+					};
+					if (modalType === 'user-profile') {
+						logUserProfileExploreSimilarClicked(logParams);
+					} else {
+						logGalleryExploreSimilarClicked(logParams);
+					}
 					if ($activeGeneration) {
 						activeGeneration.set(undefined);
 					}
@@ -252,7 +219,40 @@
 			</Morpher>
 		</SubtleButton>
 	</div>
-	{#if (modalType === 'generate' || modalType === 'history') && !generation.selected_output.image_url.includes('placeholder')}
+	{#if modalType === 'gallery' || modalType === 'user-profile' || modalType === 'history' || modalType === 'stage' || modalType === 'generate'}
+		<div
+			use:copy={linkUrl}
+			on:svelte-copy={() => {
+				setButtonObjectWithState('link', 'success');
+				fetch(
+					modalType === 'user-profile' ||
+						modalType === 'history' ||
+						modalType === 'stage' ||
+						modalType === 'generate'
+						? getUserProfilePreviewImageUrlFromOutputId(
+								generation.selected_output.id,
+								generation.user.username
+						  )
+						: getPreviewImageUrlFromOutputId(generation.selected_output.id)
+				);
+			}}
+			on:svelte-copy:error={(e) => console.log(e)}
+		>
+			<SubtleButton state={buttonObjectsWithState.link.state === 'success' ? 'success' : 'idle'}>
+				<Morpher morphed={buttonObjectsWithState.link.state === 'success'}>
+					<div slot="0" class="flex items-center justify-center gap-1.5">
+						<IconLink class="w-5 h-5 -ml-0.5" />
+						<p>{$LL.Shared.CopyLinkButton()}</p>
+					</div>
+					<div slot="1" class="flex items-center justify-center gap-1.5">
+						<IconTick class="w-5 h-5 -ml-0.5 scale-110" />
+						<p>{$LL.GenerationFullscreen.CopiedButtonState()}</p>
+					</div>
+				</Morpher>
+			</SubtleButton>
+		</div>
+	{/if}
+	{#if (modalType === 'generate' || modalType === 'history' || (modalType === 'user-profile' && generation.user.username === $userSummary?.username)) && !generation.selected_output.image_url.includes('placeholder')}
 		<SubtleButton
 			onClick={onDownloadImageClicked}
 			disabled={buttonObjectsWithState.download.state === 'loading'}
@@ -280,31 +280,8 @@
 			</Morpher>
 		</SubtleButton>
 	{/if}
-	{#if modalType === 'gallery'}
-		<div
-			use:copy={linkUrl}
-			on:svelte-copy={() => {
-				setButtonObjectWithState('link', 'success');
-				fetch(getPreviewImageUrlFromOutputId(generation.selected_output.id));
-			}}
-			on:svelte-copy:error={(e) => console.log(e)}
-		>
-			<SubtleButton state={buttonObjectsWithState.link.state === 'success' ? 'success' : 'idle'}>
-				<Morpher morphed={buttonObjectsWithState.link.state === 'success'}>
-					<div slot="0" class="flex items-center justify-center gap-1.5">
-						<IconLink class="w-5 h-5 -ml-0.5" />
-						<p>{$LL.Shared.CopyLinkButton()}</p>
-					</div>
-					<div slot="1" class="flex items-center justify-center gap-1.5">
-						<IconTick class="w-5 h-5 -ml-0.5 scale-110" />
-						<p>{$LL.GenerationFullscreen.CopiedButtonState()}</p>
-					</div>
-				</Morpher>
-			</SubtleButton>
-		</div>
-	{/if}
 	{#if modalType === 'generate' || modalType === 'history'}
-		{#if $userSummary?.product_id || $userSummary?.has_nonfree_credits === true}
+		<!-- {#if $userSummary?.product_id || $userSummary?.has_nonfree_credits === true}
 			{#if submitToGalleryStatus === 'success' || generation.selected_output.gallery_status !== 'not_submitted'}
 				<SubtleButton disabled={true}>
 					<div class="flex items-center justify-center gap-1.5 text-c-success">
@@ -330,7 +307,7 @@
 					</div>
 				</SubtleButton>
 			{/if}
-		{/if}
+		{/if} -->
 		<div use:clickoutside={{ callback: resetDeleteStatus }}>
 			<SubtleButton
 				disabled={deleteStatus === 'loading'}

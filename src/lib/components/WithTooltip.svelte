@@ -8,6 +8,7 @@
 	export let closeDelay = 0;
 	export let color: 'bg-secondary' | 'bg-tertiary' = 'bg-secondary';
 	export let title: string | undefined = undefined;
+	export let titleIcon: ConstructorOfATypedSvelteComponent | undefined = undefined;
 	export let paragraph: string | undefined = undefined;
 	export let noArrow = false;
 	export let size: 'sm' | 'md' = 'md';
@@ -59,7 +60,15 @@
 		{#if title || paragraph}
 			<div class="w-full flex flex-col gap-1">
 				{#if title}
-					<p class="w-full font-semibold text-c-on-bg">{title}</p>
+					<div class="w-full flex items-center gap-1">
+						{#if titleIcon}
+							<svelte:component
+								this={titleIcon}
+								class="w-4 h-4 -mt-0.5 text-c-on-bg flex-shrink-0"
+							/>
+						{/if}
+						<p class="flex-1 flex-shrink font-semibold text-c-on-bg">{title}</p>
+					</div>
 				{/if}
 				{#if paragraph}
 					<p class="w-full text-c-on-bg/75">{paragraph}</p>

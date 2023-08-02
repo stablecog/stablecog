@@ -42,9 +42,19 @@ export function logGalleryExploreSimilarClicked(props: IGalleryExploreSimilarCli
 	posthog.capture('Gallery | Explore Similar Clicked', { ...props });
 }
 
+export function logUserProfileExploreSimilarClicked(props: IGalleryExploreSimilarClickedProps) {
+	mixpanel.track('User Profile | Explore Similar Clicked', { ...props });
+	posthog.capture('User Profile | Explore Similar Clicked', { ...props });
+}
+
 export function logGalleryModalSimilarClicked(props: ISimilarClickedProps) {
 	mixpanel.track('Gallery | Modal Similar Clicked', { ...props });
 	posthog.capture('Gallery | Modal Similar Clicked', { ...props });
+}
+
+export function logUserProfileModalSimilarClicked(props: ISimilarClickedProps) {
+	mixpanel.track('User Profile | Modal Similar Clicked', { ...props });
+	posthog.capture('User Profile | Modal Similar Clicked', { ...props });
 }
 
 export function logOutputPageSimilarClicked(props: ISimilarClickedProps) {
@@ -100,6 +110,21 @@ export function logVoiceoverOutputDeleted(props: IVoiceoverOutputActionProps) {
 export function logGenerationOutputFavorited(props: IGenerationOutputActionProps) {
 	mixpanel.track('Generation Output | Favorited', { ...props });
 	posthog.capture('Generation Output | Favorited', { ...props });
+}
+
+export function logGenerationOutputMadePublic(props: IGenerationOutputActionProps) {
+	mixpanel.track('Generation Output | Made Public', { ...props });
+	posthog.capture('Generation Output | Made Public', { ...props });
+}
+
+export function logUsernameChanged(props: IUsernameChangedProps) {
+	mixpanel.track('Username Changed', { ...props });
+	posthog.capture('Username Changed', { ...props });
+}
+
+export function logGenerationOutputMadePrivate(props: IGenerationOutputActionProps) {
+	mixpanel.track('Generation Output | Made Private', { ...props });
+	posthog.capture('Generation Output | Made Private', { ...props });
 }
 
 export function logGenerationOutputUnfavorited(props: IGenerationOutputActionProps) {
@@ -314,6 +339,15 @@ interface IGalleryExploreSimilarClickedProps {
 	'SC - User Id': string | undefined;
 	'SC - Stripe Product Id': string | undefined;
 	'SC - App Version': string;
+}
+
+interface IUsernameChangedProps {
+	'SC - User Id': string | undefined;
+	'SC - Stripe Product Id': string | undefined;
+	'SC - App Version': string;
+	'SC - Old Username': string;
+	'SC - New Username': string;
+	'SC - Locale': string;
 }
 
 interface ISimilarClickedProps {

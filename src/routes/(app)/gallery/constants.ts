@@ -1,7 +1,5 @@
-import {
-	getGalleryGenerationFullOutputs,
-	type TGalleryGenerationFullOutputsPage
-} from '$ts/queries/galleryGenerations';
+import { getGalleryGenerationFullOutputs } from '$ts/queries/galleryLike/galleryGenerations';
+import type { TGalleryGenerationFullOutputsPage } from '$ts/queries/galleryLike/types';
 import type { FetchInfiniteQueryOptions } from '@tanstack/svelte-query';
 
 export const getGalleryInfiniteQueryKey = ({

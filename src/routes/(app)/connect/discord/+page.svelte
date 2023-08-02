@@ -179,7 +179,7 @@
 						side="end"
 						platform={$LL.Connect.Platform.Stablecog()}
 						{status}
-						username={$page.data.session.user.email}
+						username={$userSummary.username}
 					/>
 				</div>
 			{/if}

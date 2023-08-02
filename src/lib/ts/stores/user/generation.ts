@@ -1,7 +1,7 @@
 import { apiUrl } from '$ts/constants/main';
 import type { TAvailableGenerationModelId } from '$ts/constants/generationModels';
 import type { TAvailableSchedulerId } from '$ts/constants/schedulers';
-import { writable } from 'svelte/store';
+import { get, writable } from 'svelte/store';
 import {
 	generationCostCompletionPerMs,
 	getCostCompletionPerMsFromGeneration
@@ -90,7 +90,8 @@ export const setGenerationToSucceeded = ({
 			...Array.from({ length: gen.num_outputs - outputs.length }).map(() => ({
 				id: generateSSEId(),
 				image_url: '',
-				status: 'failed-nsfw' as TGenerationOutputStatus
+				status: 'failed-nsfw' as TGenerationOutputStatus,
+				was_auto_submitted: false
 			}))
 		];
 		gen.completed_at = convertToDBTimeString(Date.now());
@@ -166,6 +167,7 @@ export const setGenerationToServerProcessing = ({ ui_id, id }: { ui_id: string; 
 
 export async function queueInitialGenerationRequest(request: TInitialGenerationRequest) {
 	generations.update(($generations) => {
+		const username = get(userSummary)?.username;
 		const generationToSubmit: TGeneration = {
 			...request,
 			status: 'to-be-submitted',
@@ -174,8 +176,12 @@ export async function queueInitialGenerationRequest(request: TInitialGenerationR
 				id: generateSSEId(),
 				image_url: '',
 				status: 'to-be-submitted',
-				animation: newGenerationStartAnimation()
-			}))
+				animation: newGenerationStartAnimation(),
+				was_auto_submitted: false
+			})),
+			user: {
+				username: username || ''
+			}
 		};
 		if ($generations === null || $generations.length === 0) {
 			return [generationToSubmit];
@@ -265,6 +271,28 @@ export const setGenerationOutputToSubmitted = (output_id: string) => {
 				const output = generation.outputs[j];
 				if (output.id === output_id) {
 					generation.outputs[j].gallery_status = 'submitted';
+					return $generations;
+				}
+			}
+		}
+		return $generations;
+	});
+};
+
+export const setGenerationOutputVisibility = (
+	output_id: string,
+	visibility: 'public' | 'private'
+) => {
+	generations.update(($generations) => {
+		if ($generations === null || $generations.length === 0) {
+			return $generations;
+		}
+		for (let i = 0; i < $generations.length; i++) {
+			const generation = $generations[i];
+			for (let j = 0; j < generation.outputs.length; j++) {
+				const output = generation.outputs[j];
+				if (output.id === output_id) {
+					generation.outputs[j].is_public = visibility === 'public';
 					return $generations;
 				}
 			}
@@ -393,7 +421,8 @@ export interface TGenerationBase {
 }
 
 export interface TUser {
-	email: string;
+	email?: string;
+	username: string;
 }
 export interface TGeneration extends TGenerationBase {
 	status: TGenerationStatus;
@@ -406,7 +435,7 @@ export interface TGeneration extends TGenerationBase {
 	completed_at?: string;
 	submit_to_gallery: boolean;
 	is_placeholder?: boolean;
-	user?: TUser;
+	user: TUser;
 }
 
 export interface TGenerationOutput {
@@ -420,6 +449,8 @@ export interface TGenerationOutput {
 	gallery_status?: TGalleryStatus;
 	status?: TGenerationOutputStatus;
 	animation?: Tweened<number>;
+	was_auto_submitted: boolean;
+	is_public: boolean;
 }
 
 export type TGalleryStatus =

@@ -29,6 +29,7 @@
 	import { logOutputPageSimilarClicked } from '$ts/helpers/loggers.js';
 	import { appVersion } from '$ts/stores/appVersion.js';
 	import { userSummary } from '$ts/stores/user/summary';
+	import UsernameButton from '$components/buttons/UsernameButton.svelte';
 
 	export let data;
 
@@ -178,7 +179,8 @@
 					</div>
 				</NoBgButton>
 			</div>
-			<div class="w-full flex flex-col items-start gap-3 -mt-4 lg:-mt-2">
+			<UsernameButton username={output.generation.user.username} class="-mt-3" />
+			<div class="w-full flex flex-col items-start gap-3 mt-1">
 				<div class="w-full flex flex-col gap-2">
 					<p class="w-full font-semibold text-3xl">{$LL.Home.PromptInput.Title()}</p>
 					<h1 class="w-full leading-normal">{output.generation.prompt.text}</h1>
@@ -221,50 +223,52 @@
 				bind:buttonObjectsWithState
 				{modalType}
 			/>
-			<div class="w-full flex flex-col mt-5">
-				<p class="max-w-full font-semibold text-3xl">
-					{$LL.GenerationFullscreen.SimilarTitle()}
-				</p>
-				<div class="w-[calc(100%+8px)] flex flex-row justify-start items-start -m-4px mt-3.5">
-					<SimpleGrid cols={simpleGridCols} items={similarOutputs} let:item={similarOutput}>
-						<a
-							on:click={() => {
-								logOutputPageSimilarClicked({
-									'SC - App Version': $appVersion,
-									'SC - Similar to Output Id': output.id,
-									'SC - Clicked Output Id': similarOutput.id,
-									'SC - Stripe Product Id': $userSummary?.product_id,
-									'SC - User Id': $page.data.session?.user.id
-								});
-							}}
-							href="/gallery/o/{similarOutput.id}"
-							data-sveltekit-preload-data="hover"
-							class="w-full group"
-						>
-							<div class="w-full p-2px">
-								{#key similarOutput.id}
-									<img
-										loading="lazy"
-										class="w-full h-auto rounded-xl overflow-hidden border-2 border-c-bg-secondary
+			{#if similarOutputs.length > 0}
+				<div class="w-full flex flex-col mt-5">
+					<p class="max-w-full font-semibold text-3xl">
+						{$LL.GenerationFullscreen.SimilarTitle()}
+					</p>
+					<div class="w-[calc(100%+8px)] flex flex-row justify-start items-start -m-4px mt-3.5">
+						<SimpleGrid cols={simpleGridCols} items={similarOutputs} let:item={similarOutput}>
+							<a
+								on:click={() => {
+									logOutputPageSimilarClicked({
+										'SC - App Version': $appVersion,
+										'SC - Similar to Output Id': output.id,
+										'SC - Clicked Output Id': similarOutput.id,
+										'SC - Stripe Product Id': $userSummary?.product_id,
+										'SC - User Id': $page.data.session?.user.id
+									});
+								}}
+								href="/gallery/o/{similarOutput.id}"
+								data-sveltekit-preload-data="hover"
+								class="w-full group"
+							>
+								<div class="w-full p-2px">
+									{#key similarOutput.id}
+										<img
+											loading="lazy"
+											class="w-full h-auto rounded-xl overflow-hidden border-2 border-c-bg-secondary
 										shadow-lg shadow-c-shadow/[var(--o-shadow-stronger)] transition bg-c-bg-secondary not-touch:group-hover:border-c-primary"
-										sizes={`(min-width: 1024px) calc(28rem / ${simpleGridCols}), calc(min(36rem, 100vw) / ${simpleGridCols})`}
-										src={getImgProxySrc({
-											src: similarOutput.upscaled_image_url ?? similarOutput.image_url,
-											preset: '256w'
-										})}
-										srcset={getImgProxySrcSet({
-											src: similarOutput.upscaled_image_url ?? similarOutput.image_url
-										})}
-										width={similarOutput.generation.width}
-										height={similarOutput.generation.height}
-										alt={similarOutput.generation.prompt.text}
-									/>
-								{/key}
-							</div>
-						</a>
-					</SimpleGrid>
+											sizes={`(min-width: 1024px) calc(28rem / ${simpleGridCols}), calc(min(36rem, 100vw) / ${simpleGridCols})`}
+											src={getImgProxySrc({
+												src: similarOutput.upscaled_image_url ?? similarOutput.image_url,
+												preset: '256w'
+											})}
+											srcset={getImgProxySrcSet({
+												src: similarOutput.upscaled_image_url ?? similarOutput.image_url
+											})}
+											width={similarOutput.generation.width}
+											height={similarOutput.generation.height}
+											alt={similarOutput.generation.prompt.text}
+										/>
+									{/key}
+								</div>
+							</a>
+						</SimpleGrid>
+					</div>
 				</div>
-			</div>
+			{/if}
 		</div>
 	</div>
 </div>
