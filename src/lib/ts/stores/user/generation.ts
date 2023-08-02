@@ -447,10 +447,10 @@ export interface TGenerationOutput {
 	is_deleted?: boolean;
 	is_favorited?: boolean;
 	gallery_status?: TGalleryStatus;
-	is_public?: boolean;
 	status?: TGenerationOutputStatus;
 	animation?: Tweened<number>;
 	was_auto_submitted: boolean;
+	is_public: boolean;
 }
 
 export type TGalleryStatus =

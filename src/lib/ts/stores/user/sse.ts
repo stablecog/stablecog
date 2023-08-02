@@ -23,6 +23,7 @@ export interface TSSECreationProcessGenerationOutput {
 	gallery_status: TGalleryStatus;
 	image_url: string;
 	was_auto_submitted: boolean;
+	is_public: boolean;
 }
 
 export interface TSSECreationProcessUpscaleOutput {

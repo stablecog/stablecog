@@ -112,6 +112,16 @@ export function logGenerationOutputFavorited(props: IGenerationOutputActionProps
 	posthog.capture('Generation Output | Favorited', { ...props });
 }
 
+export function logGenerationOutputMadePublic(props: IGenerationOutputActionProps) {
+	mixpanel.track('Generation Output | Made Public', { ...props });
+	posthog.capture('Generation Output | Made Public', { ...props });
+}
+
+export function logGenerationOutputMadePrivate(props: IGenerationOutputActionProps) {
+	mixpanel.track('Generation Output | Made Private', { ...props });
+	posthog.capture('Generation Output | Made Private', { ...props });
+}
+
 export function logGenerationOutputUnfavorited(props: IGenerationOutputActionProps) {
 	mixpanel.track('Generation Output | Unfavorited', { ...props });
 	posthog.capture('Generation Output | Unfavorited', { ...props });

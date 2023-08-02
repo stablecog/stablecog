@@ -23,10 +23,18 @@
 	import WantEmailCard from '$components/WantsEmailCard.svelte';
 	import { onMount } from 'svelte';
 	import { wantsEmail } from '$ts/stores/user/wantsEmail.js';
+	import { createPopover } from '@melt-ui/svelte';
 
 	$: if (!$page.data.session?.user.id) {
 		goto(`/sign-in?redirect_to=${encodeURIComponent($page.url.pathname)}`);
 	}
+
+	const { trigger, content, open } = createPopover({
+		positioning: {
+			placement: 'bottom',
+			gutter: 4
+		}
+	});
 
 	async function signOut() {
 		if (!$page.data.supabase) return;
@@ -103,13 +111,13 @@
 						class="w-8 h-8 ring-2 ring-c-on-bg/25 overflow-hidden rounded-full transition transform
 							relative shadow-lg shadow-c-shadow/[var(--o-shadow-strong)] flex-shrink-0"
 					/>
-					<p class="text-lg overflow-hidden font-semibold flex-shrink overflow-ellipsis">
+					<p class="text-lg font-semibold flex-shrink min-w-0 overflow-hidden overflow-ellipsis">
 						<span class="text-c-on-bg/50 font-normal">@</span>{$userSummary?.username}
 					</p>
 				</div>
-				<div
+				<!-- <div
 					use:clickoutside={{ callback: closeExtraAccountSettings }}
-					class="flex items-end justify-start -m-2 px-5 py-4 md:p-6 -ml-8 md:-ml-10"
+					class="flex items-end justify-start -m-2 px-5 py-3 md:p-6 -ml-8 md:-ml-10"
 				>
 					<div class="flex flex-col items-end justify-start">
 						<IconButton name="Extra Settings" onClick={toggleExtraAccountSettings}>
@@ -134,7 +142,7 @@
 							{/if}
 						</div>
 					</div>
-				</div>
+				</div> -->
 			</div>
 			<div class="w-full h-2px bg-c-bg-secondary" />
 			<div

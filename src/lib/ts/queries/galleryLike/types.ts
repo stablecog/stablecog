@@ -22,6 +22,8 @@ export interface TGalleryGenerationHit {
 	prompt_id: string;
 	negative_prompt_text?: string;
 	negative_prompt_id?: string;
+	is_public: boolean;
+	was_auto_submitted: boolean;
 	user: {
 		username: string;
 	};

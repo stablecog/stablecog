@@ -6,12 +6,19 @@
 	import type { TGenerationFullScreenModalType } from '$components/generationFullScreen/types';
 	import IconShare from '$components/icons/IconShare.svelte';
 	import IconStar from '$components/icons/IconStar.svelte';
-	import LL from '$i18n/i18n-svelte';
+	import LL, { locale } from '$i18n/i18n-svelte';
 	import { getSomeUserProfileInfiniteQueryKey } from '$routes/(app)/user/[username]/constants';
 	import { apiUrl } from '$ts/constants/main';
+	import {
+		logGenerationOutputMadePrivate,
+		logGenerationOutputMadePublic
+	} from '$ts/helpers/loggers';
 	import type { TUserGenerationFullOutputsPage } from '$ts/queries/userGenerations';
+	import { advancedModeApp } from '$ts/stores/advancedMode';
+	import { appVersion } from '$ts/stores/appVersion';
 	import { globalSeed } from '$ts/stores/globalSeed';
 	import {
+		activeGeneration,
 		setGenerationOutputVisibility,
 		type TGenerationWithSelectedOutput
 	} from '$ts/stores/user/generation';
@@ -39,20 +46,45 @@
 
 	const queryClient = useQueryClient();
 
-	async function toggleVisibility(outputIds: string[]) {
+	async function toggleVisibility(
+		outputIds: string[],
+		newVisibility: 'make-public' | 'make-private'
+	) {
 		try {
-			const res = await fetch(`${apiUrl.origin}/v1/user/gallerya`, {
-				method: 'PUT',
-				headers: {
-					'Content-Type': 'application/json',
-					Authorization: `Bearer ${$page.data.session?.access_token}`
-				},
-				body: JSON.stringify({ generation_output_ids: outputIds })
-			});
+			const res = await fetch(
+				`${apiUrl.origin}/v1/user/image/generation/outputs/${
+					newVisibility === 'make-public' ? 'make_public' : 'make_private'
+				}`,
+				{
+					method: 'PUT',
+					headers: {
+						'Content-Type': 'application/json',
+						Authorization: `Bearer ${$page.data.session?.access_token}`
+					},
+					body: JSON.stringify({ generation_output_ids: outputIds })
+				}
+			);
 			if (!res.ok) {
 				checked.set(was_initially_public);
 				throw new Error('Response not ok');
 			}
+			outputIds.forEach((id) => {
+				const props = {
+					'SC - Advanced Mode': $advancedModeApp,
+					'SC - App Version': $appVersion,
+					'SC - Locale': $locale,
+					'SC - Output Id': id,
+					'SC - Page': `${$page.url.pathname}${$page.url.search}`,
+					'SC - Stripe Product Id': $userSummary?.product_id,
+					'SC - User Id': $page.data.session?.user.id,
+					'SC - Generation Id': generation.id
+				};
+				if (newVisibility === 'make-private') {
+					logGenerationOutputMadePrivate(props);
+				} else {
+					logGenerationOutputMadePublic(props);
+				}
+			});
 			if (
 				modalType === 'history' ||
 				modalType === 'generate' ||
@@ -66,7 +98,7 @@
 							return {
 								...page,
 								outputs: page.outputs.map((output) =>
-									outputIds.includes(output.id) ? { ...output, is_public: checked } : output
+									outputIds.includes(output.id) ? { ...output, is_public: $checked } : output
 								)
 							};
 						})
@@ -93,7 +125,7 @@
 					queryClient.setQueryData(otherProfileQueryKey, updateFunction);
 				}
 				outputIds.forEach((id) => {
-					setGenerationOutputVisibility(id, checked ? 'public' : 'private');
+					setGenerationOutputVisibility(id, $checked ? 'public' : 'private');
 				});
 			}
 		} catch (error) {
@@ -113,7 +145,8 @@
 			? 'cursor-pointer'
 			: 'cursor-not-allowed opacity-50'}"
 		id="checkbox"
-		on:click={() => toggleVisibility([generation.selected_output.id])}
+		on:click={() =>
+			toggleVisibility([generation.selected_output.id], $checked ? 'make-public' : 'make-private')}
 	>
 		{#if canToggleVisibility}
 			<ButtonHoverEffect size="md" hoverFrom="left" />
