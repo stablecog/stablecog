@@ -320,6 +320,11 @@ const tr: Translation = {
 		PasswordInput: {
 			Placeholder: 'Şifre'
 		},
+		ProFeatures: {
+			SubscribeTitle: 'Subscribe!',
+			ChangeVisibilityFeatureParagraph:
+				'Changing the visibility of this generation requires a subscription.'
+		},
 		ModelTags: {
 			GoodAtTitle: 'Şunlarda iyi',
 			Tags: {

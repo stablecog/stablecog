@@ -322,6 +322,11 @@ const ja: Translation = {
 		PasswordInput: {
 			Placeholder: 'パスワード'
 		},
+		ProFeatures: {
+			SubscribeTitle: 'Subscribe!',
+			ChangeVisibilityFeatureParagraph:
+				'Changing the visibility of this generation requires a subscription.'
+		},
 		ModelTags: {
 			GoodAtTitle: 'Good at',
 			Tags: {

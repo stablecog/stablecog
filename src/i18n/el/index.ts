@@ -322,6 +322,11 @@ const es: Translation = {
 		PasswordInput: {
 			Placeholder: 'Κωδικός πρόσβασης'
 		},
+		ProFeatures: {
+			SubscribeTitle: 'Subscribe!',
+			ChangeVisibilityFeatureParagraph:
+				'Changing the visibility of this generation requires a subscription.'
+		},
 		ModelTags: {
 			GoodAtTitle: 'Good at',
 			Tags: {

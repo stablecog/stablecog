@@ -307,6 +307,11 @@ const zhHans: Translation = {
 		PasswordInput: {
 			Placeholder: '密码'
 		},
+		ProFeatures: {
+			SubscribeTitle: 'Subscribe!',
+			ChangeVisibilityFeatureParagraph:
+				'Changing the visibility of this generation requires a subscription.'
+		},
 		ModelTags: {
 			GoodAtTitle: 'Good at',
 			Tags: {

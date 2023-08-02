@@ -309,6 +309,11 @@ const ptPt: Translation = {
 		PasswordInput: {
 			Placeholder: 'Palavra-chave'
 		},
+		ProFeatures: {
+			SubscribeTitle: 'Subscribe!',
+			ChangeVisibilityFeatureParagraph:
+				'Changing the visibility of this generation requires a subscription.'
+		},
 		ModelTags: {
 			GoodAtTitle: 'Good at',
 			Tags: {

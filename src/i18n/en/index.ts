@@ -310,6 +310,11 @@ const en: BaseTranslation = {
 		PasswordInput: {
 			Placeholder: 'Password'
 		},
+		ProFeatures: {
+			SubscribeTitle: 'Subscribe!',
+			ChangeVisibilityFeatureParagraph:
+				'Changing the visibility of this generation requires a subscription.'
+		},
 		ModelTags: {
 			GoodAtTitle: 'Good at',
 			Tags: {

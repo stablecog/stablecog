@@ -90,7 +90,8 @@ export const setGenerationToSucceeded = ({
 			...Array.from({ length: gen.num_outputs - outputs.length }).map(() => ({
 				id: generateSSEId(),
 				image_url: '',
-				status: 'failed-nsfw' as TGenerationOutputStatus
+				status: 'failed-nsfw' as TGenerationOutputStatus,
+				was_auto_submitted: false
 			}))
 		];
 		gen.completed_at = convertToDBTimeString(Date.now());
@@ -175,7 +176,8 @@ export async function queueInitialGenerationRequest(request: TInitialGenerationR
 				id: generateSSEId(),
 				image_url: '',
 				status: 'to-be-submitted',
-				animation: newGenerationStartAnimation()
+				animation: newGenerationStartAnimation(),
+				was_auto_submitted: false
 			})),
 			user: {
 				username: username || ''
@@ -448,6 +450,7 @@ export interface TGenerationOutput {
 	is_public?: boolean;
 	status?: TGenerationOutputStatus;
 	animation?: Tweened<number>;
+	was_auto_submitted: boolean;
 }
 
 export type TGalleryStatus =

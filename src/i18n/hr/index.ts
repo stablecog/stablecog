@@ -309,6 +309,11 @@ const hr: Translation = {
 		PasswordInput: {
 			Placeholder: 'Lozinka'
 		},
+		ProFeatures: {
+			SubscribeTitle: 'Subscribe!',
+			ChangeVisibilityFeatureParagraph:
+				'Changing the visibility of this generation requires a subscription.'
+		},
 		ModelTags: {
 			GoodAtTitle: 'Good at',
 			Tags: {

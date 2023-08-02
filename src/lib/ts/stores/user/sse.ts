@@ -22,6 +22,7 @@ export interface TSSECreationProcessGenerationOutput {
 	id: string;
 	gallery_status: TGalleryStatus;
 	image_url: string;
+	was_auto_submitted: boolean;
 }
 
 export interface TSSECreationProcessUpscaleOutput {

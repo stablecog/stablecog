@@ -971,6 +971,16 @@ type RootTranslation = {
 			 */
 			Placeholder: string
 		}
+		ProFeatures: {
+			/**
+			 * S​u​b​s​c​r​i​b​e​!
+			 */
+			SubscribeTitle: string
+			/**
+			 * C​h​a​n​g​i​n​g​ ​t​h​e​ ​v​i​s​i​b​i​l​i​t​y​ ​o​f​ ​t​h​i​s​ ​g​e​n​e​r​a​t​i​o​n​ ​r​e​q​u​i​r​e​s​ ​a​ ​s​u​b​s​c​r​i​p​t​i​o​n​.
+			 */
+			ChangeVisibilityFeatureParagraph: string
+		}
 		ModelTags: {
 			/**
 			 * G​o​o​d​ ​a​t
@@ -4068,6 +4078,16 @@ export type TranslationFunctions = {
 			 * Password
 			 */
 			Placeholder: () => LocalizedString
+		}
+		ProFeatures: {
+			/**
+			 * Subscribe!
+			 */
+			SubscribeTitle: () => LocalizedString
+			/**
+			 * Changing the visibility of this generation requires a subscription.
+			 */
+			ChangeVisibilityFeatureParagraph: () => LocalizedString
 		}
 		ModelTags: {
 			/**
