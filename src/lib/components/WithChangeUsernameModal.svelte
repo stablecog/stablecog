@@ -126,7 +126,7 @@
 			<div
 				{...$content}
 				use:content
-				class="w-80 max-w-full my-auto bg-c-bg-secondary p-5 ring-2 ring-c-bg-tertiary relative
+				class="w-full max-w-sm my-auto bg-c-bg-secondary p-5 md:p-7 ring-2 ring-c-bg-tertiary relative
       	rounded-2xl shadow-generation-modal shadow-c-shadow/[var(--o-shadow-strongest)]"
 			>
 				<h2 class="text-xl font-bold -mt-1 pl-1 pr-12" {...$title} use:title>
