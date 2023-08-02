@@ -781,6 +781,18 @@ type RootTranslation = {
 		 */
 		ContinueButton: string
 		/**
+		 * P​r​o​f​i​l​e
+		 */
+		ProfileButton: string
+		/**
+		 * V​i​s​i​t​ ​P​r​o​f​i​l​e
+		 */
+		VisitProfileButton: string
+		/**
+		 * Y​o​u​r​ ​P​r​o​f​i​l​e
+		 */
+		YourProfileButton: string
+		/**
 		 * L​o​a​d​i​n​g​.​.​.
 		 */
 		LoadingParagraph: string
@@ -3905,6 +3917,18 @@ export type TranslationFunctions = {
 		 * Continue
 		 */
 		ContinueButton: () => LocalizedString
+		/**
+		 * Profile
+		 */
+		ProfileButton: () => LocalizedString
+		/**
+		 * Visit Profile
+		 */
+		VisitProfileButton: () => LocalizedString
+		/**
+		 * Your Profile
+		 */
+		YourProfileButton: () => LocalizedString
 		/**
 		 * Loading...
 		 */

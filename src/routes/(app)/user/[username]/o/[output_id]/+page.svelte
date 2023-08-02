@@ -18,7 +18,11 @@
 	import LL from '$i18n/i18n-svelte.js';
 	import ImagePlaceholder from '$components/ImagePlaceholder.svelte';
 	import MetaTag from '$components/MetaTag.svelte';
-	import { capitalize, getGalleryMetaTagDescriptionFromPromptText } from '$ts/helpers/metaTag.js';
+	import {
+		capitalize,
+		getGalleryMetaTagDescriptionFromPromptText,
+		getOutputOnProfileMetaTagDescriptionFromPromptText
+	} from '$ts/helpers/metaTag.js';
 	import { getPreviewImageUrlFromOutputId } from '$ts/helpers/getPreviewImageUrl.js';
 	import { canonicalUrl } from '$ts/constants/main.js';
 	import NoBgButton from '$components/buttons/NoBgButton.svelte';
@@ -116,7 +120,10 @@
 
 <MetaTag
 	title="{shortPromptTitle} | @{data.username}"
-	description={getGalleryMetaTagDescriptionFromPromptText(output.generation.prompt.text)}
+	description={getOutputOnProfileMetaTagDescriptionFromPromptText(
+		output.generation.prompt.text,
+		$userSummary?.username || ''
+	)}
 	image_url={getPreviewImageUrlFromOutputId(output.id)}
 	canonical="{canonicalUrl}{$page.url.pathname}"
 />

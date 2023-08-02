@@ -32,6 +32,8 @@
 	import UsernameButton from '$components/buttons/UsernameButton.svelte';
 	import UsernameChangeButton from '$routes/(app)/account/UsernameChangeButton.svelte';
 	import NoBgButton from '$components/buttons/NoBgButton.svelte';
+	import SubtleButton from '$components/buttons/SubtleButton.svelte';
+	import IconExternalLink from '$components/icons/IconExternalLink.svelte';
 
 	$: if (!$page.data.session?.user.id) {
 		goto(`/sign-in?redirect_to=${encodeURIComponent($page.url.pathname)}`);
@@ -104,30 +106,40 @@
 			class="w-full md:max-w-4xl flex flex-col rounded-2xl bg-c-bg relative z-0 overflow-hidden
 				shadow-xl shadow-c-shadow/[var(--o-shadow-strong)] ring-2 ring-c-bg-secondary"
 		>
-			<div class="w-full flex items-center gap-3 px-5 py-3 md:px-6">
-				<Avatar
-					text={$userSummary?.username || ''}
-					class="w-8 h-8 ring-2 ring-c-on-bg/25 overflow-hidden rounded-full transition transform
-					relative shadow-lg shadow-c-shadow/[var(--o-shadow-strong)] flex-shrink-0"
-				/>
-				<WithChangeUsernameModal let:trigger closeOnSuccess>
-					<NoBgButton class="mt-0 -ml-2" noPadding {trigger} hoverFrom="left">
-						<div class="flex-shrink min-w-0 flex items-center gap-2 px-2 py-2">
-							<p
-								class="not-touch:group-hover:text-c-primary text-c-on-bg text-xl transition
-							font-semibold flex-shrink min-w-0 overflow-hidden overflow-ellipsis"
-							>
-								<span
-									class="text-c-on-bg/50 transition not-touch:group-hover:text-c-primary/50 font-normal"
-									>@</span
-								>{$userSummary?.username}
-							</p>
-							<IconPen
-								class="w-3.5 h-3.5 text-c-on-bg/50 transition not-touch:group-hover:text-c-primary/50 flex-shrink-0"
-							/>
-						</div>
-					</NoBgButton>
-				</WithChangeUsernameModal>
+			<div class="w-full flex flex-wrap items-center gap-4 px-5 py-4 md:px-6">
+				<div class="flex items-center justify-between gap-3">
+					<Avatar
+						text={$userSummary?.username || ''}
+						class="w-8 h-8 ring-2 ring-c-on-bg/25 overflow-hidden rounded-full transition transform
+						relative shadow-lg shadow-c-shadow/[var(--o-shadow-strong)] flex-shrink-0"
+					/>
+					<WithChangeUsernameModal let:trigger closeOnSuccess>
+						<NoBgButton class="mt-0 -ml-2" noPadding {trigger} hoverFrom="left">
+							<div class="flex-shrink min-w-0 flex items-center gap-2 px-2 py-2">
+								<p
+									class="not-touch:group-hover:text-c-primary text-c-on-bg text-xl transition
+									font-semibold flex-shrink min-w-0 overflow-hidden overflow-ellipsis"
+								>
+									<span
+										class="text-c-on-bg/50 transition not-touch:group-hover:text-c-primary/50 font-normal"
+										>@</span
+									>{$userSummary?.username}
+								</p>
+								<IconPen
+									class="w-3.5 h-3.5 text-c-on-bg/50 transition not-touch:group-hover:text-c-primary/50 flex-shrink-0"
+								/>
+							</div>
+						</NoBgButton>
+					</WithChangeUsernameModal>
+				</div>
+				<SubtleButton target="_blank" href="/user/{$userSummary?.username}">
+					<div class="flex items-center gap-2 px-1">
+						<p class="text-base font-semibold flex flex-shrink min-w-0">
+							{$LL.Shared.VisitProfileButton()}
+						</p>
+						<IconExternalLink class="text-c-on-bg w-6 h-6 -mr-1" />
+					</div>
+				</SubtleButton>
 			</div>
 			<div class="w-full h-2px bg-c-bg-secondary" />
 			<div class="w-full flex items-center justify-between px-5 md:px-6 py-1 gap-4">
