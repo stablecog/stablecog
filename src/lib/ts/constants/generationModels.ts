@@ -70,6 +70,10 @@ export const generationModels: {
 	'3fb1f6d9-c0d3-4ae4-adf4-77f8da78a6f7': {
 		name: 'Waifu Diffusion XL',
 		supportedSchedulerIds: sdSharedSchedulerIds
+	},
+	'48a7031d-43b6-4a23-9f8c-8020eb6862e4': {
+		name: 'Ghibli Diffusion',
+		supportedSchedulerIds: sdSharedSchedulerIds
 	}
 } as const;
 
