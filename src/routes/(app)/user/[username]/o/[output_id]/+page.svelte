@@ -122,7 +122,7 @@
 	title="{shortPromptTitle} | @{data.username}"
 	description={getOutputOnProfileMetaTagDescriptionFromPromptText(
 		output.generation.prompt.text,
-		$userSummary?.username || ''
+		data.username
 	)}
 	image_url={getPreviewImageUrlFromOutputId(output.id)}
 	canonical="{canonicalUrl}{$page.url.pathname}"
