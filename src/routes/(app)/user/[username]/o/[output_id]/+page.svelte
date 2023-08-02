@@ -20,10 +20,9 @@
 	import MetaTag from '$components/MetaTag.svelte';
 	import {
 		capitalize,
-		getGalleryMetaTagDescriptionFromPromptText,
 		getOutputOnProfileMetaTagDescriptionFromPromptText
 	} from '$ts/helpers/metaTag.js';
-	import { getPreviewImageUrlFromOutputId } from '$ts/helpers/getPreviewImageUrl.js';
+	import { getUserProfilePreviewImageUrlFromOutputId } from '$ts/helpers/getPreviewImageUrl.js';
 	import { canonicalUrl } from '$ts/constants/main.js';
 	import NoBgButton from '$components/buttons/NoBgButton.svelte';
 	import IconBack from '$components/icons/IconBack.svelte';
@@ -124,7 +123,7 @@
 		output.generation.prompt.text,
 		data.username
 	)}
-	image_url={getPreviewImageUrlFromOutputId(output.id)}
+	image_url={getUserProfilePreviewImageUrlFromOutputId(output.id, data.username)}
 	canonical="{canonicalUrl}{$page.url.pathname}"
 />
 
