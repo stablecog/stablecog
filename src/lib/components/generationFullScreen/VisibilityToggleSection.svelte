@@ -18,7 +18,6 @@
 	import { appVersion } from '$ts/stores/appVersion';
 	import { globalSeed } from '$ts/stores/globalSeed';
 	import {
-		activeGeneration,
 		setGenerationOutputVisibility,
 		type TGenerationWithSelectedOutput
 	} from '$ts/stores/user/generation';
