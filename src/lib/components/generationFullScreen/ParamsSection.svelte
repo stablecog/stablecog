@@ -9,6 +9,7 @@
 	import IconBubbles from '$components/icons/IconBubbles.svelte';
 	import IconCopy from '$components/icons/IconCopy.svelte';
 	import IconDimensions from '$components/icons/IconDimensions.svelte';
+	import IconGenerationSettingsSet from '$components/icons/iconGenerationSettingsSet/IconGenerationSettingsSet.svelte';
 	import IconScale from '$components/icons/IconScale.svelte';
 	import IconSeed from '$components/icons/IconSeed.svelte';
 	import IconSteps from '$components/icons/IconSteps.svelte';
@@ -47,7 +48,7 @@
 					{...triggerStoreValue}
 					class="flex items-center gap-1.5 text-c-on-bg/75 text-sm cursor-default"
 				>
-					<IconBrain class="w-4 h-4" />
+					<IconGenerationSettingsSet type="model" class="w-4 h-4" />
 					<p class="font-medium">{$LL.Home.ModelDropdown.Title()}</p>
 				</div>
 			</WithTooltip>
@@ -71,7 +72,7 @@
 					{...triggerStoreValue}
 					class="flex items-center gap-1.5 text-c-on-bg/75 text-sm cursor-default"
 				>
-					<IconScale class="w-4 h-4" />
+					<IconGenerationSettingsSet type="guidance-scale" class="w-4 h-4" />
 					<p class="font-medium">{$LL.Home.GuidanceScaleSlider.Title()}</p>
 				</div>
 				<p class="font-semibold">{generation.guidance_scale}</p>
@@ -91,7 +92,7 @@
 					{...triggerStoreValue}
 					class="flex items-center gap-1.5 text-c-on-bg/75 text-sm cursor-default"
 				>
-					<IconSteps class="w-4 h-4" />
+					<IconGenerationSettingsSet type="inference-steps" class="w-4 h-4" />
 					<p class="font-medium">{$LL.Home.InferenceStepsTabBar.Title()}</p>
 				</div>
 			</WithTooltip>
@@ -111,7 +112,7 @@
 					{...triggerStoreValue}
 					class="flex items-center gap-1.5 text-c-on-bg/75 text-sm cursor-default"
 				>
-					<IconBubbles class="w-4 h-4" />
+					<IconGenerationSettingsSet type="scheduler" class="w-4 h-4" />
 					<p class="font-medium">{$LL.Home.SchedulerDropdown.Title()}</p>
 				</div>
 			</WithTooltip>
@@ -136,7 +137,7 @@
 							{...triggerStoreValue}
 							class="flex items-center gap-1.5 text-c-on-bg/75 text-sm cursor-default"
 						>
-							<IconSeed class="w-4 h-4" />
+							<IconGenerationSettingsSet type="seed" class="w-4 h-4" />
 							<p class="font-medium">{$LL.Home.SeedInput.Title()}</p>
 						</div>
 					</WithTooltip>
@@ -168,7 +169,7 @@
 		{/if}
 		<div class="min-w-[calc(50%-0.75rem)] flex flex-col items-start gap-1">
 			<div class="flex items-center gap-1.5 text-c-on-bg/75 text-sm cursor-default">
-				<IconDimensions class="w-4 h-4" />
+				<IconGenerationSettingsSet type="dimensions" class="w-4 h-4" />
 				<p class="font-medium">{$LL.GenerationFullscreen.Dimensions.Title()}</p>
 			</div>
 			<p class="font-semibold">{currentImageWidth} × {currentImageHeight}</p>

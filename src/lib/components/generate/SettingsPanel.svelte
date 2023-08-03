@@ -1,9 +1,5 @@
 <script lang="ts">
 	import IconAspectRatio from '$components/icons/IconAspectRatio.svelte';
-	import IconBrain from '$components/icons/IconBrain.svelte';
-	import IconChatBubbleCancel from '$components/icons/IconChatBubbleCancel.svelte';
-	import IconDimensions from '$components/icons/IconDimensions.svelte';
-	import IconImage from '$components/icons/IconImage.svelte';
 	import TabLikeDropdown from '$components/tabBars/TabLikeDropdown.svelte';
 	import TabLikeRangeInput from '$components/tabBars/TabLikeRangeInput.svelte';
 	import TabLikeTextArea from '$components/tabBars/TabLikeTextArea.svelte';
@@ -31,9 +27,6 @@
 	} from '$ts/stores/generationSettings';
 	import { advancedModeApp } from '$ts/stores/advancedMode';
 	import TabBar from '$components/tabBars/TabBar.svelte';
-	import IconSteps from '$components/icons/IconSteps.svelte';
-	import IconScale from '$components/icons/IconScale.svelte';
-	import IconBubbles from '$components/icons/IconBubbles.svelte';
 	import type { TTab } from '$ts/types/main';
 	import IconChevronDown from '$components/icons/IconChevronDown.svelte';
 	import { expandCollapse } from '$ts/animation/transitions';
@@ -42,7 +35,6 @@
 	import TabLikeInput from '$components/tabBars/TabLikeInput.svelte';
 	import TabLikeInitImageUploader2 from '$components/tabBars/TabLikeInitImageUploader2.svelte';
 	import SettingsPanelItem from '$components/generate/SettingsPanelItem.svelte';
-	import IconAddImage from '$components/icons/IconAddImage.svelte';
 	import type { TAvailableSchedulerId } from '$ts/constants/schedulers';
 	import ModelCard from '$components/modelCard/ModelCard.svelte';
 	import IconModelImage from '$components/modelCard/IconModelImage.svelte';
@@ -65,7 +57,7 @@
 	>
 		<SettingsPanelItem
 			title={$LL.Home.AspectRatioDropdown.Title()}
-			icon={IconDimensions}
+			iconType="aspect-ratio"
 			tooltipTitle={$LL.Home.AspectRatioTabBar.Title()}
 			tooltipParagraph={$LL.Home.AspectRatioTabBar.Paragraph()}
 		>
@@ -83,7 +75,7 @@
 		</SettingsPanelItem>
 		<SettingsPanelItem
 			title={$LL.Home.ModelDropdown.Title()}
-			icon={IconBrain}
+			iconType="model"
 			tooltipTitle={$LL.Home.ModelDropdown.Title()}
 			tooltipParagraph={$LL.Home.ModelDropdown.Paragraph()}
 		>
@@ -108,7 +100,7 @@
 		</SettingsPanelItem>
 		<SettingsPanelItem
 			title={$LL.Home.ImageInput.Title()}
-			icon={IconAddImage}
+			iconType="upload-image"
 			tooltipTitle={$LL.Home.ImageInput.Title()}
 			tooltipParagraph={$LL.Home.InitialImageTabBar.Paragraph()}
 		>
@@ -116,7 +108,7 @@
 		</SettingsPanelItem>
 		<SettingsPanelItem
 			title={$LL.Home.NegativePromptInput.Title()}
-			icon={IconChatBubbleCancel}
+			iconType="negative-prompt"
 			tooltipTitle={$LL.Home.NegativePromptInput.Title()}
 			tooltipParagraph={$LL.Home.NegativePromptInput.Paragraph()}
 		>
@@ -130,7 +122,7 @@
 		</SettingsPanelItem>
 		<SettingsPanelItem
 			title={$LL.Home.NumOutputsSlider.Title()}
-			icon={IconImage}
+			iconType="number-of-images"
 			tooltipTitle={$LL.Home.NumOutputsSlider.Title()}
 			tooltipParagraph={$LL.Home.NumOutputsSlider.Paragraph()}
 		>
@@ -196,7 +188,7 @@
 					<div class="w-full pt-4 pb-6 flex flex-col gap-7">
 						<SettingsPanelItem
 							title={$LL.Home.GuidanceScaleSlider.Title()}
-							icon={IconScale}
+							iconType="guidance-scale"
 							tooltipTitle={$LL.Home.GuidanceScaleSlider.Title()}
 							tooltipParagraph={$LL.Home.GuidanceScaleSlider.Paragraph()}
 						>
@@ -212,7 +204,7 @@
 						</SettingsPanelItem>
 						<SettingsPanelItem
 							title={$LL.Home.SchedulerDropdown.Title()}
-							icon={IconBubbles}
+							iconType="scheduler"
 							tooltipTitle={$LL.Home.SchedulerDropdown.Title()}
 							tooltipParagraph={$LL.Home.SchedulerDropdown.Paragraph()}
 						>
@@ -229,7 +221,7 @@
 						</SettingsPanelItem>
 						<SettingsPanelItem
 							title={$LL.Home.InferenceStepsTabBar.Title()}
-							icon={IconSteps}
+							iconType="inference-steps"
 							tooltipTitle={$LL.Home.InferenceStepsTabBar.Title()}
 							tooltipParagraph={$LL.Home.InferenceStepsTabBar.Paragraph()}
 						>
@@ -244,7 +236,7 @@
 						</SettingsPanelItem>
 						<SettingsPanelItem
 							title={$LL.Home.SeedInput.Title()}
-							icon={IconSeed}
+							iconType="seed"
 							tooltipTitle={$LL.Home.SeedInput.Title()}
 							tooltipParagraph={$LL.Home.SeedInput.Paragraph()}
 						>

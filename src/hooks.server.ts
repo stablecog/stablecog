@@ -79,11 +79,13 @@ export const handle: Handle = async ({ event, resolve }) => {
 			return notAuthorizedResponse(notAuthorizedRedirectRoute);
 		}
 	}
-	return resolve(event, {
+	const response = await resolve(event, {
 		filterSerializedResponseHeaders(name) {
 			return name === 'content-range';
 		}
 	});
+	console.log(response.headers.get('Link'));
+	return response;
 };
 
 const getPreferredLocale = ({ request }: RequestEvent) => {
