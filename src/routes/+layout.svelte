@@ -81,7 +81,7 @@
 	const confirmOtherEmailHash =
 		'#message=Confirmation+link+accepted.+Please+proceed+to+confirm+link+sent+to+the+other+email';
 
-	onMount(async () => {
+	onMount(() => {
 		setBodyClasses();
 		setBodyOverflowHiddenClass();
 		const {
@@ -97,10 +97,10 @@
 		});
 		appVersion.set(document.body.getAttribute('app-version') ?? 'unknown');
 		if ($page.url.hash === confirmOtherEmailHash) {
-			await goto('/account/change-email?confirm_other_email=true');
+			goto('/account/change-email?confirm_other_email=true');
 		}
 		if ($localeLS && isLocale($localeLS) && $localeLS !== $locale) {
-			await loadLocaleAsync($localeLS);
+			loadLocaleAsync($localeLS);
 			setLocale($localeLS);
 		}
 		if ($theme !== null && $theme !== $themeApp) {

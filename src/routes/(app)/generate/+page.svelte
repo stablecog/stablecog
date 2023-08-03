@@ -164,7 +164,9 @@
 		status: 'pre-submit',
 		outputs: Array.from({ length: Number($generationNumOutputs) }).map((i) => ({
 			id: '',
-			image_url: ''
+			image_url: '',
+			is_public: false,
+			was_auto_submitted: false
 		})),
 		user: {
 			username: $userSummary?.username || ''
@@ -236,12 +238,12 @@
 	const confirmOtherEmailHash =
 		'#message=Confirmation+link+accepted.+Please+proceed+to+confirm+link+sent+to+the+other+email';
 
-	onMount(async () => {
+	onMount(() => {
 		if ($page.url.hash === confirmOtherEmailHash) {
-			await goto('/account/change-email?confirm_other_email=true');
+			goto('/account/change-email?confirm_other_email=true');
 		}
 		if (data.is_sign_in_modal_open) {
-			await tick();
+			tick();
 			setTimeout(() => {
 				isSignInModalOpen = true;
 			});

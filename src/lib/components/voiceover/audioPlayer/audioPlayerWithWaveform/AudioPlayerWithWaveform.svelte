@@ -79,7 +79,7 @@
 		}
 	}
 
-	onMount(async () => {
+	onMount(() => {
 		$allAudioPlayers.add(audioElement);
 	});
 
