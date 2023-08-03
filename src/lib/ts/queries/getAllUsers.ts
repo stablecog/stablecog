@@ -109,6 +109,7 @@ export interface TUserForAdmin {
 	banned_at?: string;
 	scheduled_for_deletion_on?: string;
 	data_deleted_at?: string;
+	username: string;
 }
 
 export interface TUserCredit {

@@ -66,12 +66,16 @@
 			{#if productId}
 				<IconStar
 					class="{size === 'sm'
+						? 'w-4 h-4 -ml-0.75'
+						: size === 'md'
 						? 'w-5 h-5 -ml-0.75'
 						: 'w-6 h-6 -ml-1'} flex-shrink-0 text-c-primary"
 				/>
 			{:else}
 				<IconHeart
 					class="{size === 'sm'
+						? 'w-4 h-4 -ml-0.75'
+						: size === 'md'
 						? 'w-5 h-5 -ml-0.75'
 						: 'w-6 h-6 -ml-1'} flex-shrink-0 text-c-primary"
 				/>
@@ -107,12 +111,16 @@
 			{#if productId}
 				<IconStar
 					class="{size === 'sm'
+						? 'w-4 h-4 -ml-0.75'
+						: size === 'md'
 						? 'w-5 h-5 -ml-0.75'
 						: 'w-6 h-6 -ml-1'} flex-shrink-0 text-c-primary"
 				/>
 			{:else}
 				<IconHeart
 					class="{size === 'sm'
+						? 'w-4 h-4 -ml-0.75'
+						: size === 'md'
 						? 'w-5 h-5 -ml-0.75'
 						: 'w-6 h-6 -ml-1'} flex-shrink-0 text-c-primary"
 				/>

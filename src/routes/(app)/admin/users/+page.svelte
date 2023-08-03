@@ -426,7 +426,12 @@
 												{user.email}
 											</p>
 										</button>
-										<div class="relative">
+										<p
+											class="text-left max-w-full overflow-hidden text-sm font-medium px-1.5 py-0.5 break-all text-c-on-bg/60"
+										>
+											<span class="text-c-on-bg/30 font-normal">@</span>{user.username}
+										</p>
+										<div class="relative mt-0.5">
 											{#if isUserDropdownOpen}
 												<div
 													use:clickoutside={{
