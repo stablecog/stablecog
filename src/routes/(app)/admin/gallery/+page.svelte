@@ -106,7 +106,9 @@
 	}
 
 	function goToSide(side: 'left' | 'right') {
-		const outputs = $allUserGenerationFullOutputsQuery?.data?.pages.flatMap((page) => page.outputs);
+		const outputs = $allUserGenerationFullOutputsQuery?.data?.pages
+			.flatMap((page) => page.outputs)
+			.filter((i) => i !== undefined);
 		if (!outputs) return;
 		const index = outputs.findIndex((g) => g.id === $activeGeneration?.selected_output.id);
 		if (index === -1) return;

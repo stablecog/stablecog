@@ -89,9 +89,11 @@
 	let userGalleryEditActivatedOnce = false;
 	$: $isUserGalleryEditActive, onUserGalleryEditActiveChanged();
 
-	$: outputs = $userGenerationFullOutputsQuery?.data?.pages.flatMap((page) => page.outputs);
+	$: outputs = $userGenerationFullOutputsQuery?.data?.pages
+		.flatMap((page) => page.outputs)
+		.filter((i) => i !== undefined);
 	$: outputIndex = outputs
-		? outputs.findIndex((g) => g?.id === $activeGeneration?.selected_output.id)
+		? outputs.findIndex((g) => g.id === $activeGeneration?.selected_output.id)
 		: -1;
 	$: leftIndex = outputIndex > 0 ? outputIndex - 1 : -1;
 	$: rightIndex = outputs && outputIndex < outputs?.length - 1 ? outputIndex + 1 : -1;

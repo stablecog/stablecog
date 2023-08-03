@@ -32,7 +32,9 @@
 
 	let listVirtualizer: Readable<SvelteVirtualizer<HTMLDivElement, Element>> | undefined;
 
-	$: onlyOutputs = $query.data?.pages.flatMap((page) => page.outputs);
+	$: onlyOutputs = $query.data?.pages
+		.flatMap((page) => page.outputs)
+		.filter((i) => i !== undefined);
 	let outputs: TVoiceoverFullOutput[] | undefined = undefined;
 	$: [onlyOutputs, pinnedFullOutputs], setOutputs();
 

@@ -31,7 +31,9 @@
 	let listVirtualizer: Readable<SvelteVirtualizer<HTMLDivElement, Element>> | undefined;
 	let placeholderInnerContainerHeight: number;
 
-	$: onlyOutputs = $generationsQuery.data?.pages.flatMap((page) => page.outputs);
+	$: onlyOutputs = $generationsQuery.data?.pages
+		.flatMap((page) => page.outputs)
+		.filter((i) => i !== undefined);
 	let outputs: TGenerationFullOutput[] | undefined;
 	$: [onlyOutputs, pinnedFullOutputs], setOutputs();
 

@@ -60,7 +60,9 @@
 		| Readable<SvelteVirtualizer<Window, Element>>
 		| undefined;
 
-	$: onlyOutputs = $generationsQuery.data?.pages.flatMap((page) => page.outputs);
+	$: onlyOutputs = $generationsQuery.data?.pages
+		.flatMap((page) => page.outputs)
+		.filter((i) => i !== undefined);
 	let outputs: TGenerationFullOutput[] | undefined = undefined;
 	$: [onlyOutputs, pinnedFullOutputs], setOutputs();
 

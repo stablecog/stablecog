@@ -55,7 +55,9 @@
 		  )
 		: undefined;
 
-	$: outputs = $galleryGenerationFullOutputsQuery?.data?.pages.flatMap((page) => page.outputs);
+	$: outputs = $galleryGenerationFullOutputsQuery?.data?.pages
+		.flatMap((page) => page.outputs)
+		.filter((i) => i !== undefined);
 	$: outputIndex = outputs
 		? outputs.findIndex((g) => g.id === $activeGeneration?.selected_output.id)
 		: -1;
