@@ -5,14 +5,8 @@
 		TGenerationFullScreenModalType,
 		TSetButtonObjectWithState
 	} from '$components/generationFullScreen/types';
-	import IconBrain from '$components/icons/IconBrain.svelte';
-	import IconBubbles from '$components/icons/IconBubbles.svelte';
 	import IconCopy from '$components/icons/IconCopy.svelte';
-	import IconDimensions from '$components/icons/IconDimensions.svelte';
 	import IconGenerationSettingsSet from '$components/icons/iconGenerationSettingsSet/IconGenerationSettingsSet.svelte';
-	import IconScale from '$components/icons/IconScale.svelte';
-	import IconSeed from '$components/icons/IconSeed.svelte';
-	import IconSteps from '$components/icons/IconSteps.svelte';
 	import IconTick from '$components/icons/IconTick.svelte';
 	import Morpher from '$components/Morpher.svelte';
 	import WithTooltip from '$components/WithTooltip.svelte';
