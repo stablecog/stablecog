@@ -511,7 +511,9 @@
 					</div>
 					{#if modalType === 'generate' || modalType === 'history' || modalType === 'stage' || (modalType === 'user-profile' && $userSummary?.username === generation.user.username)}
 						<Divider />
-						<VisibilityToggleSection {generation} {modalType} />
+						{#key generation.selected_output.id}
+							<VisibilityToggleSection {generation} {modalType} />
+						{/key}
 					{/if}
 					<Divider />
 					<ParamsSection
