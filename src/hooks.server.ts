@@ -11,6 +11,8 @@ import { CLIPAPI_AUTH_TOKEN } from '$env/static/private';
 
 loadAllLocales();
 
+const LINK_HEADER_LENGTH = 60;
+
 export const handle: Handle = async ({ event, resolve }) => {
 	event.locals.supabase = createSupabaseServerClient({
 		supabaseUrl: PUBLIC_SUPABASE_URL,
@@ -84,7 +86,13 @@ export const handle: Handle = async ({ event, resolve }) => {
 			return name === 'content-range';
 		}
 	});
-	console.log(response.headers.get('Link'));
+	const linkHeaders = response.headers.get('Link');
+	if (linkHeaders) {
+		const newLinkHeadersArr = linkHeaders.split(', ');
+		if (newLinkHeadersArr.length > LINK_HEADER_LENGTH) {
+			response.headers.set('Link', newLinkHeadersArr.slice(0, LINK_HEADER_LENGTH).join(', '));
+		}
+	}
 	return response;
 };
 
