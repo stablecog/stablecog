@@ -95,8 +95,12 @@
 				</p>
 				<Button
 					href={$page.data.session?.user.id && $userSummary
-						? `/generate?p=${encodeURIComponent($LL.Landing.Describe.Prompt())}`
-						: `/generate?p=${encodeURIComponent($LL.Landing.Describe.Prompt())}&smo=true`}
+						? `/generate?p=${encodeURIComponent(
+								$LL.Landing.Describe.Prompt()
+						  )}&mi=22b0857d-7edc-4d00-9cd9-45aa509db093`
+						: `/generate?p=${encodeURIComponent(
+								$LL.Landing.Describe.Prompt()
+						  )}&smo=true&mi=22b0857d-7edc-4d00-9cd9-45aa509db093`}
 					class="mt-6 w-full hidden md:block max-w-[15rem] px-6 md:px-8 py-4"
 					noPadding
 				>
