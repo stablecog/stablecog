@@ -181,7 +181,7 @@
 						isActive={$userSummary.product_id === undefined &&
 							$userSummary.more_credits_at !== undefined}
 					>
-						<div slot="tooltip" class="flex flex-col pb-0.75">
+						<div slot="tooltip" class="flex flex-col pb-1">
 							<div class="flex items-center justify-start gap-1">
 								<IconToken class="w-4 h-4 -ml-0.75" />
 								<p class="font-bold flex-shrink min-w-0">
