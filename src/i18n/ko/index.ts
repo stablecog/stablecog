@@ -434,6 +434,12 @@ const ko: Translation = {
 		EmailNotAllowed: "This email isn't allowed.",
 		EmailAlreadyInUse: 'This email is already in use.'
 	},
+	MoreCredits: {
+		MoreCreditsOnTheWay: {
+			Title: 'More credits on the way!',
+			Paragraph: "You'll receive more credits soon:"
+		}
+	},
 	Admin: {
 		AdminPanelTitle: '관리자',
 		DeleteButton: '삭제하기',

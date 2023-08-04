@@ -455,6 +455,12 @@ const es: Translation = {
 		EmailNotAllowed: "This email isn't allowed.",
 		EmailAlreadyInUse: 'Αυτός ο λογαριασμός ηλεκτρονικού ταχυδρομείου χρησιμοποιείται ήδη.'
 	},
+	MoreCredits: {
+		MoreCreditsOnTheWay: {
+			Title: 'More credits on the way!',
+			Paragraph: "You'll receive more credits soon:"
+		}
+	},
 	Admin: {
 		AdminPanelTitle: 'Διαχειριστής',
 		DeleteButton: 'Διαγραφή',

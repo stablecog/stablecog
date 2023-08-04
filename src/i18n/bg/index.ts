@@ -437,6 +437,12 @@ const bg: Translation = {
 		EmailNotAllowed: "This email isn't allowed.",
 		EmailAlreadyInUse: 'Имейлът вече се използва.'
 	},
+	MoreCredits: {
+		MoreCreditsOnTheWay: {
+			Title: 'More credits on the way!',
+			Paragraph: "You'll receive more credits soon:"
+		}
+	},
 	Admin: {
 		AdminPanelTitle: 'Администратор',
 		DeleteButton: 'Изтрий',

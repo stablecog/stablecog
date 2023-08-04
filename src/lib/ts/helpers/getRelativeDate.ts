@@ -2,16 +2,18 @@ export function getRelativeDate({
 	date,
 	now = Date.now(),
 	decimals = 0,
-	locale
+	locale,
+	dateStyle = 'short'
 }: {
 	date: string | number | undefined;
 	now?: number;
 	decimals?: number;
 	locale: Locales;
+	dateStyle?: Intl.RelativeTimeFormatStyle | undefined;
 }) {
 	if (date === undefined || (typeof date === 'number' && isNaN(date))) return 'Unknown';
 	const d = new Date(date);
-	const rtf1 = new Intl.RelativeTimeFormat(locale, { style: 'short' });
+	const rtf1 = new Intl.RelativeTimeFormat(locale, { style: dateStyle });
 	const seconds = (d.getTime() - now) / 1000;
 	const secondsRounded = Math.round(seconds);
 	if (Math.abs(secondsRounded) < 60) {

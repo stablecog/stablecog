@@ -27,6 +27,8 @@
 	import BannerWrapper from '$components/BannerWrapper.svelte';
 	import IconToken from '$components/icons/IconToken.svelte';
 	import SignInModal from '$components/SignInModal.svelte';
+	import WithTooltip from '$components/WithTooltip.svelte';
+	import { getRelativeDate } from '$ts/helpers/getRelativeDate';
 
 	export let notAtTheVeryTop = false;
 	export let scrollDirection: 'up' | 'down' = 'down';
@@ -173,29 +175,61 @@
 			</IconButton>
 			<div class="flex items-center justify-end pl-2 pr-3.5 md:pl-2.5 md:pr-5">
 				{#if $page.data.session && $userSummary}
-					<div
-						class="flex-col items-end mr-3.5 md:mr-4 {$isNoCreditsInfoRoute
-							? 'hidden md:flex'
-							: 'flex'} {$page.url.pathname === '/' && $themeApp === 'light' && !notAtTheVeryTop
-							? 'text-c-bg'
-							: 'text-c-on-bg'}"
+					<WithTooltip
+						let:trigger
+						let:triggerStoreValue
+						isActive={$userSummary.product_id === undefined &&
+							$userSummary.more_credits_at !== undefined}
 					>
-						<p
-							class="text-xs font-medium {$page.url.pathname === '/' &&
-							$themeApp === 'light' &&
-							!notAtTheVeryTop
-								? 'text-c-bg/60'
-								: 'text-c-on-bg/60'}"
-						>
-							{$LL.Account.RemainingTitle()}
-						</p>
-						<div class="flex gap-0.25 items-center">
-							<IconToken class="w-4 h-4 -ml-0.25 flex-shrink-0" />
-							<p class="text-sm font-bold mt-0.5">
-								{$userSummary.total_remaining_credits.toLocaleString($locale)}
+						<div slot="tooltip" class="flex flex-col items-start pb-0.75">
+							<div class="flex items-center justify-start gap-1">
+								<IconToken class="w-4 h-4 -ml-0.75" />
+								<p class="font-bold flex-shrink min-w-0">
+									{$LL.MoreCredits.MoreCreditsOnTheWay.Title()}
+								</p>
+							</div>
+							<p class="mt-1">
+								{$LL.MoreCredits.MoreCreditsOnTheWay.Paragraph()}
+							</p>
+							<p
+								class="mt-2.5 -ml-0.5 text-base font-medium bg-c-primary/15 ring-1.5
+									ring-c-primary/30 rounded-md px-2 py-0.5 text-c-primary"
+							>
+								{getRelativeDate({
+									date: $userSummary.more_credits_at,
+									locale: $locale,
+									dateStyle: 'long'
+								})}
 							</p>
 						</div>
-					</div>
+						<div
+							use:trigger
+							{...triggerStoreValue}
+							tabindex="0"
+							role="button"
+							class="flex-col items-end mr-3.5 md:mr-4 cursor-default rounded {$isNoCreditsInfoRoute
+								? 'hidden md:flex'
+								: 'flex'} {$page.url.pathname === '/' && $themeApp === 'light' && !notAtTheVeryTop
+								? 'text-c-bg'
+								: 'text-c-on-bg'}"
+						>
+							<p
+								class="text-xs font-medium {$page.url.pathname === '/' &&
+								$themeApp === 'light' &&
+								!notAtTheVeryTop
+									? 'text-c-bg/60'
+									: 'text-c-on-bg/60'}"
+							>
+								{$LL.Account.RemainingTitle()}
+							</p>
+							<div class="flex gap-0.25 items-center">
+								<IconToken class="w-4 h-4 -ml-0.25 flex-shrink-0" />
+								<p class="text-sm font-bold mt-0.5">
+									{$userSummary.total_remaining_credits.toLocaleString($locale)}
+								</p>
+							</div>
+						</div>
+					</WithTooltip>
 				{/if}
 				<!-- Account -->
 				{#if $page.data.session?.user.email && $userSummary}

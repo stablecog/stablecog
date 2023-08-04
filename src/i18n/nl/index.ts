@@ -439,6 +439,12 @@ const nl: Translation = {
 		EmailNotAllowed: "This email isn't allowed.",
 		EmailAlreadyInUse: 'Dit e-mailadres is al in gebruik.'
 	},
+	MoreCredits: {
+		MoreCreditsOnTheWay: {
+			Title: 'More credits on the way!',
+			Paragraph: "You'll receive more credits soon:"
+		}
+	},
 	Admin: {
 		AdminPanelTitle: 'Admin',
 		DeleteButton: 'Verwijderen',

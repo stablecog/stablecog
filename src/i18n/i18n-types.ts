@@ -1310,6 +1310,18 @@ type RootTranslation = {
 		 */
 		EmailAlreadyInUse: string
 	}
+	MoreCredits: {
+		MoreCreditsOnTheWay: {
+			/**
+			 * M​o​r​e​ ​c​r​e​d​i​t​s​ ​o​n​ ​t​h​e​ ​w​a​y​!
+			 */
+			Title: string
+			/**
+			 * Y​o​u​'​l​l​ ​r​e​c​e​i​v​e​ ​m​o​r​e​ ​c​r​e​d​i​t​s​ ​s​o​o​n​:
+			 */
+			Paragraph: string
+		}
+	}
 	Admin: {
 		/**
 		 * A​d​m​i​n
@@ -4429,6 +4441,18 @@ export type TranslationFunctions = {
 		 * This email is already in use.
 		 */
 		EmailAlreadyInUse: () => LocalizedString
+	}
+	MoreCredits: {
+		MoreCreditsOnTheWay: {
+			/**
+			 * More credits on the way!
+			 */
+			Title: () => LocalizedString
+			/**
+			 * You'll receive more credits soon:
+			 */
+			Paragraph: () => LocalizedString
+		}
 	}
 	Admin: {
 		/**
