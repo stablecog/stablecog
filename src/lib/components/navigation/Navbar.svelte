@@ -192,7 +192,7 @@
 								{$LL.MoreCredits.MoreCreditsOnTheWay.ParagraphFree()}
 							</p>
 							<p
-								class="text-center mt-2.5 -ml-0.5 text-base font-medium bg-c-primary/10 ring-1.5
+								class="text-center mt-2.5 text-base font-medium bg-c-primary/10 ring-1.5
 									ring-c-primary/20 rounded-md px-2 py-0.25 text-c-primary"
 							>
 								{getRelativeDate({
