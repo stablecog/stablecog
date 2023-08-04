@@ -458,7 +458,7 @@ const es: Translation = {
 	MoreCredits: {
 		MoreCreditsOnTheWay: {
 			Title: 'More credits on the way!',
-			Paragraph: "You'll receive more credits soon:"
+			ParagraphFree: "You'll receive more free credits:"
 		}
 	},
 	Admin: {

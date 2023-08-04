@@ -181,7 +181,7 @@
 						isActive={$userSummary.product_id === undefined &&
 							$userSummary.more_credits_at !== undefined}
 					>
-						<div slot="tooltip" class="flex flex-col items-start pb-0.75">
+						<div slot="tooltip" class="flex flex-col pb-0.75">
 							<div class="flex items-center justify-start gap-1">
 								<IconToken class="w-4 h-4 -ml-0.75" />
 								<p class="font-bold flex-shrink min-w-0">
@@ -189,11 +189,11 @@
 								</p>
 							</div>
 							<p class="mt-1">
-								{$LL.MoreCredits.MoreCreditsOnTheWay.Paragraph()}
+								{$LL.MoreCredits.MoreCreditsOnTheWay.ParagraphFree()}
 							</p>
 							<p
-								class="mt-2.5 -ml-0.5 text-base font-medium bg-c-primary/10 ring-1.5
-									ring-c-primary/20 rounded-md px-2 py-0.5 text-c-primary"
+								class="text-center mt-2.5 -ml-0.5 text-base font-medium bg-c-primary/10 ring-1.5
+									ring-c-primary/20 rounded-md px-2 py-0.25 text-c-primary"
 							>
 								{getRelativeDate({
 									date: $userSummary.more_credits_at,

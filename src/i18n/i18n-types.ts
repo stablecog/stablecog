@@ -1317,9 +1317,9 @@ type RootTranslation = {
 			 */
 			Title: string
 			/**
-			 * Y​o​u​'​l​l​ ​r​e​c​e​i​v​e​ ​m​o​r​e​ ​c​r​e​d​i​t​s​ ​s​o​o​n​:
+			 * Y​o​u​'​l​l​ ​r​e​c​e​i​v​e​ ​m​o​r​e​ ​f​r​e​e​ ​c​r​e​d​i​t​s​:
 			 */
-			Paragraph: string
+			ParagraphFree: string
 		}
 	}
 	Admin: {
@@ -4449,9 +4449,9 @@ export type TranslationFunctions = {
 			 */
 			Title: () => LocalizedString
 			/**
-			 * You'll receive more credits soon:
+			 * You'll receive more free credits:
 			 */
-			Paragraph: () => LocalizedString
+			ParagraphFree: () => LocalizedString
 		}
 	}
 	Admin: {
