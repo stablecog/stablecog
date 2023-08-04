@@ -192,8 +192,8 @@
 								{$LL.MoreCredits.MoreCreditsOnTheWay.Paragraph()}
 							</p>
 							<p
-								class="mt-2.5 -ml-0.5 text-base font-medium bg-c-primary/15 ring-1.5
-									ring-c-primary/30 rounded-md px-2 py-0.5 text-c-primary"
+								class="mt-2.5 -ml-0.5 text-base font-medium bg-c-primary/10 ring-1.5
+									ring-c-primary/20 rounded-md px-2 py-0.5 text-c-primary"
 							>
 								{getRelativeDate({
 									date: $userSummary.more_credits_at,
