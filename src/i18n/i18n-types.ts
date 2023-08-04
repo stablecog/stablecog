@@ -1310,16 +1310,16 @@ type RootTranslation = {
 		 */
 		EmailAlreadyInUse: string
 	}
-	MoreCredits: {
-		MoreCreditsOnTheWay: {
+	UpcomingCredits: {
+		MoreFreeCreditsTooltip: {
 			/**
-			 * M​o​r​e​ ​c​r​e​d​i​t​s​ ​o​n​ ​t​h​e​ ​w​a​y​!
+			 * M​o​r​e​ ​o​n​ ​t​h​e​ ​w​a​y​!
 			 */
 			Title: string
 			/**
 			 * Y​o​u​'​l​l​ ​r​e​c​e​i​v​e​ ​m​o​r​e​ ​f​r​e​e​ ​c​r​e​d​i​t​s​:
 			 */
-			ParagraphFree: string
+			Paragraph: string
 		}
 	}
 	Admin: {
@@ -4442,16 +4442,16 @@ export type TranslationFunctions = {
 		 */
 		EmailAlreadyInUse: () => LocalizedString
 	}
-	MoreCredits: {
-		MoreCreditsOnTheWay: {
+	UpcomingCredits: {
+		MoreFreeCreditsTooltip: {
 			/**
-			 * More credits on the way!
+			 * More on the way!
 			 */
 			Title: () => LocalizedString
 			/**
 			 * You'll receive more free credits:
 			 */
-			ParagraphFree: () => LocalizedString
+			Paragraph: () => LocalizedString
 		}
 	}
 	Admin: {

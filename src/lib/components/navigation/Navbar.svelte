@@ -183,16 +183,18 @@
 					>
 						<div slot="tooltip" class="flex flex-col pb-1">
 							<div class="flex items-center justify-start gap-1">
-								<IconToken class="w-4 h-4 -ml-0.75" />
-								<p class="font-bold flex-shrink min-w-0">
-									{$LL.MoreCredits.MoreCreditsOnTheWay.Title()}
-								</p>
+								<IconToken class="w-8 h-8 -ml-1" />
+								<div class="flex flex-col flex-shrink min-w-0">
+									<p class="font-bold flex-shrink min-w-0">
+										{$LL.UpcomingCredits.MoreFreeCreditsTooltip.Title()}
+									</p>
+									<p class="mt-0.5 flex-shrink min-w-0">
+										{$LL.UpcomingCredits.MoreFreeCreditsTooltip.Paragraph()}
+									</p>
+								</div>
 							</div>
-							<p class="mt-1">
-								{$LL.MoreCredits.MoreCreditsOnTheWay.ParagraphFree()}
-							</p>
 							<p
-								class="text-center mt-2.5 text-base font-medium bg-c-primary/10 ring-1.5
+								class="text-center mt-3 text-base font-semibold bg-c-primary/10 ring-1.5
 									ring-c-primary/20 rounded-md px-2 py-0.25 text-c-primary"
 							>
 								{getRelativeDate({

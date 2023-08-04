@@ -455,10 +455,10 @@ const es: Translation = {
 		EmailNotAllowed: "This email isn't allowed.",
 		EmailAlreadyInUse: 'Αυτός ο λογαριασμός ηλεκτρονικού ταχυδρομείου χρησιμοποιείται ήδη.'
 	},
-	MoreCredits: {
-		MoreCreditsOnTheWay: {
-			Title: 'More credits on the way!',
-			ParagraphFree: "You'll receive more free credits:"
+	UpcomingCredits: {
+		MoreFreeCreditsTooltip: {
+			Title: 'More on the way!',
+			Paragraph: "You'll receive more free credits:"
 		}
 	},
 	Admin: {
