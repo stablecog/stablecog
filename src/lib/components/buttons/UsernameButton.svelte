@@ -9,6 +9,8 @@
 	export let email: string | undefined = undefined;
 	export { classes as class };
 	let classes = '';
+
+	$: useEmail = isSuperAdmin($userSummary?.roles) || isGalleryAdmin($userSummary?.roles);
 </script>
 
 <a
@@ -29,10 +31,9 @@
 		class="font-medium text-c-on-bg not-touch:group-hover:text-c-primary
 									transition flex-shrink min-w-0 overflow-hidden overflow-ellipsis relative"
 	>
-		<span class="text-c-on-bg/50 not-touch:group-hover:text-c-primary/50 transition font-normal"
-			>@</span
-		>{email && (isSuperAdmin($userSummary?.roles) || isGalleryAdmin($userSummary?.roles))
-			? email
-			: username}
+		{#if !(email && useEmail)}
+			<span class="text-c-on-bg/50 not-touch:group-hover:text-c-primary/50 transition font-normal"
+				>@</span
+			>{/if}{email && useEmail ? email : username}
 	</p>
 </a>
