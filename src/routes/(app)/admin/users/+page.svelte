@@ -426,11 +426,18 @@
 												{user.email}
 											</p>
 										</button>
-										<p
-											class="text-left max-w-full overflow-hidden text-sm font-medium px-1.5 py-0.5 break-all text-c-on-bg/60"
+										<a
+											href="/user/{user.username}"
+											data-sveltekit-preload-data="hover"
+											target="_blank"
+											class="text-left max-w-full overflow-hidden text-sm font-medium px-1.5 py-0.5 break-all text-c-on-bg/60
+											transition rounded not-touch:hover:bg-c-primary/15 not-touch:hover:text-c-primary group"
 										>
-											<span class="text-c-on-bg/30 font-normal">@</span>{user.username}
-										</p>
+											<span
+												class="text-c-on-bg/30 font-normal not-touch:group-hover:text-c-primary/50 transition"
+												>@</span
+											>{user.username}
+										</a>
 										<div class="relative mt-0.5">
 											{#if isUserDropdownOpen}
 												<div
