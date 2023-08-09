@@ -18,11 +18,14 @@
 
 <PageWrapper>
 	<div class="w-full max-w-7xl flex justify-center text-center">
-		<h1 class="font-bold text-4xl">{$LL.Blog.Title()}</h1>
+		<h1 class="font-bold text-4xl">{$LL.Blog.TitleAlt()}</h1>
 	</div>
-	<div class="w-[100%+2.5rem] -mx-5 max-w-7xl flex flex-wrap items-start justify-center mt-6">
-		{#each data.posts as post}
-			<div class="w-full self-stretch flex max-w-md md:w-1/2 lg:w-1/3 xl:w-auto xl:max-w-sm p-2">
+	<div class="w-[100%+2.5rem] -mx-5 max-w-6xl flex flex-wrap items-start justify-center mt-6">
+		<div class="w-full p-2 max-w-lg md:max-w-full">
+			<BlogPostCard post={data.posts[0]} featured={true} />
+		</div>
+		{#each data.posts.slice(1) as post}
+			<div class="self-stretch flex max-w-lg w-full md:w-1/2 lg:w-1/3 p-2">
 				<BlogPostCard {post} />
 			</div>
 		{/each}

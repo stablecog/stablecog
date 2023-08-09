@@ -1,2 +1,2 @@
 export const docContainerSize = 768;
-export const blogContainerSize = 1280;
+export const blogContainerSize = 1152;
