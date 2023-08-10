@@ -1,38 +1,19 @@
 <script lang="ts">
 	import IconHeart from '$components/icons/IconHeart.svelte';
 	import IconStar from '$components/icons/IconStar.svelte';
-	import {
-		PUBLIC_STRIPE_PRODUCT_ID_STARTER_SUBSCRIPTION,
-		PUBLIC_STRIPE_PRODUCT_ID_PRO_SUBSCRIPTION,
-		PUBLIC_STRIPE_PRODUCT_ID_ULTIMATE_SUBSCRIPTION
-	} from '$env/static/public';
 	import LL from '$i18n/i18n-svelte';
 	import type { TStripeSupportedProductIdSubscriptions } from '$ts/constants/stripePublic';
+	import { getTitleFromProductId } from '$ts/helpers/stripe/plan';
 
 	export let productId: TStripeSupportedProductIdSubscriptions | undefined;
 	export let size: 'sm' | 'md' | 'lg' = 'md';
 	export { classes as class };
-	export let planText: string | undefined = undefined;
+	export let loading = false;
 	export let href: string | undefined = undefined;
 	export let onClick: (() => void) | undefined = undefined;
 	let classes = '';
 
-	let _planText: string;
-	$: [$LL, planText], setPlanText();
-
-	function setPlanText() {
-		if (planText !== undefined) {
-			_planText = planText;
-		} else if (productId === PUBLIC_STRIPE_PRODUCT_ID_STARTER_SUBSCRIPTION) {
-			_planText = $LL.Pricing.Plans.StarterTitle();
-		} else if (productId === PUBLIC_STRIPE_PRODUCT_ID_PRO_SUBSCRIPTION) {
-			_planText = $LL.Pricing.Plans.ProTitle();
-		} else if (productId === PUBLIC_STRIPE_PRODUCT_ID_ULTIMATE_SUBSCRIPTION) {
-			_planText = $LL.Pricing.Plans.UltimateTitle();
-		} else {
-			_planText = $LL.Pricing.Plans.FreeTitle();
-		}
-	}
+	$: planTitle = getTitleFromProductId($LL, productId);
 </script>
 
 {#if href}
@@ -63,8 +44,8 @@
 				? 'gap-1.5 px-3 py-1.25'
 				: 'gap-1.5 px-4 py-1.25'}"
 		>
-			{#if productId}
-				<IconStar
+			{#if productId === undefined || productId === 'free'}
+				<IconHeart
 					class="{size === 'sm'
 						? 'w-4 h-4 -ml-0.75'
 						: size === 'md'
@@ -72,7 +53,7 @@
 						: 'w-6 h-6 -ml-1'} flex-shrink-0 text-c-primary"
 				/>
 			{:else}
-				<IconHeart
+				<IconStar
 					class="{size === 'sm'
 						? 'w-4 h-4 -ml-0.75'
 						: size === 'md'
@@ -87,7 +68,7 @@
 					? 'text-base font-semibold'
 					: 'text-lg font-semibold'} flex-shrink min-w-0 overflow-hidden overflow-ellipsis whitespace-nowrap"
 			>
-				{_planText}
+				{loading ? '----' : planTitle}
 			</p>
 		</div>
 	</a>
@@ -108,8 +89,8 @@
 				? 'gap-1.5 px-3 py-1.25'
 				: 'gap-1.5 px-4 py-1.25'}"
 		>
-			{#if productId}
-				<IconStar
+			{#if productId === undefined || productId === 'free'}
+				<IconHeart
 					class="{size === 'sm'
 						? 'w-4 h-4 -ml-0.75'
 						: size === 'md'
@@ -117,7 +98,7 @@
 						: 'w-6 h-6 -ml-1'} flex-shrink-0 text-c-primary"
 				/>
 			{:else}
-				<IconHeart
+				<IconStar
 					class="{size === 'sm'
 						? 'w-4 h-4 -ml-0.75'
 						: size === 'md'
@@ -132,7 +113,7 @@
 					? 'text-base font-semibold'
 					: 'text-lg font-semibold'} flex-shrink min-w-0 overflow-hidden overflow-ellipsis whitespace-nowrap"
 			>
-				{_planText}
+				{loading ? '----' : planTitle}
 			</p>
 		</div>
 	</div>

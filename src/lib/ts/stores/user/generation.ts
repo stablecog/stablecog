@@ -91,6 +91,7 @@ export const setGenerationToSucceeded = ({
 				id: generateSSEId(),
 				image_url: '',
 				status: 'failed-nsfw' as TGenerationOutputStatus,
+				is_public: false,
 				was_auto_submitted: false
 			}))
 		];
@@ -177,6 +178,7 @@ export async function queueInitialGenerationRequest(request: TInitialGenerationR
 				image_url: '',
 				status: 'to-be-submitted',
 				animation: newGenerationStartAnimation(),
+				is_public: false,
 				was_auto_submitted: false
 			})),
 			user: {

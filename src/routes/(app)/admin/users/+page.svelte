@@ -268,15 +268,10 @@
 					<div class="flex gap-3 items-center">
 						<ProductIdBadge
 							productId={item.product_id}
-							planText={item.product_id === '----' ? item.product_id : undefined}
+							loading={item.product_id === '----'}
 							size="md"
 						/>
-						<p
-							class="font-bold text-xl pr-4 {item.product_id !== undefined &&
-							item.product_id !== 'free'
-								? 'text-c-primary'
-								: 'text-c-on-bg'}"
-						>
+						<p class="font-bold text-xl pr-4 text-c-primary">
 							{item.count}
 						</p>
 					</div>
