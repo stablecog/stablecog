@@ -488,6 +488,8 @@ const tr: Translation = {
 			BannedAtTitle: 'Banlandı',
 			BannedTitle: 'Banlandı',
 			UnbanUserButton: 'Banı Kaldır',
+			BanDomainButton: 'Ban Domain',
+			UnbanDomainButton: 'Unban Domain',
 			BanUserButton: 'Banla',
 			GiftCreditsButton: 'Kredi Hediye Et'
 		},

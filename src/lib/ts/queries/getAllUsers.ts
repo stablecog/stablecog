@@ -79,7 +79,32 @@ export async function banOrUnbanUsers({
 			Authorization: `Bearer ${access_token}`
 		},
 		body: JSON.stringify({
-			user_ids: user_ids,
+			user_ids,
+			action
+		})
+	});
+	const resJson = await res.json();
+	return resJson;
+}
+
+export async function banOrUnbanDomains({
+	domains,
+	access_token,
+	action
+}: {
+	domains: string[];
+	access_token: string;
+	action: 'ban' | 'unban';
+}) {
+	const url = `${apiUrl.origin}/v1/admin/domains/ban`;
+	const res = await fetch(url, {
+		method: 'POST',
+		headers: {
+			'Content-Type': 'application/json',
+			Authorization: `Bearer ${access_token}`
+		},
+		body: JSON.stringify({
+			domains,
 			action
 		})
 	});

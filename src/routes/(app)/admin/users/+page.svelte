@@ -10,7 +10,12 @@
 	import IconSearch from '$components/icons/IconSearch.svelte';
 	import { browser } from '$app/environment';
 	import { createInfiniteQuery, createQuery } from '@tanstack/svelte-query';
-	import { banOrUnbanUsers, getAllUsers, type TAllUsersPage } from '$ts/queries/getAllUsers';
+	import {
+		banOrUnbanDomains,
+		banOrUnbanUsers,
+		getAllUsers,
+		type TAllUsersPage
+	} from '$ts/queries/getAllUsers';
 	import ProductIdBadge from '$components/badges/ProductIdBadge.svelte';
 	import { scale } from 'svelte/transition';
 	import { quadOut } from 'svelte/easing';
@@ -90,7 +95,13 @@
 
 	$: totalCounts = $allUsersQuery?.data?.pages?.[0]?.total_counts;
 
-	type TDropdownState = 'main' | 'gift-credits' | 'ban-user' | 'unban-user';
+	type TDropdownState =
+		| 'main'
+		| 'gift-credits'
+		| 'ban-user'
+		| 'unban-user'
+		| 'ban-domain'
+		| 'unban-domain';
 	let isDropdownOpen: {
 		[id: string]: {
 			isOpen: boolean;
@@ -221,6 +232,31 @@
 			const res = await banOrUnbanUsers({
 				access_token: $page.data.session?.access_token || '',
 				user_ids,
+				action
+			});
+			console.log(res);
+			$allUsersQuery?.refetch();
+		} catch (e) {
+			console.log(e);
+		}
+	}
+
+	async function _banOrUnbanDomains({
+		userId,
+		domains,
+		action
+	}: {
+		userId: string;
+		domains: string[];
+		action: 'ban' | 'unban';
+	}) {
+		if (banOrUnbanUserInputValue !== $LL.Admin.Users.ConfirmAction.ConfirmActionReferenceText())
+			return;
+		try {
+			toggleUserDropdown(userId, false);
+			const res = await banOrUnbanDomains({
+				access_token: $page.data.session?.access_token || '',
+				domains,
 				action
 			});
 			console.log(res);
@@ -447,7 +483,7 @@
 														alignment="left-0 top-0"
 														class="w-64 max-w-[80vw] mt-1.5"
 													>
-														{#if userDropdownState === 'ban-user' || userDropdownState === 'unban-user'}
+														{#if userDropdownState === 'ban-user' || userDropdownState === 'unban-user' || userDropdownState === 'ban-domain' || userDropdownState === 'unban-domain'}
 															<ScrollAreaWithChevron
 																class="w-full flex flex-col justify-start max-h-[min(50vh,16rem)] relative"
 															>
@@ -458,11 +494,23 @@
 																		})}
 																	</p>
 																	<form
-																		on:submit={() =>
-																			_banOrUnbanUsers({
-																				user_ids: [user.id],
-																				action: user.banned_at ? 'unban' : 'ban'
-																			})}
+																		on:submit={() => {
+																			if (
+																				userDropdownState === 'ban-domain' ||
+																				userDropdownState === 'unban-domain'
+																			) {
+																				_banOrUnbanDomains({
+																					userId: user.id,
+																					domains: [user.email.split('@')[1]],
+																					action: user.banned_at ? 'unban' : 'ban'
+																				});
+																			} else {
+																				_banOrUnbanUsers({
+																					user_ids: [user.id],
+																					action: user.banned_at ? 'unban' : 'ban'
+																				});
+																			}
+																		}}
 																		class="w-full flex flex-col gap-2"
 																	>
 																		<Input
@@ -478,7 +526,12 @@
 																			type="danger"
 																			size="sm"
 																		>
-																			{user.banned_at
+																			{userDropdownState === 'ban-domain' ||
+																			userDropdownState === 'unban-domain'
+																				? user.banned_at
+																					? $LL.Admin.Users.UnbanDomainButton()
+																					: $LL.Admin.Users.BanDomainButton()
+																				: user.banned_at
 																				? $LL.Admin.Users.UnbanUserButton()
 																				: $LL.Admin.Users.BanUserButton()}
 																		</Button>
@@ -563,6 +616,26 @@
 																			{user.banned_at
 																				? $LL.Admin.Users.UnbanUserButton()
 																				: $LL.Admin.Users.BanUserButton()}
+																		</p>
+																	</div>
+																</DropdownItem>
+																<DropdownItem
+																	onClick={() =>
+																		user.banned_at
+																			? changeUserDropdownState(user.id, 'unban-domain')
+																			: changeUserDropdownState(user.id, 'ban-domain')}
+																>
+																	<div class="max-w-full flex items-center gap-2">
+																		<IconWarning
+																			class="w-5 h-5 text-c-danger flex-shrink-0 not-touch:group-hover:text-c-primary"
+																		/>
+																		<p
+																			class="flex-1 min-w-0 overflow-hidden overflow-ellipsis text-left text-c-danger
+																			transition not-touch:group-hover:text-c-primary"
+																		>
+																			{user.banned_at
+																				? $LL.Admin.Users.UnbanDomainButton()
+																				: $LL.Admin.Users.BanDomainButton()}
 																		</p>
 																	</div>
 																</DropdownItem>

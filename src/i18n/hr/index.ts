@@ -467,6 +467,8 @@ const hr: Translation = {
 			BannedAtTitle: 'Banned',
 			BannedTitle: 'Banned',
 			UnbanUserButton: 'Unban User',
+			BanDomainButton: 'Ban Domain',
+			UnbanDomainButton: 'Unban Domain',
 			BanUserButton: 'Ban User',
 			GiftCreditsButton: 'Gift Credits'
 		},

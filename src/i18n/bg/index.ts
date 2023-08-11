@@ -471,6 +471,8 @@ const bg: Translation = {
 			BannedAtTitle: 'Banned',
 			BannedTitle: 'Banned',
 			UnbanUserButton: 'Unban User',
+			BanDomainButton: 'Ban Domain',
+			UnbanDomainButton: 'Unban Domain',
 			BanUserButton: 'Ban User',
 			GiftCreditsButton: 'Дари кредити'
 		},

@@ -491,6 +491,8 @@ const es: Translation = {
 			BannedAtTitle: 'Αποκλεισμένοι',
 			BannedTitle: 'Αποκλεισμένοι',
 			UnbanUserButton: 'Κατάργηση Αποκλεισμού Χρήστη',
+			BanDomainButton: 'Ban Domain',
+			UnbanDomainButton: 'Unban Domain',
 			BanUserButton: 'Αποκλεισμός Χρήστη',
 			GiftCreditsButton: 'Δωρεάν μονάδες'
 		},

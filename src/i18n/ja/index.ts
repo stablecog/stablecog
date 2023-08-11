@@ -483,6 +483,8 @@ const ja: Translation = {
 			BannedAtTitle: '禁止',
 			BannedTitle: '禁止',
 			UnbanUserButton: 'ユーザーの禁止解除',
+			BanDomainButton: 'Ban Domain',
+			UnbanDomainButton: 'Unban Domain',
 			BanUserButton: 'ユーザーの禁止',
 			GiftCreditsButton: 'ギフトクレジット'
 		},

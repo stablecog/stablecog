@@ -530,7 +530,6 @@
 						{modalType}
 					/>
 					{#if modalType === 'gallery' || modalType === 'user-profile'}
-						<Divider class="lg:-mt-3" />
 						<SimilarOutputsSection
 							{modalType}
 							{generation}

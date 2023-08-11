@@ -1426,6 +1426,14 @@ type RootTranslation = {
 			 */
 			UnbanUserButton: string
 			/**
+			 * B​a​n​ ​D​o​m​a​i​n
+			 */
+			BanDomainButton: string
+			/**
+			 * U​n​b​a​n​ ​D​o​m​a​i​n
+			 */
+			UnbanDomainButton: string
+			/**
 			 * B​a​n​ ​U​s​e​r
 			 */
 			BanUserButton: string
@@ -4556,6 +4564,14 @@ export type TranslationFunctions = {
 			 * Unban User
 			 */
 			UnbanUserButton: () => LocalizedString
+			/**
+			 * Ban Domain
+			 */
+			BanDomainButton: () => LocalizedString
+			/**
+			 * Unban Domain
+			 */
+			UnbanDomainButton: () => LocalizedString
 			/**
 			 * Ban User
 			 */
