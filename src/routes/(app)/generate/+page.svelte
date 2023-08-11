@@ -345,7 +345,7 @@
 					>
 						<div
 							bind:clientHeight={horizontalListHeight}
-							class="w-full md:hidden pb-0.5 bg-c-bg transform transition duration-250 {isGenerationSettingsSheetOpen
+							class="w-full md:hidden pb-0.5 bg-c-bg transform transition duration-300 {isGenerationSettingsSheetOpen
 								? 'translate-y-full pointer-events-none opacity-0'
 								: 'pointer-events-auto'}"
 						>

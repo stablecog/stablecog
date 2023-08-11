@@ -250,7 +250,7 @@
 						<div
 							bind:clientHeight={horizontalListHeight}
 							class="w-full h-17 flex flex-col overflow-hidden relative z-40 md:hidden rounded-t-2xl
-							bg-c-bg transform transition duration-250 {isSettingsSheetOpen
+							bg-c-bg transform transition duration-300 {isSettingsSheetOpen
 								? 'translate-y-full pointer-events-none opacity-0'
 								: 'pointer-events-auto'}"
 						>
