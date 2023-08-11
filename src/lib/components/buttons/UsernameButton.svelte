@@ -29,7 +29,7 @@
 	/>
 	<p
 		class="font-medium text-c-on-bg not-touch:group-hover:text-c-primary
-									transition flex-shrink min-w-0 overflow-hidden overflow-ellipsis relative"
+		transition flex-shrink min-w-0 overflow-hidden overflow-ellipsis relative whitespace-nowrap"
 	>
 		{#if !(email && useEmail)}
 			<span class="text-c-on-bg/50 not-touch:group-hover:text-c-primary/50 transition font-normal"
