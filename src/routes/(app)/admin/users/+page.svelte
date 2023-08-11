@@ -494,7 +494,7 @@
 																		})}
 																	</p>
 																	<form
-																		on:submit={() => {
+																		on:submit|preventDefault={() => {
 																			if (
 																				userDropdownState === 'ban-domain' ||
 																				userDropdownState === 'unban-domain'
