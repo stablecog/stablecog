@@ -40,7 +40,7 @@
 	import GenerationSettingsProvider from '$components/generate/GenerationSettingsProvider.svelte';
 	import { heightDefault, widthDefault } from '$ts/constants/generationSize.js';
 	import { setActiveGenerationToOutputIndex } from '$ts/helpers/goToOutputIndex.js';
-	import GenerationGridInfinite2 from '$components/grids/GenerationGridInfinite2.svelte';
+	import GenerationGridInfinite from '$components/grids/GenerationGridInfinite.svelte';
 	import AutoSize from '$components/AutoSize.svelte';
 	import { canonicalUrl } from '$ts/constants/main.js';
 	import MetaTag from '$components/MetaTag.svelte';
@@ -285,7 +285,7 @@
 							{:else if userGenerationFullOutputsQuery}
 								<AutoSize bind:element={gridScrollContainer} let:clientWidth let:clientHeight>
 									{#if $windowWidth > lgBreakpoint && gridScrollContainer}
-										<GenerationGridInfinite2
+										<GenerationGridInfinite
 											paddingLeft={6}
 											paddingRight={6}
 											paddingTop={6}

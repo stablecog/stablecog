@@ -16,7 +16,7 @@
 	import IconSadFace from '$components/icons/IconSadFace.svelte';
 	import type { TAvailableGenerationModelId } from '$ts/constants/generationModels';
 	import { setActiveGenerationToOutputIndex } from '$ts/helpers/goToOutputIndex';
-	import GenerationGridInfinite2 from '$components/grids/GenerationGridInfinite2.svelte';
+	import GenerationGridInfinite from '$components/grids/GenerationGridInfinite.svelte';
 	import { windowWidth } from '$ts/stores/window';
 	import {
 		lgBreakpoint,
@@ -127,7 +127,7 @@
 			</div>
 		{:else if galleryGenerationFullOutputsQuery !== undefined && $windowWidth}
 			<div class="w-full flex-1 mt-1 md:mt-0.5 flex flex-col">
-				<GenerationGridInfinite2
+				<GenerationGridInfinite
 					cardType="gallery"
 					generationsQuery={galleryGenerationFullOutputsQuery}
 					cols={$windowWidth >= xxlBreakpoint

@@ -9,7 +9,7 @@
 		xxlBreakpoint
 	} from '$components/generationFullScreen/constants';
 	import GenerationFullScreen from '$components/generationFullScreen/GenerationFullScreen.svelte';
-	import GenerationGridInfinite2 from '$components/grids/GenerationGridInfinite2.svelte';
+	import GenerationGridInfinite from '$components/grids/GenerationGridInfinite.svelte';
 	import IconAnimatedSpinner from '$components/icons/IconAnimatedSpinner.svelte';
 	import IconFunnel from '$components/icons/IconFunnel.svelte';
 	import IconSadFace from '$components/icons/IconSadFace.svelte';
@@ -220,7 +220,7 @@
 					</div>
 				</div>
 			{:else}
-				<GenerationGridInfinite2
+				<GenerationGridInfinite
 					generationsQuery={allUserGenerationFullOutputsQuery}
 					cardType="admin-gallery"
 					cols={$windowWidth > xxlBreakpoint

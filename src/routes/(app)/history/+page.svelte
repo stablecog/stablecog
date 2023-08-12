@@ -10,7 +10,7 @@
 		xxlBreakpoint
 	} from '$components/generationFullScreen/constants';
 	import GenerationFullScreen from '$components/generationFullScreen/GenerationFullScreen.svelte';
-	import GenerationGridInfinite2 from '$components/grids/GenerationGridInfinite2.svelte';
+	import GenerationGridInfinite from '$components/grids/GenerationGridInfinite.svelte';
 	import IconFolderOutlined from '$components/icons/IconFolderOutlined.svelte';
 	import IconSadFace from '$components/icons/IconSadFace.svelte';
 	import IconStarOutlined from '$components/icons/IconStarOutlined.svelte';
@@ -237,7 +237,7 @@
 				{:else if $windowWidth}
 					<div class="w-full flex-1 flex flex-col">
 						{#key $userGalleryCurrentView}
-							<GenerationGridInfinite2
+							<GenerationGridInfinite
 								generationsQuery={userGenerationFullOutputsQuery}
 								cardType="history"
 								cols={$windowWidth > xxlBreakpoint
