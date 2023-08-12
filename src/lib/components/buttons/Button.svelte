@@ -1,10 +1,12 @@
 <script lang="ts">
 	import IconAnimatedSpinner from '$components/icons/IconAnimatedSpinner.svelte';
 	import IconAnimatedUploading from '$components/icons/IconAnimatedUploading.svelte';
+	import IconHourglassAnimated from '$components/icons/IconHourglassAnimated.svelte';
 	import type { THrefTarget } from '$ts/types/main';
 	import { tick } from 'svelte';
 	export let disabled = false;
 	export let loading = false;
+	export let waiting = false;
 	export let uploading = false;
 	export let href: string | undefined = undefined;
 	export let onClick: (() => void) | undefined = undefined;
@@ -61,6 +63,8 @@
 		const diagonal = Math.sqrt(width * width + height * height);
 		return diagonal;
 	}
+
+	$: loadingOrWaitingOrUploading = loading || waiting || uploading;
 </script>
 
 {#if href}
@@ -140,7 +144,7 @@
 			{/if}
 			{#if withSpinner}
 				<div
-					class="transform relative transition {loading
+					class="transform relative transition {loadingOrWaitingOrUploading
 						? 'scale-0 opacity-0'
 						: 'scale-100 opacity-100'}"
 				>
@@ -150,11 +154,22 @@
 					class="w-full h-full absolute left-0 top-0 pointer-events-none flex justify-center items-center"
 				>
 					<div
-						class="{size === 'sm' ? 'w-6 h-6' : 'w-7 h-7'} transition transform {loading
+						class="{size === 'sm' ? 'w-6 h-6' : 'w-7 h-7'} transition transform {loading && !waiting
 							? 'scale-100'
 							: 'scale-0'}"
 					>
-						<IconAnimatedSpinner class="w-full h-full" {loading} />
+						<IconAnimatedSpinner class="w-full h-full" loading={loading && !waiting} />
+					</div>
+				</div>
+				<div
+					class="w-full h-full absolute left-0 top-0 pointer-events-none flex justify-center items-center"
+				>
+					<div
+						class="{size === 'sm' ? 'w-6 h-6' : 'w-7 h-7'} transition transform {waiting
+							? 'scale-100'
+							: 'scale-0'}"
+					>
+						<IconHourglassAnimated class="w-full h-full" loading={waiting} />
 					</div>
 				</div>
 				<div
@@ -185,7 +200,7 @@
 		on:click={_onClick}
 		bind:this={element}
 		aria-label={label}
-		disabled={disabled || loading || uploading}
+		disabled={disabled || loadingOrWaitingOrUploading}
 		type={buttonType}
 		class="touch-manipulation relative flex items-center justify-center text-center font-bold gap-2
 			overflow-hidden z-0 group {noPadding
@@ -254,7 +269,7 @@
 			{/if}
 			{#if withSpinner}
 				<div
-					class="transform relative transition {loading || uploading
+					class="transform relative transition {loadingOrWaitingOrUploading
 						? 'scale-0 opacity-0'
 						: 'scale-100 opacity-100'}"
 				>
@@ -264,11 +279,22 @@
 					class="w-full h-full absolute left-0 top-0 pointer-events-none flex justify-center items-center"
 				>
 					<div
-						class="{size === 'sm' ? 'w-6 h-6' : 'w-7 h-7'} transition transform {loading
+						class="{size === 'sm' ? 'w-6 h-6' : 'w-7 h-7'} transition transform {loading && !waiting
 							? 'scale-100'
 							: 'scale-0'}"
 					>
-						<IconAnimatedSpinner class="w-full h-full" {loading} />
+						<IconAnimatedSpinner class="w-full h-full" loading={loading && !waiting} />
+					</div>
+				</div>
+				<div
+					class="w-full h-full absolute left-0 top-0 pointer-events-none flex justify-center items-center"
+				>
+					<div
+						class="{size === 'sm' ? 'w-6 h-6' : 'w-7 h-7'} transition transform {waiting
+							? 'scale-100'
+							: 'scale-0'}"
+					>
+						<IconHourglassAnimated class="w-full h-full" loading={waiting} />
 					</div>
 				</div>
 				<div
@@ -298,7 +324,7 @@
 		on:click={_onClick}
 		bind:this={element}
 		aria-label={label}
-		disabled={disabled || loading || uploading}
+		disabled={disabled || loadingOrWaitingOrUploading}
 		type={buttonType}
 		class="touch-manipulation relative flex items-center justify-center text-center font-bold gap-2
 			overflow-hidden z-0 group {noPadding
@@ -367,7 +393,7 @@
 			{/if}
 			{#if withSpinner}
 				<div
-					class="transform relative transition {loading || uploading
+					class="transform relative transition {loadingOrWaitingOrUploading
 						? 'scale-0 opacity-0'
 						: 'scale-100 opacity-100'}"
 				>
@@ -377,11 +403,22 @@
 					class="w-full h-full absolute left-0 top-0 pointer-events-none flex justify-center items-center"
 				>
 					<div
-						class="{size === 'sm' ? 'w-6 h-6' : 'w-7 h-7'} transition transform {loading
+						class="{size === 'sm' ? 'w-6 h-6' : 'w-7 h-7'} transition transform {loading && !waiting
 							? 'scale-100'
 							: 'scale-0'}"
 					>
-						<IconAnimatedSpinner class="w-full h-full" {loading} />
+						<IconAnimatedSpinner class="w-full h-full" loading={loading && !waiting} />
+					</div>
+				</div>
+				<div
+					class="w-full h-full absolute left-0 top-0 pointer-events-none flex justify-center items-center"
+				>
+					<div
+						class="{size === 'sm' ? 'w-6 h-6' : 'w-7 h-7'} transition transform {waiting
+							? 'scale-100'
+							: 'scale-0'}"
+					>
+						<IconHourglassAnimated class="w-full h-full" loading={waiting} />
 					</div>
 				</div>
 				<div

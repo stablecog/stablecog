@@ -439,7 +439,8 @@
 									<div class="w-full relative">
 										<Button
 											onClick={onUpscaleClicked}
-											loading={upscaleBeingProcessed || $maxOngoingUpscalesCountReached}
+											loading={upscaleBeingProcessed}
+											waiting={!upscaleBeingProcessed && $maxOngoingUpscalesCountReached}
 											disabled={doesntHaveEnoughCredits}
 											fadeOnDisabled={doesntHaveEnoughCredits}
 											withSpinner

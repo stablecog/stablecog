@@ -191,6 +191,13 @@
 		fn();
 	}
 
+	function onKeyPressTextArea(e: any) {
+		if (e.key === 'Enter') {
+			e.preventDefault();
+			onPromptFormSubmitted();
+		}
+	}
+
 	let isPromptBarFocused = false;
 	$: shouldPromptBarExpand =
 		isPromptBarFocused &&
@@ -238,12 +245,7 @@
 					bind:this={promptInputElement}
 					bind:value={$generationPrompt}
 					on:change={() => console.log('changed')}
-					on:keypress={(e) => {
-						if (e.key === 'Enter') {
-							e.preventDefault();
-							onPromptFormSubmitted();
-						}
-					}}
+					on:keypress={onKeyPressTextArea}
 					on:input={() => {
 						if (
 							$generationPrompt !== undefined &&
@@ -295,7 +297,7 @@
 					disabled={!isCheckCompleted ||
 						(doesntHaveEnoughCredits && $page.data.session?.user.id !== undefined)}
 					uploading={$generationInitImageFilesState === 'uploading'}
-					loading={$maxOngoingGenerationsCountReached}
+					waiting={$maxOngoingGenerationsCountReached}
 					withSpinner
 					noPadding
 					fadeOnDisabled={isCheckCompleted}

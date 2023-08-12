@@ -1,11 +1,11 @@
 <script lang="ts">
 	export { classes as class };
 	let classes = 'w-6 h-6';
+	export let loading = true;
 </script>
 
 <svg
-	class={classes}
-	id="end69mBNOzR1"
+	class="{classes} {loading ? 'is-loading' : ''}"
 	xmlns="http://www.w3.org/2000/svg"
 	xmlns:xlink="http://www.w3.org/1999/xlink"
 	width="24"
@@ -81,7 +81,7 @@
 >
 
 <style>
-	#end69mBNOzR2_tr {
+	.is-loading #end69mBNOzR2_tr {
 		animation: end69mBNOzR2_tr__tr 2100ms linear infinite normal forwards;
 	}
 	@keyframes end69mBNOzR2_tr__tr {
@@ -96,7 +96,7 @@
 			transform: translate(12px, 12px) rotate(180deg);
 		}
 	}
-	#end69mBNOzR6_ts {
+	.is-loading #end69mBNOzR6_ts {
 		animation: end69mBNOzR6_ts__ts 2100ms linear infinite normal forwards;
 	}
 	@keyframes end69mBNOzR6_ts__ts {
@@ -113,7 +113,7 @@
 			transform: translate(11.605393px, 12px) scale(0, 0);
 		}
 	}
-	#end69mBNOzR8_ts {
+	.is-loading #end69mBNOzR8_ts {
 		animation: end69mBNOzR8_ts__ts 2100ms linear infinite normal forwards;
 	}
 	@keyframes end69mBNOzR8_ts__ts {
@@ -130,7 +130,7 @@
 			transform: translate(12px, 21px) scale(1, 1);
 		}
 	}
-	#end69mBNOzR9_to {
+	.is-loading #end69mBNOzR9_to {
 		animation: end69mBNOzR9_to__to 2100ms linear infinite normal forwards;
 	}
 	@keyframes end69mBNOzR9_to__to {
