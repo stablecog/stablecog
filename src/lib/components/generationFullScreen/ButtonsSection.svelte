@@ -12,7 +12,6 @@
 	import {
 		activeGeneration,
 		setGenerationOutputToDeleted,
-		setGenerationOutputToSubmitted,
 		type TGenerationWithSelectedOutput
 	} from '$ts/stores/user/generation';
 	import { copy } from 'svelte-copy';
@@ -26,7 +25,6 @@
 	import { apiUrl } from '$ts/constants/main';
 	import { page } from '$app/stores';
 	import { useQueryClient } from '@tanstack/svelte-query';
-	import type { TUserGenerationFullOutputsPage } from '$ts/queries/userGenerations';
 	import {
 		logGalleryExploreSimilarClicked,
 		logGalleryGenerateSimilarClicked,
@@ -77,6 +75,7 @@
 				outputIndex: generation.outputs.findIndex(
 					(output) => output.id === generation.selected_output.id
 				),
+				modelId: generation.model_id,
 				logProps: {
 					'SC - Advanced Mode': $advancedModeApp,
 					'SC - Locale': $locale,

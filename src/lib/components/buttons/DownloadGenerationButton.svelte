@@ -34,6 +34,7 @@
 				outputIndex: generation.outputs.findIndex(
 					(output) => output.id === generation.selected_output.id
 				),
+				modelId: generation.model_id,
 				logProps: {
 					'SC - Advanced Mode': $advancedModeApp,
 					'SC - Locale': $locale,
