@@ -169,7 +169,8 @@
 {:else if $query.isSuccess && $query.data.pages.length > 0 && outputs !== undefined}
 	{#if $listVirtualizer}
 		<div
-			style="{horizontal ? 'width' : 'height'}: {$listVirtualizer.getTotalSize()}px"
+			style="{horizontal ? 'width' : 'height'}: {$listVirtualizer.getTotalSize() +
+				($query.hasNextPage ? (horizontal ? $windowWidth : $windowHeight) : 0)}px"
 			class="{horizontal ? 'h-full' : 'w-full'} relative"
 		>
 			{#each $listVirtualizer.getVirtualItems() as virtualItem (virtualItem.index + (outputs[virtualItem.index].ui_id || outputs[virtualItem.index].id))}

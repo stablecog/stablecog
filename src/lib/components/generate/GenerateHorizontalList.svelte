@@ -150,7 +150,11 @@
 	<GenerateHorizontalListPlaceholder text={$LL.Generate.Grid.NoGeneration.Paragraph()} />
 {:else if $generationsQuery.isSuccess && outputs !== undefined && outputs.length > 0}
 	{#if listScrollContainer && $listVirtualizer}
-		<div style="width: {$listVirtualizer.getTotalSize()}px" class="h-full relative">
+		<div
+			style="width: {$listVirtualizer.getTotalSize() +
+				($generationsQuery.hasNextPage ? $windowWidth : 0)}px"
+			class="h-full relative"
+		>
 			{#each $listVirtualizer.getVirtualItems() as virtualItem (virtualItem.index + outputs[virtualItem.index].id)}
 				{@const output = outputs[virtualItem.index]}
 				<div

@@ -235,7 +235,11 @@
 	<GenerateGridPlaceholder text={$LL.Generate.Grid.NoGeneration.Paragraph()} />
 {:else if $generationsQuery.isSuccess && $generationsQuery.data.pages.length > 0 && outputs !== undefined}
 	{#if $gridVirtualizer}
-		<div style="height: {$gridVirtualizer.getTotalSize()}px" class="w-full relative">
+		<div
+			style="height: {$gridVirtualizer.getTotalSize() +
+				($generationsQuery.hasNextPage ? $windowHeight : 0)}px"
+			class="w-full relative"
+		>
 			{#each $gridVirtualizer.getVirtualItems() as virtualItem (virtualItem.index + outputs[virtualItem.index].id)}
 				{@const output = outputs[virtualItem.index]}
 				{@const isOutputSelected = selectedItems.includes(output.id)}
