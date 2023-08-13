@@ -275,7 +275,7 @@
 						disabled={!isCheckCompleted ||
 							(doesntHaveEnoughCredits && $page.data.session?.user.id !== undefined)}
 						uploading={$generationInitImageFilesState === 'uploading'}
-						loading={$maxOngoingGenerationsCountReached}
+						waiting={$maxOngoingGenerationsCountReached}
 						withSpinner
 						fadeOnDisabled={isCheckCompleted}
 						class="w-full h-full rounded-r-lg md:rounded-r-xl rounded-l-none absolute right-0 top-0"

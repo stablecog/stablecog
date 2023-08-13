@@ -155,8 +155,8 @@
 				>
 					<div
 						class="{size === 'sm' ? 'w-6 h-6' : 'w-7 h-7'} transition transform {loading && !waiting
-							? 'scale-100'
-							: 'scale-0'}"
+							? 'scale-100 opacity-100'
+							: 'scale-0 opacity-0'}"
 					>
 						<IconAnimatedSpinner class="w-full h-full" loading={loading && !waiting} />
 					</div>
@@ -166,8 +166,8 @@
 				>
 					<div
 						class="{size === 'sm' ? 'w-6 h-6' : 'w-7 h-7'} transition transform {waiting
-							? 'scale-100'
-							: 'scale-0'}"
+							? 'scale-100 opacity-100'
+							: 'scale-0 opacity-0'}"
 					>
 						<IconHourglassAnimated class="w-full h-full" loading={waiting} />
 					</div>
@@ -177,8 +177,8 @@
 				>
 					<div
 						class="{size === 'sm' ? 'w-6 h-6' : 'w-7 h-7'} transition transform {uploading
-							? 'scale-100'
-							: 'scale-0'}"
+							? 'scale-100 opacity-100'
+							: 'scale-0 opacity-0'}"
 					>
 						<IconAnimatedUploading class="w-full h-full" loading={uploading} />
 					</div>
@@ -280,8 +280,8 @@
 				>
 					<div
 						class="{size === 'sm' ? 'w-6 h-6' : 'w-7 h-7'} transition transform {loading && !waiting
-							? 'scale-100'
-							: 'scale-0'}"
+							? 'scale-100 opacity-100'
+							: 'scale-0 opacity-0'}"
 					>
 						<IconAnimatedSpinner class="w-full h-full" loading={loading && !waiting} />
 					</div>
@@ -291,8 +291,8 @@
 				>
 					<div
 						class="{size === 'sm' ? 'w-6 h-6' : 'w-7 h-7'} transition transform {waiting
-							? 'scale-100'
-							: 'scale-0'}"
+							? 'scale-100 opacity-100'
+							: 'scale-0 opacity-0'}"
 					>
 						<IconHourglassAnimated class="w-full h-full" loading={waiting} />
 					</div>
@@ -303,8 +303,8 @@
 					<div
 						class="{size === 'sm' ? 'w-6 h-6' : 'w-7 h-7'} transition transform {!loading &&
 						uploading
-							? 'scale-100'
-							: 'scale-0'}"
+							? 'scale-100 opacity-100'
+							: 'scale-0 opacity-0'}"
 					>
 						<IconAnimatedUploading class="w-full h-full" loading={!loading && uploading} />
 					</div>
@@ -404,8 +404,8 @@
 				>
 					<div
 						class="{size === 'sm' ? 'w-6 h-6' : 'w-7 h-7'} transition transform {loading && !waiting
-							? 'scale-100'
-							: 'scale-0'}"
+							? 'scale-100 opacity-100'
+							: 'scale-0 opacity-0'}"
 					>
 						<IconAnimatedSpinner class="w-full h-full" loading={loading && !waiting} />
 					</div>
@@ -415,8 +415,8 @@
 				>
 					<div
 						class="{size === 'sm' ? 'w-6 h-6' : 'w-7 h-7'} transition transform {waiting
-							? 'scale-100'
-							: 'scale-0'}"
+							? 'scale-100 opacity-100'
+							: 'scale-0 opacity-0'}"
 					>
 						<IconHourglassAnimated class="w-full h-full" loading={waiting} />
 					</div>
@@ -427,8 +427,8 @@
 					<div
 						class="{size === 'sm' ? 'w-6 h-6' : 'w-7 h-7'} transition transform {!loading &&
 						uploading
-							? 'scale-100'
-							: 'scale-0'}"
+							? 'scale-100 opacity-100'
+							: 'scale-0 opacity-0'}"
 					>
 						<IconAnimatedUploading class="w-full h-full" loading={!loading && uploading} />
 					</div>
