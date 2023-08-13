@@ -28,10 +28,10 @@
 	<div
 		class="{featured
 			? 'w-full md:w-full md:max-w-[50%] min-h-full'
-			: 'w-full h-auto'} bg-c-primary relative z-0 overflow-hidden"
+			: 'w-full h-auto'} relative z-0 overflow-hidden"
 	>
 		<svg
-			class="w-full h-auto bg-c-secondary {featured ? 'md:object-cover md:h-full' : ''} relative"
+			class="w-full h-auto {featured ? 'md:object-cover md:h-full' : ''} relative"
 			viewBox="0 0 1200 630"
 		/>
 		<img
