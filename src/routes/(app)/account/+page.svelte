@@ -84,7 +84,7 @@
 		<IconAnimatedSpinner class="w-10 h-10 text-c-on-bg/60" />
 	</div>
 {:else}
-	<div class="w-full flex flex-col items-center justify-center pt-6 pb-6 md:pb-8 px-3">
+	<div class="w-full flex flex-col items-center justify-center pt-6 pb-6 md:pb-8 px-3 md:px-6">
 		<div
 			class="w-full md:max-w-4xl flex flex-col rounded-2xl bg-c-bg relative z-0 overflow-hidden
 				shadow-xl shadow-c-shadow/[var(--o-shadow-strong)] ring-2 ring-c-bg-secondary"

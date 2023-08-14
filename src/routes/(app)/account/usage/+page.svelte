@@ -34,7 +34,7 @@
 	image_url="{canonicalUrl}/previews/account-{previewImageVersion}.png"
 />
 
-<div class="w-full flex justify-center pt-4 md:pt-6 pb-6 md:pb-8">
+<div class="w-full flex justify-center pt-4 md:pt-6 pb-6 md:pb-8 md:px-3">
 	<div class="w-full max-w-4xl flex flex-col">
 		<p class="leading-relaxed mb-5 md:mb-7 px-5">
 			{$LL.Account.Usage.PageParagraph()}

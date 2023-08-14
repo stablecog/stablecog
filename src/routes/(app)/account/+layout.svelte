@@ -33,7 +33,7 @@
 </script>
 
 {#if isNavbarRoute}
-	<div class="w-full flex justify-center pt-2 md:pt-10">
+	<div class="w-full flex justify-center pt-2 md:pt-10 md:px-5">
 		<div class="w-full max-w-4xl flex flex-col">
 			<PageNavbar items={accountRoutes} />
 		</div>
