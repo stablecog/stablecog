@@ -1,4 +1,3 @@
-import { PUBLIC_SUPABASE_URL, PUBLIC_SUPABASE_ANON_KEY } from '$env/static/public';
 import { createSupabaseServerClient } from '@supabase/auth-helpers-sveltekit';
 import type { Handle, RequestEvent } from '@sveltejs/kit';
 import { initAcceptLanguageHeaderDetector } from 'typesafe-i18n/detectors';
@@ -8,6 +7,7 @@ import type { TAvailableThemes } from '$ts/stores/theme';
 import { apiUrl } from '$ts/constants/main';
 import { galleryAdminAllowedRoutes, isGalleryAdmin, isSuperAdmin } from '$ts/helpers/admin/roles';
 import { CLIPAPI_AUTH_TOKEN } from '$env/static/private';
+import { supabaseAnonKey, supabaseUrl } from '$ts/constants/supabase';
 
 loadAllLocales();
 
@@ -15,8 +15,8 @@ const LINK_HEADER_LENGTH = 60;
 
 export const handle: Handle = async ({ event, resolve }) => {
 	event.locals.supabase = createSupabaseServerClient({
-		supabaseUrl: PUBLIC_SUPABASE_URL,
-		supabaseKey: PUBLIC_SUPABASE_ANON_KEY,
+		supabaseUrl: supabaseUrl,
+		supabaseKey: supabaseAnonKey,
 		event
 	});
 

@@ -4,25 +4,15 @@ import { writable } from 'svelte/store';
 import type { TAvailableThemes } from '$ts/stores/theme';
 import type { TUserSummary } from '$ts/stores/user/summary';
 import { createSupabaseLoadClient } from '@supabase/auth-helpers-sveltekit';
-import { env as envPublic } from '$env/dynamic/public';
 import type { SupabaseClient } from '@supabase/supabase-js';
 import { getUserSummary } from '$ts/helpers/user/user';
+import { supabaseAnonKey, supabaseUrl } from '$ts/constants/supabase';
 
 export const load: LayoutLoad = async (event) => {
 	event.depends('supabase:auth');
 	const supabase = createSupabaseLoadClient({
-		supabaseUrl:
-			envPublic.PUBLIC_APP_MODE === 'qa'
-				? envPublic.PUBLIC_SUPABASE_URL_QA || ''
-				: envPublic.PUBLIC_APP_MODE === 'dev'
-				? envPublic.PUBLIC_SUPABASE_URL || ''
-				: envPublic.PUBLIC_SUPABASE_URL || '',
-		supabaseKey:
-			envPublic.PUBLIC_APP_MODE === 'qa'
-				? envPublic.PUBLIC_SUPABASE_ANON_KEY_QA
-				: envPublic.PUBLIC_APP_MODE === 'dev'
-				? envPublic.PUBLIC_SUPABASE_ANON_KEY
-				: envPublic.PUBLIC_SUPABASE_ANON_KEY,
+		supabaseUrl: supabaseUrl,
+		supabaseKey: supabaseAnonKey,
 		event: { fetch },
 		serverSession: event.data.session
 	});
