@@ -23,7 +23,7 @@ export const load: LayoutLoad = async (event) => {
 	let userSummary: TUserSummary | undefined = undefined;
 	if (event.data.userSummary) {
 		userSummary = event.data.userSummary;
-	} else if (session?.access_token) {
+	} else if (session && session.access_token && session.expires_in > 3) {
 		try {
 			const summary = await getUserSummary(session.access_token);
 			if (summary) {

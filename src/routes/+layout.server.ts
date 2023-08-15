@@ -7,7 +7,7 @@ import type { Session } from '@supabase/supabase-js';
 export const load: LayoutServerLoad = async (event) => {
 	let session = await event.locals.getSession();
 	let userSummary: TUserSummary | undefined = undefined;
-	if (session?.access_token) {
+	if (session && session.access_token && session.expires_in > 3) {
 		try {
 			const summary = await getUserSummary(session.access_token);
 			if (summary) {
