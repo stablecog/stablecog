@@ -16,7 +16,6 @@ declare namespace App {
 		theme: TAvailableThemes | null;
 		isLeftSidebarHidden: boolean;
 		advancedMode: boolean | null;
-		clipApiToken: string | undefined;
 		supabase: SupabaseClient;
 		getSession(): Promise<Session | null>;
 	}
