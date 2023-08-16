@@ -12,15 +12,15 @@
 	onDestroy(() => {
 		onClickoutside();
 	});
-</script>
 
-<svelte:body
-	on:keydown={(e) => {
+	function onKeyDown(e: any) {
 		if (e.key === 'Escape') {
 			onClickoutside();
 		}
-	}}
-/>
+	}
+</script>
+
+<svelte:body on:keydown={onKeyDown} />
 
 <div
 	use:portal={'body'}

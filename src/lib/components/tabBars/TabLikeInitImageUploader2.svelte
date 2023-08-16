@@ -230,16 +230,6 @@
 							</Morpher>
 						</div>
 					{/if}
-					<!-- Delete image button -->
-					<div class="h-full flex justify-end items-start absolute right-0 top-0 z-10">
-						<div class="bg-c-bg/75 flex items-center justify-center rounded-tr-xl rounded-bl-xl">
-							<IconButton name="Reset Upload State" class="p-0.5" onClick={resetUploadState}>
-								<IconTrashcan
-									class="w-5 h-5 transition not-touch:group-hover/iconbutton:text-c-primary"
-								/>
-							</IconButton>
-						</div>
-					</div>
 				</div>
 				{#if $generationInitImageFilesState === 'error'}
 					<div class="w-full bg-c-bg-secondary h-2px" />
@@ -339,6 +329,18 @@
 			/>
 		{/if}
 	</div>
+	<!-- Delete image button -->
+	{#if $generationInitImageSrc && $generationInitImageWidth && $generationInitImageHeight}
+		<div class="h-full flex justify-end items-start absolute right-0 top-0 z-10">
+			<div class="bg-c-bg/75 flex items-center justify-center rounded-tr-xl rounded-bl-xl">
+				<IconButton name="Reset Upload State" class="p-0.5" onClick={resetUploadState}>
+					<IconTrashcan
+						class="w-5 h-5 transition not-touch:group-hover/iconbutton:text-c-primary"
+					/>
+				</IconButton>
+			</div>
+		</div>
+	{/if}
 </TabBarWrapper>
 
 {#if isImageModalOpen && $generationInitImageSrc && $generationInitImageWidth && $generationInitImageHeight}
