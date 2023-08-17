@@ -4,6 +4,13 @@ export interface TGalleryGenerationFullOutputPageRes {
 	hits: TGalleryGenerationHit[];
 	next?: string;
 }
+export interface TUserProfileGenerationFullOutputPageRes {
+	hits: TGalleryGenerationHit[];
+	next?: string;
+	metadata: {
+		username: string;
+	};
+}
 
 export interface TGalleryGenerationHit {
 	id: string;
@@ -29,7 +36,10 @@ export interface TGalleryGenerationHit {
 	};
 }
 
-export interface TGalleryGenerationFullOutputsPage {
+export interface TUserProfileFullOutputsPage {
 	outputs: TGenerationFullOutput[];
 	next?: string | number;
+	metadata: {
+		username: string;
+	};
 }

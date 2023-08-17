@@ -224,7 +224,7 @@
 				bind:buttonObjectsWithState
 				{modalType}
 			/>
-			<SimilarOutputsSectionOutputPage {similarOutputs} {output} />
+			<SimilarOutputsSectionOutputPage {similarOutputs} {output} username={data.username} />
 		</div>
 	</div>
 </div>

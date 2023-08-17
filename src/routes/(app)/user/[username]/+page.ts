@@ -58,11 +58,11 @@ export const load: PageLoad = async ({ url, parent, params }) => {
 	} else {
 		userMetadata = await getOtherUserMetadata({ username, custom_fetch: fetch });
 	}
-
+	if (username !== userMetadata.username) throw redirect(302, `/user/${userMetadata.username}`);
 	return {
 		searchQuery,
 		modelIds: filteredModelIds,
 		userMetadata,
-		username
+		username: userMetadata.username
 	};
 };

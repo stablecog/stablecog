@@ -22,4 +22,5 @@ export async function getOtherUserMetadata({
 export interface TOtherUserMetadata {
 	created_at: string;
 	active_product_id?: string;
+	username: string;
 }

@@ -42,7 +42,7 @@ export function logGalleryExploreSimilarClicked(props: IGalleryExploreSimilarCli
 	posthog.capture('Gallery | Explore Similar Clicked', { ...props });
 }
 
-export function logUserProfileExploreSimilarClicked(props: IGalleryExploreSimilarClickedProps) {
+export function logUserProfileExploreSimilarClicked(props: ISimilarClickedProps) {
 	mixpanel.track('User Profile | Explore Similar Clicked', { ...props });
 	posthog.capture('User Profile | Explore Similar Clicked', { ...props });
 }

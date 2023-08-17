@@ -3,8 +3,8 @@ import { apiUrl } from '$ts/constants/main';
 import type { TAvailableSchedulerId } from '$ts/constants/schedulers';
 import { convertToDBTimeString } from '$ts/helpers/convertToDBTimeString';
 import type {
-	TGalleryGenerationFullOutputPageRes,
-	TGalleryGenerationFullOutputsPage
+	TUserProfileFullOutputsPage,
+	TUserProfileGenerationFullOutputPageRes
 } from '$ts/queries/galleryLike/types';
 import type { TGenerationFullOutput, TGenerationOutput } from '$userStores/generation';
 
@@ -29,7 +29,7 @@ export async function getGalleryGenerationFullOutputs({
 	per_page?: number;
 	score_threshold?: number;
 	prompt_id?: string;
-}): Promise<TGalleryGenerationFullOutputsPage> {
+}): Promise<TUserProfileFullOutputsPage> {
 	console.log('getGalleryOutputs');
 	const query = new URLSearchParams();
 	if (cursor) {
@@ -61,8 +61,8 @@ export async function getGalleryGenerationFullOutputs({
 		}
 	});
 	if (!res.ok) throw new Error(`Failed to fetch gallery outputs: ${res.status}, ${res.statusText}`);
-	const data: TGalleryGenerationFullOutputPageRes = await res.json();
-	const { hits, next } = data;
+	const data: TUserProfileGenerationFullOutputPageRes = await res.json();
+	const { hits, next, metadata } = data;
 	const outputs: TGenerationFullOutput[] = hits.map((hit) => {
 		const output: TGenerationOutput = {
 			id: hit.id,
@@ -107,9 +107,10 @@ export async function getGalleryGenerationFullOutputs({
 			...output
 		};
 	});
-	const page: TGalleryGenerationFullOutputsPage = {
+	const page: TUserProfileFullOutputsPage = {
 		outputs,
-		next
+		next,
+		metadata
 	};
 	return page;
 }

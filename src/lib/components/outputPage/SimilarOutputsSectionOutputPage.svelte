@@ -2,7 +2,10 @@
 	import LL from '$i18n/i18n-svelte';
 	import type { TGenerationFullOutput } from '$ts/stores/user/generation';
 	import SimpleGrid from '$components/grids/SimpleGrid.svelte';
-	import { logOutputPageSimilarClicked } from '$ts/helpers/loggers.js';
+	import {
+		logOutputPageSimilarClicked,
+		logUserProfileExploreSimilarClicked
+	} from '$ts/helpers/loggers.js';
 	import { appVersion } from '$ts/stores/appVersion.js';
 	import { userSummary } from '$ts/stores/user/summary';
 	import { getImgProxySrc, getImgProxySrcSet } from '$ts/helpers/imgproxy';
@@ -11,6 +14,7 @@
 
 	export let similarOutputs: TGenerationFullOutput[];
 	export let output: TGenerationFullOutput;
+	export let username: string | undefined = undefined;
 
 	const simpleGridCols = 3;
 </script>
@@ -24,15 +28,22 @@
 			<SimpleGrid cols={simpleGridCols} items={similarOutputs} let:item={similarOutput}>
 				<a
 					on:click={() => {
-						logOutputPageSimilarClicked({
+						const sharedProps = {
 							'SC - App Version': $appVersion,
 							'SC - Similar to Output Id': output.id,
 							'SC - Clicked Output Id': similarOutput.id,
 							'SC - Stripe Product Id': $userSummary?.product_id,
 							'SC - User Id': $page.data.session?.user.id
-						});
+						};
+						if (username) {
+							logUserProfileExploreSimilarClicked(sharedProps);
+						} else {
+							logOutputPageSimilarClicked(sharedProps);
+						}
 					}}
-					href="/gallery/o/{similarOutput.id}"
+					href={username
+						? `/user/${username}/o/${similarOutput.id}`
+						: `/gallery/o/${similarOutput.id}`}
 					data-sveltekit-preload-data="hover"
 					class="w-full group"
 				>

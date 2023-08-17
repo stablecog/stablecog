@@ -3,8 +3,8 @@ import { apiUrl } from '$ts/constants/main';
 import type { TAvailableSchedulerId } from '$ts/constants/schedulers';
 import { convertToDBTimeString } from '$ts/helpers/convertToDBTimeString';
 import type {
-	TGalleryGenerationFullOutputPageRes,
-	TGalleryGenerationFullOutputsPage
+	TUserProfileFullOutputsPage,
+	TUserProfileGenerationFullOutputPageRes
 } from '$ts/queries/galleryLike/types';
 import type { TGenerationFullOutput, TGenerationOutput } from '$userStores/generation';
 
@@ -31,7 +31,7 @@ export async function getSomeUsersGenerationFullOutputs({
 	score_threshold?: number;
 	prompt_id?: string;
 	username: string;
-}): Promise<TGalleryGenerationFullOutputsPage> {
+}): Promise<TUserProfileFullOutputsPage> {
 	console.log('getSomeUsersGenerationFullOutputs');
 	const query = new URLSearchParams();
 	if (cursor) {
@@ -66,8 +66,8 @@ export async function getSomeUsersGenerationFullOutputs({
 		throw new Error(
 			`Failed to user user generation full outputs: ${res.status}, ${res.statusText}`
 		);
-	const data: TGalleryGenerationFullOutputPageRes = await res.json();
-	const { hits, next } = data;
+	const data: TUserProfileGenerationFullOutputPageRes = await res.json();
+	const { hits, next, metadata } = data;
 	const outputs: TGenerationFullOutput[] = hits.map((hit) => {
 		const output: TGenerationOutput = {
 			id: hit.id,
@@ -106,15 +106,16 @@ export async function getSomeUsersGenerationFullOutputs({
 				num_outputs: 1,
 				submit_to_gallery: true,
 				user: {
-					username
+					username: metadata.username
 				}
 			},
 			...output
 		};
 	});
-	const page: TGalleryGenerationFullOutputsPage = {
+	const page: TUserProfileFullOutputsPage = {
 		outputs,
-		next
+		next,
+		metadata
 	};
 	return page;
 }

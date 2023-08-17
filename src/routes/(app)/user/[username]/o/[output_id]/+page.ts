@@ -2,15 +2,14 @@ import type { TAvailableGenerationModelId } from '$ts/constants/generationModels
 import { apiUrl } from '$ts/constants/main';
 import type { TAvailableSchedulerId } from '$ts/constants/schedulers';
 import { convertToDBTimeString } from '$ts/helpers/convertToDBTimeString';
-import { getGalleryGenerationFullOutputs } from '$ts/queries/galleryLike/galleryGenerations';
 import type { TGenerationFullOutput, TGenerationOutput } from '$ts/stores/user/generation';
-import { error } from '@sveltejs/kit';
+import { error, redirect } from '@sveltejs/kit';
 import { similarCount } from '$routes/(app)/gallery/o/[output_id]/constants';
 import type { PageLoad } from './$types';
 import type { QueryClient } from '@tanstack/svelte-query';
 import type {
-	TGalleryGenerationFullOutputPageRes,
-	TGalleryGenerationFullOutputsPage
+	TUserProfileFullOutputsPage,
+	TUserProfileGenerationFullOutputPageRes
 } from '$ts/queries/galleryLike/types';
 import { getSomeUsersGenerationFullOutputs } from '$ts/queries/galleryLike/someUsersOutputs';
 
@@ -35,7 +34,7 @@ export const load: PageLoad = async ({ params, parent }) => {
 	if (!generationFullOutputRes.ok) {
 		throw error(404, 'Response for generation not ok');
 	}
-	const data: TGalleryGenerationFullOutputPageRes = await generationFullOutputRes.json();
+	const data: TUserProfileGenerationFullOutputPageRes = await generationFullOutputRes.json();
 	if (!data.hits || !data.hits[0]) {
 		throw error(404, 'No output found');
 	}
@@ -77,7 +76,7 @@ export const load: PageLoad = async ({ params, parent }) => {
 			num_outputs: 1,
 			submit_to_gallery: true,
 			user: {
-				username
+				username: data.metadata.username
 			}
 		},
 		...output
@@ -87,10 +86,14 @@ export const load: PageLoad = async ({ params, parent }) => {
 		.filter((o) => o.id !== generationFullOutput?.id)
 		.slice(0, similarCount);
 
-	const page: TGalleryGenerationFullOutputsPage = {
+	const page: TUserProfileFullOutputsPage = {
 		outputs: similarGenerationFullOutputs,
-		next: undefined
+		next: undefined,
+		metadata: data.metadata
 	};
+
+	if (username !== data.metadata.username)
+		throw redirect(302, `/user/${data.metadata.username}/o/${outputId}`);
 
 	const { queryClient } = (await parent()) as TParent;
 	queryClient.setQueryData(['other_user_similar_outputs_short', outputId], page);
@@ -98,6 +101,6 @@ export const load: PageLoad = async ({ params, parent }) => {
 	return {
 		generationFullOutput,
 		similarGenerationFullOutputs,
-		username
+		username: data.metadata.username
 	};
 };
