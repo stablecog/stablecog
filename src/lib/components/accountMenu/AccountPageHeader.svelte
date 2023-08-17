@@ -1,5 +1,4 @@
 <script lang="ts">
-	import { page } from '$app/stores';
 	import Avatar from '$components/avatar/Avatar.svelte';
 	import { userSummary } from '$ts/stores/user/summary';
 </script>
