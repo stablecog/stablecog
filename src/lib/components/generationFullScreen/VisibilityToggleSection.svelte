@@ -33,7 +33,11 @@
 	export let modalType: TGenerationFullScreenModalType;
 	export let generation: TGenerationWithSelectedOutput;
 
-	$: was_initially_public = generation.selected_output.is_public ? true : false;
+	$: was_initially_public =
+		generation.selected_output.is_public ||
+		generation.selected_output.gallery_status === 'submitted'
+			? true
+			: false;
 	$: canToggleVisibility =
 		generation.selected_output.was_auto_submitted === false ||
 		$userSummary?.product_id ||
