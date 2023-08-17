@@ -23,7 +23,8 @@
 		generationWidth,
 		generationNegativePrompt,
 		prompt,
-		generationPrompt
+		generationPrompt,
+		generationShouldSubmitToGallery
 	} from '$ts/stores/generationSettings';
 	import {
 		generations,
@@ -167,7 +168,7 @@
 				$generations && $generations[0] && $generations[0].status === 'pre-submit'
 					? $generations[0].ui_id
 					: generateSSEId(),
-			submit_to_gallery: false
+			submit_to_gallery: $generationShouldSubmitToGallery
 		};
 		promptInputElement?.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
 		queueInitialGenerationRequest(initialRequestProps);

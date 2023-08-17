@@ -45,6 +45,7 @@
 		generationPrompt,
 		generationSchedulerId,
 		generationSeed,
+		generationShouldSubmitToGallery,
 		generationWidth,
 		guidanceScale,
 		imageSize,
@@ -70,6 +71,7 @@
 	import { afterNavigate } from '$app/navigation';
 	import type { TTab } from '$ts/types/main';
 	import type { TGeneratePageData } from '$approutes/generate/+page.server';
+	import { shouldSubmitToGallery } from '$ts/stores/shouldSubmitToGallery';
 
 	export let serverData: TGeneratePageData;
 	export let isReadyMap: TIsReadyMap;
@@ -145,6 +147,7 @@
 	$: [$generationSchedulerId], withCheck(setLocalSchedulerId);
 	$: [$generationSeed], withCheck(setLocalSeed);
 	$: [$advancedModeApp], withCheck(setLocalAdvancedMode);
+	$: [$generationShouldSubmitToGallery], withCheck(setLocalShouldSubmitToGallery);
 
 	$: [
 		$generationWidth,
@@ -196,7 +199,9 @@
 				generations[0].outputs = Array.from({ length: Number(generations[0].num_outputs) }).map(
 					(i) => ({
 						id: '',
-						image_url: ''
+						image_url: '',
+						was_auto_submitted: false,
+						is_public: false
 					})
 				);
 				return generations;
@@ -293,6 +298,11 @@
 	function setLocalAdvancedMode() {
 		if ($advancedModeApp === undefined) return;
 		advancedMode.set($advancedModeApp);
+	}
+
+	function setLocalShouldSubmitToGallery() {
+		if ($generationShouldSubmitToGallery === undefined) return;
+		shouldSubmitToGallery.set($generationShouldSubmitToGallery);
 	}
 
 	function withCheck(fn: () => void) {
@@ -439,6 +449,9 @@
 				height: shouldBeHeight,
 				aspectRatio: $generationAspectRatio
 			});
+		}
+		if ($shouldSubmitToGallery !== null) {
+			generationShouldSubmitToGallery.set($shouldSubmitToGallery);
 		}
 		isReadyMap.generationSettings = true;
 	});

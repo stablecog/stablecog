@@ -3,12 +3,11 @@
 	import ToggleIndicator from '$components/ToggleIndicator.svelte';
 
 	export let isToggled: boolean;
-	export let onClick: () => void;
 	export { classes as class };
 	export let disabled = false;
 	export let hasTitle = false;
 	export let text: string | undefined;
-	let classes = '';
+	let classes = 'w-full';
 </script>
 
 <TabBarWrapper class={classes}>
@@ -23,7 +22,7 @@
 	<button
 		class="flex-1 min-w-0 flex items-center justify-between touch-manipulation self-stretch p-3.5 relative group rounded-xl gap-2"
 		type="button"
-		on:click={onClick}
+		on:click={() => (isToggled = !isToggled)}
 		{disabled}
 	>
 		<div
@@ -40,7 +39,7 @@
 			<p
 				class="break-words flex-shrink overflow-hidden
 				text-base transition not-touch:group-hover:text-c-primary
-				font-medium text-left relative pr-4"
+				font-medium text-left relative pl-1 pr-4 overflow-ellipsis"
 			>
 				{text}
 			</p>

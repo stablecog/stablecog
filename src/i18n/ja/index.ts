@@ -101,6 +101,10 @@ const ja: Translation = {
 			Title: '画像数',
 			Paragraph: '生成される画像数。'
 		},
+		ShowOnProfileToggle: {
+			Title: 'Show on Profile',
+			Paragraph: 'Whether to show the generated images on your profile.'
+		},
 		SchedulerDropdown: {
 			Title: 'スケジュラー',
 			Paragraph:

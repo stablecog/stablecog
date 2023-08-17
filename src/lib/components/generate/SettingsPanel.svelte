@@ -23,7 +23,8 @@
 		generationNegativePrompt,
 		generationNumOutputs,
 		generationSchedulerId,
-		generationSeed
+		generationSeed,
+		generationShouldSubmitToGallery
 	} from '$ts/stores/generationSettings';
 	import { advancedModeApp } from '$ts/stores/advancedMode';
 	import TabBar from '$components/tabBars/TabBar.svelte';
@@ -38,6 +39,8 @@
 	import type { TAvailableSchedulerId } from '$ts/constants/schedulers';
 	import ModelCard from '$components/modelCard/ModelCard.svelte';
 	import IconModelImage from '$components/modelCard/IconModelImage.svelte';
+	import TabLikeToggle from '$components/tabBars/TabLikeToggle.svelte';
+	import { userSummary } from '$ts/stores/user/summary';
 
 	export let rounding: 'all' | 'top' | 'bottom' = 'all';
 	export let openSignInModal: () => void;
@@ -137,6 +140,21 @@
 				bind:value={$generationNumOutputs}
 			/>
 		</SettingsPanelItem>
+		{#if $userSummary?.product_id}
+			<SettingsPanelItem
+				title={$LL.Home.ShowOnProfileToggle.Title()}
+				iconType="show-on-profile"
+				tooltipTitle={$LL.Home.ShowOnProfileToggle.Title()}
+				tooltipParagraph={$LL.Home.ShowOnProfileToggle.Paragraph()}
+			>
+				<TabLikeToggle
+					bind:isToggled={$generationShouldSubmitToGallery}
+					disabled={!isCheckCompleted}
+					text={$generationShouldSubmitToGallery ? $LL.Shared.On() : $LL.Shared.Off()}
+					hasTitle={false}
+				/>
+			</SettingsPanelItem>
+		{/if}
 		<div class="w-full flex flex-col ring-2 ring-c-bg-secondary">
 			<button
 				class="w-full group font-medium text-c-on-bg/75 px-4 py-4.5 flex justify-start transition {$advancedModeApp

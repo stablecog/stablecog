@@ -101,6 +101,10 @@ const es: Translation = {
 			Title: 'Αριθμός εικόνων',
 			Paragraph: 'Ο αριθμός των εικόνων που θα παραχθούν.'
 		},
+		ShowOnProfileToggle: {
+			Title: 'Show on Profile',
+			Paragraph: 'Whether to show the generated images on your profile.'
+		},
 		SchedulerDropdown: {
 			Title: 'Προγραμματισμός',
 			Paragraph:

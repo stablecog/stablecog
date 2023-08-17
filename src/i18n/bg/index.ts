@@ -95,6 +95,10 @@ const bg: Translation = {
 			Title: 'Брой изображения',
 			Paragraph: 'Броят изображения за създаване наведнъж.'
 		},
+		ShowOnProfileToggle: {
+			Title: 'Show on Profile',
+			Paragraph: 'Whether to show the generated images on your profile.'
+		},
 		SchedulerDropdown: {
 			Title: 'Аналитик',
 			Paragraph:

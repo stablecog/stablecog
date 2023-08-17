@@ -79,3 +79,4 @@ export const generationInitImageFilesError = writable<string | undefined>(undefi
 export const generationInitImageSrc = writable<string | undefined>(undefined);
 export const generationInitImageWidth = writable<number | undefined>(undefined);
 export const generationInitImageHeight = writable<number | undefined>(undefined);
+export const generationShouldSubmitToGallery = writable<boolean>(false);

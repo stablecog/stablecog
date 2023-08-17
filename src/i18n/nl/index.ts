@@ -96,6 +96,10 @@ const nl: Translation = {
 			Title: 'Aantal Afbeeldingen',
 			Paragraph: 'Het aantal afbeeldingen dat zal worden gegenereerd.'
 		},
+		ShowOnProfileToggle: {
+			Title: 'Show on Profile',
+			Paragraph: 'Whether to show the generated images on your profile.'
+		},
 		SchedulerDropdown: {
 			Title: 'Planner',
 			Paragraph:

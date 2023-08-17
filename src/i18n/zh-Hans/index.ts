@@ -90,6 +90,10 @@ const zhHans: Translation = {
 			Title: 'Number of Images',
 			Paragraph: 'The number of images that will be generated.'
 		},
+		ShowOnProfileToggle: {
+			Title: 'Show on Profile',
+			Paragraph: 'Whether to show the generated images on your profile.'
+		},
 		SchedulerDropdown: {
 			Title: 'Scheduler',
 			Paragraph:

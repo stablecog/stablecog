@@ -282,6 +282,16 @@ type RootTranslation = {
 			 */
 			Paragraph: string
 		}
+		ShowOnProfileToggle: {
+			/**
+			 * S​h​o​w​ ​o​n​ ​P​r​o​f​i​l​e
+			 */
+			Title: string
+			/**
+			 * W​h​e​t​h​e​r​ ​t​o​ ​s​h​o​w​ ​t​h​e​ ​g​e​n​e​r​a​t​e​d​ ​i​m​a​g​e​s​ ​o​n​ ​y​o​u​r​ ​p​r​o​f​i​l​e​.
+			 */
+			Paragraph: string
+		}
 		SchedulerDropdown: {
 			/**
 			 * S​c​h​e​d​u​l​e​r
@@ -3440,6 +3450,16 @@ export type TranslationFunctions = {
 			Title: () => LocalizedString
 			/**
 			 * The number of images that will be generated.
+			 */
+			Paragraph: () => LocalizedString
+		}
+		ShowOnProfileToggle: {
+			/**
+			 * Show on Profile
+			 */
+			Title: () => LocalizedString
+			/**
+			 * Whether to show the generated images on your profile.
 			 */
 			Paragraph: () => LocalizedString
 		}

@@ -101,6 +101,10 @@ const tr: Translation = {
 			Title: 'Fotoğraf Sayısı',
 			Paragraph: 'Üretilecek fotoğraf sayısı.'
 		},
+		ShowOnProfileToggle: {
+			Title: 'Show on Profile',
+			Paragraph: 'Whether to show the generated images on your profile.'
+		},
 		SchedulerDropdown: {
 			Title: 'Planlayıcı',
 			Paragraph:

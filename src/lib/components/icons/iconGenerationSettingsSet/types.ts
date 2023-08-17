@@ -8,4 +8,5 @@ export type TIconGenerationSettingsSet =
 	| 'scheduler'
 	| 'inference-steps'
 	| 'seed'
-	| 'dimensions';
+	| 'dimensions'
+	| 'show-on-profile';
