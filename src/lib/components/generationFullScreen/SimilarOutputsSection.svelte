@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { browser } from '$app/environment';
 	import { page } from '$app/stores';
+	import Img from '$components/Img.svelte';
 	import Divider from '$components/generationFullScreen/Divider.svelte';
 	import type { TGenerationFullScreenModalType } from '$components/generationFullScreen/types';
 	import SimpleGrid from '$components/grids/SimpleGrid.svelte';
@@ -102,22 +103,27 @@
 					>
 						<div class="w-full p-2px">
 							{#key similarOutput.id}
-								<img
-									loading="lazy"
-									class="w-full h-auto rounded-xl overflow-hidden border-2 border-c-bg-tertiary
-                shadow-lg shadow-c-shadow/[var(--o-shadow-strong)] transition bg-c-bg-tertiary not-touch:group-hover:border-c-primary"
-									sizes={`(min-width: 1024px) calc(400px / ${simpleGridCols}), calc(min(700px, 100vw) / ${simpleGridCols})`}
-									src={getImgProxySrc({
-										src: similarOutput.upscaled_image_url ?? similarOutput.image_url,
-										preset: '256w'
-									})}
-									srcset={getImgProxySrcSet({
-										src: similarOutput.upscaled_image_url ?? similarOutput.image_url
-									})}
-									width={similarOutput.generation.width}
-									height={similarOutput.generation.height}
-									alt={similarOutput.generation.prompt.text}
-								/>
+								<div
+									class="w-full rounded-xl overflow-hidden relative z-0 border-2 border-c-bg-tertiary
+									shadow-lg shadow-c-shadow/[var(--o-shadow-strong)] transition bg-c-bg-tertiary not-touch:group-hover:border-c-primary"
+								>
+									<Img
+										loading="lazy"
+										class="w-full h-auto"
+										sizes={`(min-width: 1024px) calc(400px / ${simpleGridCols}), calc(min(700px, 100vw) / ${simpleGridCols})`}
+										src={getImgProxySrc({
+											src: similarOutput.upscaled_image_url ?? similarOutput.image_url,
+											preset: '256w'
+										})}
+										srcset={getImgProxySrcSet({
+											src: similarOutput.upscaled_image_url ?? similarOutput.image_url
+										})}
+										width={similarOutput.generation.width}
+										height={similarOutput.generation.height}
+										alt={similarOutput.generation.prompt.text}
+										fade
+									/>
+								</div>
 							{/key}
 						</div>
 					</a>

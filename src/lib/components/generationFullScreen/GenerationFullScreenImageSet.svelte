@@ -35,7 +35,10 @@
 </SrcsetProvider>
 <img
 	on:load={onImageLoad}
-	class="w-full relative transition h-auto lg:h-full lg:object-contain lg:absolute lg:left-0 lg:top-0"
+	class="w-full relative transition ease-out h-auto lg:h-full lg:object-contain lg:absolute lg:left-0 lg:top-0 {naturalWidth &&
+	naturalHeight
+		? 'opacity-100'
+		: 'opacity-0'}"
 	src={imageUrl}
 	alt={prompt}
 	bind:naturalWidth
