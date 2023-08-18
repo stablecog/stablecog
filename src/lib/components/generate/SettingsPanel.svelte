@@ -180,7 +180,7 @@
 					/>
 					<p
 						class="flex-1 break-words min-w-0 overflow-hidden overflow-ellipsis text-left text-c-on-bg/75
-						not-touch:group-hover:text-c-primary"
+						not-touch:group-hover:text-c-primary transition"
 					>
 						{$LL.Shared.AdvancedSettingsButton()}
 					</p>

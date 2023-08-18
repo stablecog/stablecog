@@ -134,7 +134,11 @@
 				</div>
 			</div>
 			<div class="flex-shrink min-w-0 flex items-center">
-				<svelte:component this={iconSet} type={selectedItem?.value} class={iconSetClass} />
+				<svelte:component
+					this={iconSet}
+					type={selectedItem?.value}
+					class="{iconSetClass} transition text-c-on-bg not-touch:group-hover:text-c-primary"
+				/>
 				<p
 					class="flex-shrink whitespace-nowrap overflow-hidden overflow-ellipsis text-base font-medium relative transition
 					max-w-full z-0 text-c-on-bg not-touch:group-hover:text-c-primary"
@@ -218,7 +222,9 @@
 											<svelte:component
 												this={iconSet}
 												type={item.value}
-												class="{iconSetClass} {isSelected ? 'text-c-primary' : ''}"
+												class="{iconSetClass} {isSelected
+													? 'text-c-primary'
+													: 'text-c-on-bg'} transition"
 											/>
 											<div class="flex-shrink min-w-0 flex items-center gap-2">
 												<p

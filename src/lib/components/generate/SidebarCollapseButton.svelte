@@ -71,13 +71,17 @@
 	on:focus|preventDefault={() => null}
 	on:mouseleave|preventDefault={onMouseLeave}
 	on:blur|preventDefault={() => null}
+	role="button"
+	tabindex="0"
 	class="h-full {size === 'sm' ? 'w-5 -right-4.5' : 'w-8 -right-7'} absolute transition {isClosed
 		? isClosedClass
 		: ''} top-0 flex items-center justify-center transform z-20"
 >
 	<div
 		class="rounded-full bg-c-bg ring-2 ring-c-bg-secondary flex items-center justify-center
-    shadow-xl shadow-c-shadow/[var(--o-shadow-strongest)] transform transition {shouldShowButton ||
+    shadow-lg {isClosed
+			? 'shadow-c-shadow/[var(--o-shadow-stronger)]'
+			: 'shadow-c-shadow/[var(--o-shadow-strongest)]'} transform transition {shouldShowButton ||
 		isClosed ||
 		isNewlyOpened
 			? size === 'sm'
