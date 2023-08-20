@@ -118,7 +118,8 @@
 	{/if}
 	<WithTooltip let:triggerStoreValue let:trigger delay={0} color="bg-secondary">
 		<div
-			tabindex="-1"
+			tabindex="0"
+			role="button"
 			class="w-10 h-10 relative cursor-default rounded-xl"
 			use:trigger
 			{...triggerStoreValue}
