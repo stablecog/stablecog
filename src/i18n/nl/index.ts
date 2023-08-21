@@ -929,6 +929,7 @@ const nl: Translation = {
 		Reddit: 'Reddit',
 		GitHub: 'GitHub',
 		Telegram: 'Telegram',
+		Facebook: 'Facebook',
 		ProductHunt: 'Product Hunt'
 	},
 	Voiceover: {
@@ -1052,6 +1053,7 @@ const nl: Translation = {
 			AlreadyLinked: 'Your account already has a {platform} account associated with it.'
 		}
 	},
+	ShareCard: { Title: 'Share' },
 	UnderDevelopment: {
 		PageTitle: 'We zijn snel weer terug!',
 		PageParagraph: 'We zijn onze systemen aan het upgraden. Over een paar uur zijn we weer terug.'

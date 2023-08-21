@@ -919,6 +919,7 @@ const bg: Translation = {
 		Reddit: 'Reddit',
 		GitHub: 'GitHub',
 		Telegram: 'Telegram',
+		Facebook: 'Facebook',
 		ProductHunt: 'Product Hunt'
 	},
 	Voiceover: {
@@ -1042,6 +1043,7 @@ const bg: Translation = {
 			AlreadyLinked: 'Your account already has a {platform} account associated with it.'
 		}
 	},
+	ShareCard: { Title: 'Share' },
 	UnderDevelopment: {
 		PageTitle: 'Скоро ще се върнем!',
 		PageParagraph: 'Обновяваме системите си. Ще се върнем след няколко часа.'

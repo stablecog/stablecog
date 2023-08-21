@@ -2727,6 +2727,10 @@ type RootTranslation = {
 		 */
 		Telegram: string
 		/**
+		 * F​a​c​e​b​o​o​k
+		 */
+		Facebook: string
+		/**
 		 * P​r​o​d​u​c​t​ ​H​u​n​t
 		 */
 		ProductHunt: string
@@ -3186,6 +3190,12 @@ type RootTranslation = {
 			 */
 			AlreadyLinked: RequiredParams<'platform'>
 		}
+	}
+	ShareCard: {
+		/**
+		 * S​h​a​r​e
+		 */
+		Title: string
 	}
 	UnderDevelopment: {
 		/**
@@ -5860,6 +5870,10 @@ export type TranslationFunctions = {
 		 */
 		Telegram: () => LocalizedString
 		/**
+		 * Facebook
+		 */
+		Facebook: () => LocalizedString
+		/**
 		 * Product Hunt
 		 */
 		ProductHunt: () => LocalizedString
@@ -6307,6 +6321,12 @@ export type TranslationFunctions = {
 			 */
 			AlreadyLinked: (arg: { platform: unknown }) => LocalizedString
 		}
+	}
+	ShareCard: {
+		/**
+		 * Share
+		 */
+		Title: () => LocalizedString
 	}
 	UnderDevelopment: {
 		/**

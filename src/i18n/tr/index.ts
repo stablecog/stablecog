@@ -939,6 +939,7 @@ const tr: Translation = {
 		Reddit: 'Reddit',
 		GitHub: 'GitHub',
 		Telegram: 'Telegram',
+		Facebook: 'Facebook',
 		ProductHunt: 'Product Hunt'
 	},
 	Voiceover: {
@@ -1148,6 +1149,7 @@ const tr: Translation = {
 			AlreadyLinked: 'Hesabına bağlanmış bir {platform} hesabı zaten mevcut.'
 		}
 	},
+	ShareCard: { Title: 'Share' },
 	UnderDevelopment: {
 		PageTitle: 'Geri döneceğiz!',
 		PageParagraph: 'Sistemlerimizi güncelliyoruz. Birkaç saate döneceğiz.'

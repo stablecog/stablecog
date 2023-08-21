@@ -939,6 +939,7 @@ const ja: Translation = {
 		Reddit: 'Reddit',
 		GitHub: 'GitHub',
 		Telegram: 'Telegram',
+		Facebook: 'Facebook',
 		ProductHunt: 'Product Hunt'
 	},
 	Voiceover: {
@@ -1140,6 +1141,7 @@ const ja: Translation = {
 			AlreadyLinked: 'Your account already has a {platform} account associated with it.'
 		}
 	},
+	ShareCard: { Title: 'Share' },
 	UnderDevelopment: {
 		PageTitle: 'しばらくお待ちください',
 		PageParagraph: 'システムをアップグレードしています。数時間後に戻ります。'

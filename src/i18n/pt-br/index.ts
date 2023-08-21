@@ -922,6 +922,7 @@ const ptBr: Translation = {
 		Reddit: 'Reddit',
 		GitHub: 'GitHub',
 		Telegram: 'Telegram',
+		Facebook: 'Facebook',
 		ProductHunt: 'Product Hunt'
 	},
 	Voiceover: {
@@ -1045,6 +1046,7 @@ const ptBr: Translation = {
 			AlreadyLinked: 'Your account already has a {platform} account associated with it.'
 		}
 	},
+	ShareCard: { Title: 'Share' },
 	UnderDevelopment: {
 		PageTitle: "We'll be back soon!",
 		PageParagraph: "We're upgrading our systems. We'll be back in a couple of hours."

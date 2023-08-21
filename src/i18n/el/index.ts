@@ -954,6 +954,7 @@ const es: Translation = {
 		Reddit: 'Reddit',
 		GitHub: 'GitHub',
 		Telegram: 'Telegram',
+		Facebook: 'Facebook',
 		ProductHunt: 'Product Hunt'
 	},
 	Voiceover: {
@@ -1165,6 +1166,7 @@ const es: Translation = {
 			AlreadyLinked: 'Your account already has a {platform} account associated with it.'
 		}
 	},
+	ShareCard: { Title: 'Share' },
 	UnderDevelopment: {
 		PageTitle: 'Θα επιστρέψουμε σύντομα!',
 		PageParagraph: 'Αναβαθμίζουμε τα συστήματά μας. Θα επιστρέψουμε σε μια-δυο ώρες.'
