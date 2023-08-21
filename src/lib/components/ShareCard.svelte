@@ -5,6 +5,7 @@
 	import ButtonHoverEffect from '$components/buttons/ButtonHoverEffect.svelte';
 	import { copyTimeoutDuration } from '$components/generationFullScreen/constants';
 	import IconCancel from '$components/icons/IconCancel.svelte';
+	import IconCopy from '$components/icons/IconCopy.svelte';
 	import IconSc from '$components/icons/IconSc.svelte';
 	import IconTick from '$components/icons/IconTick.svelte';
 	import { PUBLIC_FACEBOOK_APP_ID } from '$env/static/public';
@@ -102,13 +103,13 @@
 
 <div
 	class="w-full flex flex-col max-w-md bg-c-bg-secondary ring-2 ring-c-bg-tertiary relative
-  rounded-2xl p-3 md:p-5 gap-3 shadow-generation-modal shadow-c-shadow/[var(--o-shadow-stronger)] {classes}"
+  rounded-2xl p-2 md:p-5 gap-3 shadow-generation-modal shadow-c-shadow/[var(--o-shadow-stronger)] {classes}"
 >
 	<button class="absolute right-0 top-0 p-3 rounded-xl overflow-hidden z-0 group" on:click={close}>
 		<ButtonHoverEffect color="primary" hoverFrom="bottom" />
 		<IconCancel class="text-c-on-bg/25 w-6 h-6 not-touch:group-hover:text-c-primary transition" />
 	</button>
-	<h1 class="w-full text-center font-bold text-2xl md:-mt-1.5 px-9">
+	<h1 class="w-full text-center font-bold text-2xl mt-1 md:-mt-1.5 px-9">
 		{$LL.ShareCard.Title()}
 	</h1>
 	<div class="w-full flex flex-wrap items-center justify-center -mt-1.5">
@@ -122,9 +123,9 @@
 					});
 				}}
 				target="_blank"
-				class="flex flex-col items-center justify-center gap-1.5 group relative p-3"
+				class="rounded-xl flex flex-col items-center justify-center gap-1.5 group relative p-3"
 			>
-				<ButtonHoverEffect noPadding color="bg-tertiary" hoverFrom="left" noFade />
+				<ButtonHoverEffect noPadding color="bg-tertiary" noFade />
 				<div
 					class="{button.iconClasses} w-11 h-11 rounded-full text-c-bg flex items-center justify-center p-1.5 relative"
 				>
@@ -158,9 +159,14 @@
 			noHoverEffect={copied}
 		>
 			<Morpher morphed={!copied}>
-				<p slot="1" class="flex flex-shrink min-w-0">
-					{$LL.Shared.CopyButton()}
-				</p>
+				<div slot="1" class="flex items-center justify-center gap-0.75 text-c-on-primary">
+					<div class="w-5.5 h-5.5 transform flex-shrink-0 -ml-1">
+						<IconCopy class="w-full h-full" />
+					</div>
+					<p class="flex flex-shrink min-w-0">
+						{$LL.Shared.CopyButton()}
+					</p>
+				</div>
 				<div slot="0" class="flex items-center justify-center gap-0.75 text-c-on-primary">
 					<div class="w-5.5 h-5.5 transform flex-shrink-0 -ml-1">
 						<IconTick class="w-full h-full" />

@@ -135,11 +135,11 @@
 					class="w-full max-w-sm my-auto bg-c-bg-secondary p-5 md:p-7 ring-2 ring-c-bg-tertiary relative
       		rounded-2xl shadow-generation-modal shadow-c-shadow/[var(--o-shadow-strongest)]"
 				>
-					<h2 class="text-xl font-bold -mt-1 pl-1 pr-12" {...$title} use:title>
+					<h2 class="text-xl font-bold -mt-1 md:-mt-2 pl-1 pr-12" {...$title} use:title>
 						{$LL.ChangeUsername.ChangeUsernameTitle()}
 					</h2>
-					<div class="w-full flex flex-col">
-						<form use:usernameForm class="flex flex-col gap-2.5 mt-1">
+					<div class="w-full flex flex-col mt-0.5 md:mt-1">
+						<form use:usernameForm class="flex flex-col gap-2.5">
 							<Input
 								noAutocomplete
 								title={$LL.ChangeUsername.UsernameInput.Title()}
