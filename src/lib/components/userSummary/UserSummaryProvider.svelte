@@ -31,7 +31,7 @@
 
 	function setUserSummary() {
 		if (browser && $userSummaryQuery && $userSummaryQuery.isSuccess && $userSummaryQuery.data) {
-			userSummary.set($userSummaryQuery.data);
+			userSummary.set({ ...$userSummaryQuery.data, refetch: $userSummaryQuery.refetch });
 		}
 	}
 

@@ -14,6 +14,7 @@
 	export let size: 'sm' | 'md' = 'md';
 	export let gutter = -4;
 	export let isActive = true;
+	export let onOpened: (() => void) | undefined = undefined;
 
 	const {
 		elements: { trigger, arrow, content },
@@ -36,9 +37,16 @@
 	});
 
 	$: [$isTouchscreen], setOptions();
+	$: [$open], _onOpened();
 
 	function setOptions() {
 		options.openDelay.set($isTouchscreen ? 0 : delay);
+	}
+
+	function _onOpened() {
+		if ($open && onOpened) {
+			onOpened();
+		}
 	}
 </script>
 

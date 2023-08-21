@@ -2,6 +2,11 @@ import type {
 	TStripeSupportedPriceIdSubscriptionsMo,
 	TStripeSupportedProductIdSubscriptions
 } from '$ts/constants/stripePublic';
+import type {
+	QueryObserverResult,
+	RefetchOptions,
+	RefetchQueryFilters
+} from '@tanstack/svelte-query';
 import { writable } from 'svelte/store';
 
 export const userSummary = writable<TUserSummary | null>(null);
@@ -18,4 +23,7 @@ export interface TUserSummary {
 	has_nonfree_credits?: boolean;
 	wants_email?: boolean;
 	username: string;
+	refetch?: <TPageData>(
+		options?: (RefetchOptions & RefetchQueryFilters<TPageData>) | undefined
+	) => Promise<QueryObserverResult<TUserSummary | null, unknown>>;
 }

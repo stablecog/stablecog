@@ -43,6 +43,12 @@
 	const closeAccountMenu = () => (isAccountMenuOpen = false);
 
 	const showBanner = false;
+
+	$: onCreditTooltipOpened = $userSummary?.refetch
+		? () => {
+				if ($userSummary?.refetch) $userSummary.refetch();
+		  }
+		: undefined;
 </script>
 
 <nav
@@ -178,6 +184,7 @@
 					<WithTooltip
 						let:trigger
 						let:triggerStoreValue
+						onOpened={onCreditTooltipOpened}
 						isActive={$userSummary.product_id === undefined &&
 							$userSummary.more_credits_at !== undefined}
 					>
