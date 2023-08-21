@@ -15,6 +15,7 @@
 	import { validator } from '@felte/validator-zod';
 	import { logUsernameChanged } from '$ts/helpers/loggers';
 	import { appVersion } from '$ts/stores/appVersion';
+	import { onMount } from 'svelte';
 
 	export let afterUsernameChanged: ((username: string) => Promise<void>) | undefined = undefined;
 	export let closeOnSuccess = false;
@@ -112,54 +113,61 @@
 	function onOpenChanged() {
 		if (!$open) usernameInputValue = $userSummary?.username || '';
 	}
+
+	let mounted = false;
+	onMount(() => {
+		mounted = true;
+	});
 </script>
 
 <slot {trigger} {close} />
 
-<div use:portalled {...$portalled}>
-	{#if $open}
-		<div {...$overlay} use:overlay class="fixed inset-0 z-[9999] w-full h-full bg-c-barrier/80" />
-		<div
-			class="w-full h-full fixed inset-0 z-[10000] flex justify-center px-3 pt-8 pb-12 overflow-auto"
-		>
+{#if mounted}
+	<div use:portalled {...$portalled}>
+		{#if $open}
+			<div {...$overlay} use:overlay class="fixed inset-0 z-[9999] w-full h-full bg-c-barrier/80" />
 			<div
-				{...$content}
-				use:content
-				class="w-full max-w-sm my-auto bg-c-bg-secondary p-5 md:p-7 ring-2 ring-c-bg-tertiary relative
-      	rounded-2xl shadow-generation-modal shadow-c-shadow/[var(--o-shadow-strongest)]"
+				class="w-full h-full fixed inset-0 z-[10000] flex justify-center px-3 pt-8 pb-12 overflow-auto"
 			>
-				<h2 class="text-xl font-bold -mt-1 pl-1 pr-12" {...$title} use:title>
-					{$LL.ChangeUsername.ChangeUsernameTitle()}
-				</h2>
-				<div class="w-full flex flex-col">
-					<form use:usernameForm class="flex flex-col gap-2.5 mt-1">
-						<Input
-							noAutocomplete
-							title={$LL.ChangeUsername.UsernameInput.Title()}
-							name="username"
-							bind:value={usernameInputValue}
-							type="text"
-							class="mt-4 w-full"
-						/>
-						<Button withSpinner loading={$isSubmittingUsernameForm} class="w-full">
-							{$LL.Shared.ConfirmButton()}
-						</Button>
-					</form>
-					{#if $usernameFormErrors.username}
-						<ErrorLine size="sm" text={$usernameFormErrors.username[0]} />
-					{/if}
-				</div>
-				<button
-					class="absolute right-0 top-0 p-3 rounded-xl overflow-hidden z-0 group"
-					{...$close}
-					use:close
+				<div
+					{...$content}
+					use:content
+					class="w-full max-w-sm my-auto bg-c-bg-secondary p-5 md:p-7 ring-2 ring-c-bg-tertiary relative
+      		rounded-2xl shadow-generation-modal shadow-c-shadow/[var(--o-shadow-strongest)]"
 				>
-					<ButtonHoverEffect color="primary" hoverFrom="bottom" />
-					<IconCancel
-						class="text-c-on-bg/25 w-6 h-6 not-touch:group-hover:text-c-primary transition"
-					/>
-				</button>
+					<h2 class="text-xl font-bold -mt-1 pl-1 pr-12" {...$title} use:title>
+						{$LL.ChangeUsername.ChangeUsernameTitle()}
+					</h2>
+					<div class="w-full flex flex-col">
+						<form use:usernameForm class="flex flex-col gap-2.5 mt-1">
+							<Input
+								noAutocomplete
+								title={$LL.ChangeUsername.UsernameInput.Title()}
+								name="username"
+								bind:value={usernameInputValue}
+								type="text"
+								class="mt-4 w-full"
+							/>
+							<Button withSpinner loading={$isSubmittingUsernameForm} class="w-full">
+								{$LL.Shared.ConfirmButton()}
+							</Button>
+						</form>
+						{#if $usernameFormErrors.username}
+							<ErrorLine size="sm" text={$usernameFormErrors.username[0]} />
+						{/if}
+					</div>
+					<button
+						class="absolute right-0 top-0 p-3 rounded-xl overflow-hidden z-0 group"
+						{...$close}
+						use:close
+					>
+						<ButtonHoverEffect color="primary" hoverFrom="bottom" />
+						<IconCancel
+							class="text-c-on-bg/25 w-6 h-6 not-touch:group-hover:text-c-primary transition"
+						/>
+					</button>
+				</div>
 			</div>
-		</div>
-	{/if}
-</div>
+		{/if}
+	</div>
+{/if}
