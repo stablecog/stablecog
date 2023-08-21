@@ -68,7 +68,7 @@
 			buttonText: $LL.Scl.Facebook(),
 			href: `https://facebook.com/dialog/share?display=popup&href=${encodeURIComponent(
 				url
-			)}&app_id=${PUBLIC_FACEBOOK_APP_ID}&hashtag=${hashtagMain}`
+			)}&app_id=${PUBLIC_FACEBOOK_APP_ID}`
 		},
 		{
 			icon: 'reddit',
