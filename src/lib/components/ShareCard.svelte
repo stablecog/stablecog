@@ -117,7 +117,7 @@
 				target="_blank"
 				class="flex flex-col items-center justify-center gap-1.5 group relative p-3"
 			>
-				<ButtonHoverEffect noPadding color="bg-tertiary" />
+				<ButtonHoverEffect noPadding color="bg-tertiary" hoverFrom="left" noFade />
 				<div
 					class="{button.iconClasses} w-11 h-11 rounded-full text-c-bg flex items-center justify-center p-1.5 relative"
 				>
