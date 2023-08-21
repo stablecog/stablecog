@@ -17,9 +17,7 @@
 
 	export let url: string;
 	export let generation: TGenerationWithSelectedOutput;
-	export let content: any;
-	export let close: any;
-	export let title: any;
+	export let close: () => void;
 	export { classes as class };
 	let classes = '';
 
@@ -94,20 +92,14 @@
 </script>
 
 <div
-	use:content
-	{...$content}
 	class="w-full flex flex-col max-w-md bg-c-bg-secondary ring-2 ring-c-bg-tertiary relative
   rounded-2xl p-3 md:p-5 gap-3 shadow-generation-modal shadow-c-shadow/[var(--o-shadow-stronger)] {classes}"
 >
-	<button
-		class="absolute right-0 top-0 p-3 rounded-xl overflow-hidden z-0 group"
-		{...$close}
-		use:close
-	>
+	<button class="absolute right-0 top-0 p-3 rounded-xl overflow-hidden z-0 group" on:click={close}>
 		<ButtonHoverEffect color="primary" hoverFrom="bottom" />
 		<IconCancel class="text-c-on-bg/25 w-6 h-6 not-touch:group-hover:text-c-primary transition" />
 	</button>
-	<h1 use:title {...$title} class="w-full text-center font-bold text-2xl md:-mt-1.5 px-9">
+	<h1 class="w-full text-center font-bold text-2xl md:-mt-1.5 px-9">
 		{$LL.ShareCard.Title()}
 	</h1>
 	<div class="w-full flex flex-wrap items-center justify-center -mt-1.5">

@@ -8,6 +8,10 @@
 	export let hasPadding = true;
 	export let onClose: (() => void) | undefined = undefined;
 	export let scrollContainer: HTMLDivElement | undefined = undefined;
+	export let level = 0;
+	export let overflowHiddenClass = 'overflow-hidden-for-modal';
+	export let portalBarrier: HTMLDivElement | undefined = undefined;
+	export let portalContent: HTMLDivElement | undefined = undefined;
 	let scrollY: number;
 
 	function onScroll(e: any) {
@@ -15,23 +19,25 @@
 	}
 
 	onMount(() => {
-		document.body.classList.add('overflow-hidden-for-modal');
+		document.body.classList.add(overflowHiddenClass);
 	});
 	onDestroy(() => {
-		document.body.classList.remove('overflow-hidden-for-modal');
+		document.body.classList.remove(overflowHiddenClass);
 	});
 </script>
 
 <div
 	use:portal={'body'}
+	bind:this={portalBarrier}
 	style="width: {$windowWidth}px; height: {$windowHeight}px;"
 	class="flex flex-col items-center fixed left-0
-    top-0 bg-c-barrier/90 z-[1000] overflow-hidden"
+    top-0 bg-c-barrier/90 {level === 1 ? 'z-[1010]' : 'z-[1000]'} overflow-hidden"
 />
 <div
 	use:portal={'body'}
+	bind:this={portalContent}
 	style="width: {$windowWidth}px; height: {$windowHeight}px;"
-	class="fixed left-0 top-0 overflow-hidden flex flex-col z-[1001]"
+	class="fixed left-0 top-0 overflow-hidden flex flex-col {level === 1 ? 'z-[1011]' : 'z-[1001]'}"
 >
 	<div
 		bind:this={scrollContainer}

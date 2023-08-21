@@ -51,7 +51,8 @@
 	export let currentImageUrl: string;
 	export let modalType: TGenerationFullScreenModalType;
 	export let setSearchQuery: ((query: string) => void) | undefined = undefined;
-	export let shareButtonPortalElement: HTMLDivElement;
+	export let shareButtonPortalBarrier: HTMLDivElement;
+	export let shareButtonPortalContent: HTMLDivElement;
 	export { classes as class };
 	let classes = '';
 
@@ -219,7 +220,8 @@
 			{modalType}
 			{generation}
 			url={linkUrl}
-			bind:portalElement={shareButtonPortalElement}
+			bind:portalBarrier={shareButtonPortalBarrier}
+			bind:portalContent={shareButtonPortalContent}
 		/>
 	{/if}
 	{#if (modalType === 'generate' || modalType === 'history' || (modalType === 'user-profile' && generation.user.username === $userSummary?.username)) && !generation.selected_output.image_url.includes('placeholder')}

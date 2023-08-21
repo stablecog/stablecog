@@ -1,29 +1,29 @@
 <script lang="ts">
+	import ModalWrapper from '$components/ModalWrapper.svelte';
 	import ShareCard from '$components/ShareCard.svelte';
 	import SubtleButton from '$components/buttons/SubtleButton.svelte';
 	import type { TGenerationFullScreenModalType } from '$components/generationFullScreen/types';
 	import IconShare from '$components/icons/IconShare.svelte';
 	import LL from '$i18n/i18n-svelte';
+	import { clickoutside } from '$ts/actions/clickoutside';
 	import {
 		getPreviewImageUrlFromOutputId,
 		getUserProfilePreviewImageUrlFromOutputId
 	} from '$ts/helpers/getPreviewImageUrl';
 	import type { TGenerationWithSelectedOutput } from '$ts/stores/user/generation';
-	import { createDialog } from '@melt-ui/svelte';
 
 	export let modalType: TGenerationFullScreenModalType;
 	export let url: string;
 	export let generation: TGenerationWithSelectedOutput;
-	export let portalElement: HTMLElement;
+	export let portalBarrier: HTMLDivElement;
+	export let portalContent: HTMLDivElement;
 
-	const {
-		elements: { trigger, close, content, overlay, portalled, title },
-		states: { open }
-	} = createDialog();
+	let isModalOpen = false;
+
+	const closeModal = () => (isModalOpen = false);
 </script>
 
 <SubtleButton
-	{trigger}
 	onClick={() => {
 		fetch(
 			modalType === 'user-profile' ||
@@ -36,6 +36,7 @@
 				  )
 				: getPreviewImageUrlFromOutputId(generation.selected_output.id)
 		);
+		isModalOpen = !isModalOpen;
 	}}
 >
 	<div class="flex items-center justify-center gap-1.5">
@@ -44,15 +45,15 @@
 	</div>
 </SubtleButton>
 
-{#if $open}
-	<div {...$portalled} use:portalled bind:this={portalElement}>
-		{#if $open}
-			<div {...$overlay} use:overlay class="fixed inset-0 z-[9999] w-full h-full bg-c-barrier/80" />
-			<div
-				class="w-full h-full fixed inset-0 z-[10000] flex justify-center px-3 pt-8 pb-12 overflow-auto"
-			>
-				<ShareCard class="my-auto" {generation} {url} {title} {close} {content} />
-			</div>
-		{/if}
-	</div>
+{#if isModalOpen}
+	<ModalWrapper
+		level={1}
+		overflowHiddenClass="overflow-hidden-for-modal-l1"
+		bind:portalBarrier
+		bind:portalContent
+	>
+		<div use:clickoutside={{ callback: closeModal }} class="max-w-full my-auto">
+			<ShareCard {generation} {url} close={closeModal} />
+		</div>
+	</ModalWrapper>
 {/if}

@@ -229,6 +229,9 @@ select:-webkit-autofill:focus {
 .overflow-hidden-for-modal {
 	overflow: hidden!important;
 }
+.overflow-hidden-for-modal-l1 {
+	overflow: hidden!important;
+}
 
 .overflow-hidden-for-drawer {
 	overflow: hidden!important;
