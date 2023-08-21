@@ -102,8 +102,8 @@ const tr: Translation = {
 			Paragraph: 'Üretilecek fotoğraf sayısı.'
 		},
 		ShowOnProfileToggle: {
-			Title: 'Show on Profile',
-			Paragraph: 'Whether to show the generated images on your profile.'
+			Title: 'Profile Göster',
+			Paragraph: 'Üretimin profilde gösterilip gösterilmeyeceğini belirler.'
 		},
 		SchedulerDropdown: {
 			Title: 'Planlayıcı',
@@ -209,7 +209,7 @@ const tr: Translation = {
 		GenerateButton: 'Üret',
 		UpscaleButton: 'Büyüt',
 		SimilarTitle: 'Benzer',
-		ShowOnProfileButton: 'Show on Profile',
+		ShowOnProfileButton: 'Profilde Göster',
 		SubmitToGalleryButton: 'Galeriye Gönder',
 		SubmittedTitle: 'Gönderildi',
 		UpscaleTabBar: {
@@ -260,14 +260,14 @@ const tr: Translation = {
 		DownloadButton: 'İndir',
 		AddButton: 'Ekle',
 		CopyLinkButton: 'Linki Kopyala',
-		CopiedButton: 'Copied!',
+		CopiedButton: 'Kopyalandı!',
 		CopyButton: 'Kopyala',
 		DeleteButton: 'Sil',
 		LoadingTitle: 'Yükleniyor',
 		ContinueButton: 'Devam Et',
-		ProfileButton: 'Profile',
-		VisitProfileButton: 'Visit Profile',
-		YourProfileButton: 'Your Profile',
+		ProfileButton: 'Profil',
+		VisitProfileButton: 'Profile Git',
+		YourProfileButton: 'Profilin',
 		LoadingParagraph: 'Yükleniyor...',
 		InsufficientCreditsTitle: 'Yetersiz kredi ({remainingCredits}/{neededCredits})',
 		AllTitle: 'Hepsi',
@@ -329,9 +329,9 @@ const tr: Translation = {
 			Placeholder: 'Şifre'
 		},
 		ProFeatures: {
-			SubscribeTitle: 'Subscribe!',
+			SubscribeTitle: 'Abone Ol!',
 			ChangeVisibilityFeatureParagraph:
-				'Changing the visibility of this generation requires a subscription.'
+				'Bu üretimin görünürlüğünü değiştirebilmek için abone olman gerek.'
 		},
 		ModelTags: {
 			GoodAtTitle: 'Şunlarda iyi',
@@ -382,7 +382,9 @@ const tr: Translation = {
 			'8002bc51-7260-468f-8840-cf1e6dbe3f8a': {
 				realName: 'SDXL'
 			},
-			'3fb1f6d9-c0d3-4ae4-adf4-77f8da78a6f7': { realName: 'Waifu Diffusion XL' },
+			'3fb1f6d9-c0d3-4ae4-adf4-77f8da78a6f7': {
+				realName: 'Waifu Diffusion XL'
+			},
 			'a3636543-91cc-4290-b1a4-9d506457b9be': {
 				realName: 'Freedom'
 			}
@@ -423,7 +425,7 @@ const tr: Translation = {
 		TryAgainButton: 'Yeniden Dene',
 		RefreshButton: 'Yenile',
 		LoadMoreButton: 'Daha Fazla',
-		BackToProfile: 'Back to Profile',
+		BackToProfile: 'Profile Dön',
 		BackToGalleryButton: 'Galeriye Dön',
 		SearchingTitle: 'Aranıyor',
 		NoResultsFoundTitle: 'Sonuç bulunamadı'
@@ -454,13 +456,13 @@ const tr: Translation = {
 			Paragraph: 'Güncelleme mevcut! Sayfayı yenile.'
 		},
 		EmailProviderNotAllowed: 'Bu e-posta sağlayıcısı desteklenmiyor.',
-		EmailNotAllowed: "This email isn't allowed.",
+		EmailNotAllowed: 'Bu e-postaya izin verilmiyor.',
 		EmailAlreadyInUse: 'Bu e-posta adresi biri tarafından kullanılıyor.'
 	},
 	UpcomingCredits: {
 		MoreFreeCreditsTooltip: {
-			Title: 'More on the way!',
-			Paragraph: "You'll receive more free credits:"
+			Title: 'Daha fazlası yolda!',
+			Paragraph: 'Daha fazla ücretsiz kredi gelecek:'
 		}
 	},
 	Admin: {
@@ -493,8 +495,8 @@ const tr: Translation = {
 			BannedAtTitle: 'Banlandı',
 			BannedTitle: 'Banlandı',
 			UnbanUserButton: 'Banı Kaldır',
-			BanDomainButton: 'Ban Domain',
-			UnbanDomainButton: 'Unban Domain',
+			BanDomainButton: 'Domaini Banla',
+			UnbanDomainButton: 'Domain Banını Kaldır',
 			BanUserButton: 'Banla',
 			GiftCreditsButton: 'Kredi Hediye Et'
 		},
@@ -556,14 +558,16 @@ const tr: Translation = {
 		SignOutButton: 'Çıkış Yap'
 	},
 	ChangeUsername: {
-		ChangeUsernameTitle: 'Change Username',
-		ChangeUsernameButton: 'Change Username',
-		UsernameInput: { Title: 'Username' },
+		ChangeUsernameTitle: 'Kullanıcı Adı Değiştir',
+		ChangeUsernameButton: 'Kullanıcı Adı Değiştir',
+		UsernameInput: {
+			Title: 'Kullanıcı Adı'
+		},
 		Error: {
-			MinimumCharacters: 'Must be at least {count} characters.',
-			MaximumCharacters: 'Must be at most {count} characters.',
-			InvalidCharacters: 'Can only contain letters, numbers, and dashes.',
-			NotAvailable: "This username isn't available."
+			MinimumCharacters: 'En az {count} karakter olmalı.',
+			MaximumCharacters: 'En fazla {count} karater olmalı.',
+			InvalidCharacters: 'Sadece harf, rakam ve tire içerebilir.',
+			NotAvailable: 'Bu kullanıcı adı müsait değil.'
 		}
 	},
 	Pro: {
@@ -787,7 +791,7 @@ const tr: Translation = {
 		SearchInput: {
 			Title: 'Ara'
 		},
-		BackToProfile: 'Back to Profile',
+		BackToProfile: 'Profile Dön',
 		BackToGalleryButton: 'Galeriye Gön',
 		SearchingTitle: 'Arıyor',
 		NoMatchingGenerationTitle: 'Benzer bir üretim bulunamadı'
@@ -1151,9 +1155,9 @@ const tr: Translation = {
 		}
 	},
 	ShareCard: {
-		Title: 'Share',
-		Message: 'Check out this generation on Stablecog!',
-		MessageUsersOwn: 'Check out my generation on Stablecog!'
+		Title: 'Paylaş',
+		Message: "Stablecog'da bu üretimi incele!",
+		MessageUsersOwn: "Stablecog'da üretimime incele!"
 	},
 	UnderDevelopment: {
 		PageTitle: 'Geri döneceğiz!',
