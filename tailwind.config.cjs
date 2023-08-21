@@ -38,7 +38,10 @@ module.exports = {
 				'c-success': withOpacityValue('--c-success'),
 				'c-success-secondary': withOpacityValue('--c-success-secondary'),
 				'c-shadow': withOpacityValue('--c-shadow'),
-				'c-barrier': withOpacityValue('--c-barrier')
+				'c-barrier': withOpacityValue('--c-barrier'),
+				'c-twitter': withOpacityValue('--c-twitter'),
+				'c-instagram': withOpacityValue('--c-instagram'),
+				'c-facebook': withOpacityValue('--c-facebook')
 			},
 			transitionDuration: {
 				DEFAULT: '200ms',
