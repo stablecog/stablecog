@@ -44,7 +44,7 @@
 
 	const showBanner = false;
 
-	$: onCreditTooltipOpened = $userSummary?.refetch
+	$: onUpcomingCreditsTooltipOpened = $userSummary?.refetch
 		? () => {
 				if ($userSummary?.refetch) $userSummary.refetch();
 		  }
@@ -184,7 +184,7 @@
 					<WithTooltip
 						let:trigger
 						let:triggerStoreValue
-						onOpened={onCreditTooltipOpened}
+						onOpened={onUpcomingCreditsTooltipOpened}
 						isActive={$userSummary.product_id === undefined &&
 							$userSummary.more_credits_at !== undefined}
 					>
