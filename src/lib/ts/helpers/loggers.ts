@@ -52,6 +52,16 @@ export function logGalleryModalSimilarClicked(props: ISimilarClickedProps) {
 	posthog.capture('Gallery | Modal Similar Clicked', { ...props });
 }
 
+export function logShareModalOpened(props: IShareModalOpenedProps) {
+	mixpanel.track('Share | Modal Opened', { ...props });
+	posthog.capture('Share | Modal Opened', { ...props });
+}
+
+export function logShareButtonClicked(props: IShareButtonClickedProps) {
+	mixpanel.track('Share | Button Clicked', { ...props });
+	posthog.capture('Share | Button Clicked', { ...props });
+}
+
 export function logUserProfileModalSimilarClicked(props: ISimilarClickedProps) {
 	mixpanel.track('User Profile | Modal Similar Clicked', { ...props });
 	posthog.capture('User Profile | Modal Similar Clicked', { ...props });
@@ -356,6 +366,22 @@ interface ISimilarClickedProps {
 	'SC - User Id': string | undefined;
 	'SC - Stripe Product Id': string | undefined;
 	'SC - App Version': string;
+}
+
+interface IShareModalOpenedProps {
+	'SC - Output Id'?: string;
+	'SC - User Id': string | undefined;
+	'SC - Stripe Product Id': string | undefined;
+	'SC - App Version': string;
+	'SC - Modal Type': string;
+}
+
+interface IShareButtonClickedProps {
+	'SC - Output Id'?: string;
+	'SC - User Id': string | undefined;
+	'SC - Stripe Product Id': string | undefined;
+	'SC - App Version': string;
+	'SC - Share Type': string;
 }
 
 interface IAdvancedModeToggledProps {

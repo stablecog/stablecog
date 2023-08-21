@@ -10,7 +10,9 @@
 	import { PUBLIC_FACEBOOK_APP_ID } from '$env/static/public';
 	import LL from '$i18n/i18n-svelte';
 	import { modelIdToDisplayName } from '$ts/constants/generationModels';
+	import { logShareButtonClicked } from '$ts/helpers/loggers';
 	import { removeSpecialCharacters } from '$ts/helpers/removeSpecialCharacters';
+	import { appVersion } from '$ts/stores/appVersion';
 	import type { TGenerationWithSelectedOutput } from '$ts/stores/user/generation';
 	import { userSummary } from '$ts/stores/user/summary';
 	import type { TIconSc } from '$ts/types/main';
@@ -89,6 +91,13 @@
 			)}&body=${encodeURIComponent(`${prompt}\n\n${url}`)}`
 		}
 	];
+
+	$: sharedLogProps = {
+		'SC - App Version': $appVersion,
+		'SC - Stripe Product Id': $userSummary?.product_id,
+		'SC - User Id': $page.data.session?.user.id,
+		'SC - Output Id': generation.selected_output.id
+	};
 </script>
 
 <div
@@ -106,6 +115,12 @@
 		{#each buttons as button}
 			<a
 				href={button.href}
+				on:click={() => {
+					logShareButtonClicked({
+						...sharedLogProps,
+						'SC - Share Type': button.icon
+					});
+				}}
 				target="_blank"
 				class="flex flex-col items-center justify-center gap-1.5 group relative p-3"
 			>
@@ -128,7 +143,13 @@
 		<Button
 			stringToCopy={url}
 			type={copied ? 'success' : 'primary'}
-			onClick={onCopied}
+			onClick={() => {
+				logShareButtonClicked({
+					...sharedLogProps,
+					'SC - Share Type': 'copy-link'
+				});
+				onCopied();
+			}}
 			noPadding
 			noRounding
 			class="px-6 py-2.5 rounded-lg"

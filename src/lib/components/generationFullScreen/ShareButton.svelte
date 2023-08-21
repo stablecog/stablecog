@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { page } from '$app/stores';
 	import ModalWrapper from '$components/ModalWrapper.svelte';
 	import ShareCard from '$components/ShareCard.svelte';
 	import SubtleButton from '$components/buttons/SubtleButton.svelte';
@@ -10,7 +11,10 @@
 		getPreviewImageUrlFromOutputId,
 		getUserProfilePreviewImageUrlFromOutputId
 	} from '$ts/helpers/getPreviewImageUrl';
+	import { logShareModalOpened } from '$ts/helpers/loggers';
+	import { appVersion } from '$ts/stores/appVersion';
 	import type { TGenerationWithSelectedOutput } from '$ts/stores/user/generation';
+	import { userSummary } from '$ts/stores/user/summary';
 
 	export let modalType: TGenerationFullScreenModalType;
 	export let url: string;
@@ -36,6 +40,13 @@
 				  )
 				: getPreviewImageUrlFromOutputId(generation.selected_output.id)
 		);
+		logShareModalOpened({
+			'SC - App Version': $appVersion,
+			'SC - Stripe Product Id': $userSummary?.product_id,
+			'SC - User Id': $page.data.session?.user.id,
+			'SC - Output Id': generation.selected_output.id,
+			'SC - Modal Type': modalType
+		});
 		isModalOpen = !isModalOpen;
 	}}
 >
