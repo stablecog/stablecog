@@ -249,6 +249,7 @@ const hi: Translation = {
 		DownloadButton: 'Download',
 		AddButton: 'जोड़े',
 		CopyLinkButton: 'लिंक कॉपी करे',
+		CopiedButton: 'Copied!',
 		CopyButton: 'कॉपी',
 		DeleteButton: 'हटाए',
 		LoadingTitle: 'लोड हो रहा है',

@@ -260,6 +260,7 @@ const ja: Translation = {
 		DownloadButton: 'Download',
 		AddButton: '追加',
 		CopyLinkButton: 'リンクをコピー',
+		CopiedButton: 'Copied!',
 		CopyButton: 'コピー',
 		DeleteButton: '削除',
 		LoadingTitle: '読み込み中',

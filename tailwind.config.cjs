@@ -41,7 +41,8 @@ module.exports = {
 				'c-barrier': withOpacityValue('--c-barrier'),
 				'c-twitter': withOpacityValue('--c-twitter'),
 				'c-instagram': withOpacityValue('--c-instagram'),
-				'c-facebook': withOpacityValue('--c-facebook')
+				'c-facebook': withOpacityValue('--c-facebook'),
+				'c-reddit': withOpacityValue('--c-reddit')
 			},
 			transitionDuration: {
 				DEFAULT: '200ms',

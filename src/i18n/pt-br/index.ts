@@ -249,6 +249,7 @@ const ptBr: Translation = {
 		DownloadButton: 'Download',
 		AddButton: 'Adicionar',
 		CopyLinkButton: 'Copiar Link',
+		CopiedButton: 'Copied!',
 		CopyButton: 'Copiar',
 		DeleteButton: 'Deletar',
 		LoadingTitle: 'Carregando',

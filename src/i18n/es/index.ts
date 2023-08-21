@@ -250,6 +250,7 @@ const es: Translation = {
 		DownloadButton: 'Download',
 		AddButton: 'Añadir',
 		CopyLinkButton: 'Copiar Enlace',
+		CopiedButton: 'Copied!',
 		CopyButton: 'Copiar',
 		DeleteButton: 'Eliminar',
 		LoadingTitle: 'Loading',

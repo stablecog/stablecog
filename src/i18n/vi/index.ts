@@ -250,6 +250,7 @@ const vi: Translation = {
 		DownloadButton: 'Download',
 		AddButton: 'Thêm',
 		CopyLinkButton: 'Sao chép liên kết',
+		CopiedButton: 'Copied!',
 		CopyButton: 'Sao chép',
 		DeleteButton: 'Xóa',
 		LoadingTitle: 'Đang tải',

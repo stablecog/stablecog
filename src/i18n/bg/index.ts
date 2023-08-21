@@ -252,6 +252,7 @@ const bg: Translation = {
 		DownloadButton: 'Download',
 		AddButton: 'Добави',
 		CopyLinkButton: 'Копирай линк',
+		CopiedButton: 'Copied!',
 		CopyButton: 'Копирай',
 		DeleteButton: 'Изтрий',
 		LoadingTitle: 'Зареждане',

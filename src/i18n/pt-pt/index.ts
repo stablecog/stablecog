@@ -249,6 +249,7 @@ const ptPt: Translation = {
 		DownloadButton: 'Download',
 		AddButton: 'Adicionar',
 		CopyLinkButton: 'Copiar Ligação',
+		CopiedButton: 'Copied!',
 		CopyButton: 'Copiar',
 		DeleteButton: 'Eliminar',
 		LoadingTitle: 'A Carregar',

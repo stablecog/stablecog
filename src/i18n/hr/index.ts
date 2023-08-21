@@ -249,6 +249,7 @@ const hr: Translation = {
 		DownloadButton: 'Download',
 		AddButton: 'Dodaj',
 		CopyLinkButton: 'Kopiraj Link',
+		CopiedButton: 'Copied!',
 		CopyButton: 'Kopiraj',
 		DeleteButton: 'Obriši',
 		LoadingTitle: 'Učitavanje',

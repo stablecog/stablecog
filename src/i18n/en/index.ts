@@ -250,6 +250,7 @@ const en: BaseTranslation = {
 		DownloadButton: 'Download',
 		AddButton: 'Add',
 		CopyLinkButton: 'Copy Link',
+		CopiedButton: 'Copied!',
 		CopyButton: 'Copy',
 		DeleteButton: 'Delete',
 		LoadingTitle: 'Loading',

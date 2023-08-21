@@ -775,6 +775,10 @@ type RootTranslation = {
 		 */
 		CopyLinkButton: string
 		/**
+		 * C​o​p​i​e​d​!
+		 */
+		CopiedButton: string
+		/**
 		 * C​o​p​y
 		 */
 		CopyButton: string
@@ -3951,6 +3955,10 @@ export type TranslationFunctions = {
 		 * Copy Link
 		 */
 		CopyLinkButton: () => LocalizedString
+		/**
+		 * Copied!
+		 */
+		CopiedButton: () => LocalizedString
 		/**
 		 * Copy
 		 */

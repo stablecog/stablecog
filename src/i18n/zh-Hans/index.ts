@@ -247,6 +247,7 @@ const zhHans: Translation = {
 		DownloadButton: 'Download',
 		AddButton: '添加',
 		CopyLinkButton: '复制链接',
+		CopiedButton: 'Copied!',
 		CopyButton: '复制',
 		DeleteButton: '删除',
 		LoadingTitle: '加载',

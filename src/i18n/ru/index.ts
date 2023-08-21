@@ -250,6 +250,7 @@ const ru: Translation = {
 		DownloadButton: 'Download',
 		AddButton: 'Добавить',
 		CopyLinkButton: 'Копировать ссылку',
+		CopiedButton: 'Copied!',
 		CopyButton: 'Копировать',
 		DeleteButton: 'Удалить',
 		LoadingTitle: 'Загружается',

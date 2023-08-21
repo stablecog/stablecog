@@ -249,6 +249,7 @@ const de: Translation = {
 		DownloadButton: 'Download',
 		AddButton: 'Hinzufügen',
 		CopyLinkButton: 'Link kopieren',
+		CopiedButton: 'Copied!',
 		CopyButton: 'Kopieren',
 		DeleteButton: 'Löschen',
 		LoadingTitle: 'Wird geladen',

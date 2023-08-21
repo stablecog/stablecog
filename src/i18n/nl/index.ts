@@ -253,6 +253,7 @@ const nl: Translation = {
 		DownloadButton: 'Download',
 		AddButton: 'Voeg toe',
 		CopyLinkButton: 'Link kopiëren',
+		CopiedButton: 'Copied!',
 		CopyButton: 'Kopiëren',
 		DeleteButton: 'Verwijderen',
 		LoadingTitle: 'Laden',

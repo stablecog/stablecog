@@ -260,6 +260,7 @@ const es: Translation = {
 		DownloadButton: 'Λήψη',
 		AddButton: 'Προσθήκη',
 		CopyLinkButton: 'Αντιγραφή Συνδέσμου',
+		CopiedButton: 'Copied!',
 		CopyButton: 'Αντιγραφή',
 		DeleteButton: 'Διαγραφή',
 		LoadingTitle: 'Μεταφόρτωση',

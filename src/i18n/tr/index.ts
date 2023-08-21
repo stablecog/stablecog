@@ -260,6 +260,7 @@ const tr: Translation = {
 		DownloadButton: 'İndir',
 		AddButton: 'Ekle',
 		CopyLinkButton: 'Linki Kopyala',
+		CopiedButton: 'Copied!',
 		CopyButton: 'Kopyala',
 		DeleteButton: 'Sil',
 		LoadingTitle: 'Yükleniyor',

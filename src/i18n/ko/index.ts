@@ -250,6 +250,7 @@ const ko: Translation = {
 		DownloadButton: 'Download',
 		AddButton: '추가하기',
 		CopyLinkButton: '링크 복사하기',
+		CopiedButton: 'Copied!',
 		CopyButton: '복사하기',
 		DeleteButton: '삭제하기',
 		LoadingTitle: '로딩 중',

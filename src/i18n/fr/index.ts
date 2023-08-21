@@ -250,6 +250,7 @@ const fr: Translation = {
 		DownloadButton: 'Download',
 		AddButton: 'Ajouter',
 		CopyLinkButton: 'Copier le lien',
+		CopiedButton: 'Copied!',
 		CopyButton: 'Copier',
 		DeleteButton: 'Supprimer',
 		LoadingTitle: 'Chargement en cours',
