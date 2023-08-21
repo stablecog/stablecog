@@ -461,6 +461,10 @@ const es: Translation = {
 		EmailAlreadyInUse: 'Αυτός ο λογαριασμός ηλεκτρονικού ταχυδρομείου χρησιμοποιείται ήδη.'
 	},
 	UpcomingCredits: {
+		MorePaidPlanCreditsTooltip: {
+			Title: 'More on the way!',
+			Paragraph: 'Your credits will refresh:'
+		},
 		MoreFreeCreditsTooltip: {
 			Title: 'More on the way!',
 			Paragraph: "You'll receive more free credits:"

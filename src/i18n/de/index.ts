@@ -439,6 +439,10 @@ const de: Translation = {
 		EmailAlreadyInUse: 'Diese E-Mail-Adresse wird bereits verwendet.'
 	},
 	UpcomingCredits: {
+		MorePaidPlanCreditsTooltip: {
+			Title: 'More on the way!',
+			Paragraph: 'Your credits will refresh:'
+		},
 		MoreFreeCreditsTooltip: {
 			Title: 'More on the way!',
 			Paragraph: "You'll receive more free credits:"

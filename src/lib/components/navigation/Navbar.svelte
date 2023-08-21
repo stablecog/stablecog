@@ -185,7 +185,7 @@
 						let:trigger
 						let:triggerStoreValue
 						onOpened={onUpcomingCreditsTooltipOpened}
-						isActive={$userSummary.product_id === undefined &&
+						isActive={$userSummary.renews_at !== undefined ||
 							$userSummary.more_credits_at !== undefined}
 					>
 						<div slot="tooltip" class="flex flex-col pb-1">
@@ -193,10 +193,14 @@
 								<IconToken class="w-8 h-8 -ml-1" />
 								<div class="flex flex-col flex-shrink min-w-0">
 									<p class="font-bold flex-shrink min-w-0">
-										{$LL.UpcomingCredits.MoreFreeCreditsTooltip.Title()}
+										{$userSummary.renews_at
+											? $LL.UpcomingCredits.MorePaidPlanCreditsTooltip.Title()
+											: $LL.UpcomingCredits.MoreFreeCreditsTooltip.Title()}
 									</p>
 									<p class="mt-0.5 flex-shrink min-w-0">
-										{$LL.UpcomingCredits.MoreFreeCreditsTooltip.Paragraph()}
+										{$userSummary.renews_at
+											? $LL.UpcomingCredits.MorePaidPlanCreditsTooltip.Paragraph()
+											: $LL.UpcomingCredits.MoreFreeCreditsTooltip.Paragraph()}
 									</p>
 								</div>
 							</div>
@@ -205,7 +209,7 @@
 									ring-c-primary/20 rounded-md px-2 py-0.25 text-c-primary"
 							>
 								{getRelativeDate({
-									date: $userSummary.more_credits_at,
+									date: $userSummary.renews_at ?? $userSummary.more_credits_at,
 									locale: $locale,
 									dateStyle: 'long'
 								})}

@@ -18,6 +18,7 @@
 
 	export let afterUsernameChanged: ((username: string) => Promise<void>) | undefined = undefined;
 	export let closeOnSuccess = false;
+
 	const {
 		elements: { trigger, close, content, overlay, title, portalled },
 		states: { open },

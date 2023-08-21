@@ -453,6 +453,10 @@ const ja: Translation = {
 		EmailAlreadyInUse: 'このメールアドレスは既に使用されています。'
 	},
 	UpcomingCredits: {
+		MorePaidPlanCreditsTooltip: {
+			Title: 'More on the way!',
+			Paragraph: 'Your credits will refresh:'
+		},
 		MoreFreeCreditsTooltip: {
 			Title: 'More on the way!',
 			Paragraph: "You'll receive more free credits:"

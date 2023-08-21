@@ -1325,6 +1325,16 @@ type RootTranslation = {
 		EmailAlreadyInUse: string
 	}
 	UpcomingCredits: {
+		MorePaidPlanCreditsTooltip: {
+			/**
+			 * M​o​r​e​ ​o​n​ ​t​h​e​ ​w​a​y​!
+			 */
+			Title: string
+			/**
+			 * Y​o​u​r​ ​c​r​e​d​i​t​s​ ​w​i​l​l​ ​r​e​f​r​e​s​h​:
+			 */
+			Paragraph: string
+		}
 		MoreFreeCreditsTooltip: {
 			/**
 			 * M​o​r​e​ ​o​n​ ​t​h​e​ ​w​a​y​!
@@ -4497,6 +4507,16 @@ export type TranslationFunctions = {
 		EmailAlreadyInUse: () => LocalizedString
 	}
 	UpcomingCredits: {
+		MorePaidPlanCreditsTooltip: {
+			/**
+			 * More on the way!
+			 */
+			Title: () => LocalizedString
+			/**
+			 * Your credits will refresh:
+			 */
+			Paragraph: () => LocalizedString
+		}
 		MoreFreeCreditsTooltip: {
 			/**
 			 * More on the way!

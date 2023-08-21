@@ -460,6 +460,10 @@ const tr: Translation = {
 		EmailAlreadyInUse: 'Bu e-posta adresi biri tarafından kullanılıyor.'
 	},
 	UpcomingCredits: {
+		MorePaidPlanCreditsTooltip: {
+			Title: 'More on the way!',
+			Paragraph: 'Your credits will refresh:'
+		},
 		MoreFreeCreditsTooltip: {
 			Title: 'Daha fazlası yolda!',
 			Paragraph: 'Daha fazla ücretsiz kredi gelecek:'

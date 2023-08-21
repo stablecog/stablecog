@@ -440,6 +440,10 @@ const ko: Translation = {
 		EmailAlreadyInUse: 'This email is already in use.'
 	},
 	UpcomingCredits: {
+		MorePaidPlanCreditsTooltip: {
+			Title: 'More on the way!',
+			Paragraph: 'Your credits will refresh:'
+		},
 		MoreFreeCreditsTooltip: {
 			Title: 'More on the way!',
 			Paragraph: "You'll receive more free credits:"

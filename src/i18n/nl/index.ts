@@ -445,6 +445,10 @@ const nl: Translation = {
 		EmailAlreadyInUse: 'Dit e-mailadres is al in gebruik.'
 	},
 	UpcomingCredits: {
+		MorePaidPlanCreditsTooltip: {
+			Title: 'More on the way!',
+			Paragraph: 'Your credits will refresh:'
+		},
 		MoreFreeCreditsTooltip: {
 			Title: 'More on the way!',
 			Paragraph: "You'll receive more free credits:"
