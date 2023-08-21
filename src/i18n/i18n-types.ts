@@ -3200,6 +3200,14 @@ type RootTranslation = {
 		 * S​h​a​r​e
 		 */
 		Title: string
+		/**
+		 * C​h​e​c​k​ ​o​u​t​ ​t​h​i​s​ ​g​e​n​e​r​a​t​i​o​n​ ​o​n​ ​S​t​a​b​l​e​c​o​g​!
+		 */
+		Message: string
+		/**
+		 * C​h​e​c​k​ ​o​u​t​ ​m​y​ ​g​e​n​e​r​a​t​i​o​n​ ​o​n​ ​S​t​a​b​l​e​c​o​g​!
+		 */
+		MessageUsersOwn: string
 	}
 	UnderDevelopment: {
 		/**
@@ -6335,6 +6343,14 @@ export type TranslationFunctions = {
 		 * Share
 		 */
 		Title: () => LocalizedString
+		/**
+		 * Check out this generation on Stablecog!
+		 */
+		Message: () => LocalizedString
+		/**
+		 * Check out my generation on Stablecog!
+		 */
+		MessageUsersOwn: () => LocalizedString
 	}
 	UnderDevelopment: {
 		/**

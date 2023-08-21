@@ -15,7 +15,11 @@
 	export let gutter = -4;
 	export let isActive = true;
 
-	const { trigger, content, open, arrow, options } = createTooltip({
+	const {
+		elements: { trigger, arrow, content },
+		states: { open },
+		options
+	} = createTooltip({
 		positioning: {
 			placement: 'bottom',
 			gutter: gutter,
@@ -34,10 +38,7 @@
 	$: [$isTouchscreen], setOptions();
 
 	function setOptions() {
-		options.set({
-			...$options,
-			openDelay: $isTouchscreen ? 0 : delay
-		});
+		options.openDelay.set($isTouchscreen ? 0 : delay);
 	}
 </script>
 

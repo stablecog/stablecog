@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { isTouchscreen } from '$ts/stores/isTouchscreen';
 	import { createSlider } from '@melt-ui/svelte';
+	import { writable } from 'svelte/store';
 	export let value: number;
 	export let min: number;
 	export let max: number;
@@ -17,25 +18,22 @@
 
 	const {
 		options,
-		slider,
-		range,
-		thumb,
-		value: valueLocal
+		elements: { range, root, thumb },
+		states: { value: valueLocal }
 	} = createSlider({
-		value: [value],
+		value: writable([value]),
 		min,
 		max,
 		step,
 		disabled
 	});
 
-	$: options.set({ ...$options, disabled, min, max, step });
+	$: options.disabled.set(disabled || $isTouchscreen);
+	$: options.max.set(max);
+	$: options.min.set(min);
+	$: options.step.set(step);
 	$: valueLocal.set([value]);
 	$: value = $valueLocal[0];
-
-	$: sliderConditional = $isTouchscreen ? {} : $slider;
-	$: rangeConditional = $isTouchscreen ? {} : $range;
-	$: thumbConditional = $isTouchscreen ? {} : $thumb();
 </script>
 
 <div on:pointerup={onPointerUp} aria-label={name} class="w-full h-full relative">
@@ -50,25 +48,22 @@
 		{/each}
 	{/if}
 	<span
-		{...sliderConditional}
+		{...$root}
+		use:root
 		class="flex-1 h-full cursor-grab active:cursor-grabbing relative flex
       items-center group/audio-player-slider"
 	>
 		<span class="block w-full h-6px rounded-full bg-c-on-bg/20 relative">
 			<span
-				style={$isTouchscreen
-					? `width: ${Math.min(
-							100,
-							Math.max(0, ((value - min) / (max - min)) * 100)
-					  )}%; position: absolute; left:0;`
-					: ''}
-				{...rangeConditional}
+				{...$range}
+				use:range
 				class="block h-6px rounded-full transition bg-c-on-bg not-touch:group-active/audio-player-slider:bg-c-primary"
 			/>
 		</span>
 		{#each [...Array($valueLocal.length).keys()] as _}
 			<span
-				{...thumbConditional}
+				{...$thumb()}
+				use:thumb
 				class="{$isTouchscreen
 					? 'hidden'
 					: 'block'} ring-0 ring-c-on-bg/25 group-hover/audio-player-slider:ring-[6px]

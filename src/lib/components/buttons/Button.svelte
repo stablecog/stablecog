@@ -28,6 +28,7 @@
 	export let blurOnClick = false;
 	export let trigger: any | undefined = undefined;
 	export let stringToCopy: string | undefined = undefined;
+	export let noHoverEffect = false;
 	let classes = '';
 
 	let element: HTMLElement;
@@ -122,24 +123,26 @@
 			? 'border-2 border-c-bg-tertiary'
 			: ''} {classes} {shouldAnimate ? 'scale-animation' : ''}"
 	>
-		<div
-			style="width: {buttonSize}px; height: {buttonSize}px;"
-			class="absolute left-1/2 top-1/2 transform -translate-y-1/2 -translate-x-1/2 items-center justify-center
-			hidden not-touch:flex"
-		>
+		{#if !noHoverEffect}
 			<div
-				class="absolute w-full h-full rounded-full transition transform left-0 -translate-x-full
+				style="width: {buttonSize}px; height: {buttonSize}px;"
+				class="absolute left-1/2 top-1/2 transform -translate-y-1/2 -translate-x-1/2 items-center justify-center
+				hidden not-touch:flex"
+			>
+				<div
+					class="absolute w-full h-full rounded-full transition transform left-0 -translate-x-full
 					{type === 'success'
-					? 'bg-c-success-secondary'
-					: type === 'danger'
-					? 'bg-c-danger-secondary'
-					: type === 'bg-secondary'
-					? 'bg-c-bg-tertiary'
-					: type === 'no-bg-on-bg'
-					? 'bg-c-on-bg/10'
-					: 'bg-c-secondary'} not-touch:group-hover:translate-x-0"
-			/>
-		</div>
+						? 'bg-c-success-secondary'
+						: type === 'danger'
+						? 'bg-c-danger-secondary'
+						: type === 'bg-secondary'
+						? 'bg-c-bg-tertiary'
+						: type === 'no-bg-on-bg'
+						? 'bg-c-on-bg/10'
+						: 'bg-c-secondary'} not-touch:group-hover:translate-x-0"
+				/>
+			</div>
+		{/if}
 		<div class="flex items-center justify-center relative gap-3">
 			{#if icon && iconAlignment === 'left'}
 				<svelte:component this={icon} class="w-6 h-6 -m-1 flex-shrink-0" />
@@ -247,24 +250,26 @@
 			? 'scale-animation'
 			: ''}"
 	>
-		<div
-			style="width: {buttonSize}px; height: {buttonSize}px;"
-			class="absolute left-1/2 top-1/2 transform -translate-y-1/2 -translate-x-1/2 items-center justify-center
-			hidden not-touch:flex"
-		>
+		{#if !noHoverEffect}
 			<div
-				class="absolute w-full h-full rounded-full transition transform left-0 -translate-x-full
-					{type === 'success'
-					? 'bg-c-success-secondary'
-					: type === 'danger'
-					? 'bg-c-danger-secondary'
-					: type === 'bg-secondary'
-					? 'bg-c-bg-tertiary'
-					: type === 'no-bg-on-bg'
-					? 'bg-c-on-bg/10'
-					: 'bg-c-secondary'} not-touch:group-enabled:group-hover:translate-x-0"
-			/>
-		</div>
+				style="width: {buttonSize}px; height: {buttonSize}px;"
+				class="absolute left-1/2 top-1/2 transform -translate-y-1/2 -translate-x-1/2 items-center justify-center
+				hidden not-touch:flex"
+			>
+				<div
+					class="absolute w-full h-full rounded-full transition transform left-0 -translate-x-full
+				{type === 'success'
+						? 'bg-c-success-secondary'
+						: type === 'danger'
+						? 'bg-c-danger-secondary'
+						: type === 'bg-secondary'
+						? 'bg-c-bg-tertiary'
+						: type === 'no-bg-on-bg'
+						? 'bg-c-on-bg/10'
+						: 'bg-c-secondary'} not-touch:group-enabled:group-hover:translate-x-0"
+				/>
+			</div>
+		{/if}
 		<div class="flex items-center justify-center relative gap-3">
 			{#if icon && iconAlignment === 'left'}
 				<svelte:component this={icon} class="w-6 h-6 -m-1 flex-shrink-0" />
@@ -372,24 +377,26 @@
 			? 'scale-animation'
 			: ''}"
 	>
-		<div
-			style="width: {buttonSize}px; height: {buttonSize}px;"
-			class="absolute left-1/2 top-1/2 transform -translate-y-1/2 -translate-x-1/2 items-center justify-center
-			hidden not-touch:flex"
-		>
+		{#if !noHoverEffect}
 			<div
-				class="absolute w-full h-full rounded-full transition transform left-0 -translate-x-full
-					{type === 'success'
-					? 'bg-c-success-secondary'
-					: type === 'danger'
-					? 'bg-c-danger-secondary'
-					: type === 'bg-secondary'
-					? 'bg-c-bg-tertiary'
-					: type === 'no-bg-on-bg'
-					? 'bg-c-on-bg/10'
-					: 'bg-c-secondary'} not-touch:group-enabled:group-hover:translate-x-0"
-			/>
-		</div>
+				style="width: {buttonSize}px; height: {buttonSize}px;"
+				class="absolute left-1/2 top-1/2 transform -translate-y-1/2 -translate-x-1/2 items-center justify-center
+				hidden not-touch:flex"
+			>
+				<div
+					class="absolute w-full h-full rounded-full transition transform left-0 -translate-x-full
+				{type === 'success'
+						? 'bg-c-success-secondary'
+						: type === 'danger'
+						? 'bg-c-danger-secondary'
+						: type === 'bg-secondary'
+						? 'bg-c-bg-tertiary'
+						: type === 'no-bg-on-bg'
+						? 'bg-c-on-bg/10'
+						: 'bg-c-secondary'} not-touch:group-enabled:group-hover:translate-x-0"
+				/>
+			</div>
+		{/if}
 		<div class="flex items-center justify-center relative gap-3">
 			{#if icon && iconAlignment === 'left'}
 				<svelte:component this={icon} class="w-6 h-6 -m-1 flex-shrink-0" />
@@ -496,24 +503,26 @@
 			? 'scale-animation'
 			: ''}"
 	>
-		<div
-			style="width: {buttonSize}px; height: {buttonSize}px;"
-			class="absolute left-1/2 top-1/2 transform -translate-y-1/2 -translate-x-1/2 items-center justify-center
-			hidden not-touch:flex"
-		>
+		{#if !noHoverEffect}
 			<div
-				class="absolute w-full h-full rounded-full transition transform left-0 -translate-x-full
-					{type === 'success'
-					? 'bg-c-success-secondary'
-					: type === 'danger'
-					? 'bg-c-danger-secondary'
-					: type === 'bg-secondary'
-					? 'bg-c-bg-tertiary'
-					: type === 'no-bg-on-bg'
-					? 'bg-c-on-bg/10'
-					: 'bg-c-secondary'} not-touch:group-enabled:group-hover:translate-x-0"
-			/>
-		</div>
+				style="width: {buttonSize}px; height: {buttonSize}px;"
+				class="absolute left-1/2 top-1/2 transform -translate-y-1/2 -translate-x-1/2 items-center justify-center
+				hidden not-touch:flex"
+			>
+				<div
+					class="absolute w-full h-full rounded-full transition transform left-0 -translate-x-full
+				{type === 'success'
+						? 'bg-c-success-secondary'
+						: type === 'danger'
+						? 'bg-c-danger-secondary'
+						: type === 'bg-secondary'
+						? 'bg-c-bg-tertiary'
+						: type === 'no-bg-on-bg'
+						? 'bg-c-on-bg/10'
+						: 'bg-c-secondary'} not-touch:group-enabled:group-hover:translate-x-0"
+				/>
+			</div>
+		{/if}
 		<div class="flex items-center justify-center relative gap-3">
 			{#if icon && iconAlignment === 'left'}
 				<svelte:component this={icon} class="w-6 h-6 -m-1 flex-shrink-0" />

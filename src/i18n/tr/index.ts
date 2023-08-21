@@ -1150,7 +1150,11 @@ const tr: Translation = {
 			AlreadyLinked: 'Hesabına bağlanmış bir {platform} hesabı zaten mevcut.'
 		}
 	},
-	ShareCard: { Title: 'Share' },
+	ShareCard: {
+		Title: 'Share',
+		Message: 'Check out this generation on Stablecog!',
+		MessageUsersOwn: 'Check out my generation on Stablecog!'
+	},
 	UnderDevelopment: {
 		PageTitle: 'Geri döneceğiz!',
 		PageParagraph: 'Sistemlerimizi güncelliyoruz. Birkaç saate döneceğiz.'

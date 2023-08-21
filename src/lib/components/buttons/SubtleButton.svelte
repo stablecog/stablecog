@@ -21,6 +21,7 @@
 	export let shadow: 'normal' | 'strongest' = 'normal';
 	export let label: string | undefined = undefined;
 	export let rounding: string | undefined = undefined;
+	export let trigger: any | undefined = undefined;
 
 	let classes = '';
 </script>
@@ -94,6 +95,77 @@
 			{/if}
 		</div>
 	</a>
+{:else if trigger}
+	<button
+		{...$trigger}
+		use:trigger
+		type="button"
+		on:click={onClick}
+		disabled={disabled || loading}
+		class="touch-manipulation {state === 'success'
+			? 'bg-c-success ring-c-success'
+			: state === 'danger'
+			? 'bg-c-danger ring-c-danger'
+			: 'bg-c-bg-secondary ring-c-bg-tertiary'} {noPadding
+			? ''
+			: 'px-3 py-2.5'} shadow-lg {shadow === 'strongest'
+			? 'shadow-c-shadow/[var(--o-shadow-strongest)]'
+			: 'shadow-c-shadow/[var(--o-shadow-strong)]'}
+    	{rounding ? rounding : 'rounded-lg'} font-bold transition {size === 'md'
+			? 'text-sm'
+			: 'text-xs'} {!hasRing ? '' : 'ring-2'} relative overflow-hidden z-0 group {classes}"
+		aria-label={label}
+	>
+		<div class="w-[210%] h-full absolute left-0 top-0 flex items-center justify-center">
+			<div
+				class="{state === 'success'
+					? 'bg-c-success translate-x-[-43%]'
+					: state === 'danger'
+					? 'bg-c-danger translate-x-[-43%]'
+					: 'bg-c-bg-tertiary'} w-full aspect-square origin-left rounded-full transition transform -translate-x-full
+					not-touch:group-enabled:group-hover:translate-x-[-43%] {loading ? 'translate-x-[-43%]' : ''}"
+			/>
+		</div>
+		<div
+			class="relative flex items-center justify-center text-center transition-none gap-1.5 {state ===
+			'success'
+				? 'text-c-on-primary'
+				: state === 'danger'
+				? 'text-c-on-primary'
+				: textColor === 'danger'
+				? 'text-c-danger'
+				: textColor === 'success'
+				? 'text-c-success'
+				: textColor === 'secondary'
+				? 'text-c-secondary'
+				: 'text-c-on-bg'}"
+		>
+			{#if withSpinner}
+				<Morpher morphed={loading}>
+					<div slot="0" class="w-full flex gap-1.5">
+						{#if icon}
+							<svelte:component
+								this={icon}
+								class="{size === 'md' ? 'w-5 h-5 -ml-0.5' : 'w-4 h-4 -ml-0.25'} flex-shrink-0"
+							/>
+						{/if}
+						<slot />
+					</div>
+					<div slot="1">
+						<IconAnimatedSpinner {loading} class={size === 'md' ? 'w-5 h-5' : 'w-4 h-4'} />
+					</div>
+				</Morpher>
+			{:else}
+				{#if icon}
+					<svelte:component
+						this={icon}
+						class="{size === 'md' ? 'w-5 h-5 -ml-0.5' : 'w-4 h-4 -ml-0.25'} flex-shrink-0"
+					/>
+				{/if}
+				<slot />
+			{/if}
+		</div>
+	</button>
 {:else}
 	<button
 		type="button"

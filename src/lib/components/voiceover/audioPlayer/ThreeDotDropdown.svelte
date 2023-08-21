@@ -18,7 +18,10 @@
 	export let hasDeleteButton = false;
 	export let onDeleteClicked: (() => void) | undefined;
 
-	const { trigger, content, open } = createPopover({
+	const {
+		elements: { trigger, content },
+		states: { open }
+	} = createPopover({
 		positioning: {
 			placement: 'left',
 			gutter: 4

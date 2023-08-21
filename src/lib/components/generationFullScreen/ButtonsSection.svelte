@@ -21,7 +21,6 @@
 		TSetButtonObjectWithState
 	} from '$components/generationFullScreen/types';
 	import IconWand from '$components/icons/IconWand.svelte';
-	import IconLink from '$components/icons/IconLink.svelte';
 	import { apiUrl } from '$ts/constants/main';
 	import { page } from '$app/stores';
 	import { useQueryClient } from '@tanstack/svelte-query';
@@ -29,13 +28,10 @@
 		logGalleryExploreSimilarClicked,
 		logGalleryGenerateSimilarClicked,
 		logGenerationOutputDeleted,
-		logGenerationOutputSubmittedToGallery,
 		logUserProfileExploreSimilarClicked
 	} from '$ts/helpers/loggers';
 	import { advancedModeApp } from '$ts/stores/advancedMode';
 	import { userSummary } from '$ts/stores/user/summary';
-	import IconUpload from '$components/icons/IconUpload.svelte';
-	import IconTickOnly from '$components/icons/IconTickOnly.svelte';
 	import IconAnimatedSpinner from '$components/icons/IconAnimatedSpinner.svelte';
 	import {
 		generatePageUserGenerationFullOutputsQueryKey,
@@ -43,11 +39,8 @@
 	} from '$ts/stores/user/keys';
 	import { appVersion } from '$ts/stores/appVersion';
 	import { replaceOutputInUserQueryData } from '$ts/helpers/replaceOutputInUserQueryData';
-	import {
-		getPreviewImageUrlFromOutputId,
-		getUserProfilePreviewImageUrlFromOutputId
-	} from '$ts/helpers/getPreviewImageUrl';
 	import IconImageSearch from '$components/icons/IconImageSearch.svelte';
+	import ShareButton from '$components/generationFullScreen/ShareButton.svelte';
 
 	export let generation: TGenerationWithSelectedOutput;
 	export let generateSimilarUrl: string;
@@ -58,6 +51,7 @@
 	export let currentImageUrl: string;
 	export let modalType: TGenerationFullScreenModalType;
 	export let setSearchQuery: ((query: string) => void) | undefined = undefined;
+	export let shareButtonPortalElement: HTMLDivElement;
 	export { classes as class };
 	let classes = '';
 
@@ -181,7 +175,9 @@
 						'SC - Output Id': generation.selected_output.id,
 						'SC - User Id': $page.data.session?.user.id,
 						'SC - Stripe Product Id': $userSummary?.product_id,
-						'SC - App Version': $appVersion
+						'SC - App Version': $appVersion,
+						'SC - Clicked Output Id': generation.selected_output.id,
+						'SC - Similar to Output Id': generation.selected_output.id
 					};
 					if (modalType === 'user-profile') {
 						logUserProfileExploreSimilarClicked(logParams);
@@ -219,37 +215,12 @@
 		</SubtleButton>
 	</div>
 	{#if modalType === 'gallery' || modalType === 'user-profile' || modalType === 'history' || modalType === 'stage' || modalType === 'generate'}
-		<div
-			use:copy={linkUrl}
-			on:svelte-copy={() => {
-				setButtonObjectWithState('link', 'success');
-				fetch(
-					modalType === 'user-profile' ||
-						modalType === 'history' ||
-						modalType === 'stage' ||
-						modalType === 'generate'
-						? getUserProfilePreviewImageUrlFromOutputId(
-								generation.selected_output.id,
-								generation.user.username
-						  )
-						: getPreviewImageUrlFromOutputId(generation.selected_output.id)
-				);
-			}}
-			on:svelte-copy:error={(e) => console.log(e)}
-		>
-			<SubtleButton state={buttonObjectsWithState.link.state === 'success' ? 'success' : 'idle'}>
-				<Morpher morphed={buttonObjectsWithState.link.state === 'success'}>
-					<div slot="0" class="flex items-center justify-center gap-1.5">
-						<IconLink class="w-5 h-5 -ml-0.5" />
-						<p>{$LL.Shared.CopyLinkButton()}</p>
-					</div>
-					<div slot="1" class="flex items-center justify-center gap-1.5">
-						<IconTick class="w-5 h-5 -ml-0.5 scale-110" />
-						<p>{$LL.GenerationFullscreen.CopiedButtonState()}</p>
-					</div>
-				</Morpher>
-			</SubtleButton>
-		</div>
+		<ShareButton
+			{modalType}
+			{generation}
+			url={linkUrl}
+			bind:portalElement={shareButtonPortalElement}
+		/>
 	{/if}
 	{#if (modalType === 'generate' || modalType === 'history' || (modalType === 'user-profile' && generation.user.username === $userSummary?.username)) && !generation.selected_output.image_url.includes('placeholder')}
 		<SubtleButton

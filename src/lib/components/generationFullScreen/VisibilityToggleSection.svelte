@@ -29,6 +29,7 @@
 	import { userSummary } from '$ts/stores/user/summary';
 	import { createCheckbox } from '@melt-ui/svelte';
 	import { useQueryClient } from '@tanstack/svelte-query';
+	import { writable } from 'svelte/store';
 
 	export let modalType: TGenerationFullScreenModalType;
 	export let generation: TGenerationWithSelectedOutput;
@@ -44,12 +45,12 @@
 		isSuperAdmin($userSummary?.roles) ||
 		isGalleryAdmin($userSummary?.roles);
 	$: checkbox = createCheckbox({
-		checked: was_initially_public,
+		checked: writable(was_initially_public),
 		disabled: !canToggleVisibility
 	});
-	$: checked = checkbox.checked;
-	$: input = checkbox.input;
-	$: root = checkbox.root;
+	$: checked = checkbox.states.checked;
+	$: input = checkbox.elements.input;
+	$: root = checkbox.elements.root;
 
 	const queryClient = useQueryClient();
 

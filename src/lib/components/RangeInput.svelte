@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { createSlider } from '@melt-ui/svelte';
+	import { writable } from 'svelte/store';
 
 	export let value: number;
 	export let min: number;
@@ -12,19 +13,21 @@
 
 	const {
 		options,
-		slider,
-		range,
-		thumb,
-		value: valueLocal
+		states: { value: valueLocal },
+		elements: { range, root, thumb }
 	} = createSlider({
-		value: [value],
+		value: writable([value]),
 		min,
 		max,
 		step,
 		disabled
 	});
 
-	$: options.set({ ...$options, disabled, min, max, step });
+	$: options.disabled.set(disabled);
+	$: options.max.set(max);
+	$: options.min.set(min);
+	$: options.step.set(step);
+
 	$: valueLocal.set([value]);
 	$: value = $valueLocal[0];
 </script>
@@ -34,7 +37,7 @@
 	class="pr-1.5 {max.toString().length - min.toString().length < 2 ? 'pl-1.5' : ''} {classes}"
 >
 	<span
-		{...$slider}
+		{...$root}
 		class="flex-1 h-full touch-none select-none cursor-grab active:cursor-grabbing relative flex
 			items-center group/rangeinput"
 	>

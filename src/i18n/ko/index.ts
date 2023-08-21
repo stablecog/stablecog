@@ -1043,7 +1043,11 @@ const ko: Translation = {
 			AlreadyLinked: 'Your account already has a {platform} account associated with it.'
 		}
 	},
-	ShareCard: { Title: 'Share' },
+	ShareCard: {
+		Title: 'Share',
+		Message: 'Check out this generation on Stablecog!',
+		MessageUsersOwn: 'Check out my generation on Stablecog!'
+	},
 	UnderDevelopment: {
 		PageTitle: "We'll be back soon!",
 		PageParagraph: "We're upgrading our systems. We'll be back in a couple of hours."

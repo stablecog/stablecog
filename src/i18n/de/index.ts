@@ -1048,7 +1048,11 @@ const de: Translation = {
 			AlreadyLinked: 'Your account already has a {platform} account associated with it.'
 		}
 	},
-	ShareCard: { Title: 'Share' },
+	ShareCard: {
+		Title: 'Share',
+		Message: 'Check out this generation on Stablecog!',
+		MessageUsersOwn: 'Check out my generation on Stablecog!'
+	},
 	UnderDevelopment: {
 		PageTitle: 'Wir sind bald wieder da!',
 		PageParagraph: 'Wir upgraden unsere Systeme. Wir sind in ein paar Stunden wieder da.'

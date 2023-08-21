@@ -1142,7 +1142,11 @@ const ja: Translation = {
 			AlreadyLinked: 'Your account already has a {platform} account associated with it.'
 		}
 	},
-	ShareCard: { Title: 'Share' },
+	ShareCard: {
+		Title: 'Share',
+		Message: 'Check out this generation on Stablecog!',
+		MessageUsersOwn: 'Check out my generation on Stablecog!'
+	},
 	UnderDevelopment: {
 		PageTitle: 'しばらくお待ちください',
 		PageParagraph: 'システムをアップグレードしています。数時間後に戻ります。'

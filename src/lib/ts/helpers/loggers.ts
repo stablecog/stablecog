@@ -351,7 +351,7 @@ interface IUsernameChangedProps {
 }
 
 interface ISimilarClickedProps {
-	'SC - Similar to Output Id': string;
+	'SC - Similar to Output Id'?: string;
 	'SC - Clicked Output Id': string;
 	'SC - User Id': string | undefined;
 	'SC - Stripe Product Id': string | undefined;

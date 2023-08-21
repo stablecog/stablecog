@@ -1054,7 +1054,11 @@ const nl: Translation = {
 			AlreadyLinked: 'Your account already has a {platform} account associated with it.'
 		}
 	},
-	ShareCard: { Title: 'Share' },
+	ShareCard: {
+		Title: 'Share',
+		Message: 'Check out this generation on Stablecog!',
+		MessageUsersOwn: 'Check out my generation on Stablecog!'
+	},
 	UnderDevelopment: {
 		PageTitle: 'We zijn snel weer terug!',
 		PageParagraph: 'We zijn onze systemen aan het upgraden. Over een paar uur zijn we weer terug.'

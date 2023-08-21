@@ -101,10 +101,7 @@
 			<TabLikeToggle
 				class="w-full"
 				text={$voiceoverRemoveSilence ? $LL.Shared.On() : $LL.Shared.Off()}
-				isToggled={$voiceoverRemoveSilence}
-				onClick={() => {
-					voiceoverRemoveSilence.set(!$voiceoverRemoveSilence);
-				}}
+				bind:isToggled={$voiceoverRemoveSilence}
 			/>
 		</SettingsPanelItem>
 		<SettingsPanelItem
@@ -116,10 +113,7 @@
 			<TabLikeToggle
 				class="w-full"
 				text={$voiceoverDenoiseAudio ? $LL.Shared.On() : $LL.Shared.Off()}
-				isToggled={$voiceoverDenoiseAudio}
-				onClick={() => {
-					voiceoverDenoiseAudio.set(!$voiceoverDenoiseAudio);
-				}}
+				bind:isToggled={$voiceoverDenoiseAudio}
 			/>
 		</SettingsPanelItem>
 	</div>

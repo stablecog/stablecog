@@ -1044,7 +1044,11 @@ const bg: Translation = {
 			AlreadyLinked: 'Your account already has a {platform} account associated with it.'
 		}
 	},
-	ShareCard: { Title: 'Share' },
+	ShareCard: {
+		Title: 'Share',
+		Message: 'Check out this generation on Stablecog!',
+		MessageUsersOwn: 'Check out my generation on Stablecog!'
+	},
 	UnderDevelopment: {
 		PageTitle: 'Скоро ще се върнем!',
 		PageParagraph: 'Обновяваме системите си. Ще се върнем след няколко часа.'

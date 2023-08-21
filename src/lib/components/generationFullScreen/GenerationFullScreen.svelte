@@ -279,6 +279,8 @@
 		}
 	};
 
+	let shareButtonPortalElement: HTMLDivElement;
+
 	onMount(() => {
 		lastClickedOutputId.set(undefined);
 	});
@@ -311,7 +313,7 @@
 		: undefined}
 >
 	<Container
-		clickoutsideExceptions={[buttonLeft, buttonRight]}
+		clickoutsideExceptions={[buttonLeft, buttonRight, shareButtonPortalElement]}
 		{generation}
 		let:imageContainerWidth
 		let:imageContainerHeight
@@ -506,6 +508,7 @@
 								{setSearchQuery}
 								{modalType}
 								{setButtonObjectWithState}
+								bind:shareButtonPortalElement
 								bind:buttonObjectsWithState
 							/>
 						{/key}

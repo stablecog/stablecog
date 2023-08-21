@@ -18,7 +18,11 @@
 
 	export let afterUsernameChanged: ((username: string) => Promise<void>) | undefined = undefined;
 	export let closeOnSuccess = false;
-	const { trigger, portal, overlay, content, title, close, open, options } = createDialog();
+	const {
+		elements: { trigger, close, content, overlay, title, portalled },
+		states: { open },
+		options
+	} = createDialog();
 
 	let usernameInputValue = $userSummary?.username || '';
 
@@ -58,19 +62,13 @@
 	}
 
 	function disableEasyClose() {
-		options.set({
-			...$options,
-			closeOnEscape: false,
-			closeOnOutsideClick: false
-		});
+		options.closeOnEscape.set(false);
+		options.closeOnOutsideClick.set(false);
 	}
 
 	function enableEasyClose() {
-		options.set({
-			...$options,
-			closeOnEscape: true,
-			closeOnOutsideClick: true
-		});
+		options.closeOnEscape.set(true);
+		options.closeOnOutsideClick.set(true);
 	}
 
 	async function onSubmit(newUsername: string) {
@@ -117,7 +115,7 @@
 
 <slot {trigger} {close} />
 
-<div use:portal>
+<div use:portalled {...$portalled}>
 	{#if $open}
 		<div {...$overlay} use:overlay class="fixed inset-0 z-[9999] w-full h-full bg-c-barrier/80" />
 		<div
