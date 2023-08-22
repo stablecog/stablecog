@@ -642,6 +642,10 @@ const ja: Translation = {
 		RemainingImagesTitle: '残りの画像数',
 		RemainingCreditsTitle: 'クレジット残高',
 		RemainingTitle: 'クレジット残高',
+		SubscriptionStatusTitle: 'Subscription Status',
+		SubscriptionRenewalTitle: 'Subscription Renewal',
+		SubscriptionCancellationTitle: 'Subscription Cancellation',
+		ManageTitle: 'Manage',
 		Subscription: {
 			UpdateSubscriptionTitle: 'サブスクリプションを更新',
 			ChangePlanTitle: 'プランを変更',

@@ -24,6 +24,8 @@
 	import NoBgButton from '$components/buttons/NoBgButton.svelte';
 	import SubtleButton from '$components/buttons/SubtleButton.svelte';
 	import IconExternalLink from '$components/icons/IconExternalLink.svelte';
+	import AccountDetailLine from '$routes/(app)/account/AccountDetailLine.svelte';
+	import { getRelativeDate } from '$ts/helpers/getRelativeDate';
 
 	$: if (!$page.data.session?.user.id) {
 		goto(`/sign-in?redirect_to=${encodeURIComponent($page.url.pathname)}`);
@@ -124,19 +126,12 @@
 					</div>
 				</SubtleButton>
 			</div>
-			<div class="w-full h-2px bg-c-bg-secondary" />
-			<div class="w-full flex items-center justify-between px-5 md:px-6 py-1 gap-4">
-				<p class="font-medium text-c-on-bg/60">{$LL.Shared.EmailInput.Placeholder()}</p>
-				<NoBgButton
-					noPadding
-					class="mt-0 -mr-4 md:-mr-5"
-					href="/account/change-email"
-					hoverFrom="left"
-				>
-					<div class="flex-shrink min-w-0 flex items-center gap-2 px-4 py-4">
+			<AccountDetailLine title={$LL.Shared.EmailInput.Placeholder()}>
+				<NoBgButton noPadding class="-mx-3 -my-3" href="/account/change-email" hoverFrom="left">
+					<div class="flex-shrink min-w-0 flex items-center gap-2 px-4 py-3.5">
 						<p
 							class="not-touch:group-hover:text-c-primary text-c-on-bg transition
-							font-semibold flex-shrink min-w-0 overflow-hidden overflow-ellipsis text-right"
+							font-semibold flex-shrink min-w-0 overflow-hidden overflow-ellipsis text-left"
 						>
 							{$page.data.session.user.email}
 						</p>
@@ -145,51 +140,64 @@
 						/>
 					</div>
 				</NoBgButton>
-			</div>
-			<div class="w-full h-2px bg-c-bg-secondary" />
-			<div
-				class="w-full flex flex-wrap items-center justify-between px-4 py-5 md:p-5 gap-5 md:gap-8"
-			>
-				<div class="flex flex-col items-start px-0.5 -mt-2">
-					<p class="text-c-on-bg/60 font-medium px-1">
-						{$LL.Account.SubscriptionPlanTitle()}
-					</p>
-					<ProductIdBadge
-						href="/pricing#plans"
-						class="mt-1.5"
-						productId={$userSummary?.product_id}
-						size="lg"
-					/>
-				</div>
-				<div class="w-full md:w-auto flex flex-col">
-					<Button
-						noPadding
-						class="w-full px-6 py-3.5"
-						size="sm"
-						href={$page.data.customer_portal_url && $userSummary?.product_id
-							? $page.data.customer_portal_url
-							: '/pricing'}
+			</AccountDetailLine>
+			<AccountDetailLine title={$LL.Account.SubscriptionPlanTitle()}>
+				<ProductIdBadge
+					class="-my-1.5"
+					href="/pricing#plans"
+					productId={$userSummary?.product_id}
+					size="lg"
+				/>
+			</AccountDetailLine>
+			{#if $userSummary?.product_id && ($userSummary.renews_at || $userSummary.cancels_at)}
+				<AccountDetailLine title={$LL.Account.SubscriptionStatusTitle()}>
+					<p
+						class="text-center px-3 py-1.25 rounded-lg font-semibold -my-1.25 {$userSummary.renews_at
+							? 'bg-c-success/15 text-c-success'
+							: 'bg-c-danger/15 text-c-danger'}"
 					>
-						{$page.data.customer_portal_url && $userSummary?.product_id
-							? $LL.Account.ManageSubscriptionButton()
-							: $LL.Pricing.SubscribeButton()}
-					</Button>
-					{#if $page.data.customer_portal_url && $userSummary?.product_id}
-						<Button noPadding class="w-full px-6 py-3.5 mt-2" size="sm" href={'/pricing'}>
+						{$userSummary.renews_at ? 'Active' : 'Cancelled'}
+					</p>
+				</AccountDetailLine>
+				<AccountDetailLine
+					title={$userSummary.renews_at
+						? $LL.Account.SubscriptionRenewalTitle()
+						: $LL.Account.SubscriptionCancellationTitle()}
+				>
+					<p class="text-left font-semibold px-1">
+						{getRelativeDate({
+							date: $userSummary.renews_at ?? $userSummary.cancels_at,
+							locale: $locale
+						})}
+					</p>
+				</AccountDetailLine>
+			{/if}
+			<AccountDetailLine title={$LL.Account.RemainingCreditsTitle()}>
+				<p class="font-semibold text-left px-1">
+					{($userSummary?.total_remaining_credits || 0).toLocaleString($locale)}
+				</p>
+			</AccountDetailLine>
+			<AccountDetailLine id="manage" title={$LL.Account.ManageTitle()}>
+				{#if $userSummary?.product_id}
+					<div class="w-full md:w-auto flex flex-wrap items-center gap-2 -my-1.25">
+						<Button
+							noPadding
+							class="w-full md:w-auto px-6 py-3.5"
+							size="sm"
+							href={$page.data.customer_portal_url}
+						>
+							{$LL.Account.ManageSubscriptionButton()}
+						</Button>
+						<Button noPadding class="w-full md:w-auto px-6 py-3.5" size="sm" href={'/pricing'}>
 							{$LL.Account.ComparePlansButton()}
 						</Button>
-					{/if}
-				</div>
-			</div>
-			<div class="w-full h-2px bg-c-bg-secondary" />
-			<div class="w-full flex flex-col">
-				<div class="w-full flex items-center flex-wrap justify-between py-5 gap-2">
-					<p class="font-medium text-c-on-bg/60 px-5 md:px-6">{$LL.Account.RemainingTitle()}</p>
-					<p class="font-bold text-right text-xl px-5 md:px-6">
-						{($userSummary?.total_remaining_credits || 0).toLocaleString($locale)}
-					</p>
-				</div>
-			</div>
+					</div>
+				{:else}
+					<Button noPadding class="w-full md:w-auto px-6 py-3.5 -my-1.25" size="sm" href="/pricing">
+						{$LL.Pricing.SubscribeButton()}
+					</Button>
+				{/if}
+			</AccountDetailLine>
 			<div class="w-full h-2px bg-c-bg-secondary" />
 			<div class="w-full flex justify-start items-center">
 				<WantEmailCard

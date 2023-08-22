@@ -627,6 +627,10 @@ const ru: Translation = {
 		RemainingImagesTitle: 'Remaining Images',
 		RemainingCreditsTitle: 'Remaining Credits',
 		RemainingTitle: 'Remaining',
+		SubscriptionStatusTitle: 'Subscription Status',
+		SubscriptionRenewalTitle: 'Subscription Renewal',
+		SubscriptionCancellationTitle: 'Subscription Cancellation',
+		ManageTitle: 'Manage',
 		Subscription: {
 			UpdateSubscriptionTitle: 'Update Subscription',
 			ChangePlanTitle: 'Change Plan',

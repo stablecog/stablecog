@@ -653,6 +653,10 @@ const es: Translation = {
 		RemainingImagesTitle: 'Υπολειπόμενες Εικόνες',
 		RemainingCreditsTitle: 'Υπόλοιπες Μονάδες',
 		RemainingTitle: 'Υπόλοιπο',
+		SubscriptionStatusTitle: 'Subscription Status',
+		SubscriptionRenewalTitle: 'Subscription Renewal',
+		SubscriptionCancellationTitle: 'Subscription Cancellation',
+		ManageTitle: 'Manage',
 		Subscription: {
 			UpdateSubscriptionTitle: 'Ενημέρωση Συνδρομής',
 			ChangePlanTitle: 'Αλλαγή Πλάνου',

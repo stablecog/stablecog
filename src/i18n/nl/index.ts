@@ -634,6 +634,10 @@ const nl: Translation = {
 		RemainingImagesTitle: 'Resterende afbeeldingen',
 		RemainingCreditsTitle: 'Resterende credits',
 		RemainingTitle: 'Resterend',
+		SubscriptionStatusTitle: 'Subscription Status',
+		SubscriptionRenewalTitle: 'Subscription Renewal',
+		SubscriptionCancellationTitle: 'Subscription Cancellation',
+		ManageTitle: 'Manage',
 		Subscription: {
 			UpdateSubscriptionTitle: 'Abonnement bijwerken',
 			ChangePlanTitle: 'Abonnement wijzigen',

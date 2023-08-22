@@ -627,6 +627,10 @@ const de: Translation = {
 		RemainingImagesTitle: 'Verbleibende Bilder',
 		RemainingCreditsTitle: 'Verbleibendes Guthaben',
 		RemainingTitle: 'Verbleibend',
+		SubscriptionStatusTitle: 'Subscription Status',
+		SubscriptionRenewalTitle: 'Subscription Renewal',
+		SubscriptionCancellationTitle: 'Subscription Cancellation',
+		ManageTitle: 'Manage',
 		Subscription: {
 			UpdateSubscriptionTitle: 'Abonnement erneuern',
 			ChangePlanTitle: 'Abonnement ändern',

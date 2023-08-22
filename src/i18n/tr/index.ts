@@ -648,6 +648,10 @@ const tr: Translation = {
 		RemainingImagesTitle: 'Kalan Fotoğraflar',
 		RemainingCreditsTitle: 'Kalan Krediler',
 		RemainingTitle: 'Kalan',
+		SubscriptionStatusTitle: 'Subscription Status',
+		SubscriptionRenewalTitle: 'Subscription Renewal',
+		SubscriptionCancellationTitle: 'Subscription Cancellation',
+		ManageTitle: 'Manage',
 		Subscription: {
 			UpdateSubscriptionTitle: 'Paket Değiştir',
 			ChangePlanTitle: 'Paket Değiştir',

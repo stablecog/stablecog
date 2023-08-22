@@ -628,6 +628,10 @@ const bg: Translation = {
 		RemainingImagesTitle: 'Оставащи изработки',
 		RemainingCreditsTitle: 'Оставащ кредит',
 		RemainingTitle: 'Кредит',
+		SubscriptionStatusTitle: 'Subscription Status',
+		SubscriptionRenewalTitle: 'Subscription Renewal',
+		SubscriptionCancellationTitle: 'Subscription Cancellation',
+		ManageTitle: 'Manage',
 		Subscription: {
 			UpdateSubscriptionTitle: 'Актуализирай абонамента',
 			ChangePlanTitle: 'Промяна на плана',
