@@ -26,6 +26,7 @@
 	import IconExternalLink from '$components/icons/IconExternalLink.svelte';
 	import AccountDetailLine from '$routes/(app)/account/AccountDetailLine.svelte';
 	import { getRelativeDate } from '$ts/helpers/getRelativeDate';
+	import AccountPageCard from '$routes/(app)/account/AccountPageCard.svelte';
 
 	$: if (!$page.data.session?.user.id) {
 		goto(`/sign-in?redirect_to=${encodeURIComponent($page.url.pathname)}`);
@@ -86,154 +87,153 @@
 		<IconAnimatedSpinner class="w-10 h-10 text-c-on-bg/60" />
 	</div>
 {:else}
-	<div class="w-full flex flex-col items-center justify-center pt-6 pb-6 md:pb-8 px-3 md:px-6">
-		<div
-			class="w-full md:max-w-4xl flex flex-col rounded-2xl bg-c-bg relative z-0 overflow-hidden
-				shadow-xl shadow-c-shadow/[var(--o-shadow-strong)] ring-2 ring-c-bg-secondary"
-		>
-			<div class="w-full flex flex-wrap items-center gap-4 px-5 py-4 md:px-6">
-				<div class="flex items-center justify-between gap-3">
-					<Avatar
-						text={$userSummary?.username || ''}
-						class="w-8 h-8 ring-2 ring-c-on-bg/25 overflow-hidden rounded-full transition transform
-						relative shadow-lg shadow-c-shadow/[var(--o-shadow-strong)] flex-shrink-0"
-					/>
-					<WithChangeUsernameModal let:trigger closeOnSuccess>
-						<NoBgButton class="mt-0 -ml-2" noPadding {trigger} hoverFrom="left">
-							<div class="flex-shrink min-w-0 flex items-center gap-2 px-2 py-2">
-								<p
-									class="not-touch:group-hover:text-c-primary text-c-on-bg text-xl transition
-									font-semibold flex-shrink min-w-0 overflow-hidden overflow-ellipsis"
-								>
-									<span
-										class="text-c-on-bg/50 transition not-touch:group-hover:text-c-primary/50 font-normal"
-										>@</span
-									>{$userSummary?.username}
-								</p>
-								<IconPen
-									class="w-3.5 h-3.5 text-c-on-bg/50 transition not-touch:group-hover:text-c-primary/50 flex-shrink-0"
-								/>
-							</div>
-						</NoBgButton>
-					</WithChangeUsernameModal>
-				</div>
-				<SubtleButton target="_blank" href="/user/{$userSummary?.username}">
-					<div class="flex items-center gap-2 px-1">
-						<p class="text-base font-semibold flex flex-shrink min-w-0">
-							{$LL.Shared.VisitProfileButton()}
-						</p>
-						<IconExternalLink class="text-c-on-bg w-6 h-6 -mr-1" />
-					</div>
-				</SubtleButton>
-			</div>
-			<AccountDetailLine title={$LL.Shared.EmailInput.Placeholder()}>
-				<NoBgButton noPadding class="-mx-3 -my-3" href="/account/change-email" hoverFrom="left">
-					<div class="flex-shrink min-w-0 flex items-center gap-2 px-4 py-3.5">
-						<p
-							class="not-touch:group-hover:text-c-primary text-c-on-bg transition
-							font-semibold flex-shrink min-w-0 overflow-hidden overflow-ellipsis text-left"
-						>
-							{$page.data.session.user.email}
-						</p>
-						<IconPen
-							class="w-3.5 h-3.5 text-c-on-bg/50 transition not-touch:group-hover:text-c-primary/50 flex-shrink-0"
+	<div class="w-full flex flex-col items-center justify-center pt-6 pb-6 md:pb-8 md:px-3">
+		<div class="w-full max-w-4xl px-3">
+			<AccountPageCard>
+				<div class="w-full flex flex-wrap items-center gap-4 px-5 py-4 md:px-6">
+					<div class="flex items-center justify-between gap-3">
+						<Avatar
+							text={$userSummary?.username || ''}
+							class="w-8 h-8 ring-2 ring-c-on-bg/25 overflow-hidden rounded-full transition transform
+							relative shadow-lg shadow-c-shadow/[var(--o-shadow-strong)] flex-shrink-0"
 						/>
+						<WithChangeUsernameModal let:trigger closeOnSuccess>
+							<NoBgButton class="mt-0 -ml-2" noPadding {trigger} hoverFrom="left">
+								<div class="flex-shrink min-w-0 flex items-center gap-2 px-2 py-2">
+									<p
+										class="not-touch:group-hover:text-c-primary text-c-on-bg text-xl transition
+										font-semibold flex-shrink min-w-0 overflow-hidden overflow-ellipsis"
+									>
+										<span
+											class="text-c-on-bg/50 transition not-touch:group-hover:text-c-primary/50 font-normal"
+											>@</span
+										>{$userSummary?.username}
+									</p>
+									<IconPen
+										class="w-3.5 h-3.5 text-c-on-bg/50 transition not-touch:group-hover:text-c-primary/50 flex-shrink-0"
+									/>
+								</div>
+							</NoBgButton>
+						</WithChangeUsernameModal>
 					</div>
-				</NoBgButton>
-			</AccountDetailLine>
-			<AccountDetailLine title={$LL.Account.SubscriptionPlanTitle()}>
-				<ProductIdBadge
-					class="-my-1.5"
-					href="/pricing#plans"
-					productId={$userSummary?.product_id}
-					size="lg"
-				/>
-			</AccountDetailLine>
-			{#if $userSummary?.product_id && ($userSummary.renews_at || $userSummary.cancels_at)}
-				<AccountDetailLine title={$LL.Account.SubscriptionStatusTitle()}>
-					<p
-						class="text-center px-3 py-1.25 rounded-lg font-semibold -my-1.25 {$userSummary.renews_at
-							? 'bg-c-success/15 text-c-success'
-							: 'bg-c-danger/15 text-c-danger'}"
+					<SubtleButton target="_blank" href="/user/{$userSummary?.username}">
+						<div class="flex items-center gap-2 px-1">
+							<p class="text-base font-semibold flex flex-shrink min-w-0">
+								{$LL.Shared.VisitProfileButton()}
+							</p>
+							<IconExternalLink class="text-c-on-bg w-6 h-6 -mr-1" />
+						</div>
+					</SubtleButton>
+				</div>
+				<AccountDetailLine title={$LL.Shared.EmailInput.Placeholder()}>
+					<NoBgButton noPadding class="-mx-3 -my-3" href="/account/change-email" hoverFrom="left">
+						<div class="flex-shrink min-w-0 flex items-center gap-2 px-4 py-3.5">
+							<p
+								class="not-touch:group-hover:text-c-primary text-c-on-bg transition
+								font-semibold flex-shrink min-w-0 overflow-hidden overflow-ellipsis text-left"
+							>
+								{$page.data.session.user.email}
+							</p>
+							<IconPen
+								class="w-3.5 h-3.5 text-c-on-bg/50 transition not-touch:group-hover:text-c-primary/50 flex-shrink-0"
+							/>
+						</div>
+					</NoBgButton>
+				</AccountDetailLine>
+				<AccountDetailLine title={$LL.Account.SubscriptionPlanTitle()}>
+					<ProductIdBadge
+						class="-my-1.5"
+						href="/pricing#plans"
+						productId={$userSummary?.product_id}
+						size="lg"
+					/>
+				</AccountDetailLine>
+				{#if $userSummary?.product_id && ($userSummary.renews_at || $userSummary.cancels_at)}
+					<AccountDetailLine title={$LL.Account.SubscriptionStatusTitle()}>
+						<p
+							class="text-center px-3 py-1.25 rounded-lg font-semibold -my-1.25 {$userSummary.renews_at
+								? 'bg-c-success/15 text-c-success'
+								: 'bg-c-danger/15 text-c-danger'}"
+						>
+							{$userSummary.renews_at ? 'Active' : 'Cancelled'}
+						</p>
+					</AccountDetailLine>
+					<AccountDetailLine
+						title={$userSummary.renews_at
+							? $LL.Account.SubscriptionRenewalTitle()
+							: $LL.Account.SubscriptionCancellationTitle()}
 					>
-						{$userSummary.renews_at ? 'Active' : 'Cancelled'}
+						<p class="text-left font-semibold px-1">
+							{getRelativeDate({
+								date: $userSummary.renews_at ?? $userSummary.cancels_at,
+								locale: $locale
+							})}
+						</p>
+					</AccountDetailLine>
+				{/if}
+				<AccountDetailLine title={$LL.Account.RemainingCreditsTitle()}>
+					<p class="font-semibold text-left px-1">
+						{($userSummary?.total_remaining_credits || 0).toLocaleString($locale)}
 					</p>
 				</AccountDetailLine>
-				<AccountDetailLine
-					title={$userSummary.renews_at
-						? $LL.Account.SubscriptionRenewalTitle()
-						: $LL.Account.SubscriptionCancellationTitle()}
-				>
-					<p class="text-left font-semibold px-1">
-						{getRelativeDate({
-							date: $userSummary.renews_at ?? $userSummary.cancels_at,
-							locale: $locale
-						})}
-					</p>
-				</AccountDetailLine>
-			{/if}
-			<AccountDetailLine title={$LL.Account.RemainingCreditsTitle()}>
-				<p class="font-semibold text-left px-1">
-					{($userSummary?.total_remaining_credits || 0).toLocaleString($locale)}
-				</p>
-			</AccountDetailLine>
-			<AccountDetailLine id="manage" title={$LL.Account.ManageTitle()}>
-				{#if $userSummary?.product_id}
-					<div class="w-full md:w-auto flex flex-wrap items-center gap-2 md:-my-1.25">
+				<AccountDetailLine id="manage" title={$LL.Account.ManageTitle()}>
+					{#if $userSummary?.product_id}
+						<div class="w-full md:w-auto flex flex-wrap items-center gap-2.5 md:-my-1.25">
+							<Button
+								noPadding
+								class="w-full md:w-auto px-4.5 py-3.5"
+								size="sm"
+								href={$page.data.customer_portal_url}
+							>
+								{$LL.Account.ManageSubscriptionButton()}
+							</Button>
+							<Button noPadding class="w-full md:w-auto px-4.5 py-3.5" size="sm" href={'/pricing'}>
+								{$LL.Account.ComparePlansButton()}
+							</Button>
+						</div>
+					{:else}
 						<Button
 							noPadding
-							class="w-full md:w-auto px-6 py-3.5"
+							class="w-full md:w-auto px-4.5 py-3.5 md:-my-1.25"
 							size="sm"
-							href={$page.data.customer_portal_url}
+							href="/pricing"
 						>
-							{$LL.Account.ManageSubscriptionButton()}
+							{$LL.Pricing.SubscribeButton()}
 						</Button>
-						<Button noPadding class="w-full md:w-auto px-6 py-3.5" size="sm" href={'/pricing'}>
-							{$LL.Account.ComparePlansButton()}
-						</Button>
-					</div>
-				{:else}
-					<Button
-						noPadding
-						class="w-full md:w-auto px-6 py-3.5 md:-my-1.25"
-						size="sm"
-						href="/pricing"
-					>
-						{$LL.Pricing.SubscribeButton()}
-					</Button>
-				{/if}
-			</AccountDetailLine>
-			<div class="w-full h-2px bg-c-bg-secondary" />
-			<div class="w-full flex justify-start items-center">
-				<WantEmailCard
-					bg="primary"
-					bind:checked={wantsEmailChecked}
-					oneLine
-					padding="p-5 md:px-6"
-				/>
-			</div>
-			<div class="w-full h-2px bg-c-bg-secondary" />
-			<div class="w-full flex flex-wrap items-stretch">
-				<DropdownItem href="/generate" class="w-full md:w-auto md:flex-1">
-					<div
-						class="flex transition justify-center items-center gap-2 text-c-on-bg
-						not-touch:group-hover:text-c-primary"
-					>
-						<IconHome class="w-6 h-6" />
-						<p>{$LL.Shared.GoHomeButton()}</p>
-					</div>
-				</DropdownItem>
-				<div class="w-full h-2px md:h-auto md:w-2px bg-c-bg-secondary" />
-				<DropdownItem onClick={signOut} class="w-full md:w-auto md:flex-1">
-					<div
-						class="flex transition justify-center items-center gap-2 text-c-on-bg
-						not-touch:group-hover:text-c-primary"
-					>
-						<IconSignOut class="w-6 h-6" />
-						<p>{$LL.SignIn.SignOutButton()}</p>
-					</div>
-				</DropdownItem>
-			</div>
+					{/if}
+				</AccountDetailLine>
+				<div class="w-full h-2px bg-c-bg-secondary" />
+				<div class="w-full flex justify-start items-center">
+					<WantEmailCard
+						bg="primary"
+						bind:checked={wantsEmailChecked}
+						oneLine
+						padding="p-5 md:px-6"
+					/>
+				</div>
+				<div class="w-full h-2px bg-c-bg-secondary" />
+				<div class="w-full flex flex-wrap items-stretch">
+					<DropdownItem href="/generate" class="w-full md:w-auto md:flex-1">
+						<div
+							class="flex transition justify-center items-center gap-2 text-c-on-bg
+							not-touch:group-hover:text-c-primary"
+						>
+							<IconHome class="w-6 h-6" />
+							<p>{$LL.Shared.GoHomeButton()}</p>
+						</div>
+					</DropdownItem>
+					<div class="w-full h-2px md:h-auto md:w-2px bg-c-bg-secondary" />
+					<DropdownItem onClick={signOut} class="w-full md:w-auto md:flex-1">
+						<div
+							class="flex transition justify-center items-center gap-2 text-c-on-bg
+							not-touch:group-hover:text-c-primary"
+						>
+							<IconSignOut class="w-6 h-6" />
+							<p>{$LL.SignIn.SignOutButton()}</p>
+						</div>
+					</DropdownItem>
+				</div>
+			</AccountPageCard>
 		</div>
 	</div>
 {/if}
