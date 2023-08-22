@@ -179,7 +179,7 @@
 			</AccountDetailLine>
 			<AccountDetailLine id="manage" title={$LL.Account.ManageTitle()}>
 				{#if $userSummary?.product_id}
-					<div class="w-full md:w-auto flex flex-wrap items-center gap-2 -my-1.25">
+					<div class="w-full md:w-auto flex flex-wrap items-center gap-2 md:-my-1.25">
 						<Button
 							noPadding
 							class="w-full md:w-auto px-6 py-3.5"
@@ -193,7 +193,12 @@
 						</Button>
 					</div>
 				{:else}
-					<Button noPadding class="w-full md:w-auto px-6 py-3.5 -my-1.25" size="sm" href="/pricing">
+					<Button
+						noPadding
+						class="w-full md:w-auto px-6 py-3.5 md:-my-1.25"
+						size="sm"
+						href="/pricing"
+					>
 						{$LL.Pricing.SubscribeButton()}
 					</Button>
 				{/if}
