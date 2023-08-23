@@ -50,7 +50,7 @@
 	export let isInferenceStepsValid: <T>(s: T) => boolean;
 
 	let settingsContainer: HTMLDivElement;
-	let containerDropdownPadding = 8;
+	let containerDropdownPadding = 16;
 </script>
 
 <SidebarWrapper {rounding} {noWrapper} hasGradient>
