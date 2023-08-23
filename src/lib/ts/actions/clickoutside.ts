@@ -29,11 +29,17 @@ export function clickoutside(
 }
 
 function isntInside(node: HTMLElement, event: Event, exclude?: (HTMLElement | undefined)[]) {
+	const tooltips = document.querySelectorAll('[role="tooltip"]');
 	return (
 		node !== event.target &&
 		!node.contains(event.target as Node) &&
 		!(exclude && exclude.some((e) => e && e.contains(event.target as Node))) &&
-		!(exclude && exclude.some((e) => e && event.target === e))
+		!(exclude && exclude.some((e) => e && event.target === e)) &&
+		!(
+			tooltips &&
+			tooltips.length > 0 &&
+			[...tooltips].some((e) => e && e.contains(event.target as Node))
+		)
 	);
 }
 
