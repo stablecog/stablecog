@@ -102,25 +102,25 @@
 
 <div class="w-full px-1 flex-1 flex flex-col items-center md:pt-4.5">
 	<div class="w-full max-w-3xl flex flex-col items-center">
-		<div
-			class="w-full flex-shrink min-w-0 flex flex-col items-center gap-2 px-4 md:px-3 py-2 md:py-3"
-		>
+		<div class="w-full flex-shrink min-w-0 flex flex-col items-center gap-2 px-4 md:px-3 mt-3">
 			<Avatar
 				class="w-16 h-16 ring-2 ring-c-on-bg/25 rounded-full transition transform flex-shrink-0
 					relative shadow-lg shadow-c-shadow/[var(--o-shadow-strong)] items-center justify-center overflow-hidden"
 				text={data.username}
 			/>
-			<div class="w-full flex justify-center items-center">
+			<div class="w-full flex justify-center items-center -mt-0.5 md:-mt-0.25">
 				{#if data.username === $userSummary?.username}
 					<WithChangeUsernameModal
 						afterUsernameChanged={(username) => goto(`/user/${username}`)}
 						let:trigger
 					>
 						<NoBgButton {trigger} class="mt-0" hoverFrom="left">
-							<div class="flex items-center justify-center gap-2.5 -mx-0.5 -my-0.5">
+							<div
+								class="flex flex-shrink min-w-0 items-center justify-center gap-2.5 -mx-0.5 -my-0.5"
+							>
 								<p
-									class="max-w-full text-c-on-bg font-bold text-2xl md:text-3xl flex-shrink min-w-0 transition
-								whitespace-nowrap overflow-hidden overflow-ellipsis not-touch:group-hover:text-c-primary"
+									class="max-w-full text-c-on-bg font-bold text-3xl md:text-4xl flex-shrink min-w-0 transition
+									whitespace-nowrap overflow-hidden overflow-ellipsis not-touch:group-hover:text-c-primary"
 								>
 									<span
 										class="text-c-on-bg/50 not-touch:group-hover:text-c-primary/50 transition font-semibold"
@@ -134,9 +134,9 @@
 						</NoBgButton>
 					</WithChangeUsernameModal>
 				{:else}
-					<div class="flex items-center justify-center gap-3 py-3">
+					<div class="flex-shrink min-w-0 flex items-center justify-center gap-3 py-3">
 						<p
-							class="max-w-full text-c-on-bg font-bold text-2xl md:text-3xl flex-shrink min-w-0 transition
+							class="max-w-full text-c-on-bg font-bold text-3xl md:text-4xl flex-shrink min-w-0 transition
 							whitespace-nowrap overflow-hidden overflow-ellipsis not-touch:group-hover:text-c-primary"
 						>
 							<span
@@ -148,7 +148,7 @@
 				{/if}
 			</div>
 		</div>
-		<div class="w-full flex flex-wrap items-center justify-center gap-3 px-2">
+		<div class="w-full flex flex-wrap items-center justify-center gap-3 px-2 mt-2 md:mt-2.5">
 			<div
 				class="flex items-center justify-center gap-1.5 ring-2
 				px-3 py-1 rounded-lg bg-c-primary/15 ring-c-primary/30"
