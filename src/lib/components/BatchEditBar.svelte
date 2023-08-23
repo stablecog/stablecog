@@ -39,6 +39,8 @@
 	import { userGenerationFullOutputsQueryKey } from '$ts/stores/user/keys';
 	import { userSummary } from '$ts/stores/user/summary';
 	import { useQueryClient } from '@tanstack/svelte-query';
+	import { quadOut } from 'svelte/easing';
+	import { fly } from 'svelte/transition';
 
 	export let type: 'history' | 'admin-gallery';
 
@@ -322,6 +324,7 @@
 </script>
 
 <div
+	in:fly={{ duration: 200, easing: quadOut, y: -50, opacity: 0 }}
 	class="w-full flex flex-row flex-wrap justify-between items-center bg-c-bg rounded-xl
 	shadow-lg shadow-c-shadow/[var(--o-shadow-strong)] ring-2 ring-c-bg-secondary"
 >

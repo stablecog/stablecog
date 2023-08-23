@@ -202,13 +202,17 @@
 				<div class="w-full flex mt-3">
 					<SearchAndFilterBar bind:searchString bind:modelIdFilters bind:searchInputIsFocused />
 				</div>
-				{#if $isUserGalleryEditActive}
-					<div class="w-full top-1 sticky z-30 {$isUserGalleryEditActive ? 'mt-3' : 'mt-0'}">
-						<BatchEditBar type="history" />
-					</div>
-				{/if}
 			</div>
 		</div>
+		{#if $isUserGalleryEditActive}
+			<div
+				class="w-full max-w-3xl px-1 md:px-0 sticky z-30 top-1 {$isUserGalleryEditActive
+					? 'mt-3'
+					: 'mt-0'}"
+			>
+				<BatchEditBar type="history" />
+			</div>
+		{/if}
 		<div class="w-full flex-1 flex flex-col mt-5">
 			{#if userGenerationFullOutputsQuery !== undefined}
 				{#if $userGenerationFullOutputsQuery?.isError || ($userGenerationFullOutputsQuery?.data && !$userGenerationFullOutputsQuery?.data?.pages)}
