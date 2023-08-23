@@ -182,6 +182,7 @@
 			<div class="flex items-center justify-end pl-2 pr-3.5 md:pl-2.5 md:pr-5">
 				{#if $page.data.session && $userSummary}
 					<WithTooltip
+						delay={150}
 						let:trigger
 						let:triggerStoreValue
 						onOpened={onUpcomingCreditsTooltipOpened}

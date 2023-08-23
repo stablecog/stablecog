@@ -24,7 +24,7 @@
 	let:trigger
 	let:triggerStoreValue
 	noArrow
-	delay={100}
+	delay={150}
 	size="sm"
 	gutter={-4}
 	isActive={hasTooltip}
