@@ -1,5 +1,5 @@
 import { getSomeUsersGenerationFullOutputs } from '$ts/queries/galleryLike/someUsersOutputs';
-import type { TGalleryGenerationFullOutputsPage } from '$ts/queries/galleryLike/types';
+import type { TUserProfileFullOutputsPage } from '$ts/queries/galleryLike/types';
 import type { FetchInfiniteQueryOptions } from '@tanstack/svelte-query';
 
 export const getSomeUserProfileInfiniteQueryKey = ({
@@ -33,9 +33,9 @@ export function getSomeUserProfileInfiniteQueryProps({
 	seed?: number;
 	username: string;
 }): FetchInfiniteQueryOptions<
-	TGalleryGenerationFullOutputsPage,
+	TUserProfileFullOutputsPage,
 	unknown,
-	TGalleryGenerationFullOutputsPage,
+	TUserProfileFullOutputsPage,
 	any
 > {
 	return {
@@ -49,7 +49,7 @@ export function getSomeUserProfileInfiniteQueryProps({
 				username
 			});
 		},
-		getNextPageParam: (lastPage: TGalleryGenerationFullOutputsPage) => {
+		getNextPageParam: (lastPage: TUserProfileFullOutputsPage) => {
 			if (!lastPage.next) return undefined;
 			return lastPage.next;
 		}
