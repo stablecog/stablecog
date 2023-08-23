@@ -33,7 +33,8 @@
 		arrowSize: 20,
 		openDelay: delay,
 		closeDelay: closeDelay,
-		closeOnPointerDown: false
+		closeOnPointerDown: false,
+		forceVisible: true
 	});
 
 	$: [$isTouchscreen], setOptions();
