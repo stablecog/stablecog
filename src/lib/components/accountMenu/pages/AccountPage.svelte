@@ -50,7 +50,7 @@
 			<div class="w-full h-2px rounded-full bg-c-bg-tertiary" />
 		</div>
 		<div class="w-full flex flex-col items-start px-5 py-3">
-			<p class="text-c-on-bg/50 font-medium text-sm">{$LL.Account.RemainingTitle()}</p>
+			<p class="text-c-on-bg/50 font-medium text-sm">{$LL.Account.RemainingCreditsTitle()}</p>
 			<p class="font-bold text-lg">
 				{$userSummary.total_remaining_credits.toLocaleString($locale)}
 			</p>
