@@ -511,7 +511,7 @@ const ko: Translation = {
 		AlreadyHaveAnAccountTitle: '이미 계정이 있으신가요?',
 		LoginInsteadButton: '다음으로 로그인하기',
 		WantsEmailCheckbox: {
-			Paragraph: 'Get product updates, deals or news.',
+			Paragraph: 'Get product updates, deals and news.',
 			NoSpamParagraph: 'No spam, we promise.'
 		},
 		SixDigitCodeInput: {

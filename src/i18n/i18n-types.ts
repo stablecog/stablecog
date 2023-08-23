@@ -1558,7 +1558,7 @@ type RootTranslation = {
 		LoginInsteadButton: string
 		WantsEmailCheckbox: {
 			/**
-			 * G​e​t​ ​p​r​o​d​u​c​t​ ​u​p​d​a​t​e​s​,​ ​d​e​a​l​s​ ​o​r​ ​n​e​w​s​.
+			 * G​e​t​ ​p​r​o​d​u​c​t​ ​u​p​d​a​t​e​s​,​ ​d​e​a​l​s​ ​a​n​d​ ​n​e​w​s​.
 			 */
 			Paragraph: string
 			/**
@@ -4755,7 +4755,7 @@ export type TranslationFunctions = {
 		LoginInsteadButton: () => LocalizedString
 		WantsEmailCheckbox: {
 			/**
-			 * Get product updates, deals or news.
+			 * Get product updates, deals and news.
 			 */
 			Paragraph: () => LocalizedString
 			/**

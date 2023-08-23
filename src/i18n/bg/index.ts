@@ -514,7 +514,7 @@ const bg: Translation = {
 		AlreadyHaveAnAccountTitle: 'Вече имате профил?',
 		LoginInsteadButton: 'Вместо това Влизане',
 		WantsEmailCheckbox: {
-			Paragraph: 'Get product updates, deals or news.',
+			Paragraph: 'Get product updates, deals and news.',
 			NoSpamParagraph: 'No spam, we promise.'
 		},
 		SixDigitCodeInput: {

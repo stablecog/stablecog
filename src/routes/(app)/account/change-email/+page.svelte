@@ -74,17 +74,17 @@
 />
 
 <PageWrapper>
-	<div class="w-[100%+1rem] flex flex-col justify-center items-center my-auto -mx-2">
+	<div class="w-full flex flex-col justify-center items-center my-auto">
 		<div
-			class="max-w-full flex flex-col items-center justify-center bg-c-bg ring-c-bg-secondary ring-2 px-3 py-4
-				md:px-10 md:py-7 rounded-3xl relative z-10 overflow-hidden shadow-xl shadow-c-shadow/[var(--o-shadow-normal)]"
+			class="w-full max-w-md flex flex-col items-center justify-center bg-c-bg ring-c-bg-secondary ring-2 px-3 py-4
+				md:p-7 rounded-3xl relative z-10 overflow-hidden shadow-xl shadow-c-shadow/[var(--o-shadow-normal)]"
 		>
 			{#if changeEmailStatus === 'sent-otp' || changeEmailStatus === 'confirm-other-email'}
 				<div class="mb-2">
 					<IconEmail class="w-20 h-20 text-c-on-bg" />
 				</div>
 			{/if}
-			<h1 class="max-w-sm text-center font-bold leading-normal mt-1 md:-mt-1 text-2xl px-8">
+			<h1 class="w-full text-center font-bold leading-normal mt-1 md:-mt-2 text-2xl px-8">
 				{changeEmailStatus === 'sent-otp'
 					? $LL.Account.ChangeEmail.PageTitleSentLink()
 					: changeEmailStatus === 'confirm-other-email'
@@ -93,7 +93,7 @@
 			</h1>
 			<div class="w-full flex flex-col items-center justify-start mt-1.5">
 				<p
-					class="px-3 md:px-0 max-w-sm text-sm md:text-base text-c-on-bg/60 text-center leading-relaxed mb-4 {changeEmailStatus ===
+					class="w-full px-4 text-c-on-bg/60 text-center leading-relaxed mb-4 {changeEmailStatus ===
 					'sent-otp'
 						? 'mt-1'
 						: ''}"
@@ -128,7 +128,7 @@
 						<form
 							on:input={() => (errorText = null)}
 							on:submit|preventDefault={changeEmail}
-							class="w-full flex flex-col p-1 md:pb-2 max-w-[21rem]"
+							class="w-full flex flex-col p-1 md:pb-2"
 						>
 							<Input
 								disabled={changeEmailStatus === 'loading'}
@@ -151,7 +151,7 @@
 			</div>
 		</div>
 		{#if changeEmailStatus === 'idle'}
-			<div class="max-w-full flex items-center justify-center pt-3">
+			<div class="w-full flex items-center justify-center pt-3">
 				<NoBgButton href="/account">
 					<div class="flex items-center justify-center gap-2.5 px-2 py-1">
 						<IconBack

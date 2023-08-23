@@ -511,7 +511,7 @@ const de: Translation = {
 		AlreadyHaveAnAccountTitle: 'Hast Du bereits ein Konto?',
 		LoginInsteadButton: 'Stattdessen anmelden',
 		WantsEmailCheckbox: {
-			Paragraph: 'Get product updates, deals or news.',
+			Paragraph: 'Get product updates, deals and news.',
 			NoSpamParagraph: 'No spam, we promise.'
 		},
 		SixDigitCodeInput: {

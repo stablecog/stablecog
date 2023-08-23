@@ -513,7 +513,7 @@ const vi: Translation = {
 		AlreadyHaveAnAccountTitle: 'Đã có một tài khoản?',
 		LoginInsteadButton: 'Đăng Nhập',
 		WantsEmailCheckbox: {
-			Paragraph: 'Get product updates, deals or news.',
+			Paragraph: 'Get product updates, deals and news.',
 			NoSpamParagraph: 'No spam, we promise.'
 		},
 		SixDigitCodeInput: {

@@ -512,7 +512,7 @@ const ptBr: Translation = {
 		AlreadyHaveAnAccountTitle: 'Já possui uma conta?',
 		LoginInsteadButton: 'Efetuar Login',
 		WantsEmailCheckbox: {
-			Paragraph: 'Get product updates, deals or news.',
+			Paragraph: 'Get product updates, deals and news.',
 			NoSpamParagraph: 'No spam, we promise.'
 		},
 		SixDigitCodeInput: {

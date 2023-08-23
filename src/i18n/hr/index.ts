@@ -509,7 +509,7 @@ const hr: Translation = {
 		AlreadyHaveAnAccountTitle: 'Već imaš račun?',
 		LoginInsteadButton: 'Ulogiraj se',
 		WantsEmailCheckbox: {
-			Paragraph: 'Get product updates, deals or news.',
+			Paragraph: 'Get product updates, deals and news.',
 			NoSpamParagraph: 'No spam, we promise.'
 		},
 		SixDigitCodeInput: {
