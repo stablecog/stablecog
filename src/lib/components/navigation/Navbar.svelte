@@ -189,22 +189,20 @@
 						isActive={$userSummary.renews_at !== undefined ||
 							$userSummary.more_credits_at !== undefined}
 					>
-						<div slot="tooltip" class="flex flex-col pb-1">
-							<div class="flex items-center justify-start gap-1">
-								<IconToken class="w-8 h-8 -ml-1" />
-								<div class="flex flex-col flex-shrink min-w-0">
-									<p class="font-bold flex-shrink min-w-0">
-										{$userSummary.renews_at
-											? $LL.UpcomingCredits.MorePaidPlanCreditsTooltip.Title()
-											: $LL.UpcomingCredits.MoreFreeCreditsTooltip.Title()}
-									</p>
-									<p class="mt-0.5 flex-shrink min-w-0">
-										{$userSummary.renews_at
-											? $LL.UpcomingCredits.MorePaidPlanCreditsTooltip.Paragraph()
-											: $LL.UpcomingCredits.MoreFreeCreditsTooltip.Paragraph()}
-									</p>
-								</div>
+						<div slot="tooltip" class="flex flex-col pb-1 text-sm">
+							<div class="flex flex-row items-center flex-shrink min-w-0 gap-0.25">
+								<IconToken class="w-4 h-4 -ml-1.25 flex-shrink-0" />
+								<p class="font-bold flex-shrink min-w-0">
+									{$userSummary.renews_at
+										? $LL.UpcomingCredits.MorePaidPlanCreditsTooltip.Title()
+										: $LL.UpcomingCredits.MoreFreeCreditsTooltip.Title()}
+								</p>
 							</div>
+							<p class="mt-0.5 flex-shrink min-w-0">
+								{$userSummary.renews_at
+									? $LL.UpcomingCredits.MorePaidPlanCreditsTooltip.Paragraph()
+									: $LL.UpcomingCredits.MoreFreeCreditsTooltip.Paragraph()}
+							</p>
 							<p
 								class="text-center mt-2.5 -mx-1.5 -mb-1.5 text-base font-semibold bg-c-primary/10
 									ring-c-primary/20 rounded-md px-4 py-0.75 text-c-primary"
