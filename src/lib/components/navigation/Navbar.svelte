@@ -256,7 +256,12 @@
 								class="shadow-lg rounded-full flex items-center justify-center shadow-c-shadow/[var(--o-shadow-strong)]"
 								noPadding
 								name="Account"
-								onClick={toggleAccountMenu}
+								onClick={() => {
+									toggleAccountMenu();
+									if (isAccountMenuOpen && $userSummary && $userSummary.refetch) {
+										$userSummary.refetch();
+									}
+								}}
 							>
 								<Avatar
 									text={$userSummary.username}
