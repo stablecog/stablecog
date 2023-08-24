@@ -27,6 +27,7 @@
 	import AccountDetailLine from '$routes/(app)/account/AccountDetailLine.svelte';
 	import { getRelativeDate } from '$ts/helpers/getRelativeDate';
 	import AccountPageCard from '$routes/(app)/account/AccountPageCard.svelte';
+	import IconToken from '$components/icons/IconToken.svelte';
 
 	$: if (!$page.data.session?.user.id) {
 		goto(`/sign-in?redirect_to=${encodeURIComponent($page.url.pathname)}`);
@@ -172,9 +173,12 @@
 					</AccountDetailLine>
 				{/if}
 				<AccountDetailLine title={$LL.Account.RemainingCreditsTitle()}>
-					<p class="font-semibold text-left px-1">
-						{($userSummary?.total_remaining_credits || 0).toLocaleString($locale)}
-					</p>
+					<div class="flex items-center justify-start px-1">
+						<IconToken class="w-4.5 h-4.5 -ml-1 flex-shrink-0" />
+						<p class="font-semibold text-left">
+							{($userSummary?.total_remaining_credits || 0).toLocaleString($locale)}
+						</p>
+					</div>
 				</AccountDetailLine>
 				<AccountDetailLine id="manage" title={$LL.Account.ManageTitle()}>
 					{#if $userSummary?.product_id}

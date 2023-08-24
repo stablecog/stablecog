@@ -206,8 +206,8 @@
 								</div>
 							</div>
 							<p
-								class="text-center mt-3 text-base font-semibold bg-c-primary/10 ring-1.5
-									ring-c-primary/20 rounded-md px-2 py-0.25 text-c-primary"
+								class="text-center mt-2.5 -mx-1.5 -mb-1.5 text-base font-semibold bg-c-primary/10
+									ring-c-primary/20 rounded-md px-4 py-0.75 text-c-primary"
 							>
 								{getRelativeDate({
 									date: $userSummary.renews_at ?? $userSummary.more_credits_at,

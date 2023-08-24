@@ -18,6 +18,8 @@
 	import IconCommandLine from '$components/icons/IconCommandLine.svelte';
 	import IconGalleryFilled from '$components/icons/IconGalleryFilled.svelte';
 	import IconProfile from '$components/icons/IconProfile.svelte';
+	import IconToken from '$components/icons/IconToken.svelte';
+	import { getRelativeDate } from '$ts/helpers/getRelativeDate';
 
 	export let setAccountMenuDropdownPage: (p: TAccountDropdownPage) => void;
 	export let closeMenu: () => void;
@@ -49,11 +51,16 @@
 		<div class="w-full relative z-20">
 			<div class="w-full h-2px rounded-full bg-c-bg-tertiary" />
 		</div>
-		<div class="w-full flex flex-col items-start px-5 py-3">
-			<p class="text-c-on-bg/50 font-medium text-sm">{$LL.Account.RemainingCreditsTitle()}</p>
-			<p class="font-bold text-lg">
-				{$userSummary.total_remaining_credits.toLocaleString($locale)}
+		<div class="w-full flex flex-col px-5 py-3">
+			<p class="w-full text-c-on-bg/50 font-medium text-sm">
+				{$LL.Account.RemainingCreditsTitle()}
 			</p>
+			<div class="w-full flex items-center justify-start mt-0.5">
+				<IconToken class="w-5 h-5 -ml-1 flex-shrink-0" />
+				<p class="font-bold text-lg">
+					{$userSummary.total_remaining_credits.toLocaleString($locale)}
+				</p>
+			</div>
 		</div>
 	{/if}
 	<div class="w-full relative z-20">
