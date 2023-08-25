@@ -226,7 +226,7 @@
 									</p>
 								</div>
 								<p
-									class="max-w-full bg-c-primary/15 mt-0.5 px-1.75 py-0.25 rounded-md font-medium text-sm flex-shrink min-w-0"
+									class="max-w-full bg-c-primary/15 mt-0.75 px-1.75 py-0.25 rounded-md font-medium text-sm flex-shrink min-w-0"
 								>
 									{getRelativeDate({
 										date: $userSummary.renews_at ?? $userSummary.more_free_credits_at,
