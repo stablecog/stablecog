@@ -129,7 +129,7 @@
 						height={initialFirstOutput.generation.height}
 						bind:naturalWidth={cardBgNaturalWidth}
 					/>
-				{:else}
+				{:else if $galleryGenerationFullOutputsQuery?.isSuccess}
 					<div
 						class="w-full h-full bg-gradient-to-br
 						from-c-primary via-c-primary-secondary to-c-primary"
