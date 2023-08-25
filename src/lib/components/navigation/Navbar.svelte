@@ -197,27 +197,23 @@
 								$userSummary.more_free_credits_at_credit_amount !== undefined)}
 					>
 						<div slot="tooltip" class="max-w-full flex flex-col text-sm break-words">
-							<div class="flex flex-row items-center flex-shrink min-w-0 gap-0.25">
-								<IconToken class="w-4 h-4 -ml-1.25 flex-shrink-0" />
-								<p class="font-bold flex-shrink min-w-0">
-									{$userSummary.renews_at
-										? $LL.UpcomingCredits.MorePaidPlanCreditsTooltip.Title()
-										: $LL.UpcomingCredits.MoreFreeCreditsTooltip.Title()}
-								</p>
-							</div>
+							<p class="font-bold flex-shrink min-w-0">
+								{$userSummary.renews_at
+									? $LL.UpcomingCredits.MorePaidPlanCreditsTooltip.Title()
+									: $LL.UpcomingCredits.MoreFreeCreditsTooltip.Title()}
+							</p>
 							<p class="mt-0.5 flex-shrink min-w-0 text-c-on-bg/75 font-medium">
 								{$userSummary.renews_at
 									? $LL.UpcomingCredits.MorePaidPlanCreditsTooltip.Paragraph()
 									: $LL.UpcomingCredits.MoreFreeCreditsTooltip.Paragraph()}
 							</p>
 							<div
-								class="text-center font-bold
-									flex flex-col justify-center items-center
-									rounded-md px-4 pt-1 pb-1 text-c-primary"
+								class="text-center font-bold flex justify-start items-center flex-wrap
+									rounded-md pt-1.25 pb-0.25 text-c-primary gap-2"
 							>
 								<div class="max-w-full flex justify-center items-center flex-shrink min-w-0">
-									<IconToken class="w-4.5 h-4.5 -ml-2 flex-shrink-0" />
-									<p class="text-xl flex-shrink min-w-0 -mb-0.5">
+									<IconToken class="w-4.5 h-4.5 -ml-0.75 flex-shrink-0" />
+									<p class="text-lg flex-shrink min-w-0 -mb-0.5">
 										{numberFormatter.format(
 											$userSummary.renews_at_credit_amount ??
 												$userSummary.more_free_credits_at_credit_amount ??
@@ -226,7 +222,7 @@
 									</p>
 								</div>
 								<p
-									class="max-w-full bg-c-primary/15 mt-0.75 px-1.75 py-0.25 rounded-md font-medium text-sm flex-shrink min-w-0"
+									class="max-w-full bg-c-primary/15 px-1.75 py-0.25 rounded-md font-medium text-sm flex-shrink min-w-0"
 								>
 									{getRelativeDate({
 										date: $userSummary.renews_at ?? $userSummary.more_free_credits_at,
