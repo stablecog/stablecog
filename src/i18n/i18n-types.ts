@@ -1908,10 +1908,28 @@ type RootTranslation = {
 		 */
 		SubscriptionCancellationTitle: string
 		/**
+		 * M​a​n​a​g​e​ ​S​u​b​s​c​r​i​p​t​i​o​n
+		 */
+		ManageSubscriptionTitle: string
+		/**
 		 * M​a​n​a​g​e
 		 */
 		ManageTitle: string
 		Subscription: {
+			Status: {
+				/**
+				 * A​c​t​i​v​e
+				 */
+				ActiveTitle: string
+				/**
+				 * C​a​n​c​e​l​l​i​n​g
+				 */
+				CancellingTitle: string
+				/**
+				 * C​a​n​c​e​l​l​e​d
+				 */
+				CancelledTitle: string
+			}
 			/**
 			 * U​p​d​a​t​e​ ​S​u​b​s​c​r​i​p​t​i​o​n
 			 */
@@ -5100,10 +5118,28 @@ export type TranslationFunctions = {
 		 */
 		SubscriptionCancellationTitle: () => LocalizedString
 		/**
+		 * Manage Subscription
+		 */
+		ManageSubscriptionTitle: () => LocalizedString
+		/**
 		 * Manage
 		 */
 		ManageTitle: () => LocalizedString
 		Subscription: {
+			Status: {
+				/**
+				 * Active
+				 */
+				ActiveTitle: () => LocalizedString
+				/**
+				 * Cancelling
+				 */
+				CancellingTitle: () => LocalizedString
+				/**
+				 * Cancelled
+				 */
+				CancelledTitle: () => LocalizedString
+			}
 			/**
 			 * Update Subscription
 			 */

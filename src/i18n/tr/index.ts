@@ -651,8 +651,10 @@ const tr: Translation = {
 		SubscriptionStatusTitle: 'Subscription Status',
 		SubscriptionRenewalTitle: 'Subscription Renewal',
 		SubscriptionCancellationTitle: 'Subscription Cancellation',
+		ManageSubscriptionTitle: 'Manage Subscription',
 		ManageTitle: 'Manage',
 		Subscription: {
+			Status: { ActiveTitle: 'Active', CancellingTitle: 'Cancelling', CancelledTitle: 'Cancelled' },
 			UpdateSubscriptionTitle: 'Paket Değiştir',
 			ChangePlanTitle: 'Paket Değiştir',
 			CurrentPlanTitle: 'Mevcut Paket',

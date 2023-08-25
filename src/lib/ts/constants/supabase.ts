@@ -12,4 +12,4 @@ export const supabaseAnonKey =
 		? envPublic.PUBLIC_SUPABASE_ANON_KEY_QA
 		: envPublic.PUBLIC_APP_MODE === 'dev'
 		? envPublic.PUBLIC_SUPABASE_ANON_KEY
-		: envPublic.PUBLIC_SUPABASE_ANON_KEY;
+		: envPublic.PUBLIC_SUPABASE_ANON_KEY || '';

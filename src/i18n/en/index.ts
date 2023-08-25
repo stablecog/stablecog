@@ -629,8 +629,10 @@ const en: BaseTranslation = {
 		SubscriptionStatusTitle: 'Subscription Status',
 		SubscriptionRenewalTitle: 'Subscription Renewal',
 		SubscriptionCancellationTitle: 'Subscription Cancellation',
+		ManageSubscriptionTitle: 'Manage Subscription',
 		ManageTitle: 'Manage',
 		Subscription: {
+			Status: { ActiveTitle: 'Active', CancellingTitle: 'Cancelling', CancelledTitle: 'Cancelled' },
 			UpdateSubscriptionTitle: 'Update Subscription',
 			ChangePlanTitle: 'Change Plan',
 			CurrentPlanTitle: 'Current Plan',

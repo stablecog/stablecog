@@ -378,7 +378,9 @@
 						style="aspect-ratio: {$generationInitImageWidth / $generationInitImageHeight}"
 						class="w-full max-w-lg md:w-auto md:max-w-full md:max-h-full relative my-auto"
 					>
-						<div class="absolute w-full flex flex-wrap justify-end items-center p-3 gap-3">
+						<div
+							class="absolute w-full flex flex-wrap justify-end items-center p-2 gap-2 md:p-3 md:gap-3"
+						>
 							<SubtleButton
 								class="shadow-lg shadow-c-shadow/[var(--o-shadow-stronger)]"
 								onClick={() => fileInput?.click()}
@@ -390,6 +392,12 @@
 								onClick={removeInitImage}
 							>
 								<IconTrashcan class="w-7 h-7 text-c-danger" />
+							</SubtleButton>
+							<SubtleButton
+								class="shadow-lg shadow-c-shadow/[var(--o-shadow-stronger)]"
+								onClick={closeImageModal}
+							>
+								<IconCancel class="w-7 h-7" />
 							</SubtleButton>
 						</div>
 						<img

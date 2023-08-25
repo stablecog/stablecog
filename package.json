@@ -65,8 +65,8 @@
 	"dependencies": {
 		"@felte/validator-zod": "^1.0.16",
 		"@melt-ui/svelte": "^0.37.5",
-		"@supabase/auth-helpers-sveltekit": "^0.10.1",
-		"@supabase/supabase-js": "^2.26.0",
+		"@supabase/auth-helpers-sveltekit": "^0.10.2",
+		"@supabase/supabase-js": "^2.33.1",
 		"@tanstack/svelte-query": "^4.24.6",
 		"@tanstack/svelte-virtual": "^3.0.0-beta.54",
 		"esbuild": "^0.17.19",

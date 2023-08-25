@@ -141,6 +141,14 @@
 						</div>
 					</NoBgButton>
 				</AccountDetailLine>
+				<AccountDetailLine title={$LL.Account.RemainingCreditsTitle()}>
+					<div class="flex items-center justify-start px-1">
+						<IconToken class="w-4.5 h-4.5 -ml-1 flex-shrink-0" />
+						<p class="font-semibold text-left">
+							{($userSummary?.total_remaining_credits || 0).toLocaleString($locale)}
+						</p>
+					</div>
+				</AccountDetailLine>
 				<AccountDetailLine title={$LL.Account.SubscriptionPlanTitle()}>
 					<ProductIdBadge
 						class="-my-1.5"
@@ -156,7 +164,9 @@
 								? 'bg-c-success/15 text-c-success'
 								: 'bg-c-danger/15 text-c-danger'}"
 						>
-							{$userSummary.renews_at ? 'Active' : 'Cancelled'}
+							{$userSummary.renews_at
+								? $LL.Account.Subscription.Status.ActiveTitle()
+								: $LL.Account.Subscription.Status.CancellingTitle()}
 						</p>
 					</AccountDetailLine>
 					<AccountDetailLine
@@ -172,15 +182,7 @@
 						</p>
 					</AccountDetailLine>
 				{/if}
-				<AccountDetailLine title={$LL.Account.RemainingCreditsTitle()}>
-					<div class="flex items-center justify-start px-1">
-						<IconToken class="w-4.5 h-4.5 -ml-1 flex-shrink-0" />
-						<p class="font-semibold text-left">
-							{($userSummary?.total_remaining_credits || 0).toLocaleString($locale)}
-						</p>
-					</div>
-				</AccountDetailLine>
-				<AccountDetailLine id="manage" title={$LL.Account.ManageTitle()}>
+				<AccountDetailLine id="manage" title={$LL.Account.ManageSubscriptionTitle()}>
 					{#if $userSummary?.product_id}
 						<div class="w-full md:w-auto flex flex-wrap items-center gap-2.5 md:-my-1.25">
 							<Button

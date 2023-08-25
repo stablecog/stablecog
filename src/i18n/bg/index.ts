@@ -631,8 +631,10 @@ const bg: Translation = {
 		SubscriptionStatusTitle: 'Subscription Status',
 		SubscriptionRenewalTitle: 'Subscription Renewal',
 		SubscriptionCancellationTitle: 'Subscription Cancellation',
+		ManageSubscriptionTitle: 'Manage Subscription',
 		ManageTitle: 'Manage',
 		Subscription: {
+			Status: { ActiveTitle: 'Active', CancellingTitle: 'Cancelling', CancelledTitle: 'Cancelled' },
 			UpdateSubscriptionTitle: 'Актуализирай абонамента',
 			ChangePlanTitle: 'Промяна на плана',
 			CurrentPlanTitle: 'Текущ план',

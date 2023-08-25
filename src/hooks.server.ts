@@ -15,7 +15,7 @@ const LINK_HEADER_LENGTH = 60;
 export const handle: Handle = async ({ event, resolve }) => {
 	event.locals.supabase = createSupabaseServerClient({
 		supabaseUrl: supabaseUrl,
-		supabaseKey: supabaseAnonKey,
+		supabaseKey: supabaseAnonKey || '',
 		event
 	});
 

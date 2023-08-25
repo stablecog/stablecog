@@ -656,8 +656,10 @@ const es: Translation = {
 		SubscriptionStatusTitle: 'Subscription Status',
 		SubscriptionRenewalTitle: 'Subscription Renewal',
 		SubscriptionCancellationTitle: 'Subscription Cancellation',
+		ManageSubscriptionTitle: 'Manage Subscription',
 		ManageTitle: 'Manage',
 		Subscription: {
+			Status: { ActiveTitle: 'Active', CancellingTitle: 'Cancelling', CancelledTitle: 'Cancelled' },
 			UpdateSubscriptionTitle: 'Ενημέρωση Συνδρομής',
 			ChangePlanTitle: 'Αλλαγή Πλάνου',
 			CurrentPlanTitle: 'Τρέχον Πλάνο',

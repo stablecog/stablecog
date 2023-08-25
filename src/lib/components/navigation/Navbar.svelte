@@ -49,6 +49,11 @@
 				if ($userSummary?.refetch) $userSummary.refetch();
 		  }
 		: undefined;
+
+	$: numberFormatter = new Intl.NumberFormat($locale, {
+		style: 'decimal',
+		maximumFractionDigits: 0
+	});
 </script>
 
 <nav
@@ -186,10 +191,12 @@
 						let:trigger
 						let:triggerStoreValue
 						onOpened={onUpcomingCreditsTooltipOpened}
-						isActive={$userSummary.renews_at !== undefined ||
-							$userSummary.more_credits_at !== undefined}
+						isActive={($userSummary.renews_at !== undefined &&
+							$userSummary.renews_at_credit_amount !== undefined) ||
+							($userSummary.more_free_credits_at !== undefined &&
+								$userSummary.more_free_credits_at_credit_amount !== undefined)}
 					>
-						<div slot="tooltip" class="flex flex-col pb-1 text-sm">
+						<div slot="tooltip" class="max-w-full flex flex-col pb-1 text-sm break-words">
 							<div class="flex flex-row items-center flex-shrink min-w-0 gap-0.25">
 								<IconToken class="w-4 h-4 -ml-1.25 flex-shrink-0" />
 								<p class="font-bold flex-shrink min-w-0">
@@ -198,21 +205,34 @@
 										: $LL.UpcomingCredits.MoreFreeCreditsTooltip.Title()}
 								</p>
 							</div>
-							<p class="mt-0.5 flex-shrink min-w-0">
+							<p class="mt-0.5 flex-shrink min-w-0 text-c-on-bg/75 font-medium">
 								{$userSummary.renews_at
 									? $LL.UpcomingCredits.MorePaidPlanCreditsTooltip.Paragraph()
 									: $LL.UpcomingCredits.MoreFreeCreditsTooltip.Paragraph()}
 							</p>
-							<p
-								class="text-center mt-2.5 -mx-1.5 -mb-1.5 text-base font-semibold bg-c-primary/10
-									ring-c-primary/20 rounded-md px-4 py-0.75 text-c-primary"
+							<div
+								class="text-center mt-2.5 -mx-1.5 -mb-1.5 font-bold
+									flex flex-col justify-center items-center bg-c-bg
+									rounded-md px-4 pt-1.5 pb-2 text-c-primary"
 							>
-								{getRelativeDate({
-									date: $userSummary.renews_at ?? $userSummary.more_credits_at,
-									locale: $locale,
-									dateStyle: 'long'
-								})}
-							</p>
+								<div class="max-w-full flex justify-center items-center flex-shrink min-w-0">
+									<IconToken class="w-4.5 h-4.5 -ml-2 flex-shrink-0" />
+									<p class="text-lg flex-shrink min-w-0">
+										{numberFormatter.format(
+											$userSummary.renews_at_credit_amount ??
+												$userSummary.more_free_credits_at_credit_amount ??
+												0
+										)}
+									</p>
+								</div>
+								<p class="max-w-full font-medium text-sm text-c-primary/75 flex-shrink min-w-0">
+									({getRelativeDate({
+										date: $userSummary.renews_at ?? $userSummary.more_free_credits_at,
+										locale: $locale,
+										dateStyle: 'long'
+									})})
+								</p>
+							</div>
 						</div>
 						<div
 							use:trigger

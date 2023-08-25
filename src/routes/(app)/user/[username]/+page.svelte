@@ -7,7 +7,7 @@
 	import LL, { locale } from '$i18n/i18n-svelte';
 	import { canonicalUrl } from '$ts/constants/main';
 	import { globalSeed } from '$ts/stores/globalSeed';
-	import { activeGeneration } from '$ts/stores/user/generation';
+	import { activeGeneration, type TGenerationFullOutput } from '$ts/stores/user/generation';
 	import { createInfiniteQuery } from '@tanstack/svelte-query';
 	import { quadOut } from 'svelte/easing';
 	import { scale } from 'svelte/transition';
@@ -36,6 +36,8 @@
 	import WithChangeUsernameModal from '$components/WithChangeUsernameModal.svelte';
 	import NoBgButton from '$components/buttons/NoBgButton.svelte';
 	import { getPreviewImageUrlForUserProfile } from '$ts/helpers/getPreviewImageUrl.js';
+	import { themeApp } from '$ts/stores/theme.js';
+	import { getImgProxySrc } from '$ts/helpers/imgproxy.js';
 
 	export let data;
 	const { searchQuery: searchQueryParam } = data;
@@ -44,20 +46,22 @@
 
 	let modelIdFilters: TAvailableGenerationModelId[] = data.modelIds ?? [];
 
-	$: galleryGenerationFullOutputsQuery = browser
-		? createInfiniteQuery(
-				getSomeUserProfileInfiniteQueryProps({
-					searchString,
-					modelIdFilters,
-					seed: $globalSeed,
-					username: data.username
-				})
-		  )
-		: undefined;
+	$: galleryGenerationFullOutputsQuery = createInfiniteQuery(
+		getSomeUserProfileInfiniteQueryProps({
+			searchString,
+			modelIdFilters,
+			seed: $globalSeed,
+			username: data.username
+		})
+	);
 
+	let initialFirstOutput: TGenerationFullOutput;
+	let isFirstSet = false;
+	let cardBgNaturalWidth: number;
 	$: outputs = $galleryGenerationFullOutputsQuery?.data?.pages
 		.flatMap((page) => page.outputs)
 		.filter((i) => i !== undefined);
+	$: outputs, setInitialFirstOutput();
 	$: outputIndex = outputs
 		? outputs.findIndex((g) => g.id === $activeGeneration?.selected_output.id)
 		: -1;
@@ -66,6 +70,13 @@
 
 	function setSearchQuery(query: string) {
 		searchString = query;
+	}
+
+	function setInitialFirstOutput() {
+		if (outputs && outputs.length > 0 && !isFirstSet) {
+			initialFirstOutput = outputs[0];
+			isFirstSet = true;
+		}
 	}
 
 	function onKeyDown({ key }: KeyboardEvent) {
@@ -100,25 +111,69 @@
 
 <svelte:window on:keydown={onKeyDown} />
 
-<div class="w-full px-1 flex-1 flex flex-col items-center md:pt-4.5">
-	<div class="w-full max-w-3xl flex flex-col items-center">
-		<div class="w-full flex-shrink min-w-0 flex flex-col items-center gap-2 px-4 md:px-3 mt-3">
-			<Avatar
-				class="w-16 h-16 ring-2 ring-c-on-bg/25 rounded-full transition transform flex-shrink-0
-					relative shadow-lg shadow-c-shadow/[var(--o-shadow-strong)] items-center justify-center overflow-hidden"
-				text={data.username}
-			/>
-			<div class="w-full flex justify-center items-center -mt-0.5 md:-mt-0.25">
-				{#if data.username === $userSummary?.username}
-					<WithChangeUsernameModal
-						afterUsernameChanged={(username) => goto(`/user/${username}`)}
-						let:trigger
-					>
-						<NoBgButton {trigger} class="mt-0" hoverFrom="left">
-							<div
-								class="flex flex-shrink min-w-0 items-center justify-center gap-2.5 -mx-0.5 -my-0.5"
+<div class="w-full px-1 flex-1 flex flex-col items-center md:pt-4">
+	<div class="w-full px-1 flex justify-center">
+		<div
+			class="w-full max-w-3xl flex flex-col bg-c-bg-secondary shadow-xl shadow-c-shadow/[var(--o-shadow-normal)]
+			rounded-2xl mt-3 relative z-0 overflow-hidden border-2 border-c-bg-secondary"
+		>
+			<div class="w-full h-full pl-16 absolute left-0 top-0 flex items-center justify-center">
+				{#if initialFirstOutput}
+					<img
+						class="w-full h-auto min-h-full transform transition ease-in {cardBgNaturalWidth
+							? 'opacity-100'
+							: 'opacity-0'} filter blur-xl scale-110"
+						src={getImgProxySrc({ src: initialFirstOutput.image_url, preset: '32w' })}
+						alt="Background"
+						width={initialFirstOutput.generation.width}
+						height={initialFirstOutput.generation.height}
+						bind:naturalWidth={cardBgNaturalWidth}
+					/>
+				{:else}
+					<div
+						class="w-full h-full bg-gradient-to-br
+						from-c-primary via-c-primary-secondary to-c-primary"
+					/>
+				{/if}
+			</div>
+			<div
+				class="w-full flex flex-col relative bg-gradient-to-r from-[5rem] from-c-bg-secondary
+				to-c-bg-secondary/0 px-2 py-4 md:px-5 md:pt-6.5 md:pb-7"
+			>
+				<div class="w-full flex-shrink min-w-0 flex flex-col items-start gap-2 px-2 relative">
+					<Avatar
+						class="w-14 h-14 md:w-16 md:h-16 ring-2 ring-c-on-bg/25 rounded-full transition transform flex-shrink-0
+						relative shadow-lg shadow-c-shadow/[var(--o-shadow-stronger)] items-center justify-center overflow-hidden"
+						text={data.username}
+					/>
+					<div class="w-full flex justify-start items-center -mt-0.75 md:-mt-0.25">
+						{#if data.username === $userSummary?.username}
+							<WithChangeUsernameModal
+								afterUsernameChanged={(username) => goto(`/user/${username}`)}
+								let:trigger
 							>
-								<p
+								<NoBgButton {trigger} class="mt-0 -mx-3.5" hoverFrom="left">
+									<div
+										class="flex flex-shrink min-w-0 items-center justify-center gap-2.5 -mx-0.5 -my-0.5"
+									>
+										<h1
+											class="max-w-full text-c-on-bg font-bold text-3xl md:text-4xl flex-shrink min-w-0 transition
+											whitespace-nowrap overflow-hidden overflow-ellipsis not-touch:group-hover:text-c-primary"
+										>
+											<span
+												class="text-c-on-bg/50 not-touch:group-hover:text-c-primary/50 transition font-semibold"
+												>@</span
+											>{data.username}
+										</h1>
+										<IconPen
+											class="w-5 h-5 text-c-on-bg/50 not-touch:group-hover:text-c-primary/50 transition relative"
+										/>
+									</div>
+								</NoBgButton>
+							</WithChangeUsernameModal>
+						{:else}
+							<div class="flex-shrink min-w-0 flex items-center justify-start gap-3 py-3">
+								<h1
 									class="max-w-full text-c-on-bg font-bold text-3xl md:text-4xl flex-shrink min-w-0 transition
 									whitespace-nowrap overflow-hidden overflow-ellipsis not-touch:group-hover:text-c-primary"
 								>
@@ -126,58 +181,49 @@
 										class="text-c-on-bg/50 not-touch:group-hover:text-c-primary/50 transition font-semibold"
 										>@</span
 									>{data.username}
-								</p>
-								<IconPen
-									class="w-5 h-5 text-c-on-bg/50 not-touch:group-hover:text-c-primary/50 transition relative"
-								/>
+								</h1>
 							</div>
-						</NoBgButton>
-					</WithChangeUsernameModal>
-				{:else}
-					<div class="flex-shrink min-w-0 flex items-center justify-center gap-3 py-3">
-						<p
-							class="max-w-full text-c-on-bg font-bold text-3xl md:text-4xl flex-shrink min-w-0 transition
-							whitespace-nowrap overflow-hidden overflow-ellipsis not-touch:group-hover:text-c-primary"
+						{/if}
+					</div>
+				</div>
+				<div
+					class="w-full flex flex-wrap items-center justify-start gap-3 px-2 mt-2 md:mt-2.5 relative"
+				>
+					<div
+						class="bg-c-bg-secondary rounded-lg shadow-lg shadow-c-shadow/[var(--o-shadow-strong)]"
+					>
+						<div
+							class="flex items-center justify-center gap-1.5 ring-2
+							px-3 py-1 rounded-lg bg-c-primary/15 ring-c-primary/30"
 						>
-							<span
-								class="text-c-on-bg/50 not-touch:group-hover:text-c-primary/50 transition font-semibold"
-								>@</span
-							>{data.username}
+							{#if data.userMetadata.active_product_id}
+								<IconStar class="w-5 h-5 -ml-1 flex-shrink-0 text-c-primary" />
+							{:else}
+								<IconHeart class="w-5 h-5 -ml-1 flex-shrink-0 text-c-primary" />
+							{/if}
+							<p
+								class="font-medium flex flex-shrink min-w-0 overflow-ellipsis overflow-hidden text-c-primary"
+							>
+								{getTitleFromProductId($LL, data.userMetadata.active_product_id)}
+							</p>
+						</div>
+					</div>
+					<div
+						class="flex items-center justify-center gap-1.5 bg-c-bg-secondary
+						ring-2 ring-c-bg-tertiary px-3 py-1 rounded-lg shadow-lg shadow-c-shadow/[var(--o-shadow-strong)]"
+					>
+						<IconBirthday class="w-5 h-5 -ml-1 flex-shrink-0 text-c-on-bg/75" />
+						<p
+							class="font-medium flex flex-shrink min-w-0 text-c-on-bg/75 overflow-ellipsis overflow-hidden"
+						>
+							{dateFormatter.format(new Date(data.userMetadata.created_at))}
 						</p>
 					</div>
-				{/if}
-			</div>
-		</div>
-		<div class="w-full flex flex-wrap items-center justify-center gap-3 px-2 mt-2 md:mt-2.5">
-			<div
-				class="flex items-center justify-center gap-1.5 ring-2
-				px-3 py-1 rounded-lg bg-c-primary/15 ring-c-primary/30"
-			>
-				{#if data.userMetadata.active_product_id}
-					<IconStar class="w-5 h-5 -ml-1 flex-shrink-0 text-c-primary" />
-				{:else}
-					<IconHeart class="w-5 h-5 -ml-1 flex-shrink-0 text-c-primary" />
-				{/if}
-				<p
-					class="font-medium flex flex-shrink min-w-0 overflow-ellipsis overflow-hidden text-c-primary"
-				>
-					{getTitleFromProductId($LL, data.userMetadata.active_product_id)}
-				</p>
-			</div>
-			<div
-				class="flex items-center justify-center gap-1.5 bg-c-bg-secondary ring-2 ring-c-bg-tertiary
-				px-3 py-1 rounded-lg"
-			>
-				<IconBirthday class="w-5 h-5 -ml-1 flex-shrink-0 text-c-on-bg/75" />
-				<p
-					class="font-medium flex flex-shrink min-w-0 text-c-on-bg/75 overflow-ellipsis overflow-hidden"
-				>
-					{dateFormatter.format(new Date(data.userMetadata.created_at))}
-				</p>
+				</div>
 			</div>
 		</div>
 	</div>
-	<div class="w-full px-1 py-1 md:py-2 flex justify-center mt-7">
+	<div class="w-full px-1 py-1 md:py-2 flex justify-center mt-2 md:mt-3.5">
 		<div class="w-full flex max-w-3xl justify-center">
 			<SearchAndFilterBar bind:modelIdFilters bind:searchString />
 		</div>

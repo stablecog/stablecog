@@ -637,8 +637,10 @@ const nl: Translation = {
 		SubscriptionStatusTitle: 'Subscription Status',
 		SubscriptionRenewalTitle: 'Subscription Renewal',
 		SubscriptionCancellationTitle: 'Subscription Cancellation',
+		ManageSubscriptionTitle: 'Manage Subscription',
 		ManageTitle: 'Manage',
 		Subscription: {
+			Status: { ActiveTitle: 'Active', CancellingTitle: 'Cancelling', CancelledTitle: 'Cancelled' },
 			UpdateSubscriptionTitle: 'Abonnement bijwerken',
 			ChangePlanTitle: 'Abonnement wijzigen',
 			CurrentPlanTitle: 'Huidige abonnement',
