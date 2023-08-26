@@ -1,28 +1,29 @@
 <table cellspacing="0" cellpadding="0" style="width: 100%;
 				max-width: 500px;
 				margin: 0 auto;
-				background: #121217;
-				border: solid 4px #121217;
+				background: rgba(28, 28, 35, 1);
+				border: solid 3px rgba(38, 38, 45, 1);
 				border-radius: 1.25rem;
-				color: #dbd5e7;
+				color: rgba(220, 220, 234,1);
 				overflow: hidden;
 				z-index: 0;
 				position: relative;
 				word-break: break-all;
-				font-size: 1rem;">
+				font-size: 1rem;
+				box-shadow: 0rem 0.75rem 1.5rem rgba(0, 0, 0, 0.25);">
 			<tbody><tr>
-				<td>
+				<td style="border-bottom: solid 3px rgba(38, 38, 45, 1)">
 					<img width="1536 " height="300" style="width: 100%; height: auto; padding: 0; margin: 0" src="https://stablecog.com/email-templates/banner.png">
 				</td>
 			</tr>
 			<tr style="text-align: center">
-				<td style="padding-top: 1.5rem; padding-left: 1.5rem; padding-right: 1.5rem; line-height: 1.5;">Click the button to sign in:</td>
+				<td style="padding-top: 1.5rem; padding-left: 1.5rem; padding-right: 1.5rem; line-height: 1.5;">Click to sign in:</td>
 			</tr>
 			<tr style="text-align: center">
 				<td style="padding-top: 1rem; padding-bottom: 1rem">
-					<a href="{{ .ConfirmationURL }}" style="background: #ae85ff;
-							color: #29282b;
-							box-shadow: 0rem 0.5rem 1rem rgba(0, 0, 0, 0.3);
+					<a href="{{ .ConfirmationURL }}" style="background: rgba(181, 140, 255, 1);
+							color: rgba(18, 18, 23, 1);
+							box-shadow: 0rem 0.5rem 1rem rgba(0, 0, 0, 0.25);
 							font-size: 1.1rem;
 							font-weight: bold;
 							padding: 1.25rem 1.75rem;
@@ -41,14 +42,14 @@
 			</tr>
 			<tr style="text-align: center">
 				<td>
-					<p style="color: #ae85ff;
+					<p style="color: rgba(181, 140, 255, 1);
 							font-size: 2rem;
 							font-weight: bold;
 							text-align: center;
 							display: inline-block;
 							padding-left: 1.5rem;
           		padding-right: 1.5rem;
-							line-height: 0.7;
+							line-height: 0.5;
 							letter-spacing: 0.25ch;">
 						{{ .Token }}
 					</p>
@@ -56,10 +57,18 @@
 			</tr>
 			<tr style="text-align: center">
 				<td style="padding-top: 1rem; padding-bottom: 1.75rem; padding-left: 1.5rem; padding-right: 1.5rem;">
-					<a style="color: #dbd5e7" href="https://stablecog.com">
+					<a style="color: rgba(220, 220, 234,1);" href="https://stablecog.com">
 						© 2023 Stablecog, Inc.
 					</a>
 				</td>
 			</tr>
 		</tbody>
 </table>
+
+<style>
+	body {
+		background: rgba(18, 18, 23, 1);
+		margin: 0;
+		padding: 1rem;
+	}
+</style>
