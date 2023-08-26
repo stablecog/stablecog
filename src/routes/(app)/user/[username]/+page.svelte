@@ -117,7 +117,9 @@
 			class="w-full max-w-3xl flex flex-col bg-c-bg-secondary shadow-xl shadow-c-shadow/[var(--o-shadow-normal)]
 			rounded-2xl mt-3 relative z-0 overflow-hidden border-2 border-c-bg-secondary"
 		>
-			<div class="w-full h-full pl-16 absolute left-0 top-0 flex items-center justify-center">
+			<div
+				class="w-full h-full pl-16 absolute left-0 top-0 flex items-center justify-center overflow-hidden z-0"
+			>
 				{#if initialFirstOutput}
 					<div
 						style="background: url({getImgProxySrc({
