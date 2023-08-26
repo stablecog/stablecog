@@ -119,15 +119,12 @@
 		>
 			<div class="w-full h-full pl-16 absolute left-0 top-0 flex items-center justify-center">
 				{#if initialFirstOutput}
-					<img
-						class="w-full h-auto min-h-full transform transition ease-in {cardBgNaturalWidth
-							? 'opacity-100'
-							: 'opacity-0'} filter blur-xl scale-110"
-						src={getImgProxySrc({ src: initialFirstOutput.image_url, preset: '32w' })}
-						alt="Background"
-						width={initialFirstOutput.generation.width}
-						height={initialFirstOutput.generation.height}
-						bind:naturalWidth={cardBgNaturalWidth}
+					<div
+						style="background: url({getImgProxySrc({
+							src: initialFirstOutput.image_url,
+							preset: '32w'
+						})}); background-size: cover; background-position: center; background-repeat: no-repeat;"
+						class="w-full h-full filter blur-xl scale-110"
 					/>
 				{:else if $galleryGenerationFullOutputsQuery?.isSuccess}
 					<div
