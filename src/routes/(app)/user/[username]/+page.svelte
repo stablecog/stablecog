@@ -131,7 +131,7 @@
 				{:else if $galleryGenerationFullOutputsQuery?.isSuccess}
 					<div
 						class="w-full h-full bg-gradient-to-br
-						from-c-primary via-c-primary-secondary to-c-primary"
+						from-c-primary via-c-secondary to-c-primary"
 					/>
 				{/if}
 			</div>
