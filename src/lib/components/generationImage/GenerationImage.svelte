@@ -203,7 +203,7 @@
 	/>
 {/if}
 <!-- Barriers -->
-{#if cardType !== 'stage' && cardType !== 'generate' && cardType !== 'gallery' && !generation.selected_output.is_deleted}
+{#if cardType !== 'stage' && cardType !== 'user-profile' && cardType !== 'generate' && cardType !== 'gallery' && !generation.selected_output.is_deleted}
 	<div
 		class="absolute top-0 left-0 w-full h-24 bg-gradient-to-b
 		from-c-barrier/90 via-c-barrier/60 to-c-barrier/0
