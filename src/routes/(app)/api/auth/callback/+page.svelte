@@ -50,7 +50,7 @@
 
 <PageWrapper>
 	<div class="w-full flex flex-col items-center justify-center my-auto">
-		{#if errorCode === 401}
+		{#if errorCode === 401 || data.error_code === 400 || data.error_code === 401}
 			<IconHourglass class="w-28 h-28" />
 			<p class="text-3xl font-bold mt-2">{$LL.Error.LinkExpired.Title()}</p>
 			<p class="text-c-on-bg/60 mt-3 w-full max-w-xs leading-relaxed pb-[5vh]">
