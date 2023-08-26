@@ -125,13 +125,15 @@
 				target="_blank"
 				class="rounded-xl flex flex-col items-center justify-center gap-1.5 group relative p-3"
 			>
-				<ButtonHoverEffect noPadding color="bg-tertiary" noFade />
+				<ButtonHoverEffect noPadding color="on-bg" noFade />
 				<div
 					class="{button.iconClasses} w-11 h-11 rounded-full text-c-bg flex items-center justify-center p-1.5 relative"
 				>
 					<IconSc type={button.icon} class="w-full h-full" />
 				</div>
-				<p class="text-xs w-full text-center flex-shrink min-w-0 relative">{button.buttonText}</p>
+				<p class="text-xs font-medium w-full text-center flex-shrink min-w-0 relative">
+					{button.buttonText}
+				</p>
 			</a>
 		{/each}
 	</div>
