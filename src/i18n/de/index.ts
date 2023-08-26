@@ -427,6 +427,7 @@ const de: Translation = {
 		TryAnotherImage: 'Try another image :(',
 		OnceEvery60Seconds: 'Du kannst nur einmal alle 60 Sekunden einen Link anfordern.',
 		LinkExpired: {
+			TitleAlt: 'The link is expired',
 			Title: 'Link abgelaufen',
 			Paragraph: 'Der Link kann nur einmal verwendet werden und läuft nach 24 Stunden ab.'
 		},

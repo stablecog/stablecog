@@ -449,6 +449,7 @@ const es: Translation = {
 		TryAnotherImage: 'Δοκιμάστε μια άλλη εικόνα :(',
 		OnceEvery60Seconds: 'Μπορείτε να ζητήσετε σύνδεσμο μόνο μία φορά κάθε 60 δευτερόλεπτα.',
 		LinkExpired: {
+			TitleAlt: 'The link is expired',
 			Title: 'Ο σύνδεσμος έληξε',
 			Paragraph: 'Ο σύνδεσμος μπορεί να χρησιμοποιηθεί μόνο μία φορά και λήγει μετά από 24 ώρες.'
 		},

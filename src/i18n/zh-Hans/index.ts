@@ -424,6 +424,7 @@ const zhHans: Translation = {
 		TryAnotherImage: 'Try another image :(',
 		OnceEvery60Seconds: 'You can only request a link once every 60 seconds.',
 		LinkExpired: {
+			TitleAlt: 'The link is expired',
 			Title: 'Link Expired',
 			Paragraph: 'The link can only be used once and expires after 24 hours.'
 		},

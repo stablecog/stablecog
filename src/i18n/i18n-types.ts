@@ -1293,6 +1293,10 @@ type RootTranslation = {
 		OnceEvery60Seconds: string
 		LinkExpired: {
 			/**
+			 * T​h​e​ ​l​i​n​k​ ​i​s​ ​e​x​p​i​r​e​d
+			 */
+			TitleAlt: string
+			/**
 			 * L​i​n​k​ ​E​x​p​i​r​e​d
 			 */
 			Title: string
@@ -4508,6 +4512,10 @@ export type TranslationFunctions = {
 		 */
 		OnceEvery60Seconds: () => LocalizedString
 		LinkExpired: {
+			/**
+			 * The link is expired
+			 */
+			TitleAlt: () => LocalizedString
 			/**
 			 * Link Expired
 			 */

@@ -448,6 +448,7 @@ const tr: Translation = {
 		TryAnotherImage: 'Başka fotoğraf dene :(',
 		OnceEvery60Seconds: 'Her 60 saniyede sadece bir link talebinde bulunabilirsin.',
 		LinkExpired: {
+			TitleAlt: 'The link is expired',
 			Title: 'Link Geçersiz',
 			Paragraph: 'Link sadece bir kere kullanılabilir ve 24 saat sonunda geçersiz hale gelir.'
 		},

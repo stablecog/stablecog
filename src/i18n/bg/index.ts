@@ -431,6 +431,7 @@ const bg: Translation = {
 		TryAnotherImage: 'Опитайте различно изображение :(',
 		OnceEvery60Seconds: 'Може да поискате линк само на всеки 60 секунди.',
 		LinkExpired: {
+			TitleAlt: 'The link is expired',
 			Title: 'Линкът ви изтече',
 			Paragraph: 'Този еднократен линк изтича след 24 часа.'
 		},

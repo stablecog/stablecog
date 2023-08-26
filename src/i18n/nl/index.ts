@@ -433,6 +433,7 @@ const nl: Translation = {
 		TryAnotherImage: 'Probeer een andere afbeelding :(',
 		OnceEvery60Seconds: 'Je kunt slechts een keer per 60 seconden een link aanvragen.',
 		LinkExpired: {
+			TitleAlt: 'The link is expired',
 			Title: 'Link is niet meer geldig',
 			Paragraph: 'De link kan slechts één keer gebruikt worden en vervalt na 24 uur.'
 		},

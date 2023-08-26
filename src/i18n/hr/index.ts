@@ -427,6 +427,7 @@ const hr: Translation = {
 		TryAnotherImage: 'Try another image :(',
 		OnceEvery60Seconds: 'Možeš zatražiti link samo svakih 60 sekundi.',
 		LinkExpired: {
+			TitleAlt: 'The link is expired',
 			Title: 'Link Expired',
 			Paragraph: 'The link can only be used once and expires after 24 hours.'
 		},

@@ -441,6 +441,7 @@ const ja: Translation = {
 		TryAnotherImage: '別の画像をお試しください (^_^);',
 		OnceEvery60Seconds: 'リンクは60秒ごとに1回しかリクエストできません。',
 		LinkExpired: {
+			TitleAlt: 'The link is expired',
 			Title: 'リンクが期限切れ',
 			Paragraph: 'リンクは一度だけ使用でき、24時間後に期限切れになります。'
 		},
