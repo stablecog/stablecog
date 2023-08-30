@@ -98,7 +98,7 @@
 							class="w-8 h-8 ring-2 ring-c-on-bg/25 overflow-hidden rounded-full transition transform
 							relative shadow-lg shadow-c-shadow/[var(--o-shadow-strong)] flex-shrink-0"
 						/>
-						<WithChangeUsernameModal let:trigger closeOnSuccess>
+						<WithChangeUsernameModal let:trigger>
 							<NoBgButton class="mt-0 -ml-2" noPadding {trigger} hoverFrom="left">
 								<div class="flex-shrink min-w-0 flex items-center gap-2 px-2 py-2">
 									<p

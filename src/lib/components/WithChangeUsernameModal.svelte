@@ -18,7 +18,7 @@
 	import { onMount } from 'svelte';
 
 	export let afterUsernameChanged: ((username: string) => Promise<void>) | undefined = undefined;
-	export let closeOnSuccess = false;
+	export let dontCloseOnSuccess = false;
 
 	const {
 		elements: { trigger, close, content, overlay, title, portalled },
@@ -105,7 +105,7 @@
 			if (us) {
 				userSummary.set(us);
 				if (afterUsernameChanged) await afterUsernameChanged(usernameFromServer);
-				if (closeOnSuccess) open.set(false);
+				if (!dontCloseOnSuccess) open.set(false);
 			}
 		}
 	}
