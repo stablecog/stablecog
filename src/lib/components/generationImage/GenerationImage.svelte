@@ -220,7 +220,7 @@
 			{overlayShouldShow ? 'opacity-100' : 'opacity-0'}"
 	/>
 {/if}
-{#if cardType !== 'gallery' && cardType !== 'user-profile' && cardType !== 'admin-gallery' && isRecentlyUpdated}
+{#if cardType !== 'gallery' && cardType !== 'admin-gallery' && isRecentlyUpdated}
 	<!-- Ping animation for newly created -->
 	<div class="absolute w-full pointer-events-none">
 		<div
