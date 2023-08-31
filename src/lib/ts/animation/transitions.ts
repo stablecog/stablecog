@@ -109,7 +109,7 @@ export const flyAndScale = (node: Node, options: IFlyAndScaleOptions) => {
 			}
 			css += ` transform-origin: ${transformOrigin};`;
 			if (isAbsolute) {
-				const { top, right, left, bottom } = getPositionRelativeToContainer(node as HTMLElement);
+				const { top, left } = getPositionRelativeToContainer(node as HTMLElement);
 				css += ` position: absolute; top:${top}px; left:${left}px;`;
 			}
 			return css;
