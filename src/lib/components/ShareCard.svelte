@@ -155,7 +155,7 @@
 			}}
 			noPadding
 			noRounding
-			class="px-6 py-2.5 rounded-lg"
+			class="px-6.5 py-2.5 rounded-lg"
 			size="xs"
 			buttonType="button"
 			noHoverEffect={copied}
