@@ -48,7 +48,9 @@ module.exports = {
 				DEFAULT: '200ms',
 				250: '250ms',
 				350: '350ms',
-				400: '400ms'
+				400: '400ms',
+				600: '600ms',
+				800: '800ms'
 			},
 			ringWidth: {
 				3: '3px',

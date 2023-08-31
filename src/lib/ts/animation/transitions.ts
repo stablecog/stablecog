@@ -76,7 +76,8 @@ export const flyAndScale = (node: Node, options: IFlyAndScaleOptions) => {
 		scaleX,
 		scaleY,
 		opacity,
-		transformOrigin = 'top'
+		transformOrigin = 'top',
+		isAbsolute = false
 	} = options;
 	return {
 		delay,
@@ -107,10 +108,44 @@ export const flyAndScale = (node: Node, options: IFlyAndScaleOptions) => {
 				css += ` opacity: ${t};`;
 			}
 			css += ` transform-origin: ${transformOrigin};`;
+			if (isAbsolute) {
+				const { top, right, left, bottom } = getPositionRelativeToContainer(node as HTMLElement);
+				css += ` position: absolute; top:${top}px; left:${left}px;`;
+			}
 			return css;
 		}
 	};
 };
+
+function getPositionRelativeToContainer(element: HTMLElement | null): Position {
+	if (!element || !element.parentElement) {
+		throw new Error('Element or parent element not found');
+	}
+
+	// Get dimensions of the element and its parent
+	const elementRect = element.getBoundingClientRect();
+	const parentRect = element.parentElement.getBoundingClientRect();
+
+	// Calculate distances
+	const topDistance = elementRect.y - parentRect.y;
+	const bottomDistance = parentRect.y + parentRect.height - (elementRect.y + elementRect.height);
+	const leftDistance = elementRect.x - parentRect.x;
+	const rightDistance = parentRect.x + parentRect.width - (elementRect.x + elementRect.width);
+
+	return {
+		top: topDistance,
+		right: rightDistance,
+		left: leftDistance,
+		bottom: bottomDistance
+	};
+}
+
+interface Position {
+	top: number;
+	right: number;
+	left: number;
+	bottom: number;
+}
 
 interface IFlyAndScaleOptions {
 	delay?: number;
@@ -124,4 +159,5 @@ interface IFlyAndScaleOptions {
 	scaleX?: number;
 	scaleY?: number;
 	opacity?: number;
+	isAbsolute?: boolean;
 }

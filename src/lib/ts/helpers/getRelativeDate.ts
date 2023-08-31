@@ -15,7 +15,7 @@ export function getRelativeDate({
 	const d = new Date(date);
 	const rtf1 = new Intl.RelativeTimeFormat(locale, { style: dateStyle });
 	const seconds = (d.getTime() - now) / 1000;
-	const secondsRounded = Math.round(seconds);
+	const secondsRounded = Math.round(seconds * Math.pow(10, decimals)) / Math.pow(10, decimals);
 	if (Math.abs(secondsRounded) < 60) {
 		return rtf1.format(secondsRounded, 'second');
 	}
@@ -26,6 +26,7 @@ export function getRelativeDate({
 	}
 	const hours = minutes / 60;
 	const hoursRounded = Math.round(hours * Math.pow(10, decimals)) / Math.pow(10, decimals);
+	console.log(hoursRounded);
 	if (Math.abs(hoursRounded) < 24) {
 		return rtf1.format(hoursRounded, 'hour');
 	}

@@ -5,13 +5,13 @@
 	import NavigationTabBar from '$components/navigation/NavigationTabBar.svelte';
 	import { clickoutside } from '$ts/actions/clickoutside';
 	import IconSc from '$components/icons/IconSc.svelte';
-	import LL, { locale } from '$i18n/i18n-svelte';
+	import LL from '$i18n/i18n-svelte';
 	import Button from '$components/buttons/Button.svelte';
 	import AccountMenu from '$components/accountMenu/AccountMenu.svelte';
 	import Avatar from '$components/avatar/Avatar.svelte';
 	import { navbarHeight } from '$ts/stores/navbarHeight';
 	import { userSummary } from '$ts/stores/user/summary';
-	import { isNoCreditsInfoRoute, navbarStickyType } from '$ts/stores/navbar';
+	import { navbarStickyType } from '$ts/stores/navbar';
 	import { isDrawerOpen } from '$ts/stores/isDrawerOpen';
 	import IconSidebar from '$components/icons/IconSidebar.svelte';
 	import ButtonHoverEffect from '$components/buttons/ButtonHoverEffect.svelte';
@@ -25,10 +25,8 @@
 	import type { TDirTreeItem } from '$routes/+layout';
 	import IconChevronDown from '$components/icons/IconChevronDown.svelte';
 	import BannerWrapper from '$components/BannerWrapper.svelte';
-	import IconToken from '$components/icons/IconToken.svelte';
 	import SignInModal from '$components/SignInModal.svelte';
-	import WithTooltip from '$components/WithTooltip.svelte';
-	import { getRelativeDate } from '$ts/helpers/getRelativeDate';
+	import RemainingCredits from '$components/navigation/navbar/RemainingCredits.svelte';
 
 	export let notAtTheVeryTop = false;
 	export let scrollDirection: 'up' | 'down' = 'down';
@@ -43,17 +41,6 @@
 	const closeAccountMenu = () => (isAccountMenuOpen = false);
 
 	const showBanner = false;
-
-	$: onUpcomingCreditsTooltipOpened = $userSummary?.refetch
-		? () => {
-				if ($userSummary?.refetch) $userSummary.refetch();
-		  }
-		: undefined;
-
-	$: numberFormatter = new Intl.NumberFormat($locale, {
-		style: 'decimal',
-		maximumFractionDigits: 0
-	});
 </script>
 
 <nav
@@ -185,82 +172,7 @@
 				/>
 			</IconButton>
 			<div class="flex items-center justify-end pl-2 pr-3.5 md:pl-2.5 md:pr-5">
-				{#if $page.data.session && $userSummary}
-					<WithTooltip
-						delay={150}
-						let:trigger
-						let:triggerStoreValue
-						onOpened={onUpcomingCreditsTooltipOpened}
-						isActive={($userSummary.renews_at !== undefined &&
-							$userSummary.renews_at_credit_amount !== undefined) ||
-							($userSummary.more_free_credits_at !== undefined &&
-								$userSummary.more_free_credits_at_credit_amount !== undefined)}
-					>
-						<div slot="tooltip" class="max-w-full flex flex-col text-sm break-words">
-							<p class="font-bold flex-shrink min-w-0">
-								{$userSummary.renews_at
-									? $LL.UpcomingCredits.MorePaidPlanCreditsTooltip.Title()
-									: $LL.UpcomingCredits.MoreFreeCreditsTooltip.Title()}
-							</p>
-							<p class="mt-0.5 flex-shrink min-w-0 text-c-on-bg/75 font-medium">
-								{$userSummary.renews_at
-									? $LL.UpcomingCredits.MorePaidPlanCreditsTooltip.Paragraph()
-									: $LL.UpcomingCredits.MoreFreeCreditsTooltip.Paragraph()}
-							</p>
-							<div
-								class="text-center font-bold flex justify-start items-center flex-wrap
-									rounded-md pt-1.25 pb-0.25 text-c-primary gap-2"
-							>
-								<div class="max-w-full flex justify-center items-center flex-shrink min-w-0">
-									<IconToken class="w-4.5 h-4.5 -ml-0.75 flex-shrink-0" />
-									<p class="text-lg flex-shrink min-w-0 -mb-0.5">
-										{numberFormatter.format(
-											$userSummary.renews_at_credit_amount ??
-												$userSummary.more_free_credits_at_credit_amount ??
-												0
-										)}
-									</p>
-								</div>
-								<p
-									class="max-w-full bg-c-primary/10 px-1.75 py-0.25 rounded-md font-medium text-sm flex-shrink min-w-0"
-								>
-									{getRelativeDate({
-										date: $userSummary.renews_at ?? $userSummary.more_free_credits_at,
-										locale: $locale,
-										dateStyle: 'long'
-									})}
-								</p>
-							</div>
-						</div>
-						<div
-							use:trigger
-							{...triggerStoreValue}
-							tabindex="0"
-							role="button"
-							class="flex-col items-end mr-3.5 md:mr-4 cursor-default rounded {$isNoCreditsInfoRoute
-								? 'hidden md:flex'
-								: 'flex'} {$page.url.pathname === '/' && $themeApp === 'light' && !notAtTheVeryTop
-								? 'text-c-bg'
-								: 'text-c-on-bg'}"
-						>
-							<p
-								class="text-xs font-medium {$page.url.pathname === '/' &&
-								$themeApp === 'light' &&
-								!notAtTheVeryTop
-									? 'text-c-bg/60'
-									: 'text-c-on-bg/60'}"
-							>
-								{$LL.Account.RemainingTitle()}
-							</p>
-							<div class="flex gap-0.25 items-center">
-								<IconToken class="w-4 h-4 -ml-0.25 flex-shrink-0" />
-								<p class="text-sm font-bold mt-0.5">
-									{$userSummary.total_remaining_credits.toLocaleString($locale)}
-								</p>
-							</div>
-						</div>
-					</WithTooltip>
-				{/if}
+				<RemainingCredits {notAtTheVeryTop} />
 				<!-- Account -->
 				{#if $page.data.session?.user.email && $userSummary}
 					<div

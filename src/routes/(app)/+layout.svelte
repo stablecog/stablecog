@@ -7,7 +7,7 @@
 	import UserSummaryProvider from '$components/userSummary/UserSummaryProvider.svelte';
 	import Drawer from '$components/navigation/Drawer.svelte';
 	import Footer from '$components/navigation/Footer.svelte';
-	import Navbar from '$components/navigation/Navbar.svelte';
+	import Navbar from '$components/navigation/navbar/Navbar.svelte';
 	import { locale } from '$i18n/i18n-svelte';
 	import { apiUrl } from '$ts/constants/main';
 	import {

@@ -6,7 +6,7 @@
 	import LayoutWrapper from '$components/LayoutWrapper.svelte';
 	import Drawer from '$components/navigation/Drawer.svelte';
 	import { onMount } from 'svelte';
-	import Navbar from '$components/navigation/Navbar.svelte';
+	import Navbar from '$components/navigation/navbar/Navbar.svelte';
 	import Footer from '$components/navigation/Footer.svelte';
 	import { appRoutes, rawRoutes } from '$ts/constants/routes';
 	import { navbarStickyType } from '$ts/stores/navbar';
