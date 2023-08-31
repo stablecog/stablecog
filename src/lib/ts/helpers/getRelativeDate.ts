@@ -26,7 +26,6 @@ export function getRelativeDate({
 	}
 	const hours = minutes / 60;
 	const hoursRounded = Math.round(hours * Math.pow(10, decimals)) / Math.pow(10, decimals);
-	console.log(hoursRounded);
 	if (Math.abs(hoursRounded) < 24) {
 		return rtf1.format(hoursRounded, 'hour');
 	}

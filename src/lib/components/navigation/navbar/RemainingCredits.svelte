@@ -126,7 +126,7 @@
 			</p>
 			<div class="flex gap-0.25 items-center">
 				<div
-					class="transition duration-500 flex-shrink-0"
+					class="transition duration-1000 flex-shrink-0"
 					style="transform: rotate({creditsChangedCounter * 180}deg)"
 				>
 					<IconToken class="w-4 h-4 -ml-0.25" />
@@ -135,13 +135,13 @@
 					{#each totalRemainingCreditsString.split('') as character, index (character + index)}
 						<p
 							in:flyAndScale={{
-								duration: 400,
+								duration: 1000,
 								easing: quadOut,
 								yPercent: -100,
 								opacity: 0
 							}}
 							out:flyAndScale={{
-								duration: 400,
+								duration: 1000,
 								easing: quadOut,
 								yPercent: 100,
 								opacity: 0,

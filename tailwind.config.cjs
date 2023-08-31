@@ -50,6 +50,7 @@ module.exports = {
 				350: '350ms',
 				400: '400ms',
 				600: '600ms',
+				750: '750ms',
 				800: '800ms'
 			},
 			ringWidth: {

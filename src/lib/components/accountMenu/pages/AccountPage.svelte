@@ -16,10 +16,8 @@
 	import type { TAccountDropdownPage } from '$components/accountMenu/types';
 	import PageWrapper from '$components/accountMenu/PageWrapper.svelte';
 	import IconCommandLine from '$components/icons/IconCommandLine.svelte';
-	import IconGalleryFilled from '$components/icons/IconGalleryFilled.svelte';
 	import IconProfile from '$components/icons/IconProfile.svelte';
 	import IconToken from '$components/icons/IconToken.svelte';
-	import { getRelativeDate } from '$ts/helpers/getRelativeDate';
 
 	export let setAccountMenuDropdownPage: (p: TAccountDropdownPage) => void;
 	export let closeMenu: () => void;
