@@ -889,6 +889,10 @@ const nl: Translation = {
 	},
 	LowOnCreditsCard: {
 		Title: 'Je hebt nog maar weinig credits over ({remainingCredits})',
+		FreeWithMoreOnTheWay: {
+			Paragraph:
+				"Get more now by subscribing to a plan or participating in our events. You'll receive more free credits soon:"
+		},
 		FreeParagraph:
 			'We geven alle actieve gebruikers dagelijks gratis credits. Je kunt er meer krijgen door een abonnement aan te schaffen of door deel te nemen aan onze evenementen.',
 		HighestPlanParagraph: 'Je kunt een creditbundel kopen.',

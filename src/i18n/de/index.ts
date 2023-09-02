@@ -882,6 +882,10 @@ const de: Translation = {
 	},
 	LowOnCreditsCard: {
 		Title: 'Du hast wenig Guthaben ({remainingCredits})',
+		FreeWithMoreOnTheWay: {
+			Paragraph:
+				"Get more now by subscribing to a plan or participating in our events. You'll receive more free credits soon:"
+		},
 		FreeParagraph:
 			'Täglich gewähren wir allen aktiven Nutzern kostenloses Guthaben. Du kannst mehr erhalten, indem Du ein Abonnement buchst oder an unseren Veranstaltungen teilnimmst.',
 		HighestPlanParagraph: 'Du kannst ein Guthabenpaket kaufen.',

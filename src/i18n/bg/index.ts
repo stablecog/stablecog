@@ -879,6 +879,10 @@ const bg: Translation = {
 	},
 	LowOnCreditsCard: {
 		Title: 'Вашият кредит привършва ({remainingCredits})',
+		FreeWithMoreOnTheWay: {
+			Paragraph:
+				"Get more now by subscribing to a plan or participating in our events. You'll receive more free credits soon:"
+		},
 		FreeParagraph:
 			'Всеки ден даваме безплатен кредит на активни потребители. Може да закупите чрез платен план, или чрез участие в наши събития.',
 		HighestPlanParagraph: 'Може да закупите кредит пакет.',

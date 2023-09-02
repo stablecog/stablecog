@@ -898,6 +898,10 @@ const ja: Translation = {
 	},
 	LowOnCreditsCard: {
 		Title: 'クレジットが不足しています ({remainingCredits})',
+		FreeWithMoreOnTheWay: {
+			Paragraph:
+				"Get more now by subscribing to a plan or participating in our events. You'll receive more free credits soon:"
+		},
 		FreeParagraph:
 			'全てのアクティブ・ユーザーにクレジットが毎日無料で提供されます。プランに加入するか、当サイトのイベントに参加することによって、さらにクレジットを獲得できます。',
 		HighestPlanParagraph: 'クレジットパックを購入することができます。',

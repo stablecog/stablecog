@@ -2620,6 +2620,12 @@ type RootTranslation = {
 		 * @param {unknown} remainingCredits
 		 */
 		Title: RequiredParams<'remainingCredits'>
+		FreeWithMoreOnTheWay: {
+			/**
+			 * G​e​t​ ​m​o​r​e​ ​n​o​w​ ​b​y​ ​s​u​b​s​c​r​i​b​i​n​g​ ​t​o​ ​a​ ​p​l​a​n​ ​o​r​ ​p​a​r​t​i​c​i​p​a​t​i​n​g​ ​i​n​ ​o​u​r​ ​e​v​e​n​t​s​.​ ​Y​o​u​'​l​l​ ​r​e​c​e​i​v​e​ ​m​o​r​e​ ​f​r​e​e​ ​c​r​e​d​i​t​s​ ​s​o​o​n​:
+			 */
+			Paragraph: string
+		}
 		/**
 		 * W​e​ ​g​i​v​e​ ​a​l​l​ ​a​c​t​i​v​e​ ​u​s​e​r​s​ ​f​r​e​e​ ​c​r​e​d​i​t​s​ ​d​a​i​l​y​.​ ​Y​o​u​ ​c​a​n​ ​g​e​t​ ​m​o​r​e​ ​b​y​ ​s​u​b​s​c​r​i​b​i​n​g​ ​t​o​ ​a​ ​p​l​a​n​ ​o​r​ ​b​y​ ​p​a​r​t​i​c​i​p​a​t​i​n​g​ ​i​n​ ​o​u​r​ ​e​v​e​n​t​s​.
 		 */
@@ -5823,6 +5829,12 @@ export type TranslationFunctions = {
 		 * You're low on credits ({remainingCredits})
 		 */
 		Title: (arg: { remainingCredits: unknown }) => LocalizedString
+		FreeWithMoreOnTheWay: {
+			/**
+			 * Get more now by subscribing to a plan or participating in our events. You'll receive more free credits soon:
+			 */
+			Paragraph: () => LocalizedString
+		}
 		/**
 		 * We give all active users free credits daily. You can get more by subscribing to a plan or by participating in our events.
 		 */

@@ -912,6 +912,10 @@ const es: Translation = {
 	},
 	LowOnCreditsCard: {
 		Title: 'Έχετε λίγες μονάδες ({remainingCredits})',
+		FreeWithMoreOnTheWay: {
+			Paragraph:
+				"Get more now by subscribing to a plan or participating in our events. You'll receive more free credits soon:"
+		},
 		FreeParagraph:
 			'Δίνουμε σε όλους τους ενεργούς χρήστες δωρεάν μονάδες καθημερινά. Μπορείτε να πάρετε περισσότερες, αν εγγραφείτε σε ένα πλάνο ή συμμετέχετε στις εκδηλώσεις μας.',
 		HighestPlanParagraph: 'Μπορείτε να αγοράσετε ένα πακέτο μονάδων.',

@@ -84,8 +84,8 @@
 					: $LL.UpcomingCredits.MoreFreeCreditsTooltip.Paragraph()}
 			</p>
 			<div
-				class="text-center font-bold flex justify-start items-center flex-wrap
-									rounded-md pt-1.25 pb-0.25 text-c-primary gap-2"
+				class="text-left font-bold flex justify-start items-center flex-wrap
+					rounded-md pt-1.25 pb-0.25 text-c-primary gap-2"
 			>
 				<div class="max-w-full flex justify-center items-center flex-shrink min-w-0">
 					<IconToken class="w-4.5 h-4.5 -ml-0.75 flex-shrink-0" />

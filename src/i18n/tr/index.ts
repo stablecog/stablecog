@@ -903,6 +903,10 @@ const tr: Translation = {
 	},
 	LowOnCreditsCard: {
 		Title: 'Kredin az kaldı ({remainingCredits})',
+		FreeWithMoreOnTheWay: {
+			Paragraph:
+				"Get more now by subscribing to a plan or participating in our events. You'll receive more free credits soon:"
+		},
 		FreeParagraph:
 			'Tüm aktif kullanıcılara her gün ücretsiz kredi veriyoruz. Bir plan satın alarak veya etkinliklerimize katılarak daha fazla kredi elde edebilirsin.',
 		HighestPlanParagraph: 'Kredi paketi satın alabilirsin.',
