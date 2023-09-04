@@ -32,9 +32,12 @@
 	let errorText: string | null = null;
 	let codeValue: string;
 	let codeSignInErrorText: string | null = null;
+	const codeLength = 6;
 
 	let wantsEmailChecked = false;
 	let wantsEmailOnMount = false;
+
+	$: isCodeValid = codeValue?.length === codeLength;
 
 	async function signIn() {
 		if (!$page.data.supabase) return;
@@ -131,9 +134,7 @@
 
 	async function signInWithCode() {
 		if (!$page.data.supabase) return;
-		if (codeValue.length !== 6) {
-			return;
-		}
+		if (!isCodeValid) return;
 		signInCardCodeSignInStatus.set('loading');
 		try {
 			const { data: sData, error: sError } = await $page.data.supabase.auth.verifyOtp({
@@ -246,8 +247,7 @@
 									<div class="w-full flex flex-col justify-start items-center max-w-[21rem]">
 										<PinInput bind:value={codeValue} />
 										<Button
-											disabled={codeValue?.length !== 6}
-											fadeOnDisabled
+											disabled={!isCodeValid}
 											withSpinner
 											loading={$signInCardCodeSignInStatus === 'loading'}
 											class="mt-3 w-full">{$LL.SignIn.ContinueButton()}</Button
