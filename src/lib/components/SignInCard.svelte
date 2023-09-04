@@ -238,7 +238,7 @@
 								class="w-full flex flex-col justify-start items-center max-w-xs"
 							>
 								<div class="w-full flex flex-col justify-start items-center p-4">
-									<Input class="w-full" type="number" bind:value={codeValue} title="Code" />
+									<Input class="w-full" type="text" bind:value={codeValue} title="Code" />
 									<Button
 										withSpinner
 										loading={$signInCardCodeSignInStatus === 'loading'}

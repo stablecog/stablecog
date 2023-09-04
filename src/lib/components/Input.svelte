@@ -17,6 +17,7 @@
 	export let noAutocomplete = false;
 	export let onInput: (() => void) | undefined = undefined;
 	export let maxLength: number | undefined = undefined;
+	export let minLength: number | undefined = undefined;
 	export let onKeyPress:
 		| ((
 				e: KeyboardEvent & {
@@ -54,6 +55,7 @@
 			on:keypress={onKeyPress}
 			on:focus={onFocus}
 			on:blur={onBlur}
+			minlength={minLength}
 			maxlength={maxLength}
 			{readonly}
 			autocomplete={noAutocomplete ? 'off' : 'on'}
@@ -86,6 +88,7 @@
 			on:keypress={onKeyPress}
 			on:focus={onFocus}
 			on:blur={onBlur}
+			minlength={minLength}
 			maxlength={maxLength}
 			{readonly}
 			autocomplete={noAutocomplete ? 'off' : 'on'}
@@ -118,6 +121,7 @@
 			on:keypress={onKeyPress}
 			on:focus={onFocus}
 			on:blur={onBlur}
+			minlength={minLength}
 			maxlength={maxLength}
 			{readonly}
 			autocomplete={noAutocomplete ? 'off' : 'on'}
@@ -150,6 +154,7 @@
 			on:keypress={onKeyPress}
 			on:focus={onFocus}
 			on:blur={onBlur}
+			minlength={minLength}
 			maxlength={maxLength}
 			{readonly}
 			autocomplete={noAutocomplete ? 'off' : 'on'}
