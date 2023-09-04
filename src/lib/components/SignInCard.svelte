@@ -20,6 +20,7 @@
 	import { signInCardCodeSignInStatus, signInCardStatus } from '$ts/stores/signInCardState';
 	import { PUBLIC_APP_MODE } from '$env/static/public';
 	import { apiUrl } from '$ts/constants/main';
+	import PinInput from '$components/PinInput.svelte';
 
 	export let redirectTo: string | null = null;
 	export let isModal = false;
@@ -127,8 +128,12 @@
 			route: '/guide'
 		}
 	];
+
 	async function signInWithCode() {
 		if (!$page.data.supabase) return;
+		if (codeValue.length !== 6) {
+			return;
+		}
 		signInCardCodeSignInStatus.set('loading');
 		try {
 			const { data: sData, error: sError } = await $page.data.supabase.auth.verifyOtp({
@@ -235,24 +240,22 @@
 							<form
 								transition:expandCollapse={{ duration: 200, easing: quadOut, opacity: 0 }}
 								on:submit|preventDefault={signInWithCode}
-								class="w-full flex flex-col justify-start items-center max-w-xs"
+								class="w-full flex flex-col justify-start items-center"
 							>
-								<div class="w-full flex flex-col justify-start items-center p-4">
-									<Input
-										class="w-full"
-										maxLength={6}
-										type="text"
-										bind:value={codeValue}
-										title="Code"
-									/>
-									<Button
-										withSpinner
-										loading={$signInCardCodeSignInStatus === 'loading'}
-										class="mt-3 w-full">{$LL.SignIn.ContinueButton()}</Button
-									>
-									{#if codeSignInErrorText}
-										<ErrorLine text={codeSignInErrorText} class="text-xs w-full" />
-									{/if}
+								<div class="flex flex-col justify-start items-center p-4">
+									<div class="w-full flex flex-col justify-start items-center max-w-[21rem]">
+										<PinInput bind:value={codeValue} />
+										<Button
+											disabled={codeValue?.length !== 6}
+											fadeOnDisabled
+											withSpinner
+											loading={$signInCardCodeSignInStatus === 'loading'}
+											class="mt-3 w-full">{$LL.SignIn.ContinueButton()}</Button
+										>
+										{#if codeSignInErrorText}
+											<ErrorLine text={codeSignInErrorText} class="text-xs w-full" />
+										{/if}
+									</div>
 								</div>
 							</form>
 						{/if}
