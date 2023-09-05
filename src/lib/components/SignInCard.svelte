@@ -244,15 +244,21 @@
 								class="w-full flex flex-col justify-start items-center"
 							>
 								<div
-									class="flex flex-col justify-start items-center px-4 pt-4 pb-5 md:px-6 md:pt-6 md:pb-7"
+									class="flex flex-col justify-start items-center px-4 pt-5 pb-6 md:px-6 md:pt-6 md:pb-7"
 								>
 									<div class="w-full flex flex-col justify-start items-center max-w-[21rem]">
-										<PinInput bind:value={codeValue} />
+										<PinInput
+											bind:value={codeValue}
+											on:pincomplete={signInWithCode}
+											onInput={() => {
+												codeSignInErrorText = null;
+											}}
+										/>
 										<Button
 											disabled={!isCodeValid}
 											withSpinner
 											loading={$signInCardCodeSignInStatus === 'loading'}
-											class="mt-3 w-full">{$LL.SignIn.ContinueButton()}</Button
+											class="mt-4 w-full">{$LL.SignIn.ContinueButton()}</Button
 										>
 										{#if codeSignInErrorText}
 											<ErrorLine text={codeSignInErrorText} class="text-xs w-full" />
@@ -266,6 +272,7 @@
 							onClick={() => {
 								signInCardStatus.set('idle');
 								signInCardCodeSignInStatus.set('idle');
+								codeSignInErrorText = null;
 							}}
 						>
 							<div class="w-full flex items-center justify-center gap-2.5">
@@ -328,6 +335,7 @@
 						type="email"
 						title={$LL.Shared.EmailInput.Placeholder()}
 						bind:value={email}
+						enterkeyhint="go"
 						hasIcon
 					>
 						<IconEmail slot="icon" class="w-full h-full" />
