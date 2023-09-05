@@ -22,7 +22,7 @@
 			style="width: {(1 / length) * 100}%"
 			class="bg-c-bg-secondary text-c-on-bg rounded-md text-center text-lg font-semibold py-3
       focus:ring-2 ring-0 transition ring-c-primary/20 focus:ring-c-primary/30 not-touch:enabled:hover:ring-2
-      placeholder:text-c-on-bg/30"
+      placeholder:text-c-on-bg/40"
 			{...$input()}
 			use:input
 		/>
