@@ -243,7 +243,9 @@
 								on:submit|preventDefault={signInWithCode}
 								class="w-full flex flex-col justify-start items-center"
 							>
-								<div class="flex flex-col justify-start items-center p-4">
+								<div
+									class="flex flex-col justify-start items-center px-4 pt-4 pb-5 md:px-6 md:pt-6 md:pb-7"
+								>
 									<div class="w-full flex flex-col justify-start items-center max-w-[21rem]">
 										<PinInput bind:value={codeValue} />
 										<Button
