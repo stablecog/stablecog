@@ -227,16 +227,21 @@
 						class="w-full border-t-2 border-c-bg-secondary flex flex-col justify-start items-center relative z-0"
 					>
 						{#if $signInCardCodeSignInStatus === 'idle'}
-							<DropdownItem onClick={() => ($signInCardCodeSignInStatus = 'entering')}>
-								<div class="w-full flex items-center justify-center gap-2.5">
-									<IconPassword
-										class="text-c-on-bg/75 w-6 h-6 transition not-touch:group-hover:text-c-primary"
-									/>
-									<p class="text-c-on-bg/75 transition not-touch:group-hover:text-c-primary">
-										{$LL.SignIn.EnterCodeManuallyButton()}
-									</p>
-								</div>
-							</DropdownItem>
+							<div
+								transition:expandCollapse={{ duration: 200, easing: quadOut, opacity: 0 }}
+								class="w-full"
+							>
+								<DropdownItem onClick={() => ($signInCardCodeSignInStatus = 'entering')}>
+									<div class="w-full flex items-center justify-center gap-2.5">
+										<IconPassword
+											class="text-c-on-bg/75 w-6 h-6 transition not-touch:group-hover:text-c-primary"
+										/>
+										<p class="text-c-on-bg/75 transition not-touch:group-hover:text-c-primary">
+											{$LL.SignIn.EnterCodeManuallyButton()}
+										</p>
+									</div>
+								</DropdownItem>
+							</div>
 						{:else}
 							<form
 								transition:expandCollapse={{ duration: 200, easing: quadOut, opacity: 0 }}
