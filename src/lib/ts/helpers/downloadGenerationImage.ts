@@ -13,6 +13,7 @@ export async function downloadGenerationImage({
 	inferenceSteps,
 	outputIndex,
 	modelId,
+	imageStrength,
 	logProps
 }: TDownloadGenerationImageProps) {
 	const res = await fetch(`${url}?download=true`);
@@ -25,7 +26,8 @@ export async function downloadGenerationImage({
 		guidanceScale,
 		inferenceSteps,
 		outputIndex,
-		modelId
+		modelId,
+		imageStrength
 	});
 	const a = document.createElement('a');
 	a.href = URL.createObjectURL(blob);
@@ -45,4 +47,5 @@ interface TDownloadGenerationImageProps {
 	outputIndex: number;
 	modelId: string;
 	logProps: IGenerationOutputActionProps;
+	imageStrength?: number;
 }

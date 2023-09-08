@@ -11,7 +11,8 @@ export function getImageFileNameFromGeneration({
 	inferenceSteps,
 	guidanceScale,
 	outputIndex,
-	modelId
+	modelId,
+	imageStrength
 }: IGetImageFileNameFromGenerationProps) {
 	let extension: string;
 	if (url.startsWith('data:image/')) {
@@ -20,9 +21,9 @@ export function getImageFileNameFromGeneration({
 		extension = url.split('.').pop() || 'jpeg';
 	}
 	const modelName = toSlug(get(modelIdToDisplayName)[modelId]);
-	return `[s_${seed}]-[gs_${guidanceScale}]-[is_${inferenceSteps}]-[u_${
-		isUpscaled ? '1' : '0'
-	}]-[oi_${outputIndex}]-[m_${modelName}]-${replaceSpaces(
+	return `[s_${seed}]-[gs_${guidanceScale}]-[is_${inferenceSteps}]-[u_${isUpscaled ? '1' : '0'}]${
+		imageStrength ? `-[istr_${imageStrength}]` : ''
+	}-[oi_${outputIndex}]-[m_${modelName}]-${replaceSpaces(
 		prompt.slice(0, maxPromptLength)
 	)}.${extension}`;
 }
@@ -40,6 +41,7 @@ interface IGetImageFileNameFromGenerationProps {
 	inferenceSteps: number;
 	outputIndex: number;
 	modelId: string;
+	imageStrength?: number;
 }
 
 function toSlug(str: string): string {

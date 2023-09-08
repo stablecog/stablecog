@@ -35,6 +35,9 @@
 					(output) => output.id === generation.selected_output.id
 				),
 				modelId: generation.model_id,
+				imageStrength: generation.prompt_strength
+					? Math.round((1 - generation.prompt_strength) * 10) / 10
+					: undefined,
 				logProps: {
 					'SC - Advanced Mode': $advancedModeApp,
 					'SC - Locale': $locale,
