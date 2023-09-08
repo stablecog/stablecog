@@ -9,4 +9,5 @@ export type TIconGenerationSettingsSet =
 	| 'inference-steps'
 	| 'seed'
 	| 'dimensions'
-	| 'show-on-profile';
+	| 'show-on-profile'
+	| 'image-strength';

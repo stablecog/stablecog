@@ -115,6 +115,30 @@
 					$LL.Shared.UnknownTitle()}
 			</p>
 		</div>
+		{#if generation.prompt_strength}
+			<div class="min-w-[calc(50%-0.75rem)] flex flex-col items-start gap-1">
+				<WithTooltip
+					title={$LL.Home.InitialImageStrengthTabBar.TitleAlt()}
+					paragraph={$LL.Home.InitialImageStrengthTabBar.Paragraph()}
+					let:trigger
+					let:triggerStoreValue
+					color="bg-tertiary"
+				>
+					<div
+						tabindex="-1"
+						use:trigger
+						{...triggerStoreValue}
+						class="flex items-center gap-1.5 text-c-on-bg/75 text-sm cursor-default"
+					>
+						<IconGenerationSettingsSet type="image-strength" class="w-4 h-4" />
+						<p class="font-medium">{$LL.Home.InitialImageStrengthTabBar.TitleAlt()}</p>
+					</div>
+				</WithTooltip>
+				<p class="font-semibold">
+					{Math.round((1 - generation.prompt_strength) * 10) / 10}
+				</p>
+			</div>
+		{/if}
 		{#if modalType === 'generate' || modalType === 'history' || modalType === 'admin-gallery'}
 			<div class="min-w-[calc(50%-0.75rem)] flex flex-wrap items-center gap-3.5">
 				<div class="flex flex-col items-start gap-1">
