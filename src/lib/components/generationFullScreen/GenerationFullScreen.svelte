@@ -18,11 +18,7 @@
 	import TabBar from '$components/tabBars/TabBar.svelte';
 	import LL from '$i18n/i18n-svelte';
 	import Container from '$components/generationFullScreen/Container.svelte';
-	import {
-		activeGeneration,
-		type TGenerationFullOutput,
-		type TGenerationWithSelectedOutput
-	} from '$userStores/generation';
+	import { activeGeneration, type TGenerationWithSelectedOutput } from '$userStores/generation';
 	import { sseId } from '$userStores/sse';
 	import {
 		queueInitialUpscaleRequest,

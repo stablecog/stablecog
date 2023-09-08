@@ -6,9 +6,10 @@ export function setActiveGenerationToOutputIndex(
 	index: number
 ) {
 	if (outputs === undefined) return;
+	const card_type = get(activeGeneration)?.card_type;
 	activeGeneration.set({
-		...(get(activeGeneration) || {}),
 		...outputs[index].generation,
-		selected_output: outputs[index]
+		selected_output: outputs[index],
+		card_type
 	});
 }
