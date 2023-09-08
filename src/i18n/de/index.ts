@@ -626,6 +626,7 @@ const de: Translation = {
 		MyAccountButton: 'Mein Benutzerkonto',
 		SubscriptionPlanTitle: 'Abonnement',
 		RemainingImagesTitle: 'Verbleibende Bilder',
+		UpcomingCreditsTitle: 'Upcoming Credits',
 		RemainingCreditsTitle: 'Verbleibendes Guthaben',
 		RemainingTitle: 'Verbleibend',
 		SubscriptionStatusTitle: 'Subscription Status',

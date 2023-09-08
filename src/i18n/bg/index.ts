@@ -627,6 +627,7 @@ const bg: Translation = {
 		MyAccountButton: 'Моят профил',
 		SubscriptionPlanTitle: 'План',
 		RemainingImagesTitle: 'Оставащи изработки',
+		UpcomingCreditsTitle: 'Upcoming Credits',
 		RemainingCreditsTitle: 'Оставащ кредит',
 		RemainingTitle: 'Кредит',
 		SubscriptionStatusTitle: 'Subscription Status',

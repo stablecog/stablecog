@@ -633,6 +633,7 @@ const nl: Translation = {
 		MyAccountButton: 'Mijn account',
 		SubscriptionPlanTitle: 'Abonnement',
 		RemainingImagesTitle: 'Resterende afbeeldingen',
+		UpcomingCreditsTitle: 'Upcoming Credits',
 		RemainingCreditsTitle: 'Resterende credits',
 		RemainingTitle: 'Resterend',
 		SubscriptionStatusTitle: 'Subscription Status',

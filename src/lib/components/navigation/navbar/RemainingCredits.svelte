@@ -94,14 +94,12 @@
 							$userSummary.renews_at_credit_amount ??
 								$userSummary.more_free_credits_at_credit_amount ??
 								0
-						)}
+						)}&nbsp;&nbsp;<span
+							class="bg-c-primary/10 px-1.75 py-1 font-medium rounded-md text-sm align-middle"
+							>{relativeDate}</span
+						>
 					</p>
 				</div>
-				<p
-					class="max-w-full bg-c-primary/10 px-1.75 py-0.25 rounded-md font-medium text-sm flex-shrink min-w-0"
-				>
-					{relativeDate}
-				</p>
 			</div>
 		</div>
 		<div

@@ -626,6 +626,7 @@ const ru: Translation = {
 		MyAccountButton: 'My Account',
 		SubscriptionPlanTitle: 'Plan',
 		RemainingImagesTitle: 'Remaining Images',
+		UpcomingCreditsTitle: 'Upcoming Credits',
 		RemainingCreditsTitle: 'Remaining Credits',
 		RemainingTitle: 'Remaining',
 		SubscriptionStatusTitle: 'Subscription Status',

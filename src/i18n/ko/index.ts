@@ -624,6 +624,7 @@ const ko: Translation = {
 		MyAccountButton: '로그인 계정',
 		SubscriptionPlanTitle: '가입 요금제',
 		RemainingImagesTitle: 'Remaining Images',
+		UpcomingCreditsTitle: 'Upcoming Credits',
 		RemainingCreditsTitle: 'Remaining Credits',
 		RemainingTitle: 'Remaining',
 		SubscriptionStatusTitle: 'Subscription Status',

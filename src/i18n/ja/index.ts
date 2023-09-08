@@ -641,6 +641,7 @@ const ja: Translation = {
 		MyAccountButton: 'アカウント',
 		SubscriptionPlanTitle: 'プラン',
 		RemainingImagesTitle: '残りの画像数',
+		UpcomingCreditsTitle: 'Upcoming Credits',
 		RemainingCreditsTitle: 'クレジット残高',
 		RemainingTitle: 'クレジット残高',
 		SubscriptionStatusTitle: 'Subscription Status',

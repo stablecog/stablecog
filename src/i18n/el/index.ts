@@ -652,6 +652,7 @@ const es: Translation = {
 		MyAccountButton: 'Ο Λογαριασμός μου',
 		SubscriptionPlanTitle: 'Πλάνο',
 		RemainingImagesTitle: 'Υπολειπόμενες Εικόνες',
+		UpcomingCreditsTitle: 'Upcoming Credits',
 		RemainingCreditsTitle: 'Υπόλοιπες Μονάδες',
 		RemainingTitle: 'Υπόλοιπο',
 		SubscriptionStatusTitle: 'Subscription Status',

@@ -1892,6 +1892,10 @@ type RootTranslation = {
 		 */
 		RemainingImagesTitle: string
 		/**
+		 * U​p​c​o​m​i​n​g​ ​C​r​e​d​i​t​s
+		 */
+		UpcomingCreditsTitle: string
+		/**
 		 * R​e​m​a​i​n​i​n​g​ ​C​r​e​d​i​t​s
 		 */
 		RemainingCreditsTitle: string
@@ -5111,6 +5115,10 @@ export type TranslationFunctions = {
 		 * Remaining Images
 		 */
 		RemainingImagesTitle: () => LocalizedString
+		/**
+		 * Upcoming Credits
+		 */
+		UpcomingCreditsTitle: () => LocalizedString
 		/**
 		 * Remaining Credits
 		 */

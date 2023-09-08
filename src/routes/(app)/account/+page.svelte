@@ -149,26 +149,54 @@
 						</p>
 					</div>
 				</AccountDetailLine>
+				{#if ($userSummary?.renews_at && $userSummary?.renews_at_credit_amount) || ($userSummary?.more_free_credits_at && $userSummary?.more_free_credits_at_credit_amount)}
+					<AccountDetailLine title={$LL.Account.UpcomingCreditsTitle()}>
+						<div class="flex items-center justify-start px-1">
+							<IconToken class="w-4.5 h-4.5 -ml-1 flex-shrink-0 text-c-on-bg" />
+							<p class="font-semibold text-left text-c-on-bg">
+								{$userSummary.renews_at_credit_amount ??
+									$userSummary.more_free_credits_at_credit_amount}&nbsp;&nbsp;<span
+									class="bg-c-on-bg/10 text-c-on-bg/75 rounded-md px-1.75 py-1 font-medium text-sm align-middle"
+								>
+									{getRelativeDate({
+										date: $userSummary.renews_at ?? $userSummary.more_free_credits_at,
+										locale: $locale,
+										dateStyle: 'long'
+									})}</span
+								>
+							</p>
+						</div>
+					</AccountDetailLine>
+				{/if}
 				<AccountDetailLine title={$LL.Account.SubscriptionPlanTitle()}>
-					<ProductIdBadge
-						class="-my-1.5"
-						href="/pricing#plans"
-						productId={$userSummary?.product_id}
-						size="lg"
-					/>
+					<div class="flex items-center py-1.5">
+						<div class="relative flex items-center">
+							<ProductIdBadge
+								class="-my-1.5"
+								href="/pricing#plans"
+								productId={$userSummary?.product_id}
+								size="lg"
+							/>
+							{#if $userSummary?.product_id && ($userSummary.renews_at || $userSummary.cancels_at)}
+								<div
+									class="max-w-full bg-c-bg absolute -right-2 -top-3.5 z-10 flex items-center justify-center rounded pointer-events-none"
+								>
+									<p
+										class="w-full whitespace-nowrap overflow-hidden overflow-ellipsis text-center text-xs rounded
+										font-semibold px-1 {$userSummary.renews_at
+											? 'bg-c-success/15 text-c-success ring-c-success/35'
+											: 'bg-c-danger/15 text-c-danger ring-c-danger/35'} ring-1 shadow-md shadow-c-shadow/[var(--o-shadow-weaker)]"
+									>
+										{$userSummary.renews_at
+											? $LL.Account.Subscription.Status.ActiveTitle()
+											: $LL.Account.Subscription.Status.CancellingTitle()}
+									</p>
+								</div>
+							{/if}
+						</div>
+					</div>
 				</AccountDetailLine>
 				{#if $userSummary?.product_id && ($userSummary.renews_at || $userSummary.cancels_at)}
-					<AccountDetailLine title={$LL.Account.SubscriptionStatusTitle()}>
-						<p
-							class="text-center px-3 py-1.25 rounded-lg font-semibold -my-1.25 {$userSummary.renews_at
-								? 'bg-c-success/15 text-c-success'
-								: 'bg-c-danger/15 text-c-danger'}"
-						>
-							{$userSummary.renews_at
-								? $LL.Account.Subscription.Status.ActiveTitle()
-								: $LL.Account.Subscription.Status.CancellingTitle()}
-						</p>
-					</AccountDetailLine>
 					<AccountDetailLine
 						title={$userSummary.renews_at
 							? $LL.Account.SubscriptionRenewalTitle()
@@ -184,7 +212,7 @@
 				{/if}
 				<AccountDetailLine id="manage" title={$LL.Account.ManageSubscriptionTitle()}>
 					{#if $userSummary?.product_id}
-						<div class="w-full md:w-auto flex flex-wrap items-center gap-2.5 md:-my-1.25">
+						<div class="w-full md:w-auto flex flex-wrap items-center gap-2.5 md:-my-0.75">
 							<Button
 								noPadding
 								class="w-full md:w-auto px-4.5 py-3.5"
@@ -200,7 +228,7 @@
 					{:else}
 						<Button
 							noPadding
-							class="w-full md:w-auto px-4.5 py-3.5 md:-my-1.25"
+							class="w-full md:w-auto px-4.5 py-3.5 md:-my-0.75"
 							size="sm"
 							href="/pricing"
 						>

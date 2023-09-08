@@ -627,6 +627,7 @@ const ptBr: Translation = {
 		MyAccountButton: 'Minha conta',
 		SubscriptionPlanTitle: 'Plano',
 		RemainingImagesTitle: 'Remaining Images',
+		UpcomingCreditsTitle: 'Upcoming Credits',
 		RemainingCreditsTitle: 'Remaining Credits',
 		RemainingTitle: 'Remaining',
 		SubscriptionStatusTitle: 'Subscription Status',

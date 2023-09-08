@@ -647,6 +647,7 @@ const tr: Translation = {
 		MyAccountButton: 'Üyeliğim',
 		SubscriptionPlanTitle: 'Üyelik Tipi',
 		RemainingImagesTitle: 'Kalan Fotoğraflar',
+		UpcomingCreditsTitle: 'Upcoming Credits',
 		RemainingCreditsTitle: 'Kalan Krediler',
 		RemainingTitle: 'Kalan',
 		SubscriptionStatusTitle: 'Subscription Status',

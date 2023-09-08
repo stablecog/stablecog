@@ -627,6 +627,7 @@ const vi: Translation = {
 		MyAccountButton: 'Tài khoản của tôi',
 		SubscriptionPlanTitle: 'Gói',
 		RemainingImagesTitle: 'Remaining Images',
+		UpcomingCreditsTitle: 'Upcoming Credits',
 		RemainingCreditsTitle: 'Remaining Credits',
 		RemainingTitle: 'Remaining',
 		SubscriptionStatusTitle: 'Subscription Status',
