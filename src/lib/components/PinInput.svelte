@@ -12,7 +12,7 @@
 		elements: { root, input },
 		states: { value: _value, valueStr: _valueStr }
 	} = createPinInput({
-		placeholder: '0'
+		placeholder: '-'
 	});
 
 	$: value = $_valueStr;
@@ -46,7 +46,7 @@
 				: ''} {!$_valueStr && index === 0
 				? 'not-touch:group-hover:enabled:ring-2'
 				: ''} ring-0 transition ring-c-primary/20 focus:ring-c-primary/30
-      placeholder:text-c-on-bg/40"
+      placeholder:text-c-on-bg/30"
 			{...$input()}
 			use:input
 		/>
