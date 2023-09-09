@@ -35,7 +35,7 @@ Here is another example with specific direction regarding realism. Aside from th
 
 ## Higher Resolution
 
-[Kandinsky 2.1](https://stablecog.com/blog/kandinsky-v2-1-open-source-midjourney-alternative) was trained on [768x768 pixel images](<(https://habr.com/ru/companies/sberbank/articles/747446/)>). Because of this, if you went too wider or taller, say 1280 pixel on one side, it would produce repeating details, double heads etc.
+[Kandinsky 2.1](https://stablecog.com/blog/kandinsky-v2-1-open-source-midjourney-alternative) was trained on [768x768 pixel images](https://habr.com/ru/companies/sberbank/articles/747446/). Because of this, if you went too wider or taller, say 1280 pixel on one side, it would produce repeating details, double heads etc.
 
 Kandinsky 2.2 on the other hand, is optimized to produce [1024x1024 pixel images](https://habr.com/ru/companies/sberbank/articles/747446/).
 
