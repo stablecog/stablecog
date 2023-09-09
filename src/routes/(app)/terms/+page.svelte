@@ -1,5 +1,5 @@
 <script lang="ts">
-	import '$css/md-doc.css';
+	import '$css/blog.css';
 	import MetaTag from '$components/MetaTag.svelte';
 	import { canonicalUrl } from '$ts/constants/main';
 	import { page } from '$app/stores';
@@ -15,7 +15,7 @@
 />
 
 <div class="w-full flex justify-center items-start pt-4 pb-7 md:pt-7 md:pb-12 px-5 md:px-10">
-	<div class="w-full max-w-3xl md-doc">
+	<div class="w-full max-w-3xl blog">
 		<svelte:component this={data.content} class="w-full" />
 	</div>
 </div>

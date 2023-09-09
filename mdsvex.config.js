@@ -2,6 +2,11 @@ import rehypeHighlight from 'rehype-highlight';
 import { defineMDSveXConfig as defineConfig } from 'mdsvex';
 import remarkExternalLinks from 'remark-external-links';
 import rehypeSlug from 'rehype-slug';
+import rehypeAutolinkHeadings from 'rehype-autolink-headings';
+import { h } from 'hastscript';
+import { toString } from 'hast-util-to-string';
+
+function getHeading(node) {}
 
 export const mdsvexOptions = defineConfig({
 	extensions: ['.svx', '.md'],
@@ -12,7 +17,21 @@ export const mdsvexOptions = defineConfig({
 		toc,
 		[remarkExternalLinks, { target: '_blank', rel: 'noopener noreferrer' }]
 	],
-	rehypePlugins: [rehypeHighlight, rehypeSlug]
+	rehypePlugins: [
+		rehypeHighlight,
+		rehypeSlug,
+		[
+			rehypeAutolinkHeadings,
+			{
+				behavior: 'append',
+				properties: { ariaHidden: true, tabIndex: -1, class: 'heading-anchor' },
+				test: (node) => node.tagName !== 'h1',
+				content(node) {
+					return [h('span.heading-anchor-span', '#')];
+				}
+			}
+		]
+	]
 });
 
 const AVERAGE_WORD_LENGTH = 5;

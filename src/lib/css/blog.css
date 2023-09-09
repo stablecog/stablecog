@@ -124,7 +124,7 @@
 .blog p:first-child {
 	margin-top: 0rem;
 }
-.blog p a, .blog h1 a, .blog h2 a, .blog h3 a, .blog h4 a, .blog h5 a, .blog h6 a {
+.blog p a, .blog h1 a, .blog h2 a, .blog h3 a, .blog h4 a, .blog h5 a, .blog h6 a, .blog li a {
 	transition: all 0.2s var(--e-default);
 	position: relative;
 	padding: 0px 2px;
@@ -133,11 +133,37 @@
 	box-shadow: 0 -2px 0 0 rgba(var(--c-primary) / 0.5) inset;
 	z-index: 0;
 }
+
+
+.blog h1 .heading-anchor, .blog h2 .heading-anchor, .blog h3 .heading-anchor, .blog h4 .heading-anchor, .blog h5 .heading-anchor, .blog h6 .heading-anchor {
+	opacity: 1;
+	box-shadow: 0 0 0 0 rgba(var(--c-primary) / 0.5) inset;
+	transition: all 0.2s var(--e-default);
+	padding: 0rem 0.25ch;
+	margin-left: 0.5ch;
+	opacity: 0
+}
+
+.blog h1:hover .heading-anchor, .blog h2:hover .heading-anchor, .blog h3:hover .heading-anchor, .blog h4:hover .heading-anchor, .blog h5:hover .heading-anchor, .blog h6:hover .heading-anchor {
+	opacity: 0.5;
+}
+.blog h1:hover .heading-anchor:hover, .blog h2:hover .heading-anchor:hover, .blog h3:hover .heading-anchor:hover, .blog h4:hover .heading-anchor:hover, .blog h5:hover .heading-anchor:hover, .blog h6:hover .heading-anchor {
+	opacity: 1;
+}
+
 .blog p a:hover,
-.blog p a:focus-visible {
+.blog p a:focus-visible,
+.blog li a:hover,
+.blog li a:focus-visible {
 	color: rgba(var(--c-on-primary));
 	border-radius: 4px;
 	box-shadow: 0 -1.5rem 0 0 rgba(var(--c-primary)) inset;
+}
+.blog h1 a:hover,
+.blog h1 a:focus-visible {
+	color: rgba(var(--c-on-primary));
+	border-radius: 5px;
+	box-shadow: 0 -2.5rem 0 0 rgba(var(--c-primary)) inset;
 }
 .blog h2 a:hover,
 .blog h2 a:focus-visible {

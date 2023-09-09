@@ -59,11 +59,16 @@
 
 {#if href}
 	<div class="w-full {classes}">
-		<a class="w-full group" {href} target="_blank" rel="noopener noreferrer">
+		<a
+			class="w-full group focus-visible:shadow-none"
+			{href}
+			target="_blank"
+			rel="noopener noreferrer"
+		>
 			<img
 				loading="lazy"
 				class="w-full bg-c-bg-tertiary h-auto rounded-lg transition ring-2 ring-c-bg-tertiary
-        group-hover:ring-c-primary/75 shadow-xl shadow-c-shadow/[var(--o-shadow-strong)"
+        group-hover:ring-c-primary/75 group-focus:ring-c-primary/75 shadow-xl shadow-c-shadow/[var(--o-shadow-strong)"
 				{sizes}
 				src={_src}
 				{srcset}
