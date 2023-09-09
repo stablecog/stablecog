@@ -179,13 +179,13 @@
 							/>
 							{#if $userSummary?.product_id && ($userSummary.renews_at || $userSummary.cancels_at)}
 								<div
-									class="max-w-full bg-c-bg p-3px absolute -right-2.5 -top-4.5 z-10 flex items-center justify-center rounded-md pointer-events-none"
+									class="max-w-full bg-c-bg p-1.5px absolute -right-2 -top-4 z-10 flex items-center justify-center rounded-md pointer-events-none"
 								>
 									<p
 										class="w-full whitespace-nowrap overflow-hidden overflow-ellipsis text-center text-xs rounded
 										font-semibold px-1 {$userSummary.renews_at
 											? 'bg-c-success/15 text-c-success ring-c-success/35'
-											: 'bg-c-danger/15 text-c-danger ring-c-danger/35'} ring-1"
+											: 'bg-c-danger/15 text-c-danger ring-c-danger/35'} ring-1.5"
 									>
 										{$userSummary.renews_at
 											? $LL.Account.Subscription.Status.ActiveTitle()
