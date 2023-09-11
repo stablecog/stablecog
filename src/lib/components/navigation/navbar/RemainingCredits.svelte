@@ -122,16 +122,17 @@
 			>
 				{$LL.Account.RemainingTitle()}
 			</p>
-			<div class="flex gap-0.25 items-center">
+			<div class="flex items-center -mt-0.25 gap-0.25">
 				<div
 					class="transition duration-1000 flex-shrink-0"
 					style="transform: rotate({creditsChangedCounter * 180}deg)"
 				>
 					<IconToken class="w-4 h-4 -ml-0.25" />
 				</div>
-				<div class="text-sm font-bold mt-0.5 flex overflow-hidden relative z-0">
+				<div class="text-sm font-bold mt-0.25 flex overflow-hidden relative z-0 numerator-fade">
 					{#each totalRemainingCreditsString.split('') as character, index (character + index)}
 						<p
+							class="leading-6"
 							in:flyAndScale={{
 								duration: 1000,
 								easing: quadOut,
@@ -154,3 +155,15 @@
 		</div>
 	</WithTooltip>
 {/if}
+
+<style>
+	.numerator-fade {
+		mask-image: linear-gradient(
+			to bottom,
+			transparent 0rem,
+			black 0.3rem,
+			black 1.2rem,
+			transparent 1.5rem
+		);
+	}
+</style>
