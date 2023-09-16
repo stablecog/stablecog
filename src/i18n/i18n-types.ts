@@ -139,11 +139,11 @@ type RootTranslation = {
 		GuidanceScaleSlider: {
 			Error: {
 				/**
-				 * S​e​t​t​i​n​g​ ​i​t​ ​t​o​o​ ​h​i​g​h​ ​m​i​g​h​t​ ​p​r​o​d​u​c​e​ ​p​o​o​r​ ​r​e​s​u​l​t​s​!
+				 * S​e​t​t​i​n​g​ ​i​t​ ​t​h​a​t​ ​h​i​g​h​ ​m​i​g​h​t​ ​p​r​o​d​u​c​e​ ​p​o​o​r​ ​r​e​s​u​l​t​s​!
 				 */
 				TooHigh: string
 				/**
-				 * S​e​t​t​i​n​g​ ​i​t​ ​t​o​o​ ​l​o​w​ ​m​i​g​h​t​ ​p​r​o​d​u​c​e​ ​p​o​o​r​ ​r​e​s​u​l​t​s​!
+				 * S​e​t​t​i​n​g​ ​i​t​ ​t​h​a​t​ ​l​o​w​ ​m​i​g​h​t​ ​p​r​o​d​u​c​e​ ​p​o​o​r​ ​r​e​s​u​l​t​s​!
 				 */
 				TooLow: string
 			}
@@ -3400,11 +3400,11 @@ export type TranslationFunctions = {
 		GuidanceScaleSlider: {
 			Error: {
 				/**
-				 * Setting it too high might produce poor results!
+				 * Setting it that high might produce poor results!
 				 */
 				TooHigh: () => LocalizedString
 				/**
-				 * Setting it too low might produce poor results!
+				 * Setting it that low might produce poor results!
 				 */
 				TooLow: () => LocalizedString
 			}

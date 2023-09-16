@@ -41,8 +41,8 @@ const vi: Translation = {
 		},
 		GuidanceScaleSlider: {
 			Error: {
-				TooHigh: 'Setting it too high might produce poor results!',
-				TooLow: 'Setting it too low might produce poor results!'
+				TooHigh: 'Setting it that high might produce poor results!',
+				TooLow: 'Setting it that low might produce poor results!'
 			},
 			Title: 'Mức độ hướng dẫn',
 			Paragraph:
