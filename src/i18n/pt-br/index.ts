@@ -41,8 +41,8 @@ const ptBr: Translation = {
 		},
 		GuidanceScaleSlider: {
 			Error: {
-				TooHigh: 'Setting it that high might produce poor results!',
-				TooLow: 'Setting it that low might produce poor results!'
+				TooHigh: 'That high of a value might produce poor results!',
+				TooLow: 'That low of a value might produce poor results!'
 			},
 			Title: 'Escala de Orientação',
 			Paragraph:
