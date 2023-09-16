@@ -41,8 +41,8 @@ const ru: Translation = {
 		},
 		GuidanceScaleSlider: {
 			Error: {
-				TooHigh: 'That high of a value might produce poor results!',
-				TooLow: 'That low of a value might produce poor results!'
+				TooHigh: 'That high of a value might produce poor results.',
+				TooLow: 'That low of a value might produce poor results.'
 			},
 			Title: 'Уровень соответствия',
 			Paragraph:

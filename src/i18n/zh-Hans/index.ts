@@ -41,8 +41,8 @@ const zhHans: Translation = {
 		},
 		GuidanceScaleSlider: {
 			Error: {
-				TooHigh: 'That high of a value might produce poor results!',
-				TooLow: 'That low of a value might produce poor results!'
+				TooHigh: 'That high of a value might produce poor results.',
+				TooLow: 'That low of a value might produce poor results.'
 			},
 			Title: '指导量表',
 			Paragraph: '图像与您的提示有多么相似。值越高，图像就越靠近您的提示。'
