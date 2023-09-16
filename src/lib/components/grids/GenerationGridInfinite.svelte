@@ -258,7 +258,6 @@
 					output.status !== 'failed-nsfw' &&
 					output.status !== 'failed-nsfw-prompt'}
 				<div
-					key={virtualItem.index}
 					style="
 							width: calc(((100% - {horizontalPadding}px) / {cols});
 							left: calc({horizontalPadding / 2}px + ((100% - {horizontalPadding}px) * {virtualItem.lane /

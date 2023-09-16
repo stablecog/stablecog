@@ -158,7 +158,6 @@
 			{#each $listVirtualizer.getVirtualItems() as virtualItem (virtualItem.index + outputs[virtualItem.index].id)}
 				{@const output = outputs[virtualItem.index]}
 				<div
-					key={virtualItem.index}
 					class="absolute"
 					style="
 						height: calc(100% - {paddingY * 2}px);

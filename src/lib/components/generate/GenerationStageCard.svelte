@@ -57,7 +57,7 @@
 						: 'w-full max-w-[2rem] md:max-w-[2.5rem] h-auto'}
 				<div
 					in:fade={{ duration: 200, easing: quadOut }}
-					class="w-full h-full flex flex-col items-center bg-c-bg-secondary justify-center relative px-3 md:px-5 py-3 gap-2"
+					class="w-full h-full flex flex-col items-center bg-c-bg-secondary justify-center relative px-4 md:px-5 py-3 gap-2"
 				>
 					{#if status === 'failed-nsfw'}
 						<IconEyeSlashOutline class="{sizeClasses} text-c-on-bg/50" />
