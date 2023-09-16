@@ -46,6 +46,7 @@
 	import ErrorLine from '$components/error/ErrorLine.svelte';
 	import IconWarning from '$components/icons/IconWarning.svelte';
 	import IconWarningOutline from '$components/icons/IconWarningOutline.svelte';
+	import { scale } from 'svelte/transition';
 
 	export let rounding: 'all' | 'top' | 'bottom' = 'all';
 	export let openSignInModal: () => void;
@@ -191,27 +192,22 @@
 					</p>
 				</div>
 				<div class="flex-shrink-0 flex items-center justify-end gap-1.5">
-					<div
-						class="transform transition {$generationGuidanceScale < guidanceScaleLowThreshold ||
-						$generationGuidanceScale > guidanceScaleHighThreshold
-							? 'scale-100 opacity-100'
-							: 'scale-50 opacity-0'}"
-					>
-						<IconWarningOutline
-							class="flex-shrink-0 w-5 h-5 text-c-on-bg/50 transition 
-							not-touch:group-hover:text-c-primary"
-						/>
-					</div>
-					<div
-						class="transform transition {$generationSeed !== null && $generationSeed !== undefined
-							? 'scale-100 opacity-100'
-							: 'scale-50 opacity-0'}"
-					>
-						<IconSeed
-							class="flex-shrink-0 w-5 h-5 text-c-on-bg/50 transition 
+					{#if $generationGuidanceScale < guidanceScaleLowThreshold || $generationGuidanceScale > guidanceScaleHighThreshold}
+						<div transition:scale={{ duration: 100, easing: quadOut, opacity: 0, start: 0.5 }}>
+							<IconWarningOutline
+								class="flex-shrink-0 w-5 h-5 text-c-on-bg/50 transition 
 								not-touch:group-hover:text-c-primary"
-						/>
-					</div>
+							/>
+						</div>
+					{/if}
+					{#if $generationSeed !== null && $generationSeed !== undefined}
+						<div transition:scale={{ duration: 100, easing: quadOut, opacity: 0, start: 0.5 }}>
+							<IconSeed
+								class="flex-shrink-0 w-5 h-5 text-c-on-bg/50 transition 
+								not-touch:group-hover:text-c-primary"
+							/>
+						</div>
+					{/if}
 				</div>
 			</button>
 			{#if $advancedModeApp}
