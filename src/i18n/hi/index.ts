@@ -40,6 +40,10 @@ const hi: Translation = {
 			Paragraph: 'चित्र को बनाने (बिखराव) करने के लिए कितने कदम लगेंगे।'
 		},
 		GuidanceScaleSlider: {
+			Error: {
+				TooHigh: 'Setting it too high might produce poor results!',
+				TooLow: 'Setting it too low might produce poor results!'
+			},
 			Title: 'मार्गदर्शन पैमाना',
 			Paragraph:
 				'चित्र आपके संकेत से कितना मिलता-जुलता होगा। उच्च मान चित्र को आपके संकेत के करीब बनाता हैं।'

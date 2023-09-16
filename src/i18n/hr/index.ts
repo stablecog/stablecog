@@ -40,6 +40,10 @@ const hr: Translation = {
 			Paragraph: 'Koliko će koraka biti obavljeno da se generira (proširi) slika.'
 		},
 		GuidanceScaleSlider: {
+			Error: {
+				TooHigh: 'Setting it too high might produce poor results!',
+				TooLow: 'Setting it too low might produce poor results!'
+			},
 			Title: 'Ljestvica izvođenja',
 			Paragraph:
 				'Koliko će slika biti slična tvom opisu. Veća vrijednost će stvoriti sliku sličniju tvom opisu.'

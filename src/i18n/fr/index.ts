@@ -40,6 +40,10 @@ const fr: Translation = {
 			Paragraph: "Le nombre d'itérations utilisé pour générer (diffuser) l'image."
 		},
 		GuidanceScaleSlider: {
+			Error: {
+				TooHigh: 'Setting it too high might produce poor results!',
+				TooLow: 'Setting it too low might produce poor results!'
+			},
 			Title: 'Degré de supervision',
 			Paragraph:
 				"A quel point l'image doit respecter la description textuelle. Une valeur plus élevée donnera une image plus proche de la description."

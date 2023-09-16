@@ -67,6 +67,8 @@ export const inferenceStepsDefault: TAvailableInferenceSteps = '30';
 
 export const guidanceScaleMax = 20;
 export const guidanceScaleMin = 1;
+export const guidanceScaleLowThreshold = 3;
+export const guidanceScaleHighThreshold = 15;
 export const guidanceScaleDefault = 7;
 export const initImageStrengthDefault = 50;
 export const initImageStrengthMin = 10;

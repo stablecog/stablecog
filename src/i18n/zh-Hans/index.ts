@@ -40,6 +40,10 @@ const zhHans: Translation = {
 			Paragraph: '将采取多少步骤(生成) 图像。'
 		},
 		GuidanceScaleSlider: {
+			Error: {
+				TooHigh: 'Setting it too high might produce poor results!',
+				TooLow: 'Setting it too low might produce poor results!'
+			},
 			Title: '指导量表',
 			Paragraph: '图像与您的提示有多么相似。值越高，图像就越靠近您的提示。'
 		},

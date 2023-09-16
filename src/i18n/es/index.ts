@@ -40,6 +40,10 @@ const es: Translation = {
 			Paragraph: 'Cuántos pasos se tomarán para generar (difundir) la imagen.'
 		},
 		GuidanceScaleSlider: {
+			Error: {
+				TooHigh: 'Setting it too high might produce poor results!',
+				TooLow: 'Setting it too low might produce poor results!'
+			},
 			Title: 'Escala de Orientación',
 			Paragraph:
 				'Cuán similar será la imagen a su indicación. Valores más altos hacen que la imagen se acerque más a su indicación.'

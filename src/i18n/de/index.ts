@@ -40,6 +40,10 @@ const de: Translation = {
 			Paragraph: 'Wie viele Schritte durchlaufen werden, um das Bild zu erzeugen.'
 		},
 		GuidanceScaleSlider: {
+			Error: {
+				TooHigh: 'Setting it too high might produce poor results!',
+				TooLow: 'Setting it too low might produce poor results!'
+			},
 			Title: 'Ähnlichkeit (Guidance Scale)',
 			Paragraph:
 				'Wie ähnlich das Bild den Eingabewörtern ist. Je höher der Wert ist, umso ähnlicher wird das Bild.'

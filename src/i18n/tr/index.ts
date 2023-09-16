@@ -45,6 +45,10 @@ const tr: Translation = {
 			Paragraph: 'Fotoğrafı üretmek için kaç tahmin adımı kullanılacağı.'
 		},
 		GuidanceScaleSlider: {
+			Error: {
+				TooHigh: 'Setting it too high might produce poor results!',
+				TooLow: 'Setting it too low might produce poor results!'
+			},
 			Title: 'Benzeme Ölçeği',
 			Paragraph:
 				'Fotoğrafın komutuna ne derecede benzeyeceğinin ölçüsü. Yüksek sayılar fotoğrafı komutuna daha çok benzetir.'

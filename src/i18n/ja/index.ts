@@ -45,6 +45,10 @@ const ja: Translation = {
 			Paragraph: '画像の生成(拡散)に必要なステップ数。'
 		},
 		GuidanceScaleSlider: {
+			Error: {
+				TooHigh: 'Setting it too high might produce poor results!',
+				TooLow: 'Setting it too low might produce poor results!'
+			},
 			Title: 'ガイダンススケール',
 			Paragraph:
 				'生成画像がプロンプトにどれほど近似するかを指定します。値が高いほど、画像がプロンプトにより近似することを意味します。'

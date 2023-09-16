@@ -40,6 +40,10 @@ const vi: Translation = {
 			Paragraph: 'Bao nhiêu bước sẽ được thực hiện để tạo ra ảnh.'
 		},
 		GuidanceScaleSlider: {
+			Error: {
+				TooHigh: 'Setting it too high might produce poor results!',
+				TooLow: 'Setting it too low might produce poor results!'
+			},
 			Title: 'Mức độ hướng dẫn',
 			Paragraph:
 				'Hình ảnh sẽ theo sát lời mô tả đến đâu. Giá trị cao hơn khiến hình ảnh dược tạo ra sát với lời mô tả hơn.'

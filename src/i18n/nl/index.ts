@@ -40,6 +40,10 @@ const nl: Translation = {
 			Paragraph: 'De te nemen stappen om een afbeelding te genereren (diffuseren).'
 		},
 		GuidanceScaleSlider: {
+			Error: {
+				TooHigh: 'Setting it too high might produce poor results!',
+				TooLow: 'Setting it too low might produce poor results!'
+			},
 			Title: 'Oriëntatie Schaal',
 			Paragraph:
 				'In welke mate je afbeelding gelijk is aan je prompt. Hogere waarden laten je afbeelding meer lijken op je prompt.'

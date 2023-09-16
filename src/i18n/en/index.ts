@@ -40,6 +40,10 @@ const en: BaseTranslation = {
 			Paragraph: 'How many steps will be taken to generate (diffuse) the image.'
 		},
 		GuidanceScaleSlider: {
+			Error: {
+				TooHigh: 'Setting it too high might produce poor results!',
+				TooLow: 'Setting it too low might produce poor results!'
+			},
 			Title: 'Guidance Scale',
 			Paragraph:
 				'How similar the image will be to your prompt. Higher values make the image closer to your prompt.'

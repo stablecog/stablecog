@@ -40,6 +40,10 @@ const ru: Translation = {
 			Paragraph: 'Сколько итераций будет сделано при создании (улучшении) изображения.'
 		},
 		GuidanceScaleSlider: {
+			Error: {
+				TooHigh: 'Setting it too high might produce poor results!',
+				TooLow: 'Setting it too low might produce poor results!'
+			},
 			Title: 'Уровень соответствия',
 			Paragraph:
 				'Насколько изображение будет похоже на ваш запрос. Большие значения означают более точное следование/соответствие запросу.'

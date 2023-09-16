@@ -137,6 +137,16 @@ type RootTranslation = {
 			Paragraph: string
 		}
 		GuidanceScaleSlider: {
+			Error: {
+				/**
+				 * S​e​t​t​i​n​g​ ​i​t​ ​t​o​o​ ​h​i​g​h​ ​m​i​g​h​t​ ​p​r​o​d​u​c​e​ ​p​o​o​r​ ​r​e​s​u​l​t​s​!
+				 */
+				TooHigh: string
+				/**
+				 * S​e​t​t​i​n​g​ ​i​t​ ​t​o​o​ ​l​o​w​ ​m​i​g​h​t​ ​p​r​o​d​u​c​e​ ​p​o​o​r​ ​r​e​s​u​l​t​s​!
+				 */
+				TooLow: string
+			}
 			/**
 			 * G​u​i​d​a​n​c​e​ ​S​c​a​l​e
 			 */
@@ -3388,6 +3398,16 @@ export type TranslationFunctions = {
 			Paragraph: () => LocalizedString
 		}
 		GuidanceScaleSlider: {
+			Error: {
+				/**
+				 * Setting it too high might produce poor results!
+				 */
+				TooHigh: () => LocalizedString
+				/**
+				 * Setting it too low might produce poor results!
+				 */
+				TooLow: () => LocalizedString
+			}
 			/**
 			 * Guidance Scale
 			 */

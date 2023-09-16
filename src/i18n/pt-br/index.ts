@@ -40,6 +40,10 @@ const ptBr: Translation = {
 			Paragraph: 'Quantas etapas serão tomadas para gerar (difundir) a imagem.'
 		},
 		GuidanceScaleSlider: {
+			Error: {
+				TooHigh: 'Setting it too high might produce poor results!',
+				TooLow: 'Setting it too low might produce poor results!'
+			},
 			Title: 'Escala de Orientação',
 			Paragraph:
 				'O quão semelhante a imagem será do seu prompt.\nValores maiores tornam a imagem mais próxima do seu prompt.'

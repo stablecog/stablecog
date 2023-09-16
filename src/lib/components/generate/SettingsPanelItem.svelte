@@ -10,7 +10,7 @@
 	export let title: string;
 </script>
 
-<div class="w-full flex flex-col items-start gap-3 px-3 md:px-4">
+<div class="w-full flex flex-col items-start px-3 md:px-4">
 	<WithTooltip let:trigger let:triggerStoreValue title={tooltipTitle} paragraph={tooltipParagraph}>
 		<div
 			tabindex="-1"
@@ -28,5 +28,6 @@
 			</p>
 		</div>
 	</WithTooltip>
+	<div class="w-full h-3" />
 	<slot />
 </div>

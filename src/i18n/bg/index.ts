@@ -40,6 +40,10 @@ const bg: Translation = {
 			Paragraph: 'Броя на стъпките за създаване (дифузия) на изображението.'
 		},
 		GuidanceScaleSlider: {
+			Error: {
+				TooHigh: 'Setting it too high might produce poor results!',
+				TooLow: 'Setting it too low might produce poor results!'
+			},
 			Title: 'Насока',
 			Paragraph:
 				'Колко близко да се следват напътствията. По-високи стойности водят до по-буквално тълкуване.'

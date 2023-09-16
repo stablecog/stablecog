@@ -40,6 +40,10 @@ const ko: Translation = {
 			Paragraph: '이미지를 만들기까지 수행할 생성(diffuse) 스텝의 수를 의미합니다.'
 		},
 		GuidanceScaleSlider: {
+			Error: {
+				TooHigh: 'Setting it too high might produce poor results!',
+				TooLow: 'Setting it too low might produce poor results!'
+			},
 			Title: '유사한 정도',
 			Paragraph:
 				'입력한 문구와 이미지가 유사한 정도를 의미합니다. 값이 높을 수록 이미지가 입력 문구와 비슷해집니다.'

@@ -8,6 +8,8 @@
 	import { availableModelIdDropdownItems } from '$ts/constants/generationModels';
 	import { aspectRatioDropdownItems } from '$ts/constants/generationSize';
 	import {
+		guidanceScaleHighThreshold,
+		guidanceScaleLowThreshold,
 		guidanceScaleMax,
 		guidanceScaleMin,
 		inferenceStepsTabs,
@@ -41,6 +43,9 @@
 	import IconModelImage from '$components/modelCard/IconModelImage.svelte';
 	import TabLikeToggle from '$components/tabBars/TabLikeToggle.svelte';
 	import { userSummary } from '$ts/stores/user/summary';
+	import ErrorLine from '$components/error/ErrorLine.svelte';
+	import IconWarning from '$components/icons/IconWarning.svelte';
+	import IconWarningOutline from '$components/icons/IconWarningOutline.svelte';
 
 	export let rounding: 'all' | 'top' | 'bottom' = 'all';
 	export let openSignInModal: () => void;
@@ -185,15 +190,26 @@
 						{$LL.Shared.AdvancedSettingsButton()}
 					</p>
 				</div>
-				<div class="flex-shrink-0">
+				<div class="flex-shrink-0 flex items-center justify-end gap-1.5">
+					<div
+						class="transform transition {$generationGuidanceScale < guidanceScaleLowThreshold ||
+						$generationGuidanceScale > guidanceScaleHighThreshold
+							? 'scale-100 opacity-100'
+							: 'scale-50 opacity-0'}"
+					>
+						<IconWarningOutline
+							class="flex-shrink-0 w-5 h-5 text-c-on-bg/50 transition 
+							not-touch:group-hover:text-c-primary"
+						/>
+					</div>
 					<div
 						class="transform transition {$generationSeed !== null && $generationSeed !== undefined
 							? 'scale-100 opacity-100'
 							: 'scale-50 opacity-0'}"
 					>
 						<IconSeed
-							class="flex-shrink-0 w-4 h-4 text-c-on-bg/50 transition 
-							not-touch:group-hover:text-c-primary"
+							class="flex-shrink-0 w-5 h-5 text-c-on-bg/50 transition 
+								not-touch:group-hover:text-c-primary"
 						/>
 					</div>
 				</div>
@@ -219,6 +235,26 @@
 								valueSize="md"
 								bind:value={$generationGuidanceScale}
 							/>
+							{#if $generationGuidanceScale < guidanceScaleLowThreshold || $generationGuidanceScale > guidanceScaleHighThreshold}
+								<div
+									transition:expandCollapse={{ duration: 150 }}
+									class="w-full flex flex-col justify-start"
+								>
+									<div class="w-full flex flex-col justify-start pt-3">
+										<div
+											class="w-full flex items-center justify-start px-3 py-2 text-sm
+											bg-c-secondary/10 rounded-lg text-c-secondary gap-2"
+										>
+											<IconWarningOutline class="w-5 h-5 -ml-0.5 flex-shrink-0" />
+											<p class="flex-shrink min-w-0">
+												{$generationGuidanceScale < guidanceScaleLowThreshold
+													? $LL.Home.GuidanceScaleSlider.Error.TooLow()
+													: $LL.Home.GuidanceScaleSlider.Error.TooHigh()}
+											</p>
+										</div>
+									</div>
+								</div>
+							{/if}
 						</SettingsPanelItem>
 						<SettingsPanelItem
 							title={$LL.Home.SchedulerDropdown.Title()}

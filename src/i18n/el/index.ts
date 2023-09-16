@@ -45,6 +45,10 @@ const es: Translation = {
 			Paragraph: 'Πόσα βήματα θα χρειαστούν για τη δημιουργία (διάχυση) της εικόνας.'
 		},
 		GuidanceScaleSlider: {
+			Error: {
+				TooHigh: 'Setting it too high might produce poor results!',
+				TooLow: 'Setting it too low might produce poor results!'
+			},
 			Title: 'Κλίμακα βαρύτητας',
 			Paragraph:
 				'Πόσο παρόμοια θα είναι η εικόνα με την περιγραφή σας. Υψηλότερες τιμές κάνουν την εικόνα κοντινότερη στην περιγραφή.'
