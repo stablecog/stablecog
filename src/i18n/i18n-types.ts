@@ -1943,7 +1943,7 @@ type RootTranslation = {
 				/**
 				 * A​u​t​h​o​r​i​z​e​ ​A​p​p
 				 */
-				PageTitleAlt: string
+				PageTitleFallback: string
 				/**
 				 * C​l​i​c​k​ ​t​h​e​ ​b​u​t​t​o​n​ ​b​e​l​o​w​ ​t​o​ ​a​u​t​h​o​r​i​z​e​ ​{​p​l​a​t​f​o​r​m​}​.
 				 * @param {unknown} platform
@@ -5237,7 +5237,7 @@ export type TranslationFunctions = {
 				/**
 				 * Authorize App
 				 */
-				PageTitleAlt: () => LocalizedString
+				PageTitleFallback: () => LocalizedString
 				/**
 				 * Click the button below to authorize {platform}.
 				 */

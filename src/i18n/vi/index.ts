@@ -642,7 +642,7 @@ const vi: Translation = {
 		Apps: {
 			Authorize: {
 				PageTitle: 'Authorize {platform}',
-				PageTitleAlt: 'Authorize App',
+				PageTitleFallback: 'Authorize App',
 				PageParagraph: 'Click the button below to authorize {platform}.',
 				PageSuccessTitle: 'Authorized!',
 				PageSuccessParagraph: 'You can return back to {platform} now.',
