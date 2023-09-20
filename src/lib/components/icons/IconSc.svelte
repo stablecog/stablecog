@@ -169,6 +169,22 @@
 			fill="currentColor"
 		/>
 	</svg>
+{:else if type === 'raycast'}
+	<svg
+		class={classes}
+		width="24"
+		height="24"
+		viewBox="0 0 24 24"
+		fill="none"
+		xmlns="http://www.w3.org/2000/svg"
+	>
+		<path
+			fill-rule="evenodd"
+			clip-rule="evenodd"
+			d="M6.5 15.2v2.3L1 12l1.15-1.15 4.35 4.36Zm2.3 2.3H6.5L12 23l1.15-1.14L8.8 17.5Zm13.05-4.35L23 12 12 1l-1.15 1.15 4.36 4.35h-2.63L9.54 3.47 8.39 4.62l1.89 1.89H8.96v8.54h8.54v-1.32l1.89 1.89 1.14-1.15-3.03-3.04V8.8l4.35 4.35ZM7.07 5.93 5.92 7.08l1.24 1.23L8.3 7.16 7.07 5.93Zm9.77 9.77-1.14 1.15 1.23 1.23 1.15-1.15-1.24-1.23ZM4.61 8.4 3.46 9.53l3.04 3.04v-2.3L4.61 8.4Zm9.11 9.1h-2.3l3.04 3.04 1.15-1.14-1.89-1.9Z"
+			fill="currentColor"
+		/>
+	</svg>
 {:else if type === 'stablecog'}
 	<svg
 		class={classes}

@@ -20,7 +20,8 @@ export type TIconSc =
 	| 'youtube'
 	| 'email'
 	| 'producthunt'
-	| 'stablecog';
+	| 'stablecog'
+	| 'raycast';
 
 export interface TBlogPost {
 	slug: string;

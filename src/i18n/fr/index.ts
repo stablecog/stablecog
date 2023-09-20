@@ -641,6 +641,23 @@ const fr: Translation = {
 		SubscriptionCancellationTitle: 'Subscription Cancellation',
 		ManageSubscriptionTitle: 'Manage Subscription',
 		ManageTitle: 'Manage',
+		Apps: {
+			Authorize: {
+				PageTitle: 'Authorize {platform}',
+				PageTitleAlt: 'Authorize App',
+				PageParagraph: 'Click the button below to authorize {platform}.',
+				PageSuccessTitle: 'Authorized!',
+				PageSuccessParagraph: 'You can return back to {platform} now.',
+				Platform: { Raycast: 'Raycast', Stablecog: 'Stablecog' },
+				SignInTitle: 'Authorize {platform}',
+				SignInParagraph: 'Create an account or sign in to authorize {platform}.',
+				AuthorizeButton: 'Authorize',
+				Error: {
+					NoAppIdParagraph: "This link doesn't contain an app ID. Please request a new link.",
+					NoCodeParagraph: "This link doesn't contain a code. Please request a new link."
+				}
+			}
+		},
 		Subscription: {
 			Status: { ActiveTitle: 'Active', CancellingTitle: 'Cancelling', CancelledTitle: 'Cancelled' },
 			UpdateSubscriptionTitle: 'Update Subscription',

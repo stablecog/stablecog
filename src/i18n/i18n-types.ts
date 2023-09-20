@@ -139,11 +139,11 @@ type RootTranslation = {
 		GuidanceScaleSlider: {
 			Error: {
 				/**
-				 * S​e​t​t​i​n​g​ ​i​t​ ​t​h​a​t​ ​h​i​g​h​ ​m​i​g​h​t​ ​p​r​o​d​u​c​e​ ​p​o​o​r​ ​r​e​s​u​l​t​s​!
+				 * T​h​a​t​ ​h​i​g​h​ ​o​f​ ​a​ ​v​a​l​u​e​ ​m​i​g​h​t​ ​p​r​o​d​u​c​e​ ​p​o​o​r​ ​r​e​s​u​l​t​s​.
 				 */
 				TooHigh: string
 				/**
-				 * S​e​t​t​i​n​g​ ​i​t​ ​t​h​a​t​ ​l​o​w​ ​m​i​g​h​t​ ​p​r​o​d​u​c​e​ ​p​o​o​r​ ​r​e​s​u​l​t​s​!
+				 * T​h​a​t​ ​l​o​w​ ​o​f​ ​a​ ​v​a​l​u​e​ ​m​i​g​h​t​ ​p​r​o​d​u​c​e​ ​p​o​o​r​ ​r​e​s​u​l​t​s​.
 				 */
 				TooLow: string
 			}
@@ -1933,6 +1933,67 @@ type RootTranslation = {
 		 * M​a​n​a​g​e
 		 */
 		ManageTitle: string
+		Apps: {
+			Authorize: {
+				/**
+				 * A​u​t​h​o​r​i​z​e​ ​{​p​l​a​t​f​o​r​m​}
+				 * @param {unknown} platform
+				 */
+				PageTitle: RequiredParams<'platform'>
+				/**
+				 * A​u​t​h​o​r​i​z​e​ ​A​p​p
+				 */
+				PageTitleAlt: string
+				/**
+				 * C​l​i​c​k​ ​t​h​e​ ​b​u​t​t​o​n​ ​b​e​l​o​w​ ​t​o​ ​a​u​t​h​o​r​i​z​e​ ​{​p​l​a​t​f​o​r​m​}​.
+				 * @param {unknown} platform
+				 */
+				PageParagraph: RequiredParams<'platform'>
+				/**
+				 * A​u​t​h​o​r​i​z​e​d​!
+				 */
+				PageSuccessTitle: string
+				/**
+				 * Y​o​u​ ​c​a​n​ ​r​e​t​u​r​n​ ​b​a​c​k​ ​t​o​ ​{​p​l​a​t​f​o​r​m​}​ ​n​o​w​.
+				 * @param {unknown} platform
+				 */
+				PageSuccessParagraph: RequiredParams<'platform'>
+				Platform: {
+					/**
+					 * R​a​y​c​a​s​t
+					 */
+					Raycast: string
+					/**
+					 * S​t​a​b​l​e​c​o​g
+					 */
+					Stablecog: string
+				}
+				/**
+				 * A​u​t​h​o​r​i​z​e​ ​{​p​l​a​t​f​o​r​m​}
+				 * @param {unknown} platform
+				 */
+				SignInTitle: RequiredParams<'platform'>
+				/**
+				 * C​r​e​a​t​e​ ​a​n​ ​a​c​c​o​u​n​t​ ​o​r​ ​s​i​g​n​ ​i​n​ ​t​o​ ​a​u​t​h​o​r​i​z​e​ ​{​p​l​a​t​f​o​r​m​}​.
+				 * @param {unknown} platform
+				 */
+				SignInParagraph: RequiredParams<'platform'>
+				/**
+				 * A​u​t​h​o​r​i​z​e
+				 */
+				AuthorizeButton: string
+				Error: {
+					/**
+					 * T​h​i​s​ ​l​i​n​k​ ​d​o​e​s​n​'​t​ ​c​o​n​t​a​i​n​ ​a​n​ ​a​p​p​ ​I​D​.​ ​P​l​e​a​s​e​ ​r​e​q​u​e​s​t​ ​a​ ​n​e​w​ ​l​i​n​k​.
+					 */
+					NoAppIdParagraph: string
+					/**
+					 * T​h​i​s​ ​l​i​n​k​ ​d​o​e​s​n​'​t​ ​c​o​n​t​a​i​n​ ​a​ ​c​o​d​e​.​ ​P​l​e​a​s​e​ ​r​e​q​u​e​s​t​ ​a​ ​n​e​w​ ​l​i​n​k​.
+					 */
+					NoCodeParagraph: string
+				}
+			}
+		}
 		Subscription: {
 			Status: {
 				/**
@@ -3400,11 +3461,11 @@ export type TranslationFunctions = {
 		GuidanceScaleSlider: {
 			Error: {
 				/**
-				 * Setting it that high might produce poor results!
+				 * That high of a value might produce poor results.
 				 */
 				TooHigh: () => LocalizedString
 				/**
-				 * Setting it that low might produce poor results!
+				 * That low of a value might produce poor results.
 				 */
 				TooLow: () => LocalizedString
 			}
@@ -5167,6 +5228,62 @@ export type TranslationFunctions = {
 		 * Manage
 		 */
 		ManageTitle: () => LocalizedString
+		Apps: {
+			Authorize: {
+				/**
+				 * Authorize {platform}
+				 */
+				PageTitle: (arg: { platform: unknown }) => LocalizedString
+				/**
+				 * Authorize App
+				 */
+				PageTitleAlt: () => LocalizedString
+				/**
+				 * Click the button below to authorize {platform}.
+				 */
+				PageParagraph: (arg: { platform: unknown }) => LocalizedString
+				/**
+				 * Authorized!
+				 */
+				PageSuccessTitle: () => LocalizedString
+				/**
+				 * You can return back to {platform} now.
+				 */
+				PageSuccessParagraph: (arg: { platform: unknown }) => LocalizedString
+				Platform: {
+					/**
+					 * Raycast
+					 */
+					Raycast: () => LocalizedString
+					/**
+					 * Stablecog
+					 */
+					Stablecog: () => LocalizedString
+				}
+				/**
+				 * Authorize {platform}
+				 */
+				SignInTitle: (arg: { platform: unknown }) => LocalizedString
+				/**
+				 * Create an account or sign in to authorize {platform}.
+				 */
+				SignInParagraph: (arg: { platform: unknown }) => LocalizedString
+				/**
+				 * Authorize
+				 */
+				AuthorizeButton: () => LocalizedString
+				Error: {
+					/**
+					 * This link doesn't contain an app ID. Please request a new link.
+					 */
+					NoAppIdParagraph: () => LocalizedString
+					/**
+					 * This link doesn't contain a code. Please request a new link.
+					 */
+					NoCodeParagraph: () => LocalizedString
+				}
+			}
+		}
 		Subscription: {
 			Status: {
 				/**
