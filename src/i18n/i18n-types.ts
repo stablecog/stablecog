@@ -1984,13 +1984,13 @@ type RootTranslation = {
 				AuthorizeButton: string
 				Error: {
 					/**
-					 * T​h​i​s​ ​l​i​n​k​ ​d​o​e​s​n​'​t​ ​c​o​n​t​a​i​n​ ​a​n​ ​a​p​p​ ​I​D​.​ ​P​l​e​a​s​e​ ​r​e​q​u​e​s​t​ ​a​ ​n​e​w​ ​l​i​n​k​.
+					 * T​h​i​s​ ​l​i​n​k​ ​d​o​e​s​n​'​t​ ​c​o​n​t​a​i​n​ ​a​ ​v​a​l​i​d​ ​a​p​p​ ​I​D​.​ ​P​l​e​a​s​e​ ​r​e​q​u​e​s​t​ ​a​ ​n​e​w​ ​l​i​n​k​.
 					 */
-					NoAppIdParagraph: string
+					NoValidAppIdParagraph: string
 					/**
-					 * T​h​i​s​ ​l​i​n​k​ ​d​o​e​s​n​'​t​ ​c​o​n​t​a​i​n​ ​a​ ​c​o​d​e​.​ ​P​l​e​a​s​e​ ​r​e​q​u​e​s​t​ ​a​ ​n​e​w​ ​l​i​n​k​.
+					 * T​h​i​s​ ​l​i​n​k​ ​d​o​e​s​n​'​t​ ​c​o​n​t​a​i​n​ ​a​ ​v​a​l​i​d​ ​c​o​d​e​.​ ​P​l​e​a​s​e​ ​r​e​q​u​e​s​t​ ​a​ ​n​e​w​ ​l​i​n​k​.
 					 */
-					NoCodeParagraph: string
+					NoValidCodeParagraph: string
 				}
 			}
 		}
@@ -5274,13 +5274,13 @@ export type TranslationFunctions = {
 				AuthorizeButton: () => LocalizedString
 				Error: {
 					/**
-					 * This link doesn't contain an app ID. Please request a new link.
+					 * This link doesn't contain a valid app ID. Please request a new link.
 					 */
-					NoAppIdParagraph: () => LocalizedString
+					NoValidAppIdParagraph: () => LocalizedString
 					/**
-					 * This link doesn't contain a code. Please request a new link.
+					 * This link doesn't contain a valid code. Please request a new link.
 					 */
-					NoCodeParagraph: () => LocalizedString
+					NoValidCodeParagraph: () => LocalizedString
 				}
 			}
 		}

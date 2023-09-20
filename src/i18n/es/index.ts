@@ -650,8 +650,9 @@ const es: Translation = {
 				SignInParagraph: 'Create an account or sign in to authorize {platform}.',
 				AuthorizeButton: 'Authorize',
 				Error: {
-					NoAppIdParagraph: "This link doesn't contain an app ID. Please request a new link.",
-					NoCodeParagraph: "This link doesn't contain a code. Please request a new link."
+					NoValidAppIdParagraph:
+						"This link doesn't contain a valid app ID. Please request a new link.",
+					NoValidCodeParagraph: "This link doesn't contain a valid code. Please request a new link."
 				}
 			}
 		},

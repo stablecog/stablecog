@@ -20,7 +20,8 @@
 	let status: TConnectionStatus = 'idle';
 	let statusError: string | undefined = undefined;
 
-	$: platformString = $LL.Account.Apps.Authorize.Platform.Raycast();
+	$: platformString =
+		data.app_id === 'raycast' ? $LL.Account.Apps.Authorize.Platform.Raycast() : null;
 
 	async function authorizeApp() {
 		if (!$page.data.session?.access_token) return;
@@ -47,7 +48,7 @@
 <PageWrapper>
 	<div class="w-full flex flex-col items-center justify-start my-auto">
 		<section id="connect" class="w-full flex flex-col items-center justify-start">
-			{#if !data.app_id || !data.app_code}
+			{#if !data.app_id || !data.app_code || !platformString}
 				<IconSadFaceOutline class="w-20 h-20 text-c-danger" />
 				<h1 class="mt-3 w-full max-w-sm text-center font-bold text-3xl md:text-4xl text-c-danger">
 					{$LL.Account.Apps.Authorize.PageTitleAlt()}
@@ -56,10 +57,10 @@
 					class="w-full max-w-sm md:max-w-md mt-2 md:mt-3 text-base md:text-lg text-c-on-bg/75 text-center"
 				>
 					{!data.app_id
-						? $LL.Account.Apps.Authorize.Error.NoAppIdParagraph()
+						? $LL.Account.Apps.Authorize.Error.NoValidAppIdParagraph()
 						: !data.app_code
-						? $LL.Account.Apps.Authorize.Error.NoCodeParagraph()
-						: $LL.Account.Apps.Authorize.Error.NoAppIdParagraph()}
+						? $LL.Account.Apps.Authorize.Error.NoValidCodeParagraph()
+						: $LL.Account.Apps.Authorize.Error.NoValidAppIdParagraph()}
 				</p>
 			{:else if !$page.data.session?.access_token || !$page.data.session.user.email || !$userSummary}
 				<div class="flex items-center justify-center mt-6">
