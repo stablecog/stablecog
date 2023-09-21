@@ -31,8 +31,8 @@
 			'SC - User Id': $page.data.session?.user.id
 		});
 		setTimeout(async () => {
-			if (data.redirect_to) {
-				await goto(data.redirect_to);
+			if (data.rd_to) {
+				await goto(data.rd_to);
 				return;
 			}
 			await goto('/');

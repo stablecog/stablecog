@@ -45,9 +45,7 @@ export const handle: Handle = async ({ event, resolve }) => {
 
 	// protect requests to all routes that start with /admin
 	if (event.url.pathname.startsWith('/admin')) {
-		const notSignedInRedirectRoute = `/sign-in?redirect_to=${encodeURIComponent(
-			event.url.pathname
-		)}`;
+		const notSignedInRedirectRoute = `/sign-in?rd_to=${encodeURIComponent(event.url.pathname)}`;
 		const notAuthorizedRedirectRoute = `/`;
 		try {
 			const session = await event.locals.getSession();

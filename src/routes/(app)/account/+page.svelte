@@ -30,7 +30,7 @@
 	import IconToken from '$components/icons/IconToken.svelte';
 
 	$: if (!$page.data.session?.user.id) {
-		goto(`/sign-in?redirect_to=${encodeURIComponent($page.url.pathname)}`);
+		goto(`/sign-in?rd_to=${encodeURIComponent($page.url.pathname)}`);
 	}
 
 	async function signOut() {

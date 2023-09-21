@@ -16,6 +16,10 @@
 	async function redirect() {
 		if (!browser) return;
 		if (!$page.data.session?.user.id) return;
+		if (data.rd_to) {
+			await goto(data.rd_to);
+			return;
+		}
 		await goto('/');
 	}
 </script>
@@ -28,6 +32,6 @@
 
 <PageWrapper>
 	<div class="w-[100%+1rem] flex justify-center items-center my-auto -mx-2">
-		<SignInCard redirectTo={data.redirect_to + $searchParamsString} />
+		<SignInCard redirectTo={data.rd_to + $searchParamsString} />
 	</div>
 </PageWrapper>
