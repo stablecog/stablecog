@@ -41,7 +41,7 @@
 			if (!res.redirect_url) throw new Error('No redirect url');
 			setTimeout(() => {
 				window.location.href = res.redirect_url;
-			}, 250);
+			}, 300);
 		} catch (e) {
 			console.log(e);
 			status = 'error';
