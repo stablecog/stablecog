@@ -278,13 +278,14 @@
 					</h1>
 					{#if (modalType === 'delete' && $tokensQuery?.data?.find((i) => i.id === tokenToDelete)) || (modalType === 'created' && lastTokenName)}
 						<div
-							class="flex -mt-1 items-center justify-start gap-1.5 {modalType === 'created'
+							class="max-w-full flex -mt-1 items-center justify-start gap-1.5 {modalType ===
+							'created'
 								? 'bg-c-on-bg/10 text-c-on-bg'
 								: 'bg-c-danger/15 text-c-danger'}
 								rounded-md px-2.5 py-1 text-sm font-medium"
 						>
 							<IconKey class="w-4 h-4 -ml-0.5 flex-shrink-0" />
-							<p class="flex-shrink min-w-0">
+							<p class="flex-shrink min-w-0 overflow-hidden overflow-ellipsis">
 								{modalType === 'created'
 									? lastTokenName
 									: $tokensQuery?.data?.find((i) => i.id === tokenToDelete)?.name}
