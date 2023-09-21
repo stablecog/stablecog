@@ -22,7 +22,9 @@
 	let statusError: string | undefined = undefined;
 
 	$: platformString =
-		data.app_id === 'raycast' ? $LL.Account.Apps.Authorize.Platform.Raycast() : null;
+		data.app_id === 'e1d7e2fd-a173-473b-98f2-680d14283e75'
+			? $LL.Account.Apps.Authorize.Platform.Raycast()
+			: null;
 
 	async function authorizeApp() {
 		if (!$page.data.session?.access_token) return;
