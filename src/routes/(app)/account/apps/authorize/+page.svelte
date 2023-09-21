@@ -25,13 +25,13 @@
 		data.app_id === 'raycast' ? $LL.Account.Apps.Authorize.Platform.Raycast() : null;
 
 	async function authorizeApp() {
-		if (!$page.data.session?.refresh_token) return;
+		if (!$page.data.session?.access_token) return;
 		if (!data.app_id || !data.app_code) return;
 		status = 'confirming';
 		statusError = undefined;
 		try {
 			const res = await approveAppAuthorization({
-				refresh_token: $page.data.session.refresh_token,
+				access_token: $page.data.session.access_token,
 				app_id: data.app_id,
 				app_code: data.app_code
 			});

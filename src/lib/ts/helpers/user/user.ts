@@ -76,11 +76,11 @@ export async function connectAccountToDiscord({
 }
 
 export async function approveAppAuthorization({
-	refresh_token,
+	access_token,
 	app_code,
 	app_id
 }: {
-	refresh_token: string;
+	access_token: string;
 	app_code: string;
 	app_id: string;
 }): Promise<TApproveAppAuthorizationResponse> {
@@ -88,7 +88,7 @@ export async function approveAppAuthorization({
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json',
-			Authorization: `Bearer ${refresh_token}`
+			Authorization: `Bearer ${access_token}`
 		},
 		body: JSON.stringify({
 			app_code,
