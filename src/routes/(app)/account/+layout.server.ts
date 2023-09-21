@@ -3,12 +3,8 @@ import { redirect, type ServerLoad } from '@sveltejs/kit';
 
 export const load: ServerLoad = async (event) => {
 	const session = await event.locals.getSession();
-	const originalQueryString = event.url.search;
 	if (!session?.user?.id) {
-		throw redirect(
-			307,
-			`/sign-in?redirect_to=${encodeURIComponent(event.url.pathname + originalQueryString)}`
-		);
+		throw redirect(307, `/sign-in?redirect_to=${encodeURIComponent(event.url.pathname)}`);
 	}
 	try {
 		const return_url = `${event.url.origin}/account`;
