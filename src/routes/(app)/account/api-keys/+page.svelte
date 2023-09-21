@@ -29,6 +29,15 @@
 	const maxTokenNameLength = 50;
 	const tokenPlaceholderString = 'sc-...' + Array(4).fill('•').join('');
 
+	let isModalOpen = false;
+	let modalType: TModalType = 'create';
+	let tokenToDelete: string | undefined = undefined;
+	let tokenInputValue = '';
+	let lastTokenName: undefined | string;
+	let isTokenInputHidden = true;
+	let tokenInput: HTMLInputElement;
+	let isCopiedOnce = false;
+
 	$: tokensQuery = browser
 		? createQuery(['user_tokens'], () =>
 				getUserTokens({ access_token: $page.data.session?.access_token || '' })
@@ -45,6 +54,9 @@
 						$tokensQuery?.refetch();
 						modalType = 'created';
 						tokenInputValue = d.token;
+					},
+					onMutate: (d) => {
+						lastTokenName = d.name;
 					}
 				}
 		  )
@@ -80,14 +92,6 @@
 	});
 
 	type TModalType = 'delete' | 'create' | 'created';
-
-	let isModalOpen = false;
-	let modalType: TModalType = 'create';
-	let tokenToDelete: string | undefined = undefined;
-	let tokenInputValue = '';
-	let isTokenInputHidden = true;
-	let tokenInput: HTMLInputElement;
-	let isCopiedOnce = false;
 
 	function openModal({ type, id }: { type: TModalType; id?: string }) {
 		modalType = type;
@@ -258,19 +262,36 @@
 				class="w-full max-w-lg bg-c-bg ring-2 ring-c-bg-secondary rounded-xl p-5 md:p-6
 				shadow-2xl shadow-c-shadow/[var(--o-shadow-stronger)]"
 			>
-				<h1
-					class="font-bold text-xl -mt-1 {modalType === 'delete'
-						? 'text-c-danger'
-						: 'text-c-on-bg'}"
-				>
-					{#if modalType === 'delete'}
-						{$LL.Account.APIKeys.KeyModal.Delete.Title()}
-					{:else if modalType === 'created'}
-						{$LL.Account.APIKeys.KeyModal.Created.Title()}
-					{:else}
-						{$LL.Account.APIKeys.KeyModal.Create.Title()}
+				<div class="w-full flex flex-row flex-wrap items-center gap-3">
+					<h1
+						class="font-bold text-xl -mt-1 {modalType === 'delete'
+							? 'text-c-danger'
+							: 'text-c-on-bg'}"
+					>
+						{#if modalType === 'delete'}
+							{$LL.Account.APIKeys.KeyModal.Delete.Title()}
+						{:else if modalType === 'created'}
+							{$LL.Account.APIKeys.KeyModal.Created.Title()}
+						{:else}
+							{$LL.Account.APIKeys.KeyModal.Create.Title()}
+						{/if}
+					</h1>
+					{#if (modalType === 'delete' && $tokensQuery?.data?.find((i) => i.id === tokenToDelete)) || (modalType === 'created' && lastTokenName)}
+						<div
+							class="flex -mt-1 items-center justify-start gap-1.5 {modalType === 'created'
+								? 'bg-c-on-bg/10 text-c-on-bg'
+								: 'bg-c-danger/15 text-c-danger'}
+								rounded-md px-2.5 py-1 text-sm font-medium"
+						>
+							<IconKey class="w-4 h-4 -ml-0.5 flex-shrink-0" />
+							<p class="flex-shrink min-w-0">
+								{modalType === 'created'
+									? lastTokenName
+									: $tokensQuery?.data?.find((i) => i.id === tokenToDelete)?.name}
+							</p>
+						</div>
 					{/if}
-				</h1>
+				</div>
 				<p class="mt-3 text-c-on-bg/75 leading-relaxed">
 					{#if modalType === 'delete'}
 						{$LL.Account.APIKeys.KeyModal.Delete.Paragraph()}
