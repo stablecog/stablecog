@@ -125,7 +125,7 @@
 					</div>
 				{/if}
 				<div
-					class="max-w-full flex flex-col md:flex-row items-center justify-center mt-3 md:mt-7 gap-4"
+					class="max-w-full flex flex-col md:flex-row items-center justify-center mt-4 md:mt-8 gap-4"
 				>
 					<!-- Platform Info -->
 					<PlatformCard
@@ -137,7 +137,7 @@
 					<!-- Connection div -->
 					<div class="relative flex flex-col md:flex-row justify-center items-center gap-2">
 						<div
-							class="w-2px h-5 md:w-6 md:h-2px rounded-full transition duration-300 {status ===
+							class="w-2px h-4 md:w-6 md:h-2px rounded-full transition duration-300 {status ===
 							'success'
 								? 'bg-c-success'
 								: 'bg-c-on-bg/20'}"
@@ -154,7 +154,7 @@
 							/>
 						</div>
 						<div
-							class="w-2px h-5 md:w-6 md:h-2px rounded-full transition duration-300 {status ===
+							class="w-2px h-4 md:w-6 md:h-2px rounded-full transition duration-300 {status ===
 							'success'
 								? 'bg-c-success'
 								: 'bg-c-on-bg/20'}"

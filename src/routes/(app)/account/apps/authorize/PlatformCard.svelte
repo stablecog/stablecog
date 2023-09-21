@@ -18,11 +18,11 @@
 		: ''} {status === 'success'
 		? 'ring-c-success ring-3'
 		: 'ring-c-bg-tertiary ring-2'} bg-c-bg-secondary rounded-xl shadow-xl shadow-c-shadow/[var(--o-shadow-normal)]
-		flex flex-col items-center justify-center gap-2 text-center overflow-hidden z-0 relative px-6 pt-4 pb-5 md:pt-5 md:pb-6"
+		flex flex-col items-center justify-center gap-2 text-center overflow-hidden z-0 relative px-6 pt-3.5 pb-4 md:pt-5 md:pb-6"
 >
 	<IconSc type={icon} class="w-16 h-16 md:w-20 md:h-20 flex-shrink-0 transition duration-300" />
 	<p
-		class="w-full font-semibold whitespace-nowrap overflow-hidden
+		class="w-full -mt-0.5 md:mt-0 font-semibold whitespace-nowrap overflow-hidden
     overflow-ellipsis text-xl md:text-2xl"
 	>
 		{platform}
