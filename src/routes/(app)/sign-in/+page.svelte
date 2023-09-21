@@ -7,7 +7,6 @@
 	import SignInCard from '$components/SignInCard.svelte';
 	import { canonicalUrl } from '$ts/constants/main';
 	import { previewImageVersion } from '$ts/constants/previewImageVersion';
-	import { searchParamsString } from '$ts/stores/searchParamsString';
 
 	export let data;
 
@@ -32,6 +31,6 @@
 
 <PageWrapper>
 	<div class="w-[100%+1rem] flex justify-center items-center my-auto -mx-2">
-		<SignInCard redirectTo={data.rd_to + $searchParamsString} />
+		<SignInCard redirectTo={data.rd_to} />
 	</div>
 </PageWrapper>
