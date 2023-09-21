@@ -11,6 +11,7 @@ export const apiUrl = new URL(
 		? env.PUBLIC_GO_SERVER_URL_DEV
 		: env.PUBLIC_GO_SERVER_URL_PROD
 );
+export const authServerUrl = new URL(env.PUBLIC_AUTH_SERVER_URL);
 
 export const navbarEstimatedHeight = 72;
 

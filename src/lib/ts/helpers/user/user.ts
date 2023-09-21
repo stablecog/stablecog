@@ -1,4 +1,4 @@
-import { apiUrl } from '$ts/constants/main';
+import { apiUrl, authServerUrl } from '$ts/constants/main';
 import type { TStripeSupportedPriceIdSubscriptionsMo } from '$ts/constants/stripePublic';
 import type { TUserSummary } from '$ts/stores/user/summary';
 
@@ -45,6 +45,11 @@ interface TConnectAccountResponse {
 	error?: string;
 }
 
+interface TApproveAppAuthorizationResponse {
+	redirect_url: string;
+	error?: string;
+}
+
 export async function connectAccountToDiscord({
 	access_token,
 	platform_user_id,
@@ -67,5 +72,29 @@ export async function connectAccountToDiscord({
 		})
 	});
 	const resJson: TConnectAccountResponse = await res.json();
+	return resJson;
+}
+
+export async function approveAppAuthorization({
+	refresh_token,
+	app_code,
+	app_id
+}: {
+	refresh_token: string;
+	app_code: string;
+	app_id: string;
+}): Promise<TApproveAppAuthorizationResponse> {
+	const res = await fetch(`${authServerUrl.origin}/oauth/approve`, {
+		method: 'POST',
+		headers: {
+			'Content-Type': 'application/json',
+			Authorization: `Bearer ${refresh_token}`
+		},
+		body: JSON.stringify({
+			app_code,
+			app_id
+		})
+	});
+	const resJson: TApproveAppAuthorizationResponse = await res.json();
 	return resJson;
 }

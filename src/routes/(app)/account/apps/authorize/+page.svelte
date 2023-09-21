@@ -14,6 +14,7 @@
 	import ErrorChip from '$components/error/ErrorChip.svelte';
 	import type { TConnectionStatus } from '$routes/(app)/connect/types.js';
 	import PlatformCard from '$routes/(app)/account/apps/authorize/PlatformCard.svelte';
+	import { approveAppAuthorization } from '$ts/helpers/user/user.js';
 
 	export let data;
 
@@ -24,14 +25,19 @@
 		data.app_id === 'raycast' ? $LL.Account.Apps.Authorize.Platform.Raycast() : null;
 
 	async function authorizeApp() {
-		if (!$page.data.session?.access_token) return;
+		if (!$page.data.session?.refresh_token) return;
 		if (!data.app_id || !data.app_code) return;
 		status = 'confirming';
 		statusError = undefined;
 		try {
-			// 1 second delay
-			await new Promise((resolve) => setTimeout(resolve, 1000));
+			const res = await approveAppAuthorization({
+				refresh_token: $page.data.session.refresh_token,
+				app_id: data.app_id,
+				app_code: data.app_code
+			});
 			status = 'success';
+			if (!res.redirect_url) throw new Error('No redirect url');
+			window.location.href = res.redirect_url;
 		} catch (e) {
 			console.log(e);
 			status = 'error';
