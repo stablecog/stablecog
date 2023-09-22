@@ -225,6 +225,15 @@
 				>
 					<div class="w-full flex flex-wrap justify-end items-stretch mt-6 gap-2">
 						<Button
+							disabled={$deleteTokenMutation?.isLoading}
+							onClick={resetModal}
+							size="sm"
+							type="no-bg-on-bg"
+							buttonType="button"
+						>
+							{$LL.Shared.CancelButton()}
+						</Button>
+						<Button
 							withSpinner
 							loading={$deleteTokenMutation?.isLoading}
 							size="sm"
