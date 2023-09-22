@@ -21,6 +21,11 @@
 			name: $LL.Account.Tabs.APIKeys(),
 			href: '/account/api-keys',
 			icon: 'api-keys'
+		},
+		{
+			name: $LL.Account.Tabs.ConnectedApplications(),
+			href: '/account/apps',
+			icon: 'apps'
 		}
 	];
 

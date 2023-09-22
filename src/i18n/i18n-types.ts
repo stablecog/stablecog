@@ -1958,16 +1958,6 @@ type RootTranslation = {
 				 * @param {unknown} platform
 				 */
 				PageSuccessParagraph: RequiredParams<'platform'>
-				Platform: {
-					/**
-					 * R​a​y​c​a​s​t
-					 */
-					Raycast: string
-					/**
-					 * S​t​a​b​l​e​c​o​g
-					 */
-					Stablecog: string
-				}
 				/**
 				 * A​u​t​h​o​r​i​z​e​ ​{​p​l​a​t​f​o​r​m​}
 				 * @param {unknown} platform
@@ -1991,6 +1981,50 @@ type RootTranslation = {
 					 * T​h​i​s​ ​l​i​n​k​ ​d​o​e​s​n​'​t​ ​c​o​n​t​a​i​n​ ​a​ ​v​a​l​i​d​ ​c​o​d​e​.​ ​P​l​e​a​s​e​ ​r​e​q​u​e​s​t​ ​a​ ​n​e​w​ ​l​i​n​k​.
 					 */
 					NoValidCodeParagraph: string
+				}
+			}
+			Platform: {
+				/**
+				 * R​a​y​c​a​s​t
+				 */
+				Raycast: string
+				/**
+				 * S​t​a​b​l​e​c​o​g
+				 */
+				Stablecog: string
+			}
+			/**
+			 * Y​o​u​ ​h​a​v​e​n​'​t​ ​c​o​n​n​e​c​t​e​d​ ​a​n​y​ ​a​p​p​s​ ​y​e​t​.
+			 */
+			NoAppsYet: string
+			/**
+			 * A​p​p​l​i​c​a​t​i​o​n​s
+			 */
+			PageTitle: string
+			/**
+			 * T​h​e​ ​a​p​p​l​i​c​a​t​i​o​n​s​ ​t​h​a​t​ ​y​o​u​'​v​e​ ​c​o​n​n​e​c​t​e​d​ ​t​o​ ​y​o​u​r​ ​S​t​a​b​l​e​c​o​g​ ​a​c​c​o​u​n​t​ ​a​r​e​ ​l​i​s​t​e​d​ ​b​e​l​o​w​.
+			 */
+			PageParagraph: string
+			KeyTable: {
+				/**
+				 * C​o​n​n​e​c​t​e​d
+				 */
+				ConnectedAtTitle: string
+			}
+			AppModal: {
+				Delete: {
+					/**
+					 * R​e​v​o​k​e​ ​A​c​c​e​s​s
+					 */
+					Title: string
+					/**
+					 * T​h​i​s​ ​a​p​p​'​s​ ​a​c​c​e​s​s​ ​t​o​ ​y​o​u​r​ ​S​t​a​b​l​e​c​o​g​ ​a​c​c​o​u​n​t​ ​w​i​l​l​ ​b​e​ ​r​e​v​o​k​e​d​ ​i​m​m​e​d​i​a​t​e​l​y​.​ ​O​n​c​e​ ​t​h​e​ ​a​c​c​e​s​s​ ​i​s​ ​r​e​v​o​k​e​d​,​ ​t​h​e​ ​r​e​q​u​e​s​t​s​ ​c​o​m​i​n​g​ ​f​r​o​m​ ​t​h​i​s​ ​a​p​p​ ​w​i​l​l​ ​b​e​ ​r​e​j​e​c​t​e​d​.
+					 */
+					Paragraph: string
+					/**
+					 * R​e​v​o​k​e​ ​A​c​c​e​s​s
+					 */
+					RevokeAccessButton: string
 				}
 			}
 		}
@@ -2079,6 +2113,10 @@ type RootTranslation = {
 			 * A​P​I​ ​K​e​y​s
 			 */
 			APIKeys: string
+			/**
+			 * A​p​p​l​i​c​a​t​i​o​n​s
+			 */
+			ConnectedApplications: string
 		}
 		Meta: {
 			/**
@@ -5250,16 +5288,6 @@ export type TranslationFunctions = {
 				 * You can return back to {platform} now.
 				 */
 				PageSuccessParagraph: (arg: { platform: unknown }) => LocalizedString
-				Platform: {
-					/**
-					 * Raycast
-					 */
-					Raycast: () => LocalizedString
-					/**
-					 * Stablecog
-					 */
-					Stablecog: () => LocalizedString
-				}
 				/**
 				 * Authorize {platform}
 				 */
@@ -5281,6 +5309,50 @@ export type TranslationFunctions = {
 					 * This link doesn't contain a valid code. Please request a new link.
 					 */
 					NoValidCodeParagraph: () => LocalizedString
+				}
+			}
+			Platform: {
+				/**
+				 * Raycast
+				 */
+				Raycast: () => LocalizedString
+				/**
+				 * Stablecog
+				 */
+				Stablecog: () => LocalizedString
+			}
+			/**
+			 * You haven't connected any apps yet.
+			 */
+			NoAppsYet: () => LocalizedString
+			/**
+			 * Applications
+			 */
+			PageTitle: () => LocalizedString
+			/**
+			 * The applications that you've connected to your Stablecog account are listed below.
+			 */
+			PageParagraph: () => LocalizedString
+			KeyTable: {
+				/**
+				 * Connected
+				 */
+				ConnectedAtTitle: () => LocalizedString
+			}
+			AppModal: {
+				Delete: {
+					/**
+					 * Revoke Access
+					 */
+					Title: () => LocalizedString
+					/**
+					 * This app's access to your Stablecog account will be revoked immediately. Once the access is revoked, the requests coming from this app will be rejected.
+					 */
+					Paragraph: () => LocalizedString
+					/**
+					 * Revoke Access
+					 */
+					RevokeAccessButton: () => LocalizedString
 				}
 			}
 		}
@@ -5369,6 +5441,10 @@ export type TranslationFunctions = {
 			 * API Keys
 			 */
 			APIKeys: () => LocalizedString
+			/**
+			 * Applications
+			 */
+			ConnectedApplications: () => LocalizedString
 		}
 		Meta: {
 			/**

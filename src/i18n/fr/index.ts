@@ -648,7 +648,7 @@ const fr: Translation = {
 				PageParagraph: 'Click the button below to authorize {platform}.',
 				PageSuccessTitle: 'Authorized!',
 				PageSuccessParagraph: 'You can return back to {platform} now.',
-				Platform: { Raycast: 'Raycast', Stablecog: 'Stablecog' },
+
 				SignInTitle: 'Authorize {platform}',
 				SignInParagraph: 'Create an account or sign in to authorize {platform}.',
 				AuthorizeButton: 'Authorize',
@@ -656,6 +656,22 @@ const fr: Translation = {
 					NoValidAppIdParagraph:
 						"This link doesn't contain a valid app ID. Please request a new link.",
 					NoValidCodeParagraph: "This link doesn't contain a valid code. Please request a new link."
+				}
+			},
+			Platform: { Raycast: 'Raycast', Stablecog: 'Stablecog' },
+			NoAppsYet: "You haven't connected any apps yet.",
+			PageTitle: 'Applications',
+			PageParagraph:
+				"The applications that you've connected to your Stablecog account are listed below.",
+			KeyTable: {
+				ConnectedAtTitle: 'Connected'
+			},
+			AppModal: {
+				Delete: {
+					Title: 'Revoke Access',
+					Paragraph:
+						"This app's access to your Stablecog account will be revoked immediately. Once the access is revoked, the requests coming from this app will be rejected.",
+					RevokeAccessButton: 'Revoke Access'
 				}
 			}
 		},
@@ -682,7 +698,12 @@ const fr: Translation = {
 				PageParagraph: 'Your plan has been changed successfully.'
 			}
 		},
-		Tabs: { Account: 'Account', Usage: 'Usage', APIKeys: 'API Keys' },
+		Tabs: {
+			Account: 'Account',
+			Usage: 'Usage',
+			APIKeys: 'API Keys',
+			ConnectedApplications: 'Applications'
+		},
 		Meta: {
 			AccountCreationTitle: 'Creation',
 			LastSignInTitle: 'Last Sign-in',

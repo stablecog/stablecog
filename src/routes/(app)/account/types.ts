@@ -1,4 +1,4 @@
-export type TAccountRouteOption = 'account' | 'api-keys' | 'usage';
+export type TAccountRouteOption = 'account' | 'api-keys' | 'usage' | 'apps';
 
 export interface TAccountRoute {
 	name: string;

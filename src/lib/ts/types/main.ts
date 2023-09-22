@@ -21,7 +21,8 @@ export type TIconSc =
 	| 'email'
 	| 'producthunt'
 	| 'stablecog'
-	| 'raycast';
+	| 'raycast'
+	| 'unknown';
 
 export interface TBlogPost {
 	slug: string;

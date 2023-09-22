@@ -1,7 +1,15 @@
 import { apiUrl } from '$ts/constants/main';
 
-export async function getUserTokens({ access_token }: { access_token: string }) {
-	const res = await fetch(`${apiUrl.origin}/v1/user/tokens`, {
+export async function getUserTokens({
+	access_token,
+	type
+}: {
+	access_token: string;
+	type: 'any' | 'client' | 'manual';
+}) {
+	const url = new URL(`${apiUrl.origin}/v1/user/tokens`);
+	url.searchParams.append('type', type);
+	const res = await fetch(url.toString(), {
 		method: 'GET',
 		headers: {
 			'Content-Type': 'application/json',
@@ -59,6 +67,7 @@ interface TTokenRes {
 	uses: number;
 	is_active: boolean;
 	last_used_at?: string;
+	auth_client_id?: string;
 }
 
 interface TCreateTokenRes {

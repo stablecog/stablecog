@@ -15,16 +15,14 @@
 	import type { TConnectionStatus } from '$routes/(app)/connect/types.js';
 	import PlatformCard from '$routes/(app)/account/apps/authorize/PlatformCard.svelte';
 	import { approveAppAuthorization } from '$ts/helpers/user/user.js';
+	import { getAppFromAppId } from '$routes/(app)/account/apps/helpers.js';
 
 	export let data;
 
 	let status: TConnectionStatus = 'idle';
 	let statusError: string | undefined = undefined;
 
-	$: platformString =
-		data.app_id === 'e1d7e2fd-a173-473b-98f2-680d14283e75'
-			? $LL.Account.Apps.Authorize.Platform.Raycast()
-			: null;
+	$: platform = getAppFromAppId(data.app_id, $LL);
 
 	async function authorizeApp() {
 		if (!$page.data.session?.access_token) return;
@@ -58,7 +56,7 @@
 <PageWrapper>
 	<div class="w-full flex flex-col items-center justify-start my-auto">
 		<section id="connect" class="w-full flex flex-col items-center justify-start">
-			{#if !data.app_id || !data.app_code || !platformString}
+			{#if !data.app_id || !data.app_code || !platform}
 				<IconSadFaceOutline class="w-20 h-20 text-c-danger" />
 				<h1 class="mt-3 w-full max-w-sm text-center font-bold text-3xl md:text-4xl text-c-danger">
 					{$LL.Account.Apps.Authorize.PageTitleFallback()}
@@ -66,7 +64,7 @@
 				<p
 					class="w-full max-w-sm md:max-w-md mt-2 md:mt-3 text-base md:text-lg text-c-on-bg/75 text-center"
 				>
-					{!data.app_id || !platformString
+					{!data.app_id || !platform
 						? $LL.Account.Apps.Authorize.Error.NoValidAppIdParagraph()
 						: !data.app_code
 						? $LL.Account.Apps.Authorize.Error.NoValidCodeParagraph()
@@ -77,10 +75,10 @@
 					<SignInCard
 						redirectTo={`${$page.url.pathname}?${$page.url.searchParams}`}
 						title={$LL.Account.Apps.Authorize.SignInTitle({
-							platform: platformString
+							platform: platform.localizedName
 						})}
 						paragraph={$LL.Account.Apps.Authorize.SignInParagraph({
-							platform: platformString
+							platform: platform.localizedName
 						})}
 					/>
 				</div>
@@ -93,7 +91,7 @@
 					{status === 'success'
 						? $LL.Account.Apps.Authorize.PageSuccessTitle()
 						: $LL.Account.Apps.Authorize.PageTitle({
-								platform: platformString
+								platform: platform.localizedName
 						  })}
 				</h1>
 				<p
@@ -101,10 +99,10 @@
 				>
 					{status === 'success'
 						? $LL.Account.Apps.Authorize.PageSuccessParagraph({
-								platform: platformString
+								platform: platform.localizedName
 						  })
 						: $LL.Account.Apps.Authorize.PageParagraph({
-								platform: platformString
+								platform: platform.localizedName
 						  })}
 				</p>
 				{#if status !== 'success'}
@@ -139,9 +137,9 @@
 				>
 					<!-- Platform Info -->
 					<PlatformCard
-						icon="raycast"
+						icon={platform.icon}
 						side="start"
-						platform={$LL.Account.Apps.Authorize.Platform.Raycast()}
+						platform={platform.localizedName}
 						{status}
 					/>
 					<!-- Connection div -->
@@ -174,7 +172,7 @@
 					<PlatformCard
 						icon="stablecog"
 						side="end"
-						platform={$LL.Account.Apps.Authorize.Platform.Stablecog()}
+						platform={$LL.Account.Apps.Platform.Stablecog()}
 						{status}
 					/>
 				</div>

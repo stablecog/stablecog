@@ -40,7 +40,7 @@
 
 	$: tokensQuery = browser
 		? createQuery(['user_tokens'], () =>
-				getUserTokens({ access_token: $page.data.session?.access_token || '' })
+				getUserTokens({ access_token: $page.data.session?.access_token || '', type: 'manual' })
 		  )
 		: undefined;
 
