@@ -19,7 +19,7 @@
 			? innerContainerWidth - (containerWidth + scrollContainerScrollLeft)
 			: undefined;
 	$: showChevron =
-		distanceToEnd !== undefined && containerWidth !== undefined ? distanceToEnd > 24 : false;
+		distanceToEnd !== undefined && containerWidth !== undefined ? distanceToEnd > 16 : false;
 </script>
 
 <div

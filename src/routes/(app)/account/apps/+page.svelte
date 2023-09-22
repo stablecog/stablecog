@@ -105,7 +105,7 @@
 						</p>
 					</div>
 				{:else}
-					<div class="w-full flex flex-col text-sm md:text-base min-w-[45rem]">
+					<div class="w-full flex flex-col text-sm md:text-base min-w-[36rem]">
 						<div class="w-full flex items-center font-semibold border-b-2 border-c-bg-secondary">
 							<div class="flex-1 flex items-center min-w-0">
 								<p class="flex-1 px-4 py-3.5 w-1/4">
