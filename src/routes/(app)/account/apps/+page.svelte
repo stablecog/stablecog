@@ -135,9 +135,9 @@
 										: ''} border-c-bg-secondary"
 								>
 									<div class="flex-1 flex items-center min-w-0">
-										<div class="flex-1 px-4 py-3.5 w-1/4 flex items-center gap-1.5">
+										<div class="flex-1 px-4 py-3.5 w-1/4 flex items-center gap-1.5 md:gap-2">
 											<IconSc
-												class="w-5 h-5"
+												class="w-5 h-5 md:w-6 md:h-6 flex-shrink-0"
 												type={getAppFromAppId(token.auth_client_id, $LL)?.icon || 'unknown'}
 											/>
 											<p class="flex-shrink min-w-0">
