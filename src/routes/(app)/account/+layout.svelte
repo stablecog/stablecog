@@ -25,7 +25,8 @@
 		{
 			name: $LL.Account.Tabs.ConnectedApplications(),
 			href: '/account/apps',
-			icon: 'apps'
+			icon: 'apps',
+			strictMatch: true
 		}
 	];
 
