@@ -15,12 +15,14 @@
 		{
 			name: $LL.Account.Tabs.Usage(),
 			href: '/account/usage',
-			icon: 'usage'
+			icon: 'usage',
+			strictMatch: true
 		},
 		{
 			name: $LL.Account.Tabs.APIKeys(),
 			href: '/account/api-keys',
-			icon: 'api-keys'
+			icon: 'api-keys',
+			strictMatch: true
 		},
 		{
 			name: $LL.Account.Tabs.ConnectedApplications(),
