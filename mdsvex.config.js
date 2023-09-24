@@ -27,7 +27,7 @@ export const mdsvexOptions = defineConfig({
 				properties: { ariaHidden: true, tabIndex: -1, class: 'heading-anchor' },
 				test: (node) => node.tagName !== 'h1',
 				content(node) {
-					return [h('span.heading-anchor-span', '#')];
+					return [h('span.heading-anchor-span.font-normal', '#')];
 				}
 			}
 		]
