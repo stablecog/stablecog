@@ -19,6 +19,7 @@
 	import { appVersion } from '$ts/stores/appVersion';
 	import { globalSeed } from '$ts/stores/globalSeed';
 	import {
+		generations,
 		setGenerationOutputVisibility,
 		type TGenerationWithSelectedOutput
 	} from '$ts/stores/user/generation';
@@ -41,6 +42,7 @@
 			: false;
 	$: canToggleVisibility =
 		generation.selected_output.was_auto_submitted === false ||
+		$userSummary?.has_nonfree_credits ||
 		$userSummary?.product_id ||
 		isSuperAdmin($userSummary?.roles) ||
 		isGalleryAdmin($userSummary?.roles);

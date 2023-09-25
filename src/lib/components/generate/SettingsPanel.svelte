@@ -146,7 +146,7 @@
 				bind:value={$generationNumOutputs}
 			/>
 		</SettingsPanelItem>
-		{#if $userSummary?.product_id}
+		{#if $userSummary?.product_id || $userSummary?.has_nonfree_credits}
 			<SettingsPanelItem
 				title={$LL.Home.ShowOnProfileToggle.Title()}
 				iconType="show-on-profile"
