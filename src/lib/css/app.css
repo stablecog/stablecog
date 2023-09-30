@@ -248,4 +248,12 @@ select:-webkit-autofill:focus {
 	overflow: hidden!important;
 }
 
+.color-scheme-dark {
+	color-scheme: dark;
+}
+
+.color-scheme-light {
+	color-scheme: light;
+}
+
 @tailwind utilities;

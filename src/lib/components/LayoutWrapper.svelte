@@ -17,8 +17,10 @@
 		: `min-height: 100vh;min-height: ${$windowHeight ? `${$windowHeight}px` : '100svh'};`}
 	"
 	class="w-full bg-c-bg text-c-on-bg flex flex-col {$themeApp === 'light'
-		? 'theme-light'
-		: 'theme-dark'} {isAppRoute ? 'overflow-hidden' : ''} {!$isTouchscreen ? 'not-touch' : ''}"
+		? 'theme-light color-scheme-light'
+		: 'theme-dark color-scheme-dark'} {isAppRoute ? 'overflow-hidden' : ''} {!$isTouchscreen
+		? 'not-touch'
+		: ''}"
 >
 	<slot />
 </div>
