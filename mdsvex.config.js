@@ -4,9 +4,6 @@ import remarkExternalLinks from 'remark-external-links';
 import rehypeSlug from 'rehype-slug';
 import rehypeAutolinkHeadings from 'rehype-autolink-headings';
 import { h } from 'hastscript';
-import { toString } from 'hast-util-to-string';
-
-function getHeading(node) {}
 
 export const mdsvexOptions = defineConfig({
 	extensions: ['.svx', '.md'],
