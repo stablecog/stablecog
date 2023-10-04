@@ -27,7 +27,7 @@
 		<div
 			class="w-full pt-1 md:pt-4 {noBottomPadding
 				? ''
-				: 'pb-20 md:pb-36'} px-2 md:px-3 flex flex-col overflow-auto"
+				: 'pb-20 md:pb-36'} flex flex-col overflow-auto"
 		>
 			<SidebarItem sidebarItem={sidebar} />
 		</div>

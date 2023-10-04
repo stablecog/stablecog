@@ -37,7 +37,7 @@
 	{#if !isRoot}
 		<div class="w-full flex relative">
 			<a
-				class="w-full text-lg md:text-base flex items-center gap-4 px-3 py-3 md:py-2.5 group relative rounded-lg overflow-hidden z-0"
+				class="w-full text-lg md:text-base flex items-center gap-4 px-4 py-3.5 md:py-2.5 group relative rounded-lg overflow-hidden z-0"
 				href={sidebarItem.pathname}
 				on:click={() => {
 					toggle();
@@ -56,6 +56,8 @@
 					hoverFrom="left"
 					size="md"
 					hovered={isSelected}
+					noPadding
+					paddingClass="px-1.5 py-2px"
 				/>
 				<p
 					class="flex-1 min-w-0 w-0 relative break-words transition-all overflow-hidden {isSelected
@@ -78,7 +80,7 @@
 					{/if}
 					{#if sidebarItem.children}
 						<IconChevronDown
-							class="w-5 h-5 md:w-4 md:h-4 transform transition {$page.url.pathname ===
+							class="w-5.5 h-5.5 md:w-4 md:h-4 transform transition {$page.url.pathname ===
 							sidebarItem.pathname
 								? 'text-c-primary'
 								: level > 1
@@ -92,9 +94,9 @@
 				<button
 					aria-label="{isOpen ? 'Collapse ' : 'Expand '} + {sidebarItem.title}"
 					on:click={() => (isOpen = !isOpen)}
-					class="w-11 md:w-10 h-full absolute right-0 top-0 z-10 group"
+					class="w-12 md:w-10 h-full absolute right-1 top-0 z-10 group"
 				>
-					<ButtonHoverEffect size="md" color={isSelected ? 'primary' : 'on-bg'} hoverFrom="left" />
+					<ButtonHoverEffect size="sm" color={isSelected ? 'primary' : 'on-bg'} hoverFrom="left" />
 				</button>
 			{/if}
 		</div>

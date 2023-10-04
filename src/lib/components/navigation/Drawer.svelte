@@ -75,7 +75,7 @@
 			<slot />
 		{:else}
 			<ScrollAreaWithChevron fadeColor="bg" class="pb-20">
-				{#each $routesDrawer as route}
+				{#each $routesDrawer as route, index}
 					{@const isSelected = route.strictMatch
 						? $page.url.pathname === route.href
 						: $page.url.pathname.startsWith(route.href)}
@@ -83,11 +83,17 @@
 						href={route.href}
 						on:click={closeDrawer}
 						data-sveltekit-preload-data="hover"
-						class="w-full flex items-center justify-start text-lg p-1 relative group font-semibold"
+						class="w-full flex items-center justify-start text-lg px-1.5 py-2px {index === 0 &&
+							'pt-1.5'} relative group font-semibold"
 					>
-						<ButtonHoverEffect size="md" hoverFrom="left" />
+						<ButtonHoverEffect
+							size="md"
+							hoverFrom="left"
+							noPadding
+							paddingClass="px-1.5 py-2px {index === 0 && 'pt-1.5'}"
+						/>
 						<div
-							class="w-full flex items-center justify-start px-4 py-3 gap-3 rounded-lg {isSelected
+							class="w-full flex items-center justify-start px-4 py-3.5 gap-3 rounded-lg {isSelected
 								? 'bg-c-primary/10 text-c-primary'
 								: ''}"
 						>

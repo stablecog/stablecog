@@ -17,7 +17,7 @@
 
 <div style="padding-left: {0.75 * Math.max(item.level - 2)}rem" class="w-full flex justify-start">
 	<a
-		class="w-full {item.level <= 2 ? 'font-medium' : 'font-normal'} px-3 py-1.5 relative group"
+		class="w-full {item.level <= 2 ? 'font-medium' : 'font-normal'} px-2.5 py-2 relative group"
 		href="#{id}"
 	>
 		<ButtonHoverEffect
@@ -25,7 +25,7 @@
 			color={id === activeId ? 'primary' : 'on-bg'}
 			hoverFrom="left"
 			size="sm"
-			paddingClass="p-0.5"
+			paddingClass="py-2px"
 		/>
 		<p
 			class="transition {id === activeId

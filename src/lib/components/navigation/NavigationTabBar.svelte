@@ -4,7 +4,6 @@
 	import type { TTabBarPlacement } from '$ts/types/main';
 	import TabBarWrapper from '$components/tabBars/TabBarWrapper.svelte';
 	import { routes, type TNavbarRoute } from '$components/navigation/routes';
-	import LL from '$i18n/i18n-svelte';
 	import IconNew from '$components/icons/IconNew.svelte';
 
 	export let type: TTabBarPlacement = 'normal';
