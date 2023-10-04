@@ -32,10 +32,6 @@ export const generationModels: {
 		name: 'Luna Diffusion',
 		supportedSchedulerIds: sdSharedSchedulerIds
 	},
-	'048b4aa3-5586-47ed-900f-f4341c96bdb2': {
-		name: 'Stable Diffusion v1.5',
-		supportedSchedulerIds: sdSharedSchedulerIds
-	},
 	'fc06f6ab-ed14-4186-a7c0-aaec288d4f38': {
 		name: '22h Diffusion',
 		supportedSchedulerIds: sdSharedSchedulerIds
@@ -50,10 +46,6 @@ export const generationModels: {
 	},
 	'eaa438e1-dbf9-48fd-be71-206f0f257617': {
 		name: 'Redshift Diffusion',
-		supportedSchedulerIds: sdSharedSchedulerIds
-	},
-	'36d9d835-646f-4fc7-b9fe-98654464bf8e': {
-		name: 'Arcane Diffusion',
 		supportedSchedulerIds: sdSharedSchedulerIds
 	},
 	'8002bc51-7260-468f-8840-cf1e6dbe3f8a': {
@@ -72,8 +64,18 @@ export const generationModels: {
 		name: 'Waifu Diffusion XL',
 		supportedSchedulerIds: sdSharedSchedulerIds
 	},
+	'048b4aa3-5586-47ed-900f-f4341c96bdb2': {
+		name: 'Stable Diffusion v1.5',
+		supportedSchedulerIds: sdSharedSchedulerIds,
+		active: false
+	},
 	'48a7031d-43b6-4a23-9f8c-8020eb6862e4': {
 		name: 'Ghibli Diffusion',
+		supportedSchedulerIds: sdSharedSchedulerIds,
+		active: false
+	},
+	'36d9d835-646f-4fc7-b9fe-98654464bf8e': {
+		name: 'Arcane Diffusion',
 		supportedSchedulerIds: sdSharedSchedulerIds,
 		active: false
 	}
