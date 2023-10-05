@@ -14,8 +14,7 @@
 	import type {
 		TAnyRealtimePayloadExt,
 		TGenerationRealtimePayloadExt,
-		TUpscaleRealtimePayloadExt,
-		TVoiceoverRealtimePayloadExt
+		TUpscaleRealtimePayloadExt
 	} from '$approutes/live/types';
 	import LiveBubble from '$approutes/live/LiveBubble.svelte';
 	import { flip } from 'svelte/animate';
@@ -77,30 +76,6 @@
 						upscaleTotalCount.set(newCount);
 					}
 				}
-			} else if (data.process_type === 'voiceover') {
-				const voiceover = data as TVoiceoverRealtimePayloadExt;
-				// check if voiceover is already in the array
-				const voiceoverAlreadyInArray = voiceovers.find((v) => v.id === voiceover.id);
-				if (!voiceoverAlreadyInArray) {
-					voiceovers = [voiceover, ...voiceovers];
-				} else {
-					// update the voiceover in the array
-					voiceovers = voiceovers.map((v) => {
-						if (v.id === voiceover.id) {
-							return voiceover;
-						} else {
-							return v;
-						}
-					});
-					if (voiceover.status === 'succeeded' && voiceover.actual_num_outputs) {
-						const newCount = $voiceoverTotalCount + voiceover.actual_num_outputs;
-						voiceoverTotalCount = tweened($voiceoverTotalCount, {
-							duration: calculateAnimationDuration($voiceoverTotalCount, newCount),
-							easing: quadOut
-						});
-						voiceoverTotalCount.set(newCount);
-					}
-				}
 			}
 			console.log('Message from SSE', data);
 		};
@@ -111,10 +86,9 @@
 
 	let generations: TGenerationRealtimePayloadExt[] = [];
 	let upscales: TUpscaleRealtimePayloadExt[] = [];
-	let voiceovers: TVoiceoverRealtimePayloadExt[] = [];
 	let allProcesses: TAnyRealtimePayloadExt[] = [];
 
-	$: [generations, upscales, voiceovers], setAllProcesses();
+	$: [generations, upscales], setAllProcesses();
 
 	const maxLengthAllProcesses = 50;
 	const msForEachDifference = 50;
@@ -127,17 +101,13 @@
 		duration: 500,
 		easing: quadOut
 	});
-	let voiceoverTotalCount = tweened(0, {
-		duration: 500,
-		easing: quadOut
-	});
 
 	const calculateAnimationDuration = (curr: number, next: number) => {
 		return Math.min((next - curr) * msForEachDifference, maxDuration);
 	};
 
 	function setAllProcesses() {
-		const all = [...generations, ...upscales, ...voiceovers];
+		const all = [...generations, ...upscales];
 		const allSorted = all
 			.sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime())
 			.slice(0, maxLengthAllProcesses);
@@ -210,11 +180,7 @@
 	async function getAndSetTotals() {
 		const res = await fetch(`${apiUrl.origin}/v1/stats`);
 		const resJson: IStatsRes = await res.json();
-		const {
-			generation_output_count: gCount,
-			upscale_output_count: uCount,
-			voiceover_output_count: vCount
-		} = resJson;
+		const { generation_output_count: gCount, upscale_output_count: uCount } = resJson;
 		if (gCount > $generationTotalCount) {
 			generationTotalCount = tweened($generationTotalCount, {
 				duration: calculateAnimationDuration($generationTotalCount, gCount),
@@ -228,13 +194,6 @@
 				easing: quadOut
 			});
 			upscaleTotalCount.set(uCount);
-		}
-		if (vCount > $voiceoverTotalCount) {
-			voiceoverTotalCount = tweened($voiceoverTotalCount, {
-				duration: calculateAnimationDuration($voiceoverTotalCount, vCount),
-				easing: quadOut
-			});
-			voiceoverTotalCount.set(vCount);
 		}
 	}
 
@@ -254,7 +213,7 @@
 <div class="w-full flex-1 flex justify-center pb-[calc(2vh)]">
 	<div class="w-full flex flex-col items-center justify-center max-w-5xl">
 		<div
-			class="w-full px-8 md:px-16 flex flex-wrap items-center justify-center py-2 md:pt-10 gap-8"
+			class="w-full px-8 md:px-16 flex flex-wrap items-center justify-center py-2 md:pt-10 gap-8 md:gap-12"
 		>
 			<div class="w-full lg:w-64 max-w-full flex flex-col gap-1.5 text-center lg:text-right">
 				<h2 class="text-c-on-bg/50 font-medium text-base">{$LL.Live.GenerationsTitle()}</h2>
@@ -262,16 +221,10 @@
 					{Math.floor($generationTotalCount).toLocaleString($locale)}
 				</p>
 			</div>
-			<div class="w-full lg:w-64 max-w-full flex flex-col gap-1.5 text-center">
+			<div class="w-full lg:w-64 max-w-full flex flex-col gap-1.5 text-center lg:text-left">
 				<h2 class="text-c-on-bg/50 font-medium text-base">{$LL.Live.UpscalesTitle()}</h2>
 				<p class="font-bold text-4xl">
 					{Math.floor($upscaleTotalCount).toLocaleString($locale)}
-				</p>
-			</div>
-			<div class="w-full lg:w-64 max-w-full flex flex-col gap-1.5 text-center lg:text-left">
-				<h2 class="text-c-on-bg/50 font-medium text-base">{$LL.Live.VoiceoversTitle()}</h2>
-				<p class="font-bold text-4xl">
-					{Math.floor($voiceoverTotalCount).toLocaleString($locale)}
 				</p>
 			</div>
 		</div>
