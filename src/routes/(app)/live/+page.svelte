@@ -213,7 +213,7 @@
 <div class="w-full flex-1 flex justify-center pb-[calc(2vh)]">
 	<div class="w-full flex flex-col items-center justify-center max-w-5xl">
 		<div
-			class="w-full px-8 md:px-16 flex flex-wrap items-center justify-center py-2 md:pt-10 gap-8 md:gap-12"
+			class="w-full px-8 md:px-16 flex flex-wrap items-center justify-center py-2 md:pt-10 gap-8 lg:gap-12"
 		>
 			<div class="w-full lg:w-64 max-w-full flex flex-col gap-1.5 text-center lg:text-right">
 				<h2 class="text-c-on-bg/50 font-medium text-base">{$LL.Live.GenerationsTitle()}</h2>
