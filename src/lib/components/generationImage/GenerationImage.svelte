@@ -130,7 +130,11 @@
 			return;
 		}
 		e.currentTarget.blur();
-		activeGeneration.set({ ...generation, card_type: cardType });
+		activeGeneration.set({
+			...generation,
+			card_type: cardType,
+			prev: $page.url.pathname + $page.url.search
+		});
 		if ($page.url.pathname === '/gallery') {
 			logGalleryGenerationOpened({
 				'SC - Output Id': generation.selected_output.id,

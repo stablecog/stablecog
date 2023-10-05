@@ -283,6 +283,10 @@
 	});
 
 	onDestroy(() => {
+		if (generation.prev) {
+			window.history.replaceState({}, '', generation.prev);
+			return;
+		}
 		const searchParams = new URLSearchParams(window.location.search);
 		if (modalType === 'gallery') {
 			window.history.pushState({}, '', `/gallery`);

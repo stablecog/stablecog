@@ -478,6 +478,7 @@ export interface TGenerationFullOutput extends TGenerationOutput {
 export interface TGenerationWithSelectedOutput extends TGeneration {
 	selected_output: TGenerationOutput;
 	card_type?: TGenerationImageCardType;
+	prev?: string;
 }
 
 export interface TInitialGenerationRequest extends TGenerationBase {

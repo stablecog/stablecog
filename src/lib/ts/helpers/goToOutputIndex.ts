@@ -7,9 +7,11 @@ export function setActiveGenerationToOutputIndex(
 ) {
 	if (outputs === undefined) return;
 	const card_type = get(activeGeneration)?.card_type;
+	const prev = get(activeGeneration)?.prev;
 	activeGeneration.set({
 		...outputs[index].generation,
 		selected_output: outputs[index],
-		card_type
+		card_type,
+		prev
 	});
 }

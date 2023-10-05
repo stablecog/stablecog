@@ -27,7 +27,6 @@
 	import { isUUID } from '$ts/helpers/uuid';
 	import IconImageSearch from '$components/icons/IconImageSearch.svelte';
 	import WithTooltip from '$components/WithTooltip.svelte';
-	import Button from '$components/buttons/Button.svelte';
 
 	export let disabled = false;
 	export let searchString: string;
@@ -41,6 +40,7 @@
 
 	$: hasAnyFilter = modelIdFilters?.length > 0;
 	$: searchStringLocal, onSearchStringLocalChanged();
+	$: modelIdFilters, onModelIdFiltersChanged();
 
 	function clearAllFilters() {
 		modelIdFilters = [];
@@ -98,6 +98,23 @@
 		searchString = searchStringLocal;
 		const params = $page.url.searchParams;
 		params.set('q', searchString);
+		const paramsString = params.toString();
+		window.history.replaceState(
+			{},
+			'',
+			`${$page.url.pathname}${paramsString !== '' ? '?' : ''}${params}`
+		);
+	}
+
+	function onModelIdFiltersChanged() {
+		if (!browser) return;
+		const params = $page.url.searchParams;
+		const mi = modelIdFilters?.join(',');
+		if (!mi) {
+			params.delete('mi');
+		} else {
+			params.set('mi', mi);
+		}
 		const paramsString = params.toString();
 		window.history.replaceState(
 			{},
