@@ -35,6 +35,7 @@
 				app_id: data.app_id,
 				app_code: data.app_code
 			});
+			console.log(res);
 			status = 'success';
 			if (!res.redirect_url) throw new Error('No redirect url');
 			setTimeout(() => {
