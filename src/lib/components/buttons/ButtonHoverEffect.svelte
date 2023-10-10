@@ -59,7 +59,7 @@
 					: '-translate-x-1/2 opacity-0'
 				: 'translate-y-full'}
       {color === 'on-bg'
-				? 'bg-c-on-bg/10'
+				? 'bg-c-on-bg/8'
 				: color === 'bg-secondary'
 				? 'bg-c-bg-secondary'
 				: color === 'bg-tertiary'
