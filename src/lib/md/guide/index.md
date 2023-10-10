@@ -2,7 +2,7 @@
 title: Guide
 description: Learn how to create better prompts and get familiar with fine-tuned Stable Diffusion models, Kandinsky, and generation settings such as inference steps, guidance scale, negative prompt, schedulers, and more.
 author: M. Yekta Güngör
-author_url: https://twitter.com/ngyekta
+author_url: https://twitter.com/yektagg
 date: 2023-04-18T15:00:00.000Z
 ---
 

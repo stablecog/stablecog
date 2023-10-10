@@ -2,7 +2,7 @@
 title: Billing
 description: Learn how the billing works for the Stablecog API.
 author: M. Yekta Güngör
-author_url: https://twitter.com/ngyekta
+author_url: https://twitter.com/yektagg
 date: 2023-05-18T26:00:00.000Z
 preview_image_url: https://ba.stablecog.com/docs/previews/get-started.jpg
 ---

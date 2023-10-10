@@ -2,7 +2,7 @@
 title: Try Openjourney for Free
 description: Openjourney is a fine-tuned Stable Diffusion model trained on 100K+ Midjourney v4 images. Try it on Stablecog for free.
 author: M. Yekta Güngör
-author_url: https://twitter.com/ngyekta
+author_url: https://twitter.com/yektagg
 date: 2023-04-18T15:00:00.000Z
 preview_image_url: https://ba.stablecog.com/try/previews/openjourney.jpg
 ---

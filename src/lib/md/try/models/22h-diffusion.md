@@ -2,7 +2,7 @@
 title: Try 22h Diffusion for Free
 description: 22h Diffusion is a fine-tuned Stable Diffusion model that is trained on a large number of high quality images to generate beautiful images without the need for long prompts. Try it on Stablecog for free.
 author: M. Yekta Güngör
-author_url: https://twitter.com/ngyekta
+author_url: https://twitter.com/yektagg
 date: 2023-04-18T15:00:00.000Z
 preview_image_url: https://ba.stablecog.com/try/previews/22h-diffusion.jpg
 ---

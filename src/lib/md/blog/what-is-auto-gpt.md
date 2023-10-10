@@ -2,7 +2,7 @@
 title: 'What is Auto-GPT?'
 description: Autopilot for GPT-4. An open-source experiment for autonomously developing and managing processes using OpenAI's GPT-4. It has internet access for search, short term and long term memory management and more...
 author: M. Yekta Güngör
-author_url: https://twitter.com/ngyekta
+author_url: https://twitter.com/yektagg
 date: 2023-04-05T13:00:00.000Z
 ---
 

@@ -2,7 +2,7 @@
 title: Upscale Defaults
 description: Learn how to retrive the defaults for the upscale operation using the Stablecog API.
 author: M. Yekta Güngör
-author_url: https://twitter.com/ngyekta
+author_url: https://twitter.com/yektagg
 date: 2023-05-26T15:00:00.000Z
 preview_image_url: https://ba.stablecog.com/docs/previews/defaults.jpg
 ---

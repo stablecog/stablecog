@@ -2,7 +2,7 @@
 title: What is Ghibli Diffusion?
 description: Ghibli Diffusion is a fine-tuned Stable Diffusion model trained images from the famous Studio Ghibli.
 author: M. Yekta Güngör
-author_url: https://twitter.com/ngyekta
+author_url: https://twitter.com/yektagg
 date: 2023-04-18T15:00:00.000Z
 ---
 

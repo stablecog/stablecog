@@ -2,7 +2,7 @@
 title: Create Voiceovers with AI Using Bark (Text to Audio Model)
 description: You can create voiceovers on Stablecog now using a text-to-audio model called Bark. We have 7 languages and 36 speakers available in beta.
 author: M. Yekta Güngör
-author_url: https://twitter.com/ngyekta
+author_url: https://twitter.com/yektagg
 date: 2023-06-22T15:00:00.000Z
 ---
 

@@ -2,7 +2,7 @@
 title: Try SDXL 1.0 for Free
 description: SDXL 1.0 is an open-source diffusion model that has a base resolution of 1024x1024 pixels. It's an upgrade to Stable Diffusion v2.1.
 author: M. Yekta Güngör
-author_url: https://twitter.com/ngyekta
+author_url: https://twitter.com/yektagg
 date: 2023-04-28T15:00:00.000Z
 preview_image_url: https://ba.stablecog.com/try/previews/sdxl.jpg
 ---

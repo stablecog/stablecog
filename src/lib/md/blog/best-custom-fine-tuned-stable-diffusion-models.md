@@ -2,7 +2,7 @@
 title: Best Custom (Fine-Tuned) Stable Diffusion Models
 description: Fine-tuned Stable Diffusion models let you achieve certain styles of art easier. When they are fine-tuned nicely, they reproduce styles in higher quality.
 author: M. Yekta Güngör
-author_url: https://twitter.com/ngyekta
+author_url: https://twitter.com/yektagg
 date: 2022-12-01T13:00:00.000Z
 ---
 

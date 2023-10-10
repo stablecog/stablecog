@@ -2,7 +2,7 @@
 title: Our First Big Update
 description: We've been working on a big update to our systems to make Stablecog faster, mor robust and sustainable. It's finally here! We have a new system, a new pricing model, a new default model and new schedulers.
 author: M. Yekta Güngör
-author_url: https://twitter.com/ngyekta
+author_url: https://twitter.com/yektagg
 date: 2023-03-10T13:00:00.000Z
 ---
 

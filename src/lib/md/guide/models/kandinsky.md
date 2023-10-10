@@ -2,7 +2,7 @@
 title: What is Kandinsky v2.1?
 description: Kandinsky v2.1 is an open-source and multilingual latent diffusion model. It's not based on Stable Diffusion, it's an original model.
 author: M. Yekta Güngör
-author_url: https://twitter.com/ngyekta
+author_url: https://twitter.com/yektagg
 date: 2023-04-18T15:00:00.000Z
 ---
 

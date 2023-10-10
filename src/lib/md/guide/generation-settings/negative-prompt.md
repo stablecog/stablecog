@@ -2,7 +2,7 @@
 title: What is Negative Prompt?
 author: M. Yekta Güngör
 description: Negative prompt is used for excluding certain things from the generated image. Learn more about it in our guide.
-author_url: https://twitter.com/ngyekta
+author_url: https://twitter.com/yektagg
 date: 2023-04-18T15:00:00.000Z
 ---
 

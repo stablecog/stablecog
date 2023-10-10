@@ -2,7 +2,7 @@
 title: Try Waifu Diffusion for Free
 description: Waifu Diffusion is a fine-tuned Stable Diffusion model that is trained large number of high quality anime images. Try it on Stablecog for free.
 author: M. Yekta Güngör
-author_url: https://twitter.com/ngyekta
+author_url: https://twitter.com/yektagg
 date: 2023-04-18T15:00:00.000Z
 preview_image_url: https://ba.stablecog.com/try/previews/waifu-diffusion.jpg
 ---

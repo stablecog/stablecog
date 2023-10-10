@@ -2,7 +2,7 @@
 title: Stable Diffusion Tools & Resources
 description: Stable Diffusion is an AI model to generate images, bit like DALL-E and Midjourney but it's open source and free. Here are tools to help you get started.
 author: M. Yekta Güngör
-author_url: https://twitter.com/ngyekta
+author_url: https://twitter.com/yektagg
 date: 2022-10-21T16:00:00.000Z
 ---
 
@@ -44,7 +44,7 @@ It's easy to use with a good amount of options including text to image generatio
 
 ### [Stablecog](https://stablecog.com)
 
-Well, this is the blog of Stablecog :). It's a free, open source and easy to use web app that lets you generate images using Stable Diffusion. It's [made by me](https://twitter.com/ngyekta).
+Well, this is the blog of Stablecog :). It's a free, open source and easy to use web app that lets you generate images using Stable Diffusion. It's [made by me](https://twitter.com/yektagg).
 
 <DocImage src="https://ba.stablecog.com/blog/stablecog.jpg" href="https://stablecog.com" width="2634" height="1756" alt="Stablecog" />
 

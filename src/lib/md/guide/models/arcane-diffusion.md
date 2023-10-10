@@ -2,7 +2,7 @@
 title: What is Arcane Diffusion?
 description: Arcane Diffusion is a fine-tuned Stable Diffusion model trained on images from the TV show Arcane.
 author: M. Yekta Güngör
-author_url: https://twitter.com/ngyekta
+author_url: https://twitter.com/yektagg
 date: 2023-04-18T15:00:00.000Z
 ---
 

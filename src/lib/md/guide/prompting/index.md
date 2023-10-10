@@ -2,7 +2,7 @@
 title: How to write better prompts?
 description: Learn how to write better prompts for fine-tuned Stable Diffusion models and Kandinsky on Stablecog.
 author: M. Yekta Güngör
-author_url: https://twitter.com/ngyekta
+author_url: https://twitter.com/yektagg
 date: 2023-04-18T15:00:00.000Z
 ---
 

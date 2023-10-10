@@ -2,7 +2,7 @@
 title: Models
 description: Learn about the models that are available on Stablecog. Stable Diffusion, Kandinsky, Openjourney, Waifu Diffusion and more.
 author: M. Yekta Güngör
-author_url: https://twitter.com/ngyekta
+author_url: https://twitter.com/yektagg
 date: 2023-04-18T15:00:00.000Z
 ---
 

@@ -2,7 +2,7 @@
 title: 'Kandinsky 2.2: The Best Open-Source AI Image Model with a Permissive License'
 description: Kandinsky 2.2 offers more realistic images, a higher base resolution (1024x1024), supports ControlNet, produces more detail and wider scenes.
 author: M. Yekta Güngör
-author_url: https://twitter.com/ngyekta
+author_url: https://twitter.com/yektagg
 date: 2023-07-14T15:00:00.000Z
 ---
 

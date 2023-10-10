@@ -2,7 +2,7 @@
 title: 'Kandinsky v2.1: Open Source Midjourney Alternative'
 description: An open-source and multilingual latent diffusion model that shows similarities to Midjourney's initial versions. It is now available on Stablecog!
 author: M. Yekta Güngör
-author_url: https://twitter.com/ngyekta
+author_url: https://twitter.com/yektagg
 date: 2023-04-06T15:00:00.000Z
 ---
 

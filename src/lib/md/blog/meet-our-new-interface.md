@@ -2,7 +2,7 @@
 title: Meet Our New Interface
 description: We have a completely new interface to make your experience better. It allows for parallel generations and upscales. Your history is also accessible at all times.
 author: M. Yekta Güngör
-author_url: https://twitter.com/ngyekta
+author_url: https://twitter.com/yektagg
 date: 2023-05-10T15:00:00.000Z
 ---
 

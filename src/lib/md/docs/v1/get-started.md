@@ -2,7 +2,7 @@
 title: Get Started
 description: Get started with the Stablecog API. Learn how to generate or upscale images, and more.
 author: M. Yekta Güngör
-author_url: https://twitter.com/ngyekta
+author_url: https://twitter.com/yektagg
 date: 2023-05-26T15:00:00.000Z
 preview_image_url: https://ba.stablecog.com/docs/previews/get-started.jpg
 ---

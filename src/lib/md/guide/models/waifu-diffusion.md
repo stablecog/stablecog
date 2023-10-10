@@ -2,7 +2,7 @@
 title: What is Waifu Diffusion?
 description: Waifu Diffusion is a fine-tuned Stable Diffusion model that is trained large number of high quality anime images.
 author: M. Yekta Güngör
-author_url: https://twitter.com/ngyekta
+author_url: https://twitter.com/yektagg
 date: 2023-04-18T15:00:00.000Z
 ---
 

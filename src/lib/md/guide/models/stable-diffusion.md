@@ -2,7 +2,7 @@
 title: What is Stable Diffusion v1.5?
 description: Stable Diffusion is an open-source latent diffusion model that was trained on billions of images to generate images given any prompt.
 author: M. Yekta Güngör
-author_url: https://twitter.com/ngyekta
+author_url: https://twitter.com/yektagg
 date: 2023-04-18T15:00:00.000Z
 ---
 

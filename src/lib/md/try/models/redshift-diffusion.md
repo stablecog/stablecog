@@ -2,7 +2,7 @@
 title: Try Redshift Diffusion for Free
 description: Redshift Diffusion is a fine-tuned Stable Diffusion model trained on high resolution 3D artworks. Try it on Stablecog for free.
 author: M. Yekta Güngör
-author_url: https://twitter.com/ngyekta
+author_url: https://twitter.com/yektagg
 date: 2023-04-18T15:00:00.000Z
 preview_image_url: https://ba.stablecog.com/try/previews/redshift-diffusion.jpg
 ---

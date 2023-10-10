@@ -2,7 +2,7 @@
 title: What is Seed?
 description: Seed is a way of initializing the random number generator that is used to generate the image. Learn more about it in our guide.
 author: M. Yekta Güngör
-author_url: https://twitter.com/ngyekta
+author_url: https://twitter.com/yektagg
 date: 2023-04-18T15:00:00.000Z
 ---
 

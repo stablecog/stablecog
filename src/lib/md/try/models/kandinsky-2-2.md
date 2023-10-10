@@ -2,7 +2,7 @@
 title: Try Kandinsky 2.2 for Free
 description: Kandinsky 2.2 is an open-source and multilingual latent diffusion model that has a base resolution of 1024x1024 pixels. It's significantly better than Kandinsky v2.1 on realistic images. Try it on Stablecog for free.
 author: M. Yekta Güngör
-author_url: https://twitter.com/ngyekta
+author_url: https://twitter.com/yektagg
 date: 2023-04-18T15:00:00.000Z
 preview_image_url: https://ba.stablecog.com/try/previews/kandinsky.jpg
 ---
