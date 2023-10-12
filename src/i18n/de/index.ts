@@ -870,6 +870,7 @@ const de: Translation = {
 			MostPopular: 'Am beliebtesten',
 			BestValue: 'Bestes Preis-Leistungs-Verhältnis'
 		},
+		Discounts: { FirstPurchase50OffParagraph: 'First month is 50% off!' },
 		Purchase: {
 			Succeeded: {
 				PageTitle: 'Es kann los gehen!',

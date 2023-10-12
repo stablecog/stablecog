@@ -882,6 +882,7 @@ const ja: Translation = {
 			MostPopular: '一番好評',
 			BestValue: 'お買い得'
 		},
+		Discounts: { FirstPurchase50OffParagraph: 'First month is 50% off!' },
 		Purchase: {
 			Succeeded: {
 				PageTitle: 'これで完了です!',

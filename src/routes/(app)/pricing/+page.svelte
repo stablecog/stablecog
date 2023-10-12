@@ -33,6 +33,8 @@
 
 	export let data;
 
+	const isFirstPurchase50Off = false;
+
 	$: subscriptionCards = [
 		{
 			id: 'plan-starter',
@@ -375,17 +377,43 @@
 						<h3 class="w-full text-c-on-bg text-center font-bold text-xl md:-mt-1.5 py-0.5 gap-2">
 							{card.title}
 						</h3>
-						<h4
+						<div
 							class="w-[100%+2rem] md:w-[100%+2.5rem] -mx-4 md:-mx-5 text-center bg-c-bg-secondary
-							text-c-on-bg mt-4 py-3 font-bold flex justify-center items-start"
+							text-c-on-bg mt-4 py-3 font-bold flex flex-col items-center"
 						>
-							<span class="text-xl">{card.currencySymbol}</span><span class="text-3xl font-bold">
-								{card.amount.toLocaleString($locale)}
-							</span>
-							<span class="self-end mb-0.75 text-c-on-bg/60 font-medium"
-								>{$LL.Pricing.SlashMonth()}</span
-							>
-						</h4>
+							<h4 class="max-w-full flex flex-wrap justify-center items-start px-2">
+								{#if isFirstPurchase50Off}
+									<span class="text-xl text-c-on-bg/50">{card.currencySymbol}</span><span
+										class="text-3xl font-semibold text-c-on-bg/50 line-through pr-0.4ch"
+									>
+										{card.amount.toLocaleString($locale)}
+									</span><span class="text-xl">{card.currencySymbol}</span><span
+										class="text-3xl font-bold"
+									>
+										{(card.amount / 2).toLocaleString($locale)}
+									</span>
+								{:else}
+									<span class="text-xl">{card.currencySymbol}</span><span
+										class="text-3xl font-bold"
+									>
+										{card.amount.toLocaleString($locale)}
+									</span>
+								{/if}
+								<span class="self-end mb-0.75 text-c-on-bg/60 font-medium"
+									>{$LL.Pricing.SlashMonth()}</span
+								>
+							</h4>
+							{#if isFirstPurchase50Off}
+								<div class="max-w-full px-2 mt-1 pb-1">
+									<p
+										class="max-w-full bg-c-primary/10 text-sm text-c-primary font-medium px-1.75 py-0.5 rounded-md"
+									>
+										{$LL.Pricing.Discounts.FirstPurchase50OffParagraph()}
+									</p>
+								</div>
+							{/if}
+						</div>
+
 						<ul class="w-full mt-6 flex flex-col gap-3 px-1 flex-1">
 							{#each card.features as feature}
 								<li class="flex items-center gap-3">

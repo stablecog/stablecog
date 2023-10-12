@@ -889,6 +889,7 @@ const tr: Translation = {
 			MostPopular: 'En Popüler',
 			BestValue: 'En Kârlı'
 		},
+		Discounts: { FirstPurchase50OffParagraph: 'First month is 50% off!' },
 		Purchase: {
 			Succeeded: {
 				PageTitle: 'İşlem tamam!',

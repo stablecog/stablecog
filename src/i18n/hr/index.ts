@@ -863,6 +863,7 @@ const hr: Translation = {
 			MostPopular: 'Most Popular',
 			BestValue: 'Best Value'
 		},
+		Discounts: { FirstPurchase50OffParagraph: 'First month is 50% off!' },
 		Purchase: {
 			Succeeded: {
 				PageTitle: "You're all set!",

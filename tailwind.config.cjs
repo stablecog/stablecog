@@ -63,6 +63,8 @@ module.exports = {
 				'bounce-out': 'cubic-bezier(.3,2,.5,.8)'
 			},
 			spacing: {
+				'0.4ch': '0.4ch',
+				'0.5ch': '0.5ch',
 				'1ch': '1ch',
 				'1.5px': '1.5px',
 				'2px': '2px',

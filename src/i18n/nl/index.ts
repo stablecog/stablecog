@@ -877,6 +877,7 @@ const nl: Translation = {
 			MostPopular: 'Populairst',
 			BestValue: 'Meeste voordeel'
 		},
+		Discounts: { FirstPurchase50OffParagraph: 'First month is 50% off!' },
 		Purchase: {
 			Succeeded: {
 				PageTitle: 'Je bent helemaal klaar!',

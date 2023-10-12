@@ -2614,6 +2614,12 @@ type RootTranslation = {
 			 */
 			BestValue: string
 		}
+		Discounts: {
+			/**
+			 * F​i​r​s​t​ ​m​o​n​t​h​ ​i​s​ ​5​0​%​ ​o​f​f​!
+			 */
+			FirstPurchase50OffParagraph: string
+		}
 		Purchase: {
 			Succeeded: {
 				/**
@@ -5935,6 +5941,12 @@ export type TranslationFunctions = {
 			 * Best Value
 			 */
 			BestValue: () => LocalizedString
+		}
+		Discounts: {
+			/**
+			 * First month is 50% off!
+			 */
+			FirstPurchase50OffParagraph: () => LocalizedString
 		}
 		Purchase: {
 			Succeeded: {

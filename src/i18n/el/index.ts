@@ -896,6 +896,7 @@ const es: Translation = {
 			MostPopular: 'Τα πιο δημοφιλή',
 			BestValue: 'Βέλτιστη προσφορά'
 		},
+		Discounts: { FirstPurchase50OffParagraph: 'First month is 50% off!' },
 		Purchase: {
 			Succeeded: {
 				PageTitle: 'Είστε έτοιμοι!',

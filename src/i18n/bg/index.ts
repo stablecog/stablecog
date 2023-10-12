@@ -868,6 +868,7 @@ const bg: Translation = {
 			MostPopular: 'Най-популярен',
 			BestValue: 'Най-стойностно'
 		},
+		Discounts: { FirstPurchase50OffParagraph: 'First month is 50% off!' },
 		Purchase: {
 			Succeeded: {
 				PageTitle: 'Всичко е готово!',
