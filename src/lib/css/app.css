@@ -126,7 +126,7 @@ input[type='range']:focus-visible, div[tabindex='0']:focus-visible {
 
 /* text select color */
 ::selection {
-	background: rgb(var(--c-primary) / 0.5);
+	background: rgb(var(--c-primary) / 0.4);
 }
 
 .hide-scrollbar {

@@ -404,9 +404,9 @@
 								>
 							</h4>
 							{#if isFirstPurchase50Off}
-								<div class="max-w-full px-2 mt-1 pb-1">
+								<div class="max-w-full px-2 mt-1.5 pb-1">
 									<p
-										class="max-w-full bg-c-primary/10 text-sm text-c-primary font-medium px-1.75 py-0.5 rounded-md"
+										class="max-w-full rounded-full bg-c-primary/15 ring-1 ring-c-primary/25 text-sm text-c-primary font-medium px-2.5 py-0.5"
 									>
 										{$LL.Pricing.Discounts.FirstPurchase50OffParagraph()}
 									</p>
