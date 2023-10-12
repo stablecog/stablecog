@@ -24,7 +24,7 @@
 	import type { Writable } from 'svelte/store';
 	import type { TDirTreeItem } from '$routes/+layout';
 	import IconChevronDown from '$components/icons/IconChevronDown.svelte';
-	import BannerWrapper from '$components/BannerWrapper.svelte';
+	import BannerWrapper from '$components/navigation/navbar/BannerWrapper.svelte';
 	import SignInModal from '$components/SignInModal.svelte';
 	import RemainingCredits from '$components/navigation/navbar/RemainingCredits.svelte';
 
@@ -57,7 +57,7 @@
 		: 'bg-c-bg shadow-navbar'}"
 >
 	{#if showBanner}
-		<BannerWrapper />
+		<BannerWrapper canShow={true} />
 	{/if}
 	<div class="w-full flex flex-row items-center justify-between relative z-0">
 		<PageLoadProgressBar />

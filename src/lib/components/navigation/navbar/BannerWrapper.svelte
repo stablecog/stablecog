@@ -1,15 +1,18 @@
 <script lang="ts">
 	import { afterNavigate } from '$app/navigation';
 	import { page } from '$app/stores';
-	import Banner from '$components/Banner.svelte';
-	import IconBolt from '$components/icons/IconBolt.svelte';
+	import Banner from '$components/navigation/navbar/Banner.svelte';
 	import { lastClosedNotification } from '$ts/stores/lastClosedNotification';
 	import { onMount } from 'svelte';
+	import IconCart from '$components/icons/IconCart.svelte';
 
-	const lastNotification = 'kandinsky-2-2-announcement';
-	const href = '/blog/kandinsky-2-2-the-best-open-source-ai-image-model';
+	export let canShow = true;
+
+	const lastNotification = 'first-month-50-off';
+	const href = '/pricing';
 
 	let mounted = false;
+
 	onMount(() => {
 		mounted = true;
 	});
@@ -21,7 +24,7 @@
 	});
 </script>
 
-{#if mounted && ($lastClosedNotification === null || $lastClosedNotification !== lastNotification) && $page.url.pathname !== href}
+{#if mounted && canShow && ($lastClosedNotification === null || $lastClosedNotification !== lastNotification) && $page.url.pathname !== href}
 	<Banner
 		{href}
 		onClose={() => {
@@ -29,8 +32,8 @@
 		}}
 	>
 		<div class="flex items-center justify-center gap-2">
-			<IconBolt class="w-6 h-6 flex-shrink-0" />
-			<p class="flex-shrink min-w-0 overflow-hidden overflow-ellipsis">We have a new AI model!</p>
+			<IconCart class="w-6 h-6 flex-shrink-0" />
+			<p class="flex-shrink min-w-0 overflow-hidden overflow-ellipsis">First month is 50% off!</p>
 		</div>
 	</Banner>
 {/if}
