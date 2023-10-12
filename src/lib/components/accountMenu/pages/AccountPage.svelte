@@ -77,6 +77,17 @@
 				</div>
 			</DropdownItem>
 		{/if}
+		<DropdownItem href="/account" onClick={closeMenu}>
+			<div class="flex-1 min-w-0 flex items-center justify-start gap-2.5">
+				<IconUser class="transition w-6 h-6 text-c-text not-touch:group-hover:text-c-primary" />
+				<p
+					class="flex-1 min-w-0 overflow-hidden overflow-ellipsis text-left transition
+					text-c-on-bg not-touch:group-hover:text-c-primary"
+				>
+					{$LL.Account.AccountButton()}
+				</p>
+			</div>
+		</DropdownItem>
 		<DropdownItem href="/user/{$userSummary?.username}" onClick={closeMenu}>
 			<div class="flex-1 min-w-0 flex items-center justify-start gap-2.5">
 				<IconProfile class="transition w-6 h-6 text-c-text not-touch:group-hover:text-c-primary" />
@@ -88,14 +99,14 @@
 				</p>
 			</div>
 		</DropdownItem>
-		<DropdownItem href="/account" onClick={closeMenu}>
+		<DropdownItem onClick={() => setAccountMenuDropdownPage('settings')}>
 			<div class="flex-1 min-w-0 flex items-center justify-start gap-2.5">
-				<IconUser class="transition w-6 h-6 text-c-text not-touch:group-hover:text-c-primary" />
+				<IconSettings class="transition w-6 h-6 text-c-text not-touch:group-hover:text-c-primary" />
 				<p
 					class="flex-1 min-w-0 overflow-hidden overflow-ellipsis text-left transition
 					text-c-on-bg not-touch:group-hover:text-c-primary"
 				>
-					{$LL.Account.AccountButton()}
+					{$LL.Settings.Title()}
 				</p>
 			</div>
 		</DropdownItem>
@@ -109,17 +120,6 @@
 					text-c-on-bg not-touch:group-hover:text-c-primary"
 				>
 					{$LL.Documentation.ForDevelopersTitle()}
-				</p>
-			</div>
-		</DropdownItem>
-		<DropdownItem onClick={() => setAccountMenuDropdownPage('settings')}>
-			<div class="flex-1 min-w-0 flex items-center justify-start gap-2.5">
-				<IconSettings class="transition w-6 h-6 text-c-text not-touch:group-hover:text-c-primary" />
-				<p
-					class="flex-1 min-w-0 overflow-hidden overflow-ellipsis text-left transition
-					text-c-on-bg not-touch:group-hover:text-c-primary"
-				>
-					{$LL.Settings.Title()}
 				</p>
 			</div>
 		</DropdownItem>
