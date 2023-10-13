@@ -27,6 +27,7 @@ export interface TUserSummary {
 	has_nonfree_credits?: boolean;
 	wants_email?: boolean;
 	username: string;
+	purchase_count: number;
 	refetch?: <TPageData>(
 		options?: (RefetchOptions & RefetchQueryFilters<TPageData>) | undefined
 	) => Promise<QueryObserverResult<TUserSummary | null, unknown>>;
