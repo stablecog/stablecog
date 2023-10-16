@@ -18,7 +18,8 @@
 		PUBLIC_STRIPE_PRODUCT_ID_LARGE_PACK,
 		PUBLIC_STRIPE_PRICE_ID_LARGE_PACK,
 		PUBLIC_STRIPE_PRICE_ID_MEGA_PACK,
-		PUBLIC_STRIPE_PRODUCT_ID_MEGA_PACK
+		PUBLIC_STRIPE_PRODUCT_ID_MEGA_PACK,
+		PUBLIC_STRIPE_PROMOTION_CODE_ID_FIRST_PURCHASE_50_OFF
 	} from '$env/static/public';
 	import {
 		STRIPE_CURRENCY_TO_SYMBOL,
@@ -33,7 +34,10 @@
 
 	export let data;
 
-	const isFirstPurchase50Off = false;
+	$: isFirstPurchase50Off = $userSummary && $userSummary.purchase_count > 0 ? false : true;
+	$: promotionCodeId = isFirstPurchase50Off
+		? PUBLIC_STRIPE_PROMOTION_CODE_ID_FIRST_PURCHASE_50_OFF
+		: undefined;
 
 	$: subscriptionCards = [
 		{
@@ -43,6 +47,7 @@
 			productId: PUBLIC_STRIPE_PRODUCT_ID_STARTER_SUBSCRIPTION,
 			currency: data.currency,
 			currencySymbol: STRIPE_CURRENCY_TO_SYMBOL[data.currency],
+			promotionCodeId,
 			amount:
 				data.currency === 'eur'
 					? STRIPE_PRODUCT_ID_OBJECTS_SUBSCRIPTIONS_MO[
@@ -76,6 +81,7 @@
 			productId: PUBLIC_STRIPE_PRODUCT_ID_PRO_SUBSCRIPTION,
 			currency: data.currency,
 			currencySymbol: STRIPE_CURRENCY_TO_SYMBOL[data.currency],
+			promotionCodeId,
 			amount:
 				data.currency === 'eur'
 					? STRIPE_PRODUCT_ID_OBJECTS_SUBSCRIPTIONS_MO[PUBLIC_STRIPE_PRODUCT_ID_PRO_SUBSCRIPTION]
@@ -109,6 +115,7 @@
 			productId: PUBLIC_STRIPE_PRODUCT_ID_ULTIMATE_SUBSCRIPTION,
 			currency: data.currency,
 			currencySymbol: STRIPE_CURRENCY_TO_SYMBOL[data.currency],
+			promotionCodeId,
 			amount:
 				data.currency === 'eur'
 					? STRIPE_PRODUCT_ID_OBJECTS_SUBSCRIPTIONS_MO[
@@ -286,10 +293,12 @@
 
 	async function createCheckoutSessionAndRedirect({
 		priceId,
-		currency
+		currency,
+		promotionCodeId
 	}: {
 		priceId: string;
 		currency: string;
+		promotionCodeId?: string;
 	}) {
 		selectedPriceId = priceId;
 		try {
@@ -304,6 +313,7 @@
 					target_price_id: priceId,
 					success_url: `${window.location.origin}/pricing/purchase/succeeded`,
 					cancel_url: `${window.location.origin}/pricing/purchase/cancelled`,
+					promotion_code_id: promotionCodeId,
 					currency
 				})
 			});
@@ -437,7 +447,8 @@
 									!isDowngrade
 										? createCheckoutSessionAndRedirect({
 												priceId: card.priceIdMo,
-												currency: card.currency
+												currency: card.currency,
+												promotionCodeId: card.promotionCodeId
 										  })
 										: null}
 								class="w-full mt-7"

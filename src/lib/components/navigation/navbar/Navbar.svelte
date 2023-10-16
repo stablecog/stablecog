@@ -40,7 +40,7 @@
 	const toggleAccountMenu = () => (isAccountMenuOpen = !isAccountMenuOpen);
 	const closeAccountMenu = () => (isAccountMenuOpen = false);
 
-	const showBanner = false;
+	const showBanner = true;
 </script>
 
 <nav
@@ -57,7 +57,7 @@
 		: 'bg-c-bg shadow-navbar'}"
 >
 	{#if showBanner}
-		<BannerWrapper canShow={true} />
+		<BannerWrapper canShow={$userSummary && $userSummary.purchase_count > 0 ? false : true} />
 	{/if}
 	<div class="w-full flex flex-row items-center justify-between relative z-0">
 		<PageLoadProgressBar />

@@ -27,6 +27,7 @@
 {#if mounted && canShow && ($lastClosedNotification === null || $lastClosedNotification !== lastNotification) && $page.url.pathname !== href}
 	<Banner
 		{href}
+		target="_self"
 		onClose={() => {
 			lastClosedNotification.set(lastNotification);
 		}}
