@@ -423,12 +423,11 @@
 								</div>
 							{/if}
 						</div>
-
 						<ul class="w-full mt-6 flex flex-col gap-3 px-1 flex-1">
 							{#each card.features as feature}
-								<li class="flex items-center gap-3">
+								<li class="w-full flex items-start gap-3">
 									<span class="text-c-on-bg/60">-</span>
-									{feature}
+									<span class="flex-shrink min-w-0">{feature}</span>
 								</li>
 							{/each}
 						</ul>
@@ -507,9 +506,9 @@
 							</h4>
 							<ul class="w-full mt-6 flex flex-col gap-3 px-1 flex-1">
 								{#each card.features as feature}
-									<li class="flex items-center gap-3">
+									<li class="flex items-start gap-3">
 										<span class="text-c-on-bg/60">-</span>
-										{feature}
+										<span class="flex-shrink min-w-0">{feature}</span>
 									</li>
 								{/each}
 							</ul>
