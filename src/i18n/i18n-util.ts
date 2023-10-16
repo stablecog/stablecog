@@ -11,23 +11,13 @@ import type { Formatters, Locales, Translations, TranslationFunctions } from './
 export const baseLocale: Locales = 'en'
 
 export const locales: Locales[] = [
-	'bg',
 	'de',
 	'el',
 	'en',
-	'es',
-	'fr',
-	'hi',
-	'hr',
 	'ja',
 	'ko',
 	'nl',
-	'pt-br',
-	'pt-pt',
-	'ru',
-	'tr',
-	'vi',
-	'zh-Hans'
+	'tr'
 ]
 
 export const isLocale = (locale: string): locale is Locales => locales.includes(locale as Locales)

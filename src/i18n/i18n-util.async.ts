@@ -6,23 +6,13 @@ import type { Locales, Translations } from './i18n-types'
 import { loadedFormatters, loadedLocales, locales } from './i18n-util'
 
 const localeTranslationLoaders = {
-	bg: () => import('./bg'),
 	de: () => import('./de'),
 	el: () => import('./el'),
 	en: () => import('./en'),
-	es: () => import('./es'),
-	fr: () => import('./fr'),
-	hi: () => import('./hi'),
-	hr: () => import('./hr'),
 	ja: () => import('./ja'),
 	ko: () => import('./ko'),
 	nl: () => import('./nl'),
-	'pt-br': () => import('./pt-br'),
-	'pt-pt': () => import('./pt-pt'),
-	ru: () => import('./ru'),
 	tr: () => import('./tr'),
-	vi: () => import('./vi'),
-	'zh-Hans': () => import('./zh-Hans'),
 }
 
 const updateDictionary = (locale: Locales, dictionary: Partial<Translations>): Translations =>
