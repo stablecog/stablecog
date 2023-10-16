@@ -39,6 +39,7 @@
 	export let readonly: boolean | null | undefined = undefined;
 	export let rounding: string | undefined = undefined;
 	export let iconForButton: ConstructorOfATypedSvelteComponent | undefined = undefined;
+	export let iconForButtonLabel: string | undefined = undefined;
 	let classes = '';
 
 	$: showClearButton = value !== undefined && value !== '' && value !== null;
@@ -212,7 +213,13 @@
 				type="md"
 			/>
 			{#if iconForButton}
-				<Button noRounding noPadding class="py-2 px-2.5 md:p-3 rounded-r-xl" size="sm">
+				<Button
+					label={iconForButtonLabel}
+					noRounding
+					noPadding
+					class="py-2 px-3 md:p-3 rounded-r-xl"
+					size="sm"
+				>
 					<svelte:component this={iconForButton} strokeWidth={2} class="w-6 h-6 md:w-7 md:h-7" />
 				</Button>
 			{/if}

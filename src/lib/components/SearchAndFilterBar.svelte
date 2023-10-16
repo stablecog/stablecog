@@ -158,12 +158,13 @@
 				shadow={inputShadow}
 				onClearButtonClicked={resetSearchString}
 				iconForButton={IconSearch}
+				iconForButtonLabel={$LL.Gallery.SearchInput.Title()}
 			>
 				<IconSearch slot="icon" class="w-full h-full" />
 			</Input>
 		</div>
 		<SubtleButton
-			class="py-2 px-2.5 md:p-3"
+			class="py-2 px-3 md:p-3"
 			noPadding
 			label={isFiltersOpen ? 'Collapse Filters' : 'Expand Filters'}
 			shadow={inputShadow}
