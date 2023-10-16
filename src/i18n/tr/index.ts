@@ -46,8 +46,8 @@ const tr: Translation = {
 		},
 		GuidanceScaleSlider: {
 			Error: {
-				TooHigh: 'That high of a value might produce poor results.',
-				TooLow: 'That low of a value might produce poor results.'
+				TooHigh: 'Bu kadar yüksek bir değer kötü sonuç doğurabilir.',
+				TooLow: 'Bu kadar düşük bir değer kötü sonuç doğurabilir.'
 			},
 			Title: 'Benzeme Ölçeği',
 			Paragraph:
@@ -452,7 +452,7 @@ const tr: Translation = {
 		TryAnotherImage: 'Başka fotoğraf dene :(',
 		OnceEvery60Seconds: 'Her 60 saniyede sadece bir link talebinde bulunabilirsin.',
 		LinkExpired: {
-			TitleAlt: 'The link is expired',
+			TitleAlt: 'Linkin süresi dolmuş',
 			Title: 'Link Geçersiz',
 			Paragraph: 'Link sadece bir kere kullanılabilir ve 24 saat sonunda geçersiz hale gelir.'
 		},
@@ -466,8 +466,8 @@ const tr: Translation = {
 	},
 	UpcomingCredits: {
 		MorePaidPlanCreditsTooltip: {
-			Title: 'More on the way!',
-			Paragraph: 'Your credits will refresh:'
+			Title: 'Daha fazlası yolda!',
+			Paragraph: 'Kredilerin yenilecek:'
 		},
 		MoreFreeCreditsTooltip: {
 			Title: 'Daha fazlası yolda!',
@@ -537,7 +537,7 @@ const tr: Translation = {
 		AlreadyHaveAnAccountTitle: 'Zaten üye misin?',
 		LoginInsteadButton: 'Giriş yap',
 		WantsEmailCheckbox: {
-			Paragraph: 'Güncellemeler ve fırsatlar hakkında bilgi al.',
+			Paragraph: 'İndirimlerden ve güncellemelerden haberdar ol.',
 			NoSpamParagraph: 'Kesinlikle spam yapmıyoruz.'
 		},
 		SixDigitCodeInput: {
@@ -651,50 +651,55 @@ const tr: Translation = {
 		MyAccountButton: 'Üyeliğim',
 		SubscriptionPlanTitle: 'Üyelik Tipi',
 		RemainingImagesTitle: 'Kalan Fotoğraflar',
-		UpcomingCreditsTitle: 'Upcoming Credits',
+		UpcomingCreditsTitle: 'Gelecek Krediler',
 		RemainingCreditsTitle: 'Kalan Krediler',
 		RemainingTitle: 'Kalan',
-		SubscriptionStatusTitle: 'Subscription Status',
-		SubscriptionRenewalTitle: 'Subscription Renewal',
-		SubscriptionCancellationTitle: 'Subscription Cancellation',
-		ManageSubscriptionTitle: 'Manage Subscription',
-		ManageTitle: 'Manage',
+		SubscriptionStatusTitle: 'Abonelik Durumu',
+		SubscriptionRenewalTitle: 'Abonelik Yenilenmesi',
+		SubscriptionCancellationTitle: 'Abonelik İptali',
+		ManageSubscriptionTitle: 'Aboneliği Yönet',
+		ManageTitle: 'Yönet',
 		Apps: {
 			Authorize: {
-				PageTitle: 'Authorize {platform}',
-				PageTitleFallback: 'Authorize App',
-				PageParagraph: 'Click the button below to authorize {platform}.',
-				PageSuccessTitle: 'Authorized!',
-				PageSuccessParagraph: 'You can return back to {platform} now.',
-
-				SignInTitle: 'Authorize {platform}',
-				SignInParagraph: 'Create an account or sign in to authorize {platform}.',
-				AuthorizeButton: 'Authorize',
+				PageTitle: 'İzin Ver: {platform}',
+				PageTitleFallback: 'Uygulamaya İzin Ver',
+				PageParagraph: '{platform} uygulamasına izin vermek için butona tıkla.',
+				PageSuccessTitle: 'İzin Verildi!',
+				PageSuccessParagraph: '{platform} uygulamasına geri dönebilirsin.',
+				SignInTitle: 'İzin Ver: {platform}',
+				SignInParagraph:
+					'{platform} uygulamasına izin vermek için bir üyelik oluştur veya giriş yap.',
+				AuthorizeButton: 'İzin Ver',
 				Error: {
-					NoValidAppIdParagraph:
-						"This link doesn't contain a valid app ID. Please request a new link.",
-					NoValidCodeParagraph: "This link doesn't contain a valid code. Please request a new link."
+					NoValidAppIdParagraph: 'Bu link geçerli bir uygulama kodu içermiyor. Yeni bir link iste.',
+					NoValidCodeParagraph: 'Bu link geçerli bir kod içermiyor. Yeni bir link iste.'
 				}
 			},
-			Platform: { Raycast: 'Raycast', Stablecog: 'Stablecog' },
-			NoAppsYet: "You haven't connected any apps yet.",
-			PageTitle: 'Applications',
-			PageParagraph:
-				"The applications that you've connected to your Stablecog account are listed below.",
+			Platform: {
+				Raycast: 'Raycast',
+				Stablecog: 'Stablecog'
+			},
+			NoAppsYet: 'Henüz izin verdiğin bir uygulama yok.',
+			PageTitle: 'Uygulamalar',
+			PageParagraph: 'Stablecog üyeliğine bağladığın uygulamalar aşağıda listelenmiştir.',
 			KeyTable: {
-				ConnectedAtTitle: 'Connected'
+				ConnectedAtTitle: 'Bağlandı'
 			},
 			AppModal: {
 				Delete: {
-					Title: 'Revoke Access',
+					Title: 'İzni Kaldır',
 					Paragraph:
-						"This app's access to your Stablecog account will be revoked immediately. Once the access is revoked, the requests coming from this app will be rejected.",
-					RevokeAccessButton: 'Revoke Access'
+						'Bu uygulamanın Stablecog üyeliğine erişim izni hemen kesilecek. İzin kesildikten sonra uygulamanın Stablecog hesabına erişim istekleri reddedilecek.',
+					RevokeAccessButton: 'İzni Kaldır'
 				}
 			}
 		},
 		Subscription: {
-			Status: { ActiveTitle: 'Active', CancellingTitle: 'Cancelling', CancelledTitle: 'Cancelled' },
+			Status: {
+				ActiveTitle: 'Aktif',
+				CancellingTitle: 'İptal Edilecek',
+				CancelledTitle: 'İptal Edildi'
+			},
 			UpdateSubscriptionTitle: 'Paket Değiştir',
 			ChangePlanTitle: 'Paket Değiştir',
 			CurrentPlanTitle: 'Mevcut Paket',
@@ -720,7 +725,7 @@ const tr: Translation = {
 			Account: 'Üyelik',
 			Usage: 'Kullanım',
 			APIKeys: 'API Anahtarları',
-			ConnectedApplications: 'Applications'
+			ConnectedApplications: 'Uygulamalar'
 		},
 		Meta: {
 			AccountCreationTitle: 'Üyelik',
@@ -889,7 +894,9 @@ const tr: Translation = {
 			MostPopular: 'En Popüler',
 			BestValue: 'En Kârlı'
 		},
-		Discounts: { FirstPurchase50OffParagraph: 'First month is 50% off!' },
+		Discounts: {
+			FirstPurchase50OffParagraph: 'İlk ay %50% indirimli!'
+		},
 		Purchase: {
 			Succeeded: {
 				PageTitle: 'İşlem tamam!',
@@ -946,7 +953,7 @@ const tr: Translation = {
 		Title: 'Kredin az kaldı ({remainingCredits})',
 		FreeWithMoreOnTheWay: {
 			Paragraph:
-				"Get more now by subscribing to a plan or participating in our events. You'll receive more free credits soon:"
+				'Abone olarak hemen daha fazla krediye erişebilirsin. Yakında daha fazla ücretsiz kredi alacaksın:'
 		},
 		FreeParagraph:
 			'Tüm aktif kullanıcılara her gün ücretsiz kredi veriyoruz. Bir plan satın alarak veya etkinliklerimize katılarak daha fazla kredi elde edebilirsin.',

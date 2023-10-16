@@ -5,6 +5,7 @@
 	import { lastClosedNotification } from '$ts/stores/lastClosedNotification';
 	import { onMount } from 'svelte';
 	import IconCart from '$components/icons/IconCart.svelte';
+	import LL from '$i18n/i18n-svelte';
 
 	export let canShow = true;
 
@@ -34,7 +35,9 @@
 	>
 		<div class="flex items-center justify-center gap-2">
 			<IconCart class="w-6 h-6 flex-shrink-0" />
-			<p class="flex-shrink min-w-0 overflow-hidden overflow-ellipsis">First month is 50% off!</p>
+			<p class="flex-shrink min-w-0 overflow-hidden overflow-ellipsis">
+				{$LL.Pricing.Discounts.FirstPurchase50OffParagraph()}
+			</p>
 		</div>
 	</Banner>
 {/if}
