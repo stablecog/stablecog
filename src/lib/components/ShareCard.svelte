@@ -54,7 +54,7 @@
 		{
 			icon: 'twitter',
 			iconClasses: 'bg-c-twitter text-white',
-			buttonText: $LL.Scl.Twitter(),
+			buttonText: $LL.Platform.Twitter(),
 			href: `https://twitter.com/intent/tweet?text=${encodeURIComponent(
 				`${
 					generation.user.username === $userSummary?.username
@@ -66,7 +66,7 @@
 		{
 			icon: 'facebook',
 			iconClasses: 'bg-c-facebook text-white',
-			buttonText: $LL.Scl.Facebook(),
+			buttonText: $LL.Platform.Facebook(),
 			href: `https://facebook.com/dialog/share?display=popup&href=${encodeURIComponent(
 				url
 			)}&app_id=${PUBLIC_FACEBOOK_APP_ID}`
@@ -74,7 +74,7 @@
 		{
 			icon: 'reddit',
 			iconClasses: 'bg-c-reddit text-white',
-			buttonText: $LL.Scl.Reddit(),
+			buttonText: $LL.Platform.Reddit(),
 			href: `https://reddit.com/submit?url=${encodeURIComponent(url)}&title=${encodeURIComponent(
 				generation.user.username === $userSummary?.username
 					? $LL.ShareCard.MessageUsersOwn()
@@ -84,7 +84,7 @@
 		{
 			icon: 'email',
 			iconClasses: 'bg-c-on-bg text-c-bg',
-			buttonText: $LL.Scl.Email(),
+			buttonText: $LL.Platform.Email(),
 			href: `mailto:,?subject=${encodeURIComponent(
 				generation.user.username === $userSummary?.username
 					? $LL.ShareCard.MessageUsersOwn()

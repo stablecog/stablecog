@@ -161,7 +161,6 @@ const ko: Translation = {
 				Default: '일반',
 				Custom: '커스텀'
 			},
-			UnknownTitle: '알 수 없음',
 			OutputsTitle: 'Outputs'
 		},
 		WaitingTitle: '이미지 생성을 기다리는 중',
@@ -244,6 +243,7 @@ const ko: Translation = {
 		ShareButton: '공유하기',
 		ShareOnButton: '{name}에 공유하기',
 		GoBackButton: 'Go Back',
+		UnknownTitle: '알 수 없음',
 		YesButton: '좋아요',
 		NoButton: '괜찮아요',
 		EnableButton: '활성화',
@@ -402,7 +402,6 @@ const ko: Translation = {
 				realName: 'P Sampler'
 			}
 		},
-		UnknownTitle: '알 수 없음',
 		AdvancedSettingsButton: 'Advanced Settings',
 		MoreOptionsTitle: '더 많은 옵션 보기',
 		LessOptionsTitle: '옵션 숨기기',
@@ -556,69 +555,6 @@ const ko: Translation = {
 			NotAvailable: "This username isn't available."
 		}
 	},
-	Pro: {
-		PageTitle: '더 많은 기능을 사용해보세요!',
-		PageParagraph:
-			'프로 멤버에 가입해서 Stablecog의 모든 기능을 사용해보세요. Stablecog가 제공하는 오픈소스와 무료 기능은 프로 멤버들의 지원을 통해 유지될 수 있습니다.',
-		PageTitleAlreadyPro: '이미 프로 멤버에 가입하셨네요!',
-		PageParagraphAlreadyPro:
-			'이미 프로 멤버에 가입해 주셨네요. Stablecog 프로젝트가 유지될 수 있도록 도와주셔서 고맙습니다. Stablecog가 마음에 드신다면 주변에도 많이 소개해주세요!',
-		ProPlanTitle: 'Pro',
-		Features: {
-			FullSpeed: '가장 빠른 속도의 이미지 생성',
-			ImageDimensions: '다양한 이미지 생성 옵션',
-			Upscale: '고해상도 이미지 생성 기능',
-			Steps: '다양한 생성 스텝 설정',
-			MoreModels: '더 많은 AI 모델',
-			MoreSchedulers: '다양한 스케쥴러 사용',
-			SavedToCloud: '클라우드에 보관되는 이미지 생성 결과',
-			Upcoming: '향후 출시될 기능 모두!',
-			CommercialUse: '상업적 사용 가능'
-		},
-		Soon: '(출시 예정)',
-		Month: '월',
-		BecomeProButton: '프로 멤버 가입하기',
-		Success: {
-			PageTitle: '프로 멤버가 되어주셔서 감사합니다!',
-			PageParagraph:
-				'이제부터 Stablecog에서 제공하는 모든 기능을 사용할 수 있습니다. 궁금한 점이 있을 때면 {platform}을 통해 문의해주세요.'
-		},
-		Cancel: {
-			PageTitle: '프로 멤버 가입이 중단됐어요.',
-			PageParagraph: '결제 과정에서 취소된 것 같아요. 실수로 취소했다면 다시 한번 시도해주세요.'
-		},
-		Reason: {
-			ParagraphWidth: '선택하신 이미지 너비는 프로 멤버만 사용할 수 있어요.',
-			ParagraphHeight: '선택하신 이미지 높이는 프로 멤버만 사용할 수 있어요.',
-			ParagraphDimensions: '선택하신 이미지 유사 정도는 프로 멤버만 사용할 수 있어요.',
-			ParagraphUpscale: '고해상도 이미지 생성 기능은 프로 멤버만 사용할 수 있어요.',
-			ParagraphInferenceSteps: '선택하신 이미지 생성 스텝은 프로 멤버만 사용할 수 있어요.',
-			ParagraphModel: '선택하신 AI 모델은 프로 멤버만 사용할 수 있어요.',
-			ParagraphScheduler: '선택하신 스케쥴러는 프로 멤버만 사용할 수 있어요.',
-			ParagraphWidthGeneration:
-				'선택하신 이미지는 프로 멤버만 사용할 수 있는 이미지 너비 값으로 생성됐어요.',
-			ParagraphHeightGeneration:
-				'선택하신 이미지는 프로 멤버만 사용할 수 있는 이미지 높이 값으로 생성됐어요.',
-			ParagraphDimensionsGeneration:
-				'선택하신 이미지는 프로 멤버만 사용할 수 있는 "유사한 정도" 값으로 생성됐어요.',
-			ParagraphInferenceStepsGeneration:
-				'선택하신 이미지는 프로 멤버만 사용할 수 있는 생성 스텝 값으로 생성됐어요.',
-			ParagraphModelGeneration:
-				'선택하신 이미지는 프로 멤버만 사용할 수 있는 AI 모델을 통해 생성됐어요.',
-			ParagraphSchedulerGeneration:
-				'선택하신 이미지는 프로 멤버만 사용할 수 있는 스케쥴러를 통해 생성됐어요.'
-		},
-		Tier: {
-			Title: {
-				Free: '무료 체험',
-				Pro: '프로'
-			},
-			Badge: {
-				Free: '무료 체험',
-				Pro: 'PRO'
-			}
-		}
-	},
 	Account: {
 		PageTitle: '로그인 계정',
 		ManageSubscriptionButton: '구독 설정',
@@ -653,7 +589,6 @@ const ko: Translation = {
 					NoValidCodeParagraph: "This link doesn't contain a valid code. Please request a new link."
 				}
 			},
-			Platform: { Raycast: 'Raycast', Stablecog: 'Stablecog' },
 			NoAppsYet: "You haven't connected any apps yet.",
 			PageTitle: 'Applications',
 			PageParagraph:
@@ -790,25 +725,6 @@ const ko: Translation = {
 				}
 			}
 		}
-	},
-	ForgotPassword: {
-		PageTitle: '비밀번호 재설정',
-		PageParagraph: '비밀번호 재설정을 위해 가입한 이메일로 인증코드를 발송합니다.',
-		SendResetCodeButton: '인증코드 받기',
-		PageTitleConfirmCode: '이메일 인증',
-		PageTitleConfirmCodeAlt: '이메일을 확인해주세요!',
-		PageParagraphConfirmCode:
-			'가입한 이메일로 6자리 인증코드를 발송했어요. 아래에 인증코드를 입력해주세요.',
-		ConfirmCodeButton: '이메일 인증하기',
-		PageTitleNewPassword: '새로운 비밀번호 설정',
-		PageParagraphNewPassword: '새로운 비밀번호를 설정해주세요.',
-		NewPasswordInput: {
-			Placeholder: '새로운 비밀번호'
-		},
-		SetNewPasswordButton: '새로운 비밀번호 설정하기',
-		PageTitleSuccess: '완료!',
-		PageParagraphSuccess: '새로운 비밀번호가 성공적으로 설정됐어요.',
-		ForgotPasswordButton: '비밀번호를 잊으셨나요?'
 	},
 	FeaturedOn: {
 		PageTitle: 'Stablecog가 알려지고 있어요!'
@@ -969,7 +885,7 @@ const ko: Translation = {
 		DocumentationButton: 'Documentation',
 		ForDevelopersTitle: 'For Developers'
 	},
-	Scl: {
+	Platform: {
 		Discord: 'Discord',
 		Email: 'Email',
 		Twitter: 'Twitter',
@@ -980,7 +896,9 @@ const ko: Translation = {
 		GitHub: 'GitHub',
 		Telegram: 'Telegram',
 		Facebook: 'Facebook',
-		ProductHunt: 'Product Hunt'
+		ProductHunt: 'Product Hunt',
+		Stablecog: 'Stablecog',
+		Raycast: 'Raycast'
 	},
 	Voiceover: {
 		ModelOptions: { '0f442a3e-cf53-490b-b4a9-b0dda63e9523': { Name: 'Bark' } },
@@ -1091,10 +1009,6 @@ const ko: Translation = {
 		NoPlatformIDParagraph: "This link doesn't contain a {platform} ID. Please request a new link.",
 		NoPlatformUsernameParagraph:
 			"This link doesn't contain a {platform} username. Please request a new link.",
-		Platform: {
-			Discord: 'Discord',
-			Stablecog: 'Stablecog'
-		},
 		ConnectToTitle: 'Connect to {platform}',
 		ConnectToParagraph:
 			'Create an account or sign in to connect your {platform} account to your Stablecog account.',

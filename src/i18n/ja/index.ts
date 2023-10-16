@@ -171,7 +171,6 @@ const ja: Translation = {
 				Default: '既定値',
 				Custom: 'カスタム設定'
 			},
-			UnknownTitle: '不明',
 			OutputsTitle: '出力'
 		},
 		WaitingTitle: '生成待機中',
@@ -254,6 +253,7 @@ const ja: Translation = {
 		ShareButton: '共有',
 		ShareOnButton: '{name} にて共有',
 		GoBackButton: '戻る',
+		UnknownTitle: '不明',
 		YesButton: 'はい',
 		NoButton: 'いいえ',
 		EnableButton: '有効にする',
@@ -414,7 +414,6 @@ const ja: Translation = {
 				realName: 'Pサンプラー'
 			}
 		},
-		UnknownTitle: '不明',
 		AdvancedSettingsButton: '詳細設定',
 		MoreOptionsTitle: 'オプションを表示',
 		LessOptionsTitle: 'オプションを隠す',
@@ -572,70 +571,6 @@ const ja: Translation = {
 			NotAvailable: "This username isn't available."
 		}
 	},
-	Pro: {
-		PageTitle: 'Pro版に登録',
-		PageParagraph:
-			'Stablecogプロジェクトの援助し、全ての機能のアンロックすることができます。Stablecogを完全オープンソースとして無料生成を引き続き提供できるのは、プロメンバーの皆様のおかげであります。',
-		PageTitleAlreadyPro: '既にPro版に登録済です!',
-		PageParagraphAlreadyPro:
-			'あなたはすでにPro版のメンバーです。当プロジェクトをサポートしていただき誠に有難うございます！是非Stablecogを楽しんで、友達と共有してください。',
-		ProPlanTitle: 'プロ',
-		Features: {
-			FullSpeed: '制限なしのフルスピード',
-			ImageDimensions: '任意の画像寸法',
-			Upscale: '画像のアップスケーリング',
-			Steps: '様々な推論ステップ',
-			MoreModels: 'より多くのモデル',
-			MoreSchedulers: 'より多くのスケジュラー',
-			SavedToCloud: '生成画像をクラウドに保存',
-			Upcoming: '今後追加される機能',
-			CommercialUse: '商用利用'
-		},
-		Soon: '(近日中)',
-		Month: '/ 月',
-		BecomeProButton: 'Pro版に登録',
-		Success: {
-			PageTitle: 'プロ版にアップグレードしました!',
-			PageParagraph:
-				'Stablecogが提供するすべての機能にアクセスできます。ご質問があれば、 {platform} までお問い合わせください。'
-		},
-		Cancel: {
-			PageTitle: 'プランを解約されました',
-			PageParagraph:
-				'サブスクリプションの処理がキャンセルされました。間違いであった場合は、もう一度やり直してください。'
-		},
-		Reason: {
-			ParagraphWidth: 'その画像の幅は無料プランでは利用できません。',
-			ParagraphHeight: 'その画像の高さは無料プランでは利用できません。',
-			ParagraphDimensions: 'これらの画像寸法は無料プランでは利用できません。',
-			ParagraphUpscale: 'アップスケール機能は無料プランでは利用できません。',
-			ParagraphInferenceSteps: 'この推論ステップの設定は無料プランでは利用できません。',
-			ParagraphModel: 'このAIモデルは無料プランでは利用できません。',
-			ParagraphScheduler: 'このスケジュラーは無料プランでは利用できません。',
-			ParagraphWidthGeneration:
-				'その生成は、無料プランでは利用できない画像幅を使用して作成されました。',
-			ParagraphHeightGeneration:
-				'その生成は、無料プランでは利用できない画像の高さを使用して作成されました。',
-			ParagraphDimensionsGeneration:
-				'その生成は、無料プランでは利用できない画像寸法を使用して作成されました。',
-			ParagraphInferenceStepsGeneration:
-				'その生成は、無料プランでは利用できない推論ステップ設定を使用して作成されました。',
-			ParagraphModelGeneration:
-				'その世代は、無料プランでは利用できないAIモデルを使用して作成されました。',
-			ParagraphSchedulerGeneration:
-				'その生成は、無料プランでは利用できないスケジュラーを使用して作成されました。'
-		},
-		Tier: {
-			Title: {
-				Free: '無料',
-				Pro: 'Pro'
-			},
-			Badge: {
-				Free: '無料',
-				Pro: 'PRO'
-			}
-		}
-	},
 	Account: {
 		PageTitle: 'アカウント',
 		ManageSubscriptionButton: 'サブスクリプションを管理',
@@ -670,7 +605,6 @@ const ja: Translation = {
 					NoValidCodeParagraph: "This link doesn't contain a valid code. Please request a new link."
 				}
 			},
-			Platform: { Raycast: 'Raycast', Stablecog: 'Stablecog' },
 			NoAppsYet: "You haven't connected any apps yet.",
 			PageTitle: 'Applications',
 			PageParagraph:
@@ -806,25 +740,6 @@ const ja: Translation = {
 				}
 			}
 		}
-	},
-	ForgotPassword: {
-		PageTitle: 'パスワードのリセット',
-		PageParagraph: 'パスワードをリセットするための6桁のコードをメールで送信します。',
-		SendResetCodeButton: 'コードを送信',
-		PageTitleConfirmCode: '確認する',
-		PageTitleConfirmCodeAlt: 'メールを確認してください',
-		PageParagraphConfirmCode:
-			'6桁のコードをメールで送信しました。続行するには以下に入力してください。',
-		ConfirmCodeButton: '確認',
-		PageTitleNewPassword: '新しいパスワード',
-		PageParagraphNewPassword: 'アカウントの新しいパスワードを入力してください。',
-		NewPasswordInput: {
-			Placeholder: '新しいパスワード'
-		},
-		SetNewPasswordButton: '新しいパスワードを設定',
-		PageTitleSuccess: '完了！',
-		PageParagraphSuccess: 'パスワードが正常にリセットされました。',
-		ForgotPasswordButton: 'パスワードをお忘れですか？'
 	},
 	FeaturedOn: {
 		PageTitle: '私たちは以下で紹介されています'
@@ -986,7 +901,7 @@ const ja: Translation = {
 		DocumentationButton: 'ドキュメンテーション',
 		ForDevelopersTitle: '開発者向け'
 	},
-	Scl: {
+	Platform: {
 		Discord: 'Discord',
 		Email: 'メール',
 		Twitter: 'Twitter',
@@ -997,7 +912,9 @@ const ja: Translation = {
 		GitHub: 'GitHub',
 		Telegram: 'Telegram',
 		Facebook: 'Facebook',
-		ProductHunt: 'Product Hunt'
+		ProductHunt: 'Product Hunt',
+		Stablecog: 'Stablecog',
+		Raycast: 'Raycast'
 	},
 	Voiceover: {
 		ModelOptions: {
@@ -1186,10 +1103,6 @@ const ja: Translation = {
 		NoPlatformIDParagraph: "This link doesn't contain a {platform} ID. Please request a new link.",
 		NoPlatformUsernameParagraph:
 			"This link doesn't contain a {platform} username. Please request a new link.",
-		Platform: {
-			Discord: 'Discord',
-			Stablecog: 'Stablecog'
-		},
 		ConnectToTitle: 'Connect to {platform}',
 		ConnectToParagraph:
 			'Create an account or sign in to connect your {platform} account to your Stablecog account.',

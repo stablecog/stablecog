@@ -161,7 +161,6 @@ const en: BaseTranslation = {
 				Default: 'Default',
 				Custom: 'Custom'
 			},
-			UnknownTitle: 'Unknown',
 			OutputsTitle: 'Outputs'
 		},
 		WaitingTitle: 'Waiting for generations',
@@ -244,6 +243,7 @@ const en: BaseTranslation = {
 		ShareButton: 'Share',
 		ShareOnButton: 'Share on {name}',
 		GoBackButton: 'Go Back',
+		UnknownTitle: 'Unknown',
 		YesButton: 'Yes',
 		NoButton: 'No',
 		EnableButton: 'Enable',
@@ -402,7 +402,6 @@ const en: BaseTranslation = {
 				realName: 'P Sampler'
 			}
 		},
-		UnknownTitle: 'Unknown',
 		AdvancedSettingsButton: 'Advanced Settings',
 		MoreOptionsTitle: 'More Options',
 		LessOptionsTitle: 'Less Options',
@@ -556,70 +555,6 @@ const en: BaseTranslation = {
 			NotAvailable: "This username isn't available."
 		}
 	},
-	Pro: {
-		PageTitle: 'Become a Pro',
-		PageParagraph:
-			"Unlock all features of Stablecog and support the project. Without the pro members, Stablecog wouldn't be able to stay completely open-source and offer free generations to everyone.",
-		PageTitleAlreadyPro: 'Already a Pro!',
-		PageParagraphAlreadyPro:
-			'You are already a pro member. Thank you for supporting the project! Go ahead and enjoy Stablecog, and consider sharing it with your friends.',
-		ProPlanTitle: 'Pro',
-		Features: {
-			FullSpeed: 'Full speed without set limits',
-			ImageDimensions: 'Different image dimensions',
-			Upscale: 'Upscale images',
-			Steps: 'Different inference steps',
-			MoreModels: 'More models',
-			MoreSchedulers: 'More schedulers',
-			SavedToCloud: 'Generations saved to the cloud',
-			Upcoming: 'Upcoming features',
-			CommercialUse: 'Commercial Use'
-		},
-		Soon: '(soon)',
-		Month: '/month',
-		BecomeProButton: 'Become a Pro',
-		Success: {
-			PageTitle: "You're a Pro!",
-			PageParagraph:
-				'You now have access to everything Stablecog has to offer. If you have any questions, reach out to us on {platform}.'
-		},
-		Cancel: {
-			PageTitle: "You've cancelled",
-			PageParagraph:
-				"You've cancelled the subscription process. If it was a mistake, you can try again."
-		},
-		Reason: {
-			ParagraphWidth: "That image width isn't available on the free plan.",
-			ParagraphHeight: "That image height isn't available on the free plan.",
-			ParagraphDimensions: "Those image dimensions aren't available on the free plan.",
-			ParagraphUpscale: "Upscale feature isn't available on the free plan.",
-			ParagraphInferenceSteps: "That inference steps setting isn't available on the free plan.",
-			ParagraphModel: "That AI model isn't available on the free plan.",
-			ParagraphScheduler: "That scheduler isn't available on the free plan.",
-			ParagraphWidthGeneration:
-				"That generation was created using an image width that isn't available on the free plan.",
-			ParagraphHeightGeneration:
-				"That generation was created using an image height that isn't available on the free plan.",
-			ParagraphDimensionsGeneration:
-				"That generation was created using image dimensions that aren't available on the free plan.",
-			ParagraphInferenceStepsGeneration:
-				"That generation was created using an inference steps setting that isn't available on the free plan.",
-			ParagraphModelGeneration:
-				"That generation was created using an AI model that isn't available on the free plan.",
-			ParagraphSchedulerGeneration:
-				"That generation was created using a scheduler that isn't available on the free plan."
-		},
-		Tier: {
-			Title: {
-				Free: 'Free',
-				Pro: 'Pro'
-			},
-			Badge: {
-				Free: 'FREE',
-				Pro: 'PRO'
-			}
-		}
-	},
 	Account: {
 		PageTitle: 'Account',
 		ManageSubscriptionButton: 'Manage Subscription',
@@ -653,7 +588,6 @@ const en: BaseTranslation = {
 					NoValidCodeParagraph: "This link doesn't contain a valid code. Please request a new link."
 				}
 			},
-			Platform: { Raycast: 'Raycast', Stablecog: 'Stablecog' },
 			NoAppsYet: "You haven't connected any apps yet.",
 			PageTitle: 'Applications',
 			PageParagraph:
@@ -790,24 +724,6 @@ const en: BaseTranslation = {
 				}
 			}
 		}
-	},
-	ForgotPassword: {
-		PageTitle: 'Reset Password',
-		PageParagraph: 'We will send a 6-digit code to your email for resetting your password.',
-		SendResetCodeButton: 'Send Code',
-		PageTitleConfirmCode: 'Confirm',
-		PageTitleConfirmCodeAlt: 'Check Your Email',
-		PageParagraphConfirmCode: "We've emailed you a 6-digit code. Enter it below to continue.",
-		ConfirmCodeButton: 'Confirm',
-		PageTitleNewPassword: 'New Password',
-		PageParagraphNewPassword: 'Enter a new password for your account.',
-		NewPasswordInput: {
-			Placeholder: 'New Password'
-		},
-		SetNewPasswordButton: 'Set New Password',
-		PageTitleSuccess: 'Done!',
-		PageParagraphSuccess: 'Your password has been successfully reset.',
-		ForgotPasswordButton: 'Forgot Password?'
 	},
 	FeaturedOn: {
 		PageTitle: 'We Are Featured On'
@@ -967,7 +883,7 @@ const en: BaseTranslation = {
 		DocumentationButton: 'Documentation',
 		ForDevelopersTitle: 'For Developers'
 	},
-	Scl: {
+	Platform: {
 		Discord: 'Discord',
 		Email: 'Email',
 		Twitter: 'Twitter',
@@ -978,7 +894,9 @@ const en: BaseTranslation = {
 		GitHub: 'GitHub',
 		Telegram: 'Telegram',
 		Facebook: 'Facebook',
-		ProductHunt: 'Product Hunt'
+		ProductHunt: 'Product Hunt',
+		Stablecog: 'Stablecog',
+		Raycast: 'Raycast'
 	},
 	Voiceover: {
 		ModelOptions: { '0f442a3e-cf53-490b-b4a9-b0dda63e9523': { Name: 'Bark' } },
@@ -1089,10 +1007,6 @@ const en: BaseTranslation = {
 		NoPlatformIDParagraph: "This link doesn't contain a {platform} ID. Please request a new link.",
 		NoPlatformUsernameParagraph:
 			"This link doesn't contain a {platform} username. Please request a new link.",
-		Platform: {
-			Discord: 'Discord',
-			Stablecog: 'Stablecog'
-		},
 		ConnectToTitle: 'Connect to {platform}',
 		ConnectToParagraph:
 			'Create an account or sign in to connect your {platform} account to your Stablecog account.',

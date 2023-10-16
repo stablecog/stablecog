@@ -463,10 +463,6 @@ type RootTranslation = {
 				Custom: string
 			}
 			/**
-			 * U​n​k​n​o​w​n
-			 */
-			UnknownTitle: string
-			/**
 			 * O​u​t​p​u​t​s
 			 */
 			OutputsTitle: string
@@ -734,6 +730,10 @@ type RootTranslation = {
 		 * G​o​ ​B​a​c​k
 		 */
 		GoBackButton: string
+		/**
+		 * U​n​k​n​o​w​n
+		 */
+		UnknownTitle: string
 		/**
 		 * Y​e​s
 		 */
@@ -1185,10 +1185,6 @@ type RootTranslation = {
 				realName: string
 			}
 		}
-		/**
-		 * U​n​k​n​o​w​n
-		 */
-		UnknownTitle: string
 		/**
 		 * A​d​v​a​n​c​e​d​ ​S​e​t​t​i​n​g​s
 		 */
@@ -1689,175 +1685,6 @@ type RootTranslation = {
 			NotAvailable: string
 		}
 	}
-	Pro: {
-		/**
-		 * B​e​c​o​m​e​ ​a​ ​P​r​o
-		 */
-		PageTitle: string
-		/**
-		 * U​n​l​o​c​k​ ​a​l​l​ ​f​e​a​t​u​r​e​s​ ​o​f​ ​S​t​a​b​l​e​c​o​g​ ​a​n​d​ ​s​u​p​p​o​r​t​ ​t​h​e​ ​p​r​o​j​e​c​t​.​ ​W​i​t​h​o​u​t​ ​t​h​e​ ​p​r​o​ ​m​e​m​b​e​r​s​,​ ​S​t​a​b​l​e​c​o​g​ ​w​o​u​l​d​n​'​t​ ​b​e​ ​a​b​l​e​ ​t​o​ ​s​t​a​y​ ​c​o​m​p​l​e​t​e​l​y​ ​o​p​e​n​-​s​o​u​r​c​e​ ​a​n​d​ ​o​f​f​e​r​ ​f​r​e​e​ ​g​e​n​e​r​a​t​i​o​n​s​ ​t​o​ ​e​v​e​r​y​o​n​e​.
-		 */
-		PageParagraph: string
-		/**
-		 * A​l​r​e​a​d​y​ ​a​ ​P​r​o​!
-		 */
-		PageTitleAlreadyPro: string
-		/**
-		 * Y​o​u​ ​a​r​e​ ​a​l​r​e​a​d​y​ ​a​ ​p​r​o​ ​m​e​m​b​e​r​.​ ​T​h​a​n​k​ ​y​o​u​ ​f​o​r​ ​s​u​p​p​o​r​t​i​n​g​ ​t​h​e​ ​p​r​o​j​e​c​t​!​ ​G​o​ ​a​h​e​a​d​ ​a​n​d​ ​e​n​j​o​y​ ​S​t​a​b​l​e​c​o​g​,​ ​a​n​d​ ​c​o​n​s​i​d​e​r​ ​s​h​a​r​i​n​g​ ​i​t​ ​w​i​t​h​ ​y​o​u​r​ ​f​r​i​e​n​d​s​.
-		 */
-		PageParagraphAlreadyPro: string
-		/**
-		 * P​r​o
-		 */
-		ProPlanTitle: string
-		Features: {
-			/**
-			 * F​u​l​l​ ​s​p​e​e​d​ ​w​i​t​h​o​u​t​ ​s​e​t​ ​l​i​m​i​t​s
-			 */
-			FullSpeed: string
-			/**
-			 * D​i​f​f​e​r​e​n​t​ ​i​m​a​g​e​ ​d​i​m​e​n​s​i​o​n​s
-			 */
-			ImageDimensions: string
-			/**
-			 * U​p​s​c​a​l​e​ ​i​m​a​g​e​s
-			 */
-			Upscale: string
-			/**
-			 * D​i​f​f​e​r​e​n​t​ ​i​n​f​e​r​e​n​c​e​ ​s​t​e​p​s
-			 */
-			Steps: string
-			/**
-			 * M​o​r​e​ ​m​o​d​e​l​s
-			 */
-			MoreModels: string
-			/**
-			 * M​o​r​e​ ​s​c​h​e​d​u​l​e​r​s
-			 */
-			MoreSchedulers: string
-			/**
-			 * G​e​n​e​r​a​t​i​o​n​s​ ​s​a​v​e​d​ ​t​o​ ​t​h​e​ ​c​l​o​u​d
-			 */
-			SavedToCloud: string
-			/**
-			 * U​p​c​o​m​i​n​g​ ​f​e​a​t​u​r​e​s
-			 */
-			Upcoming: string
-			/**
-			 * C​o​m​m​e​r​c​i​a​l​ ​U​s​e
-			 */
-			CommercialUse: string
-		}
-		/**
-		 * (​s​o​o​n​)
-		 */
-		Soon: string
-		/**
-		 * /​m​o​n​t​h
-		 */
-		Month: string
-		/**
-		 * B​e​c​o​m​e​ ​a​ ​P​r​o
-		 */
-		BecomeProButton: string
-		Success: {
-			/**
-			 * Y​o​u​'​r​e​ ​a​ ​P​r​o​!
-			 */
-			PageTitle: string
-			/**
-			 * Y​o​u​ ​n​o​w​ ​h​a​v​e​ ​a​c​c​e​s​s​ ​t​o​ ​e​v​e​r​y​t​h​i​n​g​ ​S​t​a​b​l​e​c​o​g​ ​h​a​s​ ​t​o​ ​o​f​f​e​r​.​ ​I​f​ ​y​o​u​ ​h​a​v​e​ ​a​n​y​ ​q​u​e​s​t​i​o​n​s​,​ ​r​e​a​c​h​ ​o​u​t​ ​t​o​ ​u​s​ ​o​n​ ​{​p​l​a​t​f​o​r​m​}​.
-			 * @param {unknown} platform
-			 */
-			PageParagraph: RequiredParams<'platform'>
-		}
-		Cancel: {
-			/**
-			 * Y​o​u​'​v​e​ ​c​a​n​c​e​l​l​e​d
-			 */
-			PageTitle: string
-			/**
-			 * Y​o​u​'​v​e​ ​c​a​n​c​e​l​l​e​d​ ​t​h​e​ ​s​u​b​s​c​r​i​p​t​i​o​n​ ​p​r​o​c​e​s​s​.​ ​I​f​ ​i​t​ ​w​a​s​ ​a​ ​m​i​s​t​a​k​e​,​ ​y​o​u​ ​c​a​n​ ​t​r​y​ ​a​g​a​i​n​.
-			 */
-			PageParagraph: string
-		}
-		Reason: {
-			/**
-			 * T​h​a​t​ ​i​m​a​g​e​ ​w​i​d​t​h​ ​i​s​n​'​t​ ​a​v​a​i​l​a​b​l​e​ ​o​n​ ​t​h​e​ ​f​r​e​e​ ​p​l​a​n​.
-			 */
-			ParagraphWidth: string
-			/**
-			 * T​h​a​t​ ​i​m​a​g​e​ ​h​e​i​g​h​t​ ​i​s​n​'​t​ ​a​v​a​i​l​a​b​l​e​ ​o​n​ ​t​h​e​ ​f​r​e​e​ ​p​l​a​n​.
-			 */
-			ParagraphHeight: string
-			/**
-			 * T​h​o​s​e​ ​i​m​a​g​e​ ​d​i​m​e​n​s​i​o​n​s​ ​a​r​e​n​'​t​ ​a​v​a​i​l​a​b​l​e​ ​o​n​ ​t​h​e​ ​f​r​e​e​ ​p​l​a​n​.
-			 */
-			ParagraphDimensions: string
-			/**
-			 * U​p​s​c​a​l​e​ ​f​e​a​t​u​r​e​ ​i​s​n​'​t​ ​a​v​a​i​l​a​b​l​e​ ​o​n​ ​t​h​e​ ​f​r​e​e​ ​p​l​a​n​.
-			 */
-			ParagraphUpscale: string
-			/**
-			 * T​h​a​t​ ​i​n​f​e​r​e​n​c​e​ ​s​t​e​p​s​ ​s​e​t​t​i​n​g​ ​i​s​n​'​t​ ​a​v​a​i​l​a​b​l​e​ ​o​n​ ​t​h​e​ ​f​r​e​e​ ​p​l​a​n​.
-			 */
-			ParagraphInferenceSteps: string
-			/**
-			 * T​h​a​t​ ​A​I​ ​m​o​d​e​l​ ​i​s​n​'​t​ ​a​v​a​i​l​a​b​l​e​ ​o​n​ ​t​h​e​ ​f​r​e​e​ ​p​l​a​n​.
-			 */
-			ParagraphModel: string
-			/**
-			 * T​h​a​t​ ​s​c​h​e​d​u​l​e​r​ ​i​s​n​'​t​ ​a​v​a​i​l​a​b​l​e​ ​o​n​ ​t​h​e​ ​f​r​e​e​ ​p​l​a​n​.
-			 */
-			ParagraphScheduler: string
-			/**
-			 * T​h​a​t​ ​g​e​n​e​r​a​t​i​o​n​ ​w​a​s​ ​c​r​e​a​t​e​d​ ​u​s​i​n​g​ ​a​n​ ​i​m​a​g​e​ ​w​i​d​t​h​ ​t​h​a​t​ ​i​s​n​'​t​ ​a​v​a​i​l​a​b​l​e​ ​o​n​ ​t​h​e​ ​f​r​e​e​ ​p​l​a​n​.
-			 */
-			ParagraphWidthGeneration: string
-			/**
-			 * T​h​a​t​ ​g​e​n​e​r​a​t​i​o​n​ ​w​a​s​ ​c​r​e​a​t​e​d​ ​u​s​i​n​g​ ​a​n​ ​i​m​a​g​e​ ​h​e​i​g​h​t​ ​t​h​a​t​ ​i​s​n​'​t​ ​a​v​a​i​l​a​b​l​e​ ​o​n​ ​t​h​e​ ​f​r​e​e​ ​p​l​a​n​.
-			 */
-			ParagraphHeightGeneration: string
-			/**
-			 * T​h​a​t​ ​g​e​n​e​r​a​t​i​o​n​ ​w​a​s​ ​c​r​e​a​t​e​d​ ​u​s​i​n​g​ ​i​m​a​g​e​ ​d​i​m​e​n​s​i​o​n​s​ ​t​h​a​t​ ​a​r​e​n​'​t​ ​a​v​a​i​l​a​b​l​e​ ​o​n​ ​t​h​e​ ​f​r​e​e​ ​p​l​a​n​.
-			 */
-			ParagraphDimensionsGeneration: string
-			/**
-			 * T​h​a​t​ ​g​e​n​e​r​a​t​i​o​n​ ​w​a​s​ ​c​r​e​a​t​e​d​ ​u​s​i​n​g​ ​a​n​ ​i​n​f​e​r​e​n​c​e​ ​s​t​e​p​s​ ​s​e​t​t​i​n​g​ ​t​h​a​t​ ​i​s​n​'​t​ ​a​v​a​i​l​a​b​l​e​ ​o​n​ ​t​h​e​ ​f​r​e​e​ ​p​l​a​n​.
-			 */
-			ParagraphInferenceStepsGeneration: string
-			/**
-			 * T​h​a​t​ ​g​e​n​e​r​a​t​i​o​n​ ​w​a​s​ ​c​r​e​a​t​e​d​ ​u​s​i​n​g​ ​a​n​ ​A​I​ ​m​o​d​e​l​ ​t​h​a​t​ ​i​s​n​'​t​ ​a​v​a​i​l​a​b​l​e​ ​o​n​ ​t​h​e​ ​f​r​e​e​ ​p​l​a​n​.
-			 */
-			ParagraphModelGeneration: string
-			/**
-			 * T​h​a​t​ ​g​e​n​e​r​a​t​i​o​n​ ​w​a​s​ ​c​r​e​a​t​e​d​ ​u​s​i​n​g​ ​a​ ​s​c​h​e​d​u​l​e​r​ ​t​h​a​t​ ​i​s​n​'​t​ ​a​v​a​i​l​a​b​l​e​ ​o​n​ ​t​h​e​ ​f​r​e​e​ ​p​l​a​n​.
-			 */
-			ParagraphSchedulerGeneration: string
-		}
-		Tier: {
-			Title: {
-				/**
-				 * F​r​e​e
-				 */
-				Free: string
-				/**
-				 * P​r​o
-				 */
-				Pro: string
-			}
-			Badge: {
-				/**
-				 * F​R​E​E
-				 */
-				Free: string
-				/**
-				 * P​R​O
-				 */
-				Pro: string
-			}
-		}
-	}
 	Account: {
 		/**
 		 * A​c​c​o​u​n​t
@@ -1972,16 +1799,6 @@ type RootTranslation = {
 					 */
 					NoValidCodeParagraph: string
 				}
-			}
-			Platform: {
-				/**
-				 * R​a​y​c​a​s​t
-				 */
-				Raycast: string
-				/**
-				 * S​t​a​b​l​e​c​o​g
-				 */
-				Stablecog: string
 			}
 			/**
 			 * Y​o​u​ ​h​a​v​e​n​'​t​ ​c​o​n​n​e​c​t​e​d​ ​a​n​y​ ​a​p​p​s​ ​y​e​t​.
@@ -2358,66 +2175,6 @@ type RootTranslation = {
 				}
 			}
 		}
-	}
-	ForgotPassword: {
-		/**
-		 * R​e​s​e​t​ ​P​a​s​s​w​o​r​d
-		 */
-		PageTitle: string
-		/**
-		 * W​e​ ​w​i​l​l​ ​s​e​n​d​ ​a​ ​6​-​d​i​g​i​t​ ​c​o​d​e​ ​t​o​ ​y​o​u​r​ ​e​m​a​i​l​ ​f​o​r​ ​r​e​s​e​t​t​i​n​g​ ​y​o​u​r​ ​p​a​s​s​w​o​r​d​.
-		 */
-		PageParagraph: string
-		/**
-		 * S​e​n​d​ ​C​o​d​e
-		 */
-		SendResetCodeButton: string
-		/**
-		 * C​o​n​f​i​r​m
-		 */
-		PageTitleConfirmCode: string
-		/**
-		 * C​h​e​c​k​ ​Y​o​u​r​ ​E​m​a​i​l
-		 */
-		PageTitleConfirmCodeAlt: string
-		/**
-		 * W​e​'​v​e​ ​e​m​a​i​l​e​d​ ​y​o​u​ ​a​ ​6​-​d​i​g​i​t​ ​c​o​d​e​.​ ​E​n​t​e​r​ ​i​t​ ​b​e​l​o​w​ ​t​o​ ​c​o​n​t​i​n​u​e​.
-		 */
-		PageParagraphConfirmCode: string
-		/**
-		 * C​o​n​f​i​r​m
-		 */
-		ConfirmCodeButton: string
-		/**
-		 * N​e​w​ ​P​a​s​s​w​o​r​d
-		 */
-		PageTitleNewPassword: string
-		/**
-		 * E​n​t​e​r​ ​a​ ​n​e​w​ ​p​a​s​s​w​o​r​d​ ​f​o​r​ ​y​o​u​r​ ​a​c​c​o​u​n​t​.
-		 */
-		PageParagraphNewPassword: string
-		NewPasswordInput: {
-			/**
-			 * N​e​w​ ​P​a​s​s​w​o​r​d
-			 */
-			Placeholder: string
-		}
-		/**
-		 * S​e​t​ ​N​e​w​ ​P​a​s​s​w​o​r​d
-		 */
-		SetNewPasswordButton: string
-		/**
-		 * D​o​n​e​!
-		 */
-		PageTitleSuccess: string
-		/**
-		 * Y​o​u​r​ ​p​a​s​s​w​o​r​d​ ​h​a​s​ ​b​e​e​n​ ​s​u​c​c​e​s​s​f​u​l​l​y​ ​r​e​s​e​t​.
-		 */
-		PageParagraphSuccess: string
-		/**
-		 * F​o​r​g​o​t​ ​P​a​s​s​w​o​r​d​?
-		 */
-		ForgotPasswordButton: string
 	}
 	FeaturedOn: {
 		/**
@@ -2856,7 +2613,7 @@ type RootTranslation = {
 		 */
 		ForDevelopersTitle: string
 	}
-	Scl: {
+	Platform: {
 		/**
 		 * D​i​s​c​o​r​d
 		 */
@@ -2901,6 +2658,14 @@ type RootTranslation = {
 		 * P​r​o​d​u​c​t​ ​H​u​n​t
 		 */
 		ProductHunt: string
+		/**
+		 * S​t​a​b​l​e​c​o​g
+		 */
+		Stablecog: string
+		/**
+		 * R​a​y​c​a​s​t
+		 */
+		Raycast: string
 	}
 	Voiceover: {
 		ModelOptions: {
@@ -3325,16 +3090,6 @@ type RootTranslation = {
 		 * @param {unknown} platform
 		 */
 		NoPlatformUsernameParagraph: RequiredParams<'platform'>
-		Platform: {
-			/**
-			 * D​i​s​c​o​r​d
-			 */
-			Discord: string
-			/**
-			 * S​t​a​b​l​e​c​o​g
-			 */
-			Stablecog: string
-		}
 		/**
 		 * C​o​n​n​e​c​t​ ​t​o​ ​{​p​l​a​t​f​o​r​m​}
 		 * @param {unknown} platform
@@ -3828,10 +3583,6 @@ export type TranslationFunctions = {
 				Custom: () => LocalizedString
 			}
 			/**
-			 * Unknown
-			 */
-			UnknownTitle: () => LocalizedString
-			/**
 			 * Outputs
 			 */
 			OutputsTitle: () => LocalizedString
@@ -4096,6 +3847,10 @@ export type TranslationFunctions = {
 		 * Go Back
 		 */
 		GoBackButton: () => LocalizedString
+		/**
+		 * Unknown
+		 */
+		UnknownTitle: () => LocalizedString
 		/**
 		 * Yes
 		 */
@@ -4530,10 +4285,6 @@ export type TranslationFunctions = {
 				realName: () => LocalizedString
 			}
 		}
-		/**
-		 * Unknown
-		 */
-		UnknownTitle: () => LocalizedString
 		/**
 		 * Advanced Settings
 		 */
@@ -5029,174 +4780,6 @@ export type TranslationFunctions = {
 			NotAvailable: () => LocalizedString
 		}
 	}
-	Pro: {
-		/**
-		 * Become a Pro
-		 */
-		PageTitle: () => LocalizedString
-		/**
-		 * Unlock all features of Stablecog and support the project. Without the pro members, Stablecog wouldn't be able to stay completely open-source and offer free generations to everyone.
-		 */
-		PageParagraph: () => LocalizedString
-		/**
-		 * Already a Pro!
-		 */
-		PageTitleAlreadyPro: () => LocalizedString
-		/**
-		 * You are already a pro member. Thank you for supporting the project! Go ahead and enjoy Stablecog, and consider sharing it with your friends.
-		 */
-		PageParagraphAlreadyPro: () => LocalizedString
-		/**
-		 * Pro
-		 */
-		ProPlanTitle: () => LocalizedString
-		Features: {
-			/**
-			 * Full speed without set limits
-			 */
-			FullSpeed: () => LocalizedString
-			/**
-			 * Different image dimensions
-			 */
-			ImageDimensions: () => LocalizedString
-			/**
-			 * Upscale images
-			 */
-			Upscale: () => LocalizedString
-			/**
-			 * Different inference steps
-			 */
-			Steps: () => LocalizedString
-			/**
-			 * More models
-			 */
-			MoreModels: () => LocalizedString
-			/**
-			 * More schedulers
-			 */
-			MoreSchedulers: () => LocalizedString
-			/**
-			 * Generations saved to the cloud
-			 */
-			SavedToCloud: () => LocalizedString
-			/**
-			 * Upcoming features
-			 */
-			Upcoming: () => LocalizedString
-			/**
-			 * Commercial Use
-			 */
-			CommercialUse: () => LocalizedString
-		}
-		/**
-		 * (soon)
-		 */
-		Soon: () => LocalizedString
-		/**
-		 * /month
-		 */
-		Month: () => LocalizedString
-		/**
-		 * Become a Pro
-		 */
-		BecomeProButton: () => LocalizedString
-		Success: {
-			/**
-			 * You're a Pro!
-			 */
-			PageTitle: () => LocalizedString
-			/**
-			 * You now have access to everything Stablecog has to offer. If you have any questions, reach out to us on {platform}.
-			 */
-			PageParagraph: (arg: { platform: unknown }) => LocalizedString
-		}
-		Cancel: {
-			/**
-			 * You've cancelled
-			 */
-			PageTitle: () => LocalizedString
-			/**
-			 * You've cancelled the subscription process. If it was a mistake, you can try again.
-			 */
-			PageParagraph: () => LocalizedString
-		}
-		Reason: {
-			/**
-			 * That image width isn't available on the free plan.
-			 */
-			ParagraphWidth: () => LocalizedString
-			/**
-			 * That image height isn't available on the free plan.
-			 */
-			ParagraphHeight: () => LocalizedString
-			/**
-			 * Those image dimensions aren't available on the free plan.
-			 */
-			ParagraphDimensions: () => LocalizedString
-			/**
-			 * Upscale feature isn't available on the free plan.
-			 */
-			ParagraphUpscale: () => LocalizedString
-			/**
-			 * That inference steps setting isn't available on the free plan.
-			 */
-			ParagraphInferenceSteps: () => LocalizedString
-			/**
-			 * That AI model isn't available on the free plan.
-			 */
-			ParagraphModel: () => LocalizedString
-			/**
-			 * That scheduler isn't available on the free plan.
-			 */
-			ParagraphScheduler: () => LocalizedString
-			/**
-			 * That generation was created using an image width that isn't available on the free plan.
-			 */
-			ParagraphWidthGeneration: () => LocalizedString
-			/**
-			 * That generation was created using an image height that isn't available on the free plan.
-			 */
-			ParagraphHeightGeneration: () => LocalizedString
-			/**
-			 * That generation was created using image dimensions that aren't available on the free plan.
-			 */
-			ParagraphDimensionsGeneration: () => LocalizedString
-			/**
-			 * That generation was created using an inference steps setting that isn't available on the free plan.
-			 */
-			ParagraphInferenceStepsGeneration: () => LocalizedString
-			/**
-			 * That generation was created using an AI model that isn't available on the free plan.
-			 */
-			ParagraphModelGeneration: () => LocalizedString
-			/**
-			 * That generation was created using a scheduler that isn't available on the free plan.
-			 */
-			ParagraphSchedulerGeneration: () => LocalizedString
-		}
-		Tier: {
-			Title: {
-				/**
-				 * Free
-				 */
-				Free: () => LocalizedString
-				/**
-				 * Pro
-				 */
-				Pro: () => LocalizedString
-			}
-			Badge: {
-				/**
-				 * FREE
-				 */
-				Free: () => LocalizedString
-				/**
-				 * PRO
-				 */
-				Pro: () => LocalizedString
-			}
-		}
-	}
 	Account: {
 		/**
 		 * Account
@@ -5306,16 +4889,6 @@ export type TranslationFunctions = {
 					 */
 					NoValidCodeParagraph: () => LocalizedString
 				}
-			}
-			Platform: {
-				/**
-				 * Raycast
-				 */
-				Raycast: () => LocalizedString
-				/**
-				 * Stablecog
-				 */
-				Stablecog: () => LocalizedString
 			}
 			/**
 			 * You haven't connected any apps yet.
@@ -5692,66 +5265,6 @@ export type TranslationFunctions = {
 				}
 			}
 		}
-	}
-	ForgotPassword: {
-		/**
-		 * Reset Password
-		 */
-		PageTitle: () => LocalizedString
-		/**
-		 * We will send a 6-digit code to your email for resetting your password.
-		 */
-		PageParagraph: () => LocalizedString
-		/**
-		 * Send Code
-		 */
-		SendResetCodeButton: () => LocalizedString
-		/**
-		 * Confirm
-		 */
-		PageTitleConfirmCode: () => LocalizedString
-		/**
-		 * Check Your Email
-		 */
-		PageTitleConfirmCodeAlt: () => LocalizedString
-		/**
-		 * We've emailed you a 6-digit code. Enter it below to continue.
-		 */
-		PageParagraphConfirmCode: () => LocalizedString
-		/**
-		 * Confirm
-		 */
-		ConfirmCodeButton: () => LocalizedString
-		/**
-		 * New Password
-		 */
-		PageTitleNewPassword: () => LocalizedString
-		/**
-		 * Enter a new password for your account.
-		 */
-		PageParagraphNewPassword: () => LocalizedString
-		NewPasswordInput: {
-			/**
-			 * New Password
-			 */
-			Placeholder: () => LocalizedString
-		}
-		/**
-		 * Set New Password
-		 */
-		SetNewPasswordButton: () => LocalizedString
-		/**
-		 * Done!
-		 */
-		PageTitleSuccess: () => LocalizedString
-		/**
-		 * Your password has been successfully reset.
-		 */
-		PageParagraphSuccess: () => LocalizedString
-		/**
-		 * Forgot Password?
-		 */
-		ForgotPasswordButton: () => LocalizedString
 	}
 	FeaturedOn: {
 		/**
@@ -6179,7 +5692,7 @@ export type TranslationFunctions = {
 		 */
 		ForDevelopersTitle: () => LocalizedString
 	}
-	Scl: {
+	Platform: {
 		/**
 		 * Discord
 		 */
@@ -6224,6 +5737,14 @@ export type TranslationFunctions = {
 		 * Product Hunt
 		 */
 		ProductHunt: () => LocalizedString
+		/**
+		 * Stablecog
+		 */
+		Stablecog: () => LocalizedString
+		/**
+		 * Raycast
+		 */
+		Raycast: () => LocalizedString
 	}
 	Voiceover: {
 		ModelOptions: {
@@ -6640,16 +6161,6 @@ export type TranslationFunctions = {
 		 * This link doesn't contain a {platform} username. Please request a new link.
 		 */
 		NoPlatformUsernameParagraph: (arg: { platform: unknown }) => LocalizedString
-		Platform: {
-			/**
-			 * Discord
-			 */
-			Discord: () => LocalizedString
-			/**
-			 * Stablecog
-			 */
-			Stablecog: () => LocalizedString
-		}
 		/**
 		 * Connect to {platform}
 		 */

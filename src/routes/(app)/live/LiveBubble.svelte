@@ -23,9 +23,8 @@
 		{
 			key: $LL.Live.GenerationTooltip.CountryTitle() + ':',
 			value: processObject.country_code
-				? getCountryName($locale, processObject.country_code) ??
-				  $LL.Live.GenerationTooltip.UnknownTitle()
-				: $LL.Live.GenerationTooltip.UnknownTitle()
+				? getCountryName($locale, processObject.country_code) ?? $LL.Shared.UnknownTitle()
+				: $LL.Shared.UnknownTitle()
 		},
 		{
 			key: $LL.Account.SubscriptionPlanTitle() + ':',

@@ -115,7 +115,7 @@
 				class="py-2 hidden md:block"
 				href="/discord"
 				target="_blank"
-				name={$LL.Scl.Discord()}
+				name={$LL.Platform.Discord()}
 				hasTooltip={true}
 			>
 				<IconSc

@@ -171,7 +171,6 @@ const tr: Translation = {
 				Default: 'Varsayılan',
 				Custom: 'Özel'
 			},
-			UnknownTitle: 'Bilinmeyen',
 			OutputsTitle: 'Çıktı Sayısı'
 		},
 		WaitingTitle: 'Üretimler bekleniyor',
@@ -254,6 +253,7 @@ const tr: Translation = {
 		ShareButton: 'Paylaş',
 		ShareOnButton: 'Paylaş: {name}',
 		GoBackButton: 'Geri Dön',
+		UnknownTitle: 'Bilinmeyen',
 		YesButton: 'Evet',
 		NoButton: 'Hayır',
 		EnableButton: 'Aktifleştir',
@@ -422,7 +422,6 @@ const tr: Translation = {
 				realName: 'P Sampler'
 			}
 		},
-		UnknownTitle: 'Bilinmeyen',
 		AdvancedSettingsButton: 'Gelişmiş Ayarlar',
 		MoreOptionsTitle: 'Daha Fazla Seçenek',
 		LessOptionsTitle: 'Daha Az Seçenek',
@@ -579,69 +578,6 @@ const tr: Translation = {
 			NotAvailable: 'Bu kullanıcı adı müsait değil.'
 		}
 	},
-	Pro: {
-		PageTitle: 'Pro Ol',
-		PageParagraph:
-			"Stablecog'un bütün özelliklerine eriş ve projeyi destekle. Pro üyeler olmadan Stablecog tamamen açık kaynak kodlu kalamaz, herkese ücretsiz fotoğraf üretimi imkanı sunamazdı.",
-		PageTitleAlreadyPro: 'Zaten Prosun!',
-		PageParagraphAlreadyPro:
-			"Pro üye olarak projeyi desteklediğin için teşekkürler. Stablecog'un keyfini çıkarmanı ve arkadaşlarınla paylaşmanı tavsiye ederiz.",
-		ProPlanTitle: 'Pro',
-		Features: {
-			FullSpeed: 'Gecikmesiz tam hız üretim',
-			ImageDimensions: 'Farklı fotoğraf boyutları',
-			Upscale: 'Büyütme/çözünürlük arttırma',
-			Steps: 'Farklı tahmin adımı seçenekleri',
-			MoreModels: 'Daha fazla AI modeli',
-			MoreSchedulers: 'Daha fazla planlayıcı',
-			SavedToCloud: 'Üretimleri buluta kaydetme',
-			Upcoming: 'Gelecek özellikler',
-			CommercialUse: 'Ticari kullanım'
-		},
-		Soon: '(yakında)',
-		Month: '/ay',
-		BecomeProButton: 'Pro Ol',
-		Success: {
-			PageTitle: 'Pro oldun!',
-			PageParagraph:
-				"Artık Stablecog'un tüm özelliklerine erişimin var. Soruların varsa bize buradan ulaşabilirsin: {platform}."
-		},
-		Cancel: {
-			PageTitle: 'İptal Ettin',
-			PageParagraph: 'Üyelik sürecini iptal ettin. Bir yanlışlık olduysa tekrar deneyebilirsin.'
-		},
-		Reason: {
-			ParagraphWidth: 'O fotoğraf genişliği ayarı ücretsiz planda mevcut değil.',
-			ParagraphHeight: 'O fotoğraf yüksekliği ayarı ücretsiz planda mevcut değil.',
-			ParagraphDimensions: 'O fotoğraf boyutu ücretsiz planda mevcut değil.',
-			ParagraphUpscale: 'Büyütme özelliği ücretsiz planda mevcut değil.',
-			ParagraphInferenceSteps: 'O tahmin adımı seçeneği ücretsiz planda mevcut değil.',
-			ParagraphModel: 'O AI modeli ücretsiz planda mevcut değil.',
-			ParagraphScheduler: 'O planlayıcı ücretsiz planda mevcut değil.',
-			ParagraphWidthGeneration:
-				'O üretim ücretsiz planda mevcut olmayan bir fotoğraf genişliği ayarı ile yapıldı.',
-			ParagraphHeightGeneration:
-				'O üretim ücretsiz planda mevcut olmayan bir fotoğraf yüksekliği ayarı ile yapıldı.',
-			ParagraphDimensionsGeneration:
-				'O üretim ücretsiz planda mevcut olmayan bir fotoğraf boyutu ayarı ile yapıldı.',
-			ParagraphInferenceStepsGeneration:
-				'O üretim ücretsiz planda mevcut olmayan bir tahmin adımı ayarı ile yapıldı.',
-			ParagraphModelGeneration:
-				'O üretim ücretsiz planda mevcut olmayan bir AI modeli ile yapıldı.',
-			ParagraphSchedulerGeneration:
-				'O üretim ücretsiz planda mevcut olmayan bir planlayıcı seçeneği ile yapıldı.'
-		},
-		Tier: {
-			Title: {
-				Free: 'Ücretsiz',
-				Pro: 'Pro'
-			},
-			Badge: {
-				Free: 'ÜCRETSİZ',
-				Pro: 'PRO'
-			}
-		}
-	},
 	Account: {
 		PageTitle: 'Üyelik',
 		ManageSubscriptionButton: 'Aboneliği Yönet',
@@ -674,10 +610,6 @@ const tr: Translation = {
 					NoValidAppIdParagraph: 'Bu link geçerli bir uygulama kodu içermiyor. Yeni bir link iste.',
 					NoValidCodeParagraph: 'Bu link geçerli bir kod içermiyor. Yeni bir link iste.'
 				}
-			},
-			Platform: {
-				Raycast: 'Raycast',
-				Stablecog: 'Stablecog'
 			},
 			NoAppsYet: 'Henüz izin verdiğin bir uygulama yok.',
 			PageTitle: 'Uygulamalar',
@@ -818,25 +750,6 @@ const tr: Translation = {
 				}
 			}
 		}
-	},
-	ForgotPassword: {
-		PageTitle: 'Şifre Yenile',
-		PageParagraph: 'E-posta adresine 6 haneli bir kod yollayacağız.',
-		SendResetCodeButton: 'Kodu Yolla',
-		PageTitleConfirmCode: 'Doğrula',
-		PageTitleConfirmCodeAlt: 'E-posta Yolladık',
-		PageParagraphConfirmCode:
-			'E-posta adresine 6 haneli bir kod yolladık. Devam etmek için onu aşağı gir.',
-		ConfirmCodeButton: 'Onayla',
-		PageTitleNewPassword: 'Yeni Şifre',
-		PageParagraphNewPassword: 'Üyeliğin için yeni bir şifre gir.',
-		NewPasswordInput: {
-			Placeholder: 'Yeni Şifre'
-		},
-		SetNewPasswordButton: 'Şifreyi Güncelle',
-		PageTitleSuccess: 'Tamamdır!',
-		PageParagraphSuccess: 'Şifren başarıyla güncellendi.',
-		ForgotPasswordButton: 'Şifremi Unuttum'
 	},
 	FeaturedOn: {
 		PageTitle: 'Basında'
@@ -997,7 +910,7 @@ const tr: Translation = {
 		DocumentationButton: 'Dökümantasyon',
 		ForDevelopersTitle: 'Geliştiriciler İçin'
 	},
-	Scl: {
+	Platform: {
 		Discord: 'Discord',
 		Email: 'E-posta',
 		Twitter: 'Twitter',
@@ -1008,7 +921,9 @@ const tr: Translation = {
 		GitHub: 'GitHub',
 		Telegram: 'Telegram',
 		Facebook: 'Facebook',
-		ProductHunt: 'Product Hunt'
+		ProductHunt: 'Product Hunt',
+		Stablecog: 'Stablecog',
+		Raycast: 'Raycast'
 	},
 	Voiceover: {
 		ModelOptions: {
@@ -1205,10 +1120,6 @@ const tr: Translation = {
 		NoPlatformIDParagraph: 'Bu link bir {platform} kimliği içermiyor. Yeni bir link iste.',
 		NoPlatformUsernameParagraph:
 			'Bu link bir {platform} kullanıcı adı içermiyor. Yeni bir link iste.',
-		Platform: {
-			Discord: 'Discord',
-			Stablecog: 'Stablecog'
-		},
 		ConnectToTitle: 'Şuraya Bağlan: {platform}',
 		ConnectToParagraph:
 			'{platform} hesabını Stablecog hesabına bağlamak için yeni bir hesap oluştur veya giriş yap.',

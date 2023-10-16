@@ -57,25 +57,25 @@
 				<div class="flex items-center justify-center mt-6">
 					<SignInCard
 						redirectTo={`${$page.url.pathname}?${$page.url.searchParams}`}
-						title={$LL.Connect.ConnectToTitle({ platform: $LL.Connect.Platform.Discord() })}
-						paragraph={$LL.Connect.ConnectToParagraph({ platform: $LL.Connect.Platform.Discord() })}
+						title={$LL.Connect.ConnectToTitle({ platform: $LL.Platform.Discord() })}
+						paragraph={$LL.Connect.ConnectToParagraph({ platform: $LL.Platform.Discord() })}
 					/>
 				</div>
 			{:else if !data.platform_user_id || !data.platform_token || !data.platform_username}
 				<IconSadFaceOutline class="w-20 h-20 text-c-danger" />
 				<h1 class="mt-3 w-full max-w-sm text-center font-bold text-3xl md:text-4xl text-c-danger">
-					{$LL.Connect.ConnectToTitle({ platform: $LL.Connect.Platform.Discord() })}
+					{$LL.Connect.ConnectToTitle({ platform: $LL.Platform.Discord() })}
 				</h1>
 				<p
 					class="w-full max-w-sm md:max-w-md mt-2 md:mt-3 text-base md:text-lg text-c-on-bg/75 text-center"
 				>
 					{!data.platform_user_id
-						? $LL.Connect.NoPlatformIDParagraph({ platform: $LL.Connect.Platform.Discord() })
+						? $LL.Connect.NoPlatformIDParagraph({ platform: $LL.Platform.Discord() })
 						: !data.platform_token
-						? $LL.Connect.NoPlatformTokenParagraph({ platform: $LL.Connect.Platform.Discord() })
+						? $LL.Connect.NoPlatformTokenParagraph({ platform: $LL.Platform.Discord() })
 						: !data.platform_username
-						? $LL.Connect.NoPlatformUsernameParagraph({ platform: $LL.Connect.Platform.Discord() })
-						: $LL.Connect.NoPlatformIDParagraph({ platform: $LL.Connect.Platform.Discord() })}
+						? $LL.Connect.NoPlatformUsernameParagraph({ platform: $LL.Platform.Discord() })
+						: $LL.Connect.NoPlatformIDParagraph({ platform: $LL.Platform.Discord() })}
 				</p>
 			{:else}
 				<h1
@@ -85,14 +85,14 @@
 				>
 					{status === 'success'
 						? $LL.Connect.PageSuccessTitle()
-						: $LL.Connect.ConnectToTitle({ platform: $LL.Connect.Platform.Discord() })}
+						: $LL.Connect.ConnectToTitle({ platform: $LL.Platform.Discord() })}
 				</h1>
 				<p
 					class="w-full max-w-sm md:max-w-md mt-2 md:mt-3 text-base md:text-lg text-c-on-bg/75 text-center"
 				>
 					{status === 'success'
-						? $LL.Connect.ReturnBackToParagraph({ platform: $LL.Connect.Platform.Discord() })
-						: $LL.Connect.PageParagraph({ platform: $LL.Connect.Platform.Discord() })}
+						? $LL.Connect.ReturnBackToParagraph({ platform: $LL.Platform.Discord() })
+						: $LL.Connect.PageParagraph({ platform: $LL.Platform.Discord() })}
 				</p>
 				{#if status !== 'success'}
 					<div
@@ -118,11 +118,11 @@
 											size="sm"
 											error={statusError === 'already_linked'
 												? $LL.Connect.Error.AlreadyLinked({
-														platform: $LL.Connect.Platform.Discord()
+														platform: $LL.Platform.Discord()
 												  })
 												: statusError === 'invalid_token'
 												? $LL.Connect.Error.InvalidToken({
-														platform: $LL.Connect.Platform.Discord()
+														platform: $LL.Platform.Discord()
 												  })
 												: $LL.Error.SomethingWentWrong()}
 										/>
@@ -139,7 +139,7 @@
 					<ConnectCard
 						icon="discord"
 						side="start"
-						platform={$LL.Connect.Platform.Discord()}
+						platform={$LL.Platform.Discord()}
 						{status}
 						src={data.platform_avatar_url}
 						srcWidth={128}
@@ -177,7 +177,7 @@
 					<ConnectCard
 						icon="stablecog"
 						side="end"
-						platform={$LL.Connect.Platform.Stablecog()}
+						platform={$LL.Platform.Stablecog()}
 						{status}
 						username={$userSummary.username}
 					/>

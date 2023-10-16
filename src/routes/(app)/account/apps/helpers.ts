@@ -13,7 +13,7 @@ export const getAppFromAppId = (
 	const appIdToObject: Record<string, TApp> = {
 		'e1d7e2fd-a173-473b-98f2-680d14283e75': {
 			icon: 'raycast',
-			localizedName: $LL.Account.Apps.Platform.Raycast()
+			localizedName: $LL.Platform.Raycast()
 		}
 	};
 	const app = appIdToObject[appId];

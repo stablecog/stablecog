@@ -164,7 +164,6 @@ const nl: Translation = {
 				Default: 'Standaard',
 				Custom: 'Aangepast'
 			},
-			UnknownTitle: 'Onbekend',
 			OutputsTitle: 'Outputs'
 		},
 		WaitingTitle: 'Wachten op creaties',
@@ -247,6 +246,7 @@ const nl: Translation = {
 		ShareButton: 'Delen',
 		ShareOnButton: 'Delen op {name}',
 		GoBackButton: 'Terug',
+		UnknownTitle: 'Onbekend',
 		YesButton: 'Ja',
 		NoButton: 'Nee',
 		EnableButton: 'Activeren',
@@ -406,7 +406,6 @@ const nl: Translation = {
 				realName: 'P Sampler'
 			}
 		},
-		UnknownTitle: 'Onbekend',
 		AdvancedSettingsButton: 'Geavanceerde instellingen',
 		MoreOptionsTitle: 'Meer opties',
 		LessOptionsTitle: 'Minder opties',
@@ -563,71 +562,6 @@ const nl: Translation = {
 			NotAvailable: "This username isn't available."
 		}
 	},
-	Pro: {
-		PageTitle: 'Word een Pro',
-		PageParagraph:
-			'Ontgrendel alle functies van Stablecog en ondersteun het project. Zonder de pro-leden kan Stablecog niet volledig open source blijven en iedereen gratis kunnen laten genereren.',
-		PageTitleAlreadyPro: 'Je bent al een Pro!',
-		PageParagraphAlreadyPro:
-			'Je bent al een pro lid. Bedankt voor het steunen van het project! Geniet van Stablecog, en overweeg het te delen met je vrienden.',
-		ProPlanTitle: 'Pro',
-		Features: {
-			FullSpeed: 'Volledige snelheid zonder ingestelde limieten',
-			ImageDimensions: 'Verschillende afbeeldingsafmetingen',
-			Upscale: 'Afbeeldingen opschalen',
-			Steps: 'Verschillende inferentie stappen',
-			MoreModels: 'Meer modellen',
-			MoreSchedulers: 'Meer planners',
-			SavedToCloud: 'Creaties opgeslagen in de cloud',
-			Upcoming: 'Aankomende features',
-			CommercialUse: 'Commercieel gebruik'
-		},
-		Soon: '(binnenkort)',
-		Month: '/maand',
-		BecomeProButton: 'Word Pro',
-		Success: {
-			PageTitle: 'Je bent een Pro!',
-			PageParagraph:
-				'Je hebt nu toegang tot alles wat Stablecog te bieden heeft. Als je vragen hebt, neem dan contact met ons op via {platform}.'
-		},
-		Cancel: {
-			PageTitle: 'Je hebt geannuleerd',
-			PageParagraph:
-				'Je hebt het abonnementproces geannuleerd. Als dit een vergissing was, probeer het dan opnieuw.'
-		},
-		Reason: {
-			ParagraphWidth: 'Die afbeeldingsbreedte is niet beschikbaar op het gratis abonnement.',
-			ParagraphHeight: 'Die afbeeldingshoogte is niet beschikbaar op het gratis abonnement.',
-			ParagraphDimensions: 'Deze afbeeldingsafmetingen zijn niet beschikbaar op het gratis plan.',
-			ParagraphUpscale: 'Opschaalfunctie is niet beschikbaar op het gratis abonnement.',
-			ParagraphInferenceSteps:
-				'Die instelling voor inferentie stappen is niet beschikbaar op het gratis abonnement.',
-			ParagraphModel: 'Dat AI-model is niet beschikbaar op het gratis abonnement.',
-			ParagraphScheduler: 'Die planner is niet beschikbaar op het gratis abonnement.',
-			ParagraphWidthGeneration:
-				'Die creatie is gemaakt met een afbeeldingsbreedte die niet beschikbaar is op het gratis abonnement.',
-			ParagraphHeightGeneration:
-				'Die creatie is gemaakt met een afbeeldingshoogte die niet beschikbaar is op het gratis abonnement.',
-			ParagraphDimensionsGeneration:
-				'Die creatie is gemaakt met afbeeldingsdimensies die niet beschikbaar zijn op het gratis abonnement.',
-			ParagraphInferenceStepsGeneration:
-				'Die creatie is gemaakt met een inferentie instelling die niet beschikbaar is op het gratis plan.',
-			ParagraphModelGeneration:
-				'Die creatie is gemaakt met een AI-model dat niet beschikbaar is op het gratis abonnement.',
-			ParagraphSchedulerGeneration:
-				'Die creatie is gemaakt met een planner die niet beschikbaar is op het gratis abonnement.'
-		},
-		Tier: {
-			Title: {
-				Free: 'Gratis',
-				Pro: 'Pro'
-			},
-			Badge: {
-				Free: 'GRATIS',
-				Pro: 'PRO'
-			}
-		}
-	},
 	Account: {
 		PageTitle: 'Account',
 		ManageSubscriptionButton: 'Abonnement beheren',
@@ -662,7 +596,6 @@ const nl: Translation = {
 					NoValidCodeParagraph: "This link doesn't contain a valid code. Please request a new link."
 				}
 			},
-			Platform: { Raycast: 'Raycast', Stablecog: 'Stablecog' },
 			NoAppsYet: "You haven't connected any apps yet.",
 			PageTitle: 'Applications',
 			PageParagraph:
@@ -800,26 +733,6 @@ const nl: Translation = {
 				}
 			}
 		}
-	},
-	ForgotPassword: {
-		PageTitle: 'Wachtwoord Resetten',
-		PageParagraph:
-			'We sturen een 6-cijferige code naar je e-mailadres om je wachtwoord te kunnen resetten.',
-		SendResetCodeButton: 'Verstuur code',
-		PageTitleConfirmCode: 'Bevestigen',
-		PageTitleConfirmCodeAlt: 'Check je e-mail',
-		PageParagraphConfirmCode:
-			'We hebben je een 6-cijferige code gestuurd. Voer deze hieronder in om verder te gaan.',
-		ConfirmCodeButton: 'Bevestigen',
-		PageTitleNewPassword: 'Nieuw Wachtwoord',
-		PageParagraphNewPassword: 'Voer een nieuw wachtwoord in voor je account.',
-		NewPasswordInput: {
-			Placeholder: 'Nieuw Wachtwoord'
-		},
-		SetNewPasswordButton: 'Nieuw wachtwoord instellen',
-		PageTitleSuccess: 'Gereed!',
-		PageParagraphSuccess: 'Je wachtwoord reset is geslaagd.',
-		ForgotPasswordButton: 'Wachtwoord vergeten?'
 	},
 	FeaturedOn: {
 		PageTitle: 'We Zijn Uitgelicht Op'
@@ -980,7 +893,7 @@ const nl: Translation = {
 		DocumentationButton: 'Documentation',
 		ForDevelopersTitle: 'For Developers'
 	},
-	Scl: {
+	Platform: {
 		Discord: 'Discord',
 		Email: 'Email',
 		Twitter: 'Twitter',
@@ -991,7 +904,9 @@ const nl: Translation = {
 		GitHub: 'GitHub',
 		Telegram: 'Telegram',
 		Facebook: 'Facebook',
-		ProductHunt: 'Product Hunt'
+		ProductHunt: 'Product Hunt',
+		Stablecog: 'Stablecog',
+		Raycast: 'Raycast'
 	},
 	Voiceover: {
 		ModelOptions: { '0f442a3e-cf53-490b-b4a9-b0dda63e9523': { Name: 'Bark' } },
@@ -1102,10 +1017,6 @@ const nl: Translation = {
 		NoPlatformIDParagraph: "This link doesn't contain a {platform} ID. Please request a new link.",
 		NoPlatformUsernameParagraph:
 			"This link doesn't contain a {platform} username. Please request a new link.",
-		Platform: {
-			Discord: 'Discord',
-			Stablecog: 'Stablecog'
-		},
 		ConnectToTitle: 'Connect to {platform}',
 		ConnectToParagraph:
 			'Create an account or sign in to connect your {platform} account to your Stablecog account.',

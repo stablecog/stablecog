@@ -170,12 +170,7 @@
 						/>
 					</div>
 					<!-- Stablecog Info -->
-					<PlatformCard
-						icon="stablecog"
-						side="end"
-						platform={$LL.Account.Apps.Platform.Stablecog()}
-						{status}
-					/>
+					<PlatformCard icon="stablecog" side="end" platform={$LL.Platform.Stablecog()} {status} />
 				</div>
 			{/if}
 		</section>

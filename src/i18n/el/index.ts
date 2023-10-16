@@ -171,7 +171,6 @@ const es: Translation = {
 				Default: 'Προεπιλογή',
 				Custom: 'Προσαρμοσμένο'
 			},
-			UnknownTitle: 'Άγνωστο',
 			OutputsTitle: 'Αποδόσεις'
 		},
 		WaitingTitle: 'Αναμονή για παράγωγες εικόνες',
@@ -254,6 +253,7 @@ const es: Translation = {
 		ShareButton: 'Κοινοποίηση',
 		ShareOnButton: 'Κοινοποίηση σε {name}',
 		GoBackButton: 'Επιστροφή',
+		UnknownTitle: 'Άγνωστο',
 		YesButton: 'Ναι',
 		NoButton: 'Όχι',
 		EnableButton: 'Ενεργοποίηση',
@@ -422,7 +422,6 @@ const es: Translation = {
 				realName: 'P Sampler'
 			}
 		},
-		UnknownTitle: 'Άγνωστο',
 		AdvancedSettingsButton: 'Προχωρημένες Ρυθμίσεις',
 		MoreOptionsTitle: 'Περισσότερες επιλογές',
 		LessOptionsTitle: 'Λιγότερες επιλογές',
@@ -582,71 +581,6 @@ const es: Translation = {
 			NotAvailable: "This username isn't available."
 		}
 	},
-	Pro: {
-		PageTitle: 'Γίνετε μέλος επί πληρωμή',
-		PageParagraph:
-			'Ξεκλειδώστε όλα τα χαρακτηριστικά του Stablecog και να υποστηρίξετε το έργο. Χωρίς τα επαγγελματικά μέλη, το Stablecog δε θα ήταν σε θέση να παραμείνει εντελώς ανοιχτού κώδικα και να προσφέρει δωρεάν γενιές σε όλους.',
-		PageTitleAlreadyPro: 'Είστε ήδη μέλος επί πληρωμή!',
-		PageParagraphAlreadyPro:
-			'Είστε ήδη ένα μέλος επί πληρωμή. Σας ευχαριστούμε για την υποστήριξη του έργου! Προχωρήστε, απολαύστε το Stablecog και σκεφτείτε να το μοιραστείτε με τους φίλους σας.',
-		ProPlanTitle: 'Μέλος επί πληρωμή',
-		Features: {
-			FullSpeed: 'Πλήρης ταχύτητα χωρίς προκαθορισμένα όρια',
-			ImageDimensions: 'Διαφορετικές διαστάσεις εικόνας',
-			Upscale: 'Αναβαθμίστε την ανάλυση των εικόνων',
-			Steps: 'Διαφορετικά βήματα παραγωγής εικόνων',
-			MoreModels: 'Περισσότερα μοντέλα',
-			MoreSchedulers: 'Περισσότερες δυνατότητες προγραμματισμού',
-			SavedToCloud: 'Αποθήκευση παραγώγων στο cloud',
-			Upcoming: 'Προσεχείς Λειτουργίες',
-			CommercialUse: 'Εμπορική χρήση'
-		},
-		Soon: '(σύντομα)',
-		Month: '/μήνα',
-		BecomeProButton: 'Γίνετε μέλος επί πληρωμή',
-		Success: {
-			PageTitle: 'Είστε μέλος επί πληρωμή!',
-			PageParagraph:
-				'Τώρα έχετε πρόσβαση σε όλα όσα έχει να προσφέρει το Stablecog. Αν έχετε οποιεσδήποτε ερωτήσεις, επικοινωνήστε μαζί μας στο {platform}.'
-		},
-		Cancel: {
-			PageTitle: 'Ακυρώσατε',
-			PageParagraph:
-				'Έχετε ακυρώσει τη διαδικασία αγοράς. Αν επρόκειτο για λάθος, μπορείτε να δοκιμάσετε ξανά.'
-		},
-		Reason: {
-			ParagraphWidth: 'Αυτό το πλάτος εικόνας δεν είναι διαθέσιμο στο δωρεάν πλάνο.',
-			ParagraphHeight: 'Αυτό το ύψος εικόνας δεν είναι διαθέσιμο στο δωρεάν πλάνο.',
-			ParagraphDimensions: 'Αυτές οι διαστάσεις εικόνας δεν είναι διαθέσιμες στο δωρεάν πλάνο.',
-			ParagraphUpscale: 'Η λειτουργία αναβάθμισης ανάλυσης δεν είναι διαθέσιμη στο δωρεάν πλάνο.',
-			ParagraphInferenceSteps:
-				'Αυτά τα βήματα παραγωγής εικόνας δεν είναι διαθέσιμα στο δωρεάν πλάνο.',
-			ParagraphModel: 'Αυτό το μοντέλο τεχνητής νοημοσύνης δεν είναι διαθέσιμο στο δωρεάν πλάνο.',
-			ParagraphScheduler: 'Η δυνατότητα προγραμματισμού δεν είναι διαθέσιμη στο δωρεάν πλάνο.',
-			ParagraphWidthGeneration:
-				'Αυτό το παράγωγο δημιουργήθηκε με τη χρήση ενός πλάτους εικόνας που δεν είναι διαθέσιμο στο δωρεάν πλάνο.',
-			ParagraphHeightGeneration:
-				'Αυτό το παράγωγο δημιουργήθηκε με τη χρήση ενός ύψους εικόνας που δεν είναι διαθέσιμο στο δωρεάν πλάνο.',
-			ParagraphDimensionsGeneration:
-				'Αυτό το παράγωγο δημιουργήθηκε χρησιμοποιώντας διαστάσεις εικόνας που δεν είναι διαθέσιμες στο δωρεάν πλάνο.',
-			ParagraphInferenceStepsGeneration:
-				'Αυτό το παράγωγο δημιουργήθηκε χρησιμοποιώντας μια ρύθμιση για βήματα παραγωγής που δεν είναι διαθέσιμα στο δωρεάν πλάνο.',
-			ParagraphModelGeneration:
-				'Αυτό το παράγωγο δημιουργήθηκε χρησιμοποιώντας ένα μοντέλο τεχνητής νοημοσύνης που δεν είναι διαθέσιμο στο δωρεάν πλάνο.',
-			ParagraphSchedulerGeneration:
-				'Αυτή η παράγωγη εικόνα δημιουργήθηκε χρησιμοποιώντας μια δυνατότητα προγραμματισμού που δεν είναι διαθέσιμη στο δωρεάν πλάνο.'
-		},
-		Tier: {
-			Title: {
-				Free: 'Δωρεάν',
-				Pro: 'Μέλος επί πληρωμή'
-			},
-			Badge: {
-				Free: 'ΔΩΡΕΑΝ',
-				Pro: 'ΜΕΛΟΣ ΕΠΙ ΠΛΗΡΩΜΗ'
-			}
-		}
-	},
 	Account: {
 		PageTitle: 'Λογαριασμός',
 		ManageSubscriptionButton: 'Διαχείριση συνδρομής',
@@ -681,7 +615,6 @@ const es: Translation = {
 					NoValidCodeParagraph: "This link doesn't contain a valid code. Please request a new link."
 				}
 			},
-			Platform: { Raycast: 'Raycast', Stablecog: 'Stablecog' },
 			NoAppsYet: "You haven't connected any apps yet.",
 			PageTitle: 'Applications',
 			PageParagraph:
@@ -818,26 +751,6 @@ const es: Translation = {
 				}
 			}
 		}
-	},
-	ForgotPassword: {
-		PageTitle: 'Επαναφορά κωδικού πρόσβασης',
-		PageParagraph:
-			'Θα στείλουμε έναν 6ψήφιο κωδικό στο ηλεκτρονικό ταχυδρομείο σας για την επαναφορά του κωδικού πρόσβασής σας.',
-		SendResetCodeButton: 'Αποστολή κωδικού',
-		PageTitleConfirmCode: 'Επιβεβαίωση',
-		PageTitleConfirmCodeAlt: 'Ελέγξτε το ηλεκτρονικό ταχυδρομείο σας',
-		PageParagraphConfirmCode:
-			'Σας στείλαμε έναν 6-ψήφιο κωδικό. Εισάγετέ τον παρακάτω για να επιβεβαιώσετε τον λογαριασμό σας.',
-		ConfirmCodeButton: 'Επιβεβαίωση',
-		PageTitleNewPassword: 'Νέος Κωδικός Πρόσβασης',
-		PageParagraphNewPassword: 'Εισάγετε ένα νέο κωδικό πρόσβασης για το λογαριασμό σας.',
-		NewPasswordInput: {
-			Placeholder: 'Νέος Κωδικός Πρόσβασης'
-		},
-		SetNewPasswordButton: 'Ορίστε νέο κωδικό',
-		PageTitleSuccess: 'Ολοκληρώθηκε!',
-		PageParagraphSuccess: 'Έχει γίνει επαναφορά του κωδικού πρόσβασής σας με επιτυχία.',
-		ForgotPasswordButton: 'Ξεχάσατε το κωδικό;'
 	},
 	FeaturedOn: {
 		PageTitle: 'Συγκαταλεγόμαστε στα Προτεινόμενα του'
@@ -1001,7 +914,7 @@ const es: Translation = {
 		DocumentationButton: 'Τεκμηρίωση',
 		ForDevelopersTitle: 'Για προγραμματιστές'
 	},
-	Scl: {
+	Platform: {
 		Discord: 'Discord',
 		Email: 'Ηλεκτρονικό ταχυδρομείο',
 		Twitter: 'Twitter',
@@ -1012,7 +925,9 @@ const es: Translation = {
 		GitHub: 'GitHub',
 		Telegram: 'Telegram',
 		Facebook: 'Facebook',
-		ProductHunt: 'Product Hunt'
+		ProductHunt: 'Product Hunt',
+		Stablecog: 'Stablecog',
+		Raycast: 'Raycast'
 	},
 	Voiceover: {
 		ModelOptions: {
@@ -1211,10 +1126,6 @@ const es: Translation = {
 		NoPlatformIDParagraph: "This link doesn't contain a {platform} ID. Please request a new link.",
 		NoPlatformUsernameParagraph:
 			"This link doesn't contain a {platform} username. Please request a new link.",
-		Platform: {
-			Discord: 'Discord',
-			Stablecog: 'Stablecog'
-		},
 		ConnectToTitle: 'Connect to {platform}',
 		ConnectToParagraph:
 			'Create an account or sign in to connect your {platform} account to your Stablecog account.',
