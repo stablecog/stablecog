@@ -389,7 +389,7 @@
 						</h3>
 						<div
 							class="w-[100%+2rem] md:w-[100%+2.5rem] -mx-4 md:-mx-5 text-center bg-c-bg-secondary
-							text-c-on-bg mt-4 py-3 font-bold flex flex-col items-center"
+							text-c-on-bg mt-4 {isFirstPurchase50Off ? 'py-4' : 'py-3'} font-bold flex flex-col items-center"
 						>
 							<h4 class="max-w-full flex flex-wrap justify-center items-start px-2">
 								{#if isFirstPurchase50Off}
@@ -414,7 +414,7 @@
 								>
 							</h4>
 							{#if isFirstPurchase50Off}
-								<div class="max-w-full px-2 mt-1.5 pb-1">
+								<div class="max-w-full px-2 mt-2 pb-1">
 									<p
 										class="max-w-full rounded-full bg-c-primary/15 ring-1 ring-c-primary/25 text-sm text-c-primary font-medium px-2.5 py-0.5"
 									>
