@@ -6,6 +6,7 @@
 
 	export let post: TPostMetadata;
 	export let featured = false;
+	export let loading: 'eager' | 'lazy' = 'lazy';
 	export { classes as class };
 	let classes = '';
 
@@ -35,7 +36,7 @@
 			viewBox="0 0 1200 630"
 		/>
 		<img
-			loading="lazy"
+			{loading}
 			class="bg-c-bg-tertiary w-full h-auto {featured
 				? 'md:object-cover md:h-full'
 				: ''} absolute left-0 top-0 origin-top transition transform"

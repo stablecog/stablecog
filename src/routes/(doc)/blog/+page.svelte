@@ -22,11 +22,11 @@
 	</div>
 	<div class="w-[100%+2.5rem] -mx-5 max-w-6xl flex flex-wrap items-start justify-center mt-6">
 		<div class="w-full p-2 max-w-lg md:max-w-full">
-			<BlogPostCard post={data.posts[0]} featured={true} />
+			<BlogPostCard post={data.posts[0]} featured={true} loading="eager" />
 		</div>
-		{#each data.posts.slice(1) as post}
+		{#each data.posts.slice(1) as post, index}
 			<div class="self-stretch flex max-w-lg w-full md:w-1/2 lg:w-1/3 p-2">
-				<BlogPostCard {post} />
+				<BlogPostCard {post} loading={index < 1 ? 'eager' : 'lazy'} />
 			</div>
 		{/each}
 	</div>
