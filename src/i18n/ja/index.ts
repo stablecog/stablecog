@@ -783,7 +783,7 @@ const ja: Translation = {
 		Features: {
 			DailyCredits: '{count} credits per day.',
 			DailyImages: '{count} images per day.',
-			PersonalyUseOnly: 'Personaly use only.',
+			PersonalUseOnly: 'Personal use only.',
 			MonthlyCredits: '月毎 {count} クレジット。',
 			MonthlyImages: '月毎{count}個まで生成',
 			MonthlyGenerations: '月毎 {count} 枚の生成',

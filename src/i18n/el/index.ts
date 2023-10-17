@@ -795,7 +795,7 @@ const es: Translation = {
 		Features: {
 			DailyCredits: '{count} credits per day.',
 			DailyImages: '{count} images per day.',
-			PersonalyUseOnly: 'Personaly use only.',
+			PersonalUseOnly: 'Personal use only.',
 			MonthlyCredits: '{count} μονάδες το μήνα.',
 			MonthlyImages: '{count} μονάδες το μήνα.',
 			MonthlyGenerations: '{count} δημιουργίες το μήνα.',

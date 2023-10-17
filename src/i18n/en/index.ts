@@ -767,7 +767,7 @@ const en: BaseTranslation = {
 		Features: {
 			DailyCredits: '{count} credits per day.',
 			DailyImages: '{count} images per day.',
-			PersonalyUseOnly: 'Personaly use only.',
+			PersonalUseOnly: 'Personal use only.',
 			MonthlyCredits: '{count} credits per month.',
 			MonthlyImages: '{count} images per month.',
 			MonthlyGenerations: '{count} generations per month.',

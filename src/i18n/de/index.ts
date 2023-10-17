@@ -769,7 +769,7 @@ const de: Translation = {
 		Features: {
 			DailyCredits: '{count} credits per day.',
 			DailyImages: '{count} images per day.',
-			PersonalyUseOnly: 'Personaly use only.',
+			PersonalUseOnly: 'Personal use only.',
 			MonthlyCredits: '{count} credits per month.',
 			MonthlyImages: '{count} Bilder pro Monat.',
 			MonthlyGenerations: '{count} Generierungen pro Monat.',

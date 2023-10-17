@@ -2311,9 +2311,9 @@ type RootTranslation = {
 			 */
 			DailyImages: RequiredParams<'count'>
 			/**
-			 * P​e​r​s​o​n​a​l​y​ ​u​s​e​ ​o​n​l​y​.
+			 * P​e​r​s​o​n​a​l​ ​u​s​e​ ​o​n​l​y​.
 			 */
-			PersonalyUseOnly: string
+			PersonalUseOnly: string
 			/**
 			 * {​c​o​u​n​t​}​ ​c​r​e​d​i​t​s​ ​p​e​r​ ​m​o​n​t​h​.
 			 * @param {unknown} count
@@ -5429,9 +5429,9 @@ export type TranslationFunctions = {
 			 */
 			DailyImages: (arg: { count: unknown }) => LocalizedString
 			/**
-			 * Personaly use only.
+			 * Personal use only.
 			 */
-			PersonalyUseOnly: () => LocalizedString
+			PersonalUseOnly: () => LocalizedString
 			/**
 			 * {count} credits per month.
 			 */

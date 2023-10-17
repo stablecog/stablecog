@@ -776,7 +776,7 @@ const nl: Translation = {
 		Features: {
 			DailyCredits: '{count} credits per day.',
 			DailyImages: '{count} images per day.',
-			PersonalyUseOnly: 'Personaly use only.',
+			PersonalUseOnly: 'Personal use only.',
 			MonthlyCredits: '{count} credits per maand.',
 			MonthlyImages: '{count} afbeeldingen per maand.',
 			MonthlyGenerations: '{count} creaties per maand.',
