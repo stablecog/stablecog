@@ -120,10 +120,10 @@
 			: undefined;
 
 	$: overscanCount = estimatedItemCountInAWindow
-		? Math.round(estimatedItemCountInAWindow * 2)
+		? Math.round(estimatedItemCountInAWindow * 1.5)
 		: undefined;
 
-	const overscanMultiplierForNextPage = 0.25;
+	const overscanMultiplierForGettingNextPage = 0;
 
 	$: [
 		gridScrollContainer,
@@ -151,9 +151,9 @@
 		const items = $gridVirtualizer.getVirtualItems();
 		if (!items || items.length < 1) return;
 		const lastItemIndex = items[items.length - 1].index;
-		const isLastItemVisible =
-			lastItemIndex >= outputs.length - 1 - overscanCount * overscanMultiplierForNextPage;
-		if (!isLastItemVisible) return;
+		const shouldGetNextPage =
+			lastItemIndex >= outputs.length - 1 - overscanCount * overscanMultiplierForGettingNextPage;
+		if (!shouldGetNextPage) return;
 		$generationsQuery.fetchNextPage();
 	}
 
