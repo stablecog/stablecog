@@ -94,12 +94,12 @@
 		class="touch-manipulation transition rounded-lg group/favoritebutton {classes}"
 		aria-label="Favorite Output"
 	>
-		<div class="p-2.5 rounded-full bg-c-bg relative overflow-hidden z-0">
-			<div
-				class="w-full h-full rounded-full transition transform -translate-x-[calc(100%+8px)]
-				bg-c-secondary/25 absolute left-0 top-0 group-focus/favoritebutton:translate-x-0
-				not-touch:group-hover/favoritebutton:translate-x-0"
-			/>
+		<div
+			class="p-2.5 rounded-full bg-c-bg relative overflow-hidden z-0
+			after:w-full after:h-full after:absolute after:left-0 after:top-0
+			after:-translate-x-full after:not-touch:group-hover/favoritebutton:translate-x-0
+			after:rounded-full after:transition after:transform after:z-[-1] after:bg-c-secondary/25"
+		>
 			<IconFavorite favorited={generation.selected_output.is_favorited} />
 		</div>
 	</button>

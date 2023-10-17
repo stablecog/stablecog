@@ -36,12 +36,14 @@
 	class="touch-manipulation transition rounded-lg group/copybutton {classes}"
 	aria-label="Copy to Clipboard"
 >
-	<div class="rounded-full bg-c-bg relative overflow-hidden z-0 p-2.5">
-		<div
-			class="w-full h-full rounded-full transition transform -translate-x-[calc(100%+8px)] absolute left-0 top-0 {copied
-				? 'bg-c-bg'
-				: 'bg-c-primary'} not-touch:group-hover/copybutton:translate-x-0"
-		/>
+	<div
+		class="rounded-full bg-c-bg relative overflow-hidden z-0 p-2.5
+		after:w-full after:h-full after:absolute after:left-0 after:top-0
+		after:-translate-x-full after:not-touch:group-hover/copybutton:translate-x-0
+		after:rounded-full after:transition after:transform after:z-[-1] {copied
+			? 'after:bg-c-bg'
+			: 'after:bg-c-primary'}"
+	>
 		<IconCopy
 			class="transform {copied
 				? 'scale-0 opacity-0'

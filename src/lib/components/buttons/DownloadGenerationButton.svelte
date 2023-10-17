@@ -64,22 +64,21 @@
 	class="touch-manipulation transition rounded-lg group/downloadbutton {classes}"
 	aria-label="Download Image"
 >
-	<div class="p-2.5 rounded-full bg-c-bg relative overflow-hidden z-0">
-		<div
-			class="w-full h-full rounded-full transition transform -translate-x-[calc(100%+8px)]
-			bg-c-primary absolute left-0 top-0 group-focus/downloadbutton:translate-x-0
-			not-touch:group-hover/downloadbutton:translate-x-0"
-		/>
+	<div
+		class="p-2.5 rounded-full bg-c-bg relative overflow-hidden z-0 after:w-full after:h-full after:absolute after:left-0 after:top-0
+		after:-translate-x-full after:not-touch:group-hover/downloadbutton:translate-x-0
+		after:rounded-full after:transition after:transform after:z-[-1] after:bg-c-primary"
+	>
 		<Morpher morphed={downloadStatus === 'downloading'} class="w-7 h-7">
 			<IconDownload
 				slot="0"
-				class="w-7 h-7 transition text-c-on-bg relative group-focus/downloadbutton:text-c-on-primary
+				class="w-7 h-7 transition text-c-on-bg relative
 				not-touch:group-hover/downloadbutton:text-c-on-primary"
 			/>
 			<IconAnimatedSpinner
 				slot="1"
 				loading={downloadStatus === 'downloading'}
-				class="w-7 h-7 text-c-on-bg relative group-focus/downloadbutton:text-c-on-primary
+				class="w-7 h-7 text-c-on-bg relative
 				not-touch:group-hover/downloadbutton:text-c-on-primary"
 			/>
 		</Morpher>

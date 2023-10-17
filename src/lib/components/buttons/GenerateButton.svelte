@@ -30,14 +30,14 @@
 	})}
 	aria-label={label}
 >
-	<div class="p-2.5 rounded-full bg-c-bg relative overflow-hidden z-0">
-		<div
-			class="w-full h-full rounded-full transition transform -translate-x-[calc(100%+8px)]
-			bg-c-primary absolute left-0 top-0 group-focus/generatebutton:translate-x-0
-			not-touch:group-hover/generatebutton:translate-x-0"
-		/>
+	<div
+		class="p-2.5 rounded-full bg-c-bg relative overflow-hidden z-0
+		after:w-full after:h-full after:absolute after:left-0 after:top-0
+		after:-translate-x-full after:not-touch:group-hover/generatebutton:translate-x-0
+		after:rounded-full after:transition after:transform after:z-[-1] after:bg-c-primary"
+	>
 		<IconWand
-			class="w-7 h-7 transform scale-100 transition text-c-on-bg relative group-focus/generatebutton:text-c-on-primary
+			class="w-7 h-7 transform scale-100 transition text-c-on-bg relative
 			not-touch:group-hover/generatebutton:text-c-on-primary"
 		/>
 	</div>
