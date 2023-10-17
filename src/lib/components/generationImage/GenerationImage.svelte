@@ -166,7 +166,7 @@
 
 {#if generation.selected_output.image_url.includes('placeholder')}
 	<svg
-		class="w-full h-full absolute left-0 top-0 text-c-bg-secondary"
+		class="w-full h-full object-cover absolute left-0 top-0 text-c-bg-secondary"
 		width={generation.width}
 		height={generation.height}
 		viewBox="0 0 {generation.width} {generation.height}"
@@ -176,14 +176,14 @@
 		<rect width={generation.width} height={generation.height} fill="currentColor" />
 	</svg>
 	<div class="w-full h-full absolute left-0 top-0 p-5 flex items-center justify-center">
-		<IconNoImage class="w-12 h-12 text-c-on-bg/40" />
+		<IconNoImage class="w-10 h-10 text-c-on-bg/40" />
 	</div>
 {:else}
 	<SrcsetProvider src={srcHighest} {cardType} let:sizes let:srcset>
 		<img
 			on:load={onImageLoaded}
 			loading="lazy"
-			class="w-full h-full absolute left-0 top-0 {didLoadBefore
+			class="w-full h-full object-cover absolute left-0 top-0 {didLoadBefore
 				? 'transition-[transform] ease-[ease-out] duration-[0.2s]'
 				: 'transition-[transform,opacity] ease-[ease-out,ease-in] duration-[0.2s,0.2s]'} 
 				transform {isImageLoaded ? 'opacity-100' : 'opacity-0'} {isInGallerySelectedIds

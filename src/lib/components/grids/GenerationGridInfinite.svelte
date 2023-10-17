@@ -268,75 +268,73 @@
 						"
 					class="w-full group absolute p-px"
 				>
-					<div class="w-full h-full relative">
-						<ImagePlaceholder width={output.generation.width} height={output.generation.height} />
-						<div
-							class="absolute left-0 top-0 w-full h-full bg-c-bg-secondary transition overflow-hidden
-								z-0 {cardType === 'generate'
-								? output.image_url &&
-								  !output.is_deleted &&
-								  output.status !== 'failed' &&
-								  output.status !== 'failed-nsfw' &&
-								  output.status !== 'failed-nsfw-prompt'
-									? 'border-2 rounded-lg hover:border-c-primary'
-									: 'border-2 rounded-lg'
-								: 'border-2 rounded-xl'} {isOutputSelected
-								? 'border-c-primary'
-								: 'border-c-bg-secondary'} {isOutputHoverable ? 'hover:border-c-primary/75' : ''}"
-						>
-							{#if output.generation.outputs !== undefined}
-								{#if output.status !== 'failed' && output.status !== 'failed-nsfw' && output.status !== 'failed-nsfw-prompt'}
-									{#if output.status !== undefined && output.status !== 'succeeded' && output.animation !== undefined}
-										<div
-											out:fade={{ duration: 3000, easing: quadIn }}
-											class="w-full h-full absolute left-0 top-0"
-										>
-											<GenerationAnimation animation={output.animation} />
-										</div>
-									{/if}
-									{#if output.status === undefined || output.status === 'succeeded'}
-										<GenerationImage
-											{cardType}
-											{cardWidth}
-											didLoadBefore={loadedImages[output.image_url + cardType] === true}
-											{isGalleryEditActive}
-											generation={{
-												...output.generation,
-												selected_output: output
-											}}
-											{setSearchQuery}
-										/>
-									{/if}
-								{:else}
+					<div
+						class="w-full h-full relative bg-c-bg-secondary transition overflow-hidden
+						z-0 {cardType === 'generate'
+							? output.image_url &&
+							  !output.is_deleted &&
+							  output.status !== 'failed' &&
+							  output.status !== 'failed-nsfw' &&
+							  output.status !== 'failed-nsfw-prompt'
+								? 'border-2 rounded-lg hover:border-c-primary'
+								: 'border-2 rounded-lg'
+							: 'border-2 rounded-xl'} {isOutputSelected
+							? 'border-c-primary'
+							: 'border-c-bg-secondary'} {isOutputHoverable ? 'hover:border-c-primary/75' : ''}"
+					>
+						<!-- <ImagePlaceholder width={output.generation.width} height={output.generation.height} /> -->
+						{#if output.generation.outputs !== undefined}
+							{#if output.status !== 'failed' && output.status !== 'failed-nsfw' && output.status !== 'failed-nsfw-prompt'}
+								{#if output.status !== undefined && output.status !== 'succeeded' && output.animation !== undefined}
 									<div
-										in:fade={{ duration: 200, easing: quadOut }}
-										class="w-full h-full flex items-center bg-c-bg-secondary justify-center relative p-2"
+										out:fade={{ duration: 3000, easing: quadIn }}
+										class="w-full h-full absolute left-0 top-0"
 									>
-										{#if cardType === 'generate'}
-											{@const sizeClasses =
-												output.generation.height > output.generation.width
-													? 'h-full max-h-[1.75rem] xl:max-h-[2rem] w-auto'
-													: 'w-full max-w-[1.75rem] xl:max-w-[2rem] h-auto'}
-											{#if output.status === 'failed-nsfw'}
-												<IconEyeSlashOutline class="{sizeClasses} text-c-on-bg/50" />
-											{:else if output.status === 'failed-nsfw-prompt'}
-												<IconNsfwPrompt class="{sizeClasses} text-c-on-bg/50" />
-											{:else}
-												<IconSadFaceOutline class="{sizeClasses} text-c-on-bg/50" />
-											{/if}
-										{:else}
-											<p class="text-sm text-c-on-bg/50 px-5 py-3 text-center leading-relaxed">
-												{output.status === 'failed-nsfw'
-													? $LL.Error.ImageWasNSFW()
-													: output.status === 'failed-nsfw-prompt'
-													? $LL.Error.PromptWasNSFW()
-													: $LL.Error.SomethingWentWrong()}
-											</p>
-										{/if}
+										<GenerationAnimation animation={output.animation} />
 									</div>
 								{/if}
+								{#if output.status === undefined || output.status === 'succeeded'}
+									<GenerationImage
+										{cardType}
+										{cardWidth}
+										didLoadBefore={loadedImages[output.image_url + cardType] === true}
+										{isGalleryEditActive}
+										generation={{
+											...output.generation,
+											selected_output: output
+										}}
+										{setSearchQuery}
+									/>
+								{/if}
+							{:else}
+								<div
+									in:fade={{ duration: 200, easing: quadOut }}
+									class="w-full h-full flex items-center bg-c-bg-secondary justify-center relative p-2"
+								>
+									{#if cardType === 'generate'}
+										{@const sizeClasses =
+											output.generation.height > output.generation.width
+												? 'h-full max-h-[1.75rem] xl:max-h-[2rem] w-auto'
+												: 'w-full max-w-[1.75rem] xl:max-w-[2rem] h-auto'}
+										{#if output.status === 'failed-nsfw'}
+											<IconEyeSlashOutline class="{sizeClasses} text-c-on-bg/50" />
+										{:else if output.status === 'failed-nsfw-prompt'}
+											<IconNsfwPrompt class="{sizeClasses} text-c-on-bg/50" />
+										{:else}
+											<IconSadFaceOutline class="{sizeClasses} text-c-on-bg/50" />
+										{/if}
+									{:else}
+										<p class="text-sm text-c-on-bg/50 px-5 py-3 text-center leading-relaxed">
+											{output.status === 'failed-nsfw'
+												? $LL.Error.ImageWasNSFW()
+												: output.status === 'failed-nsfw-prompt'
+												? $LL.Error.PromptWasNSFW()
+												: $LL.Error.SomethingWentWrong()}
+										</p>
+									{/if}
+								</div>
 							{/if}
-						</div>
+						{/if}
 					</div>
 				</div>
 			{/each}
