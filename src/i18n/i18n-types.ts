@@ -2301,6 +2301,20 @@ type RootTranslation = {
 		}
 		Features: {
 			/**
+			 * {​c​o​u​n​t​}​ ​c​r​e​d​i​t​s​ ​p​e​r​ ​d​a​y​.
+			 * @param {unknown} count
+			 */
+			DailyCredits: RequiredParams<'count'>
+			/**
+			 * {​c​o​u​n​t​}​ ​i​m​a​g​e​s​ ​p​e​r​ ​d​a​y​.
+			 * @param {unknown} count
+			 */
+			DailyImages: RequiredParams<'count'>
+			/**
+			 * P​e​r​s​o​n​a​l​y​ ​u​s​e​ ​o​n​l​y​.
+			 */
+			PersonalyUseOnly: string
+			/**
 			 * {​c​o​u​n​t​}​ ​c​r​e​d​i​t​s​ ​p​e​r​ ​m​o​n​t​h​.
 			 * @param {unknown} count
 			 */
@@ -2315,6 +2329,10 @@ type RootTranslation = {
 			 * @param {unknown} count
 			 */
 			MonthlyGenerations: RequiredParams<'count'>
+			/**
+			 * N​o​ ​p​a​r​a​l​l​e​l​ ​g​e​n​e​r​a​t​i​o​n​s​.
+			 */
+			NoParallelGenerations: string
 			/**
 			 * {​c​o​u​n​t​}​ ​p​a​r​a​l​l​e​l​ ​g​e​n​e​r​a​t​i​o​n​s​.
 			 * @param {unknown} count
@@ -2334,6 +2352,14 @@ type RootTranslation = {
 			 * N​e​v​e​r​ ​e​x​p​i​r​e​s​.
 			 */
 			NeverExpires: string
+			/**
+			 * G​e​n​e​r​a​t​i​o​n​ ​p​r​i​o​r​i​t​y​.
+			 */
+			GenerationQueuePriority: string
+			/**
+			 * N​o​ ​g​e​n​e​r​a​t​i​o​n​ ​p​r​i​o​r​i​t​y​.
+			 */
+			NoGenerationQueuePriority: string
 			/**
 			 * C​o​m​m​e​r​c​i​a​l​ ​u​s​e​.
 			 */
@@ -2361,6 +2387,10 @@ type RootTranslation = {
 			 */
 			BestValue: string
 		}
+		/**
+		 * F​r​e​e​ ​F​o​r​e​v​e​r​!
+		 */
+		FreeForeverTitle: string
 		Discounts: {
 			/**
 			 * F​i​r​s​t​ ​m​o​n​t​h​ ​i​s​ ​5​0​%​ ​o​f​f​!
@@ -5391,6 +5421,18 @@ export type TranslationFunctions = {
 		}
 		Features: {
 			/**
+			 * {count} credits per day.
+			 */
+			DailyCredits: (arg: { count: unknown }) => LocalizedString
+			/**
+			 * {count} images per day.
+			 */
+			DailyImages: (arg: { count: unknown }) => LocalizedString
+			/**
+			 * Personaly use only.
+			 */
+			PersonalyUseOnly: () => LocalizedString
+			/**
 			 * {count} credits per month.
 			 */
 			MonthlyCredits: (arg: { count: unknown }) => LocalizedString
@@ -5402,6 +5444,10 @@ export type TranslationFunctions = {
 			 * {count} generations per month.
 			 */
 			MonthlyGenerations: (arg: { count: unknown }) => LocalizedString
+			/**
+			 * No parallel generations.
+			 */
+			NoParallelGenerations: () => LocalizedString
 			/**
 			 * {count} parallel generations.
 			 */
@@ -5418,6 +5464,14 @@ export type TranslationFunctions = {
 			 * Never expires.
 			 */
 			NeverExpires: () => LocalizedString
+			/**
+			 * Generation priority.
+			 */
+			GenerationQueuePriority: () => LocalizedString
+			/**
+			 * No generation priority.
+			 */
+			NoGenerationQueuePriority: () => LocalizedString
 			/**
 			 * Commercial use.
 			 */
@@ -5445,6 +5499,10 @@ export type TranslationFunctions = {
 			 */
 			BestValue: () => LocalizedString
 		}
+		/**
+		 * Free Forever!
+		 */
+		FreeForeverTitle: () => LocalizedString
 		Discounts: {
 			/**
 			 * First month is 50% off!

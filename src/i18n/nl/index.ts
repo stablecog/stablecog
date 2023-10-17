@@ -774,13 +774,19 @@ const nl: Translation = {
 			MegaTitle: 'Mega Bundel'
 		},
 		Features: {
+			DailyCredits: '{count} credits per day.',
+			DailyImages: '{count} images per day.',
+			PersonalyUseOnly: 'Personaly use only.',
 			MonthlyCredits: '{count} credits per maand.',
 			MonthlyImages: '{count} afbeeldingen per maand.',
 			MonthlyGenerations: '{count} creaties per maand.',
+			NoParallelGenerations: 'No parallel generations.',
 			ParallelGenerations: '{count} parallel generations.',
 			Images: '{count} afbeeldingen.',
 			Generations: '{count} creaties.',
 			NeverExpires: 'Verloopt nooit.',
+			GenerationQueuePriority: 'Generation priority.',
+			NoGenerationQueuePriority: 'No generation priority.',
 			CommercialUse: 'Commercieel gebruik.',
 			ImagesArePublic: 'Afbeeldingen zijn openbaar.',
 			ImagesArePrivate: 'Afbeeldingen zijn privé.'
@@ -790,6 +796,7 @@ const nl: Translation = {
 			MostPopular: 'Populairst',
 			BestValue: 'Meeste voordeel'
 		},
+		FreeForeverTitle: 'Free Forever!',
 		Discounts: { FirstPurchase50OffParagraph: 'First month is 50% off!' },
 		Purchase: {
 			Succeeded: {

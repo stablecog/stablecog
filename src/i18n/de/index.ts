@@ -767,13 +767,19 @@ const de: Translation = {
 			MegaTitle: 'Mega Package'
 		},
 		Features: {
+			DailyCredits: '{count} credits per day.',
+			DailyImages: '{count} images per day.',
+			PersonalyUseOnly: 'Personaly use only.',
 			MonthlyCredits: '{count} credits per month.',
 			MonthlyImages: '{count} Bilder pro Monat.',
 			MonthlyGenerations: '{count} Generierungen pro Monat.',
+			NoParallelGenerations: 'No parallel generations.',
 			ParallelGenerations: '{count} parallel generations.',
 			Images: '%{count} Bilder.',
 			Generations: '{count} Generierungen.',
 			NeverExpires: 'Läuft nie ab.',
+			GenerationQueuePriority: 'Generation priority.',
+			NoGenerationQueuePriority: 'No generation priority.',
 			CommercialUse: 'Kommerzielle Nutzung.',
 			ImagesArePublic: 'Bilder sind öffentlich.',
 			ImagesArePrivate: 'Bilder sind privat.'
@@ -783,6 +789,7 @@ const de: Translation = {
 			MostPopular: 'Am beliebtesten',
 			BestValue: 'Bestes Preis-Leistungs-Verhältnis'
 		},
+		FreeForeverTitle: 'Free Forever!',
 		Discounts: { FirstPurchase50OffParagraph: 'First month is 50% off!' },
 		Purchase: {
 			Succeeded: {

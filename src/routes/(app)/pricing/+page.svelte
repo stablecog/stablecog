@@ -31,6 +31,7 @@
 	import { socialAppUrls } from '$ts/constants/social';
 	import { searchParamsString } from '$ts/stores/searchParamsString';
 	import SignInModal from '$components/SignInModal.svelte';
+	import { getCustomerPortalUrl } from '$ts/helpers/user/getCustomerPortalUrl.js';
 
 	export let data;
 
@@ -39,7 +40,39 @@
 		? PUBLIC_STRIPE_PROMOTION_CODE_ID_FIRST_PURCHASE_50_OFF
 		: undefined;
 
+	interface TSubscriptionCard {
+		id: 'plan-free' | 'plan-starter' | 'plan-pro' | 'plan-ultimate';
+		title: string;
+		priceIdMo?: string;
+		productId?: string;
+		currency: 'usd' | 'eur';
+		currencySymbol: string;
+		promotionCodeId?: string;
+		amount: number;
+		features: string[];
+		ringClass: string;
+		badgeText?: string;
+		badgeClasses?: string;
+	}
+
+	let subscriptionCards: TSubscriptionCard[];
 	$: subscriptionCards = [
+		{
+			id: 'plan-free',
+			title: $LL.Pricing.Plans.FreeTitle(),
+			currency: data.currency,
+			currencySymbol: STRIPE_CURRENCY_TO_SYMBOL[data.currency],
+			amount: 0,
+			features: [
+				$LL.Pricing.Features.DailyImages({
+					count: 20
+				}),
+				$LL.Pricing.Features.NoParallelGenerations(),
+				$LL.Pricing.Features.PersonalyUseOnly(),
+				$LL.Pricing.Features.ImagesArePublic()
+			],
+			ringClass: 'ring-c-bg-secondary'
+		},
 		{
 			id: 'plan-starter',
 			title: $LL.Pricing.Plans.StarterTitle(),
@@ -283,6 +316,7 @@
 	];
 
 	let checkoutCreationStatus: 'idle' | 'loading' | 'success' | 'error' = 'idle';
+	let customerPortalCreationStatus: 'idle' | 'loading' | 'success' | 'error' = 'idle';
 	let isSignInModalOpen = false;
 	let selectedPriceId: string | undefined = undefined;
 
@@ -333,6 +367,23 @@
 		}
 	}
 
+	async function createCustomerPortalSessionAndRedirect(accessToken: string) {
+		try {
+			customerPortalCreationStatus = 'loading';
+			const { customer_portal_url, error } = await getCustomerPortalUrl({
+				returnUrl: `${window.location.origin}/pricing`,
+				accessToken
+			});
+			if (error || !customer_portal_url) {
+				throw new Error(error || 'No customer portal url returned');
+			}
+			await goto(customer_portal_url);
+			checkoutCreationStatus = 'success';
+		} catch (error) {
+			customerPortalCreationStatus = 'error';
+		}
+	}
+
 	function getAnchorLinkHTML(text: string, href: string) {
 		return `<a href="${href}" target="_blank" class="hover:text-c-primary transition underline">${text}</a>`;
 	}
@@ -351,7 +402,9 @@
 			<p class="max-w-xl mt-3 text-center leading-relaxed text-c-on-bg/75">
 				{$LL.Pricing.PlansParagraph()}
 			</p>
-			<div class="w-full max-w-7xl flex flex-wrap justify-center items-stretch gap-7 mt-9">
+			<div
+				class="w-full max-w-7xl flex flex-wrap justify-center items-stretch mt-5 lg:px-5 xl:px-0"
+			>
 				{#each subscriptionCards as card}
 					{@const subscribedProductId = subscriptionCards.find(
 						(c) => c.productId === $userSummary?.product_id
@@ -369,126 +422,21 @@
 						subscribedAmount !== undefined &&
 						subscribedAmount > card.amount &&
 						$page.data.session?.user.id !== undefined}
+					{@const accessToken = $page.data.session?.access_token}
 					<div
 						id={card.id}
-						class="w-full flex flex-col max-w-md md:max-w-[20rem] bg-c-bg shadow-xl shadow-c-shadow/[var(--o-shadow-strong)]
-					 	p-4 md:p-5 rounded-2xl md:rounded-3xl ring-2 {isSubscribed
-							? 'ring-c-success'
-							: card.ringClass} relative"
+						class="w-full sm:max-w-sm md:w-1/2 xl:w-1/4 px-3 py-4 flex items-stretch"
 					>
-						{#if card.badgeText && card.badgeClasses && !isDowngrade}
-							<div
-								class="absolute -right-2.5 -top-3 rounded-full px-3.5 py-1.5 text-xs text-right
-								font-bold {isSubscribed ? 'bg-c-success text-c-on-primary' : card.badgeClasses}"
-							>
-								{card.badgeText}
-							</div>
-						{/if}
-						<h3 class="w-full text-c-on-bg text-center font-bold text-xl md:-mt-1.5 py-0.5 gap-2">
-							{card.title}
-						</h3>
 						<div
-							class="w-[100%+2rem] md:w-[100%+2.5rem] -mx-4 md:-mx-5 text-center bg-c-bg-secondary
-							text-c-on-bg mt-4 {isFirstPurchase50Off ? 'py-4' : 'py-3'} font-bold flex flex-col items-center"
+							class="w-full flex flex-col bg-c-bg shadow-xl shadow-c-shadow/[var(--o-shadow-strong)]
+					 		p-4 md:p-5 rounded-2xl md:rounded-3xl ring-2 {isSubscribed && $userSummary?.product_id
+								? 'ring-c-success'
+								: card.ringClass} relative"
 						>
-							<h4 class="max-w-full flex flex-wrap justify-center items-start px-2">
-								{#if isFirstPurchase50Off}
-									<span class="text-xl text-c-on-bg/50">{card.currencySymbol}</span><span
-										class="text-3xl font-semibold text-c-on-bg/50 line-through pr-0.4ch"
-									>
-										{card.amount.toLocaleString($locale)}
-									</span><span class="text-xl">{card.currencySymbol}</span><span
-										class="text-3xl font-bold"
-									>
-										{(card.amount / 2).toLocaleString($locale)}
-									</span>
-								{:else}
-									<span class="text-xl">{card.currencySymbol}</span><span
-										class="text-3xl font-bold"
-									>
-										{card.amount.toLocaleString($locale)}
-									</span>
-								{/if}
-								<span class="self-end mb-0.75 text-c-on-bg/60 font-medium"
-									>{$LL.Pricing.SlashMonth()}</span
-								>
-							</h4>
-							{#if isFirstPurchase50Off}
-								<div class="max-w-full px-2 mt-2 pb-1">
-									<p
-										class="max-w-full rounded-full bg-c-primary/15 ring-1 ring-c-primary/25 text-sm text-c-primary font-medium px-2.5 py-0.5"
-									>
-										{$LL.Pricing.Discounts.FirstPurchase50OffParagraph()}
-									</p>
-								</div>
-							{/if}
-						</div>
-						<ul class="w-full mt-6 flex flex-col gap-3 px-1 flex-1">
-							{#each card.features as feature}
-								<li class="w-full flex items-start gap-3">
-									<span class="text-c-on-bg/60">-</span>
-									<span class="flex-shrink min-w-0">{feature}</span>
-								</li>
-							{/each}
-						</ul>
-						{#if $page.data.session?.user.email}
-							<Button
-								withSpinner
-								type={isSubscribed ? 'success' : 'primary'}
-								disabled={isSubscribed}
-								loading={card.priceIdMo === selectedPriceId && checkoutCreationStatus === 'loading'}
-								href={isDowngrade
-									? `/account/subscription/downgrade?price_id=${
-											card.priceIdMo
-									  }&from=${encodeURIComponent($page.url.pathname)}`
-									: undefined}
-								onClick={() =>
-									!isDowngrade
-										? createCheckoutSessionAndRedirect({
-												priceId: card.priceIdMo,
-												currency: card.currency,
-												promotionCodeId: card.promotionCodeId
-										  })
-										: null}
-								class="w-full mt-7"
-							>
-								{#if isSubscribed}
-									{$LL.Pricing.SubscribedButton()}
-								{:else if isUpgrade}
-									{$LL.Pricing.UpgradeButton()}
-								{:else if isDowngrade}
-									{$LL.Pricing.DowngradeButton()}
-								{:else}
-									{$LL.Pricing.SubscribeButton()}
-								{/if}
-							</Button>
-						{:else}
-							<Button onClick={() => (isSignInModalOpen = true)} class="w-full mt-7">
-								{$LL.Pricing.SubscribeButton()}
-							</Button>
-						{/if}
-					</div>
-				{/each}
-			</div>
-			<div class="w-full h-[1vh]" />
-		</section>
-		{#if $userSummary?.product_id && $page.data.session?.user.id !== undefined}
-			<section id="credit-packs" class="w-full flex flex-col items-center justify-start pt-16">
-				<h2 class="text-center font-bold text-4xl">{$LL.Pricing.CreditPacksTitle()}</h2>
-				<p class="max-w-xl mt-3 text-center leading-relaxed text-c-on-bg/75">
-					{$LL.Pricing.CreditPacksParagraph()}
-				</p>
-				<div class="w-full max-w-7xl flex flex-wrap justify-center gap-7 mt-8">
-					{#each creditPackCards as card}
-						<div
-							id={card.id}
-							class="w-full max-w-md md:max-w-[20rem] bg-c-bg shadow-xl shadow-c-shadow/[var(--o-shadow-strong)]
-							p-4 md:p-5 rounded-2xl md:rounded-3xl ring-2 {card.ringClass} relative"
-						>
-							{#if card.badgeText && card.badgeClasses}
+							{#if card.badgeText && card.badgeClasses && !isDowngrade}
 								<div
 									class="absolute -right-2.5 -top-3 rounded-full px-3.5 py-1.5 text-xs text-right
-									font-bold {card.badgeClasses}"
+									font-bold {isSubscribed ? 'bg-c-success text-c-on-primary' : card.badgeClasses}"
 								>
 									{card.badgeText}
 								</div>
@@ -496,41 +444,177 @@
 							<h3 class="w-full text-c-on-bg text-center font-bold text-xl md:-mt-1.5 py-0.5 gap-2">
 								{card.title}
 							</h3>
-							<h4
+							<div
 								class="w-[100%+2rem] md:w-[100%+2.5rem] -mx-4 md:-mx-5 text-center bg-c-bg-secondary
-								text-c-on-bg mt-4 py-3 font-bold flex justify-center items-start"
+								text-c-on-bg mt-4 {isFirstPurchase50Off ? 'py-4' : 'py-3'} font-bold flex flex-col items-center"
 							>
-								<span class="text-xl">{card.currencySymbol}</span><span class="text-3xl font-bold">
-									{card.amount.toLocaleString($locale)}
-								</span>
-							</h4>
+								<h4 class="max-w-full flex flex-wrap justify-center items-start px-2">
+									{#if isFirstPurchase50Off}
+										{#if card.id !== 'plan-free'}<span class="text-xl text-c-on-bg/50"
+												>{card.currencySymbol}</span
+											><span class="text-3xl font-semibold text-c-on-bg/50 line-through pr-0.4ch">
+												{card.amount.toLocaleString($locale)}
+											</span>
+										{/if}<span class="text-xl">{card.currencySymbol}</span><span
+											class="text-3xl font-bold"
+										>
+											{(card.amount / 2).toLocaleString($locale)}
+										</span>
+									{:else}
+										<span class="text-xl">{card.currencySymbol}</span><span
+											class="text-3xl font-bold"
+										>
+											{card.amount.toLocaleString($locale)}
+										</span>
+									{/if}
+									<span class="self-end mb-0.75 text-c-on-bg/60 font-medium"
+										>{$LL.Pricing.SlashMonth()}</span
+									>
+								</h4>
+								{#if isFirstPurchase50Off}
+									<div class="max-w-full px-2 mt-2 pb-1">
+										<p
+											class="max-w-full rounded-full {card.id === 'plan-free'
+												? 'bg-c-on-bg/10 ring-c-on-bg/20 text-c-on-bg'
+												: 'bg-c-primary/15 ring-c-primary/25 text-c-primary'} ring-1 text-sm font-medium px-2.5 py-0.5"
+										>
+											{card.id === 'plan-free'
+												? $LL.Pricing.FreeForeverTitle()
+												: $LL.Pricing.Discounts.FirstPurchase50OffParagraph()}
+										</p>
+									</div>
+								{/if}
+							</div>
 							<ul class="w-full mt-6 flex flex-col gap-3 px-1 flex-1">
 								{#each card.features as feature}
-									<li class="flex items-start gap-3">
+									<li class="w-full flex items-start gap-3">
 										<span class="text-c-on-bg/60">-</span>
 										<span class="flex-shrink min-w-0">{feature}</span>
 									</li>
 								{/each}
 							</ul>
-							{#if $page.data.session?.user.email}
+							{#if $userSummary && accessToken}
 								<Button
 									withSpinner
-									type={'primary'}
-									loading={card.priceId === selectedPriceId && checkoutCreationStatus === 'loading'}
+									type={isSubscribed && card.id !== 'plan-free'
+										? 'success'
+										: isSubscribed && card.id === 'plan-free'
+										? 'bg-secondary'
+										: isDowngrade
+										? 'bg-secondary'
+										: 'primary'}
+									noBorder={!isDowngrade}
+									disabled={isSubscribed}
+									loading={(card.priceIdMo === selectedPriceId &&
+										checkoutCreationStatus === 'loading') ||
+										(card.id === 'plan-free' && customerPortalCreationStatus === 'loading')}
+									href={isDowngrade && card.priceIdMo
+										? `/account/subscription/downgrade?price_id=${
+												card.priceIdMo
+										  }&from=${encodeURIComponent($page.url.pathname)}`
+										: undefined}
 									onClick={() =>
-										createCheckoutSessionAndRedirect({
-											priceId: card.priceId,
-											currency: card.currency
-										})}
-									class="w-full mt-8"
+										!isDowngrade && card.priceIdMo
+											? createCheckoutSessionAndRedirect({
+													priceId: card.priceIdMo,
+													currency: card.currency,
+													promotionCodeId: card.promotionCodeId
+											  })
+											: isDowngrade && card.id === 'plan-free'
+											? createCustomerPortalSessionAndRedirect(accessToken)
+											: null}
+									class="w-full mt-7"
 								>
-									{$LL.Pricing.PurchaseButton()}
+									{#if isSubscribed}
+										{$LL.Pricing.SubscribedButton()}
+									{:else if isUpgrade}
+										{$LL.Pricing.UpgradeButton()}
+									{:else if isDowngrade}
+										{$LL.Pricing.DowngradeButton()}
+									{:else}
+										{$LL.Pricing.SubscribeButton()}
+									{/if}
 								</Button>
 							{:else}
-								<Button onClick={() => (isSignInModalOpen = true)} class="w-full mt-8">
-									{$LL.Pricing.PurchaseButton()}
+								<Button onClick={() => (isSignInModalOpen = true)} class="w-full mt-7">
+									{$LL.Pricing.SubscribeButton()}
 								</Button>
 							{/if}
+						</div>
+					</div>
+				{/each}
+			</div>
+			<div class="w-full h-[1vh]" />
+		</section>
+		{#if $userSummary?.product_id && $page.data.session?.user.id !== undefined}
+			<section id="credit-packs" class="w-full flex flex-col items-center justify-start pt-12">
+				<h2 class="text-center font-bold text-4xl">{$LL.Pricing.CreditPacksTitle()}</h2>
+				<p class="max-w-xl mt-3 text-center leading-relaxed text-c-on-bg/75">
+					{$LL.Pricing.CreditPacksParagraph()}
+				</p>
+				<div class="w-full max-w-7xl flex flex-wrap justify-center mt-5">
+					{#each creditPackCards as card}
+						<div
+							id={card.id}
+							class="w-full sm:max-w-sm md:w-1/2 xl:w-1/4 px-3 py-4 flex items-stretch"
+						>
+							<div
+								id={card.id}
+								class="w-full bg-c-bg shadow-xl shadow-c-shadow/[var(--o-shadow-strong)]
+								p-4 md:p-5 rounded-2xl md:rounded-3xl ring-2 {card.ringClass} relative"
+							>
+								{#if card.badgeText && card.badgeClasses}
+									<div
+										class="absolute -right-2.5 -top-3 rounded-full px-3.5 py-1.5 text-xs text-right
+									font-bold {card.badgeClasses}"
+									>
+										{card.badgeText}
+									</div>
+								{/if}
+								<h3
+									class="w-full text-c-on-bg text-center font-bold text-xl md:-mt-1.5 py-0.5 gap-2"
+								>
+									{card.title}
+								</h3>
+								<h4
+									class="w-[100%+2rem] md:w-[100%+2.5rem] -mx-4 md:-mx-5 text-center bg-c-bg-secondary
+								text-c-on-bg mt-4 py-3 font-bold flex justify-center items-start"
+								>
+									<span class="text-xl">{card.currencySymbol}</span><span
+										class="text-3xl font-bold"
+									>
+										{card.amount.toLocaleString($locale)}
+									</span>
+								</h4>
+								<ul class="w-full mt-6 flex flex-col gap-3 px-1 flex-1">
+									{#each card.features as feature}
+										<li class="flex items-start gap-3">
+											<span class="text-c-on-bg/60">-</span>
+											<span class="flex-shrink min-w-0">{feature}</span>
+										</li>
+									{/each}
+								</ul>
+								{#if $page.data.session?.user.email}
+									<Button
+										withSpinner
+										type={'primary'}
+										loading={card.priceId === selectedPriceId &&
+											checkoutCreationStatus === 'loading'}
+										onClick={() =>
+											createCheckoutSessionAndRedirect({
+												priceId: card.priceId,
+												currency: card.currency
+											})}
+										class="w-full mt-8"
+									>
+										{$LL.Pricing.PurchaseButton()}
+									</Button>
+								{:else}
+									<Button onClick={() => (isSignInModalOpen = true)} class="w-full mt-8">
+										{$LL.Pricing.PurchaseButton()}
+									</Button>
+								{/if}
+							</div>
 						</div>
 					{/each}
 				</div>

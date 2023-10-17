@@ -100,9 +100,12 @@
 						<p class="text-sm text-c-on-bg/60 font-medium">
 							{$LL.Account.Subscription.CurrentPlanTitle()}
 						</p>
-						<p class="text-left font-bold text-2xl mt-1 text-c-on-bg">
-							{currentPlan.title}<span
-								class="text-base bg-c-primary/15 font-medium text-c-primary px-1.5 py-0.75 rounded-md ml-2"
+						<p
+							class="text-left font-bold text-2xl mt-1 text-c-on-bg flex flex-wrap items-center gap-1.5"
+						>
+							<span class="pr-1">{currentPlan.title}</span><span
+								class="my-auto text-base bg-c-primary/15 font-medium text-c-primary
+								px-1.5 py-0.5 rounded-md"
 								>{STRIPE_CURRENCY_TO_SYMBOL[
 									currency
 								]}{currentPlan.amount}{$LL.Pricing.SlashMonth()}</span
@@ -116,9 +119,11 @@
 						<p class="text-sm text-c-on-bg/60 font-medium">
 							{$LL.Account.Subscription.Downgrade.DowngradingToTitle()}
 						</p>
-						<p class="text-left font-bold text-2xl mt-1 text-c-on-bg">
-							{targetPlan.title}<span
-								class="text-base bg-c-primary/15 font-medium text-c-primary px-1.5 py-0.75 rounded-md ml-2"
+						<p
+							class="text-left font-bold text-2xl mt-1 text-c-on-bg flex flex-wrap items-center gap-1.5"
+						>
+							<span class="pr-1">{targetPlan.title}</span><span
+								class="text-base bg-c-primary/15 font-medium text-c-primary px-1.5 py-0.5 rounded-md"
 								>{STRIPE_CURRENCY_TO_SYMBOL[
 									currency
 								]}{targetPlan.amount}{$LL.Pricing.SlashMonth()}</span

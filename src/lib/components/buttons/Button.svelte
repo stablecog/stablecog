@@ -15,6 +15,7 @@
 	export let size: 'md' | 'sm' | 'xs' = 'md';
 	export let withSpinner = false;
 	export let noPadding = false;
+	export let noBorder = false;
 	export let target: THrefTarget = undefined;
 	export { classes as class };
 	export let type: 'primary' | 'success' | 'danger' | 'no-bg-on-bg' | 'bg-secondary' = 'primary';
@@ -110,6 +111,8 @@
 				? 'bg-c-success-secondary'
 				: type === 'danger'
 				? 'bg-c-danger-secondary'
+				: type === 'bg-secondary'
+				? 'bg-c-bg-tertiary'
 				: 'bg-c-secondary'
 			: type === 'success'
 			? 'bg-c-success'
@@ -235,6 +238,8 @@
 				? 'bg-c-success-secondary'
 				: type === 'danger'
 				? 'bg-c-danger-secondary'
+				: type === 'bg-secondary'
+				? 'bg-c-bg-tertiary'
 				: 'bg-c-secondary'
 			: type === 'success'
 			? 'bg-c-success'
@@ -362,6 +367,8 @@
 				? 'bg-c-success-secondary'
 				: type === 'danger'
 				? 'bg-c-danger-secondary'
+				: type === 'bg-secondary'
+				? 'bg-c-bg-secondary'
 				: 'bg-c-secondary'
 			: type === 'success'
 			? 'bg-c-success'
@@ -371,7 +378,7 @@
 			? 'bg-c-bg-secondary'
 			: type === 'no-bg-on-bg'
 			? 'bg-c-primary/0'
-			: 'bg-c-primary'} {type === 'bg-secondary'
+			: 'bg-c-primary'} {type === 'bg-secondary' && !noBorder
 			? 'border-2 border-c-bg-tertiary'
 			: ''} {fadeOnDisabled && disabled ? 'opacity-75' : ''} {classes} {shouldAnimate
 			? 'scale-animation'
@@ -488,6 +495,8 @@
 				? 'bg-c-success-secondary'
 				: type === 'danger'
 				? 'bg-c-danger-secondary'
+				: type === 'bg-secondary'
+				? 'bg-c-bg-tertiary'
 				: 'bg-c-secondary'
 			: type === 'success'
 			? 'bg-c-success'
@@ -497,7 +506,7 @@
 			? 'bg-c-bg-secondary'
 			: type === 'no-bg-on-bg'
 			? 'bg-c-primary/0'
-			: 'bg-c-primary'} {type === 'bg-secondary'
+			: 'bg-c-primary'} {type === 'bg-secondary' && !noBorder
 			? 'border-2 border-c-bg-tertiary'
 			: ''} {fadeOnDisabled && disabled ? 'opacity-75' : ''} {classes} {shouldAnimate
 			? 'scale-animation'

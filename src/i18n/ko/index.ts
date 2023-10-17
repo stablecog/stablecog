@@ -766,13 +766,19 @@ const ko: Translation = {
 			MegaTitle: 'Mega Pack'
 		},
 		Features: {
+			DailyCredits: '{count} credits per day.',
+			DailyImages: '{count} images per day.',
+			PersonalyUseOnly: 'Personaly use only.',
 			MonthlyCredits: '{count} credits per month.',
 			MonthlyImages: '{count} images per month.',
 			MonthlyGenerations: '{count} generations per month.',
+			NoParallelGenerations: 'No parallel generations.',
 			ParallelGenerations: '{count} parallel generations.',
 			Images: '{count} images.',
 			Generations: '{count} generations.',
 			NeverExpires: 'Never expires.',
+			GenerationQueuePriority: 'Generation priority.',
+			NoGenerationQueuePriority: 'No generation priority.',
 			CommercialUse: 'Commercial use.',
 			ImagesArePublic: 'Images are public.',
 			ImagesArePrivate: 'Images are private.'
@@ -782,6 +788,7 @@ const ko: Translation = {
 			MostPopular: 'Most Popular',
 			BestValue: 'Best Value'
 		},
+		FreeForeverTitle: 'Free Forever!',
 		Discounts: { FirstPurchase50OffParagraph: 'First month is 50% off!' },
 		Purchase: {
 			Succeeded: {

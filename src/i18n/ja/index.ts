@@ -781,13 +781,19 @@ const ja: Translation = {
 			MegaTitle: 'メガパック'
 		},
 		Features: {
+			DailyCredits: '{count} credits per day.',
+			DailyImages: '{count} images per day.',
+			PersonalyUseOnly: 'Personaly use only.',
 			MonthlyCredits: '月毎 {count} クレジット。',
 			MonthlyImages: '月毎{count}個まで生成',
 			MonthlyGenerations: '月毎 {count} 枚の生成',
+			NoParallelGenerations: 'No parallel generations.',
 			ParallelGenerations: '{count}個の画像を並列生成',
 			Images: '{count} 枚の画像。',
 			Generations: '{count} 回の生成。',
 			NeverExpires: '無期限。',
+			GenerationQueuePriority: 'Generation priority.',
+			NoGenerationQueuePriority: 'No generation priority.',
 			CommercialUse: '商業利用可能',
 			ImagesArePublic: '生成画像は公開',
 			ImagesArePrivate: '生成画像は非公開'
@@ -797,6 +803,7 @@ const ja: Translation = {
 			MostPopular: '一番好評',
 			BestValue: 'お買い得'
 		},
+		FreeForeverTitle: 'Free Forever!',
 		Discounts: { FirstPurchase50OffParagraph: 'First month is 50% off!' },
 		Purchase: {
 			Succeeded: {

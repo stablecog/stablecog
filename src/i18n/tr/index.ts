@@ -791,13 +791,19 @@ const tr: Translation = {
 			MegaTitle: 'Mega Paket'
 		},
 		Features: {
+			DailyCredits: '{count} credits per day.',
+			DailyImages: '{count} images per day.',
+			PersonalyUseOnly: 'Personaly use only.',
 			MonthlyCredits: '{count} kredi/ay.',
 			MonthlyImages: 'Ayda {count} fotoğraf.',
 			MonthlyGenerations: 'Ayda {count} üretim.',
+			NoParallelGenerations: 'No parallel generations.',
 			ParallelGenerations: '{count} paralel üretim.',
 			Images: '{count} fotoğraf.',
 			Generations: '{count} üretim.',
 			NeverExpires: 'Tarihi geçmez.',
+			GenerationQueuePriority: 'Generation priority.',
+			NoGenerationQueuePriority: 'No generation priority.',
 			CommercialUse: 'Ticari kullanım.',
 			ImagesArePublic: 'Fotoğraflar halka açık.',
 			ImagesArePrivate: 'Fotoğraflar gizli.'
@@ -807,6 +813,7 @@ const tr: Translation = {
 			MostPopular: 'En Popüler',
 			BestValue: 'En Kârlı'
 		},
+		FreeForeverTitle: 'Free Forever!',
 		Discounts: {
 			FirstPurchase50OffParagraph: 'İlk ay %50% indirimli!'
 		},

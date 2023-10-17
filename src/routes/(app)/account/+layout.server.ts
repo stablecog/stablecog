@@ -1,4 +1,4 @@
-import { apiUrl } from '$ts/constants/main';
+import { getCustomerPortalUrl } from '$ts/helpers/user/getCustomerPortalUrl';
 import { redirect, type ServerLoad } from '@sveltejs/kit';
 
 export const load: ServerLoad = async (event) => {
@@ -10,22 +10,11 @@ export const load: ServerLoad = async (event) => {
 		);
 	}
 	try {
-		const return_url = `${event.url.origin}/account`;
-		const res = await fetch(`${apiUrl.origin}/v1/user/subscription/portal`, {
-			body: JSON.stringify({
-				return_url
-			}),
-			method: 'POST',
-			headers: {
-				'Content-Type': 'application/json',
-				Authorization: `Bearer ${session.access_token}`
-			}
+		const { customer_portal_url, error } = await getCustomerPortalUrl({
+			returnUrl: `${event.url.origin}/account`,
+			accessToken: session.access_token
 		});
-		if (!res.ok) {
-			throw new Error('Failed to get customer portal url');
-		}
-		const resJson: TCustomerPortalRes = await res.json();
-		const { customer_portal_url } = resJson;
+		if (error) throw new Error(error);
 		return {
 			customer_portal_url
 		};
@@ -36,8 +25,3 @@ export const load: ServerLoad = async (event) => {
 		};
 	}
 };
-
-interface TCustomerPortalRes {
-	customer_portal_url?: string;
-	error?: string;
-}

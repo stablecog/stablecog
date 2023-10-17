@@ -793,13 +793,19 @@ const es: Translation = {
 			MegaTitle: 'Αυξημένο Πακέτο'
 		},
 		Features: {
+			DailyCredits: '{count} credits per day.',
+			DailyImages: '{count} images per day.',
+			PersonalyUseOnly: 'Personaly use only.',
 			MonthlyCredits: '{count} μονάδες το μήνα.',
 			MonthlyImages: '{count} μονάδες το μήνα.',
 			MonthlyGenerations: '{count} δημιουργίες το μήνα.',
+			NoParallelGenerations: 'No parallel generations.',
 			ParallelGenerations: '{count} παράλληλες δημιουργίες.',
 			Images: '{count} εικόνες.',
 			Generations: '{count} δημιουργίες.',
 			NeverExpires: 'Χωρίς Λήξη.',
+			GenerationQueuePriority: 'Generation priority.',
+			NoGenerationQueuePriority: 'No generation priority.',
 			CommercialUse: 'Εμπορική χρήση.',
 			ImagesArePublic: 'Οι εικόνες είναι δημόσιες.',
 			ImagesArePrivate: 'Οι εικόνες είναι ιδιωτικές.'
@@ -809,6 +815,7 @@ const es: Translation = {
 			MostPopular: 'Τα πιο δημοφιλή',
 			BestValue: 'Βέλτιστη προσφορά'
 		},
+		FreeForeverTitle: 'Free Forever!',
 		Discounts: { FirstPurchase50OffParagraph: 'First month is 50% off!' },
 		Purchase: {
 			Succeeded: {
