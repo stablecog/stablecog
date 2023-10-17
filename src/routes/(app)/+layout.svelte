@@ -80,7 +80,11 @@
 		const sseUrl = `${apiUrl.origin}/v1/sse?id=${$sseId}`;
 		console.log('SSE ID:', $sseId);
 		console.log('SSE URL:', sseUrl);
-		sse.set(new EventSource(sseUrl));
+		try {
+			sse.set(new EventSource(sseUrl));
+		} catch (error) {
+			console.log('Error creating SSE', error);
+		}
 		if ($sse !== null) {
 			$sse.onopen = () => {
 				console.log(`Connected to SSE with ID: ${$sseId}`);
