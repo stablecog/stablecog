@@ -791,19 +791,19 @@ const tr: Translation = {
 			MegaTitle: 'Mega Paket'
 		},
 		Features: {
-			DailyCredits: '{count} credits per day.',
-			DailyImages: '{count} images per day.',
-			PersonalUseOnly: 'Personal use only.',
-			MonthlyCredits: '{count} kredi/ay.',
+			DailyCredits: 'Günde {count} kredi.',
+			DailyImages: 'Günde {count} fotoğraf.',
+			PersonalUseOnly: 'Sadece kişisel kullanım.',
+			MonthlyCredits: 'Ayda {count} kredi.',
 			MonthlyImages: 'Ayda {count} fotoğraf.',
 			MonthlyGenerations: 'Ayda {count} üretim.',
-			NoParallelGenerations: 'No parallel generations.',
+			NoParallelGenerations: 'Paralel üretim yok.',
 			ParallelGenerations: '{count} paralel üretim.',
 			Images: '{count} fotoğraf.',
 			Generations: '{count} üretim.',
 			NeverExpires: 'Tarihi geçmez.',
-			GenerationQueuePriority: 'Generation priority.',
-			NoGenerationQueuePriority: 'No generation priority.',
+			GenerationQueuePriority: 'Üretim önceliği.',
+			NoGenerationQueuePriority: 'Üretim önceliği yok.',
 			CommercialUse: 'Ticari kullanım.',
 			ImagesArePublic: 'Fotoğraflar halka açık.',
 			ImagesArePrivate: 'Fotoğraflar gizli.'
@@ -813,7 +813,7 @@ const tr: Translation = {
 			MostPopular: 'En Popüler',
 			BestValue: 'En Kârlı'
 		},
-		FreeForeverTitle: 'Free Forever!',
+		FreeForeverTitle: 'Her Zaman Ücretsiz!',
 		Discounts: {
 			FirstPurchase50OffParagraph: 'İlk ay %50% indirimli!'
 		},
@@ -921,7 +921,7 @@ const tr: Translation = {
 		Discord: 'Discord',
 		Email: 'E-posta',
 		Twitter: 'Twitter',
-		Instagram: 'Instagram',
+		Instagram: 'Instragram',
 		YouTube: 'YouTube',
 		LinkedIn: 'LinkedIn',
 		Reddit: 'Reddit',
@@ -1145,5 +1145,4 @@ const tr: Translation = {
 		PageParagraph: 'Sistemlerimizi güncelliyoruz. Birkaç saate döneceğiz.'
 	}
 };
-
 export default tr;
