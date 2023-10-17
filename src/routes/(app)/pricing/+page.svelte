@@ -621,7 +621,7 @@
 				<div class="w-full h-[1vh]" />
 			</section>
 		{/if}
-		<div class="w-[calc(100%+1rem)] -mx-2 flex justify-center mt-10 md:mt-12">
+		<div class="w-[calc(100%+1rem)] -mx-2 flex justify-center mt-5 md:mt-10">
 			<div class="w-full max-w-5xl rounded-full h-2px bg-c-bg-secondary" />
 		</div>
 		<section id="faq" class="w-full flex flex-col items-center pt-5">
