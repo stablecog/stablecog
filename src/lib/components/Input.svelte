@@ -168,7 +168,7 @@
 			class="peer flex-1 overflow-hidden overflow-ellipsis {bg === 'bg-secondary'
 				? 'bg-c-bg-secondary'
 				: 'bg-c-bg-tertiary'} relative {hasIcon ? 'pl-12' : 'pl-5'} {hasClearButton && iconForButton
-				? 'pr-20 md:pr-27'
+				? 'pr-22 md:pr-27'
 				: hasClearButton || iconForButton
 				? 'pr-10 md:pr-16'
 				: 'pr-5'} pt-6.5 pb-2.5 {rounding ? rounding : 'rounded-xl'} transition
