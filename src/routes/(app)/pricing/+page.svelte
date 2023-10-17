@@ -525,15 +525,23 @@
 											: null}
 									class="w-full mt-7"
 								>
-									{#if isSubscribed}
-										{$LL.Pricing.SubscribedButton()}
-									{:else if isUpgrade}
-										{$LL.Pricing.UpgradeButton()}
-									{:else if isDowngrade}
-										{$LL.Pricing.DowngradeButton()}
-									{:else}
-										{$LL.Pricing.SubscribeButton()}
-									{/if}
+									<p
+										class="w-full {isSubscribed && subscribedAmount === 0 && card.id === 'plan-free'
+											? 'opacity-60'
+											: ''}"
+									>
+										{#if isSubscribed}
+											{$LL.Pricing.SubscribedButton()}
+										{:else if isUpgrade}
+											{subscribedAmount === 0
+												? $LL.Pricing.SubscribeButton()
+												: $LL.Pricing.UpgradeButton()}
+										{:else if isDowngrade}
+											{$LL.Pricing.DowngradeButton()}
+										{:else}
+											{$LL.Pricing.SubscribeButton()}
+										{/if}
+									</p>
 								</Button>
 							{:else}
 								<Button onClick={() => (isSignInModalOpen = true)} class="w-full mt-7">

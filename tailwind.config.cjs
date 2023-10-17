@@ -254,7 +254,8 @@ module.exports = {
 				'pulse-custom': 'pulse-custom 1s cubic-bezier(0.5, 0, 0.5, 1) infinite',
 				'pulse-scale': 'pulse-scale 0.75s cubic-bezier(0.5, 0, 0.5, 1) infinite',
 				'spin-faster': 'spin-faster 0.75s linear infinite',
-				'pulse-faster': 'pulse 1s cubic-bezier(0.4, 0, 0.6, 1) infinite;',
+				'pulse-fast': 'pulse 1.5s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+				'pulse-faster': 'pulse 1s cubic-bezier(0.4, 0, 0.6, 1) infinite',
 				'slide-up-and-fade': 'slide-up-and-fade 0.2s cubic-bezier(0.4, 0, 0.2, 1)',
 				hourglass: 'hourglass 3s cubic-bezier(0.4, 0, 0.2, 1) infinite'
 			},

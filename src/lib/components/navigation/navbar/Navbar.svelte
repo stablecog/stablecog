@@ -181,7 +181,11 @@
 					>
 						<div class="py-3.5">
 							<IconButton
-								class="shadow-lg rounded-full flex items-center justify-center shadow-c-shadow/[var(--o-shadow-strong)]"
+								class="shadow-lg ring-2 {$page.url.pathname === '/' &&
+								$themeApp === 'light' &&
+								!notAtTheVeryTop
+									? 'ring-c-bg/25'
+									: 'ring-c-on-bg/25'} rounded-full flex items-center justify-center shadow-c-shadow/[var(--o-shadow-strong)]"
 								noPadding
 								name="Account"
 								onClick={() => {
@@ -193,11 +197,7 @@
 							>
 								<Avatar
 									text={$userSummary.username}
-									class="w-9 h-9 ring-2 {$page.url.pathname === '/' &&
-									$themeApp === 'light' &&
-									!notAtTheVeryTop
-										? 'ring-c-bg/25'
-										: 'ring-c-on-bg/25'} overflow-hidden rounded-full transition duration-250 transform relative
+									class="w-9 h-9 overflow-hidden rounded-full transition duration-250 transform relative
 									{$page.url.pathname === '/' && $themeApp === 'light' && !notAtTheVeryTop
 										? 'not-touch:group-hover/iconbutton:ring-c-bg'
 										: 'not-touch:group-hover/iconbutton:ring-c-on-bg'} {isAccountMenuOpen

@@ -13,7 +13,10 @@
 	>
 		<div
 			style="transform: translateX({!isProcessing ? 0 : -100 + $animation * 100}%)"
-			class="w-full h-full bg-c-primary/75 absolute left-0 top-0 filter backdrop-saturate-0"
-		/>
+			class="w-full h-full bg-c-primary/50 absolute left-0 top-0 flex items-center justify-end filter
+			backdrop-saturate-0"
+		>
+			<div class="bg-c-primary animate-pulse-fast h-full w-2px" />
+		</div>
 	</div>
 </div>
