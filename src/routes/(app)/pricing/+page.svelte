@@ -68,7 +68,7 @@
 					count: 20
 				}),
 				$LL.Pricing.Features.NoParallelGenerations(),
-				$LL.Pricing.Features.PersonalyUseOnly(),
+				$LL.Pricing.Features.PersonalUseOnly(),
 				$LL.Pricing.Features.ImagesArePublic()
 			],
 			ringClass: 'ring-c-bg-secondary'
