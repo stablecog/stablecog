@@ -42,18 +42,16 @@
 				? 'bg-c-bg'
 				: 'bg-c-primary'} not-touch:group-hover/copybutton:translate-x-0"
 		/>
-		<div class="relative">
-			<IconCopy
-				class="transform {copied
-					? 'scale-0 opacity-0'
-					: 'scale-100 opacity-100'} w-7 h-7 transition text-c-on-bg
+		<IconCopy
+			class="transform {copied
+				? 'scale-0 opacity-0'
+				: 'scale-100 opacity-100'} w-7 h-7 transition text-c-on-bg
 						not-touch:group-hover/copybutton:text-c-on-primary"
-			/>
-			<IconTick
-				class="transform {!copied
-					? 'scale-0 opacity-0'
-					: 'scale-175 opacity-100'} w-7 h-7 absolute left-0 top-0 transition text-c-success"
-			/>
-		</div>
+		/>
+		<IconTick
+			class="transform absolute left-2.5 top-2.5 w-7 h-7 {!copied
+				? 'scale-0 opacity-0'
+				: 'scale-175 opacity-100'} transition text-c-success"
+		/>
 	</div>
 </button>

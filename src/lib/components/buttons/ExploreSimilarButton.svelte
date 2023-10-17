@@ -27,7 +27,8 @@
 			'SC - Output Id': generation.selected_output.id,
 			'SC - User Id': $page.data.session?.user.id,
 			'SC - Stripe Product Id': $userSummary?.product_id,
-			'SC - App Version': $appVersion
+			'SC - App Version': $appVersion,
+			'SC - Clicked Output Id': generation.selected_output.id
 		};
 		if (cardType === 'user-profile') {
 			logUserProfileExploreSimilarClicked(logParams);
