@@ -61,26 +61,23 @@
 	bind:this={element}
 	on:click={downloadImage}
 	disabled={downloadStatus === 'downloading'}
-	class="touch-manipulation transition rounded-lg group/downloadbutton {classes}"
+	class="touch-manipulation transition group/downloadbutton rounded-full bg-c-bg relative overflow-hidden z-0 p-2.5
+	before:w-full before:h-full before:absolute before:left-0 before:top-0
+	before:-translate-x-full before:not-touch:hover:translate-x-0
+	before:rounded-full before:transition before:transform before:bg-c-primary {classes}"
 	aria-label="Download Image"
 >
-	<div
-		class="p-2.5 rounded-full bg-c-bg relative overflow-hidden z-0 after:w-full after:h-full after:absolute after:left-0 after:top-0
-		after:-translate-x-full after:not-touch:group-hover/downloadbutton:translate-x-0
-		after:rounded-full after:transition after:transform after:z-[-1] after:bg-c-primary"
-	>
-		<Morpher morphed={downloadStatus === 'downloading'} class="w-7 h-7">
-			<IconDownload
-				slot="0"
-				class="w-7 h-7 transition text-c-on-bg relative
+	<Morpher morphed={downloadStatus === 'downloading'} class="w-7 h-7">
+		<IconDownload
+			slot="0"
+			class="w-7 h-7 transition text-c-on-bg relative
 				not-touch:group-hover/downloadbutton:text-c-on-primary"
-			/>
-			<IconAnimatedSpinner
-				slot="1"
-				loading={downloadStatus === 'downloading'}
-				class="w-7 h-7 text-c-on-bg relative
+		/>
+		<IconAnimatedSpinner
+			slot="1"
+			loading={downloadStatus === 'downloading'}
+			class="w-7 h-7 text-c-on-bg relative
 				not-touch:group-hover/downloadbutton:text-c-on-primary"
-			/>
-		</Morpher>
-	</div>
+		/>
+	</Morpher>
 </button>

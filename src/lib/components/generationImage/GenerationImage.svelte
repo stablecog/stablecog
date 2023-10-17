@@ -309,31 +309,41 @@
 		{#if !isGalleryEditActive && !generation.selected_output.is_deleted}
 			<div
 				bind:this={rightButtonContainer}
-				class="flex flex-row flex-wrap items-center
-					justify-end transition transform pointer-events-auto"
+				class="flex flex-row flex-wrap items-center pr-1.5 pt-1.5
+				justify-end transition transform pointer-events-none gap-1.5"
 			>
 				{#if cardType !== 'admin-gallery'}
 					<CopyButton
-						class="p-1.5"
 						stringToCopy={generation.prompt.text}
 						bind:copied={promptCopied}
 						bind:copiedTimeout={promptCopiedTimeout}
+						class="pointer-events-auto"
 					/>
 				{/if}
 				{#if cardType === 'history' || cardType === 'stage'}
-					<DownloadGenerationButton class="p-1.5 -ml-1.5" {generation} />
+					<DownloadGenerationButton class="pointer-events-auto" {generation} />
 				{:else if cardType === 'gallery' || cardType === 'user-profile'}
 					<GenerateButton
 						{generation}
-						class="p-1.5 -ml-1.5"
+						class="pointer-events-auto"
 						label="Generate similar to: {shortPrompt}..."
 					/>
 				{/if}
 				{#if (cardType === 'stage' || (cardType === 'history' && $userGalleryCurrentView !== 'favorites')) && cardWidth !== undefined && ((cardType === 'history' && cardWidth > 225) || (cardType === 'stage' && cardWidth > 180))}
-					<FavoriteButton {generation} modalType={cardType} type="on-image" class="p-1.5 -ml-1.5" />
+					<FavoriteButton
+						{generation}
+						modalType={cardType}
+						type="on-image"
+						class="pointer-events-auto"
+					/>
 				{/if}
 				{#if (cardType === 'gallery' || cardType === 'user-profile') && setSearchQuery}
-					<ExploreSimilarButton {setSearchQuery} {generation} {cardType} class="p-1.5 -ml-1.5" />
+					<ExploreSimilarButton
+						{setSearchQuery}
+						{generation}
+						{cardType}
+						class="pointer-events-auto"
+					/>
 				{/if}
 			</div>
 		{:else if cardType === 'history' && $userGalleryCurrentView !== 'favorites' && generation.selected_output.is_favorited && !generation.selected_output.is_deleted}

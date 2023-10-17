@@ -8,7 +8,7 @@
 <script lang="ts">
 	import ButtonHoverEffect from '$components/buttons/ButtonHoverEffect.svelte';
 	import { Tabs } from 'radix-svelte';
-	import { getContext, setContext } from 'svelte/internal';
+	import { getContext, setContext } from 'svelte';
 	import { onMount } from 'svelte';
 	import CopyButton from '$components/docs/CopyButton.svelte';
 

@@ -91,17 +91,13 @@
 	<button
 		bind:this={buttonElement}
 		on:click={() => favoriteOutput(generation.selected_output.is_favorited ? 'remove' : 'add')}
-		class="touch-manipulation transition rounded-lg group/favoritebutton {classes}"
+		class="touch-manipulation transition group/favoritebutton p-2.5 rounded-full bg-c-bg relative overflow-hidden z-0
+		before:w-full before:h-full before:absolute before:left-0 before:top-0
+		before:-translate-x-full before:not-touch:hover:translate-x-0
+		before:rounded-full before:transition before:transform before:bg-c-secondary/25 {classes}"
 		aria-label="Favorite Output"
 	>
-		<div
-			class="p-2.5 rounded-full bg-c-bg relative overflow-hidden z-0
-			after:w-full after:h-full after:absolute after:left-0 after:top-0
-			after:-translate-x-full after:not-touch:group-hover/favoritebutton:translate-x-0
-			after:rounded-full after:transition after:transform after:z-[-1] after:bg-c-secondary/25"
-		>
-			<IconFavorite favorited={generation.selected_output.is_favorited} />
-		</div>
+		<IconFavorite favorited={generation.selected_output.is_favorited} />
 	</button>
 {:else}
 	<div class="flex bg-c-bg/75 rounded-full {classes}">
