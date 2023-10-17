@@ -75,7 +75,7 @@
 	tabindex="0"
 	class="h-full {size === 'sm' ? 'w-5 -right-4.5' : 'w-8 -right-7'} absolute transition {isClosed
 		? isClosedClass
-		: ''} top-0 flex items-center justify-center transform z-20"
+		: ''} top-0 flex items-center justify-center transform z-20 cursor-default"
 >
 	<div
 		class="rounded-full bg-c-bg ring-2 ring-c-bg-secondary flex items-center justify-center

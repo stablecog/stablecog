@@ -41,33 +41,29 @@
 			class="touch-manipulation group/iconbutton rounded-xl {classes}"
 			aria-label={name}
 		>
-			<div class="rounded-lg relative">
+			<div class="rounded-full relative z-0 overflow-hidden {noPadding ? '' : 'p-2'}">
 				{#if !(withSpinner && loading)}
-					<div class="w-full h-full rounded-full overflow-hidden z-0 absolute left-0 top-0">
-						<div
-							class="w-full h-full ease-out transition transform {type === 'on-primary'
-								? 'bg-c-on-primary/15'
-								: 'bg-c-primary/25'} 
+					<div
+						class="w-full h-full ease-out transition transform {type === 'on-primary'
+							? 'bg-c-on-primary/15'
+							: 'bg-c-primary/25'} 
 							absolute left-0 top-0 rounded-xl {hoverFrom === 'left' ? '-translate-x-full' : 'translate-x-full'}
 							not-touch:group-hover/iconbutton:translate-x-0"
-						/>
-					</div>
+					/>
 				{/if}
-				<div class={noPadding ? '' : 'p-2'}>
-					<div class="relative">
-						<div class="transition {withSpinner && loading ? 'opacity-0 scale-50' : ''}">
-							<slot />
-						</div>
-						{#if withSpinner}
-							<div
-								class="w-full h-full absolute transform transition pointer-events-none {loading
-									? 'opacity-100 scale-100'
-									: ''}"
-							>
-								<IconAnimatedSpinner class="w-full h-full" {loading} />
-							</div>
-						{/if}
+				<div class="relative">
+					<div class="transition {withSpinner && loading ? 'opacity-0 scale-50' : ''}">
+						<slot />
 					</div>
+					{#if withSpinner}
+						<div
+							class="w-full h-full absolute transform transition pointer-events-none {loading
+								? 'opacity-100 scale-100'
+								: ''}"
+						>
+							<IconAnimatedSpinner class="w-full h-full" {loading} />
+						</div>
+					{/if}
 				</div>
 			</div>
 		</a>
@@ -81,37 +77,29 @@
 			class="touch-manipulation group/iconbutton rounded-xl {classes}"
 			aria-label={name}
 		>
-			<div class="rounded-lg relative">
+			<div class="rounded-full relative z-0 overflow-hidden {noPadding ? '' : 'p-2'}">
 				{#if !(withSpinner && loading)}
-					<div class="w-full h-full rounded-full overflow-hidden z-0 absolute left-0 top-0">
-						<div
-							class="w-full h-full ease-out transition transform {type === 'secondary'
-								? 'bg-c-secondary/25'
-								: type === 'on-primary'
-								? 'bg-c-on-primary/25'
-								: 'bg-c-primary/25'} 
-          	absolute left-0 top-0 rounded-xl {hoverFrom === 'left'
-								? '-translate-x-full'
-								: 'translate-x-full'}
-						not-touch:group-hover/iconbutton:translate-x-0"
-						/>
-					</div>
+					<div
+						class="w-full h-full ease-out transition transform {type === 'on-primary'
+							? 'bg-c-on-primary/15'
+							: 'bg-c-primary/25'} 
+							absolute left-0 top-0 rounded-xl {hoverFrom === 'left' ? '-translate-x-full' : 'translate-x-full'}
+							not-touch:group-hover/iconbutton:translate-x-0"
+					/>
 				{/if}
-				<div class={noPadding ? '' : 'p-2'}>
-					<div class="relative">
-						<div class="transition {withSpinner && loading ? 'opacity-0 scale-50' : ''}">
-							<slot />
-						</div>
-						{#if withSpinner}
-							<div
-								class="w-full h-full absolute left-0 top-0 transform transition pointer-events-none {loading
-									? 'opacity-100 scale-100'
-									: 'opacity-0 scale-0'}"
-							>
-								<IconAnimatedSpinner class="w-full h-full" {loading} />
-							</div>
-						{/if}
+				<div class="relative">
+					<div class="transition {withSpinner && loading ? 'opacity-0 scale-50' : ''}">
+						<slot />
 					</div>
+					{#if withSpinner}
+						<div
+							class="w-full h-full absolute left-0 top-0 transform transition pointer-events-none {loading
+								? 'opacity-100 scale-100'
+								: 'opacity-0 scale-0'}"
+						>
+							<IconAnimatedSpinner class="w-full h-full" {loading} />
+						</div>
+					{/if}
 				</div>
 			</div>
 		</button>
