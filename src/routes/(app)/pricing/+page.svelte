@@ -32,6 +32,8 @@
 	import { searchParamsString } from '$ts/stores/searchParamsString';
 	import SignInModal from '$components/SignInModal.svelte';
 	import { getCustomerPortalUrl } from '$ts/helpers/user/getCustomerPortalUrl.js';
+	import type { LocalizedString } from 'typesafe-i18n';
+	import PlanCard from '$routes/(app)/pricing/PlanCard.svelte';
 
 	export let data;
 
@@ -49,7 +51,7 @@
 		currencySymbol: string;
 		promotionCodeId?: string;
 		amount: number;
-		features: string[];
+		features: LocalizedString[];
 		ringClass: string;
 		badgeText?: string;
 		badgeClasses?: string;
@@ -423,76 +425,25 @@
 						subscribedAmount > card.amount &&
 						$page.data.session?.user.id !== undefined}
 					{@const accessToken = $page.data.session?.access_token}
-					<div
+					<PlanCard
 						id={card.id}
-						class="w-full sm:max-w-sm md:w-1/2 xl:w-1/4 px-3 py-4 flex items-stretch"
+						planTitle={card.title}
+						ringClass={card.ringClass}
+						isSelected={isSubscribed && $userSummary?.product_id !== undefined}
+						badgeText={!isDowngrade ? card.badgeText : undefined}
+						badgeClasses={card.badgeClasses}
+						currencyAmount={card.amount}
+						currencySymbol={card.currencySymbol}
+						discountBadgeText={isFirstPurchase50Off && card.id === 'plan-free'
+							? $LL.Pricing.FreeForeverTitle()
+							: isFirstPurchase50Off
+							? $LL.Pricing.Discounts.FirstPurchase50OffParagraph()
+							: undefined}
+						discountBadgeType={card.id === 'plan-free' ? 'on-bg' : 'primary'}
+						hasDiscount={isFirstPurchase50Off && card.id !== 'plan-free'}
+						features={card.features}
 					>
-						<div
-							class="w-full flex flex-col bg-c-bg shadow-xl shadow-c-shadow/[var(--o-shadow-strong)]
-					 		p-4 md:p-5 rounded-2xl md:rounded-3xl ring-2 {isSubscribed && $userSummary?.product_id
-								? 'ring-c-success'
-								: card.ringClass} relative"
-						>
-							{#if card.badgeText && card.badgeClasses && !isDowngrade}
-								<div
-									class="absolute -right-2.5 -top-3 rounded-full px-3.5 py-1.5 text-xs text-right
-									font-bold {isSubscribed ? 'bg-c-success text-c-on-primary' : card.badgeClasses}"
-								>
-									{card.badgeText}
-								</div>
-							{/if}
-							<h3 class="w-full text-c-on-bg text-center font-bold text-xl md:-mt-1.5 py-0.5 gap-2">
-								{card.title}
-							</h3>
-							<div
-								class="w-[100%+2rem] md:w-[100%+2.5rem] -mx-4 md:-mx-5 text-center bg-c-bg-secondary
-								text-c-on-bg mt-4 {isFirstPurchase50Off ? 'py-4' : 'py-3'} font-bold flex flex-col items-center"
-							>
-								<h4 class="max-w-full flex flex-wrap justify-center items-start px-2">
-									{#if isFirstPurchase50Off}
-										{#if card.id !== 'plan-free'}<span class="text-xl text-c-on-bg/50"
-												>{card.currencySymbol}</span
-											><span class="text-3xl font-semibold text-c-on-bg/50 line-through pr-0.4ch">
-												{card.amount.toLocaleString($locale)}
-											</span>
-										{/if}<span class="text-xl">{card.currencySymbol}</span><span
-											class="text-3xl font-bold"
-										>
-											{(card.amount / 2).toLocaleString($locale)}
-										</span>
-									{:else}
-										<span class="text-xl">{card.currencySymbol}</span><span
-											class="text-3xl font-bold"
-										>
-											{card.amount.toLocaleString($locale)}
-										</span>
-									{/if}
-									<span class="self-end mb-0.75 text-c-on-bg/60 font-medium"
-										>{$LL.Pricing.SlashMonth()}</span
-									>
-								</h4>
-								{#if isFirstPurchase50Off}
-									<div class="max-w-full px-2 mt-2 pb-1">
-										<p
-											class="max-w-full rounded-full {card.id === 'plan-free'
-												? 'bg-c-on-bg/10 ring-c-on-bg/20 text-c-on-bg'
-												: 'bg-c-primary/15 ring-c-primary/25 text-c-primary'} ring-1 text-sm font-medium px-2.5 py-0.5"
-										>
-											{card.id === 'plan-free'
-												? $LL.Pricing.FreeForeverTitle()
-												: $LL.Pricing.Discounts.FirstPurchase50OffParagraph()}
-										</p>
-									</div>
-								{/if}
-							</div>
-							<ul class="w-full mt-6 flex flex-col gap-3 px-1 flex-1">
-								{#each card.features as feature}
-									<li class="w-full flex items-start gap-3">
-										<span class="text-c-on-bg/60">-</span>
-										<span class="flex-shrink min-w-0">{feature}</span>
-									</li>
-								{/each}
-							</ul>
+						<div slot="button" class="w-full">
 							{#if $userSummary && accessToken}
 								<Button
 									withSpinner
@@ -523,7 +474,7 @@
 											: isDowngrade && card.id === 'plan-free'
 											? createCustomerPortalSessionAndRedirect(accessToken)
 											: null}
-									class="w-full mt-7"
+									class="w-full"
 								>
 									<p
 										class="w-full {isSubscribed && subscribedAmount === 0 && card.id === 'plan-free'
@@ -544,12 +495,12 @@
 									</p>
 								</Button>
 							{:else}
-								<Button onClick={() => (isSignInModalOpen = true)} class="w-full mt-7">
-									{$LL.Pricing.SubscribeButton()}
+								<Button onClick={() => (isSignInModalOpen = true)} class="w-full">
+									{$LL.SignIn.GetStartedButton()}
 								</Button>
 							{/if}
 						</div>
-					</div>
+					</PlanCard>
 				{/each}
 			</div>
 			<div class="w-full h-[1vh]" />
@@ -562,68 +513,32 @@
 				</p>
 				<div class="w-full max-w-7xl flex flex-wrap justify-center mt-5">
 					{#each creditPackCards as card}
-						<div
+						<PlanCard
 							id={card.id}
-							class="w-full sm:max-w-sm md:w-1/2 xl:w-1/4 px-3 py-4 flex items-stretch"
+							planTitle={card.title}
+							ringClass={card.ringClass}
+							badgeText={card.badgeText}
+							badgeClasses={card.badgeClasses}
+							currencyAmount={card.amount}
+							currencySymbol={card.currencySymbol}
+							features={card.features}
 						>
-							<div
-								id={card.id}
-								class="w-full bg-c-bg shadow-xl shadow-c-shadow/[var(--o-shadow-strong)]
-								p-4 md:p-5 rounded-2xl md:rounded-3xl ring-2 {card.ringClass} relative"
-							>
-								{#if card.badgeText && card.badgeClasses}
-									<div
-										class="absolute -right-2.5 -top-3 rounded-full px-3.5 py-1.5 text-xs text-right
-									font-bold {card.badgeClasses}"
-									>
-										{card.badgeText}
-									</div>
-								{/if}
-								<h3
-									class="w-full text-c-on-bg text-center font-bold text-xl md:-mt-1.5 py-0.5 gap-2"
+							<div slot="button" class="w-full">
+								<Button
+									withSpinner
+									type={'primary'}
+									loading={card.priceId === selectedPriceId && checkoutCreationStatus === 'loading'}
+									onClick={() =>
+										createCheckoutSessionAndRedirect({
+											priceId: card.priceId,
+											currency: card.currency
+										})}
+									class="w-full"
 								>
-									{card.title}
-								</h3>
-								<h4
-									class="w-[100%+2rem] md:w-[100%+2.5rem] -mx-4 md:-mx-5 text-center bg-c-bg-secondary
-								text-c-on-bg mt-4 py-3 font-bold flex justify-center items-start"
-								>
-									<span class="text-xl">{card.currencySymbol}</span><span
-										class="text-3xl font-bold"
-									>
-										{card.amount.toLocaleString($locale)}
-									</span>
-								</h4>
-								<ul class="w-full mt-6 flex flex-col gap-3 px-1 flex-1">
-									{#each card.features as feature}
-										<li class="flex items-start gap-3">
-											<span class="text-c-on-bg/60">-</span>
-											<span class="flex-shrink min-w-0">{feature}</span>
-										</li>
-									{/each}
-								</ul>
-								{#if $page.data.session?.user.email}
-									<Button
-										withSpinner
-										type={'primary'}
-										loading={card.priceId === selectedPriceId &&
-											checkoutCreationStatus === 'loading'}
-										onClick={() =>
-											createCheckoutSessionAndRedirect({
-												priceId: card.priceId,
-												currency: card.currency
-											})}
-										class="w-full mt-8"
-									>
-										{$LL.Pricing.PurchaseButton()}
-									</Button>
-								{:else}
-									<Button onClick={() => (isSignInModalOpen = true)} class="w-full mt-8">
-										{$LL.Pricing.PurchaseButton()}
-									</Button>
-								{/if}
+									{$LL.Pricing.PurchaseButton()}
+								</Button>
 							</div>
-						</div>
+						</PlanCard>
 					{/each}
 				</div>
 				<div class="w-full h-[1vh]" />
