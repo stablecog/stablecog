@@ -4,6 +4,7 @@ description: Autopilot for GPT-4. An open-source experiment for autonomously dev
 author: M. Yekta Güngör
 author_url: https://twitter.com/yektagg
 date: 2023-04-05T13:00:00.000Z
+tags: auto-gpt, gpt-4, chatgpt, openai, autopilot
 ---
 
 <script>

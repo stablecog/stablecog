@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { page } from '$app/stores';
 	import ButtonHoverEffect from '$components/buttons/ButtonHoverEffect.svelte';
+	import ListOrDiv from '$components/docs/ListOrDiv.svelte';
 	import MethodBadge from '$components/docs/MethodBadge.svelte';
 	import IconChevronDown from '$components/icons/IconChevronDown.svelte';
 	import type { TSidebarItem } from '$docroutes/guide/types';
@@ -33,7 +34,7 @@
 	}
 </script>
 
-<div class="w-full flex flex-col justify-start {classes}">
+<ListOrDiv as={isRoot ? 'div' : 'li'} class="w-full flex flex-col justify-start {classes}">
 	{#if !isRoot}
 		<div class="w-full flex relative">
 			<a
@@ -111,11 +112,11 @@
 					<div class="h-full w-full bg-c-bg-secondary" />
 				</div>
 			{/if}
-			<div class="flex-1 flex flex-col">
+			<ul class="flex-1 flex flex-col">
 				{#each sidebarItem.children as child}
 					<svelte:self sidebarItem={child} isRoot={false} level={level + 1} />
 				{/each}
-			</div>
+			</ul>
 		</div>
 	{/if}
-</div>
+</ListOrDiv>

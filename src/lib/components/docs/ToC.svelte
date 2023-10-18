@@ -48,9 +48,11 @@
 			<div class="w-full h-2px bg-c-on-bg/5 rounded-full px-5" />
 		</div>
 		<nav class="w-full flex flex-col max-h-full overflow-auto pt-5 pb-16 px-3">
-			{#each toc as tocItem}
-				<ToCItem item={tocItem} {activeId} />
-			{/each}
+			<ul class="w-full flex flex-col">
+				{#each toc as tocItem}
+					<ToCItem item={tocItem} {activeId} />
+				{/each}
+			</ul>
 		</nav>
 	</div>
 </div>

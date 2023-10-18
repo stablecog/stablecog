@@ -15,7 +15,7 @@
 	$: id = titleToId(item.title);
 </script>
 
-<div style="padding-left: {0.75 * Math.max(item.level - 2)}rem" class="w-full flex justify-start">
+<li style="padding-left: {0.75 * Math.max(item.level - 2)}rem" class="w-full flex justify-start">
 	<a
 		class="w-full {item.level <= 2 ? 'font-medium' : 'font-normal'} px-2.5 py-2 relative group"
 		href="#{id}"
@@ -39,7 +39,7 @@
 			{item.title}
 		</p>
 	</a>
-</div>
+</li>
 
 {#if item.children}
 	{#each item.children as childrenItem}
