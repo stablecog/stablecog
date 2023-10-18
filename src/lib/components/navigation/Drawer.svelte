@@ -44,7 +44,7 @@
 		class="w-full md:hidden md:pointer-events-none fixed left-0 top-0 bg-c-barrier/80 z-100"
 	/>
 {/if}
-<div
+<nav
 	use:clickoutside={{
 		callback: closeDrawer
 	}}
@@ -75,44 +75,50 @@
 			<slot />
 		{:else}
 			<ScrollAreaWithChevron fadeColor="bg" class="pb-20">
-				{#each $routesDrawer as route, index}
-					{@const isSelected = route.strictMatch
-						? $page.url.pathname === route.href
-						: $page.url.pathname.startsWith(route.href)}
-					<a
-						href={route.href}
-						on:click={closeDrawer}
-						data-sveltekit-preload-data="hover"
-						class="w-full flex items-center justify-start text-lg px-1.5 py-2px {index === 0 &&
-							'pt-1.5'} relative group font-semibold"
-					>
-						<ButtonHoverEffect
-							size="md"
-							hoverFrom="left"
-							noPadding
-							paddingClass="px-1.5 py-2px {index === 0 && 'pt-1.5'}"
-						/>
-						<div
-							class="w-full flex items-center justify-start px-4 py-3.5 gap-3 rounded-lg {isSelected
-								? 'bg-c-primary/10 text-c-primary'
-								: ''}"
-						>
-							<IconNavbarRoute
-								type={route.icon}
-								class="not-touch:group-hover:text-c-primary transition flex-shrink-0"
-							/>
-							<p
-								class="break-words flex flex-col overflow-hidden
-								not-touch:group-hover:text-c-primary transition flex-shrink"
+				<ul class="w-full flex flex-col">
+					{#each $routesDrawer as route, index}
+						{@const isSelected = route.strictMatch
+							? $page.url.pathname === route.href
+							: $page.url.pathname.startsWith(route.href)}
+						<li class="w-full">
+							<a
+								href={route.href}
+								on:click={closeDrawer}
+								data-sveltekit-preload-data="hover"
+								class="w-full flex items-center justify-start text-lg px-1.5 py-2px {index === 0 &&
+									'pt-1.5'} relative group font-semibold"
 							>
-								{route.name}
-							</p>
-							{#if route.href === '/voiceover/generate'}
-								<IconNew class="w-6 h-6 flex-shrink-0 transform scale-100 text-c-primary -ml-1.5" />
-							{/if}
-						</div>
-					</a>
-				{/each}
+								<ButtonHoverEffect
+									size="md"
+									hoverFrom="left"
+									noPadding
+									paddingClass="px-1.5 py-2px {index === 0 && 'pt-1.5'}"
+								/>
+								<div
+									class="w-full flex items-center justify-start px-4 py-3.5 gap-3 rounded-lg {isSelected
+										? 'bg-c-primary/10 text-c-primary'
+										: ''}"
+								>
+									<IconNavbarRoute
+										type={route.icon}
+										class="not-touch:group-hover:text-c-primary transition flex-shrink-0"
+									/>
+									<p
+										class="break-words flex flex-col overflow-hidden
+								not-touch:group-hover:text-c-primary transition flex-shrink"
+									>
+										{route.name}
+									</p>
+									{#if route.href === '/voiceover/generate'}
+										<IconNew
+											class="w-6 h-6 flex-shrink-0 transform scale-100 text-c-primary -ml-1.5"
+										/>
+									{/if}
+								</div>
+							</a>
+						</li>
+					{/each}
+				</ul>
 			</ScrollAreaWithChevron>
 		{/if}
 	</div>
@@ -121,4 +127,4 @@
 	>
 		<ScBar withEmail />
 	</div>
-</div>
+</nav>
