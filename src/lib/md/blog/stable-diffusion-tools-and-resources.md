@@ -4,7 +4,7 @@ description: Stable Diffusion is an AI model to generate images, bit like DALL-E
 author: M. Yekta Güngör
 author_url: https://twitter.com/yektagg
 date: 2022-10-21T16:00:00.000Z
-tags: stable-diffusion, tools, resources
+tags: stable-diffusion, tools, resources, ai
 ---
 
 <script>

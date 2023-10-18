@@ -676,6 +676,10 @@ type RootTranslation = {
 		 */
 		ThanksForReading: string
 		/**
+		 * R​e​a​d​ ​M​o​r​e
+		 */
+		ReadMoreTitle: string
+		/**
 		 * B​a​c​k​ ​t​o​ ​B​l​o​g
 		 */
 		BackToBlogButton: string
@@ -3825,6 +3829,10 @@ export type TranslationFunctions = {
 		 * Thanks for reading!
 		 */
 		ThanksForReading: () => LocalizedString
+		/**
+		 * Read More
+		 */
+		ReadMoreTitle: () => LocalizedString
 		/**
 		 * Back to Blog
 		 */

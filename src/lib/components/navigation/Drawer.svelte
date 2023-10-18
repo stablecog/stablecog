@@ -105,7 +105,7 @@
 									/>
 									<p
 										class="break-words flex flex-col overflow-hidden
-								not-touch:group-hover:text-c-primary transition flex-shrink"
+										not-touch:group-hover:text-c-primary transition flex-shrink"
 									>
 										{route.name}
 									</p>

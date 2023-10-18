@@ -1,6 +1,7 @@
 <script lang="ts">
 	import Button from '$components/buttons/Button.svelte';
 	import NoBgButton from '$components/buttons/NoBgButton.svelte';
+	import BlogPostCard from '$components/docs/BlogPostCard.svelte';
 	import ToC from '$components/docs/ToC.svelte';
 	import IconBack from '$components/icons/IconBack.svelte';
 	import MetaTag from '$components/MetaTag.svelte';
@@ -99,9 +100,7 @@
 		/>
 	</div>
 	<div class="w-full flex flex-col items-center mt-16 gap-5">
-		<div class="max-w-full flex items-center justify-center">
-			<p class="font-bold text-3xl text-center">{$LL.Blog.ThanksForReading()}</p>
-		</div>
+		<p class="w-full font-bold text-3xl text-center px-3">{$LL.Blog.ThanksForReading()}</p>
 		<NoBgButton href="/blog" prefetch={true}>
 			<div class="flex items-center justify-center gap-2.5 px-2 py-1">
 				<IconBack
@@ -117,6 +116,21 @@
 	<div class="w-full flex justify-center pt-6 pb-10 lg:px-5">
 		<div class="w-full bg-c-on-bg/5 rounded-full h-2px" />
 	</div>
+	{#if data.similarPosts.length > 0}
+		<section id="read-more" class="w-full flex flex-col items-center">
+			<h3 class="w-full font-bold text-3xl text-center px-3">{$LL.Blog.ReadMoreTitle()}</h3>
+			<ul class="w-full max-w-7xl flex flex-row flex-wrap justify-center lg:px-8 pt-6">
+				{#each data.similarPosts as similarPost}
+					<li class="self-stretch flex w-full max-w-md md:w-1/2 lg:w-1/2 xl:w-1/4 p-2">
+						<BlogPostCard post={similarPost} />
+					</li>
+				{/each}
+			</ul>
+		</section>
+		<div class="w-full flex justify-center pt-12 pb-14 lg:px-5">
+			<div class="w-full bg-c-on-bg/5 rounded-full h-2px" />
+		</div>
+	{/if}
 	<div class="w-full max-w-7xl flex flex-col items-center gap-10">
 		<div
 			class="max-w-full flex flex-col items-center bg-c-bg relative z-0 overflow-hidden

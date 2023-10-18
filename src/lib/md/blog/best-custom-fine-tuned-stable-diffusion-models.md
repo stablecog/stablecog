@@ -4,7 +4,7 @@ description: Fine-tuned Stable Diffusion models let you achieve certain styles o
 author: M. Yekta Güngör
 author_url: https://twitter.com/yektagg
 date: 2022-12-01T13:00:00.000Z
-tags: stable-diffusion, fine-tune, models, text-to-image
+tags: stable-diffusion, fine-tune, models, text-to-image, ai
 ---
 
 <script>

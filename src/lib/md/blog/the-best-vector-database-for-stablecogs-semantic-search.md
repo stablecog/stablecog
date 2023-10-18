@@ -4,7 +4,7 @@ description: An inside look at how we compared vector databases and CLIP models.
 author: Brandon Berhent
 author_url: https://twitter.com/bbedward_real
 date: 2023-04-12T13:00:00.000Z
-tags: database, vector, search, developers, app, update
+tags: database, vector, search, developers, app, update, ai
 ---
 
 <script>

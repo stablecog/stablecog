@@ -237,6 +237,7 @@ const es: Translation = {
 		Title: 'Δημοσιεύσεις Ιστολογίου',
 		TitleAlt: 'Ιστολόγιο',
 		ThanksForReading: 'Thanks for reading!',
+		ReadMoreTitle: 'Read More',
 		BackToBlogButton: 'Επιστροφή στο Ιστολόγιο'
 	},
 	Redirect: {

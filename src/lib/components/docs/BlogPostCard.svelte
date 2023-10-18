@@ -1,10 +1,10 @@
 <script lang="ts">
 	import { blogContainerSize } from '$components/docs/constants';
 	import { locale } from '$i18n/i18n-svelte';
-	import type { TPostMetadata } from '$docroutes/blog/types';
+	import type { TPostCleanedMetadata } from '$docroutes/blog/types';
 	import { getImgProxySrcDefault, getImgProxySrcSet } from '$ts/helpers/imgproxy';
 
-	export let post: TPostMetadata;
+	export let post: TPostCleanedMetadata;
 	export let featured = false;
 	export let loading: 'eager' | 'lazy' = 'lazy';
 	export { classes as class };
