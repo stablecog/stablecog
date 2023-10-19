@@ -4,7 +4,7 @@ description: Kandinsky 2.2 offers more realistic images, a higher base resolutio
 author: M. Yekta Güngör
 author_url: https://twitter.com/yektagg
 date: 2023-07-14T15:00:00.000Z
-tags: kandinsky-2-2, kandinsky, text-to-image, stable-diffusion, models, ai
+tags: Kandinsky 2.2, Kandinsky, Text to Image, Stable Diffusion, Models, AI
 ---
 
 <script>

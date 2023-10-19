@@ -4,7 +4,7 @@ description: We've been working on a big update to our systems to make Stablecog
 author: M. Yekta Güngör
 author_url: https://twitter.com/yektagg
 date: 2023-03-10T13:00:00.000Z
-tags: stablecog-update, stablecog-interface, stablecog-backend, ai
+tags: Stablecog Update, Stablecog Interface, Stablecog Backend, Developers, AI
 ---
 
 <script>

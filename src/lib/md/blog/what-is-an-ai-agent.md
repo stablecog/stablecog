@@ -4,7 +4,7 @@ description: Learn about AI agents and how they automate online tasks efficientl
 author: Matthew Duffin
 author_url: https://rareconnections.io
 date: 2023-07-08T15:00:00.000Z
-tags: ai-agent, automation, chatgpt, gpt-4, developers, ai
+tags: AI Agent, Automation, ChatGPT, GPT4, Developers, AI
 ---
 
 <script>

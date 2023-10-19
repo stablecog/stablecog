@@ -4,7 +4,7 @@ description: An open-source and multilingual latent diffusion model that shows s
 author: M. Yekta Güngör
 author_url: https://twitter.com/yektagg
 date: 2023-04-06T15:00:00.000Z
-tags: kandinsky-2-1, kandinsky, text-to-image, stable-diffusion, models, ai
+tags: Kandinsky 2.1, Kandinsky, Text to Image, Stable Diffusion, Models, AI
 ---
 
 <script>

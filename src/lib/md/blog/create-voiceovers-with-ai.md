@@ -4,7 +4,7 @@ description: You can create voiceovers on Stablecog now using a text-to-audio mo
 author: M. Yekta Güngör
 author_url: https://twitter.com/yektagg
 date: 2023-06-22T15:00:00.000Z
-tags: voiceover, bark, text-to-audio, stablecog-update, ai
+tags: Bark, Voiceover, Text to Audio, Stablecog Update, AI
 ---
 
 <script>

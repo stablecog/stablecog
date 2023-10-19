@@ -4,7 +4,7 @@ description: Our public API is now available. Developers can utilize it to build
 author: Brandon Berhent
 author_url: https://twitter.com/bbedward_real
 date: 2023-05-31T15:00:00.000Z
-tags: api, developers, stablecog-update, ai
+tags: API, Developers, Stablecog Update, AI
 ---
 
 <script>

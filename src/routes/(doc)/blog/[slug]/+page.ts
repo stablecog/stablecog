@@ -8,16 +8,16 @@ const similarPostCount = 4;
 export const load: Load = async ({ params }) => {
 	const { slug } = params;
 	const postImports = import.meta.glob(`/src/lib/md/blog/*md`);
-	let posts: Record<string, TPostCleaned> = {};
+	let otherPosts: Record<string, TPostCleaned> = {};
 	for (const path in postImports) {
 		if (path === getPath(slug)) continue;
 		const post = (await postImports[path]()) as TPost;
-		posts[path] = cleanPost(post);
+		otherPosts[path] = cleanPost(post);
 	}
 	const post = (await postImports[getPath(slug)]()) as TPost;
 	const post_cleaned = cleanPost(post);
 	const metadata = post_cleaned.metadata;
-	const orderedOtherPosts = orderPostsBySimilarity(post_cleaned, Object.values(posts));
+	const orderedOtherPosts = orderPostsBySimilarity(post_cleaned, Object.values(otherPosts));
 	const similarPosts = orderedOtherPosts.slice(0, similarPostCount).map((post) => post.metadata);
 	return {
 		metadata,

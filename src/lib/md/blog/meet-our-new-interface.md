@@ -4,7 +4,7 @@ description: We have a completely new interface to make your experience better. 
 author: M. Yekta Güngör
 author_url: https://twitter.com/yektagg
 date: 2023-05-10T15:00:00.000Z
-tags: stablecog-update, stablecog-interface, ai
+tags: Stablecog Update, Stablecog Interface, AI
 ---
 
 <script>

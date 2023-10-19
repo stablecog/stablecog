@@ -14,6 +14,7 @@ export interface TSSECreationProcessMessage {
 	process_type: TProcessType;
 	stream_id: string;
 	error?: string;
+	queue_position?: number;
 }
 
 export type TSSECreationProcessStatus = 'processing' | 'succeeded' | 'failed';
