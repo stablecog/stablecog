@@ -1,9 +1,16 @@
 import { writable } from 'svelte/store';
+import type { TQueueItem } from '$ts/stores/user/queue';
 
 export let sse = writable<EventSource | null>(null);
 export let sseId = writable<string | null>(null);
 
+export interface TSSEQueueUpdateMessage {
+	message_type: 'queue';
+	queue_items: TQueueItem[];
+}
+
 export interface TSSECreationProcessMessage {
+	message_type: 'creation_process';
 	id: string;
 	ui_id?: string;
 	status?: TSSECreationProcessStatus;
@@ -14,8 +21,9 @@ export interface TSSECreationProcessMessage {
 	process_type: TProcessType;
 	stream_id: string;
 	error?: string;
-	queue_position?: number;
 }
+
+export type TSSEMessage = TSSEQueueUpdateMessage | TSSECreationProcessMessage;
 
 export type TSSECreationProcessStatus = 'processing' | 'succeeded' | 'failed';
 

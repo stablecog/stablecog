@@ -11,6 +11,7 @@
 	import IconImage from '$components/icons/IconImage.svelte';
 	import ErrorChip from '$components/error/ErrorChip.svelte';
 	import IconNsfwPrompt from '$components/icons/IconNSFWPrompt.svelte';
+	import { queue } from '$ts/stores/user/queue';
 
 	export let generation: TGenerationWithSelectedOutput;
 	export let cardWidth: number;
@@ -42,8 +43,23 @@
 				{#if status !== undefined && status !== 'succeeded' && animation !== undefined}
 					<div
 						out:fade={{ duration: 3000, easing: quadIn }}
-						class="w-full h-full absolute left-0 top-0"
+						class="w-full h-full absolute left-0 top-0 flex items-center justify-center"
 					>
+						<div class="w-full h-full flex flex-col">
+							{#each $queue as queueItem}
+								<div
+									class="text-xs w-full flex flex-row px-6 py-3 {generation.queued_id ===
+									queueItem.id
+										? 'bg-c-primary text-c-on-primary'
+										: ''}"
+								>
+									<p class="w-1/3">
+										ID: <span class="font-bold">{queueItem.id.slice(0, 3)}</span>
+									</p>
+									<p class="w-1/3">PRI: <span class="font-bold">{queueItem.priority}</span></p>
+								</div>
+							{/each}
+						</div>
 						<GenerationAnimation {animation} />
 					</div>
 				{/if}

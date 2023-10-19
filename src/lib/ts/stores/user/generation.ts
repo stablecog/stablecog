@@ -22,6 +22,7 @@ import {
 	STRIPE_PRODUCT_ID_OBJECTS_SUBSCRIPTIONS_MO,
 	roleToProductId
 } from '$ts/constants/stripePublic';
+import type { TQueueItem } from '$ts/stores/user/queue';
 
 export const generations = writable<TGeneration[]>([]);
 export const activeGeneration = writable<TGenerationWithSelectedOutput | undefined>(undefined);
@@ -114,7 +115,15 @@ export const setGenerationToSucceeded = ({
 	});
 };
 
-export const setGenerationToServerReceived = ({ ui_id, id }: { ui_id: string; id: string }) => {
+export const setGenerationToServerReceived = ({
+	ui_id,
+	id,
+	queued_id
+}: {
+	ui_id: string;
+	id: string;
+	queued_id?: string;
+}) => {
 	generations.update(($generations) => {
 		if ($generations === null || $generations.length === 0) {
 			return $generations;
@@ -130,6 +139,7 @@ export const setGenerationToServerReceived = ({ ui_id, id }: { ui_id: string; id
 		}
 		gen.id = id;
 		gen.status = 'server-received';
+		gen.queued_id = queued_id;
 		gen.outputs = gen.outputs.map((o) => ({ ...o, status: 'server-received' }));
 		return $generations;
 	});
@@ -397,6 +407,8 @@ export interface TInitialGenerationResponse {
 	id?: string;
 	error?: string;
 	total_remaining_credits?: number;
+	queued_id?: string;
+	queue_items?: TQueueItem[];
 }
 
 export type TProcessType = 'generate' | 'generate_and_upscale';
@@ -438,6 +450,7 @@ export interface TGeneration extends TGenerationBase {
 	submit_to_gallery: boolean;
 	is_placeholder?: boolean;
 	user: TUser;
+	queued_id?: string;
 }
 
 export interface TGenerationOutput {

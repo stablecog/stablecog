@@ -41,7 +41,12 @@
 		setGenerationToServerReceived,
 		submitInitialGenerationRequest
 	} from '$ts/stores/user/generation';
-	import { sse, sseId, type TSSECreationProcessMessage } from '$ts/stores/user/sse';
+	import {
+		sse,
+		sseId,
+		type TSSECreationProcessMessage,
+		type TSSEMessage
+	} from '$ts/stores/user/sse';
 	import { userSummary } from '$ts/stores/user/summary';
 	import {
 		setUpscaleToFailed,
@@ -61,6 +66,7 @@
 		submitInitialVoiceoverRequest,
 		voiceovers
 	} from '$ts/stores/user/voiceovers.js';
+	import { queue } from '$ts/stores/user/queue.js';
 
 	export let data;
 
@@ -101,8 +107,13 @@
 				if (data.version) {
 					serverVersion.set(data.version);
 				}
-				if (isCreationProcessData(data)) {
-					setCreationProcessStatus(data as TSSECreationProcessMessage);
+				if (data.message_type === 'queue' || data.message_type === 'creation_process') {
+					const d = data as TSSEMessage;
+					if (d.message_type === 'queue') {
+						queue.set(d.queue_items);
+					} else if (isCreationProcessData(data)) {
+						setCreationProcessStatus(data);
+					}
 				}
 			};
 			$sse.onerror = (event) => {
@@ -144,20 +155,29 @@
 					$page.data.session.access_token,
 					$appVersion
 				);
-				const { id, error, total_remaining_credits, ui_id } = res;
+				const { id, error, total_remaining_credits, ui_id, queued_id, queue_items } = res;
 				if (total_remaining_credits !== undefined && $userSummary) {
 					userSummary.set({ ...$userSummary, total_remaining_credits });
 				}
+				if (queue_items) {
+					queue.set(queue_items);
+				}
 				if (error || !id || !ui_id) {
 					console.log('Generation failed:', error);
-					setGenerationToFailed({ id: generation.id || generation.ui_id, error: error });
+					setGenerationToFailed({
+						id: generation.id || generation.ui_id,
+						error
+					});
 				} else {
-					setGenerationToServerReceived({ ui_id: ui_id, id: id });
+					setGenerationToServerReceived({ ui_id: ui_id, id, queued_id });
 				}
 			} catch (error) {
 				const err = error as Error;
 				console.log('Initial generation submisssion error', error);
-				setGenerationToFailed({ id: generation.id || generation.ui_id, error: err.message });
+				setGenerationToFailed({
+					id: generation.id || generation.ui_id,
+					error: err.message
+				});
 			} finally {
 				isSubmittingGenerations = false;
 			}
