@@ -12,6 +12,7 @@
 	import ErrorChip from '$components/error/ErrorChip.svelte';
 	import IconNsfwPrompt from '$components/icons/IconNSFWPrompt.svelte';
 	import { queue } from '$ts/stores/user/queue';
+	import { userSummary } from '$ts/stores/user/summary';
 
 	export let generation: TGenerationWithSelectedOutput;
 	export let cardWidth: number;
@@ -19,6 +20,8 @@
 	$: output = generation.selected_output;
 	$: status = output.status;
 	$: animation = output.animation;
+	$: positionInQueue = queue.getItemPosition(generation.queued_id);
+	$: queueLength = $queue.length;
 </script>
 
 <div class="w-full h-full relative group">
@@ -45,21 +48,19 @@
 						out:fade={{ duration: 3000, easing: quadIn }}
 						class="w-full h-full absolute left-0 top-0 flex items-center justify-center"
 					>
-						<div class="w-full h-full flex flex-col">
-							{#each $queue as queueItem}
-								<div
-									class="text-xs w-full flex flex-row px-6 py-3 {generation.queued_id ===
-									queueItem.id
-										? 'bg-c-primary text-c-on-primary'
-										: ''}"
-								>
-									<p class="w-1/3">
-										ID: <span class="font-bold">{queueItem.id.slice(0, 3)}</span>
+						{#if positionInQueue && queueLength && $userSummary?.product_id === undefined}
+							<div
+								transition:scale={{ start: 0.5, opacity: 0, easing: quadOut, duration: 150 }}
+								class="w-full h-full flex flex-col"
+							>
+								<div class="my-auto w-full flex flex-col items-center justify-center">
+									<p class="text-center text-xs text-c-on-bg/50">Queue</p>
+									<p class="text-center text-sm font-medium mt-0.1 text-c-on-bg/75">
+										{positionInQueue}<span class="text-c-on-bg/50">/</span>{queueLength}
 									</p>
-									<p class="w-1/3">PRI: <span class="font-bold">{queueItem.priority}</span></p>
 								</div>
-							{/each}
-						</div>
+							</div>
+						{/if}
 						<GenerationAnimation {animation} />
 					</div>
 				{/if}
