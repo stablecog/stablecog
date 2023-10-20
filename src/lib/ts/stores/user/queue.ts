@@ -1,6 +1,6 @@
-import { get, writable } from 'svelte/store';
+import { writable } from 'svelte/store';
 
-export const queue = createQueueStore([]);
+export const queue = writable<TQueueItem[]>([]);
 
 export interface TQueueItem {
 	created_at: string;
@@ -9,18 +9,9 @@ export interface TQueueItem {
 	updated_at: string;
 }
 
-export function createQueueStore(initial: TQueueItem[]) {
-	const queue = writable<TQueueItem[]>(initial);
-
-	function getItemPosition(id: string | undefined) {
-		if (!id) return undefined;
-		const index = get(queue).findIndex((queueItem) => queueItem.id === id);
-		if (index === -1) return undefined;
-		return index + 1;
-	}
-
-	return {
-		...queue,
-		getItemPosition
-	};
+export function getQueuePositionFromId(id: string | undefined, queue: TQueueItem[]) {
+	if (!id) return undefined;
+	const index = queue.findIndex((queueItem) => queueItem.id === id);
+	if (index === -1) return undefined;
+	return index + 1;
 }

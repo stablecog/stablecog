@@ -11,7 +11,7 @@
 	import IconImage from '$components/icons/IconImage.svelte';
 	import ErrorChip from '$components/error/ErrorChip.svelte';
 	import IconNsfwPrompt from '$components/icons/IconNSFWPrompt.svelte';
-	import { queue } from '$ts/stores/user/queue';
+	import { getQueuePositionFromId, queue } from '$ts/stores/user/queue';
 	import { userSummary } from '$ts/stores/user/summary';
 
 	export let generation: TGenerationWithSelectedOutput;
@@ -20,7 +20,7 @@
 	$: output = generation.selected_output;
 	$: status = output.status;
 	$: animation = output.animation;
-	$: positionInQueue = queue.getItemPosition(generation.queued_id);
+	$: positionInQueue = getQueuePositionFromId(generation.queued_id, $queue);
 	$: queueLength = $queue.length;
 </script>
 
