@@ -51,13 +51,13 @@
 						{#if positionInQueue && ((positionInQueue > 1 && !($userSummary?.product_id || $userSummary?.has_nonfree_credits)) || isSuperAdmin($userSummary?.roles))}
 							<div
 								transition:scale={{ start: 0.5, opacity: 0, easing: quadOut, duration: 150 }}
-								class="w-full h-full flex flex-col px-4 py-3"
+								class="w-full h-full flex flex-col px-5 py-3"
 							>
 								<div class="my-auto w-full flex flex-col items-center justify-center">
-									<p class="text-center text-xs text-c-on-bg/50 leading-tight">
+									<p class="w-full text-center text-xs text-c-on-bg/50 leading-tight">
 										{$LL.Generate.PositionInQueueTitle()}
 									</p>
-									<p class="text-center text-lg font-medium mt-0.5 text-c-on-bg/75">
+									<p class="w-full text-center text-lg font-medium mt-0.5 text-c-on-bg/75">
 										{positionInQueue.toLocaleString($locale)}
 									</p>
 								</div>
