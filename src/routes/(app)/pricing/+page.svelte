@@ -69,6 +69,7 @@
 				$LL.Pricing.Features.DailyImages({
 					count: 20
 				}),
+				$LL.Pricing.Features.SlowGeneration(),
 				$LL.Pricing.Features.NoParallelGenerations(),
 				$LL.Pricing.Features.PersonalUseOnly(),
 				$LL.Pricing.Features.ImagesArePublic()
@@ -98,6 +99,7 @@
 							PUBLIC_STRIPE_PRODUCT_ID_STARTER_SUBSCRIPTION
 						].monthly_images.toLocaleString($locale)
 				}),
+				$LL.Pricing.Features.FastGeneration(),
 				$LL.Pricing.Features.ParallelGenerations({
 					count:
 						STRIPE_PRODUCT_ID_OBJECTS_SUBSCRIPTIONS_MO[
@@ -130,6 +132,7 @@
 							PUBLIC_STRIPE_PRODUCT_ID_PRO_SUBSCRIPTION
 						].monthly_images.toLocaleString($locale)
 				}),
+				$LL.Pricing.Features.FastGeneration(),
 				$LL.Pricing.Features.ParallelGenerations({
 					count:
 						STRIPE_PRODUCT_ID_OBJECTS_SUBSCRIPTIONS_MO[
@@ -166,6 +169,7 @@
 							PUBLIC_STRIPE_PRODUCT_ID_ULTIMATE_SUBSCRIPTION
 						].monthly_images.toLocaleString($locale)
 				}),
+				$LL.Pricing.Features.FastGeneration(),
 				$LL.Pricing.Features.ParallelGenerations({
 					count:
 						STRIPE_PRODUCT_ID_OBJECTS_SUBSCRIPTIONS_MO[
@@ -202,6 +206,7 @@
 							PUBLIC_STRIPE_PRODUCT_ID_MEDIUM_PACK
 						].images.toLocaleString($locale)
 				}),
+				$LL.Pricing.Features.FastGeneration(),
 				$LL.Pricing.Features.NeverExpires()
 			],
 			ringClass: 'ring-c-bg-secondary',
@@ -230,6 +235,7 @@
 							PUBLIC_STRIPE_PRODUCT_ID_LARGE_PACK
 						].images.toLocaleString($locale)
 				}),
+				$LL.Pricing.Features.FastGeneration(),
 				$LL.Pricing.Features.NeverExpires()
 			],
 			ringClass: 'ring-c-bg-secondary',
@@ -258,6 +264,7 @@
 							PUBLIC_STRIPE_PRODUCT_ID_MEGA_PACK
 						].images.toLocaleString($locale)
 				}),
+				$LL.Pricing.Features.FastGeneration(),
 				$LL.Pricing.Features.NeverExpires()
 			],
 			ringClass: 'ring-c-bg-secondary',

@@ -782,6 +782,8 @@ const ko: Translation = {
 			GenerationQueuePriority: 'Generation priority.',
 			NoGenerationQueuePriority: 'No generation priority.',
 			CommercialUse: 'Commercial use.',
+			SlowGeneration: 'Slow generation.',
+			FastGeneration: 'Fast generation.',
 			ImagesArePublic: 'Images are public.',
 			ImagesArePrivate: 'Images are private.'
 		},

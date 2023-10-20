@@ -790,6 +790,8 @@ const nl: Translation = {
 			GenerationQueuePriority: 'Generation priority.',
 			NoGenerationQueuePriority: 'No generation priority.',
 			CommercialUse: 'Commercieel gebruik.',
+			SlowGeneration: 'Slow generation',
+			FastGeneration: 'Fast generation',
 			ImagesArePublic: 'Afbeeldingen zijn openbaar.',
 			ImagesArePrivate: 'Afbeeldingen zijn privé.'
 		},

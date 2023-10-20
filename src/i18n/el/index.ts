@@ -809,6 +809,8 @@ const es: Translation = {
 			GenerationQueuePriority: 'Generation priority.',
 			NoGenerationQueuePriority: 'No generation priority.',
 			CommercialUse: 'Εμπορική χρήση.',
+			SlowGeneration: 'Slow generation',
+			FastGeneration: 'Fast generation',
 			ImagesArePublic: 'Οι εικόνες είναι δημόσιες.',
 			ImagesArePrivate: 'Οι εικόνες είναι ιδιωτικές.'
 		},

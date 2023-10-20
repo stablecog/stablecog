@@ -2373,6 +2373,14 @@ type RootTranslation = {
 			 */
 			CommercialUse: string
 			/**
+			 * S​l​o​w​ ​g​e​n​e​r​a​t​i​o​n​.
+			 */
+			SlowGeneration: string
+			/**
+			 * F​a​s​t​ ​g​e​n​e​r​a​t​i​o​n​.
+			 */
+			FastGeneration: string
+			/**
 			 * I​m​a​g​e​s​ ​a​r​e​ ​p​u​b​l​i​c​.
 			 */
 			ImagesArePublic: string
@@ -5492,6 +5500,14 @@ export type TranslationFunctions = {
 			 * Commercial use.
 			 */
 			CommercialUse: () => LocalizedString
+			/**
+			 * Slow generation.
+			 */
+			SlowGeneration: () => LocalizedString
+			/**
+			 * Fast generation.
+			 */
+			FastGeneration: () => LocalizedString
 			/**
 			 * Images are public.
 			 */

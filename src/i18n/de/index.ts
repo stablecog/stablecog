@@ -783,6 +783,8 @@ const de: Translation = {
 			GenerationQueuePriority: 'Generation priority.',
 			NoGenerationQueuePriority: 'No generation priority.',
 			CommercialUse: 'Kommerzielle Nutzung.',
+			SlowGeneration: 'Slow generation',
+			FastGeneration: 'Fast generation',
 			ImagesArePublic: 'Bilder sind öffentlich.',
 			ImagesArePrivate: 'Bilder sind privat.'
 		},

@@ -807,6 +807,8 @@ const tr: Translation = {
 			GenerationQueuePriority: 'Üretim önceliği.',
 			NoGenerationQueuePriority: 'Üretim önceliği yok.',
 			CommercialUse: 'Ticari kullanım.',
+			SlowGeneration: 'Slow generation',
+			FastGeneration: 'Fast generation',
 			ImagesArePublic: 'Fotoğraflar halka açık.',
 			ImagesArePrivate: 'Fotoğraflar gizli.'
 		},

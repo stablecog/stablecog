@@ -797,6 +797,8 @@ const ja: Translation = {
 			GenerationQueuePriority: 'Generation priority.',
 			NoGenerationQueuePriority: 'No generation priority.',
 			CommercialUse: '商業利用可能',
+			SlowGeneration: 'Slow generation',
+			FastGeneration: 'Fast generation',
 			ImagesArePublic: '生成画像は公開',
 			ImagesArePrivate: '生成画像は非公開'
 		},
