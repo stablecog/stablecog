@@ -64,7 +64,7 @@
 				</div>
 			{/if}
 		</div>
-		<ul class="w-full py-6 flex flex-col gap-3 px-1 flex-1">
+		<ul class="w-full py-6 flex flex-col gap-2.5 px-1 flex-1">
 			{#each features as feature}
 				<li class="flex items-start gap-3">
 					<span class="text-c-on-bg/60">-</span>

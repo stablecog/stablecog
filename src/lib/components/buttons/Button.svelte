@@ -123,7 +123,7 @@
 			: type === 'no-bg-on-bg'
 			? 'bg-c-primary/0'
 			: 'bg-c-primary'} {type === 'bg-secondary'
-			? 'border-2 border-c-bg-tertiary'
+			? 'ring-2 ring-c-bg-tertiary'
 			: ''} {classes} {shouldAnimate ? 'scale-animation' : ''}"
 	>
 		{#if !noHoverEffect}
@@ -250,7 +250,7 @@
 			: type === 'no-bg-on-bg'
 			? 'bg-c-primary/0'
 			: 'bg-c-primary'} {type === 'bg-secondary'
-			? 'border-2 border-c-bg-tertiary'
+			? 'ring-2 ring-c-bg-tertiary'
 			: ''} {fadeOnDisabled && disabled ? 'opacity-75' : ''} {classes} {shouldAnimate
 			? 'scale-animation'
 			: ''}"
@@ -379,7 +379,7 @@
 			: type === 'no-bg-on-bg'
 			? 'bg-c-primary/0'
 			: 'bg-c-primary'} {type === 'bg-secondary' && !noBorder
-			? 'border-2 border-c-bg-tertiary'
+			? 'ring-2 ring-c-bg-tertiary'
 			: ''} {fadeOnDisabled && disabled ? 'opacity-75' : ''} {classes} {shouldAnimate
 			? 'scale-animation'
 			: ''}"
@@ -507,7 +507,7 @@
 			: type === 'no-bg-on-bg'
 			? 'bg-c-primary/0'
 			: 'bg-c-primary'} {type === 'bg-secondary' && !noBorder
-			? 'border-2 border-c-bg-tertiary'
+			? 'ring-2 ring-c-bg-tertiary'
 			: ''} {fadeOnDisabled && disabled ? 'opacity-75' : ''} {classes} {shouldAnimate
 			? 'scale-animation'
 			: ''}"
