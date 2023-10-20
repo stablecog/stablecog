@@ -4,7 +4,7 @@
 	import GenerationAnimation from '$components/generate/GenerationAnimation.svelte';
 	import IconEyeSlashOutline from '$components/icons/IconEyeSlashOutline.svelte';
 	import IconSadFaceOutline from '$components/icons/IconSadFaceOutline.svelte';
-	import LL from '$i18n/i18n-svelte';
+	import LL, { locale } from '$i18n/i18n-svelte';
 	import type { TGenerationWithSelectedOutput } from '$ts/stores/user/generation';
 	import { quadIn, quadOut } from 'svelte/easing';
 	import { fade, scale } from 'svelte/transition';
@@ -13,6 +13,7 @@
 	import IconNsfwPrompt from '$components/icons/IconNSFWPrompt.svelte';
 	import { getQueuePositionFromId, queue } from '$ts/stores/user/queue';
 	import { userSummary } from '$ts/stores/user/summary';
+	import { isSuperAdmin } from '$ts/helpers/admin/roles';
 
 	export let generation: TGenerationWithSelectedOutput;
 	export let cardWidth: number;
@@ -21,7 +22,6 @@
 	$: status = output.status;
 	$: animation = output.animation;
 	$: positionInQueue = getQueuePositionFromId(generation.queued_id, $queue);
-	$: queueLength = $queue.length;
 </script>
 
 <div class="w-full h-full relative group">
@@ -48,15 +48,17 @@
 						out:fade={{ duration: 3000, easing: quadIn }}
 						class="w-full h-full absolute left-0 top-0 flex items-center justify-center"
 					>
-						{#if positionInQueue && queueLength && $userSummary?.product_id === undefined}
+						{#if positionInQueue && ((positionInQueue > 1 && !($userSummary?.product_id || $userSummary?.has_nonfree_credits)) || isSuperAdmin($userSummary?.roles))}
 							<div
 								transition:scale={{ start: 0.5, opacity: 0, easing: quadOut, duration: 150 }}
-								class="w-full h-full flex flex-col"
+								class="w-full h-full flex flex-col px-4 py-3"
 							>
 								<div class="my-auto w-full flex flex-col items-center justify-center">
-									<p class="text-center text-xs text-c-on-bg/50">Queue</p>
-									<p class="text-center text-sm font-medium mt-0.1 text-c-on-bg/75">
-										{positionInQueue}<span class="text-c-on-bg/50">/</span>{queueLength}
+									<p class="text-center text-xs text-c-on-bg/50 leading-tight">
+										{$LL.Generate.PositionInQueueTitle()}
+									</p>
+									<p class="text-center text-lg font-medium mt-0.5 text-c-on-bg/75">
+										{positionInQueue.toLocaleString($locale)}
 									</p>
 								</div>
 							</div>

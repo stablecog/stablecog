@@ -114,6 +114,7 @@ const ko: Translation = {
 	Generate: {
 		ShowSettingsButton: 'Show Settings',
 		HideSettingsButton: 'Hide Settings',
+		PositionInQueueTitle: 'Position in queue',
 		Grid: {
 			NotSignedIn: { Paragraph: 'Sign in to see your generations.' },
 			NoGeneration: {

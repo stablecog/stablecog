@@ -322,6 +322,10 @@ type RootTranslation = {
 		 * H​i​d​e​ ​S​e​t​t​i​n​g​s
 		 */
 		HideSettingsButton: string
+		/**
+		 * P​o​s​i​t​i​o​n​ ​i​n​ ​q​u​e​u​e
+		 */
+		PositionInQueueTitle: string
 		Grid: {
 			NotSignedIn: {
 				/**
@@ -3477,6 +3481,10 @@ export type TranslationFunctions = {
 		 * Hide Settings
 		 */
 		HideSettingsButton: () => LocalizedString
+		/**
+		 * Position in queue
+		 */
+		PositionInQueueTitle: () => LocalizedString
 		Grid: {
 			NotSignedIn: {
 				/**
