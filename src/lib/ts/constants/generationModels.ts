@@ -76,8 +76,7 @@ export const generationModels: {
 	},
 	'36d9d835-646f-4fc7-b9fe-98654464bf8e': {
 		name: 'Arcane Diffusion',
-		supportedSchedulerIds: sdSharedSchedulerIds,
-		active: false
+		supportedSchedulerIds: sdSharedSchedulerIds
 	}
 } as const;
 
@@ -135,6 +134,10 @@ export const availableModelIdDropdownItems = derived(
 			{
 				label: $modelIdToDisplayName['eaa438e1-dbf9-48fd-be71-206f0f257617'],
 				value: 'eaa438e1-dbf9-48fd-be71-206f0f257617'
+			},
+			{
+				label: $modelIdToDisplayName['36d9d835-646f-4fc7-b9fe-98654464bf8e'],
+				value: '36d9d835-646f-4fc7-b9fe-98654464bf8e'
 			}
 		];
 		return items;
