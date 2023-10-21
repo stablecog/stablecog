@@ -22,6 +22,21 @@
 	$: status = output.status;
 	$: animation = output.animation;
 	$: positionInQueue = getQueuePositionFromId(generation.queued_id, $queue);
+	$: positionInQueue, onPositionInQueueChanged();
+
+	let debouncedPositionInQueue: number | undefined;
+	let positionInQueueTimeout: NodeJS.Timeout;
+
+	function onPositionInQueueChanged() {
+		clearTimeout(positionInQueueTimeout);
+		if (positionInQueue !== undefined) {
+			debouncedPositionInQueue = positionInQueue;
+			return;
+		}
+		positionInQueueTimeout = setTimeout(() => {
+			debouncedPositionInQueue = positionInQueue;
+		}, 750);
+	}
 </script>
 
 <div class="w-full h-full relative group">
@@ -48,17 +63,17 @@
 						out:fade={{ duration: 3000, easing: quadIn }}
 						class="w-full h-full absolute left-0 top-0 flex items-center justify-center"
 					>
-						{#if positionInQueue && ((positionInQueue > 1 && !($userSummary?.product_id || $userSummary?.has_nonfree_credits)) || isSuperAdmin($userSummary?.roles))}
+						{#if debouncedPositionInQueue && (!($userSummary?.product_id || $userSummary?.has_nonfree_credits) || isSuperAdmin($userSummary?.roles))}
 							<div
-								transition:scale={{ start: 0.5, opacity: 0, easing: quadOut, duration: 150 }}
+								transition:scale={{ start: 0.75, opacity: 0, easing: quadOut, duration: 150 }}
 								class="w-full h-full flex flex-col px-5 py-3"
 							>
 								<div class="my-auto w-full flex flex-col items-center justify-center">
 									<p class="w-full text-center text-xs text-c-on-bg/50 leading-tight">
 										{$LL.Generate.PositionInQueueTitle()}
 									</p>
-									<p class="w-full text-center text-lg font-medium mt-0.5 text-c-on-bg/75">
-										{positionInQueue.toLocaleString($locale)}
+									<p class="w-full text-center text-xl font-medium mt-0.5 text-c-on-bg/75">
+										{debouncedPositionInQueue.toLocaleString($locale)}
 									</p>
 								</div>
 							</div>

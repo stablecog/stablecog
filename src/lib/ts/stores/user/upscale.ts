@@ -15,6 +15,7 @@ import {
 	STRIPE_PRODUCT_ID_OBJECTS_SUBSCRIPTIONS_MO,
 	roleToProductId
 } from '$ts/constants/stripePublic';
+import type { TQueueItem } from '$ts/stores/user/queue';
 
 export const upscales = writable<TUpscale[]>([]);
 
@@ -84,7 +85,15 @@ async function loadImage(url: string) {
 	});
 }
 
-export const setUpscaleToServerReceived = ({ ui_id, id }: { ui_id: string; id: string }) => {
+export const setUpscaleToServerReceived = ({
+	ui_id,
+	id,
+	queued_id
+}: {
+	ui_id: string;
+	id: string;
+	queued_id?: string;
+}) => {
 	upscales.update(($upscales) => {
 		if ($upscales === null) {
 			return $upscales;
@@ -100,6 +109,7 @@ export const setUpscaleToServerReceived = ({ ui_id, id }: { ui_id: string; id: s
 		}
 		ups.id = id;
 		ups.status = 'server-received';
+		ups.queued_id = queued_id;
 		return $upscales;
 	});
 };
@@ -216,6 +226,8 @@ export interface TInitialUpscaleResponse {
 	id?: string;
 	error?: string;
 	total_remaining_credits?: number;
+	queued_id?: string;
+	queue_items?: TQueueItem[];
 }
 
 export interface TUpscaleBase {
@@ -234,6 +246,7 @@ export interface TUpscale extends TUpscaleBase {
 	created_at: string;
 	completed_at?: string;
 	animation?: Tweened<number>;
+	queued_id?: string;
 }
 
 export interface TInitialUpscaleRequest extends TUpscaleBase {

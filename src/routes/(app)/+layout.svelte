@@ -217,15 +217,18 @@
 						access_token: $page.data.session.access_token,
 						app_version: $appVersion
 					});
-					const { id, error, total_remaining_credits, ui_id } = res;
+					const { id, error, total_remaining_credits, ui_id, queued_id, queue_items } = res;
 					if (total_remaining_credits !== undefined && $userSummary) {
 						userSummary.set({ ...$userSummary, total_remaining_credits });
+					}
+					if (queue_items) {
+						queue.set(queue_items);
 					}
 					if (error || !id || !ui_id) {
 						console.log('Upscale failed:', error);
 						setUpscaleToFailed({ id: upscale.id || upscale.ui_id, error: error });
 					} else {
-						setUpscaleToServerReceived({ ui_id: ui_id, id: id });
+						setUpscaleToServerReceived({ ui_id: ui_id, id: id, queued_id });
 					}
 				} catch (error) {
 					const err = error as Error;

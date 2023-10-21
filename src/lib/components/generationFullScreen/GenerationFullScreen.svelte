@@ -4,7 +4,7 @@
 	import { windowWidth } from '$ts/stores/window';
 	import { onDestroy, onMount } from 'svelte';
 	import { quadOut } from 'svelte/easing';
-	import { fly } from 'svelte/transition';
+	import { fly, scale } from 'svelte/transition';
 	import { getGenerationUrlFromParams } from '$ts/helpers/getGenerationUrlFromParams';
 	import { page } from '$app/stores';
 	import {
@@ -16,7 +16,7 @@
 	import Button from '$components/buttons/Button.svelte';
 	import IconUpscale from '$components/icons/IconUpscale.svelte';
 	import TabBar from '$components/tabBars/TabBar.svelte';
-	import LL from '$i18n/i18n-svelte';
+	import LL, { locale } from '$i18n/i18n-svelte';
 	import Container from '$components/generationFullScreen/Container.svelte';
 	import { activeGeneration, type TGenerationWithSelectedOutput } from '$userStores/generation';
 	import { sseId } from '$userStores/sse';
@@ -51,6 +51,8 @@
 	import ScrollAreaWithChevron from '$components/ScrollAreaWithChevron.svelte';
 	import UsernameButton from '$components/buttons/UsernameButton.svelte';
 	import ShowOnProfileSection from '$components/generationFullScreen/ShowOnProfileSection.svelte';
+	import { getQueuePositionFromId, queue } from '$ts/stores/user/queue';
+	import { isSuperAdmin } from '$ts/helpers/admin/roles';
 
 	export let generation: TGenerationWithSelectedOutput;
 	export let modalType: TGenerationFullScreenModalType;
@@ -275,6 +277,23 @@
 		}
 	};
 
+	$: positionInQueue = getQueuePositionFromId(upscaleFromStore?.queued_id, $queue);
+	$: positionInQueue, onPositionInQueueChanged();
+
+	let debouncedPositionInQueue: number | undefined;
+	let positionInQueueTimeout: NodeJS.Timeout;
+
+	function onPositionInQueueChanged() {
+		clearTimeout(positionInQueueTimeout);
+		if (positionInQueue !== undefined) {
+			debouncedPositionInQueue = positionInQueue;
+			return;
+		}
+		positionInQueueTimeout = setTimeout(() => {
+			debouncedPositionInQueue = positionInQueue;
+		}, 750);
+	}
+
 	let shareButtonPortalBarrier: HTMLDivElement;
 	let shareButtonPortalContent: HTMLDivElement;
 
@@ -393,6 +412,23 @@
 						</div>
 					{/if}
 					{#if upscaleFromStore?.animation}
+						{#if debouncedPositionInQueue && (!($userSummary?.product_id || $userSummary?.has_nonfree_credits) || isSuperAdmin($userSummary?.roles))}
+							<div
+								transition:scale={{ start: 0.75, opacity: 0, easing: quadOut, duration: 150 }}
+								class="w-full h-full flex flex-col items-center px-5 py-3 absolute left-0 top-0"
+							>
+								<div
+									class="my-auto max-w-full flex flex-col items-center justify-center bg-c-barrier/80 rounded-lg px-3 py-2"
+								>
+									<p class="max-w-full text-center text-xs text-c-on-bg/75 leading-tight">
+										{$LL.Generate.PositionInQueueTitle()}
+									</p>
+									<p class="max-w-full text-center text-xl font-medium mt-0.5 text-c-on-bg">
+										{debouncedPositionInQueue.toLocaleString($locale)}
+									</p>
+								</div>
+							</div>
+						{/if}
 						<UpscaleAnimation
 							animation={upscaleFromStore.animation}
 							isProcessing={upscaleBeingProcessed}
