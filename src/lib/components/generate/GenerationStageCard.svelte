@@ -37,7 +37,7 @@
 			}, 750);
 			return;
 		}
-		// Any updates after the first entry
+		// Updates after the first entry except exit
 		if (positionInQueue !== undefined && hasPrevValue) {
 			debouncedPositionInQueue = positionInQueue;
 			return;
