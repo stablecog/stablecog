@@ -24,15 +24,25 @@
 	$: positionInQueue = getQueuePositionFromId(generation.queued_id, $queue);
 	$: positionInQueue, onPositionInQueueChanged();
 
-	let debouncedPositionInQueue: number | undefined;
+	let debouncedPositionInQueue: number | undefined = undefined;
 	let positionInQueueTimeout: NodeJS.Timeout;
 
 	function onPositionInQueueChanged() {
+		let hasPrevValue = debouncedPositionInQueue !== undefined;
 		clearTimeout(positionInQueueTimeout);
-		if (positionInQueue !== undefined) {
+		// First entry
+		if (positionInQueue !== undefined && !hasPrevValue) {
+			positionInQueueTimeout = setTimeout(() => {
+				debouncedPositionInQueue = positionInQueue;
+			}, 750);
+			return;
+		}
+		// Any updates after the first entry
+		if (positionInQueue !== undefined && hasPrevValue) {
 			debouncedPositionInQueue = positionInQueue;
 			return;
 		}
+		// Exit
 		positionInQueueTimeout = setTimeout(() => {
 			debouncedPositionInQueue = positionInQueue;
 		}, 750);
