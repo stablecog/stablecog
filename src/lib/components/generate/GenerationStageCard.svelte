@@ -66,7 +66,7 @@
 						{#if debouncedPositionInQueue && (!($userSummary?.product_id || $userSummary?.has_nonfree_credits) || isSuperAdmin($userSummary?.roles))}
 							<div
 								transition:scale={{ start: 0.75, opacity: 0, easing: quadOut, duration: 150 }}
-								class="w-full h-full flex flex-col px-5 py-3"
+								class="w-full h-full flex flex-col px-5 py-3 absolute left-0 top-0"
 							>
 								<div class="my-auto w-full flex flex-col items-center justify-center">
 									<p class="w-full text-center text-xs text-c-on-bg/50 leading-tight">
