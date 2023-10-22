@@ -44,7 +44,7 @@
 				<a
 					href="/pricing#plan-starter"
 					target="_blank"
-					class="max-w-full text-sm font-semibold pointer-events-auto
+					class="max-w-full text-center text-sm font-semibold pointer-events-auto
           rounded-lg px-2.5 py-2 shadow-lg shadow-c-shadow/[var(--o-shadow-normal)] overflow-hidden z-0 relative group/button
           {hasBg
 						? 'bg-c-primary text-c-on-primary'
