@@ -53,7 +53,6 @@
 	import ShowOnProfileSection from '$components/generationFullScreen/ShowOnProfileSection.svelte';
 	import { getQueuePositionFromId, queue } from '$ts/stores/user/queue';
 	import { isSuperAdmin } from '$ts/helpers/admin/roles';
-	import IconQueue from '$components/icons/IconQueue.svelte';
 	import QueuePosition from '$components/QueuePosition.svelte';
 
 	export let generation: TGenerationWithSelectedOutput;
@@ -303,7 +302,7 @@
 		// Exit
 		positionInQueueTimeout = setTimeout(() => {
 			debouncedPositionInQueue = positionInQueue;
-		}, 750);
+		}, 2000);
 	}
 
 	let shareButtonPortalBarrier: HTMLDivElement;
@@ -424,13 +423,13 @@
 						</div>
 					{/if}
 					{#if upscaleFromStore?.animation}
-						{#if debouncedPositionInQueue && (!($userSummary?.product_id || $userSummary?.has_nonfree_credits) || isSuperAdmin($userSummary?.roles))}
-							<QueuePosition position={debouncedPositionInQueue} hasBg />
-						{/if}
 						<UpscaleAnimation
 							animation={upscaleFromStore.animation}
 							isProcessing={upscaleBeingProcessed}
 						/>
+						{#if debouncedPositionInQueue && (!($userSummary?.product_id || $userSummary?.has_nonfree_credits) || isSuperAdmin($userSummary?.roles))}
+							<QueuePosition position={debouncedPositionInQueue} hasBg />
+						{/if}
 					{/if}
 				{/if}
 			</div>

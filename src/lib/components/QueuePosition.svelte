@@ -51,12 +51,14 @@
 						: 'bg-c-bg-secondary text-c-primary ring-c-primary/50 ring-1.5'}"
 				>
 					<div
-						class="w-full h-full absolute left-0 top-0 transition -translate-x-full
-            not-touch:group-hover/button:translate-x-0 {hasBg
-							? 'bg-c-secondary'
-							: 'bg-c-primary/15'}"
-					/>
-					<p class="relative max-w-full">{$LL.Generate.SkipTheQueueButton()}</p>
+						class="w-full h-full bg-c-bg-secondary absolute left-0 top-0 transition -translate-x-full
+						not-touch:group-hover/button:translate-x-0"
+					>
+						<div class="w-full h-full {hasBg ? 'bg-c-secondary' : 'bg-c-primary/15'}" />
+					</div>
+					<p class="relative max-w-full">
+						{$LL.Generate.SkipTheQueueButton()}
+					</p>
 				</a>
 			</div>
 		{/if}

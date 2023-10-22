@@ -4,7 +4,7 @@
 	import GenerationAnimation from '$components/generate/GenerationAnimation.svelte';
 	import IconEyeSlashOutline from '$components/icons/IconEyeSlashOutline.svelte';
 	import IconSadFaceOutline from '$components/icons/IconSadFaceOutline.svelte';
-	import LL, { locale } from '$i18n/i18n-svelte';
+	import LL from '$i18n/i18n-svelte';
 	import type { TGenerationWithSelectedOutput } from '$ts/stores/user/generation';
 	import { quadIn, quadOut } from 'svelte/easing';
 	import { fade, scale } from 'svelte/transition';
@@ -14,7 +14,6 @@
 	import { getQueuePositionFromId, queue } from '$ts/stores/user/queue';
 	import { userSummary } from '$ts/stores/user/summary';
 	import { isSuperAdmin } from '$ts/helpers/admin/roles';
-	import IconQueue from '$components/icons/IconQueue.svelte';
 	import QueuePosition from '$components/QueuePosition.svelte';
 
 	export let generation: TGenerationWithSelectedOutput;
@@ -47,7 +46,7 @@
 		// Exit
 		positionInQueueTimeout = setTimeout(() => {
 			debouncedPositionInQueue = positionInQueue;
-		}, 750);
+		}, 2000);
 	}
 </script>
 
@@ -75,10 +74,10 @@
 						out:fade={{ duration: 3000, easing: quadIn }}
 						class="w-full h-full absolute left-0 top-0 flex items-center justify-center"
 					>
+						<GenerationAnimation {animation} />
 						{#if debouncedPositionInQueue && (!($userSummary?.product_id || $userSummary?.has_nonfree_credits) || isSuperAdmin($userSummary?.roles))}
 							<QueuePosition position={debouncedPositionInQueue} />
 						{/if}
-						<GenerationAnimation {animation} />
 					</div>
 				{/if}
 				{#if status === undefined || status === 'succeeded'}
