@@ -48,7 +48,7 @@
 				>
 					<div
 						class="w-full h-full absolute left-0 top-0 transition -translate-x-full
-          not-touch:group-hover/button:translate-x-0 {hasBg
+            not-touch:group-hover/button:translate-x-0 {hasBg
 							? 'bg-c-secondary'
 							: 'bg-c-bg-tertiary'}"
 					/>
