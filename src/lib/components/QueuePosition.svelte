@@ -45,16 +45,16 @@
 					href="/pricing#plan-starter"
 					target="_blank"
 					class="max-w-full text-center text-sm font-semibold pointer-events-auto
-          rounded-lg px-2.5 py-2 shadow-lg shadow-c-shadow/[var(--o-shadow-normal)] overflow-hidden z-0 relative group/button
+          rounded-lg px-2.5 py-2 shadow-lg shadow-c-shadow/[var(--o-shadow-strong)] overflow-hidden z-0 relative group/button
           {hasBg
 						? 'bg-c-primary text-c-on-primary'
-						: 'bg-c-bg-secondary text-c-primary ring-c-bg-tertiary ring-2'}"
+						: 'bg-c-bg-secondary text-c-primary ring-c-primary/50 ring-1.5'}"
 				>
 					<div
 						class="w-full h-full absolute left-0 top-0 transition -translate-x-full
             not-touch:group-hover/button:translate-x-0 {hasBg
 							? 'bg-c-secondary'
-							: 'bg-c-bg-tertiary'}"
+							: 'bg-c-primary/15'}"
 					/>
 					<p class="relative max-w-full">{$LL.Generate.SkipTheQueueButton()}</p>
 				</a>
