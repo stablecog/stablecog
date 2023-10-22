@@ -53,6 +53,8 @@
 	import ShowOnProfileSection from '$components/generationFullScreen/ShowOnProfileSection.svelte';
 	import { getQueuePositionFromId, queue } from '$ts/stores/user/queue';
 	import { isSuperAdmin } from '$ts/helpers/admin/roles';
+	import IconQueue from '$components/icons/IconQueue.svelte';
+	import QueuePosition from '$components/QueuePosition.svelte';
 
 	export let generation: TGenerationWithSelectedOutput;
 	export let modalType: TGenerationFullScreenModalType;
@@ -423,21 +425,7 @@
 					{/if}
 					{#if upscaleFromStore?.animation}
 						{#if debouncedPositionInQueue && (!($userSummary?.product_id || $userSummary?.has_nonfree_credits) || isSuperAdmin($userSummary?.roles))}
-							<div
-								transition:scale={{ start: 0.75, opacity: 0, easing: quadOut, duration: 150 }}
-								class="w-full h-full flex flex-col items-center px-5 py-3 absolute left-0 top-0"
-							>
-								<div
-									class="my-auto max-w-full flex flex-col items-center justify-center bg-c-barrier/80 rounded-lg px-3 py-2"
-								>
-									<p class="max-w-full text-center text-xs text-c-on-bg/75 leading-tight">
-										{$LL.Generate.PositionInQueueTitle()}
-									</p>
-									<p class="max-w-full text-center text-xl font-medium mt-0.5 text-c-on-bg">
-										{debouncedPositionInQueue.toLocaleString($locale)}
-									</p>
-								</div>
-							</div>
+							<QueuePosition position={debouncedPositionInQueue} hasBg />
 						{/if}
 						<UpscaleAnimation
 							animation={upscaleFromStore.animation}

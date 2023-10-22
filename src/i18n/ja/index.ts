@@ -122,6 +122,7 @@ const ja: Translation = {
 	Generate: {
 		ShowSettingsButton: '設定を表示',
 		HideSettingsButton: '設定を非表示',
+		QueueTitle: 'Queue',
 		PositionInQueueTitle: 'Position in queue',
 		Grid: {
 			NotSignedIn: {

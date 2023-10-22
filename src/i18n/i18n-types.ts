@@ -323,6 +323,10 @@ type RootTranslation = {
 		 */
 		HideSettingsButton: string
 		/**
+		 * Q​u​e​u​e
+		 */
+		QueueTitle: string
+		/**
 		 * P​o​s​i​t​i​o​n​ ​i​n​ ​q​u​e​u​e
 		 */
 		PositionInQueueTitle: string
@@ -3489,6 +3493,10 @@ export type TranslationFunctions = {
 		 * Hide Settings
 		 */
 		HideSettingsButton: () => LocalizedString
+		/**
+		 * Queue
+		 */
+		QueueTitle: () => LocalizedString
 		/**
 		 * Position in queue
 		 */

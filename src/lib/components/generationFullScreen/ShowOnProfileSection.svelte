@@ -186,6 +186,8 @@
 				title={$LL.Shared.ProFeatures.SubscribeTitle()}
 				titleIcon={IconStar}
 				paragraph={$LL.Shared.ProFeatures.ChangeVisibilityFeatureParagraph()}
+				buttonHref="/pricing"
+				buttonText={$LL.Pricing.SubscribeButton()}
 			>
 				<div
 					role="button"

@@ -122,6 +122,7 @@ const es: Translation = {
 	Generate: {
 		ShowSettingsButton: 'Εμφάνιση ρυθμίσεων',
 		HideSettingsButton: 'Απόκρυψη ρυθμίσεων',
+		QueueTitle: 'Queue',
 		PositionInQueueTitle: 'Position in queue',
 		Grid: {
 			NotSignedIn: {

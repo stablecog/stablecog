@@ -122,6 +122,7 @@ const tr: Translation = {
 	Generate: {
 		ShowSettingsButton: 'Ayarları Göster',
 		HideSettingsButton: 'Ayarları Gizle',
+		QueueTitle: 'Queue',
 		PositionInQueueTitle: 'Position in queue',
 		Grid: {
 			NotSignedIn: {

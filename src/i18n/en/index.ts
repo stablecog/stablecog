@@ -114,6 +114,7 @@ const en: BaseTranslation = {
 	Generate: {
 		ShowSettingsButton: 'Show Settings',
 		HideSettingsButton: 'Hide Settings',
+		QueueTitle: 'Queue',
 		PositionInQueueTitle: 'Position in queue',
 		Grid: {
 			NotSignedIn: { Paragraph: 'Sign in to see your generations.' },

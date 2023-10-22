@@ -1,4 +1,5 @@
 <script lang="ts">
+	import Button from '$components/buttons/Button.svelte';
 	import { isTouchscreen } from '$ts/stores/isTouchscreen';
 	import { createTooltip } from '@melt-ui/svelte';
 	import { quadOut } from 'svelte/easing';
@@ -16,6 +17,8 @@
 	export let isActive = true;
 	export let onOpened: (() => void) | undefined = undefined;
 	export let onOpenChanged: ((open: boolean) => void) | undefined = undefined;
+	export let buttonHref: string | undefined = undefined;
+	export let buttonText: string | undefined = undefined;
 
 	const {
 		elements: { trigger, arrow, content },
@@ -86,6 +89,11 @@
 				{/if}
 				{#if paragraph}
 					<p class="w-full text-c-on-bg/75">{paragraph}</p>
+				{/if}
+				{#if buttonHref && buttonText}
+					<div class="pt-1.5 pb-1">
+						<Button size="sm" href={buttonHref}>{buttonText}</Button>
+					</div>
 				{/if}
 			</div>
 		{:else}
