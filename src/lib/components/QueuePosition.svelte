@@ -15,7 +15,7 @@
 >
 	<div
 		class="my-auto max-w-full flex flex-col items-center justify-center {hasBg
-			? `bg-c-barrier/75 rounded-xl px-3 ${$userSummary?.product_id ? 'py-2.5' : 'py-2'}`
+			? `bg-c-barrier/75 rounded-xl px-3 ${!$userSummary?.product_id ? 'py-2.5' : 'py-2'}`
 			: ''}"
 	>
 		<p
