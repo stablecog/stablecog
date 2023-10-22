@@ -3,6 +3,7 @@
 	import { quadOut } from 'svelte/easing';
 	import { scale } from 'svelte/transition';
 	import IconQueue from './icons/IconQueue.svelte';
+	import { userSummary } from '$ts/stores/user/summary';
 
 	export let position: number;
 	export let hasBg = false;
@@ -14,7 +15,7 @@
 >
 	<div
 		class="my-auto max-w-full flex flex-col items-center justify-center {hasBg
-			? 'bg-c-barrier/75 rounded-lg px-3 py-2'
+			? 'bg-c-barrier/75 rounded-xl px-3 py-2'
 			: ''}"
 	>
 		<p
@@ -34,5 +35,26 @@
 				{position.toLocaleString($locale)}
 			</p>
 		</div>
+		{#if !$userSummary?.product_id}
+			<div class="w-full flex items-center justify-center pb-0.5">
+				<a
+					href="/pricing#plan-starter"
+					target="_blank"
+					class="max-w-full text-sm font-semibold pointer-events-auto
+          rounded-lg px-2.5 py-2 mt-2 shadow-lg shadow-c-shadow/[var(--o-shadow-normal)] overflow-hidden z-0 relative group/button
+          {hasBg
+						? 'bg-c-primary text-c-on-primary'
+						: 'bg-c-bg-secondary text-c-primary ring-c-bg-tertiary ring-2'}"
+				>
+					<div
+						class="w-full h-full absolute left-0 top-0 transition -translate-x-full
+          not-touch:group-hover/button:translate-x-0 {hasBg
+							? 'bg-c-secondary'
+							: 'bg-c-bg-tertiary'}"
+					/>
+					<p class="relative max-w-full">{$LL.Generate.SkipTheQueueButton()}</p>
+				</a>
+			</div>
+		{/if}
 	</div>
 </div>

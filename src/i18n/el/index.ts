@@ -123,6 +123,7 @@ const es: Translation = {
 		ShowSettingsButton: 'Εμφάνιση ρυθμίσεων',
 		HideSettingsButton: 'Απόκρυψη ρυθμίσεων',
 		QueueTitle: 'Queue',
+		SkipTheQueueButton: 'Skip the Queue',
 		PositionInQueueTitle: 'Position in queue',
 		Grid: {
 			NotSignedIn: {

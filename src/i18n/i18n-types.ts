@@ -327,6 +327,10 @@ type RootTranslation = {
 		 */
 		QueueTitle: string
 		/**
+		 * S​k​i​p​ ​t​h​e​ ​Q​u​e​u​e
+		 */
+		SkipTheQueueButton: string
+		/**
 		 * P​o​s​i​t​i​o​n​ ​i​n​ ​q​u​e​u​e
 		 */
 		PositionInQueueTitle: string
@@ -3497,6 +3501,10 @@ export type TranslationFunctions = {
 		 * Queue
 		 */
 		QueueTitle: () => LocalizedString
+		/**
+		 * Skip the Queue
+		 */
+		SkipTheQueueButton: () => LocalizedString
 		/**
 		 * Position in queue
 		 */

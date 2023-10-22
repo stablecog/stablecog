@@ -123,6 +123,7 @@ const tr: Translation = {
 		ShowSettingsButton: 'Ayarları Göster',
 		HideSettingsButton: 'Ayarları Gizle',
 		QueueTitle: 'Queue',
+		SkipTheQueueButton: 'Skip the Queue',
 		PositionInQueueTitle: 'Position in queue',
 		Grid: {
 			NotSignedIn: {

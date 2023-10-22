@@ -123,6 +123,7 @@ const ja: Translation = {
 		ShowSettingsButton: '設定を表示',
 		HideSettingsButton: '設定を非表示',
 		QueueTitle: 'Queue',
+		SkipTheQueueButton: 'Skip the Queue',
 		PositionInQueueTitle: 'Position in queue',
 		Grid: {
 			NotSignedIn: {

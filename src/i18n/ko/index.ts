@@ -115,6 +115,7 @@ const ko: Translation = {
 		ShowSettingsButton: 'Show Settings',
 		HideSettingsButton: 'Hide Settings',
 		QueueTitle: 'Queue',
+		SkipTheQueueButton: 'Skip the Queue',
 		PositionInQueueTitle: 'Position in queue',
 		Grid: {
 			NotSignedIn: { Paragraph: 'Sign in to see your generations.' },
