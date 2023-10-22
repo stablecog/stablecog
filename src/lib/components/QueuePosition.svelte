@@ -7,6 +7,8 @@
 
 	export let position: number;
 	export let hasBg = false;
+
+	$: hasButton = !$userSummary?.product_id;
 </script>
 
 <div
@@ -15,7 +17,7 @@
 >
 	<div
 		class="my-auto max-w-full flex flex-col items-center justify-center {hasBg
-			? `bg-c-barrier/75 rounded-xl px-3 ${!$userSummary?.product_id ? 'py-2.5' : 'py-2'}`
+			? `bg-c-barrier/75 rounded-xl px-3 ${hasButton ? 'pt-2.5 pb-3' : 'py-2'}`
 			: ''}"
 	>
 		<p
@@ -37,7 +39,7 @@
 				{position.toLocaleString($locale)}
 			</p>
 		</div>
-		{#if !$userSummary?.product_id}
+		{#if hasButton}
 			<div class="w-full flex items-center justify-center pt-2.5">
 				<a
 					href="/pricing#plan-starter"
