@@ -26,7 +26,9 @@
 			{$LL.Generate.QueueTitle()}
 		</p>
 		<div class="max-w-full flex items-center justify-center -mt-0.25 gap-1.5">
-			<IconQueue class="w-5 h-5 flex-shrink-0 {hasBg ? 'text-c-on-bg' : 'text-c-on-bg/75'}" />
+			<IconQueue
+				class="w-5 h-5 -ml-0.5 flex-shrink-0 {hasBg ? 'text-c-on-bg' : 'text-c-on-bg/75'}"
+			/>
 			<p
 				class="flex-shrink min-w-0 text-center text-lg font-medium mt-0.5 {hasBg
 					? 'text-c-on-bg'
@@ -36,12 +38,12 @@
 			</p>
 		</div>
 		{#if !$userSummary?.product_id}
-			<div class="w-full flex items-center justify-center pb-0.5">
+			<div class="w-full flex items-center justify-center pt-2.5 pb-0.5">
 				<a
 					href="/pricing#plan-starter"
 					target="_blank"
 					class="max-w-full text-sm font-semibold pointer-events-auto
-          rounded-lg px-2.5 py-2 mt-2 shadow-lg shadow-c-shadow/[var(--o-shadow-normal)] overflow-hidden z-0 relative group/button
+          rounded-lg px-2.5 py-2 shadow-lg shadow-c-shadow/[var(--o-shadow-normal)] overflow-hidden z-0 relative group/button
           {hasBg
 						? 'bg-c-primary text-c-on-primary'
 						: 'bg-c-bg-secondary text-c-primary ring-c-bg-tertiary ring-2'}"
