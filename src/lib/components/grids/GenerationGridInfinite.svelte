@@ -1,7 +1,6 @@
 <script lang="ts">
 	import GenerationImage from '$components/generationImage/GenerationImage.svelte';
 	import type { TGenerationImageCardType } from '$components/generationImage/types';
-	import ImagePlaceholder from '$components/ImagePlaceholder.svelte';
 	import LL from '$i18n/i18n-svelte';
 	import type { CreateInfiniteQueryResult } from '@tanstack/svelte-query';
 	import {
@@ -97,7 +96,7 @@
 		(cardType === 'admin-gallery' && $isAdminGalleryEditActive) ||
 		(cardType === 'history' && $isUserGalleryEditActive);
 
-	const defaultAspectRatio = 1.5;
+	const defaultAspectRatio = 1;
 	$: estimatedItemWidth = hasGridScrollContainer
 		? gridScrollContainer && gridScrollContainerWidth
 			? (gridScrollContainerWidth - horizontalPadding) / cols
