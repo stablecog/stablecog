@@ -75,9 +75,12 @@
 						class="w-full h-full absolute left-0 top-0 flex items-center justify-center"
 					>
 						<GenerationAnimation {animation} />
-						{#if debouncedPositionInQueue && (!($userSummary?.product_id || $userSummary?.has_nonfree_credits) || isSuperAdmin($userSummary?.roles))}
-							<QueuePosition position={debouncedPositionInQueue} />
-						{/if}
+						<QueuePosition
+							position={debouncedPositionInQueue !== undefined ? debouncedPositionInQueue : 0}
+							show={debouncedPositionInQueue !== undefined &&
+								(!($userSummary?.product_id || $userSummary?.has_nonfree_credits) ||
+									isSuperAdmin($userSummary?.roles))}
+						/>
 					</div>
 				{/if}
 				{#if status === undefined || status === 'succeeded'}

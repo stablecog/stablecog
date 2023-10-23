@@ -427,9 +427,13 @@
 							animation={upscaleFromStore.animation}
 							isProcessing={upscaleBeingProcessed}
 						/>
-						{#if debouncedPositionInQueue && (!($userSummary?.product_id || $userSummary?.has_nonfree_credits) || isSuperAdmin($userSummary?.roles))}
-							<QueuePosition position={debouncedPositionInQueue} hasBg />
-						{/if}
+						<QueuePosition
+							position={debouncedPositionInQueue !== undefined ? debouncedPositionInQueue : 0}
+							show={debouncedPositionInQueue !== undefined &&
+								(!($userSummary?.product_id || $userSummary?.has_nonfree_credits) ||
+									isSuperAdmin($userSummary?.roles))}
+							hasBg
+						/>
 					{/if}
 				{/if}
 			</div>

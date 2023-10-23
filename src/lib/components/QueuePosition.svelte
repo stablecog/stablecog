@@ -1,19 +1,20 @@
 <script lang="ts">
 	import LL, { locale } from '$i18n/i18n-svelte';
-	import { quadOut } from 'svelte/easing';
-	import { scale } from 'svelte/transition';
 	import IconQueue from './icons/IconQueue.svelte';
 	import { userSummary } from '$ts/stores/user/summary';
 
 	export let position: number;
 	export let hasBg = false;
+	export let show = false;
 
 	$: hasButton = !$userSummary?.product_id;
 </script>
 
 <div
-	transition:scale={{ start: 0.75, opacity: 0, easing: quadOut, duration: 150 }}
-	class="w-full h-full flex flex-col items-center px-5 py-3 absolute left-0 top-0"
+	class="w-full h-full flex flex-col items-center px-5 py-3 absolute left-0 top-0
+	transform transition duration-150 {show
+		? 'scale-100 opacity-100'
+		: 'scale-75 opacity-0 pointer-events-none'}"
 >
 	<div
 		class="my-auto max-w-full flex flex-col items-center justify-center {hasBg
@@ -44,7 +45,7 @@
 				<a
 					href="/pricing#plan-starter"
 					target="_blank"
-					class="max-w-full text-center text-sm font-semibold pointer-events-auto
+					class="max-w-full text-center text-sm font-semibold {show ? 'pointer-events-auto' : ''}
           rounded-lg px-2.5 py-2 shadow-lg shadow-c-shadow/[var(--o-shadow-strong)] overflow-hidden z-0 relative group/button
           {hasBg
 						? 'bg-c-primary text-c-on-primary'
