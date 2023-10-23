@@ -1,5 +1,8 @@
 <script lang="ts">
+	import IconTick from '$components/icons/IconTick.svelte';
+	import IconTickOnly from '$components/icons/IconTickOnly.svelte';
 	import LL, { locale } from '$i18n/i18n-svelte';
+	import type { TFeature } from '$routes/(app)/pricing/types';
 	import type { LocalizedString } from 'typesafe-i18n';
 
 	export let isSelected = false;
@@ -13,7 +16,7 @@
 	export let discountBadgeType: 'primary' | 'on-bg' = 'primary';
 	export let currencyAmount: number;
 	export let currencySymbol: string;
-	export let features: LocalizedString[];
+	export let features: TFeature[];
 </script>
 
 <div {id} class="w-full sm:max-w-sm md:w-1/2 xl:w-1/4 px-3 py-4 flex items-stretch">
@@ -67,8 +70,15 @@
 		<ul class="w-full py-6 flex flex-col gap-2.5 px-1 flex-1">
 			{#each features as feature}
 				<li class="flex items-start gap-3">
-					<span class="text-c-on-bg/60">-</span>
-					<span class="flex-shrink min-w-0">{feature}</span>
+					{#if feature.icon}
+						<svelte:component
+							this={feature.icon}
+							class="w-5 h-5 text-c-on-bg/80 mt-1.5px flex-shrink-0"
+						/>
+					{:else}
+						<IconTickOnly class="w-5 h-5 text-c-success mt-1.5px flex-shrink-0" />
+					{/if}
+					<span class="flex-shrink min-w-0">{feature.paragraph}</span>
 				</li>
 			{/each}
 		</ul>

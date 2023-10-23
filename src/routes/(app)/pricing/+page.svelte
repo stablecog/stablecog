@@ -34,6 +34,10 @@
 	import { getCustomerPortalUrl } from '$ts/helpers/user/getCustomerPortalUrl.js';
 	import type { LocalizedString } from 'typesafe-i18n';
 	import PlanCard from '$routes/(app)/pricing/PlanCard.svelte';
+	import IconTickOnly from '$components/icons/IconTickOnly.svelte';
+	import type { TCreditPackCard, TSubscriptionCard } from '$routes/(app)/pricing/types.js';
+	import IconImage from '$components/icons/IconImage.svelte';
+	import IconMinus from '$components/icons/IconMinus.svelte';
 
 	export let data;
 
@@ -41,21 +45,6 @@
 	$: promotionCodeId = isFirstPurchase50Off
 		? PUBLIC_STRIPE_PROMOTION_CODE_ID_FIRST_PURCHASE_50_OFF
 		: undefined;
-
-	interface TSubscriptionCard {
-		id: 'plan-free' | 'plan-starter' | 'plan-pro' | 'plan-ultimate';
-		title: string;
-		priceIdMo?: string;
-		productId?: string;
-		currency: 'usd' | 'eur';
-		currencySymbol: string;
-		promotionCodeId?: string;
-		amount: number;
-		features: LocalizedString[];
-		ringClass: string;
-		badgeText?: string;
-		badgeClasses?: string;
-	}
 
 	let subscriptionCards: TSubscriptionCard[];
 	$: subscriptionCards = [
@@ -66,13 +55,27 @@
 			currencySymbol: STRIPE_CURRENCY_TO_SYMBOL[data.currency],
 			amount: 0,
 			features: [
-				$LL.Pricing.Features.DailyImages({
-					count: 20
-				}),
-				$LL.Pricing.Features.SlowGeneration(),
-				$LL.Pricing.Features.NoParallelGenerations(),
-				$LL.Pricing.Features.PersonalUseOnly(),
-				$LL.Pricing.Features.ImagesArePublic()
+				{
+					paragraph: $LL.Pricing.Features.DailyImages({
+						count: 20
+					})
+				},
+				{
+					paragraph: $LL.Pricing.Features.SlowGeneration(),
+					icon: IconMinus
+				},
+				{
+					paragraph: $LL.Pricing.Features.NoParallelGenerations(),
+					icon: IconMinus
+				},
+				{
+					paragraph: $LL.Pricing.Features.PersonalUseOnly(),
+					icon: IconMinus
+				},
+				{
+					paragraph: $LL.Pricing.Features.ImagesArePublic(),
+					icon: IconMinus
+				}
 			],
 			ringClass: 'ring-c-bg-secondary'
 		},
@@ -93,21 +96,29 @@
 							PUBLIC_STRIPE_PRODUCT_ID_STARTER_SUBSCRIPTION
 					  ].prices[PUBLIC_STRIPE_PRICE_ID_STARTER_SUBSCRIPTION_MO].currencies.usd.amount,
 			features: [
-				$LL.Pricing.Features.MonthlyImages({
-					count:
-						STRIPE_PRODUCT_ID_OBJECTS_SUBSCRIPTIONS_MO[
-							PUBLIC_STRIPE_PRODUCT_ID_STARTER_SUBSCRIPTION
-						].monthly_images.toLocaleString($locale)
-				}),
-				$LL.Pricing.Features.FastGeneration(),
-				$LL.Pricing.Features.ParallelGenerations({
-					count:
-						STRIPE_PRODUCT_ID_OBJECTS_SUBSCRIPTIONS_MO[
-							PUBLIC_STRIPE_PRODUCT_ID_STARTER_SUBSCRIPTION
-						].parallel_generations.toLocaleString($locale)
-				}),
-				$LL.Pricing.Features.CommercialUse(),
-				$LL.Pricing.Features.ImagesArePrivate()
+				{
+					paragraph: $LL.Pricing.Features.MonthlyImages({
+						count:
+							STRIPE_PRODUCT_ID_OBJECTS_SUBSCRIPTIONS_MO[
+								PUBLIC_STRIPE_PRODUCT_ID_STARTER_SUBSCRIPTION
+							].monthly_images.toLocaleString($locale)
+					})
+				},
+				{
+					paragraph: $LL.Pricing.Features.FastGeneration()
+				},
+				{
+					paragraph: $LL.Pricing.Features.ParallelGenerations({
+						count:
+							STRIPE_PRODUCT_ID_OBJECTS_SUBSCRIPTIONS_MO[
+								PUBLIC_STRIPE_PRODUCT_ID_STARTER_SUBSCRIPTION
+							].parallel_generations.toLocaleString($locale)
+					})
+				},
+				{ paragraph: $LL.Pricing.Features.CommercialUse() },
+				{
+					paragraph: $LL.Pricing.Features.ImagesArePrivate()
+				}
 			],
 			ringClass: 'ring-c-bg-secondary'
 		},
@@ -126,21 +137,27 @@
 					: STRIPE_PRODUCT_ID_OBJECTS_SUBSCRIPTIONS_MO[PUBLIC_STRIPE_PRODUCT_ID_PRO_SUBSCRIPTION]
 							.prices[PUBLIC_STRIPE_PRICE_ID_PRO_SUBSCRIPTION_MO].currencies.usd.amount,
 			features: [
-				$LL.Pricing.Features.MonthlyImages({
-					count:
-						STRIPE_PRODUCT_ID_OBJECTS_SUBSCRIPTIONS_MO[
-							PUBLIC_STRIPE_PRODUCT_ID_PRO_SUBSCRIPTION
-						].monthly_images.toLocaleString($locale)
-				}),
-				$LL.Pricing.Features.FastGeneration(),
-				$LL.Pricing.Features.ParallelGenerations({
-					count:
-						STRIPE_PRODUCT_ID_OBJECTS_SUBSCRIPTIONS_MO[
-							PUBLIC_STRIPE_PRODUCT_ID_PRO_SUBSCRIPTION
-						].parallel_generations.toLocaleString($locale)
-				}),
-				$LL.Pricing.Features.CommercialUse(),
-				$LL.Pricing.Features.ImagesArePrivate()
+				{
+					paragraph: $LL.Pricing.Features.MonthlyImages({
+						count:
+							STRIPE_PRODUCT_ID_OBJECTS_SUBSCRIPTIONS_MO[
+								PUBLIC_STRIPE_PRODUCT_ID_PRO_SUBSCRIPTION
+							].monthly_images.toLocaleString($locale)
+					})
+				},
+				{ paragraph: $LL.Pricing.Features.FastGeneration() },
+				{
+					paragraph: $LL.Pricing.Features.ParallelGenerations({
+						count:
+							STRIPE_PRODUCT_ID_OBJECTS_SUBSCRIPTIONS_MO[
+								PUBLIC_STRIPE_PRODUCT_ID_PRO_SUBSCRIPTION
+							].parallel_generations.toLocaleString($locale)
+					})
+				},
+				{ paragraph: $LL.Pricing.Features.CommercialUse() },
+				{
+					paragraph: $LL.Pricing.Features.ImagesArePrivate()
+				}
 			],
 			ringClass: 'ring-c-bg-secondary',
 			badgeText: $LL.Pricing.Badges.Recommended(),
@@ -163,26 +180,33 @@
 							PUBLIC_STRIPE_PRODUCT_ID_ULTIMATE_SUBSCRIPTION
 					  ].prices[PUBLIC_STRIPE_PRICE_ID_ULTIMATE_SUBSCRIPTION_MO].currencies.usd.amount,
 			features: [
-				$LL.Pricing.Features.MonthlyImages({
-					count:
-						STRIPE_PRODUCT_ID_OBJECTS_SUBSCRIPTIONS_MO[
-							PUBLIC_STRIPE_PRODUCT_ID_ULTIMATE_SUBSCRIPTION
-						].monthly_images.toLocaleString($locale)
-				}),
-				$LL.Pricing.Features.FastGeneration(),
-				$LL.Pricing.Features.ParallelGenerations({
-					count:
-						STRIPE_PRODUCT_ID_OBJECTS_SUBSCRIPTIONS_MO[
-							PUBLIC_STRIPE_PRODUCT_ID_ULTIMATE_SUBSCRIPTION
-						].parallel_generations.toLocaleString($locale)
-				}),
-				$LL.Pricing.Features.CommercialUse(),
-				$LL.Pricing.Features.ImagesArePrivate()
+				{
+					paragraph: $LL.Pricing.Features.MonthlyImages({
+						count:
+							STRIPE_PRODUCT_ID_OBJECTS_SUBSCRIPTIONS_MO[
+								PUBLIC_STRIPE_PRODUCT_ID_ULTIMATE_SUBSCRIPTION
+							].monthly_images.toLocaleString($locale)
+					})
+				},
+				{ paragraph: $LL.Pricing.Features.FastGeneration() },
+				{
+					paragraph: $LL.Pricing.Features.ParallelGenerations({
+						count:
+							STRIPE_PRODUCT_ID_OBJECTS_SUBSCRIPTIONS_MO[
+								PUBLIC_STRIPE_PRODUCT_ID_ULTIMATE_SUBSCRIPTION
+							].parallel_generations.toLocaleString($locale)
+					})
+				},
+				{ paragraph: $LL.Pricing.Features.CommercialUse() },
+				{
+					paragraph: $LL.Pricing.Features.ImagesArePrivate()
+				}
 			],
 			ringClass: 'ring-c-bg-secondary'
 		}
 	];
 
+	let creditPackCards: TCreditPackCard[];
 	$: creditPackCards = [
 		{
 			id: 'credit-pack-medium',
@@ -200,14 +224,16 @@
 							PUBLIC_STRIPE_PRICE_ID_MEDIUM_PACK
 					  ].currencies.usd.amount,
 			features: [
-				$LL.Pricing.Features.Images({
-					count:
-						STRIPE_PRODUCT_ID_OBJECTS_CREDIT_PACKS[
-							PUBLIC_STRIPE_PRODUCT_ID_MEDIUM_PACK
-						].images.toLocaleString($locale)
-				}),
-				$LL.Pricing.Features.FastGeneration(),
-				$LL.Pricing.Features.NeverExpires()
+				{
+					paragraph: $LL.Pricing.Features.Images({
+						count:
+							STRIPE_PRODUCT_ID_OBJECTS_CREDIT_PACKS[
+								PUBLIC_STRIPE_PRODUCT_ID_MEDIUM_PACK
+							].images.toLocaleString($locale)
+					})
+				},
+				{ paragraph: $LL.Pricing.Features.FastGeneration() },
+				{ paragraph: $LL.Pricing.Features.NeverExpires() }
 			],
 			ringClass: 'ring-c-bg-secondary',
 			badgeText: undefined,
@@ -229,14 +255,16 @@
 							PUBLIC_STRIPE_PRICE_ID_LARGE_PACK
 					  ].currencies.usd.amount,
 			features: [
-				$LL.Pricing.Features.Images({
-					count:
-						STRIPE_PRODUCT_ID_OBJECTS_CREDIT_PACKS[
-							PUBLIC_STRIPE_PRODUCT_ID_LARGE_PACK
-						].images.toLocaleString($locale)
-				}),
-				$LL.Pricing.Features.FastGeneration(),
-				$LL.Pricing.Features.NeverExpires()
+				{
+					paragraph: $LL.Pricing.Features.Images({
+						count:
+							STRIPE_PRODUCT_ID_OBJECTS_CREDIT_PACKS[
+								PUBLIC_STRIPE_PRODUCT_ID_LARGE_PACK
+							].images.toLocaleString($locale)
+					})
+				},
+				{ paragraph: $LL.Pricing.Features.FastGeneration() },
+				{ paragraph: $LL.Pricing.Features.NeverExpires() }
 			],
 			ringClass: 'ring-c-bg-secondary',
 			badgeText: $LL.Pricing.Badges.MostPopular(),
@@ -258,14 +286,16 @@
 							PUBLIC_STRIPE_PRICE_ID_MEGA_PACK
 					  ].currencies.usd.amount,
 			features: [
-				$LL.Pricing.Features.Images({
-					count:
-						STRIPE_PRODUCT_ID_OBJECTS_CREDIT_PACKS[
-							PUBLIC_STRIPE_PRODUCT_ID_MEGA_PACK
-						].images.toLocaleString($locale)
-				}),
-				$LL.Pricing.Features.FastGeneration(),
-				$LL.Pricing.Features.NeverExpires()
+				{
+					paragraph: $LL.Pricing.Features.Images({
+						count:
+							STRIPE_PRODUCT_ID_OBJECTS_CREDIT_PACKS[
+								PUBLIC_STRIPE_PRODUCT_ID_MEGA_PACK
+							].images.toLocaleString($locale)
+					})
+				},
+				{ paragraph: $LL.Pricing.Features.FastGeneration() },
+				{ paragraph: $LL.Pricing.Features.NeverExpires() }
 			],
 			ringClass: 'ring-c-bg-secondary',
 			badgeText: undefined,

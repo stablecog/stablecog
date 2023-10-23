@@ -142,7 +142,7 @@
 				>
 			</div>
 			<div class="mt-4">
-				<NoBgButton href="/pricing">
+				<NoBgButton href="/pricing" hoverFrom="right">
 					<div class="flex items-center justify-center gap-2.5 px-2 py-1">
 						<IconBack
 							class="w-6 h-6 transform transition text-c-on-bg/50 group-hover:-translate-x-1
