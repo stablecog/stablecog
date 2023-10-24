@@ -46,7 +46,11 @@
 					style="width: {selectedRouteWidth}px; transform: translateX({selectedRouteLeft}px);"
 					class="h-full absolute left-0 top-0 transition {type === 'bottom'
 						? 'px-1.5 pt-1.5 pb-2'
-						: 'p-1'}"
+						: selectedRouteIndex === 0
+						? 'py-1 pl-1 pr-0.6'
+						: selectedRouteIndex === $routes.length - 1
+						? 'py-1 pr-1 pl-0.6'
+						: 'py-1 px-0.6'}"
 				>
 					<div
 						class="w-full h-full bg-c-bg-secondary rounded-lg shadow-md shadow-c-shadow/[var(--o-shadow-strong)]"
@@ -71,7 +75,11 @@
 					<div
 						class="w-full h-full absolute left-0 top-0 rounded-lg {type === 'bottom'
 							? 'px-1.5 pt-1.5 pb-2'
-							: 'p-1'}"
+							: index === 0
+							? 'py-1 pl-1 pr-0.6'
+							: index === $routes.length - 1
+							? 'py-1 pr-1 pl-0.6'
+							: 'py-1 px-0.6'}"
 					>
 						<div class="w-full h-full overflow-hidden relative z-0 rounded-lg">
 							<div
