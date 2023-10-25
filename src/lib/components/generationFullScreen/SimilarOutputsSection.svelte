@@ -66,7 +66,7 @@
 					<div class="w-full p-2px">
 						<svg
 							class="w-full rounded-xl bg-c-bg-tertiary border-2 border-c-bg-tertiary
-						shadow-lg shadow-c-shadow/[var(--o-shadow-strong)]"
+							shadow-lg shadow-c-shadow/[var(--o-shadow-strong)]"
 							xmlns="http://www.w3.org/2000/svg"
 							fill="none"
 							viewBox="0 0 512 768"

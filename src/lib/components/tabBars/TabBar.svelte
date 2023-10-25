@@ -20,6 +20,8 @@
 	export let fontWeight: 500 | 600 = 500;
 
 	let classes = '';
+
+	$: selectedIndex = tabs.map((t) => t.value).indexOf(value);
 </script>
 
 <TabBarWrapper {outline} class={classes} {dontScale}>
@@ -38,15 +40,19 @@
 			<div
 				style="width: {(1 / tabs.length) * 100}%; transform: translateX({hideSelected
 					? -100
-					: tabs.map((t) => t.value).indexOf(value) * 100}%)"
-				class="h-full absolute left-0 top-0 p-1 transition"
+					: selectedIndex * 100}%)"
+				class="h-full absolute left-0 top-0 transition py-1 {selectedIndex === 0
+					? 'pl-1 pr-0.5'
+					: selectedIndex === tabs.length - 1
+					? 'pr-1 pl-0.5'
+					: 'px-0.5'}"
 			>
 				<div
 					class="w-full h-full bg-c-bg-secondary rounded-lg shadow-md shadow-c-shadow/[var(--o-shadow-strong)]"
 				/>
 			</div>
 		</div>
-		{#each tabs as tab}
+		{#each tabs as tab, index}
 			<button
 				disabled={disabled || !isValid(tab.value)}
 				on:click|preventDefault={(e) => {
@@ -63,7 +69,13 @@
 				type="button"
 				aria-label={name}
 			>
-				<div class="w-full h-full absolute left-0 top-0 rounded-lg p-1">
+				<div
+					class="w-full h-full absolute left-0 top-0 rounded-lg py-1 {index === 0
+						? 'pl-1 pr-0.5'
+						: index === tabs.length - 1
+						? 'pr-1 pl-0.5'
+						: 'px-0.5'}"
+				>
 					<div class="w-full h-full overflow-hidden relative z-0 rounded-lg">
 						<div
 							class="w-full h-full origin-left rounded-lg transition transform translate-y-full

@@ -10,9 +10,7 @@
 	{#each [...Array(cols).keys()] as columnIndex}
 		<div style="width: {100 / cols}%" class="flex flex-col">
 			{#each items.filter((_, index) => index % cols === columnIndex) as item}
-				<div class="w-full flex">
-					<slot {item} />
-				</div>
+				<slot {item} />
 			{/each}
 		</div>
 	{/each}

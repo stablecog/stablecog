@@ -117,7 +117,7 @@
 		<div class="w-full bg-c-on-bg/5 rounded-full h-2px" />
 	</div>
 	{#if data.similarPosts.length > 0}
-		<section id="read-more" class="w-full flex flex-col items-center">
+		<section id="read-more" class="w-full flex flex-col items-center pt-1 pb-2">
 			<h3 class="w-full font-bold text-3xl text-center px-3">{$LL.Blog.ReadMoreTitle()}</h3>
 			<ul class="w-full max-w-7xl flex flex-row flex-wrap justify-center lg:px-8 pt-6">
 				{#each data.similarPosts as similarPost}
