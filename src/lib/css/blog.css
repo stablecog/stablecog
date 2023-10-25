@@ -28,7 +28,7 @@
 .blog > h2 {
 	font-weight: 700;
 	font-size: 1.6rem;
-	margin-top: 2rem;
+	margin-top: 3rem;
 	margin-bottom: 0.25rem;
 	line-height: 1.35;
 	width: 100%;
@@ -47,7 +47,7 @@
 	margin-top: 0.25rem;
 }
 .blog > h2 + p {
-	margin-top: 0.5rem;
+	margin-top: 0.35rem;
 }
 .blog > h3 + p {
 	margin-top: 0.5rem;
@@ -119,7 +119,6 @@
 }
 .blog p + ol, .blog p + ul {
 	margin-top: 0rem;
-	margin-bottom: 1rem;
 }
 .blog p:first-child {
 	margin-top: 0rem;
