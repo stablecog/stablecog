@@ -119,7 +119,7 @@
 			: undefined;
 
 	$: overscanCount = estimatedItemCountInAWindow
-		? Math.round(estimatedItemCountInAWindow * 1)
+		? Math.round(estimatedItemCountInAWindow * 1.5)
 		: undefined;
 
 	const overscanMultiplierForGettingNextPage = 0.5;
