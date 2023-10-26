@@ -1,5 +1,4 @@
 import type { TGeneration } from '$ts/stores/user/generation';
-import type { TUpscale } from '$ts/stores/user/upscale';
 import { writable as writableLocal } from 'svelte-local-storage-store';
 
 const defaultUpscaleDurationMs = 6000;

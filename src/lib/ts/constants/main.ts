@@ -53,7 +53,7 @@ export const modalCloseDelay = 120;
 export const maxSeed = 2147483647;
 export const maxPromptLength = 500;
 
-export const numOutputsDefault = 4;
+export const numOutputsDefault = 2;
 export const numOutputsMin = 1;
 export const numOutputsMax = 4;
 
