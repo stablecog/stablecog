@@ -122,9 +122,9 @@ const tr: Translation = {
 	Generate: {
 		ShowSettingsButton: 'Ayarları Göster',
 		HideSettingsButton: 'Ayarları Gizle',
-		QueueTitle: 'Queue',
-		SkipTheQueueButton: 'Skip the Queue',
-		PositionInQueueTitle: 'Position in queue',
+		QueueTitle: 'Sıra',
+		SkipTheQueueButton: 'Sırayı Atla',
+		PositionInQueueTitle: 'Sıradaki yerin',
 		Grid: {
 			NotSignedIn: {
 				Paragraph: 'Üretimlerini görmek için giriş yap.'
@@ -809,8 +809,8 @@ const tr: Translation = {
 			GenerationQueuePriority: 'Üretim önceliği.',
 			NoGenerationQueuePriority: 'Üretim önceliği yok.',
 			CommercialUse: 'Ticari kullanım.',
-			SlowGeneration: 'Slow generation',
-			FastGeneration: 'Fast generation',
+			SlowGeneration: 'Yavaş üretim.',
+			FastGeneration: 'Hızlı üretim.',
 			ImagesArePublic: 'Fotoğraflar halka açık.',
 			ImagesArePrivate: 'Fotoğraflar gizli.'
 		},
@@ -1151,4 +1151,5 @@ const tr: Translation = {
 		PageParagraph: 'Sistemlerimizi güncelliyoruz. Birkaç saate döneceğiz.'
 	}
 };
+
 export default tr;
