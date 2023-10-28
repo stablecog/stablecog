@@ -1144,7 +1144,7 @@ type RootTranslation = {
 			}
 			'4e54440f-ee17-4712-b4b6-0671b94d685d': {
 				/**
-				 * S​S​D​ ​1​B
+				 * S​S​D​-​1​B
 				 */
 				realName: string
 			}
@@ -4308,7 +4308,7 @@ export type TranslationFunctions = {
 			}
 			'4e54440f-ee17-4712-b4b6-0671b94d685d': {
 				/**
-				 * SSD 1B
+				 * SSD-1B
 				 */
 				realName: () => LocalizedString
 			}

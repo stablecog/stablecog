@@ -394,7 +394,7 @@ const es: Translation = {
 				realName: 'SDXL'
 			},
 			'3fb1f6d9-c0d3-4ae4-adf4-77f8da78a6f7': { realName: 'Waifu Diffusion XL' },
-			'4e54440f-ee17-4712-b4b6-0671b94d685d': { realName: 'SSD 1B' },
+			'4e54440f-ee17-4712-b4b6-0671b94d685d': { realName: 'SSD-1B' },
 			'a3636543-91cc-4290-b1a4-9d506457b9be': {
 				realName: 'Freedom'
 			}
