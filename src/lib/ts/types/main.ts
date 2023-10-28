@@ -6,6 +6,7 @@ export interface TTab<T> {
 	label: string;
 	value: T;
 	icon?: ConstructorOfATypedSvelteComponent;
+	isNew?: boolean;
 }
 
 export type TIconSc =

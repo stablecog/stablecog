@@ -783,6 +783,10 @@ type RootTranslation = {
 		 */
 		DownloadButton: string
 		/**
+		 * N​e​w
+		 */
+		NewTitle: string
+		/**
 		 * A​d​d
 		 */
 		AddButton: string
@@ -1135,6 +1139,12 @@ type RootTranslation = {
 			'3fb1f6d9-c0d3-4ae4-adf4-77f8da78a6f7': {
 				/**
 				 * W​a​i​f​u​ ​D​i​f​f​u​s​i​o​n​ ​X​L
+				 */
+				realName: string
+			}
+			'4e54440f-ee17-4712-b4b6-0671b94d685d': {
+				/**
+				 * S​S​D​ ​1​B
 				 */
 				realName: string
 			}
@@ -3954,6 +3964,10 @@ export type TranslationFunctions = {
 		 */
 		DownloadButton: () => LocalizedString
 		/**
+		 * New
+		 */
+		NewTitle: () => LocalizedString
+		/**
 		 * Add
 		 */
 		AddButton: () => LocalizedString
@@ -4289,6 +4303,12 @@ export type TranslationFunctions = {
 			'3fb1f6d9-c0d3-4ae4-adf4-77f8da78a6f7': {
 				/**
 				 * Waifu Diffusion XL
+				 */
+				realName: () => LocalizedString
+			}
+			'4e54440f-ee17-4712-b4b6-0671b94d685d': {
+				/**
+				 * SSD 1B
 				 */
 				realName: () => LocalizedString
 			}

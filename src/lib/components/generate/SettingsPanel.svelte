@@ -103,8 +103,9 @@
 				let:item
 				let:onClick
 				let:isSelected
+				let:isNew
 			>
-				<ModelCard modelId={item.value} {onClick} {isSelected} />
+				<ModelCard modelId={item.value} {onClick} {isSelected} {isNew} />
 			</TabLikeDropdown>
 		</SettingsPanelItem>
 		<SettingsPanelItem

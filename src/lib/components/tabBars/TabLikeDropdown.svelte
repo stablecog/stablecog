@@ -190,8 +190,9 @@
 										isDropdownOpen = false;
 									}, 100);
 								}}
+								{@const isNew = item.isNew ? true : false}
 								{#if $$slots.default}
-									<slot {isSelected} {item} {onClick} />
+									<slot {isSelected} {item} {onClick} {isNew} />
 								{:else}
 									<button
 										disabled={disabled || !isDropdownOpen}

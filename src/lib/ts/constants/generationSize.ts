@@ -1,5 +1,4 @@
 import LL from '$i18n/i18n-svelte';
-import { generationModels } from '$ts/constants/generationModels';
 import type { TTab } from '$ts/types/main';
 import { derived, type Readable } from 'svelte/store';
 
@@ -152,6 +151,111 @@ export const aspectRatioDropdownItems = derived<
 });
 export const aspectRatioDefault: TAvailableAspectRatio = '2:3';
 
+const square = {
+	small: {
+		width: '512',
+		height: '512'
+	},
+	medium: {
+		width: '768',
+		height: '768'
+	},
+	large: {
+		width: '1024',
+		height: '1024'
+	}
+} as const;
+
+const portrait = {
+	small: {
+		width: '512',
+		height: '768'
+	},
+	medium: {
+		width: '608',
+		height: '912'
+	},
+	large: {
+		width: '832',
+		height: '1248'
+	}
+} as const;
+
+const landscape = {
+	small: {
+		width: '768',
+		height: '512'
+	},
+	medium: {
+		width: '912',
+		height: '608'
+	},
+	large: {
+		width: '1248',
+		height: '832'
+	}
+} as const;
+
+const mobile = {
+	small: {
+		width: '432',
+		height: '768'
+	},
+	medium: {
+		width: '576',
+		height: '1024'
+	},
+	large: {
+		width: '720',
+		height: '1280'
+	}
+} as const;
+
+const desktop = {
+	small: {
+		width: '768',
+		height: '432'
+	},
+	medium: {
+		width: '1024',
+		height: '576'
+	},
+	large: {
+		width: '1280',
+		height: '720'
+	}
+} as const;
+
+const squarish = {
+	small: {
+		width: '512',
+		height: '640'
+	},
+	medium: {
+		width: '672',
+		height: '840'
+	},
+	large: {
+		width: '1024',
+		height: '1280'
+	}
+} as const;
+
+const anamorphic = {
+	small: {
+		width: '768',
+		height: '320'
+	},
+	medium: {
+		width: '1152',
+		height: '480'
+	},
+	large: {
+		width: '1536',
+		height: '640'
+	}
+} as const;
+
 export const aspectRatioToImageSize: {
 	[key in TAvailableAspectRatio]: {
 		[key: string]: {
@@ -161,186 +265,67 @@ export const aspectRatioToImageSize: {
 	};
 } = {
 	'1:1': {
-		'b6c1372f-31a7-457c-907c-d292a6ffef97': {
-			width: '768',
-			height: '768'
-		},
-		'22b0857d-7edc-4d00-9cd9-45aa509db093': {
-			width: '768',
-			height: '768'
-		},
-		'8002bc51-7260-468f-8840-cf1e6dbe3f8a': {
-			width: '1024',
-			height: '1024'
-		},
-		'9fa49c00-109d-430f-9ddd-449f02e2c71a': {
-			width: '1024',
-			height: '1024'
-		},
-		'3fb1f6d9-c0d3-4ae4-adf4-77f8da78a6f7': {
-			width: '1024',
-			height: '1024'
-		},
-		default: {
-			width: '512',
-			height: '512'
-		}
+		'8002bc51-7260-468f-8840-cf1e6dbe3f8a': square.large,
+		'9fa49c00-109d-430f-9ddd-449f02e2c71a': square.large,
+		'3fb1f6d9-c0d3-4ae4-adf4-77f8da78a6f7': square.large,
+		'4e54440f-ee17-4712-b4b6-0671b94d685d': square.large,
+		'b6c1372f-31a7-457c-907c-d292a6ffef97': square.medium,
+		'22b0857d-7edc-4d00-9cd9-45aa509db093': square.medium,
+		default: square.small
 	},
 	'4:5': {
-		'b6c1372f-31a7-457c-907c-d292a6ffef97': {
-			width: '672',
-			height: '840'
-		},
-		'22b0857d-7edc-4d00-9cd9-45aa509db093': {
-			width: '672',
-			height: '840'
-		},
-		'8002bc51-7260-468f-8840-cf1e6dbe3f8a': {
-			width: '896',
-			height: '1120'
-		},
-		'9fa49c00-109d-430f-9ddd-449f02e2c71a': {
-			width: '896',
-			height: '1120'
-		},
-		'3fb1f6d9-c0d3-4ae4-adf4-77f8da78a6f7': {
-			width: '896',
-			height: '1120'
-		},
-		default: {
-			width: '512',
-			height: '640'
-		}
+		'8002bc51-7260-468f-8840-cf1e6dbe3f8a': squarish.large,
+		'9fa49c00-109d-430f-9ddd-449f02e2c71a': squarish.large,
+		'3fb1f6d9-c0d3-4ae4-adf4-77f8da78a6f7': squarish.large,
+		'4e54440f-ee17-4712-b4b6-0671b94d685d': squarish.large,
+		'b6c1372f-31a7-457c-907c-d292a6ffef97': squarish.medium,
+		'22b0857d-7edc-4d00-9cd9-45aa509db093': squarish.medium,
+		default: squarish.small
 	},
 	'2:3': {
-		'b6c1372f-31a7-457c-907c-d292a6ffef97': {
-			width: '608',
-			height: '912'
-		},
-		'22b0857d-7edc-4d00-9cd9-45aa509db093': {
-			width: '608',
-			height: '912'
-		},
-		'8002bc51-7260-468f-8840-cf1e6dbe3f8a': {
-			width: '832',
-			height: '1248'
-		},
-		'9fa49c00-109d-430f-9ddd-449f02e2c71a': {
-			width: '832',
-			height: '1248'
-		},
-		'3fb1f6d9-c0d3-4ae4-adf4-77f8da78a6f7': {
-			width: '832',
-			height: '1248'
-		},
-		default: {
-			width: '512',
-			height: '768'
-		}
+		'8002bc51-7260-468f-8840-cf1e6dbe3f8a': portrait.large,
+		'9fa49c00-109d-430f-9ddd-449f02e2c71a': portrait.large,
+		'3fb1f6d9-c0d3-4ae4-adf4-77f8da78a6f7': portrait.large,
+		'4e54440f-ee17-4712-b4b6-0671b94d685d': portrait.large,
+		'b6c1372f-31a7-457c-907c-d292a6ffef97': portrait.medium,
+		'22b0857d-7edc-4d00-9cd9-45aa509db093': portrait.medium,
+		default: portrait.small
 	},
 	'3:2': {
-		'b6c1372f-31a7-457c-907c-d292a6ffef97': {
-			width: '912',
-			height: '608'
-		},
-		'22b0857d-7edc-4d00-9cd9-45aa509db093': {
-			width: '912',
-			height: '608'
-		},
-		'8002bc51-7260-468f-8840-cf1e6dbe3f8a': {
-			width: '1248',
-			height: '832'
-		},
-		'9fa49c00-109d-430f-9ddd-449f02e2c71a': {
-			width: '1248',
-			height: '832'
-		},
-		'3fb1f6d9-c0d3-4ae4-adf4-77f8da78a6f7': {
-			width: '1248',
-			height: '832'
-		},
-		default: {
-			width: '768',
-			height: '512'
-		}
+		'8002bc51-7260-468f-8840-cf1e6dbe3f8a': landscape.large,
+		'9fa49c00-109d-430f-9ddd-449f02e2c71a': landscape.large,
+		'3fb1f6d9-c0d3-4ae4-adf4-77f8da78a6f7': landscape.large,
+		'4e54440f-ee17-4712-b4b6-0671b94d685d': landscape.large,
+		'b6c1372f-31a7-457c-907c-d292a6ffef97': landscape.medium,
+		'22b0857d-7edc-4d00-9cd9-45aa509db093': landscape.medium,
+		default: landscape.small
 	},
 	'9:16': {
-		'b6c1372f-31a7-457c-907c-d292a6ffef97': {
-			width: '576',
-			height: '1024'
-		},
-		'22b0857d-7edc-4d00-9cd9-45aa509db093': {
-			width: '576',
-			height: '1024'
-		},
-		'8002bc51-7260-468f-8840-cf1e6dbe3f8a': {
-			width: '720',
-			height: '1280'
-		},
-		'9fa49c00-109d-430f-9ddd-449f02e2c71a': {
-			width: '720',
-			height: '1280'
-		},
-		'3fb1f6d9-c0d3-4ae4-adf4-77f8da78a6f7': {
-			width: '720',
-			height: '1280'
-		},
-		default: {
-			width: '432',
-			height: '768'
-		}
+		'8002bc51-7260-468f-8840-cf1e6dbe3f8a': mobile.large,
+		'9fa49c00-109d-430f-9ddd-449f02e2c71a': mobile.large,
+		'3fb1f6d9-c0d3-4ae4-adf4-77f8da78a6f7': mobile.large,
+		'4e54440f-ee17-4712-b4b6-0671b94d685d': mobile.large,
+		'b6c1372f-31a7-457c-907c-d292a6ffef97': mobile.medium,
+		'22b0857d-7edc-4d00-9cd9-45aa509db093': mobile.medium,
+		default: mobile.small
 	},
 	'16:9': {
-		'b6c1372f-31a7-457c-907c-d292a6ffef97': {
-			width: '1024',
-			height: '576'
-		},
-		'22b0857d-7edc-4d00-9cd9-45aa509db093': {
-			width: '1024',
-			height: '576'
-		},
-		'8002bc51-7260-468f-8840-cf1e6dbe3f8a': {
-			width: '1280',
-			height: '720'
-		},
-		'9fa49c00-109d-430f-9ddd-449f02e2c71a': {
-			width: '1280',
-			height: '720'
-		},
-		'3fb1f6d9-c0d3-4ae4-adf4-77f8da78a6f7': {
-			width: '1280',
-			height: '720'
-		},
-		default: {
-			width: '768',
-			height: '432'
-		}
+		'8002bc51-7260-468f-8840-cf1e6dbe3f8a': desktop.large,
+		'9fa49c00-109d-430f-9ddd-449f02e2c71a': desktop.large,
+		'3fb1f6d9-c0d3-4ae4-adf4-77f8da78a6f7': desktop.large,
+		'4e54440f-ee17-4712-b4b6-0671b94d685d': desktop.large,
+		'b6c1372f-31a7-457c-907c-d292a6ffef97': desktop.medium,
+		'22b0857d-7edc-4d00-9cd9-45aa509db093': desktop.medium,
+		default: desktop.small
 	},
 	'2.4:1': {
-		'b6c1372f-31a7-457c-907c-d292a6ffef97': {
-			width: '1152',
-			height: '480'
-		},
-		'22b0857d-7edc-4d00-9cd9-45aa509db093': {
-			width: '1152',
-			height: '480'
-		},
-		'8002bc51-7260-468f-8840-cf1e6dbe3f8a': {
-			width: '1536',
-			height: '640'
-		},
-		'9fa49c00-109d-430f-9ddd-449f02e2c71a': {
-			width: '1536',
-			height: '640'
-		},
-		'3fb1f6d9-c0d3-4ae4-adf4-77f8da78a6f7': {
-			width: '1536',
-			height: '640'
-		},
-		default: {
-			width: '768',
-			height: '320'
-		}
+		'8002bc51-7260-468f-8840-cf1e6dbe3f8a': anamorphic.large,
+		'9fa49c00-109d-430f-9ddd-449f02e2c71a': anamorphic.large,
+		'3fb1f6d9-c0d3-4ae4-adf4-77f8da78a6f7': anamorphic.large,
+		'4e54440f-ee17-4712-b4b6-0671b94d685d': anamorphic.large,
+		'b6c1372f-31a7-457c-907c-d292a6ffef97': anamorphic.medium,
+		'22b0857d-7edc-4d00-9cd9-45aa509db093': anamorphic.medium,
+		default: anamorphic.small
 	}
 };
 

@@ -1,4 +1,5 @@
 <script lang="ts">
+	import IconStar from '$components/icons/IconStar.svelte';
 	import { modelImageVersion } from '$components/modelCard/constants';
 	import LL from '$i18n/i18n-svelte';
 	import type { TAvailableGenerationModelId } from '$ts/constants/generationModels';
@@ -10,6 +11,7 @@
 	export let modelId: TAvailableGenerationModelId;
 	export let onClick: () => void;
 	export let isSelected: boolean;
+	export let isNew = false;
 
 	const imageFolder = '16x9';
 	const imageUrl = imageUrlFromModelId({ modelId, folder: imageFolder });
@@ -43,15 +45,26 @@
 			? 'ring-2'
 			: 'ring-0'} ring-c-primary not-touch:group-hover:ring-2"
 	>
-		<div class="w-full flex flex-col items-start justify-start px-1.75 pt-0.75 pb-2">
+		<div class="w-full flex flex-col items-start justify-start px-1.75 pt-1 pb-2.5">
+			<div class="max-w-full flex items-center justify-start gap-2">
+				<p
+					class="flex-shrink min-w-0 bg-c-bg-tertiary text-base whitespace-nowrap overflow-hidden overflow-ellipsis
+					font-medium rounded-tr-lg"
+				>
+					{modelName}
+				</p>
+				{#if isNew}
+					<div
+						class="pl-1 pr-1.5 py-0.25 items-center font-medium flex text-xs
+						bg-c-secondary/10 rounded text-c-secondary gap-0.75 mb-0.75"
+					>
+						<IconStar class="w-3 h-3" />
+						<p class="mt-0.25">{$LL.Shared.NewTitle()}</p>
+					</div>
+				{/if}
+			</div>
 			<p
-				class="max-w-full bg-c-bg-tertiary text-base flex-shrink min-w-0 whitespace-nowrap overflow-hidden overflow-ellipsis
-				font-medium rounded-tr-lg"
-			>
-				{modelName}
-			</p>
-			<p
-				class="max-w-full text-xs leading-none text-c-on-bg/60 font-medium mt-0.5 flex-shrink min-w-0 whitespace-nowrap overflow-hidden overflow-ellipsis"
+				class="max-w-full text-xs leading-none text-c-on-bg/60 font-medium mt-0.75 flex-shrink min-w-0 whitespace-nowrap overflow-hidden overflow-ellipsis"
 			>
 				{aspectRatioToImageSize[$generationAspectRatio][modelId]?.width ??
 					aspectRatioToImageSize[$generationAspectRatio].default.width} ×
