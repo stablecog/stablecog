@@ -21,6 +21,10 @@ const _sidebar: TSidebarItemBase = {
 					pathname: '/try/models/sdxl'
 				},
 				{
+					title: 'SSD-1B',
+					pathname: '/try/models/ssd-1b'
+				},
+				{
 					title: 'Kandinsky',
 					pathname: '/try/models/kandinsky'
 				},
