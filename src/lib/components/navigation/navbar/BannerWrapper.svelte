@@ -10,7 +10,7 @@
 	export let canShow = true;
 
 	const lastNotification = 'first-month-50-off';
-	const href = '/pricing';
+	const href = '/pricing#plan-starter';
 
 	let mounted = false;
 
