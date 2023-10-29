@@ -1,5 +1,5 @@
 ---
-title: Try SSD-1B for Free
+title: What is SSD-1B?
 description: SSD-1B is an open-source diffusion model that has a base resolution of 1024x1024 pixels. It's a distilled version of Stable Diffusion XL (SDXL).
 author: M. Yekta Güngör
 author_url: https://twitter.com/yektagg
