@@ -15,7 +15,7 @@ date: 2023-04-28T15:00:00.000Z
 
 [SSD-1B](https://huggingface.co/segmind/SSD-1B) is an open-source diffusion model, a distilled version of Stable Diffusion XL ([SDXL](https://huggingface.co/stabilityai/stable-diffusion-xl-base-1.0)) with about 50% of the size. It is created by [Segmind](https://www.segmind.com). It has a base resolution of 1024x1024 pixels. It offers similar quality to SDXL while offering a 60% speedup.
 
-According to its creators, it uses a knowledge distillation strategy. It uses the teachings of several expert models including SDXL, ZavyChromaXL, and JuggernautXL. It combines their strengths to produce high quality results at a much better speed than Stable Diffusion XL (SDXL)
+According to its creators, it uses a knowledge distillation strategy. It uses the teachings of several expert models including SDXL, ZavyChromaXL, and JuggernautXL. It combines their strengths to produce high quality results at a much better speed than Stable Diffusion XL (SDXL).
 
 ## SSD-1B Examples
 
