@@ -52,7 +52,6 @@
 	import { lowOnCreditsThreshold } from '$ts/constants/credits.js';
 	import SettingsSheet from '$components/generate/SettingsSheet.svelte';
 	import SignInModal from '$components/SignInModal.svelte';
-	import IconArrowRight from '$components/icons/IconArrowRight.svelte';
 
 	export let data;
 
@@ -396,7 +395,7 @@
 					</div>
 				</div>
 				<div
-					class="w-full flex flex-col order-first flex-1 min-w-0 pb-42
+					class="w-full flex flex-col order-first flex-1 min-w-0 pb-[calc(env(safe-area-inset-bottom)+10.5rem)]
 					md:pb-0 md:pt-26 lg:pb-8 relative z-0"
 				>
 					<div class="flex-1 min-w-0 flex flex-col items-center justify-center w-full">
