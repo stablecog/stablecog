@@ -11,7 +11,6 @@
 	import LL, { locale } from '$i18n/i18n-svelte';
 	import { canonicalUrl } from '$ts/constants/main';
 	import { logSignOut } from '$ts/helpers/loggers';
-	import { advancedModeApp } from '$ts/stores/advancedMode';
 	import { userSummary } from '$ts/stores/user/summary';
 	import IconAnimatedSpinner from '$components/icons/IconAnimatedSpinner.svelte';
 	import { appVersion } from '$ts/stores/appVersion';
@@ -42,7 +41,6 @@
 				'SC - User Id': $page.data.session?.user.id,
 				'SC - Stripe Product Id': $userSummary?.product_id,
 				'SC - Locale': $locale,
-				'SC - Advanced Mode': $advancedModeApp,
 				'SC - Page': `${$page.url.pathname}${$page.url.search}`,
 				'SC - App Version': $appVersion
 			});

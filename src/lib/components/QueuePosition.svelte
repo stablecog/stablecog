@@ -2,6 +2,9 @@
 	import LL, { locale } from '$i18n/i18n-svelte';
 	import IconQueue from './icons/IconQueue.svelte';
 	import { userSummary } from '$ts/stores/user/summary';
+	import { logSkipTheQueueButtonClicked } from '$ts/helpers/loggers';
+	import { appVersion } from '$ts/stores/appVersion';
+	import { page } from '$app/stores';
 
 	export let position: number;
 	export let hasBg = false;
@@ -43,6 +46,15 @@
 		{#if hasButton}
 			<div class="w-full flex items-center justify-center pt-2.5">
 				<a
+					on:click={() => {
+						logSkipTheQueueButtonClicked({
+							'SC - App Version': $appVersion,
+							'SC - Locale': $locale,
+							'SC - Page': `${$page.url.pathname}${$page.url.search}`,
+							'SC - User Id': $page.data.session?.user.id,
+							'SC - Stripe Product Id': $userSummary?.product_id
+						});
+					}}
 					href="/pricing#plan-starter"
 					target="_blank"
 					class="max-w-full text-center text-sm font-semibold {show ? 'pointer-events-auto' : ''}

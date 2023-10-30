@@ -26,7 +26,6 @@
 	import { setActiveGenerationToOutputIndex } from '$ts/helpers/goToOutputIndex';
 	import { logBatchEditActived, logBatchEditDeactivated } from '$ts/helpers/loggers';
 	import type { TUserGenerationFullOutputsPage } from '$ts/queries/userGenerations';
-	import { advancedModeApp } from '$ts/stores/advancedMode';
 	import { appVersion } from '$ts/stores/appVersion';
 	import { searchParamsString } from '$ts/stores/searchParamsString';
 	import {
@@ -101,7 +100,6 @@
 	function onUserGalleryEditActiveChanged() {
 		if (!userGalleryEditActivatedOnce && !$isUserGalleryEditActive) return;
 		const props = {
-			'SC - Advanced Mode': $advancedModeApp,
 			'SC - Locale': $locale,
 			'SC - Page': `${$page.url.pathname}${$page.url.search}`,
 			'SC - User Id': $page.data.session?.user.id,

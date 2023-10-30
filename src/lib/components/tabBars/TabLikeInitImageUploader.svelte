@@ -16,7 +16,6 @@
 		initImageStrengthStep
 	} from '$ts/constants/main';
 	import { logInitImageRemoved } from '$ts/helpers/loggers';
-	import { advancedModeApp } from '$ts/stores/advancedMode';
 	import { appVersion } from '$ts/stores/appVersion';
 	import {
 		generationInitImageFiles,
@@ -69,7 +68,6 @@
 			'SC - User Id': $page.data.session?.user.id,
 			'SC - Stripe Product Id': $userSummary?.product_id,
 			'SC - Locale': $locale,
-			'SC - Advanced Mode': $advancedModeApp,
 			'SC - Page': `${$page.url.pathname}${$page.url.search}`,
 			'SC - App Version': $appVersion
 		});
@@ -106,6 +104,9 @@
 			<div class="w-full flex items-center relative">
 				<div class="p-1">
 					<div
+						role="button"
+						tabindex="0"
+						aria-label="Open Image Modal"
 						on:click|stopPropagation={openImageModal}
 						on:keydown={() => null}
 						style="background-image: url({$generationInitImageSrc});"
@@ -116,6 +117,9 @@
 				</div>
 				{#if $generationInitImageFilesState === 'error'}
 					<div
+						role="button"
+						tabindex="0"
+						aria-label="Try Another Image"
 						on:click={() => {
 							resetUploadState();
 							fileInput?.click();

@@ -10,7 +10,6 @@
 	import IconUser from '$components/icons/IconUser.svelte';
 	import { logSignOut } from '$ts/helpers/loggers';
 	import IconSignOut from '$components/icons/IconSignOut.svelte';
-	import { advancedModeApp } from '$ts/stores/advancedMode';
 	import { appVersion } from '$ts/stores/appVersion';
 	import IconSettings from '$components/icons/IconSettings.svelte';
 	import type { TAccountDropdownPage } from '$components/accountMenu/types';
@@ -136,7 +135,6 @@
 						'SC - User Id': $page.data.session?.user.id,
 						'SC - Stripe Product Id': $userSummary?.product_id,
 						'SC - Locale': $locale,
-						'SC - Advanced Mode': $advancedModeApp,
 						'SC - Page': `${$page.url.pathname}${$page.url.search}`,
 						'SC - App Version': $appVersion
 					});

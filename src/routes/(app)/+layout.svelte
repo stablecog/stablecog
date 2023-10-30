@@ -313,7 +313,6 @@
 			'SC - User Id': $page.data.session?.user.id,
 			'SC - Stripe Product Id': $userSummary?.product_id,
 			'SC - Locale': $locale,
-			'SC - Advanced Mode': $advancedModeApp,
 			'SC - Page': `${$page.url.pathname}${$page.url.search}`,
 			'SC - App Version': $appVersion
 		});

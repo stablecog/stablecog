@@ -92,7 +92,7 @@ export function logWantsEmail(props: IWantsEmailProps) {
 	posthog.capture(`Wants Email | ${props.wantsEmail ? 'True' : 'False'}`, { ...props });
 }
 
-export function logSignOut(props: ISignOutProps) {
+export function logSignOut(props: IGeneralLogProps) {
 	mixpanel.track('Sign Out', { ...props });
 	posthog.capture('Sign Out', { ...props });
 }
@@ -152,46 +152,50 @@ export function logGenerationOutputDownloaded(props: IGenerationOutputActionProp
 	posthog.capture('Generation Output | Downloaded', { ...props });
 }
 
-export function logBatchEditActived(props: IBatchEditActivedProps) {
+export function logBatchEditActived(props: IGeneralLogProps) {
 	mixpanel.track('Batch Edit | Activated', { ...props });
 	posthog.capture('Batch Edit | Activated', { ...props });
 }
 
-export function logInitImageAdded(props: IInitImageActionProps) {
+export function logInitImageAdded(props: IGeneralLogProps) {
 	mixpanel.track('Init Image | Added', { ...props });
 	posthog.capture('Init Image | Added', { ...props });
 }
 
-export function logInitImageRemoved(props: IInitImageActionProps) {
+export function logInitImageRemoved(props: IGeneralLogProps) {
 	mixpanel.track('Init Image | Removed', { ...props });
 	posthog.capture('Init Image | Removed', { ...props });
 }
 
-export function logBatchEditDeactivated(props: IBatchEditActivedProps) {
+export function logBatchEditDeactivated(props: IGeneralLogProps) {
 	mixpanel.track('Batch Edit | Deactivated', { ...props });
 	posthog.capture('Batch Edit | Deactivated', { ...props });
 }
 
-export function logLowCreditsCardSeen(props: ILowCreditsCardProps) {
+export function logLowCreditsCardSeen(props: IGeneralLogProps) {
 	mixpanel.track('Low Credits Card | Seen', { ...props });
 	posthog.capture('Low Credits Card | Seen', { ...props });
 }
 
-export function logLowCreditsCardDiscord(props: ILowCreditsCardProps) {
+export function logLowCreditsCardDiscord(props: IGeneralLogProps) {
 	mixpanel.track('Low Credits Card | Discord Clicked', { ...props });
 	posthog.capture('Low Credits Card | Discord Clicked', { ...props });
 }
-export function logLowCreditsCardSubscribe(props: ILowCreditsCardProps) {
+export function logLowCreditsCardSubscribe(props: IGeneralLogProps) {
 	mixpanel.track('Low Credits Card | Subscribe Clicked', { ...props });
 	posthog.capture('Low Credits Card | Subscribe Clicked', { ...props });
 }
-export function logLowCreditsCardBuyCredits(props: ILowCreditsCardProps) {
+export function logLowCreditsCardBuyCredits(props: IGeneralLogProps) {
 	mixpanel.track('Low Credits Card | Buy Credits Clicked', { ...props });
 	posthog.capture('Low Credits Card | Buy Credits Clicked', { ...props });
 }
-export function logLowCreditsCardUpgradeClicked(props: ILowCreditsCardProps) {
+export function logLowCreditsCardUpgradeClicked(props: IGeneralLogProps) {
 	mixpanel.track('Low Credits Card | Upgrade Clicked', { ...props });
 	posthog.capture('Low Credits Card | Upgrade Clicked', { ...props });
+}
+export function logSkipTheQueueButtonClicked(props: IGeneralLogProps) {
+	mixpanel.track('Skip the Queue Button Clicked', { ...props });
+	posthog.capture('Skip the Queue Button Clicked', { ...props });
 }
 
 export function logGenerationFailed({
@@ -450,15 +454,6 @@ interface IWantsEmailProps {
 	wantsEmail: boolean;
 }
 
-interface ISignOutProps {
-	'SC - Locale': string;
-	'SC - Advanced Mode': boolean;
-	'SC - User Id': string | undefined;
-	'SC - Stripe Product Id': string | undefined;
-	'SC - Page': string;
-	'SC - App Version': string;
-}
-
 interface IGallerySearchProps {
 	'SC - Locale': string;
 	'SC - Advanced Mode': boolean;
@@ -496,25 +491,7 @@ export interface IVoiceoverOutputActionProps {
 	'SC - App Version': string;
 }
 
-interface IInitImageActionProps {
-	'SC - Locale': string;
-	'SC - Advanced Mode': boolean;
-	'SC - Page': string;
-	'SC - User Id': string | undefined;
-	'SC - Stripe Product Id': string | undefined;
-	'SC - App Version': string;
-}
-
-interface IBatchEditActivedProps {
-	'SC - Locale': string;
-	'SC - Advanced Mode': boolean;
-	'SC - Page': string;
-	'SC - User Id': string | undefined;
-	'SC - Stripe Product Id': string | undefined;
-	'SC - App Version': string;
-}
-
-interface ILowCreditsCardProps {
+interface IGeneralLogProps {
 	'SC - Locale': string;
 	'SC - Page': string;
 	'SC - User Id': string | undefined;
