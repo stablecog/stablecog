@@ -246,6 +246,7 @@ select:-webkit-autofill:focus {
 	width: 100%;
 	height: 100%;
 	position: fixed;
+	overscroll-behavior: none;
 }
 
 .overflow-hidden-for-doc-image {
