@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { isTouchscreen } from '$ts/stores/isTouchscreen';
 	import { themeApp } from '$ts/stores/theme';
-	import { windowHeight } from '$ts/stores/window';
+	import { windowHeight, windowWidth } from '$ts/stores/window';
 
 	export let isAppRoute = false;
 </script>
@@ -13,7 +13,9 @@
 		: '/illustrations/grid-on-dark.svg'});
 				background-size: 24px;
         {isAppRoute
-		? 'width: 100vw; width: 100svw;height: 100vh; height: 100svh;'
+		? $windowHeight && $windowWidth
+			? `width: ${$windowWidth}px; height: ${$windowHeight}px`
+			: 'width: 100vw; width: 100svw; height: 100vh; height: 100svh;'
 		: `min-height: 100vh;min-height: ${$windowHeight ? `${$windowHeight}px` : '100svh'};`}
 	"
 	class="w-full bg-c-bg text-c-on-bg flex flex-col {$themeApp === 'light'
