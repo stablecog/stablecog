@@ -4,7 +4,7 @@
 	import WithTooltip from '$components/WithTooltip.svelte';
 	import ButtonHoverEffect from '$components/buttons/ButtonHoverEffect.svelte';
 	import type { TGenerationFullScreenModalType } from '$components/generationFullScreen/types';
-	import IconShareAlt from '$components/icons/IconShareAlt.svelte';
+	import IconEyeOutline from '$components/icons/IconEyeOutline.svelte';
 	import IconStar from '$components/icons/IconStar.svelte';
 	import LL, { locale } from '$i18n/i18n-svelte';
 	import { getSomeUserProfileInfiniteQueryKey } from '$routes/(app)/user/[username]/constants';
@@ -19,7 +19,6 @@
 	import { appVersion } from '$ts/stores/appVersion';
 	import { globalSeed } from '$ts/stores/globalSeed';
 	import {
-		generations,
 		setGenerationOutputVisibility,
 		type TGenerationWithSelectedOutput
 	} from '$ts/stores/user/generation';
@@ -167,7 +166,7 @@
 				transition text-c-on-bg group-enabled:not-touch:group-hover:text-c-primary"
 			for="checkbox"
 		>
-			<IconShareAlt class="flex-shrink-0 w-5 h-5" />
+			<IconEyeOutline class="flex-shrink-0 w-5 h-5" />
 			<p class="flex-1 whitespace-nowrap overflow-hidden overflow-ellipsis text-left">
 				{$LL.GenerationFullscreen.ShowOnProfileButton()}
 			</p>

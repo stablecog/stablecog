@@ -259,12 +259,7 @@
 
 <svelte:window on:keydown={onKeyDown} />
 
-<GenerationSettingsProvider
-	serverData={data}
-	bind:isReadyMap
-	let:isInferenceStepsValid
-	let:supportedSchedulerIdDropdownItems
->
+<GenerationSettingsProvider serverData={data} bind:isReadyMap let:supportedSchedulerIdDropdownItems>
 	<div class="w-full h-full flex flex-col overflow-hidden relative z-0">
 		<div
 			class="w-full h-full flex flex-row overflow-hidden md:pb-[calc(env(safe-area-inset-bottom)+1rem)] pt-1 md:pt-2 md:px-4 gap-4"
@@ -330,7 +325,6 @@
 						{horizontalListHeightEstimatedRem}
 						{promptBarHeight}
 						{horizontalListHeight}
-						{isInferenceStepsValid}
 						{openSignInModal}
 						{isCheckCompleted}
 						isOpen={isGenerationSettingsSheetOpen}
@@ -462,12 +456,7 @@
 				</div>
 			</div>
 			<div class="h-full w-72 hidden md:flex">
-				<SettingsPanel
-					{openSignInModal}
-					{isCheckCompleted}
-					{isInferenceStepsValid}
-					{supportedSchedulerIdDropdownItems}
-				/>
+				<SettingsPanel {openSignInModal} {isCheckCompleted} {supportedSchedulerIdDropdownItems} />
 			</div>
 		</div>
 	</div>

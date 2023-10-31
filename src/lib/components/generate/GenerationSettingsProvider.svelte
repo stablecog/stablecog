@@ -22,12 +22,9 @@
 		guidanceScaleDefault,
 		guidanceScaleMax,
 		guidanceScaleMin,
-		inferenceStepsDefault,
-		inferenceStepsTabs,
 		initImageStrengthDefault,
 		initImageStrengthMax,
 		initImageStrengthMin,
-		maxProPixelSteps,
 		numOutputsDefault,
 		numOutputsMax,
 		numOutputsMin
@@ -49,7 +46,6 @@
 		generationWidth,
 		guidanceScale,
 		imageSize,
-		inferenceSteps,
 		initImageStrength,
 		modelId,
 		negativePrompt,
@@ -105,15 +101,6 @@
 			generationAspectRatio.set(ratio);
 		}
 	}
-	generationInferenceSteps.set(
-		isValue(serverData.num_inference_steps) &&
-			serverData.num_inference_steps !== null &&
-			inferenceStepsTabs
-				.map((i) => i.value)
-				.findIndex((i) => i === serverData.num_inference_steps) >= 0
-			? serverData.num_inference_steps
-			: inferenceStepsDefault
-	);
 	generationGuidanceScale.set(
 		isValue(serverData.guidance_scale) && serverData.guidance_scale !== null
 			? serverData.guidance_scale
@@ -142,41 +129,22 @@
 	$: [$generationAspectRatio], withCheck(setLocalImageSizeBasedOnAspectRatio);
 	$: [$generationNumOutputs], withCheck(setLocalNumOutputs);
 	$: [$generationNegativePrompt], withCheck(setLocalNegativePrompt);
-	$: [$generationInferenceSteps], withCheck(setLocalInferenceSteps);
 	$: [$generationGuidanceScale], withCheck(setLocalGuidanceScale);
 	$: [$generationSchedulerId], withCheck(setLocalSchedulerId);
 	$: [$generationSeed], withCheck(setLocalSeed);
 	$: [$advancedModeApp], withCheck(setLocalAdvancedMode);
 	$: [$generationShouldSubmitToGallery], withCheck(setLocalShouldSubmitToGallery);
 
-	$: [
-		$generationWidth,
-		$generationHeight,
-		$generationInferenceSteps,
-		$generationNumOutputs,
-		$generationCostCompletionPerMs
-	],
+	$: [$generationWidth, $generationHeight, $generationNumOutputs, $generationCostCompletionPerMs],
 		setEstimatedGenerationDuration();
 
 	$: $generationModelId, enforceSupportedSchedulerId();
 
 	$: [$generationAspectRatio, $generationNumOutputs], updateGenerationOnStage();
 
-	$: isInferenceStepsValid = <T>(s: T) => {
-		return Number(s) * Number($generationHeight) * Number($generationWidth) <= maxProPixelSteps;
-	};
-
-	$: [$generationHeight, $generationWidth], adjustInferenceSteps();
-
 	$: supportedSchedulerIdDropdownItems = $availableSchedulerIdDropdownItems.filter((i) =>
 		generationModels[$generationModelId].supportedSchedulerIds.includes(i.value)
 	);
-
-	function adjustInferenceSteps() {
-		generationInferenceSteps.set(
-			getValidValue($generationInferenceSteps, inferenceStepsTabs, isInferenceStepsValid)
-		);
-	}
 
 	function getValidValue<T>(value: T, tabs: TTab<T>[], isValid: (s: T) => boolean) {
 		if (!isValid(value)) {
@@ -275,11 +243,6 @@
 		);
 	}
 
-	function setLocalInferenceSteps() {
-		if ($generationInferenceSteps === undefined) return;
-		inferenceSteps.set($generationInferenceSteps);
-	}
-
 	function setLocalGuidanceScale() {
 		if ($generationGuidanceScale === undefined) return;
 		guidanceScale.set($generationGuidanceScale);
@@ -338,19 +301,6 @@
 			if (aspectRatioIndex >= 0) {
 				generationAspectRatio.set(aspectRatioTabs[aspectRatioIndex].value);
 			}
-		}
-		if (!isValue(serverData.num_inference_steps)) {
-			const inferenceStepsIndex = inferenceStepsTabs
-				.map((i) => i.value)
-				.findIndex((i) => i === $inferenceSteps?.toString());
-			if (inferenceStepsIndex >= 0) {
-				generationInferenceSteps.set(inferenceStepsTabs[inferenceStepsIndex].value);
-			}
-		}
-		if (!isInferenceStepsValid($generationInferenceSteps)) {
-			generationInferenceSteps.set(
-				getValidValue($generationInferenceSteps, inferenceStepsTabs, isInferenceStepsValid)
-			);
 		}
 		if (
 			!isValue(serverData.guidance_scale) &&
@@ -483,15 +433,6 @@
 		if (serverData.model_id !== null && isValue(serverData.model_id)) {
 			generationModelId.set(serverData.model_id);
 		}
-		if (
-			isValue(serverData.num_inference_steps) &&
-			serverData.num_inference_steps !== null &&
-			inferenceStepsTabs
-				.map((i) => i.value)
-				.findIndex((i) => i === serverData.num_inference_steps) >= 0
-		) {
-			generationInferenceSteps.set(serverData.num_inference_steps);
-		}
 		if (isValue(serverData.guidance_scale) && serverData.guidance_scale !== null) {
 			generationGuidanceScale.set(serverData.guidance_scale);
 		}
@@ -515,4 +456,4 @@
 	});
 </script>
 
-<slot {isInferenceStepsValid} {supportedSchedulerIdDropdownItems} />
+<slot {supportedSchedulerIdDropdownItems} />

@@ -11,7 +11,6 @@
 	export let horizontalListHeight: number | undefined;
 	export let promptBarEstimatedHeightRem: number;
 	export let horizontalListHeightEstimatedRem: number;
-	export let isInferenceStepsValid: <T>(s: T) => boolean;
 	export let openSignInModal: () => void;
 	export let supportedSchedulerIdDropdownItems: TTab<TAvailableSchedulerId>[];
 </script>
@@ -42,7 +41,6 @@
 				rounding="top"
 				{openSignInModal}
 				{isCheckCompleted}
-				{isInferenceStepsValid}
 				{supportedSchedulerIdDropdownItems}
 			/>
 		{/if}

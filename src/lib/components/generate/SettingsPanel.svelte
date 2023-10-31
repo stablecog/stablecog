@@ -43,8 +43,6 @@
 	import IconModelImage from '$components/modelCard/IconModelImage.svelte';
 	import TabLikeToggle from '$components/tabBars/TabLikeToggle.svelte';
 	import { userSummary } from '$ts/stores/user/summary';
-	import ErrorLine from '$components/error/ErrorLine.svelte';
-	import IconWarning from '$components/icons/IconWarning.svelte';
 	import IconWarningOutline from '$components/icons/IconWarningOutline.svelte';
 	import { scale } from 'svelte/transition';
 
@@ -53,7 +51,6 @@
 	export let noWrapper = false;
 	export let isCheckCompleted: boolean;
 	export let supportedSchedulerIdDropdownItems: TTab<TAvailableSchedulerId>[];
-	export let isInferenceStepsValid: <T>(s: T) => boolean;
 
 	let settingsContainer: HTMLDivElement;
 	let containerDropdownPadding = 16;
@@ -128,6 +125,7 @@
 				class="w-full"
 				bind:value={$generationNegativePrompt}
 				hasTitle={false}
+				maxRows={4}
 			/>
 		</SettingsPanelItem>
 		<SettingsPanelItem
@@ -268,21 +266,6 @@
 								hasTitle={false}
 								bind:value={$generationSchedulerId}
 								name={$LL.Home.AspectRatioDropdown.Title()}
-							/>
-						</SettingsPanelItem>
-						<SettingsPanelItem
-							title={$LL.Home.InferenceStepsTabBar.Title()}
-							iconType="inference-steps"
-							tooltipTitle={$LL.Home.InferenceStepsTabBar.Title()}
-							tooltipParagraph={$LL.Home.InferenceStepsTabBar.Paragraph()}
-						>
-							<TabBar
-								class="w-full"
-								isValid={isInferenceStepsValid}
-								name={$LL.Home.InferenceStepsTabBar.Title()}
-								bind:value={$generationInferenceSteps}
-								hasTitle={false}
-								tabs={inferenceStepsTabs}
 							/>
 						</SettingsPanelItem>
 						<SettingsPanelItem

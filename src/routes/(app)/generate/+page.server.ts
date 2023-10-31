@@ -13,15 +13,12 @@ import {
 import {
 	guidanceScaleMax,
 	guidanceScaleMin,
-	inferenceStepsDefault,
-	inferenceStepsTabs,
 	initImageStrengthMax,
 	initImageStrengthMin,
 	maxPromptLength,
 	maxSeed,
 	numOutputsMax,
-	numOutputsMin,
-	type TAvailableInferenceSteps
+	numOutputsMin
 } from '$ts/constants/main';
 import { availableSchedulerIds, type TAvailableSchedulerId } from '$ts/constants/schedulers';
 import type { ServerLoad } from '@sveltejs/kit';
@@ -34,7 +31,6 @@ export const load: ServerLoad = ({ url }) => {
 	const _height = url.searchParams.get('h');
 	const _aspect_ratio = url.searchParams.get('ar');
 	const _guidance_scale = url.searchParams.get('gs');
-	const _num_inference_steps = url.searchParams.get('is');
 	const _model_id = url.searchParams.get('mi');
 	const _scheduler_id = url.searchParams.get('si');
 	const _advanced_mode = url.searchParams.get('adv');
@@ -56,17 +52,6 @@ export const load: ServerLoad = ({ url }) => {
 		_guidance_scale_number >= guidanceScaleMin &&
 		_guidance_scale_number <= guidanceScaleMax
 			? _guidance_scale_number
-			: null;
-	const num_inference_steps =
-		_num_inference_steps !== null
-			? inferenceStepsTabs
-					.map((i) => i.value)
-					.includes(_num_inference_steps as TAvailableInferenceSteps)
-				? (_num_inference_steps as TAvailableInferenceSteps)
-				: _num_inference_steps >
-				  inferenceStepsTabs.map((i) => i.value)[inferenceStepsTabs.length - 1]
-				? inferenceStepsTabs.map((i) => i.value)[inferenceStepsTabs.length - 1]
-				: inferenceStepsDefault
 			: null;
 	const width =
 		_width !== null && widthTabs.map((i) => i.value).includes(_width as TAvailableWidth)
@@ -121,7 +106,6 @@ export const load: ServerLoad = ({ url }) => {
 		scheduler_id,
 		seed,
 		guidance_scale,
-		num_inference_steps,
 		width,
 		height,
 		aspect_ratio,
@@ -141,7 +125,6 @@ export interface TGeneratePageData {
 	scheduler_id: TAvailableSchedulerId | null;
 	seed: number | null;
 	guidance_scale: number | null;
-	num_inference_steps: TAvailableInferenceSteps | null;
 	width: TAvailableWidth | null;
 	height: TAvailableHeight | null;
 	aspect_ratio: TAvailableAspectRatio | null;
