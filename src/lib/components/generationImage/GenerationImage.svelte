@@ -7,6 +7,7 @@
 	import FavoriteButton from '$components/buttons/FavoriteButton.svelte';
 	import GenerateButton from '$components/buttons/GenerateButton.svelte';
 	import IconButton from '$components/buttons/IconButton.svelte';
+	import LikeButton from '$components/buttons/LikeButton.svelte';
 	import UpscaleAnimation from '$components/generate/UpscaleAnimation.svelte';
 	import SrcsetProvider from '$components/generationImage/SrcsetProvider.svelte';
 	import { onSelectButtonClicked } from '$components/generationImage/helpers';
@@ -312,7 +313,7 @@
 				class="flex flex-row flex-wrap items-center pr-1.5 pt-1.5
 				justify-end transition transform pointer-events-none gap-1.5"
 			>
-				{#if cardType !== 'admin-gallery'}
+				{#if cardType !== 'admin-gallery' && cardType !== 'gallery'}
 					<CopyButton
 						stringToCopy={generation.prompt.text}
 						bind:copied={promptCopied}
@@ -342,6 +343,14 @@
 						{setSearchQuery}
 						{generation}
 						{cardType}
+						class="pointer-events-auto"
+					/>
+				{/if}
+				{#if cardType === 'gallery'}
+					<LikeButton
+						{generation}
+						modalType={cardType}
+						type="on-image"
 						class="pointer-events-auto"
 					/>
 				{/if}

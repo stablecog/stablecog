@@ -27,6 +27,7 @@
 	import WithTooltip from '$components/WithTooltip.svelte';
 	import UsernameButton from '$components/buttons/UsernameButton.svelte';
 	import SimilarOutputsSectionOutputPage from '$components/outputPage/SimilarOutputsSectionOutputPage.svelte';
+	import { onMount } from 'svelte';
 
 	export let data;
 
@@ -98,7 +99,9 @@
 
 	let imageNaturalWidth: number | undefined = undefined;
 
-	$: output.id, resetImageNaturalWidth();
+	$: outputId = output.id;
+	$: outputId, resetImageNaturalWidth();
+
 	let isInitial = true;
 	function resetImageNaturalWidth() {
 		if (isInitial) {
@@ -106,6 +109,20 @@
 			return;
 		}
 		imageNaturalWidth = undefined;
+	}
+
+	function onLikesChanged({
+		newLikeCount,
+		newIsLikedByUser
+	}: {
+		newLikeCount: number;
+		newIsLikedByUser: boolean;
+	}) {
+		output = {
+			...output,
+			like_count: newLikeCount,
+			liked_by_user: newIsLikedByUser
+		};
 	}
 </script>
 
@@ -207,6 +224,7 @@
 				{currentImageUrl}
 				{modalType}
 				{setButtonObjectWithState}
+				{onLikesChanged}
 				bind:buttonObjectsWithState
 			/>
 			<ParamsSection

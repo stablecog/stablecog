@@ -4,7 +4,7 @@
 	import { windowWidth } from '$ts/stores/window';
 	import { onDestroy, onMount } from 'svelte';
 	import { quadOut } from 'svelte/easing';
-	import { fly, scale } from 'svelte/transition';
+	import { fly } from 'svelte/transition';
 	import { getGenerationUrlFromParams } from '$ts/helpers/getGenerationUrlFromParams';
 	import { page } from '$app/stores';
 	import {
@@ -16,7 +16,7 @@
 	import Button from '$components/buttons/Button.svelte';
 	import IconUpscale from '$components/icons/IconUpscale.svelte';
 	import TabBar from '$components/tabBars/TabBar.svelte';
-	import LL, { locale } from '$i18n/i18n-svelte';
+	import LL from '$i18n/i18n-svelte';
 	import Container from '$components/generationFullScreen/Container.svelte';
 	import { activeGeneration, type TGenerationWithSelectedOutput } from '$userStores/generation';
 	import { sseId } from '$userStores/sse';
@@ -95,8 +95,12 @@
 		? generation.selected_output.upscaled_image_url
 		: generation.selected_output.image_url;
 
-	let upscaledImageWidth: number | undefined;
-	let upscaledImageHeight: number | undefined;
+	$: upscaledImageWidth = generation.selected_output.upscaled_image_url
+		? generation.width * 4
+		: undefined;
+	$: upscaledImageHeight = generation.selected_output.upscaled_image_url
+		? generation.height * 4
+		: undefined;
 
 	$: generation.selected_output, onGenerationChanged();
 	$: selectedOutputId = generation.selected_output.id;
@@ -145,8 +149,6 @@
 		currentImageUrl =
 			generation.selected_output.upscaled_image_url ?? generation.selected_output.image_url;
 		if (generation.selected_output.upscaled_image_url) upscaledTabValue = 'upscaled';
-		upscaledImageWidth = undefined;
-		upscaledImageHeight = undefined;
 		buttonObjectsWithState = { ...initialButtonObjectsWithState };
 		const { seed, selected_output, ...rest } = generation;
 		generateSimilarUrl = getGenerationUrlFromParams(rest);
@@ -256,19 +258,6 @@
 			currentImageUrl = generation.selected_output.image_url;
 		}
 	}
-
-	const onImageLoad = (e: Event) => {
-		const target = e.target as HTMLImageElement;
-		if (generation.width !== target.naturalWidth && generation.selected_output.upscaled_image_url) {
-			upscaledImageWidth = target.naturalWidth;
-		}
-		if (
-			generation.height !== target.naturalHeight &&
-			generation.selected_output.upscaled_image_url
-		) {
-			upscaledImageHeight = target.naturalHeight;
-		}
-	};
 
 	const onPopState: any = (e: any) => {
 		const searchParams = new URLSearchParams(e.currentTarget.location.search);
@@ -400,13 +389,16 @@
 							backgroundImageWidth={generation.width}
 							backgroundImageHeight={generation.height}
 							imageUrl={currentImageUrl}
-							imageWidth={upscaledTabValue === 'upscaled' && upscaledImageWidth
+							imageWidth={upscaledTabValue === 'upscaled' &&
+							upscaledImageWidth &&
+							generation.selected_output.upscaled_image_url
 								? upscaledImageWidth
 								: generation.width}
-							imageHeight={upscaledTabValue === 'upscaled' && upscaledImageHeight
+							imageHeight={upscaledTabValue === 'upscaled' &&
+							upscaledImageHeight &&
+							generation.selected_output.upscaled_image_url
 								? upscaledImageHeight
 								: generation.height}
-							{onImageLoad}
 							cardType={modalType}
 						/>
 					{/key}

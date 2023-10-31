@@ -10,23 +10,37 @@ import type { PageLoad } from './$types';
 import type { QueryClient } from '@tanstack/svelte-query';
 import type {
 	TGalleryGenerationFullOutputPageRes,
-	TGalleryGenerationFullOutputsPage
+	TUserProfileFullOutputsPage
 } from '$ts/queries/galleryLike/types';
 
 interface TParent {
 	queryClient: QueryClient;
 	globalSeed: number;
+	session: Session | null | undefined;
 }
 
-export const load: PageLoad = async ({ params, parent }) => {
+export const load: PageLoad = async ({ params, parent, fetch }) => {
 	const outputId = params.output_id;
 	let generationFullOutput: TGenerationFullOutput | undefined = undefined;
 	let similarGenerationFullOutputs: TGenerationFullOutput[] | undefined = undefined;
+	const { session, queryClient } = (await parent()) as TParent;
+	let headers: Record<string, string> = {
+		'Content-Type': 'application/json'
+	};
+	if (session?.access_token) {
+		headers = {
+			...headers,
+			Authorization: `Bearer ${session.access_token}`
+		};
+	}
 	const [generationFullOutputRes, similarGenerationFullOutputsRes] = await Promise.all([
-		fetch(`${apiUrl.origin}/v1/gallery?output_id=${outputId}`),
+		fetch(`${apiUrl.origin}/v1/gallery?output_id=${outputId}`, {
+			headers
+		}),
 		getGalleryGenerationFullOutputs({
 			search: outputId,
-			per_page: similarCount + 1
+			per_page: similarCount + 1,
+			accessToken: session?.access_token
 		})
 	]);
 	if (!generationFullOutputRes.ok) {
@@ -44,7 +58,9 @@ export const load: PageLoad = async ({ params, parent }) => {
 		created_at: hit.created_at,
 		updated_at: hit.updated_at,
 		was_auto_submitted: hit.was_auto_submitted,
-		is_public: hit.is_public
+		is_public: hit.is_public,
+		like_count: hit.like_count,
+		liked_by_user: hit.liked_by_user
 	};
 	generationFullOutput = {
 		generation: {
@@ -84,12 +100,12 @@ export const load: PageLoad = async ({ params, parent }) => {
 		.filter((o) => o.id !== generationFullOutput?.id)
 		.slice(0, similarCount);
 
-	const page: TGalleryGenerationFullOutputsPage = {
+	const page: TUserProfileFullOutputsPage = {
 		outputs: similarGenerationFullOutputs,
-		next: undefined
+		next: undefined,
+		metadata: similarGenerationFullOutputsRes.metadata
 	};
 
-	const { queryClient } = (await parent()) as TParent;
 	queryClient.setQueryData(['gallery_similar_outputs_short', outputId], page);
 
 	return {

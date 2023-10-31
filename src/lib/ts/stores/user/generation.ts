@@ -93,7 +93,8 @@ export const setGenerationToSucceeded = ({
 				image_url: '',
 				status: 'failed-nsfw' as TGenerationOutputStatus,
 				is_public: false,
-				was_auto_submitted: false
+				was_auto_submitted: false,
+				like_count: 0
 			}))
 		];
 		gen.completed_at = convertToDBTimeString(Date.now());
@@ -189,7 +190,8 @@ export async function queueInitialGenerationRequest(request: TInitialGenerationR
 				status: 'to-be-submitted',
 				animation: newGenerationStartAnimation(),
 				is_public: false,
-				was_auto_submitted: false
+				was_auto_submitted: false,
+				like_count: 0
 			})),
 			user: {
 				username: username || ''
@@ -466,6 +468,8 @@ export interface TGenerationOutput {
 	animation?: Tweened<number>;
 	was_auto_submitted: boolean;
 	is_public: boolean;
+	like_count: number;
+	liked_by_user?: boolean;
 }
 
 export type TGalleryStatus =

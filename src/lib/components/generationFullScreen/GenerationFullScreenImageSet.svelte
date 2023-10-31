@@ -6,7 +6,6 @@
 	import { quadOut } from 'svelte/easing';
 	import { scale } from 'svelte/transition';
 
-	export let onImageLoad: (e: Event) => void;
 	export let backgroundImageUrl: string;
 	export let backgroundImageWidth: number;
 	export let backgroundImageHeight: number;
@@ -34,7 +33,6 @@
 	/>
 </SrcsetProvider>
 <img
-	on:load={onImageLoad}
 	class="w-full relative transition ease-out h-auto lg:h-full lg:object-contain lg:absolute lg:left-0 lg:top-0 {naturalWidth &&
 	naturalHeight
 		? 'opacity-100'

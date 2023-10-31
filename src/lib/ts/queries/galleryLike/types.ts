@@ -34,6 +34,8 @@ export interface TGalleryGenerationHit {
 	user: {
 		username: string;
 	};
+	liked_by_user?: boolean;
+	like_count: number;
 }
 
 export interface TUserProfileFullOutputsPage {

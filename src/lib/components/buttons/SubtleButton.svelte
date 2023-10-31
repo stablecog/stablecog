@@ -44,7 +44,9 @@
 			: 'shadow-c-shadow/[var(--o-shadow-strong)]'}
     	{rounding ? rounding : 'rounded-lg'} font-bold transition {size === 'md'
 			? 'text-sm'
-			: 'text-xs'} {!hasRing ? '' : 'ring-2'} relative overflow-hidden z-0 group {classes}"
+			: 'text-xs'} {!hasRing
+			? ''
+			: 'ring-2'} flex items-center justify-center relative overflow-hidden z-0 group {classes}"
 		aria-label={label}
 	>
 		<div class="w-[210%] h-full absolute left-0 top-0 flex items-center justify-center">

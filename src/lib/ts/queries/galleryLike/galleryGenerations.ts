@@ -19,7 +19,8 @@ export async function getGalleryGenerationFullOutputs({
 	custom_fetch,
 	per_page = per_page_default,
 	score_threshold = score_threshold_default,
-	prompt_id
+	prompt_id,
+	accessToken
 }: {
 	cursor?: string;
 	search?: string | null;
@@ -29,6 +30,7 @@ export async function getGalleryGenerationFullOutputs({
 	per_page?: number;
 	score_threshold?: number;
 	prompt_id?: string;
+	accessToken?: string;
 }): Promise<TUserProfileFullOutputsPage> {
 	console.log('getGalleryOutputs');
 	const query = new URLSearchParams();
@@ -55,10 +57,17 @@ export async function getGalleryGenerationFullOutputs({
 	if (queryString) queryString = `?${queryString}`;
 	const url = `${apiUrl.origin}/v1/gallery${queryString}`;
 	const f = custom_fetch || fetch;
+	let headers: Record<string, string> = {
+		'Content-Type': 'application/json'
+	};
+	if (accessToken) {
+		headers = {
+			...headers,
+			Authorization: `Bearer ${accessToken}`
+		};
+	}
 	const res = await f(url, {
-		headers: {
-			'Content-Type': 'application/json'
-		}
+		headers
 	});
 	if (!res.ok) throw new Error(`Failed to fetch gallery outputs: ${res.status}, ${res.statusText}`);
 	const data: TUserProfileGenerationFullOutputPageRes = await res.json();
@@ -71,7 +80,9 @@ export async function getGalleryGenerationFullOutputs({
 			created_at: hit.created_at,
 			updated_at: hit.updated_at,
 			was_auto_submitted: hit.was_auto_submitted,
-			is_public: hit.is_public
+			is_public: hit.is_public,
+			like_count: hit.like_count,
+			liked_by_user: hit.liked_by_user
 		};
 		return {
 			generation: {

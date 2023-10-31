@@ -166,7 +166,8 @@
 			id: '',
 			image_url: '',
 			is_public: false,
-			was_auto_submitted: false
+			was_auto_submitted: false,
+			like_count: 0
 		})),
 		user: {
 			username: $userSummary?.username || ''

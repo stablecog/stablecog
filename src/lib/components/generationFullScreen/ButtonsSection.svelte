@@ -41,6 +41,7 @@
 	import { replaceOutputInUserQueryData } from '$ts/helpers/replaceOutputInUserQueryData';
 	import IconImageSearch from '$components/icons/IconImageSearch.svelte';
 	import ShareButton from '$components/generationFullScreen/ShareButton.svelte';
+	import LikeButton from '$components/buttons/LikeButton.svelte';
 
 	export let generation: TGenerationWithSelectedOutput;
 	export let generateSimilarUrl: string;
@@ -51,8 +52,17 @@
 	export let currentImageUrl: string;
 	export let modalType: TGenerationFullScreenModalType;
 	export let setSearchQuery: ((query: string) => void) | undefined = undefined;
-	export let shareButtonPortalBarrier: HTMLDivElement;
-	export let shareButtonPortalContent: HTMLDivElement;
+	export let shareButtonPortalBarrier: HTMLDivElement | undefined = undefined;
+	export let shareButtonPortalContent: HTMLDivElement | undefined = undefined;
+	export let onLikesChanged:
+		| (({
+				newLikeCount,
+				newIsLikedByUser
+		  }: {
+				newLikeCount: number;
+				newIsLikedByUser: boolean;
+		  }) => void)
+		| undefined = undefined;
 	export { classes as class };
 	let classes = '';
 
@@ -145,6 +155,7 @@
 </script>
 
 <div class="w-full flex flex-wrap gap-3 pb-1 {classes}">
+	<LikeButton {generation} {modalType} {onLikesChanged} />
 	<SubtleButton
 		prefetch={true}
 		href={generateSimilarUrl}
@@ -218,7 +229,7 @@
 			</Morpher>
 		</SubtleButton>
 	</div>
-	{#if modalType === 'gallery' || modalType === 'user-profile' || modalType === 'history' || modalType === 'stage' || modalType === 'generate'}
+	{#if shareButtonPortalBarrier && shareButtonPortalContent && (modalType === 'gallery' || modalType === 'user-profile' || modalType === 'history' || modalType === 'stage' || modalType === 'generate')}
 		<ShareButton
 			{modalType}
 			{generation}
