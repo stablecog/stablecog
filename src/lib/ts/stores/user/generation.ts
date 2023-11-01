@@ -84,7 +84,9 @@ export const setGenerationToSucceeded = ({
 		gen.status = 'succeeded';
 		const newOutputs = outputs.map((o) => ({
 			...o,
-			status: 'succeeded' as TGenerationOutputStatus
+			status: 'succeeded' as TGenerationOutputStatus,
+			liked_by_user: false,
+			like_count: 0
 		}));
 		gen.outputs = [
 			...newOutputs,
@@ -94,7 +96,8 @@ export const setGenerationToSucceeded = ({
 				status: 'failed-nsfw' as TGenerationOutputStatus,
 				is_public: false,
 				was_auto_submitted: false,
-				like_count: 0
+				like_count: 0,
+				liked_by_user: false
 			}))
 		];
 		gen.completed_at = convertToDBTimeString(Date.now());
@@ -191,7 +194,8 @@ export async function queueInitialGenerationRequest(request: TInitialGenerationR
 				animation: newGenerationStartAnimation(),
 				is_public: false,
 				was_auto_submitted: false,
-				like_count: 0
+				like_count: 0,
+				liked_by_user: false
 			})),
 			user: {
 				username: username || ''
