@@ -24,7 +24,7 @@
 		viewBox="0 0 24 24"
 		fill="currentColor"
 		class="w-full h-full absolute left-0 top-0 transition text-c-danger {liked
-			? 'scale-100 duration-400 ease-bounce-out'
+			? 'scale-100 duration-400 ease-like'
 			: 'scale-0 opacity-0 duration-250'}"
 	>
 		<path
