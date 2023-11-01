@@ -33,7 +33,7 @@
 		userGalleryCurrentView,
 		type TUserGalleryView
 	} from '$ts/stores/user/gallery';
-	import { userGenerationFullOutputsQueryKey } from '$ts/stores/user/keys';
+	import { userGenerationFullOutputsQueryKey } from '$ts/stores/user/queryKeys';
 	import { userSummary } from '$ts/stores/user/summary';
 	import { windowWidth } from '$ts/stores/window';
 	import type { TTab } from '$ts/types/main';

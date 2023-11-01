@@ -36,7 +36,7 @@
 	import {
 		generatePageUserGenerationFullOutputsQueryKey,
 		userGenerationFullOutputsQueryKey
-	} from '$ts/stores/user/keys';
+	} from '$ts/stores/user/queryKeys';
 	import { appVersion } from '$ts/stores/appVersion';
 	import { replaceOutputInUserQueryData } from '$ts/helpers/replaceOutputInUserQueryData';
 	import IconImageSearch from '$components/icons/IconImageSearch.svelte';
@@ -85,7 +85,6 @@
 					? Math.round((1 - generation.prompt_strength) * 10) / 10
 					: undefined,
 				logProps: {
-					'SC - Advanced Mode': $advancedModeApp,
 					'SC - Locale': $locale,
 					'SC - Output Id': generation.selected_output.id,
 					'SC - Page': `${$page.url.pathname}${$page.url.search}`,
@@ -229,7 +228,7 @@
 			</Morpher>
 		</SubtleButton>
 	</div>
-	{#if shareButtonPortalBarrier && shareButtonPortalContent && (modalType === 'gallery' || modalType === 'user-profile' || modalType === 'history' || modalType === 'stage' || modalType === 'generate')}
+	{#if modalType === 'gallery' || modalType === 'user-profile' || modalType === 'history' || modalType === 'stage' || modalType === 'generate'}
 		<ShareButton
 			{modalType}
 			{generation}

@@ -20,7 +20,8 @@ export async function getSomeUsersGenerationFullOutputs({
 	per_page = per_page_default,
 	score_threshold = score_threshold_default,
 	prompt_id,
-	username
+	username,
+	access_token
 }: {
 	cursor?: string;
 	search?: string | null;
@@ -31,6 +32,7 @@ export async function getSomeUsersGenerationFullOutputs({
 	score_threshold?: number;
 	prompt_id?: string;
 	username: string;
+	access_token?: string;
 }): Promise<TUserProfileFullOutputsPage> {
 	console.log('getSomeUsersGenerationFullOutputs');
 	const query = new URLSearchParams();
@@ -57,10 +59,17 @@ export async function getSomeUsersGenerationFullOutputs({
 	if (queryString) queryString = `?${queryString}`;
 	const url = `${apiUrl.origin}/v1/profile/${username}/outputs${queryString}`;
 	const f = custom_fetch || fetch;
+	let headers: Record<string, string> = {
+		'Content-Type': 'application/json'
+	};
+	if (access_token) {
+		headers = {
+			...headers,
+			Authorization: `Bearer ${access_token}`
+		};
+	}
 	const res = await f(url, {
-		headers: {
-			'Content-Type': 'application/json'
-		}
+		headers
 	});
 	if (!res.ok)
 		throw new Error(
@@ -76,7 +85,9 @@ export async function getSomeUsersGenerationFullOutputs({
 			created_at: hit.created_at,
 			updated_at: hit.updated_at,
 			was_auto_submitted: hit.was_auto_submitted,
-			is_public: hit.is_public
+			is_public: hit.is_public,
+			like_count: hit.like_count,
+			liked_by_user: hit.liked_by_user
 		};
 		return {
 			generation: {

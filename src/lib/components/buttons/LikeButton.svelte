@@ -5,10 +5,21 @@
 	import type { TGenerationFullScreenModalType } from '$components/generationFullScreen/types';
 	import IconHeartSet from '$components/icons/IconHeartSet.svelte';
 	import { locale } from '$i18n/i18n-svelte';
+	import { logGenerationOutputLikedChange } from '$ts/helpers/loggers';
 	import { replaceOutputInUserQueryData } from '$ts/helpers/replaceOutputInUserQueryData';
 	import { likeOutputs } from '$ts/queries/likeOutputs';
-	import { activeGeneration, type TGenerationWithSelectedOutput } from '$ts/stores/user/generation';
-	import { galleryGenerationFullOutputsQueryKey } from '$ts/stores/user/keys';
+	import { appVersion } from '$ts/stores/appVersion';
+	import {
+		activeGeneration,
+		setGenerationOutputPartial,
+		type TGenerationWithSelectedOutput
+	} from '$ts/stores/user/generation';
+	import {
+		galleryGenerationFullOutputsQueryKey,
+		someUserProfileFullOutputsQueryKey,
+		userGenerationFullOutputsQueryKey
+	} from '$ts/stores/user/queryKeys';
+	import { userSummary } from '$ts/stores/user/summary';
 	import { useQueryClient } from '@tanstack/svelte-query';
 	import { get } from 'svelte/store';
 
@@ -35,15 +46,49 @@
 
 	async function likeOutput(action: 'like' | 'unlike') {
 		if (!$page.data.session?.access_token) return;
+		const newLikeCount =
+			action === 'like'
+				? generation.selected_output.like_count + 1
+				: generation.selected_output.like_count - 1;
+		const newIsLikedByUser = action === 'like' ? true : false;
+		logGenerationOutputLikedChange(newIsLikedByUser, newLikeCount, {
+			'SC - App Version': $appVersion,
+			'SC - Locale': $locale,
+			'SC - Output Id': generation.selected_output.id,
+			'SC - Page': `${$page.url.pathname}${$page.url.search}`,
+			'SC - Stripe Product Id': $userSummary?.product_id,
+			'SC - User Id': $page.data.session?.user.id,
+			'SC - Generation Id': generation.id
+		});
 		try {
-			const newLikeCount =
-				action === 'like'
-					? generation.selected_output.like_count + 1
-					: generation.selected_output.like_count - 1;
-			const newIsLikedByUser = action === 'like' ? true : false;
 			if (modalType === 'gallery') {
 				const _galleryGenerationFullOutputsQueryKey = get(galleryGenerationFullOutputsQueryKey);
 				await replaceOutputInUserQueryData(queryClient, _galleryGenerationFullOutputsQueryKey, {
+					id: generation.selected_output.id,
+					liked_by_user: newIsLikedByUser,
+					like_count: newLikeCount
+				});
+			} else if (modalType === 'history') {
+				const _userGenerationFullOutputsQueryKey = get(userGenerationFullOutputsQueryKey);
+				await replaceOutputInUserQueryData(queryClient, _userGenerationFullOutputsQueryKey, {
+					id: generation.selected_output.id,
+					liked_by_user: newIsLikedByUser,
+					like_count: newLikeCount
+				});
+			} else if (modalType === 'generate' || modalType === 'stage') {
+				const _userGenerationFullOutputsQueryKey = get(userGenerationFullOutputsQueryKey);
+				setGenerationOutputPartial(generation.selected_output.id, {
+					liked_by_user: newIsLikedByUser,
+					like_count: newLikeCount
+				});
+				await replaceOutputInUserQueryData(queryClient, _userGenerationFullOutputsQueryKey, {
+					id: generation.selected_output.id,
+					liked_by_user: newIsLikedByUser,
+					like_count: newLikeCount
+				});
+			} else if (modalType === 'user-profile') {
+				const _userGenerationFullOutputsQueryKey = get(someUserProfileFullOutputsQueryKey);
+				await replaceOutputInUserQueryData(queryClient, _userGenerationFullOutputsQueryKey, {
 					id: generation.selected_output.id,
 					liked_by_user: newIsLikedByUser,
 					like_count: newLikeCount
@@ -112,7 +157,7 @@
 			<div class="max-w-full flex items-center justify-center gap-1 -my-1">
 				<IconHeartSet class="w-5 h-5" liked={generation.selected_output.liked_by_user} />
 				<p
-					class="{generation.selected_output.liked_by_user
+					class="transition {generation.selected_output.liked_by_user
 						? 'text-c-danger'
 						: ''} text-base font-medium"
 				>

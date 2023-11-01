@@ -15,7 +15,7 @@
 		getUserGenerationFullOutputs,
 		type TUserGenerationFullOutputsPage
 	} from '$ts/queries/userGenerations';
-	import { generatePageUserGenerationFullOutputsQueryKey } from '$ts/stores/user/keys';
+	import { generatePageUserGenerationFullOutputsQueryKey } from '$ts/stores/user/queryKeys.js';
 	import { windowWidth } from '$ts/stores/window';
 	import SidebarWrapper from '$components/generate/SidebarWrapper.svelte';
 	import GenerationStage from '$components/generate/GenerationStage.svelte';

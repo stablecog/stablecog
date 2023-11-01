@@ -18,7 +18,7 @@ export const getSomeUserProfileInfiniteQueryKey = ({
 		username,
 		searchString ? searchString : '',
 		modelIdFilters ? modelIdFilters.join(',') : '',
-		typeof seed === 'number' ? seed : ''
+		typeof seed === 'number' ? String(seed) : ''
 	];
 };
 
@@ -26,12 +26,14 @@ export function getSomeUserProfileInfiniteQueryProps({
 	searchString,
 	modelIdFilters,
 	seed,
-	username
+	username,
+	accessToken
 }: {
 	searchString?: string | null;
 	modelIdFilters?: string[];
 	seed?: number;
 	username: string;
+	accessToken?: string;
 }): FetchInfiniteQueryOptions<
 	TUserProfileFullOutputsPage,
 	unknown,
@@ -46,7 +48,8 @@ export function getSomeUserProfileInfiniteQueryProps({
 				seed,
 				search: searchString,
 				model_ids: modelIdFilters,
-				username
+				username,
+				access_token: accessToken
 			});
 		},
 		getNextPageParam: (lastPage: TUserProfileFullOutputsPage) => {

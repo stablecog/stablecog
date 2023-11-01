@@ -19,8 +19,8 @@
 	export let modalType: TGenerationFullScreenModalType;
 	export let url: string;
 	export let generation: TGenerationWithSelectedOutput;
-	export let portalBarrier: HTMLDivElement;
-	export let portalContent: HTMLDivElement;
+	export let portalBarrier: HTMLDivElement | undefined;
+	export let portalContent: HTMLDivElement | undefined;
 
 	let isModalOpen = false;
 

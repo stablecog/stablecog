@@ -4,23 +4,20 @@
 	import type { TGenerationFullScreenModalType } from '$components/generationFullScreen/types';
 	import IconFavorite from '$components/icons/IconFavorite.svelte';
 	import { locale } from '$i18n/i18n-svelte';
-	import {
-		logGenerationOutputFavorited,
-		logGenerationOutputUnfavorited
-	} from '$ts/helpers/loggers';
+	import { logGenerationOutputFavoritedChange } from '$ts/helpers/loggers';
 	import { replaceOutputInUserQueryData } from '$ts/helpers/replaceOutputInUserQueryData';
 	import { favoriteOutputs } from '$ts/queries/favoriteOutput';
 	import { advancedModeApp } from '$ts/stores/advancedMode';
 	import { appVersion } from '$ts/stores/appVersion';
 	import {
 		activeGeneration,
-		setGenerationOutputFavoritedStatus,
+		setGenerationOutputPartial,
 		type TGenerationWithSelectedOutput
 	} from '$ts/stores/user/generation';
 	import {
 		generatePageUserGenerationFullOutputsQueryKey,
 		userGenerationFullOutputsQueryKey
-	} from '$ts/stores/user/keys';
+	} from '$ts/stores/user/queryKeys';
 	import { userSummary } from '$ts/stores/user/summary';
 	import { useQueryClient } from '@tanstack/svelte-query';
 
@@ -46,21 +43,20 @@
 	};
 
 	async function favoriteOutput(action: 'add' | 'remove') {
-		if (action === 'add') {
-			logGenerationOutputFavorited(logProps);
-		} else {
-			logGenerationOutputUnfavorited(logProps);
-		}
+		let newIsFavorited = action === 'add';
+		logGenerationOutputFavoritedChange(newIsFavorited ? 'favorite' : 'unfavorite', logProps);
 		if (modalType === 'history') {
 			replaceOutputInUserQueryData(queryClient, $userGenerationFullOutputsQueryKey, {
 				id: generation.selected_output.id,
-				is_favorited: action === 'add'
+				is_favorited: newIsFavorited
 			});
 		} else if (modalType === 'generate' || modalType === 'stage') {
-			setGenerationOutputFavoritedStatus(generation.selected_output.id, action === 'add');
+			setGenerationOutputPartial(generation.selected_output.id, {
+				is_favorited: newIsFavorited
+			});
 			replaceOutputInUserQueryData(queryClient, $generatePageUserGenerationFullOutputsQueryKey, {
 				id: generation.selected_output.id,
-				is_favorited: action === 'add'
+				is_favorited: newIsFavorited
 			});
 		}
 		if ($activeGeneration) {
@@ -68,7 +64,7 @@
 				...$activeGeneration,
 				selected_output: {
 					...generation.selected_output,
-					is_favorited: action === 'add'
+					is_favorited: newIsFavorited
 				}
 			});
 		}

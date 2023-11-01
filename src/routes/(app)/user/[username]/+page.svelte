@@ -24,7 +24,10 @@
 		xlBreakpoint,
 		xxlBreakpoint
 	} from '$components/generationFullScreen/constants';
-	import { getSomeUserProfileInfiniteQueryProps } from '$routes/(app)/user/[username]/constants.js';
+	import {
+		getSomeUserProfileInfiniteQueryKey,
+		getSomeUserProfileInfiniteQueryProps
+	} from '$routes/(app)/user/[username]/constants.js';
 	import Avatar from '$components/avatar/Avatar.svelte';
 	import IconBirthday from '$components/icons/IconBirthday.svelte';
 	import IconStar from '$components/icons/IconStar.svelte';
@@ -36,8 +39,8 @@
 	import WithChangeUsernameModal from '$components/WithChangeUsernameModal.svelte';
 	import NoBgButton from '$components/buttons/NoBgButton.svelte';
 	import { getPreviewImageUrlForUserProfile } from '$ts/helpers/getPreviewImageUrl.js';
-	import { themeApp } from '$ts/stores/theme.js';
 	import { getImgProxySrc } from '$ts/helpers/imgproxy.js';
+	import { someUserProfileFullOutputsQueryKey } from '$ts/stores/user/queryKeys.js';
 
 	export let data;
 	const { searchQuery: searchQueryParam } = data;
@@ -46,12 +49,22 @@
 
 	let modelIdFilters: TAvailableGenerationModelId[] = data.modelIds ?? [];
 
+	$: someUserProfileFullOutputsQueryKey.set(
+		getSomeUserProfileInfiniteQueryKey({
+			searchString,
+			modelIdFilters,
+			seed: $globalSeed,
+			username: data.username
+		})
+	);
+
 	$: galleryGenerationFullOutputsQuery = createInfiniteQuery(
 		getSomeUserProfileInfiniteQueryProps({
 			searchString,
 			modelIdFilters,
 			seed: $globalSeed,
-			username: data.username
+			username: data.username,
+			accessToken: $page.data.session?.access_token
 		})
 	);
 

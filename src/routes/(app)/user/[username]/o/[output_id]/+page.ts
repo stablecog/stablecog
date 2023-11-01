@@ -12,23 +12,38 @@ import type {
 	TUserProfileGenerationFullOutputPageRes
 } from '$ts/queries/galleryLike/types';
 import { getSomeUsersGenerationFullOutputs } from '$ts/queries/galleryLike/someUsersOutputs';
+import type { Session } from '@supabase/supabase-js';
 
 interface TParent {
 	queryClient: QueryClient;
 	globalSeed: number;
+	session: Session | null | undefined;
 }
 
 export const load: PageLoad = async ({ params, parent }) => {
+	const { queryClient, session } = (await parent()) as TParent;
 	const outputId = params.output_id;
 	const username = params.username;
 	let generationFullOutput: TGenerationFullOutput | undefined = undefined;
 	let similarGenerationFullOutputs: TGenerationFullOutput[] | undefined = undefined;
+	let headers: Record<string, string> = {
+		'Content-Type': 'application/json'
+	};
+	if (session?.access_token) {
+		headers = {
+			...headers,
+			Authorization: `Bearer ${session.access_token}`
+		};
+	}
 	const [generationFullOutputRes, similarGenerationFullOutputsRes] = await Promise.all([
-		fetch(`${apiUrl.origin}/v1/profile/${username}/outputs?output_id=${outputId}`),
+		fetch(`${apiUrl.origin}/v1/profile/${username}/outputs?output_id=${outputId}`, {
+			headers
+		}),
 		getSomeUsersGenerationFullOutputs({
 			search: outputId,
 			per_page: similarCount + 1,
-			username
+			username,
+			access_token: session?.access_token
 		})
 	]);
 	if (!generationFullOutputRes.ok) {
@@ -46,7 +61,9 @@ export const load: PageLoad = async ({ params, parent }) => {
 		created_at: hit.created_at,
 		updated_at: hit.updated_at,
 		was_auto_submitted: hit.was_auto_submitted,
-		is_public: hit.is_public
+		is_public: hit.is_public,
+		liked_by_user: hit.liked_by_user,
+		like_count: hit.like_count
 	};
 	generationFullOutput = {
 		generation: {
@@ -95,7 +112,6 @@ export const load: PageLoad = async ({ params, parent }) => {
 	if (username !== data.metadata.username)
 		throw redirect(302, `/user/${data.metadata.username}/o/${outputId}`);
 
-	const { queryClient } = (await parent()) as TParent;
 	queryClient.setQueryData(['other_user_similar_outputs_short', outputId], page);
 
 	return {

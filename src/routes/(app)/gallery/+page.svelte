@@ -29,7 +29,7 @@
 		getGalleryInfiniteQueryProps
 	} from '$routes/(app)/gallery/constants';
 	import { previewImageVersion } from '$ts/constants/previewImageVersion.js';
-	import { galleryGenerationFullOutputsQueryKey } from '$ts/stores/user/keys.js';
+	import { galleryGenerationFullOutputsQueryKey } from '$ts/stores/user/queryKeys.js';
 
 	export let data;
 	const { searchQuery: searchQueryParam } = data;

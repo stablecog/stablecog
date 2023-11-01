@@ -313,7 +313,7 @@
 				class="flex flex-row flex-wrap items-center pr-1.5 pt-1.5
 				justify-end transition transform pointer-events-none gap-1.5"
 			>
-				{#if cardType !== 'admin-gallery' && cardType !== 'gallery'}
+				{#if (cardType !== 'admin-gallery' && cardType !== 'gallery' && cardType !== 'user-profile') || (cardType === 'user-profile' && generation.user.username === $userSummary?.username)}
 					<CopyButton
 						stringToCopy={generation.prompt.text}
 						bind:copied={promptCopied}
@@ -346,7 +346,7 @@
 						class="pointer-events-auto"
 					/>
 				{/if}
-				{#if cardType === 'gallery'}
+				{#if cardType === 'gallery' || (cardType === 'user-profile' && generation.user.username !== $userSummary?.username)}
 					<LikeButton
 						{generation}
 						modalType={cardType}
