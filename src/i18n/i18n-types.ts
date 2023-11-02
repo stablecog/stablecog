@@ -363,20 +363,28 @@ type RootTranslation = {
 		 * D​o​w​n​l​o​a​d​ ​L​e​g​a​c​y​ ​G​e​n​e​r​a​t​i​o​n​s
 		 */
 		DownloadLegacyGenerationsButton: string
-		/**
-		 * Y​o​u​ ​d​o​n​'​t​ ​h​a​v​e​ ​a​n​y​ ​f​a​v​o​r​i​t​e​s​ ​y​e​t​.
-		 */
-		NoFavoritesYet: string
 		Views: {
 			/**
 			 * A​l​l
 			 */
 			AllTitle: string
 			/**
+			 * L​i​k​e​s
+			 */
+			LikesTitle: string
+			/**
 			 * F​a​v​o​r​i​t​e​s
 			 */
 			FavoritesTitle: string
 		}
+		/**
+		 * Y​o​u​ ​d​o​n​'​t​ ​h​a​v​e​ ​a​n​y​ ​f​a​v​o​r​i​t​e​s​ ​y​e​t​.
+		 */
+		NoFavoritesYet: string
+		/**
+		 * Y​o​u​ ​h​a​v​e​n​'​t​ ​l​i​k​e​d​ ​a​n​y​t​h​i​n​g​ ​y​e​t​.
+		 */
+		NoLikesYet: string
 		/**
 		 * Y​o​u​ ​h​a​v​e​n​'​t​ ​g​e​n​e​r​a​t​e​d​ ​a​n​y​ ​i​m​a​g​e​s​ ​y​e​t​.
 		 */
@@ -3547,20 +3555,28 @@ export type TranslationFunctions = {
 		 * Download Legacy Generations
 		 */
 		DownloadLegacyGenerationsButton: () => LocalizedString
-		/**
-		 * You don't have any favorites yet.
-		 */
-		NoFavoritesYet: () => LocalizedString
 		Views: {
 			/**
 			 * All
 			 */
 			AllTitle: () => LocalizedString
 			/**
+			 * Likes
+			 */
+			LikesTitle: () => LocalizedString
+			/**
 			 * Favorites
 			 */
 			FavoritesTitle: () => LocalizedString
 		}
+		/**
+		 * You don't have any favorites yet.
+		 */
+		NoFavoritesYet: () => LocalizedString
+		/**
+		 * You haven't liked anything yet.
+		 */
+		NoLikesYet: () => LocalizedString
 		/**
 		 * You haven't generated any images yet.
 		 */

@@ -138,11 +138,13 @@ const ja: Translation = {
 		GenerationsTitle: '生成画像',
 		GenerationsMaxSavedCountWarning: '最新の {count} のみ',
 		DownloadLegacyGenerationsButton: 'レガシー生成をダウンロード',
-		NoFavoritesYet: 'お気に入りがまだありません。',
 		Views: {
 			AllTitle: '全て',
+			LikesTitle: 'Likes',
 			FavoritesTitle: 'お気に入り'
 		},
+		NoFavoritesYet: 'お気に入りがまだありません。',
+		NoLikesYet: "You haven't liked anything yet.",
 		NoGenerationsYet: 'まだ画像を生成していません。'
 	},
 	Live: {

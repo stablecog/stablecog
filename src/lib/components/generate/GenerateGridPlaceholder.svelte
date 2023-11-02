@@ -3,7 +3,7 @@
 </script>
 
 <div class="w-full h-full flex flex-col items-start justify-start overflow-hidden p-1.5">
-	<div class="w-full h-full flex flex-col items-stretch justify-start opacity-50">
+	<div class="w-full h-full flex flex-col items-stretch justify-start opacity-50 bg-c-primary">
 		{#each Array(8) as item}
 			<div class="w-full flex flex-row flex-1">
 				<div class="flex-1 flex p-2px">

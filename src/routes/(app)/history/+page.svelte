@@ -11,13 +11,12 @@
 	} from '$components/generationFullScreen/constants';
 	import GenerationFullScreen from '$components/generationFullScreen/GenerationFullScreen.svelte';
 	import GenerationGridInfinite from '$components/grids/GenerationGridInfinite.svelte';
-	import IconFolderOutlined from '$components/icons/IconFolderOutlined.svelte';
 	import IconSadFace from '$components/icons/IconSadFace.svelte';
 	import IconStarOutlined from '$components/icons/IconStarOutlined.svelte';
+	import IconUserGalleryFilterSet from '$components/icons/IconUserGalleryFilterSet.svelte';
 	import MetaTag from '$components/MetaTag.svelte';
 	import SearchAndFilterBar from '$components/SearchAndFilterBar.svelte';
 	import SignInCard from '$components/SignInCard.svelte';
-	import TabBar from '$components/tabBars/TabBar.svelte';
 	import LL, { locale } from '$i18n/i18n-svelte';
 	import { getHistoryInfiniteQueryProps } from '$routes/(app)/history/constants';
 	import type { TAvailableGenerationModelId } from '$ts/constants/generationModels';
@@ -39,6 +38,9 @@
 	import type { TTab } from '$ts/types/main';
 	import { activeGeneration } from '$userStores/generation';
 	import { createInfiniteQuery, type CreateInfiniteQueryResult } from '@tanstack/svelte-query';
+	import TabLikeDropdown from '$components/tabBars/TabLikeDropdown.svelte';
+	import IconHeartOutlined from '$components/icons/IconHeartOutlined.svelte';
+	import IconImage from '$components/icons/IconImage.svelte';
 
 	let totalOutputs: number;
 	let modelIdFilters: TAvailableGenerationModelId[];
@@ -75,13 +77,15 @@
 	$: userGalleryTabs = [
 		{
 			label: $LL.History.Views.AllTitle(),
-			value: 'all',
-			icon: IconFolderOutlined
+			value: 'all'
 		},
 		{
 			label: $LL.History.Views.FavoritesTitle(),
-			value: 'favorites',
-			icon: IconStarOutlined
+			value: 'favorites'
+		},
+		{
+			label: $LL.History.Views.LikesTitle(),
+			value: 'likes'
 		}
 	];
 
@@ -177,6 +181,8 @@
 								>
 									{$userGalleryCurrentView === 'favorites'
 										? $LL.History.Views.FavoritesTitle()
+										: $userGalleryCurrentView === 'likes'
+										? $LL.History.Views.LikesTitle()
 										: $LL.History.GenerationsTitle()}
 								</p>
 								<p class="text-sm md:text-base text-c-on-bg/50 font-semibold">
@@ -184,14 +190,14 @@
 								</p>
 							</div>
 							<div class="w-full md:w-auto flex flex-1 items-center justify-end gap-4">
-								<TabBar
+								<TabLikeDropdown
 									dontScale
-									fontWeight={600}
 									hasTitle={false}
-									name="Tabs"
-									tabs={userGalleryTabs}
+									name="Filters"
+									items={userGalleryTabs}
 									bind:value={$userGalleryCurrentView}
-									class="flex-1 md:max-w-[19rem]"
+									iconSet={IconUserGalleryFilterSet}
+									class="flex-1 md:max-w-[15rem] z-50"
 								/>
 							</div>
 						</div>
@@ -220,19 +226,28 @@
 							<p class="text-c-on-bg/50">{$LL.Error.SomethingWentWrong()}</p>
 						</div>
 					</div>
-				{:else if $userGalleryCurrentView === 'favorites' && $userGenerationFullOutputsQuery?.data?.pages.length === 1 && $userGenerationFullOutputsQuery.data.pages[0].outputs.length === 0}
-					<div class="w-full flex-1 flex flex-col items-center py-8 px-5">
-						<div class="flex flex-col my-auto items-center gap-4">
-							<IconStarOutlined class="w-16 h-16 text-c-on-bg/50" />
-							<p class="text-c-on-bg/50 text-center">{$LL.History.NoFavoritesYet()}</p>
-							<div class="h-[1vh]" />
-						</div>
-					</div>
 				{:else if $userGenerationFullOutputsQuery?.data?.pages.length === 1 && $userGenerationFullOutputsQuery.data.pages[0].outputs.length === 0}
 					<div class="w-full flex-1 flex flex-col items-center py-8 px-5">
 						<div class="flex flex-col my-auto items-center gap-6">
-							<p class="text-c-on-bg/50 text-center">{$LL.History.NoGenerationsYet()}</p>
-							<Button href="/generate">{$LL.Shared.StartGeneratingButton()}</Button>
+							<div class="flex items-center justify-center -mb-3">
+								{#if $userGalleryCurrentView === 'likes'}
+									<IconHeartOutlined class="text-c-on-bg/50 w-16 h-16" />
+								{:else if $userGalleryCurrentView === 'favorites'}
+									<IconStarOutlined class="text-c-on-bg/50 w-16 h-16" />
+								{:else}
+									<IconImage class="text-c-on-bg/50 w-16 h-16" />
+								{/if}
+							</div>
+							<p class="text-c-on-bg/50 text-center">
+								{$userGalleryCurrentView === 'likes'
+									? $LL.History.NoLikesYet()
+									: $userGalleryCurrentView === 'favorites'
+									? $LL.History.NoFavoritesYet()
+									: $LL.History.NoGenerationsYet()}
+							</p>
+							{#if $userGalleryCurrentView === 'all'}
+								<Button href="/generate">{$LL.Shared.StartGeneratingButton()}</Button>
+							{/if}
 							<div class="h-[1vh]" />
 						</div>
 					</div>

@@ -9,12 +9,14 @@ export async function getUserGenerationFullOutputs({
 	cursor,
 	access_token,
 	is_favorited,
+	is_liked,
 	search,
 	model_ids
 }: {
 	cursor?: string;
 	access_token: string;
 	is_favorited?: boolean;
+	is_liked?: boolean;
 	search?: string;
 	model_ids?: TAvailableGenerationModelId[];
 }) {
@@ -28,6 +30,9 @@ export async function getUserGenerationFullOutputs({
 	}
 	if (is_favorited !== undefined) {
 		query.append('is_favorited', is_favorited.toString());
+	}
+	if (is_liked !== undefined) {
+		query.append('is_liked', is_liked.toString());
 	}
 	if (search && search !== '') {
 		query.append('search', search);

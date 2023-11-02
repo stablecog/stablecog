@@ -128,11 +128,13 @@ const ko: Translation = {
 		GenerationsTitle: '생성한 이미지',
 		GenerationsMaxSavedCountWarning: '최근 {count}개',
 		DownloadLegacyGenerationsButton: 'Download Legacy Generations',
-		NoFavoritesYet: "You don't have any favorites yet.",
 		Views: {
 			AllTitle: 'All',
+			LikesTitle: 'Likes',
 			FavoritesTitle: 'Favorites'
 		},
+		NoFavoritesYet: "You don't have any favorites yet.",
+		NoLikesYet: "You haven't liked anything yet.",
 		NoGenerationsYet: '아직 생성한 이미지가 없어요.'
 	},
 	Live: {
