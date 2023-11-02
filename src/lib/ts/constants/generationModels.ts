@@ -79,7 +79,7 @@ export const generationModels: {
 		supportedSchedulerIds: sdSharedSchedulerIds
 	},
 	'4e54440f-ee17-4712-b4b6-0671b94d685d': {
-		name: 'SSD',
+		name: 'SSD-1B',
 		supportedSchedulerIds: sdSharedSchedulerIds
 	}
 } as const;

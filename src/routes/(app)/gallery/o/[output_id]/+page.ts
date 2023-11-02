@@ -8,10 +8,8 @@ import { error } from '@sveltejs/kit';
 import { similarCount } from '$routes/(app)/gallery/o/[output_id]/constants';
 import type { PageLoad } from './$types';
 import type { QueryClient } from '@tanstack/svelte-query';
-import type {
-	TGalleryGenerationFullOutputPageRes,
-	TGalleryGenerationFullOutputsPage
-} from '$ts/queries/galleryLike/types';
+import type { TGalleryGenerationFullOutputPageRes } from '$ts/queries/galleryLike/types';
+import type { TUserGenerationFullOutputsPage } from '$ts/queries/userGenerations';
 
 interface TParent {
 	queryClient: QueryClient;
@@ -84,7 +82,7 @@ export const load: PageLoad = async ({ params, parent }) => {
 		.filter((o) => o.id !== generationFullOutput?.id)
 		.slice(0, similarCount);
 
-	const page: TGalleryGenerationFullOutputsPage = {
+	const page: TUserGenerationFullOutputsPage = {
 		outputs: similarGenerationFullOutputs,
 		next: undefined
 	};

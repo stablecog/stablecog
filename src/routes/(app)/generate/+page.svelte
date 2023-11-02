@@ -21,7 +21,7 @@
 	import GenerationStage from '$components/generate/GenerationStage.svelte';
 	import { generationAspectRatio, generationNumOutputs } from '$ts/stores/generationSettings.js';
 	import { generateSSEId } from '$ts/helpers/generateSSEId.js';
-	import { generationModelIdDefault } from '$ts/constants/generationModels.js';
+	import { generationModelIdDefault, generationModels } from '$ts/constants/generationModels.js';
 	import { schedulerIdDefault } from '$ts/constants/schedulers.js';
 	import type { TIsReadyMap } from '$components/generate/types.js';
 	import {
@@ -52,6 +52,7 @@
 	import { lowOnCreditsThreshold } from '$ts/constants/credits.js';
 	import SettingsSheet from '$components/generate/SettingsSheet.svelte';
 	import SignInModal from '$components/SignInModal.svelte';
+	import { PUBLIC_OG_IMAGE_API_URL } from '$env/static/public';
 
 	export let data;
 
@@ -249,13 +250,25 @@
 			});
 		}
 	});
+
+	$: meta = {
+		title:
+			data.model_id !== null && generationModels[data.model_id]?.name
+				? `Generate with ${generationModels[data.model_id].name} | Stablecog`
+				: 'Generate | Stablecog',
+		description:
+			data.model_id !== null && generationModels[data.model_id]?.name
+				? `Create AI art with ${
+						generationModels[data.model_id].name
+				  } on Stablecog: Free, multilingual and open-source AI image generator using Stable Diffusion and Kandinsky.`
+				: 'Create amazing art in seconds with AI. Free, multilingual and open-source AI image generator using Stable Diffusion and Kandinsky.',
+		image_url: data.model_id
+			? `${PUBLIC_OG_IMAGE_API_URL}/api/generation-model/${data.model_id}.png`
+			: `${canonicalUrl}/previews/home-${previewImageVersion}.png`
+	};
 </script>
 
-<MetaTag
-	title="Generate | Stablecog"
-	description="Create amazing art in seconds with AI. Free, multilingual and open-source AI image generator using Stable Diffusion and Kandinsky."
-	image_url="{canonicalUrl}/previews/home-{previewImageVersion}.png"
-/>
+<MetaTag {...meta} />
 
 <svelte:window on:keydown={onKeyDown} />
 
