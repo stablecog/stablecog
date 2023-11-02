@@ -68,7 +68,7 @@
 					{negativePrompt}
 				</p>
 				<div class="flex-shrink-0 flex items-center justify-center w-6 h-6">
-					<IconChevronDown class=" w-5 h-5" />
+					<IconChevronDown class="w-5 h-5" />
 				</div>
 			</button>
 		{:else}
