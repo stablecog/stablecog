@@ -121,7 +121,7 @@
 		output = {
 			...output,
 			like_count: newLikeCount,
-			liked_by_user: newIsLikedByUser
+			is_liked: newIsLikedByUser
 		};
 	}
 </script>

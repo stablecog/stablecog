@@ -87,7 +87,7 @@ export async function getSomeUsersGenerationFullOutputs({
 			was_auto_submitted: hit.was_auto_submitted,
 			is_public: hit.is_public,
 			like_count: hit.like_count,
-			liked_by_user: hit.liked_by_user
+			is_liked: hit.is_liked
 		};
 		return {
 			generation: {

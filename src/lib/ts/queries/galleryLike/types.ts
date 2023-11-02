@@ -34,7 +34,7 @@ export interface TGalleryGenerationHit {
 	user: {
 		username: string;
 	};
-	liked_by_user?: boolean;
+	is_liked?: boolean;
 	like_count: number;
 }
 

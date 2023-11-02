@@ -90,7 +90,7 @@ export async function getAllUserGenerationFullOutputs({
 	const res = await fetch(url, {
 		headers: {
 			'Content-Type': 'application/json',
-			Authorization: 'Bearer ' + access_token
+			Authorization: `Bearer ${access_token}`
 		}
 	});
 	const data: TUserGenerationFullOutputsPage = await res.json();

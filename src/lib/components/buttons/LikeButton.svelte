@@ -8,6 +8,7 @@
 	import { logGenerationOutputLikedChange } from '$ts/helpers/loggers';
 	import { replaceOutputInUserQueryData } from '$ts/helpers/replaceOutputInUserQueryData';
 	import { likeOutputs } from '$ts/queries/likeOutputs';
+	import { allUserGenerationFullOutputsQueryKey } from '$ts/stores/admin/gallery';
 	import { appVersion } from '$ts/stores/appVersion';
 	import {
 		activeGeneration,
@@ -65,32 +66,39 @@
 				const _galleryGenerationFullOutputsQueryKey = get(galleryGenerationFullOutputsQueryKey);
 				await replaceOutputInUserQueryData(queryClient, _galleryGenerationFullOutputsQueryKey, {
 					id: generation.selected_output.id,
-					liked_by_user: newIsLikedByUser,
+					is_liked: newIsLikedByUser,
 					like_count: newLikeCount
 				});
 			} else if (modalType === 'history') {
 				const _userGenerationFullOutputsQueryKey = get(userGenerationFullOutputsQueryKey);
 				await replaceOutputInUserQueryData(queryClient, _userGenerationFullOutputsQueryKey, {
 					id: generation.selected_output.id,
-					liked_by_user: newIsLikedByUser,
+					is_liked: newIsLikedByUser,
 					like_count: newLikeCount
 				});
 			} else if (modalType === 'generate' || modalType === 'stage') {
 				const _userGenerationFullOutputsQueryKey = get(userGenerationFullOutputsQueryKey);
 				setGenerationOutputPartial(generation.selected_output.id, {
-					liked_by_user: newIsLikedByUser,
+					is_liked: newIsLikedByUser,
 					like_count: newLikeCount
 				});
 				await replaceOutputInUserQueryData(queryClient, _userGenerationFullOutputsQueryKey, {
 					id: generation.selected_output.id,
-					liked_by_user: newIsLikedByUser,
+					is_liked: newIsLikedByUser,
 					like_count: newLikeCount
 				});
 			} else if (modalType === 'user-profile') {
 				const _userGenerationFullOutputsQueryKey = get(someUserProfileFullOutputsQueryKey);
 				await replaceOutputInUserQueryData(queryClient, _userGenerationFullOutputsQueryKey, {
 					id: generation.selected_output.id,
-					liked_by_user: newIsLikedByUser,
+					is_liked: newIsLikedByUser,
+					like_count: newLikeCount
+				});
+			} else if (modalType === 'admin-gallery') {
+				const _allUserGenerationFullOutputsQueryKey = get(allUserGenerationFullOutputsQueryKey);
+				await replaceOutputInUserQueryData(queryClient, _allUserGenerationFullOutputsQueryKey, {
+					id: generation.selected_output.id,
+					is_liked: newIsLikedByUser,
 					like_count: newLikeCount
 				});
 			}
@@ -100,7 +108,7 @@
 					selected_output: {
 						...generation.selected_output,
 						like_count: newLikeCount,
-						liked_by_user: newIsLikedByUser
+						is_liked: newIsLikedByUser
 					}
 				});
 			}
@@ -137,27 +145,27 @@
 	{#if type === 'on-image'}
 		<button
 			bind:this={buttonElement}
-			on:click={() => likeOutput(generation.selected_output.liked_by_user ? 'unlike' : 'like')}
+			on:click={() => likeOutput(generation.selected_output.is_liked ? 'unlike' : 'like')}
 			class="touch-manipulation transition group/likebutton p-2.5 rounded-full bg-c-bg relative overflow-hidden z-0
 			flex flex-col items-center justify-center
 			before:w-full before:h-full before:absolute before:left-0 before:top-0
 			before:-translate-x-full before:not-touch:hover:translate-x-0
 			before:rounded-full before:transition before:transform before:bg-c-danger/25 {classes}"
-			aria-label={generation.selected_output.liked_by_user ? 'Unlike' : 'Like'}
+			aria-label={generation.selected_output.is_liked ? 'Unlike' : 'Like'}
 		>
 			<IconHeartSet
-				liked={generation.selected_output.liked_by_user}
+				liked={generation.selected_output.is_liked}
 				class="w-7 h-7 transform flex-shrink-0 relative"
 			/>
 		</button>
 	{:else}
 		<SubtleButton
-			onClick={() => likeOutput(generation.selected_output.liked_by_user ? 'unlike' : 'like')}
+			onClick={() => likeOutput(generation.selected_output.is_liked ? 'unlike' : 'like')}
 		>
 			<div class="max-w-full flex items-center justify-center gap-1 -my-1">
-				<IconHeartSet class="w-5 h-5" liked={generation.selected_output.liked_by_user} />
+				<IconHeartSet class="w-5 h-5" liked={generation.selected_output.is_liked} />
 				<p
-					class="transition {generation.selected_output.liked_by_user
+					class="transition {generation.selected_output.is_liked
 						? 'text-c-danger'
 						: ''} text-base font-medium"
 				>

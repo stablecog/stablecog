@@ -62,7 +62,7 @@ export const load: PageLoad = async ({ params, parent }) => {
 		updated_at: hit.updated_at,
 		was_auto_submitted: hit.was_auto_submitted,
 		is_public: hit.is_public,
-		liked_by_user: hit.liked_by_user,
+		is_liked: hit.is_liked,
 		like_count: hit.like_count
 	};
 	generationFullOutput = {

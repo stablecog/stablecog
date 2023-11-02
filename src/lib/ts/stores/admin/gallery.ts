@@ -1,6 +1,4 @@
-import type { TUserGenerationFullOutputsPage } from '$ts/queries/userGenerations';
 import type { TGalleryStatus } from '$ts/stores/user/generation';
-import type { CreateInfiniteQueryResult } from '@tanstack/svelte-query';
 import { writable as writableLocal } from 'svelte-local-storage-store';
 import { derived, writable } from 'svelte/store';
 

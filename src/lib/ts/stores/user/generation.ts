@@ -85,7 +85,7 @@ export const setGenerationToSucceeded = ({
 		const newOutputs = outputs.map((o) => ({
 			...o,
 			status: 'succeeded' as TGenerationOutputStatus,
-			liked_by_user: false,
+			is_liked: false,
 			like_count: 0
 		}));
 		gen.outputs = [
@@ -97,7 +97,7 @@ export const setGenerationToSucceeded = ({
 				is_public: false,
 				was_auto_submitted: false,
 				like_count: 0,
-				liked_by_user: false
+				is_liked: false
 			}))
 		];
 		gen.completed_at = convertToDBTimeString(Date.now());
@@ -195,7 +195,7 @@ export async function queueInitialGenerationRequest(request: TInitialGenerationR
 				is_public: false,
 				was_auto_submitted: false,
 				like_count: 0,
-				liked_by_user: false
+				is_liked: false
 			})),
 			user: {
 				username: username || ''
@@ -476,7 +476,7 @@ export interface TGenerationOutput {
 	was_auto_submitted: boolean;
 	is_public: boolean;
 	like_count: number;
-	liked_by_user?: boolean;
+	is_liked?: boolean;
 }
 
 export type TGalleryStatus =
