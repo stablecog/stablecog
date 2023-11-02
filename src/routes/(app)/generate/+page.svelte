@@ -263,7 +263,7 @@
 				  } on Stablecog: Free, multilingual and open-source AI image generator using Stable Diffusion and Kandinsky.`
 				: 'Create amazing art in seconds with AI. Free, multilingual and open-source AI image generator using Stable Diffusion and Kandinsky.',
 		image_url: data.model_id
-			? `${PUBLIC_OG_IMAGE_API_URL}/api/generation-model/${data.model_id}.png`
+			? `${PUBLIC_OG_IMAGE_API_URL}/api/generation-model-v2/${data.model_id}.png`
 			: `${canonicalUrl}/previews/home-${previewImageVersion}.png`
 	};
 </script>
