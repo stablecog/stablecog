@@ -1,5 +1,4 @@
 <script lang="ts">
-	import IconChatBubbleCancel from '$components/icons/IconChatBubbleCancel.svelte';
 	import ModalWrapper from '$components/ModalWrapper.svelte';
 	import { windowWidth } from '$ts/stores/window';
 	import { onDestroy, onMount } from 'svelte';
@@ -46,7 +45,6 @@
 	import SideButton from '$components/generationFullScreen/SideButton.svelte';
 	import { removeFromRecentlyUpdatedOutputIds } from '$ts/stores/user/recentlyUpdatedOutputIds';
 	import SrcsetProvider from '$components/generationImage/SrcsetProvider.svelte';
-	import WithTooltip from '$components/WithTooltip.svelte';
 	import SimilarOutputsSection from '$components/generationFullScreen/SimilarOutputsSection.svelte';
 	import ScrollAreaWithChevron from '$components/ScrollAreaWithChevron.svelte';
 	import UsernameButton from '$components/buttons/UsernameButton.svelte';
@@ -54,6 +52,7 @@
 	import { getQueuePositionFromId, queue } from '$ts/stores/user/queue';
 	import { isSuperAdmin } from '$ts/helpers/admin/roles';
 	import QueuePosition from '$components/QueuePosition.svelte';
+	import NegativePromptSection from '$components/generationFullScreen/NegativePromptSection.svelte';
 
 	export let generation: TGenerationWithSelectedOutput;
 	export let modalType: TGenerationFullScreenModalType;
@@ -515,22 +514,9 @@
 						<div class="w-full break-words flex flex-col items-start gap-3">
 							<p class="w-full leading-normal">{generation.prompt.text}</p>
 							{#if generation.negative_prompt}
-								<div class="w-full flex items-start text-c-danger gap-2">
-									<WithTooltip
-										title={$LL.Home.NegativePromptInput.Title()}
-										paragraph={$LL.Home.NegativePromptInput.Paragraph()}
-										let:trigger
-										let:triggerStoreValue
-										color="bg-tertiary"
-									>
-										<div tabindex="-1" use:trigger {...triggerStoreValue} class="cursor-default">
-											<IconChatBubbleCancel class="w-5 h-5" />
-										</div>
-									</WithTooltip>
-									<p class="flex-shrink min-w-0 leading-normal -mt-0.75">
-										{generation.negative_prompt.text}
-									</p>
-								</div>
+								{#key generation.id}
+									<NegativePromptSection negativePrompt={generation.negative_prompt.text} />
+								{/key}
 							{/if}
 						</div>
 						{#key generation.selected_output.id}
