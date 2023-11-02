@@ -37,7 +37,7 @@ export const generationModels: {
 		supportedSchedulerIds: sdSharedSchedulerIds
 	},
 	'f7f3d973-ac6f-4a7a-9db8-e89e4fba03a9': {
-		name: 'Waifu Diffusion v1.4',
+		name: 'Waifu Diffusion',
 		supportedSchedulerIds: sdSharedSchedulerIds
 	},
 	'8acfe4c8-751d-4aa6-8c3c-844e3ef478e0': {
