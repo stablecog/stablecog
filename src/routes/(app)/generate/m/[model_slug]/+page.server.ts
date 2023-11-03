@@ -1,10 +1,10 @@
 import { generationModels } from '$ts/constants/generationModels';
 import { toSlug } from '$ts/helpers/toSlug';
-import { redirect, type ServerLoad } from '@sveltejs/kit';
+import type { ServerLoad } from '@sveltejs/kit';
 
 export const load: ServerLoad = ({ params }) => {
 	const modelSlug = params.model_slug;
-	let matchingModelId: string | undefined = undefined;
+	let matchingModelId: string | null = null;
 	for (const modelId in generationModels) {
 		const model = generationModels[modelId];
 		const slug = toSlug(model.name);
@@ -13,10 +13,7 @@ export const load: ServerLoad = ({ params }) => {
 			break;
 		}
 	}
-
-	if (matchingModelId) {
-		throw redirect(302, `/generate?mi=${matchingModelId}`);
-	}
-
-	throw redirect(302, '/generate');
+	return {
+		model_id: matchingModelId
+	};
 };

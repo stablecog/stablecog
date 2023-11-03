@@ -232,9 +232,7 @@ const de: Translation = {
 		ReadMoreTitle: 'Read More',
 		BackToBlogButton: 'Zurück zum Blog'
 	},
-	Redirect: {
-		RedirectingToTitle: 'Weiterleitung zu {name}'
-	},
+	Redirect: { RedirectingTitle: 'Redirecting', RedirectingToTitle: 'Weiterleitung zu {name}' },
 	Shared: {
 		StartGeneratingTitle: 'Beginne wunderschöne Bilder zu generieren!',
 		StartGeneratingButton: 'Beginne zu generieren',

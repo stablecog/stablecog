@@ -243,9 +243,7 @@ const tr: Translation = {
 		ReadMoreTitle: 'Okumaya Devam Et',
 		BackToBlogButton: 'Bloğa Dön'
 	},
-	Redirect: {
-		RedirectingToTitle: 'Yönlendiriliyor: {name}'
-	},
+	Redirect: { RedirectingTitle: 'Redirecting', RedirectingToTitle: 'Yönlendiriliyor: {name}' },
 	Shared: {
 		StartGeneratingTitle: 'Süper fotoğraflar üretmeye hemen başla!',
 		StartGeneratingButton: 'Üretmeye Başla',

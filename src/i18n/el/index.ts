@@ -243,9 +243,7 @@ const es: Translation = {
 		ReadMoreTitle: 'Read More',
 		BackToBlogButton: 'Επιστροφή στο Ιστολόγιο'
 	},
-	Redirect: {
-		RedirectingToTitle: 'Ανακατεύθυνση σε {name}'
-	},
+	Redirect: { RedirectingTitle: 'Redirecting', RedirectingToTitle: 'Ανακατεύθυνση σε {name}' },
 	Shared: {
 		StartGeneratingTitle: 'Αρχίστε να δημιουργείτε όμορφες εικόνες!',
 		StartGeneratingButton: 'Έναρξη Δημιουργίας',

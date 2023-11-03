@@ -698,6 +698,10 @@ type RootTranslation = {
 	}
 	Redirect: {
 		/**
+		 * R​e​d​i​r​e​c​t​i​n​g
+		 */
+		RedirectingTitle: string
+		/**
 		 * R​e​d​i​r​e​c​t​i​n​g​ ​t​o​ ​{​n​a​m​e​}
 		 * @param {unknown} name
 		 */
@@ -3881,6 +3885,10 @@ export type TranslationFunctions = {
 		BackToBlogButton: () => LocalizedString
 	}
 	Redirect: {
+		/**
+		 * Redirecting
+		 */
+		RedirectingTitle: () => LocalizedString
 		/**
 		 * Redirecting to {name}
 		 */

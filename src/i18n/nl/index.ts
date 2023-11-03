@@ -236,9 +236,7 @@ const nl: Translation = {
 		ReadMoreTitle: 'Read More',
 		BackToBlogButton: 'Terug naar Blog'
 	},
-	Redirect: {
-		RedirectingToTitle: 'Doorverwijzen naar {name}'
-	},
+	Redirect: { RedirectingTitle: 'Redirecting', RedirectingToTitle: 'Doorverwijzen naar {name}' },
 	Shared: {
 		StartGeneratingTitle: 'Start met het genereren van mooie afbeeldingen!',
 		StartGeneratingButton: 'Begin met genereren',

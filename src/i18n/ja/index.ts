@@ -243,9 +243,7 @@ const ja: Translation = {
 		ReadMoreTitle: 'Read More',
 		BackToBlogButton: 'ブログに戻る'
 	},
-	Redirect: {
-		RedirectingToTitle: '{name} に転送'
-	},
+	Redirect: { RedirectingTitle: 'Redirecting', RedirectingToTitle: '{name} に転送' },
 	Shared: {
 		StartGeneratingTitle: '美しい画像を生成し始めよう!',
 		StartGeneratingButton: '生成を開始',

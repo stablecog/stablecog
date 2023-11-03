@@ -233,9 +233,7 @@ const ko: Translation = {
 		ReadMoreTitle: 'Read More',
 		BackToBlogButton: '되돌아가기'
 	},
-	Redirect: {
-		RedirectingToTitle: '{name}으로 이동 중...'
-	},
+	Redirect: { RedirectingTitle: 'Redirecting', RedirectingToTitle: '{name}으로 이동 중...' },
 	Shared: {
 		StartGeneratingTitle: '아름다운 이미지를 만들어 보세요!',
 		StartGeneratingButton: '이미지 만들러 가기',

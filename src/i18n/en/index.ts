@@ -233,9 +233,7 @@ const en: BaseTranslation = {
 		ReadMoreTitle: 'Read More',
 		BackToBlogButton: 'Back to Blog'
 	},
-	Redirect: {
-		RedirectingToTitle: 'Redirecting to {name}'
-	},
+	Redirect: { RedirectingTitle: 'Redirecting', RedirectingToTitle: 'Redirecting to {name}' },
 	Shared: {
 		StartGeneratingTitle: 'Start generating beautiful images!',
 		StartGeneratingButton: 'Start Generating',

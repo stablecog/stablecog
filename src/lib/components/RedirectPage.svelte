@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { goto } from '$app/navigation';
 	import { page } from '$app/stores';
 	import IconPulsing from '$components/icons/IconPulsing.svelte';
 	import MetaTag from '$components/MetaTag.svelte';
@@ -11,8 +12,8 @@
 	export let title: string;
 	export let description: string;
 
-	onMount(() => {
-		window.location.assign(url);
+	onMount(async () => {
+		await goto(url);
 	});
 </script>
 
