@@ -41,6 +41,7 @@
 	import TabLikeDropdown from '$components/tabBars/TabLikeDropdown.svelte';
 	import IconHeartOutlined from '$components/icons/IconHeartOutlined.svelte';
 	import IconImage from '$components/icons/IconImage.svelte';
+	import IconAnimatedSpinner from '$components/icons/IconAnimatedSpinner.svelte';
 
 	let totalOutputs: number;
 	let modelIdFilters: TAvailableGenerationModelId[];
@@ -131,6 +132,7 @@
 
 	function onKeyDown({ key }: KeyboardEvent) {
 		if (key === 'e' && !searchInputIsFocused) {
+			if ($userGalleryCurrentView === 'likes') return;
 			isUserGalleryEditActive.set(!$isUserGalleryEditActive);
 			return;
 		}
@@ -146,6 +148,14 @@
 		if (key === 'ArrowRight' && rightIndex !== -1) {
 			setActiveGenerationToOutputIndex(outputs, rightIndex);
 			return;
+		}
+	}
+
+	$: $userGalleryCurrentView, onUserGalleryCurrentViewChanged();
+
+	function onUserGalleryCurrentViewChanged() {
+		if ($userGalleryCurrentView === 'likes') {
+			isUserGalleryEditActive.set(false);
 		}
 	}
 </script>

@@ -53,6 +53,7 @@
 	import { isSuperAdmin } from '$ts/helpers/admin/roles';
 	import QueuePosition from '$components/QueuePosition.svelte';
 	import NegativePromptSection from '$components/generationFullScreen/NegativePromptSection.svelte';
+	import { userGalleryCurrentView } from '$ts/stores/user/gallery';
 
 	export let generation: TGenerationWithSelectedOutput;
 	export let modalType: TGenerationFullScreenModalType;
@@ -451,7 +452,7 @@
 						onClick={onRightButtonClicked}
 					/>
 				{/if}
-				{#if modalType === 'history' || modalType === 'generate'}
+				{#if (modalType === 'history' && $userGalleryCurrentView !== 'likes') || modalType === 'generate'}
 					<div class="absolute right-1.5 top-1.5 pointer-events-auto z-10">
 						<FavoriteButton {generation} {modalType} />
 					</div>

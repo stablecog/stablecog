@@ -208,7 +208,7 @@
 	/>
 {/if}
 <!-- Barriers -->
-{#if cardType !== 'stage' && cardType !== 'generate' && cardType !== 'gallery' && cardType !== 'user-profile' && !generation.selected_output.is_deleted}
+{#if cardType !== 'stage' && cardType !== 'generate' && cardType !== 'gallery' && cardType !== 'user-profile' && !generation.selected_output.is_deleted && !(cardType === 'history' && $userGalleryCurrentView === 'likes')}
 	<div
 		class="absolute top-0 left-0 w-full h-24 bg-gradient-to-b
 		from-c-barrier/90 via-c-barrier/60 to-c-barrier/0
@@ -271,7 +271,8 @@
 			cardType === 'history' &&
 			$userGalleryCurrentView === 'favorites' &&
 			!generation.selected_output.is_favorited
-		)}
+		) &&
+		!(cardType === 'history' && $userGalleryCurrentView === 'likes')}
 	<div
 		class="w-full absolute left-0 top-0 pointer-events-none flex items-start {showLeftContainer
 			? 'justify-between'
@@ -330,7 +331,7 @@
 						label="Generate similar to: {shortPrompt}..."
 					/>
 				{/if}
-				{#if (cardType === 'stage' || (cardType === 'history' && $userGalleryCurrentView !== 'favorites')) && cardWidth !== undefined && ((cardType === 'history' && cardWidth > 225) || (cardType === 'stage' && cardWidth > 180))}
+				{#if (cardType === 'stage' || (cardType === 'history' && $userGalleryCurrentView === 'all')) && cardWidth !== undefined && ((cardType === 'history' && cardWidth > 225) || (cardType === 'stage' && cardWidth > 180))}
 					<FavoriteButton
 						{generation}
 						modalType={cardType}
@@ -362,7 +363,7 @@
 		{/if}
 	</div>
 {/if}
-{#if (cardType === 'user-profile' && generation.selected_output.is_public === false) || generation.selected_output.is_deleted || (cardType === 'admin-gallery' && showAdminGalleryBarrier) || (cardType === 'history' && $userGalleryCurrentView === 'favorites' && !generation.selected_output.is_favorited)}
+{#if (cardType === 'user-profile' && generation.selected_output.is_public === false) || generation.selected_output.is_deleted || (cardType === 'admin-gallery' && showAdminGalleryBarrier) || (cardType === 'history' && $userGalleryCurrentView === 'favorites' && !generation.selected_output.is_favorited) || (cardType === 'history' && $userGalleryCurrentView === 'likes' && !generation.selected_output.is_liked)}
 	<!-- Deleted, approved, rejected or just hidden -->
 	{@const sizeClasses =
 		generation.height > generation.width
@@ -388,9 +389,9 @@
 			<IconEyeSlashOutline class="text-c-danger {sizeClasses}" />
 		{:else if generation.selected_output.is_deleted}
 			<IconTrashcan class="text-c-danger {sizeClasses}" />
-		{:else if generation.selected_output.gallery_status === 'approved'}
+		{:else if cardType === 'admin-gallery' && generation.selected_output.gallery_status === 'approved'}
 			<IconTick class="text-c-success {sizeClasses}" />
-		{:else if generation.selected_output.gallery_status === 'rejected'}
+		{:else if cardType === 'admin-gallery' && generation.selected_output.gallery_status === 'rejected'}
 			<IconCancelCircle class="text-c-danger {sizeClasses}" />
 		{/if}
 	</div>
