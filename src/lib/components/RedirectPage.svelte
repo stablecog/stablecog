@@ -11,17 +11,16 @@
 	export let redirectingText: string;
 	export let title: string;
 	export let description: string;
+	export let image_url = `${canonicalUrl}/previews${
+		$page.url.pathname !== '/' ? $page.url.pathname : 'home'
+	}-${previewImageVersion}.png`;
 
 	onMount(async () => {
 		await goto(url);
 	});
 </script>
 
-<MetaTag
-	{title}
-	{description}
-	image_url="{canonicalUrl}/previews{$page.url.pathname}-{previewImageVersion}.png"
-/>
+<MetaTag {title} {description} {image_url} />
 
 <div class="w-full flex-1 flex justify-center px-8 md:px-24 pt-8 pb-[calc(7vh+2rem)]">
 	<div class="w-full flex flex-col items-center justify-center max-w-lg">
