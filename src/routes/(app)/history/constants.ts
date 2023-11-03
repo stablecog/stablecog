@@ -47,6 +47,7 @@ export function getHistoryInfiniteQueryProps({
 				access_token: session.access_token || '',
 				cursor: lastPage?.pageParam,
 				is_favorited: userGalleryCurrentView === 'favorites' ? true : undefined,
+				is_liked: userGalleryCurrentView === 'likes' ? true : undefined,
 				search: searchString,
 				model_ids: modelIdFilters
 			});

@@ -25,7 +25,7 @@
 	import {
 		generatePageUserGenerationFullOutputsQueryKey,
 		userGenerationFullOutputsQueryKey
-	} from '$ts/stores/user/keys';
+	} from '$ts/stores/user/queryKeys';
 	import { userSummary } from '$ts/stores/user/summary';
 	import { createCheckbox } from '@melt-ui/svelte';
 	import { useQueryClient } from '@tanstack/svelte-query';

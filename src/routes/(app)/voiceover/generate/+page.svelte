@@ -47,8 +47,7 @@
 	import { canonicalUrl } from '$ts/constants/main.js';
 	import { lowOnCreditsThreshold } from '$ts/constants/credits.js';
 	import VoiceoverSettingsSheet from '$components/voiceover/generate/VoiceoverSettingsSheet.svelte';
-	import SignInModal from '$components/SignInModal.svelte';
-	import { searchParamsString } from '$ts/stores/searchParamsString';
+	import { isSignInModalOpen } from '$ts/stores/isSignInModalOpen.js';
 
 	export let data;
 
@@ -164,9 +163,8 @@
 		}
 	}
 
-	let isSignInModalOpen = false;
 	function openSignInModal() {
-		isSignInModalOpen = true;
+		isSignInModalOpen.set(true);
 	}
 </script>
 
@@ -345,10 +343,4 @@
 			</div>
 		</div>
 	</div>
-	{#if isSignInModalOpen && (!$page.data.session?.user.id || !$userSummary)}
-		<SignInModal
-			redirectTo={$page.url.pathname + $searchParamsString}
-			onClickoutside={() => (isSignInModalOpen = false)}
-		/>
-	{/if}
 </VoiceoverSettingsProvider>

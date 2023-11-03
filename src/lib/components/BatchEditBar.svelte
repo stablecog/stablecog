@@ -14,8 +14,7 @@
 	import { apiUrl } from '$ts/constants/main';
 	import {
 		logGenerationOutputDeleted,
-		logGenerationOutputFavorited,
-		logGenerationOutputUnfavorited
+		logGenerationOutputFavoritedChange
 	} from '$ts/helpers/loggers';
 	import type { TUserGenerationFullOutputsPage } from '$ts/queries/userGenerations';
 	import {
@@ -36,7 +35,7 @@
 		userGallerySelectedOutputIds,
 		userGallerySelectedOutputObjects
 	} from '$ts/stores/user/gallery';
-	import { userGenerationFullOutputsQueryKey } from '$ts/stores/user/keys';
+	import { userGenerationFullOutputsQueryKey } from '$ts/stores/user/queryKeys';
 	import { userSummary } from '$ts/stores/user/summary';
 	import { useQueryClient } from '@tanstack/svelte-query';
 	import { quadOut } from 'svelte/easing';
@@ -189,11 +188,7 @@
 				'SC - Stripe Product Id': $userSummary?.product_id,
 				'SC - App Version': $appVersion
 			};
-			if (action === 'add') {
-				logGenerationOutputFavorited(logProps);
-			} else {
-				logGenerationOutputUnfavorited(logProps);
-			}
+			logGenerationOutputFavoritedChange(action === 'add' ? 'favorite' : 'unfavorite', logProps);
 		}
 		if (type === 'history') {
 			queryClient.setQueryData($userGenerationFullOutputsQueryKey, (data: any) => ({

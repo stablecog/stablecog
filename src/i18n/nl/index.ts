@@ -131,11 +131,13 @@ const nl: Translation = {
 		GenerationsTitle: 'Creaties',
 		GenerationsMaxSavedCountWarning: 'Alleen de laatste {count}',
 		DownloadLegacyGenerationsButton: 'Download Oudere Creaties',
-		NoFavoritesYet: 'Je hebt nog geen favorieten.',
 		Views: {
 			AllTitle: 'Alles',
+			LikesTitle: 'Likes',
 			FavoritesTitle: 'Favorieten'
 		},
+		NoFavoritesYet: 'Je hebt nog geen favorieten.',
+		NoLikesYet: "You haven't liked anything yet.",
 		NoGenerationsYet: 'Je hebt nog geen afbeeldingen aangemaakt.'
 	},
 	Live: {

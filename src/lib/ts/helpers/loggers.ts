@@ -117,11 +117,6 @@ export function logVoiceoverOutputDeleted(props: IVoiceoverOutputActionProps) {
 	posthog.capture('Voiceover Output | Deleted', { ...props });
 }
 
-export function logGenerationOutputFavorited(props: IGenerationOutputActionProps) {
-	mixpanel.track('Generation Output | Favorited', { ...props });
-	posthog.capture('Generation Output | Favorited', { ...props });
-}
-
 export function logGenerationOutputMadePublic(props: IGenerationOutputActionProps) {
 	mixpanel.track('Generation Output | Made Public', { ...props });
 	posthog.capture('Generation Output | Made Public', { ...props });
@@ -137,9 +132,34 @@ export function logGenerationOutputMadePrivate(props: IGenerationOutputActionPro
 	posthog.capture('Generation Output | Made Private', { ...props });
 }
 
-export function logGenerationOutputUnfavorited(props: IGenerationOutputActionProps) {
-	mixpanel.track('Generation Output | Unfavorited', { ...props });
-	posthog.capture('Generation Output | Unfavorited', { ...props });
+export function logGenerationOutputFavoritedChange(
+	action: 'favorite' | 'unfavorite',
+	props: IGenerationOutputActionProps
+) {
+	if (action === 'unfavorite') {
+		mixpanel.track('Generation Output | Unfavorited', { ...props });
+		posthog.capture('Generation Output | Unfavorited', { ...props });
+	} else {
+		mixpanel.track('Generation Output | Favorited', { ...props });
+		posthog.capture('Generation Output | Favorited', { ...props });
+	}
+}
+
+export function logGenerationOutputLikedChange(
+	isLiked: boolean,
+	likeCount: number,
+	props: IGenerationOutputActionProps
+) {
+	const extraProps = {
+		'SC - Like Count': likeCount
+	};
+	if (isLiked) {
+		mixpanel.track('Generation Output | Liked', { ...props, ...extraProps });
+		posthog.capture('Generation Output | Liked', { ...props, ...extraProps });
+	} else {
+		mixpanel.track('Generation Output | Unliked', { ...props, ...extraProps });
+		posthog.capture('Generation Output | Unliked', { ...props, ...extraProps });
+	}
 }
 
 export function logGenerationOutputSubmittedToGallery(props: IGenerationOutputActionProps) {
@@ -474,7 +494,6 @@ export interface IGenerationOutputActionProps {
 	'SC - Generation Id'?: string;
 	'SC - Output Id': string;
 	'SC - Locale': string;
-	'SC - Advanced Mode': boolean;
 	'SC - User Id': string | undefined;
 	'SC - Stripe Product Id': string | undefined;
 	'SC - Page': string;

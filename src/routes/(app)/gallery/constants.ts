@@ -1,5 +1,5 @@
 import { getGalleryGenerationFullOutputs } from '$ts/queries/galleryLike/galleryGenerations';
-import type { TGalleryGenerationFullOutputsPage } from '$ts/queries/galleryLike/types';
+import type { TUserProfileFullOutputsPage } from '$ts/queries/galleryLike/types';
 import type { FetchInfiniteQueryOptions } from '@tanstack/svelte-query';
 
 export const getGalleryInfiniteQueryKey = ({
@@ -10,27 +10,29 @@ export const getGalleryInfiniteQueryKey = ({
 	searchString?: string | null;
 	modelIdFilters?: string[] | null;
 	seed?: number;
-}) => {
+}): string[] => {
 	return [
 		'gallery_generation_full_outputs',
 		searchString ? searchString : '',
 		modelIdFilters ? modelIdFilters.join(',') : '',
-		typeof seed === 'number' ? seed : ''
+		typeof seed === 'number' ? String(seed) : ''
 	];
 };
 
 export function getGalleryInfiniteQueryProps({
 	searchString,
 	modelIdFilters,
-	seed
+	seed,
+	accessToken
 }: {
 	searchString?: string | null;
 	modelIdFilters?: string[];
 	seed?: number;
+	accessToken?: string;
 }): FetchInfiniteQueryOptions<
-	TGalleryGenerationFullOutputsPage,
+	TUserProfileFullOutputsPage,
 	unknown,
-	TGalleryGenerationFullOutputsPage,
+	TUserProfileFullOutputsPage,
 	any
 > {
 	return {
@@ -40,10 +42,11 @@ export function getGalleryInfiniteQueryProps({
 				cursor: lastPage?.pageParam,
 				seed,
 				search: searchString,
-				model_ids: modelIdFilters
+				model_ids: modelIdFilters,
+				accessToken
 			});
 		},
-		getNextPageParam: (lastPage: TGalleryGenerationFullOutputsPage) => {
+		getNextPageParam: (lastPage: TUserProfileFullOutputsPage) => {
 			if (!lastPage.next) return undefined;
 			return lastPage.next;
 		}

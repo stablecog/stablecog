@@ -23,4 +23,5 @@ export interface TOtherUserMetadata {
 	created_at: string;
 	active_product_id?: string;
 	username: string;
+	likes: number;
 }

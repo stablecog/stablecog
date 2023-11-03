@@ -4,23 +4,20 @@
 	import type { TGenerationFullScreenModalType } from '$components/generationFullScreen/types';
 	import IconFavorite from '$components/icons/IconFavorite.svelte';
 	import { locale } from '$i18n/i18n-svelte';
-	import {
-		logGenerationOutputFavorited,
-		logGenerationOutputUnfavorited
-	} from '$ts/helpers/loggers';
+	import { logGenerationOutputFavoritedChange } from '$ts/helpers/loggers';
 	import { replaceOutputInUserQueryData } from '$ts/helpers/replaceOutputInUserQueryData';
 	import { favoriteOutputs } from '$ts/queries/favoriteOutput';
 	import { advancedModeApp } from '$ts/stores/advancedMode';
 	import { appVersion } from '$ts/stores/appVersion';
 	import {
 		activeGeneration,
-		setGenerationOutputFavoritedStatus,
+		setGenerationOutputPartial,
 		type TGenerationWithSelectedOutput
 	} from '$ts/stores/user/generation';
 	import {
 		generatePageUserGenerationFullOutputsQueryKey,
 		userGenerationFullOutputsQueryKey
-	} from '$ts/stores/user/keys';
+	} from '$ts/stores/user/queryKeys';
 	import { userSummary } from '$ts/stores/user/summary';
 	import { useQueryClient } from '@tanstack/svelte-query';
 
@@ -46,21 +43,20 @@
 	};
 
 	async function favoriteOutput(action: 'add' | 'remove') {
-		if (action === 'add') {
-			logGenerationOutputFavorited(logProps);
-		} else {
-			logGenerationOutputUnfavorited(logProps);
-		}
+		let newIsFavorited = action === 'add';
+		logGenerationOutputFavoritedChange(newIsFavorited ? 'favorite' : 'unfavorite', logProps);
 		if (modalType === 'history') {
 			replaceOutputInUserQueryData(queryClient, $userGenerationFullOutputsQueryKey, {
 				id: generation.selected_output.id,
-				is_favorited: action === 'add'
+				is_favorited: newIsFavorited
 			});
 		} else if (modalType === 'generate' || modalType === 'stage') {
-			setGenerationOutputFavoritedStatus(generation.selected_output.id, action === 'add');
+			setGenerationOutputPartial(generation.selected_output.id, {
+				is_favorited: newIsFavorited
+			});
 			replaceOutputInUserQueryData(queryClient, $generatePageUserGenerationFullOutputsQueryKey, {
 				id: generation.selected_output.id,
-				is_favorited: action === 'add'
+				is_favorited: newIsFavorited
 			});
 		}
 		if ($activeGeneration) {
@@ -68,7 +64,7 @@
 				...$activeGeneration,
 				selected_output: {
 					...generation.selected_output,
-					is_favorited: action === 'add'
+					is_favorited: newIsFavorited
 				}
 			});
 		}
@@ -97,7 +93,10 @@
 		before:rounded-full before:transition before:transform before:bg-c-secondary/25 {classes}"
 		aria-label="Favorite Output"
 	>
-		<IconFavorite favorited={generation.selected_output.is_favorited} />
+		<IconFavorite
+			class="w-7 h-7 transition not-touch:group-hover/favoritebutton:text-c-secondary"
+			favorited={generation.selected_output.is_favorited}
+		/>
 	</button>
 {:else}
 	<div class="flex bg-c-bg/75 rounded-full {classes}">
@@ -107,7 +106,10 @@
 			class="pointer-events-auto"
 			onClick={() => favoriteOutput(generation.selected_output.is_favorited ? 'remove' : 'add')}
 		>
-			<IconFavorite favorited={generation.selected_output.is_favorited} />
+			<IconFavorite
+				class="w-7 h-7 transition not-touch:group-hover/iconbutton:text-c-secondary"
+				favorited={generation.selected_output.is_favorited}
+			/>
 		</IconButton>
 	</div>
 {/if}

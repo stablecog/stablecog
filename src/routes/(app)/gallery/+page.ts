@@ -13,6 +13,7 @@ import { redirect } from '@sveltejs/kit';
 interface TParent {
 	queryClient: QueryClient;
 	globalSeed: number;
+	session: Session | null | undefined;
 }
 
 export const load: PageLoad = async ({ url, parent }) => {
@@ -21,7 +22,7 @@ export const load: PageLoad = async ({ url, parent }) => {
 	const outputIdShort = url.searchParams.get('o');
 	if (outputIdShort) throw redirect(302, `/gallery/o/${outputIdShort}`);
 
-	const { queryClient, globalSeed } = (await parent()) as TParent;
+	const { queryClient, globalSeed, session } = (await parent()) as TParent;
 	const searchQuery = url.searchParams.get('q');
 	const modelIdQuery = url.searchParams.get('mi');
 	const modelIds = modelIdQuery ? modelIdQuery.split(',') : [];
@@ -43,7 +44,8 @@ export const load: PageLoad = async ({ url, parent }) => {
 				getGalleryInfiniteQueryProps({
 					searchString: searchQuery,
 					modelIdFilters: filteredModelIds,
-					seed: globalSeed
+					seed: globalSeed,
+					accessToken: session?.access_token
 				})
 			);
 		} catch (error) {

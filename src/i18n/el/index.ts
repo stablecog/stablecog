@@ -138,11 +138,13 @@ const es: Translation = {
 		GenerationsTitle: 'Παράγωγες εικόνες',
 		GenerationsMaxSavedCountWarning: 'Μόνο οι τελευταίες {count}',
 		DownloadLegacyGenerationsButton: 'Λήψη εικόνων παλαιού τύπου',
-		NoFavoritesYet: 'Δεν έχετε αγαπημένα ακόμα.',
 		Views: {
 			AllTitle: 'Όλα',
+			LikesTitle: 'Likes',
 			FavoritesTitle: 'Αγαπημένα'
 		},
+		NoFavoritesYet: 'Δεν έχετε αγαπημένα ακόμα.',
+		NoLikesYet: "You haven't liked anything yet.",
 		NoGenerationsYet: 'Δεν έχετε δημιουργήσει εικόνες ακόμα.'
 	},
 	Live: {

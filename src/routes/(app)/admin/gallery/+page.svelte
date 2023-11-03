@@ -46,12 +46,13 @@
 		| CreateInfiniteQueryResult<TUserGenerationFullOutputsPage, unknown>
 		| undefined;
 
-	$: $allUserGenerationFullOutputsQueryKey = [
+	$: allUserGenerationFullOutputsQueryKey.set([
 		'admin_user_generation_full_outputs',
 		$adminGalleryCurrentFilter,
 		searchString ? searchString : '',
 		modelIdFilters ? modelIdFilters.join(',') : ''
-	];
+	]);
+
 	$: allUserGenerationFullOutputsQuery =
 		browser && $page.data.session?.user.id
 			? createInfiniteQuery({

@@ -13,6 +13,7 @@
 	import LL from '$i18n/i18n-svelte';
 	import { generationModelIdDefault, modelIdToDisplayName } from '$ts/constants/generationModels';
 	import { schedulerIdDefault, schedulerIdToDisplayName } from '$ts/constants/schedulers';
+	import { userSummary } from '$ts/stores/user/summary';
 	import type { TGenerationWithSelectedOutput } from '$userStores/generation';
 	import { copy } from 'svelte-copy';
 
@@ -139,7 +140,7 @@
 				</p>
 			</div>
 		{/if}
-		{#if modalType === 'generate' || modalType === 'history' || modalType === 'admin-gallery'}
+		{#if modalType === 'generate' || (modalType === 'history' && generation.user.username === $userSummary?.username) || modalType === 'admin-gallery'}
 			<div class="min-w-[calc(50%-0.75rem)] flex flex-wrap items-center gap-3.5">
 				<div class="flex flex-col items-start gap-1">
 					<WithTooltip

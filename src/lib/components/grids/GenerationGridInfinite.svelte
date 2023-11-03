@@ -51,6 +51,17 @@
 	export let paddingTop = 0;
 	export let paddingBottom = 0;
 	export let setSearchQuery: ((query: string) => void) | undefined = undefined;
+	export let onLikesChanged:
+		| (({
+				newLikeCount,
+				newIsLikedByUser,
+				action
+		  }: {
+				newLikeCount: number;
+				newIsLikedByUser: boolean;
+				action: 'like' | 'unlike';
+		  }) => void)
+		| undefined = undefined;
 
 	$: horizontalPadding = paddingLeft + paddingRight;
 
@@ -303,6 +314,7 @@
 											selected_output: output
 										}}
 										{setSearchQuery}
+										{onLikesChanged}
 									/>
 								{/if}
 							{:else}

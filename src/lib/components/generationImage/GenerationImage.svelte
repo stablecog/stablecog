@@ -7,6 +7,7 @@
 	import FavoriteButton from '$components/buttons/FavoriteButton.svelte';
 	import GenerateButton from '$components/buttons/GenerateButton.svelte';
 	import IconButton from '$components/buttons/IconButton.svelte';
+	import LikeButton from '$components/buttons/LikeButton.svelte';
 	import UpscaleAnimation from '$components/generate/UpscaleAnimation.svelte';
 	import SrcsetProvider from '$components/generationImage/SrcsetProvider.svelte';
 	import { onSelectButtonClicked } from '$components/generationImage/helpers';
@@ -46,6 +47,17 @@
 	export let didLoadBefore: boolean = false;
 	export let cardWidth: number | undefined = undefined;
 	export let setSearchQuery: ((query: string) => void) | undefined = undefined;
+	export let onLikesChanged:
+		| (({
+				newLikeCount,
+				newIsLikedByUser,
+				action
+		  }: {
+				newLikeCount: number;
+				newIsLikedByUser: boolean;
+				action: 'like' | 'unlike';
+		  }) => void)
+		| undefined = undefined;
 
 	$: srcHighest =
 		generation.selected_output.upscaled_image_url ?? generation.selected_output.image_url;
@@ -207,7 +219,7 @@
 	/>
 {/if}
 <!-- Barriers -->
-{#if cardType !== 'stage' && cardType !== 'generate' && cardType !== 'gallery' && cardType !== 'user-profile' && !generation.selected_output.is_deleted}
+{#if cardType !== 'stage' && cardType !== 'generate' && cardType !== 'gallery' && cardType !== 'user-profile' && !generation.selected_output.is_deleted && !(cardType === 'history' && $userGalleryCurrentView === 'likes')}
 	<div
 		class="absolute top-0 left-0 w-full h-24 bg-gradient-to-b
 		from-c-barrier/90 via-c-barrier/60 to-c-barrier/0
@@ -270,7 +282,8 @@
 			cardType === 'history' &&
 			$userGalleryCurrentView === 'favorites' &&
 			!generation.selected_output.is_favorited
-		)}
+		) &&
+		!(cardType === 'history' && $userGalleryCurrentView === 'likes')}
 	<div
 		class="w-full absolute left-0 top-0 pointer-events-none flex items-start {showLeftContainer
 			? 'justify-between'
@@ -312,7 +325,7 @@
 				class="flex flex-row flex-wrap items-center pr-1.5 pt-1.5
 				justify-end transition transform pointer-events-none gap-1.5"
 			>
-				{#if cardType !== 'admin-gallery'}
+				{#if (cardType !== 'admin-gallery' && cardType !== 'gallery' && cardType !== 'user-profile') || (cardType === 'user-profile' && generation.user.username === $userSummary?.username)}
 					<CopyButton
 						stringToCopy={generation.prompt.text}
 						bind:copied={promptCopied}
@@ -329,7 +342,7 @@
 						label="Generate similar to: {shortPrompt}..."
 					/>
 				{/if}
-				{#if (cardType === 'stage' || (cardType === 'history' && $userGalleryCurrentView !== 'favorites')) && cardWidth !== undefined && ((cardType === 'history' && cardWidth > 225) || (cardType === 'stage' && cardWidth > 180))}
+				{#if (cardType === 'stage' || (cardType === 'history' && $userGalleryCurrentView === 'all')) && cardWidth !== undefined && ((cardType === 'history' && cardWidth > 225) || (cardType === 'stage' && cardWidth > 180))}
 					<FavoriteButton
 						{generation}
 						modalType={cardType}
@@ -345,6 +358,15 @@
 						class="pointer-events-auto"
 					/>
 				{/if}
+				{#if cardType === 'gallery' || (cardType === 'user-profile' && generation.user.username !== $userSummary?.username)}
+					<LikeButton
+						{generation}
+						modalType={cardType}
+						type="on-image"
+						class="pointer-events-auto"
+						{onLikesChanged}
+					/>
+				{/if}
 			</div>
 		{:else if cardType === 'history' && $userGalleryCurrentView !== 'favorites' && generation.selected_output.is_favorited && !generation.selected_output.is_deleted}
 			<div class="p-1">
@@ -353,7 +375,7 @@
 		{/if}
 	</div>
 {/if}
-{#if (cardType === 'user-profile' && generation.selected_output.is_public === false) || generation.selected_output.is_deleted || (cardType === 'admin-gallery' && showAdminGalleryBarrier) || (cardType === 'history' && $userGalleryCurrentView === 'favorites' && !generation.selected_output.is_favorited)}
+{#if (cardType === 'user-profile' && generation.selected_output.is_public === false) || generation.selected_output.is_deleted || (cardType === 'admin-gallery' && showAdminGalleryBarrier) || (cardType === 'history' && $userGalleryCurrentView === 'favorites' && !generation.selected_output.is_favorited) || (cardType === 'history' && $userGalleryCurrentView === 'likes' && !generation.selected_output.is_liked)}
 	<!-- Deleted, approved, rejected or just hidden -->
 	{@const sizeClasses =
 		generation.height > generation.width
@@ -379,9 +401,9 @@
 			<IconEyeSlashOutline class="text-c-danger {sizeClasses}" />
 		{:else if generation.selected_output.is_deleted}
 			<IconTrashcan class="text-c-danger {sizeClasses}" />
-		{:else if generation.selected_output.gallery_status === 'approved'}
+		{:else if cardType === 'admin-gallery' && generation.selected_output.gallery_status === 'approved'}
 			<IconTick class="text-c-success {sizeClasses}" />
-		{:else if generation.selected_output.gallery_status === 'rejected'}
+		{:else if cardType === 'admin-gallery' && generation.selected_output.gallery_status === 'rejected'}
 			<IconCancelCircle class="text-c-danger {sizeClasses}" />
 		{/if}
 	</div>

@@ -127,11 +127,13 @@ const de: Translation = {
 		GenerationsTitle: 'Generierte Bilder',
 		GenerationsMaxSavedCountWarning: 'Nur die letzten {count}',
 		DownloadLegacyGenerationsButton: 'Legacy Generierungen herunterladen',
-		NoFavoritesYet: "You don't have any favorites yet.",
 		Views: {
 			AllTitle: 'All',
+			LikesTitle: 'Likes',
 			FavoritesTitle: 'Favorites'
 		},
+		NoFavoritesYet: "You don't have any favorites yet.",
+		NoLikesYet: "You haven't liked anything yet.",
 		NoGenerationsYet: 'Du hast noch keine Bilder generiert.'
 	},
 	Live: {

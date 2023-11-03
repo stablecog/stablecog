@@ -27,12 +27,12 @@
 	import BannerWrapper from '$components/navigation/navbar/BannerWrapper.svelte';
 	import SignInModal from '$components/SignInModal.svelte';
 	import RemainingCredits from '$components/navigation/navbar/RemainingCredits.svelte';
+	import { isSignInModalOpen } from '$ts/stores/isSignInModalOpen';
 
 	export let notAtTheVeryTop = false;
 	export let scrollDirection: 'up' | 'down' = 'down';
 	export let dirTree: Writable<TDirTreeItem[]> | undefined = undefined;
 
-	let isSignInModalOpen = false;
 	let isAccountMenuOpen = false;
 
 	const routesWithoutDrawer = ['/'];
@@ -216,7 +216,7 @@
 					</div>
 				{:else}
 					<div class="py-2.5">
-						<Button class="-mr-1" size="xs" onClick={() => (isSignInModalOpen = true)}>
+						<Button class="-mr-1" size="xs" onClick={() => isSignInModalOpen.set(true)}>
 							{$LL.SignIn.GetStartedButton()}
 						</Button>
 					</div>
@@ -226,10 +226,10 @@
 	</div>
 </nav>
 
-{#if isSignInModalOpen && (!$page.data.session?.user.id || !$userSummary)}
+{#if $isSignInModalOpen && (!$page.data.session?.user.id || !$userSummary)}
 	<SignInModal
 		redirectTo={($page.url.pathname === '/' ? '/generate' : $page.url.pathname) +
 			$searchParamsString}
-		onClickoutside={() => (isSignInModalOpen = false)}
+		onClickoutside={() => isSignInModalOpen.set(false)}
 	/>
 {/if}

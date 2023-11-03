@@ -32,4 +32,4 @@ export interface TUserGalleryActionableItem {
 	view: TUserGalleryView;
 }
 
-export type TUserGalleryView = 'all' | 'favorites';
+export type TUserGalleryView = 'all' | 'favorites' | 'likes';

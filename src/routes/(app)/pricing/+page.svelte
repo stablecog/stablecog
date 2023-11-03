@@ -603,10 +603,3 @@
 		</div>
 	</div>
 </PageWrapper>
-
-{#if isSignInModalOpen && !$page.data.session?.user.id}
-	<SignInModal
-		redirectTo={$page.url.pathname + $searchParamsString}
-		onClickoutside={() => (isSignInModalOpen = false)}
-	/>
-{/if}

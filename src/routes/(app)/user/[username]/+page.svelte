@@ -1,5 +1,4 @@
 <script lang="ts">
-	import { browser } from '$app/environment';
 	import { page } from '$app/stores';
 	import GenerationFullScreen from '$components/generationFullScreen/GenerationFullScreen.svelte';
 	import IconSearch from '$components/icons/IconSearch.svelte';
@@ -24,7 +23,10 @@
 		xlBreakpoint,
 		xxlBreakpoint
 	} from '$components/generationFullScreen/constants';
-	import { getSomeUserProfileInfiniteQueryProps } from '$routes/(app)/user/[username]/constants.js';
+	import {
+		getSomeUserProfileInfiniteQueryKey,
+		getSomeUserProfileInfiniteQueryProps
+	} from '$routes/(app)/user/[username]/constants.js';
 	import Avatar from '$components/avatar/Avatar.svelte';
 	import IconBirthday from '$components/icons/IconBirthday.svelte';
 	import IconStar from '$components/icons/IconStar.svelte';
@@ -36,8 +38,9 @@
 	import WithChangeUsernameModal from '$components/WithChangeUsernameModal.svelte';
 	import NoBgButton from '$components/buttons/NoBgButton.svelte';
 	import { getPreviewImageUrlForUserProfile } from '$ts/helpers/getPreviewImageUrl.js';
-	import { themeApp } from '$ts/stores/theme.js';
 	import { getImgProxySrc } from '$ts/helpers/imgproxy.js';
+	import { someUserProfileFullOutputsQueryKey } from '$ts/stores/user/queryKeys.js';
+	import IconFreePlan from '$components/icons/IconFreePlan.svelte';
 
 	export let data;
 	const { searchQuery: searchQueryParam } = data;
@@ -46,12 +49,22 @@
 
 	let modelIdFilters: TAvailableGenerationModelId[] = data.modelIds ?? [];
 
+	$: someUserProfileFullOutputsQueryKey.set(
+		getSomeUserProfileInfiniteQueryKey({
+			searchString,
+			modelIdFilters,
+			seed: $globalSeed,
+			username: data.username
+		})
+	);
+
 	$: galleryGenerationFullOutputsQuery = createInfiniteQuery(
 		getSomeUserProfileInfiniteQueryProps({
 			searchString,
 			modelIdFilters,
 			seed: $globalSeed,
-			username: data.username
+			username: data.username,
+			accessToken: $page.data.session?.access_token
 		})
 	);
 
@@ -100,6 +113,31 @@
 		month: 'short',
 		day: 'numeric'
 	});
+
+	$: numberFormatter = new Intl.NumberFormat($locale, {
+		style: 'decimal',
+		notation: 'compact',
+		maximumFractionDigits: 1
+	});
+
+	$: likes = data.userMetadata.likes;
+
+	function onLikesChanged({
+		newLikeCount,
+		newIsLikedByUser,
+		action
+	}: {
+		newLikeCount: number;
+		newIsLikedByUser: boolean;
+		action: 'like' | 'unlike';
+	}) {
+		if (data.userMetadata.username === $userSummary?.username) return;
+		if (action === 'like') {
+			likes++;
+		} else {
+			likes--;
+		}
+	}
 </script>
 
 <MetaTag
@@ -199,12 +237,12 @@
 					>
 						<div
 							class="flex items-center justify-center gap-1.5 ring-2
-							px-3 py-1 rounded-lg bg-c-primary/15 ring-c-primary/30"
+							px-3 py-1 rounded-lg bg-c-primary/10 ring-c-primary/20"
 						>
 							{#if data.userMetadata.active_product_id}
 								<IconStar class="w-5 h-5 -ml-1 flex-shrink-0 text-c-primary" />
 							{:else}
-								<IconHeart class="w-5 h-5 -ml-1 flex-shrink-0 text-c-primary" />
+								<IconFreePlan class="w-5 h-5 -ml-1 flex-shrink-0 text-c-primary" />
 							{/if}
 							<p
 								class="font-medium flex flex-shrink min-w-0 overflow-ellipsis overflow-hidden text-c-primary"
@@ -217,9 +255,20 @@
 						class="flex items-center justify-center gap-1.5 bg-c-bg-secondary
 						ring-2 ring-c-bg-tertiary px-3 py-1 rounded-lg shadow-lg shadow-c-shadow/[var(--o-shadow-strong)]"
 					>
-						<IconBirthday class="w-5 h-5 -ml-1 flex-shrink-0 text-c-on-bg/75" />
+						<IconHeart class="w-5 h-5 -ml-0.5 flex-shrink-0 text-c-on-bg" />
 						<p
-							class="font-medium flex flex-shrink min-w-0 text-c-on-bg/75 overflow-ellipsis overflow-hidden"
+							class="font-medium flex flex-shrink min-w-0 text-c-on-bg overflow-ellipsis overflow-hidden"
+						>
+							{numberFormatter.format(likes)}
+						</p>
+					</div>
+					<div
+						class="flex items-center justify-center gap-1.5 bg-c-bg-secondary
+						ring-2 ring-c-bg-tertiary px-3 py-1 rounded-lg shadow-lg shadow-c-shadow/[var(--o-shadow-strong)]"
+					>
+						<IconBirthday class="w-5 h-5 -ml-0.5 flex-shrink-0 text-c-on-bg" />
+						<p
+							class="font-medium flex flex-shrink min-w-0 text-c-on-bg overflow-ellipsis overflow-hidden"
 						>
 							{dateFormatter.format(new Date(data.userMetadata.created_at))}
 						</p>
@@ -276,6 +325,7 @@
 		{:else if galleryGenerationFullOutputsQuery !== undefined && $windowWidth}
 			<div class="w-full flex-1 mt-1 md:mt-0.5 flex flex-col">
 				<GenerationGridInfinite
+					{onLikesChanged}
 					cardType="user-profile"
 					generationsQuery={galleryGenerationFullOutputsQuery}
 					cols={$windowWidth >= xxlBreakpoint
@@ -304,6 +354,7 @@
 			: undefined}
 		generation={$activeGeneration}
 		{setSearchQuery}
+		{onLikesChanged}
 		modalType="user-profile"
 	/>
 {/if}

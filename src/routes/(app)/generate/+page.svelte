@@ -15,7 +15,7 @@
 		getUserGenerationFullOutputs,
 		type TUserGenerationFullOutputsPage
 	} from '$ts/queries/userGenerations';
-	import { generatePageUserGenerationFullOutputsQueryKey } from '$ts/stores/user/keys';
+	import { generatePageUserGenerationFullOutputsQueryKey } from '$ts/stores/user/queryKeys.js';
 	import { windowWidth } from '$ts/stores/window';
 	import SidebarWrapper from '$components/generate/SidebarWrapper.svelte';
 	import GenerationStage from '$components/generate/GenerationStage.svelte';
@@ -48,15 +48,13 @@
 	import { isLeftSidebarHidden, isLeftSidebarHiddenApp } from '$ts/stores/sidebars.js';
 	import { previewImageVersion } from '$ts/constants/previewImageVersion.js';
 	import { goto } from '$app/navigation';
-	import { searchParamsString } from '$ts/stores/searchParamsString.js';
 	import { lowOnCreditsThreshold } from '$ts/constants/credits.js';
 	import SettingsSheet from '$components/generate/SettingsSheet.svelte';
-	import SignInModal from '$components/SignInModal.svelte';
 	import { PUBLIC_OG_IMAGE_API_URL } from '$env/static/public';
+	import { isSignInModalOpen } from '$ts/stores/isSignInModalOpen.js';
 
 	export let data;
 
-	let isSignInModalOpen = false;
 	let isJustCreatedGenerationForAnim = false;
 	let promptBarHeight: number;
 	let stageWidth: number;
@@ -167,7 +165,8 @@
 			id: '',
 			image_url: '',
 			is_public: false,
-			was_auto_submitted: false
+			was_auto_submitted: false,
+			like_count: 0
 		})),
 		user: {
 			username: $userSummary?.username || ''
@@ -188,7 +187,7 @@
 	$: rightIndex = outputs && outputIndex < outputs?.length - 1 ? outputIndex + 1 : -1;
 
 	function openSignInModal() {
-		isSignInModalOpen = true;
+		isSignInModalOpen.set(true);
 	}
 
 	function onKeyDown({ key }: KeyboardEvent) {
@@ -246,7 +245,7 @@
 		if (data.is_sign_in_modal_open) {
 			tick();
 			setTimeout(() => {
-				isSignInModalOpen = true;
+				openSignInModal();
 			});
 		}
 	});
@@ -484,13 +483,6 @@
 				: undefined}
 			generation={$activeGeneration}
 			modalType="generate"
-		/>
-	{/if}
-
-	{#if isSignInModalOpen && (!$page.data.session?.user.id || !$userSummary)}
-		<SignInModal
-			redirectTo={'/generate' + $searchParamsString}
-			onClickoutside={() => (isSignInModalOpen = false)}
 		/>
 	{/if}
 </GenerationSettingsProvider>

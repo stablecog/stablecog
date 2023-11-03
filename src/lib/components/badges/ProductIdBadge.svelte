@@ -1,5 +1,5 @@
 <script lang="ts">
-	import IconHeart from '$components/icons/IconHeart.svelte';
+	import IconFreePlan from '$components/icons/IconFreePlan.svelte';
 	import IconStar from '$components/icons/IconStar.svelte';
 	import LL from '$i18n/i18n-svelte';
 	import type { TStripeSupportedProductIdSubscriptions } from '$ts/constants/stripePublic';
@@ -45,7 +45,7 @@
 				: 'gap-1.5 px-4 py-1.25'}"
 		>
 			{#if productId === undefined || productId === 'free'}
-				<IconHeart
+				<IconFreePlan
 					class="{size === 'sm'
 						? 'w-4 h-4 -ml-0.75'
 						: size === 'md'
@@ -90,7 +90,7 @@
 				: 'gap-1.5 px-4 py-1.25'}"
 		>
 			{#if productId === undefined || productId === 'free'}
-				<IconHeart
+				<IconFreePlan
 					class="{size === 'sm'
 						? 'w-4 h-4 -ml-0.75'
 						: size === 'md'

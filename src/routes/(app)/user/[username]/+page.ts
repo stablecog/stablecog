@@ -10,10 +10,12 @@ import {
 	getSomeUserProfileInfiniteQueryProps
 } from '$routes/(app)/user/[username]/constants';
 import { getOtherUserMetadata, type TOtherUserMetadata } from '$ts/queries/otherUserMetadata';
+import type { Session } from '@supabase/supabase-js';
 
 interface TParent {
 	queryClient: QueryClient;
 	globalSeed: number;
+	session: Session | undefined | null;
 }
 
 export const load: PageLoad = async ({ url, parent, params }) => {
@@ -24,7 +26,7 @@ export const load: PageLoad = async ({ url, parent, params }) => {
 	const outputIdShort = url.searchParams.get('o');
 	if (outputIdShort) throw redirect(302, `/gallery/o/${outputIdShort}`);
 
-	const { queryClient, globalSeed } = (await parent()) as TParent;
+	const { queryClient, globalSeed, session } = (await parent()) as TParent;
 	const searchQuery = url.searchParams.get('q');
 	const modelIdQuery = url.searchParams.get('mi');
 	const modelIds = modelIdQuery ? modelIdQuery.split(',') : [];
@@ -49,7 +51,8 @@ export const load: PageLoad = async ({ url, parent, params }) => {
 					searchString: searchQuery,
 					modelIdFilters: filteredModelIds,
 					seed: globalSeed,
-					username
+					username,
+					accessToken: session?.access_token
 				})
 			),
 			getOtherUserMetadata({ username, custom_fetch: fetch })

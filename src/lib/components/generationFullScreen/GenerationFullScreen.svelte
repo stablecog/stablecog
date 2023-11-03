@@ -1,10 +1,9 @@
 <script lang="ts">
-	import IconChatBubbleCancel from '$components/icons/IconChatBubbleCancel.svelte';
 	import ModalWrapper from '$components/ModalWrapper.svelte';
 	import { windowWidth } from '$ts/stores/window';
 	import { onDestroy, onMount } from 'svelte';
 	import { quadOut } from 'svelte/easing';
-	import { fly, scale } from 'svelte/transition';
+	import { fly } from 'svelte/transition';
 	import { getGenerationUrlFromParams } from '$ts/helpers/getGenerationUrlFromParams';
 	import { page } from '$app/stores';
 	import {
@@ -16,7 +15,7 @@
 	import Button from '$components/buttons/Button.svelte';
 	import IconUpscale from '$components/icons/IconUpscale.svelte';
 	import TabBar from '$components/tabBars/TabBar.svelte';
-	import LL, { locale } from '$i18n/i18n-svelte';
+	import LL from '$i18n/i18n-svelte';
 	import Container from '$components/generationFullScreen/Container.svelte';
 	import { activeGeneration, type TGenerationWithSelectedOutput } from '$userStores/generation';
 	import { sseId } from '$userStores/sse';
@@ -46,7 +45,6 @@
 	import SideButton from '$components/generationFullScreen/SideButton.svelte';
 	import { removeFromRecentlyUpdatedOutputIds } from '$ts/stores/user/recentlyUpdatedOutputIds';
 	import SrcsetProvider from '$components/generationImage/SrcsetProvider.svelte';
-	import WithTooltip from '$components/WithTooltip.svelte';
 	import SimilarOutputsSection from '$components/generationFullScreen/SimilarOutputsSection.svelte';
 	import ScrollAreaWithChevron from '$components/ScrollAreaWithChevron.svelte';
 	import UsernameButton from '$components/buttons/UsernameButton.svelte';
@@ -54,12 +52,25 @@
 	import { getQueuePositionFromId, queue } from '$ts/stores/user/queue';
 	import { isSuperAdmin } from '$ts/helpers/admin/roles';
 	import QueuePosition from '$components/QueuePosition.svelte';
+	import NegativePromptSection from '$components/generationFullScreen/NegativePromptSection.svelte';
+	import { userGalleryCurrentView } from '$ts/stores/user/gallery';
 
 	export let generation: TGenerationWithSelectedOutput;
 	export let modalType: TGenerationFullScreenModalType;
 	export let onLeftButtonClicked: (() => void) | undefined = undefined;
 	export let onRightButtonClicked: (() => void) | undefined = undefined;
 	export let setSearchQuery: ((query: string) => void) | undefined = undefined;
+	export let onLikesChanged:
+		| (({
+				newLikeCount,
+				newIsLikedByUser,
+				action
+		  }: {
+				newLikeCount: number;
+				newIsLikedByUser: boolean;
+				action: 'like' | 'unlike';
+		  }) => void)
+		| undefined = undefined;
 
 	let buttonLeft: HTMLButtonElement;
 	let buttonRight: HTMLButtonElement;
@@ -95,8 +106,12 @@
 		? generation.selected_output.upscaled_image_url
 		: generation.selected_output.image_url;
 
-	let upscaledImageWidth: number | undefined;
-	let upscaledImageHeight: number | undefined;
+	$: upscaledImageWidth = generation.selected_output.upscaled_image_url
+		? generation.width * 4
+		: undefined;
+	$: upscaledImageHeight = generation.selected_output.upscaled_image_url
+		? generation.height * 4
+		: undefined;
 
 	$: generation.selected_output, onGenerationChanged();
 	$: selectedOutputId = generation.selected_output.id;
@@ -145,8 +160,6 @@
 		currentImageUrl =
 			generation.selected_output.upscaled_image_url ?? generation.selected_output.image_url;
 		if (generation.selected_output.upscaled_image_url) upscaledTabValue = 'upscaled';
-		upscaledImageWidth = undefined;
-		upscaledImageHeight = undefined;
 		buttonObjectsWithState = { ...initialButtonObjectsWithState };
 		const { seed, selected_output, ...rest } = generation;
 		generateSimilarUrl = getGenerationUrlFromParams(rest);
@@ -256,19 +269,6 @@
 			currentImageUrl = generation.selected_output.image_url;
 		}
 	}
-
-	const onImageLoad = (e: Event) => {
-		const target = e.target as HTMLImageElement;
-		if (generation.width !== target.naturalWidth && generation.selected_output.upscaled_image_url) {
-			upscaledImageWidth = target.naturalWidth;
-		}
-		if (
-			generation.height !== target.naturalHeight &&
-			generation.selected_output.upscaled_image_url
-		) {
-			upscaledImageHeight = target.naturalHeight;
-		}
-	};
 
 	const onPopState: any = (e: any) => {
 		const searchParams = new URLSearchParams(e.currentTarget.location.search);
@@ -400,13 +400,16 @@
 							backgroundImageWidth={generation.width}
 							backgroundImageHeight={generation.height}
 							imageUrl={currentImageUrl}
-							imageWidth={upscaledTabValue === 'upscaled' && upscaledImageWidth
+							imageWidth={upscaledTabValue === 'upscaled' &&
+							upscaledImageWidth &&
+							generation.selected_output.upscaled_image_url
 								? upscaledImageWidth
 								: generation.width}
-							imageHeight={upscaledTabValue === 'upscaled' && upscaledImageHeight
+							imageHeight={upscaledTabValue === 'upscaled' &&
+							upscaledImageHeight &&
+							generation.selected_output.upscaled_image_url
 								? upscaledImageHeight
 								: generation.height}
-							{onImageLoad}
 							cardType={modalType}
 						/>
 					{/key}
@@ -460,7 +463,7 @@
 						onClick={onRightButtonClicked}
 					/>
 				{/if}
-				{#if modalType === 'history' || modalType === 'generate'}
+				{#if (modalType === 'history' && $userGalleryCurrentView !== 'likes') || modalType === 'generate'}
 					<div class="absolute right-1.5 top-1.5 pointer-events-auto z-10">
 						<FavoriteButton {generation} {modalType} />
 					</div>
@@ -523,22 +526,9 @@
 						<div class="w-full break-words flex flex-col items-start gap-3">
 							<p class="w-full leading-normal">{generation.prompt.text}</p>
 							{#if generation.negative_prompt}
-								<div class="w-full flex items-start text-c-danger gap-2">
-									<WithTooltip
-										title={$LL.Home.NegativePromptInput.Title()}
-										paragraph={$LL.Home.NegativePromptInput.Paragraph()}
-										let:trigger
-										let:triggerStoreValue
-										color="bg-tertiary"
-									>
-										<div tabindex="-1" use:trigger {...triggerStoreValue} class="cursor-default">
-											<IconChatBubbleCancel class="w-5 h-5" />
-										</div>
-									</WithTooltip>
-									<p class="flex-shrink min-w-0 leading-normal -mt-0.75">
-										{generation.negative_prompt.text}
-									</p>
-								</div>
+								{#key generation.id}
+									<NegativePromptSection negativePrompt={generation.negative_prompt.text} />
+								{/key}
 							{/if}
 						</div>
 						{#key generation.selected_output.id}
@@ -550,6 +540,7 @@
 								{currentImageUrl}
 								{setSearchQuery}
 								{modalType}
+								{onLikesChanged}
 								{setButtonObjectWithState}
 								bind:shareButtonPortalBarrier
 								bind:shareButtonPortalContent

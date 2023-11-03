@@ -24,8 +24,12 @@
 		xlBreakpoint,
 		xxlBreakpoint
 	} from '$components/generationFullScreen/constants';
-	import { getGalleryInfiniteQueryProps } from '$routes/(app)/gallery/constants';
+	import {
+		getGalleryInfiniteQueryKey,
+		getGalleryInfiniteQueryProps
+	} from '$routes/(app)/gallery/constants';
 	import { previewImageVersion } from '$ts/constants/previewImageVersion.js';
+	import { galleryGenerationFullOutputsQueryKey } from '$ts/stores/user/queryKeys.js';
 
 	export let data;
 	const { searchQuery: searchQueryParam } = data;
@@ -34,9 +38,22 @@
 
 	let modelIdFilters: TAvailableGenerationModelId[] = data.modelIds ?? [];
 
+	$: galleryGenerationFullOutputsQueryKey.set(
+		getGalleryInfiniteQueryKey({
+			searchString,
+			modelIdFilters,
+			seed: $globalSeed
+		})
+	);
+
 	$: galleryGenerationFullOutputsQuery = browser
 		? createInfiniteQuery(
-				getGalleryInfiniteQueryProps({ searchString, modelIdFilters, seed: $globalSeed })
+				getGalleryInfiniteQueryProps({
+					searchString,
+					modelIdFilters,
+					seed: $globalSeed,
+					accessToken: $page.data.session?.access_token
+				})
 		  )
 		: undefined;
 
