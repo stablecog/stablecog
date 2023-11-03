@@ -236,8 +236,8 @@ const squarish = {
 		height: '840'
 	},
 	large: {
-		width: '1024',
-		height: '1280'
+		width: '896',
+		height: '1120'
 	}
 } as const;
 
