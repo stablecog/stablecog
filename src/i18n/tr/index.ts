@@ -140,11 +140,11 @@ const tr: Translation = {
 		DownloadLegacyGenerationsButton: 'Eski Üretimleri İndir',
 		Views: {
 			AllTitle: 'Hepsi',
-			LikesTitle: 'Likes',
+			LikesTitle: 'Beğeniler',
 			FavoritesTitle: 'Favoriler'
 		},
 		NoFavoritesYet: 'Henüz favorin yok.',
-		NoLikesYet: "You haven't liked anything yet.",
+		NoLikesYet: 'Henüz bir şey beğenmedin.',
 		NoGenerationsYet: 'Henüz fotoğraf üretmedin.'
 	},
 	Live: {
@@ -245,7 +245,10 @@ const tr: Translation = {
 		ReadMoreTitle: 'Okumaya Devam Et',
 		BackToBlogButton: 'Bloğa Dön'
 	},
-	Redirect: { RedirectingTitle: 'Redirecting', RedirectingToTitle: 'Yönlendiriliyor: {name}' },
+	Redirect: {
+		RedirectingTitle: 'Yönlendiriliyor',
+		RedirectingToTitle: 'Yönlendiriliyor: {name}'
+	},
 	Shared: {
 		StartGeneratingTitle: 'Süper fotoğraflar üretmeye hemen başla!',
 		StartGeneratingButton: 'Üretmeye Başla',
@@ -286,7 +289,7 @@ const tr: Translation = {
 		ResourcesButton: 'Kaynaklar',
 		On: 'Açık',
 		Off: 'Kapalı',
-		FeatureNoLongerAvailableParagraph: 'This feature is no longer available.',
+		FeatureNoLongerAvailableParagraph: 'Bu özellik artık mevcut değil.',
 		BetaTitle: 'Beta',
 		ConfirmQuestionMarkButton: 'Onayla?',
 		Credits: {
