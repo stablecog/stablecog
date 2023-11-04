@@ -41,6 +41,7 @@
 	import { getImgProxySrc } from '$ts/helpers/imgproxy.js';
 	import { someUserProfileFullOutputsQueryKey } from '$ts/stores/user/queryKeys.js';
 	import IconFreePlan from '$components/icons/IconFreePlan.svelte';
+	import ProfileCardBadge from '$routes/(app)/user/[username]/ProfileCardBadge.svelte';
 
 	export let data;
 	const { searchQuery: searchQueryParam } = data;
@@ -232,47 +233,16 @@
 				<div
 					class="w-full flex flex-wrap items-center justify-start gap-3 px-2 mt-2 md:mt-2.5 relative"
 				>
-					<div
-						class="bg-c-bg-secondary rounded-lg shadow-lg shadow-c-shadow/[var(--o-shadow-strong)]"
-					>
-						<div
-							class="flex items-center justify-center gap-1.5 ring-2
-							px-3 py-1 rounded-lg bg-c-primary/10 ring-c-primary/20"
-						>
-							{#if data.userMetadata.active_product_id}
-								<IconStar class="w-5 h-5 -ml-1 flex-shrink-0 text-c-primary" />
-							{:else}
-								<IconFreePlan class="w-5 h-5 -ml-1 flex-shrink-0 text-c-primary" />
-							{/if}
-							<p
-								class="font-medium flex flex-shrink min-w-0 overflow-ellipsis overflow-hidden text-c-primary"
-							>
-								{getTitleFromProductId($LL, data.userMetadata.active_product_id)}
-							</p>
-						</div>
-					</div>
-					<div
-						class="flex items-center justify-center gap-1.5 bg-c-bg-secondary
-						ring-2 ring-c-bg-tertiary px-3 py-1 rounded-lg shadow-lg shadow-c-shadow/[var(--o-shadow-strong)]"
-					>
-						<IconHeart class="w-5 h-5 -ml-0.5 flex-shrink-0 text-c-on-bg" />
-						<p
-							class="font-medium flex flex-shrink min-w-0 text-c-on-bg overflow-ellipsis overflow-hidden"
-						>
-							{numberFormatter.format(likes)}
-						</p>
-					</div>
-					<div
-						class="flex items-center justify-center gap-1.5 bg-c-bg-secondary
-						ring-2 ring-c-bg-tertiary px-3 py-1 rounded-lg shadow-lg shadow-c-shadow/[var(--o-shadow-strong)]"
-					>
-						<IconBirthday class="w-5 h-5 -ml-0.5 flex-shrink-0 text-c-on-bg" />
-						<p
-							class="font-medium flex flex-shrink min-w-0 text-c-on-bg overflow-ellipsis overflow-hidden"
-						>
-							{dateFormatter.format(new Date(data.userMetadata.created_at))}
-						</p>
-					</div>
+					<ProfileCardBadge
+						icon={data.userMetadata.active_product_id ? IconStar : IconFreePlan}
+						text={getTitleFromProductId($LL, data.userMetadata.active_product_id)}
+						type="primary"
+					/>
+					<ProfileCardBadge icon={IconHeart} text={numberFormatter.format(likes)} />
+					<ProfileCardBadge
+						icon={IconBirthday}
+						text={dateFormatter.format(new Date(data.userMetadata.created_at))}
+					/>
 				</div>
 			</div>
 		</div>
