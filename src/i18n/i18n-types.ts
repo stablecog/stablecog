@@ -878,6 +878,10 @@ type RootTranslation = {
 		 */
 		Off: string
 		/**
+		 * T​h​i​s​ ​f​e​a​t​u​r​e​ ​i​s​ ​n​o​ ​l​o​n​g​e​r​ ​a​v​a​i​l​a​b​l​e​.
+		 */
+		FeatureNoLongerAvailableParagraph: string
+		/**
 		 * B​e​t​a
 		 */
 		BetaTitle: string
@@ -4067,6 +4071,10 @@ export type TranslationFunctions = {
 		 * Off
 		 */
 		Off: () => LocalizedString
+		/**
+		 * This feature is no longer available.
+		 */
+		FeatureNoLongerAvailableParagraph: () => LocalizedString
 		/**
 		 * Beta
 		 */

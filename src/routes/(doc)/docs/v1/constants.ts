@@ -76,38 +76,6 @@ const _sidebar: TSidebarItemBase = {
 					]
 				},
 				{
-					title: 'Audio',
-					pathname: '/docs/v1/api-reference/audio',
-					children: [
-						{
-							title: 'Voiceover',
-							pathname: '/docs/v1/api-reference/audio/voiceover',
-							children: [
-								{
-									title: 'Create',
-									pathname: '/docs/v1/api-reference/audio/voiceover/create',
-									http_method: 'POST'
-								},
-								{
-									title: 'Outputs',
-									pathname: '/docs/v1/api-reference/audio/voiceover/outputs',
-									http_method: 'GET'
-								},
-								{
-									title: 'Models',
-									pathname: '/docs/v1/api-reference/audio/voiceover/models',
-									http_method: 'GET'
-								},
-								{
-									title: 'Defaults',
-									pathname: '/docs/v1/api-reference/audio/voiceover/defaults',
-									http_method: 'GET'
-								}
-							]
-						}
-					]
-				},
-				{
 					title: 'Credits',
 					pathname: '/docs/v1/api-reference/credits'
 				}

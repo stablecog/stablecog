@@ -286,6 +286,7 @@ const es: Translation = {
 		ResourcesButton: 'Πόροι',
 		On: 'Ενεργό',
 		Off: 'Ανενεργό',
+		FeatureNoLongerAvailableParagraph: 'This feature is no longer available.',
 		BetaTitle: 'Δοκιμαστική Έκδοση',
 		ConfirmQuestionMarkButton: 'Επιβεβαίωση;',
 		Credits: {

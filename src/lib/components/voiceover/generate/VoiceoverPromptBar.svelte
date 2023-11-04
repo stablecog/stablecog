@@ -43,6 +43,7 @@
 	export let toggleSettingsSheet: (s?: boolean) => void;
 	export let openSignInModal: () => void;
 	export let isSettingsSheetOpen: boolean;
+	export let disabled = false;
 
 	$: creditCost = getVoiceoverCreditCost(
 		$voiceoverPrompt || $LL.Voiceover.PromptBar.PromptInput.Placeholder()
@@ -177,6 +178,7 @@
 	>
 		<div class="flex-1 flex relative group">
 			<textarea
+				{disabled}
 				on:focus={() => (isPromptBarFocused = true)}
 				on:blur={() => (isPromptBarFocused = false)}
 				use:autoresize={{
@@ -193,8 +195,8 @@
 				style="transition: height 0.1s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.2s cubic-bezier(0.4, 0, 0.2, 1), padding 0.2s cubic-bezier(0.4, 0, 0.2, 1)"
 				class="w-full text-base bg-c-bg-secondary shadow-lg shadow-c-shadow/[var(--o-shadow-normal)] pr-20 md:pr-26 lg:pr-17 hide-scrollbar
 							scroll-smooth resize-none transition relative pl-2.5 md:pl-5 py-1.75 md:py-4.5 rounded-lg md:rounded-xl
-							focus:ring-2 focus:ring-c-primary/30 ring-0 ring-c-primary/20 placeholder:text-c-on-bg/40
-							not-touch:enabled:hover:ring-2 text-c-on-bg not-touch:group-hover:ring-2"
+							enabled:focus:ring-2 focus:ring-c-primary/30 ring-0 ring-c-primary/20 placeholder:text-c-on-bg/40
+							not-touch:enabled:hover:ring-2 text-c-on-bg not-touch:enabled:group-hover:ring-2"
 			/>
 			<div class="flex h-full flex-col absolute right-11 top-0">
 				<ClearButton class="" show={showClearPromptInputButton} onClick={clearPrompt} />
@@ -209,9 +211,9 @@
 			</div>
 			<div class="absolute right-0 top-0 h-full w-11 md:w-13 lg:hidden">
 				<Button
-					fadeOnDisabled={doesntHaveEnoughCredits}
+					fadeOnDisabled={doesntHaveEnoughCredits || disabled}
 					loading={$maxOngoingVoiceoversCountReached}
-					disabled={doesntHaveEnoughCredits}
+					disabled={doesntHaveEnoughCredits || disabled}
 					withSpinner
 					class="w-full h-full rounded-r-lg md:rounded-r-xl rounded-l-none absolute right-0 top-0"
 					noPadding
@@ -259,11 +261,14 @@
 <form
 	on:submit|preventDefault={onSubmit}
 	class="hidden md:flex w-full max-h-full flex-row md:flex-col rounded-lg md:rounded-2xl
-	overflow-hidden relative md:shadow-lg md:shadow-c-shadow/[var(--o-shadow-strong)] bg-c-bg-secondary transition focus-within:ring-2 focus-within:ring-c-primary/30
-	ring-0 ring-c-primary/20 not-touch:enabled:hover:ring-2 text-c-on-bg not-touch:hover:ring-2"
+	overflow-hidden relative md:shadow-lg md:shadow-c-shadow/[var(--o-shadow-strong)] bg-c-bg-secondary transition focus-within:ring-c-primary/30
+	ring-0 ring-c-primary/20 {!disabled
+		? 'not-touch:enabled:hover:ring-2 text-c-on-bg not-touch:hover:ring-2 focus-within:ring-2'
+		: ''}"
 >
 	<div class="w-full flex-1 min-h-0 flex flex-col relative">
 		<textarea
+			{disabled}
 			bind:value={$voiceoverPrompt}
 			bind:this={promptInputElementMd}
 			placeholder={$LL.Voiceover.PromptBar.PromptInput.Placeholder()}
@@ -322,9 +327,9 @@
 					noPadding
 					noRounding
 					blurOnClick
-					fadeOnDisabled={doesntHaveEnoughCredits}
+					fadeOnDisabled={doesntHaveEnoughCredits || disabled}
 					loading={$maxOngoingVoiceoversCountReached}
-					disabled={doesntHaveEnoughCredits}
+					disabled={doesntHaveEnoughCredits || disabled}
 					class="pointer-events-auto px-8 py-3.5 rounded-xl"
 				>
 					{$LL.Voiceover.PromptBar.GenerateButton()}

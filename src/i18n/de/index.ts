@@ -275,6 +275,7 @@ const de: Translation = {
 		ResourcesButton: 'Resources',
 		On: 'On',
 		Off: 'Off',
+		FeatureNoLongerAvailableParagraph: 'This feature is no longer available.',
 		BetaTitle: 'Beta',
 		ConfirmQuestionMarkButton: 'Confirm?',
 		Credits: {

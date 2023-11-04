@@ -286,6 +286,7 @@ const tr: Translation = {
 		ResourcesButton: 'Kaynaklar',
 		On: 'Açık',
 		Off: 'Kapalı',
+		FeatureNoLongerAvailableParagraph: 'This feature is no longer available.',
 		BetaTitle: 'Beta',
 		ConfirmQuestionMarkButton: 'Onayla?',
 		Credits: {

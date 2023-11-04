@@ -48,6 +48,8 @@
 	import { lowOnCreditsThreshold } from '$ts/constants/credits.js';
 	import VoiceoverSettingsSheet from '$components/voiceover/generate/VoiceoverSettingsSheet.svelte';
 	import { isSignInModalOpen } from '$ts/stores/isSignInModalOpen.js';
+	import IllustrationDeprecated from '$components/illustrations/IllustrationDeprecated.svelte';
+	import Logo from '$components/Logo.svelte';
 
 	export let data;
 
@@ -283,8 +285,13 @@
 							class="w-full bg-c-bg md:bg-transparent
 							pb-[calc(env(safe-area-inset-bottom)+0.75rem)] md:pb-3.75 z-40"
 						>
-							<div class="w-full flex flex-col md:max-h-[30vh] md:min-h-[12rem] px-2 md:px-0">
-								<VoiceoverPromptBar {openSignInModal} {toggleSettingsSheet} {isSettingsSheetOpen} />
+							<div class="w-full flex flex-col md:max-h-[15vh] md:min-h-[12rem] px-2 md:px-0">
+								<VoiceoverPromptBar
+									disabled={true}
+									{openSignInModal}
+									{toggleSettingsSheet}
+									{isSettingsSheetOpen}
+								/>
 							</div>
 						</div>
 					</div>
@@ -300,11 +307,21 @@
 					</div>
 				{/if}
 				<div
-					class="w-full flex flex-col justify-start flex-1 min-h-0 relative z-30 md:z-40 order-first md:order-last"
+					class="w-full flex flex-col justify-start flex-1 my-auto min-h-0 relative z-30 md:z-40 order-first md:order-last"
 				>
-					<div class="w-full flex-1 min-h-0 flex flex-col justify-start px-2 pb-4 md:p-0">
-						<div class="flex-1 min-h-0 w-full flex flex-col relative">
-							<AudioPlayerWithWaveform voiceover={$voiceovers[0]} />
+					<div class="w-full flex-1 min-h-0 flex flex-col justify-start px-2 pb-4 md:p-0 my-auto">
+						<div
+							class="flex-shrink min-h-0 w-full my-auto flex flex-col items-center relative pt-4 md:pt-6 pb-[calc(3vh+1rem)]"
+						>
+							<p class="text-center px-5 opacity-75 font-medium md:text-lg max-w-md">
+								{$LL.Shared.FeatureNoLongerAvailableParagraph()}
+							</p>
+							<div
+								class="max-w-full flex-shrink min-h-0 w-[min(33%,12rem)] max-h-full flex items-center justify-center mt-8"
+							>
+								<IllustrationDeprecated class="opacity-75 max-w-full max-h-full w-auto h-auto" />
+							</div>
+							<!-- <AudioPlayerWithWaveform voiceover={$voiceovers[0]} /> -->
 						</div>
 					</div>
 					<div class="w-full hidden md:block lg:hidden pt-4">

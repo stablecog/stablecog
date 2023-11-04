@@ -286,6 +286,7 @@ const ja: Translation = {
 		ResourcesButton: 'リソース',
 		On: 'On',
 		Off: 'Off',
+		FeatureNoLongerAvailableParagraph: 'This feature is no longer available.',
 		BetaTitle: 'Beta',
 		ConfirmQuestionMarkButton: '確定しますか？',
 		Credits: {
