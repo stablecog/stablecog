@@ -309,7 +309,7 @@
 				>
 					<div class="w-full flex-1 min-h-0 flex flex-col justify-start px-2 pb-4 md:p-0 my-auto">
 						<div
-							class="flex-shrink min-h-0 w-full my-auto flex flex-col items-center relative pt-4 md:pt-6 pb-[calc(3vh+1rem)]"
+							class="flex-shrink min-h-0 w-full my-auto flex flex-col items-center relative pt-4 md:pt-8 pb-[calc(1vh+1rem)] md:pb-[calc(3vh+1rem)]"
 						>
 							<p class="text-center px-5 opacity-75 font-medium md:text-lg max-w-md">
 								{$LL.Shared.FeatureNoLongerAvailableParagraph()}
