@@ -2,7 +2,6 @@
 	import { page } from '$app/stores';
 	import AutoSize from '$components/AutoSize.svelte';
 	import LowOnCreditsCard from '$components/LowOnCreditsCard.svelte';
-	import AudioPlayerWithWaveform from '$components/voiceover/audioPlayer/audioPlayerWithWaveform/AudioPlayerWithWaveform.svelte';
 	import SidebarCollapseButton from '$components/generate/SidebarCollapseButton.svelte';
 	import SidebarWrapper from '$components/generate/SidebarWrapper.svelte';
 	import { mdBreakpoint, xlBreakpoint } from '$components/generationFullScreen/constants.js';
@@ -49,7 +48,6 @@
 	import VoiceoverSettingsSheet from '$components/voiceover/generate/VoiceoverSettingsSheet.svelte';
 	import { isSignInModalOpen } from '$ts/stores/isSignInModalOpen.js';
 	import IllustrationDeprecated from '$components/illustrations/IllustrationDeprecated.svelte';
-	import Logo from '$components/Logo.svelte';
 
 	export let data;
 

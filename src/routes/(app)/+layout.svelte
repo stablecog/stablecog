@@ -4,10 +4,10 @@
 	import LayoutWrapper from '$components/LayoutWrapper.svelte';
 	import UnderDevelopment from '$components/UnderDevelopment.svelte';
 	import UpdateAvailableCard from '$components/UpdateAvailableCard.svelte';
-	import UserSummaryProvider from '$components/userSummary/UserSummaryProvider.svelte';
 	import Drawer from '$components/navigation/Drawer.svelte';
 	import Footer from '$components/navigation/Footer.svelte';
 	import Navbar from '$components/navigation/navbar/Navbar.svelte';
+	import UserSummaryProvider from '$components/userSummary/UserSummaryProvider.svelte';
 	import { locale } from '$i18n/i18n-svelte';
 	import { apiUrl } from '$ts/constants/main';
 	import {
@@ -16,10 +16,14 @@
 		routesWithTheirOwnDrawer,
 		sseExcludedRoutes
 	} from '$ts/constants/routes';
+	import { underDevelopment } from '$ts/constants/underDevelopment';
 	import { isSuperAdmin } from '$ts/helpers/admin/roles';
 	import { generateSSEId } from '$ts/helpers/generateSSEId';
 	import { logInitImageAdded } from '$ts/helpers/loggers';
-	import { advancedModeApp } from '$ts/stores/advancedMode';
+	import {
+		isCreationProcessData,
+		setCreationProcessStatus
+	} from '$ts/helpers/user/creationProcess.js';
 	import { appVersion, serverVersion } from '$ts/stores/appVersion';
 	import {
 		generationInitImageFiles,
@@ -30,9 +34,8 @@
 		generationInitImageUrl,
 		generationInitImageWidth
 	} from '$ts/stores/generationSettings';
-	import { navbarHeight } from '$ts/stores/navbarHeight';
 	import { navbarStickyType } from '$ts/stores/navbar';
-	import { underDevelopment } from '$ts/constants/underDevelopment';
+	import { navbarHeight } from '$ts/stores/navbarHeight';
 	import {
 		activeGeneration,
 		generations,
@@ -41,12 +44,8 @@
 		setGenerationToServerReceived,
 		submitInitialGenerationRequest
 	} from '$ts/stores/user/generation';
-	import {
-		sse,
-		sseId,
-		type TSSECreationProcessMessage,
-		type TSSEMessage
-	} from '$ts/stores/user/sse';
+	import { queue } from '$ts/stores/user/queue.js';
+	import { sse, sseId, type TSSEMessage } from '$ts/stores/user/sse';
 	import { userSummary } from '$ts/stores/user/summary';
 	import {
 		setUpscaleToFailed,
@@ -56,23 +55,11 @@
 	} from '$ts/stores/user/upscale';
 	import { QueryClientProvider } from '@tanstack/svelte-query';
 	import { onMount } from 'svelte';
-	import {
-		isCreationProcessData,
-		setCreationProcessStatus
-	} from '$ts/helpers/user/creationProcess.js';
-	import {
-		setVoiceoverToFailed,
-		setVoiceoverToServerReceived,
-		submitInitialVoiceoverRequest,
-		voiceovers
-	} from '$ts/stores/user/voiceovers.js';
-	import { queue } from '$ts/stores/user/queue.js';
 
 	export let data;
 
 	$: $generations, onGenerationsChanged();
 	$: $upscales, onUpscalesChanged();
-	$: $voiceovers, onVoiceoversChanged();
 	$: isDrawerRoute =
 		!routesWithTheirOwnDrawer.includes($page.url.pathname) &&
 		!routesWithTheirOwnDrawer.some((r) => $page.url.pathname.startsWith(r));
@@ -237,55 +224,6 @@
 				} finally {
 					isSubmittingUpscales = false;
 				}
-			}
-		}
-	}
-
-	let isSubmittingVoiceovers = false;
-	async function onVoiceoversChanged() {
-		if (isSubmittingVoiceovers) return;
-		if (!$voiceovers || $voiceovers.length === 0) {
-			return;
-		}
-		if (!$page.data.session?.access_token) {
-			console.log('No access token, not submitting initial voiceover request');
-			return;
-		}
-		if ($sseId === null) {
-			console.log('Stream id is null, not submitting initial voiceover request');
-			return;
-		}
-		for (let i = 0; i < $voiceovers.length; i++) {
-			const voiceover = $voiceovers[i];
-			if (voiceover.status !== 'to-be-submitted') continue;
-			if (voiceover.is_placeholder) continue;
-			isSubmittingVoiceovers = true;
-			try {
-				console.log('Submitting initial voiceover request', voiceover);
-				const res = await submitInitialVoiceoverRequest(
-					{
-						...voiceover,
-						stream_id: $sseId
-					},
-					$page.data.session.access_token,
-					$appVersion
-				);
-				const { id, error, total_remaining_credits, ui_id } = res;
-				if (total_remaining_credits !== undefined && $userSummary) {
-					userSummary.set({ ...$userSummary, total_remaining_credits });
-				}
-				if (error || !id || !ui_id) {
-					console.log('Voiceover failed:', error);
-					setVoiceoverToFailed({ id: voiceover.id || voiceover.ui_id, error: error });
-				} else {
-					setVoiceoverToServerReceived({ ui_id: ui_id, id: id });
-				}
-			} catch (error) {
-				const err = error as Error;
-				console.log('Initial voiceover submisssion error', error);
-				setVoiceoverToFailed({ id: voiceover.id || voiceover.ui_id, error: err.message });
-			} finally {
-				isSubmittingVoiceovers = false;
 			}
 		}
 	}
