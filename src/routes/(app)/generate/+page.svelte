@@ -52,6 +52,8 @@
 	import SettingsSheet from '$components/generate/SettingsSheet.svelte';
 	import { PUBLIC_OG_IMAGE_API_URL } from '$env/static/public';
 	import { isSignInModalOpen } from '$ts/stores/isSignInModalOpen.js';
+	import { writable } from 'svelte/store';
+	import WithChangeUsernameModal from '$components/WithChangeUsernameModal.svelte';
 
 	export let data;
 
@@ -249,6 +251,16 @@
 			});
 		}
 	});
+
+	const isSetUsernameModalOpen = writable(false);
+	$: $userSummary, onUserSummaryChanged();
+
+	function onUserSummaryChanged() {
+		if (!browser) return;
+		if (!$userSummary) return;
+		if ($userSummary.username_changed_at !== undefined) return;
+		isSetUsernameModalOpen.set(true);
+	}
 
 	$: meta = {
 		title:
@@ -484,5 +496,9 @@
 			generation={$activeGeneration}
 			modalType="generate"
 		/>
+	{/if}
+
+	{#if $isSetUsernameModalOpen}
+		<WithChangeUsernameModal type="set" isOpen={isSetUsernameModalOpen} />
 	{/if}
 </GenerationSettingsProvider>

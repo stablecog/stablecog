@@ -84,7 +84,9 @@
 			};
 			$sse.onmessage = (event) => {
 				const data = JSON.parse(event.data);
-				console.log('Message from SSE', data);
+				if (data && data.message_type !== 'queue') {
+					console.log('Message from SSE', data);
+				}
 				if (data.total_remaining_credits !== undefined && $userSummary) {
 					userSummary.set({
 						...$userSummary,

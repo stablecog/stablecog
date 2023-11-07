@@ -561,6 +561,7 @@ const nl: Translation = {
 	ChangeUsername: {
 		ChangeUsernameTitle: 'Change Username',
 		ChangeUsernameButton: 'Change Username',
+		PickUsernameTitle: 'Pick a username',
 		UsernameInput: { Title: 'Username' },
 		Error: {
 			MinimumCharacters: 'Must be at least {count} characters.',

@@ -16,19 +16,20 @@
 	import { logUsernameChanged } from '$ts/helpers/loggers';
 	import { appVersion } from '$ts/stores/appVersion';
 	import { onMount } from 'svelte';
+	import { writable } from 'svelte/store';
 
 	export let afterUsernameChanged: ((username: string) => Promise<void>) | undefined = undefined;
 	export let dontCloseOnSuccess = false;
+	export let isOpen = writable(false);
+	export let type: 'change' | 'set' = 'change';
 
 	const {
 		elements: { trigger, close, content, overlay, title, portalled },
 		states: { open },
 		options
-	} = createDialog();
+	} = createDialog({ open: isOpen });
 
-	let usernameInputValue = $userSummary?.username || '';
-
-	$: schema = z.object({
+	const schema = z.object({
 		username: z
 			.string()
 			.min(3, $LL.ChangeUsername.Error.MinimumCharacters({ count: 3 }))
@@ -38,25 +39,32 @@
 			}, $LL.ChangeUsername.Error.InvalidCharacters())
 	});
 
-	$: usernameFormObj = createForm<z.infer<typeof schema>>({
-		initialValues: { username: $userSummary?.username },
+	let { form, data, errors, isSubmitting, setInitialValues } = createForm<z.infer<typeof schema>>({
+		initialValues: {
+			username:
+				type === 'set' ? '' : $userSummary?.username !== undefined ? $userSummary.username : ''
+		},
 		onSubmit: async (values) => {
 			await onSubmit(values.username);
 		},
-		onError: () => {
+		onError: (e) => {
 			return { username: [$LL.ChangeUsername.Error.NotAvailable()] };
 		},
 		extend: [validator({ schema }), validator({ schema, level: 'warning' })]
 	});
-	$: usernameForm = usernameFormObj.form;
-	$: usernameFormErrors = usernameFormObj.errors;
-	$: isSubmittingUsernameForm = usernameFormObj.isSubmitting;
 
-	$: $open, onOpenChanged();
-	$: $isSubmittingUsernameForm, enableOrDisableEasyClose();
+	$: [$userSummary], resetForm();
+
+	function resetForm() {
+		if (!$userSummary?.username) return;
+		if (type === 'set') return;
+		setInitialValues({ username: $userSummary.username });
+	}
+
+	$: $isSubmitting, enableOrDisableEasyClose();
 
 	function enableOrDisableEasyClose() {
-		if ($isSubmittingUsernameForm) {
+		if ($isSubmitting) {
 			disableEasyClose();
 		} else {
 			enableEasyClose();
@@ -88,30 +96,23 @@
 			},
 			body: JSON.stringify({ username: newUsername })
 		});
-		if (!res.ok) {
-			throw new Error('Something went wrong with username change');
-		} else {
-			const resJson: { username: string } = await res.json();
-			const { username: usernameFromServer } = resJson;
-			logUsernameChanged({
-				'SC - App Version': $appVersion,
-				'SC - Locale': $locale,
-				'SC - New Username': usernameFromServer,
-				'SC - Old Username': oldUsername,
-				'SC - Stripe Product Id': $userSummary?.product_id,
-				'SC - User Id': $page.data.session.user.id
-			});
-			const us = await getUserSummary($page.data.session.access_token);
-			if (us) {
-				userSummary.set(us);
-				if (afterUsernameChanged) await afterUsernameChanged(usernameFromServer);
-				if (!dontCloseOnSuccess) open.set(false);
-			}
+		const resJson: { username: string; error?: string } = await res.json();
+		if (!res.ok) throw new Error(resJson.error || 'Something went wrong with username change');
+		const { username: usernameFromServer } = resJson;
+		logUsernameChanged(type, {
+			'SC - App Version': $appVersion,
+			'SC - Locale': $locale,
+			'SC - New Username': usernameFromServer,
+			'SC - Old Username': oldUsername,
+			'SC - Stripe Product Id': $userSummary?.product_id,
+			'SC - User Id': $page.data.session.user.id
+		});
+		const us = await getUserSummary($page.data.session.access_token);
+		if (us) {
+			userSummary.set(us);
+			if (afterUsernameChanged) await afterUsernameChanged(usernameFromServer);
+			if (!dontCloseOnSuccess) open.set(false);
 		}
-	}
-
-	function onOpenChanged() {
-		if (!$open) usernameInputValue = $userSummary?.username || '';
 	}
 
 	let mounted = false;
@@ -136,24 +137,26 @@
       		rounded-2xl shadow-generation-modal shadow-c-shadow/[var(--o-shadow-strongest)]"
 				>
 					<h2 class="text-xl font-bold -mt-1 md:-mt-2 pl-1 pr-12" {...$title} use:title>
-						{$LL.ChangeUsername.ChangeUsernameTitle()}
+						{type === 'set'
+							? $LL.ChangeUsername.PickUsernameTitle()
+							: $LL.ChangeUsername.ChangeUsernameTitle()}
 					</h2>
 					<div class="w-full flex flex-col mt-0.5 md:mt-1">
-						<form use:usernameForm class="flex flex-col gap-2.5">
+						<form use:form class="flex flex-col gap-2.5">
 							<Input
 								noAutocomplete
 								title={$LL.ChangeUsername.UsernameInput.Title()}
 								name="username"
-								bind:value={usernameInputValue}
+								bind:value={$data.username}
 								type="text"
 								class="mt-4 w-full"
 							/>
-							<Button withSpinner loading={$isSubmittingUsernameForm} class="w-full">
+							<Button withSpinner loading={$isSubmitting} class="w-full">
 								{$LL.Shared.ConfirmButton()}
 							</Button>
 						</form>
-						{#if $usernameFormErrors.username}
-							<ErrorLine size="sm" text={$usernameFormErrors.username[0]} />
+						{#if $errors.username}
+							<ErrorLine size="sm" text={$errors.username[0]} />
 						{/if}
 					</div>
 					<button

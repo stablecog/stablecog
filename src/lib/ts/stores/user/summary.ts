@@ -28,6 +28,7 @@ export interface TUserSummary {
 	wants_email?: boolean;
 	username: string;
 	purchase_count: number;
+	username_changed_at?: string;
 	refetch?: <TPageData>(
 		options?: (RefetchOptions & RefetchQueryFilters<TPageData>) | undefined
 	) => Promise<QueryObserverResult<TUserSummary | null, unknown>>;

@@ -1700,6 +1700,10 @@ type RootTranslation = {
 		 * C​h​a​n​g​e​ ​U​s​e​r​n​a​m​e
 		 */
 		ChangeUsernameButton: string
+		/**
+		 * P​i​c​k​ ​a​ ​u​s​e​r​n​a​m​e
+		 */
+		PickUsernameTitle: string
 		UsernameInput: {
 			/**
 			 * U​s​e​r​n​a​m​e
@@ -4877,6 +4881,10 @@ export type TranslationFunctions = {
 		 * Change Username
 		 */
 		ChangeUsernameButton: () => LocalizedString
+		/**
+		 * Pick a username
+		 */
+		PickUsernameTitle: () => LocalizedString
 		UsernameInput: {
 			/**
 			 * Username

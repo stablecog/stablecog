@@ -580,6 +580,7 @@ const tr: Translation = {
 	ChangeUsername: {
 		ChangeUsernameTitle: 'Kullanıcı Adı Değiştir',
 		ChangeUsernameButton: 'Kullanıcı Adı Değiştir',
+		PickUsernameTitle: 'Kullanıcı adı seç',
 		UsernameInput: {
 			Title: 'Kullanıcı Adı'
 		},

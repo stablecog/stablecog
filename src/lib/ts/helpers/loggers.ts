@@ -122,9 +122,14 @@ export function logGenerationOutputMadePublic(props: IGenerationOutputActionProp
 	posthog.capture('Generation Output | Made Public', { ...props });
 }
 
-export function logUsernameChanged(props: IUsernameChangedProps) {
-	mixpanel.track('Username Changed', { ...props });
-	posthog.capture('Username Changed', { ...props });
+export function logUsernameChanged(type: 'change' | 'set', props: IUsernameChangedProps) {
+	if (type === 'set') {
+		mixpanel.track('Username Set', { ...props });
+		posthog.capture('Username Set', { ...props });
+	} else {
+		mixpanel.track('Username Changed', { ...props });
+		posthog.capture('Username Changed', { ...props });
+	}
 }
 
 export function logGenerationOutputMadePrivate(props: IGenerationOutputActionProps) {
