@@ -145,6 +145,8 @@
 						<form use:form class="flex flex-col gap-2.5">
 							<Input
 								noAutocomplete
+								noAutocapitalize
+								noAutocorrect
 								title={$LL.ChangeUsername.UsernameInput.Title()}
 								name="username"
 								bind:value={$data.username}

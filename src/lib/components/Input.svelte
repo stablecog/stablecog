@@ -15,6 +15,8 @@
 	export let shadow: 'normal' | 'strong' | 'strongest' = 'normal';
 	export let onClearButtonClicked: (() => void) | undefined = undefined;
 	export let noAutocomplete = false;
+	export let noAutocorrect = false;
+	export let noAutocapitalize = false;
 	export let onInput: (() => void) | undefined = undefined;
 	export let maxLength: number | undefined = undefined;
 	export let minLength: number | undefined = undefined;
@@ -59,7 +61,9 @@
 			minlength={minLength}
 			maxlength={maxLength}
 			{readonly}
-			autocomplete={noAutocomplete ? 'off' : 'on'}
+			autocomplete={noAutocomplete ? 'off' : undefined}
+			autocorrect={noAutocorrect ? 'off' : undefined}
+			autocapitalize={noAutocapitalize ? 'off' : undefined}
 			{enterkeyhint}
 			{disabled}
 			type="email"
@@ -92,7 +96,9 @@
 			minlength={minLength}
 			maxlength={maxLength}
 			{readonly}
-			autocomplete={noAutocomplete ? 'off' : 'on'}
+			autocomplete={noAutocomplete ? 'off' : undefined}
+			autocorrect={noAutocorrect ? 'off' : undefined}
+			autocapitalize={noAutocapitalize ? 'off' : undefined}
 			{enterkeyhint}
 			{disabled}
 			type="password"
@@ -125,7 +131,9 @@
 			minlength={minLength}
 			maxlength={maxLength}
 			{readonly}
-			autocomplete={noAutocomplete ? 'off' : 'on'}
+			autocomplete={noAutocomplete ? 'off' : undefined}
+			autocorrect={noAutocorrect ? 'off' : undefined}
+			autocapitalize={noAutocapitalize ? 'off' : undefined}
 			{enterkeyhint}
 			{disabled}
 			type="number"
@@ -158,7 +166,9 @@
 			minlength={minLength}
 			maxlength={maxLength}
 			{readonly}
-			autocomplete={noAutocomplete ? 'off' : 'on'}
+			autocomplete={noAutocomplete ? 'off' : undefined}
+			autocorrect={noAutocorrect ? 'off' : undefined}
+			autocapitalize={noAutocapitalize ? 'off' : undefined}
 			{enterkeyhint}
 			{disabled}
 			type="text"
