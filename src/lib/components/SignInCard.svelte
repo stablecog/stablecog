@@ -140,7 +140,7 @@
 			const { data: sData, error: sError } = await $page.data.supabase.auth.verifyOtp({
 				email,
 				token: codeValue.toString(),
-				type: PUBLIC_APP_MODE === 'qa' ? 'magiclink' : 'email'
+				type: 'email'
 			});
 			if (sError) {
 				throw new Error(sError.message);
