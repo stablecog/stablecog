@@ -121,38 +121,27 @@
 	}
 
 	async function onConfirmButtonClicked() {
-		if (isDeleteModalOpen) {
-			try {
+		try {
+			if (isDeleteModalOpen) {
 				await deleteOutputs({
 					idObjects: [...selectedOutputObjects]
 				});
-			} catch (error) {
-				console.log(error);
-			}
-		} else if (isFavoriteModalOpen) {
-			try {
+			} else if (isFavoriteModalOpen) {
 				await favoriteOutputs({
 					idObjects: [...selectedOutputObjects],
 					action: 'add'
 				});
-			} catch (error) {
-				console.log(error);
-			}
-		} else if (isUnfavoriteModalOpen) {
-			try {
+			} else if (isUnfavoriteModalOpen) {
 				await favoriteOutputs({
 					idObjects: [...selectedOutputObjects],
 					action: 'remove'
 				});
-			} catch (error) {
-				console.log(error);
+			} else if (isDeselectModalOpen) {
+				deselectOutputs();
+				closeModal();
 			}
-		} else if (isDeselectModalOpen) {
-			deselectOutputs();
-			closeModal();
-		} else if (isDeselectModalOpen) {
-			deselectOutputs();
-			closeModal();
+		} catch (error) {
+			console.log(error);
 		}
 	}
 
@@ -216,48 +205,44 @@
 		idObjects: { output_id: string; generation_id: string }[];
 	}) {
 		actionStatus = 'loading';
-		try {
-			const res = await fetch(`${apiUrl.origin}/v1/user/generation`, {
-				method: 'DELETE',
-				headers: {
-					'Content-Type': 'application/json',
-					Authorization: `Bearer ${$page.data.session?.access_token}`
-				},
-				body: JSON.stringify({ generation_output_ids: idObjects.map((i) => i.output_id) })
-			});
-			if (!res.ok) throw new Error('Response not ok');
-			console.log('Delete generation output response', res);
-			if (type === 'history') {
-				queryClient.setQueryData($userGenerationFullOutputsQueryKey, (data: any) => ({
-					...data,
-					pages: data.pages.map((page: TUserGenerationFullOutputsPage) => {
-						return {
-							...page,
-							outputs: page.outputs.map((output) =>
-								idObjects.map((i) => i.output_id).includes(output.id)
-									? { ...output, is_deleted: true }
-									: output
-							)
-						};
-					})
-				}));
-				for (let i = 0; i < idObjects.length; i++) {
-					let idObject = idObjects[i];
-					const logProps = {
-						'SC - Generation Id': idObject.generation_id,
-						'SC - Output Id': idObject.output_id,
-						'SC - Advanced Mode': $advancedModeApp,
-						'SC - Locale': $locale,
-						'SC - Page': `${$page.url.pathname}${$page.url.search}`,
-						'SC - User Id': $page.data.session?.user.id,
-						'SC - Stripe Product Id': $userSummary?.product_id,
-						'SC - App Version': $appVersion
+		const res = await fetch(`${apiUrl.origin}/v1/user/generation`, {
+			method: 'DELETE',
+			headers: {
+				'Content-Type': 'application/json',
+				Authorization: `Bearer ${$page.data.session?.access_token}`
+			},
+			body: JSON.stringify({ generation_output_ids: idObjects.map((i) => i.output_id) })
+		});
+		if (!res.ok) throw new Error('Response not ok');
+		console.log('Delete generation output response', res);
+		if (type === 'history') {
+			queryClient.setQueryData($userGenerationFullOutputsQueryKey, (data: any) => ({
+				...data,
+				pages: data.pages.map((page: TUserGenerationFullOutputsPage) => {
+					return {
+						...page,
+						outputs: page.outputs.map((output) =>
+							idObjects.map((i) => i.output_id).includes(output.id)
+								? { ...output, is_deleted: true }
+								: output
+						)
 					};
-					logGenerationOutputDeleted(logProps);
-				}
+				})
+			}));
+			for (let i = 0; i < idObjects.length; i++) {
+				let idObject = idObjects[i];
+				const logProps = {
+					'SC - Generation Id': idObject.generation_id,
+					'SC - Output Id': idObject.output_id,
+					'SC - Advanced Mode': $advancedModeApp,
+					'SC - Locale': $locale,
+					'SC - Page': `${$page.url.pathname}${$page.url.search}`,
+					'SC - User Id': $page.data.session?.user.id,
+					'SC - Stripe Product Id': $userSummary?.product_id,
+					'SC - App Version': $appVersion
+				};
+				logGenerationOutputDeleted(logProps);
 			}
-		} catch (error) {
-			console.log('Error deleting generation output', error);
 		}
 		closeModal();
 		deselectOutputs();
@@ -267,50 +252,42 @@
 	async function approveOrReject(action: TAdminGalleryAction) {
 		actionStatus = 'loading';
 		actionType = action;
-		try {
-			const ids = [...$adminGallerySelectedOutputIds];
-			const res = await fetch(`${apiUrl.origin}/v1/admin/gallery`, {
-				method: 'PUT',
-				headers: {
-					'Content-Type': 'application/json',
-					Authorization: `Bearer ${$page.data.session?.access_token}`
-				},
-				body: JSON.stringify({
-					action,
-					generation_output_ids: ids
-				})
-			});
-			if (!res.ok) throw new Error('Error approving/rejecting generation outputs');
-			const resJson = await res.json();
-			adminGalleryActionableItems.set(
-				$adminGalleryActionableItems.filter(
-					(i) => !ids.includes(i.output_id) || i.filter !== $adminGalleryCurrentFilter
-				)
-			);
-			queryClient.setQueryData($allUserGenerationFullOutputsQueryKey, (data: any) => ({
-				...data,
-				pages: data.pages.map((page: TUserGenerationFullOutputsPage) => {
-					return {
-						...page,
-						outputs: page.outputs.map((output) =>
-							ids.includes(output.id)
-								? {
-										...output,
-										gallery_status:
-											action === 'approve'
-												? 'approved'
-												: action === 'reject'
-												? 'rejected'
-												: undefined
-								  }
-								: output
-						)
-					};
-				})
-			}));
-		} catch (error) {
-			console.log(error);
-		}
+		const ids = [...$adminGallerySelectedOutputIds];
+		const res = await fetch(`${apiUrl.origin}/v1/admin/gallery`, {
+			method: 'PUT',
+			headers: {
+				'Content-Type': 'application/json',
+				Authorization: `Bearer ${$page.data.session?.access_token}`
+			},
+			body: JSON.stringify({
+				action,
+				generation_output_ids: ids
+			})
+		});
+		if (!res.ok) throw new Error('Error approving/rejecting generation outputs');
+		const resJson = await res.json();
+		adminGalleryActionableItems.set(
+			$adminGalleryActionableItems.filter(
+				(i) => !ids.includes(i.output_id) || i.filter !== $adminGalleryCurrentFilter
+			)
+		);
+		queryClient.setQueryData($allUserGenerationFullOutputsQueryKey, (data: any) => ({
+			...data,
+			pages: data.pages.map((page: TUserGenerationFullOutputsPage) => {
+				return {
+					...page,
+					outputs: page.outputs.map((output) =>
+						ids.includes(output.id)
+							? {
+									...output,
+									gallery_status:
+										action === 'approve' ? 'approved' : action === 'reject' ? 'rejected' : undefined
+							  }
+							: output
+					)
+				};
+			})
+		}));
 		actionStatus = 'idle';
 		actionType = undefined;
 		closeModal();
