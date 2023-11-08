@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { page } from '$app/stores';
-	import IconButton from '$components/buttons/IconButton.svelte';
+	import ButtonHoverEffect from '$components/buttons/ButtonHoverEffect.svelte';
 	import SubtleButton from '$components/buttons/SubtleButton.svelte';
 	import type { TGenerationFullScreenModalType } from '$components/generationFullScreen/types';
 	import IconHeartSet from '$components/icons/IconHeartSet.svelte';
@@ -27,7 +27,7 @@
 
 	export let generation: TGenerationWithSelectedOutput;
 	export let modalType: TGenerationFullScreenModalType;
-	export let type: 'on-image' | 'subtle' = 'subtle';
+	export let type: 'on-image' | 'subtle' | 'on-grid-card' = 'subtle';
 	export let onLikesChanged:
 		| (({
 				newLikeCount,
@@ -169,6 +169,23 @@
 				liked={generation.selected_output.is_liked}
 				class="w-7 h-7 transform flex-shrink-0 relative transition not-touch:group-hover/likebutton:text-c-danger"
 			/>
+		</button>
+	{:else if type === 'on-grid-card'}
+		<button
+			bind:this={buttonElement}
+			on:click={onClick}
+			class="flex relative items-center justify-end gap-1 before:w-full before:h-full
+					before:min-w-[48px] before:min-h-[48px]
+					before:absolute before:-bottom-2.5 before:-right-2.5 group px-3 py-2.5 {classes}"
+		>
+			<ButtonHoverEffect color="danger" size="sm" />
+			<IconHeartSet
+				liked={generation.selected_output.is_liked}
+				class="w-5 h-5 transform flex-shrink-0 relative transition not-touch:group-hover:text-c-danger"
+			/>
+			<p class="font-medium transition not-touch:group-hover:text-c-danger">
+				{generation.selected_output.like_count}
+			</p>
 		</button>
 	{:else}
 		<SubtleButton {onClick}>
