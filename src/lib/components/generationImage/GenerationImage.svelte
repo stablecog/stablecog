@@ -195,8 +195,9 @@
 	<SrcsetProvider src={srcHighest} {cardType} let:sizes let:srcset>
 		<div
 			class="w-full h-full absolute left-0 top-0 transition duration-350 {cardType === 'generate'
-				? 'group-hover:scale-105'
-				: 'group-hover:scale-105 md:group-hover:scale-102'}"
+				? 'not-touch:group-hover:scale-105'
+				: 'not-touch:group-hover:scale-105 md:not-touch:group-hover:scale-103'}
+			{overlayShouldShow ? (cardType === 'generate' ? 'scale-105' : 'scale-105 md:scale-103') : ''}"
 		>
 			<img
 				on:load={onImageLoaded}

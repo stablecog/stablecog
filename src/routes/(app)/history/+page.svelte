@@ -7,7 +7,8 @@
 		lgBreakpoint,
 		mdBreakpoint,
 		xlBreakpoint,
-		xxlBreakpoint
+		xl2Breakpoint,
+		xl3Breakpoint
 	} from '$components/generationFullScreen/constants';
 	import GenerationFullScreen from '$components/generationFullScreen/GenerationFullScreen.svelte';
 	import GenerationGridInfinite from '$components/grids/GenerationGridInfinite.svelte';
@@ -268,7 +269,9 @@
 							<GenerationGridInfinite
 								generationsQuery={userGenerationFullOutputsQuery}
 								cardType="history"
-								cols={$windowWidth > xxlBreakpoint
+								cols={$windowWidth > xl3Breakpoint
+									? 7
+									: $windowWidth > xl2Breakpoint
 									? 6
 									: $windowWidth > xlBreakpoint
 									? 5

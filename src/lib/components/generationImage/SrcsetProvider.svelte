@@ -15,7 +15,7 @@
 		cardType !== 'stage'
 			? cardType === 'generate'
 				? `128px`
-				: '(min-width: 1440px) 16.66vw, (min-width: 1280px) 20vw, (min-width: 1024px) 25vw, (min-width: 768px) 33.33vw, 50vw'
+				: '(min-width: 1920px) 14.28w, (min-width: 1536px) 16.66vw, (min-width: 1280px) 20vw, (min-width: 1024px) 25vw, (min-width: 768px) 33.33vw, 50vw'
 			: undefined;
 </script>
 

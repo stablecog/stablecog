@@ -21,7 +21,8 @@
 		lgBreakpoint,
 		mdBreakpoint,
 		xlBreakpoint,
-		xxlBreakpoint
+		xl2Breakpoint,
+		xl3Breakpoint
 	} from '$components/generationFullScreen/constants';
 	import {
 		getSomeUserProfileInfiniteQueryKey,
@@ -299,13 +300,15 @@
 					{onLikesChanged}
 					cardType="user-profile"
 					generationsQuery={galleryGenerationFullOutputsQuery}
-					cols={$windowWidth >= xxlBreakpoint
+					cols={$windowWidth > xl3Breakpoint
+						? 7
+						: $windowWidth > xl2Breakpoint
 						? 6
-						: $windowWidth >= xlBreakpoint
+						: $windowWidth > xlBreakpoint
 						? 5
-						: $windowWidth >= lgBreakpoint
+						: $windowWidth > lgBreakpoint
 						? 4
-						: $windowWidth >= mdBreakpoint
+						: $windowWidth > mdBreakpoint
 						? 3
 						: 2}
 					{setSearchQuery}
