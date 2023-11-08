@@ -196,7 +196,7 @@
 		<div
 			class="w-full h-full absolute left-0 top-0 transition duration-350 {cardType === 'generate'
 				? 'group-hover:scale-105'
-				: 'group-hover:scale-102'}"
+				: 'group-hover:scale-105 md:group-hover:scale-102'}"
 		>
 			<img
 				on:load={onImageLoaded}
