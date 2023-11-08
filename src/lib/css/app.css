@@ -3,8 +3,8 @@
 
 :root {
 	--c-bg: 18 18 23;
-	--c-bg-secondary: 28 28 35;
-	--c-bg-tertiary: 38 38 45;
+	--c-bg-secondary: 30 30 37;
+	--c-bg-tertiary: 40 40 47;
 	--c-on-bg: 220 220 234;
 	--c-on-bg-faded: 124 124 134;
 	--c-on-bg-secondary: 100 100 114;
@@ -32,8 +32,8 @@
 
 .theme-dark {
 	--c-bg: 18 18 23;
-	--c-bg-secondary: 28 28 35;
-	--c-bg-tertiary: 38 38 45;
+	--c-bg-secondary: 30 30 37;
+	--c-bg-tertiary: 40 40 47;
 	--c-tertiary: 93 209 202;
 	--c-on-bg: 220 220 234;
 	--c-on-bg-faded: 124 124 134;
@@ -57,8 +57,8 @@
 
 .theme-light {
 	--c-bg: 227 221 235;
-	--c-bg-secondary: 236 230 245;
-	--c-bg-tertiary: 240 238 255;
+	--c-bg-secondary: 240 234 249;
+	--c-bg-tertiary: 244 242 255;
 	--c-on-bg: 20 18 22;
 	--c-on-bg-faded: 117 124 133;
 	--c-on-bg-secondary: 185 183 194;
