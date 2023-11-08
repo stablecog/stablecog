@@ -607,7 +607,7 @@
 																>
 																	<div class="max-w-full flex items-center gap-2">
 																		<IconWarning
-																			class="w-5 h-5 text-c-danger flex-shrink-0 not-touch:group-hover:text-c-primary"
+																			class="w-5 h-5 text-c-danger transition flex-shrink-0 not-touch:group-hover:text-c-primary"
 																		/>
 																		<p
 																			class="flex-1 min-w-0 overflow-hidden overflow-ellipsis text-left text-c-danger
@@ -627,7 +627,7 @@
 																>
 																	<div class="max-w-full flex items-center gap-2">
 																		<IconWarning
-																			class="w-5 h-5 text-c-danger flex-shrink-0 not-touch:group-hover:text-c-primary"
+																			class="w-5 h-5 text-c-danger transition flex-shrink-0 not-touch:group-hover:text-c-primary"
 																		/>
 																		<p
 																			class="flex-1 min-w-0 overflow-hidden overflow-ellipsis text-left text-c-danger
