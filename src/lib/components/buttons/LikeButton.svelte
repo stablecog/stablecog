@@ -174,16 +174,21 @@
 		<button
 			bind:this={buttonElement}
 			on:click={onClick}
-			class="flex relative items-center justify-end gap-1 before:w-full before:h-full
-					before:min-w-[48px] before:min-h-[48px]
-					before:absolute before:-bottom-2.5 before:-right-2.5 group px-3 py-2.5 {classes}"
+			class="flex text-sm relative items-center justify-end gap-1 before:w-full before:h-full
+			before:min-w-[48px] before:min-h-[48px] rounded-md
+			before:absolute before:-bottom-2.5 before:-right-2.5 group px-2 py-1.5 {classes}"
 		>
-			<ButtonHoverEffect color="danger" size="sm" />
+			<ButtonHoverEffect noPadding color="danger" size="sm" />
 			<IconHeartSet
 				liked={generation.selected_output.is_liked}
 				class="w-5 h-5 transform flex-shrink-0 relative transition not-touch:group-hover:text-c-danger"
 			/>
-			<p class="font-medium transition not-touch:group-hover:text-c-danger">
+			<p
+				class="font-medium transition not-touch:group-hover:text-c-danger {generation
+					.selected_output.is_liked
+					? 'text-c-danger'
+					: ''}"
+			>
 				{generation.selected_output.like_count}
 			</p>
 		</button>

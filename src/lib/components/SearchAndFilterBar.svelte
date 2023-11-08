@@ -80,11 +80,12 @@
 	}
 
 	function removeSearchParam() {
-		const params = $page.url.searchParams;
+		const params = new URL($page.url).searchParams;
+		if (!params.has('q')) return;
 		params.delete('q');
 		const paramsString = params.toString();
 		window.history.replaceState(
-			{},
+			history.state,
 			'',
 			`${$page.url.pathname}${paramsString !== '' ? '?' : ''}${params}`
 		);
@@ -96,11 +97,14 @@
 			return;
 		}
 		searchString = searchStringLocal;
-		const params = $page.url.searchParams;
+		const params = new URL($page.url).searchParams;
+		const currentQ = params.get('q');
+		const currentQString = currentQ === null ? '' : currentQ;
+		if (currentQString === searchString) return;
 		params.set('q', searchString);
 		const paramsString = params.toString();
 		window.history.replaceState(
-			{},
+			history.state,
 			'',
 			`${$page.url.pathname}${paramsString !== '' ? '?' : ''}${params}`
 		);
@@ -108,16 +112,19 @@
 
 	function onModelIdFiltersChanged() {
 		if (!browser) return;
-		const params = $page.url.searchParams;
-		const mi = modelIdFilters?.join(',');
-		if (!mi) {
+		const currentMi = $page.url.searchParams.get('mi');
+		const currentMiString = currentMi === null ? '' : currentMi;
+		const params = new URL($page.url).searchParams;
+		const newMiString = modelIdFilters?.join(',');
+		if (newMiString === currentMiString) return;
+		if (!newMiString) {
 			params.delete('mi');
 		} else {
-			params.set('mi', mi);
+			params.set('mi', newMiString);
 		}
 		const paramsString = params.toString();
 		window.history.replaceState(
-			{},
+			history.state,
 			'',
 			`${$page.url.pathname}${paramsString !== '' ? '?' : ''}${params}`
 		);

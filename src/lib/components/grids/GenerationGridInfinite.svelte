@@ -25,10 +25,13 @@
 	import type { TUserGenerationFullOutputsPage } from '$ts/queries/userGenerations';
 	import type { Readable } from 'svelte/store';
 	import { windowHeight, windowWidth } from '$ts/stores/window';
-	import { tick } from 'svelte';
+	import { onDestroy, onMount, tick } from 'svelte';
 	import { loadedImages } from '$ts/stores/loadedImages';
 	import { browser } from '$app/environment';
 	import GridCard from '$components/grids/GridCard.svelte';
+	import { mdBreakpoint } from '$components/generationFullScreen/constants';
+	import { gridScrollPositions } from '$components/grids/scrollPosition';
+	import { page } from '$app/stores';
 
 	export let generationsQuery: CreateInfiniteQueryResult<TUserGenerationFullOutputsPage, unknown>;
 	export let hasGridScrollContainer = false;
@@ -58,7 +61,8 @@
 		| undefined = undefined;
 
 	$: horizontalPadding = paddingLeft + paddingRight;
-
+	let isInitialScrollPositionSet = false;
+	let mounted = false;
 	let gridVirtualizer:
 		| Readable<SvelteVirtualizer<HTMLDivElement, Element>>
 		| Readable<SvelteVirtualizer<Window, Element>>
@@ -102,6 +106,13 @@
 		(cardType === 'history' && $isUserGalleryEditActive);
 
 	const defaultAspectRatio = 1;
+	$: extraHeightForInfo =
+		cardType === 'gallery' || cardType === 'admin-gallery'
+			? $windowWidth < mdBreakpoint
+				? 73
+				: 82
+			: 0;
+
 	$: estimatedItemWidth = hasGridScrollContainer
 		? gridScrollContainer && gridScrollContainerWidth
 			? (gridScrollContainerWidth - horizontalPadding) / cols
@@ -110,7 +121,7 @@
 		? ($windowWidth - horizontalPadding) / cols
 		: undefined;
 	$: estimatedItemHeight = estimatedItemWidth
-		? estimatedItemWidth * (1 / defaultAspectRatio)
+		? estimatedItemWidth * (1 / defaultAspectRatio) + extraHeightForInfo
 		: undefined;
 	$: estimatedItemCountInAWindow =
 		estimatedItemWidth && estimatedItemHeight
@@ -143,10 +154,20 @@
 	$: [outputs, overscanCount, cols], onParamsChanged();
 	$: cardWidth = browser ? ($windowWidth - horizontalPadding) / cols : undefined;
 
-	function onGridVirtualizerChanged() {
+	async function onGridVirtualizerChanged() {
+		if (!$gridVirtualizer) return;
+		if (isInitialScrollPositionSet && mounted) {
+			gridScrollPositions.set($page.url.toString(), $gridVirtualizer.scrollOffset);
+		}
+		if (!isInitialScrollPositionSet && !$gridVirtualizer.isScrolling && mounted) {
+			const position = gridScrollPositions.get($page.url.toString());
+			if (position) {
+				$gridVirtualizer.scrollToOffset(position, { behavior: 'auto' });
+			}
+			isInitialScrollPositionSet = true;
+		}
 		if (
 			!outputs ||
-			!$gridVirtualizer ||
 			!$generationsQuery.hasNextPage ||
 			$generationsQuery.isFetchingNextPage ||
 			overscanCount === undefined
@@ -213,7 +234,7 @@
 					estimateSize: (i) => {
 						const width = ((gridScrollContainerWidth as number) - horizontalPadding) / cols;
 						const height = (width * outputs![i].generation.height) / outputs![i].generation.width;
-						return height;
+						return height + extraHeightForInfo;
 					}
 			  })
 			: createWindowVirtualizer({
@@ -221,10 +242,14 @@
 					estimateSize: (i) => {
 						const width = (window.innerWidth - horizontalPadding) / cols;
 						const height = (width * outputs![i].generation.height) / outputs![i].generation.width;
-						return height;
+						return height + extraHeightForInfo;
 					}
 			  });
 	}
+
+	onMount(() => {
+		mounted = true;
+	});
 </script>
 
 {#if $generationsQuery.isInitialLoading}
@@ -271,7 +296,7 @@
 							transform: translateY({virtualItem.start}px);
 							top: 0;
 						"
-					class="w-full group absolute p-px"
+					class="w-full absolute p-px"
 				>
 					<GridCard
 						{output}

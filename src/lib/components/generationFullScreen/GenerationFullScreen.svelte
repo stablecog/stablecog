@@ -311,23 +311,6 @@
 	onMount(() => {
 		lastClickedOutputId.set(undefined);
 	});
-
-	onDestroy(() => {
-		if (generation.prev) {
-			window.history.replaceState({}, '', generation.prev);
-			return;
-		}
-		const searchParams = new URLSearchParams(window.location.search);
-		if (modalType === 'gallery') {
-			window.history.pushState({}, '', `/gallery`);
-		} else if (modalType === 'user-profile') {
-			window.history.pushState({}, '', `/user/${generation.user.username}`);
-		} else if (searchParams.has('o')) {
-			searchParams.delete('o');
-			const newSearch = searchParams.toString();
-			window.history.pushState({}, '', `${$page.url.pathname}${newSearch ? `?${newSearch}` : ''}`);
-		}
-	});
 </script>
 
 <svelte:window on:popstate={onPopState} />

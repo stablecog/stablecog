@@ -68,6 +68,7 @@
 	let promptCopiedTimeout: NodeJS.Timeout;
 	let rightButtonContainer: HTMLDivElement;
 	let leftButtonContainer: HTMLDivElement;
+	const showPromptOnHover = cardType !== 'gallery' && cardType !== 'admin-gallery' ? true : false;
 
 	let isImageLoaded = false;
 	const onImageLoaded = () => {
@@ -162,7 +163,7 @@
 			cardType === 'gallery' || cardType === 'user-profile'
 				? `${$page.url.pathname}/o/${generation.selected_output.id}`
 				: `${$page.url.pathname}?${searchParams.toString()}`;
-		window.history.pushState({}, '', urlToPush);
+		window.history.pushState(history.state, '', urlToPush);
 	}
 
 	function _onSelectButtonClicked(e: any) {
@@ -192,22 +193,28 @@
 	</div>
 {:else}
 	<SrcsetProvider src={srcHighest} {cardType} let:sizes let:srcset>
-		<img
-			on:load={onImageLoaded}
-			loading="lazy"
-			class="w-full h-full object-cover absolute left-0 top-0 {didLoadBefore
-				? 'transition-[transform] ease-[ease-out] duration-[0.2s]'
-				: 'transition-[transform,opacity] ease-[ease-out,ease-in] duration-[0.2s,0.2s]'} 
+		<div
+			class="w-full h-full absolute left-0 top-0 transition duration-350 {cardType === 'generate'
+				? 'group-hover:scale-105'
+				: 'group-hover:scale-102'}"
+		>
+			<img
+				on:load={onImageLoaded}
+				loading="lazy"
+				class="w-full h-full object-cover absolute left-0 top-0 {didLoadBefore
+					? 'transition-[transform] ease-[ease-out] duration-[0.2s]'
+					: 'transition-[transform,opacity] ease-[ease-out,ease-in] duration-[0.2s,0.2s]'} 
 				transform {isImageLoaded ? 'opacity-100' : 'opacity-0'} {isInGallerySelectedIds
-				? 'scale-110'
-				: 'scale-100'}"
-			{sizes}
-			src={srcPicked}
-			{srcset}
-			alt={generation.prompt.text}
-			width={generation.width}
-			height={generation.height}
-		/>
+					? 'scale-110'
+					: 'scale-100'}"
+				{sizes}
+				src={srcPicked}
+				{srcset}
+				alt={generation.prompt.text}
+				width={generation.width}
+				height={generation.height}
+			/>
+		</div>
 	</SrcsetProvider>
 {/if}
 {#if upscaleFromStore?.animation}
@@ -218,7 +225,7 @@
 			!generation.selected_output.upscaled_image_url}
 	/>
 {/if}
-<!-- Barriers -->
+<!-- Top Barrier -->
 {#if cardType !== 'stage' && cardType !== 'generate' && cardType !== 'gallery' && cardType !== 'user-profile' && !generation.selected_output.is_deleted && !(cardType === 'history' && $userGalleryCurrentView === 'likes')}
 	<div
 		class="absolute top-0 left-0 w-full h-24 bg-gradient-to-b
@@ -228,7 +235,8 @@
 			{isGalleryEditActive || overlayShouldShow ? 'opacity-100' : 'opacity-0'}"
 	/>
 {/if}
-{#if cardType !== 'generate' && !generation.selected_output.is_deleted && !isGalleryEditActive}
+<!-- Bottom Barrier -->
+{#if showPromptOnHover && cardType !== 'generate' && !generation.selected_output.is_deleted && !isGalleryEditActive}
 	<div
 		class="absolute bottom-0 left-0 w-full h-full max-h-[12rem] bg-gradient-to-t
 		transition from-c-barrier/90 via-c-barrier/60 to-c-barrier/0
@@ -262,7 +270,7 @@
 		on:click|preventDefault={onImageClick}
 		class="w-full h-full absolute left-0 top-0 flex flex-col justify-end items-end overflow-hidden pt-16"
 	>
-		{#if cardType !== 'generate'}
+		{#if cardType !== 'generate' && showPromptOnHover}
 			<p
 				class="w-full text-sm min-h-0 max-h-[max(4rem,min(35%,5.3rem))] list-fade px-2 md:px-3 py-2 md:py-2.5
 				font-medium leading-normal transition text-c-on-bg transform pointer-events-none

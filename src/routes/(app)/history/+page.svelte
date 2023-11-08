@@ -139,6 +139,7 @@
 		if (!$activeGeneration) return;
 		if (key === 'Escape') {
 			activeGeneration.set(undefined);
+			window.history.back();
 			return;
 		}
 		if (key === 'ArrowLeft' && leftIndex !== -1) {

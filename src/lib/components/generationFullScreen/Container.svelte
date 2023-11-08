@@ -68,6 +68,7 @@
 			callback: () => {
 				if ($activeGeneration !== undefined) {
 					activeGeneration.set(undefined);
+					window.history.back();
 				}
 			},
 			exclude: clickoutsideExceptions
