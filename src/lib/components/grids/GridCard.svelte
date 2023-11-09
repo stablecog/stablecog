@@ -134,8 +134,8 @@
 							>{output.generation.user.username}
 						</p>
 						<p
-							class="whitespace-nowrap overflow-hidden overflow-ellipsis text-c-on-bg/50 text-xs
-							transition not-touch:group-hover:text-c-on-bg/75"
+							class="whitespace-nowrap overflow-hidden overflow-ellipsis text-c-on-bg/75 text-xs
+							transition not-touch:group-hover:text-c-on-bg"
 						>
 							{getRelativeDate({ date: output.created_at, locale: $locale })}
 						</p>
