@@ -39,7 +39,7 @@
 
 	$: numberFormatter = new Intl.NumberFormat($locale, {
 		style: 'decimal',
-		maximumFractionDigits: 2
+		maximumFractionDigits: 0
 	});
 </script>
 
@@ -153,7 +153,7 @@
 								<div class="flex items-center gap-1">
 									<IconBrush class="w-4 h-4" />
 									<p class="font-medium">
-										{numberFormatter.format(output.aesthetic_rating_score)}
+										{numberFormatter.format(output.aesthetic_rating_score * 100)}
 									</p>
 								</div>
 							{/if}
@@ -161,7 +161,7 @@
 								<div class="flex items-center gap-1">
 									<IconBug class="w-4 h-4" />
 									<p class="font-medium">
-										{numberFormatter.format(output.aesthetic_artifact_score)}
+										{numberFormatter.format(output.aesthetic_artifact_score * 100)}
 									</p>
 								</div>
 							{/if}
