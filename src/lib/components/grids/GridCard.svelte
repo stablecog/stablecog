@@ -153,7 +153,7 @@
 								<div class="flex items-center gap-1">
 									<IconBrush class="w-4 h-4" />
 									<p class="font-medium">
-										{numberFormatter.format(output.aesthetic_rating_score || 0.481234)}
+										{numberFormatter.format(output.aesthetic_rating_score)}
 									</p>
 								</div>
 							{/if}
@@ -161,7 +161,7 @@
 								<div class="flex items-center gap-1">
 									<IconBug class="w-4 h-4" />
 									<p class="font-medium">
-										{numberFormatter.format(output.aesthetic_artifact_score || 0.231234)}
+										{numberFormatter.format(output.aesthetic_artifact_score)}
 									</p>
 								</div>
 							{/if}
