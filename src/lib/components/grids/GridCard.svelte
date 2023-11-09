@@ -8,9 +8,11 @@
 	import IconBrush from '$components/icons/IconBrush.svelte';
 	import IconBug from '$components/icons/IconBug.svelte';
 	import IconEyeSlashOutline from '$components/icons/IconEyeSlashOutline.svelte';
+	import IconGalleryFilled from '$components/icons/IconGalleryFilled.svelte';
 	import IconNsfwPrompt from '$components/icons/IconNSFWPrompt.svelte';
 	import IconSadFaceOutline from '$components/icons/IconSadFaceOutline.svelte';
 	import LL, { locale } from '$i18n/i18n-svelte';
+	import { calculateCombinedAestheticScore } from '$ts/helpers/calculateCombinedAestheticScore';
 	import { getRelativeDate } from '$ts/helpers/getRelativeDate';
 	import type { TGenerationFullOutput } from '$ts/stores/user/generation';
 	import { quadIn, quadOut } from 'svelte/easing';
@@ -114,6 +116,41 @@
 	</div>
 	{#if cardType === 'gallery' || cardType === 'admin-gallery'}
 		<div class="w-full flex flex-col bg-c-bg-secondary rounded-b-xl text-sm">
+			{#if cardType === 'admin-gallery' && (output.aesthetic_artifact_score !== undefined || output.aesthetic_rating_score !== undefined)}
+				<div
+					class="flex flex-row flex-wrap items-center justify-start px-2 md:px-3 pt-2 md:pt-2.25 gap-2.5 -mb-0.5 md:-mb-1.25"
+				>
+					{#if output.aesthetic_rating_score !== undefined && output.aesthetic_artifact_score !== undefined}
+						<div class="flex items-center gap-1">
+							<IconGalleryFilled class="w-4 h-4" />
+							<p class="font-medium pt-0.25">
+								{numberFormatter.format(
+									calculateCombinedAestheticScore(
+										output.aesthetic_rating_score,
+										output.aesthetic_artifact_score
+									) * 100
+								)}
+							</p>
+						</div>
+					{/if}
+					{#if output.aesthetic_rating_score !== undefined}
+						<div class="flex items-center gap-1">
+							<IconBrush class="w-4 h-4" />
+							<p class="font-medium pt-0.25">
+								{numberFormatter.format(output.aesthetic_rating_score * 100)}
+							</p>
+						</div>
+					{/if}
+					{#if output.aesthetic_artifact_score !== undefined}
+						<div class="flex items-center gap-1">
+							<IconBug class="w-4 h-4" />
+							<p class="font-medium pt-0.25">
+								{numberFormatter.format(output.aesthetic_artifact_score * 100)}
+							</p>
+						</div>
+					{/if}
+				</div>
+			{/if}
 			<p
 				class="w-full whitespace-nowrap overflow-hidden overflow-ellipsis px-2 md:px-3 pt-1.75 md:pt-2.5"
 			>
@@ -146,33 +183,11 @@
 						</p>
 					</div>
 				</a>
-				<div class="flex items-end justify-end flex-shrink-0">
-					{#if cardType === 'admin-gallery' && (output.aesthetic_artifact_score !== undefined || output.aesthetic_rating_score !== undefined)}
-						<div class="flex flex-col items-end justify-center px-1 pt-1.5 pb-1 gap-0.5">
-							{#if output.aesthetic_rating_score !== undefined}
-								<div class="flex items-center gap-1">
-									<IconBrush class="w-4 h-4" />
-									<p class="font-medium">
-										{numberFormatter.format(output.aesthetic_rating_score * 100)}
-									</p>
-								</div>
-							{/if}
-							{#if output.aesthetic_artifact_score !== undefined}
-								<div class="flex items-center gap-1">
-									<IconBug class="w-4 h-4" />
-									<p class="font-medium">
-										{numberFormatter.format(output.aesthetic_artifact_score * 100)}
-									</p>
-								</div>
-							{/if}
-						</div>
-					{/if}
-					<LikeButton
-						type="on-grid-card"
-						modalType={cardType}
-						generation={{ ...output.generation, selected_output: output }}
-					/>
-				</div>
+				<LikeButton
+					type="on-grid-card"
+					modalType={cardType}
+					generation={{ ...output.generation, selected_output: output }}
+				/>
 			</div>
 		</div>
 	{/if}
