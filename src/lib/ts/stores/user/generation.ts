@@ -477,6 +477,8 @@ export interface TGenerationOutput {
 	is_public: boolean;
 	like_count: number;
 	is_liked?: boolean;
+	aesthetic_rating_score?: number;
+	aesthetic_artifact_score?: number;
 }
 
 export type TGalleryStatus =
