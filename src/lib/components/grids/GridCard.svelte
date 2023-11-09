@@ -22,6 +22,7 @@
 	export let cardWidth: number | undefined;
 	export let setSearchQuery: ((query: string) => void) | undefined = undefined;
 	export let isGalleryEditActive: boolean;
+	export let now: number;
 	export let onLikesChanged:
 		| (({
 				newLikeCount,
@@ -137,7 +138,7 @@
 							class="whitespace-nowrap overflow-hidden overflow-ellipsis text-c-on-bg/75 text-xs
 							transition not-touch:group-hover:text-c-on-bg"
 						>
-							{getRelativeDate({ date: output.created_at, locale: $locale })}
+							{getRelativeDate({ date: output.created_at, locale: $locale, now })}
 						</p>
 					</div>
 				</a>

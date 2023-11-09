@@ -187,6 +187,8 @@
 
 	let lastMeasuredFirstItemId: string | undefined = undefined;
 
+	let now = Date.now();
+
 	function onParamsChanged() {
 		if (!$gridVirtualizer) return;
 		let optionsToSet: { [key: string]: string | number } = {};
@@ -308,6 +310,7 @@
 						{isGalleryEditActive}
 						{onLikesChanged}
 						{setSearchQuery}
+						{now}
 					/>
 				</div>
 			{/each}
