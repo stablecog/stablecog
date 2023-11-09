@@ -40,7 +40,6 @@
 
 <div
 	class="w-full h-full flex flex-col relative bg-c-bg-secondary transition overflow-hidden
-    shadow-lg shadow-c-shadow/[var(--o-shadow-stronger)]
 		z-0 {cardType === 'generate'
 		? output.image_url &&
 		  !output.is_deleted &&

@@ -298,7 +298,7 @@
 							transform: translateY({virtualItem.start}px);
 							top: 0;
 						"
-					class="w-full absolute p-px"
+					class="absolute p-px"
 				>
 					<GridCard
 						{output}
