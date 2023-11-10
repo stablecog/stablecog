@@ -34,13 +34,14 @@
 	export let modelIdFilters: TAvailableGenerationModelId[];
 	export let searchInputIsFocused = false;
 
-	let searchStringLocal = isUUID(searchString) ? '' : searchString ?? '';
+	let searchStringLocal = searchString ?? '';
 	let inputElement: HTMLInputElement;
 	let isFiltersOpen = false;
 
 	$: hasAnyFilter = modelIdFilters?.length > 0;
 	$: searchStringLocal, onSearchStringLocalChanged();
 	$: modelIdFilters, onModelIdFiltersChanged();
+	$: searchString, onSearchStringChanged();
 
 	function clearAllFilters() {
 		modelIdFilters = [];
@@ -69,22 +70,12 @@
 	}
 
 	function onSearchStringLocalChanged() {
-		if (isUUID(searchString)) return;
 		if (!browser || searchStringLocal) return;
 		resetSearchString();
 	}
 
 	function resetSearchString() {
 		searchString = '';
-		removeSearchParam();
-	}
-
-	function removeSearchParam() {
-		const url = new URL(window.location.href);
-		if (!url.searchParams.has('q')) return;
-		url.searchParams.delete('q');
-		const relativeUrl = url.pathname + url.search;
-		window.history.replaceState(window.history.state, '', relativeUrl);
 	}
 
 	function setSearchString() {
@@ -93,13 +84,6 @@
 			return;
 		}
 		searchString = searchStringLocal;
-		const url = new URL(window.location.href);
-		const currentQ = url.searchParams.get('q');
-		const currentQString = currentQ === null ? '' : currentQ;
-		if (currentQString === searchString) return;
-		url.searchParams.set('q', searchString);
-		const relativeUrl = url.pathname + url.search;
-		window.history.replaceState(window.history.state, '', relativeUrl);
 	}
 
 	function onModelIdFiltersChanged() {
@@ -113,6 +97,21 @@
 			url.searchParams.delete('mi');
 		} else {
 			url.searchParams.set('mi', newMiString);
+		}
+		const relativeUrl = url.pathname + url.search;
+		window.history.replaceState(window.history.state, '', relativeUrl);
+	}
+
+	function onSearchStringChanged() {
+		if (!browser) return;
+		const url = new URL(window.location.href);
+		const currentQ = url.searchParams.get('q');
+		const currentQString = currentQ === null ? '' : currentQ;
+		if (currentQString === searchString) return;
+		if (searchString) {
+			url.searchParams.set('q', searchString);
+		} else {
+			url.searchParams.delete('q');
 		}
 		const relativeUrl = url.pathname + url.search;
 		window.history.replaceState(window.history.state, '', relativeUrl);
@@ -192,8 +191,8 @@
 					hasMaxWidth={false}
 					hasCancelIcon={true}
 					onClick={() => {
+						searchStringLocal = '';
 						searchString = '';
-						removeSearchParam();
 					}}
 					text={$LL.Shared.SimilarToTitle({ item: searchString.slice(0, 6) })}
 					color="primary"

@@ -22,15 +22,20 @@ export const load: PageLoad = async ({ parent, url }) => {
 	const modelIdFiltersParam = url.searchParams.get('mi');
 	const modelIdFilters = modelIdFiltersParam ? modelIdFiltersParam.split(',') : [];
 	const searchStringParam = url.searchParams.get('q');
-	const searchString = searchStringParam ? searchStringParam : null;
+	const searchString = searchStringParam || '';
 	const hasInitialData =
 		queryClient.getQueryData(
-			getHistoryInfiniteQueryKey({ userGalleryCurrentView: view, modelIdFilters })
+			getHistoryInfiniteQueryKey({ userGalleryCurrentView: view, modelIdFilters, searchString })
 		) !== undefined;
 	if (session && userSummary && !hasInitialData) {
 		try {
 			await queryClient.prefetchInfiniteQuery(
-				getHistoryInfiniteQueryProps({ userGalleryCurrentView: view, session, modelIdFilters })
+				getHistoryInfiniteQueryProps({
+					userGalleryCurrentView: view,
+					session,
+					modelIdFilters,
+					searchString
+				})
 			);
 		} catch (error) {
 			console.log(error);

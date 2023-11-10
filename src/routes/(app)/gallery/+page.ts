@@ -23,7 +23,7 @@ export const load: PageLoad = async ({ url, parent }) => {
 	if (outputIdShort) throw redirect(302, `/gallery/o/${outputIdShort}`);
 
 	const { queryClient, globalSeed, session } = (await parent()) as TParent;
-	const searchQuery = url.searchParams.get('q');
+	const searchString = url.searchParams.get('q') || '';
 	const modelIdQuery = url.searchParams.get('mi');
 	const modelIds = modelIdQuery ? modelIdQuery.split(',') : [];
 	const filteredModelIds = modelIds.filter((modelId) =>
@@ -33,7 +33,7 @@ export const load: PageLoad = async ({ url, parent }) => {
 	const hasInitialData =
 		queryClient.getQueryData(
 			getGalleryInfiniteQueryKey({
-				searchString: searchQuery,
+				searchString: searchString,
 				modelIdFilters: filteredModelIds,
 				seed: globalSeed
 			})
@@ -42,7 +42,7 @@ export const load: PageLoad = async ({ url, parent }) => {
 		try {
 			await queryClient.prefetchInfiniteQuery(
 				getGalleryInfiniteQueryProps({
-					searchString: searchQuery,
+					searchString: searchString,
 					modelIdFilters: filteredModelIds,
 					seed: globalSeed,
 					accessToken: session?.access_token
@@ -54,7 +54,7 @@ export const load: PageLoad = async ({ url, parent }) => {
 	}
 
 	return {
-		searchQuery,
-		modelIds: filteredModelIds
+		searchString,
+		modelIdFilters: filteredModelIds
 	};
 };

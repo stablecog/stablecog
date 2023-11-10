@@ -3,7 +3,15 @@ import {
 	type TUserGenerationFullOutputsPage
 } from '$ts/queries/userGenerations';
 import type { TGalleryStatus } from '$ts/stores/user/generation';
-import type { CreateInfiniteQueryOptions, FetchInfiniteQueryOptions } from '@tanstack/svelte-query';
+import type { CreateInfiniteQueryOptions } from '@tanstack/svelte-query';
+import { writable as writableLocal } from '@macfja/svelte-persistent-store';
+import type { TAvailableGenerationModelId } from '$ts/constants/generationModels';
+
+export const adminGallerySearchString = writableLocal<string>('adminGallerySearchString', '');
+export const adminGalleryModelIdFilters = writableLocal<TAvailableGenerationModelId[]>(
+	'adminGalleryModelIdFilters',
+	[]
+);
 
 export const getAllUserGenerationFullOutputsQueryKey = ({
 	adminGalleryCurrentFilter,

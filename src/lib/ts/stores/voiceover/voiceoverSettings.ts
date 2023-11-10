@@ -9,7 +9,7 @@ import {
 	voiceoverStabilityDefault
 } from '$ts/constants/voiceover/rest';
 import { writable } from 'svelte/store';
-import { writable as writableLocal } from 'svelte-local-storage-store';
+import { writable as writableLocal } from '@macfja/svelte-persistent-store';
 import type { TVoiceoverLocale } from '$ts/constants/voiceover/locales';
 
 export const voiceoverPrompt = writable<string | null>(null);

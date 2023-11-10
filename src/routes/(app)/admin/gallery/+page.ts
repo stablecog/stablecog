@@ -24,10 +24,14 @@ export const load: PageLoad = async ({ parent, url }) => {
 	const modelIdFiltersParam = url.searchParams.get('mi');
 	const modelIdFilters = modelIdFiltersParam ? modelIdFiltersParam.split(',') : [];
 	const searchStringParam = url.searchParams.get('q');
-	const searchString = searchStringParam ? searchStringParam : null;
+	const searchString = searchStringParam || '';
 	const hasInitialData =
 		queryClient.getQueryData(
-			getAllUserGenerationFullOutputsQueryKey({ adminGalleryCurrentFilter: view, modelIdFilters })
+			getAllUserGenerationFullOutputsQueryKey({
+				adminGalleryCurrentFilter: view,
+				modelIdFilters,
+				searchString
+			})
 		) !== undefined;
 	if (session && userSummary && !hasInitialData && isSuperAdmin(userSummary.roles)) {
 		try {
@@ -35,7 +39,8 @@ export const load: PageLoad = async ({ parent, url }) => {
 				getAllUserGenerationFullOutputsQueryProps({
 					adminGalleryCurrentFilter: view,
 					session,
-					modelIdFilters
+					modelIdFilters,
+					searchString
 				})
 			);
 		} catch (error) {

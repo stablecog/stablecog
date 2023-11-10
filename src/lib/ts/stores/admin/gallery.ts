@@ -1,6 +1,6 @@
 import type { TGalleryStatus } from '$ts/stores/user/generation';
-import { writable as writableLocal } from 'svelte-local-storage-store';
 import { derived, writable } from 'svelte/store';
+import { writable as writableLocal } from '@macfja/svelte-persistent-store';
 
 export const adminGalleryActionableItems = writableLocal<TAdminGalleryActionableItem[]>(
 	'admin_gallery_actionable_items',

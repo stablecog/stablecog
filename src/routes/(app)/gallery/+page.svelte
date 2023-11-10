@@ -26,23 +26,27 @@
 		xl2Breakpoint
 	} from '$components/generationFullScreen/constants';
 	import {
+		galleryModelIdFilters,
+		gallerySearchString,
 		getGalleryInfiniteQueryKey,
 		getGalleryInfiniteQueryProps
 	} from '$routes/(app)/gallery/constants';
 	import { previewImageVersion } from '$ts/constants/previewImageVersion.js';
 	import { galleryGenerationFullOutputsQueryKey } from '$ts/stores/user/queryKeys.js';
+	import { hydrated, updateHydrated } from '$ts/stores/hydrated.js';
+	import { onMount } from 'svelte';
 
 	export let data;
-	const { searchQuery: searchQueryParam } = data;
 
-	let searchString = searchQueryParam ?? '';
-
-	let modelIdFilters: TAvailableGenerationModelId[] = data.modelIds ?? [];
+	if (!hydrated) {
+		galleryModelIdFilters.set(data.modelIdFilters);
+		gallerySearchString.set(data.searchString);
+	}
 
 	$: galleryGenerationFullOutputsQueryKey.set(
 		getGalleryInfiniteQueryKey({
-			searchString,
-			modelIdFilters,
+			searchString: $gallerySearchString,
+			modelIdFilters: $galleryModelIdFilters,
 			seed: $globalSeed
 		})
 	);
@@ -50,8 +54,8 @@
 	$: galleryGenerationFullOutputsQuery = browser
 		? createInfiniteQuery(
 				getGalleryInfiniteQueryProps({
-					searchString,
-					modelIdFilters,
+					searchString: $gallerySearchString,
+					modelIdFilters: $galleryModelIdFilters,
 					seed: $globalSeed,
 					accessToken: $page.data.session?.access_token
 				})
@@ -68,7 +72,7 @@
 	$: rightIndex = outputs && outputIndex < outputs?.length - 1 ? outputIndex + 1 : -1;
 
 	function setSearchQuery(query: string) {
-		searchString = query;
+		gallerySearchString.set(query);
 	}
 
 	function onKeyDown({ key }: KeyboardEvent) {
@@ -87,6 +91,10 @@
 			return;
 		}
 	}
+
+	onMount(() => {
+		updateHydrated();
+	});
 </script>
 
 <MetaTag
@@ -101,7 +109,10 @@
 <div class="w-full flex-1 flex flex-col items-center pt-1.5">
 	<div class="w-full px-2 py-1 md:py-2 flex justify-center">
 		<div class="w-full flex max-w-3xl justify-center">
-			<SearchAndFilterBar bind:modelIdFilters bind:searchString />
+			<SearchAndFilterBar
+				bind:modelIdFilters={$galleryModelIdFilters}
+				bind:searchString={$gallerySearchString}
+			/>
 		</div>
 	</div>
 	<div class="w-full px-1 pb-3 pt-1 md:pt-3 relative flex flex-col flex-1">

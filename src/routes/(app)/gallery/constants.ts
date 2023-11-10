@@ -1,6 +1,15 @@
 import { getGalleryGenerationFullOutputs } from '$ts/queries/galleryLike/galleryGenerations';
 import type { TUserProfileFullOutputsPage } from '$ts/queries/galleryLike/types';
 import type { FetchInfiniteQueryOptions } from '@tanstack/svelte-query';
+import { writable as writableLocal } from '@macfja/svelte-persistent-store';
+import type { TAvailableGenerationModelId } from '$ts/constants/generationModels';
+
+export const gallerySearchString = writableLocal<string>('gallerySearchString', '');
+
+export const galleryModelIdFilters = writableLocal<TAvailableGenerationModelId[]>(
+	'galleryModelIdFilters',
+	[]
+);
 
 export const getGalleryInfiniteQueryKey = ({
 	searchString,

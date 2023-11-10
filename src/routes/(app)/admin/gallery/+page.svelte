@@ -22,6 +22,8 @@
 	import TabLikeDropdown from '$components/tabBars/TabLikeDropdown.svelte';
 	import LL from '$i18n/i18n-svelte';
 	import {
+		adminGalleryModelIdFilters,
+		adminGallerySearchString,
 		getAllUserGenerationFullOutputsQueryKey,
 		getAllUserGenerationFullOutputsQueryProps
 	} from '$routes/(app)/admin/gallery/constants';
@@ -44,13 +46,10 @@
 
 	export let data;
 
-	let modelIdFilters: TAvailableGenerationModelId[];
-	let searchString = '';
-
 	if (!hydrated) {
-		modelIdFilters = data.modelIdFilters;
+		adminGalleryModelIdFilters.set(data.modelIdFilters);
 		adminGalleryCurrentFilter.set(data.view);
-		if (data.searchString) searchString = data.searchString;
+		adminGallerySearchString.set(data.searchString);
 	}
 
 	let totalOutputs: number;
@@ -63,8 +62,8 @@
 	$: allUserGenerationFullOutputsQueryKey.set(
 		getAllUserGenerationFullOutputsQueryKey({
 			adminGalleryCurrentFilter: $adminGalleryCurrentFilter,
-			searchString: searchString,
-			modelIdFilters
+			searchString: $adminGallerySearchString,
+			modelIdFilters: $adminGalleryModelIdFilters
 		})
 	);
 
@@ -74,8 +73,8 @@
 					getAllUserGenerationFullOutputsQueryProps({
 						adminGalleryCurrentFilter: $adminGalleryCurrentFilter,
 						session: $page.data.session,
-						modelIdFilters,
-						searchString
+						modelIdFilters: $adminGalleryModelIdFilters,
+						searchString: $adminGallerySearchString
 					})
 			  )
 			: undefined;
@@ -142,10 +141,6 @@
 	onMount(() => {
 		updateHydrated();
 	});
-
-	afterNavigate(() => {
-		onFilterChanged();
-	});
 </script>
 
 <MetaTag
@@ -207,7 +202,11 @@
 		</div>
 		<div class="w-full flex flex-col items-center justify-start px-1">
 			<div class="w-full max-w-3xl mt-3 flex flex-row justify-center">
-				<SearchAndFilterBar bind:searchString bind:modelIdFilters bind:searchInputIsFocused />
+				<SearchAndFilterBar
+					bind:searchString={$adminGallerySearchString}
+					bind:modelIdFilters={$adminGalleryModelIdFilters}
+					bind:searchInputIsFocused
+				/>
 			</div>
 		</div>
 		<!-- Edit bar -->

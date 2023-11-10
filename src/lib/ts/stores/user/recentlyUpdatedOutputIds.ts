@@ -1,6 +1,6 @@
 import { activeGeneration } from '$ts/stores/user/generation';
 import { get } from 'svelte/store';
-import { writable as writableLocal } from 'svelte-local-storage-store';
+import { writable as writableLocal } from '@macfja/svelte-persistent-store';
 
 const maxItems = 50;
 export const recentlyUpdatedOutputIds = writableLocal<string[]>('recentlyUpdatedOutputIds', []);

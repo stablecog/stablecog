@@ -1,3 +1,3 @@
-import { writable } from 'svelte-local-storage-store';
+import { writable as writableLocal } from '@macfja/svelte-persistent-store';
 
-export const wantsEmail = writable<boolean | null>('wantsEmail', null);
+export const wantsEmail = writableLocal<boolean | null>('wantsEmail', null);

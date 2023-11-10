@@ -50,7 +50,6 @@
 		"svelte-confetti": "^1.2.2",
 		"svelte-copy": "^1.2.4",
 		"svelte-intersection-observer": "^0.10.0",
-		"svelte-local-storage-store": "^0.3.1",
 		"svelte-portal": "^2.2.0",
 		"svelte-preprocess": "^5.0.3",
 		"svelte-textarea-autoresize": "^1.0.0",
@@ -66,6 +65,7 @@
 	"type": "module",
 	"dependencies": {
 		"@felte/validator-zod": "^1.0.16",
+		"@macfja/svelte-persistent-store": "^2.4.1",
 		"@melt-ui/svelte": "^0.39.5",
 		"@supabase/auth-helpers-sveltekit": "^0.10.2",
 		"@supabase/supabase-js": "^2.33.1",

@@ -19,7 +19,10 @@
 	import SearchAndFilterBar from '$components/SearchAndFilterBar.svelte';
 	import SignInCard from '$components/SignInCard.svelte';
 	import LL, { locale } from '$i18n/i18n-svelte';
-	import { getHistoryInfiniteQueryProps } from '$routes/(app)/history/constants';
+	import {
+		getHistoryInfiniteQueryProps,
+		historySearchString
+	} from '$routes/(app)/history/constants';
 	import { canonicalUrl } from '$ts/constants/main';
 	import { previewImageVersion } from '$ts/constants/previewImageVersion';
 	import { setActiveGenerationToOutputIndex } from '$ts/helpers/goToOutputIndex';
@@ -44,7 +47,6 @@
 	import IconImage from '$components/icons/IconImage.svelte';
 	import { onMount } from 'svelte';
 	import { hydrated, updateHydrated } from '$ts/stores/hydrated.js';
-	import { afterNavigate } from '$app/navigation';
 
 	export let data;
 
@@ -54,19 +56,18 @@
 		| CreateInfiniteQueryResult<TUserGenerationFullOutputsPage, unknown>
 		| undefined;
 
-	let searchString: string;
 	let searchInputIsFocused = false;
 
 	if (!hydrated) {
 		userGalleryCurrentView.set(data.view);
 		userGalleryModelIdFilters.set(data.modelIdFilters);
-		if (data.searchString) searchString = data.searchString;
+		historySearchString.set(data.searchString);
 	}
 
 	$: userGenerationFullOutputsQueryKey.set([
 		'user_generation_full_outputs',
 		$userGalleryCurrentView,
-		searchString ? searchString : '',
+		$historySearchString ? $historySearchString : '',
 		$userGalleryModelIdFilters ? $userGalleryModelIdFilters.join(',') : ''
 	]);
 
@@ -75,7 +76,7 @@
 			? createInfiniteQuery(
 					getHistoryInfiniteQueryProps({
 						userGalleryCurrentView: $userGalleryCurrentView,
-						searchString,
+						searchString: $historySearchString,
 						modelIdFilters: $userGalleryModelIdFilters,
 						session: $page.data.session
 					})
@@ -183,10 +184,6 @@
 	onMount(() => {
 		updateHydrated();
 	});
-
-	afterNavigate(() => {
-		onUserGalleryCurrentViewChanged();
-	});
 </script>
 
 <MetaTag
@@ -244,7 +241,7 @@
 				</div>
 				<div class="w-full flex mt-3">
 					<SearchAndFilterBar
-						bind:searchString
+						bind:searchString={$historySearchString}
 						bind:modelIdFilters={$userGalleryModelIdFilters}
 						bind:searchInputIsFocused
 					/>

@@ -1,5 +1,5 @@
 import type { TGeneration } from '$ts/stores/user/generation';
-import { writable as writableLocal } from 'svelte-local-storage-store';
+import { writable as writableLocal } from '@macfja/svelte-persistent-store';
 
 const defaultUpscaleDurationMs = 6000;
 const defaultGenerationCostCompletionPerMs = 6000;

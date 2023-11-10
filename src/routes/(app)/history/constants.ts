@@ -5,6 +5,9 @@ import {
 import type { TUserGalleryView } from '$ts/stores/user/gallery';
 import type { Session } from '@supabase/supabase-js';
 import type { CreateInfiniteQueryOptions } from '@tanstack/svelte-query';
+import { writable as writableLocal } from '@macfja/svelte-persistent-store';
+
+export const historySearchString = writableLocal<string>('historySearchString', '');
 
 export const getHistoryInfiniteQueryKey = ({
 	userGalleryCurrentView,

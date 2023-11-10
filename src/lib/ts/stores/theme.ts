@@ -1,4 +1,4 @@
-import { writable as writableLocal } from 'svelte-local-storage-store';
+import { writable as writableLocal } from '@macfja/svelte-persistent-store';
 import { writable } from 'svelte/store';
 
 export const theme = writableLocal<TAvailableThemes | null>('theme', null);

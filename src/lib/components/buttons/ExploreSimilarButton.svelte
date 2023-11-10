@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { browser } from '$app/environment';
 	import { page } from '$app/stores';
 	import type { TGenerationImageCardType } from '$components/generationImage/types';
 	import IconImageSearch from '$components/icons/IconImageSearch.svelte';
@@ -17,9 +18,18 @@
 	export { classes as class };
 	let classes = '';
 
+	const searchParams = new URLSearchParams(browser ? window.location.search : $page.url.search);
+
+	const searchParamsWithOutputId = new URLSearchParams(searchParams);
+	searchParamsWithOutputId.set('q', generation.selected_output.id);
+	const searchParamsWithOutputIdString = searchParamsWithOutputId.toString();
+	const searchParamsWithOutputIdStringFinal = searchParamsWithOutputIdString
+		? `?${searchParamsWithOutputIdString}`
+		: '';
+
 	$: exploreSimilarUrl = `${
 		cardType === 'user-profile' ? `/user/${generation.user.username}` : '/gallery'
-	}?q=${generation.selected_output.id}`;
+	}${searchParamsWithOutputIdStringFinal}`;
 
 	function onClick() {
 		setSearchQuery(generation.selected_output.id);
