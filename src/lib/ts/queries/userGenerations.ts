@@ -100,7 +100,6 @@ export async function getAllUserGenerationFullOutputs({
 	});
 	const data: TUserGenerationFullOutputsPage = await res.json();
 	if (data.error) throw new Error(data.error);
-	console.log(data);
 	return data;
 }
 

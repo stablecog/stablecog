@@ -23,6 +23,7 @@ import {
 	roleToProductId
 } from '$ts/constants/stripePublic';
 import type { TQueueItem } from '$ts/stores/user/queue';
+import { z } from 'zod';
 
 export const generations = writable<TGeneration[]>([]);
 export const activeGeneration = writable<TGenerationWithSelectedOutput | undefined>(undefined);
@@ -481,12 +482,11 @@ export interface TGenerationOutput {
 	aesthetic_artifact_score?: number;
 }
 
-export type TGalleryStatus =
-	| 'submitted'
-	| 'approved'
-	| 'rejected'
-	| 'not_submitted'
-	| 'manually_submitted';
+export const TGalleryStatusSchema = z
+	.enum(['submitted', 'approved', 'rejected', 'not_submitted', 'manually_submitted'])
+	.default('submitted');
+
+export type TGalleryStatus = z.infer<typeof TGalleryStatusSchema>;
 
 export type TGenerationOutputStatus =
 	| 'to-be-submitted'

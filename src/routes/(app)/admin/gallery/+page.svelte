@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { browser } from '$app/environment';
+	import { afterNavigate } from '$app/navigation';
 	import { page } from '$app/stores';
 	import BatchEditBar from '$components/BatchEditBar.svelte';
 	import {
@@ -20,63 +21,62 @@
 	import SignInCard from '$components/SignInCard.svelte';
 	import TabLikeDropdown from '$components/tabBars/TabLikeDropdown.svelte';
 	import LL from '$i18n/i18n-svelte';
+	import {
+		getAllUserGenerationFullOutputsQueryKey,
+		getAllUserGenerationFullOutputsQueryProps
+	} from '$routes/(app)/admin/gallery/constants';
 	import type { TAvailableGenerationModelId } from '$ts/constants/generationModels';
 	import { canonicalUrl } from '$ts/constants/main';
 	import { previewImageVersion } from '$ts/constants/previewImageVersion';
 	import { isSuperAdmin } from '$ts/helpers/admin/roles';
-	import {
-		getAllUserGenerationFullOutputs,
-		type TUserGenerationFullOutputsPage
-	} from '$ts/queries/userGenerations';
+	import type { TUserGenerationFullOutputsPage } from '$ts/queries/userGenerations';
 	import {
 		adminGalleryCurrentFilter,
 		allUserGenerationFullOutputsQueryKey,
 		isAdminGalleryEditActive
 	} from '$ts/stores/admin/gallery';
+	import { hydrated, updateHydrated } from '$ts/stores/hydrated.js';
 	import { userSummary } from '$ts/stores/user/summary';
 	import { windowWidth } from '$ts/stores/window';
 	import { activeGeneration } from '$userStores/generation';
 	import { createInfiniteQuery, type CreateInfiniteQueryResult } from '@tanstack/svelte-query';
+	import { onMount } from 'svelte';
+
+	export let data;
+
+	let modelIdFilters: TAvailableGenerationModelId[];
+
+	if (!hydrated) {
+		modelIdFilters = data.modelIdFilters;
+		adminGalleryCurrentFilter.set(data.view);
+	}
 
 	let totalOutputs: number;
 	let searchString = '';
 	let searchInputIsFocused = false;
-	let modelIdFilters: TAvailableGenerationModelId[];
 
 	let allUserGenerationFullOutputsQuery:
 		| CreateInfiniteQueryResult<TUserGenerationFullOutputsPage, unknown>
 		| undefined;
 
-	$: allUserGenerationFullOutputsQueryKey.set([
-		'admin_user_generation_full_outputs',
-		$adminGalleryCurrentFilter,
-		searchString ? searchString : '',
-		modelIdFilters ? modelIdFilters.join(',') : ''
-	]);
+	$: allUserGenerationFullOutputsQueryKey.set(
+		getAllUserGenerationFullOutputsQueryKey({
+			adminGalleryCurrentFilter: $adminGalleryCurrentFilter,
+			searchString: searchString,
+			modelIdFilters
+		})
+	);
 
 	$: allUserGenerationFullOutputsQuery =
 		browser && $page.data.session?.user.id
-			? createInfiniteQuery({
-					queryKey: $allUserGenerationFullOutputsQueryKey,
-					queryFn: (lastPage) => {
-						return getAllUserGenerationFullOutputs({
-							access_token: $page.data.session?.access_token || '',
-							cursor: lastPage?.pageParam,
-							gallery_status: $adminGalleryCurrentFilter,
-							order_by:
-								$adminGalleryCurrentFilter === 'approved' ||
-								$adminGalleryCurrentFilter === 'rejected'
-									? 'updated_at'
-									: 'created_at',
-							search: searchString,
-							model_ids: modelIdFilters
-						});
-					},
-					getNextPageParam: (lastPage: TUserGenerationFullOutputsPage) => {
-						if (!lastPage.next) return undefined;
-						return lastPage.next;
-					}
-			  })
+			? createInfiniteQuery(
+					getAllUserGenerationFullOutputsQueryProps({
+						adminGalleryCurrentFilter: $adminGalleryCurrentFilter,
+						session: $page.data.session,
+						modelIdFilters,
+						searchString
+					})
+			  )
 			: undefined;
 
 	$: $allUserGenerationFullOutputsQuery?.data?.pages, onPagesChanged();
@@ -122,6 +122,29 @@
 			selected_output: outputs[newIndex]
 		});
 	}
+
+	$: $adminGalleryCurrentFilter, onFilterChanged();
+
+	function onFilterChanged() {
+		if (!browser) return;
+		const url = new URL($page.url);
+		if ($adminGalleryCurrentFilter === 'submitted') {
+			url.searchParams.delete('view');
+		} else {
+			url.searchParams.set('view', $adminGalleryCurrentFilter);
+		}
+		const relativeUrl = url.pathname + url.search;
+		if (url === $page.url) return;
+		window.history.replaceState(history.state, '', relativeUrl);
+	}
+
+	onMount(() => {
+		updateHydrated();
+	});
+
+	afterNavigate(() => {
+		onFilterChanged();
+	});
 </script>
 
 <MetaTag
