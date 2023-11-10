@@ -45,14 +45,15 @@
 	export let data;
 
 	let modelIdFilters: TAvailableGenerationModelId[];
+	let searchString = '';
 
 	if (!hydrated) {
 		modelIdFilters = data.modelIdFilters;
 		adminGalleryCurrentFilter.set(data.view);
+		if (data.searchString) searchString = data.searchString;
 	}
 
 	let totalOutputs: number;
-	let searchString = '';
 	let searchInputIsFocused = false;
 
 	let allUserGenerationFullOutputsQuery:
@@ -127,7 +128,7 @@
 
 	function onFilterChanged() {
 		if (!browser) return;
-		const url = new URL($page.url);
+		const url = new URL(window.location.href);
 		if ($adminGalleryCurrentFilter === 'submitted') {
 			url.searchParams.delete('view');
 		} else {
@@ -135,7 +136,7 @@
 		}
 		const relativeUrl = url.pathname + url.search;
 		if (url === $page.url) return;
-		window.history.replaceState(history.state, '', relativeUrl);
+		window.history.replaceState(window.history.state, '', relativeUrl);
 	}
 
 	onMount(() => {

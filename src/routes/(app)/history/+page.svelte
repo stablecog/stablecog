@@ -60,6 +60,7 @@
 	if (!hydrated) {
 		userGalleryCurrentView.set(data.view);
 		userGalleryModelIdFilters.set(data.modelIdFilters);
+		if (data.searchString) searchString = data.searchString;
 	}
 
 	$: userGenerationFullOutputsQueryKey.set([
@@ -168,7 +169,7 @@
 			isUserGalleryEditActive.set(false);
 		}
 		if (!browser) return;
-		const url = new URL($page.url);
+		const url = new URL(window.location.href);
 		if ($userGalleryCurrentView === 'all') {
 			url.searchParams.delete('view');
 		} else {
@@ -176,7 +177,7 @@
 		}
 		const relativeUrl = url.pathname + url.search;
 		if (url === $page.url) return;
-		window.history.replaceState(history.state, '', relativeUrl);
+		window.history.replaceState(window.history.state, '', relativeUrl);
 	}
 
 	onMount(() => {

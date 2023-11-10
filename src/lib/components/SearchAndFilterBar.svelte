@@ -80,15 +80,11 @@
 	}
 
 	function removeSearchParam() {
-		const params = new URL($page.url).searchParams;
-		if (!params.has('q')) return;
-		params.delete('q');
-		const paramsString = params.toString();
-		window.history.replaceState(
-			history.state,
-			'',
-			`${$page.url.pathname}${paramsString !== '' ? '?' : ''}${params}`
-		);
+		const url = new URL(window.location.href);
+		if (!url.searchParams.has('q')) return;
+		url.searchParams.delete('q');
+		const relativeUrl = url.pathname + url.search;
+		window.history.replaceState(window.history.state, '', relativeUrl);
 	}
 
 	function setSearchString() {
@@ -97,24 +93,20 @@
 			return;
 		}
 		searchString = searchStringLocal;
-		const params = new URL($page.url).searchParams;
-		const currentQ = params.get('q');
+		const url = new URL(window.location.href);
+		const currentQ = url.searchParams.get('q');
 		const currentQString = currentQ === null ? '' : currentQ;
 		if (currentQString === searchString) return;
-		params.set('q', searchString);
-		const paramsString = params.toString();
-		window.history.replaceState(
-			history.state,
-			'',
-			`${$page.url.pathname}${paramsString !== '' ? '?' : ''}${params}`
-		);
+		url.searchParams.set('q', searchString);
+		const relativeUrl = url.pathname + url.search;
+		window.history.replaceState(window.history.state, '', relativeUrl);
 	}
 
 	function onModelIdFiltersChanged() {
 		if (!browser) return;
-		const currentMi = $page.url.searchParams.get('mi');
+		const url = new URL(window.location.href);
+		const currentMi = url.searchParams.get('mi');
 		const currentMiString = currentMi === null ? '' : currentMi;
-		const url = new URL($page.url);
 		const newMiString = modelIdFilters?.join(',');
 		if (newMiString === currentMiString) return;
 		if (!newMiString) {
@@ -123,7 +115,7 @@
 			url.searchParams.set('mi', newMiString);
 		}
 		const relativeUrl = url.pathname + url.search;
-		window.history.replaceState(history.state, '', relativeUrl);
+		window.history.replaceState(window.history.state, '', relativeUrl);
 	}
 
 	function onKeyPress(

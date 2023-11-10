@@ -21,6 +21,8 @@ export const load: PageLoad = async ({ parent, url }) => {
 		: 'all';
 	const modelIdFiltersParam = url.searchParams.get('mi');
 	const modelIdFilters = modelIdFiltersParam ? modelIdFiltersParam.split(',') : [];
+	const searchStringParam = url.searchParams.get('q');
+	const searchString = searchStringParam ? searchStringParam : null;
 	const hasInitialData =
 		queryClient.getQueryData(
 			getHistoryInfiniteQueryKey({ userGalleryCurrentView: view, modelIdFilters })
@@ -36,6 +38,7 @@ export const load: PageLoad = async ({ parent, url }) => {
 	}
 	return {
 		view,
-		modelIdFilters
+		modelIdFilters,
+		searchString
 	};
 };

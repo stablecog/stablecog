@@ -163,7 +163,7 @@
 			cardType === 'gallery' || cardType === 'user-profile'
 				? `${$page.url.pathname}/o/${generation.selected_output.id}`
 				: `${$page.url.pathname}?${searchParams.toString()}`;
-		window.history.pushState(history.state, '', urlToPush);
+		window.history.pushState(window.history.state, '', urlToPush);
 	}
 
 	function _onSelectButtonClicked(e: any) {

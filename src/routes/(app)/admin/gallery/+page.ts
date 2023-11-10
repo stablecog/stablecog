@@ -23,6 +23,8 @@ export const load: PageLoad = async ({ parent, url }) => {
 		: 'submitted';
 	const modelIdFiltersParam = url.searchParams.get('mi');
 	const modelIdFilters = modelIdFiltersParam ? modelIdFiltersParam.split(',') : [];
+	const searchStringParam = url.searchParams.get('q');
+	const searchString = searchStringParam ? searchStringParam : null;
 	const hasInitialData =
 		queryClient.getQueryData(
 			getAllUserGenerationFullOutputsQueryKey({ adminGalleryCurrentFilter: view, modelIdFilters })
@@ -42,6 +44,7 @@ export const load: PageLoad = async ({ parent, url }) => {
 	}
 	return {
 		view,
-		modelIdFilters
+		modelIdFilters,
+		searchString
 	};
 };
