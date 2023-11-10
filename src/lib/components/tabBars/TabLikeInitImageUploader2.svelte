@@ -10,7 +10,7 @@
 	import IconTrashcan from '$components/icons/IconTrashcan.svelte';
 	import IconWarningOutline from '$components/icons/IconWarningOutline.svelte';
 	import Morpher from '$components/Morpher.svelte';
-	import RangeInputWithNumerator from '$components/RangeInputWithNumerator.svelte';
+	import SliderInputWithNumerator from '$components/SliderInputWithNumerator.svelte';
 	import TabBarWrapper from '$components/tabBars/TabBarWrapper.svelte';
 	import WithTooltip from '$components/WithTooltip.svelte';
 	import LL, { locale } from '$i18n/i18n-svelte';
@@ -255,7 +255,7 @@
 								{$LL.Home.InitialImageStrengthTabBar.TitleAlt()}
 							</p>
 						</WithTooltip>
-						<RangeInputWithNumerator
+						<SliderInputWithNumerator
 							name={$LL.Home.InitialImageStrengthTabBar.Title()}
 							min={initImageStrengthMin}
 							max={initImageStrengthMax}

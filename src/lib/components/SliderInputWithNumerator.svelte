@@ -1,6 +1,6 @@
 <script lang="ts">
 	import Numerator from '$components/Numerator.svelte';
-	import RangeInput from '$components/RangeInput.svelte';
+	import SliderInput from '$components/SliderInput.svelte';
 
 	export let value: number;
 	export let min: number;
@@ -23,5 +23,5 @@
 		{value}
 		class="{valueSize === 'md' ? 'text-base px-0.5' : 'text-sm'} text-c-on-bg"
 	/>
-	<RangeInput {disabled} class="flex-1 h-full" bind:value {name} {min} {max} {step} />
+	<SliderInput {disabled} class="flex-1 h-full" bind:value {name} {min} {max} {step} />
 </div>

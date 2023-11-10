@@ -1,5 +1,5 @@
 <script lang="ts">
-	import RangeInputWithNumerator from '$components/RangeInputWithNumerator.svelte';
+	import SliderInputWithNumerator from '$components/SliderInputWithNumerator.svelte';
 	import TabBarWrapper from '$components/tabBars/TabBarWrapper.svelte';
 
 	export let value: number;
@@ -24,7 +24,7 @@
 			<div class="w-full h-full bg-c-bg-secondary transition" />
 		</div>
 	{/if}
-	<RangeInputWithNumerator
+	<SliderInputWithNumerator
 		bind:value
 		{valueSize}
 		{step}
