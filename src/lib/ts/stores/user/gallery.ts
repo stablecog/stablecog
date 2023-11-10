@@ -1,5 +1,7 @@
+import type { TAvailableGenerationModelId } from '$ts/constants/generationModels';
 import { writable as writableLocal } from 'svelte-local-storage-store';
 import { derived, writable } from 'svelte/store';
+import { z } from 'zod';
 
 export const userGalleryActionableItems = writableLocal<TUserGalleryActionableItem[]>(
 	'user_gallery_actionable_items',
@@ -9,6 +11,10 @@ export const userGalleryActionableItems = writableLocal<TUserGalleryActionableIt
 export const userGalleryCurrentView = writableLocal<TUserGalleryView>(
 	'userGalleryCurrentView',
 	'all'
+);
+export const userGalleryModelIdFilters = writableLocal<TAvailableGenerationModelId[]>(
+	'userGalleryModelIdFilters',
+	[]
 );
 export const isUserGalleryEditActive = writable<boolean>(false);
 
@@ -32,4 +38,5 @@ export interface TUserGalleryActionableItem {
 	view: TUserGalleryView;
 }
 
-export type TUserGalleryView = 'all' | 'favorites' | 'likes';
+export const TUserGalleryViewSchema = z.enum(['all', 'favorites', 'likes']).default('all');
+export type TUserGalleryView = z.infer<typeof TUserGalleryViewSchema>;

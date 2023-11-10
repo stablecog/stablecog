@@ -6,24 +6,36 @@ import {
 	getHistoryInfiniteQueryKey,
 	getHistoryInfiniteQueryProps
 } from '$routes/(app)/history/constants';
+import { TUserGalleryViewSchema } from '$ts/stores/user/gallery';
 
 interface TParent {
 	queryClient: QueryClient;
 	session: Session | null | undefined;
 	userSummary: TUserSummary | null | undefined;
 }
-export const load: PageLoad = async ({ parent }) => {
+export const load: PageLoad = async ({ parent, url }) => {
 	const { queryClient, session, userSummary } = (await parent()) as TParent;
+	const viewParam = url.searchParams.get('view');
+	const view = TUserGalleryViewSchema.safeParse(viewParam).success
+		? TUserGalleryViewSchema.parse(viewParam)
+		: 'all';
+	const modelIdFiltersParam = url.searchParams.get('mi');
+	const modelIdFilters = modelIdFiltersParam ? modelIdFiltersParam.split(',') : [];
 	const hasInitialData =
-		queryClient.getQueryData(getHistoryInfiniteQueryKey({ userGalleryCurrentView: 'all' })) !==
-		undefined;
+		queryClient.getQueryData(
+			getHistoryInfiniteQueryKey({ userGalleryCurrentView: view, modelIdFilters })
+		) !== undefined;
 	if (session && userSummary && !hasInitialData) {
 		try {
 			await queryClient.prefetchInfiniteQuery(
-				getHistoryInfiniteQueryProps({ userGalleryCurrentView: 'all', session })
+				getHistoryInfiniteQueryProps({ userGalleryCurrentView: view, session, modelIdFilters })
 			);
 		} catch (error) {
 			console.log(error);
 		}
 	}
+	return {
+		view,
+		modelIdFilters
+	};
 };

@@ -20,7 +20,6 @@
 	import SignInCard from '$components/SignInCard.svelte';
 	import LL, { locale } from '$i18n/i18n-svelte';
 	import { getHistoryInfiniteQueryProps } from '$routes/(app)/history/constants';
-	import type { TAvailableGenerationModelId } from '$ts/constants/generationModels';
 	import { canonicalUrl } from '$ts/constants/main';
 	import { previewImageVersion } from '$ts/constants/previewImageVersion';
 	import { setActiveGenerationToOutputIndex } from '$ts/helpers/goToOutputIndex';
@@ -31,7 +30,8 @@
 	import {
 		isUserGalleryEditActive,
 		userGalleryCurrentView,
-		type TUserGalleryView
+		type TUserGalleryView,
+		userGalleryModelIdFilters
 	} from '$ts/stores/user/gallery';
 	import { userGenerationFullOutputsQueryKey } from '$ts/stores/user/queryKeys';
 	import { userSummary } from '$ts/stores/user/summary';
@@ -42,10 +42,13 @@
 	import TabLikeDropdown from '$components/tabBars/TabLikeDropdown.svelte';
 	import IconHeartOutlined from '$components/icons/IconHeartOutlined.svelte';
 	import IconImage from '$components/icons/IconImage.svelte';
-	import IconAnimatedSpinner from '$components/icons/IconAnimatedSpinner.svelte';
+	import { onMount } from 'svelte';
+	import { hydrated, updateHydrated } from '$ts/stores/hydrated.js';
+	import { afterNavigate } from '$app/navigation';
+
+	export let data;
 
 	let totalOutputs: number;
-	let modelIdFilters: TAvailableGenerationModelId[];
 
 	let userGenerationFullOutputsQuery:
 		| CreateInfiniteQueryResult<TUserGenerationFullOutputsPage, unknown>
@@ -54,11 +57,16 @@
 	let searchString: string;
 	let searchInputIsFocused = false;
 
+	if (!hydrated) {
+		userGalleryCurrentView.set(data.view);
+		userGalleryModelIdFilters.set(data.modelIdFilters);
+	}
+
 	$: userGenerationFullOutputsQueryKey.set([
 		'user_generation_full_outputs',
 		$userGalleryCurrentView,
 		searchString ? searchString : '',
-		modelIdFilters ? modelIdFilters.join(',') : ''
+		$userGalleryModelIdFilters ? $userGalleryModelIdFilters.join(',') : ''
 	]);
 
 	$: userGenerationFullOutputsQuery =
@@ -67,7 +75,7 @@
 					getHistoryInfiniteQueryProps({
 						userGalleryCurrentView: $userGalleryCurrentView,
 						searchString,
-						modelIdFilters,
+						modelIdFilters: $userGalleryModelIdFilters,
 						session: $page.data.session
 					})
 			  )
@@ -159,7 +167,25 @@
 		if ($userGalleryCurrentView === 'likes') {
 			isUserGalleryEditActive.set(false);
 		}
+		if (!browser) return;
+		const url = new URL($page.url);
+		if ($userGalleryCurrentView === 'all') {
+			url.searchParams.delete('view');
+		} else {
+			url.searchParams.set('view', $userGalleryCurrentView);
+		}
+		const relativeUrl = url.pathname + url.search;
+		if (url === $page.url) return;
+		window.history.replaceState(history.state, '', relativeUrl);
 	}
+
+	onMount(() => {
+		updateHydrated();
+	});
+
+	afterNavigate(() => {
+		onUserGalleryCurrentViewChanged();
+	});
 </script>
 
 <MetaTag
@@ -216,7 +242,11 @@
 					</div>
 				</div>
 				<div class="w-full flex mt-3">
-					<SearchAndFilterBar bind:searchString bind:modelIdFilters bind:searchInputIsFocused />
+					<SearchAndFilterBar
+						bind:searchString
+						bind:modelIdFilters={$userGalleryModelIdFilters}
+						bind:searchInputIsFocused
+					/>
 				</div>
 			</div>
 		</div>

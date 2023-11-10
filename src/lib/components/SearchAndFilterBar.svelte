@@ -114,20 +114,16 @@
 		if (!browser) return;
 		const currentMi = $page.url.searchParams.get('mi');
 		const currentMiString = currentMi === null ? '' : currentMi;
-		const params = new URL($page.url).searchParams;
+		const url = new URL($page.url);
 		const newMiString = modelIdFilters?.join(',');
 		if (newMiString === currentMiString) return;
 		if (!newMiString) {
-			params.delete('mi');
+			url.searchParams.delete('mi');
 		} else {
-			params.set('mi', newMiString);
+			url.searchParams.set('mi', newMiString);
 		}
-		const paramsString = params.toString();
-		window.history.replaceState(
-			history.state,
-			'',
-			`${$page.url.pathname}${paramsString !== '' ? '?' : ''}${params}`
-		);
+		const relativeUrl = url.pathname + url.search;
+		window.history.replaceState(history.state, '', relativeUrl);
 	}
 
 	function onKeyPress(
