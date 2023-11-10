@@ -1,37 +1,36 @@
 <script lang="ts">
+	import { browser } from '$app/environment';
+	import GenerateGridPlaceholder from '$components/generate/GenerateGridPlaceholder.svelte';
+	import { mdBreakpoint } from '$components/generationFullScreen/constants';
 	import type { TGenerationImageCardType } from '$components/generationImage/types';
+	import GridCard from '$components/grids/GridCard.svelte';
+	import { gridScrollPositions } from '$components/grids/scrollPosition';
+	import IconAnimatedSpinner from '$components/icons/IconAnimatedSpinner.svelte';
 	import LL from '$i18n/i18n-svelte';
-	import type { CreateInfiniteQueryResult } from '@tanstack/svelte-query';
+	import { removeRepeatingOutputs } from '$ts/helpers/removeRepeatingOutputs';
+	import type { TUserGenerationFullOutputsPage } from '$ts/queries/userGenerations';
 	import {
 		adminGalleryActionableItems,
 		adminGalleryCurrentFilter,
 		isAdminGalleryEditActive
 	} from '$ts/stores/admin/gallery';
-	import IconAnimatedSpinner from '$components/icons/IconAnimatedSpinner.svelte';
+	import { isTouchscreen } from '$ts/stores/isTouchscreen';
+	import { loadedImages } from '$ts/stores/loadedImages';
 	import {
 		isUserGalleryEditActive,
 		userGalleryActionableItems,
 		userGalleryCurrentView
 	} from '$ts/stores/user/gallery';
-	import { isTouchscreen } from '$ts/stores/isTouchscreen';
 	import type { TGenerationFullOutput } from '$ts/stores/user/generation';
-	import GenerateGridPlaceholder from '$components/generate/GenerateGridPlaceholder.svelte';
-	import { removeRepeatingOutputs } from '$ts/helpers/removeRepeatingOutputs';
+	import { windowHeight, windowWidth } from '$ts/stores/window';
+	import type { CreateInfiniteQueryResult } from '@tanstack/svelte-query';
 	import {
 		createVirtualizer,
 		createWindowVirtualizer,
 		type SvelteVirtualizer
 	} from '@tanstack/svelte-virtual';
-	import type { TUserGenerationFullOutputsPage } from '$ts/queries/userGenerations';
+	import { onMount, tick } from 'svelte';
 	import type { Readable } from 'svelte/store';
-	import { windowHeight, windowWidth } from '$ts/stores/window';
-	import { onDestroy, onMount, tick } from 'svelte';
-	import { loadedImages } from '$ts/stores/loadedImages';
-	import { browser } from '$app/environment';
-	import GridCard from '$components/grids/GridCard.svelte';
-	import { mdBreakpoint } from '$components/generationFullScreen/constants';
-	import { gridScrollPositions } from '$components/grids/scrollPosition';
-	import { page } from '$app/stores';
 
 	export let generationsQuery: CreateInfiniteQueryResult<TUserGenerationFullOutputsPage, unknown>;
 	export let hasGridScrollContainer = false;
@@ -156,11 +155,12 @@
 
 	async function onGridVirtualizerChanged() {
 		if (!$gridVirtualizer) return;
+		const href = window.location.href;
 		if (isInitialScrollPositionSet && mounted) {
-			gridScrollPositions.set($page.url.toString(), $gridVirtualizer.scrollOffset);
+			gridScrollPositions.set(href, $gridVirtualizer.scrollOffset);
 		}
 		if (!isInitialScrollPositionSet && !$gridVirtualizer.isScrolling && mounted) {
-			const position = gridScrollPositions.get($page.url.toString());
+			const position = gridScrollPositions.get(href);
 			if (position) {
 				$gridVirtualizer.scrollToOffset(position, { behavior: 'auto' });
 			}
