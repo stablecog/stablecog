@@ -9,7 +9,7 @@
 	import IconSpeaker from '$components/icons/IconVoiceoverSpeaker.svelte';
 	import IconWave from '$components/icons/IconWave.svelte';
 	import TabLikeDropdown from '$components/tabBars/TabLikeDropdown.svelte';
-	import TabLikeRangeInput from '$components/tabBars/TabLikeRangeInput.svelte';
+	import TabLikeSliderInput from '$components/tabBars/TabLikeSliderInput.svelte';
 	import TabLikeToggle from '$components/tabBars/TabLikeToggle.svelte';
 	import LL from '$i18n/i18n-svelte';
 	import { voiceoverLocaleDropdownItems } from '$ts/constants/voiceover/locales';
@@ -79,7 +79,7 @@
 			tooltipTitle={$LL.Voiceover.Settings.VoiceStability.Title()}
 			tooltipParagraph={$LL.Voiceover.Settings.VoiceStability.Paragraph()}
 		>
-			<TabLikeRangeInput
+			<TabLikeSliderInput
 				name={$LL.Voiceover.Settings.VoiceStability.Title()}
 				hasTitle={false}
 				disabled={!isCheckCompleted}

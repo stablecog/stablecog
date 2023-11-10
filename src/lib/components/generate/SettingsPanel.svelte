@@ -1,7 +1,7 @@
 <script lang="ts">
 	import IconAspectRatio from '$components/icons/IconAspectRatio.svelte';
 	import TabLikeDropdown from '$components/tabBars/TabLikeDropdown.svelte';
-	import TabLikeRangeInput from '$components/tabBars/TabLikeRangeInput.svelte';
+	import TabLikeSliderInput from '$components/tabBars/TabLikeSliderInput.svelte';
 	import TabLikeTextArea from '$components/tabBars/TabLikeTextArea.svelte';
 	import LL from '$i18n/i18n-svelte';
 	import SidebarWrapper from '$components/generate/SidebarWrapper.svelte';
@@ -134,7 +134,7 @@
 			tooltipTitle={$LL.Home.NumOutputsSlider.Title()}
 			tooltipParagraph={$LL.Home.NumOutputsSlider.Paragraph()}
 		>
-			<TabLikeRangeInput
+			<TabLikeSliderInput
 				name={$LL.Home.NumOutputsSlider.Title()}
 				hasTitle={false}
 				disabled={!isCheckCompleted}
@@ -221,7 +221,7 @@
 							tooltipTitle={$LL.Home.GuidanceScaleSlider.Title()}
 							tooltipParagraph={$LL.Home.GuidanceScaleSlider.Paragraph()}
 						>
-							<TabLikeRangeInput
+							<TabLikeSliderInput
 								name={$LL.Home.GuidanceScaleSlider.Title()}
 								class="w-full"
 								hasTitle={false}
