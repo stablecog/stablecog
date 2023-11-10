@@ -8,9 +8,9 @@
 	import IconBrush from '$components/icons/IconBrush.svelte';
 	import IconBug from '$components/icons/IconBug.svelte';
 	import IconEyeSlashOutline from '$components/icons/IconEyeSlashOutline.svelte';
-	import IconGalleryFilled from '$components/icons/IconGalleryFilled.svelte';
 	import IconNsfwPrompt from '$components/icons/IconNSFWPrompt.svelte';
 	import IconSadFaceOutline from '$components/icons/IconSadFaceOutline.svelte';
+	import IconStar from '$components/icons/IconStar.svelte';
 	import LL, { locale } from '$i18n/i18n-svelte';
 	import { calculateCombinedAestheticScore } from '$ts/helpers/calculateCombinedAestheticScore';
 	import { getRelativeDate } from '$ts/helpers/getRelativeDate';
@@ -122,7 +122,7 @@
 				>
 					{#if output.aesthetic_rating_score !== undefined && output.aesthetic_artifact_score !== undefined}
 						<div class="flex items-center gap-1">
-							<IconGalleryFilled class="w-4 h-4" />
+							<IconStar class="w-4 h-4" />
 							<p class="font-medium pt-0.25">
 								{numberFormatter.format(
 									calculateCombinedAestheticScore(
