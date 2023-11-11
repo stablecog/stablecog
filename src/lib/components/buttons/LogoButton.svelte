@@ -1,5 +1,7 @@
 <script lang="ts">
+	import { page } from '$app/stores';
 	import Logo from '$components/Logo.svelte';
+	import { userSummary } from '$ts/stores/user/summary';
 
 	export { classes as class };
 	export let onClick: () => void = () => null;
@@ -8,7 +10,7 @@
 
 <a
 	aria-label="Go to Home"
-	href="/"
+	href={$userSummary && $page.data.session?.user.id ? '/generate' : '/'}
 	on:click={onClick}
 	data-sveltekit-preload-data="hover"
 	class="touch-manipulation px-2 py-3.5 md:px-3 md:py-4.5 self-stretch flex items-center justify-center relative rounded-lg md:rounded-xl z-0 group {classes}"
