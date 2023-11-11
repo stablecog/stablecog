@@ -5,6 +5,7 @@
 	import { logSkipTheQueueButtonClicked } from '$ts/helpers/loggers';
 	import { appVersion } from '$ts/stores/appVersion';
 	import { page } from '$app/stores';
+	import IconPulsing from '$components/icons/IconPulsing.svelte';
 
 	export let position: number;
 	export let hasBg = false;

@@ -16,6 +16,7 @@
 	import IconEyeSlashOutline from '$components/icons/IconEyeSlashOutline.svelte';
 	import IconGalleryFilled from '$components/icons/IconGalleryFilled.svelte';
 	import IconNoImage from '$components/icons/IconNoImage.svelte';
+	import IconPulsing from '$components/icons/IconPulsing.svelte';
 	import IconTick from '$components/icons/IconTick.svelte';
 	import IconTrashcan from '$components/icons/IconTrashcan.svelte';
 	import { doesContainTarget } from '$ts/helpers/doesContainTarget';
@@ -247,21 +248,9 @@
 {/if}
 {#if cardType !== 'gallery' && cardType !== 'admin-gallery' && isRecentlyUpdated}
 	<!-- Ping animation for newly created -->
-	<div class="absolute w-full pointer-events-none">
-		<div
-			class="absolute left-0 top-0 w-full h-12 bg-gradient-to-b from-c-barrier/75 to-c-barrier/0"
-		/>
-		<div
-			class="{cardType === 'stage' ? 'w-6 h-6' : 'w-5 h-5'} {cardType === 'generate'
-				? '-left-0.5 -top-0.5'
-				: 'left-0 top-0'} relative"
-		>
-			<div class="absolute w-full h-full rounded-full animate-ping-custom bg-c-primary/50" />
-			<div class="w-full h-full transform scale-40">
-				<div class="w-full h-full rounded-full animate-ping-custom-bg bg-c-primary" />
-			</div>
-		</div>
-	</div>
+	<IconPulsing
+		class="absolute w-5 h-5 {cardType === 'generate' ? '-left-0.5 -top-0.5' : 'left-0 top-0'}"
+	/>
 {/if}
 {#if !generation.selected_output.is_deleted && !isGalleryEditActive}
 	<a

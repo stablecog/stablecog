@@ -228,7 +228,7 @@
 				</p>
 			</div>
 		</div>
-		{#if allProcesses.length > 0}
+		{#if false && allProcesses.length > 0}
 			<div transition:expandCollapse={{ duration: 300 }} class="w-full px-8 md:px-24 z-0 relative">
 				<div class="w-full flex flex-wrap items-center justify-center py-4">
 					{#each allProcesses as processObject (processObject.id)}
@@ -255,7 +255,7 @@
 				class="w-full px-8 lg:px-16 relative max-w-lg"
 			>
 				<div class="w-full flex flex-col items-center justify-center py-4">
-					<IconPulsing />
+					<IconPulsing class="w-26 h-26 -m-3" />
 					<p class="w-full text-c-on-bg/75 font-medium text-center mt-1.5">
 						{$LL.Live.WaitingTitle()}
 					</p>
