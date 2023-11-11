@@ -1,43 +1,39 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
 	import { page } from '$app/stores';
-	import Button from '$components/buttons/Button.svelte';
 	import MetaTag from '$components/MetaTag.svelte';
-	import LL, { locale } from '$i18n/i18n-svelte';
-	import { apiUrl, canonicalUrl } from '$ts/constants/main';
 	import PageWrapper from '$components/PageWrapper.svelte';
+	import Button from '$components/buttons/Button.svelte';
+	import IconMinus from '$components/icons/IconMinus.svelte';
 	import {
-		PUBLIC_STRIPE_PRICE_ID_STARTER_SUBSCRIPTION_MO,
-		PUBLIC_STRIPE_PRICE_ID_PRO_SUBSCRIPTION_MO,
-		PUBLIC_STRIPE_PRICE_ID_ULTIMATE_SUBSCRIPTION_MO,
-		PUBLIC_STRIPE_PRODUCT_ID_STARTER_SUBSCRIPTION,
-		PUBLIC_STRIPE_PRODUCT_ID_PRO_SUBSCRIPTION,
-		PUBLIC_STRIPE_PRODUCT_ID_ULTIMATE_SUBSCRIPTION,
-		PUBLIC_STRIPE_PRICE_ID_MEDIUM_PACK,
-		PUBLIC_STRIPE_PRODUCT_ID_MEDIUM_PACK,
-		PUBLIC_STRIPE_PRODUCT_ID_LARGE_PACK,
 		PUBLIC_STRIPE_PRICE_ID_LARGE_PACK,
+		PUBLIC_STRIPE_PRICE_ID_MEDIUM_PACK,
 		PUBLIC_STRIPE_PRICE_ID_MEGA_PACK,
+		PUBLIC_STRIPE_PRICE_ID_PRO_SUBSCRIPTION_MO,
+		PUBLIC_STRIPE_PRICE_ID_STARTER_SUBSCRIPTION_MO,
+		PUBLIC_STRIPE_PRICE_ID_ULTIMATE_SUBSCRIPTION_MO,
+		PUBLIC_STRIPE_PRODUCT_ID_LARGE_PACK,
+		PUBLIC_STRIPE_PRODUCT_ID_MEDIUM_PACK,
 		PUBLIC_STRIPE_PRODUCT_ID_MEGA_PACK,
+		PUBLIC_STRIPE_PRODUCT_ID_PRO_SUBSCRIPTION,
+		PUBLIC_STRIPE_PRODUCT_ID_STARTER_SUBSCRIPTION,
+		PUBLIC_STRIPE_PRODUCT_ID_ULTIMATE_SUBSCRIPTION,
 		PUBLIC_STRIPE_PROMOTION_CODE_ID_FIRST_PURCHASE_50_OFF
 	} from '$env/static/public';
-	import {
-		STRIPE_CURRENCY_TO_SYMBOL,
-		STRIPE_PRODUCT_ID_OBJECTS_SUBSCRIPTIONS_MO,
-		STRIPE_PRODUCT_ID_OBJECTS_CREDIT_PACKS
-	} from '$ts/constants/stripePublic';
-	import { userSummary } from '$ts/stores/user/summary';
+	import LL, { locale } from '$i18n/i18n-svelte';
+	import PlanCard from '$routes/(app)/pricing/PlanCard.svelte';
+	import type { TCreditPackCard, TSubscriptionCard } from '$routes/(app)/pricing/types.js';
+	import { apiUrl, canonicalUrl } from '$ts/constants/main';
 	import { previewImageVersion } from '$ts/constants/previewImageVersion';
 	import { socialAppUrls } from '$ts/constants/social';
-	import { searchParamsString } from '$ts/stores/searchParamsString';
-	import SignInModal from '$components/SignInModal.svelte';
+	import {
+		STRIPE_CURRENCY_TO_SYMBOL,
+		STRIPE_PRODUCT_ID_OBJECTS_CREDIT_PACKS,
+		STRIPE_PRODUCT_ID_OBJECTS_SUBSCRIPTIONS_MO
+	} from '$ts/constants/stripePublic';
 	import { getCustomerPortalUrl } from '$ts/helpers/user/getCustomerPortalUrl.js';
-	import type { LocalizedString } from 'typesafe-i18n';
-	import PlanCard from '$routes/(app)/pricing/PlanCard.svelte';
-	import IconTickOnly from '$components/icons/IconTickOnly.svelte';
-	import type { TCreditPackCard, TSubscriptionCard } from '$routes/(app)/pricing/types.js';
-	import IconImage from '$components/icons/IconImage.svelte';
-	import IconMinus from '$components/icons/IconMinus.svelte';
+	import { isSignInModalOpen } from '$ts/stores/isSignInModalOpen.js';
+	import { userSummary } from '$ts/stores/user/summary';
 
 	export let data;
 
@@ -356,7 +352,6 @@
 
 	let checkoutCreationStatus: 'idle' | 'loading' | 'success' | 'error' = 'idle';
 	let customerPortalCreationStatus: 'idle' | 'loading' | 'success' | 'error' = 'idle';
-	let isSignInModalOpen = false;
 	let selectedPriceId: string | undefined = undefined;
 
 	interface TCheckoutSessionRes {
@@ -532,7 +527,7 @@
 									</p>
 								</Button>
 							{:else}
-								<Button onClick={() => (isSignInModalOpen = true)} class="w-full">
+								<Button onClick={() => isSignInModalOpen.set(true)} class="w-full">
 									{$LL.SignIn.GetStartedButton()}
 								</Button>
 							{/if}
