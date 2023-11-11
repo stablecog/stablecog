@@ -53,7 +53,7 @@
 						: 'py-1 px-0.5'}"
 				>
 					<div
-						class="w-full h-full bg-c-bg-secondary rounded-lg shadow-md shadow-c-shadow/[var(--o-shadow-strong)]"
+						class="w-full h-full bg-c-bg-secondary rounded-lg shadow-lg shadow-c-shadow/[var(--o-shadow-strong)]"
 					/>
 				</div>
 			</div>
@@ -69,7 +69,7 @@
 						? 'pt-4 pb-4.5'
 						: 'py-4'} {isSelected(route, $page.url.pathname)
 						? 'text-c-on-bg not-touch:hover:text-c-primary'
-						: 'text-c-on-bg/60'}"
+						: 'text-c-on-bg/75'}"
 					href={route.href}
 				>
 					<div
