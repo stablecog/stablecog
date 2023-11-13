@@ -76,6 +76,8 @@
 				? 'bg-c-danger/15'
 				: 'bg-c-primary/15'} {noRounding
 				? ''
+				: fullRounding
+				? 'rounded-full'
 				: size === 'xs'
 				? 'rounded'
 				: size === 'sm'
