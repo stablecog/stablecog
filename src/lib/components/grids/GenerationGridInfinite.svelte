@@ -338,7 +338,7 @@
 					class="relative rounded-lg group
 					before:absolute before:min-w-[56px] before:min-h-[56px]
 					before:left-1/2 before:top-1/2 before:-translate-x-1/2 before:-translate-y-1/2
-					before:w-full before:h-full before:rounded-lg transition
+					before:w-full before:h-full before:rounded-lg transition duration-300
 					{showScrollToTopChevron
 						? 'pointer-events-auto before:pointer-events-auto scale-100 opacity-100'
 						: 'scale-0 opacity-0'}"
