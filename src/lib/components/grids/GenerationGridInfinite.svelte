@@ -1,8 +1,6 @@
 <script lang="ts">
 	import { browser } from '$app/environment';
 	import ButtonHoverEffect from '$components/buttons/ButtonHoverEffect.svelte';
-	import IconButton from '$components/buttons/IconButton.svelte';
-	import SubtleButton from '$components/buttons/SubtleButton.svelte';
 	import GenerateGridPlaceholder from '$components/generate/GenerateGridPlaceholder.svelte';
 	import { mdBreakpoint } from '$components/generationFullScreen/constants';
 	import type { TGenerationImageCardType } from '$components/generationImage/types';
@@ -10,7 +8,6 @@
 	import { gridScrollPositions } from '$components/grids/scrollPosition';
 	import IconAnimatedSpinner from '$components/icons/IconAnimatedSpinner.svelte';
 	import IconArrowRight from '$components/icons/IconArrowRight.svelte';
-	import IconChevronDown from '$components/icons/IconChevronDown.svelte';
 	import LL from '$i18n/i18n-svelte';
 	import { removeRepeatingOutputs } from '$ts/helpers/removeRepeatingOutputs';
 	import type { TUserGenerationFullOutputsPage } from '$ts/queries/userGenerations';
@@ -326,7 +323,7 @@
 			<div
 				class="z-20 sticky flex items-center justify-center left-0 bottom-0
 				w-full px-2 pt-8 pb-[calc(0.5rem+env(safe-area-inset-bottom))]
-				md:px-5 md:pt-5 md:pb-[calc(1.25rem+env(safe-area-inset-bottom))]"
+				md:px-3 md:pt-8 md:pb-[calc(1rem+env(safe-area-inset-bottom))]"
 			>
 				<button
 					disabled={!showScrollToTopChevron}
@@ -348,7 +345,7 @@
 						shadow-lg shadow-c-shadow/[var(--o-shadow-strongest)] border-2 border-c-on-bg/15"
 					>
 						<ButtonHoverEffect color="on-bg" noPadding fullRounding />
-						<IconArrowRight class="transform -rotate-90 w-5 h-5 md:w-6 md:h-6" />
+						<IconArrowRight class="transform -rotate-90 w-5 h-5" />
 					</div>
 				</button>
 			</div>
