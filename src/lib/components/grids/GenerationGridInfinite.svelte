@@ -323,7 +323,7 @@
 			</div>
 			<div
 				class="z-20 sticky flex items-center justify-end left-0 bottom-0
-				w-full pointer-events-none px-3 pt-3 pb-[calc(0.75rem+env(safe-area-inset-bottom))]
+				w-full pointer-events-none px-2 pt-2 pb-[calc(0.5rem+env(safe-area-inset-bottom))]
 				md:px-5 md:pt-5 md:pb-[calc(1.25rem+env(safe-area-inset-bottom))]"
 			>
 				<SubtleButton
