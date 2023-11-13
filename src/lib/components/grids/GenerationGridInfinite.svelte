@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { browser } from '$app/environment';
+	import ButtonHoverEffect from '$components/buttons/ButtonHoverEffect.svelte';
 	import IconButton from '$components/buttons/IconButton.svelte';
 	import SubtleButton from '$components/buttons/SubtleButton.svelte';
 	import GenerateGridPlaceholder from '$components/generate/GenerateGridPlaceholder.svelte';
@@ -8,6 +9,7 @@
 	import GridCard from '$components/grids/GridCard.svelte';
 	import { gridScrollPositions } from '$components/grids/scrollPosition';
 	import IconAnimatedSpinner from '$components/icons/IconAnimatedSpinner.svelte';
+	import IconArrowRight from '$components/icons/IconArrowRight.svelte';
 	import IconChevronDown from '$components/icons/IconChevronDown.svelte';
 	import LL from '$i18n/i18n-svelte';
 	import { removeRepeatingOutputs } from '$ts/helpers/removeRepeatingOutputs';
@@ -322,26 +324,33 @@
 				{/each}
 			</div>
 			<div
-				class="z-20 sticky flex items-center justify-end left-0 bottom-0
-				w-full pointer-events-none px-2 pt-2 pb-[calc(0.5rem+env(safe-area-inset-bottom))]
+				class="z-20 sticky flex items-center justify-center left-0 bottom-0
+				w-full px-2 pt-8 pb-[calc(0.5rem+env(safe-area-inset-bottom))]
 				md:px-5 md:pt-5 md:pb-[calc(1.25rem+env(safe-area-inset-bottom))]"
 			>
-				<SubtleButton
+				<button
 					disabled={!showScrollToTopChevron}
-					noPadding
-					rounding="rounded-full"
-					label="Scroll to top"
-					onClick={() =>
+					aria-label="Scroll to top"
+					on:click={() =>
 						$gridVirtualizer?.scrollToOffset(0, {
 							behavior: 'smooth'
 						})}
-					class="{showScrollToTopChevron
-						? 'pointer-events-auto scale-100 opacity-100'
-						: 'scale-0 opacity-0'} shadow-lg shadow-c-shadow/[var(--o-shadow-strongest)] 
-						transform transition p-3"
+					class="relative rounded-lg group
+					before:absolute before:min-w-[56px] before:min-h-[56px]
+					before:left-1/2 before:top-1/2 before:-translate-x-1/2 before:-translate-y-1/2
+					before:w-full before:h-full before:rounded-lg transition
+					{showScrollToTopChevron
+						? 'pointer-events-auto before:pointer-events-auto scale-100 opacity-100'
+						: 'scale-0 opacity-0'}"
 				>
-					<IconChevronDown class="transform rotate-180 w-6 h-6" />
-				</SubtleButton>
+					<div
+						class="w-full h-full rounded-full bg-c-bg-tertiary relative p-2.5 md:p-3
+						shadow-lg shadow-c-shadow/[var(--o-shadow-strongest)] border-2 border-c-on-bg/15"
+					>
+						<ButtonHoverEffect color="on-bg" noPadding fullRounding />
+						<IconArrowRight class="transform -rotate-90 w-5 h-5 md:w-6 md:h-6" />
+					</div>
+				</button>
 			</div>
 		</div>
 	{/if}
