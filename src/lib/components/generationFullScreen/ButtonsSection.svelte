@@ -268,33 +268,6 @@
 		</SubtleButton>
 	{/if}
 	{#if modalType === 'generate' || modalType === 'history'}
-		<!-- {#if $userSummary?.product_id || $userSummary?.has_nonfree_credits === true}
-			{#if submitToGalleryStatus === 'success' || generation.selected_output.gallery_status !== 'not_submitted'}
-				<SubtleButton disabled={true}>
-					<div class="flex items-center justify-center gap-1.5 text-c-success">
-						<IconTickOnly class="w-4.5 h-4.5 -ml-0.5" />
-						<p>{$LL.GenerationFullscreen.SubmittedTitle()}</p>
-					</div>
-				</SubtleButton>
-			{:else}
-				<SubtleButton disabled={submitToGalleryStatus === 'loading'} onClick={submitToGallery}>
-					<div class="flex items-center justify-center gap-1.5 text-c-on-bg">
-						<Morpher morphed={submitToGalleryStatus === 'loading'}>
-							<div slot="0" class="flex items-center justify-center gap-1.5 text-c-on-bg">
-								<IconUpload class="w-5 h-5 -ml-0.5" />
-								<p>{$LL.GenerationFullscreen.SubmitToGalleryButton()}</p>
-							</div>
-							<div slot="1" class="flex items-center justify-center gap-1.5 text-c-on-bg">
-								<IconAnimatedSpinner
-									loading={submitToGalleryStatus === 'loading'}
-									class="w-5 h-5"
-								/>
-							</div>
-						</Morpher>
-					</div>
-				</SubtleButton>
-			{/if}
-		{/if} -->
 		<div use:clickoutside={{ callback: resetDeleteStatus }}>
 			<SubtleButton
 				disabled={deleteStatus === 'loading'}

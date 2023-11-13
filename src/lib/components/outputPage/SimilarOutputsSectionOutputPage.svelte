@@ -11,10 +11,11 @@
 	import { getImgProxySrc, getImgProxySrcSet } from '$ts/helpers/imgproxy';
 	import { page } from '$app/stores';
 	import Img from '$components/Img.svelte';
+	import type { TGenerationFullScreenModalType } from '$components/generationFullScreen/types';
 
 	export let similarOutputs: TGenerationFullOutput[];
 	export let output: TGenerationFullOutput;
-	export let username: string | undefined = undefined;
+	export let modalType: TGenerationFullScreenModalType;
 
 	const simpleGridCols = 3;
 </script>
@@ -35,14 +36,14 @@
 							'SC - Stripe Product Id': $userSummary?.product_id,
 							'SC - User Id': $page.data.session?.user.id
 						};
-						if (username) {
+						if (modalType === 'user-profile') {
 							logUserProfileExploreSimilarClicked(sharedProps);
 						} else {
 							logOutputPageSimilarClicked(sharedProps);
 						}
 					}}
-					href={username
-						? `/user/${username}/o/${similarOutput.id}`
+					href={modalType === 'user-profile'
+						? `/user/${output.generation.user.username}/o/${similarOutput.id}`
 						: `/gallery/o/${similarOutput.id}`}
 					data-sveltekit-preload-data="hover"
 					class="w-full group"
