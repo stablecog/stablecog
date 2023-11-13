@@ -1,11 +1,14 @@
 <script lang="ts">
 	import { browser } from '$app/environment';
+	import IconButton from '$components/buttons/IconButton.svelte';
+	import SubtleButton from '$components/buttons/SubtleButton.svelte';
 	import GenerateGridPlaceholder from '$components/generate/GenerateGridPlaceholder.svelte';
 	import { mdBreakpoint } from '$components/generationFullScreen/constants';
 	import type { TGenerationImageCardType } from '$components/generationImage/types';
 	import GridCard from '$components/grids/GridCard.svelte';
 	import { gridScrollPositions } from '$components/grids/scrollPosition';
 	import IconAnimatedSpinner from '$components/icons/IconAnimatedSpinner.svelte';
+	import IconChevronDown from '$components/icons/IconChevronDown.svelte';
 	import LL from '$i18n/i18n-svelte';
 	import { removeRepeatingOutputs } from '$ts/helpers/removeRepeatingOutputs';
 	import type { TUserGenerationFullOutputsPage } from '$ts/queries/userGenerations';
@@ -266,54 +269,80 @@
 	<GenerateGridPlaceholder text={$LL.Generate.Grid.NoGeneration.Paragraph()} />
 {:else if $generationsQuery.isSuccess && $generationsQuery.data.pages.length > 0 && outputs !== undefined}
 	{#if $gridVirtualizer}
-		<div
-			style="height: {$gridVirtualizer.getTotalSize() +
-				($generationsQuery.hasNextPage ? $windowHeight : 0)}px"
-			class="w-full relative"
-		>
-			{#each $gridVirtualizer.getVirtualItems() as virtualItem (virtualItem.index + outputs[virtualItem.index].id)}
-				{@const output = outputs[virtualItem.index]}
-				{@const isSelected = selectedItems.includes(output.id)}
-				{@const didLoadBefore = loadedImages[output.image_url + cardType] === true}
-				{@const isHoverable =
-					isHoverAllowed &&
-					!isSelected &&
-					!$isTouchscreen &&
-					!(
-						cardType === 'history' &&
-						$isUserGalleryEditActive &&
-						$userGalleryCurrentView === 'favorites' &&
-						!output.is_favorited
-					) &&
-					!output.is_deleted &&
-					output.status !== 'failed' &&
-					output.status !== 'failed-nsfw' &&
-					output.status !== 'failed-nsfw-prompt'}
-				<div
-					style="
+		{@const showScrollToTopChevron =
+			$gridVirtualizer && $gridVirtualizer.scrollOffset > $windowHeight * 2}
+		<div class="w-full relative">
+			<div
+				style="height: {$gridVirtualizer.getTotalSize() +
+					($generationsQuery.hasNextPage ? $windowHeight : 0)}px"
+				class="w-full relative"
+			>
+				{#each $gridVirtualizer.getVirtualItems() as virtualItem (virtualItem.index + outputs[virtualItem.index].id)}
+					{@const output = outputs[virtualItem.index]}
+					{@const isSelected = selectedItems.includes(output.id)}
+					{@const didLoadBefore = loadedImages[output.image_url + cardType] === true}
+					{@const isHoverable =
+						isHoverAllowed &&
+						!isSelected &&
+						!$isTouchscreen &&
+						!(
+							cardType === 'history' &&
+							$isUserGalleryEditActive &&
+							$userGalleryCurrentView === 'favorites' &&
+							!output.is_favorited
+						) &&
+						!output.is_deleted &&
+						output.status !== 'failed' &&
+						output.status !== 'failed-nsfw' &&
+						output.status !== 'failed-nsfw-prompt'}
+					<div
+						style="
 							width: calc(((100% - {horizontalPadding}px) / {cols});
 							left: calc({horizontalPadding / 2}px + ((100% - {horizontalPadding}px) * {virtualItem.lane /
-						cols}));
+							cols}));
 							height: {virtualItem.size}px;
 							transform: translateY({virtualItem.start}px);
 							top: 0;
 						"
-					class="absolute p-px"
+						class="absolute p-px"
+					>
+						<GridCard
+							{output}
+							{cardType}
+							{isHoverable}
+							{isSelected}
+							{didLoadBefore}
+							{cardWidth}
+							{isGalleryEditActive}
+							{onLikesChanged}
+							{setSearchQuery}
+							{now}
+						/>
+					</div>
+				{/each}
+			</div>
+			<div
+				class="z-20 sticky flex items-center justify-end left-0 bottom-0
+				w-full pointer-events-none px-3 pt-3 pb-[calc(0.75rem+env(safe-area-inset-bottom))]
+				md:px-5 md:pt-5 md:pb-[calc(1.25rem+env(safe-area-inset-bottom))]"
+			>
+				<SubtleButton
+					disabled={!showScrollToTopChevron}
+					noPadding
+					rounding="rounded-full"
+					label="Scroll to top"
+					onClick={() =>
+						$gridVirtualizer?.scrollToOffset(0, {
+							behavior: 'smooth'
+						})}
+					class="{showScrollToTopChevron
+						? 'pointer-events-auto scale-100 opacity-100'
+						: 'scale-0 opacity-0'} shadow-lg shadow-c-shadow/[var(--o-shadow-strongest)] 
+						transform transition p-3"
 				>
-					<GridCard
-						{output}
-						{cardType}
-						{isHoverable}
-						{isSelected}
-						{didLoadBefore}
-						{cardWidth}
-						{isGalleryEditActive}
-						{onLikesChanged}
-						{setSearchQuery}
-						{now}
-					/>
-				</div>
-			{/each}
+					<IconChevronDown class="transform rotate-180 w-6 h-6" />
+				</SubtleButton>
+			</div>
 		</div>
 	{/if}
 {/if}
