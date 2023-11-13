@@ -344,7 +344,7 @@
 						: 'scale-0 opacity-0'}"
 				>
 					<div
-						class="w-full h-full rounded-full bg-c-bg-tertiary relative p-2.5 md:p-3
+						class="w-full h-full rounded-full bg-c-bg-tertiary relative p-2.5
 						shadow-lg shadow-c-shadow/[var(--o-shadow-strongest)] border-2 border-c-on-bg/15"
 					>
 						<ButtonHoverEffect color="on-bg" noPadding fullRounding />
