@@ -5,14 +5,12 @@
 	import GenerationAnimation from '$components/generate/GenerationAnimation.svelte';
 	import GenerationImage from '$components/generationImage/GenerationImage.svelte';
 	import type { TGenerationImageCardType } from '$components/generationImage/types';
-	import IconBrush from '$components/icons/IconBrush.svelte';
 	import IconBug from '$components/icons/IconBug.svelte';
 	import IconEyeSlashOutline from '$components/icons/IconEyeSlashOutline.svelte';
 	import IconNsfwPrompt from '$components/icons/IconNSFWPrompt.svelte';
 	import IconSadFaceOutline from '$components/icons/IconSadFaceOutline.svelte';
 	import IconStar from '$components/icons/IconStar.svelte';
 	import LL, { locale } from '$i18n/i18n-svelte';
-	import { calculateCombinedAestheticScore } from '$ts/helpers/calculateCombinedAestheticScore';
 	import { getRelativeDate } from '$ts/helpers/getRelativeDate';
 	import type { TGenerationFullOutput } from '$ts/stores/user/generation';
 	import { quadIn, quadOut } from 'svelte/easing';
@@ -120,22 +118,9 @@
 				<div
 					class="flex flex-row flex-wrap items-center justify-start px-2 md:px-3 pt-2 md:pt-2.25 gap-2.5 -mb-0.5 md:-mb-1.25"
 				>
-					{#if output.aesthetic_rating_score !== undefined && output.aesthetic_artifact_score !== undefined}
-						<div class="flex items-center gap-1">
-							<IconStar class="w-4 h-4" />
-							<p class="font-medium pt-0.25">
-								{numberFormatter.format(
-									calculateCombinedAestheticScore(
-										output.aesthetic_rating_score,
-										output.aesthetic_artifact_score
-									) * 100
-								)}
-							</p>
-						</div>
-					{/if}
 					{#if output.aesthetic_rating_score !== undefined}
 						<div class="flex items-center gap-1">
-							<IconBrush class="w-4 h-4" />
+							<IconStar class="w-4 h-4" />
 							<p class="font-medium pt-0.25">
 								{numberFormatter.format(output.aesthetic_rating_score * 100)}
 							</p>
