@@ -280,27 +280,6 @@
 		}
 	}
 
-	let notAtTheVeryTop = false;
-	const notAtTheVeryTopThreshold = 5;
-	let oldScrollY = 0;
-	const minScrollThreshold = 40;
-	let scrollDirection: 'up' | 'down' = 'down';
-
-	function setNavbarState() {
-		const scrollY = window.scrollY;
-		const _notAtTheVeryTop = scrollY > notAtTheVeryTopThreshold;
-		if (_notAtTheVeryTop !== notAtTheVeryTop) {
-			notAtTheVeryTop = _notAtTheVeryTop;
-		}
-		if (Math.abs(window.scrollY - oldScrollY) < minScrollThreshold) return;
-		if (window.scrollY > oldScrollY) {
-			scrollDirection = 'down';
-		} else {
-			scrollDirection = 'up';
-		}
-		oldScrollY = scrollY;
-	}
-
 	$: showUpdateAvailableCard =
 		Number($serverVersion) > Number($appVersion) &&
 		!rawRoutes.includes($page.url.pathname) &&
@@ -316,13 +295,7 @@
 		!$page.url.pathname.startsWith('/admin') &&
 		!$page.url.pathname.startsWith('/api/auth') &&
 		!$page.url.pathname.startsWith('/sign-in');
-
-	onMount(() => {
-		setNavbarState();
-	});
 </script>
-
-<svelte:window on:scroll|passive={setNavbarState} />
 
 <QueryClientProvider client={data.queryClient}>
 	<UserSummaryProvider queryClient={data.queryClient}>
@@ -334,7 +307,7 @@
 			{:else if showUnderDevelopmentCard}
 				<UnderDevelopment />
 			{:else}
-				<Navbar {notAtTheVeryTop} {scrollDirection} />
+				<Navbar />
 				{#if appRoutes.includes($page.url.pathname)}
 					<slot />
 				{:else}

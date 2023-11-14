@@ -10,37 +10,10 @@
 	import { onMount } from 'svelte';
 
 	export let data;
-
-	let notAtTheVeryTop = false;
-	const notAtTheVeryTopThreshold = 5;
-	let oldScrollY = 0;
-	const minScrollThreshold = 40;
-	let scrollDirection: 'up' | 'down' = 'down';
-
-	function setNavbarState() {
-		const scrollY = window.scrollY;
-		const _notAtTheVeryTop = scrollY > notAtTheVeryTopThreshold;
-		if (_notAtTheVeryTop !== notAtTheVeryTop) {
-			notAtTheVeryTop = _notAtTheVeryTop;
-		}
-		if (Math.abs(window.scrollY - oldScrollY) < minScrollThreshold) return;
-		if (window.scrollY > oldScrollY) {
-			scrollDirection = 'down';
-		} else {
-			scrollDirection = 'up';
-		}
-		oldScrollY = scrollY;
-	}
-
-	onMount(() => {
-		setNavbarState();
-	});
 </script>
 
-<svelte:window on:scroll|passive={setNavbarState} />
-
 <LayoutWrapper isAppRoute={false}>
-	<Navbar {notAtTheVeryTop} {scrollDirection} dirTree={data.dirTree} />
+	<Navbar dirTree={data.dirTree} />
 	{#if !rawRoutes.includes($page.url.pathname) && ($navbarStickyType === undefined || $navbarStickyType !== 'relative')}
 		<div style={$navbarHeight ? `height: ${$navbarHeight}px` : ``} class="h-16 md:h-18 w-full" />
 	{/if}

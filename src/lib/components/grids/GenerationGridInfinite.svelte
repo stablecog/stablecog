@@ -321,7 +321,9 @@
 				{/each}
 			</div>
 			<div
-				class="z-20 sticky flex items-center justify-center left-0 bottom-0
+				class="z-20 {showScrollToTopChevron
+					? 'translate-y-0'
+					: 'translate-y-full'} sticky transform transition flex items-center justify-center left-0 bottom-0
 				w-full px-2 pt-8 pb-[calc(0.5rem+env(safe-area-inset-bottom))] pointer-events-none
 				md:px-3 md:pt-8 md:pb-[calc(1rem+env(safe-area-inset-bottom))]"
 			>
@@ -335,10 +337,8 @@
 					class="relative rounded-lg group
 					before:absolute before:min-w-[56px] before:min-h-[56px]
 					before:left-1/2 before:top-1/2 before:-translate-x-1/2 before:-translate-y-1/2
-					before:w-full before:h-full before:rounded-lg transition duration-300
-					{showScrollToTopChevron
-						? 'pointer-events-auto before:pointer-events-auto scale-100 opacity-100'
-						: 'scale-0 opacity-0'}"
+					before:w-full before:h-full before:rounded-lg
+					{showScrollToTopChevron ? 'pointer-events-auto before:pointer-events-auto' : ''}"
 				>
 					<div
 						class="w-full h-full rounded-full bg-c-bg-tertiary relative p-2.5

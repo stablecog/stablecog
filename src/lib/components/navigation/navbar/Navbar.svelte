@@ -28,9 +28,8 @@
 	import SignInModal from '$components/SignInModal.svelte';
 	import RemainingCredits from '$components/navigation/navbar/RemainingCredits.svelte';
 	import { isSignInModalOpen } from '$ts/stores/isSignInModalOpen';
+	import { notAtTheVeryTop, scrollDirection } from '$ts/stores/scroll';
 
-	export let notAtTheVeryTop = false;
-	export let scrollDirection: 'up' | 'down' = 'down';
 	export let dirTree: Writable<TDirTreeItem[]> | undefined = undefined;
 
 	let isAccountMenuOpen = false;
@@ -48,11 +47,11 @@
 	style={$navbarStickyType === 'relative' || $navbarStickyType === undefined
 		? ''
 		: 'position: fixed; top: 0; left: 0;'}
-	class="w-full flex flex-col z-60 transform transition rounded-b-xl {notAtTheVeryTop &&
+	class="w-full flex flex-col z-60 transform transition rounded-b-xl {$notAtTheVeryTop &&
 	$navbarStickyType === 'auto-hiding' &&
-	scrollDirection === 'down'
+	$scrollDirection === 'down'
 		? '-translate-y-[calc(100%+2px)]'
-		: ''} {$navbarStickyType === 'relative' || !notAtTheVeryTop
+		: ''} {$navbarStickyType === 'relative' || !$notAtTheVeryTop
 		? 'bg-c-bg/0 shadow-navbar-0'
 		: 'bg-c-bg shadow-navbar'}"
 >
@@ -122,7 +121,7 @@
 					type="discord"
 					class="w-7.5 h-7.5 relative transition transform {$page.url.pathname === '/' &&
 					$themeApp === 'light' &&
-					!notAtTheVeryTop
+					!$notAtTheVeryTop
 						? 'text-c-bg'
 						: 'text-c-on-bg'} not-touch:group-hover/iconbutton:text-c-primary"
 				/>
@@ -137,7 +136,7 @@
 				<IconGuide
 					class="w-7.5 h-7.5 relative transition transform {$page.url.pathname === '/' &&
 					$themeApp === 'light' &&
-					!notAtTheVeryTop
+					!$notAtTheVeryTop
 						? 'text-c-bg'
 						: 'text-c-on-bg'} not-touch:group-hover/iconbutton:text-c-primary"
 				/>
@@ -152,7 +151,7 @@
 				<IconBlog
 					class="w-7.5 h-7.5 relative transition transform {$page.url.pathname === '/' &&
 					$themeApp === 'light' &&
-					!notAtTheVeryTop
+					!$notAtTheVeryTop
 						? 'text-c-bg'
 						: 'text-c-on-bg'} not-touch:group-hover/iconbutton:text-c-primary"
 				/>
@@ -166,13 +165,13 @@
 				<IconLive
 					class="w-7.5 h-7.5 relative transition transform {$page.url.pathname === '/' &&
 					$themeApp === 'light' &&
-					!notAtTheVeryTop
+					!$notAtTheVeryTop
 						? 'text-c-bg'
 						: 'text-c-on-bg'} not-touch:group-hover/iconbutton:text-c-primary"
 				/>
 			</IconButton>
 			<div class="flex items-center justify-end pl-2 pr-3.5 md:pl-2.5 md:pr-5">
-				<RemainingCredits {notAtTheVeryTop} />
+				<RemainingCredits />
 				<!-- Account -->
 				{#if $page.data.session?.user.email && $userSummary}
 					<div
@@ -183,7 +182,7 @@
 							<IconButton
 								class="shadow-lg ring-2 {$page.url.pathname === '/' &&
 								$themeApp === 'light' &&
-								!notAtTheVeryTop
+								!$notAtTheVeryTop
 									? 'ring-c-bg/25'
 									: 'ring-c-on-bg/25'} rounded-full flex items-center justify-center shadow-c-shadow/[var(--o-shadow-strong)]"
 								noPadding
@@ -198,7 +197,7 @@
 								<Avatar
 									text={$userSummary.username}
 									class="w-9 h-9 overflow-hidden rounded-full transition duration-250 transform relative
-									{$page.url.pathname === '/' && $themeApp === 'light' && !notAtTheVeryTop
+									{$page.url.pathname === '/' && $themeApp === 'light' && !$notAtTheVeryTop
 										? 'not-touch:group-hover/iconbutton:ring-c-bg'
 										: 'not-touch:group-hover/iconbutton:ring-c-on-bg'} {isAccountMenuOpen
 										? 'rotate-360'

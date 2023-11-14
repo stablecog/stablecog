@@ -6,12 +6,11 @@
 	import { flyAndScale } from '$ts/animation/transitions';
 	import { getRelativeDate } from '$ts/helpers/getRelativeDate';
 	import { isNoCreditsInfoRoute } from '$ts/stores/navbar';
+	import { notAtTheVeryTop } from '$ts/stores/scroll';
 	import { themeApp } from '$ts/stores/theme';
 	import { userSummary } from '$ts/stores/user/summary';
 	import { onDestroy } from 'svelte';
 	import { quadOut } from 'svelte/easing';
-
-	export let notAtTheVeryTop: boolean;
 
 	let nowInterval: NodeJS.Timeout | undefined;
 	const nowIntervalDuration = 1000;
@@ -109,14 +108,14 @@
 			role="button"
 			class="flex-col items-end mr-3.5 md:mr-4 cursor-default rounded {$isNoCreditsInfoRoute
 				? 'hidden md:flex'
-				: 'flex'} {$page.url.pathname === '/' && $themeApp === 'light' && !notAtTheVeryTop
+				: 'flex'} {$page.url.pathname === '/' && $themeApp === 'light' && !$notAtTheVeryTop
 				? 'text-c-bg'
 				: 'text-c-on-bg'}"
 		>
 			<p
 				class="text-xs font-medium {$page.url.pathname === '/' &&
 				$themeApp === 'light' &&
-				!notAtTheVeryTop
+				!$notAtTheVeryTop
 					? 'text-c-bg/60'
 					: 'text-c-on-bg/60'}"
 			>

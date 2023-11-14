@@ -1,47 +1,19 @@
 <script lang="ts">
-	import '$css/app.css';
 	import { page } from '$app/stores';
-	import Button from '$components/buttons/Button.svelte';
-	import LL from '$i18n/i18n-svelte';
 	import LayoutWrapper from '$components/LayoutWrapper.svelte';
+	import Button from '$components/buttons/Button.svelte';
 	import Drawer from '$components/navigation/Drawer.svelte';
-	import { onMount } from 'svelte';
-	import Navbar from '$components/navigation/navbar/Navbar.svelte';
 	import Footer from '$components/navigation/Footer.svelte';
-	import { appRoutes, rawRoutes } from '$ts/constants/routes';
+	import Navbar from '$components/navigation/navbar/Navbar.svelte';
+	import '$css/app.css';
+	import LL from '$i18n/i18n-svelte';
+	import { rawRoutes } from '$ts/constants/routes';
 	import { navbarStickyType } from '$ts/stores/navbar';
 	import { navbarHeight } from '$ts/stores/navbarHeight';
-
-	let notAtTheVeryTop = false;
-	const notAtTheVeryTopThreshold = 5;
-	let oldScrollY = 0;
-	const minScrollThreshold = 40;
-	let scrollDirection: 'up' | 'down' = 'down';
-
-	function setNavbarState() {
-		const scrollY = window.scrollY;
-		const _notAtTheVeryTop = scrollY > notAtTheVeryTopThreshold;
-		if (_notAtTheVeryTop !== notAtTheVeryTop) {
-			notAtTheVeryTop = _notAtTheVeryTop;
-		}
-		if (Math.abs(window.scrollY - oldScrollY) < minScrollThreshold) return;
-		if (window.scrollY > oldScrollY) {
-			scrollDirection = 'down';
-		} else {
-			scrollDirection = 'up';
-		}
-		oldScrollY = scrollY;
-	}
-
-	onMount(() => {
-		setNavbarState();
-	});
 </script>
 
-<svelte:window on:scroll|passive={setNavbarState} />
-
 <LayoutWrapper>
-	<Navbar {notAtTheVeryTop} {scrollDirection} />
+	<Navbar />
 	{#if !rawRoutes.includes($page.url.pathname) && ($navbarStickyType === undefined || $navbarStickyType !== 'relative')}
 		<div style={$navbarHeight ? `height: ${$navbarHeight}px` : ``} class="h-16 md:h-18 w-full" />
 	{/if}

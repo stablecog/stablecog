@@ -23,6 +23,7 @@
 	import { isLeftSidebarHidden, isLeftSidebarHiddenApp } from '$ts/stores/sidebars';
 	import { isTouchscreen } from '$ts/stores/isTouchscreen.js';
 	import { appRoutes } from '$ts/constants/routes.js';
+	import { notAtTheVeryTop, scrollDirection } from '$ts/stores/scroll.js';
 	export let data;
 
 	$: ({ supabase, session } = data);
@@ -80,6 +81,25 @@
 
 	const confirmOtherEmailHash =
 		'#message=Confirmation+link+accepted.+Please+proceed+to+confirm+link+sent+to+the+other+email';
+
+	const notAtTheVeryTopThreshold = 5;
+	let oldScrollY = 0;
+	const minScrollThreshold = 40;
+
+	function setNavbarState() {
+		const scrollY = window.scrollY;
+		const _notAtTheVeryTop = scrollY > notAtTheVeryTopThreshold;
+		if (_notAtTheVeryTop !== $notAtTheVeryTop) {
+			$notAtTheVeryTop = _notAtTheVeryTop;
+		}
+		if (Math.abs(window.scrollY - oldScrollY) < minScrollThreshold) return;
+		if (window.scrollY > oldScrollY) {
+			scrollDirection.set('down');
+		} else {
+			scrollDirection.set('up');
+		}
+		oldScrollY = scrollY;
+	}
 
 	onMount(() => {
 		setBodyClasses();
@@ -142,6 +162,10 @@
 	}
 </script>
 
-<svelte:window bind:innerHeight={$windowHeight} bind:innerWidth={$windowWidth} />
+<svelte:window
+	bind:innerHeight={$windowHeight}
+	bind:innerWidth={$windowWidth}
+	on:scroll|passive={setNavbarState}
+/>
 
 <slot />
