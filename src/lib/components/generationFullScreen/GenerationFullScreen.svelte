@@ -1,59 +1,62 @@
 <script lang="ts">
-	import ModalWrapper from '$components/ModalWrapper.svelte';
-	import { windowWidth } from '$ts/stores/window';
-	import { onDestroy, onMount } from 'svelte';
-	import { quadOut } from 'svelte/easing';
-	import { fly } from 'svelte/transition';
-	import { getGenerationUrlFromParams } from '$ts/helpers/getGenerationUrlFromParams';
+	import { browser } from '$app/environment';
 	import { page } from '$app/stores';
+	import ModalWrapper from '$components/ModalWrapper.svelte';
+	import QueuePosition from '$components/QueuePosition.svelte';
+	import ScrollAreaWithChevron from '$components/ScrollAreaWithChevron.svelte';
+	import InsufficientCreditsBadge from '$components/badges/InsufficientCreditsBadge.svelte';
+	import Button from '$components/buttons/Button.svelte';
+	import ButtonHoverEffect from '$components/buttons/ButtonHoverEffect.svelte';
+	import FavoriteButton from '$components/buttons/FavoriteButton.svelte';
+	import UsernameButton from '$components/buttons/UsernameButton.svelte';
+	import UpscaleAnimation from '$components/generate/UpscaleAnimation.svelte';
+	import ButtonsSection from '$components/generationFullScreen/ButtonsSection.svelte';
+	import Container from '$components/generationFullScreen/Container.svelte';
+	import Divider from '$components/generationFullScreen/Divider.svelte';
+	import GenerationFullScreenImageSet from '$components/generationFullScreen/GenerationFullScreenImageSet.svelte';
+	import NegativePromptSection from '$components/generationFullScreen/NegativePromptSection.svelte';
+	import ParamsSection from '$components/generationFullScreen/ParamsSection.svelte';
+	import ShowOnProfileSection from '$components/generationFullScreen/ShowOnProfileSection.svelte';
+	import SideButton from '$components/generationFullScreen/SideButton.svelte';
+	import SimilarOutputsSection from '$components/generationFullScreen/SimilarOutputsSection.svelte';
 	import {
 		lgBreakpoint,
 		mdBreakpoint,
 		sidebarWidth
 	} from '$components/generationFullScreen/constants';
-	import ParamsSection from '$components/generationFullScreen/ParamsSection.svelte';
-	import Button from '$components/buttons/Button.svelte';
-	import IconUpscale from '$components/icons/IconUpscale.svelte';
-	import TabBar from '$components/tabBars/TabBar.svelte';
-	import LL from '$i18n/i18n-svelte';
-	import Container from '$components/generationFullScreen/Container.svelte';
-	import { activeGeneration, type TGenerationWithSelectedOutput } from '$userStores/generation';
-	import { sseId } from '$userStores/sse';
-	import {
-		queueInitialUpscaleRequest,
-		upscales,
-		type TInitialUpscaleRequest,
-		maxOngoingUpscalesCountReached
-	} from '$ts/stores/user/upscale';
-	import { upscaleModelIdDefault } from '$ts/constants/upscaleModels';
-	import { generateSSEId } from '$ts/helpers/generateSSEId';
-	import ButtonsSection from '$components/generationFullScreen/ButtonsSection.svelte';
 	import type {
 		TButtonObjectsWithState,
 		TGenerationFullScreenModalType,
 		TSetButtonObjectWithState
 	} from '$components/generationFullScreen/types';
-	import Divider from '$components/generationFullScreen/Divider.svelte';
-	import { userSummary } from '$ts/stores/user/summary';
-	import InsufficientCreditsBadge from '$components/badges/InsufficientCreditsBadge.svelte';
-	import IconNoImage from '$components/icons/IconNoImage.svelte';
-	import { lastClickedOutputId } from '$ts/stores/lastClickedOutputId';
-	import FavoriteButton from '$components/buttons/FavoriteButton.svelte';
-	import { browser } from '$app/environment';
-	import GenerationFullScreenImageSet from '$components/generationFullScreen/GenerationFullScreenImageSet.svelte';
-	import UpscaleAnimation from '$components/generate/UpscaleAnimation.svelte';
-	import SideButton from '$components/generationFullScreen/SideButton.svelte';
-	import { removeFromRecentlyUpdatedOutputIds } from '$ts/stores/user/recentlyUpdatedOutputIds';
 	import SrcsetProvider from '$components/generationImage/SrcsetProvider.svelte';
-	import SimilarOutputsSection from '$components/generationFullScreen/SimilarOutputsSection.svelte';
-	import ScrollAreaWithChevron from '$components/ScrollAreaWithChevron.svelte';
-	import UsernameButton from '$components/buttons/UsernameButton.svelte';
-	import ShowOnProfileSection from '$components/generationFullScreen/ShowOnProfileSection.svelte';
-	import { getQueuePositionFromId, queue } from '$ts/stores/user/queue';
+	import IconNoImage from '$components/icons/IconNoImage.svelte';
+	import IconUpscale from '$components/icons/IconUpscale.svelte';
+	import TabBar from '$components/tabBars/TabBar.svelte';
+	import LL from '$i18n/i18n-svelte';
+	import { upscaleModelIdDefault } from '$ts/constants/upscaleModels';
 	import { isSuperAdmin } from '$ts/helpers/admin/roles';
-	import QueuePosition from '$components/QueuePosition.svelte';
-	import NegativePromptSection from '$components/generationFullScreen/NegativePromptSection.svelte';
+	import { generateSSEId } from '$ts/helpers/generateSSEId';
+	import { getGenerationUrlFromParams } from '$ts/helpers/getGenerationUrlFromParams';
+	import { adminGallerySelectedOutputIds } from '$ts/stores/admin/gallery';
+	import { lastClickedOutputId } from '$ts/stores/lastClickedOutputId';
 	import { userGalleryCurrentView } from '$ts/stores/user/gallery';
+	import { toggleGalleryActionableItemsState } from '$ts/stores/user/galleryActionableItems';
+	import { getQueuePositionFromId, queue } from '$ts/stores/user/queue';
+	import { removeFromRecentlyUpdatedOutputIds } from '$ts/stores/user/recentlyUpdatedOutputIds';
+	import { userSummary } from '$ts/stores/user/summary';
+	import {
+		maxOngoingUpscalesCountReached,
+		queueInitialUpscaleRequest,
+		upscales,
+		type TInitialUpscaleRequest
+	} from '$ts/stores/user/upscale';
+	import { windowWidth } from '$ts/stores/window';
+	import { activeGeneration, type TGenerationWithSelectedOutput } from '$userStores/generation';
+	import { sseId } from '$userStores/sse';
+	import { onMount } from 'svelte';
+	import { quadOut } from 'svelte/easing';
+	import { fly } from 'svelte/transition';
 
 	export let generation: TGenerationWithSelectedOutput;
 	export let modalType: TGenerationFullScreenModalType;
@@ -305,6 +308,24 @@
 		}, 2000);
 	}
 
+	function onSelect() {
+		toggleGalleryActionableItemsState({
+			output_id: generation.selected_output.id,
+			cardType: 'admin-gallery',
+			generation_id: generation.id || generation.ui_id,
+			type: $adminGallerySelectedOutputIds.includes(generation.selected_output.id)
+				? 'remove'
+				: 'add'
+		});
+	}
+
+	function onKeyPress(event: KeyboardEvent) {
+		if (modalType !== 'admin-gallery') return;
+		if (event.key === 'Enter') {
+			onSelect();
+		}
+	}
+
 	let shareButtonPortalBarrier: HTMLDivElement;
 	let shareButtonPortalContent: HTMLDivElement;
 
@@ -313,7 +334,7 @@
 	});
 </script>
 
-<svelte:window on:popstate={onPopState} />
+<svelte:window on:popstate={onPopState} on:keypress={onKeyPress} />
 
 <ModalWrapper
 	bind:scrollContainer={modalScrollContainer}
@@ -420,6 +441,26 @@
 									isSuperAdmin($userSummary?.roles))}
 							hasBg
 						/>
+					{/if}
+					{#if modalType === 'admin-gallery'}
+						<button
+							on:click={onSelect}
+							class="absolute right-2 top-2 p-1 bg-c-bg-secondary rounded-full group
+							before:w-full before:h-full
+							before:min-w-[56px] before:min-h-[56px]
+							before:absolute before:-top-2 before:-right-2"
+						>
+							<ButtonHoverEffect noPadding fullRounding color="primary-strong" />
+							<div class="w-6 h-6 border-2 rounded-full p-0.75 transition border-c-primary">
+								<div
+									class="w-full h-full rounded-full bg-c-primary transition {$adminGallerySelectedOutputIds.includes(
+										generation.selected_output.id
+									)
+										? 'scale-100 opacity-100'
+										: 'scale-0 opacity-0'}"
+								/>
+							</div>
+						</button>
 					{/if}
 				{/if}
 			</div>
