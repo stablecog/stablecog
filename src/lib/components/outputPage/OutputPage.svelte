@@ -170,14 +170,20 @@
 		{/key}
 		<div class="w-full flex flex-shrink-0 flex-col gap-4 max-w-xl lg:max-w-md items-start px-5">
 			<div class="w-full flex justify-center lg:justify-start lg:-ml-6 lg:-mt-2">
-				<NoBgButton href="/gallery" prefetch={true} hoverFrom="right">
+				<NoBgButton
+					href={modalType === 'user-profile' ? `/user/${generation.user.username}` : '/gallery'}
+					prefetch={true}
+					hoverFrom="right"
+				>
 					<div class="flex items-center justify-center gap-2.5 px-2 py-1">
 						<IconBack
 							class="w-6 h-6 transform transition text-c-on-bg/50 group-hover:-translate-x-1
 							not-touch:group-hover:text-c-primary"
 						/>
 						<p class="transition text-c-on-bg/50 not-touch:group-hover:text-c-primary">
-							{$LL.Shared.BackToGalleryButton()}
+							{modalType === 'user-profile'
+								? $LL.Shared.BackToProfile()
+								: $LL.Shared.BackToGalleryButton()}
 						</p>
 					</div>
 				</NoBgButton>
