@@ -323,7 +323,8 @@
 			<div
 				class="z-20 {showScrollToTopChevron
 					? 'translate-y-0'
-					: 'translate-y-full'} sticky transform transition flex items-center justify-center left-0 bottom-0
+					: 'translate-y-full'} sticky transform transition duration-300
+				flex items-center justify-center left-0 bottom-0
 				w-full px-2 pt-8 pb-[calc(0.5rem+env(safe-area-inset-bottom))] pointer-events-none
 				md:px-3 md:pt-8 md:pb-[calc(1rem+env(safe-area-inset-bottom))]"
 			>
