@@ -442,26 +442,26 @@
 							hasBg
 						/>
 					{/if}
-					{#if modalType === 'admin-gallery'}
-						<button
-							on:click={onSelect}
-							class="absolute right-2 top-2 p-1 bg-c-bg-secondary rounded-full group
+				{/if}
+				{#if modalType === 'admin-gallery'}
+					<button
+						on:click={onSelect}
+						class="absolute right-2 top-2 p-1 bg-c-bg-secondary rounded-full group
 							before:w-full before:h-full
 							before:min-w-[56px] before:min-h-[56px]
-							before:absolute before:-top-2 before:-right-2"
-						>
-							<ButtonHoverEffect noPadding fullRounding color="primary-strong" />
-							<div class="w-6 h-6 border-2 rounded-full p-0.75 transition border-c-primary">
-								<div
-									class="w-full h-full rounded-full bg-c-primary transition {$adminGallerySelectedOutputIds.includes(
-										generation.selected_output.id
-									)
-										? 'scale-100 opacity-100'
-										: 'scale-0 opacity-0'}"
-								/>
-							</div>
-						</button>
-					{/if}
+							before:absolute before:-top-2 before:-right-2 z-20"
+					>
+						<ButtonHoverEffect noPadding fullRounding color="primary-strong" />
+						<div class="w-6 h-6 border-3 rounded-full p-0.75 transition border-c-primary">
+							<div
+								class="w-full h-full rounded-full bg-c-primary transition {$adminGallerySelectedOutputIds.includes(
+									generation.selected_output.id
+								)
+									? 'scale-100 opacity-100'
+									: 'scale-0 opacity-0'}"
+							/>
+						</div>
+					</button>
 				{/if}
 			</div>
 			<div class="w-full h-full overflow-hidden z-0 absolute left-0 top-0 pointer-events-none">
