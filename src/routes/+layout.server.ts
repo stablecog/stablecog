@@ -1,8 +1,8 @@
-import type { LayoutServerLoad } from './$types';
 import { loadLocaleAsync } from '$i18n/i18n-util.async';
-import type { TUserSummary } from '$ts/stores/user/summary';
 import { getUserSummary } from '$ts/helpers/user/user';
+import type { TUserSummary } from '$ts/stores/user/summary';
 import type { Session } from '@supabase/supabase-js';
+import type { LayoutServerLoad } from './$types';
 
 export const load: LayoutServerLoad = async (event) => {
 	let session = await event.locals.getSession();
@@ -20,12 +20,14 @@ export const load: LayoutServerLoad = async (event) => {
 	const locale = event.locals.locale;
 	const theme = event.locals.theme;
 	const isLeftSidebarHidden = event.locals.isLeftSidebarHidden;
+	const globalSeed = Math.round(Math.random() * Math.pow(10, 12));
 	await loadLocaleAsync(locale);
 	return {
 		locale,
 		session: session as Session | null,
 		theme,
 		userSummary,
-		isLeftSidebarHidden
+		isLeftSidebarHidden,
+		globalSeed
 	};
 };

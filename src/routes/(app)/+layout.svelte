@@ -54,7 +54,6 @@
 		upscales
 	} from '$ts/stores/user/upscale';
 	import { QueryClientProvider } from '@tanstack/svelte-query';
-	import { onMount } from 'svelte';
 
 	export let data;
 

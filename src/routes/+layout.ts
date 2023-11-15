@@ -36,7 +36,6 @@ export const load: LayoutLoad = async (event) => {
 	const locale = event.data.locale;
 	await loadLocaleAsync(locale);
 	const theme = event.data.theme;
-	const globalSeed = Math.round(Math.random() * Math.pow(10, 12));
 	const isLeftSidebarHidden = event.data.isLeftSidebarHidden;
 	return {
 		locale,
@@ -46,8 +45,8 @@ export const load: LayoutLoad = async (event) => {
 		themeStore: writable<TAvailableThemes>('dark'),
 		userSummary,
 		userSummaryStore: writable<TUserSummary | undefined>(userSummary),
-		globalSeed,
-		globalSeedStore: writable<number>(globalSeed),
+		globalSeed: event.data.globalSeed,
+		globalSeedStore: writable<number>(event.data.globalSeed),
 		isLeftSidebarHidden,
 		isLeftSidebarHiddenStore: writable<boolean>(isLeftSidebarHidden),
 		dirTree: writable<TDirTreeItem[]>([])
