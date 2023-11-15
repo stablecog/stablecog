@@ -169,7 +169,8 @@
 						id: '',
 						image_url: '',
 						was_auto_submitted: false,
-						is_public: false
+						is_public: false,
+						like_count: 0
 					})
 				);
 				return generations;
