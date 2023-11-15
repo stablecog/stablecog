@@ -86,7 +86,7 @@
 	]);
 
 	$: userGenerationFullOutputsQuery =
-		browser && $page.data.session?.user.id && $userSummary
+		$page.data.session?.user.id && $userSummary
 			? createInfiniteQuery({
 					queryKey: $generatePageUserGenerationFullOutputsQueryKey,
 					queryFn: async (lastPage) => {

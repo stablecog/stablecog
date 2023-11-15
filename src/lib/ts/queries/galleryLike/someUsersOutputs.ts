@@ -14,7 +14,6 @@ const per_page_default = 50;
 export async function getSomeUsersGenerationFullOutputs({
 	cursor,
 	search,
-	seed,
 	model_ids,
 	custom_fetch,
 	per_page = per_page_default,
@@ -49,9 +48,6 @@ export async function getSomeUsersGenerationFullOutputs({
 		query.append('model_ids', model_ids.join(','));
 	}
 	query.append('per_page', per_page.toString());
-	if (typeof seed === 'number') {
-		query.append('seed', seed.toString());
-	}
 	if (prompt_id) {
 		query.append('prompt_id', prompt_id);
 	}

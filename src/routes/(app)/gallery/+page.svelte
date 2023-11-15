@@ -51,16 +51,14 @@
 		})
 	);
 
-	$: galleryGenerationFullOutputsQuery = browser
-		? createInfiniteQuery(
-				getGalleryInfiniteQueryProps({
-					searchString: $gallerySearchString,
-					modelIdFilters: $galleryModelIdFilters,
-					seed: $globalSeed,
-					accessToken: $page.data.session?.access_token
-				})
-		  )
-		: undefined;
+	$: galleryGenerationFullOutputsQuery = createInfiniteQuery(
+		getGalleryInfiniteQueryProps({
+			searchString: $gallerySearchString,
+			modelIdFilters: $galleryModelIdFilters,
+			seed: $globalSeed,
+			accessToken: $page.data.session?.access_token
+		})
+	);
 
 	$: outputs = $galleryGenerationFullOutputsQuery?.data?.pages
 		.flatMap((page) => page.outputs)

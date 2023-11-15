@@ -55,7 +55,6 @@
 		getSomeUserProfileInfiniteQueryKey({
 			searchString,
 			modelIdFilters,
-			seed: $globalSeed,
 			username: data.username
 		})
 	);
@@ -64,7 +63,6 @@
 		getSomeUserProfileInfiniteQueryProps({
 			searchString,
 			modelIdFilters,
-			seed: $globalSeed,
 			username: data.username,
 			accessToken: $page.data.session?.access_token
 		})

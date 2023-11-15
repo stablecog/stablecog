@@ -72,7 +72,7 @@
 	]);
 
 	$: userGenerationFullOutputsQuery =
-		browser && $page.data.session?.user.id && $userSummary
+		$page.data.session?.user.id && $userSummary
 			? createInfiniteQuery(
 					getHistoryInfiniteQueryProps({
 						userGalleryCurrentView: $userGalleryCurrentView,
