@@ -505,6 +505,7 @@ const nl: Translation = {
 			StatusDropdown: {
 				All: 'Alles',
 				ManuallySubmitted: 'Handmatig verzonden',
+				SubmittedBest: 'Submitted (Best)',
 				Submitted: 'Verzonden',
 				Approved: 'Goedgekeurd',
 				Rejected: 'Geweigerd',

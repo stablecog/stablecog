@@ -499,6 +499,7 @@ const de: Translation = {
 			StatusDropdown: {
 				All: 'Alle',
 				ManuallySubmitted: 'Manually Submitted',
+				SubmittedBest: 'Submitted (Best)',
 				Submitted: 'Eingereicht',
 				Approved: 'Genehmigt',
 				Rejected: 'Abgelehnt',

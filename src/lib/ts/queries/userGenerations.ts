@@ -1,6 +1,6 @@
 import type { TAvailableGenerationModelId } from '$ts/constants/generationModels';
 import { apiUrl } from '$ts/constants/main';
-import type { TGenerationFullOutput } from '$userStores/generation';
+import type { TGalleryStatus, TGenerationFullOutput } from '$userStores/generation';
 
 export const generationsPerPage = 50;
 const score_threshold = 50;
@@ -61,7 +61,7 @@ export async function getAllUserGenerationFullOutputs({
 	model_ids
 }: {
 	cursor?: string;
-	gallery_status?: string;
+	gallery_status?: TGalleryStatus;
 	access_token: string;
 	order_by?: string;
 	search?: string;
@@ -77,6 +77,10 @@ export async function getAllUserGenerationFullOutputs({
 		if (gallery_status === 'manually_submitted') {
 			query.append('was_auto_submitted', 'false');
 			query.append('gallery_status', 'submitted');
+		} else if (gallery_status === 'submitted_best') {
+			query.append('gallery_status', 'submitted');
+			query.append('aesthetic_rating_score_gte', '0.5');
+			query.append('aesthetic_artifact_score_lte', '0.5');
 		} else {
 			query.append('gallery_status', gallery_status);
 		}

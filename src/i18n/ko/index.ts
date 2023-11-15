@@ -500,6 +500,7 @@ const ko: Translation = {
 			StatusDropdown: {
 				All: 'All',
 				ManuallySubmitted: 'Manually Submitted',
+				SubmittedBest: 'Submitted (Best)',
 				Submitted: 'Submitted',
 				Approved: 'Approved',
 				Rejected: 'Rejected',

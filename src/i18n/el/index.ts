@@ -523,6 +523,7 @@ const es: Translation = {
 			StatusDropdown: {
 				All: 'Όλα',
 				ManuallySubmitted: 'Χειροκίνητη Υποβολή',
+				SubmittedBest: 'Submitted (Best)',
 				Submitted: 'Υποβολή',
 				Approved: 'Έγκριση',
 				Rejected: 'Απόρριψη',

@@ -515,6 +515,7 @@ const ja: Translation = {
 			StatusDropdown: {
 				All: '全て',
 				ManuallySubmitted: '手動で提出済み',
+				SubmittedBest: 'Submitted (Best)',
 				Submitted: '提出済み',
 				Approved: '承認済',
 				Rejected: '却下',

@@ -1531,6 +1531,10 @@ type RootTranslation = {
 				 */
 				ManuallySubmitted: string
 				/**
+				 * S​u​b​m​i​t​t​e​d​ ​(​B​e​s​t​)
+				 */
+				SubmittedBest: string
+				/**
 				 * S​u​b​m​i​t​t​e​d
 				 */
 				Submitted: string
@@ -4713,6 +4717,10 @@ export type TranslationFunctions = {
 				 * Manually Submitted
 				 */
 				ManuallySubmitted: () => LocalizedString
+				/**
+				 * Submitted (Best)
+				 */
+				SubmittedBest: () => LocalizedString
 				/**
 				 * Submitted
 				 */

@@ -1,14 +1,13 @@
 <script lang="ts">
 	import { browser } from '$app/environment';
-	import { afterNavigate } from '$app/navigation';
 	import { page } from '$app/stores';
 	import BatchEditBar from '$components/BatchEditBar.svelte';
 	import {
 		lgBreakpoint,
 		mdBreakpoint,
-		xlBreakpoint,
 		xl2Breakpoint,
-		xl3Breakpoint
+		xl3Breakpoint,
+		xlBreakpoint
 	} from '$components/generationFullScreen/constants';
 	import GenerationFullScreen from '$components/generationFullScreen/GenerationFullScreen.svelte';
 	import GenerationGridInfinite from '$components/grids/GenerationGridInfinite.svelte';
@@ -27,7 +26,6 @@
 		getAllUserGenerationFullOutputsQueryKey,
 		getAllUserGenerationFullOutputsQueryProps
 	} from '$routes/(app)/admin/gallery/constants';
-	import type { TAvailableGenerationModelId } from '$ts/constants/generationModels';
 	import { canonicalUrl } from '$ts/constants/main';
 	import { previewImageVersion } from '$ts/constants/previewImageVersion';
 	import { isSuperAdmin } from '$ts/helpers/admin/roles';
@@ -175,6 +173,10 @@
 						class="w-full"
 						name="Filter"
 						items={[
+							{
+								label: $LL.Admin.Gallery.StatusDropdown.SubmittedBest(),
+								value: 'submitted_best'
+							},
 							{ label: $LL.Admin.Gallery.StatusDropdown.Submitted(), value: 'submitted' },
 							{
 								label: $LL.Admin.Gallery.StatusDropdown.ManuallySubmitted(),

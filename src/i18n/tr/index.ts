@@ -527,6 +527,7 @@ const tr: Translation = {
 			StatusDropdown: {
 				All: 'Hepsi',
 				ManuallySubmitted: 'Manuel Gönderilmiş',
+				SubmittedBest: 'Submitted (Best)',
 				Submitted: 'Gönderilenler',
 				Approved: 'Onaylananlar',
 				Rejected: 'Reddedilenler',

@@ -6,7 +6,7 @@ export const adminGalleryActionableItems = writableLocal<TAdminGalleryActionable
 	'admin_gallery_actionable_items',
 	[]
 );
-export const adminGalleryCurrentFilter = writable<TGalleryStatus>('submitted');
+export const adminGalleryCurrentFilter = writable<TGalleryStatus>('submitted_best');
 export const allUserGenerationFullOutputsQueryKey = writable<string[]>(undefined);
 
 export const adminGallerySelectedOutputObjects = derived(

@@ -483,7 +483,14 @@ export interface TGenerationOutput {
 }
 
 export const TGalleryStatusSchema = z
-	.enum(['submitted', 'approved', 'rejected', 'not_submitted', 'manually_submitted'])
+	.enum([
+		'submitted_best',
+		'submitted',
+		'approved',
+		'rejected',
+		'not_submitted',
+		'manually_submitted'
+	])
 	.default('submitted');
 
 export type TGalleryStatus = z.infer<typeof TGalleryStatusSchema>;

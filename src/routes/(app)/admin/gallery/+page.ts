@@ -20,7 +20,7 @@ export const load: PageLoad = async ({ parent, url }) => {
 	const viewParam = url.searchParams.get('view');
 	const view = TGalleryStatusSchema.safeParse(viewParam).success
 		? TGalleryStatusSchema.parse(viewParam)
-		: 'submitted';
+		: 'submitted_best';
 	const modelIdFiltersParam = url.searchParams.get('mi');
 	const modelIdFilters = modelIdFiltersParam ? modelIdFiltersParam.split(',') : [];
 	const searchStringParam = url.searchParams.get('q');
