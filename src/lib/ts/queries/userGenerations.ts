@@ -74,8 +74,8 @@ export async function getAllUserGenerationFullOutputs({
 		query.append('cursor', cursor);
 	}
 	if (gallery_status === 'manually_submitted') {
-		query.append('was_auto_submitted', 'false');
 		query.append('gallery_status', 'submitted');
+		query.append('was_auto_submitted', 'false');
 	} else if (gallery_status === 'submitted_best') {
 		query.append('gallery_status', 'submitted');
 		query.append('aesthetic_rating_score_gte', '0.5');
