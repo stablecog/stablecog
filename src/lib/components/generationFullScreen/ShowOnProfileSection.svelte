@@ -116,7 +116,6 @@
 				const otherProfileQueryKey = getSomeUserProfileInfiniteQueryKey({
 					searchString: undefined,
 					modelIdFilters: undefined,
-					seed: $globalSeed,
 					username: $userSummary?.username || ''
 				});
 				const hasInitialData1 =

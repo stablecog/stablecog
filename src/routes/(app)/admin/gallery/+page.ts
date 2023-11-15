@@ -8,6 +8,7 @@ import {
 	getAllUserGenerationFullOutputsQueryProps
 } from '$routes/(app)/admin/gallery/constants';
 import { TGalleryStatusSchema } from '$ts/stores/user/generation';
+import { adminGalleryCurrentFilterDefault } from '$ts/stores/admin/gallery';
 
 interface TParent {
 	queryClient: QueryClient;
@@ -20,7 +21,7 @@ export const load: PageLoad = async ({ parent, url }) => {
 	const viewParam = url.searchParams.get('view');
 	const view = TGalleryStatusSchema.safeParse(viewParam).success
 		? TGalleryStatusSchema.parse(viewParam)
-		: 'submitted_best';
+		: adminGalleryCurrentFilterDefault;
 	const modelIdFiltersParam = url.searchParams.get('mi');
 	const modelIdFilters = modelIdFiltersParam ? modelIdFiltersParam.split(',') : [];
 	const searchStringParam = url.searchParams.get('q');

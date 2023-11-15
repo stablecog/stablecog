@@ -32,6 +32,7 @@
 	import type { TUserGenerationFullOutputsPage } from '$ts/queries/userGenerations';
 	import {
 		adminGalleryCurrentFilter,
+		adminGalleryCurrentFilterDefault,
 		allUserGenerationFullOutputsQueryKey,
 		isAdminGalleryEditActive
 	} from '$ts/stores/admin/gallery';
@@ -126,7 +127,7 @@
 	function onFilterChanged() {
 		if (!browser) return;
 		const url = new URL(window.location.href);
-		if ($adminGalleryCurrentFilter === 'submitted') {
+		if ($adminGalleryCurrentFilter === adminGalleryCurrentFilterDefault) {
 			url.searchParams.delete('view');
 		} else {
 			url.searchParams.set('view', $adminGalleryCurrentFilter);

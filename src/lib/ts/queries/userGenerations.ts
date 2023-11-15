@@ -73,17 +73,15 @@ export async function getAllUserGenerationFullOutputs({
 	if (cursor) {
 		query.append('cursor', cursor);
 	}
-	if (gallery_status) {
-		if (gallery_status === 'manually_submitted') {
-			query.append('was_auto_submitted', 'false');
-			query.append('gallery_status', 'submitted');
-		} else if (gallery_status === 'submitted_best') {
-			query.append('gallery_status', 'submitted');
-			query.append('aesthetic_rating_score_gte', '0.5');
-			query.append('aesthetic_artifact_score_lte', '0.5');
-		} else {
-			query.append('gallery_status', gallery_status);
-		}
+	if (gallery_status === 'manually_submitted') {
+		query.append('was_auto_submitted', 'false');
+		query.append('gallery_status', 'submitted');
+	} else if (gallery_status === 'submitted_best') {
+		query.append('gallery_status', 'submitted');
+		query.append('aesthetic_rating_score_gte', '0.5');
+		query.append('aesthetic_artifact_score_lte', '0.5');
+	} else if (gallery_status) {
+		query.append('gallery_status', gallery_status);
 	}
 	if (search && search !== '') {
 		query.append('search', search);

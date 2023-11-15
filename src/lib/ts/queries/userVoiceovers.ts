@@ -55,13 +55,11 @@ export async function getAllUserGenerationFullOutputs({
 	if (cursor) {
 		query.append('cursor', cursor);
 	}
-	if (gallery_status) {
-		if (gallery_status === 'manually_submitted') {
-			query.append('was_auto_submitted', 'false');
-			query.append('gallery_status', 'submitted');
-		} else {
-			query.append('gallery_status', gallery_status);
-		}
+	if (gallery_status === 'manually_submitted') {
+		query.append('was_auto_submitted', 'false');
+		query.append('gallery_status', 'submitted');
+	} else if (gallery_status) {
+		query.append('gallery_status', gallery_status);
 	}
 	if (search && search !== '') {
 		query.append('search', search);
