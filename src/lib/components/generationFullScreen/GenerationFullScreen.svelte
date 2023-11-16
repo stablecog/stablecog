@@ -551,10 +551,10 @@
 						</div>
 						<!-- Prompt and Negative Prompt -->
 						<div class="w-full break-words flex flex-col items-start gap-3">
-							{#if generation.selected_output.created_at !== undefined}
+							{#if generation.selected_output.created_at !== undefined || generation.created_at !== undefined}
 								<p class="text-sm text-c-on-bg/75 -mb-1.5">
 									{getRelativeDate({
-										date: generation.selected_output.created_at,
+										date: generation.selected_output.created_at || generation.created_at,
 										locale: $locale,
 										now
 									})}
