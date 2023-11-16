@@ -58,7 +58,7 @@
 			/>
 		</div>
 		<div
-			class="relative flex items-center justify-center text-center transition-none gap-1.5 {state ===
+			class="relative flex items-center justify-center text-center transition gap-1.5 {state ===
 			'success'
 				? 'text-c-on-primary'
 				: state === 'danger'
@@ -129,7 +129,7 @@
 			/>
 		</div>
 		<div
-			class="relative flex items-center justify-center text-center transition-none gap-1.5 {state ===
+			class="relative flex items-center justify-center text-center transition gap-1.5 {state ===
 			'success'
 				? 'text-c-on-primary'
 				: state === 'danger'
@@ -198,7 +198,7 @@
 			/>
 		</div>
 		<div
-			class="relative flex items-center justify-center text-center transition-none gap-1.5 {state ===
+			class="relative flex items-center justify-center text-center transition gap-1.5 {state ===
 			'success'
 				? 'text-c-on-primary'
 				: state === 'danger'
