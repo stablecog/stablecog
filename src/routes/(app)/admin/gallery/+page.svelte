@@ -80,6 +80,15 @@
 
 	$: $allUserGenerationFullOutputsQuery?.data?.pages, onPagesChanged();
 
+	$: outputs = $allUserGenerationFullOutputsQuery?.data?.pages
+		.flatMap((page) => page.outputs)
+		.filter((i) => i !== undefined);
+	$: outputIndex = outputs
+		? outputs.findIndex((g) => g.id === $activeGeneration?.selected_output.id)
+		: -1;
+	$: leftIndex = outputIndex > 0 ? outputIndex - 1 : -1;
+	$: rightIndex = outputs && outputIndex < outputs?.length - 1 ? outputIndex + 1 : -1;
+
 	const onPagesChanged = () => {
 		if (!$page.data.session?.user.id || !$allUserGenerationFullOutputsQuery) return;
 		if (!$allUserGenerationFullOutputsQuery.data?.pages) return;
@@ -102,7 +111,7 @@
 			window.history.back();
 			return;
 		}
-		if (key === 'ArrowLeft' || key === 'ArrowRight') {
+		if ((key === 'ArrowLeft' && leftIndex !== -1) || (key === 'ArrowRight' && rightIndex !== -1)) {
 			goToSide(key === 'ArrowLeft' ? 'left' : 'right');
 		}
 	}
@@ -271,8 +280,8 @@
 
 {#if $activeGeneration}
 	<GenerationFullScreen
-		onLeftButtonClicked={() => goToSide('left')}
-		onRightButtonClicked={() => goToSide('right')}
+		onLeftButtonClicked={leftIndex !== -1 ? () => goToSide('left') : undefined}
+		onRightButtonClicked={rightIndex !== -1 ? () => goToSide('right') : undefined}
 		generation={$activeGeneration}
 		modalType="admin-gallery"
 	/>

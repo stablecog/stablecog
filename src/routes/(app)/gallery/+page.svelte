@@ -80,13 +80,8 @@
 			window.history.back();
 			return;
 		}
-		if (key === 'ArrowLeft' && leftIndex !== -1) {
-			setActiveGenerationToOutputIndex(outputs, leftIndex);
-			return;
-		}
-		if (key === 'ArrowRight' && rightIndex !== -1) {
-			setActiveGenerationToOutputIndex(outputs, rightIndex);
-			return;
+		if ((key === 'ArrowLeft' && leftIndex !== -1) || (key === 'ArrowRight' && rightIndex !== -1)) {
+			setActiveGenerationToOutputIndex(outputs, key === 'ArrowLeft' ? leftIndex : rightIndex);
 		}
 	}
 
