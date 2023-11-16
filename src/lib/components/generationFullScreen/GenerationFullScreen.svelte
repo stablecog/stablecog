@@ -330,7 +330,7 @@
 	let shareButtonPortalBarrier: HTMLDivElement;
 	let shareButtonPortalContent: HTMLDivElement;
 
-	let now = Date.now();
+	$: now = generation ? Date.now() : Date.now();
 
 	onMount(() => {
 		lastClickedOutputId.set(undefined);
