@@ -33,6 +33,7 @@ export interface TSSECreationProcessGenerationOutput {
 	image_url: string;
 	was_auto_submitted: boolean;
 	is_public: boolean;
+	like_count: number;
 }
 
 export interface TSSECreationProcessUpscaleOutput {

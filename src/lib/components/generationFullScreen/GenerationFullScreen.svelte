@@ -33,11 +33,12 @@
 	import IconNoImage from '$components/icons/IconNoImage.svelte';
 	import IconUpscale from '$components/icons/IconUpscale.svelte';
 	import TabBar from '$components/tabBars/TabBar.svelte';
-	import LL from '$i18n/i18n-svelte';
+	import LL, { locale } from '$i18n/i18n-svelte';
 	import { upscaleModelIdDefault } from '$ts/constants/upscaleModels';
 	import { isSuperAdmin } from '$ts/helpers/admin/roles';
 	import { generateSSEId } from '$ts/helpers/generateSSEId';
 	import { getGenerationUrlFromParams } from '$ts/helpers/getGenerationUrlFromParams';
+	import { getRelativeDate } from '$ts/helpers/getRelativeDate';
 	import { adminGallerySelectedOutputIds } from '$ts/stores/admin/gallery';
 	import { lastClickedOutputId } from '$ts/stores/lastClickedOutputId';
 	import { userGalleryCurrentView } from '$ts/stores/user/gallery';
@@ -329,6 +330,8 @@
 	let shareButtonPortalBarrier: HTMLDivElement;
 	let shareButtonPortalContent: HTMLDivElement;
 
+	let now = Date.now();
+
 	onMount(() => {
 		lastClickedOutputId.set(undefined);
 	});
@@ -548,6 +551,15 @@
 						</div>
 						<!-- Prompt and Negative Prompt -->
 						<div class="w-full break-words flex flex-col items-start gap-3">
+							{#if generation.selected_output.created_at !== undefined}
+								<p class="text-sm text-c-on-bg/75 -mb-1.5">
+									{getRelativeDate({
+										date: generation.selected_output.created_at,
+										locale: $locale,
+										now
+									})}
+								</p>
+							{/if}
 							<p class="w-full leading-normal">{generation.prompt.text}</p>
 							{#if generation.negative_prompt}
 								{#key generation.id}
