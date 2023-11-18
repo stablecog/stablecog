@@ -308,7 +308,7 @@
 		{#if !isGalleryEditActive && !generation.selected_output.is_deleted}
 			<div
 				bind:this={rightButtonContainer}
-				class="flex flex-row flex-wrap items-center pr-1.5 pt-1.5
+				class="flex flex-row flex-wrap items-center px-1.5 pt-1.5
 				justify-end transition transform pointer-events-none gap-1.5"
 			>
 				{#if cardType !== 'admin-gallery'}
