@@ -11,6 +11,7 @@
 
 	export let generation: TGenerationWithSelectedOutput;
 	export let clickoutsideExceptions: HTMLElement[];
+	export let ringClass: 'ring-c-bg-tertiary' | 'ring-c-primary' = 'ring-c-bg-tertiary';
 
 	let imageContainerWidth = 0;
 	let imageContainerHeight = 0;
@@ -83,7 +84,7 @@
 			: generationAspectRatio >= 2 / 3
 			? 'max-w-lg'
 			: 'max-w-md'} w-full lg:w-auto flex flex-col my-auto lg:flex-row bg-c-bg-secondary items-center shadow-generation-modal
-			shadow-c-shadow/[var(--o-shadow-stronger)] rounded-xl ring-2 ring-c-bg-tertiary overflow-hidden z-0 relative"
+			shadow-c-shadow/[var(--o-shadow-stronger)] rounded-xl ring-2 {ringClass} overflow-hidden z-0 relative"
 	>
 		<slot {imageContainerWidth} {imageContainerHeight} {modalMinHeight} />
 	</div>

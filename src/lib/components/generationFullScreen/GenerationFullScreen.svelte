@@ -361,6 +361,10 @@
 		let:imageContainerWidth
 		let:imageContainerHeight
 		let:modalMinHeight
+		ringClass={modalType === 'admin-gallery' &&
+		$adminGallerySelectedOutputIds.includes(generation.selected_output.id)
+			? 'ring-c-primary'
+			: 'ring-c-bg-tertiary'}
 	>
 		<div class="relative self-stretch flex items-center">
 			{#if generation.selected_output.image_url}
