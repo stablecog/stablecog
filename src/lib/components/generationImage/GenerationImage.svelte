@@ -7,7 +7,6 @@
 	import FavoriteButton from '$components/buttons/FavoriteButton.svelte';
 	import GenerateButton from '$components/buttons/GenerateButton.svelte';
 	import IconButton from '$components/buttons/IconButton.svelte';
-	import LikeButton from '$components/buttons/LikeButton.svelte';
 	import UpscaleAnimation from '$components/generate/UpscaleAnimation.svelte';
 	import SrcsetProvider from '$components/generationImage/SrcsetProvider.svelte';
 	import { onSelectButtonClicked } from '$components/generationImage/helpers';
@@ -23,8 +22,8 @@
 	import { logGalleryGenerationOpened } from '$ts/helpers/loggers';
 	import {
 		adminGalleryCurrentFilter,
-		isAdminGalleryEditActive,
-		adminGallerySelectedOutputIds
+		adminGallerySelectedOutputIds,
+		isAdminGalleryEditActive
 	} from '$ts/stores/admin/gallery';
 	import { advancedModeApp } from '$ts/stores/advancedMode';
 	import { appVersion } from '$ts/stores/appVersion';
@@ -48,17 +47,6 @@
 	export let didLoadBefore: boolean = false;
 	export let cardWidth: number | undefined = undefined;
 	export let setSearchQuery: ((query: string) => void) | undefined = undefined;
-	export let onLikesChanged:
-		| (({
-				newLikeCount,
-				newIsLikedByUser,
-				action
-		  }: {
-				newLikeCount: number;
-				newIsLikedByUser: boolean;
-				action: 'like' | 'unlike';
-		  }) => void)
-		| undefined = undefined;
 
 	$: srcHighest =
 		generation.selected_output.upscaled_image_url ?? generation.selected_output.image_url;
@@ -323,11 +311,19 @@
 				class="flex flex-row flex-wrap items-center pr-1.5 pt-1.5
 				justify-end transition transform pointer-events-none gap-1.5"
 			>
-				{#if (cardType !== 'admin-gallery' && cardType !== 'gallery' && cardType !== 'user-profile') || (cardType === 'user-profile' && generation.user.username === $userSummary?.username)}
+				{#if cardType !== 'admin-gallery'}
 					<CopyButton
 						stringToCopy={generation.prompt.text}
 						bind:copied={promptCopied}
 						bind:copiedTimeout={promptCopiedTimeout}
+						class="pointer-events-auto"
+					/>
+				{/if}
+				{#if (cardType === 'gallery' || cardType === 'user-profile') && setSearchQuery}
+					<ExploreSimilarButton
+						{setSearchQuery}
+						{generation}
+						{cardType}
 						class="pointer-events-auto"
 					/>
 				{/if}
@@ -346,23 +342,6 @@
 						modalType={cardType}
 						type="on-image"
 						class="pointer-events-auto"
-					/>
-				{/if}
-				{#if (cardType === 'gallery' || cardType === 'user-profile') && setSearchQuery}
-					<ExploreSimilarButton
-						{setSearchQuery}
-						{generation}
-						{cardType}
-						class="pointer-events-auto"
-					/>
-				{/if}
-				{#if cardType === 'gallery' || (cardType === 'user-profile' && generation.user.username !== $userSummary?.username)}
-					<LikeButton
-						{generation}
-						modalType={cardType}
-						type="on-image"
-						class="pointer-events-auto"
-						{onLikesChanged}
 					/>
 				{/if}
 			</div>

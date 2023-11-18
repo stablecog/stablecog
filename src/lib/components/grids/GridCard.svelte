@@ -25,17 +25,6 @@
 	export let setSearchQuery: ((query: string) => void) | undefined = undefined;
 	export let isGalleryEditActive: boolean;
 	export let now: number;
-	export let onLikesChanged:
-		| (({
-				newLikeCount,
-				newIsLikedByUser,
-				action
-		  }: {
-				newLikeCount: number;
-				newIsLikedByUser: boolean;
-				action: 'like' | 'unlike';
-		  }) => void)
-		| undefined = undefined;
 
 	$: numberFormatter = new Intl.NumberFormat($locale, {
 		style: 'decimal',
@@ -79,7 +68,6 @@
 							selected_output: output
 						}}
 						{setSearchQuery}
-						{onLikesChanged}
 					/>
 				{/if}
 			{:else}
