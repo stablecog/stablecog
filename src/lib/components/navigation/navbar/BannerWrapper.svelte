@@ -6,11 +6,13 @@
 	import { onMount } from 'svelte';
 	import IconCart from '$components/icons/IconCart.svelte';
 	import LL from '$i18n/i18n-svelte';
+	import { canonicalUrl } from '$ts/constants/main';
 
 	export let canShow = true;
 
 	const lastNotification = 'first-month-50-off';
 	const href = '/pricing#plan-starter';
+	const pathname = new URL(canonicalUrl + href).pathname;
 
 	let mounted = false;
 
@@ -19,7 +21,7 @@
 	});
 
 	afterNavigate(() => {
-		if ($page.url.pathname === href) {
+		if ($page.url.pathname === pathname) {
 			lastClosedNotification.set(lastNotification);
 		}
 	});
