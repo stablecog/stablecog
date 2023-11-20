@@ -140,28 +140,44 @@
 					</NoBgButton>
 				</AccountDetailLine>
 				<AccountDetailLine title={$LL.Account.RemainingCreditsTitle()}>
-					<div class="flex items-center justify-start px-1">
-						<IconToken class="w-4.5 h-4.5 -ml-1 flex-shrink-0" />
-						<p class="font-semibold text-left">
-							{($userSummary?.total_remaining_credits || 0).toLocaleString($locale)}
-						</p>
+					<div class="flex flex-row items-center justify-start">
+						<div class="flex items-center justify-start px-1">
+							<IconToken class="w-4.5 h-4.5 -ml-1 flex-shrink-0" />
+							<p class="font-semibold text-left">
+								{($userSummary?.total_remaining_credits || 0).toLocaleString($locale)}
+							</p>
+						</div>
+						{#if $userSummary?.product_id}
+							<Button
+								noPadding
+								noRounding
+								class="rounded-lg w-full md:w-auto px-3 py-1.75 -my-0.75 ml-2.5"
+								size="sm"
+								href="/pricing#credit-packs"
+							>
+								{$LL.Pricing.BuyCreditsButton()}
+							</Button>
+						{/if}
 					</div>
 				</AccountDetailLine>
 				{#if ($userSummary?.renews_at && $userSummary?.renews_at_credit_amount) || ($userSummary?.more_free_credits_at && $userSummary?.more_free_credits_at_credit_amount)}
 					<AccountDetailLine title={$LL.Account.UpcomingCreditsTitle()}>
-						<div class="flex items-center justify-start px-1">
-							<IconToken class="w-4.5 h-4.5 -ml-1 flex-shrink-0 text-c-on-bg" />
-							<p class="font-semibold text-left text-c-on-bg">
-								{$userSummary.renews_at_credit_amount ??
-									$userSummary.more_free_credits_at_credit_amount}&nbsp;&nbsp;<span
-									class="bg-c-on-bg/10 text-c-on-bg/75 rounded-md px-1.75 py-1 font-medium text-sm align-middle"
-								>
-									{getRelativeDate({
-										date: $userSummary.renews_at ?? $userSummary.more_free_credits_at,
-										locale: $locale,
-										dateStyle: 'long'
-									})}</span
-								>
+						<div class="flex items-center justify-start">
+							<div class="flex items-center justify-start px-1">
+								<IconToken class="w-4.5 h-4.5 -ml-1 flex-shrink-0 text-c-on-bg" />
+								<p class="font-semibold text-left text-c-on-bg">
+									{$userSummary.renews_at_credit_amount ??
+										$userSummary.more_free_credits_at_credit_amount}
+								</p>
+							</div>
+							<p
+								class="bg-c-on-bg/10 text-c-on-bg/75 rounded-md px-1.75 py-0.5 font-medium text-sm align-middle ml-1.5"
+							>
+								{getRelativeDate({
+									date: $userSummary.renews_at ?? $userSummary.more_free_credits_at,
+									locale: $locale,
+									dateStyle: 'long'
+								})}
 							</p>
 						</div>
 					</AccountDetailLine>
@@ -213,20 +229,20 @@
 						<div class="w-full md:w-auto flex flex-wrap items-center gap-2.5 md:-my-0.75">
 							<Button
 								noPadding
-								class="w-full md:w-auto px-4.5 py-3.5"
+								class="w-full md:w-auto px-3.5 py-3"
 								size="sm"
 								href={$page.data.customer_portal_url}
 							>
 								{$LL.Account.ManageSubscriptionButton()}
 							</Button>
-							<Button noPadding class="w-full md:w-auto px-4.5 py-3.5" size="sm" href={'/pricing'}>
+							<Button noPadding class="w-full md:w-auto px-3.5 py-3" size="sm" href={'/pricing'}>
 								{$LL.Account.ComparePlansButton()}
 							</Button>
 						</div>
 					{:else}
 						<Button
 							noPadding
-							class="w-full md:w-auto px-4.5 py-3.5 md:-my-0.75"
+							class="w-full md:w-auto px-4.5 py-3 md:-my-0.75"
 							size="sm"
 							href="/pricing"
 						>
