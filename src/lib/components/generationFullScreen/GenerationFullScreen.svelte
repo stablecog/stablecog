@@ -169,7 +169,10 @@
 		generateSimilarUrl = getGenerationUrlFromParams(rest);
 		linkUrl =
 			modalType === 'user-profile' ||
-			modalType === 'history' ||
+			(modalType === 'history' && $userGalleryCurrentView !== 'likes') ||
+			(modalType === 'history' &&
+				$userGalleryCurrentView === 'likes' &&
+				generation.selected_output.gallery_status !== 'approved') ||
 			modalType === 'generate' ||
 			modalType === 'stage'
 				? `${$page.url.origin}/user/${generation.user.username}/o/${generation.selected_output.id}`
@@ -512,7 +515,7 @@
 			<ScrollAreaWithChevron bind:scrollContainer={sidebarScrollContainer}>
 				<div class="w-full flex flex-col items-start justify-start">
 					<div class="w-full flex flex-col gap-4 md:gap-5 px-5 py-4 md:px-7 md:py-5">
-						{#if (modalType === 'generate' || modalType === 'history') && !generation.selected_output.image_url.includes('placeholder')}
+						{#if (modalType === 'generate' || (modalType === 'history' && $userGalleryCurrentView !== 'likes')) && !generation.selected_output.image_url.includes('placeholder')}
 							<div class="w-full pt-1.5">
 								{#if !generation.selected_output.upscaled_image_url || upscaleBeingProcessed}
 									<div class="w-full relative">
