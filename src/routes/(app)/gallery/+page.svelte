@@ -14,7 +14,6 @@
 	import IconAnimatedSpinner from '$components/icons/IconAnimatedSpinner.svelte';
 	import SearchAndFilterBar from '$components/SearchAndFilterBar.svelte';
 	import IconSadFace from '$components/icons/IconSadFace.svelte';
-	import type { TAvailableGenerationModelId } from '$ts/constants/generationModels';
 	import { setActiveGenerationToOutputIndex } from '$ts/helpers/goToOutputIndex';
 	import GenerationGridInfinite from '$components/grids/GenerationGridInfinite.svelte';
 	import { windowWidth } from '$ts/stores/window';
