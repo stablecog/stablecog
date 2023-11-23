@@ -129,6 +129,7 @@
 		if ($isLeftSidebarHidden && $isLeftSidebarHidden !== $isLeftSidebarHiddenApp) {
 			isLeftSidebarHiddenApp.set($isLeftSidebarHidden);
 		}
+		setNavbarState();
 		mounted = true;
 		return () => {
 			subscription.unsubscribe();
