@@ -17,7 +17,9 @@
 				background: rgba(18, 18, 23, 1);
 				color: rgba(220, 220, 234, 1);
 				margin: 0;
-				padding: 2rem 1rem;
+				padding: 2rem;
+				font-size: 15px;
+				line-height: 26px;
 			}
 
 			pre {
@@ -72,7 +74,9 @@
 			}
 
 			.footer a {
-				color: #888;
+				text-align: center;
+				font-size: 12px;
+				color: rgba(220, 220, 234, 0.6);
 				margin-right: 5px;
 			}
 
@@ -94,6 +98,9 @@
 			}
 
 			@media screen and (max-width: 600px) {
+				body {
+					padding: 1rem;
+				}
 				.wrap {
 					max-width: auto;
 				}
@@ -109,28 +116,8 @@
 		</style>
 	</head>
 
-	<body
-		style="
-			background: rgba(18, 18, 23, 1);
-			color: rgba(220, 220, 234, 1);
-			font-family: 'Helvetica Neue', 'Segoe UI', Helvetica, sans-serif;
-			font-size: 15px;
-			line-height: 26px;
-			margin: 0;
-		"
-	>
-		<div
-			class="wrap"
-			style="
-				background-color: rgba(28, 28, 35, 1);
-				max-width: 600px;
-				margin: 0 auto;
-				padding: 0;
-				border-radius: 1.25rem;
-				box-shadow: 0rem 0.75rem 1.5rem rgba(0, 0, 0, 0.25);
-				border: solid 2px rgba(38, 38, 45, 1);
-			"
-		>
+	<body>
+		<div class="wrap">
 			<table style="border: none" width="100%" border="0" cellspacing="0" cellpadding="0">
 				<tr>
 					<td
@@ -145,8 +132,8 @@
 						align="middle"
 					>
 						<img
-							width="1536 "
-							height="300"
+							width="512 "
+							height="104"
 							style="width: 200px; max-width: 100%; height: auto; padding: 0; margin: 0"
 							src="https://stablecog.com/logos/logo-horizontal-on-dark.png"
 						/>
@@ -156,17 +143,14 @@
 			<div class="wrap-inner">{{ template "content" . }}</div>
 		</div>
 
-		<div
-			class="footer"
-			style="text-align: center; font-size: 12px; color: rgba(220, 220, 234, 0.6)"
-		>
+		<div class="footer">
 			<p>
 				{{ L.T "email.unsubHelp" }}<br />
 				<a href="{{ UnsubscribeURL }}" style="color: rgba(220, 220, 234, 0.6)"
 					>{{ L.T "email.unsub" }}</a
-				><span>&nbsp;|&nbsp;</span>
+				>
 			</p>
 		</div>
-		<div class="gutter" style="padding: 30px">&nbsp;{{ TrackView }}</div>
+		<div class="gutter">&nbsp;{{ TrackView }}</div>
 	</body>
 </html>
