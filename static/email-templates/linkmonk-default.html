@@ -45,6 +45,10 @@
 				border: solid 2px rgba(38, 38, 45, 1);
 			}
 
+			.wrap-inner {
+				padding: 24px 32px;
+			}
+
 			.button {
 				background: rgba(181, 140, 255, 1);
 				color: rgba(18, 18, 23, 1) !important;
@@ -94,6 +98,10 @@
 					max-width: auto;
 				}
 
+				.wrap-inner {
+					padding: 20px 16px;
+				}
+
 				.gutter {
 					padding: 10px;
 				}
@@ -123,13 +131,7 @@
 				border: solid 2px rgba(38, 38, 45, 1);
 			"
 		>
-			<table
-				style="border: none; border-bottom: solid 2px rgba(38, 38, 45, 1)"
-				width="100%"
-				border="0"
-				cellspacing="0"
-				cellpadding="0"
-			>
+			<table style="border: none" width="100%" border="0" cellspacing="0" cellpadding="0">
 				<tr>
 					<td
 						style="
@@ -146,12 +148,12 @@
 							width="1536 "
 							height="300"
 							style="width: 200px; max-width: 100%; height: auto; padding: 0; margin: 0"
-							src="https://stablecog.com/logos/logo-horizontal.png"
+							src="https://stablecog.com/logos/logo-horizontal-on-dark.png"
 						/>
 					</td>
 				</tr>
 			</table>
-			<div style="padding: 24px 32px">{{ template "content" . }}</div>
+			<div class="wrap-inner">{{ template "content" . }}</div>
 		</div>
 
 		<div
