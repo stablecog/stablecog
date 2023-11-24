@@ -7,21 +7,20 @@
 		<base target="_blank" />
 		<style>
 			html {
-				background: rgba(18, 18, 23, 1);
-				color: rgba(220, 220, 234, 1);
+				background: rgba(255, 255, 255, 1);
+				color: rgba(18, 18, 23, 1);
 				margin: 0;
 				padding: 0;
 			}
 
 			body {
-				background: rgba(18, 18, 23, 1);
-				color: rgba(220, 220, 234, 1);
+				background: rgba(255, 255, 255, 1);
+				color: rgba(18, 18, 23, 1);
 				margin: 0;
 				padding: 2rem;
-				font-size: 15px;
+				font-size: 16px;
 				line-height: 26px;
-				font-family: Avenir, Montserrat, Corbel, 'URW Gothic', source-sans-pro, system-ui,
-					sans-serif;
+				font-family: system-ui, sans-serif;
 			}
 
 			pre {
@@ -40,28 +39,20 @@
 			}
 
 			.wrap {
-				background-color: rgba(28, 28, 35, 1);
 				max-width: 600px;
 				margin: 0 auto;
-				padding: 0;
-				border-radius: 1.25rem;
-				box-shadow: 0rem 0.75rem 1.5rem rgba(0, 0, 0, 0.25);
-				border: solid 2px rgba(38, 38, 45, 1);
-			}
-
-			.wrap-inner {
 				padding: 24px 32px;
 			}
 
 			.button {
 				background: rgba(181, 140, 255, 1);
-				color: rgba(18, 18, 23, 1) !important;
-				box-shadow: 0rem 0.5rem 1rem rgba(0, 0, 0, 0.25);
+				color: rgba(0, 0, 0, 1) !important;
 				border-radius: 8px;
 				border: none;
 				text-decoration: none !important;
 				font-weight: bold;
-				padding: 10px 24px;
+				font-size: 18px;
+				padding: 14px 24px;
 				display: inline-block;
 			}
 
@@ -72,13 +63,13 @@
 			.footer {
 				text-align: center;
 				font-size: 12px;
-				color: #888;
+				color: rgba(0, 0, 0, 0.6);
 			}
 
 			.footer a {
 				text-align: center;
 				font-size: 12px;
-				color: rgba(220, 220, 234, 0.6);
+				color: rgba(0, 0, 0, 0.6);
 				margin-right: 5px;
 			}
 
@@ -105,9 +96,6 @@
 				}
 				.wrap {
 					max-width: auto;
-				}
-
-				.wrap-inner {
 					padding: 20px 16px;
 				}
 
@@ -118,39 +106,21 @@
 		</style>
 	</head>
 
-	<body>
+	<body style="background: rgba(255, 255, 255, 1); color: rgba(18, 18, 23, 1)">
 		<div class="wrap">
-			<table style="border: none" width="100%" border="0" cellspacing="0" cellpadding="0">
-				<tr>
-					<td
-						style="
-							padding-left: 16px;
-							padding-right: 16px;
-							padding-top: 18px;
-							padding-bottom: 14px;
-							border: none;
-							border-bottom: solid 2px rgba(38, 38, 45, 1);
-						"
-						align="middle"
-					>
-						<img
-							width="512 "
-							height="104"
-							style="width: 200px; max-width: 100%; height: auto; padding: 0; margin: 0"
-							src="https://stablecog.com/logos/logo-horizontal-on-dark.png"
-						/>
-					</td>
-				</tr>
-			</table>
+			<img
+				width="192 "
+				height="192"
+				style="width: 50px; max-width: 100%; height: auto; padding: 0; margin: 0"
+				src="https://stablecog.com/icon-192.png"
+			/>
+			<p style="font-weight: bold; font-size: 28px; margin-top: 6px">Stablecog</p>
 			<div class="wrap-inner">{{ template "content" . }}</div>
 		</div>
-
 		<div class="footer">
 			<p>
 				{{ L.T "email.unsubHelp" }}<br />
-				<a href="{{ UnsubscribeURL }}" style="color: rgba(220, 220, 234, 0.6)"
-					>{{ L.T "email.unsub" }}</a
-				>
+				<a href="{{ UnsubscribeURL }}" style="color: rgba(0, 0, 0, 0.6)">{{ L.T "email.unsub" }}</a>
 			</p>
 		</div>
 		<div class="gutter">&nbsp;{{ TrackView }}</div>
