@@ -31,11 +31,17 @@
 			}
 
 			.wrap {
+				width: 100%;
 				max-width: 600px;
 				background: rgba(240, 234, 249, 1);
 				color: rgba(20, 18, 22, 1);
 				margin: 0 auto;
-				padding: 32px;
+			}
+
+			.wrap-inner {
+				width: 92%;
+				margin: 0;
+				padding: 4%;
 			}
 
 			.button {
@@ -71,7 +77,7 @@
 			}
 
 			.gutter {
-				padding: 32px;
+				padding: 4%;
 			}
 
 			img {
@@ -86,11 +92,8 @@
 			}
 
 			@media screen and (max-width: 600px) {
-				.wrap {
-					padding: 16px;
-				}
-				.gutter {
-					padding: 16px;
+				body {
+					padding: 0px;
 				}
 			}
 
@@ -104,6 +107,10 @@
 					color: rgba(220, 220, 234, 1);
 				}
 				.wrap {
+					background: rgba(18, 18, 23, 1);
+					color: rgba(220, 220, 234, 1);
+				}
+				.wrap-inner {
 					background: rgba(18, 18, 23, 1);
 					color: rgba(220, 220, 234, 1);
 				}
@@ -139,29 +146,20 @@
 
 	<body>
 		<div class="wrap">
-			<div>
-				<img
-					width="512"
-					height="152"
-					style="
-						width: 220px;
-						max-width: 100%;
-						height: auto;
-						padding: 0;
-						margin: 0 auto;
-						display: block;
-					"
-					src="https://stablecog.com/logos/banner-horizontal.png"
-				/>
-			</div>
-			<div style="margin-top: 16px">{{ template "content" . }}</div>
+			<img
+				width="1200"
+				height="400"
+				style="width: 100%; height: auto; padding: 0; margin: 0; display: block"
+				src="https://stablecog.com/logos/banner-horizontal.png"
+			/>
+			<div class="wrap-inner">{{ template "content" . }}</div>
 		</div>
 		<div class="footer">
 			<p>
 				{{ L.T "email.unsubHelp" }}<br />
 				<a href="{{ UnsubscribeURL }}">{{ L.T "email.unsub" }}</a>
 			</p>
+			<div>{{ TrackView }}</div>
 		</div>
-		<div class="gutter">{{ TrackView }}</div>
 	</body>
 </html>
