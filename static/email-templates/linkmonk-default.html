@@ -4,49 +4,41 @@
 		<title>{{ .Campaign.Subject }}</title>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+		<!--Dark Mode meta tags needed to enable Dark Mode in email client user agents-->
+		<meta name="color-scheme" content="light dark" />
+		<meta name="supported-color-schemes" content="light dark only" />
 		<base target="_blank" />
 		<style>
+			:root {
+				color-scheme: light dark;
+			}
+
 			html {
-				background: rgba(255, 255, 255, 1);
-				color: rgba(18, 18, 23, 1);
+				background: rgba(240, 234, 249, 1);
+				color: rgba(20, 18, 22, 1);
 				margin: 0;
 				padding: 0;
 			}
 
 			body {
-				background: rgba(255, 255, 255, 1);
-				color: rgba(18, 18, 23, 1);
+				background: rgba(240, 234, 249, 1);
+				color: rgba(20, 18, 22, 1);
 				margin: 0;
-				padding: 2rem;
+				padding: 0;
 				font-size: 16px;
 				line-height: 26px;
 				font-family: system-ui, sans-serif;
 			}
 
-			pre {
-				background: #f4f4f4f4;
-				padding: 2px;
-			}
-
-			table {
-				width: 100%;
-				border: 1px solid #ddd;
-			}
-
-			table td {
-				border-color: #ddd;
-				padding: 5px;
-			}
-
 			.wrap {
 				max-width: 600px;
 				margin: 0 auto;
-				padding: 24px 32px;
+				padding: 32px;
 			}
 
 			.button {
-				background: rgba(181, 140, 255, 1);
-				color: rgba(0, 0, 0, 1) !important;
+				background: rgba(96, 42, 204, 1);
+				color: rgba(240, 234, 249, 1) !important;
 				border-radius: 8px;
 				border: none;
 				text-decoration: none !important;
@@ -54,22 +46,25 @@
 				font-size: 18px;
 				padding: 14px 24px;
 				display: inline-block;
+				transition: all 0.15s ease-out;
 			}
 
 			.button:hover {
-				background: rgba(181, 140, 255, 1);
+				background: rgba(210, 108, 34, 1);
 			}
 
 			.footer {
 				text-align: center;
 				font-size: 12px;
-				color: rgba(0, 0, 0, 0.6);
+				color: rgba(20, 18, 22, 0.75);
 			}
 
-			.footer a {
+			.footer a,
+			.footer a:visited,
+			.footer a:hover {
 				text-align: center;
 				font-size: 12px;
-				color: rgba(0, 0, 0, 0.6);
+				color: rgba(20, 18, 22, 0.75);
 				margin-right: 5px;
 			}
 
@@ -82,47 +77,77 @@
 				height: auto;
 			}
 
-			a {
-				color: rgba(181, 140, 255, 1);
-			}
-
-			a:hover {
-				color: rgba(181, 140, 255, 1);
+			a,
+			a:hover,
+			a:visited {
+				color: rgba(96, 42, 204, 1);
 			}
 
 			@media screen and (max-width: 600px) {
-				body {
-					padding: 1rem;
-				}
 				.wrap {
-					max-width: auto;
-					padding: 20px 16px;
+					padding: 16px;
 				}
-
 				.gutter {
-					padding: 10px;
+					padding: 12px;
+				}
+			}
+
+			@media (prefers-color-scheme: dark) {
+				html {
+					background: rgba(18, 18, 23, 1);
+					color: rgba(220, 220, 234, 1);
+				}
+				body {
+					background: rgba(18, 18, 23, 1);
+					color: rgba(220, 220, 234, 1);
+				}
+				.footer {
+					color: rgba(220, 220, 234, 0.75);
+				}
+				.footer a,
+				.footer a:visited,
+				.footer a:hover {
+					color: rgba(220, 220, 234, 0.75);
+				}
+				.button {
+					background: rgba(181, 140, 255, 1);
+					color: rgba(18, 18, 23, 1) !important;
+				}
+				.button:hover {
+					background: rgba(245, 164, 106, 1);
+				}
+				a,
+				a:hover,
+				a:visited {
+					color: rgba(181, 140, 255, 1);
+				}
+				.logo-dark {
+					display: block;
+				}
+				.logo-light {
+					display: none;
 				}
 			}
 		</style>
 	</head>
 
-	<body style="background: rgba(255, 255, 255, 1); color: rgba(18, 18, 23, 1)">
+	<body>
 		<div class="wrap">
 			<img
-				width="192 "
-				height="192"
-				style="width: 50px; max-width: 100%; height: auto; padding: 0; margin: 0"
-				src="https://stablecog.com/icon-192.png"
+				width="512"
+				height="104"
+				style="width: 160px; max-width: 100%; height: auto; padding: 0; margin: 0"
+				src="https://stablecog.com/logos/logo-horizontal-on-dark.png"
 			/>
-			<p style="font-weight: bold; font-size: 28px; margin-top: 6px">Stablecog</p>
-			<div class="wrap-inner">{{ template "content" . }}</div>
+			<div style="margin-top: 16px">{{ template "content" . }}</div>
 		</div>
 		<div class="footer">
 			<p>
 				{{ L.T "email.unsubHelp" }}<br />
-				<a href="{{ UnsubscribeURL }}" style="color: rgba(0, 0, 0, 0.6)">{{ L.T "email.unsub" }}</a>
+				<a href="{{ UnsubscribeURL }}">{{ L.T "email.unsub" }}</a>
 			</p>
 		</div>
+		<button class="button">asdf</button>
 		<div class="gutter">&nbsp;{{ TrackView }}</div>
 	</body>
 </html>
