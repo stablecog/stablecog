@@ -69,7 +69,7 @@
 			}
 
 			.gutter {
-				padding: 30px;
+				padding: 32px;
 			}
 
 			img {
@@ -88,7 +88,7 @@
 					padding: 16px;
 				}
 				.gutter {
-					padding: 12px;
+					padding: 16px;
 				}
 			}
 
@@ -133,12 +133,21 @@
 
 	<body>
 		<div class="wrap">
-			<img
-				width="512"
-				height="104"
-				style="width: 160px; max-width: 100%; height: auto; padding: 0; margin: 0"
-				src="https://stablecog.com/logos/banner-horizontal.png"
-			/>
+			<div>
+				<img
+					width="512"
+					height="152"
+					style="
+						width: 220px;
+						max-width: 100%;
+						height: auto;
+						padding: 0;
+						margin: 0 auto;
+						display: block;
+					"
+					src="https://stablecog.com/logos/banner-horizontal.png"
+				/>
+			</div>
 			<div style="margin-top: 16px">{{ template "content" . }}</div>
 		</div>
 		<div class="footer">
@@ -147,7 +156,6 @@
 				<a href="{{ UnsubscribeURL }}">{{ L.T "email.unsub" }}</a>
 			</p>
 		</div>
-		<button class="button">asdf</button>
-		<div class="gutter">&nbsp;{{ TrackView }}</div>
+		<div class="gutter">{{ TrackView }}</div>
 	</body>
 </html>
