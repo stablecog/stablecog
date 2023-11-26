@@ -1,135 +1,177 @@
-<table
-	cellspacing="0"
-	cellpadding="0"
-	style="
-		width: 100%;
-		max-width: 500px;
-		margin: 0 auto;
-		background: rgba(28, 28, 35, 1);
-		border: solid 2px rgba(38, 38, 45, 1);
-		border-radius: 1.25rem;
-		color: rgba(220, 220, 234, 1);
-		overflow: hidden;
-		z-index: 0;
-		position: relative;
-		word-break: break-all;
-		font-size: 16px;
-		box-shadow: 0rem 0.75rem 1.5rem rgba(0, 0, 0, 0.25);
-	"
->
-	<tbody>
-		<tr>
-			<td
-				style="
-					padding-left: 16px;
-					padding-right: 16px;
-					padding-top: 18px;
-					padding-bottom: 14px;
-					border: none;
-					border-bottom: solid 2px rgba(38, 38, 45, 1);
-				"
-				align="middle"
-			>
-				<img
-					width="512 "
-					height="104"
-					style="width: 200px; max-width: 100%; height: auto; padding: 0; margin: 0"
-					src="https://stablecog.com/logos/logo-horizontal-on-dark.png"
-				/>
-			</td>
-		</tr>
-		<tr style="text-align: center">
-			<td
-				style="padding-top: 1.5rem; padding-left: 1.5rem; padding-right: 1.5rem; line-height: 1.5"
-			>
-				Click the button to update your email<br />from
-				<span style="color: rgba(181, 140, 255, 1)">{{ .Email }}</span> to
-				<span style="color: rgba(181, 140, 255, 1)">{{ .NewEmail }}</span>:
-			</td>
-		</tr>
-		<tr style="text-align: center">
-			<td style="padding-top: 1rem; padding-bottom: 1rem">
-				<a
-					href="{{ .ConfirmationURL }}"
-					style="
-						background: rgba(181, 140, 255, 1);
-						color: #29282b;
-						box-shadow: 0rem 0.5rem 1rem rgba(0, 0, 0, 0.3);
-						font-size: 1.1rem;
-						font-weight: bold;
-						padding: 1.25rem 1.75rem;
-						border-radius: 0.9rem;
-						text-align: center;
-						display: inline-block;
-						margin-left: 1rem;
-						margin-right: 1rem;
-						text-decoration: none;
-					"
-				>
-					Change Email
-				</a>
-			</td>
-		</tr>
-		<tr style="text-align: center">
-			<td
-				style="padding-top: 1.25rem; padding-left: 1.5rem; padding-right: 1.5rem; line-height: 1.5"
-			>
-				Or copy the link into your browser:
-			</td>
-		</tr>
-		<tr style="text-align: center">
-			<td style="padding: 0rem 2rem">
-				<p
-					style="
-						color: rgba(181, 140, 255, 1);
-						font-size: 0.75rem;
-						font-weight: normal;
-						text-align: left;
-						display: inline-block;
-						padding-left: 1.5rem;
-						padding-right: 1.5rem;
-						text-decoration: none;
-					"
-				>
-					{{ .ConfirmationURL }}
-				</p>
-			</td>
-		</tr>
-		<tr style="text-align: center">
-			<td
-				style="
-					padding-top: 1rem;
-					padding-bottom: 1.75rem;
-					padding-left: 1.5rem;
-					padding-right: 1.5rem;
-				"
-			>
-				<a style="color: rgba(220, 220, 234, 1)" href="https://stablecog.com">
-					© 2023 Stablecog, Inc.
-				</a>
-			</td>
-		</tr>
-	</tbody>
-</table>
-
-<style>
-	html {
-		background: rgba(18, 18, 23, 1);
-		color: rgba(220, 220, 234, 1);
-		margin: 0;
-		padding: 0;
-	}
-	body {
-		background: rgba(18, 18, 23, 1);
-		color: rgba(220, 220, 234, 1);
-		margin: 0;
-		padding: 2rem;
-		font-family: system-ui, sans-serif;
-	}
-
-	@media screen and (max-width: 600px) {
-		body {
-			padding: 1rem;
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+	<!--Dark Mode meta tags needed to enable Dark Mode in email client user agents-->
+	<meta name="color-scheme" content="light dark" />
+	<meta name="supported-color-schemes" content="light dark only" />
+	<base target="_blank" />
+	<style>
+		:root {
+			color-scheme: light dark;
 		}
-	}
-</style>
+
+		html {
+			background: rgba(240, 234, 249, 1);
+			color: rgba(20, 18, 22, 1);
+			margin: 0;
+			padding: 0;
+		}
+
+		body {
+			background: rgba(240, 234, 249, 1);
+			color: rgba(20, 18, 22, 1);
+			margin: 0;
+			padding: 0;
+			font-size: 16px;
+			line-height: 26px;
+			font-family: system-ui, sans-serif;
+		}
+
+		.wrap {
+			width: 100%;
+			max-width: 600px;
+			background: rgba(240, 234, 249, 1);
+			color: rgba(20, 18, 22, 1);
+			margin: 0 auto;
+		}
+
+		.wrap-inner {
+			width: 92%;
+			margin: 0;
+			padding: 4%;
+			text-align: center;
+		}
+
+		.link {
+			color: rgba(96, 42, 204, 1);
+			font-size: 12px;
+			word-break: break-all;
+		}
+
+		.email {
+			color: rgba(96, 42, 204, 1);
+			font-weight: 600;
+		}
+
+		.button {
+			background: rgba(96, 42, 204, 1);
+			color: rgba(240, 234, 249, 1) !important;
+			border-radius: 8px;
+			border: none;
+			text-decoration: none !important;
+			font-weight: bold;
+			font-size: 18px;
+			padding: 14px 24px;
+			display: inline-block;
+			transition: all 0.15s ease-out;
+		}
+
+		.button:hover {
+			background: rgba(210, 108, 34, 1);
+		}
+
+		.footer {
+			text-align: center;
+			font-size: 12px;
+			color: rgba(20, 18, 22, 0.75);
+			padding: 16px 12px;
+		}
+
+		.footer a,
+		.footer a:visited,
+		.footer a:hover {
+			text-align: center;
+			font-size: 12px;
+			color: rgba(20, 18, 22, 0.75);
+		}
+
+		img {
+			max-width: 100%;
+			height: auto;
+		}
+
+		a,
+		a:hover,
+		a:visited {
+			color: rgba(96, 42, 204, 1);
+		}
+
+		@media screen and (max-width: 600px) {
+			body {
+				padding: 0px;
+			}
+		}
+
+		@media (prefers-color-scheme: dark) {
+			html {
+				background: rgba(18, 18, 23, 1);
+				color: rgba(220, 220, 234, 1);
+			}
+			body {
+				background: rgba(18, 18, 23, 1);
+				color: rgba(220, 220, 234, 1);
+			}
+			.wrap {
+				background: rgba(18, 18, 23, 1);
+				color: rgba(220, 220, 234, 1);
+			}
+			.wrap-inner {
+				background: rgba(18, 18, 23, 1);
+				color: rgba(220, 220, 234, 1);
+			}
+			.footer {
+				color: rgba(220, 220, 234, 0.75);
+			}
+			.footer a,
+			.footer a:visited,
+			.footer a:hover {
+				color: rgba(220, 220, 234, 0.75);
+			}
+			.link {
+				color: rgba(181, 140, 255, 1);
+			}
+			.email {
+				color: rgba(181, 140, 255, 1);
+			}
+			.button {
+				background: rgba(181, 140, 255, 1);
+				color: rgba(18, 18, 23, 1) !important;
+			}
+			.button:hover {
+				background: rgba(245, 164, 106, 1);
+			}
+			a,
+			a:hover,
+			a:visited {
+				color: rgba(181, 140, 255, 1);
+			}
+			.logo-dark {
+				display: block;
+			}
+			.logo-light {
+				display: none;
+			}
+		}
+	</style>
+</head>
+
+<div class="wrap">
+	<img
+		width="1200"
+		height="400"
+		style="width: 100%; height: auto; padding: 0; margin: 0; display: block"
+		src="https://stablecog.com/logos/banner-horizontal.jpg"
+	/>
+	<div class="wrap-inner">
+		<p style="max-width: 350px; margin: 0 auto; padding: 16px 16px">
+			Click the button below to update your email from <span class="email">{{ .Email }}</span> to
+			<span class="email">{{ .NewEmail }}</span>:
+		</p>
+		<a href="{{ .ConfirmationURL }}" class="button">Change Email</a>
+		<p style="padding-top: 24px">Or copy the link into your browser:</p>
+		<p style="max-width: 350px; margin: 0 auto" class="link">{{ .ConfirmationURL }}</p>
+	</div>
+</div>
+<div class="footer">
+	<a href="https://stablecog.com">© 2023 Stablecog, Inc.</a>
+</div>
