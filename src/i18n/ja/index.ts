@@ -498,6 +498,7 @@ const ja: Translation = {
 					Placeholder: '確認'
 				}
 			},
+			DeleteDataButton: 'Delete Data',
 			DataDeletedAtTitle: 'このデータは削除されました',
 			WillBeDeletedTitle: '削除します',
 			BannedAtTitle: '禁止',

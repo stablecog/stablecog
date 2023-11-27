@@ -506,6 +506,7 @@ const es: Translation = {
 					Placeholder: 'Επιβεβαίωση'
 				}
 			},
+			DeleteDataButton: 'Delete Data',
 			DataDeletedAtTitle: 'Τα Δεδομένα Διαγράφηκαν',
 			WillBeDeletedTitle: 'Θα διαγραφεί',
 			BannedAtTitle: 'Αποκλεισμένοι',

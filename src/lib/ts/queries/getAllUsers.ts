@@ -65,11 +65,13 @@ export async function getAllUsers({
 export async function banOrUnbanUsers({
 	user_ids,
 	access_token,
-	action
+	action,
+	delete_data = false
 }: {
 	user_ids: string[];
 	access_token: string;
 	action: 'ban' | 'unban';
+	delete_data?: boolean;
 }) {
 	const url = `${apiUrl.origin}/v1/admin/users/ban`;
 	const res = await fetch(url, {
@@ -80,7 +82,8 @@ export async function banOrUnbanUsers({
 		},
 		body: JSON.stringify({
 			user_ids,
-			action
+			action,
+			delete_data
 		})
 	});
 	const resJson = await res.json();

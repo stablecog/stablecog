@@ -39,6 +39,8 @@
 	import { giftCreditsToUser } from '$ts/queries/giftCreditsToUser';
 	import IconWarning from '$components/icons/IconWarning.svelte';
 	import { previewImageVersion } from '$ts/constants/previewImageVersion';
+	import ToggleIndicator from '$components/ToggleIndicator.svelte';
+	import ButtonHoverEffect from '$components/buttons/ButtonHoverEffect.svelte';
 
 	let searchString: string;
 	let searchStringDebounced: string | undefined = undefined;
@@ -107,6 +109,7 @@
 			isOpen: boolean;
 			state: TDropdownState;
 			buttonElement?: HTMLElement | undefined;
+			delete_data?: boolean;
 		};
 	} = {};
 	$: $allUsersQuery, onAllUsersQueryChanged();
@@ -120,10 +123,12 @@
 				isDropdownOpen[user.id] = {
 					isOpen: false,
 					state: 'main',
-					buttonElement: undefined
+					buttonElement: undefined,
+					delete_data: false
 				};
 			});
 		isDropdownOpen = { ...isDropdownOpen };
+		deleteData = false;
 	}
 
 	$: creditOptions = browser
@@ -220,10 +225,12 @@
 
 	async function _banOrUnbanUsers({
 		user_ids,
-		action
+		action,
+		delete_data
 	}: {
 		user_ids: string[];
 		action: 'ban' | 'unban';
+		delete_data?: boolean;
 	}) {
 		if (banOrUnbanUserInputValue !== $LL.Admin.Users.ConfirmAction.ConfirmActionReferenceText())
 			return;
@@ -232,7 +239,8 @@
 			const res = await banOrUnbanUsers({
 				access_token: $page.data.session?.access_token || '',
 				user_ids,
-				action
+				action,
+				delete_data
 			});
 			console.log(res);
 			$allUsersQuery?.refetch();
@@ -240,6 +248,8 @@
 			console.log(e);
 		}
 	}
+
+	let deleteData = false;
 
 	async function _banOrUnbanDomains({
 		userId,
@@ -507,12 +517,35 @@
 																			} else {
 																				_banOrUnbanUsers({
 																					user_ids: [user.id],
-																					action: user.banned_at ? 'unban' : 'ban'
+																					action: user.banned_at ? 'unban' : 'ban',
+																					delete_data: deleteData
 																				});
 																			}
 																		}}
 																		class="w-full flex flex-col gap-2"
 																	>
+																		{#if userDropdownState === 'ban-user'}
+																			<div class="w-full flex items-center justify-start pb-1">
+																				<button
+																					type="button"
+																					on:click={() => {
+																						deleteData = !deleteData;
+																					}}
+																					class="flex items-center justify-start gap-2 group rounded-full overflow-hidden relative
+																					p-1 pr-3"
+																				>
+																					<ButtonHoverEffect noPadding color="on-bg" />
+																					<ToggleIndicator isToggled={deleteData} color="danger" />
+																					<p
+																						class="shrink transition {deleteData === true
+																							? 'text-c-danger'
+																							: 'text-c-on-bg'} whitespace-nowrap min-w-0 overflow-hidden overflow-ellipsis font-semibold"
+																					>
+																						{$LL.Admin.Users.DeleteDataButton()}
+																					</p>
+																				</button>
+																			</div>
+																		{/if}
 																		<Input
 																			noAutocomplete
 																			title={$LL.Admin.Users.ConfirmAction.ConfirmActionInput.Placeholder()}

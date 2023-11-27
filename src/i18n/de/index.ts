@@ -482,6 +482,7 @@ const de: Translation = {
 				ConfirmActionParagraph: 'Type "{confirmActionText}" to confirm.',
 				ConfirmActionInput: { Placeholder: 'Confirm' }
 			},
+			DeleteDataButton: 'Delete Data',
 			DataDeletedAtTitle: 'Data Deleted',
 			WillBeDeletedTitle: 'Will Be Deleted',
 			BannedAtTitle: 'Banned',

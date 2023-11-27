@@ -510,6 +510,7 @@ const tr: Translation = {
 					Placeholder: 'Onayla'
 				}
 			},
+			DeleteDataButton: 'Delete Data',
 			DataDeletedAtTitle: 'Veri Silinme',
 			WillBeDeletedTitle: 'Silinecek',
 			BannedAtTitle: 'Banlandı',

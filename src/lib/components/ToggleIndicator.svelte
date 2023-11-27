@@ -2,7 +2,7 @@
 	import IconNotAllowed from '$components/icons/IconNotAllowed.svelte';
 
 	export let isToggled: boolean = false;
-	export let color: 'primary' | 'on-bg' = 'primary';
+	export let color: 'primary' | 'on-bg' | 'danger' = 'primary';
 	export let disabled: boolean = false;
 </script>
 
@@ -11,6 +11,10 @@
 		? isToggled
 			? 'bg-c-on-bg'
 			: 'bg-c-on-bg/20'
+		: color === 'danger'
+		? isToggled
+			? 'bg-c-danger'
+			: 'bg-c-on-bg-secondary'
 		: isToggled
 		? 'bg-c-primary'
 		: 'bg-c-on-bg-secondary'} relative z-0 overflow-hidden pointer-events-none"

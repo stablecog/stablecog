@@ -1472,6 +1472,10 @@ type RootTranslation = {
 				}
 			}
 			/**
+			 * D​e​l​e​t​e​ ​D​a​t​a
+			 */
+			DeleteDataButton: string
+			/**
 			 * D​a​t​a​ ​D​e​l​e​t​e​d
 			 */
 			DataDeletedAtTitle: string
@@ -4658,6 +4662,10 @@ export type TranslationFunctions = {
 					Placeholder: () => LocalizedString
 				}
 			}
+			/**
+			 * Delete Data
+			 */
+			DeleteDataButton: () => LocalizedString
 			/**
 			 * Data Deleted
 			 */
