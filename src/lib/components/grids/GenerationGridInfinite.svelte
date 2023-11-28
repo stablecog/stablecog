@@ -259,8 +259,8 @@
 	{#if $gridVirtualizer}
 		{@const showScrollToTopChevron =
 			$gridVirtualizer && $gridVirtualizer.scrollOffset > $windowHeight * 2}
-		{@const isPageLongEnoughForScrollToTopChevron =
-			$gridVirtualizer && $gridVirtualizer.getTotalSize() > $windowHeight * 2}
+		{@const isGridLongEnoughForScrollToTopChevron =
+			$gridVirtualizer && $gridVirtualizer.getTotalSize() > $windowHeight * 1.5}
 		<div class="w-full relative">
 			<div
 				style="height: {$gridVirtualizer.getTotalSize() +
@@ -310,38 +310,38 @@
 					</div>
 				{/each}
 			</div>
-			<div
-				class="z-20 {showScrollToTopChevron
-					? 'translate-y-0'
-					: 'translate-y-full'} {!isPageLongEnoughForScrollToTopChevron
-					? 'opacity-0'
-					: 'opacity-100'} sticky transform transition duration-300
-						flex items-center justify-center left-0 bottom-0
-						w-full px-2 pt-8 pb-[calc(0.5rem+env(safe-area-inset-bottom))] pointer-events-none
-						md:px-3 md:pt-8 md:pb-[calc(1rem+env(safe-area-inset-bottom))]"
-			>
-				<button
-					disabled={!showScrollToTopChevron || !isPageLongEnoughForScrollToTopChevron}
-					aria-label="Scroll to top"
-					on:click={() =>
-						$gridVirtualizer?.scrollToOffset(0, {
-							behavior: 'smooth'
-						})}
-					class="relative rounded-lg group
+			{#if isGridLongEnoughForScrollToTopChevron}
+				<div
+					class="z-20 {showScrollToTopChevron
+						? 'translate-y-0'
+						: 'translate-y-full'} sticky transform transition duration-300
+					flex items-center justify-center left-0 bottom-0
+					w-full px-2 pt-8 pb-[calc(0.5rem+env(safe-area-inset-bottom))] pointer-events-none
+					md:px-3 md:pt-8 md:pb-[calc(1rem+env(safe-area-inset-bottom))]"
+				>
+					<button
+						disabled={!showScrollToTopChevron}
+						aria-label="Scroll to top"
+						on:click={() =>
+							$gridVirtualizer?.scrollToOffset(0, {
+								behavior: 'smooth'
+							})}
+						class="relative rounded-lg group
 						before:absolute before:min-w-[56px] before:min-h-[56px]
 						before:left-1/2 before:top-1/2 before:-translate-x-1/2 before:-translate-y-1/2
 						before:w-full before:h-full before:rounded-lg
 						{showScrollToTopChevron ? 'pointer-events-auto before:pointer-events-auto' : ''}"
-				>
-					<div
-						class="w-full h-full rounded-full bg-c-bg-tertiary relative p-2.5
-							shadow-lg shadow-c-shadow/[var(--o-shadow-strongest)] border-2 border-c-on-bg/15"
 					>
-						<ButtonHoverEffect color="on-bg" noPadding fullRounding />
-						<IconArrowRight class="transform -rotate-90 w-5 h-5" />
-					</div>
-				</button>
-			</div>
+						<div
+							class="w-full h-full rounded-full bg-c-bg-tertiary relative p-2.5
+							shadow-lg shadow-c-shadow/[var(--o-shadow-strongest)] border-2 border-c-on-bg/15"
+						>
+							<ButtonHoverEffect color="on-bg" noPadding fullRounding />
+							<IconArrowRight class="transform -rotate-90 w-5 h-5" />
+						</div>
+					</button>
+				</div>
+			{/if}
 		</div>
 	{/if}
 {/if}
