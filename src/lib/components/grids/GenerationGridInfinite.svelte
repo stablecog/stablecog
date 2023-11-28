@@ -49,17 +49,6 @@
 	export let paddingTop = 0;
 	export let paddingBottom = 0;
 	export let setSearchQuery: ((query: string) => void) | undefined = undefined;
-	export let onLikesChanged:
-		| (({
-				newLikeCount,
-				newIsLikedByUser,
-				action
-		  }: {
-				newLikeCount: number;
-				newIsLikedByUser: boolean;
-				action: 'like' | 'unlike';
-		  }) => void)
-		| undefined = undefined;
 
 	$: horizontalPadding = paddingLeft + paddingRight;
 	let isInitialScrollPositionSet = false;
@@ -270,6 +259,8 @@
 	{#if $gridVirtualizer}
 		{@const showScrollToTopChevron =
 			$gridVirtualizer && $gridVirtualizer.scrollOffset > $windowHeight * 2}
+		{@const isPageLongEnoughForScrollToTopChevron =
+			$gridVirtualizer && $gridVirtualizer.getTotalSize() > $windowHeight * 2}
 		<div class="w-full relative">
 			<div
 				style="height: {$gridVirtualizer.getTotalSize() +
@@ -313,7 +304,6 @@
 							{didLoadBefore}
 							{cardWidth}
 							{isGalleryEditActive}
-							{onLikesChanged}
 							{setSearchQuery}
 							{now}
 						/>
@@ -323,27 +313,29 @@
 			<div
 				class="z-20 {showScrollToTopChevron
 					? 'translate-y-0'
-					: 'translate-y-full'} sticky transform transition duration-300
-				flex items-center justify-center left-0 bottom-0
-				w-full px-2 pt-8 pb-[calc(0.5rem+env(safe-area-inset-bottom))] pointer-events-none
-				md:px-3 md:pt-8 md:pb-[calc(1rem+env(safe-area-inset-bottom))]"
+					: 'translate-y-full'} {!isPageLongEnoughForScrollToTopChevron
+					? 'opacity-0'
+					: 'opacity-100'} sticky transform transition duration-300
+						flex items-center justify-center left-0 bottom-0
+						w-full px-2 pt-8 pb-[calc(0.5rem+env(safe-area-inset-bottom))] pointer-events-none
+						md:px-3 md:pt-8 md:pb-[calc(1rem+env(safe-area-inset-bottom))]"
 			>
 				<button
-					disabled={!showScrollToTopChevron}
+					disabled={!showScrollToTopChevron || !isPageLongEnoughForScrollToTopChevron}
 					aria-label="Scroll to top"
 					on:click={() =>
 						$gridVirtualizer?.scrollToOffset(0, {
 							behavior: 'smooth'
 						})}
 					class="relative rounded-lg group
-					before:absolute before:min-w-[56px] before:min-h-[56px]
-					before:left-1/2 before:top-1/2 before:-translate-x-1/2 before:-translate-y-1/2
-					before:w-full before:h-full before:rounded-lg
-					{showScrollToTopChevron ? 'pointer-events-auto before:pointer-events-auto' : ''}"
+						before:absolute before:min-w-[56px] before:min-h-[56px]
+						before:left-1/2 before:top-1/2 before:-translate-x-1/2 before:-translate-y-1/2
+						before:w-full before:h-full before:rounded-lg
+						{showScrollToTopChevron ? 'pointer-events-auto before:pointer-events-auto' : ''}"
 				>
 					<div
 						class="w-full h-full rounded-full bg-c-bg-tertiary relative p-2.5
-						shadow-lg shadow-c-shadow/[var(--o-shadow-strongest)] border-2 border-c-on-bg/15"
+							shadow-lg shadow-c-shadow/[var(--o-shadow-strongest)] border-2 border-c-on-bg/15"
 					>
 						<ButtonHoverEffect color="on-bg" noPadding fullRounding />
 						<IconArrowRight class="transform -rotate-90 w-5 h-5" />
