@@ -9,6 +9,7 @@
 	export let iconClass = 'w-8 h-8';
 	export let wrapperClass = 'w-full h-full relative flex items-center rounded-xl justify-center';
 	export let hasAnimation = true;
+	export let count: number | undefined = undefined;
 	export { classes as class };
 	let classes = `absolute ${
 		side === 'left' ? 'left-0' : 'right-0'
@@ -39,16 +40,27 @@
 		{#if onClick}
 			<ButtonHoverEffect hoverFrom={side === 'left' ? 'right' : 'left'} />
 		{/if}
-		<IconChevronDown
-			strokeWidth={3}
-			class="{iconClass} text-c-on-bg transition duration-100 transform {isRecentlyClicked &&
-			hasAnimation
-				? side === 'left'
-					? '-translate-x-1.5'
-					: 'translate-x-1.5'
-				: ''} {side === 'left' ? 'rotate-90' : '-rotate-90'} {onClick
-				? 'not-touch:group-hover:text-c-primary'
-				: ''} group-disabled:opacity-15"
-		/>
+		<div class="max-w-full flex flex-col items-center">
+			{#if count !== undefined}
+				<p
+					class="max-w-full transition duration-100 {onClick
+						? 'not-touch:group-hover:text-c-primary'
+						: ''} group-disabled:opacity-15 overflow-hidden overflow-ellipsis text-center text-xs font-semibold py-1 -mt-6 px-3"
+				>
+					{count}
+				</p>
+			{/if}
+			<IconChevronDown
+				strokeWidth={3}
+				class="{iconClass} text-c-on-bg transition duration-100 transform {isRecentlyClicked &&
+				hasAnimation
+					? side === 'left'
+						? '-translate-x-1.5'
+						: 'translate-x-1.5'
+					: ''} {side === 'left' ? 'rotate-90' : '-rotate-90'} {onClick
+					? 'not-touch:group-hover:text-c-primary'
+					: ''} group-disabled:opacity-15"
+			/>
+		</div>
 	</div>
 </button>

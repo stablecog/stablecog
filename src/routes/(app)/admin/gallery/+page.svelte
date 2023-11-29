@@ -284,5 +284,7 @@
 		onRightButtonClicked={rightIndex !== -1 ? () => goToSide('right') : undefined}
 		generation={$activeGeneration}
 		modalType="admin-gallery"
+		outputsLength={outputs?.length}
+		{outputIndex}
 	/>
 {/if}

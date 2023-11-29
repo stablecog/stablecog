@@ -64,6 +64,8 @@
 	export let onLeftButtonClicked: (() => void) | undefined = undefined;
 	export let onRightButtonClicked: (() => void) | undefined = undefined;
 	export let setSearchQuery: ((query: string) => void) | undefined = undefined;
+	export let outputsLength: number | undefined = undefined;
+	export let outputIndex: number | undefined = undefined;
 	export let onLikesChanged:
 		| (({
 				newLikeCount,
@@ -638,6 +640,11 @@
 			side="left"
 			bind:element={buttonLeft}
 			onClick={onLeftButtonClicked}
+			count={modalType === 'admin-gallery' &&
+			outputIndex !== undefined &&
+			outputsLength !== undefined
+				? outputIndex
+				: undefined}
 		/>
 		<SideButton
 			name="Go Right"
@@ -645,6 +652,11 @@
 			side="right"
 			bind:element={buttonRight}
 			onClick={onRightButtonClicked}
+			count={modalType === 'admin-gallery' &&
+			outputIndex !== undefined &&
+			outputsLength !== undefined
+				? outputsLength - (outputIndex + 1)
+				: undefined}
 		/>
 	{/if}
 </ModalWrapper>
