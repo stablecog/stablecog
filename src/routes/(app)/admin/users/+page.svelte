@@ -42,14 +42,17 @@
 	import ToggleIndicator from '$components/ToggleIndicator.svelte';
 	import ButtonHoverEffect from '$components/buttons/ButtonHoverEffect.svelte';
 
-	let searchString: string;
-	let searchStringDebounced: string | undefined = undefined;
+	export let data;
+
+	let searchString: string = data.searchString ?? undefined;
+	let searchStringDebounced: string = data.searchString ?? undefined;
 	let searchTimeout: NodeJS.Timeout;
 	let searchDebounceMs = 300;
 	let usersInput: HTMLInputElement;
-	$: searchString, setDebouncedSearch(searchString);
 
-	let selectedFilterDropdownItem: TStripeSupportedProductIdSubscriptions = '';
+	$: searchString, setDebouncedSearch(searchString);
+	$: searchStringDebounced, onSearchStringDebouncedChanged();
+	$: view, onViewChanged();
 
 	const filterDropdownItems: TTab<TStripeSupportedProductIdSubscriptions>[] = [
 		{
@@ -74,17 +77,22 @@
 		}
 	];
 
+	const filterDropdownItemValues = filterDropdownItems.map((item) => item.value);
+
+	let view: TStripeSupportedProductIdSubscriptions = filterDropdownItemValues.includes(data.view)
+		? data.view
+		: '';
+
 	$: allUsersQuery = browser
 		? createInfiniteQuery({
-				queryKey: ['all_users_query', searchStringDebounced, selectedFilterDropdownItem ?? ''],
+				queryKey: ['all_users_query', searchStringDebounced, view ?? ''],
 				queryFn: async (lastPage) => {
 					const res = await getAllUsers({
 						cursor: lastPage?.pageParam,
 						search: searchStringDebounced,
 						access_token: $page.data.session?.access_token,
-						active_product_id:
-							selectedFilterDropdownItem === 'banned' ? undefined : selectedFilterDropdownItem,
-						banned: selectedFilterDropdownItem === 'banned' ? true : undefined
+						active_product_id: view === 'banned' ? undefined : view,
+						banned: view === 'banned' ? true : undefined
 					});
 					return res;
 				},
@@ -158,6 +166,36 @@
 				searchStringDebounced = '';
 			}
 		}, searchDebounceMs);
+	}
+
+	function onSearchStringDebouncedChanged() {
+		if (!browser) return;
+		const url = new URL(window.location.href);
+		const currentQ = url.searchParams.get('q');
+		const currentQString = currentQ === null ? '' : currentQ;
+		if (currentQString === searchStringDebounced) return;
+		if (searchStringDebounced) {
+			url.searchParams.set('q', searchStringDebounced);
+		} else {
+			url.searchParams.delete('q');
+		}
+		const relativeUrl = url.pathname + url.search;
+		window.history.replaceState(window.history.state, '', relativeUrl);
+	}
+
+	function onViewChanged() {
+		if (!browser) return;
+		const url = new URL(window.location.href);
+		const currentView = url.searchParams.get('view');
+		const currentViewString = currentView === null ? '' : currentView;
+		if (currentViewString === view) return;
+		if (view) {
+			url.searchParams.set('view', view);
+		} else {
+			url.searchParams.delete('view');
+		}
+		const relativeUrl = url.pathname + url.search;
+		window.history.replaceState(window.history.state, '', relativeUrl);
 	}
 
 	const atTheTopThreshold = 80;
@@ -360,7 +398,7 @@
 					name="Active Product ID"
 					items={filterDropdownItems}
 					hasTitle={false}
-					bind:value={selectedFilterDropdownItem}
+					bind:value={view}
 				/>
 			</div>
 		</div>
