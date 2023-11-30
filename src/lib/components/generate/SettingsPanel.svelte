@@ -59,7 +59,7 @@
 <SidebarWrapper {rounding} {noWrapper} hasGradient>
 	<div
 		bind:this={settingsContainer}
-		class="w-full h-full flex flex-col overflow-auto pt-4 md:pt-5 pb-[calc(5.5rem+env(safe-area-inset-bottom))] md:pb-32 gap-7"
+		class="w-full h-full flex flex-col overflow-auto pt-4 md:pt-5 pb-[calc(4rem+env(safe-area-inset-bottom))] md:pb-20 gap-7"
 	>
 		<SettingsPanelItem
 			title={$LL.Home.AspectRatioDropdown.Title()}

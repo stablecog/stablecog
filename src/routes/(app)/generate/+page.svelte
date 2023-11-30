@@ -299,6 +299,7 @@
 						}}
 						class="h-full flex w-36 xl:w-72 relative z-10"
 					>
+						<!-- Desktop Sidebar -->
 						<SidebarWrapper hasGradient>
 							{#if !$page.data.session?.user.id || !$userSummary}
 								<GenerateGridPlaceholder text={$LL.Generate.Grid.NotSignedIn.Paragraph()} />
