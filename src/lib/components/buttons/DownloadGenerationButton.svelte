@@ -5,7 +5,6 @@
 	import Morpher from '$components/Morpher.svelte';
 	import { locale } from '$i18n/i18n-svelte';
 	import { downloadGenerationImage } from '$ts/helpers/downloadGenerationImage';
-	import { advancedModeApp } from '$ts/stores/advancedMode';
 	import { appVersion } from '$ts/stores/appVersion';
 	import type { TGenerationWithSelectedOutput } from '$ts/stores/user/generation';
 	import { userSummary } from '$ts/stores/user/summary';
@@ -39,7 +38,6 @@
 					? Math.round((1 - generation.prompt_strength) * 10) / 10
 					: undefined,
 				logProps: {
-					'SC - Advanced Mode': $advancedModeApp,
 					'SC - Locale': $locale,
 					'SC - Output Id': generation.selected_output.id,
 					'SC - Page': `${$page.url.pathname}${$page.url.search}`,

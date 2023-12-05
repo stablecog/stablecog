@@ -177,7 +177,7 @@
 				generation.selected_output.gallery_status !== 'approved') ||
 			modalType === 'generate' ||
 			modalType === 'stage'
-				? `${$page.url.origin}/user/${generation.user.username}/o/${generation.selected_output.id}`
+				? `${$page.url.origin}/${generation.user.username}/o/${generation.selected_output.id}`
 				: `${$page.url.origin}/gallery/o/${generation.selected_output.id}`;
 		if (browser && window && !initialGenerationChange) {
 			if (modalType === 'gallery') {
@@ -186,7 +186,7 @@
 				window.history.replaceState(
 					{},
 					'',
-					`/user/${generation.user.username}/o/${generation.selected_output.id}`
+					`/${generation.user.username}/o/${generation.selected_output.id}`
 				);
 			} else {
 				const searchParams = new URLSearchParams(window.location.search);

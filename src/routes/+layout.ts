@@ -8,6 +8,18 @@ import type { SupabaseClient } from '@supabase/supabase-js';
 import { getUserSummary } from '$ts/helpers/user/user';
 import { supabaseAnonKey, supabaseUrl } from '$ts/constants/supabase';
 
+// const pages = import.meta.glob('./**/*.*');
+/* let usernameBlacklistSet = new Set<string>();
+for (const path in pages) {
+	const parts = path.split('/');
+	usernameBlacklistSet.add(parts[1]);
+	usernameBlacklistSet.add(parts[2]);
+}
+const usernameBlacklist = Array.from(usernameBlacklistSet).filter(
+	(username) => username !== undefined
+);
+console.log(usernameBlacklist); */
+
 export const load: LayoutLoad = async (event) => {
 	event.depends('supabase:auth');
 	const supabase = createSupabaseLoadClient({

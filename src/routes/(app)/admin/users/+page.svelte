@@ -506,7 +506,7 @@
 											</p>
 										</button>
 										<a
-											href="/user/{user.username}"
+											href="/{user.username}"
 											data-sveltekit-preload-data="hover"
 											target="_blank"
 											class="text-left max-w-full overflow-hidden text-sm font-medium px-1.5 py-0.5 break-all text-c-on-bg/60

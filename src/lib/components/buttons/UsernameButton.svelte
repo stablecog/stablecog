@@ -14,7 +14,7 @@
 </script>
 
 <a
-	href="/user/{username}"
+	href="/{username}"
 	data-sveltekit-preload-data="hover"
 	on:click={() => activeGeneration.set(undefined)}
 	class="max-w-full flex justify-start items-center gap-2.5 bg-c-bg-secondary

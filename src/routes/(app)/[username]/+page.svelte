@@ -5,7 +5,6 @@
 	import MetaTag from '$components/MetaTag.svelte';
 	import LL, { locale } from '$i18n/i18n-svelte';
 	import { canonicalUrl } from '$ts/constants/main';
-	import { globalSeed } from '$ts/stores/globalSeed';
 	import { activeGeneration, type TGenerationFullOutput } from '$ts/stores/user/generation';
 	import { createInfiniteQuery } from '@tanstack/svelte-query';
 	import { quadOut } from 'svelte/easing';
@@ -24,10 +23,6 @@
 		xl2Breakpoint,
 		xl3Breakpoint
 	} from '$components/generationFullScreen/constants';
-	import {
-		getSomeUserProfileInfiniteQueryKey,
-		getSomeUserProfileInfiniteQueryProps
-	} from '$routes/(app)/user/[username]/constants.js';
 	import Avatar from '$components/avatar/Avatar.svelte';
 	import IconBirthday from '$components/icons/IconBirthday.svelte';
 	import IconStar from '$components/icons/IconStar.svelte';
@@ -42,7 +37,11 @@
 	import { getImgProxySrc } from '$ts/helpers/imgproxy.js';
 	import { someUserProfileFullOutputsQueryKey } from '$ts/stores/user/queryKeys.js';
 	import IconFreePlan from '$components/icons/IconFreePlan.svelte';
-	import ProfileCardBadge from '$routes/(app)/user/[username]/ProfileCardBadge.svelte';
+	import {
+		getSomeUserProfileInfiniteQueryKey,
+		getSomeUserProfileInfiniteQueryProps
+	} from '$routes/(app)/[username]/constants.js';
+	import ProfileCardBadge from '$routes/(app)/[username]/ProfileCardBadge.svelte';
 
 	export let data;
 	const { searchQuery: searchQueryParam } = data;
@@ -193,7 +192,7 @@
 					<div class="w-full flex justify-start items-center -mt-0.75 md:-mt-0.25">
 						{#if data.username === $userSummary?.username}
 							<WithChangeUsernameModal
-								afterUsernameChanged={(username) => goto(`/user/${username}`)}
+								afterUsernameChanged={(username) => goto(`/${username}`)}
 								let:trigger
 							>
 								<NoBgButton {trigger} class="mt-0 -mx-3.5" hoverFrom="left">
@@ -295,7 +294,6 @@
 		{:else if galleryGenerationFullOutputsQuery !== undefined && $windowWidth}
 			<div class="w-full flex-1 mt-1 md:mt-0.5 flex flex-col">
 				<GenerationGridInfinite
-					{onLikesChanged}
 					cardType="user-profile"
 					generationsQuery={galleryGenerationFullOutputsQuery}
 					cols={$windowWidth > xl3Breakpoint

@@ -87,7 +87,7 @@
 				</p>
 			</div>
 		</DropdownItem>
-		<DropdownItem href="/user/{$userSummary?.username}" onClick={closeMenu}>
+		<DropdownItem href="/{$userSummary?.username}" onClick={closeMenu}>
 			<div class="flex-1 min-w-0 flex items-center justify-start gap-2.5">
 				<IconProfile class="transition w-6 h-6 text-c-text not-touch:group-hover:text-c-primary" />
 				<p

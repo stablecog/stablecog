@@ -1,9 +1,7 @@
 <script lang="ts">
 	import Morpher from '$components/Morpher.svelte';
-	import WithTooltip from '$components/WithTooltip.svelte';
 	import ButtonHoverEffect from '$components/buttons/ButtonHoverEffect.svelte';
 	import { copyTimeoutDuration } from '$components/generationFullScreen/constants';
-	import IconAnimatedSpinner from '$components/icons/IconAnimatedSpinner.svelte';
 	import IconLink from '$components/icons/IconLink.svelte';
 	import IconTick from '$components/icons/IconTick.svelte';
 	import LL from '$i18n/i18n-svelte';

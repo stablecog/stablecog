@@ -18,7 +18,6 @@
 	import { userSummary } from '$ts/stores/user/summary';
 	import { getUserSummary } from '$ts/helpers/user/user';
 	import { signInCardCodeSignInStatus, signInCardStatus } from '$ts/stores/signInCardState';
-	import { PUBLIC_APP_MODE } from '$env/static/public';
 	import { apiUrl } from '$ts/constants/main';
 	import PinInput from '$components/PinInput.svelte';
 

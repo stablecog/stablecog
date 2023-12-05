@@ -78,7 +78,7 @@
 					<a
 						data-sveltekit-preload-data="hover"
 						href={`${
-							modalType === 'user-profile' ? `/user/${generation.user.username}` : '/gallery'
+							modalType === 'user-profile' ? `/${generation.user.username}` : '/gallery'
 						}/o/${similarOutput.id}`}
 						on:click|preventDefault={() => {
 							const logParams = {

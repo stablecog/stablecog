@@ -131,7 +131,7 @@
 			</p>
 			<div class="w-full flex items-end justify-between px-0.5 pb-0.5 md:px-1 md:pb-1">
 				<a
-					href="/user/{output.generation.user.username}"
+					href="/{output.generation.user.username}"
 					data-sveltekit-preload-data="hover"
 					class="flex flex-shrink min-w-0 items-center group gap-2 relative px-2 py-1.5 rounded-md"
 				>

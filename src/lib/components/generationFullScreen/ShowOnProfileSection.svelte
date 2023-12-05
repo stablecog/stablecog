@@ -7,7 +7,7 @@
 	import IconEyeOutline from '$components/icons/IconEyeOutline.svelte';
 	import IconStar from '$components/icons/IconStar.svelte';
 	import LL, { locale } from '$i18n/i18n-svelte';
-	import { getSomeUserProfileInfiniteQueryKey } from '$routes/(app)/user/[username]/constants';
+	import { getSomeUserProfileInfiniteQueryKey } from '$routes/(app)/[username]/constants';
 	import { apiUrl } from '$ts/constants/main';
 	import { isGalleryAdmin, isSuperAdmin } from '$ts/helpers/admin/roles';
 	import {
@@ -17,7 +17,6 @@
 	import type { TUserGenerationFullOutputsPage } from '$ts/queries/userGenerations';
 	import { advancedModeApp } from '$ts/stores/advancedMode';
 	import { appVersion } from '$ts/stores/appVersion';
-	import { globalSeed } from '$ts/stores/globalSeed';
 	import {
 		setGenerationOutputVisibility,
 		type TGenerationWithSelectedOutput

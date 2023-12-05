@@ -16,7 +16,7 @@
 	import { globalSeed } from '$ts/stores/globalSeed';
 	import { userSummary } from '$ts/stores/user/summary';
 	import posthog from 'posthog-js';
-	import { PUBLIC_MP_URL, PUBLIC_MP_ID, PUBLIC_PH_ID, PUBLIC_PH_URL } from '$env/static/public';
+	import { PUBLIC_PH_ID, PUBLIC_PH_URL } from '$env/static/public';
 	import { isHydrated, setIsHydratedToTrue } from '$ts/helpers/isHydrated';
 	import { setBodyClasses } from '$ts/helpers/setBodyClasses';
 	import { isLeftSidebarHidden, isLeftSidebarHiddenApp } from '$ts/stores/sidebars';

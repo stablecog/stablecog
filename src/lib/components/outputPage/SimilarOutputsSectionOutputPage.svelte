@@ -43,7 +43,7 @@
 						}
 					}}
 					href={modalType === 'user-profile'
-						? `/user/${output.generation.user.username}/o/${similarOutput.id}`
+						? `/${output.generation.user.username}/o/${similarOutput.id}`
 						: `/gallery/o/${similarOutput.id}`}
 					data-sveltekit-preload-data="hover"
 					class="w-full group"

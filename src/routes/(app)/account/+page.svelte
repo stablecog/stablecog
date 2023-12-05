@@ -115,7 +115,7 @@
 							</NoBgButton>
 						</WithChangeUsernameModal>
 					</div>
-					<SubtleButton target="_blank" href="/user/{$userSummary?.username}">
+					<SubtleButton target="_blank" href="/{$userSummary?.username}">
 						<div class="flex items-center gap-2 px-1">
 							<p class="text-base font-semibold flex flex-shrink min-w-0">
 								{$LL.Shared.VisitProfileButton()}

@@ -36,7 +36,7 @@
 	$: exploreSimilarUrl = `/gallery?q=${generation.selected_output.id}`;
 	$: linkUrl =
 		modalType === 'user-profile'
-			? `${$page.url.origin}/user/${output.generation.user.username}/${output.generation.id}`
+			? `${$page.url.origin}/${output.generation.user.username}/${output.generation.id}`
 			: `${$page.url.origin}/gallery/o/${output.generation.id}`;
 	$: currentImageUrl = output.upscaled_image_url ?? output.image_url;
 	$: currentImageWidth = output.generation.width * (output.upscaled_image_url ? 4 : 1);
@@ -171,7 +171,7 @@
 		<div class="w-full flex flex-shrink-0 flex-col gap-4 max-w-xl lg:max-w-md items-start px-5">
 			<div class="w-full flex justify-center lg:justify-start lg:-ml-6 lg:-mt-2">
 				<NoBgButton
-					href={modalType === 'user-profile' ? `/user/${generation.user.username}` : '/gallery'}
+					href={modalType === 'user-profile' ? `/${generation.user.username}` : '/gallery'}
 					prefetch={true}
 					hoverFrom="right"
 				>

@@ -28,7 +28,7 @@
 		: '';
 
 	$: exploreSimilarUrl = `${
-		cardType === 'user-profile' ? `/user/${generation.user.username}` : '/gallery'
+		cardType === 'user-profile' ? `/${generation.user.username}` : '/gallery'
 	}${searchParamsWithOutputIdStringFinal}`;
 
 	function onClick() {
