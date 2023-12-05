@@ -35,7 +35,6 @@
 		"intl-unofficial-duration-unit-format": "^3.1.0",
 		"js-base64": "^3.7.5",
 		"mdsvex": "^0.10.6",
-		"mixpanel-browser": "^2.45.0",
 		"postcss": "^8.4.16",
 		"prettier": "^2.6.2",
 		"prettier-plugin-svelte": "^2.10.1",
