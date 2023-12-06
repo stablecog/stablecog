@@ -510,7 +510,7 @@ const tr: Translation = {
 					Placeholder: 'Onayla'
 				}
 			},
-			DeleteDataButton: 'Delete Data',
+			DeleteDataButton: 'Veriyi Sil',
 			DataDeletedAtTitle: 'Veri Silinme',
 			WillBeDeletedTitle: 'Silinecek',
 			BannedAtTitle: 'Banlandı',
@@ -527,8 +527,8 @@ const tr: Translation = {
 			DeletedTitle: 'Silinen',
 			StatusDropdown: {
 				All: 'Hepsi',
-				ManuallySubmitted: 'Manuel Gönderilmiş',
-				SubmittedBest: 'Submitted (Best)',
+				ManuallySubmitted: 'Manuel Gönderilenler',
+				SubmittedBest: 'Gönderilenler (En İyi)',
 				Submitted: 'Gönderilenler',
 				Approved: 'Onaylananlar',
 				Rejected: 'Reddedilenler',
@@ -832,7 +832,8 @@ const tr: Translation = {
 		},
 		FreeForeverTitle: 'Her Zaman Ücretsiz!',
 		Discounts: {
-			FirstPurchase50OffParagraph: 'İlk ay %50% indirimli!'
+			FirstMonth30OffParagraph: 'İlk ay %30 indirimli!',
+			FirstMonth50OffParagraph: 'İlk ay %50 indirimli!'
 		},
 		Purchase: {
 			Succeeded: {
