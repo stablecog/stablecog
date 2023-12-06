@@ -167,8 +167,14 @@
 				isActive={!canToggleVisibility}
 				overflowPadding={{ bottom: 100 }}
 			>
-				<div tabindex="-1" use:trigger {...triggerStoreValue} class="w-full">
+				<div
+					tabindex="-1"
+					use:trigger
+					{...triggerStoreValue}
+					class="w-full {!canToggleVisibility ? 'cursor-not-allowed' : ''}"
+				>
 					<TabLikeToggle
+						class="w-full {!canToggleVisibility ? 'pointer-events-none' : ''}"
 						bind:isToggled={$generationShouldSubmitToGallery}
 						disabled={!isCheckCompleted || !canToggleVisibility}
 						disabledIsToggled={canToggleVisibility ? $generationShouldSubmitToGallery : true}

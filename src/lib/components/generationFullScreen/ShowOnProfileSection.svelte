@@ -154,15 +154,19 @@
 		buttonText={$LL.Pricing.SubscribeButton()}
 		isActive={!canToggleVisibility}
 	>
-		<div tabindex="-1" use:trigger {...triggerStoreValue} class="w-full">
+		<div
+			tabindex="-1"
+			use:trigger
+			{...triggerStoreValue}
+			class="w-full {!canToggleVisibility ? 'cursor-not-allowed' : ''}"
+		>
 			<button
 				{...$root}
 				use:root
 				class="w-full flex items-center justify-between rounded-lg pl-5 md:pl-6.5 pr-4
-				md:pr-5 py-4 relative group -my-1.5 {canToggleVisibility
-					? 'cursor-pointer'
-					: 'cursor-not-allowed opacity-50'}"
+				md:pr-5 py-4 relative group -my-1.5 disabled:cursor-not-allowed disabled:opacity-50 disabled:pointer-events-none"
 				id="checkbox"
+				disabled={!canToggleVisibility}
 				on:click={() =>
 					canToggleVisibility
 						? toggleVisibility(
