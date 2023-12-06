@@ -1,5 +1,4 @@
 <script lang="ts">
-	import IconTick from '$components/icons/IconTick.svelte';
 	import IconTickOnly from '$components/icons/IconTickOnly.svelte';
 	import LL, { locale } from '$i18n/i18n-svelte';
 	import type { TFeature } from '$routes/(app)/pricing/types';
@@ -11,12 +10,12 @@
 	export let badgeText: string | undefined = undefined;
 	export let badgeClasses: string | undefined = undefined;
 	export let planTitle: string;
-	export let hasDiscount = false;
 	export let discountBadgeText: LocalizedString | undefined = undefined;
 	export let discountBadgeType: 'primary' | 'on-bg' = 'primary';
 	export let currencyAmount: number;
 	export let currencySymbol: string;
 	export let features: TFeature[];
+	export let discountRate: number | undefined = undefined;
 </script>
 
 <div {id} class="w-full sm:max-w-sm md:w-1/2 xl:w-1/4 px-3 py-4 flex items-stretch">
@@ -41,12 +40,16 @@
 		>
 			<h4 class="max-w-full flex flex-wrap justify-center items-start px-2 font-semibold">
 				{#if discountBadgeText}
-					{#if hasDiscount}<span class="text-xl font-medium text-c-on-bg/50">{currencySymbol}</span
+					{#if discountRate !== undefined}<span class="text-xl font-medium text-c-on-bg/50"
+							>{currencySymbol}</span
 						><span class="text-3xl text-c-on-bg/50 line-through pr-0.4ch">
 							{currencyAmount.toLocaleString($locale)}
 						</span>
 					{/if}<span class="text-xl font-medium">{currencySymbol}</span><span class="text-3xl">
-						{(currencyAmount / 2).toLocaleString($locale)}
+						{(discountRate !== undefined
+							? currencyAmount - currencyAmount * discountRate
+							: currencyAmount
+						).toLocaleString($locale)}
 					</span>
 				{:else}
 					<span class="text-xl font-medium">{currencySymbol}</span><span class="text-3xl">

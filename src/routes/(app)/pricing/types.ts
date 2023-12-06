@@ -22,6 +22,7 @@ export interface TSubscriptionCard extends TCard {
 	id: 'plan-free' | 'plan-starter' | 'plan-pro' | 'plan-ultimate';
 	priceIdMo?: string;
 	productId?: string;
+	discountRate?: number;
 }
 
 export interface TCreditPackCard extends TCard {

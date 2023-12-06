@@ -10,7 +10,7 @@
 
 	export let canShow = true;
 
-	const lastNotification = 'first-month-50-off';
+	const lastNotification = 'first-month-30-off';
 	const href = '/pricing#plan-starter';
 	const pathname = new URL(canonicalUrl + href).pathname;
 
@@ -38,7 +38,7 @@
 		<div class="flex items-center justify-center gap-2">
 			<IconCart class="w-6 h-6 flex-shrink-0" />
 			<p class="flex-shrink min-w-0 overflow-hidden overflow-ellipsis">
-				{$LL.Pricing.Discounts.FirstPurchase50OffParagraph()}
+				{$LL.Pricing.Discounts.FirstMonth30OffParagraph()}
 			</p>
 		</div>
 	</Banner>

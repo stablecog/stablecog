@@ -18,7 +18,7 @@
 		PUBLIC_STRIPE_PRODUCT_ID_PRO_SUBSCRIPTION,
 		PUBLIC_STRIPE_PRODUCT_ID_STARTER_SUBSCRIPTION,
 		PUBLIC_STRIPE_PRODUCT_ID_ULTIMATE_SUBSCRIPTION,
-		PUBLIC_STRIPE_PROMOTION_CODE_ID_FIRST_PURCHASE_50_OFF
+		PUBLIC_STRIPE_PROMOTION_CODE_ID_FIRST_PURCHASE_30_OFF
 	} from '$env/static/public';
 	import LL, { locale } from '$i18n/i18n-svelte';
 	import PlanCard from '$routes/(app)/pricing/PlanCard.svelte';
@@ -37,9 +37,9 @@
 
 	export let data;
 
-	$: isFirstPurchase50Off = $userSummary && $userSummary.purchase_count > 0 ? false : true;
-	$: promotionCodeId = isFirstPurchase50Off
-		? PUBLIC_STRIPE_PROMOTION_CODE_ID_FIRST_PURCHASE_50_OFF
+	$: isFirstPurchase30Off = $userSummary && $userSummary.purchase_count > 0 ? false : true;
+	$: promotionCodeId = isFirstPurchase30Off
+		? PUBLIC_STRIPE_PROMOTION_CODE_ID_FIRST_PURCHASE_30_OFF
 		: undefined;
 
 	let subscriptionCards: TSubscriptionCard[];
@@ -116,7 +116,8 @@
 					paragraph: $LL.Pricing.Features.ImagesArePrivate()
 				}
 			],
-			ringClass: 'ring-c-bg-secondary'
+			ringClass: 'ring-c-bg-secondary',
+			discountRate: isFirstPurchase30Off ? 0.3 : undefined
 		},
 		{
 			id: 'plan-pro',
@@ -157,7 +158,8 @@
 			],
 			ringClass: 'ring-c-bg-secondary',
 			badgeText: $LL.Pricing.Badges.Recommended(),
-			badgeClasses: 'bg-c-primary text-c-on-primary'
+			badgeClasses: 'bg-c-primary text-c-on-primary',
+			discountRate: isFirstPurchase30Off ? 0.3 : undefined
 		},
 		{
 			id: 'plan-ultimate',
@@ -198,7 +200,8 @@
 					paragraph: $LL.Pricing.Features.ImagesArePrivate()
 				}
 			],
-			ringClass: 'ring-c-bg-secondary'
+			ringClass: 'ring-c-bg-secondary',
+			discountRate: isFirstPurchase30Off ? 0.3 : undefined
 		}
 	];
 
@@ -466,13 +469,13 @@
 						badgeClasses={card.badgeClasses}
 						currencyAmount={card.amount}
 						currencySymbol={card.currencySymbol}
-						discountBadgeText={isFirstPurchase50Off && card.id === 'plan-free'
+						discountBadgeText={isFirstPurchase30Off && card.id === 'plan-free'
 							? $LL.Pricing.FreeForeverTitle()
-							: isFirstPurchase50Off
-							? $LL.Pricing.Discounts.FirstPurchase50OffParagraph()
+							: isFirstPurchase30Off
+							? $LL.Pricing.Discounts.FirstMonth30OffParagraph()
 							: undefined}
+						discountRate={card.discountRate}
 						discountBadgeType={card.id === 'plan-free' ? 'on-bg' : 'primary'}
-						hasDiscount={isFirstPurchase50Off && card.id !== 'plan-free'}
 						features={card.features}
 					>
 						<div slot="button" class="w-full">

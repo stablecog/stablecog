@@ -2455,9 +2455,13 @@ type RootTranslation = {
 		FreeForeverTitle: string
 		Discounts: {
 			/**
+			 * F​i​r​s​t​ ​m​o​n​t​h​ ​i​s​ ​3​0​%​ ​o​f​f​!
+			 */
+			FirstMonth30OffParagraph: string
+			/**
 			 * F​i​r​s​t​ ​m​o​n​t​h​ ​i​s​ ​5​0​%​ ​o​f​f​!
 			 */
-			FirstPurchase50OffParagraph: string
+			FirstMonth50OffParagraph: string
 		}
 		Purchase: {
 			Succeeded: {
@@ -5629,9 +5633,13 @@ export type TranslationFunctions = {
 		FreeForeverTitle: () => LocalizedString
 		Discounts: {
 			/**
+			 * First month is 30% off!
+			 */
+			FirstMonth30OffParagraph: () => LocalizedString
+			/**
 			 * First month is 50% off!
 			 */
-			FirstPurchase50OffParagraph: () => LocalizedString
+			FirstMonth50OffParagraph: () => LocalizedString
 		}
 		Purchase: {
 			Succeeded: {

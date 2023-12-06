@@ -800,7 +800,10 @@ const en: BaseTranslation = {
 			BestValue: 'Best Value'
 		},
 		FreeForeverTitle: 'Free Forever!',
-		Discounts: { FirstPurchase50OffParagraph: 'First month is 50% off!' },
+		Discounts: {
+			FirstMonth30OffParagraph: 'First month is 30% off!',
+			FirstMonth50OffParagraph: 'First month is 50% off!'
+		},
 		Purchase: {
 			Succeeded: {
 				PageTitle: "You're all set!",
