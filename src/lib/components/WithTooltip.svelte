@@ -46,7 +46,7 @@
 		},
 		arrowSize: 20,
 		openDelay: delay,
-		closeDelay: closeDelay,
+		closeDelay,
 		closeOnPointerDown: false,
 		forceVisible: true
 	});
@@ -109,7 +109,7 @@
 						<p class="w-full text-c-on-bg/75">{paragraph}</p>
 					{/if}
 					{#if buttonHref && buttonText}
-						<div class="pt-1.5 pb-1">
+						<div class="pt-1.5 pb-1.25">
 							<Button size="sm" href={buttonHref}>{buttonText}</Button>
 						</div>
 					{/if}

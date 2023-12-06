@@ -45,6 +45,7 @@
 	import { scale } from 'svelte/transition';
 	import WithTooltip from '$components/WithTooltip.svelte';
 	import IconStar from '$components/icons/IconStar.svelte';
+	import { toggle } from '@melt-ui/svelte/internal/helpers';
 
 	export let rounding: 'all' | 'top' | 'bottom' = 'all';
 	export let openSignInModal: () => void;
@@ -166,19 +167,19 @@
 				isActive={!canToggleVisibility}
 				overflowPadding={{ bottom: 100 }}
 			>
-				<TabLikeToggle
-					{trigger}
-					{triggerStoreValue}
-					bind:isToggled={$generationShouldSubmitToGallery}
-					disabled={!isCheckCompleted || !canToggleVisibility}
-					disabledIsToggled={canToggleVisibility ? $generationShouldSubmitToGallery : true}
-					text={canToggleVisibility
-						? $generationShouldSubmitToGallery
-							? $LL.Shared.On()
-							: $LL.Shared.Off()
-						: $LL.Shared.On()}
-					hasTitle={false}
-				/>
+				<div tabindex="-1" use:trigger {...triggerStoreValue} class="w-full">
+					<TabLikeToggle
+						bind:isToggled={$generationShouldSubmitToGallery}
+						disabled={!isCheckCompleted || !canToggleVisibility}
+						disabledIsToggled={canToggleVisibility ? $generationShouldSubmitToGallery : true}
+						text={canToggleVisibility
+							? $generationShouldSubmitToGallery
+								? $LL.Shared.On()
+								: $LL.Shared.Off()
+							: $LL.Shared.On()}
+						hasTitle={false}
+					/>
+				</div>
 			</WithTooltip>
 		</SettingsPanelItem>
 		<div class="w-full flex flex-col ring-2 ring-c-bg-secondary">
