@@ -19,6 +19,14 @@
 	export let onOpenChanged: ((open: boolean) => void) | undefined = undefined;
 	export let buttonHref: string | undefined = undefined;
 	export let buttonText: string | undefined = undefined;
+	export let overflowPadding:
+		| number
+		| Partial<{
+				top: number;
+				right: number;
+				bottom: number;
+				left: number;
+		  }> = 8;
 
 	const {
 		elements: { trigger, arrow, content },
@@ -29,6 +37,8 @@
 			placement: 'bottom',
 			gutter: gutter,
 			overlap: true,
+			// @ts-ignore
+			overflowPadding,
 			offset: {
 				mainAxis: 4,
 				crossAxis: 4

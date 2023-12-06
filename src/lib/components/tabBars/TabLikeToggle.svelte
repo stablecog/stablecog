@@ -5,8 +5,11 @@
 	export let isToggled: boolean;
 	export { classes as class };
 	export let disabled = false;
+	export let disabledIsToggled: boolean | undefined = undefined;
 	export let hasTitle = false;
 	export let text: string | undefined;
+	export let trigger: any | undefined = undefined;
+	export let triggerStoreValue: any | undefined = undefined;
 	let classes = 'w-full';
 </script>
 
@@ -20,30 +23,35 @@
 		</div>
 	{/if}
 	<button
-		class="flex-1 min-w-0 flex items-center justify-between touch-manipulation self-stretch p-3.5 relative group rounded-xl gap-2"
+		use:trigger
+		{...triggerStoreValue}
+		class="flex-1 min-w-0 flex items-center justify-between touch-manipulation self-stretch p-3.5 relative group rounded-xl gap-2 {disabled
+			? 'cursor-not-allowed opacity-50'
+			: ''}"
 		type="button"
-		on:click={() => (isToggled = !isToggled)}
-		{disabled}
+		on:click={!disabled ? () => (isToggled = !isToggled) : () => null}
 	>
-		<div
-			class="w-full h-full absolute left-0 top-0 overflow-hidden z-0 transition-all duration-150 rounded-xl"
-		>
-			<div class="w-[200%] h-full absolute left-0 top-0 flex items-center justify-center">
-				<div
-					class="w-full aspect-square origin-left rounded-full transition transform -translate-x-full opacity-0
-					bg-c-primary/10 not-touch:group-hover:translate-x-[-45%] not-touch:group-hover:opacity-100"
-				/>
+		{#if !disabled}
+			<div
+				class="w-full h-full absolute left-0 top-0 overflow-hidden z-0 transition-all duration-150 rounded-xl"
+			>
+				<div class="w-[200%] h-full absolute left-0 top-0 flex items-center justify-center">
+					<div
+						class="w-full aspect-square origin-left rounded-full transition transform -translate-x-full opacity-0
+				bg-c-primary/10 not-touch:group-hover:translate-x-[-45%] not-touch:group-hover:opacity-100"
+					/>
+				</div>
 			</div>
-		</div>
+		{/if}
 		{#if text}
 			<p
 				class="break-words flex-shrink overflow-hidden
-				text-base transition not-touch:group-hover:text-c-primary
+				text-base transition {!disabled ? 'not-touch:group-hover:text-c-primary' : ''}
 				font-medium text-left relative pl-1 pr-4 overflow-ellipsis"
 			>
 				{text}
 			</p>
 		{/if}
-		<ToggleIndicator {isToggled} color="on-bg" />
+		<ToggleIndicator isToggled={isToggled || (disabled && disabledIsToggled)} color="on-bg" />
 	</button>
 </TabBarWrapper>

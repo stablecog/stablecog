@@ -12,7 +12,6 @@
 		guidanceScaleLowThreshold,
 		guidanceScaleMax,
 		guidanceScaleMin,
-		inferenceStepsTabs,
 		maxPromptLength,
 		numOutputsMax,
 		numOutputsMin
@@ -29,7 +28,6 @@
 		generationShouldSubmitToGallery
 	} from '$ts/stores/generationSettings';
 	import { advancedModeApp } from '$ts/stores/advancedMode';
-	import TabBar from '$components/tabBars/TabBar.svelte';
 	import type { TTab } from '$ts/types/main';
 	import IconChevronDown from '$components/icons/IconChevronDown.svelte';
 	import { expandCollapse } from '$ts/animation/transitions';
@@ -45,12 +43,17 @@
 	import { userSummary } from '$ts/stores/user/summary';
 	import IconWarningOutline from '$components/icons/IconWarningOutline.svelte';
 	import { scale } from 'svelte/transition';
+	import WithTooltip from '$components/WithTooltip.svelte';
+	import IconStar from '$components/icons/IconStar.svelte';
 
 	export let rounding: 'all' | 'top' | 'bottom' = 'all';
 	export let openSignInModal: () => void;
 	export let noWrapper = false;
 	export let isCheckCompleted: boolean;
 	export let supportedSchedulerIdDropdownItems: TTab<TAvailableSchedulerId>[];
+
+	$: canToggleVisibility =
+		$userSummary?.product_id !== undefined || $userSummary?.has_nonfree_credits === true;
 
 	let settingsContainer: HTMLDivElement;
 	let containerDropdownPadding = 16;
@@ -145,21 +148,39 @@
 				bind:value={$generationNumOutputs}
 			/>
 		</SettingsPanelItem>
-		{#if $userSummary?.product_id || $userSummary?.has_nonfree_credits}
-			<SettingsPanelItem
-				title={$LL.Home.ShowOnProfileToggle.Title()}
-				iconType="show-on-profile"
-				tooltipTitle={$LL.Home.ShowOnProfileToggle.Title()}
-				tooltipParagraph={$LL.Home.ShowOnProfileToggle.Paragraph()}
+		<SettingsPanelItem
+			title={$LL.Home.ShowOnProfileToggle.Title()}
+			iconType="show-on-profile"
+			tooltipTitle={$LL.Home.ShowOnProfileToggle.Title()}
+			tooltipParagraph={$LL.Home.ShowOnProfileToggle.Paragraph()}
+		>
+			<WithTooltip
+				let:trigger
+				let:triggerStoreValue
+				color="bg-tertiary"
+				title={$LL.Shared.ProFeatures.SubscribeTitle()}
+				titleIcon={IconStar}
+				paragraph={$LL.Shared.ProFeatures.ChangeVisibilityFeatureParagraph()}
+				buttonHref="/pricing"
+				buttonText={$LL.Pricing.SubscribeButton()}
+				isActive={!canToggleVisibility}
+				overflowPadding={{ bottom: 100 }}
 			>
 				<TabLikeToggle
+					{trigger}
+					{triggerStoreValue}
 					bind:isToggled={$generationShouldSubmitToGallery}
-					disabled={!isCheckCompleted}
-					text={$generationShouldSubmitToGallery ? $LL.Shared.On() : $LL.Shared.Off()}
+					disabled={!isCheckCompleted || !canToggleVisibility}
+					disabledIsToggled={canToggleVisibility ? $generationShouldSubmitToGallery : true}
+					text={canToggleVisibility
+						? $generationShouldSubmitToGallery
+							? $LL.Shared.On()
+							: $LL.Shared.Off()
+						: $LL.Shared.On()}
 					hasTitle={false}
 				/>
-			</SettingsPanelItem>
-		{/if}
+			</WithTooltip>
+		</SettingsPanelItem>
 		<div class="w-full flex flex-col ring-2 ring-c-bg-secondary">
 			<button
 				class="w-full group font-medium text-c-on-bg/75 px-4 py-4.5 flex justify-start transition {$advancedModeApp
