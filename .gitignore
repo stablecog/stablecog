@@ -9,3 +9,4 @@ node_modules
 tmp
 *.log
 vite.config.ts.*
+index.json
