@@ -85,7 +85,6 @@
 		"remark-reading-time": "^2.0.1",
 		"svelte-boring-avatars": "^1.2.4",
 		"svelte-inview": "^4.0.0",
-		"svelte-konva": "^0.3.1",
 		"svelte-meta-tags": "^2.6.3",
 		"typesafe-i18n": "^5.16.3",
 		"uuid": "^9.0.0"
