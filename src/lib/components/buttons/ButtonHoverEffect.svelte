@@ -20,10 +20,15 @@
 	export let groupClass =
 		'not-touch:group-hover:translate-x-0 not-touch:group-hover:translate-y-0 not-touch:group-hover:opacity-100';
 	export let noFade = false;
+	export let disabled = false;
 </script>
 
 <div
-	class="w-full h-full absolute left-0 top-0 {paddingClass ? paddingClass : noPadding ? '' : 'p-1'}"
+	class="w-full h-full absolute left-0 top-0 {disabled ? 'opacity-0' : ''} {paddingClass
+		? paddingClass
+		: noPadding
+		? ''
+		: 'p-1'}"
 >
 	<div
 		class="w-full h-full relative z-0 overflow-hidden transition {hasShadow

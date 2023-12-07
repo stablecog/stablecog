@@ -1,5 +1,5 @@
 <script lang="ts">
-	export let element: HTMLDivElement;
+	export let element: HTMLDivElement | undefined = undefined;
 	export let hideScroll = false;
 	let clientWidth: number;
 	let clientHeight: number;

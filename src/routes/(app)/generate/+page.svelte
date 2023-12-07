@@ -54,6 +54,7 @@
 	import { isSignInModalOpen } from '$ts/stores/isSignInModalOpen.js';
 	import { writable } from 'svelte/store';
 	import WithChangeUsernameModal from '$components/WithChangeUsernameModal.svelte';
+	/* 	import InpaintingCanvas from '$components/canvas/inpainting/InpaintingCanvas.svelte'; */
 
 	export let data;
 
@@ -430,6 +431,11 @@
 							</div>
 						{/if}
 						<div class="w-full flex-1 min-w-0 flex flex-col px-2 lg:px-6">
+							<!-- <AutoSize let:clientWidth let:clientHeight>
+								<div style="width: {clientWidth}px; height: {clientHeight}px" class="relative">
+									<InpaintingCanvas />
+								</div>
+							</AutoSize> -->
 							<div
 								bind:clientWidth={stageWidth}
 								bind:clientHeight={stageHeight}
