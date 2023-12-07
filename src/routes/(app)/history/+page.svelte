@@ -47,6 +47,7 @@
 	import IconImage from '$components/icons/IconImage.svelte';
 	import { onMount } from 'svelte';
 	import { hydrated, updateHydrated } from '$ts/stores/hydrated.js';
+	import { setUrlParam } from '$ts/helpers/setUrlParam.js';
 
 	export let data;
 
@@ -169,16 +170,11 @@
 		if ($userGalleryCurrentView === 'likes') {
 			isUserGalleryEditActive.set(false);
 		}
-		if (!browser) return;
-		const url = new URL(window.location.href);
-		if ($userGalleryCurrentView === 'all') {
-			url.searchParams.delete('view');
-		} else {
-			url.searchParams.set('view', $userGalleryCurrentView);
-		}
-		const relativeUrl = url.pathname + url.search;
-		if (url === $page.url) return;
-		window.history.replaceState(window.history.state, '', relativeUrl);
+		setUrlParam({
+			key: 'view',
+			value: $userGalleryCurrentView,
+			defaultValue: 'all'
+		});
 	}
 
 	onMount(() => {

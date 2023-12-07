@@ -29,6 +29,7 @@
 	import { canonicalUrl } from '$ts/constants/main';
 	import { previewImageVersion } from '$ts/constants/previewImageVersion';
 	import { isSuperAdmin } from '$ts/helpers/admin/roles';
+	import { setUrlParam } from '$ts/helpers/setUrlParam.js';
 	import type { TUserGenerationFullOutputsPage } from '$ts/queries/userGenerations';
 	import {
 		adminGalleryCurrentFilter,
@@ -131,20 +132,12 @@
 		});
 	}
 
-	$: $adminGalleryCurrentFilter, onFilterChanged();
-
-	function onFilterChanged() {
-		if (!browser) return;
-		const url = new URL(window.location.href);
-		if ($adminGalleryCurrentFilter === adminGalleryCurrentFilterDefault) {
-			url.searchParams.delete('view');
-		} else {
-			url.searchParams.set('view', $adminGalleryCurrentFilter);
-		}
-		const relativeUrl = url.pathname + url.search;
-		if (url === $page.url) return;
-		window.history.replaceState(window.history.state, '', relativeUrl);
-	}
+	$: $adminGalleryCurrentFilter,
+		setUrlParam({
+			key: 'view',
+			value: $adminGalleryCurrentFilter,
+			defaultValue: adminGalleryCurrentFilterDefault
+		});
 
 	onMount(() => {
 		updateHydrated();

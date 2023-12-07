@@ -27,6 +27,7 @@
 	import { isUUID } from '$ts/helpers/uuid';
 	import IconImageSearch from '$components/icons/IconImageSearch.svelte';
 	import WithTooltip from '$components/WithTooltip.svelte';
+	import { setUrlParam } from '$ts/helpers/setUrlParam';
 
 	export let disabled = false;
 	export let searchString: string;
@@ -40,8 +41,12 @@
 
 	$: hasAnyFilter = modelIdFilters?.length > 0;
 	$: searchStringLocal, onSearchStringLocalChanged();
-	$: modelIdFilters, onModelIdFiltersChanged();
-	$: searchString, onSearchStringChanged();
+	$: modelIdFilters,
+		setUrlParam({
+			key: 'mi',
+			value: modelIdFilters
+		});
+	$: searchString, setUrlParam({ key: 'q', value: searchString });
 
 	function clearAllFilters() {
 		modelIdFilters = [];
@@ -84,37 +89,6 @@
 			return;
 		}
 		searchString = searchStringLocal;
-	}
-
-	function onModelIdFiltersChanged() {
-		if (!browser) return;
-		const url = new URL(window.location.href);
-		const currentMi = url.searchParams.get('mi');
-		const currentMiString = currentMi === null ? '' : currentMi;
-		const newMiString = modelIdFilters?.join(',');
-		if (newMiString === currentMiString) return;
-		if (!newMiString) {
-			url.searchParams.delete('mi');
-		} else {
-			url.searchParams.set('mi', newMiString);
-		}
-		const relativeUrl = url.pathname + url.search;
-		window.history.replaceState(window.history.state, '', relativeUrl);
-	}
-
-	function onSearchStringChanged() {
-		if (!browser) return;
-		const url = new URL(window.location.href);
-		const currentQ = url.searchParams.get('q');
-		const currentQString = currentQ === null ? '' : currentQ;
-		if (currentQString === searchString) return;
-		if (searchString) {
-			url.searchParams.set('q', searchString);
-		} else {
-			url.searchParams.delete('q');
-		}
-		const relativeUrl = url.pathname + url.search;
-		window.history.replaceState(window.history.state, '', relativeUrl);
 	}
 
 	function onKeyPress(

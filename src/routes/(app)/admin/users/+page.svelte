@@ -41,6 +41,7 @@
 	import { previewImageVersion } from '$ts/constants/previewImageVersion';
 	import ToggleIndicator from '$components/ToggleIndicator.svelte';
 	import ButtonHoverEffect from '$components/buttons/ButtonHoverEffect.svelte';
+	import { setUrlParam } from '$ts/helpers/setUrlParam.js';
 
 	export let data;
 
@@ -51,10 +52,18 @@
 	let usersInput: HTMLInputElement;
 
 	$: searchString, setDebouncedSearch(searchString);
-	$: searchStringDebounced, onSearchStringDebouncedChanged();
-	$: view, onViewChanged();
+	$: searchStringDebounced,
+		setUrlParam({
+			key: 'q',
+			value: searchStringDebounced
+		});
+	$: view,
+		setUrlParam({
+			key: 'view',
+			value: view
+		});
 
-	const filterDropdownItems: TTab<TStripeSupportedProductIdSubscriptions>[] = [
+	const viewDropdownItems: TTab<TStripeSupportedProductIdSubscriptions>[] = [
 		{
 			label: $LL.Shared.AllTitle(),
 			value: ''
@@ -77,9 +86,9 @@
 		}
 	];
 
-	const filterDropdownItemValues = filterDropdownItems.map((item) => item.value);
+	const viewValues = viewDropdownItems.map((item) => item.value);
 
-	let view: TStripeSupportedProductIdSubscriptions = filterDropdownItemValues.includes(data.view)
+	let view: TStripeSupportedProductIdSubscriptions = viewValues.includes(data.view)
 		? data.view
 		: '';
 
@@ -166,36 +175,6 @@
 				searchStringDebounced = '';
 			}
 		}, searchDebounceMs);
-	}
-
-	function onSearchStringDebouncedChanged() {
-		if (!browser) return;
-		const url = new URL(window.location.href);
-		const currentQ = url.searchParams.get('q');
-		const currentQString = currentQ === null ? '' : currentQ;
-		if (currentQString === searchStringDebounced) return;
-		if (searchStringDebounced) {
-			url.searchParams.set('q', searchStringDebounced);
-		} else {
-			url.searchParams.delete('q');
-		}
-		const relativeUrl = url.pathname + url.search;
-		window.history.replaceState(window.history.state, '', relativeUrl);
-	}
-
-	function onViewChanged() {
-		if (!browser) return;
-		const url = new URL(window.location.href);
-		const currentView = url.searchParams.get('view');
-		const currentViewString = currentView === null ? '' : currentView;
-		if (currentViewString === view) return;
-		if (view) {
-			url.searchParams.set('view', view);
-		} else {
-			url.searchParams.delete('view');
-		}
-		const relativeUrl = url.pathname + url.search;
-		window.history.replaceState(window.history.state, '', relativeUrl);
 	}
 
 	const atTheTopThreshold = 80;
@@ -396,7 +375,7 @@
 				<TabLikeDropdown
 					class="w-full"
 					name="Active Product ID"
-					items={filterDropdownItems}
+					items={viewDropdownItems}
 					hasTitle={false}
 					bind:value={view}
 				/>
