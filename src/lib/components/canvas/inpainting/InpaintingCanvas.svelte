@@ -15,7 +15,12 @@
 	let selectedTool: Writable<TTool> = writable('brush');
 	let isPainting = false;
 
-	let history = createHistoryStore<TInpaintingState>();
+	let {
+		history,
+		hasUndo,
+		hasRedo,
+		currentState: historyCurrentState
+	} = createHistoryStore<TInpaintingState>();
 
 	onMount(() => {
 		stage = new Konva.Stage({
@@ -67,12 +72,12 @@
 
 	function onUndo() {
 		history.undo();
-		setInpaintingState(history.currentState);
+		if ($historyCurrentState) setInpaintingState($historyCurrentState);
 	}
 
 	function onRedo() {
 		history.redo();
-		setInpaintingState(history.currentState);
+		if ($historyCurrentState) setInpaintingState($historyCurrentState);
 	}
 
 	function setInpaintingState(newState: TInpaintingState) {
@@ -87,11 +92,6 @@
 		// Redraw the layer to update the canvas
 		mainLayer.draw();
 	}
-
-	$: hasUndo = history.hasUndo;
-	$: hasRedo = history.hasRedo;
-
-	$: console.log($history);
 </script>
 
 <div
