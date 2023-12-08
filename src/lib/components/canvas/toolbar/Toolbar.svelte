@@ -25,11 +25,27 @@
 		onClick: () => void;
 		icon: ConstructorOfATypedSvelteComponent;
 		disabled?: boolean;
+		onClickClass?: string;
+		iconClass?: string;
 	}[];
 
 	$: historyActions = [
-		{ name: 'Undo', icon: IconUndo, onClick: onUndo, disabled: undoDisabled },
-		{ name: 'Redo', icon: IconRedo, onClick: onRedo, disabled: redoDisabled }
+		{
+			name: 'Undo',
+			icon: IconUndo,
+			onClick: onUndo,
+			disabled: undoDisabled,
+			onClickClass: '-rotate-30',
+			iconClass: 'group-active:-rotate-30'
+		},
+		{
+			name: 'Redo',
+			icon: IconRedo,
+			onClick: onRedo,
+			disabled: redoDisabled,
+			onClickClass: 'rotate-30',
+			iconClass: 'group-active:rotate-30'
+		}
 	];
 
 	const sizeClass = 'w-11 h-11';
@@ -89,6 +105,8 @@
 				{paddingClass}
 				{sizeClass}
 				disabled={action.disabled}
+				onClickClass={action.onClickClass}
+				iconClass={action.iconClass}
 			/>
 		{/each}
 	</div>

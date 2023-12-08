@@ -5,6 +5,7 @@
 	import { onMount } from 'svelte';
 	import { writable, type Writable } from 'svelte/store';
 	import { copy } from 'copy-anything';
+	import { createHistoryStore } from '$components/canvas/history/historyStore';
 
 	let stage: Konva.Stage;
 	let mainLayer: Konva.Layer;
@@ -14,8 +15,7 @@
 	let selectedTool: Writable<TTool> = writable('brush');
 	let isPainting = false;
 
-	let history: TInpaintingState[] = [];
-	let historyStep = 0;
+	let history = createHistoryStore<TInpaintingState>();
 
 	onMount(() => {
 		stage = new Konva.Stage({
@@ -26,11 +26,9 @@
 		mainLayer = new Konva.Layer();
 		stage.add(mainLayer);
 
-		history = [
-			{
-				mainLayerChildren: copy(mainLayer.getChildren())
-			}
-		];
+		history.addEntry({ mainLayerChildren: [] });
+
+		console.log($history);
 
 		stage.on('mousedown touchstart', function (e) {
 			isPainting = true;
@@ -38,7 +36,7 @@
 			if (!pos) return;
 			lastLine = new Konva.Line({
 				stroke: '#df4b26',
-				strokeWidth: 5,
+				strokeWidth: 8,
 				globalCompositeOperation: $selectedTool === 'brush' ? 'source-over' : 'destination-out',
 				lineCap: 'round',
 				lineJoin: 'round',
@@ -49,7 +47,8 @@
 
 		stage.on('mouseup touchend', function () {
 			isPainting = false;
-			addToHistory();
+			const mainLayerChildren = copy(mainLayer.getChildren());
+			history.addEntry({ mainLayerChildren });
 		});
 
 		// and core function - drawing
@@ -67,31 +66,13 @@
 	});
 
 	function onUndo() {
-		if (historyStep === 0) return;
-		historyStep -= 1;
-		const prev = history[historyStep];
-		setInpaintingState(prev);
+		history.undo();
+		setInpaintingState(history.currentState);
 	}
 
 	function onRedo() {
-		if (historyStep === history.length - 1) return;
-		historyStep += 1;
-		const next = history[historyStep];
-		setInpaintingState(next);
-	}
-
-	function addToHistory() {
-		if (historyStep < history.length - 1) {
-			history = history.slice(0, historyStep + 1);
-		}
-		const mainLayerChildren = copy(mainLayer.getChildren());
-		history = [
-			...history,
-			{
-				mainLayerChildren
-			}
-		];
-		historyStep++;
+		history.redo();
+		setInpaintingState(history.currentState);
 	}
 
 	function setInpaintingState(newState: TInpaintingState) {
@@ -106,6 +87,11 @@
 		// Redraw the layer to update the canvas
 		mainLayer.draw();
 	}
+
+	$: hasUndo = history.hasUndo;
+	$: hasRedo = history.hasRedo;
+
+	$: console.log($history);
 </script>
 
 <div
@@ -114,13 +100,7 @@
 	class="w-full h-full absolute left-0 top-0 flex flex-col overflow-hidden"
 >
 	<div class="absolute left-0 top-0 flex z-10 p-1.5">
-		<Toolbar
-			{selectedTool}
-			{onUndo}
-			{onRedo}
-			undoDisabled={historyStep <= 0}
-			redoDisabled={historyStep >= history.length - 1}
-		/>
+		<Toolbar {selectedTool} {onUndo} {onRedo} undoDisabled={!$hasUndo} redoDisabled={!$hasRedo} />
 	</div>
 	<div id="konva-stage" />
 </div>
