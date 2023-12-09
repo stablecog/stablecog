@@ -1,6 +1,6 @@
 <script lang="ts">
 	import Toolbar from '$components/canvas/toolbar/Toolbar.svelte';
-	import type { TInpaintingState, TTool } from '$components/canvas/toolbar/types';
+	import type { TBrushConfig, TInpaintingState, TTool } from '$components/canvas/toolbar/types';
 	import Konva from 'konva';
 	import { onMount } from 'svelte';
 	import { writable, type Writable } from 'svelte/store';
@@ -22,8 +22,20 @@
 	let selectedTool: Writable<TTool> = writable('brush');
 	let isPainting = false;
 
-	$: brushSize = canvasWidth && canvasHeight ? Math.min(canvasWidth, canvasHeight) / 20 : 8;
-	$: brushSize, onBrushSizeChanged(brushSize);
+	let canvasMinSize = 1000;
+
+	let brushConfig: TBrushConfig = {
+		min: canvasMinSize / 100,
+		max: canvasMinSize / 10,
+		step: canvasMinSize / 1000
+	};
+
+	let brushSize = (brushConfig.max - brushConfig.min) / 2 + brushConfig.min;
+
+	$: canvasMinSize, onCanvasMinSizeChanged();
+	$: canvasMinSize = canvasWidth && canvasHeight ? Math.min(canvasWidth, canvasHeight) : 1000;
+	$: brushConfig, onBrushConfigChanged();
+	$: brushSize, onBrushSizeChanged();
 
 	let {
 		history,
@@ -117,22 +129,35 @@
 		mainLayer.draw();
 	}
 
-	function onBrushSizeChanged(size: number) {
+	function onBrushSizeChanged() {
 		if (!brushCircle) return;
 		resetBrushCirclePosition();
-		setBrushCircleSize(size);
-	}
-
-	function setBrushCircleSize(size: number) {
-		if (!brushCircle) return;
-		brushCircle.radius(size / 2);
-		brushCircleLayer.draw();
+		setBrushCircleSize();
 	}
 
 	function resetBrushCirclePosition() {
 		if (!brushCircle) return;
 		brushCircle.position({ x: stage.width() / 2, y: stage.height() / 2 });
 		brushCircleLayer.draw();
+	}
+
+	function setBrushCircleSize() {
+		if (!brushCircle) return;
+		brushCircle.radius(brushSize / 2);
+		brushCircleLayer.draw();
+	}
+
+	function onCanvasMinSizeChanged() {
+		if (!canvasWidth || !canvasHeight) return;
+		brushConfig = {
+			min: canvasMinSize / 100,
+			max: canvasMinSize / 10,
+			step: canvasMinSize / 1000
+		};
+	}
+
+	function onBrushConfigChanged() {
+		brushSize = (brushConfig.max - brushConfig.min) / 2 + brushConfig.min;
 	}
 </script>
 
@@ -141,7 +166,7 @@
 	bind:clientHeight={stageHeight}
 	class="w-full h-full absolute left-0 top-0 flex flex-col overflow-hidden"
 >
-	<div class="flex z-10 p-1.5">
+	<div class="flex z-10">
 		<Toolbar
 			{selectedTool}
 			{onUndo}
@@ -149,8 +174,7 @@
 			undoDisabled={!$hasUndo}
 			redoDisabled={!$hasRedo}
 			bind:brushSize
-			{canvasWidth}
-			{canvasHeight}
+			{brushConfig}
 		/>
 	</div>
 	<div

@@ -3,9 +3,9 @@
 	import ButtonHoverEffect from '$components/buttons/ButtonHoverEffect.svelte';
 	import ToolbarButton from '$components/canvas/toolbar/ToolbarButton.svelte';
 	import ToolbarSectionWrapper from '$components/canvas/toolbar/ToolbarSectionWrapper.svelte';
-	import type { TTool } from '$components/canvas/toolbar/types';
+	import type { TBrushConfig, TTool } from '$components/canvas/toolbar/types';
+	import IconBrushAlt from '$components/icons/IconBrushAlt.svelte';
 	import IconEraser from '$components/icons/IconEraser.svelte';
-	import IconPaintBrush from '$components/icons/IconPaintBrush.svelte';
 	import IconRedo from '$components/icons/IconRedo.svelte';
 	import IconUndo from '$components/icons/IconUndo.svelte';
 	import { createRadioGroup } from '@melt-ui/svelte';
@@ -17,25 +17,12 @@
 	export let undoDisabled = false;
 	export let redoDisabled = false;
 	export let brushSize: number;
-	export let canvasWidth: number;
-	export let canvasHeight: number;
+	export let brushConfig: TBrushConfig;
 
 	const tools: { value: TTool; name: string; icon: ConstructorOfATypedSvelteComponent }[] = [
-		{ value: 'brush', name: 'Brush', icon: IconPaintBrush },
+		{ value: 'brush', name: 'Brush', icon: IconBrushAlt },
 		{ value: 'eraser', name: 'Eraser', icon: IconEraser }
 	];
-
-	let brushMin = 0;
-	let brushMax = 100;
-	let brushStep = 1;
-	$: {
-		if (canvasWidth && canvasHeight) {
-			const minWidth = Math.min(canvasWidth, canvasHeight);
-			brushMin = minWidth / 100;
-			brushMax = minWidth / 10;
-			brushStep = minWidth / 100;
-		}
-	}
 
 	let historyActions: {
 		name: string;
@@ -80,12 +67,7 @@
 
 <div class="flex items-center justify-start gap-3">
 	<ToolbarSectionWrapper>
-		<div
-			{...$root}
-			use:root
-			class="flex flex-row items-center justify-start group"
-			aria-label="Toolbar"
-		>
+		<div {...$root} use:root class="flex flex-row items-center justify-start" aria-label="Toolbar">
 			<div
 				style="transform: translateX({(selectedIndex / (tools.length - 1)) * 100}%)"
 				class="{sizeClass} {paddingClass} absolute left-0 top-0 transition"
@@ -114,15 +96,16 @@
 		</div>
 	</ToolbarSectionWrapper>
 
-	<ToolbarSectionWrapper class="px-4">
+	<ToolbarSectionWrapper class="px-4.5 gap-3">
+		<div class="w-2 h-2 ring-2 ring-c-on-bg rounded-full" />
 		<SliderInput
 			class="w-32 h-11"
 			name="Brush Size"
+			size="sm"
 			bind:value={brushSize}
-			min={brushMin}
-			max={brushMax}
-			step={brushStep}
+			{...brushConfig}
 		/>
+		<div class="w-3.5 h-3.5 ring-2 ring-c-on-bg rounded-full" />
 	</ToolbarSectionWrapper>
 
 	<ToolbarSectionWrapper>
