@@ -9,11 +9,21 @@
 
 	let stage: Konva.Stage;
 	let mainLayer: Konva.Layer;
+	let brushCircleLayer: Konva.Layer;
+	let brushCircle: Konva.Circle;
+
 	let stageWidth: number;
 	let stageHeight: number;
+
+	let canvasWidth: number;
+	let canvasHeight: number;
+
 	let lastLine: Konva.Line;
 	let selectedTool: Writable<TTool> = writable('brush');
 	let isPainting = false;
+
+	$: brushSize = canvasWidth && canvasHeight ? Math.min(canvasWidth, canvasHeight) / 20 : 8;
+	$: brushSize, onBrushSizeChanged(brushSize);
 
 	let {
 		history,
@@ -29,11 +39,21 @@
 			height: stageHeight
 		});
 		mainLayer = new Konva.Layer();
+		brushCircleLayer = new Konva.Layer();
 		stage.add(mainLayer);
+		stage.add(brushCircleLayer);
 
 		history.addEntry({ mainLayerChildren: [] });
 
-		console.log($history);
+		brushCircle = new Konva.Circle({
+			x: stage.width() / 2,
+			y: stage.height() / 2,
+			radius: brushSize / 2, // Initial brush size
+			stroke: 'green',
+			visible: false // Initially hidden
+		});
+
+		brushCircleLayer.add(brushCircle);
 
 		stage.on('mousedown touchstart', function (e) {
 			isPainting = true;
@@ -41,7 +61,7 @@
 			if (!pos) return;
 			lastLine = new Konva.Line({
 				stroke: '#df4b26',
-				strokeWidth: 8,
+				strokeWidth: brushSize,
 				globalCompositeOperation: $selectedTool === 'brush' ? 'source-over' : 'destination-out',
 				lineCap: 'round',
 				lineJoin: 'round',
@@ -58,13 +78,17 @@
 
 		// and core function - drawing
 		stage.on('mousemove touchmove', function (e) {
+			const pos = stage.getPointerPosition();
+			if (!pos) return;
+
+			brushCircle.visible(true); // Make the circle visible
+			brushCircle.position(pos); // Update position
+
 			if (!isPainting) return;
 
 			// prevent scrolling on touch devices
 			e.evt.preventDefault();
 
-			const pos = stage.getPointerPosition();
-			if (!pos) return;
 			const newPoints = lastLine.points().concat([pos.x, pos.y]);
 			lastLine.points(newPoints);
 		});
@@ -92,6 +116,24 @@
 		// Redraw the layer to update the canvas
 		mainLayer.draw();
 	}
+
+	function onBrushSizeChanged(size: number) {
+		if (!brushCircle) return;
+		resetBrushCirclePosition();
+		setBrushCircleSize(size);
+	}
+
+	function setBrushCircleSize(size: number) {
+		if (!brushCircle) return;
+		brushCircle.radius(size / 2);
+		brushCircleLayer.draw();
+	}
+
+	function resetBrushCirclePosition() {
+		if (!brushCircle) return;
+		brushCircle.position({ x: stage.width() / 2, y: stage.height() / 2 });
+		brushCircleLayer.draw();
+	}
 </script>
 
 <div
@@ -99,8 +141,23 @@
 	bind:clientHeight={stageHeight}
 	class="w-full h-full absolute left-0 top-0 flex flex-col overflow-hidden"
 >
-	<div class="absolute left-0 top-0 flex z-10 p-1.5">
-		<Toolbar {selectedTool} {onUndo} {onRedo} undoDisabled={!$hasUndo} redoDisabled={!$hasRedo} />
+	<div class="flex z-10 p-1.5">
+		<Toolbar
+			{selectedTool}
+			{onUndo}
+			{onRedo}
+			undoDisabled={!$hasUndo}
+			redoDisabled={!$hasRedo}
+			bind:brushSize
+			{canvasWidth}
+			{canvasHeight}
+		/>
 	</div>
-	<div id="konva-stage" />
+	<div
+		bind:clientWidth={canvasWidth}
+		bind:clientHeight={canvasHeight}
+		class="w-full flex-1 overflow-hidden"
+	>
+		<div style="width: {canvasWidth}px; height: {canvasHeight}px" id="konva-stage" />
+	</div>
 </div>

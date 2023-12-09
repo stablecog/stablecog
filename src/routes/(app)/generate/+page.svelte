@@ -54,7 +54,7 @@
 	import { isSignInModalOpen } from '$ts/stores/isSignInModalOpen.js';
 	import { writable } from 'svelte/store';
 	import WithChangeUsernameModal from '$components/WithChangeUsernameModal.svelte';
-	/* 	import InpaintingCanvas from '$components/canvas/inpainting/InpaintingCanvas.svelte'; */
+	/* import InpaintingCanvas from '$components/canvas/inpainting/InpaintingCanvas.svelte'; */
 
 	export let data;
 
