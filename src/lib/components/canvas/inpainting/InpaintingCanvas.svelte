@@ -32,7 +32,6 @@
 	let paintLayer: Konva.Layer;
 	let brushIndicatorLayer: Konva.Layer;
 	let brushCircle: Konva.Circle;
-	let selectionEffectLayer: Konva.Layer;
 
 	let canvasContainerWidth: number | undefined = undefined;
 	let canvasContainerHeight: number | undefined = undefined;
