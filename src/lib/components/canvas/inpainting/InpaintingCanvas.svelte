@@ -17,6 +17,10 @@
 		getDrawingLineStroke,
 		getPrimaryColor
 	} from '$components/canvas/helpers/main';
+	import { exportStage } from '$components/canvas/helpers/exportStage';
+
+	const stageId = 'konva-stage';
+	const stageForExportId = 'konva-stage-export';
 
 	let stage: Konva.Stage;
 	let imageLayer: Konva.Layer;
@@ -25,9 +29,6 @@
 	let brushCircle: Konva.Circle;
 
 	const exampleImageUrl = 'https://b.stablecog.com/c7ec87bc-7908-45a5-879a-e7363f2c3df9.jpeg';
-
-	let stageWidth: number;
-	let stageHeight: number;
 
 	let canvasWidth: number | undefined = undefined;
 	let canvasHeight: number | undefined = undefined;
@@ -89,8 +90,8 @@
 	onMount(() => {
 		stage = new Konva.Stage({
 			container: 'konva-stage',
-			width: stageWidth,
-			height: stageHeight
+			width: canvasWidth,
+			height: canvasHeight
 		});
 		imageLayer = new Konva.Layer();
 		paintLayer = new Konva.Layer();
@@ -215,11 +216,7 @@
 	}
 </script>
 
-<div
-	bind:clientWidth={stageWidth}
-	bind:clientHeight={stageHeight}
-	class="w-full h-full absolute left-0 top-0 flex flex-col overflow-hidden"
->
+<div class="w-full h-full absolute left-0 top-0 flex flex-col overflow-hidden">
 	<div class="flex z-10">
 		<Toolbar
 			{selectedTool}
@@ -229,6 +226,9 @@
 			redoDisabled={!$hasRedo}
 			bind:brushSize
 			{brushConfig}
+			onDownloadClicked={() => {
+				exportStage({ layer: paintLayer, stage: stage, container: stageForExportId });
+			}}
 		/>
 	</div>
 	<div class="w-full h-4" />
@@ -237,6 +237,7 @@
 		bind:clientHeight={canvasHeight}
 		class="w-full flex-1 overflow-hidden"
 	>
-		<div style="width: {canvasWidth}px; height: {canvasHeight}px" id="konva-stage" />
+		<div style="width: {canvasWidth}px; height: {canvasHeight}px" id={stageId} />
 	</div>
+	<div class="w-0 h-0 overflow-hidden" id={stageForExportId} />
 </div>

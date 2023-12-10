@@ -12,7 +12,7 @@ export function getCanvasMinSize(
 export function getBrushConfig(canvasMinSize: number): TBrushConfig {
 	return {
 		min: canvasMinSize / 100,
-		max: canvasMinSize / 10,
+		max: canvasMinSize / 8,
 		step: canvasMinSize / 1000
 	};
 }
