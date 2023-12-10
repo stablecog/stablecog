@@ -1,2 +1,2 @@
-export const primaryLight = '96, 42, 204';
-export const primaryDark = '181, 140, 255';
+export const brushColorLight = '0, 230, 230';
+export const brushColorDark = '0, 230, 230';

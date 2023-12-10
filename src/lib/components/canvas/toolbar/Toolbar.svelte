@@ -55,7 +55,7 @@
 	];
 
 	const sizeClass = 'w-11 h-11';
-	const paddingClass = 'p-0.75';
+	const paddingClass = 'p-0.5';
 
 	const {
 		elements: { root, item, hiddenInput }
@@ -67,7 +67,7 @@
 	$: selectedIndex = tools.findIndex((tool) => tool.value === $selectedTool);
 </script>
 
-<div class="flex items-center justify-start gap-3">
+<div class="max-w-full flex flex-wrap items-center justify-center gap-2">
 	<ToolbarSectionWrapper>
 		<div {...$root} use:root class="flex flex-row items-center justify-start" aria-label="Toolbar">
 			<div

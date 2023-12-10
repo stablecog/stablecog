@@ -430,12 +430,18 @@
 								</div>
 							</div>
 						{/if}
-						<div class="w-full flex-1 min-w-0 flex flex-col px-2 lg:px-6">
-							<!-- <AutoSize let:clientWidth let:clientHeight>
-								<div style="width: {clientWidth}px; height: {clientHeight}px" class="relative">
-									<InpaintingCanvas />
-								</div>
-							</AutoSize> -->
+						<div class="w-full flex-1 min-w-0 min-h-0 flex flex-col px-2 lg:px-6">
+							<!-- {#if $userGenerationFullOutputsQuery && $userGenerationFullOutputsQuery.data?.pages?.[0].outputs}
+								<InpaintingCanvas
+									generationOutput={{
+										width:
+											$userGenerationFullOutputsQuery.data?.pages?.[0].outputs[0].generation.width,
+										height:
+											$userGenerationFullOutputsQuery.data?.pages?.[0].outputs[0].generation.height,
+										image_url: $userGenerationFullOutputsQuery.data?.pages?.[0].outputs[0].image_url
+									}}
+								/>
+							{/if} -->
 							<div
 								bind:clientWidth={stageWidth}
 								bind:clientHeight={stageHeight}

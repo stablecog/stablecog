@@ -1,4 +1,4 @@
-import { primaryDark, primaryLight } from '$components/canvas/constants/main';
+import { brushColorDark, brushColorLight } from '$components/canvas/constants/main';
 import type { TBrushConfig } from '$components/canvas/toolbar/types';
 import type { TAvailableThemes } from '$ts/stores/theme';
 
@@ -12,7 +12,7 @@ export function getCanvasMinSize(
 export function getBrushConfig(canvasMinSize: number): TBrushConfig {
 	return {
 		min: canvasMinSize / 100,
-		max: canvasMinSize / 8,
+		max: canvasMinSize / 4,
 		step: canvasMinSize / 1000
 	};
 }
@@ -21,8 +21,8 @@ export function getBrushSize(brushConfig: TBrushConfig) {
 	return (brushConfig.max - brushConfig.min) / 2 + brushConfig.min;
 }
 
-export function getPrimaryColor(theme: TAvailableThemes | null) {
-	return theme === 'light' ? primaryLight : primaryDark;
+export function getBrushColor(theme: TAvailableThemes | null) {
+	return theme === 'light' ? brushColorLight : brushColorDark;
 }
 
 export function getBrushCircleFill(currentPrimary: string) {

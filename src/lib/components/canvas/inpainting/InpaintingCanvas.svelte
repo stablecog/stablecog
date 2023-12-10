@@ -2,7 +2,6 @@
 	import Toolbar from '$components/canvas/toolbar/Toolbar.svelte';
 	import type { TInpaintingState, TTool } from '$components/canvas/toolbar/types';
 	import Konva from 'konva';
-	import { onMount } from 'svelte';
 	import { writable, type Writable } from 'svelte/store';
 	import { copy } from 'copy-anything';
 	import { createHistoryStore } from '$components/canvas/history/historyStore';
@@ -15,9 +14,15 @@
 		getBrushSize,
 		getCanvasMinSize,
 		getDrawingLineStroke,
-		getPrimaryColor
+		getBrushColor
 	} from '$components/canvas/helpers/main';
 	import { exportStage } from '$components/canvas/helpers/exportStage';
+
+	export let generationOutput: {
+		width: number;
+		height: number;
+		image_url: string;
+	};
 
 	const stageId = 'konva-stage';
 	const stageForExportId = 'konva-stage-export';
@@ -27,9 +32,10 @@
 	let paintLayer: Konva.Layer;
 	let brushIndicatorLayer: Konva.Layer;
 	let brushCircle: Konva.Circle;
+	let selectionEffectLayer: Konva.Layer;
 
-	const exampleImageUrl = 'https://b.stablecog.com/c7ec87bc-7908-45a5-879a-e7363f2c3df9.jpeg';
-
+	let canvasContainerWidth: number | undefined = undefined;
+	let canvasContainerHeight: number | undefined = undefined;
 	let canvasWidth: number | undefined = undefined;
 	let canvasHeight: number | undefined = undefined;
 
@@ -37,11 +43,26 @@
 	let selectedTool: Writable<TTool> = writable('brush');
 	let isPainting = false;
 
+	$: {
+		if (canvasContainerWidth && canvasContainerHeight) {
+			const aspectRatio = generationOutput.width / generationOutput.height;
+			const widthRatio = canvasContainerWidth / generationOutput.width;
+			const heightRatio = canvasContainerHeight / generationOutput.height;
+			if (widthRatio >= heightRatio) {
+				canvasHeight = canvasContainerHeight;
+				canvasWidth = canvasHeight * aspectRatio;
+			} else {
+				canvasWidth = canvasContainerWidth;
+				canvasHeight = canvasWidth / aspectRatio;
+			}
+		}
+	}
+
 	let canvasMinSize = getCanvasMinSize(canvasWidth, canvasHeight);
 	let brushConfig = getBrushConfig(canvasMinSize);
 	let brushSize = getBrushSize(brushConfig);
 
-	let currentPrimary = getPrimaryColor($theme);
+	let currentPrimary = getBrushColor($theme);
 
 	$: {
 		if (brushCircle) {
@@ -64,7 +85,7 @@
 		}
 	}
 
-	$: currentPrimary = getPrimaryColor($theme);
+	$: currentPrimary = getBrushColor($theme);
 	$: canvasMinSize = getCanvasMinSize(canvasWidth, canvasHeight);
 	$: brushConfig, onBrushConfigChanged();
 	$: brushSize, onBrushSizeChanged();
@@ -87,7 +108,11 @@
 		currentState: historyCurrentState
 	} = createHistoryStore<TInpaintingState>();
 
-	onMount(() => {
+	$: [canvasWidth, canvasHeight], onCanvasSizeChanged();
+
+	function onCanvasSizeChanged() {
+		if (!canvasWidth || !canvasHeight) return;
+		if (stage) return;
 		stage = new Konva.Stage({
 			container: 'konva-stage',
 			width: canvasWidth,
@@ -112,7 +137,8 @@
 			});
 			imageLayer.add(image);
 		};
-		imageObj.src = exampleImageUrl;
+		console.log(generationOutput.image_url);
+		imageObj.src = generationOutput.image_url;
 
 		history.addEntry({ paintLayerChildren: [] });
 
@@ -169,7 +195,7 @@
 			const newPoints = lastLine.points().concat([pos.x, pos.y]);
 			lastLine.points(newPoints);
 		});
-	});
+	}
 
 	function onUndo() {
 		history.undo();
@@ -216,8 +242,8 @@
 	}
 </script>
 
-<div class="w-full h-full absolute left-0 top-0 flex flex-col overflow-hidden">
-	<div class="flex z-10">
+<div class="w-full flex-1 min-h-0 flex flex-col">
+	<div class="w-full flex items-center justify-center z-10">
 		<Toolbar
 			{selectedTool}
 			{onUndo}
@@ -233,11 +259,22 @@
 	</div>
 	<div class="w-full h-4" />
 	<div
-		bind:clientWidth={canvasWidth}
-		bind:clientHeight={canvasHeight}
-		class="w-full flex-1 overflow-hidden"
+		bind:clientWidth={canvasContainerWidth}
+		bind:clientHeight={canvasContainerHeight}
+		class="w-full flex-1"
 	>
-		<div style="width: {canvasWidth}px; height: {canvasHeight}px" id={stageId} />
+		<div
+			style="width: {canvasContainerWidth}px; height: {canvasHeight}"
+			class="absolute left-0 top-0"
+		>
+			<div class="w-full full flex items-center justify-center">
+				<div
+					class="ring-2 ring-c-bg-secondary shadow-lg shadow-c-shadow/[var(--o-shadow-normal)] rounded-lg overflow-hidden"
+					style="width: {canvasWidth}px; height: {canvasHeight}px"
+					id={stageId}
+				/>
+			</div>
+		</div>
 	</div>
 	<div class="w-0 h-0 overflow-hidden" id={stageForExportId} />
 </div>
