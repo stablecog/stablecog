@@ -13,6 +13,10 @@ export function exportStage({
 }) {
 	const clonedLayer = layer.clone();
 
+	clonedLayer.find('Rect').forEach((rect) => {
+		rect.destroy();
+	});
+
 	// Change stroke colors to white in the cloned layer
 	clonedLayer.find('Line').forEach((line) => {
 		if (line instanceof Konva.Line) {

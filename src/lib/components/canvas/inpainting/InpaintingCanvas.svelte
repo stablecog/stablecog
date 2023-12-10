@@ -7,14 +7,14 @@
 	import { createHistoryStore } from '$components/canvas/history/historyStore';
 	import { theme } from '$ts/stores/theme';
 	import {
-		getBrushCircleFill,
-		getBrushCircleRadius,
-		getBrushCircleStroke,
+		getBrushIndicatorCircleFill,
+		getBrushIndicatorCircleRadius,
+		getBrushIndicatorCircleStroke,
 		getBrushConfig,
 		getBrushSize,
 		getCanvasMinSize,
-		getDrawingLineStroke,
-		getBrushColor
+		getColoredSvgPattern,
+		getBrushStroke
 	} from '$components/canvas/helpers/main';
 	import { exportStage } from '$components/canvas/helpers/exportStage';
 
@@ -29,9 +29,13 @@
 
 	let stage: Konva.Stage;
 	let imageLayer: Konva.Layer;
+	let patternLayer: Konva.Layer;
 	let paintLayer: Konva.Layer;
 	let brushIndicatorLayer: Konva.Layer;
-	let brushCircle: Konva.Circle;
+	let brushIndicatorCircle: Konva.Circle;
+	let patternImageObj: HTMLImageElement;
+	let patternRect: Konva.Rect;
+	let patternAnim: Konva.Animation;
 
 	let canvasContainerWidth: number | undefined = undefined;
 	let canvasContainerHeight: number | undefined = undefined;
@@ -62,19 +66,19 @@
 	let brushConfig = getBrushConfig(canvasMinSize);
 	let brushSize = getBrushSize(brushConfig);
 
-	let currentPrimary = getBrushColor($theme);
-
 	$: {
-		if (brushCircle) {
-			brushCircle.stroke(getBrushCircleStroke(currentPrimary));
-			brushCircle.fill(getBrushCircleFill(currentPrimary));
+		if (brushIndicatorCircle) {
+			brushIndicatorCircle.stroke(getBrushIndicatorCircleStroke($theme));
+			brushIndicatorCircle.fill(getBrushIndicatorCircleFill($theme));
 		}
 	}
 
 	$: {
 		if (paintLayer) {
 			paintLayer.children.forEach((c) => {
-				if (c instanceof Konva.Line) c.stroke(getBrushCircleStroke(currentPrimary));
+				if (c instanceof Konva.Line) {
+					c.stroke(getBrushStroke($theme));
+				}
 			});
 		}
 	}
@@ -85,18 +89,15 @@
 		}
 	}
 
-	$: currentPrimary = getBrushColor($theme);
 	$: canvasMinSize = getCanvasMinSize(canvasWidth, canvasHeight);
 	$: brushConfig, onBrushConfigChanged();
 	$: brushSize, onBrushSizeChanged();
 	$: {
-		if (brushCircle) {
+		if (brushIndicatorCircle) {
 			if ($selectedTool === 'eraser') {
-				brushCircle.dashEnabled(true);
-				brushCircle.fillEnabled(false);
+				brushIndicatorCircle.dashEnabled(true);
 			} else {
-				brushCircle.dashEnabled(false);
-				brushCircle.fillEnabled(true);
+				brushIndicatorCircle.dashEnabled(false);
 			}
 		}
 	}
@@ -120,10 +121,11 @@
 		});
 		imageLayer = new Konva.Layer();
 		paintLayer = new Konva.Layer();
-		paintLayer.getCanvas()._canvas.style.opacity = '0.75';
 		brushIndicatorLayer = new Konva.Layer();
+		patternLayer = new Konva.Layer();
 		stage.add(imageLayer);
 		stage.add(paintLayer);
+		stage.add(patternLayer);
 		stage.add(brushIndicatorLayer);
 
 		const imageObj = new Image();
@@ -137,34 +139,42 @@
 			});
 			imageLayer.add(image);
 		};
-		console.log(generationOutput.image_url);
 		imageObj.src = generationOutput.image_url;
 
 		history.addEntry({ paintLayerChildren: [] });
 
-		brushCircle = new Konva.Circle({
+		patternImageObj = new Image();
+		patternImageObj.onload = function () {
+			resetPatternRect();
+		};
+		patternImageObj.src = getColoredSvgPattern(
+			getBrushIndicatorCircleFill('dark'),
+			getBrushIndicatorCircleStroke('dark')
+		);
+
+		brushIndicatorCircle = new Konva.Circle({
 			x: stage.width() / 2,
 			y: stage.height() / 2,
-			radius: getBrushCircleRadius(brushSize),
-			stroke: getBrushCircleStroke(currentPrimary),
+			radius: getBrushIndicatorCircleRadius(brushSize),
+			stroke: getBrushIndicatorCircleStroke($theme),
 			strokeWidth: 2,
 			visible: false,
 			fillEnabled: true,
 			dashEnabled: false,
-			fill: getBrushCircleFill(currentPrimary),
+			fill: getBrushIndicatorCircleFill($theme),
 			dash: [4, 4],
 			lineCap: 'round',
 			lineJoin: 'round'
 		});
 
-		brushIndicatorLayer.add(brushCircle);
+		brushIndicatorLayer.add(brushIndicatorCircle);
 
 		stage.on('mousedown touchstart', function (e) {
 			isPainting = true;
 			const pos = stage.getPointerPosition();
 			if (!pos) return;
 			lastLine = new Konva.Line({
-				stroke: getDrawingLineStroke(currentPrimary),
+				stroke: getBrushStroke($theme),
 				strokeWidth: brushSize,
 				globalCompositeOperation: $selectedTool === 'brush' ? 'source-over' : 'destination-out',
 				lineCap: 'round',
@@ -172,12 +182,14 @@
 				points: [pos.x, pos.y, pos.x, pos.y]
 			});
 			paintLayer.add(lastLine);
+			patternRect?.moveToTop();
 		});
 
 		stage.on('mouseup touchend', function () {
 			isPainting = false;
 			const paintLayerChildren = copy(paintLayer.getChildren());
-			history.addEntry({ paintLayerChildren });
+			const linesOnly = paintLayerChildren.filter((c) => c instanceof Konva.Line);
+			history.addEntry({ paintLayerChildren: linesOnly });
 		});
 
 		stage.on('mousemove touchmove', function (e) {
@@ -185,8 +197,8 @@
 			const pos = stage.getPointerPosition();
 			if (!pos) return;
 
-			brushCircle.visible(true);
-			brushCircle.position(pos);
+			brushIndicatorCircle.visible(true);
+			brushIndicatorCircle.position(pos);
 
 			if (!isPainting) return;
 
@@ -194,17 +206,25 @@
 
 			const newPoints = lastLine.points().concat([pos.x, pos.y]);
 			lastLine.points(newPoints);
+
+			patternRect?.moveToTop();
 		});
 	}
 
 	function onUndo() {
 		history.undo();
-		if ($historyCurrentState) setInpaintingState($historyCurrentState);
+		if ($historyCurrentState) {
+			setInpaintingState($historyCurrentState);
+			resetPatternRect();
+		}
 	}
 
 	function onRedo() {
 		history.redo();
-		if ($historyCurrentState) setInpaintingState($historyCurrentState);
+		if ($historyCurrentState) {
+			setInpaintingState($historyCurrentState);
+			resetPatternRect();
+		}
 	}
 
 	function setInpaintingState(newState: TInpaintingState) {
@@ -214,31 +234,55 @@
 		children.forEach((child) => {
 			const node = Konva.Node.create(child);
 			paintLayer.add(node);
+			if (node instanceof Konva.Rect) node.moveToTop();
 		});
 
 		paintLayer.draw();
 	}
 
 	function onBrushSizeChanged() {
-		if (!brushCircle) return;
+		if (!brushIndicatorCircle) return;
 		resetBrushCirclePosition();
 		setBrushCircleSize();
 	}
 
 	function resetBrushCirclePosition() {
-		if (!brushCircle) return;
-		brushCircle.position({ x: stage.width() / 2, y: stage.height() / 2 });
+		if (!brushIndicatorCircle) return;
+		brushIndicatorCircle.position({ x: stage.width() / 2, y: stage.height() / 2 });
 		brushIndicatorLayer.draw();
 	}
 
 	function setBrushCircleSize() {
-		if (!brushCircle) return;
-		brushCircle.radius(getBrushCircleRadius(brushSize));
+		if (!brushIndicatorCircle) return;
+		brushIndicatorCircle.radius(getBrushIndicatorCircleRadius(brushSize));
 		brushIndicatorLayer.draw();
 	}
 
 	function onBrushConfigChanged() {
 		brushSize = (brushConfig.max - brushConfig.min) / 2 + brushConfig.min;
+	}
+
+	function resetPatternRect() {
+		if (patternRect) patternRect.destroy();
+		if (patternAnim) patternAnim.stop();
+		patternRect = new Konva.Rect({
+			x: 0,
+			y: 0,
+			width: stage.width(),
+			height: stage.height(),
+			fillPatternImage: patternImageObj,
+			fillPatternRepeat: 'repeat',
+			fillPatternScaleX: 0.5,
+			fillPatternScaleY: 0.5,
+			globalCompositeOperation: 'source-in'
+		});
+		paintLayer.add(patternRect);
+		patternAnim = new Konva.Animation(function (frame) {
+			var offset = patternRect.fillPatternOffset();
+			offset.x += 0.1;
+			patternRect.fillPatternOffset(offset);
+		}, paintLayer);
+		patternAnim.start();
 	}
 </script>
 

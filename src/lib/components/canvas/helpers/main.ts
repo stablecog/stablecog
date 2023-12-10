@@ -1,4 +1,10 @@
-import { brushColorDark, brushColorLight } from '$components/canvas/constants/main';
+import {
+	brushColorDark,
+	brushColorLight,
+	brushFillDark,
+	brushFillLight,
+	svgPattern
+} from '$components/canvas/constants/main';
 import type { TBrushConfig } from '$components/canvas/toolbar/types';
 import type { TAvailableThemes } from '$ts/stores/theme';
 
@@ -25,18 +31,39 @@ export function getBrushColor(theme: TAvailableThemes | null) {
 	return theme === 'light' ? brushColorLight : brushColorDark;
 }
 
-export function getBrushCircleFill(currentPrimary: string) {
-	return `rgba(${currentPrimary}, 0.2)`;
+export function getBrushIndicatorCircleFillColor(theme: TAvailableThemes | null) {
+	return theme === 'light' ? brushFillLight : brushFillDark;
 }
 
-export function getBrushCircleStroke(currentPrimary: string) {
-	return `rgba(${currentPrimary}, 1)`;
+export function getBrushIndicatorCircleStrokeColor(theme: TAvailableThemes | null) {
+	return theme === 'light' ? brushColorLight : brushColorDark;
 }
 
-export function getBrushCircleRadius(brushSize: number) {
+export function getBrushStroke(theme: TAvailableThemes | null) {
+	const current = getBrushColor(theme);
+	return `rgba(${current}, 1)`;
+}
+
+export function getBrushIndicatorCircleFill(theme: TAvailableThemes | null) {
+	const current = getBrushIndicatorCircleFillColor(theme);
+	return `rgba(${current}, 0.35)`;
+}
+
+export function getBrushIndicatorCircleStroke(theme: TAvailableThemes | null) {
+	const current = getBrushIndicatorCircleStrokeColor(theme);
+	return `rgba(${current}, 1)`;
+}
+
+export function getBrushIndicatorCircleRadius(brushSize: number) {
 	return brushSize / 2;
 }
 
-export function getDrawingLineStroke(currentPrimary: string) {
-	return `rgba(${currentPrimary}, 1)`;
+export function getDrawingLineStroke(current: string) {
+	return `rgba(${current}, 1)`;
+}
+
+export function getColoredSvgPattern(fg: string, bg: string) {
+	return `data:image/svg+xml;utf8,<?xml version="1.0" encoding="UTF-8" standalone="no"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">${svgPattern}`
+		.replaceAll('black', fg)
+		.replaceAll('white', bg);
 }
