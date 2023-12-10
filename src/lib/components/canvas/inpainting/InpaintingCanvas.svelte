@@ -1,12 +1,22 @@
 <script lang="ts">
 	import Toolbar from '$components/canvas/toolbar/Toolbar.svelte';
-	import type { TBrushConfig, TInpaintingState, TTool } from '$components/canvas/toolbar/types';
+	import type { TInpaintingState, TTool } from '$components/canvas/toolbar/types';
 	import Konva from 'konva';
 	import { onMount } from 'svelte';
 	import { writable, type Writable } from 'svelte/store';
 	import { copy } from 'copy-anything';
 	import { createHistoryStore } from '$components/canvas/history/historyStore';
 	import { theme } from '$ts/stores/theme';
+	import {
+		getBrushCircleFill,
+		getBrushCircleRadius,
+		getBrushCircleStroke,
+		getBrushConfig,
+		getBrushSize,
+		getCanvasMinSize,
+		getDrawingLineStroke,
+		getPrimaryColor
+	} from '$components/canvas/helpers/main';
 
 	let stage: Konva.Stage;
 	let imageLayer: Konva.Layer;
@@ -19,51 +29,42 @@
 	let stageWidth: number;
 	let stageHeight: number;
 
-	let canvasWidth: number;
-	let canvasHeight: number;
+	let canvasWidth: number | undefined = undefined;
+	let canvasHeight: number | undefined = undefined;
 
 	let lastLine: Konva.Line;
 	let selectedTool: Writable<TTool> = writable('brush');
 	let isPainting = false;
 
-	let canvasMinSize = 1000;
+	let canvasMinSize = getCanvasMinSize(canvasWidth, canvasHeight);
+	let brushConfig = getBrushConfig(canvasMinSize);
+	let brushSize = getBrushSize(brushConfig);
 
-	let brushConfig: TBrushConfig = {
-		min: canvasMinSize / 100,
-		max: canvasMinSize / 10,
-		step: canvasMinSize / 1000
-	};
-
-	let brushSize = (brushConfig.max - brushConfig.min) / 2 + brushConfig.min;
-
-	const primaryLight = '96, 42, 204';
-	const primaryDark = '181, 140, 255';
-	let currentPrimary = $theme === 'light' ? primaryLight : primaryDark;
-	$: currentPrimary = $theme === 'light' ? primaryLight : primaryDark;
+	let currentPrimary = getPrimaryColor($theme);
 
 	$: {
 		if (brushCircle) {
-			brushCircle.stroke(`rgba(${currentPrimary}, 1)`);
-			brushCircle.fill(`rgba(${currentPrimary}, 0.2)`);
+			brushCircle.stroke(getBrushCircleStroke(currentPrimary));
+			brushCircle.fill(getBrushCircleFill(currentPrimary));
 		}
+	}
+
+	$: {
 		if (paintLayer) {
 			paintLayer.children.forEach((c) => {
-				if (c instanceof Konva.Line) c.stroke(`rgba(${currentPrimary}, 1)`);
+				if (c instanceof Konva.Line) c.stroke(getBrushCircleStroke(currentPrimary));
 			});
 		}
 	}
 
 	$: {
-		if (canvasWidth && canvasHeight) {
-			brushConfig = {
-				min: canvasMinSize / 100,
-				max: canvasMinSize / 10,
-				step: canvasMinSize / 1000
-			};
+		if (canvasWidth && canvasHeight && canvasMinSize) {
+			brushConfig = getBrushConfig(canvasMinSize);
 		}
 	}
 
-	$: canvasMinSize = canvasWidth && canvasHeight ? Math.min(canvasWidth, canvasHeight) : 1000;
+	$: currentPrimary = getPrimaryColor($theme);
+	$: canvasMinSize = getCanvasMinSize(canvasWidth, canvasHeight);
 	$: brushConfig, onBrushConfigChanged();
 	$: brushSize, onBrushSizeChanged();
 	$: {
@@ -117,13 +118,13 @@
 		brushCircle = new Konva.Circle({
 			x: stage.width() / 2,
 			y: stage.height() / 2,
-			radius: brushSize / 2, // Initial brush size
-			stroke: `rgba(${primaryDark}, 1)`,
+			radius: getBrushCircleRadius(brushSize),
+			stroke: getBrushCircleStroke(currentPrimary),
 			strokeWidth: 2,
 			visible: false,
 			fillEnabled: true,
 			dashEnabled: false,
-			fill: `rgba(${currentPrimary}, 0.2)`,
+			fill: getBrushCircleFill(currentPrimary),
 			dash: [4, 4],
 			lineCap: 'round',
 			lineJoin: 'round'
@@ -136,7 +137,7 @@
 			const pos = stage.getPointerPosition();
 			if (!pos) return;
 			lastLine = new Konva.Line({
-				stroke: `rgba(${currentPrimary}, 1)`,
+				stroke: getDrawingLineStroke(currentPrimary),
 				strokeWidth: brushSize,
 				globalCompositeOperation: $selectedTool === 'brush' ? 'source-over' : 'destination-out',
 				lineCap: 'round',
@@ -152,18 +153,16 @@
 			history.addEntry({ paintLayerChildren });
 		});
 
-		// and core function - drawing
 		stage.on('mousemove touchmove', function (e) {
 			console.log('mousemove');
 			const pos = stage.getPointerPosition();
 			if (!pos) return;
 
-			brushCircle.visible(true); // Make the circle visible
-			brushCircle.position(pos); // Update position
+			brushCircle.visible(true);
+			brushCircle.position(pos);
 
 			if (!isPainting) return;
 
-			// prevent scrolling on touch devices
 			e.evt.preventDefault();
 
 			const newPoints = lastLine.points().concat([pos.x, pos.y]);
@@ -190,7 +189,6 @@
 			paintLayer.add(node);
 		});
 
-		// Redraw the layer to update the canvas
 		paintLayer.draw();
 	}
 
@@ -208,7 +206,7 @@
 
 	function setBrushCircleSize() {
 		if (!brushCircle) return;
-		brushCircle.radius(brushSize / 2);
+		brushCircle.radius(getBrushCircleRadius(brushSize));
 		brushIndicatorLayer.draw();
 	}
 
