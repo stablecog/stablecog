@@ -48,7 +48,8 @@
 			const aspectRatio = generationOutput.width / generationOutput.height;
 			const widthRatio = canvasContainerWidth / generationOutput.width;
 			const heightRatio = canvasContainerHeight / generationOutput.height;
-			if (widthRatio >= heightRatio) {
+			const boundByHeight = heightRatio < widthRatio;
+			if (boundByHeight) {
 				canvasHeight = canvasContainerHeight;
 				canvasWidth = canvasHeight * aspectRatio;
 			} else {
