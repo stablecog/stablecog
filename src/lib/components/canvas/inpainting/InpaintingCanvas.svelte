@@ -11,7 +11,7 @@
 		getBrushIndicatorCircleRadius,
 		getBrushIndicatorCircleStroke,
 		getBrushConfig,
-		getBrushSize,
+		getDefaultBrushSize,
 		getCanvasMinSize,
 		getColoredSvgPattern,
 		getBrushStroke,
@@ -19,9 +19,9 @@
 		getSvgPatternBg
 	} from '$components/canvas/helpers/main';
 	import { generateMode } from '$ts/stores/generate/generateMode';
-	import { generationOutputForInpainting } from '$components/canvas/stores/generationOutputForInpainting';
+	import { baseOutputForInpainting } from '$components/canvas/stores/baseOutputForInpainting';
 	import IconAnimatedSpinner from '$components/icons/IconAnimatedSpinner.svelte';
-	import { onDestroy, onMount } from 'svelte';
+	import { onMount } from 'svelte';
 	import ErrorChip from '$components/error/ErrorChip.svelte';
 	import LL from '$i18n/i18n-svelte';
 	import { konvaContainerForExportId, konvaContainerId } from '$components/canvas/constants/main';
@@ -35,7 +35,7 @@
 	import type { TAvailableWidth } from '$ts/constants/generationSize';
 	import type { TGenerationFullOutput } from '$ts/stores/user/generation';
 
-	export let generationOutput: TGenerationFullOutput;
+	export let baseOutput: TGenerationFullOutput;
 
 	let konvaErrored = false;
 	let imageLayer: Konva.Layer;
@@ -59,9 +59,9 @@
 
 	$: {
 		if (canvasContainerWidth && canvasContainerHeight) {
-			const aspectRatio = generationOutput.generation.width / generationOutput.generation.height;
-			const widthRatio = canvasContainerWidth / generationOutput.generation.width;
-			const heightRatio = canvasContainerHeight / generationOutput.generation.height;
+			const aspectRatio = baseOutput.generation.width / baseOutput.generation.height;
+			const widthRatio = canvasContainerWidth / baseOutput.generation.width;
+			const heightRatio = canvasContainerHeight / baseOutput.generation.height;
 			const boundByHeight = heightRatio < widthRatio;
 			if (boundByHeight) {
 				canvasHeight = canvasContainerHeight;
@@ -75,7 +75,7 @@
 
 	let canvasMinSize = getCanvasMinSize(canvasWidth, canvasHeight);
 	let brushConfig = getBrushConfig(canvasMinSize);
-	let brushSize = getBrushSize(brushConfig);
+	let brushSize = getDefaultBrushSize(brushConfig);
 
 	$: {
 		if (brushIndicatorCircle) {
@@ -120,7 +120,7 @@
 		currentState: historyCurrentState
 	} = createHistoryStore<TInpaintingState>();
 
-	$: [generationOutput, canvasWidth, canvasHeight, $KonvaInstance], createCanvas({ reset: true });
+	$: [baseOutput, canvasWidth, canvasHeight, $KonvaInstance], createCanvas({ reset: true });
 
 	function createCanvas({ reset = false }: { reset: boolean }) {
 		if (!$KonvaInstance) return;
@@ -134,10 +134,10 @@
 		}
 
 		// set generation params
-		generationWidth.set(generationOutput.generation.width.toString() as TAvailableWidth);
-		generationHeight.set(generationOutput.generation.height.toString() as TAvailableWidth);
-		generationInitImageUrl.set(generationOutput.image_url);
-		generationModelId.set(generationOutput.generation.model_id);
+		generationWidth.set(baseOutput.generation.width.toString() as TAvailableWidth);
+		generationHeight.set(baseOutput.generation.height.toString() as TAvailableWidth);
+		generationInitImageUrl.set(baseOutput.image_url);
+		generationModelId.set(baseOutput.generation.model_id);
 
 		$stage = new $KonvaInstance.Stage({
 			container: 'konva-stage',
@@ -165,7 +165,7 @@
 			imageLayer.add(img);
 			imageLoaded = true;
 		};
-		image.src = generationOutput.image_url;
+		image.src = baseOutput.image_url;
 
 		history.addEntry({ paintLayerChildren: [] });
 
@@ -282,7 +282,7 @@
 	}
 
 	function onBrushConfigChanged() {
-		brushSize = (brushConfig.max - brushConfig.min) / 2 + brushConfig.min;
+		brushSize = getDefaultBrushSize(brushConfig);
 	}
 
 	function resetPatternRect() {
@@ -310,7 +310,7 @@
 
 	function onCancelClicked() {
 		generateMode.set('regular');
-		generationOutputForInpainting.set(null);
+		baseOutputForInpainting.set(null);
 	}
 
 	onMount(async () => {

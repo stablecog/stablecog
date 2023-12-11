@@ -54,8 +54,8 @@
 	import { writable } from 'svelte/store';
 	import WithChangeUsernameModal from '$components/WithChangeUsernameModal.svelte';
 	import InpaintingCanvas from '$components/canvas/inpainting/InpaintingCanvas.svelte';
-	import { generationOutputForInpainting } from '$components/canvas/stores/generationOutputForInpainting.js';
 	import { generateMode } from '$ts/stores/generate/generateMode.js';
+	import { baseOutputForInpainting } from '$components/canvas/stores/baseOutputForInpainting.js';
 
 	export let data;
 
@@ -432,8 +432,8 @@
 							</div>
 						{/if}
 						<div class="w-full flex-1 min-w-0 min-h-0 flex flex-col px-2 lg:px-6">
-							{#if $generationOutputForInpainting && $generateMode === 'inpainting'}
-								<InpaintingCanvas generationOutput={$generationOutputForInpainting} />
+							{#if $baseOutputForInpainting && $generateMode === 'inpainting'}
+								<InpaintingCanvas baseOutput={$baseOutputForInpainting} />
 							{:else}
 								<div
 									bind:clientWidth={stageWidth}

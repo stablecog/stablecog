@@ -48,7 +48,7 @@
 	import IconSettings from '$components/icons/IconSettings.svelte';
 	import { generateMode } from '$ts/stores/generate/generateMode';
 	import { exportStage } from '$components/canvas/helpers/exportStage';
-	import { konvaContainerId } from '$components/canvas/constants/main';
+	import { konvaContainerForExportId } from '$components/canvas/constants/main';
 	import { KonvaInstance, paintLayer, stage } from '$components/canvas/stores/konva';
 
 	export let openSignInModal: () => void;
@@ -140,7 +140,7 @@
 		let mask_image_data_url = undefined;
 		if ($generateMode === 'inpainting') {
 			mask_image_data_url = await exportStage({
-				container: konvaContainerId,
+				container: konvaContainerForExportId,
 				konvaInstance: $KonvaInstance,
 				layer: $paintLayer,
 				stage: $stage

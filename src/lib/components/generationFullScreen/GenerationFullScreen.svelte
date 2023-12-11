@@ -10,7 +10,7 @@
 	import ButtonHoverEffect from '$components/buttons/ButtonHoverEffect.svelte';
 	import FavoriteButton from '$components/buttons/FavoriteButton.svelte';
 	import UsernameButton from '$components/buttons/UsernameButton.svelte';
-	import { generationOutputForInpainting } from '$components/canvas/stores/generationOutputForInpainting';
+	import { baseOutputForInpainting } from '$components/canvas/stores/baseOutputForInpainting';
 	import UpscaleAnimation from '$components/generate/UpscaleAnimation.svelte';
 	import ButtonsSection from '$components/generationFullScreen/ButtonsSection.svelte';
 	import Container from '$components/generationFullScreen/Container.svelte';
@@ -337,7 +337,7 @@
 	}
 
 	async function onEditClicked() {
-		generationOutputForInpainting.set({ generation: generation, ...generation.selected_output });
+		baseOutputForInpainting.set({ generation: generation, ...generation.selected_output });
 		generateMode.set('inpainting');
 		activeGeneration.set(undefined);
 		if (modalType !== 'generate' && modalType !== 'stage') {

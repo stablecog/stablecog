@@ -17,14 +17,14 @@ export function getCanvasMinSize(
 
 export function getBrushConfig(canvasMinSize: number): TBrushConfig {
 	return {
-		min: canvasMinSize / 100,
-		max: canvasMinSize / 4,
+		min: canvasMinSize / 50,
+		max: canvasMinSize / 3,
 		step: canvasMinSize / 1000
 	};
 }
 
-export function getBrushSize(brushConfig: TBrushConfig) {
-	return (brushConfig.max - brushConfig.min) / 2 + brushConfig.min;
+export function getDefaultBrushSize(brushConfig: TBrushConfig) {
+	return (brushConfig.max - brushConfig.min) / 2.5 + brushConfig.min;
 }
 
 export function getBrushColor(theme: TAvailableThemes | null) {
