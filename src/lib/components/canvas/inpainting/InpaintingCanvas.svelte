@@ -33,7 +33,18 @@
 		generationWidth
 	} from '$ts/stores/generationSettings';
 	import type { TAvailableWidth } from '$ts/constants/generationSize';
-	import type { TGenerationFullOutput } from '$ts/stores/user/generation';
+	import {
+		generations,
+		type TGenerationFullOutput,
+		type TGenerationWithSelectedOutput
+	} from '$ts/stores/user/generation';
+	import GenerationAnimation from '$components/generate/GenerationAnimation.svelte';
+	import { fade } from 'svelte/transition';
+	import QueuePosition from '$components/QueuePosition.svelte';
+	import { quadIn } from 'svelte/easing';
+	import { userSummary } from '$ts/stores/user/summary';
+	import { isSuperAdmin } from '$ts/helpers/admin/roles';
+	import QueuePositionProvider from '$components/generate/QueuePositionProvider.svelte';
 
 	export let baseOutput: TGenerationFullOutput;
 
@@ -313,6 +324,14 @@
 		baseOutputForInpainting.set(null);
 	}
 
+	$: generation = $generations?.[0];
+	$: animation = $generations?.[0].outputs?.[0]?.animation;
+	$: isGenerating =
+		generation &&
+		(generation.status === 'to-be-submitted' ||
+			generation.status === 'server-received' ||
+			generation.status === 'server-processing');
+
 	onMount(async () => {
 		try {
 			const k = (await import('konva')).default;
@@ -324,51 +343,62 @@
 	});
 </script>
 
-<div class="w-full flex-1 min-h-0 flex flex-col items-center justify-center">
-	<div class="w-full flex items-center justify-center z-10">
-		<Toolbar
-			{selectedTool}
-			{onUndo}
-			{onRedo}
-			undoDisabled={!$hasUndo}
-			redoDisabled={!$hasRedo}
-			bind:brushSize
-			{brushConfig}
-			{onCancelClicked}
-		/>
-	</div>
-	<div class="w-full h-4" />
-	<div
-		bind:clientWidth={canvasContainerWidth}
-		bind:clientHeight={canvasContainerHeight}
-		class="w-full flex-1"
-	>
+<QueuePositionProvider {generation} let:positionInQueue let:showQueuePosition>
+	<div class="w-full flex-1 min-h-0 flex flex-col items-center justify-center">
+		<div class="w-full flex items-center justify-center z-10">
+			<Toolbar
+				{selectedTool}
+				{onUndo}
+				{onRedo}
+				undoDisabled={!$hasUndo}
+				redoDisabled={!$hasRedo}
+				bind:brushSize
+				{brushConfig}
+				{onCancelClicked}
+			/>
+		</div>
+		<div class="w-full h-4" />
 		<div
-			style="width: {canvasContainerWidth}px; height: {canvasHeight}"
-			class="absolute left-0 top-0"
+			bind:clientWidth={canvasContainerWidth}
+			bind:clientHeight={canvasContainerHeight}
+			class="w-full flex-1"
 		>
-			<div class="w-full full flex items-center justify-center">
-				<div
-					style="width: {canvasWidth}px; height: {canvasHeight}px"
-					class="relative rounded-lg overflow-hidden ring-2 bg-c-bg-secondary
-					ring-c-bg-secondary shadow-lg shadow-c-shadow/[var(--o-shadow-normal)]"
-				>
-					<div class="w-full h-full relative" id={konvaContainerId} />
-					{#if !image || !imageLoaded}
-						<div class="w-full h-full absolute left-0 top-0 flex items-center justify-center z-10">
-							<IconAnimatedSpinner loading={true} class="w-8 h-8 text-c-on-bg/50" />
-						</div>
-					{/if}
-					{#if !$KonvaInstance && konvaErrored}
-						<div
-							class="w-full h-full bg-c-bg-secondary absolute p-3 left-0 top-0 flex items-center justify-center"
-						>
-							<ErrorChip error={$LL.Error.SomethingWentWrong()} />
-						</div>
-					{/if}
+			<div
+				style="width: {canvasContainerWidth}px; height: {canvasHeight}"
+				class="absolute left-0 top-0"
+			>
+				<div class="w-full full flex items-center justify-center">
+					<div
+						style="width: {canvasWidth}px; height: {canvasHeight}px"
+						class="relative rounded-lg overflow-hidden ring-2 bg-c-bg-secondary
+						ring-c-bg-secondary shadow-lg shadow-c-shadow/[var(--o-shadow-normal)]"
+					>
+						<div class="w-full h-full relative" id={konvaContainerId} />
+						{#if !image || !imageLoaded}
+							<div class="w-full h-full absolute left-0 top-0 flex items-center justify-center">
+								<IconAnimatedSpinner loading={true} class="w-8 h-8 text-c-on-bg/50" />
+							</div>
+						{/if}
+						{#if !$KonvaInstance && konvaErrored}
+							<div
+								class="w-full h-full bg-c-bg-secondary absolute p-3 left-0 top-0 flex items-center justify-center"
+							>
+								<ErrorChip error={$LL.Error.SomethingWentWrong()} />
+							</div>
+						{/if}
+						{#if isGenerating && animation}
+							<div
+								out:fade={{ duration: 3000, easing: quadIn }}
+								class="w-full h-full absolute left-0 top-0 flex items-center justify-center"
+							>
+								<GenerationAnimation {animation} />
+								<QueuePosition hasBg position={positionInQueue} show={showQueuePosition} />
+							</div>
+						{/if}
+					</div>
 				</div>
 			</div>
 		</div>
+		<div class="w-0 h-0 overflow-hidden" id={konvaContainerForExportId} />
 	</div>
-	<div class="w-0 h-0 overflow-hidden" id={konvaContainerForExportId} />
-</div>
+</QueuePositionProvider>
