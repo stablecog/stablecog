@@ -203,6 +203,7 @@ const ja: Translation = {
 		GenerationSettingsTitle: '生成設定',
 		DarkModeToggle: 'ダークモード'
 	},
+	Inpainting: { OriginalImageTitle: 'Original' },
 	GenerationFullscreen: {
 		DownloadButton: 'ダウンロード',
 		DoneButtonState: '完了！',

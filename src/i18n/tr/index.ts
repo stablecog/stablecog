@@ -203,6 +203,7 @@ const tr: Translation = {
 		GenerationSettingsTitle: 'Üretim Ayarları',
 		DarkModeToggle: 'Karanlık Mod'
 	},
+	Inpainting: { OriginalImageTitle: 'Original' },
 	GenerationFullscreen: {
 		DownloadButton: 'İndir',
 		DoneButtonState: 'Bitti!',

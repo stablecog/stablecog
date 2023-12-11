@@ -33,18 +33,17 @@
 		generationWidth
 	} from '$ts/stores/generationSettings';
 	import type { TAvailableWidth } from '$ts/constants/generationSize';
-	import {
-		generations,
-		type TGenerationFullOutput,
-		type TGenerationWithSelectedOutput
-	} from '$ts/stores/user/generation';
+	import { generations, type TGenerationFullOutput } from '$ts/stores/user/generation';
 	import GenerationAnimation from '$components/generate/GenerationAnimation.svelte';
-	import { fade } from 'svelte/transition';
+	import { fade, fly } from 'svelte/transition';
 	import QueuePosition from '$components/QueuePosition.svelte';
-	import { quadIn } from 'svelte/easing';
-	import { userSummary } from '$ts/stores/user/summary';
-	import { isSuperAdmin } from '$ts/helpers/admin/roles';
+	import { quadIn, quadOut } from 'svelte/easing';
 	import QueuePositionProvider from '$components/generate/QueuePositionProvider.svelte';
+	import ToolbarSectionWrapper from '$components/canvas/toolbar/ToolbarSectionWrapper.svelte';
+	import ToolbarButton from '$components/canvas/toolbar/ToolbarButton.svelte';
+	import IconChevronLeft from '$components/icons/IconChevronLeft.svelte';
+	import IconChevronRight from '$components/icons/IconChevronRight.svelte';
+	import { flyAndScale } from '$ts/animation/transitions';
 
 	export let baseOutput: TGenerationFullOutput;
 
@@ -131,6 +130,24 @@
 		currentState: historyCurrentState
 	} = createHistoryStore<TInpaintingState>();
 
+	$: generation = $generations?.[0];
+	$: animation = $generations?.[0].outputs?.[0]?.animation;
+	$: isGenerating =
+		generation &&
+		(generation.status === 'to-be-submitted' ||
+			generation.status === 'server-received' ||
+			generation.status === 'server-processing');
+
+	$: isGenerating, onIsGeneratingChanged();
+
+	let allOutputs: TGenerationFullOutput[] | undefined = undefined;
+	$: allOutputs =
+		generation.status === 'succeeded'
+			? [baseOutput, ...generation.outputs.map((o) => ({ generation: generation, ...o }))]
+			: undefined;
+	let selectedOutputIndex = 0;
+	$: allOutputs, onAllOutputsChanged();
+
 	$: [baseOutput, canvasWidth, canvasHeight, $KonvaInstance], createCanvas({ reset: true });
 
 	function createCanvas({ reset = false }: { reset: boolean }) {
@@ -142,6 +159,8 @@
 			imageLoaded = false;
 			history.clear();
 			konvaErrored = false;
+			allOutputs = undefined;
+			selectedOutputIndex = 0;
 		}
 
 		// set generation params
@@ -164,19 +183,7 @@
 		$stage.add(patternLayer);
 		$stage.add(brushIndicatorLayer);
 
-		image = new Image();
-		image.onload = function () {
-			const img = new $KonvaInstance.Image({
-				x: 0,
-				y: 0,
-				image,
-				width: $stage.width(),
-				height: $stage.height()
-			});
-			imageLayer.add(img);
-			imageLoaded = true;
-		};
-		image.src = baseOutput.image_url;
+		setImage(baseOutput.image_url);
 
 		history.addEntry({ paintLayerChildren: [] });
 
@@ -227,7 +234,6 @@
 		});
 
 		$stage.on('mousemove touchmove', function (e) {
-			console.log('mousemove');
 			const pos = $stage.getPointerPosition();
 			if (!pos) return;
 
@@ -262,7 +268,7 @@
 	}
 
 	function setInpaintingState(newState: TInpaintingState) {
-		$paintLayer.destroyChildren();
+		$paintLayer?.destroyChildren();
 
 		const children = newState.paintLayerChildren;
 		children.forEach((child) => {
@@ -324,13 +330,35 @@
 		baseOutputForInpainting.set(null);
 	}
 
-	$: generation = $generations?.[0];
-	$: animation = $generations?.[0].outputs?.[0]?.animation;
-	$: isGenerating =
-		generation &&
-		(generation.status === 'to-be-submitted' ||
-			generation.status === 'server-received' ||
-			generation.status === 'server-processing');
+	function onIsGeneratingChanged() {
+		if (!brushIndicatorLayer) return;
+		brushIndicatorLayer.visible(!isGenerating);
+	}
+
+	function onAllOutputsChanged() {
+		if (!allOutputs || allOutputs.length < 2) return;
+		$paintLayer?.destroyChildren();
+		history.addEntry({ paintLayerChildren: [] });
+		selectedOutputIndex = 1;
+		setImage(allOutputs[selectedOutputIndex].image_url);
+	}
+
+	function setImage(url: string) {
+		imageLayer?.destroyChildren();
+		image = new Image();
+		image.onload = function () {
+			const img = new $KonvaInstance.Image({
+				x: 0,
+				y: 0,
+				image,
+				width: $stage.width(),
+				height: $stage.height()
+			});
+			imageLayer.add(img);
+			imageLoaded = true;
+		};
+		image.src = url;
+	}
 
 	onMount(async () => {
 		try {
@@ -393,6 +421,62 @@
 							>
 								<GenerationAnimation {animation} />
 								<QueuePosition hasBg position={positionInQueue} show={showQueuePosition} />
+							</div>
+						{:else if allOutputs !== undefined}
+							{@const outputs = allOutputs}
+							<div
+								class="w-full h-full pointer-events-none absolute bottom-0 left-0 flex flex-col justify-between items-center p-2"
+							>
+								{#if selectedOutputIndex === 0}
+									<div
+										transition:flyAndScale={{
+											duration: 100,
+											easing: quadOut,
+											opacity: 0,
+											yPercent: -100
+										}}
+										class="bg-c-bg-secondary p-px rounded-md shadow-md shadow-c-shadow/[var(--o-shadow-normal)]"
+									>
+										<p class="px-1.75 py-0.5 font-medium text-sm text-c-primary">
+											{$LL.Inpainting.OriginalImageTitle()}
+										</p>
+									</div>
+								{:else}
+									<div class="w-full" />
+								{/if}
+								<ToolbarSectionWrapper class="gap-2 pointer-events-auto">
+									<ToolbarButton
+										label="Go Left"
+										onClick={() => {
+											const index = (selectedOutputIndex - 1 + outputs.length) % outputs.length;
+											selectedOutputIndex = index;
+											setImage(outputs[index].image_url);
+										}}
+										icon={IconChevronLeft}
+										iconClass="group-active:-translate-x-1"
+										onClickClass="-translate-x-1"
+										disabled={selectedOutputIndex === 0}
+									/>
+									<p class="font-medium text-c-on-bg/60 text-sm min-w-[2rem] text-center">
+										<span
+											class="font-semibold transition duration-100 {selectedOutputIndex === 0
+												? 'text-c-primary'
+												: 'text-c-on-bg'}">{selectedOutputIndex + 1}</span
+										><span class="px-0.5ch">/</span><span>{outputs.length}</span>
+									</p>
+									<ToolbarButton
+										label="Go Right"
+										onClick={() => {
+											const index = (selectedOutputIndex + 1 + outputs.length) % outputs.length;
+											selectedOutputIndex = index;
+											setImage(outputs[index].image_url);
+										}}
+										icon={IconChevronRight}
+										iconClass="group-active:translate-x-1"
+										onClickClass="translate-x-1"
+										disabled={selectedOutputIndex === outputs.length - 1}
+									/>
+								</ToolbarSectionWrapper>
 							</div>
 						{/if}
 					</div>

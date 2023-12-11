@@ -193,6 +193,7 @@ const en: BaseTranslation = {
 		GenerationSettingsTitle: 'Generation Settings',
 		DarkModeToggle: 'Dark Mode'
 	},
+	Inpainting: { OriginalImageTitle: 'Original' },
 	GenerationFullscreen: {
 		DownloadButton: 'Download',
 		DoneButtonState: 'Done!',

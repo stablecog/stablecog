@@ -193,6 +193,7 @@ const ko: Translation = {
 		GenerationSettingsTitle: '생성 이미지 설정',
 		DarkModeToggle: '다크모드'
 	},
+	Inpainting: { OriginalImageTitle: 'Original' },
 	GenerationFullscreen: {
 		DownloadButton: '다운로드',
 		DoneButtonState: '완료!',

@@ -203,6 +203,7 @@ const es: Translation = {
 		GenerationSettingsTitle: 'Ρυθμίσεις Δημιουργίας',
 		DarkModeToggle: 'Σκούρo Φόντο'
 	},
+	Inpainting: { OriginalImageTitle: 'Original' },
 	GenerationFullscreen: {
 		DownloadButton: 'Λήψη',
 		DoneButtonState: 'Ολοκληρώθηκε!',

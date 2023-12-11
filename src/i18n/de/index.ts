@@ -192,6 +192,7 @@ const de: Translation = {
 		GenerationSettingsTitle: 'Generierungseinstellungen',
 		DarkModeToggle: 'Dunkel-Modus'
 	},
+	Inpainting: { OriginalImageTitle: 'Original' },
 	GenerationFullscreen: {
 		DownloadButton: 'Download',
 		DoneButtonState: 'Fertig!',

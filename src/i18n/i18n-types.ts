@@ -572,6 +572,12 @@ type RootTranslation = {
 		 */
 		DarkModeToggle: string
 	}
+	Inpainting: {
+		/**
+		 * O​r​i​g​i​n​a​l
+		 */
+		OriginalImageTitle: string
+	}
 	GenerationFullscreen: {
 		/**
 		 * D​o​w​n​l​o​a​d
@@ -3791,6 +3797,12 @@ export type TranslationFunctions = {
 		 * Dark Mode
 		 */
 		DarkModeToggle: () => LocalizedString
+	}
+	Inpainting: {
+		/**
+		 * Original
+		 */
+		OriginalImageTitle: () => LocalizedString
 	}
 	GenerationFullscreen: {
 		/**

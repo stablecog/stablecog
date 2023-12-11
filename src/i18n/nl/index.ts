@@ -196,6 +196,7 @@ const nl: Translation = {
 		GenerationSettingsTitle: 'Settings voor Genereren',
 		DarkModeToggle: 'Donkere Modus'
 	},
+	Inpainting: { OriginalImageTitle: 'Original' },
 	GenerationFullscreen: {
 		DownloadButton: 'Download',
 		DoneButtonState: 'Gereed!',
