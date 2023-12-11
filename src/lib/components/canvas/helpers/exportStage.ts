@@ -1,15 +1,17 @@
-import Konva from 'konva';
+import type Konva from 'konva';
 
 const blurAmount = 32;
 
 export function exportStage({
 	layer,
 	stage,
-	container
+	container,
+	konvaInstance
 }: {
 	layer: Konva.Layer;
 	stage: Konva.Stage;
 	container: string;
+	konvaInstance: typeof Konva;
 }) {
 	const clonedLayer = layer.clone();
 
@@ -19,14 +21,14 @@ export function exportStage({
 
 	// Change stroke colors to white in the cloned layer
 	clonedLayer.find('Line').forEach((line) => {
-		if (line instanceof Konva.Line) {
+		if (line instanceof konvaInstance.Line) {
 			line.stroke('white');
 			line.strokeWidth(line.strokeWidth() + blurAmount);
 		}
 	});
 
 	// Create an off-screen stage with the same size as the original stage
-	const stageForExport = new Konva.Stage({
+	const stageForExport = new konvaInstance.Stage({
 		container,
 		width: stage.width(),
 		height: stage.height(),
@@ -34,7 +36,7 @@ export function exportStage({
 	});
 
 	// Create a background for the off-screen stage
-	const background = new Konva.Rect({
+	const background = new konvaInstance.Rect({
 		x: 0,
 		y: 0,
 		width: stageForExport.width(),
@@ -43,7 +45,7 @@ export function exportStage({
 	});
 
 	// Create a new layer for background
-	const backgroundLayer = new Konva.Layer();
+	const backgroundLayer = new konvaInstance.Layer();
 	backgroundLayer.add(background);
 	stageForExport.add(backgroundLayer);
 
@@ -52,7 +54,7 @@ export function exportStage({
 
 	stageForExport.draw();
 
-	clonedLayer.filters([Konva.Filters.Blur]);
+	clonedLayer.filters([konvaInstance.Filters.Blur]);
 	clonedLayer.blurRadius(blurAmount);
 
 	const layerBox = clonedLayer.getClientRect();

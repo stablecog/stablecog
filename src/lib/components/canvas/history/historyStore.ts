@@ -75,7 +75,7 @@ export function createHistoryStore<T>() {
 					redoPointer
 				});
 			},
-			reset: () => {
+			clear: () => {
 				history.set([]);
 			}
 		},

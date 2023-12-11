@@ -569,7 +569,7 @@
 								{/if}
 								<!-- Edit Image Button -->
 								<!-- <div
-									class="w-full {!generation.selected_output.upscaled_image_url ||
+									class="w-full relative {!generation.selected_output.upscaled_image_url ||
 									upscaleBeingProcessed
 										? 'mt-2'
 										: 'mt-2.5'}"

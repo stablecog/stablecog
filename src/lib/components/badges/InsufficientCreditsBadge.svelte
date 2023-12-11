@@ -12,7 +12,7 @@
 		class="max-w-full z-10 bg-c-bg shadow-lg shadow-c-shadow/[var(--o-shadow-strong)] rounded-md md:rounded-lg"
 	>
 		<div
-			class="w-full px-1.25 md:px-1.5 border-2 bg-c-secondary/10 border-c-secondary/20 rounded-md md:rounded-lg gap-1 flex items-center"
+			class="w-full px-1.25 md:px-1.5 border-2 bg-c-secondary/10 border-c-secondary/20 rounded-md md:rounded-lg flex items-center"
 		>
 			<IconToken class="w-4 h-4 -ml-0.5 flex-shrink-0 text-c-secondary" />
 			<p
