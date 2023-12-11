@@ -46,7 +46,7 @@ export function getBrushStroke(theme: TAvailableThemes | null) {
 
 export function getBrushIndicatorCircleFill(theme: TAvailableThemes | null) {
 	const current = getBrushIndicatorCircleFillColor(theme);
-	return `rgba(${current}, 0.35)`;
+	return `rgba(${current}, 0.5)`;
 }
 
 export function getSvgPatternFg(theme: TAvailableThemes | null) {
