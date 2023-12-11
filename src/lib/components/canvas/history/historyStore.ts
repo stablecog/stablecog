@@ -74,6 +74,9 @@ export function createHistoryStore<T>() {
 					undoPointer,
 					redoPointer
 				});
+			},
+			reset: () => {
+				history.set([]);
 			}
 		},
 		hasUndo,

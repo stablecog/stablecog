@@ -205,6 +205,7 @@ const en: BaseTranslation = {
 		RerollButton: 'Reroll',
 		RegenerateButton: 'Regenerate',
 		GenerateButton: 'Generate',
+		EditButton: 'Edit',
 		UpscaleButton: 'Upscale',
 		SimilarTitle: 'Similar',
 		ShowOnProfileButton: 'Show on Profile',

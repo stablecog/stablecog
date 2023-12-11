@@ -205,6 +205,7 @@ const ko: Translation = {
 		RerollButton: '다시하기',
 		RegenerateButton: '다시 생성하기',
 		GenerateButton: '나도 생성해보기',
+		EditButton: 'Edit',
 		UpscaleButton: '고화질 이미지로 만들기',
 		SimilarTitle: 'Similar',
 		ShowOnProfileButton: 'Show on Profile',

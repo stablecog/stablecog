@@ -5,6 +5,7 @@
 	import type { THrefTarget } from '$ts/types/main';
 	import { tick } from 'svelte';
 	import { copy } from 'svelte-copy';
+
 	export let disabled = false;
 	export let loading = false;
 	export let waiting = false;
@@ -18,7 +19,14 @@
 	export let noBorder = false;
 	export let target: THrefTarget = undefined;
 	export { classes as class };
-	export let type: 'primary' | 'success' | 'danger' | 'no-bg-on-bg' | 'bg-secondary' = 'primary';
+	export let type:
+		| 'primary'
+		| 'primary-alt'
+		| 'success'
+		| 'danger'
+		| 'no-bg-on-bg'
+		| 'on-bg'
+		| 'bg-secondary' = 'primary';
 	export let fadeOnDisabled = false;
 	export let animateOnClick = false;
 	export let buttonType: 'submit' | 'button' | 'reset' | null | undefined = undefined;
@@ -106,6 +114,10 @@
 			? 'text-c-on-bg/60'
 			: type === 'bg-secondary'
 			? 'text-c-on-bg'
+			: type === 'primary-alt'
+			? 'text-c-primary'
+			: type === 'on-bg'
+			? 'text-c-bg'
 			: 'text-c-on-primary'} {loading
 			? type === 'success'
 				? 'bg-c-success-secondary'
@@ -120,6 +132,10 @@
 			? 'bg-c-danger'
 			: type === 'bg-secondary'
 			? 'bg-c-bg-secondary'
+			: type === 'primary-alt'
+			? 'bg-c-bg-tertiary'
+			: type === 'on-bg'
+			? 'bg-c-on-bg'
 			: type === 'no-bg-on-bg'
 			? 'bg-c-primary/0'
 			: 'bg-c-primary'} {type === 'bg-secondary'
@@ -142,6 +158,8 @@
 						? 'bg-c-bg-tertiary'
 						: type === 'no-bg-on-bg'
 						? 'bg-c-on-bg/10'
+						: type === 'primary-alt'
+						? 'bg-c-primary/15'
 						: 'bg-c-secondary'} not-touch:group-hover:translate-x-0"
 				/>
 			</div>
@@ -233,6 +251,10 @@
 			? 'text-c-on-bg/60'
 			: type === 'bg-secondary'
 			? 'text-c-on-bg'
+			: type === 'primary-alt'
+			? 'text-c-primary'
+			: type === 'on-bg'
+			? 'text-c-bg'
 			: 'text-c-on-primary'} {loading
 			? type === 'success'
 				? 'bg-c-success-secondary'
@@ -247,6 +269,10 @@
 			? 'bg-c-danger'
 			: type === 'bg-secondary'
 			? 'bg-c-bg-secondary'
+			: type === 'primary-alt'
+			? 'bg-c-bg-tertiary'
+			: type === 'on-bg'
+			? 'bg-c-on-bg'
 			: type === 'no-bg-on-bg'
 			? 'bg-c-primary/0'
 			: 'bg-c-primary'} {type === 'bg-secondary'
@@ -271,6 +297,8 @@
 						? 'bg-c-bg-tertiary'
 						: type === 'no-bg-on-bg'
 						? 'bg-c-on-bg/10'
+						: type === 'primary-alt'
+						? 'bg-c-primary/15'
 						: 'bg-c-secondary'} not-touch:group-enabled:group-hover:translate-x-0"
 				/>
 			</div>
@@ -362,6 +390,10 @@
 			? 'text-c-on-bg/60'
 			: type === 'bg-secondary'
 			? 'text-c-on-bg'
+			: type === 'primary-alt'
+			? 'text-c-primary'
+			: type === 'on-bg'
+			? 'text-c-bg'
 			: 'text-c-on-primary'} {loading
 			? type === 'success'
 				? 'bg-c-success-secondary'
@@ -376,6 +408,10 @@
 			? 'bg-c-danger'
 			: type === 'bg-secondary'
 			? 'bg-c-bg-secondary'
+			: type === 'primary-alt'
+			? 'bg-c-bg-tertiary'
+			: type === 'on-bg'
+			? 'bg-c-on-bg'
 			: type === 'no-bg-on-bg'
 			? 'bg-c-primary/0'
 			: 'bg-c-primary'} {type === 'bg-secondary' && !noBorder
@@ -400,6 +436,8 @@
 						? 'bg-c-bg-tertiary'
 						: type === 'no-bg-on-bg'
 						? 'bg-c-on-bg/10'
+						: type === 'primary-alt'
+						? 'bg-c-primary/15'
 						: 'bg-c-secondary'} not-touch:group-enabled:group-hover:translate-x-0"
 				/>
 			</div>
@@ -490,6 +528,10 @@
 			? 'text-c-on-bg/60'
 			: type === 'bg-secondary'
 			? 'text-c-on-bg'
+			: type === 'primary-alt'
+			? 'text-c-primary'
+			: type === 'on-bg'
+			? 'text-c-bg'
 			: 'text-c-on-primary'} {loading
 			? type === 'success'
 				? 'bg-c-success-secondary'
@@ -504,6 +546,10 @@
 			? 'bg-c-danger'
 			: type === 'bg-secondary'
 			? 'bg-c-bg-secondary'
+			: type === 'primary-alt'
+			? 'bg-c-bg-tertiary'
+			: type === 'on-bg'
+			? 'bg-c-on-bg'
 			: type === 'no-bg-on-bg'
 			? 'bg-c-primary/0'
 			: 'bg-c-primary'} {type === 'bg-secondary' && !noBorder
@@ -528,6 +574,8 @@
 						? 'bg-c-bg-tertiary'
 						: type === 'no-bg-on-bg'
 						? 'bg-c-on-bg/10'
+						: type === 'primary-alt'
+						? 'bg-c-primary/15'
 						: 'bg-c-secondary'} not-touch:group-enabled:group-hover:translate-x-0"
 				/>
 			</div>

@@ -18,13 +18,12 @@
 		getSvgPatternFg,
 		getSvgPatternBg
 	} from '$components/canvas/helpers/main';
-	import { exportStage } from '$components/canvas/helpers/exportStage';
+	import type { TGenerationFullOutput } from '$ts/stores/user/generation';
+	import { generateMode } from '$ts/stores/generate/generateMode';
+	import { generationOutputForInpainting } from '$components/canvas/stores/generationOutputForInpainting';
+	import IconAnimatedSpinner from '$components/icons/IconAnimatedSpinner.svelte';
 
-	export let generationOutput: {
-		width: number;
-		height: number;
-		image_url: string;
-	};
+	export let generationOutput: TGenerationFullOutput;
 
 	const stageId = 'konva-stage';
 	const stageForExportId = 'konva-stage-export';
@@ -34,6 +33,8 @@
 	let patternLayer: Konva.Layer;
 	let paintLayer: Konva.Layer;
 	let brushIndicatorLayer: Konva.Layer;
+	let image: HTMLImageElement | undefined = undefined;
+	let imageLoaded = false;
 	let brushIndicatorCircle: Konva.Circle;
 	let patternImageObj: HTMLImageElement;
 	let patternRect: Konva.Rect;
@@ -50,9 +51,9 @@
 
 	$: {
 		if (canvasContainerWidth && canvasContainerHeight) {
-			const aspectRatio = generationOutput.width / generationOutput.height;
-			const widthRatio = canvasContainerWidth / generationOutput.width;
-			const heightRatio = canvasContainerHeight / generationOutput.height;
+			const aspectRatio = generationOutput.generation.width / generationOutput.generation.height;
+			const widthRatio = canvasContainerWidth / generationOutput.generation.width;
+			const heightRatio = canvasContainerHeight / generationOutput.generation.height;
 			const boundByHeight = heightRatio < widthRatio;
 			if (boundByHeight) {
 				canvasHeight = canvasContainerHeight;
@@ -111,11 +112,16 @@
 		currentState: historyCurrentState
 	} = createHistoryStore<TInpaintingState>();
 
-	$: [canvasWidth, canvasHeight], onCanvasSizeChanged();
+	$: [generationOutput, canvasWidth, canvasHeight], createCanvas({ reset: true });
 
-	function onCanvasSizeChanged() {
+	function createCanvas({ reset = false }: { reset: boolean }) {
 		if (!canvasWidth || !canvasHeight) return;
-		if (stage) return;
+		if (reset && stage) {
+			stage.destroy();
+			image = undefined;
+			imageLoaded = false;
+			history.reset();
+		}
 		stage = new Konva.Stage({
 			container: 'konva-stage',
 			width: canvasWidth,
@@ -130,18 +136,19 @@
 		stage.add(patternLayer);
 		stage.add(brushIndicatorLayer);
 
-		const imageObj = new Image();
-		imageObj.onload = function () {
-			const image = new Konva.Image({
+		image = new Image();
+		image.onload = function () {
+			const img = new Konva.Image({
 				x: 0,
 				y: 0,
-				image: imageObj,
+				image,
 				width: stage.width(),
 				height: stage.height()
 			});
-			imageLayer.add(image);
+			imageLayer.add(img);
+			imageLoaded = true;
 		};
-		imageObj.src = generationOutput.image_url;
+		image.src = generationOutput.image_url;
 
 		history.addEntry({ paintLayerChildren: [] });
 
@@ -283,6 +290,11 @@
 		}, paintLayer);
 		patternAnim.start();
 	}
+
+	function onCancelClicked() {
+		generateMode.set('normal');
+		generationOutputForInpainting.set(null);
+	}
 </script>
 
 <div class="w-full flex-1 min-h-0 flex flex-col">
@@ -295,9 +307,7 @@
 			redoDisabled={!$hasRedo}
 			bind:brushSize
 			{brushConfig}
-			onDownloadClicked={() => {
-				exportStage({ layer: paintLayer, stage: stage, container: stageForExportId });
-			}}
+			{onCancelClicked}
 		/>
 	</div>
 	<div class="w-full h-4" />
@@ -312,10 +322,17 @@
 		>
 			<div class="w-full full flex items-center justify-center">
 				<div
-					class="ring-2 ring-c-bg-secondary shadow-lg shadow-c-shadow/[var(--o-shadow-normal)] rounded-lg overflow-hidden"
 					style="width: {canvasWidth}px; height: {canvasHeight}px"
-					id={stageId}
-				/>
+					class="relative rounded-lg overflow-hidden ring-2 bg-c-bg-secondary
+					ring-c-bg-secondary shadow-lg shadow-c-shadow/[var(--o-shadow-normal)]"
+				>
+					<div class="w-full h-full relative" id={stageId} />
+					{#if !image || !imageLoaded}
+						<div class="w-full h-full absolute left-0 top-0 flex items-center justify-center z-10">
+							<IconAnimatedSpinner loading={true} class="w-8 h-8 text-c-on-bg/50" />
+						</div>
+					{/if}
+				</div>
 			</div>
 		</div>
 	</div>

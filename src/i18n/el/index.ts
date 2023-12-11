@@ -215,6 +215,7 @@ const es: Translation = {
 		RerollButton: 'Αναδημιουργία',
 		RegenerateButton: 'Αναπαραγωγή',
 		GenerateButton: 'Δημιουργία',
+		EditButton: 'Edit',
 		UpscaleButton: 'Αύξηση ανάλυσης',
 		SimilarTitle: 'Παρόμοια',
 		ShowOnProfileButton: 'Show on Profile',

@@ -618,6 +618,10 @@ type RootTranslation = {
 		 */
 		GenerateButton: string
 		/**
+		 * E​d​i​t
+		 */
+		EditButton: string
+		/**
 		 * U​p​s​c​a​l​e
 		 */
 		UpscaleButton: string
@@ -3833,6 +3837,10 @@ export type TranslationFunctions = {
 		 * Generate
 		 */
 		GenerateButton: () => LocalizedString
+		/**
+		 * Edit
+		 */
+		EditButton: () => LocalizedString
 		/**
 		 * Upscale
 		 */

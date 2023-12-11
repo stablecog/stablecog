@@ -215,6 +215,7 @@ const ja: Translation = {
 		RerollButton: 'リロール',
 		RegenerateButton: '再生成',
 		GenerateButton: '生成',
+		EditButton: 'Edit',
 		UpscaleButton: 'アップスケール',
 		SimilarTitle: '類似画像',
 		ShowOnProfileButton: 'Show on Profile',

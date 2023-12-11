@@ -5,7 +5,7 @@
 	import ToolbarSectionWrapper from '$components/canvas/toolbar/ToolbarSectionWrapper.svelte';
 	import type { TBrushConfig, TTool } from '$components/canvas/toolbar/types';
 	import IconBrushAlt from '$components/icons/IconBrushAlt.svelte';
-	import IconDownload from '$components/icons/IconDownload.svelte';
+	import IconCancel from '$components/icons/IconCancel.svelte';
 	import IconEraser from '$components/icons/IconEraser.svelte';
 	import IconRedo from '$components/icons/IconRedo.svelte';
 	import IconUndo from '$components/icons/IconUndo.svelte';
@@ -19,7 +19,7 @@
 	export let redoDisabled = false;
 	export let brushSize: number;
 	export let brushConfig: TBrushConfig;
-	export let onDownloadClicked: () => void;
+	export let onCancelClicked: () => void;
 
 	const tools: { value: TTool; name: string; icon: ConstructorOfATypedSvelteComponent }[] = [
 		{ value: 'brush', name: 'Brush', icon: IconBrushAlt },
@@ -127,9 +127,9 @@
 
 	<ToolbarSectionWrapper>
 		<ToolbarButton
-			onClick={onDownloadClicked}
-			icon={IconDownload}
-			label={'download'}
+			onClick={onCancelClicked}
+			icon={IconCancel}
+			label={'Stop Editing'}
 			{paddingClass}
 			{sizeClass}
 		/>

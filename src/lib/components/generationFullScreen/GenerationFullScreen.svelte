@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { browser } from '$app/environment';
+	import { goto } from '$app/navigation';
 	import { page } from '$app/stores';
 	import ModalWrapper from '$components/ModalWrapper.svelte';
 	import QueuePosition from '$components/QueuePosition.svelte';
@@ -9,6 +10,7 @@
 	import ButtonHoverEffect from '$components/buttons/ButtonHoverEffect.svelte';
 	import FavoriteButton from '$components/buttons/FavoriteButton.svelte';
 	import UsernameButton from '$components/buttons/UsernameButton.svelte';
+	import { generationOutputForInpainting } from '$components/canvas/stores/generationOutputForInpainting';
 	import UpscaleAnimation from '$components/generate/UpscaleAnimation.svelte';
 	import ButtonsSection from '$components/generationFullScreen/ButtonsSection.svelte';
 	import Container from '$components/generationFullScreen/Container.svelte';
@@ -30,7 +32,9 @@
 		TSetButtonObjectWithState
 	} from '$components/generationFullScreen/types';
 	import SrcsetProvider from '$components/generationImage/SrcsetProvider.svelte';
+	import IconEdit from '$components/icons/IconEdit.svelte';
 	import IconNoImage from '$components/icons/IconNoImage.svelte';
+	import IconPen from '$components/icons/IconPen.svelte';
 	import IconUpscale from '$components/icons/IconUpscale.svelte';
 	import TabBar from '$components/tabBars/TabBar.svelte';
 	import LL, { locale } from '$i18n/i18n-svelte';
@@ -40,6 +44,7 @@
 	import { getGenerationUrlFromParams } from '$ts/helpers/getGenerationUrlFromParams';
 	import { getRelativeDate } from '$ts/helpers/getRelativeDate';
 	import { adminGallerySelectedOutputIds } from '$ts/stores/admin/gallery';
+	import { generateMode } from '$ts/stores/generate/generateMode';
 	import { lastClickedOutputId } from '$ts/stores/lastClickedOutputId';
 	import { userGalleryCurrentView } from '$ts/stores/user/gallery';
 	import { toggleGalleryActionableItemsState } from '$ts/stores/user/galleryActionableItems';
@@ -332,6 +337,15 @@
 		}
 	}
 
+	async function onEditClicked() {
+		generationOutputForInpainting.set({ generation: generation, ...generation.selected_output });
+		generateMode.set('inpainting');
+		activeGeneration.set(undefined);
+		if (modalType !== 'generate' && modalType !== 'stage') {
+			await goto('/generate');
+		}
+	}
+
 	let shareButtonPortalBarrier: HTMLDivElement;
 	let shareButtonPortalContent: HTMLDivElement;
 
@@ -518,7 +532,7 @@
 				<div class="w-full flex flex-col items-start justify-start">
 					<div class="w-full flex flex-col gap-4 md:gap-5 px-5 py-4 md:px-7 md:py-5">
 						{#if (modalType === 'generate' || (modalType === 'history' && $userGalleryCurrentView !== 'likes')) && !generation.selected_output.image_url.includes('placeholder')}
-							<div class="w-full pt-1.5">
+							<div class="w-full flex flex-col pt-1.5">
 								{#if !generation.selected_output.upscaled_image_url || upscaleBeingProcessed}
 									<div class="w-full relative">
 										<Button
@@ -553,6 +567,33 @@
 										name="Upscaled or Default Image"
 									/>
 								{/if}
+								<!-- Edit Image Button -->
+								<!-- <div
+									class="w-full {!generation.selected_output.upscaled_image_url ||
+									upscaleBeingProcessed
+										? 'mt-2'
+										: 'mt-2.5'}"
+								>
+									<Button
+										onClick={onEditClicked}
+										disabled={doesntHaveEnoughCredits}
+										fadeOnDisabled={doesntHaveEnoughCredits}
+										class="w-full"
+										type="on-bg"
+										size="sm"
+									>
+										<div class="flex items-center gap-2">
+											<IconPen class="w-5 h-5" />
+											<p>{$LL.GenerationFullscreen.EditButton()}</p>
+										</div>
+									</Button>
+									{#if doesntHaveEnoughCredits && !upscaleBeingProcessed && $userSummary && $page.data.session?.user.id}
+										<InsufficientCreditsBadge
+											neededCredits={upscaleCreditCost}
+											remainingCredits={$userSummary.total_remaining_credits}
+										/>
+									{/if}
+								</div> -->
 							</div>
 						{/if}
 						<div class="w-full flex justify-start items-center mt-1">

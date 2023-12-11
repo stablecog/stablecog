@@ -208,6 +208,7 @@ const nl: Translation = {
 		RerollButton: 'Nieuwe seed',
 		RegenerateButton: 'Opnieuw genereren',
 		GenerateButton: 'Genereren',
+		EditButton: 'Edit',
 		UpscaleButton: 'Opschalen',
 		SimilarTitle: 'Similar',
 		ShowOnProfileButton: 'Show on Profile',

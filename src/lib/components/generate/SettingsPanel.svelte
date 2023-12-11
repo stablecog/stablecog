@@ -46,6 +46,7 @@
 	import WithTooltip from '$components/WithTooltip.svelte';
 	import IconStar from '$components/icons/IconStar.svelte';
 	import { toggle } from '@melt-ui/svelte/internal/helpers';
+	import { generateMode } from '$ts/stores/generate/generateMode';
 
 	export let rounding: 'all' | 'top' | 'bottom' = 'all';
 	export let openSignInModal: () => void;
@@ -65,24 +66,26 @@
 		bind:this={settingsContainer}
 		class="w-full h-full flex flex-col overflow-auto pt-4 md:pt-5 pb-[calc(4rem+env(safe-area-inset-bottom))] md:pb-20 gap-7"
 	>
-		<SettingsPanelItem
-			title={$LL.Home.AspectRatioDropdown.Title()}
-			iconType="aspect-ratio"
-			tooltipTitle={$LL.Home.AspectRatioTabBar.Title()}
-			tooltipParagraph={$LL.Home.AspectRatioTabBar.Paragraph()}
-		>
-			<TabLikeDropdown
-				class="w-full"
-				iconSet={IconAspectRatio}
-				container={settingsContainer}
-				containerTopMinDistance={containerDropdownPadding}
-				containerBottomMinDistance={containerDropdownPadding}
-				items={$aspectRatioDropdownItems}
-				hasTitle={false}
-				bind:value={$generationAspectRatio}
-				name={$LL.Home.AspectRatioDropdown.Title()}
-			/>
-		</SettingsPanelItem>
+		{#if $generateMode !== 'inpainting'}
+			<SettingsPanelItem
+				title={$LL.Home.AspectRatioDropdown.Title()}
+				iconType="aspect-ratio"
+				tooltipTitle={$LL.Home.AspectRatioTabBar.Title()}
+				tooltipParagraph={$LL.Home.AspectRatioTabBar.Paragraph()}
+			>
+				<TabLikeDropdown
+					class="w-full"
+					iconSet={IconAspectRatio}
+					container={settingsContainer}
+					containerTopMinDistance={containerDropdownPadding}
+					containerBottomMinDistance={containerDropdownPadding}
+					items={$aspectRatioDropdownItems}
+					hasTitle={false}
+					bind:value={$generationAspectRatio}
+					name={$LL.Home.AspectRatioDropdown.Title()}
+				/>
+			</SettingsPanelItem>
+		{/if}
 		<SettingsPanelItem
 			title={$LL.Home.ModelDropdown.Title()}
 			iconType="model"
@@ -109,14 +112,16 @@
 				<ModelCard modelId={item.value} {onClick} {isSelected} {isNew} />
 			</TabLikeDropdown>
 		</SettingsPanelItem>
-		<SettingsPanelItem
-			title={$LL.Home.ImageInput.Title()}
-			iconType="upload-image"
-			tooltipTitle={$LL.Home.ImageInput.Title()}
-			tooltipParagraph={$LL.Home.InitialImageTabBar.Paragraph()}
-		>
-			<TabLikeInitImageUploader2 disabled={!isCheckCompleted} class="w-full" {openSignInModal} />
-		</SettingsPanelItem>
+		{#if $generateMode !== 'inpainting'}
+			<SettingsPanelItem
+				title={$LL.Home.ImageInput.Title()}
+				iconType="upload-image"
+				tooltipTitle={$LL.Home.ImageInput.Title()}
+				tooltipParagraph={$LL.Home.InitialImageTabBar.Paragraph()}
+			>
+				<TabLikeInitImageUploader2 disabled={!isCheckCompleted} class="w-full" {openSignInModal} />
+			</SettingsPanelItem>
+		{/if}
 		<SettingsPanelItem
 			title={$LL.Home.NegativePromptInput.Title()}
 			iconType="negative-prompt"

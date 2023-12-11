@@ -215,6 +215,7 @@ const tr: Translation = {
 		RerollButton: 'Rastgele Üret',
 		RegenerateButton: 'Tekrar Üret',
 		GenerateButton: 'Üret',
+		EditButton: 'Edit',
 		UpscaleButton: 'Büyüt',
 		SimilarTitle: 'Benzer',
 		ShowOnProfileButton: 'Profilde Göster',

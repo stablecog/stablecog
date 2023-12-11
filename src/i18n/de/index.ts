@@ -204,6 +204,7 @@ const de: Translation = {
 		RerollButton: 'Seed durchmischen',
 		RegenerateButton: 'Erneut generieren',
 		GenerateButton: 'Generieren',
+		EditButton: 'Edit',
 		UpscaleButton: 'Hochskalieren',
 		SimilarTitle: 'Similar',
 		ShowOnProfileButton: 'Show on Profile',

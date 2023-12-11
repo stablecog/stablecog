@@ -53,7 +53,9 @@
 	import { isSignInModalOpen } from '$ts/stores/isSignInModalOpen.js';
 	import { writable } from 'svelte/store';
 	import WithChangeUsernameModal from '$components/WithChangeUsernameModal.svelte';
-	/* import InpaintingCanvas from '$components/canvas/inpainting/InpaintingCanvas.svelte'; */
+	import InpaintingCanvas from '$components/canvas/inpainting/InpaintingCanvas.svelte';
+	import { generationOutputForInpainting } from '$components/canvas/stores/generationOutputForInpainting.js';
+	import { generateMode } from '$ts/stores/generate/generateMode.js';
 
 	export let data;
 
@@ -430,33 +432,26 @@
 							</div>
 						{/if}
 						<div class="w-full flex-1 min-w-0 min-h-0 flex flex-col px-2 lg:px-6">
-							<!-- {#if $userGenerationFullOutputsQuery && $userGenerationFullOutputsQuery.data?.pages?.[0].outputs}
-								<InpaintingCanvas
-									generationOutput={{
-										width:
-											$userGenerationFullOutputsQuery.data?.pages?.[0].outputs[0].generation.width,
-										height:
-											$userGenerationFullOutputsQuery.data?.pages?.[0].outputs[0].generation.height,
-										image_url: $userGenerationFullOutputsQuery.data?.pages?.[0].outputs[0].image_url
-									}}
-								/>
-							{/if} -->
-							<div
-								bind:clientWidth={stageWidth}
-								bind:clientHeight={stageHeight}
-								class="flex-1 min-w-0 w-full"
-							>
-								{#if stageWidth && stageHeight}
-									{#key $generations[0].ui_id}
-										<GenerationStage
-											generation={$generations[0]}
-											{stageWidth}
-											{stageHeight}
-											bind:isReadyMap
-										/>
-									{/key}
-								{/if}
-							</div>
+							{#if $generationOutputForInpainting && $generateMode === 'inpainting'}
+								<InpaintingCanvas generationOutput={$generationOutputForInpainting} />
+							{:else}
+								<div
+									bind:clientWidth={stageWidth}
+									bind:clientHeight={stageHeight}
+									class="flex-1 min-w-0 w-full"
+								>
+									{#if stageWidth && stageHeight}
+										{#key $generations[0].ui_id}
+											<GenerationStage
+												generation={$generations[0]}
+												{stageWidth}
+												{stageHeight}
+												bind:isReadyMap
+											/>
+										{/key}
+									{/if}
+								</div>
+							{/if}
 						</div>
 					</div>
 					<div class="w-full hidden md:flex lg:hidden pt-11">
