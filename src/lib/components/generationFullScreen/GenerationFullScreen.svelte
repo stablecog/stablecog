@@ -32,7 +32,6 @@
 		TSetButtonObjectWithState
 	} from '$components/generationFullScreen/types';
 	import SrcsetProvider from '$components/generationImage/SrcsetProvider.svelte';
-	import IconEdit from '$components/icons/IconEdit.svelte';
 	import IconNoImage from '$components/icons/IconNoImage.svelte';
 	import IconPen from '$components/icons/IconPen.svelte';
 	import IconUpscale from '$components/icons/IconUpscale.svelte';

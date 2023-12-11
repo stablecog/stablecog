@@ -1,8 +1,8 @@
 <script lang="ts">
 	import { page } from '$app/stores';
 	import { locale } from '$i18n/i18n-svelte';
-	import { apiUrl } from '$ts/constants/main';
 	import { logInitImageAdded } from '$ts/helpers/loggers';
+	import { uploadImage } from '$ts/helpers/user/uploadImage';
 	import { appVersion } from '$ts/stores/appVersion';
 	import {
 		generationInitImageFiles,
@@ -88,6 +88,8 @@
 
 	async function onFilesChanged() {
 		if (!$generationInitImageFiles) return;
+		const access_token = $page.data.session?.access_token;
+		if (!access_token) return;
 		const file = $generationInitImageFiles?.[0];
 		if (!file) return;
 		generationInitImageUrl.set(undefined);
@@ -113,18 +115,9 @@
 			'SC - App Version': $appVersion
 		});
 		try {
-			const res = await fetch(`${apiUrl.origin}/upload`, {
-				method: 'POST',
-				body: formData,
-				headers: {
-					Authorization: `Bearer ${$page.data.session?.access_token}`
-				}
-			});
-			if (!res.ok) throw new Error('Upload failed');
-			const resJson = await res.json();
-			if (!resJson.object) throw new Error('Upload failed, no object');
+			const url = await uploadImage({ access_token, formData });
 			if ($generationInitImageFilesState === 'uploading' && $generationInitImageFiles) {
-				generationInitImageUrl.set(resJson.object);
+				generationInitImageUrl.set(url);
 				generationInitImageFilesState.set('uploaded');
 			}
 		} catch (error) {

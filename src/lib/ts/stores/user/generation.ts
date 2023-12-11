@@ -24,6 +24,8 @@ import {
 } from '$ts/constants/stripePublic';
 import type { TQueueItem } from '$ts/stores/user/queue';
 import { z } from 'zod';
+import { uploadImage } from '$ts/helpers/user/uploadImage';
+import { dataUrltoFile } from '$components/canvas/helpers/exportStage';
 
 export const generations = writable<TGeneration[]>([]);
 export const activeGeneration = writable<TGenerationWithSelectedOutput | undefined>(undefined);
@@ -222,10 +224,21 @@ export async function submitInitialGenerationRequest(
 	const promptText = request.prompt.text;
 	const negativePromptText = request.negative_prompt?.text;
 	const { prompt, negative_prompt, ...rest } = request;
+
+	// upload the mask image if it exists
+	let mask_image_url = undefined;
+	if (request.mask_image_data_url) {
+		const formData = new FormData();
+		const file = dataUrltoFile(request.mask_image_data_url);
+		formData.append('file', file);
+		mask_image_url = await uploadImage({ access_token, formData: formData });
+	}
+
 	const finalRequest = {
 		...rest,
 		prompt: promptText,
-		negative_prompt: negativePromptText
+		negative_prompt: negativePromptText,
+		mask_image_url
 	};
 	const response = await fetch(`${apiUrl.origin}/v1/user/generation`, {
 		method: 'POST',
@@ -521,6 +534,7 @@ export interface TInitialGenerationRequest extends TGenerationBase {
 	process_type: TProcessType;
 	submit_to_gallery: boolean;
 	init_image_file?: FileList;
+	mask_image_data_url?: string;
 }
 
 export type TGenerationStatus =

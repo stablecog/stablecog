@@ -1,5 +1,5 @@
 import { writable } from 'svelte/store';
 
-export const generateMode = writable<TGenerateMode>('normal');
+export const generateMode = writable<TGenerateMode>('regular');
 
-type TGenerateMode = 'normal' | 'inpainting';
+type TGenerateMode = 'regular' | 'inpainting';

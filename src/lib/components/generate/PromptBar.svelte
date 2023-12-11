@@ -46,6 +46,10 @@
 	import NoBgButton from '$components/buttons/NoBgButton.svelte';
 	import type { TGeneratePageData } from '$approutes/generate/+page.server';
 	import IconSettings from '$components/icons/IconSettings.svelte';
+	import { generateMode } from '$ts/stores/generate/generateMode';
+	import { exportStage } from '$components/canvas/helpers/exportStage';
+	import { konvaContainerId } from '$components/canvas/constants/main';
+	import { KonvaInstance, paintLayer, stage } from '$components/canvas/stores/konva';
 
 	export let openSignInModal: () => void;
 	export let serverData: TGeneratePageData;
@@ -133,6 +137,15 @@
 			console.log("No SSE ID, can't create generation");
 			return;
 		}
+		let mask_image_data_url = undefined;
+		if ($generateMode === 'inpainting') {
+			mask_image_data_url = await exportStage({
+				container: konvaContainerId,
+				konvaInstance: $KonvaInstance,
+				layer: $paintLayer,
+				stage: $stage
+			});
+		}
 		const initialRequestProps: TInitialGenerationRequest = {
 			prompt: {
 				id: 'prompt',
@@ -150,6 +163,7 @@
 			height: Number($generationHeight),
 			init_image_url: $generationInitImageUrl,
 			init_image_file: $generationInitImageFiles,
+			mask_image_data_url,
 			prompt_strength:
 				$generationInitImageUrl && $generationInitImageStrength !== undefined
 					? Number((1 - Number($generationInitImageStrength) / 100).toFixed(1))

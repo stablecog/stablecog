@@ -18,25 +18,28 @@
 		getSvgPatternFg,
 		getSvgPatternBg
 	} from '$components/canvas/helpers/main';
-	import type { TGenerationFullOutput } from '$ts/stores/user/generation';
 	import { generateMode } from '$ts/stores/generate/generateMode';
 	import { generationOutputForInpainting } from '$components/canvas/stores/generationOutputForInpainting';
 	import IconAnimatedSpinner from '$components/icons/IconAnimatedSpinner.svelte';
-	import { onMount } from 'svelte';
+	import { onDestroy, onMount } from 'svelte';
 	import ErrorChip from '$components/error/ErrorChip.svelte';
 	import LL from '$i18n/i18n-svelte';
+	import { konvaContainerForExportId, konvaContainerId } from '$components/canvas/constants/main';
+	import { KonvaInstance, paintLayer, stage } from '$components/canvas/stores/konva';
+	import {
+		generationHeight,
+		generationInitImageUrl,
+		generationModelId,
+		generationWidth
+	} from '$ts/stores/generationSettings';
+	import type { TAvailableWidth } from '$ts/constants/generationSize';
+	import type { TGenerationFullOutput } from '$ts/stores/user/generation';
 
 	export let generationOutput: TGenerationFullOutput;
 
-	const stageId = 'konva-stage';
-	const stageForExportId = 'konva-stage-export';
-
-	let KonvaInstance: typeof Konva;
 	let konvaErrored = false;
-	let stage: Konva.Stage;
 	let imageLayer: Konva.Layer;
 	let patternLayer: Konva.Layer;
-	let paintLayer: Konva.Layer;
 	let brushIndicatorLayer: Konva.Layer;
 	let image: HTMLImageElement | undefined = undefined;
 	let imageLoaded = false;
@@ -82,9 +85,9 @@
 	}
 
 	$: {
-		if (paintLayer && KonvaInstance) {
-			paintLayer.children.forEach((c) => {
-				if (c instanceof KonvaInstance.Line) {
+		if ($paintLayer && $KonvaInstance) {
+			$paintLayer.children.forEach((c) => {
+				if (c instanceof $KonvaInstance.Line) {
 					c.stroke(getBrushStroke($theme));
 				}
 			});
@@ -117,40 +120,47 @@
 		currentState: historyCurrentState
 	} = createHistoryStore<TInpaintingState>();
 
-	$: [generationOutput, canvasWidth, canvasHeight, KonvaInstance], createCanvas({ reset: true });
+	$: [generationOutput, canvasWidth, canvasHeight, $KonvaInstance], createCanvas({ reset: true });
 
 	function createCanvas({ reset = false }: { reset: boolean }) {
-		if (!KonvaInstance) return;
+		if (!$KonvaInstance) return;
 		if (!canvasWidth || !canvasHeight) return;
-		if (reset && stage) {
-			stage.destroy();
+		if (reset && $stage) {
+			$stage.destroy();
 			image = undefined;
 			imageLoaded = false;
 			history.clear();
 			konvaErrored = false;
 		}
-		stage = new KonvaInstance.Stage({
+
+		// set generation params
+		generationWidth.set(generationOutput.generation.width.toString() as TAvailableWidth);
+		generationHeight.set(generationOutput.generation.height.toString() as TAvailableWidth);
+		generationInitImageUrl.set(generationOutput.image_url);
+		generationModelId.set(generationOutput.generation.model_id);
+
+		$stage = new $KonvaInstance.Stage({
 			container: 'konva-stage',
 			width: canvasWidth,
 			height: canvasHeight
 		});
-		imageLayer = new KonvaInstance.Layer();
-		paintLayer = new KonvaInstance.Layer();
-		brushIndicatorLayer = new KonvaInstance.Layer();
-		patternLayer = new KonvaInstance.Layer();
-		stage.add(imageLayer);
-		stage.add(paintLayer);
-		stage.add(patternLayer);
-		stage.add(brushIndicatorLayer);
+		imageLayer = new $KonvaInstance.Layer();
+		paintLayer.set(new $KonvaInstance.Layer());
+		brushIndicatorLayer = new $KonvaInstance.Layer();
+		patternLayer = new $KonvaInstance.Layer();
+		$stage.add(imageLayer);
+		$stage.add($paintLayer);
+		$stage.add(patternLayer);
+		$stage.add(brushIndicatorLayer);
 
 		image = new Image();
 		image.onload = function () {
-			const img = new KonvaInstance.Image({
+			const img = new $KonvaInstance.Image({
 				x: 0,
 				y: 0,
 				image,
-				width: stage.width(),
-				height: stage.height()
+				width: $stage.width(),
+				height: $stage.height()
 			});
 			imageLayer.add(img);
 			imageLoaded = true;
@@ -165,9 +175,9 @@
 		};
 		patternImageObj.src = getColoredSvgPattern(getSvgPatternFg($theme), getSvgPatternBg($theme));
 
-		brushIndicatorCircle = new KonvaInstance.Circle({
-			x: stage.width() / 2,
-			y: stage.height() / 2,
+		brushIndicatorCircle = new $KonvaInstance.Circle({
+			x: $stage.width() / 2,
+			y: $stage.height() / 2,
 			radius: getBrushIndicatorCircleRadius(brushSize),
 			stroke: getBrushIndicatorCircleStroke($theme),
 			strokeWidth: 2,
@@ -182,11 +192,11 @@
 
 		brushIndicatorLayer.add(brushIndicatorCircle);
 
-		stage.on('mousedown touchstart', function (e) {
+		$stage.on('mousedown touchstart', function (e) {
 			isPainting = true;
-			const pos = stage.getPointerPosition();
+			const pos = $stage.getPointerPosition();
 			if (!pos) return;
-			lastLine = new KonvaInstance.Line({
+			lastLine = new $KonvaInstance.Line({
 				stroke: getBrushStroke($theme),
 				strokeWidth: brushSize,
 				globalCompositeOperation: $selectedTool === 'brush' ? 'source-over' : 'destination-out',
@@ -194,20 +204,20 @@
 				lineJoin: 'round',
 				points: [pos.x, pos.y, pos.x, pos.y]
 			});
-			paintLayer.add(lastLine);
+			$paintLayer.add(lastLine);
 			patternRect?.moveToTop();
 		});
 
-		stage.on('mouseup touchend', function () {
+		$stage.on('mouseup touchend', function () {
 			isPainting = false;
-			const paintLayerChildren = copy(paintLayer.getChildren());
-			const linesOnly = paintLayerChildren.filter((c) => c instanceof KonvaInstance.Line);
+			const paintLayerChildren = copy($paintLayer.getChildren());
+			const linesOnly = paintLayerChildren.filter((c) => c instanceof $KonvaInstance.Line);
 			history.addEntry({ paintLayerChildren: linesOnly });
 		});
 
-		stage.on('mousemove touchmove', function (e) {
+		$stage.on('mousemove touchmove', function (e) {
 			console.log('mousemove');
-			const pos = stage.getPointerPosition();
+			const pos = $stage.getPointerPosition();
 			if (!pos) return;
 
 			brushIndicatorCircle.visible(true);
@@ -241,16 +251,16 @@
 	}
 
 	function setInpaintingState(newState: TInpaintingState) {
-		paintLayer.destroyChildren();
+		$paintLayer.destroyChildren();
 
 		const children = newState.paintLayerChildren;
 		children.forEach((child) => {
-			const node = KonvaInstance.Node.create(child);
-			paintLayer.add(node);
-			if (node instanceof KonvaInstance.Rect) node.moveToTop();
+			const node = $KonvaInstance.Node.create(child);
+			$paintLayer.add(node);
+			if (node instanceof $KonvaInstance.Rect) node.moveToTop();
 		});
 
-		paintLayer.draw();
+		$paintLayer.draw();
 	}
 
 	function onBrushSizeChanged() {
@@ -261,7 +271,7 @@
 
 	function resetBrushCirclePosition() {
 		if (!brushIndicatorCircle) return;
-		brushIndicatorCircle.position({ x: stage.width() / 2, y: stage.height() / 2 });
+		brushIndicatorCircle.position({ x: $stage.width() / 2, y: $stage.height() / 2 });
 		brushIndicatorLayer.draw();
 	}
 
@@ -278,19 +288,19 @@
 	function resetPatternRect() {
 		if (patternRect) patternRect.destroy();
 		if (patternAnim) patternAnim.stop();
-		patternRect = new KonvaInstance.Rect({
+		patternRect = new $KonvaInstance.Rect({
 			x: 0,
 			y: 0,
-			width: stage.width(),
-			height: stage.height(),
+			width: $stage.width(),
+			height: $stage.height(),
 			fillPatternImage: patternImageObj,
 			fillPatternRepeat: 'repeat',
 			fillPatternScaleX: 0.5,
 			fillPatternScaleY: 0.5,
 			globalCompositeOperation: 'source-in'
 		});
-		paintLayer.add(patternRect);
-		patternAnim = new KonvaInstance.Animation(function (frame) {
+		$paintLayer.add(patternRect);
+		patternAnim = new $KonvaInstance.Animation(function (frame) {
 			var offset = patternRect.fillPatternOffset();
 			offset.x += 0.1;
 			patternRect.fillPatternOffset(offset);
@@ -299,13 +309,14 @@
 	}
 
 	function onCancelClicked() {
-		generateMode.set('normal');
+		generateMode.set('regular');
 		generationOutputForInpainting.set(null);
 	}
 
 	onMount(async () => {
 		try {
-			KonvaInstance = (await import('konva')).default;
+			const k = (await import('konva')).default;
+			KonvaInstance.set(k);
 		} catch (error) {
 			console.log(error);
 			konvaErrored = true;
@@ -342,13 +353,13 @@
 					class="relative rounded-lg overflow-hidden ring-2 bg-c-bg-secondary
 					ring-c-bg-secondary shadow-lg shadow-c-shadow/[var(--o-shadow-normal)]"
 				>
-					<div class="w-full h-full relative" id={stageId} />
+					<div class="w-full h-full relative" id={konvaContainerId} />
 					{#if !image || !imageLoaded}
 						<div class="w-full h-full absolute left-0 top-0 flex items-center justify-center z-10">
 							<IconAnimatedSpinner loading={true} class="w-8 h-8 text-c-on-bg/50" />
 						</div>
 					{/if}
-					{#if !KonvaInstance && konvaErrored}
+					{#if !$KonvaInstance && konvaErrored}
 						<div
 							class="w-full h-full bg-c-bg-secondary absolute p-3 left-0 top-0 flex items-center justify-center"
 						>
@@ -359,5 +370,5 @@
 			</div>
 		</div>
 	</div>
-	<div class="w-0 h-0 overflow-hidden" id={stageForExportId} />
+	<div class="w-0 h-0 overflow-hidden" id={konvaContainerForExportId} />
 </div>

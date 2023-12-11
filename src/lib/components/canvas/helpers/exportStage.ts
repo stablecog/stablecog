@@ -2,7 +2,7 @@ import type Konva from 'konva';
 
 const blurAmount = 32;
 
-export function exportStage({
+export async function exportStage({
 	layer,
 	stage,
 	container,
@@ -66,22 +66,28 @@ export function exportStage({
 	});
 
 	// Export the off-screen stage
-	const dataURL = stageForExport.toDataURL({
+	const dataUrl = stageForExport.toDataURL({
 		mimeType: 'image/png',
 		quality: 1.0
 	});
 
 	stageForExport.destroy();
 
-	// Download the exported image
-	downloadURI(dataURL, 'image.png');
+	return dataUrl;
 }
 
-function downloadURI(uri: string, name: string) {
-	var link = document.createElement('a');
-	link.download = name;
-	link.href = uri;
-	document.body.appendChild(link);
-	link.click();
-	document.body.removeChild(link);
+export function dataUrltoBlob(dataURL: string) {
+	let byteString = atob(dataURL.split(',')[1]);
+	let mimeString = dataURL.split(',')[0].split(':')[1].split(';')[0];
+	let ab = new ArrayBuffer(byteString.length);
+	let ia = new Uint8Array(ab);
+	for (let i = 0; i < byteString.length; i++) {
+		ia[i] = byteString.charCodeAt(i);
+	}
+	return new Blob([ab], { type: mimeString });
+}
+
+export function dataUrltoFile(dataUrl: string) {
+	const blob = dataUrltoBlob(dataUrl);
+	return new File([blob], 'image.png', { type: 'image/png' });
 }
