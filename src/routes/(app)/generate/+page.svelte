@@ -3,7 +3,6 @@
 	import GenerationFullScreen from '$components/generationFullScreen/GenerationFullScreen.svelte';
 	import SettingsPanel from '$components/generate/SettingsPanel.svelte';
 	import { activeGeneration, generations, type TGeneration } from '$ts/stores/user/generation';
-
 	import { onMount, tick } from 'svelte';
 	import PromptBar from '$components/generate/PromptBar.svelte';
 	import { quadOut } from 'svelte/easing';

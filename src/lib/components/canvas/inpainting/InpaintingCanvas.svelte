@@ -14,7 +14,9 @@
 		getBrushSize,
 		getCanvasMinSize,
 		getColoredSvgPattern,
-		getBrushStroke
+		getBrushStroke,
+		getSvgPatternFg,
+		getSvgPatternBg
 	} from '$components/canvas/helpers/main';
 	import { exportStage } from '$components/canvas/helpers/exportStage';
 
@@ -147,10 +149,7 @@
 		patternImageObj.onload = function () {
 			resetPatternRect();
 		};
-		patternImageObj.src = getColoredSvgPattern(
-			getBrushIndicatorCircleFill('dark'),
-			getBrushIndicatorCircleStroke('dark')
-		);
+		patternImageObj.src = getColoredSvgPattern(getSvgPatternFg($theme), getSvgPatternBg($theme));
 
 		brushIndicatorCircle = new Konva.Circle({
 			x: stage.width() / 2,
@@ -162,7 +161,7 @@
 			fillEnabled: true,
 			dashEnabled: false,
 			fill: getBrushIndicatorCircleFill($theme),
-			dash: [4, 4],
+			dash: [1, 4],
 			lineCap: 'round',
 			lineJoin: 'round'
 		});
