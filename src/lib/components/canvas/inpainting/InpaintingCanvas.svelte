@@ -53,6 +53,7 @@
 	let brushIndicatorLayer: Konva.Layer;
 	let image: HTMLImageElement | undefined = undefined;
 	let imageLoaded = false;
+	let imageLoadedFirstTime = false;
 	let brushIndicatorCircle: Konva.Circle;
 	let patternImageObj: HTMLImageElement;
 	let patternRect: Konva.Rect;
@@ -156,7 +157,7 @@
 		if (reset && $stage) {
 			$stage.destroy();
 			image = undefined;
-			imageLoaded = false;
+			imageLoadedFirstTime = false;
 			history.clear();
 			konvaErrored = false;
 			allOutputs = undefined;
@@ -255,7 +256,6 @@
 		history.undo();
 		if ($historyCurrentState) {
 			setInpaintingState($historyCurrentState);
-			resetPatternRect();
 		}
 	}
 
@@ -263,7 +263,6 @@
 		history.redo();
 		if ($historyCurrentState) {
 			setInpaintingState($historyCurrentState);
-			resetPatternRect();
 		}
 	}
 
@@ -276,6 +275,8 @@
 			$paintLayer.add(node);
 			if (node instanceof $KonvaInstance.Rect) node.moveToTop();
 		});
+
+		resetPatternRect();
 
 		$paintLayer.draw();
 	}
@@ -338,13 +339,14 @@
 	function onAllOutputsChanged() {
 		if (!allOutputs || allOutputs.length < 2) return;
 		$paintLayer?.destroyChildren();
+		resetPatternRect();
 		history.addEntry({ paintLayerChildren: [] });
 		selectedOutputIndex = 1;
 		setImage(allOutputs[selectedOutputIndex].image_url);
 	}
 
 	function setImage(url: string) {
-		imageLayer?.destroyChildren();
+		imageLoaded = false;
 		image = new Image();
 		image.onload = function () {
 			const img = new $KonvaInstance.Image({
@@ -356,6 +358,9 @@
 			});
 			imageLayer.add(img);
 			imageLoaded = true;
+			if (!imageLoadedFirstTime) {
+				imageLoadedFirstTime = true;
+			}
 		};
 		image.src = url;
 	}
@@ -402,7 +407,7 @@
 						ring-c-bg-secondary shadow-lg shadow-c-shadow/[var(--o-shadow-normal)]"
 					>
 						<div class="w-full h-full relative" id={konvaContainerId} />
-						{#if !image || !imageLoaded}
+						{#if !image || !imageLoadedFirstTime}
 							<div class="w-full h-full absolute left-0 top-0 flex items-center justify-center">
 								<IconAnimatedSpinner loading={true} class="w-8 h-8 text-c-on-bg/50" />
 							</div>
@@ -425,26 +430,25 @@
 						{:else if allOutputs !== undefined}
 							{@const outputs = allOutputs}
 							<div
-								class="w-full h-full pointer-events-none absolute bottom-0 left-0 flex flex-col justify-between items-center p-2"
+								class="w-full h-full pointer-events-none absolute bottom-0 left-0 flex flex-col justify-end items-center p-2"
 							>
 								{#if selectedOutputIndex === 0}
 									<div
 										transition:flyAndScale={{
-											duration: 100,
+											duration: 150,
 											easing: quadOut,
 											opacity: 0,
-											yPercent: -100
+											yPercent: 100
 										}}
-										class="bg-c-bg-secondary p-px rounded-md shadow-md shadow-c-shadow/[var(--o-shadow-normal)]"
+										class="bg-c-bg-secondary p-px text-sm md:text-base text-center rounded-lg shadow-md shadow-c-shadow/[var(--o-shadow-normal)]
+										z-0 -mb-2.5 pointer-events-auto"
 									>
-										<p class="px-1.75 py-0.5 font-medium text-sm text-c-primary">
+										<p class="px-2 pt-0.75 pb-3.25 font-medium text-c-primary">
 											{$LL.Inpainting.OriginalImageTitle()}
 										</p>
 									</div>
-								{:else}
-									<div class="w-full" />
 								{/if}
-								<ToolbarSectionWrapper class="gap-2 pointer-events-auto">
+								<ToolbarSectionWrapper class="gap-2 pointer-events-auto z-10">
 									<ToolbarButton
 										label="Go Left"
 										onClick={() => {
@@ -457,7 +461,9 @@
 										onClickClass="-translate-x-1"
 										disabled={selectedOutputIndex === 0}
 									/>
-									<p class="font-medium text-c-on-bg/60 text-sm min-w-[2rem] text-center">
+									<p
+										class="font-medium text-c-on-bg/50 text-sm md:text-base min-w-[2rem] md:min-w-[2.5rem] text-center"
+									>
 										<span
 											class="font-semibold transition duration-100 {selectedOutputIndex === 0
 												? 'text-c-primary'
