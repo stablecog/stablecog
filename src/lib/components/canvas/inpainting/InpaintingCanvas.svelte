@@ -57,7 +57,7 @@
 	let brushIndicatorCircle: Konva.Circle;
 	let patternImageObj: HTMLImageElement;
 	let patternRect: Konva.Rect;
-	let patternAnim: Konva.Animation;
+	let patternAnimation: Konva.Animation;
 
 	let canvasContainerWidth: number | undefined = undefined;
 	let canvasContainerHeight: number | undefined = undefined;
@@ -305,7 +305,7 @@
 
 	function resetPatternRect() {
 		if (patternRect) patternRect.destroy();
-		if (patternAnim) patternAnim.stop();
+		if (patternAnimation) patternAnimation.stop();
 		patternRect = new $KonvaInstance.Rect({
 			x: 0,
 			y: 0,
@@ -318,12 +318,12 @@
 			globalCompositeOperation: 'source-in'
 		});
 		$paintLayer.add(patternRect);
-		patternAnim = new $KonvaInstance.Animation(function (frame) {
+		patternAnimation = new $KonvaInstance.Animation(function (frame) {
 			var offset = patternRect.fillPatternOffset();
 			offset.x += 0.1;
 			patternRect.fillPatternOffset(offset);
 		}, paintLayer);
-		patternAnim.start();
+		patternAnimation.start();
 	}
 
 	function onCancelClicked() {
@@ -334,6 +334,11 @@
 	function onIsGeneratingChanged() {
 		if (!brushIndicatorLayer) return;
 		brushIndicatorLayer.visible(!isGenerating);
+		if (isGenerating) {
+			patternAnimation?.stop();
+		} else {
+			patternAnimation?.start();
+		}
 	}
 
 	function onAllOutputsChanged() {
@@ -343,6 +348,11 @@
 		history.addEntry({ paintLayerChildren: [] });
 		selectedOutputIndex = 1;
 		setImage(allOutputs[selectedOutputIndex].image_url);
+		// Load all images
+		allOutputs.slice(1).forEach((o) => {
+			const img = new Image();
+			img.src = o.image_url;
+		});
 	}
 
 	function setImage(url: string) {
@@ -434,7 +444,7 @@
 							>
 								<div class="max-w-full relative">
 									<div
-										class="w-full absolute -top-[calc(100%-1rem)] transform z-0 flex items-center justify-center
+										class="w-full absolute -top-[calc(100%-1.1rem)] transform z-0 flex items-center justify-center
 											transition duration-150 {selectedOutputIndex === 0
 											? 'translate-y-0 opacity-100'
 											: 'translate-y-4 opacity-0'}"
@@ -445,7 +455,7 @@
 										>
 											<p
 												class="max-w-full overflow-hidden overflow-ellipsis
-													px-2 pt-0.75 pb-3.75 font-medium text-c-primary"
+													px-2 pt-0.75 pb-2.5 font-semibold text-c-primary"
 											>
 												{$LL.Inpainting.OriginalImageTitle()}
 											</p>
