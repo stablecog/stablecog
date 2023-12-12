@@ -432,57 +432,59 @@
 							<div
 								class="w-full h-full pointer-events-none absolute bottom-0 left-0 flex flex-col justify-end items-center p-2"
 							>
-								{#if selectedOutputIndex === 0}
+								<div class="max-w-full relative">
 									<div
-										transition:flyAndScale={{
-											duration: 150,
-											easing: quadOut,
-											opacity: 0,
-											yPercent: 100
-										}}
-										class="bg-c-bg-secondary p-px text-sm md:text-base text-center rounded-lg shadow-md shadow-c-shadow/[var(--o-shadow-normal)]
-										z-0 -mb-2.5 pointer-events-auto"
+										class="w-full absolute -top-[calc(100%-1rem)] transform z-0 flex items-center justify-center
+											transition duration-150 {selectedOutputIndex === 0
+											? 'translate-y-0 opacity-100'
+											: 'translate-y-4 opacity-0'}"
 									>
-										<p class="px-2 pt-0.75 pb-3.25 font-medium text-c-primary">
-											{$LL.Inpainting.OriginalImageTitle()}
-										</p>
+										<div
+											class="max-w-full bg-c-bg-secondary p-px text-sm text-center rounded-lg shadow-md
+												shadow-c-shadow/[var(--o-shadow-normal)] pointer-events-auto"
+										>
+											<p
+												class="max-w-full overflow-hidden overflow-ellipsis
+													px-2 pt-0.75 pb-3.75 font-medium text-c-primary"
+											>
+												{$LL.Inpainting.OriginalImageTitle()}
+											</p>
+										</div>
 									</div>
-								{/if}
-								<ToolbarSectionWrapper class="gap-2 pointer-events-auto z-10">
-									<ToolbarButton
-										label="Go Left"
-										onClick={() => {
-											const index = (selectedOutputIndex - 1 + outputs.length) % outputs.length;
-											selectedOutputIndex = index;
-											setImage(outputs[index].image_url);
-										}}
-										icon={IconChevronLeft}
-										iconClass="group-active:-translate-x-1"
-										onClickClass="-translate-x-1"
-										disabled={selectedOutputIndex === 0}
-									/>
-									<p
-										class="font-medium text-c-on-bg/50 text-sm md:text-base min-w-[2rem] md:min-w-[2.5rem] text-center"
-									>
-										<span
-											class="font-semibold transition duration-100 {selectedOutputIndex === 0
-												? 'text-c-primary'
-												: 'text-c-on-bg'}">{selectedOutputIndex + 1}</span
-										><span class="px-0.5ch">/</span><span>{outputs.length}</span>
-									</p>
-									<ToolbarButton
-										label="Go Right"
-										onClick={() => {
-											const index = (selectedOutputIndex + 1 + outputs.length) % outputs.length;
-											selectedOutputIndex = index;
-											setImage(outputs[index].image_url);
-										}}
-										icon={IconChevronRight}
-										iconClass="group-active:translate-x-1"
-										onClickClass="translate-x-1"
-										disabled={selectedOutputIndex === outputs.length - 1}
-									/>
-								</ToolbarSectionWrapper>
+									<ToolbarSectionWrapper class="gap-2 pointer-events-auto z-10">
+										<ToolbarButton
+											label="Go Left"
+											onClick={() => {
+												const index = (selectedOutputIndex - 1 + outputs.length) % outputs.length;
+												selectedOutputIndex = index;
+												setImage(outputs[index].image_url);
+											}}
+											icon={IconChevronLeft}
+											iconClass="group-active:-translate-x-1"
+											onClickClass="-translate-x-1"
+											disabled={selectedOutputIndex === 0}
+										/>
+										<p class="font-medium text-c-on-bg/50 min-w-[2.5rem] text-center">
+											<span
+												class="font-semibold transition duration-100 {selectedOutputIndex === 0
+													? 'text-c-primary'
+													: 'text-c-on-bg'}">{selectedOutputIndex + 1}</span
+											><span class="px-0.5ch">/</span><span>{outputs.length}</span>
+										</p>
+										<ToolbarButton
+											label="Go Right"
+											onClick={() => {
+												const index = (selectedOutputIndex + 1 + outputs.length) % outputs.length;
+												selectedOutputIndex = index;
+												setImage(outputs[index].image_url);
+											}}
+											icon={IconChevronRight}
+											iconClass="group-active:translate-x-1"
+											onClickClass="translate-x-1"
+											disabled={selectedOutputIndex === outputs.length - 1}
+										/>
+									</ToolbarSectionWrapper>
+								</div>
 							</div>
 						{/if}
 					</div>
