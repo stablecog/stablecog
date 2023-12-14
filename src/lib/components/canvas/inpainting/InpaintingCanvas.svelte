@@ -4,7 +4,13 @@
 	import type Konva from 'konva';
 	import { writable, type Writable } from 'svelte/store';
 	import { copy } from 'copy-anything';
-	import { createHistoryStore } from '$components/canvas/history/historyStore';
+	import {
+		history,
+		historyCurrentState,
+		historyGenerationId,
+		historyHasRedo,
+		historyHasUndo
+	} from '$components/canvas/history/historyStore';
 	import { theme } from '$ts/stores/theme';
 	import {
 		getBrushIndicatorCircleFill,
@@ -35,18 +41,18 @@
 	import type { TAvailableWidth } from '$ts/constants/generationSize';
 	import { generations, type TGenerationFullOutput } from '$ts/stores/user/generation';
 	import GenerationAnimation from '$components/generate/GenerationAnimation.svelte';
-	import { fade, fly } from 'svelte/transition';
+	import { fade } from 'svelte/transition';
 	import QueuePosition from '$components/QueuePosition.svelte';
-	import { quadIn, quadOut } from 'svelte/easing';
+	import { quadIn } from 'svelte/easing';
 	import QueuePositionProvider from '$components/generate/QueuePositionProvider.svelte';
 	import ToolbarSectionWrapper from '$components/canvas/toolbar/ToolbarSectionWrapper.svelte';
 	import ToolbarButton from '$components/canvas/toolbar/ToolbarButton.svelte';
 	import IconChevronLeft from '$components/icons/IconChevronLeft.svelte';
 	import IconChevronRight from '$components/icons/IconChevronRight.svelte';
-	import { flyAndScale } from '$ts/animation/transitions';
 
 	export let baseOutput: TGenerationFullOutput;
 
+	let isMounted = false;
 	let konvaErrored = false;
 	let imageLayer: Konva.Layer;
 	let patternLayer: Konva.Layer;
@@ -124,13 +130,6 @@
 		}
 	}
 
-	let {
-		history,
-		hasUndo,
-		hasRedo,
-		currentState: historyCurrentState
-	} = createHistoryStore<TInpaintingState>();
-
 	$: generation = $generations?.[0];
 	$: animation = $generations?.[0].outputs?.[0]?.animation;
 	$: isGenerating =
@@ -149,11 +148,13 @@
 	let selectedOutputIndex = 0;
 	$: allOutputs, onAllOutputsChanged();
 
-	$: [baseOutput, canvasWidth, canvasHeight, $KonvaInstance], createCanvas({ reset: true });
+	$: [baseOutput, canvasWidth, canvasHeight, $KonvaInstance],
+		createCanvas({ reset: $historyGenerationId === baseOutput.id ? false : true });
 
 	function createCanvas({ reset = false }: { reset: boolean }) {
 		if (!$KonvaInstance) return;
 		if (!canvasWidth || !canvasHeight) return;
+
 		if (reset && $stage) {
 			$stage.destroy();
 			image = undefined;
@@ -186,7 +187,13 @@
 
 		setImage(baseOutput.image_url);
 
-		history.addEntry({ paintLayerChildren: [] });
+		// Optionally restore state
+		if (!reset && $stage && $historyCurrentState !== null) {
+			setInpaintingState($historyCurrentState);
+		} else {
+			history.addEntry({ paintLayerChildren: [] });
+			historyGenerationId.set(baseOutput.id);
+		}
 
 		patternImageObj = new Image();
 		patternImageObj.onload = function () {
@@ -232,6 +239,7 @@
 			const paintLayerChildren = copy($paintLayer.getChildren());
 			const linesOnly = paintLayerChildren.filter((c) => c instanceof $KonvaInstance.Line);
 			history.addEntry({ paintLayerChildren: linesOnly });
+			historyGenerationId.set(baseOutput.id);
 		});
 
 		$stage.on('mousemove touchmove', function (e) {
@@ -304,6 +312,7 @@
 	}
 
 	function resetPatternRect() {
+		if (!$KonvaInstance) return;
 		if (patternRect) patternRect.destroy();
 		if (patternAnimation) patternAnimation.stop();
 		patternRect = new $KonvaInstance.Rect({
@@ -346,6 +355,7 @@
 		$paintLayer?.destroyChildren();
 		resetPatternRect();
 		history.addEntry({ paintLayerChildren: [] });
+		historyGenerationId.set(baseOutput.id);
 		selectedOutputIndex = 1;
 		setImage(allOutputs[selectedOutputIndex].image_url);
 		// Load all images
@@ -356,6 +366,7 @@
 	}
 
 	function setImage(url: string) {
+		if (!$KonvaInstance) return;
 		imageLoaded = false;
 		image = new Image();
 		image.onload = function () {
@@ -379,6 +390,7 @@
 		try {
 			const k = (await import('konva')).default;
 			KonvaInstance.set(k);
+			isMounted = true;
 		} catch (error) {
 			console.log(error);
 			konvaErrored = true;
@@ -393,8 +405,8 @@
 				{selectedTool}
 				{onUndo}
 				{onRedo}
-				undoDisabled={!$hasUndo}
-				redoDisabled={!$hasRedo}
+				undoDisabled={!$historyHasUndo}
+				redoDisabled={!$historyHasRedo}
 				bind:brushSize
 				{brushConfig}
 				{onCancelClicked}

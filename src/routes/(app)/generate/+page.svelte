@@ -177,8 +177,11 @@
 		}
 	};
 
-	$: [$generationNumOutputs, $generationAspectRatio, isCheckCompleted],
-		addNewGenerationToGenerations();
+	if ($generations && $generations.length === 0) {
+		generations.update((gs) => [generationPlaceholder, ...gs]);
+	}
+
+	$: [$generationNumOutputs, $generationAspectRatio], addNewGenerationToGenerations();
 
 	$: outputs =
 		$activeGeneration?.card_type === 'generate'
@@ -212,11 +215,13 @@
 	}
 
 	function addNewGenerationToGenerations() {
-		if ($generations && $generations[0] && $generations[0].status === 'pre-submit') return;
-		generations.update((gs) => [
-			...(generationPlaceholder !== undefined ? [generationPlaceholder] : []),
-			...gs
-		]);
+		if (!isCheckCompleted) return;
+		const gen0Status =
+			$generations && $generations[0] && $generations[0].status
+				? $generations[0].status
+				: undefined;
+		if (gen0Status === 'pre-submit') return;
+		generations.update((gs) => [generationPlaceholder, ...gs]);
 	}
 
 	function closeSettingsSheet() {

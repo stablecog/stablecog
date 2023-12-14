@@ -1,3 +1,4 @@
+import type { TInpaintingState } from '$components/canvas/toolbar/types';
 import { derived, get, writable } from 'svelte/store';
 
 export function createHistoryStore<T>() {
@@ -8,6 +9,8 @@ export function createHistoryStore<T>() {
 	}
 	const history = writable<THistoryEntry[]>([]);
 	const { subscribe, update } = history;
+
+	const generationId = writable<string | null>(null);
 
 	const hasUndo = derived(
 		history,
@@ -81,6 +84,17 @@ export function createHistoryStore<T>() {
 		},
 		hasUndo,
 		hasRedo,
-		currentState
+		currentState,
+		generationId
 	};
 }
+
+let {
+	history,
+	hasUndo: historyHasUndo,
+	hasRedo: historyHasRedo,
+	currentState: historyCurrentState,
+	generationId: historyGenerationId
+} = createHistoryStore<TInpaintingState>();
+
+export { history, historyHasUndo, historyGenerationId, historyHasRedo, historyCurrentState };
