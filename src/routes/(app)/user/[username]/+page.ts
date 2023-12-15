@@ -5,7 +5,7 @@ export const load = async ({ url, params }) => {
 	const outputIdShort = url.searchParams.get('o');
 	const username = params.username;
 
-	if (outputId) redirect(302, `/${username}/o/${outputId}`);
-	if (outputIdShort) redirect(302, `/${username}/o/${outputIdShort}`);
-	redirect(301, `/${username}`);
+	if (outputId) throw redirect(302, `/${username}/o/${outputId}`);
+	if (outputIdShort) throw redirect(302, `/${username}/o/${outputIdShort}`);
+	throw redirect(301, `/${username}`);
 };

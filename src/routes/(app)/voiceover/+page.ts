@@ -1,5 +1,5 @@
 import { redirect } from '@sveltejs/kit';
 
 export const load = async () => {
-	redirect(302, '/voiceover/generate');
+	throw redirect(302, '/voiceover/generate');
 };
