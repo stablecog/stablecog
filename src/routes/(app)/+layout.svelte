@@ -40,8 +40,6 @@
 		!$page.url.pathname.startsWith('/admin') &&
 		!$page.url.pathname.startsWith('/api/auth') &&
 		!$page.url.pathname.startsWith('/sign-in');
-
-	$: isAppRoute = appRoutes.some((r) => $page.url.pathname.startsWith(r));
 </script>
 
 <QueryClientProvider client={data.queryClient}>
@@ -49,7 +47,7 @@
 		<SSEConnector>
 			<GenerationWorker>
 				<UpscaleWorker>
-					<LayoutWrapper {isAppRoute}>
+					<LayoutWrapper isAppRoute={appRoutes.includes($page.url.pathname)}>
 						{#if showUpdateAvailableCard}
 							<div class="w-full flex-1 flex flex-col items-center justify-center my-auto py-4">
 								<UpdateAvailableCard />
@@ -58,7 +56,7 @@
 							<UnderDevelopment />
 						{:else}
 							<Navbar />
-							{#if isAppRoute}
+							{#if appRoutes.includes($page.url.pathname)}
 								<slot />
 							{:else}
 								{#if !rawRoutes.includes($page.url.pathname) && ($navbarStickyType === undefined || $navbarStickyType !== 'relative')}
