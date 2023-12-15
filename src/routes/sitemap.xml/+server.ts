@@ -2,6 +2,8 @@ import { canonicalUrl } from '$ts/constants/main';
 import type { RequestHandler } from '@sveltejs/kit';
 import { getAllRoutes, type IRoute } from '$ts/helpers/sitemap';
 
+export const prerender = true;
+
 export const GET: RequestHandler = async () => {
 	const allRoutes = await getAllRoutes();
 	const headers = {

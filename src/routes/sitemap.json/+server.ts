@@ -1,6 +1,8 @@
 import type { RequestHandler } from '@sveltejs/kit';
 import { getAllRoutes } from '$ts/helpers/sitemap';
 
+export const prerender = true;
+
 export const GET: RequestHandler = async () => {
 	const allRoutes = await getAllRoutes();
 	const headers = {
