@@ -1,6 +1,7 @@
 import { env } from '$env/dynamic/public';
 import type { TTab } from '$ts/types/main';
 
+export const serverUrl = env.PUBLIC_DEFAULT_SERVER_URL;
 export const canonicalUrl = 'https://stablecog.com';
 export const defaultLocale: Locales = 'en';
 export const apiUrl = new URL(
