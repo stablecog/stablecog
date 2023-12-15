@@ -52,7 +52,6 @@
 
 	export let baseOutput: TGenerationFullOutput;
 
-	let isMounted = false;
 	let konvaErrored = false;
 	let imageLayer: Konva.Layer;
 	let patternLayer: Konva.Layer;
@@ -60,6 +59,7 @@
 	let image: HTMLImageElement | undefined = undefined;
 	let imageLoaded = false;
 	let imageLoadedFirstTime = false;
+	let isGeneratedImageStatus: 'loading' | 'loaded' | 'idle' = 'idle';
 	let brushIndicatorCircle: Konva.Circle;
 	let patternImageObj: HTMLImageElement;
 	let patternRect: Konva.Rect;
@@ -344,6 +344,7 @@
 		if (!brushIndicatorLayer) return;
 		brushIndicatorLayer.visible(!isGenerating);
 		if (isGenerating) {
+			isGeneratedImageStatus = 'loading';
 			patternAnimation?.stop();
 		} else {
 			patternAnimation?.start();
@@ -359,9 +360,14 @@
 		selectedOutputIndex = 1;
 		setImage(allOutputs[selectedOutputIndex].image_url);
 		// Load all images
-		allOutputs.slice(1).forEach((o) => {
+		allOutputs.slice(1).forEach((o, i) => {
 			const img = new Image();
 			img.src = o.image_url;
+			if (i === 0) {
+				img.onload = function () {
+					isGeneratedImageStatus = 'loaded';
+				};
+			}
 		});
 	}
 
@@ -390,7 +396,6 @@
 		try {
 			const k = (await import('konva')).default;
 			KonvaInstance.set(k);
-			isMounted = true;
 		} catch (error) {
 			console.log(error);
 			konvaErrored = true;
@@ -428,7 +433,13 @@
 						class="relative rounded-lg overflow-hidden ring-2 bg-c-bg-secondary
 						ring-c-bg-secondary shadow-lg shadow-c-shadow/[var(--o-shadow-normal)]"
 					>
-						<div class="w-full h-full relative" id={konvaContainerId} />
+						<div
+							class="w-full h-full relative filter transition ease-in {isGeneratedImageStatus ===
+							'loading'
+								? 'duration-400 blur-lg pointer-events-none'
+								: 'duration-250'}"
+							id={konvaContainerId}
+						/>
 						{#if !image || !imageLoadedFirstTime}
 							<div class="w-full h-full absolute left-0 top-0 flex items-center justify-center">
 								<IconAnimatedSpinner loading={true} class="w-8 h-8 text-c-on-bg/50" />
@@ -443,10 +454,10 @@
 						{/if}
 						{#if isGenerating && animation}
 							<div
-								out:fade={{ duration: 3000, easing: quadIn }}
+								out:fade={{ duration: 400, easing: quadIn }}
 								class="w-full h-full absolute left-0 top-0 flex items-center justify-center"
 							>
-								<GenerationAnimation {animation} />
+								<GenerationAnimation {animation} type={$generateMode} />
 								<QueuePosition hasBg position={positionInQueue} show={showQueuePosition} />
 							</div>
 						{:else if allOutputs !== undefined}
