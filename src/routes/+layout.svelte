@@ -71,6 +71,8 @@
 	$: $isLeftSidebarHiddenApp,
 		runIfMounted(() => setCookie(`sc-l-sidebar-h=${$isLeftSidebarHiddenApp}`));
 
+	$: isAppRoute = appRoutes.includes($page.url.pathname);
+
 	const confirmOtherEmailHash =
 		'#message=Confirmation+link+accepted.+Please+proceed+to+confirm+link+sent+to+the+other+email';
 
@@ -146,7 +148,7 @@
 	});
 
 	function setBodyOverflowHiddenClass() {
-		if (appRoutes.includes($page.url.pathname)) {
+		if (isAppRoute) {
 			document.body.classList.add('overflow-hidden-for-app-routes');
 		} else {
 			document.body.classList.remove('overflow-hidden-for-app-routes');
