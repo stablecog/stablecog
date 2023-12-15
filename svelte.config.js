@@ -1,5 +1,5 @@
 import adapterNode from '@sveltejs/adapter-node';
-import adapterAuto from '@sveltejs/adapter-auto';
+import adapterVercel from '@sveltejs/adapter-vercel';
 import { mdsvex } from 'mdsvex';
 import { vitePreprocess } from '@sveltejs/vite-plugin-svelte';
 import preprocess from 'svelte-preprocess';
@@ -16,7 +16,7 @@ const config = {
 		})
 	],
 	kit: {
-		adapter: process.env.VERCEL ? adapterAuto() : adapterNode(),
+		adapter: process.env.VERCEL ? adapterVercel() : adapterNode(),
 		alias: {
 			'$components/*': './src/lib/components',
 			'$ts/*': './src/lib/ts',
