@@ -41,7 +41,7 @@
 		!$page.url.pathname.startsWith('/api/auth') &&
 		!$page.url.pathname.startsWith('/sign-in');
 
-	$: isAppRoute = appRoutes.includes($page.url.pathname);
+	$: isAppRoute = appRoutes.some((r) => $page.url.pathname.startsWith(r));
 </script>
 
 <QueryClientProvider client={data.queryClient}>
