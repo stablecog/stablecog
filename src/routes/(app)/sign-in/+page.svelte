@@ -10,9 +10,9 @@
 
 	export let data;
 
-	$: $page.data.session?.user.id, redirectToPage();
+	$: $page.data.session?.user.id, redirect();
 
-	async function redirectToPage() {
+	async function redirect() {
 		if (!browser) return;
 		if (!$page.data.session?.user.id) return;
 		if (data.rd_to) {

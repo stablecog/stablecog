@@ -47,11 +47,11 @@ export const load: PageLoad = async ({ params, parent }) => {
 		})
 	]);
 	if (!generationFullOutputRes.ok) {
-		throw error(404, 'Response for generation not ok');
+		error(404, 'Response for generation not ok');
 	}
 	const data: TUserProfileGenerationFullOutputPageRes = await generationFullOutputRes.json();
 	if (!data.hits || !data.hits[0]) {
-		throw error(404, 'No output found');
+		error(404, 'No output found');
 	}
 	const hit = data.hits[0];
 	const output: TGenerationOutput = {
@@ -110,7 +110,7 @@ export const load: PageLoad = async ({ params, parent }) => {
 	};
 
 	if (username !== data.metadata.username)
-		throw redirect(302, `/${data.metadata.username}/o/${outputId}`);
+		redirect(302, `/${data.metadata.username}/o/${outputId}`);
 
 	queryClient.setQueryData(['other_user_similar_outputs_short', outputId], page);
 

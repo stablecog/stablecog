@@ -7,8 +7,8 @@
 
 	$: isUserSuperAdmin = isSuperAdmin($userSummary?.roles);
 
-	$: [isUserSuperAdmin, $userSummary], redirectToSignIn();
-	function redirectToSignIn() {
+	$: [isUserSuperAdmin, $userSummary], redirect();
+	function redirect() {
 		if (!browser) return;
 		if (isUserSuperAdmin) return;
 		if ($userSummary && $page.data.session) {

@@ -23,8 +23,8 @@ export const load: PageLoad = async ({ url, parent, params }) => {
 	const outputIdShort = url.searchParams.get('o');
 	const username = params.username;
 
-	if (outputId) throw redirect(302, `/${username}/o/${outputId}`);
-	if (outputIdShort) throw redirect(302, `/${username}/o/${outputIdShort}`);
+	if (outputId) redirect(302, `/${username}/o/${outputId}`);
+	if (outputIdShort) redirect(302, `/${username}/o/${outputIdShort}`);
 
 	const { queryClient, session } = (await parent()) as TParent;
 	const searchQuery = url.searchParams.get('q');
@@ -59,7 +59,7 @@ export const load: PageLoad = async ({ url, parent, params }) => {
 	} else {
 		userMetadata = await getOtherUserMetadata({ username, custom_fetch: fetch });
 	}
-	if (username !== userMetadata.username) throw redirect(302, `/${userMetadata.username}`);
+	if (username !== userMetadata.username) redirect(302, `/${userMetadata.username}`);
 	return {
 		searchQuery,
 		modelIds: filteredModelIds,

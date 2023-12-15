@@ -8,8 +8,8 @@
 	$: isUserGalleryAdmin = isGalleryAdmin($userSummary?.roles);
 	$: isUserSuperAdmin = isSuperAdmin($userSummary?.roles);
 
-	$: [isUserGalleryAdmin, isUserSuperAdmin, $userSummary], redirectToSignIn();
-	function redirectToSignIn() {
+	$: [isUserGalleryAdmin, isUserSuperAdmin, $userSummary], redirect();
+	function redirect() {
 		if (!browser) return;
 		if (isUserGalleryAdmin) return;
 		if (isUserSuperAdmin) return;

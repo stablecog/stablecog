@@ -14,11 +14,11 @@
 
 	export let data;
 
-	$: if (mounted && $page.data.session?.user.id) redirectToPage();
+	$: if (mounted && $page.data.session?.user.id) redirect();
 
 	let errorCode: number | null = null;
 
-	async function redirectToPage() {
+	async function redirect() {
 		if (!browser) return;
 		if (!$page.data.session?.user.id || !$page.data.session.user.email) return;
 		logSignIn({
