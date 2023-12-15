@@ -1,21 +1,15 @@
-import {
-	PUBLIC_APP_MODE,
-	PUBLIC_SUPABASE_ANON_KEY,
-	PUBLIC_SUPABASE_ANON_KEY_QA,
-	PUBLIC_SUPABASE_URL,
-	PUBLIC_SUPABASE_URL_QA
-} from '$env/static/public';
+import { env as envPublic } from '$env/dynamic/public';
 
 export const supabaseUrl =
-	(PUBLIC_APP_MODE === 'qa'
-		? PUBLIC_SUPABASE_URL_QA
-		: PUBLIC_APP_MODE === 'dev'
-		? PUBLIC_SUPABASE_URL
-		: PUBLIC_SUPABASE_URL) || '';
+	(envPublic.PUBLIC_APP_MODE === 'qa'
+		? envPublic.PUBLIC_SUPABASE_URL_QA
+		: envPublic.PUBLIC_APP_MODE === 'dev'
+		? envPublic.PUBLIC_SUPABASE_URL
+		: envPublic.PUBLIC_SUPABASE_URL) || '';
 
 export const supabaseAnonKey =
-	(PUBLIC_APP_MODE === 'qa'
-		? PUBLIC_SUPABASE_ANON_KEY_QA
-		: PUBLIC_APP_MODE === 'dev'
-		? PUBLIC_SUPABASE_ANON_KEY
-		: PUBLIC_SUPABASE_ANON_KEY) || '';
+	(envPublic.PUBLIC_APP_MODE === 'qa'
+		? envPublic.PUBLIC_SUPABASE_ANON_KEY_QA
+		: envPublic.PUBLIC_APP_MODE === 'dev'
+		? envPublic.PUBLIC_SUPABASE_ANON_KEY
+		: envPublic.PUBLIC_SUPABASE_ANON_KEY) || '';
