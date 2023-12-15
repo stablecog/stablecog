@@ -27,6 +27,7 @@
 	import { getRelativeDate } from '$ts/helpers/getRelativeDate';
 	import AccountPageCard from '$routes/(app)/account/AccountPageCard.svelte';
 	import IconToken from '$components/icons/IconToken.svelte';
+	import { writable } from 'svelte/store';
 
 	$: if (!$page.data.session?.user.id) {
 		goto(`/sign-in?rd_to=${encodeURIComponent($page.url.pathname)}`);
@@ -50,26 +51,26 @@
 	}
 
 	let mounted = false;
-	let wantsEmailChecked = $userSummary?.wants_email === true ? true : false;
+	let wantsEmailChecked = writable($userSummary?.wants_email === true ? true : false);
 
-	$: [wantsEmailChecked], onWantsEmailCheckedChanged();
+	$: [$wantsEmailChecked], onWantsEmailCheckedChanged();
 	$: [$wantsEmail], onWantsEmailChanged();
 
 	function onWantsEmailCheckedChanged() {
 		if (mounted) {
-			wantsEmail.set(wantsEmailChecked);
+			wantsEmail.set($wantsEmailChecked);
 		}
 	}
 
 	function onWantsEmailChanged() {
-		if (mounted && $wantsEmail !== null && $wantsEmail !== wantsEmailChecked) {
-			wantsEmailChecked = $wantsEmail;
+		if (mounted && $wantsEmail !== null && $wantsEmail !== $wantsEmailChecked) {
+			wantsEmailChecked.set($wantsEmail);
 		}
 	}
 
 	onMount(() => {
 		if ($wantsEmail !== null) {
-			wantsEmailChecked = $wantsEmail;
+			wantsEmailChecked.set($wantsEmail);
 		}
 		mounted = true;
 	});
@@ -252,12 +253,7 @@
 				</AccountDetailLine>
 				<div class="w-full h-2px bg-c-bg-secondary" />
 				<div class="w-full flex justify-start items-center">
-					<WantEmailCard
-						bg="primary"
-						bind:checked={wantsEmailChecked}
-						oneLine
-						padding="p-5 md:px-6"
-					/>
+					<WantEmailCard bg="primary" checked={wantsEmailChecked} oneLine padding="p-5 md:px-6" />
 				</div>
 				<div class="w-full h-2px bg-c-bg-secondary" />
 				<div class="w-full flex flex-wrap items-stretch">
