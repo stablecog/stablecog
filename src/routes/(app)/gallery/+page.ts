@@ -18,9 +18,9 @@ interface TParent {
 
 export const load: PageLoad = async ({ url, parent }) => {
 	const outputId = url.searchParams.get('output');
-	if (outputId) redirect(302, `/gallery/o/${outputId}`);
+	if (outputId) throw redirect(302, `/gallery/o/${outputId}`);
 	const outputIdShort = url.searchParams.get('o');
-	if (outputIdShort) redirect(302, `/gallery/o/${outputIdShort}`);
+	if (outputIdShort) throw redirect(302, `/gallery/o/${outputIdShort}`);
 
 	const { queryClient, globalSeed, session } = (await parent()) as TParent;
 	const searchString = url.searchParams.get('q') || '';
