@@ -120,7 +120,7 @@
 				: `${$page.url.pathname}?${params}`;
 	}
 
-	function onImageClick(e: any) {
+	function onImageClick(e: MouseEvent & { currentTarget: HTMLAnchorElement }) {
 		if (!modalShouldOpen) {
 			lastClickedOutputId.set(generation.selected_output.id);
 			return;
