@@ -50,6 +50,7 @@
 	import { exportStage } from '$components/canvas/helpers/exportStage';
 	import { konvaContainerForExportId } from '$components/canvas/constants/main';
 	import { KonvaInstance, paintLayer, stage } from '$components/canvas/stores/konva';
+	import { baseOutputForInpainting } from '$components/canvas/stores/baseOutputForInpainting';
 
 	export let openSignInModal: () => void;
 	export let serverData: TGeneratePageData;
@@ -179,7 +180,9 @@
 			process_type: 'generate',
 			stream_id: $sseId,
 			ui_id:
-				$generations && $generations[0] && $generations[0].status === 'pre-submit'
+				$generateMode === 'inpainting' && $baseOutputForInpainting
+					? $baseOutputForInpainting.id
+					: $generations && $generations[0] && $generations[0].status === 'pre-submit'
 					? $generations[0].ui_id
 					: generateSSEId(),
 			submit_to_gallery:

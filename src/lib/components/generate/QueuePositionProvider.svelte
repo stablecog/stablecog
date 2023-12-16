@@ -4,9 +4,9 @@
 	import { getQueuePositionFromId, queue } from '$ts/stores/user/queue';
 	import { userSummary } from '$ts/stores/user/summary';
 
-	export let generation: TGeneration;
+	export let generation: TGeneration | undefined;
 
-	$: positionInQueue = getQueuePositionFromId(generation.queued_id, $queue);
+	$: positionInQueue = getQueuePositionFromId(generation?.queued_id, $queue);
 	$: positionInQueue, onPositionInQueueChanged();
 
 	let debouncedPositionInQueue: number | undefined = undefined;

@@ -52,6 +52,15 @@
 
 	export let baseOutput: TGenerationFullOutput;
 
+	let generation =
+		$generations?.[0] && $generations[0].ui_id === baseOutput.id ? $generations[0] : undefined;
+	let animation = $generations?.[0].outputs?.[0]?.animation;
+	let isGenerating =
+		generation &&
+		(generation.status === 'to-be-submitted' ||
+			generation.status === 'server-received' ||
+			generation.status === 'server-processing');
+
 	let konvaErrored = false;
 	let imageLayer: Konva.Layer;
 	let patternLayer: Konva.Layer;
@@ -59,7 +68,7 @@
 	let image: HTMLImageElement | undefined = undefined;
 	let imageLoaded = false;
 	let imageLoadedFirstTime = false;
-	let isGeneratedImageStatus: 'loading' | 'loaded' | 'idle' = 'idle';
+	let isGeneratedImageStatus: 'loading' | 'loaded' | 'idle' = isGenerating ? 'loading' : 'idle';
 	let brushIndicatorCircle: Konva.Circle;
 	let patternImageObj: HTMLImageElement;
 	let patternRect: Konva.Rect;
@@ -130,7 +139,8 @@
 		}
 	}
 
-	$: generation = $generations?.[0];
+	$: generation =
+		$generations?.[0] && $generations[0].ui_id === baseOutput.id ? $generations[0] : undefined;
 	$: animation = $generations?.[0].outputs?.[0]?.animation;
 	$: isGenerating =
 		generation &&
@@ -142,8 +152,8 @@
 
 	let allOutputs: TGenerationFullOutput[] | undefined = undefined;
 	$: allOutputs =
-		generation.status === 'succeeded'
-			? [baseOutput, ...generation.outputs.map((o) => ({ generation: generation, ...o }))]
+		generation && generation?.status === 'succeeded'
+			? [baseOutput, ...generation.outputs.map((o) => ({ generation: generation!, ...o }))]
 			: undefined;
 	let selectedOutputIndex = 0;
 	$: allOutputs, onAllOutputsChanged();
@@ -152,6 +162,7 @@
 		createCanvas({ reset: $historyGenerationId === baseOutput.id ? false : true });
 
 	function createCanvas({ reset = false }: { reset: boolean }) {
+		console.log('test');
 		if (!$KonvaInstance) return;
 		if (!canvasWidth || !canvasHeight) return;
 
@@ -342,7 +353,7 @@
 
 	function onIsGeneratingChanged() {
 		if (!brushIndicatorLayer) return;
-		brushIndicatorLayer.visible(!isGenerating);
+		if (isGenerating) brushIndicatorLayer.visible(false);
 		if (isGenerating) {
 			isGeneratedImageStatus = 'loading';
 			patternAnimation?.stop();
@@ -353,29 +364,33 @@
 
 	function onAllOutputsChanged() {
 		if (!allOutputs || allOutputs.length < 2) return;
-		$paintLayer?.destroyChildren();
-		resetPatternRect();
-		history.addEntry({ paintLayerChildren: [] });
-		historyGenerationId.set(baseOutput.id);
-		selectedOutputIndex = 1;
-		setImage(allOutputs[selectedOutputIndex].image_url);
 		// Load all images
 		allOutputs.slice(1).forEach((o, i) => {
 			const img = new Image();
 			img.src = o.image_url;
 			if (i === 0) {
 				img.onload = function () {
+					$paintLayer?.destroyChildren();
+					resetPatternRect();
+					history.addEntry({ paintLayerChildren: [] });
+					historyGenerationId.set(baseOutput.id);
+					selectedOutputIndex = 1;
+					setImage(img);
+					brushIndicatorCircle.position({
+						x: 0 - brushIndicatorCircle.width(),
+						y: 0 - brushIndicatorCircle.height()
+					});
+					brushIndicatorLayer.visible(true);
 					isGeneratedImageStatus = 'loaded';
 				};
 			}
 		});
 	}
 
-	function setImage(url: string) {
+	function setImage(urlOrImageElement: string | HTMLImageElement) {
 		if (!$KonvaInstance) return;
-		imageLoaded = false;
-		image = new Image();
-		image.onload = function () {
+		if (urlOrImageElement instanceof HTMLImageElement) {
+			image = urlOrImageElement;
 			const img = new $KonvaInstance.Image({
 				x: 0,
 				y: 0,
@@ -388,8 +403,25 @@
 			if (!imageLoadedFirstTime) {
 				imageLoadedFirstTime = true;
 			}
-		};
-		image.src = url;
+		} else {
+			imageLoaded = false;
+			image = new Image();
+			image.onload = function () {
+				const img = new $KonvaInstance.Image({
+					x: 0,
+					y: 0,
+					image,
+					width: $stage.width(),
+					height: $stage.height()
+				});
+				imageLayer.add(img);
+				imageLoaded = true;
+				if (!imageLoadedFirstTime) {
+					imageLoadedFirstTime = true;
+				}
+			};
+			image.src = urlOrImageElement;
+		}
 	}
 
 	onMount(async () => {
@@ -460,7 +492,7 @@
 								<GenerationAnimation {animation} type={$generateMode} />
 								<QueuePosition hasBg position={positionInQueue} show={showQueuePosition} />
 							</div>
-						{:else if allOutputs !== undefined}
+						{:else if allOutputs !== undefined && isGeneratedImageStatus === 'loaded'}
 							{@const outputs = allOutputs}
 							<div
 								class="w-full h-full pointer-events-none absolute bottom-0 left-0 flex flex-col justify-end items-center p-2"
