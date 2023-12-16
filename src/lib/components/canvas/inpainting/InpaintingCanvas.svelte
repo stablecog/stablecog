@@ -353,7 +353,7 @@
 
 	function onIsGeneratingChanged() {
 		if (!brushIndicatorLayer) return;
-		if (isGenerating) brushIndicatorLayer.visible(false);
+		if (isGenerating) moveBrushIndicatorOutOfCanvas();
 		if (isGenerating) {
 			isGeneratedImageStatus = 'loading';
 			patternAnimation?.stop();
@@ -376,11 +376,6 @@
 					historyGenerationId.set(baseOutput.id);
 					selectedOutputIndex = 1;
 					setImage(img);
-					brushIndicatorCircle.position({
-						x: 0 - brushIndicatorCircle.width(),
-						y: 0 - brushIndicatorCircle.height()
-					});
-					brushIndicatorLayer.visible(true);
 					isGeneratedImageStatus = 'loaded';
 				};
 			}
@@ -422,6 +417,13 @@
 			};
 			image.src = urlOrImageElement;
 		}
+	}
+
+	function moveBrushIndicatorOutOfCanvas() {
+		brushIndicatorCircle?.position({
+			x: 0 - brushIndicatorCircle.width(),
+			y: 0 - brushIndicatorCircle.height()
+		});
 	}
 
 	onMount(async () => {
