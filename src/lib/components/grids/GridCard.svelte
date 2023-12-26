@@ -11,8 +11,10 @@
 	import IconSadFaceOutline from '$components/icons/IconSadFaceOutline.svelte';
 	import IconStar from '$components/icons/IconStar.svelte';
 	import LL, { locale } from '$i18n/i18n-svelte';
+	import { isAdmin } from '$ts/helpers/admin/roles';
 	import { getRelativeDate } from '$ts/helpers/getRelativeDate';
 	import type { TGenerationFullOutput } from '$ts/stores/user/generation';
+	import { userSummary } from '$ts/stores/user/summary';
 	import { quadIn, quadOut } from 'svelte/easing';
 	import { fade } from 'svelte/transition';
 
@@ -25,6 +27,8 @@
 	export let setSearchQuery: ((query: string) => void) | undefined = undefined;
 	export let isGalleryEditActive: boolean;
 	export let now: number;
+
+	$: isAdminView = cardType === 'admin-gallery' && isAdmin($userSummary?.roles);
 
 	$: numberFormatter = new Intl.NumberFormat($locale, {
 		style: 'decimal',
@@ -78,7 +82,7 @@
 					{#if cardType === 'generate'}
 						{@const sizeClasses =
 							output.generation.height > output.generation.width
-								? 'h-full max-h-[1.75rem] xl:max-h-[2rem] w-auto'
+								? 'h-full max-h-[1.75rem] xl:fmax-h-[2rem] w-auto'
 								: 'w-full max-w-[1.75rem] xl:max-w-[2rem] h-auto'}
 						{#if output.status === 'failed-nsfw'}
 							<IconEyeSlashOutline class="{sizeClasses} text-c-on-bg/50" />
@@ -152,7 +156,12 @@
 							class="whitespace-nowrap overflow-hidden overflow-ellipsis text-c-on-bg/75 text-xs
 							transition not-touch:group-hover:text-c-on-bg"
 						>
-							{getRelativeDate({ date: output.created_at, locale: $locale, now })}
+							{getRelativeDate({
+								date: output.created_at,
+								locale: $locale,
+								now,
+								decimals: isAdminView ? 1 : 0
+							})}
 						</p>
 					</div>
 				</a>
