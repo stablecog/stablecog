@@ -14,8 +14,9 @@
 	import IconBack from '$components/icons/IconBack.svelte';
 	import IconChatBubbleCancel from '$components/icons/IconChatBubbleCancel.svelte';
 	import SimilarOutputsSectionOutputPage from '$components/outputPage/SimilarOutputsSectionOutputPage.svelte';
-	import LL from '$i18n/i18n-svelte';
+	import LL, { locale } from '$i18n/i18n-svelte';
 	import { getGenerationUrlFromParams } from '$ts/helpers/getGenerationUrlFromParams';
+	import { getRelativeDate } from '$ts/helpers/getRelativeDate';
 	import { getImgProxySrc, getImgProxySrcDefault, getImgProxySrcSet } from '$ts/helpers/imgproxy';
 	import { navbarHeight } from '$ts/stores/navbarHeight';
 	import type {
@@ -122,6 +123,8 @@
 			setButtonObjectWithState(key, 'idle');
 		}
 	}
+
+	$: now = generation ? Date.now() : Date.now();
 </script>
 
 <div class="w-full flex justify-center pt-2 md:pt-6 pb-8 md:px-5 lg:px-8 xl:px-12 2xl:px-16">
@@ -189,6 +192,16 @@
 				</NoBgButton>
 			</div>
 			<UsernameButton username={output.generation.user.username} class="-mt-3" />
+			{#if generation.selected_output.created_at !== undefined || generation.created_at !== undefined}
+				<p class="text-sm text-c-on-bg/75 -mb-3.5 mt-1">
+					{getRelativeDate({
+						date: generation.selected_output.created_at || generation.created_at,
+						locale: $locale,
+						dateStyle: 'long',
+						now
+					})}
+				</p>
+			{/if}
 			<div class="w-full flex flex-col items-start gap-3 mt-1">
 				<div class="w-full flex flex-col gap-2">
 					<p class="w-full font-semibold text-3xl">{$LL.Home.PromptInput.Title()}</p>

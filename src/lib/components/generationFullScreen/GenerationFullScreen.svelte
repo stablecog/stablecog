@@ -605,6 +605,7 @@
 									{getRelativeDate({
 										date: generation.selected_output.created_at || generation.created_at,
 										locale: $locale,
+										dateStyle: 'long',
 										now
 									})}
 								</p>
