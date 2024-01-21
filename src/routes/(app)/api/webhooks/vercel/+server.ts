@@ -5,13 +5,12 @@ import { WebhookClient, EmbedBuilder } from 'discord.js';
 const webhookClient = new WebhookClient({ url: DISCORD_WEBSITE_DEPLOYMENT_WEBHOOK });
 
 export async function POST({ request }) {
-	// tes
 	const isVercel = verifySignature(request);
 	try {
 		const body: TPostBody = await request.json();
 		const notificationTitle = `${
 			body.payload.deployment?.meta?.githubCommitMessage
-		} • ${body.payload.deployment?.meta.githubCommitSha.slice(0, 6)}`;
+		} • ${body.payload.deployment?.meta?.githubCommitSha?.slice(0, 6)}`;
 		if (body.type === 'deployment.created') {
 			await sendDiscordNotification({
 				title: notificationTitle,
