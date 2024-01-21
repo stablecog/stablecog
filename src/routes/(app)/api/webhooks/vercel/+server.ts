@@ -71,9 +71,10 @@ function getDateString(date: string) {
 }
 
 async function verifySignature(req: Request) {
-	const payload = await req.text();
+	const clonedReq = req.clone();
+	const payload = await clonedReq.text();
 	const signature = crypto.createHmac('sha1', VERCEL_WEBHOOK_SECRET).update(payload).digest('hex');
-	return signature === req.headers.get('x-vercel-signature');
+	return signature === clonedReq.headers.get('x-vercel-signature');
 }
 
 interface TPostBody {
