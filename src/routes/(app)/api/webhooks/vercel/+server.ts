@@ -5,6 +5,7 @@ import { WebhookClient, EmbedBuilder } from 'discord.js';
 const webhookClient = new WebhookClient({ url: DISCORD_WEBSITE_DEPLOYMENT_WEBHOOK });
 
 export async function POST({ request }) {
+	//
 	const isVercel = verifySignature(request);
 	try {
 		const body: TPostBody = await request.json();
