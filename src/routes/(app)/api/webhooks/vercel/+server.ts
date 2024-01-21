@@ -9,7 +9,7 @@ export async function POST({ request }) {
 	const isVercel = verifySignature(request);
 	try {
 		const body: TPostBody = await request.json();
-		const notificationTitle = `${body.deployment?.id} • ${body.deployment?.url}`;
+		const notificationTitle = `${body.payload.deployment?.id} • ${body.payload.deployment?.url}`;
 		if (body.type === 'deployment.created') {
 			await sendDiscordNotification({
 				title: notificationTitle,
@@ -60,7 +60,7 @@ async function sendDiscordNotification({
 }) {
 	const embed = new EmbedBuilder()
 		.setTitle(title)
-		.setDescription(description)
+		.setDescription('```' + description + '```')
 		.setColor(color)
 		.setFooter({ text: footer });
 	await webhookClient.send({ embeds: [embed] });
@@ -81,13 +81,14 @@ interface TPostBody {
 	id: string;
 	type: TEventType;
 	createdAt: string;
-	payload: string;
-	region: string;
-	deployment?: {
-		id: string;
-		url: string;
-		name: string;
+	payload: {
+		deployment?: {
+			id: string;
+			url: string;
+			name: string;
+		};
 	};
+	region: string;
 }
 
 type TEventType =
