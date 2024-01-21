@@ -37,6 +37,7 @@
 	import IconUpscale from '$components/icons/IconUpscale.svelte';
 	import TabBar from '$components/tabBars/TabBar.svelte';
 	import LL, { locale } from '$i18n/i18n-svelte';
+	import type { TRequestNavigationEventParams } from '$routes/(app)/admin/gallery/types';
 	import { upscaleModelIdDefault } from '$ts/constants/upscaleModels';
 	import { isSuperAdmin } from '$ts/helpers/admin/roles';
 	import { generateSSEId } from '$ts/helpers/generateSSEId';
@@ -59,7 +60,7 @@
 	import { windowWidth } from '$ts/stores/window';
 	import { activeGeneration, type TGenerationWithSelectedOutput } from '$userStores/generation';
 	import { sseId } from '$userStores/sse';
-	import { onMount } from 'svelte';
+	import { createEventDispatcher, onMount } from 'svelte';
 	import { quadOut } from 'svelte/easing';
 	import { fly } from 'svelte/transition';
 
@@ -86,6 +87,8 @@
 	let buttonRight: HTMLButtonElement;
 	let buttonLeftMobile: HTMLButtonElement;
 	let buttonRightMobile: HTMLButtonElement;
+
+	const dispatch = createEventDispatcher<{ requestNavigation: TRequestNavigationEventParams }>();
 
 	$: upscaleFromStore = $upscales.find(
 		(upscale) => upscale.type === 'from_output' && upscale.input === generation.selected_output.id
@@ -318,14 +321,19 @@
 		}, 2000);
 	}
 
-	function onSelect() {
+	function onSelect(action?: 'add' | 'remove') {
+		let finalAction: 'add' | 'remove' = $adminGallerySelectedOutputIds.includes(
+			generation.selected_output.id
+		)
+			? 'remove'
+			: 'add';
+		if (action) finalAction = action;
+
 		toggleGalleryActionableItemsState({
 			output_id: generation.selected_output.id,
 			cardType: 'admin-gallery',
 			generation_id: generation.id || generation.ui_id,
-			type: $adminGallerySelectedOutputIds.includes(generation.selected_output.id)
-				? 'remove'
-				: 'add'
+			type: finalAction
 		});
 	}
 
@@ -333,6 +341,21 @@
 		if (modalType !== 'admin-gallery') return;
 		if (event.key === 'Enter') {
 			onSelect();
+			return;
+		}
+		if (event.key === 'j') {
+			onSelect('add');
+			dispatch('requestNavigation', {
+				direction: 'left'
+			});
+			return;
+		}
+		if (event.key === 'k') {
+			onSelect('remove');
+			dispatch('requestNavigation', {
+				direction: 'left'
+			});
+			return;
 		}
 	}
 
@@ -470,7 +493,7 @@
 				{/if}
 				{#if modalType === 'admin-gallery'}
 					<button
-						on:click={onSelect}
+						on:click={() => onSelect()}
 						class="absolute right-2 top-2 p-1 bg-c-bg-secondary rounded-full group
 							before:w-full before:h-full
 							before:min-w-[56px] before:min-h-[56px]

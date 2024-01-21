@@ -26,6 +26,7 @@
 		getAllUserGenerationFullOutputsQueryKey,
 		getAllUserGenerationFullOutputsQueryProps
 	} from '$routes/(app)/admin/gallery/constants';
+	import type { TRequestNavigationEventParams } from '$routes/(app)/admin/gallery/types.js';
 	import { canonicalUrl } from '$ts/constants/main';
 	import { previewImageVersion } from '$ts/constants/previewImageVersion';
 	import { isSuperAdmin } from '$ts/helpers/admin/roles';
@@ -112,8 +113,25 @@
 			window.history.back();
 			return;
 		}
-		if ((key === 'ArrowLeft' && leftIndex !== -1) || (key === 'ArrowRight' && rightIndex !== -1)) {
-			goToSide(key === 'ArrowLeft' ? 'left' : 'right');
+		if (key === 'ArrowLeft' && leftIndex !== -1) {
+			goToSide('left');
+			return;
+		}
+		if (key === 'ArrowRight' && rightIndex !== -1) {
+			goToSide('right');
+			return;
+		}
+	}
+
+	function onRequestNavigation(e: CustomEvent<TRequestNavigationEventParams>) {
+		const { direction } = e.detail;
+		if (direction === 'left' && leftIndex !== -1) {
+			goToSide('left');
+			return;
+		}
+		if (direction === 'right' && rightIndex !== -1) {
+			goToSide('right');
+			return;
 		}
 	}
 
@@ -279,5 +297,6 @@
 		modalType="admin-gallery"
 		outputsLength={outputs?.length}
 		{outputIndex}
+		on:requestNavigation={onRequestNavigation}
 	/>
 {/if}
