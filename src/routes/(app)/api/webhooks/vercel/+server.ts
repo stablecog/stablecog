@@ -9,9 +9,9 @@ export async function POST({ request }) {
 	const isVercel = verifySignature(request);
 	try {
 		const body: TPostBody = await request.json();
-		const notificationTitle = `${body.payload.deployment?.id} • ${
-			body.payload.deployment?.url
-		} • ${JSON.stringify(body.payload.deployment?.meta)}`;
+		const notificationTitle = `${
+			body.payload.deployment?.meta?.githubCommitMessage
+		} • ${body.payload.deployment?.meta.githubCommitSha.slice(0, 6)}`;
 		if (body.type === 'deployment.created') {
 			await sendDiscordNotification({
 				title: notificationTitle,
@@ -45,6 +45,12 @@ export async function POST({ request }) {
 		}
 	} catch (e) {
 		console.log(e);
+		await sendDiscordNotification({
+			title: 'Something went wrong with Vercel webhook notification',
+			description: 'Notification failed',
+			footer: getDateString(new Date().toISOString()),
+			color: 16737894
+		});
 	}
 	return new Response(JSON.stringify({ isVercel }));
 }
@@ -88,7 +94,10 @@ interface TPostBody {
 			id: string;
 			url: string;
 			name: string;
-			meta: Record<string, string>;
+			meta: {
+				githubCommitMessage: string;
+				githubCommitSha: string;
+			};
 		};
 	};
 	region: string;
