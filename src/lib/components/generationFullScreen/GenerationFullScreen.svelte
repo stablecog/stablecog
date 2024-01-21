@@ -343,15 +343,15 @@
 			onSelect();
 			return;
 		}
-		if (event.key === 'j') {
-			onSelect('add');
+		if (event.key === 'w' || event.key === 'u') {
+			onSelect('remove');
 			dispatch('requestNavigation', {
 				direction: 'left'
 			});
 			return;
 		}
-		if (event.key === 'k') {
-			onSelect('remove');
+		if (event.key === 's' || event.key === 'j') {
+			onSelect('add');
 			dispatch('requestNavigation', {
 				direction: 'left'
 			});
