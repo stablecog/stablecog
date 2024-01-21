@@ -9,7 +9,9 @@ export async function POST({ request }) {
 	const isVercel = verifySignature(request);
 	try {
 		const body: TPostBody = await request.json();
-		const notificationTitle = `${body.payload.deployment?.id} • ${body.payload.deployment?.url}`;
+		const notificationTitle = `${body.payload.deployment?.id} • ${
+			body.payload.deployment?.url
+		} • ${JSON.stringify(body.payload.deployment?.meta)}`;
 		if (body.type === 'deployment.created') {
 			await sendDiscordNotification({
 				title: notificationTitle,
@@ -86,6 +88,7 @@ interface TPostBody {
 			id: string;
 			url: string;
 			name: string;
+			meta: Record<string, string>;
 		};
 	};
 	region: string;
