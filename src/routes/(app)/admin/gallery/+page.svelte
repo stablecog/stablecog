@@ -41,7 +41,7 @@
 	import { hydrated, updateHydrated } from '$ts/stores/hydrated.js';
 	import { userSummary } from '$ts/stores/user/summary';
 	import { windowWidth } from '$ts/stores/window';
-	import { activeGeneration } from '$userStores/generation';
+	import { activeGeneration, type TGenerationWithSelectedOutput } from '$userStores/generation';
 	import { createInfiniteQuery, type CreateInfiniteQueryResult } from '@tanstack/svelte-query';
 	import { onMount } from 'svelte';
 
@@ -55,6 +55,8 @@
 
 	let totalOutputs: number;
 	let searchInputIsFocused = false;
+	let prevGeneration: TGenerationWithSelectedOutput | undefined = undefined;
+	let nextGeneration: TGenerationWithSelectedOutput | undefined = undefined;
 
 	let allUserGenerationFullOutputsQuery:
 		| CreateInfiniteQueryResult<TUserGenerationFullOutputsPage, unknown>
@@ -90,6 +92,14 @@
 		: -1;
 	$: leftIndex = outputIndex > 0 ? outputIndex - 1 : -1;
 	$: rightIndex = outputs && outputIndex < outputs?.length - 1 ? outputIndex + 1 : -1;
+	$: prevGeneration =
+		outputs && leftIndex !== -1
+			? { ...outputs[leftIndex].generation, selected_output: outputs[leftIndex] }
+			: undefined;
+	$: nextGeneration =
+		outputs && rightIndex !== -1
+			? { ...outputs[rightIndex].generation, selected_output: outputs[rightIndex] }
+			: undefined;
 
 	const onPagesChanged = () => {
 		if (!$page.data.session?.user.id || !$allUserGenerationFullOutputsQuery) return;
@@ -113,11 +123,11 @@
 			window.history.back();
 			return;
 		}
-		if (key === 'ArrowLeft' && leftIndex !== -1) {
+		if ((key === 'ArrowLeft' || key === 'a') && leftIndex !== -1) {
 			goToSide('left');
 			return;
 		}
-		if (key === 'ArrowRight' && rightIndex !== -1) {
+		if ((key === 'ArrowRight' || key === 'd') && rightIndex !== -1) {
 			goToSide('right');
 			return;
 		}
@@ -294,6 +304,8 @@
 		onLeftButtonClicked={leftIndex !== -1 ? () => goToSide('left') : undefined}
 		onRightButtonClicked={rightIndex !== -1 ? () => goToSide('right') : undefined}
 		generation={$activeGeneration}
+		{prevGeneration}
+		{nextGeneration}
 		modalType="admin-gallery"
 		outputsLength={outputs?.length}
 		{outputIndex}

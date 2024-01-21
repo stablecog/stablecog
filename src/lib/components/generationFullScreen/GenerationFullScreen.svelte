@@ -65,6 +65,8 @@
 	import { fly } from 'svelte/transition';
 
 	export let generation: TGenerationWithSelectedOutput;
+	export let prevGeneration: TGenerationWithSelectedOutput | undefined = undefined;
+	export let nextGeneration: TGenerationWithSelectedOutput | undefined = undefined;
 	export let modalType: TGenerationFullScreenModalType;
 	export let onLeftButtonClicked: (() => void) | undefined = undefined;
 	export let onRightButtonClicked: (() => void) | undefined = undefined;
@@ -709,6 +711,11 @@
 			outputsLength !== undefined
 				? outputIndex
 				: undefined}
+			generation={prevGeneration}
+			isGenerationSelected={prevGeneration
+				? modalType === 'admin-gallery' &&
+				  $adminGallerySelectedOutputIds.includes(prevGeneration.selected_output.id)
+				: undefined}
 		/>
 		<SideButton
 			name="Go Right"
@@ -720,6 +727,11 @@
 			outputIndex !== undefined &&
 			outputsLength !== undefined
 				? outputsLength - (outputIndex + 1)
+				: undefined}
+			generation={nextGeneration}
+			isGenerationSelected={nextGeneration
+				? modalType === 'admin-gallery' &&
+				  $adminGallerySelectedOutputIds.includes(nextGeneration.selected_output.id)
 				: undefined}
 		/>
 	{/if}

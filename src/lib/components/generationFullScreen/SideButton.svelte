@@ -1,6 +1,10 @@
 <script lang="ts">
 	import ButtonHoverEffect from '$components/buttons/ButtonHoverEffect.svelte';
+	import IconCancel from '$components/icons/IconCancel.svelte';
 	import IconChevronDown from '$components/icons/IconChevronDown.svelte';
+	import IconTickOnly from '$components/icons/IconTickOnly.svelte';
+	import { getImgProxySrc } from '$ts/helpers/imgproxy';
+	import type { TGenerationWithSelectedOutput } from '$ts/stores/user/generation';
 
 	export let element: HTMLButtonElement;
 	export let name: string;
@@ -9,6 +13,8 @@
 	export let iconClass = 'w-8 h-8';
 	export let wrapperClass = 'w-full h-full relative flex items-center rounded-xl justify-center';
 	export let hasAnimation = true;
+	export let generation: TGenerationWithSelectedOutput | undefined = undefined;
+	export let isGenerationSelected: boolean | undefined = undefined;
 	export let count: number | undefined = undefined;
 	export { classes as class };
 	let classes = `absolute ${
@@ -42,10 +48,30 @@
 		{/if}
 		<div class="max-w-full flex flex-col items-center">
 			{#if count !== undefined}
+				<div
+					class="w-12 h-12 overflow-hidden flex items-center justify-center z-0 relative -mt-18
+					rounded-md bg-c-bg-tertiary ring-1.5 shadow-lg shadow-c-shadow/[var(--o-shadow-strongest)] {isGenerationSelected
+						? 'ring-c-primary'
+						: 'ring-c-bg-tertiary'}"
+				>
+					{#if generation !== undefined}
+						<img
+							src={getImgProxySrc({
+								src: generation.selected_output.image_url,
+								preset: '128w'
+							})}
+							width={generation.width}
+							height={generation.height}
+							alt={generation.prompt.text}
+							class="w-full h-full object-cover"
+						/>
+					{/if}
+				</div>
 				<p
-					class="max-w-full transition duration-100 {onClick
+					class="max-w-full transition duration-100 relative z-[1] {onClick
 						? 'not-touch:group-hover:text-c-primary'
-						: ''} group-disabled:opacity-15 overflow-hidden overflow-ellipsis text-center text-xs font-semibold py-1 -mt-6 px-3"
+						: ''} group-disabled:opacity-15 overflow-hidden overflow-ellipsis
+						text-center text-xs font-semibold py-1 mt-2 mb-2 px-3"
 				>
 					{count}
 				</p>
