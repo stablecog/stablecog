@@ -183,27 +183,12 @@
 				<TabLikeFilterDropdown
 					class="w-full md:max-w-[20rem]"
 					name={$LL.Home.ModelDropdown.Title()}
+					nameIcon={IconBrain}
 					bind:values={modelIdFilters}
 					items={$availableModelIdDropdownItems}
-				>
-					<div slot="title">
-						<WithTooltip
-							let:trigger
-							let:triggerStoreValue
-							title={$LL.Home.ModelDropdown.Title()}
-							paragraph={$LL.Home.ModelDropdown.Paragraph()}
-						>
-							<div
-								tabindex="-1"
-								use:trigger
-								{...triggerStoreValue}
-								class="p-3.5 flex items-center justify-center cursor-default"
-							>
-								<IconBrain class="w-6 h-6 text-c-on-bg/35" />
-							</div>
-						</WithTooltip>
-					</div>
-				</TabLikeFilterDropdown>
+					dontScale
+					hasTitle={false}
+				/>
 			</div>
 		</div>
 	{/if}

@@ -26,7 +26,7 @@
 	export let filterSelected = false;
 	export let listClass = 'flex flex-col';
 	export let iconSetClass =
-		'w-6 h-6 flex-shrink-0 -ml-1 mr-2 text-c-on-bg not-touch:group-hover:text-c-primary';
+		'w-5.5 h-5.5 flex-shrink-0 -ml-1 mr-2 text-c-on-bg not-touch:group-hover:text-c-primary';
 	let classes = '';
 
 	let minDropdownHeight = 200;

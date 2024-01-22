@@ -625,8 +625,14 @@
 						</div>
 						<!-- Prompt and Negative Prompt -->
 						<div class="w-full break-words flex flex-col items-start gap-3">
+							<p class="w-full leading-normal">{generation.prompt.text}</p>
+							{#if generation.negative_prompt}
+								{#key generation.id}
+									<NegativePromptSection negativePrompt={generation.negative_prompt.text} />
+								{/key}
+							{/if}
 							{#if generation.selected_output.created_at !== undefined || generation.created_at !== undefined}
-								<p class="text-sm text-c-on-bg/75 -mb-1.5">
+								<p class="text-sm text-c-on-bg/75 -mt-1">
 									{getRelativeDate({
 										date: generation.selected_output.created_at || generation.created_at,
 										locale: $locale,
@@ -634,12 +640,6 @@
 										now
 									})}
 								</p>
-							{/if}
-							<p class="w-full leading-normal">{generation.prompt.text}</p>
-							{#if generation.negative_prompt}
-								{#key generation.id}
-									<NegativePromptSection negativePrompt={generation.negative_prompt.text} />
-								{/key}
 							{/if}
 						</div>
 						{#key generation.selected_output.id}

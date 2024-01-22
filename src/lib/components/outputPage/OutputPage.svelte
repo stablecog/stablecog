@@ -192,16 +192,6 @@
 				</NoBgButton>
 			</div>
 			<UsernameButton username={output.generation.user.username} class="-mt-3" />
-			{#if generation.selected_output.created_at !== undefined || generation.created_at !== undefined}
-				<p class="text-sm text-c-on-bg/75 -mb-3.5 mt-1">
-					{getRelativeDate({
-						date: generation.selected_output.created_at || generation.created_at,
-						locale: $locale,
-						dateStyle: 'long',
-						now
-					})}
-				</p>
-			{/if}
 			<div class="w-full flex flex-col items-start gap-3 mt-1">
 				<div class="w-full flex flex-col gap-2">
 					<p class="w-full font-semibold text-3xl">{$LL.Home.PromptInput.Title()}</p>
@@ -223,6 +213,16 @@
 							{output.generation.negative_prompt.text}
 						</h2>
 					</div>
+				{/if}
+				{#if generation.selected_output.created_at !== undefined || generation.created_at !== undefined}
+					<p class="text-sm text-c-on-bg/75 -mt-1">
+						{getRelativeDate({
+							date: generation.selected_output.created_at || generation.created_at,
+							locale: $locale,
+							dateStyle: 'long',
+							now
+						})}
+					</p>
 				{/if}
 			</div>
 			<ButtonsSection

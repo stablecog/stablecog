@@ -11,6 +11,7 @@
 	export let values: T[];
 	export let items: TTab<T>[];
 	export let name: string;
+	export let nameIcon: ConstructorOfATypedSvelteComponent | undefined = undefined;
 	export let hasTitle = true;
 	export let dontScale = false;
 	export let disabled = false;
@@ -124,6 +125,12 @@
 				</div>
 			</div>
 			<div class="flex-shrink min-w-0 flex items-center">
+				{#if nameIcon}
+					<svelte:component
+						this={nameIcon}
+						class="w-5.5 h-5.5 flex-shrink-0 -ml-1 mr-2 text-c-on-bg not-touch:group-hover:text-c-primary"
+					/>
+				{/if}
 				<p
 					class="flex-shrink whitespace-nowrap overflow-hidden overflow-ellipsis text-base font-medium relative transition
 					max-w-full z-0 text-c-on-bg not-touch:group-hover:text-c-primary"
