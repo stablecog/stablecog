@@ -751,6 +751,10 @@ const de: Translation = {
 		BackToProfile: 'Back to Profile',
 		BackToGalleryButton: 'Back to Gallery',
 		SearchingTitle: 'Suchen...',
+		Sort: {
+			Title: 'Sort',
+			Options: { New: 'New', Top: 'Top', Trending: 'Trending' }
+		},
 		NoMatchingGenerationTitle: 'Nichts Passendes gefunden'
 	},
 	Pricing: {

@@ -16,6 +16,7 @@ export async function getGalleryGenerationFullOutputs({
 	search,
 	seed,
 	model_ids,
+	sorts,
 	custom_fetch,
 	per_page = per_page_default,
 	score_threshold = score_threshold_default,
@@ -26,6 +27,7 @@ export async function getGalleryGenerationFullOutputs({
 	search?: string | null;
 	seed?: number;
 	model_ids?: TAvailableGenerationModelId[];
+	sorts?: string[];
 	custom_fetch?: typeof fetch;
 	per_page?: number;
 	score_threshold?: number;
@@ -45,6 +47,9 @@ export async function getGalleryGenerationFullOutputs({
 	}
 	if (model_ids && model_ids.length > 0) {
 		query.append('model_ids', model_ids.join(','));
+	}
+	if (sorts && sorts.length > 0) {
+		query.append('sort', sorts.join(','));
 	}
 	query.append('per_page', per_page.toString());
 	if (typeof seed === 'number') {

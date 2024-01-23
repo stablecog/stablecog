@@ -27,6 +27,7 @@
 	import {
 		galleryModelIdFilters,
 		gallerySearchString,
+		gallerySorts,
 		getGalleryInfiniteQueryKey,
 		getGalleryInfiniteQueryProps
 	} from '$routes/(app)/gallery/constants';
@@ -40,12 +41,14 @@
 	if (!hydrated) {
 		galleryModelIdFilters.set(data.modelIdFilters);
 		gallerySearchString.set(data.searchString);
+		gallerySorts.set(data.sorts);
 	}
 
 	$: galleryGenerationFullOutputsQueryKey.set(
 		getGalleryInfiniteQueryKey({
 			searchString: $gallerySearchString,
 			modelIdFilters: $galleryModelIdFilters,
+			sorts: $gallerySorts,
 			seed: $globalSeed
 		})
 	);
@@ -54,6 +57,7 @@
 		getGalleryInfiniteQueryProps({
 			searchString: $gallerySearchString,
 			modelIdFilters: $galleryModelIdFilters,
+			sorts: $gallerySorts,
 			seed: $globalSeed,
 			accessToken: $page.data.session?.access_token
 		})
@@ -104,6 +108,7 @@
 			<SearchAndFilterBar
 				bind:modelIdFilters={$galleryModelIdFilters}
 				bind:searchString={$gallerySearchString}
+				bind:sorts={$gallerySorts}
 			/>
 		</div>
 	</div>

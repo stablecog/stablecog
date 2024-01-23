@@ -758,6 +758,10 @@ const nl: Translation = {
 		BackToProfile: 'Back to Profile',
 		BackToGalleryButton: 'Back to Gallery',
 		SearchingTitle: 'Bezig met zoeken',
+		Sort: {
+			Title: 'Sort',
+			Options: { New: 'New', Top: 'Top', Trending: 'Trending' }
+		},
 		NoMatchingGenerationTitle: 'Geen overeenkomstige creatie gevonden'
 	},
 	Pricing: {

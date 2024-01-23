@@ -765,6 +765,10 @@ const ja: Translation = {
 		BackToProfile: 'Back to Profile',
 		BackToGalleryButton: 'ギャラリーに戻る',
 		SearchingTitle: '検索中...',
+		Sort: {
+			Title: 'Sort',
+			Options: { New: 'New', Top: 'Top', Trending: 'Trending' }
+		},
 		NoMatchingGenerationTitle: '一致する生成がありません'
 	},
 	Pricing: {

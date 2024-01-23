@@ -776,6 +776,10 @@ const es: Translation = {
 		BackToProfile: 'Back to Profile',
 		BackToGalleryButton: 'Πίσω στη Συλλογή',
 		SearchingTitle: 'Αναζήτηση',
+		Sort: {
+			Title: 'Sort',
+			Options: { New: 'New', Top: 'Top', Trending: 'Trending' }
+		},
 		NoMatchingGenerationTitle: 'Δεν υπάρχει αντίστοιχο παράγωγο'
 	},
 	Pricing: {

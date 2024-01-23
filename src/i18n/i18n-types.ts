@@ -2273,6 +2273,26 @@ type RootTranslation = {
 		 * S​e​a​r​c​h​i​n​g
 		 */
 		SearchingTitle: string
+		Sort: {
+			/**
+			 * S​o​r​t
+			 */
+			Title: string
+			Options: {
+				/**
+				 * N​e​w
+				 */
+				New: string
+				/**
+				 * T​o​p
+				 */
+				Top: string
+				/**
+				 * T​r​e​n​d​i​n​g
+				 */
+				Trending: string
+			}
+		}
 		/**
 		 * N​o​ ​m​a​t​c​h​i​n​g​ ​g​e​n​e​r​a​t​i​o​n
 		 */
@@ -5469,6 +5489,26 @@ export type TranslationFunctions = {
 		 * Searching
 		 */
 		SearchingTitle: () => LocalizedString
+		Sort: {
+			/**
+			 * Sort
+			 */
+			Title: () => LocalizedString
+			Options: {
+				/**
+				 * New
+				 */
+				New: () => LocalizedString
+				/**
+				 * Top
+				 */
+				Top: () => LocalizedString
+				/**
+				 * Trending
+				 */
+				Trending: () => LocalizedString
+			}
+		}
 		/**
 		 * No matching generation
 		 */

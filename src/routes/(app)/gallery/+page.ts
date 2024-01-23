@@ -1,6 +1,7 @@
 import {
 	getGalleryInfiniteQueryKey,
-	getGalleryInfiniteQueryProps
+	getGalleryInfiniteQueryProps,
+	sortsDefault
 } from '$routes/(app)/gallery/constants';
 import {
 	availableGenerationModelIds,
@@ -29,12 +30,14 @@ export const load: PageLoad = async ({ url, parent }) => {
 	const filteredModelIds = modelIds.filter((modelId) =>
 		availableGenerationModelIds.includes(modelId as TAvailableGenerationModelId)
 	);
-
+	const sortsQuery = url.searchParams.get('sort');
+	const sorts = sortsQuery ? sortsQuery.split(',') : sortsDefault;
 	const hasInitialData =
 		queryClient.getQueryData(
 			getGalleryInfiniteQueryKey({
 				searchString: searchString,
 				modelIdFilters: filteredModelIds,
+				sorts,
 				seed: globalSeed
 			})
 		) !== undefined;
@@ -44,6 +47,7 @@ export const load: PageLoad = async ({ url, parent }) => {
 				getGalleryInfiniteQueryProps({
 					searchString: searchString,
 					modelIdFilters: filteredModelIds,
+					sorts: sorts,
 					seed: globalSeed,
 					accessToken: session?.access_token
 				})
@@ -55,6 +59,7 @@ export const load: PageLoad = async ({ url, parent }) => {
 
 	return {
 		searchString,
-		modelIdFilters: filteredModelIds
+		modelIdFilters: filteredModelIds,
+		sorts
 	};
 };

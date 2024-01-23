@@ -780,6 +780,10 @@ const tr: Translation = {
 		BackToProfile: 'Profile Dön',
 		BackToGalleryButton: 'Galeriye Gön',
 		SearchingTitle: 'Arıyor',
+		Sort: {
+			Title: 'Sort',
+			Options: { New: 'New', Top: 'Top', Trending: 'Trending' }
+		},
 		NoMatchingGenerationTitle: 'Benzer bir üretim bulunamadı'
 	},
 	Pricing: {

@@ -11,19 +11,25 @@ export const galleryModelIdFilters = writableLocal<TAvailableGenerationModelId[]
 	[]
 );
 
+export const sortsDefault = ['new'];
+export const gallerySorts = writableLocal<string[]>('gallerySorts', sortsDefault);
+
 export const getGalleryInfiniteQueryKey = ({
 	searchString,
 	modelIdFilters,
+	sorts,
 	seed
 }: {
 	searchString?: string | null;
 	modelIdFilters?: string[] | null;
+	sorts?: string[] | null;
 	seed?: number;
 }): string[] => {
 	return [
 		'gallery_generation_full_outputs',
 		searchString ? searchString : '',
 		modelIdFilters ? modelIdFilters.join(',') : '',
+		sorts ? sorts.join(',') : '',
 		typeof seed === 'number' ? String(seed) : ''
 	];
 };
@@ -31,11 +37,13 @@ export const getGalleryInfiniteQueryKey = ({
 export function getGalleryInfiniteQueryProps({
 	searchString,
 	modelIdFilters,
+	sorts,
 	seed,
 	accessToken
 }: {
 	searchString?: string | null;
 	modelIdFilters?: string[];
+	sorts?: string[];
 	seed?: number;
 	accessToken?: string;
 }): FetchInfiniteQueryOptions<
@@ -52,6 +60,7 @@ export function getGalleryInfiniteQueryProps({
 				seed,
 				search: searchString,
 				model_ids: modelIdFilters,
+				sorts,
 				accessToken
 			});
 		},

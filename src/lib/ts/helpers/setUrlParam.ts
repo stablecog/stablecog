@@ -6,21 +6,27 @@ export function setUrlParam({
 	defaultValue = ''
 }: {
 	key: string;
-	value: string | string[] | number;
+	value: string | string[] | number | null | undefined;
 	defaultValue?: string | string[] | number;
 }) {
 	if (!browser) return;
 	const url = new URL(window.location.href);
 	const current = url.searchParams.get(key);
 	const currentString = current === null ? '' : current;
-	const valueString =
-		typeof value === 'string' ? value : Array.isArray(value) ? value.join(',') : value.toString();
 	const defaultValueString =
 		typeof defaultValue === 'string'
 			? defaultValue
 			: Array.isArray(defaultValue)
 			? defaultValue.join(',')
 			: defaultValue.toString();
+	const valueString =
+		value === null || value === undefined
+			? ''
+			: typeof value === 'string'
+			? value
+			: Array.isArray(value)
+			? value.join(',')
+			: value.toString();
 	if (currentString === valueString) return;
 	if (valueString && valueString !== defaultValueString) {
 		url.searchParams.set(key, valueString);

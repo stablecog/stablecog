@@ -26,18 +26,40 @@
 	import { browser } from '$app/environment';
 	import { isUUID } from '$ts/helpers/uuid';
 	import IconImageSearch from '$components/icons/IconImageSearch.svelte';
-	import WithTooltip from '$components/WithTooltip.svelte';
 	import { setUrlParam } from '$ts/helpers/setUrlParam';
+	import type { TTab } from '$ts/types/main';
+	import { sortsDefault } from '$routes/(app)/gallery/constants';
+	import TabLikeDropdown from '$components/tabBars/TabLikeDropdown.svelte';
+	import IconMainSortView from '$components/icons/IconMainSortView.svelte';
 
 	export let disabled = false;
 	export let searchString: string;
 	export let inputShadow: 'normal' | 'strongest' = 'normal';
 	export let modelIdFilters: TAvailableGenerationModelId[];
+	export let sorts: string[] | undefined = undefined;
 	export let searchInputIsFocused = false;
 
 	let searchStringLocal = searchString ?? '';
 	let inputElement: HTMLInputElement;
 	let isFiltersOpen = false;
+
+	const mainSorts = ['trending', 'top', 'new'];
+	let mainSortView = sorts?.find((i) => mainSorts.includes(i)) ?? 'new';
+
+	const mainSortViews: TTab<string>[] = [
+		{
+			value: 'trending',
+			label: $LL.Gallery.Sort.Options.Trending()
+		},
+		{
+			value: 'top',
+			label: $LL.Gallery.Sort.Options.Top()
+		},
+		{
+			value: 'new',
+			label: $LL.Gallery.Sort.Options.New()
+		}
+	];
 
 	$: hasAnyFilter = modelIdFilters?.length > 0;
 	$: searchStringLocal, onSearchStringLocalChanged();
@@ -47,6 +69,9 @@
 			value: modelIdFilters
 		});
 	$: searchString, setUrlParam({ key: 'q', value: searchString });
+
+	$: mainSortView, onMainSortViewChanged();
+	$: sorts, setUrlParam({ key: 'sort', value: sorts, defaultValue: sortsDefault });
 
 	function clearAllFilters() {
 		modelIdFilters = [];
@@ -104,6 +129,11 @@
 
 	function toggleFiltersPanel() {
 		isFiltersOpen = !isFiltersOpen;
+	}
+
+	function onMainSortViewChanged() {
+		if (!sorts) return;
+		sorts = [mainSortView, ...sorts.filter((i) => !mainSorts.includes(i))];
 	}
 </script>
 
@@ -216,4 +246,14 @@
 			</div>
 		</div>
 	{/if}
+	<!-- {#if sorts}
+		<TabLikeDropdown
+			class="mt-3"
+			items={mainSortViews}
+			hasTitle={false}
+			name={$LL.Gallery.Sort.Title()}
+			iconSet={IconMainSortView}
+			bind:value={mainSortView}
+		/>
+	{/if} -->
 </div>

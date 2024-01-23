@@ -750,6 +750,10 @@ const ko: Translation = {
 		BackToProfile: 'Back to Profile',
 		BackToGalleryButton: 'Back to Gallery',
 		SearchingTitle: 'Searching',
+		Sort: {
+			Title: 'Sort',
+			Options: { New: 'New', Top: 'Top', Trending: 'Trending' }
+		},
 		NoMatchingGenerationTitle: 'No matching generation'
 	},
 	Pricing: {
