@@ -76,6 +76,9 @@
 	function clearAllFilters() {
 		modelIdFilters = [];
 		isFiltersOpen = false;
+		if (isUUID(searchString)) {
+			clearSearchString();
+		}
 	}
 
 	function search() {
@@ -135,9 +138,14 @@
 		if (!sorts) return;
 		sorts = [mainSortView, ...sorts.filter((i) => !mainSorts.includes(i))];
 	}
+
+	function clearSearchString() {
+		searchStringLocal = '';
+		searchString = '';
+	}
 </script>
 
-<div class="w-full flex flex-col z-40">
+<div class="w-full flex flex-col items-center z-40">
 	<form on:submit|preventDefault={search} class="w-full flex gap-1.5">
 		<div class="flex-1 min-w-0 flex">
 			<Input
@@ -187,45 +195,39 @@
 			</Morpher>
 		</SubtleButton>
 	</form>
-	{#if isUUID(searchString)}
-		<div class="w-full flex flex-col">
-			<div class="w-full flex items-center justify-center pt-3">
-				<TagButton
-					icon={IconImageSearch}
-					hasMaxWidth={false}
-					hasCancelIcon={true}
-					onClick={() => {
-						searchStringLocal = '';
-						searchString = '';
-					}}
-					text={$LL.Shared.SimilarToTitle({ item: searchString.slice(0, 6) })}
-					color="primary"
-				/>
-			</div>
+	{#if sorts || isFiltersOpen}
+		<div class="w-full flex flex-col md:flex-row justify-center items-center px-0.5 gap-3 mt-3">
+			<!-- {#if sorts}
+				<div class="w-full md:max-w-[15rem]">
+					<TabLikeDropdown
+						class="w-full"
+						items={mainSortViews}
+						hasTitle={false}
+						name={$LL.Gallery.Sort.Title()}
+						iconSet={IconMainSortView}
+						bind:value={mainSortView}
+					/>
+				</div>
+			{/if} -->
+			{#if isFiltersOpen}
+				<div class="w-full md:max-w-[15rem]">
+					<TabLikeFilterDropdown
+						class="w-full"
+						name={$LL.Home.ModelDropdown.Title()}
+						nameIcon={IconBrain}
+						bind:values={modelIdFilters}
+						items={$availableModelIdDropdownItems}
+						dontScale
+						hasTitle={false}
+					/>
+				</div>
+			{/if}
 		</div>
 	{/if}
-	{#if isFiltersOpen}
-		<div
-			transition:expandCollapse={{ duration: 200, easing: quadOut }}
-			class="w-full flex flex-col"
-		>
-			<div class="w-full flex flex-row justify-center flex-wrap pt-3 px-0.5">
-				<TabLikeFilterDropdown
-					class="w-full md:max-w-[20rem]"
-					name={$LL.Home.ModelDropdown.Title()}
-					nameIcon={IconBrain}
-					bind:values={modelIdFilters}
-					items={$availableModelIdDropdownItems}
-					dontScale
-					hasTitle={false}
-				/>
-			</div>
-		</div>
-	{/if}
-	{#if modelIdFilters && modelIdFilters.length > 0}
+	{#if (modelIdFilters && modelIdFilters.length > 0) || isUUID(searchString)}
 		<div class="w-full flex justify-center px-0.5 mt-0.5">
 			<div class="flex flex-wrap justify-start gap-2 pt-3">
-				{#if hasAnyFilter}
+				{#if hasAnyFilter || isUUID(searchString)}
 					<TagButton
 						icon={IconTrashcan}
 						hasMaxWidth={false}
@@ -233,6 +235,16 @@
 						onClick={clearAllFilters}
 						text={$LL.Shared.ClearAllButton()}
 						color="secondary"
+					/>
+				{/if}
+				{#if isUUID(searchString)}
+					<TagButton
+						icon={IconImageSearch}
+						hasMaxWidth={false}
+						hasCancelIcon={true}
+						onClick={clearSearchString}
+						text={$LL.Shared.SimilarToTitle({ item: searchString.slice(0, 6) })}
+						color="primary"
 					/>
 				{/if}
 				{#each modelIdFilters as item}
@@ -246,14 +258,4 @@
 			</div>
 		</div>
 	{/if}
-	<!-- {#if sorts}
-		<TabLikeDropdown
-			class="mt-3"
-			items={mainSortViews}
-			hasTitle={false}
-			name={$LL.Gallery.Sort.Title()}
-			iconSet={IconMainSortView}
-			bind:value={mainSortView}
-		/>
-	{/if} -->
 </div>
