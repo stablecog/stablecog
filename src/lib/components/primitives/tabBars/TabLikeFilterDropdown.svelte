@@ -199,9 +199,9 @@
 										</div>
 									</div>
 									<div class="w-full flex items-center gap-3">
-										<div class="w-4 h-4 ring-1 ring-c-primary rounded flex-shrink-0 p-0.5">
+										<div class="w-4 h-4 ring-1 ring-c-primary rounded flex-shrink-0">
 											<div
-												class="w-full h-full transition transform bg-c-primary rounded-sm {values &&
+												class="w-full h-full transition transform bg-c-primary rounded {values &&
 												values.includes(item.value)
 													? 'scale-100 opacity-100'
 													: 'scale-50 opacity-0'}"

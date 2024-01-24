@@ -3,13 +3,10 @@ import {
 	getGalleryInfiniteQueryProps,
 	sortsDefault
 } from '$routes/(app)/gallery/constants';
-import {
-	availableGenerationModelIds,
-	type TAvailableGenerationModelId
-} from '$ts/constants/generationModels';
 import type { QueryClient } from '@tanstack/svelte-query';
 import type { PageLoad } from './$types';
 import { redirect } from '@sveltejs/kit';
+import { getGalleryLikeParamsFromSearchParams } from '$ts/helpers/galleryLike';
 
 interface TParent {
 	queryClient: QueryClient;
@@ -24,19 +21,13 @@ export const load: PageLoad = async ({ url, parent }) => {
 	if (outputIdShort) throw redirect(302, `/gallery/o/${outputIdShort}`);
 
 	const { queryClient, globalSeed, session } = (await parent()) as TParent;
-	const searchString = url.searchParams.get('q') || '';
-	const modelIdQuery = url.searchParams.get('mi');
-	const modelIds = modelIdQuery?.split(',') || [];
+	const galleryLikeParams = getGalleryLikeParamsFromSearchParams(url.searchParams);
 	const usernameFiltersQuery = url.searchParams.get('un');
 	const usernameFilters = usernameFiltersQuery?.split(',') || [];
-	const filteredModelIds = modelIds.filter((modelId) =>
-		availableGenerationModelIds.includes(modelId as TAvailableGenerationModelId)
-	);
 	const sortsQuery = url.searchParams.get('sort');
 	const sorts = sortsQuery ? sortsQuery.split(',') : sortsDefault;
 	const sharedQueryParams = {
-		searchString: searchString,
-		modelIdFilters: filteredModelIds,
+		...galleryLikeParams,
 		sorts,
 		usernameFilters,
 		seed: globalSeed
@@ -61,9 +52,8 @@ export const load: PageLoad = async ({ url, parent }) => {
 	}
 
 	return {
-		searchString,
+		...galleryLikeParams,
 		usernameFilters,
-		modelIdFilters: filteredModelIds,
 		sorts
 	};
 };

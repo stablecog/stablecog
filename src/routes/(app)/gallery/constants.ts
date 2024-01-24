@@ -3,12 +3,18 @@ import type { TUserProfileFullOutputsPage } from '$ts/queries/galleryLike/types'
 import type { FetchInfiniteQueryOptions } from '@tanstack/svelte-query';
 import { writable as writableLocal } from '@macfja/svelte-persistent-store';
 import type { TAvailableGenerationModelId } from '$ts/constants/generationModels';
+import type { TAvailableAspectRatio } from '$ts/constants/generationSize';
 
 export const gallerySearchString = writableLocal<string>('gallerySearchString', '');
 export const galleryUsernameFilters = writableLocal<string[]>('galleryUsernameFilters', []);
 
 export const galleryModelIdFilters = writableLocal<TAvailableGenerationModelId[]>(
 	'galleryModelIdFilters',
+	[]
+);
+
+export const galleryAspectRatioFilters = writableLocal<TAvailableAspectRatio[]>(
+	'galleryAspectRatioFilters',
 	[]
 );
 
@@ -20,12 +26,14 @@ export const gallerySorts = writableLocal<string[]>('gallerySorts', sortsDefault
 export const getGalleryInfiniteQueryKey = ({
 	searchString,
 	modelIdFilters,
+	aspectRatioFilters,
 	sorts,
 	usernameFilters,
 	seed
 }: {
 	searchString?: string | null;
 	modelIdFilters?: string[] | null;
+	aspectRatioFilters?: string[] | null;
 	sorts?: string[];
 	usernameFilters?: string[];
 	seed?: number;
@@ -34,6 +42,7 @@ export const getGalleryInfiniteQueryKey = ({
 		'gallery_generation_full_outputs',
 		searchString ? searchString : '',
 		modelIdFilters ? modelIdFilters.sort().join(',') : '',
+		aspectRatioFilters ? aspectRatioFilters.sort().join(',') : '',
 		sorts ? sorts.join(',') : '',
 		usernameFilters
 			? usernameFilters
@@ -48,6 +57,7 @@ export const getGalleryInfiniteQueryKey = ({
 export function getGalleryInfiniteQueryProps({
 	searchString,
 	modelIdFilters,
+	aspectRatioFilters,
 	sorts,
 	usernameFilters,
 	seed,
@@ -55,6 +65,7 @@ export function getGalleryInfiniteQueryProps({
 }: {
 	searchString?: string | null;
 	modelIdFilters?: string[];
+	aspectRatioFilters?: string[];
 	sorts?: string[];
 	usernameFilters?: string[];
 	seed?: number;
@@ -69,6 +80,7 @@ export function getGalleryInfiniteQueryProps({
 		queryKey: getGalleryInfiniteQueryKey({
 			searchString,
 			modelIdFilters,
+			aspectRatioFilters,
 			sorts,
 			usernameFilters,
 			seed
@@ -79,6 +91,7 @@ export function getGalleryInfiniteQueryProps({
 				seed,
 				search: searchString,
 				model_ids: modelIdFilters,
+				aspect_ratios: aspectRatioFilters,
 				sorts,
 				usernameFilters: usernameFilters,
 				accessToken

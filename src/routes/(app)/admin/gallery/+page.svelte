@@ -25,6 +25,7 @@
 	import LL, { locale } from '$i18n/i18n-svelte';
 	import {
 		adminGalleryModelIdFilters,
+		adminGalleryAspectRatioFilters,
 		adminGallerySearchString,
 		getAllUserGenerationFullOutputsQueryKey,
 		getAllUserGenerationFullOutputsQueryProps
@@ -52,6 +53,7 @@
 
 	if (!hydrated) {
 		adminGalleryModelIdFilters.set(data.modelIdFilters);
+		adminGalleryAspectRatioFilters.set(data.aspectRatioFilters);
 		adminGalleryCurrentFilter.set(data.view);
 		adminGallerySearchString.set(data.searchString);
 	}
@@ -69,7 +71,8 @@
 		getAllUserGenerationFullOutputsQueryKey({
 			adminGalleryCurrentFilter: $adminGalleryCurrentFilter,
 			searchString: $adminGallerySearchString,
-			modelIdFilters: $adminGalleryModelIdFilters
+			modelIdFilters: $adminGalleryModelIdFilters,
+			aspectRatioFilters: $adminGalleryAspectRatioFilters
 		})
 	);
 
@@ -80,6 +83,7 @@
 						adminGalleryCurrentFilter: $adminGalleryCurrentFilter,
 						session: $page.data.session,
 						modelIdFilters: $adminGalleryModelIdFilters,
+						aspectRatioFilters: $adminGalleryAspectRatioFilters,
 						searchString: $adminGallerySearchString
 					})
 			  )
@@ -234,6 +238,7 @@
 				<SearchAndFilterBar
 					bind:searchString={$adminGallerySearchString}
 					bind:modelIdFilters={$adminGalleryModelIdFilters}
+					bind:aspectRatioFilters={$adminGalleryAspectRatioFilters}
 					bind:searchInputIsFocused
 				/>
 			</div>

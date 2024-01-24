@@ -2,6 +2,7 @@ import type { TAvailableGenerationModelId } from '$ts/constants/generationModels
 import { derived, writable } from 'svelte/store';
 import { z } from 'zod';
 import { writable as writableLocal } from '@macfja/svelte-persistent-store';
+import type { TAvailableAspectRatio } from '$ts/constants/generationSize';
 
 export const userGalleryActionableItems = writableLocal<TUserGalleryActionableItem[]>(
 	'user_gallery_actionable_items',
@@ -14,6 +15,10 @@ export const userGalleryCurrentView = writableLocal<TUserGalleryView>(
 );
 export const userGalleryModelIdFilters = writableLocal<TAvailableGenerationModelId[]>(
 	'userGalleryModelIdFilters',
+	[]
+);
+export const userGalleryAspectRatioFilters = writableLocal<TAvailableAspectRatio[]>(
+	'userGalleryAspectRatioFilters',
 	[]
 );
 export const isUserGalleryEditActive = writable<boolean>(false);

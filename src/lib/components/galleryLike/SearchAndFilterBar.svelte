@@ -29,6 +29,8 @@
 	import TabLikeInput from '$components/primitives/tabBars/TabLikeInput.svelte';
 	import IconUserAlt from '$components/icons/IconUserAlt.svelte';
 	import IconFilter from '$components/icons/IconFilter.svelte';
+	import { aspectRatioTabs, type TAvailableAspectRatio } from '$ts/constants/generationSize';
+	import IconDimensions from '$components/icons/IconDimensions.svelte';
 
 	export let disabled = false;
 	export let searchString: string;
@@ -37,6 +39,7 @@
 	export let usernameFilters: string[] | undefined = undefined;
 	export let searchInputIsFocused = false;
 	export let type: 'gallery' | 'default' = 'default';
+	export let aspectRatioFilters: TAvailableAspectRatio[];
 
 	let searchStringLocal = searchString ?? '';
 	let usernameSearchStringLocal = '';
@@ -50,16 +53,19 @@
 			key: 'mi',
 			value: modelIdFilters
 		});
+	$: aspectRatioFilters, setUrlParam({ key: 'ar', value: aspectRatioFilters });
 	$: searchString, setUrlParam({ key: 'q', value: searchString });
 	$: usernameFilters, setUrlParam({ key: 'un', value: usernameFilters });
 	$: hasAnyFilter =
 		modelIdFilters?.length > 0 ||
+		aspectRatioFilters?.length > 0 ||
 		(usernameFilters && usernameFilters.length > 0) ||
 		isUUID(searchString);
 
 	function clearAllFilters() {
 		modelIdFilters = [];
 		isFiltersOpen = false;
+		aspectRatioFilters = [];
 		if (isUUID(searchString)) {
 			clearSearchString();
 		}
@@ -199,14 +205,21 @@
 			class="w-full flex flex-col md:flex-row justify-center items-center px-0.5 gap-3 pt-3"
 		>
 			<TabLikeFilterDropdown
-				class="w-full md:max-w-[15rem]"
+				class="w-full md:w-1/3"
 				name={$LL.Home.ModelDropdown.Title()}
 				nameIcon={IconBrain}
 				bind:values={modelIdFilters}
 				items={$availableModelIdDropdownItems}
 			/>
+			<TabLikeFilterDropdown
+				class="w-full md:w-1/3"
+				name={$LL.Home.AspectRatioDropdown.Title()}
+				nameIcon={IconDimensions}
+				bind:values={aspectRatioFilters}
+				items={aspectRatioTabs}
+			/>
 			{#if type === 'gallery'}
-				<form on:submit|preventDefault={onUsernameFieldSubmit} class="w-full md:max-w-[15rem]">
+				<form on:submit|preventDefault={onUsernameFieldSubmit} class="w-full md:w-1/3">
 					<TabLikeInput
 						name={$LL.Gallery.UsernameFilterInput.Title()}
 						placeholder={$LL.Gallery.UsernameFilterInput.Placeholder()}
@@ -245,6 +258,24 @@
 						color="primary"
 					/>
 				{/if}
+				{#each aspectRatioFilters as aspectRatioFilter}
+					<TagButton
+						icon={IconDimensions}
+						text={aspectRatioTabs.find((i) => i.value === aspectRatioFilter)?.label || ''}
+						onClick={() => {
+							aspectRatioFilters = aspectRatioFilters.filter((i) => i !== aspectRatioFilter);
+						}}
+					/>
+				{/each}
+				{#each modelIdFilters as modelIdFilter}
+					<TagButton
+						icon={IconBrain}
+						text={$LL.Home.ModelTag({ modelName: $modelIdToDisplayName[modelIdFilter] })}
+						onClick={() => {
+							modelIdFilters = modelIdFilters.filter((i) => i !== modelIdFilter);
+						}}
+					/>
+				{/each}
 				{#if usernameFilters !== undefined && usernameFilters.length > 0}
 					{#each usernameFilters as usernameFilter}
 						<TagButton
@@ -257,15 +288,6 @@
 						/>
 					{/each}
 				{/if}
-				{#each modelIdFilters as item}
-					<TagButton
-						icon={IconBrain}
-						text={$LL.Home.ModelTag({ modelName: $modelIdToDisplayName[item] })}
-						onClick={() => {
-							modelIdFilters = modelIdFilters.filter((i) => i !== item);
-						}}
-					/>
-				{/each}
 			</div>
 		</div>
 	{/if}

@@ -11,6 +11,7 @@ import {
 	getSomeUserProfileInfiniteQueryKey,
 	getSomeUserProfileInfiniteQueryProps
 } from '$routes/(app)/[username]/constants';
+import { getGalleryLikeParamsFromSearchParams } from '$ts/helpers/galleryLike';
 
 interface TParent {
 	queryClient: QueryClient;
@@ -27,18 +28,12 @@ export const load: PageLoad = async ({ url, parent, params }) => {
 	if (outputIdShort) throw redirect(302, `/${username}/o/${outputIdShort}`);
 
 	const { queryClient, session } = (await parent()) as TParent;
-	const searchQuery = url.searchParams.get('q');
-	const modelIdQuery = url.searchParams.get('mi');
-	const modelIds = modelIdQuery ? modelIdQuery.split(',') : [];
-	const filteredModelIds = modelIds.filter((modelId) =>
-		availableGenerationModelIds.includes(modelId as TAvailableGenerationModelId)
-	);
+	const galleryLikeParams = getGalleryLikeParamsFromSearchParams(url.searchParams);
 
 	const hasInitialData =
 		queryClient.getQueryData(
 			getSomeUserProfileInfiniteQueryKey({
-				searchString: searchQuery,
-				modelIdFilters: filteredModelIds,
+				...galleryLikeParams,
 				username
 			})
 		) !== undefined;
@@ -47,8 +42,7 @@ export const load: PageLoad = async ({ url, parent, params }) => {
 		const [_, userRes] = await Promise.all([
 			queryClient.prefetchInfiniteQuery(
 				getSomeUserProfileInfiniteQueryProps({
-					searchString: searchQuery,
-					modelIdFilters: filteredModelIds,
+					...galleryLikeParams,
 					username,
 					accessToken: session?.access_token
 				})
@@ -61,8 +55,7 @@ export const load: PageLoad = async ({ url, parent, params }) => {
 	}
 	if (username !== userMetadata.username) throw redirect(302, `/${userMetadata.username}`);
 	return {
-		searchQuery,
-		modelIds: filteredModelIds,
+		...galleryLikeParams,
 		userMetadata,
 		username: userMetadata.username
 	};

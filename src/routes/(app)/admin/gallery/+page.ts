@@ -9,6 +9,7 @@ import {
 } from '$routes/(app)/admin/gallery/constants';
 import { TGalleryStatusSchema } from '$ts/stores/user/generation';
 import { adminGalleryCurrentFilterDefault } from '$ts/stores/admin/gallery';
+import { getGalleryLikeParamsFromSearchParams } from '$ts/helpers/galleryLike';
 
 interface TParent {
 	queryClient: QueryClient;
@@ -22,14 +23,10 @@ export const load: PageLoad = async ({ parent, url }) => {
 	const view = TGalleryStatusSchema.safeParse(viewParam).success
 		? TGalleryStatusSchema.parse(viewParam)
 		: adminGalleryCurrentFilterDefault;
-	const modelIdFiltersParam = url.searchParams.get('mi');
-	const modelIdFilters = modelIdFiltersParam ? modelIdFiltersParam.split(',') : [];
-	const searchStringParam = url.searchParams.get('q');
-	const searchString = searchStringParam || '';
+	const galleryLikeParams = getGalleryLikeParamsFromSearchParams(url.searchParams);
 	const sharedQueryParams = {
-		adminGalleryCurrentFilter: view,
-		modelIdFilters,
-		searchString
+		...galleryLikeParams,
+		adminGalleryCurrentFilter: view
 	};
 	const hasInitialData =
 		queryClient.getQueryData(
@@ -50,8 +47,7 @@ export const load: PageLoad = async ({ parent, url }) => {
 		}
 	}
 	return {
-		view,
-		modelIdFilters,
-		searchString
+		...galleryLikeParams,
+		view
 	};
 };

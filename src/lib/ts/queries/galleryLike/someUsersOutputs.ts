@@ -1,4 +1,5 @@
 import type { TAvailableGenerationModelId } from '$ts/constants/generationModels';
+import type { TAvailableAspectRatio } from '$ts/constants/generationSize';
 import { apiUrl } from '$ts/constants/main';
 import type { TAvailableSchedulerId } from '$ts/constants/schedulers';
 import { convertToDBTimeString } from '$ts/helpers/convertToDBTimeString';
@@ -15,6 +16,7 @@ export async function getSomeUsersGenerationFullOutputs({
 	cursor,
 	search,
 	model_ids,
+	aspect_ratios,
 	custom_fetch,
 	per_page = per_page_default,
 	score_threshold = score_threshold_default,
@@ -26,6 +28,7 @@ export async function getSomeUsersGenerationFullOutputs({
 	search?: string | null;
 	seed?: number;
 	model_ids?: TAvailableGenerationModelId[];
+	aspect_ratios?: TAvailableAspectRatio[];
 	custom_fetch?: typeof fetch;
 	per_page?: number;
 	score_threshold?: number;
@@ -46,6 +49,12 @@ export async function getSomeUsersGenerationFullOutputs({
 	}
 	if (model_ids && model_ids.length > 0) {
 		query.append('model_ids', model_ids.join(','));
+	}
+	if (aspect_ratios && aspect_ratios.length > 0) {
+		query.append(
+			'aspect_ratio',
+			aspect_ratios.map((i) => i.replaceAll('.', '_').replaceAll(':', '-')).join(',')
+		);
 	}
 	query.append('per_page', per_page.toString());
 	if (prompt_id) {

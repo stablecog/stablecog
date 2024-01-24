@@ -16,6 +16,7 @@ export async function getGalleryGenerationFullOutputs({
 	search,
 	seed,
 	model_ids,
+	aspect_ratios,
 	sorts,
 	usernameFilters,
 	custom_fetch,
@@ -28,6 +29,7 @@ export async function getGalleryGenerationFullOutputs({
 	search?: string | null;
 	seed?: number;
 	model_ids?: TAvailableGenerationModelId[];
+	aspect_ratios?: string[];
 	sorts?: string[];
 	usernameFilters?: string[];
 	custom_fetch?: typeof fetch;
@@ -62,6 +64,12 @@ export async function getGalleryGenerationFullOutputs({
 	}
 	if (usernameFilters && usernameFilters.length > 0) {
 		query.append('username', usernameFilters.join(','));
+	}
+	if (aspect_ratios && aspect_ratios.length > 0) {
+		query.append(
+			'aspect_ratio',
+			aspect_ratios.map((i) => i.replaceAll('.', '_').replaceAll(':', '-')).join(',')
+		);
 	}
 	let queryString = query.toString();
 	if (queryString) queryString = `?${queryString}`;

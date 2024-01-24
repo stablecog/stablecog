@@ -6,23 +6,28 @@ import type { TUserGalleryView } from '$ts/stores/user/gallery';
 import type { Session } from '@supabase/supabase-js';
 import type { CreateInfiniteQueryOptions } from '@tanstack/svelte-query';
 import { writable as writableLocal } from '@macfja/svelte-persistent-store';
+import type { TAvailableAspectRatio } from '$ts/constants/generationSize';
+import type { TAvailableGenerationModelId } from '$ts/constants/generationModels';
 
 export const historySearchString = writableLocal<string>('historySearchString', '');
 
 export const getHistoryInfiniteQueryKey = ({
 	userGalleryCurrentView,
 	searchString,
-	modelIdFilters
+	modelIdFilters,
+	aspectRatioFilters
 }: {
 	userGalleryCurrentView: TUserGalleryView;
 	searchString?: string;
 	modelIdFilters?: string[];
+	aspectRatioFilters?: string[];
 }) => {
 	return [
 		'user_generation_full_outputs',
 		userGalleryCurrentView,
 		searchString ? searchString : '',
-		modelIdFilters ? modelIdFilters.sort().join(',') : ''
+		modelIdFilters ? modelIdFilters.sort().join(',') : '',
+		aspectRatioFilters ? aspectRatioFilters.sort().join(',') : ''
 	];
 };
 
@@ -30,11 +35,13 @@ export function getHistoryInfiniteQueryProps({
 	userGalleryCurrentView,
 	searchString,
 	modelIdFilters,
+	aspectRatioFilters,
 	session
 }: {
 	userGalleryCurrentView: TUserGalleryView;
 	searchString?: string;
-	modelIdFilters?: string[];
+	modelIdFilters?: TAvailableGenerationModelId[];
+	aspectRatioFilters?: TAvailableAspectRatio[];
 	session: Session;
 }): CreateInfiniteQueryOptions<
 	TUserGenerationFullOutputsPage,
@@ -44,7 +51,12 @@ export function getHistoryInfiniteQueryProps({
 	string[]
 > {
 	return {
-		queryKey: getHistoryInfiniteQueryKey({ userGalleryCurrentView, searchString, modelIdFilters }),
+		queryKey: getHistoryInfiniteQueryKey({
+			userGalleryCurrentView,
+			searchString,
+			modelIdFilters,
+			aspectRatioFilters
+		}),
 		queryFn: (lastPage) => {
 			return getUserGenerationFullOutputs({
 				access_token: session.access_token || '',
@@ -52,7 +64,8 @@ export function getHistoryInfiniteQueryProps({
 				is_favorited: userGalleryCurrentView === 'favorites' ? true : undefined,
 				is_liked: userGalleryCurrentView === 'likes' ? true : undefined,
 				search: searchString,
-				model_ids: modelIdFilters
+				model_ids: modelIdFilters,
+				aspect_ratios: aspectRatioFilters
 			});
 		},
 		getNextPageParam: (lastPage: TUserGenerationFullOutputsPage) => {

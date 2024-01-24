@@ -24,6 +24,7 @@
 		xl2Breakpoint
 	} from '$components/generationFullScreen/constants';
 	import {
+		galleryAspectRatioFilters,
 		galleryModelIdFilters,
 		gallerySearchString,
 		gallerySorts,
@@ -50,6 +51,7 @@
 
 	if (!hydrated) {
 		galleryModelIdFilters.set(data.modelIdFilters);
+		galleryAspectRatioFilters.set(data.aspectRatioFilters);
 		gallerySearchString.set(data.searchString);
 		gallerySorts.set(data.sorts);
 		galleryUsernameFilters.set(data.usernameFilters);
@@ -79,6 +81,7 @@
 		getGalleryInfiniteQueryKey({
 			searchString: $gallerySearchString,
 			modelIdFilters: $galleryModelIdFilters,
+			aspectRatioFilters: $galleryAspectRatioFilters,
 			sorts: $gallerySorts,
 			usernameFilters: $galleryUsernameFilters,
 			seed: $globalSeed
@@ -89,6 +92,7 @@
 		getGalleryInfiniteQueryProps({
 			searchString: $gallerySearchString,
 			modelIdFilters: $galleryModelIdFilters,
+			aspectRatioFilters: $galleryAspectRatioFilters,
 			sorts: $gallerySorts,
 			usernameFilters: $galleryUsernameFilters,
 			seed: $globalSeed,
@@ -157,6 +161,7 @@
 				bind:modelIdFilters={$galleryModelIdFilters}
 				bind:searchString={$gallerySearchString}
 				bind:usernameFilters={$galleryUsernameFilters}
+				bind:aspectRatioFilters={$galleryAspectRatioFilters}
 			/>
 		</div>
 	</GalleryLikeTitleSection>

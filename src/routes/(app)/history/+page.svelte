@@ -35,7 +35,8 @@
 		isUserGalleryEditActive,
 		userGalleryCurrentView,
 		type TUserGalleryView,
-		userGalleryModelIdFilters
+		userGalleryModelIdFilters,
+		userGalleryAspectRatioFilters
 	} from '$ts/stores/user/gallery';
 	import { userGenerationFullOutputsQueryKey } from '$ts/stores/user/queryKeys';
 	import { userSummary } from '$ts/stores/user/summary';
@@ -66,6 +67,7 @@
 	if (!hydrated) {
 		userGalleryCurrentView.set(data.view);
 		userGalleryModelIdFilters.set(data.modelIdFilters);
+		userGalleryAspectRatioFilters.set(data.aspectRatioFilters);
 		historySearchString.set(data.searchString);
 	}
 
@@ -73,7 +75,8 @@
 		getHistoryInfiniteQueryKey({
 			userGalleryCurrentView: $userGalleryCurrentView,
 			searchString: $historySearchString,
-			modelIdFilters: $userGalleryModelIdFilters
+			modelIdFilters: $userGalleryModelIdFilters,
+			aspectRatioFilters: $userGalleryAspectRatioFilters
 		})
 	);
 
@@ -84,6 +87,7 @@
 						userGalleryCurrentView: $userGalleryCurrentView,
 						searchString: $historySearchString,
 						modelIdFilters: $userGalleryModelIdFilters,
+						aspectRatioFilters: $userGalleryAspectRatioFilters,
 						session: $page.data.session
 					})
 			  )
@@ -227,6 +231,7 @@
 				<SearchAndFilterBar
 					bind:searchString={$historySearchString}
 					bind:modelIdFilters={$userGalleryModelIdFilters}
+					bind:aspectRatioFilters={$userGalleryAspectRatioFilters}
 					bind:searchInputIsFocused
 				/>
 			</div>

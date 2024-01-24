@@ -39,29 +39,36 @@
 	import IconFreePlan from '$components/icons/IconFreePlan.svelte';
 	import {
 		getSomeUserProfileInfiniteQueryKey,
-		getSomeUserProfileInfiniteQueryProps
+		getSomeUserProfileInfiniteQueryProps,
+		someUserGalleryAspectRatioFilters,
+		someUserGalleryModelIdFilters,
+		someUserGallerySearchString
 	} from '$routes/(app)/[username]/constants.js';
 	import ProfileCardBadge from '$routes/(app)/[username]/ProfileCardBadge.svelte';
+	import { hydrated } from '$ts/stores/hydrated.js';
 
 	export let data;
-	const { searchQuery: searchQueryParam } = data;
 
-	let searchString = searchQueryParam ?? '';
-
-	let modelIdFilters: TAvailableGenerationModelId[] = data.modelIds ?? [];
+	if (!hydrated) {
+		someUserGalleryModelIdFilters.set(data.modelIdFilters);
+		someUserGalleryAspectRatioFilters.set(data.aspectRatioFilters);
+		someUserGallerySearchString.set(data.searchString);
+	}
 
 	$: someUserProfileFullOutputsQueryKey.set(
 		getSomeUserProfileInfiniteQueryKey({
-			searchString,
-			modelIdFilters,
+			searchString: $someUserGallerySearchString,
+			modelIdFilters: $someUserGalleryModelIdFilters,
+			aspectRatioFilters: $someUserGalleryAspectRatioFilters,
 			username: data.username
 		})
 	);
 
 	$: galleryGenerationFullOutputsQuery = createInfiniteQuery(
 		getSomeUserProfileInfiniteQueryProps({
-			searchString,
-			modelIdFilters,
+			searchString: $someUserGallerySearchString,
+			modelIdFilters: $someUserGalleryModelIdFilters,
+			aspectRatioFilters: $someUserGalleryAspectRatioFilters,
 			username: data.username,
 			accessToken: $page.data.session?.access_token
 		})
@@ -81,7 +88,7 @@
 	$: rightIndex = outputs && outputIndex < outputs?.length - 1 ? outputIndex + 1 : -1;
 
 	function setSearchQuery(query: string) {
-		searchString = query;
+		someUserGallerySearchString.set(query);
 	}
 
 	function setInitialFirstOutput() {
@@ -248,7 +255,11 @@
 	</div>
 	<div class="w-full px-1 py-1 md:py-2 flex justify-center mt-2 md:mt-3.5">
 		<div class="w-full flex max-w-3xl justify-center">
-			<SearchAndFilterBar bind:modelIdFilters bind:searchString />
+			<SearchAndFilterBar
+				bind:modelIdFilters={$someUserGalleryModelIdFilters}
+				bind:searchString={$someUserGallerySearchString}
+				bind:aspectRatioFilters={$someUserGalleryAspectRatioFilters}
+			/>
 		</div>
 	</div>
 	<div class="w-full pb-3 pt-1 md:pt-3 relative flex flex-col flex-1">

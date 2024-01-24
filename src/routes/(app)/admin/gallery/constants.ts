@@ -6,27 +6,35 @@ import type { TGalleryStatus } from '$ts/stores/user/generation';
 import type { CreateInfiniteQueryOptions } from '@tanstack/svelte-query';
 import { writable as writableLocal } from '@macfja/svelte-persistent-store';
 import type { TAvailableGenerationModelId } from '$ts/constants/generationModels';
+import type { TAvailableAspectRatio } from '$ts/constants/generationSize';
 
 export const adminGallerySearchString = writableLocal<string>('adminGallerySearchString', '');
 export const adminGalleryModelIdFilters = writableLocal<TAvailableGenerationModelId[]>(
 	'adminGalleryModelIdFilters',
 	[]
 );
+export const adminGalleryAspectRatioFilters = writableLocal<TAvailableAspectRatio[]>(
+	'adminGalleryAspectRatioFilters',
+	[]
+);
 
 export const getAllUserGenerationFullOutputsQueryKey = ({
 	adminGalleryCurrentFilter,
 	searchString,
-	modelIdFilters
+	modelIdFilters,
+	aspectRatioFilters
 }: {
 	adminGalleryCurrentFilter: TGalleryStatus;
 	searchString?: string;
-	modelIdFilters?: string[];
+	modelIdFilters?: TAvailableGenerationModelId[];
+	aspectRatioFilters?: TAvailableAspectRatio[];
 }) => {
 	return [
 		'admin_user_generation_full_outputs',
 		adminGalleryCurrentFilter,
 		searchString ? searchString : '',
-		modelIdFilters ? modelIdFilters.sort().join(',') : ''
+		modelIdFilters ? modelIdFilters.sort().join(',') : '',
+		aspectRatioFilters ? aspectRatioFilters.sort().join(',') : ''
 	];
 };
 
@@ -34,11 +42,13 @@ export function getAllUserGenerationFullOutputsQueryProps({
 	adminGalleryCurrentFilter,
 	searchString,
 	modelIdFilters,
+	aspectRatioFilters,
 	session
 }: {
 	adminGalleryCurrentFilter: TGalleryStatus;
 	searchString?: string;
-	modelIdFilters?: string[];
+	modelIdFilters?: TAvailableGenerationModelId[];
+	aspectRatioFilters?: TAvailableAspectRatio[];
 	session: Session;
 }): CreateInfiniteQueryOptions<
 	TUserGenerationFullOutputsPage,
@@ -51,7 +61,8 @@ export function getAllUserGenerationFullOutputsQueryProps({
 		queryKey: getAllUserGenerationFullOutputsQueryKey({
 			adminGalleryCurrentFilter,
 			searchString,
-			modelIdFilters
+			modelIdFilters,
+			aspectRatioFilters
 		}),
 		queryFn: (lastPage) => {
 			return getAllUserGenerationFullOutputs({
@@ -63,7 +74,8 @@ export function getAllUserGenerationFullOutputsQueryProps({
 						? 'updated_at'
 						: 'created_at',
 				search: searchString,
-				model_ids: modelIdFilters
+				model_ids: modelIdFilters,
+				aspect_ratios: aspectRatioFilters
 			});
 		},
 		getNextPageParam: (lastPage: TUserGenerationFullOutputsPage) => {

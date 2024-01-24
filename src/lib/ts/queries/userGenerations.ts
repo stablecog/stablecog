@@ -1,4 +1,5 @@
 import type { TAvailableGenerationModelId } from '$ts/constants/generationModels';
+import type { TAvailableAspectRatio } from '$ts/constants/generationSize';
 import { apiUrl } from '$ts/constants/main';
 import type { TGalleryStatus, TGenerationFullOutput } from '$userStores/generation';
 
@@ -11,7 +12,8 @@ export async function getUserGenerationFullOutputs({
 	is_favorited,
 	is_liked,
 	search,
-	model_ids
+	model_ids,
+	aspect_ratios
 }: {
 	cursor?: string;
 	access_token: string;
@@ -19,6 +21,7 @@ export async function getUserGenerationFullOutputs({
 	is_liked?: boolean;
 	search?: string;
 	model_ids?: TAvailableGenerationModelId[];
+	aspect_ratios?: TAvailableAspectRatio[];
 }) {
 	console.log('getUserOutputs');
 	const query = new URLSearchParams();
@@ -41,6 +44,12 @@ export async function getUserGenerationFullOutputs({
 	if (model_ids && model_ids.length > 0) {
 		query.append('model_ids', model_ids.join(','));
 	}
+	if (aspect_ratios && aspect_ratios.length > 0) {
+		query.append(
+			'aspect_ratio',
+			aspect_ratios.map((i) => i.replaceAll('.', '_').replaceAll(':', '-')).join(',')
+		);
+	}
 	const url = `${apiUrl.origin}/v1/user/outputs?${query.toString()}`;
 	const res = await fetch(url, {
 		headers: {
@@ -58,7 +67,8 @@ export async function getAllUserGenerationFullOutputs({
 	gallery_status,
 	order_by,
 	search,
-	model_ids
+	model_ids,
+	aspect_ratios
 }: {
 	cursor?: string;
 	gallery_status?: TGalleryStatus;
@@ -66,6 +76,7 @@ export async function getAllUserGenerationFullOutputs({
 	order_by?: string;
 	search?: string;
 	model_ids?: TAvailableGenerationModelId[];
+	aspect_ratios?: TAvailableAspectRatio[];
 }) {
 	console.log('getAllUserOutputs');
 	const query = new URLSearchParams();
@@ -89,6 +100,12 @@ export async function getAllUserGenerationFullOutputs({
 	}
 	if (model_ids && model_ids.length > 0) {
 		query.append('model_ids', model_ids.join(','));
+	}
+	if (aspect_ratios && aspect_ratios.length > 0) {
+		query.append(
+			'aspect_ratio',
+			aspect_ratios.map((i) => i.replaceAll('.', '_').replaceAll(':', '-')).join(',')
+		);
 	}
 	if (order_by) {
 		query.append('order_by', order_by);

@@ -7,6 +7,7 @@ import {
 	getHistoryInfiniteQueryProps
 } from '$routes/(app)/history/constants';
 import { TUserGalleryViewSchema } from '$ts/stores/user/gallery';
+import { getGalleryLikeParamsFromSearchParams } from '$ts/helpers/galleryLike';
 
 interface TParent {
 	queryClient: QueryClient;
@@ -19,14 +20,10 @@ export const load: PageLoad = async ({ parent, url }) => {
 	const view = TUserGalleryViewSchema.safeParse(viewParam).success
 		? TUserGalleryViewSchema.parse(viewParam)
 		: 'all';
-	const modelIdFiltersParam = url.searchParams.get('mi');
-	const modelIdFilters = modelIdFiltersParam ? modelIdFiltersParam.split(',') : [];
-	const searchStringParam = url.searchParams.get('q');
-	const searchString = searchStringParam || '';
+	const galleryLikeParams = getGalleryLikeParamsFromSearchParams(url.searchParams);
 	const sharedQueryParams = {
-		userGalleryCurrentView: view,
-		modelIdFilters,
-		searchString
+		...galleryLikeParams,
+		userGalleryCurrentView: view
 	};
 	const hasInitialData =
 		queryClient.getQueryData(getHistoryInfiniteQueryKey({ ...sharedQueryParams })) !== undefined;
@@ -44,7 +41,6 @@ export const load: PageLoad = async ({ parent, url }) => {
 	}
 	return {
 		view,
-		modelIdFilters,
-		searchString
+		...galleryLikeParams
 	};
 };
