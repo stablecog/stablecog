@@ -30,6 +30,8 @@
 		gallerySorts,
 		getGalleryInfiniteQueryKey,
 		getGalleryInfiniteQueryProps,
+		mainSortViewDefault,
+		mainSorts,
 		sortsDefault
 	} from '$routes/(app)/gallery/constants';
 	import { previewImageVersion } from '$ts/constants/previewImageVersion.js';
@@ -38,7 +40,7 @@
 	import { onMount } from 'svelte';
 	import { setUrlParam } from '$ts/helpers/setUrlParam.js';
 	import type { TTab } from '$ts/types/main.js';
-	import TabLikeDropdown from '$components/tabBars/TabLikeDropdown.svelte';
+	import TabLikeDropdown from '$components/primitives/tabBars/TabLikeDropdown.svelte';
 	import IconMainSortView from '$components/icons/IconMainSortView.svelte';
 	import GalleryLikePageWrapper from '$components/galleryLike/GalleryLikePageWrapper.svelte';
 	import GalleryLikeTitleSection from '$components/galleryLike/GalleryLikeTitleSection.svelte';
@@ -52,8 +54,7 @@
 		gallerySorts.set(data.sorts);
 	}
 
-	const mainSorts = ['trending', 'top', 'new'];
-	let mainSortView = $gallerySorts?.find((i) => mainSorts.includes(i)) ?? 'new';
+	let mainSortView = $gallerySorts?.find((i) => mainSorts.includes(i)) ?? mainSortViewDefault;
 
 	const mainSortViews: TTab<string>[] = [
 		{

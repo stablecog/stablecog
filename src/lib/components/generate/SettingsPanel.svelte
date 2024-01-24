@@ -1,8 +1,8 @@
 <script lang="ts">
 	import IconAspectRatio from '$components/icons/IconAspectRatio.svelte';
-	import TabLikeDropdown from '$components/tabBars/TabLikeDropdown.svelte';
-	import TabLikeSliderInput from '$components/tabBars/TabLikeSliderInput.svelte';
-	import TabLikeTextArea from '$components/tabBars/TabLikeTextArea.svelte';
+	import TabLikeDropdown from '$components/primitives/tabBars/TabLikeDropdown.svelte';
+	import TabLikeSliderInput from '$components/primitives/tabBars/TabLikeSliderInput.svelte';
+	import TabLikeTextArea from '$components/primitives/tabBars/TabLikeTextArea.svelte';
 	import LL from '$i18n/i18n-svelte';
 	import SidebarWrapper from '$components/generate/SidebarWrapper.svelte';
 	import { availableModelIdDropdownItems } from '$ts/constants/generationModels';
@@ -33,13 +33,13 @@
 	import { expandCollapse } from '$ts/animation/transitions';
 	import { quadOut } from 'svelte/easing';
 	import IconSeed from '$components/icons/IconSeed.svelte';
-	import TabLikeInput from '$components/tabBars/TabLikeInput.svelte';
-	import TabLikeInitImageUploader2 from '$components/tabBars/TabLikeInitImageUploader2.svelte';
+	import TabLikeInput from '$components/primitives/tabBars/TabLikeInput.svelte';
+	import TabLikeInitImageUploader2 from '$components/primitives/tabBars/TabLikeInitImageUploader2.svelte';
 	import SettingsPanelItem from '$components/generate/SettingsPanelItem.svelte';
 	import type { TAvailableSchedulerId } from '$ts/constants/schedulers';
-	import ModelCard from '$components/modelCard/ModelCard.svelte';
-	import IconModelImage from '$components/modelCard/IconModelImage.svelte';
-	import TabLikeToggle from '$components/tabBars/TabLikeToggle.svelte';
+	import ModelCard from '$components/cards/modelCard/ModelCard.svelte';
+	import IconModelImage from '$components/cards/modelCard/IconModelImage.svelte';
+	import TabLikeToggle from '$components/primitives/tabBars/TabLikeToggle.svelte';
 	import { userSummary } from '$ts/stores/user/summary';
 	import IconWarningOutline from '$components/icons/IconWarningOutline.svelte';
 	import { scale } from 'svelte/transition';

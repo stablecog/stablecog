@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { page } from '$app/stores';
-	import CreditCostBadge from '$components/CreditCostBadge.svelte';
+	import CreditCostBadge from '$components/badges/CreditCostBadge.svelte';
 	import Morpher from '$components/utils/Morpher.svelte';
 	import InsufficientCreditsBadge from '$components/badges/InsufficientCreditsBadge.svelte';
 	import Button from '$components/primitives/buttons/Button.svelte';

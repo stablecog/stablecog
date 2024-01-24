@@ -8,9 +8,9 @@
 	import IconRemoveSilence from '$components/icons/IconRemoveSilence.svelte';
 	import IconSpeaker from '$components/icons/IconVoiceoverSpeaker.svelte';
 	import IconWave from '$components/icons/IconWave.svelte';
-	import TabLikeDropdown from '$components/tabBars/TabLikeDropdown.svelte';
-	import TabLikeSliderInput from '$components/tabBars/TabLikeSliderInput.svelte';
-	import TabLikeToggle from '$components/tabBars/TabLikeToggle.svelte';
+	import TabLikeDropdown from '$components/primitives/tabBars/TabLikeDropdown.svelte';
+	import TabLikeSliderInput from '$components/primitives/tabBars/TabLikeSliderInput.svelte';
+	import TabLikeToggle from '$components/primitives/tabBars/TabLikeToggle.svelte';
 	import LL from '$i18n/i18n-svelte';
 	import { voiceoverLocaleDropdownItems } from '$ts/constants/voiceover/locales';
 	import { voiceoverLocale, voiceoverSpeakerDropdownItems } from '$ts/constants/voiceover/models';

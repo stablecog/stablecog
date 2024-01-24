@@ -2,7 +2,7 @@
 	import { page } from '$app/stores';
 	import IconNavbarRoute from '$components/icons/IconNavbarRoute.svelte';
 	import type { TTabBarPlacement } from '$ts/types/main';
-	import TabBarWrapper from '$components/tabBars/TabBarWrapper.svelte';
+	import TabBarWrapper from '$components/primitives/tabBars/TabBarWrapper.svelte';
 	import { routes, type TNavbarRoute } from '$components/navigation/routes';
 	import IconNew from '$components/icons/IconNew.svelte';
 

@@ -10,7 +10,7 @@
 	import { userSummary } from '$ts/stores/user/summary';
 	import Input from '../primitives/Input.svelte';
 	import IconSearch from '../icons/IconSearch.svelte';
-	import TabLikeFilterDropdown from '$components/tabBars/TabLikeFilterDropdown.svelte';
+	import TabLikeFilterDropdown from '$components/primitives/tabBars/TabLikeFilterDropdown.svelte';
 	import {
 		availableModelIdDropdownItems,
 		modelIdToDisplayName,
@@ -27,7 +27,7 @@
 	import { setUrlParam } from '$ts/helpers/setUrlParam';
 	import type { TTab } from '$ts/types/main';
 	import { sortsDefault } from '$routes/(app)/gallery/constants';
-	import TabLikeDropdown from '$components/tabBars/TabLikeDropdown.svelte';
+	import TabLikeDropdown from '$components/primitives/tabBars/TabLikeDropdown.svelte';
 	import IconMainSortView from '$components/icons/IconMainSortView.svelte';
 	import { quadOut } from 'svelte/easing';
 	import { fly } from 'svelte/transition';

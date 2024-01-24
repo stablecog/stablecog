@@ -1,6 +1,6 @@
 <script lang="ts">
 	import SliderInputWithNumerator from '$components/primitives/SliderInputWithNumerator.svelte';
-	import TabBarWrapper from '$components/tabBars/TabBarWrapper.svelte';
+	import TabBarWrapper from '$components/primitives/tabBars/TabBarWrapper.svelte';
 
 	export let value: number;
 	export let min: number;

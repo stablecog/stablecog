@@ -21,7 +21,7 @@
 	import MetaTag from '$components/utils/MetaTag.svelte';
 	import SearchAndFilterBar from '$components/galleryLike/SearchAndFilterBar.svelte';
 	import SignInCard from '$components/cards/SignInCard.svelte';
-	import TabLikeDropdown from '$components/tabBars/TabLikeDropdown.svelte';
+	import TabLikeDropdown from '$components/primitives/tabBars/TabLikeDropdown.svelte';
 	import LL, { locale } from '$i18n/i18n-svelte';
 	import {
 		adminGalleryModelIdFilters,

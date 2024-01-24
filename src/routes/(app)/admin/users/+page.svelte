@@ -29,7 +29,7 @@
 		PUBLIC_STRIPE_PRODUCT_ID_STARTER_SUBSCRIPTION,
 		PUBLIC_STRIPE_PRODUCT_ID_ULTIMATE_SUBSCRIPTION
 	} from '$env/static/public';
-	import TabLikeDropdown from '$components/tabBars/TabLikeDropdown.svelte';
+	import TabLikeDropdown from '$components/primitives/tabBars/TabLikeDropdown.svelte';
 	import IconAnimatedSpinner from '$components/icons/IconAnimatedSpinner.svelte';
 	import { getCreditOptions } from '$ts/queries/getCreditsList';
 	import DropdownWrapper from '$components/primitives/dropdown/DropdownWrapper.svelte';

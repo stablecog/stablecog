@@ -35,7 +35,7 @@
 	import IconNoImage from '$components/icons/IconNoImage.svelte';
 	import IconPen from '$components/icons/IconPen.svelte';
 	import IconUpscale from '$components/icons/IconUpscale.svelte';
-	import TabBar from '$components/tabBars/TabBar.svelte';
+	import TabBar from '$components/primitives/tabBars/TabBar.svelte';
 	import LL, { locale } from '$i18n/i18n-svelte';
 	import type { TRequestNavigationEventParams } from '$routes/(app)/admin/gallery/types';
 	import { upscaleModelIdDefault } from '$ts/constants/upscaleModels';

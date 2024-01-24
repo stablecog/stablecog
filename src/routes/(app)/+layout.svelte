@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { page } from '$app/stores';
 	import LayoutWrapper from '$components/wrappers/LayoutWrapper.svelte';
-	import UnderDevelopment from '$components/UnderDevelopment.svelte';
+	import UnderDevelopment from '$components/system/UnderDevelopment.svelte';
 	import UpdateAvailableCard from '$components/cards/UpdateAvailableCard.svelte';
 	import GenerationWorker from '$components/appLayout/GenerationWorker.svelte';
 	import SSEConnector from '$components/appLayout/SSEConnector.svelte';

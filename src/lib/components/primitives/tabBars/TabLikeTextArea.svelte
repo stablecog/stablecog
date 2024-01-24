@@ -1,6 +1,6 @@
 <script lang="ts">
 	import ClearButton from '$components/primitives/buttons/ClearButton.svelte';
-	import TabBarWrapper from '$components/tabBars/TabBarWrapper.svelte';
+	import TabBarWrapper from '$components/primitives/tabBars/TabBarWrapper.svelte';
 	import { autoresize } from '$ts/actions/textarea/autoresize';
 
 	export let value: string | undefined;

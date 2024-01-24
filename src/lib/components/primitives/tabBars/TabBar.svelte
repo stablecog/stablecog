@@ -1,6 +1,6 @@
 <script lang="ts">
 	import Morpher from '$components/utils/Morpher.svelte';
-	import TabBarWrapper from '$components/tabBars/TabBarWrapper.svelte';
+	import TabBarWrapper from '$components/primitives/tabBars/TabBarWrapper.svelte';
 	import type { TTab } from '$ts/types/main';
 
 	type T = $$Generic;

@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { locale } from '$i18n/i18n-svelte';
-	import IconToken from './icons/IconToken.svelte';
+	import IconToken from '../icons/IconToken.svelte';
 	export let creditCost: number;
 </script>
 

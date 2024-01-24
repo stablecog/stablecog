@@ -11,7 +11,9 @@ export const galleryModelIdFilters = writableLocal<TAvailableGenerationModelId[]
 	[]
 );
 
-export const sortsDefault = ['new'];
+export const mainSortViewDefault = 'trending';
+export const mainSorts = ['trending', 'top', 'new'];
+export const sortsDefault = [mainSortViewDefault];
 export const gallerySorts = writableLocal<string[]>('gallerySorts', sortsDefault);
 
 export const getGalleryInfiniteQueryKey = ({

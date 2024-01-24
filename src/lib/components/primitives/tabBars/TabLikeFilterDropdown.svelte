@@ -1,40 +1,31 @@
 <script lang="ts">
-	import { scale } from 'svelte/transition';
-	import { quadOut } from 'svelte/easing';
 	import IconChevronDown from '$components/icons/IconChevronDown.svelte';
 	import ScrollAreaWithChevron from '$components/utils/ScrollAreaWithChevron.svelte';
-	import TabBarWrapper from '$components/tabBars/TabBarWrapper.svelte';
+	import TabBarWrapper from '$components/primitives/tabBars/TabBarWrapper.svelte';
 	import { clickoutside } from '$ts/actions/clickoutside';
 	import { windowHeight, windowWidth } from '$ts/stores/window';
 	import type { TTab } from '$ts/types/main';
 	import { onMount } from 'svelte';
 
 	type T = $$Generic;
-	export let value: T;
+	export let values: T[];
 	export let items: TTab<T>[];
 	export let name: string;
+	export let nameIcon: ConstructorOfATypedSvelteComponent | undefined = undefined;
 	export let hasTitle = true;
 	export let dontScale = false;
 	export let disabled = false;
 	export let calculateDistance = true;
 	export let dropdownClass = '';
 	export let container: HTMLDivElement | undefined = undefined;
-	export let containerTopMinDistance = 8;
-	export let containerBottomMinDistance = 8;
-	export let iconSet: ConstructorOfATypedSvelteComponent | undefined = undefined;
+	export let containerTopMinDistance = 12;
+	export let containerBottomMinDistance = 12;
 	export { classes as class };
-	export let filterSelected = false;
-	export let listClass = 'flex flex-col';
-	export let iconSetClass =
-		'w-5.5 h-5.5 flex-shrink-0 -ml-1 mr-2 text-c-on-bg not-touch:group-hover:text-c-primary';
 	let classes = '';
 
 	let minDropdownHeight = 200;
 
-	$: itemsOptionallyFiltered = filterSelected ? items.filter((i) => i.value !== value) : items;
-
 	let isDropdownOpen = false;
-	$: selectedItem = items.find((item) => item.value === value);
 	const toggleDropdown = () => (isDropdownOpen = !isDropdownOpen);
 
 	let buttonElement: HTMLButtonElement;
@@ -57,13 +48,13 @@
 				containerHeight - buttonDistanceToTop - buttonHeight - containerBottomMinDistance;
 			if (buttonDistanceToBottom >= dropdownHeight || buttonDistanceToBottom >= minDropdownHeight) {
 				dropdownPlacement = 'bottom';
-				dropdownMaxHeight = buttonDistanceToBottom - containerBottomMinDistance;
+				dropdownMaxHeight = buttonDistanceToBottom;
 			} else if (buttonDistanceToTop > buttonDistanceToBottom) {
 				dropdownPlacement = 'top';
-				dropdownMaxHeight = buttonDistanceToTop - containerTopMinDistance;
+				dropdownMaxHeight = buttonDistanceToTop;
 			} else {
 				dropdownPlacement = 'bottom';
-				dropdownMaxHeight = buttonDistanceToBottom - containerBottomMinDistance;
+				dropdownMaxHeight = buttonDistanceToBottom;
 			}
 		} else {
 			const { top, height: buttonHeight } = buttonElement.getBoundingClientRect();
@@ -134,20 +125,21 @@
 				</div>
 			</div>
 			<div class="flex-shrink min-w-0 flex items-center">
-				<svelte:component
-					this={iconSet}
-					type={selectedItem?.value}
-					class="{iconSetClass} transition text-c-on-bg not-touch:group-hover:text-c-primary"
-				/>
+				{#if nameIcon}
+					<svelte:component
+						this={nameIcon}
+						class="w-5.5 h-5.5 flex-shrink-0 -ml-1 mr-2 text-c-on-bg not-touch:group-hover:text-c-primary"
+					/>
+				{/if}
 				<p
 					class="flex-shrink whitespace-nowrap overflow-hidden overflow-ellipsis text-base font-medium relative transition
 					max-w-full z-0 text-c-on-bg not-touch:group-hover:text-c-primary"
 				>
-					{selectedItem?.label}
+					{name}
 				</p>
 			</div>
 			<div
-				class="-mr-2 flex-shrink-0 w-5 h-5 transition {isDropdownOpen ? 'rotate-180' : 'rotate-0'}"
+				class="-mr-1 flex-shrink-0 w-5 h-5 transition {isDropdownOpen ? 'rotate-180' : 'rotate-0'}"
 			>
 				<IconChevronDown
 					class="relative w-full h-full transition text-c-on-bg/50 not-touch:group-hover:text-c-primary"
@@ -181,71 +173,56 @@
 						bind:clientHeight={dropdownHeight}
 						class="w-full flex flex-col justify-start relative z-20 overflow-hidden {dropdownClass}"
 					>
-						<ScrollAreaWithChevron class="w-full {listClass}">
-							{#each itemsOptionallyFiltered as item, index (item.value)}
-								{@const isSelected = item.value === value}
-								{@const onClick = () => {
-									value = item.value;
-									setTimeout(() => {
-										isDropdownOpen = false;
-									}, 100);
-								}}
-								{@const isNew = item.isNew ? true : false}
-								{#if $$slots.default}
-									<slot {isSelected} {item} {onClick} {isNew} />
-								{:else}
-									<button
-										disabled={disabled || !isDropdownOpen}
-										on:click={onClick}
-										class="touch-manipulation w-full text-left flex items-center justify-start min-w-0 {hasTitle
-											? 'px-4'
-											: 'px-5'} py-3.5 relative z-0 group
-									{index === itemsOptionallyFiltered.length - 1 ? 'rounded-b-lg' : ''}"
-										type="button"
-										aria-label={item.label}
+						<ScrollAreaWithChevron class="w-full flex flex-col">
+							{#each items as item, index (item.value)}
+								<label
+									for={item.label}
+									class="touch-manipulation w-full text-left flex items-center justify-start min-w-0 {hasTitle
+										? 'px-4'
+										: 'px-5'} py-3.5 relative z-0 group
+											{index === items.length - 1 ? 'rounded-b-lg' : ''} cursor-pointer"
+									aria-label={item.label}
+								>
+									<div
+										class="w-full h-full absolute left-0 top-0 overflow-hidden z-0 {index ===
+										items.length - 1
+											? 'rounded-b-lg'
+											: ''}"
 									>
 										<div
-											class="w-full h-full absolute left-0 top-0 overflow-hidden z-0 {index ===
-											itemsOptionallyFiltered.length - 1
-												? 'rounded-b-lg'
-												: ''}"
+											class="w-[200%] h-full absolute left-0 top-0 flex items-center justify-center"
 										>
 											<div
-												class="w-[200%] h-full absolute left-0 top-0 flex items-center justify-center"
-											>
-												<div
-													class="w-full aspect-square origin-left rounded-full transition transform -translate-x-full opacity-0
+												class="w-full aspect-square origin-left rounded-full transition transform -translate-x-full opacity-0
 													bg-c-primary/10 not-touch:group-hover:translate-x-[-45%] not-touch:group-hover:opacity-100"
-												/>
-											</div>
-										</div>
-										<div class="w-full flex items-center">
-											<svelte:component
-												this={iconSet}
-												type={item.value}
-												class="{iconSetClass} {isSelected
-													? 'text-c-primary'
-													: 'text-c-on-bg'} transition"
 											/>
-											<div class="flex-shrink min-w-0 flex items-center gap-2">
-												<p
-													class="flex-shrink whitespace-nowrap overflow-hidden overflow-ellipsis text-base font-medium relative transition
-													max-w-full z-0 {isSelected
-														? 'text-c-primary'
-														: 'text-c-on-bg'} not-touch:group-hover:text-c-primary"
-												>
-													{item.label}
-												</p>
-												{#if isSelected}
-													<div
-														transition:scale={{ duration: 150, easing: quadOut, start: 0 }}
-														class="w-2 h-2 flex-shrink-0 rounded-full bg-c-primary"
-													/>
-												{/if}
-											</div>
 										</div>
-									</button>
-								{/if}
+									</div>
+									<div class="w-full flex items-center gap-3">
+										<div class="w-4 h-4 ring-1 ring-c-primary rounded flex-shrink-0 p-0.5">
+											<div
+												class="w-full h-full transition transform bg-c-primary rounded-sm {values &&
+												values.includes(item.value)
+													? 'scale-100 opacity-100'
+													: 'scale-50 opacity-0'}"
+											/>
+										</div>
+										<p
+											class="flex-shrink whitespace-nowrap overflow-hidden overflow-ellipsis text-base font-medium relative transition
+												max-w-full z-0 text-c-on-bg not-touch:group-hover:text-c-primary"
+										>
+											{item.label}
+										</p>
+									</div>
+									<input
+										type="checkbox"
+										class="w-0 h-0 overflow-hidden opacity-0 z-0"
+										bind:group={values}
+										id={item.label}
+										name={item.label}
+										value={item.value}
+									/>
+								</label>
 							{/each}
 						</ScrollAreaWithChevron>
 					</div>

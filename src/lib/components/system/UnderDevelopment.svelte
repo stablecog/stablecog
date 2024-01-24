@@ -1,7 +1,7 @@
 <script>
 	import LL from '$i18n/i18n-svelte';
-	import Logo from './Logo.svelte';
-	import ScBar from './ScBar.svelte';
+	import Logo from '../Logo.svelte';
+	import ScBar from '../ScBar.svelte';
 </script>
 
 <div class="w-full flex-1 flex justify-center px-3 py-12">

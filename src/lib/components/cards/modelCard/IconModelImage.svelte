@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { modelImageVersion } from '$components/modelCard/constants';
+	import { modelImageVersion } from '$components/cards/modelCard/constants';
 	import type { TAvailableGenerationModelId } from '$ts/constants/generationModels';
 	import { canonicalUrl } from '$ts/constants/main';
 	import { getImgProxySrc, getImgProxySrcSetSmall } from '$ts/helpers/imgproxy';

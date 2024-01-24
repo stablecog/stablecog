@@ -7,7 +7,7 @@
 	import IconRefresh from '$components/icons/IconRefresh.svelte';
 	import IconTrashcan from '$components/icons/IconTrashcan.svelte';
 	import SliderInputWithNumerator from '$components/primitives/SliderInputWithNumerator.svelte';
-	import TabBarWrapper from '$components/tabBars/TabBarWrapper.svelte';
+	import TabBarWrapper from '$components/primitives/tabBars/TabBarWrapper.svelte';
 	import LL, { locale } from '$i18n/i18n-svelte';
 	import { clickoutside } from '$ts/actions/clickoutside';
 	import {

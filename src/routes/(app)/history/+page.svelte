@@ -43,7 +43,7 @@
 	import type { TTab } from '$ts/types/main';
 	import { activeGeneration } from '$userStores/generation';
 	import { createInfiniteQuery, type CreateInfiniteQueryResult } from '@tanstack/svelte-query';
-	import TabLikeDropdown from '$components/tabBars/TabLikeDropdown.svelte';
+	import TabLikeDropdown from '$components/primitives/tabBars/TabLikeDropdown.svelte';
 	import IconHeartOutlined from '$components/icons/IconHeartOutlined.svelte';
 	import IconImage from '$components/icons/IconImage.svelte';
 	import { onMount } from 'svelte';
