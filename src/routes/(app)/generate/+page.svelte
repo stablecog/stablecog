@@ -34,15 +34,15 @@
 	import GenerateHorizontalListPlaceholder from '$components/generate/GenerateHorizontalListPlaceholder.svelte';
 	import { expandCollapse } from '$ts/animation/transitions.js';
 	import { userSummary } from '$ts/stores/user/summary.js';
-	import LowOnCreditsCard from '$components/LowOnCreditsCard.svelte';
+	import LowOnCreditsCard from '$components/cards/LowOnCreditsCard.svelte';
 	import { removeRepeatingOutputs } from '$ts/helpers/removeRepeatingOutputs.js';
 	import GenerationSettingsProvider from '$components/generate/GenerationSettingsProvider.svelte';
 	import { heightDefault, widthDefault } from '$ts/constants/generationSize.js';
 	import { setActiveGenerationToOutputIndex } from '$ts/helpers/goToOutputIndex.js';
 	import GenerationGridInfinite from '$components/grids/GenerationGridInfinite.svelte';
-	import AutoSize from '$components/AutoSize.svelte';
+	import AutoSize from '$components/utils/AutoSize.svelte';
 	import { canonicalUrl } from '$ts/constants/main.js';
-	import MetaTag from '$components/MetaTag.svelte';
+	import MetaTag from '$components/utils/MetaTag.svelte';
 	import SidebarCollapseButton from '$components/generate/SidebarCollapseButton.svelte';
 	import { isLeftSidebarHidden, isLeftSidebarHiddenApp } from '$ts/stores/sidebars.js';
 	import { previewImageVersion } from '$ts/constants/previewImageVersion.js';
@@ -52,7 +52,7 @@
 	import { PUBLIC_OG_IMAGE_API_URL } from '$env/static/public';
 	import { isSignInModalOpen } from '$ts/stores/isSignInModalOpen.js';
 	import { writable } from 'svelte/store';
-	import WithChangeUsernameModal from '$components/WithChangeUsernameModal.svelte';
+	import WithChangeUsernameModal from '$components/utils/WithChangeUsernameModal.svelte';
 	import InpaintingCanvas from '$components/canvas/inpainting/InpaintingCanvas.svelte';
 	import { generateMode } from '$ts/stores/generate/generateMode.js';
 	import { baseOutputForInpainting } from '$components/canvas/stores/baseOutputForInpainting.js';

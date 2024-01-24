@@ -1,5 +1,5 @@
 <script lang="ts">
-	import IconStar from '$components/icons/IconStar.svelte';
+	import IconNewAlt from '$components/icons/IconNewAlt.svelte';
 	import { modelImageVersion } from '$components/modelCard/constants';
 	import LL from '$i18n/i18n-svelte';
 	import type { TAvailableGenerationModelId } from '$ts/constants/generationModels';
@@ -58,7 +58,7 @@
 						class="pl-1 pr-1.5 py-0.25 items-center font-medium flex text-xs
 						bg-c-secondary/10 rounded text-c-secondary gap-0.75 mb-0.75"
 					>
-						<IconStar class="w-3 h-3" />
+						<IconNewAlt class="w-3 h-3" />
 						<p class="mt-0.25">{$LL.Shared.NewTitle()}</p>
 					</div>
 				{/if}

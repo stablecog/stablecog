@@ -53,7 +53,7 @@ export function getGalleryInfiniteQueryProps({
 	any
 > {
 	return {
-		queryKey: getGalleryInfiniteQueryKey({ searchString, modelIdFilters, seed }),
+		queryKey: getGalleryInfiniteQueryKey({ searchString, modelIdFilters, sorts, seed }),
 		queryFn: async (lastPage) => {
 			return getGalleryGenerationFullOutputs({
 				cursor: lastPage?.pageParam,

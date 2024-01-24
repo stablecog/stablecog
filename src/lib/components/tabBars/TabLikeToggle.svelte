@@ -1,6 +1,6 @@
 <script lang="ts">
 	import TabBarWrapper from '$components/tabBars/TabBarWrapper.svelte';
-	import ToggleIndicator from '$components/ToggleIndicator.svelte';
+	import ToggleIndicator from '$components/primitives/ToggleIndicator.svelte';
 
 	export let isToggled: boolean;
 	export { classes as class };

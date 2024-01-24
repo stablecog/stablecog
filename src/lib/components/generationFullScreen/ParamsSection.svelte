@@ -8,8 +8,8 @@
 	import IconCopy from '$components/icons/IconCopy.svelte';
 	import IconGenerationSettingsSet from '$components/icons/iconGenerationSettingsSet/IconGenerationSettingsSet.svelte';
 	import IconTick from '$components/icons/IconTick.svelte';
-	import Morpher from '$components/Morpher.svelte';
-	import WithTooltip from '$components/WithTooltip.svelte';
+	import Morpher from '$components/utils/Morpher.svelte';
+	import WithTooltip from '$components/utils/WithTooltip.svelte';
 	import LL from '$i18n/i18n-svelte';
 	import { generationModelIdDefault, modelIdToDisplayName } from '$ts/constants/generationModels';
 	import { schedulerIdDefault, schedulerIdToDisplayName } from '$ts/constants/schedulers';

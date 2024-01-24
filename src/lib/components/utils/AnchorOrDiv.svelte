@@ -18,7 +18,13 @@
 		</a>
 	{/if}
 {:else}
-	<div on:keydown={() => null} on:click={onClick} class="{classes} hover:cursor-pointer">
+	<div
+		role="button"
+		tabindex="0"
+		on:keydown={() => null}
+		on:click={onClick}
+		class="{classes} hover:cursor-pointer"
+	>
 		<slot />
 	</div>
 {/if}

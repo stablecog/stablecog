@@ -1,5 +1,5 @@
 <script lang="ts">
-	import ImagePlaceholder from '$components/ImagePlaceholder.svelte';
+	import ImagePlaceholder from '$components/utils/image/ImagePlaceholder.svelte';
 	import GenerationImage from '$components/generationImage/GenerationImage.svelte';
 	import GenerationAnimation from '$components/generate/GenerationAnimation.svelte';
 	import IconEyeSlashOutline from '$components/icons/IconEyeSlashOutline.svelte';

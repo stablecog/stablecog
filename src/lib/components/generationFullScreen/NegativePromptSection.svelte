@@ -1,5 +1,5 @@
 <script lang="ts">
-	import WithTooltip from '$components/WithTooltip.svelte';
+	import WithTooltip from '$components/utils/WithTooltip.svelte';
 	import IconChatBubbleCancel from '$components/icons/IconChatBubbleCancel.svelte';
 	import IconChevronDown from '$components/icons/IconChevronDown.svelte';
 	import LL from '$i18n/i18n-svelte';

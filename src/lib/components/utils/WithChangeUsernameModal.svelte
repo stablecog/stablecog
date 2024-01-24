@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { page } from '$app/stores';
-	import Input from '$components/Input.svelte';
+	import Input from '$components/primitives/Input.svelte';
 	import Button from '$components/buttons/Button.svelte';
 	import ButtonHoverEffect from '$components/buttons/ButtonHoverEffect.svelte';
 	import ErrorLine from '$components/error/ErrorLine.svelte';

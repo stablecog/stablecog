@@ -1,5 +1,5 @@
 <script lang="ts">
-	import SignInCard from '$components/SignInCard.svelte';
+	import SignInCard from '$components/cards/SignInCard.svelte';
 	import { clickoutside } from '$ts/actions/clickoutside';
 	import { onDestroy } from 'svelte';
 	import { portal } from 'svelte-portal';

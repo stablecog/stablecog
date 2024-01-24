@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { page } from '$app/stores';
-	import ImagePlaceholder from '$components/ImagePlaceholder.svelte';
-	import WithTooltip from '$components/WithTooltip.svelte';
+	import ImagePlaceholder from '$components/utils/image/ImagePlaceholder.svelte';
+	import WithTooltip from '$components/utils/WithTooltip.svelte';
 	import NoBgButton from '$components/buttons/NoBgButton.svelte';
 	import UsernameButton from '$components/buttons/UsernameButton.svelte';
 	import ButtonsSection from '$components/generationFullScreen/ButtonsSection.svelte';

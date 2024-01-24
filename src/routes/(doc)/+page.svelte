@@ -1,5 +1,5 @@
 <script lang="ts">
-	import MetaTag from '$components/MetaTag.svelte';
+	import MetaTag from '$components/utils/MetaTag.svelte';
 	import { canonicalUrl } from '$ts/constants/main.js';
 	import DescribeAnything from '$components/landing/DescribeAnything.svelte';
 	import InitImage from '$components/landing/InitImage.svelte';

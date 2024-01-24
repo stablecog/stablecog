@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { page } from '$app/stores';
-	import MetaTag from '$components/MetaTag.svelte';
+	import MetaTag from '$components/utils/MetaTag.svelte';
 	import { capitalize, getGalleryMetaTagDescriptionFromPromptText } from '$ts/helpers/metaTag.js';
 	import { getPreviewImageUrlFromOutputId } from '$ts/helpers/getPreviewImageUrl.js';
 	import { canonicalUrl } from '$ts/constants/main.js';

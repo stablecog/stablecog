@@ -106,6 +106,7 @@ const ko: Translation = {
 			Paragraph:
 				'이미지에 노이즈를 넣거나 샘플을 업데이트 하는 방법을 의미합니다. 스케쥴러의 변화는 생성된 이미지의 큰 변화로 이어집니다. 스케쥴러에 따라 더 적은 생성 스텝을 써야 좋은 이미지를 생성할 수 있습니다.'
 		},
+		ModelTag: 'Model: {modelName}',
 		SubmitToGalleryQuestion: {
 			Title: '생성한 이미지를 갤러리에 전시할까요?',
 			Paragraph: '갤러리에 전시하는 옵션은 설정을 통해 언제든 키거나 끌 수 있어요.'

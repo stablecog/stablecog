@@ -32,23 +32,23 @@ export const load: PageLoad = async ({ url, parent }) => {
 	);
 	const sortsQuery = url.searchParams.get('sort');
 	const sorts = sortsQuery ? sortsQuery.split(',') : sortsDefault;
+	const sharedQueryParams = {
+		searchString: searchString,
+		modelIdFilters: filteredModelIds,
+		sorts,
+		seed: globalSeed
+	};
 	const hasInitialData =
 		queryClient.getQueryData(
 			getGalleryInfiniteQueryKey({
-				searchString: searchString,
-				modelIdFilters: filteredModelIds,
-				sorts,
-				seed: globalSeed
+				...sharedQueryParams
 			})
 		) !== undefined;
 	if (!hasInitialData) {
 		try {
 			await queryClient.prefetchInfiniteQuery(
 				getGalleryInfiniteQueryProps({
-					searchString: searchString,
-					modelIdFilters: filteredModelIds,
-					sorts: sorts,
-					seed: globalSeed,
+					...sharedQueryParams,
 					accessToken: session?.access_token
 				})
 			);

@@ -1,5 +1,5 @@
 <script lang="ts">
-	import LazyImage from '$components/LazyImage.svelte';
+	import LazyImage from '$components/utils/LazyImage.svelte';
 
 	export let src: string;
 	export let srcset: string;

@@ -1,6 +1,6 @@
 <script lang="ts">
 	import '$css/blog.css';
-	import MetaTag from '$components/MetaTag.svelte';
+	import MetaTag from '$components/utils/MetaTag.svelte';
 	import { canonicalUrl } from '$ts/constants/main';
 	import { page } from '$app/stores';
 	import { previewImageVersion } from '$ts/constants/previewImageVersion';

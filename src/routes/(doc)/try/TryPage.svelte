@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { page } from '$app/stores';
-	import MetaTag from '$components/MetaTag.svelte';
+	import MetaTag from '$components/utils/MetaTag.svelte';
 	import ChapterButton from '$components/docs/ChapterButton.svelte';
 	import NextOrPrevButton from '$components/docs/NextOrPrevButton.svelte';
 	import LL from '$i18n/i18n-svelte';

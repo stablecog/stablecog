@@ -1,6 +1,6 @@
 <script lang="ts">
 	import IconAnimatedSpinner from '$components/icons/IconAnimatedSpinner.svelte';
-	import Morpher from '$components/Morpher.svelte';
+	import Morpher from '$components/utils/Morpher.svelte';
 	import type { THrefTarget } from '$ts/types/main';
 
 	export let onClick: (() => void) | undefined = undefined;

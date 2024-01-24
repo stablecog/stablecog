@@ -1,5 +1,5 @@
 <script lang="ts">
-	import Morpher from '$components/Morpher.svelte';
+	import Morpher from '$components/utils/Morpher.svelte';
 	import ButtonHoverEffect from '$components/buttons/ButtonHoverEffect.svelte';
 	import { lgBreakpoint, xlBreakpoint } from '$components/generationFullScreen/constants';
 	import IconCancel from '$components/icons/IconCancel.svelte';

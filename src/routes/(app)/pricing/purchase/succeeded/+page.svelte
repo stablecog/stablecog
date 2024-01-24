@@ -3,7 +3,7 @@
 	import IconConfetti from '$components/icons/IconConfetti.svelte';
 	import LL from '$i18n/i18n-svelte';
 	import { onMount } from 'svelte';
-	import MetaTag from '$components/MetaTag.svelte';
+	import MetaTag from '$components/utils/MetaTag.svelte';
 	import { canonicalUrl } from '$ts/constants/main';
 	import { page } from '$app/stores';
 	import ConfettiFullScreen from '$components/ConfettiFullScreen.svelte';

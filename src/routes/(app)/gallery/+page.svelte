@@ -3,7 +3,7 @@
 	import { page } from '$app/stores';
 	import GenerationFullScreen from '$components/generationFullScreen/GenerationFullScreen.svelte';
 	import IconSearch from '$components/icons/IconSearch.svelte';
-	import MetaTag from '$components/MetaTag.svelte';
+	import MetaTag from '$components/utils/MetaTag.svelte';
 	import LL from '$i18n/i18n-svelte';
 	import { canonicalUrl } from '$ts/constants/main';
 	import { globalSeed } from '$ts/stores/globalSeed';
@@ -12,7 +12,7 @@
 	import { quadOut } from 'svelte/easing';
 	import { scale } from 'svelte/transition';
 	import IconAnimatedSpinner from '$components/icons/IconAnimatedSpinner.svelte';
-	import SearchAndFilterBar from '$components/SearchAndFilterBar.svelte';
+	import SearchAndFilterBar from '$components/galleryLike/SearchAndFilterBar.svelte';
 	import IconSadFace from '$components/icons/IconSadFace.svelte';
 	import { setActiveGenerationToOutputIndex } from '$ts/helpers/goToOutputIndex';
 	import GenerationGridInfinite from '$components/grids/GenerationGridInfinite.svelte';
@@ -29,12 +29,20 @@
 		gallerySearchString,
 		gallerySorts,
 		getGalleryInfiniteQueryKey,
-		getGalleryInfiniteQueryProps
+		getGalleryInfiniteQueryProps,
+		sortsDefault
 	} from '$routes/(app)/gallery/constants';
 	import { previewImageVersion } from '$ts/constants/previewImageVersion.js';
 	import { galleryGenerationFullOutputsQueryKey } from '$ts/stores/user/queryKeys.js';
 	import { hydrated, updateHydrated } from '$ts/stores/hydrated.js';
 	import { onMount } from 'svelte';
+	import { setUrlParam } from '$ts/helpers/setUrlParam.js';
+	import type { TTab } from '$ts/types/main.js';
+	import TabLikeDropdown from '$components/tabBars/TabLikeDropdown.svelte';
+	import IconMainSortView from '$components/icons/IconMainSortView.svelte';
+	import GalleryLikePageWrapper from '$components/galleryLike/GalleryLikePageWrapper.svelte';
+	import GalleryLikeTitleSection from '$components/galleryLike/GalleryLikeTitleSection.svelte';
+	import GalleryLikeGridWrapper from '$components/galleryLike/GalleryLikeGridWrapper.svelte';
 
 	export let data;
 
@@ -43,6 +51,27 @@
 		gallerySearchString.set(data.searchString);
 		gallerySorts.set(data.sorts);
 	}
+
+	const mainSorts = ['trending', 'top', 'new'];
+	let mainSortView = $gallerySorts?.find((i) => mainSorts.includes(i)) ?? 'new';
+
+	const mainSortViews: TTab<string>[] = [
+		{
+			value: 'trending',
+			label: $LL.Gallery.Sort.Options.Trending()
+		},
+		{
+			value: 'top',
+			label: $LL.Gallery.Sort.Options.Top()
+		},
+		{
+			value: 'new',
+			label: $LL.Gallery.Sort.Options.New()
+		}
+	];
+
+	$: mainSortView, onMainSortViewChanged();
+	$: $gallerySorts, setUrlParam({ key: 'sort', value: $gallerySorts, defaultValue: sortsDefault });
 
 	$: galleryGenerationFullOutputsQueryKey.set(
 		getGalleryInfiniteQueryKey({
@@ -71,6 +100,11 @@
 		: -1;
 	$: leftIndex = outputIndex > 0 ? outputIndex - 1 : -1;
 	$: rightIndex = outputs && outputIndex < outputs?.length - 1 ? outputIndex + 1 : -1;
+
+	function onMainSortViewChanged() {
+		if (!$gallerySorts) return;
+		gallerySorts.set([mainSortView, ...$gallerySorts.filter((i) => !mainSorts.includes(i))]);
+	}
 
 	function setSearchQuery(query: string) {
 		gallerySearchString.set(query);
@@ -102,17 +136,27 @@
 
 <svelte:window on:keydown={onKeyDown} />
 
-<div class="w-full flex-1 flex flex-col items-center pt-1.5">
-	<div class="w-full px-2 py-1 md:py-2 flex justify-center">
-		<div class="w-full flex max-w-3xl justify-center">
+<GalleryLikePageWrapper>
+	<GalleryLikeTitleSection title={$LL.Gallery.PageTitle()}>
+		<div slot="view" class="w-full flex justify-end">
+			<TabLikeDropdown
+				dontScale
+				hasTitle={false}
+				name={$LL.Gallery.Sort.Title()}
+				items={mainSortViews}
+				bind:value={mainSortView}
+				iconSet={IconMainSortView}
+				class="flex-1 min-w-0 md:max-w-[15rem] z-50"
+			/>
+		</div>
+		<div slot="search-and-filter" class="w-full">
 			<SearchAndFilterBar
 				bind:modelIdFilters={$galleryModelIdFilters}
 				bind:searchString={$gallerySearchString}
-				bind:sorts={$gallerySorts}
 			/>
 		</div>
-	</div>
-	<div class="w-full px-1 pb-3 pt-1 md:pt-3 relative flex flex-col flex-1">
+	</GalleryLikeTitleSection>
+	<GalleryLikeGridWrapper>
 		{#if $galleryGenerationFullOutputsQuery?.isInitialLoading}
 			<div
 				class="w-full flex flex-col text-c-on-bg/60 flex-1 py-6 px-4 justify-center items-center text-center"
@@ -153,27 +197,25 @@
 				<div class="h-[2vh]" />
 			</div>
 		{:else if galleryGenerationFullOutputsQuery !== undefined && $windowWidth}
-			<div class="w-full flex-1 mt-1 md:mt-0.5 flex flex-col">
-				<GenerationGridInfinite
-					cardType="gallery"
-					generationsQuery={galleryGenerationFullOutputsQuery}
-					cols={$windowWidth > xl3Breakpoint
-						? 7
-						: $windowWidth > xl2Breakpoint
-						? 6
-						: $windowWidth > xlBreakpoint
-						? 5
-						: $windowWidth > lgBreakpoint
-						? 4
-						: $windowWidth > mdBreakpoint
-						? 3
-						: 2}
-					{setSearchQuery}
-				/>
-			</div>
+			<GenerationGridInfinite
+				cardType="gallery"
+				generationsQuery={galleryGenerationFullOutputsQuery}
+				cols={$windowWidth > xl3Breakpoint
+					? 7
+					: $windowWidth > xl2Breakpoint
+					? 6
+					: $windowWidth > xlBreakpoint
+					? 5
+					: $windowWidth > lgBreakpoint
+					? 4
+					: $windowWidth > mdBreakpoint
+					? 3
+					: 2}
+				{setSearchQuery}
+			/>
 		{/if}
-	</div>
-</div>
+	</GalleryLikeGridWrapper>
+</GalleryLikePageWrapper>
 
 {#if $activeGeneration && $galleryGenerationFullOutputsQuery?.isInitialLoading === false}
 	<GenerationFullScreen

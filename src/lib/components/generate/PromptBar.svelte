@@ -40,7 +40,7 @@
 	import { isValue } from '$ts/helpers/isValue';
 	import type { TIsReadyMap } from '$components/generate/types';
 	import IconWand from '$components/icons/IconWand.svelte';
-	import Morpher from '$components/Morpher.svelte';
+	import Morpher from '$components/utils/Morpher.svelte';
 	import IconChevronDown from '$components/icons/IconChevronDown.svelte';
 	import { afterNavigate } from '$app/navigation';
 	import NoBgButton from '$components/buttons/NoBgButton.svelte';

@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { page } from '$app/stores';
-	import AutoSize from '$components/AutoSize.svelte';
-	import LowOnCreditsCard from '$components/LowOnCreditsCard.svelte';
+	import AutoSize from '$components/utils/AutoSize.svelte';
+	import LowOnCreditsCard from '$components/cards/LowOnCreditsCard.svelte';
 	import SidebarCollapseButton from '$components/generate/SidebarCollapseButton.svelte';
 	import SidebarWrapper from '$components/generate/SidebarWrapper.svelte';
 	import { mdBreakpoint, xlBreakpoint } from '$components/generationFullScreen/constants.js';
@@ -42,7 +42,7 @@
 		voiceoverStability
 	} from '$ts/stores/voiceover/voiceoverSettings.js';
 	import { voiceoverLocale, voiceoverModelId } from '$ts/constants/voiceover/models.js';
-	import MetaTag from '$components/MetaTag.svelte';
+	import MetaTag from '$components/utils/MetaTag.svelte';
 	import { canonicalUrl } from '$ts/constants/main.js';
 	import { lowOnCreditsThreshold } from '$ts/constants/credits.js';
 	import VoiceoverSettingsSheet from '$components/voiceover/generate/VoiceoverSettingsSheet.svelte';

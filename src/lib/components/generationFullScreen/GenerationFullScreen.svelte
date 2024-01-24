@@ -4,7 +4,7 @@
 	import { page } from '$app/stores';
 	import ModalWrapper from '$components/ModalWrapper.svelte';
 	import QueuePosition from '$components/QueuePosition.svelte';
-	import ScrollAreaWithChevron from '$components/ScrollAreaWithChevron.svelte';
+	import ScrollAreaWithChevron from '$components/utils/ScrollAreaWithChevron.svelte';
 	import InsufficientCreditsBadge from '$components/badges/InsufficientCreditsBadge.svelte';
 	import Button from '$components/buttons/Button.svelte';
 	import ButtonHoverEffect from '$components/buttons/ButtonHoverEffect.svelte';

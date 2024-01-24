@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { page } from '$app/stores';
-	import MetaTag from '$components/MetaTag.svelte';
+	import MetaTag from '$components/utils/MetaTag.svelte';
 	import LL from '$i18n/i18n-svelte';
 	import { canonicalUrl } from '$ts/constants/main';
 	import PageWrapper from '$components/PageWrapper.svelte';
@@ -8,7 +8,7 @@
 	import Button from '$components/buttons/Button.svelte';
 	import IconLink from '$components/icons/IconLink.svelte';
 	import { userSummary } from '$ts/stores/user/summary.js';
-	import SignInCard from '$components/SignInCard.svelte';
+	import SignInCard from '$components/cards/SignInCard.svelte';
 	import { expandCollapse } from '$ts/animation/transitions.js';
 	import IconSadFaceOutline from '$components/icons/IconSadFaceOutline.svelte';
 	import ErrorChip from '$components/error/ErrorChip.svelte';

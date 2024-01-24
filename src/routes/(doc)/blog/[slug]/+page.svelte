@@ -4,7 +4,7 @@
 	import BlogPostCard from '$components/docs/BlogPostCard.svelte';
 	import ToC from '$components/docs/ToC.svelte';
 	import IconBack from '$components/icons/IconBack.svelte';
-	import MetaTag from '$components/MetaTag.svelte';
+	import MetaTag from '$components/utils/MetaTag.svelte';
 	import ScBar from '$components/ScBar.svelte';
 	import '$css/blog.css';
 	import LL from '$i18n/i18n-svelte';

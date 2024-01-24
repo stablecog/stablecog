@@ -2,7 +2,7 @@
 	import { goto } from '$app/navigation';
 	import { page } from '$app/stores';
 	import IconPulsing from '$components/icons/IconPulsing.svelte';
-	import MetaTag from '$components/MetaTag.svelte';
+	import MetaTag from '$components/utils/MetaTag.svelte';
 	import { canonicalUrl } from '$ts/constants/main';
 	import { previewImageVersion } from '$ts/constants/previewImageVersion';
 	import { onMount } from 'svelte';

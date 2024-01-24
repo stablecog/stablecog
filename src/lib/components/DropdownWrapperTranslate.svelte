@@ -22,7 +22,7 @@
 		easing: quadOut,
 		transformOrigin: 'right top'
 	}}
-	class="transition-all ring-2 ring-c-bg-tertiary bg-c-bg-secondary {rounding} flex flex-col justify-start shadow-lg shadow-c-shadow/[var(--o-shadow-strong)]
+	class="transition-all ring-2 ring-c-bg-tertiary bg-c-bg-secondary {rounding} flex flex-col justify-start shadow-xl shadow-c-shadow/[var(--o-shadow-strongest)]
 	absolute {alignment} overflow-hidden z-50 {classes}"
 >
 	<div class="w-full flex flex-col justify-start z-0 overflow-hidden relative">

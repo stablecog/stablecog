@@ -5,7 +5,7 @@
 	import IconTick from '$components/icons/IconTick.svelte';
 	import IconTrashcan from '$components/icons/IconTrashcan.svelte';
 	import IconTrashcanFilledOpen from '$components/icons/IconTrashcanFilledOpen.svelte';
-	import Morpher from '$components/Morpher.svelte';
+	import Morpher from '$components/utils/Morpher.svelte';
 	import LL, { locale } from '$i18n/i18n-svelte';
 	import { clickoutside } from '$ts/actions/clickoutside';
 	import { downloadGenerationImage } from '$ts/helpers/downloadGenerationImage';

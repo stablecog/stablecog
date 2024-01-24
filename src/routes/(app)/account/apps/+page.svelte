@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { browser } from '$app/environment';
 	import { page } from '$app/stores';
-	import MetaTag from '$components/MetaTag.svelte';
+	import MetaTag from '$components/utils/MetaTag.svelte';
 	import ModalWrapper from '$components/ModalWrapper.svelte';
 	import Button from '$components/buttons/Button.svelte';
 	import IconButton from '$components/buttons/IconButton.svelte';

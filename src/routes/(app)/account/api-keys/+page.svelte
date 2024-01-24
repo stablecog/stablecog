@@ -1,8 +1,8 @@
 <script lang="ts">
 	import { browser } from '$app/environment';
 	import { page } from '$app/stores';
-	import Input from '$components/Input.svelte';
-	import MetaTag from '$components/MetaTag.svelte';
+	import Input from '$components/primitives/Input.svelte';
+	import MetaTag from '$components/utils/MetaTag.svelte';
 	import ModalWrapper from '$components/ModalWrapper.svelte';
 	import Button from '$components/buttons/Button.svelte';
 	import CopyButton from '$components/buttons/CopyButton.svelte';

@@ -1,6 +1,6 @@
 <script lang="ts">
 	import IconNavbarRoute from '$components/icons/IconNavbarRoute.svelte';
-	import MetaTag from '$components/MetaTag.svelte';
+	import MetaTag from '$components/utils/MetaTag.svelte';
 	import type { TNavbarRouteOption } from '$components/navigation/routes';
 	import LL from '$i18n/i18n-svelte';
 	import { canonicalUrl } from '$ts/constants/main';

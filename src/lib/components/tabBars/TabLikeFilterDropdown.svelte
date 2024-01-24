@@ -1,6 +1,6 @@
 <script lang="ts">
 	import IconChevronDown from '$components/icons/IconChevronDown.svelte';
-	import ScrollAreaWithChevron from '$components/ScrollAreaWithChevron.svelte';
+	import ScrollAreaWithChevron from '$components/utils/ScrollAreaWithChevron.svelte';
 	import TabBarWrapper from '$components/tabBars/TabBarWrapper.svelte';
 	import { clickoutside } from '$ts/actions/clickoutside';
 	import { windowHeight, windowWidth } from '$ts/stores/window';
@@ -157,8 +157,8 @@
 		>
 			<div
 				style="height: {isDropdownOpen ? dropdownHeight : '0'}px"
-				class="w-full flex flex-col overflow-hidden bg-c-bg-secondary shadow-sheet transition-all
-					shadow-c-shadow/[var(--o-shadow-stronger)] ring-2 ring-c-bg-tertiary {dropdownPlacement === 'top'
+				class="w-full flex flex-col overflow-hidden bg-c-bg-secondary shadow-xl transition-all
+					shadow-c-shadow/[var(--o-shadow-strongest)] ring-2 ring-c-bg-tertiary {dropdownPlacement === 'top'
 					? 'rounded-t-xl origin-bottom justify-end'
 					: 'rounded-b-xl origin-top justify-start'} {isDropdownOpen
 					? 'opacity-100 pointer-events-auto'

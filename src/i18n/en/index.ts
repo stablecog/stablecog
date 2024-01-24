@@ -106,6 +106,7 @@ const en: BaseTranslation = {
 			Paragraph:
 				'Diffuse the image in a certain way. It can drastically change the generated image. Some require less steps to produce good results.'
 		},
+		ModelTag: 'Model: {modelName}',
 		SubmitToGalleryQuestion: {
 			Title: 'Submit generations to the gallery?',
 			Paragraph: 'You can change your preference from the settings later.'

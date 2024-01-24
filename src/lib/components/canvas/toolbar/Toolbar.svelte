@@ -1,5 +1,5 @@
 <script lang="ts">
-	import SliderInput from '$components/SliderInput.svelte';
+	import SliderInput from '$components/primitives/SliderInput.svelte';
 	import ButtonHoverEffect from '$components/buttons/ButtonHoverEffect.svelte';
 	import ToolbarButton from '$components/canvas/toolbar/ToolbarButton.svelte';
 	import ToolbarSectionWrapper from '$components/canvas/toolbar/ToolbarSectionWrapper.svelte';

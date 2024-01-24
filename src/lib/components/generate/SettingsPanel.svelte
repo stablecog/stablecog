@@ -43,7 +43,7 @@
 	import { userSummary } from '$ts/stores/user/summary';
 	import IconWarningOutline from '$components/icons/IconWarningOutline.svelte';
 	import { scale } from 'svelte/transition';
-	import WithTooltip from '$components/WithTooltip.svelte';
+	import WithTooltip from '$components/utils/WithTooltip.svelte';
 	import IconStar from '$components/icons/IconStar.svelte';
 	import { toggle } from '@melt-ui/svelte/internal/helpers';
 	import { generateMode } from '$ts/stores/generate/generateMode';

@@ -26,22 +26,23 @@ export const load: PageLoad = async ({ parent, url }) => {
 	const modelIdFilters = modelIdFiltersParam ? modelIdFiltersParam.split(',') : [];
 	const searchStringParam = url.searchParams.get('q');
 	const searchString = searchStringParam || '';
+	const sharedQueryParams = {
+		adminGalleryCurrentFilter: view,
+		modelIdFilters,
+		searchString
+	};
 	const hasInitialData =
 		queryClient.getQueryData(
 			getAllUserGenerationFullOutputsQueryKey({
-				adminGalleryCurrentFilter: view,
-				modelIdFilters,
-				searchString
+				...sharedQueryParams
 			})
 		) !== undefined;
 	if (session && userSummary && !hasInitialData && isSuperAdmin(userSummary.roles)) {
 		try {
 			await queryClient.prefetchInfiniteQuery(
 				getAllUserGenerationFullOutputsQueryProps({
-					adminGalleryCurrentFilter: view,
-					session,
-					modelIdFilters,
-					searchString
+					...sharedQueryParams,
+					session
 				})
 			);
 		} catch (error) {

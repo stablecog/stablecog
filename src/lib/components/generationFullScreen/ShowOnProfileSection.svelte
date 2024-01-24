@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { page } from '$app/stores';
-	import ToggleIndicator from '$components/ToggleIndicator.svelte';
-	import WithTooltip from '$components/WithTooltip.svelte';
+	import ToggleIndicator from '$components/primitives/ToggleIndicator.svelte';
+	import WithTooltip from '$components/utils/WithTooltip.svelte';
 	import ButtonHoverEffect from '$components/buttons/ButtonHoverEffect.svelte';
 	import type { TGenerationFullScreenModalType } from '$components/generationFullScreen/types';
 	import IconEyeOutline from '$components/icons/IconEyeOutline.svelte';

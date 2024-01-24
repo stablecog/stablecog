@@ -1,5 +1,5 @@
 <script lang="ts">
-	import Checkbox from '$components/Checkbox.svelte';
+	import Checkbox from '$components/primitives/Checkbox.svelte';
 	import ButtonHoverEffect from '$components/buttons/ButtonHoverEffect.svelte';
 	import LL from '$i18n/i18n-svelte';
 

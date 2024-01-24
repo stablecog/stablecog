@@ -23,18 +23,19 @@ export const load: PageLoad = async ({ parent, url }) => {
 	const modelIdFilters = modelIdFiltersParam ? modelIdFiltersParam.split(',') : [];
 	const searchStringParam = url.searchParams.get('q');
 	const searchString = searchStringParam || '';
+	const sharedQueryParams = {
+		userGalleryCurrentView: view,
+		modelIdFilters,
+		searchString
+	};
 	const hasInitialData =
-		queryClient.getQueryData(
-			getHistoryInfiniteQueryKey({ userGalleryCurrentView: view, modelIdFilters, searchString })
-		) !== undefined;
+		queryClient.getQueryData(getHistoryInfiniteQueryKey({ ...sharedQueryParams })) !== undefined;
 	if (session && userSummary && !hasInitialData) {
 		try {
 			await queryClient.prefetchInfiniteQuery(
 				getHistoryInfiniteQueryProps({
-					userGalleryCurrentView: view,
-					session,
-					modelIdFilters,
-					searchString
+					...sharedQueryParams,
+					session
 				})
 			);
 		} catch (error) {

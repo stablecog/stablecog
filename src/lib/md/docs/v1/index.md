@@ -9,7 +9,7 @@ preview_image_url: https://ba.stablecog.com/docs/previews/docs-v1.jpg
 
 <script>
 	import { page } from '$app/stores';
-	import MetaTag from '$components/MetaTag.svelte';
+	import MetaTag from '$components/utils/MetaTag.svelte';
 	import { canonicalUrl } from '$ts/constants/main';
 </script>
 

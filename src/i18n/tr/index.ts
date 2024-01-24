@@ -114,6 +114,7 @@ const tr: Translation = {
 			Paragraph:
 				'Üretim sürecininin planını değiştirir. Üretilecek fotoğrafı ciddi şekilde farklılaştırabilir. Bazı planlayıcılar düzgün sonuç vermek için daha az tahmin adımına ihtiyaç duyar.'
 		},
+		ModelTag: 'Model: {modelName}',
 		SubmitToGalleryQuestion: {
 			Title: 'Üretimler galeriye gönderilsin mi?',
 			Paragraph: 'Tercihini daha sonra ayarlardan değiştirebilirsin.'

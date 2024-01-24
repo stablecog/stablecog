@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { browser } from '$app/environment';
 	import { page } from '$app/stores';
-	import MetaTag from '$components/MetaTag.svelte';
+	import MetaTag from '$components/utils/MetaTag.svelte';
 	import LL from '$i18n/i18n-svelte';
 	import AccountPageCard from '$approutes/account/AccountPageCard.svelte';
 	import UsageInfiniteList from '$approutes/account/usage/UsageInfiniteList.svelte';

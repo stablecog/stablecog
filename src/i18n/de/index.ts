@@ -105,6 +105,7 @@ const de: Translation = {
 			Paragraph:
 				'Diffundiere das Bild auf eine bestimmte Art und Weise. Es kann das generierte Bild drastisch verändern. Einige benötigen weniger Schritte, um gute Ergebnisse zu erzielen.'
 		},
+		ModelTag: 'Model: {modelName}',
 		SubmitToGalleryQuestion: {
 			Title: 'Generierte Bilder zur Galerie hinzufügen?',
 			Paragraph: 'Du kannst deine Einstellungen später ändern.'

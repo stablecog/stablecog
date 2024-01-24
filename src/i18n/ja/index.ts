@@ -114,6 +114,7 @@ const ja: Translation = {
 			Paragraph:
 				'特定の方法で画像を拡散します。生成された画像を大幅に変更することができます。スケジュラーによっては、任意の結果を生み出すために必要なステップ数が少ない場合があります。'
 		},
+		ModelTag: 'Model: {modelName}',
 		SubmitToGalleryQuestion: {
 			Title: '生成された画像をギャラリーに提出しますか?',
 			Paragraph: '後で設定から任意に変更できます。'

@@ -1,5 +1,5 @@
 <script lang="ts">
-	import Morpher from '$components/Morpher.svelte';
+	import Morpher from '$components/utils/Morpher.svelte';
 	import TabBarWrapper from '$components/tabBars/TabBarWrapper.svelte';
 	import type { TTab } from '$ts/types/main';
 

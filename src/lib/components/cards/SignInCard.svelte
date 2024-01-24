@@ -6,7 +6,7 @@
 	import ErrorLine from '$components/error/ErrorLine.svelte';
 	import IconBack from '$components/icons/IconBack.svelte';
 	import IconEmail from '$components/icons/IconEmail.svelte';
-	import Input from '$components/Input.svelte';
+	import Input from '$components/primitives/Input.svelte';
 	import LL from '$i18n/i18n-svelte';
 	import { expandCollapse } from '$ts/animation/transitions';
 	import type { Provider } from '@supabase/supabase-js';
@@ -14,12 +14,12 @@
 	import IconPassword from '$components/icons/IconPassword.svelte';
 	import { wantsEmail } from '$ts/stores/user/wantsEmail';
 	import { onDestroy, onMount } from 'svelte';
-	import WantsEmailCard from '$components/WantsEmailCard.svelte';
+	import WantsEmailCard from '$components/cards/WantsEmailCard.svelte';
 	import { userSummary } from '$ts/stores/user/summary';
 	import { getUserSummary } from '$ts/helpers/user/user';
 	import { signInCardCodeSignInStatus, signInCardStatus } from '$ts/stores/signInCardState';
 	import { apiUrl } from '$ts/constants/main';
-	import PinInput from '$components/PinInput.svelte';
+	import PinInput from '$components/primitives/PinInput.svelte';
 
 	export let redirectTo: string | null = null;
 	export let isModal = false;

@@ -2,7 +2,7 @@
 	import { page } from '$app/stores';
 	import LayoutWrapper from '$components/LayoutWrapper.svelte';
 	import UnderDevelopment from '$components/UnderDevelopment.svelte';
-	import UpdateAvailableCard from '$components/UpdateAvailableCard.svelte';
+	import UpdateAvailableCard from '$components/cards/UpdateAvailableCard.svelte';
 	import GenerationWorker from '$components/appLayout/GenerationWorker.svelte';
 	import SSEConnector from '$components/appLayout/SSEConnector.svelte';
 	import UpscaleWorker from '$components/appLayout/UpscaleWorker.svelte';

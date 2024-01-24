@@ -2,7 +2,7 @@
 	import { page } from '$app/stores';
 	import GenerationFullScreen from '$components/generationFullScreen/GenerationFullScreen.svelte';
 	import IconSearch from '$components/icons/IconSearch.svelte';
-	import MetaTag from '$components/MetaTag.svelte';
+	import MetaTag from '$components/utils/MetaTag.svelte';
 	import LL, { locale } from '$i18n/i18n-svelte';
 	import { canonicalUrl } from '$ts/constants/main';
 	import { activeGeneration, type TGenerationFullOutput } from '$ts/stores/user/generation';
@@ -10,7 +10,7 @@
 	import { quadOut } from 'svelte/easing';
 	import { scale } from 'svelte/transition';
 	import IconAnimatedSpinner from '$components/icons/IconAnimatedSpinner.svelte';
-	import SearchAndFilterBar from '$components/SearchAndFilterBar.svelte';
+	import SearchAndFilterBar from '$components/galleryLike/SearchAndFilterBar.svelte';
 	import IconSadFace from '$components/icons/IconSadFace.svelte';
 	import type { TAvailableGenerationModelId } from '$ts/constants/generationModels';
 	import { setActiveGenerationToOutputIndex } from '$ts/helpers/goToOutputIndex';
@@ -31,7 +31,7 @@
 	import { userSummary } from '$ts/stores/user/summary.js';
 	import { goto } from '$app/navigation';
 	import IconPen from '$components/icons/IconPen.svelte';
-	import WithChangeUsernameModal from '$components/WithChangeUsernameModal.svelte';
+	import WithChangeUsernameModal from '$components/utils/WithChangeUsernameModal.svelte';
 	import NoBgButton from '$components/buttons/NoBgButton.svelte';
 	import { getPreviewImageUrlForUserProfile } from '$ts/helpers/getPreviewImageUrl.js';
 	import { getImgProxySrc } from '$ts/helpers/imgproxy.js';

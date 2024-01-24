@@ -5,7 +5,7 @@
 	import IconDarkMode from '$components/icons/IconDarkMode.svelte';
 	import IconLanguage from '$components/icons/IconLanguage.svelte';
 	import IconLocale from '$components/icons/IconLocale.svelte';
-	import ToggleIndicator from '$components/ToggleIndicator.svelte';
+	import ToggleIndicator from '$components/primitives/ToggleIndicator.svelte';
 	import LL, { locale } from '$i18n/i18n-svelte';
 	import { languageName } from '$ts/helpers/language';
 	import { theme, themeApp } from '$ts/stores/theme';

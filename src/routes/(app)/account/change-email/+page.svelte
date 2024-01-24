@@ -5,8 +5,8 @@
 	import ErrorLine from '$components/error/ErrorLine.svelte';
 	import IconBack from '$components/icons/IconBack.svelte';
 	import IconEmail from '$components/icons/IconEmail.svelte';
-	import Input from '$components/Input.svelte';
-	import MetaTag from '$components/MetaTag.svelte';
+	import Input from '$components/primitives/Input.svelte';
+	import MetaTag from '$components/utils/MetaTag.svelte';
 	import PageWrapper from '$components/PageWrapper.svelte';
 	import LL from '$i18n/i18n-svelte';
 	import { expandCollapse } from '$ts/animation/transitions';

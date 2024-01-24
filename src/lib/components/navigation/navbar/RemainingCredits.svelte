@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { page } from '$app/stores';
-	import WithTooltip from '$components/WithTooltip.svelte';
+	import WithTooltip from '$components/utils/WithTooltip.svelte';
 	import IconToken from '$components/icons/IconToken.svelte';
 	import LL, { locale } from '$i18n/i18n-svelte';
 	import { flyAndScale } from '$ts/animation/transitions';

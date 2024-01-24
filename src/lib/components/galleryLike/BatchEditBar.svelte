@@ -296,7 +296,7 @@
 </script>
 
 <div
-	in:fly={{ duration: 200, easing: quadOut, y: -50, opacity: 0 }}
+	in:fly={{ duration: 150, easing: quadOut, y: -25, opacity: 0 }}
 	class="w-full flex flex-row flex-wrap justify-between items-center bg-c-bg rounded-xl
 	shadow-lg shadow-c-shadow/[var(--o-shadow-strong)] ring-2 ring-c-bg-secondary"
 >

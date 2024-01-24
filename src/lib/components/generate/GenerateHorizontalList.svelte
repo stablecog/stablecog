@@ -1,7 +1,7 @@
 <script lang="ts">
 	import GenerationImage from '$components/generationImage/GenerationImage.svelte';
 	import type { TGenerationImageCardType } from '$components/generationImage/types';
-	import ImagePlaceholder from '$components/ImagePlaceholder.svelte';
+	import ImagePlaceholder from '$components/utils/image/ImagePlaceholder.svelte';
 	import type { CreateInfiniteQueryResult } from '@tanstack/svelte-query';
 	import IconAnimatedSpinner from '$components/icons/IconAnimatedSpinner.svelte';
 	import type { TGenerationFullOutput } from '$ts/stores/user/generation';

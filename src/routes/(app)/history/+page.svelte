@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { browser } from '$app/environment';
 	import { page } from '$app/stores';
-	import BatchEditBar from '$components/BatchEditBar.svelte';
+	import BatchEditBar from '$components/galleryLike/BatchEditBar.svelte';
 	import Button from '$components/buttons/Button.svelte';
 	import {
 		lgBreakpoint,
@@ -15,11 +15,12 @@
 	import IconSadFace from '$components/icons/IconSadFace.svelte';
 	import IconStarOutlined from '$components/icons/IconStarOutlined.svelte';
 	import IconUserGalleryFilterSet from '$components/icons/IconUserGalleryFilterSet.svelte';
-	import MetaTag from '$components/MetaTag.svelte';
-	import SearchAndFilterBar from '$components/SearchAndFilterBar.svelte';
-	import SignInCard from '$components/SignInCard.svelte';
+	import MetaTag from '$components/utils/MetaTag.svelte';
+	import SearchAndFilterBar from '$components/galleryLike/SearchAndFilterBar.svelte';
+	import SignInCard from '$components/cards/SignInCard.svelte';
 	import LL, { locale } from '$i18n/i18n-svelte';
 	import {
+		getHistoryInfiniteQueryKey,
 		getHistoryInfiniteQueryProps,
 		historySearchString
 	} from '$routes/(app)/history/constants';
@@ -48,6 +49,9 @@
 	import { onMount } from 'svelte';
 	import { hydrated, updateHydrated } from '$ts/stores/hydrated.js';
 	import { setUrlParam } from '$ts/helpers/setUrlParam.js';
+	import GalleryLikePageWrapper from '$components/galleryLike/GalleryLikePageWrapper.svelte';
+	import GalleryLikeTitleSection from '$components/galleryLike/GalleryLikeTitleSection.svelte';
+	import GalleryLikeGridWrapper from '$components/galleryLike/GalleryLikeGridWrapper.svelte';
 
 	export let data;
 
@@ -65,12 +69,13 @@
 		historySearchString.set(data.searchString);
 	}
 
-	$: userGenerationFullOutputsQueryKey.set([
-		'user_generation_full_outputs',
-		$userGalleryCurrentView,
-		$historySearchString ? $historySearchString : '',
-		$userGalleryModelIdFilters ? $userGalleryModelIdFilters.join(',') : ''
-	]);
+	$: userGenerationFullOutputsQueryKey.set(
+		getHistoryInfiniteQueryKey({
+			userGalleryCurrentView: $userGalleryCurrentView,
+			searchString: $historySearchString,
+			modelIdFilters: $userGalleryModelIdFilters
+		})
+	);
 
 	$: userGenerationFullOutputsQuery =
 		$page.data.session?.user.id && $userSummary
@@ -190,7 +195,7 @@
 
 <svelte:window on:keydown={onKeyDown} />
 
-<div class="w-full flex-1 flex flex-col items-center px-1 md:pt-3 md:pb-6">
+<GalleryLikePageWrapper>
 	{#if !$page.data.session?.user.id || !$userSummary}
 		<div class="w-full flex-1 max-w-7xl flex justify-center px-2 py-4 md:py-2 md:px-8">
 			<div class="my-auto flex flex-col">
@@ -199,51 +204,35 @@
 			</div>
 		</div>
 	{:else}
-		<div class="w-full px-1 flex flex-col items-center justify-start pt-2">
-			<div class="w-full max-w-3xl flex flex-col items-center justify-start">
-				<div class="w-full flex justify-center">
-					<div class="w-full flex flex-wrap gap-4 items-center justify-between rounded-xl">
-						<div
-							class="w-full flex flex-col md:flex-row gap-4 md:gap-5 items-start md:items-center justify-start md:justify-between"
-						>
-							<div class="flex flex-shrink min-w-0 gap-2 items-center px-3 md:px-3 md:py-2.5">
-								<p
-									class="font-bold text-1.5xl md:text-2xl flex-shrink min-w-0
-								whitespace-nowrap overflow-hidden overflow-ellipsis"
-								>
-									{$userGalleryCurrentView === 'favorites'
-										? $LL.History.Views.FavoritesTitle()
-										: $userGalleryCurrentView === 'likes'
-										? $LL.History.Views.LikesTitle()
-										: $LL.History.GenerationsTitle()}
-								</p>
-								<p class="text-sm md:text-base text-c-on-bg/50 font-semibold">
-									({totalOutputs !== undefined ? totalOutputs.toLocaleString($locale) : '...'})
-								</p>
-							</div>
-							<div class="w-full md:w-auto flex flex-1 items-center justify-end gap-4">
-								<TabLikeDropdown
-									dontScale
-									hasTitle={false}
-									name="Filters"
-									items={userGalleryTabs}
-									bind:value={$userGalleryCurrentView}
-									iconSet={IconUserGalleryFilterSet}
-									class="flex-1 md:max-w-[15rem] z-50"
-								/>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="w-full flex mt-3">
-					<SearchAndFilterBar
-						bind:searchString={$historySearchString}
-						bind:modelIdFilters={$userGalleryModelIdFilters}
-						bind:searchInputIsFocused
-					/>
-				</div>
+		<GalleryLikeTitleSection
+			title={$userGalleryCurrentView === 'favorites'
+				? $LL.History.Views.FavoritesTitle()
+				: $userGalleryCurrentView === 'likes'
+				? $LL.History.Views.LikesTitle()
+				: $LL.History.GenerationsTitle()}
+			titleSecondary={`(${
+				totalOutputs !== undefined ? totalOutputs.toLocaleString($locale) : '...'
+			})`}
+		>
+			<div slot="view" class="w-full flex justify-end">
+				<TabLikeDropdown
+					dontScale
+					hasTitle={false}
+					name="Filters"
+					items={userGalleryTabs}
+					bind:value={$userGalleryCurrentView}
+					iconSet={IconUserGalleryFilterSet}
+					class="flex-1 min-w-0 md:max-w-[15rem] z-50"
+				/>
 			</div>
-		</div>
+			<div slot="search-and-filter" class="w-full">
+				<SearchAndFilterBar
+					bind:searchString={$historySearchString}
+					bind:modelIdFilters={$userGalleryModelIdFilters}
+					bind:searchInputIsFocused
+				/>
+			</div>
+		</GalleryLikeTitleSection>
 		{#if $isUserGalleryEditActive}
 			<div
 				class="w-full max-w-3xl px-1 md:px-0 sticky z-30 top-1 {$isUserGalleryEditActive
@@ -253,7 +242,7 @@
 				<BatchEditBar type="history" />
 			</div>
 		{/if}
-		<div class="w-full flex-1 flex flex-col mt-5">
+		<GalleryLikeGridWrapper>
 			{#if userGenerationFullOutputsQuery !== undefined}
 				{#if $userGenerationFullOutputsQuery?.isError || ($userGenerationFullOutputsQuery?.data && !$userGenerationFullOutputsQuery?.data?.pages)}
 					<div class="w-full flex-1 flex flex-col items-center py-8 px-5">
@@ -288,30 +277,28 @@
 						</div>
 					</div>
 				{:else if $windowWidth}
-					<div class="w-full flex-1 flex flex-col">
-						{#key $userGalleryCurrentView}
-							<GenerationGridInfinite
-								generationsQuery={userGenerationFullOutputsQuery}
-								cardType="history"
-								cols={$windowWidth > xl3Breakpoint
-									? 7
-									: $windowWidth > xl2Breakpoint
-									? 6
-									: $windowWidth > xlBreakpoint
-									? 5
-									: $windowWidth > lgBreakpoint
-									? 4
-									: $windowWidth > mdBreakpoint
-									? 3
-									: 2}
-							/>
-						{/key}
-					</div>
+					{#key $userGalleryCurrentView}
+						<GenerationGridInfinite
+							generationsQuery={userGenerationFullOutputsQuery}
+							cardType="history"
+							cols={$windowWidth > xl3Breakpoint
+								? 7
+								: $windowWidth > xl2Breakpoint
+								? 6
+								: $windowWidth > xlBreakpoint
+								? 5
+								: $windowWidth > lgBreakpoint
+								? 4
+								: $windowWidth > mdBreakpoint
+								? 3
+								: 2}
+						/>
+					{/key}
 				{/if}
 			{/if}
-		</div>
+		</GalleryLikeGridWrapper>
 	{/if}
-</div>
+</GalleryLikePageWrapper>
 
 {#if $activeGeneration}
 	<GenerationFullScreen

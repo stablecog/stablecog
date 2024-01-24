@@ -1,5 +1,5 @@
 <script lang="ts">
-	import ScrollAreaWithChevron from '$components/ScrollAreaWithChevron.svelte';
+	import ScrollAreaWithChevron from '$components/utils/ScrollAreaWithChevron.svelte';
 	import { pageLevels } from '$components/accountMenu/constants';
 	import type { TAccountDropdownPage } from '$components/accountMenu/types';
 	export let height: number;

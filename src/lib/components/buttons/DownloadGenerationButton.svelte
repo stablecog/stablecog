@@ -2,7 +2,7 @@
 	import { page } from '$app/stores';
 	import IconAnimatedSpinner from '$components/icons/IconAnimatedSpinner.svelte';
 	import IconDownload from '$components/icons/IconDownload.svelte';
-	import Morpher from '$components/Morpher.svelte';
+	import Morpher from '$components/utils/Morpher.svelte';
 	import { locale } from '$i18n/i18n-svelte';
 	import { downloadGenerationImage } from '$ts/helpers/downloadGenerationImage';
 	import { appVersion } from '$ts/stores/appVersion';

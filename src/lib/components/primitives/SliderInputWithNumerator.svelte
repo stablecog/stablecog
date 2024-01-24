@@ -1,6 +1,6 @@
 <script lang="ts">
-	import Numerator from '$components/Numerator.svelte';
-	import SliderInput from '$components/SliderInput.svelte';
+	import Numerator from '$components/primitives/Numerator.svelte';
+	import SliderInput from '$components/primitives/SliderInput.svelte';
 
 	export let value: number;
 	export let min: number;

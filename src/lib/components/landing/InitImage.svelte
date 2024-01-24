@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { page } from '$app/stores';
-	import LazyImageWithOutline from '$components/LazyImageWithOutline.svelte';
+	import LazyImageWithOutline from '$components/utils/LazyImageWithOutline.svelte';
 	import Button from '$components/buttons/Button.svelte';
 	import LL from '$i18n/i18n-svelte';
 	import { themeApp } from '$ts/stores/theme';

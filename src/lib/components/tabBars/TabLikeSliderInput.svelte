@@ -1,5 +1,5 @@
 <script lang="ts">
-	import SliderInputWithNumerator from '$components/SliderInputWithNumerator.svelte';
+	import SliderInputWithNumerator from '$components/primitives/SliderInputWithNumerator.svelte';
 	import TabBarWrapper from '$components/tabBars/TabBarWrapper.svelte';
 
 	export let value: number;

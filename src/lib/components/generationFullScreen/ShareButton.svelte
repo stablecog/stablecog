@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { page } from '$app/stores';
 	import ModalWrapper from '$components/ModalWrapper.svelte';
-	import ShareCard from '$components/ShareCard.svelte';
+	import ShareCard from '$components/cards/ShareCard.svelte';
 	import SubtleButton from '$components/buttons/SubtleButton.svelte';
 	import type { TGenerationFullScreenModalType } from '$components/generationFullScreen/types';
 	import IconShare from '$components/icons/IconShare.svelte';

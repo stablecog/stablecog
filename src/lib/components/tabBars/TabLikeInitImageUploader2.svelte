@@ -9,10 +9,10 @@
 	import IconTickOnly from '$components/icons/IconTickOnly.svelte';
 	import IconTrashcan from '$components/icons/IconTrashcan.svelte';
 	import IconWarningOutline from '$components/icons/IconWarningOutline.svelte';
-	import Morpher from '$components/Morpher.svelte';
-	import SliderInputWithNumerator from '$components/SliderInputWithNumerator.svelte';
+	import Morpher from '$components/utils/Morpher.svelte';
+	import SliderInputWithNumerator from '$components/primitives/SliderInputWithNumerator.svelte';
 	import TabBarWrapper from '$components/tabBars/TabBarWrapper.svelte';
-	import WithTooltip from '$components/WithTooltip.svelte';
+	import WithTooltip from '$components/utils/WithTooltip.svelte';
 	import LL, { locale } from '$i18n/i18n-svelte';
 	import { clickoutside } from '$ts/actions/clickoutside';
 	import {

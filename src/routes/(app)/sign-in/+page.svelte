@@ -2,9 +2,9 @@
 	import { browser } from '$app/environment';
 	import { goto } from '$app/navigation';
 	import { page } from '$app/stores';
-	import MetaTag from '$components/MetaTag.svelte';
+	import MetaTag from '$components/utils/MetaTag.svelte';
 	import PageWrapper from '$components/PageWrapper.svelte';
-	import SignInCard from '$components/SignInCard.svelte';
+	import SignInCard from '$components/cards/SignInCard.svelte';
 	import { canonicalUrl } from '$ts/constants/main';
 	import { previewImageVersion } from '$ts/constants/previewImageVersion';
 

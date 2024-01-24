@@ -19,7 +19,7 @@
 	import { fade, scale } from 'svelte/transition';
 	import { timestampPlaceholder } from '$components/voiceover/audioPlayer/constants';
 	import IconHourglassAnimated from '$components/icons/IconHourglassAnimated.svelte';
-	import Morpher from '$components/Morpher.svelte';
+	import Morpher from '$components/utils/Morpher.svelte';
 	import { flyAndScale } from '$ts/animation/transitions';
 	import { lgBreakpoint } from '$components/generationFullScreen/constants';
 	import { windowWidth } from '$ts/stores/window';

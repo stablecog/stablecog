@@ -6,7 +6,7 @@
 	import DropdownItem from '$components/DropdownItem.svelte';
 	import IconHome from '$components/icons/IconHome.svelte';
 	import IconSignOut from '$components/icons/IconSignOut.svelte';
-	import MetaTag from '$components/MetaTag.svelte';
+	import MetaTag from '$components/utils/MetaTag.svelte';
 	import ProductIdBadge from '$components/badges/ProductIdBadge.svelte';
 	import LL, { locale } from '$i18n/i18n-svelte';
 	import { canonicalUrl } from '$ts/constants/main';
@@ -15,11 +15,11 @@
 	import IconAnimatedSpinner from '$components/icons/IconAnimatedSpinner.svelte';
 	import { appVersion } from '$ts/stores/appVersion';
 	import { previewImageVersion } from '$ts/constants/previewImageVersion';
-	import WantEmailCard from '$components/WantsEmailCard.svelte';
+	import WantEmailCard from '$components/cards/WantsEmailCard.svelte';
 	import { onMount } from 'svelte';
 	import { wantsEmail } from '$ts/stores/user/wantsEmail.js';
 	import IconPen from '$components/icons/IconPen.svelte';
-	import WithChangeUsernameModal from '$components/WithChangeUsernameModal.svelte';
+	import WithChangeUsernameModal from '$components/utils/WithChangeUsernameModal.svelte';
 	import NoBgButton from '$components/buttons/NoBgButton.svelte';
 	import SubtleButton from '$components/buttons/SubtleButton.svelte';
 	import IconExternalLink from '$components/icons/IconExternalLink.svelte';

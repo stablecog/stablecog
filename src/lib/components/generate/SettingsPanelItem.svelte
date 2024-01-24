@@ -1,5 +1,5 @@
 <script lang="ts">
-	import WithTooltip from '$components/WithTooltip.svelte';
+	import WithTooltip from '$components/utils/WithTooltip.svelte';
 	import IconGenerationSettingsSet from '$components/icons/iconGenerationSettingsSet/IconGenerationSettingsSet.svelte';
 	import type { TIconGenerationSettingsSet } from '$components/icons/iconGenerationSettingsSet/types';
 

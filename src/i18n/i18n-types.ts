@@ -302,6 +302,11 @@ type RootTranslation = {
 			 */
 			Paragraph: string
 		}
+		/**
+		 * M​o​d​e​l​:​ ​{​m​o​d​e​l​N​a​m​e​}
+		 * @param {unknown} modelName
+		 */
+		ModelTag: RequiredParams<'modelName'>
 		SubmitToGalleryQuestion: {
 			/**
 			 * S​u​b​m​i​t​ ​g​e​n​e​r​a​t​i​o​n​s​ ​t​o​ ​t​h​e​ ​g​a​l​l​e​r​y​?
@@ -3549,6 +3554,10 @@ export type TranslationFunctions = {
 			 */
 			Paragraph: () => LocalizedString
 		}
+		/**
+		 * Model: {modelName}
+		 */
+		ModelTag: (arg: { modelName: unknown }) => LocalizedString
 		SubmitToGalleryQuestion: {
 			/**
 			 * Submit generations to the gallery?

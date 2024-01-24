@@ -11,7 +11,7 @@
 	import { routesDrawer } from './routes';
 	import IconNavbarRoute from '$components/icons/IconNavbarRoute.svelte';
 	import { page } from '$app/stores';
-	import ScrollAreaWithChevron from '$components/ScrollAreaWithChevron.svelte';
+	import ScrollAreaWithChevron from '$components/utils/ScrollAreaWithChevron.svelte';
 	import LogoButton from '$components/buttons/LogoButton.svelte';
 	import { browser } from '$app/environment';
 	import ScBar from '$components/ScBar.svelte';

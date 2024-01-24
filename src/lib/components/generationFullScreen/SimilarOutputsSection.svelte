@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { browser } from '$app/environment';
 	import { page } from '$app/stores';
-	import Img from '$components/Img.svelte';
+	import Img from '$components/utils/image/Img.svelte';
 	import Divider from '$components/generationFullScreen/Divider.svelte';
 	import type { TGenerationFullScreenModalType } from '$components/generationFullScreen/types';
 	import SimpleGrid from '$components/grids/SimpleGrid.svelte';

@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { page } from '$app/stores';
-	import MetaTag from '$components/MetaTag.svelte';
+	import MetaTag from '$components/utils/MetaTag.svelte';
 	import { elementreceive, elementsend, expandCollapse } from '$ts/animation/transitions';
 	import { apiUrl, canonicalUrl } from '$ts/constants/main';
 	import { onMount, onDestroy } from 'svelte';

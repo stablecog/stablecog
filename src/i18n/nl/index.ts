@@ -109,6 +109,7 @@ const nl: Translation = {
 			Paragraph:
 				'Diffusie van de afbeelding op een bepaalde manier. Het kan de gegenereerde afbeelding drastisch wijzigen. Sommigen vereisen minder stappen om goede resultaten te produceren.'
 		},
+		ModelTag: 'Model: {modelName}',
 		SubmitToGalleryQuestion: {
 			Title: 'Stuur creaties naar de galerij?',
 			Paragraph: 'Je kan later je voorkeur via de instellingen wijzigen.'

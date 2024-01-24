@@ -10,7 +10,7 @@
 	import { userSummary } from '$ts/stores/user/summary';
 	import { getImgProxySrc, getImgProxySrcSet } from '$ts/helpers/imgproxy';
 	import { page } from '$app/stores';
-	import Img from '$components/Img.svelte';
+	import Img from '$components/utils/image/Img.svelte';
 	import type { TGenerationFullScreenModalType } from '$components/generationFullScreen/types';
 
 	export let similarOutputs: TGenerationFullOutput[];

@@ -3,22 +3,20 @@
 	import SubtleButton from '$components/buttons/SubtleButton.svelte';
 	import IconAdjustmentsVertical from '$components/icons/IconAdjustmentsVertical.svelte';
 	import LL, { locale } from '$i18n/i18n-svelte';
-	import { expandCollapse } from '$ts/animation/transitions';
 	import { logGallerySearch, logHistorySearch } from '$ts/helpers/loggers';
 	import { advancedModeApp } from '$ts/stores/advancedMode';
 	import { appVersion } from '$ts/stores/appVersion';
 	import { isTouchscreen } from '$ts/stores/isTouchscreen';
 	import { userSummary } from '$ts/stores/user/summary';
-	import { quadOut } from 'svelte/easing';
-	import Input from './Input.svelte';
-	import IconSearch from './icons/IconSearch.svelte';
+	import Input from '../primitives/Input.svelte';
+	import IconSearch from '../icons/IconSearch.svelte';
 	import TabLikeFilterDropdown from '$components/tabBars/TabLikeFilterDropdown.svelte';
 	import {
 		availableModelIdDropdownItems,
 		modelIdToDisplayName,
 		type TAvailableGenerationModelId
 	} from '$ts/constants/generationModels';
-	import Morpher from '$components/Morpher.svelte';
+	import Morpher from '$components/utils/Morpher.svelte';
 	import IconChevronDown from '$components/icons/IconChevronDown.svelte';
 	import TagButton from '$components/buttons/TagButton.svelte';
 	import IconTrashcan from '$components/icons/IconTrashcan.svelte';
@@ -31,35 +29,18 @@
 	import { sortsDefault } from '$routes/(app)/gallery/constants';
 	import TabLikeDropdown from '$components/tabBars/TabLikeDropdown.svelte';
 	import IconMainSortView from '$components/icons/IconMainSortView.svelte';
+	import { quadOut } from 'svelte/easing';
+	import { fly } from 'svelte/transition';
 
 	export let disabled = false;
 	export let searchString: string;
 	export let inputShadow: 'normal' | 'strongest' = 'normal';
 	export let modelIdFilters: TAvailableGenerationModelId[];
-	export let sorts: string[] | undefined = undefined;
 	export let searchInputIsFocused = false;
 
 	let searchStringLocal = searchString ?? '';
 	let inputElement: HTMLInputElement;
 	let isFiltersOpen = false;
-
-	const mainSorts = ['trending', 'top', 'new'];
-	let mainSortView = sorts?.find((i) => mainSorts.includes(i)) ?? 'new';
-
-	const mainSortViews: TTab<string>[] = [
-		{
-			value: 'trending',
-			label: $LL.Gallery.Sort.Options.Trending()
-		},
-		{
-			value: 'top',
-			label: $LL.Gallery.Sort.Options.Top()
-		},
-		{
-			value: 'new',
-			label: $LL.Gallery.Sort.Options.New()
-		}
-	];
 
 	$: hasAnyFilter = modelIdFilters?.length > 0;
 	$: searchStringLocal, onSearchStringLocalChanged();
@@ -69,9 +50,6 @@
 			value: modelIdFilters
 		});
 	$: searchString, setUrlParam({ key: 'q', value: searchString });
-
-	$: mainSortView, onMainSortViewChanged();
-	$: sorts, setUrlParam({ key: 'sort', value: sorts, defaultValue: sortsDefault });
 
 	function clearAllFilters() {
 		modelIdFilters = [];
@@ -134,11 +112,6 @@
 		isFiltersOpen = !isFiltersOpen;
 	}
 
-	function onMainSortViewChanged() {
-		if (!sorts) return;
-		sorts = [mainSortView, ...sorts.filter((i) => !mainSorts.includes(i))];
-	}
-
 	function clearSearchString() {
 		searchStringLocal = '';
 		searchString = '';
@@ -195,20 +168,11 @@
 			</Morpher>
 		</SubtleButton>
 	</form>
-	{#if sorts || isFiltersOpen}
-		<div class="w-full flex flex-col md:flex-row justify-center items-center px-0.5 gap-3 mt-3">
-			<!-- {#if sorts}
-				<div class="w-full md:max-w-[15rem]">
-					<TabLikeDropdown
-						class="w-full"
-						items={mainSortViews}
-						hasTitle={false}
-						name={$LL.Gallery.Sort.Title()}
-						iconSet={IconMainSortView}
-						bind:value={mainSortView}
-					/>
-				</div>
-			{/if} -->
+	{#if isFiltersOpen}
+		<div
+			in:fly={{ duration: 150, easing: quadOut, y: -25, opacity: 0 }}
+			class="w-full flex flex-col md:flex-row justify-center items-center px-0.5 gap-3 pt-3"
+		>
 			{#if isFiltersOpen}
 				<div class="w-full md:max-w-[15rem]">
 					<TabLikeFilterDropdown
@@ -249,7 +213,7 @@
 				{/if}
 				{#each modelIdFilters as item}
 					<TagButton
-						text={$modelIdToDisplayName[item]}
+						text={$LL.Home.ModelTag({ modelName: $modelIdToDisplayName[item] })}
 						onClick={() => {
 							modelIdFilters = modelIdFilters.filter((i) => i !== item);
 						}}

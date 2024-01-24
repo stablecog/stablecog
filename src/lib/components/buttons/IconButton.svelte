@@ -1,5 +1,5 @@
 <script lang="ts">
-	import WithTooltip from '$components/WithTooltip.svelte';
+	import WithTooltip from '$components/utils/WithTooltip.svelte';
 	import IconAnimatedSpinner from '$components/icons/IconAnimatedSpinner.svelte';
 	import type { THrefTarget } from '$ts/types/main';
 

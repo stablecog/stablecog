@@ -8,7 +8,7 @@
 	import { quadOut } from 'svelte/easing';
 	import { scale } from 'svelte/transition';
 	import IconSc from '$components/icons/IconSc.svelte';
-	import WithTooltip from '$components/WithTooltip.svelte';
+	import WithTooltip from '$components/utils/WithTooltip.svelte';
 
 	export let processObject: TAnyRealtimePayloadExt;
 	export let planBasedColor: (processObject: TAnyRealtimePayloadExt) => string;

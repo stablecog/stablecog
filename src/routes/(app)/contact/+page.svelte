@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { page } from '$app/stores';
-	import MetaTag from '$components/MetaTag.svelte';
+	import MetaTag from '$components/utils/MetaTag.svelte';
 	import LL from '$i18n/i18n-svelte';
 	import { canonicalUrl } from '$ts/constants/main';
 	import PageWrapper from '$components/PageWrapper.svelte';

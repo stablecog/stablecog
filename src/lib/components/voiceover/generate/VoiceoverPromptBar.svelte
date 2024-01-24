@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { page } from '$app/stores';
 	import CreditCostBadge from '$components/CreditCostBadge.svelte';
-	import Morpher from '$components/Morpher.svelte';
+	import Morpher from '$components/utils/Morpher.svelte';
 	import InsufficientCreditsBadge from '$components/badges/InsufficientCreditsBadge.svelte';
 	import Button from '$components/buttons/Button.svelte';
 	import ClearButton from '$components/buttons/ClearButton.svelte';

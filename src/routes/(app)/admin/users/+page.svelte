@@ -1,12 +1,12 @@
 <script lang="ts">
 	import { page } from '$app/stores';
-	import MetaTag from '$components/MetaTag.svelte';
+	import MetaTag from '$components/utils/MetaTag.svelte';
 	import LL, { locale } from '$i18n/i18n-svelte';
 	import { canonicalUrl } from '$ts/constants/main';
 	import PageWrapper from '$components/PageWrapper.svelte';
 	import { getRelativeDate } from '$ts/helpers/getRelativeDate';
 	import { navbarHeight } from '$ts/stores/navbarHeight';
-	import Input from '$components/Input.svelte';
+	import Input from '$components/primitives/Input.svelte';
 	import IconSearch from '$components/icons/IconSearch.svelte';
 	import { browser } from '$app/environment';
 	import { createInfiniteQuery, createQuery } from '@tanstack/svelte-query';
@@ -35,11 +35,11 @@
 	import DropdownWrapper from '$components/DropdownWrapper.svelte';
 	import DropdownItem from '$components/DropdownItem.svelte';
 	import { clickoutside } from '$ts/actions/clickoutside';
-	import ScrollAreaWithChevron from '$components/ScrollAreaWithChevron.svelte';
+	import ScrollAreaWithChevron from '$components/utils/ScrollAreaWithChevron.svelte';
 	import { giftCreditsToUser } from '$ts/queries/giftCreditsToUser';
 	import IconWarning from '$components/icons/IconWarning.svelte';
 	import { previewImageVersion } from '$ts/constants/previewImageVersion';
-	import ToggleIndicator from '$components/ToggleIndicator.svelte';
+	import ToggleIndicator from '$components/primitives/ToggleIndicator.svelte';
 	import ButtonHoverEffect from '$components/buttons/ButtonHoverEffect.svelte';
 	import { setUrlParam } from '$ts/helpers/setUrlParam.js';
 
