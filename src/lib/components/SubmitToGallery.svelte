@@ -7,7 +7,7 @@
 	import { appVersion } from '$ts/stores/appVersion';
 	import { shouldSubmitToGallery } from '$ts/stores/shouldSubmitToGallery';
 	import { userSummary } from '$ts/stores/user/summary';
-	import SubtleButton from './buttons/SubtleButton.svelte';
+	import SubtleButton from '$components/primitives/buttons/SubtleButton.svelte';
 
 	$: logProps = {
 		'SC - User Id': $page.data.session?.user.id,
@@ -23,7 +23,7 @@
 >
 	<div class="w-full flex items-center justify-center py-4 px-4">
 		<div
-			class="bg-c-bg-secondary shadow-lg shadow-c-shadow/[var(--o-shadow-normal)] px-5 pb-5 pt-4 rounded-2xl 
+			class="bg-c-bg-secondary shadow-lg shadow-c-shadow/[var(--o-shadow-normal)] px-5 pb-5 pt-4 rounded-2xl
       flex flex-col items-start justify-start gap-4 w-full max-w-[21rem]"
 		>
 			<div class="flex flex-col items-start justify-start gap-1.5">
