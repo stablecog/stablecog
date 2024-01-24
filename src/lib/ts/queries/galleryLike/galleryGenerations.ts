@@ -41,9 +41,7 @@ export async function getGalleryGenerationFullOutputs({
 	console.log('getGalleryOutputs');
 	const query = new URLSearchParams();
 	if (cursor) {
-		if ((search && typeof cursor === 'number') || (!search && typeof cursor === 'string')) {
-			query.append('cursor', cursor);
-		}
+		query.append('cursor', cursor);
 	}
 	if (search && search !== '') {
 		query.append('search', search);
