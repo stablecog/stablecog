@@ -26,7 +26,9 @@ export const load: PageLoad = async ({ url, parent }) => {
 	const { queryClient, globalSeed, session } = (await parent()) as TParent;
 	const searchString = url.searchParams.get('q') || '';
 	const modelIdQuery = url.searchParams.get('mi');
-	const modelIds = modelIdQuery ? modelIdQuery.split(',') : [];
+	const modelIds = modelIdQuery?.split(',') || [];
+	const usernameFiltersQuery = url.searchParams.get('un');
+	const usernameFilters = usernameFiltersQuery?.split(',') || [];
 	const filteredModelIds = modelIds.filter((modelId) =>
 		availableGenerationModelIds.includes(modelId as TAvailableGenerationModelId)
 	);
@@ -36,6 +38,7 @@ export const load: PageLoad = async ({ url, parent }) => {
 		searchString: searchString,
 		modelIdFilters: filteredModelIds,
 		sorts,
+		usernameFilters,
 		seed: globalSeed
 	};
 	const hasInitialData =
@@ -59,6 +62,7 @@ export const load: PageLoad = async ({ url, parent }) => {
 
 	return {
 		searchString,
+		usernameFilters,
 		modelIdFilters: filteredModelIds,
 		sorts
 	};

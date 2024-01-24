@@ -216,8 +216,6 @@
 		>
 			<div slot="view" class="w-full flex justify-end">
 				<TabLikeDropdown
-					dontScale
-					hasTitle={false}
 					name="Filters"
 					items={userGalleryTabs}
 					bind:value={$userGalleryCurrentView}

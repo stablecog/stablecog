@@ -1,5 +1,4 @@
 <script lang="ts">
-	import { browser } from '$app/environment';
 	import { page } from '$app/stores';
 	import GenerationFullScreen from '$components/generationFullScreen/GenerationFullScreen.svelte';
 	import IconSearch from '$components/icons/IconSearch.svelte';
@@ -28,6 +27,7 @@
 		galleryModelIdFilters,
 		gallerySearchString,
 		gallerySorts,
+		galleryUsernameFilters,
 		getGalleryInfiniteQueryKey,
 		getGalleryInfiniteQueryProps,
 		mainSortViewDefault,
@@ -52,6 +52,7 @@
 		galleryModelIdFilters.set(data.modelIdFilters);
 		gallerySearchString.set(data.searchString);
 		gallerySorts.set(data.sorts);
+		galleryUsernameFilters.set(data.usernameFilters);
 	}
 
 	let mainSortView = $gallerySorts?.find((i) => mainSorts.includes(i)) ?? mainSortViewDefault;
@@ -79,6 +80,7 @@
 			searchString: $gallerySearchString,
 			modelIdFilters: $galleryModelIdFilters,
 			sorts: $gallerySorts,
+			usernameFilters: $galleryUsernameFilters,
 			seed: $globalSeed
 		})
 	);
@@ -88,6 +90,7 @@
 			searchString: $gallerySearchString,
 			modelIdFilters: $galleryModelIdFilters,
 			sorts: $gallerySorts,
+			usernameFilters: $galleryUsernameFilters,
 			seed: $globalSeed,
 			accessToken: $page.data.session?.access_token
 		})
@@ -141,8 +144,6 @@
 	<GalleryLikeTitleSection title={$LL.Gallery.PageTitle()}>
 		<div slot="view" class="w-full flex justify-end">
 			<TabLikeDropdown
-				dontScale
-				hasTitle={false}
 				name={$LL.Gallery.Sort.Title()}
 				items={mainSortViews}
 				bind:value={mainSortView}
@@ -152,8 +153,10 @@
 		</div>
 		<div slot="search-and-filter" class="w-full">
 			<SearchAndFilterBar
+				type="gallery"
 				bind:modelIdFilters={$galleryModelIdFilters}
 				bind:searchString={$gallerySearchString}
+				bind:usernameFilters={$galleryUsernameFilters}
 			/>
 		</div>
 	</GalleryLikeTitleSection>

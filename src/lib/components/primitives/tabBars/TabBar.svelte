@@ -9,7 +9,7 @@
 	export let value: T;
 	export let hideSelected = false;
 	export { classes as class };
-	export let hasTitle = true;
+	export let hasTitle = false;
 	export let dontScale = false;
 	export let disabled = false;
 	export let isValid: (v: T) => boolean = () => true;
@@ -26,7 +26,7 @@
 
 <TabBarWrapper {outline} class={classes} {dontScale}>
 	{#if hasTitle}
-		<div class="self-stretch flex text-c-on-bg/40 relative">
+		<div class="self-stretch flex text-c-on-bg/50 relative">
 			<slot name="title" />
 		</div>
 		<div class="w-2px mr-px -ml-px self-stretch relative">

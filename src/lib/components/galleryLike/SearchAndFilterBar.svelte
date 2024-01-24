@@ -1,7 +1,6 @@
 <script lang="ts">
 	import { page } from '$app/stores';
 	import SubtleButton from '$components/primitives/buttons/SubtleButton.svelte';
-	import IconAdjustmentsVertical from '$components/icons/IconAdjustmentsVertical.svelte';
 	import LL, { locale } from '$i18n/i18n-svelte';
 	import { logGallerySearch, logHistorySearch } from '$ts/helpers/loggers';
 	import { advancedModeApp } from '$ts/stores/advancedMode';
@@ -25,24 +24,26 @@
 	import { isUUID } from '$ts/helpers/uuid';
 	import IconImageSearch from '$components/icons/IconImageSearch.svelte';
 	import { setUrlParam } from '$ts/helpers/setUrlParam';
-	import type { TTab } from '$ts/types/main';
-	import { sortsDefault } from '$routes/(app)/gallery/constants';
-	import TabLikeDropdown from '$components/primitives/tabBars/TabLikeDropdown.svelte';
-	import IconMainSortView from '$components/icons/IconMainSortView.svelte';
 	import { quadOut } from 'svelte/easing';
 	import { fly } from 'svelte/transition';
+	import TabLikeInput from '$components/primitives/tabBars/TabLikeInput.svelte';
+	import IconUserAlt from '$components/icons/IconUserAlt.svelte';
+	import IconFilter from '$components/icons/IconFilter.svelte';
 
 	export let disabled = false;
 	export let searchString: string;
 	export let inputShadow: 'normal' | 'strongest' = 'normal';
 	export let modelIdFilters: TAvailableGenerationModelId[];
+	export let usernameFilters: string[] | undefined = undefined;
 	export let searchInputIsFocused = false;
+	export let type: 'gallery' | 'default' = 'default';
 
 	let searchStringLocal = searchString ?? '';
+	let usernameSearchStringLocal = '';
 	let inputElement: HTMLInputElement;
 	let isFiltersOpen = false;
+	let usernameInputElement: HTMLInputElement;
 
-	$: hasAnyFilter = modelIdFilters?.length > 0;
 	$: searchStringLocal, onSearchStringLocalChanged();
 	$: modelIdFilters,
 		setUrlParam({
@@ -50,6 +51,11 @@
 			value: modelIdFilters
 		});
 	$: searchString, setUrlParam({ key: 'q', value: searchString });
+	$: usernameFilters, setUrlParam({ key: 'un', value: usernameFilters });
+	$: hasAnyFilter =
+		modelIdFilters?.length > 0 ||
+		(usernameFilters && usernameFilters.length > 0) ||
+		isUUID(searchString);
 
 	function clearAllFilters() {
 		modelIdFilters = [];
@@ -57,6 +63,7 @@
 		if (isUUID(searchString)) {
 			clearSearchString();
 		}
+		clearUsernameFilters();
 	}
 
 	function search() {
@@ -116,6 +123,19 @@
 		searchStringLocal = '';
 		searchString = '';
 	}
+
+	function clearUsernameFilters() {
+		usernameSearchStringLocal = '';
+		usernameFilters = [];
+	}
+
+	async function onUsernameFieldSubmit() {
+		if (!usernameSearchStringLocal) return;
+		if (!usernameFilters) usernameFilters = [];
+		usernameFilters = [...usernameFilters, usernameSearchStringLocal];
+		usernameSearchStringLocal = '';
+		usernameInputElement?.focus();
+	}
 </script>
 
 <div class="w-full flex flex-col items-center z-40">
@@ -152,7 +172,7 @@
 		>
 			<Morpher morphed={isFiltersOpen}>
 				<div slot="0" class="w-6 h-6 md:w-7 md:h-7">
-					<IconAdjustmentsVertical
+					<IconFilter
 						class="w-full h-full text-c-on-bg transition transform {isFiltersOpen
 							? 'rotate-90'
 							: 'rotate-0'} not-touch:group-hover/iconbutton:text-c-primary"
@@ -173,25 +193,34 @@
 			in:fly={{ duration: 150, easing: quadOut, y: -25, opacity: 0 }}
 			class="w-full flex flex-col md:flex-row justify-center items-center px-0.5 gap-3 pt-3"
 		>
-			{#if isFiltersOpen}
-				<div class="w-full md:max-w-[15rem]">
-					<TabLikeFilterDropdown
+			<TabLikeFilterDropdown
+				class="w-full md:max-w-[15rem]"
+				name={$LL.Home.ModelDropdown.Title()}
+				nameIcon={IconBrain}
+				bind:values={modelIdFilters}
+				items={$availableModelIdDropdownItems}
+			/>
+			{#if type === 'gallery'}
+				<form on:submit|preventDefault={onUsernameFieldSubmit} class="w-full md:max-w-[15rem]">
+					<TabLikeInput
+						name={$LL.Gallery.UsernameFilterInput.Title()}
+						placeholder={$LL.Gallery.UsernameFilterInput.Placeholder()}
 						class="w-full"
-						name={$LL.Home.ModelDropdown.Title()}
-						nameIcon={IconBrain}
-						bind:values={modelIdFilters}
-						items={$availableModelIdDropdownItems}
-						dontScale
-						hasTitle={false}
+						inputmode="search"
+						type="text"
+						icon={IconUserAlt}
+						bind:inputElement={usernameInputElement}
+						bind:value={usernameSearchStringLocal}
+						dontHandleKeypress
 					/>
-				</div>
+				</form>
 			{/if}
 		</div>
 	{/if}
-	{#if (modelIdFilters && modelIdFilters.length > 0) || isUUID(searchString)}
+	{#if hasAnyFilter}
 		<div class="w-full flex justify-center px-0.5 mt-0.5">
 			<div class="flex flex-wrap justify-start gap-2 pt-3">
-				{#if hasAnyFilter || isUUID(searchString)}
+				{#if hasAnyFilter}
 					<TagButton
 						icon={IconTrashcan}
 						hasMaxWidth={false}
@@ -211,8 +240,21 @@
 						color="primary"
 					/>
 				{/if}
+				{#if usernameFilters !== undefined && usernameFilters.length > 0}
+					{#each usernameFilters as usernameFilter}
+						<TagButton
+							icon={IconUserAlt}
+							text={$LL.Gallery.UsernameFilterInput.Tag({ username: usernameFilter })}
+							onClick={() => {
+								if (usernameFilters === undefined) return;
+								usernameFilters = usernameFilters.filter((i) => i !== usernameFilter);
+							}}
+						/>
+					{/each}
+				{/if}
 				{#each modelIdFilters as item}
 					<TagButton
+						icon={IconBrain}
 						text={$LL.Home.ModelTag({ modelName: $modelIdToDisplayName[item] })}
 						onClick={() => {
 							modelIdFilters = modelIdFilters.filter((i) => i !== item);

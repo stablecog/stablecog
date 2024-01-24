@@ -113,7 +113,7 @@
 						</p>
 					</div>
 					<div class="transform rotate-90 -mt-2">
-						<IconArrowRight class="w-8 h-8 text-c-on-bg/40 flex-shrink-0" />
+						<IconArrowRight class="w-8 h-8 text-c-on-bg/50 flex-shrink-0" />
 					</div>
 					<div class="w-full flex flex-col">
 						<p class="text-sm text-c-on-bg/60 font-medium">

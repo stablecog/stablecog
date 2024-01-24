@@ -756,6 +756,11 @@ const de: Translation = {
 			Title: 'Sort',
 			Options: { New: 'New', Top: 'Top', Trending: 'Trending' }
 		},
+		UsernameFilterInput: {
+			Title: 'Username Search',
+			Placeholder: 'Filter by username',
+			Tag: 'Username: {username}'
+		},
 		NoMatchingGenerationTitle: 'Nichts Passendes gefunden'
 	},
 	Pricing: {

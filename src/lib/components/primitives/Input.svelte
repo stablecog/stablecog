@@ -84,7 +84,7 @@
 				: 'shadow-c-shadow/[var(--o-shadow-normal)]'} focus:ring-2 ring-0 {bg === 'bg-secondary'
 				? 'ring-c-primary/20 focus:ring-c-primary/30'
 				: 'ring-c-primary/20 focus:ring-c-primary/35'}  
-      placeholder:text-c-on-bg/40 not-touch:enabled:hover:ring-2 not-touch:enabled:group-hover:ring-2"
+      placeholder:text-c-on-bg/50 not-touch:enabled:hover:ring-2 not-touch:enabled:group-hover:ring-2"
 		/>
 	{:else if type === 'password'}
 		<input
@@ -119,7 +119,7 @@
 				: 'shadow-c-shadow/[var(--o-shadow-normal)]'} focus:ring-2 ring-0 {bg === 'bg-secondary'
 				? 'ring-c-primary/20 focus:ring-c-primary/30'
 				: 'ring-c-primary/20 focus:ring-c-primary/35'} 
-      placeholder:text-c-on-bg/40 not-touch:enabled:hover:ring-2 not-touch:enabled:group-hover:ring-2"
+      placeholder:text-c-on-bg/50 not-touch:enabled:hover:ring-2 not-touch:enabled:group-hover:ring-2"
 		/>
 	{:else if type === 'number'}
 		<input
@@ -154,7 +154,7 @@
 				: 'shadow-c-shadow/[var(--o-shadow-normal)]'} focus:ring-2 ring-0 {bg === 'bg-secondary'
 				? 'ring-c-primary/20 focus:ring-c-primary/30'
 				: 'ring-c-primary/20 focus:ring-c-primary/35'}  
-      placeholder:text-c-on-bg/40 not-touch:enabled:hover:ring-2 not-touch:enabled:group-hover:ring-2"
+      placeholder:text-c-on-bg/50 not-touch:enabled:hover:ring-2 not-touch:enabled:group-hover:ring-2"
 		/>
 	{:else}
 		<input
@@ -189,7 +189,7 @@
 				: 'shadow-c-shadow/[var(--o-shadow-normal)]'} focus:ring-2 ring-0 {bg === 'bg-secondary'
 				? 'ring-c-primary/20 focus:ring-c-primary/30'
 				: 'ring-c-primary/20 focus:ring-c-primary/35'}  
-      placeholder:text-c-on-bg/40 not-touch:enabled:hover:ring-2 not-touch:enabled:group-hover:ring-2"
+      placeholder:text-c-on-bg/50 not-touch:enabled:hover:ring-2 not-touch:enabled:group-hover:ring-2"
 		/>
 	{/if}
 	<label

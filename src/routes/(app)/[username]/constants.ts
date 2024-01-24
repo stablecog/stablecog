@@ -15,7 +15,7 @@ export const getSomeUserProfileInfiniteQueryKey = ({
 		'other_user_generation_full_outputs',
 		username,
 		searchString ? searchString : '',
-		modelIdFilters ? modelIdFilters.join(',') : ''
+		modelIdFilters ? modelIdFilters.sort().join(',') : ''
 	];
 };
 

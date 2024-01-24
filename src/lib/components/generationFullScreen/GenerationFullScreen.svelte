@@ -444,7 +444,7 @@
 						<rect width={generation.width} height={generation.height} fill="currentColor" />
 					</svg>
 					<div class="w-full h-full absolute left-0 top-0 p-5 flex items-center justify-center">
-						<IconNoImage class="w-16 h-16 text-c-on-bg/40" />
+						<IconNoImage class="w-16 h-16 text-c-on-bg/50" />
 					</div>
 				{:else}
 					{#key selectedOutputId}
@@ -586,8 +586,6 @@
 										bind:value={upscaledTabValue}
 										fontWeight={600}
 										tabs={upscaledOrDefaultTabs}
-										hasTitle={false}
-										dontScale={true}
 										name="Upscaled or Default Image"
 									/>
 								{/if}

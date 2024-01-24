@@ -13,7 +13,7 @@
 	export let value: T;
 	export let items: TTab<T>[];
 	export let name: string;
-	export let hasTitle = true;
+	export let hasTitle = false;
 	export let dontScale = false;
 	export let disabled = false;
 	export let calculateDistance = true;

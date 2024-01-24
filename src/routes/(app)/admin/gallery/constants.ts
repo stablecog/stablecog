@@ -26,7 +26,7 @@ export const getAllUserGenerationFullOutputsQueryKey = ({
 		'admin_user_generation_full_outputs',
 		adminGalleryCurrentFilter,
 		searchString ? searchString : '',
-		modelIdFilters ? modelIdFilters.join(',') : ''
+		modelIdFilters ? modelIdFilters.sort().join(',') : ''
 	];
 };
 

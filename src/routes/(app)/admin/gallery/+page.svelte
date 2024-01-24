@@ -202,7 +202,6 @@
 				<TabLikeDropdown
 					class="flex-1 min-w-0 md:max-w-[15rem]"
 					name="Filter"
-					hasTitle={false}
 					items={[
 						{
 							label: $LL.Admin.Gallery.StatusDropdown.SubmittedBest(),

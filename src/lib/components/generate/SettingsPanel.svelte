@@ -19,7 +19,6 @@
 	import {
 		generationAspectRatio,
 		generationGuidanceScale,
-		generationInferenceSteps,
 		generationModelId,
 		generationNegativePrompt,
 		generationNumOutputs,
@@ -80,7 +79,6 @@
 					containerTopMinDistance={containerDropdownPadding}
 					containerBottomMinDistance={containerDropdownPadding}
 					items={$aspectRatioDropdownItems}
-					hasTitle={false}
 					bind:value={$generationAspectRatio}
 					name={$LL.Home.AspectRatioDropdown.Title()}
 				/>
@@ -98,7 +96,6 @@
 				containerTopMinDistance={containerDropdownPadding}
 				containerBottomMinDistance={containerDropdownPadding}
 				items={$availableModelIdDropdownItems}
-				hasTitle={false}
 				name={$LL.Home.ModelDropdown.Title()}
 				iconSet={IconModelImage}
 				iconSetClass="w-11 h-11 -mx-4 -my-5 mr-3 rounded-lg bg-c-bg-tertiary"
@@ -133,7 +130,6 @@
 				placeholder={$LL.Home.NegativePromptInput.PlaceholderAlt()}
 				class="w-full"
 				bind:value={$generationNegativePrompt}
-				hasTitle={false}
 				maxRows={4}
 			/>
 		</SettingsPanelItem>
@@ -145,7 +141,6 @@
 		>
 			<TabLikeSliderInput
 				name={$LL.Home.NumOutputsSlider.Title()}
-				hasTitle={false}
 				disabled={!isCheckCompleted}
 				class="w-full"
 				min={numOutputsMin}
@@ -188,7 +183,6 @@
 								? $LL.Shared.On()
 								: $LL.Shared.Off()
 							: $LL.Shared.On()}
-						hasTitle={false}
 					/>
 				</div>
 			</WithTooltip>
@@ -257,7 +251,6 @@
 							<TabLikeSliderInput
 								name={$LL.Home.GuidanceScaleSlider.Title()}
 								class="w-full"
-								hasTitle={false}
 								min={guidanceScaleMin}
 								max={guidanceScaleMax}
 								valueSize="md"
@@ -296,7 +289,6 @@
 								containerTopMinDistance={containerDropdownPadding}
 								containerBottomMinDistance={containerDropdownPadding}
 								items={supportedSchedulerIdDropdownItems}
-								hasTitle={false}
 								bind:value={$generationSchedulerId}
 								name={$LL.Home.AspectRatioDropdown.Title()}
 							/>
@@ -308,9 +300,9 @@
 							tooltipParagraph={$LL.Home.SeedInput.Paragraph()}
 						>
 							<TabLikeInput
+								name={$LL.Home.SeedInput.Title()}
 								class="w-full"
 								bind:value={$generationSeed}
-								hasTitle={false}
 								placeholder={$LL.Home.SeedInput.Placeholder()}
 							/>
 						</SettingsPanelItem>

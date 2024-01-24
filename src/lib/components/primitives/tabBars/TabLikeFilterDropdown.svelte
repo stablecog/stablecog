@@ -12,7 +12,7 @@
 	export let items: TTab<T>[];
 	export let name: string;
 	export let nameIcon: ConstructorOfATypedSvelteComponent | undefined = undefined;
-	export let hasTitle = true;
+	export let hasTitle = false;
 	export let dontScale = false;
 	export let disabled = false;
 	export let calculateDistance = true;
@@ -128,7 +128,7 @@
 				{#if nameIcon}
 					<svelte:component
 						this={nameIcon}
-						class="w-5.5 h-5.5 flex-shrink-0 -ml-1 mr-2 text-c-on-bg not-touch:group-hover:text-c-primary"
+						class="w-5.5 h-5.5 flex-shrink-0 -ml-1 mr-2 text-c-on-bg not-touch:group-hover:text-c-primary transition"
 					/>
 				{/if}
 				<p

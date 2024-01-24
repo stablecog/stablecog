@@ -2298,6 +2298,21 @@ type RootTranslation = {
 				Trending: string
 			}
 		}
+		UsernameFilterInput: {
+			/**
+			 * U​s​e​r​n​a​m​e​ ​S​e​a​r​c​h
+			 */
+			Title: string
+			/**
+			 * F​i​l​t​e​r​ ​b​y​ ​u​s​e​r​n​a​m​e
+			 */
+			Placeholder: string
+			/**
+			 * U​s​e​r​n​a​m​e​:​ ​{​u​s​e​r​n​a​m​e​}
+			 * @param {unknown} username
+			 */
+			Tag: RequiredParams<'username'>
+		}
 		/**
 		 * N​o​ ​m​a​t​c​h​i​n​g​ ​g​e​n​e​r​a​t​i​o​n
 		 */
@@ -5517,6 +5532,20 @@ export type TranslationFunctions = {
 				 */
 				Trending: () => LocalizedString
 			}
+		}
+		UsernameFilterInput: {
+			/**
+			 * Username Search
+			 */
+			Title: () => LocalizedString
+			/**
+			 * Filter by username
+			 */
+			Placeholder: () => LocalizedString
+			/**
+			 * Username: {username}
+			 */
+			Tag: (arg: { username: unknown }) => LocalizedString
 		}
 		/**
 		 * No matching generation

@@ -8,7 +8,7 @@
 	export let step = 1;
 	export let name: string;
 	export let disabled: boolean = false;
-	export let hasTitle = true;
+	export let hasTitle = false;
 	export let valueSize: 'sm' | 'md' = 'sm';
 	export let numeratorFormatter: (value: number) => string = (value) => value.toString();
 	export { classes as class };

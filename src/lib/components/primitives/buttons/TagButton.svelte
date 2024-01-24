@@ -34,7 +34,7 @@
 		{/if}
 		<p
 			class="flex-1 min-w-0 {hasMaxWidth
-				? 'max-w-[5rem]'
+				? 'max-w-[9rem]'
 				: 'max-w-full'} md:max-w-full whitespace-nowrap overflow-hidden overflow-ellipsis"
 		>
 			{text}

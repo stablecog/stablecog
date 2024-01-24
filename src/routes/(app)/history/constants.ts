@@ -22,7 +22,7 @@ export const getHistoryInfiniteQueryKey = ({
 		'user_generation_full_outputs',
 		userGalleryCurrentView,
 		searchString ? searchString : '',
-		modelIdFilters ? modelIdFilters.join(',') : ''
+		modelIdFilters ? modelIdFilters.sort().join(',') : ''
 	];
 };
 

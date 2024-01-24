@@ -178,7 +178,7 @@
 		<rect width={generation.width} height={generation.height} fill="currentColor" />
 	</svg>
 	<div class="w-full h-full absolute left-0 top-0 p-5 flex items-center justify-center">
-		<IconNoImage class="w-10 h-10 text-c-on-bg/40" />
+		<IconNoImage class="w-10 h-10 text-c-on-bg/50" />
 	</div>
 {:else}
 	<SrcsetProvider src={srcHighest} {cardType} let:sizes let:srcset>

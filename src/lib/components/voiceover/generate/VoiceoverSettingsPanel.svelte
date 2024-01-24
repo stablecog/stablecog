@@ -50,7 +50,6 @@
 				containerTopMinDistance={containerDropdownPadding}
 				containerBottomMinDistance={containerDropdownPadding}
 				items={$voiceoverSpeakerDropdownItems}
-				hasTitle={false}
 				bind:value={$voiceoverSpeakerId}
 			/>
 		</SettingsPanelItem>
@@ -69,7 +68,6 @@
 				containerTopMinDistance={containerDropdownPadding}
 				containerBottomMinDistance={containerDropdownPadding}
 				items={$voiceoverLocaleDropdownItems}
-				hasTitle={false}
 				bind:value={$voiceoverLocale}
 			/>
 		</SettingsPanelItem>
@@ -81,7 +79,6 @@
 		>
 			<TabLikeSliderInput
 				name={$LL.Voiceover.Settings.VoiceStability.Title()}
-				hasTitle={false}
 				disabled={!isCheckCompleted}
 				class="w-full"
 				min={voiceoverStabilityMin}

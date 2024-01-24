@@ -785,6 +785,11 @@ const tr: Translation = {
 			Title: 'Sort',
 			Options: { New: 'New', Top: 'Top', Trending: 'Trending' }
 		},
+		UsernameFilterInput: {
+			Title: 'Username Search',
+			Placeholder: 'Filter by username',
+			Tag: 'Username: {username}'
+		},
 		NoMatchingGenerationTitle: 'Benzer bir üretim bulunamadı'
 	},
 	Pricing: {

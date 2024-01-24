@@ -376,7 +376,6 @@
 					class="w-full"
 					name="Active Product ID"
 					items={viewDropdownItems}
-					hasTitle={false}
 					bind:value={view}
 				/>
 			</div>
