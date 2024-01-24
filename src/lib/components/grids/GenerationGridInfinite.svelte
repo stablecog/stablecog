@@ -264,7 +264,7 @@
 		<div class="w-full relative">
 			<div
 				style="height: {$gridVirtualizer.getTotalSize() +
-					($generationsQuery.hasNextPage ? $windowHeight : 0)}px"
+					($generationsQuery.hasNextPage ? $windowHeight : 200)}px"
 				class="w-full relative"
 			>
 				{#each $gridVirtualizer.getVirtualItems() as virtualItem (virtualItem.index + outputs[virtualItem.index].id)}
@@ -312,7 +312,8 @@
 			</div>
 			{#if isGridLongEnoughForScrollToTopChevron}
 				<div
-					class="z-20 {showScrollToTopChevron
+					class="z-20 {showScrollToTopChevron ||
+					$gridVirtualizer.scrollOffset > $gridVirtualizer.getTotalSize() - $windowHeight
 						? 'translate-y-0'
 						: 'translate-y-full'} sticky transform transition duration-300
 					flex items-center justify-center left-0 bottom-0
