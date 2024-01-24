@@ -3,9 +3,9 @@
 	import CreditCostBadge from '$components/CreditCostBadge.svelte';
 	import Morpher from '$components/utils/Morpher.svelte';
 	import InsufficientCreditsBadge from '$components/badges/InsufficientCreditsBadge.svelte';
-	import Button from '$components/buttons/Button.svelte';
-	import ClearButton from '$components/buttons/ClearButton.svelte';
-	import NoBgButton from '$components/buttons/NoBgButton.svelte';
+	import Button from '$components/primitives/buttons/Button.svelte';
+	import ClearButton from '$components/primitives/buttons/ClearButton.svelte';
+	import NoBgButton from '$components/primitives/buttons/NoBgButton.svelte';
 	import { mdBreakpoint } from '$components/generationFullScreen/constants';
 	import IconChevronDown from '$components/icons/IconChevronDown.svelte';
 	import IconSettings from '$components/icons/IconSettings.svelte';

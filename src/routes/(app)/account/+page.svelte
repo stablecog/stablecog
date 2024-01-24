@@ -2,8 +2,8 @@
 	import { goto } from '$app/navigation';
 	import { page } from '$app/stores';
 	import Avatar from '$components/avatar/Avatar.svelte';
-	import Button from '$components/buttons/Button.svelte';
-	import DropdownItem from '$components/DropdownItem.svelte';
+	import Button from '$components/primitives/buttons/Button.svelte';
+	import DropdownItem from '$components/primitives/dropdown/DropdownItem.svelte';
 	import IconHome from '$components/icons/IconHome.svelte';
 	import IconSignOut from '$components/icons/IconSignOut.svelte';
 	import MetaTag from '$components/utils/MetaTag.svelte';
@@ -20,8 +20,8 @@
 	import { wantsEmail } from '$ts/stores/user/wantsEmail.js';
 	import IconPen from '$components/icons/IconPen.svelte';
 	import WithChangeUsernameModal from '$components/utils/WithChangeUsernameModal.svelte';
-	import NoBgButton from '$components/buttons/NoBgButton.svelte';
-	import SubtleButton from '$components/buttons/SubtleButton.svelte';
+	import NoBgButton from '$components/primitives/buttons/NoBgButton.svelte';
+	import SubtleButton from '$components/primitives/buttons/SubtleButton.svelte';
 	import IconExternalLink from '$components/icons/IconExternalLink.svelte';
 	import AccountDetailLine from '$routes/(app)/account/AccountDetailLine.svelte';
 	import { getRelativeDate } from '$ts/helpers/getRelativeDate';

@@ -1,12 +1,12 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
 	import { page } from '$app/stores';
-	import Button from '$components/buttons/Button.svelte';
-	import NoBgButton from '$components/buttons/NoBgButton.svelte';
+	import Button from '$components/primitives/buttons/Button.svelte';
+	import NoBgButton from '$components/primitives/buttons/NoBgButton.svelte';
 	import IconArrowRight from '$components/icons/IconArrowRight.svelte';
 	import IconBack from '$components/icons/IconBack.svelte';
 	import MetaTag from '$components/utils/MetaTag.svelte';
-	import PageWrapper from '$components/PageWrapper.svelte';
+	import PageWrapper from '$components/wrappers/PageWrapper.svelte';
 	import LL from '$i18n/i18n-svelte';
 	import { apiUrl, canonicalUrl } from '$ts/constants/main';
 	import { previewImageVersion } from '$ts/constants/previewImageVersion';

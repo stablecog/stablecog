@@ -2,7 +2,7 @@
 	import { page } from '$app/stores';
 	import MetaTag from '$components/utils/MetaTag.svelte';
 	import { canonicalUrl } from '$ts/constants/main';
-	import PageWrapper from '$components/PageWrapper.svelte';
+	import PageWrapper from '$components/wrappers/PageWrapper.svelte';
 	import { previewImageVersion } from '$ts/constants/previewImageVersion';
 	import Logo from '$components/Logo.svelte';
 	import LL from '$i18n/i18n-svelte';

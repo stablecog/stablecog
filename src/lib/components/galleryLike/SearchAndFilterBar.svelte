@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { page } from '$app/stores';
-	import SubtleButton from '$components/buttons/SubtleButton.svelte';
+	import SubtleButton from '$components/primitives/buttons/SubtleButton.svelte';
 	import IconAdjustmentsVertical from '$components/icons/IconAdjustmentsVertical.svelte';
 	import LL, { locale } from '$i18n/i18n-svelte';
 	import { logGallerySearch, logHistorySearch } from '$ts/helpers/loggers';
@@ -18,7 +18,7 @@
 	} from '$ts/constants/generationModels';
 	import Morpher from '$components/utils/Morpher.svelte';
 	import IconChevronDown from '$components/icons/IconChevronDown.svelte';
-	import TagButton from '$components/buttons/TagButton.svelte';
+	import TagButton from '$components/primitives/buttons/TagButton.svelte';
 	import IconTrashcan from '$components/icons/IconTrashcan.svelte';
 	import IconBrain from '$components/icons/IconBrain.svelte';
 	import { browser } from '$app/environment';

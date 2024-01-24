@@ -1,5 +1,5 @@
 <script lang="ts">
-	import ButtonHoverEffect from '$components/buttons/ButtonHoverEffect.svelte';
+	import ButtonHoverEffect from '$components/primitives/buttons/ButtonHoverEffect.svelte';
 	import IconArrowRight from '$components/icons/IconArrowRight.svelte';
 	import LL from '$i18n/i18n-svelte';
 	import type { TSidebarItem } from '$docroutes/guide/types';

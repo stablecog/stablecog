@@ -1,5 +1,5 @@
 <script lang="ts">
-	import IconButton from '$components/buttons/IconButton.svelte';
+	import IconButton from '$components/primitives/buttons/IconButton.svelte';
 	import IconChevronDown from '$components/icons/IconChevronDown.svelte';
 
 	export let onClick: () => void;

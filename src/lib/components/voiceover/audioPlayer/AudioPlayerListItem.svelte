@@ -24,10 +24,10 @@
 	import { lgBreakpoint } from '$components/generationFullScreen/constants';
 	import { windowWidth } from '$ts/stores/window';
 	import ThreeDotDropdown from '$components/voiceover/audioPlayer/ThreeDotDropdown.svelte';
-	import ModalWrapper from '$components/ModalWrapper.svelte';
+	import ModalWrapper from '$components/modals/ModalWrapper.svelte';
 	import { clickoutside } from '$ts/actions/clickoutside';
 	import LL, { locale } from '$i18n/i18n-svelte';
-	import Button from '$components/buttons/Button.svelte';
+	import Button from '$components/primitives/buttons/Button.svelte';
 	import { apiUrl } from '$ts/constants/main';
 	import { page } from '$app/stores';
 	import { logVoiceoverOutputDeleted } from '$ts/helpers/loggers';

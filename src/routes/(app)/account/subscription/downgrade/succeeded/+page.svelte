@@ -1,9 +1,9 @@
 <script lang="ts">
 	import { page } from '$app/stores';
-	import Button from '$components/buttons/Button.svelte';
+	import Button from '$components/primitives/buttons/Button.svelte';
 	import IconTick from '$components/icons/IconTick.svelte';
 	import MetaTag from '$components/utils/MetaTag.svelte';
-	import PageWrapper from '$components/PageWrapper.svelte';
+	import PageWrapper from '$components/wrappers/PageWrapper.svelte';
 	import LL from '$i18n/i18n-svelte';
 	import { canonicalUrl } from '$ts/constants/main';
 	import { previewImageVersion } from '$ts/constants/previewImageVersion';

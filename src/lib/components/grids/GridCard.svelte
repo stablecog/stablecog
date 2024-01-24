@@ -1,7 +1,7 @@
 <script lang="ts">
 	import Avatar from '$components/avatar/Avatar.svelte';
-	import ButtonHoverEffect from '$components/buttons/ButtonHoverEffect.svelte';
-	import LikeButton from '$components/buttons/LikeButton.svelte';
+	import ButtonHoverEffect from '$components/primitives/buttons/ButtonHoverEffect.svelte';
+	import LikeButton from '$components/primitives/buttons/LikeButton.svelte';
 	import GenerationAnimation from '$components/generate/GenerationAnimation.svelte';
 	import GenerationImage from '$components/generationImage/GenerationImage.svelte';
 	import type { TGenerationImageCardType } from '$components/generationImage/types';

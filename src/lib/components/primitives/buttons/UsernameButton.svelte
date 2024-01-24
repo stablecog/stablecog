@@ -1,6 +1,6 @@
 <script lang="ts">
 	import Avatar from '$components/avatar/Avatar.svelte';
-	import ButtonHoverEffect from '$components/buttons/ButtonHoverEffect.svelte';
+	import ButtonHoverEffect from '$components/primitives/buttons/ButtonHoverEffect.svelte';
 	import { isGalleryAdmin, isSuperAdmin } from '$ts/helpers/admin/roles';
 	import { activeGeneration } from '$ts/stores/user/generation';
 	import { userSummary } from '$ts/stores/user/summary';

@@ -1,5 +1,5 @@
 <script lang="ts">
-	import IconButton from '$components/buttons/IconButton.svelte';
+	import IconButton from '$components/primitives/buttons/IconButton.svelte';
 	import { lgBreakpoint } from '$components/generationFullScreen/constants';
 	import IconChevronDown from '$components/icons/IconChevronDown.svelte';
 	import { windowWidth } from '$ts/stores/window';

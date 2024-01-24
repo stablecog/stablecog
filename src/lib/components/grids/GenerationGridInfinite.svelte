@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { browser } from '$app/environment';
-	import ButtonHoverEffect from '$components/buttons/ButtonHoverEffect.svelte';
+	import ButtonHoverEffect from '$components/primitives/buttons/ButtonHoverEffect.svelte';
 	import GenerateGridPlaceholder from '$components/generate/GenerateGridPlaceholder.svelte';
 	import { mdBreakpoint } from '$components/generationFullScreen/constants';
 	import type { TGenerationImageCardType } from '$components/generationImage/types';

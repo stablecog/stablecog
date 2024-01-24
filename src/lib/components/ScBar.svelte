@@ -2,8 +2,8 @@
 	import IconBlog from '$components/icons/IconBlog.svelte';
 	import IconGuide from '$components/icons/IconGuide.svelte';
 	import { socialAppUrls, socialAppUrlsAbsolute } from '$ts/constants/social';
-	import IconButton from './buttons/IconButton.svelte';
-	import IconSc from './icons/IconSc.svelte';
+	import IconButton from '$components/primitives/buttons/IconButton.svelte';
+	import IconSc from '$components/icons/IconSc.svelte';
 
 	export let size: 'sm' | 'md' | 'lg' = 'sm';
 	export let color: 'faded' | 'normal' = 'faded';

@@ -1,12 +1,12 @@
 <script lang="ts">
 	import { browser } from '$app/environment';
 	import { page } from '$app/stores';
-	import CopyButton from '$components/buttons/CopyButton.svelte';
-	import DownloadGenerationButton from '$components/buttons/DownloadGenerationButton.svelte';
-	import ExploreSimilarButton from '$components/buttons/ExploreSimilarButton.svelte';
-	import FavoriteButton from '$components/buttons/FavoriteButton.svelte';
-	import GenerateButton from '$components/buttons/GenerateButton.svelte';
-	import IconButton from '$components/buttons/IconButton.svelte';
+	import CopyButton from '$components/primitives/buttons/CopyButton.svelte';
+	import DownloadGenerationButton from '$components/primitives/buttons/DownloadGenerationButton.svelte';
+	import ExploreSimilarButton from '$components/primitives/buttons/ExploreSimilarButton.svelte';
+	import FavoriteButton from '$components/primitives/buttons/FavoriteButton.svelte';
+	import GenerateButton from '$components/primitives/buttons/GenerateButton.svelte';
+	import IconButton from '$components/primitives/buttons/IconButton.svelte';
 	import UpscaleAnimation from '$components/generate/UpscaleAnimation.svelte';
 	import SrcsetProvider from '$components/generationImage/SrcsetProvider.svelte';
 	import { onSelectButtonClicked } from '$components/generationImage/helpers';

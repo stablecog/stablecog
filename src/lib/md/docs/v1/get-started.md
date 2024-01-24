@@ -8,7 +8,7 @@ preview_image_url: https://ba.stablecog.com/docs/previews/get-started.jpg
 ---
 
 <script>
-  import Button from '$components/buttons/Button.svelte'
+  import Button from '$components/primitives/buttons/Button.svelte'
 </script>
 
 # Get Started

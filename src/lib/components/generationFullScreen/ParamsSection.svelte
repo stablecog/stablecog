@@ -1,5 +1,5 @@
 <script lang="ts">
-	import SubtleButton from '$components/buttons/SubtleButton.svelte';
+	import SubtleButton from '$components/primitives/buttons/SubtleButton.svelte';
 	import type {
 		TButtonObjectsWithState,
 		TGenerationFullScreenModalType,

@@ -1,6 +1,6 @@
 <script lang="ts">
 	import Morpher from '$components/utils/Morpher.svelte';
-	import ButtonHoverEffect from '$components/buttons/ButtonHoverEffect.svelte';
+	import ButtonHoverEffect from '$components/primitives/buttons/ButtonHoverEffect.svelte';
 	import IconCopy from '$components/icons/IconCopy.svelte';
 	import IconTick from '$components/icons/IconTick.svelte';
 	import LL from '$i18n/i18n-svelte';

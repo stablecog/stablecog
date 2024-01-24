@@ -1,5 +1,5 @@
 <script lang="ts">
-	import ButtonHoverEffect from '$components/buttons/ButtonHoverEffect.svelte';
+	import ButtonHoverEffect from '$components/primitives/buttons/ButtonHoverEffect.svelte';
 	import IconChevronDown from '$components/icons/IconChevronDown.svelte';
 	import { Collapsible } from 'radix-svelte';
 

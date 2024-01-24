@@ -1,8 +1,8 @@
 <script lang="ts">
 	import { page } from '$app/stores';
-	import ModalWrapper from '$components/ModalWrapper.svelte';
+	import ModalWrapper from '$components/modals/ModalWrapper.svelte';
 	import ShareCard from '$components/cards/ShareCard.svelte';
-	import SubtleButton from '$components/buttons/SubtleButton.svelte';
+	import SubtleButton from '$components/primitives/buttons/SubtleButton.svelte';
 	import type { TGenerationFullScreenModalType } from '$components/generationFullScreen/types';
 	import IconShare from '$components/icons/IconShare.svelte';
 	import LL from '$i18n/i18n-svelte';

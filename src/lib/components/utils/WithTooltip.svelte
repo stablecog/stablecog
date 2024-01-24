@@ -1,5 +1,5 @@
 <script lang="ts">
-	import Button from '$components/buttons/Button.svelte';
+	import Button from '$components/primitives/buttons/Button.svelte';
 	import { isTouchscreen } from '$ts/stores/isTouchscreen';
 	import { createTooltip } from '@melt-ui/svelte';
 	import { quadOut } from 'svelte/easing';

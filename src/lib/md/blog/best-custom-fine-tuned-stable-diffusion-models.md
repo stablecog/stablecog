@@ -8,7 +8,7 @@ tags: Stable Diffusion, Fine-tuning, Models, Text to Image, AI
 ---
 
 <script>
-  import Button from '$components/buttons/Button.svelte'
+  import Button from '$components/primitives/buttons/Button.svelte'
   import DocImage from '$components/docs/DocImage.svelte'
 </script>
 

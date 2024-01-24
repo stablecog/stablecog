@@ -1,5 +1,5 @@
 <script lang="ts">
-	import DropdownItem from '$components/DropdownItem.svelte';
+	import DropdownItem from '$components/primitives/dropdown/DropdownItem.svelte';
 	import PageWrapper from '$components/accountMenu/PageWrapper.svelte';
 	import type { TAccountDropdownPage } from '$components/accountMenu/types';
 	import IconLocale from '$components/icons/IconLocale.svelte';

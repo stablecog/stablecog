@@ -1,7 +1,7 @@
 <script lang="ts">
 	import PageWrapper from '$components/accountMenu/PageWrapper.svelte';
 	import type { TAccountDropdownPage } from '$components/accountMenu/types';
-	import DropdownItem from '$components/DropdownItem.svelte';
+	import DropdownItem from '$components/primitives/dropdown/DropdownItem.svelte';
 	import IconDarkMode from '$components/icons/IconDarkMode.svelte';
 	import IconLanguage from '$components/icons/IconLanguage.svelte';
 	import IconLocale from '$components/icons/IconLocale.svelte';

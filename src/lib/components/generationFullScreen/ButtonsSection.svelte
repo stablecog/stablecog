@@ -1,5 +1,5 @@
 <script lang="ts">
-	import SubtleButton from '$components/buttons/SubtleButton.svelte';
+	import SubtleButton from '$components/primitives/buttons/SubtleButton.svelte';
 	import IconCopy from '$components/icons/IconCopy.svelte';
 	import IconDownload from '$components/icons/IconDownload.svelte';
 	import IconTick from '$components/icons/IconTick.svelte';
@@ -41,7 +41,7 @@
 	import { replaceOutputInUserQueryData } from '$ts/helpers/replaceOutputInUserQueryData';
 	import IconImageSearch from '$components/icons/IconImageSearch.svelte';
 	import ShareButton from '$components/generationFullScreen/ShareButton.svelte';
-	import LikeButton from '$components/buttons/LikeButton.svelte';
+	import LikeButton from '$components/primitives/buttons/LikeButton.svelte';
 
 	export let generation: TGenerationWithSelectedOutput;
 	export let generateSimilarUrl: string;

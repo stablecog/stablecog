@@ -1,5 +1,5 @@
 <script lang="ts">
-	import ButtonHoverEffect from '$components/buttons/ButtonHoverEffect.svelte';
+	import ButtonHoverEffect from '$components/primitives/buttons/ButtonHoverEffect.svelte';
 
 	export let label: string;
 	export let icon: ConstructorOfATypedSvelteComponent;

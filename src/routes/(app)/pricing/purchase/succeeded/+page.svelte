@@ -1,13 +1,13 @@
 <script>
-	import Button from '$components/buttons/Button.svelte';
+	import Button from '$components/primitives/buttons/Button.svelte';
 	import IconConfetti from '$components/icons/IconConfetti.svelte';
 	import LL from '$i18n/i18n-svelte';
 	import { onMount } from 'svelte';
 	import MetaTag from '$components/utils/MetaTag.svelte';
 	import { canonicalUrl } from '$ts/constants/main';
 	import { page } from '$app/stores';
-	import ConfettiFullScreen from '$components/ConfettiFullScreen.svelte';
-	import PageWrapper from '$components/PageWrapper.svelte';
+	import ConfettiFullScreen from '$components/utils/ConfettiFullScreen.svelte';
+	import PageWrapper from '$components/wrappers/PageWrapper.svelte';
 	import { previewImageVersion } from '$ts/constants/previewImageVersion';
 
 	let mounted = false;

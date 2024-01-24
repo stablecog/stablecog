@@ -8,7 +8,7 @@ tags: Bark, Voiceover, Text to Audio, Stablecog Update, AI
 ---
 
 <script>
-  import Button from '$lib/components/buttons/Button.svelte';
+  import Button from '$lib/components/primitives/buttons/Button.svelte';
   import DocImage from '$lib/components/docs/DocImage.svelte';
   import AudioPlayerListItem from "$lib/components/voiceover/audioPlayer/AudioPlayerListItem.svelte";
 </script>

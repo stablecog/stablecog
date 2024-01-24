@@ -1,5 +1,5 @@
 <script lang="ts">
-	import DelayedValueProvider from '$components/DelayedValueProvider.svelte';
+	import DelayedValueProvider from '$components/utils/DelayedValueProvider.svelte';
 	import SrcsetProvider from '$components/generationImage/SrcsetProvider.svelte';
 	import type { TGenerationImageCardType } from '$components/generationImage/types';
 	import IconAnimatedSpinner from '$components/icons/IconAnimatedSpinner.svelte';

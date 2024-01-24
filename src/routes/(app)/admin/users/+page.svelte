@@ -3,7 +3,7 @@
 	import MetaTag from '$components/utils/MetaTag.svelte';
 	import LL, { locale } from '$i18n/i18n-svelte';
 	import { canonicalUrl } from '$ts/constants/main';
-	import PageWrapper from '$components/PageWrapper.svelte';
+	import PageWrapper from '$components/wrappers/PageWrapper.svelte';
 	import { getRelativeDate } from '$ts/helpers/getRelativeDate';
 	import { navbarHeight } from '$ts/stores/navbarHeight';
 	import Input from '$components/primitives/Input.svelte';
@@ -19,7 +19,7 @@
 	import ProductIdBadge from '$components/badges/ProductIdBadge.svelte';
 	import { scale } from 'svelte/transition';
 	import { quadOut } from 'svelte/easing';
-	import Button from '$components/buttons/Button.svelte';
+	import Button from '$components/primitives/buttons/Button.svelte';
 	import IntersectionObserver from 'svelte-intersection-observer';
 	import { getTitleFromProductId } from '$ts/helpers/stripe/plan';
 	import type { TStripeSupportedProductIdSubscriptions } from '$ts/constants/stripePublic';
@@ -32,15 +32,15 @@
 	import TabLikeDropdown from '$components/tabBars/TabLikeDropdown.svelte';
 	import IconAnimatedSpinner from '$components/icons/IconAnimatedSpinner.svelte';
 	import { getCreditOptions } from '$ts/queries/getCreditsList';
-	import DropdownWrapper from '$components/DropdownWrapper.svelte';
-	import DropdownItem from '$components/DropdownItem.svelte';
+	import DropdownWrapper from '$components/primitives/dropdown/DropdownWrapper.svelte';
+	import DropdownItem from '$components/primitives/dropdown/DropdownItem.svelte';
 	import { clickoutside } from '$ts/actions/clickoutside';
 	import ScrollAreaWithChevron from '$components/utils/ScrollAreaWithChevron.svelte';
 	import { giftCreditsToUser } from '$ts/queries/giftCreditsToUser';
 	import IconWarning from '$components/icons/IconWarning.svelte';
 	import { previewImageVersion } from '$ts/constants/previewImageVersion';
 	import ToggleIndicator from '$components/primitives/ToggleIndicator.svelte';
-	import ButtonHoverEffect from '$components/buttons/ButtonHoverEffect.svelte';
+	import ButtonHoverEffect from '$components/primitives/buttons/ButtonHoverEffect.svelte';
 	import { setUrlParam } from '$ts/helpers/setUrlParam.js';
 
 	export let data;

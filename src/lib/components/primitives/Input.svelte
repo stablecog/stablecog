@@ -1,6 +1,6 @@
 <script lang="ts">
-	import Button from '$components/buttons/Button.svelte';
-	import ClearButton from '$components/buttons/ClearButton.svelte';
+	import Button from '$components/primitives/buttons/Button.svelte';
+	import ClearButton from '$components/primitives/buttons/ClearButton.svelte';
 
 	export let type: 'text' | 'email' | 'password' | 'number' = 'text';
 	export let name: string | undefined = undefined;

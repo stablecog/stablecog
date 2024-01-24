@@ -8,7 +8,7 @@ tags: Kandinsky 2.1, Kandinsky, Text to Image, Stable Diffusion, Models, AI
 ---
 
 <script>
-  import Button from '$components/buttons/Button.svelte'
+  import Button from '$components/primitives/buttons/Button.svelte'
   import DocImage from '$components/docs/DocImage.svelte'
 </script>
 

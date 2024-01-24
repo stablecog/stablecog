@@ -1,8 +1,8 @@
 <script lang="ts">
 	import { page } from '$app/stores';
 	import Input from '$components/primitives/Input.svelte';
-	import Button from '$components/buttons/Button.svelte';
-	import ButtonHoverEffect from '$components/buttons/ButtonHoverEffect.svelte';
+	import Button from '$components/primitives/buttons/Button.svelte';
+	import ButtonHoverEffect from '$components/primitives/buttons/ButtonHoverEffect.svelte';
 	import ErrorLine from '$components/error/ErrorLine.svelte';
 	import IconCancel from '$components/icons/IconCancel.svelte';
 	import LL, { locale } from '$i18n/i18n-svelte';

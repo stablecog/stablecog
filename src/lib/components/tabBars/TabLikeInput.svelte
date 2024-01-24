@@ -1,5 +1,5 @@
 <script lang="ts">
-	import ClearButton from '$components/buttons/ClearButton.svelte';
+	import ClearButton from '$components/primitives/buttons/ClearButton.svelte';
 	import TabBarWrapper from '$components/tabBars/TabBarWrapper.svelte';
 
 	export let value: number | string | undefined | null;

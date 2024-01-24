@@ -1,6 +1,6 @@
 <script lang="ts">
-	import Button from '$components/buttons/Button.svelte';
-	import NoBgButton from '$components/buttons/NoBgButton.svelte';
+	import Button from '$components/primitives/buttons/Button.svelte';
+	import NoBgButton from '$components/primitives/buttons/NoBgButton.svelte';
 	import BlogPostCard from '$components/docs/BlogPostCard.svelte';
 	import ToC from '$components/docs/ToC.svelte';
 	import IconBack from '$components/icons/IconBack.svelte';

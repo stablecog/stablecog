@@ -1,5 +1,5 @@
 <script>
-	import ButtonHoverEffect from '$components/buttons/ButtonHoverEffect.svelte';
+	import ButtonHoverEffect from '$components/primitives/buttons/ButtonHoverEffect.svelte';
 	import IconCancel from '$components/icons/IconCancel.svelte';
 
 	import { clickoutside } from '$ts/actions/clickoutside';
@@ -12,7 +12,7 @@
 	import IconNavbarRoute from '$components/icons/IconNavbarRoute.svelte';
 	import { page } from '$app/stores';
 	import ScrollAreaWithChevron from '$components/utils/ScrollAreaWithChevron.svelte';
-	import LogoButton from '$components/buttons/LogoButton.svelte';
+	import LogoButton from '$components/primitives/buttons/LogoButton.svelte';
 	import { browser } from '$app/environment';
 	import ScBar from '$components/ScBar.svelte';
 	import { onDestroy } from 'svelte';

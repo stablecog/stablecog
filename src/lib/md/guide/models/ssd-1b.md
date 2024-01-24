@@ -7,7 +7,7 @@ date: 2023-04-28T15:00:00.000Z
 ---
 
 <script>
-  import Button from '$components/buttons/Button.svelte'
+  import Button from '$components/primitives/buttons/Button.svelte'
   import DocImage from '$components/docs/DocImage.svelte'
 </script>
 

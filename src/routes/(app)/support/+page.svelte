@@ -3,7 +3,7 @@
 	import MetaTag from '$components/utils/MetaTag.svelte';
 	import LL from '$i18n/i18n-svelte';
 	import { canonicalUrl } from '$ts/constants/main';
-	import PageWrapper from '$components/PageWrapper.svelte';
+	import PageWrapper from '$components/wrappers/PageWrapper.svelte';
 	import ScBar from '$components/ScBar.svelte';
 	import { previewImageVersion } from '$ts/constants/previewImageVersion';
 	import Logo from '$components/Logo.svelte';

@@ -1,7 +1,7 @@
 <script lang="ts">
-	import IconButton from '$components/buttons/IconButton.svelte';
+	import IconButton from '$components/primitives/buttons/IconButton.svelte';
 	import IconCancel from '$components/icons/IconCancel.svelte';
-	import ModalWrapper from './ModalWrapper.svelte';
+	import ModalWrapper from '../ModalWrapper.svelte';
 
 	export let onCloseClicked: () => void;
 	export let hasPadding = true;

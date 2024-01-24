@@ -1,5 +1,5 @@
 <script lang="ts">
-	import Button from '$components/buttons/Button.svelte';
+	import Button from '$components/primitives/buttons/Button.svelte';
 	import LL from '$i18n/i18n-svelte';
 	import { expandCollapse } from '$ts/animation/transitions';
 	import IconConfetti from '$components/icons/IconConfetti.svelte';

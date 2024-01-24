@@ -5,7 +5,7 @@
 	import LanguagePage from '$components/accountMenu/pages/LanguagePage.svelte';
 	import Header from '$components/accountMenu/Header.svelte';
 	import LL from '$i18n/i18n-svelte';
-	import DropdownWrapperTranslate from '$components/DropdownWrapperTranslate.svelte';
+	import DropdownWrapperTranslate from '$components/primitives/dropdown/DropdownWrapperTranslate.svelte';
 	import AccountPageHeader from '$components/accountMenu/AccountPageHeader.svelte';
 
 	export let closeMenu: () => void;

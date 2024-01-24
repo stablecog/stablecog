@@ -1,6 +1,6 @@
 <script lang="ts">
 	import Morpher from '$components/utils/Morpher.svelte';
-	import ButtonHoverEffect from '$components/buttons/ButtonHoverEffect.svelte';
+	import ButtonHoverEffect from '$components/primitives/buttons/ButtonHoverEffect.svelte';
 	import { copyTimeoutDuration } from '$components/generationFullScreen/constants';
 	import IconLink from '$components/icons/IconLink.svelte';
 	import IconTick from '$components/icons/IconTick.svelte';

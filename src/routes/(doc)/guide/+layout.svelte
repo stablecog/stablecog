@@ -1,6 +1,6 @@
 <script lang="ts">
 	import '$css/blog.css';
-	import ButtonHoverEffect from '$components/buttons/ButtonHoverEffect.svelte';
+	import ButtonHoverEffect from '$components/primitives/buttons/ButtonHoverEffect.svelte';
 	import IconHome from '$components/icons/IconHome.svelte';
 	import Drawer from '$components/navigation/Drawer.svelte';
 	import LL from '$i18n/i18n-svelte';

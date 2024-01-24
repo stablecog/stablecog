@@ -3,9 +3,9 @@
 	import ProductIdBadge from '$components/badges/ProductIdBadge.svelte';
 	import LL, { locale } from '$i18n/i18n-svelte';
 	import { userSummary } from '$ts/stores/user/summary';
-	import Button from '$components/buttons/Button.svelte';
+	import Button from '$components/primitives/buttons/Button.svelte';
 	import { isGalleryAdmin, isSuperAdmin } from '$ts/helpers/admin/roles';
-	import DropdownItem from '$components/DropdownItem.svelte';
+	import DropdownItem from '$components/primitives/dropdown/DropdownItem.svelte';
 	import IconWrench from '$components/icons/IconWrench.svelte';
 	import IconUser from '$components/icons/IconUser.svelte';
 	import { logSignOut } from '$ts/helpers/loggers';

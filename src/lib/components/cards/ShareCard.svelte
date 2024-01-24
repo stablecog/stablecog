@@ -1,8 +1,8 @@
 <script lang="ts">
 	import { page } from '$app/stores';
 	import Morpher from '$components/utils/Morpher.svelte';
-	import Button from '$components/buttons/Button.svelte';
-	import ButtonHoverEffect from '$components/buttons/ButtonHoverEffect.svelte';
+	import Button from '$components/primitives/buttons/Button.svelte';
+	import ButtonHoverEffect from '$components/primitives/buttons/ButtonHoverEffect.svelte';
 	import { copyTimeoutDuration } from '$components/generationFullScreen/constants';
 	import IconCancel from '$components/icons/IconCancel.svelte';
 	import IconCopy from '$components/icons/IconCopy.svelte';

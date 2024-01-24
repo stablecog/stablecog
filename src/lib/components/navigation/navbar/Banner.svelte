@@ -1,5 +1,5 @@
 <script lang="ts">
-	import IconButton from '$components/buttons/IconButton.svelte';
+	import IconButton from '$components/primitives/buttons/IconButton.svelte';
 	import IconCancel from '$components/icons/IconCancel.svelte';
 	import { expandCollapse } from '$ts/animation/transitions';
 	import { quadOut } from 'svelte/easing';

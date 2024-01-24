@@ -2,7 +2,7 @@
 	import { page } from '$app/stores';
 	import ToggleIndicator from '$components/primitives/ToggleIndicator.svelte';
 	import WithTooltip from '$components/utils/WithTooltip.svelte';
-	import ButtonHoverEffect from '$components/buttons/ButtonHoverEffect.svelte';
+	import ButtonHoverEffect from '$components/primitives/buttons/ButtonHoverEffect.svelte';
 	import type { TGenerationFullScreenModalType } from '$components/generationFullScreen/types';
 	import IconEyeOutline from '$components/icons/IconEyeOutline.svelte';
 	import IconStar from '$components/icons/IconStar.svelte';

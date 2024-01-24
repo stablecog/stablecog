@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { page } from '$app/stores';
-	import LayoutWrapper from '$components/LayoutWrapper.svelte';
-	import Button from '$components/buttons/Button.svelte';
+	import LayoutWrapper from '$components/wrappers/LayoutWrapper.svelte';
+	import Button from '$components/primitives/buttons/Button.svelte';
 	import Drawer from '$components/navigation/Drawer.svelte';
 	import Footer from '$components/navigation/Footer.svelte';
 	import Navbar from '$components/navigation/navbar/Navbar.svelte';

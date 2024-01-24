@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { page } from '$app/stores';
-	import ButtonHoverEffect from '$components/buttons/ButtonHoverEffect.svelte';
-	import SubtleButton from '$components/buttons/SubtleButton.svelte';
+	import ButtonHoverEffect from '$components/primitives/buttons/ButtonHoverEffect.svelte';
+	import SubtleButton from '$components/primitives/buttons/SubtleButton.svelte';
 	import type { TGenerationFullScreenModalType } from '$components/generationFullScreen/types';
 	import IconHeartSet from '$components/icons/IconHeartSet.svelte';
 	import { locale } from '$i18n/i18n-svelte';

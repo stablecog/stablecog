@@ -2,8 +2,8 @@
 	import { goto } from '$app/navigation';
 	import { page } from '$app/stores';
 	import MetaTag from '$components/utils/MetaTag.svelte';
-	import PageWrapper from '$components/PageWrapper.svelte';
-	import Button from '$components/buttons/Button.svelte';
+	import PageWrapper from '$components/wrappers/PageWrapper.svelte';
+	import Button from '$components/primitives/buttons/Button.svelte';
 	import IconMinus from '$components/icons/IconMinus.svelte';
 	import {
 		PUBLIC_STRIPE_PRICE_ID_LARGE_PACK,

@@ -4,7 +4,7 @@
 	import { page } from '$app/stores';
 	import IconAnimatedSpinner from '$components/icons/IconAnimatedSpinner.svelte';
 	import IconHourglass from '$components/icons/IconHourglass.svelte';
-	import PageWrapper from '$components/PageWrapper.svelte';
+	import PageWrapper from '$components/wrappers/PageWrapper.svelte';
 	import LL, { locale } from '$i18n/i18n-svelte';
 	import { logSignIn } from '$ts/helpers/loggers';
 	import { advancedModeApp } from '$ts/stores/advancedMode';

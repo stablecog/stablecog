@@ -32,7 +32,7 @@
 	import { goto } from '$app/navigation';
 	import IconPen from '$components/icons/IconPen.svelte';
 	import WithChangeUsernameModal from '$components/utils/WithChangeUsernameModal.svelte';
-	import NoBgButton from '$components/buttons/NoBgButton.svelte';
+	import NoBgButton from '$components/primitives/buttons/NoBgButton.svelte';
 	import { getPreviewImageUrlForUserProfile } from '$ts/helpers/getPreviewImageUrl.js';
 	import { getImgProxySrc } from '$ts/helpers/imgproxy.js';
 	import { someUserProfileFullOutputsQueryKey } from '$ts/stores/user/queryKeys.js';

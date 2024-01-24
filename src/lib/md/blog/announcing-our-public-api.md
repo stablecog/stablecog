@@ -8,7 +8,7 @@ tags: API, Developers, Stablecog Update, AI
 ---
 
 <script>
-  import Button from '$lib/components/buttons/Button.svelte';
+  import Button from '$lib/components/primitives/buttons/Button.svelte';
   import DocImage from '$lib/components/docs/DocImage.svelte';
 </script>
 

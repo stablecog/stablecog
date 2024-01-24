@@ -1,7 +1,7 @@
 <script lang="ts">
 	import '$css/blog.css';
 	import { page } from '$app/stores';
-	import LayoutWrapper from '$components/LayoutWrapper.svelte';
+	import LayoutWrapper from '$components/wrappers/LayoutWrapper.svelte';
 	import Footer from '$components/navigation/Footer.svelte';
 	import Navbar from '$components/navigation/navbar/Navbar.svelte';
 	import { rawRoutes } from '$ts/constants/routes';

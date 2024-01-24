@@ -3,11 +3,11 @@
 	import { page } from '$app/stores';
 	import Input from '$components/primitives/Input.svelte';
 	import MetaTag from '$components/utils/MetaTag.svelte';
-	import ModalWrapper from '$components/ModalWrapper.svelte';
-	import Button from '$components/buttons/Button.svelte';
-	import CopyButton from '$components/buttons/CopyButton.svelte';
-	import IconButton from '$components/buttons/IconButton.svelte';
-	import ShowHideButton from '$components/buttons/ShowHideButton.svelte';
+	import ModalWrapper from '$components/modals/ModalWrapper.svelte';
+	import Button from '$components/primitives/buttons/Button.svelte';
+	import CopyButton from '$components/primitives/buttons/CopyButton.svelte';
+	import IconButton from '$components/primitives/buttons/IconButton.svelte';
+	import ShowHideButton from '$components/primitives/buttons/ShowHideButton.svelte';
 	import IconAnimatedSpinner from '$components/icons/IconAnimatedSpinner.svelte';
 	import IconKey from '$components/icons/IconKey.svelte';
 	import IconPlusThick from '$components/icons/IconPlusThick.svelte';

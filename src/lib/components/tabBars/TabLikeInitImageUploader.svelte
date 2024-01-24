@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { page } from '$app/stores';
-	import IconButton from '$components/buttons/IconButton.svelte';
-	import SubtleButton from '$components/buttons/SubtleButton.svelte';
+	import IconButton from '$components/primitives/buttons/IconButton.svelte';
+	import SubtleButton from '$components/primitives/buttons/SubtleButton.svelte';
 	import IconCancel from '$components/icons/IconCancel.svelte';
 	import IconDropzone from '$components/icons/IconDropzone.svelte';
 	import IconRefresh from '$components/icons/IconRefresh.svelte';

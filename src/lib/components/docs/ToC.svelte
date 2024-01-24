@@ -1,7 +1,7 @@
 <script lang="ts">
 	import ScBar from '$components/ScBar.svelte';
 	import LL from '$i18n/i18n-svelte';
-	import NoBgButton from '$components/buttons/NoBgButton.svelte';
+	import NoBgButton from '$components/primitives/buttons/NoBgButton.svelte';
 	import IconBack from '$components/icons/IconBack.svelte';
 	import { windowHeight } from '$ts/stores/window';
 	import { navbarHeight } from '$ts/stores/navbarHeight';

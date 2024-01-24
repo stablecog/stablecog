@@ -1,12 +1,12 @@
 <script lang="ts">
 	import { page } from '$app/stores';
-	import IconButton from '$components/buttons/IconButton.svelte';
+	import IconButton from '$components/primitives/buttons/IconButton.svelte';
 	import PageLoadProgressBar from '$components/PageLoadProgressBar.svelte';
 	import NavigationTabBar from '$components/navigation/NavigationTabBar.svelte';
 	import { clickoutside } from '$ts/actions/clickoutside';
 	import IconSc from '$components/icons/IconSc.svelte';
 	import LL from '$i18n/i18n-svelte';
-	import Button from '$components/buttons/Button.svelte';
+	import Button from '$components/primitives/buttons/Button.svelte';
 	import AccountMenu from '$components/accountMenu/AccountMenu.svelte';
 	import Avatar from '$components/avatar/Avatar.svelte';
 	import { navbarHeight } from '$ts/stores/navbarHeight';
@@ -14,8 +14,8 @@
 	import { navbarStickyType } from '$ts/stores/navbar';
 	import { isDrawerOpen } from '$ts/stores/isDrawerOpen';
 	import IconSidebar from '$components/icons/IconSidebar.svelte';
-	import ButtonHoverEffect from '$components/buttons/ButtonHoverEffect.svelte';
-	import LogoButton from '$components/buttons/LogoButton.svelte';
+	import ButtonHoverEffect from '$components/primitives/buttons/ButtonHoverEffect.svelte';
+	import LogoButton from '$components/primitives/buttons/LogoButton.svelte';
 	import IconGuide from '$components/icons/IconGuide.svelte';
 	import { themeApp } from '$ts/stores/theme';
 	import IconBlog from '$components/icons/IconBlog.svelte';
@@ -25,7 +25,7 @@
 	import type { TDirTreeItem } from '$routes/+layout';
 	import IconChevronDown from '$components/icons/IconChevronDown.svelte';
 	import BannerWrapper from '$components/navigation/navbar/BannerWrapper.svelte';
-	import SignInModal from '$components/SignInModal.svelte';
+	import SignInModal from '$components/modals/SignInModal.svelte';
 	import RemainingCredits from '$components/navigation/navbar/RemainingCredits.svelte';
 	import { isSignInModalOpen } from '$ts/stores/isSignInModalOpen';
 	import { notAtTheVeryTop, scrollDirection } from '$ts/stores/scroll';

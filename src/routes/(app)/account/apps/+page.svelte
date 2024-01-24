@@ -2,9 +2,9 @@
 	import { browser } from '$app/environment';
 	import { page } from '$app/stores';
 	import MetaTag from '$components/utils/MetaTag.svelte';
-	import ModalWrapper from '$components/ModalWrapper.svelte';
-	import Button from '$components/buttons/Button.svelte';
-	import IconButton from '$components/buttons/IconButton.svelte';
+	import ModalWrapper from '$components/modals/ModalWrapper.svelte';
+	import Button from '$components/primitives/buttons/Button.svelte';
+	import IconButton from '$components/primitives/buttons/IconButton.svelte';
 	import IconAnimatedSpinner from '$components/icons/IconAnimatedSpinner.svelte';
 	import IconKey from '$components/icons/IconKey.svelte';
 	import IconSadFaceOutline from '$components/icons/IconSadFaceOutline.svelte';

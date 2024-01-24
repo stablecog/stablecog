@@ -2,8 +2,8 @@
 	import { page } from '$app/stores';
 	import LL from '$i18n/i18n-svelte';
 	import InsufficientCreditsBadge from '$components/badges/InsufficientCreditsBadge.svelte';
-	import Button from '$components/buttons/Button.svelte';
-	import ClearButton from '$components/buttons/ClearButton.svelte';
+	import Button from '$components/primitives/buttons/Button.svelte';
+	import ClearButton from '$components/primitives/buttons/ClearButton.svelte';
 	import { autoresize } from '$ts/actions/textarea/autoresize';
 	import { maxPromptLength, maxSeed } from '$ts/constants/main';
 	import { formatPrompt } from '$ts/helpers/formatPrompt';
@@ -43,7 +43,7 @@
 	import Morpher from '$components/utils/Morpher.svelte';
 	import IconChevronDown from '$components/icons/IconChevronDown.svelte';
 	import { afterNavigate } from '$app/navigation';
-	import NoBgButton from '$components/buttons/NoBgButton.svelte';
+	import NoBgButton from '$components/primitives/buttons/NoBgButton.svelte';
 	import type { TGeneratePageData } from '$approutes/generate/+page.server';
 	import IconSettings from '$components/icons/IconSettings.svelte';
 	import { generateMode } from '$ts/stores/generate/generateMode';

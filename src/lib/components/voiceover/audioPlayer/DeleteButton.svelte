@@ -1,5 +1,5 @@
 <script lang="ts">
-	import ButtonHoverEffect from '$components/buttons/ButtonHoverEffect.svelte';
+	import ButtonHoverEffect from '$components/primitives/buttons/ButtonHoverEffect.svelte';
 	import IconTrashcan from '$components/icons/IconTrashcan.svelte';
 	import LL from '$i18n/i18n-svelte';
 

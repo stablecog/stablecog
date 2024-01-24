@@ -1,5 +1,5 @@
 <script lang="ts">
-	import ButtonHoverEffect from '$components/buttons/ButtonHoverEffect.svelte';
+	import ButtonHoverEffect from '$components/primitives/buttons/ButtonHoverEffect.svelte';
 	import Sidebar from '$components/docs/Sidebar.svelte';
 	import IconHome from '$components/icons/IconHome.svelte';
 	import Drawer from '$components/navigation/Drawer.svelte';

@@ -1,6 +1,6 @@
 <script lang="ts">
 	import Morpher from '$components/utils/Morpher.svelte';
-	import ButtonHoverEffect from '$components/buttons/ButtonHoverEffect.svelte';
+	import ButtonHoverEffect from '$components/primitives/buttons/ButtonHoverEffect.svelte';
 	import { lgBreakpoint, xlBreakpoint } from '$components/generationFullScreen/constants';
 	import IconCancel from '$components/icons/IconCancel.svelte';
 	import IconThreeDots from '$components/icons/IconThreeDots.svelte';

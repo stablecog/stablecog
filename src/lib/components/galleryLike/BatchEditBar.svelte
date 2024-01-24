@@ -1,8 +1,8 @@
 <script lang="ts">
 	import { page } from '$app/stores';
-	import ModalWrapper from '$components/ModalWrapper.svelte';
-	import Button from '$components/buttons/Button.svelte';
-	import SubtleButton from '$components/buttons/SubtleButton.svelte';
+	import ModalWrapper from '$components/modals/ModalWrapper.svelte';
+	import Button from '$components/primitives/buttons/Button.svelte';
+	import SubtleButton from '$components/primitives/buttons/SubtleButton.svelte';
 	import IconCancel from '$components/icons/IconCancel.svelte';
 	import IconPause from '$components/icons/IconPause.svelte';
 	import IconStarCrossedOutlined from '$components/icons/IconStarCrossedOutlined.svelte';

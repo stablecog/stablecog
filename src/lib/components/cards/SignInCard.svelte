@@ -1,8 +1,8 @@
 <script lang="ts">
 	import { page } from '$app/stores';
-	import Button from '$components/buttons/Button.svelte';
-	import ButtonOAuth from '$components/buttons/ButtonOAuth.svelte';
-	import DropdownItem from '$components/DropdownItem.svelte';
+	import Button from '$components/primitives/buttons/Button.svelte';
+	import ButtonOAuth from '$components/primitives/buttons/ButtonOAuth.svelte';
+	import DropdownItem from '$components/primitives/dropdown/DropdownItem.svelte';
 	import ErrorLine from '$components/error/ErrorLine.svelte';
 	import IconBack from '$components/icons/IconBack.svelte';
 	import IconEmail from '$components/icons/IconEmail.svelte';

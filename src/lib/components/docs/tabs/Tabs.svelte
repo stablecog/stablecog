@@ -6,7 +6,7 @@
 </script>
 
 <script lang="ts">
-	import ButtonHoverEffect from '$components/buttons/ButtonHoverEffect.svelte';
+	import ButtonHoverEffect from '$components/primitives/buttons/ButtonHoverEffect.svelte';
 	import { Tabs } from 'radix-svelte';
 	import { getContext, setContext } from 'svelte';
 	import { onMount } from 'svelte';

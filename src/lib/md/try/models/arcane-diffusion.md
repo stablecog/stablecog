@@ -8,7 +8,7 @@ preview_image_url: https://ba.stablecog.com/try/previews/arcane-diffusion.jpg
 ---
 
 <script>
-  import Button from '$components/buttons/Button.svelte'
+  import Button from '$components/primitives/buttons/Button.svelte'
   import DocImage from '$components/docs/DocImage.svelte'
 </script>
 

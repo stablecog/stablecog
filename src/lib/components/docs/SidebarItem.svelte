@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { page } from '$app/stores';
-	import ButtonHoverEffect from '$components/buttons/ButtonHoverEffect.svelte';
+	import ButtonHoverEffect from '$components/primitives/buttons/ButtonHoverEffect.svelte';
 	import ListOrDiv from '$components/docs/ListOrDiv.svelte';
 	import MethodBadge from '$components/docs/MethodBadge.svelte';
 	import IconChevronDown from '$components/icons/IconChevronDown.svelte';
