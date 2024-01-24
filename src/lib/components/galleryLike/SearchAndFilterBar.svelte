@@ -132,7 +132,9 @@
 	async function onUsernameFieldSubmit() {
 		if (!usernameSearchStringLocal) return;
 		if (!usernameFilters) usernameFilters = [];
-		usernameFilters = [...usernameFilters, usernameSearchStringLocal];
+		const arr = usernameSearchStringLocal.replaceAll(' ', '').split(',');
+		const filteredArr = arr.filter((i) => !usernameFilters?.includes(i));
+		usernameFilters = [...usernameFilters, ...filteredArr];
 		usernameSearchStringLocal = '';
 		usernameInputElement?.focus();
 	}
