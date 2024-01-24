@@ -132,7 +132,10 @@
 	async function onUsernameFieldSubmit() {
 		if (!usernameSearchStringLocal) return;
 		if (!usernameFilters) usernameFilters = [];
-		const arr = usernameSearchStringLocal.replaceAll(' ', '').split(',');
+		const arr = usernameSearchStringLocal
+			.replaceAll(' ', '')
+			.split(',')
+			.map((i) => i.toLowerCase());
 		const filteredArr = arr.filter((i) => !usernameFilters?.includes(i));
 		usernameFilters = [...usernameFilters, ...filteredArr];
 		usernameSearchStringLocal = '';
