@@ -44,7 +44,6 @@
 	import { scale } from 'svelte/transition';
 	import WithTooltip from '$components/utils/WithTooltip.svelte';
 	import IconStar from '$components/icons/IconStar.svelte';
-	import { toggle } from '@melt-ui/svelte/internal/helpers';
 	import { generateMode } from '$ts/stores/generate/generateMode';
 
 	export let rounding: 'all' | 'top' | 'bottom' = 'all';

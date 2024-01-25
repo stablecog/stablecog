@@ -10,7 +10,7 @@
 
 	const {
 		options,
-		elements: { range, root, thumb },
+		elements: { range, root, thumbs },
 		states: { value: valueLocal }
 	} = createSlider({
 		value: writable([value]),
@@ -42,7 +42,8 @@
 		</span>
 		{#each [...Array($valueLocal.length).keys()] as _}
 			<span
-				{...$thumb()}
+				{...$thumbs[0]}
+				use:thumbs
 				class="transition h-full w-4px bg-c-primary/50
 				outline-none rounded-full origin-bottom transform group-active:bg-c-primary
 				scale-y-0 group-hover:scale-y-100 group-active:scale-y-100"

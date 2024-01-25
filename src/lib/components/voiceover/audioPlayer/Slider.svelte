@@ -18,7 +18,7 @@
 
 	const {
 		options,
-		elements: { range, root, thumb },
+		elements: { range, root, thumbs },
 		states: { value: valueLocal }
 	} = createSlider({
 		value: writable([value]),
@@ -62,8 +62,8 @@
 		</span>
 		{#each [...Array($valueLocal.length).keys()] as _}
 			<span
-				{...$thumb()}
-				use:thumb
+				use:thumbs
+				{...$thumbs[0]}
 				class="{$isTouchscreen
 					? 'hidden'
 					: 'block'} ring-0 ring-c-on-bg/25 group-hover/audio-player-slider:ring-[6px]

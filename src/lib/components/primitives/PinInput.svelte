@@ -1,6 +1,5 @@
 <script lang="ts">
 	import { createPinInput } from '@melt-ui/svelte';
-	import { createEventDispatcher } from 'svelte';
 
 	export const length = 6;
 	export let value: string;
