@@ -259,21 +259,21 @@
 						color="primary"
 					/>
 				{/if}
-				{#each aspectRatioFilters as aspectRatioFilter}
-					<TagButton
-						icon={IconDimensions}
-						text={aspectRatioTabs.find((i) => i.value === aspectRatioFilter)?.label || ''}
-						onClick={() => {
-							aspectRatioFilters = aspectRatioFilters.filter((i) => i !== aspectRatioFilter);
-						}}
-					/>
-				{/each}
 				{#each modelIdFilters as modelIdFilter}
 					<TagButton
 						icon={IconBrain}
 						text={$LL.Home.ModelTag({ modelName: $modelIdToDisplayName[modelIdFilter] })}
 						onClick={() => {
 							modelIdFilters = modelIdFilters.filter((i) => i !== modelIdFilter);
+						}}
+					/>
+				{/each}
+				{#each aspectRatioFilters as aspectRatioFilter}
+					<TagButton
+						icon={IconDimensions}
+						text={aspectRatioTabs.find((i) => i.value === aspectRatioFilter)?.label || ''}
+						onClick={() => {
+							aspectRatioFilters = aspectRatioFilters.filter((i) => i !== aspectRatioFilter);
 						}}
 					/>
 				{/each}
