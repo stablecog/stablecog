@@ -1,0 +1,183 @@
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+	<!--Dark Mode meta tags needed to enable Dark Mode in email client user agents-->
+	<meta name="color-scheme" content="light dark" />
+	<meta name="supported-color-schemes" content="light dark only" />
+	<base target="_blank" />
+	<style>
+		:root {
+			color-scheme: light dark;
+		}
+
+		html {
+			background: rgba(240, 234, 249, 1);
+			color: rgba(20, 18, 22, 1);
+			margin: 0;
+			padding: 0;
+		}
+
+		body {
+			background: rgba(240, 234, 249, 1);
+			color: rgba(20, 18, 22, 1);
+			margin: 0;
+			padding: 0;
+			font-size: 16px;
+			line-height: 26px;
+			font-family: system-ui, sans-serif;
+		}
+
+		.wrap {
+			width: 100%;
+			max-width: 600px;
+			background: rgba(240, 234, 249, 1);
+			color: rgba(20, 18, 22, 1);
+			margin: 0 auto;
+		}
+
+		.wrap-inner {
+			width: 90%;
+			margin: 0;
+			padding: 4% 5%;
+			text-align: center;
+		}
+
+		.link {
+			color: rgba(96, 42, 204, 1);
+			font-size: 12px;
+			word-break: break-all;
+		}
+
+		.email {
+			color: rgba(96, 42, 204, 1);
+			font-weight: 600;
+		}
+
+		.button {
+			background: rgba(96, 42, 204, 1);
+			color: rgba(240, 234, 249, 1) !important;
+			border-radius: 8px;
+			border: none;
+			text-decoration: none !important;
+			font-weight: bold;
+			font-size: 18px;
+			padding: 14px 24px;
+			display: inline-block;
+			transition: all 0.15s ease-out;
+		}
+
+		.button:hover {
+			background: rgba(210, 108, 34, 1);
+		}
+
+		.footer {
+			text-align: center;
+			font-size: 12px;
+			color: rgba(20, 18, 22, 0.75);
+			padding: 16px 12px;
+		}
+
+		.footer a,
+		.footer a:visited,
+		.footer a:hover {
+			text-align: center;
+			font-size: 12px;
+			color: rgba(20, 18, 22, 0.75);
+		}
+
+		img {
+			max-width: 100%;
+			height: auto;
+		}
+
+		a,
+		a:hover,
+		a:visited {
+			color: rgba(96, 42, 204, 1);
+		}
+
+		@media screen and (max-width: 600px) {
+			body {
+				padding: 0px;
+			}
+		}
+
+		@media (prefers-color-scheme: dark) {
+			html {
+				background: rgba(18, 18, 23, 1);
+				color: rgba(220, 220, 234, 1);
+			}
+			body {
+				background: rgba(18, 18, 23, 1);
+				color: rgba(220, 220, 234, 1);
+			}
+			.wrap {
+				background: rgba(18, 18, 23, 1);
+				color: rgba(220, 220, 234, 1);
+			}
+			.wrap-inner {
+				background: rgba(18, 18, 23, 1);
+				color: rgba(220, 220, 234, 1);
+			}
+			.footer {
+				color: rgba(220, 220, 234, 0.75);
+			}
+			.footer a,
+			.footer a:visited,
+			.footer a:hover {
+				color: rgba(220, 220, 234, 0.75);
+			}
+			.link {
+				color: rgba(181, 140, 255, 1);
+			}
+			.email {
+				color: rgba(181, 140, 255, 1);
+			}
+			.button {
+				background: rgba(181, 140, 255, 1);
+				color: rgba(18, 18, 23, 1) !important;
+			}
+			.button:hover {
+				background: rgba(245, 164, 106, 1);
+			}
+			a,
+			a:hover,
+			a:visited {
+				color: rgba(181, 140, 255, 1);
+			}
+			.logo-dark {
+				display: block;
+			}
+			.logo-light {
+				display: none;
+			}
+		}
+	</style>
+</head>
+
+<div class="wrap">
+	<img
+		width="1200"
+		height="400"
+		style="width: 100%; height: auto; padding: 0; margin: 0; display: block"
+		src="https://stablecog.com/logos/banner-horizontal-v2.jpg"
+	/>
+	<div class="wrap-inner">
+		<p style="max-width: 350px; margin: 0 auto; padding: 16px 16px">
+			Click the button below to update your email from <span class="email">{{ .Email }}</span> to
+			<span class="email">{{ .NewEmail }}</span>:
+		</p>
+		<a
+			href="{{ .SiteURL }}/auth/confirm?token_hash={{ .TokenHash }}&type=email_change"
+			class="button"
+			>Change Email</a
+		>
+		<p style="padding-top: 24px">Or copy the link into your browser:</p>
+		<p style="max-width: 350px; margin: 0 auto" class="link">
+			{{ .SiteURL }}/auth/confirm?token_hash={{ .TokenHash }}&type=email_change
+		</p>
+	</div>
+</div>
+<div class="footer">
+	<a href="https://stablecog.com">© 2023 Stablecog, Inc.</a>
+</div>
