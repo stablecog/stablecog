@@ -17,9 +17,7 @@ export const GET = async (event) => {
 		if (!error) {
 			redirect(303, `/${next.slice(1)}`);
 		}
-	}
-
-	if (code) {
+	} else if (code) {
 		const { error } = await supabase.auth.exchangeCodeForSession(code);
 		if (!error) {
 			redirect(303, `/${next.slice(1)}`);
