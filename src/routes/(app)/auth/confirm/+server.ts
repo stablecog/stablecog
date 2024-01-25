@@ -14,9 +14,10 @@ export const GET = async (event) => {
 	if (token_hash && type) {
 		console.log('TOKEN HASH AND TYPE FOUND');
 		// @ts-ignore
-		const { error } = await supabase.auth.verifyOtp({ token_hash, type });
+		const { data, error } = await supabase.auth.verifyOtp({ token_hash, type });
 		console.log('ERROR IS', error);
 		console.log('REDIRECTING TO ', `/${next.slice(1)}`);
+		console.log('EMAIL IS', data.user?.email);
 		if (!error) {
 			redirect(303, `/${next.slice(1)}`);
 		}

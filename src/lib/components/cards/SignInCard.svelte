@@ -70,7 +70,7 @@
 			options: {
 				emailRedirectTo: `${$page.url.origin}/auth/callback?rd_to=${
 					redirectTo ? encodeURIComponent(redirectTo) : ''
-				}`
+				}`,
 			}
 		});
 		if (sError) {
