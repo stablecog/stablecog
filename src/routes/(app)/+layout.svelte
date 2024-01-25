@@ -30,7 +30,7 @@
 		!rawRoutes.includes($page.url.pathname) &&
 		(!$userSummary || !isSuperAdmin($userSummary.roles)) &&
 		!$page.url.pathname.startsWith('/admin') &&
-		!$page.url.pathname.startsWith('/api/auth') &&
+		!$page.url.pathname.startsWith('/auth') &&
 		!$page.url.pathname.startsWith('/sign-in');
 
 	$: showUnderDevelopmentCard =
@@ -38,7 +38,7 @@
 		!rawRoutes.includes($page.url.pathname) &&
 		(!$userSummary || !isSuperAdmin($userSummary.roles)) &&
 		!$page.url.pathname.startsWith('/admin') &&
-		!$page.url.pathname.startsWith('/api/auth') &&
+		!$page.url.pathname.startsWith('/auth') &&
 		!$page.url.pathname.startsWith('/sign-in');
 </script>
 
