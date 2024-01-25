@@ -18,10 +18,11 @@ export const GET = async (event) => {
 		console.log('ERROR IS', error);
 		console.log('REDIRECTING TO ', `/${next.slice(1)}`);
 		console.log('EMAIL IS', data.user?.email);
-		const session = await getSession();
-		console.log('ACCESS TOKEN', session?.access_token.slice(0, 6));
-		console.log('EXPIRES IN', session?.expires_in);
 		if (!error) {
+			if (data.session) {
+				console.log('Setting session');
+				await supabase.auth.setSession(data.session);
+			}
 			redirect(303, `/${next.slice(1)}`);
 		}
 	} else if (code) {
