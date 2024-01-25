@@ -6,6 +6,8 @@
 	import { windowHeight, windowWidth } from '$ts/stores/window';
 	import type { TTab } from '$ts/types/main';
 	import { onMount } from 'svelte';
+	import IconTickOnly from '$components/icons/IconTickOnly.svelte';
+	import IconTrashcan from '$components/icons/IconTrashcan.svelte';
 
 	type T = $$Generic;
 	export let values: T[];
@@ -199,13 +201,18 @@
 										</div>
 									</div>
 									<div class="w-full flex items-center gap-3">
-										<div class="w-4 h-4 ring-1 ring-c-primary rounded flex-shrink-0">
+										<div
+											class="w-4 h-4 ring-1.5 ring-c-primary rounded flex-shrink-0 overflow-hidden relative z-0
+											transition {values && values.includes(item.value) ? 'bg-c-primary' : ''}"
+										>
 											<div
-												class="w-full h-full transition transform bg-c-primary rounded {values &&
-												values.includes(item.value)
-													? 'scale-100 opacity-100'
-													: 'scale-50 opacity-0'}"
-											/>
+												class="w-full h-full transition transform bg-c-primary ring-c-primary rounded
+												{values && values.includes(item.value)
+													? 'scale-100 opacity-100 ring-2'
+													: 'scale-25 opacity-0 ring-0'} p-0.25"
+											>
+												<IconTickOnly class="w-full h-full text-c-on-primary" />
+											</div>
 										</div>
 										<p
 											class="flex-shrink whitespace-nowrap overflow-hidden overflow-ellipsis text-base font-medium relative transition
