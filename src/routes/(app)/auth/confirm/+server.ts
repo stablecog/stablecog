@@ -19,7 +19,8 @@ export const GET = async (event) => {
 		console.log('REDIRECTING TO ', `/${next.slice(1)}`);
 		console.log('EMAIL IS', data.user?.email);
 		const session = await getSession();
-		console.log('SESSION IS', session);
+		console.log('ACCESS TOKEN', session?.access_token.slice(0, 6));
+		console.log('EXPIRES IN', session?.expires_in);
 		if (!error) {
 			redirect(303, `/${next.slice(1)}`);
 		}
