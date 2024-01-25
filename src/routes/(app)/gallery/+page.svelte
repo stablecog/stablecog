@@ -66,12 +66,12 @@
 			label: $LL.Gallery.Sort.Options.Trending()
 		},
 		{
-			value: 'top',
-			label: $LL.Gallery.Sort.Options.Top()
-		},
-		{
 			value: 'new',
 			label: $LL.Gallery.Sort.Options.New()
+		},
+		{
+			value: 'top',
+			label: $LL.Gallery.Sort.Options.Top()
 		}
 	];
 
