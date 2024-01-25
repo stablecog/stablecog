@@ -17,10 +17,10 @@
 		"i18n-export": "tsx src/i18n/export.ts"
 	},
 	"devDependencies": {
-		"@sveltejs/adapter-auto": "^2.1.0",
-		"@sveltejs/adapter-node": "^1.2.4",
-		"@sveltejs/adapter-static": "^2.0.2",
-		"@sveltejs/adapter-vercel": "^3.0.0",
+		"@sveltejs/adapter-auto": "^3.1.1",
+		"@sveltejs/adapter-node": "^4.0.1",
+		"@sveltejs/adapter-static": "^3.0.1",
+		"@sveltejs/adapter-vercel": "^5.1.0",
 		"@sveltejs/kit": "^2.4.3",
 		"@tailwindcss/container-queries": "^0.1.1",
 		"@types/d3": "^7.4.0",
@@ -34,7 +34,7 @@
 		"hastscript": "^8.0.0",
 		"intl-unofficial-duration-unit-format": "^3.1.0",
 		"js-base64": "^3.7.5",
-		"mdsvex": "^0.10.6",
+		"mdsvex": "^0.11.0",
 		"postcss": "^8.4.16",
 		"prettier": "^2.6.2",
 		"prettier-plugin-svelte": "^2.10.1",
