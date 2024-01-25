@@ -11,16 +11,16 @@ export const GET = async (event) => {
 	const next = url.searchParams.get('next') ?? '/';
 	const code = url.searchParams.get('code') as string;
 
-	if (code) {
-		const { error } = await supabase.auth.exchangeCodeForSession(code);
+	if (token_hash && type) {
+		// @ts-ignore
+		const { error } = await supabase.auth.verifyOtp({ token_hash, type });
 		if (!error) {
 			redirect(303, `/${next.slice(1)}`);
 		}
 	}
 
-	if (token_hash && type) {
-		// @ts-ignore
-		const { error } = await supabase.auth.verifyOtp({ token_hash, type });
+	if (code) {
+		const { error } = await supabase.auth.exchangeCodeForSession(code);
 		if (!error) {
 			redirect(303, `/${next.slice(1)}`);
 		}
