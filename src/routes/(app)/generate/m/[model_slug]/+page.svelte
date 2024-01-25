@@ -27,4 +27,4 @@
 	};
 </script>
 
-<RedirectPage {...meta} {url} redirectingText={$LL.Redirect.RedirectingTitle()} />
+<RedirectPage {...meta} {url} urlIsInternal redirectingText={$LL.Redirect.RedirectingTitle()} />

@@ -8,6 +8,7 @@
 	import { onMount } from 'svelte';
 
 	export let url: string;
+	export let urlIsInternal = false;
 	export let redirectingText: string;
 	export let title: string;
 	export let description: string;
@@ -16,7 +17,11 @@
 	}-${previewImageVersion}.png`;
 
 	onMount(async () => {
-		await goto(url);
+		if (urlIsInternal) {
+			await goto(url);
+		} else {
+			window.location.href = url;
+		}
 	});
 </script>
 

@@ -397,7 +397,7 @@
 			if (!checkout_url) {
 				throw new Error('No checkout session url returned');
 			}
-			await goto(checkout_url);
+			window.location.href = checkout_url;
 			checkoutCreationStatus = 'success';
 		} catch (error) {
 			checkoutCreationStatus = 'error';
@@ -415,7 +415,7 @@
 			if (error || !customer_portal_url) {
 				throw new Error(error || 'No customer portal url returned');
 			}
-			await goto(customer_portal_url);
+			window.location.href = customer_portal_url;
 			checkoutCreationStatus = 'success';
 		} catch (error) {
 			customerPortalCreationStatus = 'error';
