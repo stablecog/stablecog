@@ -167,9 +167,15 @@
 			Click the button below to update your email from <span class="email">{{ .Email }}</span> to
 			<span class="email">{{ .NewEmail }}</span>:
 		</p>
-		<a href="{{ .ConfirmationURL }}" class="button">Change Email</a>
+		<a
+			href="{{ .SiteURL }}/auth/confirm?token_hash={{ .TokenHash }}&type=email_change"
+			class="button"
+			>Change Email</a
+		>
 		<p style="padding-top: 24px">Or copy the link into your browser:</p>
-		<p style="max-width: 350px; margin: 0 auto" class="link">{{ .ConfirmationURL }}</p>
+		<p style="max-width: 350px; margin: 0 auto" class="link">
+			{{ .SiteURL }}/auth/confirm?token_hash={{ .TokenHash }}&type=email_change
+		</p>
 	</div>
 </div>
 <div class="footer">

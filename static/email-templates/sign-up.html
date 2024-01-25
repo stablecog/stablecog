@@ -157,7 +157,9 @@
 	/>
 	<div class="wrap-inner">
 		<p>Click to sign up:</p>
-		<a href="{{ .ConfirmationURL }}" class="button">Sign up to Stablecog</a>
+		<a href="{{ .SiteURL }}/auth/confirm?token_hash={{ .TokenHash }}&type=email" class="button"
+			>Sign up to Stablecog</a
+		>
 		<p style="padding-top: 24px">Or use the code:</p>
 		<p class="code">{{ .Token }}</p>
 	</div>

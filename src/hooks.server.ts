@@ -1,4 +1,4 @@
-import { createSupabaseServerClient } from '@supabase/auth-helpers-sveltekit';
+import { createServerClient } from '@supabase/ssr';
 import type { Handle, RequestEvent } from '@sveltejs/kit';
 import { initAcceptLanguageHeaderDetector } from 'typesafe-i18n/detectors';
 import { detectLocale, isLocale } from '$i18n/i18n-util';
@@ -13,10 +13,16 @@ loadAllLocales();
 const LINK_HEADER_LENGTH = 60;
 
 export const handle: Handle = async ({ event, resolve }) => {
-	event.locals.supabase = createSupabaseServerClient({
-		supabaseUrl: supabaseUrl,
-		supabaseKey: supabaseAnonKey || '',
-		event
+	event.locals.supabase = createServerClient(supabaseUrl, supabaseAnonKey, {
+		cookies: {
+			get: (key) => event.cookies.get(key),
+			set: (key, value, options) => {
+				event.cookies.set(key, value, { ...options, path: '' });
+			},
+			remove: (key, options) => {
+				event.cookies.delete(key, { ...options, path: '' });
+			}
+		}
 	});
 
 	event.locals.getSession = async () => {
@@ -71,7 +77,11 @@ export const handle: Handle = async ({ event, resolve }) => {
 			if (isGalleryAdmin(roles) && !galleryAdminAllowedRoutes.includes(event.url.pathname)) {
 				return notAuthorizedResponse('/admin');
 			}
-			return resolve(event);
+			return resolve(event, {
+				filterSerializedResponseHeaders(name) {
+					return name === 'content-range';
+				}
+			});
 		} catch (error) {
 			console.log('Admin access error:', error);
 			return notAuthorizedResponse(notAuthorizedRedirectRoute);

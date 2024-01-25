@@ -3,10 +3,10 @@ import { loadLocaleAsync } from '$i18n/i18n-util.async';
 import { writable } from 'svelte/store';
 import type { TAvailableThemes } from '$ts/stores/theme';
 import type { TUserSummary } from '$ts/stores/user/summary';
-import { createSupabaseLoadClient } from '@supabase/auth-helpers-sveltekit';
 import type { SupabaseClient } from '@supabase/supabase-js';
 import { getUserSummary } from '$ts/helpers/user/user';
 import { supabaseAnonKey, supabaseUrl } from '$ts/constants/supabase';
+import { createBrowserClient, isBrowser, parse } from '@supabase/ssr';
 
 // const pages = import.meta.glob('./**/*.*');
 /* let usernameBlacklistSet = new Set<string>();
@@ -21,14 +21,24 @@ const usernameBlacklist = Array.from(usernameBlacklistSet).filter(
 console.log(usernameBlacklist); */
 
 export const load: LayoutLoad = async (event) => {
-	event.depends('supabase:auth');
-	const supabase = createSupabaseLoadClient({
-		supabaseUrl: supabaseUrl,
-		supabaseKey: supabaseAnonKey,
-		event: { fetch },
-		serverSession: event.data.session
+	const { depends, data, fetch } = event;
+	depends('supabase:auth');
+	const supabase = createBrowserClient(supabaseUrl, supabaseAnonKey, {
+		global: {
+			fetch
+		},
+		cookies: {
+			get(key) {
+				if (!isBrowser()) {
+					return JSON.stringify(data.session);
+				}
+
+				const cookie = parse(document.cookie);
+				return cookie[key];
+			}
+		}
 	});
-	let {
+	const {
 		data: { session }
 	} = await supabase.auth.getSession();
 
@@ -51,8 +61,8 @@ export const load: LayoutLoad = async (event) => {
 	const isLeftSidebarHidden = event.data.isLeftSidebarHidden;
 	return {
 		locale,
-		session: session as Session | null,
-		supabase: supabase as SupabaseClient,
+		session,
+		supabase,
 		theme,
 		themeStore: writable<TAvailableThemes>('dark'),
 		userSummary,

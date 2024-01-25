@@ -68,7 +68,7 @@
 		const { data: sData, error: sError } = await $supabaseStore.auth.signInWithOtp({
 			email,
 			options: {
-				emailRedirectTo: `${$page.url.origin}/api/auth/callback?rd_to=${
+				emailRedirectTo: `${$page.url.origin}/auth/callback?rd_to=${
 					redirectTo ? encodeURIComponent(redirectTo) : ''
 				}`
 			}
@@ -99,7 +99,7 @@
 		const { data: sData, error: sError } = await $supabaseStore.auth.signInWithOAuth({
 			provider: prov,
 			options: {
-				redirectTo: `${$page.url.origin}/api/auth/callback?rd_to=${
+				redirectTo: `${$page.url.origin}/auth/callback?rd_to=${
 					redirectTo ? encodeURIComponent(redirectTo) : ''
 				}`
 			}
