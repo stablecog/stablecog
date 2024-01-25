@@ -85,10 +85,10 @@
 		"discord.js": "^14.14.1",
 		"copy-anything": "^3.0.5",
 		"@sveltejs/vite-plugin-svelte": "^3.0.1",
+		"@tanstack/svelte-virtual": "^3.0.2",
 		"@supabase/auth-helpers-sveltekit": "^0.10.2",
 		"@supabase/supabase-js": "^2.33.1",
 		"@tanstack/svelte-query": "^4.36.1",
-		"@tanstack/svelte-virtual": "^3.0.2",
 		"posthog-js": "^1.46.2"
 	}
 }
