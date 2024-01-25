@@ -17,7 +17,7 @@
 <PageWrapper>
 	<div class="w-full flex flex-col items-center justify-center my-auto text-center">
 			<IconHourglass class="w-28 h-28" />
-			<p class="text-3xl font-bold mt-3">{$LL.Error.LinkExpired.TitleAlt()}</p>
+			<p class="text-3xl font-bold mt-4">{$LL.Error.LinkExpired.TitleAlt()}</p>
 			<p class="text-c-on-bg/60 mt-3 w-full max-w-xs leading-relaxed">
 				{$LL.Error.LinkExpired.Paragraph()}
 			</p>

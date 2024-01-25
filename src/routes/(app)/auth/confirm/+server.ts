@@ -12,8 +12,11 @@ export const GET = async (event) => {
 	const code = url.searchParams.get('code') as string;
 
 	if (token_hash && type) {
+		console.log('TOKEN HASH AND TYPE FOUND');
 		// @ts-ignore
 		const { error } = await supabase.auth.verifyOtp({ token_hash, type });
+		console.log('ERROR IS', error);
+		console.log('REDIRECTING TO ', `/${next.slice(1)}`);
 		if (!error) {
 			redirect(303, `/${next.slice(1)}`);
 		}
