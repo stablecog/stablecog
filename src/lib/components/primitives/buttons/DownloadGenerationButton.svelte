@@ -8,6 +8,7 @@
 	import { appVersion } from '$ts/stores/appVersion';
 	import type { TGenerationWithSelectedOutput } from '$ts/stores/user/generation';
 	import { userSummary } from '$ts/stores/user/summary';
+	import { sessionStore } from '$ts/constants/supabase';
 
 	export let generation: TGenerationWithSelectedOutput;
 
@@ -42,7 +43,7 @@
 					'SC - Output Id': generation.selected_output.id,
 					'SC - Page': `${$page.url.pathname}${$page.url.search}`,
 					'SC - Generation Id': generation.id,
-					'SC - User Id': $page.data.session?.user.id,
+					'SC - User Id': $sessionStore?.user.id,
 					'SC - Stripe Product Id': $userSummary?.product_id,
 					'SC - App Version': $appVersion
 				}

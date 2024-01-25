@@ -1,6 +1,5 @@
 <script lang="ts">
 	import { browser } from '$app/environment';
-	import { page } from '$app/stores';
 	import Input from '$components/primitives/Input.svelte';
 	import MetaTag from '$components/utils/MetaTag.svelte';
 	import ModalWrapper from '$components/modals/ModalWrapper.svelte';
@@ -24,6 +23,7 @@
 	import { createMutation, createQuery } from '@tanstack/svelte-query';
 	import { quadOut } from 'svelte/easing';
 	import IconCommandLineOutlined from '$components/icons/IconCommandLineOutlined.svelte';
+	import { sessionStore } from '$ts/constants/supabase';
 
 	const maxAllowedTokenCount = 10;
 	const maxTokenNameLength = 50;
@@ -40,7 +40,7 @@
 
 	$: tokensQuery = browser
 		? createQuery(['user_tokens'], () =>
-				getUserTokens({ access_token: $page.data.session?.access_token || '', type: 'manual' })
+				getUserTokens({ access_token: $sessionStore?.access_token || '', type: 'manual' })
 		  )
 		: undefined;
 
@@ -48,7 +48,7 @@
 		? createMutation(
 				['user_create_token'],
 				({ name }: { name: string }) =>
-					createUserToken({ access_token: $page.data.session?.access_token || '', name }),
+					createUserToken({ access_token: $sessionStore?.access_token || '', name }),
 				{
 					onSuccess: (d) => {
 						$tokensQuery?.refetch();
@@ -66,7 +66,7 @@
 		? createMutation(
 				['user_delete_token'],
 				({ id }: { id: string }) =>
-					deleteUserToken({ access_token: $page.data.session?.access_token || '', id }),
+					deleteUserToken({ access_token: $sessionStore?.access_token || '', id }),
 				{
 					onSuccess: () => {
 						$tokensQuery?.refetch();

@@ -11,24 +11,25 @@
 	import { appVersion } from '$ts/stores/appVersion';
 	import { userSummary } from '$ts/stores/user/summary';
 	import { onMount } from 'svelte';
+	import { sessionStore } from '$ts/constants/supabase';
 
 	export let data;
 
-	$: if (mounted && $page.data.session?.user.id) redirect();
+	$: if (mounted && $sessionStore?.user.id) redirect();
 
 	let errorCode: number | null = null;
 
 	async function redirect() {
 		if (!browser) return;
-		if (!$page.data.session?.user.id || !$page.data.session.user.email) return;
+		if (!$sessionStore?.user.id || !$sessionStore.user.email) return;
 		logSignIn({
 			'SC - Page': `${$page.url.pathname}${$page.url.search}`,
 			'SC - Stripe Product Id': $userSummary?.product_id,
 			'SC - Locale': $locale,
 			'SC - Advanced Mode': $advancedModeApp,
-			'SC - Email': $page.data.session?.user.email,
+			'SC - Email': $sessionStore?.user.email,
 			'SC - App Version': $appVersion,
-			'SC - User Id': $page.data.session?.user.id
+			'SC - User Id': $sessionStore?.user.id
 		});
 		setTimeout(async () => {
 			if (data.rd_to) {

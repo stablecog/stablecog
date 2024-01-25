@@ -46,6 +46,7 @@
 	} from '$routes/(app)/[username]/constants.js';
 	import ProfileCardBadge from '$routes/(app)/[username]/ProfileCardBadge.svelte';
 	import { hydrated } from '$ts/stores/hydrated.js';
+	import { sessionStore } from '$ts/constants/supabase';
 
 	export let data;
 
@@ -70,7 +71,7 @@
 			modelIdFilters: $someUserGalleryModelIdFilters,
 			aspectRatioFilters: $someUserGalleryAspectRatioFilters,
 			username: data.username,
-			accessToken: $page.data.session?.access_token
+			accessToken: $sessionStore?.access_token
 		})
 	);
 

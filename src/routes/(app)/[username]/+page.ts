@@ -4,7 +4,7 @@ import {
 } from '$ts/constants/generationModels';
 import type { QueryClient } from '@tanstack/svelte-query';
 import type { PageLoad } from './$types';
-import { redirect } from '@sveltejs/kit';
+import { error, redirect } from '@sveltejs/kit';
 import { getOtherUserMetadata, type TOtherUserMetadata } from '$ts/queries/otherUserMetadata';
 import type { Session } from '@supabase/supabase-js';
 import {
@@ -24,8 +24,8 @@ export const load: PageLoad = async ({ url, parent, params }) => {
 	const outputIdShort = url.searchParams.get('o');
 	const username = params.username;
 
-	if (outputId) throw redirect(302, `/${username}/o/${outputId}`);
-	if (outputIdShort) throw redirect(302, `/${username}/o/${outputIdShort}`);
+	if (outputId) redirect(302, `/${username}/o/${outputId}`);
+	if (outputIdShort) redirect(302, `/${username}/o/${outputIdShort}`);
 
 	const { queryClient, session } = (await parent()) as TParent;
 	const galleryLikeParams = getGalleryLikeParamsFromSearchParams(url.searchParams);
@@ -38,22 +38,26 @@ export const load: PageLoad = async ({ url, parent, params }) => {
 			})
 		) !== undefined;
 	let userMetadata: TOtherUserMetadata;
-	if (!hasInitialData) {
-		const [_, userRes] = await Promise.all([
-			queryClient.prefetchInfiniteQuery(
-				getSomeUserProfileInfiniteQueryProps({
-					...galleryLikeParams,
-					username,
-					accessToken: session?.access_token
-				})
-			),
-			getOtherUserMetadata({ username, custom_fetch: fetch })
-		]);
-		userMetadata = userRes;
-	} else {
-		userMetadata = await getOtherUserMetadata({ username, custom_fetch: fetch });
+	try {
+		if (!hasInitialData) {
+			const [_, userRes] = await Promise.all([
+				queryClient.prefetchInfiniteQuery(
+					getSomeUserProfileInfiniteQueryProps({
+						...galleryLikeParams,
+						username,
+						accessToken: session?.access_token
+					})
+				),
+				getOtherUserMetadata({ username, custom_fetch: fetch })
+			]);
+			userMetadata = userRes;
+		} else {
+			userMetadata = await getOtherUserMetadata({ username, custom_fetch: fetch });
+		}
+	} catch (err) {
+		error(404, 'Not found');
 	}
-	if (username !== userMetadata.username) throw redirect(302, `/${userMetadata.username}`);
+	if (username !== userMetadata.username) redirect(302, `/${userMetadata.username}`);
 	return {
 		...galleryLikeParams,
 		userMetadata,

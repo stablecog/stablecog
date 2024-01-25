@@ -9,6 +9,7 @@
 	} from '$ts/helpers/loggers';
 	import { appVersion } from '$ts/stores/appVersion';
 	import type { TGenerationWithSelectedOutput } from '$ts/stores/user/generation';
+	import { sessionStore } from '$ts/constants/supabase';
 
 	import { userSummary } from '$ts/stores/user/summary';
 
@@ -35,7 +36,7 @@
 		setSearchQuery(generation.selected_output.id);
 		const logParams = {
 			'SC - Output Id': generation.selected_output.id,
-			'SC - User Id': $page.data.session?.user.id,
+			'SC - User Id': $sessionStore?.user.id,
 			'SC - Stripe Product Id': $userSummary?.product_id,
 			'SC - App Version': $appVersion,
 			'SC - Clicked Output Id': generation.selected_output.id

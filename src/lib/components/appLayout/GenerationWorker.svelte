@@ -22,6 +22,7 @@
 	import { queue } from '$ts/stores/user/queue';
 	import { sseId } from '$ts/stores/user/sse';
 	import { userSummary } from '$ts/stores/user/summary';
+	import { sessionStore } from '$ts/constants/supabase';
 
 	$: $generationInitImageFiles, onFilesChanged();
 	$: $generations, onGenerationsChanged();
@@ -32,7 +33,7 @@
 		if (!$generations || $generations.length === 0) {
 			return;
 		}
-		if (!$page.data.session?.access_token) {
+		if (!$sessionStore?.access_token) {
 			console.log('No access token, not submitting initial generation request');
 			return;
 		}
@@ -54,7 +55,7 @@
 						output_image_extension: 'jpeg',
 						process_type: 'generate'
 					},
-					$page.data.session.access_token,
+					$sessionStore.access_token,
 					$appVersion
 				);
 				const { id, error, total_remaining_credits, ui_id, queued_id, queue_items } = res;
@@ -88,7 +89,7 @@
 
 	async function onFilesChanged() {
 		if (!$generationInitImageFiles) return;
-		const access_token = $page.data.session?.access_token;
+		const access_token = $sessionStore?.access_token;
 		if (!access_token) return;
 		const file = $generationInitImageFiles?.[0];
 		if (!file) return;
@@ -108,7 +109,7 @@
 		const formData = new FormData();
 		formData.append('file', file);
 		logInitImageAdded({
-			'SC - User Id': $page.data.session?.user.id,
+			'SC - User Id': $sessionStore?.user.id,
 			'SC - Stripe Product Id': $userSummary?.product_id,
 			'SC - Locale': $locale,
 			'SC - Page': `${$page.url.pathname}${$page.url.search}`,

@@ -1,5 +1,4 @@
 <script lang="ts">
-	import { page } from '$app/stores';
 	import MetaTag from '$components/utils/MetaTag.svelte';
 	import LL, { locale } from '$i18n/i18n-svelte';
 	import { canonicalUrl } from '$ts/constants/main';
@@ -42,6 +41,7 @@
 	import ToggleIndicator from '$components/primitives/ToggleIndicator.svelte';
 	import ButtonHoverEffect from '$components/primitives/buttons/ButtonHoverEffect.svelte';
 	import { setUrlParam } from '$ts/helpers/setUrlParam.js';
+	import { sessionStore } from '$ts/constants/supabase';
 
 	export let data;
 
@@ -99,7 +99,7 @@
 					const res = await getAllUsers({
 						cursor: lastPage?.pageParam,
 						search: searchStringDebounced,
-						access_token: $page.data.session?.access_token,
+						access_token: $sessionStore?.access_token,
 						active_product_id: view === 'banned' ? undefined : view,
 						banned: view === 'banned' ? true : undefined
 					});
@@ -153,7 +153,7 @@
 				queryKey: ['admin_credit_options'],
 				queryFn: async () => {
 					const res = await getCreditOptions({
-						access_token: $page.data.session?.access_token
+						access_token: $sessionStore?.access_token
 					});
 					return res;
 				}
@@ -228,7 +228,7 @@
 		toggleUserDropdown(user_id, false);
 		try {
 			const res = await giftCreditsToUser({
-				access_token: $page.data.session?.access_token,
+				access_token: $sessionStore?.access_token,
 				user_id,
 				credit_type_id
 			});
@@ -254,7 +254,7 @@
 		try {
 			user_ids.forEach((id) => toggleUserDropdown(id, false));
 			const res = await banOrUnbanUsers({
-				access_token: $page.data.session?.access_token || '',
+				access_token: $sessionStore?.access_token || '',
 				user_ids,
 				action,
 				delete_data
@@ -282,7 +282,7 @@
 		try {
 			toggleUserDropdown(userId, false);
 			const res = await banOrUnbanDomains({
-				access_token: $page.data.session?.access_token || '',
+				access_token: $sessionStore?.access_token || '',
 				domains,
 				action
 			});

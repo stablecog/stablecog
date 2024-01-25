@@ -21,7 +21,7 @@ export const load: ServerLoad = async ({ url, parent }) => {
 	const { session, userSummary } = parentData;
 	if (session && userSummary && !isHydrated) {
 		const params = url.searchParams.toString();
-		throw redirect(302, `/generate${params ? `?${params}` : ''}`);
+		redirect(302, `/generate${params ? `?${params}` : ''}`);
 	}
 	let hasGenerationRelatedSearchParam = false;
 	for (let i = 0; i < generationRelatedSearchParams.length; i++) {
@@ -31,7 +31,7 @@ export const load: ServerLoad = async ({ url, parent }) => {
 		}
 	}
 	if (hasGenerationRelatedSearchParam) {
-		throw redirect(302, `/generate?${url.searchParams.toString()}`);
+		redirect(302, `/generate?${url.searchParams.toString()}`);
 	}
 	return {};
 };

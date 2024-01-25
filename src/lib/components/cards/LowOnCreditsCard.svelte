@@ -15,6 +15,7 @@
 	import { appVersion } from '$ts/stores/appVersion';
 	import { userSummary } from '$ts/stores/user/summary';
 	import { onDestroy, onMount } from 'svelte';
+	import { sessionStore } from '$ts/constants/supabase';
 
 	export { classes as class };
 	let classes = '';
@@ -22,7 +23,7 @@
 	$: logProps = {
 		'SC - Locale': $locale,
 		'SC - Page': `${$page.url.pathname}${$page.url.search}`,
-		'SC - User Id': $page.data.session?.user.id,
+		'SC - User Id': $sessionStore?.user.id,
 		'SC - Stripe Product Id': $userSummary?.product_id,
 		'SC - App Version': $appVersion
 	};

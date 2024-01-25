@@ -27,18 +27,19 @@
 	import { getRelativeDate } from '$ts/helpers/getRelativeDate';
 	import AccountPageCard from '$routes/(app)/account/AccountPageCard.svelte';
 	import IconToken from '$components/icons/IconToken.svelte';
+	import { sessionStore, supabaseStore } from '$ts/constants/supabase';
 
-	$: if (!$page.data.session?.user.id) {
+	$: if (!$sessionStore?.user.id) {
 		goto(`/sign-in?rd_to=${encodeURIComponent($page.url.pathname)}`);
 	}
 
 	async function signOut() {
-		if (!$page.data.supabase) return;
+		if (!$supabaseStore) return;
 		try {
-			await $page.data.supabase.auth.signOut();
+			await $supabaseStore.auth.signOut();
 			userSummary.set(null);
 			logSignOut({
-				'SC - User Id': $page.data.session?.user.id,
+				'SC - User Id': $sessionStore?.user.id,
 				'SC - Stripe Product Id': $userSummary?.product_id,
 				'SC - Locale': $locale,
 				'SC - Page': `${$page.url.pathname}${$page.url.search}`,
@@ -81,7 +82,7 @@
 	image_url="{canonicalUrl}/previews{$page.url.pathname}-{previewImageVersion}.png"
 />
 
-{#if !$page.data.session?.user.email}
+{#if !$sessionStore?.user.email}
 	<div class="w-full flex justify-center items-center my-auto">
 		<IconAnimatedSpinner class="w-10 h-10 text-c-on-bg/60" />
 	</div>
@@ -131,7 +132,7 @@
 								class="not-touch:group-hover:text-c-primary text-c-on-bg transition
 								font-semibold flex-shrink min-w-0 overflow-hidden overflow-ellipsis text-left"
 							>
-								{$page.data.session.user.email}
+								{$sessionStore.user.email}
 							</p>
 							<IconPen
 								class="w-3.5 h-3.5 text-c-on-bg/50 transition not-touch:group-hover:text-c-primary/50 flex-shrink-0"

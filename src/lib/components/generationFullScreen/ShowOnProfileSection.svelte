@@ -29,6 +29,7 @@
 	import { createCheckbox } from '@melt-ui/svelte';
 	import { useQueryClient } from '@tanstack/svelte-query';
 	import { writable } from 'svelte/store';
+	import { sessionStore } from '$ts/constants/supabase';
 
 	export let modalType: TGenerationFullScreenModalType;
 	export let generation: TGenerationWithSelectedOutput;
@@ -67,7 +68,7 @@
 					method: 'PUT',
 					headers: {
 						'Content-Type': 'application/json',
-						Authorization: `Bearer ${$page.data.session?.access_token}`
+						Authorization: `Bearer ${$sessionStore?.access_token}`
 					},
 					body: JSON.stringify({ generation_output_ids: outputIds })
 				}
@@ -84,7 +85,7 @@
 					'SC - Output Id': id,
 					'SC - Page': `${$page.url.pathname}${$page.url.search}`,
 					'SC - Stripe Product Id': $userSummary?.product_id,
-					'SC - User Id': $page.data.session?.user.id,
+					'SC - User Id': $sessionStore?.user.id,
 					'SC - Generation Id': generation.id
 				};
 				if (newVisibility === 'make-private') {

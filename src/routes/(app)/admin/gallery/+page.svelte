@@ -48,6 +48,7 @@
 	import { activeGeneration, type TGenerationWithSelectedOutput } from '$userStores/generation';
 	import { createInfiniteQuery, type CreateInfiniteQueryResult } from '@tanstack/svelte-query';
 	import { onMount } from 'svelte';
+	import { sessionStore } from '$ts/constants/supabase';
 
 	export let data;
 
@@ -77,11 +78,11 @@
 	);
 
 	$: allUserGenerationFullOutputsQuery =
-		browser && $page.data.session?.user.id
+		browser && $sessionStore?.user.id
 			? createInfiniteQuery(
 					getAllUserGenerationFullOutputsQueryProps({
 						adminGalleryCurrentFilter: $adminGalleryCurrentFilter,
-						session: $page.data.session,
+						session: $sessionStore,
 						modelIdFilters: $adminGalleryModelIdFilters,
 						aspectRatioFilters: $adminGalleryAspectRatioFilters,
 						searchString: $adminGallerySearchString
@@ -109,7 +110,7 @@
 			: undefined;
 
 	const onPagesChanged = () => {
-		if (!$page.data.session?.user.id || !$allUserGenerationFullOutputsQuery) return;
+		if (!$sessionStore?.user.id || !$allUserGenerationFullOutputsQuery) return;
 		if (!$allUserGenerationFullOutputsQuery.data?.pages) return;
 		for (let i = 0; i < $allUserGenerationFullOutputsQuery.data.pages.length; i++) {
 			let page = $allUserGenerationFullOutputsQuery.data.pages[i];
@@ -188,7 +189,7 @@
 <svelte:window on:keydown={onKeyDown} />
 
 <GalleryLikePageWrapper>
-	{#if !$page.data.session?.user.id}
+	{#if !$sessionStore?.user.id}
 		<div class="w-full flex-1 max-w-5xl flex justify-center px-2 py-4 md:py-2">
 			<div class="my-auto flex flex-col">
 				<SignInCard redirectTo="/history" />

@@ -20,6 +20,7 @@
 	} from '$ts/stores/user/queryKeys';
 	import { userSummary } from '$ts/stores/user/summary';
 	import { useQueryClient } from '@tanstack/svelte-query';
+	import { sessionStore } from '$ts/constants/supabase';
 
 	export let generation: TGenerationWithSelectedOutput;
 	export let modalType: TGenerationFullScreenModalType;
@@ -37,7 +38,7 @@
 		'SC - Advanced Mode': $advancedModeApp,
 		'SC - Locale': $locale,
 		'SC - Page': `${$page.url.pathname}${$page.url.search}`,
-		'SC - User Id': $page.data.session?.user.id,
+		'SC - User Id': $sessionStore?.user.id,
 		'SC - Stripe Product Id': $userSummary?.product_id,
 		'SC - App Version': $appVersion
 	};
@@ -72,7 +73,7 @@
 			const res = favoriteOutputs({
 				output_ids: [generation.selected_output.id],
 				action,
-				access_token: $page.data.session?.access_token || ''
+				access_token: $sessionStore?.access_token || ''
 			});
 		} catch (error) {
 			console.log('Error favoriting generation output', error);

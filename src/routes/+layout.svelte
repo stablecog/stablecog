@@ -23,9 +23,15 @@
 	import { isTouchscreen } from '$ts/stores/isTouchscreen.js';
 	import { appRoutes } from '$ts/constants/routes.js';
 	import { notAtTheVeryTop, scrollDirection } from '$ts/stores/scroll.js';
+	import { sessionStore, supabaseStore } from '$ts/constants/supabase.js';
+
 	export let data;
 
+	let { supabase, session } = data;
 	$: ({ supabase, session } = data);
+
+	$: sessionStore.set(session);
+	$: supabaseStore.set(supabase);
 
 	setLocale(data.locale);
 
@@ -49,16 +55,16 @@
 	$: [mounted, $page], identifyUser();
 
 	function identifyUser() {
-		if (!mounted || !$page.data.session?.user.id || lastIdentity === $page.data.session?.user.id) {
+		if (!mounted || !$sessionStore?.user.id || lastIdentity === $sessionStore?.user.id) {
 			return;
 		}
-		posthog.identify($page.data.session.user.id, {
-			email: $page.data.session.user.email,
-			'SC - User Id': $page.data.session.user.id,
+		posthog.identify($sessionStore.user.id, {
+			email: $sessionStore.user.email,
+			'SC - User Id': $sessionStore.user.id,
 			'SC - Stripe Product Id': $userSummary?.product_id,
 			'SC - App Version': $appVersion
 		});
-		lastIdentity = $page.data.session?.user.id;
+		lastIdentity = $sessionStore?.user.id;
 	}
 
 	const runIfMounted = (fn: () => void) => {
@@ -99,6 +105,7 @@
 		const {
 			data: { subscription }
 		} = supabase.auth.onAuthStateChange((event, _session) => {
+			console.log(event);
 			if (_session?.expires_at !== session?.expires_at) {
 				invalidate('supabase:auth');
 			}
@@ -137,7 +144,7 @@
 				'SC - Page': `${$page.url.pathname}${$page.url.search}`,
 				'SC - Locale': $locale,
 				'SC - Advanced Mode': $advancedModeApp,
-				'SC - User Id': $page.data.session?.user.id,
+				'SC - User Id': $sessionStore?.user.id,
 				'SC - Stripe Product Id': $userSummary?.product_id,
 				'SC - App Version': $appVersion
 			};

@@ -16,6 +16,7 @@
 	import PlatformCard from '$routes/(app)/account/apps/authorize/PlatformCard.svelte';
 	import { approveAppAuthorization } from '$ts/helpers/user/user.js';
 	import { getAppFromAppId } from '$routes/(app)/account/apps/helpers.js';
+	import { sessionStore } from '$ts/constants/supabase';
 
 	export let data;
 
@@ -25,13 +26,13 @@
 	$: platform = getAppFromAppId(data.app_id, $LL);
 
 	async function authorizeApp() {
-		if (!$page.data.session?.access_token) return;
+		if (!$sessionStore?.access_token) return;
 		if (!data.app_id || !data.app_code) return;
 		status = 'confirming';
 		statusError = undefined;
 		try {
 			const res = await approveAppAuthorization({
-				access_token: $page.data.session.access_token,
+				access_token: $sessionStore.access_token,
 				app_id: data.app_id,
 				app_code: data.app_code
 			});
@@ -71,7 +72,7 @@
 						? $LL.Account.Apps.Authorize.Error.NoValidCodeParagraph()
 						: $LL.Error.SomethingWentWrong()}
 				</p>
-			{:else if !$page.data.session?.access_token || !$page.data.session.user.email || !$userSummary}
+			{:else if !$sessionStore?.access_token || !$sessionStore.user.email || !$userSummary}
 				<div class="flex items-center justify-center mt-6">
 					<SignInCard
 						redirectTo={`${$page.url.pathname}?${$page.url.searchParams}`}

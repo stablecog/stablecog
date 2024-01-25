@@ -17,6 +17,7 @@
 	import { getTitleFromProductId } from '$ts/helpers/stripe/plan';
 	import { getUserSummary } from '$ts/helpers/user/user';
 	import { userSummary } from '$ts/stores/user/summary';
+	import { sessionStore } from '$ts/constants/supabase';
 
 	export let data;
 
@@ -55,7 +56,7 @@
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json',
-					Authorization: `Bearer ${$page.data.session?.access_token}`
+					Authorization: `Bearer ${$sessionStore?.access_token}`
 				},
 				body: JSON.stringify({
 					target_price_id: targetPriceId
@@ -63,7 +64,7 @@
 			});
 			const data = await res.json();
 			if (data.success) {
-				const summary = await getUserSummary($page.data.session?.access_token);
+				const summary = await getUserSummary($sessionStore?.access_token);
 				if (summary) {
 					userSummary.set(summary);
 				}

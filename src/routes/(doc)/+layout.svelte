@@ -7,7 +7,6 @@
 	import { rawRoutes } from '$ts/constants/routes';
 	import { navbarHeight } from '$ts/stores/navbarHeight';
 	import { navbarStickyType } from '$ts/stores/navbar';
-	import { onMount } from 'svelte';
 
 	export let data;
 </script>

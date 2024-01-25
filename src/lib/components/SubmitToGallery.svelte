@@ -8,9 +8,10 @@
 	import { shouldSubmitToGallery } from '$ts/stores/shouldSubmitToGallery';
 	import { userSummary } from '$ts/stores/user/summary';
 	import SubtleButton from '$components/primitives/buttons/SubtleButton.svelte';
+	import { sessionStore } from '$ts/constants/supabase';
 
 	$: logProps = {
-		'SC - User Id': $page.data.session?.user.id,
+		'SC - User Id': $sessionStore?.user.id,
 		'SC - Stripe Product Id': $userSummary?.product_id,
 		'SC - Advanced Mode': $advancedModeApp,
 		'SC - App Version': $appVersion

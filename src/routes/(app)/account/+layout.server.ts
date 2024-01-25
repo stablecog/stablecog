@@ -4,10 +4,7 @@ import { redirect, type ServerLoad } from '@sveltejs/kit';
 export const load: ServerLoad = async (event) => {
 	const session = await event.locals.getSession();
 	if (!session?.user?.id) {
-		throw redirect(
-			307,
-			`/sign-in?rd_to=${encodeURIComponent(event.url.pathname + event.url.search)}`
-		);
+		redirect(307, `/sign-in?rd_to=${encodeURIComponent(event.url.pathname + event.url.search)}`);
 	}
 	try {
 		const { customer_portal_url, error } = await getCustomerPortalUrl({

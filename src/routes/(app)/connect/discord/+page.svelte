@@ -15,6 +15,7 @@
 	import ErrorChip from '$components/error/ErrorChip.svelte';
 	import type { TConnectionStatus } from '$routes/(app)/connect/types.js';
 	import ConnectCard from '$routes/(app)/connect/ConnectCard.svelte';
+	import { sessionStore } from '$ts/constants/supabase';
 
 	export let data;
 
@@ -22,13 +23,13 @@
 	let statusError: string | undefined = undefined;
 
 	async function _connectToDiscord() {
-		if (!$page.data.session?.access_token) return;
+		if (!$sessionStore?.access_token) return;
 		if (!data.platform_user_id || !data.platform_token) return;
 		status = 'confirming';
 		statusError = undefined;
 		try {
 			const res = await connectAccountToDiscord({
-				access_token: $page.data.session.access_token,
+				access_token: $sessionStore.access_token,
 				platform_user_id: data.platform_user_id,
 				platform_token: data.platform_token
 			});
@@ -53,7 +54,7 @@
 <PageWrapper>
 	<div class="w-full flex flex-col items-center justify-start my-auto">
 		<section id="connect" class="w-full flex flex-col items-center justify-start">
-			{#if !$page.data.session?.access_token || !$page.data.session.user.email || !$userSummary}
+			{#if !$sessionStore?.access_token || !$sessionStore.user.email || !$userSummary}
 				<div class="flex items-center justify-center mt-6">
 					<SignInCard
 						redirectTo={`${$page.url.pathname}?${$page.url.searchParams}`}

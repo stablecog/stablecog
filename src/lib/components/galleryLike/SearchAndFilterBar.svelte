@@ -31,6 +31,7 @@
 	import IconFilter from '$components/icons/IconFilter.svelte';
 	import { aspectRatioTabs, type TAvailableAspectRatio } from '$ts/constants/generationSize';
 	import IconDimensions from '$components/icons/IconDimensions.svelte';
+	import { sessionStore } from '$ts/constants/supabase';
 
 	export let disabled = false;
 	export let searchString: string;
@@ -78,7 +79,7 @@
 			logGallerySearch({
 				'SC - Advanced Mode': $advancedModeApp,
 				'SC - Locale': $locale,
-				'SC - User Id': $page.data.session?.user.id,
+				'SC - User Id': $sessionStore?.user.id,
 				'SC - Stripe Product Id': $userSummary?.product_id,
 				'SC - App Version': $appVersion
 			});
@@ -86,7 +87,7 @@
 			logHistorySearch({
 				'SC - Advanced Mode': $advancedModeApp,
 				'SC - Locale': $locale,
-				'SC - User Id': $page.data.session?.user.id,
+				'SC - User Id': $sessionStore?.user.id,
 				'SC - Stripe Product Id': $userSummary?.product_id,
 				'SC - App Version': $appVersion
 			});

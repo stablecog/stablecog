@@ -1,5 +1,4 @@
 <script lang="ts">
-	import { page } from '$app/stores';
 	import { appVersion } from '$ts/stores/appVersion';
 	import {
 		activeGeneration,
@@ -14,6 +13,7 @@
 		submitInitialUpscaleRequest,
 		upscales
 	} from '$ts/stores/user/upscale';
+	import { sessionStore } from '$ts/constants/supabase';
 
 	$: $upscales, onUpscalesChanged();
 
@@ -23,7 +23,7 @@
 		if (!$upscales || $upscales.length === 0) {
 			return;
 		}
-		if (!$page.data.session?.access_token) {
+		if (!$sessionStore?.access_token) {
 			console.log('No access token, not submitting initial upscale request');
 			return;
 		}
@@ -47,7 +47,7 @@
 							...upscale,
 							stream_id: $sseId
 						},
-						access_token: $page.data.session.access_token,
+						access_token: $sessionStore.access_token,
 						app_version: $appVersion
 					});
 					const { id, error, total_remaining_credits, ui_id, queued_id, queue_items } = res;

@@ -7,14 +7,15 @@
 	import SignInCard from '$components/cards/SignInCard.svelte';
 	import { canonicalUrl } from '$ts/constants/main';
 	import { previewImageVersion } from '$ts/constants/previewImageVersion';
+	import { sessionStore } from '$ts/constants/supabase';
 
 	export let data;
 
-	$: $page.data.session?.user.id, redirect();
+	$: $sessionStore?.user.id, redirect();
 
 	async function redirect() {
 		if (!browser) return;
-		if (!$page.data.session?.user.id) return;
+		if (!$sessionStore?.user.id) return;
 		if (data.rd_to) {
 			await goto(data.rd_to);
 			return;

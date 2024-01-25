@@ -9,9 +9,9 @@
 	import { appVersion } from '$ts/stores/appVersion.js';
 	import { userSummary } from '$ts/stores/user/summary';
 	import { getImgProxySrc, getImgProxySrcSet } from '$ts/helpers/imgproxy';
-	import { page } from '$app/stores';
 	import Img from '$components/utils/image/Img.svelte';
 	import type { TGenerationFullScreenModalType } from '$components/generationFullScreen/types';
+	import { sessionStore } from '$ts/constants/supabase';
 
 	export let similarOutputs: TGenerationFullOutput[];
 	export let output: TGenerationFullOutput;
@@ -34,7 +34,7 @@
 							'SC - Similar to Output Id': output.id,
 							'SC - Clicked Output Id': similarOutput.id,
 							'SC - Stripe Product Id': $userSummary?.product_id,
-							'SC - User Id': $page.data.session?.user.id
+							'SC - User Id': $sessionStore?.user.id
 						};
 						if (modalType === 'user-profile') {
 							logUserProfileExploreSimilarClicked(sharedProps);

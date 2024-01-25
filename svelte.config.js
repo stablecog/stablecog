@@ -1,7 +1,7 @@
 import adapterNode from '@sveltejs/adapter-node';
 import adapterAuto from '@sveltejs/adapter-auto';
 import { mdsvex } from 'mdsvex';
-import { vitePreprocess } from '@sveltejs/kit/vite';
+import { vitePreprocess } from '@sveltejs/vite-plugin-svelte';
 import preprocess from 'svelte-preprocess';
 import { mdsvexOptions } from './mdsvex.config.js';
 

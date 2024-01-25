@@ -40,6 +40,7 @@
 	import { useQueryClient } from '@tanstack/svelte-query';
 	import { quadOut } from 'svelte/easing';
 	import { fly } from 'svelte/transition';
+	import { sessionStore } from '$ts/constants/supabase';
 
 	export let type: 'history' | 'admin-gallery';
 
@@ -157,7 +158,7 @@
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json',
-				Authorization: `Bearer ${$page.data.session?.access_token}`
+				Authorization: `Bearer ${$sessionStore?.access_token}`
 			},
 			body: JSON.stringify({
 				generation_output_ids: idObjects.map((idObject) => idObject.output_id),
@@ -173,7 +174,7 @@
 				'SC - Advanced Mode': $advancedModeApp,
 				'SC - Locale': $locale,
 				'SC - Page': `${$page.url.pathname}${$page.url.search}`,
-				'SC - User Id': $page.data.session?.user.id,
+				'SC - User Id': $sessionStore?.user.id,
 				'SC - Stripe Product Id': $userSummary?.product_id,
 				'SC - App Version': $appVersion
 			};
@@ -209,7 +210,7 @@
 			method: 'DELETE',
 			headers: {
 				'Content-Type': 'application/json',
-				Authorization: `Bearer ${$page.data.session?.access_token}`
+				Authorization: `Bearer ${$sessionStore?.access_token}`
 			},
 			body: JSON.stringify({ generation_output_ids: idObjects.map((i) => i.output_id) })
 		});
@@ -237,7 +238,7 @@
 					'SC - Advanced Mode': $advancedModeApp,
 					'SC - Locale': $locale,
 					'SC - Page': `${$page.url.pathname}${$page.url.search}`,
-					'SC - User Id': $page.data.session?.user.id,
+					'SC - User Id': $sessionStore?.user.id,
 					'SC - Stripe Product Id': $userSummary?.product_id,
 					'SC - App Version': $appVersion
 				};
@@ -257,7 +258,7 @@
 			method: 'PUT',
 			headers: {
 				'Content-Type': 'application/json',
-				Authorization: `Bearer ${$page.data.session?.access_token}`
+				Authorization: `Bearer ${$sessionStore?.access_token}`
 			},
 			body: JSON.stringify({
 				action,

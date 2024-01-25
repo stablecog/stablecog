@@ -17,6 +17,7 @@
 	import { appVersion } from '$ts/stores/appVersion';
 	import { onMount } from 'svelte';
 	import { writable } from 'svelte/store';
+	import { sessionStore } from '$ts/constants/supabase';
 
 	export let afterUsernameChanged: ((username: string) => Promise<void>) | undefined = undefined;
 	export let dontCloseOnSuccess = false;
@@ -82,7 +83,7 @@
 	}
 
 	async function onSubmit(newUsername: string) {
-		if (!$page.data.session?.access_token) return;
+		if (!$sessionStore?.access_token) return;
 		if ($userSummary?.username === newUsername) {
 			open.set(false);
 			return;
@@ -92,7 +93,7 @@
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json',
-				Authorization: `Bearer ${$page.data.session.access_token}`
+				Authorization: `Bearer ${$sessionStore.access_token}`
 			},
 			body: JSON.stringify({ username: newUsername })
 		});
@@ -105,9 +106,9 @@
 			'SC - New Username': usernameFromServer,
 			'SC - Old Username': oldUsername,
 			'SC - Stripe Product Id': $userSummary?.product_id,
-			'SC - User Id': $page.data.session.user.id
+			'SC - User Id': $sessionStore.user.id
 		});
-		const us = await getUserSummary($page.data.session.access_token);
+		const us = await getUserSummary($sessionStore.access_token);
 		if (us) {
 			userSummary.set(us);
 			if (afterUsernameChanged) await afterUsernameChanged(usernameFromServer);

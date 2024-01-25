@@ -30,6 +30,7 @@
 	import { userSummary } from '$ts/stores/user/summary';
 	import { windowHeight } from '$ts/stores/window';
 	import { portal } from 'svelte-portal';
+	import { sessionStore } from '$ts/constants/supabase';
 
 	export let disabled = false;
 	export let openSignInModal: () => void;
@@ -65,7 +66,7 @@
 
 	function removeInitImage() {
 		logInitImageRemoved({
-			'SC - User Id': $page.data.session?.user.id,
+			'SC - User Id': $sessionStore?.user.id,
 			'SC - Stripe Product Id': $userSummary?.product_id,
 			'SC - Locale': $locale,
 			'SC - Page': `${$page.url.pathname}${$page.url.search}`,
@@ -172,7 +173,7 @@
 					{$LL.Home.ImageInput.Title()}
 				</p>
 			</div>
-			{#if !$page.data.session?.user.id}
+			{#if !$sessionStore?.user.id}
 				<button
 					on:click={openSignInModal}
 					type="button"

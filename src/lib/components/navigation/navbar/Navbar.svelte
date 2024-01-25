@@ -29,6 +29,7 @@
 	import RemainingCredits from '$components/navigation/navbar/RemainingCredits.svelte';
 	import { isSignInModalOpen } from '$ts/stores/isSignInModalOpen';
 	import { notAtTheVeryTop, scrollDirection } from '$ts/stores/scroll';
+	import { sessionStore } from '$ts/constants/supabase';
 
 	export let dirTree: Writable<TDirTreeItem[]> | undefined = undefined;
 
@@ -173,7 +174,7 @@
 			<div class="flex items-center justify-end pl-2 pr-3.5 md:pl-2.5 md:pr-5">
 				<RemainingCredits />
 				<!-- Account -->
-				{#if $page.data.session?.user.email && $userSummary}
+				{#if $sessionStore?.user.email && $userSummary}
 					<div
 						use:clickoutside={{ callback: closeAccountMenu }}
 						class="flex flex-col items-end relative"
@@ -225,7 +226,7 @@
 	</div>
 </nav>
 
-{#if $isSignInModalOpen && (!$page.data.session?.user.id || !$userSummary)}
+{#if $isSignInModalOpen && (!$sessionStore?.user.id || !$userSummary)}
 	<SignInModal
 		redirectTo={($page.url.pathname === '/' ? '/generate' : $page.url.pathname) +
 			$searchParamsString}

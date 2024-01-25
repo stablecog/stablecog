@@ -5,7 +5,7 @@
 	import { logSkipTheQueueButtonClicked } from '$ts/helpers/loggers';
 	import { appVersion } from '$ts/stores/appVersion';
 	import { page } from '$app/stores';
-	import IconPulsing from '$components/icons/IconPulsing.svelte';
+	import { sessionStore } from '$ts/constants/supabase';
 
 	export let position: number;
 	export let hasBg = false;
@@ -52,7 +52,7 @@
 							'SC - App Version': $appVersion,
 							'SC - Locale': $locale,
 							'SC - Page': `${$page.url.pathname}${$page.url.search}`,
-							'SC - User Id': $page.data.session?.user.id,
+							'SC - User Id': $sessionStore?.user.id,
 							'SC - Stripe Product Id': $userSummary?.product_id
 						});
 					}}

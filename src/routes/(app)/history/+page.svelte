@@ -1,5 +1,4 @@
 <script lang="ts">
-	import { browser } from '$app/environment';
 	import { page } from '$app/stores';
 	import BatchEditBar from '$components/galleryLike/BatchEditBar.svelte';
 	import Button from '$components/primitives/buttons/Button.svelte';
@@ -53,6 +52,7 @@
 	import GalleryLikePageWrapper from '$components/galleryLike/GalleryLikePageWrapper.svelte';
 	import GalleryLikeTitleSection from '$components/galleryLike/GalleryLikeTitleSection.svelte';
 	import GalleryLikeGridWrapper from '$components/galleryLike/GalleryLikeGridWrapper.svelte';
+	import { sessionStore } from '$ts/constants/supabase';
 
 	export let data;
 
@@ -81,14 +81,14 @@
 	);
 
 	$: userGenerationFullOutputsQuery =
-		$page.data.session?.user.id && $userSummary
+		$sessionStore?.user.id && $userSummary
 			? createInfiniteQuery(
 					getHistoryInfiniteQueryProps({
 						userGalleryCurrentView: $userGalleryCurrentView,
 						searchString: $historySearchString,
 						modelIdFilters: $userGalleryModelIdFilters,
 						aspectRatioFilters: $userGalleryAspectRatioFilters,
-						session: $page.data.session
+						session: $sessionStore
 					})
 			  )
 			: undefined;
@@ -128,7 +128,7 @@
 		const props = {
 			'SC - Locale': $locale,
 			'SC - Page': `${$page.url.pathname}${$page.url.search}`,
-			'SC - User Id': $page.data.session?.user.id,
+			'SC - User Id': $sessionStore?.user.id,
 			'SC - Stripe Product Id': $userSummary?.product_id,
 			'SC - App Version': $appVersion
 		};
@@ -141,7 +141,7 @@
 	}
 
 	const onPagesChanged = () => {
-		if (!$page.data.session?.user.id || !$userGenerationFullOutputsQuery) return;
+		if (!$sessionStore?.user.id || !$userGenerationFullOutputsQuery) return;
 		if (!$userGenerationFullOutputsQuery.data?.pages) return;
 		for (let i = 0; i < $userGenerationFullOutputsQuery.data.pages.length; i++) {
 			let page = $userGenerationFullOutputsQuery.data.pages[i];
@@ -200,7 +200,7 @@
 <svelte:window on:keydown={onKeyDown} />
 
 <GalleryLikePageWrapper>
-	{#if !$page.data.session?.user.id || !$userSummary}
+	{#if !$sessionStore?.user.id || !$userSummary}
 		<div class="w-full flex-1 max-w-7xl flex justify-center px-2 py-4 md:py-2 md:px-8">
 			<div class="my-auto flex flex-col">
 				<SignInCard redirectTo={'/history' + $searchParamsString} />

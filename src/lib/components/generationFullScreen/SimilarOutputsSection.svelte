@@ -21,6 +21,7 @@
 	} from '$ts/stores/user/generation';
 	import { userSummary } from '$ts/stores/user/summary';
 	import { createQuery } from '@tanstack/svelte-query';
+	import { sessionStore } from '$ts/constants/supabase';
 
 	export let generation: TGenerationWithSelectedOutput;
 	export let modalType: TGenerationFullScreenModalType;
@@ -86,7 +87,7 @@
 								'SC - Similar to Output Id': outputId,
 								'SC - Clicked Output Id': similarOutput.id,
 								'SC - Stripe Product Id': $userSummary?.product_id,
-								'SC - User Id': $page.data.session?.user.id
+								'SC - User Id': $sessionStore?.user.id
 							};
 							if (modalType === 'user-profile') {
 								logUserProfileModalSimilarClicked(logParams);

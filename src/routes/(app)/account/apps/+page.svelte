@@ -22,13 +22,14 @@
 	import IconSc from '$components/icons/IconSc.svelte';
 	import { getAppFromAppId } from '$routes/(app)/account/apps/helpers';
 	import IconGrid from '$components/icons/IconGrid.svelte';
+	import { sessionStore } from '$ts/constants/supabase';
 
 	let isModalOpen = false;
 	let tokenToDelete: string | undefined = undefined;
 
 	$: tokensQuery = browser
 		? createQuery(['user_apps'], () =>
-				getUserTokens({ access_token: $page.data.session?.access_token || '', type: 'client' })
+				getUserTokens({ access_token: $sessionStore?.access_token || '', type: 'client' })
 		  )
 		: undefined;
 
@@ -36,7 +37,7 @@
 		? createMutation(
 				['user_delete_token'],
 				({ id }: { id: string }) =>
-					deleteUserToken({ access_token: $page.data.session?.access_token || '', id }),
+					deleteUserToken({ access_token: $sessionStore?.access_token || '', id }),
 				{
 					onSuccess: () => {
 						$tokensQuery?.refetch();

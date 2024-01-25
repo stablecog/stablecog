@@ -11,6 +11,7 @@
 	import { userSummary } from '$ts/stores/user/summary';
 	import { onDestroy } from 'svelte';
 	import { quadOut } from 'svelte/easing';
+	import { sessionStore } from '$ts/constants/supabase';
 
 	let nowInterval: NodeJS.Timeout | undefined;
 	const nowIntervalDuration = 1000;
@@ -60,7 +61,7 @@
 	});
 </script>
 
-{#if $page.data.session && $userSummary}
+{#if $sessionStore && $userSummary}
 	<WithTooltip
 		delay={150}
 		let:trigger

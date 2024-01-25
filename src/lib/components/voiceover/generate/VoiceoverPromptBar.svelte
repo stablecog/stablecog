@@ -1,5 +1,4 @@
 <script lang="ts">
-	import { page } from '$app/stores';
 	import CreditCostBadge from '$components/badges/CreditCostBadge.svelte';
 	import Morpher from '$components/utils/Morpher.svelte';
 	import InsufficientCreditsBadge from '$components/badges/InsufficientCreditsBadge.svelte';
@@ -39,6 +38,7 @@
 	} from '$ts/stores/voiceover/voiceoverSettings';
 	import { windowWidth } from '$ts/stores/window';
 	import { onMount } from 'svelte';
+	import { sessionStore } from '$ts/constants/supabase';
 
 	export let toggleSettingsSheet: (s?: boolean) => void;
 	export let openSignInModal: () => void;
@@ -67,7 +67,7 @@
 	const isJustCreatedVoiceoverForAnimTimeoutDuration = 175;
 
 	function onSubmit() {
-		if (!$page.data.session?.user.id || !$userSummary) {
+		if (!$sessionStore?.user.id || !$userSummary) {
 			openSignInModal();
 			return;
 		}
@@ -222,7 +222,7 @@
 					<IconWand class="w-7 h-7 md:w-8 md:h-8" />
 				</Button>
 				<CreditCostBadge {creditCost} />
-				{#if doesntHaveEnoughCredits && $userSummary && $page.data.session?.user.id}
+				{#if doesntHaveEnoughCredits && $userSummary && $sessionStore?.user.id}
 					<InsufficientCreditsBadge
 						neededCredits={creditCost}
 						remainingCredits={$userSummary.total_remaining_credits}
@@ -334,7 +334,7 @@
 				>
 					{$LL.Voiceover.PromptBar.GenerateButton()}
 				</Button>
-				{#if doesntHaveEnoughCredits && $userSummary && $page.data.session?.user.id}
+				{#if doesntHaveEnoughCredits && $userSummary && $sessionStore?.user.id}
 					<InsufficientCreditsBadge
 						neededCredits={creditCost}
 						remainingCredits={$userSummary.total_remaining_credits}

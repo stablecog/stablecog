@@ -33,7 +33,6 @@
 	} from '$components/generationFullScreen/types';
 	import SrcsetProvider from '$components/generationImage/SrcsetProvider.svelte';
 	import IconNoImage from '$components/icons/IconNoImage.svelte';
-	import IconPen from '$components/icons/IconPen.svelte';
 	import IconUpscale from '$components/icons/IconUpscale.svelte';
 	import TabBar from '$components/primitives/tabBars/TabBar.svelte';
 	import LL, { locale } from '$i18n/i18n-svelte';
@@ -63,6 +62,7 @@
 	import { createEventDispatcher, onMount } from 'svelte';
 	import { quadOut } from 'svelte/easing';
 	import { fly } from 'svelte/transition';
+	import { sessionStore } from '$ts/constants/supabase';
 
 	export let generation: TGenerationWithSelectedOutput;
 	export let prevGeneration: TGenerationWithSelectedOutput | undefined = undefined;
@@ -165,7 +165,7 @@
 
 	const upscaleCreditCost = 1;
 	$: doesntHaveEnoughCredits =
-		$userSummary && $page.data.session?.user.id
+		$userSummary && $sessionStore?.user.id
 			? $userSummary.total_remaining_credits < upscaleCreditCost
 			: false;
 
@@ -574,7 +574,7 @@
 												<p>{$LL.GenerationFullscreen.UpscaleButton()}</p>
 											</div>
 										</Button>
-										{#if doesntHaveEnoughCredits && !upscaleBeingProcessed && $userSummary && $page.data.session?.user.id}
+										{#if doesntHaveEnoughCredits && !upscaleBeingProcessed && $userSummary && $sessionStore?.user.id}
 											<InsufficientCreditsBadge
 												neededCredits={upscaleCreditCost}
 												remainingCredits={$userSummary.total_remaining_credits}
@@ -609,7 +609,7 @@
 											<p>{$LL.GenerationFullscreen.EditButton()}</p>
 										</div>
 									</Button>
-									{#if doesntHaveEnoughCredits && !upscaleBeingProcessed && $userSummary && $page.data.session?.user.id}
+									{#if doesntHaveEnoughCredits && !upscaleBeingProcessed && $userSummary && $sessionStore?.user.id}
 										<InsufficientCreditsBadge
 											neededCredits={upscaleCreditCost}
 											remainingCredits={$userSummary.total_remaining_credits}

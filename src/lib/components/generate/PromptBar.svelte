@@ -51,6 +51,7 @@
 	import { konvaContainerForExportId } from '$components/canvas/constants/main';
 	import { KonvaInstance, paintLayer, stage } from '$components/canvas/stores/konva';
 	import { baseOutputForInpainting } from '$components/canvas/stores/baseOutputForInpainting';
+	import { sessionStore } from '$ts/constants/supabase';
 
 	export let openSignInModal: () => void;
 	export let serverData: TGeneratePageData;
@@ -96,7 +97,7 @@
 		if ($maxOngoingGenerationsCountReached) {
 			return;
 		}
-		if (!$page.data.session?.user.id) {
+		if (!$sessionStore?.user.id) {
 			openSignInModal();
 			return;
 		}
@@ -294,7 +295,7 @@
 				<div class="absolute right-0 top-0 h-full w-11 md:w-13 lg:hidden">
 					<Button
 						disabled={!isCheckCompleted ||
-							(doesntHaveEnoughCredits && $page.data.session?.user.id !== undefined)}
+							(doesntHaveEnoughCredits && $sessionStore?.user.id !== undefined)}
 						uploading={$generationInitImageFilesState === 'uploading'}
 						waiting={$maxOngoingGenerationsCountReached}
 						withSpinner
@@ -305,7 +306,7 @@
 					>
 						<IconWand class="w-7 h-7 md:w-8 md:h-8" />
 					</Button>
-					{#if doesntHaveEnoughCredits && $userSummary && $page.data.session?.user.id}
+					{#if doesntHaveEnoughCredits && $userSummary && $sessionStore?.user.id}
 						<InsufficientCreditsBadge
 							neededCredits={Number($generationNumOutputs)}
 							remainingCredits={$userSummary.total_remaining_credits}
@@ -316,7 +317,7 @@
 			<div class="w-auto relative hidden lg:block">
 				<Button
 					disabled={!isCheckCompleted ||
-						(doesntHaveEnoughCredits && $page.data.session?.user.id !== undefined)}
+						(doesntHaveEnoughCredits && $sessionStore?.user.id !== undefined)}
 					uploading={$generationInitImageFilesState === 'uploading'}
 					waiting={$maxOngoingGenerationsCountReached}
 					withSpinner
@@ -326,7 +327,7 @@
 				>
 					{$LL.Home.GenerateButton()}
 				</Button>
-				{#if doesntHaveEnoughCredits && $userSummary && $page.data.session?.user.id}
+				{#if doesntHaveEnoughCredits && $userSummary && $sessionStore?.user.id}
 					<InsufficientCreditsBadge
 						neededCredits={Number($generationNumOutputs)}
 						remainingCredits={$userSummary.total_remaining_credits}

@@ -11,14 +11,15 @@
 	import { wantsEmail } from '$ts/stores/user/wantsEmail';
 	import { QueryClient, createMutation, createQuery } from '@tanstack/svelte-query';
 	import { onMount } from 'svelte';
+	import { sessionStore } from '$ts/constants/supabase';
 
 	export let queryClient: QueryClient;
 
 	let mounted = false;
 
-	$: userId = $page.data.session?.user.id;
-	$: userEmail = $page.data.session?.user.email;
-	$: accessToken = $page.data.session?.access_token;
+	$: userId = $sessionStore?.user.id;
+	$: userEmail = $sessionStore?.user.email;
+	$: accessToken = $sessionStore?.access_token;
 
 	$: userSummaryQuery =
 		browser && userId

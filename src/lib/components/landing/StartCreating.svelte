@@ -1,10 +1,10 @@
 <script lang="ts">
-	import { page } from '$app/stores';
 	import LazyImage from '$components/utils/LazyImage.svelte';
 	import Button from '$components/primitives/buttons/Button.svelte';
 	import LL from '$i18n/i18n-svelte';
 	import { themeApp } from '$ts/stores/theme';
 	import { userSummary } from '$ts/stores/user/summary';
+	import { sessionStore } from '$ts/constants/supabase';
 </script>
 
 <section id="start-creating" class="w-full flex justify-center pt-16 lg:pt-8 xl:pt-4 pb-8 md:pb-16">
@@ -22,7 +22,7 @@
 				{$LL.Landing.StartCreating.Paragraph()}
 			</p>
 			<Button
-				href={$page.data.session?.user.id && $userSummary ? '/generate' : '/generate?smo=true'}
+				href={$sessionStore?.user.id && $userSummary ? '/generate' : '/generate?smo=true'}
 				class="mt-6 w-full max-w-[16rem] px-6 md:px-8 py-4"
 				noPadding
 			>

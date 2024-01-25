@@ -14,6 +14,7 @@
 	import { quadOut } from 'svelte/easing';
 	import { previewImageVersion } from '$ts/constants/previewImageVersion';
 	import NoBgButton from '$components/primitives/buttons/NoBgButton.svelte';
+	import { supabaseStore } from '$ts/constants/supabase';
 
 	export let data;
 
@@ -23,14 +24,14 @@
 	let errorText: string | null = null;
 
 	async function changeEmail() {
-		if (!$page.data.supabase) return;
+		if (!$supabaseStore) return;
 		if (!email.includes('@')) {
 			errorText = $LL.Error.InvalidEmail();
 			return;
 		}
 		changeEmailStatus = 'loading';
 		const domain = email.split('@')[1];
-		const { data: dData, error: dError } = await $page.data.supabase
+		const { data: dData, error: dError } = await $supabaseStore
 			.from('disposable_emails')
 			.select('domain')
 			.eq('domain', domain);
@@ -45,7 +46,7 @@
 			changeEmailStatus = 'error';
 			return;
 		}
-		const { data: sData, error: sError } = await $page.data.supabase.auth.updateUser({
+		const { data: sData, error: sError } = await $supabaseStore.auth.updateUser({
 			email
 		});
 		if (sError) {

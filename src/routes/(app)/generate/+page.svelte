@@ -56,6 +56,7 @@
 	import InpaintingCanvas from '$components/canvas/inpainting/InpaintingCanvas.svelte';
 	import { generateMode } from '$ts/stores/generate/generateMode.js';
 	import { baseOutputForInpainting } from '$components/canvas/stores/baseOutputForInpainting.js';
+	import { sessionStore } from '$ts/constants/supabase';
 
 	export let data;
 
@@ -88,12 +89,12 @@
 	]);
 
 	$: userGenerationFullOutputsQuery =
-		$page.data.session?.user.id && $userSummary
+		$sessionStore?.user.id && $userSummary
 			? createInfiniteQuery({
 					queryKey: $generatePageUserGenerationFullOutputsQueryKey,
 					queryFn: async (lastPage) => {
 						let outputsPage = await getUserGenerationFullOutputs({
-							access_token: $page.data.session?.access_token || '',
+							access_token: $sessionStore?.access_token || '',
 							cursor: lastPage?.pageParam
 						});
 						return outputsPage;
@@ -308,7 +309,7 @@
 					>
 						<!-- Desktop Sidebar -->
 						<SidebarWrapper hasGradient>
-							{#if !$page.data.session?.user.id || !$userSummary}
+							{#if !$sessionStore?.user.id || !$userSummary}
 								<GenerateGridPlaceholder text={$LL.Generate.Grid.NotSignedIn.Paragraph()} />
 							{:else if userGenerationFullOutputsQuery}
 								<AutoSize bind:element={gridScrollContainer} let:clientWidth let:clientHeight>
@@ -383,7 +384,7 @@
 									let:clientWidth
 									let:clientHeight
 								>
-									{#if !$page.data.session?.user.id || !$userSummary}
+									{#if !$sessionStore?.user.id || !$userSummary}
 										<GenerateHorizontalListPlaceholder
 											text={$LL.Generate.Grid.NotSignedIn.Paragraph()}
 										/>
@@ -426,7 +427,7 @@
 					md:pb-0 md:pt-26 lg:pb-8 relative z-0"
 				>
 					<div class="flex-1 min-w-0 flex flex-col items-center justify-center w-full">
-						{#if $page.data.session?.user.id && $userSummary && $userSummary.total_remaining_credits < lowOnCreditsThreshold}
+						{#if $sessionStore?.user.id && $userSummary && $userSummary.total_remaining_credits < lowOnCreditsThreshold}
 							<div
 								transition:expandCollapse={{ duration: 200 }}
 								class="w-full flex flex-col justify-start items-center"
@@ -462,7 +463,7 @@
 					<div class="w-full hidden md:flex lg:hidden pt-11">
 						<SidebarWrapper borderSize="sm">
 							<div class="w-full h-20 flex flex-col">
-								{#if !$page.data.session?.user.id || !$userSummary}
+								{#if !$sessionStore?.user.id || !$userSummary}
 									<GenerateHorizontalListPlaceholder
 										text={$LL.Generate.Grid.NotSignedIn.Paragraph()}
 									/>

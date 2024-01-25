@@ -1,10 +1,10 @@
 <script lang="ts">
-	import { page } from '$app/stores';
 	import LazyImageWithOutline from '$components/utils/LazyImageWithOutline.svelte';
 	import Button from '$components/primitives/buttons/Button.svelte';
 	import LL from '$i18n/i18n-svelte';
 	import { themeApp } from '$ts/stores/theme';
 	import { userSummary } from '$ts/stores/user/summary';
+	import { sessionStore } from '$ts/constants/supabase';
 </script>
 
 <section
@@ -24,7 +24,7 @@
 			{$LL.Landing.InitImage.Paragraph()}
 		</p>
 		<Button
-			href={$page.data.session?.user.id && $userSummary ? '/generate' : '/generate?smo=true'}
+			href={$sessionStore?.user.id && $userSummary ? '/generate' : '/generate?smo=true'}
 			class="mt-6 w-full max-w-[15rem] px-6 md:px-8 py-4"
 			noPadding
 		>
@@ -84,7 +84,7 @@
 					{$LL.Landing.InitImage.Paragraph()}
 				</p>
 				<Button
-					href={$page.data.session?.user.id && $userSummary ? '/generate' : '/generate?smo=true'}
+					href={$sessionStore?.user.id && $userSummary ? '/generate' : '/generate?smo=true'}
 					class="mt-6 w-full max-w-[15rem] px-6 md:px-8 py-4"
 					noPadding
 				>

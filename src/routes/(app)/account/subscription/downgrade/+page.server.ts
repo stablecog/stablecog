@@ -12,25 +12,25 @@ export const load: ServerLoad = async (event) => {
 	const priceId = event.url.searchParams.get('price_id');
 	const from = event.url.searchParams.get('from');
 	if (!from) {
-		throw redirect(302, '/pricing');
+		redirect(302, '/pricing');
 	}
 	if (!session?.user.id || !priceId) {
-		throw redirect(302, from);
+		redirect(302, from);
 	}
 	try {
 		const res = await getUserSummary(session.access_token);
 		if (!res?.product_id || !res?.price_id) {
-			throw redirect(302, from);
+			redirect(302, from);
 		}
 		const productIdOfTargetPriceId = getProductIdFromPriceId(priceId);
 		if (!productIdOfTargetPriceId) {
-			throw redirect(302, from);
+			redirect(302, from);
 		}
 		const indexOfCurrentProductId = STRIPE_PRODUCT_IDS_SUBSCRIPTIONS.indexOf(res.product_id);
 		const indexOfTargetProductId =
 			STRIPE_PRODUCT_IDS_SUBSCRIPTIONS.indexOf(productIdOfTargetPriceId);
 		if (indexOfTargetProductId >= indexOfCurrentProductId) {
-			throw redirect(302, from);
+			redirect(302, from);
 		}
 		const countryCode = event.locals.countryCode;
 		const currency: TStripeSupportedCurrency =
@@ -45,5 +45,5 @@ export const load: ServerLoad = async (event) => {
 	} catch (error) {
 		console.log(error);
 	}
-	throw redirect(302, from);
+	redirect(302, from);
 };

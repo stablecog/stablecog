@@ -42,6 +42,7 @@
 	import IconImageSearch from '$components/icons/IconImageSearch.svelte';
 	import ShareButton from '$components/generationFullScreen/ShareButton.svelte';
 	import LikeButton from '$components/primitives/buttons/LikeButton.svelte';
+	import { sessionStore } from '$ts/constants/supabase';
 
 	export let generation: TGenerationWithSelectedOutput;
 	export let generateSimilarUrl: string;
@@ -91,7 +92,7 @@
 					'SC - Output Id': generation.selected_output.id,
 					'SC - Page': `${$page.url.pathname}${$page.url.search}`,
 					'SC - Generation Id': generation.id,
-					'SC - User Id': $page.data.session?.user.id,
+					'SC - User Id': $sessionStore?.user.id,
 					'SC - Stripe Product Id': $userSummary?.product_id,
 					'SC - App Version': $appVersion
 				}
@@ -111,7 +112,7 @@
 		'SC - Advanced Mode': $advancedModeApp,
 		'SC - Locale': $locale,
 		'SC - Page': `${$page.url.pathname}${$page.url.search}`,
-		'SC - User Id': $page.data.session?.user.id,
+		'SC - User Id': $sessionStore?.user.id,
 		'SC - Stripe Product Id': $userSummary?.product_id,
 		'SC - App Version': $appVersion
 	};
@@ -127,7 +128,7 @@
 				method: 'DELETE',
 				headers: {
 					'Content-Type': 'application/json',
-					Authorization: `Bearer ${$page.data.session?.access_token}`
+					Authorization: `Bearer ${$sessionStore?.access_token}`
 				},
 				body: JSON.stringify({ generation_output_ids: [generation.selected_output.id] })
 			});
@@ -165,7 +166,7 @@
 				logGalleryGenerateSimilarClicked({
 					'SC - Advanced Mode': $advancedModeApp,
 					'SC - Output Id': generation.selected_output.id,
-					'SC - User Id': $page.data.session?.user.id,
+					'SC - User Id': $sessionStore?.user.id,
 					'SC - Stripe Product Id': $userSummary?.product_id,
 					'SC - App Version': $appVersion
 				});
@@ -189,7 +190,7 @@
 					}
 					const logParams = {
 						'SC - Output Id': generation.selected_output.id,
-						'SC - User Id': $page.data.session?.user.id,
+						'SC - User Id': $sessionStore?.user.id,
 						'SC - Stripe Product Id': $userSummary?.product_id,
 						'SC - App Version': $appVersion,
 						'SC - Clicked Output Id': generation.selected_output.id,

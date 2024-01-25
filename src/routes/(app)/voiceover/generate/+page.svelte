@@ -48,6 +48,7 @@
 	import VoiceoverSettingsSheet from '$components/voiceover/generate/VoiceoverSettingsSheet.svelte';
 	import { isSignInModalOpen } from '$ts/stores/isSignInModalOpen.js';
 	import IllustrationDeprecated from '$components/illustrations/IllustrationDeprecated.svelte';
+	import { sessionStore } from '$ts/constants/supabase';
 
 	export let data;
 
@@ -80,12 +81,12 @@
 	$: userVoiceoverFullOutputsQueryKey = ['user_voiceover_full_outputs'];
 
 	$: userVoiceoverFullOutputsQuery =
-		browser && $page.data.session?.user.id && $userSummary
+		browser && $sessionStore?.user.id && $userSummary
 			? createInfiniteQuery({
 					queryKey: userVoiceoverFullOutputsQueryKey,
 					queryFn: async (lastPage) => {
 						let outputsPage = await getUserVoiceoverFullOutputs({
-							access_token: $page.data.session?.access_token || '',
+							access_token: $sessionStore?.access_token || '',
 							cursor: lastPage?.pageParam
 						});
 						return outputsPage;
@@ -191,7 +192,7 @@
 					>
 						<SidebarWrapper hasGradient>
 							<AutoSize bind:element={listScrollContainerLg} let:clientHeight>
-								{#if !$page.data.session?.user.id || !$userSummary}
+								{#if !$sessionStore?.user.id || !$userSummary}
 									<VoiceoverListPlaceholder text={$LL.Voiceover.List.NotSignedIn.Paragraph()} />
 								{:else if userVoiceoverFullOutputsQuery}
 									{#if listScrollContainerLg && clientHeight}
@@ -253,7 +254,7 @@
 								: 'pointer-events-auto'}"
 						>
 							<AutoSize hideScroll={true} bind:element={listScrollContainer} let:clientWidth>
-								{#if !$page.data.session?.user.id || !$userSummary}
+								{#if !$sessionStore?.user.id || !$userSummary}
 									<VoiceoverListPlaceholder
 										horizontal={true}
 										padding={8}
@@ -294,7 +295,7 @@
 						</div>
 					</div>
 				</div>
-				{#if $page.data.session?.user.id && $userSummary && $userSummary.total_remaining_credits < lowOnCreditsThreshold}
+				{#if $sessionStore?.user.id && $userSummary && $userSummary.total_remaining_credits < lowOnCreditsThreshold}
 					<div
 						transition:expandCollapse={{ duration: 200 }}
 						class="w-full flex flex-col justify-start items-center order-first md:order-last"
@@ -326,7 +327,7 @@
 						<div class="h-30 flex flex-col">
 							<SidebarWrapper>
 								<AutoSize hideScroll={true} bind:element={listScrollContainerMd} let:clientWidth>
-									{#if !$page.data.session?.user.id || !$userSummary}
+									{#if !$sessionStore?.user.id || !$userSummary}
 										<VoiceoverListPlaceholder
 											horizontal={true}
 											text={$LL.Voiceover.List.NotSignedIn.Paragraph()}

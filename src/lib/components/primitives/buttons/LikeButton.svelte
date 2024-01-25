@@ -24,6 +24,7 @@
 	import { userSummary } from '$ts/stores/user/summary';
 	import { useQueryClient } from '@tanstack/svelte-query';
 	import { get } from 'svelte/store';
+	import { sessionStore } from '$ts/constants/supabase';
 
 	export let generation: TGenerationWithSelectedOutput;
 	export let modalType: TGenerationFullScreenModalType;
@@ -49,7 +50,7 @@
 	let abortController: AbortController | undefined = undefined;
 
 	async function likeOutput(action: 'like' | 'unlike') {
-		if (!$page.data.session?.access_token) return;
+		if (!$sessionStore?.access_token) return;
 		const newLikeCount =
 			action === 'like'
 				? generation.selected_output.like_count + 1
@@ -61,7 +62,7 @@
 			'SC - Output Id': generation.selected_output.id,
 			'SC - Page': `${$page.url.pathname}${$page.url.search}`,
 			'SC - Stripe Product Id': $userSummary?.product_id,
-			'SC - User Id': $page.data.session?.user.id,
+			'SC - User Id': $sessionStore?.user.id,
 			'SC - Generation Id': generation.id
 		});
 		try {
@@ -127,7 +128,7 @@
 			const res = await likeOutputs({
 				output_ids: [generation.selected_output.id],
 				action,
-				access_token: $page.data.session?.access_token,
+				access_token: $sessionStore?.access_token,
 				abortController
 			});
 		} catch (error) {
@@ -145,7 +146,7 @@
 	});
 
 	function onClick() {
-		if ($page.data.session?.user.id && $userSummary) {
+		if ($sessionStore?.user.id && $userSummary) {
 			likeOutput(generation.selected_output.is_liked ? 'unlike' : 'like');
 		} else {
 			isSignInModalOpen.set(true);

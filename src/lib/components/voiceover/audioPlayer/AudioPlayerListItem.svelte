@@ -36,6 +36,7 @@
 	import type { TUserVoiceoverFullOutputsPage } from '$ts/queries/userVoiceovers';
 	import { useQueryClient } from '@tanstack/svelte-query';
 	import IconTrashcan from '$components/icons/IconTrashcan.svelte';
+	import { sessionStore } from '$ts/constants/supabase';
 
 	export let output: TVoiceoverFullOutput;
 	export let hasDeleteButton = false;
@@ -125,7 +126,7 @@
 				method: 'DELETE',
 				headers: {
 					'Content-Type': 'application/json',
-					Authorization: `Bearer ${$page.data.session?.access_token}`
+					Authorization: `Bearer ${$sessionStore?.access_token}`
 				},
 				body: JSON.stringify({ output_ids: idObjects.map((o) => o.output_id) })
 			});
@@ -157,7 +158,7 @@
 					'SC - Output Id': idObject.output_id,
 					'SC - Locale': $locale,
 					'SC - Page': `${$page.url.pathname}${$page.url.search}`,
-					'SC - User Id': $page.data.session?.user.id,
+					'SC - User Id': $sessionStore?.user.id,
 					'SC - Stripe Product Id': $userSummary?.product_id,
 					'SC - App Version': $appVersion
 				};

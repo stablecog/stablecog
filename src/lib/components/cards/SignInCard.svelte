@@ -20,6 +20,7 @@
 	import { signInCardCodeSignInStatus, signInCardStatus } from '$ts/stores/signInCardState';
 	import { apiUrl } from '$ts/constants/main';
 	import PinInput from '$components/primitives/PinInput.svelte';
+	import { sessionStore, supabaseStore } from '$ts/constants/supabase';
 
 	export let redirectTo: string | null = null;
 	export let isModal = false;
@@ -39,7 +40,7 @@
 	$: isCodeValid = codeValue?.length === codeLength;
 
 	async function signIn() {
-		if (!$page.data.supabase) return;
+		if (!$supabaseStore) return;
 		if (!email.includes('@')) {
 			errorText = $LL.Error.InvalidEmail();
 			return;
@@ -64,7 +65,7 @@
 			errorText = $LL.Error.EmailNotAllowed();
 			return;
 		}
-		const { data: sData, error: sError } = await $page.data.supabase.auth.signInWithOtp({
+		const { data: sData, error: sError } = await $supabaseStore.auth.signInWithOtp({
 			email,
 			options: {
 				emailRedirectTo: `${$page.url.origin}/api/auth/callback?rd_to=${
@@ -89,13 +90,13 @@
 	}
 
 	async function signInWithOAuth(prov: Provider) {
-		if (!$page.data.supabase) return;
+		if (!$supabaseStore) return;
 		if (wantsEmailChecked) {
 			wantsEmail.set(true);
 		}
 		signInCardStatus.set('loading');
 		provider = prov;
-		const { data: sData, error: sError } = await $page.data.supabase.auth.signInWithOAuth({
+		const { data: sData, error: sError } = await $supabaseStore.auth.signInWithOAuth({
 			provider: prov,
 			options: {
 				redirectTo: `${$page.url.origin}/api/auth/callback?rd_to=${
@@ -132,11 +133,11 @@
 	];
 
 	async function signInWithCode() {
-		if (!$page.data.supabase) return;
+		if (!$supabaseStore) return;
 		if (!isCodeValid) return;
 		signInCardCodeSignInStatus.set('loading');
 		try {
-			const { data: sData, error: sError } = await $page.data.supabase.auth.verifyOtp({
+			const { data: sData, error: sError } = await $supabaseStore.auth.verifyOtp({
 				email,
 				token: codeValue.toString(),
 				type: 'email'
@@ -170,7 +171,7 @@
 	});
 
 	onDestroy(() => {
-		if ($page.data.session?.user.id && $userSummary) {
+		if ($sessionStore?.user.id && $userSummary) {
 			signInCardStatus.set('idle');
 			signInCardCodeSignInStatus.set('idle');
 		}

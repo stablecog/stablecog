@@ -1,5 +1,4 @@
 <script lang="ts">
-	import { page } from '$app/stores';
 	import Morpher from '$components/utils/Morpher.svelte';
 	import Button from '$components/primitives/buttons/Button.svelte';
 	import ButtonHoverEffect from '$components/primitives/buttons/ButtonHoverEffect.svelte';
@@ -17,6 +16,7 @@
 	import type { TGenerationWithSelectedOutput } from '$ts/stores/user/generation';
 	import { userSummary } from '$ts/stores/user/summary';
 	import type { TIconSc } from '$ts/types/main';
+	import { sessionStore } from '$ts/constants/supabase';
 
 	export let url: string;
 	export let generation: TGenerationWithSelectedOutput;
@@ -96,7 +96,7 @@
 	$: sharedLogProps = {
 		'SC - App Version': $appVersion,
 		'SC - Stripe Product Id': $userSummary?.product_id,
-		'SC - User Id': $page.data.session?.user.id,
+		'SC - User Id': $sessionStore?.user.id,
 		'SC - Output Id': generation.selected_output.id
 	};
 </script>

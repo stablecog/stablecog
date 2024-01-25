@@ -46,6 +46,7 @@
 	import GalleryLikePageWrapper from '$components/galleryLike/GalleryLikePageWrapper.svelte';
 	import GalleryLikeTitleSection from '$components/galleryLike/GalleryLikeTitleSection.svelte';
 	import GalleryLikeGridWrapper from '$components/galleryLike/GalleryLikeGridWrapper.svelte';
+	import { sessionStore } from '$ts/constants/supabase';
 
 	export let data;
 
@@ -96,7 +97,7 @@
 			sorts: $gallerySorts,
 			usernameFilters: $galleryUsernameFilters,
 			seed: $globalSeed,
-			accessToken: $page.data.session?.access_token
+			accessToken: $sessionStore?.access_token
 		})
 	);
 

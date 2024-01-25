@@ -17,6 +17,7 @@
 	import IconCommandLine from '$components/icons/IconCommandLine.svelte';
 	import IconProfile from '$components/icons/IconProfile.svelte';
 	import IconToken from '$components/icons/IconToken.svelte';
+	import { sessionStore, supabaseStore } from '$ts/constants/supabase';
 
 	export let setAccountMenuDropdownPage: (p: TAccountDropdownPage) => void;
 	export let closeMenu: () => void;
@@ -126,13 +127,13 @@
 			withSpinner
 			loading={isSigningOut}
 			onClick={async () => {
-				if (!$page.data.supabase) return;
+				if (!$supabaseStore) return;
 				try {
 					isSigningOut = true;
-					await $page.data.supabase.auth.signOut();
+					await $supabaseStore.auth.signOut();
 					userSummary.set(null);
 					logSignOut({
-						'SC - User Id': $page.data.session?.user.id,
+						'SC - User Id': $sessionStore?.user.id,
 						'SC - Stripe Product Id': $userSummary?.product_id,
 						'SC - Locale': $locale,
 						'SC - Page': `${$page.url.pathname}${$page.url.search}`,

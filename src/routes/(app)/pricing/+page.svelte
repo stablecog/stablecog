@@ -34,6 +34,7 @@
 	import { getCustomerPortalUrl } from '$ts/helpers/user/getCustomerPortalUrl.js';
 	import { isSignInModalOpen } from '$ts/stores/isSignInModalOpen.js';
 	import { userSummary } from '$ts/stores/user/summary';
+	import { sessionStore } from '$ts/constants/supabase';
 
 	export let data;
 
@@ -378,7 +379,7 @@
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json',
-					Authorization: `Bearer ${$page.data.session?.access_token}`
+					Authorization: `Bearer ${$sessionStore?.access_token}`
 				},
 				body: JSON.stringify({
 					target_price_id: priceId,
@@ -450,16 +451,16 @@
 						(c) => c.productId === $userSummary?.product_id
 					)?.amount}
 					{@const isSubscribed =
-						subscribedProductId === card.productId && $page.data.session?.user.id !== undefined}
+						subscribedProductId === card.productId && $sessionStore?.user.id !== undefined}
 					{@const isUpgrade =
 						subscribedAmount !== undefined &&
 						subscribedAmount < card.amount &&
-						$page.data.session?.user.id !== undefined}
+						$sessionStore?.user.id !== undefined}
 					{@const isDowngrade =
 						subscribedAmount !== undefined &&
 						subscribedAmount > card.amount &&
-						$page.data.session?.user.id !== undefined}
-					{@const accessToken = $page.data.session?.access_token}
+						$sessionStore?.user.id !== undefined}
+					{@const accessToken = $sessionStore?.access_token}
 					<PlanCard
 						id={card.id}
 						planTitle={card.title}
@@ -540,7 +541,7 @@
 			</div>
 			<div class="w-full h-[1vh]" />
 		</section>
-		{#if $userSummary?.product_id && $page.data.session?.user.id !== undefined}
+		{#if $userSummary?.product_id && $sessionStore?.user.id !== undefined}
 			<section id="credit-packs" class="w-full flex flex-col items-center justify-start pt-12">
 				<h2 class="text-center font-bold text-4xl">{$LL.Pricing.CreditPacksTitle()}</h2>
 				<p class="max-w-xl mt-3 text-center leading-relaxed text-c-on-bg/75">

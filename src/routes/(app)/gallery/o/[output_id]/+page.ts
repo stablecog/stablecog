@@ -44,11 +44,11 @@ export const load: PageLoad = async ({ params, parent, fetch }) => {
 		})
 	]);
 	if (!generationFullOutputRes.ok) {
-		throw error(404, 'Response for generation not ok');
+		error(404, 'Response for generation not ok');
 	}
 	const data: TGalleryGenerationFullOutputPageRes = await generationFullOutputRes.json();
 	if (!data.hits || !data.hits[0]) {
-		throw error(404, 'No output found');
+		error(404, 'No output found');
 	}
 	const hit = data.hits[0];
 	const output: TGenerationOutput = {

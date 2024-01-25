@@ -4,6 +4,7 @@
 	import { page } from '$app/stores';
 	import { isSuperAdmin } from '$ts/helpers/admin/roles';
 	import { userSummary } from '$ts/stores/user/summary';
+	import { sessionStore } from '$ts/constants/supabase';
 
 	$: isUserSuperAdmin = isSuperAdmin($userSummary?.roles);
 
@@ -11,7 +12,7 @@
 	function redirect() {
 		if (!browser) return;
 		if (isUserSuperAdmin) return;
-		if ($userSummary && $page.data.session) {
+		if ($userSummary && $sessionStore) {
 			goto('/');
 			return;
 		}

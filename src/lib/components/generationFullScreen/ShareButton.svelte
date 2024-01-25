@@ -15,6 +15,7 @@
 	import { appVersion } from '$ts/stores/appVersion';
 	import type { TGenerationWithSelectedOutput } from '$ts/stores/user/generation';
 	import { userSummary } from '$ts/stores/user/summary';
+	import { sessionStore } from '$ts/constants/supabase';
 
 	export let modalType: TGenerationFullScreenModalType;
 	export let url: string;
@@ -43,7 +44,7 @@
 		logShareModalOpened({
 			'SC - App Version': $appVersion,
 			'SC - Stripe Product Id': $userSummary?.product_id,
-			'SC - User Id': $page.data.session?.user.id,
+			'SC - User Id': $sessionStore?.user.id,
 			'SC - Output Id': generation.selected_output.id,
 			'SC - Modal Type': modalType
 		});

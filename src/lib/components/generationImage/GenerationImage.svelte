@@ -40,6 +40,7 @@
 	import { userSummary } from '$ts/stores/user/summary';
 	import { upscales } from '$ts/stores/user/upscale';
 	import { activeGeneration, type TGenerationWithSelectedOutput } from '$userStores/generation';
+	import { sessionStore } from '$ts/constants/supabase';
 
 	export let generation: TGenerationWithSelectedOutput;
 	export let cardType: TGenerationImageCardType;
@@ -140,7 +141,7 @@
 		if ($page.url.pathname === '/gallery') {
 			logGalleryGenerationOpened({
 				'SC - Output Id': generation.selected_output.id,
-				'SC - User Id': $page.data.session?.user.id,
+				'SC - User Id': $sessionStore?.user.id,
 				'SC - Stripe Product Id': $userSummary?.product_id,
 				'SC - Advanced Mode': $advancedModeApp,
 				'SC - App Version': $appVersion

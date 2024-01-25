@@ -9,13 +9,14 @@
 	import { previewImageVersion } from '$ts/constants/previewImageVersion';
 	import { getUserOperations, type TUserOperationsPageExtended } from '$ts/queries/operations';
 	import { createInfiniteQuery } from '@tanstack/svelte-query';
+	import { sessionStore } from '$ts/constants/supabase';
 
 	$: userOperationsQuery = browser
 		? createInfiniteQuery({
 				queryKey: ['user_operations'],
 				queryFn: (lastPage) => {
 					return getUserOperations({
-						access_token: $page.data.session?.access_token || '',
+						access_token: $sessionStore?.access_token || '',
 						cursor: lastPage?.pageParam
 					});
 				},
