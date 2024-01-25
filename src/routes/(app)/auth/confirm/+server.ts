@@ -27,5 +27,5 @@ export const GET = async (event) => {
 	}
 
 	// return the user to an error page with some instructions
-	redirect(303, '/auth/auth-code-error');
+	redirect(303, '/auth/code-error');
 };
