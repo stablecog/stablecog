@@ -17,18 +17,21 @@ export function setUrlParam({
 		typeof defaultValue === 'string'
 			? defaultValue
 			: Array.isArray(defaultValue)
-			? defaultValue.join(',')
-			: defaultValue.toString();
+				? defaultValue.join(',')
+				: defaultValue.toString();
 	const valueString =
 		value === null || value === undefined
 			? ''
 			: typeof value === 'string'
-			? value
-			: Array.isArray(value)
-			? value.join(',')
-			: value.toString();
-	if (currentString === valueString) return;
-	if (valueString && valueString !== defaultValueString) {
+				? value
+				: Array.isArray(value)
+					? value.join(',')
+					: value.toString();
+
+	if (currentString === '' && valueString === '') return;
+	if (currentString === '' && valueString === defaultValueString) return;
+
+	if (valueString && valueString !== defaultValueString && valueString !== currentString) {
 		url.searchParams.set(key, valueString);
 	} else {
 		url.searchParams.delete(key);
