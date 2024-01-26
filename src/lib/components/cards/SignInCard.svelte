@@ -65,11 +65,10 @@
 			errorText = $LL.Error.EmailNotAllowed();
 			return;
 		}
-		console.log(`${$page.url.origin}${redirectTo}`);
 		const { data: sData, error: sError } = await $supabaseStore.auth.signInWithOtp({
 			email,
 			options: {
-				emailRedirectTo: `${$page.url.origin}${redirectTo}`
+				emailRedirectTo: redirectTo || '/'
 			}
 		});
 		if (sError) {
