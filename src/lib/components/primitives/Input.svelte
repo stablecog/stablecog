@@ -50,7 +50,7 @@
 	}
 </script>
 
-<div class="flex-1 flex flex-row relative {classes}">
+<div class="flex-1 min-w-0 flex flex-row relative {classes}">
 	{#if type === 'email'}
 		<input
 			bind:value
@@ -70,7 +70,7 @@
 			name={name || title}
 			id={title}
 			placeholder=" "
-			class="peer flex-1 overflow-hidden overflow-ellipsis {bg === 'bg-secondary'
+			class="peer w-full overflow-hidden overflow-ellipsis {bg === 'bg-secondary'
 				? 'bg-c-bg-secondary'
 				: 'bg-c-bg-tertiary'} relative {hasIcon ? 'pl-12' : 'pl-5'} {hasClearButton && iconForButton
 				? 'pr-20 md:pr-27'
@@ -105,7 +105,7 @@
 			name={name || title}
 			id={title}
 			placeholder=" "
-			class="peer flex-1 overflow-hidden overflow-ellipsis {bg === 'bg-secondary'
+			class="peer w-full overflow-hidden overflow-ellipsis {bg === 'bg-secondary'
 				? 'bg-c-bg-secondary'
 				: 'bg-c-bg-tertiary'} relative {hasIcon ? 'pl-12' : 'pl-5'} {hasClearButton && iconForButton
 				? 'pr-20 md:pr-27'
@@ -140,7 +140,7 @@
 			name={name || title}
 			id={title}
 			placeholder=" "
-			class="peer flex-1 overflow-hidden overflow-ellipsis {bg === 'bg-secondary'
+			class="peer w-full overflow-hidden overflow-ellipsis {bg === 'bg-secondary'
 				? 'bg-c-bg-secondary'
 				: 'bg-c-bg-tertiary'} relative {hasIcon ? 'pl-12' : 'pl-5'} {hasClearButton && iconForButton
 				? 'pr-20 md:pr-27'
@@ -175,7 +175,7 @@
 			name={name || title}
 			id={title}
 			placeholder=" "
-			class="peer flex-1 overflow-hidden overflow-ellipsis {bg === 'bg-secondary'
+			class="peer w-full overflow-hidden overflow-ellipsis {bg === 'bg-secondary'
 				? 'bg-c-bg-secondary'
 				: 'bg-c-bg-tertiary'} relative {hasIcon ? 'pl-12' : 'pl-5'} {hasClearButton && iconForButton
 				? 'pr-22 md:pr-27'

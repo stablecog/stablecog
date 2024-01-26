@@ -316,7 +316,7 @@
 							onClick={() => signInWithOAuth('discord')}
 							provider="discord"
 						>
-							<p class="w-full">{$LL.SignIn.ContinueWithProviderButton({ provider: 'Discord' })}</p>
+							<p class="flex-1 min-w-0">{$LL.SignIn.ContinueWithProviderButton({ provider: 'Discord' })}</p>
 						</ButtonOAuth>
 					</div>
 				</div>
@@ -335,6 +335,7 @@
 					class="w-full flex flex-col p-1 md:pb-2 max-w-[21rem]"
 				>
 					<Input
+						class='w-full'
 						disabled={$signInCardStatus === 'loading'}
 						type="email"
 						title={$LL.Shared.EmailInput.Placeholder()}
