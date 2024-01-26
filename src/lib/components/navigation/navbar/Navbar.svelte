@@ -41,6 +41,19 @@
 	const closeAccountMenu = () => (isAccountMenuOpen = false);
 
 	const showBanner = true;
+
+	const dontRedirectToRoutes = [
+		{
+			route: '/auth/confirm'
+		},
+		{
+			route: '/auth/callback'
+		},
+		{
+			route: '/auth/error/',
+			notStrict: true
+		}
+	];
 </script>
 
 <nav
@@ -228,7 +241,11 @@
 
 {#if $isSignInModalOpen && (!$sessionStore?.user.id || !$userSummary)}
 	<SignInModal
-		redirectTo={($page.url.pathname === '/' || $page.url.pathname.startsWith('/auth/')
+		redirectTo={($page.url.pathname === '/' ||
+		dontRedirectToRoutes.some(
+			(r) =>
+				r.route === $page.url.pathname || (r.notStrict && $page.url.pathname.startsWith(r.route))
+		)
 			? '/generate'
 			: $page.url.pathname) + window.location.search}
 		onClickoutside={() => isSignInModalOpen.set(false)}
