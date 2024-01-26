@@ -26,7 +26,7 @@
 				{$LL.Shared.TryAgainButton()}
 			</Button>
 		{:else}
-			<Button class="mt-5" href="/">
+			<Button class="mt-5" href="/generate">
 				{$LL.Shared.StartGeneratingButton()}
 			</Button>
 		{/if}
