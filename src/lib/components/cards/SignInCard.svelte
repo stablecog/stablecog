@@ -65,11 +65,11 @@
 			errorText = $LL.Error.EmailNotAllowed();
 			return;
 		}
-		console.log(`${$page.url.origin}${redirectTo}`)
+		console.log(`${$page.url.origin}${redirectTo}`);
 		const { data: sData, error: sError } = await $supabaseStore.auth.signInWithOtp({
 			email,
 			options: {
-				emailRedirectTo: `${$page.url.origin}${redirectTo}`,
+				emailRedirectTo: `${$page.url.origin}${redirectTo}`
 			}
 		});
 		if (sError) {
@@ -197,8 +197,8 @@
 		{$signInCardStatus === 'sent-otp'
 			? $LL.SignIn.PageTitleSentLink()
 			: title
-			? title
-			: $LL.SignIn.PageTitleGetStarted()}
+				? title
+				: $LL.SignIn.PageTitleGetStarted()}
 	</h1>
 	<div class="w-full flex flex-col items-center justify-start mt-1.5">
 		<p
@@ -210,8 +210,8 @@
 			{$signInCardStatus === 'sent-otp'
 				? $LL.SignIn.PageParagraphSentLink()
 				: paragraph
-				? paragraph
-				: $LL.SignIn.PageParagraphV2()}
+					? paragraph
+					: $LL.SignIn.PageParagraphV2()}
 		</p>
 		{#if !wantsEmailOnMount && $signInCardStatus !== 'sent-otp'}
 			<WantsEmailCard bind:checked={wantsEmailChecked} class="mb-3.5 max-w-[20.5rem]" />
@@ -316,7 +316,9 @@
 							onClick={() => signInWithOAuth('discord')}
 							provider="discord"
 						>
-							<p class="flex-1 min-w-0">{$LL.SignIn.ContinueWithProviderButton({ provider: 'Discord' })}</p>
+							<p class="flex-1 min-w-0">
+								{$LL.SignIn.ContinueWithProviderButton({ provider: 'Discord' })}
+							</p>
 						</ButtonOAuth>
 					</div>
 				</div>
@@ -335,7 +337,7 @@
 					class="w-full flex flex-col p-1 md:pb-2 max-w-[21rem]"
 				>
 					<Input
-						class='w-full'
+						class="w-full"
 						disabled={$signInCardStatus === 'loading'}
 						type="email"
 						title={$LL.Shared.EmailInput.Placeholder()}
