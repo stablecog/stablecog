@@ -230,7 +230,7 @@
 	<SignInModal
 		redirectTo={($page.url.pathname === '/' || $page.url.pathname.startsWith('/auth/')
 			? '/generate'
-			: $page.url.pathname) + $searchParamsString}
+			: $page.url.pathname) + window.location.search}
 		onClickoutside={() => isSignInModalOpen.set(false)}
 	/>
 {/if}
