@@ -12,14 +12,14 @@ export function setUrlParam({
 	if (!browser) return;
 	const url = new URL(window.location.href);
 	const current = url.searchParams.get(key);
-	const currentString = current === null ? '' : current;
+	const currentValueString = current === null ? '' : current;
 	const defaultValueString =
 		typeof defaultValue === 'string'
 			? defaultValue
 			: Array.isArray(defaultValue)
 				? defaultValue.join(',')
 				: defaultValue.toString();
-	const valueString =
+	const toBeValueString =
 		value === null || value === undefined
 			? ''
 			: typeof value === 'string'
@@ -28,14 +28,15 @@ export function setUrlParam({
 					? value.join(',')
 					: value.toString();
 
-	if (currentString === '' && valueString === '') return;
-	if (currentString === '' && valueString === defaultValueString) return;
+	if (currentValueString === '' && toBeValueString === defaultValueString) return;
+	if (toBeValueString === currentValueString && toBeValueString !== defaultValueString) return;
 
-	if (valueString && valueString !== defaultValueString && valueString !== currentString) {
-		url.searchParams.set(key, valueString);
+	if (toBeValueString !== currentValueString && toBeValueString !== defaultValueString) {
+		url.searchParams.set(key, toBeValueString);
 	} else {
 		url.searchParams.delete(key);
 	}
+
 	const relativeUrl = url.pathname + url.search;
 	window.history.replaceState(window.history.state, '', relativeUrl);
 }
