@@ -65,12 +65,11 @@
 			errorText = $LL.Error.EmailNotAllowed();
 			return;
 		}
+		console.log(`${$page.url.origin}${redirectTo}`)
 		const { data: sData, error: sError } = await $supabaseStore.auth.signInWithOtp({
 			email,
 			options: {
-				emailRedirectTo: `${$page.url.origin}/auth/callback?rd_to=${
-					redirectTo ? encodeURIComponent(redirectTo) : ''
-				}`,
+				emailRedirectTo: `${$page.url.origin}${redirectTo}`,
 			}
 		});
 		if (sError) {
@@ -325,7 +324,7 @@
 					class="flex items-center gap-4 my-5 md:my-6 -mx-5 md:-mx-10 w-[calc(100%+1.5rem)] md:w-[calc(100%+5rem)]"
 				>
 					<div class="flex-1 h-2px rounded-r-full bg-c-bg-secondary" />
-					<p class="text-base text-c-on-bg/50 text-center inline-block">
+					<p class="text-base text-c-on-bg/50 text-center inline-block flex-shrink min-w-0">
 						{$LL.SignIn.OrContinueWithEmailTitle()}
 					</p>
 					<div class="flex-1 h-2px rounded-l-full bg-c-bg-secondary" />
