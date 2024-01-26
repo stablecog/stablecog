@@ -24,7 +24,7 @@ export const load: LayoutServerLoad = async (event) => {
 	await loadLocaleAsync(locale);
 	return {
 		locale,
-		session: session as Session | null,
+		session,
 		theme,
 		userSummary,
 		isLeftSidebarHidden,

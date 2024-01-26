@@ -19,7 +19,6 @@ export const load: LayoutLoad = async (event) => {
 				if (!isBrowser()) {
 					return JSON.stringify(data.session);
 				}
-
 				const cookie = parse(document.cookie);
 				return cookie[key];
 			}

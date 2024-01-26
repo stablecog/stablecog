@@ -13,7 +13,7 @@ export const GET = async (event) => {
 		// @ts-ignore
 		const { error } = await supabase.auth.verifyOtp({ token_hash, type });
 		if (!error) {
-			redirect(303, `/auth/callback`);
+			redirect(303, `/${next.slice(1)}`);
 		}
 	}
 
