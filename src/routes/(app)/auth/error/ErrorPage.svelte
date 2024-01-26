@@ -25,6 +25,10 @@
 			<Button class="mt-5" onClick={() => isSignInModalOpen.set(true)}>
 				{$LL.Shared.TryAgainButton()}
 			</Button>
+		{:else}
+			<Button class="mt-5" href="/">
+				{$LL.Shared.StartGeneratingButton()}
+			</Button>
 		{/if}
 		<div class="h-[5vh]" />
 	</div>
