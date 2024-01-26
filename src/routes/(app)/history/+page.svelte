@@ -48,7 +48,7 @@
 	import IconImage from '$components/icons/IconImage.svelte';
 	import { onMount } from 'svelte';
 	import { hydrated, updateHydrated } from '$ts/stores/hydrated.js';
-	import { setUrlParam } from '$ts/helpers/setUrlParam.js';
+	import { setUrlSearchParam } from '$ts/helpers/setUrlSearchParam.js';
 	import GalleryLikePageWrapper from '$components/galleryLike/GalleryLikePageWrapper.svelte';
 	import GalleryLikeTitleSection from '$components/galleryLike/GalleryLikeTitleSection.svelte';
 	import GalleryLikeGridWrapper from '$components/galleryLike/GalleryLikeGridWrapper.svelte';
@@ -90,7 +90,7 @@
 						aspectRatioFilters: $userGalleryAspectRatioFilters,
 						session: $sessionStore
 					})
-			  )
+				)
 			: undefined;
 
 	$: $userGenerationFullOutputsQuery?.data?.pages, onPagesChanged();
@@ -179,7 +179,7 @@
 		if ($userGalleryCurrentView === 'likes') {
 			isUserGalleryEditActive.set(false);
 		}
-		setUrlParam({
+		setUrlSearchParam({
 			key: 'view',
 			value: $userGalleryCurrentView,
 			defaultValue: 'all'
@@ -212,8 +212,8 @@
 			title={$userGalleryCurrentView === 'favorites'
 				? $LL.History.Views.FavoritesTitle()
 				: $userGalleryCurrentView === 'likes'
-				? $LL.History.Views.LikesTitle()
-				: $LL.History.GenerationsTitle()}
+					? $LL.History.Views.LikesTitle()
+					: $LL.History.GenerationsTitle()}
 			titleSecondary={`(${
 				totalOutputs !== undefined ? totalOutputs.toLocaleString($locale) : '...'
 			})`}
@@ -270,8 +270,8 @@
 								{$userGalleryCurrentView === 'likes'
 									? $LL.History.NoLikesYet()
 									: $userGalleryCurrentView === 'favorites'
-									? $LL.History.NoFavoritesYet()
-									: $LL.History.NoGenerationsYet()}
+										? $LL.History.NoFavoritesYet()
+										: $LL.History.NoGenerationsYet()}
 							</p>
 							{#if $userGalleryCurrentView === 'all'}
 								<Button href="/generate">{$LL.Shared.StartGeneratingButton()}</Button>
@@ -287,14 +287,14 @@
 							cols={$windowWidth > xl3Breakpoint
 								? 7
 								: $windowWidth > xl2Breakpoint
-								? 6
-								: $windowWidth > xlBreakpoint
-								? 5
-								: $windowWidth > lgBreakpoint
-								? 4
-								: $windowWidth > mdBreakpoint
-								? 3
-								: 2}
+									? 6
+									: $windowWidth > xlBreakpoint
+										? 5
+										: $windowWidth > lgBreakpoint
+											? 4
+											: $windowWidth > mdBreakpoint
+												? 3
+												: 2}
 						/>
 					{/key}
 				{/if}

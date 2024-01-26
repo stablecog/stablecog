@@ -39,7 +39,7 @@
 	import { galleryGenerationFullOutputsQueryKey } from '$ts/stores/user/queryKeys.js';
 	import { hydrated, updateHydrated } from '$ts/stores/hydrated.js';
 	import { onMount } from 'svelte';
-	import { setUrlParam } from '$ts/helpers/setUrlParam.js';
+	import { setUrlSearchParam } from '$ts/helpers/setUrlSearchParam.js';
 	import type { TTab } from '$ts/types/main.js';
 	import TabLikeDropdown from '$components/primitives/tabBars/TabLikeDropdown.svelte';
 	import IconMainSortView from '$components/icons/IconMainSortView.svelte';
@@ -76,7 +76,8 @@
 	];
 
 	$: mainSortView, onMainSortViewChanged();
-	$: $gallerySorts, setUrlParam({ key: 'sort', value: $gallerySorts, defaultValue: sortsDefault });
+	$: $gallerySorts,
+		setUrlSearchParam({ key: 'sort', value: $gallerySorts, defaultValue: sortsDefault });
 
 	$: galleryGenerationFullOutputsQueryKey.set(
 		getGalleryInfiniteQueryKey({
@@ -213,14 +214,14 @@
 				cols={$windowWidth > xl3Breakpoint
 					? 7
 					: $windowWidth > xl2Breakpoint
-					? 6
-					: $windowWidth > xlBreakpoint
-					? 5
-					: $windowWidth > lgBreakpoint
-					? 4
-					: $windowWidth > mdBreakpoint
-					? 3
-					: 2}
+						? 6
+						: $windowWidth > xlBreakpoint
+							? 5
+							: $windowWidth > lgBreakpoint
+								? 4
+								: $windowWidth > mdBreakpoint
+									? 3
+									: 2}
 				{setSearchQuery}
 			/>
 		{/if}

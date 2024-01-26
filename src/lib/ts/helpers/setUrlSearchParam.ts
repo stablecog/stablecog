@@ -1,6 +1,7 @@
 import { browser } from '$app/environment';
+import { replaceState } from '$app/navigation';
 
-export function setUrlParam({
+export function setUrlSearchParam({
 	key,
 	value,
 	defaultValue = ''

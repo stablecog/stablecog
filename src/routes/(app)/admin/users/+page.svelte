@@ -40,7 +40,7 @@
 	import { previewImageVersion } from '$ts/constants/previewImageVersion';
 	import ToggleIndicator from '$components/primitives/ToggleIndicator.svelte';
 	import ButtonHoverEffect from '$components/primitives/buttons/ButtonHoverEffect.svelte';
-	import { setUrlParam } from '$ts/helpers/setUrlParam.js';
+	import { setUrlSearchParam } from '$ts/helpers/setUrlSearchParam.js';
 	import { sessionStore } from '$ts/constants/supabase';
 
 	export let data;
@@ -53,12 +53,12 @@
 
 	$: searchString, setDebouncedSearch(searchString);
 	$: searchStringDebounced,
-		setUrlParam({
+		setUrlSearchParam({
 			key: 'q',
 			value: searchStringDebounced
 		});
 	$: view,
-		setUrlParam({
+		setUrlSearchParam({
 			key: 'view',
 			value: view
 		});
@@ -109,7 +109,7 @@
 					if (!lastPage.next) return undefined;
 					return lastPage.next;
 				}
-		  })
+			})
 		: undefined;
 
 	$: totalCounts = $allUsersQuery?.data?.pages?.[0]?.total_counts;
@@ -157,7 +157,7 @@
 					});
 					return res;
 				}
-		  })
+			})
 		: undefined;
 
 	async function setDebouncedSearch(searchString: string | undefined) {
@@ -581,8 +581,8 @@
 																					? $LL.Admin.Users.UnbanDomainButton()
 																					: $LL.Admin.Users.BanDomainButton()
 																				: user.banned_at
-																				? $LL.Admin.Users.UnbanUserButton()
-																				: $LL.Admin.Users.BanUserButton()}
+																					? $LL.Admin.Users.UnbanUserButton()
+																					: $LL.Admin.Users.BanUserButton()}
 																		</Button>
 																	</form>
 																</div>

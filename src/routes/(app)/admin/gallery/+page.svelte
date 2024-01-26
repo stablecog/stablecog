@@ -34,7 +34,7 @@
 	import { canonicalUrl } from '$ts/constants/main';
 	import { previewImageVersion } from '$ts/constants/previewImageVersion';
 	import { isSuperAdmin } from '$ts/helpers/admin/roles';
-	import { setUrlParam } from '$ts/helpers/setUrlParam.js';
+	import { setUrlSearchParam } from '$ts/helpers/setUrlSearchParam.js';
 	import type { TUserGenerationFullOutputsPage } from '$ts/queries/userGenerations';
 	import {
 		adminGalleryCurrentFilter,
@@ -87,7 +87,7 @@
 						aspectRatioFilters: $adminGalleryAspectRatioFilters,
 						searchString: $adminGallerySearchString
 					})
-			  )
+				)
 			: undefined;
 
 	$: $allUserGenerationFullOutputsQuery?.data?.pages, onPagesChanged();
@@ -169,7 +169,7 @@
 	}
 
 	$: $adminGalleryCurrentFilter,
-		setUrlParam({
+		setUrlSearchParam({
 			key: 'view',
 			value: $adminGalleryCurrentFilter,
 			defaultValue: adminGalleryCurrentFilterDefault
@@ -225,7 +225,7 @@
 										label: $LL.Admin.Gallery.StatusDropdown.Private(),
 										value: 'not_submitted'
 									}
-							  ]
+								]
 							: [])
 					]}
 					bind:value={$adminGalleryCurrentFilter}
@@ -287,14 +287,14 @@
 					cols={$windowWidth > xl3Breakpoint
 						? 7
 						: $windowWidth > xl2Breakpoint
-						? 6
-						: $windowWidth > xlBreakpoint
-						? 5
-						: $windowWidth > lgBreakpoint
-						? 4
-						: $windowWidth > mdBreakpoint
-						? 3
-						: 2}
+							? 6
+							: $windowWidth > xlBreakpoint
+								? 5
+								: $windowWidth > lgBreakpoint
+									? 4
+									: $windowWidth > mdBreakpoint
+										? 3
+										: 2}
 				/>
 			{/if}
 		</GalleryLikeGridWrapper>
