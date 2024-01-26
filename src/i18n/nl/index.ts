@@ -445,6 +445,10 @@ const nl: Translation = {
 		InvalidCode: 'Ongeldige code.',
 		TryAnotherImage: 'Probeer een andere afbeelding :(',
 		OnceEvery60Seconds: 'Je kunt slechts een keer per 60 seconden een link aanvragen.',
+		OAuthFailed: {
+			Title: 'Connection error',
+			Paragraph: 'A problem occurred while connecting to the service provider.'
+		},
 		LinkExpired: {
 			TitleAlt: 'The link is expired',
 			Title: 'Link is niet meer geldig',

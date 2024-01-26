@@ -461,6 +461,10 @@ const es: Translation = {
 		InvalidCode: 'Μη έγκυρος κωδικός.',
 		TryAnotherImage: 'Δοκιμάστε μια άλλη εικόνα :(',
 		OnceEvery60Seconds: 'Μπορείτε να ζητήσετε σύνδεσμο μόνο μία φορά κάθε 60 δευτερόλεπτα.',
+		OAuthFailed: {
+			Title: 'Connection error',
+			Paragraph: 'A problem occurred while connecting to the service provider.'
+		},
 		LinkExpired: {
 			TitleAlt: 'The link is expired',
 			Title: 'Ο σύνδεσμος έληξε',

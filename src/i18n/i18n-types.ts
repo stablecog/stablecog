@@ -1344,6 +1344,16 @@ type RootTranslation = {
 		 * Y​o​u​ ​c​a​n​ ​o​n​l​y​ ​r​e​q​u​e​s​t​ ​a​ ​l​i​n​k​ ​o​n​c​e​ ​e​v​e​r​y​ ​6​0​ ​s​e​c​o​n​d​s​.
 		 */
 		OnceEvery60Seconds: string
+		OAuthFailed: {
+			/**
+			 * C​o​n​n​e​c​t​i​o​n​ ​e​r​r​o​r
+			 */
+			Title: string
+			/**
+			 * A​ ​p​r​o​b​l​e​m​ ​o​c​c​u​r​r​e​d​ ​w​h​i​l​e​ ​c​o​n​n​e​c​t​i​n​g​ ​t​o​ ​t​h​e​ ​s​e​r​v​i​c​e​ ​p​r​o​v​i​d​e​r​.
+			 */
+			Paragraph: string
+		}
 		LinkExpired: {
 			/**
 			 * T​h​e​ ​l​i​n​k​ ​i​s​ ​e​x​p​i​r​e​d
@@ -4589,6 +4599,16 @@ export type TranslationFunctions = {
 		 * You can only request a link once every 60 seconds.
 		 */
 		OnceEvery60Seconds: () => LocalizedString
+		OAuthFailed: {
+			/**
+			 * Connection error
+			 */
+			Title: () => LocalizedString
+			/**
+			 * A problem occurred while connecting to the service provider.
+			 */
+			Paragraph: () => LocalizedString
+		}
 		LinkExpired: {
 			/**
 			 * The link is expired

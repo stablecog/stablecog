@@ -453,6 +453,10 @@ const ja: Translation = {
 		InvalidCode: 'コードが無効です。',
 		TryAnotherImage: '別の画像をお試しください (^_^);',
 		OnceEvery60Seconds: 'リンクは60秒ごとに1回しかリクエストできません。',
+		OAuthFailed: {
+			Title: 'Connection error',
+			Paragraph: 'A problem occurred while connecting to the service provider.'
+		},
 		LinkExpired: {
 			TitleAlt: 'The link is expired',
 			Title: 'リンクが期限切れ',

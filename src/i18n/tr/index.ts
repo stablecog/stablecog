@@ -465,6 +465,10 @@ const tr: Translation = {
 		InvalidCode: 'Geçersiz kod.',
 		TryAnotherImage: 'Başka fotoğraf dene :(',
 		OnceEvery60Seconds: 'Her 60 saniyede sadece bir link talebinde bulunabilirsin.',
+		OAuthFailed: {
+			Title: 'Connection error',
+			Paragraph: 'A problem occurred while connecting to the service provider.'
+		},
 		LinkExpired: {
 			TitleAlt: 'Linkin süresi dolmuş',
 			Title: 'Link Geçersiz',

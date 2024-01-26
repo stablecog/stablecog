@@ -7,7 +7,7 @@ export const GET = async (event) => {
 	} = event;
 	const token_hash = url.searchParams.get('token_hash') as string;
 	const type = url.searchParams.get('type') as string;
-	const next = url.searchParams.get('next') ?? '/';
+	const next = url.searchParams.get('next') ?? '/generate';
 
 	if (token_hash && type) {
 		// @ts-ignore

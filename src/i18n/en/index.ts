@@ -440,6 +440,10 @@ const en: BaseTranslation = {
 		InvalidCode: 'Invalid code.',
 		TryAnotherImage: 'Try another image :(',
 		OnceEvery60Seconds: 'You can only request a link once every 60 seconds.',
+		OAuthFailed: {
+			Title: 'Connection error',
+			Paragraph: 'A problem occurred while connecting to the service provider.'
+		},
 		LinkExpired: {
 			TitleAlt: 'The link is expired',
 			Title: 'Link Expired',

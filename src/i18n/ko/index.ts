@@ -440,6 +440,10 @@ const ko: Translation = {
 		InvalidCode: '올바르지 않은 코드입니다. 다시 시도해주세요.',
 		TryAnotherImage: 'Try another image :(',
 		OnceEvery60Seconds: 'You can only request a link once every 60 seconds.',
+		OAuthFailed: {
+			Title: 'Connection error',
+			Paragraph: 'A problem occurred while connecting to the service provider.'
+		},
 		LinkExpired: {
 			TitleAlt: 'The link is expired',
 			Title: 'Link Expired',
