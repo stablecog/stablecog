@@ -157,7 +157,9 @@
 	/>
 	<div class="wrap-inner">
 		<p>Click to sign in:</p>
-		<a href="{{ .SiteURL }}/auth/confirm?token_hash={{ .TokenHash }}&type=email" class="button"
+		<a
+			href="{{ .SiteURL }}/auth/confirm?token_hash={{ .TokenHash }}&type=email&rd_to={{ .RedirectTo }}"
+			class="button"
 			>Sign in to Stablecog</a
 		>
 		<p style="padding-top: 24px">Or use the code:</p>
