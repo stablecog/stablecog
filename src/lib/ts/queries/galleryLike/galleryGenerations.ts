@@ -40,34 +40,42 @@ export async function getGalleryGenerationFullOutputs({
 }): Promise<TUserProfileFullOutputsPage> {
 	console.log('getGalleryOutputs');
 	const query = new URLSearchParams();
+	let shouldAddSeed = true;
+	query.append('per_page', per_page.toString());
 	if (cursor) {
 		query.append('cursor', cursor);
 	}
 	if (search && search !== '') {
 		query.append('search', search);
 		query.append('score_threshold', score_threshold.toString());
+		shouldAddSeed = false;
 	}
 	if (model_ids && model_ids.length > 0) {
 		query.append('model_ids', model_ids.join(','));
+		shouldAddSeed = false;
 	}
 	if (sorts && sorts.length > 0) {
 		query.append('sort', sorts.join(','));
-	}
-	query.append('per_page', per_page.toString());
-	if (typeof seed === 'number') {
-		query.append('seed', seed.toString());
+		if (sorts.join(',') !== 'new') {
+			shouldAddSeed = false;
+		}
 	}
 	if (prompt_id) {
 		query.append('prompt_id', prompt_id);
 	}
 	if (usernameFilters && usernameFilters.length > 0) {
 		query.append('username', usernameFilters.join(','));
+		shouldAddSeed = false;
 	}
 	if (aspect_ratios && aspect_ratios.length > 0) {
 		query.append(
 			'aspect_ratio',
 			aspect_ratios.map((i) => i.replaceAll('.', '_').replaceAll(':', '-')).join(',')
 		);
+		shouldAddSeed = false;
+	}
+	if (typeof seed === 'number' && shouldAddSeed) {
+		query.append('seed', seed.toString());
 	}
 	let queryString = query.toString();
 	if (queryString) queryString = `?${queryString}`;
@@ -120,7 +128,7 @@ export async function getGalleryGenerationFullOutputs({
 						? {
 								id: hit.negative_prompt_id,
 								text: hit.negative_prompt_text
-						  }
+							}
 						: undefined,
 				outputs: [output],
 				status: 'succeeded',

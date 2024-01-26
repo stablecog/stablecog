@@ -39,7 +39,6 @@
 	import { galleryGenerationFullOutputsQueryKey } from '$ts/stores/user/queryKeys.js';
 	import { hydrated, updateHydrated } from '$ts/stores/hydrated.js';
 	import { onMount } from 'svelte';
-	import { setUrlSearchParam } from '$ts/helpers/setUrlSearchParam.js';
 	import type { TTab } from '$ts/types/main.js';
 	import TabLikeDropdown from '$components/primitives/tabBars/TabLikeDropdown.svelte';
 	import IconMainSortView from '$components/icons/IconMainSortView.svelte';
@@ -76,8 +75,6 @@
 	];
 
 	$: mainSortView, onMainSortViewChanged();
-	$: $gallerySorts,
-		setUrlSearchParam({ key: 'sort', value: $gallerySorts, defaultValue: sortsDefault });
 
 	$: galleryGenerationFullOutputsQueryKey.set(
 		getGalleryInfiniteQueryKey({

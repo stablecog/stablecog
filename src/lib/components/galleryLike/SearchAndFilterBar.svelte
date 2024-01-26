@@ -23,7 +23,6 @@
 	import { browser } from '$app/environment';
 	import { isUUID } from '$ts/helpers/uuid';
 	import IconImageSearch from '$components/icons/IconImageSearch.svelte';
-	import { setUrlSearchParam } from '$ts/helpers/setUrlSearchParam';
 	import { quadOut } from 'svelte/easing';
 	import { fly } from 'svelte/transition';
 	import TabLikeInput from '$components/primitives/tabBars/TabLikeInput.svelte';
@@ -49,14 +48,6 @@
 	let usernameInputElement: HTMLInputElement;
 
 	$: searchStringLocal, onSearchStringLocalChanged();
-	$: modelIdFilters,
-		setUrlSearchParam({
-			key: 'mi',
-			value: modelIdFilters
-		});
-	$: aspectRatioFilters, setUrlSearchParam({ key: 'ar', value: aspectRatioFilters });
-	$: searchString, setUrlSearchParam({ key: 'q', value: searchString });
-	$: usernameFilters, setUrlSearchParam({ key: 'un', value: usernameFilters });
 	$: hasAnyFilter =
 		modelIdFilters?.length > 0 ||
 		aspectRatioFilters?.length > 0 ||

@@ -48,7 +48,6 @@
 	import IconImage from '$components/icons/IconImage.svelte';
 	import { onMount } from 'svelte';
 	import { hydrated, updateHydrated } from '$ts/stores/hydrated.js';
-	import { setUrlSearchParam } from '$ts/helpers/setUrlSearchParam.js';
 	import GalleryLikePageWrapper from '$components/galleryLike/GalleryLikePageWrapper.svelte';
 	import GalleryLikeTitleSection from '$components/galleryLike/GalleryLikeTitleSection.svelte';
 	import GalleryLikeGridWrapper from '$components/galleryLike/GalleryLikeGridWrapper.svelte';
@@ -179,11 +178,6 @@
 		if ($userGalleryCurrentView === 'likes') {
 			isUserGalleryEditActive.set(false);
 		}
-		setUrlSearchParam({
-			key: 'view',
-			value: $userGalleryCurrentView,
-			defaultValue: 'all'
-		});
 	}
 
 	onMount(() => {

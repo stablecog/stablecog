@@ -1,27 +1,41 @@
 import { getGalleryGenerationFullOutputs } from '$ts/queries/galleryLike/galleryGenerations';
 import type { TUserProfileFullOutputsPage } from '$ts/queries/galleryLike/types';
 import type { FetchInfiniteQueryOptions } from '@tanstack/svelte-query';
-import { sessionWritable } from '@macfja/svelte-persistent-store';
+import { sessionAndUrlParamWritable } from '$ts/stores/sessionAndUrlParamStore';
 import type { TAvailableGenerationModelId } from '$ts/constants/generationModels';
 import type { TAvailableAspectRatio } from '$ts/constants/generationSize';
 
-export const gallerySearchString = sessionWritable<string>('gallerySearchString', '');
-export const galleryUsernameFilters = sessionWritable<string[]>('galleryUsernameFilters', []);
-
-export const galleryModelIdFilters = sessionWritable<TAvailableGenerationModelId[]>(
-	'galleryModelIdFilters',
+export const gallerySearchString = sessionAndUrlParamWritable<string>(
+	'gallerySearchString',
+	'q',
+	''
+);
+export const galleryUsernameFilters = sessionAndUrlParamWritable<string[]>(
+	'galleryUsernameFilters',
+	'un',
 	[]
 );
 
-export const galleryAspectRatioFilters = sessionWritable<TAvailableAspectRatio[]>(
+export const galleryModelIdFilters = sessionAndUrlParamWritable<TAvailableGenerationModelId[]>(
+	'galleryModelIdFilters',
+	'mi',
+	[]
+);
+
+export const galleryAspectRatioFilters = sessionAndUrlParamWritable<TAvailableAspectRatio[]>(
 	'galleryAspectRatioFilters',
+	'ar',
 	[]
 );
 
 export const mainSortViewDefault = 'trending';
 export const mainSorts = ['trending', 'top', 'new'];
 export const sortsDefault = [mainSortViewDefault];
-export const gallerySorts = sessionWritable<string[]>('gallerySorts', sortsDefault);
+export const gallerySorts = sessionAndUrlParamWritable<string[]>(
+	'gallerySorts',
+	'sort',
+	sortsDefault
+);
 
 export const getGalleryInfiniteQueryKey = ({
 	searchString,

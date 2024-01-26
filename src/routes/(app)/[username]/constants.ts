@@ -1,22 +1,21 @@
 import { getSomeUsersGenerationFullOutputs } from '$ts/queries/galleryLike/someUsersOutputs';
 import type { TUserProfileFullOutputsPage } from '$ts/queries/galleryLike/types';
 import type { FetchInfiniteQueryOptions } from '@tanstack/svelte-query';
-import { sessionWritable } from '@macfja/svelte-persistent-store';
 import type { TAvailableGenerationModelId } from '$ts/constants/generationModels';
 import type { TAvailableAspectRatio } from '$ts/constants/generationSize';
+import { sessionAndUrlParamWritable } from '$ts/stores/sessionAndUrlParamStore';
 
-export const someUserGallerySearchString = sessionWritable<string>(
+export const someUserGallerySearchString = sessionAndUrlParamWritable<string>(
 	'someUserGallerySearchString',
+	'q',
 	''
 );
-export const someUserGalleryModelIdFilters = sessionWritable<TAvailableGenerationModelId[]>(
-	'someUserGalleryModelIdFilters',
-	[]
-);
-export const someUserGalleryAspectRatioFilters = sessionWritable<TAvailableAspectRatio[]>(
-	'someUserGalleryAspectRatioFilters',
-	[]
-);
+export const someUserGalleryModelIdFilters = sessionAndUrlParamWritable<
+	TAvailableGenerationModelId[]
+>('someUserGalleryModelIdFilters', 'mi', []);
+export const someUserGalleryAspectRatioFilters = sessionAndUrlParamWritable<
+	TAvailableAspectRatio[]
+>('someUserGalleryAspectRatioFilters', 'ar', []);
 
 export const getSomeUserProfileInfiniteQueryKey = ({
 	searchString,

@@ -1,14 +1,51 @@
 import { browser } from '$app/environment';
-import { replaceState } from '$app/navigation';
+import { sessionWritable } from '@macfja/svelte-persistent-store';
 
-export function setUrlSearchParam({
+export function sessionAndUrlParamWritable<T>(
+	sessionKey: string,
+	paramKey: string,
+	defaultValue: T
+) {
+	const {
+		set: sessionSet,
+		delete: sessionDelete,
+		subscribe: sessionSubscribe,
+		update: sessionUpdate
+	} = sessionWritable<T>(sessionKey, defaultValue);
+
+	const set: typeof sessionSet = (params) => {
+		sessionSet(params);
+		setUrlSearchParam({ key: paramKey, value: params, defaultValue });
+	};
+
+	const del: typeof sessionDelete = () => {
+		sessionDelete();
+	};
+
+	const subscribe: typeof sessionSubscribe = (params) => {
+		return sessionSubscribe(params);
+	};
+
+	const update: typeof sessionUpdate = (params) => {
+		sessionUpdate(params);
+	};
+
+	return {
+		set,
+		del,
+		subscribe,
+		update
+	};
+}
+
+export function setUrlSearchParam<T>({
 	key,
 	value,
-	defaultValue = ''
+	defaultValue
 }: {
 	key: string;
-	value: string | string[] | number | null | undefined;
-	defaultValue?: string | string[] | number;
+	value: T;
+	defaultValue?: T;
 }) {
 	if (!browser) return;
 	const url = new URL(window.location.href);
@@ -19,7 +56,9 @@ export function setUrlSearchParam({
 			? defaultValue
 			: Array.isArray(defaultValue)
 				? defaultValue.join(',')
-				: defaultValue.toString();
+				: defaultValue === undefined || defaultValue === null
+					? ''
+					: defaultValue.toString();
 	const toBeValueString =
 		value === null || value === undefined
 			? ''

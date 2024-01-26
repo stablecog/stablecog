@@ -34,11 +34,9 @@
 	import { canonicalUrl } from '$ts/constants/main';
 	import { previewImageVersion } from '$ts/constants/previewImageVersion';
 	import { isSuperAdmin } from '$ts/helpers/admin/roles';
-	import { setUrlSearchParam } from '$ts/helpers/setUrlSearchParam.js';
 	import type { TUserGenerationFullOutputsPage } from '$ts/queries/userGenerations';
 	import {
 		adminGalleryCurrentFilter,
-		adminGalleryCurrentFilterDefault,
 		allUserGenerationFullOutputsQueryKey,
 		isAdminGalleryEditActive
 	} from '$ts/stores/admin/gallery';
@@ -167,13 +165,6 @@
 			selected_output: outputs[newIndex]
 		});
 	}
-
-	$: $adminGalleryCurrentFilter,
-		setUrlSearchParam({
-			key: 'view',
-			value: $adminGalleryCurrentFilter,
-			defaultValue: adminGalleryCurrentFilterDefault
-		});
 
 	onMount(() => {
 		updateHydrated();

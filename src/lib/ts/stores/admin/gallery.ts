@@ -1,13 +1,18 @@
 import type { TGalleryStatus } from '$ts/stores/user/generation';
 import { derived, writable } from 'svelte/store';
 import { writable as writableLocal } from '@macfja/svelte-persistent-store';
+import { sessionAndUrlParamWritable } from '$ts/stores/sessionAndUrlParamStore';
 
 export const adminGalleryActionableItems = writableLocal<TAdminGalleryActionableItem[]>(
 	'admin_gallery_actionable_items',
 	[]
 );
 export const adminGalleryCurrentFilterDefault = 'submitted_best';
-export const adminGalleryCurrentFilter = writable<TGalleryStatus>(adminGalleryCurrentFilterDefault);
+export const adminGalleryCurrentFilter = sessionAndUrlParamWritable<TGalleryStatus>(
+	'adminGalleryCurrentView',
+	'view',
+	adminGalleryCurrentFilterDefault
+);
 export const allUserGenerationFullOutputsQueryKey = writable<string[]>(undefined);
 
 export const adminGallerySelectedOutputObjects = derived(

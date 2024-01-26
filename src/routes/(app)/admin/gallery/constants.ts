@@ -4,17 +4,23 @@ import {
 } from '$ts/queries/userGenerations';
 import type { TGalleryStatus } from '$ts/stores/user/generation';
 import type { CreateInfiniteQueryOptions } from '@tanstack/svelte-query';
-import { sessionWritable } from '@macfja/svelte-persistent-store';
 import type { TAvailableGenerationModelId } from '$ts/constants/generationModels';
 import type { TAvailableAspectRatio } from '$ts/constants/generationSize';
+import { sessionAndUrlParamWritable } from '$ts/stores/sessionAndUrlParamStore';
 
-export const adminGallerySearchString = sessionWritable<string>('adminGallerySearchString', '');
-export const adminGalleryModelIdFilters = sessionWritable<TAvailableGenerationModelId[]>(
+export const adminGallerySearchString = sessionAndUrlParamWritable<string>(
+	'adminGallerySearchString',
+	'q',
+	''
+);
+export const adminGalleryModelIdFilters = sessionAndUrlParamWritable<TAvailableGenerationModelId[]>(
 	'adminGalleryModelIdFilters',
+	'mi',
 	[]
 );
-export const adminGalleryAspectRatioFilters = sessionWritable<TAvailableAspectRatio[]>(
+export const adminGalleryAspectRatioFilters = sessionAndUrlParamWritable<TAvailableAspectRatio[]>(
 	'adminGalleryAspectRatioFilters',
+	'ar',
 	[]
 );
 

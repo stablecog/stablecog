@@ -40,28 +40,30 @@
 	import { previewImageVersion } from '$ts/constants/previewImageVersion';
 	import ToggleIndicator from '$components/primitives/ToggleIndicator.svelte';
 	import ButtonHoverEffect from '$components/primitives/buttons/ButtonHoverEffect.svelte';
-	import { setUrlSearchParam } from '$ts/helpers/setUrlSearchParam.js';
 	import { sessionStore } from '$ts/constants/supabase';
+	import {
+		adminPanelUsersSearchString,
+		adminPanelUsersView
+	} from '$routes/(app)/admin/users/constants.js';
+	import { hydrated } from '$ts/stores/hydrated.js';
+	import { onMount } from 'svelte';
 
 	export let data;
 
-	let searchString: string = data.searchString ?? undefined;
-	let searchStringDebounced: string = data.searchString ?? undefined;
+	let searchString: string;
+
+	if (!hydrated) {
+		adminPanelUsersSearchString.set(data.searchString);
+		searchString = data.searchString;
+	} else {
+		searchString = $adminPanelUsersSearchString;
+	}
+
 	let searchTimeout: NodeJS.Timeout;
 	let searchDebounceMs = 300;
 	let usersInput: HTMLInputElement;
 
 	$: searchString, setDebouncedSearch(searchString);
-	$: searchStringDebounced,
-		setUrlSearchParam({
-			key: 'q',
-			value: searchStringDebounced
-		});
-	$: view,
-		setUrlSearchParam({
-			key: 'view',
-			value: view
-		});
 
 	const viewDropdownItems: TTab<TStripeSupportedProductIdSubscriptions>[] = [
 		{
@@ -86,22 +88,16 @@
 		}
 	];
 
-	const viewValues = viewDropdownItems.map((item) => item.value);
-
-	let view: TStripeSupportedProductIdSubscriptions = viewValues.includes(data.view)
-		? data.view
-		: '';
-
 	$: allUsersQuery = browser
 		? createInfiniteQuery({
-				queryKey: ['all_users_query', searchStringDebounced, view ?? ''],
+				queryKey: ['all_users_query', $adminPanelUsersSearchString, $adminPanelUsersView ?? ''],
 				queryFn: async (lastPage) => {
 					const res = await getAllUsers({
 						cursor: lastPage?.pageParam,
-						search: searchStringDebounced,
+						search: $adminPanelUsersSearchString,
 						access_token: $sessionStore?.access_token,
-						active_product_id: view === 'banned' ? undefined : view,
-						banned: view === 'banned' ? true : undefined
+						active_product_id: $adminPanelUsersView === 'banned' ? undefined : $adminPanelUsersView,
+						banned: $adminPanelUsersView === 'banned' ? true : undefined
 					});
 					return res;
 				},
@@ -164,15 +160,14 @@
 		if (!browser) return;
 		clearTimeout(searchTimeout);
 		if (!searchString) {
-			searchStringDebounced = '';
-			console.log('searchStringDebounced is set to empty');
+			adminPanelUsersSearchString.set('');
 			return;
 		}
 		searchTimeout = setTimeout(async () => {
 			if (searchString) {
-				searchStringDebounced = searchString;
+				adminPanelUsersSearchString.set(searchString);
 			} else {
-				searchStringDebounced = '';
+				adminPanelUsersSearchString.set('');
 			}
 		}, searchDebounceMs);
 	}
@@ -292,6 +287,10 @@
 			console.log(e);
 		}
 	}
+
+	onMount(() => {
+		adminPanelUsersSearchString.set(searchString);
+	});
 </script>
 
 <MetaTag
@@ -376,7 +375,7 @@
 					class="w-full"
 					name="Active Product ID"
 					items={viewDropdownItems}
-					bind:value={view}
+					bind:value={$adminPanelUsersView}
 				/>
 			</div>
 		</div>
