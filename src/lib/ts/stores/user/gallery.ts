@@ -1,23 +1,23 @@
 import type { TAvailableGenerationModelId } from '$ts/constants/generationModels';
 import { derived, writable } from 'svelte/store';
 import { z } from 'zod';
-import { writable as writableLocal } from '@macfja/svelte-persistent-store';
+import { sessionWritable } from '@macfja/svelte-persistent-store';
 import type { TAvailableAspectRatio } from '$ts/constants/generationSize';
 
-export const userGalleryActionableItems = writableLocal<TUserGalleryActionableItem[]>(
+export const userGalleryActionableItems = sessionWritable<TUserGalleryActionableItem[]>(
 	'user_gallery_actionable_items',
 	[]
 );
 
-export const userGalleryCurrentView = writableLocal<TUserGalleryView>(
+export const userGalleryCurrentView = sessionWritable<TUserGalleryView>(
 	'userGalleryCurrentView',
 	'all'
 );
-export const userGalleryModelIdFilters = writableLocal<TAvailableGenerationModelId[]>(
+export const userGalleryModelIdFilters = sessionWritable<TAvailableGenerationModelId[]>(
 	'userGalleryModelIdFilters',
 	[]
 );
-export const userGalleryAspectRatioFilters = writableLocal<TAvailableAspectRatio[]>(
+export const userGalleryAspectRatioFilters = sessionWritable<TAvailableAspectRatio[]>(
 	'userGalleryAspectRatioFilters',
 	[]
 );

@@ -1,19 +1,19 @@
 import { getGalleryGenerationFullOutputs } from '$ts/queries/galleryLike/galleryGenerations';
 import type { TUserProfileFullOutputsPage } from '$ts/queries/galleryLike/types';
 import type { FetchInfiniteQueryOptions } from '@tanstack/svelte-query';
-import { writable as writableLocal } from '@macfja/svelte-persistent-store';
+import { sessionWritable } from '@macfja/svelte-persistent-store';
 import type { TAvailableGenerationModelId } from '$ts/constants/generationModels';
 import type { TAvailableAspectRatio } from '$ts/constants/generationSize';
 
-export const gallerySearchString = writableLocal<string>('gallerySearchString', '');
-export const galleryUsernameFilters = writableLocal<string[]>('galleryUsernameFilters', []);
+export const gallerySearchString = sessionWritable<string>('gallerySearchString', '');
+export const galleryUsernameFilters = sessionWritable<string[]>('galleryUsernameFilters', []);
 
-export const galleryModelIdFilters = writableLocal<TAvailableGenerationModelId[]>(
+export const galleryModelIdFilters = sessionWritable<TAvailableGenerationModelId[]>(
 	'galleryModelIdFilters',
 	[]
 );
 
-export const galleryAspectRatioFilters = writableLocal<TAvailableAspectRatio[]>(
+export const galleryAspectRatioFilters = sessionWritable<TAvailableAspectRatio[]>(
 	'galleryAspectRatioFilters',
 	[]
 );
@@ -21,7 +21,7 @@ export const galleryAspectRatioFilters = writableLocal<TAvailableAspectRatio[]>(
 export const mainSortViewDefault = 'trending';
 export const mainSorts = ['trending', 'top', 'new'];
 export const sortsDefault = [mainSortViewDefault];
-export const gallerySorts = writableLocal<string[]>('gallerySorts', sortsDefault);
+export const gallerySorts = sessionWritable<string[]>('gallerySorts', sortsDefault);
 
 export const getGalleryInfiniteQueryKey = ({
 	searchString,

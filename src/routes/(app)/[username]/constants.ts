@@ -1,16 +1,19 @@
 import { getSomeUsersGenerationFullOutputs } from '$ts/queries/galleryLike/someUsersOutputs';
 import type { TUserProfileFullOutputsPage } from '$ts/queries/galleryLike/types';
 import type { FetchInfiniteQueryOptions } from '@tanstack/svelte-query';
-import { writable as writableLocal } from '@macfja/svelte-persistent-store';
+import { sessionWritable } from '@macfja/svelte-persistent-store';
 import type { TAvailableGenerationModelId } from '$ts/constants/generationModels';
 import type { TAvailableAspectRatio } from '$ts/constants/generationSize';
 
-export const someUserGallerySearchString = writableLocal<string>('someUserGallerySearchString', '');
-export const someUserGalleryModelIdFilters = writableLocal<TAvailableGenerationModelId[]>(
+export const someUserGallerySearchString = sessionWritable<string>(
+	'someUserGallerySearchString',
+	''
+);
+export const someUserGalleryModelIdFilters = sessionWritable<TAvailableGenerationModelId[]>(
 	'someUserGalleryModelIdFilters',
 	[]
 );
-export const someUserGalleryAspectRatioFilters = writableLocal<TAvailableAspectRatio[]>(
+export const someUserGalleryAspectRatioFilters = sessionWritable<TAvailableAspectRatio[]>(
 	'someUserGalleryAspectRatioFilters',
 	[]
 );

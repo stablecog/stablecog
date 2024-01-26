@@ -4,16 +4,16 @@ import {
 } from '$ts/queries/userGenerations';
 import type { TGalleryStatus } from '$ts/stores/user/generation';
 import type { CreateInfiniteQueryOptions } from '@tanstack/svelte-query';
-import { writable as writableLocal } from '@macfja/svelte-persistent-store';
+import { sessionWritable } from '@macfja/svelte-persistent-store';
 import type { TAvailableGenerationModelId } from '$ts/constants/generationModels';
 import type { TAvailableAspectRatio } from '$ts/constants/generationSize';
 
-export const adminGallerySearchString = writableLocal<string>('adminGallerySearchString', '');
-export const adminGalleryModelIdFilters = writableLocal<TAvailableGenerationModelId[]>(
+export const adminGallerySearchString = sessionWritable<string>('adminGallerySearchString', '');
+export const adminGalleryModelIdFilters = sessionWritable<TAvailableGenerationModelId[]>(
 	'adminGalleryModelIdFilters',
 	[]
 );
-export const adminGalleryAspectRatioFilters = writableLocal<TAvailableAspectRatio[]>(
+export const adminGalleryAspectRatioFilters = sessionWritable<TAvailableAspectRatio[]>(
 	'adminGalleryAspectRatioFilters',
 	[]
 );
