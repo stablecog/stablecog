@@ -68,7 +68,7 @@
 		const { data: sData, error: sError } = await $supabaseStore.auth.signInWithOtp({
 			email,
 			options: {
-				emailRedirectTo: redirectTo || '/'
+				emailRedirectTo: redirectTo ? encodeURIComponent(redirectTo) : '/'
 			}
 		});
 		if (sError) {
@@ -98,7 +98,7 @@
 			provider: prov,
 			options: {
 				redirectTo: `${$page.url.origin}/auth/callback?rd_to=${
-					redirectTo ? encodeURIComponent(redirectTo) : ''
+					redirectTo ? encodeURIComponent(redirectTo) : '/'
 				}`
 			}
 		});

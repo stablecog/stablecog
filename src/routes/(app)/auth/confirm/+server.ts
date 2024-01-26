@@ -14,6 +14,7 @@ export const GET = async (event) => {
 		// @ts-ignore
 		const { error } = await supabase.auth.verifyOtp({ token_hash, type });
 		if (!error) {
+			console.log('REDIRECTING TO', rd_to);
 			redirect(303, rd_to);
 		}
 	}

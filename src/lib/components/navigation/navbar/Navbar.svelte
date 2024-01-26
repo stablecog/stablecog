@@ -203,8 +203,8 @@
 										: 'not-touch:group-hover/iconbutton:ring-c-on-bg'} {isAccountMenuOpen
 										? 'rotate-360'
 										: !isAccountMenuOpen
-										? 'not-touch:group-hover/iconbutton:rotate-45'
-										: ''}"
+											? 'not-touch:group-hover/iconbutton:rotate-45'
+											: ''}"
 								/>
 							</IconButton>
 						</div>
@@ -228,8 +228,9 @@
 
 {#if $isSignInModalOpen && (!$sessionStore?.user.id || !$userSummary)}
 	<SignInModal
-		redirectTo={($page.url.pathname === '/' ? '/generate' : $page.url.pathname) +
-			$searchParamsString}
+		redirectTo={($page.url.pathname === '/' || $page.url.pathname.startsWith('/auth/')
+			? '/generate'
+			: $page.url.pathname) + $searchParamsString}
 		onClickoutside={() => isSignInModalOpen.set(false)}
 	/>
 {/if}
