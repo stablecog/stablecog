@@ -1,3 +1,4 @@
+import { getRedirectTo } from '$routes/(app)/auth/getRedirectTo.js';
 import { redirect } from '@sveltejs/kit';
 
 export const GET = async (event) => {
@@ -7,13 +8,13 @@ export const GET = async (event) => {
 	} = event;
 	const token_hash = url.searchParams.get('token_hash') as string;
 	const type = url.searchParams.get('type') as string;
-	const next = url.searchParams.get('next') ?? '/generate';
+	const rd_to = getRedirectTo(url.searchParams);
 
 	if (token_hash && type) {
 		// @ts-ignore
 		const { error } = await supabase.auth.verifyOtp({ token_hash, type });
 		if (!error) {
-			redirect(303, `/${next.slice(1)}`);
+			redirect(303, rd_to);
 		}
 	}
 

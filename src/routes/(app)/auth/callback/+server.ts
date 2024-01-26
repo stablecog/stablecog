@@ -1,3 +1,4 @@
+import { getRedirectTo } from '$routes/(app)/auth/getRedirectTo.js';
 import { redirect } from '@sveltejs/kit';
 
 export const GET = async (event) => {
@@ -6,13 +7,12 @@ export const GET = async (event) => {
 		locals: { supabase }
 	} = event;
 	const code = url.searchParams.get('code') as string;
-	const rd_to = url.searchParams.get('rd_to') ?? '/';
-	const rd_to_string = decodeURIComponent(rd_to);
+	const rd_to = getRedirectTo(url.searchParams);
 
 	if (code) {
 		const { error } = await supabase.auth.exchangeCodeForSession(code);
 		if (!error) {
-			redirect(303, `/${rd_to_string.slice(1)}`);
+			redirect(303, rd_to);
 		}
 	}
 
