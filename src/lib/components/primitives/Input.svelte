@@ -75,13 +75,13 @@
 				: 'bg-c-bg-tertiary'} relative {hasIcon ? 'pl-12' : 'pl-5'} {hasClearButton && iconForButton
 				? 'pr-20 md:pr-27'
 				: hasClearButton || iconForButton
-				? 'pr-10 md:pr-16'
-				: 'pr-5'} pt-6.5 pb-2.5 {rounding ? rounding : 'rounded-xl'} transition
+					? 'pr-10 md:pr-16'
+					: 'pr-5'} pt-6.5 pb-2.5 {rounding ? rounding : 'rounded-xl'} transition
       shadow-lg {shadow === 'strongest'
 				? 'shadow-c-shadow/[var(--o-shadow-strongest)]'
 				: shadow === 'strong'
-				? 'shadow-c-shadow/[var(--o-shadow-strong)'
-				: 'shadow-c-shadow/[var(--o-shadow-normal)]'} focus:ring-2 ring-0 {bg === 'bg-secondary'
+					? 'shadow-c-shadow/[var(--o-shadow-strong)'
+					: 'shadow-c-shadow/[var(--o-shadow-normal)]'} focus:ring-2 ring-0 {bg === 'bg-secondary'
 				? 'ring-c-primary/20 focus:ring-c-primary/30'
 				: 'ring-c-primary/20 focus:ring-c-primary/35'}  
       placeholder:text-c-on-bg/50 not-touch:enabled:hover:ring-2 not-touch:enabled:group-hover:ring-2"
@@ -110,13 +110,13 @@
 				: 'bg-c-bg-tertiary'} relative {hasIcon ? 'pl-12' : 'pl-5'} {hasClearButton && iconForButton
 				? 'pr-20 md:pr-27'
 				: hasClearButton || iconForButton
-				? 'pr-10 md:pr-16'
-				: 'pr-5'} pt-6.5 pb-2.5 {rounding ? rounding : 'rounded-xl'} transition
+					? 'pr-10 md:pr-16'
+					: 'pr-5'} pt-6.5 pb-2.5 {rounding ? rounding : 'rounded-xl'} transition
       shadow-lg {shadow === 'strongest'
 				? 'shadow-c-shadow/[var(--o-shadow-strongest)]'
 				: shadow === 'strong'
-				? 'shadow-c-shadow/[var(--o-shadow-strong)'
-				: 'shadow-c-shadow/[var(--o-shadow-normal)]'} focus:ring-2 ring-0 {bg === 'bg-secondary'
+					? 'shadow-c-shadow/[var(--o-shadow-strong)'
+					: 'shadow-c-shadow/[var(--o-shadow-normal)]'} focus:ring-2 ring-0 {bg === 'bg-secondary'
 				? 'ring-c-primary/20 focus:ring-c-primary/30'
 				: 'ring-c-primary/20 focus:ring-c-primary/35'} 
       placeholder:text-c-on-bg/50 not-touch:enabled:hover:ring-2 not-touch:enabled:group-hover:ring-2"
@@ -145,13 +145,13 @@
 				: 'bg-c-bg-tertiary'} relative {hasIcon ? 'pl-12' : 'pl-5'} {hasClearButton && iconForButton
 				? 'pr-20 md:pr-27'
 				: hasClearButton || iconForButton
-				? 'pr-10 md:pr-16'
-				: 'pr-5'} pt-6.5 pb-2.5 {rounding ? rounding : 'rounded-xl'} transition
+					? 'pr-10 md:pr-16'
+					: 'pr-5'} pt-6.5 pb-2.5 {rounding ? rounding : 'rounded-xl'} transition
       shadow-lg {shadow === 'strongest'
 				? 'shadow-c-shadow/[var(--o-shadow-strongest)]'
 				: shadow === 'strong'
-				? 'shadow-c-shadow/[var(--o-shadow-strong)'
-				: 'shadow-c-shadow/[var(--o-shadow-normal)]'} focus:ring-2 ring-0 {bg === 'bg-secondary'
+					? 'shadow-c-shadow/[var(--o-shadow-strong)'
+					: 'shadow-c-shadow/[var(--o-shadow-normal)]'} focus:ring-2 ring-0 {bg === 'bg-secondary'
 				? 'ring-c-primary/20 focus:ring-c-primary/30'
 				: 'ring-c-primary/20 focus:ring-c-primary/35'}  
       placeholder:text-c-on-bg/50 not-touch:enabled:hover:ring-2 not-touch:enabled:group-hover:ring-2"
@@ -180,13 +180,13 @@
 				: 'bg-c-bg-tertiary'} relative {hasIcon ? 'pl-12' : 'pl-5'} {hasClearButton && iconForButton
 				? 'pr-22 md:pr-27'
 				: hasClearButton || iconForButton
-				? 'pr-10 md:pr-16'
-				: 'pr-5'} pt-6.5 pb-2.5 {rounding ? rounding : 'rounded-xl'} transition
+					? 'pr-10 md:pr-16'
+					: 'pr-5'} pt-6.5 pb-2.5 {rounding ? rounding : 'rounded-xl'} transition
       shadow-lg {shadow === 'strongest'
 				? 'shadow-c-shadow/[var(--o-shadow-strongest)]'
 				: shadow === 'strong'
-				? 'shadow-c-shadow/[var(--o-shadow-strong)'
-				: 'shadow-c-shadow/[var(--o-shadow-normal)]'} focus:ring-2 ring-0 {bg === 'bg-secondary'
+					? 'shadow-c-shadow/[var(--o-shadow-strong)'
+					: 'shadow-c-shadow/[var(--o-shadow-normal)]'} focus:ring-2 ring-0 {bg === 'bg-secondary'
 				? 'ring-c-primary/20 focus:ring-c-primary/30'
 				: 'ring-c-primary/20 focus:ring-c-primary/35'}  
       placeholder:text-c-on-bg/50 not-touch:enabled:hover:ring-2 not-touch:enabled:group-hover:ring-2"
@@ -208,7 +208,10 @@
 		<slot name="icon" />
 	</div>
 	{#if hasClearButton || iconForButton}
-		<div class="h-full absolute right-0 top-0 flex items-stretch">
+		<div
+			class="h-full absolute right-0 top-0 flex items-stretch {!showClearButton &&
+				'pointer-events-none'}"
+		>
 			<ClearButton
 				class="rounded-xl"
 				{disabled}
