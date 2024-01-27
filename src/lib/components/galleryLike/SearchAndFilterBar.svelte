@@ -141,7 +141,7 @@
 	}
 </script>
 
-<div class="w-full flex flex-col items-center z-40">
+<div class="w-full flex flex-col items-center">
 	<form on:submit|preventDefault={search} class="w-full flex gap-1.5">
 		<div class="flex-1 min-w-0 flex">
 			<Input
@@ -178,53 +178,55 @@
 					<IconFilter
 						class="w-full h-full text-c-on-bg transition transform {isFiltersOpen
 							? 'rotate-90'
-							: 'rotate-0'} not-touch:group-hover/iconbutton:text-c-primary"
+							: 'rotate-0'} not-touch:group-hover:text-c-primary"
 					/>
 				</div>
 				<div slot="1" class="w-6 h-6 md:w-7 md:h-7">
 					<IconChevronDown
 						class="w-full h-full text-c-on-bg transition transform {isFiltersOpen
 							? 'rotate-180'
-							: 'rotate-90'} not-touch:group-hover/iconbutton:text-c-primary"
+							: 'rotate-90'} not-touch:group-hover:text-c-primary"
 					/>
 				</div>
 			</Morpher>
 		</SubtleButton>
 	</form>
 	{#if isFiltersOpen}
-		<div
-			in:fly={{ duration: 150, easing: quadOut, y: -25, opacity: 0 }}
-			class="w-full flex flex-col md:flex-row justify-center items-center px-0.5 gap-3 pt-3"
-		>
-			<TabLikeFilterDropdown
-				class="w-full md:w-1/3"
-				name={$LL.Home.ModelDropdown.Title()}
-				nameIcon={IconBrain}
-				bind:values={modelIdFilters}
-				items={$availableModelIdDropdownItems}
-			/>
-			<TabLikeFilterDropdown
-				class="w-full md:w-1/3"
-				name={$LL.Home.AspectRatioDropdown.Title()}
-				nameIcon={IconDimensions}
-				bind:values={aspectRatioFilters}
-				items={aspectRatioTabs}
-			/>
-			{#if type === 'gallery'}
-				<form on:submit|preventDefault={onUsernameFieldSubmit} class="w-full md:w-1/3">
-					<TabLikeInput
-						name={$LL.Gallery.UsernameFilterInput.Title()}
-						placeholder={$LL.Gallery.UsernameFilterInput.Placeholder()}
-						class="w-full"
-						inputmode="search"
-						type="text"
-						icon={IconUserAlt}
-						bind:inputElement={usernameInputElement}
-						bind:value={usernameSearchStringLocal}
-						dontHandleKeypress
-					/>
-				</form>
-			{/if}
+		<div class="w-full flex flex-col pt-3">
+			<div
+				in:fly={{ duration: 150, easing: quadOut, y: -12, opacity: 0 }}
+				class="w-full flex flex-col md:flex-row justify-center items-center px-0.5 gap-3"
+			>
+				<TabLikeFilterDropdown
+					class="w-full md:w-1/3"
+					name={$LL.Home.ModelDropdown.Title()}
+					nameIcon={IconBrain}
+					bind:values={modelIdFilters}
+					items={$availableModelIdDropdownItems}
+				/>
+				<TabLikeFilterDropdown
+					class="w-full md:w-1/3"
+					name={$LL.Home.AspectRatioDropdown.Title()}
+					nameIcon={IconDimensions}
+					bind:values={aspectRatioFilters}
+					items={aspectRatioTabs}
+				/>
+				{#if type === 'gallery'}
+					<form on:submit|preventDefault={onUsernameFieldSubmit} class="w-full md:w-1/3">
+						<TabLikeInput
+							name={$LL.Gallery.UsernameFilterInput.Title()}
+							placeholder={$LL.Gallery.UsernameFilterInput.Placeholder()}
+							class="w-full"
+							inputmode="search"
+							type="text"
+							icon={IconUserAlt}
+							bind:inputElement={usernameInputElement}
+							bind:value={usernameSearchStringLocal}
+							dontHandleKeypress
+						/>
+					</form>
+				{/if}
+			</div>
 		</div>
 	{/if}
 	{#if hasAnyFilter}

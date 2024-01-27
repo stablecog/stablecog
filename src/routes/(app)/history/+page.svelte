@@ -151,7 +151,12 @@
 	};
 
 	function onKeyDown({ key }: KeyboardEvent) {
-		if (key === 'e' && !searchInputIsFocused) {
+		if (
+			key === 'e' &&
+			document?.activeElement?.tagName !== 'INPUT' &&
+			document?.activeElement?.tagName !== 'TEXTAREA' &&
+			!$activeGeneration
+		) {
 			if ($userGalleryCurrentView === 'likes') return;
 			isUserGalleryEditActive.set(!$isUserGalleryEditActive);
 			return;
@@ -221,7 +226,7 @@
 					class="flex-1 min-w-0 md:max-w-[15rem] z-50"
 				/>
 			</div>
-			<div slot="search-and-filter" class="w-full">
+			<div slot="search-and-filter" class="w-full relative z-40">
 				<SearchAndFilterBar
 					bind:searchString={$historySearchString}
 					bind:modelIdFilters={$userGalleryModelIdFilters}
@@ -232,9 +237,7 @@
 		</GalleryLikeTitleSection>
 		{#if $isUserGalleryEditActive}
 			<div
-				class="w-full max-w-3xl px-1 md:px-0 sticky z-30 top-1 {$isUserGalleryEditActive
-					? 'mt-3'
-					: 'mt-0'}"
+				class="w-full max-w-3xl px-1 sticky z-30 top-1 {$isUserGalleryEditActive ? 'mt-3' : 'mt-0'}"
 			>
 				<BatchEditBar type="history" />
 			</div>

@@ -119,7 +119,12 @@
 	};
 
 	function onKeyDown({ key }: KeyboardEvent) {
-		if (key === 'e' && !searchInputIsFocused) {
+		if (
+			key === 'e' &&
+			document?.activeElement?.tagName !== 'INPUT' &&
+			document?.activeElement?.tagName !== 'TEXTAREA' &&
+			!$activeGeneration
+		) {
 			isAdminGalleryEditActive.set(!$isAdminGalleryEditActive);
 			return;
 		}
@@ -226,7 +231,7 @@
 					</div>
 				</TabLikeDropdown>
 			</div>
-			<div slot="search-and-filter" class="w-full">
+			<div slot="search-and-filter" class="w-full relative z-40">
 				<SearchAndFilterBar
 					bind:searchString={$adminGallerySearchString}
 					bind:modelIdFilters={$adminGalleryModelIdFilters}
@@ -236,17 +241,15 @@
 			</div>
 		</GalleryLikeTitleSection>
 		<!-- Edit bar -->
-		<div
-			class="w-full flex flex-col items-center justify-start px-1 sticky top-1 z-30 {$isAdminGalleryEditActive
-				? 'mt-3'
-				: 'mt-0'}"
-		>
-			<div class="w-full max-w-3xl">
-				{#if $isAdminGalleryEditActive}
-					<BatchEditBar type="admin-gallery" />
-				{/if}
+		{#if $isAdminGalleryEditActive}
+			<div
+				class="w-full max-w-3xl px-1 sticky top-1 z-30 {$isAdminGalleryEditActive
+					? 'mt-3'
+					: 'mt-0'}"
+			>
+				<BatchEditBar type="admin-gallery" />
 			</div>
-		</div>
+		{/if}
 		<GalleryLikeGridWrapper>
 			{#if allUserGenerationFullOutputsQuery === undefined || $allUserGenerationFullOutputsQuery === undefined || $allUserGenerationFullOutputsQuery.isInitialLoading}
 				<div

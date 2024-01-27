@@ -230,7 +230,7 @@
 					label={iconForButtonLabel}
 					noRounding
 					noPadding
-					class="py-2 px-3 md:p-3 rounded-r-xl"
+					class="py-2 px-3 md:p-3 rounded-r-xl pointer-events-auto"
 					size="sm"
 				>
 					<svelte:component this={iconForButton} strokeWidth={2} class="w-6 h-6 md:w-7 md:h-7" />

@@ -154,7 +154,7 @@
 				class="flex-1 min-w-0 md:max-w-[15rem] z-50"
 			/>
 		</div>
-		<div slot="search-and-filter" class="w-full">
+		<div slot="search-and-filter" class="w-full relative z-40">
 			<SearchAndFilterBar
 				type="gallery"
 				bind:modelIdFilters={$galleryModelIdFilters}
