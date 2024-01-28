@@ -41,6 +41,7 @@
 	import { upscales } from '$ts/stores/user/upscale';
 	import { activeGeneration, type TGenerationWithSelectedOutput } from '$userStores/generation';
 	import { sessionStore } from '$ts/constants/supabase';
+	import { pushState } from '$app/navigation';
 
 	export let generation: TGenerationWithSelectedOutput;
 	export let cardType: TGenerationImageCardType;
@@ -72,8 +73,8 @@
 		$isUserGalleryEditActive && cardType === 'history'
 			? $userGallerySelectedOutputIds.includes(generation.selected_output.id)
 			: $isAdminGalleryEditActive && cardType === 'admin-gallery'
-			? $adminGallerySelectedOutputIds.includes(generation.selected_output.id)
-			: false;
+				? $adminGallerySelectedOutputIds.includes(generation.selected_output.id)
+				: false;
 
 	$: showAdminGalleryBarrier =
 		cardType === 'admin-gallery' &&
@@ -99,7 +100,7 @@
 			? $upscales.find(
 					(upscale) =>
 						upscale.type === 'from_output' && upscale.input === generation.selected_output.id
-			  )
+				)
 			: undefined;
 
 	$: shortPrompt = generation.prompt.text.slice(0, 50);
@@ -121,7 +122,7 @@
 				: `${$page.url.pathname}?${params}`;
 	}
 
-	function onImageClick(e: any) {
+	function onImageClick(e: MouseEvent & { currentTarget: HTMLAnchorElement }) {
 		if (!modalShouldOpen) {
 			lastClickedOutputId.set(generation.selected_output.id);
 			return;
@@ -132,12 +133,17 @@
 		if (leftButtonContainer && doesContainTarget(e.target, [leftButtonContainer])) {
 			return;
 		}
+		if (e.metaKey) return;
+
+		e.preventDefault();
 		e.currentTarget.blur();
+
 		activeGeneration.set({
 			...generation,
 			card_type: cardType,
 			prev: $page.url.pathname + $page.url.search
 		});
+
 		if ($page.url.pathname === '/gallery') {
 			logGalleryGenerationOpened({
 				'SC - Output Id': generation.selected_output.id,
@@ -153,7 +159,7 @@
 			cardType === 'gallery' || cardType === 'user-profile'
 				? `${$page.url.pathname}/o/${generation.selected_output.id}`
 				: `${$page.url.pathname}?${searchParams.toString()}`;
-		window.history.pushState(window.history.state, '', urlToPush);
+		pushState(urlToPush, {});
 	}
 
 	function _onSelectButtonClicked(e: any) {
@@ -246,7 +252,7 @@
 		aria-label="View generation: {shortPrompt}..."
 		href={imageClickHref}
 		data-sveltekit-preload-data="hover"
-		on:click|preventDefault={onImageClick}
+		on:click={onImageClick}
 		class="w-full h-full absolute left-0 top-0 flex flex-col justify-end items-end overflow-hidden pt-16"
 	>
 		{#if cardType !== 'generate' && showPromptOnHover}
@@ -361,8 +367,8 @@
 				? 'h-full max-h-[2rem] w-auto'
 				: 'h-full max-h-[3rem] w-auto'
 			: cardType === 'generate'
-			? 'w-full max-w-[2rem] h-auto'
-			: 'w-full max-w-[3rem] h-auto'}
+				? 'w-full max-w-[2rem] h-auto'
+				: 'w-full max-w-[3rem] h-auto'}
 	{@const isUserProfileAndImageHidden =
 		cardType === 'user-profile' && generation.selected_output.is_public === false}
 	<div
