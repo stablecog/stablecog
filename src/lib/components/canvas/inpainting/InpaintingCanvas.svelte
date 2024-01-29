@@ -527,7 +527,7 @@
 												setImage(outputs[index].image_url);
 											}}
 											icon={IconChevronLeft}
-											iconClass="group-active:-translate-x-1"
+											iconClass="enabled:group-active:-translate-x-1"
 											onClickClass="-translate-x-1"
 											disabled={selectedOutputIndex === 0}
 										/>
@@ -546,7 +546,7 @@
 												setImage(outputs[index].image_url);
 											}}
 											icon={IconChevronRight}
-											iconClass="group-active:translate-x-1"
+											iconClass="enabled:group-active:translate-x-1"
 											onClickClass="translate-x-1"
 											disabled={selectedOutputIndex === outputs.length - 1}
 										/>
