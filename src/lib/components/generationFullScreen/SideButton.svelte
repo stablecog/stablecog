@@ -1,8 +1,6 @@
 <script lang="ts">
 	import ButtonHoverEffect from '$components/primitives/buttons/ButtonHoverEffect.svelte';
-	import IconCancel from '$components/icons/IconCancel.svelte';
 	import IconChevronDown from '$components/icons/IconChevronDown.svelte';
-	import IconTickOnly from '$components/icons/IconTickOnly.svelte';
 	import { getImgProxySrc } from '$ts/helpers/imgproxy';
 	import type { TGenerationWithSelectedOutput } from '$ts/stores/user/generation';
 
@@ -20,7 +18,6 @@
 	let classes = `absolute ${
 		side === 'left' ? 'left-0' : 'right-0'
 	} w-18 flex items-center justify-center top-1/2 transform -translate-y-1/2 h-64`;
-
 	let isRecentlyClicked = false;
 	let isRecentlyClickedTimeout: NodeJS.Timeout;
 
@@ -55,16 +52,18 @@
 						: 'ring-c-bg-tertiary'}"
 				>
 					{#if generation !== undefined}
-						<img
-							src={getImgProxySrc({
-								src: generation.selected_output.image_url,
-								preset: '128w'
-							})}
-							width={generation.width}
-							height={generation.height}
-							alt={generation.prompt.text}
-							class="w-full h-full object-cover"
-						/>
+						{#key generation.id}
+							<img
+								src={getImgProxySrc({
+									src: generation.selected_output.image_url,
+									preset: '128w'
+								})}
+								width={generation.width}
+								height={generation.height}
+								alt={generation.prompt.text}
+								class="w-full h-full object-cover"
+							/>
+						{/key}
 					{/if}
 				</div>
 				<p
