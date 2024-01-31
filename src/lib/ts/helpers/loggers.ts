@@ -138,6 +138,10 @@ export function logGenerationOutputSubmittedToGallery(props: IGenerationOutputAc
 	ph.capture('Generation Output | Submitted to Gallery', { ...props });
 }
 
+export function logGalleryMainSortChanged(props: IGalleryMainSortChangedProps) {
+	ph.capture('Gallery | Main Sort Changed', { ...props });
+}
+
 export function logGenerationOutputDownloaded(props: IGenerationOutputActionProps) {
 	ph.capture('Generation Output | Downloaded', { ...props });
 }
@@ -207,8 +211,8 @@ export function logGenerationFailed({
 		error === 'NSFW' || error === 'nsfw'
 			? 'Failed-NSFW'
 			: error === 'nsfw_prompt'
-			? 'Failed-NSFW-Prompt'
-			: 'Failed',
+				? 'Failed-NSFW-Prompt'
+				: 'Failed',
 		props
 	);
 }
@@ -440,6 +444,14 @@ interface IGallerySearchProps {
 	'SC - User Id': string | undefined;
 	'SC - Stripe Product Id': string | undefined;
 	'SC - App Version': string;
+}
+
+interface IGalleryMainSortChangedProps {
+	'SC - Locale': string;
+	'SC - User Id': string | undefined;
+	'SC - Stripe Product Id': string | undefined;
+	'SC - App Version': string;
+	'SC - Main Sort': string;
 }
 
 interface IHistorySearchProps {

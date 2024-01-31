@@ -3,7 +3,7 @@
 	import GenerationFullScreen from '$components/generationFullScreen/GenerationFullScreen.svelte';
 	import IconSearch from '$components/icons/IconSearch.svelte';
 	import MetaTag from '$components/utils/MetaTag.svelte';
-	import LL from '$i18n/i18n-svelte';
+	import LL, { locale } from '$i18n/i18n-svelte';
 	import { canonicalUrl } from '$ts/constants/main';
 	import { globalSeed } from '$ts/stores/globalSeed';
 	import { activeGeneration } from '$ts/stores/user/generation';
@@ -32,8 +32,7 @@
 		getGalleryInfiniteQueryKey,
 		getGalleryInfiniteQueryProps,
 		mainSortViewDefault,
-		mainSorts,
-		sortsDefault
+		mainSorts
 	} from '$routes/(app)/gallery/constants';
 	import { previewImageVersion } from '$ts/constants/previewImageVersion.js';
 	import { galleryGenerationFullOutputsQueryKey } from '$ts/stores/user/queryKeys.js';
@@ -46,6 +45,9 @@
 	import GalleryLikeTitleSection from '$components/galleryLike/GalleryLikeTitleSection.svelte';
 	import GalleryLikeGridWrapper from '$components/galleryLike/GalleryLikeGridWrapper.svelte';
 	import { sessionStore } from '$ts/constants/supabase';
+	import { logGalleryMainSortChanged } from '$ts/helpers/loggers.js';
+	import { appVersion } from '$ts/stores/appVersion.js';
+	import { userSummary } from '$ts/stores/user/summary.js';
 
 	export let data;
 
@@ -61,12 +63,12 @@
 
 	const mainSortViews: TTab<string>[] = [
 		{
-			value: 'trending',
-			label: $LL.Gallery.Sort.Options.Trending()
-		},
-		{
 			value: 'new',
 			label: $LL.Gallery.Sort.Options.New()
+		},
+		{
+			value: 'trending',
+			label: $LL.Gallery.Sort.Options.Trending()
 		},
 		{
 			value: 'top',
@@ -111,6 +113,13 @@
 	function onMainSortViewChanged() {
 		if (!$gallerySorts) return;
 		gallerySorts.set([mainSortView, ...$gallerySorts.filter((i) => !mainSorts.includes(i))]);
+		logGalleryMainSortChanged({
+			'SC - App Version': $appVersion,
+			'SC - Locale': $locale,
+			'SC - Main Sort': mainSortView,
+			'SC - Stripe Product Id': $userSummary?.product_id,
+			'SC - User Id': $sessionStore?.user.id
+		});
 	}
 
 	function setSearchQuery(query: string) {

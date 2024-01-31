@@ -28,8 +28,8 @@ export const galleryAspectRatioFilters = sessionAndUrlParamWritable<TAvailableAs
 	[]
 );
 
-export const mainSortViewDefault = 'trending';
-export const mainSorts = ['trending', 'top', 'new'];
+export const mainSortViewDefault = 'new';
+export const mainSorts = ['new', 'trending', 'top'];
 export const sortsDefault = [mainSortViewDefault];
 export const gallerySorts = sessionAndUrlParamWritable<string[]>(
 	'gallerySorts',
