@@ -52,6 +52,8 @@
 
 	export let data;
 
+	let mounted = false;
+
 	if (!hydrated) {
 		galleryModelIdFilters.set(data.modelIdFilters);
 		galleryAspectRatioFilters.set(data.aspectRatioFilters);
@@ -114,14 +116,15 @@
 	function onMainSortViewChanged() {
 		if (!$gallerySorts) return;
 		gallerySorts.set([mainSortView, ...$gallerySorts.filter((i) => !mainSorts.includes(i))]);
-		if (!browser) return;
-		logGalleryMainSortChanged({
-			'SC - App Version': $appVersion,
-			'SC - Locale': $locale,
-			'SC - Main Sort': mainSortView,
-			'SC - Stripe Product Id': $userSummary?.product_id,
-			'SC - User Id': $sessionStore?.user.id
-		});
+		if (mounted) {
+			logGalleryMainSortChanged({
+				'SC - App Version': $appVersion,
+				'SC - Locale': $locale,
+				'SC - Main Sort': mainSortView,
+				'SC - Stripe Product Id': $userSummary?.product_id,
+				'SC - User Id': $sessionStore?.user.id
+			});
+		}
 	}
 
 	function setSearchQuery(query: string) {
@@ -142,6 +145,7 @@
 
 	onMount(() => {
 		updateHydrated();
+		mounted = true;
 	});
 </script>
 
