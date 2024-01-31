@@ -45,9 +45,10 @@
 	import GalleryLikeTitleSection from '$components/galleryLike/GalleryLikeTitleSection.svelte';
 	import GalleryLikeGridWrapper from '$components/galleryLike/GalleryLikeGridWrapper.svelte';
 	import { sessionStore } from '$ts/constants/supabase';
-	import { logGalleryMainSortChanged } from '$ts/helpers/loggers.js';
 	import { appVersion } from '$ts/stores/appVersion.js';
 	import { userSummary } from '$ts/stores/user/summary.js';
+	import { browser } from '$app/environment';
+	import { logGalleryMainSortChanged } from '$ts/helpers/loggers.js';
 
 	export let data;
 
@@ -113,6 +114,7 @@
 	function onMainSortViewChanged() {
 		if (!$gallerySorts) return;
 		gallerySorts.set([mainSortView, ...$gallerySorts.filter((i) => !mainSorts.includes(i))]);
+		if (!browser) return;
 		logGalleryMainSortChanged({
 			'SC - App Version': $appVersion,
 			'SC - Locale': $locale,
