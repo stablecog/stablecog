@@ -440,7 +440,7 @@ const de: Translation = {
 		TryAnotherImage: 'Try another image :(',
 		OnceEvery60Seconds: 'Du kannst nur einmal alle 60 Sekunden einen Link anfordern.',
 		OAuthFailed: {
-			Title: 'Connection error',
+			Title: 'Connection Error',
 			Paragraph: 'A problem occurred while connecting to the service provider.'
 		},
 		LinkExpired: {

@@ -454,7 +454,7 @@ const ja: Translation = {
 		TryAnotherImage: '別の画像をお試しください (^_^);',
 		OnceEvery60Seconds: 'リンクは60秒ごとに1回しかリクエストできません。',
 		OAuthFailed: {
-			Title: 'Connection error',
+			Title: 'Connection Error',
 			Paragraph: 'A problem occurred while connecting to the service provider.'
 		},
 		LinkExpired: {

@@ -466,7 +466,7 @@ const tr: Translation = {
 		TryAnotherImage: 'Başka fotoğraf dene :(',
 		OnceEvery60Seconds: 'Her 60 saniyede sadece bir link talebinde bulunabilirsin.',
 		OAuthFailed: {
-			Title: 'Connection error',
+			Title: 'Connection Error',
 			Paragraph: 'A problem occurred while connecting to the service provider.'
 		},
 		LinkExpired: {

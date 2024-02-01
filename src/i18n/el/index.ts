@@ -462,7 +462,7 @@ const es: Translation = {
 		TryAnotherImage: 'Δοκιμάστε μια άλλη εικόνα :(',
 		OnceEvery60Seconds: 'Μπορείτε να ζητήσετε σύνδεσμο μόνο μία φορά κάθε 60 δευτερόλεπτα.',
 		OAuthFailed: {
-			Title: 'Connection error',
+			Title: 'Connection Error',
 			Paragraph: 'A problem occurred while connecting to the service provider.'
 		},
 		LinkExpired: {

@@ -441,7 +441,7 @@ const en: BaseTranslation = {
 		TryAnotherImage: 'Try another image :(',
 		OnceEvery60Seconds: 'You can only request a link once every 60 seconds.',
 		OAuthFailed: {
-			Title: 'Connection error',
+			Title: 'Connection Error',
 			Paragraph: 'A problem occurred while connecting to the service provider.'
 		},
 		LinkExpired: {

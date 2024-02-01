@@ -446,7 +446,7 @@ const nl: Translation = {
 		TryAnotherImage: 'Probeer een andere afbeelding :(',
 		OnceEvery60Seconds: 'Je kunt slechts een keer per 60 seconden een link aanvragen.',
 		OAuthFailed: {
-			Title: 'Connection error',
+			Title: 'Connection Error',
 			Paragraph: 'A problem occurred while connecting to the service provider.'
 		},
 		LinkExpired: {
