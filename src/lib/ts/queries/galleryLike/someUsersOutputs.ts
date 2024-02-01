@@ -9,8 +9,8 @@ import type {
 } from '$ts/queries/galleryLike/types';
 import type { TGenerationFullOutput, TGenerationOutput } from '$userStores/generation';
 
-const score_threshold_default = 50;
-const per_page_default = 50;
+const SEARCH_SCORE_THRESHOLD_DEFAULT = 50;
+const PER_PAGE_DEFAULT = 50;
 
 export async function getSomeUsersGenerationFullOutputs({
 	cursor,
@@ -18,8 +18,8 @@ export async function getSomeUsersGenerationFullOutputs({
 	model_ids,
 	aspect_ratios,
 	custom_fetch,
-	per_page = per_page_default,
-	score_threshold = score_threshold_default,
+	per_page = PER_PAGE_DEFAULT,
+	search_score_threshold = SEARCH_SCORE_THRESHOLD_DEFAULT,
 	prompt_id,
 	username,
 	access_token
@@ -31,7 +31,7 @@ export async function getSomeUsersGenerationFullOutputs({
 	aspect_ratios?: TAvailableAspectRatio[];
 	custom_fetch?: typeof fetch;
 	per_page?: number;
-	score_threshold?: number;
+	search_score_threshold?: number;
 	prompt_id?: string;
 	username: string;
 	access_token?: string;
@@ -43,7 +43,7 @@ export async function getSomeUsersGenerationFullOutputs({
 	}
 	if (search && search !== '') {
 		query.append('search', search);
-		query.append('score_threshold', score_threshold.toString());
+		query.append('search_score_threshold', search_score_threshold.toString());
 	}
 	if (model_ids && model_ids.length > 0) {
 		query.append('model_ids', model_ids.join(','));
@@ -112,7 +112,7 @@ export async function getSomeUsersGenerationFullOutputs({
 						? {
 								id: hit.negative_prompt_id,
 								text: hit.negative_prompt_text
-						  }
+							}
 						: undefined,
 				outputs: [output],
 				status: 'succeeded',

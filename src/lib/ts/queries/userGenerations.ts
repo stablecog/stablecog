@@ -3,8 +3,8 @@ import type { TAvailableAspectRatio } from '$ts/constants/generationSize';
 import { apiUrl } from '$ts/constants/main';
 import type { TGalleryStatus, TGenerationFullOutput } from '$userStores/generation';
 
-export const generationsPerPage = 50;
-const score_threshold = 50;
+const SEARCH_SCORE_THRESHOLD_DEFAULT = 50;
+export const PER_PAGE_DEFAULT = 50;
 
 export async function getUserGenerationFullOutputs({
 	cursor,
@@ -13,7 +13,9 @@ export async function getUserGenerationFullOutputs({
 	is_liked,
 	search,
 	model_ids,
-	aspect_ratios
+	aspect_ratios,
+	search_score_threshold = SEARCH_SCORE_THRESHOLD_DEFAULT,
+	per_page = PER_PAGE_DEFAULT
 }: {
 	cursor?: string;
 	access_token: string;
@@ -22,10 +24,12 @@ export async function getUserGenerationFullOutputs({
 	search?: string;
 	model_ids?: TAvailableGenerationModelId[];
 	aspect_ratios?: TAvailableAspectRatio[];
+	search_score_threshold?: number;
+	per_page?: number;
 }) {
 	console.log('getUserOutputs');
 	const query = new URLSearchParams();
-	query.append('per_page', generationsPerPage.toString());
+	query.append('per_page', per_page.toString());
 	if (cursor) {
 		query.append('cursor', cursor.toString());
 	}
@@ -37,7 +41,7 @@ export async function getUserGenerationFullOutputs({
 	}
 	if (search && search !== '') {
 		query.append('search', search);
-		query.append('score_threshold', score_threshold.toString());
+		query.append('search_score_threshold', search_score_threshold.toString());
 	}
 	if (model_ids && model_ids.length > 0) {
 		query.append('model_ids', model_ids.join(','));
@@ -78,7 +82,7 @@ export async function getAllUserGenerationFullOutputs({
 }) {
 	console.log('getAllUserOutputs');
 	const query = new URLSearchParams();
-	query.append('per_page', generationsPerPage.toString());
+	query.append('per_page', PER_PAGE_DEFAULT.toString());
 	if (cursor) {
 		query.append('cursor', cursor);
 	}
@@ -94,7 +98,7 @@ export async function getAllUserGenerationFullOutputs({
 	}
 	if (search && search !== '') {
 		query.append('search', search);
-		query.append('score_threshold', score_threshold.toString());
+		query.append('search_score_threshold', SEARCH_SCORE_THRESHOLD_DEFAULT.toString());
 	}
 	if (model_ids && model_ids.length > 0) {
 		query.append('model_ids', model_ids.join(','));

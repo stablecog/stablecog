@@ -8,8 +8,8 @@ import type {
 } from '$ts/queries/galleryLike/types';
 import type { TGenerationFullOutput, TGenerationOutput } from '$userStores/generation';
 
-const score_threshold_default = 50;
-const per_page_default = 50;
+const SEARCH_SCORE_THRESHOLD_DEFAULT = 50;
+const PER_PAGE_DEFAULT = 50;
 
 export async function getGalleryGenerationFullOutputs({
 	cursor,
@@ -20,8 +20,8 @@ export async function getGalleryGenerationFullOutputs({
 	sorts,
 	usernameFilters,
 	custom_fetch,
-	per_page = per_page_default,
-	score_threshold = score_threshold_default,
+	per_page = PER_PAGE_DEFAULT,
+	search_score_threshold = SEARCH_SCORE_THRESHOLD_DEFAULT,
 	prompt_id,
 	accessToken
 }: {
@@ -34,7 +34,7 @@ export async function getGalleryGenerationFullOutputs({
 	usernameFilters?: string[];
 	custom_fetch?: typeof fetch;
 	per_page?: number;
-	score_threshold?: number;
+	search_score_threshold?: number;
 	prompt_id?: string;
 	accessToken?: string;
 }): Promise<TUserProfileFullOutputsPage> {
@@ -47,7 +47,7 @@ export async function getGalleryGenerationFullOutputs({
 	}
 	if (search && search !== '') {
 		query.append('search', search);
-		query.append('score_threshold', score_threshold.toString());
+		query.append('search_score_threshold', search_score_threshold.toString());
 		shouldAddSeed = false;
 	}
 	if (model_ids && model_ids.length > 0) {

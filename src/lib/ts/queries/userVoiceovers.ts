@@ -2,21 +2,24 @@ import type { TAvailableGenerationModelId } from '$ts/constants/generationModels
 import { apiUrl } from '$ts/constants/main';
 import type { TVoiceoverFullOutput } from '$ts/stores/user/voiceovers';
 
-export const generationsPerPage = 50;
-const score_threshold = 50;
+const SEARCH_SCORE_THRESHOLD_DEFAULT = 50;
+export const PER_PAGE_DEFAULT = 50;
 
 export async function getUserVoiceoverFullOutputs({
 	cursor,
 	access_token,
-	is_favorited
+	is_favorited,
+	per_page = PER_PAGE_DEFAULT
 }: {
 	cursor?: string;
 	access_token: string;
 	is_favorited?: boolean;
+	search_score_threshold?: number;
+	per_page?: number;
 }) {
 	console.log('getUserOutputs');
 	const query = new URLSearchParams();
-	query.append('per_page', generationsPerPage.toString());
+	query.append('per_page', per_page.toString());
 	if (cursor) {
 		query.append('cursor', cursor.toString());
 	}
@@ -40,7 +43,9 @@ export async function getAllUserGenerationFullOutputs({
 	gallery_status,
 	order_by,
 	search,
-	model_ids
+	model_ids,
+	per_page = PER_PAGE_DEFAULT,
+	search_score_threshold = SEARCH_SCORE_THRESHOLD_DEFAULT
 }: {
 	cursor?: string;
 	gallery_status?: string;
@@ -48,10 +53,12 @@ export async function getAllUserGenerationFullOutputs({
 	order_by?: string;
 	search?: string;
 	model_ids?: TAvailableGenerationModelId[];
+	per_page?: number;
+	search_score_threshold?: number;
 }) {
 	console.log('getAllUserOutputs');
 	const query = new URLSearchParams();
-	query.append('per_page', generationsPerPage.toString());
+	query.append('per_page', per_page.toString());
 	if (cursor) {
 		query.append('cursor', cursor);
 	}
@@ -63,7 +70,7 @@ export async function getAllUserGenerationFullOutputs({
 	}
 	if (search && search !== '') {
 		query.append('search', search);
-		query.append('score_threshold', score_threshold.toString());
+		query.append('search_score_threshold', search_score_threshold.toString());
 	}
 	if (model_ids && model_ids.length > 0) {
 		query.append('model_ids', model_ids.join(','));
