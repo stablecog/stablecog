@@ -1346,7 +1346,7 @@ type RootTranslation = {
 		OnceEvery60Seconds: string
 		OAuthFailed: {
 			/**
-			 * C​o​n​n​e​c​t​i​o​n​ ​e​r​r​o​r
+			 * C​o​n​n​e​c​t​i​o​n​ ​E​r​r​o​r
 			 */
 			Title: string
 			/**
@@ -4601,7 +4601,7 @@ export type TranslationFunctions = {
 		OnceEvery60Seconds: () => LocalizedString
 		OAuthFailed: {
 			/**
-			 * Connection error
+			 * Connection Error
 			 */
 			Title: () => LocalizedString
 			/**

@@ -166,6 +166,9 @@
 				items={mainSortViews}
 				bind:value={mainSortView}
 				iconSet={IconMainSortView}
+				disabled={$gallerySearchString !== '' &&
+					$gallerySearchString !== undefined &&
+					$gallerySearchString !== null}
 				class="flex-1 min-w-0 md:max-w-[15rem] z-50"
 			/>
 		</div>

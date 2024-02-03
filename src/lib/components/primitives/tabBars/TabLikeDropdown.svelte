@@ -26,7 +26,7 @@
 	export let filterSelected = false;
 	export let listClass = 'flex flex-col';
 	export let iconSetClass =
-		'w-5.5 h-5.5 flex-shrink-0 -ml-1 mr-2 text-c-on-bg not-touch:group-hover:text-c-primary';
+		'w-5.5 h-5.5 flex-shrink-0 -ml-1 mr-2 text-c-on-bg not-touch:group-enabled:group-hover:text-c-primary';
 	let classes = '';
 
 	let minDropdownHeight = 200;
@@ -108,7 +108,7 @@
 				setDropdownWrapperPosition();
 				toggleDropdown();
 			}}
-			class="touch-manipulation flex-1 ring-2 text-left flex items-center justify-between min-w-0 {hasTitle
+			class="touch-manipulation flex-1 ring-2 text-left flex items-center justify-between min-w-0 disabled:opacity-50 {hasTitle
 				? 'px-4'
 				: 'px-5'} py-3.5 relative
 				group transition-all duration-150 z-30 gap-2 {isDropdownOpen
@@ -129,7 +129,7 @@
 				<div class="w-[200%] h-full absolute left-0 top-0 flex items-center justify-center">
 					<div
 						class="w-full aspect-square origin-left rounded-full transition transform -translate-x-full opacity-0
-							bg-c-primary/10 not-touch:group-hover:translate-x-[-45%] not-touch:group-hover:opacity-100"
+							bg-c-primary/10 not-touch:group-enabled:group-hover:translate-x-[-45%] not-touch:group-enabled:group-hover:opacity-100"
 					/>
 				</div>
 			</div>
@@ -137,11 +137,11 @@
 				<svelte:component
 					this={iconSet}
 					type={selectedItem?.value}
-					class="{iconSetClass} transition text-c-on-bg not-touch:group-hover:text-c-primary"
+					class="{iconSetClass} transition"
 				/>
 				<p
 					class="flex-shrink whitespace-nowrap overflow-hidden overflow-ellipsis text-base font-medium relative transition
-					max-w-full z-0 text-c-on-bg not-touch:group-hover:text-c-primary"
+					max-w-full z-0 text-c-on-bg not-touch:group-enabled:group-hover:text-c-primary"
 				>
 					{selectedItem?.label}
 				</p>
@@ -150,7 +150,7 @@
 				class="-mr-2 flex-shrink-0 w-5 h-5 transition {isDropdownOpen ? 'rotate-180' : 'rotate-0'}"
 			>
 				<IconChevronDown
-					class="relative w-full h-full transition text-c-on-bg/50 not-touch:group-hover:text-c-primary"
+					class="relative w-full h-full transition text-c-on-bg/50 not-touch:group-enabled:group-hover:text-c-primary"
 				/>
 			</div>
 		</button>
