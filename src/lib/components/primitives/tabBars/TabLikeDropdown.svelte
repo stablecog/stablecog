@@ -27,6 +27,8 @@
 	export let listClass = 'flex flex-col';
 	export let iconSetClass =
 		'w-5.5 h-5.5 flex-shrink-0 -ml-1 mr-2 text-c-on-bg not-touch:group-enabled:group-hover:text-c-primary';
+	export let disabledText = 'Disabled';
+	export let disabledIcon: ConstructorOfATypedSvelteComponent | undefined = undefined;
 	let classes = '';
 
 	let minDropdownHeight = 200;
@@ -135,7 +137,7 @@
 			</div>
 			<div class="flex-shrink min-w-0 flex items-center">
 				<svelte:component
-					this={iconSet}
+					this={disabled && disabledIcon !== undefined ? disabledIcon : iconSet}
 					type={selectedItem?.value}
 					class="{iconSetClass} transition"
 				/>
@@ -143,7 +145,7 @@
 					class="flex-shrink whitespace-nowrap overflow-hidden overflow-ellipsis text-base font-medium relative transition
 					max-w-full z-0 text-c-on-bg not-touch:group-enabled:group-hover:text-c-primary"
 				>
-					{selectedItem?.label}
+					{disabled && disabledText !== undefined ? disabledText : selectedItem?.label}
 				</p>
 			</div>
 			<div

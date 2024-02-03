@@ -2308,6 +2308,10 @@ type RootTranslation = {
 				Trending: string
 			}
 		}
+		/**
+		 * S​e​a​r​c​h​ ​R​e​s​u​l​t​s
+		 */
+		SearchResultsTitle: string
 		UsernameFilterInput: {
 			/**
 			 * U​s​e​r​n​a​m​e​ ​S​e​a​r​c​h
@@ -5553,6 +5557,10 @@ export type TranslationFunctions = {
 				Trending: () => LocalizedString
 			}
 		}
+		/**
+		 * Search Results
+		 */
+		SearchResultsTitle: () => LocalizedString
 		UsernameFilterInput: {
 			/**
 			 * Username Search

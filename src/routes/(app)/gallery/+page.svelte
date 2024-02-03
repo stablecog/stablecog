@@ -47,8 +47,8 @@
 	import { sessionStore } from '$ts/constants/supabase';
 	import { appVersion } from '$ts/stores/appVersion.js';
 	import { userSummary } from '$ts/stores/user/summary.js';
-	import { browser } from '$app/environment';
 	import { logGalleryMainSortChanged } from '$ts/helpers/loggers.js';
+	import IconDocumentSearch from '$components/icons/IconDocumentSearch.svelte';
 
 	export let data;
 
@@ -169,6 +169,8 @@
 				disabled={$gallerySearchString !== '' &&
 					$gallerySearchString !== undefined &&
 					$gallerySearchString !== null}
+				disabledText={$LL.Gallery.SearchResultsTitle()}
+				disabledIcon={IconDocumentSearch}
 				class="flex-1 min-w-0 md:max-w-[15rem] z-50"
 			/>
 		</div>

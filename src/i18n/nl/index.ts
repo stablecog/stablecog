@@ -767,6 +767,7 @@ const nl: Translation = {
 			Title: 'Sort',
 			Options: { New: 'New', Top: 'Top', Trending: 'Trending' }
 		},
+		SearchResultsTitle: 'Search Results',
 		UsernameFilterInput: {
 			Title: 'Username Search',
 			Placeholder: 'Filter by username',
