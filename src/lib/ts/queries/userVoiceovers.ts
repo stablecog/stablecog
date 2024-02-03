@@ -70,7 +70,7 @@ export async function getAllUserGenerationFullOutputs({
 	}
 	if (search && search !== '') {
 		query.append('search', search);
-		query.append('search_score_threshold', search_score_threshold.toString());
+		query.append('score_threshold', search_score_threshold.toString());
 	}
 	if (model_ids && model_ids.length > 0) {
 		query.append('model_ids', model_ids.join(','));
