@@ -291,11 +291,13 @@ const de: Translation = {
 		},
 		BatchEditBar: {
 			PauseEditingButton: 'Pause Editing',
+			PauseEditingButtonAlt: 'Pause',
 			DeselectButton: 'Deselect ({selectedCount})',
 			DeleteButton: 'Delete ({selectedCount})',
 			FavoriteButton: 'Favorite ({selectedCount})',
 			ApproveButton: 'Approve ({selectedCount})',
 			RejectButton: 'Reject ({selectedCount})',
+			ToApproveButton: 'To Approve ({selectedCount})',
 			UnfavoriteButton: 'Unfavorite ({selectedCount})',
 			ConfirmationModal: {
 				CancelButton: 'Cancel',

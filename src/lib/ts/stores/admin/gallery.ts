@@ -31,7 +31,7 @@ export const adminGallerySelectedOutputIds = derived(
 
 export const isAdminGalleryEditActive = writable<boolean>(false);
 
-export type TAdminGalleryAction = 'approve' | 'reject';
+export type TAdminGalleryAction = 'approve' | 'reject' | 'waiting_for_approval';
 
 export interface TAdminGalleryActionableItem {
 	output_id: string;

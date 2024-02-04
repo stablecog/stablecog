@@ -305,11 +305,13 @@ const tr: Translation = {
 		},
 		BatchEditBar: {
 			PauseEditingButton: 'Düzenlemeyi Bitir',
+			PauseEditingButtonAlt: 'Pause',
 			DeselectButton: 'Seçimi Kaldır ({selectedCount})',
 			DeleteButton: 'Sil ({selectedCount})',
 			FavoriteButton: 'Favorile ({selectedCount})',
 			ApproveButton: 'Onayla ({selectedCount})',
 			RejectButton: 'Reddet ({selectedCount})',
+			ToApproveButton: 'To Approve ({selectedCount})',
 			UnfavoriteButton: 'Favoriyi Kaldır ({selectedCount})',
 			ConfirmationModal: {
 				CancelButton: 'Vazgeç',

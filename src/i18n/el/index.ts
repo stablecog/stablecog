@@ -302,11 +302,13 @@ const es: Translation = {
 		},
 		BatchEditBar: {
 			PauseEditingButton: 'Παύση Επεξεργασίας',
+			PauseEditingButtonAlt: 'Pause',
 			DeselectButton: 'Αποεπιλογή ({selectedCount})',
 			DeleteButton: 'Διαγραφή ({selectedCount})',
 			FavoriteButton: 'Αγαπημένα ({selectedCount})',
 			ApproveButton: 'Έγκριση ({selectedCount})',
 			RejectButton: 'Απόρριψη ({selectedCount})',
+			ToApproveButton: 'To Approve ({selectedCount})',
 			UnfavoriteButton: 'Διαγραφή από τα αγαπημένα ({selectedCount})',
 			ConfirmationModal: {
 				CancelButton: 'Ακύρωση',

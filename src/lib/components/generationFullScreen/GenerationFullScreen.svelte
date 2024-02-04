@@ -133,8 +133,8 @@
 	let initialGenerationChange = true;
 	$: upscaleBeingProcessed = upscaleFromStore
 		? upscaleFromStore.status !== 'succeeded' &&
-		  upscaleFromStore.status !== 'failed' &&
-		  !generation.selected_output.upscaled_image_url
+			upscaleFromStore.status !== 'failed' &&
+			!generation.selected_output.upscaled_image_url
 		: false;
 
 	let sidebarScrollContainer: HTMLDivElement | undefined;
@@ -390,7 +390,7 @@
 				if ($activeGeneration !== undefined) {
 					activeGeneration.set(undefined);
 				}
-		  }
+			}
 		: undefined}
 >
 	<Container
@@ -712,7 +712,7 @@
 			generation={prevGeneration}
 			isGenerationSelected={prevGeneration
 				? modalType === 'admin-gallery' &&
-				  $adminGallerySelectedOutputIds.includes(prevGeneration.selected_output.id)
+					$adminGallerySelectedOutputIds.includes(prevGeneration.selected_output.id)
 				: undefined}
 		/>
 		<SideButton
@@ -729,7 +729,7 @@
 			generation={nextGeneration}
 			isGenerationSelected={nextGeneration
 				? modalType === 'admin-gallery' &&
-				  $adminGallerySelectedOutputIds.includes(nextGeneration.selected_output.id)
+					$adminGallerySelectedOutputIds.includes(nextGeneration.selected_output.id)
 				: undefined}
 		/>
 	{/if}

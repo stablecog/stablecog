@@ -930,6 +930,10 @@ type RootTranslation = {
 			 */
 			PauseEditingButton: string
 			/**
+			 * P​a​u​s​e
+			 */
+			PauseEditingButtonAlt: string
+			/**
 			 * D​e​s​e​l​e​c​t​ ​(​{​s​e​l​e​c​t​e​d​C​o​u​n​t​}​)
 			 * @param {unknown} selectedCount
 			 */
@@ -954,6 +958,11 @@ type RootTranslation = {
 			 * @param {unknown} selectedCount
 			 */
 			RejectButton: RequiredParams<'selectedCount'>
+			/**
+			 * T​o​ ​A​p​p​r​o​v​e​ ​(​{​s​e​l​e​c​t​e​d​C​o​u​n​t​}​)
+			 * @param {unknown} selectedCount
+			 */
+			ToApproveButton: RequiredParams<'selectedCount'>
 			/**
 			 * U​n​f​a​v​o​r​i​t​e​ ​(​{​s​e​l​e​c​t​e​d​C​o​u​n​t​}​)
 			 * @param {unknown} selectedCount
@@ -4207,6 +4216,10 @@ export type TranslationFunctions = {
 			 */
 			PauseEditingButton: () => LocalizedString
 			/**
+			 * Pause
+			 */
+			PauseEditingButtonAlt: () => LocalizedString
+			/**
 			 * Deselect ({selectedCount})
 			 */
 			DeselectButton: (arg: { selectedCount: unknown }) => LocalizedString
@@ -4226,6 +4239,10 @@ export type TranslationFunctions = {
 			 * Reject ({selectedCount})
 			 */
 			RejectButton: (arg: { selectedCount: unknown }) => LocalizedString
+			/**
+			 * To Approve ({selectedCount})
+			 */
+			ToApproveButton: (arg: { selectedCount: unknown }) => LocalizedString
 			/**
 			 * Unfavorite ({selectedCount})
 			 */

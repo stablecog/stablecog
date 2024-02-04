@@ -302,11 +302,13 @@ const ja: Translation = {
 		},
 		BatchEditBar: {
 			PauseEditingButton: '編集を一時停止',
+			PauseEditingButtonAlt: 'Pause',
 			DeselectButton: '選択解除 ({selectedCount})',
 			DeleteButton: '削除 ({selectedCount})',
 			FavoriteButton: 'お気に入り ({selectedCount})',
 			ApproveButton: '承認 ({selectedCount})',
 			RejectButton: '却下 ({selectedCount})',
+			ToApproveButton: 'To Approve ({selectedCount})',
 			UnfavoriteButton: 'お気に入り取り消し ({selectedCount})',
 			ConfirmationModal: {
 				CancelButton: 'キャンセル',

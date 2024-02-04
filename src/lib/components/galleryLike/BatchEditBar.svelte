@@ -68,6 +68,7 @@
 		| 'deselect'
 		| 'approve'
 		| 'reject'
+		| 'waiting_for_approval'
 		| undefined = undefined;
 	type TActionStatus = 'idle' | 'loading' | 'error';
 
@@ -260,7 +261,7 @@
 		}
 	}
 
-	async function approveOrReject(action: TAdminGalleryAction) {
+	async function setGalleryStatus(action: TAdminGalleryAction) {
 		try {
 			actionStatus = 'loading';
 			actionType = action;
@@ -276,7 +277,7 @@
 					generation_output_ids: ids
 				})
 			});
-			if (!res.ok) throw new Error('Error approving/rejecting generation outputs');
+			if (!res.ok) throw new Error('Error setting generation output status');
 			const resJson = await res.json();
 			adminGalleryActionableItems.set(
 				$adminGalleryActionableItems.filter(
@@ -381,7 +382,7 @@
 					size="md"
 					icon={IconTickOnly}
 					textColor="success"
-					onClick={() => approveOrReject('approve')}
+					onClick={() => setGalleryStatus('approve')}
 				>
 					{$LL.Shared.BatchEditBar.ApproveButton({
 						selectedCount: selectedOutputIds.length
@@ -396,7 +397,7 @@
 					size="md"
 					icon={IconCancel}
 					textColor="danger"
-					onClick={() => approveOrReject('reject')}
+					onClick={() => setGalleryStatus('reject')}
 				>
 					{$LL.Shared.BatchEditBar.RejectButton({
 						selectedCount: selectedOutputIds.length

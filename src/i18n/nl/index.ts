@@ -295,11 +295,13 @@ const nl: Translation = {
 		},
 		BatchEditBar: {
 			PauseEditingButton: 'Bewerken pauzeren',
+			PauseEditingButtonAlt: 'Pause',
 			DeselectButton: '({selectedCount}) deselecteren',
 			DeleteButton: '({selectedCount}) verwijderen',
 			FavoriteButton: '({selectedCount}) aan favorieten toevoegen',
 			ApproveButton: '({selectedCount}) goedkeuren',
 			RejectButton: '({selectedCount}) afwijzen',
+			ToApproveButton: 'To Approve ({selectedCount})',
 			UnfavoriteButton: '({selectedCount}) uit favorieten verwijderen',
 			ConfirmationModal: {
 				CancelButton: 'Annuleren',
