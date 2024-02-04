@@ -540,6 +540,7 @@ const tr: Translation = {
 				Approved: 'Onaylananlar',
 				Rejected: 'Reddedilenler',
 				Deleted: 'Silinenler',
+				WaitingForApproval: 'Waiting for Approval',
 				Private: 'Gizli'
 			},
 			NoGenerationsToReview: 'İncelenecek üretim kalmadı'

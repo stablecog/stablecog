@@ -44,8 +44,8 @@ export const setGenerationToFailed = ({ id, error }: { id: string; error?: strin
 					error === 'NSFW' || error === 'nsfw'
 						? 'failed-nsfw'
 						: error === 'nsfw_prompt'
-						? 'failed-nsfw-prompt'
-						: 'failed'
+							? 'failed-nsfw-prompt'
+							: 'failed'
 			}));
 			genById.error = error;
 			return $generations;
@@ -59,8 +59,8 @@ export const setGenerationToFailed = ({ id, error }: { id: string; error?: strin
 					error === 'NSFW' || error === 'nsfw'
 						? 'failed-nsfw'
 						: error === 'nsfw_prompt'
-						? 'failed-nsfw-prompt'
-						: 'failed'
+							? 'failed-nsfw-prompt'
+							: 'failed'
 			}));
 			genByUiId.error = error;
 			return $generations;
@@ -502,7 +502,8 @@ export const TGalleryStatusSchema = z
 		'approved',
 		'rejected',
 		'not_submitted',
-		'manually_submitted'
+		'manually_submitted',
+		'waiting_for_approval'
 	])
 	.default('submitted');
 

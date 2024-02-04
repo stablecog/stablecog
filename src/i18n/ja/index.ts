@@ -528,6 +528,7 @@ const ja: Translation = {
 				Approved: '承認済',
 				Rejected: '却下',
 				Deleted: '削除済み',
+				WaitingForApproval: 'Waiting for Approval',
 				Private: '非公開'
 			},
 			NoGenerationsToReview: 'レビューする生成がありません'

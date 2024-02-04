@@ -43,7 +43,11 @@
 	import { hydrated, updateHydrated } from '$ts/stores/hydrated.js';
 	import { userSummary } from '$ts/stores/user/summary';
 	import { windowWidth } from '$ts/stores/window';
-	import { activeGeneration, type TGenerationWithSelectedOutput } from '$userStores/generation';
+	import {
+		activeGeneration,
+		type TGalleryStatus,
+		type TGenerationWithSelectedOutput
+	} from '$userStores/generation';
 	import { createInfiniteQuery, type CreateInfiniteQueryResult } from '@tanstack/svelte-query';
 	import { onMount } from 'svelte';
 	import { sessionStore } from '$ts/constants/supabase';
@@ -106,6 +110,35 @@
 		outputs && rightIndex !== -1
 			? { ...outputs[rightIndex].generation, selected_output: outputs[rightIndex] }
 			: undefined;
+
+	let adminGalleryFilters: { label: string; value: TGalleryStatus }[];
+	let adminGallerySuperAdminFilters: { label: string; value: TGalleryStatus }[];
+	$: adminGallerySuperAdminFilters = isSuperAdmin($userSummary?.roles)
+		? [
+				{
+					label: $LL.Admin.Gallery.StatusDropdown.Private(),
+					value: 'not_submitted'
+				}
+			]
+		: ([] as { label: string; value: TGalleryStatus }[]);
+	$: adminGalleryFilters = [
+		{
+			label: $LL.Admin.Gallery.StatusDropdown.SubmittedBest(),
+			value: 'submitted_best'
+		},
+		{
+			label: $LL.Admin.Gallery.StatusDropdown.WaitingForApproval(),
+			value: 'waiting_for_approval'
+		},
+		{ label: $LL.Admin.Gallery.StatusDropdown.Submitted(), value: 'submitted' },
+		{
+			label: $LL.Admin.Gallery.StatusDropdown.ManuallySubmitted(),
+			value: 'manually_submitted'
+		},
+		{ label: $LL.Admin.Gallery.StatusDropdown.Approved(), value: 'approved' },
+		{ label: $LL.Admin.Gallery.StatusDropdown.Rejected(), value: 'rejected' },
+		...adminGallerySuperAdminFilters
+	];
 
 	const onPagesChanged = () => {
 		if (!$sessionStore?.user.id || !$allUserGenerationFullOutputsQuery) return;
@@ -203,27 +236,7 @@
 				<TabLikeDropdown
 					class="flex-1 min-w-0 md:max-w-[15rem]"
 					name="Filter"
-					items={[
-						{
-							label: $LL.Admin.Gallery.StatusDropdown.SubmittedBest(),
-							value: 'submitted_best'
-						},
-						{ label: $LL.Admin.Gallery.StatusDropdown.Submitted(), value: 'submitted' },
-						{
-							label: $LL.Admin.Gallery.StatusDropdown.ManuallySubmitted(),
-							value: 'manually_submitted'
-						},
-						{ label: $LL.Admin.Gallery.StatusDropdown.Approved(), value: 'approved' },
-						{ label: $LL.Admin.Gallery.StatusDropdown.Rejected(), value: 'rejected' },
-						...(isSuperAdmin($userSummary?.roles || [])
-							? [
-									{
-										label: $LL.Admin.Gallery.StatusDropdown.Private(),
-										value: 'not_submitted'
-									}
-								]
-							: [])
-					]}
+					items={adminGalleryFilters}
 					bind:value={$adminGalleryCurrentFilter}
 				>
 					<div slot="title" class="p-3.5 flex items-center justify-center">

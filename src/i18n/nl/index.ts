@@ -518,6 +518,7 @@ const nl: Translation = {
 				Approved: 'Goedgekeurd',
 				Rejected: 'Geweigerd',
 				Deleted: 'Verwijderd',
+				WaitingForApproval: 'Waiting for Approval',
 				Private: 'Afgeschermd'
 			},
 			NoGenerationsToReview: 'Geen generaties om te beoordelen'

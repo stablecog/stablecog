@@ -536,6 +536,7 @@ const es: Translation = {
 				Approved: 'Έγκριση',
 				Rejected: 'Απόρριψη',
 				Deleted: 'Διαγραφή',
+				WaitingForApproval: 'Waiting for Approval',
 				Private: 'Ιδιωτικό'
 			},
 			NoGenerationsToReview: 'Δεν υπάρχουν παράγωγα για αναθεώρηση'

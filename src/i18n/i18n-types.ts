@@ -1580,6 +1580,10 @@ type RootTranslation = {
 				 */
 				Deleted: string
 				/**
+				 * W​a​i​t​i​n​g​ ​f​o​r​ ​A​p​p​r​o​v​a​l
+				 */
+				WaitingForApproval: string
+				/**
 				 * P​r​i​v​a​t​e
 				 */
 				Private: string
@@ -4837,6 +4841,10 @@ export type TranslationFunctions = {
 				 * Deleted
 				 */
 				Deleted: () => LocalizedString
+				/**
+				 * Waiting for Approval
+				 */
+				WaitingForApproval: () => LocalizedString
 				/**
 				 * Private
 				 */

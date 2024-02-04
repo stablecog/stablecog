@@ -512,6 +512,7 @@ const de: Translation = {
 				Approved: 'Genehmigt',
 				Rejected: 'Abgelehnt',
 				Deleted: 'Gelöscht',
+				WaitingForApproval: 'Waiting for Approval',
 				Private: 'Privat'
 			},
 			NoGenerationsToReview: 'Keine Generierungen zu prüfen'

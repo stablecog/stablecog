@@ -513,6 +513,7 @@ const en: BaseTranslation = {
 				Approved: 'Approved',
 				Rejected: 'Rejected',
 				Deleted: 'Deleted',
+				WaitingForApproval: 'Waiting for Approval',
 				Private: 'Private'
 			},
 			NoGenerationsToReview: 'No generations to review'
