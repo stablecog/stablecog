@@ -49,6 +49,7 @@
 	import { userSummary } from '$ts/stores/user/summary.js';
 	import { logGalleryMainSortChanged } from '$ts/helpers/loggers.js';
 	import IconDocumentSearch from '$components/icons/IconDocumentSearch.svelte';
+	import GalleryLikeGridKeyWrapper from '$components/galleryLike/GalleryLikeGridKeyWrapper.svelte';
 
 	export let data;
 
@@ -225,22 +226,29 @@
 				<div class="h-[2vh]" />
 			</div>
 		{:else if galleryGenerationFullOutputsQuery !== undefined && $windowWidth}
-			<GenerationGridInfinite
-				cardType="gallery"
-				generationsQuery={galleryGenerationFullOutputsQuery}
-				cols={$windowWidth > xl3Breakpoint
-					? 7
-					: $windowWidth > xl2Breakpoint
-						? 6
-						: $windowWidth > xlBreakpoint
-							? 5
-							: $windowWidth > lgBreakpoint
-								? 4
-								: $windowWidth > mdBreakpoint
-									? 3
-									: 2}
-				{setSearchQuery}
-			/>
+			<GalleryLikeGridKeyWrapper
+				key={$gallerySearchString +
+					$galleryModelIdFilters.join(',') +
+					$galleryAspectRatioFilters.join(',') +
+					$galleryUsernameFilters.join(',')}
+			>
+				<GenerationGridInfinite
+					cardType="gallery"
+					generationsQuery={galleryGenerationFullOutputsQuery}
+					cols={$windowWidth > xl3Breakpoint
+						? 7
+						: $windowWidth > xl2Breakpoint
+							? 6
+							: $windowWidth > xlBreakpoint
+								? 5
+								: $windowWidth > lgBreakpoint
+									? 4
+									: $windowWidth > mdBreakpoint
+										? 3
+										: 2}
+					{setSearchQuery}
+				/>
+			</GalleryLikeGridKeyWrapper>
 		{/if}
 	</GalleryLikeGridWrapper>
 </GalleryLikePageWrapper>

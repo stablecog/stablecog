@@ -71,7 +71,7 @@
 		"@supabase/supabase-js": "^2.39.3",
 		"@sveltejs/vite-plugin-svelte": "^3.0.1",
 		"@tanstack/svelte-query": "^4.36.1",
-		"@tanstack/svelte-virtual": "^3.0.2",
+		"@tanstack/svelte-virtual": "^3.0.4",
 		"canvas": "^2.11.2",
 		"copy-anything": "^3.0.5",
 		"discord.js": "^14.14.1",

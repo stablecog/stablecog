@@ -8,8 +8,13 @@ import type { CreateInfiniteQueryOptions } from '@tanstack/svelte-query';
 import { writable as writableLocal } from '@macfja/svelte-persistent-store';
 import type { TAvailableAspectRatio } from '$ts/constants/generationSize';
 import type { TAvailableGenerationModelId } from '$ts/constants/generationModels';
+import { sessionAndUrlParamWritable } from '$ts/stores/sessionAndUrlParamStore';
 
-export const historySearchString = writableLocal<string>('historySearchString', '');
+export const userGallerySearchString = sessionAndUrlParamWritable<string>(
+	'userGallerySearchString',
+	'q',
+	''
+);
 
 export const getHistoryInfiniteQueryKey = ({
 	userGalleryCurrentView,

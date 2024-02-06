@@ -21,7 +21,7 @@
 	import {
 		getHistoryInfiniteQueryKey,
 		getHistoryInfiniteQueryProps,
-		historySearchString
+		userGallerySearchString
 	} from '$routes/(app)/history/constants';
 	import { canonicalUrl } from '$ts/constants/main';
 	import { previewImageVersion } from '$ts/constants/previewImageVersion';
@@ -52,6 +52,7 @@
 	import GalleryLikeTitleSection from '$components/galleryLike/GalleryLikeTitleSection.svelte';
 	import GalleryLikeGridWrapper from '$components/galleryLike/GalleryLikeGridWrapper.svelte';
 	import { sessionStore } from '$ts/constants/supabase';
+	import GalleryLikeGridKeyWrapper from '$components/galleryLike/GalleryLikeGridKeyWrapper.svelte';
 
 	export let data;
 
@@ -67,13 +68,13 @@
 		userGalleryCurrentView.set(data.view);
 		userGalleryModelIdFilters.set(data.modelIdFilters);
 		userGalleryAspectRatioFilters.set(data.aspectRatioFilters);
-		historySearchString.set(data.searchString);
+		userGallerySearchString.set(data.searchString);
 	}
 
 	$: userGenerationFullOutputsQueryKey.set(
 		getHistoryInfiniteQueryKey({
 			userGalleryCurrentView: $userGalleryCurrentView,
-			searchString: $historySearchString,
+			searchString: $userGallerySearchString,
 			modelIdFilters: $userGalleryModelIdFilters,
 			aspectRatioFilters: $userGalleryAspectRatioFilters
 		})
@@ -84,7 +85,7 @@
 			? createInfiniteQuery(
 					getHistoryInfiniteQueryProps({
 						userGalleryCurrentView: $userGalleryCurrentView,
-						searchString: $historySearchString,
+						searchString: $userGallerySearchString,
 						modelIdFilters: $userGalleryModelIdFilters,
 						aspectRatioFilters: $userGalleryAspectRatioFilters,
 						session: $sessionStore
@@ -228,7 +229,7 @@
 			</div>
 			<div slot="search-and-filter" class="w-full relative z-40">
 				<SearchAndFilterBar
-					bind:searchString={$historySearchString}
+					bind:searchString={$userGallerySearchString}
 					bind:modelIdFilters={$userGalleryModelIdFilters}
 					bind:aspectRatioFilters={$userGalleryAspectRatioFilters}
 					bind:searchInputIsFocused
@@ -278,21 +279,27 @@
 					</div>
 				{:else if $windowWidth}
 					{#key $userGalleryCurrentView}
-						<GenerationGridInfinite
-							generationsQuery={userGenerationFullOutputsQuery}
-							cardType="history"
-							cols={$windowWidth > xl3Breakpoint
-								? 7
-								: $windowWidth > xl2Breakpoint
-									? 6
-									: $windowWidth > xlBreakpoint
-										? 5
-										: $windowWidth > lgBreakpoint
-											? 4
-											: $windowWidth > mdBreakpoint
-												? 3
-												: 2}
-						/>
+						<GalleryLikeGridKeyWrapper
+							key={$userGallerySearchString +
+								$userGalleryModelIdFilters.join(',') +
+								$userGalleryAspectRatioFilters.join(',')}
+						>
+							<GenerationGridInfinite
+								generationsQuery={userGenerationFullOutputsQuery}
+								cardType="history"
+								cols={$windowWidth > xl3Breakpoint
+									? 7
+									: $windowWidth > xl2Breakpoint
+										? 6
+										: $windowWidth > xlBreakpoint
+											? 5
+											: $windowWidth > lgBreakpoint
+												? 4
+												: $windowWidth > mdBreakpoint
+													? 3
+													: 2}
+							/>
+						</GalleryLikeGridKeyWrapper>
 					{/key}
 				{/if}
 			{/if}

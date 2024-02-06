@@ -82,10 +82,10 @@
 					.filter((i) => i.view === $userGalleryCurrentView)
 					.map((i) => i.output_id)
 			: cardType === 'admin-gallery' && $isAdminGalleryEditActive
-			? $adminGalleryActionableItems
-					.filter((i) => i.filter === $adminGalleryCurrentFilter)
-					.map((i) => i.output_id)
-			: [];
+				? $adminGalleryActionableItems
+						.filter((i) => i.filter === $adminGalleryCurrentFilter)
+						.map((i) => i.output_id)
+				: [];
 
 	$: isHoverAllowed =
 		(cardType === 'history' && $isUserGalleryEditActive) ||
@@ -108,8 +108,8 @@
 			? (gridScrollContainerWidth - horizontalPadding) / cols
 			: undefined
 		: $windowWidth
-		? ($windowWidth - horizontalPadding) / cols
-		: undefined;
+			? ($windowWidth - horizontalPadding) / cols
+			: undefined;
 	$: estimatedItemHeight = estimatedItemWidth
 		? estimatedItemWidth * (1 / defaultAspectRatio) + extraHeightForInfo
 		: undefined;
@@ -120,8 +120,8 @@
 					? ((gridScrollContainerHeight || $windowHeight) / estimatedItemHeight) * cols
 					: undefined
 				: $windowHeight
-				? ($windowHeight / estimatedItemHeight) * cols
-				: undefined
+					? ($windowHeight / estimatedItemHeight) * cols
+					: undefined
 			: undefined;
 
 	$: overscanCount = estimatedItemCountInAWindow
@@ -229,7 +229,7 @@
 						const height = (width * outputs![i].generation.height) / outputs![i].generation.width;
 						return height + extraHeightForInfo;
 					}
-			  })
+				})
 			: createWindowVirtualizer({
 					...params,
 					estimateSize: (i) => {
@@ -237,7 +237,7 @@
 						const height = (width * outputs![i].generation.height) / outputs![i].generation.width;
 						return height + extraHeightForInfo;
 					}
-			  });
+				});
 	}
 
 	onMount(() => {
@@ -264,7 +264,7 @@
 		<div class="w-full relative">
 			<div
 				style="height: {$gridVirtualizer.getTotalSize() +
-					($generationsQuery.hasNextPage ? $windowHeight : 200)}px"
+					($generationsQuery.hasNextPage ? $windowHeight : 0)}px"
 				class="w-full relative"
 			>
 				{#each $gridVirtualizer.getVirtualItems() as virtualItem (virtualItem.index + outputs[virtualItem.index].id)}

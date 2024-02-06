@@ -1,6 +1,5 @@
 <script lang="ts">
 	import { browser } from '$app/environment';
-	import { page } from '$app/stores';
 	import Img from '$components/utils/image/Img.svelte';
 	import Divider from '$components/generationFullScreen/Divider.svelte';
 	import type { TGenerationFullScreenModalType } from '$components/generationFullScreen/types';
@@ -40,13 +39,13 @@
 						per_page: similarOutputsCount + 1,
 						username: generation.user.username
 					});
-			  })
+				})
 			: createQuery(['gallery_similar_outputs_short', outputId], () => {
 					return getGalleryGenerationFullOutputs({
 						search: outputId,
 						per_page: similarOutputsCount + 1
 					});
-			  })
+				})
 		: undefined;
 
 	$: similarOutputs = $similarOutputsQuery?.data?.outputs

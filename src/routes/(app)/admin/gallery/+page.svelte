@@ -51,6 +51,7 @@
 	import { createInfiniteQuery, type CreateInfiniteQueryResult } from '@tanstack/svelte-query';
 	import { onMount } from 'svelte';
 	import { sessionStore } from '$ts/constants/supabase';
+	import GalleryLikeGridKeyWrapper from '$components/galleryLike/GalleryLikeGridKeyWrapper.svelte';
 
 	export let data;
 
@@ -288,21 +289,27 @@
 					</div>
 				</div>
 			{:else}
-				<GenerationGridInfinite
-					generationsQuery={allUserGenerationFullOutputsQuery}
-					cardType="admin-gallery"
-					cols={$windowWidth > xl3Breakpoint
-						? 7
-						: $windowWidth > xl2Breakpoint
-							? 6
-							: $windowWidth > xlBreakpoint
-								? 5
-								: $windowWidth > lgBreakpoint
-									? 4
-									: $windowWidth > mdBreakpoint
-										? 3
-										: 2}
-				/>
+				<GalleryLikeGridKeyWrapper
+					key={$adminGallerySearchString +
+						$adminGalleryModelIdFilters.join(',') +
+						$adminGalleryAspectRatioFilters.join(',')}
+				>
+					<GenerationGridInfinite
+						generationsQuery={allUserGenerationFullOutputsQuery}
+						cardType="admin-gallery"
+						cols={$windowWidth > xl3Breakpoint
+							? 7
+							: $windowWidth > xl2Breakpoint
+								? 6
+								: $windowWidth > xlBreakpoint
+									? 5
+									: $windowWidth > lgBreakpoint
+										? 4
+										: $windowWidth > mdBreakpoint
+											? 3
+											: 2}
+					/>
+				</GalleryLikeGridKeyWrapper>
 			{/if}
 		</GalleryLikeGridWrapper>
 	{/if}
