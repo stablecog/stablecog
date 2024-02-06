@@ -2,8 +2,6 @@
 	export let key: string;
 </script>
 
-<div class="w-full flex-1 flex flex-col">
-	{#key key}
-		<slot />
-	{/key}
-</div>
+{#key key}
+	<slot />
+{/key}
