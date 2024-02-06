@@ -52,7 +52,7 @@
 	import GalleryLikeTitleSection from '$components/galleryLike/GalleryLikeTitleSection.svelte';
 	import GalleryLikeGridWrapper from '$components/galleryLike/GalleryLikeGridWrapper.svelte';
 	import { sessionStore } from '$ts/constants/supabase';
-	import GalleryLikeGridKeyWrapper from '$components/galleryLike/GalleryLikeGridKeyWrapper.svelte';
+	import GenerationGridInfiniteWrapper from '$components/grids/GenerationGridInfiniteWrapper.svelte';
 
 	export let data;
 
@@ -279,7 +279,7 @@
 					</div>
 				{:else if $windowWidth}
 					{#key $userGalleryCurrentView}
-						<GalleryLikeGridKeyWrapper
+						<GenerationGridInfiniteWrapper
 							key={$userGallerySearchString +
 								$userGalleryModelIdFilters.join(',') +
 								$userGalleryAspectRatioFilters.join(',')}
@@ -299,7 +299,7 @@
 													? 3
 													: 2}
 							/>
-						</GalleryLikeGridKeyWrapper>
+						</GenerationGridInfiniteWrapper>
 					{/key}
 				{/if}
 			{/if}

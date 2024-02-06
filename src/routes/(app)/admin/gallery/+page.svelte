@@ -51,7 +51,7 @@
 	import { createInfiniteQuery, type CreateInfiniteQueryResult } from '@tanstack/svelte-query';
 	import { onMount } from 'svelte';
 	import { sessionStore } from '$ts/constants/supabase';
-	import GalleryLikeGridKeyWrapper from '$components/galleryLike/GalleryLikeGridKeyWrapper.svelte';
+	import GenerationGridInfiniteWrapper from '$components/grids/GenerationGridInfiniteWrapper.svelte';
 
 	export let data;
 
@@ -289,7 +289,7 @@
 					</div>
 				</div>
 			{:else}
-				<GalleryLikeGridKeyWrapper
+				<GenerationGridInfiniteWrapper
 					key={$adminGallerySearchString +
 						$adminGalleryModelIdFilters.join(',') +
 						$adminGalleryAspectRatioFilters.join(',')}
@@ -309,7 +309,7 @@
 											? 3
 											: 2}
 					/>
-				</GalleryLikeGridKeyWrapper>
+				</GenerationGridInfiniteWrapper>
 			{/if}
 		</GalleryLikeGridWrapper>
 	{/if}

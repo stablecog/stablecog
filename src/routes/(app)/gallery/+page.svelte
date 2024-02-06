@@ -49,7 +49,7 @@
 	import { userSummary } from '$ts/stores/user/summary.js';
 	import { logGalleryMainSortChanged } from '$ts/helpers/loggers.js';
 	import IconDocumentSearch from '$components/icons/IconDocumentSearch.svelte';
-	import GalleryLikeGridKeyWrapper from '$components/galleryLike/GalleryLikeGridKeyWrapper.svelte';
+	import GenerationGridInfiniteWrapper from '$components/grids/GenerationGridInfiniteWrapper.svelte';
 
 	export let data;
 
@@ -226,7 +226,7 @@
 				<div class="h-[2vh]" />
 			</div>
 		{:else if galleryGenerationFullOutputsQuery !== undefined && $windowWidth}
-			<GalleryLikeGridKeyWrapper
+			<GenerationGridInfiniteWrapper
 				key={$gallerySearchString +
 					$galleryModelIdFilters.join(',') +
 					$galleryAspectRatioFilters.join(',') +
@@ -248,7 +248,7 @@
 										: 2}
 					{setSearchQuery}
 				/>
-			</GalleryLikeGridKeyWrapper>
+			</GenerationGridInfiniteWrapper>
 		{/if}
 	</GalleryLikeGridWrapper>
 </GalleryLikePageWrapper>
