@@ -277,6 +277,7 @@ const es: Translation = {
 		DeleteButton: 'Διαγραφή',
 		LoadingTitle: 'Μεταφόρτωση',
 		ContinueButton: 'Συνέχεια',
+		ReachedTheEndTitle: "You've reached the end.",
 		ProfileButton: 'Profile',
 		VisitProfileButton: 'Visit Profile',
 		YourProfileButton: 'Your Profile',

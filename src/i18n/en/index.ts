@@ -267,6 +267,7 @@ const en: BaseTranslation = {
 		DeleteButton: 'Delete',
 		LoadingTitle: 'Loading',
 		ContinueButton: 'Continue',
+		ReachedTheEndTitle: "You've reached the end.",
 		ProfileButton: 'Profile',
 		VisitProfileButton: 'Visit Profile',
 		YourProfileButton: 'Your Profile',

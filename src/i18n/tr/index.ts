@@ -280,6 +280,7 @@ const tr: Translation = {
 		DeleteButton: 'Sil',
 		LoadingTitle: 'Yükleniyor',
 		ContinueButton: 'Devam Et',
+		ReachedTheEndTitle: "You've reached the end.",
 		ProfileButton: 'Profil',
 		VisitProfileButton: 'Profile Git',
 		YourProfileButton: 'Profilin',

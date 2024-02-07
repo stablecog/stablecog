@@ -33,6 +33,9 @@
 	} from '@tanstack/svelte-virtual';
 	import { onMount, tick } from 'svelte';
 	import type { Readable } from 'svelte/store';
+	import { scale } from 'svelte/transition';
+	import { quadOut } from 'svelte/easing';
+	import IconFinishFlag from '$components/icons/IconFinishFlag.svelte';
 
 	export let generationsQuery: CreateInfiniteQueryResult<TUserGenerationFullOutputsPage, unknown>;
 	export let hasGridScrollContainer = false;
@@ -310,6 +313,20 @@
 					</div>
 				{/each}
 			</div>
+			{#if !$generationsQuery.hasNextPage}
+				<div
+					transition:scale={{ duration: 150, easing: quadOut, opacity: 0, start: 0.5 }}
+					class="w-full flex items-center justify-center mt-8 font-medium text-c-on-bg/60 px-4"
+				>
+					<div
+						class="max-w-full flex items-center justify-center bg-c-on-bg/10 ring-1.5 ring-c-on-bg/20 px-2.5 py-1 rounded-md text-sm gap-1"
+					>
+						<p class="flex-shrink min-w-0 overflow-hidden overflow-ellipsis text-center">
+							{$LL.Shared.ReachedTheEndTitle()}
+						</p>
+					</div>
+				</div>
+			{/if}
 			{#if isGridLongEnoughForScrollToTopChevron}
 				<div
 					class="z-20 {showScrollToTopChevron ||

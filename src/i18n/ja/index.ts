@@ -277,6 +277,7 @@ const ja: Translation = {
 		DeleteButton: '削除',
 		LoadingTitle: '読み込み中',
 		ContinueButton: '続行',
+		ReachedTheEndTitle: "You've reached the end.",
 		ProfileButton: 'Profile',
 		VisitProfileButton: 'Visit Profile',
 		YourProfileButton: 'Your Profile',

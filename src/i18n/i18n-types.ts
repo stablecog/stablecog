@@ -842,6 +842,10 @@ type RootTranslation = {
 		 */
 		ContinueButton: string
 		/**
+		 * Y​o​u​'​v​e​ ​r​e​a​c​h​e​d​ ​t​h​e​ ​e​n​d​.
+		 */
+		ReachedTheEndTitle: string
+		/**
 		 * P​r​o​f​i​l​e
 		 */
 		ProfileButton: string
@@ -4130,6 +4134,10 @@ export type TranslationFunctions = {
 		 * Continue
 		 */
 		ContinueButton: () => LocalizedString
+		/**
+		 * You've reached the end.
+		 */
+		ReachedTheEndTitle: () => LocalizedString
 		/**
 		 * Profile
 		 */

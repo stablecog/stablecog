@@ -267,6 +267,7 @@ const ko: Translation = {
 		DeleteButton: '삭제하기',
 		LoadingTitle: '로딩 중',
 		ContinueButton: 'Continue',
+		ReachedTheEndTitle: "You've reached the end.",
 		ProfileButton: 'Profile',
 		VisitProfileButton: 'Visit Profile',
 		YourProfileButton: 'Your Profile',

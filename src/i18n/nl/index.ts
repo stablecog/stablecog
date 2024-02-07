@@ -270,6 +270,7 @@ const nl: Translation = {
 		DeleteButton: 'Verwijderen',
 		LoadingTitle: 'Laden',
 		ContinueButton: 'Verder',
+		ReachedTheEndTitle: "You've reached the end.",
 		ProfileButton: 'Profile',
 		VisitProfileButton: 'Visit Profile',
 		YourProfileButton: 'Your Profile',

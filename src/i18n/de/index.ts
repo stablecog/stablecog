@@ -266,6 +266,7 @@ const de: Translation = {
 		DeleteButton: 'Löschen',
 		LoadingTitle: 'Wird geladen',
 		ContinueButton: 'Weiter',
+		ReachedTheEndTitle: "You've reached the end.",
 		ProfileButton: 'Profile',
 		VisitProfileButton: 'Visit Profile',
 		YourProfileButton: 'Your Profile',
