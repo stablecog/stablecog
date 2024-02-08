@@ -103,7 +103,7 @@
 						if (!lastPage.next) return undefined;
 						return lastPage.next;
 					}
-			  })
+				})
 			: undefined;
 
 	$: pinnedFullOutputs = [...$generations]
@@ -136,7 +136,7 @@
 				outputsPinned: pinnedFullOutputs,
 				outputs: userGenerationOutputs,
 				onlySucceeded: true
-		  })
+			})
 		: undefined;
 
 	$: activeGenerationOutputs = $activeGeneration?.outputs.map((o) => ({
@@ -280,7 +280,7 @@
 			data.model_id !== null && generationModels[data.model_id]?.name
 				? `Create AI art with ${
 						generationModels[data.model_id].name
-				  } on Stablecog: Free, multilingual and open-source AI image generator using Stable Diffusion and Kandinsky.`
+					} on Stablecog: Free, multilingual and open-source AI image generator using Stable Diffusion and Kandinsky.`
 				: 'Create amazing art in seconds with AI. Free, multilingual and open-source AI image generator using Stable Diffusion and Kandinsky.',
 		image_url: data.model_id
 			? `${PUBLIC_OG_IMAGE_API_URL}/api/generation-model-v2/${data.model_id}.png`
@@ -318,7 +318,8 @@
 											paddingLeft={6}
 											paddingRight={6}
 											paddingTop={6}
-											paddingBottom={80}
+											paddingBottom={6}
+											hasExtraPadding
 											{pinnedFullOutputs}
 											noLoadingSpinnerAlignmentAdjustment
 											hasPlaceholder

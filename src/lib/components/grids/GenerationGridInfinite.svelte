@@ -35,7 +35,7 @@
 	import type { Readable } from 'svelte/store';
 	import { scale } from 'svelte/transition';
 	import { quadOut } from 'svelte/easing';
-	import IconFinishFlag from '$components/icons/IconFinishFlag.svelte';
+	import { set } from 'zod';
 
 	export let generationsQuery: CreateInfiniteQueryResult<TUserGenerationFullOutputsPage, unknown>;
 	export let hasGridScrollContainer = false;
@@ -52,6 +52,7 @@
 	export let paddingTop = 0;
 	export let paddingBottom = 0;
 	export let setSearchQuery: ((query: string) => void) | undefined = undefined;
+	export let hasExtraPadding = false;
 
 	$: horizontalPadding = paddingLeft + paddingRight;
 	let isInitialScrollPositionSet = false;
@@ -60,6 +61,8 @@
 		| Readable<SvelteVirtualizer<HTMLDivElement, Element>>
 		| Readable<SvelteVirtualizer<Window, Element>>
 		| undefined;
+
+	let extraHeight = 0;
 
 	$: onlyOutputs = $generationsQuery.data?.pages
 		.flatMap((page) => page.outputs)
@@ -149,6 +152,7 @@
 
 	async function onGridVirtualizerChanged() {
 		if (!$gridVirtualizer) return;
+		setExtraHeight();
 		const href = window.location.href;
 		if (isInitialScrollPositionSet && mounted) {
 			gridScrollPositions.set(href, $gridVirtualizer.scrollOffset);
@@ -183,7 +187,7 @@
 
 	let now = Date.now();
 
-	function onParamsChanged() {
+	async function onParamsChanged() {
 		if (!$gridVirtualizer) return;
 		let optionsToSet: { [key: string]: string | number } = {};
 		const prevOverscan = $gridVirtualizer.options.overscan;
@@ -243,6 +247,17 @@
 				});
 	}
 
+	function setExtraHeight() {
+		if (!$gridVirtualizer || !outputs) return;
+		if ($gridVirtualizer.scrollOffset < $gridVirtualizer.getTotalSize() - $windowHeight) return;
+		const items = $gridVirtualizer.getVirtualItems();
+		const lastRowSizes = items.slice(-cols).map((i) => i.size);
+		const maxSize = Math.max(...lastRowSizes);
+		const minSize = Math.min(...lastRowSizes);
+		const diff = maxSize - minSize;
+		extraHeight = diff;
+	}
+
 	onMount(() => {
 		mounted = true;
 	});
@@ -267,7 +282,7 @@
 		<div class="w-full relative">
 			<div
 				style="height: {$gridVirtualizer.getTotalSize() +
-					($generationsQuery.hasNextPage ? $windowHeight : 0)}px"
+					($generationsQuery.hasNextPage ? $windowHeight : extraHeight)}px"
 				class="w-full relative"
 			>
 				{#each $gridVirtualizer.getVirtualItems() as virtualItem (virtualItem.index + outputs[virtualItem.index].id)}
@@ -316,12 +331,13 @@
 			{#if !$generationsQuery.hasNextPage && $gridVirtualizer.getTotalSize() >= $windowHeight}
 				<div
 					transition:scale={{ duration: 200, easing: quadOut, opacity: 0, start: 0.5 }}
-					class="w-full flex items-center justify-center mt-8 font-medium text-c-on-bg/75 px-4"
+					class="w-full flex items-center justify-center mt-8 font-medium text-c-on-bg/75 px-2"
 				>
 					<div
-						class="max-w-full flex items-center justify-center bg-c-bg-tertiary border-1.5 border-c-on-bg/15 px-2.5 py-1 rounded-lg text-sm gap-1"
+						class="max-w-full flex items-center justify-center bg-c-bg-tertiary
+						border-1.5 border-c-on-bg/15 px-2 py-1 rounded-lg gap-1"
 					>
-						<p class="flex-shrink min-w-0 overflow-hidden overflow-ellipsis text-center">
+						<p class="flex-shrink min-w-0 text-sm overflow-hidden overflow-ellipsis text-center">
 							{$LL.Shared.ReachedTheEndTitle()}
 						</p>
 					</div>
@@ -334,8 +350,10 @@
 						? 'translate-y-0'
 						: 'translate-y-full'} sticky transform transition duration-300
 					flex items-center justify-center left-0 bottom-0
-					w-full px-2 pt-8 pb-[calc(2rem+env(safe-area-inset-bottom))] pointer-events-none
-					md:px-3 md:pt-8 md:pb-[calc(3rem+env(safe-area-inset-bottom))]"
+					w-full px-2 pt-8 pointer-events-none
+					md:px-3 md:pt-8 {hasExtraPadding
+						? 'pb-[calc(2rem+env(safe-area-inset-bottom))] md:pb-[calc(3rem+env(safe-area-inset-bottom))]'
+						: 'pb-[calc(0.5rem+env(safe-area-inset-bottom))] md:pb-[calc(1rem+env(safe-area-inset-bottom))]'}"
 				>
 					<button
 						disabled={!showScrollToTopChevron}
