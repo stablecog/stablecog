@@ -313,13 +313,13 @@
 					</div>
 				{/each}
 			</div>
-			{#if !$generationsQuery.hasNextPage}
+			{#if !$generationsQuery.hasNextPage && $gridVirtualizer.getTotalSize() >= $windowHeight}
 				<div
-					transition:scale={{ duration: 150, easing: quadOut, opacity: 0, start: 0.5 }}
-					class="w-full flex items-center justify-center mt-8 font-medium text-c-on-bg/60 px-4"
+					transition:scale={{ duration: 200, easing: quadOut, opacity: 0, start: 0.5 }}
+					class="w-full flex items-center justify-center mt-8 font-medium text-c-on-bg/75 px-4"
 				>
 					<div
-						class="max-w-full flex items-center justify-center bg-c-on-bg/10 ring-1.5 ring-c-on-bg/20 px-2.5 py-1 rounded-md text-sm gap-1"
+						class="max-w-full flex items-center justify-center bg-c-bg-tertiary border-1.5 border-c-on-bg/15 px-2.5 py-1 rounded-lg text-sm gap-1"
 					>
 						<p class="flex-shrink min-w-0 overflow-hidden overflow-ellipsis text-center">
 							{$LL.Shared.ReachedTheEndTitle()}
@@ -334,8 +334,8 @@
 						? 'translate-y-0'
 						: 'translate-y-full'} sticky transform transition duration-300
 					flex items-center justify-center left-0 bottom-0
-					w-full px-2 pt-8 pb-[calc(0.5rem+env(safe-area-inset-bottom))] pointer-events-none
-					md:px-3 md:pt-8 md:pb-[calc(1rem+env(safe-area-inset-bottom))]"
+					w-full px-2 pt-8 pb-[calc(2rem+env(safe-area-inset-bottom))] pointer-events-none
+					md:px-3 md:pt-8 md:pb-[calc(3rem+env(safe-area-inset-bottom))]"
 				>
 					<button
 						disabled={!showScrollToTopChevron}
