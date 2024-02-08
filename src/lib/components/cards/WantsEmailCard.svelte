@@ -2,8 +2,9 @@
 	import Checkbox from '$components/primitives/Checkbox.svelte';
 	import ButtonHoverEffect from '$components/primitives/buttons/ButtonHoverEffect.svelte';
 	import LL from '$i18n/i18n-svelte';
+	import type { Writable } from 'svelte/store';
 
-	export let checked: boolean;
+	export let checked: Writable<boolean>;
 	export let oneLine = false;
 	export { classes as class };
 	export let bg: 'primary' | 'secondary' = 'secondary';
@@ -22,7 +23,7 @@
 	{#if bg === 'primary'}
 		<ButtonHoverEffect hoverFrom="left" color="bg-secondary" />
 	{/if}
-	<Checkbox bind:checked name="want-email-checkbox" />
+	<Checkbox {checked} name="want-email-checkbox" />
 	<p class="w-full text-sm select-none relative">
 		{$LL.SignUp.WantsEmailCheckbox.Paragraph()}{#if !oneLine}
 			<br class="hidden md:block" />

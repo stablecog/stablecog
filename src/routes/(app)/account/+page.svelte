@@ -15,7 +15,7 @@
 	import IconAnimatedSpinner from '$components/icons/IconAnimatedSpinner.svelte';
 	import { appVersion } from '$ts/stores/appVersion';
 	import { previewImageVersion } from '$ts/constants/previewImageVersion';
-	import WantEmailCard from '$components/cards/WantsEmailCard.svelte';
+	import WantsEmailCard from '$components/cards/WantsEmailCard.svelte';
 	import { onMount } from 'svelte';
 	import { wantsEmail } from '$ts/stores/user/wantsEmail.js';
 	import IconPen from '$components/icons/IconPen.svelte';
@@ -28,6 +28,7 @@
 	import AccountPageCard from '$routes/(app)/account/AccountPageCard.svelte';
 	import IconToken from '$components/icons/IconToken.svelte';
 	import { sessionStore, supabaseStore } from '$ts/constants/supabase';
+	import { writable } from 'svelte/store';
 
 	$: if (!$sessionStore?.user.id) {
 		goto(`/sign-in?rd_to=${encodeURIComponent($page.url.pathname)}`);
@@ -51,26 +52,26 @@
 	}
 
 	let mounted = false;
-	let wantsEmailChecked = $userSummary?.wants_email === true ? true : false;
+	let wantsEmailChecked = writable($userSummary?.wants_email === true ? true : false);
 
-	$: [wantsEmailChecked], onWantsEmailCheckedChanged();
+	$: [$wantsEmailChecked], onWantsEmailCheckedChanged();
 	$: [$wantsEmail], onWantsEmailChanged();
 
 	function onWantsEmailCheckedChanged() {
 		if (mounted) {
-			wantsEmail.set(wantsEmailChecked);
+			wantsEmail.set($wantsEmailChecked);
 		}
 	}
 
 	function onWantsEmailChanged() {
-		if (mounted && $wantsEmail !== null && $wantsEmail !== wantsEmailChecked) {
-			wantsEmailChecked = $wantsEmail;
+		if (mounted && $wantsEmail !== null && $wantsEmail !== $wantsEmailChecked) {
+			wantsEmailChecked.set($wantsEmail);
 		}
 	}
 
 	onMount(() => {
 		if ($wantsEmail !== null) {
-			wantsEmailChecked = $wantsEmail;
+			wantsEmailChecked.set($wantsEmail);
 		}
 		mounted = true;
 	});
@@ -253,7 +254,7 @@
 				</AccountDetailLine>
 				<div class="w-full h-2px bg-c-bg-secondary" />
 				<div class="w-full flex justify-start items-center">
-					<WantEmailCard
+					<WantsEmailCard
 						bg="primary"
 						bind:checked={wantsEmailChecked}
 						oneLine

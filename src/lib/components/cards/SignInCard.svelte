@@ -21,6 +21,7 @@
 	import { apiUrl } from '$ts/constants/main';
 	import PinInput from '$components/primitives/PinInput.svelte';
 	import { sessionStore, supabaseStore } from '$ts/constants/supabase';
+	import { writable } from 'svelte/store';
 
 	export let redirectTo: string | null = null;
 	export let isModal = false;
@@ -34,7 +35,7 @@
 	let codeSignInErrorText: string | null = null;
 	const codeLength = 6;
 
-	let wantsEmailChecked = false;
+	let wantsEmailChecked = writable(false);
 	let wantsEmailOnMount = false;
 
 	$: isCodeValid = codeValue?.length === codeLength;
@@ -45,7 +46,7 @@
 			errorText = $LL.Error.InvalidEmail();
 			return;
 		}
-		if (wantsEmailChecked) {
+		if ($wantsEmailChecked) {
 			wantsEmail.set(true);
 		}
 		signInCardStatus.set('loading');
@@ -89,7 +90,7 @@
 
 	async function signInWithOAuth(prov: Provider) {
 		if (!$supabaseStore) return;
-		if (wantsEmailChecked) {
+		if ($wantsEmailChecked) {
 			wantsEmail.set(true);
 		}
 		signInCardStatus.set('loading');
@@ -213,7 +214,7 @@
 					: $LL.SignIn.PageParagraphV2()}
 		</p>
 		{#if !wantsEmailOnMount && $signInCardStatus !== 'sent-otp'}
-			<WantsEmailCard bind:checked={wantsEmailChecked} class="mb-3.5 max-w-[20.5rem]" />
+			<WantsEmailCard checked={wantsEmailChecked} class="mb-3.5 max-w-[20.5rem]" />
 		{/if}
 		{#if $signInCardStatus === 'sent-otp'}
 			<div

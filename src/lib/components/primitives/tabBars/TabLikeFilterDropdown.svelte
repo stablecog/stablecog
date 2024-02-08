@@ -208,7 +208,7 @@
 											<div
 												class="w-full h-full transition transform bg-c-primary ring-c-primary rounded
 												{values && values.includes(item.value)
-													? 'scale-100 opacity-100 ring-2'
+													? 'scale-100 opacity-100 ring-1.5'
 													: 'scale-25 opacity-0 ring-0'} p-0.25"
 											>
 												<IconTickOnly class="w-full h-full text-c-on-primary" />
