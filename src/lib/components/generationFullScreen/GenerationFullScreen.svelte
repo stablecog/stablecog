@@ -63,6 +63,7 @@
 	import { quadOut } from 'svelte/easing';
 	import { fly } from 'svelte/transition';
 	import { sessionStore } from '$ts/constants/supabase';
+	import IconGalleryFilled from '$components/icons/IconGalleryFilled.svelte';
 
 	export let generation: TGenerationWithSelectedOutput;
 	export let prevGeneration: TGenerationWithSelectedOutput | undefined = undefined;
@@ -467,6 +468,13 @@
 							cardType={modalType}
 						/>
 					{/key}
+					{#if modalType === 'admin-gallery' && generation.init_image_url}
+						<div
+							class="absolute -top-px -left-px pl-1.75 pt-1.75 pr-2 pb-2 rounded-br-lg bg-c-bg-secondary"
+						>
+							<IconGalleryFilled class="text-c-danger" />
+						</div>
+					{/if}
 					{#if $upscales && $upscales.length > 0 && upscaleFromStore?.status === 'failed'}
 						<div
 							transition:fly={{ duration: 200, easing: quadOut, y: -50 }}
