@@ -3,7 +3,7 @@ import type { Handle, RequestEvent } from '@sveltejs/kit';
 import { initAcceptLanguageHeaderDetector } from 'typesafe-i18n/detectors';
 import { detectLocale, isLocale } from '$i18n/i18n-util';
 import { loadAllLocales } from '$i18n/i18n-util.sync';
-import type { TAvailableThemes } from '$ts/stores/theme';
+import type { TAvailableTheme } from '$ts/stores/theme';
 import { apiUrl } from '$ts/constants/main';
 import { galleryAdminAllowedRoutes, isGalleryAdmin, isSuperAdmin } from '$ts/helpers/admin/roles';
 import { supabaseAnonKey, supabaseUrl } from '$ts/constants/supabase';
@@ -34,7 +34,7 @@ export const handle: Handle = async ({ event, resolve }) => {
 
 	let preferredLocale = getPreferredLocale(event);
 	const localeC = event.cookies.get('sc-locale');
-	const themeC = event.cookies.get('sc-theme') as TAvailableThemes | null;
+	const themeC = event.cookies.get('sc-theme') as TAvailableTheme | null;
 	const locale =
 		localeC && isLocale(localeC) ? localeC : isLocale(preferredLocale) ? preferredLocale : 'en';
 	const isLeftSidebarHiddenC = event.cookies.get('sc-l-sidebar-h') as string | null;

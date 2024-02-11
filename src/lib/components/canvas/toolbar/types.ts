@@ -6,9 +6,3 @@ export type TTool = 'brush' | 'eraser';
 export interface TInpaintingState {
 	paintLayerChildren: (Group | Shape<ShapeConfig>)[];
 }
-
-export interface TBrushConfig {
-	min: number;
-	max: number;
-	step: number;
-}

@@ -4,7 +4,7 @@
 // and what to do when importing types
 type Locales = import('$i18n/i18n-types').Locales;
 type TranslationFunctions = import('$i18n/i18n-types').TranslationFunctions;
-type Themes = import('$ts/stores/theme').TAvailableThemes;
+type Themes = import('$ts/stores/theme').TAvailableTheme;
 type SupabaseClient = import('@supabase/supabase-js').SupabaseClient;
 type Session = import('@supabase/supabase-js').Session;
 declare namespace App {
@@ -13,7 +13,7 @@ declare namespace App {
 		LL: TranslationFunctions;
 		IP: string | null;
 		countryCode: string | null;
-		theme: TAvailableThemes | null;
+		theme: TAvailableTheme | null;
 		isLeftSidebarHidden: boolean;
 		advancedMode: boolean | null;
 		supabase: SupabaseClient;

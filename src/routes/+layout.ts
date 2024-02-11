@@ -1,7 +1,7 @@
 import type { LayoutLoad } from './$types';
 import { loadLocaleAsync } from '$i18n/i18n-util.async';
 import { writable } from 'svelte/store';
-import type { TAvailableThemes } from '$ts/stores/theme';
+import type { TAvailableTheme } from '$ts/stores/theme';
 import type { TUserSummary } from '$ts/stores/user/summary';
 import { getUserSummary } from '$ts/helpers/user/user';
 import { supabaseAnonKey, supabaseUrl } from '$ts/constants/supabase';
@@ -50,7 +50,7 @@ export const load: LayoutLoad = async (event) => {
 		session,
 		supabase,
 		theme,
-		themeStore: writable<TAvailableThemes>('dark'),
+		themeStore: writable<TAvailableTheme>('dark'),
 		userSummary,
 		userSummaryStore: writable<TUserSummary | undefined>(userSummary),
 		globalSeed: event.data.globalSeed,

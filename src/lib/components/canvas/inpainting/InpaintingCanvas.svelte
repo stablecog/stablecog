@@ -12,18 +12,6 @@
 		historyHasUndo
 	} from '$components/canvas/history/historyStore';
 	import { theme } from '$ts/stores/theme';
-	import {
-		getBrushIndicatorCircleFill,
-		getBrushIndicatorCircleRadius,
-		getBrushIndicatorCircleStroke,
-		getBrushConfig,
-		getDefaultBrushSize,
-		getCanvasMinSize,
-		getColoredSvgPattern,
-		getBrushStroke,
-		getSvgPatternFg,
-		getSvgPatternBg
-	} from '$components/canvas/helpers/main';
 	import { generateMode } from '$ts/stores/generate/generateMode';
 	import { baseOutputForInpainting } from '$components/canvas/stores/baseOutputForInpainting';
 	import IconAnimatedSpinner from '$components/icons/IconAnimatedSpinner.svelte';
@@ -49,6 +37,22 @@
 	import ToolbarButton from '$components/canvas/toolbar/ToolbarButton.svelte';
 	import IconChevronLeft from '$components/icons/IconChevronLeft.svelte';
 	import IconChevronRight from '$components/icons/IconChevronRight.svelte';
+	import { getCanvasSize } from '$components/canvas/inpainting/helpers/getCanvasSize';
+	import {
+		getBrushConfig,
+		getBrushIndicatorCircle,
+		getBrushIndicatorCircleFill,
+		getBrushIndicatorCircleRadius,
+		getBrushIndicatorCircleStroke,
+		getBrushStroke,
+		getDefaultBrushSize
+	} from '$components/canvas/inpainting/helpers/getBrushIndicatorCircle';
+	import { getCanvasMinSize } from '$components/canvas/helpers/main';
+	import {
+		getColoredSvgPattern,
+		getSvgPatternBg,
+		getSvgPatternFg
+	} from '$components/canvas/inpainting/helpers/svgPattern';
 
 	export let baseOutput: TGenerationFullOutput;
 
@@ -85,17 +89,13 @@
 
 	$: {
 		if (canvasContainerWidth && canvasContainerHeight) {
-			const aspectRatio = baseOutput.generation.width / baseOutput.generation.height;
-			const widthRatio = canvasContainerWidth / baseOutput.generation.width;
-			const heightRatio = canvasContainerHeight / baseOutput.generation.height;
-			const boundByHeight = heightRatio < widthRatio;
-			if (boundByHeight) {
-				canvasHeight = canvasContainerHeight;
-				canvasWidth = canvasHeight * aspectRatio;
-			} else {
-				canvasWidth = canvasContainerWidth;
-				canvasHeight = canvasWidth / aspectRatio;
-			}
+			const { width, height } = getCanvasSize({
+				canvasContainerWidth,
+				canvasContainerHeight,
+				output: baseOutput
+			});
+			canvasWidth = width;
+			canvasHeight = height;
 		}
 	}
 
@@ -212,19 +212,11 @@
 		};
 		patternImageObj.src = getColoredSvgPattern(getSvgPatternFg($theme), getSvgPatternBg($theme));
 
-		brushIndicatorCircle = new $KonvaInstance.Circle({
-			x: $stage.width() / 2,
-			y: $stage.height() / 2,
-			radius: getBrushIndicatorCircleRadius(brushSize),
-			stroke: getBrushIndicatorCircleStroke($theme),
-			strokeWidth: 2,
-			visible: false,
-			fillEnabled: true,
-			dashEnabled: false,
-			fill: getBrushIndicatorCircleFill($theme),
-			dash: [1, 4],
-			lineCap: 'round',
-			lineJoin: 'round'
+		brushIndicatorCircle = getBrushIndicatorCircle({
+			KonvaInstance: $KonvaInstance,
+			stage: $stage,
+			theme: $theme,
+			brushSize
 		});
 
 		brushIndicatorLayer.add(brushIndicatorCircle);
