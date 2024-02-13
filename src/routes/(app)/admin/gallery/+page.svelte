@@ -127,11 +127,11 @@
 			label: $LL.Admin.Gallery.StatusDropdown.SubmittedBest(),
 			value: 'submitted_best'
 		},
+		{ label: $LL.Admin.Gallery.StatusDropdown.Submitted(), value: 'submitted' },
 		{
 			label: $LL.Admin.Gallery.StatusDropdown.WaitingForApproval(),
 			value: 'waiting_for_approval'
 		},
-		{ label: $LL.Admin.Gallery.StatusDropdown.Submitted(), value: 'submitted' },
 		{
 			label: $LL.Admin.Gallery.StatusDropdown.ManuallySubmitted(),
 			value: 'manually_submitted'
