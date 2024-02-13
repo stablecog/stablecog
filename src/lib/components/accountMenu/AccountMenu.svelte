@@ -45,7 +45,9 @@
 	}
 </script>
 
-<DropdownWrapperTranslate class="w-72 max-w-[calc(100vw-1.25rem)]">
+<DropdownWrapperTranslate
+	class="w-192 max-w-[calc(100vw-1.25rem)] md:w-72 md:max-w-[calc(100vw-1.25rem)]"
+>
 	<Header
 		title={menuPages[currentPage].title}
 		href={menuPages[currentPage].href}

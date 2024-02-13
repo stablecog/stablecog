@@ -19,7 +19,6 @@
 	import IconGuide from '$components/icons/IconGuide.svelte';
 	import { themeApp } from '$ts/stores/theme';
 	import IconBlog from '$components/icons/IconBlog.svelte';
-	import { searchParamsString } from '$ts/stores/searchParamsString';
 	import IconLive from '$components/icons/IconLive.svelte';
 	import type { Writable } from 'svelte/store';
 	import type { TDirTreeItem } from '$routes/+layout';

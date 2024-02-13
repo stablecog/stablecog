@@ -128,6 +128,7 @@ module.exports = {
 				180: '45rem',
 				182: '45.5rem',
 				184: '46rem',
+				192: '48rem',
 				'4vh': '4vh',
 				'5vh': '5vh'
 			},
