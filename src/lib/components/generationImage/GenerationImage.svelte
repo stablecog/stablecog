@@ -124,6 +124,7 @@
 
 	function onImageClick(e: MouseEvent & { currentTarget: HTMLAnchorElement }) {
 		if (!modalShouldOpen) {
+			e.preventDefault();
 			lastClickedOutputId.set(generation.selected_output.id);
 			return;
 		}
