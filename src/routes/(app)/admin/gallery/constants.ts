@@ -18,6 +18,11 @@ export const adminGalleryModelIdFilters = sessionAndUrlParamWritable<TAvailableG
 	'mi',
 	[]
 );
+export const adminGalleryUsernameFilters = sessionAndUrlParamWritable<string[]>(
+	'adminGalleryUsernameFilters',
+	'un',
+	[]
+);
 export const adminGalleryAspectRatioFilters = sessionAndUrlParamWritable<TAvailableAspectRatio[]>(
 	'adminGalleryAspectRatioFilters',
 	'ar',
@@ -28,19 +33,22 @@ export const getAllUserGenerationFullOutputsQueryKey = ({
 	adminGalleryCurrentFilter,
 	searchString,
 	modelIdFilters,
-	aspectRatioFilters
+	aspectRatioFilters,
+	usernameFilters
 }: {
 	adminGalleryCurrentFilter: TGalleryStatus;
 	searchString?: string;
 	modelIdFilters?: TAvailableGenerationModelId[];
 	aspectRatioFilters?: TAvailableAspectRatio[];
+	usernameFilters?: string[];
 }) => {
 	return [
 		'admin_user_generation_full_outputs',
 		adminGalleryCurrentFilter,
 		searchString ? searchString : '',
 		modelIdFilters ? modelIdFilters.sort().join(',') : '',
-		aspectRatioFilters ? aspectRatioFilters.sort().join(',') : ''
+		aspectRatioFilters ? aspectRatioFilters.sort().join(',') : '',
+		usernameFilters ? usernameFilters.sort().join(',') : ''
 	];
 };
 
@@ -49,12 +57,14 @@ export function getAllUserGenerationFullOutputsQueryProps({
 	searchString,
 	modelIdFilters,
 	aspectRatioFilters,
+	usernameFilters,
 	session
 }: {
 	adminGalleryCurrentFilter: TGalleryStatus;
 	searchString?: string;
 	modelIdFilters?: TAvailableGenerationModelId[];
 	aspectRatioFilters?: TAvailableAspectRatio[];
+	usernameFilters?: string[];
 	session: Session;
 }): CreateInfiniteQueryOptions<
 	TUserGenerationFullOutputsPage,
@@ -68,7 +78,8 @@ export function getAllUserGenerationFullOutputsQueryProps({
 			adminGalleryCurrentFilter,
 			searchString,
 			modelIdFilters,
-			aspectRatioFilters
+			aspectRatioFilters,
+			usernameFilters
 		}),
 		queryFn: (lastPage) => {
 			return getAllUserGenerationFullOutputs({
@@ -81,7 +92,8 @@ export function getAllUserGenerationFullOutputsQueryProps({
 						: 'created_at',
 				search: searchString,
 				model_ids: modelIdFilters,
-				aspect_ratios: aspectRatioFilters
+				aspect_ratios: aspectRatioFilters,
+				username_filters: usernameFilters
 			});
 		},
 		getNextPageParam: (lastPage: TUserGenerationFullOutputsPage) => {

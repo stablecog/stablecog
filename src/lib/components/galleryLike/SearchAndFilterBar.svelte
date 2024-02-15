@@ -38,7 +38,7 @@
 	export let modelIdFilters: TAvailableGenerationModelId[];
 	export let usernameFilters: string[] | undefined = undefined;
 	export let searchInputIsFocused = false;
-	export let type: 'gallery' | 'default' = 'default';
+	export let type: 'gallery' | 'admin-gallery' | 'default' = 'default';
 	export let aspectRatioFilters: TAvailableAspectRatio[];
 
 	let searchStringLocal = searchString ?? '';
@@ -211,7 +211,7 @@
 					bind:values={aspectRatioFilters}
 					items={aspectRatioTabs}
 				/>
-				{#if type === 'gallery'}
+				{#if type === 'gallery' || type === 'admin-gallery'}
 					<form on:submit|preventDefault={onUsernameFieldSubmit} class="w-full md:w-1/3">
 						<TabLikeInput
 							name={$LL.Gallery.UsernameFilterInput.Title()}

@@ -107,7 +107,7 @@ export function getGalleryInfiniteQueryProps({
 				model_ids: modelIdFilters,
 				aspect_ratios: aspectRatioFilters,
 				sorts,
-				usernameFilters: usernameFilters,
+				username_filters: usernameFilters,
 				accessToken
 			});
 		},

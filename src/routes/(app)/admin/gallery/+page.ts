@@ -23,9 +23,12 @@ export const load: PageLoad = async ({ parent, url }) => {
 	const view = TGalleryStatusSchema.safeParse(viewParam).success
 		? TGalleryStatusSchema.parse(viewParam)
 		: adminGalleryCurrentFilterDefault;
+	const usernameFiltersQuery = url.searchParams.get('un');
+	const usernameFilters = usernameFiltersQuery?.split(',') || [];
 	const galleryLikeParams = getGalleryLikeParamsFromSearchParams(url.searchParams);
 	const sharedQueryParams = {
 		...galleryLikeParams,
+		usernameFilters,
 		adminGalleryCurrentFilter: view
 	};
 	const hasInitialData =
@@ -48,6 +51,7 @@ export const load: PageLoad = async ({ parent, url }) => {
 	}
 	return {
 		...galleryLikeParams,
+		usernameFilters,
 		view
 	};
 };

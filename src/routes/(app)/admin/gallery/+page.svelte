@@ -28,7 +28,8 @@
 		adminGalleryAspectRatioFilters,
 		adminGallerySearchString,
 		getAllUserGenerationFullOutputsQueryKey,
-		getAllUserGenerationFullOutputsQueryProps
+		getAllUserGenerationFullOutputsQueryProps,
+		adminGalleryUsernameFilters
 	} from '$routes/(app)/admin/gallery/constants';
 	import type { TRequestNavigationEventParams } from '$routes/(app)/admin/gallery/types.js';
 	import { canonicalUrl } from '$ts/constants/main';
@@ -60,6 +61,7 @@
 		adminGalleryAspectRatioFilters.set(data.aspectRatioFilters);
 		adminGalleryCurrentFilter.set(data.view);
 		adminGallerySearchString.set(data.searchString);
+		adminGalleryUsernameFilters.set(data.usernameFilters);
 	}
 
 	let totalOutputs: number;
@@ -76,7 +78,8 @@
 			adminGalleryCurrentFilter: $adminGalleryCurrentFilter,
 			searchString: $adminGallerySearchString,
 			modelIdFilters: $adminGalleryModelIdFilters,
-			aspectRatioFilters: $adminGalleryAspectRatioFilters
+			aspectRatioFilters: $adminGalleryAspectRatioFilters,
+			usernameFilters: $adminGalleryUsernameFilters
 		})
 	);
 
@@ -88,7 +91,8 @@
 						session: $sessionStore,
 						modelIdFilters: $adminGalleryModelIdFilters,
 						aspectRatioFilters: $adminGalleryAspectRatioFilters,
-						searchString: $adminGallerySearchString
+						searchString: $adminGallerySearchString,
+						usernameFilters: $adminGalleryUsernameFilters
 					})
 				)
 			: undefined;
@@ -247,9 +251,11 @@
 			</div>
 			<div slot="search-and-filter" class="w-full relative z-40">
 				<SearchAndFilterBar
+					type="admin-gallery"
 					bind:searchString={$adminGallerySearchString}
 					bind:modelIdFilters={$adminGalleryModelIdFilters}
 					bind:aspectRatioFilters={$adminGalleryAspectRatioFilters}
+					bind:usernameFilters={$adminGalleryUsernameFilters}
 					bind:searchInputIsFocused
 				/>
 			</div>

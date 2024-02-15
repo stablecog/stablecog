@@ -18,7 +18,7 @@ export async function getGalleryGenerationFullOutputs({
 	model_ids,
 	aspect_ratios,
 	sorts,
-	usernameFilters,
+	username_filters,
 	custom_fetch,
 	per_page = PER_PAGE_DEFAULT,
 	search_score_threshold = SEARCH_SCORE_THRESHOLD_DEFAULT,
@@ -31,7 +31,7 @@ export async function getGalleryGenerationFullOutputs({
 	model_ids?: TAvailableGenerationModelId[];
 	aspect_ratios?: string[];
 	sorts?: string[];
-	usernameFilters?: string[];
+	username_filters?: string[];
 	custom_fetch?: typeof fetch;
 	per_page?: number;
 	search_score_threshold?: number;
@@ -63,8 +63,8 @@ export async function getGalleryGenerationFullOutputs({
 	if (prompt_id) {
 		query.append('prompt_id', prompt_id);
 	}
-	if (usernameFilters && usernameFilters.length > 0) {
-		query.append('username', usernameFilters.join(','));
+	if (username_filters && username_filters.length > 0) {
+		query.append('username', username_filters.join(','));
 		shouldAddSeed = false;
 	}
 	if (aspect_ratios && aspect_ratios.length > 0) {

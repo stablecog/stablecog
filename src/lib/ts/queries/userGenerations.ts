@@ -70,7 +70,8 @@ export async function getAllUserGenerationFullOutputs({
 	order_by,
 	search,
 	model_ids,
-	aspect_ratios
+	aspect_ratios,
+	username_filters
 }: {
 	cursor?: string;
 	gallery_status?: TGalleryStatus;
@@ -79,6 +80,7 @@ export async function getAllUserGenerationFullOutputs({
 	search?: string;
 	model_ids?: TAvailableGenerationModelId[];
 	aspect_ratios?: TAvailableAspectRatio[];
+	username_filters?: string[];
 }) {
 	console.log('getAllUserOutputs');
 	const query = new URLSearchParams();
@@ -108,6 +110,9 @@ export async function getAllUserGenerationFullOutputs({
 			'aspect_ratio',
 			aspect_ratios.map((i) => i.replaceAll('.', '_').replaceAll(':', '-')).join(',')
 		);
+	}
+	if (username_filters && username_filters.length > 0) {
+		query.append('username', username_filters.join(','));
 	}
 	if (order_by) {
 		query.append('order_by', order_by);
