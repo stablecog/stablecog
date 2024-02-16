@@ -49,7 +49,6 @@
 	import { goto } from '$app/navigation';
 	import { lowOnCreditsThreshold } from '$ts/constants/credits.js';
 	import SettingsSheet from '$components/generate/SettingsSheet.svelte';
-	import { PUBLIC_OG_IMAGE_API_URL } from '$env/static/public';
 	import { isSignInModalOpen } from '$ts/stores/isSignInModalOpen.js';
 	import { writable } from 'svelte/store';
 	import WithChangeUsernameModal from '$components/utils/WithChangeUsernameModal.svelte';
@@ -57,6 +56,7 @@
 	import { generateMode } from '$ts/stores/generate/generateMode.js';
 	import { baseOutputForInpainting } from '$components/canvas/stores/baseOutputForInpainting.js';
 	import { sessionStore } from '$ts/constants/supabase';
+	import { getModelPreviewImageUrl } from '$ts/helpers/getPreviewImageUrl.js';
 
 	export let data;
 
@@ -283,7 +283,7 @@
 					} on Stablecog: Free, multilingual and open-source AI image generator using Stable Diffusion and Kandinsky.`
 				: 'Create amazing art in seconds with AI. Free, multilingual and open-source AI image generator using Stable Diffusion and Kandinsky.',
 		image_url: data.model_id
-			? `${PUBLIC_OG_IMAGE_API_URL}/api/generation-model-v2/${data.model_id}.png`
+			? getModelPreviewImageUrl(data.model_id)
 			: `${canonicalUrl}/previews/home-${previewImageVersion}.png`
 	};
 </script>
