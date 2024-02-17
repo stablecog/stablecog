@@ -38,7 +38,7 @@
 	import LL, { locale } from '$i18n/i18n-svelte';
 	import type { TRequestNavigationEventParams } from '$routes/(app)/admin/gallery/types';
 	import { upscaleModelIdDefault } from '$ts/constants/upscaleModels';
-	import { isSuperAdmin } from '$ts/helpers/admin/roles';
+	import { isAdmin, isSuperAdmin } from '$ts/helpers/admin/roles';
 	import { generateSSEId } from '$ts/helpers/generateSSEId';
 	import { getGenerationUrlFromParams } from '$ts/helpers/getGenerationUrlFromParams';
 	import { getRelativeDate } from '$ts/helpers/getRelativeDate';
@@ -362,6 +362,8 @@
 		}
 	}
 
+	$: isAdminView = modalType === 'admin-gallery' && isAdmin($userSummary?.roles);
+
 	async function onEditClicked() {
 		baseOutputForInpainting.set({ generation: generation, ...generation.selected_output });
 		generateMode.set('inpainting');
@@ -643,7 +645,8 @@
 										date: generation.selected_output.created_at || generation.created_at,
 										locale: $locale,
 										dateStyle: 'long',
-										now
+										now,
+										decimals: isAdminView ? 1 : 0
 									})}
 								</p>
 							{/if}
