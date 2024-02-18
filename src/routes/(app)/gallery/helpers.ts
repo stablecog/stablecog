@@ -1,3 +1,5 @@
+import { shortenAndCapitalizeString } from '$ts/helpers/metaTag';
+
 export function getGalleryMeta({
 	searchString,
 	usernameFilters,
@@ -13,8 +15,8 @@ export function getGalleryMeta({
 }): TGalleryMeta {
 	if (searchString !== undefined && searchString !== null && searchString !== '') {
 		return {
-			title: `"${searchString}" | Stablecog Gallery`,
-			description: `Search results for "${searchString}" on Stablecog's gallery. Check out images created with Stable Diffusion and Kandinsky.`
+			title: `"${shortenAndCapitalizeString(searchString)}" | Stablecog Gallery`,
+			description: `Search results for "${shortenAndCapitalizeString(searchString)}" on Stablecog's gallery. Check out images created with Stable Diffusion and Kandinsky.`
 		};
 	}
 	return {
@@ -27,8 +29,4 @@ export function getGalleryMeta({
 export interface TGalleryMeta {
 	title: string;
 	description: string;
-}
-
-function shortSearchString(s: string, l = 40): string {
-	return s.length > l ? s.substring(0, l) + '...' : s;
 }
