@@ -50,10 +50,20 @@
 	import { logGalleryMainSortChanged } from '$ts/helpers/loggers.js';
 	import IconDocumentSearch from '$components/icons/IconDocumentSearch.svelte';
 	import GenerationGridInfiniteWrapper from '$components/grids/GenerationGridInfiniteWrapper.svelte';
+	import { getGalleryMeta, type TGalleryMeta } from '$routes/(app)/gallery/helpers.js';
 
 	export let data;
 
 	let mounted = false;
+
+	let galleryMeta: TGalleryMeta;
+	$: galleryMeta = getGalleryMeta({
+		searchString: data.searchString,
+		modelIdFilters: data.modelIdFilters,
+		usernameFilters: data.usernameFilters,
+		aspectRatioFilters: data.aspectRatioFilters,
+		sorts: data.sorts
+	});
 
 	if (!hydrated) {
 		galleryModelIdFilters.set(data.modelIdFilters);
@@ -151,8 +161,8 @@
 </script>
 
 <MetaTag
-	title="Gallery | Stablecog"
-	description="A gallery full of images created with Stable Diffusion and Kandinsky. Check out the images and their metadata including their prompt, negative prompt, inference steps, guidance scale and seed. Generate similar images directly from the gallery or submit your own."
+	title={galleryMeta.title}
+	description={galleryMeta.description}
 	image_url={data.previewImageUrl}
 	canonical="{canonicalUrl}{$page.url.pathname}"
 />
