@@ -22,7 +22,7 @@ export function getGalleryMeta({
 	return {
 		title: 'Gallery | Stablecog',
 		description:
-			"'A gallery full of images created with Stable Diffusion and Kandinsky. Check out images and their metadata including their prompt, negative prompt, inference steps, guidance scale and seed. Generate similar images directly from the gallery or submit your own.'"
+			'A gallery full of images created with Stable Diffusion and Kandinsky. Check out images and their metadata including their prompt, negative prompt, inference steps, guidance scale and seed. Generate similar images directly from the gallery or submit your own.'
 	};
 }
 
