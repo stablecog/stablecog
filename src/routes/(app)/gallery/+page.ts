@@ -7,6 +7,8 @@ import type { QueryClient } from '@tanstack/svelte-query';
 import type { PageLoad } from './$types';
 import { redirect } from '@sveltejs/kit';
 import { getGalleryLikeParamsFromSearchParams } from '$ts/helpers/galleryLike';
+import { searchParamsToBase64 } from '$ts/helpers/base64';
+import { PUBLIC_OG_IMAGE_API_URL } from '$env/static/public';
 
 interface TParent {
 	queryClient: QueryClient;
@@ -38,6 +40,29 @@ export const load: PageLoad = async ({ url, parent }) => {
 				...sharedQueryParams
 			})
 		) !== undefined;
+
+	const searchParamsFiltered = new URLSearchParams();
+	if (galleryLikeParams.searchString !== '') {
+		searchParamsFiltered.set('q', galleryLikeParams.searchString);
+	}
+	if (galleryLikeParams.modelIdFilters.length > 0) {
+		searchParamsFiltered.set('mi', galleryLikeParams.modelIdFilters.join(','));
+	}
+	if (galleryLikeParams.aspectRatioFilters.length > 0) {
+		searchParamsFiltered.set(
+			'ar',
+			galleryLikeParams.aspectRatioFilters.join(',').replaceAll('.', '_').replaceAll(':', '-')
+		);
+	}
+	if (sorts.length > 0 && sorts !== sortsDefault) {
+		searchParamsFiltered.set('sort', sorts.join(','));
+	}
+	if (usernameFilters.length > 0) {
+		searchParamsFiltered.set('un', usernameFilters.join(','));
+	}
+	const base64SearchParams = searchParamsToBase64(searchParamsFiltered);
+	const previewImageUrl = `${PUBLIC_OG_IMAGE_API_URL}/api/gallery/preview/${searchParamsFiltered.toString() !== '' ? base64SearchParams : 'main'}.png`;
+
 	if (!hasInitialData) {
 		try {
 			await queryClient.prefetchInfiniteQuery(
@@ -54,6 +79,7 @@ export const load: PageLoad = async ({ url, parent }) => {
 	return {
 		...galleryLikeParams,
 		usernameFilters,
-		sorts
+		sorts,
+		previewImageUrl
 	};
 };

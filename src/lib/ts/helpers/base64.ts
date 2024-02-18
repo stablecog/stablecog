@@ -25,3 +25,14 @@ export const urlFromBase64 = (b64Data: string) => {
 	const url = URL.createObjectURL(blob);
 	return url;
 };
+
+export function searchParamsToBase64(searchParams: URLSearchParams): string {
+	const paramsString = searchParams.toString();
+	let base64: string;
+	if (typeof window !== 'undefined' && 'btoa' in window) {
+		base64 = window.btoa(paramsString);
+	} else {
+		base64 = Buffer.from(paramsString, 'utf-8').toString('base64');
+	}
+	return base64.replace(/\+/g, '-').replace(/\//g, '_');
+}

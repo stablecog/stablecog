@@ -1,3 +1,4 @@
+import { mainSortViewDefault } from '$routes/(app)/gallery/constants';
 import type { TAvailableGenerationModelId } from '$ts/constants/generationModels';
 import { apiUrl } from '$ts/constants/main';
 import type { TAvailableSchedulerId } from '$ts/constants/schedulers';
@@ -56,7 +57,7 @@ export async function getGalleryGenerationFullOutputs({
 	}
 	if (sorts && sorts.length > 0) {
 		query.append('sort', sorts.join(','));
-		if (sorts.join(',') !== 'new') {
+		if (sorts.join(',') !== mainSortViewDefault) {
 			shouldAddSeed = false;
 		}
 	}
