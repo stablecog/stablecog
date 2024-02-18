@@ -3,7 +3,7 @@
 	import MetaTag from '$components/utils/MetaTag.svelte';
 	import {
 		getOutputOnProfileMetaTagDescriptionFromPromptText,
-		shortenAndCapitalizeString
+		shortenString
 	} from '$ts/helpers/metaTag.js';
 	import { getUserProfilePreviewImageUrlFromOutputId } from '$ts/helpers/getPreviewImageUrl.js';
 	import { canonicalUrl } from '$ts/constants/main.js';
@@ -13,7 +13,7 @@
 
 	$: output = data.generationFullOutput;
 	$: similarOutputs = data.similarGenerationFullOutputs;
-	$: shortPromptTitle = shortenAndCapitalizeString(output.generation.prompt.text);
+	$: shortPromptTitle = shortenString(output.generation.prompt.text);
 </script>
 
 <MetaTag

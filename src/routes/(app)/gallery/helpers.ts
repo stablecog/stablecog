@@ -1,4 +1,4 @@
-import { shortenAndCapitalizeString } from '$ts/helpers/metaTag';
+import { shortenString } from '$ts/helpers/metaTag';
 
 export function getGalleryMeta({
 	searchString,
@@ -15,8 +15,8 @@ export function getGalleryMeta({
 }): TGalleryMeta {
 	if (searchString !== undefined && searchString !== null && searchString !== '') {
 		return {
-			title: `"${shortenAndCapitalizeString(searchString)}" | Stablecog Gallery`,
-			description: `Search results for "${shortenAndCapitalizeString(searchString)}" on Stablecog's gallery. Check out images created with Stable Diffusion and Kandinsky.`
+			title: `"${shortenString(searchString)}" | Stablecog Gallery`,
+			description: `Search results for "${shortenString(searchString)}" on Stablecog's gallery. Check out images created with Stable Diffusion and Kandinsky.`
 		};
 	}
 	return {
