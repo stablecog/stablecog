@@ -2,7 +2,6 @@
 	import { page } from '$app/stores';
 	import MetaTag from '$components/utils/MetaTag.svelte';
 	import {
-		capitalize,
 		getGalleryMetaTagDescriptionFromPromptText,
 		shortenAndCapitalizeString
 	} from '$ts/helpers/metaTag.js';
