@@ -15,7 +15,7 @@ export function getGalleryMeta({
 }): TGalleryMeta {
 	if (searchString !== undefined && searchString !== null && searchString !== '') {
 		return {
-			title: `"${shortenString(searchString)}" | Stablecog Gallery`,
+			title: `"${shortenString(searchString)}" | Gallery | Stablecog`,
 			description: `Search results for "${shortenString(searchString)}" on Stablecog's gallery. Check out images created with Stable Diffusion and Kandinsky.`
 		};
 	}

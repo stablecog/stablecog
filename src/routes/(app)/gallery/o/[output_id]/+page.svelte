@@ -17,7 +17,7 @@
 </script>
 
 <MetaTag
-	title={`"${shortPromptTitle}" | Stablecog Gallery`}
+	title={`"${shortPromptTitle}" | Gallery | Stablecog`}
 	description={getGalleryMetaTagDescriptionFromPromptText(output.generation.prompt.text)}
 	image_url={getPreviewImageUrlFromOutputId(output.id)}
 	canonical="{canonicalUrl}{$page.url.pathname}"
