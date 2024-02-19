@@ -11,6 +11,7 @@ import type { TGenerationFullOutput, TGenerationOutput } from '$userStores/gener
 
 const SEARCH_SCORE_THRESHOLD_DEFAULT = 50;
 const PER_PAGE_DEFAULT = 50;
+const OVERSAMPLING_DEFAULT = 8;
 
 export async function getGalleryGenerationFullOutputs({
 	cursor,
@@ -23,6 +24,7 @@ export async function getGalleryGenerationFullOutputs({
 	custom_fetch,
 	per_page = PER_PAGE_DEFAULT,
 	search_score_threshold = SEARCH_SCORE_THRESHOLD_DEFAULT,
+	oversampling = OVERSAMPLING_DEFAULT,
 	prompt_id,
 	accessToken
 }: {
@@ -36,6 +38,7 @@ export async function getGalleryGenerationFullOutputs({
 	custom_fetch?: typeof fetch;
 	per_page?: number;
 	search_score_threshold?: number;
+	oversampling?: number;
 	prompt_id?: string;
 	accessToken?: string;
 }): Promise<TUserProfileFullOutputsPage> {
@@ -43,6 +46,7 @@ export async function getGalleryGenerationFullOutputs({
 	const query = new URLSearchParams();
 	let shouldAddSeed = true;
 	query.append('per_page', per_page.toString());
+	query.append('oversampling', oversampling.toString());
 	if (cursor) {
 		query.append('cursor', cursor);
 	}
