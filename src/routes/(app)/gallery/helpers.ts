@@ -19,8 +19,8 @@ export function getGalleryMeta({
 
 	if (hasSearchString && isUUID(searchString)) {
 		return {
-			title: `Similar to "${shortenString(searchString, 5)}" | Gallery | Stablecog`,
-			description: `Images similar to generation "${shortenString(searchString, 5)}" on Stablecog's gallery. Check out images created with Stable Diffusion and Kandinsky.`
+			title: `Similar to "${shortenString(searchString, 8, false)}" | Gallery | Stablecog`,
+			description: `Images similar to generation "${shortenString(searchString, 8, false)}" on Stablecog's gallery. Check out images created with Stable Diffusion and Kandinsky.`
 		};
 	}
 

@@ -13,8 +13,8 @@ export const getOutputOnProfileMetaTagDescriptionFromPromptText = (
 
 export const capitalize = (s: string) => s.charAt(0).toUpperCase() + s.slice(1);
 
-export function shortenString(s: string, l = 40): string {
-	return s.length > l ? s.substring(0, l) + '...' : s;
+export function shortenString(s: string, l = 40, addEllipsis = true): string {
+	return s.length > l ? (s.substring(0, l) + addEllipsis ? '...' : '') : s;
 }
 
 export function shortenAndCapitalizeString(s: string, l = 40): string {
