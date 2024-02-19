@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { page } from '$app/stores';
 	import IconButton from '$components/primitives/buttons/IconButton.svelte';
-	import PageLoadProgressBar from '$components/PageLoadProgressBar.svelte';
+	import PageLoadProgressBar from '$components/utils/PageLoadProgressBar.svelte';
 	import NavigationTabBar from '$components/navigation/NavigationTabBar.svelte';
 	import { clickoutside } from '$ts/actions/clickoutside';
 	import IconSc from '$components/icons/IconSc.svelte';
