@@ -1,4 +1,5 @@
 import { shortenString } from '$ts/helpers/metaTag';
+import { isUUID } from '$ts/helpers/uuid';
 
 export function getGalleryMeta({
 	searchString,
@@ -13,12 +14,23 @@ export function getGalleryMeta({
 	modelIdFilters?: string[];
 	sorts?: string[];
 }): TGalleryMeta {
-	if (searchString !== undefined && searchString !== null && searchString !== '') {
+	const hasSearchString =
+		searchString !== undefined && searchString !== null && searchString !== '';
+
+	if (hasSearchString && isUUID(searchString)) {
+		return {
+			title: `Similar to "${shortenString(searchString, 5)}" | Gallery | Stablecog`,
+			description: `Images similar to generation "${shortenString(searchString, 5)}" on Stablecog's gallery. Check out images created with Stable Diffusion and Kandinsky.`
+		};
+	}
+
+	if (hasSearchString) {
 		return {
 			title: `"${shortenString(searchString)}" | Gallery | Stablecog`,
 			description: `Search results for "${shortenString(searchString)}" on Stablecog's gallery. Check out images created with Stable Diffusion and Kandinsky.`
 		};
 	}
+
 	return {
 		title: 'Gallery | Stablecog',
 		description:
