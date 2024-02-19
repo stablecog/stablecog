@@ -47,6 +47,7 @@ export async function getGalleryGenerationFullOutputs({
 	let shouldAddSeed = true;
 	query.append('per_page', per_page.toString());
 	query.append('oversampling', oversampling.toString());
+
 	if (cursor) {
 		query.append('cursor', cursor);
 	}
