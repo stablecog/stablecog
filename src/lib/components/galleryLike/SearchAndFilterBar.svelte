@@ -28,7 +28,11 @@
 	import TabLikeInput from '$components/primitives/tabBars/TabLikeInput.svelte';
 	import IconUserAlt from '$components/icons/IconUserAlt.svelte';
 	import IconFilter from '$components/icons/IconFilter.svelte';
-	import { aspectRatioTabs, type TAvailableAspectRatio } from '$ts/constants/generationSize';
+	import {
+		aspectRatioDropdownItems,
+		aspectRatioTabs,
+		type TAvailableAspectRatio
+	} from '$ts/constants/generationSize';
 	import IconDimensions from '$components/icons/IconDimensions.svelte';
 	import { sessionStore } from '$ts/constants/supabase';
 
@@ -209,7 +213,7 @@
 					name={$LL.Home.AspectRatioDropdown.Title()}
 					nameIcon={IconDimensions}
 					bind:values={aspectRatioFilters}
-					items={aspectRatioTabs}
+					items={$aspectRatioDropdownItems}
 				/>
 				{#if type === 'gallery' || type === 'admin-gallery'}
 					<form on:submit|preventDefault={onUsernameFieldSubmit} class="w-full md:w-1/3">
@@ -264,7 +268,7 @@
 				{#each aspectRatioFilters as aspectRatioFilter}
 					<TagButton
 						icon={IconDimensions}
-						text={aspectRatioTabs.find((i) => i.value === aspectRatioFilter)?.label || ''}
+						text={$aspectRatioDropdownItems.find((i) => i.value === aspectRatioFilter)?.label || ''}
 						onClick={() => {
 							aspectRatioFilters = aspectRatioFilters.filter((i) => i !== aspectRatioFilter);
 						}}
