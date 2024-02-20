@@ -1,3 +1,4 @@
+import { sortsDefault } from '$routes/(app)/gallery/constants';
 import { shortenString } from '$ts/helpers/metaTag';
 import { isUUID } from '$ts/helpers/uuid';
 
@@ -28,6 +29,19 @@ export function getGalleryMeta({
 		return {
 			title: `"${shortenString(searchString)}" | Gallery | Stablecog`,
 			description: `Search results for "${shortenString(searchString)}" on Stablecog's gallery. Check out images created with Stable Diffusion and Kandinsky.`
+		};
+	}
+
+	if (
+		(aspectRatioFilters && aspectRatioFilters.length > 0) ||
+		(modelIdFilters && modelIdFilters.length > 0) ||
+		(usernameFilters && usernameFilters.length > 0) ||
+		(sorts && sorts.length > 0 && sorts !== sortsDefault)
+	) {
+		return {
+			title: 'Filtered Results | Gallery | Stablecog',
+			description:
+				'A gallery full of AI-generated images created with Stable Diffusion and Kandinsky. Check out images and their metadata including their prompt, negative prompt, inference steps, guidance scale and seed.'
 		};
 	}
 
