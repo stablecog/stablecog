@@ -351,26 +351,10 @@
 		use:portal={'body'}
 		on:scroll={onScroll}
 		style="max-height: 100vh; max-height: {$windowHeight ? `${$windowHeight}px` : '100svh'};"
-		class="w-full h-full flex flex-col items-center fixed left-0 top-0 pb-20 md:p-16 z-[10002] overflow-auto"
+		class="w-full h-full flex flex-col items-center fixed left-0 top-0 py-16 md:p-16 z-[10002] overflow-auto"
 	>
 		<div class="w-full flex-1 md:h-full flex flex-col items-center md:min-h-[20rem]">
 			<div class="w-full flex-1 md:max-w-full md:h-full flex flex-col items-center">
-				<div
-					class="w-full sticky top-0 z-10 flex items-center justify-start md:hidden px-1 pt-1 pb-2"
-				>
-					<div
-						class="flex items-center justify-center transition duration-150 rounded-full {scrollY &&
-						scrollY > 5
-							? 'bg-c-bg-secondary/75'
-							: 'bg-c-bg-secondary/0'}"
-					>
-						<IconButton name="Close" onClick={closeImageModal}>
-							<IconCancel
-								class="w-9 h-9 transition not-touch:group-hover/iconbutton:text-c-primary"
-							/>
-						</IconButton>
-					</div>
-				</div>
 				<div class="max-w-5xl flex-1 flex justify-center md:h-full w-full my-auto px-2.5">
 					<div
 						use:clickoutside={{ callback: closeImageModal }}
