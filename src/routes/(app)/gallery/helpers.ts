@@ -1,6 +1,11 @@
-import { sortsDefault } from '$routes/(app)/gallery/constants';
+import { sortsDefault, type TGalleryMainSort } from '$routes/(app)/gallery/constants';
+import type { TAvailableGenerationModelId } from '$ts/constants/generationModels';
+import type { TAvailableAspectRatio } from '$ts/constants/generationSize';
 import { shortenString } from '$ts/helpers/metaTag';
 import { isUUID } from '$ts/helpers/uuid';
+
+const defaultDescription =
+	'A gallery full of AI-generated images created with Stable Diffusion and Kandinsky. Check out images and their metadata including their prompt, negative prompt, inference steps, guidance scale and seed.';
 
 export function getGalleryMeta({
 	searchString,
@@ -10,10 +15,10 @@ export function getGalleryMeta({
 	sorts
 }: {
 	searchString?: string;
-	aspectRatioFilters?: string[];
+	aspectRatioFilters?: TAvailableAspectRatio[];
 	usernameFilters?: string[];
-	modelIdFilters?: string[];
-	sorts?: string[];
+	modelIdFilters?: TAvailableGenerationModelId[];
+	sorts?: TGalleryMainSort[];
 }): TGalleryMeta {
 	const hasSearchString =
 		searchString !== undefined && searchString !== null && searchString !== '';
@@ -32,6 +37,20 @@ export function getGalleryMeta({
 		};
 	}
 
+	if (sorts && sorts[0] === 'trending') {
+		return {
+			title: 'Trending | Gallery | Stablecog',
+			description: defaultDescription
+		};
+	}
+
+	if (sorts && sorts[0] === 'top') {
+		return {
+			title: 'Top | Gallery | Stablecog',
+			description: defaultDescription
+		};
+	}
+
 	if (
 		(aspectRatioFilters && aspectRatioFilters.length > 0) ||
 		(modelIdFilters && modelIdFilters.length > 0) ||
@@ -40,15 +59,13 @@ export function getGalleryMeta({
 	) {
 		return {
 			title: 'Filtered Results | Gallery | Stablecog',
-			description:
-				'A gallery full of AI-generated images created with Stable Diffusion and Kandinsky. Check out images and their metadata including their prompt, negative prompt, inference steps, guidance scale and seed.'
+			description: defaultDescription
 		};
 	}
 
 	return {
 		title: 'Gallery | Stablecog',
-		description:
-			'A gallery full of AI-generated images created with Stable Diffusion and Kandinsky. Check out images and their metadata including their prompt, negative prompt, inference steps, guidance scale and seed.'
+		description: defaultDescription
 	};
 }
 
