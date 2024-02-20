@@ -20,6 +20,11 @@ export function getGalleryMeta({
 	modelIdFilters?: TAvailableGenerationModelId[];
 	sorts?: TGalleryMainSort[];
 }): TGalleryMeta {
+	const hasModelIdFilter = modelIdFilters && modelIdFilters.length > 0;
+	const hasAspectRatioFilter = aspectRatioFilters && aspectRatioFilters.length > 0;
+	const hasUsernameFilter = usernameFilters && usernameFilters.length > 0;
+	const hasSorts = sorts && sorts.length > 0 && !arraysEqual(sorts, sortsDefault);
+
 	const hasSearchString =
 		searchString !== undefined && searchString !== null && searchString !== '';
 
@@ -37,26 +42,33 @@ export function getGalleryMeta({
 		};
 	}
 
-	if (sorts && sorts[0] === 'trending') {
+	if (
+		sorts &&
+		sorts.includes('trending') &&
+		!hasAspectRatioFilter &&
+		!hasModelIdFilter &&
+		!hasUsernameFilter
+	) {
 		return {
 			title: 'Trending | Gallery | Stablecog',
 			description: defaultDescription
 		};
 	}
 
-	if (sorts && sorts[0] === 'top') {
+	if (
+		sorts &&
+		sorts.includes('top') &&
+		!hasAspectRatioFilter &&
+		!hasModelIdFilter &&
+		!hasUsernameFilter
+	) {
 		return {
 			title: 'Top | Gallery | Stablecog',
 			description: defaultDescription
 		};
 	}
 
-	if (
-		(aspectRatioFilters && aspectRatioFilters.length > 0) ||
-		(modelIdFilters && modelIdFilters.length > 0) ||
-		(usernameFilters && usernameFilters.length > 0) ||
-		(sorts && sorts.length > 0 && sorts !== sortsDefault)
-	) {
+	if (hasAspectRatioFilter || hasModelIdFilter || hasUsernameFilter || hasSorts) {
 		return {
 			title: 'Filtered Results | Gallery | Stablecog',
 			description: defaultDescription
@@ -72,4 +84,16 @@ export function getGalleryMeta({
 export interface TGalleryMeta {
 	title: string;
 	description: string;
+}
+
+function arraysEqual(a: any[], b: any[]): boolean {
+	if (a === b) return true;
+	if (a == null || b == null) return false;
+	if (a.length !== b.length) return false;
+
+	for (let i = 0; i < a.length; i++) {
+		if (a[i] !== b[i]) return false;
+	}
+
+	return true;
 }
