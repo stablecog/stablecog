@@ -11,6 +11,9 @@
 	import IconGuideOutline from '$components/icons/IconGuideOutline.svelte';
 	import IconBlogOutline from '$components/icons/IconBlogOutline.svelte';
 	import IconLive from '$components/icons/IconLive.svelte';
+	import ScrollAreaWithChevron from '$components/utils/ScrollAreaWithChevron.svelte';
+	import { offset, flip, shift } from 'svelte-floating-ui/dom';
+	import { createFloatingActions } from 'svelte-floating-ui';
 
 	export let type: TTabBarPlacement = 'normal';
 
@@ -73,6 +76,12 @@
 	$: selectedRouteLeft = widths
 		.slice(0, selectedRouteIndex < 0 ? widths.length : selectedRouteIndex)
 		.reduce((acc, cur) => acc + cur, 0);
+
+	const [resourceDropdownFloatingRef, resourceDropdownFloatingContent] = createFloatingActions({
+		strategy: 'absolute',
+		placement: 'top-end',
+		middleware: [offset(2), flip(), shift()]
+	});
 </script>
 
 <TabBarWrapper class="max-w-full" {type}>
@@ -111,6 +120,7 @@
 					length={_routes.length}
 					hasDropdown={route.onClick !== undefined}
 					onClick={route.onClick}
+					floatingRef={route.icon === 'resources' ? resourceDropdownFloatingRef : undefined}
 				>
 					<div
 						slot="dropdown"
@@ -118,75 +128,81 @@
 					>
 						{#if route.icon === 'resources' && isResourcesDropdownOpen}
 							<DropdownWrapperTranslate
-								alignment="top-2px right-0"
-								translate="md"
+								floatingContent={resourceDropdownFloatingContent}
+								alignment="top-0 right-0"
 								onClickoutside={closeResourcesDropdown}
 								excludeFromClickoutside={[elements[index]]}
 								class="w-192 max-w-[calc(100vw-1.25rem)] md:w-48 md:max-w-[calc(100vw-1.25rem)]"
 							>
-								<DropdownItem
-									target="_blank"
-									href="/guide"
-									padding="md"
-									onClick={closeResourcesDropdown}
+								<ScrollAreaWithChevron
+									class="w-full flex flex-col justify-start max-h-[calc(80vh-4rem)] md:max-h-[calc(80vh-4rem)] transition-all duration-100 hide-scrollbar"
 								>
-									<div class="flex-1 min-w-0 flex items-center justify-start gap-2.5">
-										<IconGuideOutline
-											class="transition w-6 h-6 text-c-text not-touch:group-hover:text-c-primary"
-										/>
-										<p
-											class="flex-1 min-w-0 overflow-hidden overflow-ellipsis text-left transition text-c-on-bg not-touch:group-hover:text-c-primary"
+									<div class="w-full flex flex-col justify-start items-start">
+										<DropdownItem
+											target="_blank"
+											href="/guide"
+											padding="md"
+											onClick={closeResourcesDropdown}
 										>
-											{$LL.Guide.PageTitle()}
-										</p>
-									</div>
-								</DropdownItem>
-								<DropdownItem
-									target="_blank"
-									href="/blog"
-									padding="md"
-									onClick={closeResourcesDropdown}
-								>
-									<div class="flex-1 min-w-0 flex items-center justify-start gap-2.5">
-										<IconBlogOutline
-											class="transition w-6 h-6 text-c-text not-touch:group-hover:text-c-primary"
-										/>
-										<p
-											class="flex-1 min-w-0 overflow-hidden overflow-ellipsis text-left transition text-c-on-bg not-touch:group-hover:text-c-primary"
+											<div class="flex-1 min-w-0 flex items-center justify-start gap-2.5">
+												<IconGuideOutline
+													class="transition w-6 h-6 text-c-text not-touch:group-hover:text-c-primary"
+												/>
+												<p
+													class="flex-1 min-w-0 overflow-hidden overflow-ellipsis text-left transition text-c-on-bg not-touch:group-hover:text-c-primary"
+												>
+													{$LL.Guide.PageTitle()}
+												</p>
+											</div>
+										</DropdownItem>
+										<DropdownItem
+											target="_blank"
+											href="/blog"
+											padding="md"
+											onClick={closeResourcesDropdown}
 										>
-											{$LL.Blog.TitleAlt()}
-										</p>
-									</div>
-								</DropdownItem>
-								<DropdownItem
-									target="_blank"
-									href="/docs/v1"
-									padding="md"
-									onClick={closeResourcesDropdown}
-								>
-									<div class="flex-1 min-w-0 flex items-center justify-start gap-2.5">
-										<IconCommandLineOutlined
-											class="transition w-6 h-6 text-c-text not-touch:group-hover:text-c-primary"
-										/>
-										<p
-											class="flex-1 min-w-0 overflow-hidden overflow-ellipsis text-left transition text-c-on-bg not-touch:group-hover:text-c-primary"
+											<div class="flex-1 min-w-0 flex items-center justify-start gap-2.5">
+												<IconBlogOutline
+													class="transition w-6 h-6 text-c-text not-touch:group-hover:text-c-primary"
+												/>
+												<p
+													class="flex-1 min-w-0 overflow-hidden overflow-ellipsis text-left transition text-c-on-bg not-touch:group-hover:text-c-primary"
+												>
+													{$LL.Blog.TitleAlt()}
+												</p>
+											</div>
+										</DropdownItem>
+										<DropdownItem
+											target="_blank"
+											href="/docs/v1"
+											padding="md"
+											onClick={closeResourcesDropdown}
 										>
-											{$LL.Documentation.ForDevelopersTitle()}
-										</p>
+											<div class="flex-1 min-w-0 flex items-center justify-start gap-2.5">
+												<IconCommandLineOutlined
+													class="transition w-6 h-6 text-c-text not-touch:group-hover:text-c-primary"
+												/>
+												<p
+													class="flex-1 min-w-0 overflow-hidden overflow-ellipsis text-left transition text-c-on-bg not-touch:group-hover:text-c-primary"
+												>
+													{$LL.Documentation.ForDevelopersTitle()}
+												</p>
+											</div>
+										</DropdownItem>
+										<DropdownItem href="/live" padding="md" onClick={closeResourcesDropdown}>
+											<div class="flex-1 min-w-0 flex items-center justify-start gap-2.5">
+												<IconLive
+													class="transition w-6 h-6 text-c-text not-touch:group-hover:text-c-primary"
+												/>
+												<p
+													class="flex-1 min-w-0 overflow-hidden overflow-ellipsis text-left transition text-c-on-bg not-touch:group-hover:text-c-primary"
+												>
+													{$LL.Navbar.LiveTab()}
+												</p>
+											</div>
+										</DropdownItem>
 									</div>
-								</DropdownItem>
-								<DropdownItem href="/live" padding="md" onClick={closeResourcesDropdown}>
-									<div class="flex-1 min-w-0 flex items-center justify-start gap-2.5">
-										<IconLive
-											class="transition w-6 h-6 text-c-text not-touch:group-hover:text-c-primary"
-										/>
-										<p
-											class="flex-1 min-w-0 overflow-hidden overflow-ellipsis text-left transition text-c-on-bg not-touch:group-hover:text-c-primary"
-										>
-											{$LL.Navbar.LiveTab()}
-										</p>
-									</div>
-								</DropdownItem>
+								</ScrollAreaWithChevron>
 							</DropdownWrapperTranslate>
 						{/if}
 					</div>

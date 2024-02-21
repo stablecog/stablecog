@@ -65,6 +65,7 @@
 	"type": "module",
 	"dependencies": {
 		"@felte/validator-zod": "^1.0.17",
+		"@floating-ui/core": "^1.6.0",
 		"@macfja/svelte-persistent-store": "^2.4.1",
 		"@melt-ui/svelte": "^0.70.0",
 		"@supabase/ssr": "^0.0.10",
@@ -86,6 +87,7 @@
 		"rehype-highlight": "^7.0.0",
 		"remark-reading-time": "^2.0.1",
 		"svelte-boring-avatars": "^1.2.4",
+		"svelte-floating-ui": "^1.5.8",
 		"svelte-inview": "^4.0.2",
 		"svelte-meta-tags": "^3.1.0",
 		"typesafe-i18n": "^5.26.2",

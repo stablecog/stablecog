@@ -4,6 +4,7 @@
 	import IconNew from '$components/icons/IconNew.svelte';
 	import type { TNavbarRouteOption } from '$components/navigation/routes';
 	import AnchorOrDiv from '$components/utils/AnchorOrDiv.svelte';
+	import type { ReferenceAction } from 'svelte-floating-ui';
 
 	export let clientWidth: number;
 	export let element: HTMLAnchorElement | HTMLDivElement;
@@ -19,6 +20,7 @@
 	export let index: number;
 	export let length: number;
 	export let hasDropdown = false;
+	export let floatingRef: ReferenceAction | undefined = undefined;
 </script>
 
 <AnchorOrDiv
@@ -27,6 +29,7 @@
 	{ariaLabel}
 	dataSveltekitPreloadData
 	onClick={onClick ?? undefined}
+	{floatingRef}
 	class="max-w-full rounded-lg whitespace-nowrap overflow-hidden group self-stretch flex
 					items-center justify-center px-5 transition-all relative font-semibold {type === 'bottom'
 		? 'pt-4 pb-4.5'
@@ -47,7 +50,7 @@
 		<div class="w-full h-full overflow-hidden relative z-0 rounded-lg">
 			<div
 				class="w-full h-full origin-left rounded-lg transition transform translate-y-full
-				bg-c-bg-secondary {isSelected
+					bg-c-bg-secondary {isSelected
 					? 'group-focus-within:translate-y-0'
 					: ''} not-touch:group-hover:translate-y-0"
 			/>

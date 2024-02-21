@@ -1,4 +1,6 @@
 <script lang="ts">
+	import type { ReferenceAction } from 'svelte-floating-ui';
+
 	export let href: string | undefined = undefined;
 	export let onClick: ((e: any) => void) | undefined = undefined;
 	export { classes as class };
@@ -7,6 +9,7 @@
 	export let element: HTMLAnchorElement | HTMLDivElement | undefined = undefined;
 	export let ariaLabel: string | undefined = undefined;
 	export let dataSveltekitPreloadData = false;
+	export let floatingRef: ReferenceAction | (() => undefined) = () => undefined;
 
 	let classes = '';
 </script>
@@ -14,6 +17,7 @@
 {#if href}
 	{#if anchorPreventDefault}
 		<a
+			use:floatingRef
 			bind:this={element}
 			bind:clientWidth
 			aria-label={ariaLabel}
@@ -26,6 +30,7 @@
 		</a>
 	{:else}
 		<a
+			use:floatingRef
 			bind:this={element}
 			bind:clientWidth
 			aria-label={ariaLabel}
@@ -39,6 +44,7 @@
 	{/if}
 {:else}
 	<div
+		use:floatingRef
 		bind:this={element}
 		bind:clientWidth
 		aria-label={ariaLabel}

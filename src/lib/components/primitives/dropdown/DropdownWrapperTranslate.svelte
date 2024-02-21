@@ -1,19 +1,21 @@
 <script lang="ts">
 	import { clickoutside } from '$ts/actions/clickoutside';
 	import { flyAndScale } from '$ts/animation/transitions';
+	import type { ContentAction } from 'svelte-floating-ui';
 	import { quadOut } from 'svelte/easing';
 
 	export { classes as class };
 	export let alignment = 'right-0 top-0';
 	export let rounding = 'rounded-xl';
-	export let translate: 'sm' | 'md' | 'lg' = 'lg';
+	export let translate: 'sm' | 'md' | 'lg' = 'md';
 	export let onClickoutside: (() => void) | undefined = undefined;
 	export let excludeFromClickoutside: (HTMLElement | undefined)[] | undefined = undefined;
-
+	export let floatingContent: ContentAction | (() => undefined) = () => undefined;
 	let classes = '';
 </script>
 
 <div
+	use:floatingContent
 	use:clickoutside={onClickoutside
 		? { callback: onClickoutside, exclude: excludeFromClickoutside }
 		: undefined}
@@ -24,7 +26,7 @@
 		transformOrigin: 'right top'
 	}}
 	out:flyAndScale={{
-		duration: 150,
+		duration: 125,
 		yRem: translate === 'sm' ? -0.4 : -1,
 		easing: quadOut,
 		transformOrigin: 'right top'
