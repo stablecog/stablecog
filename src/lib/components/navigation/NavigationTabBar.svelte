@@ -47,10 +47,10 @@
 					class="h-full absolute left-0 top-0 transition {type === 'bottom'
 						? 'px-1.5 pt-1.5 pb-2'
 						: selectedRouteIndex === 0
-						? 'py-1 pl-1 pr-0.5'
-						: selectedRouteIndex === $routes.length - 1
-						? 'py-1 pr-1 pl-0.5'
-						: 'py-1 px-0.5'}"
+							? 'py-1 pl-1 pr-0.5'
+							: selectedRouteIndex === $routes.length - 1
+								? 'py-1 pr-1 pl-0.5'
+								: 'py-1 px-0.5'}"
 				>
 					<div
 						class="w-full h-full bg-c-bg-secondary rounded-lg shadow-lg shadow-c-shadow/[var(--o-shadow-strong)]"
@@ -64,7 +64,7 @@
 					aria-label="Go to {route.name}"
 					data-sveltekit-preload-data="hover"
 					class="max-w-full rounded-lg whitespace-nowrap overflow-hidden group self-stretch flex
-					items-center justify-center px-5 xl:px-6 2xl:px-7 transition-all relative font-semibold {type ===
+					items-center justify-center px-5 xl:px-6 2xl:px-6 transition-all relative font-semibold {type ===
 					'bottom'
 						? 'pt-4 pb-4.5'
 						: 'py-4'} {isSelected(route, $page.url.pathname)
@@ -76,10 +76,10 @@
 						class="w-full h-full absolute left-0 top-0 rounded-lg {type === 'bottom'
 							? 'px-1.5 pt-1.5 pb-2'
 							: index === 0
-							? 'py-1 pl-1 pr-0.5'
-							: index === $routes.length - 1
-							? 'py-1 pr-1 pl-0.5'
-							: 'py-1 px-0.5'}"
+								? 'py-1 pl-1 pr-0.5'
+								: index === $routes.length - 1
+									? 'py-1 pr-1 pl-0.5'
+									: 'py-1 px-0.5'}"
 					>
 						<div class="w-full h-full overflow-hidden relative z-0 rounded-lg">
 							<div
