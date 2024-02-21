@@ -1156,6 +1156,7 @@ const tr: Translation = {
 		MuteButton: 'Sesi Kapa',
 		UnmuteButton: 'Sesi Aç'
 	},
+	Resources: { PageTitle: 'Resources' },
 	Connect: {
 		PageTitle: 'Bağlan',
 		PageParagraph: '{platform} üyeliğini Stablecog üyeliğine bağlamak için aşağıdaki butona tıkla.',

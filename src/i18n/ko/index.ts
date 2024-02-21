@@ -1040,6 +1040,7 @@ const ko: Translation = {
 		MuteButton: 'Mute',
 		UnmuteButton: 'Unmute'
 	},
+	Resources: { PageTitle: 'Resources' },
 	Connect: {
 		PageTitle: 'Connect',
 		PageParagraph:

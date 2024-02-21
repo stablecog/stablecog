@@ -1157,6 +1157,7 @@ const es: Translation = {
 		MuteButton: 'Σίγαση',
 		UnmuteButton: 'Κατάργηση Σίγασης'
 	},
+	Resources: { PageTitle: 'Resources' },
 	Connect: {
 		PageTitle: 'Connect',
 		PageParagraph:

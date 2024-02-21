@@ -30,7 +30,7 @@
 	$: _routes = [
 		...$routes,
 		{
-			name: 'Resources',
+			name: $LL.Resources.PageTitle(),
 			href: '/resources',
 			strictMatch: true,
 			onClick: toggleResourcesDropdown,

@@ -3229,6 +3229,12 @@ type RootTranslation = {
 		 */
 		UnmuteButton: string
 	}
+	Resources: {
+		/**
+		 * R​e​s​o​u​r​c​e​s
+		 */
+		PageTitle: string
+	}
 	Connect: {
 		/**
 		 * C​o​n​n​e​c​t
@@ -6476,6 +6482,12 @@ export type TranslationFunctions = {
 		 * Unmute
 		 */
 		UnmuteButton: () => LocalizedString
+	}
+	Resources: {
+		/**
+		 * Resources
+		 */
+		PageTitle: () => LocalizedString
 	}
 	Connect: {
 		/**
