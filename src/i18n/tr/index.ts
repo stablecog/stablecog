@@ -204,7 +204,9 @@ const tr: Translation = {
 		GenerationSettingsTitle: 'Üretim Ayarları',
 		DarkModeToggle: 'Karanlık Mod'
 	},
-	Inpainting: { OriginalImageTitle: 'Original' },
+	Inpainting: {
+		OriginalImageTitle: 'Orijinal'
+	},
 	GenerationFullscreen: {
 		DownloadButton: 'İndir',
 		DoneButtonState: 'Bitti!',
@@ -217,7 +219,7 @@ const tr: Translation = {
 		RerollButton: 'Rastgele Üret',
 		RegenerateButton: 'Tekrar Üret',
 		GenerateButton: 'Üret',
-		EditButton: 'Edit',
+		EditButton: 'Düzenle',
 		UpscaleButton: 'Büyüt',
 		SimilarTitle: 'Benzer',
 		ShowOnProfileButton: 'Profilde Göster',
@@ -280,7 +282,7 @@ const tr: Translation = {
 		DeleteButton: 'Sil',
 		LoadingTitle: 'Yükleniyor',
 		ContinueButton: 'Devam Et',
-		ReachedTheEndTitle: "You've reached the end.",
+		ReachedTheEndTitle: 'Sona ulaştın.',
 		ProfileButton: 'Profil',
 		VisitProfileButton: 'Profile Git',
 		YourProfileButton: 'Profilin',
@@ -306,13 +308,13 @@ const tr: Translation = {
 		},
 		BatchEditBar: {
 			PauseEditingButton: 'Düzenlemeyi Bitir',
-			PauseEditingButtonAlt: 'Pause',
+			PauseEditingButtonAlt: 'Durdur',
 			DeselectButton: 'Seçimi Kaldır ({selectedCount})',
 			DeleteButton: 'Sil ({selectedCount})',
 			FavoriteButton: 'Favorile ({selectedCount})',
 			ApproveButton: 'Onayla ({selectedCount})',
 			RejectButton: 'Reddet ({selectedCount})',
-			ToApproveButton: 'To Approve ({selectedCount})',
+			ToApproveButton: 'Onaylanacak ({selectedCount})',
 			UnfavoriteButton: 'Favoriyi Kaldır ({selectedCount})',
 			ConfirmationModal: {
 				CancelButton: 'Vazgeç',
@@ -469,8 +471,8 @@ const tr: Translation = {
 		TryAnotherImage: 'Başka fotoğraf dene :(',
 		OnceEvery60Seconds: 'Her 60 saniyede sadece bir link talebinde bulunabilirsin.',
 		OAuthFailed: {
-			Title: 'Connection Error',
-			Paragraph: 'A problem occurred while connecting to the service provider.'
+			Title: 'Bağlantı Hatası',
+			Paragraph: 'Servis sağlayıcıya bağlanırken bir sorunla karşılaştık.'
 		},
 		LinkExpired: {
 			TitleAlt: 'Linkin süresi dolmuş',
@@ -543,7 +545,7 @@ const tr: Translation = {
 				Approved: 'Onaylananlar',
 				Rejected: 'Reddedilenler',
 				Deleted: 'Silinenler',
-				WaitingForApproval: 'Waiting for Approval',
+				WaitingForApproval: 'Onay Bekleyenler',
 				Private: 'Gizli'
 			},
 			NoGenerationsToReview: 'İncelenecek üretim kalmadı'
@@ -790,14 +792,18 @@ const tr: Translation = {
 		BackToGalleryButton: 'Galeriye Gön',
 		SearchingTitle: 'Arıyor',
 		Sort: {
-			Title: 'Sort',
-			Options: { New: 'New', Top: 'Top', Trending: 'Trending' }
+			Title: 'Sırala',
+			Options: {
+				New: 'Yeni',
+				Top: 'En İyi',
+				Trending: 'Popüler'
+			}
 		},
-		SearchResultsTitle: 'Search Results',
+		SearchResultsTitle: 'Arama Sonuçları',
 		UsernameFilterInput: {
-			Title: 'Username Search',
-			Placeholder: 'Filter by username',
-			Tag: 'Username: {username}'
+			Title: 'Kullanıcı Adı Arama',
+			Placeholder: 'Kullanıcı adıyla filtrele',
+			Tag: 'Kullanıcı Adı: {username}'
 		},
 		NoMatchingGenerationTitle: 'Benzer bir üretim bulunamadı'
 	},
@@ -1156,7 +1162,9 @@ const tr: Translation = {
 		MuteButton: 'Sesi Kapa',
 		UnmuteButton: 'Sesi Aç'
 	},
-	Resources: { PageTitle: 'Resources' },
+	Resources: {
+		PageTitle: 'Kaynaklar'
+	},
 	Connect: {
 		PageTitle: 'Bağlan',
 		PageParagraph: '{platform} üyeliğini Stablecog üyeliğine bağlamak için aşağıdaki butona tıkla.',
