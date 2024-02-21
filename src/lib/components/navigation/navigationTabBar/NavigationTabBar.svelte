@@ -32,13 +32,17 @@
 	let _routes: TNavbarRoute[];
 	$: _routes = [
 		...$routes,
-		{
-			name: $LL.Resources.PageTitle(),
-			href: '/resources',
-			strictMatch: true,
-			onClick: toggleResourcesDropdown,
-			icon: 'resources'
-		}
+		...(($page.url.pathname.startsWith('/admin')
+			? ([] as TNavbarRoute[])
+			: [
+					{
+						name: $LL.Resources.PageTitle(),
+						href: '/resources',
+						strictMatch: true,
+						onClick: toggleResourcesDropdown,
+						icon: 'resources'
+					}
+				]) as TNavbarRoute[])
 	];
 
 	const isSelected = (
