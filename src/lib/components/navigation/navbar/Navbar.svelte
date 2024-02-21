@@ -29,6 +29,7 @@
 	import { isSignInModalOpen } from '$ts/stores/isSignInModalOpen';
 	import { notAtTheVeryTop, scrollDirection } from '$ts/stores/scroll';
 	import { sessionStore } from '$ts/constants/supabase';
+	import IconCommandLine from '$components/icons/IconCommandLine.svelte';
 
 	export let dirTree: Writable<TDirTreeItem[]> | undefined = undefined;
 
@@ -162,6 +163,21 @@
 				hasTooltip={true}
 			>
 				<IconBlog
+					class="w-7.5 h-7.5 relative transition transform {$page.url.pathname === '/' &&
+					$themeApp === 'light' &&
+					!$notAtTheVeryTop
+						? 'text-c-bg'
+						: 'text-c-on-bg'} not-touch:group-hover/iconbutton:text-c-primary"
+				/>
+			</IconButton>
+			<IconButton
+				class="py-2 hidden md:block"
+				href="/docs/v1"
+				target={$page.url.pathname.startsWith('/docs') ? undefined : '_blank'}
+				name={$LL.Documentation.ForDevelopersTitle()}
+				hasTooltip={true}
+			>
+				<IconCommandLine
 					class="w-7.5 h-7.5 relative transition transform {$page.url.pathname === '/' &&
 					$themeApp === 'light' &&
 					!$notAtTheVeryTop

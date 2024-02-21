@@ -64,8 +64,7 @@
 					aria-label="Go to {route.name}"
 					data-sveltekit-preload-data="hover"
 					class="max-w-full rounded-lg whitespace-nowrap overflow-hidden group self-stretch flex
-					items-center justify-center px-5 xl:px-6 2xl:px-6 transition-all relative font-semibold {type ===
-					'bottom'
+					items-center justify-center px-5 transition-all relative font-semibold {type === 'bottom'
 						? 'pt-4 pb-4.5'
 						: 'py-4'} {isSelected(route, $page.url.pathname)
 						? 'text-c-on-bg not-touch:hover:text-c-primary'
@@ -92,7 +91,7 @@
 					</div>
 					<div class="flex-shrink min-w-0 flex justify-center items-center gap-1.5 relative">
 						<IconNavbarRoute
-							class="w-6 h-6 md:w-5 md:h-5 flex-shrink-0 lg:-ml-0.25 transform scale-100"
+							class="w-6 h-6 md:w-5 md:h-5 flex-shrink-0 transform scale-100"
 							type={route.icon}
 						/>
 						<p
