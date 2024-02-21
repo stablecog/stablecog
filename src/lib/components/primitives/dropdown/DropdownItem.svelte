@@ -3,7 +3,7 @@
 	import type { THrefTarget } from '$ts/types/main';
 
 	export let onClick: () => void = () => null;
-	export let padding: 'xl' | 'lg' | 'md' | 'sm' = 'xl';
+	export let padding: 'xl' | 'lg' | 'md' | 'sm' | 'sm+' = 'xl';
 	export let disabled = false;
 	export let href: string | undefined = undefined;
 	export let target: THrefTarget = undefined;
@@ -22,11 +22,13 @@
 		on:click={onClick}
 		class="flex items-center justify-center font-semibold px-5 {padding === 'sm'
 			? 'py-3'
-			: padding === 'md'
-			? 'py-4'
-			: padding === 'lg'
-			? 'py-4.5'
-			: 'py-5'} relative z-0 overflow-hidden group {classes}"
+			: padding === 'sm+'
+				? 'py-3.5'
+				: padding === 'md'
+					? 'py-4'
+					: padding === 'lg'
+						? 'py-4.5'
+						: 'py-5'} relative z-0 overflow-hidden group {classes}"
 	>
 		<div class="w-[200%] h-full absolute left-0 top-0 flex items-center justify-center">
 			<div
@@ -42,11 +44,13 @@
 		on:click={onClick}
 		class="font-semibold px-5 {padding === 'sm'
 			? 'py-3'
-			: padding === 'md'
-			? 'py-4'
-			: padding === 'lg'
-			? 'py-4.5'
-			: 'py-5'} relative z-0 overflow-hidden group {classes}"
+			: padding === 'sm+'
+				? 'py-3.5'
+				: padding === 'md'
+					? 'py-4'
+					: padding === 'lg'
+						? 'py-4.5'
+						: 'py-5'} relative z-0 overflow-hidden group {classes}"
 	>
 		{#if !withSpinner || !loading}
 			<div class="w-[200%] h-full absolute left-0 top-0 flex items-center justify-center">

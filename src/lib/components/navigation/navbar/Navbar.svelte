@@ -2,7 +2,7 @@
 	import { page } from '$app/stores';
 	import IconButton from '$components/primitives/buttons/IconButton.svelte';
 	import PageLoadProgressBar from '$components/utils/PageLoadProgressBar.svelte';
-	import NavigationTabBar from '$components/navigation/NavigationTabBar.svelte';
+	import NavigationTabBar from '$components/navigation/navigationTabBar/NavigationTabBar.svelte';
 	import { clickoutside } from '$ts/actions/clickoutside';
 	import IconSc from '$components/icons/IconSc.svelte';
 	import LL from '$i18n/i18n-svelte';
@@ -16,9 +16,7 @@
 	import IconSidebar from '$components/icons/IconSidebar.svelte';
 	import ButtonHoverEffect from '$components/primitives/buttons/ButtonHoverEffect.svelte';
 	import LogoButton from '$components/primitives/buttons/LogoButton.svelte';
-	import IconGuide from '$components/icons/IconGuide.svelte';
 	import { themeApp } from '$ts/stores/theme';
-	import IconBlog from '$components/icons/IconBlog.svelte';
 	import IconLive from '$components/icons/IconLive.svelte';
 	import type { Writable } from 'svelte/store';
 	import type { TDirTreeItem } from '$routes/+layout';
@@ -29,7 +27,6 @@
 	import { isSignInModalOpen } from '$ts/stores/isSignInModalOpen';
 	import { notAtTheVeryTop, scrollDirection } from '$ts/stores/scroll';
 	import { sessionStore } from '$ts/constants/supabase';
-	import IconCommandLine from '$components/icons/IconCommandLine.svelte';
 
 	export let dirTree: Writable<TDirTreeItem[]> | undefined = undefined;
 
@@ -120,12 +117,12 @@
 				</div>
 			{/if}
 		</div>
-		<div class="hidden md:flex md:max-w-[19rem] lg:max-w-[36rem] xl:max-w-[40rem] md:ml-2 xl:ml-0">
+		<div class="hidden md:flex md:max-w-[19rem] lg:max-w-[45rem] xl:max-w-[45rem] md:ml-2 xl:ml-0">
 			<NavigationTabBar />
 		</div>
 		<div class="flex md:flex-1 flex-wrap items-center justify-end relative">
 			<IconButton
-				class="py-2 hidden md:block"
+				class="py-2"
 				href="/discord"
 				target="_blank"
 				name={$LL.Platform.Discord()}
@@ -133,65 +130,6 @@
 			>
 				<IconSc
 					type="discord"
-					class="w-7.5 h-7.5 relative transition transform {$page.url.pathname === '/' &&
-					$themeApp === 'light' &&
-					!$notAtTheVeryTop
-						? 'text-c-bg'
-						: 'text-c-on-bg'} not-touch:group-hover/iconbutton:text-c-primary"
-				/>
-			</IconButton>
-			<IconButton
-				class="py-2 hidden md:block"
-				href="/guide"
-				target={$page.url.pathname.startsWith('/guide') ? undefined : '_blank'}
-				name={$LL.Guide.PageTitle()}
-				hasTooltip={true}
-			>
-				<IconGuide
-					class="w-7.5 h-7.5 relative transition transform {$page.url.pathname === '/' &&
-					$themeApp === 'light' &&
-					!$notAtTheVeryTop
-						? 'text-c-bg'
-						: 'text-c-on-bg'} not-touch:group-hover/iconbutton:text-c-primary"
-				/>
-			</IconButton>
-			<IconButton
-				class="py-2 hidden md:block"
-				href="/blog"
-				target={$page.url.pathname.startsWith('/blog') ? undefined : '_blank'}
-				name={$LL.Blog.TitleAlt()}
-				hasTooltip={true}
-			>
-				<IconBlog
-					class="w-7.5 h-7.5 relative transition transform {$page.url.pathname === '/' &&
-					$themeApp === 'light' &&
-					!$notAtTheVeryTop
-						? 'text-c-bg'
-						: 'text-c-on-bg'} not-touch:group-hover/iconbutton:text-c-primary"
-				/>
-			</IconButton>
-			<IconButton
-				class="py-2 hidden md:block"
-				href="/docs/v1"
-				target={$page.url.pathname.startsWith('/docs') ? undefined : '_blank'}
-				name={$LL.Documentation.ForDevelopersTitle()}
-				hasTooltip={true}
-			>
-				<IconCommandLine
-					class="w-7.5 h-7.5 relative transition transform {$page.url.pathname === '/' &&
-					$themeApp === 'light' &&
-					!$notAtTheVeryTop
-						? 'text-c-bg'
-						: 'text-c-on-bg'} not-touch:group-hover/iconbutton:text-c-primary"
-				/>
-			</IconButton>
-			<IconButton
-				class="py-2 hidden md:block"
-				href="/live"
-				name={$LL.Navbar.LiveTab()}
-				hasTooltip={true}
-			>
-				<IconLive
 					class="w-7.5 h-7.5 relative transition transform {$page.url.pathname === '/' &&
 					$themeApp === 'light' &&
 					!$notAtTheVeryTop

@@ -7,6 +7,7 @@
 
 	export let delay = 250;
 	export let closeDelay = 0;
+	export let animationDuration = 200;
 	export let color: 'bg-secondary' | 'bg-tertiary' = 'bg-secondary';
 	export let title: string | undefined = undefined;
 	export let titleIcon: ConstructorOfATypedSvelteComponent | undefined = undefined;
@@ -72,7 +73,12 @@
 
 {#if isActive && $open}
 	<div
-		transition:fly={{ duration: 200, easing: quadOut, opacity: 0, y: size === 'sm' ? 8 : 16 }}
+		transition:fly={{
+			duration: animationDuration,
+			easing: quadOut,
+			opacity: 0,
+			y: size === 'sm' ? 8 : 16
+		}}
 		class="max-w-[17rem] shadow-lg shadow-c-shadow/[var(--o-shadow-strong)] z-[9999] {size === 'sm'
 			? 'rounded-md'
 			: 'rounded-xl'} {color == 'bg-secondary' ? 'bg-c-bg-secondary' : 'bg-c-bg-tertiary'} {size ===

@@ -1,7 +1,8 @@
-export function clickoutside(
-	node: HTMLElement,
-	{ callback, exclude, capture = true }: TClickoutsideProps
-) {
+export function clickoutside(node: HTMLElement, props: TClickoutsideProps | undefined) {
+	if (!props) return;
+	let { callback, exclude, capture } = props;
+	if (capture === undefined) capture = true;
+
 	let startedFromOutside = false;
 	function onMouseDown(event: Event) {
 		if (isntInside(node, event, exclude)) {

@@ -28,6 +28,7 @@
 	size="sm"
 	gutter={-4}
 	isActive={hasTooltip}
+	animationDuration={150}
 >
 	{#if href}
 		<a
@@ -47,8 +48,8 @@
 						class="w-full h-full ease-out transition transform {type === 'on-primary'
 							? 'bg-c-on-primary/15'
 							: type === 'secondary'
-							? 'bg-c-secondary/25'
-							: 'bg-c-primary/25'} 
+								? 'bg-c-secondary/25'
+								: 'bg-c-primary/25'} 
 							absolute left-0 top-0 rounded-full {hoverFrom === 'left' ? '-translate-x-full' : 'translate-x-full'}
 							not-touch:group-hover/iconbutton:translate-x-0"
 					/>
@@ -85,8 +86,8 @@
 						class="w-full h-full ease-out transition transform {type === 'on-primary'
 							? 'bg-c-on-primary/15'
 							: type === 'secondary'
-							? 'bg-c-secondary/25'
-							: 'bg-c-primary/25'} 
+								? 'bg-c-secondary/25'
+								: 'bg-c-primary/25'} 
 							absolute left-0 top-0 rounded-full {hoverFrom === 'left' ? '-translate-x-full' : 'translate-x-full'}
 							not-touch:group-hover/iconbutton:translate-x-0"
 					/>

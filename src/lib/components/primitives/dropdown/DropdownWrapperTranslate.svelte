@@ -1,18 +1,25 @@
 <script lang="ts">
+	import { clickoutside } from '$ts/actions/clickoutside';
 	import { flyAndScale } from '$ts/animation/transitions';
 	import { quadOut } from 'svelte/easing';
 
 	export { classes as class };
 	export let alignment = 'right-0 top-0';
 	export let rounding = 'rounded-xl';
-	export let translate: 'sm' | 'md' = 'md';
+	export let translate: 'sm' | 'md' | 'lg' = 'lg';
+	export let onClickoutside: (() => void) | undefined = undefined;
+	export let excludeFromClickoutside: (HTMLElement | undefined)[] | undefined = undefined;
+
 	let classes = '';
 </script>
 
 <div
+	use:clickoutside={onClickoutside
+		? { callback: onClickoutside, exclude: excludeFromClickoutside }
+		: undefined}
 	in:flyAndScale={{
 		duration: 200,
-		yRem: translate === 'sm' ? -0.75 : -1.5,
+		yRem: translate === 'sm' ? -0.75 : translate === 'md' ? -1 : -1.5,
 		easing: quadOut,
 		transformOrigin: 'right top'
 	}}
@@ -23,7 +30,7 @@
 		transformOrigin: 'right top'
 	}}
 	class="transition-all ring-2 ring-c-bg-tertiary bg-c-bg-secondary {rounding} flex flex-col justify-start shadow-xl shadow-c-shadow/[var(--o-shadow-strongest)]
-	absolute {alignment} overflow-hidden z-50 {classes}"
+		absolute {alignment} overflow-hidden z-50 {classes}"
 >
 	<div class="w-full flex flex-col justify-start z-0 overflow-hidden relative">
 		<slot />

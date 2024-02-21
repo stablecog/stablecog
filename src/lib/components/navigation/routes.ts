@@ -26,12 +26,12 @@ export const regularRoutes = derived([LL, userSummary], ([$LL, $userSummary]) =>
 					name: $LL.Navbar.AccountTab(),
 					href: '/account',
 					icon: 'account'
-			  }
+				}
 			: {
 					name: $LL.Navbar.PricingTab(),
 					href: '/pricing',
 					icon: 'pricing'
-			  }
+				}
 	];
 	return routes;
 });
@@ -131,11 +131,13 @@ export type TNavbarRouteOption =
 	| 'guide'
 	| 'admin'
 	| 'documentation'
-	| 'voiceover';
+	| 'voiceover'
+	| 'resources';
 
 export interface TNavbarRoute {
 	name: string;
 	href: string;
+	onClick?: () => void;
 	icon: TNavbarRouteOption;
 	strictMatch?: boolean;
 	iconOnly?: boolean;
