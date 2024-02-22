@@ -26,7 +26,7 @@
 			<div
 				class="rounded-xl p-2 bg-c-bg ring-2 ring-c-bg-secondary mt-6 shadow-lg shadow-c-shadow/[var(--o-shadow-strong)]"
 			>
-				<ScBar withEmail emailFirst color="normal" size="md" />
+				<ScBar noBlog noGuide emailFirst color="normal" size="md" />
 			</div>
 			<div class="w-full h-[2vh]" />
 		</section>

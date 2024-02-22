@@ -4,6 +4,7 @@
 	export let color:
 		| 'primary'
 		| 'on-bg'
+		| 'on-bg-faded'
 		| 'bg-secondary'
 		| 'bg-tertiary'
 		| 'secondary'
@@ -27,8 +28,8 @@
 	class="w-full h-full absolute left-0 top-0 {disabled ? 'opacity-0' : ''} {paddingClass
 		? paddingClass
 		: noPadding
-		? ''
-		: 'p-1'}"
+			? ''
+			: 'p-1'}"
 >
 	<div
 		class="w-full h-full relative z-0 overflow-hidden transition {hasShadow
@@ -40,56 +41,58 @@
 			: ''} {noRounding
 			? ''
 			: fullRounding
-			? 'rounded-full'
-			: size === 'xs'
-			? 'rounded'
-			: size === 'sm'
-			? 'rounded-md'
-			: size === 'md'
-			? 'rounded-lg'
-			: 'rounded-xl'}"
+				? 'rounded-full'
+				: size === 'xs'
+					? 'rounded'
+					: size === 'sm'
+						? 'rounded-md'
+						: size === 'md'
+							? 'rounded-lg'
+							: 'rounded-xl'}"
 	>
 		<div
 			class="w-full h-full origin-left transition transform {hovered
 				? 'translate-x-0 translate-y-0'
 				: hoverFrom === 'top'
-				? '-translate-y-full'
-				: hoverFrom === 'right'
-				? noFade
-					? '-translate-x-full'
-					: 'translate-x-1/2 opacity-0'
-				: hoverFrom === 'left'
-				? noFade
-					? '-translate-x-full'
-					: '-translate-x-1/2 opacity-0'
-				: 'translate-y-full'}
+					? '-translate-y-full'
+					: hoverFrom === 'right'
+						? noFade
+							? '-translate-x-full'
+							: 'translate-x-1/2 opacity-0'
+						: hoverFrom === 'left'
+							? noFade
+								? '-translate-x-full'
+								: '-translate-x-1/2 opacity-0'
+							: 'translate-y-full'}
       {color === 'on-bg'
 				? 'bg-c-on-bg/8'
-				: color === 'bg-secondary'
-				? 'bg-c-bg-secondary'
-				: color === 'bg-tertiary'
-				? 'bg-c-bg-tertiary'
-				: color === 'secondary'
-				? 'bg-c-secondary/12'
-				: color === 'secondary-full'
-				? 'bg-c-secondary'
-				: color === 'primary-strong'
-				? 'bg-c-primary/25'
-				: color === 'success'
-				? 'bg-c-success/12'
-				: color === 'danger'
-				? 'bg-c-danger/15'
-				: 'bg-c-primary/15'} {noRounding
+				: color === 'on-bg-faded'
+					? 'bg-c-on-bg/6'
+					: color === 'bg-secondary'
+						? 'bg-c-bg-secondary'
+						: color === 'bg-tertiary'
+							? 'bg-c-bg-tertiary'
+							: color === 'secondary'
+								? 'bg-c-secondary/12'
+								: color === 'secondary-full'
+									? 'bg-c-secondary'
+									: color === 'primary-strong'
+										? 'bg-c-primary/25'
+										: color === 'success'
+											? 'bg-c-success/12'
+											: color === 'danger'
+												? 'bg-c-danger/15'
+												: 'bg-c-primary/15'} {noRounding
 				? ''
 				: fullRounding
-				? 'rounded-full'
-				: size === 'xs'
-				? 'rounded'
-				: size === 'sm'
-				? 'rounded-md'
-				: size === 'md'
-				? 'rounded-lg'
-				: 'rounded-xl'} {groupClass}"
+					? 'rounded-full'
+					: size === 'xs'
+						? 'rounded'
+						: size === 'sm'
+							? 'rounded-md'
+							: size === 'md'
+								? 'rounded-lg'
+								: 'rounded-xl'} {groupClass}"
 		/>
 	</div>
 </div>

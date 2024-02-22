@@ -55,17 +55,17 @@
 							data-sveltekit-preload-data="hover"
 							class="whitespace-nowrap px-4 md:px-5 pt-2 pb-4 text-base md:text-lg transition font-medium relative group"
 						>
-							<ButtonHoverEffect paddingClass="pb-2" size="md" color="on-bg" />
+							<ButtonHoverEffect paddingClass="pb-2" size="md" color="on-bg-faded" />
 							{#if iconSet}
 								<svelte:component
 									this={iconSet}
 									type={item.icon}
 									class="w-4 h-4 flex-shrink-0 transition {isSelected
 										? 'text-c-on-bg'
-										: 'text-c-on-bg/50'}"
+										: 'text-c-on-bg/60'}"
 								/>
 							{/if}
-							<p class="transition {isSelected ? 'text-c-on-bg' : 'text-c-on-bg/50'}">
+							<p class="transition {isSelected ? 'text-c-on-bg' : 'text-c-on-bg/60'}">
 								{item.name}
 							</p>
 						</a>

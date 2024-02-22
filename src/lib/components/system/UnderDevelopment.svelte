@@ -15,7 +15,7 @@
 			<p class="text-c-on-bg/60 mt-2">
 				{$LL.UnderDevelopment.PageParagraph()}
 			</p>
-			<ScBar isInline withEmail withAbsoluteUrls class="mt-2" />
+			<ScBar isInline withAbsoluteUrls noGuide noBlog class="mt-2" />
 		</div>
 		<div class="h-[2vh]" />
 	</div>

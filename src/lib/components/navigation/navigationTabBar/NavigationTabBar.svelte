@@ -14,6 +14,8 @@
 	import ScrollAreaWithChevron from '$components/utils/ScrollAreaWithChevron.svelte';
 	import { offset, flip, shift } from 'svelte-floating-ui/dom';
 	import { createFloatingActions } from 'svelte-floating-ui';
+	import IconSc from '$components/icons/IconSc.svelte';
+	import { socialAppUrls } from '$ts/constants/social';
 
 	export let type: TTabBarPlacement = 'normal';
 
@@ -136,7 +138,7 @@
 								alignment="top-0 right-0"
 								onClickoutside={closeResourcesDropdown}
 								excludeFromClickoutside={[elements[index]]}
-								class="w-192 max-w-[calc(100vw-1.25rem)] md:w-48 md:max-w-[calc(100vw-1.25rem)]"
+								class="w-192 max-w-[calc(100vw-1.25rem)] md:w-56 md:max-w-[calc(100vw-1.25rem)]"
 							>
 								<ScrollAreaWithChevron
 									class="w-full flex flex-col justify-start max-h-[calc(80vh-4rem)] md:max-h-[calc(80vh-4rem)] transition-all duration-100 hide-scrollbar"
@@ -205,6 +207,105 @@
 												</p>
 											</div>
 										</DropdownItem>
+										<div class="w-full h-2px bg-c-bg-tertiary"></div>
+										<div class="w-full flex flex-wrap">
+											<DropdownItem
+												class="w-1/3"
+												href={socialAppUrls.discord}
+												target="_blank"
+												padding="md"
+												onClick={closeResourcesDropdown}
+											>
+												<div
+													class="flex-1 min-w-0 flex items-center justify-center gap-2.5 -mx-2 -my-0.5"
+												>
+													<IconSc
+														type="discord"
+														class="transition w-7 h-7 text-c-on-bg/60 not-touch:group-hover:text-c-primary"
+													/>
+												</div>
+											</DropdownItem>
+											<DropdownItem
+												class="w-1/3"
+												href={socialAppUrls.twitter}
+												target="_blank"
+												padding="md"
+												onClick={closeResourcesDropdown}
+											>
+												<div
+													class="flex-1 min-w-0 flex items-center justify-center gap-2.5 -mx-2 -my-0.5"
+												>
+													<IconSc
+														type="twitter"
+														class="transition w-7 h-7 text-c-on-bg/60 not-touch:group-hover:text-c-primary"
+													/>
+												</div>
+											</DropdownItem>
+											<DropdownItem
+												class="w-1/3"
+												href={socialAppUrls.instagram}
+												target="_blank"
+												padding="md"
+												onClick={closeResourcesDropdown}
+											>
+												<div
+													class="flex-1 min-w-0 flex items-center justify-center gap-2.5 -mx-2 -my-0.5"
+												>
+													<IconSc
+														type="instagram"
+														class="transition w-7 h-7 text-c-on-bg/60 not-touch:group-hover:text-c-primary"
+													/>
+												</div>
+											</DropdownItem>
+											<DropdownItem
+												class="w-1/3"
+												href={socialAppUrls.email}
+												target="_blank"
+												padding="md"
+												onClick={closeResourcesDropdown}
+											>
+												<div
+													class="flex-1 min-w-0 flex items-center justify-center gap-2.5 -mx-2 -my-0.5"
+												>
+													<IconSc
+														type="email"
+														class="transition w-7 h-7 text-c-on-bg/60 not-touch:group-hover:text-c-primary"
+													/>
+												</div>
+											</DropdownItem>
+											<DropdownItem
+												class="w-1/3"
+												href={socialAppUrls.producthunt}
+												target="_blank"
+												padding="md"
+												onClick={closeResourcesDropdown}
+											>
+												<div
+													class="flex-1 min-w-0 flex items-center justify-center gap-2.5 -mx-2 -my-0.5"
+												>
+													<IconSc
+														type="producthunt"
+														class="transition w-7 h-7 text-c-on-bg/60 not-touch:group-hover:text-c-primary"
+													/>
+												</div>
+											</DropdownItem>
+											<DropdownItem
+												class="w-1/3"
+												href={socialAppUrls.github}
+												target="_blank"
+												padding="md"
+												onClick={closeResourcesDropdown}
+											>
+												<div
+													class="flex-1 min-w-0 flex items-center justify-center gap-2.5 -mx-2 -my-0.5"
+												>
+													<IconSc
+														type="github"
+														class="transition w-7 h-7 text-c-on-bg/60 not-touch:group-hover:text-c-primary"
+													/>
+												</div>
+											</DropdownItem>
+										</div>
 									</div>
 								</ScrollAreaWithChevron>
 							</DropdownWrapperTranslate>

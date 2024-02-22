@@ -26,7 +26,7 @@
 		transformOrigin: 'right top'
 	}}
 	out:flyAndScale={{
-		duration: 125,
+		duration: 100,
 		yRem: translate === 'sm' ? -0.4 : -1,
 		easing: quadOut,
 		transformOrigin: 'right top'

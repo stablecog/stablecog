@@ -125,6 +125,6 @@
 	<div
 		class="w-full px-4 pt-2 pb-[calc(env(safe-area-inset-bottom)+0.6rem)] border-t-2 border-c-bg-secondary"
 	>
-		<ScBar withEmail />
+		<ScBar noGuide noBlog />
 	</div>
 </nav>

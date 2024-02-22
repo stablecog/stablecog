@@ -140,7 +140,7 @@
 				{$LL.Shared.JoinUsTitle()}
 			</p>
 			<div class="flex flex-wrap justify-center items-center p-2">
-				<ScBar size="md" color="normal" />
+				<ScBar noGuide noBlog noEmail size="md" color="normal" />
 			</div>
 		</div>
 		<div class="w-full flex flex-col items-center gap-5">

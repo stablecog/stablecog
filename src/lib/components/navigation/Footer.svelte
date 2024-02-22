@@ -4,14 +4,14 @@
 	import { companyInfo } from '$ts/constants/social';
 
 	export { classes as class };
-	export let withBlog = true;
-	export let withEmail = true;
-	export let withGuide = true;
+	export let noBlog = false;
+	export let noEmail = false;
+	export let noGuide = false;
 	let classes = 'px-6 pt-5 pb-[calc(env(safe-area-inset-bottom)+1.25rem)]';
 </script>
 
 <div class="w-full flex flex-wrap justify-center items-center gap-1.5 md:gap-2.5 {classes}">
-	<ScBar isInline {withBlog} {withEmail} {withGuide} />
+	<ScBar isInline {noBlog} {noEmail} {noGuide} />
 	<div class="w-full md:w-auto flex flex-col flex-wrap items-start">
 		<div class="w-full md:w-auto flex flex-row justify-center items-center gap-1.5">
 			<a

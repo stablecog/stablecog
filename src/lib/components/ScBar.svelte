@@ -7,9 +7,11 @@
 
 	export let size: 'sm' | 'md' | 'lg' = 'sm';
 	export let color: 'faded' | 'normal' = 'faded';
-	export let withBlog = false;
-	export let withEmail = false;
-	export let withGuide = false;
+	export let noBlog = false;
+	export let noEmail = false;
+	export let noGuide = false;
+	export let noProductHunt = false;
+	export let noGithub = false;
 	export let emailFirst = false;
 	export let isInline = false;
 	export let withAbsoluteUrls = false;
@@ -18,27 +20,27 @@
 </script>
 
 <div class="{!isInline ? 'w-full' : ''} flex flex-wrap justify-center {classes}">
-	{#if withGuide}
+	{#if !noGuide}
 		<IconButton name="Blog" href={'/guide'} target="_blank">
 			<IconGuide
 				class="{size === 'sm'
 					? 'w-8 h-8'
 					: size === 'lg'
-					? 'w-12 h-12'
-					: 'w-10 h-10'} transition {color === 'normal'
+						? 'w-12 h-12'
+						: 'w-10 h-10'} transition {color === 'normal'
 					? 'text-c-on-bg'
 					: 'text-c-on-bg/60'} not-touch:group-hover/iconbutton:text-c-primary"
 			/>
 		</IconButton>
 	{/if}
-	{#if withBlog}
+	{#if !noBlog}
 		<IconButton name="Blog" href={'/blog'} target="_blank">
 			<IconBlog
 				class="{size === 'sm'
 					? 'w-8 h-8'
 					: size === 'lg'
-					? 'w-12 h-12'
-					: 'w-10 h-10'} transition {color === 'normal'
+						? 'w-12 h-12'
+						: 'w-10 h-10'} transition {color === 'normal'
 					? 'text-c-on-bg'
 					: 'text-c-on-bg/60'} not-touch:group-hover/iconbutton:text-c-primary"
 			/>
@@ -54,8 +56,8 @@
 			class="{size === 'sm'
 				? 'w-8 h-8'
 				: size === 'lg'
-				? 'w-12 h-12'
-				: 'w-10 h-10'} transition {color === 'normal'
+					? 'w-12 h-12'
+					: 'w-10 h-10'} transition {color === 'normal'
 				? 'text-c-on-bg'
 				: 'text-c-on-bg/60'} not-touch:group-hover/iconbutton:text-c-primary"
 		/>
@@ -70,8 +72,8 @@
 			class="{size === 'sm'
 				? 'w-8 h-8'
 				: size === 'lg'
-				? 'w-12 h-12'
-				: 'w-10 h-10'} transition {color === 'normal'
+					? 'w-12 h-12'
+					: 'w-10 h-10'} transition {color === 'normal'
 				? 'text-c-on-bg'
 				: 'text-c-on-bg/60'} not-touch:group-hover/iconbutton:text-c-primary"
 		/>
@@ -86,29 +88,13 @@
 			class="{size === 'sm'
 				? 'w-8 h-8'
 				: size === 'lg'
-				? 'w-12 h-12'
-				: 'w-10 h-10'} transition {color === 'normal'
+					? 'w-12 h-12'
+					: 'w-10 h-10'} transition {color === 'normal'
 				? 'text-c-on-bg'
 				: 'text-c-on-bg/60'} not-touch:group-hover/iconbutton:text-c-primary"
 		/>
 	</IconButton>
-	<IconButton
-		name="GitHub"
-		href={withAbsoluteUrls ? socialAppUrlsAbsolute.github : socialAppUrls.github}
-		target="_blank"
-	>
-		<IconSc
-			type="github"
-			class="{size === 'sm'
-				? 'w-8 h-8'
-				: size === 'lg'
-				? 'w-12 h-12'
-				: 'w-10 h-10'} transition {color === 'normal'
-				? 'text-c-on-bg'
-				: 'text-c-on-bg/60'} not-touch:group-hover/iconbutton:text-c-primary"
-		/>
-	</IconButton>
-	{#if withEmail}
+	{#if !noEmail}
 		<IconButton
 			name="Email"
 			href={withAbsoluteUrls ? socialAppUrlsAbsolute.email : socialAppUrls.email}
@@ -120,8 +106,44 @@
 				class="{size === 'sm'
 					? 'w-8 h-8'
 					: size === 'lg'
-					? 'w-12 h-12'
-					: 'w-10 h-10'} transition {color === 'normal'
+						? 'w-12 h-12'
+						: 'w-10 h-10'} transition {color === 'normal'
+					? 'text-c-on-bg'
+					: 'text-c-on-bg/60'} not-touch:group-hover/iconbutton:text-c-primary"
+			/>
+		</IconButton>
+	{/if}
+	{#if !noProductHunt}
+		<IconButton
+			name="Product Hunt"
+			href={withAbsoluteUrls ? socialAppUrlsAbsolute.producthunt : socialAppUrls.producthunt}
+			target="_blank"
+		>
+			<IconSc
+				type="producthunt"
+				class="{size === 'sm'
+					? 'w-8 h-8'
+					: size === 'lg'
+						? 'w-12 h-12'
+						: 'w-10 h-10'} transition {color === 'normal'
+					? 'text-c-on-bg'
+					: 'text-c-on-bg/60'} not-touch:group-hover/iconbutton:text-c-primary"
+			/>
+		</IconButton>
+	{/if}
+	{#if !noGithub}
+		<IconButton
+			name="GitHub"
+			href={withAbsoluteUrls ? socialAppUrlsAbsolute.github : socialAppUrls.github}
+			target="_blank"
+		>
+			<IconSc
+				type="github"
+				class="{size === 'sm'
+					? 'w-8 h-8'
+					: size === 'lg'
+						? 'w-12 h-12'
+						: 'w-10 h-10'} transition {color === 'normal'
 					? 'text-c-on-bg'
 					: 'text-c-on-bg/60'} not-touch:group-hover/iconbutton:text-c-primary"
 			/>

@@ -27,6 +27,7 @@
 	import { isSignInModalOpen } from '$ts/stores/isSignInModalOpen';
 	import { notAtTheVeryTop, scrollDirection } from '$ts/stores/scroll';
 	import { sessionStore } from '$ts/constants/supabase';
+	import { socialAppUrls } from '$ts/constants/social';
 
 	export let dirTree: Writable<TDirTreeItem[]> | undefined = undefined;
 
@@ -123,7 +124,7 @@
 		<div class="flex md:flex-1 flex-wrap items-center justify-end relative">
 			<IconButton
 				class="py-2"
-				href="/discord"
+				href={socialAppUrls.discord}
 				target="_blank"
 				name={$LL.Platform.Discord()}
 				hasTooltip={true}

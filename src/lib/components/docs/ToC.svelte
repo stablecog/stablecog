@@ -42,7 +42,7 @@
 			</NoBgButton>
 		</div>
 		<div class="w-full px-5">
-			<ScBar />
+			<ScBar noGuide noBlog noGithub noProductHunt />
 		</div>
 		<div class="w-full px-5 mt-5">
 			<div class="w-full h-2px bg-c-on-bg/5 rounded-full px-5" />
