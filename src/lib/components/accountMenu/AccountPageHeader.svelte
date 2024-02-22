@@ -16,7 +16,7 @@
 		>
 			<span
 				class="text-c-on-bg/50 not-touch:group-hover:text-c-primary/50
-				font-semibold">@</span
+				font-semibold transition">@</span
 			>{$userSummary?.username}
 		</p>
 	</div>

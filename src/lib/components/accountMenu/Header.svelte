@@ -16,12 +16,13 @@
 			data-sveltekit-preload-data="hover"
 			class="w-full relative bg-c-bg-secondary z-20 text-left h-full flex items-center transition-all self-stretch group"
 		>
-			<div class="w-full h-full overflow-hidden z-0 absolute left-0 top-0">
-				<div
-					class="w-full h-full ease-out transition transform bg-c-primary/10
-        	absolute left-0 top-0 opacity-0 -translate-x-full
-					not-touch:group-hover:translate-x-0 not-touch:group-hover:opacity-100"
-				/>
+			<div class="w-full h-full absolute left-0 top-0 flex items-center justify-center p-1">
+				<div class="w-full h-full overflow-hidden rounded-lg">
+					<div
+						class="w-full h-full aspect-square origin-left rounded-lg transition transform -translate-x-full opacity-0
+					bg-c-primary/10 not-touch:group-hover:translate-x-0 not-touch:group-hover:opacity-100"
+					/>
+				</div>
 			</div>
 			{#if content}
 				<svelte:component this={content} />
@@ -52,13 +53,15 @@
 			on:click={() => (onBackButtonClicked ? onBackButtonClicked() : null)}
 			disabled={!onBackButtonClicked}
 		>
-			<div class="w-full h-full overflow-hidden z-0 absolute left-0 top-0">
-				<div
-					class="w-full h-full ease-out transition transform bg-c-primary/10
-        	absolute left-0 top-0 opacity-0 -translate-x-full {onBackButtonClicked !== undefined
-						? 'not-touch:group-enabled:group-hover:translate-x-0 not-touch:group-enabled:group-hover:opacity-100'
-						: ''}"
-				/>
+			<div class="w-full h-full absolute left-0 top-0 flex items-center justify-center p-1">
+				<div class="w-full h-full overflow-hidden rounded-lg">
+					<div
+						class="w-full h-full aspect-square origin-left rounded-lg transition transform -translate-x-full opacity-0
+						bg-c-primary/10 {onBackButtonClicked !== undefined
+							? 'not-touch:group-enabled:group-hover:translate-x-0 not-touch:group-enabled:group-hover:opacity-100'
+							: ''}"
+					/>
+				</div>
 			</div>
 			{#if content}
 				<svelte:component this={content} />
