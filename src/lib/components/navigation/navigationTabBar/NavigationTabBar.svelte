@@ -125,6 +125,9 @@
 					{index}
 					length={_routes.length}
 					hasDropdown={route.onClick !== undefined}
+					isDropdownOpen={route.onClick !== undefined &&
+						route.icon === 'resources' &&
+						isResourcesDropdownOpen}
 					onClick={route.onClick}
 					floatingRef={route.icon === 'resources' ? resourceDropdownFloatingRef : undefined}
 				>

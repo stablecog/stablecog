@@ -5,6 +5,7 @@
 	import type { TNavbarRouteOption } from '$components/navigation/routes';
 	import AnchorOrButton from '$components/utils/AnchorOrButton.svelte';
 	import type { ReferenceAction } from 'svelte-floating-ui';
+	import IconChevronDown from '$components/icons/IconChevronDown.svelte';
 
 	export let clientWidth: number;
 	export let element: HTMLAnchorElement | HTMLButtonElement;
@@ -20,6 +21,7 @@
 	export let index: number;
 	export let length: number;
 	export let hasDropdown = false;
+	export let isDropdownOpen = false;
 	export let floatingRef: ReferenceAction | undefined = undefined;
 </script>
 
@@ -33,9 +35,7 @@
 	class="max-w-full rounded-lg whitespace-nowrap overflow-hidden group self-stretch flex
 					items-center justify-center px-5 transition-all relative font-semibold {type === 'bottom'
 		? 'pt-4 pb-4.5'
-		: 'py-4'} {isSelected
-		? 'text-c-on-bg not-touch:hover:text-c-primary'
-		: 'text-c-on-bg/75'} relative"
+		: 'py-4'} relative group/navbar-tab-item"
 	href={hasDropdown ? undefined : href}
 >
 	<div
@@ -50,18 +50,38 @@
 		<div class="w-full h-full overflow-hidden relative z-0 rounded-lg">
 			<div
 				class="w-full h-full origin-left rounded-lg transition transform translate-y-full
-					bg-c-bg-secondary {isSelected
-					? 'group-focus-within:translate-y-0'
-					: ''} not-touch:group-hover:translate-y-0"
+					bg-c-bg-secondary {isSelected ? 'group-focus-within:translate-y-0' : ''} group-hover:translate-y-0"
 			/>
 		</div>
 	</div>
 	<div class="flex-shrink min-w-0 flex justify-center items-center gap-1.5 relative">
-		<IconNavbarRoute class="w-6 h-6 md:w-5 md:h-5 flex-shrink-0 transform scale-100" type={icon} />
+		<div class="w-6 h-6 flex-shrink-0 relative">
+			<IconNavbarRoute
+				class="w-full h-full transition {isSelected
+					? 'group-hover:text-c-primary text-c-on-bg'
+					: 'text-c-on-bg/75'} {hasDropdown
+					? isDropdownOpen
+						? 'opacity-0 translate-y-2'
+						: 'group-hover/navbar-tab-item:opacity-0 group-hover:translate-y-2'
+					: ''}"
+				type={icon}
+			/>
+			<IconChevronDown
+				class="w-full h-full absolute left-0 top-0 transition {isSelected
+					? 'group-hover:text-c-primary text-c-on-bg'
+					: 'text-c-on-bg/75'} {hasDropdown
+					? isDropdownOpen
+						? 'opacity-100 rotate-180'
+						: 'opacity-0 -translate-y-2 group-hover/navbar-tab-item:opacity-100 group-hover:translate-y-0'
+					: 'hidden'}"
+			></IconChevronDown>
+		</div>
 		<p
 			class="hidden {iconOnly
 				? ''
-				: 'lg:block'} flex-shrink min-w-0 text-center overflow-hidden overflow-ellipsis select-none"
+				: 'lg:block'} flex-shrink min-w-0 text-center overflow-hidden overflow-ellipsis select-none transition {isSelected
+				? 'group-hover:text-c-primary text-c-on-bg'
+				: 'text-c-on-bg/75'}"
 		>
 			{label}
 		</p>
