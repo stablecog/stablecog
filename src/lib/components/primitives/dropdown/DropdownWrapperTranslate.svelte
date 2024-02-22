@@ -17,7 +17,7 @@
 <div
 	use:floatingContent
 	use:clickoutside={onClickoutside
-		? { callback: onClickoutside, exclude: excludeFromClickoutside }
+		? { callback: onClickoutside, exclude: excludeFromClickoutside, triggerOnBlur: true }
 		: undefined}
 	in:flyAndScale={{
 		duration: 200,

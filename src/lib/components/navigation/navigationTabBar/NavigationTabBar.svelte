@@ -19,7 +19,7 @@
 
 	export let type: TTabBarPlacement = 'normal';
 
-	let elements: Record<string, HTMLAnchorElement | HTMLDivElement> = {};
+	let elements: Record<string, HTMLAnchorElement | HTMLButtonElement> = {};
 
 	let isResourcesDropdownOpen = false;
 

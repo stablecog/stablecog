@@ -3,11 +3,11 @@
 	import IconNavbarRoute from '$components/icons/IconNavbarRoute.svelte';
 	import IconNew from '$components/icons/IconNew.svelte';
 	import type { TNavbarRouteOption } from '$components/navigation/routes';
-	import AnchorOrDiv from '$components/utils/AnchorOrDiv.svelte';
+	import AnchorOrButton from '$components/utils/AnchorOrButton.svelte';
 	import type { ReferenceAction } from 'svelte-floating-ui';
 
 	export let clientWidth: number;
-	export let element: HTMLAnchorElement | HTMLDivElement;
+	export let element: HTMLAnchorElement | HTMLButtonElement;
 	export let ariaLabel: string;
 	export let type: TTabBarPlacement = 'normal';
 	export let isSelected: boolean;
@@ -23,7 +23,7 @@
 	export let floatingRef: ReferenceAction | undefined = undefined;
 </script>
 
-<AnchorOrDiv
+<AnchorOrButton
 	bind:clientWidth
 	bind:element
 	{ariaLabel}
@@ -71,7 +71,7 @@
 			<IconNew class="w-5 h-5 transform scale-100 text-c-primary" />
 		</div>
 	{/if}
-</AnchorOrDiv>
+</AnchorOrButton>
 
 {#if hasDropdown}
 	<slot name="dropdown" />
