@@ -55,7 +55,7 @@
 		</div>
 	</div>
 	<div class="flex-shrink min-w-0 flex justify-center items-center gap-1.5 relative">
-		<div class="w-6 h-6 flex-shrink-0 relative">
+		<div class="w-6 h-6 -m-0.5 lg:m-0 lg:w-5 lg:h-5 flex-shrink-0 relative">
 			<IconNavbarRoute
 				class="w-full h-full transition {isSelected
 					? 'group-hover:text-c-primary text-c-on-bg'
@@ -67,6 +67,7 @@
 				type={icon}
 			/>
 			<IconChevronDown
+				strokeWidth={2}
 				class="w-full h-full absolute left-0 top-0 transition {isSelected
 					? 'group-hover:text-c-primary text-c-on-bg'
 					: 'text-c-on-bg/75'} {hasDropdown
