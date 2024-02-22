@@ -1,33 +1,32 @@
 <script lang="ts">
 	import { page } from '$app/stores';
-	import IconButton from '$components/primitives/buttons/IconButton.svelte';
-	import PageLoadProgressBar from '$components/utils/PageLoadProgressBar.svelte';
-	import NavigationTabBar from '$components/navigation/navigationTabBar/NavigationTabBar.svelte';
-	import { clickoutside } from '$ts/actions/clickoutside';
-	import IconSc from '$components/icons/IconSc.svelte';
-	import LL from '$i18n/i18n-svelte';
-	import Button from '$components/primitives/buttons/Button.svelte';
 	import AccountMenu from '$components/accountMenu/AccountMenu.svelte';
 	import Avatar from '$components/avatar/Avatar.svelte';
-	import { navbarHeight } from '$ts/stores/navbarHeight';
-	import { userSummary } from '$ts/stores/user/summary';
-	import { navbarStickyType } from '$ts/stores/navbar';
-	import { isDrawerOpen } from '$ts/stores/isDrawerOpen';
-	import IconSidebar from '$components/icons/IconSidebar.svelte';
-	import ButtonHoverEffect from '$components/primitives/buttons/ButtonHoverEffect.svelte';
-	import LogoButton from '$components/primitives/buttons/LogoButton.svelte';
-	import { themeApp } from '$ts/stores/theme';
-	import IconLive from '$components/icons/IconLive.svelte';
-	import type { Writable } from 'svelte/store';
-	import type { TDirTreeItem } from '$routes/+layout';
 	import IconChevronDown from '$components/icons/IconChevronDown.svelte';
-	import BannerWrapper from '$components/navigation/navbar/BannerWrapper.svelte';
+	import IconSc from '$components/icons/IconSc.svelte';
+	import IconSidebar from '$components/icons/IconSidebar.svelte';
 	import SignInModal from '$components/modals/SignInModal.svelte';
+	import BannerWrapper from '$components/navigation/navbar/BannerWrapper.svelte';
 	import RemainingCredits from '$components/navigation/navbar/RemainingCredits.svelte';
-	import { isSignInModalOpen } from '$ts/stores/isSignInModalOpen';
-	import { notAtTheVeryTop, scrollDirection } from '$ts/stores/scroll';
-	import { sessionStore } from '$ts/constants/supabase';
+	import NavigationTabBar from '$components/navigation/navigationTabBar/NavigationTabBar.svelte';
+	import Button from '$components/primitives/buttons/Button.svelte';
+	import ButtonHoverEffect from '$components/primitives/buttons/ButtonHoverEffect.svelte';
+	import IconButton from '$components/primitives/buttons/IconButton.svelte';
+	import LogoButton from '$components/primitives/buttons/LogoButton.svelte';
+	import PageLoadProgressBar from '$components/utils/PageLoadProgressBar.svelte';
+	import LL from '$i18n/i18n-svelte';
+	import type { TDirTreeItem } from '$routes/+layout';
+	import { clickoutside } from '$ts/actions/clickoutside';
 	import { socialAppUrls } from '$ts/constants/social';
+	import { sessionStore } from '$ts/constants/supabase';
+	import { isDrawerOpen } from '$ts/stores/isDrawerOpen';
+	import { isSignInModalOpen } from '$ts/stores/isSignInModalOpen';
+	import { navbarStickyType } from '$ts/stores/navbar';
+	import { navbarHeight } from '$ts/stores/navbarHeight';
+	import { notAtTheVeryTop, scrollDirection } from '$ts/stores/scroll';
+	import { themeApp } from '$ts/stores/theme';
+	import { userSummary } from '$ts/stores/user/summary';
+	import type { Writable } from 'svelte/store';
 
 	export let dirTree: Writable<TDirTreeItem[]> | undefined = undefined;
 
@@ -94,9 +93,9 @@
 				class="{routesWithoutDrawer.includes($page.url.pathname) ? 'flex' : 'hidden'} md:flex"
 			/>
 			{#if $dirTree && $dirTree.length > 0}
-				<div class="pr-2 h-full flex-shrink min-w-0">
+				<div class="pr-2 h-full flex-shrink min-w-0 md:hidden">
 					<div
-						class="w-full h-full overflow-x-auto items-center md:hidden text-sm font-medium text-c-on-bg/75 pr-2"
+						class="w-full h-full overflow-x-auto items-center text-sm font-medium text-c-on-bg/75 pr-2"
 					>
 						<div class="flex items-center justify-start h-full">
 							{#each $dirTree as treeItem, index}

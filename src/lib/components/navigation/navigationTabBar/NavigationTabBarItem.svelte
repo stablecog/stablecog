@@ -49,13 +49,15 @@
 	>
 		<div class="w-full h-full overflow-hidden relative z-0 rounded-lg">
 			<div
-				class="w-full h-full origin-left rounded-lg transition transform translate-y-full
+				class="w-full h-full origin-left rounded-lg transition transform {hasDropdown
+					? '-translate-y-full'
+					: 'translate-y-full'}
 					bg-c-bg-secondary {isSelected ? 'group-focus-within:translate-y-0' : ''} group-hover:translate-y-0"
 			/>
 		</div>
 	</div>
 	<div class="flex-shrink min-w-0 flex justify-center items-center gap-1.5 relative">
-		<div class="w-6 h-6 -m-0.5 lg:m-0 lg:w-5 lg:h-5 flex-shrink-0 relative">
+		<div class="w-6 h-6 -m-0.5 lg:my-0 lg:mr-0 lg:-ml-0.5 lg:w-5 lg:h-5 flex-shrink-0 relative">
 			<IconNavbarRoute
 				class="w-full h-full transition {isSelected
 					? 'group-hover:text-c-primary text-c-on-bg'
