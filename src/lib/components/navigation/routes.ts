@@ -88,7 +88,7 @@ export const extraRoutes = derived([LL], ([$LL]) => {
 			icon: 'blog'
 		},
 		{
-			name: $LL.Documentation.ForDevelopersTitle(),
+			name: $LL.Documentation.DevelopersTitle(),
 			href: '/docs/v1',
 			icon: 'documentation'
 		},
