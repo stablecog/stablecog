@@ -942,6 +942,7 @@ const ja: Translation = {
 		PageTitleAlt: 'APIリファレンス',
 		APIReferenceButton: 'APIリファレンス',
 		DocumentationButton: 'ドキュメンテーション',
+		DevelopersTitle: 'Developers',
 		ForDevelopersTitle: '開発者向け'
 	},
 	Platform: {

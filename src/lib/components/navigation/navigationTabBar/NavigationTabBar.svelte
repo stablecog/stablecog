@@ -92,24 +92,24 @@
 
 <TabBarWrapper class="max-w-full" {type}>
 	<div
-		class="max-w-full flex md:pb-0 {type === 'bottom' ? 'pb-[env(safe-area-inset-bottom)]' : ''}"
+		class="flex max-w-full md:pb-0 {type === 'bottom' ? 'pb-[env(safe-area-inset-bottom)]' : ''}"
 	>
-		<div class="w-full flex relative">
+		<div class="relative flex w-full">
 			<div
-				class="w-full h-full absolute left-0 top-0 overflow-hidden rounded-xl z-0 pointer-events-none"
+				class="pointer-events-none absolute left-0 top-0 z-0 h-full w-full overflow-hidden rounded-xl"
 			>
 				<div
 					style="width: {selectedRouteWidth}px; transform: translateX({selectedRouteLeft}px);"
-					class="h-full absolute left-0 top-0 transition {type === 'bottom'
-						? 'px-1.5 pt-1.5 pb-2'
+					class="absolute left-0 top-0 h-full transition {type === 'bottom'
+						? 'px-1.5 pb-2 pt-1.5'
 						: selectedRouteIndex === 0
 							? 'py-1 pl-1 pr-0.5'
 							: selectedRouteIndex === _routes.length - 1
-								? 'py-1 pr-1 pl-0.5'
-								: 'py-1 px-0.5'}"
+								? 'py-1 pl-0.5 pr-1'
+								: 'px-0.5 py-1'}"
 				>
 					<div
-						class="w-full h-full bg-c-bg-secondary rounded-lg shadow-lg shadow-c-shadow/[var(--o-shadow-strong)]"
+						class="h-full w-full rounded-lg bg-c-bg-secondary shadow-lg shadow-c-shadow/[var(--o-shadow-strong)]"
 					/>
 				</div>
 			</div>
@@ -144,21 +144,21 @@
 								class="w-192 max-w-[calc(100vw-1.25rem)] md:w-56 md:max-w-[calc(100vw-1.25rem)]"
 							>
 								<ScrollAreaWithChevron
-									class="w-full flex flex-col justify-start max-h-[calc(80vh-4rem)] md:max-h-[calc(80vh-4rem)] transition-all duration-100 hide-scrollbar"
+									class="hide-scrollbar flex max-h-[calc(80vh-4rem)] w-full flex-col justify-start transition-all duration-100 md:max-h-[calc(80vh-4rem)]"
 								>
-									<div class="w-full flex flex-col justify-start items-start">
+									<div class="flex w-full flex-col items-start justify-start">
 										<DropdownItem
 											target="_blank"
 											href="/guide"
 											padding="md"
 											onClick={closeResourcesDropdown}
 										>
-											<div class="flex-1 min-w-0 flex items-center justify-start gap-2.5">
+											<div class="flex min-w-0 flex-1 items-center justify-start gap-2.5">
 												<IconGuideOutline
-													class="transition w-6 h-6 text-c-text not-touch:group-hover:text-c-primary"
+													class="text-c-text h-6 w-6 transition not-touch:group-hover:text-c-primary"
 												/>
 												<p
-													class="flex-1 min-w-0 overflow-hidden overflow-ellipsis text-left transition text-c-on-bg not-touch:group-hover:text-c-primary"
+													class="min-w-0 flex-1 overflow-hidden overflow-ellipsis text-left text-c-on-bg transition not-touch:group-hover:text-c-primary"
 												>
 													{$LL.Guide.PageTitle()}
 												</p>
@@ -170,12 +170,12 @@
 											padding="md"
 											onClick={closeResourcesDropdown}
 										>
-											<div class="flex-1 min-w-0 flex items-center justify-start gap-2.5">
+											<div class="flex min-w-0 flex-1 items-center justify-start gap-2.5">
 												<IconBlogOutline
-													class="transition w-6 h-6 text-c-text not-touch:group-hover:text-c-primary"
+													class="text-c-text h-6 w-6 transition not-touch:group-hover:text-c-primary"
 												/>
 												<p
-													class="flex-1 min-w-0 overflow-hidden overflow-ellipsis text-left transition text-c-on-bg not-touch:group-hover:text-c-primary"
+													class="min-w-0 flex-1 overflow-hidden overflow-ellipsis text-left text-c-on-bg transition not-touch:group-hover:text-c-primary"
 												>
 													{$LL.Blog.TitleAlt()}
 												</p>
@@ -187,31 +187,31 @@
 											padding="md"
 											onClick={closeResourcesDropdown}
 										>
-											<div class="flex-1 min-w-0 flex items-center justify-start gap-2.5">
+											<div class="flex min-w-0 flex-1 items-center justify-start gap-2.5">
 												<IconCommandLineOutlined
-													class="transition w-6 h-6 text-c-text not-touch:group-hover:text-c-primary"
+													class="text-c-text h-6 w-6 transition not-touch:group-hover:text-c-primary"
 												/>
 												<p
-													class="flex-1 min-w-0 overflow-hidden overflow-ellipsis text-left transition text-c-on-bg not-touch:group-hover:text-c-primary"
+													class="min-w-0 flex-1 overflow-hidden overflow-ellipsis text-left text-c-on-bg transition not-touch:group-hover:text-c-primary"
 												>
-													{$LL.Documentation.ForDevelopersTitle()}
+													{$LL.Documentation.DevelopersTitle()}
 												</p>
 											</div>
 										</DropdownItem>
 										<DropdownItem href="/live" padding="md" onClick={closeResourcesDropdown}>
-											<div class="flex-1 min-w-0 flex items-center justify-start gap-2.5">
+											<div class="flex min-w-0 flex-1 items-center justify-start gap-2.5">
 												<IconLive
-													class="transition w-6 h-6 text-c-text not-touch:group-hover:text-c-primary"
+													class="text-c-text h-6 w-6 transition not-touch:group-hover:text-c-primary"
 												/>
 												<p
-													class="flex-1 min-w-0 overflow-hidden overflow-ellipsis text-left transition text-c-on-bg not-touch:group-hover:text-c-primary"
+													class="min-w-0 flex-1 overflow-hidden overflow-ellipsis text-left text-c-on-bg transition not-touch:group-hover:text-c-primary"
 												>
 													{$LL.Navbar.LiveTab()}
 												</p>
 											</div>
 										</DropdownItem>
-										<div class="w-full h-2px bg-c-bg-tertiary"></div>
-										<div class="w-full flex flex-wrap">
+										<div class="h-2px w-full bg-c-bg-tertiary"></div>
+										<div class="flex w-full flex-wrap">
 											<DropdownItem
 												class="w-1/3"
 												href={socialAppUrls.discord}
@@ -220,11 +220,11 @@
 												onClick={closeResourcesDropdown}
 											>
 												<div
-													class="flex-1 min-w-0 flex items-center justify-center gap-2.5 -mx-2 -my-0.5"
+													class="-mx-2 -my-0.5 flex min-w-0 flex-1 items-center justify-center gap-2.5"
 												>
 													<IconSc
 														type="discord"
-														class="transition w-7 h-7 text-c-on-bg/60 not-touch:group-hover:text-c-primary"
+														class="h-7 w-7 text-c-on-bg/60 transition not-touch:group-hover:text-c-primary"
 													/>
 												</div>
 											</DropdownItem>
@@ -236,11 +236,11 @@
 												onClick={closeResourcesDropdown}
 											>
 												<div
-													class="flex-1 min-w-0 flex items-center justify-center gap-2.5 -mx-2 -my-0.5"
+													class="-mx-2 -my-0.5 flex min-w-0 flex-1 items-center justify-center gap-2.5"
 												>
 													<IconSc
 														type="twitter"
-														class="transition w-7 h-7 text-c-on-bg/60 not-touch:group-hover:text-c-primary"
+														class="h-7 w-7 text-c-on-bg/60 transition not-touch:group-hover:text-c-primary"
 													/>
 												</div>
 											</DropdownItem>
@@ -252,11 +252,11 @@
 												onClick={closeResourcesDropdown}
 											>
 												<div
-													class="flex-1 min-w-0 flex items-center justify-center gap-2.5 -mx-2 -my-0.5"
+													class="-mx-2 -my-0.5 flex min-w-0 flex-1 items-center justify-center gap-2.5"
 												>
 													<IconSc
 														type="instagram"
-														class="transition w-7 h-7 text-c-on-bg/60 not-touch:group-hover:text-c-primary"
+														class="h-7 w-7 text-c-on-bg/60 transition not-touch:group-hover:text-c-primary"
 													/>
 												</div>
 											</DropdownItem>
@@ -268,11 +268,11 @@
 												onClick={closeResourcesDropdown}
 											>
 												<div
-													class="flex-1 min-w-0 flex items-center justify-center gap-2.5 -mx-2 -my-0.5"
+													class="-mx-2 -my-0.5 flex min-w-0 flex-1 items-center justify-center gap-2.5"
 												>
 													<IconSc
 														type="email"
-														class="transition w-7 h-7 text-c-on-bg/60 not-touch:group-hover:text-c-primary"
+														class="h-7 w-7 text-c-on-bg/60 transition not-touch:group-hover:text-c-primary"
 													/>
 												</div>
 											</DropdownItem>
@@ -284,11 +284,11 @@
 												onClick={closeResourcesDropdown}
 											>
 												<div
-													class="flex-1 min-w-0 flex items-center justify-center gap-2.5 -mx-2 -my-0.5"
+													class="-mx-2 -my-0.5 flex min-w-0 flex-1 items-center justify-center gap-2.5"
 												>
 													<IconSc
 														type="producthunt"
-														class="transition w-7 h-7 text-c-on-bg/60 not-touch:group-hover:text-c-primary"
+														class="h-7 w-7 text-c-on-bg/60 transition not-touch:group-hover:text-c-primary"
 													/>
 												</div>
 											</DropdownItem>
@@ -300,11 +300,11 @@
 												onClick={closeResourcesDropdown}
 											>
 												<div
-													class="flex-1 min-w-0 flex items-center justify-center gap-2.5 -mx-2 -my-0.5"
+													class="-mx-2 -my-0.5 flex min-w-0 flex-1 items-center justify-center gap-2.5"
 												>
 													<IconSc
 														type="github"
-														class="transition w-7 h-7 text-c-on-bg/60 not-touch:group-hover:text-c-primary"
+														class="h-7 w-7 text-c-on-bg/60 transition not-touch:group-hover:text-c-primary"
 													/>
 												</div>
 											</DropdownItem>

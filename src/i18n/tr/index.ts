@@ -960,6 +960,7 @@ const tr: Translation = {
 		PageTitleAlt: 'API Dökümantasyonu',
 		APIReferenceButton: 'API Dökümantasyonu',
 		DocumentationButton: 'Dökümantasyon',
+		DevelopersTitle: 'Developers',
 		ForDevelopersTitle: 'Geliştiriciler İçin'
 	},
 	Platform: {

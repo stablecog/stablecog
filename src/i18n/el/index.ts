@@ -955,6 +955,7 @@ const es: Translation = {
 		PageTitleAlt: 'Παραπομπές API',
 		APIReferenceButton: 'Παραπομπές API',
 		DocumentationButton: 'Τεκμηρίωση',
+		DevelopersTitle: 'Developers',
 		ForDevelopersTitle: 'Για προγραμματιστές'
 	},
 	Platform: {

@@ -926,6 +926,7 @@ const ko: Translation = {
 		PageTitleAlt: 'API Reference',
 		APIReferenceButton: 'API Reference',
 		DocumentationButton: 'Documentation',
+		DevelopersTitle: 'Developers',
 		ForDevelopersTitle: 'For Developers'
 	},
 	Platform: {

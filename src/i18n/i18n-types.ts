@@ -2786,6 +2786,10 @@ type RootTranslation = {
 		 */
 		DocumentationButton: string
 		/**
+		 * D​e​v​e​l​o​p​e​r​s
+		 */
+		DevelopersTitle: string
+		/**
 		 * F​o​r​ ​D​e​v​e​l​o​p​e​r​s
 		 */
 		ForDevelopersTitle: string
@@ -6042,6 +6046,10 @@ export type TranslationFunctions = {
 		 * Documentation
 		 */
 		DocumentationButton: () => LocalizedString
+		/**
+		 * Developers
+		 */
+		DevelopersTitle: () => LocalizedString
 		/**
 		 * For Developers
 		 */
