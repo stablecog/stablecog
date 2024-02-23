@@ -3,7 +3,7 @@
 	import type { THrefTarget } from '$ts/types/main';
 
 	export let onClick: () => void = () => null;
-	export let padding: 'xl' | 'lg' | 'md' | 'sm' | 'sm+' = 'xl';
+	export let padding: 'xl' | 'lg' | 'md' | 'sm' | 'sm+' = 'lg';
 	export let disabled = false;
 	export let href: string | undefined = undefined;
 	export let target: THrefTarget = undefined;
@@ -20,7 +20,7 @@
 		{target}
 		data-sveltekit-preload-data={prefetch && target === undefined ? 'hover' : 'off'}
 		on:click={onClick}
-		class="flex items-center justify-center font-semibold px-5 {padding === 'sm'
+		class="flex items-center justify-center px-5 font-semibold {padding === 'sm'
 			? 'py-3'
 			: padding === 'sm+'
 				? 'py-3.5'
@@ -28,13 +28,13 @@
 					? 'py-4'
 					: padding === 'lg'
 						? 'py-4.5'
-						: 'py-5'} relative z-0 overflow-hidden group {classes}"
+						: 'py-5'} group relative z-0 overflow-hidden {classes}"
 	>
-		<div class="w-full h-full absolute left-0 top-0 flex items-center justify-center p-1">
-			<div class="w-full h-full overflow-hidden rounded-lg">
+		<div class="absolute left-0 top-0 flex h-full w-full items-center justify-center p-1">
+			<div class="h-full w-full overflow-hidden rounded-lg">
 				<div
-					class="w-full h-full aspect-square origin-left rounded-lg transition transform -translate-x-full opacity-0
-						bg-c-primary/10 not-touch:group-hover:translate-x-0 not-touch:group-hover:opacity-100"
+					class="aspect-square h-full w-full origin-left -translate-x-full transform rounded-lg bg-c-primary/10 opacity-0
+						transition not-touch:group-hover:translate-x-0 not-touch:group-hover:opacity-100"
 				/>
 			</div>
 		</div>
@@ -44,7 +44,7 @@
 	<button
 		disabled={disabled || loading}
 		on:click={onClick}
-		class="font-semibold px-5 {padding === 'sm'
+		class="px-5 font-semibold {padding === 'sm'
 			? 'py-3'
 			: padding === 'sm+'
 				? 'py-3.5'
@@ -52,14 +52,14 @@
 					? 'py-4'
 					: padding === 'lg'
 						? 'py-4.5'
-						: 'py-5'} relative z-0 overflow-hidden group {classes}"
+						: 'py-5'} group relative z-0 overflow-hidden {classes}"
 	>
 		{#if !withSpinner || !loading}
-			<div class="w-full h-full absolute left-0 top-0 flex items-center justify-center p-1">
-				<div class="w-full h-full overflow-hidden rounded-lg">
+			<div class="absolute left-0 top-0 flex h-full w-full items-center justify-center p-1">
+				<div class="h-full w-full overflow-hidden rounded-lg">
 					<div
-						class="w-full h-full aspect-square origin-left rounded-lg transition transform -translate-x-full opacity-0
-						bg-c-primary/10 not-touch:group-hover:translate-x-0 not-touch:group-hover:opacity-100"
+						class="aspect-square h-full w-full origin-left -translate-x-full transform rounded-lg bg-c-primary/10 opacity-0
+						transition not-touch:group-hover:translate-x-0 not-touch:group-hover:opacity-100"
 					/>
 				</div>
 			</div>
@@ -68,17 +68,17 @@
 			<slot />
 		{:else}
 			<div
-				class="transform relative transition {loading
+				class="relative transform transition {loading
 					? 'scale-0 opacity-0'
 					: 'scale-100 opacity-100'}"
 			>
 				<slot />
 			</div>
 			<div
-				class="w-full h-full absolute left-0 top-0 pointer-events-none flex justify-center items-center"
+				class="pointer-events-none absolute left-0 top-0 flex h-full w-full items-center justify-center"
 			>
-				<div class="w-7 h-7 transition transform {loading ? 'scale-100' : 'scale-0'}">
-					<IconAnimatedSpinner class="w-full h-full" {loading} />
+				<div class="h-7 w-7 transform transition {loading ? 'scale-100' : 'scale-0'}">
+					<IconAnimatedSpinner class="h-full w-full" {loading} />
 				</div>
 			</div>
 		{/if}
