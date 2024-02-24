@@ -255,6 +255,8 @@ const en: BaseTranslation = {
 		NoButton: 'No',
 		EnableButton: 'Enable',
 		DoneButton: 'Done',
+		ReportButton: 'Report',
+		ReportErrorButton: 'Report Error',
 		CancelButton: 'Cancel',
 		ClearAllButton: 'Clear All',
 		DisableButton: 'Disable',

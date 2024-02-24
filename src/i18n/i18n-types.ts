@@ -794,6 +794,14 @@ type RootTranslation = {
 		 */
 		DoneButton: string
 		/**
+		 * R​e​p​o​r​t
+		 */
+		ReportButton: string
+		/**
+		 * R​e​p​o​r​t​ ​E​r​r​o​r
+		 */
+		ReportErrorButton: string
+		/**
 		 * C​a​n​c​e​l
 		 */
 		CancelButton: string
@@ -4096,6 +4104,14 @@ export type TranslationFunctions = {
 		 * Done
 		 */
 		DoneButton: () => LocalizedString
+		/**
+		 * Report
+		 */
+		ReportButton: () => LocalizedString
+		/**
+		 * Report Error
+		 */
+		ReportErrorButton: () => LocalizedString
 		/**
 		 * Cancel
 		 */

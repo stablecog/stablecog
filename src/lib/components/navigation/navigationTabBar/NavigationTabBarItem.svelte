@@ -32,58 +32,58 @@
 	dataSveltekitPreloadData
 	onClick={onClick ?? undefined}
 	{floatingRef}
-	class="max-w-full rounded-lg whitespace-nowrap overflow-hidden group self-stretch flex
-					items-center justify-center px-5 transition-all relative font-semibold {type === 'bottom'
-		? 'pt-4 pb-4.5'
-		: 'py-4'} relative group/navbar-tab-item"
+	class="group relative flex max-w-full items-center justify-center self-stretch
+					overflow-hidden whitespace-nowrap rounded-lg px-5 font-semibold transition-all {type === 'bottom'
+		? 'pb-4.5 pt-4'
+		: 'py-4'} group/navbar-tab-item relative"
 	href={hasDropdown ? undefined : href}
 >
 	<div
-		class="w-full h-full absolute left-0 top-0 rounded-lg {type === 'bottom'
-			? 'px-1.5 pt-1.5 pb-2'
+		class="absolute left-0 top-0 h-full w-full rounded-lg {type === 'bottom'
+			? 'px-1.5 pb-2 pt-1.5'
 			: index === 0
 				? 'py-1 pl-1 pr-0.5'
 				: index === length - 1
-					? 'py-1 pr-1 pl-0.5'
-					: 'py-1 px-0.5'}"
+					? 'py-1 pl-0.5 pr-1'
+					: 'px-0.5 py-1'}"
 	>
-		<div class="w-full h-full overflow-hidden relative z-0 rounded-lg">
+		<div class="relative z-0 h-full w-full overflow-hidden rounded-lg">
 			<div
-				class="w-full h-full origin-left rounded-lg transition transform {hasDropdown
+				class="h-full w-full origin-left transform rounded-lg transition {hasDropdown
 					? '-translate-y-full'
 					: 'translate-y-full'}
 					bg-c-bg-secondary {isSelected ? 'group-focus-within:translate-y-0' : ''} group-hover:translate-y-0"
 			/>
 		</div>
 	</div>
-	<div class="flex-shrink min-w-0 flex justify-center items-center gap-1.5 relative">
-		<div class="w-6 h-6 -m-0.5 lg:my-0 lg:mr-0 lg:-ml-0.5 lg:w-5 lg:h-5 flex-shrink-0 relative">
+	<div class="relative flex min-w-0 flex-shrink items-center justify-center gap-1.5">
+		<div class="relative -m-0.5 h-6 w-6 flex-shrink-0 lg:my-0 lg:-ml-0.5 lg:mr-0 lg:h-5 lg:w-5">
 			<IconNavbarRoute
-				class="w-full h-full transition {isSelected
-					? 'group-hover:text-c-primary text-c-on-bg'
+				class="h-full w-full transition {isSelected
+					? 'text-c-on-bg group-hover:text-c-primary'
 					: 'text-c-on-bg/75'} {hasDropdown
 					? isDropdownOpen
-						? 'opacity-0 translate-y-2'
-						: 'group-hover/navbar-tab-item:opacity-0 group-hover:translate-y-2'
+						? 'translate-y-2 opacity-0'
+						: 'group-hover:translate-y-2 group-hover/navbar-tab-item:opacity-0'
 					: ''}"
 				type={icon}
 			/>
 			<IconChevronDown
 				strokeWidth={2}
-				class="w-full h-full absolute left-0 top-0 transition {isSelected
-					? 'group-hover:text-c-primary text-c-on-bg'
+				class="absolute left-0 top-0 h-full w-full transition {isSelected
+					? 'text-c-on-bg group-hover:text-c-primary'
 					: 'text-c-on-bg/75'} {hasDropdown
 					? isDropdownOpen
-						? 'opacity-100 rotate-180'
-						: 'opacity-0 -translate-y-2 group-hover/navbar-tab-item:opacity-100 group-hover:translate-y-0'
+						? 'rotate-180 opacity-100'
+						: '-translate-y-2 opacity-0 group-hover:translate-y-0 group-hover/navbar-tab-item:opacity-100'
 					: 'hidden'}"
 			></IconChevronDown>
 		</div>
 		<p
 			class="hidden {iconOnly
 				? ''
-				: 'lg:block'} flex-shrink min-w-0 text-center overflow-hidden overflow-ellipsis select-none transition {isSelected
-				? 'group-hover:text-c-primary text-c-on-bg'
+				: 'lg:block'} min-w-0 flex-shrink select-none overflow-hidden overflow-ellipsis text-center transition {isSelected
+				? 'text-c-on-bg group-hover:text-c-primary'
 				: 'text-c-on-bg/75'}"
 		>
 			{label}
@@ -91,7 +91,7 @@
 	</div>
 	{#if isNew}
 		<div class="absolute right-1.5 top-1.5 2xl:right-2 2xl:top-2">
-			<IconNew class="w-5 h-5 transform scale-100 text-c-primary" />
+			<IconNew class="h-5 w-5 scale-100 transform text-c-primary" />
 		</div>
 	{/if}
 </AnchorOrButton>

@@ -265,6 +265,8 @@ const es: Translation = {
 		NoButton: 'Όχι',
 		EnableButton: 'Ενεργοποίηση',
 		DoneButton: 'Τέλος',
+		ReportButton: 'Report',
+		ReportErrorButton: 'Report Error',
 		CancelButton: 'Ακύρωση',
 		ClearAllButton: 'Εκκαθάριση όλων',
 		DisableButton: 'Απενεργοποίηση',

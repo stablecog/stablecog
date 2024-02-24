@@ -254,6 +254,8 @@ const de: Translation = {
 		NoButton: 'Nein',
 		EnableButton: 'Aktivieren',
 		DoneButton: 'Done',
+		ReportButton: 'Report',
+		ReportErrorButton: 'Report Error',
 		CancelButton: 'Cancel',
 		ClearAllButton: 'Clear All',
 		DisableButton: 'Deaktivieren',

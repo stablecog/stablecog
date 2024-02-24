@@ -255,6 +255,8 @@ const ko: Translation = {
 		NoButton: '괜찮아요',
 		EnableButton: '활성화',
 		DoneButton: 'Done',
+		ReportButton: 'Report',
+		ReportErrorButton: 'Report Error',
 		CancelButton: 'Cancel',
 		ClearAllButton: 'Clear All',
 		DisableButton: '비활성화',

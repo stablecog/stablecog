@@ -265,6 +265,8 @@ const ja: Translation = {
 		NoButton: 'いいえ',
 		EnableButton: '有効にする',
 		DoneButton: '完了',
+		ReportButton: 'Report',
+		ReportErrorButton: 'Report Error',
 		CancelButton: 'キャンセル',
 		ClearAllButton: '全てクリア',
 		DisableButton: '無効にする',

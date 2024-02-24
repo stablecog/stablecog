@@ -270,6 +270,8 @@ const tr: Translation = {
 		NoButton: 'Hayır',
 		EnableButton: 'Aktifleştir',
 		DoneButton: 'Tamam',
+		ReportButton: 'Report',
+		ReportErrorButton: 'Report Error',
 		CancelButton: 'Vazgeç',
 		ClearAllButton: 'Hepsini Temizle',
 		DisableButton: 'Durdur',

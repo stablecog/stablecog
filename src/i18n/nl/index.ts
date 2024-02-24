@@ -258,6 +258,8 @@ const nl: Translation = {
 		NoButton: 'Nee',
 		EnableButton: 'Activeren',
 		DoneButton: 'Done',
+		ReportButton: 'Report',
+		ReportErrorButton: 'Report Error',
 		CancelButton: 'Cancel',
 		ClearAllButton: 'Alles wissen',
 		DisableButton: 'Uitschakelen',
