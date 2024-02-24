@@ -6,11 +6,12 @@
 	import StartCreating from '$components/landing/StartCreating.svelte';
 	import Hero from '$components/landing/Hero.svelte';
 	import { previewImageVersion } from '$ts/constants/previewImageVersion';
+	import { metaDescriptionDefault } from '$ts/constants/meta';
 </script>
 
 <MetaTag
 	title="Stablecog | AI Image Generator"
-	description="Create amazing art in seconds with AI. Free, multilingual and open-source AI image generator using Stable Diffusion and Kandinsky."
+	description={metaDescriptionDefault}
 	image_url="{canonicalUrl}/previews/home-{previewImageVersion}.png"
 />
 

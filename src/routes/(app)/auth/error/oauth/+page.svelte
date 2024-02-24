@@ -5,6 +5,7 @@
 </script>
 
 <ErrorPage
+	metaTitle="Connection Error | Stablecog"
 	report={{
 		subject: `Sign in problem using OAuth`,
 		body: `I'm having a problem signing in using OAuth.`

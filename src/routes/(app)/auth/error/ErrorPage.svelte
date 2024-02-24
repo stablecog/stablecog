@@ -2,8 +2,12 @@
 	import IconMegaphone from '$components/icons/IconMegaphone.svelte';
 	import IconRepeat from '$components/icons/IconRepeat.svelte';
 	import Button from '$components/primitives/buttons/Button.svelte';
+	import MetaTag from '$components/utils/MetaTag.svelte';
 	import PageWrapper from '$components/wrappers/PageWrapper.svelte';
 	import LL from '$i18n/i18n-svelte';
+	import { canonicalUrl } from '$ts/constants/main';
+	import { metaDescriptionDefault } from '$ts/constants/meta';
+	import { previewImageVersion } from '$ts/constants/previewImageVersion';
 	import { socialAppUrls } from '$ts/constants/social';
 	import { sessionStore } from '$ts/constants/supabase';
 	import { isSignInModalOpen } from '$ts/stores/isSignInModalOpen';
@@ -13,9 +17,16 @@
 	export let paragraph: string;
 	export let icon: ConstructorOfATypedSvelteComponent;
 	export let report: { subject: string; body: string } | undefined = undefined;
+	export let metaTitle = 'Error | Stablecog';
 
 	$: showSignIn = !$sessionStore?.user.id || !$userSummary;
 </script>
+
+<MetaTag
+	title={metaTitle}
+	description={metaDescriptionDefault}
+	image_url="{canonicalUrl}/previews/home-{previewImageVersion}.png"
+/>
 
 <PageWrapper>
 	<div class="my-auto flex w-full flex-col items-center justify-center text-center">

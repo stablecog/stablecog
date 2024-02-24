@@ -5,6 +5,7 @@
 </script>
 
 <ErrorPage
+	metaTitle="Link Expired | Stablecog"
 	report={{
 		subject: `Sign in problem using magic link`,
 		body: `I'm having a problem signing in using the magic link.`
