@@ -5,6 +5,7 @@
 	import RedirectPage from '$components/RedirectPage.svelte';
 	import LL from '$i18n/i18n-svelte.js';
 	import { getModelPreviewImageUrl } from '$ts/helpers/getPreviewImageUrl.js';
+	import { metaDescriptionDefault } from '$ts/constants/meta.js';
 
 	export let data;
 
@@ -20,7 +21,7 @@
 				? `Create AI art with ${
 						generationModels[data.model_id].name
 					} on Stablecog: Free, multilingual and open-source AI image generator using Stable Diffusion and Kandinsky.`
-				: 'Create amazing art in seconds with AI. Free, multilingual and open-source AI image generator using Stable Diffusion and Kandinsky.',
+				: metaDescriptionDefault,
 		image_url: data.model_id
 			? getModelPreviewImageUrl(data.model_id)
 			: `${canonicalUrl}/previews/home-${previewImageVersion}.png`

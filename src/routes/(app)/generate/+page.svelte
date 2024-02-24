@@ -57,6 +57,7 @@
 	import { baseOutputForInpainting } from '$components/canvas/stores/baseOutputForInpainting.js';
 	import { sessionStore } from '$ts/constants/supabase';
 	import { getModelPreviewImageUrl } from '$ts/helpers/getPreviewImageUrl.js';
+	import { metaDescriptionDefault } from '$ts/constants/meta.js';
 
 	export let data;
 
@@ -281,7 +282,7 @@
 				? `Create AI art with ${
 						generationModels[data.model_id].name
 					} on Stablecog: Free, multilingual and open-source AI image generator using Stable Diffusion and Kandinsky.`
-				: 'Create amazing art in seconds with AI. Free, multilingual and open-source AI image generator using Stable Diffusion and Kandinsky.',
+				: metaDescriptionDefault,
 		image_url: data.model_id
 			? getModelPreviewImageUrl(data.model_id)
 			: `${canonicalUrl}/previews/home-${previewImageVersion}.png`
@@ -293,11 +294,11 @@
 <svelte:window on:keydown={onKeyDown} />
 
 <GenerationSettingsProvider serverData={data} bind:isReadyMap let:supportedSchedulerIdDropdownItems>
-	<div class="w-full h-full flex flex-col overflow-hidden relative z-0">
+	<div class="relative z-0 flex h-full w-full flex-col overflow-hidden">
 		<div
-			class="w-full h-full flex flex-row overflow-hidden md:pb-[calc(env(safe-area-inset-bottom)+1rem)] pt-1 md:pt-2 md:px-4 gap-4"
+			class="flex h-full w-full flex-row gap-4 overflow-hidden pt-1 md:px-4 md:pb-[calc(env(safe-area-inset-bottom)+1rem)] md:pt-2"
 		>
-			<div class="hidden lg:flex min-w-[2rem] flex-col items-start h-full relative">
+			<div class="relative hidden h-full min-w-[2rem] flex-col items-start lg:flex">
 				{#if !$isLeftSidebarHiddenApp}
 					<div
 						transition:fly={{
@@ -305,7 +306,7 @@
 							x: $windowWidth > xlBreakpoint ? -200 : -100,
 							easing: quadOut
 						}}
-						class="h-full flex w-36 xl:w-72 relative z-10"
+						class="relative z-10 flex h-full w-36 xl:w-72"
 					>
 						<!-- Desktop Sidebar -->
 						<SidebarWrapper hasGradient>
@@ -347,11 +348,11 @@
 					}}
 				/>
 			</div>
-			<div class="flex flex-col items-center flex-1 min-w-0 h-full relative">
+			<div class="relative flex h-full min-w-0 flex-1 flex-col items-center">
 				{#if $windowWidth < mdBreakpoint && isGenerationSettingsSheetOpen}
 					<div
 						transition:fade={{ duration: 200, easing: quadOut }}
-						class="fixed w-full h-full left-0 top-0 bg-c-barrier/70 z-40"
+						class="fixed left-0 top-0 z-40 h-full w-full bg-c-barrier/70"
 					/>
 				{/if}
 				<div use:clickoutside={{ callback: closeSettingsSheet }}>
@@ -367,18 +368,19 @@
 					/>
 					<!-- Prompt bar -->
 					<div
-						class="w-full z-50 flex flex-col rounded-2xl overflow-hidden md:overflow-visible md:rounded-none bg-transparent md:bg-transparent absolute left-0 bottom-0
-								md:bottom-auto md:top-0 order-2 {isGenerationSettingsSheetOpen && $windowWidth < mdBreakpoint
+						class="absolute bottom-0 left-0 z-50 order-2 flex w-full flex-col overflow-hidden rounded-2xl bg-transparent md:bottom-auto md:top-0
+								md:overflow-visible md:rounded-none md:bg-transparent {isGenerationSettingsSheetOpen &&
+						$windowWidth < mdBreakpoint
 							? 'pointer-events-none'
 							: 'pointer-events-auto'}"
 					>
 						<div
 							bind:clientHeight={horizontalListHeight}
-							class="w-full md:hidden pb-0.5 bg-c-bg transform transition duration-300 {isGenerationSettingsSheetOpen
-								? 'translate-y-full pointer-events-none opacity-0'
+							class="w-full transform bg-c-bg pb-0.5 transition duration-300 md:hidden {isGenerationSettingsSheetOpen
+								? 'pointer-events-none translate-y-full opacity-0'
 								: 'pointer-events-auto'}"
 						>
-							<div class="w-full h-16 flex flex-col">
+							<div class="flex h-16 w-full flex-col">
 								<AutoSize
 									bind:element={listScrollContainer}
 									hideScroll
@@ -408,8 +410,8 @@
 						</div>
 						<div
 							bind:clientHeight={promptBarHeight}
-							class="w-full flex pl-2 bg-c-bg md:bg-transparent md:pl-0
-							pb-[calc(env(safe-area-inset-bottom)+0.75rem)] z-50 pointer-events-auto"
+							class="pointer-events-auto z-50 flex w-full bg-c-bg pb-[calc(env(safe-area-inset-bottom)+0.75rem)]
+							pl-2 md:bg-transparent md:pl-0"
 						>
 							<PromptBar
 								{openSignInModal}
@@ -424,28 +426,28 @@
 					</div>
 				</div>
 				<div
-					class="w-full flex flex-col order-first flex-1 min-w-0 pb-[calc(env(safe-area-inset-bottom)+10.5rem)]
-					md:pb-0 md:pt-26 lg:pb-8 relative z-0"
+					class="relative z-0 order-first flex w-full min-w-0 flex-1
+					flex-col pb-[calc(env(safe-area-inset-bottom)+10.5rem)] md:pb-0 md:pt-26 lg:pb-8"
 				>
-					<div class="flex-1 min-w-0 flex flex-col items-center justify-center w-full">
+					<div class="flex w-full min-w-0 flex-1 flex-col items-center justify-center">
 						{#if $sessionStore?.user.id && $userSummary && $userSummary.total_remaining_credits < lowOnCreditsThreshold}
 							<div
 								transition:expandCollapse={{ duration: 200 }}
-								class="w-full flex flex-col justify-start items-center"
+								class="flex w-full flex-col items-center justify-start"
 							>
-								<div class="py-2px px-2.5 md:px-2px pb-6">
+								<div class="px-2.5 py-2px pb-6 md:px-2px">
 									<LowOnCreditsCard />
 								</div>
 							</div>
 						{/if}
-						<div class="w-full flex-1 min-w-0 min-h-0 flex flex-col px-2 lg:px-6">
+						<div class="flex min-h-0 w-full min-w-0 flex-1 flex-col px-2 lg:px-6">
 							{#if $baseOutputForInpainting && $generateMode === 'inpainting'}
 								<InpaintingCanvas baseOutput={$baseOutputForInpainting} />
 							{:else}
 								<div
 									bind:clientWidth={stageWidth}
 									bind:clientHeight={stageHeight}
-									class="flex-1 min-w-0 w-full"
+									class="w-full min-w-0 flex-1"
 								>
 									{#if stageWidth && stageHeight}
 										{#key $generations[0].ui_id}
@@ -461,9 +463,9 @@
 							{/if}
 						</div>
 					</div>
-					<div class="w-full hidden md:flex lg:hidden pt-11">
+					<div class="hidden w-full pt-11 md:flex lg:hidden">
 						<SidebarWrapper borderSize="sm">
-							<div class="w-full h-20 flex flex-col">
+							<div class="flex h-20 w-full flex-col">
 								{#if !$sessionStore?.user.id || !$userSummary}
 									<GenerateHorizontalListPlaceholder
 										text={$LL.Generate.Grid.NotSignedIn.Paragraph()}
@@ -494,7 +496,7 @@
 					</div>
 				</div>
 			</div>
-			<div class="h-full w-72 hidden md:flex">
+			<div class="hidden h-full w-72 md:flex">
 				<SettingsPanel {openSignInModal} {isCheckCompleted} {supportedSchedulerIdDropdownItems} />
 			</div>
 		</div>
