@@ -20,38 +20,40 @@
 <PageWrapper>
 	<div class="my-auto flex w-full flex-col items-center justify-center text-center">
 		<svelte:component this={icon} class="h-28 w-28" />
-		<p class="mt-4 text-3xl font-bold">{title}</p>
+		<p class="mt-6 text-3xl font-bold">{title}</p>
 		<p class="mt-3 w-full max-w-xs leading-relaxed text-c-on-bg/60">
 			{paragraph}
 		</p>
-		{#if showSignIn}
-			<div class="mt-5 flex w-full flex-col items-center justify-center gap-3 md:flex-row">
-				<Button
-					icon={IconRepeat}
-					iconProps={{ strokeWidth: 2 }}
-					class="w-full max-w-lg md:w-auto"
-					onClick={() => isSignInModalOpen.set(true)}
-				>
-					{$LL.Shared.TryAgainButton()}
-				</Button>
-				{#if report}
+		<div class="mt-6 flex w-full flex-col">
+			{#if showSignIn}
+				<div class="flex w-full flex-col items-center justify-center gap-3 md:flex-row">
 					<Button
-						icon={IconMegaphone}
+						icon={IconRepeat}
 						iconProps={{ strokeWidth: 2 }}
 						class="w-full max-w-lg md:w-auto"
-						type="on-bg"
-						target="_blank"
-						href={socialAppUrls.email + `?subject=${report.subject}&body=${report.body}`}
+						onClick={() => isSignInModalOpen.set(true)}
 					>
-						{$LL.Shared.ReportErrorButton()}
+						{$LL.Shared.TryAgainButton()}
 					</Button>
-				{/if}
-			</div>
-		{:else}
-			<Button class="mt-5" href="/generate">
-				{$LL.Shared.StartGeneratingButton()}
-			</Button>
-		{/if}
+					{#if report}
+						<Button
+							icon={IconMegaphone}
+							iconProps={{ strokeWidth: 2 }}
+							class="w-full max-w-lg md:w-auto"
+							type="on-bg"
+							target="_blank"
+							href={socialAppUrls.email + `?subject=${report.subject}&body=${report.body}`}
+						>
+							{$LL.Shared.ReportErrorButton()}
+						</Button>
+					{/if}
+				</div>
+			{:else}
+				<Button href="/generate">
+					{$LL.Shared.StartGeneratingButton()}
+				</Button>
+			{/if}
+		</div>
 		<div class="h-[5vh]" />
 	</div>
 </PageWrapper>
