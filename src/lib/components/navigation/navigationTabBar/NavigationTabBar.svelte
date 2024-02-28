@@ -88,6 +88,10 @@
 		placement: 'top-end',
 		middleware: [offset(2), flip(), shift()]
 	});
+
+	function isPathMatching(current: string, pathname: string) {
+		return pathname === current || pathname.startsWith(current + '/');
+	}
 </script>
 
 <TabBarWrapper class="max-w-full" {type}>
@@ -148,63 +152,100 @@
 								>
 									<div class="flex w-full flex-col items-start justify-start">
 										<DropdownItem
-											target="_blank"
+											target={isPathMatching('/guide', $page.url.pathname) ? undefined : '_blank'}
 											href="/guide"
+											isSelected={isPathMatching('/guide', $page.url.pathname)}
 											padding="md"
 											onClick={closeResourcesDropdown}
 										>
 											<div class="flex min-w-0 flex-1 items-center justify-start gap-2.5">
 												<IconGuideOutline
-													class="text-c-text h-6 w-6 transition not-touch:group-hover:text-c-primary"
+													class="h-6 w-6 {isPathMatching('/guide', $page.url.pathname)
+														? 'text-c-primary'
+														: 'text-c-on-bg'} transition not-touch:group-hover:text-c-primary"
 												/>
 												<p
-													class="min-w-0 flex-1 overflow-hidden overflow-ellipsis text-left text-c-on-bg transition not-touch:group-hover:text-c-primary"
+													class="min-w-0 flex-1 overflow-hidden overflow-ellipsis text-left {isPathMatching(
+														'/guide',
+														$page.url.pathname
+													)
+														? 'text-c-primary'
+														: 'text-c-on-bg'}
+													transition not-touch:group-hover:text-c-primary"
 												>
 													{$LL.Guide.PageTitle()}
 												</p>
 											</div>
 										</DropdownItem>
 										<DropdownItem
-											target="_blank"
+											target={isPathMatching('/blog', $page.url.pathname) ? undefined : '_blank'}
 											href="/blog"
+											isSelected={isPathMatching('/blog', $page.url.pathname)}
 											padding="md"
 											onClick={closeResourcesDropdown}
 										>
 											<div class="flex min-w-0 flex-1 items-center justify-start gap-2.5">
 												<IconBlogOutline
-													class="text-c-text h-6 w-6 transition not-touch:group-hover:text-c-primary"
+													class="{isPathMatching('/blog', $page.url.pathname)
+														? 'text-c-primary'
+														: 'text-c-on-bg'} h-6 w-6 transition not-touch:group-hover:text-c-primary"
 												/>
 												<p
-													class="min-w-0 flex-1 overflow-hidden overflow-ellipsis text-left text-c-on-bg transition not-touch:group-hover:text-c-primary"
+													class="min-w-0 flex-1 overflow-hidden overflow-ellipsis text-left {isPathMatching(
+														'/blog',
+														$page.url.pathname
+													)
+														? 'text-c-primary'
+														: 'text-c-on-bg'} transition not-touch:group-hover:text-c-primary"
 												>
 													{$LL.Blog.TitleAlt()}
 												</p>
 											</div>
 										</DropdownItem>
 										<DropdownItem
-											target="_blank"
+											target={isPathMatching('/docs', $page.url.pathname) ? undefined : '_blank'}
 											href="/docs/v1"
+											isSelected={isPathMatching('/docs', $page.url.pathname)}
 											padding="md"
 											onClick={closeResourcesDropdown}
 										>
 											<div class="flex min-w-0 flex-1 items-center justify-start gap-2.5">
 												<IconCommandLineOutlined
-													class="text-c-text h-6 w-6 transition not-touch:group-hover:text-c-primary"
+													class="{isPathMatching('/docs', $page.url.pathname)
+														? 'text-c-primary'
+														: 'text-c-on-bg'} h-6 w-6 transition not-touch:group-hover:text-c-primary"
 												/>
 												<p
-													class="min-w-0 flex-1 overflow-hidden overflow-ellipsis text-left text-c-on-bg transition not-touch:group-hover:text-c-primary"
+													class="min-w-0 flex-1 overflow-hidden overflow-ellipsis text-left {isPathMatching(
+														'/docs',
+														$page.url.pathname
+													)
+														? 'text-c-primary'
+														: 'text-c-on-bg'} transition not-touch:group-hover:text-c-primary"
 												>
 													{$LL.Documentation.DevelopersTitle()}
 												</p>
 											</div>
 										</DropdownItem>
-										<DropdownItem href="/live" padding="md" onClick={closeResourcesDropdown}>
+										<DropdownItem
+											isSelected={isPathMatching('/live', $page.url.pathname)}
+											href="/live"
+											padding="md"
+											onClick={closeResourcesDropdown}
+										>
 											<div class="flex min-w-0 flex-1 items-center justify-start gap-2.5">
 												<IconLive
-													class="text-c-text h-6 w-6 transition not-touch:group-hover:text-c-primary"
+													class="{isPathMatching('/live', $page.url.pathname)
+														? 'text-c-primary'
+														: 'text-c-on-bg'} h-6 w-6 transition not-touch:group-hover:text-c-primary"
 												/>
 												<p
-													class="min-w-0 flex-1 overflow-hidden overflow-ellipsis text-left text-c-on-bg transition not-touch:group-hover:text-c-primary"
+													class="min-w-0 flex-1 overflow-hidden overflow-ellipsis text-left {isPathMatching(
+														'/live',
+														$page.url.pathname
+													)
+														? 'text-c-primary'
+														: 'text-c-on-bg'} transition not-touch:group-hover:text-c-primary"
 												>
 													{$LL.Navbar.LiveTab()}
 												</p>

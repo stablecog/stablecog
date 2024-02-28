@@ -178,8 +178,8 @@
 </script>
 
 <div
-	class="max-w-full flex flex-col items-center justify-center bg-c-bg ring-c-bg-secondary ring-2 px-3 py-4
-	md:px-10 md:py-7 rounded-3xl relative z-10 overflow-hidden {isModal
+	class="relative z-10 flex max-w-full flex-col items-center justify-center overflow-hidden rounded-3xl bg-c-bg
+	px-3 py-4 ring-2 ring-c-bg-secondary md:px-10 md:py-7 {isModal
 		? 'shadow-2xl shadow-c-shadow/[var(--o-shadow-strong)]'
 		: 'shadow-xl shadow-c-shadow/[var(--o-shadow-normal)]'}"
 >
@@ -189,20 +189,20 @@
 			class="flex flex-col justify-start"
 		>
 			<div class="pb-2">
-				<IconEmail class="w-20 h-20 text-c-on-bg" />
+				<IconEmail class="h-20 w-20 text-c-on-bg" />
 			</div>
 		</div>
 	{/if}
-	<h1 class="max-w-sm text-center font-bold leading-normal mt-1 md:-mt-1 text-2xl px-8">
+	<h1 class="mt-1 max-w-sm px-8 text-center text-2xl font-bold leading-normal md:-mt-1">
 		{$signInCardStatus === 'sent-otp'
 			? $LL.SignIn.PageTitleSentLink()
 			: title
 				? title
 				: $LL.SignIn.PageTitleGetStarted()}
 	</h1>
-	<div class="w-full flex flex-col items-center justify-start mt-1.5">
+	<div class="mt-1.5 flex w-full flex-col items-center justify-start">
 		<p
-			class="px-3 md:px-0 max-w-sm text-base md:text-base text-c-on-bg/75 text-center leading-relaxed mb-4 {$signInCardStatus ===
+			class="mb-4 max-w-sm px-3 text-center text-base leading-relaxed text-c-on-bg/75 md:px-0 md:text-base {$signInCardStatus ===
 			'sent-otp'
 				? 'mt-1'
 				: ''}"
@@ -219,21 +219,24 @@
 		{#if $signInCardStatus === 'sent-otp'}
 			<div
 				transition:expandCollapse={{ duration: 200, easing: quadOut, opacity: 0 }}
-				class="w-[calc(100%+1.5rem)] md:w-[calc(100%+5rem)] -mx-5 md:-mx-10 pt-4 md:pt-6 -mb-4 md:-mb-7 flex flex-col justify-start"
+				class="-mx-5 -mb-4 flex w-[calc(100%+1.5rem)] flex-col justify-start pt-4 md:-mx-10 md:-mb-7 md:w-[calc(100%+5rem)] md:pt-6"
 			>
-				<div class="w-full flex flex-col justify-start items-center">
+				<div class="flex w-full flex-col items-center justify-start">
 					<div
-						class="w-full border-t-2 border-c-bg-secondary flex flex-col justify-start items-center relative z-0"
+						class="relative z-0 flex w-full flex-col items-center justify-start border-t-2 border-c-bg-secondary"
 					>
 						{#if $signInCardCodeSignInStatus === 'idle'}
 							<div
 								transition:expandCollapse={{ duration: 200, easing: quadOut, opacity: 0 }}
 								class="w-full"
 							>
-								<DropdownItem onClick={() => ($signInCardCodeSignInStatus = 'entering')}>
-									<div class="w-full flex items-center justify-center gap-2.5">
+								<DropdownItem
+									noHoverEffectPadding
+									onClick={() => ($signInCardCodeSignInStatus = 'entering')}
+								>
+									<div class="flex w-full items-center justify-center gap-2.5">
 										<IconPassword
-											class="text-c-on-bg/75 w-6 h-6 transition not-touch:group-hover:text-c-primary"
+											class="h-6 w-6 text-c-on-bg/75 transition not-touch:group-hover:text-c-primary"
 										/>
 										<p class="text-c-on-bg/75 transition not-touch:group-hover:text-c-primary">
 											{$LL.SignIn.EnterCodeManuallyButton()}
@@ -245,12 +248,12 @@
 							<form
 								transition:expandCollapse={{ duration: 200, easing: quadOut, opacity: 0 }}
 								on:submit|preventDefault={signInWithCode}
-								class="w-full flex flex-col justify-start items-center"
+								class="flex w-full flex-col items-center justify-start"
 							>
 								<div
-									class="flex flex-col justify-start items-center px-4 pt-5 pb-6 md:px-6 md:pt-6 md:pb-7"
+									class="flex flex-col items-center justify-start px-4 pb-6 pt-5 md:px-6 md:pb-7 md:pt-6"
 								>
-									<div class="w-full flex flex-col justify-start items-center max-w-[21rem]">
+									<div class="flex w-full max-w-[21rem] flex-col items-center justify-start">
 										<PinInput
 											bind:value={codeValue}
 											on:pincomplete={signInWithCode}
@@ -265,23 +268,24 @@
 											class="mt-4 w-full">{$LL.SignIn.ContinueButton()}</Button
 										>
 										{#if codeSignInErrorText}
-											<ErrorLine text={codeSignInErrorText} class="text-xs w-full" />
+											<ErrorLine text={codeSignInErrorText} class="w-full text-xs" />
 										{/if}
 									</div>
 								</div>
 							</form>
 						{/if}
-						<div class="w-full h-2px bg-c-bg-secondary" />
+						<div class="h-2px w-full bg-c-bg-secondary" />
 						<DropdownItem
+							noHoverEffectPadding
 							onClick={() => {
 								signInCardStatus.set('idle');
 								signInCardCodeSignInStatus.set('idle');
 								codeSignInErrorText = null;
 							}}
 						>
-							<div class="w-full flex items-center justify-center gap-2.5">
+							<div class="flex w-full items-center justify-center gap-2.5">
 								<IconBack
-									class="text-c-on-bg/75 w-6 h-6 transition not-touch:group-hover:text-c-primary"
+									class="h-6 w-6 text-c-on-bg/75 transition not-touch:group-hover:text-c-primary"
 								/>
 								<p class="text-c-on-bg/75 transition not-touch:group-hover:text-c-primary">
 									{$LL.Shared.GoBackButton()}
@@ -294,10 +298,10 @@
 		{:else}
 			<div
 				transition:expandCollapse={{ duration: 200, easing: quadOut, opacity: 0 }}
-				class="relative z-0 flex flex-col justify-start items-center w-full"
+				class="relative z-0 flex w-full flex-col items-center justify-start"
 			>
-				<div class="w-full flex flex-col items-center justify-start p-1 mt-1 md:mt-2 max-w-[21rem]">
-					<div class="w-full flex flex-col items-center justify-start gap-3">
+				<div class="mt-1 flex w-full max-w-[21rem] flex-col items-center justify-start p-1 md:mt-2">
+					<div class="flex w-full flex-col items-center justify-start gap-3">
 						<ButtonOAuth
 							withSpinner
 							disabled={$signInCardStatus === 'loading'}
@@ -316,25 +320,25 @@
 							onClick={() => signInWithOAuth('discord')}
 							provider="discord"
 						>
-							<p class="flex-1 min-w-0">
+							<p class="min-w-0 flex-1">
 								{$LL.SignIn.ContinueWithProviderButton({ provider: 'Discord' })}
 							</p>
 						</ButtonOAuth>
 					</div>
 				</div>
 				<div
-					class="flex items-center gap-4 my-5 md:my-6 -mx-5 md:-mx-10 w-[calc(100%+1.5rem)] md:w-[calc(100%+5rem)]"
+					class="-mx-5 my-5 flex w-[calc(100%+1.5rem)] items-center gap-4 md:-mx-10 md:my-6 md:w-[calc(100%+5rem)]"
 				>
-					<div class="flex-1 h-2px rounded-r-full bg-c-bg-secondary" />
-					<p class="text-base text-c-on-bg/50 text-center inline-block flex-shrink min-w-0">
+					<div class="h-2px flex-1 rounded-r-full bg-c-bg-secondary" />
+					<p class="inline-block min-w-0 flex-shrink text-center text-base text-c-on-bg/50">
 						{$LL.SignIn.OrContinueWithEmailTitle()}
 					</p>
-					<div class="flex-1 h-2px rounded-l-full bg-c-bg-secondary" />
+					<div class="h-2px flex-1 rounded-l-full bg-c-bg-secondary" />
 				</div>
 				<form
 					on:input={() => (errorText = null)}
 					on:submit|preventDefault={signIn}
-					class="w-full flex flex-col p-1 md:pb-2 max-w-[21rem]"
+					class="flex w-full max-w-[21rem] flex-col p-1 md:pb-2"
 				>
 					<Input
 						class="w-full"
@@ -345,10 +349,10 @@
 						enterkeyhint="go"
 						hasIcon
 					>
-						<IconEmail slot="icon" class="w-full h-full" />
+						<IconEmail slot="icon" class="h-full w-full" />
 					</Input>
 					{#if errorText}
-						<ErrorLine text={errorText} class="text-xs -mt-1" />
+						<ErrorLine text={errorText} class="-mt-1 text-xs" />
 					{/if}
 					<Button
 						class="mt-3"
