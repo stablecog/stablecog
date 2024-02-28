@@ -15,9 +15,9 @@
 	$: id = titleToId(item.title);
 </script>
 
-<li style="padding-left: {0.75 * Math.max(item.level - 2)}rem" class="w-full flex justify-start">
+<li style="padding-left: {0.75 * Math.max(item.level - 2)}rem" class="flex w-full justify-start">
 	<a
-		class="w-full {item.level <= 2 ? 'font-medium' : 'font-normal'} px-2.5 py-2 relative group"
+		class="w-full {item.level <= 2 ? 'font-medium' : 'font-normal'} group relative px-2.5 py-2"
 		href="#{id}"
 	>
 		<ButtonHoverEffect
@@ -31,10 +31,10 @@
 			class="transition {id === activeId
 				? 'text-c-primary'
 				: item.level <= 2
-				? 'text-c-on-bg'
-				: item.level === 3
-				? 'text-c-on-bg/75'
-				: ' text-c-on-bg/50'}"
+					? 'text-c-on-bg'
+					: item.level === 3
+						? 'text-c-on-bg/75'
+						: ' text-c-on-bg/50'}"
 		>
 			{item.title}
 		</p>

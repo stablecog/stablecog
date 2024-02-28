@@ -13,6 +13,7 @@
 		| 'success'
 		| 'danger' = 'primary';
 	export let hovered = false;
+	export let isSelected = false;
 	export let noPadding = false;
 	export let noRounding = false;
 	export let fullRounding = false;
@@ -25,14 +26,14 @@
 </script>
 
 <div
-	class="w-full h-full absolute left-0 top-0 {disabled ? 'opacity-0' : ''} {paddingClass
+	class="absolute left-0 top-0 h-full w-full {disabled ? 'opacity-0' : ''} {paddingClass
 		? paddingClass
 		: noPadding
 			? ''
 			: 'p-1'}"
 >
 	<div
-		class="w-full h-full relative z-0 overflow-hidden transition {hasShadow
+		class="relative z-0 h-full w-full overflow-hidden transition {hasShadow
 			? 'shadow-md'
 			: ''} {hasShadow
 			? hovered
@@ -51,7 +52,7 @@
 							: 'rounded-xl'}"
 	>
 		<div
-			class="w-full h-full origin-left transition transform {hovered
+			class="h-full w-full origin-left transform transition {hovered
 				? 'translate-x-0 translate-y-0'
 				: hoverFrom === 'top'
 					? '-translate-y-full'

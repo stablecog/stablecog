@@ -40,20 +40,12 @@
 					? 'p-1'
 					: 'px-1 py-0.5 group-first-of-type:pt-1 group-last-of-type:pb-1'}"
 		>
-			<div class="relative h-full w-full">
+			<div class="h-full w-full overflow-hidden {noHoverEffectPadding ? '' : 'rounded-lg'}">
 				<div
-					class="absolute left-0 top-0 h-full w-full bg-c-primary/10 transition {isSelected
-						? 'opacity-100'
-						: 'opacity-0'} {noHoverEffectPadding ? '' : 'rounded-lg'}"
+					class="aspect-square h-full w-full origin-left -translate-x-full transform bg-c-primary/10
+					opacity-0 {noHoverEffectPadding ? '' : 'rounded-lg'} {isSelected ? 'translate-x-0 opacity-100' : ''}
+					transition not-touch:group-hover:translate-x-0 not-touch:group-hover:opacity-100"
 				/>
-				<div class="h-full w-full overflow-hidden {noHoverEffectPadding ? '' : 'rounded-lg'}">
-					<div
-						class="aspect-square h-full w-full origin-left -translate-x-full transform opacity-0 {noHoverEffectPadding
-							? ''
-							: 'rounded-lg'} {isSelected ? 'bg-c-primary/6' : 'bg-c-primary/10'}
-						transition not-touch:group-hover:translate-x-0 not-touch:group-hover:opacity-100"
-					/>
-				</div>
 			</div>
 		</div>
 		<slot />
@@ -80,20 +72,12 @@
 						? 'p-1'
 						: 'px-1 py-0.5 group-first-of-type:pt-1 group-last-of-type:pb-1'}"
 			>
-				<div class="relative h-full w-full">
+				<div class="h-full w-full overflow-hidden {noHoverEffectPadding ? '' : 'rounded-lg'}">
 					<div
-						class="absolute left-0 top-0 h-full w-full bg-c-primary/10 transition {isSelected
-							? 'opacity-100'
-							: 'opacity-0'} {noHoverEffectPadding ? '' : 'rounded-lg'}"
+						class="aspect-square h-full w-full origin-left -translate-x-full transform bg-c-primary/10
+						opacity-0 {noHoverEffectPadding ? '' : 'rounded-lg'} {isSelected ? 'translate-x-0 opacity-100' : ''}
+						transition not-touch:group-hover:translate-x-0 not-touch:group-hover:opacity-100"
 					/>
-					<div class="h-full w-full overflow-hidden {noHoverEffectPadding ? '' : 'rounded-lg'}">
-						<div
-							class="aspect-square h-full w-full origin-left -translate-x-full transform opacity-0 {noHoverEffectPadding
-								? ''
-								: 'rounded-lg'} {isSelected ? 'bg-c-primary/6' : 'bg-c-primary/10'}
-							transition not-touch:group-hover:translate-x-0 not-touch:group-hover:opacity-100"
-						/>
-					</div>
 				</div>
 			</div>
 		{/if}
