@@ -254,6 +254,7 @@
 										<div class="h-2px w-full bg-c-bg-tertiary"></div>
 										<div class="flex w-full flex-wrap">
 											<DropdownItem
+												equalHoverEffectPadding
 												class="w-1/3"
 												href={socialAppUrls.discord}
 												target="_blank"
@@ -270,6 +271,7 @@
 												</div>
 											</DropdownItem>
 											<DropdownItem
+												equalHoverEffectPadding
 												class="w-1/3"
 												href={socialAppUrls.twitter}
 												target="_blank"
@@ -286,6 +288,7 @@
 												</div>
 											</DropdownItem>
 											<DropdownItem
+												equalHoverEffectPadding
 												class="w-1/3"
 												href={socialAppUrls.instagram}
 												target="_blank"
@@ -302,6 +305,7 @@
 												</div>
 											</DropdownItem>
 											<DropdownItem
+												equalHoverEffectPadding
 												class="w-1/3"
 												href={socialAppUrls.email}
 												target="_blank"
@@ -318,6 +322,7 @@
 												</div>
 											</DropdownItem>
 											<DropdownItem
+												equalHoverEffectPadding
 												class="w-1/3"
 												href={socialAppUrls.producthunt}
 												target="_blank"
@@ -334,6 +339,7 @@
 												</div>
 											</DropdownItem>
 											<DropdownItem
+												equalHoverEffectPadding
 												class="w-1/3"
 												href={socialAppUrls.github}
 												target="_blank"

@@ -12,6 +12,7 @@
 	export let loading = false;
 	export let isSelected = false;
 	export let noHoverEffectPadding = false;
+	export let equalHoverEffectPadding = false;
 	export { classes as class };
 	let classes = 'w-full';
 </script>
@@ -35,7 +36,9 @@
 		<div
 			class="pointer-events-none absolute left-0 top-0 flex h-full w-full items-center justify-center {noHoverEffectPadding
 				? ''
-				: 'px-1 py-0.5 group-first-of-type:pt-1 group-last-of-type:pb-1'}"
+				: equalHoverEffectPadding
+					? 'p-1'
+					: 'px-1 py-0.5 group-first-of-type:pt-1 group-last-of-type:pb-1'}"
 		>
 			<div class="relative h-full w-full">
 				<div
@@ -73,7 +76,9 @@
 			<div
 				class="pointer-events-none absolute left-0 top-0 flex h-full w-full items-center justify-center {noHoverEffectPadding
 					? ''
-					: 'px-1 py-0.5 group-first-of-type:pt-1 group-last-of-type:pb-1'}"
+					: equalHoverEffectPadding
+						? 'p-1'
+						: 'px-1 py-0.5 group-first-of-type:pt-1 group-last-of-type:pb-1'}"
 			>
 				<div class="relative h-full w-full">
 					<div
