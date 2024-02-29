@@ -31,14 +31,16 @@
 					? 'py-4'
 					: padding === 'lg'
 						? 'py-4.5'
-						: 'py-5'} group relative z-0 overflow-hidden {classes}"
+						: 'py-5'} group relative z-0 {equalHoverEffectPadding
+			? ''
+			: '-mt-1 overflow-hidden first-of-type:mt-0'} {classes}"
 	>
 		<div
 			class="pointer-events-none absolute left-0 top-0 flex h-full w-full items-center justify-center {noHoverEffectPadding
 				? ''
 				: equalHoverEffectPadding
 					? 'p-1'
-					: 'px-1 py-0.5 group-first-of-type:pt-1 group-last-of-type:pb-1'}"
+					: 'px-1 py-1'}"
 		>
 			<div class="h-full w-full overflow-hidden {noHoverEffectPadding ? '' : 'rounded-lg'}">
 				<div
@@ -62,7 +64,9 @@
 					? 'py-4'
 					: padding === 'lg'
 						? 'py-4.5'
-						: 'py-5'} group relative z-0 overflow-hidden {classes}"
+						: 'py-5'} group relative z-0 {equalHoverEffectPadding
+			? ''
+			: '-mt-1 overflow-hidden first-of-type:mt-0'} {classes}"
 	>
 		{#if !withSpinner || !loading}
 			<div
@@ -70,7 +74,7 @@
 					? ''
 					: equalHoverEffectPadding
 						? 'p-1'
-						: 'px-1 py-0.5 group-first-of-type:pt-1 group-last-of-type:pb-1'}"
+						: 'px-1 py-1'}"
 			>
 				<div class="h-full w-full overflow-hidden {noHoverEffectPadding ? '' : 'rounded-lg'}">
 					<div
