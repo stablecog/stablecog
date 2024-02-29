@@ -40,6 +40,7 @@ module.exports = {
 				'c-shadow': withOpacityValue('--c-shadow'),
 				'c-barrier': withOpacityValue('--c-barrier'),
 				'c-twitter': withOpacityValue('--c-twitter'),
+				'c-x': withOpacityValue('--c-x'),
 				'c-instagram': withOpacityValue('--c-instagram'),
 				'c-facebook': withOpacityValue('--c-facebook'),
 				'c-reddit': withOpacityValue('--c-reddit')

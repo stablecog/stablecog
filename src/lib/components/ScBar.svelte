@@ -24,10 +24,10 @@
 		<IconButton name="Blog" href={'/guide'} target="_blank">
 			<IconGuide
 				class="{size === 'sm'
-					? 'w-8 h-8'
+					? 'h-8 w-8'
 					: size === 'lg'
-						? 'w-12 h-12'
-						: 'w-10 h-10'} transition {color === 'normal'
+						? 'h-12 w-12'
+						: 'h-10 w-10'} transition {color === 'normal'
 					? 'text-c-on-bg'
 					: 'text-c-on-bg/60'} not-touch:group-hover/iconbutton:text-c-primary"
 			/>
@@ -37,10 +37,10 @@
 		<IconButton name="Blog" href={'/blog'} target="_blank">
 			<IconBlog
 				class="{size === 'sm'
-					? 'w-8 h-8'
+					? 'h-8 w-8'
 					: size === 'lg'
-						? 'w-12 h-12'
-						: 'w-10 h-10'} transition {color === 'normal'
+						? 'h-12 w-12'
+						: 'h-10 w-10'} transition {color === 'normal'
 					? 'text-c-on-bg'
 					: 'text-c-on-bg/60'} not-touch:group-hover/iconbutton:text-c-primary"
 			/>
@@ -54,26 +54,26 @@
 		<IconSc
 			type="discord"
 			class="{size === 'sm'
-				? 'w-8 h-8'
+				? 'h-8 w-8'
 				: size === 'lg'
-					? 'w-12 h-12'
-					: 'w-10 h-10'} transition {color === 'normal'
+					? 'h-12 w-12'
+					: 'h-10 w-10'} transition {color === 'normal'
 				? 'text-c-on-bg'
 				: 'text-c-on-bg/60'} not-touch:group-hover/iconbutton:text-c-primary"
 		/>
 	</IconButton>
 	<IconButton
-		name="Twitter"
-		href={withAbsoluteUrls ? socialAppUrlsAbsolute.twitter : socialAppUrls.twitter}
+		name="X"
+		href={withAbsoluteUrls ? socialAppUrlsAbsolute.x : socialAppUrls.x}
 		target="_blank"
 	>
 		<IconSc
-			type="twitter"
+			type="x"
 			class="{size === 'sm'
-				? 'w-8 h-8'
+				? 'h-8 w-8'
 				: size === 'lg'
-					? 'w-12 h-12'
-					: 'w-10 h-10'} transition {color === 'normal'
+					? 'h-12 w-12'
+					: 'h-10 w-10'} transition {color === 'normal'
 				? 'text-c-on-bg'
 				: 'text-c-on-bg/60'} not-touch:group-hover/iconbutton:text-c-primary"
 		/>
@@ -86,10 +86,10 @@
 		<IconSc
 			type="instagram"
 			class="{size === 'sm'
-				? 'w-8 h-8'
+				? 'h-8 w-8'
 				: size === 'lg'
-					? 'w-12 h-12'
-					: 'w-10 h-10'} transition {color === 'normal'
+					? 'h-12 w-12'
+					: 'h-10 w-10'} transition {color === 'normal'
 				? 'text-c-on-bg'
 				: 'text-c-on-bg/60'} not-touch:group-hover/iconbutton:text-c-primary"
 		/>
@@ -104,10 +104,10 @@
 			<IconSc
 				type="email"
 				class="{size === 'sm'
-					? 'w-8 h-8'
+					? 'h-8 w-8'
 					: size === 'lg'
-						? 'w-12 h-12'
-						: 'w-10 h-10'} transition {color === 'normal'
+						? 'h-12 w-12'
+						: 'h-10 w-10'} transition {color === 'normal'
 					? 'text-c-on-bg'
 					: 'text-c-on-bg/60'} not-touch:group-hover/iconbutton:text-c-primary"
 			/>
@@ -122,10 +122,10 @@
 			<IconSc
 				type="producthunt"
 				class="{size === 'sm'
-					? 'w-8 h-8'
+					? 'h-8 w-8'
 					: size === 'lg'
-						? 'w-12 h-12'
-						: 'w-10 h-10'} transition {color === 'normal'
+						? 'h-12 w-12'
+						: 'h-10 w-10'} transition {color === 'normal'
 					? 'text-c-on-bg'
 					: 'text-c-on-bg/60'} not-touch:group-hover/iconbutton:text-c-primary"
 			/>
@@ -140,10 +140,10 @@
 			<IconSc
 				type="github"
 				class="{size === 'sm'
-					? 'w-8 h-8'
+					? 'h-8 w-8'
 					: size === 'lg'
-						? 'w-12 h-12'
-						: 'w-10 h-10'} transition {color === 'normal'
+						? 'h-12 w-12'
+						: 'h-10 w-10'} transition {color === 'normal'
 					? 'text-c-on-bg'
 					: 'text-c-on-bg/60'} not-touch:group-hover/iconbutton:text-c-primary"
 			/>

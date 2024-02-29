@@ -2804,6 +2804,10 @@ type RootTranslation = {
 	}
 	Platform: {
 		/**
+		 * X
+		 */
+		X: string
+		/**
 		 * D​i​s​c​o​r​d
 		 */
 		Discord: string
@@ -6072,6 +6076,10 @@ export type TranslationFunctions = {
 		ForDevelopersTitle: () => LocalizedString
 	}
 	Platform: {
+		/**
+		 * X
+		 */
+		X: () => LocalizedString
 		/**
 		 * Discord
 		 */

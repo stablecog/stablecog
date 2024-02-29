@@ -940,6 +940,7 @@ const nl: Translation = {
 		ForDevelopersTitle: 'For Developers'
 	},
 	Platform: {
+		X: 'X',
 		Discord: 'Discord',
 		Email: 'Email',
 		Twitter: 'Twitter',

@@ -52,9 +52,9 @@
 	let buttons: TShareButton[];
 	$: buttons = [
 		{
-			icon: 'twitter',
-			iconClasses: 'bg-c-twitter text-white',
-			buttonText: $LL.Platform.Twitter(),
+			icon: 'x',
+			iconClasses: 'bg-c-x text-white',
+			buttonText: $LL.Platform.X(),
 			href: `https://twitter.com/intent/tweet?text=${encodeURIComponent(
 				`${
 					generation.user.username === $userSummary?.username
@@ -102,17 +102,17 @@
 </script>
 
 <div
-	class="w-full flex flex-col max-w-md bg-c-bg-secondary ring-2 ring-c-bg-tertiary relative
-  rounded-2xl p-2 md:p-5 gap-3 shadow-generation-modal shadow-c-shadow/[var(--o-shadow-stronger)] {classes}"
+	class="relative flex w-full max-w-md flex-col gap-3 rounded-2xl bg-c-bg-secondary
+  p-2 shadow-generation-modal shadow-c-shadow/[var(--o-shadow-stronger)] ring-2 ring-c-bg-tertiary md:p-5 {classes}"
 >
-	<button class="absolute right-0 top-0 p-3 rounded-xl overflow-hidden z-0 group" on:click={close}>
+	<button class="group absolute right-0 top-0 z-0 overflow-hidden rounded-xl p-3" on:click={close}>
 		<ButtonHoverEffect color="primary" hoverFrom="bottom" />
-		<IconCancel class="text-c-on-bg/25 w-6 h-6 not-touch:group-hover:text-c-primary transition" />
+		<IconCancel class="h-6 w-6 text-c-on-bg/25 transition not-touch:group-hover:text-c-primary" />
 	</button>
-	<h1 class="w-full text-center font-bold text-2xl mt-1 md:-mt-1.5 px-9">
+	<h1 class="mt-1 w-full px-9 text-center text-2xl font-bold md:-mt-1.5">
 		{$LL.ShareCard.Title()}
 	</h1>
-	<div class="w-full flex flex-wrap items-center justify-center -mt-1.5">
+	<div class="-mt-1.5 flex w-full flex-wrap items-center justify-center">
 		{#each buttons as button}
 			<a
 				href={button.href}
@@ -123,23 +123,24 @@
 					});
 				}}
 				target="_blank"
-				class="rounded-xl flex flex-col items-center justify-center gap-1.5 group relative p-3"
+				class="group relative flex flex-col items-center justify-center gap-1.5 rounded-xl p-3"
 			>
 				<ButtonHoverEffect noPadding color="on-bg" noFade />
 				<div
-					class="{button.iconClasses} w-11 h-11 rounded-full text-c-bg flex items-center justify-center p-1.5 relative"
+					class="{button.iconClasses} relative flex h-11 w-11 items-center justify-center
+					rounded-full p-1.5 text-c-bg"
 				>
-					<IconSc type={button.icon} class="w-full h-full" />
+					<IconSc type={button.icon} class="h-full w-full" />
 				</div>
-				<p class="text-xs font-medium w-full text-center flex-shrink min-w-0 relative">
+				<p class="relative w-full min-w-0 flex-shrink text-center text-xs font-medium">
 					{button.buttonText}
 				</p>
 			</a>
 		{/each}
 	</div>
-	<div class="w-full flex items-center rounded-xl bg-c-bg p-1.5 -mt-0.5">
+	<div class="-mt-0.5 flex w-full items-center rounded-xl bg-c-bg p-1.5">
 		<p
-			class="px-2 w-full text-sm flex-shrink min-w-0 whitespace-nowrap overflow-hidden overflow-ellipsis"
+			class="w-full min-w-0 flex-shrink overflow-hidden overflow-ellipsis whitespace-nowrap px-2 text-sm"
 		>
 			{url}
 		</p>
@@ -155,25 +156,25 @@
 			}}
 			noPadding
 			noRounding
-			class="px-6.5 py-2.5 rounded-lg"
+			class="rounded-lg px-8 py-2.5"
 			size="xs"
 			buttonType="button"
 			noHoverEffect={copied}
 		>
 			<Morpher morphed={!copied}>
 				<div slot="1" class="flex items-center justify-center gap-0.75 text-c-on-primary">
-					<div class="w-5.5 h-5.5 transform flex-shrink-0 -ml-1">
-						<IconCopy class="w-full h-full" />
+					<div class="-ml-1 h-5.5 w-5.5 flex-shrink-0 transform">
+						<IconCopy class="h-full w-full" />
 					</div>
-					<p class="flex flex-shrink min-w-0">
+					<p class="flex min-w-0 flex-shrink">
 						{$LL.Shared.CopyButton()}
 					</p>
 				</div>
 				<div slot="0" class="flex items-center justify-center gap-0.75 text-c-on-primary">
-					<div class="w-5.5 h-5.5 transform flex-shrink-0 -ml-1">
-						<IconTick class="w-full h-full" />
+					<div class="-ml-1 h-5.5 w-5.5 flex-shrink-0 transform">
+						<IconTick class="h-full w-full" />
 					</div>
-					<p class="flex flex-shrink min-w-0">
+					<p class="flex min-w-0 flex-shrink">
 						{$LL.Shared.CopiedButton()}
 					</p>
 				</div>

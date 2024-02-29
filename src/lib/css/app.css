@@ -20,6 +20,7 @@
 	--c-shadow: 0 0 4;
 	--c-barrier: 8 8 13;
 	--c-twitter: 29 161 242;
+	--c-x: 0 0 0;
 	--c-instagram: 225 48 108;
 	--c-facebook: 59 89 152;
 	--c-reddit: 255 69 0;
@@ -120,7 +121,9 @@ label:focus-visible,
 input[type='range']:focus-visible,
 div[tabindex='0']:focus-visible {
 	outline: none;
-	box-shadow: 0 0 0 4px rgb(var(--c-bg)), 0 0 0 6px rgb(var(--c-primary));
+	box-shadow:
+		0 0 0 4px rgb(var(--c-bg)),
+		0 0 0 6px rgb(var(--c-primary));
 	z-index: 10;
 }
 

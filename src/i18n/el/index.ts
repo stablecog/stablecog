@@ -961,6 +961,7 @@ const es: Translation = {
 		ForDevelopersTitle: 'Για προγραμματιστές'
 	},
 	Platform: {
+		X: 'X',
 		Discord: 'Discord',
 		Email: 'Ηλεκτρονικό ταχυδρομείο',
 		Twitter: 'Twitter',

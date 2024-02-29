@@ -13,6 +13,7 @@ export type TIconSc =
 	| 'discord'
 	| 'reddit'
 	| 'twitter'
+	| 'x'
 	| 'instagram'
 	| 'telegram'
 	| 'facebook'

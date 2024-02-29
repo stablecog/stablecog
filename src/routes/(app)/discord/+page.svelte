@@ -1,12 +1,12 @@
 <script lang="ts">
 	import RedirectPage from '$components/RedirectPage.svelte';
 	import LL from '$i18n/i18n-svelte';
-	import { socialUrls } from '$ts/constants/social';
+	import { socialAppUrlsAbsolute } from '$ts/constants/social';
 </script>
 
 <RedirectPage
-	url={socialUrls.discord}
-	redirectingText={$LL.Redirect.RedirectingToTitle({ name: 'Discord' })}
+	url={socialAppUrlsAbsolute.discord}
+	redirectingText={$LL.Redirect.RedirectingToTitle({ name: $LL.Platform.Discord() })}
 	title="Discord | Stablecog"
 	description="Join our Discord server to get updates on Stablecog, share your generations, and more!"
 />

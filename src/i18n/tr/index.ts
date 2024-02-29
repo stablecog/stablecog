@@ -966,6 +966,7 @@ const tr: Translation = {
 		ForDevelopersTitle: 'Geliştiriciler İçin'
 	},
 	Platform: {
+		X: 'X',
 		Discord: 'Discord',
 		Email: 'E-posta',
 		Twitter: 'Twitter',

@@ -201,6 +201,20 @@
 			fill="currentColor"
 		/>
 	</svg>
+{:else if type === 'x'}
+	<svg
+		class={classes}
+		width="24"
+		height="24"
+		viewBox="0 0 24 24"
+		fill="none"
+		xmlns="http://www.w3.org/2000/svg"
+	>
+		<path
+			d="M17.18 3.86h2.76l-6.03 6.9L21 20.14h-5.55l-4.35-5.7-4.98 5.7H3.36l6.45-7.38L3 3.86h5.7l3.93 5.2 4.55-5.2Zm-.97 14.62h1.53L7.86 5.43H6.22l9.99 13.05Z"
+			fill="currentColor"
+		/>
+	</svg>
 {:else}
 	<svg
 		xmlns="http://www.w3.org/2000/svg"

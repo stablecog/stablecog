@@ -948,6 +948,7 @@ const ja: Translation = {
 		ForDevelopersTitle: '開発者向け'
 	},
 	Platform: {
+		X: 'X',
 		Discord: 'Discord',
 		Email: 'メール',
 		Twitter: 'Twitter',
