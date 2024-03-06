@@ -1,7 +1,9 @@
 import {
 	getGalleryInfiniteQueryKey,
 	getGalleryInfiniteQueryProps,
-	sortsDefault
+	mainSorts,
+	sortsDefault,
+	type TGalleryMainSort
 } from '$routes/(app)/gallery/constants';
 import type { QueryClient } from '@tanstack/svelte-query';
 import type { PageLoad } from './$types';
@@ -27,7 +29,11 @@ export const load: PageLoad = async ({ url, parent }) => {
 	const usernameFiltersQuery = url.searchParams.get('un');
 	const usernameFilters = usernameFiltersQuery?.split(',') || [];
 	const sortsQuery = url.searchParams.get('sort');
-	const sorts = sortsQuery ? sortsQuery.split(',') : sortsDefault;
+	const sorts = (
+		sortsQuery
+			? sortsQuery.split(',').filter((i) => mainSorts.includes(i as TGalleryMainSort))
+			: sortsDefault
+	) as TGalleryMainSort[];
 	const sharedQueryParams = {
 		...galleryLikeParams,
 		sorts,

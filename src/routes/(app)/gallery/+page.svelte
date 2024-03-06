@@ -75,7 +75,7 @@
 
 	let mainSortView = $gallerySorts?.find((i) => mainSorts.includes(i)) ?? mainSortViewDefault;
 
-	const mainSortViews: TTab<string>[] = [
+	const getMainSorts = ($LL: TranslationFunctions): TTab<string>[] => [
 		{
 			value: 'new',
 			label: $LL.Gallery.Sort.Options.New()
@@ -90,6 +90,9 @@
 		}
 	];
 
+	let mainSortViews: TTab<string>[] = getMainSorts($LL);
+
+	$: mainSortViews = getMainSorts($LL);
 	$: mainSortView, onMainSortViewChanged();
 
 	$: galleryGenerationFullOutputsQueryKey.set(
@@ -171,7 +174,7 @@
 
 <GalleryLikePageWrapper>
 	<GalleryLikeTitleSection title={$LL.Gallery.PageTitle()}>
-		<div slot="view" class="w-full flex justify-end">
+		<div slot="view" class="flex w-full justify-end">
 			<TabLikeDropdown
 				name={$LL.Gallery.Sort.Title()}
 				items={mainSortViews}
@@ -182,10 +185,10 @@
 					$gallerySearchString !== null}
 				disabledText={$LL.Gallery.SearchResultsTitle()}
 				disabledIcon={IconDocumentSearch}
-				class="flex-1 min-w-0 md:max-w-[15rem] z-50"
+				class="z-50 min-w-0 flex-1 md:max-w-[13rem]"
 			/>
 		</div>
-		<div slot="search-and-filter" class="w-full relative z-40">
+		<div slot="search-and-filter" class="relative z-40 w-full">
 			<SearchAndFilterBar
 				type="gallery"
 				bind:modelIdFilters={$galleryModelIdFilters}
@@ -198,7 +201,7 @@
 	<GalleryLikeGridWrapper>
 		{#if $galleryGenerationFullOutputsQuery?.isInitialLoading}
 			<div
-				class="w-full flex flex-col text-c-on-bg/60 flex-1 py-6 px-4 justify-center items-center text-center"
+				class="flex w-full flex-1 flex-col items-center justify-center px-4 py-6 text-center text-c-on-bg/60"
 			>
 				<div
 					in:scale={{
@@ -207,9 +210,9 @@
 						opacity: 0,
 						start: 0.5
 					}}
-					class="w-12 h-12"
+					class="h-12 w-12"
 				>
-					<IconAnimatedSpinner class="w-full h-full" />
+					<IconAnimatedSpinner class="h-full w-full" />
 				</div>
 				<p class="mt-2 opacity-0">
 					{$LL.Gallery.SearchingTitle()}
@@ -217,18 +220,18 @@
 				<div class="h-[2vh]" />
 			</div>
 		{:else if $galleryGenerationFullOutputsQuery?.isError || ($galleryGenerationFullOutputsQuery?.data && !$galleryGenerationFullOutputsQuery?.data?.pages)}
-			<div class="w-full flex-1 flex flex-col items-center py-8 px-5">
-				<div class="flex flex-col my-auto items-center gap-2">
-					<IconSadFace class="w-16 h-16 text-c-on-bg/50" />
+			<div class="flex w-full flex-1 flex-col items-center px-5 py-8">
+				<div class="my-auto flex flex-col items-center gap-2">
+					<IconSadFace class="h-16 w-16 text-c-on-bg/50" />
 					<p class="text-c-on-bg/50">{$LL.Error.SomethingWentWrong()}</p>
 				</div>
 			</div>
 		{:else if $galleryGenerationFullOutputsQuery?.data?.pages.length === 1 && $galleryGenerationFullOutputsQuery.data.pages[0].outputs.length === 0}
 			<div
-				class="w-full flex flex-col text-c-on-bg/60 flex-1 py-6 px-4 justify-center items-center text-center"
+				class="flex w-full flex-1 flex-col items-center justify-center px-4 py-6 text-center text-c-on-bg/60"
 			>
-				<div class="w-16 h-16">
-					<IconSearch class="w-full h-full" />
+				<div class="h-16 w-16">
+					<IconSearch class="h-full w-full" />
 				</div>
 				<p class="mt-2">
 					{$LL.Gallery.NoMatchingGenerationTitle()}

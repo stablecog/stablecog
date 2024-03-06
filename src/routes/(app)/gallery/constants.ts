@@ -31,8 +31,8 @@ export const galleryAspectRatioFilters = sessionAndUrlParamWritable<TAvailableAs
 export const mainSortViewDefault = 'new';
 export const mainSorts = ['new', 'trending', 'top'] as const;
 export type TGalleryMainSort = (typeof mainSorts)[number];
-export const sortsDefault = [mainSortViewDefault];
-export const gallerySorts = sessionAndUrlParamWritable<string[]>(
+export const sortsDefault: TGalleryMainSort[] = [mainSortViewDefault];
+export const gallerySorts = sessionAndUrlParamWritable<TGalleryMainSort[]>(
 	'gallerySorts',
 	'sort',
 	sortsDefault

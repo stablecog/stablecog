@@ -201,10 +201,10 @@
 
 <GalleryLikePageWrapper>
 	{#if !$sessionStore?.user.id || !$userSummary}
-		<div class="w-full flex-1 max-w-7xl flex justify-center px-2 py-4 md:py-2 md:px-8">
+		<div class="flex w-full max-w-7xl flex-1 justify-center px-2 py-4 md:px-8 md:py-2">
 			<div class="my-auto flex flex-col">
 				<SignInCard redirectTo={'/history' + $searchParamsString} />
-				<div class="w-full h-[1vh]" />
+				<div class="h-[1vh] w-full" />
 			</div>
 		</div>
 	{:else}
@@ -218,16 +218,16 @@
 				totalOutputs !== undefined ? totalOutputs.toLocaleString($locale) : '...'
 			})`}
 		>
-			<div slot="view" class="w-full flex justify-end">
+			<div slot="view" class="flex w-full justify-end">
 				<TabLikeDropdown
 					name="Filters"
 					items={userGalleryTabs}
 					bind:value={$userGalleryCurrentView}
 					iconSet={IconUserGalleryFilterSet}
-					class="flex-1 min-w-0 md:max-w-[15rem] z-50"
+					class="z-50 min-w-0 flex-1 md:max-w-[13rem]"
 				/>
 			</div>
-			<div slot="search-and-filter" class="w-full relative z-40">
+			<div slot="search-and-filter" class="relative z-40 w-full">
 				<SearchAndFilterBar
 					bind:searchString={$userGallerySearchString}
 					bind:modelIdFilters={$userGalleryModelIdFilters}
@@ -238,7 +238,7 @@
 		</GalleryLikeTitleSection>
 		{#if $isUserGalleryEditActive}
 			<div
-				class="w-full max-w-3xl px-1 sticky z-30 top-1 {$isUserGalleryEditActive ? 'mt-3' : 'mt-0'}"
+				class="sticky top-1 z-30 w-full max-w-3xl px-1 {$isUserGalleryEditActive ? 'mt-3' : 'mt-0'}"
 			>
 				<BatchEditBar type="history" />
 			</div>
@@ -246,25 +246,25 @@
 		<GalleryLikeGridWrapper>
 			{#if userGenerationFullOutputsQuery !== undefined}
 				{#if $userGenerationFullOutputsQuery?.isError || ($userGenerationFullOutputsQuery?.data && !$userGenerationFullOutputsQuery?.data?.pages)}
-					<div class="w-full flex-1 flex flex-col items-center py-8 px-5">
-						<div class="flex flex-col my-auto items-center gap-2">
-							<IconSadFace class="w-16 h-16 text-c-on-bg/50" />
+					<div class="flex w-full flex-1 flex-col items-center px-5 py-8">
+						<div class="my-auto flex flex-col items-center gap-2">
+							<IconSadFace class="h-16 w-16 text-c-on-bg/50" />
 							<p class="text-c-on-bg/50">{$LL.Error.SomethingWentWrong()}</p>
 						</div>
 					</div>
 				{:else if $userGenerationFullOutputsQuery?.data?.pages.length === 1 && $userGenerationFullOutputsQuery.data.pages[0].outputs.length === 0}
-					<div class="w-full flex-1 flex flex-col items-center py-8 px-5">
-						<div class="flex flex-col my-auto items-center gap-6">
-							<div class="flex items-center justify-center -mb-3">
+					<div class="flex w-full flex-1 flex-col items-center px-5 py-8">
+						<div class="my-auto flex flex-col items-center gap-6">
+							<div class="-mb-3 flex items-center justify-center">
 								{#if $userGalleryCurrentView === 'likes'}
-									<IconHeartOutlined class="text-c-on-bg/50 w-16 h-16" />
+									<IconHeartOutlined class="h-16 w-16 text-c-on-bg/50" />
 								{:else if $userGalleryCurrentView === 'favorites'}
-									<IconStarOutlined class="text-c-on-bg/50 w-16 h-16" />
+									<IconStarOutlined class="h-16 w-16 text-c-on-bg/50" />
 								{:else}
-									<IconImage class="text-c-on-bg/50 w-16 h-16" />
+									<IconImage class="h-16 w-16 text-c-on-bg/50" />
 								{/if}
 							</div>
-							<p class="text-c-on-bg/50 text-center">
+							<p class="text-center text-c-on-bg/50">
 								{$userGalleryCurrentView === 'likes'
 									? $LL.History.NoLikesYet()
 									: $userGalleryCurrentView === 'favorites'
