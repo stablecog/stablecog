@@ -1,28 +1,27 @@
 <script lang="ts">
 	import { page } from '$app/stores';
-	import GenerationFullScreen from '$components/generationFullScreen/GenerationFullScreen.svelte';
-	import IconSearch from '$components/icons/IconSearch.svelte';
-	import MetaTag from '$components/utils/MetaTag.svelte';
-	import LL, { locale } from '$i18n/i18n-svelte';
-	import { canonicalUrl } from '$ts/constants/main';
-	import { globalSeed } from '$ts/stores/globalSeed';
-	import { activeGeneration } from '$ts/stores/user/generation';
-	import { createInfiniteQuery } from '@tanstack/svelte-query';
-	import { quadOut } from 'svelte/easing';
-	import { scale } from 'svelte/transition';
-	import IconAnimatedSpinner from '$components/icons/IconAnimatedSpinner.svelte';
+	import GalleryLikeGridWrapper from '$components/galleryLike/GalleryLikeGridWrapper.svelte';
+	import GalleryLikePageWrapper from '$components/galleryLike/GalleryLikePageWrapper.svelte';
+	import GalleryLikeTitleSection from '$components/galleryLike/GalleryLikeTitleSection.svelte';
 	import SearchAndFilterBar from '$components/galleryLike/SearchAndFilterBar.svelte';
-	import IconSadFace from '$components/icons/IconSadFace.svelte';
-	import { setActiveGenerationToOutputIndex } from '$ts/helpers/goToOutputIndex';
-	import GenerationGridInfinite from '$components/grids/GenerationGridInfinite.svelte';
-	import { windowWidth } from '$ts/stores/window';
+	import GenerationFullScreen from '$components/generationFullScreen/GenerationFullScreen.svelte';
 	import {
 		lgBreakpoint,
 		mdBreakpoint,
-		xlBreakpoint,
+		xl2Breakpoint,
 		xl3Breakpoint,
-		xl2Breakpoint
+		xlBreakpoint
 	} from '$components/generationFullScreen/constants';
+	import GenerationGridInfinite from '$components/grids/GenerationGridInfinite.svelte';
+	import GenerationGridInfiniteWrapper from '$components/grids/GenerationGridInfiniteWrapper.svelte';
+	import IconAnimatedSpinner from '$components/icons/IconAnimatedSpinner.svelte';
+	import IconDocumentSearch from '$components/icons/IconDocumentSearch.svelte';
+	import IconMainSortView from '$components/icons/IconMainSortView.svelte';
+	import IconSadFace from '$components/icons/IconSadFace.svelte';
+	import IconSearch from '$components/icons/IconSearch.svelte';
+	import TabLikeDropdown from '$components/primitives/tabBars/TabLikeDropdown.svelte';
+	import MetaTag from '$components/utils/MetaTag.svelte';
+	import LL, { locale } from '$i18n/i18n-svelte';
 	import {
 		galleryAspectRatioFilters,
 		galleryModelIdFilters,
@@ -32,25 +31,26 @@
 		getGalleryInfiniteQueryKey,
 		getGalleryInfiniteQueryProps,
 		mainSortViewDefault,
-		mainSorts
+		mainSorts,
+		type TGalleryMainSort
 	} from '$routes/(app)/gallery/constants';
-	import { previewImageVersion } from '$ts/constants/previewImageVersion.js';
-	import { galleryGenerationFullOutputsQueryKey } from '$ts/stores/user/queryKeys.js';
-	import { hydrated, updateHydrated } from '$ts/stores/hydrated.js';
-	import { onMount } from 'svelte';
-	import type { TTab } from '$ts/types/main.js';
-	import TabLikeDropdown from '$components/primitives/tabBars/TabLikeDropdown.svelte';
-	import IconMainSortView from '$components/icons/IconMainSortView.svelte';
-	import GalleryLikePageWrapper from '$components/galleryLike/GalleryLikePageWrapper.svelte';
-	import GalleryLikeTitleSection from '$components/galleryLike/GalleryLikeTitleSection.svelte';
-	import GalleryLikeGridWrapper from '$components/galleryLike/GalleryLikeGridWrapper.svelte';
-	import { sessionStore } from '$ts/constants/supabase';
-	import { appVersion } from '$ts/stores/appVersion.js';
-	import { userSummary } from '$ts/stores/user/summary.js';
-	import { logGalleryMainSortChanged } from '$ts/helpers/loggers.js';
-	import IconDocumentSearch from '$components/icons/IconDocumentSearch.svelte';
-	import GenerationGridInfiniteWrapper from '$components/grids/GenerationGridInfiniteWrapper.svelte';
 	import { getGalleryMeta, type TGalleryMeta } from '$routes/(app)/gallery/helpers.js';
+	import { canonicalUrl } from '$ts/constants/main';
+	import { sessionStore } from '$ts/constants/supabase';
+	import { setActiveGenerationToOutputIndex } from '$ts/helpers/goToOutputIndex';
+	import { logGalleryMainSortChanged } from '$ts/helpers/loggers.js';
+	import { appVersion } from '$ts/stores/appVersion.js';
+	import { globalSeed } from '$ts/stores/globalSeed';
+	import { hydrated, updateHydrated } from '$ts/stores/hydrated.js';
+	import { activeGeneration } from '$ts/stores/user/generation';
+	import { galleryGenerationFullOutputsQueryKey } from '$ts/stores/user/queryKeys.js';
+	import { userSummary } from '$ts/stores/user/summary.js';
+	import { windowWidth } from '$ts/stores/window';
+	import type { TTab } from '$ts/types/main.js';
+	import { createInfiniteQuery } from '@tanstack/svelte-query';
+	import { onMount } from 'svelte';
+	import { quadOut } from 'svelte/easing';
+	import { scale } from 'svelte/transition';
 
 	export let data;
 
@@ -75,7 +75,7 @@
 
 	let mainSortView = $gallerySorts?.find((i) => mainSorts.includes(i)) ?? mainSortViewDefault;
 
-	const getMainSorts = ($LL: TranslationFunctions): TTab<string>[] => [
+	const getMainSorts = ($LL: TranslationFunctions): TTab<TGalleryMainSort>[] => [
 		{
 			value: 'new',
 			label: $LL.Gallery.Sort.Options.New()
@@ -90,9 +90,9 @@
 		}
 	];
 
-	let mainSortViews: TTab<string>[] = getMainSorts($LL);
-
+	let mainSortViews = getMainSorts($LL);
 	$: mainSortViews = getMainSorts($LL);
+
 	$: mainSortView, onMainSortViewChanged();
 
 	$: galleryGenerationFullOutputsQueryKey.set(

@@ -1,22 +1,29 @@
 <script lang="ts">
 	import { page } from '$app/stores';
+	import SignInCard from '$components/cards/SignInCard.svelte';
 	import BatchEditBar from '$components/galleryLike/BatchEditBar.svelte';
-	import Button from '$components/primitives/buttons/Button.svelte';
+	import GalleryLikeGridWrapper from '$components/galleryLike/GalleryLikeGridWrapper.svelte';
+	import GalleryLikePageWrapper from '$components/galleryLike/GalleryLikePageWrapper.svelte';
+	import GalleryLikeTitleSection from '$components/galleryLike/GalleryLikeTitleSection.svelte';
+	import SearchAndFilterBar from '$components/galleryLike/SearchAndFilterBar.svelte';
+	import GenerationFullScreen from '$components/generationFullScreen/GenerationFullScreen.svelte';
 	import {
 		lgBreakpoint,
 		mdBreakpoint,
-		xlBreakpoint,
 		xl2Breakpoint,
-		xl3Breakpoint
+		xl3Breakpoint,
+		xlBreakpoint
 	} from '$components/generationFullScreen/constants';
-	import GenerationFullScreen from '$components/generationFullScreen/GenerationFullScreen.svelte';
 	import GenerationGridInfinite from '$components/grids/GenerationGridInfinite.svelte';
+	import GenerationGridInfiniteWrapper from '$components/grids/GenerationGridInfiniteWrapper.svelte';
+	import IconHeartOutlined from '$components/icons/IconHeartOutlined.svelte';
+	import IconImage from '$components/icons/IconImage.svelte';
 	import IconSadFace from '$components/icons/IconSadFace.svelte';
 	import IconStarOutlined from '$components/icons/IconStarOutlined.svelte';
 	import IconUserGalleryFilterSet from '$components/icons/IconUserGalleryFilterSet.svelte';
+	import Button from '$components/primitives/buttons/Button.svelte';
+	import TabLikeDropdown from '$components/primitives/tabBars/TabLikeDropdown.svelte';
 	import MetaTag from '$components/utils/MetaTag.svelte';
-	import SearchAndFilterBar from '$components/galleryLike/SearchAndFilterBar.svelte';
-	import SignInCard from '$components/cards/SignInCard.svelte';
 	import LL, { locale } from '$i18n/i18n-svelte';
 	import {
 		getHistoryInfiniteQueryKey,
@@ -25,17 +32,19 @@
 	} from '$routes/(app)/history/constants';
 	import { canonicalUrl } from '$ts/constants/main';
 	import { previewImageVersion } from '$ts/constants/previewImageVersion';
+	import { sessionStore } from '$ts/constants/supabase';
 	import { setActiveGenerationToOutputIndex } from '$ts/helpers/goToOutputIndex';
 	import { logBatchEditActived, logBatchEditDeactivated } from '$ts/helpers/loggers';
 	import type { TUserGenerationFullOutputsPage } from '$ts/queries/userGenerations';
 	import { appVersion } from '$ts/stores/appVersion';
+	import { hydrated, updateHydrated } from '$ts/stores/hydrated.js';
 	import { searchParamsString } from '$ts/stores/searchParamsString';
 	import {
 		isUserGalleryEditActive,
+		userGalleryAspectRatioFilters,
 		userGalleryCurrentView,
-		type TUserGalleryView,
 		userGalleryModelIdFilters,
-		userGalleryAspectRatioFilters
+		type TUserGalleryView
 	} from '$ts/stores/user/gallery';
 	import { userGenerationFullOutputsQueryKey } from '$ts/stores/user/queryKeys';
 	import { userSummary } from '$ts/stores/user/summary';
@@ -43,16 +52,7 @@
 	import type { TTab } from '$ts/types/main';
 	import { activeGeneration } from '$userStores/generation';
 	import { createInfiniteQuery, type CreateInfiniteQueryResult } from '@tanstack/svelte-query';
-	import TabLikeDropdown from '$components/primitives/tabBars/TabLikeDropdown.svelte';
-	import IconHeartOutlined from '$components/icons/IconHeartOutlined.svelte';
-	import IconImage from '$components/icons/IconImage.svelte';
 	import { onMount } from 'svelte';
-	import { hydrated, updateHydrated } from '$ts/stores/hydrated.js';
-	import GalleryLikePageWrapper from '$components/galleryLike/GalleryLikePageWrapper.svelte';
-	import GalleryLikeTitleSection from '$components/galleryLike/GalleryLikeTitleSection.svelte';
-	import GalleryLikeGridWrapper from '$components/galleryLike/GalleryLikeGridWrapper.svelte';
-	import { sessionStore } from '$ts/constants/supabase';
-	import GenerationGridInfiniteWrapper from '$components/grids/GenerationGridInfiniteWrapper.svelte';
 
 	export let data;
 
@@ -95,8 +95,7 @@
 
 	$: $userGenerationFullOutputsQuery?.data?.pages, onPagesChanged();
 
-	let userGalleryTabs: TTab<TUserGalleryView>[];
-	$: userGalleryTabs = [
+	const getUserGalleryTabs = ($LL: TranslationFunctions): TTab<TUserGalleryView>[] => [
 		{
 			label: $LL.History.Views.AllTitle(),
 			value: 'all'
@@ -110,6 +109,9 @@
 			value: 'likes'
 		}
 	];
+
+	let userGalleryTabs = getUserGalleryTabs($LL);
+	$: userGalleryTabs = getUserGalleryTabs($LL);
 
 	let userGalleryEditActivatedOnce = false;
 	$: $isUserGalleryEditActive, onUserGalleryEditActiveChanged();
