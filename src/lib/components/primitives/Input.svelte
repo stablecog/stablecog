@@ -76,7 +76,7 @@
 				? 'pr-20 md:pr-27'
 				: hasClearButton || iconForButton
 					? 'pr-10 md:pr-16'
-					: 'pr-5'} pt-5.75 pb-2.25 {rounding ? rounding : 'rounded-xl'} shadow-lg
+					: 'pr-5'} pb-2 pt-6 {rounding ? rounding : 'rounded-xl'} shadow-lg
       transition {shadow === 'strongest'
 				? 'shadow-c-shadow/[var(--o-shadow-strongest)]'
 				: shadow === 'strong'
@@ -111,7 +111,7 @@
 				? 'pr-20 md:pr-27'
 				: hasClearButton || iconForButton
 					? 'pr-10 md:pr-16'
-					: 'pr-5'} pt-5.75 pb-2.25 {rounding ? rounding : 'rounded-xl'} shadow-lg
+					: 'pr-5'} pb-2 pt-6 {rounding ? rounding : 'rounded-xl'} shadow-lg
       transition {shadow === 'strongest'
 				? 'shadow-c-shadow/[var(--o-shadow-strongest)]'
 				: shadow === 'strong'
@@ -146,7 +146,7 @@
 				? 'pr-20 md:pr-27'
 				: hasClearButton || iconForButton
 					? 'pr-10 md:pr-16'
-					: 'pr-5'} pt-5.75 pb-2.25 {rounding ? rounding : 'rounded-xl'} shadow-lg
+					: 'pr-5'} pb-2 pt-6 {rounding ? rounding : 'rounded-xl'} shadow-lg
       transition {shadow === 'strongest'
 				? 'shadow-c-shadow/[var(--o-shadow-strongest)]'
 				: shadow === 'strong'
@@ -181,7 +181,7 @@
 				? 'pr-22 md:pr-27'
 				: hasClearButton || iconForButton
 					? 'pr-10 md:pr-16'
-					: 'pr-5'} pt-5.75 pb-2.25 {rounding ? rounding : 'rounded-xl'} shadow-lg
+					: 'pr-5'} pb-2 pt-6 {rounding ? rounding : 'rounded-xl'} shadow-lg
       transition {shadow === 'strongest'
 				? 'shadow-c-shadow/[var(--o-shadow-strongest)]'
 				: shadow === 'strong'
@@ -193,9 +193,11 @@
 		/>
 	{/if}
 	<label
-		class="{hasIcon ? 'pl-12 pr-5' : 'px-5'} input-label pointer-events-none absolute top-4
-		-translate-y-1/2 transform text-xs
-		text-c-on-bg/75 transition-all duration-150 peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-base peer-placeholder-shown:text-c-on-bg/50 peer-focus:top-4
+		class="{hasIcon
+			? 'pl-12 pr-5'
+			: 'px-5'} input-label top-4.25 peer-focus:top-4.25 pointer-events-none
+		absolute -translate-y-1/2 transform
+		text-xs text-c-on-bg/75 transition-all duration-150 peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-base peer-placeholder-shown:text-c-on-bg/50
 		peer-focus:text-xs peer-focus:text-c-on-bg/75"
 		for={title}
 	>
